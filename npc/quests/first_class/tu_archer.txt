@@ -19,12 +19,13 @@
 //= 1.5 Fixed bad NPC header data to comply with rev. 11603. [L0ne_W0lf]
 //= 1.6 Fixed infinate loop. (bugreport:2393) [L0ne_W0lf]
 //= 1.7 Added 10.3 dialog and moved Arpesto to hunter skill quest. [Kisuka]
-//= 1.8 Updated slightly, removed additional emotions from Reiden. [L0ne_W0lf]
+//= 1.8 Updated slightly, removed additional emotions from Reidin. [L0ne_W0lf]
 //= 1.9 Misc. updates. [L0ne_W0lf]
 //= 1.9a Added 'npcskill' command. [Euphy]
 //= 2.0 Updated to match the official script. [Euphy]
 //=     Added Pre-Renewal support.
 //= 3.0 Clean-up. [Capuche]
+//= 3.1 Location changed in ep16.1 of Minister NPC. [Capuche]
 //============================================================
 
 // Bard Jet
@@ -48,7 +49,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		mes "Let me tell you a joke!";
 		mes "Trust me, it's hilarious~";
 		mes "^333333*Ahem*^000000";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		mes "[Jet]";
 		mes "A termite walks";
@@ -56,7 +57,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		mes "'Is the bar tender here?'";
 		mes "Hahahahaha!";
 		mes "Bwehehehehe!";
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "[Jet]";
 		mes "Hahaha~!";
@@ -65,7 +66,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		mes "Now, you try!";
 		mes "Come on, make";
 		mes "up a joke~!";
-		emotion e_gg;
+		emotion ET_KIK;
 		next;
 		if (Sex == SEX_MALE) {
 			select("A joke, eh?");
@@ -89,7 +90,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 			mes "I don't know why, but that was truly amazing. You must have";
 			mes "what it takes to become a Dancer...";
 		}
-		emotion e_no1;
+		emotion ET_BEST;
 		next;
 		mes "[Jet]";
 		mes "But before any of that, you've got to get rid of the Archer look, no?";
@@ -110,7 +111,7 @@ payon_in02,67,65,3	script	Bard Jet#tu	1_M_BARD,{
 		next;
 		specialeffect2 EF_TALK_FROSTJOKE;
 		//specialeffect EF_TALK_FROSTJOKE,AREA,"Bard Jet#tu";
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Jet]";
 		mes "Let's see...";
 		mes "I've been working";
@@ -428,7 +429,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "Kavaruk told you";
 				mes "to come to me, eh?";
 				mes "Alright. Okay.";
-				emotion e_gg;
+				emotion ET_KIK;
 				next;
 				break;
 			case 2:
@@ -512,7 +513,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "That's what I'm talkin' about! Yeah! Just trust me and you'll learn almost everything about Archer skills! Let's get started!";
 				next;
 				select("Yes, Chief!");
-				emotion e_ok;
+				emotion ET_OK;
 				mes "[Reidin Corse]";
 				mes "Great...!";
 				mes "I like your style!";
@@ -570,7 +571,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 							mes "about trying to become as";
 							mes "good as the greatest Archer";
 							mes "ever: me.";
-							emotion e_dots;
+							emotion ET_THINK;
 							next;
 							mes "[Reidin Corse]";
 							mes "Okay...!";
@@ -595,7 +596,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 							close;
 						}
 					case 2:
-						emotion e_an;
+						emotion ET_FRET;
 						mes "[Reidin Corse]";
 						mes "Say what...?";
 						mes "Alright, then.";
@@ -606,7 +607,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 					}
 
 				} else {
-					emotion e_ag;
+					emotion ET_ANGER;
 					mes "Huh. So you already know a little about Owl's Eye already, huh? Well then, I guess I oughta talk about something you don't know about!";
 					tu_archer01 = 7;
 					getexp 500,0;
@@ -630,7 +631,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "You've kept me";
 				mes "waiting for a while!";
 				next;
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				mes "[Reidin Corse]";
 				mes "Ah, but your eyes look a lot sharper than they used to be.";
 				mes "Here, this is a small, special reward for you.";
@@ -638,7 +639,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				tu_archer01 = 7;
 				getexp 500,0;
 				next;
-				emotion e_pif;
+				emotion ET_HNG;
 				mes "[Reidin Corse]";
 				mes "Not bad, but you really should master Owl's Eye. That means";
 				mes "you need to learn it all the way";
@@ -678,7 +679,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "Exactly!";
 				break;
 			case 2:
-				emotion e_lv2;
+				emotion ET_BIGTHROB;
 				mes "[Reidin Corse]";
 				mes "Hahahaha!";
 				mes "Well, I am famous";
@@ -691,7 +692,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 			mes "[Reidin Corse]";
 			mes "Vultures circle the sky, find a target on the ground, and then very swiftly swoop down and ensnare their prey in their claws.";
 			next;
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Reidin Corse]";
 			mes "No doubt about it.";
 			mes "Vultures are awesome!";
@@ -700,7 +701,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 			mes "The ^3131FFVulture's Eye^000000 skill allows";
 			mes "you to train your vision to be like a vulture's. You'll increase your Attack Accuracy and can target enemies from further away.";
 			next;
-			emotion e_no;
+			emotion ET_STARE_ABOUT;
 			mes "[Reidin Corse]";
 			mes "I know that you can attack";
 			mes "from a distance now, but don't";
@@ -762,7 +763,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 			} else {
 				mes "Eh?";
 				mes "Wait a minute...";
-				emotion e_what;
+				emotion ET_QUESTION;
 				next;
 				mes "[Reidin Corse]";
 				mes "You already";
@@ -858,12 +859,13 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "might! Practice Double Strafe";
 				mes "enough and you'll get used to it!";
 				next;
+				tu_archer01 = 10;
 				if(.@eagle == 0){
 					specialeffect2 EF_WIND;
 					// tu_archer01 = 10;
 					getexp 0,500;
 				}
-				emotion e_no1;
+				emotion ET_BEST;
 				next;
 				mes "[Reidin Corse]";
 				mes "Now, there's another skill known as ^FF0000Arrow Shower^000000. Where Double Strafe uses 2 Arrows, Arrow Shower fires a bunch of arrows at once.";
@@ -871,13 +873,13 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "[Reidin Corse]";
 				mes "Not even I can handle";
 				mes "Arrow Shower all that well since it's really hard. Still, maybe if you trained more at it, you'd manage to pull it off?";
-				emotion e_heh;
+				emotion ET_SMILE;
 				close;
 			}
 		} else if(tu_archer01 == 10){
 			if (checkre(0)) {
 				mes "Now, I've taught you a lot of stuff and I wanna make sure you retain all of it. That's why I want you to take this midterm. Your mission: ^FF0000Attack the Rockers^000000!";
-				emotion e_no1;
+				emotion ET_BEST;
 				next;
 				mes "[Reidin Corse]";
 				mes "Rockers live just southwest of Prontera.";
@@ -893,7 +895,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "It's easier to find them if you pass by the southern gate of Prontera and then head west. Alright, off you go, " + strcharinfo(0) + "~";
 			} else {
 				mes "Now, I've taught you a lot of stuff and I wanna make sure you retain all of it. That's why I want you to take this midterm. Your mission: ^FF0000Attack the Rockers^000000!";
-				emotion e_no1;
+				emotion ET_BEST;
 				next;
 				mes "[Reidin Corse]";
 				mes "There's a ship that";
@@ -933,7 +935,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 				mes "Hey, you're back!";
 				mes "Let's see now...";
 				next;
-				emotion e_no1;
+				emotion ET_BEST;
 				mes "[Reidin Corse]";
 				mes "Good! You pass.";
 				mes "Don't forget that you gotta keep training and improve your skills. Before you know it, you'll be an expert almost as good as me!";
@@ -973,7 +975,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 			mes "It was a pain in the";
 			mes "ass, but we're finally";
 			mes "done with all of your lessons.";
-			emotion e_pif;
+			emotion ET_HNG;
 			next;
 			mes "[Reidin Corse]";
 			mes "Ah, but it's not time for";
@@ -1042,7 +1044,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 					mes "Alright!";
 					mes "Oh, and if you get";
 					mes "the chance, give a hello to my Acolyte pal over there for me~";
-					emotion e_heh;
+					emotion ET_SMILE;
 					close2;
 					warp "mjolnir_11",25,221;
 					end;
@@ -1081,17 +1083,17 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 			mes "[Reidin Corse]";
 			mes "Well, it's like you're a full fledged Archer now. Honestly,";
 			mes "I've got nothing more to teach you. Well, about archery, anyway.";
-			emotion e_heh;
+			emotion ET_SMILE;
 			next;
 			mes "[Reidin Corse]";
 			mes "Well, if you talk to him, Master Kavaruk might have something for you to do. He happens to have me running around to doing errands";
 			mes "for him too. That creep!";
-			emotion e_pif;
+			emotion ET_HNG;
 			next;
 			mes "[Reidin Corse]";
 			mes "Well, "+ strcharinfo(0) +",";
 			mes "It'd make me really happy if you get to the point where you develop a true love for the art of archery. I'll see you sometime, okay?";
-			emotion e_no1;
+			emotion ET_BEST;
 			close;
 		} else if(tu_archer01 == 16){
 			mes "I really like this town.";
@@ -1100,7 +1102,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 			next;
 			mes "[Reidin Corse]";
 			mes "Of course, I've got friends here that I can trust with my life. We always argue, but we all want what's best for each other.";
-			emotion e_pif;
+			emotion ET_HNG;
 			next;
 			mes "[Reidin Corse]";
 			mes "Wouldn't you";
@@ -1118,7 +1120,7 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 			mes "[Reidin Corse]";
 			mes "It might also be because I have my trustable friends here with me. Haha.";
 			mes "We always argue, but we care for each other deep down inside.";
-			emotion e_pif;
+			emotion ET_HNG;
 			next;
 			mes "[Reidin Corse]";
 			mes "..'friend' is a wonderful word. Don't you agree?";
@@ -1127,39 +1129,39 @@ pay_arche,103,165,5	script	Reidin Corse#tu	4_M_REIDIN_KURS,{
 	}
 	mes "Allow me to introduce myself. I'm the Archer of all Archers, ^3131FFReidin Corse^000000, Master of the Icarus Guild!";
 	next;
-	emotion e_no1;
+	emotion ET_BEST;
 	mes "[Reidin Corse]";
 	mes "Right now, we're having a special event! The application fee for the Icarus Guild has been slashed by 50%! Join now and there'll be no annual fees!";
 	next;
-	emotion e_lv;
+	emotion ET_THROB;
 	mes "[Reidin Corse]";
 	mes "During our special event, we'll have no job class restrictions!";
 	mes "As an added bonus, all new male members will be introduced to beautiful Dancer girls!";
 	next;
-	emotion e_heh;
+	emotion ET_SMILE;
 	mes "[Reidin Corse]";
 	mes "And new female members will have the special opportunity to go out on a date with me! Don't miss out!";
 	next;
-	emotion e_cash;
+	emotion ET_MONEY;
 	mes "[Reidin Corse]";
 	mes "Join right now";
 	mes "for a one time fee of only ^3131FF1,000,000, zeny^000000! Hurry and join the Icarus Guild while";
 	mes "this offer still lasts!";
 	next;
-	emotion e_pif,"Arpesto";
+	emotion ET_HNG, getnpcid(0, "Arpesto");
 	mes "[Arpesto]";
-	mes "Reiden...";
+	mes "Reidin...";
 	mes "Stop messing around.";
 	mes "Hey there, kid. The real";
 	mes "master of the Icarus Guild";
 	mes "is in that building.";
 	next;
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Reidin Corse]";
 	mes "Arpesto...!";
 	mes "Why'd you...?!";
 	next;
-	emotion e_ag;
+	emotion ET_ANGER;
 	mes "[Reidin Corse]";
 	mes "^333333*Sigh*^000000";
 	mes "You got me, you got me.";
@@ -1397,7 +1399,7 @@ pay_arche,76,135,3	script	#Target	HIDDEN_NPC,{ end; }
 			mes "Uh... Oh no~";
 			mes "What am I supposed";
 			mes "t-to tell you...?";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			next;
 			mes "[Acolyte]";
 			mes "Oh, since I'm training to be an Acolyte, I'm supposed to help out the people he's teaching. So...";
@@ -1419,7 +1421,7 @@ pay_arche,76,135,3	script	#Target	HIDDEN_NPC,{ end; }
 				mes "If you don't need";
 				mes "my help, I guess";
 				mes "that's alright...";
-				emotion e_sob;
+				emotion ET_CRY;
 				close;
 			case 3:
 				mes "[Acolyte]";
@@ -1538,7 +1540,7 @@ pay_arche,130,113,3	script	Alchemist Guildmember#tu	2_M_ALCHE,{
 			mes "for the Icarus Guild";
 			mes "to send somebody";
 			mes "to help us! Finally!";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Alchemist Guildmember]";
 			mes "Would you like to sell ^3131FFStems^000000";
@@ -1570,13 +1572,13 @@ pay_arche,130,113,3	script	Alchemist Guildmember#tu	2_M_ALCHE,{
 				mes "Seriously...";
 				mes "I'm on the verge of begging!";
 				mes "The Alchemist Guild really needs lots of new supplies to keep our Flora field running!";
-				emotion e_sob;
+				emotion ET_CRY;
 				close;
 			}
 		} else {
 			mes "I don't know if you've heard";
 			mes "from Kavaruk, but our Flora field is getting ruined by stray cats.";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Alchemist Guildmember]";
 			mes "No matter how much we chase";
@@ -1679,7 +1681,7 @@ prontera,126,335,5	script	Arthail	1_M_BARD,{
 		mes "I sense something";
 		mes "dark and ominous...";
 		mes "I wonder what it could be?";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		next;
 		mes "[Arthail]";
 		mes "I'm probably just stressed and exhausted. I'll feel better once";
@@ -1719,7 +1721,7 @@ prontera,126,335,5	script	Arthail	1_M_BARD,{
 		next;
 		mes "[????]";
 		mes "AAAAAAAAAAAAAAAHHHHHHHHHHH!!!!!";
-		emotion e_omg;
+		emotion ET_HUK;
 		soundeffectall "se_scream_w01.wav",0;
 		next;
 		mes "["+strcharinfo(0)+"]";
@@ -1805,7 +1807,7 @@ prontera,144,301,5	script	Mage#tu	2_F_MAGICMASTER,{
 	mes "Talk about getting";
 	mes "on your soapbox!";
 	next;
-	emotion e_pif;
+	emotion ET_HNG;
 	mes "[Mage]";
 	mes "Doesn't he know that there";
 	mes "are a lot of famous guilds around nowadays? Why would anyone want";
@@ -1826,7 +1828,7 @@ prontera,144,301,5	script	Mage#tu	2_F_MAGICMASTER,{
 
 // Minister
 //============================================================
-prt_castle,76,165,6	script	Minister#tu	1_M_JOBTESTER,{
+-	script	Minister#tu_	-1,{
 	mes "[Minister]";
 	mes "The royal family";
 	mes "is extremely busy";
@@ -1886,7 +1888,8 @@ prt_castle,76,165,6	script	Minister#tu	1_M_JOBTESTER,{
 
 // Range NPC
 //============================================================
-prt_castle,94,150,4	script	#sound_tu	HIDDEN_WARP_NPC,6,6,{
+-	script	#sound_tu_	-1,{
+	end;
 OnTouch_:
 	if(tu_archer02 == 6) {
 		mes "[Minister]";

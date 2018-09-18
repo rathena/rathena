@@ -27,7 +27,7 @@ prontera,151,190,6	script	Sample Instance	101,{
 		case 2:
 			mes "[Sample Instance]";
 			mes "You don't want to try again?";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 	} else {
@@ -47,7 +47,7 @@ prontera,151,190,6	script	Sample Instance	101,{
 				}
 				mes " ";
 				mes "Instance creation ^FF0000failed^000000.";
-				emotion e_omg;
+				emotion ET_HUK;
 				close;
 			}
 			mes "[Sample Instance]";
@@ -72,7 +72,7 @@ prontera,151,190,6	script	Sample Instance	101,{
 		}
 		mes " ";
 		mes "Instance entry ^FF0000failed^000000.";
-		emotion e_omg;
+		emotion ET_HUK;
 		close;
 	}
 	close;
@@ -164,7 +164,7 @@ abyss_03,97,102,4	script	Instance NPC#finish	101,{
 	mes "[Instance NPC]";
 	mes "Congratulations! You've finished the instance.";
 	mes "I'll send you back to town now.";
-	emotion e_no1;
+	emotion ET_BEST;
 	close2;
 	warp "prontera",156,191;
 	instance_destroy();

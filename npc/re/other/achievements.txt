@@ -1,0 +1,289 @@
+//===== rAthena Script =======================================
+//= Adventure Achievements
+//===== Description: =========================================
+//= Spawns Adventure group type treasure chests.
+//===== Changelogs: ==========================================
+//= 1.0 Initial release. [Aleos]
+//============================================================
+
+-	script	ach_treasure#core	-1,{
+	if (strnpcinfo(3) == "")
+		end;
+	achievementcomplete(atoi(strnpcinfo(3)));
+	classchange HIDDEN_WARP_NPC;
+	initnpctimer;
+	end;
+
+OnTouch:
+	if (getnpctimer(1)) // Don't trigger touch if the delay timer is active.
+		end;
+	if (achievementexists(atoi(strnpcinfo(3)))) // Don't trigger if the player has already completed.
+		end;
+	classchange 4_TREASURE_BOX,"",bc_self;
+	end;
+
+OnTimer5000:
+	stopnpctimer;
+	end;
+}
+
+//-----------------
+// --- Dungeons ---
+//-----------------
+
+// Abbey Underground
+abbey03,26,72,0	duplicate(ach_treasure#core)	#abb_ach1::120110	HIDDEN_WARP_NPC,5,5
+
+// Abyss Lake
+abyss_03,86,55,0	duplicate(ach_treasure#core)	#aby_ach1::120111	HIDDEN_WARP_NPC,5,5
+
+// Amatsu Dungeon
+ama_dun03,60,163,0	duplicate(ach_treasure#core)	#ama_ach1::120113	HIDDEN_WARP_NPC,5,5
+
+// Ant Hell
+anthell02,253,41,0	duplicate(ach_treasure#core)	#ant_ach1::120114	HIDDEN_WARP_NPC,5,5
+
+// Ayothaya Dungeon
+ayo_dun02,150,256,0	duplicate(ach_treasure#core)	#ayo_ach1::120115	HIDDEN_WARP_NPC,5,5
+
+// Bifrost
+ecl_tdun04,37,37,0	duplicate(ach_treasure#core)	#ecl_ach1::120121	HIDDEN_WARP_NPC,5,5
+
+// Brasilis Dungeon
+bra_dun02,171,121,0	duplicate(ach_treasure#core)	#bra_ach1::120117	HIDDEN_WARP_NPC,5,5
+
+// Byalan Dungeon
+iz_dun05,64,223,0	duplicate(ach_treasure#core)	#iz_ach2::120141	HIDDEN_WARP_NPC,5,5
+
+// Clock Tower
+c_tower4,37,158,0	duplicate(ach_treasure#core)	#ct_ach1::120112	HIDDEN_WARP_NPC,5,5
+alde_dun04,90,107,0	duplicate(ach_treasure#core)	#ct_ach2::120118	HIDDEN_WARP_NPC,5,5
+
+// Coal Mine
+mjo_dun03,76,220,0	duplicate(ach_treasure#core)	#mjo_ach1::120136	HIDDEN_WARP_NPC,5,5
+
+// Comodo Dungeon
+beach_dun3,102,71,0	duplicate(ach_treasure#core)	#bea_ach1::120116	HIDDEN_WARP_NPC,5,5
+
+// Einbech
+ein_dun02,31,255,0	duplicate(ach_treasure#core)	#eind_ach1::120122	HIDDEN_WARP_NPC,5,5
+
+// Geffen Dungeon
+gef_dun02,222,163,0	duplicate(ach_treasure#core)	#gefd_ach1::120123	HIDDEN_WARP_NPC,5,5
+
+// Glastheim
+gl_cas02,53,151,0	duplicate(ach_treasure#core)	#gl_ach1::120124	HIDDEN_WARP_NPC,5,5
+gl_sew04,288,6,0	duplicate(ach_treasure#core)	#gl_ach2::120125	HIDDEN_WARP_NPC,5,5
+gl_knt02,126,235,0	duplicate(ach_treasure#core)	#gl_ach3::120126	HIDDEN_WARP_NPC,5,5
+gl_prison1,125,159,0	duplicate(ach_treasure#core)	#gl_ach4::120127	HIDDEN_WARP_NPC,5,5
+
+// Gonryun Dungeon
+gon_dun03,167,232,0	duplicate(ach_treasure#core)	#gon_ach1::120128	HIDDEN_WARP_NPC,5,5
+
+// Istana
+dew_dun02,87,272,0	duplicate(ach_treasure#core)	#dew_ach1::120119	HIDDEN_WARP_NPC,5,5
+
+// Labyrinth
+prt_maze03,11,14,0	duplicate(ach_treasure#core)	#maze_ach1::120140	HIDDEN_WARP_NPC,5,5
+
+// Louyang Dungeon
+lou_dun03,29,228,0	duplicate(ach_treasure#core)	#lou_ach1::120134	HIDDEN_WARP_NPC,5,5
+
+// Nogg Road
+mag_dun02,192,72,0	duplicate(ach_treasure#core)	#mag_ach1::120135	HIDDEN_WARP_NPC,5,5
+
+// Orc Dungeon
+orcsdun02,32,72,0	duplicate(ach_treasure#core)	#orc_ach1::120138	HIDDEN_WARP_NPC,5,5
+
+// Payon Dungeon
+pay_dun04,120,124,0	duplicate(ach_treasure#core)	#payd_ach1::120139	HIDDEN_WARP_NPC,5,5
+
+// Prontera Culvert
+prt_sewb4,19,183,0	duplicate(ach_treasure#core)	#iz_ach1::120131	HIDDEN_WARP_NPC,5,5
+
+// Pyramid
+moc_pryd06,102,121,0	duplicate(ach_treasure#core)	#pyr_ach1::120137	HIDDEN_WARP_NPC,5,5
+
+// Rachel Dungeon
+ice_dun03,44,261,0	duplicate(ach_treasure#core)	#rad_ach1::120129	HIDDEN_WARP_NPC,5,5
+
+// Robot Factory
+kh_dun02,70,106,0	duplicate(ach_treasure#core)	#jup_ach1::120132	HIDDEN_WARP_NPC,5,5
+
+// Scaraba Hall
+dic_dun03,216,211,0	duplicate(ach_treasure#core)	#dic_ach1::120120	HIDDEN_WARP_NPC,5,5
+
+// Somatology Lab
+lhz_dun03,240,221,0	duplicate(ach_treasure#core)	#lhzd_ach1::120133	HIDDEN_WARP_NPC,5,5
+
+// Sphinx
+in_sphinx5,154,107,0	duplicate(ach_treasure#core)	#sph_ach1::120130	HIDDEN_WARP_NPC,5,5
+
+// Sunken Ship
+treasure02,18,142,0	duplicate(ach_treasure#core)	#iz_ach3::120144	HIDDEN_WARP_NPC,5,5
+
+// Thanatos Tower
+tha_t06,150,176,0	duplicate(ach_treasure#core)	#tha_ach1::120142	HIDDEN_WARP_NPC,5,5
+
+// Thors Volcano
+thor_v03,220,221,0	duplicate(ach_treasure#core)	#thor_ach1::120143	HIDDEN_WARP_NPC,5,5
+
+// Toy Factory
+xmas_dun02,120,224,0	duplicate(ach_treasure#core)	#xmas_ach1::120146	HIDDEN_WARP_NPC,5,5
+
+// Turtle Island Dungeon
+tur_dun04,134,130,0	duplicate(ach_treasure#core)	#tur_ach1::120145	HIDDEN_WARP_NPC,5,5
+
+//---------------
+// --- Fields ---
+//---------------
+
+// Comodo
+cmd_fild01,112,200,0	duplicate(ach_treasure#core)	#cmd_ach1::120044	HIDDEN_WARP_NPC,5,5
+cmd_fild02,86,94,0	duplicate(ach_treasure#core)	#cmd_ach2::120045	HIDDEN_WARP_NPC,5,5
+cmd_fild03,144,190,0	duplicate(ach_treasure#core)	#cmd_ach3::120046	HIDDEN_WARP_NPC,5,5
+cmd_fild04,151,191,0	duplicate(ach_treasure#core)	#cmd_ach4::120047	HIDDEN_WARP_NPC,5,5
+cmd_fild06,221,108,0	duplicate(ach_treasure#core)	#cmd_ach5::120048	HIDDEN_WARP_NPC,5,5
+cmd_fild07,269,322,0	duplicate(ach_treasure#core)	#cmd_ach6::120049	HIDDEN_WARP_NPC,5,5
+cmd_fild08,181,136,0	duplicate(ach_treasure#core)	#cmd_ach7::120050	HIDDEN_WARP_NPC,5,5
+cmd_fild09,211,266,0	duplicate(ach_treasure#core)	#cmd_ach8::120051	HIDDEN_WARP_NPC,5,5
+
+// Einbroch
+ein_fild01,266,277,0	duplicate(ach_treasure#core)	#ein_ach1::120067	HIDDEN_WARP_NPC,5,5
+ein_fild03,99,332,0	duplicate(ach_treasure#core)	#ein_ach2::120068	HIDDEN_WARP_NPC,5,5
+ein_fild04,334,305,0	duplicate(ach_treasure#core)	#ein_ach3::120069	HIDDEN_WARP_NPC,5,5
+ein_fild05,337,233,0	duplicate(ach_treasure#core)	#ein_ach4::120070	HIDDEN_WARP_NPC,5,5
+ein_fild06,174,245,0	duplicate(ach_treasure#core)	#ein_ach5::120071	HIDDEN_WARP_NPC,5,5
+ein_fild07,188,50,0	duplicate(ach_treasure#core)	#ein_ach6::120072	HIDDEN_WARP_NPC,5,5
+ein_fild08,258,78,0	duplicate(ach_treasure#core)	#ein_ach7::120073	HIDDEN_WARP_NPC,5,5
+ein_fild09,330,76,0	duplicate(ach_treasure#core)	#ein_ach8::120074	HIDDEN_WARP_NPC,5,5
+
+// Geffen
+gef_fild00,74,119,0	duplicate(ach_treasure#core)	#gef_ach1::120011	HIDDEN_WARP_NPC,5,5
+gef_fild01,223,223,0	duplicate(ach_treasure#core)	#gef_ach2::120012	HIDDEN_WARP_NPC,5,5
+gef_fild05,202,292,0	duplicate(ach_treasure#core)	#gef_ach3::120013	HIDDEN_WARP_NPC,5,5
+gef_fild06,279,104,0	duplicate(ach_treasure#core)	#gef_ach4::120014	HIDDEN_WARP_NPC,5,5
+gef_fild07,181,250,0	duplicate(ach_treasure#core)	#gef_ach5::120015	HIDDEN_WARP_NPC,5,5
+gef_fild09,170,73,0	duplicate(ach_treasure#core)	#gef_ach6::120016	HIDDEN_WARP_NPC,5,5
+gef_fild11,238,249,0	duplicate(ach_treasure#core)	#gef_ach7::120017	HIDDEN_WARP_NPC,5,5
+
+// Hugel
+hu_fild01,347,312,0	duplicate(ach_treasure#core)	#hu_ach1::120062	HIDDEN_WARP_NPC,5,5
+hu_fild02,80,152,0	duplicate(ach_treasure#core)	#hu_ach2::120063	HIDDEN_WARP_NPC,5,5
+hu_fild04,322,313,0	duplicate(ach_treasure#core)	#hu_ach3::120064	HIDDEN_WARP_NPC,5,5
+hu_fild06,204,228,0	duplicate(ach_treasure#core)	#hu_ach4::120065	HIDDEN_WARP_NPC,5,5
+hu_fild05,197,210,0	duplicate(ach_treasure#core)	#hu_ach5::120066	HIDDEN_WARP_NPC,5,5
+
+// Laphine
+ecl_fild01,155,322,0	duplicate(ach_treasure#core)	#ecl_ach1::120090	HIDDEN_WARP_NPC,5,5
+bif_fild01,147,64,0	duplicate(ach_treasure#core)	#ecl_ach2::120091	HIDDEN_WARP_NPC,5,5
+bif_fild02,155,322,0	duplicate(ach_treasure#core)	#ecl_ach3::120092	HIDDEN_WARP_NPC,5,5
+spl_fild01,335,315,0	duplicate(ach_treasure#core)	#ecl_ach4::120093	HIDDEN_WARP_NPC,5,5
+spl_fild02,153,358,0	duplicate(ach_treasure#core)	#ecl_ach5::120094	HIDDEN_WARP_NPC,5,5
+spl_fild03,61,286,0	duplicate(ach_treasure#core)	#ecl_ach6::120095	HIDDEN_WARP_NPC,5,5
+
+// Lighthalzen
+lhz_fild01,118,73,0	duplicate(ach_treasure#core)	#lhz_ach1::120075	HIDDEN_WARP_NPC,5,5
+lhz_fild02,239,243,0	duplicate(ach_treasure#core)	#lhz_ach2::120076	HIDDEN_WARP_NPC,5,5
+lhz_fild03,313,132,0	duplicate(ach_treasure#core)	#lhz_ach3::120077	HIDDEN_WARP_NPC,5,5
+
+// Manuk
+man_fild01,41,172,0	duplicate(ach_treasure#core)	#man_ach1::120096	HIDDEN_WARP_NPC,5,5
+man_fild02,268,355,0	duplicate(ach_treasure#core)	#man_ach2::120097	HIDDEN_WARP_NPC,5,5
+man_fild03,198,91,0	duplicate(ach_treasure#core)	#man_ach3::120098	HIDDEN_WARP_NPC,5,5
+dic_fild01,227,82,0	duplicate(ach_treasure#core)	#man_ach4::120099	HIDDEN_WARP_NPC,5,5
+dic_fild02,147,196,0	duplicate(ach_treasure#core)	#man_ach5::120100	HIDDEN_WARP_NPC,5,5
+
+// Misc
+ama_fild01,187,337,0	duplicate(ach_treasure#core)	#misc_ach1::120101	HIDDEN_WARP_NPC,5,5
+gon_fild01,171,332,0	duplicate(ach_treasure#core)	#misc_ach2::120102	HIDDEN_WARP_NPC,5,5
+lou_fild01,104,232,0	duplicate(ach_treasure#core)	#misc_ach3::120103	HIDDEN_WARP_NPC,5,5
+ayo_fild01,289,70,0	duplicate(ach_treasure#core)	#misc_ach4::120104	HIDDEN_WARP_NPC,5,5
+mosk_fild02,176,77,0	duplicate(ach_treasure#core)	#misc_ach5::120105	HIDDEN_WARP_NPC,5,5
+bra_fild01,99,193,0	duplicate(ach_treasure#core)	#misc_ach6::120106	HIDDEN_WARP_NPC,5,5
+dew_fild01,175,287,0	duplicate(ach_treasure#core)	#misc_ach7::120107	HIDDEN_WARP_NPC,5,5
+ma_fild01,308,206,0	duplicate(ach_treasure#core)	#misc_ach8::120108	HIDDEN_WARP_NPC,5,5
+ma_fild02,176,77,0	duplicate(ach_treasure#core)	#misc_ach9::120109	HIDDEN_WARP_NPC,5,5
+
+// Mjolnir
+mjolnir_01,47,60,0	duplicate(ach_treasure#core)	#nmjo_ach1::120032	HIDDEN_WARP_NPC,5,5
+mjolnir_02,77,49,0	duplicate(ach_treasure#core)	#nmjo_ach2::120033	HIDDEN_WARP_NPC,5,5
+mjolnir_03,190,200,0	duplicate(ach_treasure#core)	#nmjo_ach3::120034	HIDDEN_WARP_NPC,5,5
+mjolnir_04,201,146,0	duplicate(ach_treasure#core)	#nmjo_ach4::120035	HIDDEN_WARP_NPC,5,5
+mjolnir_05,43,327,0	duplicate(ach_treasure#core)	#nmjo_ach5::120036	HIDDEN_WARP_NPC,5,5
+mjolnir_06,162,290,0	duplicate(ach_treasure#core)	#smjo_ach1::120037	HIDDEN_WARP_NPC,5,5
+mjolnir_07,321,127,0	duplicate(ach_treasure#core)	#smjo_ach2::120038	HIDDEN_WARP_NPC,5,5
+mjolnir_08,175,225,0	duplicate(ach_treasure#core)	#smjo_ach3::120039	HIDDEN_WARP_NPC,5,5
+mjolnir_09,299,123,0	duplicate(ach_treasure#core)	#smjo_ach4::120040	HIDDEN_WARP_NPC,5,5
+mjolnir_10,353,371,0	duplicate(ach_treasure#core)	#smjo_ach5::120041	HIDDEN_WARP_NPC,5,5
+mjolnir_11,329,182,0	duplicate(ach_treasure#core)	#smjo_ach6::120042	HIDDEN_WARP_NPC,5,5
+mjolnir_12,110,298,0	duplicate(ach_treasure#core)	#smjo_ach7::120043	HIDDEN_WARP_NPC,5,5
+
+// Morocc
+moc_fild11,188,218,0	duplicate(ach_treasure#core)	#moc_ach1::120018	HIDDEN_WARP_NPC,5,5
+moc_fild12,234,96,0	duplicate(ach_treasure#core)	#moc_ach2::120019	HIDDEN_WARP_NPC,5,5
+moc_fild13,290,207,0	duplicate(ach_treasure#core)	#moc_ach3::120020	HIDDEN_WARP_NPC,5,5
+moc_fild16,196,108,0	duplicate(ach_treasure#core)	#moc_ach4::120021	HIDDEN_WARP_NPC,5,5
+moc_fild17,269,105,0	duplicate(ach_treasure#core)	#moc_ach5::120022	HIDDEN_WARP_NPC,5,5
+moc_fild18,54,284,0	duplicate(ach_treasure#core)	#moc_ach6::120023	HIDDEN_WARP_NPC,5,5
+
+// Payon
+pay_fild01,167,243,0	duplicate(ach_treasure#core)	#pay_ach1::120024	HIDDEN_WARP_NPC,5,5
+pay_fild02,105,240,0	duplicate(ach_treasure#core)	#pay_ach2::120025	HIDDEN_WARP_NPC,5,5
+pay_fild03,144,97,0	duplicate(ach_treasure#core)	#pay_ach3::120026	HIDDEN_WARP_NPC,5,5
+pay_fild04,257,95,0	duplicate(ach_treasure#core)	#pay_ach4::120027	HIDDEN_WARP_NPC,5,5
+pay_fild07,365,37,0	duplicate(ach_treasure#core)	#pay_ach5::120028	HIDDEN_WARP_NPC,5,5
+pay_fild08,237,345,0	duplicate(ach_treasure#core)	#pay_ach6::120029	HIDDEN_WARP_NPC,5,5
+pay_fild09,251,42,0	duplicate(ach_treasure#core)	#pay_ach7::120030	HIDDEN_WARP_NPC,5,5
+pay_fild10,196,38,0	duplicate(ach_treasure#core)	#pay_ach8::120031	HIDDEN_WARP_NPC,5,5
+
+// Prontera
+prt_fild01,147,126,0	duplicate(ach_treasure#core)	#prt_ach1::120001	HIDDEN_WARP_NPC,5,5
+prt_fild02,140,219,0	duplicate(ach_treasure#core)	#prt_ach2::120002	HIDDEN_WARP_NPC,5,5
+prt_fild03,172,139,0	duplicate(ach_treasure#core)	#prt_ach3::120003	HIDDEN_WARP_NPC,5,5
+prt_fild04,119,291,0	duplicate(ach_treasure#core)	#prt_ach4::120004	HIDDEN_WARP_NPC,5,5
+prt_fild05,190,291,0	duplicate(ach_treasure#core)	#prt_ach5::120005	HIDDEN_WARP_NPC,5,5
+prt_fild06,296,303,0	duplicate(ach_treasure#core)	#prt_ach6::120006	HIDDEN_WARP_NPC,5,5
+prt_fild07,45,104,0	duplicate(ach_treasure#core)	#prt_ach7::120007	HIDDEN_WARP_NPC,5,5
+prt_fild08,203,223,0	duplicate(ach_treasure#core)	#prt_ach8::120008	HIDDEN_WARP_NPC,5,5
+prt_fild09,37,354,0	duplicate(ach_treasure#core)	#prt_ach9::120009	HIDDEN_WARP_NPC,5,5
+prt_fild10,177,206,0	duplicate(ach_treasure#core)	#prt_ach10::120010	HIDDEN_WARP_NPC,5,5
+
+// Rachel
+ra_fild01,138,166,0	duplicate(ach_treasure#core)	#ra_ach1::120078	HIDDEN_WARP_NPC,5,5
+ra_fild03,224,275,0	duplicate(ach_treasure#core)	#ra_ach2::120079	HIDDEN_WARP_NPC,5,5
+ra_fild08,326,45,0	duplicate(ach_treasure#core)	#ra_ach3::120080	HIDDEN_WARP_NPC,5,5
+ra_fild12,352,165,0	duplicate(ach_treasure#core)	#ra_ach4::120081	HIDDEN_WARP_NPC,5,5
+ra_fild04,92,302,0	duplicate(ach_treasure#core)	#ra_ach5::120082	HIDDEN_WARP_NPC,5,5
+ra_fild05,59,59,0	duplicate(ach_treasure#core)	#ra_ach6::120083	HIDDEN_WARP_NPC,5,5
+ra_fild06,362,230,0	duplicate(ach_treasure#core)	#ra_ach7::120084	HIDDEN_WARP_NPC,5,5
+
+// Veins
+ve_fild01,180,234,0	duplicate(ach_treasure#core)	#ve_ach1::120085	HIDDEN_WARP_NPC,5,5
+ve_fild02,65,194,0	duplicate(ach_treasure#core)	#ve_ach2::120086	HIDDEN_WARP_NPC,5,5
+ve_fild03,197,242,0	duplicate(ach_treasure#core)	#ve_ach3::120087	HIDDEN_WARP_NPC,5,5
+ve_fild04,288,279,0	duplicate(ach_treasure#core)	#ve_ach4::120088	HIDDEN_WARP_NPC,5,5
+ve_fild07,33,113,0	duplicate(ach_treasure#core)	#ve_ach5::120089	HIDDEN_WARP_NPC,5,5
+
+// Yuno
+yuno_fild01,284,138,0	duplicate(ach_treasure#core)	#yuno_ach1::120052	HIDDEN_WARP_NPC,5,5
+yuno_fild12,76,268,0	duplicate(ach_treasure#core)	#yuno_ach2::120053	HIDDEN_WARP_NPC,5,5
+yuno_fild02,142,191,0	duplicate(ach_treasure#core)	#yuno_ach3::120054	HIDDEN_WARP_NPC,5,5
+yuno_fild03,135,329,0	duplicate(ach_treasure#core)	#yuno_ach4::120055	HIDDEN_WARP_NPC,5,5
+yuno_fild04,35,369,0	duplicate(ach_treasure#core)	#yuno_ach5::120056	HIDDEN_WARP_NPC,5,5
+yuno_fild06,262,220,0	duplicate(ach_treasure#core)	#yuno_ach6::120057	HIDDEN_WARP_NPC,5,5
+yuno_fild07,113,339,0	duplicate(ach_treasure#core)	#yuno_ach7::120058	HIDDEN_WARP_NPC,5,5
+yuno_fild08,179,209,0	duplicate(ach_treasure#core)	#yuno_ach8::120059	HIDDEN_WARP_NPC,5,5
+yuno_fild09,166,228,0	duplicate(ach_treasure#core)	#yuno_ach9::120060	HIDDEN_WARP_NPC,5,5
+yuno_fild11,141,357,0	duplicate(ach_treasure#core)	#yuno_ach10::120061	HIDDEN_WARP_NPC,5,5
+
+// If the feature is turned off these NPCs are useless
+-	script	AchievementInit	-1,{
+	end;
+
+OnInit:
+	if( !getbattleflag( "feature.achievement" ) ){
+		unloadnpc "ach_treasure#core";
+	}
+	end;
+}

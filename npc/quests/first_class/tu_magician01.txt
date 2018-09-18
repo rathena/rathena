@@ -708,7 +708,7 @@ geffen,67,180,4	script	New Mage Manager#M	8_F,{
 			mes "has you do, come back";
 			mes "and report to me, okay?";
 			tu_magician01 = 7;
-			emotion e_heh;
+			emotion ET_SMILE;
 			warp "morocc",182,286;
 			close;
 		case 2:

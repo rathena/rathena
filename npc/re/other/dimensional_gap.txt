@@ -172,7 +172,7 @@ OnTimer18000:
 	npctalk "I just saw a street trader passing by... Where is he?", "Party Member#GUILL";
 	end;
 OnTimer19500:
-	emotion e_yawn, 0, "Party Member#SURA";
+	emotion ET_SLEEPY, getnpcid(0, "Party Member#SURA");
 	npctalk "Huh? What is this? You still haven't entered?", "Party Member#SURA";
 	end;
 OnTimer20000:
@@ -186,7 +186,7 @@ OnTimer22500:
 	npctalk "Are you awake?", "Party Member#SHADOW";
 	end;
 OnTimer24000:
-	emotion e_an, 0, "Party Member#SURA";
+	emotion ET_FRET, getnpcid(0, "Party Member#SURA");
 	npctalk "Why are you still here?", "Party Member#SURA";
 	end;
 OnTimer24500:
@@ -211,18 +211,18 @@ OnTimer32000:
 	npctalk "Cough~ Cough~", "Party Member#EINOLD";
 	end;
 OnTimer33000:
-	emotion e_an, 0, "Party Member#SURA";
+	emotion ET_FRET, getnpcid(0, "Party Member#SURA");
 	end;
 OnTimer34000:
 	npctalk "Damn! I am pissed off! I came here because I heard only a party is allowed to get in!", "Party Member#SURA";
 	end;
 OnTimer36000:
 	npctalk "Are you going to hit me? Do it!", "Party Member#MONK";
-	emotion e_ag, 0, "Party Member#MONK";
+	emotion ET_ANGER, getnpcid(0, "Party Member#MONK");
 	npctalk "You pay for your food.", "Party Member#CRU";
 	end;
 OnTimer37500:
-	emotion e_an, 0, "Party Member#SURA";
+	emotion ET_FRET, getnpcid(0, "Party Member#SURA");
 	end;
 OnTimer39000:
 	npctalk "Whatever, I'm not eating.", "Party Member#WANDERER";
@@ -230,22 +230,22 @@ OnTimer39000:
 	npctalk "Right.. I should have entered with another group!", "Party Member#SHADOW";
 	end;
 OnTimer40500:
-	emotion e_gg, 0, "Party Member#CRU::OnChat24";
-	npctalk "Hey. Are you pissed off?", "Party Member#CRU::OnChat24";
+	emotion ET_KIK, getnpcid(0, "Party Member#CRU");
+	npctalk "Hey. Are you pissed off?", "Party Member#CRU";
 	end;
 OnTimer42000:
 	npctalk "Not at all.", "Party Member#GUILL";
 	end;
 OnTimer43500:
-	emotion e_gg, 0, "Party Member#MONK";
+	emotion ET_KIK, getnpcid(0, "Party Member#MONK");
 	npctalk "Look at him snoozing. Hehe.", "Party Member#MONK";
 	end;
 OnTimer45000:
-	emotion e_yawn, 0, "Party Member#SURA";
+	emotion ET_SLEEPY, getnpcid(0, "Party Member#SURA");
 	npctalk "Bah, I don't care. I'm gonna take a nap, so wake me up when we're ready.";
 	end;
 OnTimer46500:
-	emotion e_gg, 0, "Party Member#CRU";
+	emotion ET_KIK, getnpcid(0, "Party Member#CRU");
 	npctalk "You are upset!!", "Party Member#CRU";
 	npctalk "Can I get back before I die...", "Party Member#WANDERER";
 	npctalk "What? You, we gotta talk! I've been too nice to you!", "Party Member#EINOLD";
@@ -254,12 +254,12 @@ OnTimer48000:
 	npctalk "Excuse me..... everyone.............?", "Party Leader#dali2";
 	end;
 OnTimer49500:
-	emotion e_ag, 0, "Party Member#GUILL";
+	emotion ET_ANGER, getnpcid(0, "Party Member#GUILL");
 	npctalk "No!!!!!!!!!", "Party Member#GUILL";
 	npctalk "Whatever~", "Party Member#MONK";
 	end;
 OnTimer51000:
-	emotion e_sob, 0, "Party Leader#dali2";
+	emotion ET_CRY, getnpcid(0, "Party Leader#dali2");
 	npctalk "Please listen to me....", "Party Leader#dali2";
 	npctalk "He's angry all right....", "Party Member#WANDERER";
 	npctalk "Take a nap. I am sleepy too, so we'll take shifts.", "Party Member#SHADOW";

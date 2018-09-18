@@ -19,8 +19,82 @@
 1@ma_c	mapflag	restricted	6
 1@ma_b	mapflag	restricted	6
 1@ecl	mapflag	restricted	6
-1@xm_d	mapflag	restricted	6
+
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	restricted	6
+2@gl_k	mapflag	restricted	6
+
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	restricted	6
+1@def02	mapflag	restricted	6
+1@def03	mapflag	restricted	6
+
+// Heroes' Trail - Part 1 ========
 1@face	mapflag	restricted	6
+1@sara	mapflag	restricted	6
+
+// Heroes' Trail - Part 2 ========
+1@ge_st	mapflag	restricted	6
+1@gef	mapflag	restricted	6
+1@gef_in	mapflag	restricted	6
+1@spa	mapflag	restricted	6
+1@tnm1	mapflag	restricted	6
+1@tnm2	mapflag	restricted	6
+1@tnm3	mapflag	restricted	6
+
+// Horror Toy Factory Memorial Dungeon
+1@xm_d	mapflag	restricted	6
+
+// Heroes' Trail - Part 3 ========
+1@glast	mapflag	restricted	6
+1@air1	mapflag	restricted	6
+1@air2	mapflag	restricted	6
+
+// Decisive Battle - Part 1 ======
+1@dth1	mapflag	restricted	6
+1@dth2	mapflag	restricted	6
+1@dth3	mapflag	restricted	6
+1@rev	mapflag	restricted	6
+
+// Decisive Battle - Part 2 ======
+1@eom	mapflag	restricted	6
+1@jtb	mapflag	restricted	6
+
+// Episode 15 - Phantasmagorica
+1@lab	mapflag	restricted	6
+1@uns	mapflag	restricted	6
+1@mcd	mapflag	restricted	6
+
+// Ep 16
+1@mir	mapflag	restricted	6
+2@mir	mapflag	restricted	6
+1@sthb	mapflag	restricted	6
+1@sthc	mapflag	restricted	6
+1@sthd	mapflag	restricted	6
+1@slw	mapflag	restricted	6
+1@swat	mapflag	restricted	6
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	restricted	6
+2@gl_k2	mapflag	restricted	6
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	restricted	6
+
+// Suspicious shipwreck
+1@tre	mapflag	restricted	6
+
+// Poring Town
+1@begi	mapflag	restricted	6
+
+// Volcanic island Korodo
+1@crd	mapflag	restricted	6
+
+// Noodles Festival July
+1@drdo	mapflag	restricted	6
+
+// Soul Reaper Job Change
+1@soul	mapflag	restricted	6
 
 // Towns =========================
 brasilis	mapflag	restricted	7
@@ -34,6 +108,7 @@ izlude_d	mapflag	restricted	7
 malangdo	mapflag	restricted	7
 malaya	mapflag	restricted	7
 mora	mapflag	restricted	7
+lasagna	mapflag	restricted	7
 
 // Restricted maps for WOE:TE Items ==
 teg_dun01	mapflag	restricted	8

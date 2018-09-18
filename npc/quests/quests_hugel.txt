@@ -304,7 +304,7 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 			mes "Something's not";
 			mes "right. Bunkoll A";
 			mes "doesn't taste like this...";
-			emotion e_swt,0,"Postell Schuwell#D";
+			emotion ET_SWEAT, getnpcid(0, "Postell Schuwell#D");
 			next;
 			mes "[Postell]";
 			mes "Bunkoll A...?";
@@ -332,8 +332,8 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 			close2;
 			set hg_herb,11;
 			disablenpc "Postell Schuwell#D";
-			emotion e_swt,1;
-			emotion e_swt;
+			emotion ET_SWEAT, playerattached();
+			emotion ET_SWEAT;
 			end;
 		} else if (hg_herb == 11) {
 			mes "[Allen]";
@@ -1903,7 +1903,7 @@ hugel,70,137,5	script	Shede	879,{
 		mes "[Shede]";
 		mes "Yay~ are you talking to me? Yay!";
 		mes "Hey, are you from a different city? Wow, nice to see you!";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		next;
 		mes "[Shede]";
 		mes "Ever since the airport was built, Hugel has been so busy to welcome tourists and adventurers.";
@@ -1919,7 +1919,7 @@ hugel,70,137,5	script	Shede	879,{
 			mes "[Shede]";
 			mes "Oh~ how kind of you! Thank you so much~";
 			mes "Then can I ask you a favor?";
-			emotion e_lv;
+			emotion ET_THROB;
 			next;
 			mes "[Shede]";
 			switch(rand(1,3)) {
@@ -2027,7 +2027,7 @@ hugel,70,137,5	script	Shede	879,{
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "'......I am confused...Does she love him or hate him?'";
-				emotion e_dots,1;
+				emotion ET_THINK, playerattached();
 				set hg_tre,30;
 				close2;
 				cutin "",255;
@@ -2067,7 +2067,7 @@ hugel,70,137,5	script	Shede	879,{
 		mes "Oh! You came back earlier than I thought.";
 		mes "Now, I can bake the Mushroom Flavor Cookies for uncle Hollun.";
 		mes "Thank you so much.";
-		emotion e_heh;
+		emotion ET_SMILE;
 		set hg_tre,40;
 		close2;
 		cutin "",255;
@@ -2077,7 +2077,7 @@ hugel,70,137,5	script	Shede	879,{
 		mes "Oh! You came back earlier than I thought.";
 		mes "Now, I can bake the best cookies of mine and compete with Agette!";
 		mes "Thank you so much.";
-		emotion e_heh;
+		emotion ET_SMILE;
 		set hg_tre,40;
 		close2;
 		cutin "",255;
@@ -2087,12 +2087,12 @@ hugel,70,137,5	script	Shede	879,{
 		mes "Oh! You came back earlier than I thought.";
 		mes "Now, I can bake Devil's Cookies to confess my love to the gentleman.";
 		mes "Thank you so much.";
-		emotion e_heh;
+		emotion ET_SMILE;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "(If he knew what ingredients she used for the cookies,)";
 		mes "(I am pretty sure that at least he will remember her face to avoid next time...)'";
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		set hg_tre,40;
 		close2;
 		cutin "",255;
@@ -2460,8 +2460,8 @@ hu_in01,256,40,3	script	Herico	897,{
 			mes "[Herico]";
 			mes "Haha, the first part was funny,";
 			mes "but the second part was kind of scary, you know?";
-			emotion e_dots;
-			emotion e_sob,1;
+			emotion ET_THINK;
+			emotion ET_CRY, playerattached();
 			next;
 			mes "[Herico]";
 			mes "So, tell me, where are all of his research documents?";
@@ -2491,7 +2491,7 @@ hu_in01,256,40,3	script	Herico	897,{
 		mes "I may now be an old man whose days are numbered,";
 		mes "but I used to work at ^3131FFthe Ymir's Heart imitation research department";
 		mes " in Regenschirm laboratory^000000 under Sage Varmunt's supervision.";
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		next;
 		cutin "heri2.bmp",2;
 		mes "[Herico]";
@@ -2579,7 +2579,7 @@ hu_in01,256,40,3	script	Herico	897,{
 		mes "in order to continue with their research without Sage Varmunt.";
 		next;
 		cutin "heri3.bmp",2;
-		emotion e_ag;
+		emotion ET_ANGER;
 		mes "[Herico]";
 		mes "What? \"Bio Lab\"? I didn't image that they could";
 		mes "even think of that! I can't express enough of my resentment toward them!";
@@ -3007,7 +3007,7 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 			mes "Wow, this is that famous drink!";
 			mes "Let's see...*Gulp*";
 			next;
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Enquro Carson]";
 			mes "Wow! This is awsome!";
 			mes "It is as delicious as I heard!";
@@ -3044,7 +3044,7 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 			mes "this secret between you and me.";
 			mes "I released the personal information at my discretion,";
 			mes "and I know that I am not allowed to do that. Hehe.";
-			emotion e_gg;
+			emotion ET_KIK;
 			set hg_tre,47;
 			delitem 12112,1; //Tropical Sograt
 			delitem 12113,1; //Vermilion on the Beach
@@ -4205,7 +4205,7 @@ hugel,198,169,0	script	#HugelTree	139,2,2,{
 			mes "feeling of dread?";
 			mes "This peculiar chill...";
 			mes "It's almost as if you";
-			mes "were in Nifflheim...^000000";
+			mes "were in Niflheim...^000000";
 			close;
 		} else {
 			mes "^3355FFFor some reason, you";
@@ -4302,7 +4302,7 @@ hugel,191,172,3	script	Manainne	892,1,{
 		mes "What? That's...";
 		mes "That's an incredible";
 		mes "story. You met my dead";
-		mes "sister in Nifflheim?! You";
+		mes "sister in Niflheim?! You";
 		mes "must be lying to me!";
 		next;
 		mes "[Manainne]";
@@ -4316,7 +4316,7 @@ hugel,191,172,3	script	Manainne	892,1,{
 		set hg_memory,8;
 		mes "[Manainne]";
 		mes "Gosh, all that talk";
-		mes "about Nifflheim is...";
+		mes "about Niflheim is...";
 		mes "It's giving me the chills!";
 		mes "A-aren't you cold?";
 		close;
@@ -4357,7 +4357,7 @@ hugel,191,172,3	script	Manainne	892,1,{
 		mes "long! Hello, adventurer,";
 		mes "remember me? I'm Kanainne,";
 		mes "the spirit you saw down in";
-		mes "Nifflheim. Let me explain...";
+		mes "Niflheim. Let me explain...";
 		next;
 		mes "[Manainne]";
 		mes "My spirit was able to follow";
@@ -4561,7 +4561,7 @@ niflheim,90,106,3	script	A Spirit#HQuest	802,{
 	} else {
 		mes "[Spirit]";
 		mes "The living shouldn't";
-		mes "be here in Nifflheim...";
+		mes "be here in Niflheim...";
 		mes "Go back! Go back to your";
 		mes "own world before it's too late!";
 		next;
@@ -4930,7 +4930,7 @@ hugel,107,67,3	script	Torpy	706,{
 					mes "disappeared too! I-I'm all";
 					mes "alone now! Waaaaaah~!";
 					next;
-					emotion e_dots,1;
+					emotion ET_THINK, playerattached();
 					mes "["+strcharinfo(0)+"]";
 					mes "Don't worry, I'll look";
 					mes "for your parents. I'm";
@@ -4947,7 +4947,7 @@ hugel,107,67,3	script	Torpy	706,{
 					mes "show up sooner";
 					mes "or later. Well, lots";
 					mes "of luck, kid.";
-					emotion e_dots,1;
+					emotion ET_THINK, playerattached();
 					close;
 				}
 			case 2:
@@ -4989,7 +4989,7 @@ hugel,107,67,3	script	Torpy	706,{
 			mes "also tell her that Daddy";
 			mes "is safe! See you later~";
 			next;
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "......";
 			mes ".........";
 			mes "............";
@@ -5009,7 +5009,7 @@ hugel,107,67,3	script	Torpy	706,{
 			mes "this town, where you last";
 			mes "saw her. Bye bye for now~";
 			next;
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "......";
 			mes ".........";
 			mes "............";
@@ -5023,7 +5023,7 @@ hugel,107,67,3	script	Torpy	706,{
 			mes "Um, that might not be good...^000000";
 			close;
 		} else if (hg_ubu01 == 8) {
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "[Torpy]";
 			mes "Daddy promised to get";
 			mes "me a girlfriend if I beat him";
@@ -5039,7 +5039,7 @@ hugel,107,67,3	script	Torpy	706,{
 			set hg_ubu01,9;
 			close;
 		} else if (hg_ubu01 == 9) {
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "[Torpy]";
 			mes "Maybe I should wait until";
 			mes "I'm older to have a girlfriend.";
@@ -5168,7 +5168,7 @@ hu_fild06,190,367,3	script	Torpy's Mom	701,{
 		mes "after each other. Oh, well...";
 		close;
 	} else if (hg_ubu01 == 9) {
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		mes "[Torpy's Mom]";
 		mes "When is that husband";
 		mes "of mine going to come";
@@ -5197,7 +5197,7 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 		mes "h-health... with... Steamed...";
 		mes "Crab... Nippers... Please...";
 		next;
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		mes "^3355FFIt sounds like";
 		mes "this barrel wants";
 		mes "Steamed Crab Nippers.^000000";
@@ -5212,7 +5212,7 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 			mes "and 10... N-Nippers... to";
 			mes "c-cook th-them. Ugh...";
 			next;
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "["+strcharinfo(0)+"]";
 			mes "Hold on,";
 			mes "I have to cook";
@@ -5233,7 +5233,7 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 			mes "hunger...! It... It can't...";
 			mes "It c-can't be... d-denied!";
 			next;
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "["+strcharinfo(0)+"]";
 			mes "Weirdo! Why don't you";
 			mes "get out of that barrel,";
@@ -5250,7 +5250,7 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 			mes "It's b-been so... l-long...";
 			mes "G-Give me! G-Give me now!";
 			next;
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "^3355FFYou dumped the";
 			mes "Steamed Crab Nippers";
 			mes "into the barrel where";
@@ -5276,7 +5276,7 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 			mes "and 10... N-Nippers... to";
 			mes "c-cook th-them. Ugh...";
 			next;
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "["+strcharinfo(0)+"]";
 			mes "Hold on,";
 			mes "I have to cook";
@@ -5298,7 +5298,7 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 			mes "It's b-been so... l-long...";
 			mes "G-Give me! G-Give me now!";
 			next;
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "^3355FFYou dumped the";
 			mes "Steamed Crab Nippers";
 			mes "into the barrel where";
@@ -5324,7 +5324,7 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 			mes "and 10... N-Nippers... to";
 			mes "c-cook th-them. Ugh...";
 			next;
-			emotion e_dots,1;
+			emotion ET_THINK, playerattached();
 			mes "["+strcharinfo(0)+"]";
 			mes "Hold on,";
 			mes "I have to cook";
@@ -5338,7 +5338,7 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 			close;
 		}
 	} else if (hg_ubu01 == 6) {
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		mes "^3355FFFor now, you should";
 		mes "tell Torpy and his mom";
 		mes "where Torpy's father is";
@@ -5346,22 +5346,22 @@ hugel,100,176,3	script	Suspicious Barrel	111,{
 		mes "worry about him so much.";
 		close;
 	} else if (hg_ubu01 == 7) {
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		mes "^800080Torpy's mom might want to know about^000000";
 		mes "^800080this extraordinary barrel.^000000";
 		close;
 	} else if (hg_ubu01 == 8) {
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		mes "^800080How long does Torpy's father plan to stay within the barrel?^000000";
 		close;
 	} else if (hg_ubu01 == 9) {
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		mes "^800080That barrel will become a symbolic object^000000";
 		mes "^800080that pays tribute to the firm will of Torpy's father^000000";
 		mes "^800080who is trying hard to avoid keeping the promise with his son to find his wife.^000000";
 		close;
 	} else {
-		emotion e_dots,1;
+		emotion ET_THINK, playerattached();
 		mes "^800080You hear something bustling from the hole in the barrel.^000000";
 		mes "^800080However, it doesn't seem to be a big deal.^000000";
 		close;
@@ -7205,13 +7205,13 @@ OnTouch_:
 			mes "do?! I need to deliver the";
 			mes "milk tomorrow, but Burupu";
 			mes "still hasn't arrived yet!";
-			emotion e_omg,0;
+			emotion ET_HUK;
 			next;
 			mes "[Kurupe]";
 			mes "When is he coming";
 			mes "to work? Burupu,";
 			mes "where are you?!";
-			emotion e_swt,0;
+			emotion ET_SWEAT;
 			set hg_milk,1;
 			close;
 		}
@@ -7339,7 +7339,7 @@ hu_fild06,217,270,3	script	Burupu	896,3,3,{
 		mes "world! But first, I gotta";
 		mes "learn how to use this thing!";
 		mes "Heeeeee-YAH! How's that? That was almost a Magnum Break, right?";
-		emotion e_swt2,0;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 
@@ -7349,7 +7349,7 @@ OnTouch_:
 		mes "Heeeyah!";
 		mes "Yaaaaaaaah!";
 		mes "Wh-whooooooosh!";
-		emotion e_swt2,0;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Burupu]";
 		mes "Crap! Why do I have";
@@ -7358,14 +7358,14 @@ OnTouch_:
 		mes "tired of making all my own";
 		mes "whooshing sounds and effects.";
 		set hg_milk,3;
-		emotion e_an,0;
+		emotion ET_FRET;
 		close;
 	} else if (hg_milk == 5) {
 		mes "[Burupu]";
 		mes "Heeeyah!";
 		mes "Yaaaaaaaah!";
 		mes "Yeeeeeeeyoooop!";
-		emotion e_swt2,0;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 }
@@ -7907,7 +7907,7 @@ hu_in01,19,161,0	script	Alex	803,{
 			mes "when you're done and";
 			mes "don't waste my time!";
 			next;
-			emotion e_ho,0,"Julian";
+			emotion ET_DELIGHT, getnpcid(0, "Julian");
 			mes "[Julian]";
 			mes "Hey, you know what,";
 			mes "Alex? You can't push";
@@ -7916,7 +7916,7 @@ hu_in01,19,161,0	script	Alex	803,{
 			mes "isn't a pushover, you know?";
 			next;
 			cutin "hu_alex03.bmp",2;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Alex]";
 			mes "What was that...?";
 			mes "Are you trying to";
@@ -8024,7 +8024,7 @@ hu_in01,19,161,0	script	Alex	803,{
 		mes "And what is that grey haired";
 		mes "crone thinking? Hmmmm...";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		cutin "hu_alex03.bmp",2;
 		cutin "hu_alex01.bmp",2;
 		mes "[Alex]";
@@ -8129,7 +8129,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "Milton, is right over";
 		mes "there. Say, 'Hello,' Ashe.";
 		next;
-		emotion e_heh,0,"Ashe";
+		emotion ET_SMILE, getnpcid(0, "Ashe");
 		mes "[Ashe]";
 		mes "Hello!";
 		next;
@@ -8263,7 +8263,7 @@ hu_in01,14,11,4	script	Laura	70,{
 			mes "expedition for the Rune Midgarts Kingdom. Ashe Milton is my";
 			mes "assistant for this excavation.";
 			next;
-			emotion e_heh,0,"Ashe";
+			emotion ET_SMILE, getnpcid(0, "Ashe");
 			mes "[Ashe]";
 			mes "Hello!";
 			next;
@@ -8417,7 +8417,7 @@ hu_in01,14,11,4	script	Laura	70,{
 			mes "greets me with a fake";
 			mes "smile. I hate her!";
 			next;
-			emotion e_swt2,0,"Ashe";
+			emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Ashe");
 			mes "[Ashe]";
 			mes "Ms. Laurence...!";
 			mes "Stop it, please!";
@@ -8770,7 +8770,7 @@ hu_in01,14,11,4	script	Laura	70,{
 				mes "Well, have you";
 				mes "ever heard of Ymir's...";
 				next;
-				emotion e_gasp,0,"Ashe";
+				emotion ET_SURPRISE, getnpcid(0, "Ashe");
 				mes "[Ashe]";
 				mes "...Heart?";
 				mes "Ymir's Heart, right?";
@@ -8812,7 +8812,7 @@ hu_in01,14,11,4	script	Laura	70,{
 						next;
 						break;
 				}
-				emotion e_ok,0,"Ashe";
+				emotion ET_OK, getnpcid(0, "Ashe");
 				mes "[Ashe]";
 				mes "Ymir's Heart?";
 				mes "That's a clothing";
@@ -9130,7 +9130,7 @@ OnTouch_:
 hu_in01,159,84,3	script	Laura#2	70,{
 	if (hg_odin == 22 || hg_odin == 23) {
 		cutin "hu_laura03.bmp",2;
-		emotion e_an,0,"Laura#2";
+		emotion ET_FRET, getnpcid(0, "Laura#2");
 		mes "[Laura]";
 		mes "Wh-what...?!";
 		mes "Does this mean";
@@ -9140,7 +9140,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "complete lunacy!";
 		next;
 		cutin "hu_alex04.bmp",0;
-		emotion e_an,0,"Alex#2";
+		emotion ET_FRET, getnpcid(0, "Alex#2");
 		mes "[Alex]";
 		mes "What are you talking";
 		mes "about, you crazy wench?";
@@ -9197,12 +9197,12 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "waves a thick file";
 		mes "clasped in her hands.^000000";
 		next;
-		emotion e_omg,0,"Julian#2";
+		emotion ET_HUK, getnpcid(0, "Julian#2");
 		mes "[Julian]";
 		mes "What...?";
 		mes "Argh, that's--!";
 		next;
-		emotion e_ag,0,"Laura#2";
+		emotion ET_ANGER, getnpcid(0, "Laura#2");
 		mes "[Laura]";
 		mes "That's right.";
 		mes "Now tell me, what the";
@@ -9213,7 +9213,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "......";
 		mes "Julian!";
 		next;
-		emotion e_swt2,0,"Julian#2";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Julian#2");
 		mes "[Julian]";
 		mes "Uh, this isn't my fault!";
 		mes "Sh-she doesn't have any";
@@ -9237,7 +9237,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "what are your true goals?!";
 		next;
 		cutin "hu_alex03.bmp",0;
-		emotion e_swt2,0,"Alex#2";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Alex#2");
 		mes "[Alex]";
 		mes "I-I don't know what you're";
 		mes "talking about! J-Julian must";
@@ -9255,18 +9255,18 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		mes "away, and threateningly";
 		mes "rolled up her sleeves.^000000";
 		next;
-		emotion e_sob,0,"Ashe#2";
+		emotion ET_CRY, getnpcid(0, "Ashe#2");
 		mes "[Ashe]";
 		mes "S-stop!";
 		mes "Both of you!";
 		next;
-		emotion e_swt2,0,"Laura#2";
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Laura#2");
 		mes "[Laura]";
 		mes "Stay out of";
 		mes "this, Ashe!";
 		next;
 		cutin "hu_alex04.bmp",0;
-		emotion e_an,0,"Alex#2";
+		emotion ET_FRET, getnpcid(0, "Alex#2");
 		mes "[Alex]";
 		mes "Yeah, this is none";
 		mes "of your business!";
@@ -9279,14 +9279,14 @@ hu_in01,159,84,3	script	Laura#2	70,{
 		end;
 	} else if (hg_odin > 23) {
 		cutin "hu_laura03.bmp",2;
-		emotion e_an,0,"Laura#2";
+		emotion ET_FRET, getnpcid(0, "Laura#2");
 		mes "[Laura]";
 		mes "Hah...!";
 		mes "Did you...";
 		mes "Just hit me?";
 		next;
 		cutin "hu_alex04.bmp",0;
-		emotion e_an,0,"Alex#2";
+		emotion ET_FRET, getnpcid(0, "Alex#2");
 		mes "[Alex]";
 		mes "You crazy...!";
 		close2;
@@ -9295,7 +9295,7 @@ hu_in01,159,84,3	script	Laura#2	70,{
 	}
 }
 
-hu_in01,158,84,5	duplicate(Laura#2)	Alex#2	803,0,0
+hu_in01,158,84,5	duplicate(Laura#2)	Alex#2	803
 
 hu_in01,162,85,4	script	Ashe#2	95,{
 	if (hg_odin == 22 || hg_odin == 23) {

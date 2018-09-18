@@ -32,7 +32,7 @@
 		mes "We Ayotayans are a pious people who value peace and sincerity. We endeavor to lead simple, yet noble, lives in harmony with nature.";
 		next;
 		mes "[Aibakthing]";
-		mes "Our traditional cuisine is world famous. It's no surprise when we serve dishes like Tom Yum Goong, made of Shrimp, Lemon and Chillis, which has a tantalizing aroma and flavor beyond imagining.";
+		mes "Our traditional cuisine is world famous. It's no surprise when we serve dishes like Tom Yum Goong, made of Shrimp, Lemon and Chillies, which has a tantalizing aroma and flavor beyond imagining.";
 		next;
 		mes "[Aibakthing]";
 		mes "For those who crave adventure, there is an age old story about the Sa-mhing Tiger, an evil creature that haunts our temple ruins.";
@@ -145,14 +145,14 @@ ayothaya,171,152,5	script	Girl#Lalitha	838,{
 		next;
 		mes "[Lalitha]";
 		mes "You know, like the dresses and jewelry that ladies wear in other countries, whether or not the men are good looking, what kind of songs you have, what kind of girls that guys over there like...";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "[" +strcharinfo(0)+ "]";
 		mes ".........";
 		next;
 		mes "[Lalitha]";
 		mes "..........";
-		emotion e_swt;
+		emotion ET_SWEAT;
 		next;
 		mes "[Lalitha]";
 		mes "Okay~!";
@@ -174,7 +174,7 @@ ayothaya,171,152,5	script	Girl#Lalitha	838,{
 		mes "Ah...";
 		mes "I wonder where";
 		mes "my Black Knight is~";
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Don't you mean...";
@@ -289,12 +289,12 @@ ayothaya,241,264,5	script	Young Man#5ayothaya2	843,{
 		next;
 		mes "[Eik]";
 		mes "I'm not so rude as to pick fights with strangers for no reason!";
-		emotion e_wah;
+		emotion ET_KEK;
 		close;
 	}
 	mes "[Eik]";
 	mes "Real power is developed after having thousands of matches with other people. So, don't be afraid of fighting, okay?";
-	emotion e_pif;
+	emotion ET_HNG;
 	close;
 }
 

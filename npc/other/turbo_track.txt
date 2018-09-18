@@ -51,12 +51,12 @@ OnStartArena:
 OnInit:
 	if (compare(strnpcinfo(0),"main")) end;
 	if (compare(strnpcinfo(2),"n1")) {
-		waitingroom "Solo Mode",60,"Solo Mode#n1::OnStartArena",1;
+		waitingroom "Solo Mode",60,"Solo Mode#n1::OnStartArena",1,1000,10;
 	} else {
 		if (compare(strnpcinfo(1),"4")) set .@in, 4;
 		if (compare(strnpcinfo(1),"8")) set .@in, 8;
 		if (compare(strnpcinfo(1),"16")) set .@in, 16;
-		waitingroom strnpcinfo(1),60,strnpcinfo(0)+"::OnStartArena",.@in,1000,10,99;
+		waitingroom strnpcinfo(1),60,strnpcinfo(0)+"::OnStartArena",.@in,1000,10;
 	}
 	enablewaitingroomevent strnpcinfo(0);
 	end;
@@ -995,7 +995,7 @@ OnTouch_:
 		case 1:
 		case 9:
 			sc_start SC_CONFUSION,8000,0;
-			emotion e_swt2,1;
+			emotion ET_PROFUSELY_SWEAT, playerattached();
 			end;
 		case 2:
 			sc_start SC_STONE,4000,0;
@@ -1005,7 +1005,7 @@ OnTouch_:
 			end;
 		case 6:
 			sc_start SC_FREEZE,4000,0;
-			emotion e_swt2,1;
+			emotion ET_PROFUSELY_SWEAT, playerattached();
 			end;
 		case 8:
 			sc_start SC_STUN,4000,0;
@@ -1807,7 +1807,7 @@ turbo_n_1,232,14,0	duplicate(cos#tt_main)	#cos_n1_8	45,1,1
 
 turbo_e_16,179,55,0	script	TurboHint_1#tt_main	-1,1,1,{
 OnTouch_:
-	emotion e_what,1;
+	emotion ET_QUESTION, playerattached();
 	end;
 }
 turbo_e_16,179,55,0	duplicate(TurboHint_1#tt_main)	#e16Intersectiona	-1,1,1
@@ -1855,7 +1855,7 @@ turbo_n_1,208,56,0	duplicate(TurboHint_1#tt_main)	#n1Intersectionn	-1,1,1
 
 -	script	TurboHint_2#tt_main	-1,{
 OnTouch_:
-	emotion e_gasp,1;
+	emotion ET_SURPRISE, playerattached();
 	end;
 }
 turbo_e_16,178,63,0	duplicate(TurboHint_2#tt_main)	#e16CorrectPath1	-1,1,1
@@ -1888,9 +1888,9 @@ turbo_n_1,191,30,0	duplicate(TurboHint_2#tt_main)	#n1CorrectPath9	-1,1,1
 
 -	script	TurboHint_3#tt_main	-1,{
 OnTouch_:
-	emotion e_swt2,1;
+	emotion ET_PROFUSELY_SWEAT, playerattached();
 	if (rand(1,4) == 3)
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 	end;
 }
 turbo_e_16,187,55,0	duplicate(TurboHint_3#tt_main)	#e16NoWayOut1	-1,1,1
@@ -1908,7 +1908,7 @@ turbo_n_1,219,39,0	duplicate(TurboHint_3#tt_main)	#n1NoWayOut4	-1,1,1
 
 -	script	TurboHint_4#tt_main	-1,1,1,{
 OnTouch_:
-	emotion e_swt2,1;
+	emotion ET_PROFUSELY_SWEAT, playerattached();
 	end;
 }
 turbo_e_16,222,45,0	duplicate(TurboHint_4#tt_main)	#e16NoWayOut5	-1,1,1
@@ -4492,7 +4492,7 @@ turbo_room,106,117,3	script	Point Manager#tt	833,{
 			mes "is 20. To cancel, enter '^3355FF0^000000.'";
 			next;
 			input .@input;
-			if (.@input == 0) {
+			if (.@input <= 0) {
 				mes "[Turbo Track Point Manager]";
 				mes "You have";
 				mes "canceled";

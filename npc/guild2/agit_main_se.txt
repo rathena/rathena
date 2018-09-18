@@ -1003,11 +1003,11 @@ OnInit:
 			mes "their Magic properties by";
 			mes "their casting effect.^000000";
 			next;
-			setarray .@effect[0],56,54,225;
+			setarray .@effect[0],EF_BEGINSPELL4,EF_BEGINSPELL2,EF_VOLCANO;
 			setarray .@color$[0],"Red","Yellow","Blue";
 			while(1) {
 				if (.@roof0 > 7) break;
-				set .@i, rand(3);
+				set .@i, rand(getarraysize(.@effect));
 				specialeffect .@effect[.@i];
 				mes "^3355FFThe Gemstones must";
 				mes "be arranged in the correct";
@@ -1700,7 +1700,9 @@ OnBarrierDestroyed:
 	end;
 
 OnDisable:
-	delwall substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9)+"_"+strnpcinfo(1);
+	.@wall_name$ = substr(strnpcinfo(2),0,1) + substr(strnpcinfo(2),8,9) + "_" + strnpcinfo(1);
+	if (checkwall(.@wall_name$) == true)
+		delwall .@wall_name$;
 	killmonster strnpcinfo(2),strnpcinfo(0)+"::OnBarrierDestroyed";
 	end;
 }

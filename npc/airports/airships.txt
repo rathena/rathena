@@ -190,7 +190,7 @@ airplane,100,69,3	script	Airship Crew#ein-1	852,{
 }
 
 airplane,64,94,1	script	Umbala Kid#ein_p	787,{
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Kid]";
 	if (event_umbala >= 3) {
 		mes "Wow, mom!";
@@ -208,7 +208,7 @@ airplane,64,94,1	script	Umbala Kid#ein_p	787,{
 }
 
 airplane,66,93,3	script	Umbala Lady#ein_p	783,{
-	emotion e_dots;
+	emotion ET_THINK;
 	mes "[Lady]";
 	if (event_umbala >= 3) {
 		mes "Shush...";
@@ -235,7 +235,7 @@ airplane,71,91,7	script	Umbala Man#ein_p	789,{
 		mes "you can understand";
 		mes "me. ^333333*Whew...!*^000000";
 		next;
-		emotion e_pif;
+		emotion ET_HNG;
 		mes "[Chrmlim]";
 		mes "I've been helping the";
 		mes "Airship enterprise by";
@@ -248,7 +248,7 @@ airplane,71,91,7	script	Umbala Man#ein_p	789,{
 		mes "Some of them couldn't";
 		mes "overcome their fear of";
 		mes "heights. And a few even";
-		mes "ended up, um, ^333333in Nifflheim^000000.";
+		mes "ended up, um, ^333333in Niflheim^000000.";
 	}
 	else {
 		mes "[Chrmlim]";
@@ -259,7 +259,7 @@ airplane,71,91,7	script	Umbala Man#ein_p	789,{
 		mes "...";
 		mes "......";
 		next;
-		emotion e_pif;
+		emotion ET_HNG;
 		mes "[Chrmlim]";
 		mes "Shabala moow bajama";
 		mes "Airship kulaha googoona ";
@@ -373,7 +373,7 @@ airplane,221,158,2	script	Pilot#airplane	852,{
 		mes "[Pilot]";
 		mes "But! Driving under the influence is not good.";
 		mes "But! That makes me want to drink more and more!";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		select("Do you know a passenger named Thierry?");
 		mes "[Pilot]";
@@ -389,7 +389,7 @@ airplane,221,158,2	script	Pilot#airplane	852,{
 		mes "comes into this room.";
 		mes "And the captain IS a reindeer. I could just strip to my boxers.";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Pilot]";
 		mes "Wah!? Who is it!";
 		next;
@@ -413,8 +413,8 @@ airplane,221,158,2	script	Pilot#airplane	852,{
 		mes "last time I had a real vacation";
 		mes "or even a day off. Yeap, some";
 		mes "booze, some chips, some TV";
-		mes "and serius R&R is in order.";
-		emotion e_sob;
+		mes "and serious R&R is in order.";
+		emotion ET_CRY;
 		close;
 	case 2:
 		mes "[Pilot]";
@@ -449,10 +449,10 @@ airplane,221,158,2	script	Pilot#airplane	852,{
 		mes "Yeah, they got this Airship";
 		mes "operation in a hurry.";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Pilot]";
-		mes "Still, they where real";
-		mes "serius, really thought";
+		mes "Still, they were real";
+		mes "serious, really thought";
 		mes "ahead. I mean, they had us";
 		mes "training while the Airships";
 		mes "were still being invented.";
@@ -502,7 +502,7 @@ airplane,50,66,5	script	Apple Merchant#airplane	86,{
 			else {
 				mes "[Fruitz]";
 				mes "A total of ^FF0000" + .@input + "^000000 Apples";
-				mes "will cost you ^FF0000" + .@pay + " Zeny^000000 zeny.";
+				mes "will cost you ^FF0000" + .@pay + "^000000 zeny.";
 				mes "Would you like to continue?";
 				next;
 				if (select("Yes:No") == 2) {
@@ -1009,7 +1009,7 @@ airplane_01,221,158,2	script	Pilot#airplane_01	852,{
 		mes "And the captain IS a reindeer.";
 		mes "I could just strip to my boxers.";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Pilot]";
 		mes "Oh...! Hello there!";
 		mes "E-e-enjoying your flight?!";
@@ -1028,7 +1028,7 @@ airplane_01,83,61,2	script	Dianne#01airplane_01	72,2,2,{
 	close;
 
 OnTouch_:
-	emotion e_sob;
+	emotion ET_CRY;
 	end;
 }
 

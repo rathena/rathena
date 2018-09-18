@@ -351,7 +351,7 @@ einbroch,40,116,1	script	Airship Engineer#ein-1	855,{
 			mes "ain't special at all. You've";
 			mes "gone loony tunes, paley boy.";
 			next;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Airship Engineer]";
 			mes "Wh-what...?!";
 			close;
@@ -482,7 +482,7 @@ airport,176,41,4	script	Old Man#air	88,{
 	mes "These ores are a great";
 	mes "material to use in making";
 	mes "flower vases. My friend, who";
-	mes "happens to be a dollmaker,";
+	mes "happens to be a doll maker,";
 	mes "told me that. He makes these dolls using all sorts of materials.";
 	next;
 	mes "[Zhen Lan]";
@@ -787,7 +787,7 @@ ein_in01,206,224,3	script	Hotel Employee#ein	855,{
 	mes "[Hotel Employee]";
 	mes "Good day, welcome to the";
 	mes "Einbroch Hotel. The staff is";
-	mes "always striving to accomodate";
+	mes "always striving to accommodate";
 	mes "our guests with the highest";
 	mes "standards in cleanliness,";
 	mes "service and convenience~";
@@ -834,7 +834,7 @@ ein_in01,206,224,3	script	Hotel Employee#ein	855,{
 			else {
 				mes "[Hotel Employee]";
 				mes "I'm sorry, but the";
-				mes "acommodation fee is";
+				mes "accommodation fee is";
 				mes "5,000 zeny. Next time,";
 				mes "please make sure that you";
 				mes "bring enough zeny, okay?";

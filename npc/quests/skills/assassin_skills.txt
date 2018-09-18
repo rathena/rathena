@@ -633,7 +633,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 				mes "the one who invented this";
 				mes "skill, is also... He's a man";
 				mes "amongst men, I must say.";
-				emotion e_lv;
+				emotion ET_THROB;
 				next;
 				break;
 			case 2:
@@ -715,7 +715,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "Have you heard about";
 			mes "the latest news from";
 			mes "the Assassin Guild?";
-			emotion e_heh;
+			emotion ET_SMILE;
 			next;
 			select("News from the Assassin Guild?");
 			mes "[Assassin]";
@@ -761,7 +761,7 @@ OnTouch_:
 				mes "hand really hard!^000000";
 				sc_start SC_Poison,30000,0;
 				sc_start SC_Bleeding,10000,0;
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				close;
 			case 2:
 				mes "^3355FFYou try to peek";
@@ -833,7 +833,7 @@ OnTouch_:
 					mes "hand really hard!^000000";
 					sc_start SC_Poison,30000,0;
 					sc_start SC_Bleeding,10000,0;
-					emotion e_omg,1;
+					emotion ET_HUK, playerattached();
 					close;
 				}
 				else {
@@ -946,7 +946,7 @@ OnTouch_:
 			mes "all gas in your lungs in time";
 			mes "to escape its effects. Sadly,";
 			mes "all you found was broken glass.^000000";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 		}
 		close;
 	}

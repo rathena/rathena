@@ -70,3 +70,26 @@ job3_gen01	mapflag	nopenalty
 // Ext --------------------
 job3_sha01	mapflag	nopenalty
 job_ko	mapflag	nopenalty
+job_gun	mapflag	nopenalty
+
+// Nightmare Biolab
+lhz_dun_n	mapflag	nopenalty
+lhz_d_n2	mapflag	nopenalty
+
+// Ep 16
+prt_cas	mapflag	nopenalty
+prt_cas_q	mapflag	nopenalty
+prt_pri00	mapflag	nopenalty
+prt_lib	mapflag	nopenalty
+prt_lib_q	mapflag	nopenalty
+que_swat	mapflag	nopenalty
+
+// Rockridge
+har_in01	mapflag	nopenalty
+rebel_in	mapflag	nopenalty
+rockmi2	mapflag	nopenalty
+
+// Lasagna
+lasagna	mapflag	nopenalty
+lasa_in01	mapflag	nopenalty
+conch_in	mapflag	nopenalty

@@ -32,3 +32,7 @@ gld2_pay	mapflag	hidemobhpbar
 gld2_prt	mapflag	hidemobhpbar
 teg_dun01	mapflag	hidemobhpbar
 teg_dun02	mapflag	hidemobhpbar
+
+// Episode 15 - Phantasmagorica
+verus04	mapflag	hidemobhpbar
+ 
