@@ -5157,7 +5157,7 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 				if (((int64)sstatus->hp * 100) <= ((int64)sstatus->max_hp * 20))
 					hp = sstatus->hp;
 			} else
-				hp = hp / 50; //2% hp loss per hit
+				hp = 2*hp/100; //2% hp loss per hit
 			status_zap(src, hp, 0);
 		}
 		// Only affecting non-skills
