@@ -6807,7 +6807,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			struct mob_data *tk_md;
 
 			do {
-				id = rnd() % (MOBID_GREEN_IGUANA - MOBID_PORING + 1) + MOBID_PORING;
+				id = rnd_value(MOBID_PORING, MOBID_GREEN_IGUANA);
 				tk_md = map_id2md(id);
 			} while (!tk_md || (id >= MOBID_DESERT_WOLF_2 && id <= MOBID_ANTONIO) || id == MOBID_SWITCH || // These mobs automatically fail
 				tk_md->status.class_ != CLASS_NORMAL || // Must be a Normal mob
