@@ -1,0 +1,61 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2018 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Custom Status Change Database
+###########################################################################
+#
+# Status Change Settings
+#
+###########################################################################
+# StatusID - Unique status change ID.
+###########################################################################
+# Icon - Status change Icon. Default is EFST_BLANK.
+###########################################################################
+# DurationLookup - Default status change duration.
+###########################################################################
+# SCS - Status change State when a status is active.
+###########################################################################
+# SCB - Status change BL to indicate which status calculation needs to be
+# performed.
+###########################################################################
+# OPT1 - Special effect when a status change is active.
+###########################################################################
+# OPT2 - Special option/client effect when a status change is active.
+###########################################################################
+# OPT3 - Special option/client effect when a status change is active.
+###########################################################################
+# Option - Special option/client effect when a status change is active.
+###########################################################################
+# Flag - Special flags which trigger during certain events.
+###########################################################################
+# MinRate - Minimum rate after status change reduction (10000 = 100%)
+###########################################################################
+# MinDuration - Minimum duration in milliseconds after status change
+# reduction.
+###########################################################################
+# Fail - Status Change that causes StatusID to fail to activate.
+###########################################################################
+# End - Status Change that will end when StatusID activates.
+###########################################################################
+# EndReturn - If StatusID has an End list and succeeds to remove these
+# status changes, it won't give its effect.
+###########################################################################
+# DisabledOn - Map zones the status change is disabled on.
+###########################################################################
+# Script - Special script which triggers on status change activation.
+###########################################################################

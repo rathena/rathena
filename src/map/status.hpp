@@ -4,6 +4,10 @@
 #ifndef STATUS_HPP
 #define STATUS_HPP
 
+#include <algorithm>
+#include <memory>
+#include <unordered_map>
+
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
