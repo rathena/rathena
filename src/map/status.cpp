@@ -9594,7 +9594,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	}
 
 	/* [Ind] */
-	if (scdb->flag&SCF_DISPLAY) {
+	if (scdb->flag&(SCF_DISPLAY_PC|SCF_DISPLAY_NPC)) {
 		int dval1 = 0, dval2 = 0, dval3 = 0;
 
 		switch (type) {
@@ -9715,7 +9715,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		calc_flag&=~SCB_BODY;
 	}*/
 
-	if(!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag&SCF_DISPLAY))
+	if(!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && scdb->flag&(SCF_DISPLAY_PC|SCF_DISPLAY_NPC)))
 		clif_status_change(bl,scdb->icon,1,tick,(val_flag&1)?val1:1,(val_flag&2)?val2:0,(val_flag&4)?val3:0);
 
 	// Used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.
@@ -10033,7 +10033,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 
 	sc->data[type] = NULL;
 
-	if (scdb->flag&SCF_DISPLAY)
+	if (scdb->flag&(SCF_DISPLAY_PC|SCF_DISPLAY_NPC))
 		status_display_remove(bl,type);
 
 	vd = status_get_viewdata(bl);

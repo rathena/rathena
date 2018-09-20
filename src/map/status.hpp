@@ -3145,10 +3145,10 @@ enum e_status_bonus {
 };
 
 ///Enum of Status Change Flags [Cydh]
-enum e_status_change_flag {
+enum e_status_change_flag : uint64 {
 	SCF_NONE = 0x0,
 	SCF_BLEFFECT			= 0x00000001,
-	SCF_DISPLAY				= 0x00000002,
+	SCF_DISPLAY_PC			= 0x00000002,
 	SCF_PERMANENT			= 0x00000004,
 	SCF_NO_CLEARBUFF		= 0x00000008,
 	SCF_NO_REM_ONDEAD		= 0x00000010,
@@ -3176,6 +3176,7 @@ enum e_status_change_flag {
 	SCF_OPT_CHANGEOPTION	= 0x04000000,
 	SCF_OPT_CHANGELOOK		= 0x08000000,
 	SCF_TRIGGER_ONTOUCH_	= 0x10000000,
+	SCF_DISPLAY_NPC			= 0x20000000,
 	SCF_MAX
 };
 

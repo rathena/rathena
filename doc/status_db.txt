@@ -1,7 +1,7 @@
 //===== rAthena Documentation ================================
 //= rAthena SC Configution
 //===== Description: =========================================
-//= Parameters usage on sc_config.conf file.
+//= Parameters usage on status_db.yml file.
 //============================================================
 
 ---------------------------------------
@@ -30,7 +30,6 @@ commonly the lookup is used for some item bonuses as default duration. Example: 
 SCS
 
 Specified states given when the SC is active.
-Use "|" as delimiter for multiple values.
 
 	SCS_NONE               = (Default) Means nothing.
 	SCS_NOMOVE             = Cannot move.
@@ -53,18 +52,17 @@ Use "|" as delimiter for multiple values.
 	SCS_NOATTACKCOND       = Condition check for SCS_NOATTACK.
 
 Example, if we want to make the player unable to move and unable to cast skills when Berserk/Frenzy is active, the SCS value is:
-SCS_NOMOVE|SCS_NOCAST
+[ SCS_NOMOVE, SCS_NOCAST ]
 
-SCS that have a suffix of "COND" means the SCS has hardcoded conditions in status.c::status_calc_state
+SCS that have a suffix of "COND" means the SCS has hard coded conditions in status.cpp::status_calc_state
 
 ---------------------------------------
 
 SCB
 
 Flag that indicates which status calculation needs to be performed.
-Use "|" as delimiter for multiple values.
-Even the value is changed in sc_config.conf file, if the SC doesn't have
-hardcoded respective bonus, it doesn't give any effect.
+Even if the value is changed in status_db.yml file, if the SC doesn't have
+any hard coded respective bonus, it doesn't give any effect.
 
 	SCB_NONE    = (Default) Calculates nothing.
 	SCB_BASE    = Base status
@@ -122,7 +120,6 @@ This option is not stackable. These effects also apply their special behaviors.
 OPT2
 
 Special option/client effect when status is active (Aegis: Health State).
-Use "|" as delimiter for multiple values.
 
 	OPT2_POISON         = Posioned effect
 	OPT2_CURSE          = Cursed effect
@@ -139,7 +136,6 @@ Use "|" as delimiter for multiple values.
 OPT3
 
 Special option/client effect when status is active.
-Use "|" as delimiter for multiple values.
 
 	OPT3_QUICKEN           = Quicken effect
 	OPT3_OVERTHRUST        = Overthrust effect
@@ -165,7 +161,6 @@ Use "|" as delimiter for multiple values.
 Option
 
 Special option/client effect state when status is active.
-Use "|" as delimiter for multiple values.
 
 	OPTION_SIGHT          = Sight effect
 	OPTION_HIDE           = Hide effect
@@ -196,10 +191,11 @@ Use "|" as delimiter for multiple values.
 
 Flag
 
-Various status flags for specifc usage.
+Various status flags for specific usage.
 
 	SCF_BLEFFECT            = Status should have BL_SCEFFECT as relevant effect, must have SI (displays on BL_PC, BL_HOM, BL_MER, BL_MOB, BL_ELEM). BL_PC is the default value.
-	SCF_DISPLAY             = Displays status effect when player logs in.
+	SCF_DISPLAY_PC          = Displays status effect when player logs in.
+	SCF_DISLPAY_NPC         = Displays status effect on a NPC.
 	SCF_PERMANENT           = Has a permanent effect. Unable to be removed by 'sc_end SC_ALL', 'status_change_clear(block_list,3)', etc.
 	SCF_DEBUFF              = SC is considered as a debuff.
 	SCF_SET_STAND           = Sets player to standing state.
@@ -223,7 +219,7 @@ Various status flags for specifc usage.
 	SCF_REM_ON_CHEM_PROTECT = Removed by Chemical Protection (AM_CP_ARMOR/HELM/SHIELD/WEAPON) in status_change_clear_buffs().
 
 	SCF_STOP_ATTACKING      = Makes the unit stop attacking for a while.
-	SCF_STOP_CASTING        = Makes the uint stop skill casting process.
+	SCF_STOP_CASTING        = Makes the unit stop skill casting process.
 	SCF_STOP_WALKING        = Makes the unit stop walking for a while.
 
 	SCF_BOSS_RESIST         = Cannot be applied to Boss Monster.
@@ -237,13 +233,13 @@ Various status flags for specifc usage.
 
 MinDuration
 
-Minimum duration, in miliseconds, after reduction calculation for SC resistance.
+Minimum duration, in milliseconds, after reduction calculation for SC resistance.
 
 ---------------------------------------
 
 MinRate
 
-Minimum success rate, in n/10000, after reduction calculation for SC resistance.
+Minimum success rate, at n/10000, after reduction calculation for SC resistance.
 
 ---------------------------------------
 
@@ -251,17 +247,11 @@ Fail
 
 List of status that causes this SC to fail to activate.
 
-For multiple values follow this example:
-	Fail: ( "SC_REFRESH", "SC_INSPIRATION", "SC_POWER_OF_GAIA", "SC_GVG_STONE" )
-
 ---------------------------------------
 
 End
 
 List of status that will end if the SC activates.
-
-For multiple values follow this example:
-	End: ( "SC_DANCING", "SC_AETERNA" )
 
 ---------------------------------------
 
@@ -273,8 +263,7 @@ If SC has 'End' list and succeeds to end other SC in the list, it won't give its
 
 DisabledOn
 
-Status Change will always be removed or fail to be inflicted on the specified map(s).
-The different zones are bitmask values and can be applied using the "|" delimeter or by combining the values.
+List of different zones as bitmask values where the SC will be removed or fail to be inflicted on the specified map(s).
 
 	1    - restricted in normal maps
 	2    - restricted in PVP
@@ -289,20 +278,12 @@ The different zones are bitmask values and can be applied using the "|" delimete
 	1024 - restricted in zone 6
 	2048 - restricted in zone 7
 
-Example:
-	DisabledOn: "4" // Status will be removed when the player enters GvG and WoE Castle maps; Also cannot be inflicted on those maps. (Single zone)
-	DisabledOn: "1|4" // Status will be removed when the player enters Normal, GvG, WoE Castle maps; Also cannot be inflicted on those maps. (Multiple zones using "|")
-	DisabledOn: "5" // Status will be removed when the player enters Normal, GvG, WoE Castle maps; Also cannot be inflicted on those maps. (Multiple zones combined values)
-
 ---------------------------------------
 
 Script
 
 Running limited-usage-script for active SC.
-BY using this script please DO NOT use nested script such autobonus,
-bonus_script, or sc_start.
-
-For now, this script block DOES NOT support multiple lines.
+By using this script please DO NOT use nested script such autobonus, bonus_script, or sc_start.
 
 ---------------------------------------
 

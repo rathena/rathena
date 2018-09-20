@@ -7405,7 +7405,7 @@
 
 	/* status change flags */
 	export_constant(SCF_BLEFFECT);
-	export_constant(SCF_DISPLAY);
+	export_constant(SCF_DISPLAY_PC);
 	export_constant(SCF_PERMANENT);
 	export_constant(SCF_NO_CLEARBUFF);
 	export_constant(SCF_NO_REM_ONDEAD);
@@ -7433,6 +7433,7 @@
 	export_constant(SCF_OPT_CHANGEOPTION);
 	export_constant(SCF_OPT_CHANGELOOK);
 	export_constant(SCF_TRIGGER_ONTOUCH_);
+	export_constant(SCF_DISPLAY_NPC);
 
 	#undef export_constant
 	#undef export_constant2
