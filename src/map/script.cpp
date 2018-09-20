@@ -21469,7 +21469,7 @@ BUILDIN_FUNC(bonus_script) {
 	if (icon <= EFST_BLANK || icon >= EFST_MAX)
 		icon = EFST_BLANK;
 
-	if ((entry = pc_bonus_script_add(sd, script_str, dur, (enum efst_types)icon, flag, type))) {
+	if ((entry = pc_bonus_script_add(sd, script_str, dur, (enum efst_type)icon, flag, type))) {
 		linkdb_insert(&sd->bonus_script.head, (void *)((intptr_t)entry), entry);
 		status_calc_pc(sd,SCO_NONE);
 	}

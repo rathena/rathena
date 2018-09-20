@@ -10431,7 +10431,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 		case SC_ITEMSCRIPT: // Removes Buff Icons
 			if (sd && sce->val2 != EFST_BLANK)
-				clif_status_load(bl, (enum efst_types)sce->val2, 0);
+				clif_status_load(bl, (enum efst_type)sce->val2, 0);
 			break;
 		case SC_C_MARKER:
 			{

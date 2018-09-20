@@ -11969,7 +11969,7 @@ void pc_bonus_script(struct map_session_data *sd) {
  * @return New created entry pointer or NULL if failed or NULL if duplicate fail
  * @author [Cydh]
  **/
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum efst_types icon, uint16 flag, uint8 type) {
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum efst_type icon, uint16 flag, uint8 type) {
 	struct script_code *script = NULL;
 	struct linkdb_node *node = NULL;
 	struct s_bonus_script_entry *entry = NULL;
