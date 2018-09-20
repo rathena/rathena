@@ -2930,6 +2930,7 @@ enum sc_opt1 {
 	OPT1_STONEWAIT = 6, //Petrifying
 	OPT1_BURNING,
 	OPT1_IMPRISON,
+	OPT1_MAX
 };
 
 ///opt2: (HEALTHSTATE_*) Stackable status changes.
@@ -2944,6 +2945,7 @@ enum sc_opt2 {
 	OPT2_BLEEDING		= 0x0040,
 	OPT2_DPOISON		= 0x0080,
 	OPT2_FEAR		= 0x0100,
+	OPT2_MAX
 };
 
 ///opt3: (SHOW_EFST_*)
@@ -2967,6 +2969,7 @@ enum sc_opt3 {
 	OPT3_SOULLINK		= 0x00008000,
 	OPT3_UNDEAD		= 0x00010000,
 	OPT3_CONTRACT		= 0x00020000,
+	OPT3_MAX
 };
 
 ///Option (EFFECTSTATE_*)
@@ -3009,6 +3012,8 @@ enum e_option {
 	// compound constants
 	OPTION_DRAGON	= OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
 	OPTION_COSTUME	= OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER|OPTION_HANBOK|OPTION_OKTOBERFEST|OPTION_SUMMER2,
+
+	OPTION_MAX
 };
 
 ///Defines for the manner system [Skotlex]
@@ -3042,6 +3047,7 @@ enum scs_flag {
 	SCS_NOCONSUMEITEMCOND	= 0x08000, ///< cond flag for SCS_NOCONSUMEITEM
 	SCS_NOATTACK			= 0x10000, ///< unit can't attack
 	SCS_NOATTACKCOND		= 0x20000, ///< cond flag for SCS_NOATTACK
+	SCS_MAX
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
@@ -3080,7 +3086,8 @@ enum scb_flag {
 	SCB_DYE		= 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
 
 	SCB_BATTLE	= 0x3FFFFFFE,
-	SCB_ALL		= 0x3FFFFFFF
+	SCB_ALL		= 0x3FFFFFFF,
+	SCB_MAX
 };
 
 enum e_status_calc_opt {
@@ -3169,6 +3176,7 @@ enum e_status_change_flag {
 	SCF_OPT_CHANGEOPTION	= 0x04000000,
 	SCF_OPT_CHANGELOOK		= 0x08000000,
 	SCF_TRIGGER_ONTOUCH_	= 0x10000000,
+	SCF_MAX
 };
 
 /// Enum for status_calc_weight and status_calc_cart_weight

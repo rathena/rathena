@@ -12232,35 +12232,6 @@ static bool status_readdb_attrfix(const char *basedir,bool silent)
 	return true;
 }
 
-/**
- * Splits string to integer by using bitmask
- * @param str: String to convert to integer
- * @param delim: Delimeter character
- * @param file: Filename (used for error message)
- * @return line: Line number (used for error message)
- */
-uint32 status_split_bit(char *str, const char *delim, const char *file, int line) {
-	int ret = 0;
-	char *p = strtok(str, delim);
-
-	while (p != NULL) {
-		int n = 0;
-		trim(p);
-
-		if (ISDIGIT(p[0])) // If using numeric
-			n = atol(p);
-		else if (!script_get_constant(p, &n)) { // If using constant value
-			ShowError("status_split_bit: Invalid constant: '%s' used in %s::%d\n", p, file, line);
-			p = strtok(NULL, delim);
-			continue;
-		}
-
-		ret |= n;
-		p = strtok(NULL, delim);
-	}
-	return ret;
-}
-
 static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file) {
 	YAML::Emitter out;
 	out << node;
@@ -12348,9 +12319,25 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 
 	if (node["SCS"]) {
 		try {
-			std::string scs = node["SCS"].as<std::string>();
+			const YAML::Node scs_list = node["SCS"];
 
-			entry->state = status_split_bit((char *)scs.c_str(), "|", source.c_str(), node.Mark().line);
+			if (scs_list.IsSequence()) {
+				for (const auto &it : scs_list) {
+					std::string scs = it.second.as<std::string>();
+					int scs_id = 0;
+
+					if (scs.empty())
+						continue;
+
+					if (!script_get_constant(scs.c_str(), &scs_id) || scs_id < SCS_NONE || scs_id >= SCS_MAX) {
+						ShowWarning("status_read_status_db_sub: Invalid status SCS %s. Non-existent constant in \"%s\", skipping.\n", scs.c_str(), source.c_str());
+						continue;
+					}
+
+					entry->state |= scs_id;
+				}
+			} else
+				ShowWarning("status_read_status_db_sub: Invalid status SCS format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid SCS field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12360,9 +12347,25 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 
 	if (node["SCB"]) {
 		try {
-			std::string scb = node["SCB"].as<std::string>();
+			const YAML::Node scb_list = node["SCB"];
 
-			entry->calc_flag = status_split_bit((char *)scb.c_str(), "|", source.c_str(), node.Mark().line);
+			if (scb_list.IsSequence()) {
+				for (const auto &it : scb_list) {
+					std::string scb = it.second.as<std::string>();
+					int scb_id = 0;
+
+					if (scb.empty())
+						continue;
+
+					if (!script_get_constant(scb.c_str(), &scb_id) || scb_id < SCB_NONE || scb_id >= SCB_MAX) {
+						ShowWarning("status_read_status_db_sub: Invalid status SCB %s. Non-existent constant in \"%s\", skipping.\n", scb.c_str(), source.c_str());
+						continue;
+					}
+
+					entry->calc_flag |= scb_id;
+				}
+			} else
+				ShowWarning("status_read_status_db_sub: Invalid status SCB format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid SCB field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12372,9 +12375,14 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 
 	if (node["OPT1"]) {
 		try {
-			std::string opt1 = node["OPT1"].as<std::string>();
+			std::string opt = node["OPT1"].as<std::string>();
+			int opt_id = 0;
 
-			entry->opt1 = status_split_bit((char *)opt1.c_str(), "|", source.c_str(), node.Mark().line);
+			if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT1_NONE || opt_id >= OPT1_MAX) {
+				ShowWarning("status_read_status_db_sub: Invalid status OPT1 %s. Non-existent constant in \"%s\", defaulting to OPT1_NONE.\n", opt.c_str(), source.c_str());
+				entry->opt1 = OPT1_NONE;
+			} else
+				entry->opt1 = opt_id;
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid OPT1 field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12384,9 +12392,25 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 
 	if (node["OPT2"]) {
 		try {
-			std::string opt2 = node["OPT2"].as<std::string>();
+			const YAML::Node opt_list = node["OPT2"];
 
-			entry->opt2 = status_split_bit((char *)opt2.c_str(), "|", source.c_str(), node.Mark().line);
+			if (opt_list.IsSequence()) {
+				for (const auto &it : opt_list) {
+					std::string opt = it.second.as<std::string>();
+					int opt_id = 0;
+
+					if (opt.empty())
+						continue;
+
+					if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT2_NONE || opt_id >= OPT2_MAX) {
+						ShowWarning("status_read_status_db_sub: Invalid status OPT2 %s. Non-existent constant in \"%s\", skipping.\n", opt.c_str(), source.c_str());
+						continue;
+					}
+
+					entry->opt2 |= opt_id;
+				}
+			} else
+				ShowWarning("status_read_status_db_sub: Invalid status OPT2 format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid OPT2 field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12396,9 +12420,25 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 
 	if (node["OPT3"]) {
 		try {
-			std::string opt3 = node["OPT3"].as<std::string>();
+			const YAML::Node opt_list = node["OPT3"];
 
-			entry->opt3 = status_split_bit((char *)opt3.c_str(), "|", source.c_str(), node.Mark().line);
+			if (opt_list.IsSequence()) {
+				for (const auto &it : opt_list) {
+					std::string opt = it.second.as<std::string>();
+					int opt_id = 0;
+
+					if (opt.empty())
+						continue;
+
+					if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT3_NORMAL || opt_id >= OPT3_MAX) {
+						ShowWarning("status_read_status_db_sub: Invalid status OPT3 %s. Non-existent constant in \"%s\", skipping.\n", opt.c_str(), source.c_str());
+						continue;
+					}
+
+					entry->opt3 |= opt_id;
+				}
+			} else
+				ShowWarning("status_read_status_db_sub: Invalid status OPT3 format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid OPT3 field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12408,9 +12448,25 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 
 	if (node["Option"]) {
 		try {
-			std::string option = node["Option"].as<std::string>();
+			const YAML::Node option_list = node["Option"];
 
-			entry->look = status_split_bit((char *)option.c_str(), "|", source.c_str(), node.Mark().line);
+			if (option_list.IsSequence()) {
+				for (const auto &it : option_list) {
+					std::string option = it.second.as<std::string>();
+					int option_id = 0;
+
+					if (option.empty())
+						continue;
+
+					if (!script_get_constant(option.c_str(), &option_id) || option_id < OPTION_NOTHING || option_id >= OPTION_MAX) {
+						ShowWarning("status_read_status_db_sub: Invalid status Option %s. Non-existent constant in \"%s\", skipping.\n", option.c_str(), source.c_str());
+						continue;
+					}
+
+					entry->look |= option_id;
+				}
+			} else
+				ShowWarning("status_read_status_db_sub: Invalid status Option format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Option field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12420,9 +12476,25 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 
 	if (node["Flag"]) {
 		try {
-			std::string flag = node["Flag"].as<std::string>();
+			const YAML::Node flag_list = node["Flag"];
 
-			entry->flag = status_split_bit((char *)flag.c_str(), "|", source.c_str(), node.Mark().line);
+			if (flag_list.IsSequence()) {
+				for (const auto &it : flag_list) {
+					std::string flag = it.second.as<std::string>();
+					int flag_id = 0;
+
+					if (flag.empty())
+						continue;
+
+					if (!script_get_constant(flag.c_str(), &flag_id) || flag_id < SCF_NONE || flag_id >= SCF_MAX) {
+						ShowWarning("status_read_status_db_sub: Invalid status Flag %s. Non-existent constant in \"%s\", skipping.\n", flag.c_str(), source.c_str());
+						continue;
+					}
+
+					entry->flag |= flag_id;
+				}
+			} else
+				ShowWarning("status_read_status_db_sub: Invalid status Flag format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Flag field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12459,7 +12531,7 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 					std::string fail_sc = it.second.as<std::string>();
 					int fail_sc_id = 0;
 
-					if (fail_sc.empty() || !ISALNUM(fail_sc[0]))
+					if (fail_sc.empty())
 						continue;
 
 					if (!script_get_constant(fail_sc.c_str(), &fail_sc_id) || !CHK_SC(fail_sc_id)) {
@@ -12487,7 +12559,7 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 					std::string end_sc = it.second.as<std::string>();
 					int end_sc_id = 0;
 
-					if (end_sc.empty() || !ISALNUM(end_sc[0]))
+					if (end_sc.empty())
 						continue;
 
 					if (!script_get_constant(end_sc.c_str(), &end_sc_id) || !CHK_SC(end_sc_id)) {
@@ -12518,9 +12590,21 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 
 	if (node["DisabledOn"]) {
 		try {
-			std::string disabledon = node["DisabledOn"].as<std::string>();
+			const YAML::Node disabledon_list = node["DisabledOn"];
 
-			entry->disabledon = status_split_bit((char *)disabledon.c_str(), "|", source.c_str(), node.Mark().line);
+			if (disabledon_list.IsSequence()) {
+				for (const auto &it : disabledon_list) {
+					int disabledon_id = it.second.as<int>();
+
+					if (disabledon_id <= 0) {
+						ShowWarning("status_read_status_db_sub: Invalid status DisabledOn %d. Non-existent constant in \"%s\", skipping.\n", disabledon_id, source.c_str());
+						continue;
+					}
+
+					entry->disabledon |= disabledon_id;
+				}
+			} else
+				ShowWarning("status_read_status_db_sub: Invalid status DisabledOn format for status %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid DisabledOn field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
