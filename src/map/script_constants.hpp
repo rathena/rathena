@@ -4416,6 +4416,7 @@
 	export_constant(MOBG_Bloody_Dead_Branch);
 	export_constant(MOBG_Red_Pouch_Of_Surprise);
 	export_constant(MOBG_ClassChange);
+	export_constant(MOBG_Taekwon_Mission);
 
 	/* Item Random Option Group */
 	export_constant(RDMOPTG_None);

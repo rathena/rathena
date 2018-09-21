@@ -2194,7 +2194,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		dstmd && !status_has_mode(tstatus,MD_STATUS_IMMUNE) &&
 		(rnd()%10000 < sd->bonus.classchange))
 	{
-		int class_ = mob_get_random_id(MOBG_Branch_Of_Dead_Tree, 1, 0);
+		int class_ = mob_get_random_id(MOBG_Branch_Of_Dead_Tree, RMF_DB_RATE, 0);
 		if (class_ != 0 && mobdb_checkid(class_))
 			mob_class_change(dstmd,class_);
 	}
@@ -6407,7 +6407,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				break;
 			}
-			class_ = (skill_id == SA_MONOCELL ? MOBID_PORING : mob_get_random_id(MOBG_ClassChange, 1, 0));
+			class_ = (skill_id == SA_MONOCELL ? MOBID_PORING : mob_get_random_id(MOBG_ClassChange, RMF_DB_RATE, 0));
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 			mob_class_change(dstmd,class_);
 			if( tsc && status_has_mode(&dstmd->status,MD_STATUS_IMMUNE) ) {
@@ -6803,17 +6803,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 
-			int id;
-			struct mob_data *tk_md;
+			int id = mob_get_random_id(MOBG_Taekwon_Mission, RMF_NONE, sd->status.base_level);
 
-			do {
-				id = rnd_value(MOBID_PORING, MOBID_GREEN_IGUANA);
-				tk_md = map_id2md(id);
-			} while (!tk_md || (id >= MOBID_DESERT_WOLF_2 && id <= MOBID_ANTONIO) || id == MOBID_SWITCH || // These mobs automatically fail
-				tk_md->status.class_ != CLASS_NORMAL || // Must be a Normal mob
-				tk_md->status.hp >= 30000 || // Must be less than 30,000 HP
-				tk_md->db->base_exp <= 0); // Must give Base EXP
-
+			if (!id) {
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+				break;
+			}
 			sd->mission_mobid = id;
 			sd->mission_count = 0;
 			pc_setglobalreg(sd, add_str(TKMISSIONID_VAR), id);
