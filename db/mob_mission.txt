@@ -115,8 +115,6 @@ MOBG_Taekwon_Mission,1132,Khalitzburg,1
 MOBG_Taekwon_Mission,1133,Kobold,1
 MOBG_Taekwon_Mission,1134,Kobold,1
 MOBG_Taekwon_Mission,1135,Kobold,1
-MOBG_Taekwon_Mission,1136,Kobold,1
-MOBG_Taekwon_Mission,1137,Kobold,1
 MOBG_Taekwon_Mission,1138,Magnolia,1
 MOBG_Taekwon_Mission,1139,Mantis,1
 MOBG_Taekwon_Mission,1140,Marduk,1
