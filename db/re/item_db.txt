@@ -10927,6 +10927,8 @@
 20847,Illusion_Survivor_Manteau,Illusion Survivor Manteau,4,0,,550,,30,,1,0x00810204,63,2,4,,130,1,0,{ bonus bVit,15; },{},{}
 20856,YSF01_Manteau,YSF01 Manteau,4,0,,750,,32,,1,0xFFFFFFFF,63,2,4,,170,1,0,{ .@r = getrefine(); if (.@r >= 8) { bonus bBaseAtk,20; if (.@r >= 11) { .@val = -3; if (.@r >= 13) { .@val += -4; } } } if (readparam(bVit) >= 125) { .@val += -10; } if (.@val) { bonus bDelayrate,.@val; } },{},{}
 20923,Illusion_Goibne_Spaulders,Illusion Goibne Spaulders,4,0,,1000,,47,,1,0xFFFFFFFE,63,2,4,,130,1,0,{ .@r = getrefine();  bonus bMdef,2; bonus bVit,1; if (.@r >= 7) { .@val = 5; if (.@r >= 9) { .@val += 10; } } if (.@val) { bonus2 bAddEle,Ele_Water,.@val; bonus2 bAddEle,Ele_Wind,.@val; bonus2 bAddEle,Ele_Earth,.@val; bonus2 bAddEle,Ele_Fire,.@val; } },{},{}
+20943,Geffen_Magic_Muffler,Geffen Magic Muffler,4,20,,550,,20,,1,0xFFFFFFFE,63,2,4,,99,1,0,{ .@r = getrefine(); .@val = -10;  bonus bMatk,(10*(.@r/2)); bonus bMatkRate,(.@r/3); if (.@r >= 7) { bonus2 bMagicAtkEle,Ele_All,5; } if (.@r >= 9) { .@val -= 10; } bonus bVariableCastrate,.@val; },{},{}
+20944,Anti_Magic_Manteau,Anti Magic Manteau,4,20,,750,,23,,1,0xFFFFFFFE,63,2,4,,99,1,0,{ .@r = getrefine(); bonus bMaxHP,(300+(100*(.@r/2))); bonus bMaxHPRate,(2*(.@r/3)); if (.@r >= 7) { bonus2 bAddClass,Class_All,7; } if (.@r >= 9) { bonus bVariableCastrate,-10; } },{},{}
 //===================================================================
 // More 2-Handed Swords
 //===================================================================
@@ -11736,6 +11738,14 @@
 27318,Miguel_Card,Miguel Card,6,20,,10,,,,,,,,64,,,,,{ bonus bCritAtkRate,20; bonus2 bSubRace,RC_All,-10; },{},{}
 27319,R48_85_BESTIA_Card,R48-85-BESTIA Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEle,Ele_Poison,40; },{},{}
 27320,E_EA1L_card,E-EA1L card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); .@val = 3; if (.@r >= 9) { .@val += 2; if (.@r >= 11) { .@val += 5; } } bonus2 bMagicAtkEle,Ele_Fire,.@val; },{},{}
+27321,Despair_God_Morocc_Card,Despair God Morocc Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bAddClass,Class_All,10; bonus bMaxHPRate,-50; bAddRace,RC_DemiHuman,30; bAddRace,RC_Angel,30; autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3097,5000; }"; },{},{}
+27322,Demon_God's_Apostle_Ahat_Card,Demon God's Apostle Ahat Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMaxSPrate,5;  },{},{}
+27323,Demon_God's_Apostle_Shnaim_Card,Demon God's Apostle Shnaim Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMaxHPrate,5; },{},{}
+27324,Brinaranea_Card,Brinaranea Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bMagicAtkEle,Ele_Water,15; },{},{}
+27325,Muspellskoll_Card,Muspellskoll Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Fire,30; },{},{}
+27326,Morocc's_Minion_Card,Morocc's Minion Card,6,20,,10,,,,,,,,16,,,,,{ bonus bBaseAtk,100; bonus bAspdRate,25; bonus bMaxHPrate,-20; },{},{}
+27327,Grim_Reaper_Ankou_Card,Grim Reaper Ankou Card,6,20,,10,,,,,,,,769,,,,,{ /* Fix me */ },{},{}
+27328,Corrupt_Life_Card,Corrupt Life Card,6,20,,10,,,,,,,,769,,,,,{ /* Fix me */ },{},{}
 //===================================================================
 // New Katars
 //===================================================================
