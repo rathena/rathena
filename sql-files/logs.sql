@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `atcommandlog` (
   PRIMARY KEY  (`atcommand_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `branchlog`
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS `branchlog` (
   PRIMARY KEY  (`branch_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `cashlog`
@@ -45,7 +45,7 @@ CREATE TABLE IF NOT EXISTS `cashlog` (
   `map` varchar(11) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   INDEX `type` (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `chatlog`
@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS `chatlog` (
   PRIMARY KEY  (`id`),
   INDEX (`src_accountid`),
   INDEX (`src_charid`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `feedinglog`
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS `feedinglog` (
   `x` SMALLINT(5) UNSIGNED NOT NULL,
   `y` SMALLINT(5) UNSIGNED NOT NULL,
   PRIMARY KEY  (`id`)
-) ENGINE = MyISAM AUTO_INCREMENT = 1;
+) ENGINE = InnoDB AUTO_INCREMENT = 1;
 
 --
 -- Table structure for table `loginlog`
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `loginlog` (
   `rcode` tinyint(4) NOT NULL default '0',
   `log` varchar(255) NOT NULL default '',
   INDEX (`ip`)
-) ENGINE=MyISAM ;
+) ENGINE=InnoDB ;
 
 --
 -- Table structure for table `mvplog`
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS `mvplog` (
   `mvpexp` bigint(20) unsigned NOT NULL default '0',
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`mvp_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `npclog`
@@ -137,7 +137,7 @@ CREATE TABLE IF NOT EXISTS `npclog` (
   PRIMARY KEY  (`npc_id`),
   INDEX (`account_id`),
   INDEX (`char_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `picklog`
@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `picklog` (
   `bound` tinyint(1) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   INDEX (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
 
 --
 -- Table structure for table `zenylog`
@@ -225,4 +225,4 @@ CREATE TABLE IF NOT EXISTS `zenylog` (
   `map` varchar(11) NOT NULL default '',
   PRIMARY KEY  (`id`),
   INDEX (`type`)
-) ENGINE=MyISAM AUTO_INCREMENT=1;
+) ENGINE=InnoDB AUTO_INCREMENT=1;
