@@ -522,7 +522,7 @@ menu	"Vending Zone",S0, "Battlegrounds",S2, "Casino",S3, "Dimensional Rift",S4,
 		"Monster Race Arena",S8, "Para Market",S9, "Turbo Track",S10;
 
 // S1: Go("auction_01",22,68);
-S0: Go("vendzone, 49, 48");
+S0: Go("vendzone", 49, 48);
 S2: Go("bat_room",154,150);
 S3: Go("cmd_in02",179,129);
 S4: Restrict("RE");
