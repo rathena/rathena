@@ -1253,4 +1253,4 @@ star_in	mapflag	novending
 2012rwc_06	mapflag	novending
 2012rwc_07	mapflag	novending
 2012rwc_08	mapflag	novending
-vendzone	mapflag	novending
+//vendzone	mapflag	novending
