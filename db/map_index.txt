@@ -7,7 +7,7 @@
 // Format:
 // mapname<tab>index <- specifies index for this map
 // mapname <- map will use index of previous map +1
-// Note that map index 0 is special and reserved for "error" status. 
+// Note that map index 0 is special and reserved for "error" status.
 
 alb_ship 1
 alb2trea
@@ -1051,3 +1051,4 @@ star_in
 //======================================================================================
 // - Other/Extra maps -
 //======================================================================================
+vendzone

@@ -44,4 +44,4 @@ sec_in02,11,32,3	script	VIP	90,{
 		mes "non-VIP";
 	}
 	close;
-}﻿
+}

@@ -1,0 +1,1256 @@
+//===== Hercules Script ====================================
+//= Vendor Control
+//===== By: ================================================
+//= Original by Emistry
+//= Rewrite by AnnieRuru
+//===== Current Version: ===================================
+//= 2.1a
+//===== Compatible With: ===================================
+//= Hercules 2018-06-02
+//===== Description: =======================================
+//= Vendors only vend on certain coordinate, looks tidy :P
+//===== Topic ==============================================
+//= http://herc.ws/board/topic/4509-vendor-control-rewrite/
+//===== Additional Comments: ===============================
+//= Revert back to use unitwalk
+//==========================================================
+
+vendzone,47,51,5	script	Vending Helper	73,{
+	mes "["+ strnpcinfo(1) +"]";
+	if ( !getskilllv( "MC_VENDING" ) ) {
+		mes "You dont have ^0055FFVending Skill^000000.";
+		close;
+	}
+	mes "Select a slot and start vending.";
+	while ( true ) {
+		.@menu$ = .@currentpage ? "Previous Page:" : ":";
+		.@pageindex = .@currentpage * .slotperpage;
+		for ( .@i = 0; .@i < .slotperpage && .@pageindex + .@i < .count; ++.@i ) {
+			if ( !getmapxy( .@map$, .@x, .@y, UNITTYPE_NPC, "#vend_slot"+( .@pageindex + .@i ) ) && getareausers( .map$, .@x, .@y, .@x, .@y ) )
+				.@menu$ += "Slot No."+( .@pageindex + .@i +1 )+" - ^FF0000[Unavailable]^000000:";
+			else
+				.@menu$ += "Slot No."+( .@pageindex + .@i +1 )+" - ^00CC00[Available]^000000:";
+		}
+		if ( .@currentpage != .maxpage )
+			.@menu$ = .@menu$ + "Next Page";
+		.@pick = select( .@menu$ ) -1;
+		if ( !.@pick )
+			{ --.@currentpage; }
+		else if ( .@pick == .slotperpage +1 )
+			{ ++.@currentpage; }
+		else
+			break;
+	}
+	.@s =  .@currentpage * .slotperpage + .@pick -1 ;
+	if ( !getmapxy( .@map$, .@x, .@y, UNITTYPE_NPC, "#vend_slot"+ .@s ) && getareausers( .map$, .@x, .@y, .@x, .@y ) ) {
+		mes " ";
+		mes "This slot is ^FF0000[UnAvailable]^000000.";
+		close;
+	}
+	warp .@map$, .@x, .@y;
+	hideonnpc "#vend_slot"+ .@s;
+	donpcevent "#vend_slot"+ .@s +"::OnCheckAvailable";
+	end;
+OnInit:
+//	======================= Configuration HERE =============================
+	.map$ = "vendzone"; // map
+	setarray .@x, 29,33,37,41,45,53,57,61,65,69; // x coordinates
+	setarray .@y, 29,33,37,41,45,53,57,61,65,69; // y coordinates
+	.slotperpage = 20; // display how many slots per page (prevent making the menu too long)
+
+	freeloop true;
+	setcell .map$, 0,0, 500,500, cell_novending, true;
+	.@x_size = getarraysize( .@x );
+	.@y_size = getarraysize( .@y );
+	for ( .@i = 0; .@i < .@y_size; ++.@i ) {
+		for ( .@j = 0; .@j < .@x_size; ++.@j ) {
+			if ( checkcell( .map$, .@x[.@j], .@y[.@i], cell_chkpass ) ) {
+				movenpc "#vend_slot"+ .count, .@x[.@j], .@y[.@i];
+				setcell .map$, .@x[.@j], .@y[.@i], .@x[.@j], .@y[.@i], cell_novending, false;
+				if ( getareausers( .map$, .@x[.@j], .@y[.@i], .@x[.@j], .@y[.@i] ) ) {
+					hideonnpc "#vend_slot"+ .count;
+					donpcevent "#vend_slot"+ .count +"::OnCheckAvailable";
+				}
+				++.count;
+			}
+		}
+	}
+	.maxpage = .count / .slotperpage + ( .count % .slotperpage > 0 ) -1;
+//	debugmes "Vendor NPC needed -> "+ .count;
+	end;
+}
+
+-	script	vend_slot	FAKE_NPC,{
+	mes "[Vending Slot]";
+	if ( !getskilllv( "MC_VENDING" ) ) {
+		mes "You dont have ^0055FFVending Skill^000000.";
+		close;
+	}
+	getmapxy .@map$, .@x, .@y, UNITTYPE_NPC;
+	if ( getareausers( .@map$, .@x, .@y, .@x, .@y ) ) {
+		mes "Someone already using this slot";
+		close;
+	}
+	warp .@map$, .@x, .@y;
+	mes "Spot : ^777777Available^000000";
+	mes "^0055FF[ Vending Area Rules ]^000000";
+	mes "^FF0000 ~ Use proper Shop Name.^000000";
+	mes "^777777Player who failed to follow these rules will be punished.^000000";
+	hideonnpc strnpcinfo(0);
+	donpcevent strnpcinfo(0)+"::OnCheckAvailable";
+	close;
+OnCheckAvailable:
+	sleep 10000;
+	getmapxy .@map$, .@x, .@y, UNITTYPE_NPC;
+	while ( getareausers( .@map$, .@x, .@y, .@x, .@y ) )
+		sleep 10000;
+	hideoffnpc strnpcinfo(0);
+	end;
+}
+
+// Add more if needed.
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot0	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot1	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot2	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot3	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot4	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot5	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot6	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot7	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot8	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot9	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot10	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot11	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot12	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot13	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot14	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot15	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot16	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot17	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot18	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot19	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot20	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot21	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot22	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot23	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot24	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot25	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot26	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot27	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot28	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot29	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot30	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot31	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot32	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot33	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot34	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot35	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot36	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot37	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot38	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot39	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot40	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot41	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot42	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot43	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot44	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot45	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot46	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot47	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot48	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot49	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot50	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot51	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot52	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot53	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot54	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot55	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot56	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot57	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot58	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot59	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot60	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot61	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot62	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot63	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot64	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot65	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot66	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot67	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot68	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot69	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot70	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot71	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot72	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot73	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot74	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot75	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot76	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot77	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot78	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot79	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot80	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot81	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot82	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot83	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot84	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot85	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot86	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot87	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot88	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot89	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot90	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot91	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot92	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot93	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot94	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot95	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot96	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot97	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot98	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot99	4_BULLETIN_BOARD2
+
+
+
+//===========================================================================================
+// map flag to disable vending in every other map
+//===========================================================================================
+alb_ship	mapflag	novending
+alb2trea	mapflag	novending
+alberta	mapflag	novending
+alberta_in	mapflag	novending
+alde_dun01	mapflag	novending
+alde_dun02	mapflag	novending
+alde_dun03	mapflag	novending
+alde_dun04	mapflag	novending
+aldeba_in	mapflag	novending
+aldebaran	mapflag	novending
+anthell01	mapflag	novending
+anthell02	mapflag	novending
+arena_room	mapflag	novending
+c_tower1	mapflag	novending
+c_tower2	mapflag	novending
+c_tower3	mapflag	novending
+c_tower4	mapflag	novending
+force_1-1	mapflag	novending
+force_1-2	mapflag	novending
+force_1-3	mapflag	novending
+force_2-1	mapflag	novending
+force_2-2	mapflag	novending
+force_2-3	mapflag	novending
+force_3-1	mapflag	novending
+force_3-2	mapflag	novending
+force_3-3	mapflag	novending
+gef_dun00	mapflag	novending
+gef_dun01	mapflag	novending
+gef_dun02	mapflag	novending
+gef_dun03	mapflag	novending
+gef_fild00	mapflag	novending
+gef_fild01	mapflag	novending
+gef_fild02	mapflag	novending
+gef_fild03	mapflag	novending
+gef_fild04	mapflag	novending
+gef_fild05	mapflag	novending
+gef_fild06	mapflag	novending
+gef_fild07	mapflag	novending
+gef_fild08	mapflag	novending
+gef_fild09	mapflag	novending
+gef_fild10	mapflag	novending
+gef_fild11	mapflag	novending
+gef_fild12	mapflag	novending
+gef_fild13	mapflag	novending
+gef_fild14	mapflag	novending
+gef_tower	mapflag	novending
+geffen	mapflag	novending
+geffen_in	mapflag	novending
+gl_cas01	mapflag	novending
+gl_cas02	mapflag	novending
+gl_church	mapflag	novending
+gl_chyard	mapflag	novending
+gl_dun01	mapflag	novending
+gl_dun02	mapflag	novending
+gl_in01	mapflag	novending
+gl_knt01	mapflag	novending
+gl_knt02	mapflag	novending
+gl_prison	mapflag	novending
+gl_prison1	mapflag	novending
+gl_sew01	mapflag	novending
+gl_sew02	mapflag	novending
+gl_sew03	mapflag	novending
+gl_sew04	mapflag	novending
+gl_step	mapflag	novending
+glast_01	mapflag	novending
+hunter_1-1	mapflag	novending
+hunter_2-1	mapflag	novending
+hunter_3-1	mapflag	novending
+in_hunter	mapflag	novending
+in_moc_16	mapflag	novending
+in_orcs01	mapflag	novending
+in_sphinx1	mapflag	novending
+in_sphinx2	mapflag	novending
+in_sphinx3	mapflag	novending
+in_sphinx4	mapflag	novending
+in_sphinx5	mapflag	novending
+iz_dun00	mapflag	novending
+iz_dun01	mapflag	novending
+iz_dun02	mapflag	novending
+iz_dun03	mapflag	novending
+iz_dun04	mapflag	novending
+job_sword1	mapflag	novending
+izlu2dun	mapflag	novending
+izlude	mapflag	novending
+izlude_in	mapflag	novending
+job_thief1	mapflag	novending
+knight_1-1	mapflag	novending
+knight_2-1	mapflag	novending
+knight_3-1	mapflag	novending
+mjo_dun01	mapflag	novending
+mjo_dun02	mapflag	novending
+mjo_dun03	mapflag	novending
+mjolnir_01	mapflag	novending
+mjolnir_02	mapflag	novending
+mjolnir_03	mapflag	novending
+mjolnir_04	mapflag	novending
+mjolnir_05	mapflag	novending
+mjolnir_06	mapflag	novending
+mjolnir_07	mapflag	novending
+mjolnir_08	mapflag	novending
+mjolnir_09	mapflag	novending
+mjolnir_10	mapflag	novending
+mjolnir_11	mapflag	novending
+mjolnir_12	mapflag	novending
+moc_castle	mapflag	novending
+moc_fild01	mapflag	novending
+moc_fild02	mapflag	novending
+moc_fild03	mapflag	novending
+moc_fild04	mapflag	novending
+moc_fild05	mapflag	novending
+moc_fild06	mapflag	novending
+moc_fild07	mapflag	novending
+moc_fild08	mapflag	novending
+moc_fild09	mapflag	novending
+moc_fild10	mapflag	novending
+moc_fild11	mapflag	novending
+moc_fild12	mapflag	novending
+moc_fild13	mapflag	novending
+moc_fild14	mapflag	novending
+moc_fild15	mapflag	novending
+moc_fild16	mapflag	novending
+moc_fild17	mapflag	novending
+moc_fild18	mapflag	novending
+moc_fild19	mapflag	novending
+moc_pryd01	mapflag	novending
+moc_pryd02	mapflag	novending
+moc_pryd03	mapflag	novending
+moc_pryd04	mapflag	novending
+moc_pryd05	mapflag	novending
+moc_pryd06	mapflag	novending
+moc_prydb1	mapflag	novending
+moc_ruins	mapflag	novending
+monk_in	mapflag	novending
+morocc	mapflag	novending
+morocc_in	mapflag	novending
+new_1-1	mapflag	novending
+new_1-2	mapflag	novending
+new_1-3	mapflag	novending
+new_1-4	mapflag	novending
+new_2-1	mapflag	novending
+new_2-2	mapflag	novending
+new_2-3	mapflag	novending
+new_2-4	mapflag	novending
+new_3-1	mapflag	novending
+new_3-2	mapflag	novending
+new_3-3	mapflag	novending
+new_3-4	mapflag	novending
+new_4-1	mapflag	novending
+new_4-2	mapflag	novending
+new_4-3	mapflag	novending
+new_4-4	mapflag	novending
+new_5-1	mapflag	novending
+new_5-2	mapflag	novending
+new_5-3	mapflag	novending
+new_5-4	mapflag	novending
+orcsdun01	mapflag	novending
+orcsdun02	mapflag	novending
+ordeal_1-1	mapflag	novending
+ordeal_1-2	mapflag	novending
+//ordeal_1-3	mapflag	novending
+//ordeal_1-4	mapflag	novending
+ordeal_2-1	mapflag	novending
+ordeal_2-2	mapflag	novending
+//ordeal_2-3	mapflag	novending
+//ordeal_2-4	mapflag	novending
+ordeal_3-1	mapflag	novending
+ordeal_3-2	mapflag	novending
+//ordeal_3-3	mapflag	novending
+//ordeal_3-4	mapflag	novending
+pay_arche	mapflag	novending
+pay_dun00	mapflag	novending
+pay_dun01	mapflag	novending
+pay_dun02	mapflag	novending
+pay_dun03	mapflag	novending
+pay_dun04	mapflag	novending
+pay_fild01	mapflag	novending
+pay_fild02	mapflag	novending
+pay_fild03	mapflag	novending
+pay_fild04	mapflag	novending
+pay_fild05	mapflag	novending
+pay_fild06	mapflag	novending
+pay_fild07	mapflag	novending
+pay_fild08	mapflag	novending
+pay_fild09	mapflag	novending
+pay_fild10	mapflag	novending
+pay_fild11	mapflag	novending
+payon	mapflag	novending
+payon_in01	mapflag	novending
+payon_in02	mapflag	novending
+priest_1-1	mapflag	novending
+priest_2-1	mapflag	novending
+priest_3-1	mapflag	novending
+prontera	mapflag	novending
+prt_are_in	mapflag	novending
+prt_are01	mapflag	novending
+pvp_room	mapflag	novending
+prt_castle	mapflag	novending
+prt_church	mapflag	novending
+prt_fild00	mapflag	novending
+prt_fild01	mapflag	novending
+prt_fild02	mapflag	novending
+prt_fild03	mapflag	novending
+prt_fild04	mapflag	novending
+prt_fild05	mapflag	novending
+prt_fild06	mapflag	novending
+prt_fild07	mapflag	novending
+prt_fild08	mapflag	novending
+prt_fild09	mapflag	novending
+prt_fild10	mapflag	novending
+prt_fild11	mapflag	novending
+prt_in	mapflag	novending
+prt_maze01	mapflag	novending
+prt_maze02	mapflag	novending
+prt_maze03	mapflag	novending
+prt_monk	mapflag	novending
+prt_sewb1	mapflag	novending
+prt_sewb2	mapflag	novending
+prt_sewb3	mapflag	novending
+prt_sewb4	mapflag	novending
+pvp_2vs2	mapflag	novending
+pvp_c_room	mapflag	novending
+pvp_n_1-1	mapflag	novending
+pvp_n_1-2	mapflag	novending
+pvp_n_1-3	mapflag	novending
+pvp_n_1-4	mapflag	novending
+pvp_n_1-5	mapflag	novending
+pvp_n_2-1	mapflag	novending
+pvp_n_2-2	mapflag	novending
+pvp_n_2-3	mapflag	novending
+pvp_n_2-4	mapflag	novending
+pvp_n_2-5	mapflag	novending
+pvp_n_3-1	mapflag	novending
+pvp_n_3-2	mapflag	novending
+pvp_n_3-3	mapflag	novending
+pvp_n_3-4	mapflag	novending
+pvp_n_3-5	mapflag	novending
+pvp_n_4-1	mapflag	novending
+pvp_n_4-2	mapflag	novending
+pvp_n_4-3	mapflag	novending
+pvp_n_4-4	mapflag	novending
+pvp_n_4-5	mapflag	novending
+pvp_n_5-1	mapflag	novending
+pvp_n_5-2	mapflag	novending
+pvp_n_5-3	mapflag	novending
+pvp_n_5-4	mapflag	novending
+pvp_n_5-5	mapflag	novending
+pvp_n_6-1	mapflag	novending
+pvp_n_6-2	mapflag	novending
+pvp_n_6-3	mapflag	novending
+pvp_n_6-4	mapflag	novending
+pvp_n_6-5	mapflag	novending
+pvp_n_7-1	mapflag	novending
+pvp_n_7-2	mapflag	novending
+pvp_n_7-3	mapflag	novending
+pvp_n_7-4	mapflag	novending
+pvp_n_7-5	mapflag	novending
+pvp_n_8-1	mapflag	novending
+pvp_n_8-2	mapflag	novending
+pvp_n_8-3	mapflag	novending
+pvp_n_8-4	mapflag	novending
+pvp_n_8-5	mapflag	novending
+pvp_n_room	mapflag	novending
+pvp_y_1-1	mapflag	novending
+pvp_y_1-2	mapflag	novending
+pvp_y_1-3	mapflag	novending
+pvp_y_1-4	mapflag	novending
+pvp_y_1-5	mapflag	novending
+pvp_y_2-1	mapflag	novending
+pvp_y_2-2	mapflag	novending
+pvp_y_2-3	mapflag	novending
+pvp_y_2-4	mapflag	novending
+pvp_y_2-5	mapflag	novending
+pvp_y_3-1	mapflag	novending
+pvp_y_3-2	mapflag	novending
+pvp_y_3-3	mapflag	novending
+pvp_y_3-4	mapflag	novending
+pvp_y_3-5	mapflag	novending
+pvp_y_4-1	mapflag	novending
+pvp_y_4-2	mapflag	novending
+pvp_y_4-3	mapflag	novending
+pvp_y_4-4	mapflag	novending
+pvp_y_4-5	mapflag	novending
+pvp_y_5-1	mapflag	novending
+pvp_y_5-2	mapflag	novending
+pvp_y_5-3	mapflag	novending
+pvp_y_5-4	mapflag	novending
+pvp_y_5-5	mapflag	novending
+pvp_y_6-1	mapflag	novending
+pvp_y_6-2	mapflag	novending
+pvp_y_6-3	mapflag	novending
+pvp_y_6-4	mapflag	novending
+pvp_y_6-5	mapflag	novending
+pvp_y_7-1	mapflag	novending
+pvp_y_7-2	mapflag	novending
+pvp_y_7-3	mapflag	novending
+pvp_y_7-4	mapflag	novending
+pvp_y_7-5	mapflag	novending
+pvp_y_8-1	mapflag	novending
+pvp_y_8-2	mapflag	novending
+pvp_y_8-3	mapflag	novending
+pvp_y_8-4	mapflag	novending
+pvp_y_8-5	mapflag	novending
+pvp_y_room	mapflag	novending
+sword_1-1	mapflag	novending
+sword_2-1	mapflag	novending
+sword_3-1	mapflag	novending
+treasure01	mapflag	novending
+treasure02	mapflag	novending
+wizard_1-1	mapflag	novending
+wizard_2-1	mapflag	novending
+wizard_3-1	mapflag	novending
+xmas	mapflag	novending
+xmas_dun01	mapflag	novending
+xmas_dun02	mapflag	novending
+xmas_fild01	mapflag	novending
+xmas_in	mapflag	novending
+beach_dun	mapflag	novending
+beach_dun2	mapflag	novending
+beach_dun3	mapflag	novending
+cmd_fild01	mapflag	novending
+cmd_fild02	mapflag	novending
+cmd_fild03	mapflag	novending
+cmd_fild04	mapflag	novending
+cmd_fild05	mapflag	novending
+cmd_fild06	mapflag	novending
+cmd_fild07	mapflag	novending
+cmd_fild08	mapflag	novending
+cmd_fild09	mapflag	novending
+cmd_in01	mapflag	novending
+cmd_in02	mapflag	novending
+comodo	mapflag	novending
+quiz_00	mapflag	novending
+quiz_01	mapflag	novending
+g_room1-1	mapflag	novending
+g_room1-2	mapflag	novending
+g_room1-3	mapflag	novending
+g_room2	mapflag	novending
+tur_dun01	mapflag	novending
+tur_dun02	mapflag	novending
+tur_dun03	mapflag	novending
+tur_dun04	mapflag	novending
+tur_dun05	mapflag	novending
+tur_dun06	mapflag	novending
+alde_gld	mapflag	novending
+aldeg_cas01	mapflag	novending
+aldeg_cas02	mapflag	novending
+aldeg_cas03	mapflag	novending
+aldeg_cas04	mapflag	novending
+aldeg_cas05	mapflag	novending
+gefg_cas01	mapflag	novending
+gefg_cas02	mapflag	novending
+gefg_cas03	mapflag	novending
+gefg_cas04	mapflag	novending
+gefg_cas05	mapflag	novending
+gld_dun01	mapflag	novending
+gld_dun02	mapflag	novending
+gld_dun03	mapflag	novending
+gld_dun04	mapflag	novending
+guild_room	mapflag	novending
+guild_vs1	mapflag	novending
+guild_vs2	mapflag	novending
+guild_vs3	mapflag	novending
+guild_vs4	mapflag	novending
+guild_vs5	mapflag	novending
+guild_vs1-1	mapflag	novending
+guild_vs1-2	mapflag	novending
+guild_vs1-3	mapflag	novending
+guild_vs1-4	mapflag	novending
+guild_vs2-1	mapflag	novending
+guild_vs2-2	mapflag	novending
+job_hunte	mapflag	novending
+job_knt	mapflag	novending
+job_prist	mapflag	novending
+job_wiz	mapflag	novending
+pay_gld	mapflag	novending
+payg_cas01	mapflag	novending
+payg_cas02	mapflag	novending
+payg_cas03	mapflag	novending
+payg_cas04	mapflag	novending
+payg_cas05	mapflag	novending
+prt_gld	mapflag	novending
+prtg_cas01	mapflag	novending
+prtg_cas02	mapflag	novending
+prtg_cas03	mapflag	novending
+prtg_cas04	mapflag	novending
+prtg_cas05	mapflag	novending
+alde_alche	mapflag	novending
+in_rogue	mapflag	novending
+job_cru	mapflag	novending
+job_duncer	mapflag	novending
+job_monk	mapflag	novending
+job_sage	mapflag	novending
+mag_dun01	mapflag	novending
+mag_dun02	mapflag	novending
+monk_test	mapflag	novending
+quiz_test	mapflag	novending
+yuno	mapflag	novending
+yuno_fild01	mapflag	novending
+yuno_fild02	mapflag	novending
+yuno_fild03	mapflag	novending
+yuno_fild04	mapflag	novending
+yuno_in01	mapflag	novending
+yuno_in02	mapflag	novending
+yuno_in03	mapflag	novending
+yuno_in04	mapflag	novending
+yuno_in05	mapflag	novending
+ama_dun01	mapflag	novending
+ama_dun02	mapflag	novending
+ama_dun03	mapflag	novending
+ama_fild01	mapflag	novending
+ama_in01	mapflag	novending
+ama_in02	mapflag	novending
+ama_test	mapflag	novending
+amatsu	mapflag	novending
+gon_dun01	mapflag	novending
+gon_dun02	mapflag	novending
+gon_dun03	mapflag	novending
+gon_fild01	mapflag	novending
+gon_in	mapflag	novending
+gon_test	mapflag	novending
+gonryun	mapflag	novending
+sec_in01	mapflag	novending
+sec_in02	mapflag	novending
+sec_pri	mapflag	novending
+umbala	mapflag	novending
+um_dun01	mapflag	novending
+um_dun02	mapflag	novending
+um_fild01	mapflag	novending
+um_fild02	mapflag	novending
+um_fild03	mapflag	novending
+um_fild04	mapflag	novending
+um_in	mapflag	novending
+niflheim	mapflag	novending
+nif_fild01	mapflag	novending
+nif_fild02	mapflag	novending
+nif_in	mapflag	novending
+yggdrasil01	mapflag	novending
+valkyrie	mapflag	novending
+himinn	mapflag	novending
+lou_in01	mapflag	novending
+lou_in02	mapflag	novending
+lou_dun03	mapflag	novending
+lou_dun02	mapflag	novending
+lou_dun01	mapflag	novending
+lou_fild01	mapflag	novending
+louyang	mapflag	novending
+siege_test	mapflag	novending
+n_castle	mapflag	novending
+nguild_gef	mapflag	novending
+nguild_prt	mapflag	novending
+nguild_pay	mapflag	novending
+nguild_alde	mapflag	novending
+jawaii	mapflag	novending
+jawaii_in	mapflag	novending
+gefenia01	mapflag	novending
+gefenia02	mapflag	novending
+gefenia03	mapflag	novending
+gefenia04	mapflag	novending
+new_zone01	mapflag	novending
+new_zone02	mapflag	novending
+new_zone03	mapflag	novending
+new_zone04	mapflag	novending
+payon_in03	mapflag	novending
+ayothaya	mapflag	novending
+ayo_in01	mapflag	novending
+ayo_in02	mapflag	novending
+ayo_fild01	mapflag	novending
+ayo_fild02	mapflag	novending
+ayo_dun01	mapflag	novending
+ayo_dun02	mapflag	novending
+que_god01	mapflag	novending
+que_god02	mapflag	novending
+yuno_fild05	mapflag	novending
+yuno_fild07	mapflag	novending
+yuno_fild08	mapflag	novending
+yuno_fild09	mapflag	novending
+yuno_fild11	mapflag	novending
+yuno_fild12	mapflag	novending
+alde_tt02	mapflag	novending
+turbo_n_1	mapflag	novending
+turbo_n_4	mapflag	novending
+turbo_n_8	mapflag	novending
+turbo_n_16	mapflag	novending
+turbo_e_4	mapflag	novending
+turbo_e_8	mapflag	novending
+turbo_e_16	mapflag	novending
+turbo_room	mapflag	novending
+airplane	mapflag	novending
+airport	mapflag	novending
+einbech	mapflag	novending
+einbroch	mapflag	novending
+ein_dun01	mapflag	novending
+ein_dun02	mapflag	novending
+ein_fild06	mapflag	novending
+ein_fild07	mapflag	novending
+ein_fild08	mapflag	novending
+ein_fild09	mapflag	novending
+ein_fild10	mapflag	novending
+ein_in01	mapflag	novending
+que_sign01	mapflag	novending
+que_sign02	mapflag	novending
+ein_fild03	mapflag	novending
+ein_fild04	mapflag	novending
+lhz_fild02	mapflag	novending
+lhz_fild03	mapflag	novending
+yuno_pre	mapflag	novending
+lhz_fild01	mapflag	novending
+lighthalzen	mapflag	novending
+lhz_in01	mapflag	novending
+lhz_in02	mapflag	novending
+lhz_in03	mapflag	novending
+lhz_que01	mapflag	novending
+lhz_dun01	mapflag	novending
+lhz_dun02	mapflag	novending
+lhz_dun03	mapflag	novending
+lhz_cube	mapflag	novending
+juperos_01	mapflag	novending
+juperos_02	mapflag	novending
+jupe_area1	mapflag	novending
+jupe_area2	mapflag	novending
+jupe_core	mapflag	novending
+jupe_ele	mapflag	novending
+jupe_ele_r	mapflag	novending
+jupe_gate	mapflag	novending
+y_airport	mapflag	novending
+lhz_airport	mapflag	novending
+airplane_01	mapflag	novending
+jupe_cave	mapflag	novending
+quiz_02	mapflag	novending
+hu_fild07	mapflag	novending
+hu_fild05	mapflag	novending
+hu_fild04	mapflag	novending
+hu_fild01	mapflag	novending
+yuno_fild06	mapflag	novending
+job_soul	mapflag	novending
+job_star	mapflag	novending
+que_job01	mapflag	novending
+que_job02	mapflag	novending
+que_job03	mapflag	novending
+abyss_01	mapflag	novending
+abyss_02	mapflag	novending
+abyss_03	mapflag	novending
+thana_step	mapflag	novending
+thana_boss	mapflag	novending
+tha_scene01	mapflag	novending
+tha_t01	mapflag	novending
+tha_t02	mapflag	novending
+tha_t03	mapflag	novending
+tha_t04	mapflag	novending
+tha_t07	mapflag	novending
+tha_t05	mapflag	novending
+tha_t06	mapflag	novending
+tha_t08	mapflag	novending
+tha_t09	mapflag	novending
+tha_t10	mapflag	novending
+tha_t11	mapflag	novending
+tha_t12	mapflag	novending
+auction_01	mapflag	novending
+auction_02	mapflag	novending
+hugel	mapflag	novending
+hu_in01	mapflag	novending
+que_bingo	mapflag	novending
+que_hugel	mapflag	novending
+p_track01	mapflag	novending
+p_track02	mapflag	novending
+odin_tem01	mapflag	novending
+odin_tem02	mapflag	novending
+odin_tem03	mapflag	novending
+hu_fild02	mapflag	novending
+hu_fild03	mapflag	novending
+hu_fild06	mapflag	novending
+ein_fild01	mapflag	novending
+ein_fild02	mapflag	novending
+ein_fild05	mapflag	novending
+yuno_fild10	mapflag	novending
+kh_kiehl02	mapflag	novending
+kh_kiehl01	mapflag	novending
+kh_dun02	mapflag	novending
+kh_dun01	mapflag	novending
+kh_mansion	mapflag	novending
+kh_rossi	mapflag	novending
+kh_school	mapflag	novending
+kh_vila	mapflag	novending
+force_map1	mapflag	novending
+force_map2	mapflag	novending
+force_map3	mapflag	novending
+job_hunter	mapflag	novending
+job_knight	mapflag	novending
+job_priest	mapflag	novending
+job_wizard	mapflag	novending
+ve_in02	mapflag	novending
+rachel	mapflag	novending
+ra_in01	mapflag	novending
+ra_fild01	mapflag	novending
+ra_fild02	mapflag	novending
+ra_fild03	mapflag	novending
+ra_fild04	mapflag	novending
+ra_fild05	mapflag	novending
+ra_fild06	mapflag	novending
+ra_fild07	mapflag	novending
+ra_fild08	mapflag	novending
+ra_fild09	mapflag	novending
+ra_fild10	mapflag	novending
+ra_fild11	mapflag	novending
+ra_fild12	mapflag	novending
+ra_fild13	mapflag	novending
+ra_san01	mapflag	novending
+ra_san02	mapflag	novending
+ra_san03	mapflag	novending
+ra_san04	mapflag	novending
+ra_san05	mapflag	novending
+ra_temin	mapflag	novending
+ra_temple	mapflag	novending
+ra_temsky	mapflag	novending
+que_rachel	mapflag	novending
+ice_dun01	mapflag	novending
+ice_dun02	mapflag	novending
+ice_dun03	mapflag	novending
+ice_dun04	mapflag	novending
+que_thor	mapflag	novending
+thor_camp	mapflag	novending
+thor_v01	mapflag	novending
+thor_v02	mapflag	novending
+thor_v03	mapflag	novending
+veins	mapflag	novending
+ve_in	mapflag	novending
+ve_fild01	mapflag	novending
+ve_fild02	mapflag	novending
+ve_fild03	mapflag	novending
+ve_fild04	mapflag	novending
+ve_fild05	mapflag	novending
+ve_fild06	mapflag	novending
+ve_fild07	mapflag	novending
+poring_c01	mapflag	novending
+poring_c02	mapflag	novending
+que_ng	mapflag	novending
+nameless_i	mapflag	novending
+nameless_n	mapflag	novending
+nameless_in	mapflag	novending
+abbey01	mapflag	novending
+abbey02	mapflag	novending
+abbey03	mapflag	novending
+poring_w01	mapflag	novending
+poring_w02	mapflag	novending
+que_san04	mapflag	novending
+moscovia	mapflag	novending
+mosk_in	mapflag	novending
+mosk_ship	mapflag	novending
+mosk_fild01	mapflag	novending
+mosk_fild02	mapflag	novending
+mosk_dun01	mapflag	novending
+mosk_dun02	mapflag	novending
+mosk_dun03	mapflag	novending
+mosk_que	mapflag	novending
+force_4-1	mapflag	novending
+force_5-1	mapflag	novending
+06guild_r	mapflag	novending
+06guild_01	mapflag	novending
+06guild_02	mapflag	novending
+06guild_03	mapflag	novending
+06guild_04	mapflag	novending
+06guild_05	mapflag	novending
+06guild_06	mapflag	novending
+06guild_07	mapflag	novending
+06guild_08	mapflag	novending
+z_agit	mapflag	novending
+que_temsky	mapflag	novending
+itemmall	mapflag	novending
+bossnia_01	mapflag	novending
+bossnia_02	mapflag	novending
+bossnia_03	mapflag	novending
+bossnia_04	mapflag	novending
+schg_cas01	mapflag	novending
+schg_cas02	mapflag	novending
+schg_cas03	mapflag	novending
+schg_cas04	mapflag	novending
+schg_cas05	mapflag	novending
+sch_gld	mapflag	novending
+cave	mapflag	novending
+moc_fild20	mapflag	novending
+moc_fild21	mapflag	novending
+moc_fild22	mapflag	novending
+que_ba	mapflag	novending
+que_moc_16	mapflag	novending
+que_moon	mapflag	novending
+arug_cas01	mapflag	novending
+arug_cas02	mapflag	novending
+arug_cas03	mapflag	novending
+arug_cas04	mapflag	novending
+arug_cas05	mapflag	novending
+aru_gld	mapflag	novending
+bat_room	mapflag	novending
+bat_a01	mapflag	novending
+bat_a02	mapflag	novending
+bat_b01	mapflag	novending
+bat_b02	mapflag	novending
+que_qsch01	mapflag	novending
+que_qsch02	mapflag	novending
+que_qsch03	mapflag	novending
+que_qsch04	mapflag	novending
+que_qsch05	mapflag	novending
+que_qaru01	mapflag	novending
+que_qaru02	mapflag	novending
+que_qaru03	mapflag	novending
+que_qaru04	mapflag	novending
+que_qaru05	mapflag	novending
+1@cata	mapflag	novending
+2@cata	mapflag	novending
+e_tower	mapflag	novending
+1@tower	mapflag	novending
+2@tower	mapflag	novending
+3@tower	mapflag	novending
+4@tower	mapflag	novending
+5@tower	mapflag	novending
+6@tower	mapflag	novending
+mid_camp	mapflag	novending
+mid_campin	mapflag	novending
+man_fild01	mapflag	novending
+man_fild03	mapflag	novending
+spl_fild02	mapflag	novending
+spl_fild03	mapflag	novending
+moc_fild22b	mapflag	novending
+que_dan01	mapflag	novending
+que_dan02	mapflag	novending
+schg_que01	mapflag	novending
+schg_dun01	mapflag	novending
+arug_que01	mapflag	novending
+arug_dun01	mapflag	novending
+1@orcs	mapflag	novending
+2@orcs	mapflag	novending
+1@nyd	mapflag	novending
+2@nyd	mapflag	novending
+nyd_dun01	mapflag	novending
+nyd_dun02	mapflag	novending
+manuk	mapflag	novending
+man_fild02	mapflag	novending
+man_in01	mapflag	novending
+splendide	mapflag	novending
+spl_fild01	mapflag	novending
+spl_in01	mapflag	novending
+spl_in02	mapflag	novending
+bat_c01	mapflag	novending
+bat_c02	mapflag	novending
+bat_c03	mapflag	novending
+moc_para01	mapflag	novending
+job3_arch01	mapflag	novending
+job3_arch02	mapflag	novending
+job3_arch03	mapflag	novending
+job3_guil01	mapflag	novending
+job3_guil02	mapflag	novending
+job3_guil03	mapflag	novending
+job3_rang01	mapflag	novending
+job3_rang02	mapflag	novending
+job3_rune01	mapflag	novending
+job3_rune02	mapflag	novending
+job3_rune03	mapflag	novending
+job3_war01	mapflag	novending
+job3_war02	mapflag	novending
+jupe_core2	mapflag	novending
+brasilis	mapflag	novending
+bra_in01	mapflag	novending
+bra_fild01	mapflag	novending
+bra_dun01	mapflag	novending
+bra_dun02	mapflag	novending
+dicastes01	mapflag	novending
+dicastes02	mapflag	novending
+dic_in01	mapflag	novending
+dic_fild01	mapflag	novending
+dic_fild02	mapflag	novending
+dic_dun01	mapflag	novending
+dic_dun02	mapflag	novending
+job3_gen01	mapflag	novending
+s_atelier	mapflag	novending
+job3_sha01	mapflag	novending
+//evt_zombie	mapflag	novending
+//evt_coke	mapflag	novending
+//ac_sl_area	mapflag	novending
+//ac_cl_hall	mapflag	novending
+//ac_cl_room	mapflag	novending
+//jp_s_dun11	mapflag	novending
+mora	mapflag	novending
+bif_fild01	mapflag	novending
+bif_fild02	mapflag	novending
+1@mist	mapflag	novending
+dewata	mapflag	novending
+dew_in01	mapflag	novending
+dew_fild01	mapflag	novending
+dew_dun01	mapflag	novending
+dew_dun02	mapflag	novending
+que_house_s	mapflag	novending
+malangdo	mapflag	novending
+mal_in01	mapflag	novending
+mal_in02	mapflag	novending
+mal_dun01	mapflag	novending
+1@pump	mapflag	novending
+2@pump	mapflag	novending
+1@cash	mapflag	novending
+iz_dun05	mapflag	novending
+evt_mobroom	mapflag	novending
+alde_tt03	mapflag	novending
+dic_dun03	mapflag	novending
+//mjolnir_04_1	mapflag	novending
+1@lhz	mapflag	novending
+lhz_dun04	mapflag	novending
+que_lhz	mapflag	novending
+evt_swar_b	mapflag	novending
+evt_swar_r	mapflag	novending
+evt_swar_s	mapflag	novending
+evt_swar_t	mapflag	novending
+gld2_ald	mapflag	novending
+gld2_gef	mapflag	novending
+gld2_pay	mapflag	novending
+gld2_prt	mapflag	novending
+gld_dun01_2	mapflag	novending
+gld_dun02_2	mapflag	novending
+gld_dun03_2	mapflag	novending
+gld_dun04_2	mapflag	novending
+malaya	mapflag	novending
+job_ko	mapflag	novending
+ma_scene01	mapflag	novending
+1@ma_b	mapflag	novending
+1@ma_c	mapflag	novending
+1@ma_h	mapflag	novending
+ma_in01	mapflag	novending
+ma_dun01	mapflag	novending
+ma_fild01	mapflag	novending
+ma_fild02	mapflag	novending
+ma_zif01	mapflag	novending
+ma_zif02	mapflag	novending
+ma_zif03	mapflag	novending
+ma_zif04	mapflag	novending
+ma_zif05	mapflag	novending
+ma_zif06	mapflag	novending
+ma_zif07	mapflag	novending
+ma_zif08	mapflag	novending
+ma_zif09	mapflag	novending
+new_event	mapflag	novending
+eclage	mapflag	novending
+ecl_fild01	mapflag	novending
+ecl_tdun01	mapflag	novending
+ecl_tdun02	mapflag	novending
+ecl_tdun03	mapflag	novending
+ecl_tdun04	mapflag	novending
+que_avan01	mapflag	novending
+1@ecl	mapflag	novending
+ecl_in01	mapflag	novending
+ecl_in02	mapflag	novending
+ecl_in03	mapflag	novending
+ecl_in04	mapflag	novending
+ecl_hub01	mapflag	novending
+moc_prydn1	mapflag	novending
+moc_prydn2	mapflag	novending
+iz_ac01	mapflag	novending
+iz_ac02	mapflag	novending
+treasure_n1	mapflag	novending
+treasure_n2	mapflag	novending
+iz_int	mapflag	novending
+iz_ng01	mapflag	novending
+iz_int01	mapflag	novending
+iz_int02	mapflag	novending
+iz_int03	mapflag	novending
+iz_int04	mapflag	novending
+iz_ac01_a	mapflag	novending
+iz_ac02_a	mapflag	novending
+iz_ac01_b	mapflag	novending
+iz_ac02_b	mapflag	novending
+iz_ac01_c	mapflag	novending
+iz_ac02_c	mapflag	novending
+iz_ac01_d	mapflag	novending
+iz_ac02_d	mapflag	novending
+te_prtcas01	mapflag	novending
+te_prtcas02	mapflag	novending
+te_prtcas03	mapflag	novending
+te_prtcas04	mapflag	novending
+te_prtcas05	mapflag	novending
+te_aldecas1	mapflag	novending
+te_aldecas2	mapflag	novending
+te_aldecas3	mapflag	novending
+te_aldecas4	mapflag	novending
+te_aldecas5	mapflag	novending
+prt_fild08a	mapflag	novending
+prt_fild08b	mapflag	novending
+prt_fild08c	mapflag	novending
+prt_fild08d	mapflag	novending
+izlude_a	mapflag	novending
+izlude_b	mapflag	novending
+izlude_c	mapflag	novending
+izlude_d	mapflag	novending
+te_prt_gld	mapflag	novending
+te_alde_gld	mapflag	novending
+teg_dun01	mapflag	novending
+teg_dun02	mapflag	novending
+1@gl_k	mapflag	novending
+2@gl_k	mapflag	novending
+gl_chyard_	mapflag	novending
+gl_cas02_	mapflag	novending
+evt_bomb	mapflag	novending
+1@def01	mapflag	novending
+1@def02	mapflag	novending
+1@def03	mapflag	novending
+1@gef	mapflag	novending
+1@face	mapflag	novending
+1@sara	mapflag	novending
+1@gef_in	mapflag	novending
+dali	mapflag	novending
+dali02	mapflag	novending
+1@ge_st	mapflag	novending
+1@spa	mapflag	novending
+1@tnm1	mapflag	novending
+1@tnm2	mapflag	novending
+1@tnm3	mapflag	novending
+1@dth1	mapflag	novending
+1@dth2	mapflag	novending
+1@dth3	mapflag	novending
+1@eom	mapflag	novending
+1@jtb	mapflag	novending
+1@rev	mapflag	novending
+1@xm_d	mapflag	novending
+moro_cav	mapflag	novending
+moro_vol	mapflag	novending
+silk_lair	mapflag	novending
+c_tower2_	mapflag	novending
+c_tower3_	mapflag	novending
+1@mcd	mapflag	novending
+ver_eju	mapflag	novending
+ver_tunn	mapflag	novending
+verus03	mapflag	novending
+verus04	mapflag	novending
+job_gun	mapflag	novending
+1@air1	mapflag	novending
+1@air2	mapflag	novending
+1@glast	mapflag	novending
+lhz_dun_n	mapflag	novending
+lhz_d_n2	mapflag	novending
+1@gl_kh	mapflag	novending
+2@gl_kh	mapflag	novending
+1@lab	mapflag	novending
+1@uns	mapflag	novending
+un_bk_q	mapflag	novending
+un_bunker	mapflag	novending
+un_myst	mapflag	novending
+verus01	mapflag	novending
+verus02	mapflag	novending
+paramk	mapflag	novending
+1@infi	mapflag	novending
+1@ffp	mapflag	novending
+1@mir	mapflag	novending
+2@mir	mapflag	novending
+1@sthb	mapflag	novending
+1@sthc	mapflag	novending
+1@sthd	mapflag	novending
+prt_cas	mapflag	novending
+prt_cas_q	mapflag	novending
+prt_prison	mapflag	novending
+prt_lib	mapflag	novending
+prt_lib_q	mapflag	novending
+prt_q	mapflag	novending
+prt_pri00	mapflag	novending
+int_land	mapflag	novending
+int_land01	mapflag	novending
+int_land02	mapflag	novending
+int_land03	mapflag	novending
+int_land04	mapflag	novending
+lasagna	mapflag	novending
+lasa_fild01	mapflag	novending
+lasa_fild02	mapflag	novending
+lasa_dun01	mapflag	novending
+lasa_dun02	mapflag	novending
+lasa_dun03	mapflag	novending
+conch_in	mapflag	novending
+lasa_in01	mapflag	novending
+lasa_dun_q	mapflag	novending
+1@pop1	mapflag	novending
+1@pop2	mapflag	novending
+1@pop3	mapflag	novending
+1@slw	mapflag	novending
+1@swat	mapflag	novending
+que_swat	mapflag	novending
+slabw01	mapflag	novending
+rebel_in	mapflag	novending
+1@md_gef	mapflag	novending
+1@md_pay	mapflag	novending
+har_in01	mapflag	novending
+harboro1	mapflag	novending
+harboro2	mapflag	novending
+rockmi1	mapflag	novending
+rockmi2	mapflag	novending
+rockrdg1	mapflag	novending
+rockrdg2	mapflag	novending
+1@gl_k2	mapflag	novending
+2@gl_k2	mapflag	novending
+1@xm_d2	mapflag	novending
+pay_d03_i	mapflag	novending
+gef_d01_i	mapflag	novending
+ice_d03_i	mapflag	novending
+1@tre	mapflag	novending
+1@begi	mapflag	novending
+tur_d03_i	mapflag	novending
+tur_d04_i	mapflag	novending
+1@crd	mapflag	novending
+ordeal_a00	mapflag	novending
+ordeal_a02	mapflag	novending
+pprontera	mapflag	novending
+niflxmas	mapflag	novending
+sch_lab	mapflag	novending
+nakhyang	mapflag	novending
+lasa_sea	mapflag	novending
+1@drdo	mapflag	novending
+x_lhz	mapflag	novending
+x_prt	mapflag	novending
+x_ra	mapflag	novending
+prt_evt_in	mapflag	novending
+vis_h01	mapflag	novending
+vis_h02	mapflag	novending
+vis_h03	mapflag	novending
+vis_h04	mapflag	novending
+ein_d02_i	mapflag	novending
+com_d02_i	mapflag	novending
+1@soul	mapflag	novending
+star_frst	mapflag	novending
+star_in	mapflag	novending
+2009rwc_01	mapflag	novending
+2009rwc_02	mapflag	novending
+2009rwc_03	mapflag	novending
+2009rwc_04	mapflag	novending
+2009rwc_05	mapflag	novending
+2009rwc_06	mapflag	novending
+2009rwc_07	mapflag	novending
+2009rwc_08	mapflag	novending
+2009rwc_f01	mapflag	novending
+2012rwc_01	mapflag	novending
+2012rwc_02	mapflag	novending
+2012rwc_03	mapflag	novending
+2012rwc_04	mapflag	novending
+2012rwc_05	mapflag	novending
+2012rwc_06	mapflag	novending
+2012rwc_07	mapflag	novending
+2012rwc_08	mapflag	novending
+vendzone	mapflag	novending
