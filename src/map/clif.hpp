@@ -39,7 +39,7 @@ struct achievement;
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
 	MAX_PACKET_DB  = 0xAFF,
-	MAX_PACKET_POS = 20,
+	MAX_PACKET_POS = 40,
 };
 
 enum e_packet_ack : uint8_t{

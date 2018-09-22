@@ -104,7 +104,7 @@ int mail_savemessage(struct mail_message* msg)
 		msg->id = (int)SqlStmt_LastInsertId(stmt);
 
 	SqlStmt_Free(stmt);
-
+	
 	StringBuf_Clear(&buf);
 	StringBuf_Printf(&buf,"INSERT INTO `%s` (`id`, `index`, `amount`, `nameid`, `refine`, `attribute`, `identify`, `unique_id`, `bound`", schema_config.mail_attachment_db);
 	for (j = 0; j < MAX_SLOTS; j++)
@@ -557,7 +557,7 @@ void mapif_parse_Mail_send(int fd)
 			Sql_ShowDebug(sql_handle);
 			return;
 		}
-
+		
 		msg.dest_id = 0;
 		msg.dest_name[0] = '\0';
 

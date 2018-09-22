@@ -24,11 +24,11 @@ CREATE TABLE `item_db2` (
   `refineable` tinyint(1) unsigned DEFAULT NULL,
   `view` smallint(5) unsigned DEFAULT NULL,
   `script` text,
-  `equip_script` text,
+\  `equip_script` text,
   `unequip_script` text,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `UniqueAegisName` (`name_english`)
-) ENGINE=InnoDB;
+) ENGINE=MyISAM;
 
 # Items Additional Database
 #

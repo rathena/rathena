@@ -580,7 +580,7 @@ void chmapif_changemapserv_ack(int fd, bool nok){
     WFIFOHEAD(fd,30);
     WFIFOW(fd,0) = 0x2b06;
     memcpy(WFIFOP(fd,2), RFIFOP(fd,2), 28);
-    if(nok)
+    if(nok) 
 	WFIFOL(fd,6) = 0; //Set login1 to 0.(not ok)
     WFIFOSET(fd,30);
 }
@@ -1099,7 +1099,7 @@ int chmapif_parse_reqauth(int fd, int id){
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_updmapip(int fd, int id){
-	if (RFIFOREST(fd) < 6)
+	if (RFIFOREST(fd) < 6) 
 		return 0;
 	map_server[id].ip = ntohl(RFIFOL(fd, 2));
 	ShowInfo("Updated IP address of map-server #%d to %d.%d.%d.%d.\n", id, CONVIP(map_server[id].ip));
@@ -1216,7 +1216,7 @@ int chmapif_parse_reqcharban(int fd){
 			Sql_GetData(sql_handle, 2, &data, NULL); unban_time = atol(data);
 			Sql_FreeResult(sql_handle);
 
-			if(timediff<0 && unban_time==0)
+			if(timediff<0 && unban_time==0) 
 				return 1; //attemp to reduce time of a non banned account ?!?
 			else if(unban_time<now) unban_time=now; //new entry
 			unban_time += timediff; //alterate the time

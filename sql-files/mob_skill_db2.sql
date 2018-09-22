@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS `mob_skill_db2` (
   `VAL5` mediumint(9) DEFAULT NULL,
   `EMOTION` text,
   `CHAT` text
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 # Custom Mob Skill Database
 #

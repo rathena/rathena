@@ -467,7 +467,7 @@ bool mapif_parse_itembound_retrieve(int fd)
  */
 void mapif_storage_data_loaded(int fd, uint32 account_id, char type, struct s_storage entries, bool result) {
 	uint16 size = sizeof(struct s_storage) + 10;
-
+	
 	WFIFOHEAD(fd, size);
 	WFIFOW(fd, 0) = 0x388a;
 	WFIFOW(fd, 2) = size;
@@ -553,7 +553,7 @@ bool mapif_parse_StorageSave(int fd) {
 	type = RFIFOB(fd, 4);
 	aid = RFIFOL(fd, 5);
 	cid = RFIFOL(fd, 9);
-
+	
 	memset(&stor, 0, sizeof(struct s_storage));
 	memcpy(&stor, RFIFOP(fd, 13), sizeof(struct s_storage));
 

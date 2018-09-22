@@ -16,7 +16,7 @@
 #include "loginlog.hpp"
 
 // login sql settings
-static char   ipban_db_hostname[64] = "127.0.0.1";
+static char   ipban_db_hostname[32] = "127.0.0.1";
 static uint16 ipban_db_port = 3306;
 static char   ipban_db_username[32] = "ragnarok";
 static char   ipban_db_password[32] = "";
@@ -214,7 +214,7 @@ void ipban_init(void) {
 		exit(EXIT_FAILURE);
 	}
         ShowInfo("Ipban connection made.\n");
-
+        
 	if( codepage[0] != '\0' && SQL_ERROR == Sql_SetEncoding(sql_handle, codepage) )
 		Sql_ShowDebug(sql_handle);
 

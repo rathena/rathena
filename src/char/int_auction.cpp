@@ -98,7 +98,7 @@ unsigned int auction_create(struct auction_data *auction)
 	}
 	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%hu',?,'%d','%d','%d','%" PRIu64 "'",
 		auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute, auction->item.unique_id);
-	for( j = 0; j < MAX_SLOTS; j++ )
+	for( j = 0; j < MAX_SLOTS; j++ )	
 		StringBuf_Printf(&buf, ",'%hu'", auction->item.card[j]);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
 		StringBuf_Printf(&buf, ", '%d'", auction->item.option[j].id);

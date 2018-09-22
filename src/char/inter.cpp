@@ -501,7 +501,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 	int group_id, int logincount, int state, const char *email, const char *last_ip, const char *lastlogin,
 	const char *birthdate, const char *userid)
 {
-
+	
 	if (map_fd <= 0 || !session_isActive(map_fd))
 		return; // check if we have a valid fd
 
@@ -904,7 +904,7 @@ void inter_config_readConf(void) {
 					yaml_invalid_warning("inter_config_readConf: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", node, current_file);
 					continue;
 				}
-
+				
 				if (node["Name"])
 					safestrncpy(storage_table->name, node["Name"].as<std::string>().c_str(), NAME_LENGTH);
 				if(node["Table"])
@@ -999,7 +999,7 @@ void inter_final(void)
 	inter_clan_final();
 
 	if(geoip_cache) aFree(geoip_cache);
-
+	
 	return;
 }
 

@@ -1482,12 +1482,12 @@ int mapif_parse_GuildBasicInfoChange(int fd,int guild_id,int type,const char *da
  * Receive a modification request for the guildmember
  * @param fd : map-serv link
  * @param guild_id : Guild to alter
- * @param account_id : Player aid to alter
+ * @param account_id : Player aid to alter 
  * @param char_id : Player cid to alter
  * @param type : Type of modification
  * @param data : Value of modification
  * @param len : Size of value
- * @return
+ * @return 
  */
 int mapif_parse_GuildMemberInfoChange(int fd,int guild_id,uint32 account_id,uint32 char_id,int type,const char *data,int len)
 {
@@ -1704,7 +1704,7 @@ int mapif_parse_GuildDeleteAlliance(struct guild *g, int guild_id, uint32 accoun
  * @param account_id1
  * @param account_id2
  * @param flag
- * @return
+ * @return 
  */
 int mapif_parse_GuildAlliance(int fd,int guild_id1,int guild_id2,uint32 account_id1,uint32 account_id2,int flag)
 {

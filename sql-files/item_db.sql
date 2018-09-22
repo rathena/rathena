@@ -28,7 +28,7 @@ CREATE TABLE `item_db` (
   `unequip_script` text,
   PRIMARY KEY (`id`),
   UNIQUE INDEX `UniqueAegisName` (`name_english`)
-) ENGINE=MyISAM;
+) ENGINE=InnoDB;
 
 # Items Database
 #

@@ -73,7 +73,7 @@ void int_party_calc_state(struct party_data *p)
 
 	//Check party size
 	for(i=0;i<MAX_PARTY;i++){
-		if (!p->party.member[i].lv)
+		if (!p->party.member[i].lv) 
 			continue;
 		p->size++;
 		if(p->party.member[i].online)
@@ -96,7 +96,7 @@ void int_party_calc_state(struct party_data *p)
 	//max/min levels.
 	for(i=0;i<MAX_PARTY;i++){
 		unsigned int lv=p->party.member[i].lv;
-		if (!lv)
+		if (!lv) 
 			continue;
 		if (p->party.member[i].online) {
 			if( lv < p->min_lv ) p->min_lv=lv;
@@ -783,7 +783,7 @@ int mapif_parse_PartyLeaderChange(int fd,int party_id,uint32 account_id,uint32 c
  * Used to update party share level range in run time
  * @param fd : map-serv link
  * @param share_lvl : Max level number of difference to share exp
- * @return
+ * @return 
  */
 int mapif_parse_PartyShareLevel(int fd,unsigned int share_lvl)
 {
@@ -951,6 +951,6 @@ int inter_party_charname_changed(int party_id, uint32 char_id, char *name)
 	safestrncpy(p->party.member[i].name, name, NAME_LENGTH);
 
 	mapif_party_info(-1, &p->party, char_id);
-
+	
 	return 0;
 }

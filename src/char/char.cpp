@@ -628,10 +628,10 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 			&&  items[i].unique_id == item.unique_id
 			) {	//They are the same item.
 				int k;
-
+				
 				ARR_FIND( 0, MAX_SLOTS, j, items[i].card[j] != item.card[j] );
 				ARR_FIND( 0, MAX_ITEM_RDM_OPT, k, items[i].option[k].id != item.option[k].id || items[i].option[k].value != item.option[k].value || items[i].option[k].param != item.option[k].param );
-
+				
 				if( j == MAX_SLOTS &&
 					k == MAX_ITEM_RDM_OPT &&
 				    items[i].amount == item.amount &&
@@ -1294,7 +1294,7 @@ int char_rename_char_sql(struct char_session_data *sd, uint32 char_id)
 		Sql_ShowDebug(sql_handle);
 		return 3;
 	}
-
+	
 	// Update party and party members with the new player name
 	if( char_dat.party_id )
 		inter_party_charname_changed(char_dat.party_id, char_id, sd->new_name);
@@ -1460,7 +1460,7 @@ int char_make_new_char_sql(struct char_session_data* sd, char* name_, int str, i
 	}
 
 #if PACKETVER >= 20151001
-	if(!(start_job == JOB_NOVICE && (charserv_config.allowed_job_flag&1)) &&
+	if(!(start_job == JOB_NOVICE && (charserv_config.allowed_job_flag&1)) && 
 		!(start_job == JOB_SUMMONER && (charserv_config.allowed_job_flag&2)))
 		return -2; // Invalid job
 
@@ -1689,7 +1689,7 @@ enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_i
 	/* delete mail attachments (only received) */
 	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `id` IN ( SELECT `id` FROM `%s` WHERE `dest_id`='%d' )", schema_config.mail_attachment_db, schema_config.mail_db, char_id))
 		Sql_ShowDebug(sql_handle);
-
+	
 	/* delete mails (only received) */
 	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE `dest_id`='%d'", schema_config.mail_db, char_id))
 		Sql_ShowDebug(sql_handle);
@@ -2149,11 +2149,11 @@ void char_pincode_decrypt( uint32 userSeed, char* pin ){
 	int i;
 	char tab[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
 	char *buf;
-
+	
 	for( i = 1; i < 10; i++ ){
 		int pos;
 		uint32 multiplier = 0x3498, baseSeed = 0x881234;
-
+		
 		userSeed = baseSeed + userSeed * multiplier;
 		pos = userSeed % ( i + 1 );
 		if( i != pos ){
@@ -2283,14 +2283,14 @@ int char_lan_config_read(const char *lancfgName) {
 bool char_checkdb(void){
 	int i;
 	const char* sqltable[] = {
-		schema_config.char_db, schema_config.hotkey_db, schema_config.scdata_db, schema_config.cart_db,
+		schema_config.char_db, schema_config.hotkey_db, schema_config.scdata_db, schema_config.cart_db, 
                 schema_config.inventory_db, schema_config.charlog_db,
                 schema_config.char_reg_str_table, schema_config.char_reg_num_table, schema_config.acc_reg_str_table,
                 schema_config.acc_reg_num_table, schema_config.skill_db, schema_config.interlog_db, schema_config.memo_db,
-		schema_config.guild_db, schema_config.guild_alliance_db, schema_config.guild_castle_db,
-                schema_config.guild_expulsion_db, schema_config.guild_member_db,
+		schema_config.guild_db, schema_config.guild_alliance_db, schema_config.guild_castle_db, 
+                schema_config.guild_expulsion_db, schema_config.guild_member_db, 
                 schema_config.guild_skill_db, schema_config.guild_position_db, schema_config.guild_storage_db,
-		schema_config.party_db, schema_config.pet_db, schema_config.friend_db, schema_config.mail_db,
+		schema_config.party_db, schema_config.pet_db, schema_config.friend_db, schema_config.mail_db, 
                 schema_config.auction_db, schema_config.quest_db, schema_config.homunculus_db, schema_config.skill_homunculus_db,
                 schema_config.mercenary_db, schema_config.mercenary_owner_db,
 		schema_config.elemental_db, schema_config.ragsrvinfo_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
@@ -2743,7 +2743,7 @@ void char_set_defaults(){
 	charserv_config.char_check_db =1;
 
 	// See const.hpp to change the default values
-	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME);
+	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME); 
 	charserv_config.start_point[0].x = MAP_DEFAULT_X;
 	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
 	charserv_config.start_point_count = 1;
