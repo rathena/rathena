@@ -1135,7 +1135,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 		}
 
-		if( (sce = sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_CARDFIX_ATK) && rnd()%100 < sce->val2 ) {
+		if( (sce = sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_inf3(skill_id)&INF3_NO_EFF_AUTOGUARD) && rnd()%100 < sce->val2) {
 			int delay;
 			struct status_change_entry *sce_d = sc->data[SC_DEVOTION];
 			struct block_list *d_bl = NULL;
@@ -1227,7 +1227,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 		}
 
-		if (((sce = sc->data[SC_UTSUSEMI]) || sc->data[SC_BUNSINJYUTSU]) && flag&BF_WEAPON && !(skill_get_nk(skill_id)&NK_NO_CARDFIX_ATK)) {
+		if (((sce = sc->data[SC_UTSUSEMI]) || sc->data[SC_BUNSINJYUTSU]) && flag&BF_WEAPON && !(skill_get_inf3(skill_id)&INF3_NO_EFF_CICADA)) {
 			skill_additional_effect (src, bl, skill_id, skill_lv, flag, ATK_BLOCK, gettick() );
 			if (!status_isdead(src))
 				skill_counter_additional_effect( src, bl, skill_id, skill_lv, flag, gettick() );
@@ -8522,6 +8522,7 @@ static const struct _battle_data {
 	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
 	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
+	{ "switch_remove_edp",                  &battle_config.switch_remove_edp,               2,      0,      3,              },
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
 	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
