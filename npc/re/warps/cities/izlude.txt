@@ -69,7 +69,8 @@ iz_int,56,15,0	script	#ship_out	WARPNPC,1,1,{
 	end;
 OnTouch:
 	.@num$ = replacestr( strnpcinfo(2), "ship_out", "" );
-	.@map$ = "int_land" + .@num$;
+	// .@map$ = "int_land" + .@num$;
+	.@map$ = "int_land";
 	savepoint .@map$,77,101;
 	warp .@map$,85,107;
 	end;

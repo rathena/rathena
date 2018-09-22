@@ -37,7 +37,7 @@ prontera,148,195,4	script	Guild Storage Manager::kaf_prontera6 	415,{
 	callfunc "F_KafEnd",0,1,"in the city of Prontera";
 }
 //== Payon =================================================
-payon,180,106,4	script	Guild Storage Manager::kaf_payon4 	415,{
+payon,149,231,4	script	Guild Storage Manager::kaf_payon4 	415,{
 	callfunc "F_KafSet";
 	mes "[^0000FFGuild Storage Manager^000000]";
 	mes "Welcome to the";
@@ -132,7 +132,7 @@ izlude,133,149,4	script	Guild Storage Manager::kaf_izlude2 	415,{
 	callfunc "F_KafEnd",0,1,"in the city of Izlude";
 }
 //== Alberta ===============================================
-alberta,114,65,0	script	Guild Storage Manager::kaf_alberta3 	415,{
+alberta,114,65,5	script	Guild Storage Manager::kaf_alberta3 	415,{
 	callfunc "F_KafSet";
 	mes "[^0000FFGuild Storage Manager^000000]";
 	mes "Welcome to the";

@@ -1,10 +1,10 @@
 Header:
   Type: ATTENDANCE_CONF
   Version: 1
-  
+
 Attendance:
-  - Start: 20180502
-    End: 20180529
+  - Start: 20180909
+    End: 20180929
     Rewards:
       - Day: 1
         ItemId: 22979

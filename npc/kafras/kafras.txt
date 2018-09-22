@@ -484,7 +484,7 @@ einbech,181,132,5	script	Kafra Employee#ein3::kaf_einbech	860,{
 	mes "are always on your side.";
 	mes "So how can I help you?";
 	callfunc "F_Kafra",5,4,1,40,850;
-	savepoint "einbech",182,124,1,1;
+	savepoint "einbech",174,129,1,1;
 	callfunc "F_KafEnd",0,1,"in the town of Einbech";
 }
 

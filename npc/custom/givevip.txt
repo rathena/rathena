@@ -26,3 +26,22 @@ OnPCLoginEvent:
 	}
 	end;
 }
+
+sec_in02,11,32,3	script	VIP	90,{
+	if (vip_status(1)) {
+		mes "VIP";
+	} else {
+		mes "non-VIP";
+	}
+	mes "VIP Status : " + vip_status(1);
+	mes "VIP Expire : " + vip_status(2);
+	mes "VIP Time Remaining : " + vip_status(3);
+	vip_time 5;
+	next;
+	if (vip_status(1)) {
+		mes "VIP";
+	} else {
+		mes "non-VIP";
+	}
+	close;
+}﻿
