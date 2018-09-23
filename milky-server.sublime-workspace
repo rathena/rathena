@@ -416,54 +416,70 @@
 	"buffers":
 	[
 		{
-			"file": "/D/Work/rathena/client/System/CheckAttendance.lub",
+			"file": "npc/merchants/refine.txt",
 			"settings":
 			{
-				"buffer_size": 800,
+				"buffer_size": 39911,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "/D/Work/rathena/client/data/luafiles514/lua files/datainfo/tb_cashshop_banner.lub",
+			"file": "npc/custom/card_remover.txt",
 			"settings":
 			{
-				"buffer_size": 319,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/custom/vendor_control.txt",
-			"settings":
-			{
-				"buffer_size": 0,
+				"buffer_size": 5795,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "db/map_index.txt",
+			"file": "/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
 			"settings":
 			{
-				"buffer_size": 11020,
+				"buffer_size": 700,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"contents": "Searching 2065 files for \"vendzone\" (case sensitive)\n\nD:\\MilkyRO Project\\ServerScript\\conf\\maps_athena.conf:\n 1349  //------------------------- Clone Maps ---------------------------\n 1350  //------------------------- Extra Maps ---------------------------\n 1351: map: vendzone\n\nD:\\MilkyRO Project\\ServerScript\\db\\map_index.txt:\n 1052  // - Other/Extra maps -\n 1053  //======================================================================================\n 1054: vendzone\n\nD:\\MilkyRO Project\\ServerScript\\db\\re\\map_cache.dat:\n    <binary>\n\nD:\\MilkyRO Project\\ServerScript\\npc\\custom\\vendor_control.txt:\n   16  //==========================================================\n   17  \n   18: vendzone,47,51,5\tscript\tVending Helper\t73,{\n   19  \tmes \"[\"+ strnpcinfo(1) +\"]\";\n   20  \tif ( !getskilllv( \"MC_VENDING\" ) ) {\n   ..\n   54  OnInit:\n   55  //\t======================= Configuration HERE =============================\n   56: \t.map$ = \"vendzone\"; // map\n   57  \tsetarray .@x, 29,33,37,41,45,53,57,61,65,69; // x coordinates\n   58  \tsetarray .@y, 29,33,37,41,45,53,57,61,65,69; // y coordinates\n   ..\n  110  \n  111  // Add more if needed.\n  112: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot0\t4_BULLETIN_BOARD2\n  113: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot1\t4_BULLETIN_BOARD2\n  114: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot2\t4_BULLETIN_BOARD2\n  115: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot3\t4_BULLETIN_BOARD2\n  116: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot4\t4_BULLETIN_BOARD2\n  117: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot5\t4_BULLETIN_BOARD2\n  118: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot6\t4_BULLETIN_BOARD2\n  119: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot7\t4_BULLETIN_BOARD2\n  120: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot8\t4_BULLETIN_BOARD2\n  121: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot9\t4_BULLETIN_BOARD2\n  122: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot10\t4_BULLETIN_BOARD2\n  123: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot11\t4_BULLETIN_BOARD2\n  124: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot12\t4_BULLETIN_BOARD2\n  125: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot13\t4_BULLETIN_BOARD2\n  126: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot14\t4_BULLETIN_BOARD2\n  127: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot15\t4_BULLETIN_BOARD2\n  128: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot16\t4_BULLETIN_BOARD2\n  129: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot17\t4_BULLETIN_BOARD2\n  130: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot18\t4_BULLETIN_BOARD2\n  131: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot19\t4_BULLETIN_BOARD2\n  132: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot20\t4_BULLETIN_BOARD2\n  133: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot21\t4_BULLETIN_BOARD2\n  134: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot22\t4_BULLETIN_BOARD2\n  135: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot23\t4_BULLETIN_BOARD2\n  136: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot24\t4_BULLETIN_BOARD2\n  137: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot25\t4_BULLETIN_BOARD2\n  138: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot26\t4_BULLETIN_BOARD2\n  139: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot27\t4_BULLETIN_BOARD2\n  140: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot28\t4_BULLETIN_BOARD2\n  141: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot29\t4_BULLETIN_BOARD2\n  142: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot30\t4_BULLETIN_BOARD2\n  143: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot31\t4_BULLETIN_BOARD2\n  144: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot32\t4_BULLETIN_BOARD2\n  145: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot33\t4_BULLETIN_BOARD2\n  146: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot34\t4_BULLETIN_BOARD2\n  147: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot35\t4_BULLETIN_BOARD2\n  148: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot36\t4_BULLETIN_BOARD2\n  149: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot37\t4_BULLETIN_BOARD2\n  150: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot38\t4_BULLETIN_BOARD2\n  151: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot39\t4_BULLETIN_BOARD2\n  152: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot40\t4_BULLETIN_BOARD2\n  153: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot41\t4_BULLETIN_BOARD2\n  154: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot42\t4_BULLETIN_BOARD2\n  155: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot43\t4_BULLETIN_BOARD2\n  156: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot44\t4_BULLETIN_BOARD2\n  157: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot45\t4_BULLETIN_BOARD2\n  158: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot46\t4_BULLETIN_BOARD2\n  159: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot47\t4_BULLETIN_BOARD2\n  160: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot48\t4_BULLETIN_BOARD2\n  161: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot49\t4_BULLETIN_BOARD2\n  162: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot50\t4_BULLETIN_BOARD2\n  163: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot51\t4_BULLETIN_BOARD2\n  164: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot52\t4_BULLETIN_BOARD2\n  165: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot53\t4_BULLETIN_BOARD2\n  166: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot54\t4_BULLETIN_BOARD2\n  167: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot55\t4_BULLETIN_BOARD2\n  168: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot56\t4_BULLETIN_BOARD2\n  169: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot57\t4_BULLETIN_BOARD2\n  170: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot58\t4_BULLETIN_BOARD2\n  171: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot59\t4_BULLETIN_BOARD2\n  172: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot60\t4_BULLETIN_BOARD2\n  173: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot61\t4_BULLETIN_BOARD2\n  174: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot62\t4_BULLETIN_BOARD2\n  175: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot63\t4_BULLETIN_BOARD2\n  176: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot64\t4_BULLETIN_BOARD2\n  177: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot65\t4_BULLETIN_BOARD2\n  178: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot66\t4_BULLETIN_BOARD2\n  179: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot67\t4_BULLETIN_BOARD2\n  180: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot68\t4_BULLETIN_BOARD2\n  181: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot69\t4_BULLETIN_BOARD2\n  182: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot70\t4_BULLETIN_BOARD2\n  183: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot71\t4_BULLETIN_BOARD2\n  184: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot72\t4_BULLETIN_BOARD2\n  185: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot73\t4_BULLETIN_BOARD2\n  186: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot74\t4_BULLETIN_BOARD2\n  187: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot75\t4_BULLETIN_BOARD2\n  188: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot76\t4_BULLETIN_BOARD2\n  189: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot77\t4_BULLETIN_BOARD2\n  190: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot78\t4_BULLETIN_BOARD2\n  191: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot79\t4_BULLETIN_BOARD2\n  192: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot80\t4_BULLETIN_BOARD2\n  193: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot81\t4_BULLETIN_BOARD2\n  194: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot82\t4_BULLETIN_BOARD2\n  195: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot83\t4_BULLETIN_BOARD2\n  196: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot84\t4_BULLETIN_BOARD2\n  197: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot85\t4_BULLETIN_BOARD2\n  198: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot86\t4_BULLETIN_BOARD2\n  199: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot87\t4_BULLETIN_BOARD2\n  200: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot88\t4_BULLETIN_BOARD2\n  201: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot89\t4_BULLETIN_BOARD2\n  202: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot90\t4_BULLETIN_BOARD2\n  203: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot91\t4_BULLETIN_BOARD2\n  204: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot92\t4_BULLETIN_BOARD2\n  205: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot93\t4_BULLETIN_BOARD2\n  206: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot94\t4_BULLETIN_BOARD2\n  207: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot95\t4_BULLETIN_BOARD2\n  208: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot96\t4_BULLETIN_BOARD2\n  209: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot97\t4_BULLETIN_BOARD2\n  210: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot98\t4_BULLETIN_BOARD2\n  211: vendzone,0,0,4\tduplicate(vend_slot)\t#vend_slot99\t4_BULLETIN_BOARD2\n  212  \n  213  \n  ...\n 1254  2012rwc_07\tmapflag\tnovending\n 1255  2012rwc_08\tmapflag\tnovending\n 1256: //vendzone\tmapflag\tnovending\n\nD:\\MilkyRO Project\\ServerScript\\npc\\custom\\warper.txt:\n  523  \n  524  // S1: Go(\"auction_01\",22,68);\n  525: S0: Go(\"vendzone, 49, 48\");\n  526  S2: Go(\"bat_room\",154,150);\n  527  S3: Go(\"cmd_in02\",179,129);\n  ...\n  617  mora,57,152,4\tduplicate(Warper)\tWarper#mora\t531\n  618  mid_camp,191,249,4\tduplicate(Warper)\tWarper#midcamp\t531\n  619: vendzone,51,51,3\tduplicate(Warper)\tWarper#vendzone\t531\n\n109 matches across 5 files\n",
+			"file": "npc/merchants/socket_enchant.txt",
 			"settings":
 			{
-				"buffer_size": 9076,
-				"line_ending": "Windows",
-				"name": "Find Results",
-				"scratch": true
+				"buffer_size": 17001,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "conf/battle/player.conf",
+			"file": "npc/merchants/socket_enchant2.txt",
 			"settings":
 			{
-				"buffer_size": 10271,
+				"buffer_size": 17654,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/custom/givevip.txt",
+			"settings":
+			{
+				"buffer_size": 1321,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/custom/resetnpc.txt",
+			"settings":
+			{
+				"buffer_size": 1921,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/custom/healer.txt",
+			"settings":
+			{
+				"buffer_size": 3381,
 				"line_ending": "Windows"
 			}
 		}
@@ -659,13 +675,34 @@
 	[
 		"/D/MilkyRO Project/ServerScript",
 		"/D/MilkyRO Project/ServerScript/conf",
-		"/D/MilkyRO Project/ServerScript/db",
-		"/D/MilkyRO Project/ServerScript/src",
-		"/D/MilkyRO Project/ServerScript/src/map"
+		"/D/MilkyRO Project/ServerScript/conf/battle",
+		"/D/MilkyRO Project/ServerScript/npc"
 	],
 	"file_history":
 	[
 		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
+		"/D/MilkyRO Project/ServerScript/npc/scripts_custom.conf",
+		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/merchants/socket_enchant2.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/guild_storage_kafra.txt",
+		"/D/Work/rathena/client/System/CheckAttendance.lub",
+		"/D/Work/rathena/client/data/luafiles514/lua files/datainfo/tb_cashshop_banner.lub",
+		"/D/MilkyRO Project/ServerScript/npc/custom/vendor_control.txt",
+		"/D/MilkyRO Project/Patches/20180924a/sclientinfo.xml",
+		"/D/MilkyRO Project/ServerScript/conf/char_athena.conf",
+		"/D/MilkyRO Project/ServerScript/npc/scripts_athena.conf",
+		"/D/MilkyRO Project/ServerScript/src/custom/defines_pre.hpp",
+		"/D/xampp2/htdocs/FluxCP/themes/default-brightix/pages/index.php",
+		"/D/xampp2/htdocs/FluxCP/themes/default/pages/index.php",
+		"/D/xampp2/htdocs/FluxCP/themes/default/main/index.php",
+		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/data/configs/ro.xml",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/clientinfo.xml",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/sclientinfo.xml",
+		"/D/Work/rathena/client/data/clientinfo.xml",
+		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/config.txt",
+		"/D/MilkyRO Project/ServerScript/conf/battle/player.conf",
+		"/D/MilkyRO Project/ServerScript/npc/custom/itemmall.txt",
+		"/D/MilkyRO Project/Temporary/itemmall.txt",
 		"/D/MilkyRO Project/ServerScript/db/map_index.txt",
 		"/D/MilkyRO Project/ServerScript/conf/maps_athena.conf",
 		"/D/MilkyRO Project/ServerScript/src/map/battle.cpp",
@@ -681,7 +718,6 @@
 		"/D/Desktop/Hosting Malaya/LoginInfo.txt",
 		"/D/Work/rathena/server/rathena-server/src/custom/defines_pre.hpp",
 		"/D/Work/rathena/server/rathena-localhost/src/custom/defines_pre.hpp",
-		"/D/MilkyRO Project/ServerScript/src/custom/defines_pre.hpp",
 		"/D/MilkyRO Project/ServerScript/src/config/core.hpp",
 		"/D/Work/rathena/server/rathena-localhost/conf/char_athena.conf",
 		"/D/Work/rathena/server/rathena-localhost/conf/inter_athena.conf",
@@ -691,7 +727,6 @@
 		"/D/Downloads/Drop_Rate_Barang2_Berharga_Milky_RO (1).txt",
 		"/D/Work/rathena/server/rathena-localhost/conf/battle/drops.conf",
 		"/D/Work/rathena/server/rathena-server/conf/maps_athena.conf",
-		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/data/configs/ro.xml",
 		"/D/MilkyRO Project/ServerScript/mapcache.bat",
 		"/D/MilkyRO Project/Tools/BrowEdit 2 - Map Editor/readme.txt",
 		"/D/MilkyRO Project/Resources/Map/guild_vs3.gat",
@@ -699,7 +734,6 @@
 		"/D/MilkyRO Project/Resources/Map/guild_vs3.rsw",
 		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/data/configs/rodesktop.xml",
 		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/data/rotextures.txt",
-		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/config.txt",
 		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/readme.txt",
 		"/D/Work/rathena/server/rathena-localhost/conf/battle/misc.conf",
 		"/D/Work/rathena/server/rathena-server/conf/battle/player.conf",
@@ -713,12 +747,10 @@
 		"/D/Work/rathena/server/rathena-server/db/import/attendance.yml",
 		"/D/Work/rathena/server/rathena-server/db/re/attendance.yml",
 		"/D/Work/rathena/server/rathena-localhost/db/re/attendance.yml",
-		"/D/Work/rathena/client/data/clientinfo.xml",
 		"/D/Work/rathena/server/rathena-server/src/map/battle.cpp",
 		"/C/Users/NubsPixel/AppData/Local/Temp/Rar$DIa0.299/README.TXT",
 		"/D/Work/rathena/client/System/itemInfo.lua",
 		"/D/Work/rathena/server/rathena-server/conf/groups.conf",
-		"/D/Work/rathena/client/System/CheckAttendance.lub",
 		"/D/Work/rathena/Milky - reset/System/CheckAttendance.lub",
 		"/D/Work/rathena/LUA/guide.txt",
 		"/D/Work/rathena/LUA/CheckAttendance.lua",
@@ -775,24 +807,7 @@
 		"/D/Work/rathena/Milky - reset/data/lua files/datainfo/npcidentity.lub",
 		"/D/Work/rathena/nubs_mob_sprite2.sql",
 		"/D/Work/rathena/nubs_mob_sprite1.sql",
-		"/D/xampp2/htdocs/script/bigdump.php",
-		"/D/xampp2/php/php.ini",
-		"/D/xampp2/apache/conf/httpd.conf",
-		"/D/Work/rathena/nubs_mob_sprite1",
-		"/D/Work/rathena/Tools/GrfCL/Readme.txt",
-		"/D/Work/rathena/server/rathena-server/doc/script_commands.txt",
-		"/D/Work/rathena/server/rathena-server/doc/item_bonus.txt",
-		"/D/Work/rathena/server/rathena-server/db/import/item_noequip.txt",
-		"/D/Work/rathena/server/rathena-server/db/re/item_noequip.txt",
-		"/D/xampp2/htdocs/ci/application/config/config.php",
-		"/D/xampp2/htdocs/script/sprites/spirtes.php",
-		"/D/xampp2/htdocs/ci/application/controllers/Item.php",
-		"/D/xampp2/htdocs/script/sprites/Make GIFs from ACT and SPR files.bat",
-		"/D/Work/rathena/server/rathena-server/db/re/produce_db.txt",
-		"/D/Downloads/ITEM_NPC_-_PRONTERA_-_LEFT__RIGHT_SIDE_LATEST.txt",
-		"/D/Work/rathena/server/rathena-server/npc/other/gympass.txt",
-		"/D/Downloads/Barang_yang_perlu_di_tambah_dan_di_tolak_dalam_MPC (1).txt",
-		"/D/Downloads/MVP_Custom_Drop_Rate.txt"
+		"/D/xampp2/htdocs/script/bigdump.php"
 	],
 	"find":
 	{
@@ -857,6 +872,11 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"duplicate",
+			"npc",
+			"repair",
+			"zeny",
+			"page",
 			"vendzone",
 			"mapflag",
 			"novending",
@@ -979,12 +999,7 @@
 			"300",
 			"delete char",
 			"] = ",
-			"\t[jobtbl.JT_",
-			"INSERT INTO",
-			" = ",
-			"\tJT_",
-			"bAutoSpellonskill",
-			"bautospellonskill"
+			"\t[jobtbl.JT_"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1014,19 +1029,19 @@
 			[
 				{
 					"buffer": 0,
-					"file": "/D/Work/rathena/client/System/CheckAttendance.lub",
+					"file": "npc/merchants/refine.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 800,
+						"buffer_size": 39911,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								119,
-								119
+								34020,
+								34020
 							]
 						],
 						"settings":
@@ -1036,27 +1051,115 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 21335.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/D/Work/rathena/client/data/luafiles514/lua files/datainfo/tb_cashshop_banner.lub",
+					"file": "npc/custom/card_remover.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 319,
+						"buffer_size": 5795,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								319,
-								319
+								5795,
+								5795
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2410.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 700,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								472,
+								452
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "npc/merchants/socket_enchant.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17001,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								16961,
+								16961
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 6533.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "npc/merchants/socket_enchant2.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 17654,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								14132,
+								14132
 							]
 						],
 						"settings":
@@ -1073,565 +1176,90 @@
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "npc/custom/vendor_control.txt",
+					"buffer": 5,
+					"file": "npc/custom/givevip.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 1321,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								297,
+								297
 							]
 						],
 						"settings":
 						{
-							"auto_complete": true,
 							"syntax": "Packages/Text/Plain text.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1.0,
+						"translation.y": 114.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "db/map_index.txt",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 11020,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								10786,
-								10786
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 19560.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
+					"buffer": 6,
+					"file": "npc/custom/resetnpc.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9076,
+						"buffer_size": 1921,
 						"regions":
 						{
-							"match":
-							{
-								"flags": 112,
-								"regions":
-								[
-									[
-										269,
-										277
-									],
-									[
-										463,
-										471
-									],
-									[
-										686,
-										694
-									],
-									[
-										933,
-										941
-									],
-									[
-										1142,
-										1150
-									],
-									[
-										1215,
-										1223
-									],
-									[
-										1288,
-										1296
-									],
-									[
-										1361,
-										1369
-									],
-									[
-										1434,
-										1442
-									],
-									[
-										1507,
-										1515
-									],
-									[
-										1580,
-										1588
-									],
-									[
-										1653,
-										1661
-									],
-									[
-										1726,
-										1734
-									],
-									[
-										1799,
-										1807
-									],
-									[
-										1872,
-										1880
-									],
-									[
-										1946,
-										1954
-									],
-									[
-										2020,
-										2028
-									],
-									[
-										2094,
-										2102
-									],
-									[
-										2168,
-										2176
-									],
-									[
-										2242,
-										2250
-									],
-									[
-										2316,
-										2324
-									],
-									[
-										2390,
-										2398
-									],
-									[
-										2464,
-										2472
-									],
-									[
-										2538,
-										2546
-									],
-									[
-										2612,
-										2620
-									],
-									[
-										2686,
-										2694
-									],
-									[
-										2760,
-										2768
-									],
-									[
-										2834,
-										2842
-									],
-									[
-										2908,
-										2916
-									],
-									[
-										2982,
-										2990
-									],
-									[
-										3056,
-										3064
-									],
-									[
-										3130,
-										3138
-									],
-									[
-										3204,
-										3212
-									],
-									[
-										3278,
-										3286
-									],
-									[
-										3352,
-										3360
-									],
-									[
-										3426,
-										3434
-									],
-									[
-										3500,
-										3508
-									],
-									[
-										3574,
-										3582
-									],
-									[
-										3648,
-										3656
-									],
-									[
-										3722,
-										3730
-									],
-									[
-										3796,
-										3804
-									],
-									[
-										3870,
-										3878
-									],
-									[
-										3944,
-										3952
-									],
-									[
-										4018,
-										4026
-									],
-									[
-										4092,
-										4100
-									],
-									[
-										4166,
-										4174
-									],
-									[
-										4240,
-										4248
-									],
-									[
-										4314,
-										4322
-									],
-									[
-										4388,
-										4396
-									],
-									[
-										4462,
-										4470
-									],
-									[
-										4536,
-										4544
-									],
-									[
-										4610,
-										4618
-									],
-									[
-										4684,
-										4692
-									],
-									[
-										4758,
-										4766
-									],
-									[
-										4832,
-										4840
-									],
-									[
-										4906,
-										4914
-									],
-									[
-										4980,
-										4988
-									],
-									[
-										5054,
-										5062
-									],
-									[
-										5128,
-										5136
-									],
-									[
-										5202,
-										5210
-									],
-									[
-										5276,
-										5284
-									],
-									[
-										5350,
-										5358
-									],
-									[
-										5424,
-										5432
-									],
-									[
-										5498,
-										5506
-									],
-									[
-										5572,
-										5580
-									],
-									[
-										5646,
-										5654
-									],
-									[
-										5720,
-										5728
-									],
-									[
-										5794,
-										5802
-									],
-									[
-										5868,
-										5876
-									],
-									[
-										5942,
-										5950
-									],
-									[
-										6016,
-										6024
-									],
-									[
-										6090,
-										6098
-									],
-									[
-										6164,
-										6172
-									],
-									[
-										6238,
-										6246
-									],
-									[
-										6312,
-										6320
-									],
-									[
-										6386,
-										6394
-									],
-									[
-										6460,
-										6468
-									],
-									[
-										6534,
-										6542
-									],
-									[
-										6608,
-										6616
-									],
-									[
-										6682,
-										6690
-									],
-									[
-										6756,
-										6764
-									],
-									[
-										6830,
-										6838
-									],
-									[
-										6904,
-										6912
-									],
-									[
-										6978,
-										6986
-									],
-									[
-										7052,
-										7060
-									],
-									[
-										7126,
-										7134
-									],
-									[
-										7200,
-										7208
-									],
-									[
-										7274,
-										7282
-									],
-									[
-										7348,
-										7356
-									],
-									[
-										7422,
-										7430
-									],
-									[
-										7496,
-										7504
-									],
-									[
-										7570,
-										7578
-									],
-									[
-										7644,
-										7652
-									],
-									[
-										7718,
-										7726
-									],
-									[
-										7792,
-										7800
-									],
-									[
-										7866,
-										7874
-									],
-									[
-										7940,
-										7948
-									],
-									[
-										8014,
-										8022
-									],
-									[
-										8088,
-										8096
-									],
-									[
-										8162,
-										8170
-									],
-									[
-										8236,
-										8244
-									],
-									[
-										8310,
-										8318
-									],
-									[
-										8384,
-										8392
-									],
-									[
-										8458,
-										8466
-									],
-									[
-										8628,
-										8636
-									],
-									[
-										8772,
-										8780
-									],
-									[
-										8993,
-										9001
-									],
-									[
-										9035,
-										9043
-									]
-								],
-								"scope": ""
-							}
 						},
 						"selection":
 						[
 							[
-								8785,
-								8785
+								1918,
+								1918
 							]
 						],
 						"settings":
 						{
-							"auto_complete": true,
-							"detect_indentation": false,
-							"line_numbers": false,
-							"output_tag": 1,
-							"result_base_dir": "",
-							"result_file_regex": "^([^ \t].*):$",
-							"result_line_regex": "^ +([0-9]+):",
-							"scroll_past_end": true,
-							"syntax": "Packages/Default/Find Results.hidden-tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2052.0,
+						"translation.y": 171.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "conf/battle/player.conf",
+					"buffer": 7,
+					"file": "npc/custom/healer.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 10271,
+						"buffer_size": 3381,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								6787,
-								6787
+								598,
+								577
 							]
 						],
 						"settings":
 						{
-							"auto_complete": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2820.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1690,12 +1318,60 @@
 		"selected_items":
 		[
 			[
-				"mapin",
-				"db\\map_index.txt"
+				"give",
+				"npc\\custom\\givevip.txt"
+			],
+			[
+				"socket encha",
+				"npc\\re\\merchants\\socket_enchant2.txt"
+			],
+			[
+				"scoket en",
+				"npc\\merchants\\socket_enchant2.txt"
+			],
+			[
+				"socket eh",
+				"npc\\merchants\\socket_enchant.txt"
+			],
+			[
+				"hea",
+				"npc\\custom\\healer.txt"
+			],
+			[
+				"kafra",
+				"npc\\custom\\guild_storage_kafra.txt"
+			],
+			[
+				"warper",
+				"npc\\custom\\warper.txt"
+			],
+			[
+				"card_remover",
+				"npc\\custom\\card_remover.txt"
+			],
+			[
+				"custom",
+				"npc\\scripts_custom.conf"
+			],
+			[
+				"reset",
+				"npc\\custom\\resetnpc.txt"
+			],
+			[
+				"define",
+				"src\\custom\\defines_pre.hpp"
 			],
 			[
 				"war",
 				"npc\\custom\\warper.txt"
+			],
+			[
+				"vend",
+				"npc\\custom\\vendor_control.txt"
+			],
+			[
+				"mapin",
+				"db\\map_index.txt"
 			],
 			[
 				"vendor",
@@ -1710,16 +1386,8 @@
 				"db\\import\\attendance.yml"
 			],
 			[
-				"give",
-				"npc\\custom\\givevip.txt"
-			],
-			[
 				"map_i",
 				"db\\map_index.txt"
-			],
-			[
-				"define",
-				"src\\custom\\defines_pre.hpp"
 			],
 			[
 				"re.hpp",
@@ -1842,10 +1510,6 @@
 				"rathena-server\\npc\\events\\xmas.txt"
 			],
 			[
-				"kafra",
-				"rathena-server\\npc\\kafras\\kafras.txt"
-			],
-			[
 				"guild storage",
 				"rathena-server\\npc\\custom\\guild_storage_kafra.txt"
 			],
@@ -1860,10 +1524,6 @@
 			[
 				"core",
 				"rathena-server\\src\\config\\core.hpp"
-			],
-			[
-				"warper",
-				"rathena-server\\npc\\custom\\warper.txt"
 			],
 			[
 				"guild stor",
@@ -1884,10 +1544,6 @@
 			[
 				"script athena",
 				"npc\\re\\scripts_athena.conf"
-			],
-			[
-				"custom",
-				"npc\\scripts_custom.conf"
 			],
 			[
 				"scr",
@@ -2154,10 +1810,6 @@
 				"npc\\re\\guides\\guides_prontera.txt"
 			],
 			[
-				"reset",
-				"npc\\custom\\resetnpc.txt"
-			],
-			[
 				"jobma",
 				"npc\\custom\\jobmaster.txt"
 			],
@@ -2176,30 +1828,6 @@
 			[
 				"rent",
 				"npc\\merchants\\renters.txt"
-			],
-			[
-				"strora",
-				"npc\\custom\\guild_storage_kafra.txt"
-			],
-			[
-				"atcomm",
-				"src\\map\\atcommand.cpp"
-			],
-			[
-				"cool",
-				"npc\\kafras\\cool_event_corp.txt"
-			],
-			[
-				"guild_st",
-				"npc\\custom\\guild_storage_kafra.txt"
-			],
-			[
-				"healer",
-				"npc\\custom\\healer.txt"
-			],
-			[
-				"itemm",
-				"npc\\custom\\itemmall.txt"
 			]
 		],
 		"width": 0.0
@@ -2230,7 +1858,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 211.0,
+	"side_bar_width": 226.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

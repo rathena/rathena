@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Episode 12 Socket Enchant NPC
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Gepard
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Adds slots to selected weapons and armor.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
 //= 1.1a Added 'disable_items' command. [Euphy]
-//============================================================ 
+//============================================================
 
 -	script	Leablem#dummy::SocketEnchant2	-1,{
 	if (checkweight(1201,1) == 0)
@@ -383,6 +383,7 @@
 payon,236,199,3	duplicate(SocketEnchant2)	Leablem#pay	86
 lighthalzen,96,137,3	duplicate(SocketEnchant2)	Leablem#lhz	86
 prt_in,22,60,6	duplicate(SocketEnchant2)	Leablem#prt	86
+prontera,138,169,5	duplicate(SocketEnchant2)	Leablem#prt2	86
 
 function	script	Func_Socket2	{
 	.@item_id = getarg(0);

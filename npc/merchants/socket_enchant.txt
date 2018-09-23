@@ -366,3 +366,4 @@ prt_in,31,57,1	duplicate(SocketMan)	Young Man#prt	97
 payon,143,143,7	duplicate(SocketMan)	Young Man#pay	97
 morocc,60,42,3	duplicate(SocketMan)	Young Man#moc	97
 lhz_in02,269,33,5	duplicate(SocketMan)	Young Man#lhz	97
+prontera,140,169,5	duplicate(SocketMan)	Young Man#prt2	97

@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Refining NPCs
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
@@ -765,7 +765,7 @@ function	script	refinemain	{
 	} else
 		.@menu2 = 2;
 	switch(.@menu2){
-	case 1: 
+	case 1:
 		.@refinecnt = .@safe - .@refinerycnt;
 		break;
 	case 2:
@@ -828,7 +828,7 @@ function	script	refinemain	{
 			mes "You changed it...";
 			mes "Get out before I stun you with my Hammer!!";
 			close;
-		} 
+		}
 		mes "Clang, clang!!!";
 		if(.@menu2 == 2 && getequippercentrefinery(.@part) <= rand(100)) {
 			failedrefitem .@part;
@@ -1141,6 +1141,11 @@ sch_gld,340,80,7	script	Repairman#sch_gld	86,{
 	end;
 }
 
+prontera,142,169,5	script	Repairman#prontera2	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
 // Equipment Repair Function
 //============================================================
 function	script	repairmain	{
@@ -1230,9 +1235,9 @@ function	script	repairmain	{
 	}
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 by A bunch of people!
 //=     Syrus22 - Completely redid the script using functions... also
 //=     added the option for auto safe refining and multiple refining.
@@ -1250,9 +1255,9 @@ function	script	repairmain	{
 //=     hacker that can change item [dafide18]
 //= 1.5 Fixed crashing due to badly used callfunc's [Skotlex]
 //=     Lupus, don't rollback this important fix again! >.<
-//= 1.5a Corrected an unneeded callfunc, fixed the anti-bot 
+//= 1.5a Corrected an unneeded callfunc, fixed the anti-bot
 //=     exploit ruining the safe refine loop. [Skotlex]
-//= 1.5b Fixed Spelling mistakes. [Nexon] 
+//= 1.5b Fixed Spelling mistakes. [Nexon]
 //= 1.6 Replaced all breaks for ends as per the new script engine [Skotlex]
 //= 1.7 Added Einbroch Refiners (Custom names ^^;) and a duplicated BS Shop. [Poki#3]
 //= 1.8 Added Lighthalzen Refiners (Custom names again ^^;) [Poki#3]
