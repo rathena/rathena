@@ -54,7 +54,7 @@ vendzone,47,51,5	script	Vending Helper	73,{
 OnInit:
 //	======================= Configuration HERE =============================
 	.map$ = "vendzone"; // map
-	setarray .@x, 29,33,37,41,45,53,57,61,65,69; // x coordinates
+	setarray .@x, 30,34,38,42,46,53,57,61,65,69; // x coordinates
 	setarray .@y, 29,33,37,41,45,53,57,61,65,69; // y coordinates
 	.slotperpage = 20; // display how many slots per page (prevent making the menu too long)
 

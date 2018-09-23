@@ -522,7 +522,7 @@ menu	"Vending Zone",S0, "Battlegrounds",S2, "Casino",S3, "Dimensional Rift",S4,
 		"Monster Race Arena",S8, "Para Market",S9, "Turbo Track",S10;
 
 // S1: Go("auction_01",22,68);
-S0: Go("vendzone", 49, 48);
+S0: Go("vendzone", 50, 48);
 S2: Go("bat_room",154,150);
 S3: Go("cmd_in02",179,129);
 S4: Restrict("RE");
@@ -616,4 +616,4 @@ malangdo,134,117,6	duplicate(Warper)	Warper#mal	531
 malaya,231,204,4	duplicate(Warper)	Warper#ma	531
 mora,57,152,4	duplicate(Warper)	Warper#mora	531
 mid_camp,191,249,4	duplicate(Warper)	Warper#midcamp	531
-vendzone,51,51,3	duplicate(Warper)	Warper#vendzone	531
+vendzone,52,51,3	duplicate(Warper)	Warper#vendzone	531
