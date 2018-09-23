@@ -209,6 +209,7 @@ vendzone,0,0,4	duplicate(vend_slot)	#vend_slot96	4_BULLETIN_BOARD2
 vendzone,0,0,4	duplicate(vend_slot)	#vend_slot97	4_BULLETIN_BOARD2
 vendzone,0,0,4	duplicate(vend_slot)	#vend_slot98	4_BULLETIN_BOARD2
 vendzone,0,0,4	duplicate(vend_slot)	#vend_slot99	4_BULLETIN_BOARD2
+vendzone,0,0,4	duplicate(vend_slot)	#vend_slot100	4_BULLETIN_BOARD2
 
 
 
