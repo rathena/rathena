@@ -132,5 +132,5 @@
 }
 
 //===== Duplicates: ==========================================
-prontera, 143, 180, 7	duplicate(gbreeder)	Universal Rental NPC#1	10192
+prontera,140,181,7	duplicate(gbreeder)	Universal Rental NPC#1	10192
 //============================================================

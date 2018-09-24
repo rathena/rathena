@@ -383,7 +383,7 @@
 payon,236,199,3	duplicate(SocketEnchant2)	Leablem#pay	86
 lighthalzen,96,137,3	duplicate(SocketEnchant2)	Leablem#lhz	86
 prt_in,22,60,6	duplicate(SocketEnchant2)	Leablem#prt	86
-prontera,138,169,5	duplicate(SocketEnchant2)	Leablem#prt2	86
+prontera,145,231,5	duplicate(SocketEnchant2)	Leablem#prt2	667
 
 function	script	Func_Socket2	{
 	.@item_id = getarg(0);

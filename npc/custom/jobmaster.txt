@@ -15,7 +15,7 @@
 //= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
 //============================================================
 
-prontera,159,192,4	script	Job Master	10085,{
+prontera,162,193,3	script	Job Master	10085,{
 function Get_Job_Equip;
 // Checks if the Player has the required level.
 // closes if not, returns if yes

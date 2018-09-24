@@ -13,7 +13,7 @@
 //= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
 //============================================================
 
-prontera,146,173,5	script	Stylist#custom_stylist	122,{
+prontera,131,217,5	script	Stylist#custom_stylist	122,{
 	setarray .@Styles[1],
 		getbattleflag("max_cloth_color"),
 		getbattleflag("max_hair_style"),

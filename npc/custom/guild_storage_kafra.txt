@@ -25,7 +25,7 @@ function	script	F_KafGStor	{
 	}
 }
 //== Prontera ==============================================
-prontera,148,195,4	script	Guild Storage Manager::kaf_prontera6 	415,{
+prontera,149,193,5	script	Guild Storage Manager::kaf_prontera6 	415,{
 	callfunc "F_KafSet";
 	mes "[^0000FFGuild Storage Manager^000000]";
 	mes "Welcome to the";

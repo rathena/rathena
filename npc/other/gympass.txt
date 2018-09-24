@@ -17,7 +17,7 @@
 //= 1.3 Updated script, and fixed potential errors. [L0ne_W0lf]
 //============================================================
 
-payon,173,141,4	script	Ripped Cabus#GymPass::gympass_npc	899,{
+payon,173,141,4	script	Ripped Cabus#GymPass::gympass_npc	810,{
 	mes "[Ripped]";
 	mes "Hey, there. People aren't";
 	mes "as physically active as they";
@@ -150,4 +150,4 @@ payon,173,141,4	script	Ripped Cabus#GymPass::gympass_npc	899,{
 }
 
 
-prontera,144,171,5	duplicate(gympass_npc)	Ripped Cabus#gym1	617
+prontera,128,214,5	duplicate(gympass_npc)	Ripped Cabus#gym1	810

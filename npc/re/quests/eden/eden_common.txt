@@ -238,7 +238,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
 		close;
 	}
 }
-prontera,124,76,3	duplicate(eto)	Eden Teleport Officer#1	729
+prontera,147,195,5	duplicate(eto)	Eden Teleport Officer#1	729
 moc_ruins,68,164,3	duplicate(eto)	Eden Teleport Officer#2	729
 geffen,132,66,3	duplicate(eto)	Eden Teleport Officer#3	729
 alberta,124,67,3	duplicate(eto)	Eden Teleport Officer#4	729

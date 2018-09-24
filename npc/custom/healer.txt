@@ -66,7 +66,7 @@ morocc,162,97,3	duplicate(Healer)	Healer#mor	501
 moscovia,220,191,4	duplicate(Healer)	Healer#mos	501
 niflheim,212,182,5	duplicate(Healer)	Healer#nif	501
 payon,158,231,4	duplicate(Healer)	Healer#pay	501
-prontera,162,193,4	duplicate(Healer)	Healer#prt	501
+prontera,159,192,3	duplicate(Healer)	Healer#prt	501
 rachel,125,116,6	duplicate(Healer)	Healer#rac	501
 splendide,201,153,4	duplicate(Healer)	Healer#spl	501
 thor_camp,249,74,4	duplicate(Healer)	Healer#thor	501

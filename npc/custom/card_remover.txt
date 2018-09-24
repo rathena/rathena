@@ -21,12 +21,12 @@
 	set .faildestroy,1;      // should the card remover have a chance of failure that destroys items? (1=yes, 0=no)
 
 	disable_items;
-	mes "[Wise Old Woman]";
+	mes "[Wise Old Man]";
 	mes "Good day, young one. I have the power to remove cards that you have compounded onto your equipment. Does this idea please you?";
 	next;
 	switch(select("Yes, it does.:What do you charge?:No thanks.")) {
 	case 1:
-		mes "[Wise Old Woman]";
+		mes "[Wise Old Man]";
 		mes "Very well. Which item shall I examine for you?";
 		next;
 
@@ -38,12 +38,12 @@
 		}
 		set .@part, .@indices[ select(.@menu$) ];
 		if(!getequipisequiped(.@part)) {
-			mes "[Wise Old Woman]";
+			mes "[Wise Old Man]";
 			mes "Young one... Your not wearing anything there that I can remove cards from.";
 			close;
 		}
 		if(getequipcardcnt(.@part) == 0) {
-			mes "[Wise Old Woman]";
+			mes "[Wise Old Man]";
 			mes "Young one... There are no cards compounded on this item. I can do nothing with it, I'm afraid.";
 			close;
 		}
@@ -58,25 +58,25 @@
 			mes "Kafra Storage and come again~";
 			close;
 		}
-		mes "[Wise Old Woman]";
+		mes "[Wise Old Man]";
 		mes "This item has " + .@cardcount + " cards compounded on it. To perform my magic, I will need " + (.zenycost+(.@cardcount * .percardcost)) + " zeny, a ^0000FFStar Crumb^000000, and a ^0000FFYellow Gemstone^000000.";
 		next;
 		if(select("Very well. Do it.:Never mind.") == 2) {
-			mes "[Wise Old Woman]";
+			mes "[Wise Old Man]";
 			mes "Very well. Return at once if you seek my services.";
 			close;
 		}
 		if((zeny < (.zenycost+(.@cardcount * .percardcost))) || (countitem(1000) < 1) || (countitem(715) < 1)) {
-			mes "[Wise Old Woman]";
+			mes "[Wise Old Man]";
 			mes "You do not have all the items I require to work my magic, child. Come again when you do.";
 			close;
 		}
-		mes "[Wise Old Woman]";
+		mes "[Wise Old Man]";
 		mes "Before I begin, I must warn you--I may fail. If I do, I may destroy the cards, the item, or both. I do not give refunds. That being said, which is more important to you: The cards, or the item?";
 		next;
 		switch(select("I changed my mind about this.:The item.:The cards.")) {
 		case 1:
-			mes "[Wise Old Woman]";
+			mes "[Wise Old Man]";
 			mes "Very well. Return at once if you seek my services.";
 			close;
 		case 2:
@@ -85,7 +85,7 @@
 		case 3:
 			set .@failtype,2;
 		}
-		mes "[Wise Old Woman]";
+		mes "[Wise Old Man]";
 		mes "Very well. I shall begin.";
 		set Zeny, Zeny - (.zenycost+(.@cardcount * .percardcost));
 		delitem 1000,1; //Star_Crumb
@@ -101,7 +101,7 @@
 			if(.@failchance < 2) {
 				next;
 				failedremovecards .@part,0;
-				mes "[Wise Old Woman]";
+				mes "[Wise Old Man]";
 				mes "The process was a total failure. I am afraid the item and the cards were destroyed.";
 				close;
 			}
@@ -110,7 +110,7 @@
 				if (.@failtype == 1) {
 					next;
 					failedremovecards .@part,1;
-					mes "[Wise Old Woman]";
+					mes "[Wise Old Man]";
 					mes "While I have managed to remove the cards from the item, they were destroyed in the process. The item, however, is okay.";
 					close;
 				}
@@ -118,7 +118,7 @@
 				if (.@failtype == 2) {
 					next;
 					failedremovecards .@part,2;
-					mes "[Wise Old Woman]";
+					mes "[Wise Old Man]";
 					mes "Most unfortunate. I succeeded at removing the cards, but the item itself was destroyed in the process.";
 					close;
 				}
@@ -128,25 +128,25 @@
 		if(.@failchance < 10) {
 			next;
 			failedremovecards .@part,3;
-			mes "[Wise Old Woman]";
+			mes "[Wise Old Man]";
 			mes "I have failed to remove the cards. Luckily, however, both the item and the cards are still okay.";
 			close;
 		}
 		next;
 		successremovecards .@part;
-		mes "[Wise Old Woman]";
+		mes "[Wise Old Man]";
 		mes "The process was a success. Here are your cards and your item. Farewell.";
 		close;
 	case 2:
-		mes "[Wise Old Woman]";
+		mes "[Wise Old Man]";
 		mes "I charge a flat fee of "+callfunc("F_InsertComma",.zenycost)+" zeny, plus "+callfunc("F_InsertComma",.percardcost)+" zeny for each card I remove from the item. In addition, I need a star crumb and a yellow gemstone to work my magic.";
 		close;
 	case 3:
-		mes "[Wise Old Woman]";
+		mes "[Wise Old Man]";
 		mes "Very well. Return at once if you seek my services.";
 		close;
 	}
 }
 
-prontera,140,167,5	duplicate(card_remove)	Card Remover#prontera1	78
-prt_in,28,73,4	duplicate(card_remove)	Card Remover#prontera2	78
+prontera,139,225,5	duplicate(card_remove)	Card Remover#prontera1	766
+prt_in,28,73,4	duplicate(card_remove)	Card Remover#prontera2	766
