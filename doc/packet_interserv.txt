@@ -267,7 +267,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- type
 		- value
 	desc:
-		- Receive an request to fetch account_reg2 from a char-server, see packet 0x3004 (mapif_parse_Registry)
+		- Receive a request to fetch account_reg2 from a char-server, see packet 0x3004 (mapif_parse_Registry)
 
 
 0x2729:
@@ -434,7 +434,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- cmd : packet identification (0x2739)
 		- aid : account identification
 	desc:
-		- Login notify char that too many wrong PIN code entered. (fail auth)
+		- Login-serv notifies char-serv for too many wrong PIN code entered. (fail auth)
 
 0x273a
 0x273b
@@ -2748,7 +2748,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- account_id
 		- char_id
 	desc:
-		- Request sc_data from charserver
+		- Request sc_data from char-server
 
 0x2afe
 	Type: ZA
@@ -2818,7 +2818,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- client_addr
 		- group_id
 	desc:
-		- Tell the charserver the mapchange / quest for ok
+		- Tell the char-server the mapchange / quest for ok
 
 0x2b07
 	Type: ZA
@@ -2830,7 +2830,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 		- char_id
 		- friend_id
 	desc:
-		- Asks char server to remove friend_id from the friend list of char_id
+		- Asks char-server to remove friend_id from the friend list of char_id
 
 0x2b08
 	Type: ZA
@@ -2840,7 +2840,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x2b08)
 	desc:
-		- Search char through id on char serv
+		- Search char through id on char-serv
 
 0x2b0a
 	Type: ZA
@@ -3001,7 +3001,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	parameter:
 		- cmd : packet identification (0x2b23)
 	desc:
-		- pings the charserver (chrif_keepalive)
+		- pings the char-server (chrif_keepalive)
 
 0x2b26
 	Type: ZA
