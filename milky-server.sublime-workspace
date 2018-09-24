@@ -606,23 +606,27 @@
 	"expanded_folders":
 	[
 		"/D/MilkyRO Project/ServerScript",
-		"/D/MilkyRO Project/ServerScript/conf"
+		"/D/MilkyRO Project/ServerScript/npc",
+		"/D/MilkyRO Project/ServerScript/npc/custom",
+		"/D/MilkyRO Project/ServerScript/npc/merchants"
 	],
 	"file_history":
 	[
+		"/D/MilkyRO Project/ServerScript/npc/scripts_custom.conf",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant2.txt",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/identify.txt",
 		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
 		"/D/Downloads/groups.conf",
 		"/D/MilkyRO Project/ServerScript/conf/help.txt",
 		"/D/MilkyRO Project/ServerScript/conf/groups.conf",
 		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
-		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant.txt",
 		"/D/MilkyRO Project/ServerScript/npc/re/scripts_athena.conf",
 		"/D/MilkyRO Project/ServerScript/npc/scripts_athena.conf",
 		"/D/MilkyRO Project/ServerScript/npc/battleground/bg_common.txt",
 		"/D/MilkyRO Project/ServerScript/npc/other/gympass.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/givevip.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/stylist.txt",
-		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant2.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/card_remover.txt",
 		"/D/MilkyRO Project/ServerScript/npc/merchants/refine.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt",
@@ -633,7 +637,6 @@
 		"/D/MilkyRO Project/ServerScript/npc/custom/resetnpc.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/guild_storage_kafra.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
-		"/D/MilkyRO Project/ServerScript/npc/scripts_custom.conf",
 		"/D/MilkyRO Project/ServerScript/npc/re/merchants/socket_enchant2.txt",
 		"/D/Work/rathena/client/System/CheckAttendance.lub",
 		"/D/Work/rathena/client/data/luafiles514/lua files/datainfo/tb_cashshop_banner.lub",
@@ -736,8 +739,7 @@
 		"/D/Work/rathena/server/fresh-rathena/src/map/atcommand.cpp",
 		"/D/Work/rathena/server/fresh-rathena/conf/battle/drops.conf",
 		"/D/Work/rathena/server/rathena-server/npc/custom/etc/floating_rates.txt",
-		"/D/Work/rathena/server/rathena-server/doc/mob_db_mode_list.txt",
-		"/D/Work/rathena/server/rathena-server/npc/re/guild3/te_prtcas01.txt"
+		"/D/Work/rathena/server/rathena-server/doc/mob_db_mode_list.txt"
 	],
 	"find":
 	{

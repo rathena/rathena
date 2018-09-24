@@ -1,0 +1,28 @@
+//===== rAthena Script =======================================
+//= Item Identifier
+//===== By: ==================================================
+//= Euphy - modded by Nubs
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+
+-	script	item_identify	-1,{
+	set .@Price, 100;	// Zeny per identify
+	getinventorylist;
+	for(set .@i,0; .@i<@inventorylist_count; set .@i,.@i+1) {
+		if (@inventorylist_identify[.@i]) continue;
+		if (Zeny < .@Price) {
+			dispbottom "It costs "+.@Price+" to identify an item."; break; }
+		set Zeny, Zeny-.@Price;
+		delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
+		getitem @inventorylist_id[.@i],1;
+		setarray .@Total[0], .@Total[0]+1, .@Total[1]+.@Price; }
+	if (!.@Total[0]) {
+		message strcharinfo(0),"No items identified."; end; }
+	specialeffect2 154;
+	message strcharinfo(0),"Identified "+.@Total[0]+" items"+((.@Total[1])?" for "+.@Total[1]+" Zeny":"")+".";
+	end;
+}
+prontera,145,173,5	duplicate(item_identify)	Identifier#iden_prt	574
