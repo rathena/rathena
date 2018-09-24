@@ -344,7 +344,7 @@ payon,140,151,5	duplicate(SocketEnchant)	Seiyablem#pay	84
 lhz_in02,281,35,5	duplicate(SocketEnchant)	Seiyablem#lhz	84
 prt_in,33,70,5	duplicate(SocketEnchant)	Seiyablem#prt	84
 morocc,51,41,4	duplicate(SocketEnchant)	Seiyablem#moc	84
-prontera,142,228,5	duplicate(SocketMan)	Seiyablem#prt2	659
+prontera,142,228,5	duplicate(SocketEnchant)	Seiyablem#prt2	654
 
 -	script	Young Man#dummy::SocketMan	-1,{
 	mes "[Young Man]";

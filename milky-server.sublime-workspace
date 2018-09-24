@@ -415,74 +415,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "npc/merchants/refine.txt",
-			"settings":
-			{
-				"buffer_size": 39911,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/custom/card_remover.txt",
-			"settings":
-			{
-				"buffer_size": 5795,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
-			"settings":
-			{
-				"buffer_size": 700,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/merchants/socket_enchant.txt",
-			"settings":
-			{
-				"buffer_size": 17001,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/merchants/socket_enchant2.txt",
-			"settings":
-			{
-				"buffer_size": 17654,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/custom/givevip.txt",
-			"settings":
-			{
-				"buffer_size": 1321,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/custom/resetnpc.txt",
-			"settings":
-			{
-				"buffer_size": 1921,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/custom/healer.txt",
-			"settings":
-			{
-				"buffer_size": 3381,
-				"line_ending": "Windows"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -674,23 +606,43 @@
 	"expanded_folders":
 	[
 		"/D/MilkyRO Project/ServerScript",
-		"/D/MilkyRO Project/ServerScript/conf",
-		"/D/MilkyRO Project/ServerScript/conf/battle",
-		"/D/MilkyRO Project/ServerScript/npc"
+		"/D/MilkyRO Project/ServerScript/npc",
+		"/D/MilkyRO Project/ServerScript/npc/custom",
+		"/D/MilkyRO Project/ServerScript/npc/merchants"
 	],
 	"file_history":
 	[
-		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
 		"/D/MilkyRO Project/ServerScript/npc/scripts_custom.conf",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant2.txt",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/identify.txt",
 		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
-		"/D/MilkyRO Project/ServerScript/npc/re/merchants/socket_enchant2.txt",
+		"/D/Downloads/groups.conf",
+		"/D/MilkyRO Project/ServerScript/conf/help.txt",
+		"/D/MilkyRO Project/ServerScript/conf/groups.conf",
+		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/scripts_athena.conf",
+		"/D/MilkyRO Project/ServerScript/npc/scripts_athena.conf",
+		"/D/MilkyRO Project/ServerScript/npc/battleground/bg_common.txt",
+		"/D/MilkyRO Project/ServerScript/npc/other/gympass.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/givevip.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/stylist.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/card_remover.txt",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/refine.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/platinum_skills.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/quests/eden/eden_common.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/healer.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/jobmaster.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/resetnpc.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/guild_storage_kafra.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/merchants/socket_enchant2.txt",
 		"/D/Work/rathena/client/System/CheckAttendance.lub",
 		"/D/Work/rathena/client/data/luafiles514/lua files/datainfo/tb_cashshop_banner.lub",
 		"/D/MilkyRO Project/ServerScript/npc/custom/vendor_control.txt",
 		"/D/MilkyRO Project/Patches/20180924a/sclientinfo.xml",
 		"/D/MilkyRO Project/ServerScript/conf/char_athena.conf",
-		"/D/MilkyRO Project/ServerScript/npc/scripts_athena.conf",
 		"/D/MilkyRO Project/ServerScript/src/custom/defines_pre.hpp",
 		"/D/xampp2/htdocs/FluxCP/themes/default-brightix/pages/index.php",
 		"/D/xampp2/htdocs/FluxCP/themes/default/pages/index.php",
@@ -708,7 +660,6 @@
 		"/D/MilkyRO Project/ServerScript/src/map/battle.cpp",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/vendzone.txt",
 		"/D/MilkyRO Project/ServerScript/conf/battle/feature.conf",
-		"/D/MilkyRO Project/ServerScript/npc/custom/givevip.txt",
 		"/D/MilkyRO Project/ServerScript/src/map/battle.cpp.orig",
 		"/D/MilkyRO Project/ServerScript/src/map/battle.hpp.orig",
 		"/D/MilkyRO Project/ServerScript/db/import/attendance.yml",
@@ -788,26 +739,7 @@
 		"/D/Work/rathena/server/fresh-rathena/src/map/atcommand.cpp",
 		"/D/Work/rathena/server/fresh-rathena/conf/battle/drops.conf",
 		"/D/Work/rathena/server/rathena-server/npc/custom/etc/floating_rates.txt",
-		"/D/Work/rathena/server/rathena-server/doc/mob_db_mode_list.txt",
-		"/D/Work/rathena/server/rathena-server/npc/re/guild3/te_prtcas01.txt",
-		"/D/Work/rathena/server/rathena-server/npc/re/guild3/agit_main_te.txt",
-		"/D/Work/rathena/server/rathena-server/npc/re/mobs/fields/payon.txt",
-		"/D/xampp2/htdocs/script/sprites/sprites.php",
-		"/D/Work/rathena/server/rathena-server/doc/mob_db.txt",
-		"/D/Work/rathena/server/rathena-server/npc/re/warps/cities/izlude.txt",
-		"/D/Work/rathena/server/rathena-server/npc/custom/givevip.txt",
-		"/D/Work/rathena/server/rathena-server/doc/atcommands.txt",
-		"/D/Work/rathena/server/todo.txt",
-		"/D/Work/rathena/server/adjusted-drop-rate.sql",
-		"/D/Work/rathena/server/rathena-server/db/re/item_misc.txt",
-		"/D/Work/rathena/server/rathena-server/db/re/item_package.txt",
-		"/D/xampp2/htdocs/ci/application/views/mob-boss.php",
-		"/D/xampp2/htdocs/ci/application/controllers/Mob.php",
-		"/D/Work/rathena/Milky - reset/data/lua files/datainfo/jobname.lub",
-		"/D/Work/rathena/Milky - reset/data/lua files/datainfo/npcidentity.lub",
-		"/D/Work/rathena/nubs_mob_sprite2.sql",
-		"/D/Work/rathena/nubs_mob_sprite1.sql",
-		"/D/xampp2/htdocs/script/bigdump.php"
+		"/D/Work/rathena/server/rathena-server/doc/mob_db_mode_list.txt"
 	],
 	"find":
 	{
@@ -869,9 +801,27 @@
 	},
 	"find_state":
 	{
-		"case_sensitive": true,
+		"case_sensitive": false,
 		"find_history":
 		[
+			"rankpvp",
+			"pvp",
+			"charinfo",
+			"limitedsale",
+			"whereis",
+			"jailtime",
+			"hominfo",
+			":",
+			"mobsearch",
+			"autoloot",
+			"bg_common",
+			"bg",
+			"alootid",
+			"84",
+			"eden teleport officer",
+			"899",
+			"78",
+			"Wise Old Woman",
 			"duplicate",
 			"npc",
 			"repair",
@@ -981,25 +931,7 @@
 			"smallint",
 			"More More",
 			"IG_Prize_Of_Hero",
-			"IG_Sealed_Mind_Box",
-			"IG_Splendid_Box",
-			")",
-			"º´)",
-			"\"¿©\\\\È°¿ëº´)",
-			".gr2)",
-			"guardian",
-			"Aguardian",
-			"Aguardian9",
-			"Aguardian90",
-			"Aguardian90_8",
-			"gr2",
-			"group",
-			"level",
-			"timeout",
-			"300",
-			"delete char",
-			"] = ",
-			"\t[jobtbl.JT_"
+			"IG_Sealed_Mind_Box"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1024,244 +956,8 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "npc/merchants/refine.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 39911,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								34020,
-								34020
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 21335.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "npc/custom/card_remover.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5795,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								5795,
-								5795
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2410.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 700,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								472,
-								452
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "npc/merchants/socket_enchant.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 17001,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								16961,
-								16961
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 6533.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "npc/merchants/socket_enchant2.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 17654,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								14132,
-								14132
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "npc/custom/givevip.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1321,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								297,
-								297
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 114.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "npc/custom/resetnpc.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1921,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1918,
-								1918
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 171.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "npc/custom/healer.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3381,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								598,
-								577
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -1317,6 +1013,54 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"atc",
+				"doc\\atcommands.txt"
+			],
+			[
+				"socket ",
+				"npc\\merchants\\socket_enchant.txt"
+			],
+			[
+				"script a",
+				"npc\\scripts_athena.conf"
+			],
+			[
+				"bg_co",
+				"npc\\battleground\\bg_common.txt"
+			],
+			[
+				"help",
+				"conf\\help.txt"
+			],
+			[
+				"gym",
+				"npc\\other\\gympass.txt"
+			],
+			[
+				"sty",
+				"npc\\custom\\stylist.txt"
+			],
+			[
+				"bree",
+				"npc\\custom\\breeder.txt"
+			],
+			[
+				"platinu",
+				"npc\\custom\\platinum_skills.txt"
+			],
+			[
+				"eden",
+				"npc\\re\\quests\\eden\\eden_common.txt"
+			],
+			[
+				"guild sto",
+				"npc\\custom\\guild_storage_kafra.txt"
+			],
+			[
+				"job",
+				"npc\\custom\\jobmaster.txt"
+			],
 			[
 				"give",
 				"npc\\custom\\givevip.txt"
@@ -1462,10 +1206,6 @@
 				"rathena-server\\npc\\re\\guild3\\agit_main_te.txt"
 			],
 			[
-				"atc",
-				"rathena-server\\doc\\atcommands.txt"
-			],
-			[
 				"item_noequip",
 				"rathena-server\\db\\re\\item_noequip.txt"
 			],
@@ -1486,20 +1226,12 @@
 				"rathena-server\\db\\re\\produce_db.txt"
 			],
 			[
-				"gym",
-				"rathena-server\\npc\\other\\gympass.txt"
-			],
-			[
 				"itemma",
 				"rathena-server\\npc\\custom\\itemmall.txt"
 			],
 			[
 				"pc.c",
 				"rathena-server\\src\\map\\pc.cpp"
-			],
-			[
-				"eden",
-				"rathena-server\\npc\\re\\quests\\eden\\eden_common.txt"
 			],
 			[
 				"kafra re",
@@ -1792,42 +1524,6 @@
 			[
 				"kvm",
 				"npc\\battleground\\kvm\\kvm01.txt"
-			],
-			[
-				"prtg",
-				"npc\\guild\\prtg_cas05.txt"
-			],
-			[
-				"prontera",
-				"npc\\cities\\prontera.txt"
-			],
-			[
-				"kafra st",
-				"npc\\custom\\guild_storage_kafra.txt"
-			],
-			[
-				"guide pron",
-				"npc\\re\\guides\\guides_prontera.txt"
-			],
-			[
-				"jobma",
-				"npc\\custom\\jobmaster.txt"
-			],
-			[
-				"bree",
-				"npc\\custom\\breeder.txt"
-			],
-			[
-				"styl",
-				"npc\\custom\\stylist.txt"
-			],
-			[
-				"breder",
-				"npc\\custom\\breeder.txt"
-			],
-			[
-				"rent",
-				"npc\\merchants\\renters.txt"
 			]
 		],
 		"width": 0.0
