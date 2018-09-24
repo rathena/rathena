@@ -1,29 +1,37 @@
 //===== rAthena Script =======================================
 //= Auto-Potion
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 2.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= Provides an @autopot command to automatically use potions.
-//===== Additional Comments: =================================
+//===== Changelogs: ==========================================
 //= 1.0 First version. [Euphy]
 //= 2.0 rewrite and adding SP option. [sader1992]
 //============================================================
 -	script	#autopot	-1,{
 OnInit:
+	.HP_Option = true;	//Allow HP option
+	.SP_Option = true;	//Allow SP option
+	.MinDelay = 100;	//Minimum Delay Allowed (Default and Recommended: 100) [lower values will increase server strain]
+	setarray .blackList[0],0;	//Array of black listed item ID
+
+	if(!.HP_Option && !.SP_Option){
+		debugmes "Warning: @autopot both hp and sp are Disabled";
+		debugmes "Warning: @autopot script has been Disabled!";
+		end;
+	}
 	bindatcmd("autopot",strnpcinfo(0)+"::OnCommand",0,99);
-	.MinDelay = 100;	//Minimum Delay Alowed (Default and Recomanded: 100)[lower values will increase server strain]
-	setarray .blackList[0],0;	//Array of Black Listed Item's IDs
 end;
 
 L_Help:
 	dispbottom "Available commands:";
-	dispbottom "    @autopot <hp|sp> <item id> {<min hp % [1..100]> {<delay [" + .MinDelay + "..1000]>}}";
-	dispbottom "    @autopot <hp|sp> list";
-	dispbottom "    @autopot <hp|sp> <on|off>";
+	if(.HP_Option && .SP_Option){
+		dispbottom "    @autopot <hp|sp> <item id> {<min hp|sp % [1..100]> {<delay [" + .MinDelay + "..1000]>}}";
+		dispbottom "    @autopot <hp|sp> list";
+		dispbottom "    @autopot <hp|sp> <on|off>";
+	}else{
+		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> <item id> {<min " + (.HP_Option?"hp":"sp") + " % [1..100]> {<delay [" + .MinDelay + "..1000]>}}";
+		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> list";
+		dispbottom "    @autopot <" + (.HP_Option?"hp":"sp") + "> <on|off>";
+	}
 	dispbottom "    @autopot info";
 	dispbottom "    @autopot help";
 	dispbottom "    @autopot blacklist";
@@ -31,10 +39,14 @@ L_Help:
 
 L_Info:
 	dispbottom "----------Auto-Potion Information-----------";
-	dispbottom "HP POTION:  " + getitemname(@autopot_hp_ID) + " (" + @autopot_hp_ID + ")";
-	dispbottom "MIN HP:   " + @autopot_hp_Min + " %";
-	dispbottom "SP POTION:  " + getitemname(@autopot_sp_ID) + " (" + @autopot_sp_ID + ")";
-	dispbottom "MIN SP:   " + @autopot_sp_Min + " %";
+	if(.HP_Option){
+		dispbottom "HP POTION:  " + getitemname(@autopot_hp_ID) + " (" + @autopot_hp_ID + ")";
+		dispbottom "MIN HP:   " + @autopot_hp_Min + " %";
+	}
+	if(.SP_Option){
+		dispbottom "SP POTION:  " + getitemname(@autopot_sp_ID) + " (" + @autopot_sp_ID + ")";
+		dispbottom "MIN SP:   " + @autopot_sp_Min + " %";
+	}
 	dispbottom "DELAY:    " + @autopot_delay + " ms";
 	dispbottom "---------------------------------------------";
 	return;
@@ -53,7 +65,7 @@ L_Start:
 		end;
 	}
 	if(inarray(.blackList[0],.@potion) != -1){
-		mes  "'" + getitemname(.@potion) + "' is in the Black List, and connot be used.";
+		mes  "'" + getitemname(.@potion) + "' is black listed and cannot be used.";
 		end;
 	}
 	if (BaseLevel < getiteminfo(.@potion,12)) {
@@ -77,13 +89,17 @@ OnCommand:
 	.@command$[1] = strtolower(.@atcmd_parameters$[1]);
 	
 	if(.@command$[0] == "hp" || .@command$[0] == "sp"){
+		if((!.HP_Option && .@command$[0] == "hp") || (!.SP_Option && .@command$[0] == "sp")){
+			message strcharinfo(0), "Auto-Potion " + strtoupper(.@command$[0]) + " is Disabled from The Server.";
+			end;
+		}
 		if(.@command$[1] == "on"){
 			if(getd("@autopot_" + .@command$[0] + "_Active")){
 				message strcharinfo(0), "Auto-Potion " + strtoupper(.@command$[0]) + " is already on.";
 				end;
 			}
 			if(!getd("@autopot_" + .@command$[0] + "_ID")){
-				dispbottom "You need to setup " + strtoupper(.@command$[0]) + " Potion to be use.";
+				dispbottom "You need to set a " + strtoupper(.@command$[0]) + " Potion to be used.";
 				callsub L_Help;
 				end;
 			}
