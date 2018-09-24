@@ -415,6 +415,15 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "npc/re/quests/eden/eden_131_140.txt",
+			"settings":
+			{
+				"buffer_size": 23865,
+				"encoding": "Western (Windows 1252)",
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -607,11 +616,27 @@
 	[
 		"/D/MilkyRO Project/ServerScript",
 		"/D/MilkyRO Project/ServerScript/npc",
-		"/D/MilkyRO Project/ServerScript/npc/custom",
-		"/D/MilkyRO Project/ServerScript/npc/merchants"
+		"/D/MilkyRO Project/ServerScript/npc/re",
+		"/D/MilkyRO Project/ServerScript/npc/re/quests",
+		"/D/MilkyRO Project/ServerScript/npc/re/quests/eden"
 	],
 	"file_history":
 	[
+		"/D/MilkyRO Project/ServerScript/npc/re/instances/MalangdoCulvert.txt",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/questid2display.txt",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/quest_function.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/datainfo/questinfo_f.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/localquest/questinfo/l_milky_list.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/localquest/local_milkyquest_list.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/localquest/questinfo/l_dewata_list.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/localquest/questinfo/l_malaya_list.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/localquest/local_begintutorialquest_list.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/localquest/questinfo/l_begintutorial_list.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/QuestLuaFileList.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/premiumcampain/premiumcampain_msg_f.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/premiumcampain/premiumcampain_msg.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/epquest/questinfo/epsoid141_list.lub",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/epquest/ep_141quest_list.lub",
 		"/D/MilkyRO Project/ServerScript/npc/scripts_custom.conf",
 		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant2.txt",
 		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant.txt",
@@ -724,22 +749,7 @@
 		"/D/Downloads/Dealer_NPC_Special.txt",
 		"/D/Work/rathena/server/rathena-server/npc/re/merchants/coin_exchange.txt",
 		"/D/Downloads/Barang_yang_perlu_di_tambah_dan_di_tolak_dalam_MPC (2).txt",
-		"/D/Downloads/NPC_BARANG_TERBARU_V2.txt",
-		"/D/Downloads/ITEM_NPC_-_LEFT_SIDE_UPDATES (1).txt",
-		"/D/Downloads/Drop_Rate_Barang2_Berharga_Milky_RO.txt",
-		"/D/Downloads/ITEM_NPC_-_LEFT_SIDE_UPDATES.txt",
-		"/D/Downloads/NPC_Terbaru_LEFT_SIDE_Tanpa_Slot.txt",
-		"/D/xampp2/htdocs/script/mob_spawn.txt",
-		"/D/xampp2/htdocs/script/mob_spawn.php",
-		"/D/Work/rathena/mobspawn",
-		"/D/Work/rathena/server/fresh-rathena/db/import/level_penalty.txt",
-		"/D/Work/rathena/server/fresh-rathena/db/re/level_penalty.txt",
-		"/D/Work/rathena/server/fresh-rathena/doc/atcommands.txt",
-		"/D/Work/rathena/server/fresh-rathena/src/map/pc.cpp",
-		"/D/Work/rathena/server/fresh-rathena/src/map/atcommand.cpp",
-		"/D/Work/rathena/server/fresh-rathena/conf/battle/drops.conf",
-		"/D/Work/rathena/server/rathena-server/npc/custom/etc/floating_rates.txt",
-		"/D/Work/rathena/server/rathena-server/doc/mob_db_mode_list.txt"
+		"/D/Downloads/NPC_BARANG_TERBARU_V2.txt"
 	],
 	"find":
 	{
@@ -804,6 +814,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"Hunt1",
+			"hunt",
+			"missing",
 			"rankpvp",
 			"pvp",
 			"charinfo",
@@ -928,10 +941,7 @@
 			"(",
 			",",
 			"([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})",
-			"smallint",
-			"More More",
-			"IG_Prize_Of_Hero",
-			"IG_Sealed_Mind_Box"
+			"smallint"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -956,8 +966,38 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "npc/re/quests/eden/eden_131_140.txt",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 23865,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2363,
+								2363
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 741.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -1013,6 +1053,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"malangdo",
+				"npc\\re\\instances\\MalangdoCulvert.txt"
+			],
 			[
 				"atc",
 				"doc\\atcommands.txt"
@@ -1520,10 +1564,6 @@
 			[
 				"kvm en",
 				"npc\\battleground\\kvm\\kvm_enter.txt"
-			],
-			[
-				"kvm",
-				"npc\\battleground\\kvm\\kvm01.txt"
 			]
 		],
 		"width": 0.0
