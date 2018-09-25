@@ -3594,6 +3594,7 @@
 	export_constant(EFST_ENSEMBLEFATIGUE);
 	export_constant(EFST_ADAPTATION);
 	export_constant(EFST_ANCILLA);
+	export_constant(EFST_FESTIVE_ENERGY);
 	export_constant(EFST_WEAPONBLOCK_ON);
 	export_constant(EFST_CRI_DAMAGE);
 	export_constant(EFST_DEF_POWER);
