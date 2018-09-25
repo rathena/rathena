@@ -13,60 +13,73 @@
 //= 1.0 First version, edited. [Euphy]
 //============================================================
 
-prontera,148,174,5	script	Private MVP Room	100,{
-	mes "[Private MVP Room]";
-	mes "Please select a private MVP room.";
-	if ( getvariableofnpc( .rentcost, "MVP Summoner" ) )
-		mes "The cost to rent a room for "+ getvariableofnpc( .timeout, "MVP Summoner" ) +" minutes is "+ callfunc("F_InsertComma", getvariableofnpc( .rentcost, "MVP Summoner" ) ) +" zeny.";
+prontera,167,230,3	script	Private Branch Room	733,{
+	mes "[Private Branch Room]";
+	mes "Please select a private Branch room.";
+	if ( getvariableofnpc( .rentcost, "Room Manager" ) )
+		mes "The cost to rent a room for "+ getvariableofnpc( .timeout, "Room Manager" ) +" minutes is "+ callfunc("F_InsertComma", getvariableofnpc( .rentcost, "Room Manager" ) ) +" zeny.";
 	else
-		mes "You can only use the room for only "+ getvariableofnpc( .timeout, "MVP Summoner" ) +" minutes.";
+		mes "You can only use the room for only "+ getvariableofnpc( .timeout, "Room Manager" ) +" minutes.";
 	mes " ";
-	for ( .@i = 1; .@i <= 8; .@i++ )
-		if ( getvariableofnpc( .renttime[.@i], "MVP Summoner" ) )
+	for ( .@i = 1; .@i <= 16; .@i++ )
+		if ( getvariableofnpc( .renttime[.@i], "Room Manager" ) )
 			mes "Room #"+ .@i +" = "+ .color$[ .type[.@i] ] + .whoinuse$[.@i] +"^000000";
 	next;
 	.@room = select(
-		"MVP Room 1 ["+ getmapusers("06guild_01") +"]",
-		"MVP Room 2 ["+ getmapusers("06guild_02") +"]",
-		"MVP Room 3 ["+ getmapusers("06guild_03") +"]",
-		"MVP Room 4 ["+ getmapusers("06guild_04") +"]",
-		"MVP Room 5 ["+ getmapusers("06guild_05") +"]",
-		"MVP Room 6 ["+ getmapusers("06guild_06") +"]",
-		"MVP Room 7 ["+ getmapusers("06guild_07") +"]",
-		"MVP Room 8 ["+ getmapusers("06guild_08") +"]");
-	if ( getvariableofnpc( .renttime[.@room], "MVP Summoner" ) ) {
+		"MVP ROOM 1 [" + getmapusers("pvp_n_1-3") +"]",
+		"MVP ROOM 2 [" + getmapusers("pvp_n_2-3") +"]",
+		"MVP ROOM 3 [" + getmapusers("pvp_n_3-3") +"]",
+		"MVP ROOM 4 [" + getmapusers("pvp_n_4-3") +"]",
+		"MVP ROOM 5 [" + getmapusers("pvp_n_5-3") +"]",
+		"MVP ROOM 6 [" + getmapusers("pvp_n_6-3") +"]",
+		"MVP ROOM 7 [" + getmapusers("pvp_n_7-3") +"]",
+		"MVP ROOM 8 [" + getmapusers("pvp_n_8-3") +"]",
+		"MVP ROOM 9 [" + getmapusers("pvp_n_1-5") +"]",
+		"MVP ROOM 10 [" + getmapusers("pvp_n_2-5") +"]",
+		"MVP ROOM 11 [" + getmapusers("pvp_n_3-5") +"]",
+		"MVP ROOM 12 [" + getmapusers("pvp_n_4-5") +"]",
+		"MVP ROOM 13 [" + getmapusers("pvp_n_5-5") +"]",
+		"MVP ROOM 14 [" + getmapusers("pvp_n_6-5") +"]",
+		"MVP ROOM 15 [" + getmapusers("pvp_n_7-5") +"]",
+		"MVP ROOM 16 [" + getmapusers("pvp_n_8-5") +"]");
+
+	if ( getvariableofnpc( .renttime[.@room], "Room Manager" ) ) {
 		if ( .inuseid[.@room] == getcharid( .type[.@room] ) ) {
-			warp "06guild_0"+ .@room, 0,0;
+			if(.@room <= 8) {
+				warp "pvp_n_"+ .@room +"-3", 0,0;
+			} else {
+				warp "pvp_n_"+ (.@room-8) +"-5", 0,0;
+			}
 			close;
 		} else {
-			mes "[Private MVP Room]";
+			mes "[Private Branch Room]";
 			mes "This room is reserved for ";
 			mes .color$[ .type[.@room] ] + .whoinuse$[.@room] +"^000000.";
 			mes "Please select another.";
 			close;
 		}
 	}
-	mes "[Private MVP Room]";
+	mes "[Private Branch Room]";
 	mes "Reserve this room for...";
 	next;
 	set .@type, select( "For my party members", "For my guild members", "For personal account use" );
 	if ( !getcharid(.@type) ) {
-		mes "[Private MVP Room]";
+		mes "[Private Branch Room]";
 		mes "You do not own a "+( ( .@type == 1 )? "Party" : "Guild" )+".";
 		close;
 	}
-	else if ( Zeny < getvariableofnpc( .rentcost, "MVP Summoner" ) ) {
+	else if ( Zeny < getvariableofnpc( .rentcost, "Room Manager" ) ) {
 		mes "You don't have enough zeny to rent a room.";
 		close;
 	}
-	else if ( getvariableofnpc( .renttime[.@room], "MVP Summoner" ) ) {
-		mes "[Private MVP Room]";
+	else if ( getvariableofnpc( .renttime[.@room], "Room Manager" ) ) {
+		mes "[Private Branch Room]";
 		mes "I'm sorry, somebody else has already registered this room faster than you.";
 		close;
 	}
-	for ( .@i = 1; .@i <= 8; .@i++ ) {
-		if ( ( getvariableofnpc( .renttime[.@i], "MVP Summoner" ) ) && .@type == .type[.@i] && getcharid(.@type) == .inuseid[.@i] ) {
-			mes "[Private MVP Room]";
+	for ( .@i = 1; .@i <= 16; .@i++ ) {
+		if ( ( getvariableofnpc( .renttime[.@i], "Room Manager" ) ) && .@type == .type[.@i] && getcharid(.@type) == .inuseid[.@i] ) {
+			mes "[Private Branch Room]";
 			mes "You already rented Room#"+ .@i +". Use that room instead.";
 			close;
 		}
@@ -74,10 +87,16 @@ prontera,148,174,5	script	Private MVP Room	100,{
 	set .type[.@room], .@type;
 	set .inuseid[.@room], getcharid(.@type);
 	set .whoinuse$[.@room], strcharinfo( ( .@type == 3 )? 0 : .@type );
-	Zeny -= getvariableofnpc( .rentcost, "MVP Summoner" );
-	warp "06guild_0"+ .@room, 0,0;
-	killmonsterall "06guild_0"+ .@room;
-	donpcevent "MVP Summoner#"+ .@room +"::OnEnterMap";
+	Zeny -= getvariableofnpc( .rentcost, "Room Manager" );
+
+	if(.@room <= 8) {
+		warp "pvp_n_"+ .@room +"-3", 0,0;
+		killmonsterall "pvp_n_"+ .@room +"-3";
+	} else {
+		warp "pvp_n_"+ (.@room-8) +"-5", 0,0;
+		killmonsterall "pvp_n_"+ (.@room-8) +"-5";
+	}
+	donpcevent "Room Manager#"+ .@room +"::OnEnterMap";
 	close;
 OnInit:
 	.color$[1] =  "^EE8800"; // party color
@@ -86,14 +105,14 @@ OnInit:
 	end;
 }
 
--	script	MVP Summoner	-1,{
-	mes "[MVP Summoner]";
+-	script	Room Manager	-1,{
+	mes "[Room Manager]";
 	mes "Time left: " + callfunc( "Time2Str", .renttime[ atoi( strnpcinfo(2) ) ] + .timeout * 60 );
 	mes "Hi, what can I do for you?";
 	next;
 	switch ( select(.menu$) ) {
 	case 1:
-		mes "[MVP Summoner]";
+		mes "[Room Manager]";
 		if ( mobcount( "this", strnpcinfo(3)+"::OnMobDead" ) ) {
 			mes "I cannot offer heal service when there are monsters around.";
 			close;
@@ -122,26 +141,38 @@ OnInit:
 		sc_end SC_SKA;
 		percentheal 100,100;
 		specialeffect2 EF_HEAL;
+		specialeffect2 EF_INCAGILITY;
+		specialeffect2 EF_BLESSING;
+		if(vip_status(1))
+		{
+			sc_start SC_INCREASEAGI,1200000,10;
+			sc_start SC_BLESSING,1200000,10;
+		}
+		else
+		{
+			sc_start SC_INCREASEAGI,600000,10;
+			sc_start SC_BLESSING,600000,10;
+		}
 		mes "You are completely healed.";
 		close;
 	case 2:
 		if ( mobcount( "this", strnpcinfo(3)+"::OnMobDead" ) ) {
-			mes "[MVP Summoner]";
+			mes "[Room Manager]";
 			mes "I cannot summon another MVP when there are monsters around.";
 			close;
 		} else if ( .mvpcost ) {
-			mes "[MVP Summoner]";
+			mes "[Room Manager]";
 			mes "The cost to summon an MVP is "+ callfunc( "F_InsertComma", .mvpcost ) +" zeny.";
 			next;
 			set .@menu, select(.mvpid_menu$) -1;
-			mes "[MVP Summoner]";
+			mes "[Room Manager]";
 			if ( Zeny < .mvpcost ) {
 				mes "You don't have enough zeny to summon an MVP.";
 				close;
 			}
 		} else {
 			set .@menu, select(.mvpid_menu$) -1;
-			mes "[MVP Summoner]";
+			mes "[Room Manager]";
 		}
 		mes "Please get ready.";
 		close2;
@@ -151,22 +182,22 @@ OnInit:
 		end;
 	case 3:
 		if ( mobcount( "this", strnpcinfo(3)+"::OnMobDead" ) ) {
-			mes "[MVP Summoner]";
+			mes "[Room Manager]";
 			mes "I cannot summon another mini-boss when there are monsters around.";
 			close;
 		} else if ( .bosscost ) {
-			mes "[MVP Summoner]";
+			mes "[Room Manager]";
 			mes "The cost to summon a mini-boss is "+ callfunc( "F_InsertComma", .bosscost ) +" zeny.";
 			next;
 			set .@menu, select(.bossid_menu$) -1;
-			mes "[MVP Summoner]";
+			mes "[Room Manager]";
 			if ( Zeny < .bosscost ) {
 				mes "You doesn't have enough zeny to summon a mini-boss.";
 				close;
 			}
 		} else {
 			set .@menu, select(.bossid_menu$) -1;
-			mes "[MVP Summoner]";
+			mes "[Room Manager]";
 		}
 		mes "Please get ready.";
 		close2;
@@ -176,7 +207,7 @@ OnInit:
 		end;
 	case 4:
 		if ( mobcount( "this", strnpcinfo(3)+"::OnMobDead" ) > 0 ) {
-			mes "[MVP Summoner]";
+			mes "[Room Manager]";
 			mes "I cannot offer this service when there are monsters around.";
 			close;
 		}
@@ -184,14 +215,14 @@ OnInit:
 		callshop "MVP room#branch", 1;
 		end;
 	case 5:
-		mes "[MVP Summoner]";
+		mes "[Room Manager]";
 		mes "Are you sure you want to leave this room?";
 		next;
 		if ( select( "Yes:No") == 1 )
 			warp .respawnmap$, .respawnx, .respawny;
 		close;
 	case 6:
-		mes "[MVP Summoner]";
+		mes "[Room Manager]";
 		if ( getmapusers( strcharinfo(3) ) > 1 ) {
 			mes "There are still some players in this room. Make sure you are the last member in this room to use this option.";
 			close;
@@ -220,7 +251,6 @@ OnEnterMap:
 
 OnInit:
 	if ( !getstrlen( strnpcinfo(2) ) ) {
-
 //	Config ---------------------------------------------------------------------------------------
 
 	// Room rental time, in minutes.
@@ -229,19 +259,19 @@ OnInit:
 	set .timeout, 60;
 
 	set .rentcost, 100000;	// Zeny cost for renting a room (0 = free)
-	set .mvpcost, 100000;	// Zeny cost to summon an MVP (0 = free)
-	set .bosscost, 50000;	// Zeny cost to summon a boss monster (0 = free)
+	set .mvpcost, 10000000;	// Zeny cost to summon an MVP (0 = free)
+	set .bosscost, 5000000;	// Zeny cost to summon a boss monster (0 = free)
 
 	//	Options setting inside MVP room
 	set .@menu[1], 1;	// Turn Heal option On/Off
-	set .@menu[2], 1;	// Turn MVP Summoning On/Off
-	set .@menu[3], 1;	// Turn Mini boss Summoning On/Off
+	set .@menu[2], 0;	// Turn MVP Summoning On/Off
+	set .@menu[3], 0;	// Turn Mini boss Summoning On/Off
 	set .@menu[4], 0;	// Sell items (branches) On/Off (see shop below, before the mapflags)
 
 	// Respawn point when players leave the room
 	set .respawnmap$, "prontera";
-	set .respawnx, 150;
-	set .respawny, 174;
+	set .respawnx, 156;
+	set .respawny, 183;
 
 	setarray .mvpid[0],
 		1511,//	Amon Ra
@@ -341,61 +371,1140 @@ OnInit:
 				.bossid_menu$ = .bossid_menu$ + getmonsterinfo( .bossid[.@i], MOB_NAME ) +":";
 		}
 	}
-	else {
+	else
+	{
 		mapannounce strnpcinfo(4), "An administrator has refreshed the server. Please re-register this room.", bc_map;
-		mapwarp strnpcinfo(4), .respawnmap$, .respawnx, .respawny;
+		// Respawn point when players leave the room
+		mapwarp strnpcinfo(4), "prontera", 156, 183;
 	}
 	end;
 }
 
 -	shop	MVP room#branch	-1,604:100000,12103:1000000
 
-06guild_01,49,49,4	duplicate(MVP Summoner)	MVP Summoner#1	116
-06guild_02,49,49,4	duplicate(MVP Summoner)	MVP Summoner#2	116
-06guild_03,49,49,4	duplicate(MVP Summoner)	MVP Summoner#3	116
-06guild_04,49,49,4	duplicate(MVP Summoner)	MVP Summoner#4	116
-06guild_05,49,49,4	duplicate(MVP Summoner)	MVP Summoner#5	116
-06guild_06,49,49,4	duplicate(MVP Summoner)	MVP Summoner#6	116
-06guild_07,49,49,4	duplicate(MVP Summoner)	MVP Summoner#7	116
-06guild_08,49,49,4	duplicate(MVP Summoner)	MVP Summoner#8	116
+pvp_n_1-3,107,107,4	duplicate(Room Manager)	Room Manager#1	116
+pvp_n_2-3,107,107,4	duplicate(Room Manager)	Room Manager#2	116
+pvp_n_3-3,107,107,4	duplicate(Room Manager)	Room Manager#3	116
+pvp_n_4-3,107,107,4	duplicate(Room Manager)	Room Manager#4	116
+pvp_n_5-3,107,107,4	duplicate(Room Manager)	Room Manager#5	116
+pvp_n_6-3,107,107,4	duplicate(Room Manager)	Room Manager#6	116
+pvp_n_7-3,107,107,4	duplicate(Room Manager)	Room Manager#7	116
+pvp_n_8-3,107,107,4	duplicate(Room Manager)	Room Manager#8	116
 
-06guild_01	mapflag	nowarpto
-06guild_02	mapflag	nowarpto
-06guild_03	mapflag	nowarpto
-06guild_04	mapflag	nowarpto
-06guild_05	mapflag	nowarpto
-06guild_06	mapflag	nowarpto
-06guild_07	mapflag	nowarpto
-06guild_08	mapflag	nowarpto
-06guild_01	mapflag	nomemo
-06guild_02	mapflag	nomemo
-06guild_03	mapflag	nomemo
-06guild_04	mapflag	nomemo
-06guild_05	mapflag	nomemo
-06guild_06	mapflag	nomemo
-06guild_07	mapflag	nomemo
-06guild_08	mapflag	nomemo
-06guild_01	mapflag	noteleport
-06guild_02	mapflag	noteleport
-06guild_03	mapflag	noteleport
-06guild_04	mapflag	noteleport
-06guild_05	mapflag	noteleport
-06guild_06	mapflag	noteleport
-06guild_07	mapflag	noteleport
-06guild_08	mapflag	noteleport
-06guild_01	mapflag	nosave	SavePoint
-06guild_02	mapflag	nosave	SavePoint
-06guild_03	mapflag	nosave	SavePoint
-06guild_04	mapflag	nosave	SavePoint
-06guild_05	mapflag	nosave	SavePoint
-06guild_06	mapflag	nosave	SavePoint
-06guild_07	mapflag	nosave	SavePoint
-06guild_08	mapflag	nosave	SavePoint
-06guild_01	mapflag	nopenalty
-06guild_02	mapflag	nopenalty
-06guild_03	mapflag	nopenalty
-06guild_04	mapflag	nopenalty
-06guild_05	mapflag	nopenalty
-06guild_06	mapflag	nopenalty
-06guild_07	mapflag	nopenalty
-06guild_08	mapflag	nopenalty
+pvp_n_1-5,107,107,4	duplicate(Room Manager)	Room Manager#9	116
+pvp_n_2-5,107,107,4	duplicate(Room Manager)	Room Manager#10	116
+pvp_n_3-5,107,107,4	duplicate(Room Manager)	Room Manager#11	116
+pvp_n_4-5,107,107,4	duplicate(Room Manager)	Room Manager#12	116
+pvp_n_5-5,107,107,4	duplicate(Room Manager)	Room Manager#13	116
+pvp_n_6-5,107,107,4	duplicate(Room Manager)	Room Manager#14	116
+pvp_n_7-5,107,107,4	duplicate(Room Manager)	Room Manager#15	116
+pvp_n_8-5,107,107,4	duplicate(Room Manager)	Room Manager#16	116
+
+pvp_n_1-3	mapflag	nowarpto
+pvp_n_2-3	mapflag	nowarpto
+pvp_n_3-3	mapflag	nowarpto
+pvp_n_4-3	mapflag	nowarpto
+pvp_n_5-3	mapflag	nowarpto
+pvp_n_6-3	mapflag	nowarpto
+pvp_n_7-3	mapflag	nowarpto
+pvp_n_8-3	mapflag	nowarpto
+pvp_n_1-5	mapflag	nowarpto
+pvp_n_2-5	mapflag	nowarpto
+pvp_n_3-5	mapflag	nowarpto
+pvp_n_4-5	mapflag	nowarpto
+pvp_n_5-5	mapflag	nowarpto
+pvp_n_6-5	mapflag	nowarpto
+pvp_n_7-5	mapflag	nowarpto
+pvp_n_8-5	mapflag	nowarpto
+
+pvp_n_1-3	mapflag	nomemo
+pvp_n_2-3	mapflag	nomemo
+pvp_n_3-3	mapflag	nomemo
+pvp_n_4-3	mapflag	nomemo
+pvp_n_5-3	mapflag	nomemo
+pvp_n_6-3	mapflag	nomemo
+pvp_n_7-3	mapflag	nomemo
+pvp_n_8-3	mapflag	nomemo
+pvp_n_1-5	mapflag	nomemo
+pvp_n_2-5	mapflag	nomemo
+pvp_n_3-5	mapflag	nomemo
+pvp_n_4-5	mapflag	nomemo
+pvp_n_5-5	mapflag	nomemo
+pvp_n_6-5	mapflag	nomemo
+pvp_n_7-5	mapflag	nomemo
+pvp_n_8-5	mapflag	nomemo
+
+pvp_n_1-3	mapflag	noteleport
+pvp_n_2-3	mapflag	noteleport
+pvp_n_3-3	mapflag	noteleport
+pvp_n_4-3	mapflag	noteleport
+pvp_n_5-3	mapflag	noteleport
+pvp_n_6-3	mapflag	noteleport
+pvp_n_7-3	mapflag	noteleport
+pvp_n_8-3	mapflag	noteleport
+pvp_n_1-5	mapflag	noteleport
+pvp_n_2-5	mapflag	noteleport
+pvp_n_3-5	mapflag	noteleport
+pvp_n_4-5	mapflag	noteleport
+pvp_n_5-5	mapflag	noteleport
+pvp_n_6-5	mapflag	noteleport
+pvp_n_7-5	mapflag	noteleport
+pvp_n_8-5	mapflag	noteleport
+
+pvp_n_1-3	mapflag	nosave	SavePoint
+pvp_n_2-3	mapflag	nosave	SavePoint
+pvp_n_3-3	mapflag	nosave	SavePoint
+pvp_n_4-3	mapflag	nosave	SavePoint
+pvp_n_5-3	mapflag	nosave	SavePoint
+pvp_n_6-3	mapflag	nosave	SavePoint
+pvp_n_7-3	mapflag	nosave	SavePoint
+pvp_n_8-3	mapflag	nosave	SavePoint
+pvp_n_1-5	mapflag	nosave	SavePoint
+pvp_n_2-5	mapflag	nosave	SavePoint
+pvp_n_3-5	mapflag	nosave	SavePoint
+pvp_n_4-5	mapflag	nosave	SavePoint
+pvp_n_5-5	mapflag	nosave	SavePoint
+pvp_n_6-5	mapflag	nosave	SavePoint
+pvp_n_7-5	mapflag	nosave	SavePoint
+pvp_n_8-5	mapflag	nosave	SavePoint
+
+pvp_n_1-3	mapflag	nopenalty
+pvp_n_2-3	mapflag	nopenalty
+pvp_n_3-3	mapflag	nopenalty
+pvp_n_4-3	mapflag	nopenalty
+pvp_n_5-3	mapflag	nopenalty
+pvp_n_6-3	mapflag	nopenalty
+pvp_n_7-3	mapflag	nopenalty
+pvp_n_8-3	mapflag	nopenalty
+pvp_n_1-5	mapflag	nopenalty
+pvp_n_2-5	mapflag	nopenalty
+pvp_n_3-5	mapflag	nopenalty
+pvp_n_4-5	mapflag	nopenalty
+pvp_n_5-5	mapflag	nopenalty
+pvp_n_6-5	mapflag	nopenalty
+pvp_n_7-5	mapflag	nopenalty
+pvp_n_8-5	mapflag	nopenalty
+
+alb_ship	mapflag	nobranch
+alb2trea	mapflag	nobranch
+alberta	mapflag	nobranch
+alberta_in	mapflag	nobranch
+alde_dun01	mapflag	nobranch
+alde_dun02	mapflag	nobranch
+alde_dun03	mapflag	nobranch
+alde_dun04	mapflag	nobranch
+aldeba_in	mapflag	nobranch
+aldebaran	mapflag	nobranch
+anthell01	mapflag	nobranch
+anthell02	mapflag	nobranch
+arena_room	mapflag	nobranch
+c_tower1	mapflag	nobranch
+c_tower2	mapflag	nobranch
+c_tower3	mapflag	nobranch
+c_tower4	mapflag	nobranch
+force_1-1	mapflag	nobranch
+force_1-2	mapflag	nobranch
+force_1-3	mapflag	nobranch
+force_2-1	mapflag	nobranch
+force_2-2	mapflag	nobranch
+force_2-3	mapflag	nobranch
+force_3-1	mapflag	nobranch
+force_3-2	mapflag	nobranch
+force_3-3	mapflag	nobranch
+gef_dun00	mapflag	nobranch
+gef_dun01	mapflag	nobranch
+gef_dun02	mapflag	nobranch
+gef_dun03	mapflag	nobranch
+gef_fild00	mapflag	nobranch
+gef_fild01	mapflag	nobranch
+gef_fild02	mapflag	nobranch
+gef_fild03	mapflag	nobranch
+gef_fild04	mapflag	nobranch
+gef_fild05	mapflag	nobranch
+gef_fild06	mapflag	nobranch
+gef_fild07	mapflag	nobranch
+gef_fild08	mapflag	nobranch
+gef_fild09	mapflag	nobranch
+gef_fild10	mapflag	nobranch
+gef_fild11	mapflag	nobranch
+gef_fild12	mapflag	nobranch
+gef_fild13	mapflag	nobranch
+gef_fild14	mapflag	nobranch
+gef_tower	mapflag	nobranch
+geffen	mapflag	nobranch
+geffen_in	mapflag	nobranch
+gl_cas01	mapflag	nobranch
+gl_cas02	mapflag	nobranch
+gl_church	mapflag	nobranch
+gl_chyard	mapflag	nobranch
+gl_dun01	mapflag	nobranch
+gl_dun02	mapflag	nobranch
+gl_in01	mapflag	nobranch
+gl_knt01	mapflag	nobranch
+gl_knt02	mapflag	nobranch
+gl_prison	mapflag	nobranch
+gl_prison1	mapflag	nobranch
+gl_sew01	mapflag	nobranch
+gl_sew02	mapflag	nobranch
+gl_sew03	mapflag	nobranch
+gl_sew04	mapflag	nobranch
+gl_step	mapflag	nobranch
+glast_01	mapflag	nobranch
+hunter_1-1	mapflag	nobranch
+hunter_2-1	mapflag	nobranch
+hunter_3-1	mapflag	nobranch
+in_hunter	mapflag	nobranch
+in_moc_16	mapflag	nobranch
+in_orcs01	mapflag	nobranch
+in_sphinx1	mapflag	nobranch
+in_sphinx2	mapflag	nobranch
+in_sphinx3	mapflag	nobranch
+in_sphinx4	mapflag	nobranch
+in_sphinx5	mapflag	nobranch
+iz_dun00	mapflag	nobranch
+iz_dun01	mapflag	nobranch
+iz_dun02	mapflag	nobranch
+iz_dun03	mapflag	nobranch
+iz_dun04	mapflag	nobranch
+job_sword1	mapflag	nobranch
+izlu2dun	mapflag	nobranch
+izlude	mapflag	nobranch
+izlude_in	mapflag	nobranch
+job_thief1	mapflag	nobranch
+knight_1-1	mapflag	nobranch
+knight_2-1	mapflag	nobranch
+knight_3-1	mapflag	nobranch
+mjo_dun01	mapflag	nobranch
+mjo_dun02	mapflag	nobranch
+mjo_dun03	mapflag	nobranch
+mjolnir_01	mapflag	nobranch
+mjolnir_02	mapflag	nobranch
+mjolnir_03	mapflag	nobranch
+mjolnir_04	mapflag	nobranch
+mjolnir_05	mapflag	nobranch
+mjolnir_06	mapflag	nobranch
+mjolnir_07	mapflag	nobranch
+mjolnir_08	mapflag	nobranch
+mjolnir_09	mapflag	nobranch
+mjolnir_10	mapflag	nobranch
+mjolnir_11	mapflag	nobranch
+mjolnir_12	mapflag	nobranch
+moc_castle	mapflag	nobranch
+moc_fild01	mapflag	nobranch
+moc_fild02	mapflag	nobranch
+moc_fild03	mapflag	nobranch
+moc_fild04	mapflag	nobranch
+moc_fild05	mapflag	nobranch
+moc_fild06	mapflag	nobranch
+moc_fild07	mapflag	nobranch
+moc_fild08	mapflag	nobranch
+moc_fild09	mapflag	nobranch
+moc_fild10	mapflag	nobranch
+moc_fild11	mapflag	nobranch
+moc_fild12	mapflag	nobranch
+moc_fild13	mapflag	nobranch
+moc_fild14	mapflag	nobranch
+moc_fild15	mapflag	nobranch
+moc_fild16	mapflag	nobranch
+moc_fild17	mapflag	nobranch
+moc_fild18	mapflag	nobranch
+moc_fild19	mapflag	nobranch
+moc_pryd01	mapflag	nobranch
+moc_pryd02	mapflag	nobranch
+moc_pryd03	mapflag	nobranch
+moc_pryd04	mapflag	nobranch
+moc_pryd05	mapflag	nobranch
+moc_pryd06	mapflag	nobranch
+moc_prydb1	mapflag	nobranch
+moc_ruins	mapflag	nobranch
+monk_in	mapflag	nobranch
+morocc	mapflag	nobranch
+morocc_in	mapflag	nobranch
+new_1-1	mapflag	nobranch
+new_1-2	mapflag	nobranch
+new_1-3	mapflag	nobranch
+new_1-4	mapflag	nobranch
+new_2-1	mapflag	nobranch
+new_2-2	mapflag	nobranch
+new_2-3	mapflag	nobranch
+new_2-4	mapflag	nobranch
+new_3-1	mapflag	nobranch
+new_3-2	mapflag	nobranch
+new_3-3	mapflag	nobranch
+new_3-4	mapflag	nobranch
+new_4-1	mapflag	nobranch
+new_4-2	mapflag	nobranch
+new_4-3	mapflag	nobranch
+new_4-4	mapflag	nobranch
+new_5-1	mapflag	nobranch
+new_5-2	mapflag	nobranch
+new_5-3	mapflag	nobranch
+new_5-4	mapflag	nobranch
+orcsdun01	mapflag	nobranch
+orcsdun02	mapflag	nobranch
+ordeal_1-1	mapflag	nobranch
+ordeal_1-2	mapflag	nobranch
+//ordeal_1-3	mapflag	nobranch
+//ordeal_1-4	mapflag	nobranch
+ordeal_2-1	mapflag	nobranch
+ordeal_2-2	mapflag	nobranch
+//ordeal_2-3	mapflag	nobranch
+//ordeal_2-4	mapflag	nobranch
+ordeal_3-1	mapflag	nobranch
+ordeal_3-2	mapflag	nobranch
+//ordeal_3-3	mapflag	nobranch
+//ordeal_3-4	mapflag	nobranch
+pay_arche	mapflag	nobranch
+pay_dun00	mapflag	nobranch
+pay_dun01	mapflag	nobranch
+pay_dun02	mapflag	nobranch
+pay_dun03	mapflag	nobranch
+pay_dun04	mapflag	nobranch
+pay_fild01	mapflag	nobranch
+pay_fild02	mapflag	nobranch
+pay_fild03	mapflag	nobranch
+pay_fild04	mapflag	nobranch
+pay_fild05	mapflag	nobranch
+pay_fild06	mapflag	nobranch
+pay_fild07	mapflag	nobranch
+pay_fild08	mapflag	nobranch
+pay_fild09	mapflag	nobranch
+pay_fild10	mapflag	nobranch
+pay_fild11	mapflag	nobranch
+payon	mapflag	nobranch
+payon_in01	mapflag	nobranch
+payon_in02	mapflag	nobranch
+priest_1-1	mapflag	nobranch
+priest_2-1	mapflag	nobranch
+priest_3-1	mapflag	nobranch
+prontera	mapflag	nobranch
+prt_are_in	mapflag	nobranch
+prt_are01	mapflag	nobranch
+pvp_room	mapflag	nobranch
+prt_castle	mapflag	nobranch
+prt_church	mapflag	nobranch
+prt_fild00	mapflag	nobranch
+prt_fild01	mapflag	nobranch
+prt_fild02	mapflag	nobranch
+prt_fild03	mapflag	nobranch
+prt_fild04	mapflag	nobranch
+prt_fild05	mapflag	nobranch
+prt_fild06	mapflag	nobranch
+prt_fild07	mapflag	nobranch
+prt_fild08	mapflag	nobranch
+prt_fild09	mapflag	nobranch
+prt_fild10	mapflag	nobranch
+prt_fild11	mapflag	nobranch
+prt_in	mapflag	nobranch
+prt_maze01	mapflag	nobranch
+prt_maze02	mapflag	nobranch
+prt_maze03	mapflag	nobranch
+prt_monk	mapflag	nobranch
+prt_sewb1	mapflag	nobranch
+prt_sewb2	mapflag	nobranch
+prt_sewb3	mapflag	nobranch
+prt_sewb4	mapflag	nobranch
+pvp_2vs2	mapflag	nobranch
+pvp_c_room	mapflag	nobranch
+pvp_n_1-1	mapflag	nobranch
+pvp_n_1-2	mapflag	nobranch
+pvp_n_1-4	mapflag	nobranch
+pvp_n_2-1	mapflag	nobranch
+pvp_n_2-2	mapflag	nobranch
+pvp_n_2-4	mapflag	nobranch
+pvp_n_3-1	mapflag	nobranch
+pvp_n_3-2	mapflag	nobranch
+pvp_n_3-4	mapflag	nobranch
+pvp_n_4-1	mapflag	nobranch
+pvp_n_4-2	mapflag	nobranch
+pvp_n_4-4	mapflag	nobranch
+pvp_n_5-1	mapflag	nobranch
+pvp_n_5-2	mapflag	nobranch
+pvp_n_5-4	mapflag	nobranch
+pvp_n_6-1	mapflag	nobranch
+pvp_n_6-2	mapflag	nobranch
+pvp_n_6-4	mapflag	nobranch
+pvp_n_7-1	mapflag	nobranch
+pvp_n_7-2	mapflag	nobranch
+pvp_n_7-4	mapflag	nobranch
+pvp_n_8-1	mapflag	nobranch
+pvp_n_8-2	mapflag	nobranch
+pvp_n_8-4	mapflag	nobranch
+pvp_n_room	mapflag	nobranch
+pvp_y_1-1	mapflag	nobranch
+pvp_y_1-2	mapflag	nobranch
+pvp_y_1-3	mapflag	nobranch
+pvp_y_1-4	mapflag	nobranch
+pvp_y_1-5	mapflag	nobranch
+pvp_y_2-1	mapflag	nobranch
+pvp_y_2-2	mapflag	nobranch
+pvp_y_2-3	mapflag	nobranch
+pvp_y_2-4	mapflag	nobranch
+pvp_y_2-5	mapflag	nobranch
+pvp_y_3-1	mapflag	nobranch
+pvp_y_3-2	mapflag	nobranch
+pvp_y_3-3	mapflag	nobranch
+pvp_y_3-4	mapflag	nobranch
+pvp_y_3-5	mapflag	nobranch
+pvp_y_4-1	mapflag	nobranch
+pvp_y_4-2	mapflag	nobranch
+pvp_y_4-3	mapflag	nobranch
+pvp_y_4-4	mapflag	nobranch
+pvp_y_4-5	mapflag	nobranch
+pvp_y_5-1	mapflag	nobranch
+pvp_y_5-2	mapflag	nobranch
+pvp_y_5-3	mapflag	nobranch
+pvp_y_5-4	mapflag	nobranch
+pvp_y_5-5	mapflag	nobranch
+pvp_y_6-1	mapflag	nobranch
+pvp_y_6-2	mapflag	nobranch
+pvp_y_6-3	mapflag	nobranch
+pvp_y_6-4	mapflag	nobranch
+pvp_y_6-5	mapflag	nobranch
+pvp_y_7-1	mapflag	nobranch
+pvp_y_7-2	mapflag	nobranch
+pvp_y_7-3	mapflag	nobranch
+pvp_y_7-4	mapflag	nobranch
+pvp_y_7-5	mapflag	nobranch
+pvp_y_8-1	mapflag	nobranch
+pvp_y_8-2	mapflag	nobranch
+pvp_y_8-3	mapflag	nobranch
+pvp_y_8-4	mapflag	nobranch
+pvp_y_8-5	mapflag	nobranch
+pvp_y_room	mapflag	nobranch
+sword_1-1	mapflag	nobranch
+sword_2-1	mapflag	nobranch
+sword_3-1	mapflag	nobranch
+treasure01	mapflag	nobranch
+treasure02	mapflag	nobranch
+wizard_1-1	mapflag	nobranch
+wizard_2-1	mapflag	nobranch
+wizard_3-1	mapflag	nobranch
+xmas	mapflag	nobranch
+xmas_dun01	mapflag	nobranch
+xmas_dun02	mapflag	nobranch
+xmas_fild01	mapflag	nobranch
+xmas_in	mapflag	nobranch
+beach_dun	mapflag	nobranch
+beach_dun2	mapflag	nobranch
+beach_dun3	mapflag	nobranch
+cmd_fild01	mapflag	nobranch
+cmd_fild02	mapflag	nobranch
+cmd_fild03	mapflag	nobranch
+cmd_fild04	mapflag	nobranch
+cmd_fild05	mapflag	nobranch
+cmd_fild06	mapflag	nobranch
+cmd_fild07	mapflag	nobranch
+cmd_fild08	mapflag	nobranch
+cmd_fild09	mapflag	nobranch
+cmd_in01	mapflag	nobranch
+cmd_in02	mapflag	nobranch
+comodo	mapflag	nobranch
+quiz_00	mapflag	nobranch
+quiz_01	mapflag	nobranch
+g_room1-1	mapflag	nobranch
+g_room1-2	mapflag	nobranch
+g_room1-3	mapflag	nobranch
+g_room2	mapflag	nobranch
+tur_dun01	mapflag	nobranch
+tur_dun02	mapflag	nobranch
+tur_dun03	mapflag	nobranch
+tur_dun04	mapflag	nobranch
+tur_dun05	mapflag	nobranch
+tur_dun06	mapflag	nobranch
+alde_gld	mapflag	nobranch
+aldeg_cas01	mapflag	nobranch
+aldeg_cas02	mapflag	nobranch
+aldeg_cas03	mapflag	nobranch
+aldeg_cas04	mapflag	nobranch
+aldeg_cas05	mapflag	nobranch
+gefg_cas01	mapflag	nobranch
+gefg_cas02	mapflag	nobranch
+gefg_cas03	mapflag	nobranch
+gefg_cas04	mapflag	nobranch
+gefg_cas05	mapflag	nobranch
+gld_dun01	mapflag	nobranch
+gld_dun02	mapflag	nobranch
+gld_dun03	mapflag	nobranch
+gld_dun04	mapflag	nobranch
+guild_room	mapflag	nobranch
+guild_vs1	mapflag	nobranch
+guild_vs2	mapflag	nobranch
+guild_vs3	mapflag	nobranch
+guild_vs4	mapflag	nobranch
+guild_vs5	mapflag	nobranch
+guild_vs1-1	mapflag	nobranch
+guild_vs1-2	mapflag	nobranch
+guild_vs1-3	mapflag	nobranch
+guild_vs1-4	mapflag	nobranch
+guild_vs2-1	mapflag	nobranch
+guild_vs2-2	mapflag	nobranch
+job_hunte	mapflag	nobranch
+job_knt	mapflag	nobranch
+job_prist	mapflag	nobranch
+job_wiz	mapflag	nobranch
+pay_gld	mapflag	nobranch
+payg_cas01	mapflag	nobranch
+payg_cas02	mapflag	nobranch
+payg_cas03	mapflag	nobranch
+payg_cas04	mapflag	nobranch
+payg_cas05	mapflag	nobranch
+prt_gld	mapflag	nobranch
+prtg_cas01	mapflag	nobranch
+prtg_cas02	mapflag	nobranch
+prtg_cas03	mapflag	nobranch
+prtg_cas04	mapflag	nobranch
+prtg_cas05	mapflag	nobranch
+alde_alche	mapflag	nobranch
+in_rogue	mapflag	nobranch
+job_cru	mapflag	nobranch
+job_duncer	mapflag	nobranch
+job_monk	mapflag	nobranch
+job_sage	mapflag	nobranch
+mag_dun01	mapflag	nobranch
+mag_dun02	mapflag	nobranch
+monk_test	mapflag	nobranch
+quiz_test	mapflag	nobranch
+yuno	mapflag	nobranch
+yuno_fild01	mapflag	nobranch
+yuno_fild02	mapflag	nobranch
+yuno_fild03	mapflag	nobranch
+yuno_fild04	mapflag	nobranch
+yuno_in01	mapflag	nobranch
+yuno_in02	mapflag	nobranch
+yuno_in03	mapflag	nobranch
+yuno_in04	mapflag	nobranch
+yuno_in05	mapflag	nobranch
+ama_dun01	mapflag	nobranch
+ama_dun02	mapflag	nobranch
+ama_dun03	mapflag	nobranch
+ama_fild01	mapflag	nobranch
+ama_in01	mapflag	nobranch
+ama_in02	mapflag	nobranch
+ama_test	mapflag	nobranch
+amatsu	mapflag	nobranch
+gon_dun01	mapflag	nobranch
+gon_dun02	mapflag	nobranch
+gon_dun03	mapflag	nobranch
+gon_fild01	mapflag	nobranch
+gon_in	mapflag	nobranch
+gon_test	mapflag	nobranch
+gonryun	mapflag	nobranch
+sec_in01	mapflag	nobranch
+sec_in02	mapflag	nobranch
+sec_pri	mapflag	nobranch
+umbala	mapflag	nobranch
+um_dun01	mapflag	nobranch
+um_dun02	mapflag	nobranch
+um_fild01	mapflag	nobranch
+um_fild02	mapflag	nobranch
+um_fild03	mapflag	nobranch
+um_fild04	mapflag	nobranch
+um_in	mapflag	nobranch
+niflheim	mapflag	nobranch
+nif_fild01	mapflag	nobranch
+nif_fild02	mapflag	nobranch
+nif_in	mapflag	nobranch
+yggdrasil01	mapflag	nobranch
+valkyrie	mapflag	nobranch
+himinn	mapflag	nobranch
+lou_in01	mapflag	nobranch
+lou_in02	mapflag	nobranch
+lou_dun03	mapflag	nobranch
+lou_dun02	mapflag	nobranch
+lou_dun01	mapflag	nobranch
+lou_fild01	mapflag	nobranch
+louyang	mapflag	nobranch
+siege_test	mapflag	nobranch
+n_castle	mapflag	nobranch
+nguild_gef	mapflag	nobranch
+nguild_prt	mapflag	nobranch
+nguild_pay	mapflag	nobranch
+nguild_alde	mapflag	nobranch
+jawaii	mapflag	nobranch
+jawaii_in	mapflag	nobranch
+gefenia01	mapflag	nobranch
+gefenia02	mapflag	nobranch
+gefenia03	mapflag	nobranch
+gefenia04	mapflag	nobranch
+new_zone01	mapflag	nobranch
+new_zone02	mapflag	nobranch
+new_zone03	mapflag	nobranch
+new_zone04	mapflag	nobranch
+payon_in03	mapflag	nobranch
+ayothaya	mapflag	nobranch
+ayo_in01	mapflag	nobranch
+ayo_in02	mapflag	nobranch
+ayo_fild01	mapflag	nobranch
+ayo_fild02	mapflag	nobranch
+ayo_dun01	mapflag	nobranch
+ayo_dun02	mapflag	nobranch
+que_god01	mapflag	nobranch
+que_god02	mapflag	nobranch
+yuno_fild05	mapflag	nobranch
+yuno_fild07	mapflag	nobranch
+yuno_fild08	mapflag	nobranch
+yuno_fild09	mapflag	nobranch
+yuno_fild11	mapflag	nobranch
+yuno_fild12	mapflag	nobranch
+alde_tt02	mapflag	nobranch
+turbo_n_1	mapflag	nobranch
+turbo_n_4	mapflag	nobranch
+turbo_n_8	mapflag	nobranch
+turbo_n_16	mapflag	nobranch
+turbo_e_4	mapflag	nobranch
+turbo_e_8	mapflag	nobranch
+turbo_e_16	mapflag	nobranch
+turbo_room	mapflag	nobranch
+airplane	mapflag	nobranch
+airport	mapflag	nobranch
+einbech	mapflag	nobranch
+einbroch	mapflag	nobranch
+ein_dun01	mapflag	nobranch
+ein_dun02	mapflag	nobranch
+ein_fild06	mapflag	nobranch
+ein_fild07	mapflag	nobranch
+ein_fild08	mapflag	nobranch
+ein_fild09	mapflag	nobranch
+ein_fild10	mapflag	nobranch
+ein_in01	mapflag	nobranch
+que_sign01	mapflag	nobranch
+que_sign02	mapflag	nobranch
+ein_fild03	mapflag	nobranch
+ein_fild04	mapflag	nobranch
+lhz_fild02	mapflag	nobranch
+lhz_fild03	mapflag	nobranch
+yuno_pre	mapflag	nobranch
+lhz_fild01	mapflag	nobranch
+lighthalzen	mapflag	nobranch
+lhz_in01	mapflag	nobranch
+lhz_in02	mapflag	nobranch
+lhz_in03	mapflag	nobranch
+lhz_que01	mapflag	nobranch
+lhz_dun01	mapflag	nobranch
+lhz_dun02	mapflag	nobranch
+lhz_dun03	mapflag	nobranch
+lhz_cube	mapflag	nobranch
+juperos_01	mapflag	nobranch
+juperos_02	mapflag	nobranch
+jupe_area1	mapflag	nobranch
+jupe_area2	mapflag	nobranch
+jupe_core	mapflag	nobranch
+jupe_ele	mapflag	nobranch
+jupe_ele_r	mapflag	nobranch
+jupe_gate	mapflag	nobranch
+y_airport	mapflag	nobranch
+lhz_airport	mapflag	nobranch
+airplane_01	mapflag	nobranch
+jupe_cave	mapflag	nobranch
+quiz_02	mapflag	nobranch
+hu_fild07	mapflag	nobranch
+hu_fild05	mapflag	nobranch
+hu_fild04	mapflag	nobranch
+hu_fild01	mapflag	nobranch
+yuno_fild06	mapflag	nobranch
+job_soul	mapflag	nobranch
+job_star	mapflag	nobranch
+que_job01	mapflag	nobranch
+que_job02	mapflag	nobranch
+que_job03	mapflag	nobranch
+abyss_01	mapflag	nobranch
+abyss_02	mapflag	nobranch
+abyss_03	mapflag	nobranch
+thana_step	mapflag	nobranch
+thana_boss	mapflag	nobranch
+tha_scene01	mapflag	nobranch
+tha_t01	mapflag	nobranch
+tha_t02	mapflag	nobranch
+tha_t03	mapflag	nobranch
+tha_t04	mapflag	nobranch
+tha_t07	mapflag	nobranch
+tha_t05	mapflag	nobranch
+tha_t06	mapflag	nobranch
+tha_t08	mapflag	nobranch
+tha_t09	mapflag	nobranch
+tha_t10	mapflag	nobranch
+tha_t11	mapflag	nobranch
+tha_t12	mapflag	nobranch
+auction_01	mapflag	nobranch
+auction_02	mapflag	nobranch
+hugel	mapflag	nobranch
+hu_in01	mapflag	nobranch
+que_bingo	mapflag	nobranch
+que_hugel	mapflag	nobranch
+p_track01	mapflag	nobranch
+p_track02	mapflag	nobranch
+odin_tem01	mapflag	nobranch
+odin_tem02	mapflag	nobranch
+odin_tem03	mapflag	nobranch
+hu_fild02	mapflag	nobranch
+hu_fild03	mapflag	nobranch
+hu_fild06	mapflag	nobranch
+ein_fild01	mapflag	nobranch
+ein_fild02	mapflag	nobranch
+ein_fild05	mapflag	nobranch
+yuno_fild10	mapflag	nobranch
+kh_kiehl02	mapflag	nobranch
+kh_kiehl01	mapflag	nobranch
+kh_dun02	mapflag	nobranch
+kh_dun01	mapflag	nobranch
+kh_mansion	mapflag	nobranch
+kh_rossi	mapflag	nobranch
+kh_school	mapflag	nobranch
+kh_vila	mapflag	nobranch
+force_map1	mapflag	nobranch
+force_map2	mapflag	nobranch
+force_map3	mapflag	nobranch
+job_hunter	mapflag	nobranch
+job_knight	mapflag	nobranch
+job_priest	mapflag	nobranch
+job_wizard	mapflag	nobranch
+ve_in02	mapflag	nobranch
+rachel	mapflag	nobranch
+ra_in01	mapflag	nobranch
+ra_fild01	mapflag	nobranch
+ra_fild02	mapflag	nobranch
+ra_fild03	mapflag	nobranch
+ra_fild04	mapflag	nobranch
+ra_fild05	mapflag	nobranch
+ra_fild06	mapflag	nobranch
+ra_fild07	mapflag	nobranch
+ra_fild08	mapflag	nobranch
+ra_fild09	mapflag	nobranch
+ra_fild10	mapflag	nobranch
+ra_fild11	mapflag	nobranch
+ra_fild12	mapflag	nobranch
+ra_fild13	mapflag	nobranch
+ra_san01	mapflag	nobranch
+ra_san02	mapflag	nobranch
+ra_san03	mapflag	nobranch
+ra_san04	mapflag	nobranch
+ra_san05	mapflag	nobranch
+ra_temin	mapflag	nobranch
+ra_temple	mapflag	nobranch
+ra_temsky	mapflag	nobranch
+que_rachel	mapflag	nobranch
+ice_dun01	mapflag	nobranch
+ice_dun02	mapflag	nobranch
+ice_dun03	mapflag	nobranch
+ice_dun04	mapflag	nobranch
+que_thor	mapflag	nobranch
+thor_camp	mapflag	nobranch
+thor_v01	mapflag	nobranch
+thor_v02	mapflag	nobranch
+thor_v03	mapflag	nobranch
+veins	mapflag	nobranch
+ve_in	mapflag	nobranch
+ve_fild01	mapflag	nobranch
+ve_fild02	mapflag	nobranch
+ve_fild03	mapflag	nobranch
+ve_fild04	mapflag	nobranch
+ve_fild05	mapflag	nobranch
+ve_fild06	mapflag	nobranch
+ve_fild07	mapflag	nobranch
+poring_c01	mapflag	nobranch
+poring_c02	mapflag	nobranch
+que_ng	mapflag	nobranch
+nameless_i	mapflag	nobranch
+nameless_n	mapflag	nobranch
+nameless_in	mapflag	nobranch
+abbey01	mapflag	nobranch
+abbey02	mapflag	nobranch
+abbey03	mapflag	nobranch
+poring_w01	mapflag	nobranch
+poring_w02	mapflag	nobranch
+que_san04	mapflag	nobranch
+moscovia	mapflag	nobranch
+mosk_in	mapflag	nobranch
+mosk_ship	mapflag	nobranch
+mosk_fild01	mapflag	nobranch
+mosk_fild02	mapflag	nobranch
+mosk_dun01	mapflag	nobranch
+mosk_dun02	mapflag	nobranch
+mosk_dun03	mapflag	nobranch
+mosk_que	mapflag	nobranch
+force_4-1	mapflag	nobranch
+force_5-1	mapflag	nobranch
+06guild_r	mapflag	nobranch
+06guild_01	mapflag	nobranch
+06guild_02	mapflag	nobranch
+06guild_03	mapflag	nobranch
+06guild_04	mapflag	nobranch
+06guild_05	mapflag	nobranch
+06guild_06	mapflag	nobranch
+06guild_07	mapflag	nobranch
+06guild_08	mapflag	nobranch
+z_agit	mapflag	nobranch
+que_temsky	mapflag	nobranch
+itemmall	mapflag	nobranch
+bossnia_01	mapflag	nobranch
+bossnia_02	mapflag	nobranch
+bossnia_03	mapflag	nobranch
+bossnia_04	mapflag	nobranch
+schg_cas01	mapflag	nobranch
+schg_cas02	mapflag	nobranch
+schg_cas03	mapflag	nobranch
+schg_cas04	mapflag	nobranch
+schg_cas05	mapflag	nobranch
+sch_gld	mapflag	nobranch
+cave	mapflag	nobranch
+moc_fild20	mapflag	nobranch
+moc_fild21	mapflag	nobranch
+moc_fild22	mapflag	nobranch
+que_ba	mapflag	nobranch
+que_moc_16	mapflag	nobranch
+que_moon	mapflag	nobranch
+arug_cas01	mapflag	nobranch
+arug_cas02	mapflag	nobranch
+arug_cas03	mapflag	nobranch
+arug_cas04	mapflag	nobranch
+arug_cas05	mapflag	nobranch
+aru_gld	mapflag	nobranch
+bat_room	mapflag	nobranch
+bat_a01	mapflag	nobranch
+bat_a02	mapflag	nobranch
+bat_b01	mapflag	nobranch
+bat_b02	mapflag	nobranch
+que_qsch01	mapflag	nobranch
+que_qsch02	mapflag	nobranch
+que_qsch03	mapflag	nobranch
+que_qsch04	mapflag	nobranch
+que_qsch05	mapflag	nobranch
+que_qaru01	mapflag	nobranch
+que_qaru02	mapflag	nobranch
+que_qaru03	mapflag	nobranch
+que_qaru04	mapflag	nobranch
+que_qaru05	mapflag	nobranch
+1@cata	mapflag	nobranch
+2@cata	mapflag	nobranch
+e_tower	mapflag	nobranch
+1@tower	mapflag	nobranch
+2@tower	mapflag	nobranch
+3@tower	mapflag	nobranch
+4@tower	mapflag	nobranch
+5@tower	mapflag	nobranch
+6@tower	mapflag	nobranch
+mid_camp	mapflag	nobranch
+mid_campin	mapflag	nobranch
+man_fild01	mapflag	nobranch
+man_fild03	mapflag	nobranch
+spl_fild02	mapflag	nobranch
+spl_fild03	mapflag	nobranch
+moc_fild22b	mapflag	nobranch
+que_dan01	mapflag	nobranch
+que_dan02	mapflag	nobranch
+schg_que01	mapflag	nobranch
+schg_dun01	mapflag	nobranch
+arug_que01	mapflag	nobranch
+arug_dun01	mapflag	nobranch
+1@orcs	mapflag	nobranch
+2@orcs	mapflag	nobranch
+1@nyd	mapflag	nobranch
+2@nyd	mapflag	nobranch
+nyd_dun01	mapflag	nobranch
+nyd_dun02	mapflag	nobranch
+manuk	mapflag	nobranch
+man_fild02	mapflag	nobranch
+man_in01	mapflag	nobranch
+splendide	mapflag	nobranch
+spl_fild01	mapflag	nobranch
+spl_in01	mapflag	nobranch
+spl_in02	mapflag	nobranch
+bat_c01	mapflag	nobranch
+bat_c02	mapflag	nobranch
+bat_c03	mapflag	nobranch
+moc_para01	mapflag	nobranch
+job3_arch01	mapflag	nobranch
+job3_arch02	mapflag	nobranch
+job3_arch03	mapflag	nobranch
+job3_guil01	mapflag	nobranch
+job3_guil02	mapflag	nobranch
+job3_guil03	mapflag	nobranch
+job3_rang01	mapflag	nobranch
+job3_rang02	mapflag	nobranch
+job3_rune01	mapflag	nobranch
+job3_rune02	mapflag	nobranch
+job3_rune03	mapflag	nobranch
+job3_war01	mapflag	nobranch
+job3_war02	mapflag	nobranch
+jupe_core2	mapflag	nobranch
+brasilis	mapflag	nobranch
+bra_in01	mapflag	nobranch
+bra_fild01	mapflag	nobranch
+bra_dun01	mapflag	nobranch
+bra_dun02	mapflag	nobranch
+dicastes01	mapflag	nobranch
+dicastes02	mapflag	nobranch
+dic_in01	mapflag	nobranch
+dic_fild01	mapflag	nobranch
+dic_fild02	mapflag	nobranch
+dic_dun01	mapflag	nobranch
+dic_dun02	mapflag	nobranch
+job3_gen01	mapflag	nobranch
+s_atelier	mapflag	nobranch
+job3_sha01	mapflag	nobranch
+//evt_zombie	mapflag	nobranch
+//evt_coke	mapflag	nobranch
+//ac_sl_area	mapflag	nobranch
+//ac_cl_hall	mapflag	nobranch
+//ac_cl_room	mapflag	nobranch
+//jp_s_dun11	mapflag	nobranch
+mora	mapflag	nobranch
+bif_fild01	mapflag	nobranch
+bif_fild02	mapflag	nobranch
+1@mist	mapflag	nobranch
+dewata	mapflag	nobranch
+dew_in01	mapflag	nobranch
+dew_fild01	mapflag	nobranch
+dew_dun01	mapflag	nobranch
+dew_dun02	mapflag	nobranch
+que_house_s	mapflag	nobranch
+malangdo	mapflag	nobranch
+mal_in01	mapflag	nobranch
+mal_in02	mapflag	nobranch
+mal_dun01	mapflag	nobranch
+1@pump	mapflag	nobranch
+2@pump	mapflag	nobranch
+1@cash	mapflag	nobranch
+iz_dun05	mapflag	nobranch
+evt_mobroom	mapflag	nobranch
+alde_tt03	mapflag	nobranch
+dic_dun03	mapflag	nobranch
+//mjolnir_04_1	mapflag	nobranch
+1@lhz	mapflag	nobranch
+lhz_dun04	mapflag	nobranch
+que_lhz	mapflag	nobranch
+evt_swar_b	mapflag	nobranch
+evt_swar_r	mapflag	nobranch
+evt_swar_s	mapflag	nobranch
+evt_swar_t	mapflag	nobranch
+gld2_ald	mapflag	nobranch
+gld2_gef	mapflag	nobranch
+gld2_pay	mapflag	nobranch
+gld2_prt	mapflag	nobranch
+gld_dun01_2	mapflag	nobranch
+gld_dun02_2	mapflag	nobranch
+gld_dun03_2	mapflag	nobranch
+gld_dun04_2	mapflag	nobranch
+malaya	mapflag	nobranch
+job_ko	mapflag	nobranch
+ma_scene01	mapflag	nobranch
+1@ma_b	mapflag	nobranch
+1@ma_c	mapflag	nobranch
+1@ma_h	mapflag	nobranch
+ma_in01	mapflag	nobranch
+ma_dun01	mapflag	nobranch
+ma_fild01	mapflag	nobranch
+ma_fild02	mapflag	nobranch
+ma_zif01	mapflag	nobranch
+ma_zif02	mapflag	nobranch
+ma_zif03	mapflag	nobranch
+ma_zif04	mapflag	nobranch
+ma_zif05	mapflag	nobranch
+ma_zif06	mapflag	nobranch
+ma_zif07	mapflag	nobranch
+ma_zif08	mapflag	nobranch
+ma_zif09	mapflag	nobranch
+new_event	mapflag	nobranch
+eclage	mapflag	nobranch
+ecl_fild01	mapflag	nobranch
+ecl_tdun01	mapflag	nobranch
+ecl_tdun02	mapflag	nobranch
+ecl_tdun03	mapflag	nobranch
+ecl_tdun04	mapflag	nobranch
+que_avan01	mapflag	nobranch
+1@ecl	mapflag	nobranch
+ecl_in01	mapflag	nobranch
+ecl_in02	mapflag	nobranch
+ecl_in03	mapflag	nobranch
+ecl_in04	mapflag	nobranch
+ecl_hub01	mapflag	nobranch
+moc_prydn1	mapflag	nobranch
+moc_prydn2	mapflag	nobranch
+iz_ac01	mapflag	nobranch
+iz_ac02	mapflag	nobranch
+treasure_n1	mapflag	nobranch
+treasure_n2	mapflag	nobranch
+iz_int	mapflag	nobranch
+iz_ng01	mapflag	nobranch
+iz_int01	mapflag	nobranch
+iz_int02	mapflag	nobranch
+iz_int03	mapflag	nobranch
+iz_int04	mapflag	nobranch
+iz_ac01_a	mapflag	nobranch
+iz_ac02_a	mapflag	nobranch
+iz_ac01_b	mapflag	nobranch
+iz_ac02_b	mapflag	nobranch
+iz_ac01_c	mapflag	nobranch
+iz_ac02_c	mapflag	nobranch
+iz_ac01_d	mapflag	nobranch
+iz_ac02_d	mapflag	nobranch
+te_prtcas01	mapflag	nobranch
+te_prtcas02	mapflag	nobranch
+te_prtcas03	mapflag	nobranch
+te_prtcas04	mapflag	nobranch
+te_prtcas05	mapflag	nobranch
+te_aldecas1	mapflag	nobranch
+te_aldecas2	mapflag	nobranch
+te_aldecas3	mapflag	nobranch
+te_aldecas4	mapflag	nobranch
+te_aldecas5	mapflag	nobranch
+prt_fild08a	mapflag	nobranch
+prt_fild08b	mapflag	nobranch
+prt_fild08c	mapflag	nobranch
+prt_fild08d	mapflag	nobranch
+izlude_a	mapflag	nobranch
+izlude_b	mapflag	nobranch
+izlude_c	mapflag	nobranch
+izlude_d	mapflag	nobranch
+te_prt_gld	mapflag	nobranch
+te_alde_gld	mapflag	nobranch
+teg_dun01	mapflag	nobranch
+teg_dun02	mapflag	nobranch
+1@gl_k	mapflag	nobranch
+2@gl_k	mapflag	nobranch
+gl_chyard_	mapflag	nobranch
+gl_cas02_	mapflag	nobranch
+evt_bomb	mapflag	nobranch
+1@def01	mapflag	nobranch
+1@def02	mapflag	nobranch
+1@def03	mapflag	nobranch
+1@gef	mapflag	nobranch
+1@face	mapflag	nobranch
+1@sara	mapflag	nobranch
+1@gef_in	mapflag	nobranch
+dali	mapflag	nobranch
+dali02	mapflag	nobranch
+1@ge_st	mapflag	nobranch
+1@spa	mapflag	nobranch
+1@tnm1	mapflag	nobranch
+1@tnm2	mapflag	nobranch
+1@tnm3	mapflag	nobranch
+1@dth1	mapflag	nobranch
+1@dth2	mapflag	nobranch
+1@dth3	mapflag	nobranch
+1@eom	mapflag	nobranch
+1@jtb	mapflag	nobranch
+1@rev	mapflag	nobranch
+1@xm_d	mapflag	nobranch
+moro_cav	mapflag	nobranch
+moro_vol	mapflag	nobranch
+silk_lair	mapflag	nobranch
+c_tower2_	mapflag	nobranch
+c_tower3_	mapflag	nobranch
+1@mcd	mapflag	nobranch
+ver_eju	mapflag	nobranch
+ver_tunn	mapflag	nobranch
+verus03	mapflag	nobranch
+verus04	mapflag	nobranch
+job_gun	mapflag	nobranch
+1@air1	mapflag	nobranch
+1@air2	mapflag	nobranch
+1@glast	mapflag	nobranch
+lhz_dun_n	mapflag	nobranch
+lhz_d_n2	mapflag	nobranch
+1@gl_kh	mapflag	nobranch
+2@gl_kh	mapflag	nobranch
+1@lab	mapflag	nobranch
+1@uns	mapflag	nobranch
+un_bk_q	mapflag	nobranch
+un_bunker	mapflag	nobranch
+un_myst	mapflag	nobranch
+verus01	mapflag	nobranch
+verus02	mapflag	nobranch
+paramk	mapflag	nobranch
+1@infi	mapflag	nobranch
+1@ffp	mapflag	nobranch
+1@mir	mapflag	nobranch
+2@mir	mapflag	nobranch
+1@sthb	mapflag	nobranch
+1@sthc	mapflag	nobranch
+1@sthd	mapflag	nobranch
+prt_cas	mapflag	nobranch
+prt_cas_q	mapflag	nobranch
+prt_prison	mapflag	nobranch
+prt_lib	mapflag	nobranch
+prt_lib_q	mapflag	nobranch
+prt_q	mapflag	nobranch
+prt_pri00	mapflag	nobranch
+int_land	mapflag	nobranch
+int_land01	mapflag	nobranch
+int_land02	mapflag	nobranch
+int_land03	mapflag	nobranch
+int_land04	mapflag	nobranch
+lasagna	mapflag	nobranch
+lasa_fild01	mapflag	nobranch
+lasa_fild02	mapflag	nobranch
+lasa_dun01	mapflag	nobranch
+lasa_dun02	mapflag	nobranch
+lasa_dun03	mapflag	nobranch
+conch_in	mapflag	nobranch
+lasa_in01	mapflag	nobranch
+lasa_dun_q	mapflag	nobranch
+1@pop1	mapflag	nobranch
+1@pop2	mapflag	nobranch
+1@pop3	mapflag	nobranch
+1@slw	mapflag	nobranch
+1@swat	mapflag	nobranch
+que_swat	mapflag	nobranch
+slabw01	mapflag	nobranch
+rebel_in	mapflag	nobranch
+1@md_gef	mapflag	nobranch
+1@md_pay	mapflag	nobranch
+har_in01	mapflag	nobranch
+harboro1	mapflag	nobranch
+harboro2	mapflag	nobranch
+rockmi1	mapflag	nobranch
+rockmi2	mapflag	nobranch
+rockrdg1	mapflag	nobranch
+rockrdg2	mapflag	nobranch
+1@gl_k2	mapflag	nobranch
+2@gl_k2	mapflag	nobranch
+1@xm_d2	mapflag	nobranch
+pay_d03_i	mapflag	nobranch
+gef_d01_i	mapflag	nobranch
+ice_d03_i	mapflag	nobranch
+1@tre	mapflag	nobranch
+1@begi	mapflag	nobranch
+tur_d03_i	mapflag	nobranch
+tur_d04_i	mapflag	nobranch
+1@crd	mapflag	nobranch
+ordeal_a00	mapflag	nobranch
+ordeal_a02	mapflag	nobranch
+pprontera	mapflag	nobranch
+niflxmas	mapflag	nobranch
+sch_lab	mapflag	nobranch
+nakhyang	mapflag	nobranch
+lasa_sea	mapflag	nobranch
+1@drdo	mapflag	nobranch
+x_lhz	mapflag	nobranch
+x_prt	mapflag	nobranch
+x_ra	mapflag	nobranch
+prt_evt_in	mapflag	nobranch
+vis_h01	mapflag	nobranch
+vis_h02	mapflag	nobranch
+vis_h03	mapflag	nobranch
+vis_h04	mapflag	nobranch
+ein_d02_i	mapflag	nobranch
+com_d02_i	mapflag	nobranch
+1@soul	mapflag	nobranch
+star_frst	mapflag	nobranch
+star_in	mapflag	nobranch
+2009rwc_01	mapflag	nobranch
+2009rwc_02	mapflag	nobranch
+2009rwc_03	mapflag	nobranch
+2009rwc_04	mapflag	nobranch
+2009rwc_05	mapflag	nobranch
+2009rwc_06	mapflag	nobranch
+2009rwc_07	mapflag	nobranch
+2009rwc_08	mapflag	nobranch
+2009rwc_f01	mapflag	nobranch
+2012rwc_01	mapflag	nobranch
+2012rwc_02	mapflag	nobranch
+2012rwc_03	mapflag	nobranch
+2012rwc_04	mapflag	nobranch
+2012rwc_05	mapflag	nobranch
+2012rwc_06	mapflag	nobranch
+2012rwc_07	mapflag	nobranch
+2012rwc_08	mapflag	nobranch
+vendzone	mapflag	nobranch

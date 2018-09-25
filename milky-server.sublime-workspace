@@ -416,11 +416,96 @@
 	"buffers":
 	[
 		{
-			"file": "npc/re/quests/eden/eden_131_140.txt",
+			"file": "npc/custom/breeder.txt",
 			"settings":
 			{
-				"buffer_size": 23865,
-				"encoding": "Western (Windows 1252)",
+				"buffer_size": 4736,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/merchants/enchan_arm.txt",
+			"settings":
+			{
+				"buffer_size": 5388,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/scripts_custom.conf",
+			"settings":
+			{
+				"buffer_size": 4986,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/custom/etc/mvp_room.txt",
+			"settings":
+			{
+				"buffer_size": 42304,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "db/map_index.txt",
+			"settings":
+			{
+				"buffer_size": 11020,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "doc/script_commands.txt",
+			"settings":
+			{
+				"buffer_size": 371678,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "doc/mapflags.txt",
+			"settings":
+			{
+				"buffer_size": 11796,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/re/merchants/3rd_trader.txt",
+			"settings":
+			{
+				"buffer_size": 9841,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/custom/prontera_stupidwarper.txt",
+			"settings":
+			{
+				"buffer_size": 438,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/custom/healer.txt",
+			"settings":
+			{
+				"buffer_size": 3501,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/custom/warper.txt",
+			"settings":
+			{
+				"buffer_size": 25666,
 				"line_ending": "Windows"
 			}
 		}
@@ -615,13 +700,37 @@
 	"expanded_folders":
 	[
 		"/D/MilkyRO Project/ServerScript",
+		"/D/MilkyRO Project/ServerScript/build",
+		"/D/MilkyRO Project/ServerScript/db",
+		"/D/MilkyRO Project/ServerScript/db/re",
 		"/D/MilkyRO Project/ServerScript/npc",
-		"/D/MilkyRO Project/ServerScript/npc/re",
-		"/D/MilkyRO Project/ServerScript/npc/re/quests",
-		"/D/MilkyRO Project/ServerScript/npc/re/quests/eden"
+		"/D/MilkyRO Project/ServerScript/npc/custom"
 	],
 	"file_history":
 	[
+		"/D/MilkyRO Project/ServerScript/npc/custom/etc/mvp_room1.txt",
+		"/D/MilkyRO Project/ServerScript/npc/mobs/pvp.txt",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant2.txt",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant.txt",
+		"/D/MilkyRO Project/ServerScript/npc/mapflag/hidemobhpbar.txt",
+		"/D/MilkyRO Project/ServerScript/npc/mapflag/nightmare.txt",
+		"/D/MilkyRO Project/ServerScript/npc/mapflag/pvp_noguild.txt",
+		"/D/MilkyRO Project/ServerScript/npc/other/pvp.txt",
+		"/D/MilkyRO Project/ServerScript/npc/mapflag/pvp.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/identify.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/branch.txt",
+		"/D/MilkyRO Project/ServerScript/doc/script_commands.txt",
+		"/D/MilkyRO Project/ServerScript/doc/mapflags.txt",
+		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/quests/quests_malaya.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/instances/BangungotHospital.txt",
+		"/D/MilkyRO Project/ServerScript/conf/battle/drops.conf",
+		"/D/MilkyRO Project/ServerScript/npc/re/quests/eden/eden_common.txt",
+		"/D/MilkyRO Project/ServerScript/conf/battle/player.conf",
+		"/D/MilkyRO Project/ServerScript/npc/custom/givevip.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/healer.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
+		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
 		"/D/MilkyRO Project/ServerScript/npc/re/instances/MalangdoCulvert.txt",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/questid2display.txt",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/quest_function.lub",
@@ -638,30 +747,21 @@
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/epquest/questinfo/epsoid141_list.lub",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/epquest/ep_141quest_list.lub",
 		"/D/MilkyRO Project/ServerScript/npc/scripts_custom.conf",
-		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant2.txt",
-		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/identify.txt",
-		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
 		"/D/Downloads/groups.conf",
 		"/D/MilkyRO Project/ServerScript/conf/help.txt",
 		"/D/MilkyRO Project/ServerScript/conf/groups.conf",
-		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
 		"/D/MilkyRO Project/ServerScript/npc/re/scripts_athena.conf",
 		"/D/MilkyRO Project/ServerScript/npc/scripts_athena.conf",
 		"/D/MilkyRO Project/ServerScript/npc/battleground/bg_common.txt",
 		"/D/MilkyRO Project/ServerScript/npc/other/gympass.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/givevip.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/stylist.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/card_remover.txt",
 		"/D/MilkyRO Project/ServerScript/npc/merchants/refine.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/platinum_skills.txt",
-		"/D/MilkyRO Project/ServerScript/npc/re/quests/eden/eden_common.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/healer.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/jobmaster.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/resetnpc.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/guild_storage_kafra.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
 		"/D/MilkyRO Project/ServerScript/npc/re/merchants/socket_enchant2.txt",
 		"/D/Work/rathena/client/System/CheckAttendance.lub",
 		"/D/Work/rathena/client/data/luafiles514/lua files/datainfo/tb_cashshop_banner.lub",
@@ -677,7 +777,6 @@
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/sclientinfo.xml",
 		"/D/Work/rathena/client/data/clientinfo.xml",
 		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/config.txt",
-		"/D/MilkyRO Project/ServerScript/conf/battle/player.conf",
 		"/D/MilkyRO Project/ServerScript/npc/custom/itemmall.txt",
 		"/D/MilkyRO Project/Temporary/itemmall.txt",
 		"/D/MilkyRO Project/ServerScript/db/map_index.txt",
@@ -736,20 +835,7 @@
 		"/D/Work/rathena/server/rathena-server/src/config/renewal.hpp",
 		"/D/Work/rathena/server/rathena-server/conf/char_athena.conf",
 		"/D/Work/rathena/Milky - reset/data/msgstringtable.txt",
-		"/D/Work/rathena/server/rathena-server/npc/custom/itemmall.txt",
-		"/D/Work/rathena/server/rathena-server/conf/battle/drops.conf",
-		"/D/Work/rathena/server/rathena-localhost/src/config/core.hpp",
-		"/D/Work/rathena/server/rathena-localhost/npc/re/instances/MalangdoCulvert.txt",
-		"/D/Work/rathena/server/rathena-server/npc/re/instances/MalangdoCulvert.txt",
-		"/D/Work/rathena/server/rathena-server/src/config/core.hpp",
-		"/D/Work/rathena/server/rathena-localhost/src/config/renewal.hpp",
-		"/D/Work/rathena/server/rathena-localhost/conf/battle/player.conf",
-		"/D/Work/rathena/server/rathena-localhost/npc/battleground/bg_common.txt",
-		"/D/Work/rathena/server/rathena-localhost/src/common/conf.hpp",
-		"/D/Downloads/Dealer_NPC_Special.txt",
-		"/D/Work/rathena/server/rathena-server/npc/re/merchants/coin_exchange.txt",
-		"/D/Downloads/Barang_yang_perlu_di_tambah_dan_di_tolak_dalam_MPC (2).txt",
-		"/D/Downloads/NPC_BARANG_TERBARU_V2.txt"
+		"/D/Work/rathena/server/rathena-server/npc/custom/itemmall.txt"
 	],
 	"find":
 	{
@@ -760,6 +846,8 @@
 		"height": 116.0,
 		"where_history":
 		[
+			"<project>",
+			"D:\\MilkyRO Project\\ServerScript\\conf",
 			"<project>",
 			"D:\\Work\\rathena\\server\\rathena-server\\",
 			"D:\\Work\\rathena\\server\\rathena-server\\conf",
@@ -814,6 +902,81 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"pvp_n_8-5",
+			"announce",
+			"{\n",
+			"mapwarp",
+			"getstrlen",
+			"donpcevent",
+			"Room Manager",
+			"Private MVP Room",
+			"private MVP room",
+			"Private MVP Room",
+			"pvp_n_8-5",
+			"Private MVP Room",
+			"private MVP room",
+			"Private MVP Room",
+			"MVP Summoner",
+			"prontera",
+			"Fight Square",
+			"06guild_0",
+			"nowarpto",
+			"empty",
+			"OnEnterMap",
+			"strtol",
+			"announce",
+			"8",
+			"string",
+			"respawnmap",
+			"mapwarp",
+			"MVP Summoner",
+			"MVP",
+			"MVP Summoner",
+			"warp",
+			"for",
+			"warp",
+			"rune merchant",
+			"menu",
+			"shop",
+			"06guild_0",
+			"06guild_01",
+			"izlude",
+			"F_PVP_FSRS",
+			"izlude",
+			"Heal",
+			"prontera",
+			"MVP Summoner",
+			"select",
+			"F_PVP_FSRS",
+			"pvp",
+			"storage",
+			"pvp_n_1-3",
+			"pvp",
+			"mapflag",
+			" ",
+			"Branch",
+			"nodrop",
+			"checkcart",
+			"super",
+			"BaseJob",
+			"Job",
+			"Job_SuperNovice",
+			"cart",
+			"branch room",
+			"ma_dun01",
+			"L_Warp",
+			"las",
+			"malaya_hi",
+			"malaya_bang",
+			"Nurse",
+			"12079",
+			"marse",
+			"nak_warp",
+			"eto",
+			"idle_no_autoloot",
+			"autoloot",
+			"ks",
+			"Mounds",
 			"Hunt1",
 			"hunt",
 			"missing",
@@ -866,82 +1029,7 @@
 			"skull",
 			"dung",
 			"sar",
-			"song",
-			"songk",
-			"songko",
-			"privateairship",
-			"gnjoy.com",
-			"rAbanner.bmp",
-			"rAthena",
-			"this is not the current attendance check event",
-			" },",
-			"- Day: ",
-			"ItemId: ",
-			"Amount: ",
-			"ItemId: ",
-			"- Day: ",
-			"attendance",
-			"version_to_connect",
-			"delete",
-			"are you sure you want to delete",
-			"are you sure you ",
-			"X = ",
-			"/w",
-			"7665",
-			"2227",
-			"4021",
-			"MIN_STORAGE",
-			"RENEWAL_DROP",
-			"VIP_SCRIPT",
-			"VIP",
-			"price sell",
-			"6417",
-			"vip",
-			"monster",
-			"baby hatii",
-			"1515",
-			"1307",
-			"renewal drop",
-			"level_penalty",
-			"renewal_Drop",
-			"pc_level_penalty_mod",
-			"info)",
-			"info",
-			"@m",
-			"@mo",
-			"@mon",
-			"@monster",
-			"(mi)",
-			"item_rate_common",
-			"floating_rates",
-			"FloatingRates",
-			"item_rate_common",
-			"lever2_te",
-			"lever2_TE",
-			"te_prtcas01",
-			"MVP",
-			"prt_fild08a",
-			"izlude_c",
-			"vip",
-			"rates",
-			"groups",
-			"12000",
-			"vip",
-			"MAX_STORAGE",
-			"vip_storage_increase",
-			"xxxx",
-			"6224",
-			"2235",
-			"([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})",
-			",",
-			"(",
-			")",
-			"\n(",
-			")",
-			"(",
-			",",
-			"([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})\\t([0-9]{1,5})\\t([0-9]{1,4})",
-			"smallint"
+			"song"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -966,24 +1054,24 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "npc/re/quests/eden/eden_131_140.txt",
-					"semi_transient": true,
+					"file": "npc/custom/breeder.txt",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 23865,
+						"buffer_size": 4736,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2363,
-								2363
+								1405,
+								1405
 							]
 						],
 						"settings":
@@ -992,10 +1080,302 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 741.0,
+						"translation.y": 492.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "npc/merchants/enchan_arm.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5388,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4872,
+								4872
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1952.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "npc/scripts_custom.conf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4986,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								694,
+								694
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "npc/custom/etc/mvp_room.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 42304,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19921,
+								19921
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 11001.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "db/map_index.txt",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 11020,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								590,
+								11020
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 19723.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "doc/script_commands.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 371678,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								85114,
+								85114
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 44002.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "doc/mapflags.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 11796,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								5438,
+								5438
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3163.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "npc/re/merchants/3rd_trader.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 9841,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4921,
+								4921
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1384.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "npc/custom/prontera_stupidwarper.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 438,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								237,
+								237
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 10,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "npc/custom/healer.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3501,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1313,
+								1060
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 228.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 10,
+					"file": "npc/custom/warper.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 25666,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								4525,
+								4518
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2012.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
 					"type": "text"
 				}
 			]
@@ -1003,7 +1383,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 28.0
+		"height": 29.0
 	},
 	"input":
 	{
@@ -1044,7 +1424,7 @@
 	"project": "milky-server.sublime-project",
 	"replace":
 	{
-		"height": 52.0
+		"height": 54.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1054,12 +1434,68 @@
 		"selected_items":
 		[
 			[
-				"malangdo",
-				"npc\\re\\instances\\MalangdoCulvert.txt"
+				"mapflag",
+				"doc\\mapflags.txt"
+			],
+			[
+				"iden",
+				"npc\\custom\\identify.txt"
+			],
+			[
+				"heal",
+				"npc\\custom\\healer.txt"
+			],
+			[
+				"mvp_room",
+				"npc\\custom\\etc\\mvp_room.txt"
+			],
+			[
+				"scr",
+				"doc\\script_commands.txt"
+			],
+			[
+				"warper",
+				"npc\\custom\\warper.txt"
+			],
+			[
+				"custom",
+				"npc\\scripts_custom.conf"
+			],
+			[
+				"bree",
+				"npc\\custom\\breeder.txt"
+			],
+			[
+				"sock",
+				"npc\\merchants\\socket_enchant2.txt"
+			],
+			[
+				"enchant",
+				"npc\\merchants\\enchan_arm.txt"
+			],
+			[
+				"atco",
+				"doc\\atcommands.txt"
+			],
+			[
+				"war",
+				"npc\\custom\\warper.txt"
+			],
+			[
+				"give",
+				"npc\\custom\\givevip.txt"
+			],
+			[
+				"edenc",
+				"npc\\re\\quests\\eden\\eden_common.txt"
 			],
 			[
 				"atc",
 				"doc\\atcommands.txt"
+			],
+			[
+				"malangdo",
+				"npc\\re\\instances\\MalangdoCulvert.txt"
 			],
 			[
 				"socket ",
@@ -1086,10 +1522,6 @@
 				"npc\\custom\\stylist.txt"
 			],
 			[
-				"bree",
-				"npc\\custom\\breeder.txt"
-			],
-			[
 				"platinu",
 				"npc\\custom\\platinum_skills.txt"
 			],
@@ -1104,10 +1536,6 @@
 			[
 				"job",
 				"npc\\custom\\jobmaster.txt"
-			],
-			[
-				"give",
-				"npc\\custom\\givevip.txt"
 			],
 			[
 				"socket encha",
@@ -1130,16 +1558,8 @@
 				"npc\\custom\\guild_storage_kafra.txt"
 			],
 			[
-				"warper",
-				"npc\\custom\\warper.txt"
-			],
-			[
 				"card_remover",
 				"npc\\custom\\card_remover.txt"
-			],
-			[
-				"custom",
-				"npc\\scripts_custom.conf"
 			],
 			[
 				"reset",
@@ -1148,10 +1568,6 @@
 			[
 				"define",
 				"src\\custom\\defines_pre.hpp"
-			],
-			[
-				"war",
-				"npc\\custom\\warper.txt"
 			],
 			[
 				"vend",
@@ -1220,10 +1636,6 @@
 			[
 				"level",
 				"db\\re\\level_penalty.txt"
-			],
-			[
-				"atco",
-				"doc\\atcommands.txt"
 			],
 			[
 				"drops",
@@ -1320,10 +1732,6 @@
 			[
 				"script athena",
 				"npc\\re\\scripts_athena.conf"
-			],
-			[
-				"scr",
-				"doc\\script_commands.txt"
 			],
 			[
 				"athe",
@@ -1526,10 +1934,6 @@
 				"npc\\custom\\guild_storage_kafra.txt"
 			],
 			[
-				"heal",
-				"npc\\custom\\healer.txt"
-			],
-			[
 				"item",
 				"npc\\custom\\itemmall.txt"
 			],
@@ -1540,30 +1944,6 @@
 			[
 				"hd_refiner",
 				"npc\\re\\merchants\\hd_refiner.txt"
-			],
-			[
-				"shaw",
-				"npc\\re\\merchants\\shadow_refiner.txt"
-			],
-			[
-				"bless",
-				"npc\\re\\merchants\\blessed_refiner.txt"
-			],
-			[
-				"ticket_refiner",
-				"npc\\re\\merchants\\ticket_refiner.txt"
-			],
-			[
-				"enchan_upg",
-				"npc\\re\\merchants\\enchan_upg.txt"
-			],
-			[
-				"gyp",
-				"npc\\other\\gympass.txt"
-			],
-			[
-				"kvm en",
-				"npc\\battleground\\kvm\\kvm_enter.txt"
 			]
 		],
 		"width": 0.0

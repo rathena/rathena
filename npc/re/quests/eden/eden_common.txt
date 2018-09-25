@@ -279,7 +279,7 @@ verus04,116,243,0	duplicate(eto)	Eden Teleport Officer#33	729
 moc_para01,30,10,0	script	#eden_out	45,1,1,{
 OnTouch:
 	switch (nak_warp) {
-		case 1: warp "prontera",116,72; end;
+		case 1: warp "prontera",155,184; end;
 		case 2: warp "moc_ruins",64,161; end;
 		case 3: warp "geffen",120,39; end;
 		case 4: warp "alberta",117,56; end;

@@ -33,9 +33,17 @@
 	percentheal 100,100;
 	if (.@Buffs) {
 		specialeffect2 EF_INCAGILITY;
-		sc_start SC_INCREASEAGI,240000,10;
 		specialeffect2 EF_BLESSING;
-		sc_start SC_BLESSING,240000,10;
+		if(vip_status(1))
+		{
+			sc_start SC_INCREASEAGI,1200000,10;
+			sc_start SC_BLESSING,1200000,10;
+		}
+		else
+		{
+			sc_start SC_INCREASEAGI,600000,10;
+			sc_start SC_BLESSING,600000,10;
+		}
 	}
 	if (.@Delay)
 		@HD = gettimetick(2) + .@Delay;

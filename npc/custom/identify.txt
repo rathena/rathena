@@ -25,4 +25,4 @@
 	message strcharinfo(0),"Identified "+.@Total[0]+" items"+((.@Total[1])?" for "+.@Total[1]+" Zeny":"")+".";
 	end;
 }
-prontera,145,173,5	duplicate(item_identify)	Identifier#iden_prt	574
+prontera,132,189,7	duplicate(item_identify)	Identifier#iden_prt	407
