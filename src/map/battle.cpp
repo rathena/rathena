@@ -5149,9 +5149,10 @@ struct Damage battle_calc_weapon_final_atk_modifiers(struct Damage wd, struct bl
 	if( sc ) {
 		//SC_FUSION hp penalty [Komurka]
 		if (sc->data[SC_FUSION]) {
-			int hp= sstatus->max_hp;
+			unsigned int hp = sstatus->max_hp;
+
 			if (sd && tsd) {
-				hp = 8*hp/100;
+				hp = hp / 13;
 				if (((int64)sstatus->hp * 100) <= ((int64)sstatus->max_hp * 20))
 					hp = sstatus->hp;
 			} else
