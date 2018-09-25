@@ -101,13 +101,25 @@ enum size {
 	SZ_MAX
 };
 
-/// Used hardcoded Random Monster group in src
-enum e_Random_Monster {
-	MOBG_Branch_Of_Dead_Tree	= 0,
-	MOBG_Poring_Box				= 1,
-	MOBG_Bloody_Dead_Branch		= 2,
-	MOBG_Red_Pouch_Of_Surprise	= 3,
-	MOBG_ClassChange			= 4,
+/// Random Monster Groups
+enum e_random_monster : uint16 {
+	MOBG_Branch_Of_Dead_Tree = 0,
+	MOBG_Poring_Box,
+	MOBG_Bloody_Dead_Branch,
+	MOBG_Red_Pouch_Of_Surprise,
+	MOBG_ClassChange,
+	MOBG_Taekwon_Mission,
+};
+
+/// Random Monster Group Flags
+enum e_random_monster_flags {
+	RMF_NONE			= 0x00, ///< Apply no flags
+	RMF_DB_RATE			= 0x01, ///< Apply the summon success chance found in the list (otherwise get any monster from the db)
+	RMF_CHECK_MOB_LV	= 0x02, ///< Apply a monster level check
+	RMF_MOB_NOT_BOSS	= 0x04, ///< Selected monster should not be a Boss type (except those from MOBG_Bloody_Dead_Branch)
+	RMF_MOB_NOT_SPAWN	= 0x08, ///< Selected monster must have normal spawn
+	RMF_MOB_NOT_PLANT	= 0x10, ///< Selected monster should not be a Plant type
+	RMF_ALL				= 0xFF, ///< Apply all flags
 };
 
 struct mob_skill {
@@ -336,7 +348,7 @@ TIMER_FUNC(mob_timer_delete);
 int mob_deleteslave(struct mob_data *md);
 
 int mob_random_class (int *value, size_t count);
-int mob_get_random_id(int type, int flag, int lv);
+int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv);
 int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);
