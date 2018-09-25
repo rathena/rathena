@@ -616,7 +616,7 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
  * Check if the player can sell the current item
  * @param sd: map_session_data of the player
  * @param item: struct of the checking item
- * @param shotype: NPC's sub type see enum npc_subtype
+ * @param shoptype: NPC's sub type see enum npc_subtype
  * @return bool 'true' is sellable, 'false' otherwise
  */
 bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_subtype shoptype) {
