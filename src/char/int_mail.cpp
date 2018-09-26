@@ -496,8 +496,8 @@ void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
 			safestrncpy(msg.dest_name, temp_, NAME_LENGTH);
 
 			// set reply message title
-			snprintf(temp_, MAIL_TITLE_LENGTH, "RE:%s", msg.title);
-			safestrncpy(msg.title, temp_, MAIL_TITLE_LENGTH);
+			snprintf(temp_, sizeof(temp_), "RE:%s", msg.title);
+			safestrncpy(msg.title, temp_, sizeof(temp_));
 
 			msg.status = MAIL_NEW;
 			msg.type = MAIL_INBOX_RETURNED;
