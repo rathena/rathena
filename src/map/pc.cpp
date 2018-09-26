@@ -5323,13 +5323,15 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 
 	return 0;
 }
-/*==========================================
+
+/**
  * Steal an item from bl (mob).
- * Return:
- *	0 = fail
- *	1 = succes
- *------------------------------------------*/
-int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv)
+ * @param sd: Player data
+ * @param bl: Object to steal from
+ * @param skill_lv: Level of skill used
+ * @return True on success or false otherwise
+ */
+bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 {
 	int i,itemid;
 	double rate;
@@ -5339,12 +5341,12 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	struct item tmp_item;
 
 	if(!sd || !bl || bl->type!=BL_MOB)
-		return 0;
+		return false;
 
 	md = (TBL_MOB *)bl;
 
 	if(md->state.steal_flag == UCHAR_MAX || ( md->sc.opt1 && md->sc.opt1 != OPT1_BURNING ) ) //already stolen from / status change check
-		return 0;
+		return false;
 
 	sd_status= status_get_status_data(&sd->bl);
 	md_status= status_get_status_data(bl);
@@ -5355,23 +5357,31 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
   	) { //Can't steal from
 		md->state.steal_flag = UCHAR_MAX;
-		return 0;
+		return false;
 	}
 
 	// base skill success chance (percentual)
 	rate = (sd_status->dex - md_status->dex)/2 + skill_lv*6 + 4;
 	rate += sd->bonus.add_steal_rate;
 
-	if( rate < 1 )
-		return 0;
+	if( rate < 1
+#ifdef RENEWAL
+		|| rnd()%100 >= rate
+#endif
+	)
+		return false;
 
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
 	for( i = 0; i < MAX_STEAL_DROP; i++ )
-		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].p * rate/100. )
+		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].p
+#ifndef RENEWAL
+		* rate/100.
+#endif
+		)
 			break;
 	if( i == MAX_STEAL_DROP )
-		return 0;
+		return false;
 
 	itemid = md->db->dropitem[i].nameid;
 	memset(&tmp_item,0,sizeof(tmp_item));
@@ -5386,7 +5396,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 
 	if(flag) { //Failed to steal due to overweight
 		clif_additem(sd,0,0,flag);
-		return 0;
+		return false;
 	}
 
 	if(battle_config.show_steal_in_same_party)
@@ -5404,7 +5414,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
-	return 1;
+	return true;
 }
 
 /*==========================================

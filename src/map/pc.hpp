@@ -1108,7 +1108,7 @@ int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
 
 int pc_identifyall(struct map_session_data *sd, bool identify_item);
 
-int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv);
+bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv);
 int pc_steal_coin(struct map_session_data *sd,struct block_list *bl);
 
 int pc_modifybuyvalue(struct map_session_data*,int);
