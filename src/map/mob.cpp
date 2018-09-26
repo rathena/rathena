@@ -3740,8 +3740,10 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 
 			if (mc) {
 				std::string name = md->name, output;
+				std::size_t unique = name.find("#");
 
-				name = name.substr(0, name.find("#")); // discard extra name identifier if present [Daegaladh]
+				if (unique != std::string::npos)
+					name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
 				output = name + " : " + mc->msg;
 
 				clif_messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
