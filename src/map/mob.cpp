@@ -3739,13 +3739,12 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			struct mob_chat *mc = mob_chat(ms[i].msg_id);
 
 			if (mc) {
-				char temp[CHAT_SIZE_MAX];
-				char name[NAME_LENGTH];
+				std::string name = md->name, output;
 
-				snprintf(name, sizeof name,"%s", md->name);
-				strtok(name, "#"); // discard extra name identifier if present [Daegaladh]
-				snprintf(temp, sizeof temp,"%s : %s", name, mc->msg);
-				clif_messagecolor(&md->bl, mc->color, temp, true, AREA_CHAT_WOC);
+				name = name.substr(0, name.find("#")); // discard extra name identifier if present [Daegaladh]
+				output = name + " : " + mc->msg;
+
+				clif_messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
 			}
 		}
 		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
@@ -4469,7 +4468,7 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current)
 	}
 
 	if(len>(CHAT_SIZE_MAX-1)){
-		ShowError("mob_chat: readdb: Message too long! Line %d, id: %d\n", current, msg_id);
+		ShowError("mob_parse_row_chatdb: Message too long! Line %d, id: %d\n", current, msg_id);
 		return false;
 	}
 	else if( !len ){

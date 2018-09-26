@@ -487,7 +487,7 @@ void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
 		// If it was not sent by the server, since we do not want to return mails to the server
 		else if( msg.send_id != 0 )
 		{
-			char temp_[MAIL_TITLE_LENGTH];
+			char temp_[MAIL_TITLE_LENGTH + 3];
 
 			// swap sender and receiver
 			SWAP(msg.send_id, msg.dest_id);
