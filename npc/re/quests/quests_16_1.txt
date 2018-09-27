@@ -30,7 +30,7 @@ function	script	F_Mysterious_box	{
 }
 
 // Main Quest
-prontera,121,72,3	script	Royal Errand Boy#e16_pr	4_M_ZONDAOYAJI,5,5,{
+prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	if (checkweight(501,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
@@ -150,15 +150,15 @@ OnTouch:
 		npctalk "I am looking for the hero who returned from the expedition...", "", bc_self;
 	end;
 }
-rachel,119,131,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_ra	4_M_ZONDAOYAJI
-aldebaran,159,113,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_ald	4_M_ZONDAOYAJI
-alberta,119,59,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_alb	4_M_ZONDAOYAJI
-veins,200,108,5	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_ve	4_M_ZONDAOYAJI
-geffen,123,68,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_ge	4_M_ZONDAOYAJI
-payon,168,65,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_pa	4_M_ZONDAOYAJI
-morocc,152,97,5	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_mo	4_M_ZONDAOYAJI
-yuno,162,132,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_yu	4_M_ZONDAOYAJI
-lighthalzen,152,100,5	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_lh	4_M_ZONDAOYAJI
+rachel,119,131,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ra	4_M_ZONDAOYAJI
+aldebaran,159,113,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ald	4_M_ZONDAOYAJI
+alberta,119,59,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_alb	4_M_ZONDAOYAJI
+veins,200,108,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ve	4_M_ZONDAOYAJI
+geffen,123,68,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ge	4_M_ZONDAOYAJI
+payon,168,65,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_pa	4_M_ZONDAOYAJI
+morocc,152,97,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_mo	4_M_ZONDAOYAJI
+yuno,162,132,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_yu	4_M_ZONDAOYAJI
+lighthalzen,152,100,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_lh	4_M_ZONDAOYAJI
 
 prontera,150,331,4	script	Royal Guard#ep16_ect01	8W_SOLDIER,4,4,{
 	if (banquet_main_quest == 1) {
