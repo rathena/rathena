@@ -8517,7 +8517,7 @@ static const struct _battle_data {
 	{ "guild_leaderchange_woe",				&battle_config.guild_leaderchange_woe,			0,		0,		1,				},
 	{ "guild_alliance_onlygm",              &battle_config.guild_alliance_onlygm,           0,      0,      1, },
 	{ "feature.achievement",                &battle_config.feature_achievement,             1,      0,      1,              },
-	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                0,      0,      0x3,            },
+	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                0,      0,      0xF,            },
 	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
 	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
@@ -8528,6 +8528,7 @@ static const struct _battle_data {
 	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
 	{ "feature.attendance",                 &battle_config.feature_attendance,              1,      0,      1,              },
 	{ "feature.privateairship",             &battle_config.feature_privateairship,          1,      0,      1,              },
+	{ "rental_transaction",                 &battle_config.rental_transaction,              1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

@@ -998,7 +998,7 @@ int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
-bool pc_can_sell_item(struct map_session_data* sd, struct item * item);
+bool pc_can_sell_item(struct map_session_data* sd, struct item * item, enum npc_subtype shoptype);
 bool pc_can_give_items(struct map_session_data *sd);
 bool pc_can_give_bounded_items(struct map_session_data *sd);
 

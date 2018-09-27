@@ -522,29 +522,44 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
  * Check if the player can sell the current item
  * @param sd: map_session_data of the player
  * @param item: struct of the checking item
+ * @param shoptype: NPC's sub type see enum npc_subtype
  * @return bool 'true' is sellable, 'false' otherwise
  */
-bool pc_can_sell_item(struct map_session_data *sd, struct item *item) {
-	struct npc_data *nd;
-
+bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_subtype shoptype) {
 	if (sd == NULL || item == NULL)
 		return false;
 
-	nd = map_id2nd(sd->npc_shopid);
+	if (item->equip > 0 || item->amount < 0)
+		return false;
 
 	if (battle_config.hide_fav_sell && item->favorite)
 		return false; //Cannot sell favs (optional config)
 
-	if (item->expire_time)
+	if (!battle_config.rental_transaction && item->expire_time)
 		return false; // Cannot Sell Rental Items
 
-	if (nd && nd->subtype == NPCTYPE_ITEMSHOP) {
-		struct item_data *itd;
-
-		if (item->bound && battle_config.allow_bound_sell&ISR_BOUND)
-			return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
-		if ((itd = itemdb_search(item->nameid)) && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
-			return true; // NPCTYPE_ITEMSHOP and sell restricted item config is sellable
+	switch (shoptype) {
+		case NPCTYPE_SHOP:
+			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND_SELLABLE && (
+				item->bound != BOUND_GUILD ||
+				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
+				))
+				return true;
+			break;
+		case NPCTYPE_ITEMSHOP:
+			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND && (
+				item->bound != BOUND_GUILD ||
+				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
+				))
+				return true;
+			else if (!item->bound) {
+				struct item_data *itd = itemdb_search(item->nameid);
+				if (itd && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
+					return true;
+			}
+			break;
 	}
 
 	if (!itemdb_cansell(item, pc_get_group_level(sd)))
