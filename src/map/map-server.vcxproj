@@ -292,6 +292,7 @@
     <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_tha_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_tha_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\abra_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\abra_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\achievement_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\achievement_db.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attendance.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attendance.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attr_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attr_fix.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\castle_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\castle_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\const.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\const.txt')" />
@@ -345,6 +346,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_drop.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_drop.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_item_ratio.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_item_ratio.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_poring.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_poring.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_mission.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_mission.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_pouch.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_pouch.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_race2_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_race2_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_random_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_random_db.txt')" />

@@ -1,15 +1,16 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MOB_HPP_
-#define _MOB_HPP_
+#ifndef MOB_HPP
+#define MOB_HPP
+
+#include <vector>
 
 #include "../common/mmo.hpp" // struct item
+#include "../common/timer.hpp"
 
 #include "status.hpp" // struct status data, struct status_change
 #include "unit.hpp" // unit_stop_walking(), unit_stop_attack()
-
-#include <vector>
 
 struct guardian_data;
 
@@ -100,13 +101,25 @@ enum size {
 	SZ_MAX
 };
 
-/// Used hardcoded Random Monster group in src
-enum e_Random_Monster {
-	MOBG_Branch_Of_Dead_Tree	= 0,
-	MOBG_Poring_Box				= 1,
-	MOBG_Bloody_Dead_Branch		= 2,
-	MOBG_Red_Pouch_Of_Surprise	= 3,
-	MOBG_ClassChange			= 4,
+/// Random Monster Groups
+enum e_random_monster : uint16 {
+	MOBG_Branch_Of_Dead_Tree = 0,
+	MOBG_Poring_Box,
+	MOBG_Bloody_Dead_Branch,
+	MOBG_Red_Pouch_Of_Surprise,
+	MOBG_ClassChange,
+	MOBG_Taekwon_Mission,
+};
+
+/// Random Monster Group Flags
+enum e_random_monster_flags {
+	RMF_NONE			= 0x00, ///< Apply no flags
+	RMF_DB_RATE			= 0x01, ///< Apply the summon success chance found in the list (otherwise get any monster from the db)
+	RMF_CHECK_MOB_LV	= 0x02, ///< Apply a monster level check
+	RMF_MOB_NOT_BOSS	= 0x04, ///< Selected monster should not be a Boss type (except those from MOBG_Bloody_Dead_Branch)
+	RMF_MOB_NOT_SPAWN	= 0x08, ///< Selected monster must have normal spawn
+	RMF_MOB_NOT_PLANT	= 0x10, ///< Selected monster should not be a Plant type
+	RMF_ALL				= 0xFF, ///< Apply all flags
 };
 
 struct mob_skill {
@@ -314,7 +327,7 @@ int mob_target(struct mob_data *md,struct block_list *bl,int dist);
 int mob_unlocktarget(struct mob_data *md, unsigned int tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int mob_spawn(struct mob_data *md);
-int mob_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(mob_delayspawn);
 int mob_setdelayspawn(struct mob_data *md);
 int mob_parse_dataset(struct spawn_data *data);
 void mob_log_damage(struct mob_data *md, struct block_list *src, int damage);
@@ -331,11 +344,11 @@ void mob_clear_spawninfo();
 void do_init_mob(void);
 void do_final_mob(bool is_reload);
 
-int mob_timer_delete(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(mob_timer_delete);
 int mob_deleteslave(struct mob_data *md);
 
 int mob_random_class (int *value, size_t count);
-int mob_get_random_id(int type, int flag, int lv);
+int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv);
 int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);
@@ -359,7 +372,7 @@ bool mob_has_spawn(uint16 mob_id);
 
 // MvP Tomb System
 int mvptomb_setdelayspawn(struct npc_data *nd);
-int mvptomb_delayspawn(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(mvptomb_delayspawn);
 void mvptomb_create(struct mob_data *md, char *killer, time_t time);
 void mvptomb_destroy(struct mob_data *md);
 
@@ -367,4 +380,4 @@ void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 
-#endif /* _MOB_HPP_ */
+#endif /* MOB_HPP */

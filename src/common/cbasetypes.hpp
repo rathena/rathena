@@ -1,5 +1,8 @@
-#ifndef _CBASETYPES_HPP_
-#define _CBASETYPES_HPP_
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#ifndef CBASETYPES_HPP
+#define CBASETYPES_HPP
 
 /*              +--------+-----------+--------+---------+
  *              | ILP32  |   LP64    |  ILP64 | (LL)P64 |
@@ -435,4 +438,4 @@ static inline uint32 u32min(uint32 a, uint32 b){ return (a < b) ? a : b; }
 static inline uint64 u64min(uint64 a, uint64 b){ return (a < b) ? a : b; }
 static inline size_t zmin(size_t a, size_t b){ return (a < b) ? a : b; }
 
-#endif /* _CBASETYPES_HPP_ */
+#endif /* CBASETYPES_HPP */

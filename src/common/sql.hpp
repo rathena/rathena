@@ -1,11 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _COMMON_SQL_HPP_
-#define _COMMON_SQL_HPP_
+#ifndef SQL_HPP
+#define SQL_HPP
+
+#include <stdarg.h>// va_list
 
 #include "cbasetypes.hpp"
-#include <stdarg.h>// va_list
 
 // Return codes
 #define SQL_ERROR -1
@@ -346,4 +347,4 @@ void SqlStmt_Free(SqlStmt* self);
 
 void Sql_Init(void);
 
-#endif /* _COMMON_SQL_HPP_ */
+#endif /* SQL_HPP */

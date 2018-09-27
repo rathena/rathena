@@ -1,11 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_TIMER_HPP_
-#define	_TIMER_HPP_
+#ifndef TIMER_HPP
+#define TIMER_HPP
+
+#include <time.h>
 
 #include "cbasetypes.hpp"
-#include <time.h>
 
 #define DIFF_TICK(a,b) ((int)((a)-(b)))
 
@@ -19,9 +20,10 @@ enum {
 	TIMER_REMOVE_HEAP = 0x10,
 };
 
-// Struct declaration
+#define TIMER_FUNC(x) int x ( int tid, unsigned int tick, int id, intptr_t data )
 
-typedef int (*TimerFunc)(int tid, unsigned int tick, int id, intptr_t data);
+// Struct declaration
+typedef TIMER_FUNC((*TimerFunc));
 
 struct TimerData {
 	unsigned int tick;
@@ -60,4 +62,4 @@ int do_timer(unsigned int tick);
 void timer_init(void);
 void timer_final(void);
 
-#endif /* _TIMER_HPP_ */
+#endif /* TIMER_HPP */

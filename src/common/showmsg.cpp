@@ -1,13 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include "cbasetypes.hpp"
-#include "strlib.hpp" // StringBuf
 #include "showmsg.hpp"
-#include "core.hpp" //[Ind] - For SERVER_TYPE
 
-#include <time.h>
 #include <stdlib.h> // atexit
+#include <time.h>
 
 #ifdef WIN32
 	#include "winapi.hpp"
@@ -38,6 +35,10 @@
 		#endif
 	#endif
 #endif
+
+#include "cbasetypes.hpp"
+#include "core.hpp" //[Ind] - For SERVER_TYPE
+#include "strlib.hpp" // StringBuf
 
 ///////////////////////////////////////////////////////////////////////////////
 /// behavioral parameter.
@@ -727,7 +728,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		case MSG_NONE: // direct printf replacement
 			break;
 		case MSG_STATUS: //Bright Green (To inform about good things)
-			strcat(prefix,CL_GREEN "[Status]" CL_RESET":");
+			strcat(prefix,CL_GREEN "[Status]" CL_RESET ":");
 			break;
 		case MSG_SQL: //Bright Violet (For dumping out anything related with SQL) <- Actually, this is mostly used for SQL errors with the database, as successes can as well just be anything else... [Skotlex]
 			strcat(prefix,CL_MAGENTA "[SQL]" CL_RESET ":");
@@ -775,7 +776,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 	if(strlen(DEBUGLOGPATH) > 0) {
 		fp=fopen(DEBUGLOGPATH,"a");
 		if (fp == NULL)	{
-			FPRINTF(STDERR, CL_RED"[ERROR]"CL_RESET": Could not open '"CL_WHITE"%s"CL_RESET"', access denied.\n", DEBUGLOGPATH);
+			FPRINTF(STDERR, CL_RED "[ERROR]" CL_RESET ": Could not open '" CL_WHITE "%s" CL_RESET "', access denied.\n", DEBUGLOGPATH);
 			FFLUSH(STDERR);
 		} else {
 			fprintf(fp,"%s ", prefix);
@@ -785,7 +786,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 			fclose(fp);
 		}
 	} else {
-		FPRINTF(STDERR, CL_RED"[ERROR]"CL_RESET": DEBUGLOGPATH not defined!\n");
+		FPRINTF(STDERR, CL_RED "[ERROR]" CL_RESET ": DEBUGLOGPATH not defined!\n");
 		FFLUSH(STDERR);
 	}
 #endif

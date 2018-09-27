@@ -1,5 +1,5 @@
 /*****************************************************************************\
- *  Copyright (c) Athena Dev Teams - Licensed under GNU GPL                  *
+ *  Copyright (c) rAthena Dev Teams - Licensed under GNU GPL                 *
  *  For more information, see LICENCE in the main folder                     *
  *                                                                           *
  *  <H1>Entry Reusage System</H1>                                            *
@@ -40,15 +40,15 @@
  * @see common#ers.hpp                                                         *
 \*****************************************************************************/
 
-
-#include "cbasetypes.hpp"
 #include "ers.hpp"
-#include "malloc.hpp" // CREATE, RECREATE, aMalloc, aFree
-#include "nullpo.hpp"
-#include "showmsg.hpp" // ShowMessage, ShowError, ShowFatalError, CL_BOLD, CL_NORMAL
 
 #include <stdlib.h>
 #include <string.h>
+
+#include "cbasetypes.hpp"
+#include "malloc.hpp" // CREATE, RECREATE, aMalloc, aFree
+#include "nullpo.hpp"
+#include "showmsg.hpp" // ShowMessage, ShowError, ShowFatalError, CL_BOLD, CL_NORMAL
 
 #ifndef DISABLE_ERS
 

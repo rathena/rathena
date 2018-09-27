@@ -1,7 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#ifndef _CONFIG_PACKETS_HPP_
-#define _CONFIG_PACKETS_HPP_
+
+#ifndef CONFIG_PACKETS_HPP
+#define CONFIG_PACKETS_HPP
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -42,6 +43,12 @@
 	#endif
 #endif
 
+/// Comment to disable the official Guild Storage skill.
+/// When enabled, this will set the guild storage size to the level of the skill * 100.
+#if PACKETVER >= 20131223
+	#define OFFICIAL_GUILD_STORAGE
+#endif
+
 #ifndef DUMP_UNKNOWN_PACKET
 	//#define DUMP_UNKNOWN_PACKET
 #endif
@@ -63,4 +70,4 @@
 /// Check if the specified packetvresion supports the cashshop sale system
 #define PACKETVER_SUPPORTS_SALES PACKETVER >= 20131223
 
-#endif // _CONFIG_PACKETS_HPP_
+#endif /* CONFIG_PACKETS_HPP */

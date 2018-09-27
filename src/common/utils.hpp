@@ -1,11 +1,12 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _UTILS_HPP_
-#define _UTILS_HPP_
+#ifndef UTILS_HPP
+#define UTILS_HPP
+
+#include <stdio.h> // FILE*
 
 #include "cbasetypes.hpp"
-#include <stdio.h> // FILE*
 
 // generate a hex dump of the first 'length' bytes of 'buffer'
 void WriteDump(FILE* fp, const void* buffer, size_t length);
@@ -46,4 +47,4 @@ extern uint32 GetULong(const unsigned char* buf);
 extern int32 GetLong(const unsigned char* buf);
 extern float GetFloat(const unsigned char* buf);
 
-#endif /* _UTILS_HPP_ */
+#endif /* UTILS_HPP */

@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "mail.hpp"
@@ -9,13 +9,13 @@
 #include "../common/timer.hpp"
 
 #include "atcommand.hpp"
-#include "itemdb.hpp"
-#include "clif.hpp"
-#include "pc.hpp"
-#include "intif.hpp"
-#include "date.hpp" // date_get_dayofyear
-#include "log.hpp"
 #include "battle.hpp"
+#include "clif.hpp"
+#include "date.hpp" // date_get_dayofyear
+#include "intif.hpp"
+#include "itemdb.hpp"
+#include "log.hpp"
+#include "pc.hpp"
 
 void mail_clear(struct map_session_data *sd)
 {
@@ -143,7 +143,7 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 
 		idx -= 2;
 
-		if( idx < 0 || idx >= MAX_INVENTORY )
+		if( idx < 0 || idx >= MAX_INVENTORY || sd->inventory_data[idx] == nullptr )
 			return MAIL_ATTACH_ERROR;
 
 #if PACKETVER < 20150513
@@ -326,7 +326,7 @@ void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg){
 bool mail_invalid_operation(struct map_session_data *sd)
 {
 #if PACKETVER < 20150513
-	if( !map[sd->bl.m].flag.town && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
+	if( !map_getmapflag(sd->bl.m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
 	{
 		ShowWarning("clif_parse_Mail: char '%s' trying to do invalid mail operations.\n", sd->status.name);
 		return true;

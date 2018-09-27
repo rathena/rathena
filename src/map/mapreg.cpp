@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "mapreg.hpp"
@@ -264,8 +264,7 @@ static void script_save_mapreg(void)
 /**
  * Timer event to auto-save permanent variables.
  */
-static int script_autosave_mapreg(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(script_autosave_mapreg){
 	script_save_mapreg();
 	return 0;
 }

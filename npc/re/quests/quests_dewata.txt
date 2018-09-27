@@ -135,11 +135,11 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew	541,{
 		mes "but...... this....";
 		next;
 		mes "[Sage Kasyapa]";
-		mes "Nevermind, please have a good trip.";
+		mes "Never mind, please have a good trip.";
 		close;
 	} else if (dew_legend == 4) {
 		mes "[Sage Kasyapa]";
-		mes "I've been wating for you traveler.";
+		mes "I've been waiting for you traveler.";
 		mes "Our tribe's leader has a favor";
 		mes "to ask of you.";
 		mes "Please talk to Chief ^0000FFPaiko^000000.";
@@ -166,7 +166,7 @@ dew_in01,22,48,3	script	Sage Kasyapa#dew	541,{
 		close;
 	} else if (dew_legend == 7) {
 		mes "[Sage Kasyapa]";
-		mes "There is somehing";
+		mes "There is something";
 		mes "I wish to give to you";
 		mes "as a reward for your help.";
 		mes "Please, it would honor us if you would take it.";
@@ -261,7 +261,7 @@ dew_in01,15,49,4	script	Tribal Chief Paiko#dew	540,{
 		close;
 	} else if (dew_legend == 4) {
 		mes "[Tribal Chief Paiko]";
-		mes "I've been wating for you, traveler";
+		mes "I've been waiting for you, traveler";
 		mes "according to sage ^0000FFKasyapa^000000";
 		mes "You are willing to help us make a crown for our tribe.";
 		select("Crown-a-whatsis?");
@@ -551,7 +551,7 @@ dew_fild01,78,288,6	script	Jaty Tribe Warrior#dew	541,{
 	mes "Nevertheless we will continue keeping the warrior tradition of our tribe alive and we will preserve the pride we have earned through the sacrifice of those past warriors.";
 	next;
 	mes "[Jaty Tribe Warrior]";
-	mes "I hope that your perserverance and pride remain with you in your travels.";
+	mes "I hope that your perseverance and pride remain with you in your travels.";
 	close;
 }
 
@@ -596,7 +596,7 @@ dew_fild01,185,300,6	script	Tribe Manager#dew	541,{
 	mes "^8B4513Dewata Island^000000 has became a tourist attraction and we have lost touch with them.";
 	next;
 	mes "[Tribe Manager]";
-	mes "The tourist attraction has expanded continously but the reason it hasn't influenced us here is due to this small temple which I am managing.";
+	mes "The tourist attraction has expanded continuously but the reason it hasn't influenced us here is due to this small temple which I am managing.";
 	next;
 	mes "[Tribe Manager]";
 	mes "I couldn't let our tradition fade away like that easily.";
@@ -1249,7 +1249,7 @@ dew_fild01,114,275,4	script	Lero#dew_drink	536,{
 			select("Sorry, it's my fault...");
 			emotion ET_FRET;
 			mes "[Lero]";
-			mes "This is the palm tree oil which was in short supply. Be careful pease. It was really hard to get this...";
+			mes "This is the palm tree oil which was in short supply. Be careful please. It was really hard to get this...";
 			getitem 6401,.@num; //Palm_O
 			close;
 		}
@@ -1727,7 +1727,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 		mes "Oh... Sorry~ Sorry. I was so happy that I finally arrived at Dewata Island.";
 		next;
 		mes "[Gatti]";
-		mes "This is not a short story. Oh! I have to introduce myself first. I am Mastersmtih Gatti, also an Adventurer.";
+		mes "This is not a short story. Oh! I have to introduce myself first. I am Mastersmith Gatti, also an Adventurer.";
 		next;
 		mes "[Gatti]";
 		mes "I found a mysterious Weapon blueprint, but I don't remember exactly when I acquired it.";
@@ -1742,7 +1742,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 		mes "But?";
 		next;
 		mes "[Gatti]";
-		mes "I coudn't find the last material anywhere.";
+		mes "I couldn't find the last material anywhere.";
 		next;
 		mes "[Gatti]";
 		mes "I was about to give up, but there was some fine print on the blueprint saying that it could be found on the Dewata Island.";
@@ -2082,7 +2082,7 @@ dew_fild01,127,240,4	script	Gatti#weapon	813,{
 			mes "If you don't want that to happen, put the refined Caress elsewhere before the reinforcing.^000000";
 			next;
 			mes "[Gatti]";
-			mes "^FF0000Third!^009977 Sometimes reinfocing fails. The weapon doesn't get destroyed everytime you fail. However you should know that the weapon gets destroyed from time to time if you fail.^000000";
+			mes "^FF0000Third!^009977 Sometimes reinforcing fails. The weapon doesn't get destroyed every time you fail. However you should know that the weapon gets destroyed from time to time if you fail.^000000";
 			next;
 			if(select("Please reinforce the weapon.:Maybe next time.") == 2) {
 				mes "[Gatti]";

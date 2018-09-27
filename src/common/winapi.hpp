@@ -1,6 +1,8 @@
-#pragma once
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#include <sdkddkver.h>
+#ifndef WINAPI_HPP
+#define WINAPI_HPP
 
 #ifndef NTDDI_VERSION
 	#define NTDDI_VERSION 	0x05000000 // Windows 2000
@@ -34,7 +36,6 @@
 #define NOSOUND
 #define NOTEXTMETRIC
 
-
 #define _CRT_SECURE_NO_WARNINGS
 #define _CRT_NONSTDC_NO_WARNINGS
 
@@ -49,3 +50,5 @@
 #include "cbasetypes.hpp"
 
 bool IsCurrentUserLocalAdministrator(void);
+
+#endif /* WINAPI_HPP */

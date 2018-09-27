@@ -1,31 +1,25 @@
-/**
- * @file loginclif.c
- * Module purpose is to handle incoming and outgoing requests with client.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "loginclif.hpp"
 
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/timer.hpp" //difftick
-#include "../common/strlib.hpp" //safeprint
-#include "../common/showmsg.hpp" //show notice
-#include "../common/socket.hpp" //wfifo session
 #include "../common/malloc.hpp"
-#include "../common/utils.hpp"
 #include "../common/md5calc.hpp"
 #include "../common/random.hpp"
+#include "../common/showmsg.hpp" //show notice
+#include "../common/socket.hpp" //wfifo session
+#include "../common/strlib.hpp" //safeprint
+#include "../common/timer.hpp" //difftick
+#include "../common/utils.hpp"
 
 #include "account.hpp"
 #include "ipban.hpp" //ipban_check
 #include "login.hpp"
-#include "loginlog.hpp"
 #include "loginchrif.hpp"
+#include "loginlog.hpp"
 
 /**
  * Transmit auth result to client.
