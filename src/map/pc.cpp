@@ -339,100 +339,6 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 	}
 }
 
-static int pc_check_banding( struct block_list *bl, va_list ap ) {
-	int *c, *b_sd;
-	struct block_list *src;
-	struct map_session_data *tsd;
-	struct status_change *sc;
-
-	nullpo_ret(bl);
-	nullpo_ret(tsd = (struct map_session_data*)bl);
-	nullpo_ret(src = va_arg(ap,struct block_list *));
-	c = va_arg(ap,int *);
-	b_sd = va_arg(ap, int *);
-
-	if(pc_isdead(tsd))
-		return 0;
-
-	sc = status_get_sc(bl);
-
-	if( sc && sc->data[SC_BANDING] )
-	{
-		b_sd[(*c)++] = tsd->bl.id;
-		return 1;
-	}
-
-	return 0;
-}
-
-int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
-	int c;
-	int b_sd[MAX_PARTY]; // In case of a full Royal Guard party.
-	int i, j, hp, extra_hp = 0, tmp_qty = 0;
-	int range = skill_get_splash(LG_BANDING,skill_lv);
-
-	nullpo_ret(sd);
-
-	c = 0;
-	memset(b_sd, 0, sizeof(b_sd));
-	i = party_foreachsamemap(pc_check_banding,sd,range,&sd->bl,&c,&b_sd);
-
-	if( c < 1 ) //just recalc status no need to recalc hp
-	{	// No more Royal Guards in Banding found.
-		struct status_change *sc;
-		if( (sc = status_get_sc(&sd->bl)) != NULL  && sc->data[SC_BANDING] )
-		{
-			sc->data[SC_BANDING]->val2 = 0; // Reset the counter
-			status_calc_bl(&sd->bl, status_sc2scb_flag(SC_BANDING));
-		}
-		return 0;
-	}
-
-	//Add yourself
-	hp = status_get_hp(&sd->bl);
-	i++;
-
-	// Get total HP of all Royal Guards in party.
-	for( j = 0; j < i; j++ ){
-		struct map_session_data *bsd = map_id2sd(b_sd[j]);
-		if( bsd != NULL )
-			hp += status_get_hp(&bsd->bl);
-	}
-
-	// Set average HP.
-	hp = hp / i;
-
-	// If a Royal Guard have full HP, give more HP to others that haven't full HP.
-	for( j = 0; j < i; j++ )
-	{
-		int tmp_hp=0;
-		struct map_session_data *bsd = map_id2sd(b_sd[j]);
-		if( bsd != NULL && (tmp_hp = hp - status_get_max_hp(&bsd->bl)) > 0 ){
-			extra_hp += tmp_hp;
-			tmp_qty++;
-		}
-	}
-
-	if( extra_hp > 0 && tmp_qty > 0 )
-		hp += extra_hp / tmp_qty;
-
-	for( j = 0; j < i; j++ ){
-		struct map_session_data *bsd = map_id2sd(b_sd[j]);
-		if( bsd != NULL )
-		{
-			struct status_change *sc;
-			status_set_hp(&bsd->bl,hp,0);	// Set hp
-			if( (sc = status_get_sc(&bsd->bl)) != NULL  && sc->data[SC_BANDING] )
-			{
-				sc->data[SC_BANDING]->val2 = c; // Set the counter. It doesn't count your self.
-				status_calc_bl(&bsd->bl, status_sc2scb_flag(SC_BANDING));	// Set atk and def.
-			}
-		}
-	}
-
-	return c;
-}
-
 /**
 * Increases a player's fame points and displays a notice to him
 * @param sd Player
@@ -616,29 +522,44 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
  * Check if the player can sell the current item
  * @param sd: map_session_data of the player
  * @param item: struct of the checking item
+ * @param shoptype: NPC's sub type see enum npc_subtype
  * @return bool 'true' is sellable, 'false' otherwise
  */
-bool pc_can_sell_item(struct map_session_data *sd, struct item *item) {
-	struct npc_data *nd;
-
+bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_subtype shoptype) {
 	if (sd == NULL || item == NULL)
 		return false;
 
-	nd = map_id2nd(sd->npc_shopid);
+	if (item->equip > 0 || item->amount < 0)
+		return false;
 
 	if (battle_config.hide_fav_sell && item->favorite)
 		return false; //Cannot sell favs (optional config)
 
-	if (item->expire_time)
+	if (!battle_config.rental_transaction && item->expire_time)
 		return false; // Cannot Sell Rental Items
 
-	if (nd && nd->subtype == NPCTYPE_ITEMSHOP) {
-		struct item_data *itd;
-
-		if (item->bound && battle_config.allow_bound_sell&ISR_BOUND)
-			return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
-		if ((itd = itemdb_search(item->nameid)) && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
-			return true; // NPCTYPE_ITEMSHOP and sell restricted item config is sellable
+	switch (shoptype) {
+		case NPCTYPE_SHOP:
+			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND_SELLABLE && (
+				item->bound != BOUND_GUILD ||
+				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
+				))
+				return true;
+			break;
+		case NPCTYPE_ITEMSHOP:
+			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND && (
+				item->bound != BOUND_GUILD ||
+				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
+				))
+				return true;
+			else if (!item->bound) {
+				struct item_data *itd = itemdb_search(item->nameid);
+				if (itd && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
+					return true;
+			}
+			break;
 	}
 
 	if (!itemdb_cansell(item, pc_get_group_level(sd)))
@@ -1121,6 +1042,51 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 	//fail to equip if item is restricted
 	if (!battle_config.allow_equip_restricted_item && itemdb_isNoEquip(item, sd->bl.m))
 		return ITEM_EQUIP_ACK_FAIL;
+
+	if (item->equip&EQP_AMMO) {
+		switch (item->look) {
+			case AMMO_ARROW:
+				if (battle_config.ammo_check_weapon && sd->status.weapon != W_BOW && sd->status.weapon != W_MUSICAL && sd->status.weapon != W_WHIP) {
+					clif_msg(sd, ITEM_NEED_BOW);
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				break;
+			case AMMO_THROWABLE_DAGGER:
+				if (!pc_checkskill(sd, AS_VENOMKNIFE))
+					return ITEM_EQUIP_ACK_FAIL;
+				break;
+			case AMMO_BULLET:
+			case AMMO_SHELL:
+				if (battle_config.ammo_check_weapon && sd->status.weapon != W_REVOLVER && sd->status.weapon != W_RIFLE && sd->status.weapon != W_GATLING && sd->status.weapon != W_SHOTGUN
+#ifdef RENEWAL
+					&& sd->status.weapon != W_GRENADE
+#endif
+					) {
+					clif_msg(sd, ITEM_BULLET_EQUIP_FAIL);
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				break;
+#ifndef RENEWAL
+			case AMMO_GRENADE:
+				if (battle_config.ammo_check_weapon && sd->status.weapon != W_GRENADE) {
+					clif_msg(sd, ITEM_BULLET_EQUIP_FAIL);
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				break;
+#endif
+			case AMMO_CANNONBALL:
+				if (!pc_ismadogear(sd) && (sd->status.class_ == JOB_MECHANIC_T || sd->status.class_ == JOB_MECHANIC)) {
+					clif_msg(sd, ITEM_NEED_MADOGEAR); // Item can only be used when Mado Gear is mounted.
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				if (sd->state.active && !pc_iscarton(sd) && //Check if sc data is already loaded
+					(sd->status.class_ == JOB_GENETIC_T || sd->status.class_ == JOB_GENETIC)) {
+					clif_msg(sd, ITEM_NEED_CART); // Only available when cart is mounted.
+					return ITEM_EQUIP_ACK_FAIL;
+				}
+				break;
+		}
+	}
 
 	if (sd->sc.count) {
 		if(item->equip & EQP_ARMS && item->type == IT_WEAPON && sd->sc.data[SC_STRIPWEAPON]) // Also works with left-hand weapons [DracoRPG]
@@ -3206,7 +3172,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 	switch(type){
 	case SP_ADDELE: // bonus2 bAddEle,e,x;
 		PC_BONUS_CHK_ELEMENT(type2,SP_ADDELE);
-		if(!sd->state.lr_flag)
+		if(!sd->state.lr_flag || sd->state.lr_flag == 3)
 			sd->right_weapon.addele[type2]+=val;
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.addele[type2]+=val;
@@ -3215,7 +3181,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADDRACE: // bonus2 bAddRace,r,x;
 		PC_BONUS_CHK_RACE(type2,SP_ADDRACE);
-		if(!sd->state.lr_flag)
+		if(!sd->state.lr_flag || sd->state.lr_flag == 3)
 			sd->right_weapon.addrace[type2]+=val;
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.addrace[type2]+=val;
@@ -3224,7 +3190,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADDCLASS: // bonus2 bAddClass,c,x;
 		PC_BONUS_CHK_CLASS(type2,SP_ADDCLASS);
-		if(!sd->state.lr_flag)
+		if(!sd->state.lr_flag || sd->state.lr_flag == 3)
 			sd->right_weapon.addclass[type2]+=val;
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.addclass[type2]+=val;
@@ -3233,7 +3199,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_ADDSIZE: // bonus2 bAddSize,s,x;
 		PC_BONUS_CHK_SIZE(type2,SP_ADDSIZE);
-		if(!sd->state.lr_flag)
+		if(!sd->state.lr_flag || sd->state.lr_flag == 3)
 			sd->right_weapon.addsize[type2]+=val;
 		else if(sd->state.lr_flag == 1)
 			sd->left_weapon.addsize[type2]+=val;
@@ -4288,6 +4254,29 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	return 0;
 }
 
+/**
+ * Returns the count of unidentified items with the option to identify too.
+ * @param sd: Player data
+ * @param identify_item: Whether or not to identify any unidentified items
+ * @return Unidentified items count
+ */
+int pc_identifyall(struct map_session_data *sd, bool identify_item)
+{
+	int unidentified_count = 0;
+
+	for (int i = 0; i < MAX_INVENTORY; i++) {
+		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
+			if (identify_item == true) {
+				sd->inventory.u.items_inventory[i].identify = 1;
+				clif_item_identified(sd,i,0);
+			}
+			unidentified_count++;
+		}
+	}
+
+	return unidentified_count;
+}
+
 //
 // Items
 //
@@ -4882,7 +4871,10 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		return false;
 	if (pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL))
 		return true;
-	if(map_getmapflag(sd->bl.m, MF_NOITEMCONSUMPTION)) //consumable but mapflag prevent it
+
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+	if(mapdata->flag[MF_NOITEMCONSUMPTION]) //consumable but mapflag prevent it
 		return false;
 	//Prevent mass item usage. [Skotlex]
 	if( DIFF_TICK(sd->canuseitem_tick,gettick()) > 0 ||
@@ -4900,14 +4892,14 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 		return false; // You cannot use this item while storage is open.
 	}
 
-	if (item->flag.dead_branch && (map_getmapflag(sd->bl.m, MF_NOBRANCH) || map_flag_gvg2(sd->bl.m)))
+	if (item->flag.dead_branch && (mapdata->flag[MF_NOBRANCH] || mapdata_flag_gvg2(mapdata)))
 		return false;
 
 	switch( nameid ) {
 		case ITEMID_WING_OF_FLY:
 		case ITEMID_GIANT_FLY_WING:
 		case ITEMID_N_FLY_WING:
-			if( map_getmapflag(sd->bl.m, MF_NOTELEPORT) || map_flag_gvg2(sd->bl.m) ) {
+			if( mapdata->flag[MF_NOTELEPORT] || mapdata_flag_gvg2(mapdata) ) {
 				clif_skill_teleportmessage(sd,0);
 				return false;
 			}
@@ -4948,7 +4940,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 				clif_displaymessage(sd->fd, msg_txt(sd,663));
 				return false;
 			}
-			if( map_getmapflag(sd->bl.m, MF_NORETURN) && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
+			if( mapdata->flag[MF_NORETURN] && nameid != ITEMID_WING_OF_FLY && nameid != ITEMID_GIANT_FLY_WING && nameid != ITEMID_N_FLY_WING )
 				return false;
 			break;
 		case ITEMID_MERCENARY_RED_POTION:
@@ -4967,7 +4959,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 			break;
 
 		case ITEMID_NEURALIZER:
-			if( !map_getmapflag(sd->bl.m, MF_RESET) )
+			if( !mapdata->flag[MF_RESET] )
 				return false;
 			break;
 	}
@@ -5477,8 +5469,6 @@ int pc_steal_coin(struct map_session_data *sd,struct block_list *target)
  *------------------------------------------*/
 enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, int x, int y, clr_type clrtype)
 {
-	int16 m;
-
 	nullpo_retr(SETPOS_OK,sd);
 
 	if( !mapindex || !mapindex_id2name(mapindex) ) {
@@ -5494,8 +5484,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		pc_setrestartvalue(sd,1);
 	}
 
-	m = map_mapindex2mapid(mapindex);
-
+	int16 m = map_mapindex2mapid(mapindex);
 	struct map_data *mapdata = map_getmapdata(m);
 
 	sd->state.changemap = (sd->mapindex != mapindex);
@@ -5555,7 +5544,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		if (sd->regen.state.gc)
 			sd->regen.state.gc = 0;
 		// make sure vending is allowed here
-		if (sd->state.vending && map_getmapflag(m, MF_NOVENDING)) {
+		if (sd->state.vending && mapdata->flag[MF_NOVENDING]) {
 			clif_displaymessage (sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 			vending_closevending(sd);
 		}
@@ -5638,7 +5627,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->bl.x = sd->ud.to_x = x;
 	sd->bl.y = sd->ud.to_y = y;
 
-	if( sd->status.guild_id > 0 && map_getmapflag(m, MF_GVG_CASTLE) )
+	if( sd->status.guild_id > 0 && mapdata->flag[MF_GVG_CASTLE] )
 	{	// Increased guild castle regen [Valaris]
 		struct guild_castle *gc = guild_mapindex2gc(sd->mapindex);
 		if(gc && gc->guild_id == sd->status.guild_id)
@@ -5701,10 +5690,10 @@ char pc_randomwarp(struct map_session_data *sd, clr_type type)
 
 	nullpo_ret(sd);
 
-	if (map_getmapflag(sd->bl.m, MF_NOTELEPORT)) //Teleport forbidden
-		return 3;
-
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+
+	if (mapdata->flag[MF_NOTELEPORT]) //Teleport forbidden
+		return 3;
 
 	do {
 		x = rnd()%(mapdata->xs-2)+1;
@@ -7723,8 +7712,11 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 #ifdef SECURE_NPCTIMEOUT
 		sd->npc_idle_timer = INVALID_TIMER;
 #endif
-		clif_scriptclose(sd,sd->npc_id);
-		clif_scriptclear(sd,sd->npc_id); // [Ind/Hercules]
+		if (sd->st && sd->st->state == CLOSE) {
+			clif_scriptclose(sd, sd->npc_id);
+			clif_scriptclear(sd, sd->npc_id); // [Ind/Hercules]
+			sd->st->state = END; // Force to end now
+		}
 		if(sd->st && sd->st->state == END ) {// free attached scripts that are waiting
 			script_free_state(sd->st);
 			sd->st = NULL;
@@ -7740,6 +7732,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 {
 	int i=0,k=0;
 	unsigned int tick = gettick();
+	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
 	// Super Novices have no kill or die functions attached when saved by their angel
@@ -7754,7 +7747,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			if(battle_config.pc_invincible_time)
 				pc_setinvincibletimer(sd, battle_config.pc_invincible_time);
 			sc_start(&sd->bl,&sd->bl,status_skill2sc(MO_STEELBODY),100,5,skill_get_time(MO_STEELBODY,5));
-			if(map_flag_gvg2(sd->bl.m))
+			if(mapdata_flag_gvg2(mapdata))
 				pc_respawn_timer(INVALID_TIMER, gettick(), sd->bl.id, 0);
 			return 0;
 		}
@@ -7775,7 +7768,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	if(sd->status.pet_id > 0 && sd->pd) {
 		struct pet_data *pd = sd->pd;
-		if( !map_getmapflag(sd->bl.m, MF_NOEXPPENALTY) ) {
+		if( !mapdata->flag[MF_NOEXPPENALTY] ) {
 			pet_set_intimate(pd, pd->pet.intimate - pd->get_pet_db()->die);
 			if( pd->pet.intimate < 0 )
 				pd->pet.intimate = 0;
@@ -7897,7 +7890,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 
 	if(battle_config.bone_drop==2
-		|| (battle_config.bone_drop==1 && map_getmapflag(sd->bl.m, MF_PVP)))
+		|| (battle_config.bone_drop==1 && mapdata->flag[MF_PVP]))
 	{
 		struct item item_tmp;
 		memset(&item_tmp,0,sizeof(item_tmp));
@@ -7916,8 +7909,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	// changed penalty options, added death by player if pk_mode [Valaris]
 	if(battle_config.death_penalty_type
 		&& (sd->class_&MAPID_UPPERMASK) != MAPID_NOVICE	// only novices will receive no penalty
-		&& !map_getmapflag(sd->bl.m, MF_NOEXPPENALTY) && !map_flag_gvg2(sd->bl.m)
-		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE])
+		&& !sd->sc.data[SC_BABY] && !sd->sc.data[SC_LIFEINSURANCE]
+		&& !mapdata->flag[MF_NOEXPPENALTY] && !mapdata_flag_gvg2(mapdata))
 	{
 		uint32 base_penalty = 0;
 		uint32 job_penalty = 0;
@@ -7964,18 +7957,17 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		if (base_penalty || job_penalty)
 			pc_lostexp(sd, base_penalty, job_penalty);
 
-		if( zeny_penalty > 0 && !map_getmapflag(sd->bl.m, MF_NOZENYPENALTY)) {
+		if( zeny_penalty > 0 && !mapdata->flag[MF_NOZENYPENALTY]) {
 			zeny_penalty = (uint32)( sd->status.zeny * ( zeny_penalty / 10000. ) );
 			if(zeny_penalty)
 				pc_payzeny(sd, zeny_penalty, LOG_TYPE_PICKDROP_PLAYER, NULL);
 		}
 	}
 
-	if( map_getmapflag( sd->bl.m, MF_PVP_NIGHTMAREDROP ) ) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
-		for(int j=0;j<MAX_DROP_PER_MAP;j++){
-			int id = map_getmapdata(sd->bl.m)->drop_list[j].drop_id;
-			int per = map_getmapdata(sd->bl.m)->drop_list[j].drop_per;
-			enum e_nightmare_drop_type type = map_getmapdata(sd->bl.m)->drop_list[j].drop_type;
+	if( mapdata->flag[MF_PVP_NIGHTMAREDROP] ) { // Moved this outside so it works when PVP isn't enabled and during pk mode [Ancyker]
+		for (const auto &it : mapdata->drop_list) {
+			int id = it.drop_id, per = it.drop_per;
+			enum e_nightmare_drop_type type = it.drop_type;
 
 			if(id == 0)
 				continue;
@@ -8022,7 +8014,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 	}
 	// pvp
 	// disable certain pvp functions on pk_mode [Valaris]
-	if( map_getmapflag(sd->bl.m, MF_PVP) && !battle_config.pk_mode && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) ) {
+	if( !battle_config.pk_mode && mapdata->flag[MF_PVP] && !mapdata->flag[MF_PVP_NOCALCRANK] ) {
 		sd->pvp_point -= 5;
 		sd->pvp_lost++;
 		if( src && src->type == BL_PC ) {
@@ -8036,7 +8028,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		}
 	}
 	//GvG
-	if( map_flag_gvg2(sd->bl.m) ) {
+	if( mapdata_flag_gvg2(mapdata) ) {
 		add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
 		return 1|8;
 	}
@@ -8112,6 +8104,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_FAME:            val = sd->status.fame; break;
 		case SP_KILLERRID:       val = sd->killerrid; break;
 		case SP_KILLEDRID:       val = sd->killedrid; break;
+		case SP_KILLEDGID:       val = sd->killedgid; break;
 		case SP_SITTING:         val = pc_issit(sd)?1:0; break;
 		case SP_CHARMOVE:		 val = sd->status.character_moves; break;
 		case SP_CHARRENAME:		 val = sd->status.rename; break;
@@ -8378,6 +8371,9 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		return true;
 	case SP_KILLEDRID:
 		sd->killedrid = val;
+		return true;
+	case SP_KILLEDGID:
+		sd->killedgid = val;
 		return true;
 	case SP_CHARMOVE:
 		sd->status.character_moves = val;
@@ -9845,38 +9841,6 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		return false;
 	}
 
-	if ((sd->class_&MAPID_BASEMASK) == MAPID_GUNSLINGER) {
-		/** Failing condition:
-		 * 1. Always failed to equip ammo if no weapon equipped yet
-		 * 2. Grenade only can be equipped if weapon is Grenade Launcher
-		 * 3. Bullet cannot be equipped if the weapon is Grenade Launcher
-		 * (4. The rest is relying on item job/class restriction).
-		 **/
-		if (id->type == IT_AMMO) {
-			int w_idx = sd->equip_index[EQI_HAND_R];
-			enum weapon_type w_type = (w_idx != -1) ? (enum weapon_type)sd->inventory_data[w_idx]->look : W_FIST;
-			if (w_idx == -1 ||
-				(id->look == A_GRENADE && w_type != W_GRENADE) ||
-				(id->look != A_GRENADE && w_type == W_GRENADE))
-			{
-				clif_equipitemack(sd, 0, 0, ITEM_EQUIP_ACK_FAIL);
-				return false;
-			}
-		}
-		else if (id->type == IT_WEAPON && id->look >= W_REVOLVER && id->look <= W_GRENADE) {
-			int a_idx = sd->equip_index[EQI_AMMO];
-			if (a_idx != -1) {
-				enum ammo_type a_type = (enum ammo_type)sd->inventory_data[a_idx]->look;
-				if ((a_type == A_GRENADE && id->look != W_GRENADE) ||
-					(a_type != A_GRENADE && id->look == W_GRENADE))
-				{
-					clif_equipitemack(sd, 0, 0, ITEM_EQUIP_ACK_FAIL);
-					return false;
-				}
-			}
-		}
-	}
-
 	if (id->flag.bindOnEquip && !sd->inventory.u.items_inventory[n].bound) {
 		sd->inventory.u.items_inventory[n].bound = (char)battle_config.default_bind_on_equip;
 		clif_notify_bindOnEquip(sd,n);
@@ -9917,7 +9881,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	for(i=0;i<EQI_MAX;i++) {
 		if(pos & equip_bitmask[i]) {
 			if(sd->equip_index[i] >= 0) //Slot taken, remove item from there.
-				pc_unequipitem(sd,sd->equip_index[i],2);
+				pc_unequipitem(sd,sd->equip_index[i],2 | 4);
 
 			sd->equip_index[i] = n;
 		}
@@ -9959,6 +9923,34 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	}
 	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
+
+	if (battle_config.ammo_unequip && (pos&EQP_ARMS) && id->type == IT_WEAPON) {
+		short idx = sd->equip_index[EQI_AMMO];
+
+		if (idx >= 0) {
+			switch (sd->inventory_data[idx]->look) {
+				case AMMO_ARROW:
+					if (id->look != W_BOW && id->look != W_MUSICAL && id->look != W_WHIP)
+						pc_unequipitem(sd, idx, 2 | 4);
+					break;
+				case AMMO_BULLET:
+				case AMMO_SHELL:
+					if (id->look != W_REVOLVER && id->look != W_RIFLE && id->look != W_GATLING && id->look != W_SHOTGUN
+#ifdef RENEWAL
+						&& id->look != W_GRENADE
+#endif
+						)
+						pc_unequipitem(sd, idx, 2 | 4);
+					break;
+#ifndef RENEWAL
+				case AMMO_GRENADE:
+					if (id->look != W_GRENADE)
+						pc_unequipitem(sd, idx, 2 | 4);
+					break;
+#endif
+			}
+		}
+	}
 
 	pc_set_costume_view(sd);
 
@@ -10010,17 +10002,93 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 	return true;
 }
 
-/*==========================================
- * Called when attemting to unequip an item from player
- * type:
- * 0 - only unequip
- * 1 - calculate status after unequipping
- * 2 - force unequip
- * return: false - fail; true - success
- *------------------------------------------*/
-bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
+/**
+ * Recalculate player status on unequip
+ * @param sd: Player data
+ * @param n: Item inventory index
+ * @param flag: Whether to recalculate a player's status or not
+ * @return True on success or false on failure
+ */
+static void pc_unequipitem_sub(struct map_session_data *sd, int n, int flag) {
 	int i, iflag;
 	bool status_calc = false;
+
+	if (sd->state.autobonus&sd->inventory.u.items_inventory[n].equip)
+		sd->state.autobonus &= ~sd->inventory.u.items_inventory[n].equip; //Check for activated autobonus [Inkfish]
+
+	sd->inventory.u.items_inventory[n].equip = 0;
+	pc_checkallowskill(sd);
+	iflag = sd->npc_item_flag;
+
+	/* check for combos (MUST be before status_calc_pc) */
+	if (sd->inventory_data[n]) {
+		if (sd->inventory_data[n]->combos_count) {
+			if (pc_removecombo(sd, sd->inventory_data[n]))
+				status_calc = true;
+		}
+		if (itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
+			; //No cards
+		else {
+			for (i = 0; i < MAX_SLOTS; i++) {
+				struct item_data *data;
+
+				if (!sd->inventory.u.items_inventory[n].card[i])
+					continue;
+				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != NULL) {
+					if (data->combos_count) {
+						if (pc_removecombo(sd, data))
+							status_calc = true;
+					}
+				}
+			}
+		}
+	}
+
+	if (status_calc)
+		status_calc_pc(sd, SCO_NONE);
+
+	if (sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race, sd->battle_status.def_ele))
+		status_change_end(&sd->bl, SC_SIGNUMCRUCIS, INVALID_TIMER);
+
+	//OnUnEquip script [Skotlex]
+	if (sd->inventory_data[n]) {
+		if (sd->inventory_data[n]->unequip_script)
+			run_script(sd->inventory_data[n]->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
+		if (itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
+			; //No cards
+		else {
+			for (i = 0; i < MAX_SLOTS; i++) {
+				struct item_data *data;
+				if (!sd->inventory.u.items_inventory[n].card[i])
+					continue;
+
+				if ((data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i])) != NULL) {
+					if (data->unequip_script)
+						run_script(data->unequip_script, 0, sd->bl.id, fake_nd->bl.id);
+				}
+
+			}
+		}
+	}
+
+	if (flag & 1)
+		status_calc_pc(sd, SCO_FORCE);
+	sd->npc_item_flag = iflag;
+}
+
+/**
+ * Called when attempting to unequip an item from a player
+ * @param sd: Player data
+ * @param n: Item inventory index
+ * @param flag: Type of unequip
+ *  0 - only unequip
+ *  1 - calculate status after unequipping
+ *  2 - force unequip
+ *  4 - unequip by switching equipment
+ * @return True on success or false on failure
+ */
+bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
+	int i, pos;
 
 	nullpo_retr(false,sd);
 
@@ -10028,7 +10096,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		clif_unequipitemack(sd,0,0,0);
 		return false;
 	}
-	if (!sd->inventory.u.items_inventory[n].equip) {
+	if (!(pos = sd->inventory.u.items_inventory[n].equip)) {
 		clif_unequipitemack(sd,n,0,0);
 		return false; //Nothing to unequip
 	}
@@ -10046,26 +10114,29 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 
 	if (battle_config.battle_log)
-		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),sd->inventory.u.items_inventory[n].equip);
+		ShowInfo("unequip %d %x:%x\n",n,pc_equippoint(sd,n),pos);
 
-	if (!sd->inventory.u.items_inventory[n].equip) { //Nothing to unequip
-		clif_unequipitemack(sd, n, 0, 0);
-		return false;
-	}
 	for(i = 0; i < EQI_MAX; i++) {
-		if (sd->inventory.u.items_inventory[n].equip & equip_bitmask[i])
+		if (pos & equip_bitmask[i])
 			sd->equip_index[i] = -1;
 	}
 
-	if(sd->inventory.u.items_inventory[n].equip & EQP_HAND_R) {
+	if(pos & EQP_HAND_R) {
 		sd->weapontype1 = 0;
 		sd->status.weapon = sd->weapontype2;
 		pc_calcweapontype(sd);
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 		if( !battle_config.dancing_weaponswitch_fix )
 			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
+#ifdef RENEWAL
+		if (battle_config.switch_remove_edp&2) {
+#else
+		if (battle_config.switch_remove_edp&1) {
+#endif
+			status_change_end(&sd->bl, SC_EDP, INVALID_TIMER);
+		}
 	}
-	if(sd->inventory.u.items_inventory[n].equip & EQP_HAND_L) {
+	if(pos & EQP_HAND_L) {
 		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)
 			unit_skillcastcancel(&sd->bl, 0); // Cancel Shield Spell if player swaps shields.
 
@@ -10074,15 +10145,36 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		clif_changelook(&sd->bl,LOOK_SHIELD,sd->status.shield);
 	}
 
-	if(sd->inventory.u.items_inventory[n].equip & EQP_SHOES)
+	if(pos & EQP_SHOES)
 		clif_changelook(&sd->bl,LOOK_SHOES,0);
 
-	clif_unequipitemack(sd,n,sd->inventory.u.items_inventory[n].equip,1);
+	clif_unequipitemack(sd,n,pos,1);
 	pc_set_costume_view(sd);
 
 	status_change_end(&sd->bl,SC_HEAT_BARREL,INVALID_TIMER);
 	// On weapon change (right and left hand)
-	if ((sd->inventory.u.items_inventory[n].equip & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON) {
+	if ((pos & EQP_ARMS) && sd->inventory_data[n]->type == IT_WEAPON) {
+		if (battle_config.ammo_unequip && !(flag & 4)) {
+			switch (sd->inventory_data[n]->look) {
+				case W_BOW:
+				case W_MUSICAL:
+				case W_WHIP:
+				case W_REVOLVER:
+				case W_RIFLE:
+				case W_GATLING:
+				case W_SHOTGUN:
+				case W_GRENADE: {
+					short idx = sd->equip_index[EQI_AMMO];
+
+					if (idx >= 0) {
+						sd->equip_index[EQI_AMMO] = -1;
+						clif_unequipitemack(sd, idx, sd->inventory.u.items_inventory[idx].equip, 1);
+						pc_unequipitem_sub(sd, idx, 0);
+					}
+				}
+				break;
+			}
+		}
 		if (!sd->sc.data[SC_SEVENWIND] || sd->sc.data[SC_ASPERSIO]) //Check for seven wind (but not level seven!)
 			skill_enchant_elemental_end(&sd->bl, SC_NONE);
 		status_change_end(&sd->bl, SC_FEARBREEZE, INVALID_TIMER);
@@ -10090,7 +10182,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	}
 
 	// On armor change
-	if (sd->inventory.u.items_inventory[n].equip & EQP_ARMOR) {
+	if (pos & EQP_ARMOR) {
 		if (sd->sc.data[SC_HOVERING] && sd->inventory_data[n]->nameid == ITEMID_HOVERING_BOOSTER)
 			status_change_end(&sd->bl, SC_HOVERING, INVALID_TIMER);
 		//status_change_end(&sd->bl, SC_BENEDICTIO, INVALID_TIMER); // No longer is removed? Need confirmation
@@ -10101,65 +10193,7 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
 		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);
 
-	if (sd->state.autobonus&sd->inventory.u.items_inventory[n].equip)
-		sd->state.autobonus &= ~sd->inventory.u.items_inventory[n].equip; //Check for activated autobonus [Inkfish]
-
-	sd->inventory.u.items_inventory[n].equip = 0;
-	iflag = sd->npc_item_flag;
-
-	/* check for combos (MUST be before status_calc_pc) */
-	if ( sd->inventory_data[n] ) {
-		if( sd->inventory_data[n]->combos_count ) {
-			if( pc_removecombo(sd,sd->inventory_data[n]) )
-				status_calc = true;
-		}
-		if(itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
-			; //No cards
-		else {
-			for( i = 0; i < MAX_SLOTS; i++ ) {
-				struct item_data *data;
-
-				if (!sd->inventory.u.items_inventory[n].card[i])
-					continue;
-				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]) ) != NULL ) {
-					if( data->combos_count ) {
-						if( pc_removecombo(sd,data) )
-							status_calc = true;
-					}
-				}
-			}
-		}
-	}
-
-	if(flag&1 || status_calc) {
-		pc_checkallowskill(sd);
-		status_calc_pc(sd,SCO_NONE);
-	}
-
-	if(sd->sc.data[SC_SIGNUMCRUCIS] && !battle_check_undead(sd->battle_status.race,sd->battle_status.def_ele))
-		status_change_end(&sd->bl, SC_SIGNUMCRUCIS, INVALID_TIMER);
-
-	//OnUnEquip script [Skotlex]
-	if (sd->inventory_data[n]) {
-		if (sd->inventory_data[n]->unequip_script)
-			run_script(sd->inventory_data[n]->unequip_script,0,sd->bl.id,fake_nd->bl.id);
-		if(itemdb_isspecial(sd->inventory.u.items_inventory[n].card[0]))
-			; //No cards
-		else {
-			for( i = 0; i < MAX_SLOTS; i++ ) {
-				struct item_data *data;
-				if (!sd->inventory.u.items_inventory[n].card[i])
-					continue;
-
-				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]) ) != NULL ) {
-					if( data->unequip_script )
-						run_script(data->unequip_script,0,sd->bl.id,fake_nd->bl.id);
-				}
-
-			}
-		}
-	}
-	sd->npc_item_flag = iflag;
+	pc_unequipitem_sub(sd, n, flag);
 
 	return true;
 }
@@ -12489,12 +12523,12 @@ bool pc_job_can_entermap(enum e_job jobid, int m, int group_lv) {
 	if (!job_info[idx].noenter_map.zone || group_lv > job_info[idx].noenter_map.group_lv)
 		return true;
 
-	if ((!map_flag_vs2(m) && job_info[idx].noenter_map.zone&1) || // Normal
-		(map_getmapflag(m, MF_PVP) && job_info[idx].noenter_map.zone&2) || // PVP
-		(map_flag_gvg2_no_te(m) && job_info[idx].noenter_map.zone&4) || // GVG
-		(map_getmapflag(m, MF_BATTLEGROUND) && job_info[idx].noenter_map.zone&8) || // Battleground
-		(map_flag_gvg2_te(m) && job_info[idx].noenter_map.zone&16) || // WOE:TE
-		(map_getmapflag(m, MF_RESTRICTED) && job_info[idx].noenter_map.zone&(8*mapdata->zone)) // Zone restriction
+	if ((job_info[idx].noenter_map.zone&1 && !mapdata_flag_vs2(mapdata)) || // Normal
+		(job_info[idx].noenter_map.zone&2 && mapdata->flag[MF_PVP]) || // PVP
+		(job_info[idx].noenter_map.zone&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
+		(job_info[idx].noenter_map.zone&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(job_info[idx].noenter_map.zone&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
+		(job_info[idx].noenter_map.zone&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return false;
 

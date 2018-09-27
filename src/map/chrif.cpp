@@ -395,18 +395,15 @@ int chrif_connect(int fd) {
 
 // sends maps to char-server
 int chrif_sendmap(int fd) {
-	int i = 0, size = 4 + map.size() * 4;
 	ShowStatus("Sending maps to char server...\n");
 
 	// Sending normal maps, not instances
-	WFIFOHEAD(fd, size);
+	WFIFOHEAD(fd, 4 + instance_start * 4);
 	WFIFOW(fd,0) = 0x2afa;
-	WFIFOW(fd,2) = size;
-	for( auto& pair : map ){
-		WFIFOW(fd,4+i*4) = pair.second.index;
-		i++;
-	}
-	WFIFOSET(fd,size);
+	for (int i = 0; i < instance_start; i++)
+		WFIFOW(fd, 4 + i * 4) = map[i].index;
+	WFIFOW(fd, 2) = 4 + instance_start * 4;
+	WFIFOSET(fd, WFIFOW(fd, 2));
 
 	return 0;
 }

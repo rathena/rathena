@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _ITEMDB_HPP_
-#define _ITEMDB_HPP_
+#ifndef ITEMDB_HPP
+#define ITEMDB_HPP
 
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
@@ -80,7 +80,6 @@ enum item_itemid
 	ITEMID_PAINT_BRUSH					= 6122,
 	ITEMID_MAGIC_GEAR_FUEL				= 6146,
 	ITEMID_STRANGE_EMBRYO				= 6415,
-	ITEMID_ACTINIDIA_CAT_FRUIT			= 6909,
 	ITEMID_STONE						= 7049,
 	ITEMID_FIRE_BOTTLE					= 7135,
 	ITEMID_ACID_BOTTLE					= 7136,
@@ -121,7 +120,6 @@ enum item_itemid
 	ITEMID_WOB_RACHEL					= 14584,
 	ITEMID_WOB_LOCAL					= 14585,
 	ITEMID_SIEGE_TELEPORT_SCROLL		= 14591,
-	ITEMID_WORLD_MOVING_RIGHTS			= 25464,
 };
 
 ///Rune Knight
@@ -734,6 +732,7 @@ enum e_random_item_group {
 	IG_SPECIAL_CHRISTMAS_BOX,
 	IG_SANTA_GIFT,
 	IG_PRIZEOFHERO,
+	IG_PRIVATE_AIRSHIP,
 };
 
 /// Enum for bound/sell restricted selling
@@ -741,7 +740,8 @@ enum e_itemshop_restrictions {
 	ISR_NONE = 0x0,
 	ISR_BOUND = 0x1,
 	ISR_SELLABLE = 0x2,
-	ISR_ALL = 0x3,
+	ISR_BOUND_SELLABLE = 0x4,
+	ISR_BOUND_GUILDLEADER_ONLY = 0x8,
 };
 
 ///Item combo struct
@@ -963,4 +963,4 @@ void itemdb_reload(void);
 void do_final_itemdb(void);
 void do_init_itemdb(void);
 
-#endif /* _ITEMDB_HPP_ */
+#endif /* ITEMDB_HPP */

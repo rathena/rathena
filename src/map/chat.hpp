@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHAT_HPP_
-#define _CHAT_HPP_
+#ifndef CHAT_HPP
+#define CHAT_HPP
 
 #include "map.hpp" // struct block_list, CHATROOM_TITLE_SIZE
 
@@ -43,4 +43,4 @@ int chat_npckickall(struct chat_data* cd);
 
 int chat_npckickchat(struct chat_data* cd, const char* kickusername);
 
-#endif /* _CHAT_HPP_ */
+#endif /* CHAT_HPP */

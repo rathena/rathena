@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _PC_HPP_
-#define _PC_HPP_
+#ifndef PC_HPP
+#define PC_HPP
 
 #include <vector>
 
@@ -587,7 +587,7 @@ struct map_session_data {
 	size_t duel_group; // duel vars [LuzZza]
 	size_t duel_invite;
 
-	int killerrid, killedrid;
+	int killerrid, killedrid, killedgid;
 
 	int cashPoints, kafraPoints;
 	int rental_timer;
@@ -998,7 +998,7 @@ int pc_split_atoi(char* str, int* val, char sep, int max);
 int pc_class2idx(int class_);
 int pc_get_group_level(struct map_session_data *sd);
 int pc_get_group_id(struct map_session_data *sd);
-bool pc_can_sell_item(struct map_session_data* sd, struct item * item);
+bool pc_can_sell_item(struct map_session_data* sd, struct item * item, enum npc_subtype shoptype);
 bool pc_can_give_items(struct map_session_data *sd);
 bool pc_can_give_bounded_items(struct map_session_data *sd);
 
@@ -1105,6 +1105,8 @@ enum e_addskill_type {
 bool pc_skill(struct map_session_data *sd, uint16 skill_id, int level, enum e_addskill_type type);
 
 int pc_insert_card(struct map_session_data *sd,int idx_card,int idx_equip);
+
+int pc_identifyall(struct map_session_data *sd, bool identify_item);
 
 int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv);
 int pc_steal_coin(struct map_session_data *sd,struct block_list *bl);
@@ -1288,8 +1290,6 @@ bool pc_isautolooting(struct map_session_data *sd, unsigned short nameid);
 
 void pc_overheat(struct map_session_data *sd, int16 heat);
 
-int pc_banding(struct map_session_data *sd, uint16 skill_lv);
-
 void pc_itemcd_do(struct map_session_data *sd, bool load);
 uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n);
 uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n);
@@ -1345,4 +1345,4 @@ bool pc_attendance_enabled();
 int32 pc_attendance_counter( struct map_session_data* sd );
 void pc_attendance_claim_reward( struct map_session_data* sd );
 
-#endif /* _PC_HPP_ */
+#endif /* PC_HPP */

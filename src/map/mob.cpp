@@ -486,27 +486,19 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 
 /*==========================================
  * Fetches a random mob_id [Skotlex]
- * type: Where to fetch from:
- * 0: dead branch list
- * 1: poring list
- * 2: bloody branch list
- * flag:
- * &1 : Apply the summon success chance found in the list (otherwise get any monster from the db)
- * &2 : Apply a monster check level.
- * &4 : Selected monster should not be a boss type (except those from MOBG_Bloody_Dead_Branch)
- * &8 : Selected monster must have normal spawn.
- * &16: Selected monster should not be a plant type
+ * type: Where to fetch from (see enum e_random_monster)
+ * flag: Type of checks to apply (see enum e_random_monster_flags)
  * lv: Mob level to check against
  *------------------------------------------*/
-int mob_get_random_id(int type, int flag, int lv)
+int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 {
 	struct mob_db *mob;
 	int i = 0, mob_id = 0, rand = 0;
 	struct s_randomsummon_group *msummon = (struct s_randomsummon_group *)idb_get(mob_summon_db, type);
 	struct s_randomsummon_entry *entry = nullptr;
 
-	if (type == MOBG_Bloody_Dead_Branch)
-		flag &= ~4;
+	if (type == MOBG_Bloody_Dead_Branch && flag&RMF_MOB_NOT_BOSS)
+		flag = static_cast<e_random_monster_flags>(flag&~RMF_MOB_NOT_BOSS);
 	
 	if (!msummon) {
 		ShowError("mob_get_random_id: Invalid type (%d) of random monster.\n", type);
@@ -525,11 +517,11 @@ int mob_get_random_id(int type, int flag, int lv)
 	} while ((rand == 0 || // Skip default first
 		mob == nullptr ||
 		mob_is_clone(mob_id) ||
-		(flag&0x01 && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
-		(flag&0x02 && lv < mob->lv) ||
-		(flag&0x04 && status_has_mode(&mob->status,MD_STATUS_IMMUNE) ) ||
-		(flag&0x08 && !mob_has_spawn(mob_id)) ||
-		(flag&0x10 && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
+		(flag&RMF_DB_RATE && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
+		(flag&RMF_CHECK_MOB_LV && lv < mob->lv) ||
+		(flag&RMF_MOB_NOT_BOSS && status_has_mode(&mob->status,MD_STATUS_IMMUNE) ) ||
+		(flag&RMF_MOB_NOT_SPAWN && !mob_has_spawn(mob_id)) ||
+		(flag&RMF_MOB_NOT_PLANT && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
 	) && (i++) < MAX_MOB_DB && msummon->count > 1);
 
 	if (i >= MAX_MOB_DB && &msummon->list[0]) {
@@ -572,9 +564,10 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 	do {
 		struct status_change_entry *sce;
 		struct map_session_data *pl_sd; // Owner
+		struct map_data *mapdata = map_getmapdata(md->bl.m);
 		char output[128];
 		
-		if( map_getmapflag(md->bl.m, MF_ALLOWKS) || map_flag_ks(md->bl.m) )
+		if( mapdata->flag[MF_ALLOWKS] || mapdata_flag_ks(mapdata) )
 			return false; // Ignores GVG, PVP and AllowKS map flags
 
 		if( md->db->mexp || md->master_id )
@@ -681,7 +674,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 
 	for (count = 0; count < amount; count++)
 	{
-		int c = (mob_id >= 0) ? mob_id : mob_get_random_id(-mob_id - 1, (battle_config.random_monster_checklv) ? 3 : 1, lv);
+		int c = (mob_id >= 0) ? mob_id : mob_get_random_id(-mob_id - 1, (battle_config.random_monster_checklv) ? static_cast<e_random_monster_flags>(RMF_DB_RATE|RMF_CHECK_MOB_LV) : RMF_DB_RATE, lv);
 		md = mob_once_spawn_sub((sd) ? &sd->bl : NULL, m, x, y, mobname, c, event, size, ai);
 
 		if (!md)
@@ -843,12 +836,10 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 		return 0;
 	}
 
-	struct map_data *mapdata = map_getmapdata(m);
-
 	data.m = m;
 	data.num = 1;
 	if(mob_id<=0) {
-		mob_id = mob_get_random_id(-mob_id-1, 1, 99);
+		mob_id = mob_get_random_id(-mob_id-1, RMF_DB_RATE, 0);
 		if (!mob_id) return 0;
 	}
 
@@ -860,13 +851,13 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 	}
 	else if( guardian < 0 || guardian >= MAX_GUARDIANS )
 	{
-		ShowError("mob_spawn_guardian: Invalid guardian index %d for guardian %d (castle map %s)\n", guardian, mob_id, mapdata->name);
+		ShowError("mob_spawn_guardian: Invalid guardian index %d for guardian %d (castle map %s)\n", guardian, mob_id, mapname);
 		return 0;
 	}
 
 	if((x<=0 || y<=0) && !map_search_freecell(NULL, m, &x, &y, -1,-1, 1))
 	{
-		ShowWarning("mob_spawn_guardian: Couldn't locate a spawn cell for guardian class %d (index %d) at castle map %s\n",mob_id, guardian, mapdata->name);
+		ShowWarning("mob_spawn_guardian: Couldn't locate a spawn cell for guardian class %d (index %d) at castle map %s\n",mob_id, guardian, mapname);
 		return 0;
 	}
 	data.x = x;
@@ -876,14 +867,14 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 	if (!mob_parse_dataset(&data))
 		return 0;
 
-	gc=guild_mapname2gc(mapdata->name);
+	gc=guild_mapname2gc(mapname);
 	if (gc == NULL)
 	{
-		ShowError("mob_spawn_guardian: No castle set at map %s\n", mapdata->name);
+		ShowError("mob_spawn_guardian: No castle set at map %s\n", mapname);
 		return 0;
 	}
 	if (!gc->guild_id)
-		ShowWarning("mob_spawn_guardian: Spawning guardian %d on a castle with no guild (castle map %s)\n", mob_id, mapdata->name);
+		ShowWarning("mob_spawn_guardian: Spawning guardian %d on a castle with no guild (castle map %s)\n", mob_id, mapname);
 	else
 		g = guild_search(gc->guild_id);
 
@@ -893,7 +884,7 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 		if (md2 && md2->bl.type == BL_MOB &&
 			md2->guardian_data && md2->guardian_data->number == guardian)
 		{
-			ShowError("mob_spawn_guardian: Attempted to spawn guardian in position %d which already has a guardian (castle map %s)\n", guardian, mapdata->name);
+			ShowError("mob_spawn_guardian: Attempted to spawn guardian in position %d which already has a guardian (castle map %s)\n", guardian, mapname);
 			return 0;
 		}
 	}
@@ -950,14 +941,14 @@ int mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int
 	data.num = 1;
 	if( mob_id <= 0 )
 	{
-		mob_id = mob_get_random_id(-mob_id-1,1,99);
+		mob_id = mob_get_random_id(-mob_id-1, RMF_DB_RATE, 0);
 		if( !mob_id ) return 0;
 	}
 
 	data.id = mob_id;
 	if( (x <= 0 || y <= 0) && !map_search_freecell(NULL, m, &x, &y, -1,-1, 1) )
 	{
-		ShowWarning("mob_spawn_bg: Couldn't locate a spawn cell for guardian class %d (bg_id %d) at map %s\n",mob_id, bg_id, map_getmapdata(m)->name);
+		ShowWarning("mob_spawn_bg: Couldn't locate a spawn cell for guardian class %d (bg_id %d) at map %s\n",mob_id, bg_id, mapname);
 		return 0;
 	}
 
@@ -2974,7 +2965,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				(battle_config.taekwon_mission_mobname == 1 && mission_mdb && status_get_race2(&md->bl) == RC2_GOBLIN && mission_mdb->race2 == RC2_GOBLIN) ||
 				(battle_config.taekwon_mission_mobname == 2 && mob_is_samename(md, sd->mission_mobid)))
 			{ //TK_MISSION [Skotlex]
-				if (++(sd->mission_count) >= 100 && (temp = mob_get_random_id(MOBG_Branch_Of_Dead_Tree, 0xE, sd->status.base_level)))
+				if (++(sd->mission_count) >= 100 && (temp = mob_get_random_id(MOBG_Branch_Of_Dead_Tree, static_cast<e_random_monster_flags>(RMF_CHECK_MOB_LV|RMF_MOB_NOT_BOSS|RMF_MOB_NOT_SPAWN), sd->status.base_level)))
 				{
 					pc_addfame(sd, battle_config.fame_taekwon_mission);
 					sd->mission_mobid = temp;
@@ -2999,16 +2990,19 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if( md->npc_event[0] && !md->state.npc_killmonster ) {
 			if( sd && battle_config.mob_npc_event_type ) {
+				pc_setparam(sd, SP_KILLEDGID, md->bl.id);
 				pc_setparam(sd, SP_KILLEDRID, md->mob_id);
 				pc_setparam(sd, SP_KILLERRID, sd->bl.id);
 				npc_event(sd,md->npc_event,0);
 			} else if( mvp_sd ) {
+				pc_setparam(mvp_sd, SP_KILLEDGID, md->bl.id);
 				pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
 				pc_setparam(mvp_sd, SP_KILLERRID, sd?sd->bl.id:0);
 				npc_event(mvp_sd,md->npc_event,0);
 			} else
 				npc_event_do(md->npc_event);
 		} else if( mvp_sd && !md->state.npc_killmonster ) {
+			pc_setparam(mvp_sd, SP_KILLEDGID, md->bl.id);
 			pc_setparam(mvp_sd, SP_KILLEDRID, md->mob_id);
 			npc_script_event(mvp_sd, NPCE_KILLNPC); // PCKillNPC [Lance]
 		}
@@ -4794,13 +4788,13 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 
 	mobid = atoi(str[0]);
 	if ((mob = mob_db(mobid)) == NULL) {
-		ShowError("mob_readdb_drop: Invalid monster with ID %s.\n", str[0]);
+		ShowError("mob_readdb_drop: Invalid monster ID %s.\n", str[0]);
 		return false;
 	}
 
 	nameid = atoi(str[1]);
 	if (itemdb_exists(nameid) == NULL) {
-		ShowWarning("mob_readdb_drop: Invalid item id %s.\n", str[1]);
+		ShowWarning("mob_readdb_drop: Invalid item ID %s.\n", str[1]);
 		return false;
 	}
 
@@ -4824,13 +4818,13 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		}
 	}
 	else {
-		for (i = 0; i < size; i++) {
-			if (drop[i].nameid == 0)
-				break;
-		}
-		if (i == size) {
-			ShowError("mob_readdb_drop: Cannot add item '%hu' to monster '%hu'. Max drop reached '%d'.\n", nameid, mobid, size);
-			return true;
+		ARR_FIND(0, size, i, drop[i].nameid == nameid);
+		if (i == size) { // Item is not dropped at all (search all item slots)
+			ARR_FIND(0, size, i, drop[i].nameid == 0);
+			if (i == size) { // No empty slots
+				ShowError("mob_readdb_drop: Cannot add item '%hu' to monster '%hu'. Max drop reached (%d).\n", nameid, mobid, size);
+				return true;
+			}
 		}
 
 		drop[i].nameid = nameid;
@@ -5733,6 +5727,7 @@ static void mob_load(void)
 		sv_readdb(dbsubpath2, "mob_poring.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath2, "mob_boss.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath1, "mob_pouch.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
+		sv_readdb(dbsubpath1, "mob_mission.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath1, "mob_classchange.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		
 		aFree(dbsubpath1);

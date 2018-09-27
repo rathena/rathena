@@ -490,18 +490,16 @@ static void script_reportsrc(struct script_state *st)
 	if( bl == NULL )
 		return;
 
-	struct map_data *mapdata = map_getmapdata(bl->m);
-
 	switch( bl->type ) {
 		case BL_NPC:
 			if( bl->m >= 0 )
-				ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, mapdata->name, bl->x, bl->y);
+				ShowDebug("Source (NPC): %s at %s (%d,%d)\n", ((struct npc_data *)bl)->name, map_mapid2mapname(bl->m), bl->x, bl->y);
 			else
 				ShowDebug("Source (NPC): %s (invisible/not on a map)\n", ((struct npc_data *)bl)->name);
 			break;
 		default:
 			if( bl->m >= 0 )
-				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status_get_name(bl), mapdata->name, bl->x, bl->y);
+				ShowDebug("Source (Non-NPC type %d): name %s at %s (%d,%d)\n", bl->type, status_get_name(bl), map_mapid2mapname(bl->m), bl->x, bl->y);
 			else
 				ShowDebug("Source (Non-NPC type %d): name %s (invisible/not on a map)\n", bl->type, status_get_name(bl));
 			break;
@@ -4179,7 +4177,7 @@ static void script_detach_state(struct script_state* st, bool dequeue_event)
 			 * We're done with this NPC session, so we cancel the timer (if existent) and move on
 			 **/
 			if( sd->npc_idle_timer != INVALID_TIMER ) {
-				delete_timer(sd->npc_idle_timer,npc_rr_secure_timeout_timer);
+				delete_timer(sd->npc_idle_timer,npc_secure_timeout_timer);
 				sd->npc_idle_timer = INVALID_TIMER;
 			}
 #endif
@@ -4219,7 +4217,7 @@ void script_attach_state(struct script_state* st){
 		sd->state.disable_atcommand_on_npc = (!pc_has_permission(sd, PC_PERM_ENABLE_COMMAND));
 #ifdef SECURE_NPCTIMEOUT
 		if( sd->npc_idle_timer == INVALID_TIMER )
-			sd->npc_idle_timer = add_timer(gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_rr_secure_timeout_timer,sd->bl.id,0);
+			sd->npc_idle_timer = add_timer(gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_secure_timeout_timer,sd->bl.id,0);
 		sd->npc_idle_tick = gettick();
 #endif
 	}
@@ -6400,13 +6398,13 @@ BUILDIN_FUNC(inarray)
 		for (i = 0; i <= array_size; ++i)
 		{
 			temp = (char*)get_val2(st, reference_uid(id, i), ref);
-			script_removetop(st, -1, 0);
 			if (!strcmp(temp, value))
 			{
+				script_removetop(st, -1, 0);
 				script_pushint(st, i);
 				return SCRIPT_CMD_SUCCESS;
 			}
-			
+			script_removetop(st, -1, 0);
 		}
 	}
 	else
@@ -12339,8 +12337,8 @@ BUILDIN_FUNC(removemapflag)
 	union u_mapflag_args args = {};
 
 	str = script_getstr(st, 2);
-
 	m = map_mapname2mapid(str);
+
 	if (m < 0) {
 		ShowWarning("buildin_removemapflag: Invalid map name %s.\n", str);
 		return SCRIPT_CMD_FAILURE;
@@ -12363,122 +12361,89 @@ BUILDIN_FUNC(removemapflag)
 BUILDIN_FUNC(pvpon)
 {
 	int16 m;
-	const char *str;
-	TBL_PC* sd = NULL;
-	struct s_mapiterator* iter;
+	const char *str = script_getstr(st,2);
 
-	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if( m < 0 || map_getmapflag(m, MF_PVP) )
-		return SCRIPT_CMD_SUCCESS; // nothing to do
+
+	if (m < 0 || map_getmapflag(m, MF_PVP))
+		return SCRIPT_CMD_FAILURE;
 
 	map_setmapflag(m, MF_PVP, true);
-	clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
 
-	if(battle_config.pk_mode) // disable ranking functions if pk_mode is on [Valaris]
-		return SCRIPT_CMD_SUCCESS;
-
-	iter = mapit_getallusers();
-	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-	{
-		if( sd->bl.m != m || sd->pvp_timer != INVALID_TIMER )
-			continue; // not applicable
-
-		sd->pvp_timer = add_timer(gettick()+200,pc_calc_pvprank_timer,sd->bl.id,0);
-		sd->pvp_rank = 0;
-		sd->pvp_lastusers = 0;
-		sd->pvp_point = 5;
-		sd->pvp_won = 0;
-		sd->pvp_lost = 0;
-	}
-	mapit_free(iter);
 	return SCRIPT_CMD_SUCCESS;
-}
-
-static int buildin_pvpoff_sub(struct block_list *bl,va_list ap)
-{
-	TBL_PC* sd = (TBL_PC*)bl;
-	clif_pvpset(sd, 0, 0, 2);
-	if (sd->pvp_timer != INVALID_TIMER) {
-		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
-		sd->pvp_timer = INVALID_TIMER;
-	}
-	return 0;
 }
 
 BUILDIN_FUNC(pvpoff)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
+
 	if(m < 0 || !map_getmapflag(m, MF_PVP))
-		return SCRIPT_CMD_SUCCESS; //fixed Lupus
+		return SCRIPT_CMD_FAILURE;
 
 	map_setmapflag(m, MF_PVP, false);
-	clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
 
-	if(battle_config.pk_mode) // disable ranking options if pk_mode is on [Valaris]
-		return SCRIPT_CMD_SUCCESS;
-
-	map_foreachinmap(buildin_pvpoff_sub, m, BL_PC);
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(gvgon)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if(m >= 0 && !map_getmapflag(m, MF_GVG)) {
-		map_setmapflag(m, MF_GVG, true);
-		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-	}
+
+	if (m < 0 || map_getmapflag(m, MF_GVG))
+		return SCRIPT_CMD_FAILURE;
+
+	map_setmapflag(m, MF_GVG, true);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(gvgoff)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str=script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if(m >= 0 && map_getmapflag(m, MF_GVG)) {
+
+	if (m < 0 || !map_getmapflag(m, MF_GVG))
+		return SCRIPT_CMD_FAILURE;
 		map_setmapflag(m, MF_GVG, false);
-		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-	}
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(gvgon3)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if (m >= 0 && !map_getmapflag(m, MF_GVG_TE)) {
-		map_setmapflag(m, MF_GVG_TE, true);
-		clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
-	}
+
+	if (m < 0 || map_getmapflag(m, MF_GVG_TE))
+		return SCRIPT_CMD_FAILURE;
+
+	map_setmapflag(m, MF_GVG_TE, true);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
 BUILDIN_FUNC(gvgoff3)
 {
 	int16 m;
-	const char *str;
+	const char *str = script_getstr(st,2);
 
-	str = script_getstr(st,2);
 	m = map_mapname2mapid(str);
-	if (m >= 0 && map_getmapflag(m, MF_GVG_TE)) {
-		map_setmapflag(m, MF_GVG_TE, false);
-		clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-	}
+
+	if (m < 0 || !map_getmapflag(m, MF_GVG_TE))
+		return SCRIPT_CMD_FAILURE;
+
+	map_setmapflag(m, MF_GVG_TE, false);
+
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13326,6 +13291,14 @@ BUILDIN_FUNC(delwall)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(checkwall)
+{
+	const char *wall_name = script_getstr(st, 2);
+
+	script_pushint(st, map_iwall_exist(wall_name));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -18996,8 +18969,17 @@ BUILDIN_FUNC(questinfo)
 		case QTYPE_JOB2:
 		case QTYPE_EVENT:
 		case QTYPE_EVENT2:
+		// Warg icons were replaced in this client
+#if PACKETVER < 20170315
 		case QTYPE_WARG:
 		case QTYPE_WARG2:
+#else
+		case QTYPE_CLICKME:
+		case QTYPE_DAILYQUEST:
+		case QTYPE_EVENT3:
+		case QTYPE_JOBQUEST:
+		case QTYPE_JUMPING_PORING:
+#endif
 			// Leave everything as it is
 			break;
 		case QTYPE_NONE:
@@ -23808,6 +23790,33 @@ BUILDIN_FUNC(open_roulette){
 #endif
 }
 
+/*==========================================
+ * identifyall({<type>{,<account_id>}})
+ * <type>:
+ *	true: identify the items and returns the count of unidentified items (default)
+ *	false: returns the count of unidentified items only
+ *------------------------------------------*/
+BUILDIN_FUNC(identifyall) {
+	TBL_PC *sd;
+	bool identify_item = true;
+
+	if (script_hasdata(st, 2))
+		identify_item = script_getnum(st, 2) != 0;
+
+	if( !script_hasdata(st, 3) )
+		script_rid2sd(sd);
+	else
+		sd = map_id2sd( script_getnum(st, 3) );
+
+	if (sd == NULL) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+	script_pushint(st, pc_identifyall(sd, identify_item));
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24269,6 +24278,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getfreecell,"srr?????"),
 	BUILDIN_DEF(setwall,"siiiiis"),
 	BUILDIN_DEF(delwall,"s"),
+	BUILDIN_DEF(checkwall,"s"),
 	BUILDIN_DEF(searchitem,"rs"),
 	BUILDIN_DEF(mercenary_create,"ii"),
 	BUILDIN_DEF(mercenary_heal,"ii"),
@@ -24461,6 +24471,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getequiptradability, "i?"),
 	BUILDIN_DEF(mail, "isss*"),
 	BUILDIN_DEF(open_roulette,"?"),
+	BUILDIN_DEF(identifyall,"??"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

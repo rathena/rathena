@@ -230,8 +230,8 @@ OnTimer39000:
 	npctalk "Right.. I should have entered with another group!", "Party Member#SHADOW";
 	end;
 OnTimer40500:
-	emotion ET_KIK, getnpcid(0, "Party Member#CRU::OnChat24");
-	npctalk "Hey. Are you pissed off?", "Party Member#CRU::OnChat24";
+	emotion ET_KIK, getnpcid(0, "Party Member#CRU");
+	npctalk "Hey. Are you pissed off?", "Party Member#CRU";
 	end;
 OnTimer42000:
 	npctalk "Not at all.", "Party Member#GUILL";

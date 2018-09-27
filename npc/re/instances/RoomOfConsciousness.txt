@@ -448,15 +448,15 @@ OnTimer1000:
 		initnpctimer;
 		end;
 	}
+	donpcevent instance_npcname("eq#mir4") + "::OnMobDead";
+	end;
+OnMobDead:
 	killmonster 'map_name$, instance_npcname("eq#mir4") + "::OnMobDead";
 	stopnpctimer;
 	enablenpc instance_npcname("Fenrir#5mir");
 	enablenpc instance_npcname("Iris#5mir");
 	enablenpc instance_npcname("Bijou#5mir");
 	disablenpc instance_npcname("eq#mir4");
-	end;
-OnMobDead:
-	// shouldn't happen
 	end;
 }
 
