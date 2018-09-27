@@ -10,7 +10,7 @@
 OnInit:
 	.HP_Option = true;	//Allow HP option
 	.SP_Option = true;	//Allow SP option
-	.MinDelay = 100;	//Minimum Delay Allowed (Default and Recommended: 100) [lower values will increase server strain]
+	.MinDelay = 100;	//Minimum Delay Allowed in milliseconds (Default and Recommended: 100) [lower values will increase server strain]
 	setarray .blackList[0],0;	//Array of black listed item ID
 
 	if(!.HP_Option && !.SP_Option){
@@ -65,7 +65,7 @@ L_Start:
 		end;
 	}
 	if(inarray(.blackList[0],.@potion) != -1){
-		mes  "'" + getitemname(.@potion) + "' is black listed and cannot be used.";
+		message strcharinfo(0), "'" + getitemname(.@potion) + "' is black listed and cannot be used.";
 		end;
 	}
 	if (BaseLevel < getiteminfo(.@potion,12)) {
