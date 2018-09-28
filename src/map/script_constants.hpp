@@ -7305,6 +7305,27 @@
 	export_constant(SKILLDMG_MAX);
 	export_constant(SKILLDMG_CASTER);
 
+	/* castle data flags */
+	export_constant(CD_NONE);
+	export_constant(CD_GUILD_ID);
+	export_constant(CD_ECONOMY);
+	export_constant(CD_DEFENSE);
+	export_constant(CD_TRIGGER_E);
+	export_constant(CD_TRIGGER_D);
+	export_constant(CD_NEXT_TIME);
+	export_constant(CD_PAY_TIME);
+	export_constant(CD_CREATE_TIME);
+	export_constant(CD_VISIBLE_C);
+	export_constant(CD_VISIBLE_G0);
+	export_constant(CD_VISIBLE_G1);
+	export_constant(CD_VISIBLE_G2);
+	export_constant(CD_VISIBLE_G3);
+	export_constant(CD_VISIBLE_G4);
+	export_constant(CD_VISIBLE_G5);
+	export_constant(CD_VISIBLE_G6);
+	export_constant(CD_VISIBLE_G7);
+	export_constant(CD_MAX);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

@@ -93,9 +93,9 @@ int guild_gm_change(int guild_id, uint32 char_id);
 int guild_gm_changed(int guild_id, uint32 account_id, uint32 char_id, time_t time);
 
 void guild_castle_map_init(void);
-int guild_castledatasave(int castle_id,int index,int value);
+int guild_castledatasave(int castle_id,enum e_castle_data index,int value);
 int guild_castledataloadack(int len, struct guild_castle *gc);
-void guild_castle_reconnect(int castle_id, int index, int value);
+void guild_castle_reconnect(int castle_id, enum e_castle_data index, int value);
 
 bool guild_agit_start(void);
 bool guild_agit_end(void);

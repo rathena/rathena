@@ -701,6 +701,29 @@ struct guild_castle {
 	int temp_guardians_max;
 };
 
+/// Enum for guild castle data script commands
+enum e_castle_data : uint8 {
+	CD_NONE = 0,
+	CD_GUILD_ID, ///< Guild ID
+	CD_ECONOMY, ///< Castle Economy score
+	CD_DEFENSE, ///< Castle Defense score
+	CD_TRIGGER_E, ///< Number of times the economy was invested in today
+	CD_TRIGGER_D, ///< Number of times the defense was invested in today
+	CD_NEXT_TIME, ///< unused
+	CD_PAY_TIME, ///< unused
+	CD_CREATE_TIME, ///< unused
+	CD_VISIBLE_C, ///< Is 1 if a Kafra was hired for this castle, 0 otherwise
+	CD_VISIBLE_G0, ///< Is 1 if the 1st guardian is present (Soldier Guardian)
+	CD_VISIBLE_G1, ///< Is 1 if the 2nd guardian is present (Soldier Guardian)
+	CD_VISIBLE_G2, ///< Is 1 if the 3rd guardian is present (Soldier Guardian)
+	CD_VISIBLE_G3, ///< Is 1 if the 4th guardian is present (Archer Guardian)
+	CD_VISIBLE_G4, ///< Is 1 if the 5th guardian is present (Archer Guardian)
+	CD_VISIBLE_G5, ///< Is 1 if the 6th guardian is present (Knight Guardian)
+	CD_VISIBLE_G6, ///< Is 1 if the 7th guardian is present (Knight Guardian)
+	CD_VISIBLE_G7, ///< Is 1 if the 8th guardian is present (Knight Guardian)
+	CD_MAX
+};
+
 /// Guild Permissions
 enum e_guild_permission {
 	GUILD_PERM_INVITE	= 0x001,
