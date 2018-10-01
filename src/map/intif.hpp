@@ -1,11 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INTIF_HPP_
-#define _INTIF_HPP_
+#ifndef INTIF_HPP
+#define INTIF_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 struct party_member;
 struct guild_member;
@@ -129,4 +129,4 @@ bool intif_storage_save(struct map_session_data *sd, struct s_storage *stor);
 
 int CheckForCharServer(void);
 
-#endif /* _INTIF_HPP_ */
+#endif /* INTIF_HPP */

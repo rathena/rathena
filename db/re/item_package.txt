@@ -4473,23 +4473,23 @@ IG_Something_Candy_Holder,22067,1,1 // 1x Witch Shoes
 IG_Something_Candy_Holder,22669,5,1 // 1x October Spooky Trade Box
 IG_Something_Candy_Holder,22670,1,1 // 1x DARK INVITATION
 
-// Mysterious_Egg
-IG_Mysterious_Egg,12259,200,1,1,0,0,0	// 1x Miracle_Medicine
-IG_Mysterious_Egg,5374,1,1,1,0,0,0	// 1x L_Magestic_Goat
-IG_Mysterious_Egg,5254,99,1,1,0,0,0	// 1x Deviling_Hat
-IG_Mysterious_Egg,12246,99,1,1,0,0,0	// 1x Magic_Card_Album
-IG_Mysterious_Egg,4302,1,1,1,0,0,0	// 1x Tao_Gunka_Card
-IG_Mysterious_Egg,5474,200,1,1,0,0,0	// 1x Notice_Board
-IG_Mysterious_Egg,2554,1,1,1,0,0,0	// 1x Piece_Of_Angent_Skin
-IG_Mysterious_Egg,17001,1099,1,1,0,0,0	// 1x Wander_Man_Box10
-IG_Mysterious_Egg,12903,1000,1,1,0,0,0	// 1x Str_Dish_Box
-IG_Mysterious_Egg,12922,1100,1,1,0,0,0	// 1x Token_Of_Siegfried_Box
-IG_Mysterious_Egg,16755,1200,1,1,0,0,0	// 1x Unbreak_Def_Box
-IG_Mysterious_Egg,12909,800,1,1,0,0,0	// 1x Kafra_Card_Box
-IG_Mysterious_Egg,14232,800,1,1,0,0,0	// 1x Yggdrasilberry_Box_
-IG_Mysterious_Egg,12361,1000,2,1,0,0,0	// 2x Delicious_Shaved_Ice
-IG_Mysterious_Egg,12910,1100,1,1,0,0,0	// 1x Giant_Fly_Wing_Box
-IG_Mysterious_Egg,16753,1300,1,1,0,0,0	// 1x Unbreak_Weap_Box
+// Shining Egg
+IG_Shining_Egg,12259,200,1,1,0,0,0	// 1x Miracle_Medicine
+IG_Shining_Egg,5374,1,1,1,0,0,0	// 1x L_Magestic_Goat
+IG_Shining_Egg,5254,99,1,1,0,0,0	// 1x Deviling_Hat
+IG_Shining_Egg,12246,99,1,1,0,0,0	// 1x Magic_Card_Album
+IG_Shining_Egg,4302,1,1,1,0,0,0	// 1x Tao_Gunka_Card
+IG_Shining_Egg,5474,200,1,1,0,0,0	// 1x Notice_Board
+IG_Shining_Egg,2554,1,1,1,0,0,0	// 1x Piece_Of_Angent_Skin
+IG_Shining_Egg,17001,1099,1,1,0,0,0	// 1x Wander_Man_Box10
+IG_Shining_Egg,12903,1000,1,1,0,0,0	// 1x Str_Dish_Box
+IG_Shining_Egg,12922,1100,1,1,0,0,0	// 1x Token_Of_Siegfried_Box
+IG_Shining_Egg,16755,1200,1,1,0,0,0	// 1x Unbreak_Def_Box
+IG_Shining_Egg,12909,800,1,1,0,0,0	// 1x Kafra_Card_Box
+IG_Shining_Egg,14232,800,1,1,0,0,0	// 1x Yggdrasilberry_Box_
+IG_Shining_Egg,12361,1000,2,1,0,0,0	// 2x Delicious_Shaved_Ice
+IG_Shining_Egg,12910,1100,1,1,0,0,0	// 1x Giant_Fly_Wing_Box
+IG_Shining_Egg,16753,1300,1,1,0,0,0	// 1x Unbreak_Weap_Box
 
 // Agust_Lucky_Scroll
 IG_Agust_Lucky_Scroll,4365,1,1,1,1,0,0	// 1x B_Katrinn_Card

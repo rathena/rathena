@@ -279,5 +279,24 @@ arug_dun01	mapflag	nosave	SavePoint
 1@nyd	mapflag	nosave	SavePoint
 2@nyd	mapflag	nosave	SavePoint
 
+// RWC Maps ===============
+2009rwc_01	mapflag	nosave	SavePoint
+2009rwc_02	mapflag	nosave	SavePoint
+2009rwc_03	mapflag	nosave	SavePoint
+2009rwc_04	mapflag	nosave	SavePoint
+2009rwc_05	mapflag	nosave	SavePoint
+2009rwc_06	mapflag	nosave	SavePoint
+2009rwc_07	mapflag	nosave	SavePoint
+2009rwc_08	mapflag	nosave	SavePoint
+2009rwc_f01	mapflag	nosave	SavePoint
+2012rwc_01	mapflag	nosave	SavePoint
+2012rwc_02	mapflag	nosave	SavePoint
+2012rwc_03	mapflag	nosave	SavePoint
+2012rwc_04	mapflag	nosave	SavePoint
+2012rwc_05	mapflag	nosave	SavePoint
+2012rwc_06	mapflag	nosave	SavePoint
+2012rwc_07	mapflag	nosave	SavePoint
+2012rwc_08	mapflag	nosave	SavePoint
+
 evt_bomb	mapflag	nosave	SavePoint
 //evt_zombie	mapflag	nosave	SavePoint

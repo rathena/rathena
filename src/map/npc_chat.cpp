@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #ifdef PCRE_SUPPORT
@@ -7,14 +7,13 @@
 
 #include "../../3rdparty/pcre/include/pcre.h"
 
-#include "../common/timer.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
 #include "mob.hpp" // struct mob_data
 #include "pc.hpp" // struct map_session_data
-
 
 /**
  *  Written by MouseJstr in a vision... (2/21/2005)
@@ -373,7 +372,7 @@ int npc_chat_sub(struct block_list* bl, va_list ap)
 				// save out the matched strings
 				for (i = 0; i < r; i++)
 				{
-					char var[6], val[255];
+					char var[255], val[255];
 					snprintf(var, sizeof(var), "$@p%i$", i);
 					pcre_copy_substring(msg, offsets, r, i, val, sizeof(val));
 					set_var(sd, var, val);
