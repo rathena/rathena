@@ -662,7 +662,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
 					int ele_fix = tsd->subele[rh_ele] + tsd->subele[ELE_ALL] + tsd->subele_script[rh_ele] + tsd->subele_script[ELE_ALL];
 
-					for (const auto &it : sd->subele2) {
+					for (const auto &it : tsd->subele2) {
 						if (it.ele != rh_ele)
 							continue;
 						if (!(((it.flag)&flag)&BF_WEAPONMASK &&
