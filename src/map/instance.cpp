@@ -1157,10 +1157,10 @@ void do_init_instance(void) {
 void do_final_instance(void) {
 	int i;
 
-	ers_destroy(instance_maps_ers);
 	for( i = 1; i < MAX_INSTANCE_DATA; i++ )
 		instance_destroy(i);
 
 	InstanceDB->destroy(InstanceDB, instance_db_free);
 	db_destroy(InstanceNameDB);
+	ers_destroy(instance_maps_ers);
 }
