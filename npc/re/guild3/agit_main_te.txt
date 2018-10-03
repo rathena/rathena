@@ -75,7 +75,7 @@ OnAgitInit3:
 	else {
 		requestguildinfo .@guild_id;
 		donpcevent "::OnFlagTE" + strnpcinfo(2);// Guild emblem on flags.
-		if (getcastledata(.@map$,CD_VISIBLE_C)  == 0)
+		if (getcastledata(.@map$,CD_ENABLED_KAFRA)  == 0)
 			disablenpc "Kafra Employee#"+ replacestr(.@map$, "cas", "");
 
 		// Load purchased Guardian in castles.
@@ -133,26 +133,26 @@ OnAgitBreak:
 	.@guild_id = getcharid(2);
 	.@map$ = strnpcinfo(4);
 
-	.@economy = getcastledata(.@map$,CD_ECONOMY) - 5;// Adjust economy Invest Level for Castle
+	.@economy = getcastledata(.@map$,CD_CURRENT_ECONOMY) - 5;// Adjust economy Invest Level for Castle
 	if (.@economy < 1)
-		setcastledata .@map$, CD_ECONOMY,1;
+		setcastledata .@map$, CD_CURRENT_ECONOMY,1;
 	else
-		setcastledata .@map$, CD_ECONOMY,.@economy;
-	.@defense = getcastledata(.@map$,CD_DEFENSE) - 5;// Adjust Defense Invest Level for Castle
+		setcastledata .@map$, CD_CURRENT_ECONOMY,.@economy;
+	.@defense = getcastledata(.@map$,CD_CURRENT_DEFENSE) - 5;// Adjust Defense Invest Level for Castle
 	if (.@defense < 1)
-		setcastledata .@map$, CD_DEFENSE,1;
+		setcastledata .@map$, CD_CURRENT_DEFENSE,1;
 	else
-		setcastledata .@map$, CD_DEFENSE,.@defense;
+		setcastledata .@map$, CD_CURRENT_DEFENSE,.@defense;
 	setcastledata .@map$,CD_GUILD_ID,.@guild_id;
 
 	// Reset Invest information and refresh castle data
-	for ( .@i = CD_TRIGGER_E; .@i < CD_VISIBLE_G0; .@i++ )
+	for ( .@i = CD_INVESTED_ECONOMY; .@i < CD_ENABLED_GUARDIAN0; .@i++ )
 		setcastledata .@map$,.@i,0;
 	donpcevent strnpcinfo(0) +"::OnAgitInit3";// spawn guardians / monsters
 
 	// Erase Guardian Database information if the new owners do not have Guardian Research.
 	if (getgdskilllv(.@guild_id,10002) == 0) {
-		for ( .@i = CD_VISIBLE_G0; .@i <= CD_VISIBLE_G7; .@i++ )
+		for ( .@i = CD_ENABLED_GUARDIAN0; .@i <= CD_ENABLED_GUARDIAN7; .@i++ )
 			setcastledata .@map$,.@i,0;
 	}
 
@@ -353,15 +353,15 @@ function GuardianData;
 	next;
 	switch( select( "Castle briefing", "Invest in commercial growth", "Invest in Castle Defenses", "Summon Guardian", "Hire / Fire a Kafra Employee", "Go into Master's room" ) ) {
 	case 1:
-		.@economy_today = getcastledata(.@map$,CD_TRIGGER_E);
-		.@defense_today = getcastledata(.@map$,CD_TRIGGER_D);
+		.@economy_today = getcastledata(.@map$,CD_INVESTED_ECONOMY);
+		.@defense_today = getcastledata(.@map$,CD_INVESTED_DEFENSE);
 		mes .@npc_name$;
 		mes "I will report the Castle briefing, Master.";
 		mes " ";
-		mes "^0000ffNow, the commercial growth level is "+GetCastleData(.@map$,CD_ECONOMY)+".";
+		mes "^0000ffNow, the commercial growth level is "+GetCastleData(.@map$,CD_CURRENT_ECONOMY)+".";
 		if (.@economy_today > 0)
 			mes " You invested "+.@economy_today+" times in past 1 day.";
-		mes " Now, the Castle Defense level is "+GetCastleData(.@map$,CD_DEFENSE)+".^000000";
+		mes " Now, the Castle Defense level is "+GetCastleData(.@map$,CD_CURRENT_DEFENSE)+".^000000";
 		if (.@defense_today > 0)
 			mes " ^0000ff- You invested "+.@defense_today+" times in past 1 day.^000000";
 		mes " ";
@@ -369,20 +369,20 @@ function GuardianData;
 		close;
 
 	case 2:
-		.@economy = getcastledata(.@map$,CD_ECONOMY);
+		.@economy = getcastledata(.@map$,CD_CURRENT_ECONOMY);
 		setarray .@eco_invest[0], 5,5000, 10,10000, 15,20000, 20,35000, 25,55000, 30,80000, 35,110000, 40,145000, 45,185000, 50,230000,
 			55,280000, 60,335000, 65,395000, 70,460000, 75,530000, 80,605000, 85,685000, 90,770000, 95,860000, 100,955000;
 		for ( .@i = 0; .@i < getarraysize(.@eco_invest); .@i += 2 )
 			if (.@economy <= .@eco_invest[.@i]) break;
-		callsub( S_Invest, 4, .@eco_invest[.@i+1], getcastledata(.@map$,CD_TRIGGER_E), "commercial growth", "quantity of goods made by the guild will increase", "future", "economist", "riches" );
+		callsub( S_Invest, 4, .@eco_invest[.@i+1], getcastledata(.@map$,CD_INVESTED_ECONOMY), "commercial growth", "quantity of goods made by the guild will increase", "future", "economist", "riches" );
 
 	case 3:
-		.@defense = getcastledata(.@map$,CD_DEFENSE);
+		.@defense = getcastledata(.@map$,CD_CURRENT_DEFENSE);
 		setarray .@def_invest[0], 5,10000, 10,20000, 15,40000, 20,70000, 25,110000, 30,160000, 35,220000, 40,290000, 45,370000, 50,460000,
 			55,560000, 60,670000, 65,790000, 70,920000, 75,1060000, 80,1210000, 85,1370000, 90,1540000, 95,1720000, 100,1910000;
 		for ( .@i = 0; .@i < getarraysize(.@def_invest); .@i += 2 )
 			if (.@defense <= .@def_invest[.@i]) break;
-		callsub( S_Invest, 5, .@def_invest[.@i+1], getcastledata(.@map$,CD_TRIGGER_D), "Castle Defenses", "durability of Guardians and the Emperium will increase", "coming battles", "strategist", "Defenses" );
+		callsub( S_Invest, 5, .@def_invest[.@i+1], getcastledata(.@map$,CD_INVESTED_DEFENSE), "Castle Defenses", "durability of Guardians and the Emperium will increase", "coming battles", "strategist", "Defenses" );
 
 	case 4:
 		mes .@npc_name$;
@@ -409,13 +409,13 @@ function GuardianData;
 		if (getgdskilllv(.@guild_id,10002) == 0) {
 			mes "Master, we have not the resources to Summon the Guardian. If you want to accumulate them, you have to learn the Guild skill. We failed to summon the Guardian.";
 		}
-		else if (getcastledata( .@map$,(.@s + CD_VISIBLE_G0) ) == 1)
+		else if (getcastledata( .@map$,(.@s + CD_ENABLED_GUARDIAN0) ) == 1)
 			mes "Master, you already have summoned that Guardian. We cannot summon another.";
 		else if (Zeny <  10000)
 			mes "Well... I'm sorry but we don't have funds to summon the Guardian. We failed to summon the Guardian.";
 		else {
 			Zeny = Zeny - 10000;
-			setcastledata .@map$,(.@s + CD_VISIBLE_G0),1;
+			setcastledata .@map$,(.@s + CD_ENABLED_GUARDIAN0),1;
 			guardian .@map$, .@x[.@s], .@y[.@s], .@name$[.@s], .@mob_id[.@s], "Kafra Employee#"+ replacestr(.@map$, "cas", "") +"::OnGuardianDied", .@s;
 			mes "We completed the summoning of the Guardian. Our defenses are now increased with it in place.";
 		}
@@ -423,7 +423,7 @@ function GuardianData;
 
 	case 5:
 		mes .@npc_name$;
-		if (getcastledata(.@map$,CD_VISIBLE_C) == 1) {
+		if (getcastledata(.@map$,CD_ENABLED_KAFRA) == 1) {
 			mes "We are currently hiring a Kafra Employee... Do you want to fire the Kafra Employee?";
 			next;
 			if (select( "Fire","Cancel" ) == 2) {
@@ -445,7 +445,7 @@ function GuardianData;
 			next;
 			cutin "",255;
 			disablenpc "Kafra Employee#" + replacestr(.@map$, "cas", "");
-			setcastledata .@map$,CD_VISIBLE_C,0;
+			setcastledata .@map$,CD_ENABLED_KAFRA,0;
 			mes .@npc_name$;
 			mes "....";
 			mes "I have discharged the Kafra Employee... But... are you unsatisfied with something?";
@@ -470,7 +470,7 @@ function GuardianData;
 		}
 		Zeny = Zeny - 10000;
 		enablenpc "Kafra Employee#" + replacestr(.@map$, "cas", "");
-		setcastledata .@map$,CD_VISIBLE_C,1;
+		setcastledata .@map$,CD_ENABLED_KAFRA,1;
 
 		mes "We obtained a contract with the kafra Main Office, and hired a Kafra Employee.";
 		next;
@@ -532,7 +532,7 @@ S_Invest:
 	mes " ";
 	mes "Initially, you are able to invest just once but if you pay more money, you will be able to invest twice.";
 	mes " ";
-	if (getcastledata(strnpcinfo(4),CD_ECONOMY) >= 100) {
+	if (getcastledata(strnpcinfo(4),CD_CURRENT_ECONOMY) >= 100) {
 		mes "^ff0000The "+ getarg(3) +" level of our Castle is at it's highest, 100%. No more investments are needed. Just as I have expected from a great "+ getarg(6) +" like you, Master.^000000";
 		close;
 	}
@@ -689,7 +689,7 @@ OnSpawnGuardians:
 	.@tmp$ = replacestr(.@map$, "cas", "");
 	killmonster .@map$, "Kafra Employee#"+ .@tmp$ +"::OnGuardianDied";
 	for ( .@i = 0; .@i < MAX_GUARDIANS; .@i++ ) {
-		if (getcastledata( .@map$,(.@i + CD_VISIBLE_G0) ))
+		if (getcastledata( .@map$,(.@i + CD_ENABLED_GUARDIAN0) ))
 			guardian .@map$, .@x[.@i], .@y[.@i], .@name$[.@i], .@mob_id[.@i], "Kafra Employee#"+ .@tmp$ +"::OnGuardianDied",.@i;
 	}
 }
@@ -771,23 +771,23 @@ OnClock0001:// Spawn Treasure Chests based on castle economy.
 	.@guild_id = getcastledata(.@map$,CD_GUILD_ID);
 	if (.@guild_id == 0) end;
 
-	.@economy = getcastledata(.@map$,CD_ECONOMY);
-	.@defense = getcastledata(.@map$,CD_DEFENSE);
-	.@economy_today = getcastledata(.@map$,CD_TRIGGER_E);
-	.@defense_today = getcastledata(.@map$,CD_TRIGGER_D);
+	.@economy = getcastledata(.@map$,CD_CURRENT_ECONOMY);
+	.@defense = getcastledata(.@map$,CD_CURRENT_DEFENSE);
+	.@economy_today = getcastledata(.@map$,CD_INVESTED_ECONOMY);
+	.@defense_today = getcastledata(.@map$,CD_INVESTED_DEFENSE);
 
 	killmonster .@map$, strnpcinfo(0)+"::OnTreasureDied";
 	if (.@economy_today) {
 		.@economy = .@economy + .@economy_today + (rand(2) && getgdskilllv(.@guild_id,10014));
 		.@economy = ( .@economy > 100 ) ? 100 : .@economy;
-		setcastledata .@map$,CD_ECONOMY,.@economy;
-		setcastledata .@map$,CD_TRIGGER_E,0;
+		setcastledata .@map$,CD_CURRENT_ECONOMY,.@economy;
+		setcastledata .@map$,CD_INVESTED_ECONOMY,0;
 	}
 	if (.@defense_today) {
 		.@defense = .@defense + .@defense_today;
 		.@defense = ( .@defense > 100 ) ? 100 : .@defense;
-		setcastledata .@map$,CD_DEFENSE,.@defense;
-		setcastledata .@map$,CD_TRIGGER_D,0;
+		setcastledata .@map$,CD_CURRENT_DEFENSE,.@defense;
+		setcastledata .@map$,CD_INVESTED_DEFENSE,0;
 	}
 
 	if (.@map$ == "te_aldecas1") {

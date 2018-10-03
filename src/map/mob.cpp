@@ -797,7 +797,7 @@ static TIMER_FUNC(mob_spawn_guardian_sub){
 			}
 		} else {
 			if (md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS && md->guardian_data->castle->guardian[md->guardian_data->number].visible)
-				guild_castledatasave(md->guardian_data->castle->castle_id, static_cast<e_castle_data>(CD_VISIBLE_G0 + md->guardian_data->number),0);
+				guild_castledatasave(md->guardian_data->castle->castle_id, static_cast<e_castle_data>(CD_ENABLED_GUARDIAN0 + md->guardian_data->number),0);
 			unit_free(&md->bl,CLR_OUTSIGHT); //Remove guardian.
 		}
 		return 0;
@@ -2446,7 +2446,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	}
 
 	if( md->guardian_data && md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS )
-		guild_castledatasave(md->guardian_data->castle->castle_id, static_cast<e_castle_data>(CD_VISIBLE_G0 + md->guardian_data->number),0);
+		guild_castledatasave(md->guardian_data->castle->castle_id, static_cast<e_castle_data>(CD_ENABLED_GUARDIAN0 + md->guardian_data->number),0);
 
 	if( src ) { // Use Dead skill only if not killed by Script or Command
 		md->status.hp = 1;
@@ -3090,7 +3090,7 @@ int mob_guardian_guildchange(struct mob_data *md)
 			md->guardian_data->guild_name[0] = '\0';
 		} else {
 			if (md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS && md->guardian_data->castle->guardian[md->guardian_data->number].visible)
-				guild_castledatasave(md->guardian_data->castle->castle_id, static_cast<e_castle_data>(CD_VISIBLE_G0 + md->guardian_data->number), 0);
+				guild_castledatasave(md->guardian_data->castle->castle_id, static_cast<e_castle_data>(CD_ENABLED_GUARDIAN0 + md->guardian_data->number), 0);
 			unit_free(&md->bl,CLR_OUTSIGHT); //Remove guardian.
 		}
 		return 0;
@@ -3101,7 +3101,7 @@ int mob_guardian_guildchange(struct mob_data *md)
 	{	//Properly remove guardian info from Castle data.
 		ShowError("mob_guardian_guildchange: New Guild (id %d) does not exists!\n", md->guardian_data->guild_id);
 		if (md->guardian_data->number >= 0 && md->guardian_data->number < MAX_GUARDIANS)
-			guild_castledatasave(md->guardian_data->castle->castle_id, static_cast<e_castle_data>(CD_VISIBLE_G0 + md->guardian_data->number), 0);
+			guild_castledatasave(md->guardian_data->castle->castle_id, static_cast<e_castle_data>(CD_ENABLED_GUARDIAN0 + md->guardian_data->number), 0);
 		unit_free(&md->bl,CLR_OUTSIGHT);
 		return 0;
 	}

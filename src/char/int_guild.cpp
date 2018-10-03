@@ -604,16 +604,16 @@ struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 
 	if (SQL_SUCCESS == Sql_NextRow(sql_handle)) {
 		Sql_GetData(sql_handle, CD_GUILD_ID, &data, NULL); gc->guild_id =  atoi(data);
-		Sql_GetData(sql_handle, CD_ECONOMY, &data, NULL); gc->economy = atoi(data);
-		Sql_GetData(sql_handle, CD_DEFENSE, &data, NULL); gc->defense = atoi(data);
-		Sql_GetData(sql_handle, CD_TRIGGER_E, &data, NULL); gc->triggerE = atoi(data);
-		Sql_GetData(sql_handle, CD_TRIGGER_D, &data, NULL); gc->triggerD = atoi(data);
+		Sql_GetData(sql_handle, CD_CURRENT_ECONOMY, &data, NULL); gc->economy = atoi(data);
+		Sql_GetData(sql_handle, CD_CURRENT_DEFENSE, &data, NULL); gc->defense = atoi(data);
+		Sql_GetData(sql_handle, CD_INVESTED_ECONOMY, &data, NULL); gc->triggerE = atoi(data);
+		Sql_GetData(sql_handle, CD_INVESTED_DEFENSE, &data, NULL); gc->triggerD = atoi(data);
 		Sql_GetData(sql_handle, CD_NEXT_TIME, &data, NULL); gc->nextTime = atoi(data);
 		Sql_GetData(sql_handle, CD_PAY_TIME, &data, NULL); gc->payTime = atoi(data);
 		Sql_GetData(sql_handle, CD_CREATE_TIME, &data, NULL); gc->createTime = atoi(data);
-		Sql_GetData(sql_handle, CD_VISIBLE_C, &data, NULL); gc->visibleC = atoi(data);
-		for (i = CD_VISIBLE_G0; i <= CD_VISIBLE_G7; i++) {
-			Sql_GetData(sql_handle, i, &data, NULL); gc->guardian[i - CD_VISIBLE_G0].visible = atoi(data);
+		Sql_GetData(sql_handle, CD_ENABLED_KAFRA, &data, NULL); gc->visibleC = atoi(data);
+		for (i = CD_ENABLED_GUARDIAN0; i <= CD_ENABLED_GUARDIAN7; i++) {
+			Sql_GetData(sql_handle, i, &data, NULL); gc->guardian[i - CD_ENABLED_GUARDIAN0].visible = atoi(data);
 		}
 	}
 	Sql_FreeResult(sql_handle);
@@ -1814,17 +1814,17 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 			}
 			gc->guild_id = value;
 			break;
-		case CD_ECONOMY: gc->economy = value; break;
-		case CD_DEFENSE: gc->defense = value; break;
-		case CD_TRIGGER_E: gc->triggerE = value; break;
-		case CD_TRIGGER_D: gc->triggerD = value; break;
+		case CD_CURRENT_ECONOMY: gc->economy = value; break;
+		case CD_CURRENT_DEFENSE: gc->defense = value; break;
+		case CD_INVESTED_ECONOMY: gc->triggerE = value; break;
+		case CD_INVESTED_DEFENSE: gc->triggerD = value; break;
 		case CD_NEXT_TIME: gc->nextTime = value; break;
 		case CD_PAY_TIME: gc->payTime = value; break;
 		case CD_CREATE_TIME: gc->createTime = value; break;
-		case CD_VISIBLE_C: gc->visibleC = value; break;
+		case CD_ENABLED_KAFRA: gc->visibleC = value; break;
 		default:
-			if (index > CD_VISIBLE_C && index < CD_MAX) {
-				gc->guardian[index - CD_VISIBLE_G0].visible = value;
+			if (index > CD_ENABLED_KAFRA && index < CD_MAX) {
+				gc->guardian[index - CD_ENABLED_GUARDIAN0].visible = value;
 				break;
 			}
 			ShowError("mapif_parse_GuildCastleDataSave: not found index=%d\n", index);

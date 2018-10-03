@@ -7308,22 +7308,22 @@
 	/* castle data flags */
 	export_constant(CD_NONE);
 	export_constant(CD_GUILD_ID);
-	export_constant(CD_ECONOMY);
-	export_constant(CD_DEFENSE);
-	export_constant(CD_TRIGGER_E);
-	export_constant(CD_TRIGGER_D);
+	export_constant(CD_CURRENT_ECONOMY);
+	export_constant(CD_CURRENT_DEFENSE);
+	export_constant(CD_INVESTED_ECONOMY);
+	export_constant(CD_INVESTED_DEFENSE);
 	export_constant(CD_NEXT_TIME);
 	export_constant(CD_PAY_TIME);
 	export_constant(CD_CREATE_TIME);
-	export_constant(CD_VISIBLE_C);
-	export_constant(CD_VISIBLE_G0);
-	export_constant(CD_VISIBLE_G1);
-	export_constant(CD_VISIBLE_G2);
-	export_constant(CD_VISIBLE_G3);
-	export_constant(CD_VISIBLE_G4);
-	export_constant(CD_VISIBLE_G5);
-	export_constant(CD_VISIBLE_G6);
-	export_constant(CD_VISIBLE_G7);
+	export_constant(CD_ENABLED_KAFRA);
+	export_constant(CD_ENABLED_GUARDIAN0);
+	export_constant(CD_ENABLED_GUARDIAN1);
+	export_constant(CD_ENABLED_GUARDIAN2);
+	export_constant(CD_ENABLED_GUARDIAN3);
+	export_constant(CD_ENABLED_GUARDIAN4);
+	export_constant(CD_ENABLED_GUARDIAN5);
+	export_constant(CD_ENABLED_GUARDIAN6);
+	export_constant(CD_ENABLED_GUARDIAN7);
 	export_constant(CD_MAX);
 
 	#undef export_constant

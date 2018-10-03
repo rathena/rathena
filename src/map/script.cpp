@@ -12677,13 +12677,13 @@ BUILDIN_FUNC(getcastledata)
 	switch (index) {
 		case CD_GUILD_ID:
 			script_pushint(st,gc->guild_id); break;
-		case CD_ECONOMY:
+		case CD_CURRENT_ECONOMY:
 			script_pushint(st,gc->economy); break;
-		case CD_DEFENSE:
+		case CD_CURRENT_DEFENSE:
 			script_pushint(st,gc->defense); break;
-		case CD_TRIGGER_E:
+		case CD_INVESTED_ECONOMY:
 			script_pushint(st,gc->triggerE); break;
-		case CD_TRIGGER_D:
+		case CD_INVESTED_DEFENSE:
 			script_pushint(st,gc->triggerD); break;
 		case CD_NEXT_TIME:
 			script_pushint(st,gc->nextTime); break;
@@ -12691,11 +12691,11 @@ BUILDIN_FUNC(getcastledata)
 			script_pushint(st,gc->payTime); break;
 		case CD_CREATE_TIME:
 			script_pushint(st,gc->createTime); break;
-		case CD_VISIBLE_C:
+		case CD_ENABLED_KAFRA:
 			script_pushint(st,gc->visibleC); break;
 		default:
-			if (index > CD_VISIBLE_C && index <= CD_VISIBLE_G7) {
-				script_pushint(st,gc->guardian[index - CD_VISIBLE_G0].visible);
+			if (index > CD_ENABLED_KAFRA && index <= CD_ENABLED_GUARDIAN7) {
+				script_pushint(st,gc->guardian[index - CD_ENABLED_GUARDIAN0].visible);
 				break;
 			}
 			script_pushint(st,0);

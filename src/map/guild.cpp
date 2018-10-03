@@ -1976,9 +1976,9 @@ int guild_castledatasave(int castle_id, enum e_castle_data index, int value) {
 		}
 		break;
 	}
-	case CD_ECONOMY:
+	case CD_CURRENT_ECONOMY:
 		gc->economy = value; break;
-	case CD_DEFENSE: // defense invest change -> recalculate guardian hp
+	case CD_CURRENT_DEFENSE: // defense invest change -> recalculate guardian hp
 	{
 		int i;
 		gc->defense = value;
@@ -1989,9 +1989,9 @@ int guild_castledatasave(int castle_id, enum e_castle_data index, int value) {
 		}
 		break;
 	}
-	case CD_TRIGGER_E:
+	case CD_INVESTED_ECONOMY:
 		gc->triggerE = value; break;
-	case CD_TRIGGER_D:
+	case CD_INVESTED_DEFENSE:
 		gc->triggerD = value; break;
 	case CD_NEXT_TIME:
 		gc->nextTime = value; break;
@@ -1999,11 +1999,11 @@ int guild_castledatasave(int castle_id, enum e_castle_data index, int value) {
 		gc->payTime = value; break;
 	case CD_CREATE_TIME:
 		gc->createTime = value; break;
-	case CD_VISIBLE_C:
+	case CD_ENABLED_KAFRA:
 		gc->visibleC = value; break;
 	default:
-		if (index > CD_VISIBLE_C && index < CD_MAX) {
-			gc->guardian[index - CD_VISIBLE_G0].visible = value;
+		if (index > CD_ENABLED_KAFRA && index < CD_MAX) {
+			gc->guardian[index - CD_ENABLED_GUARDIAN0].visible = value;
 			break;
 		}
 		ShowWarning("guild_castledatasave: index = '%d' is out of allowed range\n", index);

@@ -109,13 +109,13 @@ OnAgitBreak:
 		end;
 	}
 	// Adjust Economy Invest Level for Castle
-	set .@Economy,GetCastleData(strnpcinfo(2),CD_ECONOMY) - 5;
+	set .@Economy,GetCastleData(strnpcinfo(2),CD_CURRENT_ECONOMY) - 5;
 	if (.@Economy < 0) set .@Economy, 0;
-	SetCastleData strnpcinfo(2), CD_ECONOMY, .@Economy;
+	SetCastleData strnpcinfo(2), CD_CURRENT_ECONOMY, .@Economy;
 	// Adjust Defense Invest Level for Castle
-	set .@Defence,GetCastleData(strnpcinfo(2),CD_DEFENSE) - 5;
+	set .@Defence,GetCastleData(strnpcinfo(2),CD_CURRENT_DEFENSE) - 5;
 	if (.@Defence < 0) set .@Defence, 0;
-	SetCastleData strnpcinfo(2), CD_DEFENSE, .@Defence;
+	SetCastleData strnpcinfo(2), CD_CURRENT_DEFENSE, .@Defence;
 
 	// Set new Castle Occupant
 	SetCastleData strnpcinfo(2),CD_GUILD_ID, .@GID;
@@ -127,12 +127,12 @@ OnAgitBreak:
 	// Refresh castle data, disable Kafra and reset Invest information.
 	donpcevent strnpcinfo(0)+"::OnRecvCastle";
 	disablenpc "Kafra Staff#"+strnpcinfo(2);
-	for( set .@i, CD_TRIGGER_E; .@i <= CD_VISIBLE_C; set .@i, .@i+1 ) {
+	for( set .@i, CD_INVESTED_ECONOMY; .@i <= CD_ENABLED_KAFRA; set .@i, .@i+1 ) {
 		SetCastleData strnpcinfo(2), .@i, 0;
 	}
 	// Erase Guardian Database information if the new owners do not have Guardian Research.
 	if( getgdskilllv(.@GID,10002) == 0 ) {
-		for( set .@i, CD_VISIBLE_G0; .@i <= CD_VISIBLE_G7; set .@i, .@i+1 ) {
+		for( set .@i, CD_ENABLED_GUARDIAN0; .@i <= CD_ENABLED_GUARDIAN7; set .@i, .@i+1 ) {
 			SetCastleData strnpcinfo(2), .@i, 0;
 		}
 	}
@@ -309,7 +309,7 @@ OnRecvCastle:
 		// And load purchased Guardian in castles.
 		donpcevent "Guardian#"+strnpcinfo(2)+"::OnSpawnGuardians";
 		// And display Kafra if purchased.
-		if (GetCastleData(strnpcinfo(2),CD_VISIBLE_C) < 1) disablenpc "Kafra Staff#"+strnpcinfo(2);
+		if (GetCastleData(strnpcinfo(2),CD_ENABLED_KAFRA) < 1) disablenpc "Kafra Staff#"+strnpcinfo(2);
 	}
 	end;
 }
@@ -624,19 +624,19 @@ OnRecvCastle:
 		mes "["+strnpcinfo(1)+"]";
 		mes "I will report the Castle briefing, Master.";
 		mes " ";
-		mes "^0000ffNow, the commercial growth level is "+GetCastleData(strnpcinfo(2),CD_ECONOMY)+".";
-		if (GetCastleData(strnpcinfo(2),CD_TRIGGER_E)) {
-			mes " You invested "+GetCastleData(strnpcinfo(2),CD_TRIGGER_E)+" times in past 1 day.";
+		mes "^0000ffNow, the commercial growth level is "+GetCastleData(strnpcinfo(2),CD_CURRENT_ECONOMY)+".";
+		if (GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY)) {
+			mes " You invested "+GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY)+" times in past 1 day.";
 		}
-		mes " Now, the Castle Defense level is "+GetCastleData(strnpcinfo(2),CD_DEFENSE)+".^000000";
-		if (GetCastleData(strnpcinfo(2),CD_TRIGGER_D)) {
-			mes " ^0000ff- You invested "+GetCastleData(strnpcinfo(2),CD_TRIGGER_D)+" times in past 1 day.^000000";
+		mes " Now, the Castle Defense level is "+GetCastleData(strnpcinfo(2),CD_CURRENT_DEFENSE)+".^000000";
+		if (GetCastleData(strnpcinfo(2),CD_INVESTED_DEFENSE)) {
+			mes " ^0000ff- You invested "+GetCastleData(strnpcinfo(2),CD_INVESTED_DEFENSE)+" times in past 1 day.^000000";
 		}
 		mes " ";
 		mes "That's all I have to report, Master.";
 		close;
 	case 2:
-		set .@Economy,GetCastleData(strnpcinfo(2),CD_ECONOMY);
+		set .@Economy,GetCastleData(strnpcinfo(2),CD_CURRENT_ECONOMY);
 		if (.@Economy < 6) { set .@eco_invest,5000; }
 		else if ((.@Economy >= 6) && (.@Economy <= 10)) { set .@eco_invest,10000; }
 		else if ((.@Economy >= 11) && (.@Economy <= 15)) { set .@eco_invest,20000; }
@@ -658,7 +658,7 @@ OnRecvCastle:
 		else if ((.@Economy >= 91) && (.@Economy <= 95)) { set .@eco_invest,860000; }
 		else if ((.@Economy >= 96) && (.@Economy <= 100)) { set .@eco_invest,955000; }
 		//Quadruple the cost of investing if you've already invested once.
-		if (GetCastleData(strnpcinfo(2),CD_TRIGGER_E)) {
+		if (GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY)) {
 			set .@eco_invest,.@eco_invest*4;
 		}
 		mes "["+strnpcinfo(1)+"]";
@@ -670,12 +670,12 @@ OnRecvCastle:
 			mes "^ff0000The commercial growth level of our Castle is at it's highest, 100%. No more investments are needed. Just as I have expected from a great economist like you, Master.^000000";
 			close;
 		}
-		if (GetCastleData(strnpcinfo(2),CD_TRIGGER_E) >= 2) {
+		if (GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY) >= 2) {
 			mes " ";
 			mes "^ff0000You have already invested twice today. You cannot invest any more.^000000 I expect riches of the guild to grow at a high rate.";
 			close;
 		}
-		if (GetCastleData(strnpcinfo(2),CD_TRIGGER_E) == 0) {
+		if (GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY) == 0) {
 			mes " ";
 			mes "The current investment amount required is ^ff0000"+.@eco_invest+"^000000 zeny. Will you invest?";
 		}
@@ -692,7 +692,7 @@ OnRecvCastle:
 				close;
 			}
 			set Zeny, Zeny - .@eco_invest;
-			SetCastleData strnpcinfo(2),CD_TRIGGER_E,GetCastleData(strnpcinfo(2),CD_TRIGGER_E)+1;
+			SetCastleData strnpcinfo(2),CD_INVESTED_ECONOMY,GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY)+1;
 			mes "[ "+strnpcinfo(1)+"]";
 			mes "We finished the investment safely. I expect that our growth level will be increased by tomorrow.";
 			close;
@@ -702,7 +702,7 @@ OnRecvCastle:
 			close;
 		}
 	case 3:
-		set .@Defence,GetCastleData(strnpcinfo(2),CD_DEFENSE);
+		set .@Defence,GetCastleData(strnpcinfo(2),CD_CURRENT_DEFENSE);
 		if (.@Defence < 6) { set .@def_invest,10000; }
 		else if ((.@Defence >= 6) && (.@Defence <= 10)) { set .@def_invest,20000; }
 		else if ((.@Defence >= 11) && (.@Defence <= 15)) { set .@def_invest,40000; }
@@ -724,7 +724,7 @@ OnRecvCastle:
 		else if ((.@Defence >= 91) && (.@Defence <= 95)) { set .@def_invest,1720000; }
 		else if ((.@Defence >= 96) && (.@Defence <= 100)) { set .@def_invest,1910000; }
 		//Quadruple the cost of investing if you've already invested once.
-		if (GetCastleData(strnpcinfo(2),CD_TRIGGER_D)) {
+		if (GetCastleData(strnpcinfo(2),CD_INVESTED_DEFENSE)) {
 			set .@def_invest,.@def_invest*4;
 		}
 		mes "["+strnpcinfo(1)+"]";
@@ -736,12 +736,12 @@ OnRecvCastle:
 			mes "^ff0000But the Castle Defense level of our Castle is at it's highest, 100%. No more investments are needed. Just as I have expected from a great strategist like you, Master.^000000";
 			close;
 		}
-		if (GetCastleData(strnpcinfo(2),CD_TRIGGER_D) >= 2) {
+		if (GetCastleData(strnpcinfo(2),CD_INVESTED_DEFENSE) >= 2) {
 			mes " ";
 			mes "^ff0000You have already invested twice today. You cannot invest any more.^000000 I expect the Defenses of the guild to grow at a high rate.";
 			close;
 		}
-		if (GetCastleData(strnpcinfo(2),CD_TRIGGER_D) == 0) {
+		if (GetCastleData(strnpcinfo(2),CD_INVESTED_DEFENSE) == 0) {
 			mes " ";
 			mes "The current investment amount required is ^ff0000"+.@def_invest+"^000000 zeny. Will you invest?";
 		}
@@ -758,7 +758,7 @@ OnRecvCastle:
 				close;
 			}
 			set Zeny, Zeny - .@def_invest;
-			SetCastleData strnpcinfo(2),CD_TRIGGER_D,GetCastleData(strnpcinfo(2),CD_TRIGGER_D)+1;
+			SetCastleData strnpcinfo(2),CD_INVESTED_DEFENSE,GetCastleData(strnpcinfo(2),CD_INVESTED_DEFENSE)+1;
 			mes "[ "+strnpcinfo(1)+"]";
 			mes "We finished the investment safely. I expect that our Castle Defense level will be increased by tomorrow.";
 			close;
@@ -821,7 +821,7 @@ OnRecvCastle:
 			close;
 		}
 	case 5:
-		if (GetCastleData(strnpcinfo(2),CD_VISIBLE_C) == 1) {
+		if (GetCastleData(strnpcinfo(2),CD_ENABLED_KAFRA) == 1) {
 			mes "["+strnpcinfo(1)+"]";
 			mes "We are currently hiring a Kafra Employee... Do you want to fire the Kafra Employee?";
 			next;
@@ -850,7 +850,7 @@ OnRecvCastle:
 				close;
 			}
 			disablenpc "Kafra Staff#"+strnpcinfo(2);
-			SetCastleData strnpcinfo(2),CD_VISIBLE_C,0;
+			SetCastleData strnpcinfo(2),CD_ENABLED_KAFRA,0;
 			mes "["+strnpcinfo(1)+"]";
 			mes "....";
 			mes "I have discharged the Kafra Employee... But... are you unsatisfied with something?";
@@ -874,7 +874,7 @@ OnRecvCastle:
 			}
 			set Zeny, Zeny - 10000;
 			enablenpc "Kafra Staff#"+strnpcinfo(2);
-			SetCastleData strnpcinfo(2),CD_VISIBLE_C,1;
+			SetCastleData strnpcinfo(2),CD_ENABLED_KAFRA,1;
 			mes "["+strnpcinfo(1)+"]";
 			mes "We obtained a contract with the kafra Main Office, and hired a Kafra Employee.";
 			next;
@@ -1139,7 +1139,7 @@ OnClock0001:
 	if (!.@GID) end;
 
 	// Is there Economy in this castle?
-	set .@Treasure,GetCastleData(strnpcinfo(2),CD_ECONOMY)/5+4;
+	set .@Treasure,GetCastleData(strnpcinfo(2),CD_CURRENT_ECONOMY)/5+4;
 
 	// Set information
 	if (strnpcinfo(2) == "aldeg_cas01") { 
@@ -1249,19 +1249,19 @@ OnClock0001:
 
 	// Apply investment to Eco. and Def. Only happens if there were investments made.
 	// Permanent Development can only happen once per day.
-	if (GetCastleData(strnpcinfo(2),CD_TRIGGER_E)) {
-		set .@Economy,GetCastleData(strnpcinfo(2),CD_TRIGGER_E);
-		SetCastleData strnpcinfo(2),CD_TRIGGER_E,.@Economy + GetCastleData(strnpcinfo(2),CD_TRIGGER_E) + (rand(2) && getgdskilllv(.@GID,10014));
-		if (GetCastleData(strnpcinfo(2),CD_ECONOMY) > 100) SetCastleData strnpcinfo(2),CD_ECONOMY,100;
+	if (GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY)) {
+		set .@Economy,GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY);
+		SetCastleData strnpcinfo(2),CD_INVESTED_ECONOMY,.@Economy + GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY) + (rand(2) && getgdskilllv(.@GID,10014));
+		if (GetCastleData(strnpcinfo(2),CD_CURRENT_ECONOMY) > 100) SetCastleData strnpcinfo(2),CD_CURRENT_ECONOMY,100;
 	}
-	if (GetCastleData(strnpcinfo(2),CD_TRIGGER_D)) {
-		set .@Defence,GetCastleData(strnpcinfo(2),CD_DEFENSE);
-		SetCastleData strnpcinfo(2),CD_DEFENSE,.@Defence + GetCastleData(strnpcinfo(2),CD_TRIGGER_D);
-		if (GetCastleData(strnpcinfo(2),CD_DEFENSE) > 100) SetCastleData strnpcinfo(2),CD_DEFENSE,100;
+	if (GetCastleData(strnpcinfo(2),CD_INVESTED_DEFENSE)) {
+		set .@Defence,GetCastleData(strnpcinfo(2),CD_CURRENT_DEFENSE);
+		SetCastleData strnpcinfo(2),CD_CURRENT_DEFENSE,.@Defence + GetCastleData(strnpcinfo(2),CD_INVESTED_DEFENSE);
+		if (GetCastleData(strnpcinfo(2),CD_CURRENT_DEFENSE) > 100) SetCastleData strnpcinfo(2),CD_CURRENT_DEFENSE,100;
 	}
 	// Reset daily investment limits.
-	setcastledata strnpcinfo(2),CD_TRIGGER_E,0;
-	setcastledata strnpcinfo(2),CD_TRIGGER_D,0;
+	setcastledata strnpcinfo(2),CD_INVESTED_ECONOMY,0;
+	setcastledata strnpcinfo(2),CD_INVESTED_DEFENSE,0;
 
 	// Spawn boxes in proper order.
 	for (set .@i,0; .@i < .@Treasure ; set .@i,.@i+1) {
