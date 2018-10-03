@@ -3227,11 +3227,14 @@ struct Damage battle_calc_skill_base_damage(struct Damage wd, struct block_list 
 				i = (is_attack_critical(wd, src, target, skill_id, skill_lv, false)?1:0)|
 					(!skill_id && sc && sc->data[SC_CHANGE]?4:0);
 
+				// Apply for environments [MathReaper]
+				auto skill_element = skill_get_ele(skill_id, skill_lv); 
+				
 				wd.damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, i);
-				wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+				wd.damage = battle_attr_fix(src, target, wd.damage, skill_element, tstatus->def_ele, tstatus->ele_lv); // [MathReaper]
 				if (is_attack_left_handed(src, skill_id)) {
 					wd.damage2 = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, i);
-					wd.damage2 = battle_attr_fix(src, target, wd.damage2, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+					wd.damage2 = battle_attr_fix(src, target, wd.damage2, skill_element, tstatus->def_ele, tstatus->ele_lv); // [MathReaper]
 				}
 			}
 #else
