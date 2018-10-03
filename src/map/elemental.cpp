@@ -783,8 +783,12 @@ static bool read_elementaldb_sub(char* str[], int columns, int current) {
 	status->max_hp = atoi(str[4]);
 	status->max_sp = atoi(str[5]);
 	status->rhw.range = atoi(str[6]);
-	status->rhw.atk = atoi(str[7]);
-	status->rhw.atk2 = atoi(str[8]);
+	status->rhw.atk = atoi(str[7]); // RE:BaseATK, PRE:MinATK
+#ifdef RENEWAL
+	status->rhw.matk = atoi(str[8]); // RE:BaseMATK
+#else
+	status->rhw.atk2 = atoi(str[8]); // PRE:MaxATK //!TODO: Confirm
+#endif
 	status->def = atoi(str[9]);
 	status->mdef = atoi(str[10]);
 	status->str = atoi(str[11]);
