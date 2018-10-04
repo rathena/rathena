@@ -4118,11 +4118,12 @@ static bool mob_parse_dbrow(char** str)
 	entry.job_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
 
 	status->rhw.range = atoi(str[9]);
-	status->rhw.atk = atoi(str[10]); // RE:BaseATK, PRE:MinATK
 #ifdef RENEWAL
-	status->rhw.matk = atoi(str[11]); // RE:BaseMATK
+	status->rhw.atk = atoi(str[10]); // BaseATK
+	status->rhw.matk = atoi(str[11]); // BaseMATK
 #else
-	status->rhw.atk2 = atoi(str[11]); // PRE:MaxATK
+	status->rhw.atk = atoi(str[10]); // MinATK
+	status->rhw.atk2 = atoi(str[11]); // MaxATK
 #endif
 	status->def = atoi(str[12]);
 	status->mdef = atoi(str[13]);

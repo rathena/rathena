@@ -1998,8 +1998,8 @@ static int64 battle_calc_base_damage(struct block_list *src, struct status_data 
 			atkmin = status->matk_min;
 			atkmax = status->matk_max;
 		} else {
-			atkmin = status->atk_min;
-			atkmax = status->atk_max;
+			atkmin = wa->atk;
+			atkmax = wa->atk2;
 		}
 		if (atkmin > atkmax)
 			atkmin = atkmax;

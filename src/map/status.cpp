@@ -2511,13 +2511,11 @@ unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd
 #endif
 
 #ifndef RENEWAL
-unsigned short status_base_atk_min(const struct status_data* status) { return status->rhw.atk; }
-unsigned short status_base_atk_max(const struct status_data* status) { return status->rhw.atk2; }
 unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
 unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
 #else
 /*
-* Calculates minimum attack variance 80% from db's ATK1
+* Calculates minimum attack variance 80% from db's ATK1 for non BL_PC
 * status->batk (base attack) will be added in battle_calc_base_damage
 */
 unsigned short status_base_atk_min(struct block_list *bl, const struct status_data* status, int level)
@@ -2530,14 +2528,13 @@ unsigned short status_base_atk_min(struct block_list *bl, const struct status_da
 			return status->rhw.atk * 80 / 100;
 		case BL_HOM:
 			return (status_get_homstr(bl) + status_get_homdex(bl)) / 5;
-		// Player min atk is calculated in battle_calc_base_damage
 		default:
 			return status->rhw.atk;
 	}
 }
 
 /*
-* Calculates maximum attack variance 120% from db's ATK1
+* Calculates maximum attack variance 120% from db's ATK1 for non BL_PC
 * status->batk (base attack) will be added in battle_calc_base_damage
 */
 unsigned short status_base_atk_max(struct block_list *bl, const struct status_data* status, int level)
@@ -2550,7 +2547,6 @@ unsigned short status_base_atk_max(struct block_list *bl, const struct status_da
 			return status->rhw.atk * 120 / 100;
 		case BL_HOM:
 			return (status_get_homluk(bl) + status_get_homstr(bl) + status_get_homdex(bl)) / 3;
-		// Player max atk is calculated in battle_calc_base_damage
 		default:
 			return status->rhw.atk2;
 	}
@@ -2660,16 +2656,15 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 	}
 
 	// ATK
-	status->atk_min = status_base_atk_min(bl, status, level);
-	status->atk_max = status_base_atk_max(bl, status, level);
+	if (bl->type != BL_PC) {
+		status->rhw.atk = status_base_atk_min(bl, status, level);
+		status->rhw.atk2 = status_base_atk_max(bl, status, level);
+	}
 
 	// MAtk
 	status->matk_min = status_base_matk_min(bl, status, level);
 	status->matk_max = status_base_matk_max(bl, status, level);
 #else
-	// ATK
-	status->atk_min = status_base_atk_min(status);
-	status->atk_max = status_base_atk_max(status);
 	// Matk
 	status->matk_min = status_base_matk_min(status);
 	status->matk_max = status_base_matk_max(status);
@@ -2882,11 +2877,7 @@ int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt)
 			status->hp = status->max_hp;
 			status->batk += 2 * md->guardian_data->guardup_lv + 8;
 			status->rhw.atk += 2 * md->guardian_data->guardup_lv + 8;
-#ifdef RENEWAL
-			status->rhw.matk += 2 * md->guardian_data->guardup_lv + 8;
-#else
 			status->rhw.atk2 += 2 * md->guardian_data->guardup_lv + 8;
-#endif
 			status->aspd_rate -= 2 * md->guardian_data->guardup_lv + 3;
 		}
 	}
@@ -2989,11 +2980,7 @@ void status_calc_pet_(struct pet_data *pd, enum e_status_calc_opt opt)
 			if (!(opt&SCO_FIRST)) // Lv Up animation
 				clif_misceffect(&pd->bl, 0);
 			status->rhw.atk = (bstat->rhw.atk*lv)/pd->db->lv;
-#ifdef RENEWAL
-			status->rhw.matk = (bstat->rhw.matk*lv) / pd->db->lv;
-#else
 			status->rhw.atk2 = (bstat->rhw.atk2*lv)/pd->db->lv;
-#endif
 			status->str = (bstat->str*lv)/pd->db->lv;
 			status->agi = (bstat->agi*lv)/pd->db->lv;
 			status->vit = (bstat->vit*lv)/pd->db->lv;
@@ -3002,11 +2989,7 @@ void status_calc_pet_(struct pet_data *pd, enum e_status_calc_opt opt)
 			status->luk = (bstat->luk*lv)/pd->db->lv;
 
 			status->rhw.atk = cap_value(status->rhw.atk, 1, battle_config.pet_max_atk1);
-#ifdef RENEWAL
-			status->rhw.matk = cap_value(status->rhw.matk, 2, battle_config.pet_max_atk2);
-#else
 			status->rhw.atk2 = cap_value(status->rhw.atk2, 2, battle_config.pet_max_atk2);
-#endif
 			status->str = cap_value(status->str,1,battle_config.pet_max_stats);
 			status->agi = cap_value(status->agi,1,battle_config.pet_max_stats);
 			status->vit = cap_value(status->vit,1,battle_config.pet_max_stats);
@@ -4473,12 +4456,7 @@ int status_calc_elemental_(struct elemental_data *ed, enum e_status_calc_opt opt
 		status->hp = ele->hp;
 		status->sp = ele->sp;
 		status->rhw.atk = ele->atk;
-#ifdef RENEWAL
-		status->rhw.matk = ele->atk2;
-#else
 		status->rhw.atk2 = ele->atk2;
-#endif
-
 		status->matk_min += ele->matk;
 		status->def += ele->def;
 		status->mdef += ele->mdef;
