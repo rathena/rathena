@@ -5515,6 +5515,7 @@ ACMD_FUNC(dropall)
 			if( type == -1 || type == (uint8)item_data->type ) {
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
+				pc_equipswitch_remove(sd, i);
 				if(pc_dropitem(sd, i, sd->inventory.u.items_inventory[i].amount))
 					count += sd->inventory.u.items_inventory[i].amount;
 				else count2 += sd->inventory.u.items_inventory[i].amount;
@@ -5547,6 +5548,7 @@ ACMD_FUNC(storeall)
 		if (sd->inventory.u.items_inventory[i].amount) {
 			if(sd->inventory.u.items_inventory[i].equip != 0)
 				pc_unequipitem(sd, i, 3);
+			pc_equipswitch_remove(sd, i);
 			storage_storageadd(sd, &sd->storage, i, sd->inventory.u.items_inventory[i].amount);
 		}
 	}

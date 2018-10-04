@@ -10991,6 +10991,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
+	case ALL_EQSWITCH:
+		clif_equipswitch_reply( sd, true );
+
+		for( int i = 0, position = 0; i < EQI_MAX; i++ ){
+			if( sd->equip_switch_index[i] >= 0 && !( position & equip_bitmask[i] ) ){
+				position |= pc_equipswitch( sd, sd->equip_switch_index[i] );
+			}
+		}
+		break;
+
 	case AB_VITUPERATUM:
 		if (flag&1)
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv)));

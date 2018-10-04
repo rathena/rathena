@@ -9408,6 +9408,7 @@ void clif_refresh(struct map_session_data *sd)
 
 	clif_changemap(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	clif_inventorylist(sd);
+	clif_equipswitch_list(sd);
 	if(pc_iscarton(sd)) {
 		clif_cartlist(sd);
 		clif_updatestatus(sd,SP_CARTINFO);
@@ -10306,6 +10307,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// item
 	clif_inventorylist(sd);  // inventory list first, otherwise deleted items in pc_checkitem show up as 'unknown item'
 	pc_checkitem(sd);
+	clif_equipswitch_list(sd);
 
 	// cart
 	if(pc_iscarton(sd)) {
@@ -12779,6 +12781,10 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd)
 	item_amount = RFIFOL(fd,info->pos[1]);
 	if (item_index < 0 || item_index >= MAX_INVENTORY || item_amount < 1)
 		return;
+	if( sd->inventory.u.items_inventory[item_index].equipSwitch ){
+		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		return;
+	}
 
 	if (sd->state.storage_flag == 1)
 		storage_storageadd(sd, &sd->storage, item_index, item_amount);
@@ -12823,6 +12829,13 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd){
 		return;
 	if (!pc_iscarton(sd))
 		return;
+
+	if (idx < 0 || idx >= MAX_INVENTORY || amount < 1)
+		return;
+	if( sd->inventory.u.items_inventory[idx].equipSwitch ){
+		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		return;
+	}
 
 	if (sd->state.storage_flag == 1)
 		storage_storageaddfromcart(sd, &sd->storage, idx, amount);
@@ -15786,7 +15799,11 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 
 	flag = mail_setitem(sd, idx, amount);
 
-	clif_Mail_setattachment(sd,idx,amount,flag);
+	if( flag == MAIL_ATTACH_EQUIPSWITCH ){
+		clif_msg( sd, 0xbc7 );
+	}else{
+		clif_Mail_setattachment(sd,idx,amount,flag);
+	}
 }
 
 /// Remove an item from a mail
@@ -20498,6 +20515,224 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 
 	// Warp the player to a random spot on the destination map
 	pc_setpos( sd, mapindex, 0, 0, CLR_TELEPORT );
+#endif
+}
+
+/// Send the full list of items in the equip switch window
+/// 0a9b <length>.W { <index>.W <position>.L }*
+void clif_equipswitch_list( struct map_session_data* sd ){
+#if PACKETVER >= 20170208
+	int fd = sd->fd;
+	int offset, i, position;
+
+	WFIFOW(fd, 0) = 0xa9b;
+	for( i = 0, offset = 4, position = 0; i < EQI_MAX; i++ ){
+		short index = sd->equip_switch_index[i];
+
+		if( index >= 0 && !( position & equip_bitmask[i] ) ){
+			WFIFOW(fd, offset) = index + 2;
+			WFIFOL(fd, offset + 2) = sd->inventory.u.items_inventory[index].equipSwitch;
+			position |= sd->inventory.u.items_inventory[index].equipSwitch;
+			offset += 6;
+		}
+	}
+	WFIFOW(fd, 2) = offset;
+	WFIFOSET(fd, offset);
+#endif
+}
+
+/// Acknowledgement for removing an equip to the equip switch window
+/// 0a9a <index>.W <position.>.L <failure>.W
+void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 pos, bool failed ){
+#if PACKETVER >= 20170208
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0xa9a));
+	WFIFOW(fd, 0) = 0xa9a;
+	WFIFOW(fd, 2) = index + 2;
+	WFIFOL(fd, 4) = pos;
+	WFIFOW(fd, 8) = failed;
+	WFIFOSET(fd, packet_len(0xa9a));
+#endif
+}
+
+/// Request to remove an equip from the equip switch window
+/// 0a99 <index>.W
+void clif_parse_equipswitch_remove( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20170208
+	uint16 index = RFIFOW(fd, 2) - 2;
+	bool removed = false;
+
+	if( !battle_config.feature_equipswitch ){
+		return;
+	}
+
+	// Check if the index is valid
+	if( index < 0 || index > MAX_INVENTORY ){
+		return;
+	}
+
+	pc_equipswitch_remove( sd, index );
+#endif
+}
+
+/// Acknowledgement for adding an equip to the equip switch window
+/// 0a98 <index>.W <position.>.L <failure>.W
+void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos, bool failed ){
+#if PACKETVER >= 20170208
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0xa98));
+	WFIFOW(fd, 0) = 0xa98;
+	WFIFOW(fd, 2) = index + 2;
+	WFIFOL(fd, 4) = pos;
+	WFIFOW(fd, 8) = failed;
+	WFIFOSET(fd,packet_len(0xa98));
+#endif
+}
+
+/// Request to add an equip to the equip switch window
+/// 0a97 <index>.W <position>.L
+void clif_parse_equipswitch_add( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20170208
+	uint16 index = RFIFOW(fd, 2) - 2;
+	uint32 position = RFIFOL(fd, 4);
+
+	if( !battle_config.feature_equipswitch ){
+		return;
+	}
+
+	if( sd->state.trading || sd->npc_shopid ){
+		clif_equipswitch_add( sd, index, position, true );
+		return;
+	}
+
+	pc_equipitem( sd, index, position, true );
+#endif
+}
+
+/// Acknowledgement packet for the full equip switch
+/// 0a9d <failed>.W
+void clif_equipswitch_reply( struct map_session_data* sd, bool failed ){
+#if PACKETVER >= 20170208
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0xa9d));
+	WFIFOW(fd, 0) = 0xa9d;
+	WFIFOW(fd, 2) = failed;
+	WFIFOSET(fd, packet_len(0xa9d));
+#endif
+}
+
+/// Request to do a full equip switch
+/// 0a9c
+void clif_parse_equipswitch_request( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20170208
+	int i;
+	unsigned int tick = gettick();
+	uint16 skill_id = ALL_EQSWITCH, skill_lv = 1;
+
+	if( DIFF_TICK(tick, sd->equipswitch_tick) < 0 ) {
+		// Client will not let you send a request
+		return;
+	}
+
+	sd->equipswitch_tick = tick + skill_get_cooldown( skill_id, skill_lv );
+
+	if( !battle_config.feature_equipswitch ){
+		return;
+	}
+
+	ARR_FIND( 0, EQI_MAX, i, sd->equip_switch_index[i] >= 0 );
+
+	if( i == EQI_MAX ){
+		// client will show: "There is no item to replace." and should not even come here
+		clif_equipswitch_reply( sd, false );
+		return;
+	}
+
+	// Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
+	if (battle_config.idletime_option&IDLE_USESKILLTOID)
+		sd->idletime = last_tick;
+
+	if( sd->npc_id ){
+#ifdef RENEWAL
+		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
+			clif_msg( sd, WORK_IN_PROGRESS );
+			return;
+		}
+#endif
+		if( !sd->npc_item_flag ){
+			return;
+		}
+	}
+
+	if( pc_cant_act(sd) )
+		return;
+
+	if( pc_issit(sd) )
+		return;
+
+	if( skill_isNotOk(skill_id, sd) )
+		return;
+
+	if( sd->ud.skilltimer != INVALID_TIMER ) {
+		// Client will not let you send a request
+		return;
+	} else if( DIFF_TICK(tick, sd->ud.canact_tick) < 0 ) {
+		// Client will not let you send a request
+		return;
+	}
+
+	if( sd->sc.option&OPTION_COSTUME )
+		return;
+
+	if( sd->menuskill_id ) {
+		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
+			clif_menuskill_clear(sd); //Cancel pet capture.
+		} else if( sd->menuskill_id != SA_AUTOSPELL )
+			return; //Can't use skills while a menu is open.
+	}
+
+	pc_delinvincibletimer(sd);
+
+	unit_skilluse_id( &sd->bl, sd->bl.id, skill_id, skill_lv );
+#endif
+}
+
+/// Request to do a single equip switch
+/// 0ace <index>.W
+void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd ){
+#if PACKETVER >= PACKETVER_EQSWITCH
+	uint16 index = RFIFOW(fd, 2) - 2;
+
+	if( !battle_config.feature_equipswitch ){
+		return;
+	}
+
+	// Check if the index is valid
+	if( index < 0 || index > MAX_INVENTORY ){
+		return;
+	}
+
+	// Check if the item was already added to equip switch
+	if( sd->inventory.u.items_inventory[index].equipSwitch ){
+		if( sd->npc_id ){
+#ifdef RENEWAL
+			if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
+				clif_msg( sd, WORK_IN_PROGRESS );
+				return;
+			}
+#endif
+			if( !sd->npc_item_flag ){
+				return;
+			}
+		}
+
+		pc_equipswitch( sd, index );
+	}else{
+		pc_equipitem( sd, index, pc_equippoint(sd, index), true );
+	}
 #endif
 }
 

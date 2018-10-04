@@ -515,6 +515,9 @@ enum clif_messages : uint16_t {
 	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
 	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
 	MSG_ATTENDANCE_DISABLED = 0xd92,
+
+	// Unofficial names
+	C_ITEM_EQUIP_SWITCH = 0xbc7, 
 };
 
 enum e_personalinfo : uint8_t {
@@ -1094,5 +1097,11 @@ void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 
 void clif_attendence_response( struct map_session_data *sd, int32 data );
 
 void clif_weight_limit( struct map_session_data* sd );
+
+/// Equip Switch System
+void clif_equipswitch_list( struct map_session_data* sd );
+void clif_equipswitch_add( struct map_session_data* sd,uint16 index, uint32 pos, bool failed );
+void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 pos, bool failed );
+void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 
 #endif /* CLIF_HPP */

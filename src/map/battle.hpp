@@ -650,6 +650,7 @@ struct Battle_Config
 	int feature_attendance;
 	int feature_privateairship;
 	int rental_transaction;
+	int feature_equipswitch;
 
 #include "../custom/battle_config_struct.inc"
 };
