@@ -416,49 +416,6 @@
 	"buffers":
 	[
 		{
-			"file": "npc/custom/breeder.txt",
-			"settings":
-			{
-				"buffer_size": 4736,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/merchants/enchan_arm.txt",
-			"settings":
-			{
-				"buffer_size": 5388,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/scripts_custom.conf",
-			"settings":
-			{
-				"buffer_size": 4986,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/custom/etc/mvp_room.txt",
-			"settings":
-			{
-				"buffer_size": 42304,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "db/map_index.txt",
-			"settings":
-			{
-				"buffer_size": 11020,
-				"line_ending": "Windows"
-			}
-		},
-		{
 			"file": "doc/script_commands.txt",
 			"settings":
 			{
@@ -468,44 +425,78 @@
 			}
 		},
 		{
-			"file": "doc/mapflags.txt",
+			"file": "doc/item_bonus.txt",
 			"settings":
 			{
-				"buffer_size": 11796,
+				"buffer_size": 24657,
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "npc/re/merchants/3rd_trader.txt",
+			"file": "doc/item_db.txt",
 			"settings":
 			{
-				"buffer_size": 9841,
+				"buffer_size": 6373,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "doc/mob_db.txt",
+			"settings":
+			{
+				"buffer_size": 6081,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "doc/mob_db_mode_list.txt",
+			"settings":
+			{
+				"buffer_size": 7448,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "INSERT INTO item_cash_db VALUES (4,5377,30);\nINSERT INTO item_cash_db VALUES (4,5462,30);\nINSERT INTO item_cash_db VALUES (4,5767,25);\nINSERT INTO item_cash_db VALUES (4,5463,25);\nINSERT INTO item_cash_db VALUES (4,5361,20);\nINSERT INTO item_cash_db VALUES (4,5800,30);\nINSERT INTO item_cash_db VALUES (4,5664,25);\nINSERT INTO item_cash_db VALUES (4,5325,25);\nINSERT INTO item_cash_db VALUES (4,5471,20);\nINSERT INTO item_cash_db VALUES (4,5389,20);\nINSERT INTO item_cash_db VALUES (4,18561,60);\nINSERT INTO item_cash_db VALUES (4,18572,60);\nINSERT INTO item_cash_db VALUES (4,18600,50);\nINSERT INTO item_cash_db VALUES (4,5312,50);\nINSERT INTO item_cash_db VALUES (4,18528,50);",
+			"settings":
+			{
+				"buffer_size": 678,
+				"line_ending": "Windows",
+				"name": "INSERT INTO item_cash_db VALUES (4,5377,30);"
+			}
+		},
+		{
+			"contents": "4,5377,30       Gentleman Pipe [0] \n4,5462,30       Spiked Scarf [0]\n4,5767,25       Samurai Mask [0]\n4,5463,25       Rainbow Scarf [0]\n4,5361,20        Gangster Scarf [0]\n4,19128,40     Ears Of Ifrit [1] \n4,19132,35     Masquerade [1]\n4,19126,35     Magical Booster  [1]\n4,19086,35     Robo Eye [1]\n4,19085,35     Sigrun's Wings [1]\n4,18561,60     B Feather Beret [1]\n4,18572,60    Korean Judge Hat [1]\n4,18600,60    Cat Ear Beret [1]\n4,18597,60     Mercury Riser [1]\n4,18528,60    Drooping Neko Crew [1]",
+			"settings":
+			{
+				"buffer_size": 505,
+				"line_ending": "Windows",
+				"name": "4,5377,30       Gentleman Pipe [0]"
+			}
+		},
+		{
+			"file": "/D/MilkyRO Project/Clients/MilkyRO - Localhost/System/itemInfo.lua",
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "assume wATK = 100,\n2x hydra, race = 40%\n1x skel card = 15%\n\n- Kalo guna ALL_Class:\n= wATK x (140% + 105%) x 115% \n= 100 x 145% x 115% \n= 66.75\n\n- Kalo guna ATK%\n= (wATK x 105%) x 140% x 115% \n= 105 x 140% x 115%\n= 169.05",
+			"settings":
+			{
+				"buffer_size": 220,
+				"line_ending": "Windows",
+				"name": "assume wATK = 100,"
+			}
+		},
+		{
+			"file": "conf/battle/player.conf",
+			"settings":
+			{
+				"buffer_size": 10272,
 				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/custom/prontera_stupidwarper.txt",
-			"settings":
-			{
-				"buffer_size": 438,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/custom/healer.txt",
-			"settings":
-			{
-				"buffer_size": 3501,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "npc/custom/warper.txt",
-			"settings":
-			{
-				"buffer_size": 25666,
 				"line_ending": "Windows"
 			}
 		}
@@ -521,6 +512,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"htm",
+				"Set Syntax: HTML"
+			],
 			[
 				"Package Control: re",
 				"Package Control: Remove Package"
@@ -666,10 +661,6 @@
 				"Set Syntax: JavaScript"
 			],
 			[
-				"htm",
-				"Set Syntax: HTML"
-			],
-			[
 				"ph",
 				"Set Syntax: PHP"
 			],
@@ -699,15 +690,64 @@
 	},
 	"expanded_folders":
 	[
-		"/D/MilkyRO Project/ServerScript",
-		"/D/MilkyRO Project/ServerScript/build",
-		"/D/MilkyRO Project/ServerScript/db",
-		"/D/MilkyRO Project/ServerScript/db/re",
-		"/D/MilkyRO Project/ServerScript/npc",
-		"/D/MilkyRO Project/ServerScript/npc/custom"
+		"/D/MilkyRO Project/ServerScript"
 	],
 	"file_history":
 	[
+		"/D/MilkyRO Project/ServerScript/npc/scripts_custom.conf",
+		"/D/xampp2/htdocs/script/instance_spawn.php",
+		"/D/xampp2/htdocs/script/instance_spawn.sql",
+		"/D/xampp2/htdocs/script/mob_spawn.php",
+		"/D/xampp2/htdocs/script/endless_tower.txt",
+		"/D/xampp2/htdocs/script/mob_spawn.txt",
+		"/D/MilkyRO Project/ServerScript/npc/scripts_athena.conf",
+		"/D/MilkyRO Project/ServerScript/conf/script_athena.conf",
+		"/D/MilkyRO Project/ServerScript/npc/custom/quests/sunglasses.txt",
+		"/D/xampp2/htdocs/nubsCP/application/views/welcome_message.tpl",
+		"/D/xampp2/htdocs/nubsCP/application/views/example.tpl",
+		"/C/Users/NubsPixel/AppData/Local/Temp/Rar$DIa0.596/autoload.php",
+		"/C/Users/NubsPixel/AppData/Local/Temp/Rar$DIa0.327/label_lang.php",
+		"/D/MilkyRO Project/ServerScript/npc/re/merchants/renters.txt",
+		"/D/MilkyRO Project/Temporary/convert.lua",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/renters.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/scripts_athena.conf",
+		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/scripts_athena.conf",
+		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/scripts_custom.conf",
+		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt.bak",
+		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt",
+		"/D/MilkyRO Project/Tools/Translation Project/Translation-master/data/idnum2itemdesctable.txt",
+		"/D/MilkyRO Project/Tools/Translation Project/Translation-master/System/itemInfo_Sak.lub",
+		"/D/xampp2/htdocs/nubsCP/resources/js/charts/docs/charts/polar.md",
+		"/D/MilkyRO Project/ServerScript/conf/log_athena.conf",
+		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
+		"/D/xampp2/htdocs/ci-mybb/application/config/database.php",
+		"/D/MilkyRO Project/Tools/InnoSetup/RO_Lite/data.ini",
+		"/D/MilkyRO Project/Tools/InnoSetup/_Make New Lite Installer.bat",
+		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/prontera_stupidwarper.txt",
+		"/D/MilkyRO Project/ServerScript/npc/guild/prtg_cas01.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/guild3/te_aldecas1.txt",
+		"/D/Work/rathena/zenydrops.sql",
+		"/D/xampp2/htdocs/FluxCP/config/application.php",
+		"/D/xampp2/htdocs/FluxCP/config/servers.php",
+		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/styles.css",
+		"/D/MilkyRO Project/ServerScript/npc/guild/aldeg_cas01.txt",
+		"/D/MilkyRO Project/ServerScript/npc/guild/agit_main.txt",
+		"/D/Downloads/NetPen Theme_#8_stable/index-sidebar.txt",
+		"/D/Downloads/NetPen Theme_#8_stable/NetPen-theme.xml",
+		"/D/Downloads/NetPen Theme_#8_stable/INSTALLATION.txt",
+		"/D/Downloads/NetPen Theme_#8_stable/index-no-sidebar.txt",
+		"/D/MilkyRO Project/ServerScript/conf/groups.conf",
+		"/D/MilkyRO Project/ServerScript/db/re/attendance.yml",
+		"/D/MilkyRO Project/ServerScript/db/import/attendance.yml",
+		"/D/MilkyRO Project/ServerScript/npc/custom/etc/mvp_room.txt",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/System/CheckAttendance.lub",
+		"/D/MilkyRO Project/ServerScript/npc/custom/healer.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/merchants/3rd_trader.txt",
+		"/D/MilkyRO Project/ServerScript/doc/mapflags.txt",
+		"/D/MilkyRO Project/ServerScript/doc/script_commands.txt",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/enchan_arm.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/etc/mvp_room1.txt",
 		"/D/MilkyRO Project/ServerScript/npc/mobs/pvp.txt",
 		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant2.txt",
@@ -719,18 +759,12 @@
 		"/D/MilkyRO Project/ServerScript/npc/mapflag/pvp.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/identify.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/branch.txt",
-		"/D/MilkyRO Project/ServerScript/doc/script_commands.txt",
-		"/D/MilkyRO Project/ServerScript/doc/mapflags.txt",
-		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
 		"/D/MilkyRO Project/ServerScript/npc/re/quests/quests_malaya.txt",
 		"/D/MilkyRO Project/ServerScript/npc/re/instances/BangungotHospital.txt",
 		"/D/MilkyRO Project/ServerScript/conf/battle/drops.conf",
 		"/D/MilkyRO Project/ServerScript/npc/re/quests/eden/eden_common.txt",
 		"/D/MilkyRO Project/ServerScript/conf/battle/player.conf",
 		"/D/MilkyRO Project/ServerScript/npc/custom/givevip.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/healer.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
-		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
 		"/D/MilkyRO Project/ServerScript/npc/re/instances/MalangdoCulvert.txt",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/questid2display.txt",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/quest_function.lub",
@@ -746,18 +780,13 @@
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/premiumcampain/premiumcampain_msg.lub",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/epquest/questinfo/epsoid141_list.lub",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/luafiles514/lua files/quest/epquest/ep_141quest_list.lub",
-		"/D/MilkyRO Project/ServerScript/npc/scripts_custom.conf",
 		"/D/Downloads/groups.conf",
 		"/D/MilkyRO Project/ServerScript/conf/help.txt",
-		"/D/MilkyRO Project/ServerScript/conf/groups.conf",
-		"/D/MilkyRO Project/ServerScript/npc/re/scripts_athena.conf",
-		"/D/MilkyRO Project/ServerScript/npc/scripts_athena.conf",
 		"/D/MilkyRO Project/ServerScript/npc/battleground/bg_common.txt",
 		"/D/MilkyRO Project/ServerScript/npc/other/gympass.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/stylist.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/card_remover.txt",
 		"/D/MilkyRO Project/ServerScript/npc/merchants/refine.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/platinum_skills.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/jobmaster.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/resetnpc.txt",
@@ -786,60 +815,17 @@
 		"/D/MilkyRO Project/ServerScript/conf/battle/feature.conf",
 		"/D/MilkyRO Project/ServerScript/src/map/battle.cpp.orig",
 		"/D/MilkyRO Project/ServerScript/src/map/battle.hpp.orig",
-		"/D/MilkyRO Project/ServerScript/db/import/attendance.yml",
 		"/D/Work/rathena/Ragnarok Online Offline Pack rAthena 2018/05_misc_repos/exe/readme.txt",
 		"/D/Work/rathena/Ragnarok Online Offline Pack rAthena 2018/04_useful_tools/readme.txt",
 		"/D/My Windows Folders/Desktop/Hosting Malaya/LoginInfo.txt",
 		"/D/Desktop/Hosting Malaya/LoginInfo.txt",
 		"/D/Work/rathena/server/rathena-server/src/custom/defines_pre.hpp",
 		"/D/Work/rathena/server/rathena-localhost/src/custom/defines_pre.hpp",
-		"/D/MilkyRO Project/ServerScript/src/config/core.hpp",
-		"/D/Work/rathena/server/rathena-localhost/conf/char_athena.conf",
-		"/D/Work/rathena/server/rathena-localhost/conf/inter_athena.conf",
-		"/D/Work/rathena/server/rathena-localhost/doc/map_cache.txt",
-		"/D/Work/rathena/client/data/sclientinfo.xml",
-		"/D/Work/rathena/client/data/resnametable.txt",
-		"/D/Downloads/Drop_Rate_Barang2_Berharga_Milky_RO (1).txt",
-		"/D/Work/rathena/server/rathena-localhost/conf/battle/drops.conf",
-		"/D/Work/rathena/server/rathena-server/conf/maps_athena.conf",
-		"/D/MilkyRO Project/ServerScript/mapcache.bat",
-		"/D/MilkyRO Project/Tools/BrowEdit 2 - Map Editor/readme.txt",
-		"/D/MilkyRO Project/Resources/Map/guild_vs3.gat",
-		"/D/MilkyRO Project/Resources/Map/guild_vs3.gnd",
-		"/D/MilkyRO Project/Resources/Map/guild_vs3.rsw",
-		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/data/configs/rodesktop.xml",
-		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/data/rotextures.txt",
-		"/D/MilkyRO Project/Tools/BrowEdit - Map Editor/readme.txt",
-		"/D/Work/rathena/server/rathena-localhost/conf/battle/misc.conf",
-		"/D/Work/rathena/server/rathena-server/conf/battle/player.conf",
-		"/D/Work/rathena/server/rathena-server/conf/battle/feature.conf",
-		"/D/Work/rathena/zenydrops.sql",
-		"/D/Work/rathena/Milky - reset/data/idnum2itemdisplaynametable.txt",
-		"/D/Work/rathena/server/rathena-localhost/conf/battle/feature.conf",
-		"/D/Work/rathena/server/rathena-localhost/npc/re/scripts_mapflags.conf",
-		"/D/Work/rathena/client/data/msgstringtable.txt",
-		"/D/Work/rathena/client/data/luafiles514/lua files/stylingshop/stylingshopinfo.lub",
-		"/D/Work/rathena/server/rathena-server/db/import/attendance.yml",
-		"/D/Work/rathena/server/rathena-server/db/re/attendance.yml",
-		"/D/Work/rathena/server/rathena-localhost/db/re/attendance.yml",
-		"/D/Work/rathena/server/rathena-server/src/map/battle.cpp",
-		"/C/Users/NubsPixel/AppData/Local/Temp/Rar$DIa0.299/README.TXT",
-		"/D/Work/rathena/client/System/itemInfo.lua",
-		"/D/Work/rathena/server/rathena-server/conf/groups.conf",
-		"/D/Work/rathena/Milky - reset/System/CheckAttendance.lub",
-		"/D/Work/rathena/LUA/guide.txt",
-		"/D/Work/rathena/LUA/CheckAttendance.lua",
-		"/D/Work/rathena/server/rathena-localhost/npc/custom/itemmall.txt",
-		"/D/Work/rathena/Milky - reset/data/luafiles514/lua files/signboardlist.lub",
-		"/D/Work/rathena/Milky - reset/System/Towninfo.lub",
-		"/D/Work/rathena/server/rathena-server/src/config/renewal.hpp",
-		"/D/Work/rathena/server/rathena-server/conf/char_athena.conf",
-		"/D/Work/rathena/Milky - reset/data/msgstringtable.txt",
-		"/D/Work/rathena/server/rathena-server/npc/custom/itemmall.txt"
+		"/D/MilkyRO Project/ServerScript/src/config/core.hpp"
 	],
 	"find":
 	{
-		"height": 40.0
+		"height": 28.0
 	},
 	"find_in_files":
 	{
@@ -902,6 +888,54 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"rate",
+			"rates",
+			"crit",
+			"delayrate",
+			"19132",
+			"+",
+			",",
+			"cash_db_re",
+			"_",
+			"sunglass",
+			"renters.txt",
+			"renter.txt",
+			"peco peco",
+			"peco",
+			"skill",
+			"unidentifiedDescriptionName \\= \\{\\n\\s+\\\"(.*)\\n(.*)\\n(.*)\\n(.*)\\n(.*)\\n\\s+},",
+			"unidentifiedDescriptionName",
+			"\",\n\t\t\t\"",
+			"\",",
+			"\n\t\tunidentifiedDescriptionName = {\n\t\t},",
+			"unidentifiedDescriptionName \\= {\\n(.*)\\n\\s+},",
+			"unidentifiedDescriptionName",
+			"costume",
+			"ClassNum",
+			"slotCount",
+			"identifiedResourceName",
+			"identifiedDisplayName",
+			"unidentifiedResourceName",
+			"unidentifiedDisplayName",
+			"([0-9]+)#([a-zA-Z0-9\\^\\-\\_\\.\\(\\)\\,\\:\\n\\s\\!\\'\\%\\+\\[\\]\\/\\*\\&\\~]+)#",
+			"([0-9]+)#([a-zA-Z0-9\\^\\-\\_\\.\\(\\)\\,\\:\\n\\s\\!\\'\\%\\+\\[\\]\\/\\*\\&\\;\\=\\>\\<\\?\\\"\\’\\*\\|]+)#",
+			"\n",
+			"([0-9]+)#([a-zA-Z0-9\\^\\-\\_\\.\\(\\)\\,\\:\\n\\s\\!\\'\\%\\+\\[\\]\\/\\*\\&]+)#",
+			"([0-9]+)#",
+			"#",
+			"Healing items",
+			"item type",
+			"renitem",
+			"\t",
+			"rathena",
+			"PVP_Room",
+			"container",
+			"logo.png",
+			"logo.pnh",
+			"storage",
+			"\t",
+			",",
+			"attendance",
 			"pvp_n_8-5",
 			"announce",
 			"{\n",
@@ -981,55 +1015,7 @@
 			"hunt",
 			"missing",
 			"rankpvp",
-			"pvp",
-			"charinfo",
-			"limitedsale",
-			"whereis",
-			"jailtime",
-			"hominfo",
-			":",
-			"mobsearch",
-			"autoloot",
-			"bg_common",
-			"bg",
-			"alootid",
-			"84",
-			"eden teleport officer",
-			"899",
-			"78",
-			"Wise Old Woman",
-			"duplicate",
-			"npc",
-			"repair",
-			"zeny",
-			"page",
-			"vendzone",
-			"mapflag",
-			"novending",
-			"Special",
-			"vending",
-			"NPC_NAME",
-			"get_val",
-			"44",
-			"npc_name",
-			"NPC_NAME",
-			"prontera",
-			"cell_",
-			"novending",
-			"mapflag",
-			"cell_novending",
-			"mellina",
-			"refine UI is enabled in scripts but disabled in general",
-			"1@dth3",
-			"dth3",
-			"pvp_n_1-5",
-			"pvp",
-			"skull",
-			"//--------------------------------------------------------------",
-			"skull",
-			"dung",
-			"sar",
-			"song"
+			"pvp"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1037,6 +1023,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"\n",
+			"",
 			"6226",
 			"UPDATE mob_db_re SET MVP1id = $2, MVP1per = $3, MVP2id = $4, MVP2per = $5, MVP3id = $6, MVP3per = $7, Drop1id = $8, Drop1per = $9, Drop2id = $10, Drop2per = $11, Drop3id = $12, Drop3per = $13, Drop4id = $14, Drop4per = $15, Drop5id = $16, Drop5per = $17, Drop6id = $18, Drop6per = $19, Drop7id = $20, Drop7per = $21, Drop8id = $22, Drop8per = $23, Drop9id = $24, Drop9per = $25 WHERE ID = $1;",
 			"UPDATE mob_db_re (MVP1per, MVP2id, MVP2per, MVP3id, MVP3per, Drop1id, Drop1per, Drop2id, Drop2per, Drop3id, Drop3per, Drop4id, Drop4per, Drop5id, Drop5per, Drop6id, Drop6per, Drop7id, Drop7per, Drop8id, Drop8per, Drop9id, Drop9per) SET ($2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19,$20,$21,$22,$23,$24,$25) WHERE ID = $1;",
@@ -1054,157 +1042,11 @@
 	"groups":
 	[
 		{
-			"selected": 3,
+			"selected": 9,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "npc/custom/breeder.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4736,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1405,
-								1405
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 492.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "npc/merchants/enchan_arm.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5388,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4872,
-								4872
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1952.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "npc/scripts_custom.conf",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4986,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								694,
-								694
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "npc/custom/etc/mvp_room.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 42304,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								19921,
-								19921
-							]
-						],
-						"settings":
-						{
-							"auto_complete": true,
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 11001.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "db/map_index.txt",
-					"semi_transient": true,
-					"settings":
-					{
-						"buffer_size": 11020,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								590,
-								11020
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 19723.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
 					"file": "doc/script_commands.txt",
 					"semi_transient": false,
 					"settings":
@@ -1216,8 +1058,8 @@
 						"selection":
 						[
 							[
-								85114,
-								85114
+								244364,
+								244364
 							]
 						],
 						"settings":
@@ -1226,86 +1068,258 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 44002.0,
+						"translation.y": 122415.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "doc/mapflags.txt",
+					"buffer": 1,
+					"file": "doc/item_bonus.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 11796,
+						"buffer_size": 24657,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								5438,
-								5438
+								10498,
+								10498
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 3163.0,
+						"translation.y": 3969.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "npc/re/merchants/3rd_trader.txt",
+					"buffer": 2,
+					"file": "doc/item_db.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9841,
+						"buffer_size": 6373,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								4921,
-								4921
+								3257,
+								3257
 							]
 						],
 						"settings":
 						{
-							"auto_complete": true,
 							"syntax": "Packages/Text/Plain text.tmLanguage",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 1384.0,
+						"translation.y": 1719.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "npc/custom/prontera_stupidwarper.txt",
+					"buffer": 3,
+					"file": "doc/mob_db.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 438,
+						"buffer_size": 6081,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								237,
-								237
+								4368,
+								4384
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2242.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "doc/mob_db_mode_list.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 7448,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1275,
+								1229
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 171.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 678,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								678,
+								632
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"auto_name": "INSERT INTO item_cash_db VALUES (4,5377,30);",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 505,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								505,
+								505
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"auto_name": "4,5377,30       Gentleman Pipe [0]",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "/D/MilkyRO Project/Clients/MilkyRO - Localhost/System/itemInfo.lua",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Lua/Lua.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 220,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								220,
+								220
+							]
+						],
+						"settings":
+						{
+							"auto_complete": true,
+							"auto_name": "assume wATK = 100,",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "conf/battle/player.conf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 10272,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								9324,
+								9324
 							]
 						],
 						"settings":
@@ -1314,68 +1328,10 @@
 							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 4132.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
-					"file": "npc/custom/healer.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3501,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1313,
-								1060
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 228.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
-					"file": "npc/custom/warper.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 25666,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4525,
-								4518
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2012.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
@@ -1383,7 +1339,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 29.0
+		"height": 28.0
 	},
 	"input":
 	{
@@ -1424,7 +1380,7 @@
 	"project": "milky-server.sublime-project",
 	"replace":
 	{
-		"height": 54.0
+		"height": 52.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1433,6 +1389,98 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"script cus",
+				"npc\\scripts_custom.conf"
+			],
+			[
+				"script_athena",
+				"npc\\scripts_athena.conf"
+			],
+			[
+				"mob_db_mode_list",
+				"doc\\mob_db_mode_list.txt"
+			],
+			[
+				"custom",
+				"npc\\scripts_custom.conf"
+			],
+			[
+				"script athena",
+				"npc\\scripts_athena.conf"
+			],
+			[
+				"script",
+				"conf\\script_athena.conf"
+			],
+			[
+				"sunglas",
+				"npc\\custom\\quests\\sunglasses.txt"
+			],
+			[
+				"mob_db",
+				"doc\\mob_db.txt"
+			],
+			[
+				"renter",
+				"npc\\re\\merchants\\renters.txt"
+			],
+			[
+				"rent",
+				"npc\\re\\merchants\\renters.txt"
+			],
+			[
+				"rente",
+				"npc\\merchants\\renters.txt"
+			],
+			[
+				"breeder",
+				"npc\\custom\\breeder.txt"
+			],
+			[
+				"atc",
+				"doc\\atcommands.txt"
+			],
+			[
+				"item",
+				"doc\\item_db.txt"
+			],
+			[
+				"scr",
+				"doc\\script_commands.txt"
+			],
+			[
+				"cas01",
+				"npc\\guild\\prtg_cas01.txt"
+			],
+			[
+				"te",
+				"npc\\re\\guild3\\te_aldecas1.txt"
+			],
+			[
+				"cas 01",
+				"npc\\guild\\aldeg_cas01.txt"
+			],
+			[
+				"agit",
+				"npc\\guild\\agit_main.txt"
+			],
+			[
+				"attendace",
+				"db\\import\\attendance.yml"
+			],
+			[
+				"mvp",
+				"npc\\custom\\etc\\mvp_room.txt"
+			],
+			[
+				"gro",
+				"conf\\groups.conf"
+			],
+			[
+				"attenda",
+				"db\\re\\attendance.yml"
+			],
 			[
 				"mapflag",
 				"doc\\mapflags.txt"
@@ -1450,16 +1498,8 @@
 				"npc\\custom\\etc\\mvp_room.txt"
 			],
 			[
-				"scr",
-				"doc\\script_commands.txt"
-			],
-			[
 				"warper",
 				"npc\\custom\\warper.txt"
-			],
-			[
-				"custom",
-				"npc\\scripts_custom.conf"
 			],
 			[
 				"bree",
@@ -1488,10 +1528,6 @@
 			[
 				"edenc",
 				"npc\\re\\quests\\eden\\eden_common.txt"
-			],
-			[
-				"atc",
-				"doc\\atcommands.txt"
 			],
 			[
 				"malangdo",
@@ -1586,10 +1622,6 @@
 				"db\\re\\attendance.yml"
 			],
 			[
-				"attenda",
-				"db\\import\\attendance.yml"
-			],
-			[
 				"map_i",
 				"db\\map_index.txt"
 			],
@@ -1650,10 +1682,6 @@
 				"rathena-server\\npc\\re\\mobs\\fields\\payon.txt"
 			],
 			[
-				"mob_db",
-				"rathena-server\\doc\\mob_db.txt"
-			],
-			[
 				"player",
 				"rathena-server\\conf\\battle\\player.conf"
 			],
@@ -1664,10 +1692,6 @@
 			[
 				"item_noequip",
 				"rathena-server\\db\\re\\item_noequip.txt"
-			],
-			[
-				"script",
-				"rathena-server\\doc\\script_commands.txt"
 			],
 			[
 				"jobname",
@@ -1728,10 +1752,6 @@
 			[
 				"advanced",
 				"npc\\re\\merchants\\advanced_refiner.txt"
-			],
-			[
-				"script athena",
-				"npc\\re\\scripts_athena.conf"
 			],
 			[
 				"athe",
@@ -1880,70 +1900,6 @@
 			[
 				"agit c",
 				"rathena-localhost\\npc\\guild\\agit_main.txt"
-			],
-			[
-				"aldeg 01",
-				"rathena-localhost\\npc\\guild\\aldeg_cas01.txt"
-			],
-			[
-				"alg",
-				"rathena-server\\npc\\guild\\aldeg_cas01.txt"
-			],
-			[
-				"atcom",
-				"rathena-server\\doc\\atcommands.txt"
-			],
-			[
-				"prt",
-				"rathena-server\\npc\\guild\\prtg_cas01.txt"
-			],
-			[
-				"aldeg_cas01",
-				"rathena-server\\npc\\guild\\aldeg_cas01.txt"
-			],
-			[
-				"script gu",
-				"rathena-localhost\\npc\\scripts_guild.conf"
-			],
-			[
-				"agit",
-				"rathena-localhost\\npc\\guild\\agit_main.txt"
-			],
-			[
-				"scripts_g",
-				"rathena-localhost\\npc\\scripts_guild.conf"
-			],
-			[
-				"agit m",
-				"npc\\guild\\agit_main.txt"
-			],
-			[
-				"trs_rp",
-				"npc\\guild\\trs_rp.txt"
-			],
-			[
-				"produce_db",
-				"db\\re\\produce_db.txt"
-			],
-			[
-				"sc",
-				"doc\\script_commands.txt"
-			],
-			[
-				"gui",
-				"npc\\custom\\guild_storage_kafra.txt"
-			],
-			[
-				"item",
-				"npc\\custom\\itemmall.txt"
-			],
-			[
-				"auto",
-				"npc\\custom\\etc\\autopot.txt"
-			],
-			[
-				"hd_refiner",
-				"npc\\re\\merchants\\hd_refiner.txt"
 			]
 		],
 		"width": 0.0

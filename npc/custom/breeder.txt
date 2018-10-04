@@ -1,136 +1,39 @@
-//===== eAthena Script =======================================
-//= Breeder
+//===== rAthena Script =======================================
+//= Universal Rental NPC
 //===== By: ==================================================
-//= Ace
+//= Euphy
 //===== Current Version: =====================================
-//= 1.2
+//= 1.0a
 //===== Compatible With: =====================================
-//= rAthena SVN 15400 and up.
-//= Client that supports new mounts.
+//= rAthena Project
 //===== Description: =========================================
-//= Known as "Universal Rental NPC"
-//= Let's a player rent a pecopeco, falcon, cart, warg
-//= or ride a dragon, gryphon, and mado.
-//===== Changelog: ===========================================
-//= 1.1	Added Peco peco option, forgot to.
-//=		Changed KN_RIDING to RK_DRAGONTRAINING
-//=		for renting dragons.
-//= 1.2	Added restrictions for renting falcons and wargs.
-//=		Added Warg Mastery skill requirement.
-//===== Additional Comments: =================================
-//= No bugs found so far.
-//= Please report bugs to me(ace.austria523@gmail.com)
+//= One-click automatic mount rentals.
 //============================================================
 
--	script	gbreeder	10192,{
-
-	mes	"^FF0000Universal Rental NPC^000000";
-	mes	"Greetings " + strcharinfo(0) + "!";
-	mes	"How may I help you today?";
-	next;
-
-	switch(select("Rental Services:Cancel"))
-	{
-		case 1:
-			mes	"^FF0000Universal Rental NPC^000000";
-			mes	"Please select from the items below:";
-
-			switch(select("PecoPeco:Cart:Falcon:Wolf Flute:Dragon:Gryphon:Mado"))
-			{
-				case 1: // Pecopeco
-					if(BaseClass == Job_Swordman && checkriding() == 0 && getskilllv("KN_RIDING") > 0 && Class == 7 || Class == 14)
-					{
-						setriding;
-						mes	"There you go, enjoy your Peco Peco!";
-						close;
-					} else {
-						mes	"Sorry, please make sure that you have the required job and skill, also not riding one.";
-						close;
-					}
-				case 2: // Cart
-					if((BaseClass == Job_Merchant || Base_Job == Job_SuperNovice) && checkcart() == 0 && getskilllv("MC_PUSHCART") > 0)
-					{
-						setcart;
-						mes	"There you go, enjoy your cart!";
-						close;
-					} else {
-						mes	"Sorry, please make sure that you have the required job and skill, also not having a cart.";
-						close;
-					}
-				case 3: // Falcon
-					if(BaseJob != Job_Archer && BaseClass == Job_Archer && checkfalcon() == 0 && getskilllv("HT_FALCON") > 0)
-					{
-						if((Class == Job_Ranger || Class == Job_Ranger_T) && checkriding())
-						{
-							mes	"Sorry, You can't rent a falcon while having a warg with you.";
-							close;
-						} else {
-							setfalcon;
-							mes	"There you go, have fun with your falcon!";
-							close;
-						}
-					} else {
-						mes	"Sorry, please make sure that you have the required job and skill, also not having a falcon.";
-						close;
-					}
-				case 4: // Warg
-					if(BaseClass == Job_Archer && countitem(6124) == 0 && getskilllv("RA_WUGMASTERY") > 0 && Class == Job_Ranger || Class == Job_Ranger_T)
-					{
-						if(checkfalcon())
-						{
-							mes	"Sorry, You can't rent a warg while having a falcon with you.";
-							close;
-						} else {
-							getitem 6124, 1;
-							mes	"There you go, have fun calling your Warg!";
-							close;
-						}
-					} else {
-						mes	"Sorry, please make sure that you have the required job and skill.";
-						close;
-					}
-				case 5: // Dragon
-					if(checkriding() == 0 && getskilllv("KN_RIDING") > 0 && getskilllv("RK_DRAGONTRAINING") > 0 && Class == 4060 || Class == 4054)
-					{
-						atcommand "@mount";
-						setriding;
-						mes	"There you go, don't let your dragon bite you!";
-						close;
-					} else {
-						mes	"Sorry, please make sure that you have the required job and skill, and not riding one.";
-						close;
-					}
-				case 6: // Gryphon
-					if(checkriding() == 0 && getskilllv("KN_RIDING") > 0 && Class == 4066 || Class == 4073)
-					{
-						atcommand "@mount";
-						setriding;
-						mes	"There you go, fly away with your gryphon... if you can.";
-						mes	"*Laughing*";
-						close;
-					} else {
-						mes	"Sorry, please make sure that you have the required job and skill, and not riding one.";
-						close;
-					}
-				case 7: // Mado
-					if(BaseJob != Job_Merchant && BaseClass == Job_Merchant && checkriding() == 0 && getskilllv("NC_MADOLICENCE") > 0 && Class == 4064 || Class == 4058)
-					{
-						atcommand "@mount";
-						setriding;
-						mes	"There you go, be proud of your Mado!";
-						close;
-					} else {
-						mes	"Sorry, please make sure that you have the required job and skill, and not riding one.";
-						close;
-					}
-			}
-		case 2:
-			mes	"^FF0000Universal Rental NPC^000000";
-			mes	"Alright, come again!";
-			close;
+prontera,140,181,7	script	Universal Rental NPC	10192,{
+	if (ismounting()) {
+		message strcharinfo(0),"You must first remove your mount.";
+		end;
+	} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_RANGER) && !countitem(6124)) {
+		if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+			if(select(" ~ Falcon: ~ Warg")==1) setfalcon;
+			else getitem 6124,1; //Wolf's_Flute
+		} else getitem 6124,1; //Wolf's_Flute
+	} else if (((eaclass()&EAJ_THIRDMASK)==EAJ_MECHANIC) && !checkcart() && getskilllv("MC_PUSHCART")) {
+		if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) {
+			if(select(" ~ Cart: ~ Mado")==1) setcart;
+			else setmadogear;
+		} else setcart;
+	} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
+	else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+	else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
+		if ((eaclass()&EAJ_THIRDMASK)==EAJ_RUNE_KNIGHT) setdragon;
+		else setriding;
+	} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
+	else {
+		message strcharinfo(0),"You do not meet requirements to rent.";
+		end;
 	}
+	specialeffect2 EF_TEIHIT3;
+	end;
 }
-
-//===== Duplicates: ==========================================
-prontera,140,181,7	duplicate(gbreeder)	Universal Rental NPC#1	10192
-//============================================================
