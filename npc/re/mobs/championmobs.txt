@@ -177,7 +177,7 @@ ma_dun01,0,0	monster	Manananggal Ringleader	2766,2,300000
 gl_dun02,0,0	monster	Furious Majoruros	2767,2,300000
 prt_fild09,0,0	monster	Elusive Magnolia	2768,2,300000
 ve_fild03,0,0	monster	Swift Magmaring	2769,2,300000
-prt_fild08,0,0	monster	Solid Lunatic	2770,2,300000
+prt_fild08,0,0	monster	Solid Lunatic	2770,3,300000
 prt_fild01,0,0	monster	Lunatic Ringleader	2771,2,300000
 niflheim,0,0	monster	Furious Lude	2772,2,300000
 spl_fild03,0,0	monster	Elusive Luciola Vespa	2773,2,300000

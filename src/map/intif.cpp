@@ -2268,7 +2268,7 @@ int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_d
  * Request to update inbox
  * @param char_id : Player ID linked with box
  * @param flag 0 Update Inbox | 1 OpenMail
- * @return 0=errur, 1=msg_sent
+ * @return 0=error, 1=msg_sent
  */
 int intif_Mail_requestinbox(uint32 char_id, unsigned char flag, enum mail_inbox_type type)
 {
@@ -3157,7 +3157,7 @@ int intif_parse_elemental_saved(int fd)
  * @param group_lv : requesting player lv
  * @param query : name or aid of player we want info
  * @param type : 1 - Only return account id & userid, 0 - Full info
- * @return : 0=errur, 1=msg sent
+ * @return : 0=error, 1=msg sent
  */
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type) {
 

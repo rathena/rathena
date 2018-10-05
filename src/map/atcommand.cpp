@@ -6609,7 +6609,7 @@ ACMD_FUNC(cleanarea)
  *------------------------------------------*/
 ACMD_FUNC(npctalk)
 {
-	char name[NPC_NAME_LENGTH],mes[100],temp[100];
+	char name[NPC_NAME_LENGTH],mes[100],temp[CHAT_SIZE_MAX];
 	struct npc_data *nd;
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
@@ -6646,7 +6646,7 @@ ACMD_FUNC(npctalk)
 
 ACMD_FUNC(pettalk)
 {
-	char mes[100],temp[100];
+	char mes[100],temp[CHAT_SIZE_MAX];
 	struct pet_data *pd;
 
 	nullpo_retr(-1, sd);
@@ -7089,7 +7089,6 @@ ACMD_FUNC(identify)
 *-----------------------------------------------*/
 ACMD_FUNC(identifyall)
 {
-	int i;
 	nullpo_retr(-1, sd);
 	pc_identifyall(sd, true);
 	return 0;
@@ -7538,7 +7537,7 @@ ACMD_FUNC(homhungry)
  *------------------------------------------*/
 ACMD_FUNC(homtalk)
 {
-	char mes[100],temp[100];
+	char mes[100],temp[CHAT_SIZE_MAX];
 
 	nullpo_retr(-1, sd);
 
@@ -8129,7 +8128,7 @@ ACMD_FUNC(fakename)
  * Ragnarok Resources
  *------------------------------------------*/
 ACMD_FUNC(mapflag) {
-	char flag_name[CHAT_SIZE_MAX];
+	char flag_name[50];
 	short flag = 0, i, j;
 	std::string buf;
 
@@ -8137,7 +8136,7 @@ ACMD_FUNC(mapflag) {
 
 	memset(flag_name, '\0', sizeof(flag_name));
 
-	if (!message || !*message || (sscanf(message, "%99s %6hd", flag_name, &flag) < 1)) {
+	if (!message || !*message || (sscanf(message, "%49s %6hd", flag_name, &flag) < 1)) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1311)); // Enabled Mapflags in this map:
 		clif_displaymessage(sd->fd,"----------------------------------");
 		for( i = MF_MIN; i < MF_MAX; i++ ){
@@ -10425,7 +10424,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	char output[CHAT_SIZE_MAX];
 
 	//Reconstructed message
-	char atcmd_msg[CHAT_SIZE_MAX];
+	char atcmd_msg[CHAT_SIZE_MAX * 2];
 
 	TBL_PC * ssd = NULL; //sd for target
 	AtCommandInfo * info;
