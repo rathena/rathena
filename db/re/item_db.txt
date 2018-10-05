@@ -7395,29 +7395,29 @@
 13201,Silver_Bullet,Silver Bullet,10,15,,2,15,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
 13202,Shell_Of_Blood,Bloody Shell,10,30,,2,30,,,,0x41000000,63,2,32768,,1,,3,{ bonus2 bAddEff,Eff_Bleeding,100; },{},{}
 13203,Flare_Sphere,Flare Sphere,10,80,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Fire; },{},{}
-13204,Lighting_Sphere,Lightning Sphere,10,80,,3,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Wind; },{},{}
-13205,Poison_Sphere,Poison Sphere,10,80,,3,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,500; },{},{}
-13206,Blind_Sphere,Blind Sphere,10,80,,3,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,500; },{},{}
-13207,Freezing_Sphere,Freezing Sphere,10,80,,3,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Water; },{},{}
+13204,Lighting_Sphere,Lightning Sphere,10,80,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Wind; },{},{}
+13205,Poison_Sphere,Poison Sphere,10,80,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Poison; bonus2 bAddEff,Eff_Poison,500; },{},{}
+13206,Blind_Sphere,Blind Sphere,10,80,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Blind,500; },{},{}
+13207,Freezing_Sphere,Freezing Sphere,10,80,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Water; },{},{}
 13208,Gong_Bug,Sow Bug,10,0,,5,50,,,,0x41000000,63,2,32768,,50,,3,{ bonus2 bAddEff,Eff_Stun,1000; },{},{}
-13210,Slug_Bullet_1,Slug Ammunition L,10,250,,250,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13211,Slug_Bullet_2,Slug Ammunition M,10,500,,500,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13212,Slug_Bullet_3,Slug Ammunition H,10,750,,750,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13213,Slug_Bullet_4,Slug Ammunition SH,10,1000,,1000,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13214,Slug_Bullet_5,Slug Ammunition XH,10,1200,,1200,30,,,,0x41000000,63,2,32768,,1,,3,{},{},{}
-13215,AP_Ammo,Armor-Piercing Bullet,10,10,,2,50,,,0,0x41000000,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Neutral; },{},{}
+13210,Slug_Bullet_1,Slug Ammunition L,10,250,,250,30,,,,,,,32768,,,,3,{},{},{}
+13211,Slug_Bullet_2,Slug Ammunition M,10,500,,500,30,,,,,,,32768,,,,3,{},{},{}
+13212,Slug_Bullet_3,Slug Ammunition H,10,750,,750,30,,,,,,,32768,,,,3,{},{},{}
+13213,Slug_Bullet_4,Slug Ammunition SH,10,1000,,1000,30,,,,,,,32768,,,,3,{},{},{}
+13214,Slug_Bullet_5,Slug Ammunition XH,10,1200,,1200,30,,,,,,,32768,,,,3,{},{},{}
+13215,AP_Ammo,Armor-Piercing Bullet,10,15,,2,50,,,0,0x41000000,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Neutral; },{},{}
 13216,Blaze_Bullet,Blazing Bullet,10,10,,2,40,,,,0x41000000,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
 13217,Freezing_Bullet,Freezing Bullet,10,10,,2,40,,,,0x41000000,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Water; },{},{}
 13218,Electric_Shock_Bullet,Lightning Bullet,10,10,,2,40,,,,0x41000000,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Wind; },{},{}
 13219,Magical_Stone_Bullet,Magic Stone Bullet,10,10,,2,40,,,,0x41000000,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Earth; },{},{}
 13220,Sanctified_Bullet,Purifying Bullet,10,10,,2,40,,,,0x41000000,63,2,32768,,100,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
 13221,Silver_Bullet_,Silver Bullet,10,5,,2,15,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Holy; },{},{}
-13222,Shell_Of_Blood_,Bloody Shell,10,10,,2,30,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Neutral; },{},{}
-13223,Flare_Sphere_,Flare Sphere,10,15,,5,50,,,,0x41000000,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Fire; },{},{}
-13224,Lighting_Sphere_,Lightning Sphere,10,15,,5,50,,,,0x41000000,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Wind; },{},{}
-13225,Poison_Sphere_,Poison Sphere,10,15,,5,50,,,,0x41000000,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Poison; },{},{}
-13226,Blind_Sphere_,Blind Sphere,10,15,,5,50,,,,0x41000000,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Dark; },{},{}
-13227,Freezing_Sphere_,Freezing Sphere,10,15,,5,50,,,,0x41000000,63,2,32768,,1,,5,{ bonus bAtkEle,Ele_Water; },{},{}
+13222,Shell_Of_Blood_,Bloody Shell,10,10,,2,30,,,,0x41000000,63,2,32768,,1,,3,{ bonus2 bAddEff,Eff_Bleeding,100; },{},{}
+13223,Flare_Sphere_,Flare Sphere,10,15,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Fire; },{},{}
+13224,Lighting_Sphere_,Lightning Sphere,10,15,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Wind; },{},{}
+13225,Poison_Sphere_,Poison Sphere,10,15,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Poison; },{},{}
+13226,Blind_Sphere_,Blind Sphere,10,15,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Dark; },{},{}
+13227,Freezing_Sphere_,Freezing Sphere,10,15,,5,50,,,,,,,32768,,,,5,{ bonus bAtkEle,Ele_Water; },{},{}
 13228,Flare_Bullet,Flare Bullet,10,10,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Fire; },{},{}
 13229,Lightning_Bullet,Lightning Bullet,10,10,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Wind; },{},{}
 13230,Ice_Bullet,Ice Bullet,10,10,,2,20,,,,0x41000000,63,2,32768,,1,,3,{ bonus bAtkEle,Ele_Water; },{},{}
@@ -11551,6 +11551,7 @@
 25148,Cute_Starved_Demon_Doll,Cute Starved Demon Doll,3,0,,0,,,,,,,,,,,,,{},{},{}
 25149,Doll_With_Warm_Scarf,Doll With Warm Scarf,3,0,,0,,,,,,,,,,,,,{},{},{}
 25150,Hugging_Alice_Pilow,Hugging Alice Pilow,3,0,,0,,,,,,,,,,,,,{},{},{}
+25187,Slug_Bullet,Slug Bullet,3,1200,,1200,,,,,,,,,,,,,{},{},{}
 25223,Para_Team_Coin,Eden Group Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
 25238,New_Normal_Lubricant,New Normal Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25239,New_Advanced_Lubricant,New Advanced Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
