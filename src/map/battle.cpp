@@ -4302,7 +4302,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += -100 + 1700 + 200 * skill_lv;
 			break;
 		case RL_SLUGSHOT:
-			if (target->type = BL_PC)
+			if (target->type == BL_PC)
 				skillratio += -100 + 1200 * skill_lv;
 			else
 				skillratio += -100 + 2000 * skill_lv;
