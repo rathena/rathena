@@ -2657,8 +2657,8 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 
 	// ATK
 	if (bl->type != BL_PC) {
-		status->rhw.atk = status_base_atk_min(bl, status, level);
 		status->rhw.atk2 = status_base_atk_max(bl, status, level);
+		status->rhw.atk = status_base_atk_min(bl, status, level);
 	}
 
 	// MAtk
