@@ -3555,6 +3555,7 @@ void map_flags_init(void){
 		struct map_data *mapdata = &map[i];
 		union u_mapflag_args args = {};
 
+		mapdata->flag.clear();
 		mapdata->flag.reserve(MF_MAX); // Reserve the bucket size
 		args.flag_val = 100;
 
