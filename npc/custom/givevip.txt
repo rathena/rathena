@@ -12,14 +12,14 @@
 
 OnPCLoginEvent:
 	if(! #xlaunch_vipx) {
-		getitem 14208, 1; // battle manual x5 (+100%)
-		getitem 13532, 4; // Light yellow potion x50
-		getitem 13810, 4; // Light blue potion x25
-		getitem 13697, 1; // Blessing Scroll lv10 x10
-		getitem 12914, 1; // Increase Agility lv10 x10
-		getitem 14216, 1; // Bubble gum x5 (+100%)
-		vip_time 10080; // 1 week worth of vip time
-		getitem 662, 25; // Authorative Badge (no box sadly)
+		getitem 11501, 100;     // Light White Potion  x50
+		getitem 11502, 30;     // Light Blue Potion x30
+		getitem 13697, 1;     // Blessing Scroll lv10 x10
+		getitem 12914, 1;     // Increase Agility lv10 x10
+		getitem 6833, 3;    // Token of Siegfried x3
+		getitem 12210, 3;     // Bubble gum x3 (+100%)
+		getitem 662, 15;     // Authorative Badge x15
+		vip_time 30240;     // 1 week worth of vip time (10080)
 
 		announce "Welcome to MilkyRO. Here are some things to start you with along with a 1 week VIP (only given by the gm) bonus.", BC_SELF;
 		set #xlaunch_vipx,1;

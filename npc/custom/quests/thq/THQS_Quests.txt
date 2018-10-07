@@ -398,7 +398,7 @@ N_QuestStart:
 	close;
 }
 //4-3;
-prontera,176,204,6	script	Dassy	95,{
+prontera,187,209,3	script	Dassy	95,{
 	if (four_qset == 3 && countitem(711) > 19) goto N_QuestComp;
 	if (four_qset == 3) goto N_QuestStart;
 	mes "[Dassy]";
@@ -665,7 +665,7 @@ N_QuestStart:
 }
 ///////Job list 7///////
 //7-1 goes to 8-1 using callfunc;
-prontera,123,208,6	script	Little Girl#thq	717,{
+prontera,123,199,7	script	Little Girl#thq	717,{
 	if (seven_qset == 1 && countitem(531) > 4) goto N_QuestComp;
 	if (seven_qset == 1) goto N_QuestStart;
 	if (eight_qset == 1) goto N_QuestStart2;
