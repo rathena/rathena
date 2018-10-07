@@ -15,7 +15,7 @@
 
 geffen,178,72,3	script	Akkie#qsk_bs	726,{
 	if (BaseJob == Job_Blacksmith) {
-		if (BLACK_SK == 7 && getskilllv("BS_UNFAIRLYTRICK") == 0) {
+		if (BLACK_SK >= 7 && Upper == 1 && getskilllv("BS_UNFAIRLYTRICK") == 0) {
 			mes "[Akkie]";
 			mes "I see that you've";
 			mes "transcended since the";
@@ -475,7 +475,7 @@ geffen,178,72,3	script	Akkie#qsk_bs	726,{
 
 geffen,172,52,1	script	Goodman#qsk_bs	826,{
 	if (BaseJob == Job_Blacksmith) {
-		if (BLACK_SK2 == 2 && Upper == 1 && getskilllv("BS_GREED") == 0) {
+		if (BLACK_SK2 >= 2 && Upper == 1 && getskilllv("BS_GREED") == 0) {
 			mes "[Goodman]";
 			mes "Ah, I see that you have";
 			mes "transcended. It gladdens me";
