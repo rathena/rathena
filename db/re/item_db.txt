@@ -11738,7 +11738,7 @@
 27318,Miguel_Card,Miguel Card,6,20,,10,,,,,,,,64,,,,,{ bonus bCritAtkRate,20; bonus2 bSubRace,RC_All,-10; },{},{}
 27319,R48_85_BESTIA_Card,R48-85-BESTIA Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEle,Ele_Poison,40; },{},{}
 27320,E_EA1L_card,E-EA1L card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); .@val = 3; if (.@r >= 9) { .@val += 2; if (.@r >= 11) { .@val += 5; } } bonus2 bMagicAtkEle,Ele_Fire,.@val; },{},{}
-// 27321,Despair_God_Morocc_Card,Despair God Morocc Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bAddClass,Class_All,10; bonus bMaxHPRate,-50; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Angel,30; autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3097,5000; }"; /* unknown transformation rates */ },{},{}
+// 27321,Despair_God_Morocc_Card,Despair God Morocc Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bAddClass,Class_All,10; bonus bMaxHPRate,-50; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bAddRace,RC_Angel,30; autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3097,5000; }"; /* unknown transformation rates */ },{},{}
 27322,Demon_God's_Apostle_Ahat_Card,Demon God's Apostle Ahat Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMaxSPrate,5;  },{},{}
 27323,Demon_God's_Apostle_Shnaim_Card,Demon God's Apostle Shnaim Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMaxHPrate,5; },{},{}
 27324,Brinaranea_Card,Brinaranea Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bMagicAtkEle,Ele_Water,15; },{},{}
