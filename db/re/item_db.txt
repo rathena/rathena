@@ -11744,7 +11744,7 @@
 27324,Brinaranea_Card,Brinaranea Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bMagicAtkEle,Ele_Water,15; },{},{}
 27325,Muspellskoll_Card,Muspellskoll Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Fire,30; },{},{}
 27326,Morocc's_Minion_Card,Morocc's Minion Card,6,20,,10,,,,,,,,16,,,,,{ bonus bBaseAtk,100; bonus bAspdRate,25; bonus bMaxHPrate,-20; },{},{}
-27327,Grim_Reaper_Ankou_Card,Grim Reaper Ankou Card,6,20,,10,,,,,,,,769,,,,,{ autobonus2 "{ .@r = getrefine(); bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",3,(1+.@r); bonus2 bAddClass,Class_All,25; bonus bMatkRate,25; }",(1+.@r),10000,BF_WEAPON|BF_MAGIC; autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3029,5000; }"; /* unknown rates */ },{},{}
+27327,Grim_Reaper_Ankou_Card,Grim Reaper Ankou Card,6,20,,10,,,,,,,,769,,,,,{ .@r = getrefine(); bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",3,(1+.@r); autobonus2 "{ bonus2 bAddClass,Class_All,25; bonus bMatkRate,25; }",(1+.@r),10000,BF_WEAPON|BF_MAGIC; autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3029,5000; }"; /* unknown rates */ },{},{}
 27328,Corrupt_Life_Card,Corrupt Life Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bSubRace,RC_Angel,-50; },{},{}
 //===================================================================
 // New Katars
