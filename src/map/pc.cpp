@@ -5493,8 +5493,9 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int i;
+		unsigned short instance_id = map_getmapdata(sd->bl.m)->instance_id;
 
-		if (map_getmapdata(sd->bl.m)->instance_id && map_getmapdata(sd->bl.m)->instance_id != mapdata->instance_id) {
+		if (instance_id && instance_id != mapdata->instance_id) {
 			struct party_data *p = NULL;
 			struct guild *g = NULL;
 			struct clan *cd = NULL;
@@ -5508,7 +5509,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			else if (sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
 				instance_delusers(cd->instance_id);
 			else
-				instance_delusers(map_getmapdata(sd->bl.m)->instance_id);
+				instance_delusers(instance_id);
 		}
 
 		sd->state.pmap = sd->bl.m;
