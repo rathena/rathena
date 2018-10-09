@@ -1174,7 +1174,7 @@
 1839,Crimson_Knuckles,Crimson Knuckles,5,20,,1000,100,,1,2,0x00008100,63,2,2,3,70,1,12,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); bonus bUnbreakableWeapon; },{},{}
 1840,Requiem_Knuckle,Requiem Knuckle,5,20,,500,150:100,,1,0,0x00008100,63,2,2,4,100,1,12,{ .@r = getrefine(); .@b = 40; if(.@r>=5){ .@b += (.@r-5)*15+20; } bonus2 bAddRace2,RC2_BioLab,.@b; },{},{}
 1841,Claw_Of_Flash_,Claw of Flash,5,60000,,400,140,,1,3,0x00008100,63,2,2,4,105,1,12,{ bonus bAspd,1; bonus bAspdRate,getrefine(); bonus2 bAddSize,Size_Medium,getrefine(); },{},{}
-1846,Illusion Combo Battle Glove,Illusion Combo Battle Glove,5,0,,500,250,,1,2,0x00008000,56,2,2,4,120,1,12,{ .@r = getrefine(); bonus2 bSkillAtk,"SR_SKYNETBLOW",(10+5*(.@r/2)); bonus2 bSkillAtk,"SR_DRAGONCOMBO",(10+5*(.@r/2)); bonus2 bSkillAtk,"SR_TIGERCANNON",(5*(.@r/3)); },{},{}
+1846,Illusion_Combo_Battle_Glove,Illusion Combo Battle Glove,5,0,,500,250,,1,2,0x00008000,56,2,2,4,120,1,12,{ .@r = getrefine(); bonus2 bSkillAtk,"SR_SKYNETBLOW",(10+5*(.@r/2)); bonus2 bSkillAtk,"SR_DRAGONCOMBO",(10+5*(.@r/2)); bonus2 bSkillAtk,"SR_TIGERCANNON",(5*(.@r/3)); },{},{}
 //===================================================================
 // Instruments
 //===================================================================
@@ -10940,6 +10940,8 @@
 20847,Illusion_Survivor_Manteau,Illusion Survivor Manteau,4,0,,550,,30,,1,0x00810204,63,2,4,,130,1,0,{ bonus bVit,15; },{},{}
 20856,YSF01_Manteau,YSF01 Manteau,4,0,,750,,32,,1,0xFFFFFFFF,63,2,4,,170,1,0,{ .@r = getrefine(); if (.@r >= 8) { bonus bBaseAtk,20; if (.@r >= 11) { .@val = -3; if (.@r >= 13) { .@val += -4; } } } if (readparam(bVit) >= 125) { .@val += -10; } if (.@val) { bonus bDelayrate,.@val; } },{},{}
 20923,Illusion_Goibne_Spaulders,Illusion Goibne Spaulders,4,0,,1000,,47,,1,0xFFFFFFFE,63,2,4,,130,1,0,{ .@r = getrefine();  bonus bMdef,2; bonus bVit,1; if (.@r >= 7) { .@val = 5; if (.@r >= 9) { .@val += 10; } } if (.@val) { bonus2 bAddEle,Ele_Water,.@val; bonus2 bAddEle,Ele_Wind,.@val; bonus2 bAddEle,Ele_Earth,.@val; bonus2 bAddEle,Ele_Fire,.@val; } },{},{}
+20943,Geffen_Magic_Muffler,Geffen Magic Muffler,4,20,,550,,20,,1,0xFFFFFFFE,63,2,4,,99,1,0,{ .@r = getrefine(); .@val = -10;  bonus bMatk,(10*(.@r/2)); bonus bMatkRate,(.@r/3); if (.@r >= 7) { bonus2 bMagicAtkEle,Ele_All,5; } if (.@r >= 9) { .@val -= 10; } bonus bVariableCastrate,.@val; },{},{}
+20944,Anti_Magic_Manteau,Anti Magic Manteau,4,20,,750,,23,,1,0xFFFFFFFE,63,2,4,,99,1,0,{ .@r = getrefine(); bonus bMaxHP,(300+(100*(.@r/2))); bonus bMaxHPRate,(2*(.@r/3)); if (.@r >= 7) { bonus2 bAddClass,Class_All,7; } if (.@r >= 9) { bonus bVariableCastrate,-10; } },{},{}
 //===================================================================
 // More 2-Handed Swords
 //===================================================================
@@ -11758,7 +11760,7 @@
 27291,Ancient_Tri_Joint_Card,Ancient Tri Joint Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,30; bonus bMaxHPrate,-1; },{},{}
 27292,Ancient_Stalactic_Golem_Card,Ancient Stalactic Golem Card,6,20,,10,,,,,,,,4,,,,,{ .@vit = readparam(bVit); .@val = .@vit/10; if (.@val) { bonus bAspdRate,.@val; bonus bMaxHP,(150*.@val); if (.@vit >= 120) { bonus bDelayrate,-3; } } },{},{}
 27293,Ancient_Megalith_Card,Ancient Megalith Card,6,20,,10,,,,,,,,2,,,,,{ bonus bMatk,30; bonus bMaxSPrate,-1; },{},{}
-27294,Ancient Tao Gunka Card,Ancient Tao Gunka Card,6,20,,10,,,,,,,,769,,,,,{ .@val = 30; if (getrefine() >= 10) { .@val += 20; } bonus2 bIgnoreDefClassRate,Class_Boss,.@val; },{},{}
+27294,Ancient_Tao_Gunka_Card,Ancient Tao Gunka Card,6,20,,10,,,,,,,,769,,,,,{ .@val = 30; if (getrefine() >= 10) { .@val += 20; } bonus2 bIgnoreDefClassRate,Class_Boss,.@val; },{},{}
 27295,Ancient_Stone_Shooter_Card,Ancient Stone Shooter Card,6,20,,10,,,,,,,,4,,,,,{ .@luk = readparam(bLuk); .@aspd = .@crit = .@luk/10; if (.@luk >= 120) { .@crit += 5; } bonus bAspdRate,.@aspd; bonus bCritAtkRate,.@crit; },{},{}
 27296,Ancient_Wootan_Shooter_Card,Ancient Wootan Shooter Card,6,20,,10,,,,,,,,4,,,,,{ .@dex = readparam(bDex); .@val = .@dex/10; if (.@val) { bonus bAspdRate,.@val; bonus2 bWeaponDamageRate,W_BOW,.@val; if (.@dex >= 120) { bonus bBaseAtk,40; } } },{},{}
 27297,Ancient_Wootan_Fighter_Card,Ancient Wootan Fighter Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritical,5; bonus bCritAtkRate,10; },{},{}
@@ -11780,6 +11782,14 @@
 27318,Miguel_Card,Miguel Card,6,20,,10,,,,,,,,64,,,,,{ bonus bCritAtkRate,20; bonus2 bSubRace,RC_All,-10; },{},{}
 27319,R48_85_BESTIA_Card,R48-85-BESTIA Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEle,Ele_Poison,40; },{},{}
 27320,E_EA1L_card,E-EA1L card,6,20,,10,,,,,,,,2,,,,,{ .@r = getrefine(); .@val = 3; if (.@r >= 9) { .@val += 2; if (.@r >= 11) { .@val += 5; } } bonus2 bMagicAtkEle,Ele_Fire,.@val; },{},{}
+// 27321,Despair_God_Morocc_Card,Despair God Morocc Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bAddClass,Class_All,10; bonus bMaxHPRate,-50; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bAddRace,RC_Angel,30; autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3097,5000; }"; /* unknown transformation rates */ },{},{}
+27322,Demon_God's_Apostle_Ahat_Card,Demon God's Apostle Ahat Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMaxSPrate,5;  },{},{}
+27323,Demon_God's_Apostle_Shnaim_Card,Demon God's Apostle Shnaim Card,6,20,,10,,,,,,,,136,,,,,{ bonus bMaxHPrate,5; },{},{}
+27324,Brinaranea_Card,Brinaranea Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bMagicAtkEle,Ele_Water,15; },{},{}
+27325,Muspellskoll_Card,Muspellskoll Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Fire,30; },{},{}
+27326,Morocc's_Minion_Card,Morocc's Minion Card,6,20,,10,,,,,,,,16,,,,,{ bonus bBaseAtk,100; bonus bAspdRate,25; bonus bMaxHPrate,-20; },{},{}
+27327,Grim_Reaper_Ankou_Card,Grim Reaper Ankou Card,6,20,,10,,,,,,,,769,,,,,{ .@r = getrefine(); bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",3,(1+.@r); autobonus2 "{ bonus2 bAddClass,Class_All,25; bonus bMatkRate,25; }",(1+.@r),10000,BF_WEAPON|BF_MAGIC; autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3029,5000; }"; /* unknown rates */ },{},{}
+27328,Corrupt_Life_Card,Corrupt Life Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bSubRace,RC_Angel,-50; },{},{}
 //===================================================================
 // New Katars
 //===================================================================
@@ -12392,7 +12402,7 @@
 31412,C_Virgo_Crown,C Virgo Crown,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,573,{},{},{}
 31413,C_Taurus_Crown,C_ Taurus Crown,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,536,{},{},{}
 31414,C_Cancer_Diadem,C Cancer Diadem,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,560,{},{},{}
-31415,C_Wanderers_ Sakkat,Costume Wanderer's Sakkat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,3072,,1,0,558,{},{},{}
+31415,C_Wanderers_Sakkat,Costume Wanderer's Sakkat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,3072,,1,0,558,{},{},{}
 31417,C_Rice_Ball_Hat,C Rice Ball Hat,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,556,{},{},{}
 31418,C_Green_Onion_in_Mouth,C Green Onion in Mouth,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,824,{},{},{}
 31420,C_Shining_Santa_Poring,C Shining Santa Poring,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,961,{},{},{}
