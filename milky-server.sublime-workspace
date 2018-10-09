@@ -606,13 +606,23 @@
 	"expanded_folders":
 	[
 		"/D/MilkyRO Project/ServerScript",
-		"/D/MilkyRO Project/ServerScript/conf",
-		"/D/MilkyRO Project/ServerScript/conf/battle"
+		"/D/MilkyRO Project/ServerScript/build",
+		"/D/MilkyRO Project/ServerScript/db",
+		"/D/MilkyRO Project/ServerScript/db/re",
+		"/D/MilkyRO Project/ServerScript/npc"
 	],
 	"file_history":
 	[
-		"/D/MilkyRO Project/ServerScript/conf/battle/player.conf",
+		"/D/MilkyRO Project/Tools/Translation Project/ROenglishRE-master/data/msgstringtable.txt",
+		"/D/MilkyRO Project/ServerScript/src/map/pc.cpp",
+		"/D/MilkyRO Project/ServerScript/npc/re/jobs/3-2/minstrel.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/stylist.txt",
+		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/quests/thq/THQS_Quests.txt",
+		"/D/MilkyRO Project/ServerScript/conf/battle/client.conf",
 		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
+		"/D/MilkyRO Project/ServerScript/npc/cities/payon.txt",
+		"/D/MilkyRO Project/ServerScript/conf/battle/player.conf",
 		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/attendance.yml",
 		"/D/MilkyRO Project/ServerScript/db/re/attendance.yml",
 		"/D/MilkyRO Project/Patches/20181007b/System/CheckAttendance.lub",
@@ -658,7 +668,6 @@
 		"/D/MilkyRO Project/ServerScript/src/map/status.cpp",
 		"/D/MilkyRO Project/ServerScript/src/map/skill.cpp",
 		"/D/MilkyRO Project/ServerScript/src/map/pc.hpp",
-		"/D/MilkyRO Project/ServerScript/src/map/pc.cpp",
 		"/D/MilkyRO Project/ServerScript/db/carts.yml",
 		"/D/MilkyRO Project/ServerScript/db/re/refine_db.yml",
 		"/D/MilkyRO Project/ServerScript/db/import/refine_db.yml",
@@ -693,7 +702,6 @@
 		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/scripts_athena.conf",
 		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/scripts_custom.conf",
 		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt.bak",
-		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt",
 		"/D/MilkyRO Project/Tools/Translation Project/Translation-master/data/idnum2itemdesctable.txt",
 		"/D/MilkyRO Project/Tools/Translation Project/Translation-master/System/itemInfo_Sak.lub",
@@ -732,13 +740,7 @@
 		"/D/MilkyRO Project/ServerScript/npc/other/pvp.txt",
 		"/D/MilkyRO Project/ServerScript/npc/mapflag/pvp.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/identify.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/branch.txt",
-		"/D/MilkyRO Project/ServerScript/npc/re/quests/quests_malaya.txt",
-		"/D/MilkyRO Project/ServerScript/npc/re/instances/BangungotHospital.txt",
-		"/D/MilkyRO Project/ServerScript/conf/battle/drops.conf",
-		"/D/MilkyRO Project/ServerScript/npc/re/quests/eden/eden_common.txt",
-		"/D/MilkyRO Project/ServerScript/npc/re/instances/MalangdoCulvert.txt",
-		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/questid2display.txt"
+		"/D/MilkyRO Project/ServerScript/npc/custom/branch.txt"
 	],
 	"find":
 	{
@@ -749,6 +751,8 @@
 		"height": 116.0,
 		"where_history":
 		[
+			"<project>",
+			"D:\\MilkyRO Project\\ServerScript\\npc",
 			"<project>",
 			"D:\\MilkyRO Project\\ServerScript\\npc",
 			"<project>",
@@ -807,6 +811,23 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"day",
+			"ATTENDANCE_COUNT_VAR",
+			"pc_readreg2",
+			"period",
+			"attendance_periods",
+			"pc_attendance_load",
+			"sattendance",
+			"End",
+			"sattendance",
+			"pc_read_attendance",
+			"attendance.yml",
+			"Dassy",
+			"where is my little boy",
+			"prontera",
+			"Woman",
+			"Women",
+			"Little Girl",
 			"aspd",
 			"\nAmount: ",
 			"\nItemId: ",
@@ -917,24 +938,7 @@
 			"delitem",
 			",",
 			"_",
-			",",
-			"; //",
-			",",
-			"\n\t\t\t---\t\t---\t\t---",
-			"\n\tReward:\t\t\t---\t\t---\n\t\t\t",
-			"the data account settings",
-			"there is an error when loading the data account settings",
-			"5171",
-			"5094",
-			";//Items: ",
-			"delitem",
-			"delitem ",
-			",",
-			";//Items: ",
-			",",
-			";//Items: ",
-			"delitem",
-			"_"
+			","
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -1018,6 +1022,14 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"sty",
+				"npc\\custom\\stylist.txt"
+			],
+			[
+				"atco",
+				"doc\\atcommands.txt"
+			],
 			[
 				"scr",
 				"doc\\script_commands.txt"
@@ -1267,10 +1279,6 @@
 				"npc\\merchants\\enchan_arm.txt"
 			],
 			[
-				"atco",
-				"doc\\atcommands.txt"
-			],
-			[
 				"war",
 				"npc\\custom\\warper.txt"
 			],
@@ -1305,10 +1313,6 @@
 			[
 				"gym",
 				"npc\\other\\gympass.txt"
-			],
-			[
-				"sty",
-				"npc\\custom\\stylist.txt"
 			],
 			[
 				"platinu",
