@@ -3594,6 +3594,7 @@
 	export_constant(EFST_ENSEMBLEFATIGUE);
 	export_constant(EFST_ADAPTATION);
 	export_constant(EFST_ANCILLA);
+	export_constant(EFST_FESTIVE_ENERGY);
 	export_constant(EFST_WEAPONBLOCK_ON);
 	export_constant(EFST_CRI_DAMAGE);
 	export_constant(EFST_DEF_POWER);
@@ -4416,6 +4417,7 @@
 	export_constant(MOBG_Bloody_Dead_Branch);
 	export_constant(MOBG_Red_Pouch_Of_Surprise);
 	export_constant(MOBG_ClassChange);
+	export_constant(MOBG_Taekwon_Mission);
 
 	/* Item Random Option Group */
 	export_constant(RDMOPTG_None);

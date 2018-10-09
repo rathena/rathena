@@ -649,6 +649,7 @@ struct Battle_Config
 	int homunculus_autofeed_always;
 	int feature_attendance;
 	int feature_privateairship;
+	int rental_transaction;
 
 #include "../custom/battle_config_struct.inc"
 };

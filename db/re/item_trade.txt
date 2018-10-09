@@ -3898,6 +3898,10 @@
 25148,499,100	// Cute_Starved_Demon_Doll
 25149,499,100	// Doll_With_Warm_Scarf
 25150,499,100	// Hugging_Alice_Pilow
+25246,403,100	// Juice_Mix_Package
+25247,403,100	// Purple_Ore
+25248,403,100	// Purple_Ore_Crate
+25249,403,100	// Buffalo_Bandit_Mane
 25151,435,100	// Rachel's_Revolver
 25152,435,100	// Cherished_Bouquet
 25153,435,100	// Broken_Gun_Wreck
@@ -3918,10 +3922,15 @@
 25183,435,100	// Decorated_Archer's_Thimble
 25184,435,100	// Portable_Sewingbox
 25185,435,100	// Locket_Pendant
+25260,435,100	// Fragment_of_Purple_Ore
 26100,435,100	// Paradise_Foxtail_Staff_II
 26101,435,100	// Paradise_Foxtail_Staff_III
 28105,467,100	// Infinity_Axe
 28310,467,100	// Sarah's_Left_Earring
 28311,467,100	// Sarah's_Right_Earring
 28333,475,100	// Gold_PC_Room_Ring
+28495,403,100	// Sheriffs_Left_Badge
+28496,403,100	// Sheriffs_Right_Badge
 28703,467,100	// Infinity_Dagger
+31140,403,100	// C_Cowboy_Hat_
+31141,403,100	// C_Rose_Corsage_
