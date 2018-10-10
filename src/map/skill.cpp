@@ -450,12 +450,12 @@ bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 s
 
 	if (!(type&battle_config.skill_reiteration) && skill_get_unit_flag(skill_id)&UF_NOREITERATION && skill_check_unit_range(src, x, y, skill_id, skill_lv)) {
 		if (sd && display_failure)
-			clif_skill_fail(sd, sd->ud.skill_id, USESKILL_FAIL_LEVEL, 0);
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		return false;
 	}
 	if (type&battle_config.skill_nofootset && skill_get_unit_flag(skill_id)&UF_NOFOOTSET && skill_check_unit_range2(src, x, y, skill_id, skill_lv, false)) {
 		if (sd && display_failure)
-			clif_skill_fail(sd, sd->ud.skill_id, USESKILL_FAIL_LEVEL, 0);
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 		return false;
 	}
 	if (type&battle_config.land_skill_limit && (maxcount = skill_get_maxcount(skill_id, skill_lv)) > 0) {
@@ -465,7 +465,7 @@ bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 s
 		}
 		if (maxcount == 0) {
 			if (sd && display_failure)
-				clif_skill_fail(sd, sd->ud.skill_id, USESKILL_FAIL_LEVEL, 0);
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 			return false;
 		}
 	}
