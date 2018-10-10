@@ -495,25 +495,29 @@ enum clif_messages : uint16_t {
 	SKILL_CANT_USE_AREA = 0x536,
 	ITEM_CANT_USE_AREA = 0x537,
 	VIEW_EQUIP_FAIL = 0x54d,
+	ITEM_NEED_MADOGEAR = 0x59b,
+	ITEM_NEED_CART = 0x5ef,
 	RUNE_CANT_CREATE = 0x61b,
 	ITEM_CANT_COMBINE = 0x623,
 	INVENTORY_SPACE_FULL = 0x625,
 	ITEM_PRODUCE_SUCCESS = 0x627,
 	ITEM_PRODUCE_FAIL = 0x628,
 	ITEM_UNIDENTIFIED = 0x62d,
+	ITEM_NEED_BOW = 0x69b,
 	ITEM_REUSE_LIMIT = 0x746,
 	WORK_IN_PROGRESS = 0x783,
 	NEED_REINS_OF_MOUNT = 0x78c,
 	PARTY_MASTER_CHANGE_SAME_MAP = 0x82e, ///< "It is only possible to change the party leader while on the same map."
 	MERGE_ITEM_NOT_AVAILABLE = 0x887,
-	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
-	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
+	ITEM_BULLET_EQUIP_FAIL = 0x9bd,
 	SKILL_NEED_GATLING = 0x9fa,
 	SKILL_NEED_SHOTGUN = 0x9fb,
 	SKILL_NEED_RIFLE = 0x9fc,
 	SKILL_NEED_REVOLVER = 0x9fd,
 	SKILL_NEED_HOLY_BULLET = 0x9fe,
 	SKILL_NEED_GRENADE = 0xa01,
+	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
+	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
 	MSG_ATTENDANCE_DISABLED = 0xd92,
 };
 

@@ -668,13 +668,14 @@ void initChangeTables(void)
 	set_sc( AB_EPICLESIS		, SC_EPICLESIS		, EFST_EPICLESIS		, SCB_MAXHP );
 	add_sc( AB_PRAEFATIO		, SC_KYRIE		);
 	set_sc_with_vfx( AB_ORATIO	, SC_ORATIO		, EFST_ORATIO		, SCB_NONE );
-	set_sc( AB_LAUDAAGNUS		, SC_LAUDAAGNUS		, EFST_LAUDAAGNUS		, SCB_VIT );
-	set_sc( AB_LAUDARAMUS		, SC_LAUDARAMUS		, EFST_LAUDARAMUS		, SCB_LUK );
+	set_sc( AB_LAUDAAGNUS		, SC_LAUDAAGNUS		, EFST_LAUDAAGNUS		, SCB_MAXHP );
+	set_sc( AB_LAUDARAMUS		, SC_LAUDARAMUS		, EFST_LAUDARAMUS		, SCB_ALL );
 	set_sc( AB_RENOVATIO		, SC_RENOVATIO		, EFST_RENOVATIO		, SCB_REGEN );
 	set_sc( AB_EXPIATIO		, SC_EXPIATIO		, EFST_EXPIATIO		, SCB_NONE );
 	set_sc( AB_DUPLELIGHT		, SC_DUPLELIGHT		, EFST_DUPLELIGHT		, SCB_NONE );
 	set_sc( AB_SECRAMENT		, SC_SECRAMENT		, EFST_AB_SECRAMENT, SCB_NONE );
 	set_sc( AB_OFFERTORIUM		, SC_OFFERTORIUM	, EFST_OFFERTORIUM	, SCB_NONE );
+	add_sc( AB_VITUPERATUM		, SC_AETERNA );
 
 	/* Warlock */
 	add_sc( WL_WHITEIMPRISON	, SC_WHITEIMPRISON	);
@@ -714,7 +715,7 @@ void initChangeTables(void)
 	set_sc( LG_FORCEOFVANGUARD	, SC_FORCEOFVANGUARD	, EFST_FORCEOFVANGUARD	, SCB_MAXHP );
 	set_sc( LG_EXEEDBREAK		, SC_EXEEDBREAK		, EFST_EXEEDBREAK		, SCB_NONE );
 	set_sc( LG_PRESTIGE		, SC_PRESTIGE		, EFST_PRESTIGE		, SCB_DEF );
-	set_sc( LG_BANDING		, SC_BANDING		, EFST_BANDING		, SCB_DEF2|SCB_WATK );
+	set_sc( LG_BANDING		, SC_BANDING		, EFST_BANDING		, SCB_DEF|SCB_WATK|SCB_REGEN );
 	set_sc( LG_PIETY		, SC_BENEDICTIO		, EFST_BENEDICTIO		, SCB_DEF_ELE );
 	set_sc( LG_EARTHDRIVE		, SC_EARTHDRIVE		, EFST_EARTHDRIVE		, SCB_DEF|SCB_ASPD );
 	set_sc( LG_INSPIRATION		, SC_INSPIRATION	, EFST_INSPIRATION	, SCB_WATK|SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK|SCB_HIT|SCB_MAXHP);
@@ -1165,6 +1166,8 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_GLASTHEIM_STATE] = EFST_GLASTHEIM_STATE;
 	StatusIconChangeTable[SC_GLASTHEIM_ITEMDEF] = EFST_GLASTHEIM_ITEMDEF;
 	StatusIconChangeTable[SC_GLASTHEIM_HPSP] = EFST_GLASTHEIM_HPSP;
+
+	StatusIconChangeTable[SC_ANCILLA] = EFST_ANCILLA;
 
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
@@ -3067,6 +3070,8 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus += sc->data[SC_CURSED_SOIL_OPTION]->val2;
 			if(sc->data[SC_UPHEAVAL_OPTION])
 				bonus += sc->data[SC_UPHEAVAL_OPTION]->val2;
+			if(sc->data[SC_LAUDAAGNUS])
+				bonus += 2 + (sc->data[SC_LAUDAAGNUS]->val1 * 2);
 
 			//Decreasing
 			if(sc->data[SC_VENOMBLEED])
@@ -4106,16 +4111,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		sd->magic_addrace[RC_DRAGON]+=skill;
 		sd->subrace[RC_DRAGON]+=skill;
 	}
-	if((skill = pc_checkskill(sd, AB_EUCHARISTICA)) > 0) {
-		sd->right_weapon.addrace[RC_DEMON] += skill;
-		sd->right_weapon.addele[ELE_DARK] += skill;
-		sd->left_weapon.addrace[RC_DEMON] += skill;
-		sd->left_weapon.addele[ELE_DARK] += skill;
-		sd->magic_addrace[RC_DEMON] += skill;
-		sd->magic_addele[ELE_DARK] += skill;
-		sd->subrace[RC_DEMON] += skill;
-		sd->subele[ELE_DARK] += skill;
-	}
 
 	if(sc->count) {
 		if(sc->data[SC_CONCENTRATE]) { // Update the card-bonus data
@@ -4210,6 +4205,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->ignore_mdef_by_race[RC_UNDEAD] += sc->data[SC_GLASTHEIM_ATK]->val1;
 			sd->ignore_mdef_by_race[RC_DEMON] += sc->data[SC_GLASTHEIM_ATK]->val1;
 		}
+		if (sc->data[SC_LAUDARAMUS])
+			sd->bonus.crit_atk_rate += 5 * sc->data[SC_LAUDARAMUS]->val1;
 	}
 	status_cpy(&sd->battle_status, base_status);
 
@@ -4524,8 +4521,12 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 		if( (skill=pc_checkskill(sd,WM_LESSON)) > 0 )
 			val += 3 + 3 * skill;
 
-		if (sc && sc->count && sc->data[SC_SHRIMPBLESSING])
-			val += 150 / 100;
+		if (sc && sc->count) {
+			if (sc->data[SC_SHRIMPBLESSING])
+				val += 150 / 100;
+			if (sc->data[SC_ANCILLA])
+				val += sc->data[SC_ANCILLA]->val2 / 100;
+		}
 
 		sregen->sp = cap_value(val, 0, SHRT_MAX);
 
@@ -4656,6 +4657,8 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		} else
 			regen->flag &= ~sce->val4; // Remove regen as specified by val4
 	}
+	if (sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 1)
+		regen->hp += cap_value(regen->hp * 50 / 100, 1, SHRT_MAX);
 	if(sc->data[SC_GT_REVITALIZE]) {
 		regen->hp += cap_value(regen->hp * sc->data[SC_GT_REVITALIZE]->val3/100, 1, SHRT_MAX);
 		regen->state.walk = 1;
@@ -5629,8 +5632,6 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += sc->data[SC_MARIONETTE2]->val3&0xFF;
 	if(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_HIGH)
 		vit += sc->data[SC_SPIRIT]->val3&0xFF;
-	if(sc->data[SC_LAUDAAGNUS])
-		vit += 4 + sc->data[SC_LAUDAAGNUS]->val1;
 	if(sc->data[SC_MINOR_BBQ])
 		vit += sc->data[SC_MINOR_BBQ]->val1;
 	if(sc->data[SC_INSPIRATION])
@@ -5864,8 +5865,6 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk -= sc->data[SC_STOMACHACHE]->val1;
 	if(sc->data[SC_KYOUGAKU])
 		luk -= sc->data[SC_KYOUGAKU]->val2;
-	if(sc->data[SC_LAUDARAMUS])
-		luk += 4 + sc->data[SC_LAUDARAMUS]->val1;
 	if(sc->data[SC_2011RWC_SCROLL])
 		luk += sc->data[SC_2011RWC_SCROLL]->val1;
 	if(sc->data[SC__STRIPACCESSORY] && bl->type != BL_PC)
@@ -6525,8 +6524,6 @@ static signed short status_calc_def2(struct block_list *bl, struct status_change
 
 	if(sc->data[SC_SUN_COMFORT])
 		def2 += sc->data[SC_SUN_COMFORT]->val2;
-	if( sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 1 )
-		def2 += (5 + sc->data[SC_BANDING]->val1) * sc->data[SC_BANDING]->val2;
 #ifdef RENEWAL
 	if (sc->data[SC_SKA])
 		def2 += 80;
@@ -9336,6 +9333,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_OBLIVIONCURSE:
 			case SC_LEECHESEND:
 			case SC_CURSEDCIRCLE_TARGET:
+			case SC_BANDING_DEFENCE:
 			case SC__ENERVATION:
 			case SC__GROOMY:
 			case SC__IGNORANCE:
@@ -10634,6 +10632,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = ((val1 * 15) + (10 * (sd?pc_checkskill(sd,CR_DEFENDER):skill_get_max(CR_DEFENDER)))) * status_get_lv(bl) / 100; // Defence added
 			break;
 		case SC_BANDING:
+			val2 = (sd ? skill_banding_count(sd) : 1);
 			tick_time = 5000; // [GodLesZ] tick time
 			break;
 		case SC_MAGNETICFIELD:
@@ -11172,6 +11171,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_GLASTHEIM_HPSP:
 			val1 = 10000; // HP bonus
 			val2 = 1000; // SP bonus
+			break;
+		case SC_ANCILLA:
+			val1 = 15; // Heal Power rate bonus
+			val2 = 30; // SP Recovery rate bonus
 			break;
 
 		default:
@@ -13164,7 +13167,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_RENOVATIO:
 		if( --(sce->val4) >= 0 ) {
-			int heal = status->max_hp * 3 / 100;
+			int heal = status->max_hp * 5 / 100;
 			if( sc && sc->data[SC_AKAITSUKI] && heal )
 				heal = ~heal + 1;
 			status_heal(bl, heal, 0, 3);
@@ -13350,7 +13353,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_BANDING:
 		if( status_charge(bl, 0, 7 - sce->val1) ) {
-			if( sd ) pc_banding(sd, sce->val1);
+			sce->val2 = (sd ? skill_banding_count(sd) : 1);
 			sc_timer_next(5000 + tick);
 			return 0;
 		}

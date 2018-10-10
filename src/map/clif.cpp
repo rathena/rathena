@@ -1963,8 +1963,11 @@ void clif_buylist(struct map_session_data *sd, struct npc_data *nd)
 void clif_selllist(struct map_session_data *sd)
 {
 	int fd,i,c=0,val;
+	struct npc_data *nd;
 
 	nullpo_retv(sd);
+	if (!sd->npc_shopid || (nd = map_id2nd(sd->npc_shopid)) == NULL)
+		return;
 
 	fd=sd->fd;
 	WFIFOHEAD(fd, MAX_INVENTORY * 10 + 4);
@@ -1973,7 +1976,7 @@ void clif_selllist(struct map_session_data *sd)
 	{
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory_data[i] )
 		{
-			if( !pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i]))
+			if( !pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i], nd->subtype))
 				continue;
 
 			val=sd->inventory_data[i]->value_sell;
@@ -12205,9 +12208,10 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		}
 	}
 
-	if( (pc_cant_act2(sd) || sd->chatID) && skill_id != RK_REFRESH && !(skill_id == SR_GENTLETOUCH_CURE &&
-		(sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
-		sd->state.storage_flag && !(inf&INF_SELF_SKILL) ) //SELF skills can be used with the storage open, issue: 8027
+	if ((pc_cant_act2(sd) || sd->chatID) && 
+		skill_id != RK_REFRESH && 
+		!(skill_id == SR_GENTLETOUCH_CURE && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
+		!(sd->state.storage_flag && (inf&INF_SELF_SKILL))) //SELF skills can be used with the storage open, issue: 8027
 		return;
 
 	if( pc_issit(sd) )
@@ -18823,7 +18827,7 @@ void clif_display_pinfo(struct map_session_data *sd, int cmdtype) {
 		}
 		//1:Premium
 		if (pc_isvip(sd)) {
-			details_bexp[1] = battle_config.vip_base_exp_increase;
+			details_bexp[1] = battle_config.vip_base_exp_increase * 10;
 			if (details_bexp[1] < 0)
 				details_bexp[1] = 0 - details_bexp[1];
 		}

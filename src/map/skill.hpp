@@ -85,26 +85,28 @@ enum e_skill_inf2 {
 
 /// Skill info type 3
 enum e_skill_inf3 {
-	INF3_NOLP             = 0x00001, // Skill that can ignore Land Protector
-	INF3_FREE             = 0x00002, // Free
-	INF3_USABLE_HIDING    = 0x00004, // Skill that can be use in hiding
-	INF3_USABLE_DANCE     = 0x00008, // Skill that can be use while in dancing state
-	INF3_HIT_EMP          = 0x00010, // Skill that could hit emperium
-	INF3_STASIS_BL        = 0x00020, // Skill that can ignore SC_STASIS
-	INF3_KAGEHUMI_BL      = 0x00040, // Skill blocked by kagehumi
-	INF3_EFF_VULTURE      = 0x00080, // Skill range affected by AC_VULTURE
-	INF3_EFF_SNAKEEYE     = 0x00100, // Skill range affected by GS_SNAKEEYE
-	INF3_EFF_SHADOWJUMP   = 0x00200, // Skill range affected by NJ_SHADOWJUMP
-	INF3_EFF_RADIUS       = 0x00400, // Skill range affected by WL_RADIUS
-	INF3_EFF_RESEARCHTRAP = 0x00800, // Skill range affected by RA_RESEARCHTRAP
-	INF3_NO_EFF_HOVERING  = 0x01000, // Skill that does not affect user that has SC_HOVERING active
-	INF3_USABLE_WARG      = 0x02000, // Skill that can be use while riding warg
-	INF3_USABLE_MADO      = 0x04000, // Skill that can be used while on Madogear
-	INF3_USABLE_MANHOLE   = 0x08000, // Skill that can be used to target while under SC__MANHOLE effect
-	INF3_HIT_HIDING       = 0x10000, // Skill that affects hidden targets
-	INF3_SC_GLOOMYDAY_SK  = 0x20000, // Skill that affects SC_GLOOMYDAY_SK
-	INF3_SC_DANCEWITHWUG  = 0x40000, // Skill that is affected by SC_DANCEWITHWUG
-	INF3_BITE_BLOCK       = 0x80000, // Skill blocked by RA_WUGBITE
+	INF3_NOLP             = 0x000001, // Skill that can ignore Land Protector
+	INF3_FREE             = 0x000002, // Free
+	INF3_USABLE_HIDING    = 0x000004, // Skill that can be use in hiding
+	INF3_USABLE_DANCE     = 0x000008, // Skill that can be use while in dancing state
+	INF3_HIT_EMP          = 0x000010, // Skill that could hit emperium
+	INF3_STASIS_BL        = 0x000020, // Skill that can ignore SC_STASIS
+	INF3_KAGEHUMI_BL      = 0x000040, // Skill blocked by kagehumi
+	INF3_EFF_VULTURE      = 0x000080, // Skill range affected by AC_VULTURE
+	INF3_EFF_SNAKEEYE     = 0x000100, // Skill range affected by GS_SNAKEEYE
+	INF3_EFF_SHADOWJUMP   = 0x000200, // Skill range affected by NJ_SHADOWJUMP
+	INF3_EFF_RADIUS       = 0x000400, // Skill range affected by WL_RADIUS
+	INF3_EFF_RESEARCHTRAP = 0x000800, // Skill range affected by RA_RESEARCHTRAP
+	INF3_NO_EFF_HOVERING  = 0x001000, // Skill that does not affect user that has SC_HOVERING active
+	INF3_USABLE_WARG      = 0x002000, // Skill that can be use while riding warg
+	INF3_USABLE_MADO      = 0x004000, // Skill that can be used while on Madogear
+	INF3_USABLE_MANHOLE   = 0x008000, // Skill that can be used to target while under SC__MANHOLE effect
+	INF3_HIT_HIDING       = 0x010000, // Skill that affects hidden targets
+	INF3_SC_GLOOMYDAY_SK  = 0x020000, // Skill that affects SC_GLOOMYDAY_SK
+	INF3_SC_DANCEWITHWUG  = 0x040000, // Skill that is affected by SC_DANCEWITHWUG
+	INF3_BITE_BLOCK       = 0x080000, // Skill blocked by RA_WUGBITE
+	INF3_NO_EFF_AUTOGUARD = 0x100000, // Skill is not blocked by SC_AUTOGUARD (physical-skill only)
+	INF3_NO_EFF_CICADA    = 0x200000, // Skill is not blocked by SC_UTSUSEMI or SC_BUNSINJYUTSU (physical-skill only)
 };
 
 /// Walk intervals at which chase-skills are attempted to be triggered.
@@ -1425,7 +1427,7 @@ enum e_skill {
 	AB_ORATIO,
 	AB_LAUDAAGNUS,
 	AB_LAUDARAMUS,
-	AB_EUCHARISTICA,
+	AB_EUCHARISTICA, // Removed on kRO
 	AB_RENOVATIO,
 	AB_HIGHNESSHEAL,
 	AB_CLEARANCE,
@@ -2204,6 +2206,8 @@ int skill_select_menu(struct map_session_data *sd,uint16 skill_id);
 int skill_elementalanalysis(struct map_session_data *sd, int n, uint16 skill_lv, unsigned short *item_list); // Sorcerer Four Elemental Analisys.
 int skill_changematerial(struct map_session_data *sd, int n, unsigned short *item_list);	// Genetic Change Material.
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
+
+int skill_banding_count(struct map_session_data *sd);
 
 int skill_is_combo(uint16 skill_id);
 void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf);
