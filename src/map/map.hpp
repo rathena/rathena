@@ -1173,6 +1173,7 @@ extern char vendings_table[32];
 extern char vending_items_table[32];
 extern char market_table[32];
 extern char roulette_table[32];
+extern char guild_storage_log_table[32];
 
 void do_shutdown(void);
 
