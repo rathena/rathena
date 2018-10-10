@@ -18,34 +18,64 @@ prontera,131,217,5	script	Stylist#custom_stylist	122,{
 		getbattleflag("max_cloth_color"),
 		getbattleflag("max_hair_style"),
 		getbattleflag("max_hair_color");
+		getbattleflag("max_body_style");
 	setarray .@Look[1],
 		LOOK_CLOTHES_COLOR,
 		LOOK_HAIR,
 		LOOK_HAIR_COLOR;
-	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
+	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color: ~ Alternative Body");
 	set .@Revert, getlook(.@Look[.@s]);
 	set .@Style,1;
-	while(1) {
-		setlook .@Look[.@s], .@Style;
-		message strcharinfo(0),"This is style #"+.@Style+".";
-		set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
-		switch(select(.@menu$)) {
-		case 1:
-			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
-			break;
-		case 2:
-			set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
-			break;
-		case 3:
-			message strcharinfo(0),"Choose a style between 1 - "+.@Styles[.@s]+".";
-			input .@Style,0,.@Styles[.@s];
-			if (!.@Style)
-				set .@Style, rand(1,.@Styles[.@s]);
-			break;
-		case 4:
-			set .@Style, .@Revert;
-			setlook .@Look[.@s], .@Revert;
-			break;
+	if(.@s < 4) {
+		while(1) {
+			setlook .@Look[.@s], .@Style;
+			message strcharinfo(0),"This is style #"+.@Style+".";
+			set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
+			switch(select(.@menu$)) {
+			case 1:
+				set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
+				break;
+			case 2:
+				set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
+				break;
+			case 3:
+				message strcharinfo(0),"Choose a style between 1 - "+.@Styles[.@s]+".";
+				input .@Style,0,.@Styles[.@s];
+				if (!.@Style)
+					set .@Style, rand(1,.@Styles[.@s]);
+				break;
+			case 4:
+				set .@Style, .@Revert;
+				setlook .@Look[.@s], .@Revert;
+				break;
+			}
+		}
+	}
+	else
+	{
+		if( eaclass()&EAJL_THIRD > 0)
+		{
+			L_BODYSTYLE:
+			set .@body, select(" ~ Default: ~ Alternative: ~ Exit");
+			if(.@body == 1)
+			{
+				setlook LOOK_BODY2, 0;
+				message strcharinfo(0),"This is body style #1";
+				L_goto BODYSTYLE;
+			}
+			else if(.@body == 2)
+			{
+				setlook LOOK_BODY2, 1;
+				message strcharinfo(0),"This is body style #2";
+				L_goto BODYSTYLE;
+			}
+			end;
+		}
+		else
+		{
+			mes "[Stylist]";
+			mes "I am sorry, but only 3rd Class have alternative body.";
+			close;
 		}
 	}
 }
