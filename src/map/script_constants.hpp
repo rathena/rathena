@@ -7295,6 +7295,7 @@
 	export_constant(BL_PET);
 	export_constant(BL_HOM);
 	export_constant(BL_MER);
+	export_constant(BL_NPC);
 	export_constant(BL_ELEM);
 
 	/* skill damage mapflag types */
@@ -7304,6 +7305,17 @@
 	export_constant(SKILLDMG_OTHER);
 	export_constant(SKILLDMG_MAX);
 	export_constant(SKILLDMG_CASTER);
+
+	/* guild permissions */
+	export_constant(GUILD_PERM_INVITE);
+	export_constant(GUILD_PERM_EXPEL);
+	export_constant(GUILD_PERM_STORAGE);
+	export_constant(GUILD_PERM_ALL);
+
+	/* guild storage log */
+	export_constant(GUILDSTORAGE_LOG_FINAL_SUCCESS);
+	export_constant(GUILDSTORAGE_LOG_EMPTY);
+	export_constant(GUILDSTORAGE_LOG_FAILED);
 
 	#undef export_constant
 	#undef export_constant2
