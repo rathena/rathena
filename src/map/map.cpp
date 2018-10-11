@@ -3569,6 +3569,7 @@ void map_flags_init(void){
 		// Clear adjustment data, will be reset after loading NPC
 		mapdata->damage_adjust = {};
 		mapdata->skill_damage.clear();
+		mapdata->skill_duration.clear();
 		map_free_questinfo(mapdata);
 
 		if (instance_start && i >= instance_start)
@@ -3594,6 +3595,7 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 
 	dst_map->flag.insert(src_map->flag.begin(), src_map->flag.end());
 	dst_map->skill_damage.insert(dst_map->skill_damage.begin(), src_map->skill_damage.begin(), src_map->skill_damage.end());
+	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
 	dst_map->zone = src_map->zone;
 	dst_map->qi_count = 0;
@@ -4472,9 +4474,6 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
  * @param per: Skill duration adjustment value in percent
  */
 void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
-	if (mapd->skill_duration.size() >= UINT16_MAX)
-		return;
-
 	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
 		mapd->skill_duration[skill_id] += per;
 	else // Update previous entry

@@ -4157,7 +4157,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					if (!args.skill_duration.skill_id)
 						ShowError("npc_parse_mapflag: skill_duration: Invalid skill name '%s' for Skill Duration mapflag. Skipping (file '%s', line '%d')\n", skill_name, filepath, strline(buffer, start - buffer));
 					else {
-						args.skill_duration.per = cap_value(args.skill_duration.per, 0, 100000);
+						args.skill_duration.per = cap_value(args.skill_duration.per, 0, UINT16_MAX);
 						map_setmapflag_sub(m, MF_SKILL_DURATION, true, &args);
 					}
 				}
