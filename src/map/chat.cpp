@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "chat.hpp"
@@ -7,19 +7,19 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
-#include "../common/mmo.hpp"
 
-#include "map.hpp"
+#include "achievement.hpp"
 #include "atcommand.hpp" // msg_txt()
 #include "battle.hpp" // struct battle_config
 #include "clif.hpp"
+#include "map.hpp"
 #include "npc.hpp" // npc_event_do()
 #include "pc.hpp"
 #include "pc_groups.hpp"
-#include "achievement.hpp"
 
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 
@@ -86,7 +86,7 @@ int chat_createpcchat(struct map_session_data* sd, const char* title, const char
 	if( sd->state.vending || sd->state.buyingstore ) // not chat, when you already have a store open
 		return 0;
 
-	if( map[sd->bl.m].flag.nochat ) {
+	if( map_getmapflag(sd->bl.m, MF_NOCHAT) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,281));
 		return 0; //Can't create chatrooms on this map.
 	}

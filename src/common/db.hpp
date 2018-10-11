@@ -1,5 +1,5 @@
 /*****************************************************************************\
- *  Copyright (c) Athena Dev Teams - Licensed under GNU GPL                  *
+ *  Copyright (c) rAthena Dev Teams - Licensed under GNU GPL                 *
  *  For more information, see LICENCE in the main folder                     *
  *                                                                           *
  *  This file is separated in two sections:                                  *
@@ -39,8 +39,8 @@
  * @encoding US-ASCII                                                        *
  * @see common#db.cpp                                                        *
 \*****************************************************************************/
-#ifndef _DB_HPP_
-#define _DB_HPP_
+#ifndef DB_HPP
+#define DB_HPP
 
 #include <stdarg.h>
 
@@ -1655,4 +1655,4 @@ void  linkdb_foreach (struct linkdb_node** head, LinkDBFunc func, ...);
 /// @return negative if v1 is top, positive if v2 is top, 0 if equal
 #define BHEAP_MAXTOPCMP(v1,v2) ( v1 == v2 ? 0 : v1 > v2 ? -1 : 1 )
 
-#endif /* _DB_HPP_ */
+#endif /* DB_HPP */

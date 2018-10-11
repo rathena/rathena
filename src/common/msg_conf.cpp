@@ -1,9 +1,13 @@
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
+
+#include "msg_conf.hpp"
+
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "malloc.hpp"
-#include "msg_conf.hpp"
 #include "showmsg.hpp"
 
 /*

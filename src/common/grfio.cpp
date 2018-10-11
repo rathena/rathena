@@ -1,5 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
+
+#include "grfio.hpp"
+
+#include <stdlib.h>
+#include <zlib.h>
 
 #include "cbasetypes.hpp"
 #include "des.hpp"
@@ -7,10 +12,6 @@
 #include "showmsg.hpp"
 #include "strlib.hpp"
 #include "utils.hpp"
-#include "grfio.hpp"
-
-#include <stdlib.h>
-#include <zlib.h>
 
 //----------------------------
 //	file entry table struct
@@ -631,8 +632,8 @@ static int grfio_entryread(const char* grfname, int gentry)
 static bool grfio_parse_restable_row(const char* row)
 {
 	char w1[256], w2[256];
-	char src[256], dst[256];
-	char local[256];
+	char src[512], dst[512];
+	char local[512];
 	FILELIST* entry;
 
 	if( sscanf(row, "%255[^#\r\n]#%255[^#\r\n]#", w1, w2) != 2 )

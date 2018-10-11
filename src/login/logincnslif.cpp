@@ -1,24 +1,18 @@
-/**
- * @file logincnslif.c
- * Module purpose is to handle incoming and outgoing requests with console.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "logincnslif.hpp"
 
 #include <stdlib.h>
 #include <string.h>
 
+#include "../common/cli.hpp"
+#include "../common/ers.hpp"
+#include "../common/md5calc.hpp"
 #include "../common/mmo.hpp" //cbasetype + NAME_LENGTH
 #include "../common/showmsg.hpp" //show notice
-#include "../common/md5calc.hpp"
-#include "../common/ers.hpp"
-#include "../common/cli.hpp"
-#include "../common/timer.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
 #include "login.hpp"
 

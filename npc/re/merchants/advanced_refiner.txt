@@ -72,6 +72,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	mes "[Holink]";
 	.@refineitemid = getequipid(.@part); // save id of the item
 	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 	.@price = getequiprefinecost(.@part, REFINE_COST_HOLINK, REFINE_ZENY_COST);
 	.@material = getequiprefinecost(.@part, REFINE_COST_HOLINK, REFINE_MATERIAL_ID);
 
@@ -148,7 +149,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	set Zeny, Zeny-.@price;
 
 	// anti-hack
-	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) ||
+	if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) ||
 		callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
 		mes "[Holink]";
 		emotion ET_FRET;
