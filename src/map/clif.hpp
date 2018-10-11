@@ -4,6 +4,8 @@
 #ifndef CLIF_HPP
 #define CLIF_HPP
 
+#include <vector>
+
 #include <stdarg.h>
 
 #include "../common/cbasetypes.hpp"
@@ -35,6 +37,8 @@ struct party_booking_ad_info;
 struct sale_item_data;
 struct mail_message;
 struct achievement;
+struct guild_log_entry;
+enum e_guild_storage_log : uint16;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -1094,5 +1098,7 @@ void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 
 void clif_attendence_response( struct map_session_data *sd, int32 data );
 
 void clif_weight_limit( struct map_session_data* sd );
+
+void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result );
 
 #endif /* CLIF_HPP */

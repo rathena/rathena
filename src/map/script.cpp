@@ -9969,6 +9969,61 @@ BUILDIN_FUNC(guildopenstorage)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(guildopenstorage_log){
+#if PACKETVER < 20140205
+	ShowError( "buildin_guildopenstorage_log: This command requires PACKETVER 2014-02-05 or newer.\n" );
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 2, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint( st, storage_guild_log_read( sd ) );
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
+BUILDIN_FUNC(guild_has_permission){
+	struct map_session_data* sd;
+
+	if( !script_charid2sd( 3, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int permission = script_getnum(st,2);
+
+	if( permission == 0 ){
+		ShowError( "buildin_guild_has_permission: No permission given.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( ( permission & GUILD_PERM_ALL ) == 0 ){
+		ShowError( "buildin_guild_has_permission: Invalid permission '%d'.\n", permission );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( !sd->guild ){
+		script_pushint( st, false );
+
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	int position = guild_getposition(sd);
+	
+	if( position < 0 || ( sd->guild->position[position].mode&permission ) != permission ){
+		script_pushint( st, false );
+
+		return SCRIPT_CMD_SUCCESS;
+	}
+	
+	script_pushint( st, true );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Make player use a skill trought item usage
  *------------------------------------------*/
@@ -11056,6 +11111,90 @@ BUILDIN_FUNC(getareausers)
 	map_foreachinallarea(buildin_getareausers_sub,
 		m,x0,y0,x1,y1,BL_PC,&users);
 	script_pushint(st,users);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * getunits(<type>{,<array_variable>[<first value>]})
+ * getmapunits(<type>,<"map name">{,<array_variable>[<first value>]})
+ * getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>[<first value>]})
+ *------------------------------------------*/
+BUILDIN_FUNC(getunits)
+{
+	struct block_list *bl = NULL;
+	struct map_session_data *sd = NULL;
+	struct script_data *data = NULL;
+	char *command = (char *)script_getfuncname(st);
+	const char *str;
+	const char *name;
+	int type = script_getnum(st, 2);
+	int size = 0;
+	int32 idx, id;
+	int16 m = 0, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
+	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
+
+	if (!strcmp(command, "getmapunits"))
+	{
+		str = script_getstr(st, 3);
+		if ((m = map_mapname2mapid(str)) < 0) {
+			script_pushint(st, -1);
+			st->state = END;
+			ShowWarning("buildin_%s: Unknown map '%s'.\n", command, str);
+			return SCRIPT_CMD_FAILURE;
+		}
+		if (script_hasdata(st, 4))
+			data = script_getdata(st, 4);
+	}
+	else if (!strcmp(command, "getareaunits"))
+	{
+		str = script_getstr(st, 3);
+		if ((m = map_mapname2mapid(str)) < 0) {
+			script_pushint(st, -1);
+			st->state = END;
+			ShowWarning("buildin_%s: Unknown map '%s'.\n", command, str);
+			return SCRIPT_CMD_FAILURE;
+		}
+		x0 = script_getnum(st, 4);
+		y0 = script_getnum(st, 5);
+		x1 = script_getnum(st, 6);
+		y1 = script_getnum(st, 7);
+
+		if (script_hasdata(st, 8))
+			data = script_getdata(st, 8);
+	}
+	else
+	{
+		if (script_hasdata(st, 3))
+			data = script_getdata(st, 3);
+	}
+
+	if (data)
+	{
+		if (!data_isreference(data))
+		{
+			ShowError("buildin_%s: not a variable\n", command);
+			script_reportdata(data);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+		id = reference_getid(data);
+		idx = reference_getindex(data);
+		name = reference_getname(data);
+	}
+
+	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
+	{
+		if (!m || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y <= y0) && (bl->x <= x1 && bl->y >= y1)))
+		{
+			if (data)
+				set_reg(st, sd, reference_uid(id, idx + size), name, (is_string_variable(name) ? (void*)status_get_name(bl) : (void*)__64BPRTSIZE(bl->id)), reference_getref(data));
+			size++;
+		}
+	}
+
+	mapit_free(iter);
+
+	script_pushint(st, size);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -24013,6 +24152,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(gettimestr,"si?"),
 	BUILDIN_DEF(openstorage,""),
 	BUILDIN_DEF(guildopenstorage,""),
+	BUILDIN_DEF(guildopenstorage_log,"?"),
+	BUILDIN_DEF(guild_has_permission,"i?"),
 	BUILDIN_DEF(itemskill,"vi?"),
 	BUILDIN_DEF(produce,"i"),
 	BUILDIN_DEF(cooking,"i"),
@@ -24043,6 +24184,9 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(getmapguildusers,"si"),
 	BUILDIN_DEF(getmapusers,"s"),
 	BUILDIN_DEF(getareausers,"siiii"),
+	BUILDIN_DEF(getunits, "i?"),
+	BUILDIN_DEF2(getunits, "getmapunits", "is?"),
+	BUILDIN_DEF2(getunits, "getareaunits", "isiiii?"),
 	BUILDIN_DEF(getareadropitem,"siiiiv"),
 	BUILDIN_DEF(enablenpc,"s"),
 	BUILDIN_DEF(disablenpc,"s"),

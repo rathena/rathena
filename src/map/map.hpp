@@ -1033,6 +1033,8 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 // instances
 int map_addinstancemap(const char *name, unsigned short instance_id);
 int map_delinstancemap(int m);
+void map_data_copyall(void);
+void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
 
 // player to map session
 void map_addnickdb(int charid, const char* nick);
@@ -1181,6 +1183,7 @@ extern char vendings_table[32];
 extern char vending_items_table[32];
 extern char market_table[32];
 extern char roulette_table[32];
+extern char guild_storage_log_table[32];
 
 void do_shutdown(void);
 
