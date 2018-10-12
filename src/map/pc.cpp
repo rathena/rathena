@@ -2133,13 +2133,14 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 			flag |= BF_NORMAL; //By default autospells should only trigger on normal weapon attacks.
 	}
 
-	for (auto &it : spell) {
-		if ((it.card_id == card_id || it.rate < 0 || rate < 0) && it.id == id && it.lv == lv) {
-			if (!battle_config.autospell_stacking && it.rate > 0 && rate > 0)
+	if (!battle_config.autospell_stacking && it.rate > 0 && rate > 0) // Stacking disabled, make a new entry
+		;
+	else {
+		for (auto &it : spell) {
+			if ((it.card_id == card_id || it.rate < 0 || rate < 0) && it.id == id && it.lv == lv && it.flag == flag) {
+				it.rate += rate;
 				return;
-			it.rate += rate;
-			it.flag = flag;
-			return;
+			}
 		}
 	}
 
@@ -2192,7 +2193,7 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src
  * @param arrow_rate: success chance if bonus comes from arrow-type item
  * @param flag: Target flag
  * @param duration: Duration. If 0 use default duration lookup for associated skill with level 7
- **/
+ */
 static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, short rate, short arrow_rate, unsigned char flag, unsigned int duration)
 {
 	if (effect.size() == MAX_PC_BONUS) {
@@ -2235,9 +2236,10 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
  * @param effect: Effect array
  * @param sc: SC/Effect type
  * @param rate: Success chance
- * @param flag: Target flag
+ * @param skill_id: Skill to cast
+ * @param target: Target type
  * @param duration: Duration. If 0 use default duration lookup for associated skill with level 7
- **/
+ */
 static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enum sc_type sc, short rate, short skill_id, unsigned char target, unsigned int duration)
 {
 	if (effect.size() == MAX_PC_BONUS) {
@@ -2330,6 +2332,18 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 	drop.push_back(entry);
 }
 
+/**
+ * Add autobonus to player when attacking/attacked
+ * @param bonus: Bonus array
+ * @param script: Script to execute
+ * @param rate: Success chance
+ * @param dur: Duration
+ * @param flag: Battle flag
+ * @param other_script: Secondary script to execute
+ * @param pos: Item equip position
+ * @param onskill: Skill used to trigger autobonus
+ * @return True on success or false otherwise
+ */
 bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short flag, const char *other_script, unsigned int pos, bool onskill)
 {
 	if (bonus.size() == MAX_PC_BONUS) {
@@ -2365,15 +2379,21 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 	return true;
 }
 
-void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &autobonus, bool restore)
+/**
+ * Remove an autobonus from player
+ * @param sd: Player data
+ * @param bonus: Autobonus array
+ * @param restore: Run script on clearing or not
+ */
+void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore)
 {
 	if (!sd)
 		return;
 
-	for (uint8 i = 0; i < autobonus.size(); i++) {
-		if (autobonus[i].active != INVALID_TIMER) {
-			if (restore && (sd->state.autobonus&autobonus[i].pos) == autobonus[i].pos) {
-				if (autobonus[i].bonus_script) {
+	for (uint8 i = 0; i < bonus.size(); i++) {
+		if (bonus[i].active != INVALID_TIMER) {
+			if (restore && (sd->state.autobonus&bonus[i].pos) == bonus[i].pos) {
+				if (bonus[i].bonus_script) {
 					unsigned int equip_pos_idx = 0;
 
 					// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
@@ -2382,24 +2402,29 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &auto
 							equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
 					}
 
-					if ((equip_pos_idx&autobonus[i].pos) == autobonus[i].pos)
-						script_run_autobonus(autobonus[i].bonus_script, sd, autobonus[i].pos);
+					if ((equip_pos_idx&bonus[i].pos) == bonus[i].pos)
+						script_run_autobonus(bonus[i].bonus_script, sd, bonus[i].pos);
 				}
 				continue;
 			} else { // Logout / Unequipped an item with an activated bonus
-				delete_timer(autobonus[i].active, pc_endautobonus);
-				autobonus[i].active = INVALID_TIMER;
+				delete_timer(bonus[i].active, pc_endautobonus);
+				bonus[i].active = INVALID_TIMER;
 			}
 		}
 
-		if (autobonus[i].bonus_script)
-			aFree(autobonus[i].bonus_script);
-		if (autobonus[i].other_script)
-			aFree(autobonus[i].other_script);
+		if (bonus[i].bonus_script)
+			aFree(bonus[i].bonus_script);
+		if (bonus[i].other_script)
+			aFree(bonus[i].other_script);
 	}
-	autobonus.clear();
+	bonus.clear();
 }
 
+/**
+ * Execute autobonus on player
+ * @param sd: Player data
+ * @param autobonus: Autobonus to run
+ */
 void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
 {
 	if (!sd || !autobonus)
@@ -2426,6 +2451,9 @@ void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
 	status_calc_pc(sd,SCO_FORCE);
 }
 
+/**
+ * Remove autobonus timer from player
+ */
 TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
 	struct s_autobonus *autobonus = (struct s_autobonus *)data;
@@ -2439,6 +2467,13 @@ TIMER_FUNC(pc_endautobonus){
 	return 0;
 }
 
+/**
+ * Add element bonus to player when attacking
+ * @param sd: Player data
+ * @param ele: Element to adjust
+ * @param rate: Success chance
+ * @param flag: Battle flag
+ */
 static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
 	struct weapon_data *wd = (sd->state.lr_flag ? &sd->left_weapon : &sd->right_weapon);
@@ -2475,6 +2510,13 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 	wd->addele2.push_back(entry);
 }
 
+/**
+ * Reduce element bonus to player when attacking
+ * @param sd: Player data
+ * @param ele: Element to adjust
+ * @param rate: Success chance
+ * @param flag: Battle flag
+ */
 static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
 	struct s_addele2 entry;
@@ -2510,6 +2552,12 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 	sd->subele2.push_back(entry);
 }
 
+/**
+ * General item bonus for player
+ * @param bonus: Bonus array
+ * @param id: Key
+ * @param val: Value
+ */
 static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int val)
 {
 	struct s_item_bonus entry;
