@@ -2133,7 +2133,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 			flag |= BF_NORMAL; //By default autospells should only trigger on normal weapon attacks.
 	}
 
-	if (!battle_config.autospell_stacking && it.rate > 0 && rate > 0) // Stacking disabled, make a new entry
+	if (!battle_config.autospell_stacking && rate > 0) // Stacking disabled, make a new entry
 		;
 	else {
 		for (auto &it : spell) {
