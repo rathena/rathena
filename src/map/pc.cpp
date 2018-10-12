@@ -2103,10 +2103,17 @@ int pc_disguise(struct map_session_data *sd, int class_)
 /// Check for valid SC, break & show error message if invalid SC
 #define PC_BONUS_CHK_SC(sc,bonus) { if ((sc) <= SC_NONE || (sc) >= SC_MAX) { PC_BONUS_SHOW_ERROR((bonus),Effect,(sc)); }}
 
+/**
+ * Add auto spell bonus for player while attacking/attacked
+ * @param spell: Spell array
+ * @param id: Skill to cast
+ * @param lv: Skill level
+ * @param rate: Success chance
+ * @param flag: Battle flag
+ * @param card_id: Used to prevent card stacking
+ */
 static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short lv, short rate, short flag, unsigned short card_id)
 {
-	struct s_autospell entry;
-
 	if (spell.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_autospell: Reached max (%d) number of autospells per character!\n", MAX_PC_BONUS);
 		return;
@@ -2136,6 +2143,8 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 		}
 	}
 
+	struct s_autospell entry;
+
 	entry.id = id;
 	entry.lv = lv;
 	entry.rate = rate;
@@ -2145,11 +2154,17 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 	spell.push_back(entry);
 }
 
+/**
+ * Add auto spell bonus for player while using skills
+ * @param spell: Spell array
+ * @param src_skill: Trigger skill
+ * @param id: Support or target type
+ * @param lv: Skill level
+ * @param rate: Success chance
+ * @param card_id: Used to prevent card stacking
+ */
 static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
 {
-	uint8 i = 0;
-	struct s_autospell entry;
-
 	if (spell.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", MAX_PC_BONUS);
 		return;
@@ -2157,6 +2172,8 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src
 
 	if (!rate)
 		return;
+
+	struct s_autospell entry;
 
 	entry.flag = src_skill;
 	entry.id = id;
@@ -2168,7 +2185,7 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src
 }
 
 /**
- * Add inflict effect bonus for player while attacking/atatcked
+ * Add inflict effect bonus for player while attacking/attacked
  * @param effect: Effect array
  * @param sc: SC/Effect type
  * @param rate: Success chance
@@ -2178,8 +2195,6 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src
  **/
 static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, short rate, short arrow_rate, unsigned char flag, unsigned int duration)
 {
-	struct s_addeffect entry;
-
 	if (effect.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addeff: Reached max (%d) number of add effects per character!\n", MAX_PC_BONUS);
 		return;
@@ -2204,6 +2219,8 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 		}
 	}
 
+	struct s_addeffect entry;
+
 	entry.sc = sc;
 	entry.rate = rate;
 	entry.arrow_rate = arrow_rate;
@@ -2223,8 +2240,6 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
  **/
 static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enum sc_type sc, short rate, short skill_id, unsigned char target, unsigned int duration)
 {
-	struct s_addeffectonskill entry;
-
 	if (effect.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addeff_onskill: Reached max (%d) number of add effects per character!\n", MAX_PC_BONUS);
 		return;
@@ -2240,6 +2255,8 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 			return;
 		}
 	}
+
+	struct s_addeffectonskill entry;
 
 	entry.sc = sc;
 	entry.rate = rate;
@@ -2261,8 +2278,6 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
  */
 static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nameid, uint16 group, int class_, short race, int rate)
 {
-	struct s_add_drop entry;
-
 	if (!nameid && !group) {
 		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
 		return;
@@ -2304,6 +2319,8 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 		}
 	}
 
+	struct s_add_drop entry;
+
 	entry.nameid = nameid;
 	entry.group = group;
 	entry.race = race;
@@ -2315,8 +2332,6 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 
 bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short flag, const char *other_script, unsigned int pos, bool onskill)
 {
-	struct s_autobonus entry;
-
 	if (bonus.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", MAX_PC_BONUS);
 		return false;
@@ -2334,6 +2349,8 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 				flag |= BF_NORMAL | BF_SKILL;
 		}
 	}
+
+	struct s_autobonus entry;
 
 	entry.rate = rate;
 	entry.duration = dur;
@@ -2428,7 +2445,7 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 	struct s_addele2 entry;
 
 	if (wd->addele2.size() == MAX_PC_BONUS) {
-		ShowError("pc_bonus_addele: Reached max (%d) number of add element damage bonuses per character!\n", MAX_PC_BONUS);
+		ShowWarning("pc_bonus_addele: Reached max (%d) number of add element damage bonuses per character!\n", MAX_PC_BONUS);
 		return;
 	}
 
@@ -2463,7 +2480,7 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 	struct s_addele2 entry;
 
 	if (sd->subele2.size() == MAX_PC_BONUS) {
-		ShowError("pc_bonus_subele: Reached max (%d) number of resist element damage bonuses per character!\n", MAX_PC_BONUS);
+		ShowWarning("pc_bonus_subele: Reached max (%d) number of resist element damage bonuses per character!\n", MAX_PC_BONUS);
 		return;
 	}
 
@@ -3228,7 +3245,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->reseff.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_RESEFF: Reached max (%d) number of resistance bonuses per character!\n", MAX_PC_BONUS);
+			ShowWarning("pc_bonus2: SP_RESEFF: Reached max (%d) number of resistance bonuses per character!\n", MAX_PC_BONUS);
 			break;
 		}
 
@@ -3264,7 +3281,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			struct weapon_data *wd = (sd->state.lr_flag ? &sd->left_weapon : &sd->right_weapon);
 
 			if (wd->add_dmg.size() == MAX_PC_BONUS) {
-				ShowError("pc_bonus2: SP_ADD_DAMAGE_CLASS: Reached max (%d) number of add class damage bonuses per character!\n", MAX_PC_BONUS);
+				ShowWarning("pc_bonus2: SP_ADD_DAMAGE_CLASS: Reached max (%d) number of add class damage bonuses per character!\n", MAX_PC_BONUS);
 				break;
 			}
 
@@ -3275,7 +3292,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->add_mdmg.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_ADD_MAGIC_DAMAGE_CLASS: Reached max (%d) number of add class magic dmg bonuses per character!\n", MAX_PC_BONUS);
+			ShowWarning("pc_bonus2: SP_ADD_MAGIC_DAMAGE_CLASS: Reached max (%d) number of add class magic dmg bonuses per character!\n", MAX_PC_BONUS);
 			break;
 		}
 
@@ -3285,7 +3302,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->add_def.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_ADD_DEF_MONSTER: Reached max (%d) number of add class def bonuses per character!\n", MAX_PC_BONUS);
+			ShowWarning("pc_bonus2: SP_ADD_DEF_MONSTER: Reached max (%d) number of add class def bonuses per character!\n", MAX_PC_BONUS);
 			break;
 		}
 
@@ -3295,7 +3312,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->add_mdef.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_ADD_MDEF_MONSTER: Reached max (%d) number of add class mdef bonuses per character!\n", MAX_PC_BONUS);
+			ShowWarning("pc_bonus2: SP_ADD_MDEF_MONSTER: Reached max (%d) number of add class mdef bonuses per character!\n", MAX_PC_BONUS);
 			break;
 		}
 
@@ -3388,7 +3405,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillatk.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_SKILL_ATK: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SKILL_ATK: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
@@ -3398,7 +3415,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillheal.size() == MAX_PC_BONUS) { // Better mention this so the array length can be updated. [Skotlex]
-			ShowError("pc_bonus2: SP_SKILL_HEAL: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SKILL_HEAL: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 		
@@ -3408,7 +3425,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillheal2.size() == MAX_PC_BONUS) { // Better mention this so the array length can be updated. [Skotlex]
-			ShowError("pc_bonus2: SP_SKILL_HEAL2: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SKILL_HEAL2: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 		
@@ -3418,7 +3435,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillblown.size() == MAX_PC_BONUS) { //Better mention this so the array length can be updated. [Skotlex]
-			ShowError("pc_bonus2: SP_ADD_SKILL_BLOW: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_ADD_SKILL_BLOW: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 		
@@ -3469,11 +3486,11 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (!itemdb_exists(type2)) {
-			ShowError("pc_bonus2: SP_ADD_ITEM_HEAL_RATE Invalid item with id %d\n", type2);
+			ShowWarning("pc_bonus2: SP_ADD_ITEM_HEAL_RATE Invalid item with id %d\n", type2);
 			break;
 		}
 		if (sd->itemhealrate.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_ADD_ITEM_HEAL_RATE: Reached max (%d) number of item heal bonuses per character!\n", MAX_PC_BONUS);
+			ShowWarning("pc_bonus2: SP_ADD_ITEM_HEAL_RATE: Reached max (%d) number of item heal bonuses per character!\n", MAX_PC_BONUS);
 			break;
 		}
 
@@ -3483,11 +3500,11 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if (sd->state.lr_flag == 2)
 			break;
 		if (!type2 || !itemdb_group_exists(type2)) {
-			ShowError("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE: Invalid item group with id %d\n", type2);
+			ShowWarning("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE: Invalid item group with id %d\n", type2);
 			break;
 		}
 		if (sd->itemhealrate.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE: Reached max (%d) number of item heal bonuses per character!\n", MAX_PC_BONUS);
+			ShowWarning("pc_bonus2: SP_ADD_ITEMGROUP_HEAL_RATE: Reached max (%d) number of item heal bonuses per character!\n", MAX_PC_BONUS);
 			break;
 		}
 
@@ -3588,7 +3605,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillusesprate.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_SKILL_USE_SP_RATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SKILL_USE_SP_RATE: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 		
@@ -3598,7 +3615,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skilldelay.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_SKILL_DELAY: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SKILL_DELAY: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
@@ -3608,7 +3625,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillcooldown.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_SKILL_COOLDOWN: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SKILL_COOLDOWN: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
@@ -3619,7 +3636,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillfixcast.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_SKILL_FIXEDCAST: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SKILL_FIXEDCAST: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
@@ -3629,7 +3646,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillvarcast.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_SKILL_VARIABLECAST: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SKILL_VARIABLECAST: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
@@ -3640,7 +3657,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillcastrate.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_VARCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (%d%%) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_VARCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
@@ -3650,7 +3667,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillfixcastrate.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_FIXCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (%d%%) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_FIXCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
@@ -3667,7 +3684,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillcastrate.size() == MAX_PC_BONUS) { //Better mention this so the array length can be updated. [Skotlex]
-			ShowError("pc_bonus2: %s: Reached max (%d) number of skills per character, bonus skill %d (%d%%) lost.\n", (type == SP_CASTRATE) ? "SP_CASTRATE" : "SP_VARCASTRATE", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: %s: Reached max (%d) number of skills per character, bonus skill %d (%d%%) lost.\n", (type == SP_CASTRATE) ? "SP_CASTRATE" : "SP_VARCASTRATE", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
@@ -3678,7 +3695,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag == 2)
 			break;
 		if (sd->skillusesp.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_SKILL_USE_SP: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SKILL_USE_SP: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
@@ -3686,7 +3703,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_SUB_SKILL: // bonus2 bSubSkill,sk,n;
 		if (sd->subskill.size() == MAX_PC_BONUS) {
-			ShowError("pc_bonus2: SP_SUB_SKILL: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
+			ShowWarning("pc_bonus2: SP_SUB_SKILL: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
 
