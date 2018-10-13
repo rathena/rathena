@@ -12473,4 +12473,6 @@ REPLACE INTO `item_db_re` VALUES (31476,'C_Cherry_Blossom_Hat_YL','C Yellow Cher
 REPLACE INTO `item_db_re` VALUES (31478,'C_Eleanor_Wig_','C Eleanors Wig Lower',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1502,NULL,NULL,NULL);
 #
 REPLACE INTO `item_db_re` VALUES (32005,'Illusion_Pole_Axe','Illusion Pole Axe',5,0,NULL,1500,'190',NULL,3,2,0x00004082,63,2,2,4,'120',1,4,'.@r = getrefine(); bonus bStr,3; bonus bInt,2; bonus bDex,2; if (.@r >= 13) { .@val = -2000; } else if (.@r >= 9) { .@val = -1000; } bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",.@val;',NULL,NULL);
+#
+REPLACE INTO `item_db_re` VALUES (32237,'Celine\'s_Brooch','Celine\'s Brooch',4,10,NULL,500,NULL,0,NULL,1,0xFFFFFFFE,63,2,136,NULL,'100',0,0,'bonus bMatkRate,5; bonus bVariableCastrate,-10;',NULL,NULL);
 
