@@ -1656,10 +1656,15 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	}
 
 	for (const auto &requirement : pet_db_ptr->evolution_data[pet_id].requirements) {
-		int count = 0;
+		int count = requirement.second;
 		for (int i = 0; i < MAX_INVENTORY; i++) {
-			if (sd->inventory.u.items_inventory[i].nameid == requirement.first) {
-				pc_delitem(sd, i, requirement.second, 0, 0, LOG_TYPE_OTHER);
+			item *slot = &sd->inventory.u.items_inventory[i];
+			int deduction = min(requirement.second, slot->amount);
+			if (slot->nameid == requirement.first) {
+				pc_delitem(sd, i, deduction, 0, 0, LOG_TYPE_OTHER);
+				count -= deduction;
+				if (count == 0)
+					break;
 			}
 		}
 	}
