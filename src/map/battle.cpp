@@ -8012,7 +8012,7 @@ static const struct _battle_data {
 	{ "enable_critical",                    &battle_config.enable_critical,                 BL_PC,  BL_NUL, BL_ALL,         },
 	{ "mob_critical_rate",                  &battle_config.mob_critical_rate,               100,    0,      INT_MAX,        },
 	{ "critical_rate",                      &battle_config.critical_rate,                   100,    0,      INT_MAX,        },
-	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_PC|BL_HOM, BL_NUL, BL_ALL,   },
+	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_CHAR|BL_NPC, BL_NUL, BL_ALL,   },
 	{ "enable_perfect_flee",                &battle_config.enable_perfect_flee,             BL_PC|BL_PET, BL_NUL, BL_ALL,   },
 	{ "casting_rate",                       &battle_config.cast_rate,                       100,    0,      INT_MAX,        },
 	{ "delay_rate",                         &battle_config.delay_rate,                      100,    0,      INT_MAX,        },

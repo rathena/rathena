@@ -7228,7 +7228,7 @@ ACMD_FUNC(mobinfo)
 		clif_displaymessage(fd, atcmd_output);
 
 		sprintf(atcmd_output, msg_txt(sd,1244), //  ATK:%d~%d  Range:%d~%d~%d  Size:%s  Race: %s  Element: %s (Lv:%d)
-			mob->status.rhw.atk, mob->status.rhw.atk2, mob->status.rhw.range,
+			mob->status.batk + mob->status.rhw.atk, mob->status.batk + mob->status.rhw.atk2, mob->status.rhw.range,
 			mob->range2 , mob->range3, msize[mob->status.size],
 			mrace[mob->status.race], melement[mob->status.def_ele], mob->status.ele_lv);
 		clif_displaymessage(fd, atcmd_output);

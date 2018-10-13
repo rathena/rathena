@@ -550,7 +550,8 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 				struct status_data *status = status_get_status_data(src);
 				int min, max;
 
-				min = max = status_base_matk(src, status, status_get_lv(src));
+				min = status_base_matk_min(src, status, status_get_lv(src));
+				max = status_base_matk_max(src, status, status_get_lv(src));
 				if( status->rhw.matk > 0 ){
 					int wMatk, variance;
 					wMatk = status->rhw.matk;
@@ -10725,7 +10726,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		{
 			int heal = 5 * status_get_lv(&hd->bl) +
 #ifdef RENEWAL
-						status_base_matk(bl, &hd->battle_status, status_get_lv(&hd->bl));
+						status_base_matk_min(bl, &hd->battle_status, status_get_lv(&hd->bl));
 #else
 						status_base_matk_min(&hd->battle_status);
 #endif
