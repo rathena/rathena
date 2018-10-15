@@ -1249,6 +1249,35 @@ int party_sub_count_class(struct block_list *bl, va_list ap)
 	return 1;
 }
 
+/**
+ * Special check for Royal Guard's Banding skill.
+ * @param bl: Object invoking the counter
+ * @param ap: List of parameters: Check Type
+ * @return 1 or total HP on success or 0 otherwise
+ */
+int party_sub_count_banding(struct block_list *bl, va_list ap)
+{
+	struct map_session_data *sd = (TBL_PC *)bl;
+	int type = va_arg(ap, int); // 0 = Banding Count, 1 = HP Check
+
+	if (sd->state.autotrade)
+		return 0;
+
+	if (battle_config.idle_no_share && pc_isidle(sd))
+		return 0;
+
+	if ((sd->class_&MAPID_THIRDMASK) != MAPID_ROYAL_GUARD)
+		return 0;
+
+	if (!sd->sc.data[SC_BANDING])
+		return 0;
+
+	if (type == 1)
+		return status_get_hp(bl);
+
+	return 1;
+}
+
 /// Executes 'func' for each party member on the same map and in range (0:whole map)
 int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_session_data *sd,int range,...)
 {

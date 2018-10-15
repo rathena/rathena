@@ -1407,7 +1407,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 /** Payment Process for NPCTYPE_CASHSHOP, NPCTYPE_ITEMSHOP, and NPCTYPE_POINTSHOP
  * @param nd NPC Shop data
  * @param price Price must be paid
- * @param points Total points that player has
+ * @param points Amount of secondary points that player requested
  * @param sd Player data
  * @return e_CASHSHOP_ACK
  **/
@@ -1425,12 +1425,13 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 		case NPCTYPE_ITEMSHOP:
 			{
 				struct item_data *id = itemdb_exists(nd->u.shop.itemshop_nameid);
+				int delete_amount = price, i;
 
 				if (!id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
 					ShowWarning("Failed to find sellitem %hu for itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
-				if (cost[0] < (price - points)) {
+				if (cost[1] < points || cost[0] < (price - points)) {
 					char output[CHAT_SIZE_MAX];
 
 					memset(output, '\0', sizeof(output));
@@ -1439,8 +1440,28 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 					clif_messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
-				if (pc_delitem(sd, pc_search_inventory(sd, nd->u.shop.itemshop_nameid), price - points, 0, 0, LOG_TYPE_NPC)) {
-					ShowWarning("Failed to delete item %hu from '%s' at itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, sd->status.name, nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y);
+
+				for (i = 0; i < MAX_INVENTORY && delete_amount > 0; i++) {
+					struct item *it;
+					int amount = 0;
+
+					if (sd->inventory.u.items_inventory[i].nameid == 0 || sd->inventory_data[i] == NULL || !(it = &sd->inventory.u.items_inventory[i]) || it->nameid != nd->u.shop.itemshop_nameid)
+						continue;
+					if (!pc_can_sell_item(sd, it, nd->subtype))
+						continue;
+
+					amount = it->amount;
+					if (amount > delete_amount)
+						amount = delete_amount;
+
+					if (pc_delitem(sd, i, amount, 0, 0, LOG_TYPE_NPC)) {
+						ShowWarning("Failed to delete item %hu from '%s' at itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, sd->status.name, nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y);
+						return ERROR_TYPE_PURCHASE_FAIL;
+					}
+					delete_amount -= amount;
+				}
+				if (delete_amount > 0) {
+					ShowError("Item %hu is not enough as payment at itemshop NPC '%s' (%s, %d, %d, AID=%d, CID=%d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.account_id, sd->status.char_id);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 			}
@@ -1451,7 +1472,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 
 				memset(output, '\0', sizeof(output));
 
-				if (cost[0] < (price - points)) {
+				if (cost[1] < points || cost[0] < (price - points)) {
 					sprintf(output, msg_txt(sd, 713), nd->u.shop.pointshop_str); // You do not have enough '%s'.
 					clif_messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
 					return ERROR_TYPE_PURCHASE_FAIL;
@@ -1594,7 +1615,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 				}
 
 				for (i = 0; i < MAX_INVENTORY; i++) {
-					if (sd->inventory.u.items_inventory[i].amount > 0 && sd->inventory.u.items_inventory[i].nameid == id->nameid && pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i]))
+					if (sd->inventory.u.items_inventory[i].amount > 0 && sd->inventory.u.items_inventory[i].nameid == id->nameid && pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i], nd->subtype))
 						total += sd->inventory.u.items_inventory[i].amount;
 				}
 			}
@@ -2012,6 +2033,10 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 		if( nd->master_nd )
 		{// Script-controlled shops decide by themselves, what can be sold and at what price.
 			continue;
+		}
+
+		if (!pc_can_sell_item(sd, &sd->inventory.u.items_inventory[idx], nd->subtype)) {
+			return 1; // In official server, this illegal attempt the player will be disconnected
 		}
 
 		value = pc_modifysellvalue(sd, sd->inventory_data[idx]->value_sell);
@@ -3325,7 +3350,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 			clif_spawn(&wnd->bl);
 		strdb_put(npcname_db, wnd->exname, wnd);
 	} else {
-		static char w1[50], w2[50], w3[50], w4[50];
+		static char w1[128], w2[128], w3[128], w4[128];
 		const char* stat_buf = "- call from instancing subsystem -\n";
 
 		snprintf(w1, sizeof(w1), "%s,%d,%d,%d", mapdata->name, snd->bl.x, snd->bl.y, snd->ud.dir);
@@ -4457,12 +4482,12 @@ int npc_reload(void) {
 	// dynamic check by [random]
 	if( battle_config.dynamic_mobs ){
 		for (int i = 0; i < map_num; i++) {
-			for( int16 i = 0; i < MAX_MOB_LIST_PER_MAP; i++ ){
+			for( int16 j = 0; j < MAX_MOB_LIST_PER_MAP; j++ ){
 				struct map_data *mapdata = map_getmapdata(i);
 
-				if (mapdata->moblist[i] != NULL) {
-					aFree(mapdata->moblist[i]);
-					mapdata->moblist[i] = NULL;
+				if (mapdata->moblist[j] != NULL) {
+					aFree(mapdata->moblist[j]);
+					mapdata->moblist[j] = NULL;
 				}
 				if( mapdata->mob_delete_timer != INVALID_TIMER )
 				{ // Mobs were removed anyway,so delete the timer [Inkfish]
@@ -4512,6 +4537,7 @@ int npc_reload(void) {
 	//Execute the OnInit event for freshly loaded npcs. [Skotlex]
 	npc_event_runall(script_config.init_event_name);
 
+	map_data_copyall();
 	do_reload_instance();
 
 	// Execute rest of the startup events if connected to char-server. [Lance]

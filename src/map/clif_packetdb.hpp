@@ -2188,6 +2188,11 @@
 	packet(0x09DF,7); // ZC_ACK_WHISPER02
 #endif
 
+// 2014-02-05bRagexeRE
+#if PACKETVER >= 20140205
+	packet(0x09DA,-1);
+#endif
+
 // 2014-10-16Ragexe
 #if PACKETVER >= 20141016
 	packet(0x09DF,7);
