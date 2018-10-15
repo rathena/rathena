@@ -2680,7 +2680,7 @@ int map_addinstancemap(int src_m, unsigned short instance_id)
 
 	map_data_copy(dst_map, src_map);
 
-	ShowInfo("[Instance] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, name, src_map->m);
+	ShowInfo("[Instance] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, iname, src_map->m);
 
 	map_addmap2db(dst_map);
 
