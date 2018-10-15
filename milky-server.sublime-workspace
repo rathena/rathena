@@ -415,6 +415,57 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "doc/item_bonus.txt",
+			"settings":
+			{
+				"buffer_size": 24657,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"contents": "UPDATE `item_db_re` SET `script` = '{ sc_start SC_EXPBOOST,1800000,300; }' WHERE `item_db_re`.`id` = 7803;\n\nUPDATE `item_db_re` SET `script` = 'bonus2 bExpAddClass,Class_All,5; bonus bNearAtkDef,-5; bonus bLongAtkDef,-5;' WHERE `item_db_re`.`id` = 2781",
+			"settings":
+			{
+				"buffer_size": 252,
+				"line_ending": "Windows",
+				"name": "UPDATE `item_db_re` SET `script` = '{ sc_start SC_"
+			}
+		},
+		{
+			"file": "npc/re/custom/lasagna/lasagna_npcs.txt",
+			"settings":
+			{
+				"buffer_size": 388078,
+				"encoding": "Western (Windows 1252)",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/custom/stylist.txt",
+			"settings":
+			{
+				"buffer_size": 2526,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/G/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
+			"settings":
+			{
+				"buffer_size": 917,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "npc/custom/jobmaster.txt",
+			"settings":
+			{
+				"buffer_size": 16719,
+				"line_ending": "Windows"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -427,6 +478,10 @@
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"html",
+				"Set Syntax: HTML"
+			],
 			[
 				"htm",
 				"Set Syntax: HTML"
@@ -462,10 +517,6 @@
 			[
 				"blade",
 				"Set Syntax: Laravel Blade"
-			],
-			[
-				"html",
-				"Set Syntax: HTML"
 			],
 			[
 				"install",
@@ -605,33 +656,75 @@
 	},
 	"expanded_folders":
 	[
-		"/D/MilkyRO Project/ServerScript",
-		"/D/MilkyRO Project/ServerScript/build",
-		"/D/MilkyRO Project/ServerScript/db",
-		"/D/MilkyRO Project/ServerScript/db/re",
-		"/D/MilkyRO Project/ServerScript/npc"
+		"/D/MilkyRO Project/ServerScript"
 	],
 	"file_history":
 	[
+		"/G/MilkyRO Project/doram eq.txt",
+		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/quests/quests_malangdo.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/custom/lasagna/lasagna_npcs.txt",
+		"/D/MilkyRO Project/ServerScript/doc/script_commands.txt",
+		"/D/MilkyRO Project/Clients/MilkyRO - Full/Whisper/Joseth.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/cities/malangdo.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/givevip.txt",
+		"/D/MilkyRO Project/ServerScript/src/map/clif.cpp",
+		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
+		"/D/Installers/Windows 10 Pro X64 RS5 incl Office 2019 en-US OCT 2018 {Gen2}/INFO/Windows 10 Pro X64 RS5 incl Office 2019 en-US OCT 2018 {Gen2}.txt",
+		"/D/xampp2/htdocs/script/feed/Feed.php",
+		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/application.php",
+		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/eADevConfig.php",
+		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/header.php",
+		"/D/xampp2/htdocs/script/feed/atom.php",
+		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/index.php",
+		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/rsslib.php",
+		"/D/xampp2/htdocs/script/feed/index.php",
+		"/C/Users/NUBSPI~1/AppData/Local/Temp/Rar$DRa0.081/FeedParser.php",
+		"/C/Users/NubsPixel/AppData/Local/Temp/Rar$DIa0.508/LICENSE.txt",
+		"/D/MilkyRO Project/Temporary/Table_Responsive_v2/index.html",
+		"/D/MilkyRO Project/ServerScript/db/re/refine_db.yml",
+		"/D/MilkyRO Project/ServerScript/db/pre-re/refine_db.yml",
+		"/D/MilkyRO Project/ServerScript/db/import/refine_db.yml",
+		"/D/Downloads/stylist.txt",
+		"/D/MilkyRO Project/ServerScript/src/config/renewal.hpp",
+		"/D/MilkyRO Project/ServerScript/npc/custom/healer.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/jobmaster.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/stylist.txt",
+		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/char_athena.conf",
+		"/D/MilkyRO Project/ServerScript/doc/ea_job_system.txt",
+		"/D/MilkyRO Project/ServerScript/conf/battle/client.conf",
+		"/D/MilkyRO Project/ServerScript/npc/quests/the_sign_quest.txt",
+		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
+		"/D/MilkyRO Project/ServerScript/conf/battle/battle.conf",
+		"/D/MilkyRO Project/ServerScript/doc/mob_db.txt",
+		"/D/MilkyRO Project/ServerScript/doc/mob_db_mode_list.txt",
+		"/D/MilkyRO Project/enrich-drop-part2",
+		"/D/xampp2/htdocs/ci/application/controllers/Mob.php",
+		"/D/xampp2/htdocs/script/mob_spawn.php",
+		"/D/xampp2/htdocs/ci/application/controllers/Item.php",
+		"/D/MilkyRO Project/Temporary/data/palette/credits.txt",
+		"/D/MilkyRO Project/ServerScript/db/re/item_trade.txt",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/renters.txt",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant2.txt",
+		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/merchants/renters.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/guides/guides_prontera.txt",
+		"/D/MilkyRO Project/ServerScript/npc/re/guides/navigation.txt",
+		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/System/itemInfo.lua",
+		"/D/MilkyRO Project/ServerScript/npc/other/monster_race.txt",
 		"/D/MilkyRO Project/Tools/Translation Project/ROenglishRE-master/data/msgstringtable.txt",
 		"/D/MilkyRO Project/ServerScript/src/map/pc.cpp",
 		"/D/MilkyRO Project/ServerScript/npc/re/jobs/3-2/minstrel.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/stylist.txt",
-		"/D/MilkyRO Project/ServerScript/doc/atcommands.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/quests/thq/THQS_Quests.txt",
-		"/D/MilkyRO Project/ServerScript/conf/battle/client.conf",
-		"/D/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
 		"/D/MilkyRO Project/ServerScript/npc/cities/payon.txt",
 		"/D/MilkyRO Project/ServerScript/conf/battle/player.conf",
 		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/attendance.yml",
 		"/D/MilkyRO Project/ServerScript/db/re/attendance.yml",
 		"/D/MilkyRO Project/Patches/20181007b/System/CheckAttendance.lub",
-		"/D/MilkyRO Project/ServerScript/npc/custom/givevip.txt",
 		"/D/MilkyRO Project/Clients/MilkyRO - Full/System/CheckAttendance.lub",
 		"/D/MilkyRO Project/Patches/20181007/System/CheckAttendance.lub",
 		"/D/Downloads/Attendance_Check.txt",
 		"/D/Downloads/attendance.yml",
-		"/D/MilkyRO Project/ServerScript/doc/script_commands.txt",
 		"/D/MilkyRO Project/Patches/20180924b/System/CheckAttendance.lub",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/System/CheckAttendance.lub",
 		"/D/MilkyRO Project/custom_headgear.txt",
@@ -648,9 +741,6 @@
 		"/D/MilkyRO Project/ServerScript/npc/re/quests/mrsmile.txt",
 		"/D/MilkyRO Project/ServerScript/npc/quests/mrsmile.txt",
 		"/D/MilkyRO Project/edit_item.sql",
-		"/D/MilkyRO Project/ServerScript/npc/quests/the_sign_quest.txt",
-		"/D/MilkyRO Project/ServerScript/doc/mob_db_mode_list.txt",
-		"/D/MilkyRO Project/ServerScript/doc/mob_db.txt",
 		"/D/MilkyRO Project/ServerScript/doc/item_db.txt",
 		"/D/MilkyRO Project/ServerScript/doc/item_bonus.txt",
 		"/D/MilkyRO Project/ServerScript/npc/custom/quests/dead_branch.txt",
@@ -660,7 +750,6 @@
 		"/D/MilkyRO Project/ServerScript/npc/re/scripts_athena.conf",
 		"/D/MilkyRO Project/ServerScript/src/common/mmo.hpp",
 		"/D/MilkyRO Project/ServerScript/src/map/battle.cpp",
-		"/D/MilkyRO Project/ServerScript/src/map/clif.cpp",
 		"/D/MilkyRO Project/ServerScript/src/map/clif.hpp",
 		"/D/MilkyRO Project/ServerScript/src/map/map.cpp",
 		"/D/MilkyRO Project/ServerScript/src/map/map.hpp",
@@ -669,8 +758,6 @@
 		"/D/MilkyRO Project/ServerScript/src/map/skill.cpp",
 		"/D/MilkyRO Project/ServerScript/src/map/pc.hpp",
 		"/D/MilkyRO Project/ServerScript/db/carts.yml",
-		"/D/MilkyRO Project/ServerScript/db/re/refine_db.yml",
-		"/D/MilkyRO Project/ServerScript/db/import/refine_db.yml",
 		"/D/MilkyRO Project/ServerScript/db/import/achievement_db.yml",
 		"/D/MilkyRO Project/ServerScript/conf/carts.yml",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/data/sclientinfo.xml",
@@ -683,11 +770,9 @@
 		"/D/MilkyRO Project/ServerScript/conf/login_athena.conf",
 		"/D/MilkyRO Project/ServerScript/src/config/core.hpp",
 		"/D/MilkyRO Project/ServerScript/src/map/script.hpp",
-		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/System/itemInfo.lua",
 		"/D/MilkyRO Project/Clients/MilkyRO - Localhost/System/itemInfo_Sak.lub",
 		"/D/xampp2/htdocs/script/instance_spawn.php",
 		"/D/xampp2/htdocs/script/instance_spawn.sql",
-		"/D/xampp2/htdocs/script/mob_spawn.php",
 		"/D/xampp2/htdocs/script/endless_tower.txt",
 		"/D/xampp2/htdocs/script/mob_spawn.txt",
 		"/D/MilkyRO Project/ServerScript/conf/script_athena.conf",
@@ -696,51 +781,13 @@
 		"/D/xampp2/htdocs/nubsCP/application/views/example.tpl",
 		"/C/Users/NubsPixel/AppData/Local/Temp/Rar$DIa0.596/autoload.php",
 		"/C/Users/NubsPixel/AppData/Local/Temp/Rar$DIa0.327/label_lang.php",
-		"/D/MilkyRO Project/ServerScript/npc/re/merchants/renters.txt",
 		"/D/MilkyRO Project/Temporary/convert.lua",
-		"/D/MilkyRO Project/ServerScript/npc/merchants/renters.txt",
 		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/scripts_athena.conf",
 		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/scripts_custom.conf",
 		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt.bak",
 		"/D/MilkyRO Project/ServerScript/npc/custom/breeder.txt",
 		"/D/MilkyRO Project/Tools/Translation Project/Translation-master/data/idnum2itemdesctable.txt",
-		"/D/MilkyRO Project/Tools/Translation Project/Translation-master/System/itemInfo_Sak.lub",
-		"/D/xampp2/htdocs/nubsCP/resources/js/charts/docs/charts/polar.md",
-		"/D/MilkyRO Project/ServerScript/conf/log_athena.conf",
-		"/D/xampp2/htdocs/ci-mybb/application/config/database.php",
-		"/D/MilkyRO Project/Tools/InnoSetup/RO_Lite/data.ini",
-		"/D/MilkyRO Project/Tools/InnoSetup/_Make New Lite Installer.bat",
-		"/D/MilkyRO Project/ServerScript/npc/custom/warper.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/prontera_stupidwarper.txt",
-		"/D/MilkyRO Project/ServerScript/npc/guild/prtg_cas01.txt",
-		"/D/MilkyRO Project/ServerScript/npc/re/guild3/te_aldecas1.txt",
-		"/D/Work/rathena/zenydrops.sql",
-		"/D/xampp2/htdocs/FluxCP/config/application.php",
-		"/D/xampp2/htdocs/FluxCP/config/servers.php",
-		"/C/Users/NubsPixel/AppData/Local/Temp/fz3temp-2/styles.css",
-		"/D/MilkyRO Project/ServerScript/npc/guild/aldeg_cas01.txt",
-		"/D/MilkyRO Project/ServerScript/npc/guild/agit_main.txt",
-		"/D/Downloads/NetPen Theme_#8_stable/index-sidebar.txt",
-		"/D/Downloads/NetPen Theme_#8_stable/NetPen-theme.xml",
-		"/D/Downloads/NetPen Theme_#8_stable/INSTALLATION.txt",
-		"/D/Downloads/NetPen Theme_#8_stable/index-no-sidebar.txt",
-		"/D/MilkyRO Project/ServerScript/conf/groups.conf",
-		"/D/MilkyRO Project/ServerScript/npc/custom/etc/mvp_room.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/healer.txt",
-		"/D/MilkyRO Project/ServerScript/npc/re/merchants/3rd_trader.txt",
-		"/D/MilkyRO Project/ServerScript/doc/mapflags.txt",
-		"/D/MilkyRO Project/ServerScript/npc/merchants/enchan_arm.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/etc/mvp_room1.txt",
-		"/D/MilkyRO Project/ServerScript/npc/mobs/pvp.txt",
-		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant2.txt",
-		"/D/MilkyRO Project/ServerScript/npc/merchants/socket_enchant.txt",
-		"/D/MilkyRO Project/ServerScript/npc/mapflag/hidemobhpbar.txt",
-		"/D/MilkyRO Project/ServerScript/npc/mapflag/nightmare.txt",
-		"/D/MilkyRO Project/ServerScript/npc/mapflag/pvp_noguild.txt",
-		"/D/MilkyRO Project/ServerScript/npc/other/pvp.txt",
-		"/D/MilkyRO Project/ServerScript/npc/mapflag/pvp.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/identify.txt",
-		"/D/MilkyRO Project/ServerScript/npc/custom/branch.txt"
+		"/D/MilkyRO Project/Tools/Translation Project/Translation-master/System/itemInfo_Sak.lub"
 	],
 	"find":
 	{
@@ -751,6 +798,9 @@
 		"height": 116.0,
 		"where_history":
 		[
+			"D:\\MilkyRO Project\\ServerScript\\npc",
+			"<project>",
+			"D:\\MilkyRO Project\\ServerScript\\npc",
 			"<project>",
 			"D:\\MilkyRO Project\\ServerScript\\npc",
 			"<project>",
@@ -811,6 +861,94 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"third",
+			"1690",
+			"Dandi",
+			"bATK",
+			"6833",
+			"ITEMID_TOKEN_OF_SIEGFRIED",
+			"ITEMID_TOKEN_OF_SIEGFRIED ",
+			"cdata",
+			"SimpleXMLElement ",
+			"title",
+			"entry",
+			"forum",
+			"[img=",
+			"customers",
+			"[hr]",
+			"[/img]",
+			"[img]",
+			"[size=150]",
+			"100",
+			"25142",
+			"Used Good Merchant",
+			"Used Good Merchants NPC",
+			"merchant",
+			"used",
+			"Used Good Merchants",
+			"Dandi",
+			"20000",
+			" @ ",
+			"2000",
+			"2000z @ ",
+			"[/td]\n\t\t[td]",
+			": true",
+			"RENEWAL_",
+			"Class",
+			"EAJL_THIRD",
+			".bmp",
+			"h5",
+			"strong",
+			"L_",
+			"costume",
+			"body",
+			"BODY",
+			"TEST",
+			"menu",
+			"T1",
+			"got",
+			"exit",
+			"\"",
+			"\t",
+			"mode",
+			"EAJL_THIRD",
+			"setlook",
+			"class",
+			"Leablem",
+			"Seiyablem",
+			"105",
+			"Magic Gear Master",
+			"Riding Creature Master",
+			"riding",
+			"peco peco remove",
+			"F_Navi",
+			"peco peco",
+			"remove",
+			"Fish",
+			"reduce",
+			"race",
+			"18936",
+			"(12622|12887|12912|12920|12921|12922|13610|13611|13710|13758|13804|13807|13863|14175|14233|14545|16258|16259|16260|16261|16393|16394|16395|16396|16770|5462|5463|5597|7776)",
+			"475",
+			"329",
+			"507",
+			"(13710|12912|12622|14175|12103|14233|13758|16770|12622|12887|14175|20727|7776|14545|13758|12912|13710|16268|12922|12103|14233|13611|12921|13610|12920|16393|16394|16395|16396|16258|16260|16259|16261|13863|18561|18572|18600|18597|18528|19128|19132|19126|19086|19085|5377|5462|5463|5597|18936|18536|5548|13804|13807),",
+			",(13710|12912|12622|14175|12103|14233|13758|16770|12622|12887|14175|20727|7776|14545|13758|12912|13710|16268|12922|12103|14233|13611|12921|13610|12920|16393|16394|16395|16396|16258|16260|16259|16261|13863|18561|18572|18600|18597|18528|19128|19132|19126|19086|19085|5377|5462|5463|5597|18936|18536|5548|13804|13807),",
+			"19086",
+			"18597",
+			"18600",
+			"19085",
+			"18572",
+			"18561",
+			"19126",
+			"19132",
+			"19128",
+			"5361",
+			"5463",
+			"5767",
+			"5463",
+			"5767",
+			"5377",
 			"day",
 			"ATTENDANCE_COUNT_VAR",
 			"pc_readreg2",
@@ -850,95 +988,7 @@
 			",",
 			", ",
 			" (farm)",
-			"Energy Crystal",
-			".png",
-			"5161",
-			",",
-			"Zerom",
-			",",
-			"; //",
-			",",
-			"; //",
-			",",
-			"; //",
-			",",
-			"7055",
-			"1261",
-			"get",
-			"cats",
-			"_Orb",
-			"; //",
-			",",
-			"; //",
-			"delitem ",
-			",",
-			"_",
-			",",
-			"; //",
-			",",
-			"Feather Beret",
-			"_",
-			"; //",
-			"delitem ",
-			",",
-			"delitem ",
-			",",
-			"delitem ",
-			",",
-			"1304",
-			",",
-			"; //",
-			",",
-			"_",
-			"; //",
-			",",
-			"; //",
-			",",
-			"_",
-			",",
-			"; //",
-			"\t",
-			", ",
-			",",
-			"_",
-			"; //",
-			",",
-			"; //",
-			",",
-			"; //",
-			",",
-			"delitem ",
-			"; //",
-			"_",
-			"delitem ",
-			", ",
-			"_",
-			"delitem ",
-			",",
-			"smile",
-			",",
-			"_",
-			"; //",
-			"delitem",
-			",",
-			"delitem ",
-			",",
-			"_",
-			",",
-			"; //",
-			"delitem ",
-			",",
-			"zeny",
-			",",
-			"; //",
-			"delitem ",
-			"; //",
-			"delitem ",
-			"; //",
-			"delitem",
-			",",
-			"_",
-			","
+			"Energy Crystal"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -965,14 +1015,186 @@
 	"groups":
 	[
 		{
+			"selected": 2,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "doc/item_bonus.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 24657,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								6460,
+								6437
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 3174.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 252,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								252,
+								252
+							]
+						],
+						"settings":
+						{
+							"auto_name": "UPDATE `item_db_re` SET `script` = '{ sc_start SC_",
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "npc/re/custom/lasagna/lasagna_npcs.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 388078,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								92541,
+								92541
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 50778.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "npc/custom/stylist.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2526,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1647,
+								1647
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 859.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/G/MilkyRO Project/Hosting Malaya/LoginInfo.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 917,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								638,
+								638
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "npc/custom/jobmaster.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 16719,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2100,
+								2100
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 728.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 28.0
+		"height": 27.0
 	},
 	"input":
 	{
@@ -1013,7 +1235,7 @@
 	"project": "milky-server.sublime-project",
 	"replace":
 	{
-		"height": 52.0
+		"height": 50.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -1023,16 +1245,88 @@
 		"selected_items":
 		[
 			[
-				"sty",
-				"npc\\custom\\stylist.txt"
+				"job master",
+				"npc\\custom\\jobmaster.txt"
 			],
 			[
 				"atco",
 				"doc\\atcommands.txt"
 			],
 			[
+				"styl",
+				"npc\\custom\\stylist.txt"
+			],
+			[
+				"malangdo",
+				"npc\\re\\quests\\quests_malangdo.txt"
+			],
+			[
+				"scri",
+				"doc\\script_commands.txt"
+			],
+			[
+				"refine db",
+				"db\\re\\refine_db.yml"
+			],
+			[
+				"refine",
+				"db\\import\\refine_db.yml"
+			],
+			[
 				"scr",
 				"doc\\script_commands.txt"
+			],
+			[
+				"hera",
+				"npc\\custom\\healer.txt"
+			],
+			[
+				"renewal",
+				"src\\config\\renewal.hpp"
+			],
+			[
+				"client",
+				"conf\\battle\\client.conf"
+			],
+			[
+				"sty",
+				"npc\\custom\\stylist.txt"
+			],
+			[
+				"atc",
+				"doc\\atcommands.txt"
+			],
+			[
+				"warper",
+				"npc\\custom\\warper.txt"
+			],
+			[
+				"warp",
+				"npc\\custom\\warper.txt"
+			],
+			[
+				"mob db mode",
+				"doc\\mob_db_mode_list.txt"
+			],
+			[
+				"mob db",
+				"doc\\mob_db.txt"
+			],
+			[
+				"script",
+				"doc\\script_commands.txt"
+			],
+			[
+				"renter",
+				"npc\\merchants\\renters.txt"
+			],
+			[
+				"mobdb",
+				"doc\\mob_db.txt"
+			],
+			[
+				"race",
+				"npc\\other\\monster_race.txt"
 			],
 			[
 				"headg",
@@ -1179,20 +1473,12 @@
 				"npc\\scripts_athena.conf"
 			],
 			[
-				"script",
-				"conf\\script_athena.conf"
-			],
-			[
 				"sunglas",
 				"npc\\custom\\quests\\sunglasses.txt"
 			],
 			[
 				"mob_db",
 				"doc\\mob_db.txt"
-			],
-			[
-				"renter",
-				"npc\\re\\merchants\\renters.txt"
 			],
 			[
 				"rent",
@@ -1205,10 +1491,6 @@
 			[
 				"breeder",
 				"npc\\custom\\breeder.txt"
-			],
-			[
-				"atc",
-				"doc\\atcommands.txt"
 			],
 			[
 				"item",
@@ -1263,10 +1545,6 @@
 				"npc\\custom\\etc\\mvp_room.txt"
 			],
 			[
-				"warper",
-				"npc\\custom\\warper.txt"
-			],
-			[
 				"bree",
 				"npc\\custom\\breeder.txt"
 			],
@@ -1289,10 +1567,6 @@
 			[
 				"edenc",
 				"npc\\re\\quests\\eden\\eden_common.txt"
-			],
-			[
-				"malangdo",
-				"npc\\re\\instances\\MalangdoCulvert.txt"
 			],
 			[
 				"socket ",
@@ -1411,10 +1685,6 @@
 				"db\\import\\attendance.yml"
 			],
 			[
-				"renewal",
-				"src\\config\\renewal.hpp"
-			],
-			[
 				".hpp",
 				"src\\common\\conf.hpp"
 			],
@@ -1485,54 +1755,6 @@
 			[
 				"culver",
 				"rathena-server\\npc\\re\\instances\\MalangdoCulvert.txt"
-			],
-			[
-				"mmoh",
-				"rathena-server\\src\\common\\mmo.hpp"
-			],
-			[
-				"core",
-				"rathena-server\\src\\config\\core.hpp"
-			],
-			[
-				"guild stor",
-				"npc\\custom\\guild_storage_kafra.txt"
-			],
-			[
-				"warp",
-				"npc\\custom\\warper.txt"
-			],
-			[
-				"hd_re",
-				"npc\\re\\merchants\\hd_refiner.txt"
-			],
-			[
-				"advanced",
-				"npc\\re\\merchants\\advanced_refiner.txt"
-			],
-			[
-				"athe",
-				"athena-start"
-			],
-			[
-				"func",
-				"function.sh"
-			],
-			[
-				"endless",
-				"npc\\instances\\EndlessTower.txt"
-			],
-			[
-				"endle",
-				"npc\\instances\\EndlessTower.txt"
-			],
-			[
-				"mob db sql",
-				"sql-files\\mob_db_re.sql"
-			],
-			[
-				"agitm",
-				"npc\\guild\\agit_main.txt"
 			]
 		],
 		"width": 0.0

@@ -15,19 +15,21 @@
 
 -	script	Healer	-1,{
 
-	.@Price = 0;	// Zeny required for heal
+	.@Price = 2500;	// Zeny required for heal
 	.@Buffs = 1;	// Also buff players? (1: yes / 0: no)
 	.@Delay = 5;	// Heal delay, in seconds
 
 	if (@HD > gettimetick(2))
 		end;
-	if (.@Price) {
-		message strcharinfo(0), "Healing costs " + callfunc("F_InsertComma",.@Price) + " Zeny.";
-		if (Zeny < .@Price)
-			end;
-		if (select("^0055FFHeal^000000:^777777Cancel^000000") == 2)
-			end;
-		Zeny -= .@Price;
+	if (BaseLevel == 175){
+		if (.@Price) {
+			message strcharinfo(0), "Healing costs " + callfunc("F_InsertComma",.@Price) + " Zeny.";
+			if (Zeny < .@Price)
+				end;
+			if (select("^0055FFHeal^000000:^777777Cancel^000000") == 2)
+				end;
+			Zeny -= .@Price;
+		}
 	}
 	specialeffect2 EF_HEAL2;
 	percentheal 100,100;

@@ -281,11 +281,11 @@ WeaponLv2:
   Rates:
     - Level: 7
       NormalChance: 80
-      EnrichedChance: 100
-      EventNormalChance: 100
+      EnrichedChance: 90
+      EventNormalChance: 90
       EventEnrichedChance: 100
     - Level: 8
-      NormalChance: 50
+      NormalChance: 60
       EnrichedChance: 70
       EventNormalChance: 70
       EventEnrichedChance: 80

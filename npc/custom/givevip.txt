@@ -16,7 +16,7 @@ OnPCLoginEvent:
 		getitem 11502, 30;     // Light Blue Potion x30
 		getitem 13697, 1;     // Blessing Scroll lv10 x10
 		getitem 12914, 1;     // Increase Agility lv10 x10
-		getitem 6833, 3;    // Token of Siegfried x3
+		getitem 7621, 3;    // Token of Siegfried x3
 		getitem 12210, 3;     // Bubble gum x3 (+100%)
 		getitem 662, 15;     // Authorative Badge x15
 		vip_time 30240;     // 1 week worth of vip time (10080)

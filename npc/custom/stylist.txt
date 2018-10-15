@@ -62,7 +62,7 @@ prontera,131,217,5	script	Stylist#custom_stylist	122,{
 	}
 	else
 	{
-		if( eaclass()&EAJL_THIRD > 0)
+		if( eaclass()&EAJL_THIRD)
 		{
 			L_BODYSTYLE:
 			set .@body, select(" ~ Default: ~ Alternative: ~ Exit");
