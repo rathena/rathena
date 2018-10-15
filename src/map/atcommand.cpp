@@ -4042,29 +4042,25 @@ ACMD_FUNC(mapinfo) {
 	}
 
 	/* Skill damage adjustment info [Cydh] */
-	union u_mapflag_args args = {};
-
-	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
-	if (map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)) {
+	if (mapdata->flag[MF_SKILL_DAMAGE]) {
 		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
-		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
-			,(args.flag_val = SKILLDMG_PC && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_MOB && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_BOSS && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_OTHER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_CASTER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)));
+		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d",
+			mapdata->damage_adjust.rate[SKILLDMG_PC],
+			mapdata->damage_adjust.rate[SKILLDMG_MOB],
+			mapdata->damage_adjust.rate[SKILLDMG_BOSS],
+			mapdata->damage_adjust.rate[SKILLDMG_OTHER],
+			mapdata->damage_adjust.caster);
 		clif_displaymessage(fd, atcmd_output);
-		if (mapdata->skill_damage.size()) {
+		if (!mapdata->skill_damage.empty()) {
 			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
-			for (int j = 0; j < mapdata->skill_damage.size(); j++) {
-				sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
-					,j+1
-					,skill_get_name(mapdata->skill_damage[j].skill_id)
-					,mapdata->skill_damage[j].rate[SKILLDMG_PC]
-					,mapdata->skill_damage[j].rate[SKILLDMG_MOB]
-					,mapdata->skill_damage[j].rate[SKILLDMG_BOSS]
-					,mapdata->skill_damage[j].rate[SKILLDMG_OTHER]
-					,mapdata->skill_damage[j].caster);
+			for (auto skilldmg : mapdata->skill_damage) {
+				sprintf(atcmd_output,"     %s : %d%%, %d%%, %d%%, %d%% | %d",
+					skill_get_name(skilldmg.first),
+					skilldmg.second.rate[SKILLDMG_PC],
+					skilldmg.second.rate[SKILLDMG_MOB],
+					skilldmg.second.rate[SKILLDMG_BOSS],
+					skilldmg.second.rate[SKILLDMG_OTHER],
+					skilldmg.second.caster);
 				clif_displaymessage(fd,atcmd_output);
 			}
 		}

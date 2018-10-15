@@ -2226,10 +2226,8 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 static int battle_skill_damage_map(struct block_list *src, struct block_list *target, uint16 skill_id) {
 	int rate = 0;
 	struct map_data *mapdata = map_getmapdata(src->m);
-	union u_mapflag_args args = {};
 
-	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
-	if (!mapdata || !map_getmapflag_sub(src->m, MF_SKILL_DAMAGE, &args))
+	if (!mapdata || !mapdata->flag[MF_SKILL_DAMAGE])
 		return 0;
 
 	// Damage rate for all skills at this map
@@ -2240,9 +2238,8 @@ static int battle_skill_damage_map(struct block_list *src, struct block_list *ta
 		return rate;
 
 	// Damage rate for specified skill at this map
-	for (int i = 0; i < mapdata->skill_damage.size(); i++) {
-		if (mapdata->skill_damage[i].skill_id == skill_id && mapdata->skill_damage[i].caster&src->type)
-			rate += mapdata->skill_damage[i].rate[battle_skill_damage_type(target)];
+	if (mapdata->skill_damage.find(skill_id) != mapdata->skill_damage.end() && mapdata->skill_damage[skill_id].caster&src->type) {
+		rate += mapdata->skill_damage[skill_id].rate[battle_skill_damage_type(target)];
 	}
 	return rate;
 }
