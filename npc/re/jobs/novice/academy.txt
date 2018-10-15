@@ -13,166 +13,382 @@
 //= 1.0.0 Initial Release. [Kisuka]
 //= 1.0.1 Converted item constants to IDs and added hair coupon. [Kisuka]
 //= 2.0.0 Converted from Hercules Script to rAthena Script. [Capuche]
+//= 2.0.1 Add new Intro Renewal based on Hercules [Jenkijo]
 //==============================================================================
+
+//== Starting Point  (iz_int) =================================
+iz_int,18,30,0	script	iz_int#intro_start	HIDDEN_WARP_NPC,6,6,{
+	end;
+OnTouch:
+	navigateto("iz_int", 52, 30, NAV_NONE, 1); // Individual map name not required
+	if (getd(".start" + strnpcinfo(1)) == 0) {
+		setd ".start" + strnpcinfo(1), 1;
+		initnpctimer;
+		mapannounce strnpcinfo(4), "[Tip] You can move to the desired point by clicking the ground with the left mouse button.", bc_map,0xFF0000;
+	}
+	end;
+OnTimer9000:
+	mapannounce strnpcinfo(4), "[Tip] While holding down the right mouse button, drag to rotate the screen.", bc_map,0xFF0000;
+	end;
+OnTimer18000:
+	mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
+	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
+	end;
+OnTimer21000:
+	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
+	end;
+OnTimer24000:
+	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
+	end;
+OnTimer27000:
+	mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;
+	stopnpctimer;
+	setd ".start" + strnpcinfo(1), 0;
+	end;
+}
+iz_int01,18,30,0	duplicate(iz_int#intro_start)	iz_int01#intro_start	HIDDEN_WARP_NPC,6,6
+iz_int02,18,30,0	duplicate(iz_int#intro_start)	iz_int02#intro_start	HIDDEN_WARP_NPC,6,6
+iz_int03,18,30,0	duplicate(iz_int#intro_start)	iz_int03#intro_start	HIDDEN_WARP_NPC,6,6
+iz_int04,18,30,0	duplicate(iz_int#intro_start)	iz_int04#intro_start	HIDDEN_WARP_NPC,6,6
+
+iz_int,51,30,0	script	iz_int#intro_evt02	HIDDEN_WARP_NPC,1,1,{
+	end;
+OnTouch:
+	navigateto("int_land", 75, 100, NAV_NONE, 1);
+	end;
+}
+iz_int01,51,30,0	duplicate(iz_int#intro_evt02)	iz_int01#intro_evt02	HIDDEN_WARP_NPC,1,1
+iz_int02,51,30,0	duplicate(iz_int#intro_evt02)	iz_int02#intro_evt02	HIDDEN_WARP_NPC,1,1
+iz_int03,51,30,0	duplicate(iz_int#intro_evt02)	iz_int03#intro_evt02	HIDDEN_WARP_NPC,1,1
+iz_int04,51,30,0	duplicate(iz_int#intro_evt02)	iz_int04#intro_evt02	HIDDEN_WARP_NPC,1,1
+
+//== Wounded Swordsman (iz_int) =================================
+iz_int,56,32,3	script	Wounded Swordsman#intro_npc01_iz_int	4_TOWER_01,5,5,{
+	@intro_npc01 = 1;
+	npctalk "Oh...", "", bc_self;
+	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+	classchange 4_TOWER_02, "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), bc_self;
+	end;
+
+OnTouch:
+	if (@intro_npc01 == 0) {
+		npctalk "Urgh... please... help me...", "", bc_self;
+		sleep2 500;
+		npctalk "In order to talk with me.. click my body..", "", bc_self;
+	}
+	else {// debug
+		classchange HIDDEN_WARP_NPC, "", bc_self;
+		classchange 4_TOWER_02, "Wounded Swordsman#intro_npc02_" + strnpcinfo(4), bc_self;
+	}
+	end;
+
+OnInit:
+	questinfo 21001, QTYPE_QUEST, 1, Job_Novice;
+	end;
+}
+iz_int01,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int01	4_TOWER_01,5,5
+iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int02	4_TOWER_01,5,5
+iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int03	4_TOWER_01,5,5
+iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsman#intro_npc01_iz_int04	4_TOWER_01,5,5
+
+iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
+	if (isbegin_quest(21001) == 0) {
+		mes "[Wounded]";
+		mes "Wow! Thanks a lot!";
+		mes "I don't know how this happened to our ship";
+		mes "but we should go to see the captain.";
+		next;
+		mes "[Wounded]";
+		mes "... ohh, it seems my body is too injured.";
+		mes "Maybe you can go without me?";
+		setquest 21001;
+		next;
+		cutin "tutorial02",4;
+		mes "^4d4dff!- Information -!^000000";
+		mes "NPC Quest Received.";
+	}
+	else {
+		mes "[Wounded]";
+		mes "Luckily the water has not entered the ship.";
+		mes "I will wait here, you should go see the captain.";
+		next;
+		mes "[Wounded]";
+		mes "I'm fine! I'm fine!";
+		mes "Don't worry about me, you should really go to the captain!";
+		next;
+		mes "^4d4dff!- Information -!^000000";
+	}
+	mes "^4d4dffQuestinfo Shortcut is Alt + U^000000";
+	mes "You can check your quest status there anytime.";
+	close2;
+	cutin "",255;
+	end;
+
+OnInit:
+	questinfo 21001, QTYPE_QUEST, 1, Job_Novice;
+	end;
+}
+iz_int01,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int01	HIDDEN_WARP_NPC
+iz_int02,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int02	HIDDEN_WARP_NPC
+iz_int03,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int03	HIDDEN_WARP_NPC
+iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsman#intro_npc02_iz_int04	HIDDEN_WARP_NPC
 
 // - Captain Carocc (Ship)
 // -----------------------------------------------------------------------------
-iz_int,100,91,3	script	Captain Carocc#iz_int	4_M_REINDEER,{
-	if (Class == Job_Novice) {
-		cutin "fly_trock", 2;
-		if (!isbegin_quest(7471)) {
-			mes "[Captain Carocc]";
-			mes "Had a good dream?";
-			mes "Soon, we will get to ^4d4fffIzlude^000000.";
-			next;
-			mes "[Captain Carocc]";
-			mes "And you can talk to other people like you just talked to me.";
-			next;
-			cutin "tutorial01",3;
-			mes "!- Information -!";
-			mes "^4d4fffLeft mouse click allows basic game controls.";
-			mes "Such as conversation with NPC, movement, and attacks.^000000";
-			next;
-			cutin "fly_trock",2;
-			mes "[Captain Carocc]";
-			mes "Many youngsters visit the ^4d4fffRune Midgard Kingdom^000000 to chase their dreams.";
-			mes "Izlude is a satellite city of Prontera, the capital of the Rune Midgard Kingdom.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Izlude always welcomes young adventurers like you who have just started their journey to the World.";
-			mes "You are one of them of course.";
-			next;
-			mes "[Captain Carocc]";
-			mes "I would like to tell you more stories, but it's time to get ready for arrival.";
-			mes "There is an academy in Izlude for newcomers like yourself.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Let me give you more details later.";
-			mes "See you back at the harbor deck.";
-			next;
-			mes "[Captain Carocc]";
-			mes "To get off this ship, you should enter the ^4d4fffShining Portal^000000 over there.";
-			mes "All transportation is made through the portals.";
-			setquest 7471;
-			completequest 7471;
-			close2;
-			cutin "", 255;
-			end;
-		}
+int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
+	switch( isbegin_quest(21008) ) {
+	case 0:
 		mes "[Captain Carocc]";
-		mes "Now, we are here in Izlude~";
-		mes "Go through that ^4d4fffShining Portal^000000 and exit outside.";
+		mes "There are still people in the cabins?!";
+		mes "At least you are safe.";
+		mes "Are you alright?";
+		next;
+		if (select("I'm alright, but others need help.", "I think I am the last?") == 1) {
+			mes "[Captain Carocc]";
+			mes "There are more people left?";
+			mes "I will send a rescue team to them.";
+			mes "Thank you for your report.";
+		} else {
+			mes "[Captain Carocc]";
+			mes "Alright, that's good.";
+			mes "The storm came unexpectedly but I never thought it would hit us that hard.";
+		}
 		next;
 		mes "[Captain Carocc]";
-		mes "Let's talk more when we get off to the deck.";
-		mes "There are lots of things I want to teach you.";
-		close2;
-		cutin "", 255;
-		end;
+		mes "At least most people made it to safety.";
+		next;
+		mes "[Captain Carocc]";
+		mes "Look at the trees there, ^4d4dfffollow them to the southwest^000000 to find a new ship.";
+		mes "The ship will take you to ^4d4dffIzlude^000000, our original destination.";
+		next;
+		mes "[Captain Carocc]";
+		mes "Ah! Speaking of it, those ^4d4dffPorings^000000 on this island drop several materials we could use for repairs.";
+		next;
+		mes "[Captain Carocc]";
+		mes "^4d4dffKill the Porings and bring 2 Lumbers to the southern crew^000000.";
+		next;
+		mes "[Captain Carocc]";
+		mes "It is a hard task, but you look tough enough.";
+		specialeffect2 EF_HEAL2;
+		heal 9999,0;
+		skilleffect 34,0;
+		sc_start SC_BLESSING,240000,10;
+		skilleffect 29,0;
+		sc_start SC_INCREASEAGI,240000,10;
+		if (isbegin_quest(21001) == 1) {
+			completequest 21001;
+			getexp 600,600;
+		}
+		setquest 21008;
+		next;
+		mes "[Captain Carocc]";
+		mes "Speaking of Porings, you have to equip your gears.";
+		mes "You should have a ^4d4dffweapon and an armor^000000 equipped.";
+		next;
+		cutin "tutorial03",4;
+		mes "!- Information -!";
+		mes "^4d4dffYou can equip gear or use items by simply double clicking them.";
+		mes "The item window can be opened by pressing Alt + E or using the menu button.^000000";
+		next;
+		mes "!- Information -!";
+		mes "^4d4dffEquipped Items can be seen by pressing Alt + Q.";
+		mes "Either double click or drag & drop to equip or unequip them.^000000";
+		next;
+		cutin "",255;
+		mes "[Captain Carlock]";
+		mes "Did you check all your equipment?";
+		mes "^4d4dffSkill distribution^000000 should be done.";
+		next;
+		mes "[Captain Carlock]";
+		mes "For a smooth battle, you have to distribute your abilities properly.";
+		mes "^4d4dffIf you want to increase your strength, you need to raise Str^000000. ^4d4dffIf you want to increase your hit, you must raise Dex^000000.";
+		break;
+	case 1:
+		mes "[Captain Carocc]";
+		specialeffect2 EF_HEAL2;
+		heal 9999, 0;
+		skilleffect 34,0;
+		sc_start SC_BLESSING,240000,10;
+		skilleffect 29,0;
+		sc_start SC_INCREASEAGI,240000,10;
+		mes "^4d4dffThe Ship^000000 is anchored in the southwest. It will take you to Izlude.";
+		mes "Don't forget to ^4d4dffget some Lumber^000000 for the ship.";
+		next;
+		mes "[Captain Carocc]";
+		mes "Don't forget to raise your ^4d4dffskills^000000.";
+		break;
+	case 2:
+		mes "[Captain Carocc]";
+		mes "Everything is ready to sail over to Izlude.";
+		mes "The ship is located at the south-western part of the island.";
+		close;
 	}
+	next;
+	mes "! - Information -!";
+	mes "^4d4dffYou get a stats bonus for every level you raise.";
+	mes "The status window can be opened and closed with the shortcut Alt + A^000000.";
+	next;
+	mes "! - Information -!";
+	mes "^4d4dffPlease properly allocate the stats you need to battle^000000.";
+	next;
+	mes "[Captain Carocc]";
+	mes "Kill Porings and bring the Lumber to the crew.";
+	mes "Good luck!";
+	close;
+
+OnInit:
+	questinfo 21008, QTYPE_QUEST, 1, Job_Novice;
+	end;
 }
 
-iz_int01,100,91,3	duplicate(Captain Carocc#iz_int)	Captain Carocc#iz_int01	4_M_REINDEER
-iz_int02,100,91,3	duplicate(Captain Carocc#iz_int)	Captain Carocc#iz_int02	4_M_REINDEER
-iz_int03,100,91,3	duplicate(Captain Carocc#iz_int)	Captain Carocc#iz_int03	4_M_REINDEER
-iz_int04,100,91,3	duplicate(Captain Carocc#iz_int)	Captain Carocc#iz_int04	4_M_REINDEER
+int_land01,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_npc03_01	4_M_REINDEER
+int_land02,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_npc03_02	4_M_REINDEER
+int_land03,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_npc03_03	4_M_REINDEER
+int_land04,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_npc03_04	4_M_REINDEER
 
-// - Lumin (Ship)
-// -----------------------------------------------------------------------------
-iz_int,91,81,3	script	Lumin#iz_int	4_M_NOV_RUMIN,{
-	if (Class == Job_Novice) {
-		if (!isbegin_quest(7471)) {
-			mes "[Lumin]";
-			mes "............";
-			mes "...?";
-			next;
-			cutin "fly_trock",2;
-			mes "[Captain Carocc]";
-			mes "Hey, you awake now?";
-			mes "That fella without much talk, I rescued him from the ocean.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Think he lost his memory.";
-			mes "I gave him a new name 'Lumin'. But, just call him Lu...";
-			next;
-			mes "[Captain Carocc]";
-			mes "And you can talk to other people like you just talked to me.";
-			next;
-			cutin "tutorial01",3;
-			mes "!- Information -!";
-			mes "^4d4fffLeft mouse click allows basic game control.";
-			mes "Such as conversation with NPC, movement, and attacks.^000000";
-			next;
-			cutin "fly_trock",2;
-			mes "[Captain Carocc]";
-			mes "Many youngsters visit the ^4d4fffRune Midgard Kingdom^000000 to chase their dreams.";
-			mes "Izlude is a satellite city of Prontera, the capital of the Rune Midgard Kingdom.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Izlude always welcomes young adventurers like you who have just started their journey to the World.";
-			mes "You are one of them of course.";
-			next;
-			mes "[Captain Carocc]";
-			mes "I would like to tell you more stories, but it's time to get ready for arrival.";
-			mes "There is an academy in Izlude for newcomers like yourself.";
-			next;
-			mes "[Captain Carocc]";
-			mes "Let me give you more detail later.";
-			mes "See you back at the harbor deck.";
-			next;
-			mes "[Captain Carocc]";
-			mes "To get off this ship, you should enter the ^4d4fffShining Portal^000000 over there.";
-			mes "All transportation is made through those portals.";
-			setquest 7471;
-			completequest 7471;
-			next;
-			cutin "nov_lumin01",0;
-			mes "[Lumin]";
-			mes "Yes.";
-			next;
-			cutin "fly_trock",2;
-			mes "[Carocc]";
-			mes "Oh, boy.";
-			mes "What cute reaction.";
-			close2;
-			cutin "", 255;
-			end;
-		}
-		cutin "nov_lumin01",0;
+//== Lumin (int_land) ==========================================
+int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
+	if (isbegin_quest(7471) == 0) {
+		cutin "nov_lumin01.bmp",0;
 		mes "[Lumin]";
-		mes ".....";
+		mes ".............";
+		mes "..?";
 		next;
-		select("Should I introduce myself?", "My name is ~!");
-		mes "["+strcharinfo(0)+"]";
-		mes "I am "+strcharinfo(0)+"!";
+		cutin "fly_trock.bmp",2;
+		mes "[Captain Carocc]";
+		mes "Had a good dream?";
+		mes "Soon, we will get to Izlude. And you can talk to other people like you just talked to me.";
 		next;
-		mes "[Lu]";
-		mes ".....";
+		mes "[Captain Carocc]";
+		mes "I think that guy over there lost his memory. I gave him a new name.";
+		mes "Lumin.";
 		next;
-		mes "[Lu]";
-		mes ".....";
-		mes "....So?";
+		mes "[Captain Carocc]";
+		mes "Many youngsters visit the ^4d4dffRune-Midgarts Kingdom^000000 to chase their dreams.";
+		mes "Izlude is a satellite city of Prontera, the capital of the Rune-Midgarts Kingdom.";
 		next;
-		mes "- Lu just walked away with a cynical look on his face.";
+		mes "[Captain Carocc]";
+		mes "Izlude always welcomes young adventurers like you who have just started their journey through the world.";
+		mes "You are one of them, of course.";
 		next;
-		cutin "fly_trock",2;
-		mes "[Carocc]";
-		mes "He's just shy, you know.";
-		mes "You will see him again in Izlude, be good to him please.";
+		mes "[Captain Carocc]";
+		mes "I would like to tell you more stories, but it's time to get ready for arrival.";
+		mes "There is an academy in Izlude for newcomers like yourself.";
 		next;
-		mes "[Carocc]";
-		mes "From now on, I'll be driving this ship around Izlude.";
-		mes "Let's go, shall we?";
+		mes "[Captain Carocc]";
+		mes "Let me give you more details later. See you back at the harbor deck.";
+		next;
+		mes "[Captain Carocc]";
+		mes "To get off this ship, you should enter the ^4d4dffShining Portal^000000 over there.";
+		mes "All transportation is made through the portals.";
+		setquest 7471;
+		completequest 7471;
+		next;
+		cutin "nov_lumin01.bmp", 0;
+		mes "[Lumin]";
+		mes "Yes.";
+		next;
+		classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+		cutin "fly_trock.bmp",2;
+		mes "[Captain Carocc]";
+		mes "Oh boy.";
+		mes "What a cute reaction.";
 		close2;
-		cutin "", 255;
+		cutin "",255;
 		end;
 	}
+	cutin "nov_lumin01.bmp",0;
+	mes "[Lumin]";
+	mes ".....";
+	next;
+	select("Should I introduce myself?", "My name is ~!");
+	mes "[" + strcharinfo(0) + "]";
+	mes "I am " + strcharinfo(0) + "!";
+	next;
+	mes "[Lu]";
+	mes ".....";
+	next;
+	mes "[Lu]";
+	mes ".....";
+	mes "....So?";
+	next;
+	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+	mes "- Lu just walked away with a cynical look on his face.";
+	next;
+	cutin "fly_trock.bmp",2;
+	mes "[Captain Carocc]";
+	mes "Looks like... he has a shy personality.";
+	mes "When you go to Izlude, will you check on him?";
+	next;
+	mes "[Captain Carocc]";
+	mes "From now on I'll be sailing the ship around the island.";
+	mes "Let's go, shall we?";
+	close2;
+	cutin "",255;
+	end;
+
+OnInit:
+	questinfo 7471, QTYPE_QUEST, 1, Job_Novice;
+	setquestinfo_req 7471,21008,1;
+	end;
+}
+int_land01,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship01	4_M_NOV_RUMIN
+int_land02,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship02	4_M_NOV_RUMIN
+int_land03,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship03	4_M_NOV_RUMIN
+int_land04,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship04	4_M_NOV_RUMIN
+
+int_land,58,69,5	script	Sailor#intro_npc04	4W_SAILOR,{
+	if (isbegin_quest(21008) == 1) {
+		if (countitem(6008) < 2) {
+			mes "[Sailor]";
+			mes "These Porings stole my materials to repair the ship. Can you help me to get them back?";
+			mes "There are plenty of Porings on this island.";
+			next;
+			mes "[Sailor]";
+			mes "I would really appreciate it if you help me.";
+			mes "I am not allowed to set foot on this island.";
+			mes "That's why I ask for your help~";
+			close;
+		}
+		mes "[Sailor]";
+		mes "Unbelievable, perfect! Any chance you want to join my crew?";
+		mes "Enough talking!!";
+		mes "Come on, we're ready to set sail!";
+		mes "Thank you so much!";
+		next;
+		mes "[Sailor]";
+		mes "If you want to sail with us to Izlude, jump on board!";
+		delitem 6008,2;
+		getexp 100,100;
+		getitem 611,5;
+		completequest 21008;
+		next;
+		mes "[Sailor]";
+		mes "Oh, and take these ^4d4dffMagnifiers^000000.";
+		mes "When you hunt monsters you can find ^4d4dffunidentified items^000000.";
+		next;
+		mes "[Sailor]";
+		mes "Using a Magnifier will identify the item.";
+		next;
+		mes "[Sailor]";
+		mes "Maybe you already have some unidentified items from your fights with those Porings?";
+		close;
+	}
+	mes "[Sailor]";
+	mes "The ship is heading to Izlude soon~!";
+	mes "I'll let you know when we set sail~!";
+	close;
+
+OnInit:
+	questinfo 21002, QTYPE_QUEST, 1, Job_Novice;
+	setquestinfo_req 21002,21008,1;
+	end;
 }
 
-iz_int01,91,81,3	duplicate(Lumin#iz_int)	Lumin#iz_int01	4_M_NOV_RUMIN
-iz_int02,91,81,3	duplicate(Lumin#iz_int)	Lumin#iz_int02	4_M_NOV_RUMIN
-iz_int03,91,81,3	duplicate(Lumin#iz_int)	Lumin#iz_int03	4_M_NOV_RUMIN
-iz_int04,91,81,3	duplicate(Lumin#iz_int)	Lumin#iz_int04	4_M_NOV_RUMIN
+int_land01,58,69,5	duplicate(Sailor#intro_npc04)	Sailor#intro_npc04_01	4W_SAILOR
+int_land02,58,69,5	duplicate(Sailor#intro_npc04)	Sailor#intro_npc04_02	4W_SAILOR
+int_land03,58,69,5	duplicate(Sailor#intro_npc04)	Sailor#intro_npc04_03	4W_SAILOR
+int_land04,58,69,5	duplicate(Sailor#intro_npc04)	Sailor#intro_npc04_04	4W_SAILOR
 
 // - Captain Carocc
 // -----------------------------------------------------------------------------
@@ -584,9 +800,9 @@ OnInit:
 
 OnTouch:
 	if (Class == Job_Novice && BaseLevel < 15 && !isbegin_quest(4269))
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 	else
-		emotion e_heh;
+		emotion ET_SMILE;
 	end;
 }
 
@@ -751,7 +967,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 							mes "Anybody can enroll, so take advantage of it.";
 							next;
-							emotion e_gasp, 0, "Information Staff#"+strnpcinfo(2);
+							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
 							mes "Sorry to interrupt.";
 							mes "But ^4d4dffif you need location info, please ask me.^000000";
@@ -773,7 +989,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "If there are more adventurers like you, the future will be brighter.";
 							mes "Hahahaha.";
 							next;
-							emotion e_gasp, 0, "Information Staff#"+strnpcinfo(2);
+							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
 							mes "Sorry to interrupt.";
 							mes "But ^4d4dffif you need location info, please ask me.^000000";
@@ -792,7 +1008,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 							mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 							mes "What is well, is well- isn't it?";
 							next;
-							emotion e_gasp, 0, "Information Staff#"+strnpcinfo(2);
+							emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 							mes "[Information Staff]";
 							mes "You are correct.";
 							mes "Preperation is the key.";
@@ -827,7 +1043,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "<NAVI>[the Academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 						mes "Anybody can enroll, so take advantage of it.";
 						next;
-						emotion e_gasp, 0, "Information Staff#"+strnpcinfo(2);
+						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
 						mes "Sorry to interrupt.";
 						mes "But ^4d4dffif you need location info, please ask me.^000000";
@@ -849,7 +1065,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "If there are more adventurers like you, the future will be brighter.";
 						mes "Hahahaha.";
 						next;
-						emotion e_gasp, 0, "Information Staff#"+strnpcinfo(2);
+						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
 						mes "Sorry to interrupt.";
 						mes "But ^4d4dffif you need location info, please ask me.^000000";
@@ -868,7 +1084,7 @@ izlude,122,207,3	script	Criatura Academy Staff#0	4_M_KHKYEL,3,3,{
 						mes "<NAVI>[the academy building]<INFO>iz_ac01,100,39</INFO></NAVI>.";
 						mes "What is well, is well- isn't it?";
 						next;
-						emotion e_gasp, 0, "Information Staff#"+strnpcinfo(2);
+						emotion ET_SURPRISE, getnpcid(0, "Information Staff#"+strnpcinfo(2));
 						mes "[Information Staff]";
 						mes "You are correct.";
 						mes "Preperation is the key.";
@@ -905,9 +1121,9 @@ OnInit:
 
 OnTouch:
 	if (!isbegin_quest(4269))
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 	else
-		emotion e_heh;
+		emotion ET_SMILE;
 	end;
 }
 
@@ -1565,7 +1781,7 @@ OnInit:
 
 OnTouch:
 	if (isbegin_quest(7474) == 1 && !isbegin_quest(7475))
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 	end;
 }
 
@@ -1708,7 +1924,7 @@ OnInit:
 
 OnTouch:
 	if (isbegin_quest(7474) == 1 && !isbegin_quest(7476))
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 	end;
 }
 
@@ -1851,7 +2067,7 @@ OnInit:
 
 OnTouch:
 	if (isbegin_quest(7474) == 1 && !isbegin_quest(7477))
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 	end;
 }
 
@@ -2077,8 +2293,8 @@ izlude,141,251,0	script	Cultivated Red Plant#0	1078,3,3,{
 OnTouch:
 	if (isbegin_quest(7478) == 1 && !isbegin_quest(7479)) {
 		specialeffect EF_STEAL;
-		emotion e_heh, 0, "Academy Student#"+strnpcinfo(2);
-		emotion e_gasp, 1;
+		emotion ET_SMILE, getnpcid(0, "Academy Student#"+strnpcinfo(2));
+		emotion ET_SURPRISE, playerattached();
 		donpcevent "Cultivated Red Plant#"+strnpcinfo(2)+"::OnDisable";
 	}
 	end;
@@ -2110,8 +2326,8 @@ izlude,140,249,7	script	Academy Student#0	4_M_NOV_RUMIN,{
 	if (isbegin_quest(7478) == 1 && !isbegin_quest(7479)) {
 		specialeffect EF_STEAL, AREA, "Cultivated Red Plant#"+strnpcinfo(2);
 		donpcevent "Cultivated Red Plant#"+strnpcinfo(2)+"::OnDisable";
-		emotion e_gasp, 1;
-		emotion e_heh;
+		emotion ET_SURPRISE, playerattached();
+		emotion ET_SMILE;
 		mes "[Lumin]";
 		mes "Hey there Turtle";
 		mes "You are really slow.";
@@ -2245,12 +2461,12 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		mes "Yawn. Who are you making so much noise next to me...";
 		next;
 		select("You aren't dead?");
-		emotion e_omg, 1;
+		emotion ET_HUK, playerattached();
 		mes "[Instructor Argos]";
 		mes "Dead?! Who....?";
 		mes "me? Pu ha ha ha!!";
 		next;
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Instructor Argos]";
 		mes "Sorry for laughing. Ha ha ha!";
 		mes "I was just taking a nap because the weather is good.";
@@ -2285,7 +2501,7 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		mes "[Instructor Argos]";
 		mes "You made a right decision!";
 		mes "I want to teach you for good.";
-		emotion e_no1;
+		emotion ET_BEST;
 		next;
 		mes "[Instructor Argos]";
 		mes "A novice does not know the potential power of himself nor how strong the enemy is.";
@@ -2307,7 +2523,7 @@ izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
 		mes "[Instructor Argos]";
 		mes "I was faced with the risk of death, because I was not good at pretending to be dead.";
 		mes "Even when I look back at that time. it is still thrilling...";
-		emotion e_wah;
+		emotion ET_KEK;
 		next;
 		mes "[Instructor Argos]";
 		mes "let's continue to talk";
@@ -2676,7 +2892,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		mes "[Mainz]";
 		mes "Imagine that you are in that status and monsters are rushing to you...";
 		mes "Believe me it'll happen.";
-		emotion e_wah;
+		emotion ET_KEK;
 		next;
 		mes "[Mainz]";
 		mes "This time, I will teach you about <^FF0000Sleep^000000>.";
@@ -2708,7 +2924,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		next;
 		mes "[Mainz]";
 		mes "Sleep is good for recovery but not necessarily good while you're in the middle of a battle.";
-		emotion e_flash;
+		emotion ET_SPARK;
 		next;
 		mes "[Mainz]";
 		mes "Lastly, I will teach you about  <^FF0000 Silence ^000000>.";
@@ -2763,7 +2979,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		mes "[Mainz]";
 		mes "Hey, you there!";
 		mes "By any chance, are you a training beginner?";
-		emotion e_flash;
+		emotion ET_SPARK;
 		next;
 		mes "[Mainz]";
 		mes "I'm Trainer Mainz; and I'm in charge of education at this Academy.";
@@ -2803,13 +3019,13 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 			mes "[Mainz]";
 			mes "Should I just take it for myself then?";
 			close2;
-			emotion e_sigh;
+			emotion ET_OHNO;
 			end;
 		}
 		mes "[Mainz]";
 		mes "Yes... You made a right decision.";
 		mes "Please keep in mind that I really wanted to have it but since you look exhausted I offered it to you first!";
-		emotion e_no1;
+		emotion ET_BEST;
 		next;
 		mes "- You open the lunchbox and there is some type of food inside -";
 		next;
@@ -2828,7 +3044,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		mes "[Mainz]";
 		mes "Oh... what happened to you?";
 		mes "You don't look too good!";
-		emotion e_what;
+		emotion ET_QUESTION;
 		next;
 		mes "[Mainz]";
 		mes "Oh, man...";
@@ -2852,7 +3068,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		next;
 		mes "- You roll your eyes at Mainz -";
 		mes "- Mainz turns his head as if he doesn't notice -";
-		emotion e_bzz;
+		emotion ET_STARE;
 		next;
 		mes "[Mainz]";
 		mes "Ehem! Anyway, I am sorry.";
@@ -2870,7 +3086,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		next;
 		mes "[Mainz]";
 		mes "Understand that I didn't intend to pass my wife's lunchbox as if it was a present. It was just another lesson from the Criatura Academy.";
-		emotion e_otl;
+		emotion ET_OTL;
 		next;
 		mes "[Mainz]";
 		mes "As an apology, I would like to inform you of several abnormal statuses you might experience in the Rune Midgard Continent.";
@@ -2879,7 +3095,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 		mes "Don't decline it! Being ready to learn so speak to me again.";
 		setquest 15000;
 		close2;
-		emotion e_sry;
+		emotion ET_SORRY;
 		end;
 	} else {
 		mes "[Mainz]";
@@ -2954,7 +3170,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 				mes "[Mainz]";
 				mes "Imagine that you are in that status and monsters are rushing to you...";
 				mes "Believe me it'll happen.";
-				emotion e_wah;
+				emotion ET_KEK;
 				next;
 				mes "[Mainz]";
 				mes "What else are you anxious about?";
@@ -2991,7 +3207,7 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 				next;
 				mes "[Mainz]";
 				mes "Sleep is good for recovery but not necessarily good while you're in the middle of a battle.";
-				emotion e_flash;
+				emotion ET_SPARK;
 				next;
 				mes "[Mainz]";
 				mes "What else are you anxious about?";
@@ -3042,14 +3258,14 @@ iz_ac01,134,47,5	script	Trainer Mainz#ac	4_M_KY_KNT,4,4,{
 				mes "Haaaaa...";
 				mes "What should I do with this lunchbox?";
 				close2;
-				emotion e_sigh;
+				emotion ET_OHNO;
 				end;
 			}
 		}
 	}
 
 OnTouch_:
-	emotion e_otl;
+	emotion ET_OTL;
 	end;
 }
 
@@ -3687,19 +3903,19 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "["+strcharinfo(0)+"]";
 			mes ""+strcharinfo(0)+", hello.";
 			next;
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Dacquoise]";
 			mes "I am Dacquoise, the pupil of the legendary chef of Rune Midgard, ^0000cdCharles Orleans^000000.";
 			next;
-			emotion e_no1, 0, "Eclaire#"+strnpcinfo(2);
+			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
 			mes "And we are also club members of Sir Orleans' ^0000cdfan club- Loverleans^000000.";
 			next;
-			emotion e_lv,"Mille Feuille#"+strnpcinfo(2);
+			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
 			mes "Orlean belongs to all of us!";
 			next;
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "[Dacquoise]";
 			mes "Ah, what do all the fools of the land eat?";
 			next;
@@ -3718,7 +3934,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "[Eclaire]";
 			mes "You, do you want to know more about cooking?";
 			next;
-			emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
+			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
 			mes "Will you exeprience the various spectrums of cooking?";
 			next;
@@ -3733,15 +3949,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "Don't forget to pound your chest if you choke on sweet potato!";
 				close;
 			}
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Dacquoise]";
 			mes "Ok, we will be kind guides to the journey of cooking!!";
 			next;
-			emotion e_no1, 0, "Eclaire#"+strnpcinfo(2);
+			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
 			mes "It's ok with me, asking me everthing you want to know.";
 			next;
-			emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
+			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
 			mes "Kindness is our spice~";
 			next;
@@ -3750,7 +3966,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Dacquoise]";
 				mes "Aha! You want to know about the benefits of cooking? Cooked meals have two benefits!";
 				next;
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				mes "[Dacquoise]";
 				mes "First, ^0000cdincreased stats!^000000 Baaam!!";
 				next;
@@ -3760,7 +3976,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "The amount of the stat increase changes depending on the level of cooking.";
 				next;
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				mes "[Dacquoise]";
 				mes "And the next benefit? Babam!";
 				next;
@@ -3795,24 +4011,24 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Dacquoise]";
 				mes "Preparation can also be split into two stages.";
 				next;
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				break;
 			case 2:
 				mes "[Dacquoise]";
 				mes "Right, cooking needs some preparation. This can also be divided into two catagories.";
 				next;
-				emotion e_gasp,"Dacquoise#"+strnpcinfo(2);
+				emotion ET_SURPRISE, getnpcid(0, "Dacquoise#"+strnpcinfo(2));
 				break;
 			case 3:
-				emotion e_an;
+				emotion ET_FRET;
 				mes "[Dacquoise]";
 				mes "What is this? What a waste of time!";
 				next;
-				emotion e_ag, 0, "Eclaire#"+strnpcinfo(2);
+				emotion ET_ANGER, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 				mes "[Eclaire]";
 				mes "I thought we were going to get more members!";
 				next;
-				emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
+				emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 				mes "[Mille Feuille]";
 				mes "Never show up again!!";
 				close;
@@ -3835,7 +4051,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 			mes "[Mille Feuille]";
 			mes "Cookbook can be earned ^0000cdthrough Quest^000000s or can be found by hunting ^0000cdmonster^000000s.";
 			next;
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Dacquoise]";
 			mes "After getting the Cookbook, next preperation is!";
 			mes "The ^0000cdingredients!^000000.";
@@ -3857,7 +4073,7 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Dacquoise]";
 				mes "That's the spirit! Let's cook for real!";
 				mes "Get prepared and come back!";
-				emotion e_no1;
+				emotion ET_BEST;
 			} else {
 				mes "[Eclaire]";
 				mes "We are not responsible even if it fails!";
@@ -3873,15 +4089,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "[Dacquoise]";
 					mes "I used my valuable time to introduce the cooking world to you.";
 					mes "Then you just give up?";
-					emotion e_an;
+					emotion ET_FRET;
 					next;
 					mes "[Eclaire]";
 					mes "You have insulted us!";
-					emotion e_ag, 0, "Eclaire#"+strnpcinfo(2);
+					emotion ET_ANGER, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "Come back again, if you want to learn later~ I guess...";
-					emotion e_dots, 0, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THINK, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					if (isbegin_quest(14154) == 1)
 						erasequest 14154;
@@ -3900,16 +4116,16 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "[Dacquoise]";
 					mes "You brough what I need! Okay, then I will cook for you as I promised.";
 					mes "Time to move like greased lightning!!!!";
-					emotion e_flash;
+					emotion ET_SPARK;
 					next;
 					mes "[Eclaire]";
 					mes "Go hunting after eating this. You will feel your power enhanced.";
-					emotion e_no1, 0, "Eclaire#"+strnpcinfo(2);
+					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "If you really want to cook, go and see ^0000ffSir. Charles Orleans at the basement of Prontera castle^000000!!";
 					mes "Kya... Sir Orleans!!";
-					emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 705,1;// Clover
 					delitem 511,1;// Green_Herb
@@ -3922,15 +4138,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "[Dacquoise]";
 					mes "You brough what I need! Okay, then I will cook for you as I promised.";
 					mes "Time to move like greased lightning!!!!";
-					emotion e_flash;
+					emotion ET_SPARK;
 					next;
 					mes "[Eclaire]";
 					mes "Try this. It will make you run like you are a flying bee.";
-					emotion e_no1, 0, "Eclaire#"+strnpcinfo(2);
+					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "If you really want to cook, go and see ^0000ffSir. Charles Orleans at the basement of Prontera castle^000000!! You must be attracted by him!!";
-					emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 512,1;// Apple
 					delitem 515,2;// Carrot
@@ -3942,15 +4158,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "[Dacquoise]";
 					mes "You brough what I need! Okay, then I will cook for you as I promised.";
 					mes "Time to move like greased lightning!!!!";
-					emotion e_flash;
+					emotion ET_SPARK;
 					next;
 					mes "[Eclaire]";
 					mes "Can you feel unknown power coursing through your veins? You're eating it!";
-					emotion e_no1, 0, "Eclaire#"+strnpcinfo(2);
+					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "If you are really curious about the cooking, go seek Sir. Charles Orleans at the basement of Prontera Castle.";
-					emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 909,1;// Jellopy
 					delitem 914,1;// Fluff
@@ -3963,17 +4179,17 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 					mes "[Dacquoise]";
 					mes "You brough what I need! Okay, then I will cook for you as I promised.";
 					mes "Time to move like greased lightning!!!!";
-					emotion e_flash;
+					emotion ET_SPARK;
 					next;
 					mes "[Eclaire]";
 					mes "If you eat this. You will never miss your target!";
 					mes "In fact, never miss the target for level 1!";
-					emotion e_no1, 0, "Eclaire#"+strnpcinfo(2);
+					emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 					next;
 					mes "[Mille Feuille]";
 					mes "Go and see Sir. Charles Orleans at the basement of Prontera castle!!";
 					mes "You can learn real cooking from him!";
-					emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
+					emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 					close2;
 					delitem 512,1;// Apple
 					delitem 705,1;// Clover
@@ -4005,34 +4221,34 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "The cooking we are about to show you requires a recipe and cooking equipment but it is difficult for novices so I will cook for you.";
 				next;
-				emotion e_bzz;
+				emotion ET_STARE;
 				mes "[Dacquoise]";
 				mes "Why are you saying you will make them?";
 				next;
-				emotion e_hmm, 0, "Mille Feuille#"+strnpcinfo(2);
+				emotion ET_SCRATCH, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 				mes "[Mille Feuille]";
 				mes "Ah, Why not?";
 				next;
 				mes "[Dacquoise]";
 				mes "I am the leader of this flame cooking trio chefs!";
 				next;
-				emotion e_omg, 0, "Eclaire#"+strnpcinfo(2);
+				emotion ET_HUK, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 				mes "[Eclaire]";
 				mes "What?!! When was that decided?";
 				next;
-				emotion e_no;
+				emotion ET_STARE_ABOUT;
 				mes "[Dacquoise]";
 				mes "Is there anyone who is older than me?";
 				next;
-				emotion e_omg, 0, "Eclaire#"+strnpcinfo(2);
+				emotion ET_HUK, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 				mes "[Eclaire]";
 				mes "Age! There is nothing I can do with it.";
 				next;
-				emotion e_ok,"Mille Feuille#"+strnpcinfo(2);
+				emotion ET_OK, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 				mes "[Mille Feuille]";
 				mes "Just because you're one year older, you want to automatically be rejected. Anyone have an objection?";
 				next;
-				emotion e_an;
+				emotion ET_FRET;
 				mes "[Dacquoise]";
 				mes "Quiet!";
 				next;
@@ -4151,15 +4367,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				end;
 			}
 		} else {
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Dacquoise]";
 			mes "I am Dacquoise, the pupil of the legendary chef of Rune Midgard, ^0000cdCharles Orleans^000000.";
 			next;
-			emotion e_no1, 0, "Eclaire#"+strnpcinfo(2);
+			emotion ET_BEST, getnpcid(0, "Eclaire#"+strnpcinfo(2));
 			mes "[Eclaire]";
 			mes "Steaks not only increase stats but also recover both your HP and SP.";
 			next;
-			emotion e_lv, 0, "Mille Feuille#"+strnpcinfo(2);
+			emotion ET_THROB, getnpcid(0, "Mille Feuille#"+strnpcinfo(2));
 			mes "[Mille Feuille]";
 			mes "If you really want to cook, go and see^0000cd Sir. Charles Orleans at the basement of Prontera castle^000000!! You must be attracted by him!!";
 			close;
@@ -4900,7 +5116,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "[Poring]";
 		mes "Dear oh dear...what do we have 'ere?";
 		next;
-		if (select("What happend?", "Ignore him/it?") == 2) {
+		if (select("What happened?", "Ignore him/it?") == 2) {
 			mes "[Poring]";
 			mes "Oh dear, oh dear...";
 			close;
@@ -4916,29 +5132,29 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		next;
 		mes "[Ghostring]";
 		mes "Oi you lot! Tell me wot I want to hear!";
-		emotion e_gasp, 0, "Ghostring#cupet";
+		emotion ET_SURPRISE, getnpcid(0, "Ghostring#cupet");
 		next;
 		mes "[Unskilled Poring]";
 		mes "Ghostring's the strongest in the world!";
-		emotion e_paper, 0, "Cowardly Poring#pet_1";
-		emotion e_paper, 0, "Unskilled Poring#pet_2";
-		emotion e_paper, 0, "Foolish Poring#pet_3";
+		emotion ET_WRAP, getnpcid(0, "Cowardly Poring#pet_1");
+		emotion ET_WRAP, getnpcid(0, "Unskilled Poring#pet_2");
+		emotion ET_WRAP, getnpcid(0, "Foolish Poring#pet_3");
 		next;
 		mes "[Ghostring]";
 		mes "What kind of monster I am?";
-		emotion e_gasp, 0, "Ghostring#cupet";
+		emotion ET_SURPRISE, getnpcid(0, "Ghostring#cupet");
 		next;
 		mes "[Unskilled Poring]";
 		mes "Ghostring's da Boss!";
-		emotion e_paper, 0, "Cowardly Poring#pet_1";
-		emotion e_paper, 0, "Unskilled Poring#pet_2";
-		emotion e_paper, 0, "Foolish Poring#pet_3";
+		emotion ET_WRAP, getnpcid(0, "Cowardly Poring#pet_1");
+		emotion ET_WRAP, getnpcid(0, "Unskilled Poring#pet_2");
+		emotion ET_WRAP, getnpcid(0, "Foolish Poring#pet_3");
 		next;
 		mes "[Ghostring]";
 		mes "Bwa ha ha ha~";
-		emotion e_heh, 0, "Ghostring#cupet";
+		emotion ET_SMILE, getnpcid(0, "Ghostring#cupet");
 		next;
-		emotion e_sob, 0, "Friendly Poring#ac";
+		emotion ET_CRY;
 		mes "[Poring]";
 		mes "Bleedin' shame...";
 		mes "Little Porings takin' up with a git like that and not bein' cute anymore.";
@@ -4960,14 +5176,14 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 		mes "[Unskilled Poring]";
 		mes "Wot's Dat? Onna them Poring's talkin' to a huumie.";
 		mes "Shall we beat him up?";
-		emotion e_paper, 0, "Cowardly Poring#pet_1";
-		emotion e_paper, 0, "Unskilled Poring#pet_2";
-		emotion e_paper, 0, "Foolish Poring#pet_3";
+		emotion ET_WRAP, getnpcid(0, "Cowardly Poring#pet_1");
+		emotion ET_WRAP, getnpcid(0, "Unskilled Poring#pet_2");
+		emotion ET_WRAP, getnpcid(0, "Foolish Poring#pet_3");
 		next;
 		mes "[Poring]";
 		mes "Blimey!";
 		mes "Help me! Save me!";
-		emotion e_omg, 0, "Friendly Poring#ac";
+		emotion ET_HUK;
 		next;
 		select("What can I do to help?");
 		mes "[Poring]";
@@ -5012,7 +5228,7 @@ new_1-3,99,169,3	script	Friendly Poring#ac	4_PORING,{
 			mes "["+strcharinfo(0)+"]";
 			mes "I used the unripe apples that you gave me, then they turned into eggs.";
 			next;
-			emotion e_sob, 0, "Friendly Poring#ac";
+			emotion ET_CRY;
 			mes "[Poring]";
 			mes "Oh, guess I didn't expect they'd be turned into pets so easily!";
 			next;
@@ -5102,7 +5318,7 @@ new_1-3,108,165,3	script	Ghostring#cupet	4_GHOSTRING,{
 // - Little Porings
 // -----------------------------------------------------------------------------
 new_1-3,105,165,5	script	Cowardly Poring#pet_1	2398,{ end; }
-new_1-3,105,164,5	script	Unskillful Poring#pet_2	2398,{ end; }
+new_1-3,105,164,5	script	Unskilled Poring#pet_2	2398,{ end; }
 new_1-3,105,163,5	script	Foolish Poring#pet_3	2398,{ end; }
 
 // - Kafra Guide Trainer
@@ -5415,7 +5631,7 @@ izlude,102,150,5	script	Wedding Secretary#iz	1_F_LIBRARYGIRL,{
 			next;
 			break;
 		case 4:
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Wedding Secretary]";
 			mes "Your mother didn't teach you right?";
 			mes "Mercy on you. You are ignorant of the beauty of love!!!";
@@ -5444,14 +5660,14 @@ izlude,95,146,5	script	Mom#iz	4_F_CAVE1,{
 	mes "[Dad]";
 	mes "Nope~~";
 	next;
-	emotion e_an;
+	emotion ET_FRET;
 	mes "[Mom]";
 	mes "He's out again? Never stays in the house!! Shall I use it?";
 	next;
 	mes "[Dad]";
 	mes "Leave him alone~ He may be playing somewhere.";
 	next;
-	emotion e_an;
+	emotion ET_FRET;
 	mes "[Mom]";
 	mes "You spoil him too much!";
 	next;
@@ -5466,7 +5682,7 @@ izlude,95,146,5	script	Mom#iz	4_F_CAVE1,{
 	mes "[Mom]";
 	mes "Here!";
 	next;
-	emotion e_ag, 0, "Etinifni#"+strnpcinfo(2);
+	emotion ET_ANGER, getnpcid(0, "Etinifni#"+strnpcinfo(2));
 	mes "[Etinifni]";
 	mes "Ah... Again!! I have been out hunting Orcs.";
 	next;
@@ -5479,12 +5695,12 @@ izlude,95,146,5	script	Mom#iz	4_F_CAVE1,{
 	mes "[Mom]";
 	mes "What? This moron?!";
 	next;
-	emotion e_sigh, 0, "Etinifni#"+strnpcinfo(2);
+	emotion ET_OHNO, getnpcid(0, "Etinifni#"+strnpcinfo(2));
 	mes "[Etinifni]";
 	mes "OK. I will do it.";
 	next;
 	disablenpc "Etinifni#"+strnpcinfo(2);
-	emotion e_sob, 0, "Dad#"+strnpcinfo(2);
+	emotion ET_CRY, getnpcid(0, "Dad#"+strnpcinfo(2));
 	mes "[Dad]";
 	mes "I am sorry... Dad has no power over your mom.";
 	close;
@@ -5537,23 +5753,23 @@ izlude_d,97,144,1	duplicate(Etinifni#iz)	Etinifni#iz_d	4_M_DEWBOY
 // - Romantic Male
 // -----------------------------------------------------------------------------
 izlude,99,138,3	script	Romantic Male#iz	4_M_SITDOWN,{
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	mes "[Romantic Male]";
 	mes "Let's go~~ together hand in hand~~ Put everything aside ~~ in the dark blue night of Jawaii~~ under the stars~~";
 	next;
 	mes "[Romantic Male]";
 	mes "We are leaving for Jawaii-the place of our honeymoon to celebrate our 10th wedding anniversary!";
 	next;
-	emotion e_lv;
+	emotion ET_THROB;
 	mes "[Romantic Male]";
 	mes "Are you lifting up our good old memories renting my wedding dress and your tuxedo!! It will strenghthen our relationship, won't it?";
 	next;
 	specialeffect EF_HEARTCASTING, AREA, "Romantic Female#"+strnpcinfo(2);
-	emotion e_kis, 0, "Romantic Female#"+strnpcinfo(2);
+	emotion ET_CHUP, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Male]";
 	mes "Honey~~ I love you!! Sweetheart~";
 	next;
-	emotion e_kis2;
+	emotion ET_CHUPCHUP;
 	mes "[Romantic Male]";
 	mes "No!! I love you more than you do!!";
 	close;
@@ -5570,7 +5786,7 @@ izlude,97,138,5	script	Romantic Female#iz	4_F_SITDOWN,{
 	mes "[Romantic Female]";
 	mes "Shout like this when I miss you, honey!!";
 	next;
-	emotion e_lv, 0, "Romantic Female#"+strnpcinfo(2);
+	emotion ET_THROB, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Female]";
 	mes "^0000cd[I miss you.]^000000";
 	next;
@@ -5584,7 +5800,7 @@ izlude,97,138,5	script	Romantic Female#iz	4_F_SITDOWN,{
 	mes "You are tired of sitting, aren't you?";
 	next;
 	specialeffect EF_HEARTCASTING, AREA, "Romantic Female#"+strnpcinfo(2);
-	emotion e_kis, 0, "Romantic Female#"+strnpcinfo(2);
+	emotion ET_CHUP, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Female]";
 	mes "My sweetheart!!! I love you!!!";
 	next;
@@ -5592,11 +5808,11 @@ izlude,97,138,5	script	Romantic Female#iz	4_F_SITDOWN,{
 	mes "Yes, thank you for sharing your SP! You are also tired, aren't you?";
 	next;
 	specialeffect EF_HEARTCASTING, AREA, "Romantic Male#"+strnpcinfo(2);
-	emotion e_kis2, 0, "Romantic Male#"+strnpcinfo(2);
+	emotion ET_CHUPCHUP, getnpcid(0, "Romantic Male#"+strnpcinfo(2));
 	mes "[Romantic Male]";
 	mes "My sweetheart!! I love you!!!";
 	next;
-	emotion e_lv, 0, "Romantic Female#"+strnpcinfo(2);
+	emotion ET_THROB, getnpcid(0, "Romantic Female#"+strnpcinfo(2));
 	mes "[Romantic Female]";
 	mes "Kia~ You are Coolest!!!";
 	close;
@@ -5623,10 +5839,10 @@ izlude,93,143,3	script	Manufacturing Maniac#0	-1,{
 
 OnTimer30000:
 	if (rand(1,2) == 1) {
-		emotion e_no1;
+		emotion ET_BEST;
 		specialeffect EF_PHARMACY_OK;
 	} else {
-		emotion e_omg;
+		emotion ET_HUK;
 		specialeffect EF_PHARMACY_FAIL;
 	}
 	end;
@@ -6071,7 +6287,7 @@ iz_ac01,138,69,3	script	Lady#ac	1_F_ORIENT_02,{
 	next;
 	mes "[Lady]";
 	mes "You have a pretty name... Anonymous... I am attacted by your work.";
-	emotion e_lv;
+	emotion ET_THROB;
 	close;
 }
 
@@ -6096,7 +6312,7 @@ iz_ac01_d,149,46,3	duplicate(Eclaire#ac)	Eclaire#ac_d	4_F_KAFRA7
 // - Mille Feuille
 // -----------------------------------------------------------------------------
 iz_ac01,150,50,3	script	Mille Feuille#ac	4_F_KAFRA8,{
-	emotion e_lv;
+	emotion ET_THROB;
 	mes "[Mille Feuille]";
 	mes "Ahh. Hey is Sir. Orleons doing well?";
 	close;
@@ -6135,7 +6351,7 @@ iz_ac01,159,32,3	script	Hungry Trainee#ac	4_M_SIT_NOVICE,{
 	mes "Wonder when my order will get taken... it's already been an hour...";
 	mes "Look at the helpers lingering on the side...";
 	next;
-	emotion e_an, 0, "Scholarship Trainee#"+strnpcinfo(2);
+	emotion ET_FRET, getnpcid(0, "Scholarship Trainee#"+strnpcinfo(2));
 	mes "[Scholarship Trainee]";
 	mes "Ugh... this guy...";
 	mes "I already told you eight hundred times! It's buffet style! Ah!";
@@ -6144,7 +6360,7 @@ iz_ac01,159,32,3	script	Hungry Trainee#ac	4_M_SIT_NOVICE,{
 	mes "Buffet? What's that? Can you eat it?";
 	mes "You look down on me because I'm from the country, don't you?";
 	next;
-	emotion e_ag;
+	emotion ET_ANGER;
 	mes "[Hungry Trainee]";
 	mes "Don't tell me it's not difficult to understand! Explain it to me!";
 	close;
@@ -6410,7 +6626,7 @@ pay_fild08,153,83,1	script	Lady Harvesting Herbs#2	1_F_ORIENT_02,{
 	next;
 	mes "[Lady]";
 	mes "Payon is the wonderful city. There you can be transferred to an Archer or to a Taekwon. And a nice Dungeon there. If you have time, please make a visit.";
-	emotion e_heh;
+	emotion ET_SMILE;
 	close;
 }
 
@@ -6527,12 +6743,12 @@ iz_ac02_d,107,180,3	duplicate(ac_board)	[Principal's Office]#ad	2_BULLETIN_BOARD
 iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 	cutin "choucream_n.bmp", 2;
 	if (Class == Job_Novice) {
-		emotion e_what;
+		emotion ET_QUESTION;
 		mes "[Cream Puff]";
 		mes "You are a novice? right?";
 		next;
 	} else {
-		emotion e_sigh;
+		emotion ET_OHNO;
 		mes "[Cream Puff]";
 		mes "Class aptitude test is nonsense for those who already have a job.";
 		close2;
@@ -6544,7 +6760,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 	next;
 	if (select("No... how did you know?", "I decided.") == 2) {
 		cutin "choucream_d.bmp",2;
-		emotion e_sigh;
+		emotion ET_OHNO;
 		mes "[Cream Puff]";
 		mes "Have you already decided? Ok then.";
 		next;
@@ -6555,7 +6771,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		end;
 	}
 	cutin "choucream_e.bmp",2;
-	emotion e_flash;
+	emotion ET_SPARK;
 	mes "[Cream Puff]";
 	mes "Oh, that is good.";
 	mes "What is the ^0000FFClass aptitude test^000000.";
@@ -6571,7 +6787,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 			mes "[Cream Puff]";
 			mes "It has 3 types of test and each one give 30 minutes to finish.";
 			next;
-			emotion e_what;
+			emotion ET_QUESTION;
 			mes "[Cream Puff]";
 			mes "If you have free time and have not decided your job... how about taking this test?";
 			next;
@@ -6580,7 +6796,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 			break;
 		case 3:
 			cutin "choucream_d.bmp",2;
-			emotion e_pif;
+			emotion ET_HNG;
 			mes "[Cream Puff]";
 			mes "All right. Good bye.";
 			close2;
@@ -7028,7 +7244,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 		end;
 	}
 	next;
-	emotion e_no1;
+	emotion ET_BEST;
 	mes "[Cream Puff]";
 	mes "^8014EB"+.@job_name$+"^000000 is a good matching job for you.";
 	next;
@@ -7039,7 +7255,7 @@ iz_ac02,143,55,3	script	Cream Puff#ac	4_M_KID1,{
 	mes "[Cream Puff]";
 	mes "You do not have to choose the job from Class aptitude test. That is only just for fun.";
 	next;
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes "[Cream Puff]";
 	mes "If you want, I will send it to the class that was recommended by the aptitude result.";
 	next;
@@ -7120,7 +7336,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			if (isequippedcnt(.@manuals[.@i]) || countitem(.@manuals[.@i]))
 				.@has_manual = 1;
 		}
-		emotion e_awsm;
+		emotion ET_COOL;
 		mes "[Lusa]";
 		mes "Gosh Darnit! You are cuter then a piglet! Are ya trying ta learn to be a ^ff0000Gunslinger^000000?";
 		next;
@@ -7131,7 +7347,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 		}
 		switch(select(.@menu$)) {
 		case 1:
-			emotion e_lv;
+			emotion ET_THROB;
 			mes "[Lusa]";
 			mes "You're so cute! A ^ff0000Gunslinger^000000 who has true grit wield his weapons bringing justice in these wild times.";
 			next;
@@ -7211,7 +7427,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 				end;
 			}
 			mes "[Lusa]";
-			if (.@has_manual == 1) {
+			if (isequippedcnt(2941) || countitem(2941)) {
 				mes "Hey! What kind of con is this?! You already had a manual!";
 			} else {
 				getitem 2941,1;// Gunslinger_Manual
@@ -7226,7 +7442,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			end;
 		case 3:
 			if (Upper == 2) {
-				emotion e_slur;
+				emotion ET_SEXY;
 				mes "[Lusa]";
 				mes "Oh, sorry! Children cannot become Gunslingers!";
 				next;
@@ -7375,7 +7591,7 @@ iz_ac02,142,85,6	script	Lusa#ac	4_F_GUNSLINGER,{
 			cutin "", 255;
 			end;
 		} else if (nov_3_guns == 7) {
-			emotion e_ok;
+			emotion ET_OK;
 			mes "[Lusa]";
 			mes "Ah you're back, and now wearing lovely Gunslinger clothing! It suits you well, congratulations!";
 			next;
@@ -8011,9 +8227,8 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 		mes "[Sharp Snake's Fang]";
 		mes "Yesssssss? I wass sssent by the academy.";
 		close;
-	} else if (nov_3_guns > 7) {
-		disable_items;
 	}
+	disable_items;
 	mes "[Sharp Snake's Fang]";
 	mes "I am ^A2563ESharp Snake's Fang^000000 from the Gunslinger Guild. What do you need?";
 	next;
@@ -8023,9 +8238,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 		next;
 		mes "[Sharp Snake's Fang]";
 		mes "You don't need to worry, he said you're doing great!";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	mes "[Sharp Snake's Fang]";
 	mes "Do you wish to exchange your guild issued weapon?";
@@ -8033,125 +8246,66 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 	mes "[Sharp Snake's Fang]";
 	mes "Let's first check your gun's condition.";
 	next;
-	if (getequipname(EQI_HAND_R) == "") {
+	.@gun = getequipid(EQI_HAND_R);
+	.@equip_refine = getequiprefinerycnt(.@part);
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+	if (.@gun == -1) {
 		mes "[Sharp Snake's Fang]";
 		mes "If you want to proceed, you need to have your weapon equipped.";
-		close2;
-		enable_items;
-		end;
-	} else {
-		.@gun = getequipid(EQI_HAND_R);
+		close;
 	}
 	mes "[Sharp Snake's Fang]";
 	mes "Let's see...";
 	next;
+	mes "[Sharp Snake's Fang]";
 	if (.@gun == 13116) {// Novice_Revolver
 		.@gun_code$ = "RV";
 		.@now_gun$ = "Revolver";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Revolver?";
-		next;
 	} else if (.@gun == 13180) {// Novice_Rifle
 		.@gun_code$ = "RF";
 		.@now_gun$ = "Rifle";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Rifle?";
-		next;
 	} else if (.@gun == 13181) {// Novice_Shotgun
 		.@gun_code$ = "SG";
 		.@now_gun$ = "Shotgun";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Shotgun?";
-		next;
 	} else if (.@gun == 13182) {// Novice_Gatling
 		.@gun_code$ = "GT";
 		.@now_gun$ = "Gatling";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Gatling Gun?";
-		next;
 	} else if (.@gun == 13183) {// Novice_Grenade_Launcher
 		.@gun_code$ = "GL";
 		.@now_gun$ = "Grenade Launcher";
-		mes "[Sharp Snake's Fang]";
 		mes "You want to exchange your Guild issued Grenade Launcher?";
-		next;
 	} else {
-		mes "[Sharp Snake's Fang]";
 		mes "The gun you are using is was not provided by the guild.";
 		close;
 	}
+	next;
 	mes "[Sharp Snake's Fang]";
 	mes "The gun looks to be in good condition.";
 	next;
 	mes "[Sharp Snake's Fang]";
 	mes "Please select the novice weapon you wish to exchange for your "+.@now_gun$+"!";
 	next;
-	switch(select("Exchange for Revolver", "Exchange for Rifle", "Exchange for Shotgun", "Exchange for Gatling Gun", "Exchange for Grenade Launcher", "Cancel")) {
-	case 1:
-		if (.@gun == 13116) {
+	setarray .@selection_item_id[0], 13116, 13180, 13181, 13182, 13183;
+	.@s = select("Exchange for Revolver", "Exchange for Rifle", "Exchange for Shotgun", "Exchange for Gatling Gun", "Exchange for Grenade Launcher", "Cancel") - 1;
+	if (.@s != 5) {
+		if (.@gun == .@selection_item_id[.@s]) {
 			mes "[Sharp Snake's Fang]";
 			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13116,1;// Novice_Revolver
+			close;
 		}
-		break;
-	case 2:
-		if (.@gun == 13180) {
-			mes "[Sharp Snake's Fang]";
-			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13180,1;// Novice_Rifle
-		}
-		break;
-	case 3:
-		if (.@gun == 13181) {
-			mes "[Sharp Snake's Fang]";
-			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13181,1;// Novice_Shotgun
-		}
-		break;
-	case 4:
-		if (.@gun == 13182) {
-			mes "[Sharp Snake's Fang]";
-			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13182,1;// Novice_Gatling
-		}
-		break;
-	case 5:
-		if (.@gun == 13183) {
-			mes "[Sharp Snake's Fang]";
-			mes "You already have that gun, just use it!";
-			close2;
-			enable_items;
-			end;
-		} else {
-			delequip EQI_HAND_R;
-			getitem 13183,1;// Novice_Grenade_Launcher
-		}
-		break;
-	case 6:
-		break;
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@gun) || callfunc("F_IsEquipCardHack", EQI_HAND_R, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine))
+			close;
+
+		delequip EQI_HAND_R;
+		getitem .@selection_item_id[.@s],1;
 	}
 	mes "[Sharp Snake's Fang]";
-	mes "Gun control management number ^FF0000"+.@gun_code$+""+rand(0,9)+""+rand(0,9)+""+rand(0,9)+""+rand(0,9)+""+rand(0,9)+""+rand(0,9)+"^000000.";
+	mes "Gun control management number ^FF0000"+.@gun_code$+""+rand(9)+""+rand(9)+""+rand(9)+""+rand(9)+""+rand(9)+""+rand(9)+"^000000.";
 	next;
 	mes "[Sharp Snake's Fang]";
 	mes "Are there any issues?";
@@ -8159,9 +8313,7 @@ iz_ac02,162,86,4	script	Guild Staff#ac	4W_M_02,{
 	select("No issues.");
 	mes "[Sharp Snake's Fang]";
 	mes "Cherish your gun!";
-	close2;
-	enable_items;
-	end;
+	close;
 }
 
 iz_ac02_a,162,86,4	duplicate(Guild Staff#ac)	Guild Staff#ac_a	4W_M_02
@@ -8178,7 +8330,7 @@ iz_ac02_d,162,86,4	duplicate(Guild Staff#ac)	Guild Staff#ac_d	4W_M_02
 iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 	mes "[Arang]";
 	mes "Hi, Good morning!";
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	cutin "arang03.bmp", 0;
 	next;
 	if (Class == Job_Novice) {
@@ -8293,19 +8445,19 @@ iz_ac02,70,85,5	script	Arang#ac	4_F_TAEKWON,{
 					mes "[Arang]";
 					mes "Is that so!? You are!? Yaho! Now I am a teacher! Now, ask me whatever!";
 					nov_3_taekwon = 1;
-					emotion e_heh;
+					emotion ET_SMILE;
 					close2;
 					cutin "", 255;
 					end;
 				}
 				mes "[Arang]";
 				mes "Hahaha.. You are interested in me?";
-				emotion e_an;
+				emotion ET_FRET;
 				cutin "arang03.bmp", 0;
 				next;
 				mes "Suddenly, you see Arang's foot flying towards you.";
 				specialeffect2 EF_TRIPLEATTACK;
-				emotion e_wah, 1;
+				emotion ET_KEK, playerattached();
 				next;
 				cutin "", 255;
 				mes "All you see are stars...";
@@ -11820,7 +11972,12 @@ OnReset:
 OnMyMobDead:
 	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
 	if (.@dead_num < 1)
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+		initnpctimer;
+	end;
+
+OnTimer5000:	// custom timer (there is officially no respawn delay)
+	stopnpctimer;
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
 
 OnSpawn:
@@ -11853,7 +12010,12 @@ OnReset:
 OnMyMobDead:
 	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
 	if (.@dead_num < 1)
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+		initnpctimer;
+	end;
+
+OnTimer5000:	// custom timer (there is officially no respawn delay)
+	stopnpctimer;
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
 
 OnSpawn:
@@ -11886,7 +12048,12 @@ OnReset:
 OnMyMobDead:
 	.@dead_num = mobcount(""+strnpcinfo(4)+"", "#"+strnpcinfo(2)+"::OnMyMobDead");
 	if (.@dead_num < 1)
-		donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
+		initnpctimer;
+	end;
+
+OnTimer5000:	// custom timer (there is officially no respawn delay)
+	stopnpctimer;
+	donpcevent "#"+strnpcinfo(2)+"::OnSpawn";
 	end;
 
 OnSpawn:
@@ -12036,7 +12203,7 @@ iz_ac02,156,169,5	script	Acolyte Leader Alice#2	4_F_ACOLYTE,{
 				mes "[Alice Yisha]";
 				mes "Ask ^ff0000if you want to experience skills of an Acolyte, ask the sister next to you^000000.";
 				mes "Now I am reading an introductory skill.";
-				emotion e_omg, 0, "A Nun#"+strnpcinfo(2);
+				emotion ET_HUK, getnpcid(0, "A Nun#"+strnpcinfo(2));
 				close2;
 				cutin "", 255;
 				end;
@@ -12417,7 +12584,7 @@ izlude,153,126,1	script	Refinery Owner Han#iz	4_M_02,{
 		mes "Are you interested in ^3E86C3refining^000000 to make your items strong?";
 		next;
 		if (select("I have no interest.", "refining? Is it edible?") == 1) {
-			emotion e_sry;
+			emotion ET_SORRY;
 			mes "[Refinery Owner Han]";
 			mes "Ah, I am sorry. I caught a busy man.";
 			close;
@@ -12671,9 +12838,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "[Refining Machine Wagjak]";
 		mes "^ff0000- Error number 000"+.@part+" -^000000";
 		mes "Item is not equipped.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	mes "[Refining Machine Wagjak]";
 	mes "Searching for the equipment information - completed.";
@@ -12682,9 +12847,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "[Refining Machine Wagjak]";
 		mes "^FF0000- error number 4444 -^000000";
 		mes "This item cannot be refined.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	// if (!getequipisidentify(.@part)) {// getequipisidentify command removed 
 		// mes "[Refining Machine Wagjak]";
@@ -12694,27 +12857,27 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		// enable_items;
 		// end;
 	// }
-	if (getequiprefinerycnt(.@part) >= 10) {
+	.@refineitemid = getequipid(.@part); // save id of the item
+	.@refinerycnt = getequiprefinerycnt(.@part); //save refinery count
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+
+	if (.@refinerycnt >= 10) {
 		mes "[Refining Machine Wagjak]";
 		mes "^FF0000- error number 1010 -^000000";
 		mes "At the current version, you can do refining up to level 10.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	if (isbegin_quest(5153) == 1) {
 		if (getequipweaponlv(.@part) == 1) {
 			mes "[Refining Machine Wagjak]";
-			mes "Type : 1 level weapon";
+			mes "Type : Level 1 weapon";
 			mes "Charge : Phracon, 1000 zeny";
 			mes "Service usage coupon sensed. No charge to be requested. Will you refine?";
 			next;
 			if (select("Refine.", "Don't Refine.") == 2) {
 				mes "[Refining Machine Wagjak]";
 				mes "Cancel the refining.";
-				close2;
-				enable_items;
-				end;
+				close;
 			}
 			if (getequippercentrefinery(.@part) < 100) {
 				mes "[Refining Machine Wagjak]";
@@ -12725,19 +12888,18 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 				if (select("Refine.", "Don't Refine.") == 2) {
 					mes "[Refining Machine Wagjak]";
 					mes "Refining has been cancelled as per the user's request.";
-					close2;
-					enable_items;
-					end;
+					close;
 				}
 			}
+			// anti-hack
+			if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt))
+				close;
 			if (getequippercentrefinery(.@part) <= rand(100)) {
 				failedrefitem .@part;
 				mes "[Refining Machine Wagjak]";
 				mes "Result : Fail";
 				mes "refining failed. The equipment was destroyed.";
-				close2;
-				enable_items;
-				end;
+				close;
 			} else {
 				successrefitem .@part;
 				mes "[Refining Machine Wagjak]";
@@ -12747,39 +12909,19 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 				next;
 				mes "[Refining Machine Wagjak]";
 				mes "Service usage coupon was used.";
-				close2;
-				enable_items;
-				end;
+				close;
 			}
 		}
 	}
-	switch(getequipweaponlv(.@part)) {
-	case 0:
+
+	.@price = getequiprefinecost(.@part, REFINE_COST_WAGJAK, REFINE_ZENY_COST);
+	.@material = getequiprefinecost(.@part, REFINE_COST_WAGJAK, REFINE_MATERIAL_ID);
+
+	if ((getequipweaponlv(.@part) >= 1) && (getequipweaponlv(.@part) <= 4))
+		.@type$ = "Level " + getequipweaponlv(.@part) + " weapon";
+	else
 		.@type$ = "Armor";
-		.@material = 985;// Elunium
-		.@price = 20000;
-		break;
-	case 1:
-		.@type$ = "Level 1 weapon";
-		.@material = 1010;// Phracon
-		.@price = 1000;
-		break;
-	case 2:
-		.@type$ = "Level 2 weapon";
-		.@material = 1011;// Emveretarcon
-		.@price = 2000;
-		break;
-	case 3:
-		.@type$ = "Level 3 weapon";
-		.@material = 984;// Oridecon
-		.@price = 10000;
-		break;
-	case 4:
-		.@type$ = "Level 4 weapon";
-		.@material = 984;// Oridecon
-		.@price = 20000;
-		break;
-	}
+
 	mes "[Refining Machine Wagjak]";
 	mes "Type : "+ .@type$ +"";
 	mes "Charge : "+ getitemname(.@material) +", "+ .@price +" zeny";
@@ -12788,9 +12930,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 	if (select("Refine.", "Don't Refine.") == 2) {
 		mes "[Refining Machine Wagjak]";
 		mes "Refining has been cancelled as per the user's request.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	if (getequippercentrefinery(.@part) < 100) {
 		mes "[Refining Machine Wagjak]";
@@ -12801,21 +12941,27 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		if (select("Refine.", "Don't Refine.") == 2) {
 			mes "[Refining Machine Wagjak]";
 			mes "Refining has been cancelled as per the user's request.";
-			close2;
-			enable_items;
-			end;
+			close;
 		}
 	}
 	if (countitem(.@material) > 0 && Zeny >= .@price) {
 		delitem .@material, 1;
 		Zeny -= .@price;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@refineitemid) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt)) {
+			mes "[Refining Machine Wagjak]";
+			emotion ET_FRET;
+			mes "Wait a second...";
+			mes "Do you think I'm stupid?!";
+			mes "You switched the item while I wasn't looking! Get out of here!";
+			close;
+		}
 	} else {
 		mes "[Refining Machine Wagjak]";
 		mes "^FF0000- error number 8282 -^000000";
 		mes "You are short of refining price.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	if (getequippercentrefinery(.@part) <= rand(100)) {
 		failedrefitem .@part;
@@ -12828,9 +12974,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "Result : Success";
 		mes "Congratulations!! You succeeded in refining.";
 	}
-	close2;
-	enable_items;
-	end;
+	close;
 }
 
 izlude,153,121,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz	2_MONEMUS
@@ -13832,9 +13976,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		next;
 		mes "[Almond J]";
 		mes "If you have anything to do with the enchant association, please consult with Mounds inside.";
-		close2;
-		enable_items;
-		end;
+		close;
 	} else if (.@in_tutorial == 4) {
 		.@part = EQI_ARMOR;
 		mes "[Almond J]";
@@ -13864,25 +14006,21 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		if (select("Hidden enchant start!!", "Wait for a while.") == 2) {
 			mes "[Almond J]";
 			mes "Heh? Eh? Hik?! Come here quick.";
-			close2;
-			enable_items;
-			end;
+			close;
 		}
 		if (!getequipisequiped(.@part)) {
 			mes "[Almond J]";
 			mes "Please come back after you have equipped the Cotton Shirt.";
-			close2;
-			enable_items;
-			end;
+			close;
 		}
-		if (getequipid(EQI_ARMOR) == 2302) {
-			.@refineCount = getequiprefinerycnt(EQI_ARMOR);
+		.@equip_id = getequipid(.@part);
+		if (.@equip_id == 2302) {
+			.@refineCount = getequiprefinerycnt(.@part);
+			setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 		} else {
 			mes "[Almond J]";
 			mes "Hing, it is not a normal Cotton Shirt.";
-			close2;
-			enable_items;
-			end;
+			close;
 		}
 		mes "[Almond J]";
 		mes "Now!! Start the first hidden enchant!! Start!!!!!";
@@ -13890,8 +14028,12 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		specialeffect2 EF_REPAIRWEAPON;
 		progressbar "ffff00", 2;
 		completequest 5159;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@refineCount))
+			close;
+
 		delequip .@part;
-		setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1);
 		getitem2 2302,1,1,.@refineCount,0,.@equip_card[0],.@equip_card[1],4800,4795;// Cotton_Shirt_ ; SP50 ; HP100
 		mes "[Almond J]";
 		mes "Zzazanzn!! Completed!!";
@@ -13904,9 +14046,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		mes "It's fun. I want to do it again. Hey, another trial Ok? Aaaaa!!! I want to do the hidden enchant again.";
 		next;
 		mes "Gradually you are getting into your own world. You better go back to Mounds.";
-		close2;
-		enable_items;
-		end;
+		close;
 	} else if (.@in_tutorial == 5) {
 		mes "[Almond J]";
 		mes "How about it? Don't you think the hidden enchant is great? Any chance to do another hidden enchant?";
@@ -13915,9 +14055,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		mes "It's fun. I want to do it again. Hey, another trial Ok? Aaaaa!!! I want to do the hidden enchant again.";
 		next;
 		mes "Gradually you are getting into your own world. You better go back to Mounds.";
-		close2;
-		enable_items;
-		end;
+		close;
 	} else if (.@in_tutorial == 6) {
 		mes "[Almond J]";
 		mes "Heh heh... how are you? I am doing a ^142CEBservice of free hidden enchant for the beginner's weapon to advertise the enchant association.^000000.";
@@ -13925,9 +14063,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 	} else {
 		mes "[Almond J]";
 		mes "Something strange must've happened. If this continues, please contact customer service.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	mes "[Almond J]";
 	mes "As you are still a beginner, you don't have a very, very, very functional jewelry, but soon you will have.";
@@ -13948,16 +14084,12 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		mes "[Almond J]";
 		mes "^FD4F02For Novices-";
 		mes "Cutter, Mace, Rod, Axe, Etc.";
-		close2;
-		enable_items;
-		end;
+		close;
 	case 3:
 		mes "[Almond J]";
 		mes "Ye?!?!?!?!?!";
 		mes "Where are you going? You should do the hidden enchant before going.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 
 	.@part = EQI_HAND_R;
@@ -13965,13 +14097,11 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 	if (!getequipisequiped(.@part)) {
 		mes "[Almond J]";
 		mes "Hehehe... hidden enchant makes me excited. But you should come back with your weapon armed.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	.@equip = getequipid(.@part);
 	.@equip_refine = getequiprefinerycnt(.@part);
-	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1);
+	setarray .@equip_card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
 
 	mes "[Almond J]";
 	switch(.@equip) {
@@ -13980,9 +14110,7 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 		next;
 		mes "[Almond J]";
 		mes "But this weapon might be strange to add a hidden enchant? Sorry.";
-		close2;
-		enable_items;
-		end;
+		close;
 	case 1381: // N_Battle_Axe
 	case 1545: // N_Mace
 	case 1639: // N_Rod
@@ -13995,14 +14123,12 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 	case 13182: // Novice_Gatling
 	case 13183: // Novice_Grenade_Launcher
 	case 13415: // N_Falchion
-		mes "It is!! The ^142ceb"+ getequipname(EQI_HAND_R) +"^000000.";
+		mes "It is!! The ^142ceb"+ getequipname(.@part) +"^000000.";
 		next;
 		break;
 	default:
 		mes "Ehee.. It is not a Novice Weapon. Leaving this expensive weapon to us and if broken... I'm not taking that chance.";
-		close2;
-		enable_items;
-		end;
+		close;
 	}
 	setarray .@enchantments[1],4700,4701,4702,4730,4731,4732,4740,4741,4742,4710,4711,4712,4720,4721,4722,4750,4751,4752,4760,4766,4764,4786,4791,4795,4800,4811,4832,4818,4815;
 	.@enchant1 = rand(1,35);
@@ -14023,14 +14149,17 @@ izlude,108,139,7	script	Enchanter Almond J#iz	4_CAT_SAILOR3,{
 	next;
 	specialeffect2 EF_REPAIRWEAPON;
 	progressbar "ffff00", 3;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", .@part, .@equip) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+		close;
+
 	delequip .@part;
 	getitem2 .@equip,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@enchant1,.@enchant2;
 	mes "[Almond J]";
 	mes "Zzazanzn!! Completed!!";
 	mes "As I'm too excited, I can't check the options. Please check it yourself.";
-	close2;
-	enable_items;
-	end;
+	close;
 }
 
 izlude_a,108,139,7	duplicate(Enchanter Almond J#iz)	Enchanter Almond J#iz_a	4_CAT_SAILOR3

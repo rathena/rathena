@@ -3454,8 +3454,8 @@ OnReset:
 	end;
 
 OnTouch_:
-	emotion e_gasp,1;
-	emotion e_omg;
+	emotion ET_SURPRISE, playerattached();
+	emotion ET_HUK;
 	disablenpc "Stranger#ep13_2_dan01";
 	donpcevent "Stranger#ep13_2_dan02::OnCall";
 	end;
@@ -3482,8 +3482,8 @@ OnReset:
 	end;
 
 OnTouch_:
-	emotion e_gasp,1;
-	emotion e_omg;
+	emotion ET_SURPRISE, playerattached();
+	emotion ET_HUK;
 	disablenpc "Stranger#ep13_2_dan02";
 	donpcevent "Stranger#ep13_2_dan01::OnCall";
 	end;
@@ -4381,7 +4381,7 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	735,{
 			mes "Lumos Nox Densaugeo Dissendium Diffindo Engorgio Mobiliarbus Expecto patronum!!!!";
 			next;
 			specialeffect EF_FLASHER; // 99 : "Rune Midgarts Magician#ep132_rhea03" EF_FLASHER
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Magician Whisper]";
 			mes "Wow!!! Th, This is unbelievable!";
 			next;
@@ -4904,7 +4904,7 @@ mjolnir_12,220,37,0	duplicate(mjo_no_find)	#mj12_find_3	-1,5,5
 				}
 				else {
 					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
+					emotion ET_AHA, playerattached();
 					set .@stst,rand(1,5);
 					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
 					else if (.@stst == 1) getitem 6077,1; //Rough_Mineral
@@ -5255,7 +5255,7 @@ OnTouch_:
 				}
 				else {
 					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
+					emotion ET_AHA, playerattached();
 					set .@stst,rand(1,5);
 					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
 					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
@@ -5388,7 +5388,7 @@ OnTouch_:
 				}
 				else {
 					mes "- You succeeded to mine minerals. -";
-					emotion e_ic,1;
+					emotion ET_AHA, playerattached();
 					set .@stst,rand(1,5);
 					if (.@stst == 5) getitem 6077,5; //Rough_Mineral
 					else if (.@stst == 1) getitem 6077,2; //Rough_Mineral
@@ -5479,7 +5479,8 @@ spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 		set .@dayq_chk,checkquest(2186,PLAYTIME);
 		if ((.@dayq_chk == -1) || (.@dayq_chk == 2)) {
 			if ((ep13_2_tre1 < 1) || (ep13_2_tre1 == 6)) {
-				erasequest 2186;
+				if (.@dayq_chk == 2)
+					erasequest 2186;
 				set ep13_2_tre1,0;
 				mes "[Grenouille]";
 				mes "I've heard that some strangers from Rune Midgard are around here, it must be you.";
@@ -5571,13 +5572,13 @@ spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 			}
 			else if (ep13_2_tre1 == 3) {
 				if (countitem(6079) == 1) {
-					emotion e_swt;
-					emotion e_swt,1;
+					emotion ET_SWEAT;
+					emotion ET_SWEAT, playerattached();
 					mes "[Grenouille]";
 					mes "Hoo, this is one of the";
 					mes "most common kinds of flowers.";
 					next;
-					emotion e_heh;
+					emotion ET_SMILE;
 					mes "[Grenouille]";
 					mes "Haha, Don't worry.";
 					mes "Common flowers like this can bring the familiarity of home back to the soldiers.";
@@ -5728,16 +5729,16 @@ spl_in02,139,65,3	script	Middle-Ranked Laphine#la	438,{
 			mes "but sometimes he help others well! Huhu!";
 			next;
 			mes "- rummaging -";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			mes "- rummaging -";
 			mes "- rummaging -";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			mes "- rummaging -";
 			mes "- rummaging -";
 			mes "- rummaging -";
-			emotion e_ic;
+			emotion ET_AHA;
 			next;
 			mes "[Flowery]";
 			mes "Wow! Come here!";
@@ -5833,7 +5834,7 @@ splendide,205,139,5	script	Exhausted Soldier#1	447,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Ahh! Feeling much better!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_1::OnEnable";
@@ -5890,7 +5891,7 @@ splendide,181,135,5	script	Exhausted Soldier#2	447,{
 					mes "What happen?";
 					mes "Feel better suddenly! I'm so happy now!";
 					mes "Let's go to work!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_2::OnEnable";
@@ -5950,7 +5951,7 @@ splendide,139,178,5	script	Exhausted Soldier#3	447,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Let's beat Sapha and go back home!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_3::OnEnable";
@@ -6010,7 +6011,7 @@ splendide,164,188,5	script	Exhausted Soldier#4	447,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Ahh! Feels like at home!!";
-					emotion e_sob;
+					emotion ET_CRY;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_4::OnEnable";
@@ -6070,7 +6071,7 @@ splendide,177,257,5	script	Exhausted Soldier#5	447,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Ahh! Feeling much better!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_5::OnEnable";
@@ -6130,7 +6131,7 @@ splendide,124,212,5	script	Exhausted Soldier#6	447,{
 					mes "[Exhausted Soldier]";
 					mes "Yes, Splendide also a part of Alfheim!";
 					mes "Go Laphines!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_6::OnEnable";
@@ -6190,7 +6191,7 @@ splendide,196,153,5	script	Exhausted Soldier#7	447,{
 					next;
 					mes "[Exhausted Soldier]";
 					mes "Ahh! Feeling much better!";
-					emotion e_heh;
+					emotion ET_SMILE;
 					delitem 6082,1; //Spirit_Of_Alfheim
 					close2;
 					donpcevent "#tukare_7::OnEnable";
@@ -6247,7 +6248,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 		mes "Hu~~";
 		mes "That's pretty interesting...";
 		mes "I will take note of it in my research papers.";
-		emotion e_ic,"Bazett Teablack#ep13bs";
+		emotion ET_AHA;
 		next;
 		mes "[Industrious Man]";
 		mes "write...write...";
@@ -6267,7 +6268,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 			mes "Hu~~";
 			mes "That's pretty interesting...";
 			mes "I will take note of it in my research papers.";
-			emotion e_ic,"Bazett Teablack#ep13bs";
+			emotion ET_AHA;
 			next;
 			mes "[Industrious Man]";
 			mes "write...write...";
@@ -6284,7 +6285,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 			mes "Auch!!!";
 			mes "Who...who are you?!";
 			mes "How long have you been standing there?";
-			emotion e_omg,"Bazett Teablack#ep13bs";
+			emotion ET_HUK;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Uh, I'm just passing by.";
@@ -6292,7 +6293,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "See you~!!";
-			emotion e_swt2,1;
+			emotion ET_PROFUSELY_SWEAT, playerattached();
 			next;
 			mes "[Industrious Man]";
 			mes "Uh!! Wait!!";
@@ -6306,12 +6307,12 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 			next;
 			mes "[Industrious Man]";
 			mes "My research is not going so well. The god of fate must have sent you to me. I'm sure of it!!";
-			emotion e_no1,"Bazett Teablack#ep13bs";
+			emotion ET_BEST;
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "......";
 			mes "......What?!";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			next;
 			mes "[Industrious Man]";
 			mes "Would you like to help me with my search?";
@@ -6363,7 +6364,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 					mes ".............";
 					mes ".............";
 					mes "...........Why!!!!!";
-					emotion e_sob,"Bazett Teablack#ep13bs";
+					emotion ET_CRY;
 					next;
 					mes "[Industrious Man]";
 					mes "Well if you decide to change your mind, come back to me.";
@@ -6422,7 +6423,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 				mes ".............";
 				mes ".............";
 				mes "...........Why!!!!!";
-				emotion e_sob,"Bazett Teablack#ep13bs";
+				emotion ET_CRY;
 				next;
 				mes "[Industrious Man]";
 				mes "Well if you decide to change your mind, come back to me.";
@@ -6509,7 +6510,7 @@ mid_camp,283,198,5	script	Bazett Teablack#ep13bs	883,{
 			mes "[Industrious Man]";
 			mes ".............";
 			mes "Well if you decide to change your mind, come back to me.";
-			emotion e_sob,"Bazett Teablack#ep13bs";
+			emotion ET_CRY;
 			close;
 		}
 	}
@@ -6648,7 +6649,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				mes "......";
 				mes ".........";
 				mes "Nothing!!";
-				emotion e_omg,"Worker#ep13bs";
+				emotion ET_HUK;
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "What's up?";
@@ -6660,7 +6661,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "Yes, sorry to startle you.";
-				emotion e_heh,1;
+				emotion ET_SMILE, playerattached();
 				next;
 				mes "[Worker]";
 				mes "Haha, it's ok.";
@@ -6703,8 +6704,8 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				mes "[Worker]";
 				mes "Ugh!!!";
 				mes "**Sigh**";
-				emotion e_sob,"Worker#ep13bs";
-				emotion e_sob,1;
+				emotion ET_CRY;
+				emotion ET_CRY, playerattached();
 				next;
 				mes "[Worker]";
 				mes "Well that's that!";
@@ -6767,7 +6768,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				mes "......";
 				mes ".........";
 				mes "Nevermind. Nothing.";
-				emotion e_omg,"Worker#ep13bs";
+				emotion ET_HUK;
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "You don't have to be like this.";
@@ -6779,7 +6780,7 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				next;
 				mes "["+strcharinfo(0)+"]";
 				mes "Since I'm travelling here, so I thought I'd need it...";
-				emotion e_heh,1," ET_SMILE";
+				emotion ET_SMILE, playerattached();
 				next;
 				mes "[Worker]";
 				mes "Haha, is that so?";
@@ -6824,8 +6825,8 @@ manuk,193,135,0	script	Worker#ep13bs	454,{
 				next;
 				mes "[Worker]";
 				mes "Ah!!!";
-				emotion e_sob,"Worker#ep13bs";
-				emotion e_sob,1;
+				emotion ET_CRY;
+				emotion ET_CRY, playerattached();
 				next;
 				mes "[Worker]";
 				mes "I can't just care about pride now.";

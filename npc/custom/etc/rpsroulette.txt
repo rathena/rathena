@@ -27,9 +27,9 @@ PLAY:
 	menu "^0000FFROCK!",-,"^FF0000SCISSORS!",SCISSORS,"^00FF00PAPER!^000000",PAPER;
 
   	if (.@lastchoice == 1) set .@opp, rand(1,3);
-  	if (.@opp == 1) emotion e_rock;
-  	else if (.@opp == 2) emotion e_scissors;
-  	else emotion e_paper;
+  	if (.@opp == 1) emotion ET_ROCK;
+  	else if (.@opp == 2) emotion ET_SCISSOR;
+  	else emotion ET_WRAP;
   	set .@lastchoice,1;
 	if (.@opp == 1) goto SAME;
 	if (.@opp == 2) goto WIN;
@@ -37,9 +37,9 @@ PLAY:
 
 SCISSORS:
 	if (.@lastchoice == 2) set .@opp,rand(1,2);
-  	if (.@opp == 1) emotion e_rock;
-  	else if (.@opp == 2) emotion e_scissors;
-  	else emotion e_paper;
+  	if (.@opp == 1) emotion ET_ROCK;
+  	else if (.@opp == 2) emotion ET_SCISSOR;
+  	else emotion ET_WRAP;
   	set .@lastchoice,2;
 	if (.@opp == 1) goto LOSE;
 	if (.@opp == 2) goto SAME;
@@ -47,9 +47,9 @@ SCISSORS:
 
 PAPER:
 	if (.@lastchoice == 3) set .@opp,rand(2,3);
-  	if (.@opp == 1) emotion e_rock;
-  	else if (.@opp == 2) emotion e_scissors;
-  	else emotion e_paper;
+  	if (.@opp == 1) emotion ET_ROCK;
+  	else if (.@opp == 2) emotion ET_SCISSOR;
+  	else emotion ET_WRAP;
   	set .@lastchoice,3;
 	if (.@opp == 1) goto WIN;
 	if (.@opp == 2) goto LOSE;
@@ -57,13 +57,13 @@ PAPER:
 
 WIN:
 	mes "Damnit, You Win!";
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	next;
 	set .@win, 1;
 	goto YOUPULL;
 
 LOSE:
-	emotion e_heh;
+	emotion ET_SMILE;
 	mes "Boorah! You Lose!";
 	next;
 	set .@win, 0;
@@ -78,13 +78,13 @@ YOUPULL:
 	if ( .@pull == 1 ) {
 		if ( .@win ) goto KILL;
 		specialeffect2 EF_SUI_EXPLOSION;
-		emotion e_gg;
+		emotion ET_KIK;
 		percentheal -100,-100;
 		mes "*^0000FFClick^000000* *^FF0000BANG^000000*";
 		mes "You're dead!";
 		close;
 	}
-	emotion e_pif;
+	emotion ET_HNG;
 	mes "*^0000FFClick^000000* whew...";
 	goto PLAY;
 
@@ -100,7 +100,7 @@ RULES:
 
 KILL:
 	specialeffect EF_SUI_EXPLOSION;
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "*^0000FFClick^000000* *^FF0000BANG^000000*";
 	mes "OWWW @#$%^!! THAT HURT LIKE HELL!!";
 	next;

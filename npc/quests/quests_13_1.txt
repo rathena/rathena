@@ -28,6 +28,7 @@
 //= 3.3a Added Izlude RE coordinates. [Euphy]
 //= 3.4 Added GM management function and NPC. [Euphy]
 //= 3.5 Updated turn-in requirements for Tripatriate Union's Feud. [Euphy]
+//= 3.6 Renewal script update for ep16.1 [Capuche]
 //============================================================ 
 
 // Onward to the New World :: ep13_gogo
@@ -87,7 +88,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 	end;
 }
 
-prt_castle,121,51,3	script	Alliance Manager#prt	752,{
+-	script	Alliance Manager#prt_	-1,{
 	if (ep13_ryu == 13) {
 		mes "[Alliance Manager]";
 		mes "If we'd had the initiative over Schwartzvald, we could take advantage over them! But we lost the opportunity.";
@@ -173,7 +174,7 @@ prt_castle,121,51,3	script	Alliance Manager#prt	752,{
 	close;
 }
 
-prt_castle,117,51,5	script	Member of Alliance#prt	754,{
+-	script	Member of Alliance#prt_	-1,{
 	if ((ep13_ryu == 12) || (ep13_ryu == 13)) {
 		mes "[Member of Alliance]";
 		mes "If we have absolute power, we wouldn't have to get along with Schwartzvald and Arunafeltz.";
@@ -195,7 +196,7 @@ prt_castle,117,51,5	script	Member of Alliance#prt	754,{
 	close;
 }
 
-prt_castle,83,67,5	script	Recruiter for the Brave	109,{
+-	script	Recruiter for the Brave_	-1,{
 	if (ep13_ryu == 12) {
 		mes "[Recruiter]";
 		mes "Why have you come again?";
@@ -1982,7 +1983,7 @@ mid_camp,222,283,4	script	Marian#ep13bs	727,{
 				mes "As expected~";
 				mes "I'm not lying, but usually";
 				mes "I never forget a face.";
-				emotion e_lv;
+				emotion ET_THROB;
 				next;
 				mes "[Marian]";
 				mes "Well, anyway...";
@@ -2030,21 +2031,21 @@ mid_camp,222,283,4	script	Marian#ep13bs	727,{
 	if (ep13_newbs == 1) {
 		mes "[Marian]";
 		mes "Go to the right to see ^0000FFInstructor Lugen^000000.";
-		emotion e_lv;
+		emotion ET_THROB;
 		close;
 	}
 	if ((ep13_newbs > 1) && (ep13_newbs < 13)) {
 		mes "[Marian]";
 		mes "Wow, good to see you again.";
 		mes "Do you feel comfortable around here?";
-		emotion e_lv;
+		emotion ET_THROB;
 		close;
 	}
 	if (ep13_newbs == 13) {
 		mes "[Marian]";
 		mes "Hey, how are you?";
 		mes "What brings you here?";
-		emotion e_lv;
+		emotion ET_THROB;
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "The instructor sent me.";
@@ -2079,7 +2080,7 @@ mid_camp,222,283,4	script	Marian#ep13bs	727,{
 			mes "[Marian]";
 			mes "Ha! You misplaced the Supply Box?!";
 			mes "What the~~?";
-			emotion e_omg;
+			emotion ET_HUK;
 			next;
 			mes "[Marian]";
 			mes "Ok, I have spares.";
@@ -2093,7 +2094,7 @@ mid_camp,222,283,4	script	Marian#ep13bs	727,{
 			mes "Do your job, man~";
 			mes "And please say hello";
 			mes "to the instructor.";
-			emotion e_lv;
+			emotion ET_THROB;
 			close;
 		}
 	}
@@ -2102,14 +2103,14 @@ mid_camp,222,283,4	script	Marian#ep13bs	727,{
 		mes "Hey~";
 		mes "How have you been recently?";
 		mes "I am busy all the time...";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Marian]";
 		mes "The supplies from the motherland are...";
 		mes "Ah...";
 		mes "Nothing, do not care...";
 		mes "Hohoho...";
-		emotion e_omg;
+		emotion ET_HUK;
 		close;
 	}
 }
@@ -2459,7 +2460,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 		mes "please take care of yourself.";
 		mes "I have more things";
 		mes "to do now, ha...";
-		emotion e_pif;
+		emotion ET_HNG;
 		set ep13_newbs,21;
 		completequest 11098;
 		close;
@@ -2470,7 +2471,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 			mes "There must be no";
 			mes "time to rest for me.";
 			mes "Huu...~";
-			emotion e_pif;
+			emotion ET_HNG;
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "What is wrong with you?";
@@ -2563,7 +2564,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 			mes "There must be no";
 			mes "time to rest for me.";
 			mes "Huu...~";
-			emotion e_pif;
+			emotion ET_HNG;
 			close;
 		}
 	}
@@ -2572,7 +2573,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 		mes "There must be no";
 		mes "time to rest for me.";
 		mes "Huu...~";
-		emotion e_pif;
+		emotion ET_HNG;
 		next;
 		switch(select("Help him.:Just pass.")) {
 		case 1:
@@ -2666,7 +2667,7 @@ mid_camp,261,284,4	script	Instructor#ep13bs	405,{
 			mes "Hehe, don't mention it.";
 			mes "And Otto said that he";
 			mes "would come to see you.";
-			emotion e_shy,1;
+			emotion ET_SHY, playerattached();
 			next;
 			mes "[Instructor Lugen]";
 			mes "Did he?";
@@ -2832,7 +2833,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 		mes "...I mean...";
 		mes "Hmm...";
 		mes "...I would...";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 	if (ep13_newbs == 3) {
@@ -2841,7 +2842,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 		mes "...What makes...";
 		mes "Hmm...";
 		mes "...I would...";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		next;
 		mes "[Brink]";
 		mes "Hmmm... Hey...";
@@ -2855,7 +2856,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 			mes "Hmm...";
 			mes "...Hey...";
 			mes "What...your name...";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "My name is "+ strcharinfo(0) +".";
@@ -2866,7 +2867,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 			mes "You...";
 			mes "...registered...Hmm...";
 			mes "...";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			next;
 			mes "[Brink]";
 			mes "Here...";
@@ -2877,7 +2878,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 			mes "Hmmm...";
 			mes "and...";
 			mes "I mean...";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Is it finished?";
@@ -2903,7 +2904,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 			mes "And...";
 			mes "......This thing...";
 			mes "...Ehh...";
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			close;
 		}
 	}
@@ -2925,20 +2926,20 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 	if (ep13_newbs < 5) {
 		mes "[Diego]";
 		mes "I'm busy right now!";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 	if (ep13_newbs == 5) {
 		mes "[Diego]";
 		mes "Wow, this is tent is big!";
 		mes "Hey, you there, adventurer. Please help me.";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		switch(select("Help him.:Don't help.")) {
 		case 1:
 			mes "[Diego]";
 			mes "Thanks.";
-			emotion e_thx;
+			emotion ET_THANKS;
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "What do you need?";
@@ -2960,11 +2961,11 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Hah!! How did you know my name?!";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			next;
 			mes "[Diego]";
 			mes "It's on your nameplate.";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			select("So how can I help you.");
 			mes "[Diego]";
@@ -2998,7 +2999,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 			mes "...";
 			mes "You're too harsh.";
 			mes "Sob...";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 	}
@@ -3009,7 +3010,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 			mes "You finally brought";
 			mes "the materials!";
 			mes "I'm so grateful!!";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Diego]";
 			mes "Ok, so while I hold this post,";
@@ -3063,7 +3064,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 			mes "No, I just...";
 			mes "I was assigned to stay";
 			mes "in these barracks.";
-			emotion e_swt2,1;
+			emotion ET_PROFUSELY_SWEAT, playerattached();
 			next;
 			mes "[Diego]";
 			mes "Oh!!!";
@@ -3087,7 +3088,7 @@ mid_camp,264,263,4	script	Diego#ep13bs	931,{
 	else {
 		mes "[Diego]";
 		mes "I'm busy right now!";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 }
@@ -3189,7 +3190,7 @@ mid_campin,292,120,4	script	Davi#ep13bs	849,{
 	mes "Ahhh, my body...";
 	mes "I walked too much...";
 	mes "and my body hurts.";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
@@ -3202,12 +3203,12 @@ mid_camp,160,298,4	script	Jan#ep13bs	865,{
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Yes...";
-			emotion e_swt,1;
+			emotion ET_SWEAT, playerattached();
 			next;
 			mes "[Jan]";
 			mes "Ahhh, it's exciting~";
 			mes "I love it.";
-			emotion e_awsm;
+			emotion ET_COOL;
 			next;
 			mes "[Jan]";
 			mes "I want to unwrap it right now~";
@@ -3225,7 +3226,7 @@ mid_camp,160,298,4	script	Jan#ep13bs	865,{
 			mes "Why hasn't the product";
 			mes "that I ordered one month";
 			mes "ago come yet?";
-			emotion e_an;
+			emotion ET_FRET;
 			close;
 		}
 	}
@@ -3243,7 +3244,7 @@ mid_camp,160,298,4	script	Jan#ep13bs	865,{
 		next;
 		mes "[Jan]";
 		mes "It, it's a secret...";
-		emotion e_shy;
+		emotion ET_SHY;
 		close;
 	}
 	else {
@@ -3281,7 +3282,7 @@ mid_camp,30,168,4	script	Gerard#ep13bs	939,{
 			mes "I was considering";
 			mes "going back to the camp.";
 			mes "I really appreciate this.";
-			emotion e_rice;
+			emotion ET_HUNGRY;
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "...";
@@ -3296,7 +3297,7 @@ mid_camp,30,168,4	script	Gerard#ep13bs	939,{
 			mes "[Gerard]";
 			mes "Please tell the instructor that";
 			mes "I won't be back for some time.";
-			emotion e_no1;
+			emotion ET_BEST;
 			delitem 6045,1; //Supply_Box
 			set ep13_newbs,18;
 			getitem 12322,1; //Chocolate_Pie
@@ -3308,7 +3309,7 @@ mid_camp,30,168,4	script	Gerard#ep13bs	939,{
 			mes "Hhhh, I am starving.";
 			mes "When will the supplies come?";
 			mes "It is killing me...";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 	}
@@ -3349,7 +3350,7 @@ man_fild01,80,248,4	script	Alberto#ep13bs	934,{
 			mes "I finally got it.";
 			mes "My coat...sniff.";
 			mes "It's freezing here.";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[Alberto]";
 			mes "Sniff...";
@@ -3378,7 +3379,7 @@ man_fild01,80,248,4	script	Alberto#ep13bs	934,{
 			mes "Please tell the Instructor";
 			mes "that I am still alive.";
 			mes "Sniff.";
-			emotion e_sob;
+			emotion ET_CRY;
 			delitem 6045,1; //Supply_Box
 			set ep13_newbs,20;
 			getitem 12322,1; //Chocolate_Pie
@@ -3389,7 +3390,7 @@ man_fild01,80,248,4	script	Alberto#ep13bs	934,{
 			mes "[Alberto]";
 			mes "It's so cold here~~";
 			mes "the wind chills me to the bones~";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 	}
@@ -3437,7 +3438,7 @@ mid_camp,166,248,4	script	Sorcerer#ep13bs	937,{
 	next;
 	mes "[Biolay]";
 	mes "I want to go back to my house.";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
@@ -3541,7 +3542,7 @@ mid_camp,267,263,0	script	Post#ep13bs1	111,{
 						mes "[Diego]";
 						mes "...";
 						mes "Why aren't you helping?";
-						emotion e_sob;
+						emotion ET_CRY;
 						close;
 					}
 				}
@@ -3625,7 +3626,7 @@ mid_camp,267,258,0	script	Post#ep13bs2	111,{
 						mes "[Diego]";
 						mes "...";
 						mes "Why aren't you helping?";
-						emotion e_sob;
+						emotion ET_CRY;
 						close;
 					}
 				}
@@ -3696,7 +3697,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 			mes "Botanist Terris Block is";
 			mes "my older twin brother.";
 			next;
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Rumis Block]";
 			mes "This place is freezing. Not only";
 			mes "that, it's deserted and too";
@@ -4103,7 +4104,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				changequest 2153,2154;
 				close;
 			case 2:
-				emotion e_sob;
+				emotion ET_CRY;
 				mes "[Rumis Block]";
 				mes "Oh.........";
 				close;
@@ -4338,7 +4339,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 		mes "Undiscovered life!";
 		mes "Everything about this world excites me.";
 		next;
-		emotion e_lv2;
+		emotion ET_BIGTHROB;
 		mes "[Botanist]";
 		mes "Oh, okay... Ah-hah!";
 		mes "This is how it goes...";
@@ -4351,7 +4352,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "Undiscovered life!";
 			mes "Everything about this world excites me.";
 			next;
-			emotion e_lv2;
+			emotion ET_BIGTHROB;
 			mes "[Botanist]";
 			mes "Oh, okay... Ah-hah!";
 			mes "This is how it goes...";
@@ -4362,8 +4363,8 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "Undiscovered life!";
 			mes "Everything about this world excites me.";
 			next;
-			emotion e_lv2;
-			emotion e_dots,1;
+			emotion ET_BIGTHROB;
+			emotion ET_THINK, playerattached();
 			mes "[Botanist]";
 			mes "Oh, okay... Ah-hah!";
 			mes "This is how it goes...";
@@ -4380,7 +4381,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 				next;
 				break;
 			case 2:
-				emotion e_lv2,1;
+				emotion ET_BIGTHROB, playerattached();
 				mes "["+strcharinfo(0)+"]";
 				mes "I agree. There's so much to see around here!";
 				next;
@@ -4396,11 +4397,11 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			next;
 			mes "- You have given the Nepenthes Specimen to the botanist. -";
 			next;
-			emotion e_bzz;
+			emotion ET_STARE;
 			mes "[Botanist]";
 			mes "Oh...? Isn't this?!";
 			next;
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 			mes "[Botanist]";
 			mes "...Well, I've got a ton of samples of this specimen. Sorry.";
 			next;
@@ -4428,14 +4429,14 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 			mes "[Botanist]";
 			mes "Usually twins share the same feelings and ideas, I can see what he does or thinks if I try hard.";
 			next;
-			emotion e_sigh;
+			emotion ET_OHNO;
 			mes "[Botanist]";
 			mes "Let me see what Rumis is doing right now... Oh, he's picking his nose with his left hand and eating a slice of bread with his right.";
 			mes "God, how disgusting!";
 			next;
 			switch(select("Go check Rumis if it's true.:Do not trust his word.")) {
 			case 1:
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "[Botanist]";
 				mes "Hahaha!";
 				mes "Muhahaha!";
@@ -4448,7 +4449,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 				next;
 				break;
 			case 2:
-				emotion e_sigh;
+				emotion ET_OHNO;
 				mes "[Botanist]";
 				mes "Oh,";
 				mes "won't you cut me some slack? I was just joking to melt the ice.";
@@ -4456,7 +4457,7 @@ mid_camp,240,270,3	script	Botanist#ep13	750,{
 				next;
 				break;
 			}
-			emotion e_pif;
+			emotion ET_HNG;
 			mes "[Botanist]";
 			mes "Anyways, as I said, I've got a lot of Nepenthes specimens.";
 			mes "But I'll gratefully take this pretentious gift of his.";
@@ -4852,7 +4853,7 @@ spl_fild02,34,223,5	script	Small Fairy#spl	442,{
 			mes "It has tiny wings on the back...";
 			mes "It's a fairy!";
 			next;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Small Fairy]";
 			mes "RLGHLRXLA TKANTLFDMS";
 			mes "WJACK TNAHRDNJSDMFH";
@@ -4867,7 +4868,7 @@ spl_fild02,34,223,5	script	Small Fairy#spl	442,{
 			close;
 		}
 	}
-	emotion e_an;
+	emotion ET_FRET;
 	if (!isequipped(2782) && ep13_2_rhea < 100) {
 		mes "[Small Fairy]";
 		mes "RLGHLRXLA TKANTLFDMS";
@@ -4889,7 +4890,7 @@ man_fild03,236,105,3	script	Tree Giant#man	454,{
 			mes "You have found something moving between dry branches.";
 			mes "It appears to be a tree at first glance, but it turns out to be a giant that is half tree and half man.";
 			next;
-			emotion e_dots;
+			emotion ET_THINK;
 			mes "[Tree Giant]";
 			mes "TJDTMFJDNS CJFDI";
 			mes "TKADLFDMF QKATOS";
@@ -4904,7 +4905,7 @@ man_fild03,236,105,3	script	Tree Giant#man	454,{
 			close;
 		}
 	}
-	emotion e_dots;
+	emotion ET_THINK;
 	if (!isequipped(2782) && ep13_2_rhea < 100) {
 		mes "[Tree Giant]";
 		mes "TJDTMFJDNS CJFDI";
@@ -5007,7 +5008,7 @@ OnTouch_:
 			next;
 			mes "[United Research Official]";
 			mes "Alas, the head office keeps pushing me to submit a report... As if I could perform miracles!";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "[United Research Official]";
 			mes "I can't go around and meet those people myself, mediate among troubled people... This is impossible!! Unless...Unless someone helps me with that ! I need... someone...";
@@ -5084,7 +5085,7 @@ OnTouch_:
 				next;
 				mes "[United Research Official]";
 				mes "As you've heard, about the 3 researchers, they don't agree with eachother too often. It's just too obvious that their meeting will turn out a disaster, and the whole research group could break down!";
-				emotion e_sob;
+				emotion ET_CRY;
 				next;
 				mes "[United Research Official]";
 				mes "Oh, just thinking about it scares the crap out of me.";
@@ -5114,7 +5115,7 @@ OnTouch_:
 			next;
 			mes "[United Research Official]";
 			mes "First, you should go meet those 3 researchers and check on them to prepare for the meeting. Hope they're not preparing any weapons though...";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		else if (ep13_1_rhea == 19) {
@@ -5229,7 +5230,7 @@ OnTouch_:
 			mes "Hhmm, hmmmm...";
 			mes "I really don't know what to say.";
 			mes "I mean... I'm totally OK with other monsters, mutants or whatever, but that black evil thing... Oh, I can't stand that one...";
-			emotion e_sob;
+			emotion ET_CRY;
 			next;
 			mes "- Knock, knock-";
 			mes "- The researchers come back into the room. -";
@@ -9829,7 +9830,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 		mes "[Expedition Messenger]";
 		mes "You, head to Schwaltzval Republic.";
 		mes "And you, take Arunafeltz. I'll visit Prontera Palace.";
-		emotion e_ok,0,"Expedition Messenger#2";
+		emotion ET_OK, getnpcid(0, "Expedition Messenger#2");
 		next;
 		mes "[Expedition Messenger]";
 		mes "I'll see you guys later.";
@@ -9859,7 +9860,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			mes "Give it to me, now!";
 			next;
 			donpcevent "Expedition Messenger#2::OnEnable";
-			emotion e_casp,0,"Expedition Messenger#3";
+			emotion ET_SURPRISE, getnpcid(0, "Expedition Messenger#3");
 			cutin "ep13_shadow_edq",2;
 			mes "[???]";
 			mes "Argh...";
@@ -9913,7 +9914,7 @@ mid_camp,206,286,3	script	Expedition Messenger	997,{
 			mes "Oh, yeah? Then I'll have to use force!";
 			next;
 			donpcevent "Expedition Messenger#2::OnEnable";
-			emotion e_casp,0,"Expedition Messenger#3";
+			emotion ET_SURPRISE, getnpcid(0, "Expedition Messenger#3");
 			mes "[???]";
 			mes "Argh!";
 			next;
@@ -10134,7 +10135,7 @@ man_fild03,202,251,3	duplicate(Expedition Scout#1)	Expedition Scout#2	707
 spl_fild02,295,368,3	duplicate(Expedition Scout#1)	Expedition Scout#3	707
 spl_fild03,172,71,3	duplicate(Expedition Scout#1)	Expedition Scout#4	707
 
-prt_castle,88,165,3	script	Laur	57,{
+-	script	Laur_	-1,{
 	mes "[Laur]";
 	if (ep13_1_edq == 9 || ep13_1_edq == 111 || ep13_1_edq == 121 || ep13_1_edq == 113 || ep13_1_edq == 123) {
 		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";
@@ -13527,8 +13528,8 @@ OnTouch_:
 	next;
 	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_1";
 	specialeffect EF_BEGINSPELL2,AREA,"Dandelion Member#moc2_2";
-	emotion e_gasp,"Rin#moc2_bt_rin01";
-	emotion e_gasp,1;
+	emotion ET_SURPRISE, getnpcid(0, "Rin#moc2_bt_rin01");
+	emotion ET_SURPRISE, playerattached();
 	mes "[Rin]";
 	mes "You're not alone. So what?";
 	mes "You're still coming with me!";
@@ -13554,7 +13555,7 @@ OnTouch_:
 	donpcevent "Dandelion Member#moc2_5::OnEnable";
 	next;
 	specialeffect EF_FREEZED,AREA,"Rin#moc2_bt_rin02";
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mapannounce "que_dan01", "Rin: When.. When did you...!?!",bc_map,"0x7b68ee";
 	mes "[Rayan]";
 	mes "I'm sorry that I have to do this.";

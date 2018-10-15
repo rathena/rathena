@@ -58,6 +58,7 @@ ma_zif07	mapflag	noteleport
 ma_zif08	mapflag	noteleport
 ma_zif09	mapflag	noteleport
 job_ko	mapflag	noteleport
+job_gun	mapflag	noteleport
 ecl_in01	mapflag	noteleport
 ecl_in02	mapflag	noteleport
 ecl_in03	mapflag	noteleport
@@ -65,8 +66,6 @@ ecl_in04	mapflag	noteleport
 1@ecl	mapflag	noteleport
 1@ecl	mapflag	monster_noteleport
 ecl_hub01	mapflag	noteleport
-1@xm_d	mapflag	monster_noteleport
-1@xm_d	mapflag	noteleport
 
 // Glast Heim Memorial Dungeon ===
 1@gl_k	mapflag	noteleport
@@ -84,17 +83,74 @@ gl_cas02_	mapflag	noteleport
 1@def03	mapflag	noteleport
 1@def03	mapflag	monster_noteleport
 
-// Heroes' Trails - Part 1 =======
-1@gef	mapflag	noteleport
-1@gef	mapflag	monster_noteleport
+// Heroes' Trail - Part 1 ========
 1@face	mapflag	noteleport
 1@face	mapflag	monster_noteleport
 1@sara	mapflag	noteleport
 1@sara	mapflag	monster_noteleport
-1@gef_in	mapflag	noteleport
-1@gef_in	mapflag	monster_noteleport
 dali	mapflag	noteleport
 dali02	mapflag	noteleport
+
+// Heroes' Trail - Part 2 ========
+1@ge_st	mapflag	noteleport
+1@ge_st	mapflag	monster_noteleport
+1@gef	mapflag	noteleport
+1@gef	mapflag	monster_noteleport
+1@gef_in	mapflag	noteleport
+1@gef_in	mapflag	monster_noteleport
+1@spa	mapflag	noteleport
+1@spa	mapflag	monster_noteleport
+1@tnm1	mapflag	noteleport
+1@tnm1	mapflag	monster_noteleport
+1@tnm2	mapflag	noteleport
+1@tnm2	mapflag	monster_noteleport
+1@tnm3	mapflag	noteleport
+1@tnm3	mapflag	monster_noteleport
+
+// Horror Toy Factory Memorial Dungeon
+1@xm_d	mapflag	monster_noteleport
+1@xm_d	mapflag	noteleport
+
+// Heroes' Trail - Part 3 ========
+1@glast	mapflag	noteleport
+1@air1	mapflag	noteleport
+1@air2	mapflag	noteleport
+1@glast	mapflag	monster_noteleport
+1@air1	mapflag	monster_noteleport
+1@air2	mapflag	monster_noteleport
+
+// Decisive Battle - Part 1 ======
+1@dth1	mapflag	noteleport
+1@dth2	mapflag	noteleport
+1@dth3	mapflag	noteleport
+1@rev	mapflag	noteleport
+1@dth1	mapflag	monster_noteleport
+1@dth2	mapflag	monster_noteleport
+1@dth3	mapflag	monster_noteleport
+1@rev	mapflag	monster_noteleport
+
+// Decisive Battle - Part 2 ======
+1@eom	mapflag	noteleport
+1@jtb	mapflag	noteleport
+1@eom	mapflag	monster_noteleport
+1@jtb	mapflag	monster_noteleport
+
+// Episode 15 - Phantasmagorica
+1@lab	mapflag	noteleport
+1@uns	mapflag	noteleport
+un_bk_q	mapflag	noteleport
+un_myst	mapflag	noteleport
+verus04	mapflag	noteleport
+1@mcd	mapflag	noteleport
+1@lab	mapflag	monster_noteleport
+1@uns	mapflag	monster_noteleport
+un_bk_q	mapflag	monster_noteleport
+verus04	mapflag	monster_noteleport
+1@mcd	mapflag	monster_noteleport
+
+// Nightmare Biolab
+lhz_dun_n	mapflag	noteleport
+lhz_d_n2	mapflag	noteleport
 
 // WOE:TE Maps ===================
 te_prtcas01	mapflag	noteleport
@@ -117,3 +173,57 @@ te_aldecas2	mapflag	monster_noteleport
 te_aldecas3	mapflag	monster_noteleport
 te_aldecas4	mapflag	monster_noteleport
 te_aldecas5	mapflag	monster_noteleport
+
+// Ep 16
+prt_cas	mapflag	noteleport
+prt_cas_q	mapflag	noteleport
+prt_pri00	mapflag	noteleport
+prt_lib	mapflag	noteleport
+prt_lib_q	mapflag	noteleport
+que_swat	mapflag	noteleport
+rebel_in	mapflag	noteleport
+rebel_in	mapflag	monster_noteleport
+1@mir	mapflag	noteleport
+2@mir	mapflag	noteleport
+1@sthb	mapflag	noteleport
+1@sthc	mapflag	noteleport
+1@sthd	mapflag	noteleport
+1@slw	mapflag	noteleport
+1@swat	mapflag	noteleport
+1@mir	mapflag	monster_noteleport
+2@mir	mapflag	monster_noteleport
+1@sthb	mapflag	monster_noteleport
+1@sthc	mapflag	monster_noteleport
+1@sthd	mapflag	monster_noteleport
+1@slw	mapflag	monster_noteleport
+1@swat	mapflag	monster_noteleport
+
+// Rockridge
+har_in01	mapflag	noteleport
+rockmi2	mapflag	noteleport
+
+// Lasagna
+lasa_in01	mapflag	noteleport
+conch_in	mapflag	noteleport
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	noteleport
+2@gl_k2	mapflag	noteleport
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	noteleport
+
+// Suspicious shipwreck
+1@tre	mapflag	noteleport
+
+// Poring Town
+1@begi	mapflag	noteleport
+
+// Volcanic island Korodo
+1@crd	mapflag	noteleport
+
+// Noodles Festival July
+1@drdo	mapflag	noteleport
+
+// Soul Reaper Job Change
+1@soul	mapflag	noteleport

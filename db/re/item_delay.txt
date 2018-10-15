@@ -85,6 +85,7 @@
 12970,300000,SC_REUSE_LIMIT_RECALL	//Emergency_Scroll3
 
 // Misc
+12135,10000	//Green_Ale
 //12202,60000	//Str_Dish10_
 //12203,60000	//Agi_Dish10_
 //12204,60000	//Int_Dish10_
@@ -92,3 +93,4 @@
 //12206,60000	//Luk_Dish10_
 //12207,60000	//Vit_Dish10_
 22508,1200000	//Para_Team_Mark_
+23277,180000	//Mado_Box

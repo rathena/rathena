@@ -1,0 +1,34 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2017 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Config for Storages
+#
+# To access the premium storage, use script command 'openstorage2'.
+# If premium storages are added, copy the structure of the storage table and match the table name in this config.
+# The 'max' of premium storages are not adjusted by 'vip_storage_increase' config nor MIN_STORAGE.
+#
+# Structure:
+#	- ID: <storage_id>          // (int) Storage ID will be used for script command 'openstorage2'.
+#	  Name: "<storage name>"    // (string) Storage name will be sent to the client to display on the title bar.
+#	  Table: "<storage_table>"  // (string) Name of table where storage is saved. The table stucture is the same as the default storage table.
+#	  Max: <max_amount>         // (int) *optional* Maximum number of items in storage. MAX_STORAGE will be used if no value is defined.
+
+Storages:
+    - ID: 0
+      Name: "Storage"
+      Table: "storage"

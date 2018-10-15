@@ -181,7 +181,7 @@ amatsu,179,107,4	script	John#ama	86,{
 	mes "business here...";
 	next;
 	mes "[John]";
-	mes "Af first, I thought, 'What";
+	mes "At first, I thought, 'What";
 	mes "a great chance!' when the";
 	mes "trade between the Rune-Midgard";
 	mes "Kingdom and Amatsu started.";
@@ -366,7 +366,7 @@ amatsu,269,221,1	script	Propose Girl#ama	758,{
 	mes "After the proposal, the reply must";
 	mes "be answered before Sunday evening. This is the most crucial part of it.";
 	next;
-	emotion e_lv2;
+	emotion ET_BIGTHROB;
 	mes "[Hutari Shioko]";
 	mes "If you like someone...";
 	mes "You should try proposing";
@@ -398,7 +398,7 @@ amatsu,243,202,3	script	Drama Teacher#ama	760,{
 		mes "as the 'White Drayd...'";
 		close;
 	}
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	mes "[Garakame sensei]";
 	mes "Are you interested in acting?";
 	mes "I need someone who sees";
@@ -426,19 +426,19 @@ amatsu,283,203,1	script	Bonubonu#ama1	1323,{
 
 amatsu,283,203,1	script	Bonubonu#ama2	111,{
 	set jap_tree,3;
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Bonubonu]";
 	mes "That tree on the hill is";
 	mes "a very old tree. It is a big";
 	mes "cherry tree with everlasting blossoms.";
 	next;
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Bonubonu]";
 	mes "There is something about this";
 	mes "tree that makes me forget about";
 	mes "all the troubles in my life when I sit under it.";
 	next;
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Bonubonu]";
 	mes "Everything about this tree is";
 	mes "simply wonderful...";
@@ -446,7 +446,7 @@ amatsu,283,203,1	script	Bonubonu#ama2	111,{
 	mes "I feel when I look at it...";
 	mes "It just leaves me breathless...";
 	next;
-	emotion e_swt2;
+	emotion ET_PROFUSELY_SWEAT;
 	mes "[Bonubonu]";
 	mes "You should visit the tree and";
 	mes "spend some time there.";
@@ -481,7 +481,7 @@ amatsu,274,178,7	script	Veterinarian#ama	735,{
 		mes "By the way, do you want";
 		mes "make a bet on it...?";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Sakura Seiichi]";
 		mes "If I..........";
 		mes "............";
@@ -495,7 +495,7 @@ amatsu,274,178,7	script	Veterinarian#ama	735,{
 	mes "[Sakura Seiichi]";
 	mes "I can't help it if you think that way. But one day, you too could be buried underneath...";
 	next;
-	emotion e_dots;
+	emotion ET_THINK;
 	mes "[Sakura Seiichi]";
 	mes "Haha... Hahaha.....";
 	mes "...............";
@@ -545,9 +545,9 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 	}
 	else if (jap_tree == 3) {
 		mes "^3355FFUnlike other cherry trees,";
-		mes "this tree has a strong fragnance.";
+		mes "this tree has a strong fragrance.";
 		mes "I just fell into a relaxed";
-		mes "mood. The fragnance eased";
+		mes "mood. The fragrance eased";
 		mes "my burdens and I felt";
 		mes "very comfortable.^000000";
 		next;
@@ -559,7 +559,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		close;
 	}
 	else if (jap_tree == 4) {
-		mes "^3355FFThis strong fragnance";
+		mes "^3355FFThis strong fragrance";
 		mes "is making me dizzy. Not like";
 		mes "other cherry trees, this tree's";
 		mes "shimmering white petals";
@@ -569,7 +569,7 @@ amatsu,262,197,1	script	Legendary Tree	111,{
 		mes "being drained if I stay here";
 		mes "longer. After a glimpse of";
 		mes "the cherry tree, I thought to";
-		mes "mayself, 'I must get out of here quickly.'^000000";
+		mes "myself, 'I must get out of here quickly.'^000000";
 		close;
 	}
 	mes "^3355FFThere was a cherry tree";

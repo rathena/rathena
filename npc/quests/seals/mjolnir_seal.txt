@@ -1964,7 +1964,10 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "me to do with this?";
 					close;
 				}
-				if (getequiprefinerycnt(.@part) >= 10) {
+				.@equip_id = getequipid(.@part);
+				.@equip_refine = getequiprefinerycnt(.@part);
+				setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+				if (.@equip_refine >= 10) {
 					mes "[Vestri]";
 					mes "Oh, this is excellent! This piece here has been perfectly refined! But this isn't what I want. I can't do any work on this at all.";
 					close;
@@ -2037,11 +2040,15 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "Hurry up and get one.";
 					close;
 				}
+				// anti-hack
+				if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+					close;
+
 				if (getequippercentrefinery(.@part) > rand(100)) {
 					mes "^3355FF*Clang Clang!*^000000";
 					successrefitem .@part;
 					next;
-					emotion e_heh;
+					emotion ET_SMILE;
 					mes "[Vestri]";
 					mes "Mwahahaha~";
 					mes "I've still got it!";
@@ -2055,7 +2062,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "^3355FF*Clang Clang!*^000000";
 					failedrefitem .@part;
 					next;
-					emotion e_omg;
+					emotion ET_HUK;
 					mes "[Vestri]";
 					mes "Waaahhhhh!";
 					mes "Dear God, no!";
@@ -2181,7 +2188,10 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "me to do with this?";
 					close;
 				}
-				if (getequiprefinerycnt(.@part) >= 10) {
+				.@equip_id = getequipid(.@part);
+				.@equip_refine = getequiprefinerycnt(.@part);
+				setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+				if (.@equip_refine >= 10) {
 					mes "[Vestri]";
 					mes "Oh, this is excellent! This piece here has been perfectly refined! But this isn't what I want. I can't do any work on this at all.";
 					close;
@@ -2248,11 +2258,15 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "Hurry up and get one.";
 					close;
 				}
+				// anti-hack
+				if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+					close;
+
 				if (getequippercentrefinery(.@part) > rand(100)) {
 					mes "^3355FF*Clang Clang!*^000000";
 					successrefitem .@part;
 					next;
-					emotion e_heh;
+					emotion ET_SMILE;
 					mes "[Vestri]";
 					mes "Mwahahaha~";
 					mes "I've still got it!";
@@ -2266,7 +2280,7 @@ mjolnir_01,35,136,7	script	Dwarf Blacksmith#west	826,{
 					mes "^3355FF*Clang Clang!*^000000";
 					failedrefitem .@part;
 					next;
-					emotion e_omg;
+					emotion ET_HUK;
 					mes "[Vestri]";
 					mes "Waaahhhhh!";
 					mes "Dear God, no!";

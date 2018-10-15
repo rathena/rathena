@@ -1,0 +1,1384 @@
+//===== rAthena Script =======================================
+//= Central Laboratory
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//= Central Laboratory Instance
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+verus01,153,155,5	script	Temporary Dimension-mov	PORTAL,{
+	.@party_id = getcharid(1);
+	if (.@party_id == 0) {
+		mes "[Temporary Dimension-mover]";
+		mes "Do you not have a companion to join you? Organize your party even if traveling alone.";
+		close;
+	}
+	switch( checkquest(12347,PLAYTIME) ) {
+	case -1:
+		switch( instance_enter("Central Laboratory") ) {
+		case IE_NOMEMBER:
+		case IE_NOINSTANCE:
+		case IE_OTHER:
+			mes "[Temporary Dimension-mover]";
+			mes "The passage for dimensional moving has not been vitalized.";
+			close;
+		case IE_OK:
+			mapannounce "verus01", "" + strcharinfo(0) + " of the party, " + getpartyname(.@party_id) + ", is entering Central Laboratory.",bc_map,"0x00FF99";
+			setquest 12347;// Trace of Laboratory Access
+			end;
+		}
+	case 0:
+	case 1:
+		mes "[Temporary Dimension-mover]";
+		mes "There are remaining traces of the last event. Access denied.";
+		close;
+	case 2:
+		mes "^0000ffUse of Dimension-mover seems possible.^000000";
+		erasequest 12347;// Trace of Laboratory Access
+		close;
+	}
+}
+
+verus01,149,155,5	script	Civilization Explorer#p	4_LGTSCIENCE,{
+	mes "^ff0000Taming monsters will impede progress in this dungeon. Please take note of this.^000000";
+	next;
+	mes "[Civilization Explorer]";
+	if (isbegin_quest(12346) == 2) {
+		mes "What do you want to do this time?";
+		next;
+	}
+	else {
+		mes "There are a lot of interesting things about the ancient civilizations in this area.";
+		next;
+		mes "[Civilization Explorer]";
+		mes "Observing the soil strata it is estimated to be 500 to 600 years old!";
+		mes "But many of the excavated objects here already far surpass our current technology.";
+		next;
+		mes "[Civilization Explorer]";
+		mes "A lot of undefined terms are found in the recovered records as well.";
+		next;
+		select("What kind of unknown terms?");
+		mes "[Civilization Explorer]";
+		mes "^0000ffMother Computer^000000 or, ^0000ff LSI Chip^000000 Or, and what else. ^0000ffChicken^000000?";
+		next;
+		mes "[Civilization Explorer]";
+		mes "Mm that's right. There definitely was the word Chicken. I don't know what kind of combination of technology that may be...";
+		next;
+		mes "[Civilization Explorer]";
+		mes "It is referrenced in the records of people who seem to 'root' amongst the many traces of technology.";
+		next;
+		if (select( "It is not a topic I would be interested in.", "Interesting. Have there been any results?" ) == 1) {
+			mes "[Civilization Explorer]";
+			mes "Unfortunate.";
+			close;
+		}
+		mes "[Civilization Explorer]";
+		mes "My aim is to research the use of technology related to the relevant times. Even though what I have found out so far is insignificant.";
+		next;
+		mes "[Civilization Explorer]";
+		mes "If I had it my way I would use the dimension mover to see for myself but there's too much work. Besides I am not an adventurer...";
+		next;
+		mes "[Civilization Explorer]";
+		mes "By any chance, would you interested in traveling to the past?";
+		next;
+		mes "[Civilization Explorer]";
+		mes "Even better if you show me around if you find an interesting object.";
+		next;
+		if (select( "Not interested.", "Ok." ) == 1) {
+			mes "[Civilization Explorer]";
+			mes "Unfortunate.";
+			close;
+		}
+		mes "[Civilization Explorer]";
+		mes "You are an adventurer. Tell me what you decide to do.";
+		if (isbegin_quest(12346) == 0)
+			setquest 12346;// Strange Ancient Science
+		next;
+		completequest 12346;
+	}
+	.@party_id = getcharid(1);
+	if (.@party_id == 0) {
+		mes "[Civilization Explorer]";
+		mes "Please talk to me after composing a party of 1 or more, or after joining a party.";
+		close;
+	}
+	if (getpartyleader(.@party_id,2) != getcharid(0)) {
+		mes "[Civilization Explorer]";
+		mes "Ah. You aren't the party leader. Take me to your leader! Or perhaps take your leader to me.";
+		close;
+	}
+	switch( checkquest(12347,PLAYTIME) ) {
+	case -1:
+		if (select( "Produce a crack of time", "Cancel" ) == 1) {
+			mes "[Civilization Explorer]";
+			mes "When the crack of time opens take a breath and speak again.";
+			instance_create("Central Laboratory");
+		}
+		close;
+	case 0:
+	case 1:
+		mes "[Civilization Explorer]";
+		mes "Ah, oh no.";
+		mes "There are some remaining aftereffects of dimensional travel. We cannot travel again in this condition.";
+		close;
+	case 2:
+		mes "^0000ffAll the traces of entering the central laboratory have been erased. Speaking with the Civilization Explorer seems possible.^000000";
+		erasequest 12347;// Trace of Laboratory Access
+		close;
+	}
+}
+
+// Entrance
+1@lab,104,34,4	script	Probationary researcher	4_LGTSCIENCE,{
+	if ('switch_enabled == 1) {
+		mes "[Probationary researcher]";
+		mes "The entrance door is already open.";
+		close;
+	}
+	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+		mes "[Probationary researcher]";
+		mes "Please hold. I am speaking with the guide about whether or not you have been authorized.";
+		close;
+	}
+	mes "[Probationary researcher]";
+	mes "Are you participating as assistants to the experiments of research project 32001?";
+	next;
+	if (select( "Yes.", "No." ) == 2) {
+		mes "[Probationary researcher]";
+		mes "It seems you're in the wrong laboratory. Please exit and ask for help.";
+		close;
+	}
+	mes "[Probationary researcher]";
+	mes "We need about 5 seconds of time. Confirming access code.";
+	close2;
+	sleep 3000;
+	npctalk "Probationary researcher : The access code matches. I will open the door.";
+	sleep 6000;
+	npctalk "Probationary researcher : You may now enter. Please note that you cannot open the door from the other side.";
+	if ('switch_enabled == 0) {
+		'switch_enabled = 1;
+		enablenpc instance_npcname("#central_warp_1");
+		enablenpc instance_npcname("#central_warp_2");
+		enablenpc instance_npcname("#central_warp_3");
+		enablenpc instance_npcname("Main Switch#");
+		enablenpc instance_npcname("Senior researcher#pa082");
+		enablenpc instance_npcname("effect_switch");
+		for ( .@i = 1; .@i <= 8; ++.@i )
+			enablenpc instance_npcname( "Switch" + .@i + "#" );
+		'code = 5 * gettime(DT_DAYOFMONTH);
+	}
+	end;
+
+OnInstanceInit:
+	'map_name$ = instance_mapname("1@lab");
+	'code_found = 'code = 0;
+	for ( .@i = 1; .@i <= 8; .@i++ )
+		'switch_position[.@i] = 0;
+
+	// Entrance
+	disablenpc instance_npcname("#central_warp_1");
+	disablenpc instance_npcname("#central_warp_2");
+	disablenpc instance_npcname("#central_warp_3");
+
+	// Switchs
+	disablenpc instance_npcname("Main Switch#");
+	disablenpc instance_npcname("Senior researcher#pa082");
+	disablenpc instance_npcname("effect_switch");
+	for ( .@i = 1; .@i <= 8; ++.@i )
+		disablenpc instance_npcname( "Switch" + .@i + "#" );
+
+	// Experiments
+	disablenpc instance_npcname("#central_warp_4");
+	disablenpc instance_npcname("#central_warp_5");
+	disablenpc instance_npcname("DR Silvia#pa0829");
+	disablenpc instance_npcname("DR Federico#pa0829");
+	disablenpc instance_npcname("DR Artemia#pa0829");
+	disablenpc instance_npcname("DR Vincent#pa0829");
+	disablenpc instance_npcname("#wp01");
+	disablenpc instance_npcname("#wp02");
+	for ( .@i = 1; .@i <= 14; ++.@i )
+		hideonnpc instance_npcname("#gen_" + (.@i < 10 ? "0" : "") + .@i);
+	disablenpc instance_npcname("#central_warp_6");
+	end;
+}
+
+// Switchs
+1@lab,37,37,3	script	Switch1#	CLEAR_NPC,{
+	.@num = charat( strnpcinfo(1),6 );
+	setarray .@position$[0], "OFF", "ON";
+	mes "[Switch " + .@num + "]";
+	mes "The switch is currently in the " + .@position$[ 'switch_position[.@num] ] + " position. What will you do?";
+	next;
+	'switch_position[.@num] = !( select( "ON","OFF" ) - 1 );
+	close;
+}
+1@lab,39,37,3	duplicate(Switch1#)	Switch2#	CLEAR_NPC
+1@lab,41,37,3	duplicate(Switch1#)	Switch3#	CLEAR_NPC
+1@lab,43,37,3	duplicate(Switch1#)	Switch4#	CLEAR_NPC
+1@lab,46,37,3	duplicate(Switch1#)	Switch5#	CLEAR_NPC
+1@lab,48,37,3	duplicate(Switch1#)	Switch6#	CLEAR_NPC
+1@lab,50,37,3	duplicate(Switch1#)	Switch7#	CLEAR_NPC
+1@lab,52,37,3	duplicate(Switch1#)	Switch8#	CLEAR_NPC
+
+1@lab,34,37,3	script	Main Switch#	CLEAR_NPC,{
+	.@string$ = 'switch_position[1] + "" + 'switch_position[2] + "" + 'switch_position[3] + "" + 'switch_position[4] + "" +
+		'switch_position[5] + "" + 'switch_position[6] + "" + 'switch_position[7] + "" + 'switch_position[8];
+	.@current_code = strtol( .@string$,2 );
+	npctalk "Today's access code " + 'code + ", currently entered code " + .@current_code + ".";
+	sleep 6000;
+	if ('code_found > 0)
+		npctalk "The door is already open.";
+	else if (.@current_code != 'code)
+		npctalk "The code is incorrect. Please try again.";
+	else {
+		'code_found = 1;
+		npctalk "The code is correct. Opening door.";
+		enablenpc instance_npcname("#central_warp_4");
+		enablenpc instance_npcname("#central_warp_5");
+		enablenpc instance_npcname("DR Silvia#pa0829");
+		enablenpc instance_npcname("DR Federico#pa0829");
+		enablenpc instance_npcname("DR Artemia#pa0829");
+		enablenpc instance_npcname("DR Vincent#pa0829");
+		enablenpc instance_npcname("#wp01");
+		enablenpc instance_npcname("#wp02");
+		donpcevent instance_npcname("effect_switch") + "::OnStop";
+	}
+	end;
+}
+
+1@lab,45,32,3	script	Senior researcher#pa082	4_LGTSCIENCE,{
+	if ('code_found > 0) {
+		mes "[Senior Researcher]";
+		mes "The door is open so you may now enter. Please note that you cannot open the door from the other side.";
+		close;
+	}
+	mes "[Senior Researcher]";
+	mes "It seems you are here to participate in the particle acceleration experiment.";
+	next;
+	mes "[Senior Researcher]";
+	mes "Today's access code is ^0000ff" + 'code + "^000000.";
+	mes "The code needs to be entered as a binary number. Use the switches behind me to enter it.";
+	next;
+	mes "[Senior Researcher]";
+	mes "After entering the code press the main button near the entrance.";
+	for ( .@i = 1; .@i <= 8; ++.@i )
+		specialeffect EF_STEAL, AREA, instance_npcname("Switch" + .@i + "#");
+	close2;
+	donpcevent instance_npcname("effect_switch") + "::OnStart";
+	end;
+}
+
+1@lab,1,1,0	script	effect_switch	-1,{
+OnStart:
+OnTimer2000:
+	specialeffect 203,AREA, instance_npcname("Main Switch#");
+	for ( .@i = 1; .@i <= 8; ++.@i )
+		specialeffect (203+.@i),AREA, instance_npcname("Switch" + .@i + "#");
+	initnpctimer;
+	end;
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+1@lab,81,84,7	script	DR Silvia#pa0829	4_F_SCIENCE,{
+	mes "[DR Silvia]";
+	mes "After the experiment I want to go home and enjoy an ice cold beer and some fried chicken.";
+	next;
+	mes "[DR Silvia]";
+	mes "I haven't been home for almost 2 years.";
+	next;
+	mes "^0000ffSilvia is looking at the particle accelerator device with a very exhausted look.^000000";
+	close;
+}
+
+1@lab,80,87,7	script	DR Federico#pa0829	4_LGTSCIENCE,{
+	mes "[DR Federico]";
+	mes "This device is more amazing the more I look at. There has never been a particle accelerator made in this scale.";
+	next;
+	mes "[DR Federico]";
+	mes "With this size I wonder if it's possible to create a small scale black hole...";
+	next;
+	mes "[DR Federico]";
+	mes "Ah, I was just talking. Such an event is closer to a disaster than an experiment haha.";
+	close;
+}
+
+1@lab,80,90,6	script	DR Artemia#pa0829	4_F_SCIENCE,{
+	mes "[DR Artemia]";
+	mes "Look, reality doesn't like it when you grab a piece of string and give it a tug.";
+	next;
+	mes "[DR Artemia]";
+	mes "A dimensional distortion can happen with such a powerful particle acceleration.";
+	next;
+	mes "[DR Artemia]";
+	mes "I have a bad feeling about this because... Nature finds a way.";
+	close;
+}
+
+1@lab,81,93,6	script	DR Vincent#pa0829	4_LGTSCIENCE,{
+	mes "[DR Vincent]";
+	mes "The machine is perfect. Nothing will go wrong!";
+	next;
+	mes "[DR Vincent]";
+	mes "Artemia worries too much. Anyway I'm going on a trip after the experiment.";
+	close;
+}
+
+1@lab,80,89,0	script	#wp01	HIDDEN_WARP_NPC,9,9,{
+	end;
+OnTouch:
+	donpcevent instance_npcname("#wp02") + "::OnStart";
+	disablenpc instance_npcname("#wp01");
+	end;
+}
+
+1@lab,80,89,0	script	#wp02	HIDDEN_WARP_NPC,{
+	end;
+
+function effect_gen {
+	.@effect = getarg(0);
+	.@count = getargcount();
+	for ( .@i = 1; .@i < .@count; .@i++ )
+		specialeffect .@effect, AREA, getd( "'gen_" + ( getarg(.@i) < 10 ? "0" : "" ) + getarg(.@i) + "$" );
+	return;
+}
+
+function effect_1_10_gen { effect_gen( getarg(0), 1,2,3,4,5,6,7,8,10 ); }
+
+OnStart:
+	'vincent$ = instance_npcname("DR Vincent#pa0829");
+	'federico$ = instance_npcname("DR Federico#pa0829");
+	'silvia$ = instance_npcname("DR Silvia#pa0829");
+	'artemia$ = instance_npcname("DR Artemia#pa0829");
+	'gen_01$ = instance_npcname("#gen_01");
+	'gen_02$ = instance_npcname("#gen_02");
+	'gen_03$ = instance_npcname("#gen_03");
+	'gen_04$ = instance_npcname("#gen_04");
+	'gen_05$ = instance_npcname("#gen_05");
+	'gen_06$ = instance_npcname("#gen_06");
+	'gen_07$ = instance_npcname("#gen_07");
+	'gen_08$ = instance_npcname("#gen_08");
+	'gen_09$ = instance_npcname("#gen_09");
+	'gen_10$ = instance_npcname("#gen_10");
+	'gen_11$ = instance_npcname("#gen_11");
+	'gen_12$ = instance_npcname("#gen_12");
+	'gen_13$ = instance_npcname("#gen_13");
+	'gen_14$ = instance_npcname("#gen_14");
+
+	npctalk "Federico : Let us get started. Hm... Are you ready Dr. Fresa?", 'federico$;
+	sleep 5000;
+	npctalk "Artemia : Probably making final confirmation checks. An experiment of this scope needs such caution.", 'artemia$;
+	sleep 6000;
+	npctalk "Silvia : Care is needed for operating a finished product for the first experiment.", 'silvia$;
+	sleep 4000;
+	npctalk "Vincent : Ah, I hope we can finish quickly so I can go eat chicken.", 'vincent$;
+	sleep 3000;
+	npctalk "Silvia : Ah! I like that too! Call me when you go.", 'silvia$;
+	sleep 6000;
+	mapannounce 'map_name$, "?????: Ah, ah, one two one two, mic test.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 2000;
+	npctalk "Federico : She's here.", 'federico$;
+	sleep 3000;
+	mapannounce 'map_name$, "?????: Chief director Lona Fresa of project particle accelerator.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 5000;
+	mapannounce 'map_name$, "Lona Fresa : Current time " + gettime(DT_MONTH) + " Month " + gettime(DT_DAYOFMONTH) + " Day 25 minutes after 10.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 5000;
+	mapannounce 'map_name$, "Lona Fresa : Testing the effects of particle acceleration on its surroundings in an open space.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 5000;
+	npctalk "Artemia : Aah... I really don't like this experiment.", 'artemia$;
+	sleep 3000;
+	mapannounce 'map_name$, "Lona Fresa : Starting the experiment. Chief researcher Dr. Federico, Artemia, Silvia, Vincent and assistant researchers.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 5000;
+	npctalk "Artemia : Let us start~", 'artemia$;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 1800;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	sleep 700;
+	npctalk "Vincent : Starting rotation of generator.", 'vincent$;
+	sleep 1000;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	sleep 1500;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	npctalk "Federico : Generator rotation fixed at 10000 RPM.", 'federico$;
+	sleep 1200;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 1000;
+	npctalk "Silvia : Voltage is still within the tolerance band.", 'silvia$;
+	sleep 400;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	sleep 1200;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 1000;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	mapannounce 'map_name$, "Lona Fresa : This experiment is for the creation of new material that hasn't existed before.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 1000;
+	effect_gen( EF_MAGICALATTHIT, 1,2,3,4,5,6,7,8,9 );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Lona Fresa : Recorders make sure to make detailed records of the catalyst bed's reaction when it is installed to the accelerator.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 500;
+	npctalk "Artemia : Contacting catalyst bed number 1.", 'artemia$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 850;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 850;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 700;
+	npctalk "Silvia : Generator voltage unstable. Still within tolerance band.", 'silvia$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	specialeffect EF_BLASTMINEBOMB, AREA, 'gen_01$;
+	sleep 400;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 430;
+	npctalk "Silvia : Detecting heat close to the tolerance band between the catalyst bed and the accelerator!", 'silvia$;
+	effect_gen( EF_BLASTMINEBOMB, 1,3 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8 );
+	sleep 400;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4 );
+	sleep 600;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	npctalk "Vincent : Accelerator is heating.", 'vincent$;
+	sleep 400;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6 );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7 );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9 );
+	npctalk "Vincent: 320c.", 'vincent$;
+	sleep 300;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 600;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9,5 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 930;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 780;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	npctalk "Vincent : 670c It's heating up too fast!", 'vincent$;
+	sleep 430;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 630;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 450;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 330;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	npctalk "Vincent : Broke through 1000c!!!! Dr. Fresa! We have to momentarily stop the device!", 'vincent$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 530;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 650;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Lona Fresa : It is fine.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 733;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	npctalk "Silvia : It is not a simple problem. The temperature has far exceeded the predicted numbers!", 'silvia$;
+	sleep 430;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 630;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 330;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Lona Fresa : This problem was predicted. Maintain current state.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 500;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 600;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 600;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "Artemia :  But at least.. I will have chicken later.", 'artemia$;
+	sleep 400;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 850;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: Receiving changed circumstance through main server. Detecting dimensional distortion between particle accelerator and catalyst.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 710;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 400;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 330;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "Artemia : Dr. Fresa! It's a dangerous situation of Mother Computer. Shut down the main power!", 'artemia$;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 360;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 530;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 930;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: Alert. New unidentified creature approaching from demi-plane.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 810;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 630;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	npctalk "Vincent : What is going on. Somebody turn off that computer!", 'vincent$;
+	sleep 430;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 380;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 530;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: A new organism will be soon transmitted from the demi-plane.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 430;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 710;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 730;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 880;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 5 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 4 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 3 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 2 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 1 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 600;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 400;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: Unidentifiable creature discovered. Temporarily shutting down main power.", bc_map,0xFFFF00,FW_NORMAL,13;
+	callsub S_Spawn,1;
+	sleep 400;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 400;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 750;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "Artemia : What... what is that?!", 'artemia$;	// text can stack if OnMyMobDead already called
+	sleep 3000;
+	npctalk "Silvia : It isn't reacting to us. Maybe it can't see us?", 'silvia$;
+	sleep 5000;
+	npctalk "Vincent : But it is hostile to the project assistants! What is that creature!?", 'vincent$;
+	sleep 5000;
+	npctalk "Vincent : I can't move my body! I think space is frozen!", 'vincent$;
+	end;
+
+OnMyMobDead1:
+	mapannounce 'map_name$, "MA-4885: Unidentified creature eliminated. Restarting device.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 2000;
+	npctalk "Artemia: MA-4885!! On who's order are you restarting! Stop!!", 'artemia$;
+	sleep 3000;
+	mapannounce 'map_name$, "MA-4885: Unrecognized command.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 6000;
+	npctalk "Artemia: Dr. Fresa!! We have to stop! This is too dangerous!", 'artemia$;
+	sleep 3000;
+	mapannounce 'map_name$, "Lona Fresa : ......", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 3000;
+	npctalk "Vincent: Fresa! We don't have time! Turn off the computer!!", 'vincent$;
+	sleep 3000;
+	mapannounce 'map_name$, "MA-4885: Restarting particle acceleration procedure.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 3000;
+	npctalk "Silvia : Fresa! Make a decision!", 'silvia$;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 1800;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	mapannounce 'map_name$, "Lona Fresa : ......", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 1700;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	sleep 1500;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	sleep 1400;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 1300;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	mapannounce 'map_name$, "Lona Fresa : Current time 20 minutes past 11. Momentarily postpone experiment.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 1200;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 1100;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	sleep 1000;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9,5 );
+	sleep 930;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: Access denied. Cannot understand command.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 810;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_BLASTMINEBOMB, AREA, 'gen_01$;
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Lona Fresa : Mother Comp MA-4885. I am your Chief director Dr. Fresa. Cease current progress.", bc_map,0xFF77,FW_NORMAL,12;
+	effect_gen( EF_BLASTMINEBOMB, 1,3 );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8 );
+	sleep 750;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 700;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 950;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: Access denied. Cannot understand command.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 380;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6 );
+	sleep 410;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2 );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 450;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 950;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9 );
+	npctalk "Federico : Damnit! Something else is coming!!", 'federico$;
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9,5 );
+	sleep 600;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: Alert. New unidentified creature approaching from demi-plane.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 430;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 500;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 730;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 430;
+	npctalk "Vincent : Oh... damnit. This is why you shouldn't install the newest CPU.", 'vincent$;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 930;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 400;
+	npctalk "Federico : Ah... my body...can't move. Damn", 'federico$;
+	sleep 430;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 600;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 430;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: A new organism will be soon transmitted from the demi-plane.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 430;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 530;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 700;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 5 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 4 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 3 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 2 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: 1 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 600;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	mapannounce 'map_name$, "MA-4885: Unidentifiable creature discovered. Temporarily shutting down main power.", bc_map,0xFFFF00,FW_NORMAL,13;
+	callsub S_Spawn,2;
+	sleep 500;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 600;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 350;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 600;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 350;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	npctalk "Silvia: Same as the last time. It seems to have no interest in us.", 'silvia$;
+	sleep 6000;
+	npctalk "Vincent: Let's completely shut down the mother computer while the main power is temporarily off!", 'vincent$;
+	sleep 4000;
+	mapannounce 'map_name$, "MA-4885: Answering question. This space is currently stuck in a distorted phase.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 5000;
+	mapannounce 'map_name$, "MA-4885: Direct interaction between the demi-plane creature and this world's organisms will be possible after the phase has been balanced.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 5000;
+	mapannounce 'map_name$, "MA-4885: Conducting calculations to restore balance to distorted phase. Please wait a moment.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 5000;
+	npctalk "Artemia: What is that crazy clump of metal saying? It is saying we aren't in the same phase as those monster like things?", 'artemia$;
+	sleep 5000;
+	npctalk "Federico: Aah, I guess we should hope that Mother computer doesn't make the right calculations.", 'federico$;
+	end;
+
+OnMyMobDead2:
+	mapannounce 'map_name$, "MA-4885: Unidentified creature eliminated. Phase adjustment failed. Restarting relevant procedure.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 4000;
+	mapannounce 'map_name$, "Lona Fresa : Mother Computer MA-4885. Looks like you are trying to synchronize the other dimension and this world.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 7000;
+	mapannounce 'map_name$, "MA-4885: That is correct.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 5000;
+	npctalk "Artemia: Dr. Fresa!! This ridiculous event is completely unrelated to our original experiment!", 'artemia$;
+	sleep 7000;
+	mapannounce 'map_name$, "Lona Fresa : I have fully realized that.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 6000;
+	npctalk "Silvia: Can we not shut down main power completely?", 'silvia$;
+	sleep 6000;
+	mapannounce 'map_name$, "MA-4885: Restarting particle acceleration procedure.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 5000;
+	mapannounce 'map_name$, "Lona Fresa : " + gettime(DT_MONTH) + " Month " + gettime(DT_DAYOFMONTH) + " Day. Current time 38 minutes past 11 temporarily terminating particle accelerator project.", bc_map,0xFF77,FW_NORMAL,12;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 1834;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	sleep 1734;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	sleep 1550;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	mapannounce 'map_name$, "Lona Fresa : Ending record with reasons of Mother Computer malfunction and overheating of accelerator.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 1400;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 1300;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	sleep 1200;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 700;
+	npctalk "Silvia : Alright! Now Dr. Fresa just has to shut down the power.", 'silvia$;
+	sleep 400;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	sleep 1000;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9,5 );
+	sleep 950;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Lona Fresa : Cutting off power to Mother Computer MA-4885.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 300;
+	effect_gen( EF_MAGICALATTHIT, 2,3,4,5,6,7,8,9,10 );
+	sleep 700;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: Suspending operation of all equipment as per Administrator request.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: .....command... ----!!!  Zizip... ---!! -- following command ----- !! Zizip.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 750;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 750;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 750;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "Artemia : Whew... is it over?", 'artemia$;
+	sleep 6000;
+	mapannounce 'map_name$, "Lona Fresa : Completed shut down of Mother computer MA-4885. Confirm equipment suspension", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 5000;
+	npctalk "Silvia: Looks like it's over.", 'silvia$;
+	sleep 4000;
+	npctalk "Federico: Plant initialization is the best.", 'federico$;
+	sleep 4000;
+	mapannounce 'map_name$, "Lona Fresa : Recording all experiment progress and terminating at current point.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 5000;
+	mapannounce 'map_name$, "Lona Fresa : The final experiment failure is unfortunate. But I will promise a more perfect experiment next time.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 5000;
+	mapannounce 'map_name$, "Lona Fresa : Good work everybody.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 5000;
+	npctalk "Artemia: It seems to be over.", 'artemia$;
+	sleep 5000;
+	npctalk "Federico: I thought it was Fresa's dogmatic experiment. But it was a problem with the mother comp.", 'federico$;
+	sleep 5000;
+	npctalk "Silvia: Let's just calm down. And get out of this dreadful laboratory.", 'silvia$;
+	sleep 5000;
+	npctalk "Vincent : By the way... I still can't move so what is going on?", 'vincent$;
+	sleep 5000;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	mapannounce 'map_name$, "MA-4885: CODE NAME - DESCENT", bc_map,0xFF0000,FW_NORMAL,16;
+	sleep 2000;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 1700;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 1500;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	sleep 400;
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	sleep 1000;
+	npctalk "Federico : What? Wasn't this the initialization stage?", 'federico$;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 630;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 800;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	mapannounce 'map_name$, "MA-4885 : Starting final phase transformation.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1200;
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 1200;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	sleep 430;
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 480;
+	npctalk "Silvia : It's all over.", 'silvia$;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9,5 );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	sleep 700;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 930;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 780;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: A new organism will be soon transmitted from the demi-plane.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 400;
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 600;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 630;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1130;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	sleep 700;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 5 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 4 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 3 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 2 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: 1 seconds remaining", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: Temporarily shutting down main power for syntonization with transformed phase.", bc_map,0xFFFF00,FW_NORMAL,13;
+	callsub S_Spawn,3;
+	mapannounce 'map_name$, "MA-4885: Final phase transformation process.", bc_map,0xFFFF00,FW_NORMAL,13;
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 630;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	sleep 630;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	mapannounce 'map_name$, "MA-4885: This world will be summoned to the demi-plane after the phase interference phenomenon with creature fades.", bc_map,"0xFFFF00";
+	end;
+
+OnMyMobDead3:
+	mapannounce 'map_name$, "MA-4885: Phase synchronization completed before creature is eliminated. Starting dimensional travel.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 2500;
+	specialeffect EF_MAGICALATTHIT, AREA, 'gen_01$;
+	sleep 2000;
+	effect_gen( EF_MAGICALATTHIT, 1,3 );
+	sleep 1800;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8 );
+	sleep 1500;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4 );
+	sleep 1400;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6 );
+	sleep 1300;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2 );
+	sleep 1200;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7 );
+	sleep 1000;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9 );
+	mapannounce 'map_name$, "MA-4885: Conducting calculations to restore balance to distorted phase. Please wait a moment.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 1000;
+	effect_gen( EF_MAGICALATTHIT, 1,3,8,4,6,2,7,9,5 );
+	sleep 900;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 810;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	npctalk "Federico : Mother comp is conducting a tremendous experiment going beyond what we thought of.", 'federico$;
+	sleep 710;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 550;
+	npctalk "Vincent : Seems more magnanimous than we are. Fresa!!! Are you listening? Sound the alarm!", 'vincent$;
+	sleep 310;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 500;
+	npctalk "Vincent : We should at least evacuate the people in the other labs.", 'vincent$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 960;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 910;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 730;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Lona Fresa : But ... you.", bc_map,0xFF77,FW_NORMAL,12;
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1110;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 950;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 880;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 430;
+	npctalk "Silvia : Gee, I don't know what will happen but I am curious about shifting dimensions. Don't mind me!", 'silvia$;
+	sleep 360;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 880;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 950;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 510;
+	npctalk "Artemia : Dimension moving while experimenting on new material production. Got caught up in a different level of an experiment.", 'artemia$;
+	sleep 400;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 883;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1100;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Alarm System : Alert! Alert! Class 1 alert issued from the Particle Laboratory. All researchers evacuate to the bunker.", bc_map,0xFF0000,FW_NORMAL,13;
+	sleep 850;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 950;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "Alarm System : I repeat. Class 1 alert issued from the Particle Laboratory. All researchers evacuate to the bunker.", bc_map,0xFF0000,FW_NORMAL,13;
+	sleep 600;
+	npctalk "Federico : Is this how it feels to move dimensions. How strange...", 'federico$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1030;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 1000;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 380;
+	specialeffect EF_SUI_EXPLOSION,AREA,'federico$;
+	disablenpc 'federico$;
+	mapannounce 'map_name$, "MA-4885: Dimension move at 20% progress. There could be dimensional interference with certain creatures. Please be aware.", bc_map,0xFFFF00,FW_NORMAL,13;
+	npctalk "Vincent : I wonder if the others evacuated?", 'vincent$;
+	specialeffect EF_BLASTMINEBOMB, AREA, 'gen_01$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 500;
+	effect_gen( EF_BLASTMINEBOMB, 1,3 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 900;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 380;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8 );
+	sleep 550;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 350;
+	specialeffect EF_SUI_EXPLOSION,AREA,'vincent$;
+	disablenpc 'vincent$;
+	npctalk "Silvia : Ah...... I should be seeing this while having chicken and beer...", 'silvia$;
+	sleep 380;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4 );
+	sleep 700;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 730;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 860;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 350;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2 );
+	sleep 360;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	specialeffect EF_SUI_EXPLOSION,AREA,'silvia$;
+	disablenpc 'silvia$;
+	mapannounce 'map_name$, "MA-4885: Dimension move at 78% progress. Most of the dimension encroached by demi-plane.", bc_map,0xFFFF00,FW_NORMAL,13;
+	npctalk "Artemia : Ha... whose going to eat the chicken now?", 'artemia$;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7 );
+	sleep 830;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9 );
+	sleep 350;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 630;
+	effect_gen( EF_BLASTMINEBOMB, 1,3,8,4,6,2,7,9,5 );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 930;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 400;
+	specialeffect EF_SUI_EXPLOSION,AREA,'artemia$;
+	disablenpc 'artemia$;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 400;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 934;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 500;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 630;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 430;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	sleep 360;
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 460;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 430;
+	specialeffect EF_LORD, AREA, 'gen_11$;
+	sleep 400;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	sleep 800;
+	effect_1_10_gen( EF_BLASTMINEBOMB );
+	effect_1_10_gen( EF_MAGICALATTHIT );
+	mapannounce 'map_name$, "MA-4885: Dimension move 100% completed. Welcome to the demi-plane dimension.", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 600;
+	specialeffect EF_LORD, AREA, 'gen_12$;
+	sleep 1800;
+	specialeffect EF_LORD, AREA, 'gen_13$;
+	sleep 2000;
+	specialeffect EF_LORD, AREA, 'gen_14$;
+	mapannounce 'map_name$, "MA-4885: A gateway possible for contact with the demi-plane open at 3 o'clock of the laboratory.", bc_map,0xFFFF00,FW_NORMAL,13;
+	enablenpc instance_npcname("#central_warp_6");
+	sleep 5000;
+	mapannounce 'map_name$, "MA-4885: Cannot guarantee what kind of dimension will be met due to the instability of the gateway...", bc_map,0xFFFF00,FW_NORMAL,13;
+	sleep 5000;
+	mapannounce 'map_name$, "MA-4885: If there are any surviving organisms I wish you luck. I hope to see you again.", bc_map,0xFFFF00,FW_NORMAL,13;
+	end;
+
+S_Spawn:
+	.@round = getarg(0);
+	switch( .@round ) {
+	case 1:
+		setarray .@mob_id[0],
+			1087,	// Orc Hero
+			1147,	// Maya
+			1190,	// Orc Lord
+			1115,	// Eddga
+			1086,	// GTB
+			1038,	// Osiris
+			1159,	// Phreeoni
+			1389,	// Dracula
+			1046,	// Doppelganger
+			1046,	// Doppelganger
+			1059,	// Mistress
+			1150,	// Moonlight
+			1688,	// Lady Tanee
+			1039,	// Baphomet
+			1089,	// Toad
+			1092,	// Vagabond Wolf
+			1088,	// Vocal
+			1096,	// Angeling
+			1093,	// Eclipse
+			1120,	// Ghostring
+			1090;	// Mastering
+		break;
+	case 2:
+		setarray .@mob_id[0],
+			1980,	// Kublin
+			1157,	// Pharaoh
+			1112,	// Drake
+			1251,	// Stormy Knight
+			2068,	// Boitata
+			1373,	// Lord of Death
+			2156,	// Leak
+			1272,	// Dark Lord
+			1518,	// Bacsojin
+			1252,	// Garm
+			1779,	// Ktullanux
+			1708,	// Thanatos
+			1089,	// Toad
+			1092,	// Vagabond Wolf
+			1088,	// Vocal
+			1096,	// Angeling
+			1093,	// Eclipse
+			1120,	// Ghostring
+			1090;	// Mastering
+		break;
+	case 3:
+		setarray .@mob_id[0],
+			1623,	// RSX
+			1418,	// Evil Snake Lord
+			1312,	// Turtle Generals
+			1785,	// Atroce
+			1734,	// Kiel
+			1719,	// Detale
+			1768,	// Gloom Under Night
+			2087,	// Queen Scaraba
+			1751,	// Valkyrie Randgris
+			2253,	// Daehyon
+			2255,	// Kades
+			1832,	// Ifrit
+			1873,	// Beezlebub
+			1089,	// Toad
+			1092,	// Vagabond Wolf
+			1088,	// Vocal
+			1096,	// Angeling
+			1120,	// Ghostring
+			1090,	// Mastering
+			1093;	// Eclipse
+		break;
+	}
+	.@r = rand( getarraysize(.@mob_id) );
+	monster 'map_name$,90,88, "Unidentified creature",.@mob_id[.@r],1, instance_npcname("#wp02") + "::OnMyMobDead" + .@round;
+	return;
+}
+
+1@lab,91,80,5	script	#gen_01	CLEAR_NPC,{ end; }
+1@lab,96,81,5	duplicate(#gen_01)	#gen_02	CLEAR_NPC
+1@lab,99,85,5	duplicate(#gen_01)	#gen_03	CLEAR_NPC
+1@lab,99,91,5	duplicate(#gen_01)	#gen_04	CLEAR_NPC
+1@lab,96,95,5	duplicate(#gen_01)	#gen_05	CLEAR_NPC
+1@lab,91,97,5	duplicate(#gen_01)	#gen_06	CLEAR_NPC
+1@lab,85,96,5	duplicate(#gen_01)	#gen_07	CLEAR_NPC
+1@lab,82,91,5	duplicate(#gen_01)	#gen_08	CLEAR_NPC
+1@lab,82,86,5	duplicate(#gen_01)	#gen_09	CLEAR_NPC
+1@lab,85,81,5	duplicate(#gen_01)	#gen_10	CLEAR_NPC
+1@lab,90,97,5	duplicate(#gen_01)	#gen_11	CLEAR_NPC
+1@lab,82,89,5	duplicate(#gen_01)	#gen_12	CLEAR_NPC
+1@lab,91,80,5	duplicate(#gen_01)	#gen_13	CLEAR_NPC
+1@lab,99,88,5	duplicate(#gen_01)	#gen_14	CLEAR_NPC
+
+1@lab,102,28,0	warp2	#central_warp_1	2,2,1@lab,97,28
+1@lab,80,28,0	warp2	#central_warp_2	2,2,1@lab,75,28
+1@lab,58,28,0	warp2	#central_warp_3	2,2,1@lab,53,28
+1@lab,29,38,0	warp2	#central_warp_4	2,2,1@lab,29,43
+1@lab,48,82,0	warp2	#central_warp_5	2,2,1@lab,58,82
+1@lab,123,88,0	warp2	#central_warp_6	2,2,verus01,152,150

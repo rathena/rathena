@@ -164,7 +164,7 @@ ma_dun01,147,10,5	script	Nurse#ma_dun01	4_F_NURSE,{
 			}
 			callsub S_Complete, true;
 			getexp 500000,0;
-			if (VIP_SCRIPT == 0 || vip_status(1))
+			if (VIP_SCRIPT == 0 || vip_status(VIP_STATUS_ACTIVE))
 				getitem 6499,7;// Ancient_Grudge
 			else
 				getitem 6499,5;

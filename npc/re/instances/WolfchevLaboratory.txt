@@ -21,10 +21,10 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
 		close;
 	}
-	if (lhz_boss > 30) {
+	if (lhz_curse > 30) {
 		if (!lght_duk01) {
 			if (Sex == SEX_MALE) {
-				emotion e_pif, "Giacomo Girolamo#kiup2";
+				emotion ET_HNG;
 				mes "[Giacomo Girolamo]";
 				mes "....a guy....?";
 				next;
@@ -32,33 +32,33 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 				mes "Ah! Hey! Man!";
 				next;
 				select("What's up?");
-				emotion e_what, 1;
+				emotion ET_QUESTION, playerattached();
 				mes "[Giacomo Girolamo]";
 				mes "Have you ever heard of horrific human experimentation committed in Rekenber Corporation whose head office is here in Lighthalzen?";
 				next;
 				select("Whaaat?! human experimentation?");
-				emotion e_omg, 1;
+				emotion ET_HUK, playerattached();
 				mes "[Giacomo Girolamo]";
 				mes "Yea! human experimentation!!";
 				mes "There are a lot of rumors that horrible human experimentation is actually performed, but these people in the slum....don't want to believe that due to the welfare movement from Rekenber.";
 				next;
-				emotion e_swt2, "Giacomo Girolamo#kiup2";
+				emotion ET_PROFUSELY_SWEAT;
 				mes "[Giacomo Girolamo]";
 				mes "Well! and those rich people, seem to know something but they never mention that...";
 				next;
 				mes "[Giacomo Girolamo]";
 				mes "Ahh!! And this is a secret that just SOME PEOPLE know. I heard that from Rekenber Lab.,.. a person named...um...Wol....";
 				next;
-				emotion e_hmm, "Giacomo Girolamo#kiup2";
+				emotion ET_SCRATCH;
 				mes "[Giacomo Girolamo]";
 				mes "Anyway!! A scientist named Wolf.. something suddenly got sacked. and he must be related with this rumor, I think...";
 				next;
 				select("You mean... Wolfchev?");
-				emotion e_gasp, "Giacomo Girolamo#kiup2";
+				emotion ET_SURPRISE;
 				mes "[Giacomo Girolamo]";
 				mes "Ohhhh?! yeah Wolfchev!! That's right, the name was Wolfchev.. The mad scientist..";
 				next;
-				emotion e_ok, "Giacomo Girolamo#kiup2";
+				emotion ET_OK;
 				mes "[Giacomo Girolamo]";
 				mes "I suppose you can then understand the story faster... I am sure that he's involved in the rumor. I swear.";
 				next;
@@ -76,16 +76,16 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 					mes "["+ strcharinfo(0) +"]";
 					mes "He happens to research into Human 'Homunculus' without telling that to Rekenber Corp., and there was a whistle-blower who reported to the corp. so he was fired.";
 					next;
-					emotion e_no1, "Giacomo Girolamo#kiup2";
+					emotion ET_BEST;
 					mes "[Giacomo Girolamo]";
 					mes "Oh! Man..! You seem to know pretty much! By any chance, are you concerned with Rekenber??";
 					next;
-					emotion e_dots;
+					emotion ET_THINK;
 					mes "["+ strcharinfo(0) +"]";
 					mes "... .... ...";
 					next;
 				}
-				emotion e_hmm, "Giacomo Girolamo#kiup2";
+				emotion ET_SCRATCH;
 				mes "[Giacomo Girolamo]";
 				mes "Don't worry. I didn't mean anything.";
 				next;
@@ -99,11 +99,11 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 				mes "Should investigate the lab where the experiment was carried out.";
 				close;
 			} else {
-				emotion e_lv, "Giacomo Girolamo#kiup2";
+				emotion ET_THROB;
 				mes "[Giacomo Girolamo]";
 				mes "Oh! What a beautiful lady!!";
 				next;
-				emotion e_what, "Giacomo Girolamo#kiup2";
+				emotion ET_QUESTION;
 				mes "[Giacomo Girolamo]";
 				mes "How come a beauty is here, in a place with dangerous rumor?";
 				next;
@@ -129,12 +129,12 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 			mes "[Giacomo Girolamo]";
 			mes "Well, how dare I ask you and be interested in what the lady does...";
 			next;
-			emotion e_ok, "Giacomo Girolamo#kiup2";
+			emotion ET_OK;
 			mes "[Giacomo Girolamo]";
 			mes "I just hope that the lady gets out of this town with dangerous rumors..";
 			next;
 			select("Dangerous rumors?");
-			emotion e_what, 1;
+			emotion ET_QUESTION, playerattached();
 			mes "[Giacomo Girolamo]";
 			mes "Ah... Lady may not have heard of the rumor.";
 			next;
@@ -145,7 +145,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 			mes "and then the rumor came up, since disappearance cases happen pretty often, that Rekenber is committing a horrible human experimentation in their secret lab.";
 			next;
 			select("Excuse me?! human experimentation?");
-			emotion e_omg, 1;
+			emotion ET_HUK, playerattached();
 			mes "[Giacomo Girolamo]";
 			mes "Yea! human experimentation!!";
 			mes "There are a lot of rumors that horrible human experimentation is actually performed, but these people in the slum....don't want to believe that due to the welfare movement from Rekenber.";
@@ -167,33 +167,33 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 		} else {
 			mes "[Giacomo Girolamo]";
 			if (Sex == SEX_MALE) {
-				emotion e_paper, "Giacomo Girolamo#kiup2";
+				emotion ET_WRAP;
 				mes "Take care yourself and don't disappear!";
 			} else {
-				emotion e_lv2, "Giacomo Girolamo#kiup2";
+				emotion ET_BIGTHROB;
 				mes "Be careful, Lady.";
 			}
 			close;
 		}
 	} else {
 		if (Sex == SEX_MALE) {
-			emotion e_ho, "Giacomo Girolamo#kiup2";
+			emotion ET_DELIGHT;
 			mes "[Giacomo Girolamo]";
 			mes "Only those beautiful ladies are the reason of my life~!";
 			mes "I, Giacomo Girolamo Casanova de Seingalt am never interested in guys like you though!!";
 			next;
-			emotion e_an, "Giacomo Girolamo#kiup2";
+			emotion ET_FRET;
 			mes "[Giacomo Girolamo]";
 			mes "but I can listen to you...you wanna say anything to me?";
 			next;
 			switch(select("No..?", "About ladies..", "You Womanizer!!", "Envy you...", "What's the rumor lately?")) {
 			case 1:
-				emotion e_hmm, "Giacomo Girolamo#kiup2";
+				emotion ET_SCRATCH;
 				mes "[Giacomo Girolamo]";
 				mes "Hey you, get out of my way then..";
 				close;
 			case 2:
-				emotion e_an, "Giacomo Girolamo#kiup2";
+				emotion ET_FRET;
 				mes "[Giacomo Girolamo]";
 				mes "I don't feel like talking about my precious ladies making fun of them. You do it with your friends.";
 				close;
@@ -201,19 +201,19 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 				mes "[Giacomo Girolamo]";
 				mes "Hey.. Excuse me!!! but I'm not a 'Womanizer', I am just a person who adores ladies.";
 				next;
-				emotion e_ok, "Giacomo Girolamo#kiup2";
+				emotion ET_OK;
 				mes "[Giacomo Girolamo]";
 				mes "Of course..... Yea... If I'm a womanizer, all the men on earth are too! I'm just Casanova. umhahahaha.";
 				close;
 			case 4:
-				emotion e_what, "Giacomo Girolamo#kiup2";
+				emotion ET_QUESTION;
 				mes "[Giacomo Girolamo]";
 				mes "Haa.. Do you....? not have any woman but your sister and mother around you?";
 				next;
 				mes "[Giacomo Girolamo]";
 				mes "... .... ...";
 				next;
-				emotion e_swt2, "Giacomo Girolamo#kiup2";
+				emotion ET_PROFUSELY_SWEAT;
 				mes "[Giacomo Girolamo]";
 				mes "Oh...... sorry.. I got your point....";
 				close;
@@ -229,7 +229,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 				close;
 			}
 		} else {
-			emotion e_what, "Giacomo Girolamo#kiup2";
+			emotion ET_QUESTION;
 			mes "[Giacomo Girolamo]";
 			mes "Hey, lady?";
 			next;
@@ -276,7 +276,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 				next;
 				break;
 			}
-			emotion e_lv2, "Giacomo Girolamo#kiup2";
+			emotion ET_BIGTHROB;
 			mes "[Giacomo Girolamo]";
 			mes "Today is the first day we met, but I love you, Lady <3 ";
 			next;
@@ -288,7 +288,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 
 OnTouch:
 	if (!lght_duk01)
-		emotion (Sex == SEX_MALE? e_pif : e_lv2), "Giacomo Girolamo#kiup2";
+		emotion (Sex == SEX_MALE? ET_HNG : ET_BIGTHROB), "Giacomo Girolamo#kiup2";
 	end;
 }
 
@@ -309,7 +309,7 @@ OnTouch:
 			warp "que_lhz", 148, 215;
 		}
 	} else {
-		if (lhz_boss < 31) {
+		if (lhz_curse < 31) {
 			mes "- Whistling sound -";
 			mes "From below, there comes a gruesome sound mingling with the wind.";
 			close2;
@@ -371,11 +371,11 @@ que_lhz,206,74,4	script	Researcher#02	4_LGTSCIENCE,3,3,{
 
 OnTouch:
 	if (lght_duk01 == 2) {
-		emotion e_omg, 1;
+		emotion ET_HUK, playerattached();
 		mes "["+ strcharinfo(0) +"]";
 		mes "You!!!! are Wolfchev?";
 		next;
-		emotion e_gg, "Researcher#02";
+		emotion ET_KIK;
 		mes "[Wolfchev]";
 		mes "A Human! kaahaha. People tend to hate this place, why are you here?";
 		next;
@@ -385,7 +385,7 @@ OnTouch:
 		mes "["+ strcharinfo(0) +"]";
 		mes "And I see that you are still committing that!!!";
 		next;
-		emotion e_gg, "Researcher#02";
+		emotion ET_KIK;
 		mes "[Wolfchev]";
 		mes "Kihihihi. I can see that you know something about me. Is that you who accused me?";
 		mes "How dare you come back to me after you did that. Kihihih";
@@ -399,7 +399,7 @@ OnTouch:
 		erasequest 5109;
 		setquest 5110;
 		lght_duk01 = 3;
-		emotion e_omg, 1;
+		emotion ET_HUK, playerattached();
 		mes "["+ strcharinfo(0) +"]";
 		mes "Whoa! Wolfchev, stop!";
 		close2;
@@ -414,7 +414,7 @@ que_lhz,94,119,4	script	Researcher#03	4_LGTSCIENCE,{
 		close;
 	}
 	if (lght_duk01 == 3) {
-		emotion e_swt2, "Researcher#03";
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Wolfchev]";
 		mes "(Gasping) Pshaw... you are still following me. Hey, why do you keep following me?";
 		next;
@@ -427,7 +427,7 @@ que_lhz,94,119,4	script	Researcher#03	4_LGTSCIENCE,{
 		mes "["+ strcharinfo(0) +"]";
 		mes "But, your experiment seem really dangerous. How come this is what everybody wants?";
 		next;
-		emotion e_gg, "Researcher#03";
+		emotion ET_KIK;
 		mes "[Wolfchev]";
 		mes "Everyone has a desire to be stronger and wants to dominate others so those other people obey and admire you. Do you not have that desire?";
 		next;
@@ -457,7 +457,7 @@ que_lhz,147,224,4	script	Researcher#04	4_LGTSCIENCE,{
 		mes "[Wolfchev]";
 		mes "You are pretty persistent, aren't you? Or I think.......that you like me, huh? Kihihii.";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "["+ strcharinfo(0) +"]";
 		mes "... .... ...";
 		next;
@@ -469,7 +469,7 @@ que_lhz,147,224,4	script	Researcher#04	4_LGTSCIENCE,{
 		mes "[Wolfchev]";
 		mes "Again.. it's time to say goodbye.";
 		next;
-		emotion e_gasp, "Researcher#04";
+		emotion ET_SURPRISE;
 		mes "[Wolfchev]";
 		mes "Well! May be....";
 		next;
@@ -478,7 +478,7 @@ que_lhz,147,224,4	script	Researcher#04	4_LGTSCIENCE,{
 		next;
 		donpcevent "#Eventctrl::OnEnable";
 		progressbar "FF00FF", 5;
-		emotion e_omg, "Researcher#04";
+		emotion ET_HUK;
 		mes "[Wolfchev]";
 		mes "Oh my,... What happened?";
 		next;
@@ -501,7 +501,7 @@ que_lhz,147,224,4	script	Researcher#04	4_LGTSCIENCE,{
 			mes "- Hit him to wake him up -";
 			next;
 			specialeffect EF_DARKBREATH;
-			emotion e_no;
+			emotion ET_STARE_ABOUT;
 			mes "["+ strcharinfo(0) +"]";
 			mes "Hey Dude! Anyway let's get out of here first! Isn't there any place where they cannot reach?";
 			next;
@@ -520,7 +520,7 @@ que_lhz,147,224,4	script	Researcher#04	4_LGTSCIENCE,{
 			mes "Go to '^0000FFWolfchev's Lab^000000' at the 12 o'clock direction...";
 			close;
 		} else {
-			emotion e_spin, "Researcher#04";
+			emotion ET_CONFUSE;
 			mes "Wolfchev is confused and has no idea now since those monsters are attacking him too.";
 			close;
 		}
@@ -688,7 +688,7 @@ lhz_dun04,151,276,3	script	Researcher#memo	4_LGTSCIENCE,{
 		mes "[Wolfchev]";
 		mes "Urr.. I think they will ruin my whole laboratory!";
 		next;
-		emotion e_loud, 1;
+		emotion ET_BLABLA, playerattached();
 		mes "["+ strcharinfo(0) +"]";
 		mes "Hey! Wolfchev!!";
 		next;

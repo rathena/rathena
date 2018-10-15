@@ -18,7 +18,7 @@
 
 sec_pri,36,58,1	script	Chief Warder	105,{ 
 	mes "[Saddeus]";
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes (Sex==SEX_MALE?"Mr.":"Ms.")+" Prisoner #"+BaseLevel+JobLevel+",";
 	mes "what's the noise over there?";
 	next;
@@ -83,7 +83,7 @@ M_Q1:
 
 	mes "[Saddeus]";
 	if(checkcart() || checkfalcon() || checkriding()){
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "I'm sorry, you should release your Cart, PecoPeco or Falcon!";
 		close;
 	}
@@ -121,7 +121,7 @@ M_NO_THANKS:
 	mes "[Saddeus]";  
 	if (rand(2)) mes "Is today X-Mas time, huh?";
 	mes "Now shut up and back off!";
-	if (rand(2)) emotion e_omg;
+	if (rand(2)) emotion ET_HUK;
 	close;  
 }
 
@@ -138,7 +138,7 @@ sec_in02,137,57,1	script	Overseer	708,{
 	mes "I want you to gather ^FF0000"+PRISON_Q+" Orange Net Mushroom^000000.";
 	if ( countitem(1069)<PRISON_Q ) close;//Items: Orange_Net_Mushroom,
 	mes "OK... hand me all the shrooms...";
-	mes "Let me see... "+countitem(1069)+" of almost eadible ones...";//Items: Orange_Net_Mushroom,
+	mes "Let me see... "+countitem(1069)+" of almost edible ones...";//Items: Orange_Net_Mushroom,
 	mes "And "+countitem(1070)+" useless deadly ones.";//Items: Orange_Gooey_Mushroom_,
 	next;
 	mes "[Oliver]";

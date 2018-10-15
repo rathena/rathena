@@ -1,0 +1,1296 @@
+//===== rAthena Script =======================================
+//= Quest NPCs related to episode 14.3
+//===== Description: =========================================
+//= [Walkthrough Conversion]
+//- Dimensional Travel Quest (access to Flame Basin / Flame Cave)
+//- Others NPCs related to ep14.3
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// Dimensional Travel Quest
+morocc,138,238,4	script	Piled Rags#ep14bs	4_M_DIEMAN,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "- You are carrying too many items to proceed with the quest. -";
+		close;
+	}
+	if (BaseLevel < 140) {
+		mes "- There is a pile of dirty rags. -";
+		close;
+	}
+	if (ep14_3_dimensional_travel == 0) {
+		mes "- There is a pile of dirty rags. -";
+		next;
+		if (select( "Leave it.", "Remove it." ) == 1) {
+			mes "- You left the pile of dirty rags where it is. -";
+			close;
+		}
+		mes "[???]";
+		mes "Ugh...";
+		next;
+		mes "- A moan is heard underneath the pile of rags. -";
+		next;
+		if (select( "Run.", "Shake the rags." ) == 1) {
+			mes "- Startled, you ran. -";
+			close;
+		}
+		mes "[" + strcharinfo(0) + "]";
+		mes "Hey,";
+		mes "wake up!";
+		next;
+		mes "[???]";
+		mes "Ugh...";
+		next;
+		mes "[" + strcharinfo(0) + "]";
+		mes "Are you all right?";
+		next;
+		mes "[???]";
+		mes "Ugh...";
+		mes "I n-need food...";
+		mes "I could even eat ^0000FFMonster's Feed^000000. Please...";
+		next;
+		mes "- Again he lost consciousness, exhausted just from talking.";
+		mes "You should feed him ^0000FFMonster's Feed^000000. -";
+		setquest 11349;// Dimensional Travel
+		ep14_3_dimensional_travel = 1;
+		close;
+	}
+	if (ep14_3_dimensional_travel < 3) {
+		if (ep14_3_dimensional_travel == 2)
+			cutin "ep143_tadir.bmp",2;
+		else {
+			if (countitem(528) < 1) {
+				mes "- Again he lost consciousness, exhausted just from talking.";
+				mes "You should feed him ^0000FFMonster's Feed^000000. -";
+				close;
+			}
+			mes "[???]";
+			mes "Ugh...";
+			next;
+			if (select( "Leave it.", "Give Monster's Feed." ) == 1) {
+				mes "[???]";
+				mes "Ugh... H-help...";
+				close;
+			}
+			mes "[???]";
+			mes "Ugh...";
+			mes "Yuck!";
+			cutin "ep143_tadir.bmp",2;
+			delitem 528,1;// Monster's Feed
+			completequest 11349;// Dimensional Travel
+			setquest 11350;// Dimensional Travel
+			ep14_3_dimensional_travel = 2;
+			next;
+			mes "[???]";
+			mes "*Chomp Chomp*";
+			mes "*Barf*";
+			next;
+			mes "[???]";
+			mes "Phew...";
+			next;
+			mes "[" + strcharinfo(0) + "]";
+			mes "Are you all right?";
+			next;
+			mes "[???]";
+			mes "*Retch* Oh, yes, thanks to you.";
+			mes "*Retch*";
+			next;
+			mes "[???]";
+			mes "I thought I was going to die. I'm lucky to be alive.";
+			next;
+			mes "[???]";
+			mes "I've been having nothing but bad luck lately.";
+			next;
+			mes "[???]";
+			mes "I got sucked into some strange place, separated from the rest of my party. The place I arrived was terrible. There was no sign of Human habitation.";
+			next;
+			mes "[???]";
+			mes "It's a miracle that I'm here.";
+			next;
+			mes "[???]";
+			mes "I lucked out.";
+			mes "Still alive.";
+			mes "Hah hah hah!";
+			next;
+			mes "[???]";
+			mes "Oh!";
+			mes "Where are my manners? I forgot to thank you properly.";
+			next;
+			mes "[???]";
+			mes "Thank you";
+			mes "for feeding me, though the feed tasted horrible.";
+			next;
+			mes "[???]";
+			mes "I'm glad I didn't die on the street. The world is still a beautiful place.";
+			mes "I'm moved.";
+			next;
+			mes "[Tamarin]";
+			mes "My name is ^0000FFTamarin^000000.";
+			mes "I'm an adventurer, and no, this isn't my preferred attire.";
+			next;
+			select("Introduce yourself.");
+			mes "[Tamarin]";
+			mes "" + strcharinfo(0) + ", huh? That's a good name.";
+			next;
+		}
+		mes "[Tamarin]";
+		mes "Ah,";
+		mes "I'd better do something before people start asking if I'm homeless.";
+		next;
+		mes "[Tamarin]";
+		mes "Do you know a place where I can wash myself?";
+		next;
+		if (select( "Tell him the place.", "Say you don't know." ) == 2) {
+			mes "[Tamarin]";
+			mes "Water is scarce in the desert, huh?";
+			close3;
+		}
+		mes "[Tamarin]";
+		mes "Ah,";
+		mes "do you mean the ^0000FFoasis near the northwestern sphinx^000000?";
+		next;
+		mes "[Tamarin]";
+		mes "I've been in Morroc, but this is my first time inside the village.";
+		mes "I remember hearing that the place holds special water.";
+		next;
+		mes "[Tamarin]";
+		mes "I feel excited to wash myself with the special water!";
+		mes "I'm going to the oasis now. Could you wait for me?";
+		next;
+		mes "[Tamarin]";
+		mes "It'll take a while before I feel strong again, but at least I can walk on my own.";
+		mes "Hah hah hah!";
+		next;
+		if (select( "Watch him.", "Accompany him." ) == 1) {
+			mes "[Tamarin]";
+			mes "(Braces himself and inhales.)";
+			mes "Wait, wait.";
+			mes "I can stand up on my own.";
+			next;
+			mes "[Tamarin]";
+			mes "Wait, wait!";
+			close3;
+		}
+		mes "[Tamarin]";
+		mes "How kind of you!";
+		mes "The world is still an okay place to live.";
+		next;
+		mes "[Tamarin]";
+		mes "Then, let's go to the ^0000FFoasis near the northwestern sphinx^000000.";
+		erasequest 11350;// Dimensional Travel
+		setquest 11351;// Dimensional Travel
+		ep14_3_dimensional_travel = 3;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 3) {
+		mes "[Tamarin]";
+		mes "How kind of you!";
+		mes "The world is still an okay place to live.";
+		cutin "ep143_tadir.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Then, let's go to the ^0000FFoasis near the northwestern sphinx^000000.";
+		close3;
+	}
+	mes "- There is a pile of dirty rags. -";
+	close;
+
+OnInit:
+	questinfo 11349, QTYPE_QUEST, 1;
+	setquestinfo_level 11349,140,175;
+	end;
+}
+
+moc_ruins,106,140,4	script	Tamarin#ep14bs_ru	4_M_TAMARIN,{
+	if (ep14_3_dimensional_travel == 3 || ep14_3_dimensional_travel == 4) {
+		if (ep14_3_dimensional_travel == 3) {
+			mes "[Tamarin]";
+			mes "Pah!";
+			mes "This feels great!";
+			cutin "ep143_tasmi.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "The water feels too warm for my liking, but beggars can't be choosers.";
+			cutin "ep143_tasta.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "You saved me from starvation, and took me to this great place. I must have been a great person in the past life";
+			mes "to deserve such kindness.";
+			cutin "ep143_tahuk.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "I want to repay you, fellow adventurer.";
+			mes "I lost all my belongings when I fell into that strange hole and got separated from my party,";
+			cutin "ep143_tasta.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "but at least I can tell you an ^0000FFinteresting story^000000.";
+			cutin "ep143_tasmi.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "It's about the strange place I've been to.";
+			cutin "ep143_tahuk.bmp",2;
+			next;
+			if (select( "Not interested.", "I'm listening." ) == 1) {
+				mes "[Tamarin]";
+				mes "All right, then.";
+				mes "I thought you were serious about adventuring.";
+				cutin "ep143_tahuk.bmp",2;
+				next;
+				mes "[Tamarin]";
+				mes "Then";
+				mes "do you want your Monster's Feed back?";
+				cutin "ep143_tasta.bmp",2;
+				next;
+				mes "[Tamarin]";
+				mes "*Retch*";
+				cutin "ep143_taang.bmp",2;
+				close3;
+			}
+			ep14_3_dimensional_travel = 4;
+			mes "[Tamarin]";
+			mes "I knew you'd be interested!";
+			mes "Nothing piques adventurers' interest like the story of a strange place, right?";
+			cutin "ep143_tasmi.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "Ahem.";
+			mes "The story begins with my journey to the ^0000FFOther World^000000, the latest hot spot for adventurers.";
+			cutin "ep143_tahuk.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "Adventurer Tamarin and his party went on a journey to the land of the unknown, Other World.";
+			cutin "ep143_tasmi.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "Their journey was perilous, but they bravely moved forward.";
+			cutin "ep143_taang.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "Oh,";
+			mes "why am I speaking in the third-person perspective?";
+			cutin "ep143_tahuk.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "My original inspiration was Bard, but then I became a Hunter because my friends thought that suited me better.";
+			cutin "ep143_tasmi.bmp",2;
+			next;
+			select("Ask him to be more straightforward.");
+			mes "[Tamarin]";
+			mes "Yes.";
+			cutin "ep143_tahuk.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "A while ago, my friends and I decided to explore the Other World together.";
+			cutin "ep143_tasta.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "Since it'd be our first visit to the Other World, we wanted to go to a more popular spot, but one of us wouldn't have it--he was so excited that he started acting out of control.";
+			cutin "ep143_taang.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "When I came back to my senses, I was alone in a strange place.";
+			cutin "ep143_tahuk.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "The ^0000FFland was burning with perpetual flames^000000 that weren't too hot to touch, and ^0000FFstrange-looking plants and insects^000000 were crawling all over the place.";
+			next;
+			mes "[Tamarin]";
+			mes "At first I yelled for help and moved around hoping to find others, but all to no avail.";
+			next;
+			mes "[Tamarin]";
+			mes "After a few days of having nothing to eat, I started to eat anything I saw off the ground, and I had the worst diarrhea ever.";
+			cutin "ep143_taang.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "I didn't know how many days had passed before I saw a group of some entities that I thought were men at a glance.";
+			cutin "ep143_tahuk.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "But ^0000FFthey looked too strange to pass as human^000000.";
+			mes "I couldn't talk to them, so I just jumped into the Crack that they came through.";
+			next;
+			mes "[Tamarin]";
+			mes "My knees gave way and I rolled on my side. When I looked around, I was back at the ^0000FFDimensional Crack^000000 where my friends and I first arrived.";
+			next;
+			mes "[Tamarin]";
+			mes "I came out through the ^0000FFMorroc Dimensional Teleporter^000000 and used every ounce of my energy to get to Morroc.";
+			next;
+			mes "[Tamarin]";
+			mes "Sigh...";
+			mes "I wonder if my friends are safe.";
+			cutin "ep143_tasta.bmp",2;
+			next;
+		}
+		mes "[Tamarin]";
+		mes "I should seek them out,";
+		mes "but first I want to go back to that strange place when I get my full strength back. Not many people have a chance to see such a special place, you know.";
+		cutin "ep143_tasmi.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Fortunately for me, with the ^0000FFMorroc restoration work^000000 underway, I shouldn't have a problem making money through some part-time jobs.";
+		next;
+		if (select( "Tell him have safe travel.", "Tell him you want to tag along." ) == 1) {
+			mes "[Tamarin]";
+			mes "I will.";
+			mes "Thank you for saving me.";
+			cutin "ep143_tahuk.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "This is the beauty of adventuring:";
+			mes "making new friends!";
+			cutin "ep143_tasmi.bmp",2;
+			next;
+			mes "[Tamarin]";
+			mes "I'll be in Morroc for a while, making some money and getting ready for another adventure. I hope I can see you again before I leave.";
+			close3;
+		}
+		mes "[Tamarin]";
+		mes "!!";
+		cutin "ep143_tahuk.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Do you mean it?";
+		next;
+		mes "[Tamarin]";
+		mes "By the gods I'm a lucky bastard!";
+		mes "*Sob*";
+		cutin "ep143_taang.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Then meet me at the ^0000FFDimensional Crack^000000. I need to replenish myself first.";
+		cutin "ep143_tasta.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "It may take a while for me to get everything packed, so get your other business done in the meantime.";
+		erasequest 11351;// Dimensional Travel
+		setquest 11352;// Dimensional Travel
+		ep14_3_dimensional_travel = 5;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 5) {
+		mes "[Tamarin]";
+		mes "Then meet me at the ^0000FFDimensional Crack^000000. I need to replenish myself first.";
+		cutin "ep143_tasta.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "It may take a while for me to get everything packed, so get your other business done in the meantime.";
+		close3;
+	}
+	mes "[Tamarin]";
+	mes "Pah!";
+	mes "This feels great!";
+	cutin "ep143_tasmi.bmp",2;
+	close3;
+}
+
+dali,112,69,4	script	Tamarin#ep14bs_cha	4_M_TAMARIN,{
+	if (ep14_3_dimensional_travel == 5) {
+		mes "[Tamarin]";
+		mes "" + strcharinfo(0) + ", over here!";
+		mes "You're early.";
+		cutin "ep143_tasta.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "(Glancing around surreptitiously)";
+		mes "I hope no one's watching us.";
+		cutin "ep143_tahuk.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "I've hidden the opening to that place: I didn't want anyone to get there before me.";
+		cutin "ep143_tasmi.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "At that time, I was too distracted to remember where the opening was, but I think it's definitely ^0000FFsomewhere on the 2nd floor^000000.";
+		cutin "ep143_tasta.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Meet me in front of the ^0000FFHidden Crack^000000. Make sure no one follows you there.";
+		mes "I've ^0000FFcovered the opening with dirt^000000. I hope no one dug it open.";
+		erasequest 11352;// Dimensional Travel
+		setquest 11353;// Dimensional Travel
+		ep14_3_dimensional_travel = 6;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 6) {
+		mes "[Tamarin]";
+		mes "I've hidden the opening to that place: I didn't want anyone to get there before me.";
+		cutin "ep143_tasmi.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "At that time, I was too distracted to remember where the opening was, but I think it's definitely ^0000FFsomewhere on the 2nd floor^000000.";
+		cutin "ep143_tasta.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Meet me in front of the ^0000FFHidden Crack^000000. Make sure no one follows you there.";
+		mes "I've ^0000FFcovered the opening with dirt^000000. I hope no one dug it open.";
+		close3;
+	}
+	mes "[Tamarin]";
+	mes "Hm, my mark had better stay where I left it.";
+	cutin "ep143_tahuk.bmp",2;
+	close3;
+}
+
+dali02,90,62,0	script	Sand Mound#ep14bs	4_SOIL,{
+	if (ep14_3_dimensional_travel < 6) {
+		mes "- A mound of sand stands awkwardly, looking out of place. -";
+		close;
+	}
+	if (ep14_3_dimensional_travel == 6) {
+		mes "- A mound of sand stands awkwardly, looking out of place. -";
+		next;
+		mes "[Tamarin]";
+		mes "Whew!";
+		mes "I'm glad you've found me.";
+		cutin "ep143_tasmi.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Let me clear the dirt...";
+		mes "Be mindful of the opening. It's quite narrow.";
+		cutin "ep143_tasta.bmp",2;
+		next;
+		if (select( "Enter.", "Quit." ) == 2) {
+			mes "[Tamarin]";
+			mes "Aren't you going in?";
+			cutin "ep143_tahuk.bmp",2;
+			close3;
+		}
+		mes "- The passage is barely wide enough to contain one person. -";
+		completequest 11353;// Dimensional Travel
+		ep14_3_dimensional_travel = 7;
+		close2;
+		warp "moro_vol",136,135;
+		end;
+	}
+	mes "- A mound of sand stands awkwardly, looking out of place. -";
+	next;
+	if (select( "Enter.", "Quit." ) == 2) {
+		mes "You decided not to enter.";
+		close;
+	}
+	mes "- The passage is barely wide enough to contain one person. -";
+	close2;
+	warp "moro_vol",136,135;
+	end;
+}
+
+moro_vol,137,136,0	script	Sand Mound#ep14bs_	4_SOIL,{
+	mes "- A mound of sand stands awkwardly, looking out of place. -";
+	next;
+	if (select( "Return to the Dimensional Crack.", "Quit." ) == 2) {
+		mes "You decided not to enter.";
+		close;
+	}
+	mes "- The passage is barely wide enough to contain one person. -";
+	close2;
+	warp "dali02",91,63;
+	end;
+}
+
+moro_vol,91,105,1	script	Eclage Teleporter#143_1	PORTAL,{
+	mes "[Dophe]";
+	mes "This teleporter is connected to Eclage.";
+	mes "It'll be destroyed once our operation is over, but for now it's something we cannot live without.";
+	next;
+	mes "Use the teleporter to move to Eclage.";
+	next;
+	if (select( "Move to Eclage.", "Cancel." ) == 2) {
+		mes "Do not use the teleporter.";
+		close;
+	}
+	mes "Move to Eclage.";
+	close2;
+	warp "ecl_in01",38,96;
+	end;
+}
+
+ecl_in01,38,98,1	script	Interdimensional Device#ecl	PORTAL,{
+	if (ep14_3_dimensional_travel < 8) {
+		mes "[Eclage Guard]";
+		mes "This teleporter is connected to the recently discovered hideout of the Demon God.";
+		mes "Only those allowed to enter the hideout can use this teleporter.";
+		close;
+	}
+	mes "This teleporter is connected to the recently discovered hideout of the Demon God.";
+	mes "Do you want to use it?";
+	next;
+	if (select( "Move to the Demon God's hideout.", "Quit." ) == 2) {
+		mes "Do not use the teleporter.";
+		close;
+	}
+	mes "Use the teleporter to move to the Demon God's hideout.";
+	close2;
+	warp "moro_vol",91,102;
+	end;
+}
+
+ecl_in01,40,96,3	script	Eclage Guard#143_6	4_M_FAIRYSOLDIER,{
+	mes "[Eclage Guard]";
+	mes "How may I help you?";
+	next;
+	switch( select( "What's that teleporter?", "Why is it so crowded in here?", "Demon God's hideout?", "Goodbye." ) ) {
+	case 1:
+		mes "[Eclage Guard]";
+		mes "It's connected to the recently discovered hideout the of Demon God.";
+		mes "It's scientifically designed to send its user directly to the Dimensional Crack where his hideout is.";
+		next;
+		mes "[Eclage Guard]";
+		mes "Many a warrior already left to the hideout.";
+		mes "So long as Morroc exists, Yggdrasil is not safe. I'm going to join the Expedition.";
+		close;
+	case 2:
+		mes "[Eclage Guard]";
+		mes "It turns out Demon God ran from Morroc to hide out in our dimension.";
+		mes "He has to be dealt with, either banished back to his realm or destroyed.";
+		next;
+		mes "[Eclage Guard]";
+		mes "If you want to join the Expedition to defeat the Demon God, then use this teleporter.";
+		mes "It'll send you directly to the Expedition Camp.";
+		close;
+	case 3:
+		mes "[Eclage Guard]";
+		mes "You know the Dimensional Crack, don't you? Recently it's been revealed that the Crack is made up of dimensional passageways.";
+		mes "We can now use those passageways to explore inside the Crack.";
+		next;
+		mes "[Eclage Guard]";
+		mes "Originally the Crack was created by the Demon God to aid in his escape,";
+		mes "so it'd been thought investigating the Crack could locate him.";
+		next;
+		mes "[Eclage Guard]";
+		mes "And it was; finally his hideout has been discovered.";
+		mes "His traces and his demon soldiers are sighted mainly around the giant hill in the center.";
+		next;
+		mes "[Eclage Guard]";
+		mes "If you want more details, then you should visit the actual site.";
+		mes "Just use the teleporter over there.";
+		close;
+	case 4:
+		mes "[Eclage Guard]";
+		mes "May Yggdrasil bless you.";
+		close;
+	}
+}
+
+moro_vol,132,140,4	script	Tamarin#ep14bs_ju	4_M_TAMARIN,{
+	if (ep14_3_dimensional_travel == 7) {
+		mes "[Tamarin]";
+		mes "Whoa!";
+		mes "I didn't expect to see so many people.";
+		cutin "ep143_tahuk.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "I'm disappointed that I'm not the first one to discover the place, and am glad that I'm not alone in this dismal place.";
+		cutin "ep143_taang.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "I see more of those entities that look sort of like men.";
+		mes "This place might be much more than I thought it was!";
+		cutin "ep143_tasmi.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Look!";
+		mes "Walking trees!";
+		mes "Grrr-!";
+		cutin "ep143_tahuk.bmp",2;
+		next;
+		mes "[Barget Tiblack]";
+		mes "HEY!";
+		mes "What the hell do you think you're doing?!";
+		cutin "",255;
+		setquest 11354;// Specimen Collection
+		ep14_3_dimensional_travel = 8;
+		close;
+	}
+	if (ep14_3_dimensional_travel == 8) {
+		mes "[Tamarin]";
+		mes "Look!";
+		mes "Walking trees!";
+		mes "Grrr-!";
+		cutin "ep143_tahuk.bmp",2;
+		next;
+		mes "[Barget Tiblack]";
+		mes "HEY!";
+		mes "What the hell do you think you're doing?!";
+		cutin "",255;
+		close;
+	}
+	if (ep14_3_dimensional_travel == 9) {
+		mes "[Tamarin]";
+		mes "They might kick us out if they know we sneaked in.";
+		mes "Let's do what they ask for now, yeah?";
+		cutin "ep143_taang.bmp",2;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 10 || ep14_3_dimensional_travel == 11) {
+		mes "[Tamarin]";
+		mes "Collecting the plant specimens doesn't sound too difficult. We can split them between us.";
+		cutin "ep143_tasta.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "^0000FFWhen you collect 25 Sonia stems, meet me by the big rock in the center of this place^000000.";
+		if (ep14_3_dimensional_travel == 10) {
+			erasequest 11356;// Specimen Collection
+			setquest 11357;// Specimen Collection
+			ep14_3_dimensional_travel = 11;
+		}
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 12) {
+		if (countitem(6690) < 25) {
+			mes "[Tamarin]";
+			mes "Ooh! (Wincing)";
+			mes "You don't have enough stems.";
+			mes "Get more and take them to Barget.";
+			cutin "ep143_tahuk.bmp",2;
+			close3;
+		}
+		mes "[Tamarin]";
+		mes "Let's report to Barget first.";
+		cutin "ep143_tahuk.bmp",2;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 14 || ep14_3_dimensional_travel == 15) {
+		mes "[Tamarin]";
+		mes "Come on,";
+		mes "hurry over to ^0000FFInstructor Rugen^000000!";
+		cutin "ep143_tahuk.bmp",2;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 16) {
+		mes "[Tamarin]";
+		mes "Thank the gods, who knew that thing I ate out of hunger would save me?";
+		mes "Let's report to Barget.";
+		cutin "ep143_tahuk.bmp",2;
+		close3;
+	}
+	if (ep14_3_dimensional_travel > 16) {
+		mes "[Tamarin]";
+		mes "Arrgh!";
+		mes "" + strcharinfo(0) + " Get in the cave before everyone else explores it!";
+		cutin "ep143_tahuk.bmp",2;
+		close3;
+	}
+	mes "[Tamarin]";
+	mes "Ugh...";
+	mes "I was the first to come to this place!";
+	cutin "ep143_taang.bmp",2;
+	close3;
+}
+
+moro_vol,142,131,5	script	Barget Tiblack#ep14bs	4_M_ALCHE_D,{
+	if (checkweight(501,1) == 0 || (MaxWeight - Weight) < 1000) {
+		mes "- You are carrying too many items to proceed with the quest. -";
+		close;
+	}
+	if (ep14_3_dimensional_travel < 8) {
+		mes "[Barget Tiblack]";
+		mes "Ugh, I'm exhausted.";
+		mes "I understand the urgency, but that doesn't mean I like being bossed around.";
+		close;
+	}
+	if (ep14_3_dimensional_travel == 8) {
+		mes "[Barget Tiblack]";
+		mes "You've ruined my precious samples!";
+		mes "I've asked people of your ilk to steer clear of my work zone. Didn't your superiors tell you that?";
+		next;
+		mes "[Barget Tiblack]";
+		mes "I haven't even finished the research at the camp, and they dragged me away for yet another burdening project.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "I demand an assistant!";
+		mes "Enough with that budget problem!";
+		mes "Argh!";
+		next;
+		mes "[Barget Tiblack]";
+		mes "...";
+		mes "...";
+		next;
+		mes "[Barget Tiblack]";
+		mes "All right.";
+		mes "You two over there!";
+		mes "You must have too much time on your hands, loitering about aimlessly. Make yourself useful and help me collect samples.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "You've ruined my existing samples, after all.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "First, I want to collect animal specimens.";
+		mes "It's not uncommon to see mutant animals around here. Recently, one of them was confirmed as a ^0000FFcompletely new species^000000.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "^0000FFThis new species of insect is called the Firebugs because they're surrounded by flames and live in fire pits like that over there^000000.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "Firebugs that crawl out of their pits die soon after.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "Please investigate ^0000FF20 fire pits and collect 50 Burning Insect Shells from Firebugs^000000.";
+		mes "Be careful not to burn yourself in the process.";
+		erasequest 11354;// Specimen Collection
+		setquest 11355;// Specimen Collection
+		ep14_3_dimensional_travel = 9;
+		close;
+	}
+	if (ep14_3_dimensional_travel < 12) {
+		if (ep14_3_dimensional_travel == 9) {
+			if (countitem(6689) < 50 || checkquest(11355,HUNTING) != 2) {
+				mes "[Barget Tiblack]";
+				mes "First, I want to collect animal specimens.";
+				mes "It's not uncommon to see mutant animals around here. Recently, one of them was confirmed as a ^0000FFcompletely new species^000000.";
+				next;
+				mes "[Barget Tiblack]";
+				mes "^0000FFThis new species of insect is called the Firebugs because they're surrounded by flames and live in fire pits like that over there^000000.";
+				next;
+				mes "[Barget Tiblack]";
+				mes "Firebugs that crawl out of their pits die soon after.";
+				next;
+				mes "[Barget Tiblack]";
+				mes "Please investigate ^0000FF20 fire pits and collect 50 Burning Insect Shells from Firebugs^000000.";
+				mes "Be careful not to burn yourself in the process.";
+				close;
+			}
+			mes "[Barget Tiblack]";
+			mes "Oh,";
+			mes "well done!";
+			mes "You finished your task more quickly than I anticipated.";
+			delitem 6689,50;// Burning Bug Skin
+			erasequest 11355;// Specimen Collection
+			setquest 11356;// Specimen Collection
+			ep14_3_dimensional_travel = 10;
+			next;
+			mes "[Barget Tiblack]";
+			mes "Ouch, HOT!";
+			mes "*Huffing Puffing*";
+			mes "Let me bottle them before they get cold, and send them to the lab.";
+			next;
+		}
+		mes "[Barget Tiblack]";
+		mes "Now, it's time for plant specimens.";
+		mes "Our target plant is called Sonia, a very primitive type of plant.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "At a glance, Sonias look like plastic tubes, but their structure is very minimal.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "They're not difficult to gather. Please ^0000FFpick 50 Sonias and bring me 50 stems^000000.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "Sonia specimens are the last of my specimen collection. If you happen to ^0000FFsee peculiar Sonias^000000, please don't hesitate to let me know.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "Try not to stray too far away from the base. It's too dangerous out there.";
+		mes "Come back safely.";
+		next;
+		mes "[Tamarin]";
+		mes "Hm...";
+		mes "" + strcharinfo(0) + ", wait!";
+		cutin "ep143_tahuk.bmp",2;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 12) {
+		if (countitem(6690) < 25) {
+			mes "[Barget Tiblack]";
+			mes "How are you doing with collecting Sonias?";
+			close;
+		}
+		mes "[Barget Tiblack]";
+		mes "Ah,";
+		mes "welcome back!";
+		mes "I forgot to tell you ^0000FFnot to go near the rock in the center of this place^000000.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "When I realized my mistake, I called a rescue party, so worried for your safety. I'm glad you're back unscathed.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "I apologize for being a total jerk.";
+		mes "I was stressed out about my heavy workload.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "I still have so many things to do... Sigh...";
+		next;
+		select("Tell her about the central rock.");
+		mes "[Barget Tiblack]";
+		mes "Say WHAT?!";
+		mes "You went there?!";
+		mes "And you came back unscathed? How?";
+		next;
+		mes "[Barget Tiblack]";
+		mes "Everyone else who went there ^0000FFfell into a coma due to the noxious gas released from the rock^000000.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "What did you do?";
+		mes "This is a great discovery!";
+		next;
+		select("Relay what happened.");
+		mes "[Barget Tiblack]";
+		mes "You ate a Sonia stem.";
+		mes "Okay, I've known the stem is nontoxic, but I haven't finished its substance research yet. Did you experience any side effect?";
+		next;
+		mes "[Barget Tiblack]";
+		mes "Wow!";
+		mes "This really is a great discovery!";
+		next;
+		mes "[Barget Tiblack]";
+		mes "I'd better get back to the research...";
+		mes "No, we first must ^0000FFtreat those patients who need Sonia stems. Please bring them to me.^000000";
+		next;
+		mes "[Barget Tiblack]";
+		mes "^0000FFInstructor Rugen manages them^000000, so you can bring them to him.";
+		mes "Please hand me the document. I'll sign it for you.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "I'd better get back to my stem research. I'll ask someone else for assistance.";
+		mes "You lucked out this time. Better not make a habit of eating things off the ground.";
+		erasequest 11358;// Specimen Collection
+		setquest 11359;// Antidote
+		ep14_3_dimensional_travel = 13;
+		close;
+	}
+	if (ep14_3_dimensional_travel == 13) {
+		mes "[Barget Tiblack]";
+		mes "I'd better get back to the research...";
+		mes "No, we first must ^0000FFtreat those patients who need Sonia stems. Please bring them to me.^000000";
+		next;
+		mes "[Barget Tiblack]";
+		mes "^0000FFInstructor Rugen manages them^000000, so you can bring them to him.";
+		mes "Please hand me the document. I'll sign it for you.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "I'd better get back to my stem research. I'll ask someone else for assistance.";
+		mes "You lucked out this time. Better not make a habit of eating things off the ground.";
+		close;
+	}
+	if (ep14_3_dimensional_travel < 16) {
+		mes "[Barget Tiblack]";
+		mes "Did you see Instructor Rugen?";
+		close;
+	}
+	if (ep14_3_dimensional_travel == 16) {
+		mes "[Barget Tiblack]";
+		mes "Hah hah hah!";
+		mes "How did it go?";
+		mes "They worked, didn't they?";
+		next;
+		mes "[Barget Tiblack]";
+		mes "I have high hopes for my research.";
+		mes "Your seemingly reckless decision has saved many lives.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "With this, we'll soon be able to investigate that ^0000FFsuspicious cave^000000 from the inside out!";
+		next;
+		select("What cave?");
+		mes "[Barget Tiblack]";
+		mes "Oh, the cave that releases the noxious gas.";
+		mes "The gas is ^0000FFso thick in the air, you can't see the cave entrance clearly^000000.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "Those who we gave the first batch of the vaccine already left to the cave.";
+		mes "We haven't heard from them yet. I'd like to believe it's a good sign.";
+		next;
+		mes "[Barget Tiblack]";
+		mes "If it weren't two of you, I could have pulled all my hair out in frustration.";
+		mes "Good job, you guys!";
+		getexp 0,1500000;
+		completequest 11362;// Antidote
+		ep14_3_dimensional_travel = 17;
+		close;
+	}
+	mes "[Barget Tiblack]";
+	mes "Those who we gave the first batch of the vaccine already left to the cave.";
+	mes "We haven't heard from them yet. I'd like to believe it's a good sign.";
+	next;
+	mes "[Barget Tiblack]";
+	mes "If it weren't two of you, I could have pulled all my hair out in frustration.";
+	mes "Good job, you guys!";
+	close;
+}
+
+moro_vol,101,74,4	script	Patient#ep14bs2	4_F_FAIRYKID6,{
+	mes "[Patient]";
+	mes "*Moan*";
+	close;
+}
+
+moro_vol,101,72,4	script	Patient#ep14bs1	4_M_PATIENT,{
+	mes "[Patient]";
+	mes "Ugh...";
+	close;
+}
+
+moro_vol,103,71,6	script	Patient#ep14bs3	4_F_PATIENT,{
+	mes "[Patient]";
+	mes "*Groan*";
+	close;
+}
+
+moro_vol,106,69,4	script	Patient#ep14bs4	4_M_PATIENT,{
+	mes "[Patient]";
+	mes "Aww... Ugh...";
+	close;
+}
+
+moro_vol,104,70,4	script	Intoxicated Patient#ep1	4_M_LIEMAN,{
+	if (ep14_3_dimensional_travel == 14) {
+		mes "[Poisoned Patient]";
+		mes "Ugh...";
+		next;
+		mes "- You feed him a Sonia stem. The color instantly returns to his face. -";
+		erasequest 11360;// Antidote
+		setquest 11361;// Antidote
+		ep14_3_dimensional_travel = 15;
+		close;
+	}
+	if (ep14_3_dimensional_travel == 15) {
+		mes "[Poisoned Patient]";
+		mes "Ugh...";
+		next;
+		mes "- You feed him a Sonia stem. The color instantly returns to his face. -";
+		mes "- Talk to Instructor Rugen. -";
+		close;
+	}
+	mes "[Poisoned Patient]";
+	mes "Ugh...";
+	close;
+}
+
+moro_vol,105,71,5	script	Instructor Rugen#ep14bs	4_M_YOUNGKNIGHT,{
+	if (ep14_3_dimensional_travel < 13) {
+		mes "[Instructor Rugen]";
+		mes "Phew...";
+		mes "Why were you so reckless?";
+		next;
+		mes "[Instructor Rugen]";
+		mes "Is this worth it?";
+		mes "...";
+		close;
+	}
+	if (ep14_3_dimensional_travel == 13) {
+		mes "[Instructor Rugen]";
+		mes "Phew...";
+		mes "Why were you so reckless?";
+		next;
+		mes "[Instructor Rugen]";
+		mes "Is this worth it?";
+		mes "...";
+		next;
+		if (select( "Talk to him.", "No, he looks too upset to talk." ) == 2) {
+			mes "[Instructor Rugen]";
+			mes "Sigh...";
+			mes "This is just...";
+			close;
+		}
+		mes "[Instructor Rugen]";
+		mes "How may I help you?";
+		mes "If you're seeking medical assistance, then please describe your symptoms at the reception desk and wait until help arrives.";
+		next;
+		select("Give Sonia stems.");
+		if (countitem(6690) < 25) {
+			mes "[Instructor Rugen]";
+			mes "These aren't enough.";
+			mes "Could you check the number of your Sonia stems?";
+			close;
+		}
+		mes "[Instructor Rugen]";
+		mes "Are you serious?";
+		mes "Dr. Tiblack sent you, so I should believe you.";
+		mes "I'll feed these to the patients.";
+		delitem 6690,25;// Yummy Stem
+		erasequest 11359;// Antidote
+		setquest 11360;// Antidote
+		ep14_3_dimensional_travel = 14;
+		close;
+	}
+	if (ep14_3_dimensional_travel == 14) {
+		mes "[Instructor Rugen]";
+		mes "Are you serious?";
+		mes "Dr. Tiblack sent you, so I should believe you.";
+		mes "I'll feed these to the patients.";
+		close;
+	}
+	if (ep14_3_dimensional_travel == 15) {
+		mes "[Instructor Rugen]";
+		mes "Oh!";
+		mes "Otto!";
+		mes "Can you see me?";
+		next;
+		mes "[Otto]";
+		mes "Ugh...";
+		next;
+		mes "[Instructor Rugen]";
+		mes "Oh!";
+		mes "It worked!";
+		next;
+		mes "[Instructor Rugen]";
+		mes "The patients are showing remarkable improvements, though they need to stay in bed for now.";
+		mes "I'll feed the stems to the most critical patients, and wait for Dr. Tiblack to finish her research.";
+		next;
+		mes "[Instructor Rugen]";
+		mes "I'll give you a report on the patients' responses to the stem. Please bring the report to ^0000FFDr. Tiblack^000000.";
+		mes "Hah hah.";
+		mes "It worked!";
+		erasequest 11361;// Antidote
+		setquest 11362;// Antidote
+		ep14_3_dimensional_travel = 16;
+		close;
+	}
+	if (ep14_3_dimensional_travel == 16) {
+		mes "[Instructor Rugen]";
+		mes "The patients are showing remarkable improvements, though they need to stay in bed for now.";
+		mes "I'll feed the stems to the most critical patients, and wait for Dr. Tiblack to finish her research.";
+		next;
+		mes "[Instructor Rugen]";
+		mes "I'll give you a report on the patients' responses to the stem. Please bring the report to ^0000FFDr. Tiblack^000000.";
+		mes "Hah hah.";
+		mes "It worked!";
+		close;
+	}
+	mes "[Instructor Rugen]";
+	mes "I'm glad that the research resulted in our favor.";
+	mes "My comrades are well on their way to a full recovery.";
+	mes "Thank to you.";
+	close;
+}
+
+// Flame Cave entrance
+moro_vol,198,179,4	script	Tamarin#ep14bs_st	4_M_TAMARIN,{
+	if (ep14_3_dimensional_travel < 11) {
+		mes "[Tamarin]";
+		mes "Hm...";
+		mes "We don't have time for this!";
+		cutin "ep143_taang.bmp",2;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 11) {
+		if (countitem(6690) < 25 || checkquest(11357,HUNTING) != 2) {
+			mes "[Tamarin]";
+			mes "^0000FFWhen you collect 25 Sonia stems, meet me here^000000.";
+			cutin "ep143_tasta.bmp",2;
+			close3;
+		}
+		mes "[Tamarin]";
+		mes "I don't remember this rock was so big.";
+		mes "Or seeing these strange things around it.";
+		mes "I also smell ^0000FFsmoke^000000.";
+		cutin "ep143_tahuk.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "Again,";
+		mes "I don't remember seeing ^0000FFso many strange animals and plants^000000 either.";
+		mes "These are Sonias, right? They weren't so many before.";
+		next;
+		mes "[Tamarin]";
+		mes "If they were, I wouldn't have had to starve.";
+		mes "Sonias were the most delicious and least toxic among all the plants I tried.";
+		cutin "ep143_taang.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "" + strcharinfo(0) + ", do you want to taste it?";
+		mes "I brought a few stems for memories' sake.";
+		cutin "ep143_tasmi.bmp",2;
+		next;
+		cutin "",255;
+		mes "- Taste of Sonia -";
+		mes "Its thick, tongue-warming sap fills your mouth with delicious aroma.";
+		next;
+		mes "[Tamarin]";
+		mes "What do you think?";
+		mes "Delicious, huh?";
+		cutin "ep143_tahuk.bmp",2;
+		next;
+		mes "[Tamarin]";
+		mes "I've got only a few left. Let's take turns to gather some more.";
+		cutin "ep143_tasmi.bmp",2;
+		erasequest 11357;// Specimen Collection
+		setquest 11358;// Specimen Collection
+		ep14_3_dimensional_travel = 12;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 12) {
+		mes "[Tamarin]";
+		mes "I've got only a few left. Let's take turns to gather some more.";
+		cutin "ep143_tasmi.bmp",2;
+		close3;
+	}
+	if (ep14_3_dimensional_travel < 16) {
+		mes "[Tamarin]";
+		mes "Come on,";
+		mes "hurry over to ^0000FFInstructor Rugen^000000!";
+		cutin "ep143_tahuk.bmp",2;
+		close3;
+	}
+	if (ep14_3_dimensional_travel == 16) {
+		mes "[Tamarin]";
+		mes "Thank the gods, who knew that thing I ate out of hunger would save me?";
+		mes "Let's report to Barget.";
+		cutin "ep143_tahuk.bmp",2;
+		close3;
+	}
+	mes "[Tamarin]";
+	mes "Arrgh!";
+	mes "" + strcharinfo(0) + " get in there before everyone else explores it!";
+	cutin "ep143_tahuk.bmp",2;
+	next;
+	if (select( "Enter.", "Quit." ) == 2) {
+		mes "[Tamarin]";
+		mes "Ah...";
+		cutin "ep143_taang.bmp",2;
+		close3;
+	}
+	mes "[Tamarin]";
+	mes "The floor is dark. Watch your step!";
+	close2;
+	warp "moro_cav",40,50;
+	end;
+}
+
+// Others
+ecl_in01,44,99,1	script	Combat Laphine#143_4	4_M_FAIRYSOLDIER2,{
+	mes "[Combat Laphine]";
+	mes "I'm nervous.";
+	close;
+}
+
+ecl_in01,46,99,1	script	Combat Laphine#143_5	4_M_FAIRYSOLDIER2,{
+	mes "[Combat Laphine]";
+	mes "I hope I can return in one piece.";
+	close;
+}
+
+ecl_in01,48,99,1	script	Combat Laphine#143_6	4_M_FAIRYSOLDIER2,{
+	mes "[Combat Laphine]";
+	mes "Hmm...";
+	close;
+}
+ecl_in01,44,97,1	script	Combat Laphine#143_7	4_F_FAIRYSOLDIER,{
+	mes "[Combat Laphine]";
+	mes "Shush.";
+	close;
+}
+
+ecl_in01,46,97,1	script	Combat Laphine#143_8	4_F_FAIRYSOLDIER,{
+	mes "[Combat Laphine]";
+	mes "Mwa hah hah, it's time for me to shine!";
+	close;
+}
+
+ecl_in01,48,97,1	script	Combat Laphine#143_9	4_F_FAIRYSOLDIER,{
+	mes "[Combat Laphine]";
+	mes "I must have been out of my mind when I decided to join the army. Sigh, why does the Door to Verities have to be so high up there?";
+	close;
+}
+
+ecl_in01,46,102,3	script	Commander Laphine#143_1	4_M_FAIRYSOLDIER,5,5,{
+	mes "[Commander Laphine]";
+	mes "Evil must be nipped in the butt.";
+	mes "You're unexpected visitors from the Midgard Continent.";
+	next;
+	mes "[Commander Laphine]";
+	mes "If you  are the cause doom to ourselves OR Yggdrasil, then we won't hesitate to fight you.";
+	close;
+
+OnTouch_:
+	if (.talk == 0) {
+		.talk = 1;
+		npctalk "Commander: Soldiers, finally it's time to put your training to use!";
+		sleep 2000;
+		npctalk "Argh!", "Combat Laphine#143_4";
+		npctalk "Argh!", "Combat Laphine#143_5";
+		npctalk "Argh!", "Combat Laphine#143_6";
+		npctalk "Ah!", "Combat Laphine#143_7";
+		npctalk "Argh!", "Combat Laphine#143_8";
+		npctalk "Argh!", "Combat Laphine#143_9";
+		sleep 2000;
+		npctalk "Commander: Did someone just whimper?";
+		sleep 3000;
+		npctalk "Commander: Don't disappoint your comrades at the Splendide advance base!";
+		sleep 3000;
+		npctalk "Commander: Stay focused! We're going to finish off the Demon God!";
+		sleep 2000;
+		npctalk "Yeah, yeah.", "Combat Laphine#143_7";
+		sleep 2000;
+		npctalk "...", "Combat Laphine#143_4";
+		npctalk "Ah...", "Combat Laphine#143_5";
+		npctalk "...", "Combat Laphine#143_6";
+		npctalk "...", "Combat Laphine#143_8";
+		sleep 3000;
+		npctalk "Commander: Ah, suddenly I can't see...";
+		.talk = 0;
+	}
+	end;
+}
+
+ecl_in01,37,90,3	script	Magic Scholar Lemony#14	4_F_FAIRY2,{
+	mes "[Lemony]";
+	mes "Did you read the latest issue of the Door to Verities magazine?";
+	mes "Was Avant's new teleporter really featured in it?";
+	next;
+	mes "[Armandi]";
+	mes "Yes, just the basic principles and the information relevant to the Humans.";
+	mes "I didn't quite understand it all.";
+	next;
+	mes "[Lemony]";
+	mes "I wonder if this means Avant has finally decided to pursue his interest in research activities.";
+	next;
+	mes "[Lemony]";
+	mes "Hey, Human.";
+	mes "Were you eavesdropping on us? Well, though it wasn't like we're discussing secrets.";
+	next;
+	mes "[Lemony]";
+	mes "Oh, right. Are you too going there?";
+	mes "You know, the hideout of the Demon God who created some of the Space Time Dimensional Cracks has recently been discovered.";
+	next;
+	mes "[Lemony]";
+	mes "If you're curious, then use that teleporter to the hideout over there.";
+	mes "There will be quite a spectacle to watch.";
+	mes "Oh, just so you know, you might be throwing away your life. *Giggle*";
+	next;
+	mes "[Armandi]";
+	mes "Lemony, you really need to work on improving your personality.";
+	mes "Tsk, tsk.";
+	close;
+}
+
+ecl_in01,35,89,6	script	Magic Scholar Armandi#1	4_M_FAIRYKID6,{
+	mes "[Armandi]";
+	mes "I hope the Interdimensional Device won't take a heavy toll on the world.";
+	mes "By the way, Avant never fails to amaze me.";
+	next;
+	mes "[Lemony]";
+	mes "Ack, I hate that guy.";
+	next;
+	mes "[Armandi]";
+	mes "Avant may be repulsive,";
+	mes "but he's the best at what he does.";
+	next;
+	mes "[Lemony]";
+	mes "That, I agree.";
+	mes "Only he could pull off this kind of teleporter.";
+	mes "Why is he helping the Mayor, anyway?";
+	next;
+	mes "[Armandi]";
+	mes "When I asked him, he mumbled something about repentance.";
+	mes "I can only guess it has something to do with the Mayor's birth.";
+	next;
+	mes "[Armandi]";
+	mes "I wanted to ask more, but he looked down his nose at me.";
+	mes "Sigh, it's unfair such a jerk is considered the best in magical science.";
+	next;
+	mes "[Lemony]";
+	mes "You can always study hard to beat him.";
+	close;
+}
+
+// Warps
+moro_cav,64,13,0	warp	#flame_cave_out	3,3,moro_vol,198,176
+
+// Merchants
+moro_vol,95,96,6	shop	Tool Merchant	4_CAT_DOWN,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,601:-1,602:-1,1065:-1,1750:-1
+
+// Placeholder (unknown scripts)
+// ecl_in01,47,92,0	script	#ecl_buff_N	HIDDEN_WARP_NPC
+// ecl_in01,48,44,0	script	#ecl_buff_S	HIDDEN_WARP_NPC
+// ecl_in01,23,68,0	script	#ecl_buff_W	HIDDEN_WARP_NPC
+// ecl_in01,48,67,0	script	#ecl_orb_buff	HIDDEN_WARP_NPC
+// ecl_in01,71,67,0	script	#ecl_buff_E	HIDDEN_WARP_NPC
+// ecl_in01,47,27,0	script	#mgate03	HIDDEN_WARP_NPC

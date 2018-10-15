@@ -105,7 +105,8 @@
 		break;
 	}
 
-	setarray .@equip_card[0], getequipcardid(.@equip_num,0),getequipcardid(.@equip_num,1),getequipcardid(.@equip_num,2),getequipcardid(.@equip_num,3);
+	setarray .@check_equip_card[0], getequipcardid(.@equip_num,0),getequipcardid(.@equip_num,1),getequipcardid(.@equip_num,2),getequipcardid(.@equip_num,3);
+	setarray .@equip_card[0], .@check_equip_card[0], .@check_equip_card[1], .@check_equip_card[2], .@check_equip_card[3];
 	set .@mvp_list$,
 		"|4408|4128|4456|4168|4142"+  //Gloom_Under_Night_Card, Golden_Bug_Card, Nidhogg_Shadow_Card, Dark_Lord_Card, Doppelganger_Card
 		"|4134|4137|4386|4407|4357"+  //Dracula_Card, Drake_Card, Detale_Card, Randgris_Card, B_Seyren_Card
@@ -118,9 +119,9 @@
 		"|4363|4324|4361|4330|4342|"; //B_Magaleta_Card, Garm_Card, B_Harword_Card, Dark_Snake_Lord_Card, Rsx_0806_Card
 
 	if (.@Jeremy) {
-		for(set .@i,0; .@i<4; set .@i,.@i+1) {
-			if (.@equip_card[.@i] >= 4700) // Armor Enchant System
-				set .@equip_card[.@i],0;
+		for ( .@i = 0; .@i < MAX_SLOTS; .@i++ ) {
+			if (callfunc("F_IsCharm",.@equip_card[.@i]) == true)
+				.@equip_card[.@i] = 0;// Armor Enchant System
 		}
 		if (!getarraysize(.@equip_card)) {
 			mes .@n$;
@@ -136,7 +137,7 @@
 		// Official "Richard" script uses a hardcoded list including every possible item.
 		//if (!getequipisequiped(.@equip_num)) {
 		//	mes "[Richard]";
-		//	mes "I'm sorry. We don't provide that equipmnet yet.";
+		//	mes "I'm sorry. We don't provide that equipment yet.";
 		//	close;
 		//}
 
@@ -144,11 +145,12 @@
 		mes "Which number socket do you want to separate the card? From the left socket, they are sorted 1,2,3,4.";
 		next;
 		set .@menu$,"";
-		for(set .@i,0; .@i<4; set .@i,.@i+1) {
-			if (.@equip_card[.@i] && .@equip_card[.@i] < 4700) // Armor Enchant System
-				set .@menu$, .@menu$+"Socket "+(.@i+1)+" - "+getitemname(.@equip_card[.@i])+":";
-			else
-				set .@menu$, .@menu$+"^777777Socket "+(.@i+1)+" - No card^000000:";
+		for ( .@i = 0; .@i < MAX_SLOTS; .@i++ ) {
+			if (.@equip_card[.@i] && callfunc("F_IsCharm",.@equip_card[.@i]) == false) // Armor Enchant System
+				.@menu$ = .@menu$ + "Socket " + (.@i+1) + " - " + getitemname(.@equip_card[.@i])+":";
+			else {
+				.@menu$ = .@menu$ + "^777777Socket " + (.@i+1) + " - No card^000000:";
+			}
 		}
 		set .@i, select("Stop the work:"+.@menu$);
 		switch(.@i) {
@@ -158,7 +160,7 @@
 			close;
 		default:
 			set .@slot, .@i-2;
-			if (.@equip_card[.@slot] == 0 || .@equip_card[.@slot] >= 4700) {
+			if (.@equip_card[.@slot] == 0 || callfunc("F_IsCharm",.@equip_card[.@slot]) == true) {
 				mes .@n$;
 				mes "This socket is not equipped with any card. Why don't you check again?";
 				close;
@@ -287,7 +289,7 @@
 	set .@equip_refine, getequiprefinerycnt(.@equip_num);
 
 	// anti-hack
-	if (callfunc("F_IsEquipCardHack", .@equip_num, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
+	if (callfunc("F_IsEquipCardHack", .@equip_num, .@check_equip_card[0], .@check_equip_card[1], .@check_equip_card[2], .@check_equip_card[3]))
 		close;
 
 	delequip .@equip_num;
@@ -314,12 +316,12 @@
 		}
 	} else {
 		set .@card, .@equip_card[.@slot];
-		set .@equip_card[.@slot],0;
+		set .@check_equip_card[.@slot],0;
 
-		// Chance of retaining equipment.
+		// Chance of retaining equipment (all enchantments are preserved).
 		if (rand(1,.@sf_w_num) < 61) {
 			set .@equip_safe,1;
-			getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
+			getitem2 .@equip_id,1,1,.@equip_refine,0,.@check_equip_card[0],.@check_equip_card[1],.@check_equip_card[2],.@check_equip_card[3];
 		}
 
 		// Chance of retaining card.

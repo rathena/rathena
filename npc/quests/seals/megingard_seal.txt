@@ -22,9 +22,10 @@
 //= 2.0 Updated RE/Pre-RE EXP. [Euphy]
 //= 2.1 Fixed minor bug with the Librarian Jekan
 //= 2.2 Renewal script update. [Euphy]
+//= 2.3 Renewal script update for ep16.1 [Capuche]
 //============================================================
 
-prt_castle,44,151,0	script	Rebarev Doug	56,{
+-	script	Rebarev Doug_	-1,{
 	if (checkweight(1301,3) == 0) {
 		mes "- You are carrying too many items! -";
 		close;
@@ -538,7 +539,7 @@ prt_castle,44,151,0	script	Rebarev Doug	56,{
 	end;
 }
 
-prt_castle,48,164,0	script	Crusader#God	734,{
+-	script	Crusader#God_	-1,{
 	if ($God1 >= $@god_check1 && $God2 < $@god_check2) {
 		if (god_eremes > 22 && god_eremes < 25) {
 			mes "[Max Von Shedough]";
@@ -2031,7 +2032,7 @@ in_rogue,243,61,0	script	Suspicious Man#megin	748,{
 					else if (countitem(743) > 0) {
 						set .@toy$,"Spore Doll";
 					}
-					else if (countitem(744) > 0) {
+					else if (countitem(750) > 0) {
 						set .@toy$,"Baphomet Doll";
 					}
 					else if (countitem(751) > 0) {

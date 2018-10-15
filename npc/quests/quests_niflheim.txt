@@ -310,7 +310,7 @@ prt_in,161,20,3	script	Erious#nif	92,{
 		mes "*Cries* Wahhh...!";
 		mes "Elly, how could you";
 		mes "leave me this way...";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		if (select("Comfort him.:Neglect him.") == 1) {
 			mes "[Erious]";
@@ -515,7 +515,7 @@ umbala,215,181,3	script	Billik	733,{
 		mes "future, let's meet in the";
 		mes "town of the dead later.";
 		mes "Hahahaha~";
-		emotion e_no1;
+		emotion ET_BEST;
 		close;
 	}
 	if (nif_revive == 1) {
@@ -595,7 +595,7 @@ niflheim,153,215,3	script	Feylin	794,{
 		mes "come to the wrong person.";
 		next;
 		mes "[Feylin]";
-		mes "Nobody in Niffelheim can";
+		mes "Nobody in Niflheim can";
 		mes "perform that kind of miracle...";
 		next;
 		mes "[Feylin]";
@@ -614,7 +614,7 @@ niflheim,153,215,3	script	Feylin	794,{
 		mes "town immediately. I'm sorry";
 		mes "but I know nothing about what";
 		mes "you are asking.";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		if (select("But...:I am sorry.") == 1) {
 			mes "[Feylin]";
@@ -680,7 +680,7 @@ niflheim,153,215,3	script	Feylin	794,{
 								mes "I have failed to summon";
 								mes "who you wish to see. I am";
 								mes "really sorry for this result.";
-								emotion e_omg;
+								emotion ET_HUK;
 								delitem 748,1; //Witherless_Rose
 								delitem 610,10; //Leaf_Of_Yggdrasil
 								set nif_revive,5;

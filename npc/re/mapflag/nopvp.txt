@@ -28,11 +28,42 @@
 1@def01	mapflag	pvp	off
 1@def02	mapflag	pvp	off
 1@def03	mapflag	pvp	off
-1@gef	mapflag	pvp	off
+
+// Heroes' Trail - Part 1 ========
 1@face	mapflag	pvp	off
 1@sara	mapflag	pvp	off
+
+// Heroes' Trail - Part 2 ========
+1@ge_st	mapflag	pvp	off
+1@gef	mapflag	pvp	off
 1@gef_in	mapflag	pvp	off
+1@spa	mapflag	pvp	off
+1@tnm1	mapflag	pvp	off
+1@tnm2	mapflag	pvp	off
+1@tnm3	mapflag	pvp	off
+
+// Horror Toy Factory Memorial Dungeon
 1@xm_d	mapflag	pvp	off
+
+// Heroes' Trail - Part 3 ========
+1@glast	mapflag	pvp	off
+1@air1	mapflag	pvp	off
+1@air2	mapflag	pvp	off
+
+// Decisive Battle - Part 1 ======
+1@dth1	mapflag	pvp	off
+1@dth2	mapflag	pvp	off
+1@dth3	mapflag	pvp	off
+1@rev	mapflag	pvp	off
+
+// Decisive Battle - Part 2 ======
+1@eom	mapflag	pvp	off
+1@jtb	mapflag	pvp	off
+
+// Episode 15 - Phantasmagorica
+1@lab	mapflag	pvp	off
+1@uns	mapflag	pvp	off
+1@mcd	mapflag	pvp	off
 
 // Cities ========================
 moc_para01	mapflag	pvp	off

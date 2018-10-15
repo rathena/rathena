@@ -27,9 +27,10 @@
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.8 Renamed the variable cooking to cooking_q [ultramage]
 //= 1.8a Minor cleaning. [Euphy]
+//= 1.9 Renewal script update for ep16.1 [Capuche]
 //============================================================ 
 
-prt_castle,43,30,3	script	Charles Orleans#cook	878,{
+-	script	Charles Orleans#cook_	-1,{
 	if (MaxWeight - Weight < 2000) {
 		mes "[Charles Orleans]";
 		mes "Just one second.";
@@ -52,7 +53,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 			mes "kitchen, then I'd like to";
 			mes "ask you to leave now.";
 			next;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Charles Orleans]";
 			mes "Please don't be";
 			mes "offended, but I can't";
@@ -82,7 +83,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 	else if (getequipid(EQI_HEAD_TOP) != 5026) {
 		if (Sex == SEX_MALE) {
 			cutin "orleans_5",0;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Charles Orleans]";
 			mes "Monsieur, why you look";
 			mes "at me so? Is it the Morroc";
@@ -138,14 +139,14 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		switch(select("......?:She is my sister:Actually, I don't know her.")) {
 		case 1:
 			cutin "nyuang_3",2;
-			emotion e_ho,0,"Child with Cat#cook";
+			emotion ET_DELIGHT, getnpcid(0, "Child with Cat#cook");
 			mes "[The kid with a cat]";
 			mes "Nyahahaha,";
 			mes "Nyahahaha~";
 			mes "Meow~ Meow~";
 			next;
 			cutin "orleans_2",0;
-			emotion e_heh;
+			emotion ET_SMILE;
 			mes "[Charles Orleans]";
 			mes "What a lovely child.";
 			mes "Be quiet like a good girl.";
@@ -153,13 +154,13 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 			break;
 		case 2:
 			cutin "nyuang_1",2;
-			emotion e_what,0,"Child with Cat#cook";
+			emotion ET_QUESTION, getnpcid(0, "Child with Cat#cook");
 			mes "[Child with Cat]";
 			mes "...Nya?";
 			mes "...Meow?";
 			next;
 			cutin "orleans_2",0;
-			emotion e_lv2;
+			emotion ET_BIGTHROB;
 			mes "[Charles Orleans]";
 			mes "She is lovely and";
 			mes "quite although she";
@@ -168,7 +169,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 			break;
 		case 3:
 			cutin "nyuang_2",2;
-			emotion e_pif,0,"Child with Cat#cook";
+			emotion ET_HNG, getnpcid(0, "Child with Cat#cook");
 			mes "[Child with Cat]";
 			mes "Nyahahaha,";
 			mes "Nyahahaha~";
@@ -176,7 +177,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 			next;
 			cutin "orleans_4",0;
 			cutin "orleans_3",0;
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			mes "[Charles Orleans]";
 			mes "Ah, again, let me";
 			mes "apologize. I had believed";
@@ -232,7 +233,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 	}
 	else if (cooking_q == 0) {
 		cutin "orleans_5",0;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Charles Orleans]";
 		mes "Oh, have you come here";
 		mes "to learn cooking? ^333333*Sigh*^000000";
@@ -259,7 +260,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 			next;
 			cutin "orleans_4",0;
 			cutin "orleans_3",0;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "[Charles Orleans]";
 			mes "Goodness, you scared me!";
 			mes "What an ill natured kid!";
@@ -423,7 +424,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 	else if (cooking_q == 1) {
 		if (countitem(940) > 4 && countitem(7031) > 0 && countitem(7457) > 0) {
 			cutin "orleans_4",0;
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Charles Orleans]";
 			mes "Finally, you're here! Never";
 			mes "forget: your ingredients must";
@@ -828,7 +829,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		next;
 		switch(select("What's your name, kid?:Do you want to eat something?:Here, kitty~:Get out!")) {
 		case 1:
-			emotion e_ok,0,"Child with Cat#cook";
+			emotion ET_OK, getnpcid(0, "Child with Cat#cook");
 			mes "[Child with Cat]";
 			mes "Nyaaa~";
 			mes "nyaaa~";
@@ -842,7 +843,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 			goto L_End;
 		case 2:
 			cutin "nyuang_2",2;
-			emotion e_pif,0,"Child with Cat#cook";
+			emotion ET_HNG, getnpcid(0, "Child with Cat#cook");
 			mes "[Child with Cat]";
 			mes "Nyaaaa~";
 			mes "(Purrrrrr~)";
@@ -858,7 +859,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 			goto L_End;
 		case 3:
 			cutin "nyuang_3",2;
-			emotion e_heh,0,"Child with Cat#cook";
+			emotion ET_SMILE, getnpcid(0, "Child with Cat#cook");
 			mes "[Child with Cat]";
 			mes "Nyahahaha~";
 			mes "Nyhhahaha~";
@@ -870,13 +871,13 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 			mes "...Then I don't need you to be here.";
 			goto L_End;
 		case 4:
-			emotion e_dots,0,"Child with Cat#cook";
+			emotion ET_THINK, getnpcid(0, "Child with Cat#cook");
 			mes "[Child with Cat]";
 			mes "...";
 			mes "(Meow?)";
 			next;
 			cutin "nyuang_4",2;
-			emotion e_an,0,"Child with Cat#cook";
+			emotion ET_FRET, getnpcid(0, "Child with Cat#cook");
 			specialeffect2 EF_HIT2;
 			percentheal -10,0;
 			mes "[Child with Cat]";
@@ -894,7 +895,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 	}
 	else if (cooking_q == 9) {
 		cutin "orleans_5",0;
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Charles Orleans]";
 		mes "Alright, enough";
 		mes "is enough. We can't";
@@ -913,14 +914,14 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		mes "or shed on any of the food!";
 		next;
 		cutin "nyuang_4",2;
-		emotion e_an,0,"Child with Cat#cook";
+		emotion ET_FRET, getnpcid(0, "Child with Cat#cook");
 		mes "[Child with Cat]";
 		mes "Grrrrrrr!";
 		mes "RRRRreow!";
 		next;
 		donpcevent "Wickebine#cook::OnEnable";
-		emotion e_omg;
-		emotion e_ho,0,"Child with Cat#cook";
+		emotion ET_HUK;
+		emotion ET_DELIGHT, getnpcid(0, "Child with Cat#cook");
 		next;
 		cutin "job_black_hucke01",1;
 		mes "[Wickebine]";
@@ -948,7 +949,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		mes "bothering Charles, Nyuyang?";
 		next;
 		cutin "nyuang_3",2;
-		emotion e_heh,0,"Child with Cat#cook";
+		emotion ET_SMILE, getnpcid(0, "Child with Cat#cook");
 		mes "[Child with Cat]";
 		mes "Nyuuuunyuuu~";
 		mes "nyuuuunyuuu~";
@@ -966,7 +967,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		mes "wants you to leave?";
 		next;
 		cutin "orleans_3",0;
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Charles Orleans]";
 		mes "Hahahahah, what";
 		mes "are you talking about!";
@@ -984,7 +985,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		mes "So do not worry, Madam~";
 		next;
 		cutin "job_black_hucke01",1;
-		emotion e_what,0,"Wickebine#cook";
+		emotion ET_QUESTION, getnpcid(0, "Wickebine#cook");
 		mes "[Wickebine]";
 		mes "Are you sure, Charles?";
 		mes "I know how serious you";
@@ -1001,18 +1002,18 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		mes "Well then, take care~";
 		next;
 		cutin "nyuang_3",2;
-		emotion e_heh,0,"Child with Cat#cook";
+		emotion ET_SMILE, getnpcid(0, "Child with Cat#cook");
 		mes "[Child with Cat]";
 		mes "Nyahahaha~";
 		mes "Nyahahaha~";
 		mes "(Meow, meow~)";
 		next;
 		cutin "job_black_hucke02",255;
-		emotion e_ho,0,"Wickebine#cook";
+		emotion ET_DELIGHT, getnpcid(0, "Wickebine#cook");
 		donpcevent "Wickebine#cook::OnDisable";
 		next;
-		emotion e_dots;
-		emotion e_dots,0,"Child with Cat#cook";
+		emotion ET_THINK;
+		emotion ET_THINK, getnpcid(0, "Child with Cat#cook");
 		mes "[Charles Orleans]";
 		mes "......";
 		next;
@@ -1058,7 +1059,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 		mes "suggests that he is hiding";
 		mes "in the Schwaltzvalt Republic...";
 		next;
-		emotion e_go;
+		emotion ET_GO;
 		mes "[Charles Orleans]";
 		mes "Praise the glories of the";
 		mes "Rune-Midgarts Kingdom!";
@@ -1067,7 +1068,7 @@ prt_castle,43,30,3	script	Charles Orleans#cook	878,{
 	}
 	else if (cooking_q == 11) {
 		cutin "orleans_5",0;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Charles Orleans]";
 		mes "Oh, I'm in great need of";
 		mes "some rest. Unless you ";
@@ -1480,7 +1481,7 @@ L_End:
 	end;
 }
 
-prt_castle,45,35,5	script	Madeleine Chu#cook	886,{
+-	script	Madeleine Chu#cook_	-1,{
 	if (MaxWeight - Weight < 2000) {
 		mes "[Madeleine Chu]";
 		mes "I'm sorry, but right now";
@@ -2120,11 +2121,11 @@ S_SellSets:
 	return;
 }
 
-prt_castle,45,28,3	script	Child with Cat#cook	877,{
+-	script	Child with Cat#cook_	-1,{
 	set .@nyu,rand(1,2);
 	if (.@nyu == 1) {
 		cutin "nyuang_1",2;
-		emotion e_what;
+		emotion ET_QUESTION;
 		mes "[Child with Cat]";
 		mes "...Nya?";
 		mes "(...Meow?)";
@@ -2133,7 +2134,7 @@ prt_castle,45,28,3	script	Child with Cat#cook	877,{
 		end;
 	}
 	cutin "nyuang_3",2;
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	mes "[Child with Cat]";
 	mes "Nyahahahaha,";
 	mes "nyahahahaha~";
@@ -2143,7 +2144,7 @@ prt_castle,45,28,3	script	Child with Cat#cook	877,{
 	end;
 }
 
-prt_castle,44,30,5	script	Wickebine#cook	725,{
+-	script	Wickebine#cook_	-1,{
 	disablenpc "Wickebine#cook";
 	end;
 

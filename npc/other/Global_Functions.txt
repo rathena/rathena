@@ -1,14 +1,9 @@
 //===== rAthena Script ======================================= 
 //= Global Functions
-//===== By: ================================================== 
-//= Lupus, kobra_k88
-//===== Current Version: ===================================== 
-//= 2.25
-//===== Compatible With: ===================================== 
-//= rAthena Project
 //===== Description: ========================================= 
 //= General script functions.
 //===== Additional Comments: ================================= 
+//= 1.0 Initial script. [Lupus] [kobra_k88]
 //= Added F_ClearJobVar - on getting a new job it clears all Job Quest variables
 //= Removed individual job check functions as they were redundant [kobra_k88]
 //= 1.3 Added Job Change Function for Baby/Normal Classes
@@ -49,6 +44,8 @@
 //= 2.24 Added functions to check for equipment swap hacks. [Euphy]
 //= 2.25 Added "F_CanOpenStorage" and "F_CanChangeJob". [secretdataz]
 //= 2.26 Added "F_getpositionname". [Capuche]
+//= 2.27 Added "F_GetPlatinumSkills". [mazvi]
+//= 2.28 Added "close3". [Capuche]
 //============================================================ 
 
 //////////////////////////////////////////////////////////////////////////////////
@@ -165,9 +162,9 @@ function	script	F_Rand	{
 
 //////////////////////////////////////////////////////////////////////////////////
 // Returns 1st argument if female, 2nd argument if male.
-// -- callfunc "F_Sex",argFemale,argMale
+// -- callfunc "F_SexMes",argFemale,argMale
 // Example:
-//     mes callfunc("F_Sex","What a beautiful lady!","What a handsome man!");
+//     mes callfunc("F_SexMes","What a beautiful lady!","What a handsome man!");
 //////////////////////////////////////////////////////////////////////////////////
 function	script	F_SexMes	{
 	return getarg(Sex);
@@ -658,4 +655,115 @@ function	script	F_getpositionname	{
 		default:
 			return "Unknown";
 	}
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Gives attached player their Platinum Skill based on their class.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_GetPlatinumSkills	{
+	skill "NV_FIRSTAID",1,SKILL_PERM;
+	switch (BaseClass) {
+	case Job_Novice:
+		if (Class != Job_Super_Novice)
+			skill "NV_TRICKDEAD",1,SKILL_PERM;
+		break;
+	case Job_Swordman:
+		skill "SM_MOVINGRECOVERY",1,SKILL_PERM;
+		skill "SM_FATALBLOW",1,SKILL_PERM;
+		skill "SM_AUTOBERSERK",1,SKILL_PERM;
+		break;
+	case Job_Mage:
+		skill "MG_ENERGYCOAT",1,SKILL_PERM;
+		break;
+	case Job_Archer:
+		skill "AC_MAKINGARROW",1,SKILL_PERM;
+		skill "AC_CHARGEARROW",1,SKILL_PERM;
+		break;
+	case Job_Acolyte:
+		skill "AL_HOLYLIGHT",1,SKILL_PERM;
+		break;
+	case Job_Merchant:
+		skill "MC_CARTREVOLUTION",1,SKILL_PERM;
+		skill "MC_CHANGECART",1,SKILL_PERM;
+		skill "MC_LOUD",1,SKILL_PERM;
+		if(PACKETVER >= 20150826)
+			skill "MC_CARTDECORATE",1,SKILL_PERM;
+		break;
+	case Job_Thief:
+		skill "TF_SPRINKLESAND",1,SKILL_PERM;
+		skill "TF_BACKSLIDING",1,SKILL_PERM;
+		skill "TF_PICKSTONE",1,SKILL_PERM;
+		skill "TF_THROWSTONE",1,SKILL_PERM;
+		break;
+	default:
+		break;
+	}
+	switch (BaseJob) {
+	case Job_Knight:
+		skill "KN_CHARGEATK",1,SKILL_PERM;
+		break;
+	case Job_Priest:
+		skill "PR_REDEMPTIO",1,SKILL_PERM;
+		break;
+	case Job_Wizard:
+		skill "WZ_SIGHTBLASTER",1,SKILL_PERM;
+		break;
+	case Job_Blacksmith:
+		skill "BS_UNFAIRLYTRICK",1,SKILL_PERM;
+		skill "BS_GREED",1,SKILL_PERM;
+		break;
+	case Job_Hunter:
+		skill "HT_PHANTASMIC",1,SKILL_PERM;
+		break;
+	case Job_Assassin:
+		skill "AS_SONICACCEL",1,SKILL_PERM;
+		skill "AS_VENOMKNIFE",1,SKILL_PERM;
+		break;
+	case Job_Crusader:
+		skill "CR_SHRINK",1,SKILL_PERM;
+		break;
+	case Job_Monk:
+		skill "MO_KITRANSLATION",1,SKILL_PERM;
+		skill "MO_BALKYOUNG",1,SKILL_PERM;
+		break;
+	case Job_Sage:
+		skill "SA_CREATECON",1,SKILL_PERM;
+		skill "SA_ELEMENTWATER",1,SKILL_PERM;
+		skill "SA_ELEMENTGROUND",1,SKILL_PERM;
+		skill "SA_ELEMENTFIRE",1,SKILL_PERM;
+		skill "SA_ELEMENTWIND",1,SKILL_PERM;
+		break;
+	case Job_Rogue:
+		skill "RG_CLOSECONFINE",1,SKILL_PERM;
+		break;
+	case Job_Alchemist:
+		skill "AM_BIOETHICS",1,SKILL_PERM;
+		break;
+	case Job_Bard:
+		skill "BA_PANGVOICE",1,SKILL_PERM;
+		break;
+	case Job_Dancer:
+		skill "DC_WINKCHARM",1,SKILL_PERM;
+		break;
+	default:
+		break;
+	}
+	return;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Shortcut : close button and clear cutin.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	close3	{
+	close2;
+	cutin "",255;
+	end;
+}
+
+//////////////////////////////////////////////////////////////////////////////////
+// Return true if the card is a charm (enchant card), false otherwise.
+//////////////////////////////////////////////////////////////////////////////////
+function	script	F_IsCharm	{
+	.@id = getarg(0);
+	return ((.@id >= 4700 && .@id < 5000) || (.@id >= 29000 && .@id <= 29162));
 }

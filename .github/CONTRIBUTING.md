@@ -63,7 +63,7 @@ Suggesting Enhancements
 #### How to create Pull Requests :pencil:
 
 1. Make sure you have a [GitHub account](https://github.com/signup/free).
-2. Next, you will need to [fork rAthena](https://help.github.com/articles/fork-a-repo/#step-3-configure-git-to-sync-your-fork-with-the-original-spoon-knife-repository) to your account.
+2. Next, you will need to [fork rAthena](https://help.github.com/articles/fork-a-repo/#fork-an-example-repository) to your account.
 3. Before making changes, make sure you [create a new branch](https://help.github.com/articles/creating-and-deleting-branches-within-your-repository/) for your working tree.
 4. After completing your changes, commit and push it to your branch.
 5. Now you are ready to [create a Pull Request](https://help.github.com/articles/creating-a-pull-request/) for rAthena!
@@ -77,27 +77,31 @@ For the most part you as a user will have no reason to worry about the **Milesto
 
 :bangbang: Users should be aware of the 'Mode' and 'Status' Type **Labels** as these sometimes require feedback! :bangbang:
 
-#### Bug Type
+#### Component
 
 | Label Name | Search Link | Description |
 | --- | --- | --- |
-| `bug:core` | [search][search-rathena-label-bugcore] | A fault that lies within the main framework of rAthena. |
-| `bug:database` | [search][search-rathena-label-bugdatabase] | A fault that lies within the database of rAthena. |
-| `bug:documentation` | [search][search-rathena-label-bugdocumentation] | A fault that lies within the documentation of rAthena. |
-| `bug:forum` | [search][search-rathena-label-bugforum] | A fault that lies within the rAthena forum. |
-| `bug:script` | [search][search-rathena-label-bugscript] | A fault that lies within the scripts of rAthena. |
-| `bug:skill` | [search][search-rathena-label-bugskill] | A fault that deals specifically with a skill. |
-| `bug:tool` | [search][search-rathena-label-bugtool] | A fault that lies within a tool of rAthena. |
+| `component:core` | [search][search-rathena-label-componentcore] | A fault that lies within the main framework of rAthena. |
+| `component:database` | [search][search-rathena-label-componentdatabase] | A fault that lies within the database of rAthena. |
+| `component:documentation` | [search][search-rathena-label-componentdocumentation] | A fault that lies within the documentation of rAthena. |
+| `component:script` | [search][search-rathena-label-componentscript] | A fault that lies within the scripts of rAthena. |
+| `component:skill` | [search][search-rathena-label-componentskill] | A fault that deals specifically with a skill. |
+| `component:tool` | [search][search-rathena-label-componenttool] | A fault that lies within a tool of rAthena. |
 
-#### Mode Type
-
+#### Missing
 | Label Name | Search Link | Description |
 | --- | --- | --- |
-| `mode:missing` | [search][search-rathena-label-modemissing] | Issue **Title** or **Description** does not state pre-renewal or renewal mode. |
+| `missing:clientdate` | [search][search-rathena-label-missingclientdate] | Issue **Title** or **Description** does not state the client date used to create the bug. |
+| `missing:mode` | [search][search-rathena-label-missingmode] | Issue **Title** or **Description** does not state pre-renewal or renewal mode. |
+| `missing:revision` | [search][search-rathena-label-missingrevision] | Issue **Description** does not state the revision of rAthena used when the bug occurred. |
+
+#### Mode
+| Label Name | Search Link | Description |
+| --- | --- | --- |
 | `mode:prerenewal` | [search][search-rathena-label-modeprerenewal] | A fault that exists within the pre-renewal mode. |
 | `mode:renewal` | [search][search-rathena-label-moderenewal] | A fault that exists within the renewal mode. |
 
-#### Priority Type
+#### Priority
 
 | Label Name | Search Link | Description |
 | --- | --- | --- |
@@ -105,64 +109,65 @@ For the most part you as a user will have no reason to worry about the **Milesto
 | `priority:medium` | [search][search-rathena-label-prioritymedium] | A fault that makes rAthena have significant repercussions but does not render rAthena unusable. |
 | `priority:low` | [search][search-rathena-label-prioritylow] | A fault that affects rAthena in one piece of functionality and is self-contained. |
 
-#### Server Type
+#### Status
 
 | Label Name | Search Link | Description |
 | --- | --- | --- |
-| `server:login` | [search][search-rathena-label-serverlogin] | A fault that lies within the login server of rAthena. |
-| `server:char` | [search][search-rathena-label-serverchar] | A fault that lies within the character server of rAthena. |
-| `server:map` | [search][search-rathena-label-servermap] | A fault that lies within the map server of rAthena. |
-
-#### Status Type
-
-| Label Name | Search Link | Description |
-| --- | --- | --- |
-| `status:client date missing` | [search][search-rathena-label-statusclientdatemissing] | Issue **Title** or **Description** does not state the client date used to create the bug. |
+| `status:code-review` | [search][search-rathena-label-statuscodereview] | Pull Request that requires reviewing from other developers before being pushed to master. |
 | `status:confirmed` | [search][search-rathena-label-statusconfirmed] | Issue that has been validated by a developer to affect rAthena. |
 | `status:duplicate` | [search][search-rathena-label-statusduplicate] |  Issue that has been reported before. |
-| `status:git hash missing` | [search][search-rathena-label-statusgithashmissing] | Issue **Description** does not state the hash of rAthena used when the bug occurred. |
+| `status:inprogress` | [search][search-rathena-label-statusinprogress] | Issue that has begun resolution by a developer. |
 | `status:invalid` | [search][search-rathena-label-statusinvalid] | Issue that is either not official or is not related to rAthena. |
-| `status:needs more info` | [search][search-rathena-label-statusneedsmoreinfo] | Issue that needs more information from the issue creator. |
-| `status:needs official info` | [search][search-rathena-label-statusneedsofficialinfo] | Issue that needs more information from a creditable source. |
-| `status:started` | [search][search-rathena-label-statusstarted] | Issue that has begun resolution by a developer. |
+| `status:need more info` | [search][search-rathena-label-statusneedmoreinfo] | Issue that needs more information from a creditable source. |
+| `status:need user input` | [search][search-rathena-label-statusneeduserinput] | Issue that needs more information from the issue creator. |
+| `status:outdated emulator` | [search][search-rathena-label-statusoutdatedemulator] | Issue that requires the creator's local files to be updated to be resolved. |
 | `status:unable to reproduce` | [search][search-rathena-label-statusunabletoreproduce] | Issue that was unable to be reproduced on rAthena. |
 | `status:wontfix` | [search][search-rathena-label-statuswontfix] |  Issue that cannot be fixed through some limitation or is intended behavior. |
 
-[search-rathena-label-bugcore]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Abug%3Acore
-[search-rathena-label-bugdatabase]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Abug%3Adatabase
-[search-rathena-label-bugdocumentation]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Abug%3Adocumentation
-[search-rathena-label-bugforum]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Abug%3Aforum
-[search-rathena-label-bugscript]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Abug%3Ascript
-[search-rathena-label-bugskill]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Abug%3Askill
-[search-rathena-label-bugtool]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Abug%3Atool
-[search-rathena-label-modemissing]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Amode%3Amissing
+#### Type
+| Label Name | Search Link | Description |
+| --- | --- | --- |
+| `type:bug` | [search][search-rathena-label-typebug] | Issue that is a bug within rAthena. |
+| `type:enhancement` | [search][search-rathena-label-typeenhancement] | Issue that is an enhancement to rAthena. |
+| `type:maintenance` | [search][search-rathena-label-typemaintenance] | Issue for refactoring rAthena. |
+| `type:question` | [search][search-rathena-label-typequestion] | Issue that is a question for rAthena. |
+
+[search-rathena-label-componentcore]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%3Acore
+[search-rathena-label-componentdatabase]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%3Adatabase
+[search-rathena-label-componentdocumentation]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%3Adocumentation
+[search-rathena-label-componentscript]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%3Ascript
+[search-rathena-label-componentskill]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%3Askill
+[search-rathena-label-componenttool]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Acomponent%3Atool
+[search-rathena-label-missingclientdate]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Amissing%3Aclientdate
+[search-rathena-label-missingmode]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Amissing%3Amode
+[search-rathena-label-missingrevision]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Amissing%3Arevision
 [search-rathena-label-modeprerenewal]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Amode%3Aprerenewal
 [search-rathena-label-moderenewal]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Amode%3Arenewal
 [search-rathena-label-priorityhigh]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Apriority%3Ahigh
 [search-rathena-label-prioritymedium]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Apriority%3Amedium
 [search-rathena-label-prioritylow]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Apriority%3Alow
-[search-rathena-label-serverchar]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Aserver%3Achar
-[search-rathena-label-serverlogin]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Aserver%3Alogin
-[search-rathena-label-servermap]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Aserver%3Amap
-[search-rathena-label-statusclientdatemissing]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3A"status%3Aclient+date+missing"
+[search-rathena-label-statuscodereview]: https://github.com/rathena/rathena/pulls?q=is%3Apr+is%3Aopen+label%3Astatus%3Acode-review
 [search-rathena-label-statusconfirmed]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Aconfirmed
 [search-rathena-label-statusduplicate]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Aduplicate
-[search-rathena-label-statusgithashmissing]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3A"status%3Agit+hash+missing"
+[search-rathena-label-statusinprogress]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Ainprogress
 [search-rathena-label-statusinvalid]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Ainvalid
-[search-rathena-label-statusneedsmoreinfo]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3A"status%3Aneeds+more+info"
-[search-rathena-label-statusneedsofficialinfo]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3A"status%3Aneeds+official+info"
-[search-rathena-label-statusstarted]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Astarted
+[search-rathena-label-statusneedmoreinfo]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3A"status%3Aneed+more+info"
+[search-rathena-label-statusneeduserinput]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3A"status%3Aneed+user+input"
+[search-rathena-label-statusoutdatedemulator]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3A"status%3Aoutdated+emulator"
 [search-rathena-label-statusunabletoreproduce]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3A"status%3Aunable+to+reproduce"
 [search-rathena-label-statuswontfix]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Astatus%3Awontfix
+[search-rathena-label-typebug]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Abug
+[search-rathena-label-typeenhancement]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Aenhancement
+[search-rathena-label-typemaintenance]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Amaintenance
+[search-rathena-label-typequestion]: https://github.com/rathena/rathena/issues?q=is%3Aissue+is%3Aopen+label%3Atype%3Aquestion
 
 Become a Team Member
 --------------------
 
 1. Before you send in a staff application, make sure you have an [rAthena account](https://rathena.org/board/register/).
-  * If you are new to the community, go ahead and [introduce yourself](https://rathena.org/board/forum/89-introductions/)!
+    * If you are new to the community, go ahead and [introduce yourself](https://rathena.org/board/forum/89-introductions/)!
 2. Please fill out the [Staff Application](https://rathena.org/board/staffapplications/) and you will be notified shortly.
 
-<br />
 The rAthena team is comprised of all volunteers ([AUTHORS](https://github.com/rathena/rathena/blob/master/AUTHORS)). We encourage you to pitch in and submit bug reports or Pull Requests!
 
 Thanks!

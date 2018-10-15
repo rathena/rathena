@@ -27,6 +27,7 @@
 //= 3.7 Massive cleaning/optimization (more can still be done). [Euphy]
 //= 3.8 Corrected an invalid map name. [Joseph]
 //= 3.9 Updated RE/Pre-RE EXP. [Euphy]
+//= 4.0 Renewal script update for ep16.1 [Capuche]
 //============================================================ 
 
 // The Sign (Part 1)
@@ -1050,7 +1051,7 @@ prt_in,248,23,0	script	Maid#sign2	111,{
 		mes "so my body aches. Oh, what";
 		mes "am I saying? Please ignore";
 		mes "that--! Ho ho ho~";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 	else if (sign_q < 15) {
@@ -1066,7 +1067,7 @@ prt_in,248,23,0	script	Maid#sign2	111,{
 		mes "easily. Hmph, there's not";
 		mes "too many boys I like out";
 		mes "there, anyway.";
-		emotion e_pif;
+		emotion ET_HNG;
 		close;
 	}
 	else if (sign_q < 20) {
@@ -1093,7 +1094,7 @@ prt_in,248,23,0	script	Maid#sign2	111,{
 			mes "much! Ahhhhhhh~";
 			delitem 504,1; //White_Potion
 			close2;
-			emotion e_kis2;
+			emotion ET_CHUPCHUP;
 			end;
 		}
 		end;
@@ -1110,7 +1111,7 @@ prt_in,248,23,0	script	Maid#sign2	111,{
 		mes "be smarter than me,";
 		mes "but maybe I can become";
 		mes "more beautiful than her...";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	else if (sign_q < 35) {
@@ -1146,7 +1147,7 @@ prt_in,248,23,0	script	Maid#sign2	111,{
 		close;
 	}
 	else if (sign_q == 54) {
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		mes "La la la~~";
 		mes "Oh, hello.";
 		mes "Long time no see.";
@@ -1199,7 +1200,7 @@ prt_in,248,23,0	script	Maid#sign2	111,{
 		mes "visiting Master Metz.";
 		mes "Why can't they leave their";
 		mes "dirt outside of the manor?";
-		emotion e_pif;
+		emotion ET_HNG;
 		close;
 	}
 }
@@ -1212,7 +1213,7 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 		close;
 	}
 	if (sign_q < 3) {
-		emotion e_dots;
+		emotion ET_THINK;
 		end;
 	}
 	else if (sign_q == 3) {
@@ -1530,7 +1531,7 @@ morocc_in,115,154,5	script	Rogue#sign	810,{
 		mes "I'm thinking about";
 		mes "solving world hunger";
 		mes "here! Or somethin' like that.";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 }
@@ -1545,7 +1546,7 @@ morocc_in,114,162,4	script	Young Man#sign	118,{
 		mes "trying to live here. Do you";
 		mes "know a nice and cool place";
 		mes "where I can work?";
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		close;
 	}
 	else if (sign_q == 11) {
@@ -1768,7 +1769,7 @@ payon,154,170,3	script	Hagin#sign	78,{
 		mes "a flower's life is brief.";
 		mes "I better snag Daewoon";
 		mes "while I still can~";
-		emotion e_an;
+		emotion ET_FRET;
 		close;
 	}
 }
@@ -1907,7 +1908,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 			mes "you and reveal it to";
 			mes "Daewoon's roving eyes.^000000";
 			next;
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Daewoon]";
 			mes "Eh? Why that's...";
 			mes "I see now, Arian must";
@@ -1939,7 +1940,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 				case 1:
 					set .@pay_point,.@pay_point+2;
 					mes "[Daewoon]";
-					emotion e_dots;
+					emotion ET_THINK;
 					mes "Mmm...?";
 					mes "Handy? If you truly";
 					mes "understood, I don't";
@@ -1949,7 +1950,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 					break;
 				case 2:
 					set .@pay_point,.@pay_point+4;
-					emotion e_pif;
+					emotion ET_HNG;
 					mes "[Daewoon]";
 					mes "Really?";
 					mes "Mm. At least you";
@@ -1960,7 +1961,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 				break;
 			case 2:
 				mes "[Daewoon]";
-				emotion e_dots;
+				emotion ET_THINK;
 				mes "...";
 				mes "A rather crass way";
 				mes "of speaking, but perhaps";
@@ -2012,7 +2013,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 				break;
 			case 2:
 				set .@pay_point,.@pay_point+7;
-				emotion e_ok;
+				emotion ET_OK;
 				mes "[Daewoon]";
 				mes "Mwah ah hah!";
 				mes "That's exactly what";
@@ -2023,13 +2024,13 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 				next;
 				break;
 			case 3:
-				emotion e_an;
+				emotion ET_FRET;
 				set .@pay_point,.@pay_point+2;
 				mes "[Daewoon]";
 				mes "E...";
 				mes "Excuse me?";
 				next;
-				emotion e_ag;
+				emotion ET_ANGER;
 				mes "[Daewoon]";
 				mes "How can you be";
 				mes "so ridiculous at";
@@ -2042,7 +2043,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 				break;
 			case 4:
 				set .@pay_point,.@pay_point+4;
-				emotion e_dots;
+				emotion ET_THINK;
 				mes "[Daewoon]";
 				mes "Hmm. That kind of half-hearted";
 				mes "attitude won't get you very far on your adventures. Still, so long as you don't get overly negative, you should have a decent chance of surviving your challenges.";
@@ -2055,7 +2056,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 			mes "but that really isn't my style. For this test, why don't we just talk?";
 			mes "Just answer me honestly and";
 			mes "light heartedly, alright?";
-			emotion e_hmm;
+			emotion ET_SCRATCH;
 			next;
 			mes "[Daewoon]";
 			mes "So...";
@@ -2066,7 +2067,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 			switch(select("Yes, I do.:I prefer soloing.:I am lonely.")) {
 			case 1:
 				set .@pay_point,.@pay_point+5;
-				emotion e_omg;
+				emotion ET_HUK;
 				mes "[Daewoon]";
 				mes "Oh, that's great~!";
 				mes "To have many friends";
@@ -2121,7 +2122,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 			next;
 			switch(select("Awesome~!:I hate people who do that.:I do it sometimes...")) {
 			case 1:
-				emotion e_an;
+				emotion ET_FRET;
 				mes "[Daewoon]";
 				mes "But...";
 				mes "Wouldn't that be really";
@@ -2130,7 +2131,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 				mes "it would even interfere with";
 				mes "someone else's gameplay...";
 				next;
-				emotion e_an;
+				emotion ET_FRET;
 				mes "[Daewoon]";
 				mes "Perhaps you should try";
 				mes "to consider other people's";
@@ -2150,7 +2151,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 				mes "heard some ruffians boasting";
 				mes "of their mob training activities. But personally, I feel they were compensating for their own shortcomings. ";
 				next;
-				emotion e_an;
+				emotion ET_FRET;
 				mes "[Daewoon]";
 				mes "Such behavior truly";
 				mes "bothers me. Although I have";
@@ -2159,7 +2160,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 				mes "myself irked when encountering";
 				mes "such troublemakers.";
 				next;
-				emotion e_no1;
+				emotion ET_BEST;
 				mes "[Daewoon]";
 				mes "When you face obstacles";
 				mes "in your own training, never give in to weakness. Assert yourself and find the determination to overcome your tribulations with honor!";
@@ -2319,7 +2320,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 			switch(select("Yes:No")) {
 			case 1:
 				mes "[Daewoon]";
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "I'm glad.";
 				mes "When you don't live";
 				mes "with zeal, it's easy to";
@@ -2352,7 +2353,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 				mes "It's important to look forward,";
 				mes "but first you must find what is truly precious to you before you can define your happiness. That's why I think it's good to experience new things as well as reflect.";
 				next;
-				emotion e_no1;
+				emotion ET_BEST;
 				mes "[Daewoon]";
 				mes "Now, what's precious to me?";
 				mes "Three things, actually...";
@@ -2379,7 +2380,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 					else if (BaseLevel < 90) getexp 13000,0;
 					else getexp 18000,0;
 				}
-				emotion e_heh;
+				emotion ET_SMILE;
 				mes "[Daewoon]";
 				mes "Well, I must say that I've";
 				mes "grown quite fond of you. Of";
@@ -2483,7 +2484,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 		close;
 	}
 	else if (sign_q == 99) {
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		mes "[Daewoon]";
 		mes "Oh~! It's you!";
 		mes "It has been a while since";
@@ -2511,7 +2512,7 @@ payon_in03,11,31,4	script	Daewoon#sign	808,{
 			mes "Mwah ah hah~!";
 			close;
 		case 2:
-			emotion e_hmm;
+			emotion ET_SCRATCH;
 			mes "[Daewoon]";
 			mes "Eh...?";
 			mes "That's quite a surprise.";
@@ -2573,14 +2574,14 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 			mes "["+ strcharinfo(0) +"]";
 			mes "Excuse me...";
 			next;
-			emotion e_omg;
+			emotion ET_HUK;
 			mes "^313FFF*Clink*^000000";
 			next;
 			mes "[Sir Jore]";
 			mes "...";
 			mes "......";
 			next;
-			emotion e_swt2;
+			emotion ET_PROFUSELY_SWEAT;
 			mes "[Sir Jore]";
 			mes "...";
 			mes "......";
@@ -2588,14 +2589,14 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 			mes "Look what";
 			mes "you made me do!";
 			next;
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "[Sir Jore]";
 			mes "I've been fiddling";
 			mes "with this sample for";
 			mes "five hours. And now";
 			mes "it's ruined! ^333333*Sob*^000000";
 			next;
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "[Sir Jore]";
 			mes "^333333*Sob*^000000";
 			mes "I came to this town";
@@ -2606,7 +2607,7 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 			next;
 			switch(select("Daewoon sent me.:Oops, sorry. Later~")) {
 			case 1:
-				emotion e_swt;
+				emotion ET_SWEAT;
 				mes "[Sir Jore]";
 				mes "O-oh!";
 				mes "That's right.";
@@ -2614,7 +2615,7 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 				mes "tested for the piece";
 				mes "of the Sobbing Starlight.";
 				next;
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 				mes "[Sir Jore]";
 				mes "So...";
 				mes "Er. Then, what...";
@@ -2674,7 +2675,7 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 				mes "Yggdrasil. They can be used";
 				mes "to revive the dead, after all.";
 				next;
-				emotion e_swt;
+				emotion ET_SWEAT;
 				mes "[Sir Jore]";
 				mes "Oh, and make sure to";
 				mes "bring those things to me";
@@ -2684,7 +2685,7 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 				mes "schedule, you know.";
 				close;
 			case 2:
-				emotion e_sob;
+				emotion ET_CRY;
 				mes "[Sir Jore]";
 				mes "I spent five hours";
 				mes "observing the changes";
@@ -2700,7 +2701,7 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 				delitem 610,2; //Leaf_Of_Yggdrasil
 				delitem 511,10; //Green_Herb
 				set sign_q,17;
-				emotion e_thx;
+				emotion ET_THANKS;
 				mes "[Sir Jore]";
 				mes "Ah! Th-thank you for";
 				mes "bringing what I need.";
@@ -2926,11 +2927,11 @@ aldeba_in,155,101,3	script	Sir Jore#sign	805,7,7,{
 
 OnTouch_:
 	if (rand(2)) {
-		emotion e_ic;
+		emotion ET_AHA;
 		specialeffect EF_PHARMACY_OK;
 	}
 	else {
-		emotion e_omg;
+		emotion ET_HUK;
 		specialeffect EF_PHARMACY_FAIL;
 	}
 	end;
@@ -2941,7 +2942,7 @@ aldeba_in,156,118,4	script	Piru Piru#sign	102,{
 	mes "[Piru Piru]";
 	if ((gettime(DT_HOUR) >= 12) && (gettime(DT_HOUR) <= 24)) { //235959
 		if (sign_q == 17) {
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "Oh, I'm sooo tired~";
 			mes "But we can't sleep yet.";
 			mes "*Sob* Master, can't we";
@@ -2995,7 +2996,7 @@ aldeba_in,156,118,4	script	Piru Piru#sign	102,{
 			}
 		}
 		else {
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "Oh, I'm sooo tired~";
 			mes "But we can't sleep yet.";
 			mes "*Sob* Master, can't we";
@@ -3131,16 +3132,16 @@ prt_maze02,16,183,3	script	Pleur#sign	91,{
 	close;
 
 OnHo:
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	end;
 OnKis2:
-	emotion e_kis2;
+	emotion ET_CHUPCHUP;
 	end;
 OnGasp:
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	end;
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 }
 
@@ -3148,7 +3149,7 @@ prt_maze02,14,183,4	script	Gordon#sign	51,{
 	callfunc "F_UpdateSignVars";
 	mes "[Gordon]";
 	if (sign_q < 18) {
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		mes "Hello darling.";
 		mes "What did you do today?";
 		next;
@@ -3158,7 +3159,7 @@ prt_maze02,14,183,4	script	Gordon#sign	51,{
 		mes "with a white bear and a";
 		mes "blue bear, father.";
 		next;
-		emotion e_ho;
+		emotion ET_DELIGHT;
 		mes "[Gordon]";
 		mes "Darling...";
 		mes "Aren't you tired";
@@ -3170,7 +3171,7 @@ prt_maze02,14,183,4	script	Gordon#sign	51,{
 		mes "[Pleur]";
 		mes "Don't worry father, I understand. For now, this is the only place where we can relax and live inpeace. I think we deserve to rest after accomplishing our goals...";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Gordon]";
 		mes "Thank you, Pluer.";
 		mes "I have no regrets about";
@@ -3184,7 +3185,7 @@ prt_maze02,14,183,4	script	Gordon#sign	51,{
 			case 1:
 				set sign_q,18;
 				donpcevent "#skill::OnEnable";
-				emotion e_omg;
+				emotion ET_HUK;
 				donpcevent "Pleur#sign::OnOMG";
 				mes "[Pleur]";
 				mes "No no no!";
@@ -3195,7 +3196,7 @@ prt_maze02,14,183,4	script	Gordon#sign	51,{
 				mes "Summon... Marine Sphere!";
 				close;
 			case 2:
-				emotion e_gasp;
+				emotion ET_SURPRISE;
 				donpcevent "Pleur#sign::OnGasp";
 				mes "[Gordon]";
 				mes "Eh?! Don't you know";
@@ -3303,7 +3304,7 @@ prt_maze02,14,183,4	script	Gordon#sign	51,{
 		}
 	}
 	else if (sign_q == 18) {
-		emotion e_pif;
+		emotion ET_HNG;
 		mes "Oh...!";
 		mes "You scared us!";
 		mes "Roaring like some";
@@ -3414,12 +3415,12 @@ prt_maze02,14,183,4	script	Gordon#sign	51,{
 		mes "would put all those newbie";
 		mes "scientists to shame~";
 		next;
-		emotion e_swt;
+		emotion ET_SWEAT;
 		mes "[Pleur]";
 		mes "D...";
 		mes "D...Daddy!!";
 		next;
-		emotion e_heh;
+		emotion ET_SMILE;
 		mes "[Gordon]";
 		mes "Heh heh~";
 		mes "Am I being";
@@ -3448,14 +3449,14 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 			switch(select("I've never heard of you.:Oh gosh, it's Jesqurienne!")) {
 			case 1:
 				mes "[Jesqurienne]";
-				emotion e_swt;
+				emotion ET_SWEAT;
 				mes "Ho ho ho~!";
 				mes "Surely you";
 				mes "must be joking~";
 				next;
 				switch(select("You got me, you got me.:Nope. Doesn't ring a bell.")) {
 				case 1:
-					emotion e_pif;
+					emotion ET_HNG;
 					mes "[Jesqurienne]";
 					mes "Ohohohohoho~!";
 					mes "I knew it! I knew it!";
@@ -3472,7 +3473,7 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 					next;
 					break;
 				case 2:
-					emotion e_dots;
+					emotion ET_THINK;
 					mes "[Jesqurienne]";
 					mes "...";
 					mes "......";
@@ -3524,7 +3525,7 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 			next;
 			switch(select("^333333Stuck-up chick.^000000:Take it easy on the drinks...")) {
 			case 1:
-				emotion e_an;
+				emotion ET_FRET;
 				mes "[Jesqurienne]";
 				mes "What...?";
 				mes "What did you say?";
@@ -3533,7 +3534,7 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 				mes "that to me before!";
 				mes "H-how dare you...";
 				next;
-				emotion e_ag;
+				emotion ET_ANGER;
 				mes "[Jesqurienne]";
 				mes "Prove that you can";
 				mes "hold a candle to my";
@@ -3549,8 +3550,8 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 				mes "ask us the questions?";
 				next;
 				donpcevent "Aaron#sign::onSmile";
-				emotion e_gasp;
-				emotion e_gasp,1;
+				emotion ET_SURPRISE;
+				emotion ET_SURPRISE, playerattached();
 				mes "[Aaron]";
 				mes "Did someone say";
 				mes "''Quiz Challenge?''";
@@ -3558,7 +3559,7 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 				mes "of assistance.";
 				next;
 				set sign_q,21;
-				emotion e_gg;
+				emotion ET_KIK;
 				mes "[Jesqurienne]";
 				mes "Professor Aaron?";
 				mes "Ho ho~ If he's asking";
@@ -3608,11 +3609,11 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 		mes "never had a chance! Of course,";
 		mes "I did, but you know, I guess you had to learn for yourself.";
 		next;
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Jesqurienne]";
 		mes "I'd insult you if it weren't for the fact that you embarassed yourself enough during the Quiz Challenge. As a matter of fact, I'll even forgive you for wounding my pride earlier.";
 		next;
-		emotion e_gg;
+		emotion ET_KIK;
 		mes "[Jesqurienne]";
 		mes "Can you believe it?";
 		mes "Even drunk I can beat";
@@ -3708,11 +3709,11 @@ geffen_in,59,74,4	script	Jesqurienne#sign	803,{
 	}
 
 OnOmg:
-	emotion e_omg;
+	emotion ET_HUK;
 	end;
 
 OnHo:
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	end;
 }
 
@@ -3724,7 +3725,7 @@ geffen_in,61,72,7	script	Aaron#sign	754,{
 		mes "we begin, let me";
 		mes "tell you the rules...";
 		next;
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Aaron]";
 		mes "I'm going to give you";
 		mes "ten multiple choice questions.";
@@ -4344,7 +4345,7 @@ geffen_in,61,72,7	script	Aaron#sign	754,{
 		next;
 		if (.@npc_p > .@user_p) {
 			set sign_q,23;
-			emotion e_gg;
+			emotion ET_KIK;
 			mes "[Jesqurienne]";
 			mes "Bwahahaha!";
 			mes "I win! I knew it!";
@@ -4375,7 +4376,7 @@ geffen_in,61,72,7	script	Aaron#sign	754,{
 		close;
 	}
 	else {
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "Goodness...!";
 		mes "Either these beer";
 		mes "goggles are on too tight,";
@@ -4384,7 +4385,7 @@ geffen_in,61,72,7	script	Aaron#sign	754,{
 		next;
 		if (Sex == SEX_MALE) {
 			select("Um, I'm a dude...");
-			emotion e_sob;
+			emotion ET_CRY;
 			mes "[Aaron]";
 			mes "N-no...!";
 			mes "M-maybe I should";
@@ -4394,14 +4395,14 @@ geffen_in,61,72,7	script	Aaron#sign	754,{
 		}
 		else {
 			select("Why, thank you~");
-			emotion e_no1;
+			emotion ET_BEST;
 			mes "[Aaron]";
 			mes "Ah, yes. Your";
 			mes "sense of style, your";
 			mes "magnificent body. Everything";
 			mes "about you is beautiful! Not just that, but you're also intelligent!";
 			next;
-			emotion e_lv2;
+			emotion ET_BIGTHROB;
 			mes "[Aaron]";
 			mes "I should know!";
 			mes "Not only do I teach";
@@ -4413,7 +4414,7 @@ geffen_in,61,72,7	script	Aaron#sign	754,{
 		close;
 	}
 OnSmile:
-	emotion e_heh;
+	emotion ET_SMILE;
 	end;
 }
 
@@ -4431,7 +4432,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 		mes "like you want something from";
 		if (Zeny < 10000) {
 			mes "me. Hah! You are poor!";
-			emotion e_pif;
+			emotion ET_HNG;
 			mes "It also looks like you're low on cash~! Well, this is what guys like me to do to shameless";
 			mes "moochers like you!";
 			percentheal -10,0;
@@ -4807,7 +4808,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 		if (Zeny < 10000) {
 			mes "me. It also looks like you're low on cash~! Well, this is what guys like me to do to shameless";
 			mes "moochers like you!";
-			emotion e_pif;
+			emotion ET_HNG;
 			percentheal -10,0;
 			close;
 		}
@@ -4827,14 +4828,14 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			mes "other, I'm borrowing some";
 			mes "cash. You know, for old";
 			mes "time's sake. ^FF0000Yoink!^000000";
-			emotion e_gg;
+			emotion ET_KIK;
 			set Zeny, Zeny-10000;
 		}
 		else {
 			mes "I got nothin' for you and";
 			mes "you obviously have nothing";
 			mes "for me! Now lemme gamble!";
-			emotion e_pif;
+			emotion ET_HNG;
 		}
 		close;
 	}
@@ -4845,7 +4846,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 		mes "It's over. Not get outta";
 		mes "here before I jack some";
 		mes "more of your cash!";
-		emotion e_gg;
+		emotion ET_KIK;
 		next;
 		switch(select("Okay.:I want to take Part Two again.")) {
 		case 1:
@@ -4854,7 +4855,7 @@ cmd_in02,88,51,4	script	Strange Guy#sign	806,{
 			mes "Geez, why do";
 			mes "these guys always";
 			mes "come and bother me?";
-			emotion e_pif;
+			emotion ET_HNG;
 			close;
 		case 2:
 			mes "[Dearles]";
@@ -5772,7 +5773,7 @@ alberta_in,154,171,5	script	Maid#s10	758,{
 					mes "You see, it'll be my brother's";
 					mes "birthday, but I'm so busy with";
 					mes "work that I can't see him.";
-					emotion e_thx;
+					emotion ET_THANKS;
 					next;
 					mes "[Seylin]";
 					mes "The last time I saw him,";
@@ -5845,7 +5846,7 @@ alberta_in,154,171,5	script	Maid#s10	758,{
 				mes "I just thought";
 				mes "that maybe...";
 				close2;
-				emotion e_dots;
+				emotion ET_THINK;
 				end;
 			case 2:
 				mes "[Seylin]";
@@ -5962,7 +5963,7 @@ alberta_in,154,171,5	script	Maid#s10	758,{
 			set sign_q,51;
 			getitem 525,3; //Panacea
 			next;
-			emotion e_kis2;
+			emotion ET_CHUPCHUP;
 			close;
 		}
 	}
@@ -6000,7 +6001,7 @@ alberta_in,154,171,5	script	Maid#s10	758,{
 	}
 }
 
-prt_castle,107,58,5	script	Soldier#s11	105,{
+-	script	Soldier#s11_	-1,{
 	callfunc "F_UpdateSignVars";
 	mes "[Maruin]";
 	if (sign_q < 49) {
@@ -6058,7 +6059,7 @@ prt_castle,107,58,5	script	Soldier#s11	105,{
 			mes "Wow, I wonder what she";
 			mes "got for me this year?";
 			next;
-			emotion e_gasp;
+			emotion ET_SURPRISE;
 			mes "[Maruin]";
 			mes "Th-this is--!";
 			mes "Oh. Snap. That's right.";
@@ -6947,7 +6948,7 @@ geffen_in,159,48,5	script	Lonely-looking Woman	711,{
 			mes "I wonder";
 			mes "how my pickled";
 			mes "cabbage will turn out?";
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			close;
 		}
 		else {
@@ -6987,7 +6988,7 @@ geffen_in,159,48,5	script	Lonely-looking Woman	711,{
 		mes "how he's doing. Still, he should";
 		mes "be doing a better job of keeping";
 		mes "in touch with us. ^333333*Sigh*^000000";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	else if (sign_q < 62) {
@@ -7008,7 +7009,7 @@ geffen_in,159,48,5	script	Lonely-looking Woman	711,{
 		else {
 			mes "Liana's daddy needs to come home more often. ^333333*Sigh*^000000 Even though he's away for long periods of time, I suppose it's for the best...";
 			close2;
-			emotion e_dots;
+			emotion ET_THINK;
 			end;
 		}
 	}
@@ -7046,14 +7047,14 @@ geffen_in,171,42,3	script	Cute Girl	703,{
 		mes "coming home?!";
 		mes "I... I miss him so much~";
 		mes "*Cries*";
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	}
 	else if (sign_q == 54) {
 		mes "Oh, my mom said she's gonna cook me something good today.";
 		mes "I wonder what she's gonna make?";
 		mes "I hope it's pickled cabbage again!";
-		emotion e_heh;
+		emotion ET_SMILE;
 		close;
 	}
 	else if (sign_q == 55) {
@@ -7087,7 +7088,7 @@ geffen_in,171,42,3	script	Cute Girl	703,{
 				mes "time to come home and";
 				mes "see me. Sooooooooo~";
 				mes "I wrote this letter!";
-				emotion e_dots;
+				emotion ET_THINK;
 				next;
 				switch(select("....:I'll bring this to him.")) {
 				case 1:
@@ -7104,7 +7105,7 @@ geffen_in,171,42,3	script	Cute Girl	703,{
 					mes "Okay then, don't";
 					mes "forget to give this to";
 					mes "my dad, okay? Promise?";
-					emotion e_ho;
+					emotion ET_DELIGHT;
 					set sign_q,56;
 					getitem 7276,1; //Picture_Letter
 					close;
@@ -7179,14 +7180,14 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 				mes "I suppose I understand.";
 				mes "However, you're lucky that I don't kick you out of my forge right here and right now~";
 				close2;
-				emotion e_pif;
+				emotion ET_HNG;
 				end;
 			}
 		}
 		else {
 			mes "I hope you understand that";
 			mes "this forge isn't really open to the public. I'm doing some intensive training,so I'd appreciate it if you would just leave now.";
-			emotion e_pif;
+			emotion ET_HNG;
 			close2;
 			warp "mjo_dun02",372,346;
 			end;
@@ -7196,7 +7197,7 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 		mes "I hope you understand that";
 		mes "this forge isn't really open to the public. I'm doing some intensive training,so I'd appreciate it if you would just leave now.";
 		close2;
-		emotion e_pif;
+		emotion ET_HNG;
 		end;
 	}
 	else if (sign_q == 56) {
@@ -7388,7 +7389,7 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 			case 67:
 				mes "You've returned?";
 				mes "Well, I don't know how to put this, but once you hear it, don't take it the wrong way...";
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 				next;
 				mes "[Engel]";
 				mes "^333333*Ahem*^000000";
@@ -7418,7 +7419,7 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 				mes "I've got some bad news,";
 				mes "so please don't overreact~";
 				mes "Um, are you ready?";
-				emotion e_swt2;
+				emotion ET_PROFUSELY_SWEAT;
 				next;
 				mes "[Engel]";
 				mes "While I was trying to restore the ";
@@ -7658,7 +7659,7 @@ mjo_dun02,88,295,4	script	Flaming Spirit Man	85,{
 		mes "Sometimes, you can only";
 		mes "improve yourself by training in solitude. But don't ever forget about the ones who really care about you. It's those people who make everything worth it.";
 		close2;
-		emotion e_dots;
+		emotion ET_THINK;
 		end;
 	}
 }
@@ -7672,7 +7673,7 @@ gef_tower,118,36,4	script	Annoyed Man	64,{
 		mes "What could possibly be";
 		mes "the answer I'm looking";
 		mes "for? ^333333*Sigh...*^000000";
-		emotion e_pif;
+		emotion ET_HNG;
 		close;
 	}
 	else if (sign_q == 72) {
@@ -7686,7 +7687,7 @@ gef_tower,118,36,4	script	Annoyed Man	64,{
 			mes "Why bother climbing this tower?";
 		}
 		mes "What are you doing here?!";
-		emotion e_pif;
+		emotion ET_HNG;
 		next;
 		input .@input$;
 		if ((.@input$ == "Metz Brayde") || (.@input$ == "Sobbing Starlight")) {
@@ -7702,18 +7703,18 @@ gef_tower,118,36,4	script	Annoyed Man	64,{
 			next;
 			mes "[Dhota]";
 			mes "...";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			mes "[Dhota]";
 			mes "...";
 			mes "......";
-			emotion e_dots;
+			emotion ET_THINK;
 			next;
 			mes "[Dhota]";
 			mes "...";
 			mes "......";
 			mes "BWAAAAH~!";
-			emotion e_ag;
+			emotion ET_ANGER;
 			next;
 			mes "[Dhota]";
 			mes "Right, he wants that guy";
@@ -7723,7 +7724,7 @@ gef_tower,118,36,4	script	Annoyed Man	64,{
 			mes "near Comodo to investigate some";
 			mes "tribal people or whatever.";
 			set sign_q,73;
-			emotion e_pif;
+			emotion ET_HNG;
 			close;
 		}
 		else {
@@ -7742,7 +7743,7 @@ gef_tower,118,36,4	script	Annoyed Man	64,{
 		mes "What could possibly be";
 		mes "the answer I'm looking";
 		mes "for? ^333333*Sigh...*^000000";
-		emotion e_pif;
+		emotion ET_HNG;
 		close;
 	}
 }
@@ -7758,7 +7759,7 @@ umbala,163,256,3	script	Native#_s	781,{
 			mes "one of those? Well, I'd";
 			mes "be happy if I had some";
 			mes "Meat to eat, I guess!";
-			emotion e_ho;
+			emotion ET_DELIGHT;
 			close;
 		}
 		else if (sign_q == 73) {
@@ -7836,7 +7837,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 		mes "then that and then...";
 		mes "Ooh, these calculations";
 		mes "are absolutely perfect!";
-		emotion e_gg;
+		emotion ET_KIK;
 		next;
 		mes "[Cyon]";
 		mes "Wh-what?!";
@@ -7844,7 +7845,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 		mes "H-how did you get";
 		mes "in here? I demand";
 		mes "that you leave, right now!";
-		emotion e_an;
+		emotion ET_FRET;
 		close2;
 		warp "umbala",111,121;
 		end;
@@ -7856,7 +7857,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 		mes "then that and then...";
 		mes "Ooh, these calculations";
 		mes "are absolutely perfect!";
-		emotion e_gg;
+		emotion ET_KIK;
 		next;
 		mes "[Cyon]";
 		mes "Wh-what?!";
@@ -7864,7 +7865,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 		mes "H-how did you get";
 		mes "in here? I demand";
 		mes "that you leave, right now!";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		switch(select("I'm here for Metz Brayde.:My apologies.:Would you look at this?:...")) {
 		case 1:
@@ -7881,7 +7882,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 			mes "then hurry up and get";
 			mes "out of here! Not just anyone";
 			mes "is allowed here! Leave!";
-			emotion e_pif;
+			emotion ET_HNG;
 			close;
 		case 3:
 			mes "[Cyon]";
@@ -7891,7 +7892,7 @@ um_in,27,23,3	script	Fastidious-Looking Guy	121,{
 			mes "Fine, you've piqued my";
 			mes "scientific curiosity...";
 			next;
-			emotion e_omg;
+			emotion ET_HUK;
 			next;
 			mes "[Cyon]";
 			mes "Sweet lord...";
@@ -8550,7 +8551,7 @@ que_sign01,196,39,4	script	Serin#serin	90,{
 			mes "I really don't want to fight you,";
 			mes "but I've come too far to give up now. If you insist on interfering, then you leave me no choice...";
 			next;
-			emotion e_gg,0,"Dark Lord#serin";
+			emotion ET_KIK, getnpcid(0, "Dark Lord#serin");
 			mes "[Dark Lord]";
 			mes "^330033Insolent mortal!";
 			mes "Do you really think";
@@ -8733,7 +8734,7 @@ que_sign01,197,195,4	script	Serin#witch	90,{
 		mes "[Serin]";
 		mes "...";
 		mes "......";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	else if (sign_q == 124) {
@@ -9351,7 +9352,7 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 			mes "At least we both agree that";
 			mes "somehow I don't really belong";
 			mes "here in Niflheim.";
-			emotion e_dots;
+			emotion ET_THINK;
 			set sign_q,93;
 			close;
 		}
@@ -9374,7 +9375,7 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 		mes "but it seems like Angrboda";
 		mes "has been sealed away in the";
 		mes "world of Rune-Midgard...";
-		emotion e_dots;
+		emotion ET_THINK;
 		set sign_q,94;
 		close;
 	}
@@ -9542,7 +9543,7 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 				mes "you for giving back my ring,";
 				mes "my most precious possession.";
 				mes "Thank you, thank you...";
-				emotion e_sob;
+				emotion ET_CRY;
 				next;
 				mes "^3355FFThe sound of Serin's voice";
 				mes "softened and when it grew silent, her eyes blankly stared ahead as";
@@ -9557,31 +9558,31 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 				getexp (checkre(3))?50000:500000,0;
 				close;
 			case 2:
-				emotion e_sob;
+				emotion ET_CRY;
 				close;
 			}
 		}
 		else {
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 	}
 	else if (sign_q == 130) {
 		mes "[Serin]";
 		mes "...........";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		mes "[Serin]";
 		mes "...........";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Serin]";
 		mes "...........";
-		emotion e_dots;
+		emotion ET_THINK;
 		next;
 		mes "[Serin]";
 		mes "...........";
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	}
 	else if (sign_q == 131) {
@@ -9710,7 +9711,7 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 		mes "......";
 		mes "W-who...";
 		mes "Who are you?";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 	else if (sign_q > 199) {
@@ -9734,7 +9735,7 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 		if (countitem(2642) > 0) {
 			mes "[Serin]";
 			mes "Thank you...";
-			emotion e_sob;
+			emotion ET_CRY;
 			delitem 2642,1; //Serin's_Gold_Ring
 			next;
 			mes "^3355FFYou returned";
@@ -9744,7 +9745,7 @@ niflheim,313,70,4	script	Pleasant-Featured Lady#s	90,{
 		mes "[Serin]";
 		mes "...";
 		mes "......";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 }
@@ -9911,7 +9912,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 			mes "Why haven't you";
 			mes "brought my books";
 			mes "back to me yet?";
-			emotion e_pif;
+			emotion ET_HNG;
 			close;
 		}
 	}
@@ -9993,7 +9994,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 			next;
 			mes "[Kirkena]";
 			mes "Serin's already hid herself";
-			mes "deep within Niffleim, but I'm";
+			mes "deep within Niflheim, but I'm";
 			mes "sure you can find something";
 			mes "if you can find any remaining";
 			mes "trace of her.";
@@ -10008,7 +10009,7 @@ que_sign01,122,141,4	script	Witch#s	792,{
 			mes "side! Well, I won't take the";
 			mes "symbol against your will, but";
 			mes "you better think this over...";
-			emotion e_dots;
+			emotion ET_THINK;
 			close;
 		}
 	}
@@ -10674,7 +10675,7 @@ OnTouch_:
 				mes "[Kirkena]";
 				mes "...";
 				mes "Hrrmmmpf...";
-				emotion e_pif;
+				emotion ET_HNG;
 				close;
 			case 2:
 				mes "[Kirkena]";
@@ -11300,7 +11301,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 				mes "for me to enjoy myself";
 				mes "if my soul ends up getting";
 				mes "busted by the gods.";
-				emotion e_pif;
+				emotion ET_HNG;
 				close;
 			}
 			else {
@@ -11401,7 +11402,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 							mes "Hehehehe~";
 							close;
 						}
-						emotion e_pif;
+						emotion ET_HNG;
 						close;
 					case 2:
 						if (Zeny < 60000) {
@@ -11409,7 +11410,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 							mes "What is this?";
 							mes "You tryin to welch";
 							mes "me or somethin'?";
-							emotion e_pif;
+							emotion ET_HNG;
 							close;
 						}
 						else {
@@ -11504,7 +11505,7 @@ niflheim,102,54,4	script	Mad Man#s	739,{
 			mes "[Laichin]";
 			mes "Whatever, dude!";
 			mes "Freakin' cheapskate...";
-			emotion e_pif;
+			emotion ET_HNG;
 			close;
 		}
 	}
@@ -11867,7 +11868,7 @@ OnTouch_:
 			mes "^333333*Cries*^000000";
 			mes "Where am I?";
 			mes "I... I wanna go home~";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		else if (sign_sq == 1) {
@@ -11893,7 +11894,7 @@ OnTouch_:
 				mes "N-no...";
 				mes "I wanna go home...";
 				close2;
-				emotion e_sob;
+				emotion ET_CRY;
 				end;
 			}
 		}
@@ -11902,7 +11903,7 @@ OnTouch_:
 			mes "^333333*Cries*^000000";
 			mes "Where am I?";
 			mes "I... I wanna go home~";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		else if ((sign_sq == 3) || (sign_sq == 4)) {
@@ -11923,7 +11924,7 @@ OnTouch_:
 				mes "who knows how to";
 				mes "get me back home...";
 				mes "^333333*Cries*^000000";
-				emotion e_sob;
+				emotion ET_CRY;
 				close;
 			}
 		}
@@ -11934,7 +11935,7 @@ OnTouch_:
 			mes "anything! I-I'm still here";
 			mes "in this scary place! ^333333*Cries*^000000";
 			set sign_sq,6;
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 		else {
@@ -11944,7 +11945,7 @@ OnTouch_:
 			mes "but you didn't help me";
 			mes "at all. Y-you lied to me!";
 			mes "I... I hate you! ^333333*Wah~!*^000000";
-			emotion e_sob;
+			emotion ET_CRY;
 			close;
 		}
 	}
@@ -11953,7 +11954,7 @@ OnTouch_:
 		mes "^333333*Cries*^000000";
 		mes "Where am I?";
 		mes "I... I wanna go home~";
-		emotion e_sob;
+		emotion ET_CRY;
 		close;
 	}
 	end;

@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20160313
+//= 20171011
 //===== Description: =========================================
 //= List of available atcommands and their functions.
 //============================================================
@@ -226,14 +226,24 @@ New warp NPC 'my_warp_sample' created.
 @effect <effect ID>
 
 Creates a visual effect on or around the character.
-A list of IDs can be found in '/db/const.txt'.
-Descriptions of the effects can be found in '/doc/effect_list.txt'.
+A list of IDs and descriptions of the effects can be found in '/doc/effect_list.txt'.
 
 ---------------------------------------
 
-@misceffect
+@misceffect <effect ID>
 
-Does some visual effect on the character (more info needed).
+Does some visual effect on the character.
+Possible effect IDs:
+	0 = base level up
+	1 = job level up
+	2 = refine failure
+	3 = refine success
+	4 = game over
+	5 = pharmacy success
+	6 = pharmacy failure
+	7 = base level up (super novice)
+	8 = job level up (super novice)
+	9 = base level up (taekwon)
 
 ---------------------------------------
 
@@ -1300,7 +1310,7 @@ Bans or unbans a player for a limited time.
 Time elements: y/a, m, d/j, h, mn, s
 
 Example:
-@ban +2d Char2
+@charban +2d Char2
 -> bans Char2's for 2 days.
 
 ---------------------------------------
@@ -1320,12 +1330,12 @@ This will also send a packet to clients causing them to close.
 @reloadmobdb
 @reloadmotd
 @reloadmsgconf
-@reloadpacketdb
 @reloadpcdb
 @reloadquestdb
 @reloadscript
 @reloadskilldb
 @reloadstatusdb
+@reloadachievementdb
 
 Reloads a database or configuration file.
 
@@ -1333,10 +1343,10 @@ Databases:
 -- instancedb: Instance Database
 -- itemdb: Item Database
 -- mobdb: Monster Database
--- packetdb: Packet Database
 -- questdb: Quest Database
 -- script: NPC Scripts
 -- skilldb: Skill Database
+-- achievementdb: Achievement Database
 
 Configuration files:
 -- atcommand: Atcommand Settings
@@ -1354,12 +1364,12 @@ Affected files:
 -- mobdb: mob_db.txt, mob_item_ratio.txt, mob_chat_db.txt, mob_avail.txt, mob_race2_db.txt, mob_branch.txt, mob_poring.txt, mob_boss.txt, mob_pouch.txt, mob_classchange.txt, pet_db.txt, homunculus_db.txt, homun_skill_tree.txt, exp_homun.txt, mercenary_db.txt, mercenary_skill_db.txt, elemental_db.txt, elemental_skill_db.txt
 -- motd: motd.txt
 -- msgconf: atcommand_athena.conf
--- packetdb: packet_db.txt
 -- pcdb: statpoint.txt, job_exp.txt, skill_tree.txt, attr_fix.txt, job_db1.txt, job_db2.txt, job_basehpsp_db.txt, job_maxhpsp_db.txt, job_param_db.txt, level_penalty.txt
 -- questdb: quest_db.txt
 -- script: /npc/*.txt, /npc/*.conf
 -- skilldb: skill_db.txt, const.txt, skill_require_db.txt, skill_cast_db.txt, skill_castnodex_db.txt, skill_nocast_db.txt, skill_copyable_db.txt, skill_improvise_db.txt, skill_changematerial_db.txt, skill_nonearnpc_db.txt, skill_damage_db.txt, skill_unit_db.txt, abra_db.txt, create_arrow_db.txt, produce_db.txt, spellbook_db.txt, magicmushroom_db.txt
--- statusdb: attr_fix.txt, size_fix.txt, refine_db.tx
+-- statusdb: attr_fix.txt, size_fix.txt, refine_db.txt
+-- achievementdb: achievement_db.conf
 
 Restriction:
 	- Used from 'atcommand' or 'useatcmd'. For @reload & @reloadscript

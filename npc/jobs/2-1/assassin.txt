@@ -297,7 +297,7 @@ in_moc_16,19,33,1	script	Guildsman#asn	55,{
 in_moc_16,25,90,1	script	Guildsman#ASN2	730,2,2,{
 	mes "[Assassin 'Khai']";
 	mes "Umm?!";
-	emotion e_gasp;
+	emotion ET_SURPRISE;
 	next;
 	mes "[Assassin 'Khai']";
 	mes "Come closer. I prefer to talk to people face to face. It really irritates me if I have to raise my voice, just so you can hear me.";
@@ -1606,7 +1606,8 @@ OnTouch_:
 	if (ASSIN_Q == 5 || ASSIN_Q == 6) {
 		warp "in_moc_16",181,183;
 		set ASSIN_Q,ASSIN_Q+1;
-		changequest 8005,8006;
+		if (!isbegin_quest(8006))
+			changequest 8005,8006;
 	}
 	else {
 		mapannounce "in_moc_16",strcharinfo(0)+" has entered 'Guildmaster's room.'",bc_map;

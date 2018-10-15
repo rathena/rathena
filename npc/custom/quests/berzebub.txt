@@ -54,7 +54,7 @@ prontera,165,178,8	script	Old Woman	103,{
 	getitem 4145,1;
 	set BerzQuest, 1;
 	mes "Congratulations! You have all the items. Here is your ^FF0000Berzebub Card^000000, as promised.";
-	emotion e_grat;
+	emotion ET_CONGRATULATION;
 	close;
 
 M_Leave:

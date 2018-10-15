@@ -44,27 +44,27 @@ prontera,156,172,4	script	Tine	58,{
 
 M_INFO:
 	mes "[Tine]";
-	mes "The magic effect posesses only handmade chocolate from grand-grand-grand-whoever recipes!";
+	mes "The magic effect possesses only handmade chocolate from grand-grand-grand-whoever recipes!";
 	next;
 	mes "[Tine]";
 	mes "It being known that Black Handmade Chocolate works on married guys... And the White one on the married girls!";
 	mes "If you lose your wedding ring... then alas, it won't work on you.";
 	next;
 	mes "[Tine]";
-	mes "On having a Chocolate, you should put off your ring then... put it back... And if your partner is online, then magc would last till the next hour!";
+	mes "On having a Chocolate, you should put off your ring then... put it back... And if your partner is online, then magic would last till the next hour!";
 	next;
 	mes "[Tine]";
-	mes "Rumors bark that guys and gals have +50% EXP bonuses on FIVE different races of the monsters... Exluding bloody bosses, of course.";
+	mes "Rumors bark that guys and gals have +50% EXP bonuses on FIVE different races of the monsters... Excluding bloody bosses, of course.";
 	next;
 	mes "[Tine]";
-	mes "There's a fameous confectioner in the Castle of Prontera! He's the one you need.";
+	mes "There's a famous confectioner in the Castle of Prontera! He's the one you need.";
 	close;
 
 OnInit:
 	//559,Hand-made_Chocolate
-	setitemscript 559,"{ itemheal 50,50; if(Sex==SEX_FEMALE || @dsv == gettime(DT_HOUR)+1 || ispartneron()==0)end; set @dsv,gettime(DT_HOUR)+1; misceffect 113; }";
+	setitemscript 559,"{ itemheal 50,50; if(Sex==SEX_FEMALE || @dsv == gettime(DT_HOUR)+1 || ispartneron()==0)end; set @dsv,gettime(DT_HOUR)+1; misceffect EF_MAGNUS; }";
 	//560,Hand-made_White_Chocolate
-	setitemscript 560,"{ itemheal 50,50; if(Sex==SEX_MALE || @dsv == gettime(DT_HOUR)+1 || ispartneron()==0)end; set @dsv,gettime(DT_HOUR)+1; misceffect 113; }";
+	setitemscript 560,"{ itemheal 50,50; if(Sex==SEX_MALE || @dsv == gettime(DT_HOUR)+1 || ispartneron()==0)end; set @dsv,gettime(DT_HOUR)+1; misceffect EF_MAGNUS; }";
 
 	//2634,Wedding_Ring_M,Wedding Ring,5,,10,0,,0,,0,127918079,7,1,136,,0,0,0,{ skill 334,1; skill 335,1; skill 336,1; }
 	setitemscript 2634,"{ skill 334,1; skill 335,1; skill 336,1; if(@dsv == gettime(DT_HOUR)+1 && ispartneron()){ bonus2 bExpAddRace,5,50; bonus2 bExpAddRace,6,50; bonus2 bExpAddRace,7,50; bonus2 bExpAddRace,8,50; bonus2 bExpAddRace,1,50; } }";
@@ -135,7 +135,7 @@ alberta,29,243,4	script	Jainie#val1	53,{
 	mes "I made them by myself. Now I need some Milk for my special White Chocolate.";
 	next;
 	mes "[Jainie]";
-	mes "You know ... In cetain countries, there's a tradition of presenting chocolates to a person that you love...";
+	mes "You know ... In certain countries, there's a tradition of presenting chocolates to a person that you love...";
 	mes "They call it ^3355FFValentine's Day^000000.";
 	next;
 	mes "[Jainie]";
