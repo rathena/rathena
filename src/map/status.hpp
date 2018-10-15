@@ -853,6 +853,12 @@ enum sc_type : int16 {
 	SC_GLASTHEIM_ITEMDEF,
 	SC_GLASTHEIM_HPSP,
 
+	// Nightmare Biolab Buffs
+	SC_LHZ_DUN_N1,
+	SC_LHZ_DUN_N2,
+	SC_LHZ_DUN_N3,
+	SC_LHZ_DUN_N4,
+
 	SC_ANCILLA,
 
 #ifdef RENEWAL
