@@ -419,11 +419,11 @@
 5329,507,100	// Dark_Blindfold_C
 5330,507,100	// kRO_Drooping_Kitty_C
 5331,507,100	// Corsair_C
-5336,507,100	// Guildsman_Recruiter
-5337,507,100	// Party_Recruiter_Hat
-5338,507,100	// Bf_Recruiter_Hat
-5339,507,100	// Friend_Recruiter_Hat
-5346,507,100	// Gf_Recruiter_Hat
+// 5336,507,100	// Guildsman_Recruiter
+// 5337,507,100	// Party_Recruiter_Hat
+// 5338,507,100	// Bf_Recruiter_Hat
+// 5339,507,100	// Friend_Recruiter_Hat
+// 5346,507,100	// Gf_Recruiter_Hat
 5357,475,100	// Wings_Of_Victory
 5368,475,100	// White_Wing
 5369,475,100	// Dark_Wing
