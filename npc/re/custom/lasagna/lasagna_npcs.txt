@@ -2117,13 +2117,13 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	mes "Father, mother. Please come back home safely.";
 	mes "(He's making something, mumbling.)";
 	next;
-	if (select( "Craft Amulet", "About the Family" ) == 2) {
+	if (select( "Craft Amulet or Armor", "About the Family" ) == 2) {
 		mes "[Yota Chara]";
-		mes "...My parents keep going out into the dangerous areas. I'm still a child to help them, so what I do is to make these amulets for them.";
+		mes "...My parents keep going out into the dangerous areas. I'm still a child to help them, so what I do is to make these amulets and armor for them.";
 		next;
 		emotion ET_PROFUSELY_SWEAT;
 		mes "[Yota Chara]";
-		mes "What if some bad news reach us even if I try hard making these amulets for their safety?";
+		mes "What if some bad news reach us even if I try hard making these amulets and armor for their safety?";
 		next;
 		mes "[Yota Chara]";
 		mes "I get startled each time some mail arrives...";
@@ -2152,9 +2152,11 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	}
 	mes "[Yota Chara]";
 	mes "...Do you have someone you're close to and whom you wish for their wellness?";
-	mes "If you want an amulet, you can exchange it with the Doram tokens. I have a bunch of amulets with me.";
 	next;
-	.@s = select( "Low-grade Horse Mackerel Amulet", "Low-grade Leaf Amulet", "Low-grade Rabbit Amulet", "Shining Twig Charm", "Fresh Tuna Amulet", "Plump Earthworm Amulet" );
+	mes "[Yota Chara]";
+	mes "If you want an amulet or armor, you can exchange it with the <ITEM>Doram Token<INFO>25142</INFO></ITEM>. I have a bunch of amulets and armor with me.";
+	next;
+	.@s = select( "Low-grade Horse Mackerel Amulet", "Low-grade Leaf Amulet", "Low-grade Rabbit Amulet", "Shining Twig Charm", "Fresh Tuna Amulet", "Plump Earthworm Amulet", "Exlusive Doram Suit", "Exlusive Doram Manteau", "Exlusive Doram Shoe" );
 	mes "[Yota Chara]";
 	switch(.@s) {
 	case 1:
@@ -2175,14 +2177,27 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	case 6:
 		mes "<ITEM>Plump Earthworm Amulet <INFO>28424</INFO></ITEM> is to wish for easy fishing so that my family won't be starved.";
 		break;
+	case 7:
+		mes "<ITEM>Exlusive Doram Suit<INFO>15126</INFO></ITEM> is to wish for my family the strength to brave the difficulties of life.";
+		.@item_id = 15126;
+		break;
+	case 8:
+		mes "<ITEM>Exlusive Doram Manteau<INFO>20788</INFO></ITEM> is to wish for my family to shelter them from the cold.";
+		.@item_id = 20788;
+		break;
+	case 9:
+		mes "<ITEM>Exlusive Doram Shoe<INFO>22083</INFO></ITEM> is to wish for my family to walk easily in their path.";
+		.@item_id = 22083;
+		break;
 	}
 	if (.@s < 4) {
 		.@cost = 10;
 		.@item_id = 28410 + .@s * 3;
-	}
-	else {
+	} else if (.@s < 7 && .@ < .@s > 3) {
 		.@cost = 30;
 		.@item_id = 28418 + .@s;
+	} else {
+		.@cost = 50;
 	}
 	mes "Will you exchange it for " + .@cost + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>?";
 	next;
@@ -2194,7 +2209,7 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	}
 	if (countitem(25142) < .@cost) {
 		mes "[Yota Chara]";
-		mes "I'm sorry. My sister will get pretty mad if I don't sell it for the proper money. Will you come back with 10 Doram Tokens?";
+		mes "I'm sorry. My sister will get pretty mad if I don't sell it for the proper money. Will you come back with 10 <ITEM>Doram Token<INFO>25142</INFO></ITEM>?";
 		close;
 	}
 	mes "[Yota Chara]";
@@ -2361,9 +2376,9 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 			15129, 3,	// Luxurious Doram Suit [1]
 			20789, 3,	// Luxurious Doram Manteau [1]
 			22084, 3,	// Luxurious Doram Shoes [1]
-			15126, 3,	// Doram Suit [1]
-			20788, 3,	// Doram Manteau [1]
-			22083, 3,	// Doram Shoes [1]
+			15126, 2,	// Doram Suit [1]
+			20788, 2,	// Doram Manteau [1]
+			22083, 2,	// Doram Shoes [1]
 			28380, 2,	// Fresh Grass Necklace [1]
 			28381, 2,	// Cute Grass Necklace [1]
 			28382, 2,	// Charming Grass Necklace [1]
@@ -2422,9 +2437,10 @@ lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 	}
 	mes "[Goma Chara]";
 	mes "I'm Goma Chara, the eldest daughter of the Charas. These brats are who quicken my ageing process...";
-	mes "If you happen to have the amulet that my brother Yota made, I can polish it for you.";
+	mes "If you happen to have the amulet that my brother Yota made, I can polish it for you. I can also polish Doram Suits.";
 	next;
-	if (select( "Upgrade Amulet", "About the Family" ) == 2) {
+	.@s = (select( "Upgrade Amulet", "Upgrade Armor", "About the Family" ));
+	if(.@s == 3) {
 		mes "[Goma Chara]";
 		mes "My father was a born seaman so went out into the sea a long time ago, saying he'll catch the world's largest tuna.";
 		next;
@@ -2436,7 +2452,7 @@ lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 		next;
 		emotion ET_FRET;
 		mes "[Goma Chara]";
-		mes "Yota! Tidy up your place after making amulets! Pick up the scales of horse mackerels there. Oh, my days...";
+		mes "Yota! Tidy up your place after making amulets and armor! Pick up the scales of horse mackerels there. Oh, my days...";
 		next;
 		emotion ET_FRET;
 		mes "[Goma Chara]";
@@ -2448,49 +2464,118 @@ lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 		mes "I'm sorry but our chit-chat ends here. Time flies when you're busy taking care of little brothers.";
 		close;
 	}
-	mes "[Goma Chara]";
-	mes "Yota often makes quality amulets, but he still needs more polishing.";
-	mes "If he pays attention to details, his amulets will be even greater. But he just doesn't care.";
-	next;
-	.@s = (select( "Polish the Horse Mackerel Amulet.", "Polish the Leaf Amulet.", "Polish the Rabbit Amulet." ) - 1) * 4;
-
-	setarray .@item_data[0],
-		28413, 30,	// Basic Saurel Charm [1]
-		28414, 90,	// Fair Saurel Charm [1]
-		28416, 30,	// Basic Leaf Charm [1]
-		28417, 90,	// Fair Leaf Charm [1]
-		28419, 30,	// Basic Bunny Charm [1]
-		28420, 90;	// Fair Bunny Charm [1]
-
-	if ((countitem(.@item_data[.@s]) - isequippedcnt(.@item_data[.@s]))  > 0)
-		.@index = .@s;
-	else if ((countitem(.@item_data[.@s+2]) - isequippedcnt(.@item_data[.@s+2])) > 0)
-		.@index = .@s + 2;
-	else {
+	else if (.@s == 1) {
 		mes "[Goma Chara]";
-		mes "Show me your amulet, will you? I can't seem to find it in your inventory.";
+		mes "Yota often makes quality amulets, but he still needs more polishing.";
+		mes "If he pays attention to details, his amulets will be even greater. But he just doesn't care.";
+		next;
+		.@s = (select( "Polish the Horse Mackerel Amulet.", "Polish the Leaf Amulet.", "Polish the Rabbit Amulet." ) - 1) * 4;
+
+		setarray .@item_data[0],
+			28413, 30,	// Basic Saurel Charm [1]
+			28414, 90,	// Fair Saurel Charm [1]
+			28416, 30,	// Basic Leaf Charm [1]
+			28417, 90,	// Fair Leaf Charm [1]
+			28419, 30,	// Basic Bunny Charm [1]
+			28420, 90;	// Fair Bunny Charm [1]
+
+		if ((countitem(.@item_data[.@s]) - isequippedcnt(.@item_data[.@s]))  > 0)
+			.@index = .@s;
+		else if ((countitem(.@item_data[.@s+2]) - isequippedcnt(.@item_data[.@s+2])) > 0)
+			.@index = .@s + 2;
+		else {
+			mes "[Goma Chara]";
+			mes "Show me your amulet, will you? I can't seem to find it in your inventory.";
+			close;
+		}
+		mes "[Goma Chara]";
+		mes "Let me. Hmm... " + getitemname(.@item_data[.@index]) + ", it is.";
+		mes "...I knew this was going to happen again. Worse, this one must require a lot more time to polish!";
+		next;
+		mes "[Goma Chara]";
+		mes "Hey, if you give me " + .@item_data[.@index+1] + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>, I'll fix this for you.";
+		mes "<ITEM>This should produce the <INFO>" + (.@item_data[.@index]+1) + "</INFO></ITEM> function, I guess. How do you like it?";
+		next;
+		if(countitem(25142) < .@item_data[.index+1] )
+		{
+			mes "[Goma Chara]";
+			mes "Come back when you have enough <ITEM>Doram Token<INFO>25142</INFO></ITEM>.";
+			close;
+		}
+		if (select( "Upgrade", "Cancel" ) == 2) {
+			mes "[Goma Chara]";
+			mes "As you please.";
+			close;
+		}
+		mes "[Goma Chara]";
+		mes "The inside of this amulet seems pretty tough.";
+		mes "But my dexterity is tougher. Tada! Put my brother's amulet to good use.";
+		delitem 25142, .@item_data[.@index+1];// Doram token
+		delitem .@item_data[.@index],1;
+		getitem (.@item_data[.@index] + 1),1;
 		close;
 	}
-	mes "[Goma Chara]";
-	mes "Let me. Hmm... " + getitemname(.@item_data[.@index]) + ", it is.";
-	mes "...I knew this was going to happen again. Worse, this one must require a lot more time to polish!";
-	next;
-	mes "[Goma Chara]";
-	mes "Hey, if you give me " + .@item_data[.@index+1] + "<ITEM>Doram Token<INFO>25142</INFO></ITEM>, I'll fix this for you.";
-	mes "<ITEM>This should produce the <INFO>" + (.@item_data[.@index]+1) + "</INFO></ITEM> function, I guess. How do you like it?";
-	next;
-	if (select( "Upgrade", "Cancel" ) == 2) {
+	else if (.@s == 2) {
 		mes "[Goma Chara]";
-		mes "As you please.";
+		mes "Yota often makes quality armor, but he still needs more polishing.";
+		mes "If he pays attention to details, his armor will be even greater. But he just doesn't care.";
+		next;
+		.@s = (select( "Polish the Doram Suit.", "Polish the Doram Manteau.", "Polish the Doram Shoes." )-1) * 4;
+
+		setarray .@item_data[0],
+			15126, 70,	// Luxurious Doram Suit [1]
+			15129, 120,	// Elegant Doram Suit [1]
+			20788, 70,	// Luxurious Doram Manteau [1]
+			20789, 120,	// Elegant Doram Manteau [1]
+			22083, 70,	// Luxurious Doram Shoes [1]
+			22084, 120;	// Elegant Doram Shoes [1]
+
+		setarray .@item_out[0],
+			15129, 0, 	// Luxurious Doram Suit [1]
+			15156, 0,	// Elegant Doram Suit [1]
+			20789, 0,	// Luxurious Doram Manteau [1]
+			20790, 0,	// Elegant Doram Manteau [1]
+			22084, 0,	// Luxurious Doram Shoes [1]
+			22085, 0;	// Elegant Doram Shoes [1]
+
+		if ((countitem(.@item_data[.@s]) - isequippedcnt(.@item_data[.@s]))  > 0)
+			.@index = .@s;
+		else if ((countitem(.@item_data[.@s+2]) - isequippedcnt(.@item_data[.@s+2])) > 0)
+			.@index = .@s + 2;
+		else {
+			mes "[Goma Chara]";
+			mes "Show me your armor, will you? I can't seem to find it in your inventory.";
+			close;
+		}
+		mes "[Goma Chara]";
+		mes "Let me see...  Hmm...";
+		mes "<ITEM>" + getitemname(.@item_data[.@index]) + "<INFO>"+ .@item_data[.@index] +"</INFO></ITEM>, it is then.";
+		mes "This one requires a lot of time to polish!";
+		next;
+		mes "[Goma Chara]";
+		mes "Hey, if you give me " + .@item_data[.@index+1] + " <ITEM>Doram Token<INFO>25142</INFO></ITEM>, I'll fix this for you. This should";
+		mes "produce <ITEM>"+ (getitemname(.@item_out[.@index])) +"<INFO>" + (.@item_out[.@index]) + "</INFO></ITEM>.";
+		mes "How do you like it?";
+		next;
+		if(countitem(25142) < .@item_data[.index+1] )
+		{
+			mes "[Goma Chara]";
+			mes "Come back when you have enough <ITEM>Doram Token<INFO>25142</INFO></ITEM>.";
+			close;
+		}
+		if (select( "Upgrade", "Cancel" ) == 2) {
+			mes "[Goma Chara]";
+			mes "As you please.";
+			close;
+		}
+		mes "[Goma Chara]";
+		mes "The inside of this armor seems pretty tough.";
+		mes "But my dexterity is tougher. Tada! Put this armor to good use.";
+		delitem 25142, .@item_data[.@index+1];// Doram token
+		delitem .@item_data[.@index],1;
+		getitem .@item_out[.@index],1;
 		close;
 	}
-	mes "[Goma Chara]";
-	mes "The inside of this amulet seems pretty tough.";
-	mes "But my dexterity is tougher. Tada! Put my brother's amulet to good use.";
-	delitem 25142, .@item_data[.@index+1];// Doram token
-	delitem .@item_data[.@index],1;
-	getitem (.@item_data[.@index] + 1),1;
-	close;
 }
 
 // Daily Quests
