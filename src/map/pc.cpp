@@ -339,100 +339,6 @@ void pc_delspiritball(struct map_session_data *sd,int count,int type)
 	}
 }
 
-static int pc_check_banding( struct block_list *bl, va_list ap ) {
-	int *c, *b_sd;
-	struct block_list *src;
-	struct map_session_data *tsd;
-	struct status_change *sc;
-
-	nullpo_ret(bl);
-	nullpo_ret(tsd = (struct map_session_data*)bl);
-	nullpo_ret(src = va_arg(ap,struct block_list *));
-	c = va_arg(ap,int *);
-	b_sd = va_arg(ap, int *);
-
-	if(pc_isdead(tsd))
-		return 0;
-
-	sc = status_get_sc(bl);
-
-	if( sc && sc->data[SC_BANDING] )
-	{
-		b_sd[(*c)++] = tsd->bl.id;
-		return 1;
-	}
-
-	return 0;
-}
-
-int pc_banding(struct map_session_data *sd, uint16 skill_lv) {
-	int c;
-	int b_sd[MAX_PARTY]; // In case of a full Royal Guard party.
-	int i, j, hp, extra_hp = 0, tmp_qty = 0;
-	int range = skill_get_splash(LG_BANDING,skill_lv);
-
-	nullpo_ret(sd);
-
-	c = 0;
-	memset(b_sd, 0, sizeof(b_sd));
-	i = party_foreachsamemap(pc_check_banding,sd,range,&sd->bl,&c,&b_sd);
-
-	if( c < 1 ) //just recalc status no need to recalc hp
-	{	// No more Royal Guards in Banding found.
-		struct status_change *sc;
-		if( (sc = status_get_sc(&sd->bl)) != NULL  && sc->data[SC_BANDING] )
-		{
-			sc->data[SC_BANDING]->val2 = 0; // Reset the counter
-			status_calc_bl(&sd->bl, status_sc2scb_flag(SC_BANDING));
-		}
-		return 0;
-	}
-
-	//Add yourself
-	hp = status_get_hp(&sd->bl);
-	i++;
-
-	// Get total HP of all Royal Guards in party.
-	for( j = 0; j < i; j++ ){
-		struct map_session_data *bsd = map_id2sd(b_sd[j]);
-		if( bsd != NULL )
-			hp += status_get_hp(&bsd->bl);
-	}
-
-	// Set average HP.
-	hp = hp / i;
-
-	// If a Royal Guard have full HP, give more HP to others that haven't full HP.
-	for( j = 0; j < i; j++ )
-	{
-		int tmp_hp=0;
-		struct map_session_data *bsd = map_id2sd(b_sd[j]);
-		if( bsd != NULL && (tmp_hp = hp - status_get_max_hp(&bsd->bl)) > 0 ){
-			extra_hp += tmp_hp;
-			tmp_qty++;
-		}
-	}
-
-	if( extra_hp > 0 && tmp_qty > 0 )
-		hp += extra_hp / tmp_qty;
-
-	for( j = 0; j < i; j++ ){
-		struct map_session_data *bsd = map_id2sd(b_sd[j]);
-		if( bsd != NULL )
-		{
-			struct status_change *sc;
-			status_set_hp(&bsd->bl,hp,0);	// Set hp
-			if( (sc = status_get_sc(&bsd->bl)) != NULL  && sc->data[SC_BANDING] )
-			{
-				sc->data[SC_BANDING]->val2 = c; // Set the counter. It doesn't count your self.
-				status_calc_bl(&bsd->bl, status_sc2scb_flag(SC_BANDING));	// Set atk and def.
-			}
-		}
-	}
-
-	return c;
-}
-
 /**
 * Increases a player's fame points and displays a notice to him
 * @param sd Player
@@ -616,29 +522,44 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
  * Check if the player can sell the current item
  * @param sd: map_session_data of the player
  * @param item: struct of the checking item
+ * @param shoptype: NPC's sub type see enum npc_subtype
  * @return bool 'true' is sellable, 'false' otherwise
  */
-bool pc_can_sell_item(struct map_session_data *sd, struct item *item) {
-	struct npc_data *nd;
-
+bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_subtype shoptype) {
 	if (sd == NULL || item == NULL)
 		return false;
 
-	nd = map_id2nd(sd->npc_shopid);
+	if (item->equip > 0 || item->amount < 0)
+		return false;
 
 	if (battle_config.hide_fav_sell && item->favorite)
 		return false; //Cannot sell favs (optional config)
 
-	if (item->expire_time)
+	if (!battle_config.rental_transaction && item->expire_time)
 		return false; // Cannot Sell Rental Items
 
-	if (nd && nd->subtype == NPCTYPE_ITEMSHOP) {
-		struct item_data *itd;
-
-		if (item->bound && battle_config.allow_bound_sell&ISR_BOUND)
-			return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
-		if ((itd = itemdb_search(item->nameid)) && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
-			return true; // NPCTYPE_ITEMSHOP and sell restricted item config is sellable
+	switch (shoptype) {
+		case NPCTYPE_SHOP:
+			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND_SELLABLE && (
+				item->bound != BOUND_GUILD ||
+				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
+				))
+				return true;
+			break;
+		case NPCTYPE_ITEMSHOP:
+			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND && (
+				item->bound != BOUND_GUILD ||
+				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
+				))
+				return true;
+			else if (!item->bound) {
+				struct item_data *itd = itemdb_search(item->nameid);
+				if (itd && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
+					return true;
+			}
+			break;
 	}
 
 	if (!itemdb_cansell(item, pc_get_group_level(sd)))
@@ -5572,22 +5493,23 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int i;
+		unsigned short instance_id = map_getmapdata(sd->bl.m)->instance_id;
 
-		if(map_getmapdata(sd->bl.m)->instance_id && !mapdata->instance_id) {
-			bool instance_found = false;
+		if (instance_id && instance_id != mapdata->instance_id) {
 			struct party_data *p = NULL;
 			struct guild *g = NULL;
+			struct clan *cd = NULL;
 
-			if (sd->instance_id) {
+			if (sd->instance_id)
 				instance_delusers(sd->instance_id);
-				instance_found = true;
-			}
-			if (!instance_found && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id) {
+			else if (sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id)
 				instance_delusers(p->instance_id);
-				instance_found = true;
-			}
-			if (!instance_found && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
+			else if (sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
 				instance_delusers(g->instance_id);
+			else if (sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
+				instance_delusers(cd->instance_id);
+			else
+				instance_delusers(instance_id);
 		}
 
 		sd->state.pmap = sd->bl.m;
@@ -10207,6 +10129,13 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 		if( !battle_config.dancing_weaponswitch_fix )
 			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
+#ifdef RENEWAL
+		if (battle_config.switch_remove_edp&2) {
+#else
+		if (battle_config.switch_remove_edp&1) {
+#endif
+			status_change_end(&sd->bl, SC_EDP, INVALID_TIMER);
+		}
 	}
 	if(pos & EQP_HAND_L) {
 		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)

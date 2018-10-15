@@ -1,0 +1,8 @@
+//===== rAthena Script ======================================= 
+//= Rock Ridge dungeon warps script
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+rockrdg2,304,350,0	warp2	rockrdg2#rockmi1	1,1,rockmi1,247,19
+rockmi1,247,16,0	warp2	rockmi1#rockrdg2	1,1,rockrdg2,304,344

@@ -740,7 +740,8 @@ enum e_itemshop_restrictions {
 	ISR_NONE = 0x0,
 	ISR_BOUND = 0x1,
 	ISR_SELLABLE = 0x2,
-	ISR_ALL = 0x3,
+	ISR_BOUND_SELLABLE = 0x4,
+	ISR_BOUND_GUILDLEADER_ONLY = 0x8,
 };
 
 ///Item combo struct
