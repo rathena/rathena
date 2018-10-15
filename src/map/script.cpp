@@ -61,6 +61,8 @@
 #include "quest.hpp"
 #include "storage.hpp"
 
+#include "rating.hpp"
+
 struct eri *array_ers;
 DBMap *st_db;
 unsigned int active_scripts;
@@ -23956,6 +23958,87 @@ BUILDIN_FUNC(identifyall) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Get Glicko-1 rating rounded to nearest integer
+ * rating_get(<type>{,<char id>})
+ * Types:
+ * 0: Rating
+ * 1: Rating deviation
+ * @author Secret <secret@rathena.org>
+ */
+BUILDIN_FUNC(rating_get) {
+	struct map_session_data *sd;
+	int type = 0;
+
+	if (script_hasdata(st, 2)) {
+		type = script_getnum(st, 2);
+	}
+	if (!script_charid2sd(3, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	Glicko::Rating rating(sd);
+	if (type == 0) {
+		int mmr = (int)std::round(rating.Rating1());
+		script_pushint(st, mmr);
+	}
+	else if (type == 1) {
+		int rd = (int)std::round(rating.Deviation1());
+		script_pushint(st, rd);
+	}
+	else {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Adjust rating of a player
+ * Result type
+ * 0: Draw
+ * 1: sd won
+ * 2: sd lost
+ * 3: Draw
+ * rating_adjust(<opponent rating>, <opponent rating deviation>, <result type>);
+ * @author Secret <secret@rathena.org>
+ */
+BUILDIN_FUNC(rating_adjust) {
+	struct map_session_data *sd;
+	int t_rating, rd, result_type;
+	double result = 0.5;
+	char buffer[256];
+
+	t_rating = script_getnum(st, 2);
+	rd = script_getnum(st, 3);
+	result_type = script_getnum(st, 4);
+
+	if (!script_charid2sd(5, sd)) {
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (result_type & 1)
+		result += 0.5;
+	if (result_type & 2)
+		result -= 0.5;
+
+	Glicko::Rating rating(sd);
+	Glicko::Rating target_rating(t_rating, rd);
+
+	rating.Update(target_rating, result);
+	rating.Apply();
+
+	Glicko::rating_data data = rating.c_struct();
+	sprintf(buffer, "%.15f", data.u);
+	pc_setregistry_str(sd, add_str("RATING_MU$"), buffer);
+	sprintf(buffer, "%.15f", data.p);
+	pc_setregistry_str(sd, add_str("RATING_PHI$"), buffer);
+	sprintf(buffer, "%.15f", data.s);
+	pc_setregistry_str(sd, add_str("RATING_SIGMA$"), buffer);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24616,6 +24699,10 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mail, "isss*"),
 	BUILDIN_DEF(open_roulette,"?"),
 	BUILDIN_DEF(identifyall,"??"),
+		
+	// Rating System
+	BUILDIN_DEF(rating_get, "??"),
+	BUILDIN_DEF(rating_adjust, "iii?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
