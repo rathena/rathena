@@ -525,7 +525,7 @@ OnTimer26000:
 	mes "You administer the first-aid-kit to the soldier.";
 	next;
 	specialeffect EF_SPHERE;
-	progressbar "000000",10;
+	// progressbar "000000",10;	// fix me: progressbar doesn't display close button on cancel
 	delitem 7641,1;
 	specialeffect EF_ENTRY;
 	disablenpc instance_npcname( strnpcinfo(0) );
