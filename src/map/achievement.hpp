@@ -1,8 +1,8 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _ACHIEVEMENT_HPP_
-#define _ACHIEVEMENT_HPP_
+#ifndef ACHIEVEMENT_HPP
+#define ACHIEVEMENT_HPP
 
 #include <algorithm>
 #include <memory>
@@ -10,8 +10,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "../common/mmo.h"
-#include "../common/db.h"
+#include "../common/mmo.hpp"
+#include "../common/db.hpp"
 
 struct map_session_data;
 struct block_list;
@@ -123,4 +123,4 @@ const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_conditi
 long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, const int *count);
 void achievement_script_free(std::shared_ptr<struct av_condition> condition);
 
-#endif /* _ACHIEVEMENT_HPP_ */
+#endif /* ACHIEVEMENT_HPP */

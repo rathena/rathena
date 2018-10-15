@@ -1,11 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INTIF_HPP_
-#define _INTIF_HPP_
+#ifndef INTIF_HPP
+#define INTIF_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 struct party_member;
 struct guild_member;
@@ -24,7 +24,7 @@ int intif_parse(int fd);
 int intif_broadcast(const char* mes, int len, int type);
 int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY);
 int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned short nameid, unsigned int sourceid, unsigned char type);
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid, const char *srcname);
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid);
 int intif_main_message(struct map_session_data* sd, const char* message);
 
 int intif_wis_message(struct map_session_data *sd,char *nick,char *mes,int mes_len);
@@ -129,4 +129,4 @@ bool intif_storage_save(struct map_session_data *sd, struct s_storage *stor);
 
 int CheckForCharServer(void);
 
-#endif /* _INTIF_HPP_ */
+#endif /* INTIF_HPP */

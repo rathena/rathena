@@ -58,7 +58,7 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 		next;
 		select("I couldn't even imagine, seeing this mood...");
 		mes "[Catherine Jet Johnson]";
-		mes "Yes, because we couldn't earn a livng by packaging toys forever. The situations got tough after the villagers left in ones and twos.";
+		mes "Yes, because we couldn't earn a living by packaging toys forever. The situations got tough after the villagers left in ones and twos.";
 		next;
 		mes "[Catherine Jet Johnson]";
 		mes "I was the one who worked as an assistant beside the doll craftsman who made dolls to the end.";
@@ -70,31 +70,31 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 		mes "On the day when the factory is decided to be closed, the doll maker dressed the last doll he made and shed tears.";
 		next;
 		mes "[Catherine Jet Johnson]";
-		mes "Perhaps he thought he wouldn't make a doll anymore.";
+		mes "Perhaps he thought he wouldn't make dolls anymore.";
 		next;
 		mes "[Catherine Jet Johnson]";
 		mes "He named the last doll ^0000ffCeline Kimi^000000 and stopped all the lines in the factory.";
 		next;
 		select("Did he give a doll a name?");
 		mes "[Catherine Jet Johnson]";
-		mes "Sometimes there can be the work as if it were their child to doll makers. Kimi was the one for him.";
+		mes "Sometimes so much work goes into a doll as if it were their child to doll makers. Kimi was the one for him.";
 		next;
 		mes "[Catherine Jet Johnson]";
 		mes "I guess his earnestness breathed life to Kimi.";
 		next;
 		select("Do you mean the doll is alive?");
 		mes "[Catherine Jet Johnson]";
-		mes "Yes, ^0000ffShe^000000 became a living creature. I don't know the reason, but she is striding in the toy factory with heavy sorrow and rage.";
+		mes "Yes, ^0000ffShe^000000 became a living creature. I don't know how, but she is striding in the toy factory with heavy sorrow and rage.";
 		next;
 		mes "[Catherine Jet Johnson]";
-		mes "When I first saw her, she was standing beside the doll maker who died and collapsed. She stood there with an unknowable expression.";
+		mes "When I first saw her, she was standing beside the doll maker who died and collapsed. She stood there with a bare expression.";
 		next;
 		mes "[Catherine Jet Johnson]";
-		mes "That's the end. I was outside when I woke up again after I had been blacked out. My face has become like this.";
+		mes "That's the end. I was outside when I woke up again after I had blacked out. My face has become like this.";
 		next;
 		select("Did Kimi do that?");
 		mes "[Catherine Jet Johnson]";
-		mes "I don't know.. She would do it, or it could be a different problem. I have no memory with this.";
+		mes "I don't know.. She would do it, or it could be a different problem. I have no memory of it.";
 		next;
 		select("Do you blame her?");
 		mes "[Catherine Jet Johnson]";
@@ -114,9 +114,9 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 		mes "[Catherine Jet Johnson]";
 		mes "Heh? You would do me a favor?";
 		next;
-		select("Let's get into the factory with me.");
+		select("Let's get into the factory.");
 		mes "[Catherine Jet Johnson]";
-		mes "We.. Well, I cannot help you at all except for providing you with directions. Besides, there can be a big danger to you.";
+		mes "We.. Well, I cannot help you at all except for providing you with directions. Besides, this can be very dangerous to you.";
 		next;
 		select("You can reunite with Kimi, can't you?");
 		mes "[Catherine Jet Johnson]";
@@ -141,14 +141,14 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 	}
 	next;
 	if (getcharid(1) < 1) {
-		mes "^0000ffYou need to organize a party having more than a member to get into Horror Toy Factory.^000000";
+		mes "^0000ffYou need to organize a party having more than one member to get into Horror Toy Factory.^000000";
 		close;
 	}
 	switch( checkquest(12331,PLAYTIME) ) {
 	case -1:
 		if (getpartyleader(getcharid(1),2) != getcharid(0)) {
 			mes "[Catherine Jet Johnson]";
-			mes "Eh.. Give me a second. I am talking to the person in charge. Please wait for a while.";
+			mes "Eh.. Give me a second. I am talking to the person in charge. Please wait a little bit.";
 			close;
 		}
 		if (select( "Unlock Horror Toy Factory", "Cancel" ) == 1) {
@@ -160,10 +160,10 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 	case 0:
 	case 1:
 		mes "[Catherine Jet Johnson]";
-		mes "The smell of preservative from the factory has not been going away. You cannot stand longer there under this state.";
+		mes "The smell of preservative from the factory has not gone away. You cannot enter under this state.";
 		next;
 		mes "[Catherine Jet Johnson]";
-		mes "I will keep you from entering before the scent of preservative is completely gone away.";
+		mes "I will keep you from entering until the scent of preservative is completely gone.";
 		close;
 	case 2:
 		mes "^0000ffThe smell of preservative has gone away. You can talk to Catherine Jet Johnson.^000000";
@@ -175,7 +175,7 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 xmas,233,305,4	script	Factory Dimension Telep	PORTAL,{
 	if (getstatus(SC_MONSTER_TRANSFORM,1) > 0) {
 		mes "[Factory Dimension Teleporter]";
-		mes "There are some work study programs as monster workers during the Horror Toy Factory tour. Therefore, ^ff0000You are limited to enter when you are in transformation.^000000";
+		mes "There are some work study programs as monster workers during the Horror Toy Factory tour. Therefore, ^ff0000you are unable to enter when you are transformed.^000000";
 		close;
 	}
 	if (BaseLevel < 140) {
@@ -185,7 +185,7 @@ xmas,233,305,4	script	Factory Dimension Telep	PORTAL,{
 	}
 	if (getcharid(1) < 1) {
 		mes "[Factory Dimension Teleporter]";
-		mes "You don't have any fellows? Please organize a party and come again if you go alone.";
+		mes "You don't have any support? Please organize a party and come again if you go in alone.";
 		close;
 	}
 	switch( checkquest(12331,PLAYTIME) ) {
@@ -199,10 +199,10 @@ xmas,233,305,4	script	Factory Dimension Telep	PORTAL,{
 			close;
 		case 1:// dummy
 			mes "[Factory Dimension Teleporter]";
-			mes "You don't have any fellows? Please organize a party and come again if you go alone.";
+			mes "You don't have any support? Please organize a party and come again if you go in alone.";
 			close;
 		case 0:
-			mapannounce "xmas", getpartyname( getcharid(1) ) +" party's party member "+ strcharinfo(0) +" enters Horror Toy Factory.", bc_map, "0x00ff99";
+			mapannounce "xmas", getpartyname( getcharid(1) ) +" party's party member "+ strcharinfo(0) +" has entered the Horror Toy Factory.", bc_map, "0x00ff99";
 			setquest 12331;// Trail of Toy Factory
 			end;
 		}
@@ -220,10 +220,10 @@ xmas,233,305,4	script	Factory Dimension Telep	PORTAL,{
 1@xm_d,112,20,6	script	Catherine Jet Johnson#0	4_F_SKULL06GIRL,{
 	if (getstatus(SC_MONSTER_TRANSFORM,1) > 0) {
 		mes "[Catherine Jet Johnson]";
-		mes "You cannot come to here if you are under the effect of a monstre transformation.";
+		mes "You cannot come here if you are under the effect of a monster transformation.";
 		next;
 		mes "[Catherine Jet Johnson]";
-		mes "Please wait until the transformation is finished. You cannot move to another area before you become normal.";
+		mes "Please wait until the transformation is finished. You cannot move to another area until you become normal.";
 		close;
 	}
 	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
@@ -269,7 +269,7 @@ OnStart:
 	sleep 5000;
 	npctalk "Catherine Jet Johnson: I think other spirits have inhabited the empty factory for too long.";
 	sleep 3000;
-	mapannounce 'xm_d_map$, "Factory announcement: Waste and other debries should be kept clear from work areas. This is to keep you safe at all times.", bc_map, "0x00ff44";
+	mapannounce 'xm_d_map$, "Factory announcement: Waste and other debris should be kept clear from work areas. This is to keep you safe at all times.", bc_map, "0x00ff44";
 	sleep 3000;
 	npctalk "Catherine Jet Johnson: It's just like when humans worked here.";
 	sleep 3000;
@@ -281,18 +281,18 @@ OnStart:
 	sleep 3000;
 	npctalk "Catherine Jet Johnson: Ah, maybe we should restore those toys and gift boxes to their original condition.";
 	sleep 5000;
-	npctalk "Catherine Jet Johnson: Eh? I... I mean... To return them as they were.. Yes... We need to fight them? I don't how exactly.";
+	npctalk "Catherine Jet Johnson: Eh? I... I mean... To return them as they were.. Yes... We need to fight them? I don't know how exactly.";
 	sleep 2000;
 	mapannounce 'xm_d_map$, "Factory announcement: All employees must wear a proper uniform and identification. Please check with security if you do not have yours.", bc_map, "0x00ff44";
 	sleep 3000;
-	npctalk "Catherine Jet Johnson: Good heavens, I home the guards are still human. There were boxes of uniforms near here in the past..";
+	npctalk "Catherine Jet Johnson: Good heavens, I hope the guards are still human. There were boxes of uniforms near here in the past..";
 	enablenpc instance_npcname("Employees' Uniform Box#1");
 	enablenpc instance_npcname("Employees' Uniform Box#2");
 	enablenpc instance_npcname("Employees' Uniform Box#3");
 	sleep 5000;
 	npctalk "Catherine Jet Johnson: Ah, they are behind me. You'd better change into the uniform. Fortunately, I still have my employee card.";
 	sleep 5000;
-	npctalk "Catherine Jet Johnson: I will find my way around here. Let's meet near the second production line. Cheer up its a toy factory. It can't be all that bad!!";
+	npctalk "Catherine Jet Johnson: I will find my way around here. Let's meet near the second production line. Cheer up, it's a toy factory. It can't be all that bad!!";
 	sleep 6000;
 	disablenpc instance_npcname("Catherine Jet Johnson#01");
 	disablenpc instance_npcname("#bgm01");
@@ -311,22 +311,11 @@ OnStart2:
 	enablenpc instance_npcname("Employees' Uniform Box#3");
 	mapannounce 'xm_d_map$, "Factory announcement: Wake up, toy factory working time has come...", bc_map, "0x00ff44";
 	sleep 6000;
-	mapannounce 'xm_d_map$, "Factory announcement: Waste and other debries should be kept clear from work areas. This is to keep you safe at all times.", bc_map, "0x00ff44";
+	mapannounce 'xm_d_map$, "Factory announcement: Waste and other debris should be kept clear from work areas. This is to keep you safe at all times.", bc_map, "0x00ff44";
 	sleep 6000;
 	mapannounce 'xm_d_map$, "Factory announcement: Let's make presents for every child's dream today.", bc_map, "0x00ff44";
 	donpcevent instance_npcname("#fac1ct") + "::OnStart";
 	disablenpc instance_npcname("#bgm01");
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	// disable some warps
-	disablenpc instance_npcname("#fac3wp");
-	disablenpc instance_npcname("#fac3wp2");
-	disablenpc instance_npcname("#fac4wp");
-	disablenpc instance_npcname("#fac4wp2");
-	disablenpc instance_npcname("#fac5wp");
-	disablenpc instance_npcname("#fac6wp");
 	end;
 }
 
@@ -335,9 +324,6 @@ OnInstanceInit:
 OnTouch:
 	playBGM "99";
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,13,105,6	script	Employees' Uniform Box#1	4_NONMYSTCASE,{
@@ -345,16 +331,13 @@ OnInstanceInit:
 	playBGM "52";
 	.@mob_id_transform = getstatus(SC_MONSTER_TRANSFORM,1);
 	if (.@mob_id_transform == 1246 || .@mob_id_transform < 1) {
-		mes "^0000ffYou put on a factory uniform. There still seem to be a few uniforms left in the box.^000000";
+		mes "^0000ffYou put on a factory uniform. There still seems to be a few uniforms left in the box.^000000";
 		transform 1246,180000;// COOKIE_XMAS
 		close;
 	}
-	mes "^ff0000In transformation";
-	mes "You cannot use uniform box when already transformed.^000000";
+	mes "^ff0000You are in transformation.";
+	mes "You cannot use the uniform box when already transformed.^000000";
 	close;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 1@xm_d,116,16,6	duplicate(Employees' Uniform Box#1)	Employees' Uniform Box#2	4_NONMYSTCASE
 1@xm_d,10,20,6	duplicate(Employees' Uniform Box#1)	Employees' Uniform Box#3	4_NONMYSTCASE
@@ -376,14 +359,10 @@ OnMyMobDead:
 OnTimer1000:
 	killmonster 'xm_d_map$, instance_npcname("#fac1ct") + "::OnMyMobDead";
 	enablenpc instance_npcname("#fac1bs");
-	mapannounce 'xm_d_map$, "Coordinator's announcement: Huh? Where's everyone! How dare workers to be absent from the line!", bc_map, "0xff8800";
+	mapannounce 'xm_d_map$, "Coordinator's announcement: Huh? Where's everyone! How dare workers be absent from the line!", bc_map, "0xff8800";
 	for ( .@i = 61; .@i <= 89; .@i++ )
 		disablenpc instance_npcname( "alert#"+ .@i );
 	stopnpctimer;
-	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -413,7 +392,7 @@ OnAlert:
 	.@npc_name$ = instance_npcname("#fac1bs");
 	.@event$ = .@npc_name$ + "::OnMyMobDead";
 	killmonster 'xm_d_map$, .@event$;
-	npctalk "Coordinator: Guard! Where is guard! Humans are invading!!";
+	npctalk "Coordinator: Guard! Where is a guard! Humans are invading!!";
 	sleep 3000;
 	disablenpc .@npc_name$;
 	for ( .@i = 0; .@i <= 10; .@i++ ) {
@@ -429,12 +408,8 @@ OnTimer60000:
 	.@npc_name$ = instance_npcname("#fac1bs");
 	killmonster 'xm_d_map$, .@npc_name$ + "::OnMyMobDead";
 	enablenpc .@npc_name$;
-	npctalk "Coordinator: This kind of things happens a lot these days...";
+	npctalk "Coordinator: This kind of thing happens a lot these days...";
 	stopnpctimer;
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -446,17 +421,14 @@ OnInstanceInit:
 		transform 1249,180000;// MYSTCASE
 	}
 	else if (.@mob_id_transform == 1249)
-		mes "^009900The box is in your hands. You cannot carry more than one boxe.^000000";
+		mes "^009900The box is in your hands. You cannot carry more than one box.^000000";
 	else
 		mes "^ff0000You are not in uniform. The Coordinator won't let you pick it up.^000000";
 	close;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,76,129,0	script	#fac1wp	WARPNPC,2,2,{
+	end;
 OnTouch:
 	if (getstatus(SC_MONSTER_TRANSFORM,1) == 1249) {
 		warp 'xm_d_map$,88,129;
@@ -466,6 +438,7 @@ OnTouch:
 }
 
 1@xm_d,179,129,0	script	#fac2wp	WARPNPC,2,2,{
+	end;
 OnTouch:
 	if (getstatus(SC_MONSTER_TRANSFORM,1) == 1249) {
 		warp 'xm_d_map$,183,100;
@@ -479,33 +452,30 @@ OnTouch:
 OnStart:
 	.@r = rand(1,10);
 	if (.@r == 1)
-		mapannounce 'xm_d_map$, "Factory announcement: Outsiders are spotted on the product line. Guard, please move out immediately.",bc_map,"0x00ffff";
+		mapannounce 'xm_d_map$, "Factory announcement: Outsiders are spotted on the product line. Guards, please move out immediately.",bc_map,"0x00ffff";
 	else if (.@r == 2)
 		mapannounce 'xm_d_map$, "Factory announcement: Invaders have been identified. Distinction Code AX0829. Type: Human. Chase them away.", bc_map, "0x00ffff";
 	else if (.@r == 3)
-		mapannounce 'xm_d_map$, "Guard's announcement: Please immediately leave here, outsiders.", bc_map, "0xffff00";
+		mapannounce 'xm_d_map$, "Guard's announcement: Please leave here immediately, outsiders.", bc_map, "0xffff00";
 	else if (.@r == 4)
 		mapannounce 'xm_d_map$, "Factory announcement: Outsiders, hold up your hands and surrender. Otherwise, I will shoot you.", bc_map, "0x00ffff";
 	else if (.@r == 5)
-		mapannounce 'xm_d_map$, "Factory announcement: Dispatch the guard. Suppress the invaders.", bc_map, "0x00ffff";
+		mapannounce 'xm_d_map$, "Factory announcement: Dispatch the guards. Suppress the invaders.", bc_map, "0x00ffff";
 	else if (.@r == 6)
 		mapannounce 'xm_d_map$, "CAUTION: The plant manger is coming to inspect. Wipe out the outsiders.", bc_map, "0xff4444";
 	else if (.@r == 7)
-		mapannounce 'xm_d_map$, "Factory announcement: Not good news. Outside creatures are detected. Guard, please mobilize.", bc_map, "0x00ff88";
+		mapannounce 'xm_d_map$, "Factory announcement: Not good news. Outside creatures are detected. Guards, please mobilize.", bc_map, "0x00ff88";
 	else if (.@r == 8)
-		mapannounce 'xm_d_map$, "Factory announcement: Outsiders or invaders are obstacles to operate the factory. You can kill them if it is necessary.", bc_map, "0xff9999";
+		mapannounce 'xm_d_map$, "Factory announcement: Outsiders or invaders are obstacles to factory's operation. You can kill them if necessary.", bc_map, "0xff9999";
 	else if (.@r == 9)
 		mapannounce 'xm_d_map$, "Factory announcement: Okay that's it, party's over! Get out of my house!", bc_map, "0x00ffff";
 	else
 		mapannounce 'xm_d_map$, "Guard's announcement: Invaders are spotted! They seem human! I will blip them off!", bc_map, "0xffff00";
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,10,24,0	script	alert#61	-1,10,10,{
+	end;
 OnTouch_:
 	if (getstatus(SC_MONSTER_TRANSFORM,1) != 1246) {
 		switch( atoi(strnpcinfo(2)) ) {
@@ -599,7 +569,7 @@ OnMyMobDead:
 		mes "[Catherine Jet Johnson]";
 		mes "Lucky you got here safely.";
 		next;
-		switch( select( "Quit the story", "Listen to her tatics.", "I know what to do. Proceed quickly!" ) ) {
+		switch( select( "Quit the story", "Listen to her tactics.", "I know what to do. Proceed quickly!" ) ) {
 		case 1:
 			mes "[Catherine Jet Johnson]";
 			mes "Oh, dear. Let me know when you are ready.";
@@ -637,13 +607,13 @@ S_Skip:
 		sleep 5000;
 		npctalk "Catherine Jet Johnson: Ah, I realized something while coming here. Some...Children...";
 		sleep 5000;
-		npctalk "Catherine Jet Johnson: How can I say.. There were lots of souls looking very scary, but awfully sad.";
+		npctalk "Catherine Jet Johnson: How can I say.. There were lots of very scary, but awfully sad, looking souls.";
 		sleep 5000;
 		npctalk "Catherine Jet Johnson: How pitiful they are, but please make them rest if they attack you. Fortunately, they won't come at me.";
 		sleep 5000;
 		npctalk "Catherine Jet Johnson: If you see a worker toy on duty while searching here, would you ask it about the doll maker?";
 		sleep 5000;
-		npctalk "Catherine Jet Johnson: He might be sent to Heaven if they recall the memory of doll maker. That the only hope.";
+		npctalk "Catherine Jet Johnson: He might be sent to Heaven if they recall the memory of doll maker. That's the best hope.";
 		sleep 5000;
 		npctalk "Catherine Jet Johnson: If you find all clues, search other places. I will look for the spot where I met the doll maker last time I was here.";
 		sleep 5000;
@@ -658,18 +628,12 @@ S_Skip:
 		enablenpc instance_npcname( "Worker#"+ .@i );
 	disablenpc instance_npcname("#bgm06");
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,185,100,0	script	#bgm06	-1,9,9,{
+	end;
 OnTouch:
 	playBGM "99";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -685,10 +649,6 @@ OnInstanceInit:
 	mes "^ff0000You transformed into a different form.";
 	mes "You can't seem to put on the uniform over your fangs.^000000";
 	close;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,5,3	script	#fac2ct	CLEAR_NPC,{
@@ -707,10 +667,6 @@ OnStart:
 	end;
 OnMyMobDead:
 	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,2,3	script	#fac2wpc	CLEAR_NPC,{
@@ -727,10 +683,6 @@ OnStart:
 	}
 	else
 		mapannounce 'xm_d_map$, "Factory announcement: Now there are " + (10 - .@fac_open) + " people on the packaging line. Take care of yourself.", bc_map, "0x00ff44";
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -758,12 +710,12 @@ OnInstanceInit:
 			npctalk "Worker: I wish he wouldn't pass away. Ah... Ahah... I feel better.";
 			break;
 		case 2:
-			npctalk "Worker: Did Kimi kill the craftman grandpa? Who said that? That's not true. Kimi was going to save him!";
+			npctalk "Worker: Did Kimi kill the craftsman grandpa? Who said that? That's not true. Kimi was going to save him!";
 			sleep2 3000;
-			npctalk "Worker: Ah... B.. By the way, why my body becomes...";
+			npctalk "Worker: Ah... B.. By the way, why my does my body become...";
 			break;
 		case 3:
-			npctalk "Worker: He had chronic cardiac disease, but it suddenly started to fit on the day he died. Kimi found him and gave him first aid, but..";
+			npctalk "Worker: He had a chronic cardiac disease, but it was so sudden when it started and he died. Kimi found him and gave him first aid, but..";
 			sleep2 3000;
 			npctalk "Worker: Ah.. Did you do something to me? I feel strange...";
 			break;
@@ -788,16 +740,16 @@ OnInstanceInit:
 			npctalk "Worker: Perhaps Grandpa's affection made her move and become alive. Ahah.. I'm sleepy..";
 			break;
 		case 8:
-			npctalk "Worker: Grandpa good man! Kimi pity! Kimi loves Grandpa! Granpa died. I'm sad!";
+			npctalk "Worker: Grandpa was a good man! Pity on Kimi! Kimi loved Grandpa! But Grandpa died. I'm sad!";
 			sleep2 3000;
 			break;
 		case 9:
 			npctalk "Worker: He was so amazed to see Kimi's opening eyes and his heart... It became like that.";
 			sleep2 3000;
-			npctalk "Worker: Anyhow, why my body... It's likely to float in the air.... Something strange.";
+			npctalk "Worker: Anyhow, why my is my body... It's likely to float in the air.... Something strange.";
 			break;
 		case 10:
-			npctalk "Worker: Kimi didn't hurt Grandpa! Kimi's wanted to save Grandpa! People are scared of Kimi Kimi is kind! Kimi is a good girl!";
+			npctalk "Worker: Kimi didn't hurt Grandpa! Kimi's wanted to save Grandpa! People are scared of Kimi, but Kimi is kind! Kimi is a good girl!";
 			sleep2 3000;
 			npctalk "Worker: Grandpa... I miss him. Grandpa, Grandpa...";
 			break;
@@ -852,10 +804,6 @@ OnTimer60000:
 
 OnMyMobDead:
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 1@xm_d,130,72,3	duplicate(Worker#1)	Worker#2	4_M_COOKIE
 1@xm_d,134,34,1	duplicate(Worker#1)	Worker#3	4_M_COOKIE
@@ -883,10 +831,6 @@ OnTouch_:
 	mes "[Captured Santa]";
 	mes "Even if no one owns it, its not right to steal it from everyone.";
 	close;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,131,213,4	script	Antonio#1	4_M_ANTONIO,{
@@ -920,7 +864,7 @@ OnStart:
 	sleep 5000;
 	mapannounce 'xm_d_map$, "Factory announcement: Delivery employees, please stand by.", bc_map, "0x00ff44";
 	sleep 3000;
-	npctalk "Antonio: Oh! Wohuhu! A bunch of presents are dealayed. Let's have a party today?!", .@antonio$;
+	npctalk "Antonio: Oh! Wohuhu! A bunch of presents are delayed. Let's have a party today?!", .@antonio$;
 	sleep 4000;
 	npctalk "Antonio: Hey, human. You can follow me if you'd like to help. I'm okay unless you disturb me!", .@antonio$;
 	sleep 4000;
@@ -944,20 +888,16 @@ OnStart:
 }
 
 1@xm_d,131,208,0	script	#bgm04	-1,9,9,{
+	end;
 OnTouch:
 	playBGM "54";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
 1@xm_d,131,208,0	script	#bgm05	-1,9,9,{
+	end;
 OnTouch:
 	playBGM "105";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -976,9 +916,6 @@ OnStart:
 	end;
 OnMyMobDead:
 	end;
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,5,3	script	#fac3ct2	CLEAR_NPC,{
@@ -995,9 +932,6 @@ OnStart:
 	areamonster 'xm_d_map$,159,215,241,247, "Creepy Demon",2992,11, .@event$;			// XM_LUDE
 	end;
 OnMyMobDead:
-	end;
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1025,10 +959,6 @@ OnEnd:
 	mapannounce 'xm_d_map$, "???: I won't harm you if you leave quietly without spoiling it for me.", bc_map, "0xff8800";
 	stopnpctimer;
 	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,5,3	script	#finalbs	CLEAR_NPC,{
@@ -1040,49 +970,37 @@ OnStart:
 	// enablenpc instance_npcname("#fac5wp2");// never enabled
 	enablenpc instance_npcname("#jeton1");
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 /*
 // never enabled
 1@xm_d,160,208,0	script	#fac5wp2	WARPNPC,2,2,{
+	end;
 OnTouch:
 	warp 'xm_d_map$,145,208;
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 */
 
 1@xm_d,233,183,3	script	Celine Kimi#0	4_F_KIMI,{
 	mes "[Celine Kimi]";
-	mes "Did you come here as well? Why all the humans are anxious to destroy what we built?";
+	mes "Did you come here as well? Why are all of the humans so anxious to destroy what we built?";
 	close;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,222,183,0	script	#jeton1	-1,7,7,{
+	end;
 OnTouch_:
 	disablenpc instance_npcname("#jeton1");
 	donpcevent instance_npcname("Catherine Jet Johnson#5") + "::OnStart";
 	enablenpc instance_npcname("#bgm02");
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,222,183,0	script	#bgm02	-1,9,9,{
+	end;
 OnTouch:
 	playBGM "101";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1094,7 +1012,7 @@ OnInstanceInit:
 OnStart:
 	.@kimi$ = instance_npcname("Celine Kimi#0");
 	sleep 2000;
-	npctalk "Catherine Jet Johnson: Kimi! Listen to me. I didn't come to blame you here.";
+	npctalk "Catherine Jet Johnson: Kimi! Listen to me. I didn't come here to blame you.";
 	sleep 3000;
 	npctalk "Celine Kimi: Everyone hates me!... You don't like me as well? This ugly and creepy doll likes me...", .@kimi$;
 	sleep 4000;
@@ -1104,7 +1022,7 @@ OnStart:
 	sleep 1000;
 	npctalk "Celine Kimi: Don't lie. If that's true, why didn't he see me with love in his eyes?", .@kimi$;
 	sleep 4000;
-	npctalk "Celine Kimi: Why didn't call my name? [Kimi] [Kimi!] I was anxious to hear the Grandpa's voice.", .@kimi$;
+	npctalk "Celine Kimi: Why didn't he say my name? [Kimi] [Kimi!] I was anxious to hear the Grandpa's voice.", .@kimi$;
 	sleep 4000;
 	mapannounce 'xm_d_map$, "Phantom's yell: Yes, Kimi~ Father was frightened! He was scared of you~", bc_map, "0xff8800";
 	sleep 3000;
@@ -1118,7 +1036,7 @@ OnStart:
 	sleep 3000;
 	npctalk "Celine Kimi: D.. Did I.. kill him?...", .@kimi$;
 	sleep 2000;
-	npctalk "Catherine Jet Johnson: No, Kimi! I've realized that. I misunderstood you. Just he had a disease!";
+	npctalk "Catherine Jet Johnson: No, Kimi! I've realized that. I misunderstood you. He was sick!";
 	sleep 3000;
 	npctalk "Celine Kimi: D.. Di.. Did I... kill... him?", .@kimi$;
 	sleep 2000;
@@ -1128,10 +1046,10 @@ OnStart:
 	sleep 1000;
 	mapannounce 'xm_d_map$, "Phantom's yell: Don't you agree you are frightening? No one loves you, Kimi~", bc_map, "0xff8800";
 	sleep 3000;
-	npctalk "Celine Kimi: Because of me, granpa was dead...", .@kimi$;
+	npctalk "Celine Kimi: Because of me, grandpa is dead...", .@kimi$;
 	specialeffect EF_MAPPILLAR2, AREA, .@kimi$;
 	sleep 3000;
-	npctalk "Catherine Jet Johnson: It became serious. Kimi is suffering. It would be dangerous under this condition!";
+	npctalk "Catherine Jet Johnson: It has become serious. Kimi is suffering. It would be dangerous under this condition!";
 	specialeffect EF_MAPPILLAR2, AREA, .@kimi$;
 	sleep 1000;
 	mapannounce 'xm_d_map$, "Phantom's yell: Rage~ Sorrow~ No one cries for you, Kimi~", bc_map, "0xff8800";
@@ -1143,10 +1061,6 @@ OnStart:
 	disablenpc .@kimi$;
 	donpcevent instance_npcname("#finalbs2") + "::OnStart";
 	disablenpc instance_npcname("#bgm02");
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1175,7 +1089,7 @@ OnMyMobDead:
 
 OnEnd:
 	stopnpctimer;
-	killmonster 'xm_d_map$, instance_npcname( strnpcinfo(0) ) + "::OnMyMobDead";
+	killmonster 'xm_d_map$, instance_npcname("#finalbs2") + "::OnMyMobDead";
 	disablenpc instance_npcname("#bgm03");
 	donpcevent instance_npcname("#finalbs_e") + "::OnStart";
 	end;
@@ -1183,15 +1097,15 @@ OnEnd:
 OnTalk:
 	.@chat_r = rand(1,10);
 	if (.@chat_r == 1)
-		unittalk 'celene_id, "I will burn you with hell inferno.";
+		unittalk 'celene_id, "I will burn you with hell's inferno.";
 	else if (.@chat_r == 2)
 		unittalk 'celene_id, "Will you bear this flame?!";
 	else if (.@chat_r == 3)
-		unittalk 'celene_id, "I shouldn't have done, but...";
+		unittalk 'celene_id, "I shouldn't have, but...";
 	else if (.@chat_r == 4)
 		unittalk 'celene_id, "It's boiling!... Bear it if you can.";
 	else if (.@chat_r == 5)
-		unittalk 'celene_id, "Breathe as much as you can. It'll be the last breath you make.";
+		unittalk 'celene_id, "Breathe as much as you can. It'll be the last breath you take.";
 	else if (.@chat_r == 6)
 		unittalk 'celene_id, "Frankly, I don't like fire.";
 	else
@@ -1199,10 +1113,12 @@ OnTalk:
 	end;
 
 OnTimer1000:
-	getunitdata 'celene_id, .@data;
-	if ((.@data[UMOB_X] < 211 || .@data[UMOB_X] > 241 || .@data[UMOB_Y] < 166 || .@data[UMOB_Y] > 201) && (.@data[UMOB_X] > 0 || .@data[UMOB_Y] > 0)) {
-		mapannounce 'xm_d_map$, "Celine Kimi: No! I should keep my place!",bc_map,"0xff6666",FW_NORMAL,15;
-		donpcevent instance_npcname("#finalbs2") + "::Onfail";
+	if (unitexists('celene_id) == true) {
+		getunitdata 'celene_id, .@data;
+		if ((.@data[UMOB_X] < 211 || .@data[UMOB_X] > 241 || .@data[UMOB_Y] < 166 || .@data[UMOB_Y] > 201) && (.@data[UMOB_X] > 0 || .@data[UMOB_Y] > 0)) {
+			mapannounce 'xm_d_map$, "Celine Kimi: No! I should keep my place!",bc_map,"0xff6666",FW_NORMAL,15;
+			donpcevent instance_npcname("#finalbs2") + "::Onfail";
+		}
 	}
 	end;
 
@@ -1215,7 +1131,8 @@ Onfail:
 	end;
 
 OnTimer5000:
-	donpcevent instance_npcname("#bssk01") + "::OnStart";
+	if (unitexists('celene_id) == true)
+		donpcevent instance_npcname("#bssk01") + "::OnStart";
 	end;
 
 OnTimer10000:
@@ -1254,10 +1171,6 @@ OnTimer10000:
 		initnpctimer;
 	}
 	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,216,193,3	script	#eff_f01	CLEAR_NPC,{
@@ -1266,15 +1179,9 @@ OnStart:
 	for ( .@i = 1; .@i < 10; .@i++ )
 		specialeffect EF_HEARTCASTING, AREA, instance_npcname( "#eff_f0"+ .@i );
 	end;
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,226,193,3	script	#eff_f02	CLEAR_NPC,{
-	end;
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 1@xm_d,236,193,3	duplicate(#eff_f02)	#eff_f03	CLEAR_NPC
@@ -1294,9 +1201,6 @@ OnStart:
 	else if (.@r == 2)
 		donpcevent instance_npcname("#bssk03") + "::OnStart";
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,5,3	script	#bssk02	CLEAR_NPC,{
@@ -1305,9 +1209,6 @@ OnStart:
 	donpcevent instance_npcname("#finalbs2") + "::OnTalk";
 	for ( .@i = 1; .@i < 5; .@i++ )
 		donpcevent instance_npcname( "#crssk"+ .@i ) + "::OnStart";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1331,10 +1232,6 @@ OnStart:
 	end;
 
 OnMyMobDead:
-	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1361,48 +1258,37 @@ OnStart:
 	end;
 OnMyMobDead:
 	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 1@xm_d,1,5,3	duplicate(#crssk1)	#crssk2	CLEAR_NPC
 1@xm_d,1,5,3	duplicate(#crssk1)	#crssk3	CLEAR_NPC
 1@xm_d,1,5,3	duplicate(#crssk1)	#crssk4	CLEAR_NPC
 
 1@xm_d,233,183,0	script	#kimion1	-1,7,7,{
+	end;
 OnTouch_:
 	disablenpc instance_npcname("#kimion1");
 	donpcevent instance_npcname("Celine Kimi#2") + "::OnStart";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
 1@xm_d,233,183,3	script	Celine Kimi#2	4_F_KIMI,{
 	mes "[Celine Kimi]";
-	mes "You also... come here to kill me?";
+	mes "You also... came here to kill me?";
 	close;
 
 OnStart:
-	npctalk "Celine Kimi: You also... come here to kill me?";
+	npctalk "Celine Kimi: You also... came here to kill me?";
 	specialeffect EF_MAPPILLAR2;
 	sleep 5000;
 	disablenpc instance_npcname("Celine Kimi#2");
 	donpcevent instance_npcname("#finalbs2") + "::OnStart";
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,228,183,0	script	#bgm03	-1,25,25,{
+	end;
 OnTouch:
 	playBGM "123";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1413,12 +1299,8 @@ OnStart:
 		initnpctimer;
 	end;
 OnTimer3000:
-	mapannounce 'xm_d_map$, "Celine Kimi and her phantom are shared their strength. They will be stronger than ever!",bc_map,"0xff6666";
+	mapannounce 'xm_d_map$, "Celine Kimi and her phantom have shared their strength. They will be stronger than ever!",bc_map,"0xff6666";
 	stopnpctimer;
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1434,19 +1316,13 @@ OnStart:
 	sleep 6000;
 	mapannounce 'xm_d_map$, "Catherine Jet Johnson's yell: Are you okay? Flee to the south emergency exit!",bc_map,"0xffff00";
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,218,145,0	script	#jeton2	-1,4,4,{
+	end;
 OnTouch_:
 	disablenpc instance_npcname("#jeton2");
 	donpcevent instance_npcname("Catherine Jet Johnson#6") + "::OnStart";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1454,15 +1330,15 @@ OnInstanceInit:
 	end;
 OnStart:
 	sleep 1000;
-	npctalk "Catherine Jet Johnson: Unfortunately, I am failed to persuade Kimi.";
+	npctalk "Catherine Jet Johnson: Unfortunately, I have failed to persuade Kimi.";
 	sleep 3000;
-	npctalk "Catherine Jet Johnson: What was the voice of phantom? Why it torments Kimi so harshly...";
+	npctalk "Catherine Jet Johnson: What was the voice of that phantom? Why does it torment Kimi so harshly...";
 	sleep 4000;
-	npctalk "Catherine Jet Johnson: I guess that the curse of my face was form the unidentified voice.";
+	npctalk "Catherine Jet Johnson: I guess that the curse of my face was from the unidentified voice.";
 	sleep 4000;
-	npctalk "Catherine Jet Johnson: Anyway, even Kimi, saying hates everyone, has collected her recollections here a lot.";
+	npctalk "Catherine Jet Johnson: Anyway, even Kimi hates everyone and has collected her recollections here a lot.";
 	sleep 6000;
-	npctalk "Catherine Jet Johnson: I will put this thing safely even if her soul will return and she won't be disappointed.";
+	npctalk "Catherine Jet Johnson: I will end this thing safely even if her soul will return and she won't be disappointed.";
 	sleep 5000;
 	npctalk "Catherine Jet Johnson: Thanks to you, everything that I have wondered is completely resolved. Please call me again if you are going to send her to Heaven next time.";
 	sleep 5000;
@@ -1470,9 +1346,6 @@ OnStart:
 	sleep 3000;
 	disablenpc instance_npcname("Catherine Jet Johnson#6");
 	enablenpc instance_npcname("#exwp1");
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1485,10 +1358,6 @@ OnInstanceInit:
 	}
 	close2;
 	warp "xmas",233,300;
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1613,10 +1482,6 @@ OnTimer1000:
 	}
 	stopnpctimer;
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 1@xm_d,214,141,3	duplicate(Packaged Present#1)	Packaged Present#2	4_TREASURE_BOX
 1@xm_d,218,141,3	duplicate(Packaged Present#1)	Packaged Present#3	4_TREASURE_BOX
@@ -1652,7 +1517,7 @@ OnInstanceInit:
 		case 2:
 			transform 1246,180000;
 			enablenpc instance_npcname("#fac1bs");
-			mapannounce 'xm_d_map$, "Coordinator's announcement: Huh? Where's everyone! How dare you workers to be absent their line and muck around!",bc_map,"0xff8800";
+			mapannounce 'xm_d_map$, "Coordinator's announcement: Huh? Where's everyone! How dare the workers be absent from their line and muck around!",bc_map,"0xff8800";
 			warp 'xm_d_map$,70,125;
 			break;
 		case 3:
@@ -1683,5 +1548,73 @@ OnInstanceInit:
 		getunitdata 'Antonio, .@mob;
 		mapannounce 'xm_d_map$, "Factory announcement: Exist in " + .@mob[UMOB_X] + " - " + .@mob[UMOB_Y] + ".",bc_map,"0x00ff44";
 	}
+	end;
+
+OnInstanceInit:
+	// Warps
+	disablenpc instance_npcname("#fac3wp");
+	disablenpc instance_npcname("#fac3wp2");
+	disablenpc instance_npcname("#fac4wp");
+	disablenpc instance_npcname("#fac4wp2");
+	disablenpc instance_npcname("#fac5wp");
+	// disablenpc instance_npcname("#fac5wp2");
+	disablenpc instance_npcname("#fac6wp");
+
+	// Bgm
+	disablenpc instance_npcname("#bgm01");
+	disablenpc instance_npcname("#bgm02");
+	disablenpc instance_npcname("#bgm03");
+	disablenpc instance_npcname("#bgm04");
+	disablenpc instance_npcname("#bgm05");
+	disablenpc instance_npcname("#bgm06");
+
+	// Step 1
+	disablenpc instance_npcname("Catherine Jet Johnson#01");
+	disablenpc instance_npcname("Employees' Uniform Box#1");
+	disablenpc instance_npcname("Employees' Uniform Box#2");
+	disablenpc instance_npcname("Employees' Uniform Box#3");
+	hideonnpc instance_npcname("#fac1ct");
+	disablenpc instance_npcname("#fac1bs");
+	disablenpc instance_npcname("#pck1");
+	disablenpc instance_npcname("#alert1");
+
+	// Step 2
+	disablenpc instance_npcname("Catherine Jet Johnson#21");
+	disablenpc instance_npcname("Employees' Uniform Box#4");
+	hideonnpc instance_npcname("#fac2ct");
+	disablenpc instance_npcname("#fac2wpc");
+	for ( .@i = 1; .@i < 11; ++.@i )
+		disablenpc instance_npcname("Worker#" + .@i);
+
+	// Step 3
+	disablenpc instance_npcname("Captured Santa#3");
+	hideonnpc instance_npcname("#fac3ct");
+	hideonnpc instance_npcname("#fac3ct2");
+	hideonnpc instance_npcname("#fac3ct3");
+
+	// Boss
+	disablenpc instance_npcname("#finalbs");
+	hideonnpc instance_npcname("#finalbs2");
+	disablenpc instance_npcname("Celine Kimi#0");
+	disablenpc instance_npcname("#jeton1");
+	disablenpc instance_npcname("Catherine Jet Johnson#5");
+	for ( .@i = 1; .@i < 10; ++.@i )
+		hideonnpc instance_npcname("#eff_f0" + .@i);
+	disablenpc instance_npcname("#bssk01");
+	disablenpc instance_npcname("#bssk02");
+	hideonnpc instance_npcname("#bssk02");
+	for ( .@i = 1; .@i < 5; ++.@i )
+		hideonnpc instance_npcname("#crssk" + .@i);
+	disablenpc instance_npcname("#kimion1");
+	disablenpc instance_npcname("Celine Kimi#2");
+	disablenpc instance_npcname("#heal_c");
+
+	// Exit
+	disablenpc instance_npcname("#finalbs_e");
+	disablenpc instance_npcname("#jeton2");
+	disablenpc instance_npcname("Catherine Jet Johnson#6");
+	disablenpc instance_npcname("#exwp1");
+	for ( .@i = 1; .@i < 11; ++.@i )
+		disablenpc instance_npcname("Packaged Present#" + .@i);
 	end;
 }

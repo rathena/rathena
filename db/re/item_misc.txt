@@ -1370,3 +1370,36 @@ IG_Mercenary,12179,1 // SpearMercenary_Scroll7
 IG_Mercenary,12180,1 // SpearMercenary_Scroll8
 IG_Mercenary,12181,1 // SpearMercenary_Scroll9
 IG_Mercenary,12182,1 // SpearMercenary_Scroll10
+// PrizeOfHero
+IG_PrizeOfHero,522,7		// Fruit_Of_Mastela
+IG_PrizeOfHero,547,7		// White_Slim_Potion
+IG_PrizeOfHero,607,17		// Yggdrasilberry
+IG_PrizeOfHero,608,10		// Seed_Of_Yggdrasil
+IG_PrizeOfHero,678,7		// Poison_Bottle
+IG_PrizeOfHero,12075,7		// Str_Dish10
+IG_PrizeOfHero,12080,7		// Int_Dish10
+IG_PrizeOfHero,12085,7		// Vit_Dish10
+IG_PrizeOfHero,12090,7		// Agi_Dish10
+IG_PrizeOfHero,12095,7		// Dex_Dish10
+IG_PrizeOfHero,12100,7		// Luk_Dish10
+IG_PrizeOfHero,12530,2		// Mastela_Fruit_Box
+IG_PrizeOfHero,12534,2		// Yggdrasil_Seed_Box
+IG_PrizeOfHero,12535,1		// Iggdrasilberry_Box
+IG_PrizeOfHero,12549,2		// White_Slim_Pot_Box2
+IG_PrizeOfHero,12550,2		// Poison_Bottle_Box2
+IG_PrizeOfHero,12623,1		// High_Weapon_Box
+IG_PrizeOfHero,12676,7		// Sg_Violet_Potion_Box
+IG_PrizeOfHero,12679,7		// Sg_White_Potion_Box
+IG_PrizeOfHero,12680,7		// Sg_Blue_Potion_Box
+IG_PrizeOfHero,15093,1		// Hero_Plate
+IG_PrizeOfHero,15094,1		// Hero_Magic_Coat
+IG_PrizeOfHero,15095,1		// Hero_Judgement_Shawl
+IG_PrizeOfHero,15096,1		// Hero_Trade_Mail
+IG_PrizeOfHero,15097,1		// Hero_Hidden_Cloth
+IG_PrizeOfHero,15098,1		// Hero_Taget_Suits
+IG_PrizeOfHero,22035,2		// Vet_Nepen_Heel
+IG_PrizeOfHero,22036,2		// Vet_SliverFox_Boots
+IG_PrizeOfHero,22037,2		// Vet_Ungo_Boots
+// Private Airship items
+IG_PRIVATE_AIRSHIP,6909,1 // Actinidia_Cat_Fruit
+IG_PRIVATE_AIRSHIP,25464,1 // World_Moving_Rights

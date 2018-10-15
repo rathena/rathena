@@ -1,11 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _ITEMDB_HPP_
-#define _ITEMDB_HPP_
+#ifndef ITEMDB_HPP
+#define ITEMDB_HPP
 
-#include "../common/db.h"
-#include "../common/mmo.h" // ITEM_NAME_LENGTH
+#include "../common/db.hpp"
+#include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
 ///Maximum allowed Item ID (range: 1 ~ 65,534)
 #define MAX_ITEMID USHRT_MAX
@@ -714,7 +714,7 @@ enum e_random_item_group {
 	IG_COSTAMA_EGG29,
 	IG_INK_BALL,
 	IG_SOMETHING_CANDY_HOLDER,
-	IG_MYSTERIOUS_EGG,
+	IG_SHINING_EGG,
 	IG_AGUST_LUCKY_SCROLL,
 	IG_ELEMENT,
 	IG_POISON,
@@ -731,6 +731,8 @@ enum e_random_item_group {
 	IG_CHRISTMAS_BOX,
 	IG_SPECIAL_CHRISTMAS_BOX,
 	IG_SANTA_GIFT,
+	IG_PRIZEOFHERO,
+	IG_PRIVATE_AIRSHIP,
 };
 
 /// Enum for bound/sell restricted selling
@@ -738,7 +740,8 @@ enum e_itemshop_restrictions {
 	ISR_NONE = 0x0,
 	ISR_BOUND = 0x1,
 	ISR_SELLABLE = 0x2,
-	ISR_ALL = 0x3,
+	ISR_BOUND_SELLABLE = 0x4,
+	ISR_BOUND_GUILDLEADER_ONLY = 0x8,
 };
 
 ///Item combo struct
@@ -960,4 +963,4 @@ void itemdb_reload(void);
 void do_final_itemdb(void);
 void do_init_itemdb(void);
 
-#endif /* _ITEMDB_HPP_ */
+#endif /* ITEMDB_HPP */

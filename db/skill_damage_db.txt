@@ -4,12 +4,12 @@
 // SkillName,Caster,Map,Damage against Players{,Damage against Mobs{,Damage against Bosses{,Damage against Other}}}
 //
 // Caster: The groups for which the adjustment takes effect. (bitmask)
-//		 1 = Player
-//		 2 = Monster
-//		 4 = Pet
-//		 8 = Homunculus
-//		16 = Mercenary
-//		32 = Elemental
+//		BL_PC = Player
+//		BL_MOB = Monster
+//		BL_PET = Pet
+//		BL_HOM = Homunculus
+//		BL_MER = Mercenary
+//		BL_ELEM = Elemental
 //
 // Map:
 // 		1    - Normal (the maps that aren't classified as these maps below)
@@ -31,6 +31,6 @@
 //  	Negative values decrease damage and positive values increase it (0 = no change).
 //
 // Examples:
-// MC_MAMMONITE,1,1,50 // In normal maps, players deal +50% damage to other players with Mammonite.
-// MO_EXTREMITYFIST,1,6,-50 // In PVP and GVG, players deal -50% (half) damage to other players with Asura Strike.
-// AB_ADORAMUS,1,6,50,0,10,15 // In PVP and GVG, players deal +50% damage to other players, +0% to mobs, +10% to bosses, and +15% to other with Adoramus.
+// MC_MAMMONITE,BL_PC,1,50 // In normal maps, players deal +50% damage to other players with Mammonite.
+// MO_EXTREMITYFIST,BL_PC,6,-50 // In PVP and GVG, players deal -50% (half) damage to other players with Asura Strike.
+// AB_ADORAMUS,BL_PC,6,50,0,10,15 // In PVP and GVG, players deal +50% damage to other players, +0% to mobs, +10% to bosses, and +15% to other with Adoramus.

@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MERCENARY_HPP_
-#define _MERCENARY_HPP_
+#ifndef MERCENARY_HPP
+#define MERCENARY_HPP
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
@@ -92,4 +92,4 @@ void mercenary_read_skilldb(void);
 void do_init_mercenary(void);
 void do_final_mercenary(void);
 
-#endif /* _MERCENARY_HPP_ */
+#endif /* MERCENARY_HPP */

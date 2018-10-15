@@ -1,0 +1,24 @@
+//===== rAthena Script =======================================
+//= Rock Ridge Monsters Spawn Script
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// Kiwawa Desert
+rockrdg1,0,0	monster	Buffalo Bandit Sharpsho	3736,46
+rockrdg1,0,0	monster	Buffalo Bandit Duelist	3737,29
+rockrdg1,0,0	monster	Coyote	3739,51
+rockrdg1,0,0	monster	Thief Bug	1051,10
+rockrdg1,0,0	monster	Green Plant	1080,8
+rockrdg1,0,0	monster	Yellow Plant	1081,4
+rockrdg1,0,0	monster	Black Mushroom	1084,8
+
+// Kiwawa Desert
+rockrdg2,0,0	monster	Buffalo Bandit Duelist	3737,17
+rockrdg2,0,0	monster	Bowie Buffalo Bandit	3738,52
+rockrdg2,0,0	monster	Coyote	3739,8
+rockrdg2,0,0	monster	Green Plant	1080,5
+rockrdg2,0,0	monster	Yellow Plant	1081,4
+rockrdg2,0,0	monster	White Plant	1084,5
+rockrdg2,0,0	monster	Shining Plant	1083,4
+rockrdg2,0,0	monster	Thief Bug	1051,8

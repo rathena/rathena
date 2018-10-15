@@ -1,36 +1,36 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "intif.hpp"
 
 #include <stdlib.h>
 
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/strlib.h"
-#include "../common/mmo.h"
-#include "../common/timer.h"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
-#include "map.hpp"
+#include "achievement.hpp"
 #include "battle.hpp"
 #include "chrif.hpp"
 #include "clan.hpp"
-#include "guild.hpp"
 #include "clif.hpp"
-#include "pc.hpp"
-#include "storage.hpp"
-#include "party.hpp"
-#include "pet.hpp"
-#include "mercenary.hpp"
-#include "homunculus.hpp"
 #include "elemental.hpp"
+#include "guild.hpp"
+#include "homunculus.hpp"
+#include "log.hpp"
 #include "mail.hpp"
+#include "map.hpp"
+#include "mercenary.hpp"
+#include "party.hpp"
+#include "pc.hpp"
+#include "pet.hpp"
 #include "quest.hpp"
 #include "status.hpp"
-#include "achievement.hpp"
-#include "log.hpp"
+#include "storage.hpp"
 
 /// Received packet Lengths from inter-server
 static const int packet_len_table[] = {
@@ -690,9 +690,14 @@ int intif_party_changemap(struct map_session_data *sd,int online)
 	if(!sd)
 		return 0;
 
-	if( (m=map_mapindex2mapid(sd->mapindex)) >= 0 && map[m].instance_id )
-		mapindex = map[map[m].instance_src_map].index;
-	else
+	if ((m = map_mapindex2mapid(sd->mapindex)) >= 0) {
+		struct map_data *mapdata = map_getmapdata(m);
+
+		if (mapdata->instance_id)
+			mapindex = map_getmapdata(mapdata->instance_src_map)->index;
+		else
+			mapindex = sd->mapindex;
+	} else
 		mapindex = sd->mapindex;
 
 	WFIFOHEAD(inter_fd,19);
@@ -2263,7 +2268,7 @@ int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_d
  * Request to update inbox
  * @param char_id : Player ID linked with box
  * @param flag 0 Update Inbox | 1 OpenMail
- * @return 0=errur, 1=msg_sent
+ * @return 0=error, 1=msg_sent
  */
 int intif_Mail_requestinbox(uint32 char_id, unsigned char flag, enum mail_inbox_type type)
 {
@@ -2309,11 +2314,12 @@ int intif_parse_Mail_inboxreceived(int fd)
 	memcpy(&sd->mail.inbox, RFIFOP(fd,10), sizeof(struct mail_data));
 	sd->mail.changed = false; // cache is now in sync
 
-	if (flag){
 #if PACKETVER >= 20150513
-		// Refresh top right icon
-		clif_Mail_new(sd, 0, NULL, NULL);
+	// Refresh top right icon
+	clif_Mail_new(sd, 0, NULL, NULL);
 #endif
+
+	if (flag){
 		clif_Mail_refreshinbox(sd,static_cast<mail_inbox_type>(RFIFOB(fd,9)),0);
 	}else if( battle_config.mail_show_status && ( battle_config.mail_show_status == 1 || sd->mail.inbox.unread ) )
 	{
@@ -3151,7 +3157,7 @@ int intif_parse_elemental_saved(int fd)
  * @param group_lv : requesting player lv
  * @param query : name or aid of player we want info
  * @param type : 1 - Only return account id & userid, 0 - Full info
- * @return : 0=errur, 1=msg sent
+ * @return : 0=error, 1=msg sent
  */
 int intif_request_accinfo(int u_fd, int aid, int group_lv, char* query, char type) {
 
@@ -3221,12 +3227,12 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 
 	// Should not be here!
 	if (type == ITEMOBTAIN_TYPE_NPC) {
-		intif_broadcast_obtain_special_item_npc(sd, nameid, NULL /*wisp_server_name*/);
+		intif_broadcast_obtain_special_item_npc(sd, nameid);
 		return 0;
 	}
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, NULL);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3255,11 +3261,11 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
  * @param srcname Source name
  * @return
  **/
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid, const char *srcname) {
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid) {
 	nullpo_retr(0, sd);
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC, srcname);
+	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3274,7 +3280,6 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 	WFIFOW(inter_fd, 6) = 0;
 	WFIFOB(inter_fd, 8) = ITEMOBTAIN_TYPE_NPC;
 	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 9 + NAME_LENGTH), srcname, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3287,13 +3292,13 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
  **/
 void intif_parse_broadcast_obtain_special_item(int fd) {
 	int type = RFIFOB(fd, 8);
-	char name[NAME_LENGTH], srcname[NAME_LENGTH];
+	char name[NAME_LENGTH];
 
 	safestrncpy(name, RFIFOCP(fd, 9), NAME_LENGTH);
 	if (type == ITEMOBTAIN_TYPE_NPC)
 		safestrncpy(name, RFIFOCP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
 
-	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type, srcname);
+	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 }
 
 /*==========================================
