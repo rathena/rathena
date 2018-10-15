@@ -3451,6 +3451,13 @@
 14672,0,3740,15,0,0,0,0,0,0,0,0,0,0,0,0,0,"Preparing for the Firework Festival"
 14673,4:00,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Time to Make Bombs"
 
+// A Bed Of Honor
+14683,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mysterious Device"
+14684,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mysterious Device"
+14685,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mysterious Device"
+14686,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mysterious Device"
+14687,3600,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Mysterious Device"
+
 // Academy 14.2
 15000,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Experiencing abnormal statuses"
 15001,20,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hold your breath"
