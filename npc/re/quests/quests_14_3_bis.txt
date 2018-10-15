@@ -18,7 +18,7 @@ moro_vol,94,110,5	script	Guardian Nidhogg#143nyd01	4_F_NYDHOG,{
 		mes "I'm preparing a gift for you to make up for my past transgressions against you.";
 		close3;
 	}
-	if ($@ep143_3_expbuff == 1) {
+	if ($ep143_3_expbuff == 1) {
 		mes "I hope you'll like my gift. Yggdrasil's blessing doesn't last forever, ";
 		mes "but it'll last at least long enough to aid you and your party in battle.";
 		cutin "ep14_nyd04.bmp",2;
@@ -42,7 +42,7 @@ moro_vol,94,110,5	script	Guardian Nidhogg#143nyd01	4_F_NYDHOG,{
 			cutin "ep14_nyd04.bmp",2;
 			close3;
 		}
-		if ($@ep143_3_expbuff == 1) {
+		if ($ep143_3_expbuff == 1) {
 			mes "[Nidhogg]";
 			mes "Oh, you already received Yggdrasil's blessing.";
 			mes "I'll take a rain check on this.";
@@ -54,7 +54,8 @@ moro_vol,94,110,5	script	Guardian Nidhogg#143nyd01	4_F_NYDHOG,{
 		mes "Thank you.";
 		mes "May Yggdrasil bless you.";
 		delitem 6715,1;// P_Of_Evil_Soul
-		$@ep143_3_expbuff = 1;
+		$ep143_3_expbuff = 1;
+		$ep143_3_exptime = 0;
 		ep4_3_mockill = 2;
 		announce "Nidhogg: May Yggdrasil bless the Demon God slayers " + strcharinfo(0) + " and others.", bc_all, "0xFF0000";
 		donpcevent "Loki#1432loki01::OnEventOn";
@@ -79,31 +80,38 @@ moro_vol,94,110,5	script	Guardian Nidhogg#143nyd01	4_F_NYDHOG,{
 	close3;
 
 OnEventOn:
-	if ($@ep143_3_expbuff == 1) {
-		$@ep143_3_exptime = 0;
+	if ($ep143_3_expbuff == 1) {
 		initnpctimer;
+		setbattleflag( "quest_exp_rate", getbattleflag("quest_exp_rate") + 10 );
+		setbattleflag( "base_exp_rate", getbattleflag("base_exp_rate") + 10 );
+		setbattleflag( "job_exp_rate", getbattleflag("job_exp_rate") + 10 );
 	}
 	end;
 OnTimer60000:
-	if ($@ep143_3_exptime < 60) {
-		$@ep143_3_exptime++;
+	if ($ep143_3_exptime < 60) {
+		$ep143_3_exptime++;
 		initnpctimer;
 	}
-	donpcevent "Guardian Nidhogg#143nyd01::OnStop";
+	else
+		donpcevent "Guardian Nidhogg#143nyd01::OnStop";
 	end;
 OnStop:
 	stopnpctimer;
-	if ($@ep143_3_expbuff == 1) {
-		$@ep143_3_expbuff = 0;
-		$@ep143_3_exptime = 0;
+	if ($ep143_3_expbuff == 1) {
+		$ep143_3_expbuff = 0;
+		$ep143_3_exptime = 0;
 		setbattleflag( "quest_exp_rate", getbattleflag("quest_exp_rate") - 10 );
 		setbattleflag( "base_exp_rate", getbattleflag("base_exp_rate") - 10 );
 		setbattleflag( "job_exp_rate", getbattleflag("job_exp_rate") - 10 );
 	}
 	end;
 OnInit:
-	if ($@ep143_3_expbuff == 1)
+	if ($ep143_3_expbuff == 1)
 		initnpctimer;
+	end;
+OnInterIfInitOnce:
+	if ($ep143_3_expbuff == 1)
+		donpcevent "Guardian Nidhogg#143nyd01::OnEventOn";
 	end;
 }
 
@@ -124,9 +132,6 @@ OnTimer11500:
 	announce " ", bc_all, "0xFF0000";
 	end;
 OnTimer12000:
-	setbattleflag( "quest_exp_rate", getbattleflag("quest_exp_rate") + 10 );
-	setbattleflag( "base_exp_rate", getbattleflag("base_exp_rate") + 10 );
-	setbattleflag( "job_exp_rate", getbattleflag("job_exp_rate") + 10 );
 	donpcevent "Guardian Nidhogg#143nyd01::OnEventOn";
 	stopnpctimer;
 	end;
@@ -2054,8 +2059,8 @@ OnTouchNPC:
 moro_vol,5,1,3	script	#timemaster	CLEAR_NPC,{
 	if (callfunc("F_GM_NPC",1854,0,0,9999) < 1)
 		end;
-	mes "Current server experience status: " + $@ep143_3_expbuff;
-	mes "Currently elapsed: " + $@ep143_3_exptime;
+	mes "Current server experience status: " + $ep143_3_expbuff;
+	mes "Currently elapsed: " + $ep143_3_exptime;
 	mes "What do you want to do?";
 	next;
 	switch( select( "Adjust the timer", "Pause timer", "Restart timer", "Initialization" ) ) {
@@ -2064,7 +2069,7 @@ moro_vol,5,1,3	script	#timemaster	CLEAR_NPC,{
 		next;
 		input .@input,0,9999;
 		mes "Time is set to " + .@input;
-		$@ep143_3_exptime = .@input;
+		$ep143_3_exptime = .@input;
 		close;
 	case 2:
 		mes "Timer in pause.";
