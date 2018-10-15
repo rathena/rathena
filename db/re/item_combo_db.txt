@@ -492,6 +492,7 @@
 //9024:18832,{ bonus3 bAutoSpell,"BS_ADRENALINE",2,(GetPetRelationship >= 3)?15:10; }
 13027:15044,{ .@r = max(getequiprefinerycnt(EQI_ARMOR),1); bonus3 bAddMonsterDropItem,929,RC_DemiHuman,70*.@r; bonus3 bAddMonsterDropItem,970,RC_DemiHuman,50*.@r; bonus3 bAddMonsterDropItem,929,RC_Brute,70*.@r; bonus3 bAddMonsterDropItem,970,RC_Brute,50*.@r; }
 13034:13035,{ bonus bMaxSP,20; bonus bMaxHPRate,5; bonus bHit,10; bonus2 bAddSize,Size_Large,30; autobonus "{ bonus bAspdRate,100; }",1,7000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; }
+13215:28224,{ bonus bLongAtkRate,30; }
 13332:15178:20821,{ bonus2 bSkillCooldown,"KO_HUUMARANKA",-1000; bonus bLongAtkRate,15; }
 13337:19210,{ bonus bVariableCastrate,-15; .@eq = getequiprefinerycnt(EQI_HEAD_TOP); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { .@val = 25; } if ((.@eq + .@weapon) >= 18) { .@val += 25; if ((.@eq + .@weapon) >= 22) { bonus2 bSkillCooldown,"KO_HUUMARANKA",-1000; } } if (.@val) { bonus2 bSkillAtk,"KO_HUUMARANKA",.@val; } }
 13338:19210,{ bonus bBaseAtk,50;  .@eq = getequiprefinerycnt(EQI_HEAD_TOP); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { .@val = 30; } if ((.@eq + .@weapon) >= 18) { bonus bLongAtkRate,10; if ((.@eq + .@weapon) >= 22) { .@val += 20; } } if (.@val) { bonus2 bSkillAtk,"KO_HAPPOKUNAI",.@val; } }

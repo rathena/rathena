@@ -7342,6 +7342,7 @@
 13127,Crimson_Revolver,Crimson Revolver,5,20,,1000,100,,7,2,0x41000000,63,2,34,3,70,1,17,{ .@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225); },{},{}
 13128,Revolver_of_Vicious_Mind,Revolver of Vicious Mind,5,20,,1500,150,,7,1,0x41000000,63,2,34,4,160,1,17,{ bonus bAtk,pow(min(getrefine(),15),2); },{},{}
 13129,Unity_Revolver,Unity Revolver,5,20,,500,95,,7,1,0x41000000,63,2,34,3,1,1,17,{ bonus bBaseAtk,pow(getrefine(),2)*125/100; },{},{}
+13138,Dark_Rose,Dark Rose,5,20,,1800,150,,7,2,0x40000000,63,2,34,3,120,1,17,{ .@r = getrefine(); bonus bAspdRate,10; if (.@r >= 7) { bonus bLongAtkRate,15; if (.@r >= 9) { bonus bAspd,1; } } },{},{}
 13150,Branch,Branch,5,3000,,500,50,,9,3,0x41000000,63,2,34,1,1,1,18,{},{},{}
 13151,The_Cyclone,Cyclone,5,17500,,700,120,,9,1,0x41000000,63,2,34,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; },{},{}
 13152,The_Cyclone_,Cyclone,5,17500,,700,120,,9,2,0x41000000,63,2,34,2,24,1,18,{ bonus bHit,10; bonus bCritical,10; },{},{}
@@ -11825,6 +11826,10 @@
 28202,Southern_Cross_R_,Southern Cross,5,2800000,,2000,480,,9,1,0x40000000,63,2,34,4,141,1,21,{ bonus3 bAutoSpell,"GC_CROSSIMPACT",1,50; },{},{}
 28203,Half_BF_Rifle1,Half BF Rifle1,5,0,,0,50,,9,0,0x41000000,63,2,34,3,80,1,18,{ bonus bDex,2; bonus bHit,8; bonus bCritical,8; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bVariableCastrate,"GS_TRACKING",-20; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon; },{},{}
 28204,Half_BF_Shotgun1,Half BF Shotgun1,5,0,,0,100,,9,0,0x41000000,63,2,34,3,80,1,20,{ bonus bDex,2; bonus bSplashRange,1; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; autobonus "{ bonus bBaseAtk,80; bonus2 bHPLossRate,100,1000; }",30,6000,BF_WEAPON,"{ specialeffect2 EF_BASH3D; }"; bonus bUnbreakableWeapon; },{},{}
+28223,Finisher,Finisher,5,20,,2000,200,,9,2,0x40000000,63,2,34,3,120,1,18,{ .@r = getrefine(); bonus bLongAtkRate,15; if (.@r >= 7) { bonus2 bSkillAtk,"RL_AM_BLAST",30; bonus2 bSkillAtk,"RL_MASS_SPIRAL",30; if (.@r >= 9) { bonus2 bSkillCooldown,"RL_AM_BLAST",-1000; } } },{},{}
+28224,Dustfire,Dustfire,5,20,,1300,300,,9,2,0x40000000,63,2,34,3,120,1,20,{ bonus bSplashRange,1; bonus2 bAddEff,Eff_Blind,50; if (.@r >= 7) { bonus2 bSkillAtk,"RL_S_STORM",15; if (.@r >= 9) { bonus2 bSkillAtk,"RL_BANISHING_BUSTER",15; } } },{},{}
+28225,Burning_Rose,Burning Rose,5,20,,2500,200,,9,2,0x40000000,63,2,34,3,120,1,19,{ bonus bLongAtkRate,15; if (.@r >= 7) { bonus2 bSkillAtk,"RL_FIRE_RAIN",30; if (.@r >= 9) { bonus2 bSkillCooldown,"RL_FIRE_RAIN",-1000; } } },{},{}
+28226,Avenger,Avenger,5,20,,1800,350,,9,2,0x40000000,63,2,34,3,120,1,21,{ bonus bLongAtkRate,20; if (.@r >= 7) { bonus2 bSkillAtk,"RL_D_TAIL",15; if (.@r >= 9) { bonus2 bSkillCooldown,"RL_H_MINE",-1000; } } },{},{}
 28244,Illusion_Gate_Keeper_DD,Illusion Gate Keeper DD,5,0,,1300,240,,9,2,0x40000000,63,2,34,4,120,1,20,{ .@r = getrefine(); bonus bDex,1; bonus bSplashRange,1; .@val = 5*(.@r/2); if (.@r >= 7) { bonus bAspdRate,15; if (.@r >= 9) { .@val += 5; if (.@r >= 11) { bonus5 bAutoSpell,"GS_SPREADATTACK",max(6,getskilllv("GS_SPREADATTACK")),50,BF_LONG|BF_WEAPON,1; } } } bonus bLongAtkRate,.@val; },{},{}
 //===================================================================
 // New Accessories
