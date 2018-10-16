@@ -805,8 +805,7 @@ void pc_setequipindex(struct map_session_data *sd)
 			}
 		}
 		if (sd->inventory.u.items_inventory[i].equipSwitch) {
-			uint8 j;
-			for (j = 0; j < EQI_MAX; j++) {
+			for (uint8 j = 0; j < EQI_MAX; j++) {
 				if (sd->inventory.u.items_inventory[i].equipSwitch & equip_bitmask[j]) {
 					sd->equip_switch_index[j] = i;
 				}
@@ -9934,7 +9933,7 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 	}
 
 	if( equipswitch ){
-		for( int i = 0; i < EQI_MAX; i++ ){
+		for( i = 0; i < EQI_MAX; i++ ){
 			if( pos&equip_bitmask[i] ){
 				// If there was already an item assigned to this slot
 				if( sd->equip_switch_index[i] >= 0 ){
