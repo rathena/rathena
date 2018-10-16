@@ -10981,6 +10981,31 @@ REPLACE INTO `mob_skill_db_re` VALUES (2923,'Owl Marquees@NPC_EMOTION','chase',1
 REPLACE INTO `mob_skill_db_re` VALUES (2923,'Owl Marquees@NPC_EMOTION','idle',197,1,2000,0,5000,'yes','self','always','0',6,0x3695,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (2923,'Owl Marquees@NPC_SUMMONSLAVE','idle',196,2,10000,2000,60000,'no','self','slavele','0',2922,NULL,NULL,NULL,NULL,NULL,NULL);
 
+# Devil Tower Memorial
+REPLACE INTO `mob_skill_db_re` VALUES (2939,'Evil Shadow@NPC_PIERCINGATT','chase',158,1,4000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2939,'Evil Shadow@NPC_CURSEATTACK','attack',181,5,3500,0,20000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2940,'Evil Shadow@NPC_DARKSTRIKE','attack',340,1,3000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2941,'Evil Shadow@NPC_CRITICALSLASH','chase',170,1,3000,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2941,'Evil Shadow@NPC_PETRIFYATTACK','attack',180,5,3500,0,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','idle',685,1,10000,0,20000,'yes','self','myhpltmaxrate','100',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','100',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','90',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','80',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','70',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','60',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','50',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','40',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','30',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','20',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+REPLACE INTO `mob_skill_db_re` VALUES (2942,'Evil Fanatics@NPC_INVINCIBLE','attack',685,1,10000,0,20000,'yes','self','myhpltmaxrate','10',NULL,NULL,NULL,NULL,NULL,NULL,'42');
+#REPLACE INTO `mob_skill_db_re` VALUES ( 2942,'Evil Fanatics@NPC_DANCINGBLADE','attack',713,1,1000,0,15000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db_re` VALUES ( 2942,'Evil Fanatics@NPC_PULSESTRIKE2','attack',712,1,800,0,15000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+#REPLACE INTO `mob_skill_db_re` VALUES ( 2942,'Evil Fanatics@NPC_DARKPIERCING','attack',715,1,2500,0,60000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2943,'Icemine@NPC_INVISIBLE','idle',353,1,10000,0,300000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2943,'Icemine@NPC_ICEMINE','idle',709,1,10000,0,300000,'no','self','always',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2960,'Flamecross@NPC_INVISIBLE','idle',353,1,10000,0,300000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (2960,'Flamecross@NPC_FLAMECROSS','idle',711,1,10000,0,300000,'no','self','always',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
 # Ghost Palace Memorial
 REPLACE INTO `mob_skill_db_re` VALUES (2948,'Cursed Soldier@NPC_BLINDATTACK','attack',177,5,500,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (2948,'Cursed Soldier@AC_DOUBLE','attack',46,5,500,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
