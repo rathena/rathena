@@ -454,8 +454,10 @@ OnTimer26000:
 		npctalk "Officer Heim: Back up soldiers? So why are you just standing there?";
 		next;
 		select("Right now?");
-		enablenpc instance_npcname("Healer Fama#feima");
-		'devil_tower = 1;
+		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 0) {
+			enablenpc instance_npcname("Healer Fama#feima");
+			'devil_tower = 1;
+		}
 		mes "[Healer Fama]";
 		mes "Commander please help me. I can't do it by myself~!";
 		npctalk "Healer Fama: Commander please help me. I can't do it by myself~!", instance_npcname("Healer Fama#feima");
@@ -494,7 +496,8 @@ OnTimer26000:
 			mes "[Healer Fama]";
 			mes "We are low on supplies. So I will give them once at a time.";
 			mes "Sorry, please request again if you run out.";
-			getitem 7641,1;// Medical_Cure_Box
+			if ('devil_tower == 1)
+				getitem 7641,1;// Medical_Cure_Box
 			close;
 		}
 		mes "[Healer Fama]";
@@ -526,20 +529,22 @@ OnTimer26000:
 	next;
 	specialeffect EF_SPHERE;
 	// progressbar "000000",10;	// fix me: progressbar doesn't display close button on cancel
-	delitem 7641,1;
-	specialeffect EF_ENTRY;
-	disablenpc instance_npcname( strnpcinfo(0) );
-	enablenpc instance_npcname( strnpcinfo(1) + "#" + replacestr( strnpcinfo(2), "_1", "" ) );
-	specialeffect EF_ENTRY,AREA, instance_npcname( strnpcinfo(1) + "#" + replacestr( strnpcinfo(2), "_1", "" ) );
-	mes "It worked.";
-	'heal_count++;
-	if ('heal_count == 7) {
-		'devil_tower = 2;
-		npctalk "Healer Fama: Assassins?!", instance_npcname("Healer Fama#feima");
-		enablenpc instance_npcname("Lucile#tnm01");
-		enablenpc instance_npcname("Magic Swordman#tnm01");
-		enablenpc instance_npcname("Assassin Huey#tnm01");
-		enablenpc instance_npcname("Assassin Louie#tnm01");
+	if ('devil_tower == 1) {
+		delitem 7641,1;
+		specialeffect EF_ENTRY;
+		disablenpc instance_npcname( strnpcinfo(0) );
+		enablenpc instance_npcname( strnpcinfo(1) + "#" + replacestr( strnpcinfo(2), "_1", "" ) );
+		specialeffect EF_ENTRY,AREA, instance_npcname( strnpcinfo(1) + "#" + replacestr( strnpcinfo(2), "_1", "" ) );
+		mes "It worked.";
+		'heal_count++;
+		if ('heal_count == 7) {
+			'devil_tower = 2;
+			npctalk "Healer Fama: Assassins?!", instance_npcname("Healer Fama#feima");
+			enablenpc instance_npcname("Lucile#tnm01");
+			enablenpc instance_npcname("Magic Swordman#tnm01");
+			enablenpc instance_npcname("Assassin Huey#tnm01");
+			enablenpc instance_npcname("Assassin Louie#tnm01");
+		}
 	}
 	close;
 
@@ -852,19 +857,23 @@ OnMobDead:
 			next;
 			sleep2 750;
 			npctalk "Lucile: Please hold tight.";
-			donpcevent instance_npcname("Huey#hui02") + "::OnEnable";
-			'devil_tower = 5;
+			if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 4) {
+				donpcevent instance_npcname("Huey#hui02") + "::OnEnable";
+				'devil_tower = 5;
+			}
 			percentheal -30,0;
 		}
 		cutin "tnm_lucile03.bmp",2;
 		mes "Lucile seems to be a machine.";
 		mes "I can hear mechanical sounds all of a sudden.";
 		specialeffect EF_LEVEL99_3;
-		progressbar "000000",40;
-		if (isbegin_quest(7572) == 0)
-			setquest 7572;// Lucile...?
+		// progressbar "000000",40;	// fix me: progressbar doesn't display close button on cancel
+		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 5) {
+			if (isbegin_quest(7572) == 0)
+				setquest 7572;// Lucile...?
+			'devil_tower = 6;
+		}
 		mes "System is restored.";
-		'devil_tower = 6;
 		next;
 		mes "[Lucile]";
 		mes "Wow! You fixed it faster than I thought.";
@@ -888,11 +897,13 @@ OnMobDead:
 		npctalk "Lucile: Let me excuse myself, follow me if you want to save the world.";
 		sleep 2000;
 		npctalk "Huey: sister...", instance_npcname("Huey#hui02");
-		disablenpc instance_npcname("Lucile#tnm02");
-		enablenpc instance_npcname("Lucile#tnm03");
-		enablenpc instance_npcname("Magic Swordman#tnm02");
-		enablenpc instance_npcname("Demon Morocc#tnm01");
-		'devil_tower = 7;
+		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 6) {
+			disablenpc instance_npcname("Lucile#tnm02");
+			enablenpc instance_npcname("Lucile#tnm03");
+			enablenpc instance_npcname("Magic Swordman#tnm02");
+			enablenpc instance_npcname("Demon Morocc#tnm01");
+			'devil_tower = 7;
+		}
 	}
 	end;
 }
@@ -1001,12 +1012,14 @@ OnMobDead:
 		mes "We need to stop the demon...";
 		mes "Can you do that?";
 		npctalk "Lucile: We need to stop the demon... Can you do that?";
-		if (isbegin_quest(7573) == 0)
-			setquest 7573;// Magic Swordman Thanatos
-		'demon$ = instance_npcname("Demon Morocc#tnm01");
-		'thanatos$ = instance_npcname("Magic Swordman#tnm02");
-		initnpctimer;
-		'devil_tower = 8;
+		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 7) {
+			if (isbegin_quest(7573) == 0)
+				setquest 7573;// Magic Swordman Thanatos
+			'demon$ = instance_npcname("Demon Morocc#tnm01");
+			'thanatos$ = instance_npcname("Magic Swordman#tnm02");
+			initnpctimer;
+			'devil_tower = 8;
+		}
 		close3;
 	}
 	mes "[Lucile]";
@@ -1480,9 +1493,11 @@ OnTimer9000:
 		mes "Please come with me through the passage behind that shelf!";
 		npctalk "Young Girl: Please come with me through the passage behind that shelf!";
 		close2;
-		enablenpc instance_npcname("#tnm3gate01");
-		enablenpc instance_npcname("#tnm3event02ect");
-		'devil_tower = 11;
+		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 10) {
+			enablenpc instance_npcname("#tnm3gate01");
+			enablenpc instance_npcname("#tnm3event02ect");
+			'devil_tower = 11;
+		}
 		end;
 	}
 	if ('devil_tower == 11) {
@@ -1838,13 +1853,15 @@ OnTimer55500:
 	mes "You will be in charge of activating Mind Blaster.";
 	npctalk "Loki: You will be in charge of activating Mind Blaster.", instance_npcname("Loki#tnmloki02");
 	next;
-	disablenpc instance_npcname("Loki#tnmloki02");
-	mes "^4d4dffLoki, Guillotine Cross of the Assassin Guild, has joined your party.";
-	mes "We have to get rid of the demonic Lord Knight by Mind Blasting him with Loki's skill.^000000";
-	'devil_tower = 14;
-	mercenary_create 2937,1800000;// M_LOKI
-	mapannounce 'map_tnm3$, "Demon Worshipper's Voice: Such rubbish! Where did you hide yourself?", bc_map,0xFF00;
-	initnpctimer;
+	if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 13) {
+		disablenpc instance_npcname("Loki#tnmloki02");
+		mes "^4d4dffLoki, Guillotine Cross of the Assassin Guild, has joined your party.";
+		mes "We have to get rid of the demonic Lord Knight by Mind Blasting him with Loki's skill.^000000";
+		'devil_tower = 14;
+		mercenary_create 2937,1800000;// M_LOKI
+		mapannounce 'map_tnm3$, "Demon Worshipper's Voice: Such rubbish! Where did you hide yourself?", bc_map,0xFF00;
+		initnpctimer;
+	}
 	close;
 OnTimer500:
 	enablenpc instance_npcname("#boss_skills_timer");
