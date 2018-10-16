@@ -19,6 +19,7 @@ OnPCLoginEvent:
 		getitem 7621, 3;    // Token of Siegfried x3
 		getitem 12210, 3;     // Bubble gum x3 (+100%)
 		getitem 662, 15;     // Authorative Badge x15
+		Zeny += 250000;		// Give 250k Zeny
 		vip_time 30240;     // 1 week worth of vip time (10080)
 
 		announce "Welcome to MilkyRO. Here are some things to start you with along with a 1 week VIP (only given by the gm) bonus.", BC_SELF;
