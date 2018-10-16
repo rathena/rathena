@@ -37,4 +37,4 @@
 // 30,Charleston in Distress,3600,300,1@mcd,127,282
 31,Ritual of Blessing,3600,300,2@mir,101,12
 32,Room of Consciousness,3600,300,1@mir,101,10
-// 33,Sky Fortress Invasion,3600,300,1@sthb,54,67,1@sthc,1@sthd
+33,Sky Fortress Invasion,3600,300,1@sthb,54,67,1@sthc,1@sthd

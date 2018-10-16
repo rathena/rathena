@@ -2167,6 +2167,12 @@
 9336,604800,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Go back to Professor Bernhard"
 9337,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Wrapping up the Adventure"
 
+// Sky Fortress Invasion memorial
+9418,0,3473,1,0,0,0,0,0,0,0,0,0,0,0,0,0,"Attack Sky Fortress Invading Prontera"
+// TO DO implement another way for delay: delay reseted after 3 days max at 12:00 hour (2 days at 12:00 hour)
+9419,259200,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Attack Sky Fortress Invading Prontera"
+9427,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Clearing the Sky Fortress for the Same Time"
+
 // Rockridge
 9457,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Solved Anyway"
 9458,0,3743,20,0,0,0,0,0,0,0,0,0,0,0,0,0,"Pipe Cleaning"
