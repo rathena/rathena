@@ -1495,6 +1495,7 @@
 8238,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	MER_KYRIE,Kyrie Eleison
 8239,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x1000,	MER_BLESSING,Blessing
 8240,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x1000,	MER_INCAGI,Increase Agility
+8241,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	MER_INVINCIBLEOFF2,Mind Blaster
 
 //****
 // Elemental Spirits Skills
