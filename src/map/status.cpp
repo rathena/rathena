@@ -1167,6 +1167,12 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_GLASTHEIM_ITEMDEF] = EFST_GLASTHEIM_ITEMDEF;
 	StatusIconChangeTable[SC_GLASTHEIM_HPSP] = EFST_GLASTHEIM_HPSP;
 
+	// Nightmare Biolab
+	StatusIconChangeTable[SC_LHZ_DUN_N1] = EFST_LHZ_DUN_N1;
+	StatusIconChangeTable[SC_LHZ_DUN_N2] = EFST_LHZ_DUN_N2;
+	StatusIconChangeTable[SC_LHZ_DUN_N3] = EFST_LHZ_DUN_N3;
+	StatusIconChangeTable[SC_LHZ_DUN_N4] = EFST_LHZ_DUN_N4;
+
 	StatusIconChangeTable[SC_ANCILLA] = EFST_ANCILLA;
 
 	/* Other SC which are not necessarily associated to skills */
@@ -9438,6 +9444,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_ARMOR_ELEMENT_WIND:
 			case SC_ARMOR_RESIST:
 			case SC_ATTHASTE_CASH:
+			case SC_LHZ_DUN_N1:
+			case SC_LHZ_DUN_N2:
+			case SC_LHZ_DUN_N3:
+			case SC_LHZ_DUN_N4:
 				break;
 			case SC_GOSPEL:
 				 // Must not override a casting gospel char.
@@ -11931,6 +11941,10 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_GEFFEN_MAGIC1:
 			case SC_GEFFEN_MAGIC2:
 			case SC_GEFFEN_MAGIC3:
+			case SC_LHZ_DUN_N1:
+			case SC_LHZ_DUN_N2:
+			case SC_LHZ_DUN_N3:
+			case SC_LHZ_DUN_N4:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -13957,6 +13971,10 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_GEFFEN_MAGIC1:
 			case SC_GEFFEN_MAGIC2:
 			case SC_GEFFEN_MAGIC3:
+			case SC_LHZ_DUN_N1:
+			case SC_LHZ_DUN_N2:
+			case SC_LHZ_DUN_N3:
+			case SC_LHZ_DUN_N4:
 			// Clans
 			case SC_CLAN_INFO:
 			case SC_SWORDCLAN:

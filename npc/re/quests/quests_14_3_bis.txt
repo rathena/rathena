@@ -1,0 +1,2087 @@
+//===== rAthena Script =======================================
+//= Flame Basin Quests
+//===== Description: =========================================
+//= [Official Conversion]
+//= Quests NPCs from Flame Basin
+//===== Changelogs: ==========================================
+//= 1.0 First version. Thanks to Dia from https://www.divine-pride.net/ ! [Capuche]
+//============================================================
+
+moro_vol,94,110,5	script	Guardian Nidhogg#143nyd01	4_F_NYDHOG,{
+	mes "[Nidhogg]";
+	if (ep4_3_mockill == 0) {
+		mes "Soon we'll face a decisive war.";
+		mes "I'll do my best to fulfill my duty as the Guardian.";
+		cutin "ep14_nyd04.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "I'm preparing a gift for you to make up for my past transgressions against you.";
+		close3;
+	}
+	if ($ep143_3_expbuff == 1) {
+		mes "I hope you'll like my gift. Yggdrasil's blessing doesn't last forever, ";
+		mes "but it'll last at least long enough to aid you and your party in battle.";
+		cutin "ep14_nyd04.bmp",2;
+		close3;
+	}
+	if (ep4_3_mockill == 1 && countitem(6715) > 0) {
+		mes "Oh, it's a shard of his soul.";
+		mes "He's destined to endlessly roam the world that he's created in his mind.";
+		mes "Vengeance is meted out, but the results aren't as satisfying as I thought.";
+		cutin "ep14_nyd01.bmp",2;
+		next;
+		mes "[Nidhogg]";
+		mes "May I have this Soul Shard?";
+		mes "In exchange, I'll give you and your party";
+		mes "the biggest gift I can give.";
+		cutin "ep14_nyd03.bmp",2;
+		next;
+		if (select( "Give the Soul Shard.", "Decline." ) == 2) {
+			mes "[Nidhogg]";
+			mes "Watch out for the Demon God's negative influence on you.";
+			cutin "ep14_nyd04.bmp",2;
+			close3;
+		}
+		if ($ep143_3_expbuff == 1) {
+			mes "[Nidhogg]";
+			mes "Oh, you already received Yggdrasil's blessing.";
+			mes "I'll take a rain check on this.";
+			cutin "ep14_nyd01.bmp",2;
+			close3;
+		}
+		cutin "ep14_nyd04.bmp",2;
+		mes "[Nidhogg]";
+		mes "Thank you.";
+		mes "May Yggdrasil bless you.";
+		delitem 6715,1;// P_Of_Evil_Soul
+		$ep143_3_expbuff = 1;
+		$ep143_3_exptime = 0;
+		ep4_3_mockill = 2;
+		announce "Nidhogg: May Yggdrasil bless the Demon God slayers " + strcharinfo(0) + " and others.", bc_all, "0xFF0000";
+		donpcevent "Loki#1432loki01::OnEventOn";
+		next;
+		mes "^4d4dffGood job taking out Demon God Morocc. The server EXP rate has increased by 10% for about 1 hour.^000000";
+		close3;
+	}
+	mes "I don't understand this;";
+	mes "I badly wanted to get rid of him from this world,";
+	mes "yet I feel like I'm empty on the inside.";
+	cutin "ep14_nyd02.bmp",2;
+	next;
+	mes "[Nidhogg]";
+	mes "This must be";
+	mes "how people feel when they've lost their jobs overnight.";
+	cutin "ep14_nyd01.bmp",2;
+	next;
+	mes "[Nidhogg]";
+	mes "At least I've saved enough money";
+	mes "to go without a job for a while.";
+	cutin "ep14_nyd04.bmp",2;
+	close3;
+
+OnEventOn:
+	if ($ep143_3_expbuff == 1) {
+		initnpctimer;
+		setbattleflag( "quest_exp_rate", getbattleflag("quest_exp_rate") + 10 );
+		setbattleflag( "base_exp_rate", getbattleflag("base_exp_rate") + 10 );
+		setbattleflag( "job_exp_rate", getbattleflag("job_exp_rate") + 10 );
+	}
+	end;
+OnTimer60000:
+	if ($ep143_3_exptime < 60) {
+		$ep143_3_exptime++;
+		initnpctimer;
+	}
+	else
+		donpcevent "Guardian Nidhogg#143nyd01::OnStop";
+	end;
+OnStop:
+	stopnpctimer;
+	if ($ep143_3_expbuff == 1) {
+		$ep143_3_expbuff = 0;
+		$ep143_3_exptime = 0;
+		setbattleflag( "quest_exp_rate", getbattleflag("quest_exp_rate") - 10 );
+		setbattleflag( "base_exp_rate", getbattleflag("base_exp_rate") - 10 );
+		setbattleflag( "job_exp_rate", getbattleflag("job_exp_rate") - 10 );
+	}
+	end;
+OnInit:
+	if ($ep143_3_expbuff == 1)
+		initnpctimer;
+	end;
+OnInterIfInitOnce:
+	if ($ep143_3_expbuff == 1)
+		donpcevent "Guardian Nidhogg#143nyd01::OnEventOn";
+	end;
+}
+
+moro_vol,97,110,3	script	Loki#1432loki01	4_M_ROKI2,{
+	cutin "ep14_roki01.bmp",2;
+	mes "[Loki]";
+	mes "Things haven't even started off yet;";
+	mes "they will only when his true colors are revealed.";
+	close3;
+
+OnEventOn:
+	initnpctimer;
+	end;
+OnTimer5000:
+	announce "For defeating Morocc, you have been rewarded with an extra 10% Server EXP reward for 1 hour.", bc_all, "0xFF0000";
+	end;
+OnTimer11500:
+	announce " ", bc_all, "0xFF0000";
+	end;
+OnTimer12000:
+	donpcevent "Guardian Nidhogg#143nyd01::OnEventOn";
+	stopnpctimer;
+	end;
+}
+
+moro_vol,98,107,3	script	Magic Scholar#143avt01	4_M_FAIRYAVANT,{
+	if (checkweight(1304,3) == 0) {
+		mes "You are carrying too many items to proceed with the quest.";
+		mes "Please make some room in your inventory.";
+		close;
+	}
+	cutin "avant01.bmp",1;
+	if (ep14_2_mylord < 33) {
+		mes "[Magic Scholar]";
+		mes "Stop bothering me.";
+		mes "If you're here to donate your body for my experiment, then you can stay.";
+		mes "Or scram!";
+		close3;
+	}
+	if (ep14_2_mylord == 33) {
+		mes "[Avant]";
+		mes "What brings you, rookie?";
+		mes "Did you come to laugh at my misery, like everyone else?";
+		next;
+		select( "Why are you here?", "Are you sorry for what you've done?" );
+		mes "[Avant]";
+		mes "*Snort*";
+		mes "This is a matter of pride.";
+		mes "I admit that my action sent my kinsmen in harm's way.";
+		next;
+		cutin "avant02.bmp",1;
+		mes "[Avant]";
+		mes "I want to say that I'm doing this to make up for what I did,";
+		mes "like everyone wants to believe. *Smirk*";
+		next;
+		mes "[Avant]";
+		mes "But if I'm honest with myself,";
+		mes "I'm doing this to get back at Shnaim and Morocc for using me like a tool.";
+		next;
+		mes "[Avant]";
+		mes "I'm planning to be the last one standing after everything goes down.";
+		ep14_2_mylord = 34;
+		close3;
+	}
+	if (BaseLevel < 140) {
+		mes "[Avant]";
+		mes "I've got no use for weaklings.";
+		mes "Come back when you become stronger.";
+		close3;
+	}
+	switch( checkquest(7584,PLAYTIME) ) {
+	case -1:
+		if (isbegin_quest(7583) == 1) {// Collecting Mana
+			if (countitem(6708) > 2) {
+				mes "[Avant]";
+				mes "Not bad, rookie.";
+				mes "Let me take the Mana Crystallines.";
+				mes "Good job.";
+				delitem 6708, countitem(6708);// Mana_crystal
+				erasequest 7583;// Collecting Mana
+				setquest 7584;// Unending Battle
+				getexp 350000,350000;
+				close3;
+			}
+			mes "[Avant]";
+			mes "Greenhorn, if you defeat those strong Demons, you'll find some mana crystallines.";
+			mes "I want you to bring them to me,";
+			mes "at least three at a time. Got it?";
+			close3;
+		}
+		if (checkquest(7581,HUNTING) == 0 || checkquest(7581,HUNTING) == 1) {
+			mes "[Avant]";
+			mes "Hey, rookie.";
+			mes "Do you see those massive goons?";
+			mes "If you hunt those Distorted,";
+			next;
+			mes "[Avant]";
+			mes "Blazing, and Freezing Reincarnations, you'll find some mana crystallines.";
+			mes "Part of mana stolen from the orb, the crystallines are what";
+			mes "make those Demon runts so strong.";
+			next;
+			mes "[Avant]";
+			mes "I want you to";
+			mes "get rid of them and bring me Mana Crystallines.";
+			mes "Don't try to keep them from me: they're not useful for you.";
+			next;
+			mes "[Avant]";
+			mes "Three Reincarnations, thus three Mana Crystallines.";
+			mes "Bring them at least for Kardui of Eclage.";
+			setquest 7583;// Collecting Mana
+			close3;
+		}
+		mes "[Avant]";
+		mes "Hm, I didn't know such a small amount of mana could produce";
+		mes "such great power.";
+		mes "Dirty Demons.";
+		close3;
+	case 0:
+	case 1:
+		mes "[Avant]";
+		mes "I hope you'll come back for the next subjugation.";
+		close3;
+	case 2:
+		mes "[Avant]";
+		mes "Soon the Human Alliance will send out a Demon subjugation party. Come by before you leave.";
+		mes "You want to collect the mana, don't you?";
+		erasequest 7584;
+		close3;
+	}
+	end;
+
+OnInit:
+	questinfo 7583, QTYPE_QUEST2;
+	setquestinfo_req 7583,7581,1;
+	setquestinfo_req 7583,7584,0;
+	setquestinfo_level 7583,140,175;
+	// 3759 is probably ep14_2_mylord
+	// SetQuestItem 7583 3759 33 "<"
+	end;
+}
+
+moro_vol,95,108,7	script	Hishieh#143hisie01	4_M_FARIY_HISIE,{
+	cutin "hisie01.bmp",0;
+	mes "[Hishieh]";
+	if (ep14_2_mylord < 15) {
+		mes "Are you from the Human Alliance?";
+		mes "I don't remember asking for your assistance, yet.";
+		next;
+		mes "[Hishieh]";
+		mes "If something were to happen, I'd send word to your commander-in-chief, Hibba Agip.";
+		close3;
+	}
+	if (ep14_2_mylord < 33) {
+		mes "Can we really learn the truth about the Demon God in this place?";
+		mes "It's filled with creatures I've never seen.";
+		next;
+		mes "[Hishieh]";
+		mes "Creepy...";
+		close3;
+	}
+	if (ep14_2_mylord == 33) {
+		mes "The instigator of all the bad things is really hiding out in here, huh?";
+		mes "How exciting!";
+		next;
+		mes "[Hishieh]";
+		mes "Oh, why am I here?";
+		mes "I came on Kar's behalf.";
+		mes "He can't leave Eclage while supplying it with mana that the orb can't.";
+		next;
+		mes "[Hishieh]";
+		mes "Our priorities lie with Yggdrasil and her Guardian.";
+		mes "Plus, we really can't afford to lose the newborn Mayor.";
+		next;
+		cutin "hisie04.bmp",0;
+		mes "[Hishieh]";
+		mes "I was able to persuade the Elders to let me command the army,";
+		mes "but I'm still a commander in name only.";
+		next;
+		select("What happened to Avant?");
+		cutin "hisie02.bmp",0;
+		mes "[Hishieh]";
+		mes "Hm...";
+		mes "We're using his knowledge.";
+		mes "We could have killed him, but that would've been too easy.";
+		next;
+		mes "[Hishieh]";
+		mes "It's a kind of revenge I guess, huh.";
+		mes "After all, his only transgression is that he loves his science too much.";
+		next;
+		mes "[Hishieh]";
+		mes "Even the Elders acknowledged his talent and decided to save his life.";
+		mes "Above all...";
+		next;
+		mes "[Hishieh]";
+		mes "(Lowering his voice)";
+		mes "No one else knows the orb's mana has been stolen.";
+		mes "As far as others know, Avant's only responsible for me and Kar.";
+		next;
+		mes "[Hishieh]";
+		mes "Avant's over there. You can ask him questions if you'd like.";
+		mes "Hah hah. ";
+		close3;
+	}
+	switch( checkquest(7600,PLAYTIME) ) {
+	case -1:
+		switch( checkquest(7595,HUNTING) ) {
+		case -1:
+			if (isbegin_quest(7593) == 1) {
+				mes "The Temple of the Demon God, huh? Okay, well if you find stray mana from the orb in there, could you take care of it?";
+				mes "I don't know what kind of shape the mana is taking at the moment, but you won't mistake it for anything else.";
+				next;
+				mes "[Hishieh]";
+				mes "If you find stray mana from the orb, then please hit and disperse it.";
+				mes "It'll find its way back to Yggdrasil and the orb.";
+				mes "Can you do that for us?";
+				next;
+				if (select( "Gladly.", "Sorry." ) == 2) {
+					cutin "hisie02.bmp",0;
+					mes "[Hishieh]";
+					mes "No worries.";
+					mes "I'll ask someone else.";
+					mes "We're good.";
+					close3;
+				}
+				mes "[Hishieh]";
+				mes "I owe you so much,";
+				mes "I don't know how to repay you.";
+				mes "Thank you.";
+				next;
+				mes "[Hishieh]";
+				mes "Please release 3 Brilliant Manas, 3 Life Manas, and 3 Earth Manas.";
+				mes "I'll be counting on you.";
+				mes "Come back safely, you hear?";
+				setquest 7595;// Wandering Orb Magic
+				close3;
+			}
+			mes "Avant knows about the orb's mana better than anyone else.";
+			mes "Even Kar and I can barely stand Avant, but he really needs your help.";
+			next;
+			mes "[Hishieh]";
+			mes "This isn't just about collecting the orb's mana, but also has to do with the Demon God.";
+			mes "Most of my kinsmen don't know yet the orb's core mana has been stolen.";
+			next;
+			cutin "hisie02.bmp",0;
+			mes "[Hishieh]";
+			mes "And I want to keep it that way.";
+			mes "Please help us.";
+			mes "Kar and I really need you.";
+			close3;
+		case 0:
+		case 1:
+			mes "All you have to do is just hit and disperse the moving globes of mana in the Temple of the Demon God.";
+			mes "Then the mana will be returned to Yggdrasil.";
+			next;
+			mes "[Hishieh]";
+			mes "If you find solidified, immobile mana, just absorb them";
+			mes "by touching it.";
+			next;
+			mes "[Hishieh]";
+			mes "It's no longer useful for us, but this is for you";
+			mes "to fight the Demons.";
+			close3;
+		case 2:
+			cutin "hisie04.bmp",0;
+			mes "Good job!";
+			mes "I've felt the mana returning.";
+			mes "You did great. Kar will be excited!";
+			next;
+			cutin "hisie01.bmp",0;
+			mes "[Hishieh]";
+			mes "This isn't much, but I want you to have it.";
+			mes "Hope you'll like it.";
+			mes "A substantial amount of mana has been leaked out of the orb.";
+			next;
+			mes "[Hishieh]";
+			mes "If you're planning to reenter the Temple of the Demon God, then please look for more mana globes.";
+			mes "You should go rest for now.";
+			erasequest 7595;// Wandering Orb Magic
+			setquest 7600;// Promising Tomorrow
+			getitem 22567,1;// Squad_Prize
+			getexp 1000000,500000;
+			close3;
+		}
+	case 0:
+	case 1:
+		mes "Not all the stray globes of mana from the orb have been retrieved,";
+		mes "though we're making progress.";
+		mes "I'll appreciate if you can come back tomorrow and help us again.";
+		close3;
+	case 2:
+		erasequest 7600;// Promising Tomorrow
+		mes "If you're planning to reenter the Temple of the Demon God, then I'd like to ask you a favor.";
+		mes "Yes, it's the same thing I asked you before:";
+		mes "return the mana.";
+		next;
+		mes "[Hishieh]";
+		mes "Talk to me again if you want to help us.";
+		close3;
+	}
+	end;
+
+OnInit:
+	questinfo 7595, QTYPE_QUEST2;
+	setquestinfo_req 7595,7593,1;
+	setquestinfo_req 7595,7600,0;
+	setquestinfo_level 7595,160,175;
+	// 3759 = [ep14_2_mylord]
+	// SetQuestItem 7595 3759 33 "<"
+	end;
+}
+
+moro_vol,108,88,5	script	Commander Hibba Agip#14301	4_M_REDSWORD,{
+	cutin "ep13_captin_edq.bmp",2;
+	mes "[Hibba Agip]";
+	if (ep14_3_mors01 == 0 || BaseLevel < 160) {
+		mes "This place is bizarre beyond comprehension.";
+		mes "Morocc is here somewhere.";
+		next;
+		mes "[Hibba Agip]";
+		mes "This definitely looks abysmal enough for someone like him to hang around.";
+		mes "Those must have been dragged in from the Morocc Desert, then contaminated by his evil energy.";
+		next;
+		mes "[Hibba Agip]";
+		mes "Sigh...";
+		mes "We have a long and winding load ahead of us.";
+		mes "...";
+		next;
+		mes "[Hibba Agip]";
+		mes "Sigh.";
+		mes "I'll call you when I need you.";
+		mes "Till then, focus on staying alive.";
+		close3;
+	}
+	if (ep4_3_mockill == 0) {
+		if (isbegin_quest(7597) == 1) {
+			mes "Ah, our hero is back!";
+			mes "Mwah hah hah, finally we've reached the end of our expedition!";
+			mes "Good job!";
+			mes "I thank you on behalf of the entire humankind.";
+			next;
+			mes "[Adjutant Abidal]";
+			mes "You're incredible!";
+			mes "You've saved the world!";
+			mes "After this, I'm going to go back home...";
+			next;
+			mes "[Hiva Agip]";
+			mes "Abidal, enough!";
+			mes "Are you trying to raise a red flag?!";
+			next;
+			mes "[Hiva Agip]";
+			mes "This isn't much, but I want you to have it.";
+			mes "Thank you for your service.";
+			mes "Hah hah.";
+			mes "Finally I can sleep!";
+			next;
+			mes "[Hiva Agip]";
+			mes "Wait, I sense something ominous around you...";
+			mes "Oh gods, what is this?!";
+			mes "Are you trying to have your soul devoured by the Demon God?!";
+			next;
+			mes "[Hiva Agip]";
+			mes "Give it to me, and I'll crystallize it for you.";
+			mes "And I want you to meet that Guardian lady at the Laphine camp.";
+			mes "She might know about this.";
+			ep4_3_mockill = 1;
+			erasequest 7597;// Fall of the False God
+			setquest 7598;// Caged God
+			getitem 22567,1;// Squad_Prize
+			getitem 6715,1;// P_Of_Evil_Soul
+			getexp 1000000,500000;
+			close3;
+		}
+		if (isbegin_quest(7593) == 1) {
+			mes "The Temple of the Demon God is discovered inside the cave in the central hill.";
+			mes "A tree is blocking the entry to the temple.";
+			next;
+			mes "[Hibba Agip]";
+			mes "That purple lady called the Guardian said she'd go there soon.";
+			mes "You should find her.";
+			close3;
+		}
+		mes "Well-met.";
+		mes "I've heard a path has been cleared in that dark cave.";
+		mes "Sometimes I think this condemned basin is alive.";
+		next;
+		mes "[Hibba Agip]";
+		mes "You're smart and capable. I don't have to explain why I'm telling you this, do I?";
+		mes "Don't worry. I've sent out an advance party.";
+		next;
+		mes "[Hibba Agip]";
+		mes "Be joyous, comrade!";
+		mes "It won't be long before our perilous journey is over!";
+		mes "And you'll be the one to end it.";
+		next;
+		mes "[Hibba Agip]";
+		mes "We've decided to call the newly discovered place the Temple of the Demon God.";
+		mes "Actually the first scout named it, and the name stuck.";
+		next;
+		mes "[Hibba Agip]";
+		mes "I'd like to put you on a subjugation mission in the Temple of the Demon God.";
+		mes "This is not an order, but a request;";
+		mes "you decide to take the mission at your own risk.";
+		next;
+		if (select( "I'll do it.", "No." ) == 2) {
+			mes "[Hibba Agip]";
+			mes "I understand";
+			mes "you don't want to risk your life for the world peace.";
+			mes "Enjoy living until the end of the world.";
+			close3;
+		}
+		mes "[Hibba Agip]";
+		mes "I knew I chose the right person for the job.";
+		mes "Loki said the Demon God hadn't fully recovered from";
+		mes "the damage received upon the break of his seal.";
+		next;
+		mes "[Hibba Agip]";
+		mes "He's still licking his wounds,";
+		mes "which gives us a perfect opportunity to get at him.";
+		mes "Good luck.";
+		setquest 7593;// Demon God Subjugation
+		close3;
+	}
+	if (isbegin_quest(7597) == 1) {
+		mes "*Whistle* Good work!";
+		mes "How's the Temple of the Demon God?";
+		mes "Still the same?";
+		next;
+		mes "[Hiva Agip]";
+		mes "Take your reward.";
+		mes "See you again.";
+		erasequest 7597;// Fall of the False God
+		setquest 7598;// Caged God
+		getitem 22567,1;// Squad_Prize
+		getexp 1000000,500000;
+		close3;
+	}
+	switch( checkquest(7598,PLAYTIME) ) {
+	case -1:
+		mes "For the life of me, I can't figure out what's happening.";
+		mes "This place has gone to the dogs since that monster proclaimed that he would replace God.";
+		next;
+		mes "[Hiva Agip]";
+		mes "I'm afraid once warped, dimensions can never be the same.";
+		mes "Could you go back to the Temple of the Demon God once more?";
+		next;
+		if (select( "Sure.", "No." ) == 2) {
+			mes "[Hiva Agip]";
+			mes "I understand.";
+			mes "You've done enough already.";
+			mes "I'll send someone else.";
+			close3;
+		}
+		mes "[Hiva Agip]";
+		mes "The Temple of the Demon God is stuck in a perpetual time loop,";
+		mes "just like all the other Dimensional Cracks.";
+		next;
+		mes "[Hiva Agip]";
+		mes "He tried desperately to escape from this world, but all to no avail.";
+		mes "That world of his is now filled with nothing but hellish memories that repeat themselves over and over.";
+		next;
+		mes "[Hiva Agip]";
+		mes "Good luck exploring the temple. If you see Morocc again, don't hesitate to kill the Demon God again.";
+		mes "He doesn't deserve commiseration.";
+		mes "Godspeed.";
+		if (isbegin_quest(7593) == 0)
+			setquest 7593;// Demon God Subjugation
+		close3;
+	case 0:
+	case 1:
+		mes "Now that we've taken care of the main body, we can take things slow.";
+		mes "Why don't you go rest for now?";
+		mes "Leave the rest to us.";
+		close3;
+	case 2:
+		erasequest 7598;// Caged God
+		mes "I wouldn't believe you had an intense battle yesterday if I didn't already know about it.";
+		mes "Are you ready for another battle?";
+		next;
+		mes "[Hiva Agip]";
+		mes "Let me know when you're ready.";
+		mes "Morocc is gone, yet his temple stands.";
+		mes "It might have something to do with the Dimensional Crack.";
+		next;
+		mes "[Hiva Agip]";
+		mes "Oh, don't worry. I'm not thinking to send you out there.";
+		mes "Hah hah hah!";
+		close3;
+	}
+	end;
+
+OnInit:
+	questinfo 7593, QTYPE_QUEST2;
+	setquestinfo_req 7593,7597,0;
+	setquestinfo_req 7593,7598,0;
+	setquestinfo_level 7593,160,175;
+	// 3789 = [ep4_3_mockill]
+	// SetQuestItem 7593 3789 0 "<"
+
+	questinfo 7598, QTYPE_QUEST2;
+	setquestinfo_req 7598,7593,0;
+	setquestinfo_req 7598,7597,1;
+	end;
+}
+
+moro_vol,110,90,3	script	Adjutant Abidal#14302	4_M_SAGE_C,{
+	switch( checkquest(7599,PLAYTIME) ) {
+	case -1:
+		switch( checkquest(7594,HUNTING) ) {
+		case -1:
+			if (isbegin_quest(7593) == 1) {
+				mes "[Abidal]";
+				mes "Are you on the quest to subjugate the Temple of the Demon God?";
+				mes "Then please do me a favor.";
+				mes "Our scouts have reported on the presence of a Frost Spider and a Fire Wolf that have tasted the Frost of Genesis.";
+				next;
+				mes "[Abidal]";
+				mes "They're just as evil as their master Morocc.";
+				mes "Please exterminate the Frost Spider and Fire Wolf.";
+				next;
+				if (select( "Accept.", "Decline." ) == 2) {
+					mes "[Abidal]";
+					mes "Are you afraid you can't handle them?";
+					mes "I understand.";
+					mes "They're formidable enemies.";
+					close;
+				}
+				mes "[Abidal]";
+				mes "Thank you.";
+				mes "The Fire Spider is called Brinaranea; the Fire Wolf, Muspellskoll.";
+				mes "Please exterminate those creatures of the Demon God.";
+				mes "Good luck.";
+				setquest 7594;// Frost Spider and Fire Wolf
+				close;
+			}
+			mes "[Abidal]";
+			mes "Did you come to help us subjugate the Demon God?";
+			mes "Please be careful; the environment of this place keeps changing without any warning.";
+			close;
+		case 0:
+		case 1:
+			mes "[Abidal]";
+			mes "According to my intel, the Demon God has several henchmen.";
+			mes "I'd like you to eliminate the biggest threat among them.";
+			next;
+			mes "[Abidal]";
+			mes "It won't be easy, but I have faith in you.";
+			mes "The future of Midgard rests on your shoulders.";
+			close;
+		case 2:
+			mes "[Abidal]";
+			mes "You did it!";
+			mes "I knew you would!";
+			mes "Congratulations!";
+			next;
+			mes "[Abidal]";
+			mes "But I'm afraid this is not over yet.";
+			mes "I have this nagging sense of misgiving.";
+			mes "I'm sorry. Maybe I'm thinking irrationally.";
+			next;
+			mes "[Abidal]";
+			mes "I've prepared a small token of appreciation for you.";
+			mes "I'm sorry this is the best I can do.";
+			mes "Thank you for your hard work.";
+			erasequest 7594;// Frost Spider and Fire Wolf
+			setquest 7599;// Unending Hunt
+			getitem 22567,1;// Squad_Prize
+			close;
+		}
+	case 0:
+	case 1:
+		mes "[Abidal]";
+		mes "You did great. You should go rest.";
+		close;
+	case 2:
+		erasequest 7599;// Unending Hunt
+		mes "[Abidal]";
+		mes "Are you well rested?";
+		mes "You look like you are.";
+		mes "That's great because we're worried about the Temple of the Demon God. We can't seem to close it.";
+		next;
+		mes "[Abidal]";
+		mes "I might ask you again to exterminate Frost Spiders and Fire Wolves.";
+		mes "Why wouldn't the Temple of the Demon God disappear?";
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo 7594, QTYPE_QUEST2;
+	setquestinfo_req 7594,7593,1;
+	setquestinfo_req 7594,7599,0;
+	setquestinfo_level 7594,160,175;
+	end;
+}
+
+moro_vol,111,87,1	script	 Instructor Igrid#14303	4_M_CRU,{
+	if (BaseLevel < 140) {
+		mes "[Instructor Igrid]";
+		mes "You.";
+		mes "(Shaking her head) You won't do.";
+		mes "You're too weak to fight these Demons.";
+		mes "Go back and train some more.";
+		close;
+	}
+	switch( checkquest(7582,PLAYTIME) ) {
+	case -1:
+		switch( checkquest(7581,HUNTING) ) {
+		case -1:
+			mes "[Instructor Igrid]";
+			mes "Hey, well-met.";
+			mes "I need your help.";
+			mes "Some of those Demons pouring out of the Flaming Basin are a real pain in the neck.";
+			next;
+			mes "[Instructor Igrid]";
+			mes "Morocc Reincarnations have invaded here just as well, and some of them are noticeably strong.";
+			mes "I want you to get rid of them.";
+			next;
+			if (select( "Why me?", "Sure." ) == 1) {
+				mes "[Instructor Igrid]";
+				mes "Um, this is unexpected.";
+				mes "I thought you came to protect the peace and prosperity of Midgard. Did you not?";
+				next;
+				mes "[Instructor Igrid]";
+				mes "Maybe I gave you too much credit.";
+				mes "All right, I'll ask someone else.";
+				mes "I'm really disappointed in you.";
+				close;
+			}
+			mes "[Instructor Igrid]";
+			mes "You don't disappoint me.";
+			mes "Listen, in the center of the basin is a high hill.";
+			mes "In four directions from the center roams a strong Demon.";
+			next;
+			mes "[Instructor Igrid]";
+			mes "They look just like those Reincarnations that attacked Morocc City,";
+			mes "but bigger and stronger.";
+			next;
+			mes "[Instructor Igrid]";
+			mes "For the smooth operation of the subjugation mission,";
+			mes "please ^4d4dffeliminate Distorted Morocc Reincarnation, Blazing Morocc Reincarnation, and Freezing Morocc Reincarnation.^000000";
+			mes "I'll be counting on you.";
+			setquest 7581;// Eliminating Risks
+			close;
+		case 0:
+		case 1:
+			mes "[Instructor Igrid]";
+			mes "Please ^4d4dffeliminate Distorted Morocc Reincarnation, Blazing Morocc Reincarnation, and Freezing Morocc Reincarnation.^000000";
+			mes "You can find them stationed in four directions from the center of the basin.";
+			close;
+		case 2:
+			mes "[Instructor Igrid]";
+			mes "You really took out those strong Demons.";
+			mes "That should be enough to break the spirit of the rest.";
+			mes "Good job.";
+			next;
+			mes "[Instructor Igrid]";
+			mes "I hope you'll come back to help me again.";
+			mes "Let's go back home together, yeah?";
+			erasequest 7581;// Eliminating Risks
+			setquest 7582;// Daily Cleaning
+			getexp 1000000,800000;
+			close;
+		}
+	case 0:
+	case 1:
+		mes "[Instructor Igrid]";
+		mes "You.";
+		mes "Do you mean those giant reincarnations?";
+		mes "I've assigned some more adventurers to take care of them.";
+		next;
+		mes "[Instructor Igrid]";
+		mes "You should rest for the day. Come back to hunt tomorrow.";
+		close;
+	case 2:
+		mes "[Instructor Igrid]";
+		mes "It's almost time for a Demon hunt.";
+		mes "Aren't you excited? Because I am! Hah hah!";
+		erasequest 7582;// Daily Cleaning
+		close;
+	}
+	end;
+
+OnInit:
+	questinfo 7581, QTYPE_QUEST2, 0;
+	setquestinfo_req 7581,7582,0;
+	setquestinfo_level 7581,140,175;
+	end;
+}
+
+moro_vol,136,84,3	script	Jeruth Hesranta#ep143	4_MAN_JERUTOO,{
+	if (checkweight(1304,3) == 0) {
+		mes "You are carrying too many items to proceed with the quest.";
+		mes "Please make some room in your inventory.";
+		close;
+	}
+	cutin "ep13_heslanta.bmp",2;
+	mes "[Jeruth Hesranta]";
+	if (ep13_3_secret < 22) {
+		mes "I'm Hesranta, commander of the Sappha army.";
+		mes "It's my honor to fight beside you Humans.";
+		close3;
+	}
+	if (ep13_3_secret < 24) {// custom translation
+		mes "I didn't expect to see you here!";
+		mes "... although a lot of things happened, I'm still waiting for you to complete the first thing I asked!";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "Please come back to help me!";
+		close3;
+	}
+	if (ep13_3_secret == 24) {
+		mes "Long time, no see.";
+		mes "Do you remember me?";
+		mes "We had an important discussion together back in Diel.";
+		next;
+		select("Why are you here?");
+		mes "[Jeruth Hesranta]";
+		mes "I persuaded the Elders to let me bring an army here.";
+		mes "As you suspected, Ahat isn't a Sappha.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "Only I'm aware of that knowledge at the moment.";
+		mes "Everyone else has pretty much forgotten he ever existed.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "My undying suspicion about him kept me safe from Ahat's hypnosis.";
+		mes "He used the unspeakable talent to disappear.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "After he disappeared, I persuaded the Elders that we must join the subjugation of the Demon God.";
+		mes "Other Sapphas were against me, for the safety of our kind,";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "but it's in our nature to help our friends at all costs.";
+		mes "So I've brought our bravest Gartens to the battlefield.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "Long story short,";
+		mes "you no longer have to work for Ahat.";
+		mes "If you need the Contribution Certificate, do me a favor later and I'll give you one.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "You know Chesher, don't you?";
+		mes "When it comes to him,";
+		mes "I can't trust anyone else.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "I want to collect information about him first before I proceed with my plan.";
+		mes "Please stay safe until I talk to you again.";
+		ep13_3_secret = 25;
+		ep13_3_ahtdayq = 0;
+		if (isbegin_quest(7200) > 0)
+			erasequest 7200;// Cheshire's call
+		if (isbegin_quest(7201) > 0)
+			erasequest 7201;// Removing traces
+		getitem 6304,1;// Sapa_Feat_Cert
+		delitem 6305, countitem(6305);	// Frozen_Skin_Piece
+		delitem 6306, countitem(6306);	// Solid_Bloodstain
+		delitem 6307, countitem(6307);	// Suspicious_Magic_Stone
+		close3;
+	}
+	if (ep13_3_secret == 25) {
+		if (BaseLevel < 140) {// custom translation
+			mes "Do you remember that we talked about Chesher?";
+			mes "He's a sensitive issue, so I can't talk to other Sapphas about him.";
+			next;
+			mes "[Jeruth Hesranta]";
+			mes "But... it does not seem to please you,";
+			mes "go back and train some more.";
+			close3;
+		}
+		mes "Do you remember that we talked about Chesher?";
+		mes "He's a sensitive issue, so I can't talk to other Sapphas about him.";
+		mes "And I was thinking...";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "Maybe you could help me confirm my suspicion.";
+		next;
+		select("What suspicion?");
+		mes "[Jeruth Hesranta]";
+		mes "There are some things that don't seem to belong to this Flaming Basin.";
+		mes "They're boxes of some kind.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "Animated by the Demon God's evil energy, those boxes are running amok about the basin.";
+		mes "Now I'm concerned...";
+		next;
+		select("You're concerned?");
+		mes "[Jeruth Hesranta]";
+		mes "They're the spitting images of Bradium Boxes in Dicastes.";
+		mes "Could you exterminate them and help me determine their identity?";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "They really could be the Bradium Boxes that Chesher stole from Dicastes.";
+		mes "If so, I can use the boxes to replenish my army.";
+		next;
+		select("And retrieve the stolen Bradiums as well.");
+		mes "[Jeruth Hesranta]";
+		mes "Correct. My army isn't getting much support, since this expedition has been solely my idea.";
+		mes "It's just wishful thinking; we won't know until we have the boxes.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "For now please hunt one box and let me know what you find from it.";
+		mes "I'll be waiting.";
+		setquest 7578;// Rampaging Box
+		ep13_3_secret = 26;
+		close3;
+	}
+	if (ep13_3_secret == 26) {
+		if (checkquest(7578,HUNTING) != 2) {
+			cutin "ep13_heslanta.bmp",2;
+			mes "[Jeruth Hesranta]";
+			mes "Just hunt 1 ^4d4dffRampaging Box^000000 and bring me what you find inside it.";
+			if (isbegin_quest(7578) == 0)
+				setquest 7578;
+			close3;
+		}
+		if (countitem(6392) < 1) {// Bradium_Box
+			mes "I see that you've subjugated a Rampaging Box,";
+			mes "but my real objective was to check its contents.";
+			mes "^4d4dffPlease exterminate a box and bring me the item you've found from it.^000000";
+			close3;
+		}
+		mes "I was right.";
+		mes "It's amazing how such an animate object can move on its own.";
+		mes "It must be enchanted, don't you think?";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "This confirms my suspicion:";
+		mes "those boxes in the Flaming Basin are Bradium Boxes from El Dicastes.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "I don't want to impose on your kindness, but I hope you'll continue to hunt these boxes.";
+		mes "You're the only one I can trust with this, at least for now.";
+		mes "Gartens are brave, but they'll want to understand why Bradium Boxes are found in this place.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "Then I'll have to tell them everything,";
+		mes "starting with Ahat, and that most Sapphas have forgotten about him will make things really complicated.";
+		next;
+		select("When do I start?");
+		mes "[Jeruth Hesranta]";
+		mes "How about now?";
+		mes "^4d4dffPlease hunt those Rampaging Boxes and collect 10 Bradium Boxes.^000000";
+		delitem 6392,1;// Bradium_Box
+		completequest 7578;// Rampaging Box
+		setquest 7579;// Collecting Bradiums
+		ep13_3_secret = 27;
+		getexp 300000,300000;
+		close3;
+	}
+	switch( checkquest(7580,PLAYTIME) ) {
+	case -1:
+		switch( checkquest(7579,HUNTING) ) {
+		case 0:
+			cutin "ep13_heslanta.bmp",2;
+			mes "[Jeruth Hesranta]";
+			mes "Welcome back.";
+			mes "Are you ready for the day?";
+			break;
+		case 1:
+			cutin "ep13_heslanta.bmp",2;
+			mes "[Jeruth Hesranta]";
+			mes "Rampaging Boxes themselves aren't threatening, but they're surrounded by dangerous monsters. Please be careful.";
+			next;
+			mes "[Jeruth Hesranta]";
+			mes "Happy hunting!";
+			close3;
+		case 2:
+			if (countitem(6392) < 10) {
+				mes "It's amazing how those ore-filled boxes are moving on their own.";
+				mes "Maybe that's how the Demon God is recruiting his soldiers.";
+				close3;
+			}
+			cutin "ep13_heslanta.bmp",2;
+			mes "[Jeruth Hesranta]";
+			mes "Good job.";
+			mes "I can't thank you enough.";
+			mes "Let me take all the Bradium Boxes.";
+			next;
+			mes "[Jeruth Hesranta]";
+			mes "I can feel other people's eyes on us. Hah hah.";
+			mes "See you again.";
+			delitem 6392, countitem(6392);// Bradium_Box
+			erasequest 7579;// Collecting Bradiums
+			setquest 7580;// Collecting Every Day
+			getexp 800000,800000;
+			getitem 6304,1;// Sapa_Feat_Cert
+			close3;
+		}
+		break;
+	case 0:
+	case 1:
+		mes "Hah hah, we're not in a hurry at the moment.";
+		mes "I wonder if Chesher knows we're stealing back his Bradium Boxes.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "What should I feed the poor cat later?";
+		mes "Oh, keep up the good work collecting Bradium Boxes.";
+		break;
+	case 2:
+		cutin "ep13_heslanta.bmp",2;
+		mes "[Jeruth Hesranta]";
+		mes "It's time to collect Bradium Boxes.";
+		erasequest 7580;// Collecting Every Day
+		break;
+	}
+	next;
+	if (select( "I'll get on with it.", "I'll come back later." ) == 2) {
+		mes "[Jeruth Hesranta]";
+		mes "No problem.";
+		mes "Come back whenever you can.";
+		next;
+		mes "[Jeruth Hesranta]";
+		mes "I'm sorry that";
+		mes "I can't stop asking you for favors.";
+		close3;
+	}
+	mes "[Jeruth Hesranta]";
+	mes "That's the spirit!";
+	mes "hunt Rampaging Boxes and collect Bradiums.";
+	setquest 7579;// Collecting Bradiums
+	close3;
+
+OnInit:
+/* officially disabled
+	questinfo 1, QTYPE_QUEST2;
+	setquestinfo_level 1,140,160;
+	SetQuestItem 1 3650 24
+*/
+
+	questinfo 7579, QTYPE_QUEST2;
+	setquestinfo_req 7579,7580,0;
+	setquestinfo_level 7579,140,160;
+	// 3650 = [ep13_3_secret]
+	// SetQuestItem 7579 3650 26 "<"
+	end;
+}
+
+// Others
+function	script	kick_mob	{
+	sleep2 1000;
+	npctalk getarg(0);
+	specialeffect EF_METEORSTORM;
+	sleep2 getarg(1);
+	unitwarp 0,"moro_vol",165,165;
+	return;
+}
+
+moro_vol,88,107,5	script	Magic Scholar Dophe#143vol01	4_F_FAIRYKID5,{
+ 	mes "[Dophe]";
+ 	mes "A Human, I see.";
+ 	mes "Looking at you, I can't help but muse on our situation.";
+ 	mes "You and I are having conversation.";
+ 	next;
+ 	mes "[Dophe]";
+ 	mes "This so-called Dimensional Crack, where the Demon God has taken up residence, falls into Bifrost's jurisdiction.";
+ 	next;
+	mes "[Dophe]";
+	mes "He and us are like two sides of the coin, or above and below the waterline.";
+	next;
+	mes "[Dophe]";
+	mes "He and us aren't exactly running parallel to each other, but maybe standing in a universe parallel to each other's.";
+	next;
+	mes "[Dophe]";
+	mes "...";
+	next;
+	mes "[Dophe]";
+	mes "My point is:";
+	mes "he could be under our nose, and we're unable to see him.";
+	mes "If his lair is located somewhere in Bifrost's territory,";
+	next;
+	mes "[Dophe]";
+	mes "the only possible scenario for us is";
+	mes "obliteration.";
+	close;
+}
+
+moro_vol,87,104,5	script	Magic Scholar Konpana#143vol02	4_M_FAIRYKID5,{
+	mes "[Konpana]";
+	mes "This place is nothing like I've imagined.";
+	mes "No grassy field or forest, really?";
+	close;
+}
+
+moro_vol,88,102,6	script	Magic Scholar Makia#143vol03	4_M_FAIRYKID3,{
+	mes "[Makia]";
+	mes "This place is overrun with strange creatures.";
+	mes "Everywhere is burning with fire, yet the air isn't suffocating.";
+	mes "Amazing.";
+	close;
+}
+
+moro_vol,104,109,0	script	Combat Laphine#sol01	4_M_FAIRYSOLDIER,{ end; }
+moro_vol,106,109,0	duplicate(Combat Laphine#sol01)	Combat Laphine#sol02	4_M_FAIRYSOLDIER
+moro_vol,108,109,0	duplicate(Combat Laphine#sol01)	Combat Laphine#sol03	4_M_FAIRYSOLDIER
+moro_vol,104,107,0	duplicate(Combat Laphine#sol01)	Combat Laphine#sol04	4_M_FAIRYSOLDIER
+moro_vol,106,107,0	duplicate(Combat Laphine#sol01)	Combat Laphine#sol05	4_M_FAIRYSOLDIER
+moro_vol,108,107,0	duplicate(Combat Laphine#sol01)	Combat Laphine#sol06	4_M_FAIRYSOLDIER
+moro_vol,104,105,0	duplicate(Combat Laphine#sol01)	Combat Laphine#sol07	4_M_FAIRYSOLDIER
+moro_vol,106,105,0	duplicate(Combat Laphine#sol01)	Combat Laphine#sol08	4_M_FAIRYSOLDIER
+moro_vol,108,105,0	duplicate(Combat Laphine#sol01)	Combat Laphine#sol09	4_M_FAIRYSOLDIER
+
+moro_vol,106,111,3	script	Battle Commander#sol10	4_M_FAIRYSOLDIER,3,3,{
+	mes "[Commander Laphine]";
+	mes "We're in the process of regrouping for the upcoming battle.";
+	mes "Please don't bother us.";
+	close;
+
+OnTouch:
+	if (getvariableofnpc(.is_enabled,"#soltalk01") == 0)
+		donpcevent "#soltalk01::OnEventOn";
+	end;
+}
+
+moro_vol,2,2,0	script	#soltalk01	CLEAR_NPC,{
+	end;
+OnEventOn:
+	.is_enabled = 1;
+	enablenpc "#soltalk01";
+	sleep 3000;
+	npctalk "Commander: Soldiers, finally it's time to put your training to use!", "Battle Commander#sol10";
+	sleep 3000;
+	npctalk "Commander: WE ARE!", "Battle Commander#sol10";
+	sleep 2000;
+	npctalk "WE ARE!", "Combat Laphine#sol01";
+	npctalk "WE ARE!", "Combat Laphine#sol02";
+	npctalk "WE ARE!", "Combat Laphine#sol03";
+	sleep 1500;
+	npctalk "THE PROUD!", "Combat Laphine#sol04";
+	npctalk "THE PROUD!", "Combat Laphine#sol05";
+	npctalk "THE PROUD!", "Combat Laphine#sol06";
+	sleep 1500;
+	npctalk "LAPHNES!", "Combat Laphine#sol07";
+	npctalk "LAPHNES!", "Combat Laphine#sol08";
+	npctalk "LAPHNES!", "Combat Laphine#sol09";
+	sleep 3000;
+	npctalk "Commander: We fight evil!", "Battle Commander#sol10";
+	sleep 2000;
+	npctalk "Fight evil!", "Combat Laphine#sol01";
+	npctalk "Fight evil!", "Combat Laphine#sol02";
+	npctalk "Fight evil!", "Combat Laphine#sol03";
+	npctalk "Fight evil!", "Combat Laphine#sol04";
+	npctalk "Fight evil!", "Combat Laphine#sol05";
+	npctalk "Fight evil!", "Combat Laphine#sol06";
+	npctalk "Fight evil!", "Combat Laphine#sol07";
+	npctalk "Fight evil!", "Combat Laphine#sol08";
+	npctalk "Fight evil!", "Combat Laphine#sol09";
+	sleep 17000;
+	disablenpc "#soltalk01";
+	.is_enabled = 0;
+	end;
+
+OnInit:
+	disablenpc "#soltalk01";
+	end;
+}
+
+moro_vol,101,102,0	script	Laphine Magician#wsol01	4_F_FAIRY2,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "...Freeze them all! Freeze!";
+	else if (.@ttemp == 2)
+		npctalk "(Exhaling through his mouth)";
+	else if (.@ttemp == 3)
+		npctalk "...";
+	else if (.@ttemp == 4)
+		npctalk "...";
+	else
+		npctalk "The Guardian is watching. I can't make any mistakes.";
+	end;
+}
+
+moro_vol,103,102,0	script	Laphine Magician#wsol02	4_F_MORAFINE1,{
+	if (rand(1,5) == 5)
+		npctalk "Shush.";
+	else
+		npctalk "...";
+	end;
+}
+
+moro_vol,105,102,0	script	Laphine Magician#wsol03	4_M_FAIRYKID5,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "Those Humans behind us are bothering me.";
+	else if (.@ttemp == 2)
+		npctalk "I shouldn't have volunteered to come here. I miss my yai...";
+	else if (.@ttemp == 3)
+		npctalk "...";
+	else if (.@ttemp == 4)
+		npctalk "How long do we have to wait?";
+	else
+		npctalk "Sigh.";
+	end;
+}
+
+moro_vol,107,102,0	script	Laphine Magician#wsol04	4_F_FAIRYKID5,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "I'm nervous.";
+	else if (.@ttemp == 2)
+		npctalk "The Sapphas aren't enemies... The Sapphas aren't enemies... Argh, but I want to beat them senseless!";
+	else if (.@ttemp == 3)
+		npctalk "...";
+	else if (.@ttemp == 4)
+		npctalk "...";
+	else
+		npctalk "I'm trying to remember to fire the moment I see the enemy.";
+	end;
+}
+
+moro_vol,109,102,0	script	Laphine Magician#wsol05	4_M_FAIRYKID5,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "I'm trying to remember to fire the moment I see the enemy.";
+	else if (.@ttemp == 2)
+		npctalk "I like tension--it keeps me on edge. Heh heh.";
+	else if (.@ttemp == 3)
+		npctalk "...";
+	else if (.@ttemp == 4)
+		npctalk "...";
+	else
+		npctalk "I'm nervous.";
+	end;
+}
+
+moro_vol,93,128,1	script	Combat Laphine#line01	4_M_FAIRYSOLDIER2,2,3,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "Yeah, yeah~";
+	else if (.@ttemp == 2)
+		npctalk "Watch out!";
+	else if (.@ttemp == 3)
+		npctalk "*Yawn*";
+	else if (.@ttemp == 4)
+		npctalk "Please be careful.";
+	else
+		npctalk "Back off--it's dangerous!";
+	end;
+
+OnTouchNPC:
+	.@hidden_name$ = strnpcinfo(2);
+	if (.@hidden_name$ == "line01")      kick_mob( "Enemy in sight!",2000 );
+	else if (.@hidden_name$ == "line03") kick_mob( "G-get away!",2000 );
+	else if (.@hidden_name$ == "line05") kick_mob( "Don't you dare!",2000 );
+	else if (.@hidden_name$ == "line07") kick_mob( "Enemy in sight!",2000 );
+	end;
+}
+
+moro_vol,96,130,1	duplicate(Combat Laphine#line01)	Combat Laphine#line02	4_M_FAIRYSOLDIER2
+moro_vol,99,131,1	duplicate(Combat Laphine#line01)	Combat Laphine#line03	4_M_FAIRYSOLDIER2,2,3
+moro_vol,102,132,7	duplicate(Combat Laphine#line01)	Combat Laphine#line04	4_M_FAIRYSOLDIER
+moro_vol,105,132,7	duplicate(Combat Laphine#line01)	Combat Laphine#line05	4_F_FAIRYSOLDIER,2,3
+moro_vol,108,131,7	duplicate(Combat Laphine#line01)	Combat Laphine#line06	4_M_FAIRYSOLDIER2
+moro_vol,111,129,7	duplicate(Combat Laphine#line01)	Combat Laphine#line07	4_M_FAIRYSOLDIER,2,3
+
+moro_vol,85,117,1	script	Combat Laphine#line11	4_F_FAIRYSOLDIER,2,2,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "Yeah, yeah~";
+	else if (.@ttemp == 2)
+		npctalk "Watch out!";
+	else if (.@ttemp == 3)
+		npctalk "You're in a war zone. Don't let your guard down.";
+	else if (.@ttemp == 4)
+		npctalk "Please be careful.";
+	else
+		npctalk "I'm worried for the guys at the front lines.";
+	end;
+
+OnTouchNPC:
+	.@hidden_name$ = strnpcinfo(2);
+	if (.@hidden_name$ == "line11")      kick_mob( "You've come this far, huh?",2000 );
+	else if (.@hidden_name$ == "line13") kick_mob( "Enemy in sight!",2000 );
+	else if (.@hidden_name$ == "line15") kick_mob( "I'll wipe the floor with you!",2000 );
+	else if (.@hidden_name$ == "line17") kick_mob( "Yaap-!",2000 );
+	else if (.@hidden_name$ == "line19") kick_mob( "Enemy in sight!",2000 );
+	end;
+}
+
+moro_vol,89,118,1	duplicate(Combat Laphine#line11)	Combat Laphine#line12	4_M_FAIRYSOLDIER
+moro_vol,92,119,7	duplicate(Combat Laphine#line11)	Combat Laphine#line13	4_M_FAIRYSOLDIER,2,2
+moro_vol,96,119,7	duplicate(Combat Laphine#line11)	Combat Laphine#line14	4_M_FAIRYSOLDIER2
+moro_vol,100,117,7	duplicate(Combat Laphine#line11)	Combat Laphine#line15	4_M_FAIRYSOLDIER,2,2
+moro_vol,107,118,7	duplicate(Combat Laphine#line11)	Combat Laphine#line17	4_F_FAIRYSOLDIER,2,2
+moro_vol,114,114,7	duplicate(Combat Laphine#line11)	Combat Laphine#line19	4_M_FAIRYSOLDIER2,2,2
+
+moro_vol,103,118,1	script	Combat Laphine#line16	4_F_FAIRYSOLDIER,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "The Sapphas had better not flank us.";
+	else if (.@ttemp == 2)
+		npctalk "Watch out!";
+	else if (.@ttemp == 3)
+		npctalk "You're in a war zone. Don't let your guard down.";
+	else if (.@ttemp == 4)
+		npctalk "Please be careful.";
+	else
+		npctalk "I'm worried for the guys at the front lines.";
+	end;
+}
+
+moro_vol,110,117,7	duplicate(Combat Laphine#line16)	Combat Laphine#line18	4_M_FAIRYSOLDIER2
+
+moro_vol,104,86,3	script	Ryoson#14304	4_M_ALCHE_A,{
+	mes "[Ryoson]";
+	mes "Of course I'm nervous. You don't have to ask me that.";
+	mes "Why the Administrative Officer put me in charge of the knights is beyond me.";
+	next;
+	mes "[Ryoson]";
+	mes "They're not knights-in-training, or even apprentice knights. They're freaking Rune Knights.";
+	mes "Ah, I'm too inexperienced and powerless to do anything with them.";
+	next;
+	mes "[Ryoson]";
+	mes "At least my safety is guaranteed so long as the three knights are with me.";
+	mes "I hope.";
+	close;
+}
+
+moro_vol,101,87,5	script	Rune-Midgarts Knight#mid01	4_M_KNIGHT_BLACK,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "...";
+	else if (.@ttemp == 2)
+		npctalk "Too quiet.";
+	else if (.@ttemp == 3)
+		npctalk "I really need to let off some steam.";
+	else if (.@ttemp == 4)
+		npctalk "Grr...";
+	else
+		npctalk "...";
+	end;
+}
+
+moro_vol,101,85,5	script	Rune-Midgarts Knight#mid02	4_M_KNIGHT_GOLD,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "I'm here to protect important personnel.";
+	else if (.@ttemp == 2)
+		npctalk "Ryoson, don't panic--fear spreads like wildfire.";
+	else if (.@ttemp == 3)
+		npctalk "I really hope I can accomplish my mission.";
+	else if (.@ttemp == 4)
+		npctalk "Sigh.";
+	else
+		npctalk "So far, so good.";
+	end;
+}
+
+moro_vol,103,83,1	script	Rune-Midgarts Knight#mid03	4_M_KNIGHT_SILVER,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "Ryoson, no one's going to bite ya. Don't be so afraid.";
+	else if (.@ttemp == 2)
+		npctalk "Fighting the Demon God is like every knight's wet dream has come true.";
+	else if (.@ttemp == 3)
+		npctalk "Hmm...";
+	else if (.@ttemp == 4)
+		npctalk "Tension in the battlefield always thrills me.";
+	else
+		npctalk "...";
+	end;
+}
+
+moro_vol,110,83,3	script	Hugh#14305	4_M_LGTGUARD,{
+	mes "[Hugh]";
+	mes "We're here at last.";
+	mes "At first, I couldn't believe all those rumors about the Demon God's hideout and stronghold.";
+	next;
+	mes "[Hugh]";
+	mes "As things stand, I have no hope of going back to the mainland any time soon.";
+	next;
+	mes "[Hugh]";
+	mes "Gosh, I'm tired of those guys.";
+	mes "I'd better find the Demon God quickly.";
+	next;
+	mes "[Hugh]";
+	mes "Have I thought about losing?";
+	mes "I have, but I try not to.";
+	mes "I'll never going to win if I let myself believe I'll lose.";
+	next;
+	mes "[Hugh]";
+	mes "We Schwarzwaldians are born to win.";
+	close;
+}
+
+moro_vol,108,81,7	script	Schwarzwald Elite#sch01	4_M_EIN_SOLDIER,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "For the glory of Schwarzwald!";
+	else if (.@ttemp == 2)
+		npctalk "I thought Einbroch had bad air, and this place is no better.";
+	else if (.@ttemp == 3)
+		npctalk "...";
+	else if (.@ttemp == 4)
+		npctalk "We're going to win!";
+	else
+		npctalk "...";
+	end;
+}
+
+moro_vol,111,80,1	script	Schwarzwald Elite#sch02	4_M_EIN_SOLDIER,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "For the glory of Schwarzwald!";
+	else if (.@ttemp == 2)
+		npctalk "For Midgard!";
+	else if (.@ttemp == 3)
+		npctalk "...";
+	else if (.@ttemp == 4)
+		npctalk "We're going to win!";
+	else
+		npctalk "...";
+	end;
+}
+
+moro_vol,113,81,3	script	Schwarzwald Elite#sch03	4_M_EIN_SOLDIER,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "Sigh.";
+	else if (.@ttemp == 2)
+		npctalk "Which one would you prefer: fighting the Demon God or standing watch in Einbroch?";
+	else if (.@ttemp == 3)
+		npctalk "My eyes are suddenly misty... I'd better chin up... *Inhale*";
+	else if (.@ttemp == 4)
+		npctalk "We're going to win, though.";
+	else
+		npctalk "I wish I trained harder.";
+	end;
+}
+
+
+moro_vol,118,86,5	script	Henjinne#14306	4_M_RACHMAN1,{
+	mes "[Henjinne]";
+	mes "This place is much more exciting than I imagined!";
+	mes "Where's the Demon God anyway?";
+	next;
+	mes "[Henjinne]";
+	mes "Neither hide nor hair of him is to be seen.";
+	mes "Mwah hah hah!";
+	close;
+}
+
+moro_vol,116,84,7	script	Arunafeltz Crusader#aru01	4_M_TRAINEE,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "Everything is Her will.";
+	else if (.@ttemp == 2)
+		npctalk "Having to coexist with heretics...";
+	else if (.@ttemp == 3)
+		npctalk "I've never seen so many different groups of heretics congregating in one place.";
+	else if (.@ttemp == 4)
+		npctalk "May the Goddess bless you.";
+	else
+		npctalk "...";
+	end;
+}
+
+moro_vol,118,83,7	script	Arunafeltz Crusader#aru02	4_F_MASK,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "Everything is Her will.";
+	else if (.@ttemp == 2)
+		npctalk "Having to coexist with heretics...";
+	else if (.@ttemp == 3)
+		npctalk "I've never seen so many different groups of heretics congregating in one place.";
+	else if (.@ttemp == 4)
+		npctalk "May the Goddess bless you.";
+	else
+		npctalk "...";
+	end;
+}
+
+moro_vol,121,84,1	script	Arunafeltz Crusader#aru03	4_F_TRAINEE,{
+	.@ttemp = rand(1,5);
+	if (.@ttemp == 1)
+		npctalk "Goddess is watching over us.";
+	else if (.@ttemp == 2)
+		npctalk "May the Goddess bless you.";
+	else if (.@ttemp == 3)
+		npctalk "Everything is Her will.";
+	else if (.@ttemp == 4)
+		npctalk "Having to coexist with heretics...";
+	else
+		npctalk "...";
+	end;
+}
+
+moro_vol,119,106,3	script	Instructor Jakken#h_sol01	4_M_YOUNGKNIGHT,3,3,{
+	mes "[Instructor Jakken]";
+	mes "When I volunteered for the Ash-Bakum Expedition, I knew this day would come.";
+	next;
+	mes "[Instructor Jakken]";
+	mes "I'm ready.";
+	mes "I'm going to fight to the death for the peace of the Midgard Continent.";
+	next;
+	mes "[Instructor Jakken]";
+	mes "But I'm nervous all the same.";
+	mes "I really need to work on my emotional control. I don't want to scare anyone else.";
+	close;
+
+OnTouch:
+	if (getvariableofnpc(.is_enabled,"#soltalk02") == 0)
+		donpcevent "#soltalk02::OnEventOn";
+	end;
+}
+
+moro_vol,2,3,0	script	#soltalk02	CLEAR_NPC,{
+	end;
+OnEventOn:
+	.is_enabled = 1;
+	enablenpc "#soltalk02";
+	sleep 3000;
+	npctalk "Jakken: Soldiers, we're from different countries, but we've gathered here for one goal!", "Instructor Jakken#h_sol01";
+	sleep 3000;
+	npctalk "Jakken: Let's show the enemy the power of our union!", "Instructor Jakken#h_sol01";
+	sleep 2000;
+	npctalk "Jakken: Commence your march to glory!", "Instructor Jakken#h_sol01";
+	sleep 1500;
+	npctalk "At dawn~", "Midgard Alliance Soldier#h_sol02";
+	npctalk "I had a dream~", "Midgard Alliance Soldier#h_sol03";
+	npctalk "Of my home~", "Midgard Alliance Soldier#h_sol04";
+	sleep 3000;
+	npctalk "I put on my jacket~", "Midgard Alliance Soldier#h_sol05";
+	npctalk "Put on my helm~", "Midgard Alliance Soldier#h_sol06";
+	npctalk "Getting ready for a new day~", "Midgard Alliance Soldier#h_sol07";
+	sleep 3000;
+	npctalk "I'm ready~", "Midgard Alliance Soldier#h_sol08";
+	npctalk "I wear my sword~", "Midgard Alliance Soldier#h_sol09";
+	npctalk "Step out under the morning sun~", "Midgard Alliance Soldier#h_sol10";
+	sleep 3000;
+	npctalk "I look up~", "Midgard Alliance Soldier#h_sol11";
+	npctalk "I look up~", "Midgard Alliance Soldier#h_sol12";
+	npctalk "Look forward~", "Midgard Alliance Soldier#h_sol13";
+	sleep 3000;
+	npctalk "Water's pure~", "Midgard Alliance Soldier#h_sol02";
+	npctalk "Mountains are green~", "Midgard Alliance Soldier#h_sol03";
+	npctalk "For my home~", "Midgard Alliance Soldier#h_sol04";
+	sleep 3000;
+	npctalk "I won't stop~", "Midgard Alliance Soldier#h_sol05";
+	npctalk "Until I defeat", "Midgard Alliance Soldier#h_sol06";
+	npctalk "The Demon God!", "Midgard Alliance Soldier#h_sol07";
+	sleep 3000;
+	npctalk "I won't stop~", "Midgard Alliance Soldier#h_sol08";
+	npctalk "Until I defeat", "Midgard Alliance Soldier#h_sol09";
+	npctalk "The Demon God!", "Midgard Alliance Soldier#h_sol10";
+	sleep 3000;
+	npctalk "Waaaah-!", "Midgard Alliance Soldier#h_sol11";
+	npctalk "Haaaaah-!", "Midgard Alliance Soldier#h_sol12";
+	npctalk "Haaaaah-!", "Midgard Alliance Soldier#h_sol13";
+	sleep 18000;
+	disablenpc "#soltalk02";
+	.is_enabled = 0;
+	end;
+
+OnInit:
+	disablenpc "#soltalk02";
+	end;
+}
+
+moro_vol,117,104,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol02	4_M_MOC_SOLDIER
+moro_vol,117,102,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol05	4_M_MOC_SOLDIER
+moro_vol,117,100,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol08	4_M_MOC_SOLDIER
+moro_vol,117,98,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol11	4_M_MOC_SOLDIER
+moro_vol,119,104,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol03	4_M_EIN_SOLDIER
+moro_vol,119,102,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol06	4_M_EIN_SOLDIER
+moro_vol,119,100,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol09	4_M_LGTGUARD
+moro_vol,119,98,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol12	4_M_LGTGUARD
+moro_vol,121,104,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol04	4_M_RASWORD
+moro_vol,121,102,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol07	4_M_RASWORD
+moro_vol,121,100,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol10	4_DST_SOLDIER
+moro_vol,121,98,1	duplicate(Combat Laphine#sol01)	Midgard Alliance Soldier#h_sol13	4_DST_SOLDIER
+
+moro_vol,105,97,3	script	Expedition Assassin#ass01	4_M_ACROSS,{
+	mes "[Expedition Assassin]";
+	mes "A new mission will be announced soon.";
+	mes "Our objective is to locate the Demon God.";
+	next;
+	mes "[Expedition Assassin]";
+	mes "Let me check the intel our predecessors have left for us.";
+	next;
+	mes "[Expedition Assassin]";
+	mes "...";
+	mes "It's rude to eavesdrop on others, even if they're your colleagues.";
+	close;
+}
+
+moro_vol,103,96,5	script	Expedition Assassin#ass02	4_F_ACROSS,{
+	mes "[Expedition Assassin]";
+	mes "This area... Well,";
+	mes "I'll check it out later.";
+	next;
+	mes "[Expedition Assassin]";
+	mes "Sigh.";
+	mes "Can't you see we're having a meeting? Please leave.";
+	close;
+}
+
+moro_vol,105,95,1	script	Expedition Assassin#ass03	4_TOWER_15,{
+	mes "[Expedition Assassin]";
+	mes "... ";
+	mes "Well, I'm at the bottom of the food chain.";
+	mes "I just watch what my seniors do.";
+	mes "That's all.";
+	close;
+}
+
+moro_vol,114,128,1	script	Continental Guard#line01	4_M_MOCASS1,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "It is dangerous past this point. Please move back.";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "Please be careful.";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Don't you dare!",1000 );
+	end;
+}
+
+moro_vol,119,130,1	duplicate(Continental Guard#line01)	Continental Guard#line02	4_M_MOCASS2
+moro_vol,122,130,7	duplicate(Continental Guard#line01)	Continental Guard#line03	4_M_MOCASS1,2,2
+moro_vol,125,129,7	duplicate(Continental Guard#line01)	Continental Guard#line04	4_M_MOCASS1
+moro_vol,127,127,7	duplicate(Continental Guard#line01)	Continental Guard#line05	4_M_MOCASS2
+
+moro_vol,135,123,1	script	Midgard Alliance Soldier#line21	4_M_MONK,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Those Continentals are damn good fighters.";
+	else if (.@ttemp == 2)
+		npctalk "Those Arunafeltz knuckleheads, why don't they come forward?";
+	else
+		npctalk "I can take down any of you!";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Don't you dare!",1000 );
+	end;
+}
+
+moro_vol,139,124,1	script	Midgard Alliance Soldier#line22	4_F_CRU,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "...";
+	else if (.@ttemp == 2)
+		npctalk "Please be careful.";
+	else
+		npctalk "They don't stop coming.";
+	end;
+}
+
+moro_vol,143,124,1	script	Midgard Alliance Soldier#line23	4_M_JOB_WIZARD,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "The Guardians are making things easier, but...";
+	else if (.@ttemp == 2)
+		npctalk "Step back.";
+	else
+		npctalk "Sigh...";
+	end;
+}
+
+moro_vol,147,124,7	script	Midgard Alliance Soldier#line24	4_M_MOC_SOLDIER,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "...";
+	else if (.@ttemp == 2)
+		npctalk "Please be careful.";
+	else
+		npctalk "Please step back.";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Enemy in sight!",1000 );
+	end;
+}
+
+moro_vol,150,121,7	script	Midgard Alliance Soldier#line25	4_M_MOC_SOLDIER,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Wh-where's the next relief?!";
+	else if (.@ttemp == 2)
+		npctalk "Why are we the only ones on the front line?";
+	else
+		npctalk "D-don't come closer!";
+	end;
+}
+
+moro_vol,151,119,7	script	Midgard Alliance Soldier#line26	4_M_EIN_SOLDIER,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Stop acting like a hero and move back!";
+	else if (.@ttemp == 2)
+		npctalk "I'm always on guard duty wherever I go.";
+	else
+		npctalk "I can get through the night. I must.";
+	end;
+}
+
+moro_vol,153,116,7	script	Midgard Alliance Soldier#line27	4_M_EIN_SOLDIER,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "...";
+	else if (.@ttemp == 2)
+		npctalk "They don't stop coming.";
+	else
+		npctalk "Please be careful.";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Begone!",1000 );
+	end;
+}
+
+moro_vol,118,115,1	script	Midgard Alliance Soldier#line31	4_M_JOB_WIZARD,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "I think I've chosen the wrong team...";
+	else if (.@ttemp == 2)
+		npctalk "I'm tired of hearing them yelling heretics.";
+	else
+		npctalk "Ugh, how did I get myself into this mess?";
+	end;
+
+OnTouchNPC:
+	kick_mob( "SCRAM!",1000 );
+	end;
+}
+
+moro_vol,121,115,1	script	Midgard Alliance Soldier#line32	4_M_EIN_SOLDIER,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "...Loud.";
+	else if (.@ttemp == 2)
+		npctalk "The front lines are most dangerous.";
+	else
+		npctalk "Sigh...";
+	end;
+}
+
+moro_vol,124,116,1	script	Midgard Alliance Soldier#line33	4_M_EIN_SOLDIER,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "All clear.";
+	else if (.@ttemp == 2)
+		npctalk "I'll protect this defense line.";
+	else
+		npctalk "Watch out!";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Begone!",1000 );
+	end;
+}
+
+moro_vol,128,116,1	script	Midgard Alliance Soldier#line34	4_M_EIN_SOLDIER,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "I wasn't napping!";
+	else if (.@ttemp == 2)
+		npctalk "...Yeah, yeah... Everything's clear, sir!";
+	else
+		npctalk "Yeah, yeah, of course.";
+	end;
+}
+
+moro_vol,131,115,7	script	Midgard Alliance Soldier#line35	4_M_RASWORD,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "I can't believe I'm fighting beside heretics.";
+	else if (.@ttemp == 2)
+		npctalk "...";
+	else
+		npctalk "May the Goddess bless you.";
+	end;
+}
+
+moro_vol,133,113,7	script	Midgard Alliance Soldier#line36	4_DST_SOLDIER,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "*Yawn* Where's the next relief?";
+	else if (.@ttemp == 2)
+		npctalk "Hey, stop loitering. You're going to get yourself killed.";
+	else
+		npctalk "...This is tiring.";
+	end;
+}
+
+moro_vol,136,111,7	script	Midgard Alliance Soldier#line37	4_M_RASWORD,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Please step back.";
+	else if (.@ttemp == 2)
+		npctalk "Our defense line is intact.";
+	else
+		npctalk "Please be careful.";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Enemy in sight!",1000 );
+	end;
+}
+
+moro_vol,138,108,7	script	Midgard Alliance Soldier#line38	4_DST_SOLDIER,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "May the Goddess bless you.";
+	else if (.@ttemp == 2)
+		npctalk "Keep your eyes forward! Everything's clear!";
+	else
+		npctalk "All clear!";
+	end;
+}
+
+moro_vol,134,83,5	script	Jeruth Vehanus#ep143	4_MAN_JERUTOO,{
+	mes "[Vehanus]";
+	mes "You came here, too.";
+	mes "You can communicate with me without the ring, I see.";
+	next;
+	mes "[Vehanus]";
+	mes "Now I wonder how far Bifrost's grace reaches.";
+	mes "Maybe I should use this opportunity to get to know the Laphines.";
+	next;
+	mes "[Vehanus]";
+	mes "I admire Hesranta's bravery.";
+	mes "He's come to the battlefield, willing to ally with our enemy Laphines.";
+	next;
+	mes "[Vehanus]";
+	mes "I really hope we won't have to fight Laphines in here.";
+	close;
+}
+
+moro_vol,138,84,3	script	Adjutant Tiera#ep143	4_MAN_NITT,{
+	mes "[Tiera]";
+	mes "The Jeruths and Nits in Dicastes Diel may have acquiesced Hesranta's plea,";
+	next;
+	mes "[Tiera]";
+	mes "but I'm completely with him on this.";
+	mes "Our enemies are our friends in the face of a common enemy: Demon God.";
+	next;
+	mes "[Tiera]";
+	mes "We can be cowards and let others fight the fight for us, sure,";
+	mes "but what if they lose? We'll go down with them, and that'll be on us.";
+	next;
+	mes "[Tiera]";
+	mes "The same goes for you, Humans.";
+	mes "We fight this fight to win.";
+	close;
+}
+
+moro_vol,134,87,1	script	Advance Captain Avaranc#ep143	4_MAN_GALTUN,{
+	mes "[Avaranche]";
+	mes "My unit consists of the best of the best Gartens.";
+	mes "Human warrior,";
+	mes "I've waited for this day to fight beside you.";
+	next;
+	mes "[Avaranche]";
+	mes "I swear on my life that I won't stop fighting until the Demon God is defeated!";
+	close;
+}
+
+moro_vol,131,86,1	script	Dicastes Garten#gal01	4_MAN_GALTUN1,{
+	mes "[Dicastes Garten]";
+	mes "When can we fight?";
+	mes "When?";
+	next;
+	mes "[Dicastes Garten]";
+	mes "I can't believe I have to fight alongside those accursed Laphines.";
+	mes "I still remember what they did to us in the last battle.";
+	close;
+}
+
+moro_vol,138,87,7	script	Dicastes Garten#gal02	4_MAN_GALTUN1,{
+	mes "[Dicastes Garten]";
+	mes "My duty is to protect Jeruth Hesranta.";
+	mes "You'd better step back,";
+	mes "or I'll consider you my enemy.";
+	close;
+}
+
+moro_vol,140,97,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal11	4_MAN_GALTUN1
+moro_vol,143,97,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal12	4_MAN_GALTUN1
+moro_vol,146,97,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal13	4_MAN_GALTUN1
+moro_vol,140,94,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal14	4_MAN_GALTUN
+moro_vol,143,94,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal15	4_MAN_GALTUN
+moro_vol,146,94,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal16	4_MAN_GALTUN
+
+moro_vol,150,86,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal21	4_MAN_GALTUN1
+moro_vol,153,86,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal22	4_MAN_GALTUN1
+moro_vol,156,86,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal23	4_MAN_GALTUN1
+moro_vol,150,83,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal24	4_MAN_GALTUN
+moro_vol,153,83,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal25	4_MAN_GALTUN
+moro_vol,156,83,1	duplicate(Combat Laphine#sol01)	Dicastes Elite#gal26	4_MAN_GALTUN
+
+moro_vol,139,104,1	script	Manuk Defender#line01	4_MAN_GALTUN1,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Hm!";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "Back off, Humanling!";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Enemy in sight!",1000 );
+	end;
+}
+
+moro_vol,143,106,1	duplicate(Manuk Defender#line01)	Manuk Defender#line02	4_MAN_GALTUN1,2,2
+
+moro_vol,147,108,1	script	Manuk Defender#line03	4_MAN_GALTUN1,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Do you hear some bugs buzzing?";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "...";
+	end;
+}
+
+moro_vol,152,109,1	script	Manuk Defender#line04	4_MAN_GALTUN1,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Hm!";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "Back off, Humanling!";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Not a chance!",1000 );
+	end;
+}
+
+moro_vol,156,110,1	script	Manuk Defender#line05	4_MAN_GALTUN1,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Don't compare us to those winged jerks!";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "Why does it have to be the Laphines?";
+	end;
+}
+
+moro_vol,160,110,7	script	Manuk Defender#line06	4_MAN_GALTUN1,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Hm!";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "Back off, Humanling!";
+	end;
+
+OnTouchNPC:
+	kick_mob( "*Snort*",1000 );
+	end;
+}
+
+moro_vol,164,109,7	script	Manuk Defender#line07	4_MAN_GALTUN1,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Hm!";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "We're superior to the Laphines.";
+	end;
+}
+
+moro_vol,167,107,7	script	Manuk Defender#line08	4_MAN_GALTUN1,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Hm!";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "Back off, Humanling!";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Are you an enemy?",1000 );
+	end;
+}
+
+moro_vol,169,104,7	script	Manuk Defender#line09	4_MAN_GALTUN1,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Hm!";
+	else if (.@ttemp == 2)
+		npctalk "Too loud.";
+	else
+		npctalk "Back off, Humanling!";
+	end;
+}
+
+moro_vol,171,100,5	script	Manuk Defender#line10	4_MAN_GALTUN1,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Hm!";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "Back off, Humanling!";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Don't underestimate us!",1000 );
+	end;
+}
+
+moro_vol,172,95,5	script	Manuk Defender#line11	4_MAN_GALTUN1,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Hm!";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "We Gartens never retreat!";
+	end;
+}
+
+moro_vol,173,89,5	script	Manuk Defender#line12	4_MAN_GALTUN1,2,2,{
+	.@ttemp = rand(1,3);
+	if (.@ttemp == 1)
+		npctalk "Hm!";
+	else if (.@ttemp == 2)
+		npctalk "All clear.";
+	else
+		npctalk "Back off, Humanling!";
+	end;
+
+OnTouchNPC:
+	kick_mob( "Not a chance!",1000 );
+	end;
+}
+
+//-- GM NPC
+moro_vol,5,1,3	script	#timemaster	CLEAR_NPC,{
+	if (callfunc("F_GM_NPC",1854,0,0,9999) < 1)
+		end;
+	mes "Current server experience status: " + $ep143_3_expbuff;
+	mes "Currently elapsed: " + $ep143_3_exptime;
+	mes "What do you want to do?";
+	next;
+	switch( select( "Adjust the timer", "Pause timer", "Restart timer", "Initialization" ) ) {
+	case 1:
+		mes "Please enter the timer.";
+		next;
+		input .@input,0,9999;
+		mes "Time is set to " + .@input;
+		$ep143_3_exptime = .@input;
+		close;
+	case 2:
+		mes "Timer in pause.";
+		stopnpctimer "Guardian Nidhogg#143nyd01";
+		close;
+	case 3:
+		mes "Restart the clock.";
+		initnpctimer "Guardian Nidhogg#143nyd01";
+		close;
+	case 4:
+		mes "Clock initialized.";
+		donpcevent "Guardian Nidhogg#143nyd01::OnStop";
+		close;
+	}
+}
