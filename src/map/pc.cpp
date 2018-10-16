@@ -10277,47 +10277,80 @@ int pc_equipswitch( struct map_session_data* sd, int index ){
 	// Get the target equip mask
 	int position = sd->inventory.u.items_inventory[index].equipSwitch;
 
-	// Now remove it from the equip switch
-	// NOTE: Order is impotant here, since position will be erased by this call
-	pc_equipswitch_remove( sd, index );
-
 	// Get the currently equipped item
 	short equippedItem = pc_checkequip( sd, position );
 
 	// No item equipped at the target
 	if( equippedItem == -1 ){
+		// Remove it from the equip switch
+		pc_equipswitch_remove( sd, index );
+
 		pc_equipitem( sd, index, position );
+
+		return position;
 	}else{
-		// TODO: official unequip item first
+		std::map<int, int> unequipped;
+		int unequipped_position = 0;
 
-		// TODO: maybe refactor to pc_equipitem(switch=true)
+		// Unequip all items that interfere
 		for( int i = 0; i < EQI_MAX; i++ ){
-			short exchange_index = sd->equip_index[i];
+			int unequip_index = sd->equip_index[i];
 
-			if( position&equip_bitmask[i] && exchange_index >= 0 && sd->equip_switch_index[i] != exchange_index ){
-				struct item* item = &sd->inventory.u.items_inventory[exchange_index];
+			if( unequip_index >= 0 && position & equip_bitmask[i] ){
+				struct item* unequip_item = &sd->inventory.u.items_inventory[unequip_index];
 
-				item->equipSwitch = item->equip;
-				sd->equip_switch_index[i] = exchange_index;
+				// Store the unequipped index and position mask for later
+				unequipped[unequip_index] = unequip_item->equip;
 
-				// Check if the item is on another position
-				if( item->equip & ~equip_bitmask[i] ){
-					// Make sure it is not equipped another time in this iteration
-					for( int j = i + 1; j < EQI_MAX; j++ ){
-						if( sd->equip_index[j] == exchange_index ){
-							sd->equip_switch_index[j] = exchange_index;
-						}
-					}
-				}
+				// Keep the position for later
+				unequipped_position |= unequip_item->equip;
 
-				clif_equipswitch_add( sd, exchange_index, item->equip, false );
+				// Unequip the item
+				pc_unequipitem( sd, unequip_index, 0 );
 			}
 		}
 
-		pc_equipitem( sd, index, position );
-	}
+		int all_position = position | unequipped_position;
 
-	return position;
+		// Equip everything that is hit by the mask
+		for( int i = 0; i < EQI_MAX; i++ ){
+			int exchange_index = sd->equip_switch_index[i];
+
+			if( exchange_index >= 0 && all_position & equip_bitmask[i] ){
+				struct item* exchange_item = &sd->inventory.u.items_inventory[exchange_index];
+
+				// Store the target position
+				int exchange_position = exchange_item->equipSwitch;
+
+				// Remove the item from equip switch
+				pc_equipswitch_remove( sd, exchange_index );
+
+				// Equip the item at the destinated position
+				pc_equipitem( sd, exchange_index, exchange_position );
+			}
+		}
+
+		// Place all unequipped items into the equip switch window
+		for( std::pair<int, int> pair : unequipped ){
+			int unequipped_index = pair.first;
+			int unequipped_position = pair.second;
+
+			// Rebuild the index cache
+			for( int i = 0; i < EQI_MAX; i++ ){
+				if( unequipped_position & equip_bitmask[i] ){
+					sd->equip_switch_index[i] = unequipped_index;
+				}
+			}
+
+			// Set the correct position mask
+			sd->inventory.u.items_inventory[unequipped_index].equipSwitch = unequipped_position;
+
+			// Notify the client
+			clif_equipswitch_add( sd, unequipped_index, unequipped_position, false );
+		}
+
+		return all_position;
+	}
 }
 
 void pc_equipswitch_remove( struct map_session_data* sd, int index ){
