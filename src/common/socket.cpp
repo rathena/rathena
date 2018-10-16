@@ -3,6 +3,12 @@
 
 #include "socket.hpp"
 
+// (^~_~^) Gepard Shield Start
+
+#include "core.hpp"
+
+// (^~_~^) Gepard Shield End
+
 #include <stdlib.h>
 
 #ifdef WIN32
@@ -210,6 +216,377 @@ time_t stall_time = 60;
 
 uint32 addr_[16];   // ip addresses of local host (host byte order)
 int naddr_ = 0;   // # of ip addresses
+
+
+// (^~_~^) Gepard Shield Start
+
+long long gepard_get_tick(void)
+{
+	return gettick();
+}
+ 
+unsigned int gepard_get_unique_id(int fd)
+{
+	return session[fd]->gepard_info.unique_id;
+}
+ 
+struct socket_data* gepard_get_socket_data(int fd)
+{
+	return session[fd];
+}
+ 
+void gepard_set_eof(int fd)
+{
+	set_eof(fd);
+}
+ 
+void gepard_session_unit(unsigned int seed, struct gepard_crypt_unit* unit)
+{
+	unsigned int i;
+
+	for (i = 0; i < 256; ++i)
+	{
+		unit->key[i] = (((seed = seed * SESSION_CONST_1 + SESSION_CONST_2 * i) >> 7) & 0xFF);
+	}
+
+	unit->pos_1 = seed % 20;
+	unit->pos_2 = seed % 30;
+	unit->pos_3 = seed % 50;
+}
+
+void gepard_enc_dec(unsigned char* data, uint32 data_size, struct gepard_crypt_unit* unit)
+{
+	unsigned int i;
+
+	for(i = 0; i < data_size; ++i)
+	{
+		unit->key[unit->pos_3] ^= unit->pos_1;
+		unit->pos_1 += unit->key[unit->pos_3] - ALGO_KEY_1;
+		unit->pos_2 += unit->key[unit->pos_1] * ALGO_KEY_2;
+		unit->key[unit->pos_1] ^= unit->pos_2;
+		unit->pos_2 += unit->pos_1 * ALGO_KEY_3;
+		data[i] ^= unit->key[unit->pos_2];
+		unit->pos_1 ^= unit->pos_2 + (data_size % 0xFF);
+		unit->pos_3++;
+	}
+}
+
+// (^~_~^) Gepard Shield End
+
+// (^~_~^) Gepard Shield Start
+
+long long start_tick;
+bool is_gepard_active = false;
+unsigned int gepard_rand_seed;
+unsigned int min_allowed_license_version;
+
+inline void gepard_srand(unsigned int seed)
+{
+	gepard_rand_seed = seed;
+}
+
+inline unsigned int gepard_rand(void)
+{
+	return (((gepard_rand_seed = gepard_rand_seed * 214013L + 2531011L) >> 16) & 0x7fff);
+}
+
+unsigned int gepard_get_data_hash(const unsigned char* data, unsigned int data_size)
+{
+	unsigned int i, result_hash = DATA_HASH_CONST_1;
+
+	for (i = 0; i < data_size; ++i)
+	{
+		result_hash = result_hash * DATA_HASH_CONST_2 + data[i];
+	}
+
+	return result_hash;
+}
+
+void gepard_read_configs(void)
+{
+	FILE* fp;
+	char line[1024], w1[1024], w2[1024];
+	const char* conf_name = "conf/gepard_shield.conf";
+
+	start_tick = gepard_get_tick();
+
+	if (access(conf_name, 0) == -1)
+	{
+		fp = fopen(conf_name, "w");
+
+		if (fp == NULL) 
+		{
+			ShowError("Gepard can't create configuration file: %s\n", conf_name);
+			exit(EXIT_FAILURE);
+		}
+
+		fprintf(fp, "gepard_shield_enabled: yes");
+		fclose(fp);
+
+		is_gepard_active = true;
+
+		return;
+	}
+
+	fp = fopen(conf_name, "r");
+
+	if (fp == NULL) 
+	{
+		ShowError("Gepard can't open configuration file: %s\n", conf_name);
+		exit(EXIT_FAILURE);
+	}
+
+	while (fgets(line, sizeof(line), fp))
+	{
+		if (line[0] == '/' && line[1] == '/')
+			continue;
+
+		if (sscanf(line, "%[^:]: %[^\r\n]", w1, w2) < 2)
+			continue;
+
+		if (!strcmpi(w1, "gepard_shield_enabled"))
+		{
+			is_gepard_active = (unsigned int)config_switch(w2);
+		}
+	}
+
+	fclose(fp);
+}
+
+void gepard_init(struct socket_data* s, int fd, unsigned short server_type)
+{
+	const unsigned short init_packet_size = 36;
+
+	unsigned short recv_session_key = rand();
+	unsigned short send_session_key = rand();
+	unsigned short sync_session_key = rand();
+
+	gepard_session_unit(recv_session_key, &s->recv_crypt);
+	gepard_session_unit(send_session_key, &s->send_crypt);
+	gepard_session_unit(sync_session_key, &s->sync_crypt);
+
+	WFIFOHEAD(fd, init_packet_size);
+
+	WFIFOW(fd, 0) = SC_GEPARD_INIT;
+	WFIFOW(fd, 2) = init_packet_size;
+
+	WFIFOW(fd, 4) = send_session_key;
+	WFIFOW(fd, 6) = recv_session_key;
+	WFIFOW(fd, 8) = sync_session_key;
+
+	WFIFOQ(fd, 14) = start_tick;
+	WFIFOW(fd, 22) = server_type;
+
+	WFIFOL(fd, 24) = LICENSE_ID;
+	WFIFOL(fd, 28) = CODE_VERSION;
+	WFIFOL(fd, 32) = PACKETVER;
+
+	WFIFOL(fd, 10) = gepard_get_data_hash(WFIFOP(fd, 14), init_packet_size - 14);
+
+	WFIFOSET(fd, init_packet_size);
+}
+
+bool gepard_process_cs_packet(int fd, struct socket_data* s, size_t packet_size)
+{
+	unsigned short packet_id = RFIFOW(fd, 0);
+	unsigned char* packet_data = s->rdata + s->rdata_pos;
+
+	if (packet_id == s->gepard_info.cs_packet_request_move ||
+		packet_id == s->gepard_info.cs_packet_action_request ||
+		packet_id == s->gepard_info.cs_packet_use_skill_to_id ||
+		packet_id == s->gepard_info.cs_packet_use_skill_to_ground)
+	{
+		if (packet_size < 2 || RFIFOREST(fd) < packet_size)
+		{
+			return true;
+		}
+
+		gepard_enc_dec(packet_data + 2, packet_size - 2, &s->recv_crypt);
+
+		return false;
+	}
+
+	switch (packet_id)
+	{
+		case CS_GEPARD_SYNC:
+		{
+			unsigned int control_value;
+
+			if (RFIFOREST(fd) < 6)
+			{
+				return true;
+			}
+
+			gepard_enc_dec(packet_data + 2, 4, &s->sync_crypt);
+
+			control_value = RFIFOL(fd, 2);
+
+			if (control_value == 0xDDCCBBAA)
+			{
+				s->gepard_info.sync_tick = gepard_get_tick();
+			}
+
+			RFIFOSKIP(fd, 6);
+
+			return true;
+		}
+		break;
+
+		case CS_LOGIN_PACKET_1:
+		case CS_LOGIN_PACKET_2:
+		case CS_LOGIN_PACKET_3:
+		case CS_LOGIN_PACKET_4:
+		case CS_LOGIN_PACKET_5:
+		case CS_LOGIN_PACKET_6:
+		case CS_LOGIN_PACKET_7:
+		{
+			packet_size = RFIFOREST(fd);
+
+			if ((packet_id == CS_LOGIN_PACKET_1 && packet_size < 55) ||
+				(packet_id == CS_LOGIN_PACKET_2 && packet_size < 84) ||
+				(packet_id == CS_LOGIN_PACKET_3 && packet_size < 85) ||
+				(packet_id == CS_LOGIN_PACKET_4 && packet_size < 47) ||
+				(packet_id == CS_LOGIN_PACKET_5 && packet_size < 48) ||
+				(packet_id == CS_LOGIN_PACKET_6 && packet_size < 60) ||
+				(packet_id == CS_LOGIN_PACKET_7 && (packet_size < 4 || packet_size < RFIFOW(fd, 2))))
+			{
+				return false;
+			}
+
+			if (s->gepard_info.is_init_ack_received == false)
+			{
+				RFIFOSKIP(fd, RFIFOREST(fd));
+				gepard_init(s, fd, GEPARD_LOGIN);
+				return true;
+			}
+
+			gepard_enc_dec(packet_data + 4, RFIFOREST(fd) - 4, &s->recv_crypt);
+		}
+		break;
+
+		case CS_WHISPER_TO:
+		{
+			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < (packet_size = RBUFW(packet_data, 2)) || packet_size < 4)
+			{
+				return true;
+			}
+
+			gepard_enc_dec(packet_data + 4, packet_size - 4, &s->recv_crypt);
+		}
+		break;
+
+		case CS_GEPARD_INIT_ACK:
+		{
+			unsigned int data_hash_1, data_hash_2;
+
+			if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < (packet_size = RFIFOW(fd, 2)))
+			{
+				return true;
+			}
+
+			if (packet_size < 36)
+			{
+				ShowWarning("gepard_process_cs_packet: invalid size of CS_GEPARD_INIT_ACK packet: %lu\n", (unsigned long)packet_size);
+				gepard_set_eof(fd);
+				return true;
+			}
+
+			gepard_enc_dec(packet_data + 4, packet_size - 4, &s->recv_crypt);
+
+			data_hash_1 = RFIFOL(fd, 4);
+			data_hash_2 = gepard_get_data_hash(packet_data + 8, packet_size - 8);
+
+			if (data_hash_1 != data_hash_2)
+			{
+				gepard_send_info(fd, GEPARD_INFO_INVALID_INIT_ACK, NULL);
+				return true;
+			}
+
+			s->gepard_info.unique_id = RFIFOL(fd, 16);
+			s->gepard_info.license_version = RFIFOL(fd, 12);
+			s->gepard_info.cs_packet_request_move = RFIFOW(fd, 28);
+			s->gepard_info.cs_packet_use_skill_to_id = RFIFOW(fd, 30);
+			s->gepard_info.cs_packet_use_skill_to_ground = RFIFOW(fd, 32);
+			s->gepard_info.cs_packet_action_request = RFIFOW(fd, 34);
+			memcpy(s->gepard_info.mac_address, RFIFOP(fd,20), sizeof(s->gepard_info.mac_address));
+
+			s->gepard_info.is_init_ack_received = true;
+
+			RFIFOSKIP(fd, packet_size);
+
+			return true;
+		}
+		break;
+	}
+
+	return false;
+}
+
+void gepard_process_sc_packet(int fd, struct socket_data* s, size_t packet_size)
+{
+	unsigned short packet_id = WFIFOW(fd, 0);
+	unsigned char* packet_data = s->wdata + s->wdata_size;
+
+	switch (packet_id)
+	{
+		case SC_GEPARD_INIT:
+		{
+			gepard_enc_dec(packet_data + 10, packet_size - 10, &s->send_crypt);
+		}
+		break;
+
+		case SC_WHISPER_FROM:
+		case SC_SET_UNIT_IDLE_1:
+		case SC_SET_UNIT_IDLE_2:
+		case SC_SET_UNIT_IDLE_3:
+		case SC_SET_UNIT_IDLE_4:
+		case SC_SET_UNIT_IDLE_5:
+		case SC_SET_UNIT_WALKING_1:
+		case SC_SET_UNIT_WALKING_2:
+		case SC_SET_UNIT_WALKING_3:
+		case SC_SET_UNIT_WALKING_4:
+		case SC_SET_UNIT_WALKING_5:
+		{
+			gepard_enc_dec(packet_data + 4, packet_size - 4, &s->send_crypt);
+		}
+		break;
+
+		case SC_STATE_CHANGE:
+		{
+			gepard_enc_dec(packet_data + 6, 8, &s->send_crypt);
+		}
+		break;
+
+		case SC_NOTIFY_TIME:
+		case SC_MSG_STATE_CHANGE_1:
+		case SC_MSG_STATE_CHANGE_2:
+		case SC_MSG_STATE_CHANGE_3:
+		{
+			gepard_enc_dec(packet_data + 2, 4, &s->send_crypt);
+		}
+		break;
+	}
+}
+
+void gepard_send_info(int fd, unsigned short info_type, const char* message)
+{
+	int message_len = (message != NULL) ? (strlen(message) + 1) : 0;
+	int packet_len = 2 + 2 + 2 + message_len;
+
+	WFIFOHEAD(fd, packet_len);
+	WFIFOW(fd, 0) = SC_GEPARD_INFO;
+	WFIFOW(fd, 2) = packet_len;
+	WFIFOW(fd, 4) = info_type;
+
+	if (message_len > 0)
+	{
+		safestrncpy((char*)WFIFOP(fd, 6), message, message_len);
+	}
+
+	WFIFOSET(fd, packet_len);
+}
+
+// (^~_~^) Gepard Shield End
 
 // Maximum packet size in bytes, which the client is able to handle.
 // Larger packets cause a buffer overflow and stack corruption.
@@ -797,6 +1174,16 @@ int WFIFOSET(int fd, size_t len)
 		}
 
 	}
+
+// (^~_~^) Gepard Shield Start
+
+	if (is_gepard_active == true && SERVER_TYPE != ATHENA_SERVER_CHAR)
+	{
+		gepard_process_sc_packet(fd, s, len);
+	}
+
+// (^~_~^) Gepard Shield End
+
 	s->wdata_size += len;
 #ifdef SHOW_SERVER_STATS
 	socket_data_qo += len;
@@ -1448,6 +1835,12 @@ void socket_init(void)
 #endif
 
 	socket_config_read(SOCKET_CONF_FILENAME);
+
+// (^~_~^) Gepard Shield Start
+
+	gepard_read_configs();
+
+// (^~_~^) Gepard Shield End
 
 	// initialise last send-receive tick
 	last_tick = time(NULL);
