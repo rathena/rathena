@@ -20615,7 +20615,7 @@ void clif_parse_equipswitch_remove( int fd, struct map_session_data* sd ){
 	}
 
 	// Check if the index is valid
-	if( index < 0 || index > MAX_INVENTORY ){
+	if( index < 0 || index >= MAX_INVENTORY ){
 		return;
 	}
 
@@ -20649,9 +20649,17 @@ void clif_parse_equipswitch_add( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	if( index < 0 || index >= MAX_INVENTORY || sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
 	if( sd->state.trading || sd->npc_shopid ){
 		clif_equipswitch_add( sd, index, position, true );
 		return;
+	}
+
+	if( sd->inventory_data[index]->type == IT_AMMO ){
+		position = EQP_AMMO;
 	}
 
 	pc_equipitem( sd, index, position, true );
@@ -20758,7 +20766,7 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 	}
 
 	// Check if the index is valid
-	if( index < 0 || index > MAX_INVENTORY ){
+	if( index < 0 || index >= MAX_INVENTORY ){
 		return;
 	}
 
