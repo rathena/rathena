@@ -20600,6 +20600,7 @@ void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 
 }
 
 /// Request to remove an equip from the equip switch window
+/// 0a99 <index>.W <position>.L <= 20170502
 /// 0a99 <index>.W
 void clif_parse_equipswitch_remove( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20170208
@@ -20620,6 +20621,7 @@ void clif_parse_equipswitch_remove( int fd, struct map_session_data* sd ){
 }
 
 /// Acknowledgement for adding an equip to the equip switch window
+/// 0a98 <index>.W <position.>.L <failure>.L  <= 20170502
 /// 0a98 <index>.W <position.>.L <failure>.W
 void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos, bool failed ){
 #if PACKETVER >= 20170208
@@ -20629,7 +20631,11 @@ void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos
 	WFIFOW(fd, 0) = 0xa98;
 	WFIFOW(fd, 2) = index + 2;
 	WFIFOL(fd, 4) = pos;
+#if PACKETVER <= 20170502
+	WFIFOL(fd, 8) = failed;
+#else
 	WFIFOW(fd, 8) = failed;
+#endif
 	WFIFOSET(fd,packet_len(0xa98));
 #endif
 }
@@ -20754,7 +20760,7 @@ void clif_parse_equipswitch_request( int fd, struct map_session_data* sd ){
 /// Request to do a single equip switch
 /// 0ace <index>.W
 void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd ){
-#if PACKETVER >= PACKETVER_EQSWITCH
+#if PACKETVER >= 20170502
 	uint16 index = RFIFOW(fd, 2) - 2;
 
 	if( !battle_config.feature_equipswitch ){

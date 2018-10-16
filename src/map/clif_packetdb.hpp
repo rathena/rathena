@@ -2340,8 +2340,8 @@
 // 2017-02-08bRagexeRE
 #if PACKETVER >= 20170208
 	parseable_packet(0x0A97,8,clif_parse_equipswitch_add,2,4);
-	packet(0x0A98,10);
-	parseable_packet(0x0A99,4,clif_parse_equipswitch_remove,2,4);
+	packet(0x0A98,12);
+	parseable_packet(0x0A99,8,clif_parse_equipswitch_remove,2,4,6);
 	packet(0x0A9A,10);
 	packet(0x0A9B,-1);
 	parseable_packet(0x0A9C,2,clif_parse_equipswitch_request,0);
@@ -2366,6 +2366,8 @@
 	packet(0x0AB2,7);
 	packet(0x0ABD,10);
 	// TODO: find correct packet ver
+	packet(0x0A98,10);
+	parseable_packet(0x0A99,4,clif_parse_equipswitch_remove,2,4);
 	parseable_packet(0x0ACE,4,clif_parse_equipswitch_request_single,0); // 20170531 has it
 #endif
 
