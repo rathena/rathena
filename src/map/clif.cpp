@@ -15800,7 +15800,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 	flag = mail_setitem(sd, idx, amount);
 
 	if( flag == MAIL_ATTACH_EQUIPSWITCH ){
-		clif_msg( sd, 0xbc7 );
+		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
 	}else{
 		clif_Mail_setattachment(sd,idx,amount,flag);
 	}

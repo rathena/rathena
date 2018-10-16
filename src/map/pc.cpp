@@ -5266,7 +5266,7 @@ void pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 		return;
 
 	if( item_data->equipSwitch ){
-		clif_msg( sd, 0xbc7 );
+		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
 		return;
 	}
 
