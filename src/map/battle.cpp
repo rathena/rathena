@@ -1368,16 +1368,23 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		// Compressed code, fixed by map.hpp [Epoque]
 		if (src->type == BL_MOB) {
-			if( sc->data[SC_MANU_DEF] && status_get_race2(src) == RC2_MANUK ){
-				damage -= damage * sc->data[SC_MANU_DEF]->val1 / 100;
-			}
-			if( sc->data[SC_SPL_DEF] && status_get_race2(src) == RC2_SPLENDIDE ){
-				damage -= damage * sc->data[SC_SPL_DEF]->val1 / 100;
-			}
-			if (sc->data[SC_GLASTHEIM_DEF] && status_get_race2(src) == RC2_OGH_ATK_DEF)
+			enum e_race2 race2 = status_get_race2(src);
+			if (race2 == RC2_MANUK && (sce = sc->data[SC_MANU_DEF]))
+				damage -= damage * sce->val1 / 100;
+			if (race2 == RC2_SPLENDIDE && (sce = sc->data[SC_SPL_DEF]))
+				damage -= damage * sce->val1 / 100;
+			if (race2 == RC2_OGH_ATK_DEF && sc->data[SC_GLASTHEIM_DEF])
 				return 0;
-			if (sc->data[SC_GLASTHEIM_HIDDEN] && status_get_race2(src) == RC2_OGH_HIDDEN)
-				damage -= damage * sc->data[SC_GLASTHEIM_HIDDEN]->val1 / 100;
+			if (race2 == RC2_OGH_HIDDEN && (sce = sc->data[SC_GLASTHEIM_HIDDEN]))
+				damage -= damage * sce->val1 / 100;
+			if (race2 == RC2_BIO5_ACOLYTE_MERCHANT && (sce = sc->data[SC_LHZ_DUN_N1]))
+				damage -= damage * sce->val2 / 100;
+			if (race2 == RC2_BIO5_MAGE_ARCHER && (sce = sc->data[SC_LHZ_DUN_N2]))
+				damage -= damage * sce->val2 / 100;
+			if (race2 == RC2_BIO5_SWORDMAN_THIEF && (sce = sc->data[SC_LHZ_DUN_N3]))
+				damage -= damage * sce->val2 / 100;
+			if (race2 == RC2_BIO5_MVP && (sce = sc->data[SC_LHZ_DUN_N4]))
+				damage -= damage * sce->val2 / 100;
 		}
 
 		if((sce=sc->data[SC_ARMOR]) && //NPC_DEFENDER
@@ -1538,20 +1545,23 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		// [Epoque]
 		if (bl->type == BL_MOB) {
-			if ( (((sce=sc->data[SC_MANU_ATK]) && (flag&BF_WEAPON)) ||
-				 ((sce=sc->data[SC_MANU_MATK]) && (flag&BF_MAGIC))) &&
-				 status_get_race2(bl) == RC2_MANUK
-				) {
-				damage += damage * sce->val1 / 100;
+			if ((flag&BF_WEAPON) || (flag&BF_MAGIC)) {
+				enum e_race2 race2 = status_get_race2(bl);
+				if (race2 == RC2_MANUK && (sce = sc->data[SC_MANU_ATK]))
+					damage += damage * sce->val1 / 100;
+				if (race2 == RC2_SPLENDIDE && (sce = sc->data[SC_SPL_ATK]))
+					damage += damage * sce->val1 / 100;
+				if (race2 == RC2_OGH_ATK_DEF && sc->data[SC_GLASTHEIM_ATK])
+					damage <<= 1;
+				if (race2 == RC2_BIO5_SWORDMAN_THIEF && (sce = sc->data[SC_LHZ_DUN_N1]))
+					damage += damage * sce->val1 / 100;
+				if (race2 == RC2_BIO5_ACOLYTE_MERCHANT && (sce = sc->data[SC_LHZ_DUN_N2]))
+					damage += damage * sce->val1 / 100;
+				if (race2 == RC2_BIO5_MAGE_ARCHER && (sce = sc->data[SC_LHZ_DUN_N3]))
+					damage += damage * sce->val1 / 100;
+				if (race2 == RC2_BIO5_MVP && (sce = sc->data[SC_LHZ_DUN_N4]))
+					damage += damage * sce->val1 / 100;
 			}
-			if ( (((sce=sc->data[SC_SPL_ATK]) && (flag&BF_WEAPON)) ||
-				 ((sce=sc->data[SC_SPL_MATK]) && (flag&BF_MAGIC))) &&
-				 status_get_race2(bl) == RC2_SPLENDIDE
-				) {
-				damage += damage * sce->val1 / 100;
-			}
-			if (sc->data[SC_GLASTHEIM_ATK] && status_get_race2(bl) == RC2_OGH_ATK_DEF)
-				damage <<= 1;
 		}
 		/* Self Buff that destroys the armor of any target hit with melee or ranged physical attacks */
 		if( sc->data[SC_SHIELDSPELL_REF] && sc->data[SC_SHIELDSPELL_REF]->val1 == 1 && flag&BF_WEAPON ) {
@@ -3878,6 +3888,7 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 			skillratio += 50 + 15 * skill_lv;
 			break;
 		case RA_ARROWSTORM:
+		case NPC_ARROWSTORM:
 			skillratio += 900 + 80 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
@@ -5835,6 +5846,13 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 				break;
 			case PF_SOULBURN:
 				ad.damage = tstatus->sp * 2;
+				break;
+			case AB_RENOVATIO:
+				ad.damage = status_get_lv(src) * 10 + sstatus->int_;
+				break;
+			case NPC_ICEMINE:
+			case NPC_FLAMECROSS:
+				ad.damage = sstatus->rhw.atk * 20 * skill_lv;
 				break;
 			default: {
 				if (sstatus->matk_max > sstatus->matk_min) {
@@ -8012,7 +8030,7 @@ static const struct _battle_data {
 	{ "enable_critical",                    &battle_config.enable_critical,                 BL_PC,  BL_NUL, BL_ALL,         },
 	{ "mob_critical_rate",                  &battle_config.mob_critical_rate,               100,    0,      INT_MAX,        },
 	{ "critical_rate",                      &battle_config.critical_rate,                   100,    0,      INT_MAX,        },
-	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_PC|BL_HOM, BL_NUL, BL_ALL,   },
+	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_CHAR|BL_NPC, BL_NUL, BL_ALL,   },
 	{ "enable_perfect_flee",                &battle_config.enable_perfect_flee,             BL_PC|BL_PET, BL_NUL, BL_ALL,   },
 	{ "casting_rate",                       &battle_config.cast_rate,                       100,    0,      INT_MAX,        },
 	{ "delay_rate",                         &battle_config.delay_rate,                      100,    0,      INT_MAX,        },
