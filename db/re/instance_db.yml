@@ -177,14 +177,14 @@ Instances:
       Map: "1@spa"
       X: 42
       Y: 196
-#  - ID: 19
-#    Name: "Devil's Tower"
-#    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@tnm1"
-#      X: 50
-#      Y: 104
-#    AdditionalMaps: ["1@tnm2", "1@tnm3"]
+  - ID: 19
+    Name: "Devil's Tower"
+    LimitTime: 3600
+    EnterAt:
+      Map: "1@tnm1"
+      X: 50
+      Y: 104
+    AdditionalMaps: ["1@tnm2", "1@tnm3"]
   - ID: 20
     Name: "Assault on the Airship"
     LimitTime: 3600
