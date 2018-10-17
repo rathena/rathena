@@ -897,7 +897,7 @@ OnMobDead:
 		npctalk "Lucile: Let me excuse myself, follow me if you want to save the world.";
 		sleep 2000;
 		npctalk "Huey: sister...", instance_npcname("Huey#hui02");
-		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 6) {
+		if ('devil_tower == 6) {
 			disablenpc instance_npcname("Lucile#tnm02");
 			enablenpc instance_npcname("Lucile#tnm03");
 			enablenpc instance_npcname("Magic Swordman#tnm02");
