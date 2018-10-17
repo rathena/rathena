@@ -75,7 +75,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		if (isbegin_quest(9418) == 0) {// first entrance
 			mes "[Scientist Doyeon]";
 			mes "I'm a scientist,";
-			mes "living in Prontera";
+			mes "living in Prontera.";
 			mes "I'm just an ordinary scientist,";
 			mes "teaching children and doing researches.";
 			mes "And then...things came up";
