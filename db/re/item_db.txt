@@ -8475,7 +8475,7 @@
 14499,Peacock_Feather_Box,Peacock Feather Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 5519,1; },{},{}
 14500,Insurance60,Life Insurrance Certificate,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_LIFEINSURANCE,3600000,0; },{},{}
 14505,Dungeon_1_hour_Ticket,Dungeon 1 Hour Ticket,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ warp "dali02",117,69; },{},{}
-14506,Dungeon_1_hour_Ticket,Dungeon 1 Hour Ticket,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ select("Invasion of Air Stronghold - Lv. 145 or highter"); warp "dali02",117,69; },{},{}
+14506,Dungeon_1_hour_Ticket_,Dungeon 1 Hour Ticket,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ select("Invasion of Air Stronghold - Lv. 145 or highter"); warp "dali02",117,69; },{},{}
 14508,Zeny_Scroll,Zeny Pet Egg Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ Zeny += rand(1000,77777);},{},{}
 14509,Light_Center_Pot,Light Concentration Potion,2,800,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,4; },{},{}
 14510,Light_Awakening_Pot,Light Awakening Potion,2,1500,,20,,,,,0xFFF7FEEF,63,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,6; },{},{}
@@ -12077,6 +12077,9 @@
 31021,Dancing_Marionette_Card,Dancing Marionette Card,6,20,,10,,,,,,,,2,,,,,{ bonus bAspdRate,10; bonus2 bAddClass,Class_All,-3; },{},{}
 31022,Abandoned_Teddy_Bear_Card,Abandoned Teddy Bear Card,6,20,,10,,,,,,,,64,,,,,{ bonus bMaxSPRate,20; bonus2 bAddEff2,Eff_Curse,100; /* unofficial chance [Secret] */ },{},{}
 31023,Celine_Kimi_Card,Celine Kimi Card,6,20,,10,,,,,,,,2,,,,,{ bonus bMatkRate,10; bonus5 bAutoSpell,"NPC_CRITICALWOUND",3,200+(50*getrefine()),BF_MAGIC,1; },{},{}
+31024,Immortal_Cursed_Knight_Card,Immortal Cursed Knight Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bAddClass,Class_All,10; bonus5 bAutoSpell,"RK_IGNITIONBREAK",5,20,BF_WEAPON,1; },{},{}
+31025,Immortal_Wind_Ghost_Card,Immortal Wind Ghost Card,6,20,,10,,,,,,,,2,,,,,{ bonus bMatkRate,10; bonus5 bAutoSpell,"SO_CLOUD_KILL",5,10,BF_MAGIC,1; },{},{}
+31026,Stephen_Jack_Ernest_Wolf_Card,Stephen Jack Ernest Wolf Card,6,20,,10,,,,,,,,64,,,,,{ bonus5 bAutoSpellWhenHit,"SO_FIREWALK",5,35,BF_WEAPON,0; bonus5 bAutoSpellWhenHit,"SO_ELECTRICWALK",5,80,BF_MAGIC,0; autobonus { bonus bFlee,200; },30,10000,BF_WEAPON; autobonus { bonus bSpeedRate,25; },25,10000,BF_MAGIC; /* unknown rate and specialeffect */ },{},{}
 //===================================================================
 // More Costumes
 //===================================================================

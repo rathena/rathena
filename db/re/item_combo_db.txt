@@ -804,3 +804,5 @@
 28907:2998,{ bonus bSpeedRate,25; }
 28908:2998,{ bonus bDelayrate,-10; }
 28909:2998,{ bonus bUseSPrate,-10; bonus bMaxSPrate,10; }
+31024:31026,{ bonus bAspd,1; }
+31025:31026,{ bonus bVariableCastrate,-10; }
