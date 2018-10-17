@@ -74,10 +74,10 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		}
 		if (isbegin_quest(9418) == 0) {// first entrance
 			mes "[Scientist Doyeon]";
-			mes "I'm a scientist,";
-			mes "living in Prontera";
-			mes "I'm just an ordinary scientist,";
-			mes "teaching children and doing researches.";
+			mes "I'm a scientist";
+			mes "living in Prontera.";
+			mes "I'm just an ordinary scientist";
+			mes "teaching children and doing research.";
 			mes "And then...things came up";
 			mes "in Prontera all of a sudden....";
 			while(true) {
@@ -130,12 +130,12 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		mes "[Scientist Doyeon]";
 		mes "How could that be...";
 		mes "Still, I think we have every reason to remain hopeful";
-		mes "for eliminating that huge Golem,";
-		mes "to the Sky Fortress.";
+		mes "for eliminating that huge Golem";
+		mes "in the Sky Fortress.";
 		next;
 		mes "[Scientist Doyeon]";
 		mes "Still, those filthy monsters";
-		mes "keep spawning in Prontera";
+		mes "keep spawning in Prontera.";
 		mes "So I think what we've done";
 		mes "must not be enough.";
 		mes "***";
@@ -144,13 +144,10 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		mes "To operate the warp,";
 		mes "a lot of magic is required.";
 		mes "Bring me the item called the -Dungeon Pass-,";
-		mes "or I need more time about";
+		mes "or I need about";
 		mes "three days to collect magic.";
 		next;
 		mes "[Scientist Doyeon]";
-		mes "Let me collect magic";
-		mes "for about 3 days.";
-		mes "Come back in 3 days.";
 		mes "I hope you'd enter the Sky Fortress";
 		mes "and help us save";
 		mes "Prontera.";
@@ -168,14 +165,14 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		mes "To operate the warp,";
 		mes "a lot of magic is required.";
 		mes "Bring me the item called the -Dungeon Pass-,";
-		mes "or I need more time about";
+		mes "or I need about";
 		mes "three days to collect magic.";
 		next;
 		if (getcharid(1) > 0 && getpartyleader(getcharid(1),2) == getcharid(0)) {
 			if (select( "End the dialogue.", "Show the -Dungeon Pass-." ) == 2) {
 				if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
 					mes "[Scientist Doyeon]";
-					mes "I don't think this work";
+					mes "I don't think this works";
 					mes "without the -Dungeon Pass-.";
 					mes "I can't open the warp without it.";
 					close;
@@ -203,9 +200,6 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 			}
 		}
 		mes "[Scientist Doyeon]";
-		mes "Let me collect magic";
-		mes "for about 3 days.";
-		mes "Come back in 3 days.";
 		mes "I hope you'd enter the Sky Fortress";
 		mes "and help us save";
 		mes "Prontera.";
@@ -227,7 +221,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		mes "I suppose the monsters are being made up";
 		mes "inside the fortress.";
 		mes "My guess is that if we can defeat their ringleader in the fortress,";
-		mes "the monsters will get away";
+		mes "the monsters will go away";
 		mes "and Prontera will become stabilized.";
 		mes "***";
 		next;
@@ -261,10 +255,10 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 
 S_Info:
 	mes "[Scientist Doyeon]";
-	mes "I'm a scientist,";
-	mes "living in Prontera";
-	mes "I'm just an ordinary scientist,";
-	mes "teaching children and doing researches.";
+	mes "I'm a scientist";
+	mes "living in Prontera.";
+	mes "I'm just an ordinary scientist";
+	mes "teaching children and doing research.";
 	next;
 	mes "[Scientist Doyeon]";
 	mes "But now...the life at least as I know it";
@@ -490,10 +484,10 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 	}
 	if (getcharid(1) < 1 || getcharid(0) != getpartyleader(getcharid(1),2)) {
 		mes "[Scientist Doyeon]";
-		mes "I'm a scientist,";
-		mes "living in Prontera";
-		mes "I'm just an ordinary scientist,";
-		mes "teaching children and doing researches.";
+		mes "I'm a scientist";
+		mes "living in Prontera.";
+		mes "I'm just an ordinary scientist";
+		mes "teaching children and doing research.";
 		next;
 		mes "[Scientist Doyeon]";
 		mes "But now...my normal life";
@@ -522,7 +516,7 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 		mes "I suppose the monsters are being made up";
 		mes "inside the fortress.";
 		mes "My guess is that if we can defeat their ringleader in the fortress,";
-		mes "the monsters will get away";
+		mes "the monsters will go away";
 		mes "and Prontera will become stabilized.";
 		mes "***";
 		next;
@@ -548,8 +542,8 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 		close;
 	}
 	mes "[Scientist Doyeon]";
-	mes "I'm a scientist,";
-	mes "living in Prontera";
+	mes "I'm a scientist";
+	mes "living in Prontera.";
 	mes "I teach children and perform research activities.";
 	mes "But it has become";
 	mes "so dangerous there,";
@@ -584,7 +578,7 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 		mes "I suppose the monsters are being made up";
 		mes "inside the fortress.";
 		mes "My guess is that if we can defeat their ringleader in the fortress,";
-		mes "the monsters will get away";
+		mes "the monsters will go away";
 		mes "and Prontera will become stabilized.";
 		mes "***";
 		next;
@@ -628,7 +622,7 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 		}
 		if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
 			mes "[Scientist Doyeon]";
-			mes "I don't think this work";
+			mes "I don't think this works";
 			mes "without the -Dungeon Pass-.";
 			mes "I can't open the warp without it.";
 			close;
