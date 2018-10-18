@@ -1299,7 +1299,7 @@
 2568,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_HEAT_BARREL,Heat Barrel
 2569,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_AM_BLAST,Anti-Material Blast
 2570,-9,6,1,0,0,0,5,1,no,0,0,0,weapon,6,0x0,	RL_SLUGSHOT,Slug Shot
-2571,-9,6,1,0,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_HAMMER_OF_GOD,Hammer of God
+2571,7:8:9:10:11,6,1,0,0,2,5,1,no,0,0,0,weapon,0,0x0,	RL_HAMMER_OF_GOD,Hammer of God
 2572,0,6,1,-1,0x40,0,5,1,no,0,0,0,weapon,0,0,	RL_R_TRIP_PLUSATK,Round Trip Plus Attack
 //2573,0,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0,	RL_B_FLICKER_ATK,Bind Flicker Attack
 //2574,0,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0,	RL_GLITTERING_GREED_ATK,Flip The Coin Greed Attack
