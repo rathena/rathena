@@ -5492,25 +5492,26 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if( sd->state.changemap ) { // Misc map-changing settings
-		int i;
-		unsigned short instance_id = map_getmapdata(sd->bl.m)->instance_id;
+		unsigned short curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, obj_instance_id = 0;
+		struct party_data *p = NULL;
+		struct guild *g = NULL;
+		struct clan *cd = NULL;
 
-		if (instance_id && instance_id != mapdata->instance_id) {
-			struct party_data *p = NULL;
-			struct guild *g = NULL;
-			struct clan *cd = NULL;
+		if (sd->instance_id)
+			obj_instance_id = sd->instance_id;
+		else if (!obj_instance_id && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id)
+			obj_instance_id = p->instance_id;
+		else if (!obj_instance_id && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
+			obj_instance_id = g->instance_id;
+		else if (!obj_instance_id && sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
+			obj_instance_id = cd->instance_id;
+		else if (!obj_instance_id)
+			obj_instance_id = curr_map_instance_id;
 
-			if (sd->instance_id)
-				instance_delusers(sd->instance_id);
-			else if (sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id)
-				instance_delusers(p->instance_id);
-			else if (sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
-				instance_delusers(g->instance_id);
-			else if (sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
-				instance_delusers(cd->instance_id);
-			else
-				instance_delusers(instance_id);
-		}
+		if (!curr_map_instance_id && mapdata->instance_id) // Moving to instance map, adjust timers
+			instance_addusers(obj_instance_id);
+		else if (curr_map_instance_id && curr_map_instance_id != mapdata->instance_id) // Leaving from instance map, adjust timers
+			instance_delusers(obj_instance_id);
 
 		sd->state.pmap = sd->bl.m;
 		if (sd->sc.count) { // Cancel some map related stuff.
@@ -5532,7 +5533,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			status_change_end(&sd->bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		}
-		for( i = 0; i < EQI_MAX; i++ ) {
+		for(int i = 0; i < EQI_MAX; i++ ) {
 			if( sd->equip_index[i] >= 0 )
 				if( pc_isequip(sd,sd->equip_index[i]) )
 					pc_unequipitem(sd,sd->equip_index[i],2);
