@@ -62,7 +62,8 @@ prontera,131,217,5	script	Stylist#custom_stylist	122,{
 	}
 	else
 	{
-		if( eaclass()&EAJL_THIRD)
+		set @eac, eaclass();
+		if(! ((@eac&EAJ_BASEMASK) == EAJ_TAEKWON) && ! ((@eac&EAJ_BASEMASK) == EAJ_GUNSLINGER) && ! ((@eac&EAJ_BASEMASK) == EAJ_NINJA) && @eac&EAJL_THIRD)
 		{
 			L_BODYSTYLE:
 			set .@body, select(" ~ Default: ~ Alternative: ~ Exit");

@@ -2154,7 +2154,7 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	mes "...Do you have someone you're close to and whom you wish for their wellness?";
 	next;
 	mes "[Yota Chara]";
-	mes "If you want an amulet or armor, you can exchange it with the <ITEM>Doram Token<INFO>25142</INFO></ITEM>. I have a bunch of amulets and armor with me.";
+	mes "If you want an amulet or armor, you can exchange it with the <ITEM>Doram Token<INFO> </INFO></ITEM>. I have a bunch of amulets and armor with me.";
 	next;
 	.@s = select( "Low-grade Horse Mackerel Amulet", "Low-grade Leaf Amulet", "Low-grade Rabbit Amulet", "Shining Twig Charm", "Fresh Tuna Amulet", "Plump Earthworm Amulet", "Exlusive Doram Suit", "Exlusive Doram Manteau", "Exlusive Doram Shoe" );
 	mes "[Yota Chara]";
@@ -2193,7 +2193,7 @@ lasagna,131,245,5	script	The diligent second son	4_CAT_3COLOR,{
 	if (.@s < 4) {
 		.@cost = 10;
 		.@item_id = 28410 + .@s * 3;
-	} else if (.@s < 7 && .@ < .@s > 3) {
+	} else if (.@s < 7 && .@s > 3) {
 		.@cost = 30;
 		.@item_id = 28418 + .@s;
 	} else {
