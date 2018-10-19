@@ -3594,7 +3594,7 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 	memcpy(&dst_map->damage_adjust, &src_map->damage_adjust, sizeof(struct s_skill_damage));
 
 	dst_map->flag.insert(src_map->flag.begin(), src_map->flag.end());
-	dst_map->skill_damage.insert(dst_map->skill_damage.begin(), src_map->skill_damage.begin(), src_map->skill_damage.end());
+	dst_map->skill_damage.insert(src_map->skill_damage.begin(), src_map->skill_damage.end());
 	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
 	dst_map->zone = src_map->zone;
@@ -4445,26 +4445,18 @@ int cleanup_sub(struct block_list *bl, va_list ap)
  * @param caster: Caster type
  */
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
-	if (m->skill_damage.size() > UINT16_MAX)
-		return;
-
-	for (int i = 0; i < m->skill_damage.size(); i++) {
-		if (m->skill_damage[i].skill_id == skill_id) {
-			for (int j = 0; j < SKILLDMG_MAX; j++) {
-				m->skill_damage[i].rate[j] = rate[j];
-			}
-			m->skill_damage[i].caster = caster;
-			return;
-		}
-	}
-
 	struct s_skill_damage entry = {};
 
-	entry.skill_id = skill_id;
 	for (int i = 0; i < SKILLDMG_MAX; i++)
 		entry.rate[i] = rate[i];
 	entry.caster = caster;
-	m->skill_damage.push_back(entry);
+
+	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) {
+		m->skill_damage[skill_id] = entry;
+		return;
+	}
+
+	m->skill_damage.insert({ skill_id, entry });
 }
 
 /**
@@ -4849,12 +4841,9 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 						return false;
 					}
 
-					for (int i = 0; i < SKILLDMG_MAX; i++) {
+					mapdata->damage_adjust.caster = args->skill_damage.caster;
+					for (int i = 0; i < SKILLDMG_MAX; i++)
 						mapdata->damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
-
-						if (mapdata->flag.find(mapflag) != mapdata->flag.end() && mapdata->damage_adjust.rate[i])
-							mapdata->damage_adjust.caster = args->skill_damage.caster;
-					}
 				}
 			}
 			mapdata->flag[mapflag] = status;

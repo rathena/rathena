@@ -132,7 +132,7 @@ and 'doc/mapflags.txt'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x>,<y>{,<xs>{,<ys>}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
+<map name>{,<x>{,<y>{,<xs>{,<ys>}}}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
@@ -7075,8 +7075,8 @@ This command kicks the given character from the waiting room attached to the giv
 *getwaitingroomusers "<NPC object name>";
 
 This command get all the characters in the waiting room of the given NPC and stores
-their gids in the array .@waitingroom_users[]. Also, stores the the number of characters
-in the variable .@waitingroom_usercount
+their gids in the array .@waitingroom_users[]. Also, stores the number of characters
+in the variable .@waitingroom_usercount.
 
 ---------------------------------------
 

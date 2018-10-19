@@ -110,6 +110,8 @@
 
 706,0xfd,     ,  2, 0,1000,enemy, 0x018	//NPC_VENOMFOG
 708,0x86,     ,  0, 9,1000,enemy, 0x018	//NPC_COMET
+709,0xfe,     ,  0, 3,1000,enemy, 0x8018	//NPC_ICEMINE
+711,0xff,     , -1, 0,1000,enemy, 0x8018	//NPC_FLAMECROSS
 
 2044,0xca,    ,  0, 2,1000,all,   0x018	//AB_EPICLESIS
 

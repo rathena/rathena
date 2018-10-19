@@ -1515,6 +1515,10 @@
 	export_constant(SC_GLASTHEIM_STATE);
 	export_constant(SC_GLASTHEIM_ITEMDEF);
 	export_constant(SC_GLASTHEIM_HPSP);
+	export_constant(SC_LHZ_DUN_N1);
+	export_constant(SC_LHZ_DUN_N2);
+	export_constant(SC_LHZ_DUN_N3);
+	export_constant(SC_LHZ_DUN_N4);
 	export_constant(SC_ANCILLA);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -3653,6 +3657,10 @@
 	export_constant(RC2_SCARABA);
 	export_constant(RC2_OGH_ATK_DEF);
 	export_constant(RC2_OGH_HIDDEN);
+	export_constant(RC2_BIO5_SWORDMAN_THIEF);
+	export_constant(RC2_BIO5_ACOLYTE_MERCHANT);
+	export_constant(RC2_BIO5_MAGE_ARCHER);
+	export_constant(RC2_BIO5_MVP);
 	export_constant(RC2_MAX);
 
 	/* classes */

@@ -2690,3 +2690,23 @@ SC_GVG_BLIND	(EFST_GVG_BLIND)
 SC_EXTREMITYFIST2	()
 	desc:
 	val1:
+
+SC_LHZ_DUN_N1	(EFST_LHZ_DUN_N1)
+	desc: Increases damage against Swordman, Thief and reduces damage taken from Acolyte, Merchant monsters of Biolab 5 (except MVPs).
+	val1: +% Damage
+	val2: +% Defense
+
+SC_LHZ_DUN_N2	(EFST_LHZ_DUN_N2)
+	desc: Increases damage against Acolyte, Merchant and reduces damage taken from Mage, Archer monsters of Biolab 5 (except MVPs).
+	val1: +% Damage
+	val2: +% Defense
+
+SC_LHZ_DUN_N3	(EFST_LHZ_DUN_N3)
+	desc: Increases damage against Mage, Archer and reduces damage taken from Swordman, Thief monsters of Biolab 5 (except MVPs).
+	val1: +% Damage
+	val2: +% Defense
+
+SC_LHZ_DUN_N4	(EFST_LHZ_DUN_N4)
+	desc: Increases and reduces damage against MVPs of Biolab 5.
+	val1: +% Damage
+	val2: +% Defense
