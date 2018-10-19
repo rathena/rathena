@@ -7609,11 +7609,11 @@
 13535,Light_Center_Pot_Box,Light Concentration Potion Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14509,20; },{},{}
 13536,Light_Awakening_Pot_Box,Light Awakening Potion Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14510,20; },{},{}
 13537,Light_Berserk_Pot_Box,Light Berserk Potion Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14511,20; },{},{}
-13538,Meteor_10_Scroll_Box,Meteor Storm Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14512,1; },{},{}
-13539,Storm_10_Scroll_Box,Storm Gust Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14513,1; },{},{}
-13540,Vermilion_10_Scroll_Box,Lord of Vermilion Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14514,1; },{},{}
-13541,Lex_Aeterna_Scroll_Box,Lex Aeterna Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14515,1; },{},{}
-13542,Magnificat_5_Scroll_Box,Magnificat Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14516,1; },{},{}
+13538,Meteor_10_Scroll_Box,Meteor Storm Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14512,10; },{},{}
+13539,Storm_10_Scroll_Box,Storm Gust Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14513,10; },{},{}
+13540,Vermilion_10_Scroll_Box,Lord of Vermilion Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14514,10; },{},{}
+13541,Lex_Aeterna_Scroll_Box,Lex Aeterna Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14515,10; },{},{}
+13542,Magnificat_5_Scroll_Box,Magnificat Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 14516,10; },{},{}
 13543,CP_Helm_Scroll_Box,Chemical Protection Helm Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_CP_Helm_Scroll_Box); },{},{}
 13544,CP_Shield_Scroll_Box,Chemical Protection Shield Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_CP_Shield_Scroll_Box); },{},{}
 13545,CP_Armor_Scroll_Box,Chemical Protection Armor Scroll Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_CP_Armor_Scroll_Box); },{},{}
