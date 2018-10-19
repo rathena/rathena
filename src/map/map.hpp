@@ -594,7 +594,6 @@ enum e_skill_damage_type : uint8 {
 /// Struct for MF_SKILL_DAMAGE
 struct s_skill_damage {
 	unsigned int map; ///< Maps (used for skill_damage_db.txt)
-	uint16 skill_id; ///< Skill ID (used for mapflag)
 	uint16 caster; ///< Caster type
 	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
 };
@@ -729,7 +728,7 @@ struct map_data {
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
-	std::vector<s_skill_damage> skill_damage; // Used for single skill damage adjustment
+	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
