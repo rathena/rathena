@@ -1434,11 +1434,8 @@
 5039,9,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,		SU_TUNAPARTY,Tuna Party
 5040,0,6,4,0,0x3,-1,5,1,yes,0,0,0,none,0,0x0,		SU_BUNCHOFSHRIMP,Bunch of Shrimp
 5041,9,6,16,0,0x3,0,5,1,yes,0,0,0,none,0,0x0,		SU_FRESHSHRIMP,Fresh Shrimp
-
-// Unknown Unconfirmed Summoner Skills - Animations Show On These
-//5042,0,0,0,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SU_CN_METEOR_SEC,
-//5043,0,0,0,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SU_LUNATICCARROTBEAT_SEC,
-
+5042,9,8,2,0,0,1:1:2:2:3,5,-5,yes,0,0,0,magic,0,0x0,		SU_CN_METEOR2,Catnip Meteor 2
+5043,9,8,1,-1,0x2,1:1:2:2:3,5,-3,yes,0,0,0,weapon,0,0x0,	SU_LUNATICCARROTBEAT2,Lunatic Carrot Beat 2
 5044,14,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SU_SOULATTACK,Soul Attack
 5045,0,6,4,0,0x3,3:4:5:6:-1,5,0,yes,0,0,0,magic,0,0x0,	SU_POWEROFFLOCK,Power of Flock
 5046,9,8,1,-1,0,1,5,1,yes,0,0,14,weapon,0,0x0,	SU_SVG_SPIRIT,Spirit of Savage
