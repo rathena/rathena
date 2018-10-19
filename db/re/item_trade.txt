@@ -693,7 +693,7 @@
 6377,467,100	// Buy_Market_Permit
 6378,499,100	// Winning_Mark
 6380,467,100	// Mora_Coin
-6383,499,100	// Clue_Of_Lope
+6383,451,100	// Clue_Of_Lope
 6384,507,100	// Ring_Of_Lope
 6385,507,100	// Research_Tool_Bag
 6386,499,100	// Bathtub_R_Sample
@@ -1064,8 +1064,8 @@
 7603,499,100	// RO_Party_Ticket
 7614,499,100	// Special_Packing_Paper
 7618,499,100	// Monster_Crystal
-7619,475,100	// Enriched_Elunium
-7620,475,100	// Enriched_Oridecon
+// 7619,475,100	// Enriched_Elunium
+// 7620,475,100	// Enriched_Oridecon
 7621,475,100	// Token_Of_Siegfried
 7622,475,100	// New_Style_Coupon
 7623,507,100	// Name_Change_Coupon
@@ -1201,11 +1201,11 @@
 9028,1,100	// Rice_Cake_Egg
 9058,467,100	// Snow_Rabbit_Egg
 11011,499,100	// Barmund_Note
-11012,499,100	// Expedition_Report
-11013,499,100	// Expedition_Report_Vol1
-11014,499,100	// Expedition_Report_Vol2
-11015,499,100	// Expedition_Report_Vol3
-11016,499,100	// Expedition_Report_Vol4
+11012,451,100	// Expedition_Report
+11013,451,100	// Expedition_Report_Vol1
+11014,451,100	// Expedition_Report_Vol2
+11015,451,100	// Expedition_Report_Vol3
+11016,451,100	// Expedition_Report_Vol4
 11500,475,100	// Light_Yellow_Pot
 11501,475,100	// Light_White_Pot
 11502,475,100	// Light_Blue_Pot
@@ -2839,7 +2839,7 @@
 15063,499,100	// TE_Woe_Chain_Mail
 15064,499,100	// TE_Woe_Mage_Coat
 15067,507,100	// Rune_Suit
-15116,467,100	// Armor_Of_Airship
+// 15116,467,100	// Armor_Of_Airship
 15141,467,100	// Rift_Ancient_Armor
 16002,507,100	// Stunner_C
 16004,499,100	// P_Mace1
@@ -3725,13 +3725,13 @@
 //20703,499,100	//
 //20704,499,100	//
 //20709,507,100	//
-20743,467,100	// Cloak_Of_Airship
+// 20743,467,100	// Cloak_Of_Airship
 20779,467,100	// Rift_Manteau
 21005,499,100	// Metal_Two_Hand_Sword
 //21006,499,100	//
 21014,467,100	// Infinity_Two-Handed_Sword
 //22012,507,100	//
-22046,467,100	// Boots_Of_Airship
+// 22046,467,100	// Boots_Of_Airship
 22075,467,100	// Rift_Shoes
 22508,507,100	// Para_Team_Mark_
 22510,475,100	// King_Wolf_Scroll
