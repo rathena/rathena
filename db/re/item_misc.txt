@@ -1408,39 +1408,39 @@ IG_PRIVATE_AIRSHIP,25464,1 // World_Moving_Rights
 // Milky Special Gift Box
 IG_MILKY_SGB,17256,1		// Good_Student_Gift_Box
 IG_MILKY_SGB,17257,1		// Bad_Student_Gift_Box
-IG_MILKY_SGB,644,10			// Gift_Box
-IG_MILKY_SGB,664,10			// Gift_Box_1
-IG_MILKY_SGB,665,10			// Gift_Box_2
-IG_MILKY_SGB,666,10			// Gift_Box_3
-IG_MILKY_SGB,667,10			// Gift_Box_4
-IG_MILKY_SGB,12023,10		// Giftbox_China
-IG_MILKY_SGB,604,10 		// Branch_Of_Dead_Tree
+IG_MILKY_SGB,644,15			// Gift_Box
+IG_MILKY_SGB,664,15			// Gift_Box_1
+IG_MILKY_SGB,665,15			// Gift_Box_2
+IG_MILKY_SGB,666,15			// Gift_Box_3
+IG_MILKY_SGB,667,15			// Gift_Box_4
+IG_MILKY_SGB,12023,15		// Giftbox_China
+IG_MILKY_SGB,604,15 		// Branch_Of_Dead_Tree
 IG_MILKY_SGB,12103,10 		// Bloody_Dead_Branch
-IG_MILKY_SGB,12717,10 		// Poison_Paralysis
-IG_MILKY_SGB,12718,10 		// Poison_Leech
-IG_MILKY_SGB,12719,10 		// Poison_Oblivion
-IG_MILKY_SGB,12720,10 		// Poison_Disheart
-IG_MILKY_SGB,12721,10 		// Poison_Numb
-IG_MILKY_SGB,12722,10 		// Poison_Fever
-IG_MILKY_SGB,12723,10 		// Poison_Laughing
-IG_MILKY_SGB,12724,10 		// Poison_Fatigue
-IG_MILKY_SGB,12202,10 		// Str_Dish10_
-IG_MILKY_SGB,12203,10 		// Agi_Dish10_
-IG_MILKY_SGB,12204,10 		// Int_Dish10_
-IG_MILKY_SGB,12205,10 		// Dex_Dish10_
-IG_MILKY_SGB,12206,10 		// Luk_Dish10_
-IG_MILKY_SGB,12207,10 		// Vit_Dish10_
-IG_MILKY_SGB,13260,10 		// Apple_Bomb
-IG_MILKY_SGB,13261,10 		// Coconut_Bomb
-IG_MILKY_SGB,13262,10 		// Melon_Bomb
-IG_MILKY_SGB,13263,10 		// Pineapple_Bomb
-IG_MILKY_SGB,13264,10 		// Banana_Bomb
+IG_MILKY_SGB,12717,15 		// Poison_Paralysis
+IG_MILKY_SGB,12718,15 		// Poison_Leech
+IG_MILKY_SGB,12719,15 		// Poison_Oblivion
+IG_MILKY_SGB,12720,15 		// Poison_Disheart
+IG_MILKY_SGB,12721,15 		// Poison_Numb
+IG_MILKY_SGB,12722,15 		// Poison_Fever
+IG_MILKY_SGB,12723,15 		// Poison_Laughing
+IG_MILKY_SGB,12724,15 		// Poison_Fatigue
+IG_MILKY_SGB,12202,15 		// Str_Dish10_
+IG_MILKY_SGB,12203,15 		// Agi_Dish10_
+IG_MILKY_SGB,12204,15 		// Int_Dish10_
+IG_MILKY_SGB,12205,15 		// Dex_Dish10_
+IG_MILKY_SGB,12206,15 		// Luk_Dish10_
+IG_MILKY_SGB,12207,15 		// Vit_Dish10_
+IG_MILKY_SGB,13260,15 		// Apple_Bomb
+IG_MILKY_SGB,13261,15 		// Coconut_Bomb
+IG_MILKY_SGB,13262,15 		// Melon_Bomb
+IG_MILKY_SGB,13263,15 		// Pineapple_Bomb
+IG_MILKY_SGB,13264,15 		// Banana_Bomb
 IG_MILKY_SGB,12703,10 		// Holy_Egg_2
-IG_MILKY_SGB,603,10			// Old Blue Box
-IG_MILKY_SGB,617,10			// Old Purple Box
+IG_MILKY_SGB,603,15			// Old Blue Box
+IG_MILKY_SGB,617,15			// Old Purple Box
 IG_MILKY_SGB,12613,10		// High_Coin_Pocket
 IG_MILKY_SGB,12614,10		// Mid_Coin_Pocket
-IG_MILKY_SGB,12615,10		// Low_Coin_Pocket
+IG_MILKY_SGB,12615,15		// Low_Coin_Pocket
 IG_MILKY_SGB,12623,10		// High_Weapon_Box
 IG_MILKY_SGB,12690,10		// Old_C_Album_Helm
 IG_MILKY_SGB,12691,10		// Old_C_Album_Armor
@@ -1450,29 +1450,31 @@ IG_MILKY_SGB,12695,10		// Old_C_Album_Acc
 IG_MILKY_SGB,12698,10		// Old_C_Album_Weapon
 IG_MILKY_SGB,12693,10		// Old_C_Album_Garment
 IG_MILKY_SGB,8500,10			// Milky_Platinum_Card
-IG_MILKY_SGB,975,10			// Scarlet Dyestuff
-IG_MILKY_SGB,976,10			// Lemon Dyestuff
-IG_MILKY_SGB,978,10			// Cobaltblue Dyestuff
-IG_MILKY_SGB,979,10			// Darkgreen Dyestuff
-IG_MILKY_SGB,980,10			// Orange Dyestuff
-IG_MILKY_SGB,981,10			// Violet Dyestuff
-IG_MILKY_SGB,982,10			// White Dyestuff
-IG_MILKY_SGB,983,10			// Black Dyestuff
-IG_MILKY_SGB,7289,10		// Peridot
-IG_MILKY_SGB,7290,10		// Phlogopite
-IG_MILKY_SGB,7291,10		// Agate
-IG_MILKY_SGB,7292,10		// Muscovite
-IG_MILKY_SGB,7293,10		// Rose Quartz
-IG_MILKY_SGB,7294,10		// Turquoise
-IG_MILKY_SGB,7295,10		// Citrin
-IG_MILKY_SGB,7296,10		// Pyroxene
-IG_MILKY_SGB,7297,10		// Biotite
-IG_MILKY_SGB,12018,10		// Firecracker
+IG_MILKY_SGB,975,15			// Scarlet Dyestuff
+IG_MILKY_SGB,976,15			// Lemon Dyestuff
+IG_MILKY_SGB,978,15			// Cobaltblue Dyestuff
+IG_MILKY_SGB,979,15			// Darkgreen Dyestuff
+IG_MILKY_SGB,980,15			// Orange Dyestuff
+IG_MILKY_SGB,981,15			// Violet Dyestuff
+IG_MILKY_SGB,982,15			// White Dyestuff
+IG_MILKY_SGB,983,15			// Black Dyestuff
+IG_MILKY_SGB,7289,15		// Peridot
+IG_MILKY_SGB,7290,15		// Phlogopite
+IG_MILKY_SGB,7291,15		// Agate
+IG_MILKY_SGB,7292,15		// Muscovite
+IG_MILKY_SGB,7293,15		// Rose Quartz
+IG_MILKY_SGB,7294,15		// Turquoise
+IG_MILKY_SGB,7295,15		// Citrin
+IG_MILKY_SGB,7296,15		// Pyroxene
+IG_MILKY_SGB,7297,15		// Biotite
+IG_MILKY_SGB,12018,15		// Firecracker
 IG_MILKY_SGB,6380,10		// Mora_Coin
 IG_MILKY_SGB,13989,10		// Acidbomb_10_Box
 IG_MILKY_SGB,14004,10		// Poison_Bottle_10_Box
-IG_MILKY_SGB,519,10			// Milk
-IG_MILKY_SGB,732,10			// 3Carat Diamond
-IG_MILKY_SGB,2610,10		// Gold Ring
-IG_MILKY_SGB,2611,10		// Silver Ring
-IG_MILKY_SGB,2613,10		// Diamond Ring
+IG_MILKY_SGB,519,15			// Milk
+IG_MILKY_SGB,732,15			// 3Carat Diamond
+IG_MILKY_SGB,2610,15		// Gold Ring
+IG_MILKY_SGB,2611,15		// Silver Ring
+IG_MILKY_SGB,2613,15		// Diamond Ring
+IG_MILKY_SGB,670,15			// Gold_Coin_Moneybag
+IG_MILKY_SGB,969,15			// Gold

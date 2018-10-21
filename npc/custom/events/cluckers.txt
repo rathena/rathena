@@ -7,8 +7,8 @@
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
-//= Click the chicken and try retrieve the item at a low 
-//= chance. If you fail he will nuke, freeze, stone, 
+//= Click the chicken and try retrieve the item at a low
+//= chance. If you fail he will nuke, freeze, stone,
 //= stun, or make you fall asleep.
 //= The prize is configurable and triggered by the NPC.
 //===== Additional Comments: =================================
@@ -29,16 +29,16 @@ prontera,156,219,4	script	Cluckers	800,{
 			case 0: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 			case 1: npctalk "Cluckers : Cluuuuuck!~"; break;
 			case 2: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
-			case 3: sc_start SC_Freeze,10000,0; break;
+			case 3: sc_start SC_Freeze,2500,0; break;
 			case 4: npctalk "Cluckers : CLUUUUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
-			case 5: sc_start SC_Sleep,10000,0; break;
-			case 6: sc_start SC_Stone,10000,0; emotion ET_KIK; break;
+			case 5: sc_start SC_Sleep,2500,0; break;
+			case 6: sc_start SC_Stone,2500,0; emotion ET_KIK; break;
 			case 7: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 			case 8: npctalk "Cluckers : Cluck! CLUUUCK!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
-			case 9: sc_start SC_Stun,10000,0; break;
-			case 10: sc_start SC_Sleep,10000,0; emotion ET_KIK; break;
+			case 9: sc_start SC_Stun,2500,0; break;
+			case 10: sc_start SC_Sleep,2500,0; emotion ET_KIK; break;
 			case 11: npctalk "Cluckers : Cluck! Cluck!"; break;
-			case 12: sc_start SC_Stun,10000,0; break;
+			case 12: sc_start SC_Stun,2500,0; break;
 			case 13: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
 			default:
 				if (rand(50) < 4) {
@@ -109,9 +109,22 @@ OnTimer30000:
 	end;
 OnTimer40000:
 	announce "GO! Click the chicken to get the prize!",bc_blue;
-	stopnpctimer;
-	if (!$cluck_item_id) set $cluck_item_id,512;
+	announce "You have 4 minutes and 20 seconds!", bc_blue;
+	if (!$cluck_item_id) set $cluck_item_id,8501;
 	if (!$cluck_item_amount) set $cluck_item_amount,1;
 	set .startcluck,1;
+	end;
+
+OnTimer300000:
+	stopnpctimer;
+	set .startcluck,0;
+	if(.startcluck == 1)
+		announce "Time is out! I guess no one manage to get the present from me!", bc_blue;
+	end;
+
+OnMinute01:
+OnMinute31:
+	announce "[Cluck! Cluck! Boom!] is about to start in Prontera!",bc_blue;
+	initnpctimer;
 	end;
 }
