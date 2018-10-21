@@ -1,0 +1,9 @@
+
+-	script	pvp_announce	-1,{
+OnPCLoadMapEvent:
+	if(strcharinfo(3) == "pvp_y_1-2")
+		// mapannounce "pvp_y_1-2", "[" + strcharinfo(0) + "] has entered the map. ", bc_map|bc_pc;
+		announce "[" + strcharinfo(0) + "] has entered the PvP Room. KILL !! ", bc_all|bc_pc;
+	end;
+}
+pvp_y_1-2	mapflag	loadevent

@@ -21,16 +21,19 @@
 
 	if (@HD > gettimetick(2))
 		end;
-	if (BaseLevel == 175){
-		if (.@Price) {
-			message strcharinfo(0), "Healing costs " + callfunc("F_InsertComma",.@Price) + " Zeny.";
-			if (Zeny < .@Price)
-				end;
-			if (select("^0055FFHeal^000000:^777777Cancel^000000") == 2)
-				end;
-			Zeny -= .@Price;
+	if (BaseLevel == 175 && .@Price > 0){
+		if (Zeny < .@Price)
+		{
+			specialeffect2 EF_HEAL2;
+			percentheal 100,100;
+			message strcharinfo(0), "[Healer] Not enough zeny to Buff (Healing is free): " + callfunc("F_InsertComma",.@Price) + " Zeny.";
+			end;
 		}
+		message strcharinfo(0), "[Healer] Lv175 - Buffing Charges " + callfunc("F_InsertComma",.@Price) + " Zeny.";
+		Zeny -= .@Price;
 	}
+	else
+		message strcharinfo(0), "[Healer] Heal and Buffs are free for non-full level adventurers.";
 	specialeffect2 EF_HEAL2;
 	percentheal 100,100;
 	if (.@Buffs) {
