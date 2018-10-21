@@ -177,13 +177,13 @@ OnInstanceInit:
 	disablenpc instance_npcname("Soldier#dk2");
 	disablenpc instance_npcname("Soldier#dk3");
 	disablenpc instance_npcname("Lurid Royal Guard#dk3");
-	disablenpc instance_npcname("Tartanos Magic Trace#dk1");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk1");
 	disablenpc instance_npcname("#gp_control_3");
 
 	// 4th floor
 	disablenpc instance_npcname("#gp_control_4");
 	disablenpc instance_npcname("#gp_control_5");
-	disablenpc instance_npcname("Tartanos Magic Trace#dk2");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk2");
 	disablenpc instance_npcname("Visiting Prince#dk");
 	disablenpc instance_npcname("Lurid Royal Guard#dk4");
 	disablenpc instance_npcname("King's Corpse#dk");
@@ -200,7 +200,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("Lurid Royal Guard#dk5");
 	disablenpc instance_npcname("King#dk11");
 	disablenpc instance_npcname("Sakray#dk");
-	disablenpc instance_npcname("Tartanos Magic Trace#dk3");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk3");
 	disablenpc instance_npcname("#tb");
 	disablenpc instance_npcname("#sv");
 	disablenpc instance_npcname("#tv");
@@ -386,14 +386,14 @@ OnMyMobDead3:
 	disablenpc instance_npcname("Soldier#dk2");
 	disablenpc instance_npcname("Soldier#dk3");
 	disablenpc instance_npcname("Lurid Royal Guard#dk2");
-	donpcevent instance_npcname("Tartanos Magic Trace#dk1") + "::OnStart";
+	donpcevent instance_npcname("Magic Sword Tartanos#dk1") + "::OnStart";
 	end;
 }
 
-1@spa,35,56,5	script	Tartanos Magic Trace#dk1	4_TRACE,{
+1@spa,35,56,5	script	Magic Sword Tartanos#dk1	4_TRACE,{
 	end;
 OnStart:
-	enablenpc instance_npcname("Tartanos Magic Trace#dk1");
+	enablenpc instance_npcname("Magic Sword Tartanos#dk1");
 	enablenpc instance_npcname("Lurid Royal Guard#dk3");
 	initnpctimer;
 	end;
@@ -419,11 +419,11 @@ OnTimer28000:
 	npctalk "Lurid Royal Guard: I..I...", instance_npcname("Lurid Royal Guard#dk3");
 	end;
 OnTimer33000:
-	npctalk "Tartanos Magic Trace: Kukuku... What do you want boy?";
+	npctalk "Magic Sword Tartanos: Kukuku... What do you want boy?";
 	end;
 OnTimer34000:
 	stopnpctimer;
-	disablenpc instance_npcname("Tartanos Magic Trace#dk1");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk1");
 	disablenpc instance_npcname("Lurid Royal Guard#dk3");
 	donpcevent instance_npcname("#gp_control_3") + "::OnStart";
 	end;
@@ -573,7 +573,7 @@ OnSpawn1:
 	end;
 OnMyMobDead2:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_4") + "::OnMyMobDead2") < 1) {
-		enablenpc instance_npcname("Tartanos Magic Trace#dk2");
+		enablenpc instance_npcname("Magic Sword Tartanos#dk2");
 		enablenpc instance_npcname("Visiting Prince#dk");
 		enablenpc instance_npcname("Lurid Royal Guard#dk4");
 		enablenpc instance_npcname("King's Corpse#dk");
@@ -598,13 +598,13 @@ OnMyMobDead2:
 	npctalk "Visiting Prince: You are too late... but you brought what I was looking for. Thanks for your help.", .@prince$;
 	next;
 	mes "[Visiting Prince]";
-	mes "Cursed Tartanos Magic Trace! Are you ready to have a new master?";
-	npctalk "Visiting Prince: Cursed Tartanos Magic Trace! Are you ready to have a new master?", .@prince$;
+	mes "Cursed Magic Sword Tartanos! Are you ready to have a new master?";
+	npctalk "Visiting Prince: Cursed Magic Sword Tartanos! Are you ready to have a new master?", .@prince$;
 	next;
 	cutin "tartanos.bmp",3;
-	mes "[Tartanos Magic Trace]";
+	mes "[Magic Sword Tartanos]";
 	mes "How dare you!";
-	npctalk "Tartanos Magic Trace: How dare you!", instance_npcname("Tartanos Magic Trace#dk2");
+	npctalk "Magic Sword Tartanos: How dare you!", instance_npcname("Magic Sword Tartanos#dk2");
 	next;
 	mes "[Visiting Prince]";
 	mes "aah, aah !!!";
@@ -614,7 +614,7 @@ OnMyMobDead2:
 	cutin "",255;
 	end;
 }
-1@spa,201,214,1	duplicate(Lurid Royal Guard#dk)	Tartanos Magic Trace#dk2	CLEAR_NPC
+1@spa,201,214,1	duplicate(Lurid Royal Guard#dk)	Magic Sword Tartanos#dk2	CLEAR_NPC
 1@spa,197,218,5	duplicate(Lurid Royal Guard#dk)	Visiting Prince#dk	4_M_KNIGHT_SILVER
 1@spa,194,214,5	duplicate(Lurid Royal Guard#dk)	King's Corpse#dk	4_M_TRISTAN
 1@spa,211,194,3	duplicate(Lurid Royal Guard#dk)	Captain's Corpse#dk	4_M_LIEMAN
@@ -628,7 +628,7 @@ OnMyMobDead2:
 	end;
 OnStart:
 	enablenpc instance_npcname("#gp_control_5");
-	disablenpc instance_npcname("Tartanos Magic Trace#dk2");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk2");
 	disablenpc instance_npcname("Visiting Prince#dk");
 	disablenpc instance_npcname("Lurid Royal Guard#dk4");
 	disablenpc instance_npcname("King's Corpse#dk");
@@ -755,11 +755,11 @@ OnMyMobDead3:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead3") < 1) {
 		sleep 2000;
 		monster 'map_spa$,200,45, "Torturous Redeemer" ,2961,1, instance_npcname("#gp_control_6") + "::OnMyMobDead4";	// E_TORTUROUS_REDEEMER
-		unittalk $@mobid[0], "Tartanos Magic Trace! I will destroy you if I can't have you... Oh no! How could this be?";
+		unittalk $@mobid[0], "Magic Sword Tartanos! I will destroy you if I can't have you... Oh no! How could this be?";
 		sleep 5000;
 		killmonster 'map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead4";
 		enablenpc instance_npcname("Sakray#dk");
-		enablenpc instance_npcname("Tartanos Magic Trace#dk3");
+		enablenpc instance_npcname("Magic Sword Tartanos#dk3");
 		disablenpc instance_npcname("#gp_control_6");
 	}
 	end;
@@ -769,12 +769,12 @@ OnMyMobDead4:
 
 1@spa,196,44,5	script	Sakray#dk	4_M_SAKRAY,{
 	mes "[Lurid Royal Guard]";
-	mes "Are you satisfied..? Tartanos Magic Trace?";
-	npctalk "Lurid Royal Guard: Are you satisfied..? Tartanos Magic Trace?";
+	mes "Are you satisfied..? Magic Sword Tartanos?";
+	npctalk "Lurid Royal Guard: Are you satisfied..? Magic Sword Tartanos?";
 	next;
-	mes "[Tartanos Magic Trace]";
+	mes "[Magic Sword Tartanos]";
 	mes "I need more blood..Sakray, offer me his blood.";
-	npctalk "Tartanos Magic Trace: I need more blood..Sakray, offer me his blood.", instance_npcname("Tartanos Magic Trace#dk3");
+	npctalk "Magic Sword Tartanos: I need more blood..Sakray, offer me his blood.", instance_npcname("Magic Sword Tartanos#dk3");
 	next;
 	mes "[Sakray]";
 	mes "Okay, that is good. A traveller. Did you see?";
@@ -801,9 +801,9 @@ OnMyMobDead4:
 	mes "I am quite satisfied with the result.";
 	npctalk "Sakray: I am quite satisfied with the result.";
 	next;
-	mes "[Tartanos Magic Trace]";
+	mes "[Magic Sword Tartanos]";
 	mes "Sakray, offer the blood to me now!";
-	npctalk "Tartanos Magic Trace: Sakray, offer the blood to me now!", instance_npcname("Tartanos Magic Trace#dk3");
+	npctalk "Magic Sword Tartanos: Sakray, offer the blood to me now!", instance_npcname("Magic Sword Tartanos#dk3");
 	next;
 	mes "[Sakray]";
 	mes "If you were me, what would you do?";
@@ -838,7 +838,7 @@ OnMyMobDead4:
 	end;
 OnStart:
 	disablenpc instance_npcname("Sakray#dk");
-	disablenpc instance_npcname("Tartanos Magic Trace#dk3");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk3");
 	enablenpc instance_npcname("#tb");
 	enablenpc instance_npcname("#sv");
 	enablenpc instance_npcname("#tv");
@@ -851,10 +851,10 @@ OnTimer8000:
 	npctalk "Voice of Sakray : I will always stand by you. Please rest beside me.", instance_npcname("#sv");
 	end;
 OnTimer13000:
-	npctalk "Tartanos Magic Trace: Sakray, do not forget the covenant of blood between us.", instance_npcname("#tv");
+	npctalk "Magic Sword Tartanos: Sakray, do not forget the covenant of blood between us.", instance_npcname("#tv");
 	end;
 OnTimer17000:
-	npctalk "Tartanos Magic Trace: Your soul is mine until you find the blood that satisfies me...", instance_npcname("#tv");
+	npctalk "Magic Sword Tartanos: Your soul is mine until you find the blood that satisfies me...", instance_npcname("#tv");
 	end;
 OnTimer22000:
 	npctalk "Voice of Sakray : Rest in the shadow with me.", instance_npcname("#sv");
@@ -872,7 +872,7 @@ OnTimer28500:
 	end;
 }
 
-1@spa,195,41,1	duplicate(Lurid Royal Guard#dk)	Tartanos Magic Trace#dk3	CLEAR_NPC
+1@spa,195,41,1	duplicate(Lurid Royal Guard#dk)	Magic Sword Tartanos#dk3	CLEAR_NPC
 1@spa,198,43,1	duplicate(Lurid Royal Guard#dk)	#sv	CLEAR_NPC
 1@spa,196,41,1	duplicate(Lurid Royal Guard#dk)	#tv	CLEAR_NPC
 
