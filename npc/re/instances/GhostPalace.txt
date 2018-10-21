@@ -5,6 +5,7 @@
 //= Ghost Palace Instance
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Fixed NPC names. [zackdreaver]
 //============================================================
 
 dali02,43,129,5	script	Unpleasant Royal Guard#	4_M_SAKRAYROYAL,{
