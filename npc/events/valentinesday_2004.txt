@@ -1,14 +1,8 @@
 //===== rAthena Script =======================================
-//= Valentine Event Script
-//===== By: ==================================================
-//= Muad_Dib (Prometheus Project)
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
+//= 2004 Valentine's Day Event
 //===== Description: =========================================
-//= Valentine's Day Event
-//===== Additional Comments: =================================
+//= 2004 Valentine's Day Event
+//===== Changelogs: ==========================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
 //= 08/28/05 : Ver. 1.01 Added a missing close; [Muad_Dib]
 //= Converted to rAthena format by Dr.Evil

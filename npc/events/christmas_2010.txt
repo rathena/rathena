@@ -1,0 +1,891 @@
+//===== rAthena Script =======================================
+//= Christmas Event (2010)
+//===== Description: =========================================
+//= [Official Conversion]
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Kisuka]
+//============================================================
+
+// - Strange Box
+// -----------------------------------------------------------
+prontera,152,193,3	script	Strange Box#prontera	4_MYSTCASE,{
+	if (BaseLevel > 19) {
+		if (evt_2010_xmas < 250) {
+			emotion ET_QUESTION, playerattached();
+			mes "Strange Box doesn't match well with the ambiance of ^1E90FFChristmas^000000.";
+			mes "Although you can't see what's inside, it doesn't seem to be locked.";
+			next;
+			if(select("[Open the box]", "[Pass it by]") == 2) {
+				close;
+			}
+			.@int_temp = rand(1,30);
+			if (.@int_temp > 0 && .@int_temp < 11) {
+				pushpc 4,3;
+				specialeffect2 EF_PROVOKE;
+				mes "Surprisingly, as you try to open the box, the box bounces.";
+				mes "^FF0000Anxiety^000000~ ^0000FFCuriosity^000000~";
+				mes "Want to continue?? Want to stop?";
+				close;
+			} else if (.@int_temp > 10 && .@int_temp < 16) {
+				emotion ET_SURPRISE, playerattached();
+				mes "["+strcharinfo(0)+"]";
+				mes "What is this?";
+				next;
+				mes "The huge box is empty.";
+				mes "A sheet of paper had been put inside.";
+				mes "You pick up the paper.";
+				next;
+				evt_2010_xmas = 250;
+				getitem 6446, 1; // Green_Paper
+				specialeffect2 EF_ENCHANTPOISON;
+				sc_start SC_POISON,60000,0;
+				mes "When you pick up the paper, you're overwhelmed by a frightening energy.";
+				mes "It seems like it's too late though.";
+				mes "^800080You got poisoned^000000.";
+				close;
+			} else if (.@int_temp > 15 && .@int_temp < 26) {
+				pushpc 4,3;
+				specialeffect2 EF_PROVOKE;
+				mes "Surprisingly, as you try to open the box, the box bounces.";
+				mes "^FF0000Anxiety^000000~ ^0000FFCuriosity^000000~ Want to continue?? Want to stop?";
+				close;
+			} else {
+				emotion ET_SURPRISE, playerattached();
+				mes "["+strcharinfo(0)+"]";
+				mes "What is this?";
+				next;
+				mes "The huge box is empty.";
+				mes "A sheet of paper had been put inside.";
+				mes "You pick up the paper.";
+				next;
+				evt_2010_xmas = 250;
+				getitem 6446, 1; // Green_Paper
+				specialeffect2 EF_ENCHANTPOISON;
+				sc_start SC_POISON,60000,0;
+				mes "When you pick up the paper, you're overwhelmed by a frightening energy.";
+				mes "It seems like it's too late though.";
+				mes "^800080You got poisoned^000000.";
+				close;
+			}
+		} else {
+			mes "The box is empty.";
+			close;
+		}
+	} else {
+		mes "It seems risky to touch it.";
+		close;
+	}
+}
+
+// - Red Coat Girl
+// -----------------------------------------------------------
+prontera,142,183,3	script	Red Coat Girl#prontera	4_F_NFLOSTGIRL,3,3,{
+	if (evt_2010_xmas == 250) {
+		mes "[Red Coat Girl]";
+		mes "What happened?";
+		mes "This is.... a poison.";
+		mes "This status will last a little time.";
+		next;
+		mes "[Red Coat Girl]";
+		mes "I know a person who experienced the same matter as you, adventurer, and.. I also know who is likely to do such a thing.";
+		next;
+		mes "[Red Coat Girl]";
+		mes "The place where she is in... No matter how long you wait, it is so gloomy there that ^1E90FFChristmas^000000 never comes.";
+		mes "She is living in '^FF0000Witch's Castle^000000' all by herself.";
+		next;
+		mes "[Red Coat Girl]";
+		mes "If you want to treat this poison, go to '^FF0000Witch's Castle^000000' and see her.";
+		mes ".............";
+		next;
+		mes "[Red Coat Girl]";
+		mes "Actually.. I want you to save people there.";
+		mes "If you accept, I will help you to go to '^FF0000Witch's Castle^000000'.";
+		next;
+		if (select("[Help]", "[Don't help]") == 2) {
+			mes "[Red Coat Girl]";
+			mes "Then there's nothing I can do.";
+			mes "If you want to get cured.. you will need an antidote.";
+			mes "Sometimes, it heals naturally as time passes by.";
+			mes "I wish you a fast recovery..";
+			close;
+		}
+		mes "[Red Coat Girl]";
+		mes "'^FF0000Witch's Castle^000000'is dangerous, therefore, you will have to be careful.";
+		mes "Ok, let's go to '^FF0000Witch's Castle^000000' right now.";
+		next;
+		evt_2010_xmas = 251;
+		specialeffect2 EF_PORTAL;
+		warp "niflheim",253,191;
+		end;
+	} else if (evt_2010_xmas == 254) {
+		mes "[Witch]";
+		mes "^1E90FFWhite Christmas^000000.. I don't know what it is.";
+		mes "I've never seen snow, not even once..";
+		next;
+		mes "[Witch]";
+		mes "I kind of want to see snow.";
+		mes "But, a place where it always snows, I don't know any place like that..";
+		close;
+	} else if (evt_2010_xmas < 250) {
+		mes "[Red Coat Girl]";
+		mes "Wow.. ^1E90FFChristmas^000000.";
+		mes "This huge tree is so cool.";
+		mes "Full of gifts..... So...... wonderful.";
+		emotion ET_HNG;
+		close;
+	} else if (evt_2010_xmas > 250 && evt_2010_xmas < 254) {
+		mes "[Red Coat Girl]";
+		mes "If you want to move back to'^FF0000Witch's Castle^000000', you need a Red Frame.";
+		next;
+		if (select("[Move]", "[Stay]") == 2) {
+			mes "[Red Coat Girl]";
+			mes "There is a curse roaming in ^FF0000Witch's Castle^000000'.";
+			mes "Please help us...";
+			close;
+		}
+		if (countitem(734) == 0) {
+			mes "[Red Coat Girl]";
+			mes "Dear adventurer, if you don't have a Red Frame it is not possible to move.";
+			mes "Get a Red Frame first and then come back, please.";
+			close;
+		} else {
+			mes "[Red Coat Girl]";
+			mes "Ok, let me guide you to'^FF0000Witch's Castle^000000' right away ....stay safe.";
+			next;
+			delitem 734, 1; // Red_Frame
+			specialeffect2 EF_PORTAL;
+			warp "niflheim", 253, 191;
+			close;
+		}
+	} else if (evt_2010_xmas == 255) {
+		mes "[Witch]";
+		mes "^1E90FFChristmas^000000.. ^1E90FFWhite Christmas^000000..";
+		mes "It was the first time for me.";
+		mes ".............";
+		mes "Thank you. I will not forget.";
+		specialeffect EF_STORMGUST;
+		close;
+	} else {
+		end;
+	}
+
+	OnTouch:
+		if (evt_2010_xmas == 250) {
+			mes "[Red Coat Girl]";
+			mes "Dear adventurer, please come to me.";
+			emotion ET_THINK;
+			close;
+		} else {
+			end;
+		}
+}
+
+// - Message
+// -----------------------------------------------------------
+niflheim,253,191,3	script	#message	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2010_xmas == 251) {
+			mes "[Red Coat Girl]";
+			mes "The Witch is probably at the 2nd floor.";
+			close;
+		} else {
+			end;
+		}
+}
+
+// - Trap
+// -----------------------------------------------------------
+nif_in,59,167,3	script	#trap01	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2010_xmas == 251) {
+			specialeffect2 EF_BLASTMINEBOMB;
+			percentheal -5, 0;
+		}
+		end;
+}
+
+// - Trap
+// -----------------------------------------------------------
+nif_in,43,148,3	script	#trap02	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2010_xmas == 251) {
+			areamonster "nif_in",42,147,44,149,"Witch's Zombie",1015,1;
+		}
+		end;
+}
+
+// - Trap
+// -----------------------------------------------------------
+nif_in,43,155,3	script	#trap03	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2010_xmas == 251) {
+			specialeffect2 EF_PORTAL;
+			warp "nif_in", 21, 157;
+		}
+		end;
+}
+
+// - Trap
+// -----------------------------------------------------------
+nif_in,22,163,3	script	#trap04	-1,2,2,{
+	end;
+
+OnTouch:
+	if (evt_2010_xmas == 251) {
+		specialeffect2 EF_FROSTDIVER2;
+		percentheal -5, 0;
+	}
+	end;
+}
+
+// - Trap
+// -----------------------------------------------------------
+nif_in,35,162,3	script	#trap05	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2010_xmas == 251) {
+			specialeffect2 EF_EARTHSPIKE;
+			percentheal -5, 0;
+		}
+		end;
+}
+
+// - Trap
+// -----------------------------------------------------------
+nif_in,47,180,3	script	#trap06	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2010_xmas == 251) {
+			specialeffect2 EF_PORTAL;
+			warp "nif_in", 21, 157;
+		}
+		end;
+}
+
+// - Witch
+// -----------------------------------------------------------
+nif_in,113,176,3	script	Susan#fake01	1_M_SIZ,{
+	if (evt_2010_xmas < 253) {
+		mes "[Susan]";
+		emotion ET_SURPRISE;
+		mes "Who are you?";
+		mes "This is a place where not that many people come.";
+		mes "How did you end up here?";
+		mes "Get out of here!";
+		next;
+		mes "[Susan]";
+		mes "..............";
+		mes "I am the master of this castle.";
+		mes "I don't know how you got here";
+		mes "but......";
+		mes "You'd better leave right now.";
+		close;
+	} else {
+		mes "[Susan]";
+		emotion ET_CRY;
+		mes "Have you been surprised?";
+		mes "I couldn't do anything else than warning..";
+		next;
+		mes "[Susan]";
+		mes "The Witch was so terrifying I had no choice but to obey.";
+		close;
+	}
+}
+
+// - Dean
+// -----------------------------------------------------------
+nif_in,119,176,3	script	Dean#fake02	4_F_06,{
+	if (evt_2010_xmas < 253) {
+		mes "[Dean]";
+		mes "Ah, cold.. so cold.";
+		mes "What are you?";
+		next;
+		mes "[Dean]";
+		mes "This is my house.";
+		mes "What are you doing here without my permission?";
+		mes "Don't you know where you are at?";
+		emotion ET_STARE;
+		next;
+		mes "[Dean]";
+		mes "This is ^FF0000Witch's Castle^000000'. If you knew this, you will have to pay for what you've done.";
+		mes "Don't stay around here, I am not gonna be responsible for what will happen from now on.";
+		close;
+	} else {
+		mes "[Dean]";
+		mes "The Witch was scary at first, and I felt some kind of resentment.";
+		mes "But, who wouldn't feel lonely staying alone in this kind of environment?";
+		close;
+	}
+}
+
+// - Rosa
+// -----------------------------------------------------------
+nif_in,117,176,3	script	Rosa#fake03	4_F_KID3,{
+	if (evt_2010_xmas < 253) {
+		mes "[Rosa]";
+		mes "Hello? I have never seen you before!";
+		mes "I am a witch and this is my house!";
+		mes "Have you come to play with me?";
+		mes "Or have you to bother me?";
+		emotion ET_SMILE;
+		next;
+		mes "[Rosa]";
+		mes "Hehe, are you surprised?";
+		mes "Don't make a face expression like that.";
+		mes "Did I hurt you?";
+		mes "I was just joking around. Are you a coward? ";
+		mes "Ah, interesting.";
+		close;
+	} else {
+		mes "[Rosa]";
+		mes "I am living here pleasantly.";
+		mes "The Witch is not that scary.";
+		mes "But, what she has done";
+		mes "has not always been right.";
+		next;
+		mes "[Rosa]";
+		mes "However,";
+		mes "I hope everyone is having a nice time.";
+		mes "Happiness for everyone!";
+		mes "It's ^1E90FFChristmas^000000!";
+		emotion ET_BLABLA;
+		close;
+	}
+}
+
+// - Andrea
+// -----------------------------------------------------------
+nif_in,115,176,3	script	Andrea#fake04	4W_KID,{
+	if (evt_2010_xmas < 253) {
+		mes "[Andrea]";
+		mes "Hm. Wait. Good. Go.";
+		mes "Do you know where.. this is??";
+		mes "Ah, you reckless. Reckless!";
+		mes "Trespass?";
+		next;
+		mes "[Andrea]";
+		mes "um.. you...";
+		mes "lost your fear.";
+		mes "I am......";
+		mes "Right. I am the Witch!";
+		mes "...........";
+		emotion ET_HUM;
+		close;
+	} else {
+		mes "[Andrea]";
+		mes "Ah.. memorizing was very";
+		mes "hard..";
+		mes "I was told to memorize,";
+		mes "just had to..";
+		next;
+		mes "[Andrea]";
+		mes "Witches are outstanding.";
+		mes "How did you find this place?";
+		mes "You must have been teased..";
+		mes "Smarter than I thought? hehe.";
+		emotion ET_BEST;
+		close;
+	}
+}
+
+// - Witch
+// -----------------------------------------------------------
+nif_in,136,176,3	script	Witch#real	4_F_NFLOSTGIRL,3,3,{
+	if (evt_2010_xmas == 253) {
+		if (countitem(6446) != 0) {
+			mes "[Witch]";
+			mes "You've been skillful getting here,";
+			mes "although I guided you.";
+			mes "Hmm, this sentence sounds a little stupid, doesn't it?";
+			next;
+			mes "[Witch]";
+			mes "This kind of venom,";
+			mes "as time passes by, it disappears.";
+			mes "I wanted it to be hard to resist,";
+			mes "or else you could have found a remedy.";
+			mes "Everything goes as expected.";
+			next;
+			mes "[Witch]";
+			mes "Fancy light decoration,";
+			mes "a huge tree and carol song..";
+			mes "Your place is so glittering,";
+			mes "it's pretty much different in here, isn't it?";
+			next;
+			mes "[Witch]";
+			mes "Yeah, this place is always dark,";
+			mes "scary and gloomy.";
+			mes "^1E90FFChristmas^000000 carol doesn't reach";
+			mes "this place.";
+			next;
+			mes "[Witch]";
+			mes "But no one can tell us";
+			mes "not to enjoy ^1E90FFChristmas^000000!";
+			mes "It's not only YOUR ^1E90FFChristmas^000000,";
+			mes "definately not!";
+			next;
+			mes "[Witch]";
+			emotion ET_THINK;
+			mes "Well, it's alright...";
+			mes "Sorry for making you poisoned, I was playing around.";
+			mes "I've just done that because I was jealous.";
+			next;
+			mes "[Witch]";
+			mes "^1E90FFWhite Christmas^000000..";
+			mes "I don't know what it is.";
+			mes "I've never seen this,";
+			mes "not even once..";
+			mes "I only want to see it once. That's all.";
+			next;
+			specialeffect2 EF_WIND;
+			sc_end SC_BLIND;
+			percentheal 100, 100;
+			mes "(The piece of paper I had";
+			mes "started turning red,";
+			mes "as if it was merging with the";
+			mes "Witch's red dress.)";
+			next;
+			delitem 6446, 1; // Green_Paper
+			getitem 6447, 1; // Red_Paper
+			evt_2010_xmas = 254;
+			warp "prontera", 142, 183;
+			disablenpc "Witch#real";
+			close;
+		} else {
+			mes "[Witch]";
+			mes "You left something... didn't you?";
+			close;
+		}
+	} else if (evt_2010_xmas == 254) {
+		mes "[Witch]";
+		mes "^1E90FFWhite Christmas^000000..";
+		mes "I don't know what it is.";
+		mes "I've never seen this,";
+		mes "not even once..";
+		mes "I only want to see it once. That's all.";
+		close;
+	} else if (evt_2010_xmas < 253) {
+		disablenpc "Witch#real";
+	} else {
+		mes "[Witch]";
+		mes "^1E90FFChristmas^000000.. ^1E90FFWhite Christmas^000000..";
+		mes "It was the first time for me.";
+		mes ".............";
+		mes "Thank you. I will not forget.";
+		specialeffect EF_STORMGUST;
+		close;
+	}
+
+OnInit:
+	disablenpc "Witch#real";
+	end;
+
+OnTouch:
+	if (evt_2010_xmas == 253) {
+		enablenpc "Witch#real";
+	}
+	end;
+}
+
+// - Santa Claus
+// -----------------------------------------------------------
+nif_in,122,182,3	script	Santa Claus#nif	4_M_SANTA,{
+	if (evt_2010_xmas == 251) {
+		mes "[Santa Claus]";
+		mes "Santa Claus likes Red.";
+		mes "The Witch likes Red too.";
+		mes "Ok. Should we have a quiz?";
+		mes "Which one is our witch?";
+		next;
+		if (select("[ Choose ]", "[ Stop ]") == 2) {
+			close;
+		}
+		switch(select("[ Susan ]", "[ Dean ]", "[ Rosa ]", "[ Andrea ]", "[ End conversation ]", "^FFFFFF[ None of the above ]^000000")) {
+			case 1:
+			case 2:
+			case 3:
+			case 4:
+				mes "[Santa Claus]";
+				mes "Wrong answer!";
+				emotion ET_X;
+				evt_2010_xmas = 252;
+				close;
+			break;
+			case 5:
+				close;
+			break;
+			case 6:
+				mes "[Santa Claus]";
+				mes "Correct answer!";
+				mes "Congratulation, you will get a chance to meet the Witch!";
+				emotion ET_O;
+				evt_2010_xmas = 253;
+				enablenpc "Witch#real";
+				close;
+		}
+	} else if (evt_2010_xmas < 251) {
+		mes "[Santa Claus]";
+		mes "Santa Claus likes Red";
+		mes "The Witch likes Red too.";
+		mes "We like red clothes.";
+		close;
+	} else if (evt_2010_xmas == 252) {
+		mes "[Santa Claus]";
+		mes "Santa Claus likes Red";
+		mes "The Witch likes Red too.";
+		mes "So what color do you like?";
+		next;
+		while(1) {
+			switch(select("[ Find the Witch again ]", "[ About the quiz ]", "[ End conversation ]")) {
+			case 1:
+				if (Zeny < 10000) {
+					mes "[Santa Claus]";
+					mes "Short, not enough!";
+					mes "Not even close!!";
+					close;
+				} else {
+					switch(select("[ Susan ]", "[ Dean ]", "[ Rosa ]", "[ Andrea ]", "[ End conversation ]", "^FFFFFF[ None of the above ]^000000")) {
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+						mes "[Santa Claus]";
+						mes "Wrong answer!";
+						emotion ET_X;
+						Zeny -= 10000;
+						close;
+					case 5:
+						end;
+					case 6:
+						mes "[Santa Claus]";
+						mes "Correct answer!";
+						mes "Congratulation, you will get a chance to meet the Witch!";
+						emotion ET_O;
+						Zeny -= 10000;
+						evt_2010_xmas = 253;
+						enablenpc "Witch#real";
+						close;
+					}
+				}
+			case 2:
+				mes "[Santa Claus]";
+				mes "Now, you know who our witch is,";
+				mes "right?";
+				mes "Hm.. but you've already used ";
+				mes "your chance.";
+				next;
+				mes "[Santa Claus]";
+				mes "I am just one of the Witch's toy,";
+				mes "I just follow her orders";
+				mes "but....";
+				next;
+				mes "[Santa Claus]";
+				mes "If you give me as much money as the Witch does,";
+				mes "I will offer you another chance.";
+				mes "^70809010000 zeny^000000, that is.";
+				next;
+				mes "[Santa Claus]";
+				mes "If you want to challenge the Witch's quiz again, ";
+				mes "make sure you have ^70809010000 zeny^000000.";
+				close;
+			case 3:
+				break;
+			}
+		}
+	} else if ( evt_2010_xmas == 253) {
+		mes "[Santa Claus]";
+		mes "Go meet the Witch.";
+		mes "..........";
+		mes "What? She's not appearing? ";
+		mes "Oh well, she is very fickle..";
+		mes "Try again.";
+		enablenpc "witch#real";
+		close;
+	} else {
+		mes "[Santa Claus]";
+		mes "White snow.....";
+		mes "^1E90FFWhite Christmas^000000..";
+		mes "I thought the Witch would not like these.";
+		next;
+		mes "[Santa Claus]";
+		mes "Now that I think about it, ";
+		mes "looking at the fact that the Witch made me";
+		mes "tell you she likes ^1E90FFChristmas^000000,";
+		mes "there is no doubt she really likes it, after all!..";
+		close;
+	}
+}
+
+// - Wildfires
+// -----------------------------------------------------------
+nif_in,103,176,3	script	Wildfires#nif	4_NFWISP,{
+	if (evt_2010_xmas < 253) {
+		specialeffect EF_SPHERE;
+		mes "[Wildfires]";
+		mes "I am a wildfire.";
+		mes "Our witch easily feels";
+		mes "cold~";
+		mes "So always~";
+		mes "So always put on warm clothes~";
+		next;
+		mes "[Wildfires]";
+		mes "The Witch made me to";
+		mes "keep people warm~";
+		mes "I am going to keep warming ";
+		mes "the castle for the Witch~";
+		close;
+	} else {
+		mes "[Wildfires]";
+		mes "This ^1E90FFChristmas^000000,";
+		mes "the Witch is going to emit light ";
+		mes "and warm us even more~";
+		close;
+	}
+}
+
+// - Witch's Coffin
+// -----------------------------------------------------------
+nif_in,116,153,3	script	Witch's Coffin#nif	4_NFCOFFIN,{
+	if (evt_2010_xmas < 253) {
+		specialeffect EF_CURSEATTACK;
+		mes "[Witch's Coffin]";
+		mes "I am the coffin where the Witch sleeps in.";
+		mes "Have you come to meet her?";
+		mes "Hm....";
+		mes "Won't be easy..";
+		next;
+		mes "[Witch's Coffin]";
+		mes "Well, I will give you a hint.";
+		mes "As you can notice from me,";
+		mes "she is not as tall as";
+		mes "what you think she really is.";
+		mes "I am talking about her appearance.";
+		close;
+	} else {
+		mes "[Witch's Coffin]";
+		mes "At ^1E90FFChristmas^000000 times,";
+		mes "the Witch has always prayed";
+		mes "before going to bed";
+		mes "so that real White Christmas";
+		mes "comes here..";
+		close;
+	}
+}
+
+// - Witch's Cat
+// -----------------------------------------------------------
+nif_in,116,169,3	script	Witch's Cat#nif	4_CAT,{
+	if (evt_2010_xmas < 253) {
+		specialeffect EF_VALLENTINE;
+		mes "[Witch's Cat]";
+		mes "Where the Witch is?";
+		mes "Is she hard to find?";
+		mes "Sometimes the cat";
+		mes "climbs on top of the Witch's head";
+		mes "to play around.";
+		next;
+		mes "[Witch's Cat]";
+		mes "Cat and Witch's hair color";
+		mes "are alike";
+		mes "and that makes me feel nice~";
+		close;
+	} else {
+		mes "[Witch's Cat]";
+		mes "When ^1E90FFChristmas^000000 comes";
+		mes "bright areas become even more brighter";
+		mes "and dark areas get even more darker.";
+		close;
+	}
+}
+
+// - Snowflakes
+// -----------------------------------------------------------
+xmas,147,134,3	script	Snowflakes#xmas	HIDDEN_NPC,{
+	if (evt_2010_xmas == 254) {
+		if (countitem(6447) != 0) {
+			select("[ Spread the Red Paper ]");
+			specialeffect2 EF_WIND;
+			mes "(White snow is falling";
+			mes "on the paper.";
+			mes "With this green tree and shining decorations,";
+			mes "it's like ^1E90FFChristmas^000000 ";
+			mes "wanted to offer you a present.";
+			mes "You suddenly hear a small voice around you) ";
+			next;
+			specialeffect EF_STORMGUST;
+			mes "[Witch]";
+			mes ".............";
+			mes "This is snow....";
+			mes "....really";
+			mes "beautiful.";
+			next;
+			mes "[Witch]";
+			mes "...........";
+			mes "Thank you. There is an expression";
+			mes "I've always wanted to say..";
+			mes "Can I say it?";
+			next;
+			mes "[Witch]";
+			specialeffect2 EF_MVP;
+			mes "^FF6347Merry Christmas^000000.";
+			delitem 6447, 1; // Red_Paper
+			evt_2010_xmas = 255;
+			makepet 2210; // XMAS_LUNATIC
+			close;
+		} else {
+			mes "It's snowing.";
+			mes "What are you doing here?";
+			mes "Did you lose something?";
+			close;
+		}
+	} else {
+		end;
+	}
+}
+
+// - Old Santa Claus
+// -----------------------------------------------------------
+prontera,170,126,3	script	Old Santa Claus#prontera	4_M_SANTA,{
+	mes "[Old Santa Claus]";
+	mes "^FF6347~ ^FF1493MERRY CHRISTMAS ^FF6347~";
+	next;
+	while (1) {
+		switch(select("[ I'm so happy to see you, Santa! ]", "[ receiving present ]", "[ End conversation ]")) {
+		case 1:
+			mes "[Old Santa Claus]";
+			emotion ET_SMILE;
+			mes "HoHoHo!~ I'm happy to see you too, my dear" +strcharinfo(0)+".";
+			mes "Have you done lots of good things";
+			mes "today? Santa Claus is giving away";
+			mes "presents to good kids!";
+			next;
+			mes "[Old Santa Claus]";
+			mes "Christmas happens only once a year, you know?";
+			mes "That's why I have some gifts waiting!";
+			mes "What kind of gifts?";
+			next;
+			mes "[Old Santa Claus]";
+			mes "If you want to know, you should look for";
+			mes "^2E8B57[Christmas Teddy bear]^000000";
+			next;
+			mes "[Old Santa Claus]";
+			mes "If you bring a diary that";
+			mes "shows how you have done throughout a year";
+			mes "you can exchange it for a gift.";
+			mes "Of course, the more you've written good things in the diary, the better it is,";
+			mes "right?";
+			close;
+		case 2:
+			switch(select("[ Casual Diary ]", "[ Honest Diary ]", "[ Previous menu ]")) {
+			case 1:
+				while (1) {
+					.@int_lottery = rand(1,120);
+					if (countitem(6449) == 0) {
+						mes "[Old Santa Claus]";
+						mes "In order to receive a gift,";
+						mes "you need a diary.";
+						mes "Hunt ^2E8B57[Christmas Teddy bear]^000000";
+						mes "to get it!";
+						close;
+					} else {
+						mes "[Old Santa Claus]";
+						mes "One gift per each diary";
+						mes "can be received.";
+						mes "Do you want to exchange yours?";
+						next;
+						if (select("[ Yes, please. ]", "[ Not yet. ]") == 2) {
+							close;
+						}
+						if (!checkweight(1172, 1)) {
+							mes "[Old Santa Claus]";
+							mes "Your bag seems full and heavy.";
+							mes "Please empty it and revisit.";
+							close;
+						} else {
+							if (.@int_lottery > 0 && .@int_lottery < 41) {
+								delitem 6449, 1; // Casual_Diary
+								getitem 12354, 1; // Buche_De_Noel
+							} else if (.@int_lottery > 40 && .@int_lottery < 81) {
+								delitem 6449, 1; // Casual_Diary
+								getitem 12130, 1; // Cookie_Bag
+							} else {
+								delitem 6449, 1; // Casual_Diary
+								getitem 12130, 1; // Cookie_Bag
+							}
+							specialeffect2 EF_SPELLBREAKER;
+							mes "[Old Santa Claus]";
+							mes "^FF1493Merry Christmas^000000!";
+							close;
+						}
+					}
+				}
+			case 2:
+				while (1) {
+					.@int_lottery = rand(1, 100);
+					if (countitem(6450) == 0) {
+						mes "[Old Santa Claus]";
+						mes "In order to receive a gift,";
+						mes "you need a diary.";
+						mes "Hunt ^2E8B57[Christmas Teddy bear]^000000";
+						mes "to get it!";
+						close;
+					} else {
+						mes "[Old Santa Claus]";
+						mes "One gift per each diary";
+						mes "can be received.";
+						mes "Do you want to exchange yours?";
+						next;
+						if(select("[ Yes, please. ]", "[ Not yet. ]") == 2) {
+							close;
+						}
+						if (!checkweight(1172, 1)) {
+							mes "[Old Santa Claus]";
+							mes "Your bag seems full and heavy.";
+							mes "Please empty it and revisit.";
+							close;
+						} else {
+							if (.@int_lottery > 0 && .@int_lottery < 61) {
+								delitem 6450, 1; // Honest_Diary
+								getitem 11503, 1; // Siege_White_Potion
+							} else if ( .@int_lottery > 60 && .@int_lottery < 96) {
+								delitem 6450, 1; // Honest_Diary
+								getitem 11504, 1; // Siege_Blue_Potion
+							} else if (.@int_lottery > 95 && .@int_lottery < 100) {
+								delitem 6450, 1; // Honest_Diary
+								getitem 607, 1; // Yggdrasilberry
+							} else {
+								delitem 6450, 1; // Honest_Diary
+								getitem 617, 1; // Old_Violet_Box
+							}
+							specialeffect2 EF_SPELLBREAKER;
+							mes "[Old Santa Claus]";
+							mes "^FF1493Merry Christmas^000000!";
+							close;
+						}
+					}
+				}
+			case 3:
+				break;
+			}
+			break;
+		case 3:
+			close;
+		}
+	}
+}
+
+// - Old Santa Claus Clones
+// -----------------------------------------------------------
+payon,215,123,3	duplicate(Old Santa Claus#prontera)	Old Santa Claus#payon	4_M_SANTA
+geffen,170,64,3	duplicate(Old Santa Claus#prontera)	Old Santa Claus#geffen	4_M_SANTA
+moc_ruins,105,121,3	duplicate(Old Santa Claus#prontera)	Old Santa Claus#moc	4_M_SANTA
+yuno,172,187,3	duplicate(Old Santa Claus#prontera)	Old Santa Claus#yuno	4_M_SANTA

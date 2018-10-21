@@ -1,0 +1,2767 @@
+//===== rAthena Script =======================================
+//= Christmas Event (2011)
+//===== Description: =========================================
+//= [Official Conversion]
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Kisuka]
+//============================================================
+
+prontera,149,176,5	script	Quercus#mas	XMAS_SMOKEY_R,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	.@mas = rand(1, 100);
+
+	if (BaseLevel < 30) {
+		mes "[Quercus]";
+		mes "You, seem to weak!!!";
+		mes "What could you possibly do";
+		mes "if you seem more pitiful than us, the poor Raccoon Hooray Team!";
+		mes "I have a request to you.";
+		mes "but before, you need to be as strong as";
+		mes "a Poporing!";
+		close;
+	}
+
+	if (evt_2011_xmas == 0) {
+		mes "[Quercus]";
+		mes "Merry Christmas!";
+		mes "I am 'Quercus', the leader ";
+		mes "of the Raccoon Hooray team,";
+		mes "which consists of homeless raccoons.";
+		next;
+		mes "[Quercus]";
+		mes "Now we are just poor";
+		mes "homeless animal, but soon";
+		mes "we will establish a new kingdom";
+		mes "which will be more powerful than Rune-Midgard Kingdom!!";
+		mes "When the day comes, I will specially consider you";
+		mes "to be our guard. HAHAHA";
+		next;
+		switch(select("Oh! will be my honour.", "Can I help you?", "Merry Christmas!")) {
+		case 1:
+			mes "[Quercus]";
+			mes "would appreciate if you are saying it truly!";
+			next;
+			mes "[Quercus]";
+			mes "As you can see, we are making a SOCK";
+			mes "in order to get a present from Santa Clause.";
+			mes "We want Prontera Church as the present";
+			mes "and will use the Church as our head office.";
+			next;
+			mes "[Quercus]";
+			mes "But those  raccoons...";
+			mes "they just want their own present.";
+			mes "So they have been taking pieces of the cloth for the sock";
+			mes "which doesn't help to complete the sock.";
+			next;
+			mes "[Quercus]";
+			mes "Look!! you see that the bottom part is full of holes.";
+			mes "It complicates the situation too much.";
+			mes "is getting delayed and delayed..";
+			mes "What a shame....Even Santa Clause and Snowman would cry out for this.";
+			next;
+			mes "[Quercus]";
+			mes "So, please help it out.";
+			mes "Go and get ^FF000010 Pieces of Red Fabric^000000.";
+			mes "You will find it easily because now all the fields are filled with";
+			mes "those ^0000FFSocks Hooraying Raccoons^000000 who have it.";
+			mes "Get it from those raccoons.";
+			next;
+			if (select("No Thanks, just Merry Christmas!", "Alright. I'll help you.") == 1) {
+				mes "[Quercus]";
+				mes "What? Are you really denying it?";
+				mes "Oh YOU ARE REALLY REALLY WALKING AWAY?";
+				mes "I am so gonna spoil your Christmas Night.";
+				mes "I will shout out loud in front of your house that night!";
+				close;
+			}
+			mes "[Quercus]";
+			mes "Hurry up!!";
+			mes "Go and get ^FF000010 Pieces of Red Fabric^000000.";
+			mes "from those ^FF0000Socks Hooraying Raccoons^000000!";
+			mes "It is an important thing which";
+			mes "if for our raccoons, but let's keep this as a secret,";
+			mes "that I ordered this.";
+			emotion ET_BEST;
+			setquest 1194;
+			evt_2011_xmas = 1;
+			close;
+		case 2:
+			mes "[Quercus]";
+			mes "Oh~~~ I'm gonna LOVE you.";
+			mes "Please help me!";
+			mes "As you can see, we are making a sock";
+			mes "for getting a gift from Santa Clause.";
+			next;
+			mes "[Quercus]";
+			mes "We want Prontera Church as the gift";
+			mes "because we want it as our place.";
+			mes "But those  raccoons...";
+			mes "they just want their own present.";
+			mes "So they have been taking pieces of the cloth for the sock";
+			mes "which doesn't help to complete the sock.";
+			next;
+			mes "[Quercus]";
+			mes "Look!! you see that the bottom part is full of holes.";
+			mes "It complicates the situation too much.";
+			mes "is getting delayed and delayed..";
+			mes "What a shame....Even Santa Clause and Snowman would cry out for this.";
+			mes "So, please help it out.";
+			mes "Go and get ^FF000010 Pieces of Red Fabric^000000.";
+			next;
+			mes "[Quercus]";
+			mes "You will find it easily because now all the fields are filled with";
+			mes "those ^0000FFSock Hooraying Raccoon^000000 who have it.";
+			mes "Get it from those raccoons.";
+			mes "It is an important thing which";
+			mes "if for our raccoons, but let's keep this as a secret,";
+			mes "that I ordered this.";
+			emotion ET_BEST;
+			setquest 1194;
+			evt_2011_xmas = 1;
+			close;
+		case 3:
+			mes "[Quercus]";
+			mes "Actually, I need your help";
+			mes "Don't go yet and listen to me!";
+			mes "Stop!";
+			emotion ET_CRY;
+			close;
+		}
+	} else if (evt_2011_xmas == 1) {
+		if (countitem(6535) < 10) {
+			mes "[Quercus]";
+			mes "Hurry up!!";
+			mes "Maybe Santa Clause already started delivering the present!";
+			next;
+			mes "[Quercus]";
+			mes "Go and get ^FF000010 Pieces of Red Fabric^000000.";
+			mes "from those ^FF0000Sock Hooraying Raccoon^000000!";
+			mes "It is an important thing which";
+			mes "if for our raccoons, but let's keep this as a secret,";
+			mes "that I ordered this.";
+			emotion ET_BEST;
+			close;
+		} else {
+			mes "[Quercus]";
+			mes "Have you brought ^FF000010 Pieces of Red Cloth^000000?";
+			mes "Hmmmmm, Good. Enough. Now I could contentrate on";
+			mes "sewing the sock.";
+			mes "There are pieced of Raccoon snack scattered on the floor.";
+			mes "And I'm gonna share them with you";
+			mes "because it's Christmas, so do not resist and appreciate that.";
+			next;
+			if (select("What? that's all?", "oh....thanks very much. ToT!") == 1) {
+				mes "[Quercus]";
+				mes "Then what else do you want?!";
+				mes "Try to be grateful with small things, dude!";
+				mes "Why don't you go away";
+				mes "and sew the sock?!";
+			} else {
+				mes "[Quercus]";
+				mes "Hey, calm down. Don't cry out loud here.";
+				mes "Wipe out your tears and get the gift.";
+				mes "and actually there's another job for you";
+				mes "to help Raccoon Hooray team.";
+				mes "so you don't have to ";
+				mes "be moved by that..";
+			}
+			delitem 6535, 10; // Red_Cloth
+			erasequest 1194;
+			evt_2011_xmas = 2;
+			getitem 12354, 5; // Buche_De_Noel
+			getitem 12490, 5; // Vivid_Notation
+			close;
+		}
+	} else if (evt_2011_xmas == 2) {
+		mes "[Quercus]";
+		mes "Actually the sock making job";
+		mes "is getting completed pretty well.";
+		mes "But it's just a plain red colour sock.";
+		mes "I think it's too simple..";
+		next;
+		mes "[Quercus]";
+		mes "Like the revealing eye of Rudolf,";
+		mes "like the big, round belly of Santa Clause,";
+		mes "I need a fancy decoration";
+		mes "to make our Sock be revealing!";
+		mes "Isn't there anyone who can get something?";
+		next;
+		mes "[Quercus]";
+		mes "We Raccoons are so poor!";
+		mes "We are like the les Miserables";
+		mes "which could make every body feel sad for us!";
+		next;
+		if (select("Merry Christmans!", "I can help you.. Let me help you!") == 1) {
+			mes "[Quercus]";
+			mes "What?";
+			mes "I'm gonna tell you how poor I am!";
+			mes "Talk to me again! NOW!!!";
+			emotion ET_BEST;
+			close;
+		}
+		if (.@mas > 0 && .@mas < 51) {
+			mes "[Quercus]";
+			mes "Alright buddy,";
+			mes "It seems like you really really want to help us.";
+			mes "Then you can. Listen then...";
+			mes "It's said that a Raccoon named Castanea has got a lot of ^FF0000Shiny Bead^000000.";
+			next;
+			mes "[Quercus]";
+			mes "I want them so much!";
+			mes "If we decorate the sock with them,";
+			mes "it'll stand out like a Ribbon stuck on a gift box!";
+			mes "Go to Geffen and find Castanea, the Raccoon";
+			mes "who's trying to chat up with other Raccoons~";
+			setquest 1195;
+			evt_2011_xmas = 3;
+			close;
+		} else {
+			mes "[Quercus]";
+			mes "Alright buddy,";
+			mes "It seems like you really really want to help us.";
+			mes "Then you can. Listen then...";
+			mes "It's said that a Raccoon named Pyrus has got a lot of ^FF0000Star Shape Decoration^000000.";
+			next;
+			mes "[Quercus]";
+			mes "I want them so much!";
+			mes "If we decorate the sock with them,";
+			mes "it'll stand out like!";
+			mes "a Ribbon stuck on a gift box.";
+			next;
+			mes "[Quercus]";
+			mes "Go to Geffen and find Pyrus,";
+			mes "the Raccoon who seems desperate";
+			mes "about his love life.";
+			setquest 1201;
+			evt_2011_xmas = 9;
+			close;
+		}
+	} else if (evt_2011_xmas == 3) {
+		if(countitem(6222) < 0) {
+			mes "[Quercus]";
+			mes "Go to Geffen and find Castanea, the Raccoon";
+			mes "who's trying to chat up with other Raccons~";
+			mes "You gotta get Shiny Bead!";
+			close;
+		} else {
+			mes "[Quercus]";
+			mes "What I need is not this cheap bead!!";
+			mes "Go to Castanea in Geffen to get Shiny Bead";
+			mes "Go Go Go!!!";
+			close;
+		}
+	} else if (evt_2011_xmas == 4) {
+		if(countitem(6222) < 0) {
+			mes "[Quercus]";
+			mes "You went to get Shiny Beads,";
+			mes "but you got another errand to run??";
+			mes "Then be hurry to do it";
+			mes "both!";
+			close;
+		} else {
+			mes "[Quercus]";
+			mes "What I need is not this cheap bead!!";
+			mes "Bring me the right one!";
+			close;
+		}
+	} else if (evt_2011_xmas == 5) {
+		if(countitem(6222) < 0) {
+			mes "[Quercus]";
+			mes "Woooooow, the gift is a Striped Sock!";
+			mes "...";
+			mes "Am I jealous of you?";
+			mes "I knew that Castanea is always generous!";
+			close;
+		} else {
+			mes "[Quercus]";
+			mes "What I need is not this cheap bead!!";
+			mes "Bring me the right one!";
+			close;
+		}
+	} else if (evt_2011_xmas == 6) {
+		if(countitem(6222) < 0) {
+			mes "[Quercus]";
+			mes "Again? Another errand?";
+			mes "When will you";
+			mes "bring me Shiny Bead?";
+			mes "Unless I would want even your weapon!!!";
+			close;
+		} else {
+			mes "[Quercus]";
+			mes "What I need is not this cheap bead!!";
+			mes "Bring me the right one!";
+			close;
+		}
+	} else if (evt_2011_xmas == 7) {
+		if(countitem(6222) < 0) {
+			mes "[Quercus]";
+			mes "Is it taking that loooong";
+			mes "because you need to pack it for me?";
+			mes "If there is some Shiny Bead";
+			mes "it must have been rusty already.";
+			next;
+			mes "[Quercus]";
+			mes "I don't mind the pack or rusty beads, but";
+			mes "could you PLEASE send me them ASAP?";
+			emotion ET_FRET;
+			close;
+		} else {
+			mes "[Quercus]";
+			mes "What I need is not this cheap bead!!";
+			mes "Bring me the right one!";
+			close;
+		}
+	} else if (evt_2011_xmas == 8) {
+		if(countitem(6222) > 0) {
+			mes "[Quercus]";
+			mes "Oh! What you are holding in your hand..!";
+			mes "is the ^FF0000Shiny Bead^000000.";
+			mes "I was about to give up,";
+			mes "but you finally got it for me!";
+			mes "SWEET!";
+			next;
+			mes "[Quercus]";
+			mes "It's getting done, almost.";
+			mes "But I will be staying nervous";
+			mes "till I know the result of";
+			mes "Santa Clause.";
+			next;
+			mes "[Quercus]";
+			mes "Go to Lutie, and find the little Santa who lives in Santa's house,";
+			mes "then ask him if we will get Prontera Church";
+			mes "as our present!";
+			next;
+			if (select("What? I don't wanna know that!", "I even want to ask his shoe size!") == 1) {
+				mes "[Quercus]";
+				mes "Well, you seem";
+				mes "not interested at all!";
+				mes "Okay then bugger off!";
+				mes "and Merry Christmas!";
+				close;
+			}
+			mes "[Quercus]";
+			mes "Well, don't dig up anything else";
+			mes "but the present detail!!!";
+			mes "Lutie!!!";
+			mes "that's you gotta go!";
+			delitem 6222, 1; // Shining_Beads
+			erasequest 1200;
+			setquest 1206;
+			evt_2011_xmas = 14;
+			getitem 14550, 5; // Fire_Cracker_Xmas
+			getitem 12130, 3; // Cookie_Bag
+			close;
+		} else {
+			mes "[Quercus]";
+			mes "Hmmm??? Were you not gonna give me";
+			mes "^FF0000Shiny Bead^000000? Where did you drop it?";
+			next;
+			if (select("I don't know!", "Alright, I will meet Castanea again.") == 1) {
+				mes "[Quercus]";
+				mes "Why are you mad?";
+				mes "is this because you are facing Christmas alone?";
+				mes "It's really sad if it's true.";
+				emotion ET_CRY, playerattached();
+				close;
+			}
+			mes "[Quercus]";
+			mes "Will you go back to Castanea and get another Shiny Bead??";
+			mes "Love your will haha";
+			mes "Good, one more time! Right?";
+			erasequest 1200;
+			setquest 1195;
+			evt_2011_xmas = 3;
+			close;
+		}
+	} else if (evt_2011_xmas == 9) {
+		mes "[Quercus]";
+		mes "if we stick a Star Shape Decoration,";
+		mes "on the Sock, it will stand out like";
+		mes "a ribbon of the gift box.";
+		next;
+		mes "[Quercus]";
+		mes "Go to Geffen and find Pyrus,";
+		mes "the Raccoon who seems desperate";
+		mes "about his love life.";
+		mes "and get Star Shape Decoration from him!";
+		close;
+	} else if (evt_2011_xmas > 9 && evt_2011_xmas < 13) {
+		mes "[Quercus]";
+		mes "You went to get Shiny Beads,";
+		mes "but you got another errand to run??";
+		mes "Then be hurry to do it";
+		mes "both!";
+		close;
+	} else if (evt_2011_xmas == 13) {
+		if (countitem(6536) < 0) {
+			mes "[Quercus]";
+			mes "^You went to get FF0000Star Shape Decoration^000000";
+			mes "actually....";
+			mes "Did you lose them?";
+			mes "Do you want to start over??";
+			next;
+			if (select("I don't want to", "I'm gonna give another chance.") == 1) {
+				mes "[Quercus]";
+				mes "Merry christmas!";
+				close;
+			}
+			mes "[Quercus]";
+			mes "Go to Geffen and find Pyrus,";
+			mes "the Raccoon who seems desperate";
+			mes "about his love life.";
+			erasequest 1205;
+			setquest 1201;
+			evt_2011_xmas = 9;
+			close;
+		} else {
+			mes "[Quercus]";
+			mes "What you are carrying now!";
+			mes " is the...^FF0000Star Shape Decoration^000000.";
+			mes "I was about to give up,";
+			mes "but you finally got it for me!";
+			mes "SWEET!";
+			next;
+			mes "[Quercus]";
+			mes "It's getting done, almost.";
+			mes "But I will be staying nervous";
+			mes "till I know the result of";
+			mes "Santa Clause.";
+			next;
+			mes "[Quercus]";
+			mes "Go to Lutie, and find the little Santa who lives in Santa's house,";
+			mes "then ask him if we will get Prontera Church";
+			mes "as our present!";
+			next;
+			if (select("What? I don't wanna know that!", "I even want to ask his shoe size!") == 1) {
+				mes "[Quercus]";
+				mes "Well, you seem";
+				mes "not interested at all!";
+				mes "Okay then bugger off!";
+				mes "and Merry Christmas!";
+				close;
+			}
+			mes "[Quercus]";
+			mes "Well, don't dig up anything else";
+			mes "but the present detail!!!";
+			mes "Lutie!!! that's you gotta go!";
+			delitem 6536, 1; // Star_Decor
+			erasequest 1205;
+			setquest 1206;
+			evt_2011_xmas = 14;
+			getitem 12355, 2; // Xmas_Gift
+			getitem 14550, 5; // Fire_Cracker_Xmas
+			close;
+		}
+	} else if (evt_2011_xmas > 13 && evt_2011_xmas < 16) {
+		mes "[Quercus]";
+		mes "If you go to Lutie,";
+		mes "Either Santa clause or his little Santa,";
+		mes "will let you know something.";
+		mes "then ask him if we will get Prontera Church";
+		mes "as our present!";
+		close;
+	} else if (evt_2011_xmas == 16) {
+		mes "[Quercus]";
+		mes "Did you ask what we will get?";
+		mes "Is it Prontera Church?";
+		mes "....what? just nice sweet potato?";
+		next;
+		mes "[All Other Raccoons]";
+		mes "Better than a house! We can actually eat";
+		next;
+		mes "[All Other Raccoons]";
+		mes "We want something to eat";
+		mes "as a present!";
+		next;
+		mes "[All Other Raccoons]";
+		mes "From the first, we prefered to Sweet potatos";
+		mes "to a house!";
+		next;
+		mes "[Quercus]";
+		mes "......";
+		mes "Al...all right!! I prefer Sweet potatos actually!";
+		mes "Let's get the energy from Sweet potato";
+		mes "and invade Prontera Church on our own!";
+		mes "Hooray~!";
+		next;
+		mes "[All Other Raccoons]";
+		mes "Wow~!";
+		mes "Merry Christmas and,";
+		mes "Happy new Sweet Potato~";
+		mes "We wish you a Merry Sweet Potato";
+		emotion ET_PROFUSELY_SWEAT, playerattached();
+		erasequest 1213;
+		evt_2011_xmas = 17;
+		getitem 12739, 5; // Snow_Flower
+		getitem 18671, 1; // Rudolf_Hairband
+		close;
+	} else if (evt_2011_xmas == 17) {
+		mes "[Quercus]";
+		mes "Let's get the energy from Sweet potato";
+		mes "and invade Prontera Church on our own!";
+		mes "Hooray~!";
+		next;
+		mes "[All Other Raccoons]";
+		mes "Wow~!";
+		mes "Merry Christmas and,";
+		mes "Happy new Sweet Potato~";
+		mes "We wish you a Merry Sweet Potato";
+		close;
+	}
+}
+
+geffen,113,148,3	script	Castanea#mas	XMAS_SMOKEY_B,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	if (evt_2011_xmas < 3 ) {
+		mes "[Castanea]";
+		mes "Oh! my Lovely Juniper!";
+		mes "I was so close to get sick";
+		mes "waiting for you here.";
+		mes "You my little baby!";
+		next;
+		mes "[Juniper]";
+		mes "Ohhhh! my love Castanea!";
+		mes "You are really attractive";
+		mes "whenever you forget the place to meet";
+		mes "and the appointed,";
+		mes "and wait for me in a wrong place nagging!";
+		close;
+	} else if (evt_2011_xmas == 3) {
+		mes "[Castanea]";
+		mes "Oh! my Lovely Juniper!";
+		mes "I was so close to get sick";
+		mes "waiting for you here.";
+		mes "You my little baby!";
+		next;
+		mes "[Juniper]";
+		mes "Ohhhh! my love Castanea!";
+		mes "You are really attractive";
+		mes "whenever you forget the place to meet";
+		mes "and the appointed,";
+		mes "and wait for me in a wrong place nagging!";
+		next;
+		mes "[Castanea]";
+		mes "Don't worry my Darling,";
+		mes "I won't lose my charm.";
+		mes "Tell me what you want ASAP,";
+		mes "because I was talking some potatos";
+		mes "in a store without letting the owner know that.";
+		next;
+		mes "[Juniper]";
+		mes "Well, I just want you to get this gift!";
+		mes "Thinking of you,";
+		mes "I collected 30 Earthworm Peelings!";
+		mes "Show me your gift! PLEASE!!";
+		next;
+		mes "[Castanea]";
+		mes "You are asking for a reward from me";
+		mes "as if you completed a quest.";
+		mes "my little rascal!";
+		mes "HOO HOO HOO...";
+		emotion ET_PROFUSELY_SWEAT;
+		next;
+		mes "[Juniper]";
+		mes "You......did not bring me anything??";
+		mes "Is it??? Raally?";
+		mes "Should I cry out loud in Christmas time?";
+		mes "......?";
+		mes "I'm gonna cry for whole";
+		mes "two days!";
+		emotion ET_ANGER, "Juniper#mas01";
+		next;
+		mes "[Castanea]";
+		mes "Calm down sweety and";
+		mes "listen to me baby~.";
+		mes "Since Summer period,";
+		mes "I have been preparing the gift for you.";
+		mes "and that's why this gift man is here.";
+		mes "isn't it, my man?";
+		next;
+		switch(select("Shit up Raccoon.", "Just give me Shiny Bead.", "Yes I am!!")) {
+			case 1:
+				mes "[Juniper]";
+				mes "I knew that!";
+				mes "I might have been tricked again.";
+				mes "OK, I'm so gonna cry";
+				mes "as if I am a baby.";
+				next;
+				mes "[Castanea]";
+				mes "You, How are you gonna";
+				mes "solve this problem?";
+				mes "It's all your fault.";
+				mes "Talk to me again ASAP if you feel guilty for this!";
+				emotion ET_PROFUSELY_SWEAT, playerattached();
+				close;
+			case 2:
+				mes "[Castanea]";
+				mes "You...";
+				mes "You seem so firm,";
+				mes "but how rude you are..!";
+				close;
+			case 3:
+				mes "[Castanea]";
+				mes "Oh~~~~~";
+				mes "my loyal assistant!";
+				mes "Bring us the present I hid over there!";
+				next;
+				mes "[Castanea]";
+				mes "The gift hidden in the edge behind Ghez(Young Woman),";
+				mes "in east of Geffen,";
+				mes "near a shop there, you know?.";
+				mes "Hurry up, my man! Juniper";
+				mes "is staring at me so badly!";
+				erasequest 1195;
+				setquest 1196;
+				evt_2011_xmas = 4;
+				close;
+		}
+	} else if (evt_2011_xmas == 4) {
+		if (countitem(7219) < 1) {
+			mes "[Castanea]";
+			mes "the hidden gift can be found";
+			mes "in the edge behind Ghez(Young Woman),";
+			mes "in east of Geffen,";
+			mes "near a shop there.";
+			next;
+			mes "[Castanea]";
+			mes "Hurry up, my man!";
+			mes "Juniper is getting suspicious!";
+			mes "And I have no more excuses to say!";
+			close;
+		} else {
+			mes "[Castanea]";
+			mes "What the hell is this smelly sock?";
+			mes "It's not what I hid!";
+			mes "Go to east of Geffen and";
+			mes "look around the edge behind Ghez!";
+			close;
+		}
+	} else if (evt_2011_xmas == 5) {
+		if (countitem(7219) < 1) {
+			mes "[Castanea]";
+			mes "I told you to find a present";
+			mes "why did you come back without anything?";
+			next;
+			mes "[Castanea]";
+			mes "If the case is that you lost it";
+			mes "you could find it again";
+			mes "if you give 5 ^0000FFStolen Candies^000000";
+			mes "to Bean, a Raccoon Hooray Team member.";
+			next;
+			mes "[Juniper]";
+			mes "What are you talking about?";
+			mes "lost the gift for me?";
+			mes "I could feel better";
+			mes "after telling everyone about what has happened...";
+			next;
+			mes "[Castanea]";
+			mes "You see?";
+			mes "I'm this close to run away from this town,";
+			mes "feeling ashamed in the Christmas time.";
+			mes "Please bring me the gift ASAP";
+			emotion ET_CRY;
+			close;
+		} else {
+			mes "[Castanea]";
+			mes "Oh lovely Juniper";
+			mes "Look my assistance who brought gift";
+			mes "for you on time?";
+			mes "Please take it before it fades.";
+			next;
+			mes "[Juniper]";
+			mes "Oh my lovely Castanea.";
+			mes "Why do you give me only";
+			mes "gift without packing";
+			mes "as you already ask for the packing?";
+			mes "Do you really want me to cry?";
+			next;
+			mes "[Castanea]";
+			mes "Take it easy, it's all because of";
+			mes "my lazy assistance,let's just";
+			mes "blame him.";
+			next;
+			if (select("It's really unfair", "It's definitely my fault") == 1) {
+				mes "[Castanea]";
+				mes "Just hold out.";
+				mes "It will be same feeling with Rudolph";
+				mes "who need to take responsibiliy of delivery at night";
+				mes "because of he has a luminous nose.";
+				next;
+				mes "[Castanea]";
+				mes "Even though you choose different manu,the answer will be same";
+				mes "this time ";
+				mes "so you can feel totally unfair.";
+				emotion ET_BEST, "Castanea#mas";
+				next;
+				mes "[Castanea]";
+				mes "Hurry up and get a hidden wrapping";
+				mes "inside of wood barrel in ";
+				mes "west end garden of Geffen";
+				mes "There is Nut one of the";
+				mes "Raccoon Hurray team will be near there..";
+				erasequest 1197;
+				setquest 1198;
+				evt_2011_xmas = 6;
+				close;
+			}
+			mes "[Castanea]";
+			mes "Yes, it's your fault";
+			mes "I won't deny it";
+			emotion ET_BEST;
+			next;
+			mes "[Castanea]";
+			mes "Hurry up and get a hidden wrapping";
+			mes "inside of wood barrel in ";
+			mes "west end garden of Geffen";
+			mes "There is Nut one of the";
+			mes "Raccoon Hurray team will be near there..";
+			erasequest 1197;
+			setquest 1198;
+			evt_2011_xmas = 6;
+			close;
+		}
+	} else if (evt_2011_xmas == 6) {
+		if (countitem(7629) < 1) {
+			mes "[Castanea]";
+			mes "Hurry up and get a hidden wrapping";
+			mes "inside of wood barrel in ";
+			mes "west end garden of Geffen";
+			mes "There is Nut one of the";
+			mes "Raccoon Hurray team will be near there.";
+			next;
+			mes "[Castanea]";
+			mes "Hurry up assistance.";
+			mes "I will discuss ";
+			mes "about your problem";
+			mes "to chase Juniper's gloom away ";
+			close;
+		} else {
+			mes "[Castanea]";
+			mes "You broght gift box seems like very cheap.";
+			mes "and can be ";
+			mes "shared in street";
+			mes "Huh...Huh";
+			next;
+			mes "[Castanea]";
+			mes "The wood barrel located in west end garden";
+			mes "of Geffen.";
+			mes "Hurry before I  ";
+			mes "make your nose as Rudolph";
+			emotion ET_PROFUSELY_SWEAT;
+			close;
+		}
+	} else if (evt_2011_xmas == 7) {
+		if (countitem(7629) < 1) {
+			mes "[Castanea]";
+			mes "He keep coming back with bare hands";
+			mes "Even though I sent him to pack the gift.";
+			next;
+			mes "[Castanea]";
+			mes "If you lost then please go to Nut";
+			mes "in Raccoon Hurray Team";
+			mes "You can get it.";
+			mes "If you give him 5 pieces of^0000FFstolen cookies^000000";
+			next;
+			mes "[Juniper]";
+			mes "With nothing?";
+			mes "Do you mean gift?";
+			mes "I need to take care of myself";
+			mes "after tell my parents and friends.";
+			mes "Huh..........";
+			next;
+			mes "[Castanea]";
+			mes "I am in really critical condition.";
+			mes "please hurry up to get a gift.";
+			mes "I can be write the letter of apology in christmas";
+			emotion ET_CRY;
+			close;
+		} else {
+			mes "[Castanea]";
+			mes "Oh my lovely Juniper!";
+			mes "Please come and get";
+			mes "my christmas gift!";
+			next;
+			mes "[Juniper]";
+			mes "Oh cute Castanea like";
+			mes "bubble gum on bear's foot";
+			mes "Yes, I'll forget about the all sadness";
+			mes "and I will get it so quickly.";
+			next;
+			mes "[Castanea]";
+			mes "Isn't it really easy and simple";
+			mes "to have happy marry christmas, ";
+			mes "isn't, my assistance?";
+			mes "HAHAHA~";
+			next;
+			mes "[Castanea]";
+			mes "I'll give you ^0000FFShining beads^000000";
+			mes "so please go to make ";
+			mes "Quercus happy.";
+			delitem 7629, 1; // Pink_Gift_Box
+			erasequest 1199;
+			setquest 1200;
+			evt_2011_xmas = 8;
+			getitem 6222, 1; // Shining_Beads
+			close;
+		}
+	} else if (evt_2011_xmas > 7) {
+		mes "[Castanea]";
+		mes "I think Juniper ";
+		mes "loves my gift";
+		next;
+		mes "[Castanea]";
+		mes "Isn't it really simple to";
+		mes "have happy christmas?";
+		mes "Let's give the gift to your";
+		mes "friends with your heart";
+		emotion ET_BEST;
+		close;
+	}
+}
+
+geffen,110,148,5	script	Juniper#mas01	XMAS_SMOKEY_Y,{
+	if (evt_2011_xmas < 4) {
+		mes "[Juniper]";
+		mes "Ah, my lovely Castanea!";
+		mes "You are so charming even though";
+		mes "you forgot about appointed time and place";
+		mes "everytime and ";
+		mes "waiting for me anxiously in wrong place";
+		next;
+		mes "[Castanea]";
+		mes "I am even confused in socks and gloves";
+		mes "when I meet you.";
+		mes "Isn't it all because of";
+		mes "our warm love like citrus tea?";
+		close;
+	} else if (evt_2011_xmas > 3 && evt_2011_xmas < 6) {
+		mes "[Juniper]";
+		mes "I am ready to cry";
+		mes "so please tell me the truth";
+		mes "Tell me you totally forgot about";
+		mes "my gift as ";
+		mes "peeling chestnut with bare hands!";
+		close;
+	} else if (evt_2011_xmas > 5 && evt_2011_xmas < 8) {
+		mes "[Juniper]";
+		mes "Oh my lovely Castanea.";
+		mes "Why do you give me only";
+		mes "gift without packing";
+		mes "as you already ask for the packing?";
+		mes "Do you really want me to cry?";
+		next;
+		mes "[Castanea]";
+		mes "Take it easy, it's all because of";
+		mes "my lazy assistance,let's just";
+		mes "blame him.";
+		close;
+	} else if (evt_2011_xmas >= 8) {
+		mes "[Juniper]";
+		mes "Ahah, my Castanea .";
+		mes "Cute and Provoking like gum..";
+		next;
+		mes "[Juniper]";
+		mes "I am unhappy with ";
+		mes "stinky socks";
+		mes "but I can feel happiness with";
+		mes "your good";
+		mes "improvisation";
+		close;
+	}
+}
+
+geffen,199,172,3	script	Bean#mas	XMAS_SMOKEY_R,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	if (evt_2011_xmas < 4) {
+		mes "[Bean]";
+		mes "I am taking charge";
+		mes "of pointing position of gift in Christmas time";
+		mes "even though I am a really great raccoon!";
+		mes "I feel so sad.";
+		close;
+	} else if (evt_2011_xmas == 4) {
+		mes "[Bean]";
+		mes "I am taking charge";
+		mes "of pointing position of gift in Christmas time";
+		mes "even though I am a really great raccoon!";
+		mes "I feel so sad.";
+		next;
+		if (select("It looks good on you", "Give me a gift!") == 1) {
+			mes "[Bean]";
+			mes "Thank you!";
+			emotion ET_FRET;
+			close;
+		}
+		mes "[Bean]";
+		mes "Speak impolitely without reason,";
+		mes "Oh, I feel getting scared.";
+		mes "It will be in back side of this.";
+		emotion ET_PROFUSELY_SWEAT;
+		close;
+	} else if (evt_2011_xmas > 4 && evt_2011_xmas < 7) {
+		if (countitem(7219) > 0) {
+			mes "[Bean]";
+			mes "To tell the truth that socks is mine, .";
+			mes "Handle it clean,";
+			mes "and I really hope you would return it to me!";
+			close;
+		} else {
+			mes "[Bean]";
+			mes "did you lose^0000FFstriped socks^000000?";
+			mes "Give you the socks even I wearing now?";
+			mes "I didn't know I will undergo ";
+			mes "sad thing in Chritmas";
+			next;
+			mes "[Bean]";
+			mes "If you give me 5 pieces of ^0000FFstolen candies^000000";
+			mes "I will give you striped socks quickly, how is it?";
+			next;
+			if (select("Just give it to me", "I'll give you 5 pieces of ^0000FFstolen candies^000000.") == 1) {
+				mes "[Bean]";
+				mes "Clamp!";
+				emotion ET_FRET;
+				close;
+			}
+			if (countitem(7910) > 4) {
+				mes "[Bean]";
+				mes "Oh I should ask for 20,";
+				mes "I feel sad after I got it. !";
+				mes "There you go, a ^0000FFStriped Sock^000000!";
+				delitem 7910, 5; // Stolen_Candy
+				getitem 7219, 1; // Striped_Socks
+				close;
+			} else {
+				mes "[Bean]";
+				mes "You don't have enough candies.";
+				mes "Are you trying  discount";
+				mes "to the poor raccoon?";
+				mes "You are the person who will get ";
+				mes "the new years fortune with big discounted price!";
+				emotion ET_KIK;
+				close;
+			}
+		}
+	} else if (evt_2011_xmas > 6) {
+		mes "[Bean]";
+		mes "Give me your ";
+		mes "whole fortune.";
+		mes "It would be good if you do that";
+		mes "for poor Raccoon!";
+		close;
+	}
+}
+
+geffen,204,174,0	script	#mas1	-1,2,2,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	if (evt_2011_xmas == 4) {
+		mes "I can see the";
+		mes "^0000FFStriped Socks^000000 on floor";
+		mes "Let's take it and go to Castanea for now.";
+		erasequest 1196;
+		setquest 1197;
+		evt_2011_xmas = 5;
+		getitem 7219, 1; // Striped_Socks
+		close;
+	} else if (evt_2011_xmas == 5) {
+		mes "The striped socks on floor ";
+		mes "seems to be the gift, Castanea told me";
+		mes "Castanea told me.";
+		mes "Let's return to Castanea with striped socks.";
+		close;
+	}
+}
+
+geffen,37,154,5	script	Pinus#mas	XMAS_SMOKEY_Y,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	if (evt_2011_xmas < 7) {
+		mes "[Pinus]";
+		mes "What can I do for you?";
+		mes "Will you take me as pet?";
+		mes "Please hurry up to take me";
+		mes "I am not that picky I can hold out";
+		mes "5 min with just one cake.";
+		close;
+	} else if (evt_2011_xmas == 7) {
+		if (countitem(7629) < 1) {
+			mes "[Pinus]";
+			mes "Did you lose the gift from ";
+			mes "Castanea?";
+			mes "Do I have to give you replacement? ";
+			next;
+			mes "[Pinus]";
+			mes "I have many many ";
+			mes "these things!";
+			mes "If you give me 5 pieces of ^0000FFstolen cookies^000000";
+			mes "I will pick fine one to give you. Isn't it good?";
+			next;
+			switch(select("I am totally not okay", "I'll give you 5 pieces of ^0000FFstolen cookiesÀÚ^000000 .", "The ^0000FFstolen cookies^000000?")) {
+			case 1:
+				mes "[Pinus]";
+				mes "Take me as your pet";
+				mes "Eating, ask me to do laundry";
+				mes "I am good at anything";
+				emotion ET_FRET, playerattached();
+				close;
+			case 2:
+				if (countitem(7909) < 5) {
+					mes "[Pinus]";
+					mes "You don't have enough stolen cookies.";
+					mes "Do you really think raccoon is poor at";
+					mes "number, do you ?";
+					next;
+					mes "[Pinus]";
+					mes "I need to fix your";
+					mes "wrong idea.";
+					mes "I will be your pet raccoon";
+					mes "Lead the way.";
+					emotion ET_PROFUSELY_SWEAT, playerattached();
+					close;
+				} else {
+					mes "[Pinus]";
+					mes "5 pieces of^0000FFStolen Cookies^000000 ";
+					mes "I'll give you the well wrapping gift box";
+					mes "as I promised. You can take me";
+					mes "as pet if you want to. I'll pack everything";
+					mes "at home.";
+					delitem 7909, 5; // Stolen_Cookie
+					getitem 7629, 1; // Pink_Gift_Box
+					close;
+				}
+			case 3:
+				mes "[Pinus]";
+				mes "We raccoon love";
+				mes "things with";
+				mes "story.";
+				next;
+				mes "[Pinus]";
+				mes "Secretly borrowed cake";
+				mes "Secretly borrowed slide behind Santa's back,";
+				mes "Secretly borrowed Prontera Church behind father's back";
+				mes "Little stories like these";
+				emotion ET_DELIGHT;
+				close;
+			}
+		} else {
+			mes "[Pinus]";
+			mes "Hey I am really cute, ";
+			mes "will you really pass me?";
+			mes "I can be your";
+			mes "cute pet";
+			next;
+			mes "[Pinus]";
+			mes "Biting clothes, pee in anywhere,";
+			mes "I can do as good as";
+			mes "other pet";
+			mes "Please take me, I am hugry";
+			close;
+		}
+	} else if (evt_2011_xmas > 7) {
+		mes "[Pinus]";
+		mes "Hey I am really cute, ";
+		mes "will you really pass me?";
+		mes "I can be your";
+		mes "cute pet";
+		next;
+		mes "[Pinus]";
+		mes "Biting clothes, pee in anywhere,";
+		mes "I can do as good as";
+		mes "other pet";
+		mes "Please take me, I am hugry";
+		close;
+	}
+}
+
+geffen,26,156,0	script	#mas2	-1,2,2,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	if (evt_2011_xmas == 6) {
+		if (countitem(7219) < 1) {
+			mes "I need to pack but";
+			mes "I don't have the sock. Where did I throw that away.";
+			mes "I need to go to get Striped socks from the Raccoon, Bean,";
+			mes "who is in east part of Geffen.";
+			close;
+		} else {
+			mes "In the wooden pail,";
+			mes "I found the wrapping and an empty box.";
+			next;
+			mes "Packing packing~";
+			mes "Sealing Sealing~";
+			next;
+			mes "it is well wrapped";
+			mes "as Christmas gift.";
+			mes "Let's run to Castanea!";
+			delitem 7219, 1; // Striped_Socks
+			erasequest 1198;
+			setquest 1199;
+			evt_2011_xmas = 7;
+			getitem 7629, 1; // Pink_Gift_Box
+			close;
+		}
+	} else if (evt_2011_xmas == 7) {
+		mes "Finish the packing gift here.";
+		mes "Let's return to Castanea.";
+		close;
+	}
+}
+
+geffen,109,142,3	script	Pyrus#mas	XMAS_SMOKEY_R,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	if (evt_2011_xmas < 9) {
+		mes "[Kaki]";
+		mes "You call this pair of socks a gift?";
+		mes "There's a snowstorm at this";
+		mes "Christmas time.";
+		mes "I mean inside of my heart!";
+		mes "What are going to do about this?";
+		next;
+		mes "[Pyrus]";
+		mes "How can you call these 30 worm leathers";
+		mes "as a real gift?!";
+		mes "I just don't get women like you!";
+		mes "Have you lost your mind or something?";
+		next;
+		mes "[Kaki]";
+		mes "Arrggg!";
+		mes "I want to smack you with this SilverBell!";
+		next;
+		mes "[Pyrus]";
+		mes "Grrrrr!";
+		mes "I wish there is way";
+		mes "to get you back in sense!";
+		close;
+	} else if (evt_2011_xmas == 9) {
+		mes "[Kaki]";
+		mes "You call this pair of socks a gift?";
+		mes "There's a snowstorm at this";
+		mes "Christmas time.";
+		mes "I mean inside of my heart!";
+		mes "What are going to do about this?";
+		next;
+		mes "[Pyrus]";
+		mes "How can you call these 30 worm leathers";
+		mes "as a real gift?!";
+		mes "I just don't get women like you!";
+		mes "Have you lost your mind or something?";
+		next;
+		mes "[Kaki]";
+		mes "Arrggg!";
+		mes "I want to smack you with this SilverBell!";
+		next;
+		mes "[Pyrus]";
+		mes "Grrrrr!";
+		mes "I wish there is way";
+		mes "to get you back in sense!";
+		next;
+		switch(select("Give it a rest.", "Calm down and listen to me.", "Let me give you the present!")) {
+		case 1:
+			mes "[Pyrus]";
+			mes "Wow, who do you think you are";
+			mes "lecturing me like this??";
+			next;
+			mes "[Kaki]";
+			mes "You are really lucky";
+			mes "that I'm in a good mood now.";
+			mes "Or else, you be in a big trouble!";
+			emotion ET_PROFUSELY_SWEAT , playerattached();
+			close;
+		case 2:
+			mes "[Pyrus]";
+			mes "What do you have to say?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Give me that ^0000FFStar Shape Decoration^000000 item.";
+			mes "Right now.";
+			next;
+			mes "[Pyrus]";
+			mes "Let's sing, pa!";
+			mes "rapampampam!";
+			specialeffect2 EF_HIT1;
+			sc_start SC_Blind,20000,0;
+			close2;
+			warp "geffen", 187, 182;
+			end;
+		case 3:
+			mes "[Pyrus]";
+			mes "Are we going to be a couple?";
+			mes "If you give me 5 ^0000FFStolen Cookie^000000,";
+			mes "then I might even forgive";
+			mes "childish Kaki.";
+			next;
+			mes "[Kaki]";
+			mes "I think I can forgive stupid Pyrus,";
+			mes "if you care to give me";
+			mes "5 ^0000FFStolen Candy^000000.";
+			next;
+			mes "[Pyrus]";
+			mes "Arrrrr~!";
+			next;
+			mes "[Kaki]";
+			mes "Arrrrrr~!";
+			next;
+			if (select("Just fight.", "Let me see what I can do.") == 1) {
+				mes "[Pyrus]";
+				mes "I can't take this, come here you!";
+				mes "Let's fight three ways!";
+				close;
+			}
+			mes "[Pyrus]";
+			mes "^FF0000Stolen Candy^000000 and";
+			mes "^FF0000Stolen Cookie^000000 can be found";
+			mes "from field wondering";
+			mes "^0000FFGift Hooraying Raccoons^000000.";
+			mes "Get 5 of each items, will you?";
+			erasequest 1201;
+			setquest 1202;
+			evt_2011_xmas = 10;
+			close;
+		}
+	} else if (evt_2011_xmas == 10) {
+		if (countitem(7910) > 4 && countitem(7909) > 4) {
+			mes "[Pyrus]";
+			mes "Woot, a complete stranger";
+			mes "got us a gift for real~!";
+			mes "It really is good to be";
+			mes "Christmas, isn't it!";
+			next;
+			mes "[Kaki]";
+			mes "Well, we can't just always receive, can we?";
+			mes "I am a racoon with common sense.";
+			mes "Let me give you this cool outfit.";
+			mes "Would accept it?";
+			next;
+			mes "[Pyrus]";
+			mes "How can you give my cloth to a stranger?";
+			mes "Why don't you just give away";
+			mes "all of our belongings!";
+			next;
+			mes "[Kaki]";
+			mes "Huh, it's not like we have anything!";
+			next;
+			mes "[Pyrus]";
+			mes "What!";
+			next;
+			mes "[Kaki]";
+			mes "Find my friend 'Citrus,";
+			mes "who leaves near 'Welshyun' north of Geffen.";
+			mes "He will share some clothes for you.";
+			mes "There are some of my belongings,";
+			mes "try to bring them back also.";
+			delitem 7910, 5; // Stolen_Candy
+			delitem 7909, 5; // Stolen_Cookie
+			erasequest 1202;
+			setquest 1203;
+			evt_2011_xmas = 11;
+			close;
+		} else {
+			mes "[Pyrus]";
+			mes "What are you doing?";
+			mes "Are you trying to make us fight";
+			mes "in this Christmas time?";
+			next;
+			mes "[Pyrus]";
+			mes "^FF0000Stolen Candy^000000 and";
+			mes "^FF0000Stolen Cookie^000000 can be found";
+			mes "from field wondering";
+			mes "^0000FFGift Hooraying Raccoons^000000.";
+			mes "Get 5 of each items, will you?";
+			next;
+			mes "[Pyrus]";
+			mes "You better hurry,";
+			mes "if you want us to get back together!";
+			close;
+		}
+	} else if (evt_2011_xmas > 10 && evt_2011_xmas < 13) {
+		if (countitem(12132) > 0) {
+			mes "[Pyrus]";
+			mes "Citrus really gave you the cloth";
+			mes "that easy?";
+			mes "He was even happy";
+			mes "to share cloth with you?";
+			mes "That can't be real,";
+			mes "stop lying to me!";
+			close;
+		} else {
+			mes "[Pyrus]";
+			mes "Citrus would never share such cloth with you!";
+			mes "Get lost!";
+			close;
+		}
+	} else if (evt_2011_xmas == 13) {
+		mes "[Pyrus]";
+		mes "If you bring that ^FF0000Star Shape Decoration^000000 to Quercus,";
+		mes "there will be good present given to you.";
+		close;
+	} else if (evt_2011_xmas > 13) {
+		mes "[Kaki]";
+		mes "Any more presents hide there?";
+		next;
+		mes "[Pyrus]";
+		mes "Nop, nothing for you.";
+		next;
+		mes "[Kaki]";
+		mes "What you have hiding back there?";
+		mes "Isn't that a surprise present for me?";
+		next;
+		mes "[Pyrus]";
+		mes "Nah, just an ugly tale of mine.";
+		next;
+		mes "[Kaki]";
+		mes "Come on.. now...";
+		next;
+		mes "[Pyrus]";
+		mes "Hey, hey. Please don't start crying.";
+		mes "It won't work with me.";
+		close;
+	}
+}
+
+geffen,98,196,3	script	Citrus#mas	XMAS_SMOKEY_B,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	if (evt_2011_xmas < 11) {
+		mes "[Citrus]";
+		mes "I am not sure what you are looking for.";
+		mes "But, there's nothing here!";
+		mes "Nothing at all!";
+		close;
+	} else if (evt_2011_xmas == 11) {
+		mes "[Citrus]";
+		mes "I am not sure what you are looking for.";
+		mes "But, there's nothing here!";
+		mes "Nothing at all!";
+		next;
+		if (select("Give it to me.", "Never mind.") == 1) {
+			mes "[Citrus]";
+			mes "Yes, that's the spirit.";
+			mes "Beg more.";
+			mes "I will make you feel miserable.";
+			emotion ET_BEST;
+			close;
+		}
+		mes "[Citrus]";
+		mes "Why give up?";
+		mes "You really don't want it?";
+		mes "Come on! Be more desperate!";
+		next;
+		mes "[Citrus]";
+		mes "I'll give you this ^FF0000Santa's_Bag^000000.";
+		mes "Now, get lost!";
+		erasequest 1203;
+		setquest 1204;
+		evt_2011_xmas = 12;
+		getitem 12132, 3; // Red_Bag
+		close;
+	} else if (evt_2011_xmas == 12) {
+		if (countitem(12132) < 1) {
+			if (countitem(7909) < 5) {
+				mes "[Citrus]";
+				mes "Where's that ^FF0000Santa's_Bag^000000?";
+				mes "Did you throw it away?";
+				mes "You really throw that precious";
+				mes "item away?";
+				next;
+				mes "[Citrus]";
+				mes "If you give me 5 ^FF0000Stolen Cookie^000000,";
+				mes "I'll exchange them for ^FF0000Santa's_Bag^000000.";
+				emotion ET_CHUP;
+				close;
+			} else {
+				mes "[Citrus]";
+				mes "Wow, you brought 5 ^FF0000Stolen Cookie^000000?";
+				mes "These are for me, right?";
+				mes "Give them to me, now!";
+				delitem 7909, 5; // Stolen_Cookie
+				getitem 12132, 3; // Red_Bag
+				close;
+			}
+		} else {
+			mes "[Citrus]";
+			mes "Pyrus and I put a lot of effort on this cloth.";
+			mes "You better like it!";
+			close;
+		}
+	} else if (evt_2011_xmas == 13) {
+		mes "[Citrus]";
+		mes "So you received cloth and others,";
+		mes "just for that Santa's_Bag?";
+		next;
+		mes "[Citrus]";
+		mes "I should have given that to him!";
+		close;
+	} else if (evt_2011_xmas > 13) {
+		mes "[Citrus]";
+		mes "You have any more question for me?";
+		mes "Am I that important to you?";
+		mes "Go agead.";
+		mes "I'll try best not to answer you!";
+		close;
+	}
+}
+
+geffen,98,196,3	script	Kaki#mas	XMAS_SMOKEY_Y,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	if (evt_2011_xmas < 10) {
+		mes "[Kaki]";
+		mes "After all this time, I've been";
+		mes "waiting for a month dreaming about the present.";
+		mes "And you give me this pair of socks?";
+		mes "No one even gives socks";
+		mes "as a present any more!";
+		next;
+		mes "[Pyrus]";
+		mes "Well well, I was the one singing a carroll";
+		mes "ever since the hot summer.";
+		mes "30 worm leather!";
+		mes "What have you been thinking?";
+		mes "Have you lost your mind or something?";
+		next;
+		mes "[Kaki]";
+		mes "Arrggg!";
+		mes "I want to smack you with this SilverBell!";
+		next;
+		mes "[Pyrus]";
+		mes "Grrrrr!";
+		mes "I wish there is way";
+		mes "to get you back in sense!";
+		close;
+	} else if (evt_2011_xmas == 10) {
+		mes "[Kaki]";
+		mes "So you are saying";
+		mes "I can also receive Stolen_Candy,";
+		mes "just like those other racoons?";
+		mes "Are you for real?";
+		next;
+		mes "[Kaki]";
+		mes "What a good news this is!!";
+		close;
+	} else if (evt_2011_xmas == 11) {
+		mes "[Kaki]";
+		mes "Find my friend 'Citrus,";
+		mes "who leaves near 'Welshyun' north of Geffen.";
+		mes "He will share some clothes for you.";
+		mes "There are some of my belongings,";
+		mes "try to bring them back also.";
+		close;
+	} else if (evt_2011_xmas == 11) {
+		if (countitem(12132) < 1) {
+			mes "[Kaki]";
+			mes "Find my friend 'Citrus,";
+			mes "who leaves near 'Welshyun' north of Geffen.";
+			mes "He will share some clothes for you.";
+			mes "There are some of my belongings,";
+			mes "try to bring them back also.";
+			close;
+		} else {
+			mes "[Kaki]";
+			mes "Hmm, this isn't the cloth I've been talking about!";
+			mes "You surely didn't pay attention, did you?";
+			mes "I want to smack you with my silverbell.";
+			mes "Try again, quickly!";
+			close;
+		}
+	} else if (evt_2011_xmas == 12) {
+		if (countitem(12132) < 1) {
+			mes "Find my friend 'Citrus,";
+			mes "who leaves near 'Welshyun' north of Geffen.";
+			mes "He will share some clothes for you.";
+			mes "There are some of my belongings,";
+			mes "try to bring them back also.";
+			close;
+		} else {
+			mes "[Kaki]";
+			mes "Yes, this is the ^0000FFSanta's_Bag^000000 I've been talking about.";
+			mes "With this Santa cloth on,";
+			mes "eating a delicious Stolen_Candy.";
+			mes "What else can we wish for this Christmas~";
+			next;
+			mes "[Pyrus]";
+			mes "Kaki is smiling for the first time this year.";
+			mes "You've been a really good help!";
+			mes "Thank you very much.";
+			next;
+			mes "[Kaki]";
+			mes "Let me share some more ^0000FFSanta's_Bag^000000";
+			mes "for you.";
+			mes "I wish you a merry merry Christmas";
+			next;
+			mes "[Pyrus]";
+			mes "Well, I have this ^0000FFStar Shape Decoration^000000 for you.";
+			mes "Bring this to Quercus,";
+			mes "you will receive a good present.";
+			mes "I'm sure you can expect something great";
+			mes "for your happy Christmas.";
+			getitem 12132, 1; // Red_Bag
+			erasequest 1204;
+			setquest 1205;
+			evt_2011_xmas = 13;
+			getitem 6536, 1; // Star_Decor
+			close;
+		}
+	} else if (evt_2011_xmas == 13) {
+		mes "[Kaki]";
+		mes "We also would like to wish";
+		mes "a merry Christmas for you.";
+		mes "Hurry,";
+		mes "go meet Quercus.";
+		close;
+	} else if (evt_2011_xmas > 13) {
+		mes "[Kaki]";
+		mes "I guess we never get satisfied";
+		mes "with Christmas gifts,";
+		mes "no matter how many we receive.";
+		mes "I want Pyrus to understand this,";
+		mes "but he is hopeless..";
+		next;
+		mes "[Pyrus]";
+		mes "...";
+		mes "For this Christmas,";
+		mes "I am seriously considering";
+		mes "a sudden break up!";
+		close;
+	}
+}
+
+// -
+// -----------------------------------------------------------
+
+xmas_in,95,95,5	script	Little Santa#mas	4_F_RUSCHILD,{
+	getinventorylist;
+
+	if ((MAX_INVENTORY - @inventorylist_count) < 3) {
+		mes "- You are carrying too many items to continue. -";
+		close;
+	}
+
+	if (evt_2011_xmas < 14) {
+		mes "[Racoons shouting]";
+		mes "Give us present!";
+		mes "Give us house!";
+		mes "Give us Prontera church!";
+		next;
+		mes "[Little Santa]";
+		mes "Hey you, please do something";
+		mes "about those annoying racoons.";
+		mes "I can barely afford my own house here..";
+		mes "Why can't they bother someone else?";
+		close;
+	} else if (evt_2011_xmas == 14) {
+		mes "[Racoons shouting]";
+		mes "Give us present!";
+		mes "Give us house!";
+		mes "Give us Prontera church!";
+		next;
+		mes "[Little Santa]";
+		mes "Hey you, please do something";
+		mes "about those annoying racoons.";
+		mes "I can barely afford my own house here..";
+		mes "Why can't they bother someone else?";
+		next;
+		if (select("What is my present?", "Prontera church is a present for racoons?") == 1) {
+			mes "[Little Santa]";
+			mes "What are you talking about?";
+			close;
+		}
+		mes "[Little Santa]";
+		mes "Do you really think Prontera church";
+		mes "can be a present for racoons?";
+		mes "What in the world are you talking about?";
+		mes "Does that even make any sense to you?";
+		next;
+		mes "[Little Santa]";
+		mes "I've already picked up some ^FF0000Sweet Potato^000000";
+		mes "for them racoons.";
+		mes "Here, take these 5 ^FF0000Sweet Potato^000000 as a sample.";
+		mes "Go feed those racoons, and please";
+		mes "make them go away.";
+		next;
+		if (select("I will eat these myself!", "I shall follow your order.") == 1) {
+			mes "[Little Santa]";
+			mes "I'll prepare something rotten for you, then!";
+			close;
+		}
+		mes "[Little Santa]";
+		mes "Feed these to those racoons outside,";
+		mes "please report me the result.";
+		erasequest 1206;
+		setquest 1207;
+		evt_2011_xmas = 15;
+		getitem 549, 5; // Nice_Sweet_Potato
+		close;
+	} else if (evt_2011_xmas == 15) {
+		.@miting_01 = isbegin_quest(1208);
+		.@miting_02 = isbegin_quest(1209);
+		.@miting_03 = isbegin_quest(1210);
+		.@miting_04 = isbegin_quest(1211);
+		.@miting_05 = isbegin_quest(1212);
+		.@miting_rac = .@miting_01 + .@miting_02 + .@miting_03 + .@miting_04 + .@miting_05;
+
+		if (.@miting_rac < 10) {
+			if (countitem(549) > 0) {
+				mes "[Little Santa]";
+				mes "Please hurry, give these ^FF0000Sweet Potato^000000s to";
+				mes "those racoons outside.";
+				mes "I can't focus on gift wrapping";
+				mes "with all the noise out there!";
+				close;
+			} else {
+				if (countitem(6535) < 10) {
+					mes "[Little Santa]";
+					mes "I told you to give Sweet Potatos to racoons,";
+					mes "what part did you not understand?";
+					mes "If you give me 10 ^FF0000Pieces Of Red Fabric^000000,";
+					mes "I will give you 1 ^FF0000Sweet Potato^000000 as a return.";
+					mes "I really need them for hardening";
+					mes "my gift wrappings.";
+					close;
+				} else {
+					mes "[Little Santa]";
+					mes "How can you eat all those Sweet Potatos,";
+					mes "when I told you to feed racoons!";
+					mes "I will take 10 ^FF0000Pieces Of Red Fabric^000000 as compensation.";
+					mes "You are ok with that, right?";
+					next;
+					if (select("I don't like it a bit.", "Very well.") == 1) {
+						mes "[Little Santa]";
+						mes "Honesty is not always a good thing you know...";
+						mes "I'll take you off my Christmas gift list!";
+						mes "How's that sound. huh!";
+						close;
+					}
+					mes "[Little Santa]";
+					mes "Here's 1 more ^FF0000Sweet Potato^000000.";
+					mes "Don't you eat it again,";
+					mes "and feed those racoons outside!";
+					mes "Understand?";
+					delitem 6535, 10; // Red_Cloth
+					getitem 549, 1; // Nice_Sweet_Potato
+					close;
+				}
+			}
+		} else if (.@miting_rac == 10) {
+			mes "[Little Santa]";
+			mes "Oh, you did fed those Sweet Potatos to";
+			mes "them racoons outside?";
+			mes "Guess it worked,";
+			mes "it's a lot more quiet than it was.";
+			next;
+			mes "[Racoons shouting]";
+			mes "Give us more Sweet Potato!";
+			mes "My present! My Sweet Potato!";
+			mes "Give us a house full of Sweet Potato!";
+			next;
+			mes "[Little Santa]";
+			mes "......";
+			emotion ET_PROFUSELY_SWEAT, "Little Santa#mas";
+			next;
+			mes "[Little Santa]";
+			mes "Yea well...";
+			mes "I guess it's a little...bit";
+			mes "quiet than it was.";
+			emotion ET_PROFUSELY_SWEAT, playerattached();
+			next;
+			mes "[Little Santa]";
+			mes "Well, I'll get back to the";
+			mes "wrapping work.";
+			mes "Please go tell good things";
+			mes "to their leader.";
+			erasequest 1207;
+			setquest 1213;
+			evt_2011_xmas = 16;
+			close;
+		}
+	} else if (evt_2011_xmas == 16) {
+		mes "[Little Santa]";
+		mes "Well, I'll get back to the";
+		mes "wrapping work.";
+		mes "Please go tell good things";
+		mes "to their leader.";
+		next;
+		mes "Let's go back to the Quercus in Prontera.";
+		close;
+	} else if (evt_2011_xmas > 16) {
+		mes "[Racoons shouting]";
+		mes "Give us more Sweet Potato!";
+		mes "My present! My Sweet Potato!";
+		mes "Give us a house full of Sweet Potato!";
+		next;
+		mes "[Little Santa]";
+		mes "What a sound all around Lutie.";
+		mes "It's not a sound of silverbell, nor a carroll,";
+		mes "but it sure sound annoying..";
+		mes "Hahaha...";
+		next;
+		mes "[Little Santa]";
+		mes "I'll end those freaks!";
+		emotion ET_FRET;
+		close;
+	}
+}
+
+// -
+// -----------------------------------------------------------
+
+xmas,137,220,7	script	Abies#mas	XMAS_SMOKEY_R,{
+	.@miting_01 = isbegin_quest(1208);
+
+	if (evt_2011_xmas < 15) {
+		mes "[Abies]";
+		mes "Present!";
+		mes "I need present! Desperately!";
+		mes "I want a Manhole cover!";
+		close;
+	} else if (evt_2011_xmas == 15) {
+		if (.@miting_01 == 0) {
+			mes "[Abies]";
+			mes "Present!";
+			mes "I need present! Desperately!";
+			mes "I want a Manhole cover!";
+			next;
+			if (select("Not a chance!", "Feed the Sweet potato.") == 1) {
+				mes "[Abies]";
+				mes "How dare you make this racoon so sad!";
+				mes "I will cry a river for you!";
+				close;
+			}
+			if (countitem(549) > 0) {
+				mes "[Abies]";
+				mes "What is it?";
+				mes "What are you putting into my mouth!";
+				mes "Arrrr!";
+				mes "Tut tut...yuk......";
+				next;
+				mes "[Abies]";
+				mes "Woot... This tastes like...";
+				mes "a Rudolf dancing through";
+				mes "a Christmas carroll!";
+				mes "Wow.. This is a really Nice Sweet Potato..~";
+				setquest 1208;
+				completequest 1208;
+				delitem 549, 1; // Nice_Sweet_Potato
+				close;
+			} else {
+				mes "Sweet Potato Little Santa gave me";
+				mes "is all gone. Let's go get some more.";
+				close;
+			}
+		} else if (.@miting_01 == 2) {
+			mes "[Abies]";
+			mes "Will you give me more Sweet Potato?";
+			mes "Come on!";
+			close;
+		}
+	} else if (evt_2011_xmas > 15) {
+		mes "[Abies]";
+		mes "I can actually picture a Rudolf dancing through";
+		mes "the Christmas carroll.";
+		mes "Wow.. What a Sweet Potato this is..~";
+		close;
+	}
+}
+
+xmas,145,218,7	script	Cedrus#mas	XMAS_SMOKEY_Y,{
+	.@miting_02 = isbegin_quest(1209);
+
+	if (evt_2011_xmas < 15) {
+		mes "[Cedrus]";
+		mes "Give me the present!";
+		mes "I can't wait, give me right now!";
+		mes "I want a utility pole!";
+		close;
+	} else if (evt_2011_xmas == 15) {
+		if (.@miting_02 == 0) {
+			mes "[Cedrus]";
+			mes "Give me the present!";
+			mes "I can't wait, give me right now!";
+			mes "I want a utility pole!";
+			next;
+			if (select("Not a chance!", "Feed the Sweet potato.") == 1) {
+				mes "[Cedrus]";
+				mes "Well, then I want a Manhole cover!";
+				close;
+			}
+			if (countitem(549) > 0) {
+				mes "[Cedrus]";
+				mes "What is it?";
+				mes "What are you putting into my mouth!";
+				mes "Arrrr!";
+				mes "Tut tut...yuk......";
+				next;
+				mes "[Cedrus]";
+				mes "Oh my gosh...";
+				mes "This tastes like sweet potatoes";
+				mes "twinkling like a tree light,";
+				mes "inside my head!";
+				mes "What a sweet potato..~";
+				setquest 1209;
+				completequest 1209;
+				delitem 549, 1; // Nice_Sweet_Potato
+				close;
+			} else {
+				mes "Sweet Potato Little Santa gave me";
+				mes "is all gone. Let's go get some more.";
+				close;
+			}
+		} else if (.@miting_02 == 2) {
+			mes "[Cedrus]";
+			mes "I need more sweet potato!";
+			mes "More more!";
+			close;
+		}
+	} else if (evt_2011_xmas > 15) {
+		mes "[Cedrus]";
+		mes "This tastes like sweet potatoes";
+		mes "twinkling like a tree light,";
+		mes "inside my head!";
+		mes "What a sweet potato..~";
+		close;
+	}
+}
+
+xmas,150,219,1	script	Wisteria#mas	XMAS_SMOKEY_B,{
+	.@miting_03 = isbegin_quest(1210);
+
+	if (evt_2011_xmas < 15) {
+		mes "[Wisteria]";
+		mes "Give me present!";
+		mes "Give me house!";
+		mes "Give me Prontera church!";
+		close;
+	} else if (evt_2011_xmas == 15) {
+		if (.@miting_03 == 0) {
+			mes "[Wisteria]";
+			mes "Let's set aside personal wish,";
+			mes "and focus on our future home";
+			mes "Prontera church!";
+			mes "Come on everybody, say it!";
+			mes "Give! Us! Prontera! Church!";
+			next;
+			if (select("Not a chance!", "Feed the Sweet potato.") == 1) {
+				mes "[Wisteria]";
+				mes "We shall never give up!";
+				close;
+			}
+			if (countitem(549) > 0) {
+				mes "[Wisteria]";
+				mes "What is it?";
+				mes "What are you putting into my mouth!";
+				mes "Arrrr!";
+				mes "Tut tut...yuk......";
+				next;
+				mes "[Wisteria]";
+				mes "Wow...";
+				mes "This tastes so deep,";
+				mes "that makes me almost cry in this winter time!";
+				mes "What a sweet potato~!";
+				setquest 1210;
+				completequest 1210;
+				delitem 549, 1; // Nice_Sweet_Potato
+				close;
+			} else {
+				mes "Sweet Potato Little Santa gave me";
+				mes "is all gone. Let's go get some more.";
+				close;
+			}
+		}
+	} else if (evt_2011_xmas > 15) {
+		mes "[Wisteria]";
+		mes "This tastes so deep,";
+		mes "that makes me almost cry in this winter time!";
+		mes "What a sweet potato~!";
+		close;
+	}
+}
+
+xmas,144,215,7	script	Tobira#mas	XMAS_SMOKEY_R,{
+	.@miting_04 = isbegin_quest(1211);
+
+	if (evt_2011_xmas < 15) {
+		mes "[Tobira]";
+		mes "Give me present!";
+		mes "I want 2 cannon ball!";
+		close;
+	} else if (evt_2011_xmas == 15) {
+		if (.@miting_04 == 0) {
+			mes "[Tobira]";
+			mes "Give me present!";
+			mes "I want 2 cannon ball!";
+			next;
+			if (select("Not a chance!", "Feed the Sweet potato.") == 1) {
+				mes "[Tobira]";
+				mes "I'll bite you!";
+				close;
+			}
+			if (countitem(549) > 0) {
+				mes "[Tobira]";
+				mes "What is it?";
+				mes "What are you putting into my mouth!";
+				mes "Arrrr!";
+				mes "Tut tut...yuk......";
+				next;
+				mes "[Tobira]";
+				mes "Ah Ah... I'm speechless";
+				mes "from this crazy delicious taste!";
+				mes "Oh, my precious sweet potato!";
+				setquest 1211;
+				completequest 1211;
+				delitem 549, 1; // Nice_Sweet_Potato
+				close;
+			} else {
+				mes "Sweet Potato Little Santa gave me";
+				mes "is all gone. Let's go get some more.";
+				close;
+			}
+		}
+	} else if (evt_2011_xmas > 15) {
+		mes "[Tobira]";
+		mes "Ah Ah... I'm speechless";
+		mes "from this crazy delicious taste!";
+		mes "Oh, my precious sweet potato!";
+		close;
+	}
+}
+
+xmas,149,214,1	script	Prunus#mas	XMAS_SMOKEY_B,{
+	.@miting_05 = isbegin_quest(1212);
+
+	if (evt_2011_xmas < 15) {
+		mes "[Prunus]";
+		mes "Present! I want present!";
+		mes "Give me Flying ship!";
+		close;
+	} else if (evt_2011_xmas == 15) {
+		if (.@miting_05 == 0) {
+			mes "[Prunus]";
+			mes "Present! I want present!";
+			mes "Give me Flying ship!";
+			next;
+			if (select("Not a chance!", "Feed the Sweet potato.") == 1) {
+				mes "[Prunus]";
+				mes "At least give me";
+				mes "a Submarine!";
+				close;
+			}
+			if (countitem(549) > 0) {
+				mes "[Prunus]";
+				mes "What is it?";
+				mes "What are you putting into my mouth!";
+				mes "Arrrr!";
+				mes "Tut tut...yuk......";
+				next;
+				mes "[Prunus]";
+				mes "Oh.. Wow...";
+				mes "Even a little bady would stop crying";
+				mes "with this kind of taste!";
+				mes "You little tasty sweet potato you!";
+				setquest 1212;
+				completequest 1212;
+				delitem 549, 1; // Nice_Sweet_Potato
+				close;
+			} else {
+				mes "Sweet Potato Little Santa gave me";
+				mes "is all gone. Let's go get some more.";
+				close;
+			}
+		} else if (.@miting_05 == 2) {
+			mes "[Prunus]";
+			mes "Surprising taste!";
+			mes "Give me some more!";
+			mes "My sweet potato~!";
+			close;
+		}
+	} else if (evt_2011_xmas > 15) {
+		mes "[Prunus]";
+		mes "Oh.. Wow...";
+		mes "Even a little bady would stop crying";
+		mes "with this kind of taste!";
+		mes "You little tasty sweet potato you!";
+		close;
+	}
+}
+
+prontera,149,169,5	script	Kalopanax#mas	XMAS_SMOKEY_Y,{
+	if (evt_2011_xmas < 17) {
+		mes "[Kalopanax]";
+		mes "So, it is true that we get more presents";
+		mes "by the size of our Christmas socks??";
+		mes "I will make another socks";
+		mes "and get a Carousel!";
+		mes "I may need some fabric off from";
+		mes "Quercus' socks.";
+		next;
+		mes "[Quercus]";
+		mes "Stop!";
+		mes "Leave my fabric alone!!!";
+		emotion ET_FRET, "Quercus#mas";
+		close;
+	} else if (evt_2011_xmas > 16) {
+		mes "[Kalopanax]";
+		mes "For Christmas, there's nothing better";
+		mes "than a sweet potato!";
+		emotion ET_BEST;
+		close;
+	}
+}
+
+prontera,153,173,1	script	Tilia#mas	XMAS_SMOKEY_R,{
+	if (evt_2011_xmas < 17) {
+		mes "[Tilia]";
+		mes "Let's get ma a present~";
+		mes "Let's make a really big Christmas socks~";
+		next;
+		mes "[Quercus]";
+		mes "Come, on!";
+		mes "Stop taking fabrics from me!";
+		emotion ET_FRET, "Quercus#mas";
+		close;
+	} else if (evt_2011_xmas > 16) {
+		mes "[Tilia]";
+		mes "For Christmas, there's nothing better";
+		mes "than a sweet potato!";
+		emotion ET_BEST;
+		close;
+	}
+}
+
+prontera,155,168,1	script	Camphora#mas	XMAS_SMOKEY_B,{
+	if (evt_2011_xmas < 17) {
+		mes "[Camphora]";
+		mes "Quercus sure knows how to make Christmas socks.";
+		mes "It should be ok for me to take a bit of fabric~";
+		next;
+		mes "[Quercus]";
+		mes "Come, on!";
+		mes "Stop taking fabrics from me!";
+		emotion ET_FRET, "Quercus#mas";
+		close;
+	} else if (evt_2011_xmas > 16) {
+		mes "[Camphora]";
+		mes "For Christmas, there's nothing better";
+		mes "than a sweet potato!";
+		emotion ET_BEST;
+		close;
+	}
+}
+
+// - Christmas Reporter
+// -----------------------------------------------------------
+
+morocc,165,279,3	script	Christmas Reporter#ch::xmasReporter	XMAS_SMOKEY_R,{
+	mes "[Christmas Reporter]";
+	mes "Live from homeless Racoons' community,";
+	mes "Raccoon Hurray Team is making a big socks to";
+	mes "win a grand present for this Christmas time";
+	mes "in Prontera.";
+	mes "They are big, really big!";
+	next;
+	mes "[Christmas Reporter]";
+	mes "You should come help these racoons";
+	mes "making Christmas socks.";
+	mes "Isn't that what Christmast do!";
+	close;
+}
+
+veins,196,112,5	duplicate(xmasReporter)	Christmas Reporter#ch1	XMAS_SMOKEY_B
+rachel,123,139,3	duplicate(xmasReporter)	Christmas Reporter#ch2	XMAS_SMOKEY_Y
+lighthalzen,150,99,5	duplicate(xmasReporter)	Christmas Reporter#ch3	XMAS_SMOKEY_R
+einbroch,249,208,3	duplicate(xmasReporter)	Christmas Reporter#ch4	XMAS_SMOKEY_B
+comodo,207,151,3	duplicate(xmasReporter)	Christmas Reporter#ch5	XMAS_SMOKEY_Y
+yuno,158,182,3	duplicate(xmasReporter)	Christmas Reporter#ch6	XMAS_SMOKEY_R
+payon,176,116,3	duplicate(xmasReporter)	Christmas Reporter#ch7	XMAS_SMOKEY_B
+izlude,131,103,3	duplicate(xmasReporter)	Christmas Reporter#ch8	XMAS_SMOKEY_Y
+alberta,127,59,3	duplicate(xmasReporter)	Christmas Reporter#ch9	XMAS_SMOKEY_R
+
+// - Management NPC (GM Tool)
+// -----------------------------------------------------------
+
+prontera,1,2,5	script	Christmas Assistant#mas	4_MASK_SMOKEY,{
+	input .@password;
+
+	if (.@password != 1854) {
+		mes "Nice sweet potato!";
+		close;
+	}
+
+	mes "[Coal Briquet Plan]";
+	mes "Tell me";
+	mes "everything you want!";
+	next;
+	switch(select("Enable NPC", "Disable NPC", "Initialize Quest", "Castanea ¼±ÅÃÁö", "Pyrus ¼±ÅÃÁö", "¹ã°í±¸¸¶ ¹èÆ÷ Á÷Àü", "Setitem8")) {
+		case 1:
+			enablenpc "Quercus#mas";
+			mes "[Coal Briquet Plan]";
+			mes "to make NPC appear!";
+			close;
+		case 2:
+			disablenpc "Quercus#mas";
+			mes "[Coal Briquet Plan]";
+			mes "to make NPC disappear!";
+			close;
+		case 3:
+		  mes "[Coal Briquet Plan]";
+		  mes "There you go!";
+		  evt_2011_xmas = 0;
+		  erasequest 1194, 1213;
+		  close;
+		case 4:
+			mes "[Coal Briquet Plan]";
+			mes "There you go!";
+			evt_2011_xmas = 3;
+			close;
+		case 5:
+			mes "[Coal Briquet Plan]";
+			mes "There you go!";
+			evt_2011_xmas = 9;
+			close;
+		case 6:
+			mes "[Coal Briquet Plan]";
+			mes "There you go!";
+			setquest 1207;
+			evt_2011_xmas = 14;
+			close;
+		case 7:
+			mes "[Coal Briquet Plan]";
+			mes "There you go!";
+			evt_2011_xmas = 8;
+			close;
+	}
+}
+
+// - Monster Spawns
+// -----------------------------------------------------------
+
+sec_in02,39,175	monster	Greatest General	1277,1,0
+gld_dun01_2,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gld_dun02_2,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gld_dun03_2,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gld_dun04_2,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gld2_ald,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gld2_gef,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gld2_pay,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gld2_prt,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lhz_dun04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+iz_dun05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mal_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+dic_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+dew_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+dew_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+dew_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mal_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+iz_dun05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+man_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+man_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+spl_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+spl_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+man_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+spl_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+nyd_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+bra_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+bra_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+bra_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+dic_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+dic_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+dic_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+dic_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+bif_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+bif_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+abbey01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+abbey02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+abbey03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+abyss_01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+abyss_02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+abyss_03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+alde_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+alde_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+alde_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+alde_dun04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ama_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ama_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ama_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ama_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+anthell01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+anthell02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ayo_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ayo_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ayo_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ayo_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+beach_dun,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+beach_dun2,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+beach_dun3,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+c_tower1,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+c_tower2,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+c_tower3,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+c_tower4,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+cmd_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+cmd_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+cmd_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+cmd_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+cmd_fild06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+cmd_fild07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+cmd_fild08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+cmd_fild09,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ein_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ein_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ein_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ein_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ein_fild05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ein_fild06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ein_fild07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ein_fild08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ein_fild09,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_dun00,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild00,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild09,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild10,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild11,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gef_fild13,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gefenia01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gefenia02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gefenia03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gefenia04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_cas01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_cas02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_church,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_chyard,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_in01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_knt01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_knt02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_prison,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_prison1,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_sew01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_sew02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_sew03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_sew04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gl_step,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+glast_01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gon_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gon_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gon_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gon_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+hu_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+hu_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+hu_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+hu_fild05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+hu_fild06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ice_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ice_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ice_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+in_sphinx1,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+in_sphinx2,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+in_sphinx3,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+in_sphinx4,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+in_sphinx5,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+iz_dun00,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+iz_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+iz_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+iz_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+iz_dun04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+jupe_core,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+juperos_01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+juperos_02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+kh_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+kh_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lhz_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lhz_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lhz_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lhz_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lhz_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lhz_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lou_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lou_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lou_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+lou_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mag_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mag_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+man_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjo_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjo_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjo_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_09,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_10,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_11,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+mjolnir_12,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild09,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild10,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild11,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild12,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild13,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild14,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild15,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild16,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild17,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_fild18,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_pryd01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_pryd02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_pryd03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_pryd04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_pryd05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+moc_pryd06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+nameless_n,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+nif_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+nif_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+nyd_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+odin_tem01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+odin_tem02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+odin_tem03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+orcsdun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+orcsdun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_dun00,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_dun04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_fild06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_fild07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_fild08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_fild09,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+pay_fild10,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild00,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild09,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild10,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_fild11,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_maze01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_maze02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_maze03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_sewb1,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_sewb2,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+prt_sewb3,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_fild05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_fild06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_fild08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_fild12,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_san01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_san02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_san03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_san04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ra_san05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+spl_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t09,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t10,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t11,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tha_t12,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+thor_v01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+thor_v02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+thor_v03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+treasure01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+treasure02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tur_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tur_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tur_dun03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+tur_dun04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+um_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+um_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+um_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+um_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ve_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ve_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ve_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ve_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ve_fild05,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+ve_fild07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+xmas_dun01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+xmas_dun02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+xmas_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild01,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild02,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild03,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild04,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild06,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild07,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild08,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild09,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild10,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+yuno_fild12,0,0	monster	Gift Stealing Raccoon	2380,3,5000
+gld_dun01_2,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gld_dun02_2,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gld_dun03_2,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gld_dun04_2,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gld2_ald,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gld2_gef,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gld2_pay,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gld2_prt,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lhz_dun04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+iz_dun05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mal_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+dic_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+dew_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+dew_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+dew_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mal_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+iz_dun05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+man_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+man_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+spl_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+spl_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+man_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+spl_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+nyd_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+bra_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+bra_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+bra_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+dic_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+dic_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+dic_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+dic_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+bif_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+bif_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+abbey01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+abbey02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+abbey03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+abyss_01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+abyss_02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+abyss_03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+alde_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+alde_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+alde_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+alde_dun04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ama_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ama_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ama_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ama_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+anthell01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+anthell02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ayo_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ayo_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ayo_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ayo_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+beach_dun,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+beach_dun2,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+beach_dun3,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+c_tower1,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+c_tower2,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+c_tower3,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+c_tower4,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+cmd_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+cmd_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+cmd_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+cmd_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+cmd_fild06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+cmd_fild07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+cmd_fild08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+cmd_fild09,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ein_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ein_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ein_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ein_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ein_fild05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ein_fild06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ein_fild07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ein_fild08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ein_fild09,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_dun00,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild00,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild09,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild10,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild11,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gef_fild13,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gefenia01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gefenia02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gefenia03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gefenia04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_cas01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_cas02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_church,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_chyard,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_in01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_knt01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_knt02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_prison,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_prison1,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_sew01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_sew02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_sew03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_sew04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gl_step,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+glast_01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gon_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gon_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gon_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+gon_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+hu_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+hu_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+hu_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+hu_fild05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+hu_fild06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ice_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ice_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ice_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+in_sphinx1,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+in_sphinx2,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+in_sphinx3,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+in_sphinx4,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+in_sphinx5,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+iz_dun00,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+iz_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+iz_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+iz_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+iz_dun04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+jupe_core,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+juperos_01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+juperos_02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+kh_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+kh_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lhz_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lhz_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lhz_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lhz_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lhz_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lhz_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lou_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lou_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lou_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+lou_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mag_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mag_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+man_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjo_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjo_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjo_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_09,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_10,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_11,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+mjolnir_12,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild09,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild10,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild11,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild12,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild13,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild14,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild15,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild16,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild17,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_fild18,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_pryd01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_pryd02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_pryd03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_pryd04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_pryd05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+moc_pryd06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+nameless_n,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+nif_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+nif_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+nyd_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+odin_tem01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+odin_tem02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+odin_tem03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+orcsdun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+orcsdun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_dun00,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_dun04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_fild06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_fild07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_fild08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_fild09,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+pay_fild10,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild00,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild09,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild10,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_fild11,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_maze01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_maze02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_maze03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_sewb1,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_sewb2,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+prt_sewb3,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_fild05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_fild06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_fild08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_fild12,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_san01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_san02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_san03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_san04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ra_san05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+spl_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t09,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t10,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t11,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tha_t12,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+thor_v01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+thor_v02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+thor_v03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+treasure01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+treasure02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tur_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tur_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tur_dun03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+tur_dun04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+um_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+um_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+um_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+um_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ve_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ve_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ve_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ve_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ve_fild05,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+ve_fild07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+xmas_dun01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+xmas_dun02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+xmas_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild01,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild02,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild03,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild04,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild06,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild07,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild08,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild09,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild10,0,0	monster	Socks Stealing Raccoon	2379,3,5000
+yuno_fild12,0,0	monster	Socks Stealing Raccoon	2379,3,5000

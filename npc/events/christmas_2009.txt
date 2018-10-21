@@ -1,0 +1,1403 @@
+//===== rAthena Script =======================================
+//= Christmas Event (2009)
+//===== Description: =========================================
+//= [Official Conversion]
+//= Save Misty the Kafra by collecting 'Illusion Pieces'.
+//= Personalized gift wrapping services.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Kisuka]
+//============================================================
+
+// - Usher
+// -----------------------------------------------------------
+
+-	script	#xmas09usher::09xmasUsher	-1,{
+	mes "[Event Usher]";
+	mes "Hello.";
+	mes "If you go to ^8B4513Lutie^000000 town,";
+	mes "You can take a";
+	mes "special kafra service in";
+	mes "Santa's house.";
+	next;
+	if (select("Pass by.", "Move to ^8B4513Lutie^000000!") == 1) {
+		mes "[Event Usher]";
+		mes "I hope you";
+		mes "visit our ^8B4513Lutie^000000";
+		mes "town later.";
+		close;
+	}
+	mes "[Event Usher]";
+	mes "Go to find";
+	mes "Santa's house in";
+	mes "^8B4513Lutie^000000 town~!";
+	close2;
+	warp "xmas", 145, 218;
+	end;
+
+	OnInit:
+		initnpctimer;
+		end;
+
+	OnTimer10000:
+		emotion ET_SURPRISE;
+		stopnpctimer;
+		initnpctimer;
+		end;
+}
+
+yuno,166,187,5	duplicate(09xmasUsher)	Event Usher#xmas_01	4_F_KID3
+aldebaran,133,116,7	duplicate(09xmasUsher)	Event Usher#xmas_02	4_F_KID3
+geffen,128,69,5	duplicate(09xmasUsher)	Event Usher#xmas_03	4_F_KID3
+prontera,150,86,5	duplicate(09xmasUsher)	Event Usher#xmas_04	4_F_KID3
+payon,186,101,5	duplicate(09xmasUsher)	Event Usher#xmas_05	4_F_KID3
+morocc,163,41,5	duplicate(09xmasUsher)	Event Usher#xmas_06	4_F_KID3
+alberta,117,65,5	duplicate(09xmasUsher)	Event Usher#xmas_07	4_F_KID3
+
+// - Kafra
+// -----------------------------------------------------------
+
+xmas_in,110,94,5	script	Diforte#xmas	4_F_KAFRA1,1,1,{
+	cutin "kafra_01", 2;
+	mes "[kafra Diforte]";
+	mes "Hello.";
+	mes "It's Kafra service.";
+	mes "We give a";
+	mes "^006400Gift Wrapping Service^000000";
+	mes "for special christmas.";
+	next;
+	switch(select("About ^006400Gift Wrapping Service^000000", "Move to ^8B4513Prontera^000000", "Pass by.")) {
+	case 1:
+		mes "[kafra Diforte]";
+		mes "It's a service";
+		mes "to wrap a present for";
+		mes "your friends,";
+		mes "family and partner.";
+		next;
+		mes "[kafra Diforte]";
+		mes "We carve a person's";
+		mes "name who sends a present as well.";
+		mes "You can use this ^006400Gift Wrapping Service^000000";
+		mes "during christmas";
+		mes "season.";
+		next;
+		mes "[kafra Diforte]";
+		mes "If you want to have a happy Christmas";
+		mes "with happiness of someone";
+		mes "who recieve that and";
+		mes "the best wishes of a person who sends,";
+		mes "I recommend this service to you.";
+		close2;
+		cutin "", 255;
+		end;
+	case 2:
+		mes "[kafra Diforte]";
+		mes "For a period of special service,";
+		mes "we offer to moving service to ^8B4513Prontera^000000";
+		mes "for free";
+		mes "only in this area.";
+		next;
+		if (select("Go now!", "Cancel~!") == 2) {
+			mes "[Kafra Diforte]";
+			mes "I see.";
+			mes "I hope you have a";
+			mes "merry Christmas.";
+			close2;
+			cutin "", 255;
+			end;
+		}
+		mes "[Kafra Diforte]";
+		mes "Good bye.";
+		close2;
+		cutin "", 255;
+		warp "prontera", 116, 72;
+		end;
+	case 3:
+		mes "[kafra Diforte]";
+		mes "I hope you have a";
+		mes "merry Christmas.";
+		close2;
+		cutin "", 255;
+		end;
+	}
+}
+
+xmas_in,110,96,5	script	Tayelin#xmas	4_F_KAFRA2,1,1,{
+	cutin "kafra_02", 2;
+	mes "[kafra Tayelin]";
+	mes "In Christmas season,";
+	mes "It's a ";
+	mes "^006400Gift Wrapping Service^000000 as a special kafra event!";
+	mes "Take a present with decoration";
+	mes "that anyone likes when they";
+	mes "take this present.";
+	next;
+	if (select("^006400Decorate a present.^000000", "Stop talking.") == 2) {
+		mes "[kafra Tayelin]";
+		mes "Feel free ask to me ";
+		mes "whenever you need a present to wrap.";
+		mes "Ask to ";
+		mes "^0000FFSorin^000000 standing over there about stuff you need.";
+		mes "Good bye.";
+		close2;
+	} else {
+		if (countitem(644) > 0 && countitem(7174) > 0 && countitem(7175) > 0 && Zeny > 499) {
+			mes "[kafra Tayelin]";
+			mes "Do you want to decorate a present?";
+			mes "Eventhough I don't know who";
+			mes "will get this present he";
+			mes "really happy for it!";
+			mes "I'll wrap this present with all my heart.";
+			next;
+			.@box_type = rand(1, 4);
+			delitem 644, 1; // Gift_Box
+			delitem 7174, 1; // Packing_Ribbon
+			delitem 7175, 1; // Packing_Paper
+			Zeny = Zeny - 500;
+			if (.@box_type == 1) {
+				getitem 664, 1; // Gift_Box_1
+			} else if (.@box_type == 2) {
+				getitem 665, 1; // Gift_Box_2
+			} else if (.@box_type == 3) {
+				getitem 666, 1; // Gift_Box_3
+			} else {
+				getitem 667, 1; // Gift_Box_4
+			}
+			specialeffect EF_BOWLINGSELF;
+			mes "[kafra Tayelin]";
+			mes "Here you are.";
+			mes "I decorated a present with";
+			mes "stuff you bring.";
+			mes "Feel free ask to me whenever";
+			mes "you need a present to wrap.";
+			close2;
+		} else {
+			mes "[kafra Tayelin]";
+			mes "When you use a ^006400Gift Wrapping Service^000000,";
+			mes "you need some stuff.";
+			mes "Ask to ";
+			mes "^0000FFSorin^000000 standing over there about";
+			mes "stuff you need.";
+			close2;
+		}
+	}
+	cutin "", 255;
+	end;
+}
+
+xmas_in,110,92,5	script	Sorin#xmas	4_F_KAFRA3,1,1,{
+	cutin "kafra_03", 2;
+	mes "[kafra Sorin]";
+	mes "Hi~!";
+	mes "As a special kafra event,";
+	mes "It's a ^006400Gift Wrapping Service^000000!";
+	next;
+	if (select("About ^006400Gift Wrapping Service^000000", "Pass by.") == 2) {
+		mes "[kafra Sorin]";
+		mes "Good bye~!";
+	} else {
+		mes "[kafra Sorin]";
+		mes "I'm going to let you know";
+		mes "about the stuff which you need.";
+		mes "Listen carefully and get it.";
+		next;
+		mes "[kafra Sorin]";
+		mes "First, you need a ^006400gift box^000000";
+		mes "for wrapping?";
+		mes "We can't use a wrapping";
+		mes "paper without a present,right?";
+		next;
+		mes "[kafra Sorin]";
+		mes "And you need a ^006400packing paper^000000 and ^006400packing ribbon^000000.";
+		mes "You have to get it.";
+		mes "We'd like to get that";
+		mes "stuff by ourselves but there";
+		mes "are someone who disturbs us";
+		mes "so we can't do that for you.";
+		next;
+		mes "[kafra Sorin]";
+		mes "I'll wait for proper timing!";
+		mes " ";
+		mes "Huuhu...";
+		mes "It's never finished";
+		mes "with calmness!";
+		next;
+		emotion ET_SHY;
+		mes "[kafra Sorin]";
+		mes ".......";
+		mes "Ah, what did I say.. hehehe.";
+		mes "Forget what I just told you.";
+		mes "Hum, and";
+		mes "Except wrapping stuff, I need 500 zeny^000000";
+		mes " ^006400a commission.";
+		next;
+		mes "[kafra Sorin]";
+		mes "Then, Let's summary.";
+		mes "^3355FFa gift box";
+		mes "A packing paper";
+		mes "A packing ribbon";
+		mes "500 zeny^000000.";
+		next;
+		mes "[kafra Sorin]";
+		mes "If you get every stuff, and go to";
+		mes "^0000FFTayelin^000000,";
+		mes "she will wrap a present for you.";
+		mes "Our kafra service is always with";
+		mes "you even in Christmas~!";
+	}
+	close2;
+	cutin "", 255;
+	end;
+}
+
+xmas_in,93,99,5	script	Binit#xmas	4_F_KAFRA4,1,1,{
+	cutin "kafra_04", 2;
+	mes "[kafra Binit]";
+	mes "Hello.";
+	mes "It's a kafra service for Christmas.";
+	next;
+	switch(select("About ^006400this special event^000000", "Move to ^8B4513Yuno^000000", "Pass by.")) {
+	case 1:
+		mes "[kafra Binit]";
+		mes "Um.......";
+		mes "You can hear about this";
+		mes "event from others ";
+		mes "so I'll tell you more ";
+		mes "confidential talk.";
+		next;
+		mes "[kafra Binit]";
+		mes "A villain who take presents";
+		mes "that gives to people ";
+		mes "away and attack";
+		next;
+		mes "[kafra Binit]";
+		mes "our storage is";
+		mes "^FF0000Antonio^000000that he is a fake Santa";
+		mes "and his button man.";
+		next;
+		mes "[kafra Binit]";
+		mes "The reason that ^FF0000Antonio^000000";
+		mes "does bad behavior";
+		mes "are very various.";
+		mes "But the most confidence";
+		mes "story comes next.";
+		next;
+		if (select("^006400Listen more.^000000", "Pass by.") == 2) {
+			mes "[kafra Binit]";
+			mes "Ah,I told you a lot.";
+			mes "Good bye.";
+		} else {
+			mes "[kafra Binit]";
+			mes "Everyone got presents from Santa";
+			mes "when they are young,";
+			mes "but ^FF0000Antonio^000000's father said that";
+			mes "^FF0000there is no Santa^000000.";
+			next;
+			mes "[kafra Binit]";
+			mes "Anyway, with that reason";
+			mes "^FF0000Antonio^000000hates people who";
+			mes "has happier memories";
+			mes "than his own.";
+			next;
+			mes "[kafra Binit]";
+			mes "If you don't mind,";
+			mes "give monsters";
+			mes "who wearing Santa hat what-for.";
+			mes "The robber that attack";
+			mes "our storage are ^FF0000Antonio^000000's members.";
+			next;
+			mes "[kafra Binit]";
+			mes "I don't know anymore.";
+			mes "However, ";
+			mes "I think the boy who is standing";
+			mes "in front of entrance of toy dungeon in north of";
+			mes "town knows more";
+			mes "something than me!";
+		}
+		close2;
+		cutin "", 255;
+		end;
+	case 2:
+		mes "[kafra Binit]";
+		mes "We offer to moving sevice to";
+		mes "^8B4513Yuno^000000during special";
+		mes "service period for free.";
+		next;
+		if (select("Go now!", "Cancel~!") == 2) {
+			mes "[kafra Binit]";
+			mes "I see.";
+			mes "Have a nice day~!";
+			close2;
+			cutin "", 255;
+			end;
+		}
+		mes "[kafra Binit]";
+		mes "Good bye.";
+		close2;
+		cutin "", 255;
+		warp "yuno", 158, 125;
+		end;
+	case 3:
+		mes "[kafra Binit]";
+		mes "Good bye.";
+		close2;
+		cutin "", 255;
+		end;
+	}
+}
+
+xmas_in,97,99,5	script	Claris#xmas	4_F_KAFRA5,1,1,{
+	cutin "kafra_05", 2;
+	mes "[kafra Claris]";
+	mes "It's kafra service.";
+	mes "What can I do for you?";
+	next;
+	switch(select("Use cargo service", "Use cart service", "Stop it.")) {
+		case 1:
+			if (!callfunc("F_CanOpenStorage")) {
+				mes "[kafra Claris]";
+				mes "I'm sorry, sir.";
+				mes "If you use a storage,";
+				mes "You have to be^006400over 6 of basic level^000000";
+				mes "when you want to use.";
+				close2;
+			} else if (countitem(7059) != 0 || Zeny > 99) {
+				if (countitem(7059) != 0) {
+					delitem 7059, 1; // Cargo_Free_Ticket
+				} else {
+					RESRVPTS += 10;
+					Zeny = Zeny - 100;
+				}
+				mes "[kafra Claris]";
+				mes "I open the cargo.";
+				mes "Thank you for using service.";
+				close2;
+				callfunc("F_CheckKafCode");	//check your storage password, if set
+				openstorage;
+			} else {
+				mes "[kafra Claris]";
+				mes "Sir,";
+				mes "You run short of zeny for paying.";
+				mes "The ^006400money for using cargo is 100 zeny^000000.";
+				close2;
+			}
+			break;
+		case 2:
+			if (BaseClass != Job_Merchant) {
+				mes "[kafra Claris]";
+				mes "I'm sorry.";
+				mes "The person who has";
+				mes "a job of merchant can only";
+				mes "use this cart service.";
+				close2;
+			} else if (checkcart() == true) {
+				mes "[kafra Claris]";
+				mes "You already";
+				mes "have a cart.";
+				close2;
+			} else {
+				if (getskilllv("MC_PUSHCART") == 0) {
+					mes "[kafra Claris]";
+					mes "You have ^006400Push cart^000000 skill,";
+					mes "If you want";
+					mes "to use a cart.";
+					close2;
+					cutin "", 255;
+					end;
+				}
+
+				if (countitem(7061) > 0) {
+					delitem 7061, 1; // Cart_Free_Ticket
+					setcart;
+				} else {
+					mes "[kafra Claris]";
+					mes "It's 800 zeny for";
+					mes "using a cart.";
+					mes "Will you use it?";
+					next;
+					if (select("Use it.", "Cancel!") == 2) {
+						mes "[kafra Claris]";
+						mes "Good bye.";
+						close2;
+					} else {
+						if (Zeny >= 800) {
+							Zeny = Zeny - 800;
+							RESRVPTS += 8;
+							mes "[kafra Claris]";
+							mes "Thanks for";
+							mes "using our service.";
+							mes "Good bye.";
+							close2;
+							setcart;
+						} else {
+							mes "[kafra Claris]";
+							mes "Sir.";
+							mes "You run short of zeny for paying.";
+							mes "The money for using cargo is";
+							mes "800 zeny.";
+							close2;
+							cutin "", 255;
+							end;
+						}
+					}
+				}
+			}
+			break;
+		case 3:
+			mes "[kafra Claris]";
+			mes "We always do our";
+			mes "best to make our customer";
+			mes "use a service";
+			mes "in Christmas";
+			mes "with safe.";
+			close2;
+			break;
+	}
+	cutin "", 255;
+	enable_items;
+	end;
+}
+
+xmas_in,104,99,5	script	Debril#xmas	4_F_KAFRA6,1,1,{
+	disable_items;
+
+	if (evt_2009_xmas < 318) {
+		cutin "kafra_06", 2;
+		mes "[kafra Debril]";
+		mes "Hello~";
+		mes "Thanks for";
+		mes "using our service.";
+		mes "Merry Christmas~";
+		next;
+		mes "[kafra Debril]";
+		mes "I'm supporting ^0000FFTayelin^000000";
+		mes "to wrap a present.";
+		mes "^006400I write down the name";
+		mes "on box decorated.^000000";
+		next;
+		mes "[kafra Debril]";
+		mes "I can have a mistake";
+		mes "like writting the same name again ";
+		mes "on the box written name,";
+		next;
+		mes "[kafra Debril]";
+		mes "so when you bring";
+		mes "a new box,";
+		mes "I recommend that you";
+		mes "have to keep the box";
+		mes "written name first.";
+		next;
+		mes "[kafra Debril]";
+		mes "Ah~ anyway";
+		mes "It must be more fun,";
+		mes "but we have";
+		mes "problem whenever";
+		mes "big event is held.";
+		next;
+		.@menu = select("Write down name on the red gift box", "Write down name on the yellow gift box", "Write down name on the blue gift box", "Write down name on the green gift box", "^006400Comfort her.^000000");
+	} else {
+		cutin "kafra_06", 2;
+		mes "[kafra Debril]";
+		mes "When I got Christmas present,";
+		mes "I feel good.";
+		mes "Merry Christmas~!";
+		next;
+		.@menu = select("Write down name on the red gift box", "Write down name on the yellow gift box", "Write down name on the blue gift box", "Write down name on the green gift box");
+	}
+
+	switch(.@menu) {
+	case 1:
+		.@item = 664; // Gift_Box_1
+		break;
+	case 2:
+		.@item = 665; // Gift_Box_2
+		break;
+	case 3:
+		.@item = 666; // Gift_Box_3
+		break;
+	case 4:
+		.@item = 667; // Gift_Box_4
+		break;
+	case 5:
+		mes "[kafra Debril]";
+		mes "Thank you.";
+		mes "I feel better...";
+		mes "When I got arrive in ^8B4513Lutie^000000,";
+		mes "^006400I was happy,";
+		mes "but now I feel depressed ";
+		mes "even when I see Santa's hat.^000000";
+		next;
+		if (select("^006400Say you can make her more happy.^000000", "Comfort her.") == 2) {
+			mes "[kafra Debril]";
+			mes "Yes.";
+			mes "Thanks.";
+			mes "Merry Christmas.";
+			close2;
+		} else {
+			mes "[kafra Debril]";
+			mes "Really...?";
+			mes "Say you can make her more happy";
+			mes "make me happy?";
+			emotion ET_QUESTION;
+			next;
+			switch(select("^006400Give a box written named to her.^000000", "I'll give you Santa's hat.", "I'll sing carol for you.", "I'll dance Cosak.")) {
+			case 1:
+				.@slot3 = getcharid(0) & 65535;
+				.@slot4 = getcharid(0) >> 16;
+
+				.@count1 = countitem2(664, 1, 0, 0, 254, 0, .@slot3, .@slot4);
+				.@count2 = countitem2(665, 1, 0, 0, 254, 0, .@slot3, .@slot4);
+				.@count3 = countitem2(666, 1, 0, 0, 254, 0, .@slot3, .@slot4);
+				.@count4 = countitem2(667, 1, 0, 0, 254, 0, .@slot3, .@slot4);
+
+				if (.@count1 == 0 || .@count2 == 0 || .@count3 == 0 || .@count4 == 0) {
+						mes "[kafra Debril]";
+						mes "I think you don't have that.......";
+						mes "I'm busy.";
+						close2;
+						emotion ET_FRET;
+						enable_items;
+						cutin "", 255;
+						end;
+				} else {
+					emotion ET_DELIGHT;
+					mes "[kafra Debril]";
+					mes "Are you sure?";
+					mes "You give a present";
+					mes "decorated to me?";
+					mes "Thanks a lot!";
+					next;
+					if ((MaxWeight - Weight) < 1650) {
+						mes "[kafra Debril]";
+						mes "But I can't take it now.";
+						mes "We can exchange presents each other";
+						mes "when you make your weight light~!";
+						close2;
+						cutin "", 255;
+						enable_items;
+						end;
+					}
+					emotion ET_THANKS;
+					switch(rand(1, 4)) {
+						case 1:
+							delitem2 664, 1, 1, 0, 0, 254, 0, .@slot3, .@slot4;
+							break;
+						case 2:
+							delitem2 665, 1, 1, 0, 0, 254, 0, .@slot3, .@slot4;
+							break;
+						case 3:
+							delitem2 666, 1, 1, 0, 0, 254, 0, .@slot3, .@slot4;
+							break;
+						case 4:
+							delitem2 667, 1, 1, 0, 0, 254, 0, .@slot3, .@slot4;
+							break;
+					}
+					mes "[kafra Debril]";
+					mes "I'm going to give you";
+					mes "something.";
+					mes "Because you gave it to me.";
+					next;
+					mes "[kafra Debril]";
+					mes "Tada~!";
+					mes "Here you are.";
+					mes "Bye~!";
+					emotion ET_CHUP;
+					evt_2009_xmas = 318;
+					getitem 12132, 5; // Red_Bag
+					getitem 12130, 5; // Cookie_Bag
+					getitem 12317, 20; // Powder_Snow
+					.@n_rand_gift = rand(1, 5);
+					if (.@n_rand_gift > 0 && .@n_rand_gift < 3) {
+						getitem 2236, 1; // Santas_Hat
+					} else if (.@n_rand_gift > 2 && .@n_rand_gift < 5) {
+						getitem 5136, 1; // Santas_Hat_
+					} else {
+						getitem 5811, 1; // Santa_Beard
+					}
+					close2;
+					cutin "", 255;
+					enable_items;
+					end;
+				}
+				break;
+			case 2:
+				emotion ET_FRET;
+				mes "[kafra Debril]";
+				mes ".......";
+				mes "No!";
+				close2;
+				break;
+			case 3:
+				if (BaseClass == Job_Bard) {
+					mes "[kafra Debril]";
+					mes "You don't play carol.";
+					mes "Other song...";
+					mes "I don't want to listen now.";
+				} else {
+					mes "[kafra Debril]";
+					mes "I don't want to";
+					mes "listen now.";
+				}
+				close2;
+				break;
+			case 4:
+				if (BaseClass == Job_Dancer) {
+					mes "[kafra Debril]";
+					mes "... No.";
+					mes "You are not matched ";
+					mes "that dance";
+					mes "because you don't dance usually.";
+				} else {
+					emotion ET_THINK;
+					mes "[kafra Debril]";
+					mes ".......";
+					next;
+					emotion ET_THINK;
+					mes "^006400- falter -^000000";
+					next;
+					mes "[kafra Debril]";
+					mes "Stop!";
+					mes "Stop it.";
+					mes "We already knew";
+					mes "that you";
+					mes "can't dance well.";
+					emotion ET_CRY;
+				}
+				close2;
+				break;
+			}
+		}
+		break;
+	}
+
+	if (countitem(.@item) > 0) {
+		mes "[kafra Debril]";
+		mes "Okay.";
+		mes "Wait a sec.";
+		mes "Yapp!";
+		next;
+		specialeffect EF_VOLCANO;
+		emotion ET_CONFUSE;
+		delitem .@item, 1;
+		getnameditem .@item, strcharinfo(0);
+		mes "[kafra Debril]";
+		mes "Ok, here you are.";
+		mes "I don't know who will be taken this present,";
+		mes "he must be happy.......";
+		mes "Good bye.";
+		close2;
+	} else {
+		mes "[kafra Debril]";
+		mes "If you want to write a name on a box,";
+		mes "you have to wrap a present with ^0000FFTayelin^000000 first";
+		mes "over there.";
+		mes "Check it after wrapping,";
+		mes "because we don't know which color comes out.";
+		emotion ET_KIK;
+		close2;
+	}
+	cutin "", 255;
+	enable_items;
+	end;
+}
+
+// -
+// -----------------------------------------------------------
+
+xmas,136,314,6	script	The common boy#xmas	4_M_KID1,{
+	disable_items;
+
+	if ($091203_xmas01 >= $091203_xmas02) {
+		mes "[Retired Santa]";
+		mes "With people's help,";
+		mes "^0000FFMisty^000000could come back.";
+		if (evt_2009_xmas == 322) {
+			next;
+			emotion ET_BEST;
+			mes "[Retired Santa]";
+			mes "Thanks, "+strcharinfo(0)+".";
+			mes "I'll never forget your help.";
+			consumeitem 14550; // Fire_Cracker_Xmas
+			consumeitem 608; // Seed_Of_Yggdrasil
+		}
+		close2;
+		emotion ET_THANKS;
+		enable_items;
+		end;
+	} else {
+		if (evt_2009_xmas < 318) {
+			emotion ET_STARE_ABOUT;
+			mes "[The common boy]";
+			mes "Kafra members";
+			mes "visit to Santa's house";
+			mes "in south from here.";
+			mes "There will be special event~!";
+			close2;
+			enable_items;
+			end;
+		} else if (evt_2009_xmas == 318) {
+			mes "[The common boy]";
+			mes "Christmas comes.";
+			mes "It's always similar to see.";
+			emotion ET_THINK;
+			next;
+			if (select("Ask about who you are.", "Pass by.") == 2) {
+				mes "[The common boy]";
+				mes "Hum.";
+				close2;
+				enable_items;
+				end;
+			}
+			mes "[The common boy]";
+			mes "Christmas comes,";
+			mes "I was Santa";
+			mes "a long time ago.";
+			next;
+			switch(select("Ask about his days.", "Ask why he comes here.", "Ask about Santa.")) {
+				case 1:
+					mes "[Retired Santa]";
+					mes "I'm traveling.";
+					mes "Actually I have a person who I like.";
+					mes "^006400I can't tell you anymore.";
+					mes "Because It's secret.^000000";
+					next;
+					mes "[Retired Santa]";
+					mes "A long time ago, ";
+					mes "when Christmas season comes,";
+					mes "I used to go around for giving";
+					mes "presents to people every night.";
+					next;
+					mes "[Retired Santa]";
+					mes "How was the people's feeling...";
+					mes "I just wonder.";
+					mes "Actually I didn't";
+					mes "take a present when";
+					mes "Christmas time.";
+					close2;
+					enable_items;
+					end;
+				case 2:
+					mes "[Retired Santa]";
+					mes "Hum. I'm sorry, ";
+					mes "but I'm not feeling";
+					mes "to tell you .";
+					mes "It's a big secret.";
+					next;
+					mes "[Retired Santa]";
+					mes "I think that";
+					mes "I can believe a person";
+					mes "who give me a";
+					mes "^006400gift box written name^000000";
+					evt_2009_xmas = 319;
+					close2;
+					enable_items;
+					end;
+				case 3:
+					mes "[Retired Santa]";
+					mes "I respect Santa";
+					mes "with great heart.";
+					mes "Because he is supporting";
+					mes "Christmas event";
+					mes "on a different way with me.";
+					next;
+					mes "[Retired Santa]";
+					mes "So people don't";
+					mes "wait only Santa";
+					mes "to expect";
+					mes "taking a present.";
+					next;
+					mes "[Retired Santa]";
+					mes "They spend happy";
+					mes "Christmas giving";
+					mes "and taking presents";
+					mes "each other.";
+					close2;
+					enable_items;
+					end;
+			}
+		} else if (evt_2009_xmas == 319) {
+			set .@user,getcharid(0,strcharinfo(0));
+			set .@slot3,.@user & 65535;
+			set .@slot4,.@user >> 16;
+			set .@slot1,254;
+			set .@slot2,0;
+
+			.@count1 = !countitem2(664,1,0,0,.@slot1,.@slot2,.@slot3,.@slot4);
+			.@count2 = !countitem2(665,1,0,0,.@slot1,.@slot2,.@slot3,.@slot4);
+			.@count3 = !countitem2(666,1,0,0,.@slot1,.@slot2,.@slot3,.@slot4);
+			.@count4 = !countitem2(667,1,0,0,.@slot1,.@slot2,.@slot3,.@slot4);
+
+			if (.@count1 > 0 || .@count2 > 0 || .@count3 > 0 || .@count4 > 0) {
+				mes "[Retired Santa]";
+				mes "Perhaps, you bring a";
+				mes "^006400gift box written name^000000";
+				mes "for me?";
+				next;
+				if (select("Give a present.", "Say no.") == 2) {
+					mes "[Retired Santa]";
+					mes "I see.";
+					mes "It's a pity but I won't cry.";
+					mes "Santa doesn't";
+					mes "give a present";
+					mes "to a crying child.";
+					close2;
+					enable_items;
+					end;
+				} else {
+					switch(rand(1, 4)) {
+						case 1:
+							delitem2 664,1,1,0,0,.@slot1,.@slot2,.@slot3,.@slot4;
+							break;
+						case 2:
+							delitem2 665,1,1,0,0,.@slot1,.@slot2,.@slot3,.@slot4;
+							break;
+						case 3:
+							delitem2 666,1,1,0,0,.@slot1,.@slot2,.@slot3,.@slot4;
+							break;
+						case 4:
+							delitem2 667,1,1,0,0,.@slot1,.@slot2,.@slot3,.@slot4;
+							break;
+					}
+					mes "[Retired Santa]";
+					mes "Thank you so much.";
+					mes "You are really nice and sweet.";
+					mes "My ^0000FFRodolph^000000must be happy with it.";
+					mes "It's ok that let";
+					mes "you know the secret.";
+					evt_2009_xmas = 320;
+					close2;
+					enable_items;
+					end;
+				}
+			} else {
+				mes "[Retired Santa]";
+				mes "A long time ago, ";
+				mes "when Christmas season comes,";
+				mes "I used to go around for giving";
+				mes "presents to people every night.";
+				next;
+				mes "[Retired Santa]";
+				mes "How was the people's feeling...";
+				mes "I just wonder.";
+				mes "Actually I didn't";
+				mes "take a present when";
+				mes "Christmas time.";
+				close2;
+				emotion ET_THINK;
+				enable_items;
+				end;
+			}
+		} else if (evt_2009_xmas == 320) {
+			mes "[Retired Santa]";
+			mes "Hum, I can trust ^0000FF"+strcharinfo(0)+"^000000.";
+			mes "So I'm going to";
+			mes "tell you about the reason";
+			mes "that why I'm here for.";
+			next;
+			mes "[Retired Santa]";
+			mes "There is a";
+			mes "trouble to ^0000FFMisty^000000 who";
+			mes "I like among kafra members.";
+			mes "Because in^8B4513Lutie^000000,";
+			mes "we are supposed to meet.";
+			next;
+			mes "[Retired Santa]";
+			mes "Could you help me?";
+			next;
+			if (select("Help.", "Say no.") == 2) {
+				mes "[Retired Santa]";
+				mes "I'm disappointed, ";
+				mes "but I can't help it.";
+				close2;
+				enable_items;
+				end;
+			}
+			mes "[Retired Santa]";
+			mes "Then I'll tell you";
+			mes "about what I need.";
+			next;
+			mes "[Retired Santa]";
+			mes "Now, in ^8B4513Toy dungeon^000000,";
+			mes "the illusion formed ^0000FFMisty^000000";
+			mes "comes out.";
+			mes "Find that illusion,";
+			mes "please get ^006400pieces of illusion^000000formed Misty.";
+			next;
+			mes "[Retired Santa]";
+			mes "^0000FFAn illusion of Misty^000000is seen by one";
+			mes "person for one time.";
+			mes "I hope we can save";
+			mes "^0000FFMisty^000000with a great help from people.";
+			next;
+			mes "[Retired Santa]";
+			mes "With enough ^006400pieces of illusion^000000,";
+			mes "then";
+			mes "^0000FFMisty^000000can come back";
+			mes "to us.";
+			evt_2009_xmas = 321;
+			getitem 12491, 5; // Curious_Snowball
+			close2;
+			enable_items;
+			end;
+		} else if (evt_2009_xmas == 321) {
+			if (countitem(7974) > 0) {
+				mes "[Retired Santa]";
+				mes "You mean!";
+				mes "You met an illusion of Misty.";
+				mes "Then I'll take ^006400pieces of illusion^000000";
+				mes "formed misty.";
+				next;
+				specialeffect EF_WARP;
+				mes "[Retired Santa]";
+				mes "If you have ^006400pieces of illusion^000000";
+				mes "over ^006400 "+$091203_xmas01+"at least^000000,";
+				mes "then you can save^0000FFMisty^000000.";
+				next;
+				mes "[Retired Santa]";
+				mes "So far,";
+				mes "you have ^006400"+$091203_xmas01+"^000000 of";
+				mes "^006400pieces of illusion^000000.";
+				next;
+				mes "[Retired Santa]";
+				mes "I hope that many poeple gather lots of ";
+				mes "^006400pieces of illusion^000000";
+				mes "as soon as possible.";
+				if ((MaxWeight - Weight) < 250) {
+					next;
+					mes "[Retired Santa]";
+					mes "Ah, your bag is full of stuff.";
+					mes "I would like to";
+					mes "return your favor,";
+					mes "so please come back with a light bag.";
+					close;
+				} else {
+					delitem 7974, 1; // Illusion_Piece
+					evt_2009_xmas = 322;
+					getitem 12317, 20; // Powder_Snow
+					getitem 594, 1; // Sour_Cream_Pancake
+					$091203_xmas01 = $091203_xmas01 + 1;
+					close;
+				}
+			} else {
+				mes "[Retired Santa]";
+				mes "Now, in ^8B4513Toy dungeon^000000,";
+				mes "the illusion formed ^0000FFMisty^000000";
+				mes "comes out.";
+				mes "Find that illusion,";
+				mes "please get ^006400pieces of illusion^000000formed Misty.";
+				next;
+				mes "[Retired Santa]";
+				mes "^0000FFAn illusion of Misty^000000is seen by one";
+				mes "person for one time.";
+				mes "I hope we can save";
+				mes "^0000FFMisty^000000with a great help from people.";
+				next;
+				mes "[Retired Santa]";
+				mes "With enough ^006400pieces of illusion^000000,";
+				mes "then";
+				mes "^0000FFMisty^000000can come back";
+				mes "to us.";
+				close;
+			}
+		} else {
+			mes "[Retired Santa]";
+			mes "Hello, ^0000FF"+strcharinfo(0)+"^000000.";
+			mes "Fortunately,";
+			mes "lots of people help";
+			mes "to save ^0000FFMisty^000000.";
+			next;
+			if (select("How many collected ^006400Pieces of Misty^000000?", "About relationship with ^0000FFMisty^000000") == 2) {
+				mes "[Retired Santa]";
+				mes "I...";
+				mes "like ^0000FFMisty^000000!";
+				mes "Why?";
+				next;
+				mes "[Retired Santa]";
+				mes "When I was Santa...";
+				mes "for giving a present.";
+				next;
+				mes "[Retired Santa]";
+				mes "I found a";
+				mes "sock for putting a present, ";
+				mes "there was a";
+				mes "letter for me";
+				mes "with small present.";
+				next;
+				mes "[Retired Santa]";
+				mes "And it said.";
+				mes "^006400- Santa, go for it~! -^000000";
+				mes "Haha! a little bit funny?";
+				mes "But I felt happy.";
+				next;
+				mes "[Retired Santa]";
+				mes "At that time,";
+				mes "^0000FFMisty^000000woke up";
+				mes "and she";
+				mes "found me";
+				mes "when I was taken off-guard.";
+				next;
+				mes "[Retired Santa]";
+				mes "Wow~ then";
+				mes "I can't forget ^0000FFMisty^000000's figure.";
+				mes "I won't.";
+				mes "It totally looked like angel.";
+				next;
+				mes "[Retired Santa]";
+				mes "After that day,";
+				mes "I've had a good relationship";
+				mes "with ^0000FFMisty^000000.";
+				mes "Are you jealous? haha.";
+				mes "Ah, Keep this secret~!";
+				close2;
+				emotion ET_SMILE;
+				enable_items;
+				end;
+			} else {
+				mes "[Retired Santa]";
+				mes "So far,";
+				mes "you have ^006400"+$091203_xmas01+"^000000 of";
+				mes "^006400pieces of illusion^000000.";
+				next;
+				mes "[Retired Santa]";
+				mes "I hope that many poeple gather lots of ";
+				mes "^006400pieces of illusion^000000";
+				mes "as soon as possible.";
+				close2;
+				enable_items;
+				end;
+			}
+		}
+	}
+}
+
+xmas,137,315,6	script	Rodolph#xmas	4_DOG01,{
+	if (evt_2009_xmas < 320) {
+		emotion ET_FRET;
+		mes "[Rodolph]";
+		mes "Bowwow!";
+		close;
+	} else {
+		if (oversea_event8 < 128) {
+			mes "[Rodolph]";
+			mes "Bowwow!";
+			mes "I saw he gave";
+			mes "a present to a child who next to me.";
+			mes "He's really sweet.";
+			next;
+			mes "[Rodolph]";
+			mes "I'm going to give a present.";
+			mes "You can";
+			mes "be ^0000FFRudolph^000000";
+			mes "with this.";
+			mes "I used to be ^0000FFRudolph^000000.";
+			if ((MaxWeight - Weight) < 500) {
+				next;
+				mes "[Rodolph]";
+				mes "But your bag is already full of stuff.";
+				mes "Empty your bag,please.";
+				mes "Bowwow!";
+				close;
+			} else {
+				if (rand(1, 2) == 1) {
+					getitem 2284, 1; // Antler
+				} else {
+					getitem 2262, 1; // Pierrot_Nose
+				}
+				oversea_event8 = 128;
+				close;
+			}
+		} else {
+			mes "[Rodolph]";
+			mes "Bowwow! Bowwow! La~ La La~!";
+			mes "Finally, I can see you who are";
+			mes "qualified for qualified for Rudolph.";
+			mes "I give you a strong effect needed";
+			mes "when you slide in a sleigh.";
+			consumeitem 608; // Seed_Of_Yggdrasil
+			consumeitem 12045; // Str_Dish05
+			npcskill "AL_INCAGI",0,0,0;
+			close;
+		}
+	}
+}
+
+xmas,132,312,0	script	#misty_switch	-1,{
+	end;
+
+	OnInit:
+		initnpctimer;
+		end;
+
+	OnTimer7000:
+		if ($091203_xmas01 >= $091203_xmas02) {
+			donpcevent "Misty#xmas::OnEnable";
+			stopnpctimer;
+		} else {
+			stopnpctimer;
+			initnpctimer;
+		}
+		end;
+}
+
+xmas,134,314,6	script	Misty#xmas	4_F_KAFRA7,{
+	cutin "kafra_07", 2;
+	mes "[kafra Misty]";
+	mes "Hello.";
+	mes "I, ^0000FFMisty^000000, came back here with your support.";
+	mes "Which service do you want?";
+	next;
+	switch(select("Strengthening effect service", "Free cargo service", "About the relationship with^0000FFThe common boy^000000")) {
+		case 1:
+			mes "[kafra Misty]";
+			mes "Yes, I got it.";
+			mes "I hope that you have a merry christmas~!";
+			consumeitem 12092; // Dex_Dish07
+			consumeitem 12087; // Agi_Dish07
+			consumeitem 12082; // Vit_Dish07
+			consumeitem 12097; // Luk_Dish07
+			close2;
+			cutin "", 255;
+			end;
+		case 2:
+			if (!callfunc("F_CanOpenStorage")) {
+				mes "[kafra Misty]";
+				mes "Ah, sir, ";
+				mes "If you want to use a cargo,";
+				mes "you have to be over";
+				mes "^0064006 basic skill level^000000.";
+				mes "I'm sorry.";
+				close2;
+				cutin "", 255;
+				end;
+			} else {
+				mes "[kafra Misty]";
+				mes "I open the cargo.";
+				mes "Thank you.";
+				close2;
+				cutin "", 255;
+				callfunc("F_CheckKafCode");	//check your storage password, if set
+				openstorage;
+				end;
+			}
+		case 3:
+			emotion ET_SHY;
+			mes "[kafra Misty]";
+			mes "What?";
+			mes "Haha, how can I say about the relationship.";
+			mes "Um~ maybe we can't live";
+			mes "without each other?";
+			next;
+			emotion ET_SMILE;
+			mes "[kafra Misty]";
+			mes "Does ^0000FF"+strcharinfo(0)+"^000000 have";
+			mes "kind of that person?";
+			mes "The person who";
+			mes "can share your sadness";
+			mes "and happiness whenever.";
+			next;
+			mes "[kafra Misty]";
+			mes "If you don't have,";
+			mes "how about make";
+			mes "that person for";
+			mes "Christmas season?";
+			next;
+			mes "[kafra Misty]";
+			mes "That's not hard.";
+			mes "You can start from tiny thing.";
+			mes "Why don't you give a present?";
+			mes "Humm~";
+			next;
+			mes "[kafra Misty]";
+			mes "Anyway,";
+			mes "There is nothing to tell you anymore";
+			mes "about the relationship with that child.";
+			next;
+			mes "[kafra Misty]";
+			mes "I can't have";
+			mes "scandal against";
+			mes "many men who want me.";
+			mes "Hahaha~!";
+			close2;
+			emotion "The common boy#xmas", ET_THROB;
+			emotion ET_THROB;
+			cutin "", 255;
+			end;
+	}
+
+	OnInit:
+		disablenpc "Misty#xmas";
+		end;
+
+	OnEnable:
+		enablenpc "Misty#xmas";
+		end;
+}
+
+xmas_dun01,241,124,0	script	#misty_i01	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+			donpcevent "illusion of Misty#xmas_01::OnEnable";
+		}
+		end;
+}
+
+xmas_dun01,44,178,0	script	#misty_i02	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+			donpcevent "illusion of Misty#xmas_02::OnEnable";
+		}
+		end;
+}
+
+xmas_dun01,139,205,0	script	#misty_i03	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+			donpcevent "illusion of Misty#xmas_03::OnEnable";
+		}
+		end;
+}
+
+xmas_dun02,62,90,0	script	#misty_i04	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+			donpcevent "illusion of Misty#xmas_04::OnEnable";
+		}
+		end;
+}
+
+xmas_dun02,242,149,0	script	#misty_i05	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+			donpcevent "illusion of Misty#xmas_05::OnEnable";
+		}
+		end;
+}
+
+xmas_dun02,83,222,0	script	#misty_i06	-1,2,2,{
+	end;
+
+	OnTouch:
+		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+			donpcevent "illusion of Misty#xmas_06::OnEnable";
+		}
+		end;
+}
+
+-	script	#mistyIllusion::mistyIllusion	-1,{
+	emotion ET_THINK;
+	mes "[illusion of Misty]";
+	mes ".......";
+	getitem 7974, 1; // Illusion_Piece
+	close2;
+	disablenpc strnpcinfo(0);
+	end;
+
+	OnTimer10000:
+		disablenpc strnpcinfo(0);
+		end;
+
+	OnEnable:
+		enablenpc strnpcinfo(0);
+		initnpctimer;
+		end;
+
+	OnInit:
+		if (strnpcinfo(1) != "") {
+			disablenpc strnpcinfo(0);
+		}
+		end;
+}
+
+xmas_dun01,241,124,4	duplicate(mistyIllusion)	illusion of Misty#xmas_01	4_F_KAFRA7
+xmas_dun01,44,178,7	duplicate(mistyIllusion)	illusion of Misty#xmas_02	4_F_KAFRA7
+xmas_dun01,139,205,7	duplicate(mistyIllusion)	illusion of Misty#xmas_03	4_F_KAFRA7
+xmas_dun02,62,90,3	duplicate(mistyIllusion)	illusion of Misty#xmas_04	4_F_KAFRA7
+xmas_dun02,242,149,5	duplicate(mistyIllusion)	illusion of Misty#xmas_05	4_F_KAFRA7
+xmas_dun02,83,222,5	duplicate(mistyIllusion)	illusion of Misty#xmas_06	4_F_KAFRA7
+
+// - Monsters
+// -----------------------------------------------------------
+
+xmas_fild01,0,0	monster	Antonio	1247,1,3600000,0
+xmas_fild01,0,0	monster	Christmas Cookie	1246,5,30000,0
+xmas_fild01,0,0	monster	Christmas Goblin	1245,5,30000,0
+xmas_fild01,0,0	monster	Christmas Jakk	1244,5,30000,0
+xmas_fild01,0,0	monster	Christmas Orc	1588,5,30000,0
+xmas_dun01,0,0	monster	Christmas Cookie	1246,3,30000,0
+xmas_dun01,0,0	monster	Christmas Goblin	1245,3,30000,0
+xmas_dun01,0,0	monster	Christmas Jakk	1244,3,30000,0
+xmas_dun01,0,0	monster	Christmas Orc	1588,3,30000,0
+xmas_dun02,0,0	monster	Antonio	1247,1,1200000,0
+xmas_dun01,0,0	monster	Christmas Cookie	1246,3,30000,0
+xmas_dun01,0,0	monster	Christmas Goblin	1245,3,30000,0
+xmas_dun01,0,0	monster	Christmas Jakk	1244,3,30000,0
+xmas_dun01,0,0	monster	Christmas Orc	1588,3,30000,0
+
+// - GM Tool / Settings
+// -----------------------------------------------------------
+
+sec_in02,21,175,6	script	Xmas Manager#xmas	4_F_KAFRA7,{
+	mes "[Misty]";
+	mes "The number of characters passed mission";
+	mes "--> ^006400"+$091203_xmas01+"^000000";
+	mes " ";
+	mes "The number of goal set";
+	mes "--> ^FF0000"+$091203_xmas02+"^000000";
+	next;
+	if (select("Ok", "Adjust the Goal") == 1) {
+		mes "[Misty]";
+		mes "Go for it~!";
+		close;
+	}
+	mes "[Misty]";
+	mes "You have to be careful";
+	mes "when you change this setting.";
+	next;
+	mes "[Misty]";
+	mes "The initial number of goal is ^FF0000[ 200 ]^000000";
+	mes "but, you can change when";
+	mes "there is special situation";
+	mes "like the number of persons in server.";
+	next;
+	switch(select("To 200", "To 150", "To 100", "To 500", "To 300", "To 3 (for instance test)", "To 1 (for instance test)")) {
+		case 1:
+			$091203_xmas02 = 200;
+			break;
+		case 2:
+			$091203_xmas02 = 150;
+			break;
+		case 3:
+			$091203_xmas02 = 100;
+			break;
+		case 4:
+			$091203_xmas02 = 500;
+			break;
+		case 5:
+			$091203_xmas02 = 300;
+			break;
+		case 6:
+			$091203_xmas02 = 3;
+			break;
+		case 7:
+			$091203_xmas02 = 1;
+			break;
+	}
+	mes "[Misty]";
+	mes "The number of character needed";
+	mes "for gaining goal changed";
+	mes "to^FF0000"+$091203_xmas02+"^000000.";
+	close;
+
+	OnInit:
+		$091203_xmas02 = 200;
+		end;
+}

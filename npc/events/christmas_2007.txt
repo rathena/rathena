@@ -1,0 +1,3594 @@
+//===== rAthena Script =======================================
+//= Christmas Event (2007)
+//===== Description: =========================================
+//= [Official Conversion]
+//= Find and return Yulia's Hat.
+//= Deliver gifts to kids.
+//= Get a haircut.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Kisuka]
+//============================================================
+
+// - Finding Yulia's Hat
+// -----------------------------------------------------------
+
+prontera,47,329,3	script	Examiner#2007xm	4_M_ALCHE_D,3,3,{
+	if (05christ_solo < 100) {
+		mes "[Examiner]";
+		mes "D-don't step over";
+		mes "there! You'll ruin the";
+		mes "investigation site!";
+		emotion ET_HUK;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Ooops! Sorry.";
+		emotion ET_HUK, playerattached();
+		specialeffect2 EF_HITDARK;
+		next;
+		mes "[Examiner]";
+		mes "...............................";
+		mes "It's too late already.";
+		mes "That area hasn't even";
+		mes "been examined yet. Great.";
+		mes "Now what am I going to do?";
+		emotion ET_CRY;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I'm so sorry!";
+		next;
+		mes "[Examiner]";
+		mes "No, it's okay.";
+		mes "I suppose I'll just";
+		mes "start all over from";
+		mes "the very beginning...";
+		emotion ET_CRY;
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "......";
+		mes "............";
+		mes ".....................";
+		next;
+		mes "^3355FFThe expression on the";
+		mes "examiner's face was grave";
+		mes "and serious as he carefully";
+		mes "searched every inch of the";
+		mes "area of any evidence.^000000";
+		05christ_solo = 100;
+		close;
+	}
+
+	if (05christ_solo == 100) {
+		mes "^3355FFThe Examiner is still";
+		mes "meticulously searching";
+		mes "the area for evidence.^000000";
+		next;
+		if (select("Offer to Help", "Ignore Him") == 2) {
+			mes "["+strcharinfo(0)+"]";
+			mes "Good luck with";
+			mes "whatever you're doing!";
+			close;
+		}
+		mes "["+strcharinfo(0)+"]";
+		mes "Umm... I don't know";
+		mes "what exactly you're";
+		mes "looking for, but is";
+		mes "there anything I can";
+		mes "do to help out?";
+		next;
+		mes "[Examiner]";
+		mes "What? Really?";
+		mes "Are you serious?!";
+		mes "I could really use";
+		mes "an extra hand! Oh,";
+		mes "thank you so much!";
+		emotion ET_HUK;
+		next;
+		mes "[Examiner]";
+		mes "My name is Miche, and";
+		mes "I'm an investigator for the";
+		mes "Prontera Royal Bureau";
+		mes "of Investigation. This isn't";
+		mes "really a one man job, but...";
+		next;
+		mes "[Examiner]";
+		mes "My partner ditched me at";
+		mes "the last minute to see his";
+		mes "girl! He couldn't have picked";
+		mes "a worse time: there's so many";
+		mes "things for the bureau to do";
+		mes "at the end of the year!";
+		emotion ET_CRY;
+		next;
+		mes "[Examiner]";
+		mes "I can't find any leads";
+		mes "for this case, and I was";
+		mes "just about ready to write";
+		mes "my report and admit that";
+		mes "I failed to find anything.";
+		next;
+		while(1) {
+			switch(select("What is this about?", "What are you looking for?", "How can I help?")) {
+			case 1:
+				mes "[Examiner Miche]";
+				mes "There's a lot of suspicious";
+				mes "activity here lately in the";
+				mes "Rune-Midgard Kingdom: we've";
+				mes "been getting reports of late";
+				mes "night cap thefts, and Christmas gifts in Lutie are getting stolen.";
+				next;
+				mes "[Examiner Miche]";
+				mes "It makes me said to see";
+				mes "that these all crimes are";
+				mes "happening during the";
+				mes "Christmas Season.";
+				emotion ET_CRY;
+				.@mieke1 = 1;
+				next;
+				break;
+			case 2:
+				if (.@mieke1 == 1) {
+					mes "[Examiner Miche]";
+					mes "Well, I'm looking for";
+					mes "any traces of the guy";
+					mes "that stole the candies and";
+					mes "snacks being delivered";
+					mes "to Prontera. Whoever he";
+					mes "is, this guy's an expert.";
+					next;
+					mes "[Examiner Miche]";
+					mes "He pulled off his heist";
+					mes "right here in front of";
+					mes "the Prontera Knight";
+					mes "Headquarters, and he's";
+					mes "left this place really clean...";
+					.@mieke2 = 1;
+					next;
+				} else {
+					mes "[Examiner Miche]";
+					mes "I'm trying to find any";
+					mes "leads that will help me";
+					mes "solve this case. Hey, you";
+					mes "over there! Step away!";
+					mes "You'll contaminate the";
+					mes "investigation area!";
+					emotion ET_FRET;
+					next;
+				}
+				break;
+			case 3:
+				if (.@mieke2 == 1) {
+					mes "[Examiner Miche]";
+					mes "I shouldn't be asking";
+					mes "anyone outside of the";
+					mes "bureau to get involved,";
+					mes "but I don't think I have any";
+					mes "choice. I just can't complete";
+					mes "a thorough investigation alone.";
+					next;
+					mes "[Examiner Miche]";
+					mes "Would you go question";
+					mes "the theft victims over in";
+					mes "Lutie? Specifically, I want";
+					mes "you to talk to the people that";
+					mes "delivered the stolen goods.";
+					mes "Thanks, that'd help a lot.";
+					05christ_solo = 101;
+					close;
+				} else {
+					mes "[Examiner Miche]";
+					mes "What'd really help is";
+					mes "if my partner stopped";
+					mes "seeing his girlfriend";
+					mes "whenever we have an";
+					mes "important assignment!";
+					mes "What's with that guy?!";
+					emotion ET_FRET;
+					next;
+				}
+				break;
+			}
+		}
+	}
+
+	if (05christ_solo == 101) {
+		mes "[Examiner Miche]";
+		mes "Did you go to Lutie yet?";
+		mes "It's Christmas Season,";
+		mes "so everyone must be busy";
+		mes "preparing new sets of gifts.";
+		next;
+		mes "[Examiner Miche]";
+		mes "Let's see, one of the";
+		mes "members of the Distribution";
+		mes "Staff, ^000077Igor^000000, is waiting to load";
+		mes "presents into the sleighs.";
+		mes "Maybe you can question him";
+		mes "to help on my investigation?";
+		close;
+	}
+
+	if (05christ_solo == 129) {
+		if (countitem(7909) > 0 && countitem(7910) > 0) {
+			mes "[Examiner Miche]";
+			mes "Remarkable! You really";
+			mes "solved the case on your own?";
+			mes "Boy, am I glad that you came";
+			mes "to me! Thanks to you, Christmas";
+			mes "has been saved! Great work!";
+			next;
+			mes "[Examiner Miche]";
+			mes "As soon as this case solved, another case popped up, so if that case will complete...";
+			next;
+			mes "[Examiner Miche]";
+			mes "This isn't a big enough";
+			mes "reward for what you've just";
+			mes "accomplished, but I hope";
+			mes "that you'll accept this as";
+			mes "a little Christmas gift from";
+			mes "me. Merry Christmas!";
+			delitem 7909, 1; // Stolen_Cookie
+			delitem 7910, 1; // Stolen_Candy
+			05christ_solo = 130;
+			getitem 12132, 1; // Red_Bag
+			close;
+		} else {
+			mes "[Examiner Miche]";
+			mes "Have you found any";
+			mes "leads that might help";
+			mes "us find the stolen good?";
+			close;
+		}
+	} else if (05christ_solo == 130) {
+		mes "[Examiner Miche]";
+		mes "I'm happy to say that this";
+		mes "case is closed, thanks to";
+		mes "your help. However, I still";
+		mes "have other investigations to";
+		mes "do. I wish I wasn't so busy";
+		mes "during the Holiday Season...";
+		emotion ET_CRY;
+		next;
+		mes "[Examiner Miche]";
+		mes "I may not be in charge";
+		mes "of this next case, but";
+		mes "I can't sit around and do";
+		mes "nothing if I can help it.";
+		mes "Hey, did you want to help";
+		mes "the bureau out again?";
+		next;
+		mes "[Examiner Miche]";
+		mes "The man in charge of this";
+		mes "next case is over there.";
+		mes "Why don't you go and talk";
+		mes "to him? You really helped me";
+		mes "out last time, so I think he'd";
+		mes "appreciate you volunteering.";
+		close;
+	} else {
+		mes "[Examiner Miche]";
+		mes "Hey, there!";
+		mes "Is everything going";
+		mes "alright with you?";
+		close;
+	}
+
+	OnTouch:
+		if (05christ_solo < 100) {
+			mes "[Examiner]";
+			mes "Hmmm... This is strange.";
+			mes "How can someone cause all";
+			mes "this without leaving a trace?";
+			close;
+		}
+}
+
+xmas,196,245,5	script	Dist. Staff#2007xm	4_M_ROGUE,{
+	if (05christ_solo < 101) {
+		mes "[Dist. Staff]";
+		mes "Argh, this is terrible!";
+		mes "When is that investigator";
+		mes "from Rune-Midgart coming?";
+		close;
+	}
+
+	if (05christ_solo == 101) {
+		mes "[Dist. Staff Igor]";
+		mes "The presents aren't";
+		mes "ready yet?! Curses!";
+		mes "We'll never make it at";
+		mes "this rate! Hustle it up!";
+		next;
+		select("Excuse me.");
+		mes "[Dist. Staff Igor]";
+		mes "Hm? What?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I've been sent here to help";
+		mes "out Miche from the Prontera";
+		mes "Bureau of Investigation.";
+		next;
+		mes "[Dist. Staff Igor]";
+		mes "Ah, they finally sent you.";
+		mes "I'm sorry, I'd like to offer";
+		mes "you some warm tea in";
+		mes "our office, but right now";
+		mes "we don't have the luxury";
+		mes "of time. Very busy here!";
+		next;
+		while(1) {
+			if (select("What you are doing?", "What happened during the heist?") == 2) {
+				mes "[Dist. Staff Igor]";
+				mes "Let's see... We were";
+				mes "delivering Christmas candy";
+				mes "and cookies. We have to work";
+				mes "overtime during the Holiday";
+				mes "Season, as you can tell.";
+				next;
+				mes "[Dist. Staff Igor]";
+				mes "We were working late, and";
+				mes "reached Prontera around";
+				mes "midnight. Everything we loaded";
+				mes "into the sleighs vanished as";
+				mes "as soon as we passed the";
+				mes "Prontera Knights Headquarters.";
+				next;
+				mes "[Dist. Staff Igor]";
+				mes "I don't understand how";
+				mes "someone can steal so much";
+				mes "in such a short period of time.";
+				mes "I didn't know everything was";
+				mes "gone until one of my co-workers";
+				mes "noticed the gifts were gone.";
+				next;
+				mes "[Dist. Staff Igor]";
+				mes "I couldn't see anything";
+				mes "riding in the sleigh, but";
+				mes "I did hear this weird laughter";
+				mes "just before the gifts vanished.";
+				mes "^000077Yorg^000000 was sitting next to me,";
+				mes "and he heard it too.";
+				next;
+				mes "[Dist. Staff Igor]";
+				mes "Why don't you ask Yorg";
+				mes "to see if you can learn";
+				mes "anything else? He should be";
+				mes "in Santa's house, wrapping";
+				mes "presents. Just don't take too";
+				mes "long: we're all very busy!";
+				05christ_solo = 102;
+				close;
+			}
+			mes "[Dist. Staff Igor]";
+			mes "We're making goods to";
+			mes "replace the gifts that were";
+			mes "stolen a few days ago. It'd";
+			mes "be nice if we could recover";
+			mes "the presents, but we need to";
+			mes "be ready in case we don't.";
+			next;
+		}
+	}
+
+	if (05christ_solo == 102) {
+		mes "[Dist. Staff Igor]";
+		mes "I couldn't see anything";
+		mes "riding in the sleigh, but";
+		mes "I did hear this weird laughter";
+		mes "just before the gifts vanished.";
+		mes "^000077Yorg^000000 was sitting next to me,";
+		mes "and he heard it too.";
+		next;
+		mes "[Dist. Staff Igor]";
+		mes "Why don't you ask Yorg";
+		mes "to see if you can learn";
+		mes "anything else? He should be";
+		mes "in Santa's house, wrapping";
+		mes "presents. Just don't take too";
+		mes "long: we're all very busy!";
+		close;
+	}
+
+	if (05christ_solo == 130) {
+		mes "[Dist. Staff Igor]";
+		mes "I just know that it's";
+		mes "going to be another";
+		mes "wonderful Christmas!";
+		mes "I hope it snows this year!";
+		close;
+	} else {
+		mes "[Dist. Staff Igor]";
+		mes "If we don't catch";
+		mes "those thieves soon,";
+		mes "Christmas will be ruined!";
+		close;
+	}
+}
+
+xmas_in,92,96,5	script	Pack Staff#2007xm	4W_M_01,{
+	if (05christ_solo < 102) {
+		mes "[Pack Staff]";
+		mes "This is terrible...";
+		mes "Everyone's been working";
+		mes "so hard to get everything";
+		mes "ready for Christmas, and";
+		mes "then this happens...";
+		next;
+		mes "[Pack Staff]";
+		mes "I've been working so";
+		mes "long that I'm getting";
+		mes "sick of looking at";
+		mes "wrapping paper.";
+		emotion ET_CRY;
+		close;
+	}
+
+	if (05christ_solo == 102) {
+		mes "[Pack Staff Yorg]";
+		mes "This is terrible...";
+		mes "Everyone's been working";
+		mes "so hard to get everything";
+		mes "ready for Christmas, and";
+		mes "then this happens...";
+		next;
+		mes "[Pack Staff Yorg]";
+		mes "I've been working so";
+		mes "long that I'm getting";
+		mes "sick of looking at";
+		mes "wrapping paper.";
+		emotion ET_CRY;
+		next;
+		select("Excuse me.");
+		mes "[Pack Staff Yorg]";
+		mes "Hm? Can I help you?";
+		mes "I'm pretty busy here...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I'm here to investigate";
+		mes "the robbery that happened";
+		mes "in Prontera. Igor told me";
+		mes "that I should talk to you.";
+		mes "Can you tell me what";
+		mes "happened that day?";
+		next;
+		mes "[Pack Staff Yorg]";
+		mes "Well, the orders were delayed,";
+		mes "so we reached Prontera around";
+		mes "midnight. Me and Igor were";
+		mes "sitting in the sleigh when";
+		mes "it got dark suddenly, and";
+		mes "all the gifts were stolen.";
+		next;
+		mes "[Pack Staff Yorg]";
+		mes "Just before it became dark,";
+		mes "I saw some ^000077shadows over";
+		mes "in the alley^000000. I guess... ^000077Boris";
+		mes "and Linus^000000 might have been";
+		mes "able to see them better";
+		mes "from where they were.";
+		next;
+		mes "[Pack Staff Yorg]";
+		mes "Boris and Linus are pretty";
+		mes "busy right now, but you can";
+		mes "probably find them working";
+		mes "in the ^000077factory in the northern";
+		mes "part of this village^000000.";
+		next;
+		mes "[Pack Staff Yorg]";
+		mes "I hope those robbers";
+		mes "get caught soon. Because";
+		mes "of them, I'll probably need";
+		mes "to work non-stop until";
+		mes "Christmas is over.";
+		05christ_solo = 103;
+		emotion ET_CRY;
+		close;
+	}
+
+	if (05christ_solo == 103) {
+		mes "[Pack Staff Yorg]";
+		mes "Boris and Linus are pretty";
+		mes "busy right now, but you can";
+		mes "probably find them working";
+		mes "in the ^000077factory in the northern";
+		mes "part of this village^000000.";
+		close;
+	}
+
+	if (05christ_solo == 130) {
+		mes "[Pack Staff Yorg]";
+		mes "You caught the robbers!";
+		mes "Heh heh! Looks like I'll";
+		mes "be able to rest a little";
+		mes "easier now that the gifts";
+		mes "have been recovered!";
+		close;
+	} else {
+		mes "[Pack Staff Yorg]";
+		mes "Soooo much work...";
+		mes "And my vacation";
+		mes "is so far away.";
+		emotion ET_CRY;
+		close;
+	}
+}
+
+xmas_dun01,213,83,3	script	Gen Staff#2007xm	4_M_ALCHE_C,{
+	if (05christ_solo < 103) {
+		mes "[Gen Staff]";
+		mes "Hey, do you mind";
+		mes "coming back later?";
+		mes "I'm pretty swamped";
+		mes "with work right now.";
+		close;
+	}
+
+	if (05christ_solo == 103) {
+		mes "[Gen Staff Boris]";
+		mes ""+strcharinfo(0)+", right?";
+		mes "Yeah, I heard from Yorg";
+		mes "that you might be coming.";
+		mes "So you wanted to know";
+		mes "more about the gift theft?";
+		next;
+		mes "[Gen Staff Boris]";
+		mes "Honestly, I don't think";
+		mes "I know any clues that";
+		mes "might help you. I'm sorry,";
+		mes "but I know just about as";
+		mes "much as you do.";
+		close;
+	}
+
+	if (05christ_solo == 104) {
+		mes "[Gen Staff Boris]";
+		mes "Oh, you wanted to know";
+		mes "more about how my sister's";
+		mes "hat was robbed? Well, she";
+		mes "said she was on her way to";
+		mes "bring me a midnight snack";
+		mes "when her hat was stolen.";
+		next;
+		mes "[Gen Staff Boris]";
+		mes "I called the police right";
+		mes "away, and told Yulia not to";
+		mes "go outside, but... She decided";
+		mes "to stay at the village gate to";
+		mes "check passerby for her hat.";
+		mes "She really loved that hat.";
+		next;
+		mes "[Gen Staff Boris]";
+		mes "I'm so worried. I hope";
+		mes "you or somebody can";
+		mes "capture that robber soon.";
+		05christ_solo = 105;
+		close;
+	}
+
+	if (05christ_solo == 105) {
+		mes "[Gen Staff Boris]";
+		mes "My sister really loved that";
+		mes "hat. That's why she's staying";
+		mes "at the village gate to check";
+		mes "if anyone is wearing the hat";
+		mes "that was stolen from her.";
+		next;
+		mes "[Gen Staff Boris]";
+		mes "I'm so worried. I hope";
+		mes "you or somebody can";
+		mes "capture that robber soon.";
+		close;
+	}
+
+	if (05christ_solo == 130) {
+		mes "[Gen Staff Boris]";
+		mes "Thanks to you, we can";
+		mes "finally relax around here.";
+		mes "Yulia also finally went back";
+		mes "Yulia also finally went back";
+		mes "another Merry Christmas~";
+		close;
+	} else {
+		mes "[Gen Staff Boris]";
+		mes "Why would anyone go";
+		mes "around stealing presents";
+		mes "and hats like this? It's...";
+		mes "It's complete lunacy!";
+		close;
+	}
+}
+
+xmas_dun01,152,129,5	script	Div Staff#2007xm	4_M_EINMAN2,{
+	if (05christ_solo < 103) {
+		mes "[Div Staff]";
+		mes "Okay, twenty candies and";
+		mes "ten cookies in this box. Hmm...";
+		mes "Twelve cookies and a Rabbit";
+		mes "Doll in this box. Let's see...";
+		next;
+		mes "^3355FFThis man is too absorbed";
+		mes "in his work to pay any";
+		mes "attention to you for now.^000000";
+		close;
+	}
+
+	if (05christ_solo == 103) {
+		mes "[Div Staff Linus]";
+		mes "Man, things can't get any";
+		mes "worse around here! So much";
+		mes "work to be done! Oh, hey,";
+		mes "you're the guy that just";
+		mes "spoke to Boris, right?";
+		mes "Thanks for helping us.";
+		next;
+		mes "[Div Staff Linus]";
+		mes "Let's see... Just before the";
+		mes "theft happened, I was chatting";
+		mes "with Boris... It became dark in";
+		mes "front of the Prontera Knights";
+		mes "Headquarters all of a sudden...";
+		mes "Ah, and I heard a noise!";
+		next;
+		while(1) {
+			if (select("A noise?", "Chat with Boris?") == 2) {
+				mes "[Div Staff Linus]";
+				mes "Oh, yeah. I was talking to";
+				mes "Boris about the recent string";
+				mes "of hat thefts. You know, my";
+				mes "hat was robbed a few days ago.";
+				mes "Not just me, but also Boris's";
+				mes "sister's hat was stolen!";
+				next;
+				mes "[Div Staff Linus]";
+				mes "Hey, do you think the";
+				mes "hat and gift thefts are";
+				mes "related? Let's see... What";
+				mes "can I tell you about what";
+				mes "happened when my hat was";
+				mes "stolen? It was late at night...";
+				next;
+				mes "[Div Staff Linus]";
+				mes "I was passing this alley";
+				mes "on my way home from work...";
+				mes "I heard this crazy laugh...";
+				mes "And the next thing I know,";
+				mes "the hat I'm wearing is gone!";
+				next;
+				mes "[Div Staff Linus]";
+				mes "Oh, yeah! I remember hearing";
+				mes "some laughter when the gifts";
+				mes "were stolen, now that I think";
+				mes "about it. Hmm... Why don't";
+				mes "you talk to Boris again? His";
+				mes "sister's hat was stolen too.";
+				next;
+				mes "[Div Staff Linus]";
+				mes "If the hat and gift thefts";
+				mes "are really linked, then you";
+				mes "can ask Boris to ask his";
+				mes "sister about how her hat";
+				mes "was stolen. It couldn't hurt.";
+				05christ_solo = 104;
+				close;
+			}
+			mes "[Div Staff Linus]";
+			mes "Yeah, I guess it was";
+			mes "a rustling sound? Maybe";
+			mes "it was the bag the thieves";
+			mes "used to steal the presents.";
+			next;
+		}
+	}
+
+	if (05christ_solo == 104) {
+		mes "[Div Staff Linus]";
+		mes "You should probably talk";
+		mes "to Boris and ask him about";
+		mes "how his sister's hat was";
+		mes "stolen. There's a chance that";
+		mes "it's related to the gift theft.";
+		close;
+	}
+
+	if (05christ_solo == 130) {
+		mes "[Div Staff Linus]";
+		mes "Case closed, huh?";
+		mes "That's great! Still...";
+		mes "It's too bad about my hat.";
+		mes "I still didn't get it back...";
+		next;
+		mes "[Div Staff Linus]";
+		mes "Well, I don't have much";
+		mes "work left now. There's plenty";
+		mes "of time to go shopping for";
+		mes "a new one. Maybe I'll go";
+		mes "buy a new hat with Boris?";
+		close;
+	} else {
+		mes "[Div Staff Linus]";
+		mes "You still didn't find the";
+		mes "guy that's been robbing us?";
+		mes "I hope you can catch that";
+		mes "guy soon: he's the reason";
+		mes "we all have to work overtime!";
+		close;
+	}
+}
+
+xmas,143,44,3	script	Kid#2007xm	4_F_NFLOSTGIRL,{
+	if (05christ_solo < 105) {
+		mes "[Kid]";
+		mes "ARRRGH!";
+		mes "I'm gonna nail the";
+		mes "guy that stole my hat!";
+		mes "Come on, where are";
+		mes "you hiding, you jerk?!";
+		close;
+	}
+
+	if (05christ_solo == 105) {
+		mes "[Yulia]";
+		mes "Oh, you're lookin for";
+		mes "the guy that stole my hat?";
+		mes "Good! I could use the help!";
+		mes "What? You want a hint? Okay...";
+		next;
+		mes "[Yulia]";
+		mes "But it's not gonna be free!";
+		mes "You have to give me candy!";
+		mes "Do that, and I'll tell you";
+		mes "whatever you wanna know!";
+		emotion ET_KIK;
+		next;
+		if (select("No way!", "Alright.") == 2) {
+			mes "[Yulia]";
+			mes "Wha--? Really? Yay!";
+			mes "Hmm... I know! Gimme";
+			mes "^00007710 Well-baked Cookies^000000 and";
+			mes "^00007710 candy strippers!^000000 It's a promise!";
+			emotion ET_HUK;
+			05christ_solo = 106;
+			close;
+		}
+		mes "[Yulia]";
+		mes "Wha--? C'mon!";
+		emotion ET_HNG;
+		close;
+	}
+
+	if (05christ_solo == 106) {
+		if (countitem(530) > 9 && countitem(538) > 9) {
+			.@yul_xmas = rand(1, 4);
+			mes "[Yulia]";
+			mes "Yay! Candy!";
+			mes "You brought it!";
+			mes "Here, gimme!";
+			delitem 530, 10; // Candy_Striper
+			delitem 538, 10; // Well_Baked_Cookie
+			if (.@yul_xmas == 1) {
+				05christ_solo = 107;
+			} else if (.@yul_xmas == 2) {
+				05christ_solo = 108;
+			} else if (.@yul_xmas == 3) {
+				05christ_solo = 109;
+			} else if (.@yul_xmas == 4) {
+				05christ_solo = 110;
+			}
+			next;
+			mes "[Yulia]";
+			mes "So you wanna hear";
+			mes "how I lost my hat?";
+			mes "I can't believe that";
+			mes "someone stole it!";
+			emotion ET_CRY;
+			next;
+			mes "[Yulia]";
+			mes "My brother was working";
+			mes "overtime, so I stayed up";
+			mes "late to wait for him outside";
+			mes "the door. Suddenly, there";
+			mes "was this huge shadow,";
+			mes "and my hat disappeared!";
+			next;
+			mes "[Yulia]";
+			mes "When I looked behind";
+			mes "me, I saw this ugly old";
+			mes "run towards the factory.";
+			mes "I followed him, but he was";
+			mes "too fast and hid somewhere.";
+			mes "I couldn't find him at all!";
+			next;
+			mes "[Yulia]";
+			mes "I'm sure he's still inside";
+			mes "Nobody has seen him";
+			mes "around outside, so he";
+			mes "must be in a place where";
+			mes "there aren't usually people...";
+			next;
+			if (05christ_solo == 107) {
+				mes "[Yulia]";
+				mes "I... I'm really sure";
+				mes "that he's... That guy";
+				mes "is somewhere north";
+				mes "in that factory!";
+				close;
+			} else if (05christ_solo == 108) {
+				mes "[Yulia]";
+				mes "I... I'm really sure";
+				mes "that he's... That guy";
+				mes "is somewhere west";
+				mes "in that factory!";
+				close;
+			} else if (05christ_solo == 109) {
+				mes "[Yulia]";
+				mes "I... I'm really sure";
+				mes "that he's... That guy is";
+				mes "somewhere northeast";
+				mes "in that factory!";
+				close;
+			} else if (05christ_solo == 110) {
+				mes "[Yulia]";
+				mes "I... I'm really sure";
+				mes "that he's... That guy is";
+				mes "somewhere southeast";
+				mes "in that factory!";
+				close;
+			}
+		} else {
+			mes "[Yulia]";
+			mes "You really wanna help";
+			mes "me find that robber guy?";
+			mes "Mmm... Then gimmie";
+			mes "^00007710 Well-baked Cookies^000000 and";
+			mes "^00007710 candy strippers^000000! If you don't,";
+			mes "how do I know you're nice?";
+			close;
+		}
+	}
+
+	if (05christ_solo == 107) {
+		mes "[Yulia]";
+		mes "You still didn't find";
+		mes "that guy that stole my";
+		mes "hat? Hey, didn't I tell you";
+		mes "to look in the north part";
+		mes "of the factory? I want you to";
+		mes "hurt him for stealing my hat!";
+		close;
+	}
+
+	if (05christ_solo == 108) {
+		mes "[Yulia]";
+		mes "You still didn't find";
+		mes "that guy that stole my";
+		mes "hat? Hey, didn't I tell you";
+		mes "to look in the west part";
+		mes "of the factory? I want you to";
+		mes "hurt him for stealing my hat!";
+		close;
+	}
+
+	if (05christ_solo == 109) {
+		mes "[Yulia]";
+		mes "You still didn't find";
+		mes "that guy that stole my";
+		mes "hat? Hey, didn't I tell you";
+		mes "to look in the northeast part";
+		mes "of the factory? I want you to";
+		mes "hurt him for stealing my hat!";
+		close;
+	}
+
+	if (05christ_solo == 110) {
+		mes "[Yulia]";
+		mes "You still didn't find";
+		mes "that guy that stole my";
+		mes "hat? Hey, didn't I tell you";
+		mes "to look in the southeast part";
+		mes "of the factory? I want you to";
+		mes "hurt him for stealing my hat!";
+		close;
+	} else {
+		if (countitem(7911) > 0) {
+			mes "[Yulia]";
+			mes "Oh! Is that my hat?!";
+			mes "Yay! You found it, you";
+			mes "found it for me! Thank";
+			mes "you so much! How did";
+			mes "you catch that robber?";
+			mes "He was so fast!";
+			delitem 7911, 1; // Yulia_Hat
+			close;
+		} else {
+			mes "[Yulia]";
+			mes "Thank you so much for";
+			mes "helping me. I almost";
+			mes "thought that robber";
+			mes "was gonna get away";
+			mes "with what he done!";
+			close;
+		}
+	}
+}
+
+-	script	::thief07xm	-1,3,3,{
+	end;
+
+	OnTouch:
+		if (strnpcinfo(2) == "thief107xm") {
+			.@checkVal = 107;
+		} else if (strnpcinfo(2) == "thief207xm") {
+			.@checkVal = 108;
+		} else if (strnpcinfo(2) == "thief307xm") {
+			.@checkVal = 109;
+		} else if (strnpcinfo(2) == "thief407xm") {
+			.@checkVal = 110;
+		}
+
+		if (05christ_solo == .@checkVal || 05christ_solo == 111) {
+			enablenpc "Odd Old Man#"+strnpcinfo(2);
+			disablenpc "#"+strnpcinfo(2);
+		}
+		end;
+}
+
+xmas_dun02,127,205,0	duplicate(thief07xm)	#thief107xm	-1,3,3
+xmas_dun02,37,128,0	duplicate(thief07xm)	#thief207xm	-1,3,3
+xmas_dun02,240,233,0	duplicate(thief07xm)	#thief307xm	-1,3,3
+xmas_dun02,239,19,0	duplicate(thief07xm)	#thief407xm	-1,3,3
+
+-	script	::oldMan07xm	-1,{
+	if (strnpcinfo(2) == "thief107xm") {
+		.@checkVala = 107;
+		.@checkValb = 111;
+	} else if (strnpcinfo(2) == "thief207xm") {
+		.@checkVala = 108;
+		.@checkValb = 112;
+	} else if (strnpcinfo(2) == "thief307xm") {
+		.@checkVala = 109;
+		.@checkValb = 113;
+	} else if (strnpcinfo(2) == "thief407xm") {
+		.@checkVala = 110;
+		.@checkValb = 114;
+	}
+
+	if (05christ_solo == .@checkVala) {
+		mes "[Strange Old Man]";
+		mes "Heh heh heh...";
+		mes "This Christmas, there";
+		mes "will be no presents!";
+		mes "Yes, yes... There will";
+		mes "be no joy this holiday";
+		mes "season! Bwahahahah!";
+		next;
+		mes "[Strange Old Man]";
+		mes "Geh heh heh...";
+		mes "Hee hee hee...";
+		mes "Hm-hm-hm-ha-ha~";
+		next;
+		mes "[Strange Old Man]";
+		mes "Dah hah hah hah hah hah hah";
+		mes "hah hah hah hah hah hah hah";
+		mes "hah hah hah hah hah hah hah";
+		mes "hah hah hah hah hah hah hah!";
+		next;
+		mes "[Strange Old Man]";
+		mes "Ha--Wh-what the?!";
+		mes "O-Oh my God!";
+		emotion ET_HUK;
+		next;
+		mes "[Strange Old Man]";
+		mes "Wh-who...";
+		mes "Who are you?!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "So...";
+		mes "You must be the thief";
+		mes "that's been causing";
+		mes "all this trouble. I've";
+		mes "found you at last.";
+		next;
+		mes "[Strange Old Man]";
+		mes "N-no... It...";
+		mes "It wasn't me!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Don't lie, fiend!";
+		next;
+		mes "[Strange Old Man]";
+		mes "Wh-what? Fine, you got";
+		mes "me... You got me. But it's";
+		mes "one thing to corner me...";
+		mes "Catching me is another";
+		mes "matter altogether. Heh...";
+		mes "I'm gonna kill you!";
+		close2;
+		donpcevent "mobspawn#"+strnpcinfo(2)+"::OnEnable";
+		disablenpc "Odd Old Man#"+strnpcinfo(2);
+		end;
+	}
+
+	if (05christ_solo == .@checkValb) {
+		mes "[Strange Old Man]";
+		mes "N-no...!";
+		mes "I don't believe it!";
+		mes "My gloriously dastardly";
+		mes "plans... You've ruined them!";
+		05christ_solo = 129;
+		getitem 7909, 1; // Stolen_Cookie
+		getitem 7910, 1; // Stolen_Candy
+		getitem 7911, 1; // Yulia_Hat
+		close2;
+		disablenpc "Odd Old Man#"+strnpcinfo(2);
+		enablenpc "#"+strnpcinfo(2);
+		end;
+	}
+
+	OnInit:
+		if (strnpcinfo(2) != "") {
+			disablenpc "Odd Old Man#"+strnpcinfo(2);
+		}
+		end;
+}
+
+xmas_dun02,127,205,0	duplicate(oldMan07xm)	Odd Old Man#thief107xm	4_M_SANTA
+xmas_dun02,37,128,0	duplicate(oldMan07xm)	Odd Old Man#thief207xm	4_M_SANTA
+xmas_dun02,240,233,0	duplicate(oldMan07xm)	Odd Old Man#thief307xm	4_M_SANTA
+xmas_dun02,239,19,0	duplicate(oldMan07xm)	Odd Old Man#thief407xm	4_M_SANTA
+
+-	script	::mobSpawner07xm	-1,{
+	end;
+
+	OnEnable:
+		enablenpc "mobspawn#"+strnpcinfo(2);
+		initnpctimer;
+		getmapxy(.@map$, .@mapx, .@mapy, UNITTYPE_NPC, strnpcinfo(0));
+		monster "xmas_dun02",.@mapx,.@mapy,"Cookie Thief",1962,1,"mobspawn#"+strnpcinfo(2)+"::OnMyMobDead";
+		monster "xmas_dun02",.@mapx,.@mapy,"Hat Thief",1962,1,"mobspawn#"+strnpcinfo(2)+"::OnMyMobDead";
+		monster "xmas_dun02",.@mapx,.@mapy,"Candy Thief",1962,1,"mobspawn#"+strnpcinfo(2)+"::OnMyMobDead";
+		end;
+
+	OnMyMobDead:
+		if (strnpcinfo(2) == "thief107xm") {
+			.@checkVala = 107;
+			.@checkValb = 111;
+		} else if (strnpcinfo(2) == "thief207xm") {
+			.@checkVala = 108;
+			.@checkValb = 112;
+		} else if (strnpcinfo(2) == "thief307xm") {
+			.@checkVala = 109;
+			.@checkValb = 113;
+		} else if (strnpcinfo(2) == "thief407xm") {
+			.@checkVala = 110;
+			.@checkValb = 114;
+		}
+
+		if (mobcount("xmas_dun02", "#"+strnpcinfo(2)+"::OnMyMobDead") < 1) {
+			if (05christ_solo == .@checkVala) {
+				05christ_solo = .@checkValb;
+			}
+			enablenpc "Odd Old Man#"+strnpcinfo(2);
+			disablenpc "mobspawn#"+strnpcinfo(2);
+			stopnpctimer;
+		}
+		end;
+
+	OnTimer120000:
+		killmonster "xmas_dun02", "#"+strnpcinfo(2)+"::OnMyMobDead";
+		enablenpc "Odd Old Man#"+strnpcinfo(2);
+		disablenpc "mobspawn#"+strnpcinfo(2);
+		stopnpctimer;
+		end;
+
+	OnInit:
+		if (strnpcinfo(2) != "") {
+			disablenpc "mobspawn#"+strnpcinfo(2);
+		}
+		end;
+}
+
+xmas_dun02,127,205,0	duplicate(mobSpawner07xm)	mobspawn#thief107xm	-1
+xmas_dun02,37,128,0	duplicate(mobSpawner07xm)	mobspawn#thief207xm	-1
+xmas_dun02,240,233,0	duplicate(mobSpawner07xm)	mobspawn#thief307xm	-1
+xmas_dun02,239,19,0	duplicate(mobSpawner07xm)	mobspawn#thief407xm	-1
+
+// Case of the Bobbed Haircuts
+// -----------------------------------------------------------
+
+prontera,69,337,3	script	Young Knight#ryu	4_M_JOB_KNIGHT2,{
+	mes "[Young Knight]";
+	mes "Hey, you ever talk to";
+	mes "that Examiner that's";
+	mes "always dressed formally?";
+	mes "He's kind of... Weird.";
+	mes "But he's also a great guy.";
+	next;
+	mes "[Young Knight]";
+	mes "You couldn't tell by";
+	mes "looking at him, but he";
+	mes "loves flowers. They always";
+	mes "seem to calm him whenever";
+	mes "he gets mad. Fancy that, huh?";
+	next;
+	mes "[Young Knight]";
+	mes "Well, maybe you can tell";
+	mes "by the smell of him that";
+	mes "he loves flowers. It always";
+	mes "smells like roses whenever";
+	mes "that guy walks in the room.";
+	mes "Of course, no one tells him...";
+	close;
+}
+
+prontera,60,342,5	script	Knight Examiner#ryu	8W_SOLDIER,{
+	if (05christ_solo == 143) {
+		mes "[Examiner]";
+		mes "Merry Christmas~!!";
+		mes "Hahaha! Happy Holidays,";
+		mes "everyone! And God bless";
+		mes "those merry bob cut lovers!";
+		close;
+	}
+
+	if (05christ_solo == 142 && countitem(712) > 0) {
+		mes "[Examiner]";
+		mes "I don't care if I'm";
+		mes "guilty of the same crimes";
+		mes "that Kage has committed!";
+		mes "I'm going to force him to";
+		mes "love long hair, no matter";
+		mes "what it takes! I'll do it!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Umm... I hear you";
+		mes "like flowers, right?";
+		mes "Here, this is for you.";
+		mes "Consider it a Christmas gift.";
+		next;
+		mes "[Examiner]";
+		mes "Wow, this flower is...";
+		mes "It's exquisite. It smells";
+		mes "very nice too. Thank you!";
+		mes "Mmm... This sweet fragrance...";
+		mes "It's like I can relax and not";
+		mes "worry about anything at all...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Not that you're in a better";
+		mes "mood, I want to talk to you";
+		mes "about something important.";
+		mes "I was able to make you happy";
+		mes "because I understood that";
+		mes "you like flowers, right?";
+		next;
+		mes "[Examiner]";
+		mes "True, true.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "But that doesn't mean that";
+		mes "I share your love for flowers.";
+		mes "All that matters to me is that";
+		mes "it makes you happy. Do you...";
+		mes "You catch my meaning?";
+		next;
+		mes "[Examiner]";
+		mes "I... I suppose.";
+		mes "I know what you mean, but...";
+		mes "How can I forgive that Kage?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "You just have to do it.";
+		mes "I'm sure you'll feel a lot";
+		mes "better by letting go of your";
+		mes "grudge against that guy.";
+		mes "Life is too short... Fleeting,";
+		mes "like the beauty of a flower.";
+		next;
+		mes "[Examiner]";
+		mes "Oh! Well said!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "It can't be that hard to";
+		mes "understand him. Sure, there's";
+		mes "a difference between long hair";
+		mes "and short hair, but you two";
+		mes "share something in common:";
+		mes "you both love beauty.";
+		next;
+		mes "[Examiner]";
+		mes "I... I didn't";
+		mes "realize... But, yes.";
+		mes "You're right. That's true.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Come now...";
+		mes "It's Christmas.";
+		mes "Forgive and forget. How";
+		mes "can you spread goodwill";
+		mes "when you're holding on to";
+		mes "your feelings of hurt and rage?";
+		next;
+		mes "[Examiner]";
+		mes "...............................";
+		mes "I see it now. I've been";
+		mes "such a fool. I really";
+		mes "appreciate you reaching";
+		mes "out to me like this. Yes,";
+		mes "I shall forgive Kage.";
+		next;
+		mes "[Examiner]";
+		mes "It won't be easy trying";
+		mes "to understand his weird";
+		mes "tastes, but... He has that";
+		mes "right. He has that right.";
+		mes "In the spirit of Christmas...";
+		mes "I will respect his preferences.";
+		next;
+		mes "[Examiner]";
+		mes "Also, let me give you";
+		mes "this present. I cannot";
+		mes "accept your flower without";
+		mes "giving you anything in return.";
+		mes "Please accept it with my best";
+		mes "wishes. Merry Christmas!";
+		next;
+		delitem 712, 1; // Flower
+		05christ_solo = 143;
+		getitem 7908, 1; // Louis_Hair_Coupon
+		next;
+		mes "[Examiner]";
+		mes "Thank you so much";
+		mes "for opening my mind...";
+		mes "And my heart as well.";
+		close;
+	}
+
+	if (05christ_solo == 142) {
+		mes "[Examiner]";
+		mes "This... This doesn't";
+		mes "change my mind about";
+		mes "Kage! I can never forgive";
+		mes "that ruffian for what he did!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "But... I forgave you!";
+		mes "And you basically did";
+		mes "the same thing he did!";
+		next;
+		mes "^3355FFThere must be something";
+		mes "you can do to melt the";
+		mes "Examiner's cold heart.";
+		mes "But what...?^000000";
+		close;
+	}
+
+	if (05christ_solo == 141) {
+		mes "[Examiner]";
+		mes "Did Kage finally";
+		mes "admit guilt to his";
+		mes "crimes? We'll finally";
+		mes "be able to put that";
+		mes "remorseless hoodlum";
+		mes "behind bars! Heh heh!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Yes, Kage did admit";
+		mes "his guilt. But Kage isn't";
+		mes "the only person involved";
+		mes "in these weird haircut crimes.";
+		next;
+		mes "[Examiner]";
+		mes "Ohhh...";
+		mes "I see. So he had";
+		mes "accomplices. To think";
+		mes "that anyone would help him...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "No, I'm not talking";
+		mes "about Kage this time.";
+		mes "I'm talking about you.";
+		next;
+		mes "[Examiner]";
+		mes "M-me? What are";
+		mes "you talking about?";
+		mes "You know that I'd hate";
+		mes "to trim a woman's hair";
+		mes "so that it's... It's...";
+		mes "Ugh! Like a man's!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "You originally told me";
+		mes "there were three victims.";
+		mes "Kage confessed to cutting";
+		mes "the hair of those three.";
+		mes "But you later said that";
+		mes "there were four victims.";
+		next;
+		mes "[Examiner]";
+		mes "That fourth victim...";
+		mes "Her hair must have";
+		mes "been cut while you";
+		mes "were interrogating Kage.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Impossible. Kage was with";
+		mes "me, and there's no way he";
+		mes "could have used the Kafra";
+		mes "Service to reach Geffen in the";
+		mes "short amount of time before";
+		mes "and after I talked to him.";
+		next;
+		mes "[Examiner]";
+		mes "But I'm sure he...";
+		mes "The culprit works";
+		mes "awfully fast, and the";
+		mes "Warp Service is... ";
+		mes "It's instantaneous.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Maybe so...";
+		mes "But a Warp Service";
+		mes "from Morroc to Geffen";
+		mes "doesn't exist! The culprit";
+		mes "of the fourth crime... Was you!";
+		next;
+		mes "[Examiner]";
+		mes "............!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "The circumstances of the";
+		mes "fourth forced haircut were";
+		mes "different than the first three.";
+		mes "First of all, the victim ";
+		mes "mentioned the scent of roses...";
+		mes "The scent I smell right now...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Secondly, the fourth";
+		mes "victim's hair wasn't cut";
+		mes "short... It was actually";
+		mes "grown to ponytail length!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I'm guessing that when you";
+		mes "learned of these bob cut";
+		mes "crimes, you couldn't stand";
+		mes "it. So you tried to even the";
+		mes "scales by countering a crime";
+		mes "with yet another crime!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "An officer of the law like";
+		mes "yourself couldn't afford to";
+		mes "break it, so you planned on";
+		mes "passing the blame to Kage.";
+		mes "A brilliant plan, really.";
+		next;
+		mes "[Examiner]";
+		mes "...............................";
+		mes "Miche was right about you.";
+		mes "Still, I never dreamed that";
+		mes "you'd be this good. Alright,";
+		mes "I admit it. I'll... I'll turn";
+		mes "myself in for my crimes.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "That's fine. That woman was";
+		mes "actually pretty happy about";
+		mes "her haircut. Besides, it's";
+		mes "Christmas, and... I think";
+		mes "it's more important that";
+		mes "we forgive one another.";
+		next;
+		mes "[Examiner]";
+		mes "Are you...";
+		mes "Are you serious?";
+		mes "Just because";
+		mes "it's Christmas?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Well, I did what you";
+		mes "asked me to do.";
+		mes "Case closed. I'll";
+		mes "see you around.";
+		next;
+		mes "[Examiner]";
+		mes "Wait.";
+		mes "H-hold on.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "...?";
+		mes "What is it?";
+		next;
+		mes "[Examiner]";
+		mes "Here. I want you to take";
+		mes "this as a reward. For a";
+		mes "job well done. Thank you...";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Huh. Thanks.";
+		next;
+		if (Sex == 0) {
+			05christ_solo = 143;
+			getitem 5811, 1; // Santa_Beard
+			mes "[Examiner]";
+			mes "Goodbye, now~";
+			mes "Merry Christmas~!!";
+			close;
+		}
+		mes "[Examiner]";
+		mes "Still... This doesn't";
+		mes "change my mind about";
+		mes "Kage! I can never forgive";
+		mes "that ruffian for what he did!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "But... I forgave you!";
+		mes "And you basically did";
+		mes "the same thing he did!";
+		next;
+		05christ_solo = 142;
+		getitem 5811, 1; // Santa_Beard
+		mes "^3355FFThere must be something";
+		mes "you can do to melt the";
+		mes "Examiner's cold heart.";
+		mes "But what...?^000000";
+		close;
+	}
+
+	if (05christ_solo == 138) {
+		mes "[Examiner]";
+		mes "Would you please go back";
+		mes "to Morroc and interrogate";
+		mes "Kage again? Maybe he'll";
+		mes "break down if you describe";
+		mes "the details of how those";
+		mes "women's hair was cut!";
+		close;
+	}
+
+	if (05christ_solo == 137) {
+		mes "[Examiner]";
+		mes "Oh! You already questioned";
+		mes "all four of the victims?";
+		mes "So what did you manage to";
+		mes "learn? Do you know who the";
+		mes "culprit of these crimes is?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "No, not yet. The women";
+		mes "were all blindfolded when";
+		mes "it happened. All I learned";
+		mes "is that he's really fast, and";
+		mes "really good at styling hair.";
+		next;
+		mes "[Examiner]";
+		mes "Hm. Whoever this guy is...";
+		mes "He's put a lot of effort in";
+		mes "making it hard for us to";
+		mes "find him. It looks like our";
+		mes "only suspect is still Kage in";
+		mes "Morroc. It... It must be him!";
+		next;
+		mes "[Examiner]";
+		mes "Would you please go back";
+		mes "to Morroc and interrogate";
+		mes "Kage again? Maybe he'll";
+		mes "break down if you describe";
+		mes "the details of how those";
+		mes "women's hair was cut!";
+		05christ_solo = 138;
+		close;
+	}
+
+	if (05christ_solo > 132 && 05christ_solo < 137) {
+		mes "[Examiner]";
+		mes "Please question the victims";
+		mes "in the order in which the";
+		mes "culprits stripped them of";
+		mes "their lustrously long hair.";
+		next;
+		mes "[Examiner]";
+		mes "The second victim is Ling";
+		mes "in Payon. Lumi is the third";
+		mes "victim, and she lives in";
+		mes "Comodo. Lastly, please";
+		mes "talk to Ayuma in Geffen.";
+		close;
+	}
+
+	if (05christ_solo == 132) {
+		mes "[Examiner]";
+		mes "Ah, you've returned?";
+		mes "So... Did Kage admit";
+		mes "his guilt? I want that";
+		mes "man put behind bars!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Actually, he denied";
+		mes "having any involvement in";
+		mes "those crimes you described.";
+		next;
+		mes "[Examiner]";
+		mes "Hmmm... Well...";
+		mes "Even if he did do it,";
+		mes "I'm sure he'd deny it.";
+		mes "I knew it wouldn't be";
+		mes "this easy. Well, I guess you";
+		mes "should question the victims.";
+		next;
+		mes "[Examiner]";
+		mes "After talking to them, you";
+		mes "might be able to deduce who";
+		mes "attacked them. There are four";
+		mes "victims. The first woman";
+		mes "attacked was Irine in Prontera.";
+		next;
+		mes "[Examiner]";
+		mes "The second victim is Ling";
+		mes "in Payon. Third is Lumi in";
+		mes "Comodo, and the fourth is";
+		mes "Ayuma in Geffen. Best of luck";
+		mes "to you, and I hope you find";
+		mes "and punish the guilty party!";
+		next;
+		mes "[Examiner]";
+		mes "Ah, I just realized!";
+		mes "When you question them,";
+		mes "you should probably visit";
+		mes "the women in the order they";
+		mes "were victimized: go visit";
+		mes "Irine in Prontera first.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Wait a minute...";
+		mes "I thought you said";
+		mes "there were only three";
+		mes "victims? Did I hear you";
+		mes "wrong or something?";
+		next;
+		mes "[Examiner]";
+		mes "Oh, if only that were true!";
+		mes "There were only three victims";
+		mes "when you last spoke to me,";
+		mes "but while you were gone, the villains struck a fourth victim!";
+		next;
+		mes "[Examiner]";
+		mes "Remember to be very careful";
+		mes "when talking to these women.";
+		mes "Try to be sensitive: they've";
+		mes "just suffered an unfathomably";
+		mes "traumatic experience. Oh!";
+		05christ_solo = 133;
+		close;
+	}
+
+	if (05christ_solo == 131) {
+		mes "[Examiner]";
+		mes "I'm almost certain that the";
+		mes "^FF0000Bob Cut Admiration Group^000000.";
+		mes "To think that those lunatics";
+		mes "would stoop to terrorism...!";
+		next;
+		mes "[Examiner]";
+		mes "I want you to interrogate";
+		mes "the founder of the Bob Cut";
+		mes "Admiration Group. His name";
+		mes "is ^FF0000Kage^000000, and can be found";
+		mes "in Morroc. Don't let him fill";
+		mes "your head with his propoganda!";
+		next;
+		mes "[Examiner]";
+		mes "Although they're a small";
+		mes "group, and its members are";
+		mes "scattered from place to place,";
+		mes "we need to nip this problem";
+		mes "in the bud. How dare they";
+		mes "claim that short hair is best!";
+		next;
+		mes "[Examiner]";
+		mes "If I had my way, I'd round";
+		mes "them all up and fence them";
+		mes "off from respectable society,";
+		mes "maybe in some sort of camp.";
+		mes "Nonetheless... Their guilt is";
+		mes "not yet absolutely certain.";
+		next;
+		mes "[Examiner]";
+		mes "I hope that you can ascertain";
+		mes "the identity of the culprits";
+		mes "and capture them. It's tragedy";
+		mes "enough that this many women";
+		mes "have had their hair shorn.";
+		close;
+	}
+
+	if (05christ_solo == 130) {
+		mes "[Examiner]";
+		mes "Oh, are you the one that";
+		mes "Miche told me about? He";
+		mes "highly recommended your";
+		mes "work on behalf of the";
+		mes "bureau. If you don't mind,";
+		mes "I'd like to ask for your help.";
+		next;
+		mes "[Examiner]";
+		mes "Let me get right to the point:";
+		mes "a new crime wave targeting";
+		mes "innocent women and children";
+		mes "has swept the Rune-Midgarts";
+		mes "Kingdom. It is our solemn";
+		mes "duty to stop these criminals.";
+		next;
+		mes "[Examiner]";
+		mes "The bureau doesn't have the";
+		mes "manpower right now to put an";
+		mes "end to this, which is why I'm";
+		mes "asking for your help. You've";
+		mes "proven to have the resources";
+		mes "and skills necessary for this.";
+		next;
+		mes "[Examiner]";
+		mes "I believe that you are";
+		mes "the one that can crush";
+		mes "the villains that are";
+		mes "subjecting the people to";
+		mes "their unspeakable cruelty.";
+		mes "Will you lend us your aid?";
+		next;
+		switch(select("I will help.", "Tell me about the crimes.", "Refuse")) {
+		case 1:
+			mes "[Examiner]";
+			mes "Thank you. Even before";
+			mes "I told you about this case,";
+			mes "you accepted this mission.";
+			mes "For that, you have my utmost";
+			mes "respect and gratitude.";
+			next;
+			mes "[Examiner]";
+			mes "Please, speak to me";
+			mes "again when you are ready";
+			mes "to begin the investigation.";
+			close;
+		case 2:
+			mes "[Examiner]";
+			mes "Ah, how very wise of you";
+			mes "to ask. You must know as";
+			mes "much as you can about your";
+			mes "prey before you hunt it. Yes...";
+			mes "I praise your attention to";
+			mes "detail, your dedication!";
+			next;
+			mes "[Examiner]";
+			mes "With you on our side,";
+			mes "we shall certainly restore";
+			mes "harmony to Rune-Midgard.";
+			mes "Your talents can make our";
+			mes "dreams of peace come true!";
+			mes "For a brighter future, we--";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "I got it, but what";
+			mes "exactly happened?";
+			mes "What's the crime?";
+			mes "Is it theft again?";
+			next;
+			mes "[Examiner]";
+			mes "Oh, I'm sorry. I suppose";
+			mes "I was overly excited. Yes.";
+			mes "The crime is theft... In a";
+			mes "manner of speaking. The";
+			mes "very worst theft imaginable.";
+			next;
+			emotion ET_CRY;
+			mes "[Examiner]";
+			mes "This horrendous deed...!";
+			mes "The theft of speak of is...!";
+			next;
+			emotion ET_HUK, playerattached();
+			mes "["+strcharinfo(0)+"]";
+			mes "?!";
+			next;
+			mes "[Examiner]";
+			mes "The theft...";
+			mes "Of beauty itself!";
+			mes "Oh! What dark";
+			mes "day we live in!";
+			next;
+			mes "[Examiner]";
+			mes "Personality, attitude, wisdom.";
+			mes "Yes, these things are aspects";
+			mes "of beauty, but above all, the";
+			mes "the female form is unsurpassed";
+			mes "in its splendor. And what, may you ask, makes a woman truly beautiful?";
+			next;
+			emotion ET_THINK, playerattached();
+			mes "["+strcharinfo(0)+"]";
+			mes "^333333(Her mind?)^000000";
+			next;
+			mes "[Examiner]";
+			mes "The answer is clear!";
+			mes "A woman's long, lustrous";
+			mes "locks is the key to her";
+			mes "captivating comeliness!";
+			next;
+			mes "[Examiner]";
+			mes "Soft, shiny locks gently";
+			mes "draping down the nape...";
+			mes "A curtain of bobbing curls";
+			mes "that coquettishly dances upon";
+			mes "the shoulders... There can be";
+			mes "no paradise without long hair!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "True, true.";
+			next;
+			mes "[Examiner]";
+			mes "These... These vile";
+			mes "criminals have callously";
+			mes "stripped three victims of";
+			mes "their graceful tresses in";
+			mes "Prontera, Payon, and Comodo!";
+			mes "This is what we call true evil.";
+			next;
+			mes "[Examiner]";
+			mes "I can only imagine the";
+			mes "suffering these poor women";
+			mes "must endure... Their glorious";
+			mes "long hair snipped short by";
+			mes "a mere pair of scissors...";
+			next;
+			mes "[Examiner]";
+			mes "I'm almost certain that the";
+			mes "^FF0000Bob Cut Admiration Group^000000.";
+			mes "To think that those lunatics";
+			mes "would stoop to terrorism...!";
+			next;
+			mes "[Examiner]";
+			mes "I want you to interrogate";
+			mes "the founder of the Bob Cut";
+			mes "Admiration Group. His name";
+			mes "is ^FF0000Kage^000000, and can be found";
+			mes "in Morroc. Don't let him fill";
+			mes "your head with his propoganda!";
+			next;
+			mes "[Examiner]";
+			mes "Although they're a small";
+			mes "group, and its members are";
+			mes "scattered from place to place,";
+			mes "we need to nip this problem";
+			mes "in the bud. How dare they";
+			mes "claim that short hair is best!";
+			next;
+			mes "[Examiner]";
+			mes "If I had my way, I'd round";
+			mes "them all up and fence them";
+			mes "off from respectable society,";
+			mes "maybe in some sort of camp.";
+			mes "Nonetheless... Their guilt is";
+			mes "not yet absolutely certain.";
+			next;
+			05christ_solo = 131;
+			mes "[Examiner]";
+			mes "I hope that you can ascertain";
+			mes "the identity of the culprits";
+			mes "and capture them. It's tragedy";
+			mes "enough that this many women";
+			mes "have had their hair shorn.";
+			close;
+		case 3:
+			mes "[Examiner]";
+			mes "Ah! How can you be so";
+			mes "heartless! Do the wails";
+			mes "of the women of Rune-Midgard";
+			mes "not move you? No, I cannot";
+			mes "force you. But if you change";
+			mes "your mind, please tell me.";
+			next;
+			mes "[Examiner]";
+			mes "The victims of these crimes";
+			mes "need someone to avenge them.";
+			mes "Please... Do not turn a deaf ear to their cries of suffering.";
+			close;
+		}
+	}
+
+	mes "[Examiner]";
+	mes "Winter is coming, and";
+	mes "the Holiday Season is here.";
+	mes "What better reason do you";
+	mes "need to reach out and help";
+	mes "the people around you?";
+	close;
+}
+
+morocc_in,116,127,3	script	Kage#ryu	4W_M_02,{
+	if (05christ_solo == 141) {
+		mes "[Kage]";
+		mes "Merry Christmas!";
+		mes "I will continue to give";
+		mes "the Bob Cut Admiration";
+		mes "Group my all... But I'll";
+		mes "try to accept the strange";
+		mes "tastes of lovers of long hair.";
+		close;
+	}
+
+	if (05christ_solo == 140) {
+		mes "[Kage]";
+		mes "You again? Don't tell me";
+		mes "that you still doubt my";
+		mes "innocence. By now, you";
+		mes "must have figured out the";
+		mes "true culprit of those haircut";
+		mes "crimes. Who do you think it is?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "Who do I think the";
+		mes "culprit is? Only one";
+		mes "person is capable of";
+		mes "doing such a thing...";
+		select("You, Kage.");
+		mes "["+strcharinfo(0)+"]";
+		mes "You, Kage. Only a man";
+		mes "that cherishes hair the";
+		mes "way you do can so stylishly";
+		mes "cut women's hair so quickly.";
+		mes "You have a motive, and frankly,";
+		mes "you're the only real suspect.";
+		next;
+		mes "[Kage]";
+		mes "Like I said, I only spread";
+		mes "the message of the freedom";
+		mes "and loveliness that a bob cut";
+		mes "brings. I'm afraid you've got";
+		mes "the wrong man. I've been";
+		mes "here this entire time!";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "So you're telling me that";
+		mes "you've just been here, and";
+		mes "haven't been traveling to";
+		mes "any of the other towns.";
+		mes "Is that about right?";
+		next;
+		mes "[Kage]";
+		mes "There's no way I can travel";
+		mes "on foot to the other towns";
+		mes "since I can't fight all the";
+		mes "monsters. As for ^ff0000 Kafra Warps ^000000,";
+		mes "traveling to Prontera, Payon,";
+		mes "and Comodo is too expensive.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I don't believe you.";
+		mes "You may not realize it";
+		mes "now, but you've just";
+		mes "admitted your guilt!";
+		next;
+		mes "[Kage]";
+		mes "What...?";
+		mes "What are you";
+		mes "talking about?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "You gave yourself away";
+		mes "when you mentioned...";
+		next;
+		input(.@input$);
+		if (.@input$ == "Kafra Warps") {
+			mes "["+strcharinfo(0)+"]";
+			mes "Kafra Warps.";
+			mes "Only the culprit would";
+			mes "know the towns where";
+			mes "the women's hair was";
+			mes "cut against their will!";
+			next;
+			mes "[Kage]";
+			mes "Wh-what? N-no!";
+			mes "You're making a huge";
+			mes "mistake! I-I simply meant...";
+			mes "I-I never saw those three girls!";
+			next;
+			if (Sex == 0) {
+				mes "["+strcharinfo(0)+"]";
+				mes "There's more!";
+				mes "When I entered this";
+				mes "room, you assumed that";
+				mes "I had been attacked when";
+				mes "you first saw me.";
+				next;
+				mes "[Kage]";
+				mes "...I don't follow you.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "I never said that";
+				mes "I was attacked. Perhaps";
+				mes "I changed my hairstyle";
+				mes "because I felt like it.";
+				next;
+				mes "[Kage]";
+				mes "That was...";
+				mes "That was just";
+				mes "a coincidence!";
+				next;
+			}
+			mes "["+strcharinfo(0)+"]";
+			mes "Well, there's no need for";
+			mes "you to panic. I don't actually";
+			mes "have concrete proof to do";
+			mes "anything against you.";
+			mes "Besides, the hair you cut will";
+			mes "grow back. And it's Christmas.";
+			next;
+			mes "[Kage]";
+			mes "......";
+			mes "............";
+			mes "..................";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Since it's the Holiday";
+			mes "Season, a time to show";
+			mes "goodwill toward all men,";
+			mes "I'll let you off this time.";
+			mes "But if I hear anything like";
+			mes "this again, I'll take you down.";
+			next;
+			mes "[Kage]";
+			mes "What? I don't need your";
+			mes "sympathy! Christmas?";
+			mes "Goodwill toward all men?!";
+			mes "Have you lost your mind?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "No, Kage. I haven't.";
+			mes "We need to forgive the";
+			mes "wrongs committed against";
+			mes "us, as well as respect and";
+			mes "everyone's differences...";
+			mes "Even the long hair lovers.";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "At any rate, you're";
+			mes "the least of my worries.";
+			mes "My investigation of these";
+			mes "incidents isn't over yet...";
+			next;
+			mes "[Kage]";
+			mes "Huh...?";
+			mes "What do you mean?";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "Well, don't worry";
+			mes "about it. I'm sure you";
+			mes "weren't involved, and";
+			mes "you don't need to know.";
+			mes "Anyway, I'm leaving, but";
+			mes "quit cutting hair by surprise!";
+			next;
+			if (Sex == 0) {
+				mes "[Kage]";
+				mes "...Wait. Please.";
+				mes "Just wait a minute.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Huh?";
+				next;
+				mes "[Kage]";
+				mes "I... I want you";
+				mes "to take this.";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "What is it?";
+				next;
+				mes "[Kage]";
+				mes "I want to apologize.";
+				mes "Forgiving... Respecting";
+				mes "others' differences. You've";
+				mes "shown me that now. I won't";
+				mes "admit what I did was wrong...";
+				mes "But... It's Christmas, so...";
+				next;
+				mes "["+strcharinfo(0)+"]";
+				mes "Thank you, Kage";
+				next;
+				05christ_solo = 141;
+				getitem 7908, 1; // Louis_Hair_Coupon
+				mes "[Kage]";
+				mes "Alright.";
+				mes "Use it well.";
+				close;
+			}
+			05christ_solo = 141;
+			mes "[Kage]";
+			mes "Forgiveness? Respecting";
+			mes "differences, huh? I guess";
+			mes "it's something I need to";
+			mes "really think about... Is...";
+			mes "Is this the Christmas spirit?";
+			close;
+		} else {
+			mes "["+strcharinfo(0)+"]";
+			mes "...I... Uh...";
+			mes "What...?";
+			next;
+			mes "[Kage]";
+			mes "Argh! You were";
+			mes "just getting to the";
+			mes "good part too!";
+			next;
+			mes "["+strcharinfo(0)+"]";
+			mes "W-wait! Let me get";
+			mes "back to you on this!";
+			close;
+		}
+	}
+
+	if (05christ_solo == 139 && Sex == 0) {
+		mes "[Kage]";
+		mes "Are you here to try";
+		mes "to make me feel guilty";
+		mes "again? How many times";
+		mes "must I tell you: I never cut";
+		mes "the hair of those women.";
+		next;
+		mes "[Kage]";
+		mes "Oh, what? Your hair's";
+		mes "shorter. Were you attacked?";
+		mes "I must say, it's really an";
+		mes "improvement. Why don't";
+		mes "you keep it that way?";
+		next;
+		mes "[Kage]";
+		mes "It'd be much easier...";
+		mes "I mean, it's not you like you'd";
+		mes "need to be chloroformed,";
+		mes "blindfolded, and tied if you";
+		mes "always kept your hair short.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "You... You just";
+		mes "gave yourself away.";
+		mes "I now know who the";
+		mes "culprit of those";
+		mes "forced haircuts is.";
+		next;
+		mes "[Kage]";
+		mes "Sorry, I was too busy";
+		mes "admiring the nape of";
+		mes "your neck, which I can";
+		mes "now see because your";
+		mes "hair is glamorously short.";
+		mes "Did... Did you say something?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I said that I figured out";
+		mes "who did those haircuts.";
+		next;
+		05christ_solo = 140;
+		mes "[Kage]";
+		mes "Oh, really?";
+		mes "That's strange.";
+		mes "I'm curious: why";
+		mes "don't you tell me";
+		mes "who you think it is?";
+		close;
+	} else if (05christ_solo == 139 && Sex == 1) {
+		mes "[Kage]";
+		mes "Are you here to try";
+		mes "to make me feel guilty";
+		mes "again? How many times";
+		mes "must I tell you: I never cut";
+		mes "the hair of those women.";
+		next;
+		mes "[Kage]";
+		mes "At the beginning,";
+		mes "I never went out from morocc.";
+		mes "Besides this case happened";
+		mes "in Prontera, Payon, and Comodo,";
+		mes "not Morrocc!";
+		next;
+		mes "[Kage]";
+		mes "I've never left";
+		mes "Morroc. Besides,";
+		mes "none of those crimes";
+		mes "happened here. I merely";
+		mes "spread the message that";
+		mes "bob cut hair... Is best.";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "You... You just";
+		mes "gave yourself away.";
+		mes "I now know who the";
+		mes "culprit of those";
+		mes "forced haircuts is.";
+		next;
+		mes "[Kage]";
+		mes "It's true...";
+		mes "There's nothing like";
+		mes "a short, perky bob of";
+		mes "lustrous hair. I--Wait.";
+		mes "What did you just say?";
+		next;
+		mes "["+strcharinfo(0)+"]";
+		mes "I said that I figured out";
+		mes "who did those haircuts.";
+		next;
+		05christ_solo = 140;
+		mes "[Kage]";
+		mes "Oh, really?";
+		mes "That's strange.";
+		mes "I'm curious: why";
+		mes "don't you tell me";
+		mes "who you think it is?";
+		close;
+	}
+
+	if (05christ_solo == 132) {
+		mes "[Kage]";
+		mes "Please tell that Examiner";
+		mes "that I didn't commit those";
+		mes "crimes, and we'll welcome";
+		mes "him to our group if he ever";
+		mes "opens that closed mind of his.";
+		next;
+		mes "^3355FFIt's no use talking to Kage";
+		mes "anymore. You'd better";
+		mes "go talk to the Examiner.^000000";
+		close;
+	}
+
+	if (05christ_solo == 131) {
+		mes "[Kage]";
+		mes "Ahhh...";
+		mes "Is there anything more";
+		mes "alluring than a short bob";
+		mes "of hair on a woman's head?";
+		mes "It's like... Art that's alive!";
+		next;
+		if (Sex == 1) {
+			mes "[Kage]";
+			mes "You there! You have the";
+			mes "kind of eyes that can";
+			mes "recognize true beauty.";
+			mes "Why dont' you join us, the";
+			mes "Bob Cut Admiration Group?";
+			next;
+		} else {
+			mes "[Kage]";
+			mes "Ah, greetings, my lady.";
+			mes "I didn't notice you were";
+			mes "there. How about it?";
+			mes "Why don't you cut your";
+			mes "hair shorter? You'll love";
+			mes "that new feeling of freedom!";
+			next;
+		}
+		mes "["+strcharinfo(0)+"]";
+		mes "Actually, I'm here to";
+		mes "ask if you knew anything";
+		mes "about the recent incidents";
+		mes "of guerilla haircuts that three";
+		mes "women experienced. Your group happens to be  the prime suspect!";
+		next;
+		mes "[Kage]";
+		mes "What? Oh, well, naturally,";
+		mes "I'd love to cut the hair of";
+		mes "all the women in the world...";
+		mes "But I'd never do it against";
+		mes "their will, or on the street.";
+		mes "I espouse beauty and freedom!";
+		next;
+		mes "[Kage]";
+		mes "I see... That Examiner in";
+		mes "the Knight Group... He must";
+		mes "have sent you, right? That";
+		mes "man is absolutely obsessed";
+		mes "with long hair. Hah hah hah!";
+		mes "Can you believe his nonsense?";
+		next;
+		mes "[Kage]";
+		mes "That simpleton will never";
+		mes "understand freedom that";
+		mes "short hair brings, the active";
+		mes "and exhilirating lifestyle it";
+		mes "allows! The way the ears";
+		mes "peek at you from behind it...";
+		next;
+		mes "[Kage]";
+		mes "Long hair? Hmpf! That";
+		mes "invention from the Stone Age";
+		mes "weighs down women's heads,";
+		mes "smothers the neck, and chokes";
+		mes "away every once of their vitality! Oh, and the maintenance!";
+		next;
+		emotion ET_THINK, playerattached();
+		mes "["+strcharinfo(0)+"]";
+		mes "......";
+		mes "............";
+		mes "..................";
+		next;
+		05christ_solo = 132;
+		mes "[Kage]";
+		mes "I apologize if I got a little";
+		mes "carried away. Please tell that";
+		mes "Examiner that I didn't commit";
+		mes "those crimes, and we'll welcome";
+		mes "him to our group if he ever";
+		mes "opens that closed mind of his.";
+		close;
+	}
+
+	mes "[Kage]";
+	mes "Ahhh...";
+	mes "Is there anything more";
+	mes "alluring than a short bob";
+	mes "of hair on a woman's head?";
+	mes "It's like... Art that's alive!";
+	close;
+}
+
+prontera,128,212,5	script	Irine#ryu	4_F_03,{
+	if (05christ_solo == 133) {
+		mes "[Irine]";
+		mes "I-I've loved nothing more";
+		mes "than to spend hours brushing";
+		mes "my supple, long hair! Now...";
+		mes "Now look at me! I'm a freak!";
+		mes "Some hooligan cut my hair";
+		mes "without asking! I'm so angry!";
+		next;
+		mes "[Irine]";
+		mes "All I remember was that";
+		mes "someone suddenly wrapped";
+		mes "my face in cloth from behind,";
+		mes "and I couldn't move! Th-then...";
+		mes "The scissors... Th-they...";
+		mes "They wouldn't stop snipping!";
+		next;
+		mes "[Irine]";
+		mes "When the cutting stopped,";
+		mes "I found that I was able to";
+		mes "move again. And then when";
+		mes "I looked in the mirror,";
+		mes "I saw... I saw ^FF0000short hair^000000!";
+		next;
+		emotion ET_CRY;
+		mes "[Irine]";
+		mes "I guess... I should be";
+		mes "grateful that my hair was";
+		mes "cut so neatly. It all happened";
+		mes "so fast! Whoever did that...";
+		mes "He should think about";
+		mes "becoming a hairdresser...";
+		next;
+		05christ_solo = 134;
+		mes "[Irine]";
+		mes "Arrgh! But to cut my hair";
+		mes "without my permission!";
+		mes "Th-this style?! Didn't";
+		mes "it go out of fashion";
+		mes "before I was even born?!";
+		close;
+	} else {
+		mes "[Irine]";
+		mes "I-I've loved nothing more";
+		mes "than to spend hours brushing";
+		mes "my supple, long hair! Now...";
+		mes "Now look at me! I'm a freak!";
+		mes "Some hooligan cut my hair";
+		mes "without asking! I'm so angry!";
+		close;
+	}
+}
+
+payon,139,218,5	script	Ling#ryu	4_F_03,{
+	if (05christ_solo == 134) {
+		mes "[Ling]";
+		mes "Gone... All of it... Gone!";
+		mes "My long, beautiful hair!";
+		mes "I... I used to sing my songs";
+		mes "to my audience with so much";
+		mes "courage. My fans called me, the long, straight hair girl.";
+		next;
+		mes "[Ling]";
+		mes "Now, I can barely force";
+		mes "myself to get onstage!";
+		mes "When I sing... It's like...";
+		mes "It's like they can't even";
+		mes "recognize me! I'm a monster!";
+		next;
+		mes "[Ling]";
+		mes "If only those gangsters";
+		mes "didn't surprise me from";
+		mes "behind, tie me up, and...";
+		mes "And did whatever they";
+		mes "pleased with my long hair.";
+		mes "I feel so violated... Oh, God!";
+		next;
+		emotion ET_CRY;
+		mes "[Ling]";
+		mes "I can't even face the";
+		mes "audience when I sing";
+		mes "anymore! D-do... Do you";
+		mes "think I need to have a";
+		mes "makeover or something?";
+		mes "Waaah! What should I do?!";
+		mes "huk(weeping)...";
+		05christ_solo = 135;
+		close;
+	} else {
+		mes "[Ling]";
+		mes "Gone... All of it... Gone!";
+		mes "My long, beautiful hair!";
+		close;
+	}
+}
+
+comodo,144,160,5	script	Lumi#ryu	4_F_05,{
+	if (05christ_solo == 135) {
+		mes "[Lumi]";
+		mes "What are you looking";
+		mes "at? Oh, is it my short";
+		mes "hair? Yeah, I'm still not";
+		mes "used to it yet. Funny, huh?";
+		next;
+		mes "[Lumi]";
+		mes "I used to have pretty";
+		mes "long hair, and was actually";
+		mes "thinking of cutting it short,";
+		mes "but some guy snuck up on me,";
+		mes "and cut it without even asking!";
+		mes "He never gave me a choice!";
+		next;
+		mes "[Lumi]";
+		mes "Let's see... He blindfolded";
+		mes "me, tied me up, but it was";
+		mes "only for a few seconds.";
+		mes "He finished cutting my";
+		mes "hair in a flash.";
+		next;
+		emotion ET_ANGER;
+		mes "[Lumi]";
+		mes "Well... I'm pretty happy";
+		mes "with the way it was cut and";
+		mes "styled. It looks kind of nice,";
+		mes "actually. But if I ever see";
+		mes "that guy, he's dead meat!";
+		mes "You can't do that to girls!";
+		next;
+		05christ_solo = 136;
+		mes "[Lumi]";
+		mes "Then again...";
+		mes "It's not everyday";
+		mes "that you get a free";
+		mes "haircut as nice as this.";
+		close;
+	} else {
+		mes "[Lumi]";
+		mes "What are you looking";
+		mes "at? Oh, is it my short";
+		mes "hair? Yeah, I'm still not";
+		mes "used to it yet. Funny, huh?";
+		close;
+	}
+}
+
+geffen,143,196,3	script	Ayuma#ryu	4_F_LGTGIRL,{
+	if (05christ_solo == 136) {
+		mes "[Ayuma]";
+		mes "Oh? How do you";
+		mes "like my hair? Isn't";
+		mes "it fabulous? It looks";
+		mes "really pretty on me, huh?";
+		next;
+		mes "[Ayuma]";
+		mes "I used to have really";
+		mes "short, straight hair, you";
+		mes "know. It's weird... I was just";
+		mes "walking around town, there";
+		mes "there was the scent of roses.";
+		mes "I fainted! Totally knocked out.";
+		next;
+		mes "[Ayuma]";
+		mes "I don't how much time";
+		mes "passed... But when I woke";
+		mes "up, my hair was like this!";
+		mes "I can't untie the ponytail,";
+		mes "weirdly enough, but... Now,";
+		mes "I kind of like it! Heh heh!";
+		next;
+		05christ_solo = 137;
+		mes "[Ayuma]";
+		mes "What happened to me";
+		mes "was kind of scary, but...";
+		mes "I guess anyone that styles";
+		mes "hair this well can't be all";
+		mes "bad. It'd be better if he";
+		mes "asked to style my hair first...";
+		next;
+		mes "[Ayuma]";
+		mes "Gosh, look at this!";
+		mes "I didn't think having long";
+		mes "hair would look this good!";
+		close;
+	} else {
+		mes "[Ayuma]";
+		mes "Oh? How do you";
+		mes "like my hair? Isn't";
+		mes "it fabulous? It looks";
+		mes "really pretty on me, huh?";
+		close;
+	}
+}
+
+// Hair Stylist
+// -----------------------------------------------------------
+
+xmas_in,89,92,5	script	Louise Kim#07christ_00	4_F_06,{
+	mes "[Artist Louise Kim]";
+	mes "I, Lousie Kim, hair virtuoso,";
+	mes "will give your hair a vibrance";
+	mes "and glamourousness beyond";
+	mes "all your expectations, no matter how ugly your old hairstyle is.";
+	mes "Shall I change your hairstyle?";
+	next;
+	switch(select("Check Hairstyles", "Change Hairstyle", "Cancel")) {
+	case 1:
+		mes "[Artist Louise Kim]";
+		mes "I offer you twenty-three";
+		mes "fashionable hairstyles.";
+		mes "Enter a number from";
+		mes "1 to 23 to check a hairstyle.";
+		mes "Enter ''0'' when you're done";
+		mes "checking hairstyles.";
+		next;
+		input .@style;
+		if(.@style > 23) {
+			mes "[Artist Louise Kim]";
+			mes "You may only enter";
+			mes "a number from 1 to 23.";
+			mes "Concentrate, and let";
+			mes "me know which hairstyle";
+			mes "you want to see!";
+			close;
+		} else if(.@style == 0) {
+			cutin "hair_f_01", 255;
+			mes "[Artist Louise Kim]";
+			mes "Let me know anytime";
+			mes "if you want to change";
+			mes "your hair to one of the";
+			mes "styles I have to offer.";
+			close;
+		} else {
+			callsub L_cutin,.@style;
+			mes "[Artist Louise Kim]";
+			switch(.@style) {
+				case 1:
+					if (Sex == SEX_MALE) {
+						mes "The Play Dead style!";
+						mes "This style will give";
+						mes "you a calm and neat";
+						mes "feeling. Do you like this?";
+					} else {
+						mes "This is the First Aid";
+						mes "style. Everyone will want";
+						mes "to touch your hair if you";
+						mes "change it to this.";
+					}
+					break;
+				case 2:
+					if (Sex == SEX_MALE) {
+						mes "The Two-Handed Sword";
+						mes "Training style is the same";
+						mes "style as the one sported";
+						mes "by a famous Swordman.";
+						mes "Do you like this one?";
+					} else {
+						mes "This is the Bash";
+						mes "style: people that";
+						mes "have their hair styled";
+						mes "this way swear that it";
+						mes "grants them extra strength.";
+					}
+					break;
+				case 3:
+					if (Sex == SEX_MALE) {
+						mes "The Napalm Beat style";
+						mes "gives you an aura of...";
+						mes "I can't quite explain it,";
+						mes "but it feels magical.";
+					} else {
+						mes "The Frost Diver style";
+						mes "gives off a cold feeling.";
+						mes "So cold, it burns! How";
+						mes "do you like this style?";
+					}
+					break;
+				case 4:
+					if (Sex == SEX_MALE) {
+						mes "This Double Strafe";
+						mes "style gives you a feeling";
+						mes "of peace and tranquility.";
+						mes "How do you like this style?";
+					} else {
+						mes "The Arrow Shower style";
+						mes "helps you keep your cool";
+						mes "in the midst of chaos.";
+						mes "It won't get mussed, no";
+						mes "matter how beat up you get.";
+					}
+					break;
+				case 5:
+					if (Sex == SEX_MALE) {
+						mes "The Angelus style";
+						mes "evokes feelings of";
+						mes "inner quiet and piety.";
+						mes "How do you like it?";
+					} else {
+						mes "The Heal style puts";
+						mes "your mind at ease and";
+						mes "settles the troubles in";
+						mes "your mind. You like it?";
+					}
+					break;
+				case 6:
+					if (Sex == SEX_MALE) {
+						mes "The Pushcart style";
+						mes "was inspired by a big";
+						mes "cart. It doesn't sound";
+						mes "fashionable, but it's";
+						mes "actually pretty nice...";
+					} else {
+						mes "the favorite choice for";
+						mes "entrepreneurs and serious";
+						mes "moneymakers. You like it?";
+					}
+					break;
+				case 7:
+					if (Sex == SEX_MALE) {
+						mes "The fashionable look";
+						mes "of the Envenom style";
+						mes "is beyond addiction:";
+						mes "it's an obsession for";
+						mes "the fashionably conscious!";
+					} else {
+						mes "Why do they call this";
+						mes "style Double Attack?";
+						mes "It's because people who";
+						mes "wear this are always hit on";
+						mes "twice in a row, wherever";
+						mes "they go! Makes sense, huh?";
+					}
+					break;
+				case 8:
+					if (Sex == SEX_MALE) {
+						mes "The beauty of the";
+						mes "Bowling Bash style";
+						mes "is certainly striking,";
+						mes "wouldn't you say?";
+					} else {
+						mes "The Gloria style is";
+						mes "gorgeous, holy, and";
+						mes "noble. It's a very";
+						mes "sophisticated look.";
+					}
+					break;
+				case 9:
+					if (Sex == SEX_MALE) {
+						mes "The Venom Dust style";
+						mes "gives off a lethal attraction.";
+						mes "What do you think of this look?";
+					} else {
+						mes "The Increase SP";
+						mes "Recovery style makes";
+						mes "you feel filled with";
+						mes "spirit, even if it";
+						mes "actually doesn't";
+						mes "do anything.";
+					}
+					break;
+				case 10:
+					if (Sex == SEX_MALE) {
+						mes "The Turn Undead style";
+						mes "makes you feel like you";
+						mes "can knock out any ghost";
+						mes "you can see! You like it?";
+					} else {
+						mes "The Pharmacy style...";
+						mes "It makes you feel like";
+						mes "you can cure wounds?";
+						mes "It looks good, though.";
+					}
+					break;
+				case 11:
+					if (Sex == SEX_MALE) {
+						mes "This Dragonlogy style";
+						mes "was inspired by the";
+						mes "holy dragon race.";
+						mes "Kind of nice, isn't it?";
+					} else {
+						mes "The Grand Cross style";
+						mes "makes you feel like you're";
+						mes "protected by the heavens";
+						mes "themselves. It's good if you";
+						mes "want to feel more confident.";
+					}
+					break;
+				case 12:
+					if (Sex == SEX_MALE) {
+						mes "The Mace Mastery";
+						mes "style is a very solid";
+						mes "look, and it's fitting";
+						mes "for most occasions.";
+						mes "How do you like it?";
+					} else {
+						mes "The Intimidate style";
+						mes "seems very familiar.";
+						mes "Kind of nostalgic if";
+						mes "you think about it,";
+						mes "maybe. You like it?";
+					}
+					break;
+				case 13:
+					if (Sex == SEX_MALE) {
+						mes "The Thunderstorm style";
+						mes "looks like it's crackling";
+						mes "with electricity, doesn't it?";
+						mes "Alright, alright, it's... It's";
+						mes "electrifying. I said it.";
+					} else {
+						mes "The Spiritual Sphere";
+						mes "Absorption style!";
+						mes "I think everyone can";
+						mes "dig this hairstyle.";
+					}
+					break;
+				case 14:
+					if (Sex == SEX_MALE) {
+						mes "The Encore style is";
+						mes "perfect for performers!";
+						mes "It's pretty flamboyant";
+						mes "and artsy if you look";
+						mes "at it just right...";
+					} else {
+						mes "The Gypsy's Kiss style";
+						mes "is pretty provocative,";
+						mes "but you can still wear";
+						mes "it to work and formal";
+						mes "occasions. It's almost";
+						mes "too sexy, if you ask me.";
+					}
+					break;
+				case 15:
+					if (Sex == SEX_MALE) {
+						mes "The Grimtooth style";
+						mes "grabs attention with its";
+						mes "wild, piercing spikes.";
+						mes "How do you like it?";
+					} else {
+						mes "The Counter Attack";
+						mes "style is perfect for girls";
+						mes "that just got dumped.";
+						mes "Counterattack your";
+						mes "ex-beau by making him";
+						mes "sorry he ever left you!";
+					}
+					break;
+				case 16:
+					if (Sex == SEX_MALE) {
+						mes "The Blitz Beat style";
+						mes "will give you the wild";
+						mes "dignity of a falcon.";
+						mes "Isn't it cool?";
+					} else {
+						mes "The Ankle Snare style";
+						mes "will surely ensnare the";
+						mes "heart of whomever you desire.";
+						mes "Well, that's what I'm supposed";
+						mes "to tell you, anyways.";
+					}
+					break;
+				case 17:
+					if (Sex == SEX_MALE) {
+						mes "The Ore Discovery";
+						mes "style will probably";
+						mes "increase the chances";
+						mes "that you'll come across";
+						mes "what you really want.";
+						mes "Probably, but, well...";
+					} else {
+						mes "Stun all onlookers with";
+						mes "the striking beauty of";
+						mes "the Hammer Fall style!";
+						mes "Looks good, right?";
+					}
+					break;
+				case 18:
+					if (Sex == SEX_MALE) {
+						mes "The Fire Pillar style";
+						mes "used to be all the rage,";
+						mes "but it's still considered";
+						mes "a classic hairstyle.";
+						mes "Do you like this one?";
+					} else {
+						mes "Ooh, this is the ";
+						mes "Jupitel Thunder style.";
+						mes "It really crackles with";
+						mes "sensual energy, doesn't it?";
+					}
+					break;
+				case 19:
+					if (Sex == SEX_MALE) {
+						mes "The Asura Strike style...";
+						mes "One look is all it takes";
+						mes "to capture someone's rapt";
+						mes "attention if you sport this.";
+					} else {
+						mes "The Whirl Wind style";
+						mes "is a very natural looking,";
+						mes "windswept look. It's cool";
+						mes "and casual, don't you think?";
+					}
+					break;
+				case 20:
+					if (Sex == SEX_MALE) {
+						mes "The Petite style features";
+						mes "a long braid, sort of like";
+						mes "a Petite's tail. Or is that";
+						mes "too much of a stretch?";
+					} else {
+						mes "The Spring Rabbit style";
+						mes "is happy, cheerful, and";
+						mes "gives your hair extra";
+						mes "bounce. Do you like it?";
+					}
+					break;
+				case 21:
+					if (Sex == SEX_MALE) {
+						mes "The Executioner style";
+						mes "makes you look powerful,";
+						mes "and a little dangerous.";
+						mes "It's the perfect bad boy look.";
+					} else {
+						mes "The Harpy style features";
+						mes "straight hair with curls.";
+						mes "It's a pretty complex look.";
+						mes "How do you like it?";
+					}
+					break;
+				case 22:
+					if (Sex == SEX_MALE) {
+						mes "This is the Prince";
+						mes "style, a noble and";
+						mes "sophisticated look.";
+						mes "It's pretty sharp too.";
+					} else {
+						mes "This is the Medusa";
+						mes "style, which is fairly";
+						mes "cute, but it's more";
+						mes "cool than anything else.";
+						mes "Do you like this one?";
+					}
+					break;
+				case 23:
+					if (Sex == SEX_MALE) {
+						mes "This is the Devious";
+						mes "style. It gives you";
+						mes "a look of coolness and";
+						mes "cunning that looks really";
+						mes "great on some guys.";
+					} else {
+						mes "This is the Isis style.";
+						mes "It's a little like a bob";
+						mes "cut, but I don't like to";
+						mes "think of it that way.";
+						mes "It's cute, isn't it?";
+					}
+					break;
+			}
+			close;
+		}
+	case 2:
+		if (countitem(7908) > 0) {
+			mes "[Artist Louise Kim]";
+			mes "Choose your favorite";
+			mes "hairstyle by entering ";
+			mes "a number from 1 to 23.";
+			mes "I'll do my best to make";
+			mes "sure you're happy with";
+			mes "the way your hair looks.";
+			next;
+			input .@style;
+			if(.@style > 23) {
+				mes "[Artist Louise Kim]";
+				mes "I'm sorry, but there";
+				mes "aren't any styles like";
+				mes "that. Make sure that you";
+				mes "enter a number from 1 to 23.";
+				close;
+			} else if(.@style == 0) {
+				mes "[Artist Louise Kim]";
+				mes "Oh, you changed your";
+				mes "mind? Alright, but come";
+				mes "back to me if you decide";
+				mes "to change your hairstyle.";
+				close;
+			} else if (getlook(1) == .@style) {
+				mes "[Artist Louise Kim]";
+				mes "Hm? You already have";
+				mes "this hairstyle. Maybe";
+				mes "you should check the";
+				mes "number you entered?";
+				close;
+			} else {
+				callsub L_cutin,.@style;
+				mes "[Artist Louise Kim]";
+				mes "Okay, so you";
+				mes "want style No." + .@style + "?";
+				mes "Shall I go ahead and";
+				mes "change your hairstyle?";
+				next;
+				if(select("Yes, please.", "No, stop!") == 2) {
+					mes "[Artist Louise Kim]";
+					mes "Oh, that wasn't it?";
+					mes "Alright, then go ahead and";
+					mes "choose again. Let me know";
+					mes "when you decide which";
+					mes "hairstyle you want, okay?";
+					close;
+				}
+				nude;
+				mes "^3355FF*Snip Snip Snip Snip*";
+				mes "*Rasp Rasp Rasp Rasp*";
+				mes "*whing whing whing whing*";
+				mes "*Buzz Buzz Buzz Buzz*^000000";
+				next;
+				cutin "", 255;
+				mes "[Artist Louise Kim]";
+				mes "Come and visit me";
+				mes "if you decide to change";
+				mes "your hairstyle again.";
+				mes "I'll be waiting!";
+				delitem 7908, 1; // Louis_Hair_Coupon
+				setlook 1,.@style;
+				close;
+			}
+		} else {
+			mes "[Artist Louise Kim]";
+			mes "Oh? You didn't bring";
+			mes "a ^0000FFBeauty Treatment Ticket^000000?";
+			mes "I can't change your hairstyle";
+			mes "if you don't bring me one.";
+			next;
+			mes "[Artist Louise Kim]";
+			mes "Bring me that ticket";
+			mes "during the Christmas";
+			mes "Season, and I'll go ahead";
+			mes "and change your hair for you.";
+			close;
+		}
+	case 3:
+		mes "[Artist Louise Kim]";
+		mes "Everyone has the right";
+		mes "to be as beautiful as";
+		mes "they can be. I hope you'll";
+		mes "find the hairstyle that's";
+		mes "perfect for you!";
+		close;
+	}
+
+	L_cutin:
+		.@num = getarg(0);
+		if(Sex == SEX_MALE) {
+			if (.@num  < 10)
+				cutin "hair_m_0"+ .@num, 4;
+			else
+				cutin "hair_m_"+ .@num, 4;
+		} else {
+			if (.@num < 10)
+				cutin "hair_f_0"+ .@num, 4;
+			else
+				cutin "hair_f_"+ .@num, 4;
+		}
+		return;
+}
+
+// Bonus Quest (deliver presents)
+// -----------------------------------------------------------
+
+prontera,156,268,3	script	Santa Claus#07christ_01	4_M_SANTA,{
+	if (05christ_carol < 20) {
+		mes "[Santa Claus]";
+		mes "Ho ho ho!";
+		mes "Meeerry Christmas!";
+		mes "Have you been good this";
+		mes "year? Yes? Good! Now,";
+		mes "what's the first thing you think of when you think about Christmas?";
+		next;
+		switch(select("Santa Claus!", "Presents!", "Santa Costumes!", "Y-you can't be real!")) {
+			case 1:
+				break;
+			case 2:
+				mes "[Santa Claus]";
+				mes "Presents! Wonderful!";
+				mes "Yes, the anticipation";
+				mes "for Christmas presents";
+				mes "is almost too much to";
+				mes "bear, isn'it it? Ahhh,";
+				mes "but it's woooonderful!";
+				next;
+				mes "[Santa Claus]";
+				mes "Ah, but there are those";
+				mes "that don't deserve presents,";
+				mes "like that Antonio, the evil";
+				mes "version of us Santas!";
+				mes "They threaten Christmas";
+				mes "every year! Curse them all!";
+				next;
+				mes "[Santa Claus]";
+				mes "The very existence of";
+				mes "Antonio... Worries the";
+				mes "entire Santa Association.";
+				mes ". . . . . . . . . . . . . . . .";
+				mes "Ho ho ho! But it'll be alright!";
+				close;
+			case 3:
+				mes "[Santa Claus]";
+				mes "Santa costumes? Ah, yes!";
+				mes "The best fashion that ever";
+				mes "existed! Ho ho ho! It's light";
+				mes "yet warm, the perfect winter";
+				mes "coat for just about anyone!";
+				close;
+			case 4:
+				mes "[Santa Claus]";
+				mes "Ho... ho?";
+				mes "I don't catch your";
+				mes "meaning. Oh well...";
+				mes "Meeeerry Christmas!";
+				close;
+		}
+		mes "[Santa Claus]";
+		mes "Ho ho ho! You're such";
+		mes "a good kid! Do you think";
+		mes "you can help Santa with";
+		mes "a very important job?";
+		next;
+		if(select("Boo! I don't wanna!", "Sure.") == 1) {
+			mes "[Santa Claus]";
+			mes "Ho ho ho, well, if you";
+			mes "don't want to, I can't";
+			mes "help it. Ho ho ho, but if you";
+			mes "change your mind, please";
+			mes "come and talk to Santa again!";
+			close;
+		}
+		mes "[Santa Claus]";
+		mes "Ho ho ho! Santa's so";
+		mes "busy this Christmas, he";
+		mes "doesn't have time to";
+		mes "deliver all his presents!";
+		mes "Will you help Santa spread joy";
+		mes "to the children of the world?";
+		next;
+		.@07deliver = rand(1, 5);
+		if (.@07deliver == 1) {
+			mes "[Santa Claus]";
+			mes "This present is for";
+			mes "Silver, the so-called";
+			mes "^0000FFCute Boy in Lighthalzen^000000.";
+			mes "Please make sure he gets this!";
+			next;
+			mes "^3355FFSanta handed you";
+			mes "a wrapped box topped";
+			mes "with a ribbon that is";
+			mes "addressed to Silver.^000000";
+			next;
+			mes "[Santa Claus]";
+			mes "Oh, and don't forget";
+			mes "to wear a ^0000FFSanta Beard^000000";
+			mes "when you deliver the gift.";
+			mes "We can't destroy the hopes";
+			mes "and dreams of the children!";
+			05christ_carol = 20;
+			close;
+		} else if (.@07deliver == 2) {
+			mes "[Santa Claus]";
+			mes "This present is for";
+			mes "Bathornby, the so-called";
+			mes "^0000FFManly Boy in Al De Baran^000000.";
+			mes "Please make sure he gets this!";
+			next;
+			mes "^3355FFSanta handed you";
+			mes "a wrapped box topped";
+			mes "with a ribbon that is";
+			mes "addressed to Bathornby.^000000";
+			next;
+			mes "[Santa Claus]";
+			mes "Oh, and don't forget";
+			mes "to wear a ^0000FFSanta Beard^000000";
+			mes "when you deliver the gift.";
+			mes "We can't destroy the hopes";
+			mes "and dreams of the children!";
+			05christ_carol = 21;
+			close;
+		} else if (.@07deliver == 3) {
+			mes "[Santa Claus]";
+			mes "This present is for";
+			mes "Bisun, the so-called";
+			mes "^0000FFPerky Girl in Payon^000000. Please";
+			mes "make sure she gets this!";
+			next;
+			mes "^3355FFSanta handed you";
+			mes "a wrapped box topped";
+			mes "with a ribbon that is";
+			mes "addressed to Bisun.^000000";
+			next;
+			mes "[Santa Claus]";
+			mes "Oh, and don't forget";
+			mes "to wear a ^0000FFSanta Beard^000000";
+			mes "when you deliver the gift.";
+			mes "We can't destroy the hopes";
+			mes "and dreams of the children!";
+			05christ_carol = 22;
+			close;
+		} else if (.@07deliver == 4) {
+			mes "[Santa Claus]";
+			mes "This present is for";
+			mes "Neona, the so-called";
+			mes "^0000FFVery Cute Girl in Comodo^000000.";
+			mes "Please make sure she gets this!";
+			next;
+			mes "[Santa Claus]";
+			mes "^3355FFSanta handed you";
+			mes "a wrapped box topped";
+			mes "with a ribbon that is";
+			mes "addressed to Neona.^000000";
+			next;
+			mes "[Santa Claus]";
+			mes "Oh, and don't forget";
+			mes "to wear a ^0000FFSanta Beard^000000";
+			mes "when you deliver the gift.";
+			mes "We can't destroy the hopes";
+			mes "and dreams of the children!";
+			05christ_carol = 23;
+			close;
+		} else {
+			mes "[Santa Claus]";
+			mes "This present is for";
+			mes "Iddas, the so-called";
+			mes "^0000FFVery Shy Girl in Lutie^000000.";
+			mes "Please make sure she gets this!";
+			next;
+			mes "^3355FFSanta handed you";
+			mes "a wrapped box topped";
+			mes "with a ribbon that is";
+			mes "addressed to Iddas.^000000";
+			next;
+			mes "[Santa Claus]";
+			mes "Oh, and don't forget";
+			mes "to wear a ^0000FFSanta Beard^000000";
+			mes "when you deliver the gift.";
+			mes "We can't destroy the hopes";
+			mes "and dreams of the children!";
+			05christ_carol = 24;
+			close;
+		}
+	} else if (05christ_carol == 20) {
+		mes "[Santa Claus]";
+		mes "This present is for";
+		mes "Silver, the so-called";
+		mes "^0000FFCute Boy in Lighthalzen^000000.";
+		mes "Please make sure he gets this!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh, and don't forget";
+		mes "to wear a ^0000FFSanta Beard^000000";
+		mes "when you deliver the gift.";
+		mes "We can't destroy the hopes";
+		mes "and dreams of the children!";
+		close;
+	} else if (05christ_carol == 21) {
+		mes "[Santa Claus]";
+		mes "This present is for";
+		mes "Bathornby, the so-called";
+		mes "^0000FFManly Boy in Al De Baran^000000.";
+		mes "Please make sure he gets this!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh, and don't forget";
+		mes "to wear a ^0000FFSanta Beard^000000";
+		mes "when you deliver the gift.";
+		mes "We can't destroy the hopes";
+		mes "and dreams of the children!";
+		close;
+	} else if (05christ_carol == 22) {
+		mes "[Santa Claus]";
+		mes "This present is for";
+		mes "Bisun, the so-called";
+		mes "^0000FFPerky Girl in Payon^000000. Please";
+		mes "make sure she gets this!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh, and don't forget";
+		mes "to wear a ^0000FFSanta Beard^000000";
+		mes "when you deliver the gift.";
+		mes "We can't destroy the hopes";
+		mes "and dreams of the children!";
+		close;
+	} else if (05christ_carol == 23) {
+		mes "[Santa Claus]";
+		mes "This present is for";
+		mes "Neona, the so-called";
+		mes "^0000FFVery Cute Girl in Comodo^000000.";
+		mes "Please make sure she gets this!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh, and don't forget";
+		mes "to wear a ^0000FFSanta Beard^000000";
+		mes "when you deliver the gift.";
+		mes "We can't destroy the hopes";
+		mes "and dreams of the children!";
+		close;
+	} else if (05christ_carol == 24) {
+		mes "[Santa Claus]";
+		mes "This present is for";
+		mes "Iddas, the so-called";
+		mes "^0000FFVery Shy Girl in Lutie^000000.";
+		mes "Please make sure she gets this!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh, and don't forget";
+		mes "to wear a ^0000FFSanta Beard^000000";
+		mes "when you deliver the gift.";
+		mes "We can't destroy the hopes";
+		mes "and dreams of the children!";
+		close;
+	} else if (05christ_carol == 25) {
+		mes "[Santa Claus]";
+		mes "Ah, so you safely delivered";
+		mes "the presents! Good work!";
+		mes "Wasn't it a joy to see those";
+		mes "children's faces light up?";
+		mes "Ho ho ho! Let me thank";
+		mes "you for your help!";
+		next;
+		mes "[Santa Claus]";
+		mes "Place your hand into";
+		mes "my sack of gifts, and";
+		mes "pull something out.";
+		mes "Ho ho ho! Don't look!";
+		next;
+		mes "[Santa Claus]";
+		mes "Ho ho ho!";
+		mes "Look at that!";
+		mes "Now, this is truly";
+		mes "a Merry Christmas for";
+		mes "everyone! Ho ho ho!";
+		mes "Thanks for helping me!";
+		05christ_carol = 26;
+		.@07christ_gift = rand(1, 100);
+		if (.@07christ_gift < 11) {
+			getitem 12132, 1; // Red_Bag
+		} else if (.@07christ_gift > 10 && .@07christ_gift < 21) {
+			getitem 558, 3; // Chocolate
+		} else if (.@07christ_gift > 20 && 07christ_gift < 31) {
+			getitem 561, 2; // White_Chocolate
+		} else if (.@07christ_gift > 20 && .@07christ_gift < 36) {
+			getitem 12236, 1; // Choco_Tart
+		} else if (.@07christ_gift > 35 && .@07christ_gift < 41) {
+			getitem 592, 1; // Jam_Pancake
+		} else if (.@07christ_gift > 40 && .@07christ_gift < 46) {
+			getitem 594, 1; // Sour_Cream_Pancake
+		} else if (.@07christ_gift > 45 && .@07christ_gift < 51) {
+			getitem 593, 1; // Honey_Pancake
+		} else if (.@07christ_gift > 50 && .@07christ_gift < 56) {
+			getitem 595, 1; // Mushroom_Pancake
+		} else if (.@07christ_gift > 55 && .@07christ_gift < 61) {
+			getitem 591, 1; // Caviar_Pancake
+		} else if (.@07christ_gift > 60 && .@07christ_gift < 71) {
+			getitem 530, 5; // Candy_Striper
+		} else if (.@07christ_gift > 70 && .@07christ_gift < 81) {
+			getitem 2236, 1; // Santas_Hat
+		} else if (.@07christ_gift > 80 && .@07christ_gift < 86) {
+			getitem 12130, 1; // Cookie_Bag
+		} else if (.@07christ_gift > 85 && .@07christ_gift < 91) {
+			getitem 12702, 1; // Old_Bleu_Box
+		} else {
+			getitem 538, 5; // Well_Baked_Cookie
+		}
+	} else {
+		mes "[Santa Claus]";
+		mes "Ho ho ho! Hello again!";
+		mes "Santa really appreciated";
+		mes "your help last time, but";
+		mes "he's still very busy this";
+		mes "year. Every Christmas,";
+		mes "there are more children!";
+		next;
+		mes "[Santa Claus]";
+		mes "Merrrrrrry Christmas,";
+		mes "and come back to help";
+		mes "this old man out whenever";
+		mes "you get the chance! Ho ho ho!";
+		mes "I sure could use it!";
+		05christ_carol = 0;
+		close;
+	}
+}
+
+lighthalzen,141,97,1	script	Silver#07christ_02	4_M_KID2,{
+	if (05christ_carol == 20) {
+		mes "[Silver]";
+		mes "~ Don't cry, don't cry ~";
+		mes "~ Santa doesn't gives any ~";
+		mes "~ gifts to crybabies because... ~";
+		mes "~ Because crybabies don't ~";
+		mes "~ deserve any presents ~";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "That's a nice song!";
+		mes "But Santa gives gifts";
+		mes "to all good kids! Uhhh...";
+		mes "But I want you to know";
+		mes "there's nothing wrong";
+		mes "with crying or anything.";
+		next;
+		if (isequipped(Santa_Beard)) {
+			mes "[Silver]";
+			mes "S-Santa! You came!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I hope you like it!";
+			mes "Why don't you open it?";
+			next;
+			mes "[Silver]";
+			mes "Wow! This is the Mulim";
+			mes "Martial Art's Kwangchukgi";
+			mes "Practical Martial Arts Book!";
+			emotion ET_SMILE;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Is that...?";
+			next;
+			mes "[Silver]";
+			mes "Yes! It's just what";
+			mes "I wanted! Now I can";
+			mes "learn to fight, and beat";
+			mes "up all the bad guys! Hiyah!";
+			emotion ET_SPARK;
+			next;
+			mes "^3355FFYou're done with your";
+			mes "delivery: now it's time";
+			mes "to head back to Santa.^000000";
+			05christ_carol = 25;
+			close;
+		} else {
+			mes "[Silver]";
+			mes "Wh-who are you?";
+			mes "Leave me alone!";
+			mes "S-Santa! Santa,";
+			mes "where are you?!";
+			mes "G-get away from me!";
+			specialeffect2 EF_HIT2;
+			emotion ET_HUK;
+			percentheal(-30, 0);
+			close;
+		}
+	} else if (05christ_carol == 25) {
+		mes "[Silver]";
+		mes "I need to know every";
+		mes "move in this book! I'm";
+		mes "gonna be a martials arts";
+		mes "champion and beat up all";
+		mes "the bad guys I can find!";
+		close;
+	} else {
+		mes "[Silver]";
+		mes "~ Don't cry, don't cry ~";
+		mes "~ Santa doesn't gives any ~";
+		mes "~ gifts to crybabies because... ~";
+		mes "~ Because crybabies don't ~";
+		mes "~ deserve any presents ~";
+		close;
+	}
+}
+
+aldebaran,176,145,3	script	Bathornby#07christ_03	4_M_KID1,{
+	if (05christ_carol == 21) {
+		mes "[Bathornby]";
+		mes "~ Dashing through the snow ~";
+		mes "~ On a snowboard all the way ~";
+		mes "~ Feelin' dope and cool ~";
+		mes "~ At top speed all the way ~";
+		mes "~ Hah hah hah! ~";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Wow! You sing very well!";
+		mes "You've been a good kid";
+		mes "this year, Barthornby,";
+		mes "so Santa's here to give";
+		mes "you your present!";
+		next;
+		if (isequipped(Santa_Beard)) {
+			mes "[Bathornby]";
+			mes "What the crap?!";
+			mes "S-S-Santa?!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I hope you like it!";
+			mes "Go ahead and ope--";
+			next;
+			mes "[Bathornby]";
+			mes "Strawberry cake!";
+			mes "It's just what";
+			mes "I wanted! Th-thank";
+			mes "you so much, Santa!";
+			emotion ET_SMILE;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "You....";
+			mes "You didn't even";
+			mes "wait for me to--";
+			next;
+			mes "[Bathornby]";
+			mes "Mmmmm... Oh...";
+			mes "Oh, it's soo good...";
+			mes "Caaaaaaaaaaaaake.";
+			emotion ET_SPARK;
+			next;
+			mes "^3355FFYou're done with your";
+			mes "delivery: now it's time";
+			mes "to head back to Santa.^000000";
+			05christ_carol = 25;
+			close;
+		} else {
+			mes "[Bathornby]";
+			mes "What the crap?!";
+			mes "You're not Santa!";
+			mes "Get out of here!";
+			mes "You don't even";
+			mes "have a beard!";
+			mes "Gonna hurt you!";
+			specialeffect2 EF_HIT2;
+			emotion ET_HUK;
+			percentheal(-30, 0);
+			close;
+		}
+	} else if (05christ_carol == 25) {
+		mes "[Bathornby]";
+		mes "Oh, God, I just";
+		mes "love cake. I'm gonna";
+		mes "eat this all by myself!";
+		mes "Mmmmmmm... ";
+		mes "Strawberries...";
+		close;
+	} else {
+		mes "[Bathornby]";
+		mes "~ Dashing through the snow ~";
+		mes "~ On a snowboard all the way ~";
+		mes "~ Feelin' dope and cool ~";
+		mes "~ At top speed all the way ~";
+		mes "~ Hah hah hah! ~";
+		close;
+	}
+}
+
+payon,190,222,3	script	Bisun#07christ_04	4W_KID,{
+	if (05christ_carol == 22) {
+		mes "[Bisun]";
+		mes "~ Silent night~";
+		mes "~ Holy night~";
+		mes "~ All is calm ~";
+		mes "~ All is bright ~";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You sing very well,";
+		mes "Bisun! Santa's here to";
+		mes "give you a present since";
+		mes "you've been such a good";
+		mes "girl this year! Ho ho ho!";
+		next;
+		if (isequipped(Santa_Beard)) {
+			mes "[Bisun]";
+			mes "Santa...?!";
+			mes "Oh! It's really you!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I hope you like it.";
+			mes "Why don't you open";
+			mes "it right now?";
+			next;
+			mes "[Bisun]";
+			mes "Hooray! It's a duster";
+			mes "I can use to dust my";
+			mes "bookshelves! Yaaay!";
+			emotion ET_KIK;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "You... like it?";
+			next;
+			mes "[Bisun]";
+			mes "Uh...";
+			mes "Why? Is there...";
+			mes "Am I weird?";
+			emotion ET_THINK;
+			next;
+			mes "^3355FFYou're done with your";
+			mes "delivery: now it's time";
+			mes "to head back to Santa.^000000";
+			05christ_carol = 25;
+			close;
+		} else {
+			mes "[Bisun]";
+			mes "H-how do you know";
+			mes "my name?! Who are you?!";
+			mes "Get away from me! Help!";
+			mes "Someone, help! This";
+			mes "person's a weirdo!";
+			specialeffect2 EF_HIT2;
+			emotion ET_HUK;
+			percentheal(-30, 0);
+			close;
+		}
+	} else if (05christ_carol == 25) {
+		mes "[Bisun]";
+		mes "I got a bookshelf...";
+		mes "I got a bookshelf duster...";
+		mes "Bookends... Bookmarks...";
+		mes "Now I need some books!";
+		close;
+	} else {
+		mes "[Bisun]";
+		mes "~ Silent night~";
+		mes "~ Holy night~";
+		mes "~ All is calm ~";
+		mes "~ All is bright ~";
+		close;
+	}
+}
+
+comodo,241,178,1	script	Neona#07christ_05	4_F_KID2,{
+	if (05christ_carol == 23) {
+		mes "[Neona]";
+		mes "~ Holiday bells a jingle ~";
+		mes "~ Holiday bells a ringle ~";
+		mes "~ Sing your happy songs ~";
+		mes "~ Sing them, Christmas time ~";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Wow, you sing really";
+		mes "well, Neona! Look!";
+		mes "Santa's here to bring";
+		mes "you presents since you've";
+		mes "been so good this year~";
+		next;
+		if (isequipped(Santa_Beard)) {
+			mes "[Neona]";
+			mes "Mmm?";
+			mes "Thank you, Santa Claus!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I hope you like it.";
+			mes "Why don't you open";
+			mes "it up, and see";
+			mes "what's inside?";
+			next;
+			mes "[Neona]";
+			mes "What th--?";
+			mes "A crow's feather?";
+			mes "It's black as coal!";
+			emotion ET_THINK;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "So you like it?";
+			next;
+			mes "[Neona]";
+			mes "Heh heh!";
+			mes "Y-yaaay!";
+			emotion ET_SMILE;
+			next;
+			mes "^3355FFYou're done with your";
+			mes "delivery: now it's time";
+			mes "to head back to Santa.^000000";
+			05christ_carol = 25;
+			close;
+		} else {
+			mes "[Neona]";
+			mes "Santa? No way!";
+			mes "You're someone else!";
+			mes "I'm gonna step on your";
+			mes "footsie! Or jump on it!";
+			specialeffect2 EF_HIT2;
+			emotion ET_HUK;
+			percentheal(-30, 0);
+			close;
+		}
+	} else if (05christ_carol == 25) {
+		mes "[Neona]";
+		mes "I like this present...";
+		mes "But... Maybe I should";
+		mes "try to be nicer next year?";
+		close;
+	} else {
+		mes "[Neona]";
+		mes "~ Holiday bells a jingle ~";
+		mes "~ Holiday bells a ringle ~";
+		mes "~ Sing your happy songs ~";
+		mes "~ Sing them, Christmas time ~";
+		close;
+	}
+}
+
+xmas,172,135,3	script	Iddas#07christ_06	4_F_NFLOSTGIRL,{
+	if (05christ_carol == 24) {
+		mes "[Iddas]";
+		mes "~ Sing a song of";
+		mes "Christmas joy ~";
+		mes "~ Dance every girl";
+		mes "and dance every boy ~";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hello, Iddas~";
+		mes "You sing very well!";
+		mes "Santa's here to give";
+		mes "you present since";
+		mes "you've been so good!";
+		next;
+		if (isequipped(Santa_Beard)) {
+			mes "[Iddas]";
+			mes "Hooray, Santa's here!";
+			mes "I've been waiting all year!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I hope you like it!";
+			mes "Why don't you open it?";
+			next;
+			mes "[Iddas]";
+			mes "...Notebook paper?";
+			mes "I can get this at school.";
+			emotion ET_THINK;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "...Uhhh...";
+			next;
+			mes "[Iddas]";
+			mes "Hm.";
+			mes "Ummm...";
+			emotion ET_SHY;
+			next;
+			mes "^3355FFYou're done with your";
+			mes "delivery: now it's time";
+			mes "to head back to Santa.^000000";
+			05christ_carol = 25;
+			close;
+		} else {
+			mes "[Iddas]";
+			mes "...Eh?";
+			next;
+			mes "[Iddas]";
+			mes "Get away!";
+			mes "You're not Santa!";
+			mes "Gonna hurt you!";
+			specialeffect2 EF_HIT2;
+			emotion ET_HUK;
+			percentheal(-30, 0);
+			close;
+		}
+	} else if (05christ_carol == 25) {
+		mes "[Iddas]";
+		mes "Well, I don't really";
+		mes "like this present that";
+		mes "much... But Mommy says";
+		mes "it's the thought that counts.";
+		mes "Thank you for thinking of me!";
+		close;
+	} else {
+		mes "[Iddas]";
+		mes "~ Sing a song of";
+		mes "Christmas joy ~";
+		mes "~ Dance every girl";
+		mes "and dance every boy ~";
+		close;
+	}
+}

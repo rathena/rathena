@@ -1,17 +1,11 @@
 //===== rAthena Script =======================================
-//= X-mas Event
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.4
-//===== Compatible With: =====================================
-//= rAthena Project
+//= Christmas Event (2004)
 //===== Description: =========================================
 //= Beat up Antonios and grab his socks.  Get at least 3 and
 //= give them to Santa Claus Claus in exchange for a present.
 //= Includes X-mas mobs.
 //= This npc will disable, the current Santa Claus npc.
-//===== Additional Comments: =================================
+//===== Changelogs: ==========================================
 //= Fixed the spawns [shadowlady]
 //= 1.1 Added Xmas Jakk, fixed 2 exploits, fixed reward Box ID [Lupus]
 //= 1.2 Added monsters to the newer fields, thanks to Muad_Dib [MasterOfMuppets]
@@ -93,7 +87,7 @@ L_Start:
 		mes "If you get 3 more, I'll give you another.";
 		mes "Hope you get a good item.";
 		close;
-	
+
 		L_NotEnuf:
 			mes "You don't have enough socks as proof.";
 			mes "Go take down those evil Santas";

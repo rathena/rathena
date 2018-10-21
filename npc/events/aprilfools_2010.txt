@@ -1,0 +1,782 @@
+//===== rAthena Script =======================================
+//= April Fools Day Event (2010)
+//===== Description: =========================================
+//= [Official Conversion]
+//= Help Romeo lie to everyone.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Kisuka]
+//============================================================
+
+// - Nosy Little Girl (Quest Start)
+// -----------------------------------------------------------
+prontera,146,98,6	script	Nosy Little Girl#prt	4_F_LGTGIRL,{
+	if  (evt_2010_fools < 129) {
+		if (Class == Job_Novice) {
+			mes "[Nosy Little Girl]";
+			mes "What can I do?";
+			mes "I don't know how to reconcile them...";
+			close;
+		} else {
+			if (BaseLevel > 29) {
+				mes "[Nosy Little Girl]";
+				mes "What can I do?";
+				mes "I don't know how to reconcile them...";
+				next;
+				if(select("What's wrong?", "I'm busy.") == 2) {
+					mes "[Nosy Little Girl]";
+					mes "What can I do?";
+					close;
+				}
+				mes "[Nosy Little Girl]";
+				mes "I introduced ^0000FFRomeo^000000 to ^0000FFJuliet^000000 a few months ago.";
+				mes "They have been going out together for a few days.";
+				mes "But, it looks like something is wrong with their relationship.";
+				next;
+				mes "[Nosy Little Girl]";
+				mes "I've heard that ^0000FFRomeo^000000 lied to ^0000FFJuliet^000000.";
+				mes "But he lied because of her.";
+				mes "In short, ^0000FFJuliet^000000 discovered the truth and was very unhappy.";
+				next;
+				mes "[Nosy Little Girl]";
+				mes "I tried to reconcile them but they could not get along.";
+				mes "I don't know what to do.";
+				mes "I have tried everything.";
+				mes "Do you think you can help me put them back together?";
+				mes "Will you help me?";
+				next;
+				if (select("How can I help?", "I'm busy sorry.") == 2) {
+					mes "[Nosy Little Girl]";
+					mes "I don't know how to get ^0000FFRomeo^000000 and ^0000FFJuliet^000000 back together.";
+					close;
+				}
+				mes "[Nosy Little Girl]";
+				mes "Thank you very much!";
+				mes "To start, we should try to re-establish a dialogue between them.";
+				mes "So that they can discuss what's wrong.";
+				mes "This is the most important thing for now.";
+				next;
+				mes "[Nosy Little Girl]";
+				mes "^0000FFRomeo^000000 can be found in front of the East exit of ^8B4513Prontera^000000.";
+				mes "I hope you can restore the dialogue between them.";
+				mes "Good luck and do your best!";
+				evt_2010_fools = 129;
+				close;
+			} else {
+				mes "[Nosy Little Girl]";
+				mes "What can I do?";
+				close;
+			}
+		}
+	} else if (evt_2010_fools == 129) {
+		mes "[Nosy Little Girl]";
+		mes "To get started, find ^0000FFRomeo^000000 in front of the East exit of ^8B4513Prontera^000000.";
+		mes "I hope you can restore the dialogue between them.";
+		mes "Good luck and do your best!";
+		close;
+	} else if  (evt_2010_fools > 129 && evt_2010_fools < 135) {
+		mes "[Nosy Little Girl]";
+		mes "I really hope that ^0000FFRomeo^000000 and ^0000FFJuliet^000000 will reconcile.";
+		close;
+	} else if (evt_2010_fools == 135) {
+		mes "[Nosy Little Girl]";
+		mes "Thank you for your help.";
+		mes "They are together again!";
+		mes "Here is a small gift as a thank you.";
+		next;
+		if (!checkweight(607,1)) {
+			mes "[Nosy Little Girl]";
+			mes "You're carrying too many things.";
+			mes "Why not reduce your weight?";
+			mes "Return once you have stored some items.";
+			close;
+		}
+		mes "[Nosy Little Girl]";
+		mes "Ah, I just remembered something really sad.";
+		mes "I heard that Romeo's mother is very ill.";
+		mes "I hope they will get better...";
+		evt_2010_fools = 136;
+		getitem 607, 1; // Yggdrasilberry
+		if (Upper == 0) {
+			.@JobExp = (JobLevel * (JobLevel - 3) * (JobLevel / 25 +1) + (16 - (JobLevel *2)));
+		} else {
+			.@JobExp = (JobLevel * JobLevel * (JobLevel / 5 + 2) + (20 - JobLevel));
+		}
+		.@BaseExp = ((BaseLevel * (BaseLevel / 4)) * ((BaseLevel / 29) + (BaseLevel / 6)) + (5 * BaseLevel / 2));
+		getexp .@BaseExp, .@JobExp;
+		close;
+	} else {
+		mes "[Nosy Little Girl]";
+		mes "I hope that Romeo's mother will get better...";
+		close;
+	}
+}
+
+// - Romeo
+// -----------------------------------------------------------
+prontera,268,211,3	script	Romeo#prontera	4_M_KHMAN,{
+	if (evt_2010_fools < 129) {
+		mes "[Romeo]";
+		mes "Women are the most mysterious things in the world !!";
+		close;
+	} else if (evt_2010_fools == 129) {
+		mes "[Romeo]";
+		mes "Women are the most mysterious things in the world !!";
+		next;
+		select("Women are complicated creatures!");
+		mes "[Romeo]";
+		mes "You are right! I can not understand women at all.";
+		mes "Why are they so sensitive about this stuff?";
+		mes "They don't want to listen!";
+		next;
+		select("What happened?");
+		mes "[Romeo]";
+		mes "I have a girlfriend by the name of ^0000FFJuliet^000000.";
+		mes "We were happy together and had no problems.";
+		mes "A few days ago we had planned to meet in front of the Prontera fountain.";
+		next;
+		mes "[Romeo]";
+		mes "I arrived early, so I waited for the arrival of ^0000FFJuliet^000000.";
+		mes "But, by chance, I came across my ex girlfriend.";
+		mes "I just chatted with her, because it had been a long time since we had spoken.";
+		next;
+		select("And Juliet arrived?");
+		mes "[Romeo]";
+		mes "Yes, that's the problem.";
+		mes "It's just my ex, so there's nothing left between us.";
+		mes "But when I saw the face of ^0000FFJuliet^000000, I thought it was better for me to pay attention to my words.";
+		mes "I was a little tense.";
+		next;
+		mes "[Romeo]";
+		mes "Finally, I said goodbye to my ex and tried to explain what had happened. ";
+		mes "^0000FFJuliet^000000 began to stare at me with eyes full of doubts and suspicion.";
+		mes "Like that...";
+		next;
+		mes "^0000FFJuliet^000000: Romeo, who was that girl?";
+		mes "^FF0000Romeo^000000: She was a classmate.";
+		mes "^0000FFJuliet^000000: Really? You seemed rather close.";
+		mes "^FF0000Romeo^000000: We had not seen each other for a long time, so we were a little excited.";
+		mes "^0000FFJuliet^000000: Was that your ex?";
+		mes "^FF0000Romeo^000000: No, no, it was not my ex.";
+		next;
+		mes "^0000FFJuliet^000000: Are you sure?";
+		mes "^FF0000Romeo^000000: Of course, I have no reason to lie!";
+		mes "^0000FFJuliet^000000: Really?";
+		mes "^FF0000Romeo^000000: Yes, yes... well...";
+		mes "^0000FFJuliet^000000: I can understand if you tell me the truth.";
+		mes "^0000FFJuliet^000000: You can tell me if it was your old girlfriend.";
+		mes "^FF0000Romeo^000000: ...well... in fact... I have to say...";
+		next;
+		select("You did not tell the truth, did you?");
+		mes "[Romeo]";
+		mes "I could not help myself. ";
+		mes "I had no choice.";
+		mes "Besides, ^0000FFJuliet^000000 said that she'd understand!";
+		mes "So I believed it, I thought she would really understand. ";
+		mes "But, then she said...";
+		next;
+		mes "^0000FFJuliet^000000: You lied to me?";
+		mes "^FF0000Romeo^000000: No, it was not a lie. It's just ... You did not need to know.";
+		mes "^0000FFJuliet^000000: Wow, that's really not fair! ";
+		mes "^FF0000Romeo^000000: You said you would understand.";
+		mes "^0000FFJuliet^000000: You betrayed me. Traitor!!";
+		mes "^FF0000Romeo^000000: No! It's not that! Listen to me!";
+		next;
+		mes "[Romeo]";
+		mes "After a big fight, we did not talk at all.";
+		mes "It was a week ago.";
+		mes "^8B4513I do not think it's my fault.^000000 ";
+		mes "I did not want to make a story. ";
+		mes "I lied for the good cause, you know?";
+		next;
+		mes "[Romeo]";
+		mes "But ^0000FFJuliet^000000 lied to me.";
+		mes "She said she would understand.";
+		mes "But that was not true, she was angry.";
+		mes "Why is she giving me all the twists and turns.";
+		mes "I wanted to apologize but she did not give me the opportunity.";
+		mes "^8B4513I do not understand women.^000000 ";
+		next;
+		select("I will go talk to ^0000FFJuliet^000000.");
+		mes "[Romeo]";
+		mes "Would you really?";
+		mes "That would be great!";
+		mes "^0000FFJuliet^000000 should be in front of the West gate of Prontera.";
+		mes "You should find her there.";
+		next;
+		mes "[Romeo]";
+		mes "Can you try to change her mind and arrange a meeting?";
+		evt_2010_fools = 130;
+		close;
+	} else if (evt_2010_fools == 130) {
+		mes "[Romeo]";
+		mes "^0000FFJuliet^000000 should be in front of the West gate of Prontera.";
+		mes "You should find her there.";
+		mes "Can you try to change her mind and arrange a meeting?";
+		close;
+	} else if (evt_2010_fools == 131) {
+		mes "[Romeo]";
+		mes "Did you meet with ^0000FFJuliet^000000? ";
+		next;
+		if (select("She misses you.", "She does not understand you.") == 2) {
+			mes "[Romeo]";
+			mes "Oh, I didn't know ^0000FFJuliet^000000 thought that.";
+			close;
+		}
+		mes "[Romeo]";
+		mes "Ah, she misses me? So, she is not angry then?";
+		mes "Oh, I'm so happy!";
+		mes "Have you arranged an appointment with Juliet?";
+		next;
+		select("Yes, go and see her near the statue of hands to the North of Prontera.");
+		mes "[Romeo]";
+		mes "Oh, thank you very much.";
+		mes "Did ^0000FFJuliet^000000 mention anything special?";
+		next;
+		select("^0000FFJuliet^000000 has lost confidence in you.");
+		mes "[Romeo]";
+		mes "WHAT... it's terrible.";
+		mes "How can I make sure that ^0000FFJuliet^000000 trust me again?";
+		mes "What can I do?";
+		next;
+		select("You could defend ^0000FFJuliet^000000.");
+		mes "[Romeo]";
+		mes "Oh!!! What a good idea!";
+		mes "Dress yourself up as a bandit and scare her.";
+		mes "And that's where I come in and save her!";
+		mes "Wow~! ^0000FFJuliet^000000 will trust me again!";
+		mes "This is the classic shot! Ha ha";
+		next;
+		select("It might work!");
+		mes "[Romeo]";
+		mes "I think it's really going to work. Then ^0000FFJuliet^000000 will surely come back!";
+		mes "Just a moment, I'll prepare you a bandit accessory.";
+		mes "Let's see...";
+		evt_2010_fools = 132;
+		close;
+	} else if (evt_2010_fools == 132) {
+		if (!checkweight(2263, 1)) {
+			mes "[Romeo]";
+			mes "You carry too many objects.";
+			mes "You won't be able to wear the disguise.";
+			mes "Please store some items in your storage.";
+			mes "Be quick!";
+			close;
+		}
+		mes "[Romeo]";
+		mes "There you go.";
+		mes "It's an eye-patch, if you do not wear it ^0000FFJuliet^000000 will recognize you.";
+		mes "So wear this eye-patch and go to the statue of the hands.";
+		getitem 5848, 1; // Robin_Eyepatch
+		evt_2010_fools = 133;
+		enablenpc "Romeo#prontera2";
+		enablenpc "Juliet#prontera2";
+		close;
+	} else if (evt_2010_fools > 132 && evt_2010_fools < 135) {
+		mes "[Romeo]";
+		mes "Okay, let's go in front of the statue of hands to the North of Prontera.";
+		mes "Let's do this!";
+		enablenpc "Romeo#prontera2";
+		enablenpc "Juliet#prontera2";
+		close;
+	} else if (evt_2010_fools == 135) {
+		mes "[Romeo]";
+		mes "I really appreciate you.";
+		mes "You helped me return to ^0000FFJuliet^000000.";
+		mes "The bandit act was excellent.";
+		close;
+	} else if (evt_2010_fools == 136) {
+		mes "[Romeo]";
+		mes "I really appreciate you.";
+		mes "You helped me return to ^0000FFJuliet^000000.";
+		mes "The bandit act was excellent.";
+		mes "Just one last thing.";
+		mes "I need help... ";
+		mes "Can I ask you a favor?";
+		next;
+		select("Yes?");
+		mes "[Romeo]";
+		mes "I went to the doctor with my mother the last time. ";
+		mes "The doctor told me that my mother was very ill.";
+		next;
+		mes "[Romeo]";
+		mes "I didn't want my mother to know the truth.";
+		mes "But somehow she ended up finding out and began to panic.";
+		mes "She no longer sleeps, no longer eats. She does not even want to watch TV anymore.";
+		mes "Her health is deteriorating.";
+		next;
+		mes "[Romeo]";
+		mes "I would like you to help as you did with ^0000FFJuliet^000000.";
+		mes "Can you help me again for my mother?";
+		mes "If you accept, you will really be giving me a helping hand.";
+		next;
+		if(select("What should I do?", "I do not want to lie anymore.") == 2) {
+			mes "[Romeo]";
+			mes "Oh I see. I understand.";
+			mes "I should not have asked such great favor.";
+			mes "Sorry.";
+			mes "But if you change your mind come back to me.";
+			close;
+		}
+		mes "[Romeo]";
+		mes "You can disguise yourself as a doctor and tell my mother that she is better.";
+		mes "Then my mother can go ahead and think positively.";
+		next;
+		mes "[Romeo]";
+		mes "One moment, I'm going to prepare a doctor's accessory.";
+		mes "One moment.";
+		evt_2010_fools = 137;
+		close;
+	} else if (evt_2010_fools == 137) {
+		if (!checkweight(2263,1)) {
+			mes "[Romeo]";
+			mes "You carry too many objects.";
+			mes "You won't be able to wear the disguise.";
+			mes "Please store some items in your storage.";
+			close;
+		}
+		mes "[Romeo]";
+		mes "There you go.";
+		mes "It's a doctor bandanna.";
+		mes "If you do not wear it my mother will recognize you.";
+		next;
+		mes "[Romeo]";
+		mes "My mother is resting at the inn, in the PvP building.";
+		mes "So wear this bandanna and go and see my mother in the inn.";
+		getitem 5849, 1; // Doctor_Hairband
+		evt_2010_fools = 138;
+		close;
+	} else if (evt_2010_fools == 138) {
+		mes "[Romeo]";
+		mes "My mother is resting at the inn, in the PvP building.";
+		mes "So wear this bandanna and go and see my mother in the inn.";
+		close;
+	} else if (evt_2010_fools == 139) {
+		mes "[Romeo]";
+		mes "How dare you tell my mother!";
+		mes "You do not know that a white lie can bring my mother back to life.";
+		mes "That's what my mother really needed.";
+		mes "Just a white lie. Only one!";
+		mes "Mother~!!";
+		close;
+	} else if (evt_2010_fools == 140) {
+		mes "[Romeo]";
+		mes "Thank you for helping my mother, she is happy and smiling.";
+		mes "It was a lie, of course, but a white lie.";
+		mes "You brought my mother back to life.";
+		mes "Thank you very much!!";
+		next;
+		if (!checkweight(12193, 1)) {
+			mes "[Romeo]";
+			mes "I appreciate your help.";
+			mes "Here's something for you.";
+			mes "But you carry too many objects.";
+			mes "Why not reduce your weight?";
+			mes "Return when you have stored some items.";
+			close;
+		}
+		mes "[Romeo]";
+		mes "You know, you really helped me.";
+		mes "I appreciate your help.";
+		mes "Here's something for you.";
+		mes "I wish you good luck in your adventures.";
+		getitem 12396, 1; // Fools_Day_Box
+		getitem 12397, 1; // Fools_Day_Box2
+		evt_2010_fools = 141;
+
+		.@BaseExp = ((BaseLevel * (BaseLevel / 4)) * ((BaseLevel / 29) + (BaseLevel / 6)) + (5 * BaseLevel / 2));
+
+		if (Upper == 0) {
+			.@JobExp = (JobLevel * (JobLevel - 3) * (JobLevel / 25 +1) + (16 - (JobLevel *2)));
+		} else {
+			.@JobExp = (JobLevel * JobLevel * (JobLevel / 5 + 2) + (20 - JobLevel));
+		}
+
+		getexp .@BaseExp, .@JobExp;
+		next;
+		mes "^8B4513-I lied, but it was good lies.^000000 ";
+		mes "^8B4513-I realize that for a charitable purpose, a lie is sometimes necessary.^000000 ";
+		mes "^8B4513-A little lie can illuminate the world and make people happy.^000000 ";
+		mes "^8B4513-Romeo and Juliet, may you love yourself forever.^000000 ";
+		mes "^8B4513-And I hope that Romeo's mother will bite life to the fullest.^000000 ";
+		close;
+	} else {
+		mes "[Romeo]";
+		mes "Thank you for lying for me.";
+		mes "Remember, it was a good lie!";
+		mes "Good luck!";
+		close;
+	}
+}
+
+// - Juliet
+// -----------------------------------------------------------
+prontera,45,211,6	script	Juliet#prontera	4_F_KHELLISIA,{
+	if (evt_2010_fools < 130) {
+		mes "[Juliet]";
+		mes "The men are all the same. I do not understand them!";
+		close;
+	} else if (evt_2010_fools == 130) {
+		mes "[Juliet]";
+		mes "The men are all the same. I do not understand them!";
+		next;
+		select("Men are all the same!");
+		mes "[Juliet]";
+		mes "You are right! They are always like that.";
+		mes "They lie and betray girls.";
+		mes "How could he lie to me? How?";
+		mes "Finally, who are you ??";
+		next;
+		select("I'm coming from ^0000FFRomeo^000000.");
+		mes "[Juliet]";
+		mes "Romeo? Humpf, what a jerk!";
+		mes "Does ^0000FFRomeo^000000 know that he acted wrongly?";
+		next;
+		if(select("He cried for you.", "He does not regret anything.") == 2) {
+			mes "[Juliet]";
+			mes "He does not know he did something wrong?";
+			mes "How does he...";
+			mes "I do not want to see ^0000FFRomeo^000000.";
+			mes "...jerk!!";
+			close;
+		}
+		mes "[Juliet]";
+		mes "^0000FFRomeo^000000 has cried?? Really??";
+		mes "Did he really realize he was wrong?";
+		mes "........ ";
+		mes "But...";
+		mes "I can no longer trust ^0000FFRomeo^000000...";
+		next;
+		if(select("He really wants to see you.", "He does not understand women.") == 2) {
+			mes "[Juliet]";
+			mes "I'm exhausted.";
+			mes "I did not think that ^0000FFRomeo^000000 was like that.";
+			mes "I'm really disappointed.";
+			close;
+		}
+		mes "[Juliet]";
+		mes ".....";
+		mes "Actually, I want to see him too...";
+		mes "........";
+		mes "I don't know what to do...";
+		next;
+		select("He wants to meet you North of Prontera.");
+		mes "[Juliet]";
+		mes "Tell ^0000FFRomeo^000000 that I will be at the statue of hands.";
+		mes "But...";
+		mes "But ... I still can not trust him.";
+		mes "He broke my heart.";
+		evt_2010_fools = 131;
+		close;
+	} else if (evt_2010_fools > 130 && evt_2010_fools < 134) {
+		mes "[Juliet]";
+		mes "In front of the statue of hands to the North of Prontera...";
+		mes "I'll go meet him.";
+		close;
+	} else {
+		mes "[Juliet]";
+		mes "I heard that ^0000FFRomeo^000000's mother was very ill.";
+		close;
+	}
+}
+
+// - Romeo (Act II)
+// -----------------------------------------------------------
+prontera,159,284,3	script	Romeo#prontera2	4_M_KHMAN,{
+	if (evt_2010_fools < 133) {
+		mes "[Romeo]";
+		mes "....? ";
+		close;
+	} else if (evt_2010_fools == 133) {
+		if (countitem(5848) < 1) {
+			mes "[Romeo]";
+			mes "^8B4513-He seems to say to me: Wear the eye-patch.^000000 ";
+			mes "^8B4513-And prepare yourself!^000000 ";
+			mes "^8B4513-We have to make it seem real.^000000 ";
+			close;
+		}
+		mes "^FF0000[Romeo]^000000: Hey It's been a long time.";
+		mes "^0000FF[Juliet]^000000: Yes.";
+		mes "^FF0000[Romeo]^000000: You know, about that day, it was a misunderstanding...";
+		mes "^0000FF[Juliet]^000000: I can not trust you anymore.";
+		next;
+		mes "^FF0000[Romeo]^000000: You have to trust me, I am the only one who can protect you and love you forever.";
+		mes "^0000FF[Juliet]^000000: I'm not very sure...";
+		mes "^FF0000[Romeo]^000000: Juliet~!!!";
+		next;
+		if(select("What a cute little couple. Hehe.", "You look good together.") == 2) {
+			mes "[Romeo]";
+			mes "....?";
+			mes "Huh? Yeah .. Okay. Thank you.";
+			mes "^8B4513-I can read in his eyes.^000000";
+			mes "^8B4513-I should act quickly.^000000";
+			close;
+		}
+		mes "^FF0000[Romeo]^000000: Who ... who are you?";
+		mes "^0000FF[Juliet]^000000: Help!! A bandit~!! Help~!";
+		mes "^FF0000[Romeo]^000000: You better leave or else!";
+		next;
+		select("Haha, I don't think so!");
+		mes "^FF0000[Romeo]^000000: Don't touch her! If you do, I'll kill you! I am not joking.";
+		mes "^0000FF[Juliet]^000000: Romeo...";
+		mes "^FF0000[Romeo]^000000: Don't be afraid! I'll protect you!";
+		next;
+		select("Hu Hu, give me your money!");
+		mes "^FF0000[Romeo]^000000: Ye yap!!";
+		mes "^0000FF[Juliet]^000000: Awee~~!!";
+		next;
+		mes "^8B4513-I should get closer to Juliet now.^000000";
+		mes "^8B4513-Romeo, go ahead, hit me!^000000";
+		mes "^8B4513-Now!^000000";
+		evt_2010_fools = 134;
+		close;
+	} else if  (evt_2010_fools == 134) {
+		mes "[Romeo]";
+		mes "^8B4513-He whispers: Do it.^000000 ";
+		mes "^8B4513-It's a bandit!^000000 ";
+		close;
+	} else {
+		mes "[Romeo]";
+		mes "....?";
+		close;
+	}
+
+	OnInit:
+		disablenpc "Romeo#prontera2";
+		disablenpc "Romeo#prontera3";
+		disablenpc "Juliet#prontera2";
+		disablenpc "Juliet#prontera3";
+		initnpctimer;
+		end;
+
+	OnTimer60000:
+		disablenpc "Romeo#prontera2";
+		disablenpc "Romeo#prontera3";
+		disablenpc "Juliet#prontera2";
+		disablenpc "Juliet#prontera3";
+		stopnpctimer;
+		initnpctimer;
+		end;
+}
+
+// - Juliet (Act II)
+// -----------------------------------------------------------
+prontera,152,279,7	script	Juliet#prontera2	4_F_KHELLISIA,2,2,{
+	end;
+
+	OnInit:
+		disablenpc "Romeo#prontera2";
+		disablenpc "Romeo#prontera3";
+		disablenpc "Juliet#prontera2";
+		disablenpc "Juliet#prontera3";
+		end;
+
+	OnTouch:
+		if (evt_2010_fools < 134) {
+			mes "[Juliet]";
+			mes "^0000FFRomeo^000000...";
+			close;
+		} else if (evt_2010_fools == 134) {
+			mes "[Juliet]";
+			mes "Help~!! Save us~!!!";
+			next;
+			mes "[Romeo]";
+			mes "How dare you touch her!";
+			disablenpc "Romeo#prontera2";
+			enablenpc "Romeo#prontera3";
+			next;
+			mes "[Romeo]";
+			mes "Take this! I'm going to kill you!";
+			specialeffect EF_HITLINE2;
+			next;
+			mes "^8B4513-Ok.^000000";
+			mes "^8B4513-I will receive a small attack^000000 ";
+			mes "^8B4513-but I'm going to have to pretend it's deadly. Hehe.^000000 ";
+			next;
+			mes "[Romeo]";
+			mes "I'm going to kill you!! Bandit~!!";
+			specialeffect2 EF_LIGHTBOLT;
+			next;
+			mes "^8B4513-Ouch! It was not a small attack!^000000 ";
+			mes "^8B4513-It really hurt me. Ouch...^000000 ";
+			mes "^8B4513-Romeo, that's enough!^000000 ";
+			next;
+			mes "[Romeo]";
+			mes "I warned you not to touch ^0000FFJuliet^000000!";
+			mes "You are going to regret it! Too late for the excuses!";
+			specialeffect2 EF_FIREPILLARBOMB;
+			specialeffect2 EF_EARTHSPIKE;
+			specialeffect2 EF_NAPALMBEAT;
+			next;
+			evt_2010_fools = 135;
+			disablenpc "Juliet#prontera2";
+			enablenpc "Juliet#prontera3";
+			warp "prontera", 156, 271;
+			end;
+		} else {
+			mes "[Juliet]";
+			mes "^0000FFRomeo^000000...";
+			close;
+		}
+}
+
+// - Romeo (Fight Scene)
+// -----------------------------------------------------------
+prontera,156,282,3	script	Romeo#prontera3	4_M_KHMAN,{
+	end;
+
+	OnInit:
+		disablenpc "Romeo#prontera2";
+		disablenpc "Romeo#prontera3";
+		disablenpc "Juliet#prontera2";
+		disablenpc "Juliet#prontera3";
+		end;
+}
+
+// - Juliet (Fight Scene)
+// -----------------------------------------------------------
+prontera,155,282,5	script	Juliet#prontera3	4_F_KHELLISIA,2,2,{
+	end;
+
+	OnInit:
+		disablenpc "Romeo#prontera2";
+		disablenpc "Romeo#prontera3";
+		disablenpc "Juliet#prontera2";
+		disablenpc "Juliet#prontera3";
+		initnpctimer;
+	end;
+
+	OnTouch:
+		if (evt_2010_fools < 135) {
+			mes "[Romeo]";
+			mes "^0000FFJuliet^000000...";
+			close;
+		} else if (evt_2010_fools == 135) {
+			mes "[Juliet]";
+			mes "^0000FFRomeo^000000 ";
+			mes "You saved my life...";
+			mes "You are my hero...";
+			mes "You could have been hurt, but you were not afraid.";
+			mes "^0000FFRomeo^000000, you're amazing.";
+			next;
+			mes "[Romeo]";
+			mes "^0000FFJuliet^000000...";
+			mes "Are you okay? You're not hurt?";
+			mes "I'm so sorry, ^0000FFJuliet^000000.";
+			mes "I can not live without you.";
+			mes "You are my sun, we must be together, it is our destiny!";
+			next;
+			mes "[Juliet]";
+			mes "Sorry, I made a mistake.";
+			mes "I thought you wanted nothing more to do with me.";
+			mes "^0000FFRomeo^000000, I'm sorry.";
+			next;
+			mes "[Romeo]";
+			mes "^0000FFJuliet^000000...";
+			next;
+			mes "[Juliet]";
+			mes "^0000FFRomeo^000000...";
+			disablenpc "Romeo#prontera3";
+			disablenpc "Juliet#prontera3";
+			close;
+		} else {
+			mes "[Romeo]";
+			mes "^0000FFJuliet^000000... ";
+			close;
+		}
+}
+
+// - Romeo's Mother
+// -----------------------------------------------------------
+prt_in,60,172,3	script	Leina#prontera	4_F_EINOLD,{
+	if (evt_2010_fools < 138) {
+		mes "[Leina]";
+		mes "I'm exhausted. I will surely die in a short time.";
+		close;
+	} else if (evt_2010_fools == 138) {
+		if (countitem(5849) < 1) {
+			mes "[Leina]";
+			mes "I'm exhausted. I will surely die in a short time.";
+			close;
+		}
+		mes "[Leina]";
+		mes "Huh? Hello doctor.";
+		next;
+		select("I came to check your health.");
+		mes "[Leina]";
+		mes "Check? ";
+		mes "They have already said that I am too old and weak.";
+		mes "Now I'm just waiting for the day to come.";
+		mes "The day of my death.";
+		mes "I'm seriously ill...";
+		next;
+		select("You look great.");
+		mes "[Leina]";
+		mes "Thank you for comforting me.";
+		mes "But I know I am sick.";
+		mes "You will see it when you have examined me.";
+		mes "I am really sick...";
+		next;
+		select("...Let me see that..");
+		specialeffect EF_HEALSP;
+		mes "[Leina]";
+		mes "So?";
+		next;
+		select("Hm....");
+		specialeffect EF_HEAL4;
+		mes "[Leina]";
+		mes "Is it worse? Worse than before?";
+		mes "How's my body?";
+		next;
+		if(select("You're really better!", "Hmm... it's not good...") == 2) {
+			mes "[Leina]";
+			mes "That is what I thought... I have no hope.";
+			mes "I'm giving up. I can't anymore...";
+			evt_2010_fools = 139;
+			next;
+			select("Let me explain...");
+			mes "[Leina]";
+			mes "No, I do not want to hear it.";
+			mes "I'm terrified.";
+			mes "Doctor, sorry but, can you leave now? I want to be alone.";
+			close;
+		}
+		mes "[Leina]";
+		mes "Really? I'm better?";
+		mes "Doctor! Tell me more.";
+		mes "How's my body? How could I do better?";
+		next;
+		select("Let me explain ...");
+		mes "[Leina]";
+		mes "You mean, my body has created a lot of antibodies to fight the disease and so everything is okay now?";
+		next;
+		mes "[Leina]";
+		mes "So I'll get better every day, and I do not have to worry about this disease!";
+		next;
+		select("Exactly, it's over. You're better.");
+		mes "[Leina]";
+		mes "Oh, thank you doctor!";
+		mes "That's what I needed to hear!";
+		mes "I feel really better.";
+		mes "I am full of life and happy!";
+		mes "Thank you very much.";
+		next;
+		select("It's nothing, take care of yourself!");
+		mes "[Leina]";
+		mes "Thank you Doctor!";
+		mes "It's like a rebirth!";
+		mes "Wow~~ Cool~!";
+		evt_2010_fools = 140;
+		close;
+	} else if (evt_2010_fools == 139) {
+		mes "[Leina]";
+		mes "Sorry.";
+		mes "Can you leave? I want to be alone.";
+		close;
+	} else {
+		mes "[Leina]";
+		mes "The doctor saved me.";
+		mes "I feel much better.";
+		mes "Thank you Doctor!!";
+		close;
+	}
+}

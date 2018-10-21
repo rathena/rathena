@@ -1,0 +1,4165 @@
+//===== rAthena Script =======================================
+//= Christmas Event (2006)
+//===== Description: =========================================
+//= [Official Conversion]
+//= Holiday event from Christmas 2006.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Kisuka]
+//============================================================
+
+//============================================================
+//= Event 1
+//============================================================
+
+xmas_in,89,92,5	script	Louise Kim#06xmas	4_F_06,{
+	mes "[Designer Louise Kim]";
+	mes "Cone shaped red Santa hat is too ordinary.";
+	mes "It's old fashioned.";
+	mes "Maybe in 1980's?!";
+	mes "Haha~";
+	next;
+	mes "[Designer Louise Kim]";
+	mes "If you leave it on me,";
+	mes "I'll change it to lastest model.";
+	mes "You know what I mean~!";
+	next;
+	mes "[Designer Louise Kim]";
+	mes "You know Antonio's hat,right?";
+	mes "Guess who made it?";
+	mes "As you know, Antonio is hard to catch,";
+	mes "that's because I blowed some power in the hat. ";
+	next;
+	mes "[Designer Louise Kim]";
+	mes "If you don't like your hat,";
+	mes "bring it to me.";
+	mes "I'll change it to brand new one.";
+	mes "Stylish Louise's hat.";
+	emotion ET_THROB;
+	next;
+	if (countitem(2236) > 0) {
+		if (select("Here.", "It's ok.") == 2) {
+			mes "[Designer Louise Kim]";
+			mes "Ok~ whatever~";
+			mes "It's not me,";
+			mes "who's going to lose whose own luck.";
+			emotion ET_SMILE;
+			close;
+		}
+		mes "[Designer Louise Kim]";
+		mes "Nice choice!!";
+		mes "If I do it like this ...";
+		mes "and this and...";
+		mes "finally it'll turn into fantastic hat.";
+		mes "But before that,I need some materials to make with.";
+		next;
+		if (select("What are the materials?", "So what? I don't want to know.") == 2) {
+			mes "[Designer Louise Kim]";
+			mes "You'll regret!";
+			mes "Think again!";
+			emotion ET_SMILE;
+			close;
+		}
+		mes "[Designer Louise Kim]";
+		mes "Well, nothing special.";
+		mes "Basically, you need Santa's hat of course.";
+		mes "and with a touch of my magical fingers,";
+		mes "it'll just turn into very special thing.";
+		mes "Well,just little bit prettier and";
+		mes "little bit more practical. Haha...";
+		next;
+		mes "[Designer Louise Kim]";
+		mes "Anyway,to sum up,required materials are....";
+		mes "Basically ^0000FFSanta's Hat^000000 and";
+		mes " ^0000FF 1 Cactus Needle ^000000 for sewing, ";
+		mes "^0000FF 10 Holy Water ^000000 for blessing, ";
+		mes "^0000FF 1 Rosary ^000000 for luckiness.";
+		mes "It's pretty enough to make Louise Hat.";
+		next;
+		if (countitem(952) > 0 && countitem(523) > 9 && countitem(2608) > 0) {
+			select("here you are.....");
+			if (!checkweight(1201, 1) || (MaxWeight - Weight) < 3500) {
+				mes "[Designer Louise Kim]";
+				mes "Whew, what do you have there? That's a lot a stuff you are carrying.";
+				mes "Are you on a training or what?";
+				close;
+			}
+			mes "[Designer Louise Kim]";
+			mes "Wow~~!! So fast!!";
+			mes "I like your style~.";
+			mes "Ok!! If everything is ready, no need to hesitate.";
+			mes "I'll show you what Designer Louise Kim's power is.";
+			emotion ET_BEST;
+			next;
+			mes "-She puts the hat in a bucket -";
+			mes "-filled with Holy Water.-";
+			mes "-She rapidly takes it out and starts mending the hat-";
+			mes "-humming a tune.-";
+			next;
+			mes "[Designer Louise Kim]";
+			mes "~With the number one designer, Louise Kim,~";
+			mes "~you are the most blessed soul.~";
+			emotion ET_DELIGHT;
+			specialeffect EF_BLESSING;
+			next;
+			mes "-Immediately, she puts Rosary into a bucket-";
+			mes "-which is fill with unknown liquid and dissolves it.-";
+			mes "-And with a brush,-";
+			mes "-neatly coats the liquid on -";
+			mes "-a thread of the hat.-";
+			next;
+			mes "[Designer Louise Kim]";
+			mes "~With the number one designer, Louise Kim,~";
+			mes "~you are the luckiest soul.~";
+			emotion ET_DELIGHT;
+			specialeffect EF_GLORIA;
+			next;
+			mes "-She starts sewing the hat with -";
+			mes "-a Cactus Needle and a thread.-";
+			mes " ";
+			next;
+			mes "[Designer Louise Kim]";
+			mes "~This is called the Louise's miracle.~";
+			mes "~The most talented disigner,~";
+			mes "~L_O_U_I_S_E K_I_M~";
+			emotion ET_THROB;
+			specialeffect EF_BENEDICTIO;
+			next;
+			mes "[Designer Louise Kim]";
+			mes "Here!! All done~~";
+			mes "How do you like it?";
+			mes "Isn't it so wonderful?";
+			mes "Take it!! It's a gift.";
+			next;
+			mes "[Designer Louise Kim]";
+			mes "I should have called high price for it";
+			mes "but as you know,it's Christmas!";
+			mes "It's a gift for you!";
+			mes "I won't charge you anything.";
+			mes "Just tell many people how good it is.";
+			emotion ET_SMILE;
+			next;
+			mes "[Designer Louise Kim]";
+			mes "Wherever you go,";
+			mes "whatever you do,";
+			mes "never take off the hat.";
+			mes "You won't have a chance to buy it";
+			mes "no matter how much you pay.";
+			next;
+			mes "[Designer Louise Kim]";
+			mes "Alright~Go ahead~";
+			mes "Go brag yourself!";
+			mes "~Who would be happier than~";
+			mes "~being with Louise.~";
+			emotion ET_DELIGHT;
+			delitem 2236, 1; // Santas_Hat
+			delitem 952, 1; // Cactus_Needle
+			delitem 523, 10; // Holy_Water
+			delitem 2608, 1; // Rosary
+			getitem 5136, 1; // Santas_Hat_
+			close;
+		} else {
+			mes "[Designer Louise Kim]";
+			mes "Okay, I will make you ... hmm?";
+			next;
+			mes "[Designer Louise Kim]";
+			mes "Eh, something is wrong.";
+			mes "I think you didn't bring all materials.";
+			next;
+			mes "[Designer Louise Kim]";
+			mes "Please check carefully and come back!";
+			close;
+		}
+	} else {
+		mes "[Designer Louise Kim]";
+		mes "Perhaps you get the chance to acheive Santa's Hat later some time,";
+		mes "think about it carefully.";
+		mes "You can get the better designed hat,";
+		mes "and I can show off my talent.";
+		emotion ET_SMILE;
+		close;
+	}
+}
+
+//============================================================
+//= Event 2
+//============================================================
+
+xmas_in,93,97,0	script	Robert May#06xmas	4_M_REINDEER,{
+	mes "[Robert May]";
+	mes "Rudolph the red nose Rednyre";
+	mes "had a very shiny nose~";
+	next;
+	mes "[Robert May]";
+	mes "Hm...who are you calling Rudolph!";
+	mes "You f....!!!";
+	emotion ET_HUK;
+	emotion ET_HUK, playerattached();
+	next;
+	mes "[Robert May]";
+	mes "Oops,I'm sorry.";
+	mes "I've seen naughty children these days and they are kinda getting on my nerve....";
+	next;
+	mes "[Robert May]";
+	mes "Do you know the story about Rudolph.";
+	next;
+	if (select("No", "Yes") == 1) {
+		mes "[Robert May]";
+		mes "Go over there and sing 'Rudolph the red nose Rednyre' three times and come back.";
+		close;
+	}
+	mes "[Robert May]";
+	mes "Glad to hear that.It'll make easier for me to explain.";
+	next;
+	mes "[Robert May]";
+	mes "For this christmas, I've invented an accessory.";
+	mes "It's called the 'Rudolph's nose'~!";
+	next;
+	mes "[Robert May]";
+	mes "-Then one foggy christmas eve";
+	mes "Santa came to say,";
+	mes "Rudolph with your nose so bright";
+	mes "Won't you guide my sleigh tonight~-";
+	next;
+	mes "[Robert May]";
+	mes "As you can notice from the song,'";
+	mes "You can use the nose to brighten the path on foggy night.";
+	mes "If you bring materials, I'll make you one for free.";
+	next;
+	if (select("I'm not interested.", "Oh really? Thank you!") == 1) {
+		mes "[Robert May]";
+		mes "Hm...!";
+		next;
+		mes "[Robert May]";
+		mes "Well, come back any time,";
+		mes "when you change your mind.";
+		close;
+	}
+	mes "[Robert May]";
+	mes "Good choice!That's why I like you!!";
+	mes "Anyway, the materials are...";
+	next;
+	mes "[Robert May]";
+	mes "^0000ff1 Pierrot Nose^000000 and ^0000ff2 Broken Jewel^000000 to make the light, and ^0000ff1 Sparkling Dust^000000 to keep the light brighten.";
+	next;
+	mes "[Robert May]";
+	mes "Now,go get the materials~.";
+	mes "I'll be waiting here for you.";
+	next;
+	if (select("can you tell me the requirments again?", "Here, I brought them all!") == 1) {
+		mes "[Robert May]";
+		mes "^0000ff1 Pierrot Nose^000000 and ^0000ff2 Broken Jewel^000000 to make the light, and ^0000ff1 Sparkling Dust^000000 to keep the light brighten.";
+		next;
+		mes "[Robert May]";
+		mes "Now, go get the materials~.";
+		mes "I'll be waiting here for you.";
+		close;
+	}
+	mes "[Robert May]";
+	mes "Wow! you came back so early.";
+	mes "Let me see what you brought.";
+	next;
+	if (!checkweight(1201, 1) || (MaxWeight - Weight) < 3500) {
+		mes "[Robert May]";
+		mes "Whew, what do you have there?That's a lot a stuff you are carrying.";
+		mes "Are you on a training or what?";
+		close;
+	}
+	if (countitem(2262) > 0 && countitem(733) > 1 && countitem(1001) > 0) {
+		mes "[Robert May]";
+		mes "Good~I'm all ready to make the nose.";
+		next;
+		mes "[Robert May]";
+		mes "Give me a few sec!";
+		mes "Fist of all,I need to grind the diamond.";
+		next;
+		mes "[Robert May]";
+		mes "Even though the diamond is broken, it's still hard to grind it.";
+		next;
+		mes "[Robert May]";
+		mes "But!!";
+		mes "I have a hammer which my dear Holg have given me.";
+		mes "With this, I can break everything even a steel!";
+		mes "Look!!Here I go~!";
+		mes "You'll be surprised.";
+		emotion ET_HUK;
+		specialeffect EF_REPAIRWEAPON;
+		next;
+		mes "[Robert May]";
+		mes "And then, have to sprinkle the diamond powder on pierrot's nose";
+		mes "and roll it so that the powder can cover the nose.";
+		specialeffect EF_SPHERE;
+		next;
+		mes "[Robert May]";
+		mes "And, last!";
+		mes "Sprinkle the star dust and.....";
+		specialeffect EF_CHAINCOMBO;
+		next;
+		mes "[Robert May]";
+		mes "It's done!!";
+		mes "It may seem easy but it's not.";
+		mes "I'm the only one who can make it!";
+		emotion ET_SMILE;
+		next;
+		mes "[Robert May]";
+		mes "Here, take this!";
+		mes "And have a merry christmas~!";
+		delitem 2262, 1; // Pierrot_Nose
+		delitem 733, 2; // Crystal_Jewel___
+		delitem 1001, 1; // Sparkling_Dust
+		getitem 5204, 1; // Event_Pierrot_Nose
+		close;
+	} else {
+		mes "[Robert May]";
+		mes "...Hey~!";
+		mes "You didn't brought all materials.";
+		next;
+		mes "[Robert May]";
+		mes "You need to bring ^0000ff1 Pierrot Nose^000000 and ^0000ff2 Broken Jewel^000000 to make the light, and ^0000ff1 Sparkling Dust^000000 to keep the light brighten.";
+		next;
+		mes "[Robert May]";
+		mes "Go get the materials and come back.";
+		mes "I'll be here waiting for you.";
+		close;
+	}
+}
+
+//============================================================
+//= Event 3
+//============================================================
+
+xmas,147,95,5	script	Jerry#06xmas	4W_M_01,{
+	mes "[Jerry]";
+	mes "One this Christmas,say out what you have in mind.What you have wanted to say from long time ago!";
+	mes "Be brave~";
+	next;
+	mes "[Jerry]";
+	mes "If you have had a crush on someone for many years but shy to propose,";
+	mes "or fought with your friend but don't know how to apologize,";
+	next;
+	mes "[Jerry]";
+	mes "or suffering under a lot of stress,";
+	next;
+	mes "[Jerry]";
+	mes "here's your chance!!If you bring a candy cane, I will let you use my magical microphone.";
+	mes "Say out loud what you have in mind, it will be spread all over Lutie!";
+	next;
+	if (select("Hm..may be later~", "Ok!") == 1) {
+		mes "[Jerry]";
+		mes "Come whenever you feel depressed!";
+		mes "Magical microphone is yours!";
+		close;
+	}
+	if (countitem(530) > 0) {
+		mes "[Jerry]";
+		mes "Alright~!";
+		mes "Open your mind and say it out loud what you got into this magical microphone.";
+		next;
+		mes "[Jerry]";
+		mes "See how it works!!!";
+		next;
+		.@kklove = rand(1, 5);
+		if (.@kklove == 1) {
+			announce "We were always together~!!!!!", bc_map, 0x66FFCC;
+		} else if (.@kklove == 2) {
+			announce "I will run back to you. Please forgive me and marry me!!!", bc_map, 0x66FFCC;
+		} else if (.@kklove == 3) {
+			announce "Oh my sweet darling you are so cute~", bc_map, 0x66FFCC;
+		} else if (.@kklove == 4) {
+			announce "Merry Christmas to y'all!!!!!", bc_map, 0x66FFCC;
+		} else {
+			announce "Be brave and steal one's heart.", bc_map, 0x66FFCC;
+		}
+		mes "[Jerry]";
+		mes "Got it??";
+		mes "Now speak into a microphone!";
+		next;
+		mes "[Jerry]";
+		mes "One!";
+		next;
+		mes "[Jerry]";
+		mes "One!";
+		mes "Two!";
+		next;
+		mes "[Jerry]";
+		mes "One!";
+		mes "Two!";
+		mes "Three!!!";
+		next;
+		delitem 530, 1; // Candy_Striper
+		mes "[Jerry]";
+		mes "One!";
+		mes "Two!";
+		mes "three!!!";
+		input .@inputstr$;
+		next;
+		announce ""+ strcharinfo(0) +" says, "+.@inputstr$+"", bc_map, 0x66FFCC;
+		next;
+		mes "[Jerry]";
+		mes "Good!";
+		mes "Do you feel btter now?";
+		next;
+		mes "[Jerry]";
+		mes "If you have something to say but hesitating to say it out.";
+		mes "Just bring me a candy cane! I will help you.";
+		close;
+	} else {
+		mes "[Jerry]";
+		mes "Here's your chance!!If you bring a Candy Striper, I will let you use my magical microphone.";
+		mes "Say out loud what you have in mind, it will be spread all over Lutie!";
+		close;
+	}
+}
+
+//============================================================
+//= Event 4
+//============================================================
+
+prontera,155,285,3	script	Enjoy#06xmas	4_M_MONK,{
+	if (05christ_solo < 7) {
+		if (!checkweight(1201, 1) || (MaxWeight - Weight) < 3500) {
+			mes "[Enjoy]";
+			mes "Whew, what do you have there?That's a lot a stuff you are carrying.";
+			mes "Are you on a training or what?";
+			close;
+		}
+		mes "[Enjoy]";
+		mes "Hey there adventurer...";
+		mes "What's your plan for christmas?";
+		next;
+		switch(select("I'm going to spend with my friends...", "I'm going to spend with my family...", "I'm going to spend with my lover...", "Don't ask..!!!")) {
+			case 1:
+				mes "[Enjoy]";
+				mes "Friend's'?!";
+				mes "Not just a boyfriend or a girlfriend?!";
+				next;
+				mes "[Enjoy]";
+				mes "Here,take this. Share it with your friend's'.And merry christmas!";
+				05christ_solo = 7;
+				getitem 12200, 1; // Event_Cake
+				close;
+			case 2:
+				mes "[Enjoy]";
+				mes "Such a nice kid you are!!";
+				mes "Yeah,christmas is the time for family unity.";
+				next;
+				mes "[Enjoy]";
+				mes "Here,take this. Share it with your family.And merry christmas!";
+				05christ_solo = 7;
+				getitem 12200, 1; // Event_Cake
+				close;
+			case 3:
+				mes "[Enjoy]";
+				mes "......";
+				specialeffect EF_BLESSING;
+				next;
+				mes "[Enjoy]";
+				mes ".............";
+				specialeffect EF_INCAGIDEX;
+				next;
+				mes "[Enjoy]";
+				mes "........................";
+				specialeffect EF_STEELBODY;
+				next;
+				mes "[Enjoy]";
+				mes "........................";
+				mes "Get away!!You evil!!!!!";
+				specialeffect EF_BEGINASURA;
+				specialeffect2 EF_HIT2;
+				percentheal -100, -100;
+				close2;
+				warp "prontera", 155, 230;
+				end;
+			case 4:
+				mes "[Enjoy]";
+				mes "I'm sorry...I understand...";
+				next;
+				mes "[Enjoy]";
+				mes "Take this and cheer up. Merry christmas~~";
+				05christ_solo = 7;
+				getitem 12200, 1; // Event_Cake
+				close;
+		}
+	} else if (05christ_solo == 7) {
+		mes "[Enjoy]";
+		mes "Why are you still fooling around here?!";
+		mes "Do you have something to say to me?";
+		next;
+		if (select("Well,not actually...", "Don't they do 'that'for this year?") == 1) {
+			mes "[Enjoy]";
+			mes "Go away if you have nothing to say.";
+			close;
+		}
+		mes "[Enjoy]";
+		mes "What do you mean by 'that'?";
+		next;
+		select("Punishing couples!");
+		mes "[Enjoy]";
+		mes "Hush!";
+		next;
+		mes "-He immediately covers my mouth with his hand-";
+		mes "-and whipers-";
+		next;
+		mes "[Enjoy]";
+		mes "Don't say you are still a lonely single~.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Don't say you're dating someone!?Are you?";
+		next;
+		mes "[Enjoy]";
+		mes "Are you kidding?! Do you seriously think that I do have girlfriend?How dare you say such a thing?Get away you evil!!!";
+		specialeffect EF_HITLINE;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Calm down!Don't be upset. I was just asking!";
+		next;
+		mes "[Enjoy]";
+		mes "It's because you said I have a girlfriend.I was a leader of sigle soldier corps!I never have envied couples. Never ever!!!";
+		next;
+		mes "[Enjoy]";
+		mes "Couples.....Rings...... Marriage...";
+		next;
+		mes "-He suddenly rasised his head-";
+		mes "-and stared the sky for a while.-";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... Hello..Mr.Enjoy.?";
+		next;
+		mes "[Enjoy]";
+		mes "Were you still here?!Get away you evil!!!!";
+		specialeffect EF_BEGINASURA;
+		specialeffect2 EF_HIT2;
+		percentheal -50, 0;
+		05christ_solo = 8;
+		close2;
+		warp "prontera", 155, 230;
+		end;
+	} else if (05christ_solo > 7 && 05christ_solo < 15) {
+		mes "[Enjoy]";
+		mes "Were you still here?! Get away you evil!!!!";
+		specialeffect EF_BEGINASURA;
+		specialeffect2 EF_HIT2;
+		percentheal -50, 0;
+		close2;
+		warp "prontera", 155, 230;
+		end;
+	} else if (05christ_solo == 15) {
+		mes "[Enjoy]";
+		mes "No matter how often I complain about the reality, there's no place for singles to stand. Lets try to make a better world. A world where we, singles can be proud ourselves.";
+		next;
+		mes "[Enjoy]";
+		mes "Till the day we feel proud and happy!!";
+		mes "We will keep on challenging.";
+		mes "My dear single soldiers!!!";
+		mes "Lets rock and roll!! Lets enjoy our lives!";
+		05christ_solo = 0;
+		close;
+	} else {
+		mes "[Enjoy]";
+		mes "Were you still here?! Get away you evil!!!!";
+		specialeffect EF_BEGINASURA;
+		specialeffect2 EF_HIT2;
+		percentheal -50, 0;
+		close2;
+		warp "prontera", 155, 230;
+		end;
+	}
+}
+
+prontera,155,238,0	script	White Note#06xmas	CLEAR_NPC,3,3,{
+	if (05christ_solo == 8) {
+		mes "- It's a message from Enjoy-";
+		next;
+		if (select("Read it.", "I won't read it.") == 2) {
+			mes "-It's a message from Enjoy -";
+			close;
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "What message...?";
+		next;
+		mes "-You unfold the note.-";
+		next;
+		mes "<......>";
+		mes "<The time has come again...>";
+		mes "<Cold wind freezes your body>";
+		mes "<and also your empty heart.>";
+		mes "<It's called a Chirstmas!>";
+		mes "<who said the christmas is the day for couples?>";
+		mes "<Who said so!!!>";
+		next;
+		mes "<For those you, who are mad at your mean sister>";
+		mes "<who left you alone to meet her boyfriend>";
+		mes "<on a christmas day.>";
+		mes "<Don't spend your night drinking a liquor to>";
+		mes "<to bear the lonliness.>";
+		mes "<You fool!>";
+		next;
+		mes "<Listen to what I say!!>";
+		mes "<My dear single friend!>";
+		mes "<On this Christmas...>";
+		mes "<Everthing will be under our control!!!!!!!!!>";
+		mes "<Who's with me?!?!?!?!?!?!?!?!>";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Wow!!!";
+		mes "...Such an odd man..He could have said in words...?";
+		next;
+		if(select("Stop reading.", "Keep on reading.") == 1) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "...Reading makes me sleepy....";
+			close;
+		}
+		mes "<Let's rock n' roll>";
+		mes "<My dear single friends!!!!!!!>";
+		next;
+		mes "<Don't forget!!!>";
+		mes "<This year, we have to be more careful to keep the secret>";
+		mes "<and proceed our plan!>";
+		next;
+		mes "<Securities from Prontera is keeping an eye on us>";
+		mes "<due to what we have done last year.>";
+		mes "<To succeed in plan,>";
+		mes "<Things have to be done very quickly>";
+		mes "<and also very confidentially.>";
+		mes "";
+		next;
+		mes "<Most important thing is keeping the plan secret.>";
+		mes "<^0000ffI already have marked on a place and ^000000>";
+		mes "<^0000fftold each member the clues^000000>";
+		mes "<so please do your best to figure out where the place is.>";
+		mes "<Good luck my fellows!>";
+		next;
+		mes "<I'll go there first and wait for you!>";
+		mes "<Don't be late.>";
+		next;
+		mes "<For security reasons,>";
+		mes "<The note will be destroyed in 3 seconds.>";
+		next;
+		mes " - 3 !! -";
+		next;
+		mes " - 3 !! -";
+		mes " - 2 !! -";
+		next;
+		mes " - 3 !! -";
+		mes " - 2 !! -";
+		mes " - 1 !! -";
+		next;
+		mes " - 3 !! -";
+		mes " - 2 !! -";
+		mes " - 1 !! -";
+		mes " -^ff0000 0 ^000000!! -";
+		next;
+		mes " - 3 !! -";
+		mes " - 2 !! -";
+		mes " - 1 !! -";
+		mes " -^ff0000 0 ^000000!! -";
+		specialeffect EF_SUI_EXPLOSION;
+		emotion ET_HUK;
+		percentheal -30, 0;
+		05christ_solo = 9;
+		close;
+	} else if (05christ_solo > 8) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hm... What does this mean?...So he wants me to bring all members to the place!?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Then, one I should visit first will be......!";
+		emotion ET_AHA, playerattached();
+		close;
+	} else {
+		mes "- It's a message from someone.-";
+		close;
+	}
+
+	OnTouch:
+		if (05christ_solo == 8) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Damn..! What is wrong with Enjoy. Such a tensed person he is...";
+			next;
+			mes "-There you find a white note which seems to be hidden by someone.-";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "...?What's this?";
+			close;
+		}
+}
+
+prt_fild05,355,254,0	script	White Note#06xmas2	CLEAR_NPC,3,3,{
+	if (05christ_solo == 13) {
+		mes "- It's a message from Enjoy-";
+		next;
+		if (select("Read it.", "I won't read it.") == 2) {
+			mes "- It's a message from Enjoy-";
+			close;
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "- It's a message from Enjoy-";
+		next;
+		mes "-You unfold the note.-";
+		next;
+		mes "<Excellent!You have come to the right place.>";
+		mes "<Please come to the place>";
+		mes "<and bring the materials listed below!>";
+		next;
+		mes "< ^0000ff5 Tree Knots^000000 >";
+		mes "< ^0000ff5 Wooden Blocks^000000 >";
+		mes "< ^0000ff1 Branch of Dead Tree^000000 >";
+		next;
+		mes "<^0000ffWhere the water and wood meet^000000>";
+		mes "<^0000ffWe will meet there on a stone.^000000>";
+		next;
+		mes "<I'll go there first and wait for you!>";
+		mes "<Don't be late.>";
+		next;
+		mes "<For security reasons,>";
+		mes "<The note will be destroyed in 3 seconds.>";
+		next;
+		mes " - 3 !! -";
+		next;
+		mes " - 3 !! -";
+		mes " - 2 !! -";
+		next;
+		mes " - 3 !! -";
+		mes " - 2 !! -";
+		mes " - 1 !! -";
+		next;
+		mes " - 3 !! -";
+		mes " - 2 !! -";
+		mes " - 1 !! -";
+		mes " -^ff0000 0 ^000000!! -";
+		next;
+		mes " - 3 !! -";
+		mes " - 2 !! -";
+		mes " - 1 !! -";
+		mes " -^ff0000 0 ^000000!! -";
+		specialeffect EF_SUI_EXPLOSION;
+		emotion ET_HUK, playerattached();
+		percentheal -30, 0;
+		05christ_solo = 14;
+		close;
+	} else if (05christ_solo > 13) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "What does this mean......So Enjoy wants me to bring all materials!?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Meterials were...";
+		mes "< ^0000ff5 Tree Knots^000000 >";
+		mes "< ^0000ff5 Wooden Blocks^000000 >";
+		mes "< ^0000ff1 Branch of Dead Tree^000000 >";
+		mes "...";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "<^0000ffWhere the water and wood meet^000000>";
+		mes "<^0000ffWe will meet there on a stone.^000000>";
+		mes "Well...This must meaning..!! I got it!!!";
+		emotion ET_AHA, playerattached();
+		close;
+	} else {
+		mes "- It's a message from someone.-";
+		close;
+	}
+
+	OnTouch:
+		if (05christ_solo == 13) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Garden, under the bench, where the sun goes down, and another note... What does this mean?";
+			next;
+			mes "-There you find a white note which seems to be hidden by someone.-";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "...?What's this?";
+			close;
+		}
+}
+
+prt_fild05,101,158,0	script	Switch#06xmas	-1,3,3,{
+	end;
+
+	OnInit:
+		enablenpc "Switch#06xmas";
+		end;
+
+	OnTouch:
+		if (05christ_solo == 14) {
+			mes "["+ strcharinfo(0) +"]";
+			mes "<^0000ffWhere the water and wood meet^000000>";
+			mes "<^0000ffWe will meet there on a stone.^000000>";
+			mes "...This must be the place!";
+			next;
+			mes "[??????]";
+			mes "... Hey!!!You!!!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Did someone just call me!?";
+			next;
+			mes "[??????]";
+			mes "Did you bring all materials??";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Where's Enjoy?";
+			next;
+			mes "[??????]";
+			mes "I don't have time!Just answer to what I say! Where are the materials?";
+			next;
+			if (select("I haven't prepared it yet...", "Here~I brought it all!") == 1) {
+				mes "[??????]";
+				mes "Still?! Hurry!!Go get it right away!";
+				close;
+			}
+			if (countitem(1019) > 4 && countitem(7222) > 4 && countitem(604) > 0) {
+				mes "[??????]";
+				mes "Good! If all things are prepared....Let's go!!Single soldiers!!!";
+				enablenpc "Enjoy#06xmas2";
+				donpcevent "Happymerry#06xmas_02::OnEnable";
+				donpcevent "Christ#06xmas_02::OnEnable";
+				donpcevent "Mas#06xmas_02::OnEnable";
+				donpcevent "Event#06xmas_02::OnEnable";
+				disablenpc "Switch#06xmas";
+				close;
+			} else {
+				mes "[??????]";
+				mes "Are you sure? Something's still missing!";
+				close;
+			}
+		}
+		end;
+}
+
+prt_fild05,101,161,3	script	Enjoy#06xmas2	4_M_MONK,{
+	if (05christ_solo == 14) {
+		if (countitem(1019) > 4 && countitem(7222) > 4 && countitem(604) > 0) {
+			mes "[Enjoy]";
+			mes "Welcome!!! My friends!!!";
+			mes "Don't be ashamed being a single.Why are you hiding from someone? Be proud of yourself!";
+			next;
+			mes "[Enjoy]";
+			mes "Don't envy couples! The world is not owned by them!!!";
+			next;
+			mes "[Enjoy]";
+			mes "Being a single doesn't mean I'm a looser!!!";
+			next;
+			mes "[Enjoy]";
+			mes "I won't cry for the past!Never have a lingering affection for the love that never have started!Never break down being a lonely single!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "(...Huh? past? lingering affection? lonely single???)";
+			next;
+			mes "-Someone talks to you.-";
+			next;
+			mes "[Happymerry]";
+			mes "...Enjoy got dumped few days ago.";
+			next;
+			mes "[Christ]";
+			mes "It was 10 days before Christmas.";
+			next;
+			mes "[Mas]";
+			mes "I thought it would be his first Christmas not being lonely....";
+			next;
+			mes "[Event]";
+			mes "Hahaha...";
+			next;
+			mes "[Enjoy]";
+			mes "...If I can't take it back,I won't reminisce!!! I will burn up all my memories!!!!!";
+			next;
+			mes "[All]";
+			mes "!!!";
+			next;
+			mes "-Enjoy throws burning Dead Branch on a wood pile.-";
+			next;
+			mes "[Enjoy]";
+			mes "Let's be proud of ourselves!!!My dear single friends!!!!!!!!!!!";
+			next;
+			mes "[All]";
+			mes "Let's burn our sorrow, anguish, grudge, anger!!!";
+			next;
+			if (countitem(1019) > 4 && countitem(7222) > 4 && countitem(604) > 0) {
+				emotion ET_GO, playerattached();
+				emotion ET_GO, "Happymerry#06xmas_02";
+				emotion ET_GO, "Christ#06xmas_02";
+				emotion ET_GO, "Mas#06mas_02";
+				emotion ET_GO, "Event#06xmas_02";
+				specialeffect EF_HITLINE2;
+				delitem 1019, 5; // Wooden_Block
+				delitem 7222, 5; // Tree_Knot
+				delitem 604, 1; // Branch_Of_Dead_Tree
+				05christ_solo = 15;
+				disablenpc "Happymerry#06xmas_02";
+				disablenpc "Christ#06xmas_02";
+				disablenpc "Mas#06mas_02";
+				disablenpc "Event#06xmas_02";
+				donpcevent "Enjoy#06xmas2::OnGo";
+				close2;
+				announce "Single soldiers "+ strcharinfo(0) +"'s sorrow spread all over the town.", bc_map, 0x66FFCC;
+				monster "prt_fild05",117,158,""+strcharinfo(0)+"'s Anguish",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",117,157,""+strcharinfo(0)+"'s Jealousy",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",117,156,""+strcharinfo(0)+"'s Despair",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",117,155,""+strcharinfo(0)+"'s Frustration",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",117,154,""+strcharinfo(0)+"'s Bombing",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,158,""+strcharinfo(0)+"'s grudge",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,157,""+strcharinfo(0)+"'s curse",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,156,""+strcharinfo(0)+"'s anger",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,155,""+strcharinfo(0)+"'s grief",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,154,""+strcharinfo(0)+"'s hatred",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,158,""+strcharinfo(0)+"'s a bitter taste of a single life",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,157,""+strcharinfo(0)+"'s couple punisher",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,156,""+strcharinfo(0)+"'s loneliness",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,155,""+strcharinfo(0)+"'s sobbing",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,154,""+strcharinfo(0)+"'s darkness",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,158,""+strcharinfo(0)+"'s depression",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,157,""+strcharinfo(0)+"'s estrangement",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,156,""+strcharinfo(0)+"'s nightmare",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,155,""+strcharinfo(0)+"'s wail",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,154,""+strcharinfo(0)+"'s whisper",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,158,""+strcharinfo(0)+"'s regret",1588,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,157,""+strcharinfo(0)+"'s shadow",1588,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,156,""+strcharinfo(0)+"'s couplebreaker",1588,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,155,""+strcharinfo(0)+"'s sadness",1588,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,154,""+strcharinfo(0)+"'s symbol of brokenheart",1588,1,"Enjoy#06xmas2::OnMobDead";
+				end;
+			} else {
+				mes "[Enjoy]";
+				mes "There's no time to hesitate!!! Couples are enjoying Christmas out there!I believe that's not what you want!!";
+				next;
+				mes "[Enjoy]";
+				mes "What now! While you waste your ";
+				next;
+				mes "[Enjoy]";
+				mes "< ^0000ff5 Tree Knots^000000 >";
+				mes "< ^0000ff5 Wooden Blocks^000000 >";
+				mes "< ^0000ff1 Branch of Dead Tree^000000 >";
+				mes "Hurry! Bring it now!!";
+				disablenpc "Enjoy#06xmas2";
+				disablenpc "Happymerry#06xmas_02";
+				disablenpc "Christ#06xmas_02";
+				disablenpc "Mas#06mas_02";
+				disablenpc "Event#06xmas_02";
+				enablenpc "Switch#06christ_01";
+				close;
+			}
+		} else {
+			mes "[Enjoy]";
+			mes "There's no time to hesitate!!! Couples are enjoying Christmas out there!I believe that's not what you want!!";
+			next;
+			mes "[Enjoy]";
+			mes "< ^0000ff5 Tree Knots^000000 >";
+			mes "< ^0000ff5 Wooden Blocks^000000 >";
+			mes "< ^0000ff1 Branch of Dead Tree^000000 >";
+			mes "Hurry!Bring it now!!";
+			disablenpc "Enjoy#06xmas2";
+			disablenpc "Happymerry#06xmas_02";
+			disablenpc "Christ#06xmas_02";
+			disablenpc "Mas#06mas_02";
+			disablenpc "Event#06xmas_02";
+			enablenpc "Switch#06christ_01";
+			close;
+		}
+	} else if (05christ_solo == 15) {
+		mes "[Enjoy]";
+		mes "It's useless complaining about the reality! let's make the better world for singles!!! Let's go for it!";
+		next;
+		mes "[Enjoy]";
+		mes "Till the day comes!!!";
+		mes "Till the day we become happy!";
+		mes "We won't lose our faith!! We won't give up!!";
+		mes "Let's enjoy ourselves till we feel better!";
+		05christ_solo = 0;
+		disablenpc "Enjoy#06xmas2";
+		enablenpc "Switch#06christ_01";
+		close;
+	} else {
+		mes "[Enjoy]";
+		mes "Who are you?!";
+		close;
+	}
+
+	OnGo:
+		disablenpc "Enjoy#06xmas2";
+		initnpctimer;
+		end;
+
+	OnStop:
+		enablenpc "Enjoy#06xmas2";
+		killmonster "prt_fild05", "Enjoy#06xmas2::OnMobDead";
+		stopnpctimer;
+		end;
+
+	OnInit:
+		disablenpc "Enjoy#06xmas2";
+		end;
+
+	OnTimer3000:
+		announce "Never cry for the past.", bc_map, 0x66FFCC;
+		end;
+
+	OnTimer5000:
+		announce "Never wait for the unexpected phone call!!", bc_map, 0x66FFCC;
+		end;
+
+	OnTimer7000:
+		announce "Never have a lingering affection for the love that never have started!!!", bc_map, 0x66FFCC;
+		end;
+
+	OnTimer9000:
+		announce "Never break down being a lonely single!!!", bc_map, 0x66FFCC;
+		end;
+
+	OnTimer11000:
+		announce "Never remember the sad memory!!!.", bc_map, 0x66FFCC;
+		end;
+
+	OnTimer13000:
+		announce "...I am the happy single soldier!!!", bc_map, 0x66FFCC;
+		end;
+
+	OnTimer180000:
+		killmonster "prt_fild05", "Enjoy#06xmas2::OnMobDead";
+		announce "To all my single soldier friends~Merry christmas.", bc_map, 0x66FFCC;
+		donpcevent "Enjoy#06xmas2::OnStop";
+		end;
+
+	OnMobDead:
+		end;
+}
+
+prt_fild05,97,164,5	script	Happymerry#06xmas_02	4_M_LGTMAN,{
+	end;
+
+	OnInit:
+		disablenpc "Happymerry#06xmas_02";
+		end;
+
+	OnEnable:
+		enablenpc "Happymerry#06xmas_02";
+		emotion ET_GO;
+		end;
+}
+
+prt_fild05,103,164,4	script	Christ#06xmas_02	4_M_PECOKNIGHT,{
+	end;
+
+	OnInit:
+		disablenpc "Christ#06xmas_02";
+		end;
+
+	OnEnable:
+		enablenpc "Christ#06xmas_02";
+		emotion ET_GO;
+		end;
+}
+
+prt_fild05,103,159,1	script	Mas#06xmas_02	4_M_ALCHE_A,{
+	end;
+
+	OnInit:
+		disablenpc "Mas#06xmas_02";
+		end;
+
+	OnEnable:
+		enablenpc "Mas#06xmas_02";
+		emotion ET_GO;
+		end;
+}
+
+prt_fild05,97,159,7	script	Event#06xmas_02	4_M_SITDOWN,{
+	end;
+
+	OnInit:
+		disablenpc "Event#06xmas_02";
+		end;
+
+	OnEnable:
+		enablenpc "Event#06xmas_02";
+		emotion ET_GO;
+		end;
+}
+
+prt_fild05,188,177,4	script	Happymerry#06xmas01	4_M_LGTMAN,{
+	if (05christ_solo == 9) {
+		mes "[Happymerry]";
+		mes "God has betrayed me again!!Even Holgren!!!";
+		emotion ET_CRY;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... Are you Happymerry?";
+		next;
+		mes "[Happymerry]";
+		mes "Go head and laugh at me!You don't understand why I get dumped on christmas day!!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Happymerry! Enjoy said...";
+		next;
+		mes "-I start stop talking and look around to see if anyone is listening.-";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Didn't Enjoy leave any clue for you?";
+		next;
+		mes "[Happymerry]";
+		mes "...!";
+		mes "Do you know Enjoy?";
+		mes "Actually, Enjoy told me to give a clue to someone who come to me talk about him.";
+		next;
+		mes "[Happymerry]";
+		mes "^0000ffGarden^000000!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...What?What did you say?";
+		next;
+		mes "[Happymerry]";
+		mes "^0000ffGarden^000000!";
+		next;
+		mes "[Happymerry]";
+		mes "I'm sorry, that's all I know.Go ask other members.";
+		next;
+		mes "[Happymerry]";
+		mes "Well then, I'll meet you 'there'.";
+		05christ_solo = 10;
+		close;
+	} else if (05christ_solo > 9) {
+		mes "[Happymerry]";
+		mes "^0000ffGarden^000000!";
+		next;
+		mes "[Happymerry]";
+		mes "I'm sorry, that's all I know.Go ask other members.";
+		next;
+		mes "[Happymerry]";
+		mes "Well then, I'll meet you 'there'.";
+		close;
+	} else {
+		mes "[Happymerry]";
+		mes "God has betrayed me again!!Even Holgren!!!";
+		emotion ET_CRY;
+		close;
+	}
+}
+
+prontera,62,339,3	script	Christ#06xmas_01	4_M_PECOKNIGHT,{
+	if (05christ_solo == 10) {
+		mes "[Christ]";
+		mes "Pecopeco~! Where should we head to??We've always been together and had overcome all difficulties and always will. Aren't we?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Are you Christ?";
+		next;
+		mes "[Christ]";
+		mes "Holy cats!Who the hell are you?!";
+		mes "Don't even think about getting near my peco. She gets scared easily to strangers.Get away!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Your pecopeco is a male...";
+		mes "By the way, did Enjoy...";
+		next;
+		mes "[Christ]";
+		mes "My Peco is not a male!?Even though she can't lay eggs,it is still a female. Apologize to her!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...I'm sorry.";
+		mes "By the way, did Enjoy give you any clue...";
+		next;
+		mes "[Christ]";
+		mes "!!";
+		mes "Enjoy? Then, it must be the time......";
+		next;
+		mes "[Christ]";
+		mes "^0000ffUnder the bench^000000!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "What do you mean?";
+		next;
+		mes "[Christ]";
+		mes "^0000ffUnder the bench^000000!";
+		next;
+		mes "[Christ]";
+		mes "I'm sorry, that's all I can say.Go ask other members.";
+		next;
+		mes "[Christ]";
+		mes "Well then, I'll meet you 'there'.";
+		05christ_solo = 11;
+		close;
+	} else if (05christ_solo > 10) {
+		mes "[Christ]";
+		mes "^0000ffUnder the bench^000000!";
+		next;
+		mes "[Christ]";
+		mes "I'm sorry, that's all I can say.Go ask other members.";
+		next;
+		mes "[Christ]";
+		mes "Well then, I'll meet you 'there'.";
+		close;
+	} else {
+		mes "[Christ]";
+		mes "Pecopeco~! Where should we head to??We've always been together and had overcome all difficulties and always will. Aren't we?";
+		close;
+	}
+}
+
+prontera,163,66,7	script	Mas#06xmas_01	4_M_ALCHE_A,{
+	if (05christ_solo == 11) {
+		mes "[Mas]";
+		mes "Herbs,potions.I can make it all by myself!!All I need is an honour.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Are you Mas?";
+		next;
+		mes "[Mas]";
+		mes "Who....Who.. are...you?!";
+		mes "I...I...I don't have time...Do not disturb me!!";
+		next;
+		mes "[Mas]";
+		mes "... hum..it feels good talking to someone..But no no no no!! I'm running out of time!Go away!!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hey!Wake up!!";
+		mes "I was just wondering whether Enjoy have left a...";
+		next;
+		mes "[Mas]";
+		mes "Enjoy? Did you just say Enjoy?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Yep! didn't Enjoy say anything to you?...";
+		next;
+		mes "[Mas]";
+		mes "!!";
+		mes "Oh, I didn't realize how fast has the time flown...I was digging herds and making a potions everyday.....";
+		next;
+		mes "[Mas]";
+		mes "^0000ffWhere the sun goes down^000000!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "What did you say?";
+		next;
+		mes "[Mas]";
+		mes "^0000ffWhere the sun goes down^000000!";
+		next;
+		mes "[Mas]";
+		mes "I'm sorry, that's all I know.Go ask other members.";
+		next;
+		mes "[Mas]";
+		mes "Well then, I'll meet you 'there'.";
+		05christ_solo = 12;
+		close;
+	} else if (05christ_solo > 11) {
+		mes "[Mas]";
+		mes "^0000ffWhere the sun goes down^000000!";
+		next;
+		mes "[Mas]";
+		mes "I'm sorry, that's all I know.Go ask other members.";
+		next;
+		mes "[Mas]";
+		mes "Well then, I'll meet you 'there'.";
+		close;
+	} else {
+		mes "[Mas]";
+		mes "Herbs,potions.I can make it all by myself!! All I need is an honour.";
+		close;
+	}
+}
+
+prontera,35,209,5	script	Event#06xmas_01	4_M_SITDOWN,{
+	if (05christ_solo == 12) {
+		mes "[Event]";
+		mes "........................................I love you too, Miss Kafra!!!";
+		emotion ET_HUK, playerattached();
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "(Oh, shocks!)";
+		next;
+		mes "[Event]";
+		mes "You know what,Tinybee? Succubus hit on me the other.I hate being hansome!!";
+		next;
+		mes "-He starts talking to his right hand with a smile on his face.-";
+		emotion ET_KIK;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Well..Mr.Event...Is there anything you heard from Enjoy??...Hello!!Are you listening?!";
+		mes "(-Shuddering-)";
+		emotion ET_CRY, playerattached();
+		next;
+		mes "[Event]";
+		mes "Did you hear what she said Tinybee?She just said The Kafra services are always on your side.I know she just shy to say the truth. Why can't she just say stay Mr.Event~.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Excuse me... um...I believe Enjoy left a message for me...didn't he?...";
+		mes "(Ah~Such a weirdo!!!)";
+		next;
+		mes "[Event]";
+		mes "^0000ffAnother note^000000.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "What did you say??";
+		next;
+		mes "[Event]";
+		mes "^0000ffAnother note^000000.";
+		next;
+		mes "[Event]";
+		mes "Haha...I know what..You are trying to hear my voice again!Aren't you?...";
+		next;
+		mes "[Event]";
+		mes "Well then, I'll meet you 'there'.";
+		05christ_solo = 13;
+		close;
+	} else if (05christ_solo > 12) {
+		mes "[Event]";
+		mes "^0000ffAnother note^000000.";
+		next;
+		mes "[Event]";
+		mes "Haha...I know what..You are trying to hear my voice again!Aren't you?...";
+		next;
+		mes "[Event]";
+		mes "Well then, I'll meet you 'there'.";
+		close;
+	} else {
+		mes "[Event]";
+		mes "........................................I love you too, Miss Kafra!!!";
+		emotion ET_HUK, playerattached();
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "(Oh, shocks!)";
+		next;
+		mes "[Event]";
+		mes "You know what,Tinybee? Succubus hit on me the other.I hate being hansome!!";
+		next;
+		mes "-He starts talking to his right hand with a smile on his face.-";
+		emotion ET_KIK;
+		close;
+	}
+}
+
+//============================================================
+//= Event 5: Nightmare on Christmas Day
+//============================================================
+
+xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
+	if (06christ_santa < 1) {
+		mes "[Poe]";
+		mes "Yo-ho, yo-ho.";
+		next;
+		mes "[Poe]";
+		mes "O! You! Don't make trouble !";
+		specialeffect EF_HIT2;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "What's are you doing there, boy? Violence is a bad.";
+		next;
+		mes "[Poe]";
+		mes "Pardon? Who are you?";
+		next;
+		switch(select("I'm a guard of a love and courage!", "I'm just a passenger!", "I'm a trouble-solver who have nothing to do!")) {
+			case 1:
+				mes "[Poe]";
+				mes "Mom said to me not to talk with a stranger.";
+				close;
+			case 2:
+				mes "[Poe]";
+				mes "Then go wherever you're heading to...";
+				close;
+			case 3:
+				break;
+		}
+		mes "[Poe]";
+		mes "Why do you have nothing to do? Don't you have any friends? I can be your friend if you like.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Pooh, I have many friends! I'm just having a time for myself! That's all! ";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "By the way, what were you doing? You were beating something, Violence is bad.";
+		next;
+		mes "[Poe]";
+		mes "Hum, but he's always making troubles. He's mean!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Who's making troubles?";
+		next;
+		mes "-He shows what he's holding in his arms-";
+		next;
+		mes "[Poe]";
+		mes "This one. Mom said that she would allow me to raise him if he doesn't make any trouble, but look! He's such a troublemaker!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "What's that? Where did you found it?";
+		next;
+		mes "[Poe]";
+		mes "No...You shouldn't touch him! I found him around a toy factory. I'll raise him as my brother!";
+		next;
+		mes "-There's a monster's egg in his arms which you haven't seen before-";
+		next;
+		mes "[Poe]";
+		mes "After I brought the egg into the house, something misterious happened often.";
+		next;
+		mes "[Poe]";
+		mes "I heard a noise from the room where I have hidden it like if someone is playing in the room... and also heard a strange giggling sound and a crying of an animal at midnight around my house...";
+		next;
+		mes "[Poe]";
+		mes "Once I've hidden it under my bed, it suddenly rolled over to the stairs. So my father nearly fell over it.";
+		next;
+		mes "[Poe]";
+		mes "That made my parents angry so they're telling me to throw it away but... but...";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hum...  suspicious... This blotch... it's misterious! It seems to be wicked! It makes me feel that I should clean it!";
+		next;
+		mes "[Poe]";
+		mes "Hey!!I said not to touch! I'll make him good! He's my brother!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hum.. it seems dangerous... Hey, You'd better listen to me. I'm an adventurer who have lot of experiences. It's real suspicious.I have a feeling that people, especially a little boy like you couldn't tame it ...";
+		next;
+		mes "[Poe]";
+		mes "No! You go away!";
+		mes "(Screaming). He's my brother!!! (He cried out).";
+		emotion ET_CRY;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Oh, don't cry, please...";
+		mes "Ok, I'll do anything for you! So please don't cry!";
+		next;
+		mes "[Poe]";
+		mes "...(He stopped crying)... What will you do for me?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Well, first of all its wicked spirit should be purified. I'm going to go to church and inquire about the egg. Please give me the egg...";
+		next;
+		mes "[Poe]";
+		mes "(He shouted out)No!!!!!";
+		emotion ET_CRY;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... Ok, I guess it would be difficult to take it from you. Take care of the egg until I come back.Be careful!";
+		emotion ET_KEK, playerattached();
+		06christ_santa = 1;
+		close;
+	} else if (06christ_santa > 0 && 06christ_santa < 3) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "Well, first of all its wicked spirit should be purified. I'm going to go to church and inquire about the egg. Please give me the egg...";
+		next;
+		mes "[Poe]";
+		mes "(He shouted out)No!!!!";
+		emotion ET_CRY;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "... Ok, I guess it would be difficult to take it from you. Take care of the egg until I come back.Be careful!";
+		emotion ET_KEK, playerattached();
+		close;
+	} else if (06christ_santa == 3) {
+		mes "[Poe]";
+		mes "Hey! Please keep still!";
+		specialeffect EF_HIT2;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hey! I got something for you! This is^0000ffblessed powder for purification^000000 which will clean up the egg!";
+		next;
+		mes "[Poe]";
+		mes "Oh, you came back! So you mean with the powder, it will become nicer?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hum... I don't trust the nun at the church... But it wouldn't harm us giving a try!";
+		next;
+		mes "[Poe]";
+		mes "Ok then, please do that for me!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok just leave it on me!!!!!";
+		mes "...";
+		mes "(...but how do I use it?...)";
+		next;
+		switch(select("Boil it with the egg", "Put the powder into the egg through a hole", "Strew the power on the egg", "Knead the powder with water and cover the egg")) {
+			case 1:
+				mes "["+ strcharinfo(0) +"]";
+				mes "(Well, I don't know what to do !)";
+				mes "I'm going to put it in the water and then boil it!";
+				specialeffect2 EF_DEMONSTRATION;
+				next;
+				mes "[Poe]";
+				mes "What are you doing now! Are you trying to eat my brother after boiling it?!";
+				mes "You mean killer. Go away!!!";
+				emotion ET_HUK;
+				close2;
+				warp "xmas", 148, 116;
+				end;
+			case 2:
+				mes "["+ strcharinfo(0) +"]";
+				mes "(Well, I don't know what to do !)";
+				mes "After making a hole on the egg, I'm going to put the powder in it?!";
+				specialeffect2 EF_STUNATTACK;
+				next;
+				mes "[Poe]";
+				mes "What are you doing now! Are you trying to break my brother and cook it?!";
+				mes "You mean killer. Go away!!!";
+				emotion ET_HUK;
+				close2;
+				warp "xmas", 148, 116;
+				end;
+			case 3:
+				break;
+			case 4:
+				mes "["+ strcharinfo(0) +"]";
+				mes "(Well, I don't know what to do !)";
+				mes "I'll knead the powder with water and cover the egg !";
+				specialeffect2 EF_KEEPING;
+				next;
+				mes "[Poe]";
+				mes "What are you doing now! Are you trying to stifle my brother to kill him ?!";
+				mes "You mean killer. Go away!!!";
+				emotion ET_HUK;
+				close2;
+				warp "xmas", 148, 116;
+				end;
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "(Well, I don't know what to do !)";
+		mes "I'm going to strew the powder on the egg!";
+		mes "A bad boy must be punished!!!";
+		next;
+		mes "-You grabed a handful amount of ^0000ffBlessed powder for purification^000000and threw it toward the egg-";
+		specialeffect2 EF_RESURRECTION;
+		emotion ET_SURPRISE;
+		specialeffect2 ET_SURPRISE;
+		next;
+		mes "-As the powder strewed on the egg of wicked spirit, its spirit started began purifying.-";
+		next;
+		mes "[Poe]";
+		mes "Did we succeed?!";
+		mes "Is he going to make troubles anymore?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hum... well I'm not sure.";
+		mes "The wicked spirit has gone but we still don't know which monster's egg it is... Why don't just give it to me??";
+		next;
+		mes "[Poe]";
+		mes "No! I've been lonely without a brother and a sister! I need him! I want a brother.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "But, nobody knows what's inside. It may be very dangerous or terrible... That's why I'm worrying about leaving the monster's egg with you, a little boy...";
+		next;
+		mes "[Poe]";
+		mes "No! You can't take it from me.";
+		emotion ET_CRY;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Hum... I don't know what to do... What should I do...?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok! All right, then how's this?!";
+		emotion ET_AHA, playerattached();
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I'll introduce you another good monster. How about exchanging it?";
+		next;
+		mes "[Poe]";
+		mes "What...?";
+		mes "Hum..another one?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "That's it! If I bring you cuter monster won't it be nicer? So what do you think?";
+		next;
+		mes "[Poe]";
+		mes "Hum... ok, I'll take it.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Good! I will prepare an item which I can tame with. Wait!";
+		06christ_santa = 4;
+		close;
+	} else if (06christ_santa == 4) {
+		if (!checkweight(1201, 1) || (MaxWeight - Weight) < 3500) {
+			mes "[Poe]";
+			mes "Whew, what do you have there? That's a lot a stuff you are carrying.";
+			mes "Are you on a training or what?";
+			close;
+		}
+		mes "[Poe]";
+		mes "Hey, how's it going? You promised to bring me a brother? Who did you bring?";
+		next;
+		switch(select("Poring", "Drops", "Poporing", "Lunatic", "Picky", "Savage bebe", "Chonchon", "Spore", "Poison spore", "PecoPeco", "Steel Chonchon", "Hunter fly", "Smokie", "Rocker", "Dokebi", "Desert wolf", "Isis", "Petite", "Munak", "Bon gun", "Orc warrior", "Bapho Jr", "Deviruchi", "Sohee", "Yoyo")) {
+			case 1:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'unripe apple'! It's little sour but Poring likes it!";
+				.@mobName$ = "Poring";
+				.@delItem = 619; // Unripe_Apple
+				.@cakeAmount = 3;
+				.@cookieAmount = 0;
+				break;
+			case 2:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'orange juice'! A fresh squeezed orange juice . Drops likes it!";
+				.@mobName$ = "Drops";
+				.@delItem = 620; // Orange_Juice
+				.@cakeAmount = 3;
+				.@cookieAmount = 0;
+				break;
+			case 3:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'bitter herb'! Due to its bitterness, whoever eats it make wry face.But  Poporing likes it!";
+				.@mobName$ = "Poporing";
+				.@delItem = 621; // Bitter_Herb
+				.@cakeAmount = 3;
+				.@cookieAmount = 0;
+				break;
+			case 4:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'rainbow carrot'! It has seven colors and it smells really good. Lunatic likes it!";
+				.@mobName$ = "Lunatic";
+				.@delItem = 622; // Rainbow_Carrot
+				.@cakeAmount = 3;
+				.@cookieAmount = 0;
+				break;
+			case 5:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'nice earthworm'! It's a handsome young worm! Its red bow tie on his neck makes him look more charming! Picky likes it!";
+				.@mobName$ = "Picky";
+				.@delItem = 623; // Earthworm_The_Dude
+				.@cakeAmount = 3;
+				.@cookieAmount = 0;
+				break;
+			case 6:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'sweet milk'! It is a special processed milk which has special taste and a flavor. Sevage Bebe likes it!";
+				.@mobName$ = "Sevage Bebe";
+				.@delItem = 627; // Sweet_Milk
+				.@cakeAmount = 3;
+				.@cookieAmount = 0;
+				break;
+			case 7:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!!!I've prepared an 'rotten fish'! It's been rotten for a long time, Chonchon likes it!";
+				.@mobName$ = "Chonchon";
+				.@delItem = 624; // Rotten_Fish
+				.@cakeAmount = 3;
+				.@cookieAmount = 0;
+				break;
+			case 8:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'moss with morning's dew'! It is a green moss which is grown with morning's dew. Spore likes it!";
+				.@mobName$ = "Spore";
+				.@delItem = 630; // Dew_Laden_Moss
+				.@cakeAmount = 5;
+				.@cookieAmount = 0;
+				break;
+			case 9:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'deadly noxious herb'! It's a kind of herb that has deadly poison. Poison Spore likes it!";
+				.@mobName$ = "Poison Spore";
+				.@delItem = 631; // Deadly_Noxious_Herb
+				.@cakeAmount = 5;
+				.@cookieAmount = 0;
+				break;
+			case 10:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!! I've prepared an 'fatty chubby earthworm'! It's healthy and plumpy. PecoPeco likes it!";
+				.@mobName$ = "PecoPeco";
+				.@delItem = 632; // Fatty_Chubby_Earthworm
+				.@cakeAmount = 5;
+				.@cookieAmount = 0;
+				break;
+			case 11:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!! I've prepared an 'rusty iron'! It's too rusty to use it. Steel Chonchon likes it!";
+				.@mobName$ = "Steel Chonchon";
+				.@delItem = 625; // Lusty_Iron
+				.@cakeAmount = 5;
+				.@cookieAmount = 0;
+				break;
+			case 12:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'monster juice'! It's made of animal's blood, Hunter Fly likes it!";
+				.@mobName$ = "Hunter Fly";
+				.@delItem = 626; // Monster_Juice
+				.@cakeAmount = 7;
+				.@cookieAmount = 1;
+				break;
+			case 13:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'baked sweet potato'! It is an well baked sweet potato which is ready to be served. Smokie likes it!";
+				.@mobName$ = "Smokie";
+				.@delItem = 633; // Baked_Yam
+				.@cakeAmount = 7;
+				.@cookieAmount = 1;
+				break;
+			case 14:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'singing flower'! It blossoms from singing plant. Rocker likes it!";
+				.@mobName$ = "Rocker";
+				.@delItem = 629; // Singing_Flower
+				.@cakeAmount = 7;
+				.@cookieAmount = 1;
+				break;
+			case 15:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an an 'old broom'!A generations old broom that is handed down within a family. Dokebi likes it!";
+				.@mobName$ = "Dokebi";
+				.@delItem = 637; // Old_Broom
+				.@cakeAmount = 7;
+				.@cookieAmount = 1;
+				break;
+			case 16:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'well dried bone'! It's been dried in the sun.Young Desert wolf likes it!";
+				.@mobName$ = "Desert Wolf";
+				.@delItem = 628; // Well_Dried_Bone
+				.@cakeAmount = 7;
+				.@cookieAmount = 1;
+				break;
+			case 17:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an an 'armlet of_ obedience'! It's really dazzling but has somewhat sad image. Isis likes it!";
+				.@mobName$ = "Isis";
+				.@delItem = 639; // Armlet_Of_Obedience
+				.@cakeAmount = 7;
+				.@cookieAmount = 3;
+				break;
+			case 18:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an a 'shining stone'! It's very beautiful. Petite likes it!";
+				.@mobName$ = "Petite";
+				.@delItem = 640; // Shining_Stone
+				.@cakeAmount = 7;
+				.@cookieAmount = 3;
+				break;
+			case 19:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an a 'blind letter'! An old, heartfelt letter that has never been delivered since it has no recipient. Munak likes it!";
+				.@mobName$ = "Munak";
+				.@delItem = 636; // No_Recipient
+				.@cakeAmount = 7;
+				.@cookieAmount = 3;
+				break;
+			case 20:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'her heart'! It has an soul of a girl who couldn't open her heart for a long time. Bon Gun likes it!";
+				.@mobName$ = "Bon Gun";
+				.@delItem = 659; // Heart_Of_Her
+				.@cakeAmount = 7;
+				.@cookieAmount = 3;
+				break;
+			case 21:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'Horror of tribe'! You can get to know about the strict rule of the tribe with it. Orc Warrior likes it!";
+				.@mobName$ = "Orc Warrior";
+				.@delItem = 635; // Horror_Of_Tribe
+				.@cakeAmount = 7;
+				.@cookieAmount = 3;
+				break;
+			case 22:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'Book of devil'!A forbidden book in which the secret for summoning high level demons is detailed. Bapho Jr likes it!";
+				.@mobName$ = "Bapho Jr";
+				.@delItem = 642; // Book_Of_Devil
+				.@cakeAmount = 10;
+				.@cookieAmount = 3;
+				break;
+			case 23:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an a 'contract in the dark'! It's a contract as it's called. Deviruchi likes it!";
+				.@mobName$ = "Deviruchi";
+				.@delItem = 641; // Contracts_In_Shadow
+				.@cakeAmount = 10;
+				.@cookieAmount = 3;
+				break;
+			case 24:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'silver knife of the purity'! It represents the virginity. Sohee likes it!";
+				.@mobName$ = "Sohee";
+				.@delItem = 638; // Silver_Knife_Of_Chaste
+				.@cakeAmount = 10;
+				.@cookieAmount = 3;
+				break;
+			case 25:
+				mes "["+ strcharinfo(0) +"]";
+				mes "Here!!I've prepared an 'tropical banana'! A premium quality banana grown in the tropics. Yoyo likes it!";
+				.@mobName$ = "Yoyo";
+				.@delItem = 634; // Tropical_Banana
+				.@cakeAmount = 10;
+				.@cookieAmount = 3;
+				break;
+		}
+		next;
+		mes "[Poe]";
+		mes "Oh... you mean I can tame "+.@mobName$+" with this?";
+		mes "Thank you. Please take good care of my brother.";
+		next;
+		if (countitem(.@delItem) > 0) {
+			mes "[Poe]";
+			mes "Breed him well! Oh, this is a Christmas gift for you! Merry Christmas I appreciate your kindness!";
+			delitem .@delItem, 1;
+			06christ_santa = 5;
+			getitem 12200, .@cakeAmount; // Event_Cake
+			getitem 12130, .@cookieAmount; // Cookie_Bag
+			makepet 1245; // GOBLINE_XMAS
+			close;
+		} else {
+			mes "[Poe]";
+			mes "So, where's it?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Hum, here it is!";
+			mes " ";
+			mes "...um..it must be inside...the..um";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Dear! Where has it gone?";
+			mes "Hang on, give me some time to look for it!";
+			close;
+		}
+	} else {
+		mes "[Poe]";
+		mes "However, I wanted to breed it. I guess it should be difficult to the little boy like me.";
+		next;
+		mes "[Poe]";
+		mes "I wish you to breed it instead of me. You said you were free but I'd like to say 'Thank you' for your help.";
+		close;
+	}
+}
+
+prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
+	if (06christ_santa < 1) {
+		mes "[Ohholy]";
+		mes "-Joy to the world! The Lord is come-";
+		mes "-Let earth receive her King-";
+		specialeffect EF_GLORIA;
+		next;
+		mes "[Ohholy]";
+		mes "Merry Christmas~";
+		mes "I wish you a Merry Christmas!";
+		close;
+	} else if (06christ_santa == 1) {
+		mes "[Ohholy]";
+		mes "-Joy to the world! The Lord is come-";
+		mes "-Let earth receive her King-";
+		specialeffect EF_GLORIA;
+		next;
+		mes "[Ohholy]";
+		mes "Merry Christmas~";
+		mes "I wish you a Merry Christmas!.";
+		next;
+		mes "[Ohholy]";
+		mes "Isn't it a happy day?";
+		mes "What are you worrying about on this happy day? You don't look so well.";
+		next;
+		mes "[Ohholy]";
+		mes "I'll help you if there is something I can do.Tell me what you're worrying about!";
+		next;
+		if (select("I'm not worrying", "In fact...") == 1) {
+			mes "[Ohholy]";
+			mes "Areyou sure?";
+			mes "If so, have fun on Christmas!";
+			next;
+			mes "[Ohholy]";
+			mes "-Joy to the world! The Lord is come-";
+			mes "-Let earth receive her King-";
+			specialeffect EF_GLORIA;
+			next;
+			mes "[Ohholy]";
+			mes "Merry Christmas~";
+			mes "I wish you a Merry Christmas!.";
+			close;
+		}
+		mes "["+ strcharinfo(0) +"]";
+		mes "In fact, I was on my way to the church to ask someone to purify the egg that has wicked spirit in it.";
+		next;
+		mes "[Ohholy]";
+		mes "What? Did you say wicked spirit?";
+		mes "Do you mean the devil is around  here somewhere on this holy day?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "No... but, I'm not sure whether it's the devil or not...";
+		next;
+		mes "[Ohholy]";
+		mes "Oh.dear! How can evil creatures wander around  on this divine day? I'm already exhausted looking after Santa Antonio who's making troubles every Christmas!";
+		next;
+		mes "[Ohholy]";
+		mes "I'll drive the evil away along God's will! Where is it? The devil!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Come on, please... You'd better listen to me first...";
+		next;
+		mes "[Ohholy]";
+		mes "Ok! Lead the way! This hand is to serve God! I'll drive all the devil away from our world with my hand!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok, listen to me, first!!! Please!!!";
+		next;
+		mes "-You explained about the egg found by Poe to nun Ohholy, slowly and clearly.-";
+		next;
+		mes "[Ohholy]";
+		mes "Got it, that's what happened till now? You should have said it earlier.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I wanted to but...";
+		next;
+		mes "[Ohholy]";
+		mes "So you want to purify the wicked spirited egg? Is that what you mean? It's easy. We only need ^0000ffBlessed powder for purification ^000000 .";
+		next;
+		mes "[Ohholy]";
+		mes "If you bring all materials for the powder, I'll make one for you. Go get materials!";
+		06christ_santa = 2;
+		close;
+	} else if (06christ_santa == 2) {
+		if (countitem(733) > 0 && countitem(523) > 2 && countitem(716) > 0 && countitem(715) > 0) {
+			mes "[Ohholy]";
+			mes "-Joy to the world! The Lord is come-";
+			mes "-Let earth receive her King-";
+			specialeffect EF_GLORIA;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Ma'am? I've got everything for the powder.";
+			next;
+			mes "[Ohholy]";
+			mes "Pardon? What do you mean?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "You promised to make me the ^0000ffBlessed powder for purification^000000! Did you forget about it?";
+			next;
+			mes "[Ohholy]";
+			mes "......................What?";
+			next;
+			mes "[Ohholy]";
+			mes "Ah! Ah! Hahahaha.";
+			mes "No, I didn't. How can I forget about it? Of course I remember!";
+			next;
+			mes "[Ohholy]";
+			mes "...Hum... by the way, why did I promise to make you the ^0000ffBlessed powder for purification^000000?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "(She completely forgot it!)";
+			mes "...Well..";
+			next;
+			switch(select("To drive all the devil away", "To purify the monster's egg", "To get rid of headache")) {
+				case 1:
+					mes "[Ohholy]";
+					mes "......Haha? For that reason?";
+					next;
+					mes "[Ohholy]";
+					mes "You don't need ^0000ffBlessed powder for purification^000000 to drive away the devil!";
+					next;
+					mes "[Ohholy]";
+					mes "I'll crack it down for myself !";
+					close;
+				case 2:
+					mes "[Ohholy]";
+					mes "Yes, that's it. I remember. Hehe.";
+					next;
+					mes "[Ohholy]";
+					mes "Then... let me see,  seems like you've got all stuffs for the powder, I'll make it right away.";
+					next;
+					mes "[Ohholy]";
+					mes "First, I have to break the broken diamonds and make the powder of it! It requires know-how. I learned it from a smith.";
+					specialeffect EF_REPAIRWEAPON;
+					emotion ET_HUK;
+					next;
+					mes "[Ohholy]";
+					mes "You'd better pretend to be surprised with it";
+					next;
+					mes "[Ohholy]";
+					mes "Next, pour water into a large pot and boil slowly. Melt red and yellow gemston perfectly.";
+					specialeffect EF_DEMONSTRATION;
+					next;
+					mes "[Ohholy]";
+					mes "Mix the powder of the diamond with the holy water made from gemstones and dry it in the sun! Ok, it's done! Here is ^0000ffBlessed powder for purification^000000!!! ";
+					specialeffect EF_ICECRASH;
+					next;
+					mes "[Ohholy]";
+					mes "Now, you go purify the monster's egg. I wish good luck to you.";
+					emotion ET_SMILE;
+					next;
+					mes "-You've got^0000ffBlessed powder for purification!^000000";
+					delitem 733, 1; // Crystal_Jewel___
+					delitem 523, 3; // Holy_Water
+					delitem 716, 1; // Red_Gemstone
+					delitem 715, 1; // Yellow_Gemstone
+					06christ_santa = 3;
+					close;
+				case 3:
+					mes "[Ohholy]";
+					mes "You shouldn't have drunk too much!";
+					next;
+					mes "[Ohholy]";
+					mes "To relieve the hangover, we don't need ^0000ffBlessed powder for purification^000000.Just do as I say, Ok? Relax and stand there.";
+					next;
+					mes "[Ohholy]";
+					mes "Ok! Here we go!";
+					mes "'Father, you always cure our injury! The first movement!'";
+					specialeffect EF_GLORIA;
+					specialeffect2 EF_STUNATTACK;
+					emotion ET_HUK, playerattached();
+					percentheal -30, 0;
+					next;
+					mes "["+ strcharinfo(0) +"]";
+					mes "Oh, no!!Stop it! I have a real bad headache!!!";
+					next;
+					mes "[Ohholy]";
+					mes "If you listen all 74th movement, you'll be fine...Oh, dear! Where are you going?";
+					close;
+			}
+		} else {
+			mes "[Ohholy]";
+			mes "Ok, if you bring all materials, I'll make you ^0000ffBlessed powder for purification^000000! Go get the stuffs!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "... You didn't tell me what I to bring...";
+			next;
+			mes "[Ohholy]";
+			mes "No way! I said ^0000ff 1 Broken Jewel , 3 Holy Water, 1 Red Gemstone, and 1 Yellow Gemstone^000000 clearly.";
+			next;
+			mes "[Ohholy]";
+			mes "Oh, you have a bad memory...";
+			mes "Please, hurry!";
+			close;
+		}
+	} else {
+		mes "[Ohholy]";
+		mes "-Joy to the world! The Lord is come-";
+		mes "-Let earth receive her King-";
+		specialeffect EF_GLORIA;
+		next;
+		mes "[Ohholy]";
+		mes "Merry Christmas~";
+		mes "I wish you a Merry Christmas!.";
+		close;
+	}
+}
+
+//============================================================
+//= Event 6: Dear My Sister Merry Christmas
+//============================================================
+
+xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
+	if (05christ_carol == 8) {
+		mes "[Isite]";
+		mes "...Please buy matches~ please~";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...(She's familiar....)";
+		mes "It's nice of you selling matches on this cold day.";
+		mes "I got a gift for you, good girl!";
+		next;
+		if (isequipped(5136, 2241)) {
+			mes "[Isite]";
+			mes "Really? Are you serious?";
+			next;
+			mes "[Isite]";
+			mes "Thank you. I'm so happy... Santa Claus";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I wish you to like it. Open it.";
+			next;
+			mes "-She opened it carefully with flushed face-";
+			next;
+			mes "[Isite]";
+			mes "...Hum, it seems to be useful.";
+			emotion ET_KIK;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "... Do, do you like it?";
+			next;
+			mes "[Isite]";
+			mes "Thank you so much. It will be useful for me.";
+			emotion ET_SPARK;
+			next;
+			mes "-The girl seemed little bit unsatisfied with the gift but...whatever~I've done my job. Done delivering it!-";
+			05christ_carol = 9;
+			close;
+		} else {
+			mes "[Isite]";
+			mes "...What are you?Santa Claus?";
+			next;
+			mes "[Isite]";
+			mes "Hey you! Don't ever try to fool with poor people like me....Never!!";
+			next;
+			mes "[Isite]";
+			mes "If you wantted to be seen as Santa, you should have worn his cloths and a beard!";
+			next;
+			mes "[Isite]";
+			mes "Don't disturb me any more and go away!";
+			specialeffect2 EF_FIREHIT;
+			emotion ET_HUK, playerattached();
+			percentheal -50, 0;
+			close;
+		}
+	} else if (05christ_carol == 9) {
+		mes "[Isite]";
+		mes "Thanks, I really like it. I'll be more nice from now on!";
+		next;
+		mes "-She seemed very happy with the gift. She repeatedly appreciated you.-";
+		close;
+	} else {
+		if (05christ_deli < 12) {
+			mes "[Isite]";
+			mes "(Cough)";
+			mes "Please buy matches! Buy matches~!";
+			mes "This is what I hustled from Chepet....";
+			mes "I mean, Chepet matches~~";
+			mes "(Cough)";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "...(She's familiar....)";
+			mes "(What's this...... if I talk to her)";
+			mes "(something bad will be likely to happen...)";
+			next;
+			mes "[Isite]";
+			mes "(Cough!!)";
+			mes "Ah, if I don't sell all these matches, I won't be able to buy any dinner for my brother!";
+			next;
+			mes "[Isite]";
+			mes "(Cough!!!!!)";
+			mes "My brother hasn't had dinner for 5 days!!!";
+			next;
+			mes "-She lowered her head and caughed up. Suddenly she held her head up, stared at you and beckoned me to come near-";
+			next;
+			mes "[Isite]";
+			mes "Mr. Adventurer, could you come closer?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Pardon?... ah, you're talking to me...?";
+			next;
+			mes "-She pulled you closer and started threatening with a low voice-";
+			emotion ET_HUK, playerattached();
+			next;
+			mes "[Isite]";
+			mes "Why are you just looking at me not helping. ? You wanna die~!?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Pardon...? Oh, I'm sorry. I'll buy the matches. How much are they?";
+			next;
+			mes "[Isite]";
+			mes "You hurt a poor girl's heartand buying just a match as an apology?Have a moral.-";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Hum... so, what? What do you want?";
+			next;
+			mes "[Isite]";
+			mes "Hum, not so much. Just do what I ask you for. OK?";
+			next;
+			mes "[Isite]";
+			mes "If you go inside the house, there's a boy called 'Isire' sick in bed. Help him.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Why do I have to do?";
+			next;
+			mes "[Isite]";
+			mes "Hoohoo... Mr. Adventurer, do you enjoy campfire?";
+			emotion ET_SMILE;
+			emotion ET_HUK, playerattached();
+			next;
+			mes "-She stroke a match and smiled. It'll be better to do what she asks me for.-";
+			05christ_deli = 12;
+			close;
+		} else if (05christ_deli == 22) {
+			mes "[Isite]";
+			mes "...Hey.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I....I've done what you told me to do....";
+			mes "I didn't say to him that you forced me to do it.";
+			mes "You wouldn't do campfire, would you?";
+			next;
+			mes "[Isite]";
+			mes "... Can I ask you one more favor?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Eh? more!? Don't you think it's too hard for me?!";
+			next;
+			mes "[Isite]";
+			mes "If you say so, I would be hurt... then, I would strike a light to get some warmth... and then  ...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "What! Ok , I'll do it!!! What do you want?! Tell me what to do!";
+			mes " ";
+			mes "(Isite! A terrible girl!)";
+			emotion ET_CRY, playerattached();
+			next;
+			mes "[Isite]";
+			mes "People say adventurers can get '^0000ffpanacea^000000' from somewhere. Can you get it for me?";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "What...? Oh,sure...";
+			mes "Piece of cake! I'll go get it right away!";
+			mes "By the way, it's dangerous playing with fire!!";
+			mes "Never do that! Never!";
+			next;
+			mes "[Isite]";
+			mes "If you take too much time, I may burn up a whole matchbox...";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Hey~~easy~~I'll be back in a min~!!";
+			05christ_deli = 23;
+			close;
+		} else if (05christ_deli == 23) {
+			if (countitem(525) > 0) {
+				mes "["+ strcharinfo(0) +"]";
+				mes "I got the panacea!!! Here it is!!!";
+				next;
+				mes "[Isite]";
+				mes "..................................................Thank you...";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "From now on, I won't do what you ask me to do.....";
+				mes "...What?What did you just say?";
+				emotion ET_HUK, playerattached();
+				next;
+				mes "-She frowned at me for a moment and blew out the match-";
+				emotion ET_HNG;
+				next;
+				mes "[Isite]";
+				mes "...Phew whew.";
+				mes "Thank you, Mr.Adventurer.";
+				mes "My parents passed away when I was a little girl and there were no one who had cared about me except my brother.";
+				next;
+				mes "[Isite]";
+				mes "He had worked so hard to take care of me and...after all..he became weak. So I had to give hime the panacea.";
+				next;
+				mes "[Isite]";
+				mes "He always said that he would prepare Christmas tree for me but it's him who had dreamed about spending Christmas with family.";
+				next;
+				mes "[Isite]";
+				mes "So I thought of giving him the best christmas memory,that's all! Sorry for being rude. I just wanted to prepare the Christmas Day that he had dreamed of. I appreciate what you have done for me.";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "It's my pleasure.";
+				mes "(You didn't ask a favor, you have threaten me!!!)";
+				next;
+				mes "[Isite]";
+				mes "Thank you so much.";
+				mes "I know it's not enough to repay you";
+				mes "take it, is not a  big thing...";
+				next;
+				mes "[Isite]";
+				mes "It's a Santa's clothes that I took from a designer, ^4d4dffLouise^000000. I mean I got from...";
+				mes "Whatever,I wish you to like it.";
+				emotion ET_SMILE;
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Oh I don't think that I deserve it~";
+				emotion ET_SMILE, playerattached();
+				next;
+				mes "[Isite]";
+				mes "Good, maybe next time I would need your help, too...";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "What? What did you say?";
+				next;
+				mes "[Isite]";
+				mes "No, take this, please.";
+				emotion ET_SMILE;
+				next;
+				mes "-As you opened the gift, you go blind with a pain in your head. Like if someone had hit you.-";
+				sc_start sc_blind,50000,0;
+				next;
+				mes "[Isite]";
+				mes "Thank you so much.";
+				mes "Seeya later.";
+				next;
+				mes "-You heard the girl shouting 'blue moon!' with a low voice and had seen her striking a match just before you fainted. And then you fell asleep-";
+				delitem 525, 1; // Panacea
+				05christ_deli = 0;
+				getitem 12132, 1; // Red_Bag
+				close;
+			} else {
+				mes "[Isite]";
+				mes "People say adventurers can get '^0000ffpanacea^000000' from somewhere. Can you get it for me?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "What...? Oh, sure...";
+				mes "It's piece of cake! I'll get it right away!";
+				mes "By the way,it's dangerous to playing with fire!!";
+				mes "Never do that! Never!";
+				next;
+				mes "[Isite]";
+				mes "If you take too much time, I may burn up a whole matchbox...";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Hey~~easy~~I'll be back in a min~!!";
+				close;
+			}
+		} else {
+			mes "[Isite]";
+			mes "Hoohoo.. Mr.Adventurer, do you enjoy campfire?";
+			emotion ET_SMILE;
+			emotion ET_HUK, playerattached();
+			next;
+			mes "-She stroke a match and smiled. It'll be better to do what she asks me for.-";
+			close;
+		}
+	}
+}
+
+xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
+	if (05christ_deli < 12) {
+		mes "[Isire]";
+		mes "......mmmm...";
+		mes "I feel so bad...but I gotta go to work....";
+		mes "I'm sorry Isite.";
+		mes "(cough)";
+		close;
+	} else if (05christ_deli == 12) {
+		mes "[Isire]";
+		mes "......mmmm...";
+		mes "I feel so bad...but I gotta go to work....";
+		mes "I'm sorry Isite.";
+		mes "(cough)";
+		next;
+		mes "[Isire]";
+		mes "I'm too weak to do something for my sister... (Cough)";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Can I help you?! I'll do if there's something I can do!";
+		next;
+		mes "[Isire]";
+		mes "...What? Who are you? What are you doing here...?";
+		mes "By the way, I think I've been in this situation before...";
+		mes "Oh..(he coughs)";
+		mes "I have a runny nose... (He blew his nose on a tissue)";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Tell me what I have to do!";
+		mes "What are you doing now? How can I help you? Tell me what to do!";
+		mes " ";
+		mes "(If I don't help you, your sister will threaten me with a fire!!!)";
+		emotion ET_CRY, playerattached();
+		next;
+		mes "[Isire]";
+		mes "(cough) What I want you to do is delivering a cake to... (cough)...";
+		next;
+		mes "[Isire]";
+		mes "(He blew his nose again on a tissue)...I ... (cough)... If I work till today, I'm able to get a tree for Christmas tree.But as you can see, I caught a cold and sick in bed.";
+		next;
+		mes "[Isire]";
+		mes "I don't want to think of spending christmas without a Christmas tree... She would be disappointed ...(Sniffling) ...but I'm so sick.....";
+		next;
+		mes "[Isire]";
+		mes "And ^4d4dffRednyre^000000is waiting... for me...(cough)!!!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Ok, I got it! Take care of yourself!!!I gotta go now!!!";
+		next;
+		mes "[Isire]";
+		mes "What?Just a second(cough).";
+		mes "By the way, who are you- -- ---?!?!";
+		next;
+		mes "-I heard him calling me but I ignored. I should look for Rednyre. I don't want Isite to threaten me with a fire!!!-";
+		05christ_deli = 13;
+		close;
+	} else if (05christ_deli == 20) {
+		mes "[Isire]";
+		mes "Oh... I think I have a fever... (cough).";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Isire!!! Can you hear me? Are you Ok?";
+		next;
+		mes "[Isire]";
+		mes "What?! Did you?? Did you take...my part time job?! Did you?!?!";
+		mes "I, I have a sister who I have to take care of... (cough)...";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "No, no!!! It's not that...";
+		mes "I just wanted to help you, that's all!!!";
+		mes "I brought the tree for Christmas instead of you!";
+		next;
+		mes "-When I showed a small tree to him, his eyes turned wide.";
+		next;
+		mes "[Isire]";
+		mes "Why, why?! (cough)...";
+		mes "Why did you help me? We've not seen each other before...";
+		mes "...Well..actually I recognize your face...somewhere from.....";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Don't ask why... hahaha...";
+		next;
+		mes "-You glanced at the window and see a Isite with a match-";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I said that I just wanted to help you!No special meaning!!";
+		mes "I...um...I..I'm ...";
+		mes "(I can't think of any good reason!)";
+		mes "I, I am!!";
+		input .@input$;
+		mes "I'm ^4d4dff"+ .@input$ +"^000000!!!";
+		emotion ET_HUK, playerattached();
+		emotion ET_HUK;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "(What did I say?!)";
+		mes "...um, that's because...";
+		next;
+		mes "[Isire]";
+		mes "...You are. Yes, you're...";
+		mes "As you're ^4d4dff"+ .@input$ +"^000000 ";
+		mes "Does that means you can do anything for me!?";
+		mes "(Cough)";
+		emotion ET_AHA;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "(...Oh I didn't mean that way...)";
+		mes "(What's going on...)";
+		emotion ET_SWEAT, playerattached();
+		mes "";
+		mes "Hahaha....su...re....";
+		mes "But only one favor, no more!";
+		mes "(I hate myself  who can't refuse..!)";
+		next;
+		mes "[Isire]";
+		mes "Oh you're real (cough), ^4d4dff"+ .@input$ +"^000000!";
+		mes "I'm so sorry but....";
+		mes "As I'm sick...(sniffling) Can you get me a christmas decoration?(Cough)";
+		next;
+		mes "[Isire]";
+		mes "At least, I need socks and a doll ... (cough)!...";
+		mes "to decorate Christmas tree...(sniffling and cough)";
+		next;
+		mes "[Isire]";
+		mes "Could you get me ^0000ff3 pairs of stripped socks, 1 well-baked cookie^000000, (He blew his nose on a tissue) and... ^0000ffany doll^000000? (cough)!";
+		next;
+		mes "-He kept sniffling and coughing while talking to you. And finally he laid in his bed-";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Sure, it's nothing difficult!";
+		mes "Get some sleep while I'm looking for those stuffs .";
+		mes " ";
+		mes "(I don't want to make Isite angry!)";
+		05christ_deli = 21;
+		close;
+	} else if (05christ_deli == 21) {
+		if (countitem(7219) > 2 && countitem(538) > 0) {
+			if (checkweight(1201, 1) || (MaxWeight - Weight) < 700) {
+				mes "[Isire]";
+				mes "Isn't it heavy~?";
+				mes "That's a lot of stuff you are carrying.";
+				mes "I can keep it for you";
+				mes "If you want.(cough)";
+				close;
+			}
+			mes "[Isire]";
+			mes "(cough)... you came back early.. Did you get what I asked you to bring...?";
+			mes " 3 pairs of striped socks, 1 well-baked cookie and a doll?";
+			next;
+			switch(select("Poring Doll", "ChonChon Doll", "Stuffed Doll", "Hanging Doll", "Spore Doll", "Raccoon Doll", "Monkey Doll", "Grasshopper Doll", "Black Kitty Doll", "Munak Doll", "Osiris Doll", "Baphomet Doll")) {
+				case 1:
+					mes "[Isire]";
+					mes "Wow, this is a cute Poring doll.";
+					.@doll = 741; // Poring_Doll
+					setarray .@rewardItems[0] = 12200, 12130;
+					setarray .@rewardAmts[0] = 3,1;
+					break;
+				case 2:
+					mes "[Isire]";
+					mes "Wow, this is a cute ChonChon Doll.";
+					.@doll = 742; // Chonchon_Doll
+					setarray .@rewardItems[0] = 12200, 12130;
+					setarray .@rewardAmts[0] = 3,1;
+					break;
+				case 3:
+					mes "[Isire]";
+					mes "Wow, this is a cute Stuffed Doll.";
+					.@doll = 740; // Stuffed_Doll
+					setarray .@rewardItems[0] = 12200, 12130;
+					setarray .@rewardAmts[0] = 3,1;
+					break;
+				case 4:
+					mes "[Isire]";
+					mes "....Ah.................?!..";
+					mes "This is a cute Hanging Doll.";
+					.@doll = 7212; // Hanging_Doll
+					setarray .@rewardItems[0] = 12200, 12130;
+					setarray .@rewardAmts[0] = 3,1;
+					break;
+				case 5:
+					mes "[Isire]";
+					mes "Wow. this is a Spore doll.";
+					mes "So cute!";
+					.@doll = 743; // Spore_Doll
+					setarray .@rewardItems[0] = 12200, 12130, 522;
+					setarray .@rewardAmts[0] = 5,1,1;
+					break;
+				case 6:
+					mes "[Isire]";
+					mes "Wow. Is this a Raccoon Doll?";
+					mes "Wasn't it difficult to find out....?";
+					.@doll = 754; // Raccoondog_Doll
+					setarray .@rewardItems[0] = 12200, 12130, 522;
+					setarray .@rewardAmts[0] = 5,1,1;
+					break;
+				case 7:
+					mes "[Isire]";
+					mes "Wow, this is a monkey doll.";
+					mes "Where did you get this?";
+					.@doll = 753; // Monkey_Doll
+					setarray .@rewardItems[0] = 12200, 12130, 522;
+					setarray .@rewardAmts[0] = 5,1,1;
+					break;
+				case 8:
+					mes "[Isire]";
+					mes "Wow. This is a grasshopper doll, isn't it?";
+					mes "How did you get this...";
+					.@doll = 752; // Grasshopper_Doll
+					setarray .@rewardItems[0] = 12200, 12130, 522;
+					setarray .@rewardAmts[0] = 5,1,1;
+					break;
+				case 9:
+					mes "[Isire]";
+					mes "Wow, this is a black kitty doll!!";
+					mes "I also want to have one.";
+					mes "Actually, It's my favorite doll.";
+					.@doll = 7206; // Black_Kitty_Doll
+					setarray .@rewardItems[0] = 12200, 12130, 548;
+					setarray .@rewardAmts[0] = 5,3,3;
+					break;
+				case 10:
+					mes "[Isire]";
+					mes "Wow. This is munak doll!!!!!!";
+					mes "It's so cute.";
+					mes "I also want to have one.";
+					.@doll = 7277; // Munak_Doll
+					setarray .@rewardItems[0] = 12200, 12130, 548;
+					setarray .@rewardAmts[0] = 5,3,3;
+					break;
+				case 11:
+					mes "[Isire]";
+					mes "Wow, this is Osiris doll!!!!!!";
+					mes "Where did you get this?";
+					.@doll = 751; // Osiris_Doll
+					setarray .@rewardItems[0] = 12200, 12130, 607;
+					setarray .@rewardAmts[0] = 7,5,1;
+					break;
+				case 12:
+					mes "[Isire]";
+					mes "Wow. this is baphomet doll!!!!!!";
+					mes "How did you get this.";
+					.@doll = 750; // Baphomet_Doll
+					setarray .@rewardItems[0] = 12200, 12130, 607;
+					setarray .@rewardAmts[0] = 7,5,1;
+					break;
+			}
+			mes "Isite..(He blew his nose on a tissue) would like it";
+			mes "Thank you so much.";
+			next;
+			mes "-He hung a cookie, striped socks and the doll on a tree. It's not that nice but he seemed to be satisfied with the tree-";
+			next;
+			mes "[Isire]";
+			mes "(Cough and sniffling) hum, hum.";
+			mes "I really appreciate you.";
+			mes "I never had made my sister happy since I don't have much money, but this Chistmas she would be very happy.";
+			next;
+			if (countitem(7219) > 2 && countitem(538) > 0 && countitem(.@doll) > 0) {
+				mes "[Isire]";
+				mes "And I know this isn't enough to repay you";
+				mes "(cough) But ...take it.It's a gift for you";
+				delitem 7219, 3; // Striped_Socks
+				delitem 538, 1; // Well_Baked_Cookie
+				delitem .@doll, 1;
+				05christ_deli = 22;
+				for (.@i = 0; .@i < getarraysize(.@rewardItems); .@i++) {
+					getitem .@rewardItems[.@i], .@rewardAmts[.@i];
+				}
+				close;
+			} else {
+				mes "[Isire]";
+				mes "What? What are you doing? (He blew his nose)";
+				mes "Are you kidding me?";
+				emotion ET_QUESTION;
+				close;
+			}
+		} else {
+			mes "[Isire]";
+			mes "You really are(cough), ^4d4dff"+ .@input$ +"^000000!";
+			mes "I'm so sorry but...(cough)....";
+			mes "As you can see I'm sick...(sniffling) Could you get Christmas decoration for me? (Cough)";
+			next;
+			mes "[Isire]";
+			mes "At least, I need socks and a doll ... (cough)";
+			mes "to decorate Christmas tree...(sniffling and cough)";
+			next;
+			mes "[Isire]";
+			mes "Could you get me^0000ff3 pairs of stripped socks, 1 well-baked cookie^000000, (He blew his nose on a tissue) and... ^0000ffany doll^000000? (cough)";
+			next;
+			mes "-He kept sniffling and coughing while talking to you. And finally he laid in his bed-";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "It wouldn't be tough!";
+			mes "Get some sleep while I'm looking for those stuffs.";
+			mes " ";
+			mes "(I don't want to make Isite angry!)";
+			close;
+		}
+	} else if (05christ_deli > 21) {
+		mes "[Isire]";
+		mes "...Phew whew, (sniffling and cough).";
+		mes "Thank you so much.";
+		mes "I really appreciate what you have done for me.";
+		mes "I wish you a merry Christmas";
+		close;
+	} else {
+		mes "[Isire]";
+		mes "(cough)..You are...";
+		mes "Why did you ask me about^4d4dffRednyre^000000...";
+		mes "Why did you(cough)?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "...Um.. In fact...";
+		next;
+		mes "[??????]";
+		mes "Hum!! Hem!!";
+		mes "(Someone's making a noise)";
+		next;
+		mes "-With a sound of girl striking a match-";
+		mes "-she coughed.-";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "(..That must mean not to talk about.....)";
+		mes "Hum! I'd better go now 'cause I'm busy!!!";
+		next;
+		mes "[Isire]";
+		mes "What? Wait a second..(cough)";
+		mes "Who are you?!?!";
+		next;
+		mes "-I heard him calling me but I ignored. I should look for Rednyre. I don't want Isite to threaten me with a fire!!!-";
+		close;
+	}
+}
+
+xmas,138,140,7	script	Rednyre#06reindeer_01	4_M_REINDEER,{
+	if (05christ_deli < 13) {
+		mes "[Rednyre]";
+		mes "Why is he being late?";
+		mes "Everybody is going to celebrate Christmas without cakes!";
+		mes "No wonder what^4d4dffIsire^000000 is doing? Where is he?";
+		emotion ET_FRET;
+		close;
+	} else if (05christ_deli == 13) {
+		mes "[Rednyre]";
+		mes "Why is he being late?";
+		mes "Everybody is going to celebrate Christmas without cakes!";
+		mes "No wonder what^4d4dffIsire^000000 is doing? Where is he?";
+		emotion ET_FRET;
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "I'm here for Isire!!";
+		mes "What should I do?";
+		next;
+		mes "[Rednyre]";
+		mes "...Who are you?";
+		mes "It's Isire's job deliverying the cake..";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Isire is now suffering from cold!";
+		mes "We have already talked about it and he asked me to do the work instead of him!!";
+		next;
+		mes "[Rednyre]";
+		mes "...Oh~I see your eyes glowing!!!";
+		mes "I like it!!I can feel your passion from it!!!";
+		mes "Go deliver Christmas cakes!!";
+		next;
+		mes "[Rednyre]";
+		mes "Hurry!!!";
+		mes "Remember that fate of christmas is up to you!!!";
+		05christ_deli = 14;
+		close;
+	} else if (05christ_deli == 14) {
+		mes "[Rednyre]";
+		mes "Why are you hesitating? I said you go deliver cakes!?";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "But where's the address for delivery...";
+		next;
+		mes "[Rednyre]";
+		mes "Did you forget it already? Hey, you're still young! ^0000ffListen carefully, I'm going to tell you just one more time^000000!!!";
+		next;
+		mes "[Rednyre]";
+		mes "Ok, this ^0000ff'BUSHED NOEL'^000000 is for ^ff0000' Mr.Pellys'^000000!";
+		next;
+		mes "[Rednyre]";
+		mes "This ^0000ff'RUDOLPH IN THE GARDEN'^000000is for ^ff0000'Mr. Navidad'^000000!";
+		next;
+		mes "[Rednyre]";
+		mes "This ^0000ff'MY FAIR LADY SANTA CLAUS'^000000is for ^ff0000'Mr.Joyeux'^000000!";
+		next;
+		mes "[Rednyre]";
+		mes "This ^0000ff'JINGLE BELL ROCK'^000000 is for ^ff0000'Noel'^000000!";
+		next;
+		mes "[Rednyre]";
+		mes "Now go on for those who are waiting so desperately for Christmas cakes!";
+		05christ_deli = 15;
+		close;
+	} else if (05christ_deli > 14 && 05christ_deli < 19) {
+		mes "[Rednyre]";
+		mes "Hurry!!!";
+		mes "Remember that the fate of christmas is up to you!!!";
+		close;
+	} else if (05christ_deli == 19) {
+		mes "[Rednyre]";
+		mes "Oh,you came back!?";
+		mes "I got a phone calls from those who got their delivery. Nice job!!!";
+		next;
+		mes "[Rednyre]";
+		mes "Here!This is what you deserve. I've already made a deal with Isire. It's small but big enough to use as a Christmas tree. Go tell Isire that I'm looking foward to work with him soon .";
+		next;
+		mes "[Rednyre]";
+		mes "Oh~don't forget to give Isire what I gave you!!";
+		mes "If you don't, he will visit you tonight instead of santa. Hahaha.";
+		next;
+		mes "[Rednyre]";
+		mes "Merry christmas~";
+		emotion ET_SMILE;
+		next;
+		mes " - You got a small tree for Christmas from^0000ffRednyre!!^000000 -";
+		05christ_deli = 20;
+		close;
+	} else if (05christ_deli == 20) {
+		mes "[Rednyre]";
+		mes "Oh~don't forget to give Isire what I gave you!!";
+		mes "If you don't, he will visit you tonight instead of santa. Hahaha.";
+		next;
+		mes "[Rednyre]";
+		mes "Merry christmas!";
+		emotion ET_SMILE;
+		close;
+	} else {
+		mes "[Rednyre]";
+		mes "Who are you calling Rudolph?";
+		mes "I don't guide sleighs!!!";
+		close;
+	}
+}
+
+xmas,168,160,3	script	Pellys#06feliz_01	1_ETC_01,{
+	if (05christ_deli < 15) {
+		mes "[Pellys]";
+		mes "Holy cats!When are they going to bring my cake!";
+		mes "I can't imagine christmas without christams cake.";
+		next;
+		mes "[Pellys]";
+		mes "No wonder what ^4d4dffRednyre^000000 is doing!?";
+		close;
+	} else if (05christ_deli == 15) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "Sorry for being late~!!Christmas Cake delivery!!";
+		next;
+		mes "[Pellys]";
+		mes "Oh! finally you are here!I was worried that I might have to spend christmas without a cake.";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Pellys, this must be your cake...";
+		next;
+		input .@input$;
+		if (.@input$ == "BUSHED NOEL") {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Pellys, this must be your cake... ^0000ff'BUSHED NOEL'^000000is that right?";
+			next;
+			mes "[Pellys]";
+			mes "This cake looks so delicious. Thank you for your effort.";
+			emotion ET_SMILE;
+			05christ_deli = 16;
+			close;
+		} else {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Pellys, this must be your cake... "+ .@input$ +"is that right?!";
+			next;
+			mes "[Pellys]";
+			mes "Uh-oh, this is not the one I ordered!";
+			close;
+		}
+	} else {
+		mes "[Pellys]";
+		mes "Thanks for the cake!";
+		mes "Now~Everything is ready for my christmas party!";
+		mes "Anyway~merry christmas~";
+		emotion ET_SMILE;
+		close;
+	}
+}
+
+xmas,113,273,4	script	Navidad#06navidad_01	4_F_05,{
+	if (05christ_deli < 16) {
+		mes "[Navidad]";
+		mes "No wonder when will Rednyre bring my cake. Kids are going to come back home in any minute.";
+		next;
+		mes "[Navidad]";
+		mes "No wonder what ^4d4dffRednyre^000000 is doing!?";
+		close;
+	} else if (05christ_deli == 16) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "Sorry for being late~!!Christmas Cake delivery!!";
+		next;
+		mes "[Navidad]";
+		mes "Thank you. I thought something happened to you....";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Navidad, this must be your cake...";
+		next;
+		input .@input$;
+		if (.@input$ == "RUDOLPH IN THE GARDEN") {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Navidad, this must be your cake.. ^0000ff'RUDOLPH IN THE GARDEN'^000000,is that right?";
+			next;
+			mes "[Navidad]";
+			mes "Wow~this cake seems so delicious. Thanks!";
+			emotion ET_SMILE;
+			05christ_deli = 17;
+			close;
+		} else {
+			mes "["+ strcharinfo(0) +"]";
+			mes "Navidad, this must be your cake... "+ .@input$ +",is that right?!";
+			next;
+			mes "[Navidad]";
+			mes "Uh-oh, this is not the one I ordered!";
+			close;
+		}
+	} else {
+		mes "[Navidad]";
+		mes "Thanks for the cake~Wish you have a merry christmas.";
+		emotion ET_SMILE;
+		close;
+	}
+}
+
+xmas,119,155,5	script	Joyeux#06Joyeux_01	4_M_OILMAN,{
+	if (05christ_deli < 17) {
+		if (Sex == SEX_MALE) {
+			mes "[Joyeux]";
+			mes "What are you staring at?";
+			mes "Go wherever you are heading to.";
+			next;
+			mes "[Joyeux]";
+			mes "No wonder what ^4d4dffRednyre^000000 is doing!?";
+			mes "If he don't get me the cake in any minute, my all sweet darlings will go away~";
+			close;
+		} else {
+			mes "[Joyeux]";
+			mes "Where are you heading to in this cold weather?";
+			mes "If you are not in a hurry, why don't you get inside my house and have some chocolates.";
+			next;
+			mes "[Joyeux]";
+			mes "Due to^4d4dffRednyre's^000000 laziness I haven't even prepared a christmas cake.Sweet lady, melt my heart with your beautiful eyes.... ";
+			emotion ET_CHUP;
+			close;
+		}
+	} else if (05christ_deli == 17) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "Sorry for being late~!!Christmas Cake delivery!!";
+		next;
+		if (Sex == SEX_MALE) {
+			mes "[Joyeux]";
+			mes "What took you so long?";
+			mes "I was expecting you bringing my cake on next christmas.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Joyeux, this must be your cake...";
+			next;
+			input .@input$;
+			if (.@input$ == "MY FAIR LADY SANTA CLAUS") {
+				mes "["+ strcharinfo(0) +"]";
+				mes "Joyeux, this must be your cake.. ^0000ff'MY FAIR LADY SANTA CLAUS'^000000,is that right?";
+				next;
+				mes "[Joyeux]";
+				mes "Well, you must got the order right.Just leave it there.";
+				05christ_deli = 18;
+				close;
+			} else {
+				mes "["+ strcharinfo(0) +"]";
+				mes "Joyeux, this must be your cake.. "+ .@input$ +",is that right?!";
+				next;
+				mes "[Joyeux]";
+				mes "Hm...You even brought the wrong cake!!";
+				mes "What do you have in mind? Do you ever think?";
+				close;
+			}
+		} else {
+			mes "[Joyeux]";
+			mes "Oh~my beauty~ Why are you doing such a delivery service.";
+			mes "Be careful, your pure white hand might get frozen.";
+			next;
+			mes "-He blows warm breath on your hand.-";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Um...it's ok..I'm not even cold.";
+			mes "By the way, sorry for being late.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "Joyeux, this must be your cake...";
+			next;
+			input .@input$;
+			if (.@input$ == "MY FAIR LADY SANTA CLAUS") {
+				mes "["+ strcharinfo(0) +"]";
+				mes "Joyeux, this must be your cake... ^0000ff'MY FAIR LADY SANTA CLAUS'^000000, is that right?";
+				next;
+				mes "[Joyeux]";
+				mes "Wow~this cake seems so delicious. Why don't you get inside and try some with a cup of coffee?";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "It's ok. Actually I gotta go.I have things left to deliver.";
+				emotion ET_PROFUSELY_SWAT, playerattached();
+				next;
+				mes "[Joyeux]";
+				mes "Oh my sweet "+ strcharinfo(0)+"!!";
+				mes "Come visit me anytime.";
+				mes "You are always welcome.";
+				mes "I will whisper a sweet word in your ear.";
+				emotion ET_CHUP;
+				05christ_deli = 18;
+				close;
+			} else {
+				mes "["+ strcharinfo(0) +"]";
+				mes "Joyeux, this must be your cake... "+ .@input$ +", is that right?!";
+				next;
+				mes "[Joyeux]";
+				mes "Whatever the cake is made of, I'll eat up all cause you brought it only for me in this cold weather.";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "...oops...";
+				emotion ET_PROFUSELY_SWAT, playerattached();
+				close;
+			}
+		}
+	} else {
+		if (Sex == SEX_MALE) {
+			mes "[Joyeux]";
+			mes "What are you staring at? Go do your thing if you have done your job.";
+			mes "My heart is only for chicks!~~";
+			mes "Don't ever think to steal my heart.";
+			emotion ET_HNG;
+			close;
+		} else {
+			mes "[Joyeux]";
+			mes "Oh! you are still here?!";
+			mes "Oh~sweat darling,come in to my house and have some chocolates if you like to.";
+			emotion ET_CHUP;
+			close;
+		}
+	}
+}
+
+xmas,157,126,6	script	Noel#06noel_01	4_F_KID3,{
+	if (05christ_deli < 18) {
+		if (Sex == SEX_MALE) {
+			mes "[Noel]";
+			mes "Hey there~Mr.Charming~";
+			mes "Merry Christmas~";
+			next;
+			mes "[Noel]";
+			mes "If you  ever get to see ^4d4dffRednyre^000000, tell him to bring my cake fast!";
+			emotion ET_CHUP;
+			close;
+		} else {
+			mes "[Noel]";
+			mes "No wonder when will ^4d4dffRednyre^000000 bring my christmas cake.";
+			mes "You......................";
+			next;
+			mes "[Noel]";
+			mes "Why are you wondering around alone on this Christmas day?";
+			mes "I'll pray for you to meet a soulmate.";
+			emotion ET_SMILE;
+			close;
+		}
+	} else if (05christ_deli == 18) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "Sorry for being late~!!Christmas Cake delivery!!";
+		next;
+		if (Sex == SEX_MALE) {
+			mes "[Noel]";
+			mes "Mr.Charming~I was going to blame you if you were little bit late.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes " Noel, this must be your cake.";
+			next;
+			input .@input$;
+			if (.@input$ == "JINGLE BELL ROCK") {
+				mes "["+ strcharinfo(0) +"]";
+				mes " Noel, this must be your cake.... ^0000ff'JINGLE BELL ROCK'^000000, is that right?";
+				next;
+				mes "[Noel]";
+				mes "Thanks for delivering the cake~!I have a feeling that my christmas will be as sweet as the cake";
+				next;
+				mes "[Noel]";
+				mes "Well, If you are not in a hurry, why don't you come inside and have some tea.";
+				next;
+				mes "[???????]";
+				mes "Noel!!";
+				mes "Who's this guy!?";
+				next;
+				mes "[Noel]";
+				mes "(oh my~)Nothing~~!!?!Honey~~he's just a delivery guy~";
+				next;
+				mes "-She kicks your butt out and heads to somewhere the voice is comming from with smile on her face.-";
+				emotion ET_THINK, playerattached();
+				05christ_deli = 19;
+				close;
+			} else {
+				mes "["+ strcharinfo(0) +"]";
+				mes " Noel, this must be your cake.. ... "+ .@input$ +", isn't it?!";
+				next;
+				mes "[Noel]";
+				mes "Uh-oh! This is not the one I ordered.";
+				mes "But you're still cute~Mr.Charming~";
+				close;
+			}
+		} else {
+			mes "[Noel]";
+			mes "Run~run~~~";
+			mes "Look at you!!You need to get on diet.";
+			emotion ET_SMILE;
+			emotion ET_FRET, playerattached();
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes " Noel, this must be your cake...";
+			next;
+			input .@input$;
+			if (.@input$ == "JINGLE BELL ROCK") {
+				mes "["+ strcharinfo(0) +"]";
+				mes " Noel, this must be your cake.. ^0000ff'JINGLE BELL ROCK'^000000, is that right?";
+				next;
+				mes "[Noel]";
+				mes "Wouldn't it help to loose your weigh if you keep on exercising doing delivery?! By the way give me the cake.";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "Ha..Haha...";
+				emotion ET_FRET, playerattached();
+				05christ_deli = 19;
+				close;
+			} else {
+				mes "["+ strcharinfo(0) +"]";
+				mes " Noel, this must be your cake.. ... "+ .@input$ +", is that right?!";
+				next;
+				mes "[Noel]";
+				mes "This is not the one I ordered. Save some energy for your brain work. That's why you never loose your weight, you lazy~!!";
+				next;
+				mes "["+ strcharinfo(0) +"]";
+				mes "................................................";
+				emotion ET_FRET, playerattached();
+				close;
+			}
+		}
+	} else {
+		if (Sex == SEX_MALE) {
+			mes "[Noel]";
+			mes "Oh~you are still there?!!";
+			mes "I'm so sorry~~";
+			mes "My husband just being jealous~hohoho~~";
+			next;
+			mes "[??????]";
+			mes "Noel!!!";
+			mes "What are you doing there? Who are you talking to?";
+			next;
+			mes "[Noel]";
+			mes "Nothing~honey~~";
+			mes "I'll be there soon~~";
+			emotion ET_SMILE;
+			next;
+			mes "-Again, she kicks your butt out and heads to somewhere the voice is comming from with a smile on her face.-";
+			emotion ET_THINK, playerattached();
+			close;
+		} else {
+			mes "[Noel]";
+			mes "Oh~you are still there?!!";
+			mes "Move faster!!!";
+			mes "You will never loose weights if you keep being so slow like that~~";
+			emotion ET_SMILE;
+			emotion ET_THINK, playerattached();
+			close;
+		}
+	}
+}
+
+//============================================================
+//= Event 7: Santa Claus Coming to Town
+//============================================================
+
+prontera,156,268,3	script	Santa Claus#06xmas_01	4_M_SANTA,{
+	if (05christ_carol < 4) {
+		mes "[Santa Claus]";
+		mes "Hahaha! Merry Christmas!!! How have you been up to? Did you do good things this year?";
+		mes "What comes in your mind when you think of Christmas?";
+		next;
+		switch(select("Santa Claus~", "A gift box~", "Rudolph~", "Santa's hat~", "A pair of lovers!!!")) {
+		case 1:
+			mes "[Santa Claus]";
+			mes "Hahaha! You are a good child! Alright, I guess I can trust you and to give you some task. Are you interested?";
+			next;
+			if (select("Ehhh... No", "Sure!") == 1) {
+				mes "[Santa Claus]";
+				mes "Hmm, if you say so.";
+				next;
+				mes "[Santa Claus]";
+				mes "Come back whenever you change your mind. I'm really busy during Christmas season, you know...";
+				close;
+			}
+			mes "[Santa Claus]";
+			mes "Oh! I knew you have a good spirit in you by looking at your bright eyes.";
+			next;
+			mes "[Santa Claus]";
+			mes "I have no time to delay. I will tell you what to do right now. Can you help me? You know delivering the gifts to children all over the world.";
+			next;
+			mes "[Santa Claus]";
+			mes "During every Christmas season, we are very busy and Rudolph's four legs are not enough for delivering all gifts, so I need you to do some delivery instead of me.";
+			next;
+			.@06deliver = rand(1, 5);
+			if (.@06deliver == 1) {
+				mes "[Santa Claus]";
+				mes "Ok, this gift is for 'Mihir'. ^0000ffShe's a cute girl living in Juno^000000. Thank you for helping me!";
+				next;
+				mes "- I've received a gift box. With 'To Mihir' written on its ribbon!! -";
+				next;
+				mes "[Santa Claus]";
+				mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff'Louise's Santa's hat' and  'Grandpa's beard'^000000! You should not shatter children's dream. Hohoho.";
+				05christ_carol = 4;
+				close;
+			} else if (.@06deliver == 2) {
+				mes "[Santa Claus]";
+				mes "Ok, this gift is for 'Dimari'. ^0000ffHe's fishing on the wreck in Alberta^000000. Thank you for helping me!";
+				next;
+				mes "- I've received a gift box.'To Dimari' is written on its ribbon!! -";
+				next;
+				mes "[Santa Claus]";
+				mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff'Louise's Santa's hat' and  'Grandpa's beard'^000000! You should not shatter children's dream. Hohoho.";
+				05christ_carol = 5;
+				close;
+			} else if (.@06deliver == 3) {
+				mes "[Santa Claus]";
+				mes "Ok, this gift is for 'Racy'. ^0000ffShe's a quiet girl living in Payon ^000000. Thank you for helping me!";
+				next;
+				mes "- I've received a gift box. 'To Racy' is written on its ribbon!! -";
+				next;
+				mes "[Santa Claus]";
+				mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff'Louise's Santa's hat' and  'Grandpa's beard'^000000! You should not shatter children's dream. Hohoho.";
+				05christ_carol = 6;
+				close;
+			} else if (.@06deliver == 4) {
+				mes "[Santa Claus]";
+				mes "Ok, this gift is for 'Anze'. ^0000ffShe enjoys exploring the misterious forest^000000. Thank you for helping me!";
+				next;
+				mes "- I've received a gift box. 'To Anze' is written on its ribbon!! -";
+				next;
+				mes "[Santa Claus]";
+				mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff'Louise's Santa's hat' and  'Grandpa's beard'^000000! You should not shatter children's dream. Hohoho.";
+				05christ_carol = 7;
+				close;
+			} else {
+				mes "[Santa Claus]";
+				mes "Ok, this gift is for 'Isite'. ^0000ffShe's a very good girl living in Lutie^000000. Thank you for helping me!";
+				next;
+				mes "- I've received a gift box. 'To Isite' is written on its ribbon !! -";
+				next;
+				mes "[Santa Claus]";
+				mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff'Louise's Santa's hat' and  'Grandpa's beard'^000000! You should not shatter children's dream. Hohoho.";
+				05christ_carol = 8;
+				close;
+			}
+		case 2:
+			mes "[Santa Claus]";
+			mes "Gifts! That's nice!";
+			mes "You wake up and find";
+			mes "christmas gifts next to your pillow!";
+			next;
+			mes "[Santa Claus]";
+			mes "Have you heard that";
+			mes "bad santa, Antonio who";
+			mes "interferes in every christmas.";
+			mes "He is annual agony for Santa Association.";
+			close;
+		case 3:
+			mes "[Santa Claus]";
+			mes "You mean my old friend, Rudolph? His shining nose is always a great help to me.";
+			next;
+			mes "[Santa Claus]";
+			mes "Anyway did you know?";
+			mes "In this year, some artisan in Lutie will be making an accessory that looks like Rudolph's nose! It will become the memorable Christmas night with the shining Rudolph's nose, don't you think?";
+			close;
+		case 4:
+			mes "[Santa Claus]";
+			mes "Santa's hat!!";
+			mes "Actually, the real Santa's hat is completely different from what monsters wearing.";
+			next;
+			mes "[Santa Claus]";
+			mes "Anyway did you know?";
+			mes "As what I've heard, there's a designer who can make a good Santa's hat as original Santa's hat .";
+			next;
+			mes "[Santa Claus]";
+			mes "People say the reason why Antonio never been caught in every Christmas, is because of his Santa's hat and clothes.";
+			close;
+		case 5:
+			mes "[Santa Claus]";
+			mes "What? What did you say?";
+			next;
+			mes "[Santa Claus]";
+			mes "You seem to have same thoughts as the young man that I came across in Prontera.";
+			next;
+			mes "[Santa Claus]";
+			mes "I'm excited.... No, worried about what he will do in this Christmas...";
+			close;
+		}
+	} else if (05christ_carol == 4) {
+		mes "[Santa Claus]";
+		mes "This gift is for 'Mihir'. ^0000ffShe's cute girl living in Juno^000000. Thank you for helping me!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff 'Santa's hat' by Louise and 'Grandpa's beard'^000000! You shouud pretend Santa Claus. Hahaha.";
+		close;
+	} else if (05christ_carol == 5) {
+		mes "[Santa Claus]";
+		mes "This gift is for 'Dimari'. ^0000ffHe's fishing on the wreck in Alberta^000000. Thank you for helping me!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff'Louise's Santa's hat' and  'Grandpa's beard'^000000! You should not shatter children's dream. Hohoho.";
+		close;
+	} else if (05christ_carol == 6) {
+		mes "[Santa Claus]";
+		mes "This is for  'Racy'. ^0000ffShe's a quiet girl living in Payon^000000. Thank you for helping me!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff'Louise's Santa's hat' and  'Grandpa's beard'^000000! You should not shatter children's dream. Hohoho.";
+		close;
+	} else if (05christ_carol == 7) {
+		mes "[Santa Claus]";
+		mes "This is for  'Anze'. ^0000ffShe enjoys exploring the misterious forest^000000. Thank you for helping me!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff'Santa's hat'by Louise and 'Grandpa's beard'^000000! You shouud pretend Santa Claus. Hahaha.";
+		close;
+	} else if (05christ_carol == 8) {
+		mes "[Santa Claus]";
+		mes "This is for  'Isite'. ^0000ffShe's a very good girl living in Lutie^000000. Thank you for helping me!";
+		next;
+		mes "[Santa Claus]";
+		mes "Oh! Before you deliver the gifts, don't forget to wear ^0000ff'Louise's Santa's hat' and  'Grandpa's beard'^000000! You should not shatter children's dream. Hohoho.";
+		close;
+	} else if (05christ_carol == 9) {
+		mes "[Santa Claus]";
+		mes "How did it go? Did you deliver the gifts?";
+		next;
+		mes "[Santa Claus]";
+		mes "Don't you feel happy when children get excited with the gifts? Hahaha.";
+		next;
+		mes "[Santa Claus]";
+		mes "I appreciate your help.Put your hand in this pocket and pick anything up.Think that as a gift.";
+		next;
+		mes "[Santa Claus]";
+		mes "Good for you! I'd like to appreciate your help again! Merry Christmas~ hahaha!";
+		05christ_carol = 10;
+		.@06christ_gift = rand(1, 100);
+		if (.@06christ_gift == 1) {
+			getitem 2236, 1; // Santas_Hat
+		} else if (.@06christ_gift == 2) {
+			getitem 2262, 1; // Pierrot_Nose
+		} else if (.@06christ_gift > 2 && .@06christ_gift < 6) {
+			getitem 644, 1; // Gift_Box
+		} else if (.@06christ_gift > 5 && .@06christ_gift < 11) {
+			getitem 7034, 1; // Red_Socks_With_Holes
+		} else if (.@06christ_gift > 10 && .@06christ_gift < 16) {
+			getitem 604, 1; // Branch_Of_Dead_Tree
+		} else if (.@06christ_gift > 15 && .@06christ_gift < 21) {
+			getitem 526, 1; // Royal_Jelly
+		} else if (.@06christ_gift > 20 && .@06christ_gift < 26) {
+			getitem 608, 1; // Seed_Of_Yggdrasil
+		} else if (.@06christ_gift > 25 && .@06christ_gift < 31) {
+			getitem 12130, 1; // Cookie_Bag
+		} else if (.@06christ_gift > 30 && .@06christ_gift < 41) {
+			getitem 558, 3; // Chocolate
+		} else if (.@06christ_gift > 40 && .@06christ_gift < 51) {
+			getitem 530, 7; // Candy_Striper
+		} else if (.@06christ_gift > 50 && .@06christ_gift < 61) {
+			getitem 529, 10; // Candy
+		} else if (.@06christ_gift > 60 && .@06christ_gift < 71) {
+			getitem 538, 5; // Well_Baked_Cookie
+		} else if (.@06christ_gift > 70 && .@06christ_gift < 81) {
+			getitem 522, 1; // Fruit_Of_Mastela
+		} else if (.@06christ_gift > 80 && .@06christ_gift < 91) {
+			getitem 12200, 3; // Event_Cake
+		} else {
+			getitem 12200, 5; // Event_Cake
+		}
+		close;
+	} else {
+		mes "[Santa Claus]";
+		mes "I've got time to spare thank you. Help me often when you are available.";
+		next;
+		mes "[Santa Claus]";
+		mes "Although we've been so busy delivering,Today is happy Christmas! God bless you! hahaha!";
+		05christ_carol = 0;
+		close;
+	}
+}
+
+//============================================================
+//= Event 7: Children receiving gifts from Santa
+//============================================================
+
+yuno,103,186,0	script	Mihir#06mihir_01	1_F_MARIA,{
+	if (05christ_carol == 4) {
+		mes "[Mihir]";
+		mes "-You better watch out You better not cry-";
+		mes "-You better not pout I'm telling you why Santa Claus is coming to town-";
+		mes "-Santa Claus is coming to town-";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You are a good singer!";
+		mes "I got a gift for you, good girl!";
+		next;
+		if (isequipped(5136, 2241)) {
+			mes "[Mihir]";
+			mes "Woo! Thank you, Santa Claus~~~";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I hope you to like it. Why don't you open it?";
+			next;
+			mes "-She opened it carefully with flushed face-";
+			next;
+			mes "[Mihir]";
+			mes "Wow! This is, the muffler which was knitten by Kidd in Morroc!!! Oh, I can feel his touching!!!";
+			emotion ET_SMILE;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "... So, do you like it?";
+			next;
+			mes "[Mihir]";
+			mes "Sure!I've always wanted a muffler like this. hoohoohoo.";
+			emotion ET_SPARK;
+			next;
+			mes "-The girl seemed unsatisfied with the gift but I've done my jod.Done with delivery.-";
+			05christ_carol = 9;
+			close;
+		} else {
+			mes "[Mihir]";
+			mes "...Santa Claus?";
+			next;
+			mes "[Mihir]";
+			mes "No way, you're kidding me?";
+			next;
+			mes "[Mihir]";
+			mes "Becasue, because you don't look like Santa Claus!";
+			next;
+			mes "[Mihir]";
+			mes "If you didn't want to wear like Santa Claus, you should have worn like Assassin Cross!!";
+			specialeffect2 EF_HIT2;
+			emotion ET_HUK, playerattached();
+			percentheal -50, 0;
+			close;
+		}
+	} else if (05christ_carol == 9) {
+		mes "[Mihir]";
+		mes "I really like this! I'll be much better girl! hoohoo.";
+		next;
+		mes "-She seemed very happy with the gift and she repeatedly appreciated me-";
+		close;
+	} else {
+		mes "[Mihir]";
+		mes "-You better watch out You better not cry-";
+		mes "-You better not pout I'm telling you why Santa Claus is coming to town-";
+		mes "-Santa Claus is coming to town-";
+		close;
+	}
+}
+
+alb2trea,110,99,0	script	Dimari#06dimari_01	4_M_KID1,{
+	if (05christ_carol == 5) {
+		mes "[Dimari]";
+		mes "-Dashing through the snow in a one horse open sleigh-";
+		mes "-O'er the fields we go, laughing all the way-";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You're a good singer!";
+		mes "I got a gift for you, good boy!";
+		next;
+		if (isequipped(5136, 2241)) {
+			mes "[Dimari]";
+			mes "Wow!! Thank you, Santa Claus!!!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I hope you to like it. Why don't you open it?";
+			next;
+			mes "-He opened it carefully with flushed face-";
+			next;
+			mes "[Dimari]";
+			mes "Wow! This, this is a fishing set with fishworms!!! I've always wanted this!!!";
+			emotion ET_SMILE;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "So, do you like it?";
+			next;
+			mes "[Dimari]";
+			mes "Sure!I relly like it. It will be very useful! hahaha.";
+			emotion ET_SPARK;
+			next;
+			mes "-The boy seemed unsatisfied with the gift but I've done my job. Done with delivery!-";
+			05christ_carol = 9;
+			close;
+		} else {
+			mes "[Dimari]";
+			mes "...Are you Santa Claus?";
+			next;
+			mes "[Dimari]";
+			mes "Oh, you're kidding me.";
+			next;
+			mes "[Dimari]";
+			mes "Santa Claus wears a red hat and a white beard like a cloud!I know you are not Santa Claus!";
+			specialeffect2 EF_HIT2;
+			emotion ET_HUK, playerattached();
+			percentheal -50, 0;
+			close;
+		}
+	} else if (05christ_carol == 9) {
+		mes "[Dimari]";
+		mes "I really like this! I'll be much better boy!";
+		next;
+		mes "-He seems to be very happy with the gift and he repeated to appreciate me-";
+		close;
+	} else {
+		mes "[Dimari]";
+		mes "-Dashing through the snow in a one horse open sleigh-";
+		mes "-O'er the fields we go, laughing all the way-";
+		close;
+	}
+}
+
+payon,242,282,3	script	Racy#06racy_01	4_F_KID2,{
+	if (05christ_carol == 6) {
+		mes "[Racy]";
+		mes "-Silent night, holy night-";
+		mes "-All is calm, all is bright-";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You're a good singer!!";
+		mes "I got a gift for you, good girl!";
+		next;
+		if (isequipped(5136, 2241)) {
+			mes "[Racy]";
+			mes "...Thank you, Santa Claus.";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I hope you to like it. Why don't you open it?";
+			next;
+			mes "-She opened it carefully with flushed face-";
+			next;
+			mes "[Racy]";
+			mes "Ah. This is a book about sad romance between Migardts and Daku written by Joshua Vansey ...";
+			emotion ET_THINK;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "So, do you like it?";
+			next;
+			mes "[Racy]";
+			mes "I'm so happy. Thank you. I'll keep it for all my life.";
+			emotion ET_THINK;
+			next;
+			mes "-The girl didn't seemed touched by the gift but I've done my job. Done with delivery!-";
+			05christ_carol = 9;
+			close;
+		} else {
+			mes "[Racy]";
+			mes "...";
+			next;
+			mes "[Racy]";
+			mes "You're not Santa Claus...";
+			next;
+			mes "[Racy]";
+			mes "... If you have nothing to say, please go away.";
+			specialeffect2 EF_HIT2;
+			emotion ET_HUK, playerattached();
+			percentheal -50, 0;
+			close;
+		}
+	} else if (05christ_carol == 9) {
+		mes "[Racy]";
+		mes "I really like this. I'll be much better girl.";
+		next;
+		mes "-She seemed not touched by the gift but she repeatedly appreciated me-";
+		close;
+	} else {
+		mes "[Racy]";
+		mes "-Silent night, holy night~-";
+		mes "-All is calm, all is bright~-";
+		close;
+	}
+}
+
+prt_fild01,141,363,3	script	Anze#06anze_01	4W_KID,{
+	if (05christ_carol == 7) {
+		mes "[Anze]";
+		mes "-Jingle bells, jingle bells, jingle all the way!-";
+		mes "-O what fun it is to ride in a one-horse open sleigh-";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "You're a good singer!";
+		mes "I got a gift for you, good girl!";
+		next;
+		if (isequipped(5136, 2241)) {
+			mes "[Anze]";
+			mes "What? Thank you, Santa Claus!";
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "I hope you to like it. Why don't you open it?";
+			next;
+			mes "-She opened it carefully with flushed face-";
+			next;
+			mes "[Anze]";
+			mes "Look at this! Thess are series of unique cooking kits made by James Olive!!!";
+			emotion ET_THINK;
+			next;
+			mes "["+ strcharinfo(0) +"]";
+			mes "So, do you like it?";
+			next;
+			mes "[Anze]";
+			mes "I'm so happy. Thank you. I'll keep it for all my life!!!";
+			emotion ET_SMILE;
+			next;
+			mes "-The girl seemed unsatisfied with the gift but I've done my job. Done with delivery!-";
+			05christ_carol = 9;
+			close;
+		} else {
+			mes "[Anze]";
+			mes "...Santa Claus is...";
+			next;
+			mes "[Anze]";
+			mes "He's famous for delivering a gift to a good kid on Christmas Eve.";
+			next;
+			mes "[Anze]";
+			mes "He usually wears red cloths and a white beard and has a bag full of gifts.";
+			specialeffect2 EF_HIT2;
+			emotion ET_HUK, playerattached();
+			percentheal -50, 0;
+			close;
+		}
+	} else if (05christ_carol == 9) {
+		mes "[Anze]";
+		mes "I really like this. I'll be much better girl.";
+		next;
+		mes "-She seemed not touched by the gift but she repeatedly appreciated me-";
+		close;
+	} else {
+		mes "[Anze]";
+		mes "-Jingle bells, jingle bells, jingle all the way-";
+		mes "-O what fun it is to ride in a one-horse open sleigh-";
+		close;
+	}
+}
+
+//============================================================
+//= Monsters
+//============================================================
+yuno_fild05,0,0	monster	Wind Crystal	1395,1
+yuno_fild06,0,0	monster	Wind Crystal	1395,1
+yuno_fild07,0,0	monster	Wind Crystal	1395,1
+yuno_fild08,0,0	monster	Wind Crystal	1395,1
+yuno_fild09,0,0	monster	Wind Crystal	1395,1
+yuno_fild11,0,0	monster	Wind Crystal	1395,1
+yuno_fild12,0,0	monster	Wind Crystal	1395,1
+moc_fild18,0,0	monster	Wind Crystal	1395,1
+hu_fild01,0,0	monster	Wind Crystal	1395,1
+hu_fild04,0,0	monster	Wind Crystal	1395,1
+hu_fild05,0,0	monster	Wind Crystal	1395,1
+hu_fild07,0,0	monster	Wind Crystal	1395,1
+lhz_fild01,0,0	monster	Wind Crystal	1395,1
+lhz_fild02,0,0	monster	Wind Crystal	1395,1
+lhz_fild03,0,0	monster	Wind Crystal	1395,1
+ein_fild03,0,0	monster	Wind Crystal	1395,1
+ein_fild04,0,0	monster	Wind Crystal	1395,1
+ein_fild06,0,0	monster	Wind Crystal	1395,1
+ein_fild07,0,0	monster	Wind Crystal	1395,1
+ein_fild08,0,0	monster	Wind Crystal	1395,1
+ein_fild09,0,0	monster	Wind Crystal	1395,1
+ein_fild10,0,0	monster	Wind Crystal	1395,1
+nif_fild01,0,0	monster	Wind Crystal	1395,1
+nif_fild02,0,0	monster	Wind Crystal	1395,1
+um_fild01,0,0	monster	Wind Crystal	1395,1
+um_fild02,0,0	monster	Wind Crystal	1395,1
+um_fild03,0,0	monster	Wind Crystal	1395,1
+um_fild04,0,0	monster	Wind Crystal	1395,1
+ayo_fild01,0,0	monster	Wind Crystal	1395,1
+ayo_fild02,0,0	monster	Wind Crystal	1395,1
+lou_fild01,0,0	monster	Wind Crystal	1395,1
+gon_fild01,0,0	monster	Wind Crystal	1395,1
+ama_fild01,0,0	monster	Wind Crystal	1395,1
+yuno_fild01,0,0	monster	Wind Crystal	1395,1
+yuno_fild02,0,0	monster	Wind Crystal	1395,1
+yuno_fild03,0,0	monster	Wind Crystal	1395,1
+yuno_fild04,0,0	monster	Wind Crystal	1395,1
+prt_fild00,0,0	monster	Wind Crystal	1395,1
+prt_fild01,0,0	monster	Wind Crystal	1395,1
+prt_fild02,0,0	monster	Wind Crystal	1395,1
+prt_fild03,0,0	monster	Wind Crystal	1395,1
+prt_fild04,0,0	monster	Wind Crystal	1395,1
+prt_fild05,0,0	monster	Wind Crystal	1395,1
+prt_fild06,0,0	monster	Wind Crystal	1395,1
+prt_fild07,0,0	monster	Wind Crystal	1395,1
+prt_fild08,0,0	monster	Wind Crystal	1395,1
+prt_fild09,0,0	monster	Wind Crystal	1395,1
+prt_fild10,0,0	monster	Wind Crystal	1395,1
+prt_fild11,0,0	monster	Wind Crystal	1395,1
+moc_fild01,0,0	monster	Wind Crystal	1395,1
+moc_fild02,0,0	monster	Wind Crystal	1395,1
+moc_fild03,0,0	monster	Wind Crystal	1395,1
+moc_fild04,0,0	monster	Wind Crystal	1395,1
+moc_fild05,0,0	monster	Wind Crystal	1395,1
+moc_fild06,0,0	monster	Wind Crystal	1395,1
+moc_fild07,0,0	monster	Wind Crystal	1395,1
+moc_fild08,0,0	monster	Wind Crystal	1395,1
+moc_fild09,0,0	monster	Wind Crystal	1395,1
+moc_fild10,0,0	monster	Wind Crystal	1395,1
+moc_fild11,0,0	monster	Wind Crystal	1395,1
+moc_fild12,0,0	monster	Wind Crystal	1395,1
+moc_fild13,0,0	monster	Wind Crystal	1395,1
+moc_fild14,0,0	monster	Wind Crystal	1395,1
+moc_fild15,0,0	monster	Wind Crystal	1395,1
+moc_fild16,0,0	monster	Wind Crystal	1395,1
+moc_fild17,0,0	monster	Wind Crystal	1395,1
+moc_fild11,0,0	monster	Wind Crystal	1395,1
+pay_fild01,0,0	monster	Wind Crystal	1395,1
+pay_fild02,0,0	monster	Wind Crystal	1395,1
+pay_fild03,0,0	monster	Wind Crystal	1395,1
+pay_fild04,0,0	monster	Wind Crystal	1395,1
+pay_fild05,0,0	monster	Wind Crystal	1395,1
+pay_fild06,0,0	monster	Wind Crystal	1395,1
+pay_fild07,0,0	monster	Wind Crystal	1395,1
+pay_fild08,0,0	monster	Wind Crystal	1395,1
+pay_fild09,0,0	monster	Wind Crystal	1395,1
+pay_fild10,0,0	monster	Wind Crystal	1395,1
+pay_fild11,0,0	monster	Wind Crystal	1395,1
+gef_fild00,0,0	monster	Wind Crystal	1395,1
+gef_fild01,0,0	monster	Wind Crystal	1395,1
+gef_fild02,0,0	monster	Wind Crystal	1395,1
+gef_fild03,0,0	monster	Wind Crystal	1395,1
+gef_fild04,0,0	monster	Wind Crystal	1395,1
+gef_fild05,0,0	monster	Wind Crystal	1395,1
+gef_fild06,0,0	monster	Wind Crystal	1395,1
+gef_fild07,0,0	monster	Wind Crystal	1395,1
+gef_fild08,0,0	monster	Wind Crystal	1395,1
+gef_fild09,0,0	monster	Wind Crystal	1395,1
+gef_fild10,0,0	monster	Wind Crystal	1395,1
+gef_fild11,0,0	monster	Wind Crystal	1395,1
+gef_fild12,0,0	monster	Wind Crystal	1395,1
+gef_fild13,0,0	monster	Wind Crystal	1395,1
+gef_fild14,0,0	monster	Wind Crystal	1395,1
+cmd_fild01,0,0	monster	Wind Crystal	1395,1
+cmd_fild02,0,0	monster	Wind Crystal	1395,1
+cmd_fild03,0,0	monster	Wind Crystal	1395,1
+cmd_fild04,0,0	monster	Wind Crystal	1395,1
+cmd_fild05,0,0	monster	Wind Crystal	1395,1
+cmd_fild06,0,0	monster	Wind Crystal	1395,1
+cmd_fild07,0,0	monster	Wind Crystal	1395,1
+cmd_fild08,0,0	monster	Wind Crystal	1395,1
+cmd_fild09,0,0	monster	Wind Crystal	1395,1
+mjolnir_01,0,0	monster	Wind Crystal	1395,1
+mjolnir_02,0,0	monster	Wind Crystal	1395,1
+mjolnir_03,0,0	monster	Wind Crystal	1395,1
+mjolnir_04,0,0	monster	Wind Crystal	1395,1
+mjolnir_05,0,0	monster	Wind Crystal	1395,1
+mjolnir_06,0,0	monster	Wind Crystal	1395,1
+mjolnir_07,0,0	monster	Wind Crystal	1395,1
+mjolnir_08,0,0	monster	Wind Crystal	1395,1
+mjolnir_09,0,0	monster	Wind Crystal	1395,1
+mjolnir_10,0,0	monster	Wind Crystal	1395,1
+mjolnir_11,0,0	monster	Wind Crystal	1395,1
+mjolnir_12,0,0	monster	Wind Crystal	1395,1
+xmas_fild01,0,0	monster	Wind Crystal	1395,1
+nif_fild01,0,0	monster	Earth Crystal	1396,1
+nif_fild02,0,0	monster	Earth Crystal	1396,1
+um_fild01,0,0	monster	Earth Crystal	1396,1
+um_fild02,0,0	monster	Earth Crystal	1396,1
+um_fild03,0,0	monster	Earth Crystal	1396,1
+um_fild04,0,0	monster	Earth Crystal	1396,1
+ayo_fild01,0,0	monster	Earth Crystal	1396,1
+ayo_fild02,0,0	monster	Earth Crystal	1396,1
+lou_fild01,0,0	monster	Earth Crystal	1396,1
+gon_fild01,0,0	monster	Earth Crystal	1396,1
+ama_fild01,0,0	monster	Earth Crystal	1396,1
+yuno_fild01,0,0	monster	Earth Crystal	1396,1
+yuno_fild02,0,0	monster	Earth Crystal	1396,1
+yuno_fild03,0,0	monster	Earth Crystal	1396,1
+yuno_fild04,0,0	monster	Earth Crystal	1396,1
+prt_fild00,0,0	monster	Earth Crystal	1396,1
+prt_fild01,0,0	monster	Earth Crystal	1396,1
+prt_fild02,0,0	monster	Earth Crystal	1396,1
+prt_fild03,0,0	monster	Earth Crystal	1396,1
+prt_fild04,0,0	monster	Earth Crystal	1396,1
+prt_fild05,0,0	monster	Earth Crystal	1396,1
+prt_fild06,0,0	monster	Earth Crystal	1396,1
+prt_fild07,0,0	monster	Earth Crystal	1396,1
+prt_fild08,0,0	monster	Earth Crystal	1396,1
+prt_fild09,0,0	monster	Earth Crystal	1396,1
+prt_fild10,0,0	monster	Earth Crystal	1396,1
+prt_fild11,0,0	monster	Earth Crystal	1396,1
+moc_fild01,0,0	monster	Earth Crystal	1396,1
+moc_fild02,0,0	monster	Earth Crystal	1396,1
+moc_fild03,0,0	monster	Earth Crystal	1396,1
+moc_fild04,0,0	monster	Earth Crystal	1396,1
+moc_fild05,0,0	monster	Earth Crystal	1396,1
+moc_fild06,0,0	monster	Earth Crystal	1396,1
+moc_fild07,0,0	monster	Earth Crystal	1396,1
+moc_fild08,0,0	monster	Earth Crystal	1396,1
+moc_fild09,0,0	monster	Earth Crystal	1396,1
+moc_fild10,0,0	monster	Earth Crystal	1396,1
+moc_fild11,0,0	monster	Earth Crystal	1396,1
+moc_fild12,0,0	monster	Earth Crystal	1396,1
+moc_fild13,0,0	monster	Earth Crystal	1396,1
+moc_fild14,0,0	monster	Earth Crystal	1396,1
+moc_fild15,0,0	monster	Earth Crystal	1396,1
+moc_fild16,0,0	monster	Earth Crystal	1396,1
+moc_fild17,0,0	monster	Earth Crystal	1396,1
+moc_fild11,0,0	monster	Earth Crystal	1396,1
+pay_fild01,0,0	monster	Earth Crystal	1396,1
+pay_fild02,0,0	monster	Earth Crystal	1396,1
+pay_fild03,0,0	monster	Earth Crystal	1396,1
+pay_fild04,0,0	monster	Earth Crystal	1396,1
+pay_fild05,0,0	monster	Earth Crystal	1396,1
+pay_fild06,0,0	monster	Earth Crystal	1396,1
+pay_fild07,0,0	monster	Earth Crystal	1396,1
+pay_fild08,0,0	monster	Earth Crystal	1396,1
+pay_fild09,0,0	monster	Earth Crystal	1396,1
+pay_fild10,0,0	monster	Earth Crystal	1396,1
+pay_fild11,0,0	monster	Earth Crystal	1396,1
+gef_fild00,0,0	monster	Earth Crystal	1396,1
+gef_fild01,0,0	monster	Earth Crystal	1396,1
+gef_fild02,0,0	monster	Earth Crystal	1396,1
+gef_fild03,0,0	monster	Earth Crystal	1396,1
+gef_fild04,0,0	monster	Earth Crystal	1396,1
+gef_fild05,0,0	monster	Earth Crystal	1396,1
+gef_fild06,0,0	monster	Earth Crystal	1396,1
+gef_fild07,0,0	monster	Earth Crystal	1396,1
+gef_fild08,0,0	monster	Earth Crystal	1396,1
+gef_fild09,0,0	monster	Earth Crystal	1396,1
+gef_fild10,0,0	monster	Earth Crystal	1396,1
+gef_fild11,0,0	monster	Earth Crystal	1396,1
+gef_fild12,0,0	monster	Earth Crystal	1396,1
+gef_fild13,0,0	monster	Earth Crystal	1396,1
+gef_fild14,0,0	monster	Earth Crystal	1396,1
+cmd_fild01,0,0	monster	Earth Crystal	1396,1
+cmd_fild02,0,0	monster	Earth Crystal	1396,1
+cmd_fild03,0,0	monster	Earth Crystal	1396,1
+cmd_fild04,0,0	monster	Earth Crystal	1396,1
+cmd_fild05,0,0	monster	Earth Crystal	1396,1
+cmd_fild06,0,0	monster	Earth Crystal	1396,1
+cmd_fild07,0,0	monster	Earth Crystal	1396,1
+cmd_fild08,0,0	monster	Earth Crystal	1396,1
+cmd_fild09,0,0	monster	Earth Crystal	1396,1
+mjolnir_01,0,0	monster	Earth Crystal	1396,1
+mjolnir_02,0,0	monster	Earth Crystal	1396,1
+mjolnir_03,0,0	monster	Earth Crystal	1396,1
+mjolnir_04,0,0	monster	Earth Crystal	1396,1
+mjolnir_05,0,0	monster	Earth Crystal	1396,1
+mjolnir_06,0,0	monster	Earth Crystal	1396,1
+mjolnir_07,0,0	monster	Earth Crystal	1396,1
+mjolnir_08,0,0	monster	Earth Crystal	1396,1
+mjolnir_09,0,0	monster	Earth Crystal	1396,1
+mjolnir_10,0,0	monster	Earth Crystal	1396,1
+mjolnir_11,0,0	monster	Earth Crystal	1396,1
+mjolnir_12,0,0	monster	Earth Crystal	1396,1
+xmas_fild01,0,0	monster	Earth Crystal	1396,1
+nif_fild01,0,0	monster	Fire Crystal	1397,1
+nif_fild02,0,0	monster	Fire Crystal	1397,1
+um_fild01,0,0	monster	Fire Crystal	1397,1
+um_fild02,0,0	monster	Fire Crystal	1397,1
+um_fild03,0,0	monster	Fire Crystal	1397,1
+um_fild04,0,0	monster	Fire Crystal	1397,1
+ayo_fild01,0,0	monster	Fire Crystal	1397,1
+ayo_fild02,0,0	monster	Fire Crystal	1397,1
+lou_fild01,0,0	monster	Fire Crystal	1397,1
+gon_fild01,0,0	monster	Fire Crystal	1397,1
+ama_fild01,0,0	monster	Fire Crystal	1397,1
+yuno_fild01,0,0	monster	Fire Crystal	1397,1
+yuno_fild02,0,0	monster	Fire Crystal	1397,1
+yuno_fild03,0,0	monster	Fire Crystal	1397,1
+yuno_fild04,0,0	monster	Fire Crystal	1397,1
+prt_fild00,0,0	monster	Fire Crystal	1397,1
+prt_fild01,0,0	monster	Fire Crystal	1397,1
+prt_fild02,0,0	monster	Fire Crystal	1397,1
+prt_fild03,0,0	monster	Fire Crystal	1397,1
+prt_fild04,0,0	monster	Fire Crystal	1397,1
+prt_fild05,0,0	monster	Fire Crystal	1397,1
+prt_fild06,0,0	monster	Fire Crystal	1397,1
+prt_fild07,0,0	monster	Fire Crystal	1397,1
+prt_fild08,0,0	monster	Fire Crystal	1397,1
+prt_fild09,0,0	monster	Fire Crystal	1397,1
+prt_fild10,0,0	monster	Fire Crystal	1397,1
+prt_fild11,0,0	monster	Fire Crystal	1397,1
+moc_fild01,0,0	monster	Fire Crystal	1397,1
+moc_fild02,0,0	monster	Fire Crystal	1397,1
+moc_fild03,0,0	monster	Fire Crystal	1397,1
+moc_fild04,0,0	monster	Fire Crystal	1397,1
+moc_fild05,0,0	monster	Fire Crystal	1397,1
+moc_fild06,0,0	monster	Fire Crystal	1397,1
+moc_fild07,0,0	monster	Fire Crystal	1397,1
+moc_fild08,0,0	monster	Fire Crystal	1397,1
+moc_fild09,0,0	monster	Fire Crystal	1397,1
+moc_fild10,0,0	monster	Fire Crystal	1397,1
+moc_fild11,0,0	monster	Fire Crystal	1397,1
+moc_fild12,0,0	monster	Fire Crystal	1397,1
+moc_fild13,0,0	monster	Fire Crystal	1397,1
+moc_fild14,0,0	monster	Fire Crystal	1397,1
+moc_fild15,0,0	monster	Fire Crystal	1397,1
+moc_fild16,0,0	monster	Fire Crystal	1397,1
+moc_fild17,0,0	monster	Fire Crystal	1397,1
+moc_fild11,0,0	monster	Fire Crystal	1397,1
+pay_fild01,0,0	monster	Fire Crystal	1397,1
+pay_fild02,0,0	monster	Fire Crystal	1397,1
+pay_fild03,0,0	monster	Fire Crystal	1397,1
+pay_fild04,0,0	monster	Fire Crystal	1397,1
+pay_fild05,0,0	monster	Fire Crystal	1397,1
+pay_fild06,0,0	monster	Fire Crystal	1397,1
+pay_fild07,0,0	monster	Fire Crystal	1397,1
+pay_fild08,0,0	monster	Fire Crystal	1397,1
+pay_fild09,0,0	monster	Fire Crystal	1397,1
+pay_fild10,0,0	monster	Fire Crystal	1397,1
+pay_fild11,0,0	monster	Fire Crystal	1397,1
+gef_fild00,0,0	monster	Fire Crystal	1397,1
+gef_fild01,0,0	monster	Fire Crystal	1397,1
+gef_fild02,0,0	monster	Fire Crystal	1397,1
+gef_fild03,0,0	monster	Fire Crystal	1397,1
+gef_fild04,0,0	monster	Fire Crystal	1397,1
+gef_fild05,0,0	monster	Fire Crystal	1397,1
+gef_fild06,0,0	monster	Fire Crystal	1397,1
+gef_fild07,0,0	monster	Fire Crystal	1397,1
+gef_fild08,0,0	monster	Fire Crystal	1397,1
+gef_fild09,0,0	monster	Fire Crystal	1397,1
+gef_fild10,0,0	monster	Fire Crystal	1397,1
+gef_fild11,0,0	monster	Fire Crystal	1397,1
+gef_fild12,0,0	monster	Fire Crystal	1397,1
+gef_fild13,0,0	monster	Fire Crystal	1397,1
+gef_fild14,0,0	monster	Fire Crystal	1397,1
+cmd_fild01,0,0	monster	Fire Crystal	1397,1
+cmd_fild02,0,0	monster	Fire Crystal	1397,1
+cmd_fild03,0,0	monster	Fire Crystal	1397,1
+cmd_fild04,0,0	monster	Fire Crystal	1397,1
+cmd_fild05,0,0	monster	Fire Crystal	1397,1
+cmd_fild06,0,0	monster	Fire Crystal	1397,1
+cmd_fild07,0,0	monster	Fire Crystal	1397,1
+cmd_fild08,0,0	monster	Fire Crystal	1397,1
+cmd_fild09,0,0	monster	Fire Crystal	1397,1
+mjolnir_01,0,0	monster	Fire Crystal	1397,1
+mjolnir_02,0,0	monster	Fire Crystal	1397,1
+mjolnir_03,0,0	monster	Fire Crystal	1397,1
+mjolnir_04,0,0	monster	Fire Crystal	1397,1
+mjolnir_05,0,0	monster	Fire Crystal	1397,1
+mjolnir_06,0,0	monster	Fire Crystal	1397,1
+mjolnir_07,0,0	monster	Fire Crystal	1397,1
+mjolnir_08,0,0	monster	Fire Crystal	1397,1
+mjolnir_09,0,0	monster	Fire Crystal	1397,1
+mjolnir_10,0,0	monster	Fire Crystal	1397,1
+mjolnir_11,0,0	monster	Fire Crystal	1397,1
+mjolnir_12,0,0	monster	Fire Crystal	1397,1
+xmas_fild01,0,0	monster	Fire Crystal	1397,1
+nif_fild01,0,0	monster	Water Crystal	1398,1
+nif_fild02,0,0	monster	Water Crystal	1398,1
+um_fild01,0,0	monster	Water Crystal	1398,1
+um_fild02,0,0	monster	Water Crystal	1398,1
+um_fild03,0,0	monster	Water Crystal	1398,1
+um_fild04,0,0	monster	Water Crystal	1398,1
+ayo_fild01,0,0	monster	Water Crystal	1398,1
+ayo_fild02,0,0	monster	Water Crystal	1398,1
+lou_fild01,0,0	monster	Water Crystal	1398,1
+gon_fild01,0,0	monster	Water Crystal	1398,1
+ama_fild01,0,0	monster	Water Crystal	1398,1
+yuno_fild01,0,0	monster	Water Crystal	1398,1
+yuno_fild02,0,0	monster	Water Crystal	1398,1
+yuno_fild03,0,0	monster	Water Crystal	1398,1
+yuno_fild04,0,0	monster	Water Crystal	1398,1
+prt_fild00,0,0	monster	Water Crystal	1398,1
+prt_fild01,0,0	monster	Water Crystal	1398,1
+prt_fild02,0,0	monster	Water Crystal	1398,1
+prt_fild03,0,0	monster	Water Crystal	1398,1
+prt_fild04,0,0	monster	Water Crystal	1398,1
+prt_fild05,0,0	monster	Water Crystal	1398,1
+prt_fild06,0,0	monster	Water Crystal	1398,1
+prt_fild07,0,0	monster	Water Crystal	1398,1
+prt_fild08,0,0	monster	Water Crystal	1398,1
+prt_fild09,0,0	monster	Water Crystal	1398,1
+prt_fild10,0,0	monster	Water Crystal	1398,1
+prt_fild11,0,0	monster	Water Crystal	1398,1
+moc_fild01,0,0	monster	Water Crystal	1398,1
+moc_fild02,0,0	monster	Water Crystal	1398,1
+moc_fild03,0,0	monster	Water Crystal	1398,1
+moc_fild04,0,0	monster	Water Crystal	1398,1
+moc_fild05,0,0	monster	Water Crystal	1398,1
+moc_fild06,0,0	monster	Water Crystal	1398,1
+moc_fild07,0,0	monster	Water Crystal	1398,1
+moc_fild08,0,0	monster	Water Crystal	1398,1
+moc_fild09,0,0	monster	Water Crystal	1398,1
+moc_fild10,0,0	monster	Water Crystal	1398,1
+moc_fild11,0,0	monster	Water Crystal	1398,1
+moc_fild12,0,0	monster	Water Crystal	1398,1
+moc_fild13,0,0	monster	Water Crystal	1398,1
+moc_fild14,0,0	monster	Water Crystal	1398,1
+moc_fild15,0,0	monster	Water Crystal	1398,1
+moc_fild16,0,0	monster	Water Crystal	1398,1
+moc_fild17,0,0	monster	Water Crystal	1398,1
+moc_fild11,0,0	monster	Water Crystal	1398,1
+pay_fild01,0,0	monster	Water Crystal	1398,1
+pay_fild02,0,0	monster	Water Crystal	1398,1
+pay_fild03,0,0	monster	Water Crystal	1398,1
+pay_fild04,0,0	monster	Water Crystal	1398,1
+pay_fild05,0,0	monster	Water Crystal	1398,1
+pay_fild06,0,0	monster	Water Crystal	1398,1
+pay_fild07,0,0	monster	Water Crystal	1398,1
+pay_fild08,0,0	monster	Water Crystal	1398,1
+pay_fild09,0,0	monster	Water Crystal	1398,1
+pay_fild10,0,0	monster	Water Crystal	1398,1
+pay_fild11,0,0	monster	Water Crystal	1398,1
+gef_fild00,0,0	monster	Water Crystal	1398,1
+gef_fild01,0,0	monster	Water Crystal	1398,1
+gef_fild02,0,0	monster	Water Crystal	1398,1
+gef_fild03,0,0	monster	Water Crystal	1398,1
+gef_fild04,0,0	monster	Water Crystal	1398,1
+gef_fild05,0,0	monster	Water Crystal	1398,1
+gef_fild06,0,0	monster	Water Crystal	1398,1
+gef_fild07,0,0	monster	Water Crystal	1398,1
+gef_fild08,0,0	monster	Water Crystal	1398,1
+gef_fild09,0,0	monster	Water Crystal	1398,1
+gef_fild10,0,0	monster	Water Crystal	1398,1
+gef_fild11,0,0	monster	Water Crystal	1398,1
+gef_fild12,0,0	monster	Water Crystal	1398,1
+gef_fild13,0,0	monster	Water Crystal	1398,1
+gef_fild14,0,0	monster	Water Crystal	1398,1
+cmd_fild01,0,0	monster	Water Crystal	1398,1
+cmd_fild02,0,0	monster	Water Crystal	1398,1
+cmd_fild03,0,0	monster	Water Crystal	1398,1
+cmd_fild04,0,0	monster	Water Crystal	1398,1
+cmd_fild05,0,0	monster	Water Crystal	1398,1
+cmd_fild06,0,0	monster	Water Crystal	1398,1
+cmd_fild07,0,0	monster	Water Crystal	1398,1
+cmd_fild08,0,0	monster	Water Crystal	1398,1
+cmd_fild09,0,0	monster	Water Crystal	1398,1
+mjolnir_01,0,0	monster	Water Crystal	1398,1
+mjolnir_02,0,0	monster	Water Crystal	1398,1
+mjolnir_03,0,0	monster	Water Crystal	1398,1
+mjolnir_04,0,0	monster	Water Crystal	1398,1
+mjolnir_05,0,0	monster	Water Crystal	1398,1
+mjolnir_06,0,0	monster	Water Crystal	1398,1
+mjolnir_07,0,0	monster	Water Crystal	1398,1
+mjolnir_08,0,0	monster	Water Crystal	1398,1
+mjolnir_09,0,0	monster	Water Crystal	1398,1
+mjolnir_10,0,0	monster	Water Crystal	1398,1
+mjolnir_11,0,0	monster	Water Crystal	1398,1
+mjolnir_12,0,0	monster	Water Crystal	1398,1
+xmas_fild01,0,0	monster	Water Crystal	1398,1
+hu_fild01,0,0	monster	Santa Poring	1062,8
+hu_fild04,0,0	monster	Santa Poring	1062,8
+hu_fild05,0,0	monster	Santa Poring	1062,8
+hu_fild07,0,0	monster	Santa Poring	1062,8
+lhz_fild01,0,0	monster	Santa Poring	1062,8
+lhz_fild02,0,0	monster	Santa Poring	1062,8
+lhz_fild03,0,0	monster	Santa Poring	1062,8
+ein_fild03,0,0	monster	Santa Poring	1062,8
+ein_fild04,0,0	monster	Santa Poring	1062,8
+ein_fild06,0,0	monster	Santa Poring	1062,8
+ein_fild07,0,0	monster	Santa Poring	1062,8
+ein_fild08,0,0	monster	Santa Poring	1062,8
+ein_fild09,0,0	monster	Santa Poring	1062,8
+ein_fild10,0,0	monster	Santa Poring	1062,8
+yuno_fild05,0,0	monster	Santa Poring	1062,8
+yuno_fild06,0,0	monster	Santa Poring	1062,8
+yuno_fild07,0,0	monster	Santa Poring	1062,8
+yuno_fild08,0,0	monster	Santa Poring	1062,8
+yuno_fild09,0,0	monster	Santa Poring	1062,8
+yuno_fild11,0,0	monster	Santa Poring	1062,8
+yuno_fild12,0,0	monster	Santa Poring	1062,8
+nif_fild01,0,0	monster	Santa Poring	1062,8
+nif_fild02,0,0	monster	Santa Poring	1062,8
+um_fild01,0,0	monster	Santa Poring	1062,8
+um_fild02,0,0	monster	Santa Poring	1062,8
+um_fild03,0,0	monster	Santa Poring	1062,8
+um_fild04,0,0	monster	Santa Poring	1062,8
+ayo_fild01,0,0	monster	Santa Poring	1062,8
+ayo_fild02,0,0	monster	Santa Poring	1062,8
+lou_fild01,0,0	monster	Santa Poring	1062,8
+gon_fild01,0,0	monster	Santa Poring	1062,8
+ama_fild01,0,0	monster	Santa Poring	1062,8
+yuno_fild01,0,0	monster	Santa Poring	1062,8
+yuno_fild02,0,0	monster	Santa Poring	1062,8
+yuno_fild03,0,0	monster	Santa Poring	1062,8
+yuno_fild04,0,0	monster	Santa Poring	1062,8
+prt_fild00,0,0	monster	Santa Poring	1062,8
+prt_fild01,0,0	monster	Santa Poring	1062,8
+prt_fild02,0,0	monster	Santa Poring	1062,8
+prt_fild03,0,0	monster	Santa Poring	1062,8
+prt_fild04,0,0	monster	Santa Poring	1062,8
+prt_fild05,0,0	monster	Santa Poring	1062,8
+prt_fild06,0,0	monster	Santa Poring	1062,8
+prt_fild07,0,0	monster	Santa Poring	1062,8
+prt_fild08,0,0	monster	Santa Poring	1062,8
+prt_fild09,0,0	monster	Santa Poring	1062,8
+prt_fild10,0,0	monster	Santa Poring	1062,8
+prt_fild11,0,0	monster	Christmas Goblin	1245,8
+moc_fild01,0,0	monster	Santa Poring	1062,8
+moc_fild02,0,0	monster	Santa Poring	1062,8
+moc_fild03,0,0	monster	Santa Poring	1062,8
+moc_fild04,0,0	monster	Santa Poring	1062,8
+moc_fild05,0,0	monster	Santa Poring	1062,8
+moc_fild06,0,0	monster	Santa Poring	1062,8
+moc_fild07,0,0	monster	Santa Poring	1062,8
+moc_fild08,0,0	monster	Santa Poring	1062,8
+moc_fild09,0,0	monster	Santa Poring	1062,8
+moc_fild10,0,0	monster	Santa Poring	1062,8
+moc_fild11,0,0	monster	Santa Poring	1062,8
+moc_fild12,0,0	monster	Santa Poring	1062,8
+moc_fild13,0,0	monster	Santa Poring	1062,8
+moc_fild14,0,0	monster	Santa Poring	1062,8
+moc_fild15,0,0	monster	Santa Poring	1062,8
+moc_fild16,0,0	monster	Santa Poring	1062,8
+moc_fild17,0,0	monster	Santa Poring	1062,8
+moc_fild18,0,0	monster	Santa Poring	1062,8
+pay_fild01,0,0	monster	Santa Poring	1062,8
+pay_fild02,0,0	monster	Santa Poring	1062,8
+pay_fild03,0,0	monster	Santa Poring	1062,8
+pay_fild04,0,0	monster	Santa Poring	1062,8
+pay_fild05,0,0	monster	Santa Poring	1062,8
+pay_fild06,0,0	monster	Santa Poring	1062,8
+pay_fild07,0,0	monster	Santa Poring	1062,8
+pay_fild08,0,0	monster	Santa Poring	1062,8
+pay_fild09,0,0	monster	Santa Poring	1062,8
+pay_fild10,0,0	monster	Santa Poring	1062,8
+pay_fild11,0,0	monster	Santa Poring	1062,8
+gef_fild00,0,0	monster	Santa Poring	1062,8
+gef_fild01,0,0	monster	Santa Poring	1062,8
+gef_fild02,0,0	monster	Santa Poring	1062,8
+gef_fild03,0,0	monster	Santa Poring	1062,8
+gef_fild04,0,0	monster	Santa Poring	1062,8
+gef_fild05,0,0	monster	Santa Poring	1062,8
+gef_fild06,0,0	monster	Santa Poring	1062,8
+gef_fild07,0,0	monster	Santa Poring	1062,8
+gef_fild08,0,0	monster	Santa Poring	1062,8
+gef_fild09,0,0	monster	Santa Poring	1062,8
+gef_fild10,0,0	monster	Santa Poring	1062,8
+gef_fild11,0,0	monster	Santa Poring	1062,8
+gef_fild12,0,0	monster	Santa Poring	1062,8
+gef_fild13,0,0	monster	Santa Poring	1062,8
+gef_fild14,0,0	monster	Santa Poring	1062,8
+cmd_fild01,0,0	monster	Santa Poring	1062,8
+cmd_fild02,0,0	monster	Santa Poring	1062,8
+cmd_fild03,0,0	monster	Santa Poring	1062,8
+cmd_fild04,0,0	monster	Santa Poring	1062,8
+cmd_fild05,0,0	monster	Santa Poring	1062,8
+cmd_fild06,0,0	monster	Santa Poring	1062,8
+cmd_fild07,0,0	monster	Santa Poring	1062,8
+cmd_fild08,0,0	monster	Santa Poring	1062,8
+cmd_fild09,0,0	monster	Santa Poring	1062,8
+mjolnir_01,0,0	monster	Santa Poring	1062,8
+mjolnir_02,0,0	monster	Santa Poring	1062,8
+mjolnir_03,0,0	monster	Santa Poring	1062,8
+mjolnir_04,0,0	monster	Santa Poring	1062,8
+mjolnir_05,0,0	monster	Santa Poring	1062,8
+mjolnir_06,0,0	monster	Santa Poring	1062,8
+mjolnir_07,0,0	monster	Santa Poring	1062,8
+mjolnir_08,0,0	monster	Santa Poring	1062,8
+mjolnir_09,0,0	monster	Santa Poring	1062,8
+mjolnir_10,0,0	monster	Santa Poring	1062,8
+mjolnir_11,0,0	monster	Santa Poring	1062,8
+mjolnir_12,0,0	monster	Santa Poring	1062,8
+xmas,0,0	monster	Santa Poring	1062,5,60000,30000
+xmas_fild01,0,0	monster	Santa Poring	1062,10
+xmas_dun01,0,0	monster	Santa Poring	1062,15
+xmas_dun01,0,0	monster	Christmas Goblin	1245,20
+xmas_dun02,0,0	monster	Christmas Goblin	1245,10
+xmas_dun02,0,0	monster	Christmas Jakk	1244,2
+xmas_dun02,0,0	monster	Christmas Orc	1588,2
+sec_in02,51,188,1,1	monster	Santa Poring	1062,1
+sec_in02,51,188,1,1	monster	Christmas Orc	1588,1
+sec_in02,51,188,1,1	monster	Christmas Jakk	1244,1
+gef_dun01,0,0	monster	Christmas Jakk	1244,10
+hu_fild01,0,0	monster	Antonio	1247,1
+hu_fild04,0,0	monster	Antonio	1247,1
+hu_fild05,0,0	monster	Antonio	1247,1
+hu_fild07,0,0	monster	Antonio	1247,1
+lhz_fild01,0,0	monster	Antonio	1247,1
+lhz_fild02,0,0	monster	Antonio	1247,1
+lhz_fild03,0,0	monster	Antonio	1247,1
+ein_fild03,0,0	monster	Antonio	1247,1
+ein_fild04,0,0	monster	Antonio	1247,1
+ein_fild06,0,0	monster	Antonio	1247,1
+ein_fild07,0,0	monster	Antonio	1247,1
+ein_fild08,0,0	monster	Antonio	1247,1
+ein_fild09,0,0	monster	Antonio	1247,1
+ein_fild10,0,0	monster	Antonio	1247,1
+yuno_fild05,0,0	monster	Antonio	1247,1
+yuno_fild06,0,0	monster	Antonio	1247,1
+yuno_fild07,0,0	monster	Antonio	1247,1
+yuno_fild08,0,0	monster	Antonio	1247,1
+yuno_fild09,0,0	monster	Antonio	1247,1
+yuno_fild11,0,0	monster	Antonio	1247,1
+yuno_fild12,0,0	monster	Antonio	1247,1
+nif_fild01,0,0	monster	Antonio	1247,1
+nif_fild02,0,0	monster	Antonio	1247,1
+um_fild01,0,0	monster	Antonio	1247,1
+um_fild02,0,0	monster	Antonio	1247,1
+um_fild03,0,0	monster	Antonio	1247,1
+um_fild04,0,0	monster	Antonio	1247,1
+ayo_fild01,0,0	monster	Antonio	1247,1
+ayo_fild02,0,0	monster	Antonio	1247,1
+lou_fild01,0,0	monster	Antonio	1247,1
+gon_fild01,0,0	monster	Antonio	1247,1
+ama_fild01,0,0	monster	Antonio	1247,1
+yuno_fild01,0,0	monster	Antonio	1247,1
+yuno_fild02,0,0	monster	Antonio	1247,1
+yuno_fild03,0,0	monster	Antonio	1247,1
+yuno_fild04,0,0	monster	Antonio	1247,1
+prt_fild00,0,0	monster	Antonio	1247,1
+prt_fild01,0,0	monster	Antonio	1247,1
+prt_fild02,0,0	monster	Antonio	1247,1
+prt_fild03,0,0	monster	Antonio	1247,1
+prt_fild04,0,0	monster	Antonio	1247,1
+prt_fild05,0,0	monster	Antonio	1247,1
+prt_fild06,0,0	monster	Antonio	1247,1
+prt_fild07,0,0	monster	Antonio	1247,1
+prt_fild08,0,0	monster	Antonio	1247,1
+prt_fild09,0,0	monster	Antonio	1247,1
+prt_fild10,0,0	monster	Antonio	1247,1
+prt_fild11,0,0	monster	Antonio	1247,1
+moc_fild01,0,0	monster	Antonio	1247,1
+moc_fild02,0,0	monster	Antonio	1247,1
+moc_fild03,0,0	monster	Antonio	1247,1
+moc_fild04,0,0	monster	Antonio	1247,1
+moc_fild05,0,0	monster	Antonio	1247,1
+moc_fild06,0,0	monster	Antonio	1247,1
+moc_fild07,0,0	monster	Antonio	1247,1
+moc_fild08,0,0	monster	Antonio	1247,1
+moc_fild09,0,0	monster	Antonio	1247,1
+moc_fild10,0,0	monster	Antonio	1247,1
+moc_fild11,0,0	monster	Antonio	1247,1
+moc_fild12,0,0	monster	Antonio	1247,1
+moc_fild13,0,0	monster	Antonio	1247,1
+moc_fild14,0,0	monster	Antonio	1247,1
+moc_fild15,0,0	monster	Antonio	1247,1
+moc_fild16,0,0	monster	Antonio	1247,1
+moc_fild17,0,0	monster	Antonio	1247,1
+moc_fild11,0,0	monster	Antonio	1247,1
+pay_fild01,0,0	monster	Antonio	1247,1
+pay_fild02,0,0	monster	Antonio	1247,1
+pay_fild03,0,0	monster	Antonio	1247,1
+pay_fild04,0,0	monster	Antonio	1247,1
+pay_fild05,0,0	monster	Antonio	1247,1
+pay_fild06,0,0	monster	Antonio	1247,1
+pay_fild07,0,0	monster	Antonio	1247,1
+pay_fild08,0,0	monster	Antonio	1247,1
+pay_fild09,0,0	monster	Antonio	1247,1
+pay_fild10,0,0	monster	Antonio	1247,1
+pay_fild11,0,0	monster	Antonio	1247,1
+gef_fild00,0,0	monster	Antonio	1247,1
+gef_fild01,0,0	monster	Antonio	1247,1
+gef_fild02,0,0	monster	Antonio	1247,1
+gef_fild03,0,0	monster	Antonio	1247,1
+gef_fild04,0,0	monster	Antonio	1247,1
+gef_fild05,0,0	monster	Antonio	1247,1
+gef_fild06,0,0	monster	Antonio	1247,1
+gef_fild07,0,0	monster	Antonio	1247,1
+gef_fild08,0,0	monster	Antonio	1247,1
+gef_fild09,0,0	monster	Antonio	1247,1
+gef_fild10,0,0	monster	Antonio	1247,1
+gef_fild11,0,0	monster	Antonio	1247,1
+gef_fild12,0,0	monster	Antonio	1247,1
+gef_fild13,0,0	monster	Antonio	1247,1
+gef_fild14,0,0	monster	Antonio	1247,1
+cmd_fild01,0,0	monster	Antonio	1247,1
+cmd_fild02,0,0	monster	Antonio	1247,1
+cmd_fild03,0,0	monster	Antonio	1247,1
+cmd_fild04,0,0	monster	Antonio	1247,1
+cmd_fild05,0,0	monster	Antonio	1247,1
+cmd_fild06,0,0	monster	Antonio	1247,1
+cmd_fild07,0,0	monster	Antonio	1247,1
+cmd_fild08,0,0	monster	Antonio	1247,1
+cmd_fild09,0,0	monster	Antonio	1247,1
+mjolnir_01,0,0	monster	Antonio	1247,1
+mjolnir_02,0,0	monster	Antonio	1247,1
+mjolnir_03,0,0	monster	Antonio	1247,1
+mjolnir_04,0,0	monster	Antonio	1247,1
+mjolnir_05,0,0	monster	Antonio	1247,1
+mjolnir_06,0,0	monster	Antonio	1247,1
+mjolnir_07,0,0	monster	Antonio	1247,1
+mjolnir_08,0,0	monster	Antonio	1247,1
+mjolnir_09,0,0	monster	Antonio	1247,1
+mjolnir_10,0,0	monster	Antonio	1247,1
+mjolnir_11,0,0	monster	Antonio	1247,1
+mjolnir_12,0,0	monster	Antonio	1247,1
+xmas_fild01,0,0	monster	Antonio	1247,1
+sec_in02,161,46,5,5	monster	Antonio	1247,5
