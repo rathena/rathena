@@ -10,7 +10,7 @@
 dali02,43,129,5	script	Unpleasant Royal Guard#	4_M_SAKRAYROYAL,{
 	if (BaseLevel < 120) {
 		mes "[Unpleasant Royal Guard]";
-		mes "Althought I need help with a task, you are not strong enough to assist me, noob~!";
+		mes "Although I need help with a task, you are not strong enough to assist me, noob~!";
 		next;
 		mes "[Unpleasant Royal Guard]";
 		mes "Come back later when you have done some training and are at least level 120!";
@@ -138,8 +138,8 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 	npctalk "King: The marriage arrangements are going as planned. The prince is here to meet with the princess.";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "...Yes, your majesty.";
-	npctalk "Lurid Royal Guard: ...Yes, your majesty.", instance_npcname("Lurid Royal Guard#dk");
+	mes "...Yes, Your Majesty.";
+	npctalk "Lurid Royal Guard: ...Yes, Your Majesty.", instance_npcname("Lurid Royal Guard#dk");
 	next;
 	mes "[King]";
 	mes "My gods, there are monsters in the castle! Get rid of them now!";
@@ -264,8 +264,8 @@ OnMyMobDead3:
 	.@tiara$ = instance_npcname("Princess Tiara#dk");
 	cutin "npc-tiara.bmp",3;
 	mes "[Lurid Royal Guard]";
-	mes "Your highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
-	npctalk "Lurid Royal Guard: Your highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
+	mes "Your Highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
+	npctalk "Lurid Royal Guard: Your Highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
 	next;
 	mes "[Princess Tiara]";
 	mes "If...If a marriage is arranged what should I do?";
@@ -280,8 +280,8 @@ OnMyMobDead3:
 	npctalk "Princess Tiara: Then, what can I do?", .@tiara$;
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "You must decide that for yourself your highness...";
-	npctalk "Lurid Royal Guard: You must decide that for yourself your highness...";
+	mes "You must decide that for yourself Your Highness...";
+	npctalk "Lurid Royal Guard: You must decide that for yourself Your Highness...";
 	next;
 	mes "[Princess Tiara]";
 	mes "Would it be easier for you if I were married and sent off to another country?";
@@ -368,8 +368,8 @@ OnMyMobDead3:
 	npctalk "King: It was you who brought the monsters here! You want to get rid of me and have the princess for yourself?";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "It is a trap your majesty! You must trust me!";
-	npctalk "Lurid Royal Guard: It is a trap your majesty! You must trust me!", instance_npcname("Lurid Royal Guard#dk2");
+	mes "It is a trap Your Majesty! You must trust me!";
+	npctalk "Lurid Royal Guard: It is a trap Your Majesty! You must trust me!", instance_npcname("Lurid Royal Guard#dk2");
 	next;
 	mes "[King]";
 	mes "Shut up! You've betrayed me! I trusted you... you must pay for your disgrace.";
@@ -892,7 +892,7 @@ OnTimer28500:
 	mes "[King]";
 	mes "Will you give the ^006400Gray Shard^000000 to me?";
 	mes "The guilt is eating my soul.";
-	mes "My soul is stuck within the Ghost Palace.";
+	mes "My soul is trapped inside the Ghost Palace.";
 	next;
 	mes "[King]";
 	mes "I am collecting Sakray's abandoned memories from these shards.";
