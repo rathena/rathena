@@ -564,7 +564,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 		return false;
 	}
 
-	if(pc_paycash( sd, totalcash, kafrapoints, LOG_TYPE_CASH ) < 0){
+	if(pc_paycash( sd, totalcash, kafrapoints, LOG_TYPE_CASH ) <= 0){
 		clif_cashshop_result( sd, 0, CASHSHOP_RESULT_ERROR_SHORTTAGE_CASH );
 		return false;
 	}
