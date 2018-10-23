@@ -15777,7 +15777,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 
 	if( !chrif_isconnected() )
 		return;
-	if (idx < 0 || amount < 0)
+	if (idx < 0 || amount < 0 || idx >= MAX_INVENTORY)
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
