@@ -1,0 +1,253 @@
+//=========== PORING CATCHER MADE ==============\\
+//=== BY: SHOGS-GFX and RAGNAROK DEVELOPERS ====\\
+//= Please Report if you encounter some errors =\\
+//===== https://www.facebook.com/ShogsGfx ======\\
+//==============================================\\
+//==FUNCTIONS===================================\\
+/* GM Can start the event manualy
+   GM Can also stop the event manualy
+HOW: just PM this npc (npc:pcatch)
+The Next Guide Will Be Given by the Manager 	*/
+//======= PLEASE DO NOT REMOVE CREDITS =========\\
+//==============================================\\
+//== MORE UPDATES TO COME FOR BETTER FUNCTION ==\\
+//===== https://www.facebook.com/ShogsGfx ======\\
+//==============================================\\
+
+//====LEVEL OF GM CAN CONTROL THE EVENT=========\\
+
+-	script	GMCONTROL	-1,{
+OnInit:
+set $gmcontrol,60;
+end;
+
+}
+//---------------END OF SETUP-------------------\\
+
+//================ON WHISPER=========================\\
+-	script	pcatch	-1,{
+
+//====LEVEL OF GM CAN CONTROL THE EVENT=========\\
+//OnInit:
+//set $gmcontrol,60;
+//end;
+//---------------END OF SETUP-------------------\\
+
+OnWhisperGlobal:
+if(getgmlevel() >= $gmcontrol) {
+mes "^3399FF[Poring Catcher]^000000";
+mes "Hello GameMaster!";
+mes "What do you want to do?";
+switch(select("Start Event:Stop Event:Nothing"))
+{
+	case 1:
+	{
+		next;
+		mes "^3399FF[Poring Catcher]^000000";
+		mes "Please confirm by typing START.";
+		input .@confirm$;
+		if (.@confirm$ == "START")
+		{
+			donpcevent "Announcer2::OnGMStart";
+			close;
+		}
+		mes "Confirmation failed";
+		close;
+		break;
+	}
+	case 2:
+	{
+		next;
+		mes "^3399FF[Poring Catcher]^000000";
+		mes "Please confirm by typing STOP.";
+		input .@confirm$;
+		if (.@confirm$ == "STOP")
+		{
+			donpcevent "Announcer2::OnGMStop";
+			close;
+		}
+		mes "Confirmation failed";
+		close;
+		break;
+
+	}
+
+	case 3:
+	{
+		next; mes "^3399FF[Poring Catcher]^000000";
+		mes "Good bye";
+		close;
+	}
+
+}
+}
+}
+
+
+//====================ANNOUNCER======================\\
+
+-	script	Announcer2	-1,{
+
+
+OnGMStart:
+	killmonster "poring_w01.gat","All";
+	announce "(Poring Manager) : A Gamemaster started a Poring Catcher Event now.",0;
+	sleep 3000;
+	announce "(Poring Manager) : If you want to join, come at the middle of Prontera, enter the warp portal.",0;
+	enablenpc "PoringCatcher";
+	sleep 2000;
+	announce "(Poring Manager) : Prize: will be Poring Coins",0;
+	sleep 2000;
+	announce "(Poring Manager) : The portal is going to close in one minute.",0;
+	sleep 60000;
+	announce "(Poring Manager) : The portal has been closed.",0;
+	disablenpc "PoringCatcher";
+	if(getmapusers("poring_w01") == 0)
+	{
+		disablenpc "Poring Banker";
+		announce "Event Poring Catcher didn't start because there's no players.",0;
+		end;
+	}
+
+	donpcevent "Poring Banker::OnEnable";
+	end;
+
+OnGMStop:
+
+	killmonster "poring_w01.gat","All";
+	announce "A Gamemaster has stopped the Poring Catcher Event",0;
+	mapwarp "poring_w01.gat","prontera.gat",155,173;
+	disablenpc "Poring Banker";
+	disablenpc "PoringCatcher";
+	end;
+
+
+
+OnMinute00:
+	killmonster "poring_w01.gat","All";
+	announce "(Poring Manager) : Poring Catcher Event will start at the moment.",0;
+	sleep 3000;
+	announce "(Poring Manager) : If you want to join, come at the middle of Prontera, enter the warp portal.",0;
+	enablenpc "PoringCatcher";
+	sleep 2000;
+	announce "(Poring Manager) : Prize: will be Poring Coins",0;
+	sleep 2000;
+	announce "(Poring Manager) : The portal is going to close in one minute.",0;
+	sleep 60000;
+	announce "(Poring Manager) : The portal has been closed.",0;
+	disablenpc "PoringCatcher";
+	if(getmapusers("poring_w01") == 0)
+	{
+		disablenpc "Poring Banker";
+		announce "Event Poring Catcher didn't start because no players found in map.",0;
+		end;
+	}
+
+	donpcevent "Poring Banker::OnEnable";
+	end;
+
+OnInit:
+	disablenpc "Poring Banker";
+	disablenpc "PoringCatcher";
+}
+//---------All Job Registration----------------------------------------
+prontera,155,158,0	warp	PoringCatcher	2,2,poring_w01,105,128
+
+//---------------------------------------------------------------------
+
+
+//---------------------------------------------------------------------
+-	script	Poring Banker	-1,{
+
+OnEnable:
+mapannounce "poring_w01","Poring Manager: The Poring Catcher Event will start shortly",0;
+sleep2 10000;
+mapannounce "poring_w01","Poring Manager: I will be summoning 100 porings with different names kill the real poring",0;
+sleep2 10000;
+mapannounce "poring_w01","Poring Manager: What are we waiting for?..Let's Catch some Porings!!...",0;
+sleep2 10000;
+goto L_Start;
+end;
+L_Start:
+	if(getmapusers("poring_w01") == 0) goto L_None;
+	if(getmapusers("poring_w01") >= 1) {
+
+	mapannounce "poring_w01","Poring Manager: Get ready at the count of 5 we will start!....",0;
+	sleep2 6000;
+	mapannounce "poring_w01","Poring Manager: 5",0;
+	sleep2 5000;
+	mapannounce "poring_w01","Poring Manager: 4",0;
+	sleep2 4000;
+	mapannounce "poring_w01","Poring Manager: 3",0;
+	sleep2 3000;
+	mapannounce "poring_w01","Poring Manager: 2",0;
+	sleep2 2000;
+	mapannounce "poring_w01","Poring Manager: 1",0;
+	donpcevent "Poringsummoner::OnSummon";
+	end;
+	}
+
+	L_None:
+	disablenpc "Poring Banker";
+	killmonster "poring_w01.gat","All";
+	end;
+}
+
+//==================SUMMONER OF PORINGS ======================\\
+-	script	Poringsummoner	-1,{
+
+OnSummon:
+   if(getmapusers("poring_w01") == 0) goto L_2None;
+   monster "poring_w01.gat",0,0,"Poring",1002,1,"poringwin::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Pouring",1002,10,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Proing",1002,10,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Poirng",1002,10,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Poing",1002,10,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"I'm not a Poring",1002,5,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Gnirop",1002,1,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Poring",1113,1,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Poring",1062,1,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Por|ng",1002,10,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Por1ng",1002,10,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Porong",1002,10,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"P0ring",1002,10,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"P@ring",1002,10,"poringlose::OnMobKilled";
+   monster "poring_w01.gat",0,0,"Porng",1002,1,"poringlose::OnMobKilled";end;
+L_2None:
+disablenpc "Poring Banker";
+killmonster "poring_w01.gat","All";
+end;
+}
+
+//==================REAL PORING FOR WIN======================\\
+-	script	poringwin	-1,{
+
+OnMobKilled:
+   killmonster "poring_w01.gat","All";
+   atcommand "@doommap";
+   getitem 7539,5;
+   announce "Poring Banker: We have a winner! well done " + strcharinfo(0) + ".",0;
+   warp "SavePoint",0,0;
+   end;
+}
+
+//==================DUMY PORINGS FOR LOSERS======================\\
+-	script	poringlose	-1,{
+OnMobKilled:
+   dispbottom "Your out of the game, You did not catch the right Poring !";
+   percentheal -99,-99;
+   warp "SavePoint",0,0;
+   end;
+}
+
+
+//==================Mapflags========================\\
+poring_w01	mapflag	nowarp
+poring_w01	mapflag	nowarpto
+poring_w01	mapflag	noteleport
+poring_w01	mapflag	nosave
+poring_w01	mapflag	nomemo
+p﻿oring_w01	mapflag	nobranch
+poring_w01	mapflag	noloot
+poring_w01	mapflag	noskill
+poring_w01	mapflag	nopenalty
