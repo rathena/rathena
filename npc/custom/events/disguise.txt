@@ -21,7 +21,7 @@ prontera,142,172,5	script	Disguise Event	795,{
 	// To change times, edit the OnClock labels below.
 
 	set .@GMLevel,60;	// GM level required to access NPC.
-	set .@n$,"[^0000FFDisguise NPC^000000]";
+	set .@n$,"[^0000FFDisguise Event^000000]";
 
 	if (getgmlevel()>=.@GMLevel) {
 		mes .@n$;
@@ -42,15 +42,14 @@ prontera,142,172,5	script	Disguise Event	795,{
 			if (.EventON) {
 				set .EventON,0; set .Timer,0;
 				setnpctimer 0; stopnpctimer;
-				announce "A GM has decided to turn the Disguise Event off. As a result no further prizes will be given.",bc_map | bc_blue;
+				announce "[Disguise Event] A GM has decided to turn the Disguise Event off. As a result no further prizes will be given.",bc_map | bc_blue;
 				deletepset 1;
 				setnpcdisplay "Disguise Event",795;
 				close;
 			}
 			set .EventON,1; set .Timer,1; setnpctimer 0; initnpctimer;
 			set .ResetCounter,.ResetCounter+1;
-			announce "The Disguise Event will begin in 3 minutes.",bc_all | bc_blue;
-			announce "The Event is being held in Prontera.",bc_all | bc_blue;
+			announce "The <Disguise Event> is being held in Prontera (142,172) and will begin in 3 minutes.",bc_all | bc_blue;
 			close;
 		case 2:
 			mes .@n$;
@@ -129,7 +128,7 @@ OnInit:
 	set .Wait,0;
 	set .Winner,0;
 	set .ResetCounter,0;
-	set .Rounds,10;
+	set .Rounds,5;
 	set .Prize,8501;
 	set .PrizeAmt,1;
 	set .Rule,1;
@@ -164,12 +163,11 @@ OnClock2200:
 	set .EventON,1;
 	set .Timer,1;
 	set .Wait,1;
-	announce "The Disguise Event will begin in 3 minutes.",bc_all | bc_blue;
-	announce "The Event is being held in Prontera.",bc_all | bc_blue;
+	announce "The [Disguise Event] is being held in Prontera (142,172) and will begin in 3 minutes.",bc_all | bc_blue;
 	setnpctimer 0;
 	initnpctimer;
 	end;
-OnTimer10000:
+OnTimer5000:
 	if (.Timer || .Change) end;
 	set .Wait,0;
 	goto iDisguise;
@@ -178,7 +176,14 @@ OnTimer30000:
 	if (.Timer) end;
 	set .Change,0;
 	setnpcdisplay "Disguise Event",795;
-	npctalk "Disguise Event : You took too long to guess what I was. Please wait 10 seconds while I disguise again.";
+	set .RoundCount,.RoundCount+1;
+	if (.RoundCount>=.Rounds) {
+		set .RoundCount,0; set .Change,0; set .EventON,0;
+		setnpctimer 0; stopnpctimer;
+		npctalk "[Disguise Event] Thank you all for playing. That was the last round of the event. Come play again later.";
+		end;
+	}
+	npctalk "[Disguise Event] You took too long to guess what I was. Please wait 5 seconds while I disguise again.";
 	specialeffect EF_DETECT2;
 	set $MonsterName$,"";
 	deletepset 1;
@@ -188,18 +193,15 @@ OnTimer30000:
 	end;
 OnTimer60000:
 	if (.Timer!=1) end;
-	announce "The Disguise Event will begin in 2 minutes.",bc_all | bc_blue;
-	announce "The Event is being held in Prontera.",bc_all | bc_blue;
+	announce "The <Disguise Event> is being held in Prontera (142,172) and will begin in 2 minutes.",bc_all | bc_blue;
 	end;
 OnTimer120000:
 	if (.Timer!=1) end;
-	announce "The Disguise Event will begin 1 minute.",bc_all | bc_blue;
-	announce "The Event is being held in Prontera.",bc_all | bc_blue;
+	announce "The <Disguise Event> is being held in Prontera (142,172) and will begin in 1 minutes.",bc_all | bc_blue;
 	end;
 OnTimer180000:
 	if (.Timer!=1) end;
-	announce "The Disguise Event has begun!",bc_all | bc_blue;
-	announce "The Event is being held in Prontera.",bc_all | bc_blue;
+	announce "The <Disguise Event> has begun!",bc_all | bc_blue;
 	set .Timer,0; stopnpctimer;
 	setnpctimer 0; initnpctimer;
 iDisguise:
@@ -219,6 +221,7 @@ iDisguise:
 	deletepset 1;
 	defpattern 1,"([^:]+):.\\s*"+$MonsterName$+".*", "iCorrect";
 	activatepset 1;
+	npctalk "[Disguise NPC] Round #" + (.RoundCount + 1) + " | What Monster am I now?";
 	if (.Rule==1) setnpcdisplay "Disguise Event",.Monster;
 	if (.Rule==2) setnpcdisplay "Disguise Event",.MVP[.Monster];
 	set .Change,1;
@@ -239,7 +242,7 @@ iCorrect:
 		setnpcdisplay "Disguise Event",795;
 		set .RoundCount,0; set .Change,0; set .EventON,0;
 		setnpctimer 0; stopnpctimer;
-		npctalk "Disguise Event : Thank you all for playing. That was the last round of the Disguise Event. Come play again later.";
+		npctalk "[Disguise Event] Thank you all for playing. That was the last round of the event. Come play again later.";
 		end;
 	}
 	setnpcdisplay "Disguise Event",795;
