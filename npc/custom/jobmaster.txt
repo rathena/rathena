@@ -61,6 +61,10 @@ function	Can_Change_Third	{
 		return false; // Exp. Super Novice equals 3rd Cls, but has it's own case
 	if( Is_Baby() && (!.BabyClass || !.BabyThird) )
 		return false; // No Baby (Third) change allowed
+	if( Class == 4047 || Class == 4049)// disallow star gladiator and soul emperor
+		return false;
+	if( Class == 4226 || Class == 4227)// disallow baby star gladiator and baby soul emperor
+		return false;
 	return true;
 }
 
@@ -77,6 +81,8 @@ function	Can_Rebirth	{
 		return false; // Job has no transcended class
 	if( Is_Baby() && !.BabyClass )
 		return false; // No Baby changes allowed
+	if( eaclass()&EAJL_THIRD )
+		return false; // already 3rd class. no rebirth allowed.
 	return true;
 }
 
@@ -146,7 +152,7 @@ function	Job_Options	{
 		Require_Level(.Req_Rebirth[0], .Req_Rebirth[1]);
 		Job_Options(.@job_opt, Job_Novice_High);
 	}
-	if( .@third_possible ) {
+	if( .@third_possible) {
 		// Third Job change (displayed below rebirth)
 		Require_Level(.Req_Third[0], .Req_Third[1]);
 		Job_Options(.@job_opt, roclass(.@eac|EAJL_THIRD));
@@ -225,6 +231,7 @@ function	Job_Options	{
 		.@class2 = roclass(.@eac|EAJL_2_2); // 2-2
 		// dispbottom "Debug: Classes: class1 ("+.@class1+"), class2 ("+.@class2+")";
 		if(.LastJob && lastJob && (.@eac&EAJL_UPPER)) {
+			// dispbottom "Debug: Classes: lastJob ("+lastJob+"), Job_Novice_High ("+Job_Novice_High+")";
 			// Player is rebirth Cls and linear class changes are enforced
 			Require_Level(.Req_Second[0], .Req_Second[1]);
 			Job_Options(.@job_opt, lastJob + Job_Novice_High);
@@ -279,6 +286,7 @@ function	Job_Menu	{
 			mes .NPCName$;
 		}
 		.@class = getelementofarray(getarg(0), .@selected);
+		// debugmes "Job_Menu"+getarg(0)+" | .@class: "+.@class+" | .@opt_cnt: "+.@opt_cnt;
 		if ((.@class == Job_Super_Novice || .@class == Job_Super_Baby) &&
 				BaseLevel < .SNovice) {
 			// Special Level Requirement because Super Novice and
@@ -331,6 +339,15 @@ function	Confirm_Change	{
 		mes "Unknown Class Error.";
 		close;
 	}
+
+	// debugmes "Class : "+ Class + " "+ jobname(.@class);
+	// debugmes "Class : "+ Class + " "+ jobname(Class);
+	// debugmes "eac " + .@eac;
+	// debugmes "third " + .@third_possible;
+	// debugmes "rebirth " + .@rebirth_possible;
+	// debugmes "first " + .@first_eac;
+	// debugmes "second " + .@second_eac;
+
 	mes "Do you want to change into ^0055FF"+jobname(.@class)+"^000000 class?";
 	.@job_option$ = " ~ Change into ^0055FF"+jobname(.@class)+"^000000 class";
 	if( .@class == Job_Novice_High)
