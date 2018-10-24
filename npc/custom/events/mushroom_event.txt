@@ -83,8 +83,8 @@ OnClock2300:
 	.@label$ = strnpcinfo(0) + "::OnMobKilled";
 	// killmonster .event_map$, .@label$;
 	killmonsterall .event_map$;
-	monster .event_map$,0,0,"Please don't kill me!",1084, .@spawn, .@label$;
-	//areamonster .event_map$,116,142,119,145,"Please don't kill me!",1084,.@spawn, .@label$;
+	monster .event_map$,0,0,"Please don't kill me!",1085, .@spawn, .@label$;
+	//areamonster .event_map$,116,142,119,145,"Please don't kill me!",1085,.@spawn, .@label$;
 	announce "Find the Mushroom : Total of " + .@spawn + " Mushrooms have been spawned in " + .event_map$ + "!",0;
 	sleep 2500;
 	announce "Find the Mushroom : Every Mushroom you kill will give you " + getitemname(.prize) + "!",0;
