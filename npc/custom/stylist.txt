@@ -32,7 +32,7 @@ prontera,131,217,5	script	Stylist#custom_stylist	122,{
 		LOOK_CLOTHES_COLOR,
 		LOOK_HAIR,
 		LOOK_HAIR_COLOR;
-	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color: ~ Alternative Body");
+	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color: ~ Alternative Body: ~ Reset All");
 	set .@Revert, getlook(.@Look[.@s]);
 	set .@Style,1;
 	if(.@s < 4) {
@@ -60,7 +60,7 @@ prontera,131,217,5	script	Stylist#custom_stylist	122,{
 			}
 		}
 	}
-	else
+	else if (.@s == 4)
 	{
 		set @eac, eaclass();
 		if(! ((@eac&EAJ_BASEMASK) == EAJ_TAEKWON) && ! ((@eac&EAJ_BASEMASK) == EAJ_GUNSLINGER) && ! ((@eac&EAJ_BASEMASK) == EAJ_NINJA) && @eac&EAJL_THIRD)
@@ -87,5 +87,13 @@ prontera,131,217,5	script	Stylist#custom_stylist	122,{
 			mes "I am sorry, but only 3rd Class have alternative body.";
 			close;
 		}
+	}
+	else if (.@s == 5)
+	{
+		setlook LOOK_CLOTHES_COLOR, 0;
+		setlook LOOK_HAIR, 1;
+		setlook LOOK_HAIR_COLOR, 0;
+		setlook LOOK_BODY2, 0;
+		end;
 	}
 }
