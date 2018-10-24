@@ -6,7 +6,7 @@
 //= 1.3
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Players can attack other guilds, and will have their guild
 //= icons shown. WoE damage reductions will also take place.
 //= gvg: Turns on GvG mode.
@@ -14,7 +14,7 @@
 //= gvg_dungeon: Describes dungeon maps for WoE.
 //= gvg_te: Turns on GvG mode for WoE:TE.
 //= gvg_te_castle: Describes castle maps for WoE:TE.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Added Novice Guild Castles.
 //= 1.2 Updated with new meanings of gvg and gvg_castle.
 //= 1.3 Renewal split. [Euphy]
@@ -22,7 +22,7 @@
 
 // GvG Arenas =============
 guild_vs1	mapflag	gvg
-guild_vs2	mapflag	gvg
+// guild_vs2	mapflag	gvg
 guild_vs3	mapflag	gvg
 guild_vs4	mapflag	gvg
 guild_vs5	mapflag	gvg

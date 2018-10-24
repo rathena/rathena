@@ -1,0 +1,288 @@
+// AnnieRuru - very old 2013 script
+// modified by nubs
+prontera,142,166,5	script	Last Man Standing	100,{
+		function remove_player;
+		function smack_talk;
+		set .@GMLevel,60;	// GM level required to access NPC.
+		set .@n$,"[^0000FFLMS Manager^000000]";
+
+		if (getgmlevel()>=.@GMLevel) {
+			mes .@n$;
+			if (.EventON || .aTimer) {
+				mes "The Event is currently: [^0000FFON^000000]";
+				mes "Would you like to turn it OFF?";
+			} else {
+				mes "The Event is currently: [^FF0000OFF^000000]";
+				mes "Would you like to turn it ON?";
+			}
+			if(select("Yes:No")==2) close;
+			mapwarp "guild_vs2",.map$, 148,166; // prevent abuse
+			if (.EventON || .aTimer) {
+				set .EventON,0; set .aTimer,0;
+				setnpctimer 0; stopnpctimer;
+				announce "[LMS Manager] A GM has decided to turn the <Last Man Standing (PvP)> off. As a result no further prizes will be given.",bc_map | bc_blue;
+				callsub L_reset;
+				close;
+			}
+			set .EventON, 0; set .aTimer,1; setnpctimer 0; initnpctimer;
+			set .ResetCounter,.ResetCounter+1;
+			goto OnStartGame;
+			close;
+		}
+		else {
+			mes .@n$;
+
+			while ( .unique_id[.@j] != get_unique_id() && .@j < .register_count )
+			{
+				// dispbottom "unique"+get_unique_id;
+				// debugmes " unique "+.unique_id[.@j];
+				.@j++;
+			}
+			if(.unique_id[.@i])
+			{
+				mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 does ^FF0000NOT^000000 allow dual client.";
+				close;
+			}
+			if ( !.aTimer ) {
+				mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 is ^FF0000NOT^000000 being held at the moment.";
+				close;
+			}
+			if ( .EventON == 1 ) {
+				mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 is currently ^00FF00RUNNING^000000 and we are not taking any more participants. Please come earlier next time.";
+				close;
+			}
+			if ( .register_count >= .register_limit ) {
+				mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 has reached the ^FF0000MAXIMUM^000000 player participation.";
+				close;
+			}
+			mes "Do you want to register to LMS?";
+			mes "- Any buffs you have will be ^FF0000REMOVE^000000. You can buff yourself in the waiting room.";
+			mes "- The last person standing will win "+.prize_amt+"x <ITEM>"+getitemname(.prize)+"<INFO>"+.prize+"</INFO></ITEM>";
+			mes "- Minimum participants is "+.register_min;
+			mes "- Maximum participants is "+.register_limit;
+			if(select("Yes:No")==2) close; // Join confirmation
+			percentheal 100,100;
+			sc_end SC_ALL;
+			// sc_end_class SC_ALL;
+
+			.register_aid[ .register_count ] = getcharid(3);
+			.unique_id[ .register_count ] = get_unique_id;
+
+			delwaitingroom; // remove the old waiting room to add more participants
+			.register_count++;
+			waitingroom "LMS Register ["+.register_count+"/"+.register_limit+"]",0;
+			warp "guild_vs2", 0,0;
+		}
+		end;
+
+	OnStartEvent:
+		if ( .EventON == 1 )
+		{
+			if ( .register_count < .register_min ) {
+				announce "[LMS Manager] Sorry, There is not enough participant for the <Last Man Standing (PvP)> to run the event.",bc_all | bc_blue;
+				mapwarp "guild_vs2",.map$, 148,166;
+				callsub L_resetmap;
+			}
+			else
+			{
+				announce "The <Last Man Standing (PvP)> has begun!",bc_all | bc_blue;
+				.total_participants = .register_count;
+				delwaitingroom;
+				waitingroom "LMS Event ["+.register_count+"/"+.total_participants+"]",0;
+				mapannounce "guild_vs2", "The GAME will start in 10 second!",bc_map | bc_blue;
+				sleep 5000;
+				mapannounce "guild_vs2", "5...!",bc_map | bc_blue;
+				sleep 1000;
+				mapannounce "guild_vs2", "4...!",bc_map | bc_blue;
+				sleep 1000;
+				mapannounce "guild_vs2", "3...!",bc_map | bc_blue;
+				sleep 1000;
+				mapannounce "guild_vs2", "2...!",bc_map | bc_blue;
+				sleep 1000;
+				mapannounce "guild_vs2", "1...!",bc_map | bc_blue;
+				sleep 1000;
+				mapannounce "guild_vs2", "Let see who survive!!",bc_map | bc_blue;
+
+				pvpon "guild_vs2"; // start PVP
+				mapwarp "guild_vs2", "guild_vs2", 0, 0; // randomize position
+			}
+		}
+		end;
+
+	OnPCDieEvent:
+		remove_player( getcharid(3) );
+		if ( .aTimer )
+		{
+			waitingroom "LMS Event ["+.register_count+"/"+.total_participants+"]",0;
+			warp "SavePoint", 0,0;
+			end;
+		}
+		if ( .EventON != 1 || strcharinfo(3) != "guild_vs2" ) end;
+		if(killerrid)
+		{
+			set .@mtalk$, "";
+			switch(rand(1,9)){
+				case 1: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] has killed ["+strcharinfo(0)+"] without mercy!!"; break;
+				case 2: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] smack-down ["+strcharinfo(0)+"] to his knees!!"; break;
+				case 3: set .@mtalk$, "<Last Man Standing> ["+strcharinfo(0)+"] was killed by ["+rid2name(killerrid)+"]!!"; break;
+				case 4: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] spits on ["+strcharinfo(0)+"]'s grave!!"; break;
+				case 5: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] gives no chance to ["+strcharinfo(0)+"] to survive!!"; break;
+				case 6: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] bitch-slapped ["+strcharinfo(0)+"] to his grave!!"; break;
+				case 7: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] slapped ["+strcharinfo(0)+"] around with a large trout!!"; break;
+				case 8: set .@mtalk$, "<Last Man Standing> ["+strcharinfo(0)+"] don't stand a chance againts ["+rid2name(killerrid)+"]!!"; break;
+				case 9: set .@mtalk$, "<Last Man Standing> ["+strcharinfo(0)+"] was killed by ["+rid2name(killerrid)+"]!!"; break;
+			}
+			announce .@mtalk$, bc_all | bc_blue;
+		}
+		else
+		{
+			announce ""+smack_talk( strcharinfo(0) ), bc_all | bc_blue;
+		}
+
+
+		// strcharinfo(0) - killed
+		// strcharinfo(0,killerrid)
+		goto Interrupt_Event;
+		end;
+	OnPCLogoutEvent:
+		remove_player( getcharid(3) );
+		if ( .aTimer )
+		{
+			waitingroom "LMS Event ["+.register_count+"/"+.total_participants+"]",0;
+			end;
+		}
+		if ( .EventON != 1 || strcharinfo(3) != "guild_vs2" ) end;
+		announce ""+smack_talk( strcharinfo(0) ), bc_all | bc_blue;
+
+		// strcharinfo(0) - leaver
+		goto Interrupt_Event;
+		end;
+
+	Interrupt_Event:
+		//remove_player( getcharid(3) );
+		//waitingroom "LMS Event ["+.register_count+"/"+.total_participants+"]",0;
+
+		warp "SavePoint", 0,0; // warp defeated players
+
+		if ( .register_count > 1 ) end;
+		announce "[LMS Manager] Congratulations ~ ! The Winner of this round of <Last Man Standing (PvP)> is "+rid2name(.register_aid),bc_all | bc_blue;
+		getitem .prize, .prize_amt, .register_aid; // winner prize
+		warp "SavePoint", 0,0, getcharid( 0, rid2name( .register_aid ) );
+		callsub L_reset;
+		end;
+	L_resetmap:
+		mapwarp "guild_vs2",.map$, 148,166;
+	L_reset:
+		delwaitingroom;
+		killmonsterall "guild_vs2";
+		.EventON = 0;
+		deletearray .register_aid;
+		deletearray .unique_id;
+		.register_count = 0;
+		.total_participants = 0;
+		pvpoff "guild_vs2";
+		return;
+
+	// Announcements
+	OnClock0045:
+	OnClock0245:
+	OnClock0445:
+	OnClock0645:
+	OnClock0845:
+	OnClock1045:
+	OnClock1245:
+	OnClock1445:
+	OnClock1645:
+	OnClock1845:
+	OnClock2045:
+	OnClock2245:
+	OnStartGame:
+		announce "The <Last Man Standing (PvP)> is being held in Prontera (146 154) will begin in 3 minutes.",bc_all | bc_blue;
+		npctalk "[LMS Manager] Come and talk to me to register.";
+		set .aTimer, 1; // Announcement Timer
+		setnpctimer 0; initnpctimer;
+		delwaitingroom;
+		waitingroom "LMS Register [0/"+.register_limit+"]",0;
+		end;
+	OnTimer60000:
+		if (.aTimer!=1) end;
+		announce "The <Last Man Standing (PvP)> is being held in Prontera (146 154) will begin in 2 minutes.",bc_all | bc_blue;
+		npctalk "[LMS Manager] Come and talk to me to register.";
+		end;
+	OnTimer120000:
+		if (.aTimer!=1) end;
+		announce "The <Last Man Standing (PvP)> is being held in Prontera (146 154) will begin in 1 minutes.",bc_all | bc_blue;
+		npctalk "[LMS Manager] Come and talk to me to register.";
+		end;
+	OnTimer180000:
+		if (.aTimer!=1) end;
+		set .aTimer,0; set .EventON, 1;
+		setnpctimer 0; stopnpctimer;
+		goto OnStartEvent;
+		end;
+
+
+	OnInit:
+		getmapxy .map$, .x, .y, 1;
+		.register_min = 2; 			// minimum amount of players to start this event, or else it auto-abort
+		.register_limit = 100; 		// maximum amount of players able to participate in this event
+		.total_participants = 0;
+		.prize = 8501;
+		.prize_amt = 5;
+
+		pvpoff "guild_vs2"; // start PVP
+		mapwarp "guild_vs2",.map$, 148,166;
+		end;
+
+	function	remove_player	{
+		.@aid = getarg(0);
+		.@i = 0;
+		while ( .register_aid[.@i] != .@aid && .@i < .register_count )
+		{
+			// debugmes .register_aid[.@i]+" | "+rid2name(.register_aid[.@i]);
+			.@i++;
+		}
+		deletearray .register_aid[.@i], 1;
+		// deletearray .unique_id[.@i], 1;
+		.register_count--;	// reduce the player count
+		// debugmes "RegCount: "+.register_count;
+		delwaitingroom;
+		return;
+	}
+
+	function smack_talk{
+		.@name$ = getarg(0);
+		switch(rand(1,9)){
+			case 1: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] just simply quit from the game!"; break;
+			case 2: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] chicken out from the game!"; break;
+			case 3: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] isn't MAN enough to be in LMS!"; break;
+			case 4: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] is scared!"; break;
+			case 5: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] is being a wuss!"; break;
+			case 6: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] admits his weakness!"; break;
+			case 7: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] taps out of the game!"; break;
+			case 8: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] is overcome with fear!"; break;
+			case 9: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] doesn't have what it takes to be the MAN!"; break;
+		}
+		return .@mtalk$;
+	}
+}
+
+guild_vs2	mapflag	nosave	SavePoint
+guild_vs2	mapflag	nowarp
+guild_vs2	mapflag	nowarpto
+guild_vs2	mapflag	noteleport
+guild_vs2	mapflag	nomemo
+guild_vs2	mapflag	nopenalty
+guild_vs2	mapflag	nobranch
+guild_vs2	mapflag	noicewall
+guild_vs2	mapflag	pvp_noparty
+guild_vs2	mapflag	pvp_noguild
+
+guild_vs2,49,91,0	warp	NtoS	4,1,guild_vs2,49,11
+guild_vs2,49,8,0	warp	StoN	4,1,guild_vs2,49,88
+guild_vs2,8,50,0	warp	EtoW	1,4,guild_vs2,87,50
+guild_vs2,90,50,0	warp	WtoE	1,4,guild_vs2,12,50
+
+// 		49,91
+// 8,50 		90,50
+// 		49,8
