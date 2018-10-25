@@ -1407,6 +1407,8 @@ IG_PRIVATE_AIRSHIP,25464,1 // World_Moving_Rights
 // Milky Special Gift Box
 IG_MILKY_SGB,17256,1		// Good_Student_Gift_Box
 IG_MILKY_SGB,17257,1		// Bad_Student_Gift_Box
+IG_MILKY_SGB,7086,1			// Emblem of the Sun God
+IG_MILKY_SGB,12887,5		// Infinite Flywing
 IG_MILKY_SGB,644,25			// Gift_Box
 IG_MILKY_SGB,664,25			// Gift_Box_1
 IG_MILKY_SGB,665,25			// Gift_Box_2
@@ -1448,7 +1450,7 @@ IG_MILKY_SGB,12694,10		// Old_C_Album_Shoes
 IG_MILKY_SGB,12695,10		// Old_C_Album_Acc
 IG_MILKY_SGB,12698,10		// Old_C_Album_Weapon
 IG_MILKY_SGB,12693,10		// Old_C_Album_Garment
-IG_MILKY_SGB,8500,10			// Milky_Platinum_Card
+IG_MILKY_SGB,8500,10		// Milky_Platinum_Card
 IG_MILKY_SGB,975,25			// Scarlet Dyestuff
 IG_MILKY_SGB,976,25			// Lemon Dyestuff
 IG_MILKY_SGB,978,25			// Cobaltblue Dyestuff
@@ -1477,3 +1479,81 @@ IG_MILKY_SGB,2611,25		// Silver Ring
 IG_MILKY_SGB,2613,25		// Diamond Ring
 IG_MILKY_SGB,670,25			// Gold_Coin_Moneybag
 IG_MILKY_SGB,969,25			// Gold
+IG_MILKY_SGB,14536,25		// Abrasive
+IG_MILKY_SGB,14537,25		// Regeneration Potion
+IG_MILKY_SGB,14538,25		// Glass of Illusion
+IG_MILKY_SGB,14539,25		// Shadow Armor Scroll
+IG_MILKY_SGB,14540,25		// Holy Armor Scroll
+IG_MILKY_SGB,14542,25		// Big Defense Potion
+IG_MILKY_SGB,14544,25		// Big Magic Defense Potion
+IG_MILKY_SGB,14545,25		// Field Manual 300%
+IG_MILKY_SGB,13609,25		// Megaphone 5 Box
+IG_MILKY_SGB,14546,25		// I Love You Firecracker
+IG_MILKY_SGB,14549,25		// 	Birthday Firecracker
+IG_MILKY_SGB,16682,25		// Boarding Halter Box 7 day
+IG_MILKY_SGB,7776,25		// Gym Pass
+IG_MILKY_SGB,12412,25		// HE Bubble Gum
+IG_MILKY_SGB,6240,25		// HD Oridecon
+IG_MILKY_SGB,6241,25		// HD Elunium
+IG_MILKY_SGB,6226,25		// HD Bradium
+IG_MILKY_SGB,6225,25		// HD Carnium
+IG_MILKY_SGB,529,25			//Candy
+IG_MILKY_SGB,530,25			//Candy Cane
+IG_MILKY_SGB,538,25			//Well-baked Cookie
+IG_MILKY_SGB,539,25			//Piece of Cake
+IG_MILKY_SGB,558,25			//Chocolate
+IG_MILKY_SGB,559,25			//Hand-made Chocolate
+IG_MILKY_SGB,560,25			//Hand-made White Chocolate
+IG_MILKY_SGB,561,25			//White Chocolate
+IG_MILKY_SGB,564,25			//Rice Ball
+IG_MILKY_SGB,570,25			//Lucky Candy
+IG_MILKY_SGB,571,25			//Lucky Candy Cane
+IG_MILKY_SGB,572,25			//Lucky Cookie
+IG_MILKY_SGB,573,25			//Chocolate Drink
+IG_MILKY_SGB,2278,20		// Mr. Smile
+IG_MILKY_SGB,2281,20		// Opera Masque
+IG_MILKY_SGB,2288,20		// Mr. Scream
+IG_MILKY_SGB,2292,20		// Welding Mask
+IG_MILKY_SGB,2297,20		// Goblin Mask
+IG_MILKY_SGB,5005,20		// Gas Mask
+IG_MILKY_SGB,5086,20		// Alarm Mask
+IG_MILKY_SGB,5087,20		// Poker Face
+IG_MILKY_SGB,5088,20		// Surprised Mask
+IG_MILKY_SGB,5089,20		// Annoyed Mask
+IG_MILKY_SGB,5090,20		// Goblin Leader Mask
+IG_MILKY_SGB,2659,2			// Vesper Core 01
+IG_MILKY_SGB,2660,2			// Vesper Core 02
+IG_MILKY_SGB,2661,2			// Vesper Core 03
+IG_MILKY_SGB,2662,2			// Vesper Core 04
+IG_MILKY_SGB,2671,3			// Bow Thimble
+IG_MILKY_SGB,2677,3			// Spiritual Ring
+IG_MILKY_SGB,2680,10		// Ring of Minor Spirits
+IG_MILKY_SGB,2700,3			// Red Silk of Seal
+IG_MILKY_SGB,2701,3			// Glove of Orleans
+IG_MILKY_SGB,2703,5			// Expert Ring
+IG_MILKY_SGB,2716,5			// Librarian Glove
+IG_MILKY_SGB,2717,5			// Pocket Watch
+IG_MILKY_SGB,2718,5			// Lunatic Brooch
+IG_MILKY_SGB,2719,5			// Iron Wrist
+IG_MILKY_SGB,5137,1			// Alice Doll
+IG_MILKY_SGB,5138,1			// Magic Eyes
+IG_MILKY_SGB,5139,10		// Lotus
+IG_MILKY_SGB,5140,10		// Kawaii Ribbon
+IG_MILKY_SGB,628,25			// Well-Dried Bone
+IG_MILKY_SGB,629,25			// Singing Flower
+IG_MILKY_SGB,630,25			// Dew Laden Moss
+IG_MILKY_SGB,631,25			// Deadly Noxious Herb
+IG_MILKY_SGB,632,25			// Fatty Chubby Earthworm
+IG_MILKY_SGB,633,25			// Sweet Potato
+IG_MILKY_SGB,634,25			// Tropical Banana
+IG_MILKY_SGB,635,25			// Orc Trophy
+IG_MILKY_SGB,636,25			// No Recipient
+IG_MILKY_SGB,637,25			// Old Broom
+IG_MILKY_SGB,638,25			// Silver Knife of Chastity
+IG_MILKY_SGB,639,25			// Armlet of Obedience
+IG_MILKY_SGB,640,25			// Shining Stone
+IG_MILKY_SGB,641,25			// Contracts in Shadow
+IG_MILKY_SGB,642,25			// Book of the Devil
+IG_MILKY_SGB,659,25			// Her Heart
+IG_MILKY_SGB,660,25			// Forbidden Red Candle
+IG_MILKY_SGB,661,25			// Soft Apron
