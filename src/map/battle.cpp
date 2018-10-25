@@ -5959,6 +5959,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NJ_HYOUSENSOU:
 #ifdef RENEWAL
 						skillratio -= 30;
+						if (sc && sc->data[SC_SUITON])
+							skillratio += 2 * skill_lv;
 #endif
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
 							skillratio += 5 * sd->spiritcharm;
