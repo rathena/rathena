@@ -2,8 +2,27 @@
 -	script	pvp_announce	-1,{
 OnPCLoadMapEvent:
 	if(strcharinfo(3) == "pvp_y_1-2")
-		// mapannounce "pvp_y_1-2", "[" + strcharinfo(0) + "] has entered the map. ", bc_map|bc_pc;
-		announce "[" + strcharinfo(0) + "] has entered the PvP Room. KILL !! ", bc_all|bc_pc;
+		announce "[" + strcharinfo(0) + "] has entered the PvP Room. KILL !! ", bc_all, "0xFF0000";
+	end;
+
+OnPCDieEvent:
+	if(strcharinfo(3) == "pvp_y_1-2")
+	{
+		warp "SavePoint",0,0;
+		if(killerrid)
+			announce "[" + strcharinfo(0) + "] was killed by ["+ rid2name(killerrid) +"] !!", bc_all, "0xFF0000";
+		else
+			announce "[" + strcharinfo(0) + "] has left the PvP Zone.", bc_all, "0xFF0000";
+		donpcevent "PVP Warper#pvp_warper_npc::OnCountChange";
+	}
+	end;
+
+OnPCKillEvent:
+	.@map$ = strcharinfo(3);
+	if ( .@map$ == "pvp_y_1-2" ) {
+		.@char_id = getcharid( 0,rid2name( killedrid ) );
+		getitem2 7420,1,1,0,0,254,0, ( .@char_id & 65535 ), ( .@char_id >> 16 );
+	}
 	end;
 }
 pvp_y_1-2	mapflag	loadevent

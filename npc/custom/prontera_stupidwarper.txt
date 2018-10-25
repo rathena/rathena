@@ -1,14 +1,46 @@
 prontera,145,198,5	script	Vending Zone	807,{
 	warp "vendzone",50,48;
 	end;
+
+	// refresh every 5 minute;
+	OnInit:
+	OnMinute00:
+	OnMinute05:
+	OnMinute10:
+	OnMinute15:
+	OnMinute20:
+	OnMinute25:
+	OnMinute30:
+	OnMinute35:
+	OnMinute40:
+	OnMinute45:
+	OnMinute50:
+	OnMinute55:
+		.total = 0;
+		getobjects(BL_PC,0x2, "vendzone");
+		.@str1$ = ".@obj_"+BL_PC+"_name$";
+		.@pc = getarraysize(getd(.@str1$));
+		for (.@i = 0; .@i < .@pc; .@i++) {
+			debugmes getd(.@str1$);
+			if(checkvending(getd(.@str1$)))
+			{
+				.total++;
+			}
+		}
+		delwaitingroom;
+		waitingroom "Venders Count: "+.total+"",0;
+	end;
 }
-prontera,156,195,3	script	PVP Warper	588,{
+prontera,156,195,3	script	PVP Warper#pvp_warper_npc	588,{
 	mes 	"Required Level: 70 and above";
 	mes 	"Charges : ^FF55331,200z^000000";
 	menu	"Continue", PVP1, "Cancel", PVP2;
 	PVP1:
 		if ((Zeny > 1199) && (BaseLevel > 70)) {
 			set Zeny, Zeny - 1200;
+			.total = getmapusers("pvp_y_1-2")+1;
+			delwaitingroom;
+			waitingroom "PvP Count: "+.total+"",0;
 			callfunc "F_PVP_FSRS";
 		}
 		else {
@@ -16,5 +48,16 @@ prontera,156,195,3	script	PVP Warper	588,{
 		}
 		end;
 	PVP2:
+		end;
+
+	OnCountChange:
+		debugmes "sth change";
+		.total = getmapusers("pvp_y_1-2");
+		delwaitingroom;
+		waitingroom "PvP Count: "+.total+"",0;
+		end;
+
+	OnInit:
+		waitingroom "PvP Count: 0",0;
 		end;
 }
