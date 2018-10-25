@@ -2173,7 +2173,7 @@
 2980,Evilspirit_Gloves,Evil Spirit Gloves,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,110,,,{ bonus bMaxHP,500; bonus bMaxSP,200; skill "PF_SPIDERWEB",1; bonus3 bAutoSpell,"SO_PSYCHIC_WAVE",1,20; bonus5 bAutoSpell,"HW_MAGICPOWER",1,10,BF_MAGIC,0; bonus5 bAutoSpell,"WZ_FROSTNOVA",10,10,BF_WEAPON|BF_MAGIC,0; bonus5 bAutoSpellWhenHit,"DC_SCREAM",1,50,BF_WEAPON|BF_MAGIC,0; },{},{}
 2981,RingOfHero,Warrior's Ring,4,10,,200,,0,,0,0xFFFFFFFF,63,2,136,,160,,,{},{},{}
 2983,Greed_Brooch,Greed Brooch,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,50,,,{ bonus2 bHPLossRate,10,5000; },{},{}
-2984,Glove_Save_Rimnil,Glove Save Rimnil,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,30,,,{ bonus2 bExpAddRace,RC_All,5; },{},{}
+2984,Glove_Save_Rimnil,Glove Save Rimnil,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,30,,,{ bonus2 bExpAddRace,RC_All,5; bonus2 bSubRace,RC_All,-5; },{},{}
 2985,Gyges_Ring,Gyges Ring,4,10,,100,,,,1,0xFFFFFFFF,63,2,136,,50,,,{ bonus bInt,3; bonus bMatk,30; skill "TF_HIDING",1; },{},{ sc_end SC_HIDING; }
 2986,Snake_Ring,Snake Ring,4,20,,100,,2,,1,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bDex,3; bonus bMdef,2; },{},{}
 2987,Snake_Pendant,Snake Pendant,4,20,,100,,3,,1,0xFFFFFFFF,63,2,136,,0,0,0,{ bonus bAgi,3; bonus bLuk,2; bonus bMdef,3; },{},{}
