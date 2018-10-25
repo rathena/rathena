@@ -3353,6 +3353,13 @@ guild specified by the ID. 0 if the character is not a guild master of any guild
 
 ---------------------------------------
 
+*is_guild_leader({<guild ID>})
+
+This command will return true if the player attached to the script is the leader
+of his/her guild, or, if a guild ID is specified, of that guild.
+
+---------------------------------------
+
 *getcastlename("<map name>")
 
 This function returns the name of the castle when given the map name for that
@@ -9770,6 +9777,13 @@ Possible types are:
 
 If retrieval fails (leader not found or party does not exist), this function
 returns "null" instead of the character name, and -1 for the other types.
+
+---------------------------------------
+
+*is_party_leader({<party ID>})
+
+This command will return true if the player attached to the script is the leader
+of his/her party, or, if a party ID is specified, of that party.
 
 ---------------------------------------
 
