@@ -156,7 +156,7 @@ OnAgitBreak:
 			setcastledata .@map$,.@i,0;
 	}
 
-	mapannounce .@map$,"Emperium has been destroyed.",bc_map,"0x00FF00",FW_BOLD,20,0,40;
+	mapannounce .@map$,"Emperium has been destroyed by ["+strcharinfo(0)+"] from ["+strcharinfo(2)+"]!",bc_map,"0x00FF00",FW_BOLD,20,0,40;
 	maprespawnguildid .@map$,.@guild_id,2;// Respawn all but new castle-occupants, don't remove monsters.
 
 	sleep 500;
@@ -164,6 +164,7 @@ OnAgitBreak:
 		donpcevent strnpcinfo(0) +"::OnEmpSpawn";
 	sleep 7000;
 	announce "The [" + getcastlename(.@map$) + "] castle has been conquered by the [" + getguildName(.@guild_id) + "] guild.",bc_all|bc_woe;
+	donpcevent "flag_te::OnAgitBreak";
 	end;
 
 OnGuildBreak:
@@ -206,6 +207,43 @@ S_Message:
 
 OnMyMobDead:
 	end;
+
+OnPCLogoutEvent:
+OnPCDieEvent:
+	if ( strcharinfo(3) != strnpcinfo(2) ) end;
+	set .@mtalk$, "";
+	if(killerrid)
+	{
+		set .@killer$, rid2name(killerrid);
+		set .@victim$, strcharinfo(0);
+		switch(rand(1,9)){
+			case 1: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] has killed ["+.@victim$+"] without mercy!!"; break;
+			case 2: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] smack-down ["+.@victim$+"] to his knees!!"; break;
+			case 3: set .@mtalk$, "<War of Emperium> ["+.@victim$+"] was killed by ["+.@killer$+"]!!"; break;
+			case 4: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] spits on ["+.@victim$+"]'s grave!!"; break;
+			case 5: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] gives no chance to ["+.@victim$+"] to survive!!"; break;
+			case 6: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] bitch-slapped ["+.@victim$+"] to his grave!!"; break;
+			case 7: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] slapped ["+.@victim$+"] around with a large trout!!"; break;
+			case 8: set .@mtalk$, "<War of Emperium> ["+.@victim$+"] don't stand a chance againts ["+.@killer$+"]!!"; break;
+			case 9: set .@mtalk$, "<War of Emperium> ["+.@victim$+"] was killed by ["+.@killer$+"]!!"; break;
+		}
+	}
+	else
+	{
+		.@name$ = getarg(0);
+		switch(rand(1,9)){
+			case 1: set .@mtalk$, "<War of Emperium> ["+.@name$+"] just simply quit from the WAR!"; break;
+			case 2: set .@mtalk$, "<War of Emperium> ["+.@name$+"] chicken out from the WAR!"; break;
+			case 3: set .@mtalk$, "<War of Emperium> ["+.@name$+"] isn't MAN enough to be in WoE!"; break;
+			case 4: set .@mtalk$, "<War of Emperium> ["+.@name$+"] is scared!"; break;
+			case 5: set .@mtalk$, "<War of Emperium> ["+.@name$+"] is being a wuss!"; break;
+			case 6: set .@mtalk$, "<War of Emperium> ["+.@name$+"] admits his weakness!"; break;
+			case 7: set .@mtalk$, "<War of Emperium> ["+.@name$+"] taps out of the WAR!"; break;
+			case 8: set .@mtalk$, "<War of Emperium> ["+.@name$+"] is overcome with fear!"; break;
+			case 9: set .@mtalk$, "<War of Emperium> ["+.@name$+"] doesn't have what it takes to be the MAN!"; break;
+		}
+	}
+	announce ""+.@mtalk$, bc_all|bc_woe;
 }
 
 // Guild Kafras
@@ -1127,8 +1165,12 @@ OnInit:
 -	script	flag_te	GUILD_FLAG,{
 	end;
 OnInit:
+OnAgitBreak:
 	if (strnpcinfo(2) != "")
-		flagemblem getcastledata( strnpcinfo(2),1 );
+	{
+		explode(.@castle_name$, strnpcinfo(2),"-");
+		flagemblem getcastledata( .@castle_name$[0],1 );
+	}
 	end;
 }
 
