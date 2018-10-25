@@ -3217,6 +3217,62 @@ This is useful for maps that are split into many buildings, such as all the
 "*_in" maps, due to all the shops and houses.
 
 ---------------------------------------
+
+*getobjects(<type>,<data>{,"<map name>"{,<x1>,<y1>,<x2>,<y2>}})
+
+Get object GIDs on specified location based on specified 'type'. The returned
+value is number of all objects found. The GIDs is stored in temporary NPC
+variables.
+
+<type> can be combined value as bitwise of
+	BL_PC   - Character object
+	BL_MOB  - Monster object
+	BL_PET  - Pet object
+	BL_HOM  - Homunculus object
+	BL_NPC  - NPC object
+	BL_MER  - Mercenary object
+	BL_ELEM - Elemental object
+
+'data' values are bitmask of
+	0x1 - GID (default)
+	0x2 - Name
+	0x4 - Char ID (only for BL_PC)
+	0x8 - Class (Job ID for BL_PC, Sprite ID for BL_NPC, and Class
+		  for other types)
+
+Default 'map name' for look up is invoker location or NPC if no invoker found.
+
+Object GID found will be saved in these arrays, while 'type' is value of
+UNITTYPE_*. Use getd for good practice.
+
+	.@obj_type_id[]
+	.@obj_type_name$[]
+	.@obj_type_cid[]
+	.@obj_type_class[]
+
+Example 1:
+
+	getobjects(BL_PC,0x1);
+	.@n = getarraysize(getd(".@obj_"+BL_PC+"_id"));
+	for (.@i = 0; .@i < .@n; .@i++) {
+		getitem 607,1,getd(".@obj_"+BL_PC+"_id["+.@i+"]");
+	}
+
+Example 2:
+
+	getobjects(BL_PC|BL_NPC,0x1|0x2);
+	// For players
+	.@pc = getarraysize(getd(".@obj_"+BL_PC+"_id"));
+	for (.@i = 0; .@i < .@pc; .@i++) {
+		getitem 501,1,getd(".@obj_"+BL_PC+"_id["+.@i+"]");
+	}
+	// For NPCs
+	.@npc = getarraysize(getd(".@obj_"+BL_NPC+"_id"));
+	for (.@i = 0; .@i < .@npc; .@i++) {
+		npctalk "My number is "+(.@i+1)+"",getd(".@obj_"+BL_NPC+"_name$["+.@i+"]");
+	}
+
+---------------------------------------
 \\
 2,2.- Guild-related commands
 \\

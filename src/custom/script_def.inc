@@ -9,3 +9,5 @@
  **/
 
 //BUILDIN_DEF(example,""),
+
+BUILDIN_DEF(getobjects, "ii?????"), // [Cydh]
