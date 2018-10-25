@@ -2641,7 +2641,7 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 	const enum sc_type sc_atk[5] = {SC_STRIPWEAPON, SC_STRIPSHIELD, SC_STRIPARMOR, SC_STRIPHELM, SC__STRIPACCESSORY};
 	const enum sc_type sc_def[5] = {SC_CP_WEAPON, SC_CP_SHIELD, SC_CP_ARMOR, SC_CP_HELM, SC_NONE};
 	struct status_data *sstatus = status_get_status_data(src), *tstatus = status_get_status_data(target);
-	int rate, time, location;
+	int rate, time, location, mod = 100;
 
 	switch (skill_id) { // Rate
 		case RG_STRIPWEAPON:
@@ -2650,12 +2650,14 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 		case RG_STRIPHELM:
 		case GC_WEAPONCRUSH:
 			rate = 50 * (skill_lv + 1) + 2 * (sstatus->dex - tstatus->dex);
+			mod = 1000;
 			break;
 		case ST_FULLSTRIP: {
 			int min_rate = 50 + 20 * skill_lv;
 
 			rate = min_rate + 2 * (sstatus->dex - tstatus->dex);
 			rate = max(min_rate, rate);
+			mod = 1000;
 			break;
 		}
 		case GS_DISARM:
@@ -2677,7 +2679,7 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 			return false;
 	}
 
-	if (rnd()%100 >= rate)
+	if (rnd()%mod >= rate)
 		return false;
 
 	switch (skill_id) { // Duration
