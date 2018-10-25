@@ -23956,10 +23956,6 @@ BUILDIN_FUNC(identifyall) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/*==========================================
- * Retrieves party leader. if flag is specified,
- * return some of the leader data. Otherwise, return name.
- *------------------------------------------*/
 BUILDIN_FUNC(is_guild_leader)
 {
 	struct map_session_data* sd;

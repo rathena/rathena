@@ -215,7 +215,7 @@ OnTreasureDied:
 		mes "to conquer this stronghold?";
 		close;
 	}
-	if (getcharid(2) != .@GID || strcharinfo(0) != getguildmaster(.@GID)) {
+	if (is_guild_leader(.@GID) == false) {
 		mes "[ Steward ]";
 		mes "Hmpf. Your threats don't";
 		mes "scare me! Guardians, drive";
@@ -648,7 +648,7 @@ OnStartArena:
 		close;
 	}
 	if (getcharid(2) == .@GID) {
-		if (strcharinfo(0) != getguildmaster(.@GID)) {
+		if (is_guild_leader() == false) {
 			mes .@n$;
 			mes "As guardian of this";
 			mes "stronghold, I answer only";
@@ -1108,7 +1108,7 @@ OnEnable:
 	set .@num, atoi(charat(strnpcinfo(1),15));
 	set .@var$,"$agit_"+strnpcinfo(2);
 	if (getcharid(2) == .@GID) {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			if (getd(.@var$+"["+(.@num+1)+"]") == 2) {
 				mes "^3355FFDemolished Fortress";
 				mes "Gates can be repaired,";
