@@ -152,6 +152,7 @@ prontera,137,233,6	script	Find the Mushroom	4_F_RUSGREEN,{
 		.amount = 1;	// Reward item amount
 		.@GMLevel = 60;		// GM level required to access NPC
 		setarray .maps_list$[0],"izlude"; // Possible maps
+		.event_map$ = .maps_list$[ rand(getarraysize(.maps_list$)) ]; // to prevent error
 		reset_game();
 		end;
 
@@ -162,7 +163,7 @@ prontera,137,233,6	script	Find the Mushroom	4_F_RUSGREEN,{
 		// clean up previous rounds data
 		.EventON = 0; .aTimer = 0;
 		setnpctimer 0; stopnpctimer;
-		.event_map$ = "";
+		// .event_map$ = "";
 		deletearray $@mobid;
 		deletearray .@mushroom_data;
 

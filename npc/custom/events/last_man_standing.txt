@@ -3,6 +3,7 @@
 prontera,142,166,5	script	Last Man Standing	100,{
 		function remove_player;
 		function smack_talk;
+
 		set .@GMLevel,60;	// GM level required to access NPC.
 		set .@n$,"[^0000FFLMS Manager^000000]";
 
@@ -81,7 +82,6 @@ prontera,142,166,5	script	Last Man Standing	100,{
 			if ( .register_count < .register_min ) {
 				announce "[LMS Manager] Sorry, There is not enough participant for the <Last Man Standing (PvP)> to run the event.",bc_all | bc_blue;
 				mapwarp "guild_vs2",.map$, 148,166;
-				callsub L_resetmap;
 			}
 			else
 			{
@@ -138,12 +138,9 @@ prontera,142,166,5	script	Last Man Standing	100,{
 		{
 			announce ""+smack_talk( strcharinfo(0) ), bc_all | bc_blue;
 		}
-
-
-		// strcharinfo(0) - killed
-		// strcharinfo(0,killerrid)
 		goto Interrupt_Event;
 		end;
+
 	OnPCLogoutEvent:
 		remove_player( getcharid(3) );
 		if ( .aTimer )
@@ -170,8 +167,7 @@ prontera,142,166,5	script	Last Man Standing	100,{
 		warp "SavePoint", 0,0, getcharid( 0, rid2name( .register_aid ) );
 		callsub L_reset;
 		end;
-	L_resetmap:
-		mapwarp "guild_vs2",.map$, 148,166;
+
 	L_reset:
 		delwaitingroom;
 		killmonsterall "guild_vs2";
@@ -181,7 +177,7 @@ prontera,142,166,5	script	Last Man Standing	100,{
 		.register_count = 0;
 		.total_participants = 0;
 		pvpoff "guild_vs2";
-		return;
+		end;
 
 	// Announcements
 	OnClock0100:
@@ -195,16 +191,19 @@ prontera,142,166,5	script	Last Man Standing	100,{
 		delwaitingroom;
 		waitingroom "LMS Register [0/"+.register_limit+"]",0;
 		end;
+
 	OnTimer60000:
 		if (.aTimer!=1) end;
 		announce "The <Last Man Standing (PvP)> is being held in Prontera (146 154) will begin in 2 minutes.",bc_all | bc_blue;
 		npctalk "[LMS Manager] Come and talk to me to register.";
 		end;
+
 	OnTimer120000:
 		if (.aTimer!=1) end;
 		announce "The <Last Man Standing (PvP)> is being held in Prontera (146 154) will begin in 1 minutes.",bc_all | bc_blue;
 		npctalk "[LMS Manager] Come and talk to me to register.";
 		end;
+
 	OnTimer180000:
 		if (.aTimer!=1) end;
 		set .aTimer,0; set .EventON, 1;
@@ -221,7 +220,6 @@ prontera,142,166,5	script	Last Man Standing	100,{
 		.prize = 8501;
 		.prize_amt = 5;
 
-		pvpoff "guild_vs2"; // start PVP
 		mapwarp "guild_vs2",.map$, 148,166;
 		end;
 
@@ -241,7 +239,7 @@ prontera,142,166,5	script	Last Man Standing	100,{
 		return;
 	}
 
-	function smack_talk{
+	function	smack_talk	{
 		.@name$ = getarg(0);
 		switch(rand(1,9)){
 			case 1: set .@mtalk$, "<Last Man Standing> ["+.@name$+"] just simply quit from the game!"; break;
@@ -273,7 +271,3 @@ guild_vs2,49,91,0	warp	NtoS	4,1,guild_vs2,49,11
 guild_vs2,49,8,0	warp	StoN	4,1,guild_vs2,49,88
 guild_vs2,8,50,0	warp	EtoW	1,4,guild_vs2,87,50
 guild_vs2,90,50,0	warp	WtoE	1,4,guild_vs2,12,50
-
-// 		49,91
-// 8,50 		90,50
-// 		49,8

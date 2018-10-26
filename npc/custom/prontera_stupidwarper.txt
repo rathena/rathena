@@ -21,7 +21,7 @@ prontera,145,198,5	script	Vending Zone	807,{
 		.@str1$ = ".@obj_"+BL_PC+"_name$";
 		.@pc = getarraysize(getd(.@str1$));
 		for (.@i = 0; .@i < .@pc; .@i++) {
-			debugmes getd(.@str1$);
+			// debugmes getd(.@str1$);
 			if(checkvending(getd(.@str1$)))
 			{
 				.total++;
@@ -51,7 +51,7 @@ prontera,156,195,3	script	PVP Warper#pvp_warper_npc	588,{
 		end;
 
 	OnCountChange:
-		debugmes "sth change";
+		// debugmes "sth change";
 		.total = getmapusers("pvp_y_1-2");
 		delwaitingroom;
 		waitingroom "PvP Count: "+.total+"",0;

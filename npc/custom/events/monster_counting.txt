@@ -9,6 +9,8 @@ prontera,146,154,5	script	Poring Counting	757,{
 
 	if (getgmlevel()>=.@GMLevel) {
 		mes .@n$;
+		if(.EventON)
+			mes getmonsterinfo( .mob,MOB_NAME ) +" x "+.amount;
 		mes "Select an option.";
 		if (.EventON || .aTimer) {
 			mes "The Event is currently: [^0000FFON^000000]";
@@ -40,27 +42,27 @@ prontera,146,154,5	script	Poring Counting	757,{
 
 		// add-on size influence ?
 		if(.@size == 0)
-			.@amount = rand( 25,55 );
+			.amount = rand( 25,55 );
 		else if (.@size == 1)
-			.@amount = rand( 20,45 );
+			.amount = rand( 20,45 );
 		else if (.@size == 2)
-			.@amount = rand( 15,35 );
+			.amount = rand( 15,35 );
 		else
-			.@amount = rand( 15,55 ); // fallback
+			.amount = rand( 15,55 ); // fallback
 
 		set .Winner,0; // stop from having duplicate winners
 		// spawned monster in the bounding box
-		areamonster .map$,.xy_area[0],.xy_area[1],.xy_area[2],.xy_area[3],"",.mob,.@amount,.npc_name$+"::OnDied";
+		areamonster .map$,.xy_area[0],.xy_area[1],.xy_area[2],.xy_area[3],"",.mob,.amount,.npc_name$+"::OnDied";
 
 		deletepset 1; // delete previous answer regardless if there is any
 		// Execute OnCorrectAnswer when someone answer correctly
-		defpattern 1,"([^:]+):.\\s*"+.@amount+"$", "OnCorrectAnswer";
+		defpattern 1,"([^:]+):.\\s*"+.amount+"$", "OnCorrectAnswer";
 		activatepset 1;
 
 		// Chatroom to display the question
 		waitingroom "How many is there?", 0;
 		npctalk "<Poring Counting> Tell me the correct amount of " + getmonsterinfo(.mob,MOB_NAME) + " in there.";
-		debugmes " > "+.@amount+" "+getmonsterinfo( .mob,MOB_NAME );
+		// debugmes " > "+.amount+" "+getmonsterinfo( .mob,MOB_NAME );
 		setnpctimer 0; // start 30s timer
 		end;
 
@@ -198,7 +200,7 @@ prontera,146,154,5	script	Poring Counting	757,{
 			2936, // ghostring
 			2248, // golden poring
 			3508, // eggring
-			3505, // big eggring
+			// 3505, // big eggring
 			1031; // poporing;
 		.mob = 0;
 
