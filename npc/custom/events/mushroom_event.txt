@@ -131,15 +131,15 @@ prontera,137,233,6	script	Find the Mushroom	4_F_RUSGREEN,{
 		set .aTimer, 1; // Announcement Timer
 		setnpctimer 0; initnpctimer;
 		end;
-	OnTimer6000:
+	OnTimer60000:
 		if (.aTimer!=1) end;
 		announce "The <Find the Mushroom> is being held in Izlude will begin in 2 minutes.",bc_all | bc_blue;
 		end;
-	OnTimer12000:
+	OnTimer120000:
 		if (.aTimer!=1) end;
 		announce "The <Find the Mushroom> is being held in Izlude will begin in 1 minutes.",bc_all | bc_blue;
 		end;
-	OnTimer18000:
+	OnTimer180000:
 		if (.aTimer!=1) end;
 		announce "The <Find the Mushroom> has begun!",bc_all | bc_blue;
 		set .aTimer,0; stopnpctimer;
