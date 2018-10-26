@@ -15,16 +15,18 @@
 //============================================================
 
 prontera,137,233,6	script	Find the Mushroom	4_F_RUSGREEN,{
-// izlude,114,149,6	script	Find the Mushroom	4_F_RUSGREEN,{
-	mes "[ Find The Mushroom ]";
-	if (.status == 1) {
-		.@count = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
-		if (.@count > 0 && getgmlevel()  < .GM) {
-			mes "There are " + .@count + " Mushrooms left in " + .event_map$ + "!";
-			mes "Find and kill the mushrooms to gain " + getitemname(.prize) + "!";
-			close;
+		function reset_game;
+
+		set .@n$,"[^0000FFFind the Mushroom^000000]";
+		mes .@n$;
+		if (.EventON == 1) {
+			.@count = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
+			if (.@count > 0 ) {
+				mes "There are " + .@count + " Mushrooms left in " + .event_map$ + "!";
+				mes "Find and kill the mushrooms to gain " + getitemname(.prize) + "!";
+			}
 		}
-		if(getgmlevel() > .GM){
+		if (getgmlevel()>=.@GMLevel) {
 			mes "Location of the Mushrooms: ";
 			setarray .@mushroom_data[0], 0;
 			for( .@i = 0; .@i < getarraysize($@mobid); .@i++ )
@@ -35,108 +37,135 @@ prontera,137,233,6	script	Find the Mushroom	4_F_RUSGREEN,{
 					mes "<NAVI>Mushroom "+(.@i+1)+"<INFO>"+.event_map$+","+ .@mushroom_data[6] +","+ .@mushroom_data[7] +",0000,0</INFO></NAVI> :"+ .@mushroom_data[6] +" "+ .@mushroom_data[7];
 				}
 			}
-			next;
-			mes "[ Find The Mushroom ]";
-			mes "Should I stop the event?";
-			if (select("- No:- Yes") == 1) close;
-			killmonsterall .event_map$;
-			.status = 0;
-			.event_map$ = "";
-			deletearray $@mobid;
-			deletearray .@mushroom_data;
-			announce "The Find the Mushroom Event has ended. All the Mushrooms have been killed.",0;
+			mes "Select an option.";
+			if (.EventON || .aTimer) {
+				mes "The Event is currently: [^0000FFON^000000]";
+				mes "Would you like to turn it OFF?";
+			} else {
+				mes "The Event is currently: [^FF0000OFF^000000]";
+				mes "Would you like to turn it ON?";
+			}
+			if(select("Yes:No")==2) close;
+			if (.EventON || .aTimer) {
+				reset_game();
+				announce "<Find the Mushroom> A GM has decided to turn the Event off. As a result no further prizes will be given.",bc_all | bc_blue;
+				close;
+			}
+			goto OnStartGame;
 		}
-		close;
-	}
-	mes "There is no event at the moment!";
-	if (.status || getgmlevel() < .GM) close;
-	mes "Start the event?";
-	if (select("- No:- Yes") == 1) close;
-	donpcevent strnpcinfo(0) + "::OnClock2300";
-	mes "[ Find The Mushroom ]";
-	mes "Event started!";
-	close;
-
-OnInit:
-	.prize = 8501;	// Reward item ID
-	.amount = 1;	// Reward item amount
-	.GM = 60;		// GM level required to access NPC
-	setarray .maps_list$[0],"izlude"; // Possible maps
-	end;
-
-OnClock0100:
-OnClock0300:
-OnClock0500:
-OnClock0700:
-OnClock0900:
-OnClock1100:
-OnClock1300:
-OnClock1500:
-OnClock1700:
-OnClock1900:
-OnClock2100:
-OnClock2300:
-	if (.status) end;
-	.status = 1;
-	.@spawn = rand(1,10);	// How many Mushrooms should spawn?
-	.event_map$ = .maps_list$[ rand(getarraysize(.maps_list$)) ];
-	.@label$ = strnpcinfo(0) + "::OnMobKilled";
-	// killmonster .event_map$, .@label$;
-	killmonsterall .event_map$;
-	monster .event_map$,0,0,"Please don't kill me!",1085, .@spawn, .@label$;
-	//areamonster .event_map$,116,142,119,145,"Please don't kill me!",1085,.@spawn, .@label$;
-	announce "Find the Mushroom : Total of " + .@spawn + " Mushrooms have been spawned in " + .event_map$ + "!",0;
-	sleep 2500;
-	announce "Find the Mushroom : Every Mushroom you kill will give you " + getitemname(.prize) + "!",0;
-	setnpctimer 0; initnpctimer;
-	end;
-
-
-OnTimer4000:
-	for( .@i = 0; .@i < getarraysize($@mobid); .@i++ )
-	{
-		set .@mtalk, "";
-		switch(rand(25)){
-			case 1: set .@mtalk, "Noo.. Don't kill me..."; break;
-			case 2: set .@mtalk, "I am just a mushroom..."; break;
-			case 3: set .@mtalk, "..."; break;
-			case 4: set .@mtalk, "You don't see me."; break;
-			case 5: set .@mtalk, "Go away!"; break;
-			case 6: set .@mtalk, "No.. I don't have legs to run!"; break;
-			case 7: set .@mtalk, "Take my alcohol but don't take my life!"; break;
-			case 8: set .@mtalk, "Why are you doing this!"; break;
-			case 9: set .@mtalk, "Why is Nubs making me talk?!"; break;
-			case 10: set .@mtalk, "Why are you killing me?"; break;
-			case 11: set .@mtalk, "If you kill me.. I'll ... "; break;
-			case 12: set .@mtalk, "Sob.. "; break;
-			case 13: set .@mtalk, "Noo.. "; break;
-			default: set .@mtalk, ""; break;
-		}
-
-		if(unitexists ($@mobid[.@i])){
-			if(.@mtalk)
-				unittalk $@mobid[.@i], .@mtalk, bc_area;
-			else
-				emotion rand(1,30), $@mobid[.@i];
-		}
-		sleep 500;
-	}
-	setnpctimer 0; initnpctimer;
-	end;
-
-OnMobKilled:
-	if (playerattached() == 0)
 		end;
-	getitem .prize, .amount;
-	.@spawn = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
-	if (.@spawn > 0)
-		announce "[ " + strcharinfo(0) + " ] has killed a Mushroom. There are now " + .@spawn + " Mushroom(s) left.",bc_map;
-	else {
-		announce "The Find the Mushroom Event has ended. All the Mushrooms have been killed.",0;
-		.status = 0;
+
+	// The ACTUAL Start of the Event
+	OnStartEvent:
+		.EventON = 1;
+		.@spawn = rand(2,8);	// How many Mushrooms should spawn?
+		.event_map$ = .maps_list$[ rand(getarraysize(.maps_list$)) ];
+		.@label$ = strnpcinfo(0) + "::OnMobKilled";
+
+		killmonsterall .event_map$; // wipe monster from the map
+		monster .event_map$,0,0,"Please don't kill me!",1085, .@spawn, .@label$;
+
+		if(.event_map$ == "izlude")	set .@map$, "Izlude";
+		announce "<Find the Mushroom> Total of " + .@spawn + " Mushrooms have been spawned in " + .@map$ + "!",0;
+		sleep 2500;
+		announce "<Find the Mushroom> Every Mushroom you kill will give you " + getitemname(.prize) + "!",0;
+			stopnpctimer; setnpctimer 0; initnpctimer;
+		end;
+
+	// reward the player on kill
+	OnMobKilled:
+		if (playerattached() == 0) end;
+		getitem .prize, .amount;
+		.@spawn = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
+		if (.@spawn > 0)
+			announce "<Find the Mushroom> " + strcharinfo(0) + " has killed a Mushroom. There are now " + .@spawn + " Mushroom(s) left.",bc_all | bc_blue;
+		else {
+			announce "<Find the Mushroom> All the Mushrooms have been killed. Thank you for playing.",bc_all | bc_blue;
+			reset_game();
+		}
+		end;
+
+	// make the mushroom more obvous
+	OnTimer3500:
+		if(.EventON){
+			for( .@i = 0; .@i < getarraysize($@mobid); .@i++ )
+			{
+				set .@mtalk, "";
+				switch(rand(25)){
+					case 1: set .@mtalk, "Noo.. Don't kill me..."; break;
+					case 2: set .@mtalk, "I am just a mushroom..."; break;
+					case 3: set .@mtalk, "..."; break;
+					case 4: set .@mtalk, "You don't see me."; break;
+					case 5: set .@mtalk, "Go away!"; break;
+					case 6: set .@mtalk, "No.. I don't have legs to run!"; break;
+					case 7: set .@mtalk, "Take my alcohol but don't take my life!"; break;
+					case 8: set .@mtalk, "Why are you doing this!"; break;
+					case 9: set .@mtalk, "Why is Nubs making me talk?!"; break;
+					case 10: set .@mtalk, "Why are you killing me?"; break;
+					case 11: set .@mtalk, "If you kill me.. I'll ... "; break;
+					case 12: set .@mtalk, "Sob.. "; break;
+					case 13: set .@mtalk, "Noo.. "; break;
+					default: set .@mtalk, ""; break;
+				}
+
+				if(unitexists ($@mobid[.@i])){
+					if(.@mtalk)
+						unittalk $@mobid[.@i], .@mtalk, bc_area;
+					else
+						emotion rand(1,30), $@mobid[.@i];
+				}
+				sleep 250;
+			}
+			stopnpctimer; setnpctimer 0; initnpctimer;
+		}
+		end;
+
+	// Announcements
+	OnClock0000:
+	OnClock0700:
+	OnClock1200:
+	OnClock1800:
+	OnStartGame:
+		.RoundCount = 0;
+		announce "The <Find the Mushroom> is being held in Izlude will begin in 3 minutes.",bc_all | bc_blue;
+		set .aTimer, 1; // Announcement Timer
+		setnpctimer 0; initnpctimer;
+		end;
+	OnTimer6000:
+		if (.aTimer!=1) end;
+		announce "The <Find the Mushroom> is being held in Izlude will begin in 2 minutes.",bc_all | bc_blue;
+		end;
+	OnTimer12000:
+		if (.aTimer!=1) end;
+		announce "The <Find the Mushroom> is being held in Izlude will begin in 1 minutes.",bc_all | bc_blue;
+		end;
+	OnTimer18000:
+		if (.aTimer!=1) end;
+		announce "The <Find the Mushroom> has begun!",bc_all | bc_blue;
+		set .aTimer,0; stopnpctimer;
+		setnpctimer 0; initnpctimer;
+		goto OnStartEvent; // start the event
+		end;
+
+	OnInit:
+		.prize = 8501;	// Reward item ID
+		.amount = 1;	// Reward item amount
+		.@GMLevel = 60;		// GM level required to access NPC
+		setarray .maps_list$[0],"izlude"; // Possible maps
+		reset_game();
+		end;
+
+	function reset_game {
+		// kill all surving monster
+		killmonsterall .event_map$; // wipe monster from the map
+
+		// clean up previous rounds data
+		.EventON = 0; .aTimer = 0;
+		setnpctimer 0; stopnpctimer;
 		.event_map$ = "";
 		deletearray $@mobid;
 		deletearray .@mushroom_data;
+
+		return;
 	}
-	end;
 }

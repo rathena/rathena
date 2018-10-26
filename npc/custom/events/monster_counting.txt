@@ -20,7 +20,7 @@ prontera,146,154,5	script	Poring Counting	757,{
 		if(select("Yes:No")==2) close;
 		if (.EventON) {
 			reset_game();
-			announce "<Poring Counting> A GM has decided to turn the Disguise Event off. As a result no further prizes will be given.",bc_map | bc_blue;
+			announce "<Poring Counting> A GM has decided to turn the Event off. As a result no further prizes will be given.",bc_map | bc_blue;
 			close;
 		}
 		goto OnStartGame;
@@ -81,7 +81,7 @@ prontera,146,154,5	script	Poring Counting	757,{
 			dispbottom "<Poring Counting> Someone has already won this round.";
 		}
 		else {
-			announce "Bravo!! " + strcharinfo(0) + " is correct!",bc_map | bc_blue;
+			announce "<Poring Counting> Bravo!! " + strcharinfo(0) + " is correct!",bc_map | bc_blue;
 			.Winner = 1; // stop from having duplicate winners, incase the event executed twice
 			.EventON = 1;
 
@@ -146,33 +146,25 @@ prontera,146,154,5	script	Poring Counting	757,{
 		end;
 
 	// Announcements
-	OnClock0030:
-	OnClock0230:
-	OnClock0430:
-	OnClock0630:
-	OnClock0830:
-	OnClock1030:
-	OnClock1230:
-	OnClock1430:
-	OnClock1630:
-	OnClock1830:
-	OnClock2030:
-	OnClock2230:
+	OnClock0200:
+	OnClock0800:
+	OnClock1400:
+	OnClock1900:
 	OnStartGame:
 		.RoundCount = 0;
 		announce "The <Poring Counting> is being held in Prontera (146 154) will begin in 3 minutes.",bc_all | bc_blue;
 		set .aTimer, 1; // Announcement Timer
 		setnpctimer 0; initnpctimer;
 		end;
-	OnTimer6000:
+	OnTimer60000:
 		if (.aTimer!=1) end;
 		announce "The <Poring Counting> is being held in Prontera (146 154) will begin in 2 minutes.",bc_all | bc_blue;
 		end;
-	OnTimer12000:
+	OnTimer120000:
 		if (.aTimer!=1) end;
 		announce "The <Poring Counting> is being held in Prontera (146 154) will begin in 1 minutes.",bc_all | bc_blue;
 		end;
-	OnTimer18000:
+	OnTimer180000:
 		if (.aTimer!=1) end;
 		announce "The <Poring Counting> has begun!",bc_all | bc_blue;
 		set .aTimer,0; stopnpctimer;

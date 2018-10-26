@@ -184,18 +184,9 @@ prontera,142,166,5	script	Last Man Standing	100,{
 		return;
 
 	// Announcements
-	OnClock0045:
-	OnClock0245:
-	OnClock0445:
-	OnClock0645:
-	OnClock0845:
-	OnClock1045:
-	OnClock1245:
-	OnClock1445:
-	OnClock1645:
-	OnClock1845:
-	OnClock2045:
-	OnClock2245:
+	OnClock0100:
+	OnClock1300:
+	OnClock2000:
 	OnStartGame:
 		announce "The <Last Man Standing (PvP)> is being held in Prontera (146 154) will begin in 3 minutes.",bc_all | bc_blue;
 		npctalk "[LMS Manager] Come and talk to me to register.";
