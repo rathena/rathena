@@ -25,29 +25,29 @@ prontera,156,219,4	script	Cluckers	800,{
 		if (.EventON) {
 			specialeffect2 EF_HIT3;
 			switch(rand(15)) {
-				case 0: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
-				case 1: npctalk "Cluckers : Cluuuuuck!~"; break;
+				case 0: npctalk "<Cluckers> CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
+				case 1: npctalk "<Cluckers> Cluuuuuck!~"; break;
 				case 2: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
 				case 3: sc_start SC_Freeze,2500,0; break;
-				case 4: npctalk "Cluckers : CLUUUUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
+				case 4: npctalk "<Cluckers> CLUUUUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 				case 5: sc_start SC_Sleep,2500,0; break;
 				case 6: sc_start SC_Stone,2500,0; emotion ET_KIK; break;
-				case 7: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
-				case 8: npctalk "Cluckers : Cluck! CLUUUCK!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
+				case 7: npctalk "<Cluckers> CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
+				case 8: npctalk "<Cluckers> Cluck! CLUUUCK!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 				case 9: sc_start SC_Stun,2500,0; break;
 				case 10: sc_start SC_Sleep,2500,0; emotion ET_KIK; break;
-				case 11: npctalk "Cluckers : Cluck! Cluck!"; break;
+				case 11: npctalk "<Cluckers> Cluck! Cluck!"; break;
 				case 12: sc_start SC_Stun,2500,0; break;
 				case 13: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
 				default:
 					if (rand(50) < 4) {
-						npctalk "Cluckers : WOOF!...........";
+						npctalk "<Cluckers> WOOF!...........";
 						specialeffect2 EF_SPHERE;
 						announce "<Cluck! Cluck! Boom!> " + strcharinfo(0) + " squeezed out the prize! Well done!",0;
 						getitem $cluck_item_id,$cluck_item_amount;
 						set .EventON,0;
 					} else {
-						npctalk "Cluckers : Cluck! CLUUUCK!!";
+						npctalk "<Cluckers> Cluck! CLUUUCK!!";
 						unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1;
 					}
 					break;
@@ -98,19 +98,19 @@ prontera,156,219,4	script	Cluckers	800,{
 		mes "Cluck....";
 		close;
 
-	OnTimer10000:
+	OnTimer15000:
 		if(.aTimer != 1) end;
 		announce "<Cluck! Cluck! Boom!> Please hurry behind the fountain if you want to play with the crazy chicken!",bc_all | bc_blue;
 		end;
-	OnTimer20000:
+	OnTimer30000:
 		if(.aTimer != 1) end;
 		announce "<Cluck! Cluck! Boom!> Cluckers has eaten one of my items! I'm too scared to retrieve it!",bc_all | bc_blue;
 		end;
-	OnTimer30000:
+	OnTimer45000:
 		if(.aTimer != 1) end;
 		announce "<Cluck! Cluck! Boom!> Click the insane chicken and try squeeze out the item, if you're lucky you'll win! Are you ready?",bc_all | bc_blue;
 		end;
-	OnTimer40000:
+	OnTimer60000:
 		if(.aTimer != 1) end;
 		announce "<Cluck! Cluck! Boom!> GO! Click the chicken to get the prize! You have 5 minutes!",bc_all | bc_blue;
 		if (!$cluck_item_id) set $cluck_item_id,8501;
@@ -126,8 +126,15 @@ prontera,156,219,4	script	Cluckers	800,{
 			announce "<Cluck! Cluck! Boom!> Time is out! I guess no one manage to get the present from me!", bc_all | bc_blue;
 		end;
 
-	OnMinute01:
-	OnMinute31:
+	// auto event
+	OnClock0400:
+	OnClock0500:
+	OnClock0600:
+	OnClock1000:
+	OnClock1100:
+	OnClock1600:
+	OnClock1700:
+	OnClock2100:
 		announce "<Cluck! Cluck! Boom!> is about to start in Prontera!", bc_all | bc_blue;
 		.aTimer = 1;
 		initnpctimer;
