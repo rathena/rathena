@@ -3569,6 +3569,7 @@ void map_flags_init(void){
 		// Clear adjustment data, will be reset after loading NPC
 		mapdata->damage_adjust = {};
 		mapdata->skill_damage.clear();
+		mapdata->skill_duration.clear();
 		map_free_questinfo(mapdata);
 
 		if (instance_start && i >= instance_start)
@@ -3594,6 +3595,7 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 
 	dst_map->flag.insert(src_map->flag.begin(), src_map->flag.end());
 	dst_map->skill_damage.insert(src_map->skill_damage.begin(), src_map->skill_damage.end());
+	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
 	dst_map->zone = src_map->zone;
 	dst_map->qi_count = 0;
@@ -4458,6 +4460,19 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
 }
 
 /**
+ * Add new skill duration adjustment entry for a map
+ * @param mapd: Map data
+ * @param skill_id: Skill ID to adjust
+ * @param per: Skill duration adjustment value in percent
+ */
+void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
+	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
+		mapd->skill_duration[skill_id] += per;
+	else // Update previous entry
+		mapd->skill_duration.insert({ skill_id, per });
+}
+
+/**
  * PvP timer handling (starting)
  * @param bl: Player block object
  * @param ap: func* with va_list values
@@ -4830,6 +4845,16 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					for (int i = 0; i < SKILLDMG_MAX; i++)
 						mapdata->damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
 				}
+			}
+			mapdata->flag[mapflag] = status;
+			break;
+		case MF_SKILL_DURATION:
+			if (!status)
+				mapdata->skill_duration.clear();
+			else {
+				nullpo_retr(false, args);
+
+				map_skill_duration_add(mapdata, args->skill_duration.skill_id, args->skill_duration.per);
 			}
 			mapdata->flag[mapflag] = status;
 			break;

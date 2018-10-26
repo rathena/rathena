@@ -4043,8 +4043,8 @@ ACMD_FUNC(mapinfo) {
 
 	/* Skill damage adjustment info [Cydh] */
 	if (mapdata->flag[MF_SKILL_DAMAGE]) {
-		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
-		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d",
+		clif_displaymessage(fd,msg_txt(sd,1052)); // Skill Damage Adjustments:
+		sprintf(atcmd_output, msg_txt(sd, 1053), // > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d
 			mapdata->damage_adjust.rate[SKILLDMG_PC],
 			mapdata->damage_adjust.rate[SKILLDMG_MOB],
 			mapdata->damage_adjust.rate[SKILLDMG_BOSS],
@@ -4052,7 +4052,7 @@ ACMD_FUNC(mapinfo) {
 			mapdata->damage_adjust.caster);
 		clif_displaymessage(fd, atcmd_output);
 		if (!mapdata->skill_damage.empty()) {
-			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
+			clif_displaymessage(fd, msg_txt(sd, 1054)); // > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster
 			for (auto skilldmg : mapdata->skill_damage) {
 				sprintf(atcmd_output,"     %s : %d%%, %d%%, %d%%, %d%% | %d",
 					skill_get_name(skilldmg.first),
@@ -4063,6 +4063,14 @@ ACMD_FUNC(mapinfo) {
 					skilldmg.second.caster);
 				clif_displaymessage(fd,atcmd_output);
 			}
+		}
+	}
+
+	if (map_getmapflag(m_id, MF_SKILL_DURATION)) {
+		clif_displaymessage(fd, msg_txt(sd, 1055)); // Skill Duration Adjustments:
+		for (const auto &it : mapdata->skill_duration) {
+			sprintf(atcmd_output, " > %s : %d%%", skill_get_name(it.first), it.second);
+			clif_displaymessage(fd, atcmd_output);
 		}
 	}
 
@@ -8163,7 +8171,8 @@ ACMD_FUNC(mapflag) {
 												MF_BEXP,
 												MF_JEXP,
 												MF_BATTLEGROUND,
-												MF_SKILL_DAMAGE };
+												MF_SKILL_DAMAGE,
+												MF_SKILL_DURATION };
 
 			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
 				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);

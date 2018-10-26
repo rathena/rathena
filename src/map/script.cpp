@@ -12448,6 +12448,20 @@ BUILDIN_FUNC(setmapflag)
 				return SCRIPT_CMD_FAILURE;
 			}
 			break;
+		case MF_SKILL_DURATION:
+			if (script_hasdata(st, 4) && script_hasdata(st, 5)) {
+				args.skill_duration.skill_id = script_getnum(st, 4);
+
+				if (!skill_get_index(args.skill_duration.skill_id)) {
+					ShowError("buildin_setmapflag: Invalid skill ID %d for skill_duration mapflag.\n", args.skill_duration.skill_id);
+					return SCRIPT_CMD_FAILURE;
+				}
+				args.skill_duration.per = script_getnum(st, 5);
+			} else {
+				ShowWarning("buildin_setmapflag: Unable to set skill_duration mapflag as flag data is missing.\n");
+				return SCRIPT_CMD_FAILURE;
+			}
+			break;
 		case MF_NOSAVE: // Assume setting "SavePoint"
 			args.nosave.map = 0;
 			args.nosave.x = -1;

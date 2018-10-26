@@ -578,6 +578,7 @@ enum e_mapflag : int16 {
 	MF_NOEXP,
 	MF_PRIVATEAIRSHIP_SOURCE,
 	MF_PRIVATEAIRSHIP_DESTINATION,
+	MF_SKILL_DURATION,
 	MF_MAX
 };
 
@@ -596,6 +597,12 @@ struct s_skill_damage {
 	unsigned int map; ///< Maps (used for skill_damage_db.txt)
 	uint16 caster; ///< Caster type
 	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
+};
+
+/// Struct of MF_SKILL_DURATION
+struct s_skill_duration {
+	uint16 skill_id; ///< Skill ID
+	uint16 per; ///< Rate
 };
 
 /// Enum for item drop type for MF_PVP_NIGHTMAREDROP
@@ -617,6 +624,7 @@ union u_mapflag_args {
 	struct point nosave;
 	struct s_drop_list nightmaredrop;
 	struct s_skill_damage skill_damage;
+	struct s_skill_duration skill_duration;
 	int flag_val;
 };
 
@@ -729,6 +737,7 @@ struct map_data {
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
 	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
+	std::unordered_map<uint16, int> skill_duration;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
@@ -1116,6 +1125,7 @@ void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
+void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
 
 enum e_mapflag map_getmapflag_by_name(char* name);
 bool map_getmapflag_name(enum e_mapflag mapflag, char* output);

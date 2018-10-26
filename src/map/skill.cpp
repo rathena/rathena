@@ -12781,10 +12781,12 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	int active_flag = 1;
 	int subunt = 0;
 	bool hidden = false;
+	struct map_data *mapdata;
 
 	nullpo_retr(NULL, src);
 
-	limit = skill_get_time(skill_id,skill_lv);
+	mapdata = map_getmapdata(src->m);
+	limit = skill_get_time3(mapdata, skill_id,skill_lv);
 	range = skill_get_unit_range(skill_id,skill_lv);
 	interval = skill_get_unit_interval(skill_id);
 	target = skill_get_unit_target(skill_id);
@@ -13195,7 +13197,6 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		int unit_val1 = skill_lv;
 		int unit_val2 = 0;
 		int alive = 1;
-		struct map_data *mapdata = map_getmapdata(src->m);
 
 		// are the coordinates out of range?
 		if( ux <= 0 || uy <= 0 || ux >= mapdata->xs || uy >= mapdata->ys ){
@@ -20967,6 +20968,24 @@ static bool skill_check_unit_movepos(uint8 check_flag, struct block_list *bl, sh
 		return false;
 
 	return unit_movepos(bl, dst_x, dst_y, easy, checkpath);
+}
+
+/**
+ * Get skill duration after adjustments by skill_duration mapflag
+ * @param mapdata: Source map data
+ * @param skill_id: Skill ID
+ * @param skill_lv: Skill level
+ * @return Adjusted skill duration
+ */
+int skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv) {
+	int time = 0;
+
+	if (!skill_get_index(skill_id) || !(time = skill_get_time(skill_id, skill_lv)))
+		return 0;
+
+	if (mapdata && !mapdata->skill_duration.empty() && mapdata->skill_duration.find(skill_id) != mapdata->skill_duration.end())
+		return time / 100 * mapdata->skill_duration[skill_id];
+	return time;
 }
 
 /*==========================================
