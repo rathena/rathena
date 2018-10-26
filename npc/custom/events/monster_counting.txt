@@ -1,6 +1,6 @@
 // Emistry - rAthena Forum
 // modified by Nubs
-prontera,146,154,5	script	Poring Counting	975,{
+prontera,148,155,5	script	Poring Counting	975,{
 	function xy_wall;
 	function set_zone;
 	function reset_game;

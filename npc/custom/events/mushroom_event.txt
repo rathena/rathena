@@ -14,7 +14,7 @@
 //= 3.6a Slightly edited. [Euphy]
 //============================================================
 
-prontera,137,233,6	script	Find the Mushroom	748,{
+prontera,148,159,5	script	Find the Mushroom	748,{
 		function reset_game;
 
 		set .@n$,"[^0000FFFind the Mushroom^000000]";

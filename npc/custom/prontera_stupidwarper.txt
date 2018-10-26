@@ -1,4 +1,4 @@
-prontera,145,198,5	script	Vending Zone	807,{
+prontera,145,201,5	script	Vending Zone	807,{
 	warp "vendzone",50,48;
 	end;
 

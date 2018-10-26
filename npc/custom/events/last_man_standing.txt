@@ -1,6 +1,6 @@
 // AnnieRuru - very old 2013 script
 // modified by nubs
-prontera,142,166,5	script	Last Man Standing	512,{
+prontera,148,163,5	script	Last Man Standing	512,{
 		function remove_player;
 		function smack_talk;
 
