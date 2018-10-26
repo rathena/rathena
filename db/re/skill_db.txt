@@ -854,13 +854,14 @@
 706,0,6,4,5,0,0,10,1,no,0,0x2,0,magic,0,0x1,	NPC_VENOMFOG,Venom Fog
 //707,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MILLENNIUMSHIELD,Millenium Shield 2
 708,11,8,2,0,0x2,9,5,-20,yes,0,0,0,magic,2,0x400,	NPC_COMET,Comet 2
-//709,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_ICEMINE,Ice Mine
+709,0,6,4,0,0xA0,0,10,1,no,0,0x2,0,magic,0,0x0,	NPC_ICEMINE,Ice Mine
 //710,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_ICEEXPLO,Ice Explosion
-//711,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_FLAMECROSS,Flame Cross
+711,0,6,4,0,0x80,0,5,1,no,0,0x2,0,magic,2,0x1,	NPC_FLAMECROSS,Flame Cross
 //712,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_PULSESTRIKE2,Pulse Strike 2
 //713,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DANCINGBLADE,Dancing Blade
 //714,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DANCINGBLADE_ATK,Dancing Blade Attack
-//715,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DARKPIERCING,Dark Piercing
+// 715,3,6,1,0,0x0,0,1,1,yes,0,0x2,0,weapon,0,0x0,	NPC_DARKPIERCING,Dark Piercing
+715,3,6,1,0,0x2,2,1,1,yes,0,0x2,14,weapon,0,0,	NPC_DARKPIERCING,Dark Piercing
 716,0,6,4,0,0x1,0,10,0,no,0,0x2,0,none,0,0x0,		NPC_MAXPAIN,Max Pain
 717,0,6,1,0,0xD2,18,10,1,no,0,0x2,0,misc,0,0x0,		NPC_MAXPAIN_ATK,Max Pain Attack
 718,0,0,4,0,0x1,0,10,1,no,0,0x2,0,magic,0,0x0,	NPC_DEATHSUMMON,Death Summon
@@ -872,8 +873,8 @@
 //724,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_FIRESTORM,Fire Storm
 //725,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION,Reverberation 2
 //726,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION_ATK,Reverberation Attack
-//727,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_LEX_AETERNA,Lex Aeterna 2
-//728,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_ARROWSTORM,NPC Arrow Storm
+727,9,6,2,0,0x3,2:5:8:11:14,5,0,yes,0,0x2,0,magic,0,0x0,	NPC_LEX_AETERNA,Lex Aeterna 2
+728,9,8,1,-1,0x2,3:3:3:3:3:4:4:4:4:5,10,-3,yes,0,0x2,0,weapon,0,0x80,		NPC_ARROWSTORM,NPC Arrow Storm
 //729,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_CHEAL,NPC Coluceo Heal
 //730,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_SR_CURSEDCIRCLE,NPC 
 //731,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DRAGONBREATH,NPC Dragon Breath
@@ -1548,7 +1549,7 @@
 8238,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	MER_KYRIE,Kyrie Eleison
 8239,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	MER_BLESSING,Blessing
 8240,9,6,16,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	MER_INCAGI,Increase Agility
-//8241,2,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		MER_INVINCIBLEOFF2,Mind Blaster
+8241,2,6,1,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,	MER_INVINCIBLEOFF2,Mind Blaster
 
 //****
 // Elemental Spirits Skills
