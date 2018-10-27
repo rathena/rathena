@@ -48,6 +48,10 @@ prontera,148,163,5	script	Event Manager	512,{
 						}
 					}
 				}
+				else if (.Event == 3) {
+					mes getmonsterinfo( .mob,MOB_NAME ) +" x "+.amount;
+				}
+
 				mes "Would you like to turn it OFF?";
 				if( select("No:Yes") == 1) close; // cancel on top.
 
@@ -71,8 +75,10 @@ prontera,148,163,5	script	Event Manager	512,{
 				mes "I am sorry, but the ^FF0000no^000000 events are being held at the moment.";
 				close;
 			}
-
-			if(.Event == 1) {
+			if(.Event == 0){
+				// give info for each events
+			}
+			else if(.Event == 1) {
 				while ( .unique_id[.@j] != get_unique_id() && .@j < .register_count )
 				{
 					// dispbottom "unique"+get_unique_id;
@@ -116,6 +122,10 @@ prontera,148,163,5	script	Event Manager	512,{
 					mes "There are " + .@count + " Mushrooms left in " + .event_map$ + "!";
 					mes "Find and kill the mushrooms to gain " + getitemname(.prize) + "!";
 				}
+				close;
+			}
+			else if (.Event == 3) {
+				mes "You just need to say the number directly in chat.";
 				close;
 			}
 		}
@@ -205,6 +215,36 @@ prontera,148,163,5	script	Event Manager	512,{
 				}
 			}
 			else if (.Event == 3) {
+				npctalk "Round # "+(.RoundCount+1);
+				.RoundsON = 1; // Start Rounds
+
+				.mob = .monster[ rand( .monster_size ) ];
+				.@size = getmonsterinfo(.mob, MOB_SIZE);
+
+				// add-on size influence ?
+				if(.@size == 0)
+					.amount = rand( 25,55 );
+				else if (.@size == 1)
+					.amount = rand( 20,45 );
+				else if (.@size == 2)
+					.amount = rand( 15,35 );
+				else
+					.amount = rand( 15,55 ); // fallback
+
+				set .Winner,0; // stop from having duplicate winners
+				// spawned monster in the bounding box
+				areamonster .map$,.xy_area[0],.xy_area[1],.xy_area[2],.xy_area[3],"",.mob,.amount,.npc_name$+"::OnDied";
+
+				deletepset 1; // delete previous answer regardless if there is any
+				// Execute Interrupt_Event when someone answer correctly
+				defpattern 1,"([^:]+):.\\s*"+.amount+"$", "Interrupt_Event";
+				activatepset 1;
+
+				// Chatroom to display the question
+				waitingroom "How many is there?", 0;
+				npctalk "<Poring Counting> Tell me the correct amount of " + getmonsterinfo(.mob,MOB_NAME) + " in there.";
+				// debugmes " > "+.amount+" "+getmonsterinfo( .mob,MOB_NAME );
+				setnpctimer 0; // re-start 30s timer
 			}
 			else if (.Event == 4) {
 			}
@@ -300,9 +340,94 @@ prontera,148,163,5	script	Event Manager	512,{
 		}
 		// none for find the mushroom
 		else if (.Event == 3) {
+			getmapxy( .@map$,.@x,.@y,0 );
+			if ( .EventON == 0 ) {
+				dispbottom "<Poring Counting> Event isnt running.";
+			}
+			else if ( .RoundsON == 0 ) {
+				dispbottom "<Poring Counting> Please wait for the round to start.";
+			}
+			else if ( distance( .npc_x,.npc_y,.@x,.@y ) > 14 ) {
+				dispbottom "<Poring Counting> You're too far away.";
+			}
+			else if (.Winner) {
+				dispbottom "<Poring Counting> Someone has already won this round.";
+			}
+			else {
+				npctalk "Round # "+(.RoundCount+1);
+
+				announce "<Poring Counting> Bravo!! " + strcharinfo(0) + " is correct!",bc_map | bc_blue;
+				.Winner = 1; // stop from having duplicate winners, incase the event executed twice
+
+				getitem 8501, 1; // reward
+				// kill any surving monster
+				killmonster .map$,.npc_name$+"::OnDied";
+				// clean up previous rounds data
+				delwaitingroom;
+				deletepset 1; // disable answer
+
+				.RoundCount = .RoundCount+1;
+				.RoundsON = 0; // Rounds Ended
+				if (.RoundCount < .Rounds) {
+					sleep 2000;
+					npctalk "<Poring Counting> Starting a new round...";
+					setnpctimer 0;  // start 3s timer
+				}
+				else
+				{ // completed all rounds
+					npctalk "<Poring Counting> The event is now over.";
+					emotion ET_THANKS;
+					sleep 1000;
+					npctalk "<Poring Counting> Thank you for playing and please come and play again later.";
+					goto reset_game;
+				}
+			}
 		}
 		else if (.Event == 4) {
 		}
+		end;
+
+	// Round Start Timer
+	OnTimer5000:
+		// skip this if the announcement or event is running
+		if (.aTimer || .RoundsON ) end;
+		if(.Event == 3)
+			goto Start_Event;
+		end;
+
+	OnTimer30000: // Round Timer Ends
+		// skip this if the announcement is running
+		if (.aTimer) end;
+
+		if(.Event == 3) {
+			npctalk "<Poring Counting> You took too long to guess the number of "+ getmonsterinfo(.mob,MOB_NAME) +".";
+			// kill any surving monster
+			killmonster .map$,.npc_name$+"::OnDied";
+
+			// clean up previous rounds data
+			delwaitingroom;
+			deletepset 1; // disable answer
+
+			.RoundCount = .RoundCount+1;
+			if (.RoundCount < .Rounds) {
+				npctalk "<Poring Counting> Please wait 5 seconds while I start the next round.";
+				.RoundsON = 0;
+				setnpctimer 0; // re-start 5s timer
+			}
+			else
+			{
+				setnpctimer 0; stopnpctimer;
+				npctalk "<Poring Counting> The event is now over.";
+				emotion ET_THANKS;
+				sleep 1000;
+				npctalk "Thank you for playing and please come and play again later.";
+				goto reset_game;
+			}
+		}
+		end;
+
+	OnDied:
+	OnWallDied:
 		end;
 
 	// clean up previous rounds data
@@ -378,7 +503,6 @@ prontera,148,163,5	script	Event Manager	512,{
 
 	Start_Broadcast:
 		debugmes "Event " +.Event;
-		.RoundCount = 0;
 		if(.Event == 1){
 			announce "The <Last Man Standing (PvP)> is being held in Prontera and will begin in 3 minutes.",bc_all | bc_blue;
 			npctalk "[Event Manager] Come and talk to me to register for "+ .EventName$ +".";
@@ -390,6 +514,7 @@ prontera,148,163,5	script	Event Manager	512,{
 		}
 		else if (.Event == 3) {
 			announce "The <Poring Counting> is being held in Prontera and will begin in 3 minutes.",bc_all | bc_blue;
+			set_zone();
 		}
 		else if (.Event == 4) {
 			announce "The <Disguise Event> is being held in Prontera and will begin in 3 minutes.",bc_all | bc_blue;
@@ -448,7 +573,6 @@ prontera,148,163,5	script	Event Manager	512,{
 		}
 		else if (.Event == 3) {
 			announce "The <Poring Counting> has begun!",bc_all | bc_blue;
-			set_zone(); // set the boundaries
 		}
 		else if (.Event == 4) {
 			announce "The <Disguise Event> has begun!",bc_all | bc_blue;
@@ -474,6 +598,39 @@ prontera,148,163,5	script	Event Manager	512,{
 		setarray .maps_list$[0],"izlude"; // Possible maps
 		.event_map$ = .maps_list$[ rand(getarraysize(.maps_list$)) ]; // to prevent error
 		deletearray .MobIDs;
+
+		// Poring Countings
+		.Rounds = 10;
+		.wall_mob_id = 1085; // Red Mushroom
+		setarray .xy_area,
+			150,157,
+			161,168;
+		setarray .monster,
+			1002, // poring
+			1894, // pouring
+			1852, // angeling
+			2933, // deviling
+			1613, // metaling
+			1977, // heavy metaling
+			2934, // arc angeling
+			1062, // santa poring
+			2398, // little poring
+			1836, // magmaring
+			1113, // drops
+			2316, // jejeling
+			1857, // marin,
+			2936, // ghostring
+			2248, // golden poring
+			3508, // eggring
+			// 3505, // big eggring
+			1031; // poporing;
+		.mob = 0;
+
+		.monster_size = getarraysize( .monster );
+		.npc_name$ = strnpcinfo(0);
+		getmapxy( .map$,.npc_x,.npc_y,1 );
+		setmapflag .map$, mf_monster_noteleport;
+		goto reset_game;
 	end;
 
 	// -- Last Man Standing specific functions ----------------
