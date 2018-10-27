@@ -1,8 +1,37 @@
+prontera,156,195,3	script	PVP Warper#pvp_warper_npc	588,{
+	mes 	"Required Level: 70 and above";
+	mes 	"Charges : ^FF55331,200z^000000";
+	menu	"Continue", PVP1, "Cancel", PVP2;
+	PVP1:
+		if ((Zeny > 1199) && (BaseLevel > 70)) {
+			set Zeny, Zeny - 1200;
+			callfunc "F_PVP_FSRS";
+		}
+		else {
+			dispbottom "Not enough zeny or your level is too low.";
+		}
+		end;
+	PVP2:
+		end;
+
+	OnCountChange:
+		.total = getmapusers("pvp_y_1-2");
+		delwaitingroom;
+		waitingroom "PvP Count: "+.total+"",0;
+		end;
+
+	OnInit:
+		waitingroom "PvP Count: 0",0;
+		end;
+}
 
 -	script	pvp_announce	-1,{
 OnPCLoadMapEvent:
 	if(strcharinfo(3) == "pvp_y_1-2")
+	{
+		donpcevent "PVP Warper#pvp_warper_npc::OnCountChange";
 		announce "[" + strcharinfo(0) + "] has entered the PvP Room. KILL !! ", bc_all, "0xFF0000";
+	}
 	end;
 
 OnPCDieEvent:
