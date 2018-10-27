@@ -9,7 +9,7 @@
 
 // Simple flags (no message)
 //============================================================
-alde_gld,220,184,4	duplicate(flag_te)	Defolty#te_aldecas2	GUILD_FLAG
+alde_gld,220,184,4	duplicate(flag_te)	Defolty#te_aldecas2-1	GUILD_FLAG
 
 // Simple infos flags
 //============================================================

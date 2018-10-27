@@ -9,7 +9,7 @@
 
 // Simple flags (no message)
 //============================================================
-prt_gld,124,155,4	duplicate(flag_te)	Heine#te_prtcas04	GUILD_FLAG
+prt_gld,124,155,4	duplicate(flag_te)	Heine#te_prtcas04-1	GUILD_FLAG
 
 // Simple infos flags
 //============================================================

@@ -9,7 +9,7 @@
 
 // Simple flags (no message)
 //============================================================
-prt_gld,128,155,4	duplicate(flag_te)	Nerious#te_prtcas05	GUILD_FLAG
+prt_gld,128,155,4	duplicate(flag_te)	Nerious#te_prtcas05-1	GUILD_FLAG
 
 // Simple infos flags
 //============================================================

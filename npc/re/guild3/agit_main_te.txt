@@ -1169,6 +1169,7 @@ OnAgitBreak:
 	if (strnpcinfo(2) != "")
 	{
 		explode(.@castle_name$, strnpcinfo(2),"-");
+		debugmes .@castle_name$[0]+"";
 		flagemblem getcastledata( .@castle_name$[0],1 );
 	}
 	end;

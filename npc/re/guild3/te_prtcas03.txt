@@ -9,7 +9,7 @@
 
 // Simple flags (no message)
 //============================================================
-prt_gld,120,155,4	duplicate(flag_te)	Wigner#te_prtcas03	GUILD_FLAG
+prt_gld,120,155,4	duplicate(flag_te)	Wigner#te_prtcas03-1	GUILD_FLAG
 
 // Simple infos flags
 //============================================================
