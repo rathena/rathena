@@ -48,7 +48,7 @@ prontera,148,163,5	script	Event Manager	512,{
 						}
 					}
 				}
-				else if (.Event == 3) {
+				else if (.Event == 3 && .RoundsON == 1) {
 					mes getmonsterinfo( .mob,MOB_NAME ) +" x "+.amount;
 				}
 
@@ -65,6 +65,14 @@ prontera,148,163,5	script	Event Manager	512,{
 				.@menu = select("Last Man Standing (PvP):Find the Mushroom:Poring Counting:Disguise Event:Cancel");
 				if(.@menu == 5) close;
 				.Event = .@menu;
+				switch(.Event)
+				{
+					case 1: setnpcdisplay "Last Man Standing",512; break;
+					case 2: setnpcdisplay "Find the Mushroom",748; break;
+					case 3: setnpcdisplay "Poring Counting",975; break;
+					case 4: setnpcdisplay "Disguise Event",795; break;
+				}
+
 				close2;
 				goto Start_Broadcast;
 			}
