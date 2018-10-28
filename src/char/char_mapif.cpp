@@ -253,7 +253,7 @@ int chmapif_parse_getmapname(int fd, int id){
 	mapbuf = RFIFOP(fd,4);
 	RFIFOSKIP(fd,RFIFOW(fd,2));
 
-	ShowStatus("Map-Server %d connected: %d maps, from IP %d.%d.%d.%d port %d.\n",
+	ShowStatus("Map-Server %d connected: %" PRIuPTR " maps, from IP %d.%d.%d.%d port %d.\n",
 				id, map_server[id].map.size(), CONVIP(map_server[id].ip), map_server[id].port);
 	ShowStatus("Map-server %d loading complete.\n", id);
 
@@ -397,7 +397,7 @@ int chmapif_parse_reqsavechar(int fd, int id){
 
 		if (size - 13 != sizeof(struct mmo_charstatus))
 		{
-			ShowError("parse_from_map (save-char): Size mismatch! %d != %d\n", size-13, sizeof(struct mmo_charstatus));
+			ShowError("parse_from_map (save-char): Size mismatch! %d != %" PRIuPTR "\n", size-13, sizeof(struct mmo_charstatus));
 			RFIFOSKIP(fd,size);
 			return 1;
 		}

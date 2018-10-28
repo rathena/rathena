@@ -121,7 +121,7 @@ void cache_map(char *name, struct map_data *m)
 
 	// Fill the map header
 	if (strlen(name) > MAP_NAME_LENGTH) // It does not hurt to warn that there are maps with name longer than allowed.
-		ShowWarning ("Map name '%s' size '%d' is too long. Truncating to '%d'.\n", name, strlen(name), MAP_NAME_LENGTH);
+		ShowWarning ("Map name '%s' size '%" PRIuPTR "' is too long. Truncating to '%d'.\n", name, strlen(name), MAP_NAME_LENGTH);
 	strncpy(info.name, name, MAP_NAME_LENGTH);
 	info.xs = MakeShortLE(m->xs);
 	info.ys = MakeShortLE(m->ys);

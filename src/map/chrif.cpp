@@ -692,7 +692,7 @@ void chrif_authok(int fd) {
 
 	//Check if both servers agree on the struct's size
 	if( RFIFOW(fd,2) - 25 != sizeof(struct mmo_charstatus) ) {
-		ShowError("chrif_authok: Data size mismatch! %d != %d\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
+		ShowError("chrif_authok: Data size mismatch! %d != %" PRIuPTR "\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
 		return;
 	}
 
@@ -1986,13 +1986,13 @@ void do_final_chrif(void) {
  *------------------------------------------*/
 void do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
-		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF)\n",
+		ShowError("mmo_charstatus size = %" PRIuPTR " is too big to be transmitted. (must be below 0xFFFF)\n",
 			sizeof(struct mmo_charstatus));
 		exit(EXIT_FAILURE);
 	}
 
 	if (sizeof(struct s_storage) > 0xFFFF) {
-		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
+		ShowError("s_storage size = %" PRIuPTR " is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 

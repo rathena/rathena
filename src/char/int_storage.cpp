@@ -252,7 +252,7 @@ bool mapif_parse_SaveGuildStorage(int fd)
 
 	if( sizeof(struct s_storage) != len - 12 )
 	{
-		ShowError("inter storage: data size error %d != %d\n", sizeof(struct s_storage), len - 12);
+		ShowError("inter storage: data size error %" PRIuPTR " != %d\n", sizeof(struct s_storage), len - 12);
 	}
 	else
 	{

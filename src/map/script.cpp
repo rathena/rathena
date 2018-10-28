@@ -3074,7 +3074,7 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 	size_t vlen = 0;
 	if ( !script_check_RegistryVariableLength(0,name,&vlen) )
 	{
-		ShowError("set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%d\n", sd?sd->status.account_id:-1, sd?sd->status.char_id:-1, name, vlen);
+		ShowError("set_reg: Variable name length is too long (aid: %d, cid: %d): '%s' sz=%" PRIuPTR "\n", sd?sd->status.account_id:-1, sd?sd->status.char_id:-1, name, vlen);
 		return 0;
 	}
 
