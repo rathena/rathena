@@ -3749,7 +3749,7 @@ int map_readallmaps (void)
 			map_cache_buffer[i] = map_init_mapcache(fp);
 
 			if( !map_cache_buffer[i] ) {
-				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath );
+				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath[i] );
 				exit(EXIT_FAILURE);
 			}
 
