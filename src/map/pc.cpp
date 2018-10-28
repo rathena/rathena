@@ -12146,7 +12146,7 @@ TIMER_FUNC(pc_bonus_script_timer){
 		return 0;
 
 	if (!sd->bonus_script.head || entry == NULL) {
-		ShowError("pc_bonus_script_timer: Invalid entry pointer 0x%08X!\n", entry);
+		ShowError("pc_bonus_script_timer: Invalid entry pointer %p!\n", entry);
 		return 0;
 	}
 
