@@ -365,7 +365,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 			int i;
 
 			if( !sd->has_client_hash ) {
-				ShowNotice("Client didn't send client hash (account: %s, ip: %s)\n", sd->userid, acc.state, ip);
+				ShowNotice("Client didn't send client hash (account: %s, ip: %s)\n", sd->userid, ip);
 				return 5;
 			}
 
