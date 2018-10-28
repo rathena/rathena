@@ -967,7 +967,7 @@ int chmapif_parse_save_scdata(int fd){
 				memcpy (&data, RFIFOP(fd, 14+i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
 				if( i > 0 )
 					StringBuf_AppendStr(&buf, ", ");
-				StringBuf_Printf(&buf, "('%d','%d','%hu','%d','%d','%d','%d','%d')", aid, cid,
+				StringBuf_Printf(&buf, "('%d','%d','%hu','%d','%ld','%ld','%ld','%ld')", aid, cid,
 					data.type, data.tick, data.val1, data.val2, data.val3, data.val4);
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
