@@ -2484,7 +2484,7 @@ void pc_itemgrouphealrate(struct map_session_data *sd, uint16 group_id, short ra
 	}
 
 	if (i >= UINT8_MAX) {
-		ShowError("pc_itemgrouphealrate_add: Reached max (%d) possible bonuses for this player %d\n", UINT8_MAX);
+		ShowError("pc_itemgrouphealrate_add: Reached max (%d) possible bonuses for this player %d\n", UINT8_MAX, sd->status.char_id);
 		return;
 	}
 
