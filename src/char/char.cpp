@@ -2951,7 +2951,7 @@ bool char_config_read(const char* cfgName, bool normal){
 		} else if (strcmpi(w1, "char_maintenance") == 0) {
 			charserv_config.char_maintenance = atoi(w2);
 		} else if (strcmpi(w1, "char_new") == 0) {
-			charserv_config.char_new = config_switch(w2);
+			charserv_config.char_new = (bool)config_switch(w2);
 		} else if (strcmpi(w1, "char_new_display") == 0) {
 			charserv_config.char_new_display = atoi(w2);
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
