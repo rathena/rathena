@@ -4330,7 +4330,7 @@ static int mob_read_sqldb(void)
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
 	}
 	return 0;
 }
@@ -4798,7 +4798,7 @@ static int mob_read_sqlskilldb(void)
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_skill_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_skill_db_name[fi]);
 	}
 	return 0;
 }
