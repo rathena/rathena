@@ -11401,7 +11401,7 @@ static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
 	}
 
 	if (!pcdb_checkid(class_) || (idx = pc_class2idx(class_)) < 0) {
-		ShowError("pc_readdb_job_noenter_map: Invalid job %d specified.\n", str[0]);
+		ShowError("pc_readdb_job_noenter_map: Invalid job %d specified.\n", class_);
 		return false;
 	}
 
