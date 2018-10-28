@@ -582,6 +582,10 @@ bool login_config_read(const char* cfgName, bool normal) {
 			login_config.start_limited_time = atoi(w2);
 		else if(!strcmpi(w1, "use_MD5_passwords"))
 			login_config.use_md5_passwds = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "use_MD5_emails"))
+			login_config.use_md5_mails = (bool)config_switch(w2);
+		else if(!strcmpi(w1, "use_MD5_pincodes"))
+			login_config.use_md5_pincodes = (bool)config_switch(w2);
 		else if(!strcmpi(w1, "group_id_to_connect"))
 			login_config.group_id_to_connect = atoi(w2);
 		else if(!strcmpi(w1, "min_group_id_to_connect"))
@@ -684,6 +688,8 @@ void login_set_defaults() {
 	login_config.new_account_flag = true;
 	login_config.new_acc_length_limit = true;
 	login_config.use_md5_passwds = false;
+	login_config.use_md5_mails = false;
+	login_config.use_md5_pincodes = false;
 	login_config.group_id_to_connect = -1;
 	login_config.min_group_id_to_connect = -1;
 

@@ -534,6 +534,12 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 #endif
 	Sql_FreeResult(sql_handle);
 
+	
+	if( login_config.use_md5_mails )
+		MD5_String(acc->email, acc->email);
+	if( login_config.use_md5_pincodes )
+		MD5_String(acc->pincode, acc->pincode);
+	
 	return true;
 }
 
@@ -559,6 +565,11 @@ static bool mmo_auth_tosql(AccountDB_SQL* db, const struct mmo_account* acc, boo
 		break;
 	}
 
+	if( login_config.use_md5_mails )
+		MD5_String(acc->email, acc->email);
+	if( login_config.use_md5_pincodes )
+		MD5_String(acc->pincode, acc->pincode);
+	
 	if( is_new )
 	{// insert into account table
 		if( SQL_SUCCESS != SqlStmt_Prepare(stmt,
