@@ -206,7 +206,7 @@ int logchrif_send_accdata(int fd, uint32 aid) {
  * @param flag 0x1: VIP, 0x2: GM, 0x4: Show rates on player
  * @param mapfd
  */
-int logchrif_sendvipdata(int fd, struct mmo_account acc, unsigned char flag, int mapfd) {
+int logchrif_sendvipdata(int fd, struct mmo_account* acc, unsigned char flag, int mapfd) {
 #ifdef VIP_ENABLE
 	WFIFOHEAD(fd,19);
 	WFIFOW(fd,0) = 0x2743;
@@ -672,7 +672,7 @@ int logchrif_parse_reqvipdata(int fd) {
 			bool isvip = false;
 
 			if( acc.group_id > login_config.vip_sys.group ) { //Don't change group if it's higher.
-				logchrif_sendvipdata(fd,acc,0x2|((flag&0x8)?0x4:0),mapfd);
+				logchrif_sendvipdata(fd,&acc,0x2|((flag&0x8)?0x4:0),mapfd);
 				return 1;
 			}
 			if( flag&2 ) {
@@ -696,7 +696,7 @@ int logchrif_parse_reqvipdata(int fd) {
 			acc.vip_time = vip_time;
 			accounts->save(accounts,&acc);
 			if( flag&1 )
-				logchrif_sendvipdata(fd,acc,((isvip)?0x1:0)|((flag&0x8)?0x4:0),mapfd);
+				logchrif_sendvipdata(fd,&acc,((isvip)?0x1:0)|((flag&0x8)?0x4:0),mapfd);
 		}
 	}
 #endif
