@@ -23694,7 +23694,7 @@ static inline bool mail_sub( struct script_state *st, struct script_data *data, 
 
 	// Try to find the array's source pointer
 	if( !script_array_src( st, sd, name, reference_getref(data) ) ){
-		ShowError( "buildin_mail: variable \"%s\" is not an array.\n" );
+		ShowError( "buildin_mail: variable \"%s\" is not an array.\n", name );
 		return false;
 	}
 
