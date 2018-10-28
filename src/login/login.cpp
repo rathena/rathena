@@ -372,7 +372,7 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 			for( i = 0; i < 16; i++ )
 				sprintf(&smd5[i * 2], "%02x", sd->client_hash[i]);
 
-			ShowNotice("Invalid client hash (account: %s, sent md5: %d, ip: %s)\n", sd->userid, smd5, ip);
+			ShowNotice("Invalid client hash (account: %s, sent md5: %s, ip: %s)\n", sd->userid, smd5, ip);
 			return 5;
 		}
 	}
