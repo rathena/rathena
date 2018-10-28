@@ -11030,7 +11030,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 			// Do the teleport part
 			for (i = 0; i < MAX_PARTY; ++i) {
-				map_session_data *pl_sd = pl_sd = p->data[i].sd;
+				map_session_data *pl_sd = p->data[i].sd;
 
 				if (pl_sd == nullptr || pl_sd == sd || pl_sd->status.party_id != p->party.party_id || pc_isdead(pl_sd) ||
 					sd->bl.m != pl_sd->bl.m)
