@@ -455,6 +455,7 @@
 	export_constant(MF_NOEXP);
 	export_constant(MF_PRIVATEAIRSHIP_SOURCE);
 	export_constant(MF_PRIVATEAIRSHIP_DESTINATION);
+	export_constant(MF_SKILL_DURATION);
 
 	/* setcell types */
 	export_constant(CELL_WALKABLE);
@@ -1514,6 +1515,10 @@
 	export_constant(SC_GLASTHEIM_STATE);
 	export_constant(SC_GLASTHEIM_ITEMDEF);
 	export_constant(SC_GLASTHEIM_HPSP);
+	export_constant(SC_LHZ_DUN_N1);
+	export_constant(SC_LHZ_DUN_N2);
+	export_constant(SC_LHZ_DUN_N3);
+	export_constant(SC_LHZ_DUN_N4);
 	export_constant(SC_ANCILLA);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
@@ -3652,6 +3657,10 @@
 	export_constant(RC2_SCARABA);
 	export_constant(RC2_OGH_ATK_DEF);
 	export_constant(RC2_OGH_HIDDEN);
+	export_constant(RC2_BIO5_SWORDMAN_THIEF);
+	export_constant(RC2_BIO5_ACOLYTE_MERCHANT);
+	export_constant(RC2_BIO5_MAGE_ARCHER);
+	export_constant(RC2_BIO5_MVP);
 	export_constant(RC2_MAX);
 
 	/* classes */
@@ -7295,6 +7304,7 @@
 	export_constant(BL_PET);
 	export_constant(BL_HOM);
 	export_constant(BL_MER);
+	export_constant(BL_NPC);
 	export_constant(BL_ELEM);
 
 	/* skill damage mapflag types */
@@ -7304,6 +7314,17 @@
 	export_constant(SKILLDMG_OTHER);
 	export_constant(SKILLDMG_MAX);
 	export_constant(SKILLDMG_CASTER);
+
+	/* guild permissions */
+	export_constant(GUILD_PERM_INVITE);
+	export_constant(GUILD_PERM_EXPEL);
+	export_constant(GUILD_PERM_STORAGE);
+	export_constant(GUILD_PERM_ALL);
+
+	/* guild storage log */
+	export_constant(GUILDSTORAGE_LOG_FINAL_SUCCESS);
+	export_constant(GUILDSTORAGE_LOG_EMPTY);
+	export_constant(GUILDSTORAGE_LOG_FAILED);
 
 	#undef export_constant
 	#undef export_constant2
