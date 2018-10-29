@@ -3845,7 +3845,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 
 	try{
 		db = &mob_db_data[mob_id];
-	}catch( std::bad_alloc ){
+	}catch( const std::bad_alloc& ){
 		ShowError( "mob_clone_spawn: Memory allocation for clone %hu failed.\n", mob_id );
 		return 0;
 	}
@@ -4264,7 +4264,7 @@ static bool mob_parse_dbrow(char** str)
 	if (db == NULL) {
 		try{
 			db = &mob_db_data[mob_id];
-		}catch( std::bad_alloc ){
+		}catch( const std::bad_alloc& ){
 			ShowError( "Memory allocation for monster %hu failed.\n", mob_id );
 			return false;
 		}
@@ -4330,7 +4330,7 @@ static int mob_read_sqldb(void)
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
 	}
 	return 0;
 }
@@ -4455,7 +4455,7 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current)
 	if( ms == NULL ){
 		try{
 			ms = &mob_chat_db[msg_id];
-		}catch( std::bad_alloc ){
+		}catch( const std::bad_alloc& ){
 			ShowError( "mob_parse_row_chatdb: Memory allocation for chat ID '%d' failed.\n", msg_id );
 			return false;
 		}
@@ -4798,7 +4798,7 @@ static int mob_read_sqlskilldb(void)
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_skill_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_skill_db_name[fi]);
 	}
 	return 0;
 }
