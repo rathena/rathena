@@ -14284,11 +14284,15 @@ BUILDIN_FUNC(npcskilleffect)
 BUILDIN_FUNC(specialeffect)
 {
 	struct block_list *bl=map_id2bl(st->oid);
-	int type = script_getnum(st,2);
-	enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
 
 	if(bl==NULL)
 		return SCRIPT_CMD_SUCCESS;
+
+	enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
+	struct script_data *data = script_getdata(st,2);
+
+	get_val(st,data);
+	int type = conv_num(st,data);
 
 	if( type <= EF_NONE || type >= EF_MAX ){
 		ShowError( "buildin_specialeffect: unsupported effect id %d\n", type );
@@ -14319,8 +14323,11 @@ BUILDIN_FUNC(specialeffect2)
 	TBL_PC *sd;
 
 	if( script_nick2sd(4,sd) ){
-		int type = script_getnum(st,2);
 		enum send_target target = script_hasdata(st,3) ? (send_target)script_getnum(st,3) : AREA;
+		struct script_data *data = script_getdata(st,2);
+
+		get_val(st,data);
+		int type = conv_num(st,data);
 
 		if( type <= EF_NONE || type >= EF_MAX ){
 			ShowError( "buildin_specialeffect2: unsupported effect id %d\n", type );
