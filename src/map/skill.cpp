@@ -16064,17 +16064,10 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_PAINTBRUSH,0); //Paint brush is required.
 			else if( require.itemid[i] == ITEMID_ANCILLA )
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_ANCILLA,0); //Ancilla is required.
-			else if(skill_id == RL_SLUGSHOT) {
-				if (i < MAX_SKILL_ITEM_REQUIRE - 1) // Check all Slug types
-					continue;
-				else
-					clif_skill_fail(sd, RL_SLUGSHOT, USESKILL_FAIL_NEED_MORE_BULLET, 0); // Bullet is required.
-			} else {
+			else
 				clif_skill_fail( sd, skill_id, USESKILL_FAIL_NEED_ITEM, ( require.itemid[i] << 16 ) | require.amount[i] ); // [%s] required '%d' amount.
-			}
 			return false;
-		} else if (skill_id == RL_SLUGSHOT) // Slug found - simulate priority and cancel the loop
-			break;
+		}
 	}
 
 	/* check the status required */
@@ -16182,9 +16175,6 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 
 			if( (n = pc_search_inventory(sd,require.itemid[i])) >= 0 )
 				pc_delitem(sd,n,require.amount[i],0,1,LOG_TYPE_CONSUME);
-
-			if (skill_id == RL_SLUGSHOT && n > -1) // Slug found - simulate priority and cancel the loop
-				break;
 		}
 	}
 }

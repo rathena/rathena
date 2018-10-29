@@ -4309,30 +4309,12 @@ static int battle_calc_attack_skill_ratio(struct Damage wd, struct block_list *s
 		case RL_S_STORM:
 			skillratio += -100 + 1700 + 200 * skill_lv;
 			break;
-		case RL_SLUGSHOT: {
-				uint16 w = 0;
-
-				if (sd) {
-					unsigned short slug[] = { ITEMID_SLUG_AMMUNITION_XH, ITEMID_SLUG_AMMUNITION_SH, ITEMID_SLUG_AMMUNITION_H, ITEMID_SLUG_AMMUNITION_M, ITEMID_SLUG_AMMUNITION_L }; // In order of priority
-					int16 index = -1;
-
-					for (i = 0; i < ARRAYLENGTH(slug); i++) {
-						if ((index = pc_search_inventory(sd, slug[i])) >= 0) {
-							w = (sd->inventory_data[index]->weight / 10) * 32;
-							break;
-						}
-					}
-				}
-				if (target->type != BL_PC) // Monster
-					skillratio += -100 + 1200 * skill_lv;
-				else // Player
-					skillratio += -100 + 2000 * skill_lv;
-				switch(tstatus->size) {
-					case SZ_SMALL: skillratio += w * 2; break;
-					case SZ_MEDIUM: skillratio += w * 3; break;
-					case SZ_BIG: skillratio += w * 4; break;
-				}
-			}
+		case RL_SLUGSHOT:
+			if (target->type == BL_PC)
+				skillratio += -100 + 1200 * skill_lv;
+			else
+				skillratio += -100 + 2000 * skill_lv;
+			skillratio *= 2 + tstatus->size;
 			break;
 		case RL_D_TAIL:
 			skillratio += -100 + 4000 + 1000 * skill_lv;
