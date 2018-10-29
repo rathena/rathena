@@ -17,6 +17,7 @@
 			dispbottom "It costs "+.@Price+" to identify an item."; break; }
 		set Zeny, Zeny-.@Price;
 		delitem2 @inventorylist_id[.@i],1,0,0,0,0,0,0,0;
+
 		setarray .@cOptID[0], @inventorylist_option_id1[.@i], @inventorylist_option_id2[.@i], @inventorylist_option_id3[.@i], @inventorylist_option_id4[.@i], @inventorylist_option_id5[.@i];
 		setarray .@cOptVal[0], @inventorylist_option_value1[.@i], @inventorylist_option_value2[.@i], @inventorylist_option_value3[.@i], @inventorylist_option_value4[.@i], @inventorylist_option_value5[.@i];
 		setarray .@cOptPar[0], @inventorylist_option_parameter1[.@i], @inventorylist_option_parameter2[.@i], @inventorylist_option_parameter3[.@i], @inventorylist_option_parameter4[.@i], @inventorylist_option_parameter5[.@i];

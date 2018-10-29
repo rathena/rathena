@@ -183,7 +183,7 @@ prontera,148,167,5	script	Disguise Event	795,{
 		set .Wait,0;
 		set .Winner,0;
 		set .ResetCounter,0;
-		set .Rounds,5;
+		set .Rounds,10;
 		set .Prize,8501;
 		set .PrizeAmt,1;
 		set .Rule,1;

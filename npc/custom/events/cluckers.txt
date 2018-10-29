@@ -112,18 +112,19 @@ prontera,156,219,4	script	Cluckers	800,{
 		end;
 	OnTimer60000:
 		if(.aTimer != 1) end;
-		announce "<Cluck! Cluck! Boom!> GO! Click the chicken to get the prize! You have 5 minutes!",bc_all | bc_blue;
+		announce "<Cluck! Cluck! Boom!> GO! Click the chicken to get the prize! You have 30 minutes!",bc_all | bc_blue;
 		if (!$cluck_item_id) set $cluck_item_id,8501;
-		if (!$cluck_item_amount) set $cluck_item_amount,1;
-		set .EventON,1;
+		if (!$cluck_item_amount) set $cluck_item_amount,5;
+		set .EventON,1; set .aTimer,0;
 		end;
 
-	OnTimer300000:
-		stopnpctimer; setnpctimer 0;
-		.EventON = 1; initnpctimer;
-		.aTimer = 0;
+	OnTimer1800000:
 		if(.EventON == 1)
+		{
 			announce "<Cluck! Cluck! Boom!> Time is out! I guess no one manage to get the present from me!", bc_all | bc_blue;
+			.EventON = 0; .aTimer = 0;
+			stopnpctimer; setnpctimer 0;
+		}
 		end;
 
 	// auto event

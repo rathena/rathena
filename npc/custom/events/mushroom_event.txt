@@ -17,24 +17,26 @@
 prontera,148,159,5	script	Find the Mushroom	748,{
 		function reset_game;
 
+		set .@GMLevel,60;	// GM level required to access NPC.
 		set .@n$,"[^0000FFFind the Mushroom^000000]";
-		mes .@n$;
-		if (.EventON == 1) {
-			.@count = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
-			if (.@count > 0 ) {
-				mes "There are " + .@count + " Mushrooms left in " + .event_map$ + "!";
-				mes "Find and kill the mushrooms to gain " + getitemname(.prize) + "!";
-			}
-		}
 		if (getgmlevel()>=.@GMLevel) {
-			mes "Location of the Mushrooms: ";
-			setarray .@mushroom_data[0], 0;
-			for( .@i = 0; .@i < getarraysize($@mobid); .@i++ )
-			{
-				if(unitexists ($@mobid[.@i]))
+			mes .@n$;
+			if (.EventON == 1) {
+				.@count = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
+				if (.@count > 0 ) {
+					mes "There are " + .@count + " Mushrooms left in " + .event_map$ + "!";
+					mes "Find and kill the mushrooms to gain " + getitemname(.prize) + "!";
+				}
+				next;
+				mes "Location of the Mushrooms: ";
+				setarray .@mushroom_data[0], 0;
+				for( .@i = 0; .@i < getarraysize($@mobid); .@i++ )
 				{
-					getunitdata($@mobid[.@i], .@mushroom_data);
-					mes "<NAVI>Mushroom "+(.@i+1)+"<INFO>"+.event_map$+","+ .@mushroom_data[6] +","+ .@mushroom_data[7] +",0000,0</INFO></NAVI> :"+ .@mushroom_data[6] +" "+ .@mushroom_data[7];
+					if(unitexists ($@mobid[.@i]))
+					{
+						getunitdata($@mobid[.@i], .@mushroom_data);
+						mes "<NAVI>Mushroom "+(.@i+1)+"<INFO>"+.event_map$+","+ .@mushroom_data[6] +","+ .@mushroom_data[7] +",0000,0</INFO></NAVI> :"+ .@mushroom_data[6] +" "+ .@mushroom_data[7];
+					}
 				}
 			}
 			mes "Select an option.";
@@ -58,7 +60,7 @@ prontera,148,159,5	script	Find the Mushroom	748,{
 	// The ACTUAL Start of the Event
 	OnStartEvent:
 		.EventON = 1;
-		.@spawn = rand(2,8);	// How many Mushrooms should spawn?
+		.@spawn = rand(4,12);	// How many Mushrooms should spawn?
 		.event_map$ = .maps_list$[ rand(getarraysize(.maps_list$)) ];
 		.@label$ = strnpcinfo(0) + "::OnMobKilled";
 

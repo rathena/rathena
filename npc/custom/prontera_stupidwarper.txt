@@ -31,3 +31,42 @@ prontera,166,198,3	script	Vending Zone	807,{
 		waitingroom "Venders Count: "+.total+"",0;
 	end;
 }
+
+prontera,156,195,3	script	PVP Warper#pvp_warper_npc	588,{
+	mes 	"Required Level: 70 and above";
+	mes 	"Charges : ^FF55331,200z^000000";
+	menu	"Continue", PVP1, "Cancel", PVP2;
+	PVP1:
+		if ((Zeny > 1199) && (BaseLevel > 70)) {
+			set Zeny, Zeny - 1200;
+			callfunc "F_PVP_FSRS";
+		}
+		else {
+			dispbottom "Not enough zeny or your level is too low.";
+		}
+		end;
+	PVP2:
+		end;
+
+	OnMinute00:
+	OnMinute05:
+	OnMinute10:
+	OnMinute15:
+	OnMinute20:
+	OnMinute25:
+	OnMinute30:
+	OnMinute35:
+	OnMinute40:
+	OnMinute45:
+	OnMinute50:
+	OnMinute55:
+	OnCountChange:
+		.total = getmapusers("pvp_y_1-2");
+		delwaitingroom;
+		waitingroom "PvP Count: "+.total+"",0;
+		end;
+
+	OnInit:
+		waitingroom "PvP Count: 0",0;
+		end;
+}
