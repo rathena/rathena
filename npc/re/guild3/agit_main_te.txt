@@ -1062,7 +1062,10 @@ OnClock0001:// Spawn Treasure Chests based on castle economy.
 	}
 	.@treasure_num = ( 4 + ( .@economy /5 ) ) *3;// x3 <-> data[] size
 	for ( .@i = 0; .@i < getarraysize(.@data) && .@treasure_num > .@i; .@i += 3 )// nb. [4;24] chests
+	{
+		// debugmes "Prt-boxIDs: " +.@data[.@i] +" | "+.@data[.@i+2] +" | "+ .@data[.@i];
 		monster .@map$, .@data[.@i+1], .@data[.@i+2],"Treasure Chest", .@data[.@i],1, strnpcinfo(0)+"::OnTreasureDied";
+	}
 
 OnTreasureDied:
 	end;

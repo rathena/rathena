@@ -1269,7 +1269,7 @@ OnClock0001:
 		// set treasure box ID
 		set .@boxid, .@treasurebox + (.@i+2) % 2;
 		set .@box,1 << .@i;
-		debugmes "Alde-boxIDs " +.@box +" | "+.@boxid;
+		// debugmes "Alde-boxIDs " +.@box +" | "+.@boxid;
 		// Spawn or do not spawn chests if one already exists.
 		if ((getd("$@"+strnpcinfo(2)+"_treasure") & .@box) == 0) {
 			monster strnpcinfo(2),.@treasurex[.@i],.@treasurey[.@i],"Treasure Chest",.@boxid,1,"Treasure#"+strnpcinfo(2)+"::OnTreasureDied"+.@i;

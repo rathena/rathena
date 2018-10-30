@@ -12,18 +12,59 @@
 
 OnPCLoginEvent:
 	if(! #xlaunch_vipx) {
-		getitem 11501, 100;     // Light White Potion  x50
-		getitem 11502, 30;     // Light Blue Potion x30
-		getitem 13697, 1;     // Blessing Scroll lv10 x10
-		getitem 12914, 1;     // Increase Agility lv10 x10
-		getitem 7621, 3;    // Token of Siegfried x3
-		getitem 12210, 3;     // Bubble gum x3 (+100%)
-		getitem 662, 15;     // Authorative Badge x15
+		dispbottom "===============================================================", 0x666666;
+		dispbottom "  Welcome to MilkyRO.", 0x76daee;
+		dispbottom "===============================================================", 0x666666;
+		dispbottom " Here are some items to help you start playing the game. ";
+		dispbottom " ";
+		getitem 11501, 100;	// Light White Potion  x50
+		getitem 11502, 30;	// Light Blue Potion x30
+		getitem 13697, 1;	// Blessing Scroll lv10 x10
+		getitem 12914, 1;	// Increase Agility lv10 x10
+		getitem 7621, 3;	// Token of Siegfried x3
+		getitem 12210, 3;	// Bubble gum x3 (+100%)
+		getitem 662, 15;	// Authorative Badge x15
 		Zeny += 250000;		// Give 250k Zeny
-		vip_time 30240;     // 1 week worth of vip time (10080)
+		vip_time 30240;		// 1 week worth of vip time (10080)
+		dispbottom " ";
+		dispbottom " Other freebies are given in the form of Daily Attendance.";
+		dispbottom " Make sure you check-in every day.";
+		dispbottom "                                                                                                                                              MilkyRO Team", 0x76daee;
+		dispbottom "===============================================================", 0x666666;
 
-		announce "Welcome to MilkyRO. Here are some things to start you with along with a 1 week VIP (only given by the gm) bonus.", BC_SELF;
+		// announce "Welcome to MilkyRO. Here are some things to start you with along with a 1 week VIP (only given by the gm) bonus.", BC_SELF;
 		set #xlaunch_vipx,1;
+		sleep 5000;
+	}
+	if(! #ServCrash20181030 && getcharid(3, strcharinfo(0)) <= 2000346){
+		dispbottom "===============================================================", 0x666666;
+		dispbottom "  Welcome to MilkyRO.", 0x76daee;
+		dispbottom "===============================================================", 0x666666;
+		dispbottom " Thank you for your patience for the past few days. We have finally migrated to a new server.";
+		dispbottom " We hope this will prevent the server from ever crashing again.";
+		dispbottom " To compensate for the inconvienence caused we will be giving you a few items.";
+		dispbottom " ";
+
+		getitem 8501, 5; 				// Milky Special Gift Box
+		getitem 12412, 3;				// Bubble gum x3 (+100%)
+		getitem 14533, 3;				// Field Manual 100%
+		dispbottom " ";
+		dispbottom " And finally a random reward: ";
+		switch(rand(1,9)){
+			case 1: getitem 12103, 1; break;	// Bloody Branch
+			case 2: getitem 12214, 3; break;	// Convex Mirror
+			case 3: getitem 7776, 1; break;		// Gym Pass
+			case 4: getitem 12254, 2; break;	// LUK +10
+			case 5: getitem 12252, 2; break;	// INT +10
+			case 6: getitem 12253, 2; break;	// DEX +10
+			case 7: getitem 12255, 2; break;	// VIT +10
+			case 8: getitem 12251, 2; break;	// AGI +10
+			case 9: getitem 12250, 2; break;	// STR +10
+		}
+		dispbottom " ";
+		dispbottom "                                                                                                                                              MilkyRO Team", 0x76daee;
+		dispbottom "===============================================================", 0x666666;
+		set #ServCrash20181030,1;
 	}
 	end;
 }
