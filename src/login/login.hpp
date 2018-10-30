@@ -77,6 +77,7 @@ struct Login_Config {
 	bool new_account_flag,new_acc_length_limit;     /// autoregistration via _M/_F ? / if yes minimum length is 4?
 	int start_limited_time;                         /// new account expiration time (-1: unlimited)
 	bool use_md5_passwds;                           /// work with password hashes instead of plaintext passwords?
+	bool use_md5_emails;                            /// work with emails hashes instead of plaintext emails? [Vykimo]
 	int group_id_to_connect;                        /// required group id to connect
 	int min_group_id_to_connect;                    /// minimum group id to connect
 

@@ -6,6 +6,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "../common/md5calc.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mapindex.hpp"
 #include "../common/mmo.hpp"
@@ -541,14 +542,20 @@ int chclif_parse_char_delete2_req(int fd, struct char_session_data* sd) {
  **/
 bool chclif_delchar_check(struct char_session_data *sd, char *delcode, uint8 flag) {
 	// E-Mail check
-	if (flag&CHAR_DEL_EMAIL && (
-			!stricmp(delcode, sd->email) || //email does not match or
+	if (flag&CHAR_DEL_EMAIL) {
+
+		/* TODO : In case of md5 mails
+		if( login_config.use_md5_emails )
+			MD5_String(delcode, delcode);
+		*/
+		if (!stricmp(delcode, sd->email) || //email does not match or
 			(
 				!stricmp("a@a.com", sd->email) && //it is default email and
 				!strcmp("", delcode) //user sent an empty email
-			))) {
+			)) {
 			ShowInfo("" CL_RED "Char Deleted" CL_RESET " " CL_GREEN "(E-Mail)" CL_RESET ".\n");
 			return true;
+		}
 	}
 	// Birthdate (YYMMDD)
 	if (flag&CHAR_DEL_BIRTHDATE && (

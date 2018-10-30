@@ -7,6 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "login.hpp"
+
+#include "../common/md5calc.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp"
 #include "../common/showmsg.hpp"
@@ -318,6 +321,9 @@ static bool account_db_sql_create(AccountDB* self, struct mmo_account* acc) {
 	if( account_id > END_ACCOUNT_NUM )
 		return false;
 
+	if( login_config.use_md5_emails )
+		MD5_String(acc->email,acc->email);	
+	
 	// insert the data into the database
 	acc->account_id = account_id;
 	return mmo_auth_tosql(db, acc, true);
@@ -533,7 +539,7 @@ static bool mmo_auth_fromsql(AccountDB_SQL* db, struct mmo_account* acc, uint32 
 	Sql_GetData(sql_handle, 17, &data, NULL); acc->old_group = atoi(data);
 #endif
 	Sql_FreeResult(sql_handle);
-
+	
 	return true;
 }
 
