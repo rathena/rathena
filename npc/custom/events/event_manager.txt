@@ -454,7 +454,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 				dispbottom "<Poring Counting> Someone has already won this round.";
 			}
 			else {
-				announce "<Poring Counting> Bravo!! " + strcharinfo(0) + " is correct! The correct count was "+amount+".",bc_map | bc_blue;
+				announce "<Poring Counting> Bravo!! " + strcharinfo(0) + " is correct! The correct count was "+.amount+".",bc_map | bc_blue;
 				.Winner = 1; // stop from having duplicate winners, incase the event executed twice
 
 				getitem .prize, 1; // reward

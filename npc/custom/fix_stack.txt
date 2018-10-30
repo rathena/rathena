@@ -1,0 +1,21 @@
+
+guild_vs1,46,53,5	script	Item Stacker	542,{
+	getinventorylist;
+	.@total_1 = 0;
+	.@total_2 = 0;
+	for(.@i = 0; .@i < @inventorylist_count; .@i++)
+	{
+		if(@inventorylist_id[.@i] == 7135)
+			.@total_1 += @inventorylist_amount[.@i];
+
+		if(@inventorylist_id[.@i] == 7136)
+			.@total_2 += @inventorylist_amount[.@i];
+
+		// ispbottom " Fire : "+ .@total_1;
+		// dispbottom " Acid : "+ .@total_2;
+	}
+	delitem 7135, .@total_1;
+	delitem 7136, .@total_2;
+	getitem 7135, .@total_1;
+	getitem 7136, .@total_2;
+}

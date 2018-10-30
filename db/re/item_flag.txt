@@ -603,7 +603,7 @@
 13579,4 //Vit_Dish_Box50
 13580,4 //Insurance_Package30
 13581,4 //Insurance_Package50
-13582,4 //Convex_Mirror_Box5
+// 13582,4 //Convex_Mirror_Box5
 13583,4 //Convex_Mirror_Box30
 13584,4 //Blessing10_Box30
 13585,4 //Blessing10_Box50
@@ -628,7 +628,7 @@
 13604,4 //Str_Dish_Box30
 13605,4 //Str_Dish_Box50
 13606,4 //Bubble_Gum_Box1
-13607,4 //Bubble_Gum_Box5
+// 13607,4 //Bubble_Gum_Box5
 13608,4 //Megaphone_Box1
 13609,4 //Megaphone_Box5
 13610,4 //Enriched_Elunium_Box5
@@ -1008,7 +1008,7 @@
 13986,4 //Bulging_Head_Box_1m
 13987,4 //Ori_Stone_5_Box
 13988,4 //Ori_Stone_50_Box
-13989,4 //Acidbomb_10_Box
+// 13989,4 //Acidbomb_10_Box
 13990,4 //Job_Manual50_Box
 13991,4 //Tiger_Mask_Box
 13992,4 //Cat_Hat_Box
@@ -1024,7 +1024,7 @@
 14002,4 //Adv_Siege_Supply_Box
 14003,4 //Elite_Siege_Supply_Box
 14004,4 //Poison_Bottle_10_Box
-14005,4 //Poison_Bottle_5_Box
+// 14005,4 //Poison_Bottle_5_Box
 14006,4 //F_Drooping_W_Kitty_Box
 14007,4 //F_Rabbit_Ear_Hat_Box
 14008,4 //F_L_Orc_Hero_Helm_Box
@@ -1249,7 +1249,7 @@
 14227,4 //Healing_Staff_Box
 14228,4 //Praxinus_Box
 14229,4 //Sakura_Scroll
-14232,4 //Yggdrasilberry_Box_
+// 14232,4 //Yggdrasilberry_Box_
 14233,4 //Dead_Tree_Branch_Box1
 14234,4 //Dead_Tree_Branch_Box2
 14242,4 //Beholder_Ring_Box
@@ -1521,7 +1521,7 @@
 16687,4 //RWC2010_SuitcaseA
 16688,4 //RWC2010_SuitcaseB
 16691,4 //Scorpius_Scroll
-16740,4 //Ptotection_Seagod_Box
+// 16740,4 //Ptotection_Seagod_Box
 16741,4 //Hairtail_Box1
 16742,4 //Hairtail_Box2
 16743,4 //Spearfish_Box1

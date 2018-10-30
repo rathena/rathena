@@ -971,8 +971,9 @@ IG_Br_ThiefPackage,2607,0,1,0,0,0,1	// 1x Clip
 IG_Br_ThiefPackage,2607,0,1,0,0,0,1	// 1x Clip
 IG_Br_ThiefPackage,2274,0,1,0,0,0,1	// 1x Ghost_Bandana
 
-IG_Acidbomb_10_Box,7135,0,10,0,0,0,1	// 10x Fire_Bottle
-IG_Acidbomb_10_Box,7136,0,10,0,0,0,1	// 10x Acid_Bottle
+// GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,GUID,isBound,isNamed}
+IG_Acidbomb_10_Box,7135,0,10,0,0,0,0	// 10x Fire_Bottle
+IG_Acidbomb_10_Box,7136,0,10,0,0,0,0	// 10x Acid_Bottle
 
 IG_Basic_Siege_Supply_Box,11503,0,25,0,0,0,1	// 25x Siege_White_Potion
 IG_Basic_Siege_Supply_Box,11504,0,10,0,0,0,1	// 10x Siege_Blue_Potion
