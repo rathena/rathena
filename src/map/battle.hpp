@@ -649,6 +649,7 @@ struct Battle_Config
 	int feature_attendance;
 	int feature_privateairship;
 	int rental_transaction;
+	int blocking_play_delay;
 
 #include "../custom/battle_config_struct.inc"
 };

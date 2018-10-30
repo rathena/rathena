@@ -5513,6 +5513,10 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		}
 
 		sd->state.pmap = sd->bl.m;
+
+		if (battle_config.blocking_play_delay)
+			sc_start(&sd->bl, &sd->bl, SC_BLOCKING_PLAY, 100, 0, 0);
+
 		if (sd->sc.count) { // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
 				return SETPOS_MAPINDEX; //You may not get out!
@@ -9837,7 +9841,8 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		return false;
 	}
 	if( sd->sc.count && (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
-		sd->sc.data[SC_KYOUGAKU] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ) {
+		sd->sc.data[SC_KYOUGAKU] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ||
+		sd->sc.data[SC_BLOCKING_PLAY]) {
 		clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL); //Fail
 		return false;
 	}
@@ -10107,8 +10112,8 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
 		sd->sc.data[SC__BLOODYLUST] ||
 		sd->sc.data[SC_KYOUGAKU] ||
-		(sd->sc.data[SC_PYROCLASTIC] &&
-		sd->inventory_data[n]->type == IT_WEAPON)))	// can't switch weapon
+		(sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON) ||
+		sd->sc.data[SC_BLOCKING_PLAY]))	// can't switch weapon
 	{
 		clif_unequipitemack(sd,n,0,0);
 		return false;

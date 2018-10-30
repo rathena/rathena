@@ -2687,10 +2687,6 @@ SC_GVG_BLIND	(EFST_GVG_BLIND)
 	val1: Amount of HP that are instantly consumed
 	val2: Amount of SP that are instantly consumed
 
-SC_EXTREMITYFIST2	()
-	desc:
-	val1:
-
 SC_LHZ_DUN_N1	(EFST_LHZ_DUN_N1)
 	desc: Increases damage against Swordman, Thief and reduces damage taken from Acolyte, Merchant monsters of Biolab 5 (except MVPs).
 	val1: +% Damage
@@ -2710,3 +2706,11 @@ SC_LHZ_DUN_N4	(EFST_LHZ_DUN_N4)
 	desc: Increases and reduces damage against MVPs of Biolab 5.
 	val1: +% Damage
 	val2: +% Defense
+
+SC_BLOCKING_PLAY	(EFST_BLOCKING_PLAY)
+	desc: Keeps players from moving, using/picking/dropping items, using skills, chatting, and swapping equipment while changing maps.
+	val1: N/A
+
+SC_EXTREMITYFIST2	()
+	desc:
+	val1:

@@ -1176,6 +1176,8 @@ void initChangeTables(void)
 
 	StatusIconChangeTable[SC_ANCILLA] = EFST_ANCILLA;
 
+	StatusIconChangeTable[SC_BLOCKING_PLAY] = EFST_BLOCKING_PLAY;
+
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
 	StatusChangeFlagTable[SC_ASPDPOTION1] |= SCB_ASPD;
@@ -1343,6 +1345,8 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_EDP] |= SCB_WATK;
 #endif
 
+	StatusChangeFlagTable[SC_BLOCKING_PLAY] |= SCB_NONE;
+
 	/* StatusDisplayType Table [Ind] */
 	StatusDisplayType[SC_ALL_RIDING]	  = BL_PC;
 	StatusDisplayType[SC_PUSH_CART]		  = BL_PC;
@@ -1436,6 +1440,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_VACUUM_EXTREME]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_SUHIDE]				|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_SV_ROOTTWIST]			|= SCS_NOMOVE;
+	StatusChangeStateTable[SC_BLOCKING_PLAY]		|= SCS_NOMOVE;
 
 	/* StatusChangeState (SCS_) NOPICKUPITEMS */
 	StatusChangeStateTable[SC_HIDING]				|= SCS_NOPICKITEM;
@@ -1446,11 +1451,13 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC__FEINTBOMB]			|= SCS_NOPICKITEM;
 	StatusChangeStateTable[SC_NOCHAT]				|= SCS_NOPICKITEM|SCS_NOPICKITEMCOND;
 	StatusChangeStateTable[SC_SUHIDE]				|= SCS_NOPICKITEM;
+	StatusChangeStateTable[SC_BLOCKING_PLAY]		|= SCS_NOPICKITEM;
 
 	/* StatusChangeState (SCS_) NODROPITEMS */
 	StatusChangeStateTable[SC_AUTOCOUNTER]			|= SCS_NODROPITEM;
 	StatusChangeStateTable[SC_BLADESTOP]			|= SCS_NODROPITEM;
 	StatusChangeStateTable[SC_NOCHAT]				|= SCS_NODROPITEM|SCS_NODROPITEMCOND;
+	StatusChangeStateTable[SC_BLOCKING_PLAY]		|= SCS_NODROPITEM;
 
 	/* StatusChangeState (SCS_) NOCAST (skills) */
 	StatusChangeStateTable[SC_SILENCE]				|= SCS_NOCAST;
@@ -1469,12 +1476,14 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_CURSEDCIRCLE_TARGET]	|= SCS_NOCAST;
 	StatusChangeStateTable[SC_KINGS_GRACE]			|= SCS_NOCAST;
+	StatusChangeStateTable[SC_BLOCKING_PLAY]		|= SCS_NOCAST;
 
 	/* StatusChangeState (SCS_) NOCHAT (skills) */
 	StatusChangeStateTable[SC_BERSERK]				|= SCS_NOCHAT;
 	StatusChangeStateTable[SC_SATURDAYNIGHTFEVER]	|= SCS_NOCHAT;
 	StatusChangeStateTable[SC_DEEPSLEEP]			|= SCS_NOCHAT;
 	StatusChangeStateTable[SC_NOCHAT]				|= SCS_NOCHAT|SCS_NOCHATCOND;
+	StatusChangeStateTable[SC_BLOCKING_PLAY]		|= SCS_NOCHAT;
 }
 
 static void initDummyData(void)
@@ -9427,6 +9436,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_REUSE_LIMIT_ASPD_POTION:
 			case SC_DORAM_BUF_01:
 			case SC_DORAM_BUF_02:
+			case SC_BLOCKING_PLAY:
 				return 0;
 			case SC_PUSH_CART:
 			case SC_COMBO:
@@ -9763,6 +9773,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				clif_changestatus(sd,SP_MANNER,sd->status.manner);
 				clif_updatestatus(sd,SP_MANNER);
 			}
+			break;
+
+		case SC_BLOCKING_PLAY:
+			tick = battle_config.blocking_play_delay;
 			break;
 
 		case SC_STONE:
@@ -11946,6 +11960,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_LHZ_DUN_N2:
 			case SC_LHZ_DUN_N3:
 			case SC_LHZ_DUN_N4:
+			case SC_BLOCKING_PLAY:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -11980,6 +11995,7 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_PUSH_CART:
 			case SC_ALL_RIDING:
 			case SC_STYLE_CHANGE:
+			case SC_BLOCKING_PLAY:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -13976,6 +13992,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_LHZ_DUN_N2:
 			case SC_LHZ_DUN_N3:
 			case SC_LHZ_DUN_N4:
+			case SC_BLOCKING_PLAY:
 			// Clans
 			case SC_CLAN_INFO:
 			case SC_SWORDCLAN:
