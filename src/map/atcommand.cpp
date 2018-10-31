@@ -3911,7 +3911,7 @@ ACMD_FUNC(reload) {
 
 		iter = mapit_getallusers();
 		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-			pc_close_npc(pl_sd,2);
+			pc_close_npc(pl_sd,1);
 		mapit_free(iter);
 
 		flush_fifos();
