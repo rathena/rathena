@@ -110,11 +110,11 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 					// debugmes " unique "+.unique_id[.@j];
 					.@j++;
 				}
-				// if(.unique_id[.@i])
-				// {
-				// 	mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 does ^FF0000NOT^000000 allow dual client.";
-				// 	close;
-				// }
+				if(.unique_id[.@i])
+				{
+					mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 does ^FF0000NOT^000000 allow dual client.";
+					close;
+				}
 				if ( .EventON == 1 ) {
 					mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 is currently ^00FF00RUNNING^000000 and we are not taking any more participants. Please come earlier next time.";
 					close;
@@ -276,8 +276,8 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 				set .Winner,0;
 				set .DMonster,1000+rand(1,995);
 				set $MonsterName$, getmonsterinfo(.DMonster,0);
-				if ( $MonsterName$ == null ) goto Start_Event; 				// skips monster that doesn't exists
-				if ( inarray(.BlackList, .DMonster) ) goto Start_Event;		// skips monster in the blacklist
+				if ( $MonsterName$ == "null" ) goto Start_Event; 				// skips monster that doesn't exists
+				if ( inarray(.BlackList, .DMonster) > 0) goto Start_Event;		// skips monster in the blacklist
 				// if (compare(","+.BlackList$+"," , ","+.DMonster+",")) goto Start_Event;
 				if (.DMonster==.LastMonster) goto Start_Event;
 				set .LastMonster, .DMonster;
@@ -287,8 +287,6 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 				defpattern 1,"([^:]+):.\\s*"+$MonsterName$+".*", "Interrupt_Event";
 				activatepset 1;
 
-				// Chatroom to display the question
-				waitingroom "What Monster is this?", 0;
 				npctalk "<Disguise Event> Tell me the correct name of the Monster that I disguised as.";
 
 				setnpctimer 0;
@@ -447,7 +445,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 			else if ( .RoundsON == 0 ) {
 				dispbottom "<Poring Counting> Please wait for the round to start.";
 			}
-			else if ( distance( .npc_x,.npc_y,.@x,.@y ) > 14 ) {
+			else if ( distance( .npc_x,.npc_y,.@x,.@y ) > 12 ) {
 				dispbottom "<Poring Counting> You're too far away.";
 			}
 			else if (.Winner) {
@@ -465,7 +463,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 				.RoundCount = .RoundCount+1;
 				.RoundsON = 0; // Rounds Ended
 				if (.RoundCount < .Rounds) {
-					sleep 2000;
+					sleep 5000;
 					npctalk "<Poring Counting> Starting a new round...";
 					setnpctimer 0;  // start 5s timer
 				}
@@ -487,7 +485,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 			else if ( .RoundsON == 0 ) {
 				dispbottom "<Disguise Event> Please wait for the round to start.";
 			}
-			else if ( distance( .npc_x,.npc_y,.@x,.@y ) > 14 ) {
+			else if ( distance( .npc_x,.npc_y,.@x,.@y ) > 12 ) {
 				dispbottom "<Disguise Event> You're too far away.";
 			}
 			else if (.Winner) {
@@ -499,13 +497,12 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 				getitem .prize, 1; // reward
 				setnpcdisplay "Event Manager",795;
 
-				delwaitingroom;
 				deletepset 1;
 
 				set .RoundCount,.RoundCount+1;
 				.RoundsON = 0; // Rounds Ended
 				if (.RoundCount < .Rounds) {
-					sleep 2000;
+					sleep 5000;
 					npctalk "<Disguise Event> Starting a new round...";
 					setnpctimer 0;
 				}
@@ -528,12 +525,12 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 			goto Start_Event;
 		end;
 
-	OnTimer10000: // Round Timer Ends
+	OnTimer59000: // Round Timer Ends
 		// skip this if the announcement is running
 		if (.aTimer) end;
 
 		if(.Event == 3) {
-			npctalk "<Poring Counting> You took too long to guess the number of "+ getmonsterinfo(.mob,MOB_NAME) +".";
+			npctalk "<Poring Counting> You took too long to guess the number of "+ getmonsterinfo(.mob,MOB_NAME) +" The correct number is "+.amount+".";
 			// kill any surving monster
 			killmonster .map$,.npc_name$+"::OnDied";
 
@@ -556,11 +553,10 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 			}
 		}
 		else if (.Event == 4){
-			npctalk "<Disguise Event> You took too long to guess what I was. Please wait 5 seconds while I disguise again.";
+			npctalk "<Disguise Event> You took too long to guess what I was. I was disgused as "+$MonsterName$+". Please wait 5 seconds while I disguise again.";
 			setnpcdisplay "Event Manager",795;
 
 			set $MonsterName$,"";
-			delwaitingroom;
 			deletepset 1;
 			setnpctimer 0; // re-start 5s timer
 
@@ -686,7 +682,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		setnpctimer 0; initnpctimer;
 	end;
 
-	OnTimer6000:
+	OnTimer60000:
 		if (.aTimer!=1) end;
 		if(.Event == 1){
 			announce "The <Last Man Standing (PvP)> is being held in Prontera and will begin in 2 minutes.",bc_all | bc_blue;
@@ -703,7 +699,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		}
 	end;
 
-	OnTimer12000:
+	OnTimer120000:
 		if (.aTimer!=1) end;
 		if(.Event == 1){
 			announce "The <Last Man Standing (PvP)> is being held in Prontera and will begin in 1 minutes.",bc_all | bc_blue;
@@ -720,7 +716,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		}
 	end;
 
-	OnTimer18000:
+	OnTimer180000:
 		if (.aTimer!=1) end;
 		set .aTimer,0; set .EventON, 1;
 		stopnpctimer; setnpctimer 0; initnpctimer;
@@ -764,8 +760,8 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		.Rounds = 10;
 		.wall_mob_id = 1085; // Red Mushroom
 		setarray .xy_area,
-			150,157,
-			161,168;
+			154,157,
+			163,167;
 		setarray .monster,
 			1002, // poring
 			1894, // pouring
@@ -792,7 +788,16 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		getmapxy( .map$,.npc_x,.npc_y,1 );
 		setmapflag .map$, mf_monster_noteleport;
 
-		set .BlackList[0], 0;
+		setarray .BlackList[0], 1003,1006,1017,1021,1022,1027,1043,1075,1136,1137,1168,1171,1172,1173,1181;
+		setarray .BlackList[15], 1187,1210,1217,1218,1222,1223,1224,1225,1226,1227,1228,1233,1284,1407,1411;
+		setarray .BlackList[30], 1414,1495,1501,1900,1996,2000,2001,2002,2003,2004,2005,2006,2007,2011,2012;
+		setarray .BlackList[45], 2025,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041;
+		setarray .BlackList[60], 2042,2043,2044,2045,2046,2047,2048,2049,2050,2051,2052,2053,2054,2055,2056;
+		setarray .BlackList[75], 2057,2058,2059,2060,2061,2062,2063,2064,2065,2066,2067,2075,2076,2077,2078;
+		setarray .BlackList[90], 2079,2080,2081,2083,2084,2085,2086,2087,2088,2089,2090,2091,2092,2093,2094;
+		setarray .BlackList[105], 2095,2096,2097,2098,2099,2100,2101,2012,2103,2104,2105,2106,2107,2108,2109;
+		setarray .BlackList[120], 2110,2111,2112,2113,2114,2115,2116,2117,2118,2119,2120,2121,2123,2124,2125,1496;
+		getarraysize(.BlackList);
 
 		// set .BlackList$, "1003,1006,1017,1021,1022,1027,1043,1075,1136,1137,1168," +
 		//     "1171,1172,1173,1181,1187,1210,1217,1218,1222,1223,1224,1225,1226,1227,1228," +
