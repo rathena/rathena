@@ -6067,6 +6067,15 @@
 	export_constant_npc(JT_4_ED_OSCAR);
 	export_constant_npc(JT_4_ED_ORB);
 	export_constant_npc(JT_4_ED_FENCE);
+	export_constant_npc(JT_4_M_ANDREA);
+	export_constant_npc(JT_4_M_ANDREA_D);
+	export_constant_npc(JT_4_F_ANES);
+	export_constant_npc(JT_4_F_ANES_D);
+	export_constant_npc(JT_4_M_SILVANO);
+	export_constant_npc(JT_4_M_SILVANO_D);
+	export_constant_npc(JT_4_F_CECILIA);
+	export_constant_npc(JT_4_F_CECILIA_D);
+	export_constant_npc(JT_4_F_ERENE);
 	#undef export_constant_npc
 
 	/* special effects */
