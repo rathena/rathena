@@ -238,7 +238,7 @@ struct s_skill_db {
 extern struct s_skill_db **skill_db;
 
 #define MAX_SQUARE_LAYOUT		7	// 15*15 unit placement maximum
-#define MAX_SKILL_UNIT_LAYOUT	(47+MAX_SQUARE_LAYOUT)	// 47 special ones + the square ones
+#define MAX_SKILL_UNIT_LAYOUT	(48+MAX_SQUARE_LAYOUT)	// 47 special ones + the square ones
 #define MAX_SKILL_UNIT_LAYOUT2	17
 #define MAX_SKILL_UNIT_COUNT	((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
 struct s_skill_unit_layout {
@@ -2214,6 +2214,7 @@ void skill_combo_toggle_inf(struct block_list* bl, uint16 skill_id, int inf);
 void skill_combo(struct block_list* src,struct block_list *dsrc, struct block_list *bl, uint16 skill_id, uint16 skill_lv, int tick);
 
 void skill_reveal_trap_inarea(struct block_list *src, int range, int x, int y);
+int skill_get_time3(struct map_data *mapdata, uint16 skill_id, uint16 skill_lv);
 
 /// Variable name of copied skill by Plagiarism
 #define SKILL_VAR_PLAGIARISM "CLONE_SKILL"

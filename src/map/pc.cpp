@@ -522,29 +522,44 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
  * Check if the player can sell the current item
  * @param sd: map_session_data of the player
  * @param item: struct of the checking item
+ * @param shoptype: NPC's sub type see enum npc_subtype
  * @return bool 'true' is sellable, 'false' otherwise
  */
-bool pc_can_sell_item(struct map_session_data *sd, struct item *item) {
-	struct npc_data *nd;
-
+bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_subtype shoptype) {
 	if (sd == NULL || item == NULL)
 		return false;
 
-	nd = map_id2nd(sd->npc_shopid);
+	if (item->equip > 0 || item->amount < 0)
+		return false;
 
 	if (battle_config.hide_fav_sell && item->favorite)
 		return false; //Cannot sell favs (optional config)
 
-	if (item->expire_time)
+	if (!battle_config.rental_transaction && item->expire_time)
 		return false; // Cannot Sell Rental Items
 
-	if (nd && nd->subtype == NPCTYPE_ITEMSHOP) {
-		struct item_data *itd;
-
-		if (item->bound && battle_config.allow_bound_sell&ISR_BOUND)
-			return true; // NPCTYPE_ITEMSHOP and bound item config is sellable
-		if ((itd = itemdb_search(item->nameid)) && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
-			return true; // NPCTYPE_ITEMSHOP and sell restricted item config is sellable
+	switch (shoptype) {
+		case NPCTYPE_SHOP:
+			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND_SELLABLE && (
+				item->bound != BOUND_GUILD ||
+				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
+				))
+				return true;
+			break;
+		case NPCTYPE_ITEMSHOP:
+			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND && (
+				item->bound != BOUND_GUILD ||
+				(sd->guild && sd->status.char_id == sd->guild->member[0].char_id) ||
+				(item->bound == BOUND_GUILD && !(battle_config.allow_bound_sell&ISR_BOUND_GUILDLEADER_ONLY))
+				))
+				return true;
+			else if (!item->bound) {
+				struct item_data *itd = itemdb_search(item->nameid);
+				if (itd && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
+					return true;
+			}
+			break;
 	}
 
 	if (!itemdb_cansell(item, pc_get_group_level(sd)))
@@ -2469,7 +2484,7 @@ void pc_itemgrouphealrate(struct map_session_data *sd, uint16 group_id, short ra
 	}
 
 	if (i >= UINT8_MAX) {
-		ShowError("pc_itemgrouphealrate_add: Reached max (%d) possible bonuses for this player %d\n", UINT8_MAX);
+		ShowError("pc_itemgrouphealrate_add: Reached max (%d) possible bonuses for this player %d\n", UINT8_MAX, sd->status.char_id);
 		return;
 	}
 
@@ -5478,22 +5493,23 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	if( sd->state.changemap ) { // Misc map-changing settings
 		int i;
+		unsigned short instance_id = map_getmapdata(sd->bl.m)->instance_id;
 
-		if(map_getmapdata(sd->bl.m)->instance_id && !mapdata->instance_id) {
-			bool instance_found = false;
+		if (instance_id && instance_id != mapdata->instance_id) {
 			struct party_data *p = NULL;
 			struct guild *g = NULL;
+			struct clan *cd = NULL;
 
-			if (sd->instance_id) {
+			if (sd->instance_id)
 				instance_delusers(sd->instance_id);
-				instance_found = true;
-			}
-			if (!instance_found && sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id) {
+			else if (sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id)
 				instance_delusers(p->instance_id);
-				instance_found = true;
-			}
-			if (!instance_found && sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
+			else if (sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
 				instance_delusers(g->instance_id);
+			else if (sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
+				instance_delusers(cd->instance_id);
+			else
+				instance_delusers(instance_id);
 		}
 
 		sd->state.pmap = sd->bl.m;
@@ -11385,7 +11401,7 @@ static bool pc_readdb_job_noenter_map(char *str[], int columns, int current) {
 	}
 
 	if (!pcdb_checkid(class_) || (idx = pc_class2idx(class_)) < 0) {
-		ShowError("pc_readdb_job_noenter_map: Invalid job %d specified.\n", str[0]);
+		ShowError("pc_readdb_job_noenter_map: Invalid job %d specified.\n", class_);
 		return false;
 	}
 
@@ -11485,12 +11501,12 @@ void pc_readdb(void) {
 		s = pc_read_statsdb(dbsubpath2,s,i > 0);
 		if (i == 0)
 #ifdef RENEWAL_ASPD
-			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
+			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
 #else
-			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
+			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
 #endif
 		else
-			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, i > 0);
+			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, true);
 		sv_readdb(dbsubpath1, "job_db2.txt",',',1,1+MAX_LEVEL,CLASS_COUNT,&pc_readdb_job2, i > 0);
 		sv_readdb(dbsubpath2, "job_exp.txt",',',4,1000+3,CLASS_COUNT*2,&pc_readdb_job_exp, i > 0); //support till 1000lvl
 #ifdef HP_SP_TABLES
@@ -12130,7 +12146,7 @@ TIMER_FUNC(pc_bonus_script_timer){
 		return 0;
 
 	if (!sd->bonus_script.head || entry == NULL) {
-		ShowError("pc_bonus_script_timer: Invalid entry pointer 0x%08X!\n", entry);
+		ShowError("pc_bonus_script_timer: Invalid entry pointer %p!\n", entry);
 		return 0;
 	}
 

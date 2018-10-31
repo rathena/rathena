@@ -482,27 +482,19 @@ struct mob_data* mob_spawn_dataset(struct spawn_data *data)
 
 /*==========================================
  * Fetches a random mob_id [Skotlex]
- * type: Where to fetch from:
- * 0: dead branch list
- * 1: poring list
- * 2: bloody branch list
- * flag:
- * &1 : Apply the summon success chance found in the list (otherwise get any monster from the db)
- * &2 : Apply a monster check level.
- * &4 : Selected monster should not be a boss type (except those from MOBG_Bloody_Dead_Branch)
- * &8 : Selected monster must have normal spawn.
- * &16: Selected monster should not be a plant type
+ * type: Where to fetch from (see enum e_random_monster)
+ * flag: Type of checks to apply (see enum e_random_monster_flags)
  * lv: Mob level to check against
  *------------------------------------------*/
-int mob_get_random_id(int type, int flag, int lv)
+int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv)
 {
 	struct mob_db *mob;
 	int i = 0, mob_id = 0, rand = 0;
 	struct s_randomsummon_group *msummon = (struct s_randomsummon_group *)idb_get(mob_summon_db, type);
 	struct s_randomsummon_entry *entry = nullptr;
 
-	if (type == MOBG_Bloody_Dead_Branch)
-		flag &= ~4;
+	if (type == MOBG_Bloody_Dead_Branch && flag&RMF_MOB_NOT_BOSS)
+		flag = static_cast<e_random_monster_flags>(flag&~RMF_MOB_NOT_BOSS);
 	
 	if (!msummon) {
 		ShowError("mob_get_random_id: Invalid type (%d) of random monster.\n", type);
@@ -521,11 +513,11 @@ int mob_get_random_id(int type, int flag, int lv)
 	} while ((rand == 0 || // Skip default first
 		mob == nullptr ||
 		mob_is_clone(mob_id) ||
-		(flag&0x01 && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
-		(flag&0x02 && lv < mob->lv) ||
-		(flag&0x04 && status_has_mode(&mob->status,MD_STATUS_IMMUNE) ) ||
-		(flag&0x08 && !mob_has_spawn(mob_id)) ||
-		(flag&0x10 && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
+		(flag&RMF_DB_RATE && (entry->rate < 1000000 && entry->rate <= rnd() % 1000000)) ||
+		(flag&RMF_CHECK_MOB_LV && lv < mob->lv) ||
+		(flag&RMF_MOB_NOT_BOSS && status_has_mode(&mob->status,MD_STATUS_IMMUNE) ) ||
+		(flag&RMF_MOB_NOT_SPAWN && !mob_has_spawn(mob_id)) ||
+		(flag&RMF_MOB_NOT_PLANT && status_has_mode(&mob->status,MD_IGNOREMELEE|MD_IGNOREMAGIC|MD_IGNORERANGED|MD_IGNOREMISC) )
 	) && (i++) < MAX_MOB_DB && msummon->count > 1);
 
 	if (i >= MAX_MOB_DB && &msummon->list[0]) {
@@ -678,7 +670,7 @@ int mob_once_spawn(struct map_session_data* sd, int16 m, int16 x, int16 y, const
 
 	for (count = 0; count < amount; count++)
 	{
-		int c = (mob_id >= 0) ? mob_id : mob_get_random_id(-mob_id - 1, (battle_config.random_monster_checklv) ? 3 : 1, lv);
+		int c = (mob_id >= 0) ? mob_id : mob_get_random_id(-mob_id - 1, (battle_config.random_monster_checklv) ? static_cast<e_random_monster_flags>(RMF_DB_RATE|RMF_CHECK_MOB_LV) : RMF_DB_RATE, lv);
 		md = mob_once_spawn_sub((sd) ? &sd->bl : NULL, m, x, y, mobname, c, event, size, ai);
 
 		if (!md)
@@ -843,7 +835,7 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 	data.m = m;
 	data.num = 1;
 	if(mob_id<=0) {
-		mob_id = mob_get_random_id(-mob_id-1, 1, 99);
+		mob_id = mob_get_random_id(-mob_id-1, RMF_DB_RATE, 0);
 		if (!mob_id) return 0;
 	}
 
@@ -945,7 +937,7 @@ int mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int
 	data.num = 1;
 	if( mob_id <= 0 )
 	{
-		mob_id = mob_get_random_id(-mob_id-1,1,99);
+		mob_id = mob_get_random_id(-mob_id-1, RMF_DB_RATE, 0);
 		if( !mob_id ) return 0;
 	}
 
@@ -2969,7 +2961,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				(battle_config.taekwon_mission_mobname == 1 && mission_mdb && status_get_race2(&md->bl) == RC2_GOBLIN && mission_mdb->race2 == RC2_GOBLIN) ||
 				(battle_config.taekwon_mission_mobname == 2 && mob_is_samename(md, sd->mission_mobid)))
 			{ //TK_MISSION [Skotlex]
-				if (++(sd->mission_count) >= 100 && (temp = mob_get_random_id(MOBG_Branch_Of_Dead_Tree, 0xE, sd->status.base_level)))
+				if (++(sd->mission_count) >= 100 && (temp = mob_get_random_id(MOBG_Branch_Of_Dead_Tree, static_cast<e_random_monster_flags>(RMF_CHECK_MOB_LV|RMF_MOB_NOT_BOSS|RMF_MOB_NOT_SPAWN), sd->status.base_level)))
 				{
 					pc_addfame(sd, battle_config.fame_taekwon_mission);
 					sd->mission_mobid = temp;
@@ -3747,13 +3739,14 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 			struct mob_chat *mc = mob_chat(ms[i].msg_id);
 
 			if (mc) {
-				char temp[CHAT_SIZE_MAX];
-				char name[NAME_LENGTH];
+				std::string name = md->name, output;
+				std::size_t unique = name.find("#");
 
-				snprintf(name, sizeof name,"%s", md->name);
-				strtok(name, "#"); // discard extra name identifier if present [Daegaladh]
-				snprintf(temp, sizeof temp,"%s : %s", name, mc->msg);
-				clif_messagecolor(&md->bl, mc->color, temp, true, AREA_CHAT_WOC);
+				if (unique != std::string::npos)
+					name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
+				output = name + " : " + mc->msg;
+
+				clif_messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
 			}
 		}
 		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
@@ -3852,7 +3845,7 @@ int mob_clone_spawn(struct map_session_data *sd, int16 m, int16 x, int16 y, cons
 
 	try{
 		db = &mob_db_data[mob_id];
-	}catch( std::bad_alloc ){
+	}catch( const std::bad_alloc& ){
 		ShowError( "mob_clone_spawn: Memory allocation for clone %hu failed.\n", mob_id );
 		return 0;
 	}
@@ -4125,8 +4118,13 @@ static bool mob_parse_dbrow(char** str)
 	entry.job_exp = (unsigned int)cap_value(exp, 0, UINT_MAX);
 
 	status->rhw.range = atoi(str[9]);
-	status->rhw.atk = atoi(str[10]);
-	status->rhw.atk2 = atoi(str[11]);
+#ifdef RENEWAL
+	status->rhw.atk = atoi(str[10]); // BaseATK
+	status->rhw.matk = atoi(str[11]); // BaseMATK
+#else
+	status->rhw.atk = atoi(str[10]); // MinATK
+	status->rhw.atk2 = atoi(str[11]); // MaxATK
+#endif
 	status->def = atoi(str[12]);
 	status->mdef = atoi(str[13]);
 	status->str = atoi(str[14]);
@@ -4266,7 +4264,7 @@ static bool mob_parse_dbrow(char** str)
 	if (db == NULL) {
 		try{
 			db = &mob_db_data[mob_id];
-		}catch( std::bad_alloc ){
+		}catch( const std::bad_alloc& ){
 			ShowError( "Memory allocation for monster %hu failed.\n", mob_id );
 			return false;
 		}
@@ -4332,7 +4330,7 @@ static int mob_read_sqldb(void)
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_db_name[fi]);
 	}
 	return 0;
 }
@@ -4457,7 +4455,7 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current)
 	if( ms == NULL ){
 		try{
 			ms = &mob_chat_db[msg_id];
-		}catch( std::bad_alloc ){
+		}catch( const std::bad_alloc& ){
 			ShowError( "mob_parse_row_chatdb: Memory allocation for chat ID '%d' failed.\n", msg_id );
 			return false;
 		}
@@ -4477,7 +4475,7 @@ static bool mob_parse_row_chatdb(char* fields[], int columns, int current)
 	}
 
 	if(len>(CHAT_SIZE_MAX-1)){
-		ShowError("mob_chat: readdb: Message too long! Line %d, id: %d\n", current, msg_id);
+		ShowError("mob_parse_row_chatdb: Message too long! Line %d, id: %d\n", current, msg_id);
 		return false;
 	}
 	else if( !len ){
@@ -4800,7 +4798,7 @@ static int mob_read_sqlskilldb(void)
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_skill_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, mob_skill_db_name[fi]);
 	}
 	return 0;
 }
@@ -5280,6 +5278,7 @@ static void mob_load(void)
 		sv_readdb(dbsubpath2, "mob_poring.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath2, "mob_boss.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath1, "mob_pouch.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
+		sv_readdb(dbsubpath1, "mob_mission.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath1, "mob_classchange.txt", ',', 4, 4, -1, &mob_readdb_group, silent);
 		sv_readdb(dbsubpath2, "mob_drop.txt", ',', 3, 5, -1, &mob_readdb_drop, silent);
 		

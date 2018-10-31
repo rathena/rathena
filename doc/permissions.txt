@@ -35,6 +35,12 @@ Allows player to create and join parties.
 
 ---------------------------------------
 
+*attendance
+
+Allows player to use the daily attendance system.
+
+---------------------------------------
+
 ===========================
 | 2. Extended Permissions |
 ===========================

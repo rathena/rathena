@@ -1540,11 +1540,7 @@ void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag)
 	WBUFW(buf,29) = hd->homunculus.hunger;
 	WBUFW(buf,31) = (unsigned short) (hd->homunculus.intimacy / 100) ;
 	WBUFW(buf,33) = 0; // equip id
-#ifdef RENEWAL
-	WBUFW(buf,35) = cap_value(status->rhw.atk2, 0, INT16_MAX);
-#else
-	WBUFW(buf,35) = cap_value(status->rhw.atk2+status->batk, 0, INT16_MAX);
-#endif
+	WBUFW(buf,35) = cap_value(status->rhw.atk2 + status->batk, 0, INT16_MAX);
 	WBUFW(buf,37)=i16min(status->matk_max, INT16_MAX); //FIXME capping to INT16 here is too late
 	WBUFW(buf,39)=status->hit;
 	if (battle_config.hom_setting&HOMSET_DISPLAY_LUK)
@@ -1988,8 +1984,11 @@ void clif_buylist(struct map_session_data *sd, struct npc_data *nd)
 void clif_selllist(struct map_session_data *sd)
 {
 	int fd,i,c=0,val;
+	struct npc_data *nd;
 
 	nullpo_retv(sd);
+	if (!sd->npc_shopid || (nd = map_id2nd(sd->npc_shopid)) == NULL)
+		return;
 
 	fd=sd->fd;
 	WFIFOHEAD(fd, MAX_INVENTORY * 10 + 4);
@@ -1998,7 +1997,7 @@ void clif_selllist(struct map_session_data *sd)
 	{
 		if( sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory_data[i] )
 		{
-			if( !pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i]))
+			if( !pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i], nd->subtype))
 				continue;
 
 			val=sd->inventory_data[i]->value_sell;
@@ -6242,7 +6241,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 
 	static_assert(CHAT_SIZE_MAX > 8, "CHAT_SIZE_MAX too small for packet");
 	if( len > CHAT_SIZE_MAX ) {
-		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%d).\n", message, len);
+		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%" PRIuPTR ").\n", message, len);
 		len = CHAT_SIZE_MAX;
 	}
 	std::unique_ptr<char> buf(new char[8+len]);
@@ -7658,7 +7657,7 @@ void clif_party_message(struct party_data* p, uint32 account_id, const char* mes
 
 		if( len > sizeof(buf)-8 )
 		{
-			ShowWarning("clif_party_message: Truncated message '%s' (len=%d, max=%d, party_id=%d).\n", mes, len, sizeof(buf)-8, p->party.party_id);
+			ShowWarning("clif_party_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", party_id=%d).\n", mes, len, sizeof(buf)-8, p->party.party_id);
 			len = sizeof(buf)-8;
 		}
 
@@ -8852,7 +8851,7 @@ void clif_guild_message(struct guild *g,uint32 account_id,const char *mes,int le
 	}
 	else if( len > sizeof(buf)-5 )
 	{
-		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%d, guild_id=%d).\n", mes, len, sizeof(buf)-5, g->guild_id);
+		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", guild_id=%d).\n", mes, len, sizeof(buf)-5, g->guild_id);
 		len = sizeof(buf)-5;
 	}
 
@@ -9111,7 +9110,7 @@ void clif_disp_message(struct block_list* src, const char* mes, int len, enum se
 	if( len == 0 ) {
 		return;
 	} else if( len > sizeof(buf)-5 ) {
-		ShowWarning("clif_disp_message: Truncated message '%s' (len=%d, max=%d, aid=%d).\n", mes, len, sizeof(buf)-5, src->id);
+		ShowWarning("clif_disp_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", aid=%d).\n", mes, len, sizeof(buf)-5, src->id);
 		len = sizeof(buf)-5;
 	}
 
@@ -15813,7 +15812,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 
 	if( !chrif_isconnected() )
 		return;
-	if (idx < 0 || amount < 0)
+	if (idx < 0 || amount < 0 || idx >= MAX_INVENTORY)
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
@@ -17036,7 +17035,7 @@ void clif_mercenary_updatestatus(struct map_session_data *sd, int type)
 	switch( type ) {
 		case SP_ATK1:
 			{
-				int atk = rnd()%(status->rhw.atk2 - status->rhw.atk + 1) + status->rhw.atk;
+				int atk = rnd()%(status->rhw.atk2 - status->rhw.atk + 1) + status->batk + status->rhw.atk;
 				WFIFOL(fd,4) = cap_value(atk, 0, INT16_MAX);
 			}
 			break;
@@ -17106,7 +17105,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOL(fd,2) = md->bl.id;
 
 	// Mercenary shows ATK as a random value between ATK ~ ATK2
-	atk = rnd()%(status->rhw.atk2 - status->rhw.atk + 1) + status->rhw.atk;
+	atk = rnd()%(status->rhw.atk2 - status->rhw.atk + 1) + status->batk + status->rhw.atk;
 	WFIFOW(fd,6) = cap_value(atk, 0, INT16_MAX);
 	WFIFOW(fd,8) = min(status->matk_max, UINT16_MAX);
 	WFIFOW(fd,10) = status->hit;
@@ -19068,7 +19067,7 @@ void clif_showscript(struct block_list* bl, const char* message, enum send_targe
 	len = strlen(message)+1;
 
 	if( len > sizeof(buf)-8 ) {
-		ShowWarning("clif_showscript: Truncating too long message '%s' (len=%d).\n", message, len);
+		ShowWarning("clif_showscript: Truncating too long message '%s' (len=%" PRIuPTR ").\n", message, len);
 		len = sizeof(buf)-8;
 	}
 
@@ -19106,7 +19105,7 @@ void clif_clan_message(struct clan *clan,const char *mes,int len){
 	if( len == 0 ){
 		return;
 	}else if( len > (sizeof(buf)-5-NAME_LENGTH) ){
-		ShowWarning("clif_clan_message: Truncated message '%s' (len=%d, max=%d, clan_id=%d).\n", mes, len, sizeof(buf)-5, clan->id);
+		ShowWarning("clif_clan_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", clan_id=%d).\n", mes, len, sizeof(buf)-5, clan->id);
 		len = sizeof(buf)-5-NAME_LENGTH;
 	}
 
@@ -20874,6 +20873,53 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 }
 
 #undef REFINEUI_MAT_CNT
+
+/// Sends out the usage history of the guild storage
+/// 09DA <size>.W <result>.W <count>.W { <id>.L <item id>.W <amount>.L <action>.B <refine>.L <unique id>.Q <identify>.B <item type>.W
+///      { <card item id>.W }*4 <name>.24B <time>.24B <attribute>.B }*count (ZC_ACK_GUILDSTORAGE_LOG)
+void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result ){
+#if PACKETVER >= 20140205
+	nullpo_retv( sd );
+
+	int fd = sd->fd;
+	int size = 8;
+	int sub = 83;
+
+	if( result == GUILDSTORAGE_LOG_FINAL_SUCCESS ){
+		size += log.size() * sub;
+	}else{
+		log.clear();
+	}
+
+	WFIFOHEAD(fd, size);
+	WFIFOW(fd, 0) = 0x9DA;
+	WFIFOW(fd, 2) = size;
+	WFIFOW(fd, 4) = result;
+	WFIFOW(fd, 6) = (uint16)log.size();
+
+	if( result == GUILDSTORAGE_LOG_FINAL_SUCCESS ){
+		for (int offset = 8, i = 0; i < log.size(); i++, offset += sub) {
+			struct guild_log_entry& entry = log[i];
+			uint16 viewid = itemdb_viewid( entry.item.nameid );
+
+			WFIFOL(fd, offset) = entry.id;
+			WFIFOW(fd, offset + 4) = viewid > 0 ? viewid : entry.item.nameid;
+			WFIFOL(fd, offset + 6) = (uint16)(entry.amount > 0 ? entry.amount : (entry.amount * -1));
+			WFIFOB(fd, offset + 10) = entry.amount > 0; // action = true(put), false(get)
+			WFIFOL(fd, offset + 11) = entry.item.refine;
+			WFIFOQ(fd, offset + 15) = entry.item.unique_id;
+			WFIFOB(fd, offset + 23) = entry.item.identify;
+			WFIFOW(fd, offset + 24) = itemtype(entry.item.nameid);
+			clif_addcards(WFIFOP(fd, offset + 26), &entry.item);
+			safestrncpy(WFIFOCP(fd, offset + 34), entry.name, NAME_LENGTH);
+			safestrncpy(WFIFOCP(fd, offset + 34 + NAME_LENGTH), entry.time, NAME_LENGTH);
+			WFIFOB(fd, offset + 34 + 2 * NAME_LENGTH) = entry.item.attribute;
+		}
+	}
+
+	WFIFOSET(fd, size);
+#endif
+}
 
 /*==========================================
  * Main client packet processing function

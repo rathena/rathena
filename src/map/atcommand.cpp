@@ -4042,31 +4042,35 @@ ACMD_FUNC(mapinfo) {
 	}
 
 	/* Skill damage adjustment info [Cydh] */
-	union u_mapflag_args args = {};
-
-	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
-	if (map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)) {
-		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
-		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
-			,(args.flag_val = SKILLDMG_PC && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_MOB && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_BOSS && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_OTHER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_CASTER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)));
+	if (mapdata->flag[MF_SKILL_DAMAGE]) {
+		clif_displaymessage(fd,msg_txt(sd,1052)); // Skill Damage Adjustments:
+		sprintf(atcmd_output, msg_txt(sd, 1053), // > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d
+			mapdata->damage_adjust.rate[SKILLDMG_PC],
+			mapdata->damage_adjust.rate[SKILLDMG_MOB],
+			mapdata->damage_adjust.rate[SKILLDMG_BOSS],
+			mapdata->damage_adjust.rate[SKILLDMG_OTHER],
+			mapdata->damage_adjust.caster);
 		clif_displaymessage(fd, atcmd_output);
-		if (mapdata->skill_damage.size()) {
-			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
-			for (int j = 0; j < mapdata->skill_damage.size(); j++) {
-				sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
-					,j+1
-					,skill_get_name(mapdata->skill_damage[j].skill_id)
-					,mapdata->skill_damage[j].rate[SKILLDMG_PC]
-					,mapdata->skill_damage[j].rate[SKILLDMG_MOB]
-					,mapdata->skill_damage[j].rate[SKILLDMG_BOSS]
-					,mapdata->skill_damage[j].rate[SKILLDMG_OTHER]
-					,mapdata->skill_damage[j].caster);
+		if (!mapdata->skill_damage.empty()) {
+			clif_displaymessage(fd, msg_txt(sd, 1054)); // > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster
+			for (auto skilldmg : mapdata->skill_damage) {
+				sprintf(atcmd_output,"     %s : %d%%, %d%%, %d%%, %d%% | %d",
+					skill_get_name(skilldmg.first),
+					skilldmg.second.rate[SKILLDMG_PC],
+					skilldmg.second.rate[SKILLDMG_MOB],
+					skilldmg.second.rate[SKILLDMG_BOSS],
+					skilldmg.second.rate[SKILLDMG_OTHER],
+					skilldmg.second.caster);
 				clif_displaymessage(fd,atcmd_output);
 			}
+		}
+	}
+
+	if (map_getmapflag(m_id, MF_SKILL_DURATION)) {
+		clif_displaymessage(fd, msg_txt(sd, 1055)); // Skill Duration Adjustments:
+		for (const auto &it : mapdata->skill_duration) {
+			sprintf(atcmd_output, " > %s : %d%%", skill_get_name(it.first), it.second);
+			clif_displaymessage(fd, atcmd_output);
 		}
 	}
 
@@ -6609,7 +6613,7 @@ ACMD_FUNC(cleanarea)
  *------------------------------------------*/
 ACMD_FUNC(npctalk)
 {
-	char name[NPC_NAME_LENGTH],mes[100],temp[100];
+	char name[NPC_NAME_LENGTH],mes[100],temp[CHAT_SIZE_MAX];
 	struct npc_data *nd;
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
@@ -6646,7 +6650,7 @@ ACMD_FUNC(npctalk)
 
 ACMD_FUNC(pettalk)
 {
-	char mes[100],temp[100];
+	char mes[100],temp[CHAT_SIZE_MAX];
 	struct pet_data *pd;
 
 	nullpo_retr(-1, sd);
@@ -7228,7 +7232,7 @@ ACMD_FUNC(mobinfo)
 		clif_displaymessage(fd, atcmd_output);
 
 		sprintf(atcmd_output, msg_txt(sd,1244), //  ATK:%d~%d  Range:%d~%d~%d  Size:%s  Race: %s  Element: %s (Lv:%d)
-			mob->status.rhw.atk, mob->status.rhw.atk2, mob->status.rhw.range,
+			mob->status.batk + mob->status.rhw.atk, mob->status.batk + mob->status.rhw.atk2, mob->status.rhw.range,
 			mob->range2 , mob->range3, msize[mob->status.size],
 			mrace[mob->status.race], melement[mob->status.def_ele], mob->status.ele_lv);
 		clif_displaymessage(fd, atcmd_output);
@@ -7537,7 +7541,7 @@ ACMD_FUNC(homhungry)
  *------------------------------------------*/
 ACMD_FUNC(homtalk)
 {
-	char mes[100],temp[100];
+	char mes[100],temp[CHAT_SIZE_MAX];
 
 	nullpo_retr(-1, sd);
 
@@ -8128,7 +8132,7 @@ ACMD_FUNC(fakename)
  * Ragnarok Resources
  *------------------------------------------*/
 ACMD_FUNC(mapflag) {
-	char flag_name[CHAT_SIZE_MAX];
+	char flag_name[50];
 	short flag = 0, i, j;
 	std::string buf;
 
@@ -8136,7 +8140,7 @@ ACMD_FUNC(mapflag) {
 
 	memset(flag_name, '\0', sizeof(flag_name));
 
-	if (!message || !*message || (sscanf(message, "%99s %6hd", flag_name, &flag) < 1)) {
+	if (!message || !*message || (sscanf(message, "%49s %6hd", flag_name, &flag) < 1)) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1311)); // Enabled Mapflags in this map:
 		clif_displaymessage(sd->fd,"----------------------------------");
 		for( i = MF_MIN; i < MF_MAX; i++ ){
@@ -8167,7 +8171,8 @@ ACMD_FUNC(mapflag) {
 												MF_BEXP,
 												MF_JEXP,
 												MF_BATTLEGROUND,
-												MF_SKILL_DAMAGE };
+												MF_SKILL_DAMAGE,
+												MF_SKILL_DURATION };
 
 			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
 				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);
@@ -10729,7 +10734,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	char output[CHAT_SIZE_MAX];
 
 	//Reconstructed message
-	char atcmd_msg[CHAT_SIZE_MAX];
+	char atcmd_msg[CHAT_SIZE_MAX * 2];
 
 	TBL_PC * ssd = NULL; //sd for target
 	AtCommandInfo * info;
