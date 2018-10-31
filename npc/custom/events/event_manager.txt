@@ -104,13 +104,13 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 				mes "That's all that there is to this event.";
 			}
 			else if(.Event == 1) {
+				debugmes " unique "+.unique_id[.@j];
 				while ( .unique_id[.@j] != get_unique_id() && .@j < .register_count )
 				{
 					// dispbottom "unique"+get_unique_id;
-					// debugmes " unique "+.unique_id[.@j];
 					.@j++;
 				}
-				if(.unique_id[.@i])
+				if(.unique_id[.@j])
 				{
 					mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 does ^FF0000NOT^000000 allow dual client.";
 					close;
@@ -168,7 +168,6 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 				}
 				else
 				{
-					announce "The <Last Man Standing (PvP)> has begun!",bc_all | bc_blue;
 					.total_participants = .register_count;
 					delwaitingroom;
 					waitingroom "LMS Event ["+.register_count+"/"+.total_participants+"]",0;
@@ -302,7 +301,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 	end;
 
 	OnPCDieEvent:
-		if(.Event == 1) {
+		if(.Event == 1 && strcharinfo(3) == "guild_vs2") {
 			remove_player( getcharid(3) );
 			if ( .aTimer )
 			{
@@ -381,7 +380,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 	end;
 
 	OnPCLogoutEvent:
-		if(.Event == 1) {
+		if(.Event == 1 && strcharinfo(3) == "guild_vs2") {
 			remove_player( getcharid(3) );
 			if ( .aTimer )
 			{
@@ -432,7 +431,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 
 			if ( .register_count > 1 ) end;
 			announce "[Event Manager] Congratulations ~ ! The Winner of this round of <Last Man Standing (PvP)> is "+rid2name(.register_aid),bc_all | bc_blue;
-			getitem .prize, 1, .register_aid; // winner prize
+			getitem .prize, 5, .register_aid; // winner prize
 			warp "SavePoint", 0,0, getcharid( 0, rid2name( .register_aid ) );
 			goto Reset_Game;
 		}
@@ -819,7 +818,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		.@i = 0;
 		while ( .register_aid[.@i] != .@aid && .@i < .register_count )
 		{
-			// debugmes .register_aid[.@i]+" | "+rid2name(.register_aid[.@i]);
+			debugmes .register_aid[.@i]+" | "+rid2name(.register_aid[.@i]);
 			.@i++;
 		}
 		deletearray .register_aid[.@i], 1;

@@ -24,17 +24,18 @@ OnPCLoginEvent:
 		getitem 7621, 3;	// Token of Siegfried x3
 		getitem 12210, 3;	// Bubble gum x3 (+100%)
 		getitem 662, 15;	// Authorative Badge x15
+		getitem 12324, 15;	// Novice Butterfly Wings
 		Zeny += 250000;		// Give 250k Zeny
 		vip_time 30240;		// 1 week worth of vip time (10080)
 		dispbottom " ";
-		dispbottom " Other freebies are given in the form of Daily Attendance.";
-		dispbottom " Make sure you check-in every day.";
+		dispbottom " Other freebies are given in the form of Daily Attendance. Make sure you check-in every day.";
+		dispbottom " Take note that we DO NOT have @go or @load/@return. We DO have @kill/@die (if you don't have Butterfly Wings).";
 		dispbottom "                                                                                                                                              MilkyRO Team", 0x76daee;
 		dispbottom "===============================================================", 0x666666;
 
 		// announce "Welcome to MilkyRO. Here are some things to start you with along with a 1 week VIP (only given by the gm) bonus.", BC_SELF;
 		set #xlaunch_vipx,1;
-		sleep 5000;
+		sleep2 5000;
 	}
 	if(! #ServCrash20181030 && getcharid(3, strcharinfo(0)) <= 2000346){
 		dispbottom "===============================================================", 0x666666;
