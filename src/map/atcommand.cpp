@@ -3910,8 +3910,10 @@ ACMD_FUNC(reload) {
 		//atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
 
 		iter = mapit_getallusers();
-		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
+		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ){
 			pc_close_npc(pl_sd,1);
+			clif_cutin(pl_sd, "", 255);
+		}
 		mapit_free(iter);
 
 		flush_fifos();

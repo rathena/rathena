@@ -7470,11 +7470,12 @@ This command will display a picture, usually an NPC illustration, also called
 cutin, for the currently attached client. The position parameter determines the
 placement of the illustration and takes following values:
 
-	0 - bottom left corner
-	1 - bottom middle
-	2 - bottom right corner
-	3 - middle of screen in a movable window with an empty title bar
-	4 - middle of screen without the window header, but still movable
+	0	bottom left corner
+	1	bottom middle
+	2	bottom right corner
+	3	middle of screen in a movable window with an empty title bar
+	4	middle of screen without the window header, but still movable
+	255	clear all displayed cutins
 
 The picture is read from data\texture\유저인터페이스\illust, from both the GRF archive
 and data folder, and is required to be a bitmap. The file extension .bmp can be
