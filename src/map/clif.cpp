@@ -2388,6 +2388,7 @@ void clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, in
 ///     2 = bottom right corner
 ///     3 = middle of screen, inside a movable window
 ///     4 = middle of screen, movable with a close button, chrome-less
+///   255 = clear all displayed cutins
 void clif_cutin(struct map_session_data* sd, const char* image, int type)
 {
 	int fd;

@@ -7684,10 +7684,12 @@ TIMER_FUNC(pc_close_npc_timer){
 	if(sd) pc_close_npc(sd,data);
 	return 0;
 }
-/*
- *  Method to properly close npc for player and clear anything related
- * @flag == 1 : produce close button
- * @flag == 2 : directly close it
+/**
+ * Method to properly close a NPC for player and clear anything related.
+ * @param sd: Player attached
+ * @param flag: Method of closure
+ *   1: Produce a close button and end the NPC
+ *   2: End the NPC (best for no dialog windows)
  */
 void pc_close_npc(struct map_session_data *sd,int flag)
 {
@@ -7713,15 +7715,17 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 #ifdef SECURE_NPCTIMEOUT
 		sd->npc_idle_timer = INVALID_TIMER;
 #endif
-		if (sd->st && sd->st->state == CLOSE) {
-			clif_scriptclose(sd, sd->npc_id);
-			clif_scriptclear(sd, sd->npc_id); // [Ind/Hercules]
-			sd->st->state = END; // Force to end now
-		}
-		if(sd->st && sd->st->state == END ) {// free attached scripts that are waiting
-			script_free_state(sd->st);
-			sd->st = NULL;
-			sd->npc_id = 0;
+		if (sd->st) {
+			if (sd->st->state == CLOSE) {
+				clif_scriptclose(sd, sd->npc_id);
+				clif_scriptclear(sd, sd->npc_id); // [Ind/Hercules]
+				sd->st->state = END; // Force to end now
+			}
+			if (sd->st->state == END) { // free attached scripts that are waiting
+				script_free_state(sd->st);
+				sd->st = NULL;
+				sd->npc_id = 0;
+			}
 		}
 	}
 }
