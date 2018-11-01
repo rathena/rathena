@@ -535,6 +535,11 @@ int guild_recv_info(struct guild *sg) {
 			bm++;
 	}
 
+	// Restore the instance id
+	if( !guild_new && before.instance_id ){
+		g->instance_id = before.instance_id;
+	}
+
 	for (i = 0; i < g->max_member; i++) { //Transmission of information at all members
 		sd = g->member[i].sd;
 		if( sd==NULL )
