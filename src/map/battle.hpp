@@ -352,6 +352,8 @@ struct Battle_Config
 	int equip_self_break_rate; //Natural & Penalty skills break rate
 	int equip_skill_break_rate; //Offensive skills break rate
 	int multi_level_up;
+	int multi_level_up_base;
+	int multi_level_up_job;
 	int max_exp_gain_rate; //Max amount of exp bar % you can get in one go.
 	int pk_mode;
 	int pk_mode_mes;
