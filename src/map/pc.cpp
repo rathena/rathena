@@ -5493,57 +5493,13 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 
 	if( sd->state.changemap ) { // Misc map-changing settings
 		unsigned short curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = mapdata->instance_id;
-		struct party_data *p = NULL;
-		struct guild *g = NULL;
-		struct clan *cd = NULL;
-		
+
 		if (curr_map_instance_id != new_map_instance_id) {
-			if (curr_map_instance_id) {	// Update instance timer for the map on leave
-				switch(instance_data[curr_map_instance_id].mode) {
-				case IM_NONE:
-					instance_delusers(curr_map_instance_id);
-					break;
-				case IM_GUILD:
-					if (sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id && g->instance_id == curr_map_instance_id)
-						instance_delusers(curr_map_instance_id);
-					break;
-				case IM_PARTY:
-					if (sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id && p->instance_id == curr_map_instance_id)
-						instance_delusers(curr_map_instance_id);
-					break;
-				case IM_CHAR:
-					if (sd->instance_id && sd->instance_id == curr_map_instance_id)
-						instance_delusers(curr_map_instance_id);
-					break;
-				case IM_CLAN:
-					if (sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id && cd->instance_id == curr_map_instance_id)
-						instance_delusers(curr_map_instance_id);
-					break;
-				}
-			}
-			if (new_map_instance_id) { // Update instance timer for the map on enter
-				switch(instance_data[new_map_instance_id].mode) {
-				case IM_NONE:
-					instance_addusers(new_map_instance_id);
-					break;
-				case IM_GUILD:
-					if (sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id && g->instance_id == new_map_instance_id)
-						instance_addusers(new_map_instance_id);
-					break;
-				case IM_PARTY:
-					if (sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id && p->instance_id == new_map_instance_id)
-						instance_addusers(new_map_instance_id);
-					break;
-				case IM_CHAR:
-					if (sd->instance_id && sd->instance_id == new_map_instance_id)
-						instance_addusers(new_map_instance_id);
-					break;
-				case IM_CLAN:
-					if (sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id && cd->instance_id == new_map_instance_id)
-						instance_addusers(new_map_instance_id);
-					break;
-				}
-			}
+			if (curr_map_instance_id) // Update instance timer for the map on leave
+				instance_delusers(curr_map_instance_id);
+
+			if (new_map_instance_id) // Update instance timer for the map on enter
+				instance_addusers(new_map_instance_id);
 		}
 
 		sd->state.pmap = sd->bl.m;
