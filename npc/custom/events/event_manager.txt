@@ -104,7 +104,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 				mes "That's all that there is to this event.";
 			}
 			else if(.Event == 1) {
-				debugmes " unique "+.unique_id[.@j];
+				// debugmes " unique "+.unique_id[.@j];
 				while ( .unique_id[.@j] != get_unique_id() && .@j < .register_count )
 				{
 					// dispbottom "unique"+get_unique_id;
@@ -337,6 +337,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		// none for Disguise Event (.Event == 4)
 
 		.@map$ = strcharinfo(3);
+		// debugmes .@map$;
 		if ( .@map$ == "pvp_y_1-2" ) { // announce PvP
 			warp "SavePoint",0,0;
 			if(killerrid)
@@ -345,7 +346,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 				announce "[" + strcharinfo(0) + "] has left the PvP Zone.", bc_all, "0xff3232";
 			donpcevent "PVP Warper#pvp_warper_npc::OnCountChange";
 		}
-		else if ( .@map$ == "te_aldecas1" ||  .@map$ == "prtg_cas01" ) {
+		else if (agitcheck() && (.@map$ == "te_prtcas01" ||  .@map$ == "aldeg_cas01" )) {
 			set .@mtalk$, "";
 			set .@victim$, strcharinfo(0);
 			if(killerrid)
@@ -818,7 +819,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		.@i = 0;
 		while ( .register_aid[.@i] != .@aid && .@i < .register_count )
 		{
-			debugmes .register_aid[.@i]+" | "+rid2name(.register_aid[.@i]);
+			// debugmes .register_aid[.@i]+" | "+rid2name(.register_aid[.@i]);
 			.@i++;
 		}
 		deletearray .register_aid[.@i], 1;
