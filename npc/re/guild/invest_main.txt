@@ -63,24 +63,24 @@ $@vfund_*_extra
 // Note: The times in this section are almost entirely custom.
 
 -	script	#invest_timer	-1,{
-OnClock0000:	// Open investments on Wednesday (1 hour after WoE)
-	if (gettime(DT_DAYOFWEEK) == WEDNESDAY && !agitcheck()) {
+OnClock0600:	// Open investments on Wednesday (1 hour after WoE)
+	if (gettime(DT_DAYOFWEEK) == THURSDAY && !agitcheck()) {
 		set $2011_agit_invest,1;
 		donpcevent "#fund_master::OnInvest_start";
 	}
 	end;
-OnClock1200:	// Close investments on Friday (60 hours after investments open)
+OnClock1800:	// Close investments on Friday (60 hours after investments open)
 	if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck()) {
 		set $2011_agit_invest,2;
 		donpcevent "#fund_master::OnInvest_stop";
 	}
 	end;
-OnClock1235:	// Open dungeons on Friday (at least 31 minutes after investments close)
+OnClock1835:	// Open dungeons on Friday (at least 31 minutes after investments close)
 	if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck())
 		donpcevent "#fund_master::OnResult";
 	end;
-OnClock2000:	// Close dungeons on Tuesday (1 hour before WoE)
-	if (gettime(DT_DAYOFWEEK) == TUESDAY)
+OnClock1900:	// Close dungeons on Tuesday (1 hour before WoE)
+	if (gettime(DT_DAYOFWEEK) == WEDNESDAY)
 		donpcevent "#fund_master::OnReset";
 	end;
 }
