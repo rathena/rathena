@@ -312,6 +312,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 			if ( .EventON != 1 || strcharinfo(3) != "guild_vs2" ) end;
 			if(killerrid)
 			{
+				pvplog(getcharid(0, rid2name(killerrid)), getcharid(0), .@map$);
 				set .@mtalk$, "";
 				switch(rand(1,9)){
 					case 1: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] has killed ["+strcharinfo(0)+"] without mercy!!"; break;
@@ -341,16 +342,20 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		if ( .@map$ == "pvp_y_1-2" ) { // announce PvP
 			warp "SavePoint",0,0;
 			if(killerrid)
+			{
+				pvplog(getcharid(0, rid2name(killerrid)), getcharid(0), .@map$);
 				announce "[" + strcharinfo(0) + "] was killed by ["+ rid2name(killerrid) +"] !!", bc_all, "0xff3232";
+			}
 			else
 				announce "[" + strcharinfo(0) + "] has left the PvP Zone.", bc_all, "0xff3232";
 			donpcevent "PVP Warper#pvp_warper_npc::OnCountChange";
 		}
-		else if (agitcheck() && (.@map$ == "te_prtcas01" ||  .@map$ == "aldeg_cas01" )) {
+		else if ((agitcheck() && .@map$ == "aldeg_cas01" ) || (agitcheck3() && .@map$ == "te_prtcas01")) {
 			set .@mtalk$, "";
 			set .@victim$, strcharinfo(0);
 			if(killerrid)
 			{
+				pvplog(getcharid(0, rid2name(killerrid)), getcharid(0), .@map$);
 				set .@killer$, rid2name(killerrid);
 				switch(rand(1,9)){
 					case 1: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] has killed ["+.@victim$+"] without mercy!!"; break;
@@ -883,6 +888,22 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		// setcell .map$,.@x,.@y,.@x,.@y,cell_basilica,1;
 		// setcell .map$,.@x,.@y,.@x,.@y,CELL_LANDPROTECTOR,1;
 		return;
+	}
+
+	function pvplog {
+		.@killer = getarg(0);
+		.@victim = getarg(1);
+		.@map$ = getarg(2);
+
+		.@second = gettime(DT_SECOND);
+		.@minute = gettime(DT_MINUTE);
+		.@hour = gettime(DT_HOUR);
+		.@day = gettime(DT_DAYOFMONTH);
+		.@month = gettime(DT_MONTH);
+		.@year = gettime(DT_YEAR);
+		.@datetime$ = .@year + "-" + .@month + "-" + .@day + " " + .@hour + ":" + .@minute + ":" + .@second;
+
+		query_logsql("INSERT INTO pvplog (killer_id, victim_id, date_time, map) VALUES ("+.@killer+", "+.@victim+", '"+.@datetime$+"', '"+.@map$+"');");
 	}
 }
 
