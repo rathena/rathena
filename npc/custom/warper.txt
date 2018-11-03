@@ -133,7 +133,7 @@ menu	"Prontera",T1, "Alberta",T2, "Aldebaran",T3, "Amatsu",T4, "Ayothaya",T5,
     	"Izlude",T16, "Jawaii",T17, "Lasagna",T18, "Lighthalzen",T19, "Louyang",T20,
 		"Lutie",T21, "Malangdo",T22, "Malaya",T23, "Manuk",T24,
 		"Midgarts Expedition Camp",T25, "Mora",T26, "Morroc",T27, "Moscovia",T28,
-		"Nameless Island",T29, "Niflheim",T30, "Payon",T31, "Rachel",T32, "Splendide",T33,
+		"Nameless Island",T29, "Niflheim",T30, "Payon",T31, "Rachel",T32, "Rock Ridge", T38, "Splendide",T33,
 		"Thor Camp",T34, "Umbala",T35, "Veins",T36, "Yuno",T37;
 
 T1: Go("prontera",156,183);
@@ -181,6 +181,7 @@ T34: Go("thor_camp",246,68);
 T35: Go("umbala",96,156);
 T36: Go("veins",208,122);
 T37: Go("yuno",158,191);
+T38: Go("harboro1",283,191);
 
 // --------------------------------------------------
 	Fields:
@@ -623,3 +624,4 @@ malaya,231,204,4	duplicate(Warper)	Warper#ma	531
 mora,57,152,4	duplicate(Warper)	Warper#mora	531
 mid_camp,191,249,4	duplicate(Warper)	Warper#midcamp	531
 vendzone,52,51,3	duplicate(Warper)	Warper#vendzone	531
+harboro1,281,196,5	duplicate(Warper)	Warper#harboro	531

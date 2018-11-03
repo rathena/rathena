@@ -93,7 +93,7 @@ einbech,182,124,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#einbech	896
 einbroch,238,203,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#einbroch	896
 geffen,128,68,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#geffen	896
 gonryun,164,127,4	duplicate(GuildWarehouse)	Guild Warehouse Manager#gonryun	896
-harboro1,288,212,4	duplicate(GuildWarehouse)	Guild Warehouse Manager#harboro1	896
+harboro1,287,196,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#harboro1	896
 hugel,91,158,4	duplicate(GuildWarehouse)	Guild Warehouse Manager#hugel	896
 izlude,133,149,4	duplicate(GuildWarehouse)	Guild Warehouse Manager#izlude	896
 lighthalzen,150,102,4	duplicate(GuildWarehouse)	Guild Warehouse Manager#lighthalzen	896

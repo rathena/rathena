@@ -13,7 +13,7 @@
 //= 1.0 First version, edited. [Euphy]
 //============================================================
 
-prontera,167,230,3	script	Private Branch Room	733,{
+-	script	PrivateBranchRoom	-1,{
 	mes "[Private Branch Room]";
 	mes "Please select a private Branch room.";
 	if ( getvariableofnpc( .rentcost, "Room Manager" ) )
@@ -104,6 +104,8 @@ OnInit:
 	.color$[3] =  "^0000FF"; // account color
 	end;
 }
+prontera,167,230,3	duplicate(PrivateBranchRoom)	Private Branch Room#prontera	733
+harboro1,263,191,7	duplicate(PrivateBranchRoom)	Private Branch Room#rockridge	733
 
 -	script	Room Manager	-1,{
 	mes "[Room Manager]";

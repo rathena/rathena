@@ -22,6 +22,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		function smack_talk;
 		function xy_wall;
 		function set_zone;
+		function pvplog;
 
 		set .@n$,"[^0000FFEvent Manager^000000]";
 		if (getgmlevel()>=.GMLevel) {

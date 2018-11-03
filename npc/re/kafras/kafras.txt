@@ -27,7 +27,7 @@
 //= 1.5 Added Glastheim Kafra [Ridley8819]
 //= 1.6 Added Lutie [Lemongrass]
 //= 1.7 Added Rock Ridge Kafra. [Capuche]
-//============================================================ 
+//============================================================
 
 // Brasilis
 //============================================================
@@ -108,10 +108,10 @@ job3_rune01,92,62,3	script	Kafra Employee::kaf_rune	114,{
 
 // Rockridge
 //============================================================
-harboro1,291,207,5	script	Kafra Employee::kaf_rock	4_F_KAFRA1,{
+harboro1,278,196,5	script	Kafra Employee::kaf_rock	4_F_KAFRA1,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSet";
 	callfunc "F_Kafra",0,8,2,500,0;
-	savepoint "harboro1",286,189,1,1;
+	savepoint "harboro1",283,191,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Rockridge";
 }
