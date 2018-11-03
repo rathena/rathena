@@ -28,7 +28,7 @@ menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
     	" ~ Fields",Fields,
     	" ~ Dungeons",Dungeons,
     	" ~ Guild Castles",Castles,
-    	// " ~ Guild Dungeons",Guild_Dungeons,
+    	" ~ Cat Paw Merchant Guild",Guild_Dungeons,
     	" ~ Instances",Instances,
     	" ~ Special Areas",Special,
     	" ~ PvP", PVP_Room;
@@ -438,32 +438,38 @@ C8: Restrict("RE");
 // --------------------------------------------------
 	Guild_Dungeons:
 // --------------------------------------------------
-menu	"Baldur",G1, "Luina",G2, "Valkyrie",G3, "Britoniah",G4,
-    	"Arunafeltz",G5, "Schwaltzvalt",G6, "Kafragarten",G7,
-		"Gloria",G8;
+menu	"Baldur Realm",G1, "Luina Realm",G2, "Valkyrie Realm",G3, "Britoniah Realm",G4;
+G1: Go("pay_gld",203,184);
+G2: Go("alde_gld",186,155);
+G3: Go("prt_gld",159,91);
+G4: Go("gef_fild13",184,205);
 
-G1: Restrict("RE",2,3);
-	setarray @c[2],119,93,119,93,120,130;
-	Disp("Baldur F1:Baldur F2:Hall of Abyss");
-	Pick("","gld_dun01","gld_dun01_2","gld2_pay");
-G2: Restrict("RE",2,3);
-	setarray @c[2],39,161,39,161,147,155;
-	Disp("Luina F1:Luina F2:Hall of Abyss");
-	Pick("","gld_dun02","gld_dun02_2","gld2_ald");
-G3: Restrict("RE",2,3);
-	setarray @c[2],50,44,50,44,140,132;
-	Disp("Valkyrie F1:Valkyrie F2:Hall of Abyss");
-	Pick("","gld_dun03","gld_dun03_2","gld2_prt");
-G4: Restrict("RE",2,3);
-	setarray @c[2],116,45,116,45,152,118;
-	Disp("Britoniah F1:Britoniah F2:Hall of Abyss");
-	Pick("","gld_dun04","gld_dun04_2","gld2_gef");
-G5: Go("arug_dun01",199,195);
-G6: Go("schg_dun01",200,124);
-G7: Restrict("RE");
-	Go("teg_dun01",42,36);
-G8: Restrict("RE");
-	Go("teg_dun02",26,160);
+// menu	"Baldur",G1, "Luina",G2, "Valkyrie",G3, "Britoniah",G4,
+//     	"Arunafeltz",G5, "Schwaltzvalt",G6, "Kafragarten",G7,
+// 		"Gloria",G8;
+//
+// G1: Restrict("RE",2,3);
+// 	setarray @c[2],119,93,119,93,120,130;
+// 	Disp("Baldur F1:Baldur F2:Hall of Abyss");
+// 	Pick("","gld_dun01","gld_dun01_2","gld2_pay");
+// G2: Restrict("RE",2,3);
+// 	setarray @c[2],39,161,39,161,147,155;
+// 	Disp("Luina F1:Luina F2:Hall of Abyss");
+// 	Pick("","gld_dun02","gld_dun02_2","gld2_ald");
+// G3: Restrict("RE",2,3);
+// 	setarray @c[2],50,44,50,44,140,132;
+// 	Disp("Valkyrie F1:Valkyrie F2:Hall of Abyss");
+// 	Pick("","gld_dun03","gld_dun03_2","gld2_prt");
+// G4: Restrict("RE",2,3);
+// 	setarray @c[2],116,45,116,45,152,118;
+// 	Disp("Britoniah F1:Britoniah F2:Hall of Abyss");
+// 	Pick("","gld_dun04","gld_dun04_2","gld2_gef");
+// G5: Go("arug_dun01",199,195);
+// G6: Go("schg_dun01",200,124);
+// G7: Restrict("RE");
+// 	Go("teg_dun01",42,36);
+// G8: Restrict("RE");
+// 	Go("teg_dun02",26,160);
 
 // --------------------------------------------------
 	Instances:

@@ -95,16 +95,16 @@ function	script	F_Invest_Status	{
 		return 0;
 
 	// Open for investments.
-	if (.@day >= WEDNESDAY && (.@day < FRIDAY || (.@day == FRIDAY && .@hour <= 12)))
+	if ((.@day > THURSDAY || .@day >= THURSDAY && .hour <= 6) && (.@day < FRIDAY || (.@day == FRIDAY && .@hour <= 18)))
 		return 1;
 
 	// Investments closed, calculating results.
-	if (.@day == FRIDAY && .@hour == 12 && .@minute < 35)
+	if (.@day == FRIDAY && .@hour == 18 && .@minute < 35)
 		return 2;
 
 	// Calculations complete, dungeons open.
-	if ((.@day == FRIDAY && (.@hour > 12 || (.@hour == 12 && .@minute >= 35))) || .@day > FRIDAY ||
-	    .@day < TUESDAY || (.@day == TUESDAY && .@hour < 20))
+	if ((.@day == FRIDAY && (.@hour > 18 || (.@hour == 18 && .@minute >= 35))) || .@day > FRIDAY ||
+	    .@day < WEDNESDAY || (.@day == WEDNESDAY && .@hour < 19))
 		return 3;
 
 	// Dungeons closed.
@@ -137,11 +137,11 @@ function	script	F_Invest_Abyss	{
 		case 4:
 			mes .@npc_name$;
 			mes "Please enter the amount you want to invest.";
-			mes "Please choose between 1 to 200.";
+			mes "Please choose between 1 to 1000.";
 			mes "Please enter 0 to cancel.";
 			next;
 			input .@units;
-			if (.@units < 0 || .@units > 200) {
+			if (.@units < 0 || .@units > 1000) {
 				mes .@npc_name$;
 				mes "You've exceeded the amount per investment.";
 				mes "Please try again.";
