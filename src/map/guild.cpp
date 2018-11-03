@@ -1956,7 +1956,7 @@ void guild_castle_map_init(void) {
  * @param index Type of data to change
  * @param value New value
  */
-int guild_castledatasave(int castle_id, enum e_castle_data index, int value) {
+int guild_castledatasave(int castle_id, int index, int value) {
 	struct guild_castle *gc = guild_castle_search(castle_id);
 
 	if (gc == NULL) {
@@ -2002,8 +2002,8 @@ int guild_castledatasave(int castle_id, enum e_castle_data index, int value) {
 	case CD_ENABLED_KAFRA:
 		gc->visibleC = value; break;
 	default:
-		if (index > CD_ENABLED_KAFRA && index < CD_MAX) {
-			gc->guardian[index - CD_ENABLED_GUARDIAN0].visible = value;
+		if (index >= CD_ENABLED_GUARDIAN00 && index < CD_MAX) {
+			gc->guardian[index - CD_ENABLED_GUARDIAN00].visible = value;
 			break;
 		}
 		ShowWarning("guild_castledatasave: index = '%d' is out of allowed range\n", index);
@@ -2019,7 +2019,7 @@ int guild_castledatasave(int castle_id, enum e_castle_data index, int value) {
 void guild_castle_reconnect_sub(void *key, void *data, va_list ap) {
 	int castle_id = GetWord((int)__64BPRTSIZE(key), 0);
 	int index = GetWord((int)__64BPRTSIZE(key), 1);
-	intif_guild_castle_datasave(castle_id, static_cast<e_castle_data>(index), *(int *)data);
+	intif_guild_castle_datasave(castle_id, index, *(int *)data);
 	aFree(data);
 }
 
@@ -2031,7 +2031,7 @@ void guild_castle_reconnect_sub(void *key, void *data, va_list ap) {
  * @param index
  * @param value
  */
-void guild_castle_reconnect(int castle_id, enum e_castle_data index, int value) {
+void guild_castle_reconnect(int castle_id, int index, int value) {
 	static struct linkdb_node *gc_save_pending = NULL;
 
 	if (castle_id < 0) { // char-server reconnected

@@ -12847,8 +12847,8 @@ BUILDIN_FUNC(getcastledata)
 		case CD_ENABLED_KAFRA:
 			script_pushint(st,gc->visibleC); break;
 		default:
-			if (index > CD_ENABLED_KAFRA && index <= CD_ENABLED_GUARDIAN7) {
-				script_pushint(st,gc->guardian[index - CD_ENABLED_GUARDIAN0].visible);
+			if (index >= CD_ENABLED_GUARDIAN00 && index < CD_MAX) {
+				script_pushint(st,gc->guardian[index - CD_ENABLED_GUARDIAN00].visible);
 				break;
 			}
 			script_pushint(st,0);
@@ -12875,7 +12875,7 @@ BUILDIN_FUNC(setcastledata)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	guild_castledatasave(gc->castle_id, static_cast<e_castle_data>(index), value);
+	guild_castledatasave(gc->castle_id, index, value);
 	return SCRIPT_CMD_SUCCESS;
 }
 

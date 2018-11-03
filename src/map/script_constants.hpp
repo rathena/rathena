@@ -7337,14 +7337,13 @@
 	export_constant(CD_PAY_TIME);
 	export_constant(CD_CREATE_TIME);
 	export_constant(CD_ENABLED_KAFRA);
-	export_constant(CD_ENABLED_GUARDIAN0);
-	export_constant(CD_ENABLED_GUARDIAN1);
-	export_constant(CD_ENABLED_GUARDIAN2);
-	export_constant(CD_ENABLED_GUARDIAN3);
-	export_constant(CD_ENABLED_GUARDIAN4);
-	export_constant(CD_ENABLED_GUARDIAN5);
-	export_constant(CD_ENABLED_GUARDIAN6);
-	export_constant(CD_ENABLED_GUARDIAN7);
+	for( int i = CD_ENABLED_GUARDIAN00, j = 0; i < CD_MAX; i++, j++ ){
+		char constant[32];
+
+		sprintf( constant, "CD_ENABLED_GUARDIAN%02d", j );
+
+		script_set_constant( constant, i, false, false );
+	}
 	export_constant(CD_MAX);
 
 	#undef export_constant

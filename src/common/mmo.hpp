@@ -713,15 +713,9 @@ enum e_castle_data : uint8 {
 	CD_PAY_TIME, ///< unused
 	CD_CREATE_TIME, ///< unused
 	CD_ENABLED_KAFRA, ///< Is 1 if a Kafra was hired for this castle, 0 otherwise
-	CD_ENABLED_GUARDIAN0, ///< Is 1 if the 1st guardian is present (Soldier Guardian)
-	CD_ENABLED_GUARDIAN1, ///< Is 1 if the 2nd guardian is present (Soldier Guardian)
-	CD_ENABLED_GUARDIAN2, ///< Is 1 if the 3rd guardian is present (Soldier Guardian)
-	CD_ENABLED_GUARDIAN3, ///< Is 1 if the 4th guardian is present (Archer Guardian)
-	CD_ENABLED_GUARDIAN4, ///< Is 1 if the 5th guardian is present (Archer Guardian)
-	CD_ENABLED_GUARDIAN5, ///< Is 1 if the 6th guardian is present (Knight Guardian)
-	CD_ENABLED_GUARDIAN6, ///< Is 1 if the 7th guardian is present (Knight Guardian)
-	CD_ENABLED_GUARDIAN7, ///< Is 1 if the 8th guardian is present (Knight Guardian)
-	CD_MAX
+	CD_ENABLED_GUARDIAN00, ///< Is 1 if the 1st guardian is present (Soldier Guardian)
+	// The others in between are not needed in src, but are exported for the script engine
+	CD_MAX = CD_ENABLED_GUARDIAN00 + MAX_GUARDIANS
 };
 
 /// Guild Permissions

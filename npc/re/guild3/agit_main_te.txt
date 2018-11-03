@@ -146,13 +146,13 @@ OnAgitBreak:
 	setcastledata .@map$,CD_GUILD_ID,.@guild_id;
 
 	// Reset Invest information and refresh castle data
-	for ( .@i = CD_INVESTED_ECONOMY; .@i < CD_ENABLED_GUARDIAN0; .@i++ )
+	for ( .@i = CD_INVESTED_ECONOMY; .@i < CD_ENABLED_GUARDIAN00; .@i++ )
 		setcastledata .@map$,.@i,0;
 	donpcevent strnpcinfo(0) +"::OnAgitInit3";// spawn guardians / monsters
 
 	// Erase Guardian Database information if the new owners do not have Guardian Research.
 	if (getgdskilllv(.@guild_id,10002) == 0) {
-		for ( .@i = CD_ENABLED_GUARDIAN0; .@i <= CD_ENABLED_GUARDIAN7; .@i++ )
+		for ( .@i = CD_ENABLED_GUARDIAN00; .@i < CD_MAX; .@i++ )
 			setcastledata .@map$,.@i,0;
 	}
 
@@ -409,13 +409,13 @@ function GuardianData;
 		if (getgdskilllv(.@guild_id,10002) == 0) {
 			mes "Master, we have not the resources to Summon the Guardian. If you want to accumulate them, you have to learn the Guild skill. We failed to summon the Guardian.";
 		}
-		else if (getcastledata( .@map$,(.@s + CD_ENABLED_GUARDIAN0) ) == 1)
+		else if (getcastledata( .@map$,(.@s + CD_ENABLED_GUARDIAN00) ) == 1)
 			mes "Master, you already have summoned that Guardian. We cannot summon another.";
 		else if (Zeny <  10000)
 			mes "Well... I'm sorry but we don't have funds to summon the Guardian. We failed to summon the Guardian.";
 		else {
 			Zeny = Zeny - 10000;
-			setcastledata .@map$,(.@s + CD_ENABLED_GUARDIAN0),1;
+			setcastledata .@map$,(.@s + CD_ENABLED_GUARDIAN00),1;
 			guardian .@map$, .@x[.@s], .@y[.@s], .@name$[.@s], .@mob_id[.@s], "Kafra Employee#"+ replacestr(.@map$, "cas", "") +"::OnGuardianDied", .@s;
 			mes "We completed the summoning of the Guardian. Our defenses are now increased with it in place.";
 		}
@@ -689,7 +689,7 @@ OnSpawnGuardians:
 	.@tmp$ = replacestr(.@map$, "cas", "");
 	killmonster .@map$, "Kafra Employee#"+ .@tmp$ +"::OnGuardianDied";
 	for ( .@i = 0; .@i < MAX_GUARDIANS; .@i++ ) {
-		if (getcastledata( .@map$,(.@i + CD_ENABLED_GUARDIAN0) ))
+		if (getcastledata( .@map$,(.@i + CD_ENABLED_GUARDIAN00) ))
 			guardian .@map$, .@x[.@i], .@y[.@i], .@name$[.@i], .@mob_id[.@i], "Kafra Employee#"+ .@tmp$ +"::OnGuardianDied",.@i;
 	}
 }

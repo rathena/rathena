@@ -132,7 +132,7 @@ OnAgitBreak:
 	}
 	// Erase Guardian Database information if the new owners do not have Guardian Research.
 	if( getgdskilllv(.@GID,10002) == 0 ) {
-		for( set .@i, CD_ENABLED_GUARDIAN0; .@i <= CD_ENABLED_GUARDIAN7; set .@i, .@i+1 ) {
+		for( set .@i, CD_ENABLED_GUARDIAN00; .@i < CD_MAX; set .@i, .@i+1 ) {
 			SetCastleData strnpcinfo(2), .@i, 0;
 		}
 	}

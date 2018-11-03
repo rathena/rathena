@@ -1147,7 +1147,7 @@ int intif_guild_castle_dataload(int num, int *castle_ids)
  * @param value
  * @return 
  */
-int intif_guild_castle_datasave(int castle_id,enum e_castle_data index, int value)
+int intif_guild_castle_datasave(int castle_id,int index, int value)
 {
 	if (CheckForCharServer())
 		return 0;

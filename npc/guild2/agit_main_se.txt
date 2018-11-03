@@ -615,7 +615,7 @@ OnStartArena:
 	// Set new owner
 	setcastledata strnpcinfo(4),CD_GUILD_ID,.@GID;
 	// Clear castle's data.
-	for(set .@i,CD_INVESTED_ECONOMY; .@i<CD_ENABLED_GUARDIAN0; set .@i,.@i+1)
+	for(set .@i,CD_INVESTED_ECONOMY; .@i<CD_ENABLED_GUARDIAN00; set .@i,.@i+1)
 		setcastledata strnpcinfo(4),.@i,0;
 	// Disable Kafra
 	disablenpc "Kafra Employee#"+strnpcinfo(2);

@@ -612,8 +612,8 @@ struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 		Sql_GetData(sql_handle, CD_PAY_TIME, &data, NULL); gc->payTime = atoi(data);
 		Sql_GetData(sql_handle, CD_CREATE_TIME, &data, NULL); gc->createTime = atoi(data);
 		Sql_GetData(sql_handle, CD_ENABLED_KAFRA, &data, NULL); gc->visibleC = atoi(data);
-		for (i = CD_ENABLED_GUARDIAN0; i <= CD_ENABLED_GUARDIAN7; i++) {
-			Sql_GetData(sql_handle, i, &data, NULL); gc->guardian[i - CD_ENABLED_GUARDIAN0].visible = atoi(data);
+		for (i = CD_ENABLED_GUARDIAN00; i < CD_MAX; i++) {
+			Sql_GetData(sql_handle, i, &data, NULL); gc->guardian[i - CD_ENABLED_GUARDIAN00].visible = atoi(data);
 		}
 	}
 	Sql_FreeResult(sql_handle);
@@ -1823,8 +1823,8 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 		case CD_CREATE_TIME: gc->createTime = value; break;
 		case CD_ENABLED_KAFRA: gc->visibleC = value; break;
 		default:
-			if (index > CD_ENABLED_KAFRA && index < CD_MAX) {
-				gc->guardian[index - CD_ENABLED_GUARDIAN0].visible = value;
+			if (index >= CD_ENABLED_GUARDIAN00 && index < CD_MAX) {
+				gc->guardian[index - CD_ENABLED_GUARDIAN00].visible = value;
 				break;
 			}
 			ShowError("mapif_parse_GuildCastleDataSave: not found index=%d\n", index);
