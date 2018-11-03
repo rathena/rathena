@@ -3575,7 +3575,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 200 + 40 * skill_lv;
 			break;
 		case RG_RAID:
+#ifdef RENEWAL
+			if (status_has_mode(tstatus,MD_STATUS_IMMUNE))
+				skillratio += 10 * skill_lv;
+			else
+				skillratio += 20 * skill_lv;
+#else
 			skillratio += 40 * skill_lv;
+#endif
 			break;
 		case RG_INTIMIDATE:
 			skillratio += 30 * skill_lv;
