@@ -30,42 +30,71 @@ OnPCLoginEvent:
 		dispbottom " ";
 		dispbottom " Other freebies are given in the form of Daily Attendance. Make sure you check-in every day.";
 		dispbottom " Take note that we DO NOT have @go or @load/@return. We DO have @kill/@die (if you don't have Butterfly Wings).";
-		dispbottom "                                                                                                                                              MilkyRO Team", 0x76daee;
+		dispbottom "                                                                                                                                        MilkyRO Team", 0x76daee;
 		dispbottom "===============================================================", 0x666666;
 
 		// announce "Welcome to MilkyRO. Here are some things to start you with along with a 1 week VIP (only given by the gm) bonus.", BC_SELF;
 		set #xlaunch_vipx,1;
 		sleep2 5000;
 	}
-	if(! #ServCrash20181030 && getcharid(3, strcharinfo(0)) <= 2000346){
-		dispbottom "===============================================================", 0x666666;
-		dispbottom "  Welcome to MilkyRO.", 0x76daee;
-		dispbottom "===============================================================", 0x666666;
-		dispbottom " Thank you for your patience for the past few days. We have finally migrated to a new server.";
-		dispbottom " We hope this will prevent the server from ever crashing again.";
-		dispbottom " To compensate for the inconvienence caused we will be giving you a few items.";
-		dispbottom " ";
+	// if(! #ServCrash20181030 && getcharid(3, strcharinfo(0)) <= 2000346){
+	// 	dispbottom "===============================================================", 0x666666;
+	// 	dispbottom "  Welcome to MilkyRO.", 0x76daee;
+	// 	dispbottom "===============================================================", 0x666666;
+	// 	dispbottom " Thank you for your patience for the past few days. We have finally migrated to a new server.";
+	// 	dispbottom " We hope this will prevent the server from ever crashing again.";
+	// 	dispbottom " To compensate for the inconvienence caused we will be giving you a few items.";
+	// 	dispbottom " ";
 
-		getitem 8501, 5; 				// Milky Special Gift Box
-		getitem 12412, 3;				// Bubble gum x3 (+100%)
-		getitem 14533, 3;				// Field Manual 100%
-		dispbottom " ";
-		dispbottom " And finally a random reward: ";
-		switch(rand(1,9)){
-			case 1: getitem 12103, 1; break;	// Bloody Branch
-			case 2: getitem 12214, 3; break;	// Convex Mirror
-			case 3: getitem 7776, 1; break;		// Gym Pass
-			case 4: getitem 12254, 2; break;	// LUK +10
-			case 5: getitem 12252, 2; break;	// INT +10
-			case 6: getitem 12253, 2; break;	// DEX +10
-			case 7: getitem 12255, 2; break;	// VIT +10
-			case 8: getitem 12251, 2; break;	// AGI +10
-			case 9: getitem 12250, 2; break;	// STR +10
+	// 	getitem 8501, 5; 				// Milky Special Gift Box
+	// 	getitem 12412, 3;				// HE Bubble gum x3
+	// 	getitem 14533, 3;				// Field Manual 100%
+	// 	dispbottom " ";
+	// 	dispbottom " And finally a random reward: ";
+	// 	switch(rand(1,9)){
+	// 		case 1: getitem 12103, 1; break;	// Bloody Branch
+	// 		case 2: getitem 12214, 3; break;	// Convex Mirror
+	// 		case 3: getitem 7776, 1; break;		// Gym Pass
+	// 		case 4: getitem 12254, 2; break;	// LUK +10
+	// 		case 5: getitem 12252, 2; break;	// INT +10
+	// 		case 6: getitem 12253, 2; break;	// DEX +10
+	// 		case 7: getitem 12255, 2; break;	// VIT +10
+	// 		case 8: getitem 12251, 2; break;	// AGI +10
+	// 		case 9: getitem 12250, 2; break;	// STR +10
+	// 	}
+	// 	dispbottom " ";
+	// 	dispbottom "                                                                                                                                        MilkyRO Team", 0x76daee;
+	// 	dispbottom "===============================================================", 0x666666;
+	// 	set #ServCrash20181030,1;
+	// }
+
+	if(! #Diwali2018)
+	{
+		// .@unique$ = get_unique_id();
+		.@c = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#Diwali2018' AND `value` = '"+get_unique_id()+"'",.@value);
+		debugmes "c: "+.@c;
+		dispbottom "===============================================================", 0x666666;
+		dispbottom "  We from MilkyRO wishes you a Happy Holidays!", 0x76daee;
+		dispbottom "===============================================================", 0x666666;
+		dispbottom " MilkyRO is currently holding <[DOUBLE EXP]> event for Deepavali 2018.";
+		if (.@c <= 0 ) // not cheating
+		{
+			dispbottom " To celebrate the occasion, we gift you a few items and one temporary headgear.";
+			getitem 8501, 5; 				// Milky Special Gift Box
+			getitem 12264, 3;				// Bubble gum x3
+			getitem 16361, 1;				// Costume Desert Prince = 20 days
+		}
+		else // dual client
+		{
+			dispbottom " To celebrate the occasion, we had gifted you a few items in the account you login to";
+			dispbottom " previously. In other words, <GM>Nubs doesn't like you abusing the free items by ";
+			dispbottom " making multiple accounts.";
 		}
 		dispbottom " ";
-		dispbottom "                                                                                                                                              MilkyRO Team", 0x76daee;
+		dispbottom "                                                                                                                                        MilkyRO Team", 0x76daee;
 		dispbottom "===============================================================", 0x666666;
-		set #ServCrash20181030,1;
+
+		set #Diwali2018, get_unique_id();
 	}
 	end;
 }
