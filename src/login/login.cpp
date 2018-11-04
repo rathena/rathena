@@ -439,6 +439,24 @@ bool login_check_password(const char* md5key, int passwdenc, const char* passwd,
 	}
 }
 
+int login_get_usercount( int users ){
+#if PACKETVER >= 20170726
+	if( login_config.usercount_disable ){
+		return 4; // Removes count and colorization completely
+	}else if( users <= login_config.usercount_low ){
+		return 0; // Green => Smooth
+	}else if( users <= login_config.usercount_medium ){
+		return 1; // Yellow => Normal
+	}else if( users <= login_config.usercount_high ){
+		return 2; // Red => Busy
+	}else{
+		return 3; // Purple => Crowded
+	}
+#else
+	return users;
+#endif
+}
+
 /**
  * Test to determine if an IP come from LAN or WAN.
  * @param ip: ip to check if in auth network
@@ -628,7 +646,15 @@ bool login_config_read(const char* cfgName, bool normal) {
 				nnode->next = login_config.client_hash_nodes;
 				login_config.client_hash_nodes = nnode;
 			}
-		} else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
+		} else if (!strcmpi(w1, "usercount_disable"))
+			login_config.usercount_disable = config_switch(w2);
+		else if (!strcmpi(w1, "usercount_low"))
+			login_config.usercount_low = atoi(w2);
+		else if (!strcmpi(w1, "usercount_medium"))
+			login_config.usercount_medium = atoi(w2);
+		else if (!strcmpi(w1, "usercount_high"))
+			login_config.usercount_high = atoi(w2);
+		else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			login_config.char_per_account = atoi(w2);
 			if( login_config.char_per_account <= 0 || login_config.char_per_account > MAX_CHARS ) {
 				if( login_config.char_per_account > MAX_CHARS ) {
@@ -699,6 +725,10 @@ void login_set_defaults() {
 
 	login_config.client_hash_check = 0;
 	login_config.client_hash_nodes = NULL;
+	login_config.usercount_disable = false;
+	login_config.usercount_low = 200;
+	login_config.usercount_medium = 500;
+	login_config.usercount_high = 1000;
 	login_config.char_per_account = MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING;
 #ifdef VIP_ENABLE
 	login_config.vip_sys.char_increase = MAX_CHAR_VIP;
