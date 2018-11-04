@@ -6,7 +6,7 @@
 //===== Changelogs: ==========================================
 //= 1.0 Succession of the Prince removed in ep16.1 [Capuche]
 //= 1.1 Moved renewal specific npcs [zackdreaver]
-//= 1.2 Moved Chief Balrog [Lemongrass]
+//= 1.2 Moved Chief Balrog and Continental Messengers [Lemongrass]
 //============================================================
 
 // Stop Post Quest
@@ -4145,3 +4145,94 @@ morocc,159,113,3	script	Chief Balrog	752,{
 		close;
 	}
 }
+
+-	script	Continental Messenger#00::ConMessenger	997,3,3,{
+	set .@area$,strnpcinfo(2);
+	if (.@area$ == "01") { set .@area$,"Prontera"; }
+	else if (.@area$ == "02") { set .@area$,"Geffen"; }
+	else if (.@area$ == "03") { set .@area$,"Payon"; }
+	else if (.@area$ == "04") { set .@area$,"Alberta"; }
+	else if (.@area$ == "05") { set .@area$,"Al De Baran"; }
+	if (BaseLevel > 79) {
+		mes "[Continental Guard Messenger]";
+		mes "Good day, "+ strcharinfo(0) +". We don't have the luxury of time in this dire situation so I'll try to make this quick.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "I'm a messenger dispatched here to " + .@area$ + " from the Morroc Continental Guard Headquarters. My duty is to deliver this important message to as many renowned adventurers as I can. I'm glad that I was finally able to find you, "+ strcharinfo(0) +".";
+		next;
+		select("Morroc Continental Guard Headquarters?");
+		mes "[Continental Guard Messenger]";
+		mes "Time's running out, so I can only give you a brief explanation.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "Satan Morroc, the heinous demon imprisoned deep in Morroc's underground for centuries, has resurrected and broken free.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "The revival of Satan Morroc has completely devastated Morroc Village and the area surrounding it.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "All of the death and suffering... Anywhere else must seem like heaven compared to what's happening in and around Morroc.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "The Morroc Continental Guard was immediately organized to fight Satan Morroc and bring relief to this dire situation. I'm here to inform everyone in the Rune-Midgarts Kingdom about this catastrophe.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "We need your help, "+ strcharinfo(0) +". We need reputable adventurers like you to seal away Satan Morroc once again.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "For more information, please speak to the captain of the Morroc Continental Guard. He is waiting for you, "+ strcharinfo(0) +".";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "The Continental Guard Headquarters is located near the center palace of Morroc, so please go speak to the chief as soon as you can.";
+		close;
+	}
+	else {
+		mes "[Continental Guard Messenger]";
+		mes "I'm a messenger from the Morroc Continental Guards Headquarters, and I've come here to " + .@area$ + " with an urgent message for everyone here in Rune-Midgarts Kingdom.";
+		next;
+		select("Morroc Continental Guard Headquarters?");
+		mes "[Continental Guard Messenger]";
+		mes "Time's running out, so I can only give you a brief explanation.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "Satan Morroc, the heinous demon imprisoned deep in Morroc's underground for centuries, has resurrected and broken free.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "The revival of Satan Morroc has completely devastated Morroc Village and the area surrounding it.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "All of the death and suffering... Anywhere else must seem like heaven compared to what's happening in and around Morroc.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "The Morroc Continental Guard was immediately organized to fight Satan Morroc and bring relief to this dire situation. I'm here to inform everyone in the Rune-Midgarts Kingdom about this catastrophe.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "Part of my duty is to help recruit adventurers from around the world to help drive Satan Morroc back into confinement. It won't be easy, but he was defeated once before. Satan Morroc can be sealed away again.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "At least 70% of Morroc Village was destroyed by the fallout of Satan Morroc's resurrection.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "The desert around Morroc has also turned into a land of death after it was claimed by Satan Morroc and his powerful doppelgangers and underlings.";
+		mes "So heed my warning, stay away from the Morroc area unless you're on a mission organized by the Morroc Continental Guard.";
+		close;
+	}
+
+OnTouch_:
+	if (BaseLevel > 79) {
+		mes "[Continental Guard Messenger]";
+		mes "Are you... "+ strcharinfo(0) +"?";
+		mes "Ah, very well. I have an extremely important message for you.";
+		next;
+		mes "[Continental Guard Messenger]";
+		mes "The situation is urgent, so please listen to me carefully.";
+		close;
+	}
+	end;
+}
+
+prontera,164,304,3	duplicate(ConMessenger)	Continental Messenger#01	997,3,3
+geffen,128,90,3	duplicate(ConMessenger)	Continental Messenger#02	997,3,3
+payon,200,113,3	duplicate(ConMessenger)	Continental Messenger#03	997,3,3
+alberta,127,64,3	duplicate(ConMessenger)	Continental Messenger#04	998,3,3
+aldebaran,135,128,3	duplicate(ConMessenger)	Continental Messenger#05	998,3,3
