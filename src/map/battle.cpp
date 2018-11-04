@@ -1257,7 +1257,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 #ifdef RENEWAL
 		if( sc->data[SC_RAID] ) {
-			damage += damage * 20 / 100;
+			if (status_get_class_(bl) == CLASS_BOSS)
+				damage += damage * 10 / 100;
+			else
+				damage += damage * 20 / 100;
 
 			if (--sc->data[SC_RAID]->val1 == 0)
 				status_change_end(bl, SC_RAID, INVALID_TIMER);
@@ -3576,7 +3579,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case RG_RAID:
 #ifdef RENEWAL
-			if (status_has_mode(tstatus,MD_STATUS_IMMUNE))
+			if (status_get_class_(target) == CLASS_BOSS)
 				skillratio += 10 * skill_lv;
 			else
 				skillratio += 20 * skill_lv;
