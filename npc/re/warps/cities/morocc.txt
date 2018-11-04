@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= Morocc Warp Script
+//===== Description: =========================================
+//= Warp Points for Morocc
+//===== Changelog: ===========================================
+//= 1.0 Split into pre-re and re [Lemongrass]
+//============================================================
+
+morocc,299,207,0	script	MocR_MocF20L	45,2,2,{
+	mes "- Where do you want to go? -";
+	next;
+	switch( select( "Undeveloped exploration area", "Towards Prontera", "Towards Payon" ) ){
+		case 1:
+			warp "moc_fild20", 46, 181;
+			end;
+		case 2:
+			warp "prt_fild10", 263, 34;
+			end;
+		case 3:
+			warp "moc_fild13", 41, 171;
+			end;
+	}
+}
