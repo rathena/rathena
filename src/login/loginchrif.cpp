@@ -73,7 +73,6 @@ int logchrif_parse_reqauth(int fd, int id,char* ip){
 	if( RFIFOREST(fd) < 23 )
 		return 0;
 	else{
-		struct auth_node* node;
 		uint32 account_id = RFIFOL(fd,2);
 		uint32 login_id1 = RFIFOL(fd,6);
 		uint32 login_id2 = RFIFOL(fd,10);
@@ -82,9 +81,10 @@ int logchrif_parse_reqauth(int fd, int id,char* ip){
 		int request_id = RFIFOL(fd,19);
 		RFIFOSKIP(fd,23);
 
-		node = (struct auth_node*)idb_get(auth_db, account_id);
+		struct auth_node* node = login_get_auth_node( account_id );
+
 		if( runflag == LOGINSERVER_ST_RUNNING &&
-			node != NULL &&
+			node != nullptr &&
 			node->account_id == account_id &&
 			node->login_id1  == login_id1 &&
 			node->login_id2  == login_id2 &&
@@ -105,7 +105,7 @@ int logchrif_parse_reqauth(int fd, int id,char* ip){
 			WFIFOSET(fd,21);
 
 			// each auth entry can only be used once
-			idb_remove(auth_db, account_id);
+			login_remove_auth_node( account_id );
 		}else{// authentication not found
 			ShowStatus("Char-server '%s': authentication of the account %d REFUSED (ip: %s).\n", ch_server[id].name, account_id, ip);
 			WFIFOHEAD(fd,21);

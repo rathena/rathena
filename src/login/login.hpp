@@ -135,7 +135,6 @@ struct auth_node {
 	char sex;
 	uint8 clienttype;
 };
-extern DBMap* auth_db; // uint32 account_id -> struct auth_node*
 
 ///Accessors
 AccountDB* login_get_accounts_db(void);
@@ -158,6 +157,12 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
  * @param account_id: the account identifier
  */
 void login_remove_online_user(uint32 account_id);
+
+struct auth_node* login_get_auth_node( uint32 account_id );
+
+struct auth_node* login_add_auth_node( struct login_session_data* sd, uint32 ip );
+
+void login_remove_auth_node( uint32 account_id );
 
 /**
  * Timered function to disconnect a user from login.

@@ -41,7 +41,7 @@ static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
 struct mmo_char_server ch_server[MAX_SERVERS];	/// char server data
 struct Login_Config login_config;				/// Configuration of login-serv
 std::unordered_map<uint32,struct online_login_data> online_db;
-DBMap* auth_db;
+std::unordered_map<uint32,struct auth_node> auth_db;
 
 // account database
 AccountDB* accounts = NULL;
@@ -122,6 +122,27 @@ void login_remove_online_user(uint32 account_id) {
 	online_db.erase( account_id );
 }
 
+struct auth_node* login_get_auth_node( uint32 account_id ){
+	return util::umap_find( auth_db, account_id );
+}
+
+struct auth_node* login_add_auth_node( struct login_session_data* sd, uint32 ip ){
+	struct auth_node* node = &auth_db[sd->account_id];
+
+	node->account_id = sd->account_id;
+	node->login_id1 = sd->login_id1;
+	node->login_id2 = sd->login_id2;
+	node->sex = sd->sex;
+	node->ip = ip;
+	node->clienttype = sd->clienttype;
+
+	return node;
+}
+
+void login_remove_auth_node( uint32 account_id ){
+	auth_db.erase( account_id );
+}
+
 /**
  * Timered function to disconnect a user from login.
  *  This is done either after auth_ok or kicked by char-server.
@@ -139,7 +160,7 @@ TIMER_FUNC(login_waiting_disconnect_timer){
 	if( p != nullptr && p->waiting_disconnect == tid && p->account_id == id ){
 		p->waiting_disconnect = INVALID_TIMER;
 		login_remove_online_user(id);
-		idb_remove(auth_db, id);
+		login_remove_auth_node(id);
 	}
 
 	return 0;
@@ -741,7 +762,7 @@ void do_final(void) {
 
 	accounts = NULL; // destroyed in account_engine
 	online_db.clear();
-	auth_db->destroy(auth_db, NULL);
+	auth_db.clear();
 
 	do_final_loginchrif();
 
@@ -821,9 +842,6 @@ int do_init(int argc, char** argv) {
 	ipban_init();
 
 	add_timer_func_list(login_waiting_disconnect_timer, "waiting_disconnect_timer");
-
-	// Interserver auth init
-	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	// set default parser as parse_login function
 	set_defaultparse(logclif_parse);
