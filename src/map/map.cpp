@@ -87,6 +87,7 @@ char vendings_table[32] = "vendings";
 char vending_items_table[32] = "vending_items";
 char market_table[32] = "market";
 char roulette_table[32] = "db_roulette";
+char guild_storage_log_table[32] = "guild_storage_log";
 
 // log database
 char log_db_ip[32] = "127.0.0.1";
@@ -2639,11 +2640,6 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 	}
 
 	struct map_data *src_map = map_getmapdata(src_m);
-
-	// Copy the map
-	memcpy(&map[dst_m], src_map, sizeof(struct map_data));
-
-	// Retrieve new map data
 	struct map_data *dst_map = map_getmapdata(dst_m);
 
 	strcpy(iname, name);
@@ -2658,17 +2654,15 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 		snprintf(dst_map->name, sizeof(dst_map->name),"%.3hu%s", instance_id, iname);
 	dst_map->name[MAP_NAME_LENGTH-1] = '\0';
 
-	// Mimic questinfo
-	if( src_map->qi_count ) {
-		dst_map->qi_count = src_map->qi_count;
-		CREATE( dst_map->qi_data, struct questinfo, dst_map->qi_count );
-		memcpy( dst_map->qi_data, src_map->qi_data, dst_map->qi_count * sizeof(struct questinfo) );
-	}
-
 	dst_map->m = dst_m;
 	dst_map->instance_id = instance_id;
 	dst_map->instance_src_map = src_m;
 	dst_map->users = 0;
+	dst_map->xs = src_map->xs;
+	dst_map->ys = src_map->ys;
+	dst_map->bxs = src_map->bxs;
+	dst_map->bys = src_map->bys;
+	dst_map->iwall_num = src_map->iwall_num;
 
 	memset(dst_map->npc, 0, sizeof(dst_map->npc));
 	dst_map->npc_num = 0;
@@ -2685,6 +2679,10 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 	dst_map->index = mapindex_addmap(-1, dst_map->name);
 	dst_map->channel = NULL;
 	dst_map->mob_delete_timer = INVALID_TIMER;
+
+	map_data_copy(dst_map, src_map);
+
+	ShowInfo("[Instance] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, name, src_map->m);
 
 	map_addmap2db(dst_map);
 
@@ -2734,7 +2732,7 @@ static int map_instancemap_clean(struct block_list *bl, va_list ap)
 	return 1;
 }
 
-static void map_free_questinfo(int m);
+static void map_free_questinfo(struct map_data *mapdata);
 
 /*==========================================
  * Deleting an instance map
@@ -2754,16 +2752,28 @@ int map_delinstancemap(int m)
 
 	if( mapdata->mob_delete_timer != INVALID_TIMER )
 		delete_timer(mapdata->mob_delete_timer, map_removemobs_timer);
+	mapdata->mob_delete_timer = INVALID_TIMER;
 
 	// Free memory
-	aFree(mapdata->cell);
-	aFree(mapdata->block);
-	aFree(mapdata->block_mob);
-	map_free_questinfo(m);
-	mapdata->damage_adjust = {};
+	if (mapdata->cell)
+		aFree(mapdata->cell);
+	mapdata->cell = NULL;
+	if (mapdata->block)
+		aFree(mapdata->block);
+	mapdata->block = NULL;
+	if (mapdata->block_mob)
+		aFree(mapdata->block_mob);
+	mapdata->block_mob = NULL;
 
-	mapindex_removemap( mapdata->index );
+	map_free_questinfo(mapdata);
+	mapdata->damage_adjust = {};
+	mapdata->flag.clear();
+	mapdata->skill_damage.clear();
+
+	mapindex_removemap(mapdata->index);
 	map_removemapdb(mapdata);
+
+	memset(&mapdata->name, '\0', sizeof(map[0].name)); // just remove the name
 	return 1;
 }
 
@@ -3546,6 +3556,8 @@ void map_flags_init(void){
 		struct map_data *mapdata = &map[i];
 		union u_mapflag_args args = {};
 
+		mapdata->flag.clear();
+		mapdata->flag.reserve(MF_MAX); // Reserve the bucket size
 		args.flag_val = 100;
 
 		// additional mapflag data
@@ -3554,14 +3566,61 @@ void map_flags_init(void){
 		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
 		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
 
-		// skill damage
+		// Clear adjustment data, will be reset after loading NPC
 		mapdata->damage_adjust = {};
+		mapdata->skill_damage.clear();
+		mapdata->skill_duration.clear();
+		map_free_questinfo(mapdata);
+
+		if (instance_start && i >= instance_start)
+			continue;
 
 		// adjustments
 		if( battle_config.pk_mode && !mapdata->flag[MF_PVP] )
 			mapdata->flag[MF_PVP] = true; // make all maps pvp for pk_mode [Valaris]
+	}
+}
 
-		map_free_questinfo(i);
+/**
+* Copying map data from parent map for instance map
+* @param dst_map Mapdata will be copied to
+* @param src_map Copying data from
+*/
+void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
+	nullpo_retv(dst_map);
+	nullpo_retv(src_map);
+
+	memcpy(&dst_map->save, &src_map->save, sizeof(struct point));
+	memcpy(&dst_map->damage_adjust, &src_map->damage_adjust, sizeof(struct s_skill_damage));
+
+	dst_map->flag.insert(src_map->flag.begin(), src_map->flag.end());
+	dst_map->skill_damage.insert(src_map->skill_damage.begin(), src_map->skill_damage.end());
+	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
+
+	dst_map->zone = src_map->zone;
+	dst_map->qi_count = 0;
+	dst_map->qi_data = NULL;
+
+	// Mimic questinfo
+	if (src_map->qi_count) {
+		dst_map->qi_count = src_map->qi_count;
+		CREATE(dst_map->qi_data, struct questinfo, dst_map->qi_count);
+		memcpy(dst_map->qi_data, src_map->qi_data, dst_map->qi_count * sizeof(struct questinfo));
+	}
+}
+
+/**
+* Copy map data for instance maps from its parents
+* that were cleared in map_flags_init() after reloadscript
+*/
+void map_data_copyall (void) {
+	if (!instance_start)
+		return;
+	for (int i = instance_start; i < map_num; i++) {
+		struct map_data *mapdata = &map[i];
+		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map)
+			continue;
+		map_data_copy(mapdata, &map[mapdata->instance_src_map]);
 	}
 }
 
@@ -3690,7 +3749,7 @@ int map_readallmaps (void)
 			map_cache_buffer[i] = map_init_mapcache(fp);
 
 			if( !map_cache_buffer[i] ) {
-				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath );
+				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath[i] );
 				exit(EXIT_FAILURE);
 			}
 
@@ -3759,6 +3818,12 @@ int map_readallmaps (void)
 		size = mapdata->bxs * mapdata->bys * sizeof(struct block_list*);
 		mapdata->block = (struct block_list**)aCalloc(size, 1);
 		mapdata->block_mob = (struct block_list**)aCalloc(size, 1);
+
+		memset(&mapdata->save, 0, sizeof(struct point));
+		mapdata->damage_adjust = {};
+		mapdata->qi_count = 0;
+		mapdata->qi_data = NULL;
+		mapdata->channel = NULL;
 	}
 
 	// intialization and configuration-dependent adjustments of mapflags
@@ -3773,7 +3838,7 @@ int map_readallmaps (void)
 	}
 
 	if (maps_removed)
-		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'\n", maps_removed);
+		ShowNotice("Maps removed: '" CL_WHITE "%d" CL_RESET "'" CL_CLL ".\n", maps_removed);
 
 	// finished map loading
 	ShowInfo("Successfully loaded '" CL_WHITE "%d" CL_RESET "' maps." CL_CLL "\n",map_num);
@@ -4079,6 +4144,8 @@ int inter_config_read(const char *cfgName)
 			strcpy(market_table, w2);
 		else if (strcmpi(w1, "sales_table") == 0)
 			strcpy(sales_table, w2);
+		else if (strcmpi(w1, "guild_storage_log") == 0)
+			strcpy(guild_storage_log_table, w2);
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)
@@ -4274,9 +4341,10 @@ bool map_remove_questinfo(int m, struct npc_data *nd) {
 	return true;
 }
 
-static void map_free_questinfo(int m) {
+static void map_free_questinfo(struct map_data *mapdata) {
 	unsigned short i;
-	struct map_data *mapdata = map_getmapdata(m);
+	if (!mapdata)
+		return;
 
 	for(i = 0; i < mapdata->qi_count; i++) {
 		if (mapdata->qi_data[i].jobid)
@@ -4377,35 +4445,40 @@ int cleanup_sub(struct block_list *bl, va_list ap)
  * @param caster: Caster type
  */
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
-	if (m->skill_damage.size() > UINT16_MAX)
-		return;
-
-	for (int i = 0; i < m->skill_damage.size(); i++) {
-		if (m->skill_damage[i].skill_id == skill_id) {
-			for (int j = 0; j < SKILLDMG_MAX; j++) {
-				m->skill_damage[i].rate[j] = rate[j];
-			}
-			m->skill_damage[i].caster = caster;
-			return;
-		}
-	}
-
 	struct s_skill_damage entry = {};
 
-	entry.skill_id = skill_id;
 	for (int i = 0; i < SKILLDMG_MAX; i++)
 		entry.rate[i] = rate[i];
 	entry.caster = caster;
-	m->skill_damage.push_back(entry);
+
+	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) {
+		m->skill_damage[skill_id] = entry;
+		return;
+	}
+
+	m->skill_damage.insert({ skill_id, entry });
 }
 
 /**
- * PvP timer handling
+ * Add new skill duration adjustment entry for a map
+ * @param mapd: Map data
+ * @param skill_id: Skill ID to adjust
+ * @param per: Skill duration adjustment value in percent
+ */
+void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
+	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
+		mapd->skill_duration[skill_id] += per;
+	else // Update previous entry
+		mapd->skill_duration.insert({ skill_id, per });
+}
+
+/**
+ * PvP timer handling (starting)
  * @param bl: Player block object
  * @param ap: func* with va_list values
  * @return 0
  */
-static int map_mapflag_pvp_sub(struct block_list *bl, va_list ap)
+static int map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
 {
 	struct map_session_data *sd = map_id2sd(bl->id);
 
@@ -4421,6 +4494,26 @@ static int map_mapflag_pvp_sub(struct block_list *bl, va_list ap)
 	}
 
 	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	return 0;
+}
+
+/**
+ * PvP timer handling (stopping)
+ * @param bl: Player block object
+ * @param ap: func* with va_list values
+ * @return 0
+ */
+static int map_mapflag_pvp_stop_sub(struct block_list *bl, va_list ap)
+{
+	struct map_session_data* sd = map_id2sd(bl->id);
+
+	clif_pvpset(sd, 0, 0, 2);
+
+	if (sd->pvp_timer != INVALID_TIMER) {
+		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
+		sd->pvp_timer = INVALID_TIMER;
+	}
+
 	return 0;
 }
 
@@ -4477,7 +4570,7 @@ bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
  */
 int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args)
 {
-	if (m < 0) {
+	if (m < 0 || m >= MAX_MAP_PER_SERVER) {
 		ShowWarning("map_getmapflag: Invalid map ID %d.\n", m);
 		return -1;
 	}
@@ -4527,7 +4620,7 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
  */
 bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args)
 {
-	if (m < 0) {
+	if (m < 0 || m >= MAX_MAP_PER_SERVER) {
 		ShowWarning("map_setmapflag: Invalid map ID %d.\n", m);
 		return false;
 	}
@@ -4551,11 +4644,16 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			mapdata->flag[mapflag] = status;
 			break;
 		case MF_PVP:
-			if (!status)
+			mapdata->flag[mapflag] = status; // Must come first to properly set map property
+			if (!status) {
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-			else {
-				if (!battle_config.pk_mode)
-					map_foreachinmap(map_mapflag_pvp_sub, m, BL_PC);
+				map_foreachinmap(map_mapflag_pvp_stop_sub, m, BL_PC);
+				map_foreachinmap(unit_stopattack, m, BL_CHAR, 0);
+			} else {
+				if (!battle_config.pk_mode) {
+					clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
+					map_foreachinmap(map_mapflag_pvp_start_sub, m, BL_PC);
+				}
 				if (mapdata->flag[MF_GVG]) {
 					mapdata->flag[MF_GVG] = false;
 					ShowWarning("map_setmapflag: Unable to set GvG and PvP flags for the same map! Removing GvG flag from %s.\n", mapdata->name);
@@ -4581,13 +4679,14 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					ShowWarning("map_setmapflag: Unable to set Battleground and PvP flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
 			}
-			mapdata->flag[mapflag] = status;
 			break;
 		case MF_GVG:
 		case MF_GVG_TE:
-			if (!status)
+			mapdata->flag[mapflag] = status; // Must come first to properly set map property
+			if (!status) {
 				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-			else {
+				map_foreachinmap(unit_stopattack, m, BL_CHAR, 0);
+			} else {
 				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				if (mapdata->flag[MF_PVP]) {
 					mapdata->flag[MF_PVP] = false;
@@ -4599,7 +4698,6 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 					ShowWarning("map_setmapflag: Unable to set Battleground and GvG flags for the same map! Removing Battleground flag from %s.\n", mapdata->name);
 				}
 			}
-			mapdata->flag[mapflag] = status;
 			break;
 		case MF_GVG_CASTLE:
 		case MF_GVG_TE_CASTLE:
@@ -4743,13 +4841,20 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 						return false;
 					}
 
-					for (int i = 0; i < SKILLDMG_MAX; i++) {
+					mapdata->damage_adjust.caster = args->skill_damage.caster;
+					for (int i = 0; i < SKILLDMG_MAX; i++)
 						mapdata->damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
-
-						if (mapdata->flag.find(mapflag) != mapdata->flag.end() && mapdata->damage_adjust.rate[i])
-							mapdata->damage_adjust.caster = args->skill_damage.caster;
-					}
 				}
+			}
+			mapdata->flag[mapflag] = status;
+			break;
+		case MF_SKILL_DURATION:
+			if (!status)
+				mapdata->skill_duration.clear();
+			else {
+				nullpo_retr(false, args);
+
+				map_skill_duration_add(mapdata, args->skill_duration.skill_id, args->skill_duration.per);
 			}
 			mapdata->flag[mapflag] = status;
 			break;
@@ -4845,7 +4950,7 @@ void do_final(void){
 			for (int j=0; j<MAX_MOB_LIST_PER_MAP; j++)
 				if (mapdata->moblist[j]) aFree(mapdata->moblist[j]);
 		}
-		map_free_questinfo(i);
+		map_free_questinfo(mapdata);
 		mapdata->damage_adjust = {};
 	}
 

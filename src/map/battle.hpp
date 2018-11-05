@@ -87,7 +87,6 @@ extern int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 // Damage Calculation
 
 struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct block_list *target,uint16 skill_id,uint16 skill_lv,int flag);
-struct Damage battle_calc_attack_plant(struct Damage wd, struct block_list *src,struct block_list *target, uint16 skill_id, uint16 skill_lv);
 
 int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, int64 *, int flag, uint16 skill_id, bool status_reflect);
 
@@ -263,6 +262,8 @@ struct Battle_Config
 	int natural_heal_weight_rate;
 	int natural_heal_weight_rate_renewal;
 	int arrow_decrement;
+	int ammo_unequip;
+	int ammo_check_weapon;
 	int max_aspd;
 	int max_walk_speed;	//Maximum walking speed after buffs [Skotlex]
 	int max_hp_lv99;
@@ -351,6 +352,8 @@ struct Battle_Config
 	int equip_self_break_rate; //Natural & Penalty skills break rate
 	int equip_skill_break_rate; //Offensive skills break rate
 	int multi_level_up;
+	int multi_level_up_base;
+	int multi_level_up_job;
 	int max_exp_gain_rate; //Max amount of exp bar % you can get in one go.
 	int pk_mode;
 	int pk_mode_mes;
@@ -641,11 +644,13 @@ struct Battle_Config
 	int autoloot_adjust;
 	int broadcast_hide_name;
 	int skill_drop_items_full;
+	int switch_remove_edp;
 	int feature_homunculus_autofeed;
 	int summoner_trait;
 	int homunculus_autofeed_always;
 	int feature_attendance;
 	int feature_privateairship;
+	int rental_transaction;
 	int homunculus_exp_gain;
 
 #include "../custom/battle_config_struct.inc"

@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20171011
+//= 20180831
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -132,7 +132,7 @@ and 'doc/mapflags.txt'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x>,<y>{,<xs>{,<ys>}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
+<map name>{,<x>{,<y>{,<xs>{,<ys>}}}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
@@ -3033,6 +3033,14 @@ Returns true if the item in <equipment slot> is tradable.
 Returns false otherwise.
 
 ---------------------------------------
+
+*identifyall({<type>{,<account_id>}});
+
+Returns the count of unidentified items in the player inventory.
+If <type> is true the command will identify all the unidentified items as well (default).
+If <type> is false the command only returns the count of unidentified items.
+
+---------------------------------------
 //
 2,1.- End of item-related commands.
 //
@@ -3197,6 +3205,70 @@ within the specified area - an x1/y1-x2/y2 square on the specified map.
 
 This is useful for maps that are split into many buildings, such as all the
 "*_in" maps, due to all the shops and houses.
+
+---------------------------------------
+
+*getunits(<type>{,<array_variable>[<first value>]})
+*getmapunits(<type>,<"map name">{,<array_variable>[<first value>]})
+*getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>[<first value>]})
+
+The 'getunits' command will return the number of <type> objects active on the server.
+
+The 'getmapunits' command will return the number of <type> objects active on the
+specified <"map name">.
+
+The 'getareaunits' command will return the number of <type> objects actively located
+within the specified area where <x1>, <y1>, <x2>, <y2> form the area.
+
+Type is the type of object to search for:
+
+	BL_PC   - Character objects
+	BL_MOB  - Monster objects
+	BL_PET  - Pet objects
+	BL_HOM  - Homunculus objects
+	BL_MER  - Mercenary objects
+	BL_NPC  - NPC objects
+	BL_ELEM - Elemental objects
+
+If <array_variable> is provided:
+	- An int variable will return the list of GID.
+	- A string variable will return the list of names.
+
+Example 1:
+	// getting the players count and building a string array of the names.
+	.@num = getunits(BL_PC,.@array$[0]);
+
+	mes "the number of Users Connected to the server is " + .@num + " .";
+	mes "list of Players names :";
+	freeloop(1);	// for if the list was too big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
+
+Example 2:
+	// getting the npc count in Prontera and building a string array of the names.
+	.@num = getmapunits(BL_NPC,"prontera",.@array$[0]);
+
+	mes "the number of NPCs in Prontera is " + .@num + " .";
+	mes "list of NPCs name :";
+	freeloop(1);	// for if the list was too big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
+
+Example 3:
+	// getting the monster count in Prontera with specific coordinates and building a int array of the GIDs.
+	.@num = getareaunits(BL_MOB,"prontera",154,186,159,182,.@array[0]);
+
+	mes "the number of Monsters in Prontera in that Coordinates is " + .@num + " .";
+	mes "list of Monsters GID :";
+	freeloop(1);	// for if the list was too big.
+	for(.@i=0;.@i<getarraysize(.@array);.@i++)
+		mes (.@i + 1) + " " + .@array[.@i];
+	freeloop(0);
+	end;
 
 ---------------------------------------
 \\
@@ -5430,6 +5502,32 @@ Return values:
 
 ---------------------------------------
 
+*guildopenstorage_log({<char id>})
+
+Opens the guild storage log window for the attached character or the given character id.
+
+Possible return values:
+GUILDSTORAGE_LOG_FINAL_SUCCESS	Window was opened successfully.
+GUILDSTORAGE_LOG_EMPTY			Window was not opened, because no entries exist.
+GUILDSTORAGE_LOG_FAILED			Some database error occurred.
+
+---------------------------------------
+
+*guild_has_permission(<permission>{,<char id>})
+
+Checks if the attached player or the player with the given character id has the given permission(s).
+Permission can be a bitmask and allows to use multiple values at the same time.
+Returns true if the player has all of the given permissions or false if the player does at least
+miss one of the given permissions or is not in a guild at all.
+
+Available permissions are:
+GUILD_PERM_INVITE	If a player is allowed to invite other players.
+GUILD_PERM_EXPEL	If a player is allowed to expel other guild members.
+GUILD_PERM_STORAGE	If a player is allowed to access the guild storage.
+GUILD_PERM_ALL		A combination of all permissions above.
+
+---------------------------------------
+
 *guildchangegm(<guild id>,<new master's name>)
 
 This function will change the Guild Master of a guild. The ID is the guild's
@@ -5746,7 +5844,7 @@ executed on attack (or when attacked in the case of autobonus2).
 
 Rate is the trigger rate of the script (1000 = 100%).
 
-Duration is the time that the bonus will last for since the script has triggered.
+Duration is the time in milliseconds that the bonus will last for since the script has triggered.
 
 Skill ID/skill name the skill which will be used as trigger to start the bonus. (autobonus3)
 
@@ -6977,8 +7075,8 @@ This command kicks the given character from the waiting room attached to the giv
 *getwaitingroomusers "<NPC object name>";
 
 This command get all the characters in the waiting room of the given NPC and stores
-their gids in the array .@waitingroom_users[]. Also, stores the the number of characters
-in the variable .@waitingroom_usercount
+their gids in the array .@waitingroom_users[]. Also, stores the number of characters
+in the variable .@waitingroom_usercount.
 
 ---------------------------------------
 
@@ -7023,6 +7121,9 @@ For 'skill_damage' mapflag:
 	- Setting the flag here will adjust the global (all skills) damage on the map.
 	- <zone> is the -100 to 100000 damage adjustment value of the skills.
 	- See 'getmapflag' for the different <type> values.
+For 'skill_duration' mapflag:
+	- <zone> is the skill ID to adjust.
+	- <type> is the percentage of adjustment from 0 to 100000.
 
 ---------------------------------------
 
@@ -7369,11 +7470,12 @@ This command will display a picture, usually an NPC illustration, also called
 cutin, for the currently attached client. The position parameter determines the
 placement of the illustration and takes following values:
 
-	0 - bottom left corner
-	1 - bottom middle
-	2 - bottom right corner
-	3 - middle of screen in a movable window with an empty title bar
-	4 - middle of screen without the window header, but still movable
+	0	bottom left corner
+	1	bottom middle
+	2	bottom right corner
+	3	middle of screen in a movable window with an empty title bar
+	4	middle of screen without the window header, but still movable
+	255	clear all displayed cutins
 
 The picture is read from data\texture\유저인터페이스\illust, from both the GRF archive
 and data folder, and is required to be a bitmap. The file extension .bmp can be
