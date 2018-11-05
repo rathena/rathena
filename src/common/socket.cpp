@@ -321,9 +321,9 @@ void setsocketopts(int fd,int delay_timeout){
 #endif
 
 		if (sSetsockopt (fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
-			ShowError("setsocketopts: Unable to set SO_RCVTIMEO timeout for connection #%d!\n");
+			ShowError("setsocketopts: Unable to set SO_RCVTIMEO timeout for connection #%d!\n", fd);
 		if (sSetsockopt (fd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
-			ShowError("setsocketopts: Unable to set SO_SNDTIMEO timeout for connection #%d!\n");
+			ShowError("setsocketopts: Unable to set SO_SNDTIMEO timeout for connection #%d!\n", fd);
 	}
 }
 
@@ -737,7 +737,7 @@ int RFIFOSKIP(int fd, size_t len)
 	s = session[fd];
 
 	if ( s->rdata_size < s->rdata_pos + len ) {
-		ShowError("RFIFOSKIP: skipped past end of read buffer! Adjusting from %d to %d (session #%d)\n", len, RFIFOREST(fd), fd);
+		ShowError("RFIFOSKIP: skipped past end of read buffer! Adjusting from %" PRIuPTR " to %d (session #%d)\n", len, RFIFOREST(fd), fd);
 		len = RFIFOREST(fd);
 	}
 
@@ -786,12 +786,12 @@ int WFIFOSET(int fd, size_t len)
 	if( !s->flag.server ) {
 
 		if( len > socket_max_client_packet ) {// see declaration of socket_max_client_packet for details
-			ShowError("WFIFOSET: Dropped too large client packet 0x%04x (length=%u, max=%u).\n", WFIFOW(fd,0), len, socket_max_client_packet);
+			ShowError("WFIFOSET: Dropped too large client packet 0x%04x (length=%" PRIuPTR ", max=%" PRIuPTR ").\n", WFIFOW(fd,0), len, socket_max_client_packet);
 			return 0;
 		}
 
 		if( s->wdata_size+len > WFIFO_MAX ) {// reached maximum write fifo size
-			ShowError("WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet 0x%04x (len=%u, ip=%lu.%lu.%lu.%lu).\n", fd, WFIFOW(fd,0), len, CONVIP(s->client_addr));
+			ShowError("WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet 0x%04x (len=%" PRIuPTR ", ip=%lu.%lu.%lu.%lu).\n", fd, WFIFOW(fd,0), len, CONVIP(s->client_addr));
 			set_eof(fd);
 			return 0;
 		}
@@ -1525,7 +1525,7 @@ void send_shortlist_add_fd(int fd)
 
 	if( send_shortlist_count >= ARRAYLENGTH(send_shortlist_array) )
 	{
-		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%d shortlist.length=%d)\n", fd, send_shortlist_count, ARRAYLENGTH(send_shortlist_array));
+		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%" PRIuPTR " shortlist.length=%d)\n", fd, send_shortlist_count, ARRAYLENGTH(send_shortlist_array));
 		return;
 	}
 

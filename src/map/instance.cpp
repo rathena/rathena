@@ -824,12 +824,6 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, uint16 instanc
 	if (pc_setpos(sd, map_id2index(m), x, y, CLR_OUTSIGHT))
 		return IE_OTHER;
 
-	// If there was an idle timer, let's stop it
-	instance_stopidletimer(idata, instance_id);
-
-	// Now we start the instance timer
-	instance_startkeeptimer(idata, instance_id);
-
 	return IE_OK;
 }
 

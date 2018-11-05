@@ -1420,7 +1420,9 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 		case NPCTYPE_CASHSHOP:
 			if (cost[1] < points || cost[0] < (price - points))
 				return ERROR_TYPE_MONEY;
-			pc_paycash(sd, price, points, LOG_TYPE_NPC);
+			if (pc_paycash(sd, price, points, LOG_TYPE_NPC) <= 0) {
+				return ERROR_TYPE_MONEY;
+			}
 			break;
 		case NPCTYPE_ITEMSHOP:
 			{
@@ -2798,7 +2800,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		}
 		if (type == NPCTYPE_MARKETSHOP && (!qty || qty > UINT16_MAX)) {
 			ShowWarning("npc_parse_shop: Item %s [%hu] is stocked with invalid value %d, changed to 1. File '%s', line '%d'.\n",
-				id->name, nameid2, filepath, strline(buffer,start-buffer));
+				id->name, nameid2, qty, filepath, strline(buffer,start-buffer));
 			qty = 1;
 		}
 		//for logs filters, atcommands and iteminfo script command
@@ -3994,7 +3996,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	}
 	m = map_mapname2mapid(mapname);
 	if (m < 0) {
-		ShowWarning("npc_parse_mapflag: Unknown map in file '%s', line '%d' : %s\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", mapname, filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+		ShowWarning("npc_parse_mapflag: Unknown map '%s' in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", mapname, filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
 	}
 
@@ -4129,7 +4131,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.skill_damage.caster = BL_ALL;
 
 					for (int i = 0; i < SKILLDMG_MAX; i++)
-						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, INT_MAX);
+						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, 100000);
 
 					if (strcmp(skill_name, "all") == 0) // Adjust damage for all skills
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
@@ -4139,6 +4141,28 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.flag_val = 1;
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
 						map_skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), args.skill_damage.rate, args.skill_damage.caster);
+					}
+				}
+			}
+			break;
+		}
+
+		case MF_SKILL_DURATION: {
+			union u_mapflag_args args = {};
+
+			if (!state)
+				map_setmapflag_sub(m, MF_SKILL_DURATION, false, &args);
+			else {
+				char skill_name[SKILL_NAME_LENGTH];
+
+				if (sscanf(w4, "%30[^,],%5hu[^\n]", skill_name, &args.skill_duration.per) == 2) {
+					args.skill_duration.skill_id = skill_name2id(skill_name);
+
+					if (!args.skill_duration.skill_id)
+						ShowError("npc_parse_mapflag: skill_duration: Invalid skill name '%s' for Skill Duration mapflag. Skipping (file '%s', line '%d')\n", skill_name, filepath, strline(buffer, start - buffer));
+					else {
+						args.skill_duration.per = cap_value(args.skill_duration.per, 0, UINT16_MAX);
+						map_setmapflag_sub(m, MF_SKILL_DURATION, true, &args);
 					}
 				}
 			}
@@ -4427,7 +4451,7 @@ void npc_read_event_script(void)
 	if (battle_config.etc_log) {
 		//Print summary.
 		for (i = 0; i < NPCE_MAX; i++)
-			ShowInfo("%d '%s' events.\n", script_event[static_cast<enum npce_event>(i)].size(), npc_get_script_event_name(i));
+			ShowInfo("%" PRIuPTR " '%s' events.\n", script_event[static_cast<enum npce_event>(i)].size(), npc_get_script_event_name(i));
 	}
 }
 

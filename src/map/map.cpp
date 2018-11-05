@@ -3565,6 +3565,7 @@ void map_flags_init(void){
 		// Clear adjustment data, will be reset after loading NPC
 		mapdata->damage_adjust = {};
 		mapdata->skill_damage.clear();
+		mapdata->skill_duration.clear();
 		map_free_questinfo(mapdata);
 
 		if (instance_start && i >= instance_start)
@@ -3589,7 +3590,8 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 	memcpy(&dst_map->damage_adjust, &src_map->damage_adjust, sizeof(struct s_skill_damage));
 
 	dst_map->flag.insert(src_map->flag.begin(), src_map->flag.end());
-	dst_map->skill_damage.insert(dst_map->skill_damage.begin(), src_map->skill_damage.begin(), src_map->skill_damage.end());
+	dst_map->skill_damage.insert(src_map->skill_damage.begin(), src_map->skill_damage.end());
+	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
 	dst_map->zone = src_map->zone;
 	dst_map->qi_count = 0;
@@ -3743,7 +3745,7 @@ int map_readallmaps (void)
 			map_cache_buffer[i] = map_init_mapcache(fp);
 
 			if( !map_cache_buffer[i] ) {
-				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath );
+				ShowFatalError( "Failed to initialize mapcache data (%s)..\n", mapcachefilepath[i] );
 				exit(EXIT_FAILURE);
 			}
 
@@ -4439,26 +4441,31 @@ int cleanup_sub(struct block_list *bl, va_list ap)
  * @param caster: Caster type
  */
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
-	if (m->skill_damage.size() > UINT16_MAX)
-		return;
-
-	for (int i = 0; i < m->skill_damage.size(); i++) {
-		if (m->skill_damage[i].skill_id == skill_id) {
-			for (int j = 0; j < SKILLDMG_MAX; j++) {
-				m->skill_damage[i].rate[j] = rate[j];
-			}
-			m->skill_damage[i].caster = caster;
-			return;
-		}
-	}
-
 	struct s_skill_damage entry = {};
 
-	entry.skill_id = skill_id;
 	for (int i = 0; i < SKILLDMG_MAX; i++)
 		entry.rate[i] = rate[i];
 	entry.caster = caster;
-	m->skill_damage.push_back(entry);
+
+	if (m->skill_damage.find(skill_id) != m->skill_damage.end()) {
+		m->skill_damage[skill_id] = entry;
+		return;
+	}
+
+	m->skill_damage.insert({ skill_id, entry });
+}
+
+/**
+ * Add new skill duration adjustment entry for a map
+ * @param mapd: Map data
+ * @param skill_id: Skill ID to adjust
+ * @param per: Skill duration adjustment value in percent
+ */
+void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
+	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
+		mapd->skill_duration[skill_id] += per;
+	else // Update previous entry
+		mapd->skill_duration.insert({ skill_id, per });
 }
 
 /**
@@ -4830,13 +4837,20 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 						return false;
 					}
 
-					for (int i = 0; i < SKILLDMG_MAX; i++) {
+					mapdata->damage_adjust.caster = args->skill_damage.caster;
+					for (int i = 0; i < SKILLDMG_MAX; i++)
 						mapdata->damage_adjust.rate[i] = cap_value(args->skill_damage.rate[i], -100, 100000);
-
-						if (mapdata->flag.find(mapflag) != mapdata->flag.end() && mapdata->damage_adjust.rate[i])
-							mapdata->damage_adjust.caster = args->skill_damage.caster;
-					}
 				}
+			}
+			mapdata->flag[mapflag] = status;
+			break;
+		case MF_SKILL_DURATION:
+			if (!status)
+				mapdata->skill_duration.clear();
+			else {
+				nullpo_retr(false, args);
+
+				map_skill_duration_add(mapdata, args->skill_duration.skill_id, args->skill_duration.per);
 			}
 			mapdata->flag[mapflag] = status;
 			break;

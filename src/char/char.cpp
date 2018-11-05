@@ -2823,7 +2823,7 @@ void char_config_split_startpoint(char *w1_value, char *w2_value, struct point s
 
 		start_point[i].map = mapindex_name2id(fields[1]);
 		if (!start_point[i].map) {
-			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", start_point[i].map);
+			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", fields[1]);
 			start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
 			start_point[i].x = MAP_DEFAULT_X;
 			start_point[i].y = MAP_DEFAULT_Y;

@@ -365,14 +365,14 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 			int i;
 
 			if( !sd->has_client_hash ) {
-				ShowNotice("Client didn't send client hash (account: %s, ip: %s)\n", sd->userid, acc.state, ip);
+				ShowNotice("Client didn't send client hash (account: %s, ip: %s)\n", sd->userid, ip);
 				return 5;
 			}
 
 			for( i = 0; i < 16; i++ )
 				sprintf(&smd5[i * 2], "%02x", sd->client_hash[i]);
 
-			ShowNotice("Invalid client hash (account: %s, sent md5: %d, ip: %s)\n", sd->userid, smd5, ip);
+			ShowNotice("Invalid client hash (account: %s, sent md5: %s, ip: %s)\n", sd->userid, smd5, ip);
 			return 5;
 		}
 	}
