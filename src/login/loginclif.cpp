@@ -89,7 +89,8 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	}
 
 	{
-		struct online_login_data* data = (struct online_login_data*)idb_get(online_db, sd->account_id);
+		struct online_login_data* data = login_get_online_user( sd->account_id );
+
 		if( data )
 		{// account is already marked as online!
 			if( data->char_server > -1 )

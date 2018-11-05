@@ -529,17 +529,13 @@ int logchrif_parse_updonlinedb(int fd, int id){
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
 	else{
-		uint32 i, users;
-		online_db->foreach(online_db, login_online_db_setoffline, id); //Set all chars from this char-server offline first
-		users = RFIFOW(fd,4);
-		for (i = 0; i < users; i++) {
-			int aid = RFIFOL(fd,6+i*4);
-			struct online_login_data *p = (struct online_login_data*)idb_ensure(online_db, aid, login_create_online_user);
-			p->char_server = id;
-			if (p->waiting_disconnect != INVALID_TIMER){
-				delete_timer(p->waiting_disconnect, login_waiting_disconnect_timer);
-				p->waiting_disconnect = INVALID_TIMER;
-			}
+		//Set all chars from this char-server offline first
+		login_online_db_setoffline( id );
+
+		for( uint32 i = 0, users = RFIFOW(fd, 4); i < users; i++) {
+			uint32 aid = RFIFOL(fd,6+i*4);
+
+			login_add_online_user( id, aid );
 		}
 		RFIFOSKIP(fd,RFIFOW(fd,2));
 	}
@@ -588,7 +584,7 @@ int logchrif_parse_updcharip(int fd, int id){
  */
 int logchrif_parse_setalloffline(int fd, int id){
 	ShowInfo("Setting accounts from char-server %d offline.\n", id);
-	online_db->foreach(online_db, login_online_db_setoffline, id);
+	login_online_db_setoffline( id );
 	RFIFOSKIP(fd,2);
 	return 1;
 }
@@ -628,12 +624,11 @@ int logchrif_parse_pincode_authfail(int fd){
 		struct mmo_account acc;
 		AccountDB* accounts = login_get_accounts_db();
 		if( accounts->load_num(accounts, &acc, RFIFOL(fd,2) ) ){
-			struct online_login_data* ld;
+			struct online_login_data* ld = login_get_online_user( acc.account_id );
 
-			ld = (struct online_login_data*)idb_get(online_db,acc.account_id);
-
-			if( ld == NULL )
+			if( ld == nullptr ){
 				return 0;
+			}
 
 			login_log( host2ip(acc.last_ip), acc.userid, 100, "PIN Code check failed" );
 		}
@@ -850,7 +845,7 @@ void logchrif_server_destroy(int id){
  * @param id: id of char-serv (should be >0, FIXME)
  */
 void logchrif_server_reset(int id) {
-	online_db->foreach(online_db, login_online_db_setoffline, id); //Set all chars from this char server to offline.
+	login_online_db_setoffline(id); //Set all chars from this char server to offline.
 	logchrif_server_destroy(id);
 	logchrif_server_init(id);
 }
