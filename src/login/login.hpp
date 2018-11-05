@@ -97,6 +97,11 @@ struct Login_Config {
 	char msgconf_name[256];							/// name of msg_conf config file
 	char lanconf_name[256];							/// name of lan config file
 
+	bool usercount_disable;							/// Disable colorization and description in general?
+	int usercount_low;								/// Amount of users that will display in green
+	int usercount_medium;							/// Amount of users that will display in yellow
+	int usercount_high;								/// Amount of users that will display in red
+
 	int char_per_account;							/// number of characters an account can have
 #ifdef VIP_ENABLE
 	struct {
@@ -227,5 +232,7 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  *	x: acc state (TODO document me deeper)
  */
 int login_mmo_auth(struct login_session_data* sd, bool isServer);
+
+int login_get_usercount( int users );
 
 #endif /* LOGIN_HPP */
