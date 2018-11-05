@@ -6744,109 +6744,30 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 	return SCRIPT_CMD_SUCCESS;
 }
 
-/// Returns number of items in inventory/cart/storage
-/// countitem <nameID>{,<accountID>});
-/// countitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>}) [Lupus]
-/// cartcountitem <nameID>{,<accountID>});
-/// cartcountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
-/// storagecountitem <nameID>{,<accountID>});
-/// storagecountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
-/// guildstoragecountitem <nameID>{,<accountID>});
-/// guildstoragecountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
-/// countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
-/// countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
-BUILDIN_FUNC(countitem)
-{
-	int i = 0, aid = 3;
-	struct item_data* id = NULL;
-	struct script_data* data;
-	char *command = (char *)script_getfuncname(st);
-	uint8 loc = 0;
-	uint16 size, count = 0;
-	struct item *items;
-	TBL_PC *sd = NULL;
-	struct s_storage *gstor = NULL;
+/**
+ * Sub function for counting items
+ * @param items: Item array to search
+ * @param id: Item data to search for
+ * @param size: Maximum size of array
+ * @param expanded: If the script command has extra arguments
+ * @param random_option: If the struct command has random option arguments
+ * @param st: Script state (required for random options)
+ * @param sd: Player data (required for random options)
+ * @return Total count of item being searched
+ */
+int script_countitem_sub(struct item *items, struct item_data *id, int size, bool expanded, bool random_option, struct script_state *st, struct map_session_data *sd) {
+	int count = 0;
 
-	if( command[strlen(command)-1] == '2' ) {
-		i = 1;
-		aid = 10;
-	}
-	else if (command[strlen(command)-1] == '3') {
-		i = 1;
-		aid = 13;
-	}
-
-	if( script_hasdata(st,aid) ) {
-		if( !(sd = map_id2sd( (aid = script_getnum(st, aid)) )) ) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	}
-	else {
-		if( !script_rid2sd(sd) )
-			return SCRIPT_CMD_SUCCESS;
-	}
-
-	if( !strncmp(command, "cart", 4) ) {
-		loc = TABLE_CART;
-		size = MAX_CART;
-		items = sd->cart.u.items_cart;
-	}
-	else if( !strncmp(command, "storage", 7) ) {
-		loc = TABLE_STORAGE;
-		size = MAX_STORAGE;
-		items = sd->storage.u.items_storage;
-	}
-	else if( !strncmp(command, "guildstorage", 12) ) {
-		gstor = guild2storage2(sd->status.guild_id);
-
-		if (gstor && !sd->state.storage_flag) {
-			loc = TABLE_GUILD_STORAGE;
-			size = MAX_GUILD_STORAGE;
-			items = gstor->u.items_guild;
-		} else {
-			script_pushint(st, -1);
-			return SCRIPT_CMD_SUCCESS;
-		}
-	}
-	else {
-		size = MAX_INVENTORY;
-		items = sd->inventory.u.items_inventory;
-	}
-
-	if( loc == TABLE_CART && !pc_iscarton(sd) ) {
-		ShowError("buildin_%s: Player doesn't have cart (CID:%d).\n", command, sd->status.char_id);
-		script_pushint(st,-1);
-		return SCRIPT_CMD_SUCCESS;
-	}
-	
-	data = script_getdata(st, 2);
-	get_val(st, data); // Convert into value in case of a variable
-
-	if( data_isstring(data) ) // item name
-		id = itemdb_searchname(conv_str(st, data));
-	else // item id
-		id = itemdb_exists(conv_num(st, data));
-
-	if( id == NULL ) {
-		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st,2));  // returns string, regardless of what it was
-		script_pushint(st,0);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (loc == TABLE_GUILD_STORAGE)
-		gstor->lock = true;
-
-	if( !i ) { // For count/cart/storagecountitem function
+	if (!expanded) { // For non-expanded functions
 		unsigned short nameid = id->nameid;
-		for( i = 0; i < size; i++ )
-			if( &items[i] && items[i].nameid == nameid )
+
+		for (int i = 0; i < size; i++) {
+			if (&items[i] && items[i].nameid == nameid)
 				count += items[i].amount;
-	}
-	else { // For count/cart/storagecountitem2 function
+		}
+	} else { // For expanded functions
 		struct item it;
-		bool check_randomopt = false;
+
 		memset(&it, 0, sizeof(it));
 
 		it.nameid = id->nameid;
@@ -6858,23 +6779,25 @@ BUILDIN_FUNC(countitem)
 		it.card[2] = script_getnum(st,8);
 		it.card[3] = script_getnum(st,9);
 
-		if (command[strlen(command)-1] == '3') {
-			int res = script_getitem_randomoption(st, sd, &it, command, 10);
+		if (random_option) {
+			int res = script_getitem_randomoption(st, sd, &it, "countitem3", 10);
+
 			if (res != SCRIPT_CMD_SUCCESS)
 				return SCRIPT_CMD_FAILURE;
-			check_randomopt = true;
 		}
 
-		for( i = 0; i < size; i++ ) {
+		for (int i = 0; i < size; i++) {
 			struct item *itm = &items[i];
+
 			if (!itm || !itm->nameid || itm->amount < 1)
 				continue;
 			if (itm->nameid != it.nameid || itm->identify != it.identify || itm->refine != it.refine || itm->attribute != it.attribute)
 				continue;
 			if (memcmp(it.card, itm->card, sizeof(it.card)))
 				continue;
-			if (check_randomopt) {
+			if (random_option) {
 				uint8 j;
+
 				for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
 					if (itm->option[j].id != it.option[j].id || itm->option[j].value != it.option[j].value || itm->option[j].param != it.option[j].param)
 						break;
@@ -6882,14 +6805,218 @@ BUILDIN_FUNC(countitem)
 				if (j != MAX_ITEM_RDM_OPT)
 					continue;
 			}
+
 			count += items[i].amount;
 		}
 	}
 
-	if (loc == TABLE_GUILD_STORAGE) {
-		storage_guild_storageclose(sd);
-		gstor->lock = false;
+	return count;
+}
+
+/**
+ * Returns number of items in inventory
+ * countitem <nameID>{,<accountID>});
+ * countitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>}) [Lupus]
+ * countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
+ * countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
+ */
+BUILDIN_FUNC(countitem)
+{
+	TBL_PC *sd;
+	struct item_data *id;
+	struct script_data *data;
+	char *command = (char *)script_getfuncname(st);
+	int aid = 3;
+	bool random_option = false;
+
+	if (command[strlen(command)-1] == '2')
+		aid = 10;
+	else if (command[strlen(command)-1] == '3') {
+		aid = 13;
+		random_option = true;
 	}
+
+	if (script_hasdata(st, aid)) {
+		if (!(sd = map_id2sd((aid = script_getnum(st, aid))))) {
+			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	data = script_getdata(st, 2);
+	get_val(st, data); // Convert into value in case of a variable
+
+	if (data_isstring(data)) // item name
+		id = itemdb_searchname(conv_str(st, data));
+	else // item id
+		id = itemdb_exists(conv_num(st, data));
+
+	if (id == NULL) {
+		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, (aid > 3) ? true : false, random_option, st, sd));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Returns number of items in cart
+ * cartcountitem <nameID>{,<accountID>});
+ * cartcountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+ */
+BUILDIN_FUNC(cartcountitem)
+{
+	TBL_PC *sd;
+	struct item_data *id;
+	struct script_data *data;
+	char *command = (char *)script_getfuncname(st);
+	int aid = 3;
+
+	if (command[strlen(command) - 1] == '2')
+		aid = 10;
+
+	if (script_hasdata(st, aid)) {
+		if (!(sd = map_id2sd((aid = script_getnum(st, aid))))) {
+			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!pc_iscarton(sd)) {
+		ShowError("buildin_%s: Player doesn't have cart (CID:%d).\n", command, sd->status.char_id);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	data = script_getdata(st, 2);
+	get_val(st, data); // Convert into value in case of a variable
+
+	if (data_isstring(data)) // item name
+		id = itemdb_searchname(conv_str(st, data));
+	else // item id
+		id = itemdb_exists(conv_num(st, data));
+
+	if (id == NULL) {
+		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, NULL, NULL));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Returns number of items in storage
+ * storagecountitem <nameID>{,<accountID>});
+ * storagecountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+ */
+BUILDIN_FUNC(storagecountitem)
+{
+	TBL_PC *sd;
+	struct item_data *id;
+	struct script_data *data;
+	char *command = (char *)script_getfuncname(st);
+	int aid = 3;
+
+	if (command[strlen(command) - 1] == '2')
+		aid = 10;
+
+	if (script_hasdata(st, aid)) {
+		if (!(sd = map_id2sd((aid = script_getnum(st, aid))))) {
+			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	data = script_getdata(st, 2);
+	get_val(st, data); // Convert into value in case of a variable
+
+	if (data_isstring(data)) // item name
+		id = itemdb_searchname(conv_str(st, data));
+	else // item id
+		id = itemdb_exists(conv_num(st, data));
+
+	if (id == NULL) {
+		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	script_pushint(st, script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, NULL, NULL));
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * Returns number of items in inventory
+ * guildstoragecountitem <nameID>{,<accountID>});
+ * guildstoragecountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+ */
+BUILDIN_FUNC(guildstoragecountitem)
+{
+	TBL_PC *sd;
+	struct item_data *id;
+	struct script_data *data;
+	char *command = (char *)script_getfuncname(st);
+	int aid = 3;
+
+	if (command[strlen(command) - 1] == '2')
+		aid = 10;
+	else if (command[strlen(command) - 1] == '3')
+		aid = 13;
+
+	if (script_hasdata(st, aid)) {
+		if (!(sd = map_id2sd((aid = script_getnum(st, aid))))) {
+			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	data = script_getdata(st, 2);
+	get_val(st, data); // Convert into value in case of a variable
+
+	if (data_isstring(data)) // item name
+		id = itemdb_searchname(conv_str(st, data));
+	else // item id
+		id = itemdb_exists(conv_num(st, data));
+
+	if (id == NULL) {
+		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
+		script_pushint(st, 0);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+
+	if (!gstor || (gstor && sd->state.storage_flag)) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	gstor->lock = true;
+
+	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, (aid > 3) ? true : false, false, NULL, NULL);
+
+	storage_guild_storageclose(sd);
+	gstor->lock = false;
 
 	script_pushint(st, count);
 	return SCRIPT_CMD_SUCCESS;
@@ -24102,13 +24229,13 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(percentheal,"ii?"),
 	BUILDIN_DEF(rand,"i?"),
 	BUILDIN_DEF(countitem,"v?"),
-	BUILDIN_DEF2(countitem,"storagecountitem","v?"),
-	BUILDIN_DEF2(countitem,"guildstoragecountitem","v?"),
-	BUILDIN_DEF2(countitem,"cartcountitem","v?"),
+	BUILDIN_DEF(storagecountitem,"v?"),
+	BUILDIN_DEF(guildstoragecountitem,"v?"),
+	BUILDIN_DEF(cartcountitem,"v?"),
 	BUILDIN_DEF2(countitem,"countitem2","viiiiiii?"),
-	BUILDIN_DEF2(countitem,"storagecountitem2","viiiiiii?"),
-	BUILDIN_DEF2(countitem,"guildstoragecountitem2","viiiiiii?"),
-	BUILDIN_DEF2(countitem,"cartcountitem2","viiiiiii?"),
+	BUILDIN_DEF2(storagecountitem,"storagecountitem2","viiiiiii?"),
+	BUILDIN_DEF2(guildstoragecountitem,"guildstoragecountitem2","viiiiiii?"),
+	BUILDIN_DEF2(cartcountitem,"cartcountitem2","viiiiiii?"),
 	BUILDIN_DEF(checkweight,"vi*"),
 	BUILDIN_DEF(checkweight2,"rr"),
 	BUILDIN_DEF(readparam,"i?"),
