@@ -11,7 +11,6 @@
 
 #include "../common/cli.hpp"
 #include "../common/core.hpp"
-#include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/md5calc.hpp"
 #include "../common/mmo.hpp"
