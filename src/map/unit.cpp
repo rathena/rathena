@@ -101,13 +101,12 @@ int unit_walktoxy_sub(struct block_list *bl)
 	if (ud->target_to && ud->chaserange>1) {
 		// Generally speaking, the walk path is already to an adjacent tile
 		// so we only need to shorten the path if the range is greater than 1.
-		uint8 dir;
 		// Trim the last part of the path to account for range,
 		// but always move at least one cell when requested to move.
 		for (i = (ud->chaserange*10)-10; i > 0 && ud->walkpath.path_len>1;) {
 			ud->walkpath.path_len--;
-			dir = ud->walkpath.path[ud->walkpath.path_len];
-			if(dir&1)
+			enum directions dir = ud->walkpath.path[ud->walkpath.path_len];
+			if( direction_diagonal( dir ) )
 				i -= MOVE_COST*20; //When chasing, units will target a diamond-shaped area in range [Playtester]
 			else
 				i -= MOVE_COST;
@@ -126,7 +125,7 @@ int unit_walktoxy_sub(struct block_list *bl)
 
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		i = -1;
-	else if(ud->walkpath.path[ud->walkpath.path_pos]&1)
+	else if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
 		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
@@ -322,7 +321,6 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	int i;
 	int x,y,dx,dy;
 	unsigned char icewall_walk_block;
-	uint8 dir;
 	struct block_list *bl;
 	struct unit_data *ud;
 	TBL_PC *sd=NULL;
@@ -356,17 +354,17 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	if(ud->walkpath.path_pos>=ud->walkpath.path_len)
 		return 0;
 
-	if(ud->walkpath.path[ud->walkpath.path_pos]>=8)
+	if(ud->walkpath.path[ud->walkpath.path_pos]>=DIR_MAX)
 		return 1;
 
 	x = bl->x;
 	y = bl->y;
 
-	dir = ud->walkpath.path[ud->walkpath.path_pos];
+	enum directions dir = ud->walkpath.path[ud->walkpath.path_pos];
 	ud->dir = dir;
 
-	dx = dirx[(int)dir];
-	dy = diry[(int)dir];
+	dx = dirx[dir];
+	dy = diry[dir];
 
 	// Get icewall walk block depending on Status Immune mode (players can't be trapped)
 	if(md && status_has_mode(&md->status,MD_STATUS_IMMUNE))
@@ -495,8 +493,8 @@ static TIMER_FUNC(unit_walktoxy_timer){
 			ud->steptimer = INVALID_TIMER;
 		}
 		//Delay stepactions by half a step (so they are executed at full step)
-		if(ud->walkpath.path[ud->walkpath.path_pos]&1)
-			i = status_get_speed(bl)*14/20;
+		if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
+			i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST/2;
 		else
 			i = status_get_speed(bl)/2;
 		ud->steptimer = add_timer(tick+i, unit_step_timer, bl->id, 0);
@@ -515,8 +513,8 @@ static TIMER_FUNC(unit_walktoxy_timer){
 
 	if(ud->walkpath.path_pos >= ud->walkpath.path_len)
 		i = -1;
-	else if(ud->walkpath.path[ud->walkpath.path_pos]&1)
-		i = status_get_speed(bl)*14/10;
+	else if( direction_diagonal( ud->walkpath.path[ud->walkpath.path_pos] ) )
+		i = status_get_speed(bl)*MOVE_DIAGONAL_COST/MOVE_COST;
 	else
 		i = status_get_speed(bl);
 
@@ -1138,7 +1136,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 {
 	if ((flag&0x1)
-		&& (map_flag_gvg2(bl->m) || map[bl->m].flag.battleground)
+		&& (map_flag_gvg2(bl->m) || map_getmapflag(bl->m, MF_BATTLEGROUND))
 		&& ((flag&0x2) || !(battle_config.skill_trap_type&0x1)))
 		return UB_NO_KNOCKBACK_MAP; // No knocking back in WoE / BG
 
@@ -1204,14 +1202,14 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 
 	switch (bl->type) {
 		case BL_MOB:
-			if (map[bl->m].flag.monster_noteleport && ((TBL_MOB*)bl)->master_id == 0)
+			if (map_getmapflag(bl->m, MF_MONSTER_NOTELEPORT) && ((TBL_MOB*)bl)->master_id == 0)
 				return 1;
 
-			if (m != bl->m && map[m].flag.nobranch && battle_config.mob_warp&4 && !(((TBL_MOB *)bl)->master_id))
+			if (m != bl->m && map_getmapflag(m, MF_NOBRANCH) && battle_config.mob_warp&4 && !(((TBL_MOB *)bl)->master_id))
 				return 1;
 			break;
 		case BL_PC:
-			if (map[bl->m].flag.noteleport)
+			if (map_getmapflag(bl->m, MF_NOTELEPORT))
 				return 1;
 			break;
 	}
@@ -2143,6 +2141,26 @@ int unit_set_target(struct unit_data* ud, int target_id)
 }
 
 /**
+ * Helper function used in foreach calls to stop auto-attack timers
+ * @param bl: Block object
+ * @param ap: func* with va_list values
+ *   Parameter: '0' - everyone, 'id' - only those attacking someone with that id
+ * @return 1 on success or 0 otherwise
+ */
+int unit_stopattack(struct block_list *bl, va_list ap)
+{
+	struct unit_data *ud = unit_bl2ud(bl);
+	int id = va_arg(ap, int);
+
+	if (ud && ud->attacktimer != INVALID_TIMER && (!id || id == ud->target)) {
+		unit_stop_attack(bl);
+		return 1;
+	}
+
+	return 0;
+}
+
+/**
  * Stop a unit's attacks
  * @param bl: Object to stop
  */
@@ -2706,7 +2724,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 			return 0;
 
 		if (sd && (sd->special_state.no_castcancel2 ||
-			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map[bl->m].flag.battleground))) // fixed flags being read the wrong way around [blackhole89]
+			((sd->sc.data[SC_UNLIMITEDHUMMINGVOICE] || sd->special_state.no_castcancel) && !map_flag_gvg2(bl->m) && !map_getmapflag(bl->m, MF_BATTLEGROUND)))) // fixed flags being read the wrong way around [blackhole89]
 			return 0;
 	}
 

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _UNIT_HPP_
-#define _UNIT_HPP_
+#ifndef UNIT_HPP
+#define UNIT_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/timer.hpp"
@@ -134,6 +134,7 @@ bool unit_can_reach_pos(struct block_list *bl,int x,int y,int easy);
 bool unit_can_reach_bl(struct block_list *bl,struct block_list *tbl, int range, int easy, short *x, short *y);
 
 // Unit attack functions
+int unit_stopattack(struct block_list *bl, va_list ap);
 void unit_stop_attack(struct block_list *bl);
 int unit_attack(struct block_list *src,int target_id,int continuous);
 int unit_cancel_combo(struct block_list *bl);
@@ -170,4 +171,4 @@ int unit_changetarget(struct block_list *bl,va_list ap);
 void do_init_unit(void);
 void do_final_unit(void);
 
-#endif /* _UNIT_HPP_ */
+#endif /* UNIT_HPP */

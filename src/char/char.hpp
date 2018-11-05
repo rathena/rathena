@@ -1,8 +1,10 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHAR_HPP_
-#define _CHAR_HPP_
+#ifndef CHAR_HPP
+#define CHAR_HPP
+
+#include <vector>
 
 #include "../common/core.hpp" // CORE_ST_LAST
 #include "../common/mmo.hpp"
@@ -197,7 +199,7 @@ struct mmo_map_server {
 	uint32 ip;
 	uint16 port;
 	int users;
-	unsigned short map[MAX_MAP_PER_SERVER];
+	std::vector<uint16> map;
 };
 extern struct mmo_map_server map_server[MAX_MAP_SERVERS];
 
@@ -328,4 +330,4 @@ const char* char_msg_txt(int msg_number);
 void char_do_final_msg(void);
 bool char_config_read(const char* cfgName, bool normal);
 
-#endif /* _CHAR_HPP_ */
+#endif /* CHAR_HPP */

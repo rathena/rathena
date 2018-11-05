@@ -1700,7 +1700,9 @@ OnBarrierDestroyed:
 	end;
 
 OnDisable:
-	delwall substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9)+"_"+strnpcinfo(1);
+	.@wall_name$ = substr(strnpcinfo(2),0,1) + substr(strnpcinfo(2),8,9) + "_" + strnpcinfo(1);
+	if (checkwall(.@wall_name$) == true)
+		delwall .@wall_name$;
 	killmonster strnpcinfo(2),strnpcinfo(0)+"::OnBarrierDestroyed";
 	end;
 }

@@ -196,7 +196,7 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 			setarray .@xy[0],116,72;
 			break;
 		case 2:
-			setarray .@mapname$[0],"Morroc","moc_ruins";
+			setarray .@mapname$[0],"Morocc Ruins.","moc_ruins";
 			setarray .@xy[0],152,48;
 			break;
 		case 3:
@@ -218,6 +218,10 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 		case 7:
 			setarray .@mapname$[0],"Rachel.","rachel";
 			setarray .@xy[0],115,124;
+			break;
+		case 8:
+			setarray .@mapname$[0],"Morocc.","morocc";
+			setarray .@xy[0],156,46;
 			break;
 		}
 		mes "You will be sent back to "+.@mapname$[0]+".";
@@ -261,6 +265,8 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 			set bat_return,6;
 		else if (.@mapname$ == "rachel")
 			set bat_return,7;
+		else if (.@mapname$ == "morocc")
+			set bat_return,8;
 		else
 			set bat_return,1;
 		warp "bat_room",154,150;

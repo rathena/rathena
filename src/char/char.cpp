@@ -1888,6 +1888,8 @@ int char_married(int pl1, int pl2)
 
 int char_child(int parent_id, int child_id)
 {
+	if( parent_id == 0 || child_id == 0) //Failsafe, avoild querys and fix EXP bug dividing with lower level chars
+		return 0;
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `child` FROM `%s` WHERE `char_id` = '%d'", schema_config.char_db, parent_id) )
 		Sql_ShowDebug(sql_handle);
 	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -1907,6 +1909,8 @@ int char_child(int parent_id, int child_id)
 
 int char_family(int cid1, int cid2, int cid3)
 {
+	if ( cid1 == 0 || cid2 == 0 || cid3 == 0 ) //Failsafe, and avoid querys where there is no sense to keep executing if any of the inputs are 0
+		return 0;
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`partner_id`,`child` FROM `%s` WHERE `char_id` IN ('%d','%d','%d')", schema_config.char_db, cid1, cid2, cid3) )
 		Sql_ShowDebug(sql_handle);
 	else while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -2083,15 +2087,13 @@ int char_loadName(uint32 char_id, char* name){
 // Searches for the mapserver that has a given map (and optionally ip/port, if not -1).
 // If found, returns the server's index in the 'server' array (otherwise returns -1).
 int char_search_mapserver(unsigned short map, uint32 ip, uint16 port){
-	int i, j;
-
-	for(i = 0; i < ARRAYLENGTH(map_server); i++)
+	for(int i = 0; i < ARRAYLENGTH(map_server); i++)
 	{
 		if (map_server[i].fd > 0
 		&& (ip == (uint32)-1 || map_server[i].ip == ip)
 		&& (port == (uint16)-1 || map_server[i].port == port))
 		{
-			for (j = 0; map_server[i].map[j]; j++)
+			for (int j = 0; map_server[i].map[j]; j++)
 				if (map_server[i].map[j] == map)
 					return i;
 		}
@@ -2821,7 +2823,7 @@ void char_config_split_startpoint(char *w1_value, char *w2_value, struct point s
 
 		start_point[i].map = mapindex_name2id(fields[1]);
 		if (!start_point[i].map) {
-			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", start_point[i].map);
+			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", fields[1]);
 			start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
 			start_point[i].x = MAP_DEFAULT_X;
 			start_point[i].y = MAP_DEFAULT_Y;

@@ -632,8 +632,8 @@ static int grfio_entryread(const char* grfname, int gentry)
 static bool grfio_parse_restable_row(const char* row)
 {
 	char w1[256], w2[256];
-	char src[256], dst[256];
-	char local[256];
+	char src[512], dst[512];
+	char local[512];
 	FILELIST* entry;
 
 	if( sscanf(row, "%255[^#\r\n]#%255[^#\r\n]#", w1, w2) != 2 )

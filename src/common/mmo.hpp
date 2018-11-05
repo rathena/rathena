@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_MMO_HPP_
-#define	_MMO_HPP_
+#ifndef MMO_HPP
+#define MMO_HPP
 
 #include <time.h>
 
@@ -32,7 +32,7 @@
 	#define MAX_HOTKEYS 38
 #endif
 
-#define MAX_MAP_PER_SERVER 1500 /// Increased to allow creation of Instance Maps
+#define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
 #define MAX_INVENTORY 100 ///Maximum items in player inventory
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
 * Max value tested was 265 */
@@ -53,7 +53,7 @@
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1200 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1201 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -140,7 +140,7 @@
 
 //Mercenary System
 #define MC_SKILLBASE 8201
-#define MAX_MERCSKILL 40
+#define MAX_MERCSKILL 41
 
 //Elemental System
 #define MAX_ELEMENTALSKILL 42
@@ -705,13 +705,12 @@ struct guild_castle {
 enum e_guild_permission {
 	GUILD_PERM_INVITE	= 0x001,
 	GUILD_PERM_EXPEL	= 0x010,
-#if PACKETVER >= 20140205
 	GUILD_PERM_STORAGE	= 0x100,
+#if PACKETVER >= 20140205
 	GUILD_PERM_ALL		= GUILD_PERM_INVITE|GUILD_PERM_EXPEL|GUILD_PERM_STORAGE,
 #else
 	GUILD_PERM_ALL		= GUILD_PERM_INVITE|GUILD_PERM_EXPEL,
 #endif
-	GUILD_PERM_MASK		= GUILD_PERM_ALL,
 	GUILD_PERM_DEFAULT	= GUILD_PERM_ALL,
 };
 
@@ -1049,4 +1048,4 @@ struct clan{
 	#define MAX_CARTS 5
 #endif
 
-#endif /* _MMO_HPP_ */
+#endif /* MMO_HPP */

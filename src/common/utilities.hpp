@@ -1,12 +1,13 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _UTILILITIES_HPP_
-#define _UTILILITIES_HPP_
+#ifndef UTILILITIES_HPP
+#define UTILILITIES_HPP
 
+#include <map>
 #include <memory>
 #include <string>
-#include <map>
+#include <unordered_map>
 
 #include "cbasetypes.hpp"
 
@@ -26,6 +27,12 @@ namespace rathena {
 			return map.find( key ) != map.end();
 		}
 
+		/**
+		 * Find a key-value pair and return the key value as a reference
+		 * @param map: Map to search through
+		 * @param key: Key wanted
+		 * @return Key value on success or nullptr on failure
+		 */
 		template <typename K, typename V> V* map_find( std::map<K,V>& map, K key ){
 			auto it = map.find( key );
 
@@ -35,7 +42,54 @@ namespace rathena {
 				return nullptr;
 			}
 		}
+
+		/**
+		 * Get a key-value pair and return the key value
+		 * @param map: Map to search through
+		 * @param key: Key wanted
+		 * @param defaultValue: Value returned if key doesn't exist
+		 * @return Key value on success or defaultValue on failure
+		 */
+		template <typename K, typename V> V map_get(std::map<K, V>& map, K key, V defaultValue) {
+			auto it = map.find(key);
+
+			if (it != map.end())
+				return it->second;
+			else
+				return defaultValue;
+		}
+
+		/**
+		 * Find a key-value pair and return the key value as a reference
+		 * @param map: Unordered Map to search through
+		 * @param key: Key wanted
+		 * @return Key value on success or nullptr on failure
+		 */
+		template <typename K, typename V> V* umap_find(std::unordered_map<K, V>& map, K key) {
+			auto it = map.find(key);
+
+			if (it != map.end())
+				return &it->second;
+			else
+				return nullptr;
+		}
+
+		/**
+		 * Get a key-value pair and return the key value
+		 * @param map: Unordered Map to search through
+		 * @param key: Key wanted
+		 * @param defaultValue: Value returned if key doesn't exist
+		 * @return Key value on success or defaultValue on failure
+		 */
+		template <typename K, typename V> V umap_get(std::unordered_map<K, V>& map, K key, V defaultValue) {
+			auto it = map.find(key);
+
+			if (it != map.end())
+				return it->second;
+			else
+				return defaultValue;
+		}
 	}
 }
 
-#endif /* _UTILILITIES_HPP_ */
+#endif /* UTILILITIES_HPP */

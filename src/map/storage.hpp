@@ -1,10 +1,13 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _STORAGE_HPP_
-#define _STORAGE_HPP_
+#ifndef STORAGE_HPP
+#define STORAGE_HPP
+
+#include <vector>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 struct s_storage;
 struct item;
@@ -30,6 +33,21 @@ enum e_guild_storage_flags : uint8 {
 	GSTORAGE_NO_PERMISSION
 };
 
+enum e_guild_storage_log : uint16 {
+	GUILDSTORAGE_LOG_SUCCESS,
+	GUILDSTORAGE_LOG_FINAL_SUCCESS,
+	GUILDSTORAGE_LOG_EMPTY,
+	GUILDSTORAGE_LOG_FAILED,
+};
+
+struct guild_log_entry{
+	uint32 id;
+	char name[NAME_LENGTH];
+	char time[NAME_LENGTH];
+	struct item item;
+	int16 amount;
+};
+
 const char *storage_getName(uint8 id);
 bool storage_exists(uint8 id);
 
@@ -51,6 +69,7 @@ struct s_storage* guild2storage(int guild_id);
 struct s_storage* guild2storage2(int guild_id);
 void storage_guild_delete(int guild_id);
 char storage_guild_storageopen(struct map_session_data *sd);
+enum e_guild_storage_log storage_guild_log_read( struct map_session_data* sd );
 bool storage_guild_additem(struct map_session_data *sd,struct s_storage *stor,struct item *item_data,int amount);
 bool storage_guild_additem2(struct s_storage* stor, struct item* item, int amount);
 bool storage_guild_delitem(struct map_session_data *sd,struct s_storage *stor,int n,int amount);
@@ -73,4 +92,4 @@ void storage_premiumStorage_quit(struct map_session_data *sd);
 
 int compare_item(struct item *a, struct item *b);
 
-#endif /* _STORAGE_HPP_ */
+#endif /* STORAGE_HPP */

@@ -1591,11 +1591,12 @@ void read_homunculus_expdb(void)
 	memset(hexptbl,0,sizeof(hexptbl));
 	for (i = 0; i < ARRAYLENGTH(filename); i++) {
 		FILE *fp;
+		char path[1024];
 		char line[1024];
 		int j=0;
 		
-		sprintf(line, "%s/%s", db_path, filename[i]);
-		fp = fopen(line,"r");
+		sprintf(path, "%s/%s", db_path, filename[i]);
+		fp = fopen(path,"r");
 		if (fp == NULL) {
 			if (i != 0)
 				continue;
@@ -1611,11 +1612,11 @@ void read_homunculus_expdb(void)
 				break;
 		}
 		if (hexptbl[MAX_LEVEL - 1]) { // Last permitted level have to be 0!
-			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",filename,MAX_LEVEL);
+			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",path,MAX_LEVEL);
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s/%s" CL_RESET "'.\n", j, db_path, filename[i]);
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s/%s" CL_RESET "'.\n", j, db_path, path);
 	}
 }
 

@@ -1,10 +1,13 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MAP_HPP_
-#define _MAP_HPP_
+#ifndef MAP_HPP
+#define MAP_HPP
 
+#include <algorithm>
 #include <stdarg.h>
+#include <unordered_map>
+#include <vector>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // CORE_ST_LAST
@@ -26,6 +29,7 @@ enum E_MAPSERVER_ST {
 	MAPSERVER_ST_LAST
 };
 
+struct map_data *map_getmapdata(int16 m);
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
@@ -227,22 +231,6 @@ enum e_mapid {
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
-/// Specifies maps where players may hit each other
-#define map_flag_vs(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.gvg_te || (agit3_flag && map[m].flag.gvg_te_castle) || map[m].flag.battleground)
-/// Versus map: PVP, BG, GVG, GVG Dungeons, and GVG Castles (regardless of agit_flag status)
-#define map_flag_vs2(m) (map[m].flag.pvp || map[m].flag.gvg_dungeon || map[m].flag.gvg || map[m].flag.gvg_castle || map[m].flag.gvg_te || map[m].flag.gvg_te_castle || map[m].flag.battleground)
-/// Specifies maps that have special GvG/WoE restrictions
-#define map_flag_gvg(m) (map[m].flag.gvg || ((agit_flag || agit2_flag) && map[m].flag.gvg_castle) || map[m].flag.gvg_te || (agit3_flag && map[m].flag.gvg_te_castle))
-/// Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
-#define map_flag_gvg2(m) (map[m].flag.gvg || map[m].flag.gvg_te || map[m].flag.gvg_castle || map[m].flag.gvg_te_castle)
-/// No Kill Steal Protection
-#define map_flag_ks(m) (map[m].flag.town || map[m].flag.pvp || map[m].flag.gvg || map[m].flag.gvg_te || map[m].flag.battleground)
-
-/// WOE:TE Maps (regardless of agit_flag status) [Cydh]
-#define map_flag_gvg2_te(m) (map[m].flag.gvg_te || map[m].flag.gvg_te_castle)
-/// Check if map is GVG maps exclusion for item, skill, and status restriction check (regardless of agit_flag status) [Cydh]
-#define map_flag_gvg2_no_te(m) (map[m].flag.gvg || map[m].flag.gvg_castle)
-
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 //meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
 enum bl_type : uint16{
@@ -320,6 +308,10 @@ enum e_race2 : uint8{
 	RC2_SCARABA,
 	RC2_OGH_ATK_DEF,
 	RC2_OGH_HIDDEN,
+	RC2_BIO5_SWORDMAN_THIEF,
+	RC2_BIO5_ACOLYTE_MERCHANT,
+	RC2_BIO5_MAGE_ARCHER,
+	RC2_BIO5_MVP,
 	RC2_MAX
 };
 
@@ -423,6 +415,7 @@ enum _sp {
 	SP_UPPER,SP_PARTNER,SP_CART,SP_FAME,SP_UNBREAKABLE,	//56-60
 	SP_CARTINFO=99,	// 99
 
+	SP_KILLEDGID=118,
 	SP_BASEJOB=119,	// 100+19 - celest
 	SP_BASECLASS=120,	//Hmm.. why 100+19? I just use the next one... [Skotlex]
 	SP_KILLERRID=121,
@@ -513,6 +506,128 @@ enum _look {
 	LOOK_BODY2
 };
 
+enum e_mapflag : int16 {
+	MF_INVALID = -1,
+	MF_MIN = 0,
+	MF_NOMEMO = 0,
+	MF_NOTELEPORT,
+	MF_NOSAVE,
+	MF_NOBRANCH,
+	MF_NOPENALTY,
+	MF_NOZENYPENALTY,
+	MF_PVP,
+	MF_PVP_NOPARTY,
+	MF_PVP_NOGUILD,
+	MF_GVG,
+	MF_GVG_NOPARTY,	//10
+	MF_NOTRADE,
+	MF_NOSKILL,
+	MF_NOWARP,
+	MF_PARTYLOCK,
+	MF_NOICEWALL,
+	MF_SNOW,
+	MF_FOG,
+	MF_SAKURA,
+	MF_LEAVES,
+	//MF_RAIN,	//20 - No longer available, keeping here just in case it's back someday. [Ind]
+	// 21 free
+	MF_NOGO = 22,
+	MF_CLOUDS,
+	MF_CLOUDS2,
+	MF_FIREWORKS,
+	MF_GVG_CASTLE,
+	MF_GVG_DUNGEON,
+	MF_NIGHTENABLED,
+	MF_NOBASEEXP,
+	MF_NOJOBEXP,	//30
+	MF_NOMOBLOOT,
+	MF_NOMVPLOOT,
+	MF_NORETURN,
+	MF_NOWARPTO,
+	MF_PVP_NIGHTMAREDROP,
+	MF_RESTRICTED,
+	MF_NOCOMMAND,
+	MF_NODROP,
+	MF_JEXP,
+	MF_BEXP,	//40
+	MF_NOVENDING,
+	MF_LOADEVENT,
+	MF_NOCHAT,
+	MF_NOEXPPENALTY,
+	MF_GUILDLOCK,
+	MF_TOWN,
+	MF_AUTOTRADE,
+	MF_ALLOWKS,
+	MF_MONSTER_NOTELEPORT,
+	MF_PVP_NOCALCRANK,	//50
+	MF_BATTLEGROUND,
+	MF_RESET,
+	MF_NOMAPCHANNELAUTOJOIN,
+	MF_NOUSECART,
+	MF_NOITEMCONSUMPTION,
+	MF_NOSUNMOONSTARMIRACLE,
+	MF_NOMINEEFFECT,
+	MF_NOLOCKON,
+	MF_NOTOMB,
+	MF_SKILL_DAMAGE,	//60
+	MF_NOCOSTUME,
+	MF_GVG_TE_CASTLE,
+	MF_GVG_TE,
+	MF_HIDEMOBHPBAR,
+	MF_NOLOOT,
+	MF_NOEXP,
+	MF_PRIVATEAIRSHIP_SOURCE,
+	MF_PRIVATEAIRSHIP_DESTINATION,
+	MF_SKILL_DURATION,
+	MF_MAX
+};
+
+/// Enum of damage types
+enum e_skill_damage_type : uint8 {
+	SKILLDMG_PC,
+	SKILLDMG_MOB,
+	SKILLDMG_BOSS,
+	SKILLDMG_OTHER,
+	SKILLDMG_MAX,
+	SKILLDMG_CASTER, ///< Only used on getter for caster value
+};
+
+/// Struct for MF_SKILL_DAMAGE
+struct s_skill_damage {
+	unsigned int map; ///< Maps (used for skill_damage_db.txt)
+	uint16 caster; ///< Caster type
+	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
+};
+
+/// Struct of MF_SKILL_DURATION
+struct s_skill_duration {
+	uint16 skill_id; ///< Skill ID
+	uint16 per; ///< Rate
+};
+
+/// Enum for item drop type for MF_PVP_NIGHTMAREDROP
+enum e_nightmare_drop_type : uint8 {
+	NMDT_INVENTORY = 0x1,
+	NMDT_EQUIP = 0x2,
+	NMDT_ALL = (NMDT_INVENTORY|NMDT_EQUIP)
+};
+
+/// Struct for MF_PVP_NIGHTMAREDROP
+struct s_drop_list {
+	int drop_id;
+	int drop_per;
+	enum e_nightmare_drop_type drop_type;
+};
+
+/// Union for mapflag values
+union u_mapflag_args {
+	struct point nosave;
+	struct s_drop_list nightmaredrop;
+	struct s_skill_damage skill_damage;
+	struct s_skill_duration skill_duration;
+	int flag_val;
+};
+
 // used by map_setcell()
 enum cell_t{
 	CELL_WALKABLE,
@@ -583,21 +698,6 @@ struct iwall_data {
 	bool shootable;
 };
 
-#ifdef ADJUST_SKILL_DAMAGE
-/// Struct of skill damage adjustment
-struct s_skill_damage {
-	unsigned int map; ///< Maps (used for skill_damage_db.txt)
-	uint16 skill_id; ///< Skill ID (used for mapflag)
-	// Additional rates
-	int pc, ///< Rate to Player
-		mob, ///< Rate to Monster
-		boss, ///< Rate to Boss-Monster
-		other; ///< Rate to Other target
-	uint8 caster; ///< Caster type
-};
-extern struct eri *map_skill_damage_ers;
-#endif
-
 struct questinfo_req {
 	unsigned int quest_id;
 	unsigned state : 2; // 0: Doesn't have, 1: Inactive, 2: Active, 3: Complete //! TODO: CONFIRM ME!!
@@ -630,94 +730,19 @@ struct map_data {
 	int users;
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
-	struct map_flag {
-		unsigned town : 1; // [Suggestion to protect Mail System]
-		unsigned autotrade : 1;
-		unsigned allowks : 1; // [Kill Steal Protection]
-		unsigned nomemo : 1;
-		unsigned noteleport : 1;
-		unsigned noreturn : 1;
-		unsigned monster_noteleport : 1;
-		unsigned nosave : 1;
-		unsigned nobranch : 1;
-		unsigned noexppenalty : 1;
-		unsigned pvp : 1;
-		unsigned pvp_noparty : 1;
-		unsigned pvp_noguild : 1;
-		unsigned pvp_nightmaredrop :1;
-		unsigned pvp_nocalcrank : 1;
-		unsigned gvg_castle : 1;
-		unsigned gvg : 1; // Now it identifies gvg versus maps that are active 24/7
-		unsigned gvg_dungeon : 1; // Celest
-		unsigned gvg_noparty : 1;
-		unsigned battleground : 2; // [BattleGround System]
-		unsigned nozenypenalty : 1;
-		unsigned notrade : 1;
-		unsigned noskill : 1;
-		unsigned nowarp : 1;
-		unsigned nowarpto : 1;
-		unsigned noicewall : 1; // [Valaris]
-		unsigned snow : 1; // [Valaris]
-		unsigned clouds : 1;
-		unsigned clouds2 : 1; // [Valaris]
-		unsigned fog : 1; // [Valaris]
-		unsigned fireworks : 1;
-		unsigned sakura : 1; // [Valaris]
-		unsigned leaves : 1; // [Valaris]
-		unsigned nogo : 1; // [Valaris]
-		unsigned nobaseexp : 1; // [Lorky] added by Lupus
-		unsigned nojobexp : 1; // [Lorky]
-		unsigned nomobloot : 1; // [Lorky]
-		unsigned nomvploot : 1; // [Lorky]
-		unsigned nightenabled :1; //For night display. [Skotlex]
-		unsigned restricted : 1; // [Komurka]
-		unsigned nodrop : 1;
-		unsigned novending : 1;
-		unsigned loadevent : 1;
-		unsigned nochat :1;
-		unsigned partylock :1;
-		unsigned guildlock :1;
-		unsigned reset :1; // [Daegaladh]
-		unsigned chmautojoin : 1; //prevent to auto join map channel
-		unsigned nousecart : 1;	//prevent open up cart @FIXME client side only atm
-		unsigned noitemconsumption : 1; //prevent item usage
-		unsigned nosumstarmiracle : 1; //allow SG miracle to happen ?
-		unsigned nomineeffect : 1; //allow /mineeffect
-		unsigned nolockon : 1;
-		unsigned notomb : 1;
-		unsigned nocostume : 1; // Disable costume sprites [Cydh]
-		unsigned gvg_te : 1; // GVG WOE:TE. This was added as purpose to change 'gvg' for GVG TE, so item_noequp, skill_nocast exlude GVG TE maps from 'gvg' (flag &4)
-		unsigned gvg_te_castle : 1; // GVG WOE:TE Castle
-		unsigned hidemobhpbar : 1;
-#ifdef ADJUST_SKILL_DAMAGE
-		unsigned skill_damage : 1;
-#endif
-	} flag;
-	struct point save;
-	struct npc_data *npc[MAX_NPC_PER_MAP];
-	struct {
-		int drop_id;
-		int drop_type;
-		int drop_per;
-	} drop_list[MAX_DROP_PER_MAP];
 
+	std::unordered_map<int16, int> flag;
+	struct point save;
+	std::vector<s_drop_list> drop_list;
+	uint32 zone; // zone number (for item/skill restrictions)
+	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
+	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
+	std::unordered_map<uint16, int> skill_duration;
+
+	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
 	int mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
-	uint32 zone;	// zone number (for item/skill restrictions)
-	int nocommand; //Blocks @/# commands for non-gms. [Skotlex]
-	struct {
-		int jexp;	// map experience multiplicator
-		int bexp;	// map experience multiplicator
-#ifdef ADJUST_SKILL_DAMAGE
-		struct s_skill_damage damage;
-#endif
-	} adjust;
-#ifdef ADJUST_SKILL_DAMAGE
-	struct {
-		struct s_skill_damage **entries;
-		uint8 count;
-	} skill_damage;
-#endif
+
 	// Instance Variables
 	unsigned short instance_id;
 	int instance_src_map;
@@ -762,6 +787,177 @@ extern bool agit_flag;
 extern bool agit2_flag;
 extern bool agit3_flag;
 #define is_agit_start() (agit_flag || agit2_flag || agit3_flag)
+
+/**
+ * Specifies maps where players may hit each other
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_vs(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND])
+		return true;
+
+	return false;
+}
+
+/**
+ * Versus map: PVP, BG, GVG, GVG Dungeons, and GVG Castles (regardless of agit_flag status)
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_vs2(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE] || mapdata->flag[MF_BATTLEGROUND])
+		return true;
+
+	return false;
+}
+
+/**
+ * Specifies maps that have special GvG/WoE restrictions
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_gvg(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]))
+		return true;
+
+	return false;
+}
+
+/**
+ * Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE_CASTLE])
+		return true;
+
+	return false;
+}
+
+/**
+ * No Kill Steal Protection
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_ks(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_TOWN] || mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_BATTLEGROUND])
+		return true;
+
+	return false;
+}
+
+/**
+ * WOE:TE Maps (regardless of agit_flag status)
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ * @author Cydh
+ */
+inline bool mapdata_flag_gvg2_te(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE])
+		return true;
+
+	return false;
+}
+
+/**
+ * Check if map is GVG maps exclusion for item, skill, and status restriction check (regardless of agit_flag status)
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ * @author Cydh
+ */
+inline bool mapdata_flag_gvg2_no_te(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE])
+		return true;
+
+	return false;
+}
+
+/// Backwards compatibility
+inline bool map_flag_vs(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_vs(mapdata);
+}
+
+inline bool map_flag_vs2(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_vs2(mapdata);
+}
+
+inline bool map_flag_gvg(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg(mapdata);
+}
+
+inline bool map_flag_gvg2(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg2(mapdata);
+}
+
+inline bool map_flag_ks(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_ks(mapdata);
+}
+
+inline bool map_flag_gvg2_te(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg2_te(mapdata);
+}
+
+inline bool map_flag_gvg2_no_te(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg2_no_te(mapdata);
+}
 
 extern char motd_txt[];
 extern char help_txt[];
@@ -840,6 +1036,8 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 // instances
 int map_addinstancemap(const char *name, unsigned short instance_id);
 int map_delinstancemap(int m);
+void map_data_copyall(void);
+void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
 
 // player to map session
 void map_addnickdb(int charid, const char* nick);
@@ -915,6 +1113,7 @@ int cleanup_sub(struct block_list *bl, va_list ap);
 int map_delmap(char* mapname);
 void map_flags_init(void);
 
+bool map_iwall_exist(const char* wall_name);
 bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name);
 void map_iwall_get(struct map_session_data *sd);
 bool map_iwall_remove(const char *wall_name);
@@ -925,10 +1124,15 @@ void map_removemobs(int16 m); // [Wizputer]
 void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
-#ifdef ADJUST_SKILL_DAMAGE
-void map_skill_damage_free(struct map_data *m);
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int pc, int mob, int boss, int other, uint8 caster);
-#endif
+void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
+void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
+
+enum e_mapflag map_getmapflag_by_name(char* name);
+bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
+int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
+bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
+#define map_getmapflag(m, mapflag) map_getmapflag_sub(m, mapflag, NULL)
+#define map_setmapflag(m, mapflag, status) map_setmapflag_sub(m, mapflag, status, NULL)
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level
@@ -982,7 +1186,8 @@ extern char vendings_table[32];
 extern char vending_items_table[32];
 extern char market_table[32];
 extern char roulette_table[32];
+extern char guild_storage_log_table[32];
 
 void do_shutdown(void);
 
-#endif /* _MAP_HPP_ */
+#endif /* MAP_HPP */
