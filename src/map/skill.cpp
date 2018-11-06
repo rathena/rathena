@@ -6634,8 +6634,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case ITEM_ENCHANTARMS:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,
-				skill_get_ele(skill_id,skill_lv), skill_get_time(skill_id,skill_lv)));
+			sc_start(src, bl, type, 100, skill_get_ele(skill_id,skill_lv), skill_get_time(skill_id,skill_lv)));
 		break;
 
 	case TK_SEVENWIND:
@@ -13023,7 +13022,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 			else if (ele == -1) {
 				val1 = status->rhw.ele;
 				if (sc && sc->data[SC_ENCHANTARMS])
-					val1 = sc->data[SC_ENCHANTARMS]->val2;
+					val1 = sc->data[SC_ENCHANTARMS]->val1;
 			}
 
 			switch (val1) {
@@ -17726,7 +17725,7 @@ int skill_maelstrom_suction(struct block_list *bl, va_list ap)
 void skill_enchant_elemental_end(struct block_list *bl, int type)
 {
 	struct status_change *sc;
-	const enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON, SC_ENCHANTARMS };
+	const enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON };
 	int i;
 
 	nullpo_retv(bl);
@@ -17735,6 +17734,7 @@ void skill_enchant_elemental_end(struct block_list *bl, int type)
 	if (!sc->count)
 		return;
 
+	status_change_end(bl, SC_ENCHANTARMS, INVALID_TIMER); // Should always end
 	for (i = 0; i < ARRAYLENGTH(scs); i++)
 		if (type != scs[i] && sc->data[scs[i]])
 			status_change_end(bl, scs[i], INVALID_TIMER);

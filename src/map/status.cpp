@@ -7349,7 +7349,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 	if(!sc || !sc->count)
 		return cap_value(element, 0, UCHAR_MAX);
 	if(sc->data[SC_ENCHANTARMS])
-		return sc->data[SC_ENCHANTARMS]->val2;
+		return sc->data[SC_ENCHANTARMS]->val1;
 	if(sc->data[SC_WATERWEAPON]
 		|| (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2) )
 		return ELE_WATER;
@@ -10277,10 +10277,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// end previous enchants
 			skill_enchant_elemental_end(bl,type);
 			// Make sure the received element is valid.
-			if (val2 >= ELE_ALL)
-				val2 = val2%ELE_ALL;
-			else if (val2 < 0)
-				val2 = rnd()%ELE_ALL;
+			if (val1 >= ELE_ALL)
+				val1 = val1%ELE_ALL;
+			else if (val1 < 0)
+				val1 = rnd()%ELE_ALL;
 			break;
 		case SC_CRITICALWOUND:
 			val2 = 20*val1; // Heal effectiveness decrease
@@ -11296,6 +11296,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// Values that must be set regardless of flag&4 e.g. val_flag [Ind]
 	switch(type) {
 		// Start |1 val_flag setting
+		case SC_ENCHANTARMS:
 		case SC_ROLLINGCUTTER:
 		case SC_BANDING:
 		case SC_SPHERE_1:
