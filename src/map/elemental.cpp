@@ -130,7 +130,7 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 	return 1;
 }
 
-int elemental_get_lifetime(struct elemental_data *ed) {
+tick_t elemental_get_lifetime(struct elemental_data *ed) {
 	const struct TimerData * td;
 	if( ed == NULL || ed->summon_timer == INVALID_TIMER )
 		return 0;
@@ -385,7 +385,7 @@ int elemental_clean_effect(struct elemental_data *ed) {
 	return 1;
 }
 
-int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned int tick) {
+int elemental_action(struct elemental_data *ed, struct block_list *bl, tick_t tick) {
 	struct skill_condition req;
 	uint16 skill_id, skill_lv;
 	int i;
@@ -633,7 +633,7 @@ static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap
 	return 0;
 }
 
-static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, unsigned int tick) {
+static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, tick_t tick) {
 	struct block_list *target = NULL;
 	int master_dist, view_range;
 	enum e_mode mode;
@@ -744,7 +744,7 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 }
 
 static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list ap) {
-	unsigned int tick = va_arg(ap,unsigned int);
+	tick_t tick = va_arg(ap,tick_t);
 	if(sd->status.ele_id && sd->ed)
 		elemental_ai_sub_timer(sd->ed,sd,tick);
 

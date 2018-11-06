@@ -1651,7 +1651,7 @@ int64 status_charge(struct block_list* bl, int64 hp, int64 sp)
  * Note: HP/SP are integer values, not percentages. Values should be
  *	 calculated either within function call or before
  */
-int status_damage(struct block_list *src,struct block_list *target,int64 dhp, int64 dsp, int walkdelay, int flag)
+int status_damage(struct block_list *src,struct block_list *target,int64 dhp, int64 dsp, tick_t walkdelay, int flag)
 {
 	struct status_data *status;
 	struct status_change *sc;
@@ -8007,7 +8007,7 @@ static int status_get_sc_interval(enum sc_type type)
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
  * @return adjusted duration based on flag values
  */
-int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_type type, int rate, int tick, unsigned char flag)
+tick_t status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_type type, int rate, tick_t tick, unsigned char flag)
 {
 	/// Resistance rate: 10000 = 100%
 	/// Example:	50% (5000) -> sc_def = 5000 -> 25%;
@@ -8308,7 +8308,7 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 
 	// Duration cannot be reduced
 	if (flag&SCSTART_NOTICKDEF)
-		return max(tick, 1);
+		return i64max(tick, 1);
 
 	tick -= tick*tick_def/10000;
 	tick -= tick_def2;
@@ -8317,20 +8317,20 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 	switch (type) {
 		case SC_ANKLE:
 		case SC_MARSHOFABYSS:
-			tick = max(tick, 5000); // Minimum duration 5s
+			tick = i64max(tick, 5000); // Minimum duration 5s
 			break;
 		case SC_FREEZING:
-			tick = max(tick, 6000); // Minimum duration 6s
+			tick = i64max(tick, 6000); // Minimum duration 6s
 			// NEED AEGIS CHECK: might need to be 10s (http://ro.gnjoy.com/news/notice/View.asp?seq=5352)
 			break;
 		case SC_BURNING:
 		case SC_STASIS:
 		case SC_VOICEOFSIREN:
-			tick = max(tick, 10000); // Minimum duration 10s
+			tick = i64max(tick, 10000); // Minimum duration 10s
 			break;
 		default:
 			// Skills need to trigger even if the duration is reduced below 1ms
-			tick = max(tick, 1);
+			tick = i64max(tick, 1);
 			break;
 	}
 
@@ -8482,7 +8482,7 @@ void status_display_remove(struct block_list *bl, enum sc_type type) {
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
  * @return adjusted duration based on flag values
  */
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,int tick,unsigned char flag) {
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,tick_t duration,unsigned char flag) {
 	struct map_session_data *sd = NULL;
 	struct status_change* sc;
 	struct status_change_entry* sce;
@@ -8578,10 +8578,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	// Adjust tick according to status resistances
 	if( !(flag&(SCSTART_NOAVOID|SCSTART_LOADED)) ) {
-		tick = status_get_sc_def(src, bl, type, rate, tick, flag);
-		if( !tick )
+		duration = status_get_sc_def(src, bl, type, rate, duration, flag);
+		if( !duration )
 			return 0;
 	}
+
+	int tick = (int)duration;
 
 	sd = BL_CAST(BL_PC, bl);
 	vd = status_get_viewdata(bl);
@@ -10114,9 +10116,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 11-val1; // Chance to consume: 11-skill_lv%
 			break;
 		case SC_RUN:
-			val4 = gettick(); // Store time at which you started running.
+		{
+			//Store time at which you started running.
+			tick_t currenttick = gettick();
+			// Note: this int64 value is stored in two separate int32 variables (FIXME)
+			val3 = (int)(currenttick & 0x00000000ffffffffLL);
+			val4 = (int)((currenttick & 0xffffffff00000000LL) >> 32);
 			tick = INFINITE_TICK;
 			break;
+		}
 		case SC_KAAHI:
 			val2 = 200*val1; // HP heal
 			val3 = 5*val1; // SP cost
@@ -10491,9 +10499,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC_WUGDASH:
-			val4 = gettick(); // Store time at which you started running.
+		{
+			//Store time at which you started running.
+			tick_t currenttick = gettick();
+			// Note: this int64 value is stored in two separate int32 variables (FIXME)
+			val3 = (int)(currenttick&0x00000000ffffffffLL);
+			val4 = (int)((currenttick&0xffffffff00000000LL)>>32);
 			tick = INFINITE_TICK;
 			break;
+		}
 		case SC__SHADOWFORM:
 			{
 				struct map_session_data * s_sd = map_id2sd(val2);
@@ -12065,7 +12079,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		if (type == SC_SPIDERWEB) {
 			//Delete the unit group first to expire found in the status change
 			struct skill_unit_group *group = NULL, *group2 = NULL;
-			unsigned int tick = gettick();
+			tick_t tick = gettick();
 			int pos = 1;
 			if (sce->val2)
 				if (!(group = skill_id2group(sce->val2)))
@@ -12149,6 +12163,10 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		{
 			struct unit_data *ud = unit_bl2ud(bl);
 			bool begin_spurt = true;
+			// Note: this int64 value is stored in two separate int32 variables (FIXME)
+			tick_t starttick  = (tick_t)sce->val3&0x00000000ffffffffLL;
+			starttick |= ((tick_t)sce->val4<<32)&0xffffffff00000000LL;
+
 			if (ud) {
 				if(!ud->state.running)
 					begin_spurt = false;
@@ -12157,7 +12175,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					unit_stop_walking(bl,1);
 			}
 			if (begin_spurt && sce->val1 >= 7 &&
-				DIFF_TICK(gettick(), sce->val4) <= 1000 &&
+				DIFF_TICK(gettick(), starttick) <= 1000 &&
 				(!sd || (sd->weapontype1 == 0 && sd->weapontype2 == 0))
 			)
 				sc_start(bl,bl,SC_SPURT,100,sce->val1,skill_get_time2(status_sc2skill(type), sce->val1));
@@ -12842,7 +12860,7 @@ TIMER_FUNC(status_change_timer){
 
 	sd = BL_CAST(BL_PC, bl);
 
-	std::function<void (unsigned int)> sc_timer_next = [&sce, &bl, &data](unsigned int t) {
+	std::function<void (tick_t)> sc_timer_next = [&sce, &bl, &data](tick_t t) {
 		sce->timer = add_timer(t, status_change_timer, bl->id, data);
 	};
 	
@@ -13768,7 +13786,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 	struct block_list* src = va_arg(ap,struct block_list*);
 	struct status_change_entry* sce = va_arg(ap,struct status_change_entry*);
 	enum sc_type type = (sc_type)va_arg(ap,int); // gcc: enum args get promoted to int
-	unsigned int tick = va_arg(ap,unsigned int);
+	tick_t tick = va_arg(ap,unsigned int);
 
 	if (status_isdead(bl))
 		return 0;
@@ -14094,7 +14112,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 	int i, flag = 0;
 	struct status_change *sc = status_get_sc(src);
 	const struct TimerData *timer = NULL;
-	unsigned int tick;
+	tick_t tick;
 	struct status_change_data data;
 
 	if( !sc || !sc->count )
@@ -14187,7 +14205,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
  * @param args: va_list arguments
  * @return which regeneration bonuses have been applied (flag)
  */
-static unsigned int natural_heal_prev_tick,natural_heal_diff_tick;
+static tick_t natural_heal_prev_tick,natural_heal_diff_tick;
 static int status_natural_heal(struct block_list* bl, va_list args)
 {
 	struct regen_data *regen;

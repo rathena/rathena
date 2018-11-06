@@ -215,8 +215,8 @@ static TIMER_FUNC(login_online_data_cleanup){
  */
 int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
 	static int num_regs = 0; // registration counter
-	static unsigned int new_reg_tick = 0;
-	unsigned int tick = gettick();
+	static tick_t new_reg_tick = 0;
+	tick_t tick = gettick();
 	struct mmo_account acc;
 
 	//Account Registration Flood Protection by [Kevin]
