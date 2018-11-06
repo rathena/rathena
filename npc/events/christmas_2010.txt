@@ -169,15 +169,15 @@ prontera,142,183,3	script	Red Coat Girl#prontera	4_F_NFLOSTGIRL,3,3,{
 		end;
 	}
 
-	OnTouch:
-		if (evt_2010_xmas == 250) {
-			mes "[Red Coat Girl]";
-			mes "Dear adventurer, please come to me.";
-			emotion ET_THINK;
-			close;
-		} else {
-			end;
-		}
+OnTouch:
+	if (evt_2010_xmas == 250) {
+		mes "[Red Coat Girl]";
+		mes "Dear adventurer, please come to me.";
+		emotion ET_THINK;
+		close;
+	} else {
+		end;
+	}
 }
 
 // - Message
@@ -185,14 +185,14 @@ prontera,142,183,3	script	Red Coat Girl#prontera	4_F_NFLOSTGIRL,3,3,{
 niflheim,253,191,3	script	#message	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2010_xmas == 251) {
-			mes "[Red Coat Girl]";
-			mes "The Witch is probably at the 2nd floor.";
-			close;
-		} else {
-			end;
-		}
+OnTouch:
+	if (evt_2010_xmas == 251) {
+		mes "[Red Coat Girl]";
+		mes "The Witch is probably at the 2nd floor.";
+		close;
+	} else {
+		end;
+	}
 }
 
 // - Trap
@@ -200,12 +200,12 @@ niflheim,253,191,3	script	#message	-1,2,2,{
 nif_in,59,167,3	script	#trap01	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2010_xmas == 251) {
-			specialeffect2 EF_BLASTMINEBOMB;
-			percentheal -5, 0;
-		}
-		end;
+OnTouch:
+	if (evt_2010_xmas == 251) {
+		specialeffect2 EF_BLASTMINEBOMB;
+		percentheal -5, 0;
+	}
+	end;
 }
 
 // - Trap
@@ -213,11 +213,11 @@ nif_in,59,167,3	script	#trap01	-1,2,2,{
 nif_in,43,148,3	script	#trap02	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2010_xmas == 251) {
-			areamonster "nif_in",42,147,44,149,"Witch's Zombie",1015,1;
-		}
-		end;
+OnTouch:
+	if (evt_2010_xmas == 251) {
+		areamonster "nif_in",42,147,44,149,"Witch's Zombie",1015,1;
+	}
+	end;
 }
 
 // - Trap
@@ -225,12 +225,12 @@ nif_in,43,148,3	script	#trap02	-1,2,2,{
 nif_in,43,155,3	script	#trap03	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2010_xmas == 251) {
-			specialeffect2 EF_PORTAL;
-			warp "nif_in", 21, 157;
-		}
-		end;
+OnTouch:
+	if (evt_2010_xmas == 251) {
+		specialeffect2 EF_PORTAL;
+		warp "nif_in", 21, 157;
+	}
+	end;
 }
 
 // - Trap
@@ -251,12 +251,12 @@ OnTouch:
 nif_in,35,162,3	script	#trap05	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2010_xmas == 251) {
-			specialeffect2 EF_EARTHSPIKE;
-			percentheal -5, 0;
-		}
-		end;
+OnTouch:
+	if (evt_2010_xmas == 251) {
+		specialeffect2 EF_EARTHSPIKE;
+		percentheal -5, 0;
+	}
+	end;
 }
 
 // - Trap
@@ -264,12 +264,12 @@ nif_in,35,162,3	script	#trap05	-1,2,2,{
 nif_in,47,180,3	script	#trap06	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2010_xmas == 251) {
-			specialeffect2 EF_PORTAL;
-			warp "nif_in", 21, 157;
-		}
-		end;
+OnTouch:
+	if (evt_2010_xmas == 251) {
+		specialeffect2 EF_PORTAL;
+		warp "nif_in", 21, 157;
+	}
+	end;
 }
 
 // - Witch

@@ -487,7 +487,7 @@ prontera,159,284,3	script	Romeo#prontera2	4_M_KHMAN,{
 		mes "....? ";
 		close;
 	} else if (evt_2010_fools == 133) {
-		if (countitem(5848) < 1) {
+		if (getequipid(EQI_HEAD_MID) != 5848) {
 			mes "[Romeo]";
 			mes "^8B4513-He seems to say to me: Wear the eye-patch.^000000 ";
 			mes "^8B4513-And prepare yourself!^000000 ";
@@ -540,22 +540,22 @@ prontera,159,284,3	script	Romeo#prontera2	4_M_KHMAN,{
 		close;
 	}
 
-	OnInit:
-		disablenpc "Romeo#prontera2";
-		disablenpc "Romeo#prontera3";
-		disablenpc "Juliet#prontera2";
-		disablenpc "Juliet#prontera3";
-		initnpctimer;
-		end;
+OnInit:
+	disablenpc "Romeo#prontera2";
+	disablenpc "Romeo#prontera3";
+	disablenpc "Juliet#prontera2";
+	disablenpc "Juliet#prontera3";
+	initnpctimer;
+	end;
 
-	OnTimer60000:
-		disablenpc "Romeo#prontera2";
-		disablenpc "Romeo#prontera3";
-		disablenpc "Juliet#prontera2";
-		disablenpc "Juliet#prontera3";
-		stopnpctimer;
-		initnpctimer;
-		end;
+OnTimer60000:
+	disablenpc "Romeo#prontera2";
+	disablenpc "Romeo#prontera3";
+	disablenpc "Juliet#prontera2";
+	disablenpc "Juliet#prontera3";
+	stopnpctimer;
+	initnpctimer;
+	end;
 }
 
 // - Juliet (Act II)
@@ -563,60 +563,60 @@ prontera,159,284,3	script	Romeo#prontera2	4_M_KHMAN,{
 prontera,152,279,7	script	Juliet#prontera2	4_F_KHELLISIA,2,2,{
 	end;
 
-	OnInit:
-		disablenpc "Romeo#prontera2";
-		disablenpc "Romeo#prontera3";
-		disablenpc "Juliet#prontera2";
-		disablenpc "Juliet#prontera3";
-		end;
+OnInit:
+	disablenpc "Romeo#prontera2";
+	disablenpc "Romeo#prontera3";
+	disablenpc "Juliet#prontera2";
+	disablenpc "Juliet#prontera3";
+	end;
 
-	OnTouch:
-		if (evt_2010_fools < 134) {
-			mes "[Juliet]";
-			mes "^0000FFRomeo^000000...";
-			close;
-		} else if (evt_2010_fools == 134) {
-			mes "[Juliet]";
-			mes "Help~!! Save us~!!!";
-			next;
-			mes "[Romeo]";
-			mes "How dare you touch her!";
-			disablenpc "Romeo#prontera2";
-			enablenpc "Romeo#prontera3";
-			next;
-			mes "[Romeo]";
-			mes "Take this! I'm going to kill you!";
-			specialeffect EF_HITLINE2;
-			next;
-			mes "^8B4513-Ok.^000000";
-			mes "^8B4513-I will receive a small attack^000000 ";
-			mes "^8B4513-but I'm going to have to pretend it's deadly. Hehe.^000000 ";
-			next;
-			mes "[Romeo]";
-			mes "I'm going to kill you!! Bandit~!!";
-			specialeffect2 EF_LIGHTBOLT;
-			next;
-			mes "^8B4513-Ouch! It was not a small attack!^000000 ";
-			mes "^8B4513-It really hurt me. Ouch...^000000 ";
-			mes "^8B4513-Romeo, that's enough!^000000 ";
-			next;
-			mes "[Romeo]";
-			mes "I warned you not to touch ^0000FFJuliet^000000!";
-			mes "You are going to regret it! Too late for the excuses!";
-			specialeffect2 EF_FIREPILLARBOMB;
-			specialeffect2 EF_EARTHSPIKE;
-			specialeffect2 EF_NAPALMBEAT;
-			next;
-			evt_2010_fools = 135;
-			disablenpc "Juliet#prontera2";
-			enablenpc "Juliet#prontera3";
-			warp "prontera", 156, 271;
-			end;
-		} else {
-			mes "[Juliet]";
-			mes "^0000FFRomeo^000000...";
-			close;
-		}
+OnTouch:
+	if (evt_2010_fools < 134) {
+		mes "[Juliet]";
+		mes "^0000FFRomeo^000000...";
+		close;
+	} else if (evt_2010_fools == 134) {
+		mes "[Juliet]";
+		mes "Help~!! Save us~!!!";
+		next;
+		mes "[Romeo]";
+		mes "How dare you touch her!";
+		disablenpc "Romeo#prontera2";
+		enablenpc "Romeo#prontera3";
+		next;
+		mes "[Romeo]";
+		mes "Take this! I'm going to kill you!";
+		specialeffect EF_HITLINE2;
+		next;
+		mes "^8B4513-Ok.^000000";
+		mes "^8B4513-I will receive a small attack^000000 ";
+		mes "^8B4513-but I'm going to have to pretend it's deadly. Hehe.^000000 ";
+		next;
+		mes "[Romeo]";
+		mes "I'm going to kill you!! Bandit~!!";
+		specialeffect2 EF_LIGHTBOLT;
+		next;
+		mes "^8B4513-Ouch! It was not a small attack!^000000 ";
+		mes "^8B4513-It really hurt me. Ouch...^000000 ";
+		mes "^8B4513-Romeo, that's enough!^000000 ";
+		next;
+		mes "[Romeo]";
+		mes "I warned you not to touch ^0000FFJuliet^000000!";
+		mes "You are going to regret it! Too late for the excuses!";
+		specialeffect2 EF_FIREPILLARBOMB;
+		specialeffect2 EF_EARTHSPIKE;
+		specialeffect2 EF_NAPALMBEAT;
+		next;
+		evt_2010_fools = 135;
+		disablenpc "Juliet#prontera2";
+		enablenpc "Juliet#prontera3";
+		warp "prontera", 156, 271;
+		end;
+	} else {
+		mes "[Juliet]";
+		mes "^0000FFRomeo^000000...";
+		close;
+	}
 }
 
 // - Romeo (Fight Scene)
@@ -624,12 +624,12 @@ prontera,152,279,7	script	Juliet#prontera2	4_F_KHELLISIA,2,2,{
 prontera,156,282,3	script	Romeo#prontera3	4_M_KHMAN,{
 	end;
 
-	OnInit:
-		disablenpc "Romeo#prontera2";
-		disablenpc "Romeo#prontera3";
-		disablenpc "Juliet#prontera2";
-		disablenpc "Juliet#prontera3";
-		end;
+OnInit:
+	disablenpc "Romeo#prontera2";
+	disablenpc "Romeo#prontera3";
+	disablenpc "Juliet#prontera2";
+	disablenpc "Juliet#prontera3";
+	end;
 }
 
 // - Juliet (Fight Scene)
@@ -637,52 +637,52 @@ prontera,156,282,3	script	Romeo#prontera3	4_M_KHMAN,{
 prontera,155,282,5	script	Juliet#prontera3	4_F_KHELLISIA,2,2,{
 	end;
 
-	OnInit:
-		disablenpc "Romeo#prontera2";
-		disablenpc "Romeo#prontera3";
-		disablenpc "Juliet#prontera2";
-		disablenpc "Juliet#prontera3";
-		initnpctimer;
-	end;
+OnInit:
+	disablenpc "Romeo#prontera2";
+	disablenpc "Romeo#prontera3";
+	disablenpc "Juliet#prontera2";
+	disablenpc "Juliet#prontera3";
+	initnpctimer;
+end;
 
-	OnTouch:
-		if (evt_2010_fools < 135) {
-			mes "[Romeo]";
-			mes "^0000FFJuliet^000000...";
-			close;
-		} else if (evt_2010_fools == 135) {
-			mes "[Juliet]";
-			mes "^0000FFRomeo^000000 ";
-			mes "You saved my life...";
-			mes "You are my hero...";
-			mes "You could have been hurt, but you were not afraid.";
-			mes "^0000FFRomeo^000000, you're amazing.";
-			next;
-			mes "[Romeo]";
-			mes "^0000FFJuliet^000000...";
-			mes "Are you okay? You're not hurt?";
-			mes "I'm so sorry, ^0000FFJuliet^000000.";
-			mes "I can not live without you.";
-			mes "You are my sun, we must be together, it is our destiny!";
-			next;
-			mes "[Juliet]";
-			mes "Sorry, I made a mistake.";
-			mes "I thought you wanted nothing more to do with me.";
-			mes "^0000FFRomeo^000000, I'm sorry.";
-			next;
-			mes "[Romeo]";
-			mes "^0000FFJuliet^000000...";
-			next;
-			mes "[Juliet]";
-			mes "^0000FFRomeo^000000...";
-			disablenpc "Romeo#prontera3";
-			disablenpc "Juliet#prontera3";
-			close;
-		} else {
-			mes "[Romeo]";
-			mes "^0000FFJuliet^000000... ";
-			close;
-		}
+OnTouch:
+	if (evt_2010_fools < 135) {
+		mes "[Romeo]";
+		mes "^0000FFJuliet^000000...";
+		close;
+	} else if (evt_2010_fools == 135) {
+		mes "[Juliet]";
+		mes "^0000FFRomeo^000000 ";
+		mes "You saved my life...";
+		mes "You are my hero...";
+		mes "You could have been hurt, but you were not afraid.";
+		mes "^0000FFRomeo^000000, you're amazing.";
+		next;
+		mes "[Romeo]";
+		mes "^0000FFJuliet^000000...";
+		mes "Are you okay? You're not hurt?";
+		mes "I'm so sorry, ^0000FFJuliet^000000.";
+		mes "I can not live without you.";
+		mes "You are my sun, we must be together, it is our destiny!";
+		next;
+		mes "[Juliet]";
+		mes "Sorry, I made a mistake.";
+		mes "I thought you wanted nothing more to do with me.";
+		mes "^0000FFRomeo^000000, I'm sorry.";
+		next;
+		mes "[Romeo]";
+		mes "^0000FFJuliet^000000...";
+		next;
+		mes "[Juliet]";
+		mes "^0000FFRomeo^000000...";
+		disablenpc "Romeo#prontera3";
+		disablenpc "Juliet#prontera3";
+		close;
+	} else {
+		mes "[Romeo]";
+		mes "^0000FFJuliet^000000... ";
+		close;
+	}
 }
 
 // - Romeo's Mother

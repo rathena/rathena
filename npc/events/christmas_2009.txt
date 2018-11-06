@@ -34,15 +34,15 @@
 	warp "xmas", 145, 218;
 	end;
 
-	OnInit:
-		initnpctimer;
-		end;
+OnInit:
+	initnpctimer;
+	end;
 
-	OnTimer10000:
-		emotion ET_SURPRISE;
-		stopnpctimer;
-		initnpctimer;
-		end;
+OnTimer10000:
+	emotion ET_SURPRISE;
+	stopnpctimer;
+	initnpctimer;
+	end;
 }
 
 yuno,166,187,5	duplicate(09xmasUsher)	Event Usher#xmas_01	4_F_KID3
@@ -1123,19 +1123,19 @@ xmas,137,315,6	script	Rodolph#xmas	4_DOG01,{
 xmas,132,312,0	script	#misty_switch	-1,{
 	end;
 
-	OnInit:
-		initnpctimer;
-		end;
+OnInit:
+	initnpctimer;
+	end;
 
-	OnTimer7000:
-		if ($091203_xmas01 >= $091203_xmas02) {
-			donpcevent "Misty#xmas::OnEnable";
-			stopnpctimer;
-		} else {
-			stopnpctimer;
-			initnpctimer;
-		}
-		end;
+OnTimer7000:
+	if ($091203_xmas01 >= $091203_xmas02) {
+		donpcevent "Misty#xmas::OnEnable";
+		stopnpctimer;
+	} else {
+		stopnpctimer;
+		initnpctimer;
+	}
+	end;
 }
 
 xmas,134,314,6	script	Misty#xmas	4_F_KAFRA7,{
@@ -1223,73 +1223,73 @@ xmas,134,314,6	script	Misty#xmas	4_F_KAFRA7,{
 			end;
 	}
 
-	OnInit:
-		disablenpc "Misty#xmas";
-		end;
+OnInit:
+	disablenpc "Misty#xmas";
+	end;
 
-	OnEnable:
-		enablenpc "Misty#xmas";
-		end;
+OnEnable:
+	enablenpc "Misty#xmas";
+	end;
 }
 
 xmas_dun01,241,124,0	script	#misty_i01	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
-			donpcevent "illusion of Misty#xmas_01::OnEnable";
-		}
-		end;
+OnTouch:
+	if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+		donpcevent "illusion of Misty#xmas_01::OnEnable";
+	}
+	end;
 }
 
 xmas_dun01,44,178,0	script	#misty_i02	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
-			donpcevent "illusion of Misty#xmas_02::OnEnable";
-		}
-		end;
+OnTouch:
+	if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+		donpcevent "illusion of Misty#xmas_02::OnEnable";
+	}
+	end;
 }
 
 xmas_dun01,139,205,0	script	#misty_i03	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
-			donpcevent "illusion of Misty#xmas_03::OnEnable";
-		}
-		end;
+OnTouch:
+	if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+		donpcevent "illusion of Misty#xmas_03::OnEnable";
+	}
+	end;
 }
 
 xmas_dun02,62,90,0	script	#misty_i04	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
-			donpcevent "illusion of Misty#xmas_04::OnEnable";
-		}
-		end;
+OnTouch:
+	if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+		donpcevent "illusion of Misty#xmas_04::OnEnable";
+	}
+	end;
 }
 
 xmas_dun02,242,149,0	script	#misty_i05	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
-			donpcevent "illusion of Misty#xmas_05::OnEnable";
-		}
-		end;
+OnTouch:
+	if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+		donpcevent "illusion of Misty#xmas_05::OnEnable";
+	}
+	end;
 }
 
 xmas_dun02,83,222,0	script	#misty_i06	-1,2,2,{
 	end;
 
-	OnTouch:
-		if (evt_2009_xmas == 321 && countitem(7974) < 1) {
-			donpcevent "illusion of Misty#xmas_06::OnEnable";
-		}
-		end;
+OnTouch:
+	if (evt_2009_xmas == 321 && countitem(7974) < 1) {
+		donpcevent "illusion of Misty#xmas_06::OnEnable";
+	}
+	end;
 }
 
 -	script	#mistyIllusion::mistyIllusion	-1,{
@@ -1301,20 +1301,20 @@ xmas_dun02,83,222,0	script	#misty_i06	-1,2,2,{
 	disablenpc strnpcinfo(0);
 	end;
 
-	OnTimer10000:
+OnTimer10000:
+	disablenpc strnpcinfo(0);
+	end;
+
+OnEnable:
+	enablenpc strnpcinfo(0);
+	initnpctimer;
+	end;
+
+OnInit:
+	if (strnpcinfo(1) != "") {
 		disablenpc strnpcinfo(0);
-		end;
-
-	OnEnable:
-		enablenpc strnpcinfo(0);
-		initnpctimer;
-		end;
-
-	OnInit:
-		if (strnpcinfo(1) != "") {
-			disablenpc strnpcinfo(0);
-		}
-		end;
+	}
+	end;
 }
 
 xmas_dun01,241,124,4	duplicate(mistyIllusion)	illusion of Misty#xmas_01	4_F_KAFRA7
@@ -1397,7 +1397,7 @@ sec_in02,21,175,6	script	Xmas Manager#xmas	4_F_KAFRA7,{
 	mes "to^FF0000"+$091203_xmas02+"^000000.";
 	close;
 
-	OnInit:
-		$091203_xmas02 = 200;
-		end;
+OnInit:
+	$091203_xmas02 = 200;
+	end;
 }

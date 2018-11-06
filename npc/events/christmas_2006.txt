@@ -340,7 +340,7 @@ xmas,147,95,5	script	Jerry#06xmas	4W_M_01,{
 	mes "or suffering under a lot of stress,";
 	next;
 	mes "[Jerry]";
-	mes "here's your chance!!If you bring a candy cane, I will let you use my magical microphone.";
+	mes "here's your chance!! If you bring a candy cane, I will let you use my magical microphone.";
 	mes "Say out loud what you have in mind, it will be spread all over Lutie!";
 	next;
 	if (select("Hm..may be later~", "Ok!") == 1) {
@@ -404,7 +404,7 @@ xmas,147,95,5	script	Jerry#06xmas	4W_M_01,{
 		close;
 	} else {
 		mes "[Jerry]";
-		mes "Here's your chance!!If you bring a Candy Striper, I will let you use my magical microphone.";
+		mes "Here's your chance!! If you bring a Candy Striper, I will let you use my magical microphone.";
 		mes "Say out loud what you have in mind, it will be spread all over Lutie!";
 		close;
 	}
@@ -415,6 +415,8 @@ xmas,147,95,5	script	Jerry#06xmas	4W_M_01,{
 //============================================================
 
 prontera,155,285,3	script	Enjoy#06xmas	4_M_MONK,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_solo < 7) {
 		if (!checkweight(1201, 1) || (MaxWeight - Weight) < 3500) {
 			mes "[Enjoy]";
@@ -502,14 +504,14 @@ prontera,155,285,3	script	Enjoy#06xmas	4_M_MONK,{
 		mes "[Enjoy]";
 		mes "Don't say you are still a lonely single~.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Don't say you're dating someone!?Are you?";
 		next;
 		mes "[Enjoy]";
 		mes "Are you kidding?! Do you seriously think that I do have girlfriend?How dare you say such a thing?Get away you evil!!!";
 		specialeffect EF_HITLINE;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Calm down!Don't be upset. I was just asking!";
 		next;
 		mes "[Enjoy]";
@@ -521,7 +523,7 @@ prontera,155,285,3	script	Enjoy#06xmas	4_M_MONK,{
 		mes "-He suddenly rasised his head-";
 		mes "-and stared the sky for a while.-";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "... Hello..Mr.Enjoy.?";
 		next;
 		mes "[Enjoy]";
@@ -566,6 +568,8 @@ prontera,155,285,3	script	Enjoy#06xmas	4_M_MONK,{
 }
 
 prontera,155,238,0	script	White Note#06xmas	CLEAR_NPC,3,3,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_solo == 8) {
 		mes "- It's a message from Enjoy-";
 		next;
@@ -573,7 +577,7 @@ prontera,155,238,0	script	White Note#06xmas	CLEAR_NPC,3,3,{
 			mes "-It's a message from Enjoy -";
 			close;
 		}
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "What message...?";
 		next;
 		mes "-You unfold the note.-";
@@ -599,12 +603,12 @@ prontera,155,238,0	script	White Note#06xmas	CLEAR_NPC,3,3,{
 		mes "<Everthing will be under our control!!!!!!!!!>";
 		mes "<Who's with me?!?!?!?!?!?!?!?!>";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Wow!!!";
 		mes "...Such an odd man..He could have said in words...?";
 		next;
 		if(select("Stop reading.", "Keep on reading.") == 1) {
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "...Reading makes me sleepy....";
 			close;
 		}
@@ -658,10 +662,10 @@ prontera,155,238,0	script	White Note#06xmas	CLEAR_NPC,3,3,{
 		05christ_solo = 9;
 		close;
 	} else if (05christ_solo > 8) {
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Hm... What does this mean?...So he wants me to bring all members to the place!?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Then, one I should visit first will be......!";
 		emotion ET_AHA, playerattached();
 		close;
@@ -670,20 +674,22 @@ prontera,155,238,0	script	White Note#06xmas	CLEAR_NPC,3,3,{
 		close;
 	}
 
-	OnTouch:
-		if (05christ_solo == 8) {
-			mes "["+ strcharinfo(0) +"]";
-			mes "Damn..! What is wrong with Enjoy. Such a tensed person he is...";
-			next;
-			mes "-There you find a white note which seems to be hidden by someone.-";
-			next;
-			mes "["+ strcharinfo(0) +"]";
-			mes "...?What's this?";
-			close;
-		}
+OnTouch:
+	if (05christ_solo == 8) {
+		mes "["+ .@name$ +"]";
+		mes "Damn..! What is wrong with Enjoy. Such a tensed person he is...";
+		next;
+		mes "-There you find a white note which seems to be hidden by someone.-";
+		next;
+		mes "["+ .@name$ +"]";
+		mes "...?What's this?";
+		close;
+	}
 }
 
 prt_fild05,355,254,0	script	White Note#06xmas2	CLEAR_NPC,3,3,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_solo == 13) {
 		mes "- It's a message from Enjoy-";
 		next;
@@ -691,7 +697,7 @@ prt_fild05,355,254,0	script	White Note#06xmas2	CLEAR_NPC,3,3,{
 			mes "- It's a message from Enjoy-";
 			close;
 		}
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "- It's a message from Enjoy-";
 		next;
 		mes "-You unfold the note.-";
@@ -737,17 +743,17 @@ prt_fild05,355,254,0	script	White Note#06xmas2	CLEAR_NPC,3,3,{
 		05christ_solo = 14;
 		close;
 	} else if (05christ_solo > 13) {
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "What does this mean......So Enjoy wants me to bring all materials!?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Meterials were...";
 		mes "< ^0000ff5 Tree Knots^000000 >";
 		mes "< ^0000ff5 Wooden Blocks^000000 >";
 		mes "< ^0000ff1 Branch of Dead Tree^000000 >";
 		mes "...";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "<^0000ffWhere the water and wood meet^000000>";
 		mes "<^0000ffWe will meet there on a stone.^000000>";
 		mes "Well...This must meaning..!! I got it!!!";
@@ -758,73 +764,75 @@ prt_fild05,355,254,0	script	White Note#06xmas2	CLEAR_NPC,3,3,{
 		close;
 	}
 
-	OnTouch:
-		if (05christ_solo == 13) {
-			mes "["+ strcharinfo(0) +"]";
-			mes "Garden, under the bench, where the sun goes down, and another note... What does this mean?";
-			next;
-			mes "-There you find a white note which seems to be hidden by someone.-";
-			next;
-			mes "["+ strcharinfo(0) +"]";
-			mes "...?What's this?";
-			close;
-		}
+OnTouch:
+	if (05christ_solo == 13) {
+		mes "["+ .@name$ +"]";
+		mes "Garden, under the bench, where the sun goes down, and another note... What does this mean?";
+		next;
+		mes "-There you find a white note which seems to be hidden by someone.-";
+		next;
+		mes "["+ .@name$ +"]";
+		mes "...?What's this?";
+		close;
+	}
 }
 
 prt_fild05,101,158,0	script	Switch#06xmas	-1,3,3,{
 	end;
 
-	OnInit:
-		enablenpc "Switch#06xmas";
-		end;
+OnInit:
+	enablenpc "Switch#06xmas";
+	end;
 
-	OnTouch:
-		if (05christ_solo == 14) {
-			mes "["+ strcharinfo(0) +"]";
-			mes "<^0000ffWhere the water and wood meet^000000>";
-			mes "<^0000ffWe will meet there on a stone.^000000>";
-			mes "...This must be the place!";
-			next;
+OnTouch:
+	if (05christ_solo == 14) {
+		mes "["+ strcharinfo(0) +"]";
+		mes "<^0000ffWhere the water and wood meet^000000>";
+		mes "<^0000ffWe will meet there on a stone.^000000>";
+		mes "...This must be the place!";
+		next;
+		mes "[??????]";
+		mes "... Hey!!!You!!!";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Did someone just call me!?";
+		next;
+		mes "[??????]";
+		mes "Did you bring all materials??";
+		next;
+		mes "["+ strcharinfo(0) +"]";
+		mes "Where's Enjoy?";
+		next;
+		mes "[??????]";
+		mes "I don't have time!Just answer to what I say! Where are the materials?";
+		next;
+		if (select("I haven't prepared it yet...", "Here~I brought it all!") == 1) {
 			mes "[??????]";
-			mes "... Hey!!!You!!!";
-			next;
-			mes "["+ strcharinfo(0) +"]";
-			mes "Did someone just call me!?";
-			next;
-			mes "[??????]";
-			mes "Did you bring all materials??";
-			next;
-			mes "["+ strcharinfo(0) +"]";
-			mes "Where's Enjoy?";
-			next;
-			mes "[??????]";
-			mes "I don't have time!Just answer to what I say! Where are the materials?";
-			next;
-			if (select("I haven't prepared it yet...", "Here~I brought it all!") == 1) {
-				mes "[??????]";
-				mes "Still?! Hurry!!Go get it right away!";
-				close;
-			}
-			if (countitem(1019) > 4 && countitem(7222) > 4 && countitem(604) > 0) {
-				mes "[??????]";
-				mes "Good! If all things are prepared....Let's go!!Single soldiers!!!";
-				enablenpc "Enjoy#06xmas2";
-				donpcevent "Happymerry#06xmas_02::OnEnable";
-				donpcevent "Christ#06xmas_02::OnEnable";
-				donpcevent "Mas#06xmas_02::OnEnable";
-				donpcevent "Event#06xmas_02::OnEnable";
-				disablenpc "Switch#06xmas";
-				close;
-			} else {
-				mes "[??????]";
-				mes "Are you sure? Something's still missing!";
-				close;
-			}
+			mes "Still?! Hurry!!Go get it right away!";
+			close;
 		}
-		end;
+		if (countitem(1019) > 4 && countitem(7222) > 4 && countitem(604) > 0) {
+			mes "[??????]";
+			mes "Good! If all things are prepared....Let's go!!Single soldiers!!!";
+			enablenpc "Enjoy#06xmas2";
+			donpcevent "Happymerry#06xmas_02::OnEnable";
+			donpcevent "Christ#06xmas_02::OnEnable";
+			donpcevent "Mas#06xmas_02::OnEnable";
+			donpcevent "Event#06xmas_02::OnEnable";
+			disablenpc "Switch#06xmas";
+			close;
+		} else {
+			mes "[??????]";
+			mes "Are you sure? Something's still missing!";
+			close;
+		}
+	}
+	end;
 }
 
 prt_fild05,101,161,3	script	Enjoy#06xmas2	4_M_MONK,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_solo == 14) {
 		if (countitem(1019) > 4 && countitem(7222) > 4 && countitem(604) > 0) {
 			mes "[Enjoy]";
@@ -840,7 +848,7 @@ prt_fild05,101,161,3	script	Enjoy#06xmas2	4_M_MONK,{
 			mes "[Enjoy]";
 			mes "I won't cry for the past!Never have a lingering affection for the love that never have started!Never break down being a lonely single!";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "(...Huh? past? lingering affection? lonely single???)";
 			next;
 			mes "-Someone talks to you.-";
@@ -888,32 +896,32 @@ prt_fild05,101,161,3	script	Enjoy#06xmas2	4_M_MONK,{
 				disablenpc "Event#06xmas_02";
 				donpcevent "Enjoy#06xmas2::OnGo";
 				close2;
-				announce "Single soldiers "+ strcharinfo(0) +"'s sorrow spread all over the town.", bc_map, 0x66FFCC;
-				monster "prt_fild05",117,158,""+strcharinfo(0)+"'s Anguish",1062,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",117,157,""+strcharinfo(0)+"'s Jealousy",1062,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",117,156,""+strcharinfo(0)+"'s Despair",1062,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",117,155,""+strcharinfo(0)+"'s Frustration",1062,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",117,154,""+strcharinfo(0)+"'s Bombing",1062,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",118,158,""+strcharinfo(0)+"'s grudge",1246,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",118,157,""+strcharinfo(0)+"'s curse",1246,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",118,156,""+strcharinfo(0)+"'s anger",1246,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",118,155,""+strcharinfo(0)+"'s grief",1246,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",118,154,""+strcharinfo(0)+"'s hatred",1246,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",119,158,""+strcharinfo(0)+"'s a bitter taste of a single life",1245,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",119,157,""+strcharinfo(0)+"'s couple punisher",1245,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",119,156,""+strcharinfo(0)+"'s loneliness",1245,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",119,155,""+strcharinfo(0)+"'s sobbing",1245,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",119,154,""+strcharinfo(0)+"'s darkness",1245,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",120,158,""+strcharinfo(0)+"'s depression",1244,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",120,157,""+strcharinfo(0)+"'s estrangement",1244,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",120,156,""+strcharinfo(0)+"'s nightmare",1244,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",120,155,""+strcharinfo(0)+"'s wail",1244,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",120,154,""+strcharinfo(0)+"'s whisper",1244,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",121,158,""+strcharinfo(0)+"'s regret",1588,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",121,157,""+strcharinfo(0)+"'s shadow",1588,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",121,156,""+strcharinfo(0)+"'s couplebreaker",1588,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",121,155,""+strcharinfo(0)+"'s sadness",1588,1,"Enjoy#06xmas2::OnMobDead";
-				monster "prt_fild05",121,154,""+strcharinfo(0)+"'s symbol of brokenheart",1588,1,"Enjoy#06xmas2::OnMobDead";
+				announce "Single soldiers "+ .@name$ +"'s sorrow spread all over the town.", bc_map, 0x66FFCC;
+				monster "prt_fild05",117,158,""+.@name$+"'s Anguish",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",117,157,""+.@name$+"'s Jealousy",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",117,156,""+.@name$+"'s Despair",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",117,155,""+.@name$+"'s Frustration",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",117,154,""+.@name$+"'s Bombing",1062,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,158,""+.@name$+"'s grudge",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,157,""+.@name$+"'s curse",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,156,""+.@name$+"'s anger",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,155,""+.@name$+"'s grief",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",118,154,""+.@name$+"'s hatred",1246,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,158,""+.@name$+"'s a bitter taste of a single life",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,157,""+.@name$+"'s couple punisher",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,156,""+.@name$+"'s loneliness",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,155,""+.@name$+"'s sobbing",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",119,154,""+.@name$+"'s darkness",1245,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,158,""+.@name$+"'s depression",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,157,""+.@name$+"'s estrangement",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,156,""+.@name$+"'s nightmare",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,155,""+.@name$+"'s wail",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",120,154,""+.@name$+"'s whisper",1244,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,158,""+.@name$+"'s regret",1588,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,157,""+.@name$+"'s shadow",1588,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,156,""+.@name$+"'s couplebreaker",1588,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,155,""+.@name$+"'s sadness",1588,1,"Enjoy#06xmas2::OnMobDead";
+				monster "prt_fild05",121,154,""+.@name$+"'s symbol of brokenheart",1588,1,"Enjoy#06xmas2::OnMobDead";
 				end;
 			} else {
 				mes "[Enjoy]";
@@ -932,7 +940,7 @@ prt_fild05,101,161,3	script	Enjoy#06xmas2	4_M_MONK,{
 				disablenpc "Christ#06xmas_02";
 				disablenpc "Mas#06mas_02";
 				disablenpc "Event#06xmas_02";
-				enablenpc "Switch#06christ_01";
+				enablenpc "Switch#06xmas";
 				close;
 			}
 		} else {
@@ -949,7 +957,7 @@ prt_fild05,101,161,3	script	Enjoy#06xmas2	4_M_MONK,{
 			disablenpc "Christ#06xmas_02";
 			disablenpc "Mas#06mas_02";
 			disablenpc "Event#06xmas_02";
-			enablenpc "Switch#06christ_01";
+			enablenpc "Switch#06xmas";
 			close;
 		}
 	} else if (05christ_solo == 15) {
@@ -963,7 +971,7 @@ prt_fild05,101,161,3	script	Enjoy#06xmas2	4_M_MONK,{
 		mes "Let's enjoy ourselves till we feel better!";
 		05christ_solo = 0;
 		disablenpc "Enjoy#06xmas2";
-		enablenpc "Switch#06christ_01";
+		enablenpc "Switch#06xmas";
 		close;
 	} else {
 		mes "[Enjoy]";
@@ -971,125 +979,127 @@ prt_fild05,101,161,3	script	Enjoy#06xmas2	4_M_MONK,{
 		close;
 	}
 
-	OnGo:
-		disablenpc "Enjoy#06xmas2";
-		initnpctimer;
-		end;
+OnGo:
+	disablenpc "Enjoy#06xmas2";
+	initnpctimer;
+	end;
 
-	OnStop:
-		enablenpc "Enjoy#06xmas2";
-		killmonster "prt_fild05", "Enjoy#06xmas2::OnMobDead";
-		stopnpctimer;
-		end;
+OnStop:
+	enablenpc "Enjoy#06xmas2";
+	killmonster "prt_fild05", "Enjoy#06xmas2::OnMobDead";
+	stopnpctimer;
+	end;
 
-	OnInit:
-		disablenpc "Enjoy#06xmas2";
-		end;
+OnInit:
+	disablenpc "Enjoy#06xmas2";
+	end;
 
-	OnTimer3000:
-		announce "Never cry for the past.", bc_map, 0x66FFCC;
-		end;
+OnTimer3000:
+	announce "Never cry for the past.", bc_map, 0x66FFCC;
+	end;
 
-	OnTimer5000:
-		announce "Never wait for the unexpected phone call!!", bc_map, 0x66FFCC;
-		end;
+OnTimer5000:
+	announce "Never wait for the unexpected phone call!!", bc_map, 0x66FFCC;
+	end;
 
-	OnTimer7000:
-		announce "Never have a lingering affection for the love that never have started!!!", bc_map, 0x66FFCC;
-		end;
+OnTimer7000:
+	announce "Never have a lingering affection for the love that never have started!!!", bc_map, 0x66FFCC;
+	end;
 
-	OnTimer9000:
-		announce "Never break down being a lonely single!!!", bc_map, 0x66FFCC;
-		end;
+OnTimer9000:
+	announce "Never break down being a lonely single!!!", bc_map, 0x66FFCC;
+	end;
 
-	OnTimer11000:
-		announce "Never remember the sad memory!!!.", bc_map, 0x66FFCC;
-		end;
+OnTimer11000:
+	announce "Never remember the sad memory!!!.", bc_map, 0x66FFCC;
+	end;
 
-	OnTimer13000:
-		announce "...I am the happy single soldier!!!", bc_map, 0x66FFCC;
-		end;
+OnTimer13000:
+	announce "...I am the happy single soldier!!!", bc_map, 0x66FFCC;
+	end;
 
-	OnTimer180000:
-		killmonster "prt_fild05", "Enjoy#06xmas2::OnMobDead";
-		announce "To all my single soldier friends~Merry christmas.", bc_map, 0x66FFCC;
-		donpcevent "Enjoy#06xmas2::OnStop";
-		end;
+OnTimer180000:
+	killmonster "prt_fild05", "Enjoy#06xmas2::OnMobDead";
+	announce "To all my single soldier friends~Merry christmas.", bc_map, 0x66FFCC;
+	donpcevent "Enjoy#06xmas2::OnStop";
+	end;
 
-	OnMobDead:
-		end;
+OnMobDead:
+	end;
 }
 
 prt_fild05,97,164,5	script	Happymerry#06xmas_02	4_M_LGTMAN,{
 	end;
 
-	OnInit:
-		disablenpc "Happymerry#06xmas_02";
-		end;
+OnInit:
+	disablenpc "Happymerry#06xmas_02";
+	end;
 
-	OnEnable:
-		enablenpc "Happymerry#06xmas_02";
-		emotion ET_GO;
-		end;
+OnEnable:
+	enablenpc "Happymerry#06xmas_02";
+	emotion ET_GO;
+	end;
 }
 
 prt_fild05,103,164,4	script	Christ#06xmas_02	4_M_PECOKNIGHT,{
 	end;
 
-	OnInit:
-		disablenpc "Christ#06xmas_02";
-		end;
+OnInit:
+	disablenpc "Christ#06xmas_02";
+	end;
 
-	OnEnable:
-		enablenpc "Christ#06xmas_02";
-		emotion ET_GO;
-		end;
+OnEnable:
+	enablenpc "Christ#06xmas_02";
+	emotion ET_GO;
+	end;
 }
 
 prt_fild05,103,159,1	script	Mas#06xmas_02	4_M_ALCHE_A,{
 	end;
 
-	OnInit:
-		disablenpc "Mas#06xmas_02";
-		end;
+OnInit:
+	disablenpc "Mas#06xmas_02";
+	end;
 
-	OnEnable:
-		enablenpc "Mas#06xmas_02";
-		emotion ET_GO;
-		end;
+OnEnable:
+	enablenpc "Mas#06xmas_02";
+	emotion ET_GO;
+	end;
 }
 
 prt_fild05,97,159,7	script	Event#06xmas_02	4_M_SITDOWN,{
 	end;
 
-	OnInit:
-		disablenpc "Event#06xmas_02";
-		end;
+OnInit:
+	disablenpc "Event#06xmas_02";
+	end;
 
-	OnEnable:
-		enablenpc "Event#06xmas_02";
-		emotion ET_GO;
-		end;
+OnEnable:
+	enablenpc "Event#06xmas_02";
+	emotion ET_GO;
+	end;
 }
 
 prt_fild05,188,177,4	script	Happymerry#06xmas01	4_M_LGTMAN,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_solo == 9) {
 		mes "[Happymerry]";
 		mes "God has betrayed me again!!Even Holgren!!!";
 		emotion ET_CRY;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "... Are you Happymerry?";
 		next;
 		mes "[Happymerry]";
 		mes "Go head and laugh at me!You don't understand why I get dumped on christmas day!!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Happymerry! Enjoy said...";
 		next;
 		mes "-I start stop talking and look around to see if anyone is listening.-";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Didn't Enjoy leave any clue for you?";
 		next;
 		mes "[Happymerry]";
@@ -1100,7 +1110,7 @@ prt_fild05,188,177,4	script	Happymerry#06xmas01	4_M_LGTMAN,{
 		mes "[Happymerry]";
 		mes "^0000ffGarden^000000!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "...What?What did you say?";
 		next;
 		mes "[Happymerry]";
@@ -1132,25 +1142,27 @@ prt_fild05,188,177,4	script	Happymerry#06xmas01	4_M_LGTMAN,{
 }
 
 prontera,62,339,3	script	Christ#06xmas_01	4_M_PECOKNIGHT,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_solo == 10) {
 		mes "[Christ]";
 		mes "Pecopeco~! Where should we head to??We've always been together and had overcome all difficulties and always will. Aren't we?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Are you Christ?";
 		next;
 		mes "[Christ]";
 		mes "Holy cats!Who the hell are you?!";
 		mes "Don't even think about getting near my peco. She gets scared easily to strangers.Get away!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Your pecopeco is a male...";
 		mes "By the way, did Enjoy...";
 		next;
 		mes "[Christ]";
 		mes "My Peco is not a male!?Even though she can't lay eggs,it is still a female. Apologize to her!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "...I'm sorry.";
 		mes "By the way, did Enjoy give you any clue...";
 		next;
@@ -1161,7 +1173,7 @@ prontera,62,339,3	script	Christ#06xmas_01	4_M_PECOKNIGHT,{
 		mes "[Christ]";
 		mes "^0000ffUnder the bench^000000!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "What do you mean?";
 		next;
 		mes "[Christ]";
@@ -1192,11 +1204,13 @@ prontera,62,339,3	script	Christ#06xmas_01	4_M_PECOKNIGHT,{
 }
 
 prontera,163,66,7	script	Mas#06xmas_01	4_M_ALCHE_A,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_solo == 11) {
 		mes "[Mas]";
 		mes "Herbs,potions.I can make it all by myself!!All I need is an honour.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Are you Mas?";
 		next;
 		mes "[Mas]";
@@ -1206,14 +1220,14 @@ prontera,163,66,7	script	Mas#06xmas_01	4_M_ALCHE_A,{
 		mes "[Mas]";
 		mes "... hum..it feels good talking to someone..But no no no no!! I'm running out of time!Go away!!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Hey!Wake up!!";
 		mes "I was just wondering whether Enjoy have left a...";
 		next;
 		mes "[Mas]";
 		mes "Enjoy? Did you just say Enjoy?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Yep! didn't Enjoy say anything to you?...";
 		next;
 		mes "[Mas]";
@@ -1223,7 +1237,7 @@ prontera,163,66,7	script	Mas#06xmas_01	4_M_ALCHE_A,{
 		mes "[Mas]";
 		mes "^0000ffWhere the sun goes down^000000!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "What did you say?";
 		next;
 		mes "[Mas]";
@@ -1254,12 +1268,14 @@ prontera,163,66,7	script	Mas#06xmas_01	4_M_ALCHE_A,{
 }
 
 prontera,35,209,5	script	Event#06xmas_01	4_M_SITDOWN,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_solo == 12) {
 		mes "[Event]";
 		mes "........................................I love you too, Miss Kafra!!!";
 		emotion ET_HUK, playerattached();
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "(Oh, shocks!)";
 		next;
 		mes "[Event]";
@@ -1268,7 +1284,7 @@ prontera,35,209,5	script	Event#06xmas_01	4_M_SITDOWN,{
 		mes "-He starts talking to his right hand with a smile on his face.-";
 		emotion ET_KIK;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Well..Mr.Event...Is there anything you heard from Enjoy??...Hello!!Are you listening?!";
 		mes "(-Shuddering-)";
 		emotion ET_CRY, playerattached();
@@ -1276,14 +1292,14 @@ prontera,35,209,5	script	Event#06xmas_01	4_M_SITDOWN,{
 		mes "[Event]";
 		mes "Did you hear what she said Tinybee?She just said The Kafra services are always on your side.I know she just shy to say the truth. Why can't she just say stay Mr.Event~.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Excuse me... um...I believe Enjoy left a message for me...didn't he?...";
 		mes "(Ah~Such a weirdo!!!)";
 		next;
 		mes "[Event]";
 		mes "^0000ffAnother note^000000.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "What did you say??";
 		next;
 		mes "[Event]";
@@ -1311,7 +1327,7 @@ prontera,35,209,5	script	Event#06xmas_01	4_M_SITDOWN,{
 		mes "........................................I love you too, Miss Kafra!!!";
 		emotion ET_HUK, playerattached();
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "(Oh, shocks!)";
 		next;
 		mes "[Event]";
@@ -1328,6 +1344,8 @@ prontera,35,209,5	script	Event#06xmas_01	4_M_SITDOWN,{
 //============================================================
 
 xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
+	.@name$ = strcharinfo(0);
+
 	if (06christ_santa < 1) {
 		mes "[Poe]";
 		mes "Yo-ho, yo-ho.";
@@ -1336,7 +1354,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 		mes "O! You! Don't make trouble !";
 		specialeffect EF_HIT2;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "What's are you doing there, boy? Violence is a bad.";
 		next;
 		mes "[Poe]";
@@ -1357,16 +1375,16 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 		mes "[Poe]";
 		mes "Why do you have nothing to do? Don't you have any friends? I can be your friend if you like.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Pooh, I have many friends! I'm just having a time for myself! That's all! ";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "By the way, what were you doing? You were beating something, Violence is bad.";
 		next;
 		mes "[Poe]";
 		mes "Hum, but he's always making troubles. He's mean!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Who's making troubles?";
 		next;
 		mes "-He shows what he's holding in his arms-";
@@ -1374,7 +1392,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 		mes "[Poe]";
 		mes "This one. Mom said that she would allow me to raise him if he doesn't make any trouble, but look! He's such a troublemaker!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "What's that? Where did you found it?";
 		next;
 		mes "[Poe]";
@@ -1394,13 +1412,13 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 		mes "[Poe]";
 		mes "That made my parents angry so they're telling me to throw it away but... but...";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Hum...  suspicious... This blotch... it's misterious! It seems to be wicked! It makes me feel that I should clean it!";
 		next;
 		mes "[Poe]";
 		mes "Hey!!I said not to touch! I'll make him good! He's my brother!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Hum.. it seems dangerous... Hey, You'd better listen to me. I'm an adventurer who have lot of experiences. It's real suspicious.I have a feeling that people, especially a little boy like you couldn't tame it ...";
 		next;
 		mes "[Poe]";
@@ -1408,34 +1426,34 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 		mes "(Screaming). He's my brother!!! (He cried out).";
 		emotion ET_CRY;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Oh, don't cry, please...";
 		mes "Ok, I'll do anything for you! So please don't cry!";
 		next;
 		mes "[Poe]";
 		mes "...(He stopped crying)... What will you do for me?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Well, first of all its wicked spirit should be purified. I'm going to go to church and inquire about the egg. Please give me the egg...";
 		next;
 		mes "[Poe]";
 		mes "(He shouted out)No!!!!!";
 		emotion ET_CRY;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "... Ok, I guess it would be difficult to take it from you. Take care of the egg until I come back.Be careful!";
 		emotion ET_KEK, playerattached();
 		06christ_santa = 1;
 		close;
 	} else if (06christ_santa > 0 && 06christ_santa < 3) {
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Well, first of all its wicked spirit should be purified. I'm going to go to church and inquire about the egg. Please give me the egg...";
 		next;
 		mes "[Poe]";
 		mes "(He shouted out)No!!!!";
 		emotion ET_CRY;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "... Ok, I guess it would be difficult to take it from you. Take care of the egg until I come back.Be careful!";
 		emotion ET_KEK, playerattached();
 		close;
@@ -1444,26 +1462,26 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 		mes "Hey! Please keep still!";
 		specialeffect EF_HIT2;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Hey! I got something for you! This is^0000ffblessed powder for purification^000000 which will clean up the egg!";
 		next;
 		mes "[Poe]";
 		mes "Oh, you came back! So you mean with the powder, it will become nicer?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Hum... I don't trust the nun at the church... But it wouldn't harm us giving a try!";
 		next;
 		mes "[Poe]";
 		mes "Ok then, please do that for me!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Ok just leave it on me!!!!!";
 		mes "...";
 		mes "(...but how do I use it?...)";
 		next;
 		switch(select("Boil it with the egg", "Put the powder into the egg through a hole", "Strew the power on the egg", "Knead the powder with water and cover the egg")) {
 			case 1:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "(Well, I don't know what to do !)";
 				mes "I'm going to put it in the water and then boil it!";
 				specialeffect2 EF_DEMONSTRATION;
@@ -1476,7 +1494,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				warp "xmas", 148, 116;
 				end;
 			case 2:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "(Well, I don't know what to do !)";
 				mes "After making a hole on the egg, I'm going to put the powder in it?!";
 				specialeffect2 EF_STUNATTACK;
@@ -1491,7 +1509,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 			case 3:
 				break;
 			case 4:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "(Well, I don't know what to do !)";
 				mes "I'll knead the powder with water and cover the egg !";
 				specialeffect2 EF_KEEPING;
@@ -1504,7 +1522,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				warp "xmas", 148, 116;
 				end;
 		}
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "(Well, I don't know what to do !)";
 		mes "I'm going to strew the powder on the egg!";
 		mes "A bad boy must be punished!!!";
@@ -1520,41 +1538,41 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 		mes "Did we succeed?!";
 		mes "Is he going to make troubles anymore?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Hum... well I'm not sure.";
 		mes "The wicked spirit has gone but we still don't know which monster's egg it is... Why don't just give it to me??";
 		next;
 		mes "[Poe]";
 		mes "No! I've been lonely without a brother and a sister! I need him! I want a brother.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "But, nobody knows what's inside. It may be very dangerous or terrible... That's why I'm worrying about leaving the monster's egg with you, a little boy...";
 		next;
 		mes "[Poe]";
 		mes "No! You can't take it from me.";
 		emotion ET_CRY;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Hum... I don't know what to do... What should I do...?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Ok! All right, then how's this?!";
 		emotion ET_AHA, playerattached();
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "I'll introduce you another good monster. How about exchanging it?";
 		next;
 		mes "[Poe]";
 		mes "What...?";
 		mes "Hum..another one?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "That's it! If I bring you cuter monster won't it be nicer? So what do you think?";
 		next;
 		mes "[Poe]";
 		mes "Hum... ok, I'll take it.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Good! I will prepare an item which I can tame with. Wait!";
 		06christ_santa = 4;
 		close;
@@ -1570,7 +1588,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 		next;
 		switch(select("Poring", "Drops", "Poporing", "Lunatic", "Picky", "Savage bebe", "Chonchon", "Spore", "Poison spore", "PecoPeco", "Steel Chonchon", "Hunter fly", "Smokie", "Rocker", "Dokebi", "Desert wolf", "Isis", "Petite", "Munak", "Bon gun", "Orc warrior", "Bapho Jr", "Deviruchi", "Sohee", "Yoyo")) {
 			case 1:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'unripe apple'! It's little sour but Poring likes it!";
 				.@mobName$ = "Poring";
 				.@delItem = 619; // Unripe_Apple
@@ -1578,7 +1596,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 2:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'orange juice'! A fresh squeezed orange juice . Drops likes it!";
 				.@mobName$ = "Drops";
 				.@delItem = 620; // Orange_Juice
@@ -1586,7 +1604,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 3:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'bitter herb'! Due to its bitterness, whoever eats it make wry face.But  Poporing likes it!";
 				.@mobName$ = "Poporing";
 				.@delItem = 621; // Bitter_Herb
@@ -1594,7 +1612,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 4:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'rainbow carrot'! It has seven colors and it smells really good. Lunatic likes it!";
 				.@mobName$ = "Lunatic";
 				.@delItem = 622; // Rainbow_Carrot
@@ -1602,7 +1620,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 5:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'nice earthworm'! It's a handsome young worm! Its red bow tie on his neck makes him look more charming! Picky likes it!";
 				.@mobName$ = "Picky";
 				.@delItem = 623; // Earthworm_The_Dude
@@ -1610,7 +1628,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 6:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'sweet milk'! It is a special processed milk which has special taste and a flavor. Sevage Bebe likes it!";
 				.@mobName$ = "Sevage Bebe";
 				.@delItem = 627; // Sweet_Milk
@@ -1618,7 +1636,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 7:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!!!I've prepared an 'rotten fish'! It's been rotten for a long time, Chonchon likes it!";
 				.@mobName$ = "Chonchon";
 				.@delItem = 624; // Rotten_Fish
@@ -1626,7 +1644,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 8:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'moss with morning's dew'! It is a green moss which is grown with morning's dew. Spore likes it!";
 				.@mobName$ = "Spore";
 				.@delItem = 630; // Dew_Laden_Moss
@@ -1634,7 +1652,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 9:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'deadly noxious herb'! It's a kind of herb that has deadly poison. Poison Spore likes it!";
 				.@mobName$ = "Poison Spore";
 				.@delItem = 631; // Deadly_Noxious_Herb
@@ -1642,7 +1660,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 10:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!! I've prepared an 'fatty chubby earthworm'! It's healthy and plumpy. PecoPeco likes it!";
 				.@mobName$ = "PecoPeco";
 				.@delItem = 632; // Fatty_Chubby_Earthworm
@@ -1650,7 +1668,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 11:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!! I've prepared an 'rusty iron'! It's too rusty to use it. Steel Chonchon likes it!";
 				.@mobName$ = "Steel Chonchon";
 				.@delItem = 625; // Lusty_Iron
@@ -1658,7 +1676,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 0;
 				break;
 			case 12:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'monster juice'! It's made of animal's blood, Hunter Fly likes it!";
 				.@mobName$ = "Hunter Fly";
 				.@delItem = 626; // Monster_Juice
@@ -1666,7 +1684,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 1;
 				break;
 			case 13:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'baked sweet potato'! It is an well baked sweet potato which is ready to be served. Smokie likes it!";
 				.@mobName$ = "Smokie";
 				.@delItem = 633; // Baked_Yam
@@ -1674,7 +1692,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 1;
 				break;
 			case 14:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'singing flower'! It blossoms from singing plant. Rocker likes it!";
 				.@mobName$ = "Rocker";
 				.@delItem = 629; // Singing_Flower
@@ -1682,7 +1700,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 1;
 				break;
 			case 15:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an an 'old broom'!A generations old broom that is handed down within a family. Dokebi likes it!";
 				.@mobName$ = "Dokebi";
 				.@delItem = 637; // Old_Broom
@@ -1690,7 +1708,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 1;
 				break;
 			case 16:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'well dried bone'! It's been dried in the sun.Young Desert wolf likes it!";
 				.@mobName$ = "Desert Wolf";
 				.@delItem = 628; // Well_Dried_Bone
@@ -1698,7 +1716,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 1;
 				break;
 			case 17:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an an 'armlet of_ obedience'! It's really dazzling but has somewhat sad image. Isis likes it!";
 				.@mobName$ = "Isis";
 				.@delItem = 639; // Armlet_Of_Obedience
@@ -1706,7 +1724,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 3;
 				break;
 			case 18:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an a 'shining stone'! It's very beautiful. Petite likes it!";
 				.@mobName$ = "Petite";
 				.@delItem = 640; // Shining_Stone
@@ -1714,7 +1732,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 3;
 				break;
 			case 19:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an a 'blind letter'! An old, heartfelt letter that has never been delivered since it has no recipient. Munak likes it!";
 				.@mobName$ = "Munak";
 				.@delItem = 636; // No_Recipient
@@ -1722,7 +1740,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 3;
 				break;
 			case 20:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'her heart'! It has an soul of a girl who couldn't open her heart for a long time. Bon Gun likes it!";
 				.@mobName$ = "Bon Gun";
 				.@delItem = 659; // Heart_Of_Her
@@ -1730,7 +1748,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 3;
 				break;
 			case 21:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'Horror of tribe'! You can get to know about the strict rule of the tribe with it. Orc Warrior likes it!";
 				.@mobName$ = "Orc Warrior";
 				.@delItem = 635; // Horror_Of_Tribe
@@ -1738,7 +1756,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 3;
 				break;
 			case 22:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'Book of devil'!A forbidden book in which the secret for summoning high level demons is detailed. Bapho Jr likes it!";
 				.@mobName$ = "Bapho Jr";
 				.@delItem = 642; // Book_Of_Devil
@@ -1746,7 +1764,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 3;
 				break;
 			case 23:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an a 'contract in the dark'! It's a contract as it's called. Deviruchi likes it!";
 				.@mobName$ = "Deviruchi";
 				.@delItem = 641; // Contracts_In_Shadow
@@ -1754,7 +1772,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 3;
 				break;
 			case 24:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'silver knife of the purity'! It represents the virginity. Sohee likes it!";
 				.@mobName$ = "Sohee";
 				.@delItem = 638; // Silver_Knife_Of_Chaste
@@ -1762,7 +1780,7 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 				.@cookieAmount = 3;
 				break;
 			case 25:
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Here!!I've prepared an 'tropical banana'! A premium quality banana grown in the tropics. Yoyo likes it!";
 				.@mobName$ = "Yoyo";
 				.@delItem = 634; // Tropical_Banana
@@ -1788,12 +1806,12 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 			mes "[Poe]";
 			mes "So, where's it?";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Hum, here it is!";
 			mes " ";
 			mes "...um..it must be inside...the..um";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Dear! Where has it gone?";
 			mes "Hang on, give me some time to look for it!";
 			close;
@@ -1809,6 +1827,8 @@ xmas,152,290,3	script	Poe#06xmas_poe01	4_M_KID2,{
 }
 
 prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
+	.@name$ = strcharinfo(0);
+
 	if (06christ_santa < 1) {
 		mes "[Ohholy]";
 		mes "-Joy to the world! The Lord is come-";
@@ -1851,14 +1871,14 @@ prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
 			mes "I wish you a Merry Christmas!.";
 			close;
 		}
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "In fact, I was on my way to the church to ask someone to purify the egg that has wicked spirit in it.";
 		next;
 		mes "[Ohholy]";
 		mes "What? Did you say wicked spirit?";
 		mes "Do you mean the devil is around  here somewhere on this holy day?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "No... but, I'm not sure whether it's the devil or not...";
 		next;
 		mes "[Ohholy]";
@@ -1867,13 +1887,13 @@ prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
 		mes "[Ohholy]";
 		mes "I'll drive the evil away along God's will! Where is it? The devil!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Come on, please... You'd better listen to me first...";
 		next;
 		mes "[Ohholy]";
 		mes "Ok! Lead the way! This hand is to serve God! I'll drive all the devil away from our world with my hand!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Ok, listen to me, first!!! Please!!!";
 		next;
 		mes "-You explained about the egg found by Poe to nun Ohholy, slowly and clearly.-";
@@ -1881,7 +1901,7 @@ prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
 		mes "[Ohholy]";
 		mes "Got it, that's what happened till now? You should have said it earlier.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "I wanted to but...";
 		next;
 		mes "[Ohholy]";
@@ -1898,13 +1918,13 @@ prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
 			mes "-Let earth receive her King-";
 			specialeffect EF_GLORIA;
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Ma'am? I've got everything for the powder.";
 			next;
 			mes "[Ohholy]";
 			mes "Pardon? What do you mean?";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "You promised to make me the ^0000ffBlessed powder for purification^000000! Did you forget about it?";
 			next;
 			mes "[Ohholy]";
@@ -1917,7 +1937,7 @@ prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
 			mes "[Ohholy]";
 			mes "...Hum... by the way, why did I promise to make you the ^0000ffBlessed powder for purification^000000?";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "(She completely forgot it!)";
 			mes "...Well..";
 			next;
@@ -1981,7 +2001,7 @@ prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
 					emotion ET_HUK, playerattached();
 					percentheal -30, 0;
 					next;
-					mes "["+ strcharinfo(0) +"]";
+					mes "["+ .@name$ +"]";
 					mes "Oh, no!!Stop it! I have a real bad headache!!!";
 					next;
 					mes "[Ohholy]";
@@ -1992,7 +2012,7 @@ prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
 			mes "[Ohholy]";
 			mes "Ok, if you bring all materials, I'll make you ^0000ffBlessed powder for purification^000000! Go get the stuffs!";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "... You didn't tell me what I to bring...";
 			next;
 			mes "[Ohholy]";
@@ -2021,11 +2041,13 @@ prontera,226,306,0	script	Ohholy#06ohholy_01	1_F_PRIEST,{
 //============================================================
 
 xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_carol == 8) {
 		mes "[Isite]";
 		mes "...Please buy matches~ please~";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "...(She's familiar....)";
 		mes "It's nice of you selling matches on this cold day.";
 		mes "I got a gift for you, good girl!";
@@ -2037,7 +2059,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "[Isite]";
 			mes "Thank you. I'm so happy... Santa Claus";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "I wish you to like it. Open it.";
 			next;
 			mes "-She opened it carefully with flushed face-";
@@ -2046,7 +2068,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "...Hum, it seems to be useful.";
 			emotion ET_KIK;
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "... Do, do you like it?";
 			next;
 			mes "[Isite]";
@@ -2088,7 +2110,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "I mean, Chepet matches~~";
 			mes "(Cough)";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "...(She's familiar....)";
 			mes "(What's this...... if I talk to her)";
 			mes "(something bad will be likely to happen...)";
@@ -2106,7 +2128,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "[Isite]";
 			mes "Mr. Adventurer, could you come closer?";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Pardon?... ah, you're talking to me...?";
 			next;
 			mes "-She pulled you closer and started threatening with a low voice-";
@@ -2115,13 +2137,13 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "[Isite]";
 			mes "Why are you just looking at me not helping. ? You wanna die~!?";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Pardon...? Oh, I'm sorry. I'll buy the matches. How much are they?";
 			next;
 			mes "[Isite]";
 			mes "You hurt a poor girl's heartand buying just a match as an apology?Have a moral.-";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Hum... so, what? What do you want?";
 			next;
 			mes "[Isite]";
@@ -2130,7 +2152,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "[Isite]";
 			mes "If you go inside the house, there's a boy called 'Isire' sick in bed. Help him.";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Why do I have to do?";
 			next;
 			mes "[Isite]";
@@ -2145,7 +2167,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "[Isite]";
 			mes "...Hey.";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "I....I've done what you told me to do....";
 			mes "I didn't say to him that you forced me to do it.";
 			mes "You wouldn't do campfire, would you?";
@@ -2153,13 +2175,13 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "[Isite]";
 			mes "... Can I ask you one more favor?";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Eh? more!? Don't you think it's too hard for me?!";
 			next;
 			mes "[Isite]";
 			mes "If you say so, I would be hurt... then, I would strike a light to get some warmth... and then  ...";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "What! Ok , I'll do it!!! What do you want?! Tell me what to do!";
 			mes " ";
 			mes "(Isite! A terrible girl!)";
@@ -2168,7 +2190,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "[Isite]";
 			mes "People say adventurers can get '^0000ffpanacea^000000' from somewhere. Can you get it for me?";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "What...? Oh,sure...";
 			mes "Piece of cake! I'll go get it right away!";
 			mes "By the way, it's dangerous playing with fire!!";
@@ -2177,19 +2199,19 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 			mes "[Isite]";
 			mes "If you take too much time, I may burn up a whole matchbox...";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Hey~~easy~~I'll be back in a min~!!";
 			05christ_deli = 23;
 			close;
 		} else if (05christ_deli == 23) {
 			if (countitem(525) > 0) {
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "I got the panacea!!! Here it is!!!";
 				next;
 				mes "[Isite]";
 				mes "..................................................Thank you...";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "From now on, I won't do what you ask me to do.....";
 				mes "...What?What did you just say?";
 				emotion ET_HUK, playerattached();
@@ -2211,7 +2233,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 				mes "[Isite]";
 				mes "So I thought of giving him the best christmas memory,that's all! Sorry for being rude. I just wanted to prepare the Christmas Day that he had dreamed of. I appreciate what you have done for me.";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "It's my pleasure.";
 				mes "(You didn't ask a favor, you have threaten me!!!)";
 				next;
@@ -2225,14 +2247,14 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 				mes "Whatever,I wish you to like it.";
 				emotion ET_SMILE;
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Oh I don't think that I deserve it~";
 				emotion ET_SMILE, playerattached();
 				next;
 				mes "[Isite]";
 				mes "Good, maybe next time I would need your help, too...";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "What? What did you say?";
 				next;
 				mes "[Isite]";
@@ -2255,7 +2277,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 				mes "[Isite]";
 				mes "People say adventurers can get '^0000ffpanacea^000000' from somewhere. Can you get it for me?";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "What...? Oh, sure...";
 				mes "It's piece of cake! I'll get it right away!";
 				mes "By the way,it's dangerous to playing with fire!!";
@@ -2264,7 +2286,7 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 				mes "[Isite]";
 				mes "If you take too much time, I may burn up a whole matchbox...";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Hey~~easy~~I'll be back in a min~!!";
 				close;
 			}
@@ -2281,6 +2303,8 @@ xmas,137,233,3	script	Isite#06tasty_01	4_F_NFLOSTGIRL,{
 }
 
 xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_deli < 12) {
 		mes "[Isire]";
 		mes "......mmmm...";
@@ -2298,7 +2322,7 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		mes "[Isire]";
 		mes "I'm too weak to do something for my sister... (Cough)";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Can I help you?! I'll do if there's something I can do!";
 		next;
 		mes "[Isire]";
@@ -2307,7 +2331,7 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		mes "Oh..(he coughs)";
 		mes "I have a runny nose... (He blew his nose on a tissue)";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Tell me what I have to do!";
 		mes "What are you doing now? How can I help you? Tell me what to do!";
 		mes " ";
@@ -2326,7 +2350,7 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		mes "[Isire]";
 		mes "And ^4d4dffRednyre^000000is waiting... for me...(cough)!!!";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Ok, I got it! Take care of yourself!!!I gotta go now!!!";
 		next;
 		mes "[Isire]";
@@ -2340,14 +2364,14 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		mes "[Isire]";
 		mes "Oh... I think I have a fever... (cough).";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Isire!!! Can you hear me? Are you Ok?";
 		next;
 		mes "[Isire]";
 		mes "What?! Did you?? Did you take...my part time job?! Did you?!?!";
 		mes "I, I have a sister who I have to take care of... (cough)...";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "No, no!!! It's not that...";
 		mes "I just wanted to help you, that's all!!!";
 		mes "I brought the tree for Christmas instead of you!";
@@ -2359,12 +2383,12 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		mes "Why did you help me? We've not seen each other before...";
 		mes "...Well..actually I recognize your face...somewhere from.....";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Don't ask why... hahaha...";
 		next;
 		mes "-You glanced at the window and see a Isite with a match-";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "I said that I just wanted to help you!No special meaning!!";
 		mes "I...um...I..I'm ...";
 		mes "(I can't think of any good reason!)";
@@ -2374,7 +2398,7 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		emotion ET_HUK, playerattached();
 		emotion ET_HUK;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "(What did I say?!)";
 		mes "...um, that's because...";
 		next;
@@ -2385,7 +2409,7 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		mes "(Cough)";
 		emotion ET_AHA;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "(...Oh I didn't mean that way...)";
 		mes "(What's going on...)";
 		emotion ET_SWEAT, playerattached();
@@ -2408,7 +2432,7 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		next;
 		mes "-He kept sniffling and coughing while talking to you. And finally he laid in his bed-";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Sure, it's nothing difficult!";
 		mes "Get some sleep while I'm looking for those stuffs .";
 		mes " ";
@@ -2434,62 +2458,62 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 					mes "[Isire]";
 					mes "Wow, this is a cute Poring doll.";
 					.@doll = 741; // Poring_Doll
-					setarray .@rewardItems[0] = 12200, 12130;
-					setarray .@rewardAmts[0] = 3,1;
+					setarray .@rewardItems[0], 12200, 12130;
+					setarray .@rewardAmts[0], 3, 1;
 					break;
 				case 2:
 					mes "[Isire]";
 					mes "Wow, this is a cute ChonChon Doll.";
 					.@doll = 742; // Chonchon_Doll
-					setarray .@rewardItems[0] = 12200, 12130;
-					setarray .@rewardAmts[0] = 3,1;
+					setarray .@rewardItems[0], 12200, 12130;
+					setarray .@rewardAmts[0], 3, 1;
 					break;
 				case 3:
 					mes "[Isire]";
 					mes "Wow, this is a cute Stuffed Doll.";
 					.@doll = 740; // Stuffed_Doll
-					setarray .@rewardItems[0] = 12200, 12130;
-					setarray .@rewardAmts[0] = 3,1;
+					setarray .@rewardItems[0], 12200, 12130;
+					setarray .@rewardAmts[0], 3, 1;
 					break;
 				case 4:
 					mes "[Isire]";
 					mes "....Ah.................?!..";
 					mes "This is a cute Hanging Doll.";
 					.@doll = 7212; // Hanging_Doll
-					setarray .@rewardItems[0] = 12200, 12130;
-					setarray .@rewardAmts[0] = 3,1;
+					setarray .@rewardItems[0], 12200, 12130;
+					setarray .@rewardAmts[0], 3, 1;
 					break;
 				case 5:
 					mes "[Isire]";
 					mes "Wow. this is a Spore doll.";
 					mes "So cute!";
 					.@doll = 743; // Spore_Doll
-					setarray .@rewardItems[0] = 12200, 12130, 522;
-					setarray .@rewardAmts[0] = 5,1,1;
+					setarray .@rewardItems[0], 12200, 12130, 522;
+					setarray .@rewardAmts[0], 5, 1, 1;
 					break;
 				case 6:
 					mes "[Isire]";
 					mes "Wow. Is this a Raccoon Doll?";
 					mes "Wasn't it difficult to find out....?";
 					.@doll = 754; // Raccoondog_Doll
-					setarray .@rewardItems[0] = 12200, 12130, 522;
-					setarray .@rewardAmts[0] = 5,1,1;
+					setarray .@rewardItems[0], 12200, 12130, 522;
+					setarray .@rewardAmts[0], 5, 1, 1;
 					break;
 				case 7:
 					mes "[Isire]";
 					mes "Wow, this is a monkey doll.";
 					mes "Where did you get this?";
 					.@doll = 753; // Monkey_Doll
-					setarray .@rewardItems[0] = 12200, 12130, 522;
-					setarray .@rewardAmts[0] = 5,1,1;
+					setarray .@rewardItems[0], 12200, 12130, 522;
+					setarray .@rewardAmts[0], 5, 1, 1;
 					break;
 				case 8:
 					mes "[Isire]";
 					mes "Wow. This is a grasshopper doll, isn't it?";
 					mes "How did you get this...";
 					.@doll = 752; // Grasshopper_Doll
-					setarray .@rewardItems[0] = 12200, 12130, 522;
-					setarray .@rewardAmts[0] = 5,1,1;
+					setarray .@rewardItems[0], 12200, 12130, 522;
+					setarray .@rewardAmts[0], 5, 1, 1;
 					break;
 				case 9:
 					mes "[Isire]";
@@ -2497,8 +2521,8 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 					mes "I also want to have one.";
 					mes "Actually, It's my favorite doll.";
 					.@doll = 7206; // Black_Kitty_Doll
-					setarray .@rewardItems[0] = 12200, 12130, 548;
-					setarray .@rewardAmts[0] = 5,3,3;
+					setarray .@rewardItems[0], 12200, 12130, 548;
+					setarray .@rewardAmts[0], 5, 3, 3;
 					break;
 				case 10:
 					mes "[Isire]";
@@ -2506,24 +2530,24 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 					mes "It's so cute.";
 					mes "I also want to have one.";
 					.@doll = 7277; // Munak_Doll
-					setarray .@rewardItems[0] = 12200, 12130, 548;
-					setarray .@rewardAmts[0] = 5,3,3;
+					setarray .@rewardItems[0], 12200, 12130, 548;
+					setarray .@rewardAmts[0], 5, 3, 3;
 					break;
 				case 11:
 					mes "[Isire]";
 					mes "Wow, this is Osiris doll!!!!!!";
 					mes "Where did you get this?";
 					.@doll = 751; // Osiris_Doll
-					setarray .@rewardItems[0] = 12200, 12130, 607;
-					setarray .@rewardAmts[0] = 7,5,1;
+					setarray .@rewardItems[0], 12200, 12130, 607;
+					setarray .@rewardAmts[0], 7, 5, 1;
 					break;
 				case 12:
 					mes "[Isire]";
 					mes "Wow. this is baphomet doll!!!!!!";
 					mes "How did you get this.";
 					.@doll = 750; // Baphomet_Doll
-					setarray .@rewardItems[0] = 12200, 12130, 607;
-					setarray .@rewardAmts[0] = 7,5,1;
+					setarray .@rewardItems[0], 12200, 12130, 607;
+					setarray .@rewardAmts[0], 7, 5, 1;
 					break;
 			}
 			mes "Isite..(He blew his nose on a tissue) would like it";
@@ -2570,7 +2594,7 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 			next;
 			mes "-He kept sniffling and coughing while talking to you. And finally he laid in his bed-";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "It wouldn't be tough!";
 			mes "Get some sleep while I'm looking for those stuffs.";
 			mes " ";
@@ -2590,7 +2614,7 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		mes "Why did you ask me about^4d4dffRednyre^000000...";
 		mes "Why did you(cough)?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "...Um.. In fact...";
 		next;
 		mes "[??????]";
@@ -2600,7 +2624,7 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 		mes "-With a sound of girl striking a match-";
 		mes "-she coughed.-";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "(..That must mean not to talk about.....)";
 		mes "Hum! I'd better go now 'cause I'm busy!!!";
 		next;
@@ -2614,6 +2638,8 @@ xmas_in,109,109,3	script	Isire#06risse_01	4_M_LIEMAN,{
 }
 
 xmas,138,140,7	script	Rednyre#06reindeer_01	4_M_REINDEER,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_deli < 13) {
 		mes "[Rednyre]";
 		mes "Why is he being late?";
@@ -2628,7 +2654,7 @@ xmas,138,140,7	script	Rednyre#06reindeer_01	4_M_REINDEER,{
 		mes "No wonder what^4d4dffIsire^000000 is doing? Where is he?";
 		emotion ET_FRET;
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "I'm here for Isire!!";
 		mes "What should I do?";
 		next;
@@ -2636,7 +2662,7 @@ xmas,138,140,7	script	Rednyre#06reindeer_01	4_M_REINDEER,{
 		mes "...Who are you?";
 		mes "It's Isire's job deliverying the cake..";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Isire is now suffering from cold!";
 		mes "We have already talked about it and he asked me to do the work instead of him!!";
 		next;
@@ -2654,7 +2680,7 @@ xmas,138,140,7	script	Rednyre#06reindeer_01	4_M_REINDEER,{
 		mes "[Rednyre]";
 		mes "Why are you hesitating? I said you go deliver cakes!?";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "But where's the address for delivery...";
 		next;
 		mes "[Rednyre]";
@@ -2718,6 +2744,8 @@ xmas,138,140,7	script	Rednyre#06reindeer_01	4_M_REINDEER,{
 }
 
 xmas,168,160,3	script	Pellys#06feliz_01	1_ETC_01,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_deli < 15) {
 		mes "[Pellys]";
 		mes "Holy cats!When are they going to bring my cake!";
@@ -2727,18 +2755,18 @@ xmas,168,160,3	script	Pellys#06feliz_01	1_ETC_01,{
 		mes "No wonder what ^4d4dffRednyre^000000 is doing!?";
 		close;
 	} else if (05christ_deli == 15) {
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Sorry for being late~!!Christmas Cake delivery!!";
 		next;
 		mes "[Pellys]";
 		mes "Oh! finally you are here!I was worried that I might have to spend christmas without a cake.";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Pellys, this must be your cake...";
 		next;
 		input .@input$;
 		if (.@input$ == "BUSHED NOEL") {
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Pellys, this must be your cake... ^0000ff'BUSHED NOEL'^000000is that right?";
 			next;
 			mes "[Pellys]";
@@ -2747,7 +2775,7 @@ xmas,168,160,3	script	Pellys#06feliz_01	1_ETC_01,{
 			05christ_deli = 16;
 			close;
 		} else {
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Pellys, this must be your cake... "+ .@input$ +"is that right?!";
 			next;
 			mes "[Pellys]";
@@ -2765,6 +2793,8 @@ xmas,168,160,3	script	Pellys#06feliz_01	1_ETC_01,{
 }
 
 xmas,113,273,4	script	Navidad#06navidad_01	4_F_05,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_deli < 16) {
 		mes "[Navidad]";
 		mes "No wonder when will Rednyre bring my cake. Kids are going to come back home in any minute.";
@@ -2773,18 +2803,18 @@ xmas,113,273,4	script	Navidad#06navidad_01	4_F_05,{
 		mes "No wonder what ^4d4dffRednyre^000000 is doing!?";
 		close;
 	} else if (05christ_deli == 16) {
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Sorry for being late~!!Christmas Cake delivery!!";
 		next;
 		mes "[Navidad]";
 		mes "Thank you. I thought something happened to you....";
 		next;
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Navidad, this must be your cake...";
 		next;
 		input .@input$;
 		if (.@input$ == "RUDOLPH IN THE GARDEN") {
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Navidad, this must be your cake.. ^0000ff'RUDOLPH IN THE GARDEN'^000000,is that right?";
 			next;
 			mes "[Navidad]";
@@ -2793,7 +2823,7 @@ xmas,113,273,4	script	Navidad#06navidad_01	4_F_05,{
 			05christ_deli = 17;
 			close;
 		} else {
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Navidad, this must be your cake... "+ .@input$ +",is that right?!";
 			next;
 			mes "[Navidad]";
@@ -2809,6 +2839,8 @@ xmas,113,273,4	script	Navidad#06navidad_01	4_F_05,{
 }
 
 xmas,119,155,5	script	Joyeux#06Joyeux_01	4_M_OILMAN,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_deli < 17) {
 		if (Sex == SEX_MALE) {
 			mes "[Joyeux]";
@@ -2830,7 +2862,7 @@ xmas,119,155,5	script	Joyeux#06Joyeux_01	4_M_OILMAN,{
 			close;
 		}
 	} else if (05christ_deli == 17) {
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Sorry for being late~!!Christmas Cake delivery!!";
 		next;
 		if (Sex == SEX_MALE) {
@@ -2838,12 +2870,12 @@ xmas,119,155,5	script	Joyeux#06Joyeux_01	4_M_OILMAN,{
 			mes "What took you so long?";
 			mes "I was expecting you bringing my cake on next christmas.";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Joyeux, this must be your cake...";
 			next;
 			input .@input$;
 			if (.@input$ == "MY FAIR LADY SANTA CLAUS") {
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Joyeux, this must be your cake.. ^0000ff'MY FAIR LADY SANTA CLAUS'^000000,is that right?";
 				next;
 				mes "[Joyeux]";
@@ -2851,7 +2883,7 @@ xmas,119,155,5	script	Joyeux#06Joyeux_01	4_M_OILMAN,{
 				05christ_deli = 18;
 				close;
 			} else {
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Joyeux, this must be your cake.. "+ .@input$ +",is that right?!";
 				next;
 				mes "[Joyeux]";
@@ -2866,27 +2898,27 @@ xmas,119,155,5	script	Joyeux#06Joyeux_01	4_M_OILMAN,{
 			next;
 			mes "-He blows warm breath on your hand.-";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Um...it's ok..I'm not even cold.";
 			mes "By the way, sorry for being late.";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes "Joyeux, this must be your cake...";
 			next;
 			input .@input$;
 			if (.@input$ == "MY FAIR LADY SANTA CLAUS") {
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Joyeux, this must be your cake... ^0000ff'MY FAIR LADY SANTA CLAUS'^000000, is that right?";
 				next;
 				mes "[Joyeux]";
 				mes "Wow~this cake seems so delicious. Why don't you get inside and try some with a cup of coffee?";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "It's ok. Actually I gotta go.I have things left to deliver.";
 				emotion ET_PROFUSELY_SWAT, playerattached();
 				next;
 				mes "[Joyeux]";
-				mes "Oh my sweet "+ strcharinfo(0)+"!!";
+				mes "Oh my sweet "+ .@name$ +"!!";
 				mes "Come visit me anytime.";
 				mes "You are always welcome.";
 				mes "I will whisper a sweet word in your ear.";
@@ -2894,13 +2926,13 @@ xmas,119,155,5	script	Joyeux#06Joyeux_01	4_M_OILMAN,{
 				05christ_deli = 18;
 				close;
 			} else {
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Joyeux, this must be your cake... "+ .@input$ +", is that right?!";
 				next;
 				mes "[Joyeux]";
 				mes "Whatever the cake is made of, I'll eat up all cause you brought it only for me in this cold weather.";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "...oops...";
 				emotion ET_PROFUSELY_SWAT, playerattached();
 				close;
@@ -2925,6 +2957,8 @@ xmas,119,155,5	script	Joyeux#06Joyeux_01	4_M_OILMAN,{
 }
 
 xmas,157,126,6	script	Noel#06noel_01	4_F_KID3,{
+	.@name$ = strcharinfo(0);
+
 	if (05christ_deli < 18) {
 		if (Sex == SEX_MALE) {
 			mes "[Noel]";
@@ -2947,19 +2981,19 @@ xmas,157,126,6	script	Noel#06noel_01	4_F_KID3,{
 			close;
 		}
 	} else if (05christ_deli == 18) {
-		mes "["+ strcharinfo(0) +"]";
+		mes "["+ .@name$ +"]";
 		mes "Sorry for being late~!!Christmas Cake delivery!!";
 		next;
 		if (Sex == SEX_MALE) {
 			mes "[Noel]";
 			mes "Mr.Charming~I was going to blame you if you were little bit late.";
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes " Noel, this must be your cake.";
 			next;
 			input .@input$;
 			if (.@input$ == "JINGLE BELL ROCK") {
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes " Noel, this must be your cake.... ^0000ff'JINGLE BELL ROCK'^000000, is that right?";
 				next;
 				mes "[Noel]";
@@ -2980,7 +3014,7 @@ xmas,157,126,6	script	Noel#06noel_01	4_F_KID3,{
 				05christ_deli = 19;
 				close;
 			} else {
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes " Noel, this must be your cake.. ... "+ .@input$ +", isn't it?!";
 				next;
 				mes "[Noel]";
@@ -2995,30 +3029,30 @@ xmas,157,126,6	script	Noel#06noel_01	4_F_KID3,{
 			emotion ET_SMILE;
 			emotion ET_FRET, playerattached();
 			next;
-			mes "["+ strcharinfo(0) +"]";
+			mes "["+ .@name$ +"]";
 			mes " Noel, this must be your cake...";
 			next;
 			input .@input$;
 			if (.@input$ == "JINGLE BELL ROCK") {
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes " Noel, this must be your cake.. ^0000ff'JINGLE BELL ROCK'^000000, is that right?";
 				next;
 				mes "[Noel]";
 				mes "Wouldn't it help to loose your weigh if you keep on exercising doing delivery?! By the way give me the cake.";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes "Ha..Haha...";
 				emotion ET_FRET, playerattached();
 				05christ_deli = 19;
 				close;
 			} else {
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$ +"]";
 				mes " Noel, this must be your cake.. ... "+ .@input$ +", is that right?!";
 				next;
 				mes "[Noel]";
 				mes "This is not the one I ordered. Save some energy for your brain work. That's why you never loose your weight, you lazy~!!";
 				next;
-				mes "["+ strcharinfo(0) +"]";
+				mes "["+ .@name$+"]";
 				mes "................................................";
 				emotion ET_FRET, playerattached();
 				close;
