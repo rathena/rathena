@@ -610,7 +610,7 @@ OnRecvCastle:
 		mes "Brave soul... fate will guide you towards your future...";
 		close;
 	}
-	if (GetGuildMaster(.@GID) != strcharinfo(0)) {
+	if (is_guild_leader(.@GID) == false) {
 		mes "["+strnpcinfo(1)+"]";
 		mes "No matter how much you pester me, I'll still follow my master ^ff0000"+GetGuildMaster(.@GID)+"^000000. Where are the Guardians?! Send these ruffians away right now!";
 		close;

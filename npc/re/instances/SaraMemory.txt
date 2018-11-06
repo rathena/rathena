@@ -179,7 +179,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 			close;
 		}
 
-		if (getcharid(0) == getpartyleader(.@party_id,2))
+		if (is_party_leader() == true)
 			set .@menu$, "Boot up the dimensional device.:Use the dimensional device.:Cancel.";
 		else
 			set .@menu$, ":Use the dimensional device.:Cancel.";
@@ -228,7 +228,7 @@ dali,139,118,4	script	Dimensional Device#sara	10007,{
 }
 
 1@sara,260,156,6	script	A Girl#01	668,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		unittalk getcharid(3),"Where am I?";
 		mes "["+strcharinfo(0)+"]";
 		mes "Where am I?";
@@ -419,7 +419,7 @@ OnEnable:
 }
 
 1@sara,107,325,6	script	Sara Irene#01	668,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		cutin "sara_9sara1",2;
 		npctalk "Oh! Hello again! I remember you, what's up?";
 		mes "[Sara Irene]";
@@ -546,7 +546,7 @@ OnEnable:
 }
 
 1@sara,152,233,6	script	Sara Irene#02	668,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		cutin "sara_9sara2",2;
 		npctalk "Mommy!";
 		mes "[Sara Irene]";
@@ -617,7 +617,7 @@ OnEnable:
 }
 
 1@sara,156,236,4	script	Doyen Irene#04	684,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		cutin "sara_elder_irine4",2;
 		npctalk "You... were too strong for me.";
 		mes "[Doyen Irene]";
@@ -697,7 +697,7 @@ OnEnable:
 }
 
 1@sara,39,142,4	script	Sara Irene#03	668,{
-	if(getcharid(0)==getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		mapannounce instance_mapname("1@sara"), "As you are about to call out to Sara, a sudden blow knocks you down from behind.",bc_area,"0xffffff";
 		mes "^FF0000As you are about to call out to Sara, a sudden blow knocks you down from behind.^000000";
 		next;
