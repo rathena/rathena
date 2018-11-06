@@ -3607,6 +3607,7 @@
 	export_constant(EFST_BOW_ATK_POWER);
 	export_constant(EFST_RED_ORG_POTION);
 	export_constant(EFST_CAST_TIME);
+	export_constant(EFST_LEAPIMPAIRED);
 	export_constant(EFST_EXCLUSIVE_RECEIVEITEM);
 	export_constant(EFST_EXCLUSIVE_PLUSEXP);
 	export_constant(EFST_ASSUMPTIO_BUFF);
