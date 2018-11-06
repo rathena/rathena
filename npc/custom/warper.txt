@@ -194,7 +194,7 @@ menu	"Amatsu Fields",F1, "Ayothaya Fields",F2, "Bifrost Fields", F3,
 		"Lasagna Fields",F13, "Lighthalzen Fields",F14, "Louyang Field",F15,
 		"Lutie Field",F16, "Malaya Fields",F17, "Manuk Fields",F18,
 		"Mjolnir Fields",F19, "Moscovia Fields",F20, "Niflheim Fields",F21,
-		"Payon Forests",F22, "Prontera Fields",F23, "Rachel Fields",F24,
+		"Payon Forests",F22, "Prontera Fields",F23, "Rachel Fields",F24, "Rockridge Desert",F30,
 		"Sograt Deserts",F25, "Splendide Fields",F26, "Umbala Fields",F27,
 		"Veins Fields",F28, "Yuno Fields",F29;
 
@@ -277,6 +277,9 @@ F28: Restrict("Pre-RE",5);
 F29: Restrict("Pre-RE",5,10);
 	 setarray @c[2],189,224,192,207,221,157,226,199,223,177,187,232,231,174,196,203,183,214,200,124,195,226,210,304;
 	 Disp("Yuno Field",1,12); Pick("yuno_fild");
+F30: setarray @c[2],37,246,31,207;
+	 Disp("Kiwawa Desert 1:Kiwawa Desert 2");
+	 Pick("","rockrdg1","rockrdg2");
 
 // --------------------------------------------------
 	Dungeons:
@@ -291,7 +294,7 @@ menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
     	"Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22, "Lasagna Dungeon",D23,
 		"Louyang Dungeon",D24, "Magma Dungeon",D25, "Malangdo Dungeon",D26,
 		"Moscovia Dungeon",D27, "Nidhogg's Dungeon",D28, "Odin Temple",D29,
-		"Orc Dungeon",D30, "Payon Dungeon",D31, "Pyramids",D32, "Rachel Sanctuary",D33,
+		"Orc Dungeon",D30, "Payon Dungeon",D31, "Pyramids",D32, "Rachel Sanctuary",D33,"Rockridge Mines",D43,
     	"Scaraba Hole",D34, "Sphinx",D35, "Sunken Ship",D36, "Thanatos Tower",D37,
     	"Thor Volcano",D38, "Toy Factory",D39, "Turtle Dungeon",D40, "Umbala Dungeon",D41;
 
@@ -306,8 +309,9 @@ D4: setarray @c[2],275,19,24,26;
 D5: setarray @c[2],266,67,255,244,23,260;
 	Disp("Beach Dungeon",1,3); Pick("","beach_dun","beach_dun2","beach_dun3");
 D6: Restrict("RE",4);
-	setarray @c[2],150,288,150,18,140,134,244,52;
-	Disp("Bio Lab",1,4); Pick("lhz_dun");
+	setarray @c[2],150,288,150,18,140,134,244,52,100,202;
+	Disp("Bio Lab 1:Bio Lab 2:Bio Lab 3:Bio Lab 4:Bio Lab - Nightmare Mode");
+	Pick("","lhz_dun01","lhz_dun02","lhz_dun03","lhz_dun04","lhz_dun_n");
 D7: Restrict("RE");
 	setarray @c[2],87,47,262,262;
 	Disp("Brasilis Dungeon",1,2); Pick("bra_dun");
@@ -394,6 +398,10 @@ D41: Restrict("Pre-RE",1,2);
 D42: Restrict("RE");
 	 setarray @c[2],57,13,64,88,45,14,26,23;
 	 Disp("Bifrost Tower",1,4); Pick("ecl_tdun");
+D43: Restrict("RE");
+	 setarray @c[2],247,19;
+	 Disp("Rockridge Mines 1");
+	 Pick("","rockmi1");
 
 // --------------------------------------------------
 	Castles:
