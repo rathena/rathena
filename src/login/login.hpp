@@ -129,7 +129,6 @@ struct online_login_data {
 	int waiting_disconnect;
 	int char_server;
 };
-extern DBMap* online_db; // uint32 account_id -> struct online_login_data*
 
 /// Auth database
 #define AUTH_TIMEOUT 30000
@@ -141,19 +140,11 @@ struct auth_node {
 	char sex;
 	uint8 clienttype;
 };
-extern DBMap* auth_db; // uint32 account_id -> struct auth_node*
 
 ///Accessors
 AccountDB* login_get_accounts_db(void);
 
-/**
- * Sub function to create an online_login_data and save it to db.
- * @param key: Key of the database entry
- * @param ap: args
- * @return : Data identified by the key to be put in the database
- * @see DBCreateData
- */
-DBData login_create_online_user(DBKey key, va_list args);
+struct online_login_data* login_get_online_user( uint32 account_id );
 
 /**
  * Function to add a user in online_db.
@@ -172,6 +163,12 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
  */
 void login_remove_online_user(uint32 account_id);
 
+struct auth_node* login_get_auth_node( uint32 account_id );
+
+struct auth_node* login_add_auth_node( struct login_session_data* sd, uint32 ip );
+
+void login_remove_auth_node( uint32 account_id );
+
 /**
  * Timered function to disconnect a user from login.
  *  This is done either after auth_ok or kicked by char-server.
@@ -185,15 +182,7 @@ void login_remove_online_user(uint32 account_id);
  */
 TIMER_FUNC(login_waiting_disconnect_timer);
 
-/**
- * Sub function to apply on online_db.
- * Mark a character as offline.
- * @param data: 1 entry in the db
- * @param ap: args
- * @return : Value to be added up by the function that is applying this
- * @see DBApply
- */
-int login_online_db_setoffline(DBKey key, DBData *data, va_list ap);
+void login_online_db_setoffline( int char_server );
 
 /**
  * Test to determine if an IP come from LAN or WAN.
