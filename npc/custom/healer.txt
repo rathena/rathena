@@ -59,7 +59,7 @@
 // Duplicates
 //============================================================
 alberta,113,53,6	duplicate(Healer)	Healer#alb	501
-aldebaran,133,109,6	duplicate(Healer)	Healer#alde	501
+aldebaran,146,110,3	duplicate(Healer)	Healer#alde	501
 amatsu,200,79,4	duplicate(Healer)	Healer#ama	501
 ayothaya,207,169,6	duplicate(Healer)	Healer#ayo	501
 comodo,184,158,6	duplicate(Healer)	Healer#com	501

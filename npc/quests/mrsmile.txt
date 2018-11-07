@@ -95,7 +95,7 @@
 }
 
 // Additional Smile Assistance staff
-alberta,113,53,4	duplicate(SmileHelper)	Smile Assistance#alb	92
+alberta,105,61,5	duplicate(SmileHelper)	Smile Assistance#alb	92
 aldebaran,136,135,4	duplicate(SmileHelper)	Smile Assistance#alde	92
 geffen,119,107,4	duplicate(SmileHelper)	Smile Assistance#gef	92
 moc_ruins,59,154,3	duplicate(SmileHelper)	Smile Assistance#moc	92

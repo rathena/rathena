@@ -813,3 +813,5 @@
 28907:2998,{ bonus bSpeedRate,25; }
 28908:2998,{ bonus bDelayrate,-10; }
 28909:2998,{ bonus bUseSPrate,-10; bonus bMaxSPrate,10; }
+// Milky custom
+18574:4140,{ bonus2 bAddClass,Class_Boss,5; if (getequiprefinerycnt(EQI_HAND_R) >= 11) bonus2 bSubClass,Class_Normal,5; }

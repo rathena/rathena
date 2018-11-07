@@ -118,7 +118,7 @@ prontera,119,208,5	script	Riding Creature Master	666,{
 }
 geffen,100,55,3	duplicate(Riding Creature Master)	Riding Creature Master#2	105
 payon,166,102,5	duplicate(Riding Creature Master)	Riding Creature Master#3	105
-aldebaran,133,109,5	duplicate(Riding Creature Master)	Riding Creature Master#4	105
+aldebaran,133,110,5	duplicate(Riding Creature Master)	Riding Creature Master#4	105
 yuno,171,187,3	duplicate(Riding Creature Master)	Riding Creature Master#5	105
 rachel,106,130,5	duplicate(Riding Creature Master)	Riding Creature Master#6	105
 
@@ -270,7 +270,7 @@ prontera,123,208,5	script	Peco Peco Remover	652,{
 prontera,181,191,1	duplicate(mgm)	Magic Gear Master#prt	10079
 geffen,103,55,5	duplicate(mgm)	Magic Gear Master#gef	105
 payon,166,106,5	duplicate(mgm)	Magic Gear Master#pay	105
-aldebaran,133,112,5	duplicate(mgm)	Magic Gear Master#alde	105
+aldebaran,133,122,5	duplicate(mgm)	Magic Gear Master#alde	105
 yuno,167,187,3	duplicate(mgm)	Magic Gear Master#yuno	105
 rachel,106,134,5	duplicate(mgm)	Magic Gear Master#ra	105
 dicastes01,187,207,3	duplicate(mgm)	Magic Gear Master#dic	105

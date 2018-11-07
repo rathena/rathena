@@ -106,6 +106,7 @@ OnInit:
 }
 prontera,167,230,3	duplicate(PrivateBranchRoom)	Private Branch Room#prontera	733
 harboro1,263,191,7	duplicate(PrivateBranchRoom)	Private Branch Room#rockridge	733
+morocc,169,86,1	duplicate(PrivateBranchRoom)	Private Branch Room#morocc	733
 
 -	script	Room Manager	-1,{
 	mes "[Room Manager]";
