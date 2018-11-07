@@ -7126,6 +7126,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	//List of self skills that give damage around caster
 	case ASC_METEORASSAULT:
 	case GS_SPREADATTACK:
+#if PACKETVER >= 20180620
+	case RK_IGNITIONBREAK:
+#endif
 	case RK_STORMBLAST:
 	case NC_AXETORNADO:
 	case GC_COUNTERSLASH:
@@ -7151,6 +7154,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_damage(src,src,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
 	}
 		break;
+
+#if PACKETVER < 20180620
+	case RK_IGNITIONBREAK:
+		skill_area_temp[1] = 0;
+		clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
+		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+		break;
+#endif
 
 	case SR_WINDMILL:
 	case GN_CART_TORNADO:
@@ -9080,16 +9091,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				skill_castend_nodamage_id);
 		}
 		break;
-	case RK_IGNITIONBREAK:
-	case LG_EARTHDRIVE:
+
+	case LG_EARTHDRIVE: {
+			int dummy = 1;
+
 			clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
 			i = skill_get_splash(skill_id,skill_lv);
-			if( skill_id == LG_EARTHDRIVE ) {
-				int dummy = 1;
-				map_foreachinallarea(skill_cell_overlap, src->m, src->x-i, src->y-i, src->x+i, src->y+i, BL_SKILL, LG_EARTHDRIVE, &dummy, src);
-			}
-			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,
-				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+			map_foreachinallarea(skill_cell_overlap, src->m, src->x-i, src->y-i, src->x+i, src->y+i, BL_SKILL, LG_EARTHDRIVE, &dummy, src);
+			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+		}
 		break;
 	case RK_GIANTGROWTH:
 	case RK_STONEHARDSKIN:
