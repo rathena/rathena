@@ -62,5 +62,6 @@ REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `pric
 (8500, 'Milky Card', 'Milky_Card', 3, NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (8501, 'Milky_Special_Gift_Box', 'Milky Special Gift Box', 18, 20, NULL, 0, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getrandgroupitem(IG_MILKY_SGB);', NULL, NULL),(18597, 'Mercury_Helm', 'Mercury Riser', 4, 40, NULL, 200, NULL, 10, NULL, 1, 4294967295, 63, 2, 256, NULL, '0', 1, 759, 'bonus2 bSubRace,RC_DemiHuman,10; bonus2 bAddRace,RC_DemiHuman,10; bonus bAspdRate,3; bonus bDelayrate,-3; bonus bCritical,3; .@r = getrefine(); if(.@r >= 7) { bonus bAspdRate,2; bonus bDelayrate,-2; bonus bCritical,2; } if(.@r >= 9) { bonus bAspdRate,2; bonus bDelayrate,-2; bonus bCritical,2; }', NULL, NULL),
 
-(5286, 'Pecopeco_Hairband', 'Pecopeco Hairband', 4, 20, NULL, 0, NULL, 6, NULL, 0, 4294967295, 63, 2, 256, NULL, '70', 0, 314, 'bonus bSpeedAddRate,15; bonus bAspdRate,5; bonus bVariableCastrate,-5;', NULL, NULL);
+(5286, 'Pecopeco_Hairband', 'Pecopeco Hairband', 4, 20, NULL, 0, NULL, 6, NULL, 0, 4294967295, 63, 2, 256, NULL, '70', 0, 314, 'bonus bSpeedAddRate,15; bonus bAspdRate,5; bonus bVariableCastrate,-5;', NULL, NULL),
 
+(22511, 'Fenrir_Card__', 'Fenrir\'s Power Scroll', 2, 10, NULL, 10, NULL, NULL, NULL, 0, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'bonus_script \"bonus bMatk,25; bonus bFixedCastRate,-50;\",300,1025,1,EFST_FENRIR_CARD;', NULL, NULL);

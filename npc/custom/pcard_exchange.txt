@@ -1,0 +1,123 @@
+
+prontera,128,192,7	script	Milky Exchange	620,{
+	set .@n$,"[^0000FFMilky Exchange^000000]";
+	mes .@n$;
+	mes "Hi, I handle the transactions for ^009900CashPoints^000000 and <ITEM>Milky Platinum Card.<INFO>8500</INFO></ITEM>";
+	mes "I also manage the ^009900VIP^000000 services.";
+	mes "What do you want to do?";
+	next;
+	switch(select("Exchange CashPoints", "Exchange Milky Platinum Card", "VIP Status","Cancel"))
+	{
+		case 1: // CashPoints
+			mes .@n$;
+			mes "1 CP = 1 <ITEM>Milky Platinum Card<INFO>8500</INFO></ITEM>";
+			mes "1 CP = 2 days of ^009900VIP^000000";
+			mes "What do you want to change your ^009900CashPoints^000000 to?";
+			next;
+			set .@menu, select("Exchange to Milky Platinum Card", "Exchange to VIP Service", "Cancel");
+			if (.@menu == 3) close;
+
+			input .@value;
+			mes .@n$;
+			if (.@value == 0 ) {
+				mes "You can't set only 0 CashPoints to exchange.";
+				close;
+			}
+			if (#CASHPOINTS < .@value)
+			{
+				mes "You don't have enough CashPoints.";
+				close;
+			}
+			if (.@menu == 1) { // convert to MPC
+				mes "Converting "+ .@value +" of ^009900CashPoints^000000 to ";
+				mes "<ITEM>Milky Platinum Card<INFO>8500</INFO></ITEM>.";
+				mes "Confirm the change?";
+				if (select("No:Yes" ) == 1) close;
+				set #CASHPOINTS, (#CASHPOINTS - .@value);
+				dispbottom .@value +" CashPoints deducted.";
+				getitem 8500, .@value;
+				close;
+			}
+			else if (.@menu == 2) { // convert to VIP
+				mes "Converting "+ .@value +" of ^009900CashPoints^000000 to "+ .@value * 2 +" days of ^009900VIP^000000.";
+				mes "This exchange ^FF0000cannot^000000 be reverted.";
+				mes "Confirm the change?";
+				if (select("No:Yes" ) == 1) close;
+				set #CASHPOINTS, (#CASHPOINTS - .@value);
+				dispbottom .@value +" CashPoints deducted.";
+				vip_time (.@value*24*60*2);
+				close;
+			}
+			break;
+
+		case 2:	 // Milky Platinum Card
+			mes .@n$;
+			mes "1 <ITEM>Milky Platinum Card<INFO>8500</INFO></ITEM> = 1 CP";
+			mes "1 <ITEM>Milky Platinum Card<INFO>8500</INFO></ITEM> = 2 days of ^009900VIP^000000";
+			mes "What do you want to change your <ITEM>Milky Platinum Card<INFO>8500</INFO></ITEM> to?";
+			next;
+			set .@menu, select("Exchange to CashPoints", "Exchange to VIP Service", "Cancel");
+			if (.@menu == 3) close;
+
+			input .@value;
+			mes .@n$;
+			if (.@value == 0 ) {
+				mes "You can't set only 0 <ITEM>Milky Platinum Card<INFO>8500</INFO></ITEM> to exchange.";
+				close;
+			}
+			if (countitem(8500) < .@value)
+			{
+				mes "You don't have enough <ITEM>Milky Platinum Card<INFO>8500</INFO></ITEM>.";
+				close;
+			}
+			if (.@menu == 1) { // convert to MPC
+				mes "Converting "+ .@value +" of <ITEM>Milky Platinum Card<INFO>8500</INFO></ITEM>";
+				mes "to ^009900CashPoints^000000.";
+				mes "Confirm the change?";
+				if (select("No:Yes" ) == 1) close;
+				delitem 8500, .@value;
+				set #CASHPOINTS, (#CASHPOINTS + .@value);
+				dispbottom .@value +" CashPoints added.";
+				close;
+			}
+			else if (.@menu == 2) { // convert to VIP
+				mes "Converting "+ .@value +" of <ITEM>Milky Platinum Card<INFO>8500</INFO></ITEM> to "+ .@value * 2 +" days of ^009900VIP^000000.";
+				mes "This exchange ^FF0000cannot^000000 be reverted.";
+				mes "Confirm the change?";
+				if (select("No:Yes" ) == 1) close;
+				delitem 8500, .@value;
+				vip_time (.@value*24*60*2);
+				close;
+			}
+			break;
+
+		case 3:	 // VIP Status
+			mes .@n$;
+			mes "VIP gives gives several benefits:";
+			mes "- increases your EXP and drop rates.";
+			mes "- 5 extra character slots";
+			mes "- 300 extra storage slots";
+
+			next;
+			if (vip_status(1)) {
+				mes .@n$;
+				set .@remains, vip_status(3);
+				set .@days, .@remains/(60*60*24);
+				set .@remains, .@remains % (60*60*24);
+				set .@hours, .@remains/(60*60);
+				set .@remains, .@remains % (60*60);
+				set .@mins, .@remains/(60);
+				set .@remains, .@remains % (60);
+
+				mes "You currently have a ^009900VIP account^000000.";
+				mes "Your ^009900VIP account^000000 have "+ .@days +" day(s) "+ .@hours +" hour(s) "+ .@mins +" minute(s) time remaining.";
+			} else {
+				mes .@n$;
+				mes "You currently do ^990000NOT^000000 have a ^009900VIP account^000000.";
+			}
+			break;
+
+		default: close; break;
+	}
+	close;
+}
