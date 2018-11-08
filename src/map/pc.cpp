@@ -4294,8 +4294,8 @@ int pc_modifybuyvalue(struct map_session_data *sd,int orig_value)
 	if(rate1 < rate2) rate1 = rate2;
 	if(rate1)
 		val = (int)((double)orig_value*(double)(100-rate1)/100.);
-	if(val < 0) val = 0;
-	if(orig_value > 0 && val < 1) val = 1;
+	if(val < battle_config.min_shop_buy)
+		val = battle_config.min_shop_buy;
 
 	return val;
 }
@@ -4310,8 +4310,8 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
 		rate = 5+skill*2-((skill==10)? 1:0);
 	if(rate)
 		val = (int)((double)orig_value*(double)(100+rate)/100.);
-	if(val < 0) val = 0;
-	if(orig_value > 0 && val < 1) val = 1;
+	if (val < battle_config.min_shop_sell)
+		val = battle_config.min_shop_sell;
 
 	return val;
 }

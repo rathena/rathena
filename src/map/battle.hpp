@@ -651,6 +651,8 @@ struct Battle_Config
 	int feature_attendance;
 	int feature_privateairship;
 	int rental_transaction;
+	int min_shop_buy;
+	int min_shop_sell;
 
 #include "../custom/battle_config_struct.inc"
 };
