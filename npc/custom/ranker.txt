@@ -1,0 +1,138 @@
+
+-	script	nubs_ranker	-1,{
+OnInit:
+	function get_date;
+	function get_name;
+	function is_leap_year;
+	bindatcmd "mvprank",strnpcinfo(3) + "::OnMvPRank";
+	bindatcmd "pvprank",strnpcinfo(3) + "::OnPvPRank";
+	bindatcmd "pvpranker",strnpcinfo(3) + "::OnPvPRank";
+	end;
+
+// .@atcmd_command$       =  The name of the @command used.
+// .@atcmd_parameters$[]  =  Array containing the given parameters, starting from an index of 0.
+// .@atcmd_numparameters  =  The number of parameters defined.
+
+OnMvPRank:
+	specialeffect2 EF_ANGEL2;
+	end;
+
+OnPvPRank:
+	.@mode$ = " (today)";
+	dispbottom .@atcmd_parameters$[0];
+	if(.@atcmd_parameters$[0] == "" || .@atcmd_parameters$[0] == "today")
+	{
+		.@start$ = get_date(0,0) + " 00:00:00";
+		.@end$ = get_date(0,1) + " 00:00:00";
+	}
+	if(.@atcmd_parameters$[0] == "yesterday")
+	{
+		.@mode$ = " (yesterday)";
+		.@start$ = get_date(0,-1) + " 00:00:00";
+		.@end$ = get_date(0,0) + " 00:00:00";
+	}
+	if(.@atcmd_parameters$[0] == "date")
+	{
+		.@year = substr(.@atcmd_parameters$[1], 0, 3);
+		.@month = substr(.@atcmd_parameters$[1], 4, 5);
+		.@day = substr(.@atcmd_parameters$[1], 6, 7);
+		if(.@year < 2018 || (.@year == 2018 && .@month < 11) || (.@year == 2018 && .@month == 11 && .@day < 8)) { // anything before 2018-11-08 is rejected
+			dispbottom "No records from any year before 20181108."; end;
+		}
+		if(.@year > 2018 || (.@year == 2018 && .@month > gettime(DT_MONTH)) || (.@year == 2018 && .@month == gettime(DT_MONTH) && .@day < gettime(DT_DATE))) {
+			dispbottom "No records from the future."; end;
+		}
+		if(is_leap_year(.@year) == -1) {
+			dispbottom "That year is out of reach."; end;
+		}
+		.@limit = 31;
+		switch(.@month){
+			case 1: case 3: case 5: case 7: case 9: case 11: .@limit = 31; break;
+			case 4: case 6: case 8: case 10: case 12: .@limit = 30; break;
+			case 2:
+				if(is_leap_year(.@year) == 0)
+					.@limit = 28;
+				else
+					.@limit = 29;
+				break;
+
+			default: dispbottom "We don't have month "+ .@month +" in the gregorian calendar."; end; break;
+		}
+
+		.@start$ = .@year + "-" + .@month + "-" + .@day + " 00:00:00";
+		if(.@day == .@limit)
+			.@end$ = .@year + "-"+(.@month+1)+"-01";
+		else
+			.@end$ = .@year + "-"+ .@month +"-"+ .@day;
+
+		.@mode$ = " ("+.@atcmd_parameters$[1]+")";
+	}
+
+	if(.@atcmd_parameters$[0] == "weekly")
+	{
+
+	}
+	debugmes "SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+escape_sql(.@start$)+"' AND date_time < '"+escape_sql(.@end$)+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5";
+	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+"' AND date_time < '"+.@end$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
+	for(@i = 0; @i < 5; @i ++)
+	{
+		if(.@killer[0] > 0)
+			.@killer_name$[@i] = get_name(.@killer[@i]);
+		else
+			.@killer_name$[@i] = "";
+	}
+	dispbottom "PVP Ranker: TOP 5" + .@mode$;
+	dispbottom "---------------";
+	dispbottom "1." + .@killer_name$[0] + " - " + .@kill_count[0] + " kills ";
+	dispbottom "2." + .@killer_name$[1] + " - " + .@kill_count[1] + " kills ";
+	dispbottom "3." + .@killer_name$[2] + " - " + .@kill_count[2] + " kills ";
+	dispbottom "4." + .@killer_name$[3] + " - " + .@kill_count[3] + " kills ";
+	dispbottom "5." + .@killer_name$[4] + " - " + .@kill_count[4] + " kills ";
+
+	end;
+
+
+	//	.@second = gettime(DT_SECOND);
+	//	.@minute = gettime(DT_MINUTE);
+	//	.@hour = gettime(DT_HOUR);
+	//	.@day = gettime(DT_DAYOFMONTH);
+	//	.@month = gettime(DT_MONTH);
+	//	.@year = gettime(DT_YEAR);
+	//	.@datetime$ = .@year + "-" + .@month + "-" + .@day + " " + .@hour + ":" + .@minute + ":" + .@second;
+
+	function get_date {
+		.@p_month = getarg(0);
+		.@p_day = getarg(1);
+
+		.@timetick = gettimetick(2); // timestamp current
+		if(.@p_month > 0) 	.@timetick = .@timetick + (.@p_month * 30 * 24 * 60 * 60);
+		if(.@p_day > 0) 	.@timetick = .@timetick + (.@p_day * 24 * 60 * 60);
+
+		return gettimestr("%Y-%m-%d",21, .@timetick);
+	}
+
+	function get_name {
+		if(getarg(0) > 0)
+		{
+			query_sql("SELECT `name` FROM `char` WHERE `char_id` = "+getarg(0),@names$);
+			return @names$[0];
+		}
+		return "";
+	}
+
+	function get_year_ticks {
+		return gettimetick(2) - (gettime(DT_DAYOFYEAR) * 24 * 60 * 60) + (gettime(DT_HOUR) * 60 * 60) + (gettime(DT_MINUTE) * 60) + gettime(DT_SECOND);
+	}
+
+	function is_leap_year {
+		@year = getarg(0);
+
+	    if ((@year < 2000) || (@year > 2099))
+			return -1;
+
+		if ((@year % 4) != 0)
+			return 0;
+
+	    return 1;
+	}
+}

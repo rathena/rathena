@@ -896,15 +896,15 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		.@victim = getarg(1);
 		.@map$ = getarg(2);
 
-		.@second = gettime(DT_SECOND);
-		.@minute = gettime(DT_MINUTE);
-		.@hour = gettime(DT_HOUR);
-		.@day = gettime(DT_DAYOFMONTH);
-		.@month = gettime(DT_MONTH);
-		.@year = gettime(DT_YEAR);
-		.@datetime$ = .@year + "-" + .@month + "-" + .@day + " " + .@hour + ":" + .@minute + ":" + .@second;
+		// .@second = gettime(DT_SECOND);
+		// .@minute = gettime(DT_MINUTE);
+		// .@hour = gettime(DT_HOUR);
+		// .@day = gettime(DT_DAYOFMONTH);
+		// .@month = gettime(DT_MONTH);
+		// .@year = gettime(DT_YEAR);
+		// .@datetime$ = .@year + "-" + .@month + "-" + .@day + " " + .@hour + ":" + .@minute + ":" + .@second;
 
-		query_logsql("INSERT INTO pvplog (killer_id, victim_id, date_time, map) VALUES ("+.@killer+", "+.@victim+", '"+.@datetime$+"', '"+.@map$+"');");
+		query_logsql("INSERT INTO pvplog (killer_id, victim_id, date_time, map) VALUES ("+.@killer+", "+.@victim+", '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"', '"+.@map$+"');");
 	}
 }
 
