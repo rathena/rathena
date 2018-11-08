@@ -12849,27 +12849,27 @@ BUILDIN_FUNC(getcastledata)
 	}
 
 	switch (index) {
-		case 1:
+		case CD_GUILD_ID:
 			script_pushint(st,gc->guild_id); break;
-		case 2:
+		case CD_CURRENT_ECONOMY:
 			script_pushint(st,gc->economy); break;
-		case 3:
+		case CD_CURRENT_DEFENSE:
 			script_pushint(st,gc->defense); break;
-		case 4:
+		case CD_INVESTED_ECONOMY:
 			script_pushint(st,gc->triggerE); break;
-		case 5:
+		case CD_INVESTED_DEFENSE:
 			script_pushint(st,gc->triggerD); break;
-		case 6:
+		case CD_NEXT_TIME:
 			script_pushint(st,gc->nextTime); break;
-		case 7:
+		case CD_PAY_TIME:
 			script_pushint(st,gc->payTime); break;
-		case 8:
+		case CD_CREATE_TIME:
 			script_pushint(st,gc->createTime); break;
-		case 9:
+		case CD_ENABLED_KAFRA:
 			script_pushint(st,gc->visibleC); break;
 		default:
-			if (index > 9 && index <= 9+MAX_GUARDIANS) {
-				script_pushint(st,gc->guardian[index-10].visible);
+			if (index >= CD_ENABLED_GUARDIAN00 && index < CD_MAX) {
+				script_pushint(st,gc->guardian[index - CD_ENABLED_GUARDIAN00].visible);
 				break;
 			}
 			script_pushint(st,0);
@@ -12891,7 +12891,7 @@ BUILDIN_FUNC(setcastledata)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (index <= 0 || index > 9+MAX_GUARDIANS) {
+	if (index <= CD_NONE || index >= CD_MAX) {
 		ShowWarning("buildin_setcastledata: index = '%d' is out of allowed range\n", index);
 		return SCRIPT_CMD_FAILURE;
 	}
