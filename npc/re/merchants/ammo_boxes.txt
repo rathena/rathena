@@ -262,7 +262,7 @@ S_Slug_Exchange:
 				case 1:
 					mes "[Kenny]";
 					mes "All done.";
-					delitem .@slug_id, .@new_count * 500;
+					delitem .@slug_id, .@new_count * .@req_count;
 					getitem 25187, .@new_count;
 					close;
 				case 2:
