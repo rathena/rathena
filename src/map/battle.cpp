@@ -3976,7 +3976,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			RE_LVL_DMOD(100);
 			break;
 		case LG_SHIELDPRESS:
-			skillratio += -100 + 100 * skill_lv + sstatus->str + sstatus->vit; // !TODO: Confirm stat inclusion into bonus
+			skillratio += -100 + 200 * skill_lv + sstatus->str;
 			if (sd) {
 				short index = sd->equip_index[EQI_HAND_L];
 
