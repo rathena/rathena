@@ -3383,8 +3383,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 
 	switch (skill_id) {
 		case RA_AIMEDBOLT:
-			if( tsc && (tsc->data[SC_BITE] || tsc->data[SC_ANKLE] || tsc->data[SC_ELECTRICSHOCKER]) )
-				wd->div_ = tstatus->size + 2 + ( (rnd()%100 < 50-tstatus->size*10) ? 1 : 0 );
+			wd->div_ = 2 + tstatus->size + rnd()%1;
 			break;
 		case RL_QD_SHOT:
 			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20 + (tsc && tsc->data[SC_C_MARKER] ? 2 : 0);
