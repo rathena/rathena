@@ -4,7 +4,13 @@ OnInit:
 	function get_date;
 	function get_name;
 	function is_leap_year;
+	function leadingzero;
+	function date_array;
+	function get_month;
+	function date_str;
+	function add_day;
 	bindatcmd "mvprank",strnpcinfo(3) + "::OnMvPRank";
+	bindatcmd "mvpranker",strnpcinfo(3) + "::OnMvPRank";
 	bindatcmd "pvprank",strnpcinfo(3) + "::OnPvPRank";
 	bindatcmd "pvpranker",strnpcinfo(3) + "::OnPvPRank";
 	end;
@@ -19,61 +25,101 @@ OnMvPRank:
 
 OnPvPRank:
 	.@mode$ = " (today)";
-	dispbottom .@atcmd_parameters$[0];
+	// dispbottom .@atcmd_parameters$[0];
 	if(.@atcmd_parameters$[0] == "" || .@atcmd_parameters$[0] == "today")
 	{
-		.@start$ = get_date(0,0) + " 00:00:00";
-		.@end$ = get_date(0,1) + " 00:00:00";
+		.@start$ = get_date(0,0);
+		.@end$ = get_date(0,1);
 	}
 	if(.@atcmd_parameters$[0] == "yesterday")
 	{
 		.@mode$ = " (yesterday)";
-		.@start$ = get_date(0,-1) + " 00:00:00";
-		.@end$ = get_date(0,0) + " 00:00:00";
+		.@start$ = get_date(0,-1);
+		.@end$ = get_date(0,0);
 	}
 	if(.@atcmd_parameters$[0] == "date")
 	{
-		.@year = substr(.@atcmd_parameters$[1], 0, 3);
-		.@month = substr(.@atcmd_parameters$[1], 4, 5);
-		.@day = substr(.@atcmd_parameters$[1], 6, 7);
-		if(.@year < 2018 || (.@year == 2018 && .@month < 11) || (.@year == 2018 && .@month == 11 && .@day < 8)) { // anything before 2018-11-08 is rejected
+		setarray @date[0], date_array(.@atcmd_parameters$[1]);
+		if(@date[0] < 2018 || (@date[0] == 2018 && @date[1] < 11) || (@date[0] == 2018 && @date[1] == 11 && @date[2] < 8)) { // anything before 2018-11-08 is rejected
 			dispbottom "No records from any year before 20181108."; end;
 		}
-		if(.@year > 2018 || (.@year == 2018 && .@month > gettime(DT_MONTH)) || (.@year == 2018 && .@month == gettime(DT_MONTH) && .@day < gettime(DT_DATE))) {
+		if(@date[0] > 2018 || (@date[0] == 2018 && @date[1] > gettime(DT_MONTH)) || (@date[0] == 2018 && @date[1] == gettime(DT_MONTH) && @date[2] < gettime(DT_DATE))) {
 			dispbottom "No records from the future."; end;
 		}
-		if(is_leap_year(.@year) == -1) {
+		if(is_leap_year(@date[0]) == -1) {
 			dispbottom "That year is out of reach."; end;
 		}
-		.@limit = 31;
-		switch(.@month){
-			case 1: case 3: case 5: case 7: case 9: case 11: .@limit = 31; break;
-			case 4: case 6: case 8: case 10: case 12: .@limit = 30; break;
-			case 2:
-				if(is_leap_year(.@year) == 0)
-					.@limit = 28;
-				else
-					.@limit = 29;
-				break;
+		@limit = 31;
+		switch(@date[1]){
+			case 1: case 3: case 5: case 7: case 8: case 10: case 12: @limit = 31; break;
+			case 4: case 6: case 9: case 11: @limit = 30; break;
+			case 2: @limit = (is_leap_year(@date[0]) == 0 ? 28 : 29); break;
 
-			default: dispbottom "We don't have month "+ .@month +" in the gregorian calendar."; end; break;
+			default: dispbottom "We don't have month "+ @date[1] +" in the gregorian calendar."; end; break;
 		}
 
-		.@start$ = .@year + "-" + .@month + "-" + .@day + " 00:00:00";
-		if(.@day == .@limit)
-			.@end$ = .@year + "-"+(.@month+1)+"-01";
+		.@start$ = @date[0] + "-" + leadingzero(@date[1]) + "-" + leadingzero(@date[2]);
+		if(@date[2] == @limit)
+			.@end$ = @date[0] + "-"+ leadingzero(@date[1]+1) +"-01";
 		else
-			.@end$ = .@year + "-"+ .@month +"-"+ .@day;
+			.@end$ = @date[0] + "-"+ leadingzero(@date[1]) +"-"+ @date[2];
 
 		.@mode$ = " ("+.@atcmd_parameters$[1]+")";
 	}
 
-	if(.@atcmd_parameters$[0] == "weekly")
+	if(.@atcmd_parameters$[0] == "week")
 	{
+		.@mode$ = " ( Week: ";
+		@date[0] = date_array(gettimestr("%Y%m%d",21));
+		@day_week = gettime(DT_DAYOFWEEK); // determines which day we are currently
+		if(@day_week == 0) @day_week = 7;
 
+		// setarray @date[0],2018,10,31; // simulated date
+		@day_week = 3;
+		dispbottom "SimDate: 2018-"+@date[1]+"-"+@date[2];
+
+		@date[0] = add_day(@date, 1 - @day_week); // move the start date to monday
+		.@start$ = date_str(@date);
+		.@mode$ = .@mode$ + .@start$ + " to ";
+
+		@date[0] = add_day(@date, 6);
+		.@mode$ = .@mode$ + date_str(@date)+" )";
+		@date[0] = add_day(@date, 1);
+		.@end$ = date_str(@date);
 	}
-	debugmes "SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+escape_sql(.@start$)+"' AND date_time < '"+escape_sql(.@end$)+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5";
-	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+"' AND date_time < '"+.@end$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
+
+	if(.@atcmd_parameters$[0] == "month")
+	{
+		@date[0] = date_array(gettimestr("%Y%m%d",21));
+		@month = (.@atcmd_numparameters > 1 ? .@atcmd_parameters$[1] : @date[1]);
+		if ((@month < 1 || @month > 12)) {
+			dispbottom "We don't have month "+ @month +" in the gregorian calendar.";
+			end;
+		}
+		else {
+			set @date[1], @month;
+		}
+		.@mode$ = " ( Month: "+get_month(@date[1])+" )";
+
+		@date[2] = 1;	// move the start date to monday
+		.@start$ = date_str(@date);
+
+		switch(@date[1]){
+			case 1: case 3: case 5: case 7: case 8: case 10: case 12: @limit = 31; break;
+			case 4: case 6: case 9: case 11: @limit = 30; break;
+			case 2: @limit = (is_leap_year(@date[0]) == 0 ? 28 : 29); break;
+		}
+		@date[2] = @limit;
+		@date[1]++;
+		if(@date[1] > 12) setarray @date[0], @date[0]++,1,1; // only for discember
+		else {
+			@date[2] = 1;
+		}
+		.@end$ = date_str(@date);
+	}
+
+	// dispbottom " date_time > '"+escape_sql(.@start$)+"' AND date_time < '"+escape_sql(.@end$)+"'";
+	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = 'pvp_y_1-2' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
 	for(@i = 0; @i < 5; @i ++)
 	{
 		if(.@killer[0] > 0)
@@ -81,13 +127,15 @@ OnPvPRank:
 		else
 			.@killer_name$[@i] = "";
 	}
+	dispbottom "---------------------------------------------";
 	dispbottom "PVP Ranker: TOP 5" + .@mode$;
-	dispbottom "---------------";
+	dispbottom "---------------------------------------------";
 	dispbottom "1." + .@killer_name$[0] + " - " + .@kill_count[0] + " kills ";
 	dispbottom "2." + .@killer_name$[1] + " - " + .@kill_count[1] + " kills ";
 	dispbottom "3." + .@killer_name$[2] + " - " + .@kill_count[2] + " kills ";
 	dispbottom "4." + .@killer_name$[3] + " - " + .@kill_count[3] + " kills ";
 	dispbottom "5." + .@killer_name$[4] + " - " + .@kill_count[4] + " kills ";
+	dispbottom "---------------------------------------------";
 
 	end;
 
@@ -95,10 +143,10 @@ OnPvPRank:
 	//	.@second = gettime(DT_SECOND);
 	//	.@minute = gettime(DT_MINUTE);
 	//	.@hour = gettime(DT_HOUR);
-	//	.@day = gettime(DT_DAYOFMONTH);
-	//	.@month = gettime(DT_MONTH);
-	//	.@year = gettime(DT_YEAR);
-	//	.@datetime$ = .@year + "-" + .@month + "-" + .@day + " " + .@hour + ":" + .@minute + ":" + .@second;
+	//	@day = gettime(DT_DAYOFMONTH);
+	//	@month = gettime(DT_MONTH);
+	//	@year = gettime(DT_YEAR);
+	//	.@datetime$ = @year + "-" + @month + "-" + @day + " " + .@hour + ":" + .@minute + ":" + .@second;
 
 	function get_date {
 		.@p_month = getarg(0);
@@ -120,8 +168,80 @@ OnPvPRank:
 		return "";
 	}
 
-	function get_year_ticks {
-		return gettimetick(2) - (gettime(DT_DAYOFYEAR) * 24 * 60 * 60) + (gettime(DT_HOUR) * 60 * 60) + (gettime(DT_MINUTE) * 60) + gettime(DT_SECOND);
+	function date_array {
+		@date[0] = substr(getarg(0), 0, 3);
+		@date[1] = substr(getarg(0), 4, 5);
+		@date[2] = substr(getarg(0), 6, 7);
+		return @date;
+	}
+
+	function add_day {
+		setarray @date[0], getarg(0);
+		@value = getarg(1);
+		if(@value > 0){ // add days
+			while(@value > 0) {
+				switch(@date[1]){
+					case 1: case 3: case 5: case 7: case 8: case 10: case 12: @limit = 31; break;
+					case 4: case 6: case 9: case 11: @limit = 30; break;
+					case 2: @limit = (is_leap_year(@year) == 0 ? 28 : 29); break;
+				}
+				if((@date[2]+1) > @limit) { // add more than limit of days
+					@date[1]++;
+					@date[2] = 1;
+				}
+				else {
+					@date[2]++;
+				}
+				@value--;
+			}
+		}
+		else if (@value < 0) { // remove days
+			while(@value < 0) {
+				if((@date[2]-1) < 0)
+				{
+					@date[1]--;
+					switch(@date[1]){
+						case 1: case 3: case 5: case 7: case 8: case 10: case 12: @limit = 31; break;
+						case 4: case 6: case 9: case 11: @limit = 30; break;
+						case 2: @limit = (is_leap_year(@year) == 0 ? 28 : 29); break;
+					}
+					@date[2] = @limit;
+				}
+				else {
+					@date[2]--;
+				}
+				@value++;
+			}
+		}
+		return @date;
+	}
+
+	function get_month {
+		@month$ = "err";
+		switch (getarg(0)){
+			case 1: @month$ = "January"; break;
+			case 2: @month$ = "February"; break;
+			case 3: @month$ = "March"; break;
+			case 4: @month$ = "April"; break;
+			case 5: @month$ = "May"; break;
+			case 6: @month$ = "June"; break;
+			case 7: @month$ = "July"; break;
+			case 8: @month$ = "August"; break;
+			case 9: @month$ = "September"; break;
+			case 10: @month$ = "October"; break;
+			case 11: @month$ = "November"; break;
+			case 12: @month$ = "Discember"; break;
+		}
+		return @month$;
+	}
+
+	function date_str {
+		return @date[0] +"-"+ leadingzero(@date[1]) +"-"+ leadingzero(@date[2]);
+	}
+
+	function leadingzero {
+		@digit = getarg(0);
+		return (@digit <= 9 ? "0"+@digit : @digit);
 	}
 
 	function is_leap_year {
@@ -135,4 +255,8 @@ OnPvPRank:
 
 	    return 1;
 	}
+
+	// function get_year_ticks {
+	// 	return gettimetick(2) - (gettime(DT_DAYOFYEAR) * 24 * 60 * 60) + (gettime(DT_HOUR) * 60 * 60) + (gettime(DT_MINUTE) * 60) + gettime(DT_SECOND);
+	// }
 }
