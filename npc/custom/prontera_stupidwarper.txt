@@ -35,18 +35,13 @@ prontera,166,198,3	script	Vending Zone	807,{
 prontera,156,195,3	script	PVP Warper#pvp_warper_npc	588,{
 	mes 	"Required Level: 70 and above";
 	mes 	"Charges : ^FF55331,200z^000000";
-	menu	"Continue", PVP1, "Cancel", PVP2;
-	PVP1:
-		if ((Zeny > 1199) && (BaseLevel > 70)) {
-			set Zeny, Zeny - 1200;
-			callfunc "F_PVP_FSRS";
-		}
-		else {
-			dispbottom "Not enough zeny or your level is too low.";
-		}
-		end;
-	PVP2:
-		end;
+	if ((Zeny > 1199) && (BaseLevel > 70)) {
+		callfunc "F_PVP_FSRS";
+	}
+	else {
+		dispbottom "Not enough zeny or your level is too low.";
+	}
+	end;
 
 	OnMinute00:
 	OnMinute05:

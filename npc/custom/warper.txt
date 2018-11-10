@@ -556,19 +556,13 @@ S10: Go("turbo_room",99,114);
 // --------------------------------------------------
 mes 	"Required Level: 70 and above";
 mes 	"Charges : ^FF55331,200z^000000";
-menu	"Continue", PVP1, "Cancel", PVP2;
-PVP1:
-	if ((Zeny > 1199) && (BaseLevel > 70)) {
-		set Zeny, Zeny - 1200;
-		callfunc "F_PVP_FSRS";
-	}
-	else {
-		dispbottom "Not enough zeny or your level is too low.";
-	}
-	end;
-PVP2:
-	end;
-
+if ((Zeny > 1199) && (BaseLevel > 70)) {
+	callfunc "F_PVP_FSRS";
+}
+else {
+	dispbottom "Not enough zeny or your level is too low.";
+}
+end;
 
 OnInit:
 	.Satan_Morroc = true;	//	false will enable moc_fild 4,5,6,8,9,10,14,15 while disable moc_fild 20,21,22 Default is true.

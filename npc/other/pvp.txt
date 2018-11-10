@@ -293,9 +293,10 @@ function	script	F_PVP_FSRS	{
 			close;
 		}
 	}
-	setarray .@Maps$[0],	"pvp_y_1-2";
-	setarray .@Name$[0],	"Izlude";
-	setarray .@Limit[0],	128;
+	setarray .@Maps$[0],	"pvp_y_1-2", "pvp_y_2-2";
+	setarray .@Name$[0],	"Izlude [ALL]", "Izlude [Trans]";
+	setarray .@Limit[0],	32, 32;
+
 	// if (strnpcinfo(4) == "pvp_y_room") {
 	// 	set .@base$, "pvp_y_"+strnpcinfo(2);
 	// 	setarray .@Maps$[0],	.@base$+"-1",	.@base$+"-2",	.@base$+"-3",	.@base$+"-4",	.@base$+"-5";
@@ -307,16 +308,32 @@ function	script	F_PVP_FSRS	{
 	// 	setarray .@Limit[0],	64,				32,				32,				32,				32;
 	// }
 	// for(set .@i,0; .@i<5; set .@i,.@i+1)
-	for(set .@i,0; .@i<1; set .@i,.@i+1)
-		set .@menu$, .@menu$+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]:";
-	set .@menu$, .@menu$+"Cancel.";
+
+	for(set .@i,0; .@i<2; set .@i,.@i+1){
+		set .@menu$, .@menu$+":"+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]";
+	}
+	set .@menu$, "Cancel"+.@menu$;
 	set .@i, select(.@menu$)-1;
-	if (.@i == 5) close;
+	if (.@i == 0) close;
+	.@i--;
 	if (getmapusers(.@Maps$[.@i]) >= .@Limit[.@i]) {
+		next;
 		mes "[PVP Reception Staff]";
 		mes "This map is currently full.";
 		close;
 	}
+	set .@eac, eaclass();
+	setarray .@block[0],9999,4050,4051,4052,4190,4191,4211,4212,4215,4218,4220,4223,4224,4229,4239,4240,4241,4242;
+	dispbottom "third: "+(.@eac & EAJL_THIRD);
+	dispbottom "inarray: "+(inarray(.@block, Class) > 0);
+	dispbottom "map: "+.@menu$;
+	if (.@i == 1 && (.@eac & EAJL_THIRD | (inarray(.@block, Class) > 0) )) { // trans only
+		next;
+		mes "[PVP Reception Staff]";
+		mes "Third Class are not allowed to join this PVP room.";
+		close;
+	}
+	set Zeny, Zeny - 1200;
 	warp .@Maps$[.@i],0,0;
 	end;
 }

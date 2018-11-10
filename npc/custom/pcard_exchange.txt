@@ -1,5 +1,5 @@
 
-prontera,128,192,7	script	Milky Exchange	620,{
+prontera,129,192,7	script	Milky Exchange	403,{
 	set .@n$,"[^0000FFMilky Exchange^000000]";
 	mes .@n$;
 	mes "Hi, I handle the transactions for ^009900CashPoints^000000 and <ITEM>Milky Platinum Card.<INFO>8500</INFO></ITEM>";

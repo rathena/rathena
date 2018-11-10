@@ -304,21 +304,6 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 
 	OnPCDieEvent:
 		.@map$ = strcharinfo(3);
-		@unique = get_unique_id();
-
-		while ( $@victim_unique[.@i] != get_unique_id() && .@i < getarraysize($@victim_unqiue) ) { .@i++; }
-		$@victim_unique[.@i] = @unique;
-		$@victim_count[.@i] = $@victim_count[.@i] + 1;
-
-		debugmes "Unique: "+ $@victim_unique[.@i]+ " | Count: "+$@victim_count[.@i];
-
-		if($@victim_count[.@i] == 1) {
-			$@victim_time[.@i] = gettimetick(2) + 2*60; //  + 60*60*3;
-		}
-		if($@victim_count[.@i] >= 1) {
-			donpcevent "pvp_prevent_abuse::OnStart";
-		}
-
 		if(.Event == 1 && strcharinfo(3) == "guild_vs2") {
 			remove_player( getcharid(3) );
 			if ( .aTimer )
@@ -356,6 +341,21 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		// none for Disguise Event (.Event == 4)
 		// debugmes .@map$;
 		if ( .@map$ == "pvp_y_1-2" ) { // announce PvP
+			@unique = get_unique_id();
+
+			while ( $@victim_unique[.@i] != get_unique_id() && .@i < getarraysize($@victim_unique) ) { .@i++; }
+			$@victim_unique[.@i] = @unique;
+			$@victim_count[.@i] = $@victim_count[.@i] + 1;
+
+			debugmes "Unique: "+ $@victim_unique[.@i]+ " | Count: "+$@victim_count[.@i];
+
+			if($@victim_count[.@i] == 1) {
+				$@victim_time[.@i] = gettimetick(2) + 2*60; //  + 60*60*3;
+			}
+			if($@victim_count[.@i] >= 1) {
+				donpcevent "pvp_prevent_abuse::OnStart";
+			}
+
 			warp "SavePoint",0,0;
 			if(killerrid)
 			{
@@ -927,7 +927,7 @@ OnInit:
 	end;
 
 OnStart:
-	setnpctimer 0; startnpctimer;
+	startnpctimer;
 	end;
 
 OnAgain:
