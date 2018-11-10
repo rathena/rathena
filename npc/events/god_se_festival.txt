@@ -47,13 +47,12 @@ yuno,1,1,0	script	Festival Manager#gq_fes0	891,{
 }
 
 yuno,118,192,5	script	Rmimi Ravies#gq_fes01	891,{
-	set .@GID, getcharid(2);
 	if (countitem(7840) > 0) {
 		mes "[Rmimi Ravies]";
 		mes "This is the flower.";
 		mes "This is just a formality, but let me check your qualifications.";
 		next;
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			mes "[Rmimi Ravies]";
 			mes "Your qualification is verified as a Guild master.";
 			next;
@@ -123,7 +122,7 @@ yuno,118,192,5	script	Rmimi Ravies#gq_fes01	891,{
 				mes "Have a good time.";
 				donpcevent "Rmimi Ravies#gq_fes01::OnStart";
 				
-				announce "["+ strcharinfo(0) +"] member of ["+ GetGuildName(.@GID) +"] is summoning a 'Valkyrie's Present' in 'Juno'.",bc_all,"0x70dbdb";
+				announce "["+ strcharinfo(0) +"] member of ["+ GetGuildName( getcharid(2) ) +"] is summoning a 'Valkyrie's Present' in 'Juno'.",bc_all,"0x70dbdb";
 				close;
 			}
 			else {
@@ -425,13 +424,12 @@ rachel,1,1,0	script	Festival Manager#gq_fes2	891,{
 }
 
 rachel,132,117,3	script	Rhehe Ravies#gq_fes03	891,{
-	set .@GID, getcharid(2);
 	if (countitem(7840) > 0) {
 		mes "[Rhehe Ravies]";
 		mes "A flower!!";
 		mes "Shall we proceed?";
 		next;
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			mes "[Rhehe Ravies]";
 			mes "Eeeeh, so young and yet you're a guild master? Your guildsmen must be jealous.";
 			next;
@@ -504,7 +502,7 @@ rachel,132,117,3	script	Rhehe Ravies#gq_fes03	891,{
 				mes "[Rhehe Ravies]";
 				mes "I hope you enjoy yourself!";
 				donpcevent "Rhehe Ravies#gq_fes03::OnStart";
-				announce "["+ strcharinfo(0) +"] member of ["+ GetGuildName(.@GID) +"] is summoning a 'Valkyrie's Present' in 'Rachel'.",bc_all,"0x70dbdb";
+				announce "["+ strcharinfo(0) +"] member of ["+ GetGuildName( getcharid(2) ) +"] is summoning a 'Valkyrie's Present' in 'Rachel'.",bc_all,"0x70dbdb";
 				close;
 			}
 			else {

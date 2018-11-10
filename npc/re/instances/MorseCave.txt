@@ -75,7 +75,7 @@ moro_cav,61,69,3	script	Senior Tracker#a1	4_M_JOB_ASSASSIN,{
 		mes "and become the hero";
 		mes "who saved the world from evil?";
 		next;
-		if (getcharid(1) < 1 || getcharid(0) != getpartyleader(getcharid(1),2)) {
+		if (getcharid(1) < 1 || is_party_leader() == false) {
 			mes "[Senior Tracker]";
 			mes "If you're interested in my proposition,";
 			mes "let me talk to your party leader.";
@@ -136,7 +136,7 @@ moro_cav,61,69,3	script	Senior Tracker#a1	4_M_JOB_ASSASSIN,{
 	mes "as many comrades as you can find.";
 	mes "Are you ready to enter the Red Flower";
 	mes "where Morroc is believed to be hiding?";
-	if (getcharid(1) > 0 && getcharid(0) == getpartyleader(getcharid(1),2)) {
+	if (getcharid(1) > 0 && is_party_leader() == true) {
 		next;
 		if (select( "No.", "Yes." ) == 1) {
 			mes "[Senior Tracker]";
