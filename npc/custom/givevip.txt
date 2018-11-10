@@ -9,6 +9,7 @@
 //============================================================
 
 -	script	nubs_vip_giver	-1,{
+	end;
 
 OnPCLoginEvent:
 	if(! #xlaunch_vipx) {

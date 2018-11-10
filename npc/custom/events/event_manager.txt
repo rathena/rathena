@@ -106,6 +106,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 			}
 			else if(.Event == 1) {
 				// debugmes " unique "+.unique_id[.@j];
+				.@j = 0;
 				while ( .unique_id[.@j] != get_unique_id() && .@j < .register_count )
 				{
 					// dispbottom "unique"+get_unique_id;
@@ -303,6 +304,20 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 
 	OnPCDieEvent:
 		.@map$ = strcharinfo(3);
+		@unique = get_unique_id();
+
+		while ( $@victim_unique[.@i] != get_unique_id() && .@i < getarraysize($@victim_unqiue) ) { .@i++; }
+		$@victim_unique[.@i] = @unique;
+		$@victim_count[.@i] = $@victim_count[.@i] + 1;
+
+		debugmes "Unique: "+ $@victim_unique[.@i]+ " | Count: "+$@victim_count[.@i];
+
+		if($@victim_count[.@i] == 1) {
+			$@victim_time[.@i] = gettimetick(2) + 2*60; //  + 60*60*3;
+		}
+		if($@victim_count[.@i] >= 1) {
+			donpcevent "pvp_prevent_abuse::OnStart";
+		}
 
 		if(.Event == 1 && strcharinfo(3) == "guild_vs2") {
 			remove_player( getcharid(3) );
@@ -901,6 +916,39 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		else
 			debugmes "self-kill. not recording.";
 	}
+}
+
+-	script	pvp_prevent_abuse	-1,{
+	end;
+
+OnInit:
+	initnpctimer;
+	setnpctimer 0; stopnpctimer;
+	end;
+
+OnStart:
+	setnpctimer 0; startnpctimer;
+	end;
+
+OnAgain:
+OnTimer6005: // every minute
+	for(.@i = 0; .@i < getarraysize($@victim_time); .@i++){
+		debugmes "Current Time:"+gettimetick(2);
+		if($@victim_time <= gettimetick(2)) { // reset
+			debugmes $@victim_unique[.@i]+" removed";
+			deletearray $@victim_time[.@i],1;
+			deletearray $@victim_unique[.@i],1;
+			deletearray $@victim_count[.@i],1;
+			goto OnAgain;
+		}
+		else {
+			debugmes "Unique: "+ $@victim_unique[.@i] +" | Time: "+ $@victim_time[.@i]+" | Count: "+ $@victim_count[.@i];
+		}
+	}
+	setnpctimer 0; startnpctimer;
+	if(getarraysize($@victim_time) == 0)
+		stopnpctimer;
+	end;
 }
 
 
