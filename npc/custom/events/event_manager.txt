@@ -296,7 +296,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		end;
 
 	OnPCLoadMapEvent:
-		if(strcharinfo(3) == "pvp_y_1-2") {
+		if(strcharinfo(3) == "pvp_y_1-2" || strcharinfo(3) == "pvp_y_2-2") {
 			donpcevent "PVP Warper#pvp_warper_npc::OnCountChange";
 			announce "[" + strcharinfo(0) + "] has entered the PvP Room. KILL !! ", bc_all, "0xff3232";
 		}
@@ -340,21 +340,20 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		// none for Poring Counting (.Event == 3)
 		// none for Disguise Event (.Event == 4)
 		// debugmes .@map$;
-		if ( .@map$ == "pvp_y_1-2" ) { // announce PvP
+		if ( .@map$ == "pvp_y_1-2" || .@map$ == "pvp_y_2-2" ) { // announce PvP
 			@unique = get_unique_id();
 
-			while ( $@victim_unique[.@i] != get_unique_id() && .@i < getarraysize($@victim_unique) ) { .@i++; }
-			$@victim_unique[.@i] = @unique;
-			$@victim_count[.@i] = $@victim_count[.@i] + 1;
+			.@k = 0;
+			while ( $@victim_unique[.@k] != get_unique_id() && .@k < getarraysize($@victim_unique) ) { .@k++; }
+			$@victim_unique[.@k] = @unique;
+			$@victim_count[.@k] = $@victim_count[.@k] + 1;
 
-			debugmes "Unique: "+ $@victim_unique[.@i]+ " | Count: "+$@victim_count[.@i];
+			debugmes "Unique: "+ $@victim_unique[.@k]+ " | Count: "+$@victim_count[.@k];
 
-			if($@victim_count[.@i] == 1) {
-				$@victim_time[.@i] = gettimetick(2) + 2*60; //  + 60*60*3;
-			}
-			if($@victim_count[.@i] >= 1) {
+			if ($@victim_count[.@k] == 1)
+				$@victim_time[.@k] = gettimetick(2) + 60 * 60 * 2; // PvP Delay
+			if ($@victim_count[.@k] >= 1)
 				donpcevent "pvp_prevent_abuse::OnStart";
-			}
 
 			warp "SavePoint",0,0;
 			if(killerrid)
@@ -395,7 +394,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 
 	// give skull with name ==only in PvP==
 	OnPCKillEvent:
-		if ( strcharinfo(3) == "pvp_y_1-2" ) {
+		if ( strcharinfo(3) == "pvp_y_1-2" || strcharinfo(3) == "pvp_y_2-2" ) {
 			.@char_id = getcharid( 0, rid2name( killedrid ) );
 			getitem2 7420,1,1,0,0,254,0, ( .@char_id & 65535 ), ( .@char_id >> 16 );
 		}
@@ -420,7 +419,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		// none for Disguise Event (.Event == 4)
 
 		.@map$ = strcharinfo(3);
-		if ( .@map$ == "pvp_y_1-2" ) { // announce PvP
+		if ( .@map$ == "pvp_y_1-2" || .@map$ == "pvp_y_2-2" ) { // announce PvP
 			warp "SavePoint",0,0;
 			announce "[" + strcharinfo(0) + "] has left the PvP Zone.", bc_all, "0xff3232";
 			donpcevent "PVP Warper#pvp_warper_npc::OnCountChange";
@@ -853,7 +852,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		.@name$ = getarg(0);
 		if(.Event == 1)
 			set .@eventName$, "<Last Man Standing>";
-		if (strcharinfo(3) == "pvp_y_1-2")
+		if (strcharinfo(3) == "pvp_y_1-2" || strcharinfo(3) == "pvp_y_2-2")
 			set .@eventName$, "<PvP Announcer>";
 		else if ( .@map$ == "te_aldecas1" ||  .@map$ == "prtg_cas01" )
 			set .@eventName$, "<War of Emperium>";
@@ -933,16 +932,15 @@ OnStart:
 OnAgain:
 OnTimer6005: // every minute
 	for(.@i = 0; .@i < getarraysize($@victim_time); .@i++){
-		debugmes "Current Time:"+gettimetick(2);
-		if($@victim_time <= gettimetick(2)) { // reset
+		.@ticks = ($@victim_time[.@i] - gettimetick(2));
+		// debugmes "Unique: "+ $@victim_unique[.@i] +" | Ticks: "+ .@ticks +" | Count: "+ $@victim_count[.@i];
+
+		if($@victim_time[.@i] <= gettimetick(2)) { // reset
 			debugmes $@victim_unique[.@i]+" removed";
 			deletearray $@victim_time[.@i],1;
 			deletearray $@victim_unique[.@i],1;
 			deletearray $@victim_count[.@i],1;
 			goto OnAgain;
-		}
-		else {
-			debugmes "Unique: "+ $@victim_unique[.@i] +" | Time: "+ $@victim_time[.@i]+" | Count: "+ $@victim_count[.@i];
 		}
 	}
 	setnpctimer 0; startnpctimer;
@@ -971,3 +969,4 @@ guild_vs2,90,50,0	warp	WtoE	1,4,guild_vs2,12,50
 
 // -- PvP Announcer
 pvp_y_1-2	mapflag	loadevent
+pvp_y_2-2	mapflag	loadevent

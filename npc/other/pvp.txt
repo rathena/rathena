@@ -318,18 +318,41 @@ function	script	F_PVP_FSRS	{
 	.@i--;
 	if (getmapusers(.@Maps$[.@i]) >= .@Limit[.@i]) {
 		next;
-		mes "[PVP Reception Staff]";
+		mes "[PVP Warper]";
 		mes "This map is currently full.";
 		close;
 	}
+
+	@j = 0;
+	while ( $@victim_unique[@j] != get_unique_id() && .@i < getarraysize($@victim_unique) ) { @j++; }
+	// @j = inarray($@victim_unique, get_unique_id());
+	if (@j >= 0 ) {
+		if ($@victim_count[@j] >= 10){ // Died x times already. Start delaying PvP
+			next;
+			mes "[PVP Warper]";
+			mes "You were killed too ^CC0000many^000000 times.";
+			mes "You should get stronger by getting better equipment and leveling up!";
+			mes "^FFFFFF_^000000";
+
+			@ticks = ($@victim_time[@j] - gettimetick(2));
+			// debugmes "Unique: "+get_unique_id()+" | ticks: "+@ticks;
+			@hour = @ticks / (60 * 60);
+			@ticks = @ticks % (60 * 60);
+			@min = @ticks / 60;
+			@sec = @ticks % 60;
+			mes "^CC0000Blocked^000000 from PVP for "+@hour+" hours "+ @min +" minutes "+ @sec +" seconds.";
+			close;
+		}
+	}
+
 	set .@eac, eaclass();
 	setarray .@block[0],9999,4050,4051,4052,4190,4191,4211,4212,4215,4218,4220,4223,4224,4229,4239,4240,4241,4242;
-	dispbottom "third: "+(.@eac & EAJL_THIRD);
-	dispbottom "inarray: "+(inarray(.@block, Class) > 0);
-	dispbottom "map: "+.@menu$;
+	// dispbottom "third: "+(.@eac & EAJL_THIRD);
+	// dispbottom "inarray: "+(inarray(.@block, Class) > 0);
+	// dispbottom "map: "+.@menu$;
 	if (.@i == 1 && (.@eac & EAJL_THIRD | (inarray(.@block, Class) > 0) )) { // trans only
 		next;
-		mes "[PVP Reception Staff]";
+		mes "[PVP Warper]";
 		mes "Third Class are not allowed to join this PVP room.";
 		close;
 	}
