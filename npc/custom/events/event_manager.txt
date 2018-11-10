@@ -895,8 +895,11 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		.@killer = getarg(0);
 		.@victim = getarg(1);
 		.@map$ = getarg(2);
-
-		query_logsql("INSERT INTO pvplog (killer_id, victim_id, date_time, map) VALUES ("+.@killer+", "+.@victim+", '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"', '"+.@map$+"');");
+		query_sql("SELECT lg.last_unique_id FROM `login` AS lg LEFT JOIN `char` AS ch ON (ch.account_id = lg.account_id) WHERE ch.char_id IN ( "+ escape_sql(.@killer) +", "+ escape_sql(.@victim) +" ) LIMIT 2", @unique);
+		if(@unique[0] != @unique[1])
+			query_logsql("INSERT INTO pvplog (killer_id, victim_id, date_time, map) VALUES ("+.@killer+", "+.@victim+", '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"', '"+.@map$+"');");
+		else
+			debugmes "self-kill. not recording.";
 	}
 }
 
