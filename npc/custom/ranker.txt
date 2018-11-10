@@ -1,3 +1,22 @@
+//===== rAthena Script =======================================
+//= Give Player VIP on login
+//===== By: ==================================================
+//= Nubs
+//===== Current Version: =====================================
+//= 1.0 - Added PvP Ranker
+//= 1.1 - Added MvP Ranker
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Descriptions: ========================================
+//= Enables the use of @pvprank(er) or @mvprank(er)
+//= Parameters are as follows
+//= {today|daily} 			display rank for current day
+//= {yesterday} 			display rank for the day before current day
+//= {date} {YYYYMMDD}		display rank for the given date
+//= {week|weekly}			display rank for the current week. default if no parameter is given
+//= {month|months} {MM}		display rank for the given month. if no month are given, it will display current month.
+//============================================================
+
 
 -	script	nubs_ranker	-1,{
 OnInit:
@@ -15,29 +34,23 @@ OnInit:
 	bindatcmd "pvpranker",strnpcinfo(3) + "::OnPvPRank";
 	end;
 
-// .@atcmd_command$       =  The name of the @command used.
-// .@atcmd_parameters$[]  =  Array containing the given parameters, starting from an index of 0.
-// .@atcmd_numparameters  =  The number of parameters defined.
-
 OnMvPRank:
-	specialeffect2 EF_ANGEL2;
-	end;
-
 OnPvPRank:
-	.@mode$ = " (today)";
-	// dispbottom .@atcmd_parameters$[0];
-	if(.@atcmd_parameters$[0] == "" || .@atcmd_parameters$[0] == "today")
+	.@mode$ = "Today";
+	if (strtolower(.@atcmd_parameters$[0]) == "today" || strtolower(.@atcmd_parameters$[0]) == "daily")
 	{
 		.@start$ = get_date(0,0);
 		.@end$ = get_date(0,1);
 	}
-	if(.@atcmd_parameters$[0] == "yesterday")
+
+	if (strtolower(.@atcmd_parameters$[0]) == "yesterday")
 	{
-		.@mode$ = " (yesterday)";
+		.@mode$ = "Yesterday";
 		.@start$ = get_date(0,-1);
 		.@end$ = get_date(0,0);
 	}
-	if(.@atcmd_parameters$[0] == "date")
+
+	if (strtolower(.@atcmd_parameters$[0]) == "date")
 	{
 		setarray @date[0], date_array(.@atcmd_parameters$[1]);
 		if(@date[0] < 2018 || (@date[0] == 2018 && @date[1] < 11) || (@date[0] == 2018 && @date[1] == 11 && @date[2] < 8)) { // anything before 2018-11-08 is rejected
@@ -49,46 +62,36 @@ OnPvPRank:
 		if(is_leap_year(@date[0]) == -1) {
 			dispbottom "That year is out of reach."; end;
 		}
-		@limit = 31;
-		switch(@date[1]){
-			case 1: case 3: case 5: case 7: case 8: case 10: case 12: @limit = 31; break;
-			case 4: case 6: case 9: case 11: @limit = 30; break;
-			case 2: @limit = (is_leap_year(@date[0]) == 0 ? 28 : 29); break;
-
-			default: dispbottom "We don't have month "+ @date[1] +" in the gregorian calendar."; end; break;
+		if(@date[1] < 0 || @date[1] > 12) {
+			dispbottom "We don't have month "+ @date[1] +" in the gregorian calendar."; end;
 		}
-
-		.@start$ = @date[0] + "-" + leadingzero(@date[1]) + "-" + leadingzero(@date[2]);
-		if(@date[2] == @limit)
-			.@end$ = @date[0] + "-"+ leadingzero(@date[1]+1) +"-01";
-		else
-			.@end$ = @date[0] + "-"+ leadingzero(@date[1]) +"-"+ @date[2];
-
-		.@mode$ = " ("+.@atcmd_parameters$[1]+")";
+		.@mode$ = date_str(@date[1]);
+		.@end$ = date_str(add_day(@date, 0));
+		.@start$ = date_str(add_day(@date, -1));
 	}
 
-	if(.@atcmd_parameters$[0] == "week")
+	if (.@atcmd_parameters$[0] == "" || strtolower(.@atcmd_parameters$[0]) == "week" || strtolower(.@atcmd_parameters$[0]) == "weekly")
 	{
-		.@mode$ = " ( Week: ";
+		.@mode$ = "Week: ";
 		@date[0] = date_array(gettimestr("%Y%m%d",21));
 		@day_week = gettime(DT_DAYOFWEEK); // determines which day we are currently
 		if(@day_week == 0) @day_week = 7;
 
 		// setarray @date[0],2018,10,31; // simulated date
-		@day_week = 3;
-		dispbottom "SimDate: 2018-"+@date[1]+"-"+@date[2];
+		// @day_week = 3;
+		// dispbottom "SimDate: 2018-"+@date[1]+"-"+@date[2];
 
 		@date[0] = add_day(@date, 1 - @day_week); // move the start date to monday
 		.@start$ = date_str(@date);
 		.@mode$ = .@mode$ + .@start$ + " to ";
 
 		@date[0] = add_day(@date, 6);
-		.@mode$ = .@mode$ + date_str(@date)+" )";
+		.@mode$ = .@mode$ + date_str(@date);
 		@date[0] = add_day(@date, 1);
 		.@end$ = date_str(@date);
 	}
 
-	if(.@atcmd_parameters$[0] == "month")
+	if (strtolower(.@atcmd_parameters$[0]) == "month" || strtolower(.@atcmd_parameters$[0]) == "months")
 	{
 		@date[0] = date_array(gettimestr("%Y%m%d",21));
 		@month = (.@atcmd_numparameters > 1 ? .@atcmd_parameters$[1] : @date[1]);
@@ -99,7 +102,7 @@ OnPvPRank:
 		else {
 			set @date[1], @month;
 		}
-		.@mode$ = " ( Month: "+get_month(@date[1])+" )";
+		.@mode$ = "Month: "+get_month(@date[1]);
 
 		@date[2] = 1;	// move the start date to monday
 		.@start$ = date_str(@date);
@@ -118,43 +121,60 @@ OnPvPRank:
 		.@end$ = date_str(@date);
 	}
 
+	// SQL queries
 	// dispbottom " date_time > '"+escape_sql(.@start$)+"' AND date_time < '"+escape_sql(.@end$)+"'";
-	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = 'pvp_y_1-2' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
-	for(@i = 0; @i < 5; @i ++)
-	{
-		if(.@killer[0] > 0)
-			.@killer_name$[@i] = get_name(.@killer[@i]);
-		else
-			.@killer_name$[@i] = "";
+	dispbottom "===============================================================", 0x666666;
+	if(strtolower(.@atcmd_command$) == "@pvprank" || strtolower(.@atcmd_command$) == "@pvpranker") {
+		query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = 'pvp_y_1-2' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
+
+		dispbottom "PVP Ranker: TOP 5 ( " + .@mode$ + " )";
 	}
-	dispbottom "---------------------------------------------";
-	dispbottom "PVP Ranker: TOP 5" + .@mode$;
-	dispbottom "---------------------------------------------";
-	dispbottom "1." + .@killer_name$[0] + " - " + .@kill_count[0] + " kills ";
-	dispbottom "2." + .@killer_name$[1] + " - " + .@kill_count[1] + " kills ";
-	dispbottom "3." + .@killer_name$[2] + " - " + .@kill_count[2] + " kills ";
-	dispbottom "4." + .@killer_name$[3] + " - " + .@kill_count[3] + " kills ";
-	dispbottom "5." + .@killer_name$[4] + " - " + .@kill_count[4] + " kills ";
-	dispbottom "---------------------------------------------";
+	else if(strtolower(.@atcmd_command$) == "@mvprank" || strtolower(.@atcmd_command$) == "@mvpranker") {
+		@sql$ = "";
+		if ( .@atcmd_numparameters > 1 && ( strtolower(.@atcmd_parameters$[0]) == "today" || strtolower(.@atcmd_parameters$[0]) == "daily" || strtolower(.@atcmd_parameters$[0]) == "yesterday" || strtolower(.@atcmd_parameters$[0]) == "week" || strtolower(.@atcmd_parameters$[0]) == "weekly" )) {
+			@mvp_id = .@atcmd_parameters$[1];
+		}
+		else if ( .@atcmd_numparameters > 2 && ( strtolower(.@atcmd_parameters$[0]) == "date" || strtolower(.@atcmd_parameters$[0]) == "month" || strtolower(.@atcmd_parameters$[0]) == "months" )) {
+			@mvp_id = .@atcmd_parameters$[2];
+		}
 
+		if ( @mvp_id > 0) {
+			if (getmonsterinfo(@mvp_id, MOB_MODE) & 524288 > 0) {
+				dispbottom "Only MVP id are accepted. ["+strmobinfo(2, @mvp_id)+"] is not considered as MVP.";
+				end;
+			}
+			dispbottom "MVP Ranker: TOP 5 ( ["+strmobinfo(2, @mvp_id)+"] " + .@mode$ + " )";
+			@sql$ = " AND monster_id ="+escape_sql(@mvp_id);
+		}
+		else {
+			dispbottom "MVP Ranker: TOP 5 ( [All] " + .@mode$ + " )";
+		}
+
+
+		debugmes "SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+.@start$+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' "+@sql$+" GROUP BY (kill_char_id) ORDER BY cn DESC LIMIT 5;";
+		query_logsql("SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+(.@start$)+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' "+@sql$+" GROUP BY (kill_char_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
+
+	}
+	for(@i = 0; @i < 5; @i ++) {
+		.@killer_name$[@i] = (.@killer[@i] > 0) ? get_name(.@killer[@i]) : "";
+	}
+	dispbottom "===============================================================", 0x666666;
+	dispbottom "1. " + .@killer_name$[0] + " - " + .@kill_count[0] + " kills ";
+	dispbottom "2. " + .@killer_name$[1] + " - " + .@kill_count[1] + " kills ";
+	dispbottom "3. " + .@killer_name$[2] + " - " + .@kill_count[2] + " kills ";
+	dispbottom "4. " + .@killer_name$[3] + " - " + .@kill_count[3] + " kills ";
+	dispbottom "5. " + .@killer_name$[4] + " - " + .@kill_count[4] + " kills ";
+	dispbottom "===============================================================", 0x666666;
+	dispbottom " ";
 	end;
-
-
-	//	.@second = gettime(DT_SECOND);
-	//	.@minute = gettime(DT_MINUTE);
-	//	.@hour = gettime(DT_HOUR);
-	//	@day = gettime(DT_DAYOFMONTH);
-	//	@month = gettime(DT_MONTH);
-	//	@year = gettime(DT_YEAR);
-	//	.@datetime$ = @year + "-" + @month + "-" + @day + " " + .@hour + ":" + .@minute + ":" + .@second;
 
 	function get_date {
 		.@p_month = getarg(0);
 		.@p_day = getarg(1);
 
 		.@timetick = gettimetick(2); // timestamp current
-		if(.@p_month > 0) 	.@timetick = .@timetick + (.@p_month * 30 * 24 * 60 * 60);
-		if(.@p_day > 0) 	.@timetick = .@timetick + (.@p_day * 24 * 60 * 60);
+		if(.@p_month != 0) 	.@timetick = .@timetick + (.@p_month * 30 * 24 * 60 * 60);
+		if(.@p_day != 0) 	.@timetick = .@timetick + (.@p_day * 24 * 60 * 60);
 
 		return gettimestr("%Y-%m-%d",21, .@timetick);
 	}
@@ -162,10 +182,12 @@ OnPvPRank:
 	function get_name {
 		if(getarg(0) > 0)
 		{
-			query_sql("SELECT `name` FROM `char` WHERE `char_id` = "+getarg(0),@names$);
-			return @names$[0];
+			if(query_sql("SELECT `name` FROM `char` WHERE `char_id` = "+escape_sql(getarg(0)),@names$) > 0)
+				return @names$[0];
+			else
+				return "-Unknown-";
 		}
-		return "";
+		return "-Unknown-";
 	}
 
 	function date_array {
@@ -188,6 +210,11 @@ OnPvPRank:
 				if((@date[2]+1) > @limit) { // add more than limit of days
 					@date[1]++;
 					@date[2] = 1;
+					if(@date[1] == 13) { // new year.
+						@date[0]++;
+						@date[1] = 1;
+						@date[2] = 1;
+					}
 				}
 				else {
 					@date[2]++;
@@ -197,15 +224,22 @@ OnPvPRank:
 		}
 		else if (@value < 0) { // remove days
 			while(@value < 0) {
-				if((@date[2]-1) < 0)
+				if((@date[2]-1) < 0) // date 0 means previous month
 				{
 					@date[1]--;
-					switch(@date[1]){
-						case 1: case 3: case 5: case 7: case 8: case 10: case 12: @limit = 31; break;
-						case 4: case 6: case 9: case 11: @limit = 30; break;
-						case 2: @limit = (is_leap_year(@year) == 0 ? 28 : 29); break;
+					if(@date[1] == 0) { // month 0 means previous year
+						@date[0]--;
+						@date[1] = 12;
+						@date[2] = 31;
 					}
-					@date[2] = @limit;
+					else {
+						switch(@date[1]){
+							case 1: case 3: case 5: case 7: case 8: case 10: case 12: @limit = 31; break;
+							case 4: case 6: case 9: case 11: @limit = 30; break;
+							case 2: @limit = (is_leap_year(@year) == 0 ? 28 : 29); break;
+						}
+						@date[2] = @limit;
+					}
 				}
 				else {
 					@date[2]--;
@@ -255,8 +289,4 @@ OnPvPRank:
 
 	    return 1;
 	}
-
-	// function get_year_ticks {
-	// 	return gettimetick(2) - (gettime(DT_DAYOFYEAR) * 24 * 60 * 60) + (gettime(DT_HOUR) * 60 * 60) + (gettime(DT_MINUTE) * 60) + gettime(DT_SECOND);
-	// }
 }

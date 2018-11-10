@@ -302,6 +302,8 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 	end;
 
 	OnPCDieEvent:
+		.@map$ = strcharinfo(3);
+
 		if(.Event == 1 && strcharinfo(3) == "guild_vs2") {
 			remove_player( getcharid(3) );
 			if ( .aTimer )
@@ -337,8 +339,6 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		// none for Find the Mushroom (.Event == 2)
 		// none for Poring Counting (.Event == 3)
 		// none for Disguise Event (.Event == 4)
-
-		.@map$ = strcharinfo(3);
 		// debugmes .@map$;
 		if ( .@map$ == "pvp_y_1-2" ) { // announce PvP
 			warp "SavePoint",0,0;
@@ -895,14 +895,6 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		.@killer = getarg(0);
 		.@victim = getarg(1);
 		.@map$ = getarg(2);
-
-		// .@second = gettime(DT_SECOND);
-		// .@minute = gettime(DT_MINUTE);
-		// .@hour = gettime(DT_HOUR);
-		// .@day = gettime(DT_DAYOFMONTH);
-		// .@month = gettime(DT_MONTH);
-		// .@year = gettime(DT_YEAR);
-		// .@datetime$ = .@year + "-" + .@month + "-" + .@day + " " + .@hour + ":" + .@minute + ":" + .@second;
 
 		query_logsql("INSERT INTO pvplog (killer_id, victim_id, date_time, map) VALUES ("+.@killer+", "+.@victim+", '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"', '"+.@map$+"');");
 	}
