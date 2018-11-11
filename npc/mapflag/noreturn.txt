@@ -6,13 +6,13 @@
 //= 1.6
 //===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= Disables the following items:
 //=   Butterfly Wing (602), Siege Teleport Scroll (14591),
 //=   Yellow/Green/Red/Blue Butterfly Wings (14582-14585),
 //=   Dungeon Teleport Scrolls (14527/14581)
 //= Also restricts "warpparty" and "warpguild" script commands.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.3 According to the patch, enabled Butterfly wings in the Castles. [Lupus]
 //= 1.4 Enabled Butterfly wings on PvP maps. [Skotlex]
 //= 1.4a Added job_knt. [Samuray22]
@@ -156,12 +156,12 @@ que_hugel	mapflag	noreturn
 // PvP Arenas=======================
 //pvp_y_room	mapflag	noreturn
 //pvp_y_1-1	mapflag	noreturn
-//pvp_y_1-2	mapflag	noreturn
+pvp_y_1-2	mapflag	noreturn
 //pvp_y_1-3	mapflag	noreturn
 //pvp_y_1-4	mapflag	noreturn
 //pvp_y_1-5	mapflag	noreturn
 //pvp_y_2-1	mapflag	noreturn
-//pvp_y_2-2	mapflag	noreturn
+pvp_y_2-2	mapflag	noreturn
 //pvp_y_2-3	mapflag	noreturn
 //pvp_y_2-4	mapflag	noreturn
 //pvp_y_2-5	mapflag	noreturn
