@@ -7126,9 +7126,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	//List of self skills that give damage around caster
 	case ASC_METEORASSAULT:
 	case GS_SPREADATTACK:
-#if PACKETVER >= 20180620
-	case RK_IGNITIONBREAK:
-#endif
 	case RK_STORMBLAST:
 	case NC_AXETORNADO:
 	case GC_COUNTERSLASH:
@@ -7155,13 +7152,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	}
 		break;
 
-#if PACKETVER < 20180620
 	case RK_IGNITIONBREAK:
 		skill_area_temp[1] = 0;
+#if PACKETVER >= 20180207
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+#else
 		clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
+#endif
 		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		break;
-#endif
 
 	case SR_WINDMILL:
 	case GN_CART_TORNADO:
