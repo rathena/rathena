@@ -108,7 +108,7 @@ int guild_skill_get_max (int id) {
 
 // Retrieve skill_lv learned by guild
 int guild_checkskill(struct guild *g, int id) {
-	if ((id = guild_skill_get_index(id)) < 0)
+	if ( g == nullptr || (id = guild_skill_get_index(id)) < 0)
 		return 0;
 	return g->skill[id].lv;
 }
