@@ -7152,6 +7152,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	}
 		break;
 
+	case RK_IGNITIONBREAK:
+		skill_area_temp[1] = 0;
+#if PACKETVER >= 20180207
+		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+#else
+		clif_skill_damage(src, src, tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
+#endif
+		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+		break;
+
 	case SR_WINDMILL:
 	case GN_CART_TORNADO:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
@@ -9080,16 +9090,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				skill_castend_nodamage_id);
 		}
 		break;
-	case RK_IGNITIONBREAK:
-	case LG_EARTHDRIVE:
+
+	case LG_EARTHDRIVE: {
+			int dummy = 1;
+
 			clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
 			i = skill_get_splash(skill_id,skill_lv);
-			if( skill_id == LG_EARTHDRIVE ) {
-				int dummy = 1;
-				map_foreachinallarea(skill_cell_overlap, src->m, src->x-i, src->y-i, src->x+i, src->y+i, BL_SKILL, LG_EARTHDRIVE, &dummy, src);
-			}
-			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,
-				src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+			map_foreachinallarea(skill_cell_overlap, src->m, src->x-i, src->y-i, src->x+i, src->y+i, BL_SKILL, LG_EARTHDRIVE, &dummy, src);
+			map_foreachinrange(skill_area_sub, bl,i,BL_CHAR,src,skill_id,skill_lv,tick,flag|BCT_ENEMY|1,skill_castend_damage_id);
+		}
 		break;
 	case RK_GIANTGROWTH:
 	case RK_STONEHARDSKIN:
