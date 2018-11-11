@@ -15,6 +15,12 @@
 //= {date} {YYYYMMDD}		display rank for the given date
 //= {week|weekly}			display rank for the current week. default if no parameter is given
 //= {month|months} {MM}		display rank for the given month. if no month are given, it will display current month.
+//=
+//=	@pvprank(er) have an extra parameter that supports MvP ID.
+//= {xx} {xx|trans} {trans}		display the rank for Trans Only PvP
+//=
+//=	@mvprank(er) have an extra parameter that supports MvP ID.
+//= {xx} {xx|MvP_ID} {MvP_ID}	display the ranks for specific MvP
 //============================================================
 
 
@@ -125,7 +131,14 @@ OnPvPRank:
 	// dispbottom " date_time > '"+escape_sql(.@start$)+"' AND date_time < '"+escape_sql(.@end$)+"'";
 	dispbottom "===============================================================", 0x666666;
 	if(strtolower(.@atcmd_command$) == "@pvprank" || strtolower(.@atcmd_command$) == "@pvpranker") {
-		query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = 'pvp_y_1-2' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
+		.@map$ = "pvp_y_1-2";
+		if ( .@atcmd_numparameters > 1 && strtolower(.@atcmd_parameters$[1]) == "trans" && ( strtolower(.@atcmd_parameters$[0]) == "today" || strtolower(.@atcmd_parameters$[0]) == "daily" || strtolower(.@atcmd_parameters$[0]) == "yesterday" || strtolower(.@atcmd_parameters$[0]) == "week" || strtolower(.@atcmd_parameters$[0]) == "weekly" )) {
+			.@map$ = "pvp_y_2-2";
+		}
+		else if ( .@atcmd_numparameters > 2 && strtolower(.@atcmd_parameters$[2]) == "trans" && ( strtolower(.@atcmd_parameters$[0]) == "date" || strtolower(.@atcmd_parameters$[0]) == "month" || strtolower(.@atcmd_parameters$[0]) == "months" )) {
+			.@map$ = "pvp_y_2-2";
+		}
+		query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
 
 		dispbottom "PVP Ranker: TOP 5 ( " + .@mode$ + " )";
 	}
