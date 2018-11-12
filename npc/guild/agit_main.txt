@@ -151,10 +151,9 @@ OnAgitEnd:
 	GvgOff strnpcinfo(2);
 	// If the castle has no owner at the end of WoE, do not kill Emperium.
 	if (GetCastleData(strnpcinfo(2),1)) {
-		.@guild_id = GetCastleData(strnpcinfo(2),1);
-
 		// -- Reward Guild Members after WoE Ends ----------------------------------------- [start]
 		// define variables
+		.@guild_id = GetCastleData(strnpcinfo(2),1);
 		setarray .@unique_ids[0],0;
 		setarray .@unique_char[0],0;
 		setarray .@items[0], 8500, 8501;
@@ -166,35 +165,39 @@ OnAgitEnd:
 
 
 		// get member lists
-		getguildmember .@guild_id, 1, .@members;
+		getguildmember .@guild_id, 1, .@members_cid;
 
 		// loop each members
-		for(.@i = 0; .@i < getarraysize(.@members); .@i++) {
-
+		for(.@i = 0; .@i < $@guildmembercount; .@i++) {
 			// reset query result every loop
-			deletearray .@unique;
-			query_sql("SELECT lg.last_unique_id FROM `login` AS lg LEFT JOIN `char` AS ch ON (ch.account_id = lg.account_id) WHERE ch.char_id = "+ escape_sql(.@members[.@i]) +" LIMIT 1;", .@unique);
+			deletearray .@unique; deletearray .@name$; deletearray .@aid;
+			if(query_sql("SELECT lg.last_unique_id, `ch`.`name`, `ch`.`account_id` FROM `login` AS lg LEFT JOIN `char` AS ch ON (ch.account_id = lg.account_id) WHERE ch.char_id = "+ escape_sql(.@members_cid[.@i]) +" LIMIT 1;", .@unique, .@name$, .@aid) > 0) {
+				// only online members get rewarded
+				if (isloggedin(.@aid[0], .@members_cid[.@i])) {
+					// move index of unique array if it exists, otherwise to the end of the array
+					.@k = 0; while ( .@unique_ids[.@k] != .@unique[0] && .@k < getarraysize(.@unique_ids) ) { .@k++; }
 
-			// move index of unique array if it exists, otherwise to the end of the array
-			.@k = 0; while ( .@unique_ids[.@k] != .@unique[0] && .@k < getarraysize(.@unique_ids) ) { .@k++; }
+					// check if member unique id exists in the unique id list
+					if(inarray(.@unique_ids[0], .@unique[0]) == -1) {
 
-			// check if member unique id exists in the unique id list
-			if(inarray(.@unique_ids[0], .@unique[0]) == -1) {
+						// stores data of the member
+						.@unique_ids[.@k] = .@unique[0];
+						.@unique_char[.@k] = .@members_cid[.@i];
 
-				// stores data of the member
-				.@unique_ids[.@k] = .@unique[0];
-				.@unique_char[.@k] = .@members[.@i];
-
-				// gives reward to the member
-				mail .@members[.@i], .@sender$, .@title$, .@body_good$, 200000,.@items, .@items_count;
-				debugmes "Give Reward to "+strcharinfo(0, .@members[.@i]);
+						// gives reward to the member
+						mail .@members_cid[.@i], .@sender$, .@title$, .@body_good$, 200000,.@items, .@items_count;
+						debugmes "Give Reward to "+ .@name$;
+					}
+					else {
+						.@body_bad$ = .@body_bad$ + "We from the [WoE Managers] have ALREADY\r\nmailed your extra insentives to ["+strcharinfo(0, .@unique_char[.@k])+"].\r\n\r\nHave a nice day.";
+						mail .@members_cid[.@i], .@sender$, .@title$, .@body_bad$;
+						debugmes "Duplicate account found: "+ .@name$+" | Reward already given to: "+strcharinfo(0, .@unique_char[.@k]);
+					}
+				}
+				else {
+					debugmes "Off-Line account found: "+ .@name$;
+				}
 			}
-			else {
-				.@body_bad$ = .@body_bad$ + "We from the [WoE Managers] have ALREADY\r\nmailed your extra insentives to ["+strcharinfo(0, .@unique_char[.@k])+"].\r\n\r\nHave a nice day.";
-				mail .@members[.@i], .@sender$, .@title$, .@body_bad$;
-				debugmes "Duplicate account found: "+strcharinfo(0, .@members[.@i])+" | Reward already given to: "+strcharinfo(0, .@unique_char[.@k]);
-			}
-
 		}
 		// -- ----------------------------------- ----------------------------------------- [end]
 		KillMonster strnpcinfo(2),"Agit#"+strnpcinfo(2)+"::OnAgitBreak";
