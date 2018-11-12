@@ -438,7 +438,7 @@ C7: Restrict("RE");
 C8: Restrict("RE");
 	setarray @c[2],134,65,240,128,153,137,111,240,208,240;
 
-	Disp("Gloria 1");
+	Disp("Gaebolg");
 	Pick("","te_prt_gld");
 
 	// Disp("Gloria 1:Gloria 2:Gloria 3:Gloria 4:Gloria 5");

@@ -124,8 +124,65 @@ OnAgitEnd3:
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
 	gvgoff3 .@map$;
-	if (getcastledata(.@map$,1))
+	if (getcastledata(.@map$,1)) {
+		// -- Reward Guild Members after WoE Ends ----------------------------------------- [start]
+		// define variables
+		.@guild_id = GetCastleData(.@map$,1);
+		setarray .@unique_ids[0],0;
+		setarray .@unique_char[0],0;
+		setarray .@block[0],9999,4050,4051,4052,4190,4191,4211,4212,4215,4218,4220,4223,4224,4229,4239,4240,4241,4242,4054,4055,4056,4057,4058,4059,4066,4067,4068,4069,4070,4071,4072,4060,4061,4062,4063,4064,4065,4073,4074,4075,4076,4077,4078,4079,4096,4097,4098,4099,4100,4101,4102,4103,4104,4105,4106,4107,4108;
+
+		setarray .@items[0], 8500, 8501;
+		setarray .@items_count[0], 1, 5;
+		.@sender$ = "WoE:FE Manager";
+		.@title$ = "Congrats for WoE:FE Win!";
+		.@body_good$ = "Congratulations for Winning\r\n--------------------------------\r\n[WoE: Training Edition - Gaebolg Castle]\r\n--------------------------------\r\n\r\nWe from the [WoE Managers] will also give you\r\nsome extra insentives.\r\n\r\nHave a nice day.";
+		.@body_bad$ = "Congratulations for Winning\r\n--------------------------------\r\n[WoE: Training Edition - Gaebolg Castle]\r\n--------------------------------\r\n\r\n";
+
+
+		// get member lists
+		getguildmember .@guild_id, 1, .@members_cid;
+
+		// loop each members
+		for(.@i = 0; .@i < $@guildmembercount; .@i++) {
+			// reset query result every loop
+			deletearray .@unique; deletearray .@name$; deletearray .@aid;
+			if(query_sql("SELECT lg.last_unique_id, `ch`.`name`, `ch`.`account_id` FROM `login` AS lg LEFT JOIN `char` AS ch ON (ch.account_id = lg.account_id) WHERE ch.char_id = "+ escape_sql(.@members_cid[.@i]) +" LIMIT 1;", .@unique, .@name$, .@aid) > 0) {
+				// only online members get rewarded
+				if (isloggedin(.@aid[0], .@members_cid[.@i])) {
+					if (inarray(.@block, readparam(Class, .@members_cid[.@i])) == -1) { // trans only
+						// move index of unique array if it exists, otherwise to the end of the array
+						.@k = 0; while ( .@unique_ids[.@k] != .@unique[0] && .@k < getarraysize(.@unique_ids) ) { .@k++; }
+
+						// check if member unique id exists in the unique id list
+						if(inarray(.@unique_ids[0], .@unique[0]) == -1) {
+
+							// stores data of the member
+							.@unique_ids[.@k] = .@unique[0];
+							.@unique_char[.@k] = .@members_cid[.@i];
+
+							// gives reward to the member
+							mail .@members_cid[.@i], .@sender$, .@title$, .@body_good$, 200000,.@items, .@items_count;
+							debugmes "Give Reward to "+ .@name$;
+						}
+						else {
+							.@body_bad$ = .@body_bad$ + "We from the [WoE Managers] have ALREADY\r\nmailed your extra insentives to ["+strcharinfo(0, .@unique_char[.@k])+"].\r\n\r\nHave a nice day.";
+							mail .@members_cid[.@i], .@sender$, .@title$, .@body_bad$;
+							debugmes "Duplicate account found: "+ .@name$+" | Reward already given to: "+strcharinfo(0, .@unique_char[.@k]);
+						}
+					}
+					else {
+						debugmes "Non-Trans account found: "+ .@name$;
+					}
+				}
+				else {
+					debugmes "Off-Line account found: "+ .@name$;
+				}
+			}
+		}
+		// -- ----------------------------------- ----------------------------------------- [end]
 		killmonster .@map$, strnpcinfo(0) +"::OnAgitBreak";
+	}
 	callsub S_Message,"OnReset";
 	end;
 

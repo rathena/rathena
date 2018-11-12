@@ -24,7 +24,7 @@ te_prtcas01,73,6,4	duplicate(simple_info_TE)	Gaebolg#8	GUILD_FLAG
 te_prtcas01,55,46,4	duplicate(simple_info_TE)	Gaebolg#9	GUILD_FLAG
 te_prtcas01,45,46,4	duplicate(simple_info_TE)	Gaebolg#10	GUILD_FLAG
 
-prontera,164,169,3	duplicate(flag_te)	Gloria 1 <TraEd>#te_prtcas01-2	722
+prontera,164,169,3	duplicate(flag_te)	Gaebolg <TraEd>#te_prtcas01-2	722
 
 
 // Infos flags + warp guildmaster inside
