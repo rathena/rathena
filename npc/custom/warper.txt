@@ -484,12 +484,24 @@ G4: Go("gef_fild13",184,205);
 	Instances:
 // --------------------------------------------------
 menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
-		"Devil Tower",I4, "Eclage Interior",I5, "Endless Tower",I6,
+		"Devil's Tower",I4, "Eclage Interior",I5, "Endless Tower",I6,
 		"Faceworms Nest",I7, "Geffen Magic Tournament",I8, "Ghost Palace",I9,
 		"Hazy Forest",I10, "Horror Toy Factory",I11, "Malangdo Culvert",I12,
 		"Nidhoggur's Nest",I13, "Octopus Cave",I14, "Old Glast Heim",I15,
 		"Orc's Memory",I16, "Sarah and Fenrir",I17, "Sara Memory",I18,
 		"Sealed Shrine",I19, "Wolfchev's Laboratory",I20;
+
+// npc/re/instances/AirshipAssault.txt
+// npc/re/instances/CentralLaboratory.txt
+// npc/custom/offical/GeffenMagicTournament.txt (not enabled)
+// npc/re/instances/IsleOfBios.txt
+// npc/re/instances/LastRoom.txt
+// npc/re/instances/MorseCave.txt
+// npc/re/instances/RitualOfBlessing.txt
+// npc/re/instances/RoomOfConsciousness.txt
+// - SkyFortress
+// - Charleston Crisis
+// - Nightmarish Jitterbug
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);

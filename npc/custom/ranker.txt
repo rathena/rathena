@@ -186,20 +186,20 @@ OnSun2359: // one minute before 'next week' start
 	.@end$ = callfunc("date_str", .@date[0], .@date[1], .@date[2]);
 
 	.@map$ = "pvp_y_1-2";
-	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer );
+	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@cn );
 	.@map$ = "pvp_y_2-2";
-	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer2 );
-	query_logsql("SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+(.@start$)+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' GROUP BY (kill_char_id) ORDER BY cn DESC, mvp_date ASC LIMIT 5;", .@killer3 );
+	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer2, .@cn );
+	query_logsql("SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+(.@start$)+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' GROUP BY (kill_char_id) ORDER BY cn DESC, mvp_date ASC LIMIT 5;", .@killer3, .@cn );
 
 	setarray .@items[0], 8500, 8501;
 	for(.@i = 0; .@i < 5; .@i ++) {
 		setarray .@items_count[0], 5 - (.@i*1), 15 - (.@i*3);
 		if(.@killer[.@i] > 0)
-			mail .@killer[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations! You placed ["+(.@i+1)+"] in the Weekly PVP Ranking [ALL]. Attached with this mail are your winings reward.", 1000000 - (.@i*200000),.@items, .@items_count;
+			mail .@killer[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+strcharinfo(0, .@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [ALL].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 1000000 - (.@i*200000),.@items, .@items_count;
 		if(.@killer2[.@i] > 0)
-			mail .@killer2[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations! You placed ["+(.@i+1)+"] in the Weekly PVP Ranking [Trans]. Attached with this mail are your winings reward.", 1000000 - (.@i*200000),.@items, .@items_count;
+			mail .@killer2[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+strcharinfo(0, .@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [Trans].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 1000000 - (.@i*200000),.@items, .@items_count;
 		if(.@killer3[.@i] > 0)
-			mail .@killer3[.@i], "MvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations! You placed ["+(.@i+1)+"] in the Weekly MVP Ranking. Attached with this mail are your winings reward.", 1000000 - (.@i*200000),.@items, .@items_count;
+			mail .@killer3[.@i], "MvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+strcharinfo(0, .@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly MVP Ranking.\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 1000000 - (.@i*200000),.@items, .@items_count;
 	}
 end;
 

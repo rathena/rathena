@@ -930,7 +930,7 @@ OnStart:
 	end;
 
 OnAgain:
-OnTimer6005: // every minute
+OnTimer60005: // every minute
 	for(.@i = 0; .@i < getarraysize($@victim_time); .@i++){
 		.@ticks = ($@victim_time[.@i] - gettimetick(2));
 		// debugmes "Unique: "+ $@victim_unique[.@i] +" | Ticks: "+ .@ticks +" | Count: "+ $@victim_count[.@i];
