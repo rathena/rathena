@@ -49,7 +49,7 @@ prontera,148,152,5	script	Damage Test	734,{
 
 	if ( getvariableofnpc( .renttime[.@room], "emp_check_manager" ) ) {
 		if ( .inuseid[.@room] == getcharid( .type[.@room] ) ) {
-			warp "emp_check", .cord_x[.@room], .cord_y[.@room];
+			warp "emp_check", (.cord_x[.@room]-5), (.cord_y[.@room]-5);
 			close;
 		} else {
 			mes .@npc$;
@@ -106,7 +106,7 @@ OnInit:
 	setarray .cord_y[0],0, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73;
 
 	.roomID = 0;
-	// debugmes "-------------------- start block";
+	debugmes "-------------------- start block";
 end;
 
 OnTimeExpired:
@@ -128,18 +128,55 @@ end;
 	mes ((.@ticks - gettimetick(2)) / 60) + " minutes and "+ ((.@ticks - gettimetick(2)) % 60) +" seconds left.";
 
 	mes "What do you want to test?";
-	set .@sel, select("Cancel","1288 | Emperium", "2408 | Dummy Lv10 ", "2409 | Dummy Lv50", "2410 | Dummy Lv100","2411 | Dummy Lv150","Reset");
+	set .@sel, select("Cancel","Buff for 2500z","1288 | Emperium", "2408 | Dummy Lv10 ", "2409 | Dummy Lv50", "2410 | Dummy Lv100","2411 | Dummy Lv150","Kill Test Dummy", "Leave Room");
 	if (.@sel == 1) close;
-	if (.@sel == 7) {
-		killmonster "emp_check","Damage Test Manager#"+.@id+"::OnMobDead";
+	if (.@sel == 9) {
+		mapwarp strnpcinfo(4), "prontera", 156, 183;
 		close;
 	}
+	if (.@sel == 2) {
+		if (BaseLevel == 175 && .@Price > 0){
+			if (Zeny < .@Price)
+			{
+				specialeffect2 EF_HEAL2;
+				percentheal 100,100;
+				message strcharinfo(0), "[Healer] Not enough zeny to Buff (Healing is free): " + callfunc("F_InsertComma",.@Price) + " Zeny.";
+				close;
+			}
+			message strcharinfo(0), "[Healer] Lv175 - Buffing Charges " + callfunc("F_InsertComma",.@Price) + " Zeny.";
+			Zeny -= .@Price;
+		}
+		else
+			message strcharinfo(0), "[Healer] Heal and Buffs are free for non-full level adventurers.";
+
+		specialeffect2 EF_HEAL2;
+		percentheal 100,100;
+		if (.@Buffs) {
+			specialeffect2 EF_INCAGILITY;
+			specialeffect2 EF_BLESSING;
+			if(vip_status(1))
+			{
+				sc_start SC_INCREASEAGI,1200000,10;
+				sc_start SC_BLESSING,1200000,10;
+			}
+			else
+			{
+				sc_start SC_INCREASEAGI,600000,10;
+				sc_start SC_BLESSING,600000,10;
+			}
+		}
+		close;
+	}
+
+	killmonster "emp_check","Damage Test Manager#"+.@id+"::OnMobDead";
+	.mob_timer[.@id] = gettimetick(2);
+	if (.@sel == 8) close;
 	switch(.@sel) {
-		case 2: .@mob_id = 1288; break;
-		case 3: .@mob_id = 2408; break;
-		case 4: .@mob_id = 2409; break;
-		case 5: .@mob_id = 2410; break;
-		case 6: .@mob_id = 2411; break;
+		case 3: .@mob_id = 1288; break;
+		case 4: .@mob_id = 2408; break;
+		case 5: .@mob_id = 2409; break;
+		case 6: .@mob_id = 2410; break;
+		case 7: .@mob_id = 2411; break;
 	}
 	monster "emp_check", (.cord_x[.@id]-7), (.cord_y[.@id]-7), strmobinfo(1, .@mob_id), .@mob_id, 1, "Damage Test Manager#"+.@id+"::OnMobDead";
 close;
@@ -166,6 +203,11 @@ OnInit:
 end;
 
 OnMobDead:
+	.@id = atoi( strnpcinfo(2) );
+	.@mob_ticks = (gettimetick(2) - .mob_timer[.@id]);
+	debugmes .@mob_ticks + " | "+ gettimetick(2) + " | "+.mob_timer[.@id];
+	npctalk "The monster was killed in "+ (.@mob_ticks / 60) + " minutes and "+ (.@mob_ticks % 60) +" seconds.";
+	.mob_timer[.@id] = 0;
 	// debugmes "Mob Killed!";
 end;
 
@@ -176,6 +218,7 @@ OnTimer1005:
 			areawarp "emp_check", (.cord_x[.@j]-16), (.cord_y[.@j]-16), .cord_x[.@j], .cord_y[.@j], .respawnmap$, .respawnx, .respawny;
 			killmonster "emp_check","Damage Test Manager#"+.@j+"::OnMobDead";
 			.renttime[.@j] = 0;
+			.mob_timer[.@j] = 0;
 
 			// clean up variable
 			set getvariableofnpc(.roomID,"Damage Test"), .@j;
