@@ -6084,7 +6084,6 @@ ACMD_FUNC(partyoption)
 
 	return 0;
 }
-
 /*==========================================
  * @autoloot by Upa-Kun
  * Turns on/off AutoLoot for a specific player
@@ -8256,6 +8255,25 @@ ACMD_FUNC(showdelay)
 }
 
 /*==========================================
+ * @showcasttime by Nubs
+ * Turns on/off CastTime values for a specific player
+ *------------------------------------------*/
+ACMD_FUNC(showcasttime)
+{
+	if (sd->state.showcasttime) {
+		sd->state.showcasttime = 0;
+		clif_displaymessage(fd, msg_txt(sd,1505)); // Hiding cast time values.
+		return 0;
+	}
+
+	sd->state.showcasttime = 1;
+	clif_displaymessage(fd, msg_txt(sd,1506)); // Showing cast time values.
+	return 0;
+
+	return 0;
+}
+
+/*==========================================
  * Duel organizing functions [LuzZza]
  *
  * @duel [limit|nick] - create a duel
@@ -10078,7 +10096,7 @@ ACMD_FUNC(gepard_block_nick)
 		return -1;
 	}
 
-	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server)); 
+	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server));
 
 	sprintf(atcmd_output, "Request: block by name - %s", violator_name);
 	clif_displaymessage(fd, atcmd_output);
@@ -10148,7 +10166,7 @@ ACMD_FUNC(gepard_block_account_id)
 		return -1;
 	}
 
-	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server)); 
+	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server));
 
 	sprintf(atcmd_output, "Request: block by account ID: %u", violator_account_id);
 	clif_displaymessage(fd, atcmd_output);
@@ -10212,7 +10230,7 @@ ACMD_FUNC(gepard_block_unique_id)
 		return -1;
 	}
 
-	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server)); 
+	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server));
 
 	sprintf(atcmd_output, "Request: block by unqiue ID: %u", violator_unique_id);
 	clif_displaymessage(fd, atcmd_output);
@@ -10529,6 +10547,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(showexp),
 		ACMD_DEF(showzeny),
 		ACMD_DEF(showdelay),
+		ACMD_DEF(showcasttime),
 		ACMD_DEF(autotrade),
 		ACMD_DEF(changegm),
 		ACMD_DEF(changeleader),

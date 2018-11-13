@@ -368,6 +368,7 @@ struct Battle_Config
 	int skill_removetrap_type;
 	int disp_experience;
 	int disp_zeny;
+	int disp_casttime;
 	int castle_defense_rate;
 	int backstab_bow_penalty;
 	int hp_rate;

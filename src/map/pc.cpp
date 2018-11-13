@@ -1214,6 +1214,8 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 		sd->state.showexp = 1;
 	if (battle_config.disp_zeny)
 		sd->state.showzeny = 1;
+	if (battle_config.disp_casttime)
+		sd->state.showcasttime = 1;
 #ifdef VIP_ENABLE
 	if (!battle_config.vip_disp_rate)
 		sd->vip.disableshowrate = 1;
