@@ -1,0 +1,51 @@
+//===== rAthena Script =======================================
+//= Sample: getunits Test
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20180831
+//===== Description: ========================================= 
+//= An example of getunits command script
+//============================================================
+prontera,145,177,0	script	getunits Test	857,{
+	mes "server information option will take a while if there is large amount of objects";
+	switch(select("server information:map information")){
+		case 1:
+			mes "server information";
+			mes getunits(BL_PC,.@Character$[0]) + " Character Online.";
+			mes getunits(BL_MOB,.@Monster$[0]) + " Monster.";
+			mes getunits(BL_PET,.@Pet$[0]) + " Pet.";
+			mes getunits(BL_HOM,.@Homunculus$[0]) + " Homunculus.";
+			mes getunits(BL_MER,.@Mercenary$[0]) + " Mercenary.";
+			mes getunits(BL_NPC,.@NPC$[0]) + " NPC.";
+			break;
+		case 2:
+			clear;
+			mes "input the map name.";
+			input .@input$;
+			clear;
+			mes "map information : " + .@input$;
+			mes getmapunits(BL_PC,.@input$,.@Character$[0]) + " Character Online.";
+			mes getmapunits(BL_MOB,.@input$,.@Monster$[0]) + " Monster.";
+			mes getmapunits(BL_PET,.@input$,.@Pet$[0]) + " Pet.";
+			mes getmapunits(BL_HOM,.@input$,.@Homunculus$[0]) + " Homunculus.";
+			mes getmapunits(BL_MER,.@input$,.@Mercenary$[0]) + " Mercenary.";
+			mes getmapunits(BL_NPC,.@input$,.@NPC$[0]) + " NPC.";
+	}
+	mes "select for more info";
+	setarray .@list$,"Character","Monster","Pet","Homunculus","Mercenary","NPC";
+	.@s = select(implode(.@list$,":")) -1;
+	clear;
+	copyarray .@name$[0], getd(".@" + .@list$[.@s] + "$"), getarraysize(getd(".@" + .@list$[.@s] + "$"));
+	mes "count : " + getarraysize(.@name$);
+	freeloop(1);
+	for(.@i=0;.@i<getarraysize(.@name$);.@i++){
+		mes (.@i+1) + " - " + .@name$[.@i];
+		if((.@i + 1) == 100){
+			mes "and more ...";
+			break;
+		}
+	}
+	freeloop(0);
+end;
+}

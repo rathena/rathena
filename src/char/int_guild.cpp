@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_guild.hpp"
@@ -7,13 +7,13 @@
 #define __STDC_WANT_LIB_EXT1__ 1
 #include <string.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
-#include "../common/malloc.h"
-#include "../common/socket.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"
@@ -46,9 +46,9 @@ int mapif_guild_basicinfochanged(int guild_id,int type,const void *data,int len)
 int mapif_guild_info(int fd,struct guild *g);
 int guild_break_sub(int key,void *data,va_list ap);
 int inter_guild_tosql(struct guild *g,int flag);
+int guild_checkskill(struct guild *g, int id);
 
-int guild_save_timer(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(guild_save_timer){
 	static int last_id = 0; //To know in which guild we were.
 	int state = 0; //0: Have not reached last guild. 1: Reached last guild, ready for save. 2: Some guild saved, don't do further saving.
 	DBIterator *iter = db_iterator(guild_db_);
@@ -126,7 +126,7 @@ int inter_guild_tosql(struct guild *g,int flag)
 	if (g->guild_id<=0 && g->guild_id != -1) return 0;
 
 #ifdef NOISY
-	ShowInfo("Save guild request ("CL_BOLD"%d"CL_RESET" - flag 0x%x).",g->guild_id, flag);
+	ShowInfo("Save guild request (" CL_BOLD "%d" CL_RESET " - flag 0x%x).",g->guild_id, flag);
 #endif
 
 	Sql_EscapeStringLen(sql_handle, esc_name, g->name, strnlen(g->name, NAME_LENGTH));
@@ -526,6 +526,32 @@ struct guild * inter_guild_fromsql(int guild_id)
 	return g;
 }
 
+/**
+ * Get the max storage size of a guild.
+ * @param guild_id: Guild ID to search
+ * @return Guild storage max size
+ */
+uint16 inter_guild_storagemax(int guild_id)
+{
+#ifdef OFFICIAL_GUILD_STORAGE
+	struct guild *g = inter_guild_fromsql(guild_id);
+	uint16 max = 0;
+
+	if (!g) {
+		ShowError("Guild %d not found!\n", guild_id);
+		return 0;
+	}
+
+	max = guild_checkskill(g, GD_GUILD_STORAGE);
+	if (max)
+		max *= 100;
+
+	return max;
+#else
+	return MAX_GUILD_STORAGE;
+#endif
+}
+
 // `guild_castle` (`castle_id`, `guild_id`, `economy`, `defense`, `triggerE`, `triggerD`, `nextTime`, `payTime`, `createTime`, `visibleC`, `visibleG0`, `visibleG1`, `visibleG2`, `visibleG3`, `visibleG4`, `visibleG5`, `visibleG6`, `visibleG7`)
 int inter_guildcastle_tosql(struct guild_castle *gc)
 {
@@ -577,17 +603,17 @@ struct guild_castle* inter_guildcastle_fromsql(int castle_id)
 	gc->castle_id = castle_id;
 
 	if (SQL_SUCCESS == Sql_NextRow(sql_handle)) {
-		Sql_GetData(sql_handle, 1, &data, NULL); gc->guild_id =  atoi(data);
-		Sql_GetData(sql_handle, 2, &data, NULL); gc->economy = atoi(data);
-		Sql_GetData(sql_handle, 3, &data, NULL); gc->defense = atoi(data);
-		Sql_GetData(sql_handle, 4, &data, NULL); gc->triggerE = atoi(data);
-		Sql_GetData(sql_handle, 5, &data, NULL); gc->triggerD = atoi(data);
-		Sql_GetData(sql_handle, 6, &data, NULL); gc->nextTime = atoi(data);
-		Sql_GetData(sql_handle, 7, &data, NULL); gc->payTime = atoi(data);
-		Sql_GetData(sql_handle, 8, &data, NULL); gc->createTime = atoi(data);
-		Sql_GetData(sql_handle, 9, &data, NULL); gc->visibleC = atoi(data);
-		for (i = 10; i < 10+MAX_GUARDIANS; i++) {
-			Sql_GetData(sql_handle, i, &data, NULL); gc->guardian[i-10].visible = atoi(data);
+		Sql_GetData(sql_handle, CD_GUILD_ID, &data, NULL); gc->guild_id =  atoi(data);
+		Sql_GetData(sql_handle, CD_CURRENT_ECONOMY, &data, NULL); gc->economy = atoi(data);
+		Sql_GetData(sql_handle, CD_CURRENT_DEFENSE, &data, NULL); gc->defense = atoi(data);
+		Sql_GetData(sql_handle, CD_INVESTED_ECONOMY, &data, NULL); gc->triggerE = atoi(data);
+		Sql_GetData(sql_handle, CD_INVESTED_DEFENSE, &data, NULL); gc->triggerD = atoi(data);
+		Sql_GetData(sql_handle, CD_NEXT_TIME, &data, NULL); gc->nextTime = atoi(data);
+		Sql_GetData(sql_handle, CD_PAY_TIME, &data, NULL); gc->payTime = atoi(data);
+		Sql_GetData(sql_handle, CD_CREATE_TIME, &data, NULL); gc->createTime = atoi(data);
+		Sql_GetData(sql_handle, CD_ENABLED_KAFRA, &data, NULL); gc->visibleC = atoi(data);
+		for (i = CD_ENABLED_GUARDIAN00; i < CD_MAX; i++) {
+			Sql_GetData(sql_handle, i, &data, NULL); gc->guardian[i - CD_ENABLED_GUARDIAN00].visible = atoi(data);
 		}
 	}
 	Sql_FreeResult(sql_handle);
@@ -1164,7 +1190,7 @@ int mapif_parse_CreateGuild(int fd,uint32 account_id,char *name,struct guild_mem
 	g->member[0].modified = GS_MEMBER_MODIFIED;
 
 	// Set default positions
-	g->position[0].mode=0x11;
+	g->position[0].mode = GUILD_PERM_DEFAULT;
 	strcpy(g->position[0].name,"GuildMaster");
 	strcpy(g->position[MAX_GUILDPOSITION-1].name,"Newbie");
 	g->position[0].modified = g->position[MAX_GUILDPOSITION-1].modified = GS_POSITION_MODIFIED;
@@ -1646,6 +1672,8 @@ int mapif_parse_GuildSkillUp(int fd,int guild_id,uint16 skill_id,uint32 account_
 			mapif_guild_info(-1,g);
 		mapif_guild_skillupack(guild_id,skill_id,account_id);
 		g->save_flag |= (GS_LEVEL|GS_SKILL); // Change guild & guild_skill
+		if (skill_id == GD_GUILD_STORAGE)
+			inter_guild_tosql(g, g->save_flag); // Force save for GD_GUILD_STORAGE
 	}
 	return 0;
 }
@@ -1777,7 +1805,7 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 	}
 
 	switch (index) {
-		case 1:
+		case CD_GUILD_ID:
 			if (charserv_config.log_inter && gc->guild_id != value) {
 				int gid = (value) ? value : gc->guild_id;
 				struct guild *g = (struct guild*)idb_get(guild_db_, gid);
@@ -1786,17 +1814,17 @@ int mapif_parse_GuildCastleDataSave(int fd, int castle_id, int index, int value)
 			}
 			gc->guild_id = value;
 			break;
-		case 2: gc->economy = value; break;
-		case 3: gc->defense = value; break;
-		case 4: gc->triggerE = value; break;
-		case 5: gc->triggerD = value; break;
-		case 6: gc->nextTime = value; break;
-		case 7: gc->payTime = value; break;
-		case 8: gc->createTime = value; break;
-		case 9: gc->visibleC = value; break;
+		case CD_CURRENT_ECONOMY: gc->economy = value; break;
+		case CD_CURRENT_DEFENSE: gc->defense = value; break;
+		case CD_INVESTED_ECONOMY: gc->triggerE = value; break;
+		case CD_INVESTED_DEFENSE: gc->triggerD = value; break;
+		case CD_NEXT_TIME: gc->nextTime = value; break;
+		case CD_PAY_TIME: gc->payTime = value; break;
+		case CD_CREATE_TIME: gc->createTime = value; break;
+		case CD_ENABLED_KAFRA: gc->visibleC = value; break;
 		default:
-			if (index > 9 && index <= 9+MAX_GUARDIANS) {
-				gc->guardian[index-10].visible = value;
+			if (index >= CD_ENABLED_GUARDIAN00 && index < CD_MAX) {
+				gc->guardian[index - CD_ENABLED_GUARDIAN00].visible = value;
 				break;
 			}
 			ShowError("mapif_parse_GuildCastleDataSave: not found index=%d\n", index);

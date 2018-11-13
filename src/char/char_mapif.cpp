@@ -1,26 +1,20 @@
-/**
- * @file char_mapif.c
- * Module purpose is to handle incoming and outgoing requests with map-server.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
 #include "char_mapif.hpp"
 
 #include <stdlib.h>
 #include <string.h> //memcpy
 
-#include "../common/socket.h"
-#include "../common/sql.h"
-#include "../common/malloc.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
+#include "../common/malloc.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
 
-#include "inter.hpp"
 #include "char.hpp"
 #include "char_logif.hpp"
+#include "inter.hpp"
 
 /**
  * Packet send to all map-servers, attach to ourself
@@ -245,29 +239,27 @@ void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
  * @return : 0 not enough data received, 1 success
  */
 int chmapif_parse_getmapname(int fd, int id){
-	int i = 0, j = 0;
+	int i = 0;
 	unsigned char *mapbuf;
 
 	if (RFIFOREST(fd) < 4 || RFIFOREST(fd) < RFIFOW(fd,2))
 		return 0;
 
 	//Retain what map-index that map-serv contains
-	memset(map_server[id].map, 0, sizeof(map_server[id].map));
-	for(i = 4; i < RFIFOW(fd,2); i += 4) {
-		map_server[id].map[j] = RFIFOW(fd,i);
-		j++;
-	}
+	map_server[id].map = {};
+	for(i = 4; i < RFIFOW(fd,2); i += 4)
+		map_server[id].map.push_back(RFIFOW(fd, i));
 
 	mapbuf = RFIFOP(fd,4);
 	RFIFOSKIP(fd,RFIFOW(fd,2));
 
-	ShowStatus("Map-Server %d connected: %d maps, from IP %d.%d.%d.%d port %d.\n",
-				id, j, CONVIP(map_server[id].ip), map_server[id].port);
+	ShowStatus("Map-Server %d connected: %" PRIuPTR " maps, from IP %d.%d.%d.%d port %d.\n",
+				id, map_server[id].map.size(), CONVIP(map_server[id].ip), map_server[id].port);
 	ShowStatus("Map-server %d loading complete.\n", id);
 
 	chmapif_send_misc(fd);
 	chmapif_send_fame_list(fd); //Send fame list.
-	chmapif_send_maps(fd, id, j, mapbuf);
+	chmapif_send_maps(fd, id, map_server[id].map.size(), mapbuf);
 
 	return 1;
 }
@@ -405,7 +397,7 @@ int chmapif_parse_reqsavechar(int fd, int id){
 
 		if (size - 13 != sizeof(struct mmo_charstatus))
 		{
-			ShowError("parse_from_map (save-char): Size mismatch! %d != %d\n", size-13, sizeof(struct mmo_charstatus));
+			ShowError("parse_from_map (save-char): Size mismatch! %d != %" PRIuPTR "\n", size-13, sizeof(struct mmo_charstatus));
 			RFIFOSKIP(fd,size);
 			return 1;
 		}
@@ -975,7 +967,7 @@ int chmapif_parse_save_scdata(int fd){
 				memcpy (&data, RFIFOP(fd, 14+i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
 				if( i > 0 )
 					StringBuf_AppendStr(&buf, ", ");
-				StringBuf_Printf(&buf, "('%d','%d','%hu','%d','%d','%d','%d','%d')", aid, cid,
+				StringBuf_Printf(&buf, "('%d','%d','%hu','%d','%ld','%ld','%ld','%ld')", aid, cid,
 					data.type, data.tick, data.val1, data.val2, data.val3, data.val4);
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
@@ -1521,7 +1513,7 @@ void do_init_chmapif(void){
  * @param id: id of map-serv (should be >0, FIXME)
  */
 void chmapif_server_reset(int id){
-	int i,j;
+	int j = 0;
 	unsigned char buf[16384];
 	int fd = map_server[id].fd;
 	DBMap* online_char_db = char_get_onlinedb();
@@ -1530,8 +1522,7 @@ void chmapif_server_reset(int id){
 	WBUFW(buf,0) = 0x2b20;
 	WBUFL(buf,4) = htonl(map_server[id].ip);
 	WBUFW(buf,8) = htons(map_server[id].port);
-	j = 0;
-	for(i = 0; i < MAX_MAP_PER_SERVER; i++)
+	for(uint16 i = 0; i < map_server[id].map.size(); i++)
 		if (map_server[id].map[i])
 			WBUFW(buf,10+(j++)*4) = map_server[id].map[i];
 	if (j > 0) {

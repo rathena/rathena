@@ -63,7 +63,7 @@ prontera,164,171,3	script	MvP Ladder Warper	56,{
 		mes "You have to form a party to play.";
 		close;
 	}
-	if ( getpartyleader( getcharid(1), 2 ) != getcharid(0) ) {
+	if ( is_party_leader() == false ) {
 		mes "[MvP Ladder Warper]";
 		mes "Only the party leader can register.";
 		close;
@@ -160,6 +160,8 @@ prontera,164,171,3	script	MvP Ladder Warper	56,{
 	end;
 
 OnMvpDead:
+	getpartymember .party_id, 1;
+	getpartymember .party_id, 2;
 	.round++;
 	if ( .round >= 2 && .round != .totalround +1 && .round_item_amount ) {
 		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {

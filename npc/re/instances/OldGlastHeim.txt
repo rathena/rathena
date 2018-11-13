@@ -88,7 +88,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 			mes "Why don't you make a party with more than 1 person and talk to me again?";
 			close;
 		}
-		if (getcharid(0) == getpartyleader(.@party_id,2))
+		if (is_party_leader() == true)
 			.@menu$ = "Generate Time Gap";
 		else {
 			mes "[Hugin]";
@@ -174,7 +174,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 // Floor 1
 //============================================================
 1@gl_k,149,41,5	script	Varmundt#0	4_M_BARMUND,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Varmundt]";
 		mes "Where's your leader? I need his help.";
 		cutin "gl_barmund2",2;
@@ -312,7 +312,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 1@gl_k,154,54,3	duplicate(Khalitzburg Knightage#21)	Khalitzburg Knightage#22	4_F_KHALITZBURG
 
 1@gl_k,149,100,6	script	Heinrich#1	4_M_HEINRICH,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Heinrich]";
 		mes "Where is your leader? I must talk to him.";
 		cutin "gl_heinrich2",2;
@@ -642,7 +642,7 @@ OnMyMobDead:
 }
 
 1@gl_k,17,51,3	script	Altar boy Domun#1	4_M_KID1,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Altar boy Domun]";
 		mes "Save me, save me, please...";
 		close;
@@ -720,7 +720,7 @@ OnMyMobDead:
 }
 
 1@gl_k,291,145,3	script	Holgren the Destroyer#1	4_F_JOB_BLACKSMITH,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Holgren the Destroyer]";
 		mes "You human?";
 		close;
@@ -1554,12 +1554,19 @@ OnMobDead:
 	end;
 OnTouch:
 	specialeffect2 EF_ENHANCE;
-	// buff
-	// .@num = atoi( replacestr(strnpcinfo(2), "Buff", "") );
-	// if (.@num == 1)
-	// else if (.@num == 2)
-	// else if (.@num == 3)
-	// else
+	.@num = atoi( replacestr(strnpcinfo(2), "Buff", "") );
+	if (.@num == 1)
+		sc_start SC_GLASTHEIM_HIDDEN,30000,1,10000,SCSTART_NOTICKDEF;
+	else if (.@num == 2)
+		sc_start SC_GLASTHEIM_STATE,30000,1,10000,SCSTART_NOTICKDEF;
+	else if (.@num == 3) {
+		sc_start SC_GLASTHEIM_HEAL,30000,1,10000,SCSTART_NOTICKDEF;
+		sc_start SC_GLASTHEIM_HPSP,30000,1,10000,SCSTART_NOTICKDEF;
+	}
+	else {
+		sc_start SC_GLASTHEIM_DEF,30000,1,10000,SCSTART_NOTICKDEF;
+		sc_start SC_GLASTHEIM_ITEMDEF,30000,1,10000,SCSTART_NOTICKDEF;
+	}
 	end;
 OnEvent:
 	initnpctimer;
@@ -1572,7 +1579,7 @@ OnEvent:
 	else if (.@num == 3)
 		npctalk "Varmundt's Ghost: If you don't want to be attacked by Amdarais' zombie, come to me and get more power!";
 	else
-		npctalk "Varmundt's Ghost: If you don't want to be attacked by Amdarais's power, come to me and get more power! ";
+		npctalk "Varmundt's Ghost: If you don't want to be attacked by Amdarais's power, come to me and get more power!";
 	end;
 OnTimer10000:
 	stopnpctimer;

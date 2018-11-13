@@ -1,14 +1,16 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLIF_HPP_
-#define _CLIF_HPP_
+#ifndef CLIF_HPP
+#define CLIF_HPP
+
+#include <vector>
 
 #include <stdarg.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/db.h" //dbmap
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/db.hpp" //dbmap
+#include "../common/mmo.hpp"
 
 struct Channel;
 struct clan;
@@ -35,6 +37,8 @@ struct party_booking_ad_info;
 struct sale_item_data;
 struct mail_message;
 struct achievement;
+struct guild_log_entry;
+enum e_guild_storage_log : uint16;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -491,25 +495,30 @@ enum clif_messages : uint16_t {
 	SKILL_CANT_USE_AREA = 0x536,
 	ITEM_CANT_USE_AREA = 0x537,
 	VIEW_EQUIP_FAIL = 0x54d,
+	ITEM_NEED_MADOGEAR = 0x59b,
+	ITEM_NEED_CART = 0x5ef,
 	RUNE_CANT_CREATE = 0x61b,
 	ITEM_CANT_COMBINE = 0x623,
 	INVENTORY_SPACE_FULL = 0x625,
 	ITEM_PRODUCE_SUCCESS = 0x627,
 	ITEM_PRODUCE_FAIL = 0x628,
 	ITEM_UNIDENTIFIED = 0x62d,
+	ITEM_NEED_BOW = 0x69b,
 	ITEM_REUSE_LIMIT = 0x746,
 	WORK_IN_PROGRESS = 0x783,
 	NEED_REINS_OF_MOUNT = 0x78c,
 	PARTY_MASTER_CHANGE_SAME_MAP = 0x82e, ///< "It is only possible to change the party leader while on the same map."
 	MERGE_ITEM_NOT_AVAILABLE = 0x887,
-	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
-	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
+	ITEM_BULLET_EQUIP_FAIL = 0x9bd,
 	SKILL_NEED_GATLING = 0x9fa,
 	SKILL_NEED_SHOTGUN = 0x9fb,
 	SKILL_NEED_RIFLE = 0x9fc,
 	SKILL_NEED_REVOLVER = 0x9fd,
 	SKILL_NEED_HOLY_BULLET = 0x9fe,
 	SKILL_NEED_GRENADE = 0xa01,
+	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
+	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
+	MSG_ATTENDANCE_DISABLED = 0xd92,
 };
 
 enum e_personalinfo : uint8_t {
@@ -758,6 +767,7 @@ void clif_party_xy_single(int fd, struct map_session_data *sd);
 void clif_party_hp(struct map_session_data *sd);
 void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
 void clif_party_job_and_level(struct map_session_data *sd);
+void clif_party_dead( struct map_session_data *sd );
 
 // guild
 void clif_guild_created(struct map_session_data *sd,int flag);
@@ -994,12 +1004,12 @@ void clif_cashshop_open( struct map_session_data* sd );
 void clif_display_pinfo(struct map_session_data *sd, int type);
 
 /// Roulette
-void clif_roulette_generate_ack(struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID);
-void clif_parse_RouletteOpen(int fd, struct map_session_data *sd);
-void clif_parse_RouletteInfo(int fd, struct map_session_data *sd);
-void clif_parse_RouletteClose(int fd, struct map_session_data *sd);
-void clif_parse_RouletteGenerate(int fd, struct map_session_data *sd);
-void clif_parse_RouletteRecvItem(int fd, struct map_session_data *sd);
+void clif_roulette_open(struct map_session_data* sd);
+void clif_parse_roulette_open(int fd, struct map_session_data *sd);
+void clif_parse_roulette_info(int fd, struct map_session_data *sd);
+void clif_parse_roulette_close(int fd, struct map_session_data *sd);
+void clif_parse_roulette_generate(int fd, struct map_session_data *sd);
+void clif_parse_roulette_item(int fd, struct map_session_data *sd);
 
 int clif_elementalconverter_list(struct map_session_data *sd);
 
@@ -1032,6 +1042,7 @@ void clif_clan_leave( struct map_session_data* sd );
 void clif_sale_start(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_end(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_amount(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
+void clif_sale_open(struct map_session_data* sd);
 
 /**
  * Color Table
@@ -1064,7 +1075,7 @@ void clif_notify_bindOnEquip(struct map_session_data *sd, int n);
 
 void clif_merge_item_open(struct map_session_data *sd);
 
-void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type, const char *srcname);
+void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
 
 void clif_dressing_room(struct map_session_data *sd, int flag);
 void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
@@ -1075,4 +1086,20 @@ void clif_achievement_list_all(struct map_session_data *sd);
 void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count);
 void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
 
-#endif /* _CLIF_HPP_ */
+/// Attendance System
+enum in_ui_type : int8 {
+	IN_UI_ATTENDANCE = 5
+};
+
+enum out_ui_type : int8 {
+	OUT_UI_ATTENDANCE = 7
+};
+
+void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data );
+void clif_attendence_response( struct map_session_data *sd, int32 data );
+
+void clif_weight_limit( struct map_session_data* sd );
+
+void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result );
+
+#endif /* CLIF_HPP */

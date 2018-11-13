@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_mail.hpp"
@@ -6,11 +6,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/sql.h"
+#include "../common/mmo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
 
 #include "char.hpp"
 #include "char_mapif.hpp"
@@ -293,11 +293,11 @@ int mail_timer_sub( int limit, enum mail_inbox_type type ){
 	return 0;
 }
 
-int mail_return_timer( int tid, unsigned int tick, int id, intptr_t ptr ){
+TIMER_FUNC(mail_return_timer){
 	return mail_timer_sub( charserv_config.mail_return_days, MAIL_INBOX_NORMAL );
 }
 
-int mail_delete_timer( int tid, unsigned int tick, int id, intptr_t data ){
+TIMER_FUNC(mail_delete_timer){
 	return mail_timer_sub( charserv_config.mail_delete_days, MAIL_INBOX_RETURNED );
 }
 
@@ -487,7 +487,7 @@ void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
 		// If it was not sent by the server, since we do not want to return mails to the server
 		else if( msg.send_id != 0 )
 		{
-			char temp_[MAIL_TITLE_LENGTH];
+			char temp_[MAIL_TITLE_LENGTH + 3];
 
 			// swap sender and receiver
 			SWAP(msg.send_id, msg.dest_id);
@@ -496,8 +496,8 @@ void mapif_Mail_return(int fd, uint32 char_id, int mail_id)
 			safestrncpy(msg.dest_name, temp_, NAME_LENGTH);
 
 			// set reply message title
-			snprintf(temp_, MAIL_TITLE_LENGTH, "RE:%s", msg.title);
-			safestrncpy(msg.title, temp_, MAIL_TITLE_LENGTH);
+			snprintf(temp_, sizeof(temp_), "RE:%s", msg.title);
+			safestrncpy(msg.title, temp_, sizeof(temp_));
 
 			msg.status = MAIL_NEW;
 			msg.type = MAIL_INBOX_RETURNED;

@@ -1,17 +1,10 @@
-/**
- * @file loginchrif.h
- * Module purpose is to handle incoming and outgoing requests with char-server.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#pragma once
-#ifndef _LOGINCHRIF_HPP_
-#define _LOGINCHRIF_HPP_
+#ifndef LOGINCHRIF_HPP
+#define LOGINCHRIF_HPP
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 /**
  * Entry point from char-server to log-server.
@@ -47,6 +40,4 @@ void do_shutdown_loginchrif(void);
  */
 void do_final_loginchrif(void);
 
-
-#endif	/* _LOGINCHRIF_HPP_ */
-
+#endif	/* LOGINCHRIF_HPP */

@@ -1,8 +1,8 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLIF_OBFUSCATION_HPP_
-#define _CLIF_OBFUSCATION_HPP_
+#ifndef CLIF_OBFUSCATION_HPP
+#define CLIF_OBFUSCATION_HPP
 
 #if defined(PACKET_OBFUSCATION) || defined(PACKET_OBFUSCATION_WARN)
 	#define packet_keys(a,b,c) static unsigned int clif_cryptKey[] = { a, b, c };
@@ -418,6 +418,8 @@
 		packet_keys(0x6E2F6233,0x193B0A66,0x0D1D2CA5);
 	#elif PACKETVER == 20180307 // 2018-03-07bRagexeRE
 		packet_keys(0x47DA10EB,0x4B922CCF,0x765C5055);
+	#elif PACKETVER > 20180307 // Clients after 2018-03-07bRagexeRE do not obfuscate packets anymore
+		packet_keys(0x00000000,0x00000000,0x00000000);
 	#elif PACKETVER > 20110817
 		#error Unsupported packet version.
 	#endif
@@ -425,4 +427,4 @@
 	#undef packet_keys
 #endif
 
-#endif /* _CLIF_OBFUSCATION_HPP_ */
+#endif /* CLIF_OBFUSCATION_HPP */

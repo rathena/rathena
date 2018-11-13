@@ -5348,7 +5348,7 @@ verus02,79,31,4	script	Krotzel#1	4_F_HUWOMAN,{
 			case 1:
 				mes "[Krotzel]";
 				mes "They all have a professional mindset so if they haven't finished working just see if they are safe.";
-				if (isbegin_quest(13198) > 0)
+				if (isbegin_quest(13199) > 0)
 					erasequest 13199;// Krotzel's Request - Complete
 				setquest 13195;// Monthly Brigan
 				setquest 13196;// Monthly Brigan
@@ -6439,7 +6439,7 @@ lhz_in01,275,251,3	script	Luke Lapez#ep152i01	4_M_EDEN_GUARDER,{
 	cutin "",255;
 	npctalk "So much for the damn escort...", "Luke Lapez#ep152i01";
 	sleep 400;
-	emotion ET_FRET, getnpcid(0, "Commander Arquien#ep152");
+	emotion ET_FRET, getnpcid(0, "Commander Arquien#ep152i");
 	sleep 200;
 	emotion ET_THINK, getnpcid(0, "Luke Lapez#ep152i01");
 	end;
@@ -6535,7 +6535,7 @@ lhz_in01,270,257,4	script	Rekenber Chairman#e152i	4_M_REKENBER,{
 		mes "The time, that accident or whatever you call it.";
 		mes "When I found a seemingly artificial obstacle during the juperos excavation..";
 		mes "Ian suddenly disappeared.";
-		emotion ET_SURPRISE, getnpcid(0, "Commander Arquien#ep152");
+		emotion ET_SURPRISE, getnpcid(0, "Commander Arquien#ep152i");
 		next;
 		cutin "verus_ian01.bmp",2;
 		mes "[Ian Atnad]";

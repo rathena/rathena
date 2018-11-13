@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20171011
+//= 20180831
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -132,7 +132,7 @@ and 'doc/mapflags.txt'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x>,<y>{,<xs>{,<ys>}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
+<map name>{,<x>{,<y>{,<xs>{,<ys>}}}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
@@ -943,8 +943,9 @@ This special label triggers when a player kills another player. The variable
 
 OnNPCKillEvent:
 
-This special label triggers when a player kills a monster without label. The variable
-'killedrid' is set to the Class (mob ID) of the monster killed.
+This special label triggers when a player kills a monster without label.
+The variable 'killedrid' is set to the Class (mob ID) of the monster killed.
+The variable 'killedgid' is set to the ID (unique mob game ID) of the monster killed.
 
 OnPCLoadMapEvent:
 
@@ -2260,6 +2261,62 @@ array, shifting all the elements beyond this towards the beginning.
 
 ---------------------------------------
 
+*inarray <array name>,<value>;
+
+This command returns the index of the first matching value found in the array.
+It will return -1 if the value is not found.
+
+	setarray .@array[0], 100, 200, 300, 400, 500, 600, 100;
+	
+	inarray(.@array[0], 200);
+	//return 1 because 200 is in index 1
+	//another way to say it that .@array[1] == 200
+	
+	.@index = inarray(.@array[0], 600);
+	//.@index is now 5 because .@array[5] == 600
+	
+	inarray(.@array[0], 100);
+	//while index 6 is also 100, the command will return the first instance it finds
+	//return 0 because .@array[0] == 100
+
+	inarray(.@array[0], 800);
+	//return -1 because 800 is not an element of the array .@array
+
+For more details, see the sample in 'doc/sample/inarray.txt'.
+
+---------------------------------------
+
+*countinarray <array name>{[<start index>]},<array name>{[<start index>]};
+
+This command will check for matches between the array values and return the number of matches.
+While being optional, if [<start index>] is supplied, the search will begin from the given index value.
+
+	setarray .@array[0], 100, 200, 300, 400, 500, 600;
+	
+	.@variable = 100;
+	if(countinarray(.@array[0], .@variable))
+		mes "The number 100 was found in the array @array";
+	
+	countinarray(.@array[0], .@variable);
+	//return 1 because the number 100 is an element of the array .@array
+	
+	setarray .@array2[0],100,500;
+	countinarray(.@array[0], .@array2[0]);
+	//return 2 because the numbers 100 and 500 are elements of the array .@array
+	
+	setarray .@array3[0],100,700;
+	countinarray(.@array[0], .@array3[0]);
+	//return 1 because the number 100 is an element of the array .@array
+	//but the number 700 is not an element of the array .@array
+
+	//also you can change the position between the arrays in the command
+	if(countinarray(.@array[0], .@array3[0]) == countinarray(.@array3[0], .@array[0]))
+		//This is true
+
+For more details, see the sample in 'doc/sample/inarray.txt'.
+
+---------------------------------------
+
 ======================================
 |2.- Information-retrieving commands.|
 ======================================
@@ -2768,6 +2825,8 @@ REFINE_COST_OVER10     - For refining over +10
 REFINE_COST_HD         - For refining with HD ores
 REFINE_COST_ENRICHED   - For refining with enriched ores
 REFINE_COST_OVER10_HD  - For refining over +10 with HD ores
+REFINE_COST_HOLINK     - For refining at Holink in Malangdo
+REFINE_COST_WAGJAK     - For refining at Refining Machine Wagjak in the Novice Academy
 
 This function will return required cost for refining based on <information> argument.
 
@@ -2974,6 +3033,14 @@ Returns true if the item in <equipment slot> is tradable.
 Returns false otherwise.
 
 ---------------------------------------
+
+*identifyall({<type>{,<account_id>}});
+
+Returns the count of unidentified items in the player inventory.
+If <type> is true the command will identify all the unidentified items as well (default).
+If <type> is false the command only returns the count of unidentified items.
+
+---------------------------------------
 //
 2,1.- End of item-related commands.
 //
@@ -3077,6 +3144,7 @@ DT_DAYOFMONTH - Day of the current month
 DT_MONTH - Month (constants for JANUARY to DECEMBER are available)
 DT_YEAR - Year
 DT_DAYOFYEAR - Day of the year
+DT_YYYYMMDD - current date in the form YYYYMMDD
 
 It will only return numbers. If another type is supplied -1 will be returned.
 
@@ -3137,6 +3205,70 @@ within the specified area - an x1/y1-x2/y2 square on the specified map.
 
 This is useful for maps that are split into many buildings, such as all the
 "*_in" maps, due to all the shops and houses.
+
+---------------------------------------
+
+*getunits(<type>{,<array_variable>[<first value>]})
+*getmapunits(<type>,<"map name">{,<array_variable>[<first value>]})
+*getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>[<first value>]})
+
+The 'getunits' command will return the number of <type> objects active on the server.
+
+The 'getmapunits' command will return the number of <type> objects active on the
+specified <"map name">.
+
+The 'getareaunits' command will return the number of <type> objects actively located
+within the specified area where <x1>, <y1>, <x2>, <y2> form the area.
+
+Type is the type of object to search for:
+
+	BL_PC   - Character objects
+	BL_MOB  - Monster objects
+	BL_PET  - Pet objects
+	BL_HOM  - Homunculus objects
+	BL_MER  - Mercenary objects
+	BL_NPC  - NPC objects
+	BL_ELEM - Elemental objects
+
+If <array_variable> is provided:
+	- An int variable will return the list of GID.
+	- A string variable will return the list of names.
+
+Example 1:
+	// getting the players count and building a string array of the names.
+	.@num = getunits(BL_PC,.@array$[0]);
+
+	mes "the number of Users Connected to the server is " + .@num + " .";
+	mes "list of Players names :";
+	freeloop(1);	// for if the list was too big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
+
+Example 2:
+	// getting the npc count in Prontera and building a string array of the names.
+	.@num = getmapunits(BL_NPC,"prontera",.@array$[0]);
+
+	mes "the number of NPCs in Prontera is " + .@num + " .";
+	mes "list of NPCs name :";
+	freeloop(1);	// for if the list was too big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
+
+Example 3:
+	// getting the monster count in Prontera with specific coordinates and building a int array of the GIDs.
+	.@num = getareaunits(BL_MOB,"prontera",154,186,159,182,.@array[0]);
+
+	mes "the number of Monsters in Prontera in that Coordinates is " + .@num + " .";
+	mes "list of Monsters GID :";
+	freeloop(1);	// for if the list was too big.
+	for(.@i=0;.@i<getarraysize(.@array);.@i++)
+		mes (.@i + 1) + " " + .@array[.@i];
+	freeloop(0);
+	end;
 
 ---------------------------------------
 \\
@@ -3221,6 +3353,13 @@ guild specified by the ID. 0 if the character is not a guild master of any guild
 
 ---------------------------------------
 
+*is_guild_leader({<guild ID>})
+
+This command will return true if the player attached to the script is the leader
+of his/her guild, or, if a guild ID is specified, of that guild.
+
+---------------------------------------
+
 *getcastlename("<map name>")
 
 This function returns the name of the castle when given the map name for that
@@ -3236,29 +3375,29 @@ to by its map name. Castle information is stored in `guild_castle` SQL table.
 
 Types of data correspond to `guild_castle` table columns:
 
- 1 - `guild_id`   - Guild ID.
- 2 - `economy`    - Castle Economy score.
- 3 - `defense`    - Castle Defense score.
- 4 - `triggerE`   - Number of times the economy was invested in today.
- 5 - `triggerD`   - Number of times the defense was invested in today.
- 6 - `nextTime`   - unused
- 7 - `payTime`    - unused
- 8 - `createTime` - unused
- 9 - `visibleC`   - Is 1 if a Kafra was hired for this castle, 0 otherwise.
-10 - `visibleG0`  - Is 1 if the 1st guardian is present (Soldier Guardian)
-11 - `visibleG1`  - Is 1 if the 2nd guardian is present (Soldier Guardian)
-12 - `visibleG2`  - Is 1 if the 3rd guardian is present (Soldier Guardian)
-13 - `visibleG3`  - Is 1 if the 4th guardian is present (Archer Guardian)
-14 - `visibleG4`  - Is 1 if the 5th guardian is present (Archer Guardian)
-15 - `visibleG5`  - Is 1 if the 6th guardian is present (Knight Guardian)
-16 - `visibleG6`  - Is 1 if the 7th guardian is present (Knight Guardian)
-17 - `visibleG7`  - Is 1 if the 8th guardian is present (Knight Guardian)
+CD_GUILD_ID          - Guild ID.
+CD_CURRENT_ECONOMY   - Castle Economy score.
+CD_CURRENT_DEFENSE   - Castle Defense score.
+CD_INVESTED_ECONOMY  - Number of times the economy was invested in today.
+CD_INVESTED_DEFENSE  - Number of times the defense was invested in today.
+CD_NEXT_TIME         - unused
+CD_PAY_TIME          - unused
+CD_CREATE_TIME       - unused
+CD_ENABLED_KAFRA     - Is 1 if a Kafra was hired for this castle, 0 otherwise.
+CD_ENABLED_GUARDIAN0 - Is 1 if the 1st guardian is present (Soldier Guardian)
+CD_ENABLED_GUARDIAN1 - Is 1 if the 2nd guardian is present (Soldier Guardian)
+CD_ENABLED_GUARDIAN2 - Is 1 if the 3rd guardian is present (Soldier Guardian)
+CD_ENABLED_GUARDIAN3 - Is 1 if the 4th guardian is present (Archer Guardian)
+CD_ENABLED_GUARDIAN4 - Is 1 if the 5th guardian is present (Archer Guardian)
+CD_ENABLED_GUARDIAN5 - Is 1 if the 6th guardian is present (Knight Guardian)
+CD_ENABLED_GUARDIAN6 - Is 1 if the 7th guardian is present (Knight Guardian)
+CD_ENABLED_GUARDIAN7 - Is 1 if the 8th guardian is present (Knight Guardian)
 
 All types of data have their meaning determined by War of Emperium scripts,
 with exception of:
- - `guild_id` that is always considered ID of the guild that owns the castle,
- - `defense` that is used in Guardians & Emperium HP calculations,
- - `visibleG` that is always considered to hold guardian presence bits.
+ - CD_GUILD_ID that is always considered ID of the guild that owns the castle,
+ - CD_CURRENT_DEFENSE that is used in Guardians & Emperium HP calculations,
+ - CD_ENABLED_GUARDIANX that is always considered to hold guardian presence bits.
 
 The 'setcastledata' command will behave identically, but instead of returning
 values for the specified types of accessible data, it will alter them and cause
@@ -3846,7 +3985,7 @@ not.
 ==============================
 -------------------------
 
-*attachrid(<account ID>)
+*attachrid(<account ID>{,force})
 *detachrid;
 
 These commands allow the manipulation of the script's currently attached player.
@@ -3854,8 +3993,13 @@ While 'attachrid' allows attaching of a different player by using its account id
 for the parameter RID, 'detachrid' makes the following commands run as if the
 script was never invoked by a player.
 
-The command returns 0 if the player cannot be attached (if the account is offline
-or does not exist), and 1 upon success.
+The command returns false if the player cannot be attached (if the account is offline
+or does not exist), and true upon success.
+
+By default the command is executed with force, which causes to attach the player
+even if he is currently attached to another script. Since this is not always the
+desired behavior you can also specify false to the command and it will only return 
+true if the player is online and was not attached to another script.
 
 -------------------------
 
@@ -5353,12 +5497,41 @@ This will open the Auction window on the client connected to the invoking charac
 
 This function works the same as 'openstorage' but will open a guild storage
 window instead for the guild storage of the guild the invoking character belongs
-to. This is a function because it returns a value - 0 if the guild storage was
-opened successfully and 1 if it wasn't. (Notice, it's a ZERO upon success.)
-Since guild storage is only accessible to one character at one time, it may fail
-if another character is accessing the guild storage at the same time.
+to.
 
-This will also fail and return 2 if the character does not belong to any guild.
+Return values:
+ GSTORAGE_OPEN - Successfully opened.
+ GSTORAGE_STORAGE_ALREADY_OPEN - Player storage is already open.
+ GSTORAGE_ALREADY_OPEN - Guild storage is already open.
+ GSTORAGE_NO_GUILD - Player is not in a guild.
+ GSTORAGE_NO_STORAGE - Guild hasn't invested in the Guild Storage Expansion skill (only if OFFICIAL_GUILD_STORAGE is enabled).
+ GSTORAGE_NO_PERMISSION - Player doesn't have permission to use the guild storage.
+
+---------------------------------------
+
+*guildopenstorage_log({<char id>})
+
+Opens the guild storage log window for the attached character or the given character id.
+
+Possible return values:
+GUILDSTORAGE_LOG_FINAL_SUCCESS	Window was opened successfully.
+GUILDSTORAGE_LOG_EMPTY			Window was not opened, because no entries exist.
+GUILDSTORAGE_LOG_FAILED			Some database error occurred.
+
+---------------------------------------
+
+*guild_has_permission(<permission>{,<char id>})
+
+Checks if the attached player or the player with the given character id has the given permission(s).
+Permission can be a bitmask and allows to use multiple values at the same time.
+Returns true if the player has all of the given permissions or false if the player does at least
+miss one of the given permissions or is not in a guild at all.
+
+Available permissions are:
+GUILD_PERM_INVITE	If a player is allowed to invite other players.
+GUILD_PERM_EXPEL	If a player is allowed to expel other guild members.
+GUILD_PERM_STORAGE	If a player is allowed to access the guild storage.
+GUILD_PERM_ALL		A combination of all permissions above.
 
 ---------------------------------------
 
@@ -5678,7 +5851,7 @@ executed on attack (or when attacked in the case of autobonus2).
 
 Rate is the trigger rate of the script (1000 = 100%).
 
-Duration is the time that the bonus will last for since the script has triggered.
+Duration is the time in milliseconds that the bonus will last for since the script has triggered.
 
 Skill ID/skill name the skill which will be used as trigger to start the bonus. (autobonus3)
 
@@ -5985,8 +6158,9 @@ The only very special thing about this command is an event label, which is an
 optional parameter. This label is written like '<NPC object name>::<label name>'
 and upon the monster being killed, it will execute the script inside of the
 specified NPC object starting from the label given. The RID of the player
-attached at this execution will be the RID of the killing character. The variable
-'killedrid' is set to the Class (mob ID) of the monster killed.
+attached at this execution will be the RID of the killing character.
+The variable 'killedrid' is set to the Class (mob ID) of the monster killed.
+The variable 'killedgid' is set to the ID (unique mob game ID) of the monster killed.
 
 <size> can be:
 	Size_Small	(0)		(default)
@@ -6908,8 +7082,8 @@ This command kicks the given character from the waiting room attached to the giv
 *getwaitingroomusers "<NPC object name>";
 
 This command get all the characters in the waiting room of the given NPC and stores
-their gids in the array .@waitingroom_users[]. Also, stores the the number of characters
-in the variable .@waitingroom_usercount
+their gids in the array .@waitingroom_users[]. Also, stores the number of characters
+in the variable .@waitingroom_usercount.
 
 ---------------------------------------
 
@@ -6934,7 +7108,7 @@ specified.
 *setmapflag "<map name>",<flag>{,<zone>{,<type>}};
 
 This command marks a specified map with the given map flag, which will alter the
-behavior of the map. A full list of mapflags is located in 'src/map/script_constants.h' with
+behavior of the map. A full list of mapflags is located in 'src/map/script_constants.hpp' with
 the 'mf_' prefix, and documentation can be found in 'doc/mapflags.txt'.
 
 The map flags alter the behavior of the map regarding teleporting (mf_nomemo,
@@ -6946,15 +7120,17 @@ skills or open up trade deals (mf_notrade, mf_novending, mf_noskill, mf_noicewal
 current weather effects (mf_snow, mf_fog, mf_sakura, mf_leaves, mf_rain, mf_clouds,
 mf_fireworks) and whether night will be in effect on this map (mf_nightenabled).
 
-The optional parameter 'zone' is used to set the zone for restricted mapflags.
+The optional parameter <zone> is used to set the zone for 'restricted' mapflags,
+GM level bypass for 'nocommand', base/job experience for 'bexp'/'jexp', and
+flag for 'battleground'.
 
-For the 'skill_damage' mapflag, 'zone' functions as 'value' (-100 to 100000) and
-'type' can be:
- 1: damage against players
- 2: damage against mobs
- 3: damage against bosses
- 4: damage against other
- 5: caster type
+For 'skill_damage' mapflag:
+	- Setting the flag here will adjust the global (all skills) damage on the map.
+	- <zone> is the -100 to 100000 damage adjustment value of the skills.
+	- See 'getmapflag' for the different <type> values.
+For 'skill_duration' mapflag:
+	- <zone> is the skill ID to adjust.
+	- <type> is the percentage of adjustment from 0 to 100000.
 
 ---------------------------------------
 
@@ -6972,13 +7148,15 @@ The optional parameter 'zone' is used to remove the zone from restricted mapflag
 This command checks the status of a given mapflag and returns the mapflag's state.
 0 means OFF, and 1 means ON. See 'setmapflag' for a list of mapflags.
 
+For MF_RESTRICTED, the zone value of the map is returned.
+
 The optional parameter 'type' is used in the 'skill_damage' mapflag:
- 0: if mapflag is set (default)
- 1: damage against players
- 2: damage against mobs
- 3: damage against bosses
- 4: damage against other
- 5: caster type
+ SKILLDMG_MAX: if mapflag is set (default)
+ SKILLDMG_PC: damage against players
+ SKILLDMG_MOB: damage against mobs
+ SKILLDMG_BOSS: damage against bosses
+ SKILLDMG_OTHER: damage against other
+ SKILLDMG_CASTER: caster type
 
 ---------------------------------------
 
@@ -7299,11 +7477,12 @@ This command will display a picture, usually an NPC illustration, also called
 cutin, for the currently attached client. The position parameter determines the
 placement of the illustration and takes following values:
 
-	0 - bottom left corner
-	1 - bottom middle
-	2 - bottom right corner
-	3 - middle of screen in a movable window with an empty title bar
-	4 - middle of screen without the window header, but still movable
+	0	bottom left corner
+	1	bottom middle
+	2	bottom right corner
+	3	middle of screen in a movable window with an empty title bar
+	4	middle of screen without the window header, but still movable
+	255	clear all displayed cutins
 
 The picture is read from data\texture\유저인터페이스\illust, from both the GRF archive
 and data folder, and is required to be a bitmap. The file extension .bmp can be
@@ -8592,9 +8771,22 @@ same as NPC sprite facing directions: 0=north, 1=northwest, 2=west, etc.
 
 ---------------------------------------
 
+*checkwall "<name>";
+
+This command will return true if the wall with the given name exists, false otherwise.
+
+---------------------------------------
+
 *readbook <book id>,<page>;
 
 This command will open a book item at the specified page.
+
+---------------------------------------
+
+*open_roulette( {char_id} )
+
+Opens the roulette window for the currently attached character or the character
+with the given character id.
 
 ---------------------------------------
 
@@ -8812,8 +9004,13 @@ No Icon			: QTYPE_NONE
 ? Job Icon		: QTYPE_JOB2
 ! Event Icon	: QTYPE_EVENT
 ? Event Icon	: QTYPE_EVENT2
-Warg			: QTYPE_WARG
-Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
+Warg			: QTYPE_WARG (Only for packetver < 20170315)
+Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410 and < 20170315)
+Click Me		: QTYPE_CLICKME (Only for packetver >= 20170315)
+Daily Quest		: QTYPE_DAILYQUEST (Only for packetver >= 20170315)
+! Event Icon	: QTYPE_EVENT3 (Only for packetver >= 20170315)
+Job Quest		: QTYPE_JOBQUEST (Only for packetver >= 20170315)
+Jumping Poring	: QTYPE_JUMPING_PORING (Only for packetver >= 20170315)
 
 Map Mark Color, when used, creates a mark in the user's mini map on the position of the NPC,
 the available color values are:
@@ -9185,6 +9382,8 @@ currently has active. Valid types are:
  PETINFO_RENAMED - Pet rename flag. 0 means this pet has not been named yet.
  PETINFO_LEVEL - Pet level
  PETINFO_BLOCKID - Pet Game ID
+ PETINFO_EGGID - Pet egg item id
+ PETINFO_FOODID - Pet food item id
 
 ---------------------------------------
 
@@ -9582,6 +9781,13 @@ Possible types are:
 
 If retrieval fails (leader not found or party does not exist), this function
 returns "null" instead of the character name, and -1 for the other types.
+
+---------------------------------------
+
+*is_party_leader({<party ID>})
+
+This command will return true if the player attached to the script is the leader
+of his/her party, or, if a party ID is specified, of that party.
 
 ---------------------------------------
 

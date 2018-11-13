@@ -5479,7 +5479,8 @@ spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 		set .@dayq_chk,checkquest(2186,PLAYTIME);
 		if ((.@dayq_chk == -1) || (.@dayq_chk == 2)) {
 			if ((ep13_2_tre1 < 1) || (ep13_2_tre1 == 6)) {
-				erasequest 2186;
+				if (.@dayq_chk == 2)
+					erasequest 2186;
 				set ep13_2_tre1,0;
 				mes "[Grenouille]";
 				mes "I've heard that some strangers from Rune Midgard are around here, it must be you.";

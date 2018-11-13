@@ -3364,6 +3364,7 @@ ma_fild01,166,214,6	script	Old Man in Dilemma#GA	575,{
 					specialeffect2 EF_CONE;
 					specialeffect EF_FORESTLIGHT2;
 					set Zeny, Zeny-1000;
+					delitem 6497,3; //Lesser_Agimat
 					getitem 12775,1; //Ancient_Spirit_Agimat
 				} else {
 					mes "[Old Man in Dilemma]";
@@ -3532,9 +3533,10 @@ ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
 			mes "[Tikbalang Expert]";
 			mes "The '^F80835Tikbalang Belt^000000' is used to capture Tikbalangs without the hassle. But that doesn't mean it's 100% successful. Interested? Do you want me to make one for you?";
 			next;
-			switch(select("Yes, Im interested.:No, I can capture one myself.")) {
+			switch(select("Yes, I'm interested.:No, I can capture one myself.")) {
 			case 1:
 				delitem 6496,3; //Tikbalang_Thick_Spine
+				delitem 6497,5; //Lesser_Agimat
 				getitem 12699,1; //Tikbalang_Belt
 				mes "[Tikbalang Expert]";
 				mes "Yiiiiiiiiiiii! Yap!";
@@ -3604,6 +3606,7 @@ ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
 // Upgrade Boss Equipment :: malaya_mvpitem
 //============================================================
 ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
+	disable_items;
 	mes "[Bayani]";
 	mes "I will upgrade your armor if you bring one that holds enormous power.";
 	next;
@@ -3782,7 +3785,9 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 		mes "[Bayani]";
 		mes "What is this! You said you wanted to upgrade " + getitemname(.@item) + " but why are you giving me this? You should be wearing " + getitemname(.@item) + ".";
 		close;
-	} else if (getequiprefinerycnt(.@part) < 9) {
+	}
+	.@equip_refine = getequiprefinerycnt(.@part);
+	if (.@equip_refine < 9) {
 		mes "[Bayani]";
 		mes "No, the sturdiness of this item has not been tested yet. It'll have to be at least +9 refined for me to say, 'Oh this is pretty sturdy armor.";
 		close;
@@ -3823,7 +3828,7 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 	delitem 6499,20; //Ancient_Grudge
 
 	// anti-hack
-	if (callfunc("F_IsEquipIDHack", .@part, .@item))
+	if (callfunc("F_IsEquipIDHack", .@part, .@item) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
 		close;
 
 	delequip .@part;
@@ -4578,7 +4583,7 @@ malaya,290,340,3	script	Guard Leader#buwaya	571,{
 		mes "- Look at you warily while whispering to each other. -";
 		close;
 	}
-	if (malaya_buwaya <= 10) {
+	if (malaya_buwaya < 10) {
 		mes "[Guard Leader]";
 		mes "We are busy as hell because of Bangungots servants attacking the hospital.";
 		next;

@@ -1,4 +1,4 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "int_pet.hpp"
@@ -6,18 +6,19 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../common/mmo.h"
-#include "../common/malloc.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/showmsg.h"
-#include "../common/utils.h"
-#include "../common/sql.h"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/sql.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "char.hpp"
 #include "inter.hpp"
 
 struct s_pet *pet_pt;
+int mapif_load_pet(int fd, uint32 account_id, uint32 char_id, int pet_id);
 
 //---------------------------------------------------------
 int inter_pet_tosql(int pet_id, struct s_pet* p)
@@ -211,9 +212,13 @@ int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class,
 		pet_pt->intimate = 1000;
 
 	pet_pt->pet_id = -1; //Signal NEW pet.
-	if (inter_pet_tosql(pet_pt->pet_id,pet_pt))
-		mapif_pet_created(fd, account_id, pet_pt);
-	else	//Failed...
+	if (inter_pet_tosql(pet_pt->pet_id,pet_pt)){
+		if( pet_pt->incubate ){
+			mapif_pet_created(fd, account_id, pet_pt);
+		}else{
+			mapif_load_pet(fd, account_id, char_id, pet_pt->pet_id);
+		}
+	}else	//Failed...
 		mapif_pet_created(fd, account_id, NULL);
 
 	return 0;
@@ -246,7 +251,7 @@ int mapif_save_pet(int fd, uint32 account_id, struct s_pet *data) {
 	RFIFOHEAD(fd);
 	len=RFIFOW(fd, 2);
 	if(sizeof(struct s_pet)!=len-8) {
-		ShowError("inter pet: data size error %d %d\n", sizeof(struct s_pet), len-8);
+		ShowError("inter pet: data size error %" PRIuPTR " %d\n", sizeof(struct s_pet), len-8);
 	}
 
 	else{

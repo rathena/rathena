@@ -103,7 +103,7 @@ verus01,149,155,5	script	Civilization Explorer#p	4_LGTSCIENCE,{
 		mes "Please talk to me after composing a party of 1 or more, or after joining a party.";
 		close;
 	}
-	if (getpartyleader(.@party_id,2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "[Civilization Explorer]";
 		mes "Ah. You aren't the party leader. Take me to your leader! Or perhaps take your leader to me.";
 		close;
@@ -136,7 +136,7 @@ verus01,149,155,5	script	Civilization Explorer#p	4_LGTSCIENCE,{
 		mes "The entrance door is already open.";
 		close;
 	}
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "[Probationary researcher]";
 		mes "Please hold. I am speaking with the guide about whether or not you have been authorized.";
 		close;
