@@ -156,12 +156,12 @@ que_hugel	mapflag	noreturn
 // PvP Arenas=======================
 //pvp_y_room	mapflag	noreturn
 //pvp_y_1-1	mapflag	noreturn
-pvp_y_1-2	mapflag	noreturn
+//pvp_y_1-2	mapflag	noreturn
 //pvp_y_1-3	mapflag	noreturn
 //pvp_y_1-4	mapflag	noreturn
 //pvp_y_1-5	mapflag	noreturn
 //pvp_y_2-1	mapflag	noreturn
-pvp_y_2-2	mapflag	noreturn
+//pvp_y_2-2	mapflag	noreturn
 //pvp_y_2-3	mapflag	noreturn
 //pvp_y_2-4	mapflag	noreturn
 //pvp_y_2-5	mapflag	noreturn

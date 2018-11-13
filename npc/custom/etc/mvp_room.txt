@@ -26,22 +26,22 @@
 			mes "Room #"+ .@i +" = "+ .color$[ .type[.@i] ] + .whoinuse$[.@i] +"^000000";
 	next;
 	.@room = select(
-		"MVP ROOM 1 [" + getmapusers("pvp_n_1-3") +"]",
-		"MVP ROOM 2 [" + getmapusers("pvp_n_2-3") +"]",
-		"MVP ROOM 3 [" + getmapusers("pvp_n_3-3") +"]",
-		"MVP ROOM 4 [" + getmapusers("pvp_n_4-3") +"]",
-		"MVP ROOM 5 [" + getmapusers("pvp_n_5-3") +"]",
-		"MVP ROOM 6 [" + getmapusers("pvp_n_6-3") +"]",
-		"MVP ROOM 7 [" + getmapusers("pvp_n_7-3") +"]",
-		"MVP ROOM 8 [" + getmapusers("pvp_n_8-3") +"]",
-		"MVP ROOM 9 [" + getmapusers("pvp_n_1-5") +"]",
-		"MVP ROOM 10 [" + getmapusers("pvp_n_2-5") +"]",
-		"MVP ROOM 11 [" + getmapusers("pvp_n_3-5") +"]",
-		"MVP ROOM 12 [" + getmapusers("pvp_n_4-5") +"]",
-		"MVP ROOM 13 [" + getmapusers("pvp_n_5-5") +"]",
-		"MVP ROOM 14 [" + getmapusers("pvp_n_6-5") +"]",
-		"MVP ROOM 15 [" + getmapusers("pvp_n_7-5") +"]",
-		"MVP ROOM 16 [" + getmapusers("pvp_n_8-5") +"]");
+		"Branch Room 1 [" + getmapusers("pvp_n_1-3") +"]",
+		"Branch Room 2 [" + getmapusers("pvp_n_2-3") +"]",
+		"Branch Room 3 [" + getmapusers("pvp_n_3-3") +"]",
+		"Branch Room 4 [" + getmapusers("pvp_n_4-3") +"]",
+		"Branch Room 5 [" + getmapusers("pvp_n_5-3") +"]",
+		"Branch Room 6 [" + getmapusers("pvp_n_6-3") +"]",
+		"Branch Room 7 [" + getmapusers("pvp_n_7-3") +"]",
+		"Branch Room 8 [" + getmapusers("pvp_n_8-3") +"]",
+		"Branch Room 9 [" + getmapusers("pvp_n_1-5") +"]",
+		"Branch Room 10 [" + getmapusers("pvp_n_2-5") +"]",
+		"Branch Room 11 [" + getmapusers("pvp_n_3-5") +"]",
+		"Branch Room 12 [" + getmapusers("pvp_n_4-5") +"]",
+		"Branch Room 13 [" + getmapusers("pvp_n_5-5") +"]",
+		"Branch Room 14 [" + getmapusers("pvp_n_6-5") +"]",
+		"Branch Room 15 [" + getmapusers("pvp_n_7-5") +"]",
+		"Branch Room 16 [" + getmapusers("pvp_n_8-5") +"]");
 
 	if ( getvariableofnpc( .renttime[.@room], "Room Manager" ) ) {
 		if ( .inuseid[.@room] == getcharid( .type[.@room] ) ) {
@@ -1511,3 +1511,4 @@ star_in	mapflag	nobranch
 2012rwc_07	mapflag	nobranch
 2012rwc_08	mapflag	nobranch
 vendzone	mapflag	nobranch
+emp_check	mapflag	nobranch

@@ -970,3 +970,5 @@ guild_vs2,90,50,0	warp	WtoE	1,4,guild_vs2,12,50
 // -- PvP Announcer
 pvp_y_1-2	mapflag	loadevent
 pvp_y_2-2	mapflag	loadevent
+pvp_y_1-2	mapflag	noreturn
+pvp_y_2-2	mapflag	noreturn
