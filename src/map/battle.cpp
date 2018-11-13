@@ -3383,7 +3383,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 
 	switch (skill_id) {
 		case RA_AIMEDBOLT:
-			wd->div_ = 2 + tstatus->size + rnd()%1;
+			wd->div_ = 2 + tstatus->size + rnd()%2;
 			break;
 		case SC_FATALMENACE:
 			if (sd && sd->weapontype1 == W_DAGGER)
