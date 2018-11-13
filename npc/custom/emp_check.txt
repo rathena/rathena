@@ -1,0 +1,235 @@
+
+prontera,148,152,5	script	Damage Test	734,{
+	.@npc$ = "[Damage Test Manager]";
+	mes .@npc$;
+	mes "The cost to rent a room for "+ getvariableofnpc( .duration, "emp_check_manager" ) +" minutes is "+ callfunc("F_InsertComma", getvariableofnpc( .rental, "emp_check_manager" ) ) +" zeny.";
+	mes "Please select a room to proceed.";
+	mes " ";
+	for ( .@i = 1; .@i <= 25; .@i++ ){
+		.@status$[.@i] = "Open";
+		.@ticks = getvariableofnpc( .renttime[.@i], "emp_check_manager" );
+		if ( .@ticks > 0 ){
+			switch(.type) {
+				case 1: .@type$ = "Party"; break;
+				case 2: .@type$ = "Guild"; break;
+				case 3: .@type$ = "Solo"; break;
+			}
+			mes "Room #"+ .@i +" = "+ .color$[ .type[.@i] ] + .whoinuse$[.@i] +"^000000 "+.@type$;
+			mes " = "+ ((.@ticks - gettimetick(2)) / 60) + " minutes and "+ ((.@ticks - gettimetick(2)) % 60) +" seconds left.";
+			.@status$[.@i] = "Reserved";
+		}
+	}
+	.@room = select(
+		"Damage Test Room 1 ["+ .@status$[1] +"]",
+		"Damage Test Room 2 ["+ .@status$[2] +"]",
+		"Damage Test Room 3 ["+ .@status$[3] +"]",
+		"Damage Test Room 4 ["+ .@status$[4] +"]",
+		"Damage Test Room 5 ["+ .@status$[5] +"]",
+		"Damage Test Room 6 ["+ .@status$[6] +"]",
+		"Damage Test Room 7 ["+ .@status$[7] +"]",
+		"Damage Test Room 8 ["+ .@status$[8] +"]",
+		"Damage Test Room 9 ["+ .@status$[9] +"]",
+		"Damage Test Room 10 ["+ .@status$[10] +"]",
+		"Damage Test Room 11 ["+ .@status$[11] +"]",
+		"Damage Test Room 12 ["+ .@status$[12] +"]",
+		"Damage Test Room 13 ["+ .@status$[13] +"]",
+		"Damage Test Room 14 ["+ .@status$[14] +"]",
+		"Damage Test Room 15 ["+ .@status$[15] +"]",
+		"Damage Test Room 16 ["+ .@status$[16] +"]",
+		"Damage Test Room 17 ["+ .@status$[17] +"]",
+		"Damage Test Room 18 ["+ .@status$[18] +"]",
+		"Damage Test Room 19 ["+ .@status$[19] +"]",
+		"Damage Test Room 20 ["+ .@status$[20] +"]",
+		"Damage Test Room 21 ["+ .@status$[21] +"]",
+		"Damage Test Room 22 ["+ .@status$[22] +"]",
+		"Damage Test Room 23 ["+ .@status$[23] +"]",
+		"Damage Test Room 24 ["+ .@status$[24] +"]",
+		"Damage Test Room 25 ["+ .@status$[25] +"]");
+	next;
+
+	if ( getvariableofnpc( .renttime[.@room], "emp_check_manager" ) ) {
+		if ( .inuseid[.@room] == getcharid( .type[.@room] ) ) {
+			warp "emp_check", .cord_x[.@room], .cord_y[.@room];
+			close;
+		} else {
+			mes .@npc$;
+			mes "This room is reserved for ";
+			mes .color$[ .type[.@room] ] + .whoinuse$[.@room] +"^000000.";
+			mes "Please select another.";
+			close;
+		}
+	}
+	mes .@npc$;
+	mes "Reserve this room for...";
+	next;
+	set .@type, select( "For my party members", "For my guild members", "For personal account use" );
+	if ( !getcharid(.@type) ) {
+		mes .@npc$;
+		mes "You do not own a "+( ( .@type == 1 )? "Party" : "Guild" )+".";
+		close;
+	}
+	else if ( Zeny < getvariableofnpc( .rental, "emp_check_manager" ) ) {
+		mes .@npc$;
+		mes "You don't have enough zeny to rent a room.";
+		close;
+	}
+	else if ( getvariableofnpc( .renttime[.@room], "emp_check_manager" ) ) {
+		mes .@npc$;
+		mes "I'm sorry, somebody else has already registered this room faster than you.";
+		close;
+	}
+	for ( .@i = 1; .@i <= 25; .@i++ ) {
+		if ( ( getvariableofnpc( .renttime[.@i], "emp_check_manager" ) ) && .@type == .type[.@i] && getcharid(.@type) == .inuseid[.@i] ) {
+			mes .@npc$;
+			mes "You already rented Room#"+ .@i +". Use that room instead.";
+			close;
+		}
+	}
+	debugmes .@type + " | "+ getcharid(.@type) + " | " + strcharinfo( ( .@type == 3 )? 0 : .@type ) + " | "+ .@rooms;
+	set .type[.@room], .@type;
+	set .inuseid[.@room], getcharid(.@type);
+	set .whoinuse$[.@room], strcharinfo( ( .@type == 3 )? 0 : .@type );
+	Zeny -= getvariableofnpc( .rental, "emp_check_manager" );
+	warp "emp_check", (.cord_x[.@room]-5), (.cord_y[.@room]-5);
+	donpcevent "Damage Test Manager#"+ .@room +"::OnEnterRoom";
+
+	close;
+end;
+
+OnInit:
+	.color$[1] =  "^EE8800"; // party color
+	.color$[2] =  "^70CC11"; // guild color
+	.color$[3] =  "^0000FF"; // account color
+	setarray .cord_x[0],0,  49,  49,  49,  49,  49,  97,  97,  97,  97,  97, 145, 145, 145, 145, 145, 193, 193, 193, 193, 193, 241, 241, 241, 241, 241;
+	setarray .cord_y[0],0, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73;
+
+end;
+
+OnTimeExpired:
+	debugmes "OnTimeExpired 1";
+	while(.roomID == -1){ sleep 100; } // ensure .roomID have value;
+	debugmes "OnTimeExpired 2";
+
+	deletearray .roomID[.roomID],1;
+	deletearray .inuseid[.roomID],1;
+	deletearray .whoinuse$[.roomID],1;
+	.roomID = -1;
+end;
+}
+
+-	script	emp_check_manager	-1,{
+	.@npc$ = "[Damage Test Manager]";
+	mes .@npc$;
+	.@id = atoi( strnpcinfo(2) );
+
+	.@ticks = .renttime[.@id];
+	mes ((.@ticks - gettimetick(2)) / 60) + " minutes and "+ ((.@ticks - gettimetick(2)) % 60) +" seconds left.";
+
+	mes "What do you want to test?";
+	set .@sel, select("Cancel","Emperium", "Barricade","Reset");
+	if (.@sel == 1) close;
+	if (.@sel == 2) {
+		debugmes .@id+ " | "+(.cord_x[.@id]-7) + " | " +(.cord_y[.@id]-7) + " | "+.@id;
+		monster "emp_check",(.cord_x[.@id]-7),(.cord_y[.@id]-7),"Emperium",1288,1,"Damage Test Manager#"+.@id+"::OnMobDead";
+	}
+	else if (.@sel == 3) {
+
+	}
+	else if (.@sel == 4) {
+		killmonster "emp_check","Damage Test Manager#"+.@id+"::OnMobDead";
+	}
+	close;
+
+
+OnInit:
+	if ( !getstrlen( strnpcinfo(2) ) ) {
+		.rental = 10000;
+		.duration = 1; // 60 minutes
+
+		.respawnmap$ = "prontera";
+		.respawnx = 156;
+		.respawny = 183;
+		setarray .cord_x[0],0,  49,  49,  49,  49,  49,  97,  97,  97,  97,  97, 145, 145, 145, 145, 145, 193, 193, 193, 193, 193, 241, 241, 241, 241, 241;
+		setarray .cord_y[0],0, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73, 265, 217, 169, 121,  73;
+	}
+	else
+	{
+		mapannounce strnpcinfo(4), "An administrator has refreshed the server. Please re-register this room.", bc_map;
+		// Respawn point when players leave the room
+		mapwarp strnpcinfo(4), "prontera", 156, 183;
+	}
+	initnpctimer; setnpctimer 0;
+end;
+
+OnMobDead:
+end;
+
+OnTimer60005:
+	for(.@j = 1; .@j <= getarraysize(.renttime[.@j]); .@j++) {
+		if(gettimetick(2) > .renttime[.@j]) { // duration ended
+			areawarp "emp_check", (.cord_x[.@j]-16), (.cord_y[.@j]-16), .cord_x[.@j], .cord_y[.@j], .respawnmap$, .respawnx, .respawny;
+			debugmes "warp out "+.@j+" |"+(.cord_x[.@j]-16)+" | "+(.cord_y[.@j]-16)+" | "+.cord_x[.@j]+" | "+.cord_y[.@j];
+			deletearray .renttime[.@j],1;
+
+			// clean up variable
+			set getvariableofnpc(.roomID,"Damage Test"), .@j;
+			sleep 1000;
+			donpcevent "Damage Test::OnTimeExpired";
+		}
+		else
+		{
+			debugmes "nothing expired";
+		}
+	}
+	// reset timer;
+	setnpctimer 0;
+end;
+
+OnEnterRoom:
+	.@id = atoi( strnpcinfo(2) );
+	.renttime[.@id] = gettimetick(2) + (.duration * 60);
+	// debugmes .@id + " | " + gettimetick(2) +" | "+.renttime[.@id];
+	killmonster "emp_check", "damagetest::OnMobDead-"+.@id;
+	startnpctimer;
+end;
+}
+
+emp_check,49,265,3	duplicate(emp_check_manager)	Damage Test Manager#1	734
+emp_check,49,217,3	duplicate(emp_check_manager)	Damage Test Manager#2	734
+emp_check,49,169,3	duplicate(emp_check_manager)	Damage Test Manager#3	734
+emp_check,49,121,3	duplicate(emp_check_manager)	Damage Test Manager#4	734
+emp_check,49,73,3	duplicate(emp_check_manager)	Damage Test Manager#5	734
+emp_check,97,265,3	duplicate(emp_check_manager)	Damage Test Manager#6	734
+emp_check,97,217,3	duplicate(emp_check_manager)	Damage Test Manager#7	734
+emp_check,97,169,3	duplicate(emp_check_manager)	Damage Test Manager#8	734
+emp_check,97,121,3	duplicate(emp_check_manager)	Damage Test Manager#9	734
+emp_check,97,73,3	duplicate(emp_check_manager)	Damage Test Manager#10	734
+emp_check,145,265,3	duplicate(emp_check_manager)	Damage Test Manager#11	734
+emp_check,145,217,3	duplicate(emp_check_manager)	Damage Test Manager#12	734
+emp_check,145,169,3	duplicate(emp_check_manager)	Damage Test Manager#13	734
+emp_check,145,121,3	duplicate(emp_check_manager)	Damage Test Manager#14	734
+emp_check,145,73,3	duplicate(emp_check_manager)	Damage Test Manager#15	734
+emp_check,193,265,3	duplicate(emp_check_manager)	Damage Test Manager#16	734
+emp_check,193,217,3	duplicate(emp_check_manager)	Damage Test Manager#17	734
+emp_check,193,169,3	duplicate(emp_check_manager)	Damage Test Manager#18	734
+emp_check,193,121,3	duplicate(emp_check_manager)	Damage Test Manager#19	734
+emp_check,193,73,3	duplicate(emp_check_manager)	Damage Test Manager#20	734
+emp_check,241,265,3	duplicate(emp_check_manager)	Damage Test Manager#21	734
+emp_check,241,217,3	duplicate(emp_check_manager)	Damage Test Manager#22	734
+emp_check,241,169,3	duplicate(emp_check_manager)	Damage Test Manager#23	734
+emp_check,241,121,3	duplicate(emp_check_manager)	Damage Test Manager#24	734
+emp_check,241,73,3	duplicate(emp_check_manager)	Damage Test Manager#25	734
+
+// -- Damage Test specific Map Flags and warp points -----
+emp_check	mapflag	noteleport
+emp_check	mapflag	nosave	SavePoint
+emp_check	mapflag	nowarp
+emp_check	mapflag	nowarpto
+emp_check	mapflag	noteleport
+emp_check	mapflag	nomemo
+emp_check	mapflag	nopenalty
+emp_check	mapflag	nobranch
+emp_check	mapflag	noicewall
+emp_check	mapflag	pvp_noparty
+emp_check	mapflag	pvp_noguild
+// emp_check	mapflag	gvg_castle
