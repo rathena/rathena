@@ -1279,7 +1279,7 @@
 12207,475,100	// Vit_Dish10_
 12208,475,100	// Battle_Manual
 12209,475,100	// Insurance
-12210,475,100	// Bubble_Gum
+// 12210,475,100	// Bubble_Gum
 12211,475,100	// Kafra_Card
 12212,475,100	// Giant_Fly_Wing
 12213,475,100	// Neuralizer
@@ -1530,7 +1530,7 @@
 12888,507,100	// Siege_Kit_Box
 12900,475,100	// Battle_Manual_Box
 12901,475,100	// Insurance_Package
-12902,475,100	// Bubble_Gum_Box
+//12902,475,100	// Bubble_Gum_Box
 12903,475,100	// Str_Dish_Box
 12904,475,100	// Agi_Dish_Box
 12905,475,100	// Int_Dish_Box
@@ -3663,20 +3663,20 @@
 18829,475,100	// 2012RMSCNO2
 18830,475,100	// 2012RMSCNO3
 18970,475,100	// Magical_Moon_Cat
-18971,475,100	// Old_Rune_Circlet
-18972,475,100	// Old_Mitra
-18973,475,100	// Old_Driver_Band
-18974,475,100	// Old_Driver_Band(Yellow)
-18975,475,100	// Old_Shadow_Handicraft
-18976,475,100	// Old_Minstrel_Song's_Hat
-18977,475,100	// Old_Midas_Whisper
-18978,475,100	// Old_Magic_Stone_Hat
-18979,475,100	// Old_Blazing_Soul
-18980,475,100	// Old_Wind_Whisper
-18981,475,100	// Old_Dying_Swan
-18982,475,100	// Old_Circlet_Of_Bones
-18983,475,100	// Old_Protect_Of_Crown
-18984,475,100	// Old_Camouflage_Rabbit_Hood
+// 18971,475,100	// Old_Rune_Circlet
+// 18972,475,100	// Old_Mitra
+// 18973,475,100	// Old_Driver_Band
+// 18974,475,100	// Old_Driver_Band(Yellow)
+// 18975,475,100	// Old_Shadow_Handicraft
+// 18976,475,100	// Old_Minstrel_Song's_Hat
+// 18977,475,100	// Old_Midas_Whisper
+// 18978,475,100	// Old_Magic_Stone_Hat
+// 18979,475,100	// Old_Blazing_Soul
+// 18980,475,100	// Old_Wind_Whisper
+// 18981,475,100	// Old_Dying_Swan
+// 18982,475,100	// Old_Circlet_Of_Bones
+// 18983,475,100	// Old_Protect_Of_Crown
+// 18984,475,100	// Old_Camouflage_Rabbit_Hood
 19033,467,100	// Rift_Ancient_Decoration
 19051,475,100	// Warrior_Moon_Cat
 19052,507,100	// Sigruns_Wing
@@ -3957,6 +3957,7 @@
 14175,329,100	// F_Megaphone_Box
 14233,329,100	// Dead_Tree_Branch_Box1
 14545,329,100	// Battle_Manual_X3
+12210,329,100	// Bubble_Gum
 16258,329,100	// HD_Bradium_5_Box
 16259,329,100	// HD_Carnium_5_Box
 16260,329,100	// HD_Bradium_10_Box
@@ -3971,6 +3972,7 @@
 5548,329,100	// Scarlet Rose
 12103,329,100	// Bloody Branch
 16268,329,100	// HE Bubble Gum Box
+12902,329,100	// Bubble_Gum_Box
 18561,329,100	// Drooping Neko Crew [1]
 18572,329,100	// Foxtail
 18528,329,100	// B Feather Beret [1]
@@ -3988,3 +3990,18 @@
 20507,329,100	// Costume Poring Bag
 31165,329,100	// Costume Piggyback
 20132,329,100	// Costume Aura Vicious Mind
+
+18971,329,100	// Old_Rune_Circlet
+18972,329,100	// Old_Mitra
+18973,329,100	// Old_Driver_Band
+18974,329,100	// Old_Driver_Band(Yellow)
+18975,329,100	// Old_Shadow_Handicraft
+18976,329,100	// Old_Minstrel_Song's_Hat
+18977,329,100	// Old_Midas_Whisper
+18978,329,100	// Old_Magic_Stone_Hat
+18979,329,100	// Old_Blazing_Soul
+18980,329,100	// Old_Wind_Whisper
+18981,329,100	// Old_Dying_Swan
+18982,329,100	// Old_Circlet_Of_Bones
+18983,329,100	// Old_Protect_Of_Crown
+18984,329,100	// Old_Camouflage_Rabbit_Hood
