@@ -16703,7 +16703,7 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 	if( sd->state.showcasttime ) {
 		float sfixed = (1 - (float)min(fixcast_r, 100) / 100) * max(fixed, 0);
 		char output[255];
-		sprintf(output, "Cast time: %.1fms variable + %.1fms fixed = %.1fms", max(time, 0), sfixed, max(time, 0) + sfixed);
+		sprintf(output, "Cast time: %6.1f ms variable + %6.1f ms fixed = %6.1f ms", (float)max(time, 0), sfixed, (float)(max(time, 0) + sfixed));
 		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 	time = max(time, 0) + (1 - (float)min(fixcast_r, 100) / 100) * max(fixed, 0); //Underflow checking/capping
