@@ -196,7 +196,7 @@ menu	"Amatsu Fields",F1, "Ayothaya Fields",F2, "Bifrost Fields", F3,
 		"Mjolnir Fields",F19, "Moscovia Fields",F20, "Niflheim Fields",F21,
 		"Payon Forests",F22, "Prontera Fields",F23, "Rachel Fields",F24, "Rockridge Desert",F30,
 		"Sograt Deserts",F25, "Splendide Fields",F26, "Umbala Fields",F27,
-		"Veins Fields",F28, "Verus Fields",F31, "Yuno Fields",F29;
+		"Veins Fields",F28, "Verus Laboratory",F31, "Yuno Fields",F29;
 
 F1: setarray @c[2],190,197;
 	Disp("Amatsu Field",1,1); Pick("ama_fild");
