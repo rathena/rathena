@@ -4619,7 +4619,7 @@ void clif_getareachar_unit(struct map_session_data* sd,struct block_list *bl)
 	/**
 	* Hide NPC from maya purple card.
 	**/
-	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
+	if(bl->type == BL_NPC && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return;
 
 	ud = unit_bl2ud(bl);
