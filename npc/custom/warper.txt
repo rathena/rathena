@@ -280,7 +280,7 @@ F29: Restrict("Pre-RE",5,10);
 F30: setarray @c[2],37,246,31,207;
 	 Disp("Kiwawa Desert 1:Kiwawa Desert 2");
 	 Pick("","rockrdg1","rockrdg2");
-F28: Restrict("RE",1);
+F31: Restrict("RE",1,4);
 	 setarray @c[2],243,62,72,19,121,2,121,26;
 	 Disp("Laboratory",1,4); Pick("verus");
 
@@ -406,7 +406,7 @@ D43: Restrict("RE");
 	 setarray @c[2],247,19;
 	 Disp("Rockridge Mines 1");
 	 Pick("","rockmi1");
-D43: Restrict("RE");
+D44: Restrict("RE");
 	 setarray @c[2],98,91,13,148;
 	 Disp("Under Bunker", "Eastern Ruins of Juperos");
 	 Pick("","un_bunker", "ver_eju");
@@ -491,21 +491,14 @@ G4: Go("gef_fild13",184,205);
 // --------------------------------------------------
 	Instances:
 // --------------------------------------------------
-menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
+menu	"Airship Assault",I22, "Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3, "Central Laboratory", I21,
 		"Devil's Tower",I4, "Eclage Interior",I5, "Endless Tower",I6,
 		"Faceworms Nest",I7, "Geffen Magic Tournament",I8, "Ghost Palace",I9,
-		"Hazy Forest",I10, "Horror Toy Factory",I11, "Malangdo Culvert",I12,
-		"Nidhoggur's Nest",I13, "Octopus Cave",I14, "Old Glast Heim",I15,
-		"Orc's Memory",I16, "Sarah and Fenrir",I17, "Sara Memory",I18,
+		"Hazy Forest",I10, "Horror Toy Factory",I11, "Isle of Bios",I23,"Last Room",I24, "Malangdo Culvert",I12,
+		"Morse Cave",I25,"Nidhoggur's Nest",I13, "Octopus Cave",I14, "Old Glast Heim",I15,
+		"Orc's Memory",I16, "Room of Consciousness",I26, "Sarah and Fenrir",I17, "Sara Memory",I18,
 		"Sealed Shrine",I19, "Wolfchev's Laboratory",I20;
 
-// npc/re/instances/AirshipAssault.txt
-// npc/re/instances/CentralLaboratory.txt
-// npc/re/instances/IsleOfBios.txt
-// npc/re/instances/LastRoom.txt
-// npc/re/instances/MorseCave.txt
-// npc/re/instances/RitualOfBlessing.txt
-// npc/re/instances/RoomOfConsciousness.txt
 // - SkyFortress
 // - Charleston Crisis
 // - Nightmarish Jitterbug
@@ -546,6 +539,18 @@ I18: Restrict("RE");
 I19: Go("monk_test",306,143);
 I20: Restrict("RE");
 	Go("lhz_dun04",148,269);
+I21: Restrict("RE");
+	Go("verus01",152,150);
+I22: Restrict("RE");
+	Go("dali02",133,83);
+I23: Restrict("RE");
+	Go("moro_cav",45,68);
+I24: Restrict("RE");
+	Go("un_myst",155,38);
+I25: Restrict("RE");
+	Go("moro_cav",61,64);
+I26: Restrict("RE");
+	Go("prt_cas_q",23,28);
 
 // --------------------------------------------------
 	Special:
