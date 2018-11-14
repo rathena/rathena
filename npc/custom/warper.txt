@@ -196,7 +196,7 @@ menu	"Amatsu Fields",F1, "Ayothaya Fields",F2, "Bifrost Fields", F3,
 		"Mjolnir Fields",F19, "Moscovia Fields",F20, "Niflheim Fields",F21,
 		"Payon Forests",F22, "Prontera Fields",F23, "Rachel Fields",F24, "Rockridge Desert",F30,
 		"Sograt Deserts",F25, "Splendide Fields",F26, "Umbala Fields",F27,
-		"Veins Fields",F28, "Yuno Fields",F29;
+		"Veins Fields",F28, "Verus Fields",F31, "Yuno Fields",F29;
 
 F1: setarray @c[2],190,197;
 	Disp("Amatsu Field",1,1); Pick("ama_fild");
@@ -280,6 +280,10 @@ F29: Restrict("Pre-RE",5,10);
 F30: setarray @c[2],37,246,31,207;
 	 Disp("Kiwawa Desert 1:Kiwawa Desert 2");
 	 Pick("","rockrdg1","rockrdg2");
+F28: Restrict("RE",1);
+	 setarray @c[2],243,62,72,19,121,2,121,26;
+	 Disp("Laboratory",1,4); Pick("verus");
+
 
 // --------------------------------------------------
 	Dungeons:
@@ -296,7 +300,7 @@ menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
 		"Moscovia Dungeon",D27, "Nidhogg's Dungeon",D28, "Odin Temple",D29,
 		"Orc Dungeon",D30, "Payon Dungeon",D31, "Pyramids",D32, "Rachel Sanctuary",D33,"Rockridge Mines",D43,
     	"Scaraba Hole",D34, "Sphinx",D35, "Sunken Ship",D36, "Thanatos Tower",D37,
-    	"Thor Volcano",D38, "Toy Factory",D39, "Turtle Dungeon",D40, "Umbala Dungeon",D41;
+    	"Thor Volcano",D38, "Toy Factory",D39, "Turtle Dungeon",D40, "Umbala Dungeon",D41, "Under Bunker",D44;
 
 D1: setarray @c[2],261,272,275,270,116,27;
 	Disp("Abyss Lakes",1,3); Pick("abyss_");
@@ -402,6 +406,10 @@ D43: Restrict("RE");
 	 setarray @c[2],247,19;
 	 Disp("Rockridge Mines 1");
 	 Pick("","rockmi1");
+D43: Restrict("RE");
+	 setarray @c[2],98,91,13,148;
+	 Disp("Under Bunker", "Eastern Ruins of Juperos");
+	 Pick("","un_bunker", "ver_eju");
 
 // --------------------------------------------------
 	Castles:
@@ -493,7 +501,6 @@ menu	"Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3,
 
 // npc/re/instances/AirshipAssault.txt
 // npc/re/instances/CentralLaboratory.txt
-// npc/custom/offical/GeffenMagicTournament.txt (not enabled)
 // npc/re/instances/IsleOfBios.txt
 // npc/re/instances/LastRoom.txt
 // npc/re/instances/MorseCave.txt
