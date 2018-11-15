@@ -309,7 +309,7 @@ function	script	F_PVP_FSRS	{
 	// }
 	// for(set .@i,0; .@i<5; set .@i,.@i+1)
 
-	for(set .@i,0; .@i<2; set .@i,.@i+1){
+	for(.@i = 0; .@i<2; .@i++){
 		set .@menu$, .@menu$+":"+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]";
 	}
 	set .@menu$, "Cancel"+.@menu$;
@@ -323,18 +323,18 @@ function	script	F_PVP_FSRS	{
 		close;
 	}
 
-	@j = 0;
-	while ( $@victim_unique[@j] != get_unique_id() && .@i < getarraysize($@victim_unique) ) { @j++; }
-	// @j = inarray($@victim_unique, get_unique_id());
-	if (@j >= 0 ) {
-		if ($@victim_count[@j] >= 15){ // Died x times already. Start delaying PvP
+	.@j = 0;
+	while ( $@victim_unique[.@j] != get_unique_id() && .@j < getarraysize($@victim_unique) ) { .@j++; }
+	// .@j = inarray($@victim_unique, get_unique_id());
+	if (.@j >= 0 ) {
+		if ($@victim_count[.@j] >= 15){ // Died x times already. Start delaying PvP
 			next;
 			mes "[PVP Warper]";
 			mes "You were killed too ^CC0000many^000000 times.";
 			mes "You should get stronger by getting better equipment and leveling up!";
 			mes "^FFFFFF_^000000";
 
-			@ticks = ($@victim_time[@j] - gettimetick(2));
+			@ticks = ($@victim_time[.@j] - gettimetick(2));
 			// debugmes "Unique: "+get_unique_id()+" | ticks: "+@ticks;
 			@hour = @ticks / (60 * 60);
 			@ticks = @ticks % (60 * 60);
