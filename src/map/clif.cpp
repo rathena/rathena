@@ -2413,6 +2413,7 @@ void clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, in
 ///     2 = bottom right corner
 ///     3 = middle of screen, inside a movable window
 ///     4 = middle of screen, movable with a close button, chrome-less
+///   255 = clear all displayed cutins
 void clif_cutin(struct map_session_data* sd, const char* image, int type)
 {
 	int fd;
@@ -10307,7 +10308,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	// Autotraders should ignore this entirely, clif_parse_LoadEndAck is always invoked manually for them
 	if (!sd->state.active || (!sd->state.autotrade && !sd->state.pc_loaded)) { //Character loading is not complete yet!
-		//Let pc_reg_received or intif_parse_StorageReceived reinvoke this when ready.
+		//Let pc_reg_received or pc_scdata_received reinvoke this when ready.
 		sd->state.connect_new = 0;
 		return;
 	}
@@ -10623,7 +10624,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	mail_clear(sd);
 
 	/* Guild Aura Init */
-	if( sd->state.gmaster_flag ) {
+	if( sd->guild && sd->state.gmaster_flag ) {
 		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild,GD_LEADERSHIP));
 		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->guild,GD_GLORYWOUNDS));
 		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));

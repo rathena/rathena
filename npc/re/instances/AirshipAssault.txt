@@ -42,12 +42,12 @@ dali02,142,81,3	script	Dimensional Device#air1	PORTAL,{
 		mes "^ff0000To enter, you must create or join a party of 1 or more members.^000000";
 		close;
 	}
-	if (getcharid(0) != getpartyleader(.@party_id,2)) {
+	if (is_party_leader() == false) {
 		mes "^ff0000This Memorial Dungeon is only for 1 person. Only the party leader can enter.^000000";
 		close;
 	}
 	.@s = select( "Power Up the Device", "Use the Device", "Cancel" );
-	if (getcharid(0) != getpartyleader(.@party_id,2)) {
+	if (is_party_leader(.@party_id) == false) {
 		mes "^ff0000This Memorial Dungeon is only for 1 person. Only the party leader can enter.^000000";
 		close;
 	}

@@ -1572,7 +1572,7 @@ prt_lib,76,80,3	script	Lindt the Librarian#ep1	1_M_01,{
 prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 	switch( banquet_main_quest ) {
 	case 8:
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {// solo instance
+		if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
 			mes "^4d4dffIt is an event which proceeds as a memorial.";
 			mes "Only the party leader can proceed with a memorial event. Try again after forming a party.^000000";
 			close;
@@ -1760,7 +1760,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 
 prt_lib,88,90,1	script	Room of Consciousness#e	HIDDEN_WARP_NPC,{
 	if (banquet_main_quest == 8) {
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffOnly the party leader can enter MD [Ritual of Blessing].^000000";
 			close;
 		}
@@ -1771,7 +1771,7 @@ prt_lib,88,90,1	script	Room of Consciousness#e	HIDDEN_WARP_NPC,{
 			mes "Hum... This gate is only activated temporarily so that it doesn't last long.";
 			close;
 		}
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffOnly the party leader can enter MD [Ritual of Blessing].^000000";
 			close;
 		}
@@ -2257,7 +2257,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		close;
 	}
 	if (banquet_main_quest == 21) {
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffIt is an event which proceeds as a memorial.";
 			mes "Only the party leader can proceed with a memorial event. Try again after forming a party.^000000";
 			close;
@@ -2449,7 +2449,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 				close;
 			case 0:
 			case 1:
-				if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+				if (getcharid(1) == 0 || is_party_leader() == false) {
 					mes "^4d4dffIt is an event which proceeds as a memorial.";
 					mes "Only the party leader can proceed with a memorial event. Try again after forming a party.^000000";
 					close;
@@ -2518,14 +2518,14 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 
 prt_lib_q,88,90,1	script	Swaying Space#evt_gate0	HIDDEN_WARP_NPC,{
 	if (banquet_main_quest == 21) {
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {// solo instance
+		if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
 			mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
 			close;
 		}
 		mes "You can move to the place where the piece of Imir Heart was in the past.";
 		next;
 		if (select( "Enter.", "Do not enter." ) == 1) {
-			if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+			if (getcharid(1) == 0 || is_party_leader() == false) {
 				mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
 				close;
 			}
@@ -2557,7 +2557,7 @@ prt_lib_q,88,90,1	script	Swaying Space#evt_gate0	HIDDEN_WARP_NPC,{
 		close;
 	}
 	if (banquet_main_quest == 26) {
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {// solo instance
+		if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
 			mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
 			close;
 		}
@@ -2569,7 +2569,7 @@ prt_lib_q,88,90,1	script	Swaying Space#evt_gate0	HIDDEN_WARP_NPC,{
 			mes "Such thing is possible since I am a genius!";
 			close;
 		}
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
 			close;
 		}

@@ -52,7 +52,7 @@ ma_scene01,174,179,4	script	Taho	541,{
 		close;
 	}
 	if (.@baku_time == -1) {
-		if (getcharid(0) == getpartyleader(.@party_id,2)) {
+		if (is_party_leader() == true) {
 			mes "[Taho]";
 			mes "Are you the leader of the Bakonawa slayers? The road is not well so we have to go down the cliff with a rope, is that OK?";
 			next;
@@ -130,7 +130,7 @@ sec_in02,26,26,4	script	Bakonawa's Rage	541,{
 	mes "[Taho]";
 	mes "Bakonawa becomes invincible at some point. When that time comes, listen to my guides carefully. Just trust me and all will be good.";
 	next;
-	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		mes "[Taho]";
 		mes "Now I will make Bakonawa spring out from the lake.";
 		next;
@@ -514,7 +514,7 @@ OnTimer10000:
 	mes "[Taho]";
 	mes "HMM. We almost got him but he is one fast creature...";
 	next;
-	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		mes "[Taho]";
 		mes "Are we going to try again?";
 		next;
