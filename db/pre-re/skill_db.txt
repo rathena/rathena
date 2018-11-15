@@ -16,6 +16,7 @@
 //    0x20 - Skill ignores target's defense (misc type always ignores)
 //    0x40 - Skill ignores target's flee (magic type always ignores)
 //    0x80 - Skill ignores target's def cards
+//    0x100 - Skill can critical
 // 07 splash/effect range
 //      -1 - for screen-wide
 //       0 - no splash
@@ -160,7 +161,7 @@
 58,-4,6,1,-1,0x2,0,10,1,no,0,0x40000,0,weapon,6,0x0,	KN_SPEARSTAB,Spear Stab
 59,3:5:7:9:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	KN_SPEARBOOMERANG,Spear Boomerang
 60,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,		KN_TWOHANDQUICKEN,Twohand Quicken
-61,0,6,4,-1,0x20,0,5,1,no,0,0,0,weapon,0,0x0,	KN_AUTOCOUNTER,Counter Attack
+61,0,6,4,-1,0x120,0,5,1,no,0,0,0,weapon,0,0x0,	KN_AUTOCOUNTER,Counter Attack
 62,-2,6,1,-1,0x2,1,10,1,no,0,0x40000,0,weapon,1,0x0,	KN_BOWLINGBASH,Bowling Bash
 63,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0,0x0,		KN_RIDING,Peco Peco Riding
 64,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		KN_CAVALIERMASTERY,Cavalier Mastery
@@ -558,7 +559,7 @@
 // Sniper
 380,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	SN_SIGHT,Falcon Eyes
 381,9,8,1,0,0x40,0,5,1,yes,0,0,0,misc,0,0x0,		SN_FALCONASSAULT,Falcon Assault
-382,9,8,1,-1,0,1,5,1,yes,0,0x40000,14,weapon,0,0x0,	SN_SHARPSHOOTING,Focused Arrow Strike
+382,9,8,1,-1,0x100,1,5,1,yes,0,0x40000,14,weapon,0,0x0,	SN_SHARPSHOOTING,Focused Arrow Strike
 383,0,6,4,0,0x3,-1,10,1,yes,0,0,0,weapon,0,0x0,	SN_WINDWALK,Wind Walker
 
 //****
@@ -741,7 +742,7 @@
 508,-9,6,1,-1,0x1,0,1,1,no,0,0,0,weapon,0,0x0,	GS_CRACKER,Cracker
 509,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		GS_SINGLEACTION,Single Action
 510,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		GS_SNAKEEYE,Snake Eye
-511,-9,8,0,-1,0,0,10,2,no,0,0,0,weapon,0,0x0,	GS_CHAINACTION,Chain Action
+511,-9,8,0,-1,0x100,0,10,2,no,0,0,0,weapon,0,0x0,	GS_CHAINACTION,Chain Action
 512,-9,6,1,-1,0,0,10,1,yes,0,0,0,weapon,0,0x0,	GS_TRACKING,Tracking
 513,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,		GS_DISARM,Disarm
 514,-9,6,1,-1,0x20,0,5,1,no,0,0,0,weapon,0,0x100,	GS_PIERCINGSHOT,Piercing Shot
@@ -763,7 +764,7 @@
 527,0,6,4,-1,0,0,5,1,no,0,0,0,weapon,3,0x0,		NJ_TATAMIGAESHI,Improvised Defense
 528,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,	NJ_KASUMIKIRI,Vanishing Slash
 529,7:9:11:13:15,6,2,0,0x1,0,5,1,no,0,0,0,none,0,0x4,	NJ_SHADOWJUMP,Shadow Leap
-530,7:9:11:13:15,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x204,	NJ_KIRIKAGE,Shadow Slash
+530,7:9:11:13:15,6,1,-1,0x100,0,5,1,no,0,0,0,weapon,0,0x204,	NJ_KIRIKAGE,Shadow Slash
 531,0,6,4,0,0x1,0,5,1,no,0,0,0,none,7,0x0,		NJ_UTSUSEMI,Cicada Skin Sheeding
 532,0,6,4,0,0x1,0,10,1,yes,0,0,0,magic,0,0x0,	NJ_BUNSINJYUTSU,Mirror Image
 533,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		NJ_NINPOU,Spirit of the Blade
@@ -1469,7 +1470,7 @@
 8212,3,6,2,1,0x42,1,5,1,no,0,0x80,0,weapon,0,0x3800,	MA_FREEZINGTRAP,Freezing_Trap
 8213,2,6,32,0,0x1,0,1,1,no,0,0x40000,0,misc,0,0x0,	MA_REMOVETRAP,Remove_Trap
 8214,-9,6,1,-1,0x2,0,1,1,no,0,0x1,0,weapon,6,0x80,	MA_CHARGEARROW,Arrow_Repel
-8215,9,8,1,-1,0,1,5,1,yes,0,0x40000,14,weapon,0,0x0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
+8215,9,8,1,-1,0x100,1,5,1,yes,0,0x40000,14,weapon,0,0x0,	MA_SHARPSHOOTING,Focused_Arrow_Strike
 8216,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0,0x0,	ML_PIERCE,Pierce
 8217,-2,6,1,-1,0x1,2,10,1,no,0,0,5,weapon,2,0x20000,	ML_BRANDISH,Brandish_Spear
 8218,5,8,1,-1,0x20,0,5,5,no,0,0x40000,0,weapon,0,0x20000,	ML_SPIRALPIERCE,Spiral_Pierce

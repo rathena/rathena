@@ -20994,7 +20994,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	skill_db[idx]->hit = atoi(split[2]);
 	skill_db[idx]->inf = atoi(split[3]);
 	skill_split_atoi(split[4],skill_db[idx]->element);
-	skill_db[idx]->nk = (uint8)strtol(split[5], NULL, 0);
+	skill_db[idx]->nk = static_cast<uint16>(strtol(split[5], NULL, 0));
 	skill_split_atoi(split[6],skill_db[idx]->splash);
 	skill_db[idx]->max = atoi(split[7]);
 	skill_split_atoi(split[8],skill_db[idx]->num);
