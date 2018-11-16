@@ -29,7 +29,7 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 	switch( checkquest(11379,PLAYTIME) ) {
 	case -1:
 		.@party_id = getcharid(1);
-		if (getpartyleader(.@party_id,2) == getcharid(0))
+		if (is_party_leader() == true)
 			.@string$ = "Open door.";
 		.@s = select( .@string$, "Go in.", "Quit." );
 		if (.@s == 1) {
@@ -114,7 +114,7 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 		mes "[Verity]";
 		mes "Umph...I suddenly have a feeling that's not good.";
 		cutin "EP15_2_brt_6.bmp",2;
-		if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (is_party_leader() == false) {
 			mes "I wish to talk with the leader.";
 			close3;
 		}
@@ -238,7 +238,7 @@ OnMyMobDead2:
 	mes "[Tamarin]";
 	mes "Huff huff... Verity suddenly huff huff couldn't even stand straight before huff huff...";
 	cutin "ep143_tahuk.bmp",2;
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		next;
 		mes "[Tamarin]";
 		mes "I don't think this is a problem we can solve by talking amongst ourselves.";

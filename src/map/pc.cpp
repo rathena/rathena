@@ -4294,8 +4294,8 @@ int pc_modifybuyvalue(struct map_session_data *sd,int orig_value)
 	if(rate1 < rate2) rate1 = rate2;
 	if(rate1)
 		val = (int)((double)orig_value*(double)(100-rate1)/100.);
-	if(val < 0) val = 0;
-	if(orig_value > 0 && val < 1) val = 1;
+	if(val < battle_config.min_shop_buy)
+		val = battle_config.min_shop_buy;
 
 	return val;
 }
@@ -4310,8 +4310,8 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
 		rate = 5+skill*2-((skill==10)? 1:0);
 	if(rate)
 		val = (int)((double)orig_value*(double)(100+rate)/100.);
-	if(val < 0) val = 0;
-	if(orig_value > 0 && val < 1) val = 1;
+	if (val < battle_config.min_shop_sell)
+		val = battle_config.min_shop_sell;
 
 	return val;
 }
@@ -5338,13 +5338,15 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 
 	return 0;
 }
-/*==========================================
+
+/**
  * Steal an item from bl (mob).
- * Return:
- *	0 = fail
- *	1 = succes
- *------------------------------------------*/
-int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv)
+ * @param sd: Player data
+ * @param bl: Object to steal from
+ * @param skill_lv: Level of skill used
+ * @return True on success or false otherwise
+ */
+bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 {
 	int i,itemid;
 	double rate;
@@ -5354,12 +5356,12 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 	struct item tmp_item;
 
 	if(!sd || !bl || bl->type!=BL_MOB)
-		return 0;
+		return false;
 
 	md = (TBL_MOB *)bl;
 
 	if(md->state.steal_flag == UCHAR_MAX || ( md->sc.opt1 && md->sc.opt1 != OPT1_BURNING ) ) //already stolen from / status change check
-		return 0;
+		return false;
 
 	sd_status= status_get_status_data(&sd->bl);
 	md_status= status_get_status_data(bl);
@@ -5370,23 +5372,31 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
   	) { //Can't steal from
 		md->state.steal_flag = UCHAR_MAX;
-		return 0;
+		return false;
 	}
 
 	// base skill success chance (percentual)
 	rate = (sd_status->dex - md_status->dex)/2 + skill_lv*6 + 4;
 	rate += sd->bonus.add_steal_rate;
 
-	if( rate < 1 )
-		return 0;
+	if( rate < 1
+#ifdef RENEWAL
+		|| rnd()%100 >= rate
+#endif
+	)
+		return false;
 
 	// Try dropping one item, in the order from first to last possible slot.
 	// Droprate is affected by the skill success rate.
 	for( i = 0; i < MAX_STEAL_DROP; i++ )
-		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].p * rate/100. )
+		if( md->db->dropitem[i].nameid > 0 && !md->db->dropitem[i].steal_protected && itemdb_exists(md->db->dropitem[i].nameid) && rnd() % 10000 < md->db->dropitem[i].p
+#ifndef RENEWAL
+		* rate/100.
+#endif
+		)
 			break;
 	if( i == MAX_STEAL_DROP )
-		return 0;
+		return false;
 
 	itemid = md->db->dropitem[i].nameid;
 	memset(&tmp_item,0,sizeof(tmp_item));
@@ -5401,7 +5411,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 
 	if(flag) { //Failed to steal due to overweight
 		clif_additem(sd,0,0,flag);
-		return 0;
+		return false;
 	}
 
 	if(battle_config.show_steal_in_same_party)
@@ -5419,7 +5429,7 @@ int pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skil
 		//MSG: "'%s' stole %s's %s (chance: %0.02f%%)"
 		intif_broadcast(message, strlen(message) + 1, BC_DEFAULT);
 	}
-	return 1;
+	return true;
 }
 
 /*==========================================
@@ -5492,24 +5502,14 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 
 	if( sd->state.changemap ) { // Misc map-changing settings
-		int i;
-		unsigned short instance_id = map_getmapdata(sd->bl.m)->instance_id;
+		unsigned short curr_map_instance_id = map_getmapdata(sd->bl.m)->instance_id, new_map_instance_id = mapdata->instance_id;
 
-		if (instance_id && instance_id != mapdata->instance_id) {
-			struct party_data *p = NULL;
-			struct guild *g = NULL;
-			struct clan *cd = NULL;
+		if (curr_map_instance_id != new_map_instance_id) {
+			if (curr_map_instance_id) // Update instance timer for the map on leave
+				instance_delusers(curr_map_instance_id);
 
-			if (sd->instance_id)
-				instance_delusers(sd->instance_id);
-			else if (sd->status.party_id && (p = party_search(sd->status.party_id)) != NULL && p->instance_id)
-				instance_delusers(p->instance_id);
-			else if (sd->status.guild_id && (g = guild_search(sd->status.guild_id)) != NULL && g->instance_id)
-				instance_delusers(g->instance_id);
-			else if (sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
-				instance_delusers(cd->instance_id);
-			else
-				instance_delusers(instance_id);
+			if (new_map_instance_id) // Update instance timer for the map on enter
+				instance_addusers(new_map_instance_id);
 		}
 
 		sd->state.pmap = sd->bl.m;
@@ -5536,7 +5536,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 			status_change_end(&sd->bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		}
-		for( i = 0; i < EQI_MAX; i++ ) {
+		for(int i = 0; i < EQI_MAX; i++ ) {
 			if( sd->equip_index[i] >= 0 )
 				if( pc_isequip(sd,sd->equip_index[i]) )
 					pc_unequipitem(sd,sd->equip_index[i],2);
@@ -6569,7 +6569,7 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	do {
 		sd->status.base_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
-		if(!battle_config.multi_level_up && sd->status.base_exp > next-1)
+		if( ( !battle_config.multi_level_up || ( battle_config.multi_level_up_base > 0 && sd->status.base_level >= battle_config.multi_level_up_base ) ) && sd->status.base_exp > next-1 )
 			sd->status.base_exp = next-1;
 
 		next = pc_gets_status_point(sd->status.base_level);
@@ -6638,7 +6638,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	do {
 		sd->status.job_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
-		if(!battle_config.multi_level_up && sd->status.job_exp > next-1)
+		if( ( !battle_config.multi_level_up || ( battle_config.multi_level_up_job > 0 && sd->status.job_level >= battle_config.multi_level_up_job ) ) && sd->status.job_exp > next-1 )
 			sd->status.job_exp = next-1;
 
 		sd->status.job_level ++;
@@ -7688,10 +7688,12 @@ TIMER_FUNC(pc_close_npc_timer){
 	if(sd) pc_close_npc(sd,data);
 	return 0;
 }
-/*
- *  Method to properly close npc for player and clear anything related
- * @flag == 1 : produce close button
- * @flag == 2 : directly close it
+/**
+ * Method to properly close a NPC for player and clear anything related.
+ * @param sd: Player attached
+ * @param flag: Method of closure
+ *   1: Produce a close button and end the NPC
+ *   2: End the NPC (best for no dialog windows)
  */
 void pc_close_npc(struct map_session_data *sd,int flag)
 {
@@ -7717,15 +7719,17 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 #ifdef SECURE_NPCTIMEOUT
 		sd->npc_idle_timer = INVALID_TIMER;
 #endif
-		if (sd->st && sd->st->state == CLOSE) {
-			clif_scriptclose(sd, sd->npc_id);
-			clif_scriptclear(sd, sd->npc_id); // [Ind/Hercules]
-			sd->st->state = END; // Force to end now
-		}
-		if(sd->st && sd->st->state == END ) {// free attached scripts that are waiting
-			script_free_state(sd->st);
-			sd->st = NULL;
-			sd->npc_id = 0;
+		if (sd->st) {
+			if (sd->st->state == CLOSE) {
+				clif_scriptclose(sd, sd->npc_id);
+				clif_scriptclear(sd, sd->npc_id); // [Ind/Hercules]
+				sd->st->state = END; // Force to end now
+			}
+			if (sd->st->state == END) { // free attached scripts that are waiting
+				script_free_state(sd->st);
+				sd->st = NULL;
+				sd->npc_id = 0;
+			}
 		}
 	}
 }
