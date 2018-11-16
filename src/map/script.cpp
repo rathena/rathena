@@ -6962,7 +6962,7 @@ BUILDIN_FUNC(storagecountitem)
 }
 
 /**
- * Returns number of items in inventory
+ * Returns number of items in guild storage
  * guildstoragecountitem <nameID>{,<accountID>});
  * guildstoragecountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
  */
