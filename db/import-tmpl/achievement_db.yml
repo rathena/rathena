@@ -77,4 +77,6 @@
 # Score - Achievement points that are given on completion.
 ###########################################################################
 
-Achievements:
+Header:
+  Type: ACHIEVEMENT_DB
+  Version: 1

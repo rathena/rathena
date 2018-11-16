@@ -12,6 +12,7 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
+#include "../common/database.hpp"
 #include "../common/ers.hpp"  // ers_destroy
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp" //NAME_LENGTH
@@ -12724,150 +12725,148 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	clif_attendence_response( sd, attendance_counter );
 }
 
-void pc_attendance_load( std::string path ){
-	YAML::Node root;
-
-	try{
-		root = YAML::LoadFile( path );
-	}catch( ... ){
-		ShowError( "pc_attendance_load: Failed to read attendance configuration file \"%s\".\n", path.c_str() );
-		return;
+/**
+ * Reads and parses an entry from the attendance_db.
+ * @param node: YAML node containing the entry.
+ * @param n: The sequential index of the current entry.
+ * @param source: The source YAML file.
+ * @return True on successful parse or false otherwise
+ */
+bool attendance_read_db_sub(const YAML::Node &node, int n, const std::string &source)
+{
+	if (!node["Attendance"]) {
+		yaml_invalid_warning("attendance_read_db_sub: Missing Attendance fields in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		return false;
 	}
 
-	if( root["Attendance"] ){
-		YAML::Node attendance = root["Attendance"];
+	if( !node["Start"].IsDefined() ){
+		ShowError( "pc_attendance_load: Missing \"Start\" for period in line %d.\n", node.Mark().line );
+		return false;
+	}
 
-		for( const auto &periodNode : attendance ){
-			if( !periodNode["Start"].IsDefined() ){
-				ShowError( "pc_attendance_load: Missing \"Start\" for period in line %d.\n", periodNode.Mark().line );
-				continue;
-			}
+	YAML::Node startNode = node["Start"];
 
-			YAML::Node startNode = periodNode["Start"];
+	if( !node["End"].IsDefined() ){
+		ShowError( "pc_attendance_load: Missing \"End\" for period in line %d.\n", node.Mark().line );
+		return false;
+	}
 
-			if( !periodNode["End"].IsDefined() ){
-				ShowError( "pc_attendance_load: Missing \"End\" for period in line %d.\n", periodNode.Mark().line );
-				continue;
-			}
+	YAML::Node endNode = node["End"];
 
-			YAML::Node endNode = periodNode["End"];
+	if( !node["Rewards"].IsDefined() ){
+		ShowError( "pc_attendance_load: Missing \"Rewards\" for period in line %d.\n", node.Mark().line );
+		return false;
+	}
 
-			if( !periodNode["Rewards"].IsDefined() ){
-				ShowError( "pc_attendance_load: Missing \"Rewards\" for period in line %d.\n", periodNode.Mark().line );
-				continue;
-			}
+	YAML::Node rewardsNode = node["Rewards"];
 
-			YAML::Node rewardsNode = periodNode["Rewards"];
+	uint32 start = startNode.as<uint32>();
+	uint32 end = endNode.as<uint32>();
 
-			uint32 start = startNode.as<uint32>();
-			uint32 end = endNode.as<uint32>();
+	// If the period is outdated already, we do not even bother parsing
+	if( end < date_get( DT_YYYYMMDD ) ){
+		return false;
+	}
 
-			// If the period is outdated already, we do not even bother parsing
-			if( end < date_get( DT_YYYYMMDD ) ){
-				continue;
-			}
+	// Collision detection
+	bool collision = false;
 
-			// Collision detection
-			bool collision = false;
+	for( struct s_attendance_period& period : attendance_periods ){
+		// Check if start is inside another period
+		if( period.start <= start && start <= period.end ){
+			ShowError( "pc_attendance_load: period start %u intersects with period %u-%u.\n", start, period.start, period.end );
+			collision = true;
+			break;
+		}
 
-			for( struct s_attendance_period& period : attendance_periods ){
-				// Check if start is inside another period
-				if( period.start <= start && start <= period.end ){
-					ShowError( "pc_attendance_load: period start %u intersects with period %u-%u.\n", start, period.start, period.end );
-					collision = true;
-					break;
-				}
-
-				// Check if end is inside another period
-				if( period.start <= end && end <= period.end ){
-					ShowError( "pc_attendance_load: period end %u intersects with period %u-%u.\n", start, period.start, period.end );
-					collision = true;
-					break;
-				}
-			}
-
-			if( collision ){
-				continue;
-			}
-
-			struct s_attendance_period period;
-
-			period.start = start;
-			period.end = end;
-
-			for( const auto& rewardNode : rewardsNode ){
-				if( !rewardNode["Day"].IsDefined() ){
-					ShowError( "pc_attendance_load: No day defined for node in line %d.\n", rewardNode.Mark().line );
-					continue;
-				}
-
-				uint32 day = rewardNode["Day"].as<uint32>();
-
-				if( !rewardNode["ItemId"].IsDefined() ){
-					ShowError( "pc_attendance_load: No reward defined for day %d.\n", day );
-					continue;
-				}
-
-				YAML::Node itemNode = rewardNode["ItemId"];
-
-				uint16 item_id = itemNode.as<uint16>();
-
-				if( item_id == 0 || !itemdb_exists( item_id ) ){
-					ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day );
-					continue;
-				}
-
-				uint16 amount;
-
-				if( rewardNode["Amount"] ){
-					amount = rewardNode["Amount"].as<uint16>();
-
-					if( amount == 0 ){
-						ShowError( "pc_attendance_load: Invalid reward count %hu for day %d. Defaulting to 1...\n", amount, day );
-						amount = 1;
-					}else if( amount > MAX_AMOUNT ){
-						ShowError( "pc_attendance_load: Reward count %hu above maximum %hu for day %d. Defaulting to %hu...\n", amount, MAX_AMOUNT, day, MAX_AMOUNT );
-						amount = MAX_AMOUNT;
-					}
-				}else{
-					amount = 1;
-				}
-
-				struct s_attendance_reward* reward = &period.rewards[day - 1];
-
-				reward->item_id = item_id;
-				reward->amount = amount;
-			}
-
-			bool missing_day = false;
-
-			for( int day = 0; day < period.rewards.size(); day++ ){
-				if( !util::map_exists( period.rewards, day ) ){
-					ShowError( "pc_attendance_load: Reward for day %d is missing.\n", day + 1 );
-					missing_day = true;
-					break;
-				}
-			}
-
-			if( missing_day ){
-				continue;
-			}
-
-			attendance_periods.push_back( period );
+		// Check if end is inside another period
+		if( period.start <= end && end <= period.end ){
+			ShowError( "pc_attendance_load: period end %u intersects with period %u-%u.\n", start, period.start, period.end );
+			collision = true;
+			break;
 		}
 	}
+
+	if( collision ){
+		return false;
+	}
+
+	struct s_attendance_period period;
+
+	period.start = start;
+	period.end = end;
+
+	for( const auto& rewardNode : rewardsNode ){
+		if( !rewardNode["Day"].IsDefined() ){
+			ShowError( "pc_attendance_load: No day defined for node in line %d.\n", rewardNode.Mark().line );
+			continue;
+		}
+
+		uint32 day = rewardNode["Day"].as<uint32>();
+
+		if( !rewardNode["ItemId"].IsDefined() ){
+			ShowError( "pc_attendance_load: No reward defined for day %d.\n", day );
+			continue;
+		}
+
+		YAML::Node itemNode = rewardNode["ItemId"];
+
+		uint16 item_id = itemNode.as<uint16>();
+
+		if( item_id == 0 || !itemdb_exists( item_id ) ){
+			ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day );
+			continue;
+		}
+
+		uint16 amount;
+
+		if( rewardNode["Amount"] ){
+			amount = rewardNode["Amount"].as<uint16>();
+
+			if( amount == 0 ){
+				ShowError( "pc_attendance_load: Invalid reward count %hu for day %d. Defaulting to 1...\n", amount, day );
+				amount = 1;
+			}else if( amount > MAX_AMOUNT ){
+				ShowError( "pc_attendance_load: Reward count %hu above maximum %hu for day %d. Defaulting to %hu...\n", amount, MAX_AMOUNT, day, MAX_AMOUNT );
+				amount = MAX_AMOUNT;
+			}
+		}else{
+			amount = 1;
+		}
+
+		struct s_attendance_reward* reward = &period.rewards[day - 1];
+
+		reward->item_id = item_id;
+		reward->amount = amount;
+	}
+
+	bool missing_day = false;
+
+	for( int day = 0; day < period.rewards.size(); day++ ){
+		if( !util::map_exists( period.rewards, day ) ){
+			ShowError( "pc_attendance_load: Reward for day %d is missing.\n", day + 1 );
+			missing_day = true;
+			break;
+		}
+	}
+
+	if( missing_day ){
+		return false;
+	}
+
+	attendance_periods.push_back( period );
+	return true;
 }
 
-void pc_read_attendance(){
-	char path[1024];
+/**
+ * Loads achievements from the attendance db.
+ */
+void pc_attendance_read_db(){
+	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH) + "attendance.yml", std::string(db_path) + "/" + std::string(DBIMPORT) + "/attendance.yml" };
+	Database db("ATTENDANCE_DB", 1);
 
-	sprintf( path, "%s/%sattendance.yml", db_path, DBPATH );
-
-	pc_attendance_load( path );
-
-	sprintf( path, "%s/%s/attendance.yml", db_path, DBIMPORT );
-
-	pc_attendance_load( path );
+	if (!db.parse(directories, parse_t(attendance_read_db_sub)))
+		return;
 }
 
 /*==========================================
@@ -12891,7 +12890,7 @@ void do_init_pc(void) {
 
 	pc_readdb();
 	pc_read_motd(); // Read MOTD [Valaris]
-	pc_read_attendance();
+	pc_attendance_read_db();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");

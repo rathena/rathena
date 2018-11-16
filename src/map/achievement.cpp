@@ -11,6 +11,7 @@
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
@@ -976,13 +977,6 @@ std::shared_ptr<struct av_condition> parse_condition(const char *p, const char *
 	return condition;
 }
 
-static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file) {
-	YAML::Emitter out;
-	out << node;
-	ShowWarning(fmt, file.c_str());
-	ShowMessage("%s\n", out.c_str());
-}
-
 /**
  * Reads and parses an entry from the achievement_db.
  * @param node: YAML node containing the entry.
@@ -1169,39 +1163,22 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
  */
 void achievement_read_db(void)
 {
-	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH),  std::string(db_path) + "/" + std::string(DBIMPORT) + "/" };
-	static const std::string file_name("achievement_db.yml");
+	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH) + "achievement_db.yml", std::string(db_path) + "/" + std::string(DBIMPORT) + "/achievement_db.yml" };
+	Database db("ACHIEVEMENT_DB", 1);
+		
+	if (!db.parse(directories, parse_t(achievement_read_db_sub)))
+		return;
 
-	for (auto &directory : directories) {
-		std::string current_file = directory + file_name;
-		YAML::Node config;
-		int count = 0;
+	for (auto &achit : achievements) {
+		const auto ach = achit.second;
 
-		try {
-			config = YAML::LoadFile(current_file);
-		} catch (...) {
-			ShowError("Cannot read '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
-			return;
-		}
-
-		for (const auto &node : config["Achievements"]) {
-			if (node.IsDefined() && achievement_read_db_sub(node, count, current_file))
-				count++;
-		}
-		for (auto &achit : achievements) {
-			const auto ach = achit.second;
-
-			for (int i = 0; i < ach->dependent_ids.size(); i++) {
-				if (!achievement_exists(ach->dependent_ids[i])) {
-					ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", ach->dependent_ids[i], ach->achievement_id);
-					ach->dependent_ids.erase(ach->dependent_ids.begin() + i);
-				}
+		for (int i = 0; i < ach->dependent_ids.size(); i++) {
+			if (!achievement_exists(ach->dependent_ids[i])) {
+				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", ach->dependent_ids[i], ach->achievement_id);
+				ach->dependent_ids.erase(ach->dependent_ids.begin() + i);
 			}
 		}
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, current_file.c_str());
 	}
-
-	return;
 }
 
 /**

@@ -15,3 +15,7 @@
 #     Name: "VIP Storage"
 #     Table: "vip_storage"
 #     Max: 300
+
+Header:
+  Type: INTER_SERVER_DB
+  Version: 1

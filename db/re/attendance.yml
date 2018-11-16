@@ -1,8 +1,8 @@
 Header:
-  Type: ATTENDANCE_CONF
+  Type: ATTENDANCE_DB
   Version: 1
   
-Attendance:
+Body:
   - Start: 20180502
     End: 20180529
     Rewards:

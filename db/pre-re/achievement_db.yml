@@ -77,7 +77,11 @@
 # Score - Achievement points that are given on completion.
 ###########################################################################
 
-Achievements:
+Header:
+  Type: ACHIEVEMENT_DB
+  Version: 1
+
+Body:
   - ID: 110000
     Group: "AG_EAT"
     Name: "At this time I live to eat"
