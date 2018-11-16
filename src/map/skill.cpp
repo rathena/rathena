@@ -1955,7 +1955,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 	case RL_HAMMER_OF_GOD:
 		sc_start(src,bl,SC_STUN,100,skill_lv,skill_get_time2(skill_id,skill_lv));
-		status_change_end(bl, SC_C_MARKER, INVALID_TIMER);
 		break;
 	case SU_SCRATCH:
 		sc_start2(src, bl, SC_BLEEDING, skill_lv * 10 + 70, skill_lv, src->id, skill_get_time(skill_id, skill_lv));
@@ -4068,7 +4067,6 @@ int skill_area_sub_count (struct block_list *src, struct block_list *target, uin
 				}
 			}
 		case RL_D_TAIL:
-		case RL_HAMMER_OF_GOD:
 			if (src->type != BL_PC)
 				return 0;
 			{
@@ -5048,6 +5046,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RL_FIREDANCE:
 	case RL_S_STORM:
 	case RL_R_TRIP:
+	case RL_HAMMER_OF_GOD:
 	case MH_XENO_SLASHER:
 	case NC_ARMSCANNON:
 	case SU_SCRATCH:
@@ -6056,18 +6055,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		if (sd && sd->flicker)
 			flag |= 1; // Don't consume requirement
-		break;
-
-	case RL_HAMMER_OF_GOD:
-		if (!(flag&1)) {
-			if (!sd) {
-				skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
-				break;
-			}
-
-			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR|BL_SKILL, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-		} else
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag);
 		break;
 
 	case RL_QD_SHOT:
@@ -11310,6 +11297,22 @@ TIMER_FUNC(skill_castend_id){
 				ud->skilly = target->y;
 				ud->skilltimer = tid;
 				return skill_castend_pos(tid,tick,id,data);
+			case RL_HAMMER_OF_GOD:
+				if ((sc = status_get_sc(target)) && sc->data[SC_C_MARKER]) {
+					ud->skillx = target->x;
+					ud->skilly = target->y;
+				} else {
+					int splash = skill_get_splash(ud->skill_id, ud->skill_lv); // !TODO: What's the random AoE size?
+
+					ud->skillx = target->x + splash;
+					ud->skilly = target->y + splash;
+					if (!map_random_dir(target, &ud->skillx, &ud->skilly)) {
+						ud->skillx = target->x;
+						ud->skilly = target->y;
+					}
+				}
+				ud->skilltimer = tid;
+				return skill_castend_pos(tid,tick,id,data);
 		}
 
 		// Failing
@@ -12171,6 +12174,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case NC_COLDSLOWER:
 	case RK_DRAGONBREATH:
 	case RK_DRAGONBREATH_WATER:
+	case RL_HAMMER_OF_GOD:
 		// Cast center might be relevant later (e.g. for knockback direction)
 		skill_area_temp[4] = x;
 		skill_area_temp[5] = y;
