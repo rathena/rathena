@@ -12734,11 +12734,6 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
  */
 bool attendance_read_db_sub(const YAML::Node &node, int n, const std::string &source)
 {
-	if (!node["Attendance"]) {
-		yaml_invalid_warning("attendance_read_db_sub: Missing Attendance fields in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-
 	if( !node["Start"].IsDefined() ){
 		ShowError( "pc_attendance_load: Missing \"Start\" for period in line %d.\n", node.Mark().line );
 		return false;
