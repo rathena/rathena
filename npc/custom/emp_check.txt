@@ -128,57 +128,67 @@ end;
 	mes ((.@ticks - gettimetick(2)) / 60) + " minutes and "+ ((.@ticks - gettimetick(2)) % 60) +" seconds left.";
 
 	mes "What do you want to test?";
-	set .@sel, select("Cancel","Buff for 2500z","1288 | Emperium", "2408 | Dummy Lv10 ", "2409 | Dummy Lv50", "2410 | Dummy Lv100","2411 | Dummy Lv150","Kill Test Dummy", "Leave Room");
+	set .@sel, select("Cancel","Buff for 2500z","Spawn Emperium", "Spawn Other Dummy", "Kill Test Dummy", "Leave Room");
 	if (.@sel == 1) close;
-	if (.@sel == 9) {
-		mapwarp strnpcinfo(4), "prontera", 156, 183;
-		close;
-	}
-	if (.@sel == 2) {
-		if (BaseLevel == 175 && .@Price > 0){
-			if (Zeny < .@Price)
+	if (.@sel == 2) { // Buff
+		if (BaseLevel == 175 && .HealPrice > 0){
+			if (Zeny < .HealPrice)
 			{
 				specialeffect2 EF_HEAL2;
 				percentheal 100,100;
-				message strcharinfo(0), "[Healer] Not enough zeny to Buff (Healing is free): " + callfunc("F_InsertComma",.@Price) + " Zeny.";
+				message strcharinfo(0), "[Healer] Not enough zeny to Buff (Healing is free): " + callfunc("F_InsertComma",.HealPrice) + " Zeny.";
 				close;
 			}
-			message strcharinfo(0), "[Healer] Lv175 - Buffing Charges " + callfunc("F_InsertComma",.@Price) + " Zeny.";
-			Zeny -= .@Price;
+			message strcharinfo(0), "[Healer] Lv175 - Buffing Charges " + callfunc("F_InsertComma",.HealPrice) + " Zeny.";
+			Zeny -= .HealPrice;
 		}
 		else
 			message strcharinfo(0), "[Healer] Heal and Buffs are free for non-full level adventurers.";
 
 		specialeffect2 EF_HEAL2;
 		percentheal 100,100;
-		if (.@Buffs) {
-			specialeffect2 EF_INCAGILITY;
-			specialeffect2 EF_BLESSING;
-			if(vip_status(1))
-			{
-				sc_start SC_INCREASEAGI,1200000,10;
-				sc_start SC_BLESSING,1200000,10;
-			}
-			else
-			{
-				sc_start SC_INCREASEAGI,600000,10;
-				sc_start SC_BLESSING,600000,10;
-			}
+		specialeffect2 EF_INCAGILITY;
+		specialeffect2 EF_BLESSING;
+		if(vip_status(1))
+		{
+			sc_start SC_INCREASEAGI,1200000,10;
+			sc_start SC_BLESSING,1200000,10;
+		}
+		else
+		{
+			sc_start SC_INCREASEAGI,600000,10;
+			sc_start SC_BLESSING,600000,10;
 		}
 		close;
 	}
 
-	killmonster "emp_check","Damage Test Manager#"+.@id+"::OnMobDead";
-	.mob_timer[.@id] = gettimetick(2);
-	if (.@sel == 8) close;
-	switch(.@sel) {
-		case 3: .@mob_id = 1288; break;
-		case 4: .@mob_id = 2408; break;
-		case 5: .@mob_id = 2409; break;
-		case 6: .@mob_id = 2410; break;
-		case 7: .@mob_id = 2411; break;
+	if (.@sel == 3 ) {
+		monster "emp_check", (.cord_x[.@id]-7), (.cord_y[.@id]-7), strmobinfo(1, 1288), 1288, 1, "Damage Test Manager#"+.@id+"::OnMobDead";
 	}
-	monster "emp_check", (.cord_x[.@id]-7), (.cord_y[.@id]-7), strmobinfo(1, .@mob_id), .@mob_id, 1, "Damage Test Manager#"+.@id+"::OnMobDead";
+	else if (.@sel == 4 ) {
+		set .@mob, select(
+			"2408 | Neutral Lv10 ", "2409 | Neutral Lv50", "2410 | Neutral Lv100","2411 | Neutral Lv150",
+			"2495 | Demi-Human Lv10", "2496 | Demi-Human Lv75","2497 | Demi-Human Lv150"
+			);
+		switch(.@mob) {
+			case 1: .@mob_id = 2408; break;
+			case 2: .@mob_id = 2409; break;
+			case 3: .@mob_id = 2410; break;
+			case 4: .@mob_id = 2411; break;
+
+			case 5: .@mob_id = 2495; break;
+			case 6: .@mob_id = 2496; break;
+			case 7: .@mob_id = 2497; break;
+		}
+		.mob_timer[.@id] = gettimetick(2);
+		areamonster "emp_check", (.cord_x[.@id]-14), (.cord_y[.@id]-14), (.cord_x[.@id]-1), (.cord_y[.@id]-1), strmobinfo(1, .@mob_id), .@mob_id, 1, "Damage Test Manager#"+.@id+"::OnMobDead";
+	}
+	if (.@sel == 5) {
+		killmonster "emp_check", "Damage Test Manager#"+.@id+"::OnMobDead";
+	}
+	if (.@sel == 6) { // Leave
+		mapwarp strnpcinfo(4), "prontera", 156, 183;
+	}
 close;
 
 
@@ -186,6 +196,7 @@ OnInit:
 	if ( !getstrlen( strnpcinfo(2) ) ) {
 		.rental = 10000;
 		.duration = 15; // 60 minutes
+		.HealPrice = 2500;	// Zeny required for heal
 
 		.respawnmap$ = "prontera";
 		.respawnx = 156;
