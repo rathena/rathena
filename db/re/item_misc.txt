@@ -1414,7 +1414,7 @@ IG_MILKY_SGB,664,25			// Gift_Box_1
 IG_MILKY_SGB,665,25			// Gift_Box_2
 IG_MILKY_SGB,666,25			// Gift_Box_3
 IG_MILKY_SGB,667,25			// Gift_Box_4
-IG_MILKY_SGB,12023,25		// Giftbox_China
+// IG_MILKY_SGB,12023,25		// Giftbox_China
 IG_MILKY_SGB,604,25 		// Branch_Of_Dead_Tree
 IG_MILKY_SGB,12103,10 		// Bloody_Dead_Branch
 IG_MILKY_SGB,12717,25 		// Poison_Paralysis
