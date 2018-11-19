@@ -7550,8 +7550,8 @@ REPLACE INTO `item_db_re` VALUES (13400,'Cutlas_','Cutlus',5,20,NULL,900,'150',N
 REPLACE INTO `item_db_re` VALUES (13401,'Excalibur_C','Excalibur',5,1,NULL,0,'199',NULL,1,0,0x000654E2,63,2,2,4,'1',0,2,'bonus bInt,10; bonus bLuk,10; bonus bAtkEle,Ele_Holy;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13402,'Cutlas_C','Cutlus',5,2,NULL,0,'185',NULL,1,0,0x000654E2,63,2,2,4,'0',0,2,'skill "SM_BASH",5; bonus bStr,2; bonus bDef,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13403,'Solar_Sword_C','Solar Sword',5,2,NULL,0,'120',NULL,1,0,0x000654E2,63,2,2,4,'0',0,2,'bonus bAtkEle,Ele_Fire; bonus2 bSPLossRate,15,10; bonus2 bHPDrainRate,1000,1;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13404,'Platinum_Shotel','Platinum Shotel',5,20,NULL,1500,'130',NULL,1,1,0x000654E2,63,2,2,4,'55',1,2,'bonus bCritical,50;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (13405,'Curved_Sword','Curved Sword',5,20,NULL,800,'125',NULL,1,2,0x000654E2,63,2,2,4,'55',1,2,'bonus bAspdRate,10; bonus2 bAddEff,Eff_Curse,300;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13404,'Platinum_Shotel','Platinum Shotel',5,20,NULL,1500,'130',NULL,1,1,0x000654E2,58,2,2,4,'55',1,2,'bonus bCritical,50;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (13405,'Curved_Sword','Curved Sword',5,20,NULL,800,'125',NULL,1,2,0x000654E2,58,2,2,4,'55',1,2,'bonus bAspdRate,10; bonus2 bAddEff,Eff_Curse,300;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13406,'Edger','Edger',5,20,NULL,0,'120',NULL,1,0,0x000654E2,63,2,2,1,'0',0,2,'bonus2 bAddClass,Class_All,50;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13407,'Nagan_C','Refined Nagan',5,1,NULL,0,'148',NULL,1,0,0x000654E2,63,2,2,4,'0',0,2,'skill "TF_DOUBLE",5; bonus bDoubleRate,25; bonus2 bAddRace,RC_DemiHuman,40; bonus2 bAddRace,RC_Player,40;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (13408,'Fire_Brand_C','Refined Fireblend',5,1,NULL,0,'120',NULL,1,0,0x000654E2,63,2,2,4,'0',0,2,'bonus bAtkEle,Ele_Fire; bonus bInt,2; skill "MG_FIREBOLT",5; bonus3 bAutoSpell,"MG_FIREBOLT",5,100;',NULL,NULL);
