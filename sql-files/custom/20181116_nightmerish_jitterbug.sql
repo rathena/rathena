@@ -1,0 +1,31 @@
+REPLACE INTO `mob_db2_re` (`ID`, `Sprite`, `kName`, `iName`, `LV`, `HP`, `SP`, `EXP`, `JEXP`, `Range1`, `ATK1`, `ATK2`, `DEF`, `MDEF`, `STR`, `AGI`, `VIT`, `INT`, `DEX`, `LUK`, `Range2`, `Range3`, `Scale`, `Race`, `Element`, `Mode`, `Speed`, `aDelay`, `aMotion`, `dMotion`, `MEXP`, `MVP1id`, `MVP1per`, `MVP2id`, `MVP2per`, `MVP3id`, `MVP3per`, `Drop1id`, `Drop1per`, `Drop2id`, `Drop2per`, `Drop3id`, `Drop3per`, `Drop4id`, `Drop4per`, `Drop5id`, `Drop5per`, `Drop6id`, `Drop6per`, `Drop7id`, `Drop7per`, `Drop8id`, `Drop8per`, `Drop9id`, `Drop9per`, `DropCardid`, `DropCardper`) VALUES
+(3069, 'PERE1', 'Ferre', 'Ferre', 125, 48430, 1, 3088, 2392, 1, 930, 1279, 101, 45, 109, 121, 50, 55, 108, 55, 10, 12, 1, 6, 67, 33568693, 150, 576, 648, 300, 0, 0, 0, 0, 0, 0, 0, 7004, 2000, 505, 2000, 993, 1000, 997, 500, 1934, 200, 0, 0, 0, 0, 0, 0, 0, 0, 27107, 1),
+(3070, 'PERE2', 'Ferre', 'Ferre', 126, 40718, 1, 3088, 2392, 7, 930, 1279, 101, 45, 109, 121, 50, 55, 108, 55, 10, 12, 1, 6, 67, 33568693, 150, 576, 648, 300, 0, 0, 0, 0, 0, 0, 0, 7004, 2000, 504, 2000, 991, 1000, 995, 500, 1989, 200, 0, 0, 0, 0, 0, 0, 0, 0, 27108, 1),
+(3071, 'PERE3', 'Ferre', 'Ferre', 127, 53290, 1, 3088, 2392, 1, 930, 1279, 101, 45, 109, 121, 50, 55, 108, 55, 10, 12, 1, 6, 67, 33568693, 150, 576, 648, 300, 0, 0, 0, 0, 0, 0, 0, 7004, 2000, 506, 2000, 992, 1000, 996, 500, 1934, 200, 0, 0, 0, 0, 0, 0, 0, 0, 27107, 1),
+(3072, 'PERE4', 'Ferre', 'Ferre', 125, 48430, 1, 3088, 2392, 1, 930, 1279, 101, 45, 109, 121, 50, 55, 108, 55, 10, 12, 1, 6, 67, 33568693, 150, 576, 648, 300, 0, 0, 0, 0, 0, 0, 0, 7004, 2000, 505, 2000, 990, 1000, 994, 500, 1989, 200, 0, 0, 0, 0, 0, 0, 0, 0, 27108, 1),
+(3073, 'GRAND_PERE', 'Awakened Ferre', 'Awakened Ferre', 140, 10000000, 1, 300000, 300000, 1, 1540, 2140, 200, 45, 200, 100, 200, 200, 220, 100, 10, 12, 1, 1, 69, 103298997, 150, 576, 648, 300, 150000, 616, 5000, 617, 5000, 617, 5000, 6719, 9000, 2990, 100, 2991, 100, 18122, 10, 18123, 10, 0, 0, 0, 0, 0, 0, 0, 0, 27106, 1),
+(3108, 'JITTERBUG1', 'Jitterbug', 'Jitterbug', 135, 2614000, 1, 36804, 21064, 1, 2892, 4176, 123, 68, 189, 78, 81, 51, 108, 56, 10, 12, 1, 6, 67, 102774709, 150, 576, 648, 300, 0, 0, 0, 0, 0, 0, 0, 6719, 5000, 15100, 1000, 2989, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27109, 1),
+(3109, 'JITTERBUG2', 'Jitterbug', 'Jitterbug', 135, 2614000, 1, 36804, 21064, 1, 2892, 4176, 123, 68, 189, 78, 81, 51, 108, 56, 10, 12, 1, 6, 67, 102774709, 150, 576, 648, 300, 0, 0, 0, 0, 0, 0, 0, 6719, 5000, 2988, 1000, 15101, 1000, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 27109, 1);
+
+REPLACE INTO `mob_skill_db2_re` (`MOB_ID`, `INFO`, `STATE`, `SKILL_ID`, `SKILL_LV`, `RATE`, `CASTTIME`, `DELAY`, `CANCELABLE`, `TARGET`, `CONDITION`, `CONDITION_VALUE`, `VAL1`, `VAL2`, `VAL3`, `VAL4`, `VAL5`, `EMOTION`, `CHAT`) VALUES
+(3069, 'Ferre@NPC_GROUNDATTACK', 'attack', 163, 5, 1000, 0, 5000, 'yes', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, '6', NULL),
+(3070, 'Ferre@NPC_MAGICALATTACK', 'attack', 192, 1, 500, 0, 10000, 'yes', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, '6', NULL),
+(3070, 'Ferre@WM_REVERBERATION', 'idle', 2414, 3, 2000, 1000, 4000, 'no', 'around2', 'always', '0', NULL, NULL, NULL, NULL, NULL, '2', NULL),
+(3070, 'Ferre@WM_REVERBERATION', 'attack', 2414, 3, 2000, 1000, 4000, 'no', 'around2', 'always', '0', NULL, NULL, NULL, NULL, NULL, '2', NULL),
+(3071, 'Ferre@SM_BASH', 'attack', 5, 5, 1000, 0, 5000, 'yes', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, '6', NULL),
+(3071, 'Ferre@SM_ENDURE', 'attack', 8, 1, 2000, 0, 10000, 'yes', 'self', 'always', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3071, 'Ferre@SM_ENDURE', 'chase', 8, 1, 2000, 0, 10000, 'yes', 'self', 'always', '0', NULL, NULL, NULL, NULL, NULL, '7', NULL),
+(3071, 'Ferre@BS_HAMMERFALL', 'attack', 110, 5, 2000, 0, 5000, 'yes', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3071, 'Ferre@BS_HAMMERFALL', 'chase', 110, 5, 1000, 0, 5000, 'yes', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, '7', NULL),
+(3072, 'Ferre@NPC_WATERATTACK', 'attack', 184, 5, 1000, 0, 5000, 'yes', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, '6', NULL),
+(3072, 'Ferre@NPC_ENERGYDRAIN', 'attack', 200, 1, 1000, 1000, 10000, 'yes', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3073, 'Awakened Ferre@NPC_LEX_AETERNA', 'attack', 727, 5, 5000, 2000, 10000, 'no', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3073, 'Awakened Ferre@NPC_DARKNESSBREATH', 'attack', 658, 10, 2000, 2000, 5000, 'no', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3073, 'Awakened Ferre@NPC_WIDESILENCE', 'attack', 663, 5, 2000, 1000, 10000, 'no', 'self', 'always', '0', NULL, NULL, NULL, NULL, NULL, '9', NULL),
+(3073, 'Awakened Ferre@NPC_WIDECONFUSE', 'attack', 667, 5, 3000, 2000, 10000, 'no', 'self', 'always', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL),
+(3108, 'Jitterbug@NPC_LEX_AETERNA', 'attack', 727, 3, 2000, 2000, 10000, 'no', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3108, 'Jitterbug@NPC_DARKNESSBREATH', 'attack', 658, 5, 1000, 2000, 5000, 'no', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3108, 'Jitterbug@NPC_WIDESILENCE', 'attack', 663, 5, 3000, 1000, 10000, 'no', 'self', 'always', '0', NULL, NULL, NULL, NULL, NULL, '9', NULL),
+(3109, 'Jitterbug@NPC_LEX_AETERNA', 'attack', 727, 3, 2000, 2000, 10000, 'no', 'target', 'always', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3109, 'Jitterbug@NPC_WIDECONFUSE', 'attack', 667, 5, 3000, 2000, 10000, 'no', 'self', 'always', '0', NULL, NULL, NULL, NULL, NULL, '0', NULL),
+(3109, 'Jitterbug@WM_REVERBERATION', 'attack', 2414, 3, 2000, 1000, 4000, 'no', 'around2', 'always', '0', NULL, NULL, NULL, NULL, NULL, '2', NULL);
