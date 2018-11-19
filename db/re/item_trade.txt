@@ -364,7 +364,7 @@
 2863,507,100	// Ring_Of_Valkyrie
 2864,499,100	// Light_Of_Cure
 2865,499,100	// Seal_Of_Cathedral
-2866,499,100	// Ring_Of_Archbishop
+//2866,499,100	// Ring_Of_Archbishop
 2872,475,100	// G_Honor_Certificate
 2875,475,100	// RO_Appreciation_Ring
 2885,507,100	// Mother_Heart
@@ -4005,3 +4005,4 @@
 18982,329,100	// Old_Circlet_Of_Bones
 18983,329,100	// Old_Protect_Of_Crown
 18984,329,100	// Old_Camouflage_Rabbit_Hood
+2866,329,100	// Ring_Of_Archbishop
