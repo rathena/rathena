@@ -7518,8 +7518,8 @@
 13401,Excalibur_C,Excalibur,5,1,,0,199,,1,0,0x000654E2,63,2,2,4,1,0,2,{ bonus bInt,10; bonus bLuk,10; bonus bAtkEle,Ele_Holy; },{},{}
 13402,Cutlas_C,Cutlus,5,2,,0,185,,1,0,0x000654E2,63,2,2,4,0,0,2,{ skill "SM_BASH",5; bonus bStr,2; bonus bDef,1; },{},{}
 13403,Solar_Sword_C,Solar Sword,5,2,,0,120,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Fire; bonus2 bSPLossRate,15,10; bonus2 bHPDrainRate,1000,1; },{},{}
-13404,Platinum_Shotel,Platinum Shotel,5,20,,1500,130,,1,1,0x000654E2,63,2,2,4,55,1,2,{ bonus bCritical,50; },{},{}
-13405,Curved_Sword,Curved Sword,5,20,,800,125,,1,2,0x000654E2,63,2,2,4,55,1,2,{ bonus bAspdRate,10; bonus2 bAddEff,Eff_Curse,300; },{},{}
+13404,Platinum_Shotel,Platinum Shotel,5,20,,1500,130,,1,1,0x000654E2,58,2,2,4,55,1,2,{ bonus bCritical,50; },{},{}
+13405,Curved_Sword,Curved Sword,5,20,,800,125,,1,2,0x000654E2,58,2,2,4,55,1,2,{ bonus bAspdRate,10; bonus2 bAddEff,Eff_Curse,300; },{},{}
 13406,Edger,Edger,5,20,,0,120,,1,0,0x000654E2,63,2,2,1,0,0,2,{ bonus2 bAddClass,Class_All,50; },{},{}
 13407,Nagan_C,Refined Nagan,5,1,,0,148,,1,0,0x000654E2,63,2,2,4,0,0,2,{ skill "TF_DOUBLE",5; bonus bDoubleRate,25; bonus2 bAddRace,RC_DemiHuman,40; bonus2 bAddRace,RC_Player,40; },{},{}
 13408,Fire_Brand_C,Refined Fireblend,5,1,,0,120,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Fire; bonus bInt,2; skill "MG_FIREBOLT",5; bonus3 bAutoSpell,"MG_FIREBOLT",5,100; },{},{}
