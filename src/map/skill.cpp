@@ -13905,8 +13905,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, uns
 
 		case UNT_ELECTRICSHOCKER:
 			if( bl->id != ss->id ) {
-				if( status_bl_has_mode(bl,MD_STATUS_IMMUNE) )
-					break;
 				if( status_change_start(ss, bl,type,10000,sg->skill_lv,sg->group_id,0,0,skill_get_time2(sg->skill_id, sg->skill_lv), SCSTART_NORATEDEF) ) {
 					map_moveblock(bl, unit->bl.x, unit->bl.y, tick);
 					clif_fixpos(bl);
