@@ -302,7 +302,7 @@ prontera,148,175,5	script	Kafra Employee::kaf_prontera5	117,{
 
 // Yuno
 //============================================================
-yuno,152,187,4	script	Kafra Employee::kaf_yuno	860,{
+yuno,152,187,5	script	Kafra Employee::kaf_yuno	860,{
 	cutin "kafra_08",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";

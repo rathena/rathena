@@ -86,7 +86,7 @@ thor_camp,249,74,4	duplicate(Healer)	Healer#thor	501
 umbala,95,154,3	duplicate(Healer)	Healer#umb	501
 veins,217,121,4	duplicate(Healer)	Healer#ve	501
 xmas,143,136,4	duplicate(Healer)	Healer#xmas	501
-yuno,152,200,4	duplicate(Healer)	Healer#yuno	501
+yuno,152,200,5	duplicate(Healer)	Healer#yuno	501
 
 // Duplicates (Renewal)
 //============================================================

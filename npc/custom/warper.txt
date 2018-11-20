@@ -633,7 +633,7 @@ thor_camp,249,76,4	duplicate(Warper)	Warper#thor	531
 umbala,106,150,3	duplicate(Warper)	Warper#umb	531
 veins,214,123,4	duplicate(Warper)	Warper#ve	531
 xmas,150,136,6	duplicate(Warper)	Warper#xmas	531
-yuno,158,200,4	duplicate(Warper)	Warper#yuno	531
+yuno,163,200,3	duplicate(Warper)	Warper#yuno	531
 
 int_land,77,94,1	duplicate(Warper)	Warper#int_land	531
 
