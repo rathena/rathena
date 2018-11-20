@@ -133,6 +133,10 @@ umbala,105,148,3	duplicate(Healer)	Healer#umb	569
 veins,217,121,4	duplicate(Healer)	Healer#ve	569
 xmas,143,136,4	duplicate(Healer)	Healer#xmas	569
 yuno,164,45,4	duplicate(Healer)	Healer#yuno	569
+harboro1,291,202,4	duplicate(Healer)	Healer#harboro1	569
+verus04,114,253,4	duplicate(Healer)	Healer#verus04	569
+prt_monk,176,209,4	duplicate(Healer)	Healer#prt_monk	569
+
 
 // Duplicates (Renewal)
 //============================================================
@@ -140,6 +144,7 @@ brasilis,194,221,6	duplicate(Healer)	Healer#bra	569
 dewata,195,187,4	duplicate(Healer)	Healer#dew	569
 dicastes01,201,194,4	duplicate(Healer)	Healer#dic	569
 ecl_in01,45,60,4	duplicate(Healer)	Healer#ecl	569
+lasagna,186,179,4	duplicate(Healer)	Healer#las	569 
 malangdo,132,114,6	duplicate(Healer)	Healer#mal	569
 malaya,227,204,6	duplicate(Healer)	Healer#ma	569
 mora,55,152,4	duplicate(Healer)	Healer#mora	569

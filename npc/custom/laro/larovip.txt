@@ -2176,77 +2176,50 @@ pvp_n_7-5,0,0,0,0	monster	Bafomé	1039,2,60000,66000
 //pvp_n_8-5,0,0,0,0	monster	Bafomé	1039,2,60000,66000
 
 //============================================================================
+// Duplicates
+//============================================================
+alberta,31,240,6	duplicate(warpvip)	VIP Assistant#alb	646 
+aldebaran,134,123,4	duplicate(warpvip)	VIP Assistant#alde	646 
+amatsu,200,80,4	duplicate(warpvip)	VIP Assistant#ama	646 
+ayothaya,155,111,4	duplicate(warpvip)	VIP Assistant#ayo	646 
+comodo,188,162,4	duplicate(warpvip)	VIP Assistant#com	646 
+einbroch,56,203,4	duplicate(warpvip)	VIP Assistant#einbe	646 
+einbech,84,101,4	duplicate(warpvip)	VIP Assistant#einbr	646 
+geffen,121,61,4	duplicate(warpvip)	VIP Assistant#gef	646 
+gonryun,164,130,4	duplicate(warpvip)	VIP Assistant#gon	646 
+hugel,90,144,4	duplicate(warpvip)	VIP Assistant#hug	646 
+izlude,124,148,4	duplicate(warpvip)	VIP Assistant#izl	646 	//Pre-RE: (125,118)
+jawaii,245,143,4	duplicate(warpvip)	VIP Assistant#jaw	646 
+lighthalzen,166,100,4	duplicate(warpvip)	VIP Assistant#lhz	646 
+louyang,225,103,4	duplicate(warpvip)	VIP Assistant#lou	646
+manuk,276,148,6	duplicate(warpvip)	VIP Assistant#man	646 
+mid_camp,201,289,6	duplicate(warpvip)	VIP Assistant#mid	646 
+moc_ruins,74,164,4	duplicate(warpvip)	VIP Assistant#moc	646 
+morocc,150,107,4	duplicate(warpvip)	VIP Assistant#mor	646
+moscovia,218,191,4	duplicate(warpvip)	VIP Assistant#mos	646
+niflheim,214,189,5	duplicate(warpvip)	VIP Assistant#nif	646 
+payon,183,103,4	duplicate(warpvip)	VIP Assistant#pay	646
+prontera,161,198,3	duplicate(warpvip)	VIP Assistant#prt	646
+rachel,130,117,4	duplicate(warpvip)	VIP Assistant#rac	646
+splendide,212,185,4	duplicate(warpvip)	VIP Assistant#spl	646
+thor_camp,247,79,4	duplicate(warpvip)	VIP Assistant#thor	646 
+umbala,104,152,3	duplicate(warpvip)	VIP Assistant#umb	646 
+veins,211,125,4	duplicate(warpvip)	VIP Assistant#ve	646
+xmas,149,136,4	duplicate(warpvip)	VIP Assistant#xmas	646
+yuno,151,45,4	duplicate(warpvip)	VIP Assistant#yuno	646 
+harboro1,285,196,4	duplicate(warpvip)	VIP Assistant#harboro1	646 
+verus04,114,259,4	duplicate(warpvip)	VIP Assistant#verus04	646 
+prt_monk,184,215,4	duplicate(warpvip)	VIP Assistant#prt_monk	646 
 
-//Cidades
-prontera,161,198,3	duplicate(warpvip)	VIP Assistant#01	646 
-aldebaran,134,123,4	duplicate(warpvip)	VIP Assistant#02	646 
-amatsu,200,80,4	duplicate(warpvip)	VIP Assistant#03	646 
-ayothaya,155,111,4	duplicate(warpvip)	VIP Assistant#04	646 
-comodo,188,162,4	duplicate(warpvip)	VIP Assistant#05	646 
-einbroch,56,203,4	duplicate(warpvip)	VIP Assistant#06	646 
-einbech,84,101,4	duplicate(warpvip)	VIP Assistant#07	646 
-geffen,121,61,4	duplicate(warpvip)	VIP Assistant#08	646 
-yuno,152,186,4	duplicate(warpvip)	VIP Assistant#09	646 
-gonryun,164,130,4	duplicate(warpvip)	VIP Assistant#10	646 
-izlude,125,118,4	duplicate(warpvip)	VIP Assistant#11	646 
-louyang,225,103,4	duplicate(warpvip)	VIP Assistant#12	646 
-xmas,149,136,4	duplicate(warpvip)	VIP Assistant#13	646 
-morocc,159,96,4	duplicate(warpvip)	VIP Assistant#14	646 
-niflheim,29,160,4	duplicate(warpvip)	VIP Assistant#15	646 
-payon,180,105,4	duplicate(warpvip)	VIP Assistant#16	646 
-lighthalzen,166,100,4	duplicate(warpvip)	VIP Assistant#17	646 
-hugel,93,151,4	duplicate(warpvip)	VIP Assistant#18	646 
-rachel,130,117,4	duplicate(warpvip)	VIP Assistant#19	646 
-veins,211,125,4	duplicate(warpvip)	VIP Assistant#20	646 
-nameless_i,172,150,4	duplicate(warpvip)	VIP Assistant#21	646 
-moscovia,219,192,4	duplicate(warpvip)	VIP Assistant#22	646 
-manuk,293,194,4	duplicate(warpvip)	VIP Assistant#23	646 
-splendide,212,185,4	duplicate(warpvip)	VIP Assistant#24	646 
-mid_camp,204,235,4	duplicate(warpvip)	VIP Assistant#25	646 
-brasilis,184,220,4	duplicate(warpvip)	VIP Assistant#26	646 
 
-//Lugares
-pay_arche,44,138,4	duplicate(warpvip)	VIP Assistant#30	91
-mjolnir_02,86,359,4	duplicate(warpvip)	VIP Assistant#31	91
-gef_fild14,78,337,4	duplicate(warpvip)	VIP Assistant#32	91
 
-//==========================Salas MVPS
-//Desafio de Adiante
-pvp_n_1-2,100,100,4	duplicate(warpvip)	VIP Assistant#101	91
-pvp_n_2-2,100,100,4	duplicate(warpvip)	VIP Assistant#102	91
-pvp_n_3-2,100,100,4	duplicate(warpvip)	VIP Assistant#103	91
-pvp_n_4-2,100,100,4	duplicate(warpvip)	VIP Assistant#104	91
-pvp_n_5-2,100,100,4	duplicate(warpvip)	VIP Assistant#105	91
-pvp_n_6-2,100,100,4	duplicate(warpvip)	VIP Assistant#106	91
-pvp_n_7-2,100,100,4	duplicate(warpvip)	VIP Assistant#107	91
-pvp_n_8-2,100,100,4	duplicate(warpvip)	VIP Assistant#108	91
-
-//Treta
-pvp_n_1-3,100,100,4	duplicate(warpvip)	VIP Assistant#109	91
-pvp_n_2-3,100,100,4	duplicate(warpvip)	VIP Assistant#110	91
-pvp_n_3-3,100,100,4	duplicate(warpvip)	VIP Assistant#111	91
-pvp_n_4-3,100,100,4	duplicate(warpvip)	VIP Assistant#112	91
-pvp_n_5-3,100,100,4	duplicate(warpvip)	VIP Assistant#113	91
-pvp_n_6-3,100,100,4	duplicate(warpvip)	VIP Assistant#114	91
-pvp_n_7-3,100,100,4	duplicate(warpvip)	VIP Assistant#115	91
-pvp_n_8-3,100,100,4	duplicate(warpvip)	VIP Assistant#116	91
-
-//Encruzilhada
-pvp_n_1-4,100,100,4	duplicate(warpvip)	VIP Assistant#117	91
-pvp_n_2-4,100,100,4	duplicate(warpvip)	VIP Assistant#118	91
-pvp_n_3-4,100,100,4	duplicate(warpvip)	VIP Assistant#119	91
-pvp_n_4-4,100,100,4	duplicate(warpvip)	VIP Assistant#120	91
-pvp_n_5-4,100,100,4	duplicate(warpvip)	VIP Assistant#121	91
-pvp_n_6-4,100,100,4	duplicate(warpvip)	VIP Assistant#122	91
-pvp_n_7-4,100,100,4	duplicate(warpvip)	VIP Assistant#123	91
-pvp_n_8-4,100,100,4	duplicate(warpvip)	VIP Assistant#124	91
-
-//Bússola
-pvp_n_1-5,100,100,4	duplicate(warpvip)	VIP Assistant#125	91
-pvp_n_2-5,100,100,4	duplicate(warpvip)	VIP Assistant#126	91
-pvp_n_3-5,100,100,4	duplicate(warpvip)	VIP Assistant#127	91
-pvp_n_4-5,100,100,4	duplicate(warpvip)	VIP Assistant#128	91
-pvp_n_5-5,100,100,4	duplicate(warpvip)	VIP Assistant#129	91
-pvp_n_6-5,100,100,4	duplicate(warpvip)	VIP Assistant#130	91
-pvp_n_7-5,100,100,4	duplicate(warpvip)	VIP Assistant#131	91
-//pvp_n_8-5,100,100,4	duplicate(warpvip)	VIP Assistant#132	91
+// Duplicates (Renewal)
+//============================================================
+brasilis,184,220,4	duplicate(warpvip)	VIP Assistant#bra	646
+dewata,193,189,4	duplicate(warpvip)	VIP Assistant#dew	646
+dicastes01,197,195,4	duplicate(warpvip)	VIP Assistant#dic	646
+ecl_in01,51,53,4	duplicate(warpvip)	VIP Assistant#ecl	646
+lasagna,197,179,4	duplicate(warpvip)	VIP Assistant#las	646 
+malangdo,138,116,6	duplicate(warpvip)	VIP Assistant#mal	646
+malaya,227,196,6	duplicate(warpvip)	VIP Assistant#ma	646
+mora,61,148,4	duplicate(warpvip)	VIP Assistant#mora	646

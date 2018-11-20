@@ -1,0 +1,444 @@
+//===== Atlantis Script ======================================
+//= iRO Gramps - Weekly Turn-In Events
+//===== By: ================================================== 
+//= Ragno (AtlantisRO)
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena
+//===== iRO Wiki Summary: ====================================
+// Each week, a hunting quest (also called a "Turn-In") is
+// rotated. The Gramps NPC in the Eden Group HQ is offering
+// the quest. They require the player to kill 400 times a
+// monster. The monsters involved will give their normal EXP.
+// The player must be within a certain level range to obtain
+// the quest, but he can get the reward at any level. The
+// quest will give as much EXP as all the monsters killed
+// (formula : &00*(monster exp/jexp)).
+// iRO Wiki Page:
+// http://irowiki.org/wiki/Weekly_Turn-In_Events
+//===== Additional Comments: =================================
+//= 1.0 First version.
+//============================================================
+
+moc_para01,18,35,3	script	Gramps#Eden	866,{
+	if (eaclass()&EAJL_THIRD){
+		mes "^FF0000Up on reaching Job Level 50 or Base Level 150 Gramps will no longer award experience points of the type that has reached his maximum.^000000";
+		next;
+		mes "Gramps will also not allow those points to be redistributed.";
+		next;
+	}
+	if (checkquest(62837) != 2)
+		callsub S_GM_Notice;
+	setarray .@Timer, 60444, 60495, 60449, 60450, 60486, 60487;
+	for (.@i = 0; .@i < getarraysize(.@Timer); .@i++){
+		if (checkquest(.@Timer[.@i],PLAYTIME) == 2)
+			erasequest .@Timer[.@i];
+	}
+	mes "[Gramps]";
+	mes "When you get to being my age, you become bitter.";
+	mes "Too long I've done nothing about the monsters that roam around Rune Midgard.";
+	next;
+	mes "[Gramps]";
+	mes "That's why I'm asking you wippersnappers to help me hunt some monsters.";
+	mes "Will you help me young adventurer?";
+	next;
+	switch(select("Yes, I'll help.", "Reward Me!", "^FF0000I want to quit hunting^000000", "^0000FFCan you warp me?^000000", "Can you erase the timer?", "What missions are you giving", "Give me Limited 3 day VIP", "Tell me more about the VIP Access", "No thanks pops.")){
+		case 1:	//Yes, I'll help.
+			mes "[Gramps]";
+			mes "Ok, I've got a monster in mind that I need help exterminating.";
+			next;
+			mes "[Gramps]";
+			mes "Waddya say kid?";
+			mes "Want to hunt something for me?";
+			next;
+			.@map = select("I'll hunt at " + .Gramps_MapName$[0] + "[70-100]", "I'll hunt at " + .Gramps_MapName$[1] + "[101-125]", "I'll hunt at " + .Gramps_MapName$[2] + "[126-150]", "No thanks pops.") - 1;
+			if (.@map == 3){
+				mes "[Gramps]";
+				mes "Suit yourself kid.";
+				close;
+			}
+			callsub S_CheckLevel, .@map;
+			mes "[Gramps]";
+			mes "Ok, kid.";
+			mes "Hunt monsters at " + .Gramps_MapName$[.@map] + " and I can die a happy old man.";
+			next;
+			mes "[Gramps]";
+			mes "Ask me to teleport you and I will send you to a special hunting area.";
+			mes "So what do you want to hunt?";
+			next;
+			if (vip_status(1) || checkquest(60810,PLAYTIME) == 1)
+				.@vip_status = 1;
+			.@loc = 4 * .@map;
+			.@Turn_1 = .Gramps_Turn[.@loc];     .@mob1 = .Gramps_Turn[.@loc + 1];
+			.@Turn_2 = .Gramps_Turn[.@loc + 2]; .@mob2 = .Gramps_Turn[.@loc + 3];
+			.@hunt = select(getmonsterinfo(.@mob1,MOB_NAME), getmonsterinfo(.@mob2,MOB_NAME), (.@vip_status?"Hunt All":""), "Cancel");
+			if (.@hunt == 4)
+				close;
+			setarray .@Timer1, 60444, 60449, 60486;
+			setarray .@Timer2, 60495, 60450, 60487;
+			.@Timer1 = .@Timer1[.@map];
+			.@Timer2 = .@Timer2[.@map];
+			if (.@hunt == 3){
+				if (checkquest(.@Turn_1) < 0 && checkquest(.@Timer1) < 0 && checkquest(.@Turn_2) < 0 && checkquest(.@Timer2) < 0){
+					setquest .@Turn_1;
+					setquest .@Timer1;
+					setquest .@Turn_2;
+					setquest .@Timer2;
+					close;
+				}
+				.@hunt = 1;
+			}
+			.@Turn = (.@hunt == 1 ? .@Turn_1 : .@Turn_2);
+			.@Timer = (.@hunt == 1 ? .@Timer1 : .@Timer2);
+			if (checkquest(.@Turn,HUNTING) == 2){
+				mes "[Gramps]";
+				mes "You have finished this mission.";
+				mes "All you have to do is tell me that you're done.";
+			} else if (checkquest(.@Turn,HUNTING) == 1){
+				if (.@vip_status){
+					mes "[Gramps]";
+					mes "You are already on this mission.";
+					mes "Do you want me to warp you there?";
+					next;
+					if (select("Send me now!", "Not right now.") == 1){
+						close2;
+						warp .Gramps_MapWarp$[.@map], .Gramps_MapX[.@map], .Gramps_MapY[.@map];
+						end;
+					}
+				} else {
+					mes "[Gramps]";
+					mes "Tell me to warp you and I will send you to the special hunting grounds.";
+					mes "You are already on this mission.";
+				}
+			} else if (checkquest(.@Timer,PLAYTIME) == 1){
+				mes "[Gramps]";
+				mes "Wait a second!";
+				mes "You have to wait 23 hours before I can let you do this mission again.";
+			} else if ((checkquest(.@Timer1,PLAYTIME) == 1 || checkquest(.@Timer2,PLAYTIME) == 1) && !.@vip_status){
+				mes "[Gramps]";
+				mes "I'm sorry but I can only give you one mission at a time in this category.";
+				mes "If you had a VIP membership, I can give you both missions and a free warp to the area.";
+			} else {
+				if (!.@vip_status){
+					mes "[Gramps]";
+					mes "Tell me to warp you and I will send you to the special hunting grounds.";
+				}
+				setquest .@Turn;
+				setquest .@Timer;
+			}
+			close;
+		case 2:	//Reward Me!
+			mes "[Gramps]";
+			mes "I'll check for all of the missions that I've given so far.";
+			next;
+			for (.@i = 0; .@i < getarraysize(.quest_id); .@i++){
+				if (checkquest(.quest_id[.@i], HUNTING) == 2){
+					if (checkquest(60819,PLAYTIME) != 1){
+						if (checkquest(60819) > 0)
+							erasequest 60819;
+						mes "[Gramps]";
+						mes "I will give you a random buff for completing a hunting quest.";
+						mes "I can give this buff to you once every 16 hours.";
+						sc_start SC_DEXFOOD,1800000,12;
+						sc_start SC_ATKPOTION,1800000,0;
+						sc_start SC_MATKPOTION,1800000,0;
+						sc_start SC_SPEEDUP0,1800000,25;
+						setquest 60819; // Hunting Daily Timer
+						next;
+					}
+					.@monster$ = getmonsterinfo(.monster_id[.@i],MOB_NAME);
+					mes "[Gramps]";
+					mes "Hmm... let me see~";
+					mes "You HAVE completed the '" + .@monster$ + " Hunting' mission.";
+					.@boost = 600;
+					if (vip_status(1)){
+						mes "Do you want both Base and Job experience or split?";
+						next;
+						.@vip_reward = select("^FF0000Both Base and Job EXP^000000", "^0000FFI want Base EXP only.^000000", "^FFA400I want Job EXP only.^000000");
+						.@boost = 1000;
+						mes "[Gramps]";
+						mes "Here is your reward.";
+					}
+					erasequest .quest_id[.@i];
+					.@BaseExp = getmonsterinfo(.monster_id[.@i], MOB_BASEEXP) * .@boost;
+					.@JobExp = getmonsterinfo(.monster_id[.@i], MOB_JOBEXP) * .@boost;
+					if (eaclass()&EAJL_THIRD && BaseLevel > 149)
+						.@BaseExp = 0;
+					if (eaclass()&EAJL_THIRD && JobLevel > 49)
+						.@JobExp = 0;
+					switch(.@vip_reward){
+						case 2:
+							getexp .@BaseExp,0;
+							getexp .@JobExp,0;
+							break;
+						case 3:
+							getexp 0,.@BaseExp;
+							getexp 0,.@JobExp;
+							break;
+						default:
+							getexp .@BaseExp,.@JobExp;
+							break;
+					}
+					getitem "Para_Logro_Badge", (.@vip_reward ? 2 : 1);
+					next;
+				}
+			}
+			close;
+		case 3:	//I want to quit hunting
+			mes "[Gramps]";
+			mes "I'll check what missions that you've taken so far.";
+			mes "Tell me which one you want to quit doing.";
+			next;
+			for (.@i = 0; .@i < getarraysize(.quest_id); .@i++){
+				if (checkquest(.quest_id[.@i], HUNTING) == 1){
+					.@monster$ = getmonsterinfo(.monster_id[.@i],MOB_NAME);
+					mes "[Gramps]";
+					mes "You have NOT completed the '" + .@monster$ + " Hunting' mission.";
+					mes "Do you want to continue or quit?";
+					next;
+					if (select("Keep hunting " + .@monster$, "^FF0000Get rid of my quest^000000") == 2){
+						erasequest .quest_id[.@i];
+						mes "[Gramps]";
+						mes "All of your records for this quest have been deleted.";
+						close2;
+						.@questerased = 1;
+					}
+				}
+			}
+			if (.@questerased)
+				end;
+			close;
+		case 4:	//Can you warp me?
+			mes "[Gramps]";
+			mes "Where would you like me to send you to?";
+			mes "The area I will send you to is not the normal area but a special hunting grounds.";
+			next;
+			mes "[Gramps]";
+			mes "In addition, as long as you have the 23 hour timer active, I will still warp you to the hunting grounds area but you still have to wait for the timer to expire before I can give you the hunting mission again.";
+			next;
+			.@map = select(.Gramps_MapName$[0] + "[70-100]", .Gramps_MapName$[1] + "[101-125]", .Gramps_MapName$[2] + "[126-150]", "Cancel") - 1;
+			if (.@map == 3)
+				close;
+			.@loc = 4 * .@map;
+			.@Turn_1 = .Gramps_Turn[.@loc];
+			.@Turn_2 = .Gramps_Turn[.@loc + 2];
+			setarray .@Timer1, 60444, 60449, 60486;
+			setarray .@Timer2, 60495, 60450, 60487;
+			.@Timer1 = .@Timer1[.@map];
+			.@Timer2 = .@Timer2[.@map];
+			if (checkquest(.@Turn_1) < 0 && checkquest(.@Timer1) < 0 && checkquest(.@Turn_2) < 0 && checkquest(.@Timer2) < 0){
+				mes "[Gramps]";
+				mes "I won't send you there because you're either not doing that mission or you haven't recently done this mission.";
+				close;
+			}
+			mes "[Gramps]";
+			mes "Sending you now.";
+			close2;
+			warp .Gramps_MapWarp$[.@map], .Gramps_MapX[.@map], .Gramps_MapY[.@map];
+			end;
+		case 5:	//Can you erase the timer?
+			mes "[Gramps]";
+			mes "I can erase the daily timer for the quests if you give me 1 Reset Stone.";
+			mes "So what do you say kid?";
+			next;
+			if (select("Here's 1 Reset Stone", "No thanks, I'll just wait.") == 1){
+				if (!countitem("Premium_Reset_Stone")){
+					mes "[Gramps]";
+					mes "Come now, I won't do this for free.";
+					mes "You can get the Reset Stones from the Kafra Consumables Employee upstairs.";
+				} else {
+					if (checkquest(60574,PLAYTIME) == 1){
+						mes "[Gramps]";
+						mes "I can only let you reset your hunting timers once every 3 hours.";
+						mes "Wait for the timer to expire before you try reseting.";
+					} else {
+						setarray .@quest_erase, 60444, 60495, 60449, 60450, 60486, 60487, 60574;
+						for (.@i = 0; .@i < getarraysize(.@quest_erase); .@i++){
+							if (checkquest(.@quest_erase[.@i]) > 0)
+								erasequest .@quest_erase[.@i];
+						}
+						mes "[Gramps]";
+						mes "All of your daily timers have been deleted.";
+						delitem "Premium_Reset_Stone", 1;
+						setquest 60574;
+					}
+				}
+			}
+			close;
+		case 6:	//What missions are you giving
+			mes "[Gramps]";
+			mes "I am giving several hunting missions.";
+			next;
+			mes "[Gramps]";
+			mes "This week's monster areas are:";
+			mes "70-100 "  + .Gramps_MapName$[0];
+			mes "Hunt " + getmonsterinfo(.Gramps_Turn[1],MOB_NAME) + " & " + getmonsterinfo(.Gramps_Turn[3],MOB_NAME);
+			mes "101-125 " + .Gramps_MapName$[1];
+			mes "Hunt " + getmonsterinfo(.Gramps_Turn[5],MOB_NAME) + " & " + getmonsterinfo(.Gramps_Turn[7],MOB_NAME);
+			mes "126-150 " + .Gramps_MapName$[2];
+			mes "Hunt " + getmonsterinfo(.Gramps_Turn[9],MOB_NAME) + " & " + getmonsterinfo(.Gramps_Turn[11],MOB_NAME);
+			close;
+		case 7:	//Give me Limited 3 day VIP
+			if (countitem("Premium_Reset_Stone") < 2){
+				mes "[Gramps]";
+				mes "You need to bring 2 Reset Stones to get this service.";
+				mes "Open the Cash Shop and purchase them from there.";
+			} else if (checkquest(60810,PLAYTIME) == 1){
+				mes "[Gramps]";
+				mes "It seems that you already have the limited access activated.";
+				mes "Your access ends when the timer expires.";
+			} else {
+				if (checkquest(60810) > 0)
+					erasequest 60810;
+				mes "[Gramps]";
+				mes "Ok, you will now have limited 3 day VIP Access from this point on.";
+				mes "Ask me about specific details to find out more about this access.";
+				delitem "Premium_Reset_Stone", 2;
+				setquest 60810;
+			}
+			close;
+		case 8:	//Tell me more about the VIP Access
+			mes "[Gramps]";
+			mes "Ok, if you give me 2 Reset Stones you will have limited VIP Access to certain VIP only NPCs.";
+			next;
+			mes "[Gramps]";
+			mes "This includes access to extra Kafra Services, discounted warps to different areas and even the use of Primo d'Buffer here at Eden Group.";
+			next;
+			mes "[Gramps]";
+			mes "Additionally, I will allow you to get both hunting quests while you have this VIP Access active.";
+			next;
+			mes "[Gramps]";
+			mes "The only catch is that you will NOT receive some of the benefits of a VIP such as EXP Boost as well and extra storage.";
+			close;
+		case 9:	//No thanks pops.
+			mes "[Gramps]";
+			mes "Pops?";
+			mes "You better learn some respect there kiddo.";
+			close;
+	}
+	end;
+
+S_CheckLevel:
+	setarray .@BaseMin,  70, 101, 126;
+	setarray .@BaseMax, 100, 125, 150;
+	if (BaseLevel >= .@BaseMin[getarg(0)] && BaseLevel <= .@BaseMax[getarg(0)])
+		return;
+	mes "[Gramps]";
+	mes "Sorry, but I'm only giving this mission to Adventurers who are between level " + .@BaseMin[getarg(0)] + "-" + .@BaseMax[getarg(0)] + ".";
+	close;
+
+S_GM_Notice:
+	while(1){
+		mes "[Gramps]";
+		mes "Hold it there! I have a message that I will only display this one time after you answer some questions correctly.";
+		next;
+		mes "[Gramps]";
+		mes "Information about the GM Team!";
+		next;
+		mes "[Rules]";
+		mes "1. The ONLY way to become a GM is to be hired by our California Office. We do not recruit players to be GMs!";
+		next;
+		mes "[Rules]";
+		mes "2. The GM team will NEVER ask for your password!";
+		next;
+		mes "[Rules]";
+		mes "3. If someone demands a ransom to keep your account in good standing they are not members of the GM tema. DO NOT PAY THEM!";
+		mes "The GM team will never ask you to contact them outside the ticket system. If they are demanding via instant messengers or social media ignore them!";
+		next;
+		mes "[Rules]";
+		mes "4. The GM team will NEVER ask you to install and use Teamviewer!";
+		next;
+		mes "[Rules]";
+		mes "5. You will always be able to see a GM team member in a chat room if they are there. They have no special way to be invisible!";
+		next;
+		mes "[Rules]";
+		mes "6. The GM team will always be willing to show the GM sprite. If they refuse they can be ignored.";
+		next;
+		mes "[Questionaire # 1]";
+		mes "Does the GM team recruit players to be GMs?";
+		next;
+		if (select("Yes", "No") == 2){ .@n++; }
+		mes "[Questionaire # 2]";
+		mes "Will the GM team ask you for password?";
+		next;
+		if (select("Yes", "No") == 2){ .@n++; }
+		mes "[Questionaire # 3]";
+		mes "Will the GM team demand cash from you, in game or via instant messagers or social media?";
+		next;
+		if (select("No", "Yes") == 1){ .@n++; }
+		mes "[Questionaire # 4]";
+		mes "Should you install Teamviewer because a GM ask you to?";
+		next;
+		if (select("No", "Yes") == 1){ .@n++; }
+		mes "[Questionaire # 5]";
+		mes "Can a GM team member be invisible in a chat room?";
+		next;
+		if (select("Maybe", "No", "Yes") == 2){ .@n++; }
+		mes "[Questionaire # 6]";
+		mes "Can you ask to see the GM sprite in order to verify a GM's identity?";
+		next;
+		if (select("No", "Yes") == 2){ .@n++; }
+		if (.@n == 6)
+			break;
+		else
+			.@n = 0;
+	}
+	setquest 62837;
+	completequest 62837;
+	return;
+
+OnInit:
+	setarray .Gramps_MapName$, "Payon Dungeon", "Geffen Dungeon", "Moscovia Dungeon";
+	setarray .Gramps_MapWarp$, "gramps_20", "gramps_21", "gramps_22";
+	setarray .Gramps_MapX, 22, 138, 156;
+	setarray .Gramps_MapY, 181, 117, 47;
+	setarray .Gramps_Turn, 60602, 1102, 60508, 1617, 60594, 1772, 60502, 1208, 60470, 1716, 60485, 1653;
+	setarray .monster_id,  1193,  1106,  1410,  1417,  1370,  1374,  2083,  2084,  1778,
+			 1777,  1752,  1753,  2085,  2086,  1402,  1403,  1504,  1505,  1713,  1716,
+			 1614,  1615,  1714,  1717,  1657,  1654,  1652,  1655,  1656,  1653,  1316,
+			 1314,  1736,  1737,  1987,  2024,  1163,  1208,  1780,  1781,  2019,  2021,
+			 1622,  1617,  1670,  1671,  1672,  1673,  1838,  1837,  1627,  1782,  1769,
+			 1770,  1638,  1635,  1637,  1634,  1639,  1636,  1613,  1619,  1676,  1677,
+			 1678,  1679,  1867,  1870,  1253,  1194,  1215,  1162,  1699,  1698,  1986,
+			 2092,  1133,  1134,  1135,  1833,  1831,  1143,  1109,  1194,  1297,  1384,
+			 1385,  1773,  1774,  1196,  1257,  2015,  1993,  1509,  1510,  1836,  1680,
+			 1256,  1148,  1989,  1282,  1390,  1715,  1668,  1988,  2133,  2132,  1718,
+			 1992,  2137,  2136,  1318,  1315,  1367,  1366,  1295,  1771,  1772,  1865,
+			 1864,  1883,  1102,  1379,  1206,  1703,  1201,  1735,  1155,  1884,  1995,
+			 1775,  1682,  1132,  1408,  1866,  1213,  1319,  2013,  1628,  1377,  2134,
+			 1776,  1197,  1117,  1219,  1401,  1376,  1406,  1869,  1796,  1797,  1375,
+			 1405,  2071,  1198,  1098,  1512,  1513,  1309,  2153,  1291,  1999,  1154,
+			 2315,  2313,  1386,  2365,  2366,  1199,  2363,  2370,  2309,  2310,  2364,
+			 1692,  1255,  2204,  1305,  2369,  2367,  2073,  2199;
+	setarray .quest_id,   60443, 60445, 60451, 60452, 60453, 60454, 60455, 60456, 60459,
+			60460, 60461, 60462, 60463, 60464, 60465, 60466, 60467, 60468, 60469, 60470,
+			60476, 60477, 60478, 60479, 60480, 60481, 60482, 60483, 60484, 60485, 60488,
+			60489, 60490, 60491, 60492, 60493, 60501, 60502, 60503, 60504, 60505, 60506,
+			60507, 60508, 60509, 60510, 60511, 60512, 60513, 60514, 60515, 60516, 60517,
+			60518, 60519, 60520, 60521, 60522, 60523, 60524, 60525, 60526, 60527, 60528,
+			60529, 60530, 60531, 60532, 60535, 60536, 60537, 60538, 60539, 60540, 60541,
+			60542, 60543, 60544, 60545, 60546, 60547, 60549, 60550, 60551, 60552, 60553,
+			60554, 60555, 60556, 60557, 60558, 60559, 60560, 60561, 60562, 60565, 60570,
+			60571, 60572, 60573, 60575, 60576, 60579, 60580, 60581, 60582, 60583, 60584,
+			60585, 60586, 60587, 60588, 60589, 60590, 60591, 60592, 60593, 60594, 60595,
+			60596, 60601, 60602, 60603, 60604, 60605, 60608, 60609, 60610, 60611, 60612,
+			60614, 60815, 60816, 60817, 60818, 60820, 60821, 60822, 60824, 60825, 60826,
+			60827, 60828, 60830, 60831, 60832, 60833, 60834, 60835, 60836, 60837, 60838,
+			60839, 60840, 60841, 60842, 60843, 60844, 60845, 60846, 60848, 60849, 60851,
+			60853, 60854, 60855, 60856, 60857, 60858, 60859, 60860, 60861, 60862, 60863,
+			60864, 60865, 60866, 60867, 60868, 60869, 62832, 62833;
+	end;
+
+}
+
+-	script	Return to Eden#template	-1,{
+	mes "sending you back to Eden Group";
+	close2;
+	warp "moc_para01", 31, 14;
+	end;
+}
+
+gramps_20,22,186,3	duplicate(Return to Eden#template)	Return to Eden#paydun00l	707
+gramps_21,136,117,3	duplicate(Return to Eden#template)	Return to Eden#gefdun03m	707
+gramps_22,155,44,3	duplicate(Return to Eden#template)	Return to Eden#mosdun02h	707
