@@ -15,6 +15,88 @@
 //============================================================ 
 
 -	script	Smile Assistance::SmileHelper	92,{
+
+	if($language == 1) {
+	
+	mes "[Menina do Sorriso]";
+	mes "Oi ~ Oi ~";
+	mes "Esta é a Assistência ao Sorriso.";
+	mes "Como posso ajudá-lo ?";
+	next;
+	switch(select("^3355FFOque é Máscara Feliz^000000 ?:Fazer ^3355FFMáscara Feliz^000000 :Sair")) {
+	case 1:
+		mes "[Menina do Sorriso]";
+		mes "Evento Nacional realizado pelo comando de ^5577FFSua majestade Tristram o terceiro^000000,";
+		mes "que pretende encorajar a nação do Reino de Rune-Midgard";
+		mes " para jogar em uma atmosfera mais agradável!";
+		mes "Eu sou ^3355FF' Menina do Sorriso '^000000,";
+		mes ".. quem lidera o evento nacional sob o nome de ";
+		mes "^3355FFSorria por todo o Reino de Rune-Midgard~^000000";
+		next;
+		mes "[Menina do Sorriso]";
+		mes "Com itens simples e fáceis de obter,";
+		mes "Posso te fornecer";
+		mes "^3355FF' Máscara Feliz '^000000.";
+		mes "Os requisitos são os seguintes.";
+		next;
+		mes "[Menina do Sorriso]";
+		mes "^3355FF10 Jellopy^000000";
+		mes "^3355FF10 Felpa^000000";
+		mes "^3355FF10 Trevo^000000";
+		next;
+		mes "[Menina do Sorriso]";
+		mes "Com este evento";
+		mes "Todo mundo vai ser feliz e sorrir,";
+		mes "ficar junto com outras pessoas,";
+		mes "E tentará fazer do Ragnarok o jogo mais agradável do mundo.";
+		close;
+	case 2:
+		if (countitem(909) > 9 && countitem(914) > 9 && countitem(705) > 9) {
+			mes "[Menina do sorriso]";
+			mes "Parabéns !";
+			mes "Agora, por favor, pegue está Máscara Feliz.";
+			next;
+			delitem 909,10; //Jellopy
+			delitem 914,10; //Fluff
+			delitem 705,10; //Clover
+			getitem 2278,1; //Mr_Smile
+			mes "[Menina do Sorriso]";
+			mes "Sua majestade, Tristram o terceiro";
+			mes "prometeu fazer o melhor para tornar o Ragnarok melhor e mais agradável.";
+			next;
+			mes "O fato mencionado acima";
+			mes "foi anunciado por";
+			mes "o Departamento de Informação Pública do Reino de Rune-Midgart.";
+			close;
+		}
+		else {
+			mes "[Menina do Sorriso]";
+			mes "Oh - infelizmente";
+			mes "Você não trouxe";
+			mes "itens suficientes para a Máscara Feliz.";
+			mes "^3355FF10 Jellopy^000000";
+			mes "^3355FF10 Felpa^000000";
+			mes "^3355FF10 Trevo^000000";
+			mes "Por favor, verifique os requisitos acima.";
+			close;
+		}
+	case 3:
+		mes "[Menina do Sorriso]";
+		mes "Obrigado por nos visitar.";
+		mes "Nós ..";
+		mes "O reino de Rune-Midgarts";
+		mes "tentará sempre fazer o Ragnarok";
+		mes "o jogo melhor e mais agradável.";
+		next;
+		mes "[Menina do Sorriso]";
+		mes "Nós sinceramente te perguntamos";
+		mes "para você cooperar.";
+		mes "O fato mencionado acima";
+		mes "foi anunciado pelo Public Information Bureau do Reino de Rune-Midgart.";
+		close;
+	}
+	}else{
+		
 	mes "[Smile Girl]";
 	mes "Hi ~ Hi ~";
 	mes "This is Smile Assistance.";
@@ -92,6 +174,7 @@
 		mes "was announced by the Public Information Bureau of the Rune-Midgarts Kingom.";
 		close;
 	}
+	}
 }
 
 // Additional Smile Assistance staff
@@ -100,7 +183,7 @@ aldebaran,136,135,4	duplicate(SmileHelper)	Smile Assistance#alde	92
 geffen,119,107,4	duplicate(SmileHelper)	Smile Assistance#gef	92
 moc_ruins,59,154,3	duplicate(SmileHelper)	Smile Assistance#moc	92
 payon,186,104,5	duplicate(SmileHelper)	Smile Assistance#pay	92
-prontera,157,187,4	duplicate(SmileHelper)	Smile Assistance#prt	92
+prontera,132,189,4	duplicate(SmileHelper)	Smile Assistance#prt	92
 
 //============================================================ 
 // Old changelog

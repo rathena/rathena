@@ -1914,6 +1914,11 @@ ACMD_FUNC(go)
 		{ MAP_MALAYA,      242, 211 }, // 34=Malaya Port
 		{ MAP_ECLAGE,      110,  39 }, // 35=Eclage
 		{ MAP_LASAGNA,     193, 182 }, // 36=Lasagna
+		{ MAP_EDENGROUP,     31, 14 }, // 37=Eden Group
+		{ MAP_VERUS,     120, 246 }, // 38=Verus
+		{ MAP_ROCKRIDGE,     286, 189 }, // 39=Rock Ridge
+		{ MAP_CAPITOLINA,     182, 207 }, // 40=St.Capitolina Abbey
+
 	};
 
 	nullpo_retr(-1, sd);

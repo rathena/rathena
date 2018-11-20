@@ -157,7 +157,7 @@ geffen,203,123,2	script	Kafra Employee::geffen2	114,{
 
 // Morocc
 //============================================================
-morocc,156,97,4	script	Kafra Employee::kaf_morocc	113,{
+morocc,165,103,4	script	Kafra Employee::kaf_morocc	113,{
 	cutin "kafra_05",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";

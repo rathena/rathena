@@ -24,14 +24,28 @@ OnTouch:
 	if (getd(".start" + strnpcinfo(1)) == 0) {
 		setd ".start" + strnpcinfo(1), 1;
 		initnpctimer;
-		mapannounce strnpcinfo(4), "[Tip] You can move to the desired point by clicking the ground with the left mouse button.", bc_map,0xFF0000;
+		
+		if($language == 1) {
+			mapannounce strnpcinfo(4), "[Dica] Você pode mover para o ponto desejado clicando no chão com o botão esquerdo do mouse.", bc_map,0xFF0000;
+		}else{
+			mapannounce strnpcinfo(4), "[Tip] You can move to the desired point by clicking the ground with the left mouse button.", bc_map,0xFF0000;
+		}
 	}
 	end;
 OnTimer9000:
-	mapannounce strnpcinfo(4), "[Tip] While holding down the right mouse button, drag to rotate the screen.", bc_map,0xFF0000;
+	if($language == 1) {
+		mapannounce strnpcinfo(4), "[Dica] Enquanto mantém pressionado o botão direito do mouse, arraste para girar a tela.", bc_map,0xFF0000;
+	}else{
+		mapannounce strnpcinfo(4), "[Tip] While holding down the right mouse button, drag to rotate the screen.", bc_map,0xFF0000;
+	}
 	end;
 OnTimer18000:
-	mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
+	if($language == 1) {
+		mapannounce strnpcinfo(4), "[Dica] Você pode sair pelo portal de efeito azulada.", bc_map,0xFF0000;
+	}else{
+		mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
+	}
+	
 	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer21000:
@@ -41,7 +55,11 @@ OnTimer24000:
 	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer27000:
-	mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;
+	if($language == 1) {
+		mapannounce strnpcinfo(4), "[Dica] Deixe esta área para continuar.", bc_map,0xFF0000;
+	}else{
+		mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;
+	}
 	stopnpctimer;
 	setd ".start" + strnpcinfo(1), 0;
 	end;
@@ -72,9 +90,18 @@ iz_int,56,32,3	script	Wounded Swordsman#intro_npc01_iz_int	4_TOWER_01,5,5,{
 
 OnTouch:
 	if (@intro_npc01 == 0) {
-		npctalk "Urgh... please... help me...", "", bc_self;
+		if($language == 1) {
+			npctalk "Urgh... por favor... Ajude-me...", "", bc_self;
+		}else{
+			npctalk "Urgh... please... help me...", "", bc_self;
+		}
 		sleep2 500;
-		npctalk "In order to talk with me.. click my body..", "", bc_self;
+		
+		if($language == 1) {
+			npctalk "Para falar comigo.. clique no meu corpo..", "", bc_self;
+		}else{
+			npctalk "In order to talk with me.. click my body..", "", bc_self;
+		}
 	}
 	else {// debug
 		classchange HIDDEN_WARP_NPC, "", bc_self;
@@ -93,6 +120,21 @@ iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsm
 
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 	if (isbegin_quest(21001) == 0) {
+		if($language == 1) {
+		mes "[Wounded]";
+		mes "Uau! Muito obrigado!";
+		mes "Eu não sei como isso aconteceu com o nosso navio";
+		mes "mas devemos ir ver o capitão.";
+		next;
+		mes "[Wounded]";
+		mes "... ohh, parece que meu corpo está muito machucado.";
+		mes "Talvez você possa ir sem mim?";
+		setquest 21001;
+		next;
+		cutin "tutorial02",4;
+		mes "^4d4dff! - Informação -! ^000000";
+		mes "NPC Quest Recebida.";
+		}else{
 		mes "[Wounded]";
 		mes "Wow! Thanks a lot!";
 		mes "I don't know how this happened to our ship";
@@ -106,8 +148,20 @@ iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 		cutin "tutorial02",4;
 		mes "^4d4dff!- Information -!^000000";
 		mes "NPC Quest Received.";
+		}
 	}
 	else {
+		if($language == 1) {
+		mes "[Wounded]";
+		mes "Felizmente a água não entrou no navio.";
+		mes "Vou esperar aqui, você deveria ir ver o capitão.";
+		next;
+		mes "[Wounded]";
+		mes "Estou bem! Estou bem!";
+		mes "Não se preocupe comigo, você realmente deveria ir ao capitão!";
+		next;
+		mes "^4d4dff! - Informação -! ^000000";
+		}else{
 		mes "[Wounded]";
 		mes "Luckily the water has not entered the ship.";
 		mes "I will wait here, you should go see the captain.";
@@ -117,9 +171,15 @@ iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 		mes "Don't worry about me, you should really go to the captain!";
 		next;
 		mes "^4d4dff!- Information -!^000000";
+		}
 	}
+	if($language == 1) {
+	mes "^4d4dffQuestinfo O atalho é Alt + U ^000000";
+	mes "Você pode verificar o seu status de busca lá a qualquer momento.";
+	}else{
 	mes "^4d4dffQuestinfo Shortcut is Alt + U^000000";
 	mes "You can check your quest status there anytime.";
+	}
 	close2;
 	cutin "",255;
 	end;
@@ -136,6 +196,107 @@ iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsm
 // - Captain Carocc (Ship)
 // -----------------------------------------------------------------------------
 int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
+if($language == 1) {
+	switch( isbegin_quest(21008) ) {
+	case 0:
+		mes "[Capitão Carocc]";
+		mes "Ainda há pessoas nas cabines?";
+		mes "Pelo menos você está seguro.";
+		mes "Você está bem?";
+		next;
+		if (select("Eu estou bem, mas outros precisam de ajuda.", "Eu acho que sou o último?") == 1) {
+			mes "[Capitão Carocc]";
+			mes "Há mais pessoas sobrando?";
+			mes "Vou mandar uma equipe de resgate para eles.";
+			mes "Obrigado pelo seu relatório.";
+		} else {
+			mes "[Capitão Carocc]";
+			mes "Tudo bem, isso é bom.";
+			mes "A tempestade chegou inesperadamente, mas eu nunca pensei que isso iria nos atingir tão forte.";
+		}
+		next;
+		mes "[Capitão Carocc]";
+		mes "Pelo menos a maioria das pessoas chegou em segurança.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "Olhe para as árvores lá, ^4d4dffseguir-los para o sudoeste ^000000 para encontrar um novo navio.";
+		mes "O navio irá levá-lo para ^4d4dffIzlude ^000000, nosso destino original.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "Ah! Falando nisso, esses ^4d4dffPorings ^000000 nesta ilha derrubam vários materiais que poderíamos usar para reparos.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "^4d4dffMate os Porings e traga 2 Mandeiras para a tripulação do sul ^000000.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "É uma tarefa difícil, mas você parece forte o suficiente.";
+		specialeffect2 EF_HEAL2;
+		heal 9999,0;
+		skilleffect 34,0;
+		sc_start SC_BLESSING,240000,10;
+		skilleffect 29,0;
+		sc_start SC_INCREASEAGI,240000,10;
+		if (isbegin_quest(21001) == 1) {
+			completequest 21001;
+			getexp 600,600;
+		}
+		setquest 21008;
+		next;
+		mes "[Capitão Carocc]";
+		mes "Por falar em Porings, você tem que equipar suas engrenagens.";
+		mes "Você deve ter um ^4d4dffArma e uma armadura ^000000 equipada.";
+		next;
+		cutin "tutorial03",4;
+		mes "!- Informação -!";
+		mes "^4d4dffVocê pode equipar equipamentos ou usar itens simplesmente clicando duas vezes neles.";
+		mes "A janela de itens pode ser aberta pressionando Alt + E ou usando o botão de menu. ^000000";
+		next;
+		mes "!- Informação -!";
+		mes "^4d4dffEquipados Itens podem ser vistos pressionando Alt + Q.";
+		mes "Clique duas vezes ou arraste e solte para equipar ou desequipar. ^000000";
+		next;
+		cutin "",255;
+		mes "[Capitão Carlock]";
+		mes "Você verificou todo o seu equipamento?";
+		mes "^4d4dffEquipamento de Skill ^000000 deve ser feito.";
+		next;
+		mes "[Capitão Carlock]";
+		mes "Para uma batalha suave, você tem que distribuir suas habilidades corretamente.";
+		mes "^4d4dffSe você quiser aumentar sua força, você precisa aumentar a Str ^000000. ^4d4dffSe você quiser aumentar seu acerto, você deve aumentar Dex ^000000.";	
+		break;
+	case 1:
+		mes "[Capitão Carocc]";
+		specialeffect2 EF_HEAL2;
+		heal 9999, 0;
+		skilleffect 34,0;
+		sc_start SC_BLESSING,240000,10;
+		skilleffect 29,0;
+		sc_start SC_INCREASEAGI,240000,10;
+		mes "^4d4dffA Nave ^000000 está ancorada no sudoeste. Ela levará você para Izlude.";
+		mes "Não esqueça de ^4d4dffpegar algumas madeira serrada^000000 para o navio.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "Não esqueça de aumentar suas ^4d4dffskills ^000000.";
+		break;
+	case 2:
+		mes "[Capitão Carocc]";
+		mes "Tudo está pronto para navegar até Izlude.";
+		mes "O navio está localizado na parte sudoeste da ilha.";
+		close;
+	}
+	next;
+	mes "! - Informação -!";
+	mes "^4d4dffVocê recebe um bônus de estatísticas para cada nível que você aumenta.";
+	mes "A janela de status pode ser aberta e fechada com o atalho Alt + A ^000000.";
+	next;
+	mes "! - Informação -!";
+	mes "^4d4dffPor favor aloque corretamente as estatísticas que você precisa para batalhar ^000000.";
+	next;
+	mes "[Capitão Carocc]";
+	mes "Mate Porings e traga a Madeira para a tripulação.";
+	mes "Boa sorte!";
+	close;
+}else{
 	switch( isbegin_quest(21008) ) {
 	case 0:
 		mes "[Captain Carocc]";
@@ -186,11 +347,11 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 		mes "You should have a ^4d4dffweapon and an armor^000000 equipped.";
 		next;
 		cutin "tutorial03",4;
-		mes "!- Information -!";
+		mes "!- Informação -!";
 		mes "^4d4dffYou can equip gear or use items by simply double clicking them.";
 		mes "The item window can be opened by pressing Alt + E or using the menu button.^000000";
 		next;
-		mes "!- Information -!";
+		mes "!- Informação -!";
 		mes "^4d4dffEquipped Items can be seen by pressing Alt + Q.";
 		mes "Either double click or drag & drop to equip or unequip them.^000000";
 		next;
@@ -224,18 +385,18 @@ int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
 		close;
 	}
 	next;
-	mes "! - Information -!";
+	mes "! - Informação -!";
 	mes "^4d4dffYou get a stats bonus for every level you raise.";
 	mes "The status window can be opened and closed with the shortcut Alt + A^000000.";
 	next;
-	mes "! - Information -!";
+	mes "! - Informação -!";
 	mes "^4d4dffPlease properly allocate the stats you need to battle^000000.";
 	next;
 	mes "[Captain Carocc]";
 	mes "Kill Porings and bring the Lumber to the crew.";
 	mes "Good luck!";
 	close;
-
+}
 OnInit:
 	questinfo 21008, QTYPE_QUEST, 1, Job_Novice;
 	end;
@@ -248,7 +409,87 @@ int_land04,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_n
 
 //== Lumin (int_land) ==========================================
 int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
+	if($language == 1) {
 	if (isbegin_quest(7471) == 0) {
+		cutin "nov_lumin01.bmp",0;
+		mes "[Lumin]";
+		mes ".............";
+		mes "..?";
+		next;
+		cutin "fly_trock.bmp",2;
+		mes "[Capitão Carocc]";
+		mes "Teve um bom sonho?";
+		mes "Logo, chegaremos a Izlude. E você pode conversar com outras pessoas como você acabou de falar comigo.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "Eu acho que aquele cara ali perdeu a memória. Eu dei a ele um novo nome.";
+		mes "Lumin.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "Muitos jovens visitam o ^4d4dffRune-Midgarts Kingdom ^000000 para perseguir seus sonhos.";
+		mes "Izlude é uma cidade satélite de Prontera, a capital do Reino de Rune-Midgard.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "Izlude sempre recebe jovens aventureiros como você que acabaram de iniciar sua jornada pelo mundo.";
+		mes "Você é um deles, é claro.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "Eu gostaria de contar mais histórias, mas é hora de se preparar para a chegada.";
+		mes "Há uma academia em Izlude para recém-chegados como você.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "Deixe-me dar mais detalhes mais tarde. Vejo você de volta ao convés do porto.";
+		next;
+		mes "[Capitão Carocc]";
+		mes "Para sair desta nave, você deve entrar no ^4d4dffPortal brilhante^000000 por lá.";
+		mes "Todo o transporte é feito através dos portais.";
+		setquest 7471;
+		completequest 7471;
+		next;
+		cutin "nov_lumin01.bmp", 0;
+		mes "[Lumin]";
+		mes "Sim.";
+		next;
+		classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+		cutin "fly_trock.bmp",2;
+		mes "[Capitão Carocc]";
+		mes "Oh garoto.";
+		mes "Que reação fofa.";
+		close2;
+		cutin "",255;
+		end;
+	}
+	cutin "nov_lumin01.bmp",0;
+	mes "[Lumin]";
+	mes ".....";
+	next;
+	select("Devo me apresentar?", "Meu nome é ~!");
+	mes "[" + strcharinfo(0) + "]";
+	mes "Eu sou " + strcharinfo(0) + "!";
+	next;
+	mes "[Lu]";
+	mes ".....";
+	next;
+	mes "[Lu]";
+	mes ".....";
+	mes "....assim?";
+	next;
+	classchange HIDDEN_WARP_NPC, "", bc_self;// todo: classchange self remain on map
+	mes "- Lu apenas se afastou com um olhar cínico no rosto.";
+	next;
+	cutin "fly_trock.bmp",2;
+	mes "[Capitão Carocc]";
+	mes "Parece que ... ele tem uma personalidade tímida.";
+	mes "Quando você for a Izlude, você vai checá-lo?";
+	next;
+	mes "[Capitão Carocc]";
+	mes "De agora em diante eu estarei navegando o navio pela ilha.";
+	mes "Vamos, vamos?";
+	close2;
+	cutin "",255;
+	end;
+	}else{
+		if (isbegin_quest(7471) == 0) {
 		cutin "nov_lumin01.bmp",0;
 		mes "[Lumin]";
 		mes ".............";
@@ -326,7 +567,7 @@ int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
 	close2;
 	cutin "",255;
 	end;
-
+	}
 OnInit:
 	questinfo 7471, QTYPE_QUEST, 1, Job_Novice;
 	setquestinfo_req 7471,21008,1;
@@ -338,7 +579,49 @@ int_land03,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship03	4_M_NOV_RUMIN
 int_land04,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship04	4_M_NOV_RUMIN
 
 int_land,58,69,5	script	Sailor#intro_npc04	4W_SAILOR,{
+	if($language == 1) {
 	if (isbegin_quest(21008) == 1) {
+		if (countitem(6008) < 2) {
+			mes "[Sailor]";
+			mes "Esses Porings roubaram meus materiais para consertar o navio. Você pode me ajudar a recuperá-los?";
+			mes "Há muitos Porings nesta ilha.";
+			next;
+			mes "[Sailor]";
+			mes "Eu realmente aprecio se você me ajudar.";
+			mes "Eu não tenho permissão para pisar nesta ilha.";
+			mes "É por isso que peço sua ajuda ~";
+			close;
+		}
+		mes "[Sailor]";
+		mes "Inacreditável, perfeito! Alguma chance de você querer se juntar à minha equipe?";
+		mes "Chega de falar !!";
+		mes "Vamos, estamos prontos para navegar!";
+		mes "Muito obrigado!";
+		next;
+		mes "[Sailor]";
+		mes "Se você quiser navegar conosco até Izlude, pule a bordo!";
+		delitem 6008,2;
+		getexp 100,100;
+		getitem 611,5;
+		completequest 21008;
+		next;
+		mes "[Sailor]";
+		mes "Ah, e pegue estes ^4d4dffMagnificadores ^000000.";
+		mes "Quando você caça monstros você pode encontrar ^4d4dff itens não identificados ^000000.";
+		next;
+		mes "[Sailor]";
+		mes "Usar uma Lupa identificará o item.";
+		next;
+		mes "[Sailor]";
+		mes "Talvez você já tenha alguns itens não identificados de suas lutas com os Porings?";
+		close;
+	}
+	mes "[Sailor]";
+	mes "O navio está indo para Izlude em breve ~!";
+	mes "Eu vou deixar você saber quando nós partirmos ~!";
+	close;
+	}else{
+		if (isbegin_quest(21008) == 1) {
 		if (countitem(6008) < 2) {
 			mes "[Sailor]";
 			mes "These Porings stole my materials to repair the ship. Can you help me to get them back?";
@@ -378,6 +661,7 @@ int_land,58,69,5	script	Sailor#intro_npc04	4W_SAILOR,{
 	mes "The ship is heading to Izlude soon~!";
 	mes "I'll let you know when we set sail~!";
 	close;
+	}
 
 OnInit:
 	questinfo 21002, QTYPE_QUEST, 1, Job_Novice;
@@ -4268,11 +4552,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients- ^0000cd1 Clover, 1 Green Herb, 1 Red Herb^000000.";
 				next;
-				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
+				cutin "???i?.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Clover and the Red Herb are dropped by Lunatic or Fabre monsters wandering everywhere on the field outside Izlude.";
 				next;
-				cutin "ÆÄºê¸£Ä«µå.bmp", 3;
+				cutin "???i?.bmp", 3;
 				mes "[Eclaire]";
 				mes "Green Herbs are dropped by Fabres.";
 				next;
@@ -4294,11 +4578,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Apple & 2 Carrots^000000.";
 				next;
-				cutin "Æ÷¸µÄ«µå.bmp", 3;
+				cutin "??i?.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apples are dropped by Porings bouncing around the field outside of Izlude.";
 				next;
-				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
+				cutin "???i?.bmp", 3;
 				mes "[Eclaire]";
 				mes "Carrots are given by Lunatics.";
 				next;
@@ -4320,15 +4604,15 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are ^0000cd1 Jellopy, 1 Fluff, 1 Feather^000000.";
 				next;
-				cutin "Æ÷¸µÄ«µå.bmp", 3;
+				cutin "??i?.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Jellopy are dropped by Porings bouncing around the field of Izlude.";
 				next;
-				cutin "ÆÄºê¸£Ä«µå.bmp", 3;
+				cutin "???i?.bmp", 3;
 				mes "[Eclaire]";
 				mes "Fluff can be received from Fabre or Lunatic.";
 				next;
-				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
+				cutin "???i?.bmp", 3;
 				mes "[Mille Feuille]";
 				mes "Feathers are dropped by Lunatics or Fabres.";
 				next;
@@ -4350,11 +4634,11 @@ iz_ac01,147,50,3	script	Dacquoise#ac	4_COOK,{
 				mes "[Mille Feuille]";
 				mes "Ingredients are-^0000cd 1 Apple & 1 Clover^000000.";
 				next;
-				cutin "Æ÷¸µÄ«µå.bmp", 3;
+				cutin "??i?.bmp", 3;
 				mes "[Dacquoise]";
 				mes "Apple can be found in Porings in the field outside of Izlude.";
 				next;
-				cutin "·ç³ªÆ½Ä«µå.bmp", 3;
+				cutin "???i?.bmp", 3;
 				mes "[Eclaire]";
 				mes "Clovers are dropped by Lunatics or Fabre in the field outside Izlude.";
 				next;

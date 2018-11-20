@@ -1,0 +1,25 @@
+-	script	Language Changer	0,{
+OnPCLoginEvent:
+	mes "^0000FF[Translator]^000000";
+	mes " * Por favor escolha o Idioma:";
+	mes " * Please choose a language:";
+	next;
+	
+	switch(select("Português:English")){
+		next;
+		case 1:
+			set $language,1;
+			atcommand "@langtype POR";
+			mes "^0000FF[Tradutor]^000000";
+			mes "Obrigado.";
+			mes "Divirta-se no LaRO.";
+			close;
+		case 2:
+			set $language,0;
+			atcommand "@langtype ENG";
+			mes "^0000FF[Translator]^000000";
+			mes "Thank you.";
+			mes "Have fun on HonorBR Server.";
+			close;
+	}
+}
