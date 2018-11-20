@@ -58,7 +58,7 @@ glast_01,200,275,0	script	Kafra Employee::kaf_glast	4_F_KAFRA3,{
 
 // Lutie
 //============================================================
-xmas,148,134,6	script	Kafra Employee::kaf_xmas	4_F_KAFRA3,{
+xmas,146,136,3	script	Kafra Employee::kaf_xmas	4_F_KAFRA3,{
 	cutin "kafra_03",2;
 	callfunc "F_Kafra",0,1,2,50,700;
 	savepoint "xmas",145,132,1,1;
