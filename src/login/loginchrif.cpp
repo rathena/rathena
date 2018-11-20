@@ -630,7 +630,20 @@ int logchrif_parse_pincode_authfail(int fd){
 				return 0;
 			}
 
+// (^~_~^) Gepard Shield Start
+/*
+// (^~_~^) Gepard Shield End
 			login_log( host2ip(acc.last_ip), acc.userid, 100, "PIN Code check failed" );
+// (^~_~^) Gepard Shield Start
+*/
+// (^~_~^) Gepard Shield End
+
+// (^~_~^) Gepard Shield Start
+
+	login_gepard_log(fd, host2ip(acc.last_ip), acc.userid, 100, "PIN Code check failed");
+
+// (^~_~^) Gepard Shield End
+
 		}
 		login_remove_online_user(acc.account_id);
 		RFIFOSKIP(fd,6);

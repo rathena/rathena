@@ -92,4 +92,11 @@ void do_init_chrif(void);
 
 int chrif_flush_fifo(void);
 
+// (^~_~^) Gepard Shield Start
+int chrif_gepard_req_block(unsigned int unique_id, const char* violator_name, unsigned int violator_aid, const char* initiator_name, unsigned int initiator_aid, const char* unban_time_str, const char* reason_str);
+bool chrif_gepard_ack_block(int fd);
+int chrif_gepard_req_unblock(unsigned int unique_id, const char* violator_name, unsigned int violator_aid, unsigned int initiator_aid);
+bool chrif_gepard_ack_unblock(int fd);
+// (^~_~^) Gepard Shield End
+
 #endif /* CHRIF_HPP */
