@@ -6052,9 +6052,10 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case WL_TETRAVORTEX_WATER:
 					case WL_TETRAVORTEX_WIND:
 					case WL_TETRAVORTEX_GROUND:
-						skillratio += -100 + 500 + 500 * skill_lv;
-						if (skill_lv > 5)
-							skillratio += 200 * (skill_lv - 5);
+						if (skill_lv < 6)
+							skillratio += -100 + 500 + 500 * skill_lv;
+						else
+							skillratio += -100 + 3000 + 200 * (skill_lv - 5);
 						break;
 					case WL_SUMMON_ATK_FIRE:
 					case WL_SUMMON_ATK_WATER:
