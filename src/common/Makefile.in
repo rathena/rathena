@@ -1,7 +1,7 @@
 
 COMMON_OBJ = core.o socket.o timer.o db.o nullpo.o malloc.o showmsg.o strlib.o utils.o utilities.o \
 	grfio.o mapindex.o ers.o md5calc.o minicore.o minisocket.o minimalloc.o random.o des.o \
-	conf.o msg_conf.o cli.o sql.o
+	conf.o msg_conf.o cli.o sql.o database.o
 COMMON_DIR_OBJ = $(COMMON_OBJ:%=obj/%)
 COMMON_H = $(shell ls ../common/*.hpp)
 COMMON_AR = obj/common.a

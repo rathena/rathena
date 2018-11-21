@@ -86,7 +86,7 @@ const YAML::Node& Database::getRootNode(){
 	return this->root;
 }
 
-bool Database::parse(const std::vector<std::string> &location, parse_t &func) {
+bool Database::parse(const std::vector<std::string> &location, parse_t func) {
 	for (auto &current_file : location) {
 		int count = 0;
 

@@ -31,7 +31,7 @@ public:
 	}
 
 	bool load( const std::string& path );
-	bool parse(const std::vector<std::string> &location, parse_t &func);
+	bool parse(const std::vector<std::string> &location, parse_t func);
 
 	const YAML::Node& getRootNode();
 
