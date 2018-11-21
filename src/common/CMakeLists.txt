@@ -87,6 +87,7 @@ set( COMMON_BASE_HEADERS
 	${COMMON_ALL_HEADERS}
 	"${COMMON_SOURCE_DIR}/conf.hpp"
 	"${COMMON_SOURCE_DIR}/core.hpp"
+	"${COMMON_SOURCE_DIR}/database.hpp"
 	"${COMMON_SOURCE_DIR}/db.hpp"
 	"${COMMON_SOURCE_DIR}/des.hpp"
 	"${COMMON_SOURCE_DIR}/ers.hpp"
@@ -110,6 +111,7 @@ set( COMMON_BASE_HEADERS
 set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/conf.cpp"
 	"${COMMON_SOURCE_DIR}/core.cpp"
+	"${COMMON_SOURCE_DIR}/database.cpp"
 	"${COMMON_SOURCE_DIR}/db.cpp"
 	"${COMMON_SOURCE_DIR}/des.cpp"
 	"${COMMON_SOURCE_DIR}/ers.cpp"
