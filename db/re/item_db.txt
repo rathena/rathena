@@ -11665,6 +11665,46 @@
 26151,Rutilus_Stick-OS,Rutilus Stick-OS,5,10,,900,80:175,,1,2,0x00818315,63,2,2,4,130,1,10,{ .@r = getrefine(); bonus bUnbreakableWeapon; bonus2 bMagicAddEle,Ele_Neutral,5; bonus2 bMagicAddEle,Ele_Earth,5; if (.@r >= 7) { bonus bVariableCastrate,-7; if (.@r >= 9) { autobonus "{ bonus2 bMagicAtkEle,Ele_Fire,30; }",5,10000,BF_MAGIC; /* unknown rate */ if (.@r >= 11) { bonus bDelayrate,-10; } } } },{},{}
 //
 26200,Hippie_Rope,Hippie Rope,5,0,,1000,140,,2,2,0x00080000,56,0,2,3,100,1,14,{ .@r = getrefine(); .@lvl = getskilllv("DC_DANCINGLESSON"); bonus bAspdRate,.@lvl; if (.@r>=7) bonus bBaseAtk,(5*.@lvl); if (.@r>=9) bonus bAspd,1; },{},{}
+//
+25670,M_M_Defense,Modification Module (Defense),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@def = 25; if (.@r >= 9) { .@def += 20; } else if (.@r >= 7) { .@def += 10; } bonus bDef,.@def; },{},{}
+25671,M_M_Magic_Defense,Modification Module (Magic Defense),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@mdef = 2; if (.@r >= 9) { .@mdef += 6; } else if (.@r >= 7) { .@mdef += 3; } bonus bMDef,.@mdef; },{},{}
+25672,M_M_Vit,Modification Module (Vit),6,20,,10,,,,,,,,,,,,,{ bonus bVit,3; },{},{}
+25673,M_M_Luk,Modification Module (Luk),6,20,,10,,,,,,,,,,,,,{ bonus bLuk,3; },{},{}
+25674,M_M_Str,Modification Module (Str),6,20,,10,,,,,,,,,,,,,{ bonus bStr,3; },{},{}
+25675,M_M_Agi,Modification Module (Agi),6,20,,10,,,,,,,,,,,,,{ bonus bAgi,3; },{},{}
+25676,M_M_Int,Modification Module (Int),6,20,,10,,,,,,,,,,,,,{ bonus bInt,3; },{},{}
+25677,M_M_Dex,Modification Module (Dex),6,20,,10,,,,,,,,,,,,,{ bonus bDex,3; },{},{}
+25678,M_M_HP_recovery,Modification Module (HP recovery),6,20,,10,,,,,,,,,,,,,{ bonus bHPrecovRate,20; },{},{}
+25679,M_M_SP_recovery,Modification Module (SP recovery),6,20,,10,,,,,,,,,,,,,{ bonus bSPrecovRate,20; },{},{}
+25680,M_M_Spell5,Modification Module (Spell),6,20,,10,,,,,,,,,,,,,{ bonus bMatk,18; bonus bVariableCastrate,-10; },{},{}
+25681,M_M_Attack_Delay_4,Modification Module (Attack Speed),6,20,,10,,,,,,,,,,,,,{ bonus bAspdRate,10; },{},{}
+25682,M_M_Fatal4,Modification Module (Fatal),6,20,,10,,,,,,,,,,,,,{ bonus bCritAtkRate,10; bonus bCritical,4; },{},{}
+25683,M_M_Expert_Archer5,Modification Module (Expert Archer),6,20,,10,,,,,,,,,,,,,{ bonus bLongAtkRate,10; },{},{}
+25684,M_M_Vital,Modification Module (Vital),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus bMaxHPrate,5; if (.@r >= 9) { bonus bMaxHP,1250; } else if (.@r >= 7) { bonus bMaxHP,500; } },{},{}
+25685,M_M_Mental,Modification Module (Mental),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus bMaxSPrate,5; if (.@r >= 9) { bonus bMaxSP,250; } else if (.@r >= 7) { bonus bMaxSP,100; } },{},{}
+25686,M_M_Heal,Modification Module (Heal),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = 5; if (.@r >= 9) { .@val += 10; } else if (.@r >= 7) { .@val += 5; } bonus bHealPower,.@val; },{},{}
+25687,M_M_Power,Modification Module (Power),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus2 bAddClass,Class_All,5; if (.@r >= 9) { bonus bBaseAtk,50; } else if (.@r >= 7) { bonus bBaseAtk,25; } },{},{}
+25688,M_M_Magic,Modification Module (Magic),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus bMatkRate,5; if (.@r >= 9) { bonus bMatk,50; } else if (.@r >= 7) { bonus bMatk,25; } },{},{}
+25689,M_M_Shooter,Modification Module (Shooter),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = 3; if (.@r >= 9) { .@val += 4; } else if (.@r >= 7) { .@val += 2; } bonus bLongAtkRate,.@val; },{},{}
+25690,M_M_Fast,Modification Module (Fast),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus bAspd,1; if (.@r >= 9) { bonus bAspdRate,6; } else if (.@r >= 7) { bonus bAspdRate,3; } },{},{}
+25691,M_M_Caster,Modification Module (Caster),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = -5; if (.@r >= 9) { .@val -= 6; } else if (.@r >= 7) { .@val -= 3; } bonus bVariableCastrate,.@val; },{},{}
+25692,M_M_Critical,Modification Module (Critical),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus bCritical,5; if (.@r >= 9) { bonus bCritAtkRate,10; } else if (.@r >= 7) { bonus bCritAtkRate,10; } },{},{}
+25693,M_M_Delay_After_skill,Modification Module (Delay after skill),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = -5; if (.@r >= 9) { .@val -= 10; } else if (.@r >= 7) { .@val -= 5; } bonus bDelayrate,.@val; } },{},{}
+25694,M_M_Fixed_Casting,Modification Module (Fixed Casting),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = -300; if (.@r >= 9) { .@val -= 400; } else if (.@r >= 7) { .@val -= 200; } bonus bFixedCast,.@val; } },{},{}
+25695,M_M_Above_All,Modification Module (Above All),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus2 bSubEle,Ele_All,5; if (.@r >= 7) { bonus2 bSubSize,Size_All,5; if (.@r >= 9) { bonus2 bSubRace,RC_All,5; bonus2 bSubRace,RC_Player,-5; } } },{},{}
+25696,M_M_Drain_Life,Modification Module (Drain Life),6,20,,10,,,,,,,,,,,,,{ bonus2 bHPDrainRate,20,2; },{},{}
+25697,M_M_Drain_Soul,Modification Module (Drain Soul),6,20,,10,,,,,,,,,,,,,{ bonus2 bSPDrainRate,10,1; },{},{}
+25698,M_M_Magic_Healing,Modification Module (Magic Healing),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus2 bHPRegenRate,400,500; }",20,10000,BF_MAGIC; },{},{}
+25699,M_M_Magic_Soul,Modification Module (Magic Soul),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus2 bSPRegenRate,80,500; }",10,10000,BF_MAGIC; },{},{}
+25700,M_M_Unlimited_Vital,Modification Module (Unlimited Vital),6,20,,10,,,,,,,,,,,,,{ autobonus2 "{ bonus bVit,50; bonus2 bHPRegenRate,400,500; bonus2 bSPLossRate,20,1000; }",10,10000,BF_WEAPON|BF_MAGIC; /* unknown rate */ },{},{}
+25701,M_M_Spell_Buster,Modification Module (Spell Buster),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus bInt,50; bonus bMatkRate,15; bonus2 bAddClass,Class_All,-15; }",20,10000,BF_MAGIC; /* unknown rate */ },{},{}
+25702,M_M_Firing_Shot,Modification Module (Firing Shot),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus bDex,50; bonus bLongAtkRate,10; bonus2 bSPLossRate,20,1000; }",20,10000,BF_WEAPON; /* unknown rate */ },{},{}
+25703,M_M_Overpower,Modification Module (Overpower),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus bStr,50; bonus2 bAddClass,Class_All,15; bonus bMatkRate,-15; }",20,10000,BF_WEAPON; /* unknown rate */ },{},{}
+25704,M_M_Fatal_Flash,Modification Module (Fatal Flash),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus bStr,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_WEAPON; /* unknown rate */ },{},{}
+25705,M_M_Lucky_Strike,Modification Module (Lucky Strike),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC; /* unknown rate */ },{},{}
+//
+// 26154,Spirit_Plumb,Spirit Plumb,5,20,,1100,70:160,,1,2,0x00000000,63,2,2,4,100,1,10,{ .@r = getrefine(); bonus bMatk,10*(.@r/2); bonus bMaxSPrate,2*(.@r/3); if (.@r >= 7) { bonus2 bSkillAtk,"SP_SPA",15; if (.@r >= 9) { bonus bVariableCastrate,-10; if (.@r >= 11) { bonus2 bSkillAtk,"SP_SWHOO",20; } } }
+26155,Meowmeow_Foxtail,Meowmeow Foxtail,5,20,,1100,300:300,,1,2,0x80000000,7,2,2,4,100,1,10,{ .@r = getrefine(); bonus bMatk,10*(.@r/2); bonus bBaseAtk,10*(.@r/2); bonus2 bAddClass,Class_All,2*(.@r/3); bonus bMatkRate,2*(.@r/3); if (.@r >= 7) { bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",15; bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15; if (.@r >= 9) { bonus bVariableCastrate,-10; bonus bAspdRate,10; if (.@r >= 11) { bonus2 bSkillAtk,"SU_PICKYPECK",15; bonus2 bSkillAtk,"SU_CN_METEOR",15; } } }
 //===================================================================
 // More Cards
 //===================================================================
@@ -11956,6 +11996,7 @@
 28612,Illusion_Apocalypse,Illusion Apocalypse,5,0,,800,170,,1,2,0x00410100,63,2,2,4,100,1,15,{ .@val = 10 + 10*(min(getrefine(),10)/3); bonus2 bAddEle,Ele_Water,.@val; bonus2 bAddEle,Ele_Earth,.@val; bonus2 bAddEle,Ele_Fire,.@val; bonus2 bAddEle,Ele_Wind,.@val; bonus2 bSubDefEle,Ele_Holy,-30; },{},{}
 28626,Illusion_Tablet,Illusion Tablet,5,0,,800,170,,1,2,0x00410100,63,2,2,4,100,1,15,{ .@val = 10 + 10*(min(getrefine(),10)/3); bonus2 bAddEle,Ele_Dark,.@val; bonus2 bAddEle,Ele_Undead,.@val; bonus2 bAddEle,Ele_Poison,.@val; bonus2 bAddEle,Ele_Ghost,.@val; bonus2 bSubDefEle,Ele_Dark,-30; },{},{}
 28629,Circuit_Board-OS,Circuit Board-OS,5,20,,1200,180,,1,2,0x00410100,63,2,2,4,130,1,15,{ .@r = getrefine(); bonus2 bAddClass,Class_All,3; if (.@r >= 7) { bonus bAspdRate,7; if (.@r >= 9) { bonus2 bAddSize,Size_Small,20; bonus2 bAddSize,Size_Medium,20; if (.@r >= 11) { bonus bCritAtkRate,20; } } } },{},{}
+// 28631,Thousand_Sun,Thousand Sun,5,20,,900,160,,1,2,0x00000000,63,2,2,4,100,1,15,{ .@r = getrefine(); bonus bBaseAtk,10*(.@r/2); bonus bMaxSPrate,2*(.@r/3); if (.@r >= 7) { bonus2 bSkillAtk,"SJ_PROMINENCEKICK",15; if (.@r >= 9) { bonus bAspdRate,10; if (.@r >= 11) { bonus2 bSkillAtk,"SJ_SOLARBURST",20; } } }
 //===================================================================
 // More daggers
 //===================================================================
