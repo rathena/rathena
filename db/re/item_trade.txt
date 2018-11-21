@@ -636,8 +636,8 @@
 6208,499,100	// I_Respect_You
 6218,507,100	// Disin_Delivery_Box
 6219,507,100	// Para_Team_Mark
-6225,475,100	// HD_Carnium
-6226,475,100	// HD_Bradium
+// 6225,475,100	// HD_Carnium
+// 6226,475,100	// HD_Bradium
 6228,475,100	// Guarantee_Weapon_9Up
 6229,475,100	// Guarantee_Weapon_8Up
 6230,475,100	// Guarantee_Weapon_7Up
@@ -650,8 +650,8 @@
 6237,507,100	// Guarana_Fruit
 6238,475,100	// Guarantee_Weapon_11Up
 6239,475,100	// Guarantee_Armor_11Up
-6240,475,100	// HD_Oridecon
-6241,475,100	// HD_Elunium
+// 6240,475,100	// HD_Oridecon
+// 6241,475,100	// HD_Elunium
 6242,9,100	// Midgard_Coin
 6266,507,100	// Cheat_Key
 6267,507,100	// Virtual_Key
@@ -1283,7 +1283,7 @@
 12211,475,100	// Kafra_Card
 12212,475,100	// Giant_Fly_Wing
 12213,475,100	// Neuralizer
-12214,475,100	// Convex_Mirror
+// 12214,475,100	// Convex_Mirror
 12215,475,100	// Blessing_10_Scroll
 12216,475,100	// Inc_Agi_10_Scroll
 12217,475,100	// Aspersio_5_Scroll
@@ -4006,3 +4006,9 @@
 18983,329,100	// Old_Protect_Of_Crown
 18984,329,100	// Old_Camouflage_Rabbit_Hood
 2866,329,100	// Ring_Of_Archbishop
+
+6225,329,100	// HD_Carnium
+6226,329,100	// HD_Bradium
+6240,329,100	// HD_Oridecon
+6241,329,100	// HD_Elunium
+12214,329,100	// Convex_Mirror
