@@ -12,18 +12,18 @@ bool nodeExists( const YAML::Node& node, const std::string& name ){
 		}else{
 			return false;
 		}
-	}catch( YAML::InvalidNode ){
+	}catch( const YAML::InvalidNode& ){
 		return false;
 	}
 }
 
-bool Database::verifyCompatability( const YAML::Node& root ){
-	if( !nodeExists( root, "Header" ) ){
+bool Database::verifyCompatability( const YAML::Node& rootNode ){
+	if( !nodeExists( rootNode, "Header" ) ){
 		ShowError( "No database header was found.\n" );
 		return false;
 	}
 
-	const YAML::Node& headerNode = root["Header"];
+	const YAML::Node& headerNode = rootNode["Header"];
 
 	if( !nodeExists( headerNode, "Type" ) ){
 		ShowError( "No database type was found.\n" );
@@ -31,28 +31,28 @@ bool Database::verifyCompatability( const YAML::Node& root ){
 	}
 
 	const YAML::Node& typeNode = headerNode["Type"];
-	const std::string& type = typeNode.as<std::string>();
+	const std::string& tmpType = typeNode.as<std::string>();
 
-	if( type != this->type ){
-		ShowError( "Database type mismatch: %s != %s.\n", this->type.c_str(), type.c_str() );
+	if( tmpType != this->type ){
+		ShowError( "Database type mismatch: %s != %s.\n", this->type.c_str(), tmpType.c_str() );
 		return false;
 	}
 
-	uint16 version;
+	uint16 tmpVersion;
 
-	if( !this->asUInt16( headerNode, "Version", &version ) ){
+	if( !this->asUInt16( headerNode, "Version", &tmpVersion ) ){
 		ShowError("Invalid header version type for %s database.\n", this->type.c_str());
 		return false;
 	}
 
-	if( version != this->version ){
-		if( version > this->version ){
-			ShowError( "Your database version %hu is not supported by your server. Maximum version is: %hu\n", version, this->version );
+	if( tmpVersion != this->version ){
+		if( tmpVersion > this->version ){
+			ShowError( "Your database version %hu is not supported by your server. Maximum version is: %hu\n", tmpVersion, this->version );
 			return false;
-		}else if( version >= this->minimumVersion ){
-			ShowWarning( "Your database version %hu is outdated and should be updated. Current version is: %hu\n", version, this->minimumVersion );
+		}else if( tmpVersion >= this->minimumVersion ){
+			ShowWarning( "Your database version %hu is outdated and should be updated. Current version is: %hu\n", tmpVersion, this->minimumVersion );
 		}else{
-			ShowError( "Your database version %hu is not supported anymore by your server. Minimum version is: %hu\n", version, this->minimumVersion );
+			ShowError( "Your database version %hu is not supported anymore by your server. Minimum version is: %hu\n", tmpVersion, this->minimumVersion );
 			return false;
 		}
 	}
@@ -61,10 +61,10 @@ bool Database::verifyCompatability( const YAML::Node& root ){
 }
 
 bool Database::load(const std::string& path) {
-	YAML::Node root;
+	YAML::Node rootNode;
 
 	try {
-		root = YAML::LoadFile(path);
+		rootNode = YAML::LoadFile(path);
 	}
 	catch(YAML::Exception &e) {
 		ShowError("Failed to read %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
@@ -72,12 +72,12 @@ bool Database::load(const std::string& path) {
 		return false;
 	}
 
-	if (!this->verifyCompatability(root)){
+	if (!this->verifyCompatability(rootNode)){
 		ShowError("Failed to verify compatability with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
 		return false;
 	}
 
-	this->root = root;
+	this->root = rootNode;
 
 	return true;
 }
@@ -117,7 +117,7 @@ template <typename R> bool asType( const YAML::Node& node, const std::string& na
 			*out = value;
 
 			return true;
-		}catch( YAML::BadConversion ex ){
+		}catch( const YAML::BadConversion& ){
 			if( defaultValue != nullptr ){
 				ShowWarning( "Unable to parse \"%s\" in line %d. Using default value...\n", name.c_str(), dataNode.Mark().line + 1 );
 
