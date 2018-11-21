@@ -313,7 +313,7 @@ yuno,154,112,5	script	Bulletin Board#17	837,{
 	close;
 }
 
-aldebaran,145,105,5	script	Bulletin Board#18	837,{
+aldebaran,154,109,3	script	Bulletin Board#18	837,{
 	mes "[Al De Baran: The Border City]";
 	mes "Welcome to Al De Baran, the border";
 	mes "city of the Rune-Midgarts Kingdom.";
