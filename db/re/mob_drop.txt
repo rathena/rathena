@@ -195,6 +195,7 @@
 2448,6240,150,RDMOPTG_None // Morin
 2449,6240,150,RDMOPTG_None // Nasarin
 3000,6240,150,RDMOPTG_None // Morocc Necromancer
+3741,6240,150,RDMOPTG_None // Spider Chariot
 
 // Add HD Elunium
 1038,6241,150,RDMOPTG_None // Osiris
@@ -268,6 +269,7 @@
 2448,6241,150,RDMOPTG_None // Morin
 2449,6241,150,RDMOPTG_None // Nasarin
 3000,6241,150,RDMOPTG_None // Morocc Necromancer
+3741,6241,150,RDMOPTG_None // Spider Chariot
 
 // HD Bradium
 1038,6226,15,RDMOPTG_None // Osiris
@@ -341,6 +343,7 @@
 2448,6226,15,RDMOPTG_None // Morin
 2449,6226,15,RDMOPTG_None // Nasarin
 3000,6226,15,RDMOPTG_None // Morocc Necromancer
+3741,6226,15,RDMOPTG_None // Spider Chariot
 
 // HD Carnium
 1038,6225,15,RDMOPTG_None // Osiris
@@ -414,6 +417,7 @@
 2448,6225,15,RDMOPTG_None // Morin
 2449,6225,15,RDMOPTG_None // Nasarin
 3000,6225,15,RDMOPTG_None // Morocc Necromancer
+3741,6225,15,RDMOPTG_None // Spider Chariot
 
 
 // Enriched Oridecon
