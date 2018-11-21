@@ -1,9 +1,12 @@
 -	shop	vipshopAssistant	-1,1750:-1,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,713:-1,601:-1,602:-1,1065:-1
--	script	VIP Assistant::warpvip	91,{
+-	script	VIP Assistant::warpvip	-1,{
 cutin "katsua01",2;
 
+if(#language == NULL)
+	set #language, 2; 
+
 //----------------------------------------------------------------------------
-if($language == 1) {
+if(#language == 1) {
 set @npc$,"[ ^FF0000 Assistente VIP ^000000 ]";
 }else{
 set @npc$,"[ ^FF0000 VIP Assistant ^000000 ]";
@@ -11,7 +14,7 @@ set @npc$,"[ ^FF0000 VIP Assistant ^000000 ]";
 //----------------------------------------------------------------------------
 
 if (getgroupid() < 1){
-	if($language == 1) {
+	if(#language == 1) {
 		mes @npc$;
 		mes "Me desculpe, mas atendo somente a";
 		mes "usuários VIP.";
@@ -30,10 +33,10 @@ if (getgroupid() < 1){
 	}
 }
 
-if($language == 1) {
+if(#language == 1) {
 	mes @npc$;
 	mes "Olá ^CD3333"+strcharinfo(0)+"^000000!";
-	if (getgroupid() >= 5){
+	if (getgroupid() >= 2){
 		mes "Você é um usuário ^FF0000VIP TOTAL^000000."; 
 		mes "Seu passe esta confirmado.";
 		mes "Diga-me o que deseja.";
@@ -45,7 +48,7 @@ if($language == 1) {
 }else{
 	mes @npc$;
 	mes "Hello ^CD3333"+strcharinfo(0)+"^000000!";
-	if (getgroupid() >= 5){
+	if (getgroupid() >= 2){
 		mes "You are a user ^FF0000VIP TOTAL ^000000.";
 		mes "Your pass is confirmed.";
 		mes "Tell me what you want.";
@@ -57,17 +60,17 @@ if($language == 1) {
 }
 next;
 
-if($language == 1) {
-	if(getgmlevel () >= 5){
-	menu "- Loja de Utilidades",L_LU,"- Teleportador",L_g,"- Removedor de Cartas",L_d,"- Reparador de Equipamentos",L_e,"- Resetador de Pontos",L_f,"- Estilista",L_c,"- Teleportador WOE",L_h,"- Administração",L_ADM;
+if(#language == 1) {
+	if(getgroupid () >= 2){
+		menu "- Loja de Utilidades",L_LU,"- Teleportador",L_g,"- Removedor de Cartas",L_d,"- Reparador de Equipamentos",L_e,"- Resetador de Pontos",L_f,"- Estilista",L_Waitc,"- Teleportador WOE",L_h;
 	} else {
-	menu "- Curar/Encantamentos",L_a,"- Reparador de Equipamentos",L_e,"- Estilista",L_c,"- Teleportador WOE",L_h;
+		menu "- Curar/Encantamentos",L_a,"- Reparador de Equipamentos",L_e,"- Estilista",L_c,"- Teleportador WOE",L_h;
 	}
 }else{
-	if(getgmlevel () >= 5){
-	menu "- Utilities Store",L_LU,"- Warper",L_g,"- Cards Remover",L_d,"- Equipment Repairer",L_e,"- Point Reset",L_f,"- Stylist",L_c,"- Warper WOE",L_h,"-Administration",L_ADM;
+	if(getgroupid () >= 2){
+		menu "- Utilities Store",L_LU,"- Warper",L_g,"- Cards Remover",L_d,"- Equipment Repairer",L_e,"- Point Reset",L_f,"- Stylist",L_Waitc,"- Warper WOE",L_h;
 	} else {
-	menu "- Curar/Encantamentos",L_a,"- Reparador de Equipamentos",L_e,"- Estilista",L_c,"- Teleportador WOE",L_h;
+		menu "- Curar/Encantamentos",L_a,"- Reparador de Equipamentos",L_e,"- Estilista",L_c,"- Teleportador WOE",L_h;
 	}
 }
 
@@ -75,141 +78,6 @@ L_LU:
 callshop "vipshopAssistant",1;
 end;
 
-
-//============================================================================
-//==== ARENA MVP
-//============================================================================
-L_m:
-
-	mes @npc$;
-	mes "Bem-Vindo ao meu serviço.";
-	mes "Em qual Arena deseja entrar?.";
-        next;
-	menu "- Desafio Adiante",L_Adiante,
-             "- Tetra",L_Treta,
-             "- Encruzilhada", L_Encru,
-             "- Bússola", L_Busso,
-             "- Sair",L_naomvp;
-       
-  
-        L_naomvp:
-        cutin "",255;   
-	close;
-      
-   
-        
-
-	L_Adiante:
-        mes @npc$;
-	mes "Qual dos andares você deseja entrar?";
-        menu 
-              "Andar 1 [ ^0000FF"+getmapusers("pvp_n_1-2")+"^000000 / ^FF000050^000000]",adiantelv1,
-              "Andar 2 [ ^0000FF"+getmapusers("pvp_n_2-2")+"^000000 / ^FF000015^000000]",adiantelv2,
-              "Andar 3 [ ^0000FF"+getmapusers("pvp_n_3-2")+"^000000 / ^FF000015^000000]",adiantelv3,
-              "Andar 4 [ ^0000FF"+getmapusers("pvp_n_4-2")+"^000000 / ^FF000015^000000]",adiantelv4,
-              "Andar 5 [ ^0000FF"+getmapusers("pvp_n_5-2")+"^000000 / ^FF000015^000000]",adiantelv5,
-              "Andar 6 [ ^0000FF"+getmapusers("pvp_n_6-2")+"^000000 / ^FF000015^000000]",adiantelv6,
-              "Andar 7 [ ^0000FF"+getmapusers("pvp_n_7-2")+"^000000 / ^FF000015^000000]",adiantelv7,
-              "Andar 8 [ ^0000FF"+getmapusers("pvp_n_8-2")+"^000000 / ^FF000015^000000]",adiantelv8,
-              "Sair",L_sairmvp;
-              
-              L_sairmvp:
-              cutin "",255;   
-	      close;
-      
-
-        adiantelv1: warp "pvp_n_1-2", 102,102; end;
-        adiantelv2: warp "pvp_n_2-2", 102,102; end;
-        adiantelv3: warp "pvp_n_3-2", 102,102; end;
-        adiantelv4: warp "pvp_n_4-2", 102,102; end;
-        adiantelv5: warp "pvp_n_5-2", 102,102; end;
-        adiantelv6: warp "pvp_n_6-2", 102,102; end;
-        adiantelv7: warp "pvp_n_7-2", 102,102; end;
-        adiantelv8: warp "pvp_n_8-2", 102,102; end;
-
-        L_Treta:
-        mes @npc$;
-	mes "Qual dos andares você deseja entrar?";
-        menu 
-              "Andar 1 [ ^0000FF"+getmapusers("pvp_n_1-3")+"^000000 / ^FF000050^000000]",tretalv1,
-              "Andar 2 [ ^0000FF"+getmapusers("pvp_n_2-3")+"^000000 / ^FF000015^000000]",tretalv2,
-              "Andar 3 [ ^0000FF"+getmapusers("pvp_n_3-3")+"^000000 / ^FF000015^000000]",tretalv3,
-              "Andar 4 [ ^0000FF"+getmapusers("pvp_n_4-3")+"^000000 / ^FF000015^000000]",tretalv4,
-              "Andar 5 [ ^0000FF"+getmapusers("pvp_n_5-3")+"^000000 / ^FF000015^000000]",tretalv5,
-              "Andar 6 [ ^0000FF"+getmapusers("pvp_n_6-3")+"^000000 / ^FF000015^000000]",tretalv6,
-              "Andar 7 [ ^0000FF"+getmapusers("pvp_n_7-3")+"^000000 / ^FF000015^000000]",tretalv7,
-              "Andar 8 [ ^0000FF"+getmapusers("pvp_n_8-3")+"^000000 / ^FF000015^000000]",tretalv8,
-              "Sair",L_sairmvp1;
-              
-              L_sairmvp1:
-              cutin "",255;   
-	      close;
-      
-
-        tretalv1: warp "pvp_n_1-3", 102,102; end;
-        tretalv2: warp "pvp_n_2-3", 102,102; end;
-        tretalv3: warp "pvp_n_3-3", 102,102; end;
-        tretalv4: warp "pvp_n_4-3", 102,102; end;
-        tretalv5: warp "pvp_n_5-3", 102,102; end;
-        tretalv6: warp "pvp_n_6-3", 102,102; end;
-        tretalv7: warp "pvp_n_7-3", 102,102; end;
-        tretalv8: warp "pvp_n_8-3", 102,102; end;
-
-        L_Encru:
-        mes @npc$;
-	mes "Qual dos andares você deseja entrar?";
-        menu 
-              "Andar 1 [ ^0000FF"+getmapusers("pvp_n_1-4")+"^000000 / ^FF000050^000000]",encrulv1,
-              "Andar 2 [ ^0000FF"+getmapusers("pvp_n_2-4")+"^000000 / ^FF000015^000000]",encrulv2,
-              "Andar 3 [ ^0000FF"+getmapusers("pvp_n_3-4")+"^000000 / ^FF000015^000000]",encrulv3,
-              "Andar 4 [ ^0000FF"+getmapusers("pvp_n_4-4")+"^000000 / ^FF000015^000000]",encrulv4,
-              "Andar 5 [ ^0000FF"+getmapusers("pvp_n_5-4")+"^000000 / ^FF000015^000000]",encrulv5,
-              "Andar 6 [ ^0000FF"+getmapusers("pvp_n_6-4")+"^000000 / ^FF000015^000000]",encrulv6,
-              "Andar 7 [ ^0000FF"+getmapusers("pvp_n_7-4")+"^000000 / ^FF000015^000000]",encrulv7,
-              "Andar 8 [ ^0000FF"+getmapusers("pvp_n_8-4")+"^000000 / ^FF000015^000000]",encrulv8,
-              "Sair",L_sairmvp2;
-              
-              L_sairmvp2:
-              cutin "",255;   
-	      close;
-      
-
-        encrulv1: warp "pvp_n_1-4", 102,102; end;
-        encrulv2: warp "pvp_n_2-4", 102,102; end;
-        encrulv3: warp "pvp_n_3-4", 102,102; end;
-        encrulv4: warp "pvp_n_4-4", 102,102; end;
-        encrulv5: warp "pvp_n_5-4", 102,102; end;
-        encrulv6: warp "pvp_n_6-4", 102,102; end;
-        encrulv7: warp "pvp_n_7-4", 102,102; end;
-        encrulv8: warp "pvp_n_8-4", 102,102; end;
-
-        L_Busso:
-        mes @npc$;
-	mes "Qual dos andares você deseja entrar?";
-        menu 
-              "Andar 1 [ ^0000FF"+getmapusers("pvp_n_1-5")+"^000000 / ^FF000050^000000]",bussolv1,
-              "Andar 2 [ ^0000FF"+getmapusers("pvp_n_2-5")+"^000000 / ^FF000015^000000]",bussolv2,
-              "Andar 3 [ ^0000FF"+getmapusers("pvp_n_3-5")+"^000000 / ^FF000015^000000]",bussolv3,
-              "Andar 4 [ ^0000FF"+getmapusers("pvp_n_4-5")+"^000000 / ^FF000015^000000]",bussolv4,
-              "Andar 5 [ ^0000FF"+getmapusers("pvp_n_5-5")+"^000000 / ^FF000015^000000]",bussolv5,
-              "Andar 6 [ ^0000FF"+getmapusers("pvp_n_6-5")+"^000000 / ^FF000015^000000]",bussolv6,
-              "Andar 7 [ ^0000FF"+getmapusers("pvp_n_7-5")+"^000000 / ^FF000015^000000]",bussolv7,
-             // "Andar 8 [ ^0000FF"+getmapusers("pvp_n_8-5")+"^000000 / ^FF000015^000000]",bussolv8,
-              "Sair",L_sairmvp3;
-              
-              L_sairmvp3:
-              cutin "",255;   
-	      close;
-      
-
-        bussolv1: warp "pvp_n_1-5", 102,102; end;
-        bussolv2: warp "pvp_n_2-5", 102,102; end;
-        bussolv3: warp "pvp_n_3-5", 102,102; end;
-        bussolv4: warp "pvp_n_4-5", 102,102; end;
-        bussolv5: warp "pvp_n_5-5", 102,102; end;
-        bussolv6: warp "pvp_n_6-5", 102,102; end;
-        bussolv7: warp "pvp_n_7-5", 102,102; end;
-       // bussolv8: warp "pvp_n_8-5", 102,102; end;
 
 //============================================================================
 //==== CURA
@@ -271,19 +139,76 @@ L_b:
 //============================================================================
 //==== Estilista
 //============================================================================
+L_Waitc:
+mes @npc$;
+	if(#language == 1) {
+		mes "Bem vindo, meu caro Aventureiro.";
+		mes "Eu posso tingir e trocar seu estilo";
+		mes "de cabelo e mudar a cor da sua";
+		mes "roupa.";
+		mes "O que você deseja?";
+	}else{
+		mes "Welcome, my dear Adventurer.";
+		mes "and I can change your style";
+		mes "hair and change the color of your";
+		mes "clothing.";
+		mes "What do you want?";
+	}
+opendressroom(0);
+.@eac = eaclass();
+next;
+if(#language == 1) {
+	menu "- Estilista",L_c,"- Vestuário",L_vest;
+}else{
+	menu "- Stylist",L_c,"- Clothing",L_vest;
+}
+L_vest:
+	next;
+	set .@blacklist,roclass(.@eac&EAJ_THIRDMASK) == 4054 || roclass(.@eac&EAJ_THIRDMASK) == 4067 || roclass(.@eac&EAJ_THIRDMASK) == 4072;
+						if (.@eac&EAJL_THIRD && !.@blacklist) {
+							mes "^FF0000[ Super Stylist - Bodystyle ]^000000";
+							if(#language == 1) {
+								mes "Insira um número de bodystyle";
+								mes "Bodystyles: 0 a 1";
+							}else{
+								mes "Insert a bodystyle number";
+								mes "Bodystyles: 0 to 1";
+							}
+							input .@bodystyle;
+							if (.@bodystyle < 0 || .@bodystyle > 1) {
+								set .@bodystyle,0;
+							}
+							setlook LOOK_BODY2,.@bodystyle;
+							next;
+						} else {
+							mes "This service isn't avaible for " +jobname(roclass(.@eac));
+							next;
+						}
 
 L_c:
 	mes @npc$;
-	mes "Bem vindo, meu caro Aventureiro.";
-	mes "Eu posso tingir e trocar seu estilo";
-	mes "de cabelo e mudar a cor da sua";
-	mes "roupa.";
-	mes "O que você deseja?";
+	if(#language == 1) {
+		mes "Bem vindo, meu caro Aventureiro.";
+		mes "Eu posso tingir e trocar seu estilo";
+		mes "de cabelo e mudar a cor da sua";
+		mes "roupa.";
+		mes "O que você deseja?";
+	}else{
+		mes "Welcome, my dear Adventurer.";
+		mes "and I can change your style";
+		mes "hair and change the color of your";
+		mes "clothing.";
+		mes "What do you want?";
+	}
 
 
 	setarray .@styles[1],500,30,50;
 	setarray .@Look[1],7,1,6;
-	set .@s, select(" ~ Cor das Roupas: ~ Corte de Cabelo: ~ Cor do Cabelo");
+	if(#language == 1) {
+		set .@s, select(" ~ Cor das Roupas: ~ Corte de Cabelo: ~ Cor do Cabelo");
+	}else{
+		set .@s, select(" ~ Color of Clothes: ~ Haircut: ~ Hair Color");
+	}
 	set .@Revert, getlook(.@Look[.@s]);
 	set .@style,1;
 	while(1) {
@@ -311,10 +236,21 @@ close;
 
 L_d:
 	mes @npc$;
-	mes "Tudo bem. Qual item quer que eu";
-	mes "examine para você?";
-	next;
-	menu "- Deixe-me pensar.",CLOSEOUT,
+	getinventorylist;
+	if( @inventorylist_count > 1 ){
+		if(#language == 1) {
+			mes "Seu espaço de inventário está ficando cheio, por favor, remova algum item";
+		}else{
+			mes "Your inventory slot is getting full, please remove some item";
+		}
+		close;
+	}
+	
+	if(#language == 1) {
+		mes "Tudo bem. Qual item quer que eu";
+		mes "examine para você?";
+		next;
+		menu "- Deixe-me pensar.",CLOSEOUT,
 		getequipname(1),SLOT1,
 		getequipname(2),SLOT2,
 		getequipname(3),SLOT3,
@@ -325,6 +261,22 @@ L_d:
 		getequipname(8),SLOT8,
 		getequipname(9),SLOT9,
 		getequipname(10),SLOT10;
+	}else{
+		mes "Alright.What item do you want me to";
+		mes "examine for you?";
+		next;
+		menu "- Let me think.",CLOSEOUT,
+		getequipname(1),SLOT1,
+		getequipname(2),SLOT2,
+		getequipname(3),SLOT3,
+		getequipname(4),SLOT4,
+		getequipname(5),SLOT5,
+		getequipname(6),SLOT6,
+		getequipname(7),SLOT7,
+		getequipname(8),SLOT8,
+		getequipname(9),SLOT9,
+		getequipname(10),SLOT10;
+	}
 
 	SLOT1:
 		set @part,1;
@@ -371,74 +323,57 @@ L_d:
 		set @cardcount,getequipcardcnt(@part);
 		if(@cardcount > 1) goto CARDNUMMULTIMSG;
 	mes @npc$;
-	mes "Esse ítem tem " + @cardcount + " cartas.";
+	if(#language == 1) {
+		mes "Esse ítem tem " + @cardcount + " cartas.";
+	}else{
+		mes "This item has " + @cardcount + " cards.";
+	}
 		goto CARDNUMPOSTMSG;
 	CARDNUMMULTIMSG:
 	mes @npc$;
-	mes "Proseguir?";
+	if(#language == 1) {
+		mes "Proseguir?";
+	}else{
+		mes "Next?";
+	}
 	next;
-	menu "Sim",CARDNUMPOSTMSG,"Não",CLOSEOUT;
+	menu "Yes",CARDNUMPOSTMSG,"No",CLOSEOUT;
 	CARDNUMPOSTMSG:
 	next;
-	menu "Sim",PRIORITYCARD,"Não",CLOSEOUT;
-
-	PRIORITYITEM:
-		set @failtype,1;
-		goto REMOVECARD;
+	menu "Yes",PRIORITYCARD,"No",CLOSEOUT;
 
 	PRIORITYCARD:
-		set @failtype,2;
 		goto REMOVECARD;
 
 	REMOVECARD:
 	mes @npc$;
-	mes "O processo foi um grande sucesso. Tome suas cartas e seus ítens.";
+	if(#language == 1) {
+		mes "O processo foi um grande sucesso. Tome suas cartas e seus ítens.";
+	}else{
+		mes "The process was a great success. Take your letters and your items.";
+	}
 		successremovecards @part;
-        cutin "",255;
-	close;
-
-	FAILREMOVECARD0:
-		failedremovecards @part,0;
-	next;
-	mes @npc$;
-	mes "O processo foi uma falha total. Estou com muita pena, seus itens.";
-        cutin "",255;
-	close;
-
-	FAILREMOVECARD1:
-		failedremovecards @part,1;
-	next;
-	mes "[^1E90FFOpções @npc$^000000]";
-	mes "Eu falhei tentando remover as cartas do seu ítem, suas cartas foram destruídas durante o processo. O ítem, está em perfeito estado.";
-        cutin "",255;
-	close;
-
-	FAILREMOVECARD2:
-		failedremovecards @part,2;
-	next;
-	mes @npc$;
-	mes "Menos mal. Eu tive sucesso em remover as cartas, só que o ítem foi destruído no processo.";
-        cutin "",255;
-	close;
-
-	FAILREMOVECARD3:
-		failedremovecards @part,3;
-	next;
-	mes @npc$;
-	mes "Eu falhei tentando remover as cartas. Sorte sua, os ítens e as cartas estão perfeitos.";
         cutin "",255;
 	close;
 
 	DENYCARDCOUNT:
 	mes @npc$;
-	mes "Meu jovem não há cartas equipadas neste ítem. Não posso trabalhar assim.";
+	if(#language == 1) {
+		mes "Meu jovem não há cartas equipadas neste ítem. Não posso trabalhar assim.";
+	}else{
+		mes "My young lady, there are no cards equipped with this item. I can not work like this.";
+	}
         cutin "",255;
 	close;
 
 
 	CLOSEOUT:
 	mes @npc$;
-	mes "Tudo bem. Volte quando precisar dos meus serviços.";
+	if(#language == 1) {
+		mes "Tudo bem. Volte quando precisar dos meus serviços.";
+	}else{
+		mes "Alright, come back when you need my services.";
+	}
         cutin "",255;
 	close;
 	
@@ -509,7 +444,7 @@ mes "";
 mes "Para onde deseja ir hoje?";
 emotion ET_BEST;
 next;
-menu "Cidades",-,"Carvenas",L_dungeon,"Campos",L_campos;
+menu "Cidades",-,"Cavernas",L_dungeon,"Campos",L_campos;
 next;
 mes .npcname$;
 mes "Por favor";
@@ -1957,7 +1892,7 @@ set #CASHPOINTS,#CASHPOINTS+.@cash;
 query_sql "UPDATE `login` SET `cash` = `cash` =0 WHERE `account_id`='"+getcharid(3)+"'";
 end;
 }*/
-
+/*
 -	script	Sistema Cash#03	-1,{
 
 OnPCLoginEvent:
@@ -1967,7 +1902,8 @@ if(#CASHPOINTS == 0){ end; }
 dispbottom "Olá "+strcharinfo(0)+" você possui "+#CASHPOINTS+" CASHPOINTS.";
 end;
 }
-	
+
+
 -	script	Sistema Vip#02	-1,{
 
 OnClock0001: 
@@ -1996,7 +1932,7 @@ dispbottom "Olá "+strcharinfo(0)+" você possui "+.@diasvip+" dias VIP Free.";
 }
 
 end;
-}
+}*/
 
 //============================================================================
 //==== MVPS

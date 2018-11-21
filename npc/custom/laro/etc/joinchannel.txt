@@ -1,0 +1,8 @@
+-	script	autojoin	-1,{
+
+OnPCLoginEvent:
+	atcommand "@join #global";
+	atcommand "@join #support";
+	atcommand "@join #trade";
+end;
+}

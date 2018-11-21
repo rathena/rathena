@@ -25,7 +25,7 @@ OnTouch:
 		setd ".start" + strnpcinfo(1), 1;
 		initnpctimer;
 		
-		if($language == 1) {
+		if(#language == 1) {
 			mapannounce strnpcinfo(4), "[Dica] Você pode mover para o ponto desejado clicando no chão com o botão esquerdo do mouse.", bc_map,0xFF0000;
 		}else{
 			mapannounce strnpcinfo(4), "[Tip] You can move to the desired point by clicking the ground with the left mouse button.", bc_map,0xFF0000;
@@ -33,14 +33,14 @@ OnTouch:
 	}
 	end;
 OnTimer9000:
-	if($language == 1) {
+	if(#language == 1) {
 		mapannounce strnpcinfo(4), "[Dica] Enquanto mantém pressionado o botão direito do mouse, arraste para girar a tela.", bc_map,0xFF0000;
 	}else{
 		mapannounce strnpcinfo(4), "[Tip] While holding down the right mouse button, drag to rotate the screen.", bc_map,0xFF0000;
 	}
 	end;
 OnTimer18000:
-	if($language == 1) {
+	if(#language == 1) {
 		mapannounce strnpcinfo(4), "[Dica] Você pode sair pelo portal de efeito azulada.", bc_map,0xFF0000;
 	}else{
 		mapannounce strnpcinfo(4), "[Tip] You can leave through the bluish warp gate.", bc_map,0xFF0000;
@@ -55,7 +55,7 @@ OnTimer24000:
 	emotion ET_SURPRISE, getnpcid(0, "#room_out" + replacestr( strnpcinfo(4), "iz_int", "" ));
 	end;
 OnTimer27000:
-	if($language == 1) {
+	if(#language == 1) {
 		mapannounce strnpcinfo(4), "[Dica] Deixe esta área para continuar.", bc_map,0xFF0000;
 	}else{
 		mapannounce strnpcinfo(4), "[Tip] Leave this area to continue.", bc_map,0xFF0000;
@@ -90,14 +90,14 @@ iz_int,56,32,3	script	Wounded Swordsman#intro_npc01_iz_int	4_TOWER_01,5,5,{
 
 OnTouch:
 	if (@intro_npc01 == 0) {
-		if($language == 1) {
+		if(#language == 1) {
 			npctalk "Urgh... por favor... Ajude-me...", "", bc_self;
 		}else{
 			npctalk "Urgh... please... help me...", "", bc_self;
 		}
 		sleep2 500;
 		
-		if($language == 1) {
+		if(#language == 1) {
 			npctalk "Para falar comigo.. clique no meu corpo..", "", bc_self;
 		}else{
 			npctalk "In order to talk with me.. click my body..", "", bc_self;
@@ -120,7 +120,7 @@ iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc01_iz_int)	Wounded Swordsm
 
 iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 	if (isbegin_quest(21001) == 0) {
-		if($language == 1) {
+		if(#language == 1) {
 		mes "[Wounded]";
 		mes "Uau! Muito obrigado!";
 		mes "Eu não sei como isso aconteceu com o nosso navio";
@@ -151,7 +151,7 @@ iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 		}
 	}
 	else {
-		if($language == 1) {
+		if(#language == 1) {
 		mes "[Wounded]";
 		mes "Felizmente a água não entrou no navio.";
 		mes "Vou esperar aqui, você deveria ir ver o capitão.";
@@ -173,7 +173,7 @@ iz_int,56,32,3	script	Wounded Swordsman#intro_npc02_iz_int	HIDDEN_WARP_NPC,{
 		mes "^4d4dff!- Information -!^000000";
 		}
 	}
-	if($language == 1) {
+	if(#language == 1) {
 	mes "^4d4dffQuestinfo O atalho é Alt + U ^000000";
 	mes "Você pode verificar o seu status de busca lá a qualquer momento.";
 	}else{
@@ -196,7 +196,7 @@ iz_int04,56,32,3	duplicate(Wounded Swordsman#intro_npc02_iz_int)	Wounded Swordsm
 // - Captain Carocc (Ship)
 // -----------------------------------------------------------------------------
 int_land,78,103,5	script	Captain Carocc#intro_npc03	4_M_REINDEER,{
-if($language == 1) {
+if(#language == 1) {
 	switch( isbegin_quest(21008) ) {
 	case 0:
 		mes "[Capitão Carocc]";
@@ -409,7 +409,7 @@ int_land04,78,103,5	duplicate(Captain Carocc#intro_npc03)	Captain Carocc#intro_n
 
 //== Lumin (int_land) ==========================================
 int_land,73,100,3	script	Lumin#new_ship	4_M_NOV_RUMIN,{
-	if($language == 1) {
+	if(#language == 1) {
 	if (isbegin_quest(7471) == 0) {
 		cutin "nov_lumin01.bmp",0;
 		mes "[Lumin]";
@@ -579,7 +579,7 @@ int_land03,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship03	4_M_NOV_RUMIN
 int_land04,73,100,3	duplicate(Lumin#new_ship)	Lumin#new_ship04	4_M_NOV_RUMIN
 
 int_land,58,69,5	script	Sailor#intro_npc04	4W_SAILOR,{
-	if($language == 1) {
+	if(#language == 1) {
 	if (isbegin_quest(21008) == 1) {
 		if (countitem(6008) < 2) {
 			mes "[Sailor]";

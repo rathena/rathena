@@ -1,4 +1,4 @@
-// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+﻿// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "atcommand.hpp"
@@ -10272,6 +10272,96 @@ ACMD_FUNC(gepard_unblock_unique_id)
 
 // (^~_~^) Gepard Shield End
 
+/*==========================================
+* @whosell command
+*------------------------------------------*/
+ACMD_FUNC(whosell)
+{
+	struct map_session_data *pl_sd, *b_sd[MAX_SEARCH];
+	struct s_mapiterator* iter;
+
+	struct item_data *item_array[MAX_SEARCH];
+	int total[MAX_SEARCH], amount[MAX_SEARCH];
+	unsigned int MinPrice[MAX_SEARCH], MaxPrice[MAX_SEARCH];
+	char output[256];
+	int i, j, count = 1;
+	char item_name[100];
+	int minprice = 0;
+
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %11d", item_name, &minprice) < 1
+		&& sscanf(message, "%99s %11d", item_name, &minprice) < 1)
+		)
+	{
+		clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @whosell <item name or ID> {<min price>}).");
+		return -1;
+	}
+
+	if ((item_array[0] = itemdb_searchname(item_name)) == NULL &&
+		(item_array[0] = itemdb_exists(atoi(item_name))) == NULL)
+		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
+
+	if (count < 1)
+	{ // No items found
+		clif_displaymessage(fd, msg_txt(sd, 19));
+		return -1;
+	}
+
+	if (count > MAX_SEARCH) count = MAX_SEARCH;
+
+	// Preparing Search Recorders
+	for (i = 0; i < MAX_SEARCH; i++)
+	{
+		total[i] = amount[i] = MaxPrice[i] = 0;
+		MinPrice[i] = battle_config.vending_max_value + 1;
+		b_sd[i] = NULL;
+	}
+
+	iter = mapit_getallusers();
+	for (pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter))
+	{
+		if (!pl_sd->vender_id) continue;
+		for (i = 0; i < pl_sd->vend_num; i++)
+		{ // Searching in the Vending List
+			for (j = 0; j < count; j++)
+			{ // Compares with each search result
+				if (pl_sd->cart.u.items_cart[pl_sd->vending[i].index].nameid != item_array[j]->nameid)
+					continue;
+				if (pl_sd->vending[i].value < minprice)
+					continue;
+
+				amount[j] += pl_sd->vending[i].amount;
+				total[j]++;
+
+				if (pl_sd->vending[i].value < MinPrice[j])
+				{ // Best Price
+					MinPrice[j] = pl_sd->vending[i].value;
+					b_sd[j] = pl_sd;
+				}
+				if (pl_sd->vending[i].value > MaxPrice[j])
+					MaxPrice[j] = pl_sd->vending[i].value;
+			}
+		}
+	}
+	mapit_free(iter);
+
+	for (i = 0; i < count; i++)
+	{
+		if (total[i] > 0 && b_sd[i] != NULL)
+		{
+			sprintf(output, "[%d] The best price found for '%s' is %u sold by '%s' at %s <%d,%d>. Max Price %u. Item found in %d shops, %d pieces for sale.", item_array[i]->nameid, item_array[i]->jname, MinPrice[i], b_sd[i]->status.name, map[b_sd[i]->bl.m].name, b_sd[i]->bl.x, b_sd[i]->bl.y, MaxPrice[i], total[i], amount[i]);
+			if (sd->bl.m == b_sd[i]->bl.m)
+				clif_viewpoint(sd, 1, 1, b_sd[i]->bl.x, b_sd[i]->bl.y, i, 0xFFFFFF);
+		}
+		else
+			sprintf(output, "[%d] '%s' is not being sold at the moment...", item_array[i]->nameid, item_array[i]->jname);
+
+		clif_displaymessage(sd->fd, output);
+	}
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10299,6 +10389,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(gepard_unblock_unique_id),
 
 // (^~_~^) Gepard Shield End
+
+ACMD_DEF(whosell),
 
 #include "../custom/atcommand_def.inc"
 		ACMD_DEF2R("warp", mapmove, ATCMD_NOCONSOLE),

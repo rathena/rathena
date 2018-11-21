@@ -16,7 +16,7 @@
 
 -	script	Smile Assistance::SmileHelper	92,{
 
-	if($language == 1) {
+	if(#language == 1) {
 	
 	mes "[Menina do Sorriso]";
 	mes "Oi ~ Oi ~";

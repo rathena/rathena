@@ -19,11 +19,14 @@
 -	script	Warper	-1,{
 function Go; function Disp; function Pick; function Restrict;
 
+if(#language == NULL)
+set #language, 2; 
+
 // --------------------------------------------------
 //	Main Menu:
 // --------------------------------------------------
 
-if($language == 1) {
+if(#language == 1) {
 menu	"Ultimo Warp ^777777["+lastwarp$+"]^000000",-,
     	" ~ Cidades",Towns,
     	" ~ Campos",Fields,

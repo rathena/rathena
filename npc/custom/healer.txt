@@ -15,6 +15,9 @@
 
 -	script	Healer	-1,{
 
+	if(#language == NULL)
+	set #language, 2; 
+
 	.@Price = 0;	// Zeny required for heal
 	.@Buffs = 1;	// Also buff players? (1: yes / 0: no)
 	.@Delay = 5;	// Heal delay, in seconds
@@ -22,7 +25,7 @@
 
 	if (@HD > gettimetick(2)) {
 		.@Conta = @HD-(gettimetick(2));
-		if($language == 1) {
+		if(#language == 1) {
 				dispbottom "[Healer] Aguardem "+.@Conta+" segundos.";
 			}else{
 				dispbottom "[Healer] Wait "+.@Conta+" seconds.";
@@ -62,7 +65,7 @@
 			sc_start SC_INTFOOD,900000,5;
 			sc_start SC_DEXFOOD,900000,5;
 			sc_start SC_LUKFOOD,900000,5;
-			if($language == 1) {
+			if(#language == 1) {
 				dispbottom "[Healer] Continue se esforçando até chegar ao nível 180.";
 			}else{
 				dispbottom "[Healer] Keep striving until you reach the level 180.";
@@ -89,7 +92,7 @@
 	if(getbrokenid(1)){
 		repairall;
 	}else{
-		if($language == 1) {
+		if(#language == 1) {
 			dispbottom "[Healer] Você não tem itens para reparar.";
 		}else{
 			dispbottom "[Healer] You have no items to repair.";
