@@ -1,0 +1,1497 @@
+/*
+	Credits : AnnieRuru [major bug fixes]
+*/
+
+
+/*
+DROP TABLE IF EXISTS `mission_board`;
+
+CREATE TABLE IF NOT EXISTS `mission_board` (
+	`id` int(11) unsigned NOT NULL,
+	`title` varchar(30) NOT NULL default '',
+	`desc` varchar(255) NOT NULL default '',
+	`mob_list` varchar(50) NOT NULL default '',
+	`mob_qty` varchar(50) NOT NULL default '',
+	`item_list` varchar(50) NOT NULL default '',
+	`item_qty` varchar(50) NOT NULL default '',
+	`class_limitation` int(11) unsigned NOT NULL default '0',
+	`class_branch` int(11) unsigned NOT NULL default '0',
+	`min_lv` smallint(6) unsigned NOT NULL default '1',
+	`max_lv` smallint(6) unsigned NOT NULL default '99',
+	`repeat` smallint(6) unsigned NOT NULL default '0',
+	`duration` int(11) unsigned NOT NULL default '0',
+	`reward_list` varchar(50) NOT NULL default '',
+	`reward_qty` varchar(50) NOT NULL default '',
+	`base_exp` int(11) unsigned NOT NULL default '0',
+	`job_exp` int(11) unsigned NOT NULL default '0',
+	`zeny` int(11) unsigned NOT NULL default '0',
+	`cash` int(11) unsigned NOT NULL default '0',
+	`aid` int(11) unsigned NOT NULL default '0',
+	`name` varchar(30) NOT NULL default '',
+	`time_update` datetime NOT NULL default '0000-00-00 00:00:00',
+	`npc_id` varchar(255) NOT NULL default '',
+	`redo_delay` smallint(6) unsigned NOT NULL default '0',
+	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+DROP TABLE IF EXISTS `player_mission`;
+CREATE TABLE IF NOT EXISTS `player_mission` (
+	`id` int(11) unsigned NOT NULL,
+	`mission_id` int(11) unsigned NOT NULL,
+	`aid` int(11) unsigned NOT NULL default '0',
+	`cid` int(11) unsigned NOT NULL default '0',
+	`name` varchar(30) NOT NULL default '',
+	`mob_hunt` varchar(50) NOT NULL default '',
+	`expire` int(11) unsigned NOT NULL default '0',
+	`starting` datetime NOT NULL default '0000-00-00 00:00:00',
+	`completion` datetime NOT NULL default '0000-00-00 00:00:00',
+	PRIMARY KEY  (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+*/
+
+-	script	mission_board	-1,{
+.@gm_level = getgmlevel();
+.@npc_name$ = strnpcinfo(1);
+.@mission_npc_num = atoi( strnpcinfo(2) );
+
+// check npc if it's a valid npc with number 1 ~ 500
+if( !.@mission_npc_num || .@mission_npc_num > 500 ){
+	message strcharinfo(0),"This NPC isnt working, invalid <'"+strnpcinfo(2)+"'>";
+	disablenpc strnpcinfo(0);
+	end;
+}
+
+// to assign offset index.
+.@mission_npc_num--;
+query_sql( "SELECT COUNT(`id`) FROM `mission_board` WHERE `npc_id` LIKE '%|"+.@mission_npc_num+"|%' ",.@mission_count );
+query_sql( "SELECT `id`,`mission_id`,`mob_hunt`,`expire` FROM `player_mission` WHERE `mission_id` IN ( SELECT `id` FROM `mission_board` WHERE `npc_id` LIKE '%|"+.@mission_npc_num+"|%' ) AND `cid` = "+getcharid(0)+" AND `completion` = '0000-00-00 00:00:00' ",.@id,.@mission_id,.@mob_hunt$,.@expire );
+.@current_mission_size = getarraysize( .@id );
+
+mes "^0055FF[ "+.@npc_name$+" ]^000000";
+mes "A mission board may provide various missions for adventures. Each players may pick ";
+mes "   ^FF0000"+.max_mission_per_char+" missions^000000";
+mes "from each mission npc.";
+next;
+switch( select( ( .@current_mission_size )?"Submit Mission":"",
+				( .@current_mission_size < .max_mission_per_char )?"Pick Mission":"",
+				( .@current_mission_size )?"Drop Mission":"",
+				( .@gm_level < .gm_level || !.@mission_count )?"":"^FF0000[GM] Update Mission^000000",
+				( .@gm_level < .gm_level )?"":"^FF0000[GM] Setup Mission^000000",
+				( .@gm_level < .gm_level || !.@mission_count  )?"":"^FF0000[GM] Delete Mission^000000" ) ){
+	case 1:
+		.@current_time = gettimetick(2);
+		query_sql( "SELECT `id`,`title`,`min_lv`,`max_lv` FROM `mission_board` WHERE `npc_id` LIKE '%|"+.@mission_npc_num+"|%' AND `id` IN ( SELECT `mission_id` FROM `player_mission` WHERE `cid` = "+getcharid(0)+" AND `completion` = '0000-00-00 00:00:00' )",.@mission_id,.@title$,.@min_lv,.@max_lv );
+		.@size = getarraysize( .@mission_id );
+		for( .@i = 0; .@i < .@size; .@i++ ){
+			if( .@expire[.@i] && .@expire[.@i] < .@current_time )
+				.@submit_menu$ = .@submit_menu$ + "^FF0000[Expired]^000000";
+			.@submit_menu$ = .@submit_menu$ + "["+.@min_lv[.@i]+"~"+.@max_lv[.@i]+"] "+.@title$[.@i] +":";
+		}
+		.@i = select( .@submit_menu$ ) - 1;
+
+		if( .@expire[.@i] && .@expire[.@i] < .@current_time ){
+			dispbottom " ~ Mission expired "+callsub( OnTime2Str,( gettimetick(2) + ( .@current_time - .@expire[.@i] ) ) )+" ago.";
+			dispbottom " ~ You may drop this mission.";
+			close;
+		}
+
+		// get mission data from sql
+		query_sql( "SELECT * FROM `mission_board` WHERE `id` = "+.@mission_id[.@i]+" LIMIT 1",
+			.@mission_id,
+			.@title$,
+			.@description$,
+			.@mob_list$,
+			.@mob_qty$,
+			.@item_list$,
+			.@item_qty$,
+			.@base_job_bitmask,
+			.@job_branch_bitmask,
+			.@min_lv,
+			.@max_lv,
+			.@repeatable,
+			.@timelimit,
+			.@reward_list$,
+			.@reward_qty$,
+			.@baseexp,
+			.@jobexp,
+			.@zeny,
+			.@cash,
+			.@aid,
+			.@name$,
+			.@time_update$,
+			.@npc_id$,
+			.@redo_delay
+		);
+
+		// explode all saved strings to array value.
+		.@monster_size = callsub( OnExplodeArray,.@mob_list$,.@monster_list,0 );
+		if( .@monster_size )
+			callsub( OnExplodeArray,.@mob_qty$,.@monster_qty,0 );
+
+		.@item_size = callsub( OnExplodeArray,.@item_list$,.@item_list,0 );
+		if( .@item_size )
+			callsub( OnExplodeArray,.@item_qty$,.@item_qty,0 );
+
+		.@reward_size = callsub( OnExplodeArray,.@reward_list$,.@reward_list,0 );
+		if( .@reward_size )
+			callsub( OnExplodeArray,.@reward_qty$,.@reward_qty,0 );
+
+		.@selected_npc_size = callsub( OnExplodeArray,.@npc_id$,.@selected_npc_array$,1 );
+
+		setarray .@level_range,.@min_lv,.@max_lv;
+
+		// display the information of mission
+		.@result = callsub( OnDisplayMissionInfo,
+					.@mission_id,
+					.@title$,
+					.@description$,
+					.@level_range,
+					.@repeatable,
+					.@expire[.@i],
+					.@monster_list,
+					.@monster_qty,
+					.@item_list,
+					.@item_qty,
+					.@base_job_bitmask,
+					.@job_branch_bitmask,
+					.@baseexp,
+					.@jobexp,
+					.@cash,
+					.@zeny,
+					.@reward_list,
+					.@reward_qty,
+					.@selected_npc_array$,
+					.@time_update$,
+					.@redo_delay,
+					1|2|4|8
+				);
+
+		// submit mission or not
+		if( .@result ){
+			message strcharinfo(0),"Failed to submit this mission.";
+		}else{
+			next;
+			if( select( "Submit Completed Mission","Cancel" ) == 1 ){
+				for( .@ms = ( @ms_size - 1 ); .@ms >= 0; .@ms-- )
+					if( @ms_list$[.@ms] == ""+.@mission_id ){
+						mes "^0055FF[ "+.@npc_name$+" ]^000000";
+						query_sql( "UPDATE `player_mission` SET `completion` = NOW() WHERE `cid` = "+getcharid(0)+" AND `mission_id` = "+.@mission_id +" AND `completion` = '0000-00-00 00:00:00'" );
+						mes "Mission accomplished.";
+						@ms_size--;
+
+						// clear requirement.
+						setd( "@ms_"+.@mission_id+"_expire" ),0;
+						deletearray getd( "@ms_"+.@mission_id+"_list" );
+						deletearray getd( "@ms_"+.@mission_id+"_qty" );
+						deletearray getd( "@ms_"+.@mission_id+"_hunt" );
+						if( .@item_size )
+							for( .@i = 0; .@i < .@item_size; .@i++ ){
+								// debugmes getitemname( .@item_list[.@i] )+" - "+.@item_qty[.@i];
+								delitem .@item_list[.@i],.@item_qty[.@i];
+							}
+
+						mes "Gained some mission's rewards.";
+						// rewards
+						getexp .@baseexp,.@jobexp;
+						if( .@reward_size )
+							for( .@i = 0; .@i < .@reward_size; .@i++ )
+								getitem .@reward_list[.@i],.@reward_qty[.@i];
+						#CASHPOINTS += .@cash;
+						Zeny += .@zeny;
+						break;
+					}
+				mes "Something went wrong ..";
+			}
+		}
+		break;
+	case 2:
+		// get info from SQL.
+		do{
+			mes "^0055FF[ "+.@npc_name$+" ]^000000";
+			deletearray .@id;
+			query_sql( "SELECT `id`,`title`,`min_lv`,`max_lv` FROM `mission_board` WHERE `npc_id` LIKE '%|"+.@mission_npc_num+"|%' AND `id` NOT IN ( SELECT `mission_id` FROM `player_mission` WHERE `cid` = "+getcharid(0)+" AND `completion` = '0000-00-00 00:00:00' ) LIMIT "+.max_page_size+" OFFSET "+.@offset,.@id,.@title$,.@min_lv,.@max_lv );
+			.@offset += .max_page_size;
+			.@size = getarraysize( .@id );
+			if( !.@size ){
+				mes "There are no other available missions to pick.";
+				close;
+
+			}else{
+				mes "Pick a mission.";
+				.@mission_menu$ = "";
+				for( .@i = 0; .@i < .@size; .@i++ )
+					.@mission_menu$ = .@mission_menu$ + "["+.@min_lv[.@i]+"~"+.@max_lv[.@i]+"] "+.@title$[.@i] +":";
+			}
+			next;
+			.@i = select( .@mission_menu$+ ( ( .@size < .max_page_size )?"":"- next page" ) ) - 1;
+		}while( .@i == .@size );
+
+		query_sql( "SELECT * FROM `mission_board` WHERE `id` = "+.@id[.@i]+" LIMIT 1",
+			.@mission_id,
+			.@title$,
+			.@description$,
+			.@mob_list$,
+			.@mob_qty$,
+			.@item_list$,
+			.@item_qty$,
+			.@base_job_bitmask,
+			.@job_branch_bitmask,
+			.@min_lv,
+			.@max_lv,
+			.@repeatable,
+			.@timelimit,
+			.@reward_list$,
+			.@reward_qty$,
+			.@baseexp,
+			.@jobexp,
+			.@zeny,
+			.@cash,
+			.@aid,
+			.@name$,
+			.@time_update$,
+			.@npc_id$,
+			.@redo_delay
+		);
+
+		// explode all saved strings to array value.
+		.@monster_size = callsub( OnExplodeArray,.@mob_list$,.@monster_list,0 );
+		.@monster_size = callsub( OnExplodeArray,.@mob_qty$,.@monster_qty,0 );
+
+		.@item_size = callsub( OnExplodeArray,.@item_list$,.@item_list,0 );
+		.@item_size = callsub( OnExplodeArray,.@item_qty$,.@item_qty,0 );
+
+		.@reward_size = callsub( OnExplodeArray,.@reward_list$,.@reward_list,0 );
+		.@reward_size = callsub( OnExplodeArray,.@reward_qty$,.@reward_qty,0 );
+
+		.@selected_npc_size = callsub( OnExplodeArray,.@npc_id$,.@selected_npc_array$,1 );
+
+		setarray .@level_range,.@min_lv,.@max_lv;
+
+		// display the information of mission
+		.@result = callsub( OnDisplayMissionInfo,
+				.@mission_id,
+				.@title$,
+				.@description$,
+				.@level_range,
+				.@repeatable,
+				( .@timelimit + gettimetick(2) ),
+				.@monster_list,
+				.@monster_qty,
+				.@item_list,
+				.@item_qty,
+				.@base_job_bitmask,
+				.@job_branch_bitmask,
+				.@baseexp,
+				.@jobexp,
+				.@cash,
+				.@zeny,
+				.@reward_list,
+				.@reward_qty,
+				.@selected_npc_array$,
+				.@time_update$,
+				.@redo_delay,
+				1|8
+		);
+
+		// check completed how many times.
+		if ( .@repeatable ) {
+			query_sql "select count(id) from player_mission where mission_id = "+ .@id[.@i] +" and completion != '0000-00-00 00:00:00' and cid = "+ getcharid(0), .@mission_completed;
+			if( .@mission_completed >= .@repeatable ) {
+				next;
+				mes "^0055FF[ "+.@npc_name$+" ]^000000";
+				mes " ";
+				mes "You cant pick this mission, you have mission completion reach the max repeatable attempt of "+.@mission_completed+" times.";
+				close;
+			}
+		}
+
+		if ( .@redo_delay ) {
+			query_sql "select timestampdiff( hour, completion, now() ), unix_timestamp( date_add( completion, interval "+ .@redo_delay +" hour ) ) from player_mission where cid = "+ getcharid(0) +" and mission_id = "+ .@id[.@i] +" order by completion desc limit 1", .@diff_delay, .@deny_time;
+			if ( .@diff_delay < .@redo_delay ) {
+				next;
+				mes "^0055FF[ "+.@npc_name$+" ]^000000";
+				mes " ";
+				mes "You cant pick this mission, you have mission redo delay isnt finish yet.";
+				mes "^FF0000"+ callfunc( "Time2Str", .@deny_time ) +"^000000";
+				close;
+			}
+		}
+
+		if( .@result ){
+			message strcharinfo(0),"Failed to pick this mission.";
+		}else{
+			if( select( "Pick Mission","Cancel" ) == 1 ){
+				query_sql( "INSERT INTO `player_mission` VALUES ( "+gettimetick(2)+","+.@mission_id+","+getcharid(3)+","+getcharid(0)+",'"+escape_sql( strcharinfo(0) )+"','',"+( ( .@timelimit )? ( .@timelimit + gettimetick(2) ) : 0 )+",NOW(),'0000-00-00 00:00:00' );" );
+				message strcharinfo(0),"Picked Mission # "+.@mission_id;
+
+				@ms_list$[ @ms_size ] = ""+.@mission_id;
+				@ms_title$[ @ms_size ] = ""+.@title$;
+				@ms_size++;
+
+				copyarray getd( "@ms_"+.@mission_id+"_list[0]" ),.@monster_list[0],.@monster_size;
+				copyarray getd( "@ms_"+.@mission_id+"_qty[0]" ),.@monster_qty[0],.@monster_size;
+				deletearray getd( "@ms_"+.@mission_id+"_hunt" );
+				if ( .@timelimit ) {
+					setd( "@ms_"+.@mission_id+"_expire" ),( .@timelimit + gettimetick(2) );
+					addtimer ( .@timelimit * 1000 ),.npc_name$+"::OnTimeCheck";
+				}
+			}
+		}
+		break;
+	case 3:
+		query_sql( "SELECT `id`,`title`,`min_lv`,`max_lv` FROM `mission_board` WHERE `npc_id` LIKE '%|"+.@mission_npc_num+"|%' AND `id` IN ( SELECT `mission_id` FROM `player_mission` WHERE `cid` = "+getcharid(0)+" AND `completion` = '0000-00-00 00:00:00' )",.@id,.@title$,.@min_lv,.@max_lv );
+		.@id_size = getarraysize( .@id );
+		for( .@i = 0; .@i < .@id_size; .@i++ )
+			.@mission_menu$ = .@mission_menu$ + "["+.@min_lv[.@i]+"~"+.@max_lv[.@i]+"] "+.@title$[.@i] +":";
+		mes "^0055FF[ "+.@npc_name$+" ]^000000";
+		mes "Pick a Mission to remove.";
+		next;
+		.@i = select( .@mission_menu$ ) - 1;
+		mes "^0055FF[ "+.@npc_name$+" ]^000000";
+		mes "Confirm remove ^0055FFMission # "+.@id[.@i]+"^000000?";
+		mes "Title : ^0055FF"+.@title$[.@i]+"^000000";
+		mes "^777777( this cant be un-done )^000000";
+		if( select( "nope","Confirm" ) == 2 ){
+			message strcharinfo(0),"Dropped Mission # "+.@id[.@i];
+			query_sql( "DELETE FROM `player_mission` WHERE `mission_id` = "+.@id[.@i]+" AND `cid` = "+getcharid(0)+" AND `completion` = '0000-00-00 00:00:00'" );
+			setd( "@ms_"+.@id[.@i]+"_expire" ),0;
+			deletearray getd( "@ms_"+.@id[.@i]+"_list" );
+			deletearray getd( "@ms_"+.@id[.@i]+"_qty" );
+			deletearray getd( "@ms_"+.@id[.@i]+"_hunt" );
+			for( .@ms = 0; .@ms < @ms_size; .@ms++ )
+				if( ""+.@id[.@i] == @ms_list$[.@ms] ){
+					deletearray @ms_list$[.@ms],1;
+					deletearray @ms_title$[.@ms],1;
+					@ms_size--;
+					break;
+				}
+		}
+		break;
+	case 4:
+		// get info from SQL.
+		do{
+			mes "^0055FF[ "+.@npc_name$+" ]^000000";
+			deletearray .@id;
+			query_sql( "SELECT `id`,`title`,`min_lv`,`max_lv` FROM `mission_board` WHERE `npc_id` LIKE '%|"+.@mission_npc_num+"|%' LIMIT "+.max_page_size+" OFFSET "+.@offset,.@id,.@title$,.@min_lv,.@max_lv );
+			.@offset += .max_page_size;
+			.@size = getarraysize( .@id );
+			if( !.@size ){
+				mes "There are no available mission to update.";
+				close;
+
+			}else{
+				mes "Pick a mission.";
+				.@mission_menu$ = "";
+				for( .@i = 0; .@i < .@size; .@i++ )
+					.@mission_menu$ = .@mission_menu$ + "["+.@min_lv[.@i]+"~"+.@max_lv[.@i]+"] "+.@title$[.@i] +":";
+			}
+			next;
+			.@i = select( .@mission_menu$+ ( ( .@size < .max_page_size )?"":"- next page" ) ) - 1;
+		}while( .@i == .@size );
+		query_sql( "SELECT * FROM `mission_board` WHERE `id` = "+.@id[.@i],
+			.@new_mission_id,
+			.@title$,
+			.@description$,
+			.@mob_list$,
+			.@mob_qty$,
+			.@item_list$,
+			.@item_qty$,
+			.@base_job_bitmask,
+			.@job_branch_bitmask,
+			.@min_lv,
+			.@max_lv,
+			.@repeatable,
+			.@timelimit,
+			.@reward_list$,
+			.@reward_qty$,
+			.@baseexp,
+			.@jobexp,
+			.@zeny,
+			.@cash,
+			.@aid,
+			.@name$,
+			.@time_update$,
+			.@npc_id$,
+			.@redo_delay
+		);
+		// explode all saved strings to array value.
+		.@monster_size = callsub( OnExplodeArray,.@mob_list$,.@monster_list,0 );
+		.@monster_size = callsub( OnExplodeArray,.@mob_qty$,.@monster_qty,0 );
+
+		.@item_size = callsub( OnExplodeArray,.@item_list$,.@item_list,0 );
+		.@item_size = callsub( OnExplodeArray,.@item_qty$,.@item_qty,0 );
+
+		.@reward_size = callsub( OnExplodeArray,.@reward_list$,.@reward_list,0 );
+		.@reward_size = callsub( OnExplodeArray,.@reward_qty$,.@reward_qty,0 );
+
+		.@selected_npc_size = callsub( OnExplodeArray,.@npc_id$,.@selected_npc_array$,1 );
+
+		setarray .@level_range,.@min_lv,.@max_lv;
+
+	case 5:
+		do{
+			mes "^0055FF[ "+.@npc_name$+" ]^000000";
+			// display the information of mission
+			callsub( OnDisplayMissionInfo,
+				.@new_mission_id,
+				.@title$,
+				.@description$,
+				.@level_range,
+				.@repeatable,
+				( .@timelimit + gettimetick(2) ),
+				.@monster_list,
+				.@monster_qty,
+				.@item_list,
+				.@item_qty,
+				.@base_job_bitmask,
+				.@job_branch_bitmask,
+				.@baseexp,
+				.@jobexp,
+				.@cash,
+				.@zeny,
+				.@reward_list,
+				.@reward_qty,
+				.@selected_npc_array$,
+				.@time_update$,
+				.@redo_delay,
+				0
+			);
+
+			// check if required info complete for setup mission
+			.@incomplete = 0;
+			if( .@title$ == "" ) .@incomplete |= 1;
+			if( .@description$ == "" ) .@incomplete |= 2;
+			if( !.@monster_size && !.@item_size ) .@incomplete |= 4;
+			if( getarraysize( .@level_range ) != 2 || !.@base_job_bitmask || !.@job_branch_bitmask ) .@incomplete |= 8;
+			if( !.@reward_size && !.@baseexp && !.@jobexp && !.@cash && !.@zeny ) .@incomplete |= 16;
+			if( !.@selected_npc_size ) .@incomplete |= 32;
+
+			.@main_option = select( "Edit Title "+(( .@incomplete & 1 )?"^FF0000-incomplete-^000000":"" ),
+							"Edit Description "+(( .@incomplete & 2 )?"^FF0000-incomplete-^000000":"" ),
+							"Edit Monster List "+(( .@incomplete & 4 )?"^FF0000-incomplete-^000000":( ( !.@monster_size )?"^777777-none-^000000":"" )),
+							"Edit Item List "+(( .@incomplete & 4 )?"^FF0000-incomplete-^000000":( ( !.@item_size )?"^777777-none-^000000":"" )),
+							"Edit Class/Level Limitation "+(( .@incomplete & 8 )?"^FF0000-incomplete-^000000":"" ),
+							"Edit Time/Repeat/Mission Limitation ",
+							"Edit Reward List "+(( .@incomplete & 16 )?"^FF0000-incomplete-^000000":"" ),
+							"Edit NPC Limitation "+(( .@incomplete & 32 )?"^FF0000-incomplete-^000000":"" ),
+							( .@incomplete )?"":"^0055FF - Complete Setup Mission^000000" );
+			next;
+			switch( .@main_option ){
+				case 1:
+					mes "^0055FF[ "+.@npc_name$+" ]^000000";
+					mes "Enter Title";
+					mes "^777777( Length: 4 ~ 30 )^000000";
+					while( input( .@title$,4,30 ) );
+					.@input_result = replacestr( .@title$,":"," " );
+					break;
+				case 2:
+					.@description$ = "";
+					do{
+						mes "^0055FF[ "+.@npc_name$+" ]^000000";
+						mes "Enter Description";
+						mes "^777777( Length: 4 ~ 255 )^000000";
+						mes " ";
+						mes "^0055FF"+.@description$+"^000000";
+						.@length = getstrlen( .@description$ );
+						do{
+							.@input_result = input( .@temp_input$,4,255 );
+							if( .@input_result )
+								message strcharinfo(0),"Input length must between 4 ~ 255";
+						}while( .@input_result );
+						.@description$ = .@description$ + " "+ .@temp_input$;
+						mes "^0055FF"+.@temp_input$+"^000000";
+						.@length = getstrlen( .@description$ );
+						next;
+					}while( select( ( .@length >= 255 )?"":"add more ^777777( left "+( 255 - .@length )+" words )^000000","-back" ) == 1 );
+					.@description$  = replacestr( .@description$,":"," " );
+					break;
+				case 3:
+					if( .@new_mission_id ){
+						dispbottom "Editing monster list might caused unwanted behaviours of scripts.  Which may included :";
+						dispbottom " > Script/Missions isnt working properly.";
+						dispbottom " > Deletion of player mission's progress.";
+						dispbottom " > etc.";
+						dispbottom "Overall it's not suggested to edit monster list that you have set early.";
+						dispbottom "( Recommend for Re-Adding mission, if needed )";
+					}
+					do{
+						mes "^0055FF[ "+.@npc_name$+" ]^000000";
+						mes "Monster List:";
+						if( .@monster_size ){
+							.@mob_menu$ = "";
+							.@current_mob_list$ = "|";
+							deletearray .@current_mob$;
+							for( .@i = 0; .@i < .@monster_size; .@i++ ){
+								.@mob_name$ = getmonsterinfo( .@monster_list[.@i],MOB_NAME );
+								.@mob_menu$ = .@mob_menu$ + .@monster_qty[.@i] +" x "+.@mob_name$ +":";
+								mes " ^777777 ~ "+.@monster_qty[.@i]+" x "+.@mob_name$+"^000000";
+								.@current_mob_list$ = .@current_mob_list$ + .@monster_list[.@i] +"|";
+							}
+
+						}else{
+							mes " ^777777 ~ none ^000000";
+						}
+						mes " ";
+						.@option = select( ( .@monster_size >= .max_required_monster )?"":"Add Monster",( .@monster_size )?"Delete Monster":"","- Back" );
+						switch( .@option ){
+							case 1:
+								mes "Enter Monster ID";
+								do{
+									input .@mob_id;
+									if( !.@mob_id ) break;
+									.@mob_name$ = getmonsterinfo( .@mob_id,MOB_NAME );
+								}while( .@mob_name$ == "null" );
+								if( .@mob_name$ != "null" && .@mob_id ){
+									mes "How many "+.@mob_name$+" need to hunt ?";
+									input .@amount,0,30000;
+									if( .@amount ){
+										if( compare( "|"+.@current_mob_list$+"|","|"+.@mob_id+"|" ) ){
+											for( .@i = 0; .@i < .@monster_size; .@i++ )
+												if( .@monster_list[.@i] == .@mob_id ){
+													.@monster_qty[.@i] += .@amount;
+													break;
+												}
+
+										}else{
+											.@monster_list[.@monster_size] = .@mob_id;
+											.@monster_qty[.@monster_size] = .@amount;
+											.@monster_size++;
+										}
+									}
+								}
+								break;
+							case 2:
+								mes "^0055FF[ "+.@npc_name$+" ]^000000";
+								mes "Pick a Monster to Remove.";
+								.@i = select( .@mob_menu$+"- Back" ) - 1;
+								if( .@i < .@monster_size ){
+									deletearray .@monster_list[.@i],1;
+									deletearray .@monster_qty[.@i],1;
+									.@monster_size--;
+								}
+							default: break;
+						}
+						if( .@option < 3 ) next;
+					}while( .@option < 3 );
+					break;
+				case 4:
+					do{
+						mes "^0055FF[ "+.@npc_name$+" ]^000000";
+						mes "Required Item List: ";
+						if( .@item_size ){
+							.@item_menu$ = "";
+							.@current_item_list$ = "|";
+							deletearray .@current_item$;
+							for( .@i = 0; .@i < .@item_size; .@i++ ){
+								.@item_name$ = getitemname( .@item_list[.@i] );
+								.@item_menu$ = .@item_menu$ + .@item_qty[.@i] +"x "+.@item_name$ +":";
+								mes " ^777777 ~ "+.@item_qty[.@i]+" x "+.@item_name$+"^000000";
+								.@current_item_list$ = .@current_item_list$ + .@item_list[.@i] + "|";
+							}
+
+						}else{
+							mes " ^777777 ~ none ^000000";
+						}
+						mes " ";
+						.@option = select( ( .@item_size >= .max_required_item )?"":"Add Item",( .@item_size )?"Delete Item":"","- Back" );
+						switch( .@option ){
+							case 1:
+								do{
+									input .@item_id;
+									if( !.@item_id ) break;
+									.@item_name$ = getitemname( .@item_id );
+								}while( .@item_name$ == "null" || .@item_name$ == "" );
+								if( .@item_id && .@item_name$ != "null" && .@item_name$ != "" ){
+									mes "How many "+.@item_name$+" need to collect ?";
+									input .@amount,0,30000;
+									if( .@amount ){
+										if( compare( "|"+.@current_item_list$+"|","|"+.@item_id+"|" ) ){
+											for( .@i = 0; .@i < .@item_size; .@i++ )
+												if( .@item_list[.@i] == .@item_id ){
+													.@item_qty[.@i] += .@amount;
+													break;
+												}
+										}else{
+											.@item_list[.@item_size] = .@item_id;
+											.@item_qty[.@item_size] = .@amount;
+											.@item_size++;
+										}
+									}
+								}
+								break;
+							case 2:
+								mes "^0055FF[ "+.@npc_name$+" ]^000000";
+								mes "Pick an Item to Remove.";
+								.@i = select( .@item_menu$+" - Back" ) - 1;
+								if( .@i < .@item_size ){
+									mes "Removed "+.@item_qty[.@i]+" x "+getitemname( .@item_list[.@i] );
+									deletearray .@item_list[.@i],1;
+									deletearray .@item_qty[.@i],1;
+									.@item_size--;
+								}
+							default: break;
+						}
+						if( .@option < 3 ) next;
+					}while( .@option < 3 );
+					break;
+				case 5: // class limitation
+					if( !.@base_job_bitmask ){
+						// enable all job by default.
+						for( .@i = 0; .@i < .base_job_size; .@i++ ){
+							.@bitmask_value = ( 1 << .@i );
+							.@base_job_bitmask |= .@bitmask_value;
+						}
+						// enable all inherited classes by default.
+						for( .@i = 0; .@i < .job_branch_size; .@i++ ){
+							.@bitmask_value = ( 1 << .@i );
+							.@job_branch_bitmask |= .@bitmask_value;
+						}
+					}
+
+					do{
+						mes "^0055FF[ "+.@npc_name$+" ]^000000";
+						mes "Level Range : "+( ( .@level_range[1] )? "^777777"+.@level_range[0]+" ~ "+.@level_range[1]:"^FF0000-incomplete-" )+"^000000";
+						mes "Available Job Setting";
+						if( .@base_job_bitmask ){
+							for( .@i = 0; .@i < .base_job_size; .@i++ )
+								if( .@base_job_bitmask & ( 1 << .@i ) )
+									mes " ^777777 ~ "+jobname( roclass( .base_job[.@i] ) )+" ^000000";
+						}else{
+							mes " ^FF0000 -incomplete-^000000";
+						}
+						mes " ";
+						mes "Inherited Branch Setting";
+						if( .@job_branch_bitmask ){
+							for( .@i = 0; .@i < .job_branch_size; .@i++ )
+								if( .@job_branch_bitmask & ( 1 << .@i ) )
+									mes " ^777777 ~ "+.job_branch_name$[.@i]+" ^000000";
+						}else{
+							mes " ^FF0000 -incomplete-^000000";
+						}
+						next;
+						.@option = select( "Edit Base Job","Edit Job Branch","Edit Level Range","- Back" );
+						switch( .@option ){
+							case 1:
+								dispbottom "[ Base Job Class ] RED = Disable , GREEN = Enable";
+								do{
+									mes "^0055FF[ "+.@npc_name$+" ]^000000";
+									mes "Available Job List:";
+									.@base_job_menu$ = "";
+									for( .@i = 0; .@i < .base_job_size; .@i++ ){
+										.@job_name$ = jobname( roclass( .base_job[.@i] ) );
+										if( .@base_job_bitmask & ( 1 << .@i ) )
+											mes " ^777777 ~ "+.@job_name$+" ^000000";
+										.@base_job_menu$ = .@base_job_menu$ + (( .@base_job_bitmask & ( 1 << .@i ) )?"^4EEE94":"^FF0000" ) + .@job_name$ +"^000000:";
+									}
+									next;
+									.@i = select( .@base_job_menu$+"- Back" ) - 1;
+									if( .@i < .base_job_size ){
+										.@bitmask_value = ( 1 << .@i );
+										if( .@base_job_bitmask & .@bitmask_value )
+											.@base_job_bitmask -= .@bitmask_value;
+										else
+											.@base_job_bitmask |= .@bitmask_value;
+									}
+								}while( .@i < .base_job_size );
+								break;
+							case 2:
+								dispbottom "[ Inherited Job Branch ] RED = Disable , GREEN = Enable";
+								do{
+									mes "^0055FF[ "+.@npc_name$+" ]^000000";
+									mes "Inherited Job Branch List:";
+									.@job_branch_menu$ = "";
+									for( .@i = 0; .@i < .job_branch_size; .@i++ ){
+										if( .@job_branch_bitmask & ( 1 << .@i ) )
+											mes " ^777777 ~ "+.job_branch_name$[.@i]+" ^000000";
+										.@job_branch_menu$ = .@job_branch_menu$ + (( .@job_branch_bitmask & ( 1 << .@i ) )?"^4EEE94":"^FF0000" ) + .job_branch_name$[.@i] +"^000000:";
+									}
+									next;
+									.@i = select( .@job_branch_menu$+"- Back" ) - 1;
+									if( .@i < .job_branch_size ){
+										.@bitmask_value = ( 1 << .@i );
+										if( .@job_branch_bitmask & .@bitmask_value )
+											.@job_branch_bitmask -= .@bitmask_value;
+										else
+											.@job_branch_bitmask |= .@bitmask_value;
+									}
+								}while( .@i < .job_branch_size );
+								break;
+							case 3:
+								mes "^0055FF[ "+.@npc_name$+" ]^000000";
+								mes "Minimum Level";
+								input .@level_range[0],1,.server_max_level ;
+								mes "Maximum Level";
+								input .@level_range[1],.@level_range[0],.server_max_level;
+							default: break;
+						}
+						if( .@option < 4 ) next;
+					}while( .@option < 4 );
+					break;
+				case 6: // mission limitation
+					do{
+						mes "^0055FF[ "+.@npc_name$+" ]^000000";
+						mes "Repeatable: ^777777"+( ( !.@repeatable )?"unlimit":""+.@repeatable )+" time^000000";
+						mes "Redo Delay: ^777777"+( ( !.@redo_delay )?"none":callsub( OnTime2Str,( ( .@redo_delay * 3600 ) + gettimetick(2) ) ))+"^000000";
+						mes "Time Limit: ^777777"+( ( !.@timelimit )?"none":callsub( OnTime2Str,( .@timelimit + gettimetick(2) ) ) )+"^000000";
+						.@option = select( "Edit Repeatable Status","Edit Time Limit","Edit Re-do Delay","Edit Required Mission","- Back" );
+						switch( .@option ){
+							case 1:
+								mes "How many time can this mission repeat ??";
+								mes "^777777( 0 = unlimited )^000000";
+								input .@repeatable,0,100;
+								break;
+							case 2:
+								mes "Time Limit of mission";
+								mes "      1 = 1 minute";
+								mes "    60 = 1 hour";
+								mes "1440 = 1 day";
+								input .@timelimit,0,50000;
+								.@timelimit *= 60;
+								break;
+							case 3:
+								mes "Time Delay to re-take the mission";
+								mes "     1 =  1 hour";
+								mes "   24 =  1 day";
+								mes " 720 = 30 day";
+								input .@redo_delay,0,50000;
+								break;
+							case 4:
+								mes "This is not fully implemented yet.. still in beta test";
+								break;
+
+								do{
+									mes "Required Mission:";
+									if( .@required_mission_size ){
+										for( .@i = 0; .@i < .@required_mission_size; .@i++ ){
+											mes " ^777777 ~ "+.@required_mission$[.@i]+"^000000";
+											.@required_mission_menu$ = .@required_mission_menu$ + .@required_mission$[.@i] +":";
+										}
+
+									}else{
+										mes "^777777 none ^000000";
+									}
+									next;
+									.@sub_option = select( ( .@required_mission_size < .max_required_mission )?"Add required mission":"",
+														( .@required_mission_size )?"Remove required mission":"",
+														"- Back");
+									switch( .@sub_option ){
+										case 1:
+											mes "Enter mission ID";
+											mes "^777777( enter 0 to cancel )^000000";
+											do{
+												input .@mission_id$;
+												if( .@mission_id$ == "0" ) break;
+											}while( compare( "|"+.@required_mission_menu$+"|","|"+.@mission_id$+"|" ) );
+											.@mission_id$ = replacestr( .@mission_id$,":","" );
+											if( .@mission_id$ != "0" ){
+												.@required_mission$[.@required_mission_size] = .@mission_id$;
+												.@required_mission_size++;
+											}
+											break;
+										case 2:
+											mes "Select a mission to remove.";
+											.@i = select( .@required_mission_menu$ ) - 1;
+											deletearray .@required_mission$[.@i],1;
+										default: break;
+									}
+								}while( .@sub_option < 3 );
+							default: break;
+						}
+						if( .@option < 5 ) next;
+					}while( .@option < 5 );
+					break;
+				case 7: // reward list
+					do{
+						mes "^0055FF[ "+.@npc_name$+" ]^000000";
+						mes " ";
+						mes "Cash : ^777777"+( ( .@cash )? .@cash:"none" )+"^000000";
+						mes "Zeny : ^777777"+( ( .@zeny )? .@zeny:"none" )+"^000000";
+						mes "Reward Item List: ";
+						if( .@reward_size ){
+							.@reward_menu$ = "";
+							deletearray .@current_reward$;
+							for( .@i = 0; .@i < .@reward_size; .@i++ ){
+								.@reward_name$ = getitemname( .@reward_list[.@i] );
+								.@reward_menu$ = .@item_menu$ + .@reward_qty[.@i] +"x "+.@reward_name$ +":";
+								.@current_reward$[.@i] = .@reward_name$;
+								mes " ^777777 ~ "+.@reward_qty[.@i]+" x "+.@reward_name$+"^000000";
+							}
+							.@current_reward_list$ = implode( .@current_reward$,"|" );
+
+						}else{
+							mes " ^777777 ~ none ^000000";
+						}
+						mes "Base EXP : ^777777"+( ( .@baseexp )? .@baseexp:"none" )+"^000000";
+						mes "Job EXP : ^777777"+( ( .@jobexp )? .@jobexp:"none" )+"^000000";
+						mes " ";
+						next;
+						.@option = select( ( .@reward_size >= .max_required_item )?"":"Add Item Reward",
+										( .@reward_size )?"Delete Item Reward":"",
+										"Edit Cash Reward",
+										"Edit Zeny Reward",
+										"Edit Base EXP Reward",
+										"Edit Job EXP Reward",
+										"- Back" );
+						mes "^0055FF[ "+.@npc_name$+" ]^000000";
+						switch( .@option ){
+							case 1:
+								mes "Enter Reward Item ID";
+								do{
+									input .@reward_id;
+									if( !.@reward_id ) break;
+									.@reward_name$ = getitemname( .@reward_id );
+								}while( .@reward_name$ == "null" || .@reward_name$ == "" );
+								if( .@reward_id && .@reward_name$ != "null" && .@reward_name$ != "" ){
+									mes "How many "+.@reward_name$+" will be rewarded ?";
+									input .@amount,0,30000;
+									if( .@amount ){
+										if( compare( "|"+.@current_reward_list$+"|","|"+.@reward_name$+"|" ) ){
+											for( .@i = 0; .@i < .@reward_size; .@i++ )
+												if( .@reward_list[.@i] == .@item_id ){
+													.@reward_qty[.@i] += .@amount;
+													break;
+												}
+										}else{
+											.@reward_list[.@reward_size] = .@reward_id;
+											.@reward_qty[.@reward_size] = .@amount;
+											.@reward_size++;
+										}
+									}
+								}
+								break;
+							case 2:
+								mes "Pick an Reward to Remove.";
+								.@i = select( .@reward_menu$ ) - 1;
+								mes "Removed "+.@reward_qty[.@i]+"x "+getitemname( .@reward_list[.@i] );
+								deletearray .@reward_list[.@i],1;
+								deletearray .@reward_qty[.@i],1;
+								.@reward_size--;
+								break;
+							case 3:
+								mes "How many Cash will be given ?";
+								mes "^777777( value: 0 ~ "+.max_integer_value+" )^000000";
+								input .@cash,0,.max_integer_value;
+								break;
+							case 4:
+								mes "How many Zeny will be given ?";
+								mes "^777777( value: 0 ~ "+.max_integer_value+" )^000000";
+								input .@zeny,0,.max_integer_value;
+								break;
+							case 5:
+								mes "How many Base EXP reward ?";
+								mes "^777777( value: 0 ~ "+.max_integer_value+" )^000000";
+								input .@baseexp,0,.max_integer_value;
+								break;
+							case 6:
+								mes "How many Job EXP reward ?";
+								mes "^777777( value: 0 ~ "+.max_integer_value+" )^000000";
+								input .@jobexp,0,.max_integer_value;
+							default: break;
+						}
+						next;
+					}while( .@option < 7 );
+					break;
+				case 8: // npc limitation
+					mes "^0055FF[ "+.@npc_name$+" ]^000000";
+					mes "By default, the mission will be available from each mission board npc ^FF0000unless you have specified which NPC may offer this mission.^000000";
+					mes " ";
+					mes "Just pick all the NPC that may offer this mission if you wish.";
+					next;
+					if( !getarraysize( .@selected_npc_array$ ) )
+						for( .@i = 0; .@i < .mission_npc_count; .@i++ ){
+							.@selected_npc_array$[.@i] = ""+.@i;
+							.@selected_npc_size++;
+						}
+					dispbottom "[ NPC Limitation ] RED = Disable , GREEN = Enable";
+
+					do{
+						mes "^0055FF[ "+.@npc_name$+" ]^000000";
+						mes "Mission offered by: ";
+						.@selected_npc_menu$ = "";
+						if( .@selected_npc_size >= 2 ){
+							.@selected_npc$ = "|"+implode( .@selected_npc_array$,"|" )+"|";
+						}else{
+							.@selected_npc$ = "|"+.@selected_npc_array$+"|";
+						}
+						for( .@i = 0; .@i < .mission_npc_count; .@i++ ){
+							getmapxy( .@map$,.@x,.@y,1,.npc_unique_list$[.@i] );
+							.@sub_npc_name$ = ( ( compare( "|"+.@selected_npc$+"|","|"+.@i+"|" ) )?"^44EE00":"^FF0000" );
+							.@sub_npc_name$ = .@sub_npc_name$ + .npc_name_list$[.@i];
+							mes "^777777("+.@map$+") "+.@sub_npc_name$;
+							.@selected_npc_menu$ = .@selected_npc_menu$ + .@sub_npc_name$ +":";
+						}
+						next;
+						.@option = select( .@selected_npc_menu$+"^000000- Back" ) - 1;
+						if( .@option < .mission_npc_count ){
+							if( compare( "|"+.@selected_npc$+"|","|"+.@option+"|" ) )
+								.@selected_npc_array$[.@option] = "";
+							else
+								.@selected_npc_array$[.@option] = ""+.@option;
+							.@selected_npc_size = getarraysize( .@selected_npc_array$ );
+						}
+						// dispbottom "["+rand(10,99)+"] "+implode( .@selected_npc_array$,"|" );
+					}while( .@option < .mission_npc_count );
+					break;
+				default: break;
+			}
+			next;
+		}while( .@main_option < 9 );
+
+		// finalise all variable
+		if( .@monster_size ){
+			.@final_mob_list$ = "|";
+			.@final_mob_qty$ = "|";
+			for( .@i = 0; .@i < .@monster_size; .@i++ ){
+				.@final_mob_list$ = .@final_mob_list$ + .@monster_list[.@i] +"|";
+				.@final_mob_qty$ = .@final_mob_qty$ + .@monster_qty[.@i] +"|";
+			}
+		}
+
+		if( .@item_size ){
+			.@final_item_list$ = "|";
+			.@final_item_qty$ = "|";
+			for( .@i = 0; .@i < .@item_size; .@i++ ){
+				.@final_item_list$ = .@final_item_list$ + .@item_list[.@i] +"|";
+				.@final_item_qty$ = .@final_item_qty$ + .@item_qty[.@i] +"|";
+			}
+		}
+
+		if( .@reward_size ){
+			.@final_reward_list$ = "|";
+			.@final_reward_qty$ = "|";
+			for( .@i = 0; .@i < .@reward_size; .@i++ ){
+				.@final_reward_list$ = .@final_reward_list$ + .@reward_list[.@i] +"|";
+				.@final_reward_qty$ = .@final_reward_qty$ + .@reward_qty[.@i] +"|";
+			}
+		}
+
+		if( .@selected_npc_size ){
+			.@final_npc_list$ = "|";
+			for( .@i = 0; .@i < .@selected_npc_size; .@i++ )
+				.@final_npc_list$ = .@final_npc_list$ + .@selected_npc_array$[.@i] +"|";
+		}
+
+		if( !.@new_mission_id ){
+			.@new_mission_id = gettimetick(2);
+			message strcharinfo(0),"Mission # "+.@new_mission_id+" has been added.";
+		}else{
+			message strcharinfo(0),"Mission # "+.@new_mission_id+" has been updated.";
+			// attach and inform other online players.
+			callsub( OnRemoveMission,.@new_mission_id,"A GM updated Mission # "+.@new_mission_id );
+		}
+
+		// add new mission into SQL
+		query_sql(
+			"REPLACE INTO `mission_board` VALUES ( " +
+				.@new_mission_id+", " +
+				"'"+escape_sql( .@title$ )+"', " +
+				"'"+escape_sql( .@description$ )+"', " +
+				"'"+escape_sql( .@final_mob_list$ )+"', " +
+				"'"+escape_sql( .@final_mob_qty$ )+"', " +
+				"'"+escape_sql( .@final_item_list$ )+"', " +
+				"'"+escape_sql( .@final_item_qty$ )+"', " +
+				.@base_job_bitmask+", " +
+				.@job_branch_bitmask+", " +
+				.@level_range[0]+", " +
+				.@level_range[1]+", " +
+				.@repeatable+", " +
+				.@timelimit+", " +
+				"'"+escape_sql( .@final_reward_list$ )+"', " +
+				"'"+escape_sql( .@final_reward_qty$ )+"', " +
+				.@baseexp+", " +
+				.@jobexp+", " +
+				.@zeny+", " +
+				.@cash+", " +
+				getcharid(3)+", " +
+				"'"+escape_sql( strcharinfo(0) )+"', " +
+				"NOW(), " +
+				"'"+escape_sql( .@final_npc_list$ )+"', " +
+				.@redo_delay +
+			" ); "
+		);
+		break;
+	case 6: // delete mission
+		do{
+			mes "^0055FF[ "+.@npc_name$+" ]^000000";
+			deletearray .@id;
+			query_sql( "SELECT `id`,`title`,`min_lv`,`max_lv` FROM `mission_board` WHERE `npc_id` LIKE '%|"+.@mission_npc_num+"|%' LIMIT "+.max_page_size+" OFFSET "+.@offset,.@id,.@title$,.@min_lv,.@max_lv );
+			.@offset += .max_page_size;
+			.@size = getarraysize( .@id );
+			if( !.@size ){
+				mes "There are no available mission to update.";
+				close;
+
+			}else{
+				mes "Pick a mission.";
+				for( .@i = 0; .@i < .@size; .@i++ )
+					.@mission_menu$ = .@mission_menu$ + "["+.@min_lv[.@i]+"~"+.@max_lv[.@i]+"] "+.@title$[.@i] +":";
+			}
+			next;
+			.@i = select( .@mission_menu$+ ( ( .@size < .max_page_size )?"":"- next page" ) ) - 1;
+		}while( .@i == .@size );
+		.@mission_id = .@id[.@i];
+		mes "^0055FF[ "+.@npc_name$+" ]^000000";
+		mes "Are you sure to remove this mission ?";
+		if( select( "nope","Delete Mission" ) == 2 ){
+			query_sql( "DELETE FROM `mission_board` WHERE `id` = "+.@mission_id+" LIMIT 1" );
+			mes "Removed mission from mission list.";
+
+			// attach other online players and remove the missions.
+			callsub( OnRemoveMission,.@mission_id,"A GM removed Mission # "+.@mission_id );
+			query_sql( "DELETE FROM `player_mission` WHERE `completion` = '0000-00-00 00:00:00' AND `mission_id` = "+.@mission_id );
+			mes "Removed mission from all players.";
+		}
+	default: break;
+}
+close;
+
+OnInit:
+initnpctimer "mission_board";
+// initialize settings
+if( strnpcinfo(0) == "mission_board" ){
+
+	// gm level to access panel
+	.gm_level = 90;
+	// max no. of required monster
+	.max_required_monster = 500;
+	// max no. of required item
+	.max_required_item = 1000;
+	// max no. of required mission ( un-implement yet )
+	.max_required_mission = 10;
+	// max no. of available mission
+	.max_mission_available = 50;
+	// max value of integer input
+	.max_integer_value = 2000000000;
+	// max amount of mission per page
+	.max_page_size = 30;
+	// max mission per npc take by character
+	.max_mission_per_char = 3;
+
+	// predefined values.
+	.npc_name$ = strnpcinfo(0);
+	.server_max_level = MAX_LEVEL;
+	setarray .base_job,
+		EAJ_SWORDMAN,
+		EAJ_MAGE,
+		EAJ_ARCHER,
+		EAJ_ACOLYTE,
+		EAJ_MERCHANT,
+		EAJ_THIEF,
+		EAJ_TAEKWON,
+		EAJ_GUNSLINGER,
+		EAJ_NINJA,
+		EAJ_SUMMONER;
+	.base_job_size = getarraysize( .base_job );
+	setarray .job_branch_name$,
+		"2-1 Classes",
+		"2-2 Classes",
+		"Rebirth Classes",
+		"Baby Classes",
+		"Third Classes";
+	setarray .job_branch,
+		EAJL_2_1,
+		EAJL_2_2,
+		EAJL_UPPER,
+		EAJL_BABY,
+		EAJL_THIRD;
+	.job_branch_size = getarraysize( .job_branch );
+
+	bindatcmd "mission", strnpcinfo(0)+"::OnCommand";
+
+}else{
+	// delay the process
+	.@num = atoi( strnpcinfo(2) );
+	if( .@num && .@num <= 500 && .mission_npc_count < 100 ){
+		sleep( .@num + 1 );
+		.npc_name_list$[ (.@num-1) ] = strnpcinfo(1);
+		.npc_unique_list$[ (.@num-1) ] = strnpcinfo(0);
+		// debugmes "["+.mission_npc_count+"]"+.npc_name_list$[ .mission_npc_count ]+"|"+.npc_unique_list$[ .mission_npc_count ];
+		.mission_npc_count++;
+		end;
+
+	}else if( !.@num ){
+		debugmes "[Removed] "+strnpcinfo(0)+", invalid <num:'"+strnpcinfo(2)+"'>";
+	}else if( .mission_npc_count >= 100 ){
+		debugmes "[Skipped] "+strnpcinfo(0)+", max: 100 Total NPC.";
+	}
+	disablenpc strnpcinfo(0);
+}
+end;
+
+// just used to display how many total Mission Board NPC.
+OnTimer1000:
+	stopnpctimer;
+	debugmes "[ Mission Board ] Total NPC Loaded : "+.mission_npc_count+" ...";
+	end;
+
+OnCommand:
+	if ( !strcmp( strnpcinfo(0), .npc_name$ ) ) {
+		if ( @ms_size ) {
+			for ( .@i = 0; .@i < @ms_size; .@i++ ) {
+				.@mob_size = getarraysize( getd( "@ms_"+ @ms_list$[.@i] +"_list" ) );
+				query_sql "select id, title, item_list, item_qty from mission_board where id = "+ @ms_list$[.@i], .@m_id, .@title$, .@item_id$, .@item_amount$;
+				if ( .@mob_size ) {
+					if ( getd( "@ms_"+ .@m_id +"_expire" ) )
+						dispbottom "[Mission '"+ .@title$ +"' Progress] Time limit -> "+ callfunc( "Time2Str", getd( "@ms_"+ .@m_id +"_expire" ) );
+					for ( .@j = 0; .@j < .@mob_size; .@j++ )
+						dispbottom "[Mission '"+ .@title$ +"' Progress] Hunted "+ getd( "@ms_"+ @ms_list$[.@i] +"_hunt["+ .@j +"]" ) +"/"+ getd( "@ms_"+ @ms_list$[.@i] +"_qty[" + .@j +"]" ) +" x "+ getmonsterinfo( getd( "@ms_"+ @ms_list$[.@i] +"_list["+ .@j +"]" ), MOB_NAME );
+					explode .@item_id_array$, .@item_id$, "|";
+					explode .@item_amount_array$, .@item_amount$, "|";
+					.@size = getarraysize( .@item_id_array$ );
+					for ( .@j = 1; .@j < .@size; .@j++ )
+						dispbottom "[Mission '"+ .@title$ +"' Progress] Collected "+ countitem( atoi( .@item_id_array$[.@j] ) ) +"/"+ .@item_amount_array$[.@j] +" x "+ getitemname( atoi( .@item_id_array$[.@j] ) );
+				}
+			}
+		}
+	}
+	end;
+
+OnPCLoginEvent:
+if( strnpcinfo(0) == .npc_name$ ){
+	.@timetick = gettimetick(2);
+	.@nb = query_sql( "SELECT `mission_id`,`expire`,`mob_hunt` FROM `player_mission` WHERE `completion` = '0000-00-00 00:00:00' AND `cid` = "+getcharid(0),@ms_list$,.@expire,.@mob_hunt$ );
+	@ms_size = .@nb;
+	if( @ms_size ){
+		for( .@i = 0; .@i < @ms_size; .@i++ ) {
+			query_sql( "SELECT `title`,`mob_list`,`mob_qty` FROM `mission_board` WHERE `id` = "+@ms_list$[.@i],@ms_title$,.@mob_list$,.@mob_qty$ );
+			if ( .@expire[.@i] ) {
+				.@timeleft = ( .@expire[.@i] - .@timetick );
+				addtimer ( .@timeleft * 1000 ),.npc_name$+"::OnTimeCheck";
+				dispbottom "[ Mission Progress : "+@ms_title$+" , expire in "+ callfunc( "Time2Str", .@timeleft + .@timetick )+" ]";
+			}
+			else
+				dispbottom "[ Mission Progress : "+@ms_title$ +" ]";
+			setd( "@ms_"+@ms_list$[.@i]+"_expire" ),.@expire[.@i];
+			if( callsub( OnExplodeArray,.@mob_list$,getd( "@ms_"+@ms_list$[.@i]+"_list" ),0 ) ){
+				callsub( OnExplodeArray,.@mob_hunt$[.@i],getd( "@ms_"+@ms_list$[.@i]+"_hunt" ),0 );
+				.@monster_size = callsub( OnExplodeArray,.@mob_qty$,getd( "@ms_"+@ms_list$[.@i]+"_qty" ),0 );
+//				for( .@mob = 0; .@mob < .@monster_size; .@mob++ )
+//					dispbottom  " ~ killed "+getd( "@ms_"+@ms_list$[.@i]+"_hunt["+.@mob+"]" )+"/"+getd( "@ms_"+@ms_list$[.@i]+"_qty["+.@mob+"]" )+" x "+getmonsterinfo( getd( "@ms_"+@ms_list$[.@i]+"_list["+.@mob+"]" ),MOB_NAME );
+			}
+		}
+	}
+}
+end;
+
+OnPCLogoutEvent:
+if( strnpcinfo(0) == .npc_name$ ){
+	if( @ms_size )
+		for( .@ms = 0; .@ms < @ms_size; .@ms++ ){
+			debugmes "Saving "+@ms_list$[.@ms];
+			.@mob_size = getarraysize( getd( "@ms_"+@ms_list$[.@ms]+"_list" ) );
+			if( .@mob_size ){
+				copyarray .@temp_array[0],getd( "@ms_"+@ms_list$[.@ms]+"_list[0]" ),.@mob_size;
+				.@mob_hunt$ = "|";
+				for( .@mob = 0; .@mob < .@mob_size; .@mob++ )
+					.@mob_hunt$ = .@mob_hunt$ + getd( "@ms_"+@ms_list$[.@ms]+"_hunt["+.@mob+"]" ) +"|";
+				query_sql( "UPDATE `player_mission` SET `mob_hunt` = '"+escape_sql( .@mob_hunt$ )+"' WHERE `mission_id` = "+@ms_list$[.@ms]+" AND `completion` = '0000-00-00 00:00:00' AND `cid` = "+getcharid(0) );
+			}
+		}
+}
+end;
+
+OnNPCKillEvent:
+if( strnpcinfo(0) == .npc_name$ ){
+	if( @ms_size ){
+		.@map$ = strcharinfo(3);
+
+		// by default mission wont work in PVP,GVG,Instance,Event maps
+		if( compare( .@map$,"@" ) || getmapflag( .@map$,mf_gvg ) || getmapflag( .@map$,mf_pvp )){
+			// dispbottom "[Mission Board] PvP/GvG Map , Instance Map , Event Map , include monsters will not affect Mission Progress.";
+			end;
+		}
+
+		.@timetick = gettimetick(2);
+		for( .@ms = ( @ms_size - 1 ); .@ms >= 0; .@ms-- ){
+			if( getd( "@ms_"+@ms_list$[.@ms]+"_expire" ) && getd( "@ms_"+@ms_list$[.@ms]+"_expire" ) < .@timetick ){
+				setd( "@ms_"+@ms_list$[.@ms]+"_expire" ),0;
+				deletearray getd( "@ms_"+@ms_list$[.@ms]+"_list" );
+				deletearray getd( "@ms_"+@ms_list$[.@ms]+"_qty" );
+				deletearray getd( "@ms_"+@ms_list$[.@ms]+"_hunt" );
+				dispbottom "[Mission # "+@ms_title$[.@ms]+"] Mission removed due to expired. ";
+				deletearray @ms_list$[.@ms],1;
+				@ms_size--;
+
+			}else{
+				.@mob_size = getarraysize( getd( "@ms_"+@ms_list$[.@ms]+"_list" ) );
+				if( .@mob_size ){
+					copyarray .@temp_array[0],getd( "@ms_"+@ms_list$[.@ms]+"_list[0]" ),.@mob_size;
+					for( .@mob = 0; .@mob < .@mob_size; .@mob++ )
+						if( .@temp_array[.@mob] == killedrid ){
+							.@value = getd( "@ms_"+@ms_list$[.@ms]+"_hunt["+.@mob+"]" ) + 1;
+							setd( "@ms_"+@ms_list$[.@ms]+"_hunt["+.@mob+"]" ),.@value;
+							// dispbottom "[Mission # "+@ms_title$[.@ms]+" Progress] Hunted "+.@value+" x "+getmonsterinfo( .@temp_array[.@mob],MOB_NAME );
+							break;
+						}
+					deletearray .@temp_array;
+				}
+			}
+		}
+	}
+}
+end;
+
+OnTimeCheck:
+	if( @ms_size ){
+		.@timetick = gettimetick(2);
+		for( .@i = ( @ms_size - 1 ); .@i >= 0; .@i-- ){
+			if( getd( "@ms_"+@ms_list$[.@i]+"_expire" ) <= .@timetick ){
+				setd( "@ms_"+@ms_list$[.@i]+"_expire" ),0;
+				deletearray getd( "@ms_"+@ms_list$[.@i]+"_list" );
+				deletearray getd( "@ms_"+@ms_list$[.@i]+"_qty" );
+				deletearray getd( "@ms_"+@ms_list$[.@i]+"_hunt" );
+				dispbottom "[Mission # "+@ms_title$[.@i]+"] Mission removed due to expired. ";
+				deletearray @ms_list$[.@i],1;
+				deletearray @ms_title$[.@i],1;
+				@ms_size--;
+			}
+		}
+	}
+	end;
+
+OnRemoveMission:
+	.@mission_id = getarg(0);
+	.@message$ = getarg(1);
+
+	query_sql( "SELECT `aid`,`cid` FROM `player_mission` WHERE `cid` IN ( SELECT `char_id` FROM `char` WHERE `online` = 1 ) AND `mission_id` = "+.@mission_id+" AND `completion` = '0000-00-00 00:00:00' LIMIT 128",.@aid,.@cid );
+	.@aid_size = getarraysize( .@aid );
+	.@i = 0;
+	.@origin_aid = getcharid(3);
+	while( .@i < .@aid_size ){
+		if( isloggedin( .@aid[.@i],.@cid[.@i] ) ){
+			attachrid( .@aid[.@i] );
+			for( .@ms = @ms_size; .@ms >= 0; .@ms-- )
+				if( @ms_list$[.@ms] == ""+.@mission_id ){
+					message strcharinfo(0),.@message$;
+					dispbottom "Please visit Mission NPC to gain latest information.";
+					setd( "@ms_"+@ms_list$[.@ms]+"_expire" ),0;
+					deletearray getd( "@ms_"+@ms_list$[.@ms]+"_list" );
+					deletearray getd( "@ms_"+@ms_list$[.@ms]+"_qty" );
+					deletearray getd( "@ms_"+@ms_list$[.@ms]+"_hunt" );
+					deletearray @ms_list$[.@ms],1;
+					deletearray @ms_title$[.@ms],1;
+					@ms_size--;
+					break;
+				}
+			detachrid;
+			.@count++;
+		}
+		.@i++;
+	}
+	attachrid( .@origin_aid );
+	dispbottom "Total "+.@count+" online players affected.";
+	return;
+
+// usage :
+// .@timeleft = callsub( OnTime2Str,<time> );
+OnTime2Str:
+	.@time = getarg(0);
+	.@left = ( .@time - gettimetick(2) );
+	.@hour = ( .@left / 3600 );
+	.@min = ( .@left % 3600 / 60 );
+	.@sec = ( .@left % 60 );
+	if( !.@left )
+		return "none";
+	else
+		return "^777777"+( ( .@hour )? .@hour+" hr ":"" ) + ( ( .@hour || .@min )? .@min+" min ":"" ) +.@sec+" sec^000000";
+
+
+// usage :
+// .@new_array_size = callsub( OnExplodeArray,<old string variable>,<new array variable>,<save '0'> );
+OnExplodeArray:
+	.@type = getarg(2);
+	explode( getarg(0),getarg(0),"|" );
+	.@size = getarraysize( getarg(0) );
+	if ( !.@size )
+		return 0;
+	while( .@i < .@size ){
+		if( !.@type ){
+			.@value = atoi( getelementofarray( getarg(0),.@i ) );
+			if( .@value ){
+				set getelementofarray( getarg(1),.@new_size ),.@value;
+				.@new_size++;
+			}
+		}else{
+			set getelementofarray( getarg(1),.@new_size ),getelementofarray( getarg(0),.@i );
+			.@new_size++;
+		}
+		.@i++;
+	}
+
+	return .@new_size;
+
+
+// display mission information + optional progress checking
+OnDisplayMissionInfo:
+		.@mission_id = getarg(0);
+		.@title$ = getarg(1);
+		.@description$ = getarg(2);
+		.@repeatable = getarg(4);
+		.@timelimit = getarg(5);
+		.@monster_size = getarraysize( getarg(6) );
+		.@item_size = getarraysize( getarg(8) );
+		.@base_job_bitmask = getarg(10);
+		.@job_branch_bitmask = getarg(11);
+		.@baseexp = getarg(12);
+		.@jobexp = getarg(13);
+		.@cash = getarg(14);
+		.@zeny = getarg(15);
+		.@reward_size = getarraysize( getarg(16) );
+		.@selected_npc_size = getarraysize( getarg(18) );
+		.@time_update$ = getarg(19);
+		.@redo_delay = getarg(20);
+		.@check_progress = getarg(21);
+
+		if( .@check_progress & 8 )
+			.@eac = eaclass();
+
+		// display mission info
+		mes ""+(( .@mission_id )? "^FF0000Mission ID # "+.@mission_id:" " )+"^000000";
+		mes "Title : "+( ( .@title$ != "" )?"^777777"+.@title$:"^FF0000-incomplete-" )+"^000000";
+		mes "Description : "+( ( .@description$ != "" )?"^777777"+.@description$:"^FF0000-incomplete-" )+"^000000";
+		mes "Level Range : "+( ( getelementofarray( getarg(3),0 ) )? "^777777"+getelementofarray( getarg(3),0 )+" ~ "+getelementofarray( getarg(3),1 ):"^FF0000-incomplete-" )+"^000000";
+		if( .@check_progress & 1 )
+			if( BaseLevel >= getelementofarray( getarg(3),0 ) && BaseLevel <= getelementofarray( getarg(3),1 ) )
+				.@lv_progress = 1;
+
+		mes "Repeatable: ^777777"+( ( !.@repeatable )?"unlimit":.@repeatable+" time" )+"^000000";
+		mes "Redo Delay: ^777777"+( ( !.@redo_delay )?"none":callsub( OnTime2Str,( ( .@redo_delay * 3600 ) + gettimetick(2) ) ) )+"^000000";
+		mes "Expire in: ^777777"+( ( !.@timelimit )?"none":callsub( OnTime2Str,.@timelimit ) )+"^000000";
+		mes " ";
+
+		.@word$ = (( !.@monster_size && !.@item_size )?"^FF0000incomplete":"^777777none" );
+		mes "Monster List : "+( ( .@monster_size )?"":.@word$ )+"^000000";
+		if( .@monster_size )
+			for( .@i = 0; .@i < .@monster_size; .@i++ ){
+				.@mob_id = getelementofarray( getarg(6),.@i );
+				.@quantity = getelementofarray( getarg(7),.@i );
+				if( .@check_progress & 2 ){
+					.@killed_count = getd( "@ms_"+.@mission_id+"_hunt["+.@i+"]" );
+					if( .@killed_count >= .@quantity ){
+						.@monster_progress++;
+						.@temp_color$ = "44EE99";
+					}else{
+						.@temp_color$ = "FF0000";
+					}
+				}
+				mes " ^777777"+.@quantity+" x "+getmonsterinfo( .@mob_id,MOB_NAME )+"  "+( ( .@check_progress & 2 )?"^"+.@temp_color$+"(killed "+.@killed_count+")":"" )+"^000000";
+			}
+		mes "Item List : "+( ( .@item_size )?"":.@word$ )+"^000000";
+		if( .@item_size )
+			for( .@i = 0; .@i < .@item_size; .@i++ ){
+				.@item_id = getelementofarray( getarg(8),.@i );
+				.@quantity = getelementofarray( getarg(9),.@i );
+				.@item_type = getiteminfo( .@item_id,2 );
+				if( .@check_progress & 4 ){
+					.@item_count = countitem( .@item_id );
+					if( .@item_count >= .@quantity ){
+						.@item_progress++;
+						.@temp_color$ = "44EE99";
+					}else{
+						.@temp_color$ = "FF0000";
+					}
+				}
+				mes " ^777777"+.@quantity+" x "+getitemname( .@item_id )+" "+( ( .@item_type == 4 || .@item_type == 5 )?"["+getitemslots( .@item_id )+"]":"" )+"  "+( ( .@check_progress & 4 )?"^"+.@temp_color$+"(have "+.@item_count+")":"" )+"^000000";
+			}
+		mes " ";
+		mes "Available Job Classes :";
+		if( .@base_job_bitmask ){
+			deletearray .@available_job$;
+			deletearray .@available_branch$;
+			.@available_job_size = 0;
+			.@available_branch_size = 0;
+			for( .@i = 0; .@i < .base_job_size; .@i++ )
+				if( .@base_job_bitmask & ( 1 << .@i ) ){
+					.@class = roclass( .base_job[.@i] );
+					.@available_job$[.@available_job_size] = jobname( .@class );
+					if( .@check_progress & 8 && BaseClass == .@class )
+						.@class_progress = 1;
+					.@available_job_size++;
+				}
+			mes " ^777777"+implode( .@available_job$,"," )+" ^000000";
+			if( .@job_branch_bitmask && .@class_progress ){
+				for( .@i = 0; .@i < .job_branch_size; .@i++ )
+					if( .@job_branch_bitmask & ( 1 << .@i ) ){
+						if( .@check_progress & 8 && ( .@eac & .job_branch[.@i] ) )
+							.@branch_progress++;
+						.@available_branch$[.@available_branch_size] = .job_branch_name$[.@i];
+						.@available_branch_size++;
+					}
+				mes "Inherited: ^777777"+implode( .@available_branch$,", " )+" ^000000";
+			}
+		}else{
+			mes " ^FF0000-incomplete^000000";
+		}
+
+		mes " ";
+		mes "Reward List : ";
+		mes "^777777 ~ Base EXP: "+( ( .@baseexp )? .@baseexp:"none" )+"^000000";
+		mes "^777777 ~ Job EXP: "+( ( .@jobexp )? .@jobexp:"none" )+"^000000";
+		mes "^777777 ~ Cash: "+( ( .@cash )? .@cash:"none" )+"^000000";
+		mes "^777777 ~ Zeny: "+( ( .@zeny )? .@zeny:"none" )+"^000000";
+		mes "Reward Item List: "+( ( .@reward_size )?"":"^777777none" )+"^000000";
+		if( .@reward_size )
+			for( .@i = 0; .@i < .@reward_size; .@i++ ){
+				.@item_id = getelementofarray( getarg(16),.@i );
+				.@item_type = getiteminfo( .@item_id,2 );
+				mes " ^777777 ~ "+getelementofarray( getarg(17),.@i )+" x "+getitemname( .@item_id )+" "+( ( .@item_type == 4 || .@item_type == 5 )?"["+getitemslots( .@item_id )+"]":"" )+"^000000";
+			}
+		mes " ";
+
+		mes "Mission Offered by: "+( ( .@selected_npc_size )?"":"^FF0000-incomplete" )+"^000000";
+		if( .@selected_npc_size ){
+			if( .@selected_npc_size >= 2 )
+				.@selected_npc$ = "|"+implode( getarg(18),"|" )+"|";
+			else
+				.@selected_npc$ = "|"+getarg(18)+"|";
+			for( .@i = 0; .@i < .mission_npc_count; .@i++ )
+				if( ( compare( "|"+.@selected_npc$+"|","|"+.@i+"|" ) ) ){
+					getmapxy( .@map$,.@x,.@y,1,.npc_unique_list$[.@i] );
+					.@sub_npc_name$ = "^777777("+.@map$+") ";
+					.@sub_npc_name$ = .@sub_npc_name$ + .npc_name_list$[.@i] + "^000000";
+					mes " ~ "+.@sub_npc_name$;
+				}
+			mes " ";
+		}
+		if( .@time_update$ != "0000-00-00 00:00:00" && .@time_update$ != "" ){
+			mes "Last Mission Update:";
+			mes "^777777"+.@time_update$+"^000000";
+		}
+
+		if( .@check_progress ){
+			if( .@check_progress & 1 && !.@lv_progress ){
+				dispbottom "[Failed] Your level didnt meet the requirements.";
+				.@check_result |= 1;
+			}
+			if( .@check_progress & 2 && .@monster_size != .@monster_progress ){
+				dispbottom "[Failed] Your Monsters Hunt didnt meet the requirements.";
+				.@check_result |= 2;
+			}
+			if( .@check_progress & 4 && .@item_size != .@item_progress ){
+				dispbottom "[Failed] Your Items collecting didnt meet the requirements.";
+				.@check_result |= 4;
+			}
+			if( .@check_progress & 8 && ( !.@branch_progress && !.@class_progress ) ){
+				dispbottom "[Failed] Your Class didnt meet the requirements.";
+				.@check_result |= 8;
+			}
+		}
+	return .@check_result;
+}
+
+
+// the number behind the NPC name must be NUMBER with range of ( 1 ~ 500 )
+// the number should stay the same for eternity, if you change it frequently, it might affect your missions for each NPC.
+// ( to conclude, once you assigned the number, dont change it for the sake of your mission board ... )
+
+prontera,209,211,3	duplicate(mission_board)	Prontera Mission#1	888
+morocc,193,93,3	duplicate(mission_board)	Morroc Mission#2	888
+geffen,84,74,3	duplicate(mission_board)	Geffen Mission#3	888
+alberta,91,80,5	duplicate(mission_board)	Alberta Mission#4	888
+xmas,172,150,4	duplicate(mission_board)	Lutie Mission#5	888
+yuno,197,192,5	duplicate(mission_board)	Yuno Mission#6	888
+aldebaran,153,135,3	duplicate(mission_board)	Aldebaran Mission#7	888
+veins,222,138,4	duplicate(mission_board)	Veins Mission#8	888
+harboro1,303,211,3	duplicate(mission_board)	Rockridge Mission#9	888
+
