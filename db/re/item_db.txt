@@ -11689,8 +11689,8 @@
 25690,M_M_Fast,Modification Module (Fast),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus bAspd,1; if (.@r >= 9) { bonus bAspdRate,6; } else if (.@r >= 7) { bonus bAspdRate,3; } },{},{}
 25691,M_M_Caster,Modification Module (Caster),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = -5; if (.@r >= 9) { .@val -= 6; } else if (.@r >= 7) { .@val -= 3; } bonus bVariableCastrate,.@val; },{},{}
 25692,M_M_Critical,Modification Module (Critical),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus bCritical,5; if (.@r >= 9) { bonus bCritAtkRate,10; } else if (.@r >= 7) { bonus bCritAtkRate,10; } },{},{}
-25693,M_M_Delay_After_skill,Modification Module (Delay after skill),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = -5; if (.@r >= 9) { .@val -= 10; } else if (.@r >= 7) { .@val -= 5; } bonus bDelayrate,.@val; } },{},{}
-25694,M_M_Fixed_Casting,Modification Module (Fixed Casting),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = -300; if (.@r >= 9) { .@val -= 400; } else if (.@r >= 7) { .@val -= 200; } bonus bFixedCast,.@val; } },{},{}
+25693,M_M_Delay_After_skill,Modification Module (Delay after skill),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = -5; if (.@r >= 9) { .@val -= 10; } else if (.@r >= 7) { .@val -= 5; } bonus bDelayrate,.@val; },{},{}
+25694,M_M_Fixed_Casting,Modification Module (Fixed Casting),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); .@val = -300; if (.@r >= 9) { .@val -= 400; } else if (.@r >= 7) { .@val -= 200; } bonus bFixedCast,.@val; },{},{}
 25695,M_M_Above_All,Modification Module (Above All),6,20,,10,,,,,,,,,,,,,{ .@r = getrefine(); bonus2 bSubEle,Ele_All,5; if (.@r >= 7) { bonus2 bSubSize,Size_All,5; if (.@r >= 9) { bonus2 bSubRace,RC_All,5; bonus2 bSubRace,RC_Player,-5; } } },{},{}
 25696,M_M_Drain_Life,Modification Module (Drain Life),6,20,,10,,,,,,,,,,,,,{ bonus2 bHPDrainRate,20,2; },{},{}
 25697,M_M_Drain_Soul,Modification Module (Drain Soul),6,20,,10,,,,,,,,,,,,,{ bonus2 bSPDrainRate,10,1; },{},{}
@@ -11704,7 +11704,7 @@
 25705,M_M_Lucky_Strike,Modification Module (Lucky Strike),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC; /* unknown rate */ },{},{}
 //
 // 26154,Spirit_Plumb,Spirit Plumb,5,20,,1100,70:160,,1,2,0x00000000,63,2,2,4,100,1,10,{ .@r = getrefine(); bonus bMatk,10*(.@r/2); bonus bMaxSPrate,2*(.@r/3); if (.@r >= 7) { bonus2 bSkillAtk,"SP_SPA",15; if (.@r >= 9) { bonus bVariableCastrate,-10; if (.@r >= 11) { bonus2 bSkillAtk,"SP_SWHOO",20; } } }
-26155,Meowmeow_Foxtail,Meowmeow Foxtail,5,20,,1100,300:300,,1,2,0x80000000,7,2,2,4,100,1,10,{ .@r = getrefine(); bonus bMatk,10*(.@r/2); bonus bBaseAtk,10*(.@r/2); bonus2 bAddClass,Class_All,2*(.@r/3); bonus bMatkRate,2*(.@r/3); if (.@r >= 7) { bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",15; bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15; if (.@r >= 9) { bonus bVariableCastrate,-10; bonus bAspdRate,10; if (.@r >= 11) { bonus2 bSkillAtk,"SU_PICKYPECK",15; bonus2 bSkillAtk,"SU_CN_METEOR",15; } } }
+26155,Meowmeow_Foxtail,Meowmeow Foxtail,5,20,,1100,300:300,,1,2,0x80000000,7,2,2,4,100,1,10,{ .@r = getrefine(); bonus bMatk,10*(.@r/2); bonus bBaseAtk,10*(.@r/2); bonus2 bAddClass,Class_All,2*(.@r/3); bonus bMatkRate,2*(.@r/3); if (.@r >= 7) { bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",15; bonus2 bSkillAtk,"SU_SV_STEMSPEAR",15; if (.@r >= 9) { bonus bVariableCastrate,-10; bonus bAspdRate,10; if (.@r >= 11) { bonus2 bSkillAtk,"SU_PICKYPECK",15; bonus2 bSkillAtk,"SU_CN_METEOR",15; } } } },{},{}
 //===================================================================
 // More Cards
 //===================================================================
