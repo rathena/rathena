@@ -15,9 +15,11 @@
 //============================================================
 prontera,156,173,4	script	Weekly Quest#1	121 ,{ 
 
-	searchstores 10,0;
-
+	//searchstores 10,0;
+      
       mes "Look at that "+callfunc("itemlink",607)+"! Isn't it awesome!?";
+	  next;
+	  
 	  close;
 }	
 function	script	itemlink	{ 

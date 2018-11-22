@@ -4232,3 +4232,7 @@
 62832,0,2073,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Toucan Hunting"
 62833,0,2199,400,0,0,0,0,0,0,0,0,0,0,0,0,0,"Siorava Hunting"
 62837,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Gramps GM Notice"
+
+// Quest ID,Time Limit,Target1,Val1,Target2,Val2,Target3,Val3,MobID1,NameID1,Rate1,MobID2,NameID2,Rate2,MobID3,NameID3,Rate3,Quest Title
+62838,0,0,0,0,0,0,0,2285,7808,5000,1134,7808,5000,1125,7808,1000,1769,7808,5000,1772,7808,5000,1149,7808,5000,1310,7808,5000,"Apprentice Blacksmith"
+62839,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Meteor Strike"

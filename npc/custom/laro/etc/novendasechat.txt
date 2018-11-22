@@ -1,0 +1,130 @@
+izlude,1,1,1	script	NoChatVendPront	-1,{
+
+OnWhisperGlobal:
+if (!getgmlevel()) end;
+OnInit:
+
+//Meio Cima
+setcell "izlude.gat",120,171,120,207,cell_novending,1;
+setcell "izlude.gat",121,172,121,213,cell_novending,1;
+setcell "izlude.gat",122,173,122,213,cell_novending,1;
+setcell "izlude.gat",123,174,123,213,cell_novending,1;
+setcell "izlude.gat",124,174,124,213,cell_novending,1;
+setcell "izlude.gat",125,174,125,213,cell_novending,1;
+setcell "izlude.gat",126,174,126,213,cell_novending,1;
+setcell "izlude.gat",127,174,127,213,cell_novending,1;
+setcell "izlude.gat",128,174,128,213,cell_novending,1;
+setcell "izlude.gat",129,174,129,213,cell_novending,1;
+setcell "izlude.gat",130,174,130,213,cell_novending,1;
+setcell "izlude.gat",131,174,131,213,cell_novending,1;
+setcell "izlude.gat",132,174,132,213,cell_novending,1;
+setcell "izlude.gat",133,173,133,213,cell_novending,1;
+setcell "izlude.gat",134,172,134,207,cell_novending,1;
+setcell "izlude.gat",135,171,135,207,cell_novending,1;
+
+//Meio Baixo
+setcell "izlude.gat",120,126,120,152,cell_novending,1;
+setcell "izlude.gat",121,90,121,152,cell_novending,1;
+setcell "izlude.gat",122,90,122,150,cell_novending,1;
+setcell "izlude.gat",122,90,122,150,cell_novending,1;
+setcell "izlude.gat",123,90,123,149,cell_novending,1;
+setcell "izlude.gat",124,90,124,149,cell_novending,1;
+setcell "izlude.gat",125,90,125,149,cell_novending,1;
+setcell "izlude.gat",126,90,126,149,cell_novending,1;
+setcell "izlude.gat",127,90,127,149,cell_novending,1;
+setcell "izlude.gat",128,90,128,149,cell_novending,1;
+setcell "izlude.gat",129,90,129,149,cell_novending,1;
+setcell "izlude.gat",130,90,130,149,cell_novending,1;
+setcell "izlude.gat",131,90,131,149,cell_novending,1;
+setcell "izlude.gat",132,90,132,149,cell_novending,1;
+setcell "izlude.gat",133,90,133,150,cell_novending,1;
+setcell "izlude.gat",134,90,134,151,cell_novending,1;
+setcell "izlude.gat",135,90,135,152,cell_novending,1;
+
+
+
+
+//Lateral Direita
+setcell "izlude.gat",136,170,136,188,cell_novending,1;
+setcell "izlude.gat",137,169,136,187,cell_novending,1;
+setcell "izlude.gat",138,168,136,186,cell_novending,1;
+setcell "izlude.gat",139,167,139,185,cell_novending,1;
+
+setcell "izlude.gat",136,135,136,153,cell_novending,1;
+setcell "izlude.gat",137,135,137,155,cell_novending,1;
+setcell "izlude.gat",138,136,138,155,cell_novending,1;
+setcell "izlude.gat",139,138,139,156,cell_novending,1;
+setcell "izlude.gat",140,139,140,184,cell_novending,1;
+setcell "izlude.gat",141,140,141,183,cell_novending,1;
+setcell "izlude.gat",142,141,142,182,cell_novending,1;
+setcell "izlude.gat",143,142,143,181,cell_novending,1;
+setcell "izlude.gat",144,143,144,180,cell_novending,1;
+setcell "izlude.gat",145,144,145,179,cell_novending,1;
+setcell "izlude.gat",146,145,146,178,cell_novending,1;
+setcell "izlude.gat",147,146,147,177,cell_novending,1;
+setcell "izlude.gat",148,147,148,176,cell_novending,1;
+setcell "izlude.gat",149,148,149,175,cell_novending,1;
+setcell "izlude.gat",150,149,150,174,cell_novending,1;
+setcell "izlude.gat",151,150,151,173,cell_novending,1;
+setcell "izlude.gat",152,151,152,172,cell_novending,1;
+setcell "izlude.gat",153,152,153,171,cell_novending,1;
+setcell "izlude.gat",154,153,154,170,cell_novending,1;
+setcell "izlude.gat",155,154,155,169,cell_novending,1;
+setcell "izlude.gat",156,154,156,169,cell_novending,1;
+setcell "izlude.gat",157,154,157,169,cell_novending,1;
+setcell "izlude.gat",158,154,158,169,cell_novending,1;
+setcell "izlude.gat",159,154,159,169,cell_novending,1;
+setcell "izlude.gat",160,154,160,169,cell_novending,1;
+setcell "izlude.gat",161,154,161,169,cell_novending,1;
+setcell "izlude.gat",162,154,162,169,cell_novending,1;
+setcell "izlude.gat",163,154,163,169,cell_novending,1;
+setcell "izlude.gat",164,154,164,169,cell_novending,1;
+setcell "izlude.gat",165,154,165,169,cell_novending,1;
+setcell "izlude.gat",166,154,166,169,cell_novending,1;
+setcell "izlude.gat",167,154,167,169,cell_novending,1;
+setcell "izlude.gat",168,154,168,169,cell_novending,1;
+setcell "izlude.gat",169,169,169,154,cell_novending,1;
+
+//Lateral Esquerda
+setcell "izlude.gat",116,167,116,185,cell_novending,1;
+setcell "izlude.gat",117,168,117,186,cell_novending,1;
+setcell "izlude.gat",118,169,118,187,cell_novending,1;
+setcell "izlude.gat",119,170,119,188,cell_novending,1;
+
+setcell "izlude.gat",119,135,119,153,cell_novending,1;
+setcell "izlude.gat",118,136,118,154,cell_novending,1;
+setcell "izlude.gat",117,137,117,155,cell_novending,1;
+setcell "izlude.gat",116,138,116,156,cell_novending,1;
+setcell "izlude.gat",115,139,115,184,cell_novending,1;
+setcell "izlude.gat",114,140,114,183,cell_novending,1;
+setcell "izlude.gat",113,141,113,182,cell_novending,1;
+setcell "izlude.gat",112,142,112,181,cell_novending,1;
+setcell "izlude.gat",111,143,111,180,cell_novending,1;
+setcell "izlude.gat",110,144,110,179,cell_novending,1;
+setcell "izlude.gat",109,145,109,178,cell_novending,1;
+setcell "izlude.gat",108,146,108,177,cell_novending,1;
+setcell "izlude.gat",107,147,107,176,cell_novending,1;
+setcell "izlude.gat",106,148,106,175,cell_novending,1;
+setcell "izlude.gat",105,149,105,174,cell_novending,1;
+setcell "izlude.gat",104,150,104,173,cell_novending,1;
+setcell "izlude.gat",103,151,103,172,cell_novending,1;
+setcell "izlude.gat",102,152,102,171,cell_novending,1;
+setcell "izlude.gat",101,153,101,170,cell_novending,1;
+setcell "izlude.gat",100,154,100,169,cell_novending,1;
+setcell "izlude.gat",86,154,86,169,cell_novending,1;
+setcell "izlude.gat",87,154,87,169,cell_novending,1;
+setcell "izlude.gat",88,154,88,169,cell_novending,1;
+setcell "izlude.gat",89,154,89,169,cell_novending,1;
+setcell "izlude.gat",90,154,90,169,cell_novending,1;
+setcell "izlude.gat",91,154,91,169,cell_novending,1;
+setcell "izlude.gat",92,154,92,169,cell_novending,1;
+setcell "izlude.gat",93,154,93,169,cell_novending,1;
+setcell "izlude.gat",94,154,94,169,cell_novending,1;
+setcell "izlude.gat",95,154,95,169,cell_novending,1;
+setcell "izlude.gat",96,154,96,169,cell_novending,1;
+setcell "izlude.gat",97,154,97,169,cell_novending,1;
+setcell "izlude.gat",98,154,98,169,cell_novending,1;
+setcell "izlude.gat",99,154,99,169,cell_novending,1;
+
+end;
+}

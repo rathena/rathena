@@ -245,8 +245,8 @@
 744,Bunch_Of_Flowers,Bouquet,3,2000,,50,,,,,,,,,,,,,{},{},{}
 745,Wedding_Bouquet,Wedding Bouquet,3,12000,,50,,,,,,,,,,,,,{},{},{}
 746,Glass_Bead,Glass Bead,3,1400,,50,,,,,,,,,,,,,{},{},{}
-747,Crystal_Mirror,Crystal Mirror,3,15000,,50,,,,,,,,,,,,,{},{},{}
-748,Witherless_Rose,Witherless Rose,3,55000,,10,,,,,,,,,,,,,{},{},{}
+747,Crystal_Mirror,Crystal Mirror,3,15000,4500,50,,,,,,,,,,,,,{},{},{}
+748,Witherless_Rose,Witherless Rose,3,55000,19500,10,,,,,,,,,,,,,{},{},{}
 749,Frozen_Rose,Frozen Rose,3,35000,,10,,,,,,,,,,,,,{},{},{}
 750,Baphomet_Doll,Baphomet Doll,3,18000,,100,,,,,,,,,,,,,{},{},{}
 751,Osiris_Doll,Osiris Doll,3,14000,,100,,,,,,,,,,,,,{},{},{}
@@ -7223,7 +7223,7 @@
 13003,Coward,Cowardice Blade,5,52000,,700,80,,1,1,0x02021040,63,2,2,3,55,1,1,{ bonus bDef,5; },{},{}
 13004,Coward_,Cowardice Blade,5,52000,,700,80,,1,2,0x02021040,63,2,2,3,55,1,1,{ bonus bDef,5; },{},{}
 13005,Angelwing_Short_Sword,Angelic Wing Dagger,5,20,,600,120,,1,1,0x00000001,63,2,2,4,50,1,1,{},{},{}
-13006,Khukri,Khukri,5,240000,,600,150,,1,0,0x02000000,63,2,2,3,65,1,1,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,1000; },{},{}
+13006,Khukri,Khukri,5,240000,70000,600,150,,1,0,0x02000000,63,2,2,3,65,1,1,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEff,Eff_Curse,1000; },{},{}
 13007,Jitte,Jitte,5,20000,,400,70,,1,0,0x02000000,63,2,2,2,35,1,1,{ bonus bBreakWeaponRate,200; },{},{}
 13008,Jitte_,Jitte,5,20000,,400,70,,1,1,0x02000000,63,2,2,2,35,1,1,{ bonus bBreakWeaponRate,200; },{},{}
 13009,Kamaitachi,Kamaitachi,5,48000,,900,125,,2,0,0x02000000,63,2,2,4,70,1,1,{ bonus bAtkEle,Ele_Wind; bonus bCritical,3; bonus bAspdRate,3; },{},{}
@@ -12452,3 +12452,9 @@
 32005,Illusion_Pole_Axe,Illusion Pole Axe,5,0,,1500,190,,3,2,0x00004082,63,2,2,4,120,1,4,{ .@r = getrefine(); bonus bStr,3; bonus bInt,2; bonus bDex,2; if (.@r >= 13) { .@val = -2000; } else if (.@r >= 9) { .@val = -1000; } bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",.@val; },{},{}
 //
 32237,Celine's_Brooch,Celine's Brooch,4,10,,500,,0,,1,0xFFFFFFFE,63,2,136,,100,0,0,{ bonus bMatkRate,5; bonus bVariableCastrate,-10; },{},{}
+
+
+
+//CASH TICKETS
+32130,Update_Ticket,Cash Ticket [1000],2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{  set #CASHPOINTS,#CASHPOINTS+1000; if(#language == 1) { dispbottom "Você recebeu 1.000 CASH points!"; }else{ dispbottom "Você recebeu 1.000 CASH points!";} },{},{}
+32131,Update_Ticket,VIP Ticket [30],2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{  atcommand "@vip +30d "+strcharinfo(0)+""; },{},{}

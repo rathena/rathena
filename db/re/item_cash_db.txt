@@ -17,3 +17,8 @@
 //
 // Price:
 //    Item cost, in cash points (#CASHPOINTS).
+
+
+//ETC
+7,32130,1000    //Cash Ticket[1000]
+7,32131,20000   //Vip Ticket [30]

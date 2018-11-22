@@ -55,6 +55,9 @@
 #define MAP_VERUS "verus04"
 #define MAP_ROCKRIDGE "harboro1"
 #define MAP_CAPITOLINA "prt_monk"
+#define MAP_MARKET "izlude"
+#define MAP_THORCAMP "thor_camp"
+
 
 
 

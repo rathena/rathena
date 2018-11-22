@@ -1918,6 +1918,10 @@ ACMD_FUNC(go)
 		{ MAP_VERUS,     120, 246 }, // 38=Verus
 		{ MAP_ROCKRIDGE,     286, 189 }, // 39=Rock Ridge
 		{ MAP_CAPITOLINA,     182, 207 }, // 40=St.Capitolina Abbey
+		{ MAP_MARKET,     127, 162 }, // 41=Market
+		{ MAP_THORCAMP,     251, 67 }, // 42=Thor Volcano
+
+		
 
 	};
 
