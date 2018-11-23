@@ -640,7 +640,6 @@ struct Battle_Config
 	int guild_alliance_onlygm;
 	int feature_achievement;
 	int allow_bound_sell;
-	int event_refine_chance;
 	int feature_refineui;
 	int autoloot_adjust;
 	int broadcast_hide_name;

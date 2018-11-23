@@ -2462,7 +2462,7 @@ job_ko,121,121,0	script	Refinement Tools#ko_01	844,{
 		mes "This equipment is perfectly refined. Keep it for yourself!";  //custom translation
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100) {
 		mes "This is very well refined equipment. Do you want to continue? Refine skill decreases by 1 if refinement fails.";
 		next;
 		if(select("Continue.:Stop.") == 2) {

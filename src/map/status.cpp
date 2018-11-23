@@ -47,10 +47,11 @@ enum e_regen {
 
 // Bonus values and upgrade chances for refining equipment
 static struct {
-	int chance[REFINE_CHANCE_TYPE_MAX][MAX_REFINE]; /// Success chance
+	int chance[REFINE_COST_MAX][MAX_REFINE]; /// Success chance
 	int bonus[MAX_REFINE]; /// Cumulative fixed bonus damage
 	int randombonus_max[MAX_REFINE]; /// Cumulative maximum random bonus damage
 	struct refine_cost cost[REFINE_COST_MAX];
+	struct refine_bs_blessing bs_blessing[MAX_REFINE];
 } refine_info[REFINE_TYPE_MAX];
 
 static int atkmods[SZ_ALL][MAX_WEAPON_TYPE];	/// ATK weapon modification for size (size_fix.txt)
@@ -3602,8 +3603,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
 
-			if(wlv >= REFINE_TYPE_MAX)
-				wlv = REFINE_TYPE_MAX - 1;
+			if(wlv >= REFINE_TYPE_WEAPON4)
+				wlv = REFINE_TYPE_WEAPON4 - 1;
 			if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
 				wa = &base_status->lhw;
@@ -3613,15 +3614,15 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			}
 			wa->atk += sd->inventory_data[index]->atk;
 			if(r)
-				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
+				wa->atk2 = refine_info[sd->inventory_data[index]->refine_type].bonus[r-1] / 100;
 #ifdef RENEWAL
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
 			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
-				wa->matk += refine_info[wlv].bonus[r-1] / 100;
+				wa->matk += refine_info[sd->inventory_data[index]->refine_type].bonus[r-1] / 100;
 #endif
 			if(r) // Overrefine bonus.
-				wd->overrefine = refine_info[wlv].randombonus_max[r-1] / 100;
+				wd->overrefine = refine_info[sd->inventory_data[index]->refine_type].randombonus_max[r-1] / 100;
 			wa->range += sd->inventory_data[index]->range;
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if (wd == &sd->left_weapon) {
@@ -3649,7 +3650,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			int r;
 
 			if ( (r = sd->inventory.u.items_inventory[index].refine) )
-				refinedef += refine_info[REFINE_TYPE_ARMOR].bonus[r-1];
+				refinedef += refine_info[sd->inventory_data[index]->refine_type].bonus[r-1];
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if( i == EQI_HAND_L ) // Shield
 					sd->state.lr_flag = 3;
@@ -14391,31 +14392,32 @@ static TIMER_FUNC(status_natural_heal_timer){
  * Get the chance to upgrade a piece of equipment
  * @param wlv: The weapon type of the item to refine (see see enum refine_type)
  * @param refine: The target's refine level
+  * @param type: refine type for cost & rate
  * @return The chance to refine the item, in percent (0~100)
  */
-int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
+int status_get_refine_chance(enum refine_type refine_type, int refine, enum refine_cost_type type)
 {
-	enum e_refine_chance_type type;
-	
-	if ( refine < 0 || refine >= MAX_REFINE)
+	if (type < REFINE_COST_NORMAL || type >= REFINE_COST_MAX)
 		return 0;
-	
-	if( battle_config.event_refine_chance ){
-		if( enriched ){
-			type = REFINE_CHANCE_EVENT_ENRICHED;
-		}else{
-			type = REFINE_CHANCE_EVENT_NORMAL;
-		}
-	}else{
-		if( enriched ){
-			type = REFINE_CHANCE_ENRICHED;
-		}else{
-			type = REFINE_CHANCE_NORMAL;
-		}
-	}
-
-	return refine_info[wlv].chance[type][refine];
+ 	return refine_info[refine_type].chance[type][refine];
 }
+ /**
+ * Get Blacksmith Blessing requirement for refining
+ * @param bs Pointer to store the value
+ * @param type Armor or weapon level (see enum refine_type)
+ * @param refine Current refine level
+ * @return True if has valid value, false otherwise.
+ **/
+bool status_get_refine_blacksmithBlessing(struct refine_bs_blessing* bs, enum refine_type type, int refine)
+{
+	if (refine < 0 || refine >= MAX_REFINE)
+		return false;
+ 	if (type < REFINE_TYPE_ARMOR || type >= REFINE_TYPE_MAX)
+		return false;
+ 	memcpy(bs, &refine_info[type].bs_blessing[refine], sizeof(struct refine_bs_blessing));
+	return true;
+}
+
 
 /**
  * Check if status is disabled on a map
@@ -14526,7 +14528,7 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
  * @param file_name: File name for displaying only
  * @return True on success or false on failure
  */
-static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_info_index, const std::string &file_name) {
+static bool status_yaml_readdb_refine_sub(const YAML::Node &node, enum refine_type refine_info_index, const std::string &file_name) {
 	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
 		return false;
 
@@ -14534,10 +14536,7 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 	int random_bonus_start_level = node["RandomBonusStartLevel"].as<int>();
 	int random_bonus = node["RandomBonusValue"].as<int>();
 
-	if (file_name.find("import") != std::string::npos) { // Import file, reset refine bonus before calculation
-		for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
-			refine_info[refine_info_index].bonus[refine_level] = 0;
-	}
+
 
 	const YAML::Node &costs = node["Costs"];
 
@@ -14562,6 +14561,18 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 
 		refine_info[refine_info_index].cost[idx].nameid = material;
 		refine_info[refine_info_index].cost[idx].zeny = price;
+		refine_info[refine_info_index].cost[idx].refineui = (type["RefineUI"].IsDefined()) ? type["RefineUI"].as<bool>() : true;
+ 		if (type["OnFail"].IsDefined()) {
+			const YAML::Node &onfail = type["OnFail"];
+			if (onfail["Break"].IsDefined()) {
+				refine_info[refine_info_index].cost[idx].breaking = onfail["Break"].as<uint16>();
+			}
+			if (onfail["DownRefine"].IsDefined()) {
+				refine_info[refine_info_index].cost[idx].downrefine = onfail["DownRefine"].as<uint16>();
+				refine_info[refine_info_index].cost[idx].downrefine_num = onfail["DownRefineNum"].IsDefined() ? onfail["DownRefineNum"].as<uint16>() : 1;
+			}
+		}
+	
 	}
 
 	const YAML::Node &rates = node["Rates"];
@@ -14573,19 +14584,50 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 		if (refine_level >= MAX_REFINE)
 			continue;
 
-		if (level["NormalChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_NORMAL][refine_level] = level["NormalChance"].as<int>();
-		if (level["EnrichedChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_ENRICHED][refine_level] = level["EnrichedChance"].as<int>();
-		if (level["EventNormalChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_NORMAL][refine_level] = level["EventNormalChance"].as<int>();
-		if (level["EventEnrichedChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_ENRICHED][refine_level] = level["EventEnrichedChance"].as<int>();
-		if (level["Bonus"].IsDefined())
-			refine_info[refine_info_index].bonus[refine_level] = level["Bonus"].as<int>();
-
-		if (refine_level >= random_bonus_start_level - 1)
-			refine_info[refine_info_index].randombonus_max[refine_level] = random_bonus * (refine_level - random_bonus_start_level + 2);
+		if (level["Chances"].IsDefined()) {
+			const YAML::Node &chances = level["Chances"];
+			for (const auto chanceit : chances) {
+				int i;
+				const YAML::Node &chance = chanceit;
+				const std::string keys[] = { "Type", "Rate" };
+ 				for (i = 0; i < ARRAYLENGTH(keys); i++) {
+					if (!chance[keys[i]].IsDefined()) {
+						ShowWarning("status_yaml_readdb_refine_sub: Invalid Chances with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", keys[i].c_str(), file_name.c_str());
+						break;
+					}
+				}
+				if (i != ARRAYLENGTH(keys)) {
+					ShowError("status_yaml_readdb_refine_sub: Skipping incomplete node for Chances list.\n");
+					continue;
+				}
+ 				std::string chance_type = chance["Type"].as<std::string>();
+				int chance_idx = 0;
+				if (!script_get_constant(chance_type.c_str(), &chance_idx)) {
+					ShowWarning("status_yaml_readdb_refine_sub: Invalid Chance Type " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", chance_type.c_str(), file_name.c_str());
+					continue;
+				}
+				refine_info[refine_info_index].chance[chance_idx][refine_level] = chance["Rate"].as<int>();
+			}
+		}
+ 		if (level["BlacksmithBlessing"].IsDefined()) {
+			int i = 0;
+			const YAML::Node &bb = level["BlacksmithBlessing"];
+			const std::string keys[] = { "ItemID", "Count" };
+ 			for (i = 0; i < ARRAYLENGTH(keys); i++) {
+				if (!bb[keys[i]].IsDefined()) {
+					ShowWarning("status_yaml_readdb_refine_sub: Invalid BlacksmithBlessing with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", keys[i].c_str(), file_name.c_str());
+					break;
+				}
+			}
+			if (i != ARRAYLENGTH(keys)) {
+				ShowError("status_yaml_readdb_refine_sub: Skipping incomplete node for BlacksmithBlessing list.\n");
+				continue;
+			}
+			refine_info[refine_info_index].bs_blessing[refine_level].nameid = bb["ItemID"].as<uint16>();
+			refine_info[refine_info_index].bs_blessing[refine_level].count = bb["Count"].as<uint16>();
+		}
+ 		if (level["Bonus"].IsDefined())
+			refine_info[refine_info_index].bonus[refine_level] = level["Bonus"].as<int>();	
 	}
 	for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
 		refine_info[refine_info_index].bonus[refine_level] += bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
@@ -14600,7 +14642,19 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
  */
 static void status_yaml_readdb_refine(const std::string &directory, const std::string &file) {
 	int count = 0;
-	const std::string labels[] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
+	struct s_labels {
+		enum refine_type type;
+		const std::string label;
+	} labels[] = {
+		{ REFINE_TYPE_ARMOR, "Armor"},
+		{ REFINE_TYPE_WEAPON1, "WeaponLv1" },
+		{ REFINE_TYPE_WEAPON2, "WeaponLv2" },
+		{ REFINE_TYPE_WEAPON3, "WeaponLv3" },
+		{ REFINE_TYPE_WEAPON4, "WeaponLv4" },
+		{ REFINE_TYPE_SHADOW, "Shadow" },
+		{ REFINE_TYPE_SHADOW_WEAPON, "ShadowWeapon" },
+		{ REFINE_TYPE_COSTUME, "Costume" },
+	};
 	const std::string current_file = directory + "/" + file;
 	YAML::Node config;
 
@@ -14613,9 +14667,10 @@ static void status_yaml_readdb_refine(const std::string &directory, const std::s
 	}
 
 	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
-		const YAML::Node &node = config[labels[i]];
+		const YAML::Node &node = config[labels[i].label];
+		
 
-		if (node.IsDefined() && status_yaml_readdb_refine_sub(node, i, current_file))
+		if (node.IsDefined() && status_yaml_readdb_refine_sub(node, labels[i].type, current_file))
 			count++;
 	}
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, current_file.c_str());
@@ -14623,19 +14678,28 @@ static void status_yaml_readdb_refine(const std::string &directory, const std::s
 
 /**
  * Returns refine cost (zeny or item) for a weapon level.
- * @param weapon_lv Weapon level
+ * @param refine_type Refine type see enum refine_type
  * @param type Refine type (can be retrieved from refine_cost_type enum)
  * @param what true = returns zeny, false = returns item id
  * @return Refine cost for a weapon level
  */
-int status_get_refine_cost(int weapon_lv, int type, enum refine_info_type what) {
+int status_get_refine_cost(enum refine_type refine_type, int type, enum refine_info_type what) {
 	switch( what ){
 		case REFINE_MATERIAL_ID:
-			return refine_info[weapon_lv].cost[type].nameid;
+			return refine_info[refine_type].cost[type].nameid;
 		case REFINE_ZENY_COST:
-			return refine_info[weapon_lv].cost[type].zeny;
+			return refine_info[refine_type].cost[type].zeny;
+		case REFINE_REFINEUI_ENABLED:
+			return refine_info[refine_type].cost[type].refineui;
 	}
  	return 0;
+}
+ struct refine_cost *status_get_refine_cost_(enum refine_type refine_type, int type) {
+	if (refine_type < REFINE_TYPE_ARMOR || refine_type >= REFINE_TYPE_MAX)
+		return NULL;
+	if (type < REFINE_COST_NORMAL || type >= REFINE_COST_MAX)
+		return NULL;
+	return &refine_info[refine_type].cost[type];
 }
 
 /**
@@ -14720,14 +14784,17 @@ int status_readdb(void)
 	// refine_db.yml
 	for(i=0;i<ARRAYLENGTH(refine_info);i++)
 	{
-		memset(refine_info[i].cost, 0, sizeof(struct refine_cost));
-		for(j = 0; j < REFINE_CHANCE_TYPE_MAX; j++)
-			for(k=0;k<MAX_REFINE; k++)
+		memset(&refine_info[i].cost, 0, sizeof(struct refine_cost)*REFINE_COST_MAX);
+		memset(&refine_info[i].bs_blessing, 0, sizeof(struct refine_bs_blessing)*MAX_REFINE);
+		for (j = 0; j < REFINE_COST_MAX; j++) {
+			for (k = 0; k < MAX_REFINE; k++)
 			{
-				refine_info[i].chance[j][k] = 100;
+				refine_info[i].chance[j][k] = 0;
 				refine_info[i].bonus[k] = 0;
 				refine_info[i].randombonus_max[k] = 0;
 			}
+			refine_info[i].cost[j].breaking = 100;
+		}
 	}
 	// attr_fix.txt
 	for(i=0;i<MAX_ELE_LEVEL;i++)

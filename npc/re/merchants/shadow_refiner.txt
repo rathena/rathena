@@ -56,7 +56,6 @@
 		.@material[0] = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 		.@material[1] = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_MATERIAL_ID);
 		.@material[2] = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
-		.@is_enriched = false;
 
 		if (countitem(.@material[0]))
 			.@mate$[0] = getitemname(.@material[0]);
@@ -74,19 +73,21 @@
 		switch( select( .@mate$[0], .@mate$[1], .@mate$[2], "Cancel" ) ) {
 		case 1:// NORMAL
 			.@choose = .@material[0];
+			.@refine_type = REFINE_COST_NORMAL;
 			break;
 		case 2:// ENRICHED
-			.@is_enriched = true;
 			.@choose = .@material[1];
+			.@refine_type = REFINE_COST_ENRICHED;
 			break;
 		case 3:// HD
 			if (.@equip_refine < 7) {
 				mes "[Shadow Blacksmith]";
-				mes "HD Ore can only used for +7 or higher refine level items.";
+				mes "You've cancelled refining.";
 				close;
 			}
 			.@hoihoi = 1;
 			.@choose = .@material[2];
+			.@refine_type = REFINE_COST_HD;
 			break;
 		case 4:
 			mes "[Shadow Blacksmith]";
@@ -113,7 +114,7 @@
 			mes "This item cannot be refined.";
 			close;
 		}
-		if (getequippercentrefinery(.@part) < 100) {
+		if (getequippercentrefinery(.@part, .@refine_type) < 100) {
 			mes "[Shadow Blacksmith]";
 			mes "The safety refine level for Shadow Equipment is +4.";
 			if (!.@hoihoi)
@@ -137,7 +138,7 @@
 		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
 			close;
 
-		if (getequippercentrefinery(.@part, .@is_enriched) > rand(100)) {
+		if (getequippercentrefinery(.@part, .@refine_type) > rand(100)) {
 			successrefitem .@part;
 			mes "[Shadow Blacksmith]";
 			mes "It worked! It worked!";

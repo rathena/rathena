@@ -10390,6 +10390,7 @@ ACMD_FUNC(refineui)
 #endif
 }
 
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10701,9 +10702,9 @@ ACMD_DEF(whosell),
 		ACMD_DEF(adopt),
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
-		ACMD_DEF(refineui),
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEF(refineui),
 	};
 	AtCommandInfo* atcommand;
 	int i;

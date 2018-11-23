@@ -5071,6 +5071,9 @@
 	export_constant(REFINE_COST_OVER10_HD);
 	export_constant(REFINE_COST_HOLINK);
 	export_constant(REFINE_COST_WAGJAK);
+	export_constant(REFINE_COST_BLESSED);
+	export_constant(REFINE_COST_EVT_ENRICHED);
+	export_constant(REFINE_COST_EVT_OVER10_HD);
 	export_constant(REFINE_COST_MAX);
 
 	/* refine information types */
@@ -7301,6 +7304,15 @@
 	export_constant(MD_DETECTOR);
 	export_constant(MD_STATUS_IMMUNE);
 	export_constant(MD_SKILL_IMMUNE);
+	
+	export_constant(REFINE_TYPE_ARMOR);
+	export_constant(REFINE_TYPE_WEAPON1);
+	export_constant(REFINE_TYPE_WEAPON2);
+	export_constant(REFINE_TYPE_WEAPON3);
+	export_constant(REFINE_TYPE_WEAPON4);
+	export_constant(REFINE_TYPE_SHADOW);
+	export_constant(REFINE_TYPE_COSTUME);
+
 
 	/* guild storage flags */
 	export_constant(GSTORAGE_OPEN);
