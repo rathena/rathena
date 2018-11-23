@@ -20344,6 +20344,270 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 	WFIFOSET(fd, packet_len(0xa26));
 }
 
+/**
+ * Opens the refine UI on the designated client.
+ * 0aa0
+ */
+void clif_refineui_open( struct map_session_data* sd ){
+#if PACKETVER >= 20161012
+	int fd = sd->fd;
+ 	WFIFOHEAD(fd,packet_len(0x0AA0));
+	WFIFOW(fd,0) = 0x0AA0;
+	WFIFOSET(fd,packet_len(0x0AA0));
+ 	sd->state.refineui_open = true;
+#endif
+}
+ /**
+ * Parses cancel/close of the refine UI on client side.
+ * 0aa4
+ */
+void clif_parse_refineui_close( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20161012
+	sd->state.refineui_open = false;
+#endif
+}
+ #define REFINEUI_MAT_CNT 4
+ /**
+ * Structure to store all required data about refine requirements
+ */
+struct refine_materials {
+	struct refine_cost cost;
+	uint8 chance;
+};
+ /**
+ * Fills the given index with the requested data for that item and
+ * returns true on success or false on failure.
+ */
+static inline bool clif_refineui_materials_sub( struct item *item, struct item_data *id, struct refine_materials materials[REFINEUI_MAT_CNT], int index, enum refine_cost_type type ){
+	if( index < 0 || index > REFINEUI_MAT_CNT ){
+		return false;
+	}
+ 	// Get the material that is required to refine this item
+	materials[index].cost.nameid = status_get_refine_cost( id->wlv, type, REFINE_MATERIAL_ID );
+	// Get the amount of zeny that is required to refine the item with this material
+	materials[index].cost.zeny = status_get_refine_cost( id->wlv, type, REFINE_ZENY_COST );
+	// Get the chance for refining the item with this material
+	materials[index].chance = status_get_refine_chance( (enum refine_type)id->wlv, item->refine, type == REFINE_COST_ENRICHED );
+ 	// Either of the values was not set
+	if( materials[index].cost.nameid == 0 || materials[index].cost.zeny == 0 || materials[index].chance == 0 ){
+		// Reset all entries properly
+		materials[index].cost.nameid = materials[index].cost.zeny = materials[index].chance = 0;
+		return false;
+	}else{
+		// Everything was set properly
+		return true;
+	}
+}
+ /**
+ * Calculates all possible materials for the given item.
+ * Returns the count of materials that were filled in the materials array.
+ */
+static inline uint8 clif_refineui_materials( struct item *item, struct item_data *id, struct refine_materials materials[REFINEUI_MAT_CNT] ){
+	// Initialize the counter
+	uint8 count = 0;
+ 	// Zero the memory
+	memset( materials, 0, sizeof(struct refine_materials)*REFINEUI_MAT_CNT );
+ 	// Is the item +10 or above
+	if( item->refine >= 10 ){
+		// Normal refine requirements for +10 and above
+		if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_OVER10 ) ){
+			count++;
+		}
+ 		// HD refine requirements for +10 and above
+		if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_OVER10_HD ) ){
+			count++;
+		}
+	}else{
+		// Normal refine requirements
+		if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_NORMAL ) ){
+			count++;
+		}
+		
+		// HD refine requirements
+		if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_HD ) ){
+			count++;
+		}
+	}
+ 	// Enriched refine requirements
+	if( clif_refineui_materials_sub( item, id, materials, count, REFINE_COST_ENRICHED ) ){
+		count++;
+	}
+ 	// Return the amount of found materials
+	return count;
+}
+ /**
+ * Adds the selected item into the refine UI and sends the possible materials
+ * to the client.
+ * 0aa2 <length>.W <index>.W <catalyst count>.B { <material>.W <chance>.B <price>.L }*
+ */
+void clif_refineui_info( struct map_session_data* sd, uint16 index ){
+	int fd = sd->fd;
+	struct item *item;
+	struct item_data *id;
+	uint16 length;
+	struct refine_materials materials[REFINEUI_MAT_CNT];
+	uint8 i, material_count;
+ 	// Get the item db reference
+	id = sd->inventory_data[index];
+ 	// No item data was found
+	if( id == NULL ){
+		return;
+	}
+ 	// Check if the item can be refined
+	if( id->flag.no_refine ){
+		return;
+	}
+ 	// Only weapons and armors can be refined in the refine UI
+	if( id->type != IT_WEAPON && id->type != IT_ARMOR ){
+		return;
+	}
+ 	// Check the inventory
+	item = &sd->inventory.u.items_inventory[index];
+ 	// No item was found at the given index
+	if( item == NULL ){
+		return;
+	}
+ 	// Check if the item is identified
+	if( !item->identify ){
+		return;
+	}
+ 	// Check if the item is broken
+	if( item->attribute ){
+		return;
+	}
+ 	// Calculate the possible materials
+	material_count = clif_refineui_materials( item, id, materials );
+ 	// No possibilities were found
+	if( material_count == 0 ){
+		return;
+	}
+ 	length = 7 + material_count * 7;
+ 	WFIFOHEAD(fd,length);
+	WFIFOW(fd,0) = 0x0AA2;
+	WFIFOW(fd,2) = length;
+	WFIFOW(fd,4) = index + 2;
+	WFIFOB(fd,6) = 0; //TODO: required amount of "Blacksmith Blessing"(id: 6635)
+ 	for( i = 0; i < material_count; i++ ){
+		WFIFOW(fd,7 + i * 7) = materials[i].cost.nameid;
+		WFIFOB(fd,7 + i * 7 + 2) = materials[i].chance;
+		WFIFOL(fd,7 + i * 7 + 3) = materials[i].cost.zeny;
+	}
+ 	WFIFOSET(fd,length);
+}
+ /**
+ * Client request to add an item to the refine UI.
+ * 0aa1 <index>.W
+ */
+void clif_parse_refineui_add( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20161012
+	uint16 index = RFIFOW(fd, 2) - 2;
+ 	// Check if the refine UI is open
+	if( !sd->state.refineui_open ){
+		return;
+	}
+ 	// Check if the index is valid
+	if( index < 0 || index >= MAX_INVENTORY ){
+		return;
+	}
+ 	// Send out the requirements for the refine process
+	clif_refineui_info( sd, index );
+#endif
+}
+ /**
+ * Client requests to try to refine an item.
+ * 0aa3 <index>.W <material>.W <catalyst>.B
+ */
+void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20161012
+	uint16 index = RFIFOW( fd, 2 ) - 2;
+	uint16 material = RFIFOW( fd, 4 );
+	bool use_blacksmith_blessing = RFIFOB( fd, 6 ) != 0; // TODO: add logic
+	struct refine_materials materials[REFINEUI_MAT_CNT];
+	uint8 i, material_count;
+	uint16 j;
+	struct item *item;
+	struct item_data *id;
+ 	// Check if the refine UI is open
+	if( !sd->state.refineui_open ){
+		return;
+	}
+	// Check if the index is valid
+	if( index < 0 || index >= MAX_INVENTORY ){
+		return;
+	}
+ 	// Get the item db reference
+	id = sd->inventory_data[index];
+ 	// No item data was found
+	if( id == NULL ){
+		return;
+	}
+ 	// Check if the item can be refined
+	if( id->flag.no_refine ){
+		return;
+	}
+ 	// Only weapons and armors can be refined in the refine UI
+	if( id->type != IT_WEAPON && id->type != IT_ARMOR ){
+		return;
+	}
+ 	// Check the inventory
+	item = &sd->inventory.u.items_inventory[index];
+ 	// No item was found at the given index
+	if( item == NULL ){
+		return;
+	}
+ 	// Check if the item is identified
+	if( !item->identify ){
+		return;
+	}
+ 	// Check if the item is broken
+	if( item->attribute ){
+		return;
+	}
+ 	// Check if the player has the selected material
+	if( ( j = pc_search_inventory( sd, material ) ) < 0 ){
+		return;
+	}
+ 	// Calculate the possible materials
+	material_count = clif_refineui_materials( item, id, materials );
+ 	// No possibilities were found
+	if( material_count == 0 ){
+		return;
+	}
+ 	// Find the selected material
+	ARR_FIND( 0, REFINEUI_MAT_CNT, i, materials[i].cost.nameid == material );
+ 	// The material was not in the list of possible materials
+	if( i >= REFINEUI_MAT_CNT || i < 0 ){
+		return;
+	}
+ 	// Try to pay for the refine
+	if( pc_payzeny( sd, materials[i].cost.zeny, LOG_TYPE_CONSUME, NULL ) ){
+		clif_npc_buy_result( sd, 1 ); // "You do not have enough zeny."
+		return;
+	}
+ 	// Delete the required material
+	if( pc_delitem( sd, j, 1, 0, 0, LOG_TYPE_CONSUME ) ){
+		return;
+	}
+ 	// Try to refine the item
+	if( materials[i].chance >= rnd() % 100 ){
+		// Success
+		item->refine++;
+		clif_misceffect( &sd->bl, 3 );
+		clif_refine( fd, 0, index, item->refine );
+		achievement_update_objective( sd, AG_REFINE_SUCCESS, 2, id->wlv, item->refine );
+		clif_refineui_info( sd, index );
+	}else{
+		// Failure
+		clif_misceffect( &sd->bl, 2 );
+		clif_refine( fd, 1, index, item->refine );
+		pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_CONSUME );
+		achievement_update_objective( sd, AG_REFINE_FAIL, 1, 1 );
+	}
+#endif
+}
+ #undef REFINEUI_MAT_CNT
+
+
 /*
  * This packet is sent by /changedress or /nocosplay
  *

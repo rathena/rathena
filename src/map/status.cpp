@@ -14395,12 +14395,24 @@ static TIMER_FUNC(status_natural_heal_timer){
  */
 int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
 {
+	enum e_refine_chance_type type;
+	
 	if ( refine < 0 || refine >= MAX_REFINE)
 		return 0;
 	
-	int type = enriched ? 1 : 0;
-	if (battle_config.event_refine_chance)
-		type |= 2;
+	if( battle_config.event_refine_chance ){
+		if( enriched ){
+			type = REFINE_CHANCE_EVENT_ENRICHED;
+		}else{
+			type = REFINE_CHANCE_EVENT_NORMAL;
+		}
+	}else{
+		if( enriched ){
+			type = REFINE_CHANCE_ENRICHED;
+		}else{
+			type = REFINE_CHANCE_NORMAL;
+		}
+	}
 
 	return refine_info[wlv].chance[type][refine];
 }
@@ -14616,8 +14628,14 @@ static void status_yaml_readdb_refine(const std::string &directory, const std::s
  * @param what true = returns zeny, false = returns item id
  * @return Refine cost for a weapon level
  */
-int status_get_refine_cost(int weapon_lv, int type, bool what) {
-	return what ? refine_info[weapon_lv].cost[type].zeny : refine_info[weapon_lv].cost[type].nameid;
+int status_get_refine_cost(int weapon_lv, int type, enum refine_info_type what) {
+	switch( what ){
+		case REFINE_MATERIAL_ID:
+			return refine_info[weapon_lv].cost[type].nameid;
+		case REFINE_ZENY_COST:
+			return refine_info[weapon_lv].cost[type].zeny;
+	}
+ 	return 0;
 }
 
 /**
