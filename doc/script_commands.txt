@@ -2847,10 +2847,10 @@ is invalid or if there is no item in the equipment slot.
 
 
 *getblacksmithblessing(<type>,<refine>{,<var>})
- Get info about 'Blacksmith Blessing' item used for specified <type> and
+Get info about 'Blacksmith Blessing' item used for specified <type> and
 <refine>. The info will be stored in .@refinebb array.
-     .@refinebb[0] = Item ID acknowledged as Blacksmith Blessing
-    .@refinebb[1] = Amount needed
+.@refinebb[0] = Item ID acknowledged as Blacksmith Blessing
+.@refinebb[1] = Amount needed
  If <var> is specified, it will replaces .@refinebb as default array. This
 script also returns 1 on success and 0 on failure or no info.
  ---------------------------------------
