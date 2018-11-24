@@ -10042,6 +10042,7 @@
 19306,Gambler_Card,Heart Card in Mouth,4,20,,300,,0,,0,0xFFFFFFFF,63,2,1,,80,0,1679,{ bonus bCritAtkRate,5; },{},{}
 19344,Illusion_Hot_blooded_Headband,Illusion Hot-blooded Headband,4,0,,100,,3,,1,0xFFFFFFFE,63,2,256,,120,1,154,{ .@r = getrefine(); bonus bStr,2; bonus bBaseAtk,(10*(.@r/2)); if (.@r >= 7) { bonus2 bAddEle,Ele_Water,10; bonus2 bAddEle,Ele_Wind,10; bonus2 bAddEle,Ele_Earth,10; bonus2 bAddEle,Ele_Neutral,10; if (.@r >= 9) { bonus2 bAddSize,Size_Small,15; bonus2 bAddSize,Size_Large,15; } } },{},{}
 19366,Illusion_Goibne_Helm,Illusion Goibne Helm,4,0,,1000,,25,,1,0xFFFFFFFE,63,2,256,,130,1,258,{ .@r = getrefine(); .@vit = 3; if (.@r >= 7) { .@vit += 5; if (.@r >= 9) { bonus bDelayrate,-12; } } bonus bVit,.@vit; bonus bMdef,3; },{},{}
+19428,Illusion_Morpheus's_Hood,Illusion Morpheus's Hood,4,20,,200,,15,,1,0xFFFFFFFF,63,2,256,,130,1,256,{ .@r = getrefine(); bonus bInt,10; bonus bMdef,15; bonus bMaxSPrate,20; bonus bVariableCastrate,-(3*(.@r/2)); if (.@r >= 7) { bonus bMatk,30; if (.@r >= 9) { bonus bNoCastCancel; } } },{},{}
 //===================================================================
 // Costume System
 //===================================================================
@@ -10954,6 +10955,7 @@
 20934,Illusion_Engine_wing_B-type,Illusion Engine wing B-type,4,0,,900,,50,,1,0xFFFFFFFF,63,2,4,,130,1,,{ .@r = getrefine(); bonus bMaxHP,1000+(100*(.@r/2)); if (.@r >= 7) { bonus bVariableCastrate,-5; } },{},{}
 20943,Geffen_Magic_Muffler,Geffen Magic Muffler,4,20,,550,,20,,1,0xFFFFFFFE,63,2,4,,99,1,0,{ .@r = getrefine(); .@val = -10;  bonus bMatk,(10*(.@r/2)); bonus bMatkRate,(.@r/3); if (.@r >= 7) { bonus2 bMagicAtkEle,Ele_All,5; } if (.@r >= 9) { .@val -= 10; } bonus bVariableCastrate,.@val; },{},{}
 20944,Anti_Magic_Manteau,Anti Magic Manteau,4,20,,750,,23,,1,0xFFFFFFFE,63,2,4,,99,1,0,{ .@r = getrefine(); bonus bMaxHP,(300+(100*(.@r/2))); bonus bMaxHPRate,(2*(.@r/3)); if (.@r >= 7) { bonus2 bAddClass,Class_All,7; } if (.@r >= 9) { bonus bVariableCastrate,-10; } },{},{}
+20948,Illusion_Morpheus's_Shawl,Illusion Morpheus's Shawl,4,20,,600,,8,,1,0xFFFFFFFF,63,2,4,,130,1,0,{ bonus bMaxSPrate,10; bonus bMdef,5; .@r = getrefine(); if (.@r >= 7) { .@bonus = -10; if (.@r >= 9) { .@bonus -= 10; } bonus bVariableCastrate,.@bonus; } },{},{}
 //===================================================================
 // More 2-Handed Swords
 //===================================================================
@@ -10977,6 +10979,7 @@
 21018,Lindy_Hop,Lindy Hop,5,20,,3400,340,,1,2,0x00004082,56,2,34,4,170,1,3,{ .@r = getrefine(); bonus2 bAddClass,Class_All,.@r/2; bonus bAspdRate,.@r; bonus bUnbreakableWeapon; },{},{}
 21019,Onimaru,Onimaru,5,0,,4200,75,,1,2,0x00000080,56,2,34,4,130,1,3,{ .@bStr = readparam(bStr); .@r = getrefine(); bonus bBaseAtk,(min(120,.@bStr)); if (.@bStr > 119) bonus bBaseAtk,160; else if (.@bStr > 107) bonus bBaseAtk,80; else if (.@bStr > 94) bonus bBaseAtk,40; if (.@r > 6) bonus bUnbreakableWeapon; bonus4 bAutoSpell,"NPC_WIDECURSE",4,100,0; if (.@r > 8) bonus4 bAutoSpellOnSkill,"LK_BERSERK","BS_OVERTHRUST",5,100; },{},{}
 21047,Beam_Claymor-OS,Beam Claymor-OS,5,20,,1800,250,,1,2,0x00004082,56,2,34,4,130,1,3,{ .@r = getrefine(); bonus bUnbreakableWeapon; bonus bCritical,5; if (.@r >= 7) { bonus bAspdRate,7; if (.@r >= 9) { bonus bCritAtkRate,15; if (.@r >= 11) { bonus2 bAddSize,Size_Small,20; bonus2 bAddSize,Size_Medium,20; } } } },{},{}
+21050,Illusion_Tae_Goo_Lyeon,Illusion Tae Goo Lyeon,5,20,,2000,250,,1,2,0x00004082,56,2,34,4,120,1,3,{ .@r = getrefine(); bonus bFlee2,10; bonus bLongAtkRate,.@r*2; if (.@r >= 7) { bonus bUseSPrate,-20; if (.@r >= 9) { bonus bDelayrate,-20; if (.@r >= 11) { bonus bMaxHPrate,10; bonus bMaxSPrate,10; } } } },{},{}
 //===================================================================
 // New Shoes
 //===================================================================
@@ -11850,6 +11853,16 @@
 27326,Morocc's_Minion_Card,Morocc's Minion Card,6,20,,10,,,,,,,,16,,,,,{ bonus bBaseAtk,100; bonus bAspdRate,25; bonus bMaxHPrate,-20; },{},{}
 27327,Grim_Reaper_Ankou_Card,Grim Reaper Ankou Card,6,20,,10,,,,,,,,769,,,,,{ .@r = getrefine(); bonus3 bAutoSpellWhenHit,"NPC_WIDECURSE",3,(1+.@r); autobonus2 "{ bonus2 bAddClass,Class_All,25; bonus bMatkRate,25; }",(1+.@r),10000,BF_WEAPON|BF_MAGIC; autobonus3 "{ }",1000,5000,"NV_FIRSTAID","{ active_transform 3029,5000; }"; /* unknown rates */ },{},{}
 27328,Corrupt_Life_Card,Corrupt Life Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus2 bSubRace,RC_Angel,-50; },{},{}
+27334,Chaotic_Baphomet_Card,Chaotic Baphomet Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddClass,Class_All,25; bonus2 bSubRace,RC_Demon,-5; },{},{}
+27335,Chaotic_Baphomet_Junior_Card,Chaotic Baphomet Junior Card,6,20,,10,,,,,,,,64,,,,,{ bonus bCritical,readparam(bAgi)/15; },{},{}
+27336,Chaotic_Sidewinder_Card,Chaotic Sidewinder Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Poison,15; bonus2 bSubRace,RC_Brute,15; },{},{}
+27337,Chaotic_Hunter_Fly_Card,Chaotic Hunter Fly Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Wind,15; bonus2 bSubRace,RC_Insect,15; },{},{}
+27338,Chaotic_Mantis_Card,Chaotic Mantis Card,6,20,,10,,,,,,,,136,,,,,{ bonus bStr,3; },{},{}
+27339,Chaotic_Ghostring_Card,Chaotic Ghostring Card,6,20,,10,,,,,,,,2,,,,,{ bonus bBaseAtk,20; bonus2 bAddSize,Size_Small,25; bonus2 bAddSize,Size_Large,25; },{},{}
+27340,Chaotic_Killer_Mantis_Card,Chaotic Killer Mantis Card,6,20,,10,,,,,,,,136,,,,,{ bonus bCritAtkRate,3; },{},{}
+27341,Chaotic_Poporing_Card,Chaotic Poporing Card,6,20,,10,,,,,,,,32,,,,,{ bonus2 bSubDefEle,Ele_Water,15; bonus2 bSubRace,RC_Fish,15; },{},{}
+27342,Chaotic_Stem_Worm_Card,Chaotic Stem Worm Card,6,20,,10,,,,,,,,4,,,,,{ bonus bHit,10; bonus2 bSubDefEle,Ele_Earth,20; bonus2 bSubDefEle,Ele_Neutral,10; },{},{}
+27343,Chaotic_Acolyte_Card,Chaotic Acolyte Card,6,20,,10,,,,,,,,128,,,,,{ bonus bDelayrate,-4; },{},{}
 //===================================================================
 // New Katars
 //===================================================================
@@ -11893,6 +11906,7 @@
 28226,Avenger,Avenger,5,20,,1800,350,,9,2,0x40000000,63,2,34,3,120,1,21,{ bonus bLongAtkRate,20; if (.@r >= 7) { bonus2 bSkillAtk,"RL_D_TAIL",15; if (.@r >= 9) { bonus2 bSkillCooldown,"RL_H_MINE",-1000; } } },{},{}
 28244,Illusion_Gate_Keeper_DD,Illusion Gate Keeper DD,5,0,,1300,240,,9,2,0x40000000,63,2,34,4,120,1,20,{ .@r = getrefine(); bonus bDex,1; bonus bSplashRange,1; .@val = 5*(.@r/2); if (.@r >= 7) { bonus bAspdRate,15; if (.@r >= 9) { .@val += 5; if (.@r >= 11) { bonus5 bAutoSpell,"GS_SPREADATTACK",max(6,getskilllv("GS_SPREADATTACK")),50,BF_LONG|BF_WEAPON,1; } } } bonus bLongAtkRate,.@val; },{},{}
 28253,HR-S55-OS,HR-S55-OS,5,20,,1000,250,,9,2,0x41000000,63,2,34,4,130,1,18,{ .@r = getrefine(); bonus2 bAddClass,Class_All,3; if (.@r >= 7) { bonus bLongAtkRate,7; if (.@r >= 9) { bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20; if (.@r >= 11) { bonus2 bSkillCooldown,"RL_HAMMER_OF_GOD",-5000; } } } },{},{}
+28254,Illusion_Butcher,Illusion Butcher,5,20,,2500,210,,9,2,0x41000000,63,2,34,4,120,1,19,{ .@r = getrefine(); bonus bLongAtkRate,2*(readparam(bStr)/15); bonus bBaseAtk,10*.@r; if (.@r >= 7) { bonus2 bSkillAtk,"RL_FIRE_RAIN",20; if (.@r >= 9) { bonus2 bSkillAtk,"RL_R_TRIP",15; if (.@r >= 11) { bonus2 bAddRace,RC_Brute,30; bonus2 bAddRace,RC_Demon,30; } } } },{},{}
 //===================================================================
 // New Accessories
 //===================================================================
@@ -12010,6 +12024,7 @@
 28725,Illusion_Moonlight_Dagger,Illusion Moonlight Dagger,5,20,,700,150,,1,1,0x028F5EEE,63,2,2,4,99,1,1,{ bonus bMaxSPrate,10; .@val = 3; if (getrefine() >= 10) { .@val += 4; } bonus bSPDrainValue,.@val; },{},{}
 28745,Illusion_Counter_Dagger,Illusion Counter Dagger,5,0,,900,170,,1,2,0x00810204,63,2,2,4,120,0,1,{ .@r = getrefine(); bonus bCritical,90; bonus bCritAtkRate,(3*(.@r/2)); if (.@r >= 7) { bonus2 bAddClass,Class_All,5; if (.@r >= 9) { bonus2 bAddSize,Size_All,20; if (.@r >= 11) { bonus2 bAddEle,Ele_All,20; } } } },{},{}
 28755,Kuroiro-OS,Kuroiro-OS,5,20,,900,150:150,,1,2,0x22000000,63,2,2,4,130,1,1,{ .@r = getrefine(); .@dmg = 5; if (.@r >= 7) { .@dmg += 10; if (.@r >= 9) { bonus2 bSkillAtk,"KO_HAPPOKUNAI",20; if (.@r >= 11) { bonus2 bAddRace,RC_Demon,10; bonus2 bMagicAddRace,RC_Demon,10; bonus2 bAddRace,RC_Undead,10; bonus2 bMagicAddRace,RC_Undead,10; } } } bonus2 bAddEle,Ele_Undead,.@dmg; bonus2 bMagicAddEle,Ele_Undead,.@dmg; bonus2 bAddEle,Ele_Dark,.@dmg; bonus2 bMagicAddEle,Ele_Dark,.@dmg; },{},{}
+28762,Illusion_Bazerald,Illusion Bazerald,5,20,,500,120:170,,1,2,0x228F5EEE,63,2,2,4,120,1,1,{ bonus bAtkEle,Ele_Fire; bonus bInt,5; .@r = getrefine(); bonus bMatkRate,(.@r/2); if (.@r >= 7) { bonus2 bMagicAtkEle,Ele_Fire,10; if (.@r >= 9) { bonus2 bSkillAtk,"MG_FIREBOLT",40; bonus2 bSkillAtk,"MG_FIREBALL",40; if (.@r >= 11) { bonus2 bSkillAtk,"WZ_METEOR",30; bonus2 bSkillAtk,"WL_CRIMSONROCK",30; } } } },{},{}
 //===================================================================
 // More shields
 //===================================================================
@@ -12518,3 +12533,9 @@
 32209,Illusion_Battle_chip_R,Illusion Battle chip R,4,20,,100,,0,,1,0xFFFFFFFF,63,2,8,,130,0,0,{ bonus bMatkRate,5; },{},{}
 32210,Illusion_Battle_chip_L,Illusion Battle chip L,4,20,,100,,0,,1,0xFFFFFFFF,63,2,128,,130,0,0,{ bonus bMatkRate,5; },{},{}
 32237,Celine's_Brooch,Celine's Brooch,4,10,,500,,0,,1,0xFFFFFFFE,63,2,136,,100,0,0,{ bonus bMatkRate,5; bonus bVariableCastrate,-10; },{},{}
+32238,Illusion_Morpheus's_Ring,Illusion Morpheus's Ring,4,20,,100,,0,,1,0xFFFFFFFF,63,2,8,,130,0,0,{ bonus bInt,3; bonus bMaxSPrate,5; },{},{}
+32239,Illusion_Morpheus's_Bracelet,Illusion Morpheus's Bracelet,4,20,,100,,0,,1,0xFFFFFFFF,63,2,128,,130,0,0,{ bonus bInt,3; bonus bMaxSPrate,5; },{},{}
+//===================================================================
+// More Guns
+//===================================================================
+32301,Illusion_Gold_Lux,Illusion Gold Lux,5,20,,1800,160,,7,2,0x41000000,63,2,34,4,120,1,17,{ .@r = getrefine(); bonus bHit,10; bonus bLongAtkRate,3*(.@r/2); if (.@r >= 7) { bonus2 bSkillAtk,"GS_DESPERADO",40; if (.@r >= 9) { bonus2 bSkillCooldown,"RL_HEAT_BARREL",-2000; if (.@r >= 11) { bonus2 bSkillAtk,"RL_FIREDANCE",30; } } } },{},{}
