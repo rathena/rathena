@@ -583,7 +583,7 @@ void chrif_on_ready(void) {
 	do_reconnect_storage();
 
 	//Re-save any guild castles that were modified in the disconnection time.
-	guild_castle_reconnect(-1, 0, 0);
+	guild_castle_reconnect(-1, CD_NONE, 0);
 	
 	// Charserver is ready for loading autotrader
 	if (!char_init_done)

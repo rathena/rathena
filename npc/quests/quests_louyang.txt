@@ -4643,7 +4643,7 @@ lou_in02,77,37,7	script	Hermit	824,{
 				next;
 				getpartymember(getcharid(1));
 				set @partymember,$@partymembercount;
-				if (getpartyleader(getcharid(1),1) == getcharid(0) || !@partymember) {
+				if (is_party_leader() == true || !@partymember) {
 					mes "[Sun Mao]";
 					mes "Now, the most important thing for our cause is to gather more recruits and increase our numbers. Please find others who will join us in our fight.";
 					next;
@@ -4666,7 +4666,7 @@ lou_in02,77,37,7	script	Hermit	824,{
 			mes "If you're a real tourist, you do not want to get involved in our business, one way or another.";
 			close;
 		}
-	} else if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	} else if (is_party_leader() == true) {
 		if (QL_REVOL == 9) {
 			mes "[Sun Mao]";
 			mes "Once again,";

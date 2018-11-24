@@ -108,7 +108,7 @@ int guild_skill_get_max (int id) {
 
 // Retrieve skill_lv learned by guild
 int guild_checkskill(struct guild *g, int id) {
-	if ((id = guild_skill_get_index(id)) < 0)
+	if ( g == nullptr || (id = guild_skill_get_index(id)) < 0)
 		return 0;
 	return g->skill[id].lv;
 }
@@ -1730,7 +1730,7 @@ int castle_guild_broken_sub(DBKey key, DBData *data, va_list ap)
 		npc_event_do(name);
 
 		//Save the new 'owner', this should invoke guardian clean up and other such things.
-		guild_castledatasave(gc->castle_id, 1, 0);
+		guild_castledatasave(gc->castle_id, CD_GUILD_ID, 0);
 	}
 	return 0;
 }
@@ -1970,7 +1970,7 @@ int guild_castledatasave(int castle_id, int index, int value) {
 	}
 
 	switch (index) {
-	case 1: // The castle's owner has changed? Update or remove Guardians too. [Skotlex]
+	case CD_GUILD_ID: // The castle's owner has changed? Update or remove Guardians too. [Skotlex]
 	{
 		int i;
 		gc->guild_id = value;
@@ -1981,9 +1981,9 @@ int guild_castledatasave(int castle_id, int index, int value) {
 		}
 		break;
 	}
-	case 2:
+	case CD_CURRENT_ECONOMY:
 		gc->economy = value; break;
-	case 3: // defense invest change -> recalculate guardian hp
+	case CD_CURRENT_DEFENSE: // defense invest change -> recalculate guardian hp
 	{
 		int i;
 		gc->defense = value;
@@ -1994,21 +1994,21 @@ int guild_castledatasave(int castle_id, int index, int value) {
 		}
 		break;
 	}
-	case 4:
+	case CD_INVESTED_ECONOMY:
 		gc->triggerE = value; break;
-	case 5:
+	case CD_INVESTED_DEFENSE:
 		gc->triggerD = value; break;
-	case 6:
+	case CD_NEXT_TIME:
 		gc->nextTime = value; break;
-	case 7:
+	case CD_PAY_TIME:
 		gc->payTime = value; break;
-	case 8:
+	case CD_CREATE_TIME:
 		gc->createTime = value; break;
-	case 9:
+	case CD_ENABLED_KAFRA:
 		gc->visibleC = value; break;
 	default:
-		if (index > 9 && index <= 9+MAX_GUARDIANS) {
-			gc->guardian[index-10].visible = value;
+		if (index >= CD_ENABLED_GUARDIAN00 && index < CD_MAX) {
+			gc->guardian[index - CD_ENABLED_GUARDIAN00].visible = value;
 			break;
 		}
 		ShowWarning("guild_castledatasave: index = '%d' is out of allowed range\n", index);

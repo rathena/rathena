@@ -216,7 +216,7 @@ e_tower,81,105,0	script	Tower Protection Stone	406,{
 	}
 	switch(.@etower_timer) {
 	case -1:
-		if (getcharid(0) == getpartyleader(.@party_id,2)) {
+		if (is_party_leader() == true) {
 			mes "Confirmed the party has been made. Would you like to reserve entrance to the Endless Tower?";
 			next;
 			switch(select("Generate dungeon "+.@md_name$+":Enter the dungeon:Return to Alberta:Cancel")) {

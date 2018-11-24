@@ -3607,6 +3607,7 @@
 	export_constant(EFST_BOW_ATK_POWER);
 	export_constant(EFST_RED_ORG_POTION);
 	export_constant(EFST_CAST_TIME);
+	export_constant(EFST_LEAPIMPAIRED);
 	export_constant(EFST_EXCLUSIVE_RECEIVEITEM);
 	export_constant(EFST_EXCLUSIVE_PLUSEXP);
 	export_constant(EFST_ASSUMPTIO_BUFF);
@@ -7336,6 +7337,26 @@
 	export_constant(GUILDSTORAGE_LOG_FINAL_SUCCESS);
 	export_constant(GUILDSTORAGE_LOG_EMPTY);
 	export_constant(GUILDSTORAGE_LOG_FAILED);
+
+	/* castle data flags */
+	export_constant(CD_NONE);
+	export_constant(CD_GUILD_ID);
+	export_constant(CD_CURRENT_ECONOMY);
+	export_constant(CD_CURRENT_DEFENSE);
+	export_constant(CD_INVESTED_ECONOMY);
+	export_constant(CD_INVESTED_DEFENSE);
+	export_constant(CD_NEXT_TIME);
+	export_constant(CD_PAY_TIME);
+	export_constant(CD_CREATE_TIME);
+	export_constant(CD_ENABLED_KAFRA);
+	for( int i = CD_ENABLED_GUARDIAN00, j = 0; i < CD_MAX; i++, j++ ){
+		char constant[32];
+
+		sprintf( constant, "CD_ENABLED_GUARDIAN%02d", j );
+
+		script_set_constant( constant, i, false, false );
+	}
+	export_constant(CD_MAX);
 
 	#undef export_constant
 	#undef export_constant2

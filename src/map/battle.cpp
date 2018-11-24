@@ -1257,7 +1257,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 #ifdef RENEWAL
 		if( sc->data[SC_RAID] ) {
-			damage += damage * 20 / 100;
+			if (status_get_class_(bl) == CLASS_BOSS)
+				damage += damage * 10 / 100;
+			else
+				damage += damage * 20 / 100;
 
 			if (--sc->data[SC_RAID]->val1 == 0)
 				status_change_end(bl, SC_RAID, INVALID_TIMER);
@@ -3575,7 +3578,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 200 + 40 * skill_lv;
 			break;
 		case RG_RAID:
+#ifdef RENEWAL
+			if (status_get_class_(target) == CLASS_BOSS)
+				skillratio += 10 * skill_lv;
+			else
+				skillratio += 20 * skill_lv;
+#else
 			skillratio += 40 * skill_lv;
+#endif
 			break;
 		case RG_INTIMIDATE:
 			skillratio += 30 * skill_lv;
@@ -8511,6 +8521,8 @@ static const struct _battle_data {
 	{ "feature.attendance",                 &battle_config.feature_attendance,              1,      0,      1,              },
 	{ "feature.privateairship",             &battle_config.feature_privateairship,          1,      0,      1,              },
 	{ "rental_transaction",                 &battle_config.rental_transaction,              1,      0,      1,              },
+	{ "min_shop_buy",                       &battle_config.min_shop_buy,                    1,      0,      INT_MAX,        },
+	{ "min_shop_sell",                      &battle_config.min_shop_sell,                   0,      0,      INT_MAX,        },
 
 #include "../custom/battle_config_init.inc"
 };

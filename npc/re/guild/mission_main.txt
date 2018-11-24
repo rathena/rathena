@@ -59,7 +59,7 @@ function calcjobexp;
 	switch(select("Conquering " + .region$[.@zoneid], "Guild Dungeon Daily Quests", "About quests", "I don't need it.")){
 		case 1: // Conquering.
 			.@gid = getcharid(2);
-			if(.@gid && getguildmaster(.@gid) == strcharinfo(0)){
+			if(.@gid && is_guild_leader() == true){
 				.@time_check1 = checkquest(.conquer_delay_questid[.@zoneid], PLAYTIME);
 				if(.@time_check1 == 0){
 					mes .@npcname$;
@@ -93,7 +93,7 @@ function calcjobexp;
 						} else {
 							.@total = 0;
 							for(.@i = 0; .@i < 5; ++.@i){
-								.@total += (.@gid == getcastledata(.castle$[.@i+.@zoneid*5],1));
+								.@total += (.@gid == getcastledata(.castle$[.@i+.@zoneid*5],CD_GUILD_ID));
 							}
 
 							if(!.@total){
@@ -108,7 +108,7 @@ function calcjobexp;
 								else
 									mes "Currently, the total number of fortresses that your guild has conquered";
 								for(.@i = 0; .@i < 5; ++.@i){
-									mes getcastlename(.castle$[.@i+.@zoneid*5]) + (.@gid == getcastledata(.castle$[.@i+.@zoneid*5],1) ? ": ^4d4dffOccupied^000000" : "");
+									mes getcastlename(.castle$[.@i+.@zoneid*5]) + (.@gid == getcastledata(.castle$[.@i+.@zoneid*5],CD_GUILD_ID) ? ": ^4d4dffOccupied^000000" : "");
 								}
 								if(.@total == 5)
 									mes "Your guild has conquered " + .region$[.@zoneid] + "!";
@@ -175,7 +175,7 @@ function calcjobexp;
 					getitem 6615,1;
 				} else {
 					mes .@npcname$;
-					mes "Hmm? It seems like you haven't completed the mission yet…";
+					mes "Hmm? It seems like you haven't completed the mission yet..";
 					mes "Is there any problem?";
 					next;
 					if(select("No.","Give up the quest.") == 1){
