@@ -1845,7 +1845,7 @@ OnEnable:
 				next;
 				mes "[Shalosh]";
 				mes "I see you collected some junk, have a spare.";
-				getitem 6752,3; //Charleston Parts
+				getitem 6752,5; //Charleston Parts
 				erasequest 13184;
 				setquest 13186;
 				close2;
