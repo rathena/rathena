@@ -26,7 +26,7 @@ enum AtCommandType : uint8;
 enum e_log_pick_type : uint32;
 enum sc_type : int16;
 
-#define MAX_PC_BONUS 10 /// Max bonus, usually used by item bonus
+#define MAX_PC_BONUS 20 /// Max bonus, usually used by item bonus
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
