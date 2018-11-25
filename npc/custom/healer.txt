@@ -100,3 +100,4 @@ mora,55,152,4	duplicate(Healer)	Healer#mora	501
 lasagna,208,179,4	duplicate(Healer)	Healer#lasagna	501
 mid_camp,183,255,4	duplicate(Healer)	Healer#mid_camp	501
 harboro1,285,196,4	duplicate(Healer)	Healer#harboro	501
+verus04,153,226,3	duplicate(Healer)	Healer#verus	501

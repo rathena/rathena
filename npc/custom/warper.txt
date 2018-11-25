@@ -134,7 +134,7 @@ menu	"Prontera",T1, "Alberta",T2, "Aldebaran",T3, "Amatsu",T4, "Ayothaya",T5,
 		"Lutie",T21, "Malangdo",T22, "Malaya",T23, "Manuk",T24,
 		"Midgarts Expedition Camp",T25, "Mora",T26, "Morroc",T27, "Moscovia",T28,
 		"Nameless Island",T29, "Niflheim",T30, "Payon",T31, "Rachel",T32, "Rock Ridge", T38, "Splendide",T33,
-		"Thor Camp",T34, "Umbala",T35, "Veins",T36, "Yuno",T37;
+		"Thor Camp",T34, "Umbala",T35, "Veins",T36, "Verus",T39, "Yuno",T37;
 
 T1: Go("prontera",156,183);
 T2: Go("alberta",116,57);
@@ -182,6 +182,7 @@ T35: Go("umbala",96,156);
 T36: Go("veins",208,122);
 T37: Go("yuno",158,191);
 T38: Go("harboro1",283,191);
+T39: Go("verus04",147,219);
 
 // --------------------------------------------------
 	Fields:
@@ -280,8 +281,8 @@ F29: Restrict("Pre-RE",5,10);
 F30: setarray @c[2],37,246,31,207;
 	 Disp("Kiwawa Desert 1:Kiwawa Desert 2");
 	 Pick("","rockrdg1","rockrdg2");
-F31: Restrict("RE",1,4);
-	 setarray @c[2],243,62,72,19,121,2,121,26;
+F31: Restrict("RE",1,3);
+	 setarray @c[2],243,62,72,19,121,2;
 	 Disp("Laboratory",1,4); Pick("verus");
 
 
@@ -492,16 +493,15 @@ G4: Go("gef_fild13",184,205);
 	Instances:
 // --------------------------------------------------
 menu	"Airship Assault",I22, "Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buwaya Cave",I3, "Central Laboratory", I21,
-		"Devil's Tower",I4, "Eclage Interior",I5, "Endless Tower",I6,
+		"Charleston Crisis",I28, "Devil's Tower",I4, "Eclage Interior",I5, "Endless Tower",I6,
 		"Faceworms Nest",I7, "Geffen Magic Tournament",I8, "Ghost Palace",I9,
 		"Hazy Forest",I10, "Horror Toy Factory",I11, "Isle of Bios",I23,"Last Room",I24, "Malangdo Culvert",I12,
-		"Morse Cave",I25,"Nidhoggur's Nest",I13, "Octopus Cave",I14, "Old Glast Heim",I15,
+		"Morse Cave",I25,"Nidhoggur's Nest",I13, "Nightmarish Jitterbug",I27, "Octopus Cave",I14, "Old Glast Heim",I15,
 		"Orc's Memory",I16, "Room of Consciousness",I26, "Sarah and Fenrir",I17, "Sara Memory",I18,
 		"Sealed Shrine",I19, "Wolfchev's Laboratory",I20;
 
 // - SkyFortress
 // - Charleston Crisis
-// - Nightmarish Jitterbug
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);
@@ -551,6 +551,10 @@ I25: Restrict("RE");
 	Go("moro_cav",61,64);
 I26: Restrict("RE");
 	Go("prt_cas_q",23,28);
+I27: Restrict("RE");
+	Go("moc_para01",26,90);
+I27: Restrict("RE");
+	Go("verus04",77,118);
 
 // --------------------------------------------------
 	Special:
@@ -651,3 +655,4 @@ mora,57,152,4	duplicate(Warper)	Warper#mora	531
 mid_camp,191,249,4	duplicate(Warper)	Warper#midcamp	531
 vendzone,52,51,3	duplicate(Warper)	Warper#vendzone	531
 harboro1,281,196,5	duplicate(Warper)	Warper#harboro	531
+verus04,150,229,3	duplicate(Warper)	Warper#verus	531
