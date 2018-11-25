@@ -195,11 +195,11 @@ OnSun2359: // one minute before 'next week' start
 	for(.@i = 0; .@i < 5; .@i ++) {
 		setarray .@items_count[0], 5 - (.@i*1), 15 - (.@i*3);
 		if(.@killer[.@i] > 0)
-			mail .@killer[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+strcharinfo(0, .@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [ALL].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 1000000 - (.@i*200000),.@items, .@items_count;
+			mail .@killer[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+get_name(.@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [ALL].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 1000000 - (.@i*200000),.@items, .@items_count;
 		if(.@killer2[.@i] > 0)
-			mail .@killer2[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+strcharinfo(0, .@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [Trans].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 1000000 - (.@i*200000),.@items, .@items_count;
+			mail .@killer2[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+get_name(.@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [Trans].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 1000000 - (.@i*200000),.@items, .@items_count;
 		if(.@killer3[.@i] > 0)
-			mail .@killer3[.@i], "MvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+strcharinfo(0, .@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly MVP Ranking.\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 1000000 - (.@i*200000),.@items, .@items_count;
+			mail .@killer3[.@i], "MvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+(.@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly MVP Ranking.\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 1000000 - (.@i*200000),.@items, .@items_count;
 	}
 end;
 
