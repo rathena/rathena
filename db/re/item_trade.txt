@@ -1209,8 +1209,8 @@
 11500,475,100	// Light_Yellow_Pot
 11501,475,100	// Light_White_Pot
 11502,475,100	// Light_Blue_Pot
-11503,475,100	// Siege_White_Potion
-11504,475,100	// Siege_Blue_Potion
+// 11503,475,100	// Siege_White_Potion
+// 11504,475,100	// Siege_Blue_Potion
 11514,475,100	// Enriched_Slim_Pot
 11551,499,100	// Savory_Herb_Salad
 11552,499,100	// Apple_Carrot_Salad
@@ -4012,3 +4012,9 @@
 6240,329,100	// HD_Oridecon
 6241,329,100	// HD_Elunium
 12214,329,100	// Convex_Mirror
+
+11503,329,100	// Siege_White_Potion
+11504,329,100	// Siege_Blue_Potion
+11547,329,100	// Woe_Violet_Potion
+11548,329,100	// Woe_White_Potion
+11549,329,100	// Woe_Blue_Potion
