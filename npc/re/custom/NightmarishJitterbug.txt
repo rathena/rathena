@@ -121,7 +121,7 @@ L_Skip:
 				if (checkquest(13181) > -1)
 					erasequest 13181;
 
-				if (! checkquest(13181))
+				if (checkquest(13181) == -1)
 					setquest 13181;
 				close2; cutin "", 255; end;
 			case 2:
@@ -2003,6 +2003,7 @@ OnTouch:
 			getexp 1500000, 500000;
 	}
 
+	instance_destroy instance_id();
 	warp "moc_para01", 28, 87;
 	end;
 }
