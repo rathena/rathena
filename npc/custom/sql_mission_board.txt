@@ -301,18 +301,18 @@ switch( select( ( .@current_mission_size )?"Submit Mission":"",
 				next;
 				mes "^0055FF[ "+.@npc_name$+" ]^000000";
 				mes " ";
-				mes "You cant pick this mission, you have mission completion reach the max repeatable attempt of "+.@mission_completed+" times.";
+				mes "You can't pick this mission. Your mission completion reach the max repeatable attempt of "+.@mission_completed+" times.";
 				close;
 			}
 		}
 
 		if ( .@redo_delay ) {
-			query_sql "select timestampdiff( hour, completion, now() ), unix_timestamp( date_add( completion, interval "+ .@redo_delay +" hour ) ) from player_mission where cid = "+ getcharid(0) +" and mission_id = "+ .@id[.@i] +" order by completion desc limit 1", .@diff_delay, .@deny_time;
-			if ( .@diff_delay < .@redo_delay ) {
+			query_sql "select (timestampdiff( hour, completion, now() )+1), unix_timestamp( date_add( completion, interval "+ .@redo_delay +" hour ) ) from player_mission where cid = "+ getcharid(0) +" and mission_id = "+ .@id[.@i] +" order by completion desc limit 1", .@diff_delay, .@deny_time;
+			if ( .@diff_delay > 0 && .@diff_delay < .@redo_delay ) {
 				next;
 				mes "^0055FF[ "+.@npc_name$+" ]^000000";
 				mes " ";
-				mes "You cant pick this mission, you have mission redo delay isnt finish yet.";
+				mes "You can't pick this mission. Your mission redo delay isn't finish yet.";
 				mes "^FF0000"+ callfunc( "Time2Str", .@deny_time ) +"^000000";
 				close;
 			}
@@ -1126,23 +1126,30 @@ OnTimer1000:
 	end;
 
 OnCommand:
-	if ( !strcmp( strnpcinfo(0), .npc_name$ ) ) {
+	if ( strcmp( strnpcinfo(0), .npc_name$ ) == 0 ) {
 		if ( @ms_size ) {
 			for ( .@i = 0; .@i < @ms_size; .@i++ ) {
 				.@mob_size = getarraysize( getd( "@ms_"+ @ms_list$[.@i] +"_list" ) );
 				query_sql "select id, title, item_list, item_qty from mission_board where id = "+ @ms_list$[.@i], .@m_id, .@title$, .@item_id$, .@item_amount$;
-				if ( .@mob_size ) {
+				if ( .@mob_size || getstrlen(.@item_id$) ) {
+					dispbottom "==========================================";
+					dispbottom " [Mission '"+ .@title$ +"' Progress]";
+					dispbottom "- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -";
 					if ( getd( "@ms_"+ .@m_id +"_expire" ) )
-						dispbottom "[Mission '"+ .@title$ +"' Progress] Time limit -> "+ callfunc( "Time2Str", getd( "@ms_"+ .@m_id +"_expire" ) );
+						dispbottom " Time limit -> "+ callfunc( "Time2Str", getd( "@ms_"+ .@m_id +"_expire" ) );
 					for ( .@j = 0; .@j < .@mob_size; .@j++ )
-						dispbottom "[Mission '"+ .@title$ +"' Progress] Hunted "+ getd( "@ms_"+ @ms_list$[.@i] +"_hunt["+ .@j +"]" ) +"/"+ getd( "@ms_"+ @ms_list$[.@i] +"_qty[" + .@j +"]" ) +" x "+ getmonsterinfo( getd( "@ms_"+ @ms_list$[.@i] +"_list["+ .@j +"]" ), MOB_NAME );
+						dispbottom " Hunted "+ getd( "@ms_"+ @ms_list$[.@i] +"_hunt["+ .@j +"]" ) +"/"+ getd( "@ms_"+ @ms_list$[.@i] +"_qty[" + .@j +"]" ) +" x "+ getmonsterinfo( getd( "@ms_"+ @ms_list$[.@i] +"_list["+ .@j +"]" ), MOB_NAME );
 					explode .@item_id_array$, .@item_id$, "|";
 					explode .@item_amount_array$, .@item_amount$, "|";
 					.@size = getarraysize( .@item_id_array$ );
 					for ( .@j = 1; .@j < .@size; .@j++ )
-						dispbottom "[Mission '"+ .@title$ +"' Progress] Collected "+ countitem( atoi( .@item_id_array$[.@j] ) ) +"/"+ .@item_amount_array$[.@j] +" x "+ getitemname( atoi( .@item_id_array$[.@j] ) );
+						dispbottom " Collected "+ countitem( atoi( .@item_id_array$[.@j] ) ) +"/"+ .@item_amount_array$[.@j] +" x "+ getitemname( atoi( .@item_id_array$[.@j] ) );
+					dispbottom "==========================================";
 				}
 			}
+		}
+		else {
+			dispbottom "You do not have any active missions at the momment.";
 		}
 	}
 	end;
@@ -1198,7 +1205,7 @@ if( strnpcinfo(0) == .npc_name$ ){
 
 		// by default mission wont work in PVP,GVG,Instance,Event maps
 		if( compare( .@map$,"@" ) || getmapflag( .@map$,mf_gvg ) || getmapflag( .@map$,mf_pvp )){
-			// dispbottom "[Mission Board] PvP/GvG Map , Instance Map , Event Map , include monsters will not affect Mission Progress.";
+			dispbottom "[Mission Board] PvP/GvG Map , Instance Map , Event Map , include monsters will not affect Mission Progress.";
 			end;
 		}
 
