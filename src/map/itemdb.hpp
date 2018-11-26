@@ -839,6 +839,7 @@ struct item_data
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
 		unsigned broadcast : 1; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
+		uint8 dropEffect; ///< Drop Effect Mode
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;
@@ -904,6 +905,7 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_traderight(n) (itemdb_search(n)->flag.trade_restriction)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
+#define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 bool itemdb_is_spellbook2(unsigned short nameid);

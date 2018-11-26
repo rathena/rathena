@@ -764,11 +764,15 @@ void clif_charselectok(int id, uint8 ok)
 }
 
 /// Makes an item appear on the ground.
-/// 009e <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
-/// 084b <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
-void clif_dropflooritem(struct flooritem_data* fitem)
+/// 009E <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
+/// 084B <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
+/// 0ADD <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
+void clif_dropflooritem(struct flooritem_data* fitem, bool canShowEffect)
 {
-#if PACKETVER >= 20130000
+#if PACKETVER >= 20180418
+	uint8 buf[22];
+	uint32 header = 0xadd;
+#elif PACKETVER >= 20130000
 	uint8 buf[19];
 	uint32 header=0x84b;
 #else
@@ -795,6 +799,22 @@ void clif_dropflooritem(struct flooritem_data* fitem)
 	WBUFB(buf, offset+13) = fitem->subx;
 	WBUFB(buf, offset+14) = fitem->suby;
 	WBUFW(buf, offset+15) = fitem->item.amount;
+#if PACKETVER >= 20180418
+	if( canShowEffect ){
+		uint8 dropEffect = itemdb_dropeffect(fitem->item.nameid);
+
+		if( dropEffect > 0 ){
+			WBUFB(buf, offset+17) = 1;
+			WBUFW(buf, offset+18) = dropEffect - 1;
+		}else{
+			WBUFB(buf, offset+17) = 0;
+			WBUFW(buf, offset+18) = 0;
+		}
+	}else{
+		WBUFB(buf, offset+17) = 0;
+		WBUFW(buf, offset+18) = 0;
+	}
+#endif
 
 	clif_send(buf, packet_len(header), &fitem->bl, AREA);
 }
