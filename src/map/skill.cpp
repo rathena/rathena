@@ -10978,6 +10978,15 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 		}
 		break;
+		
+	case ALL_EQSWITCH:
+		clif_equipswitch_reply( sd, false );
+ 		for( int i = 0, position = 0; i < EQI_MAX; i++ ){
+			if( sd->equip_switch_index[i] >= 0 && !( position & equip_bitmask[i] ) ){
+				position |= pc_equipswitch( sd, sd->equip_switch_index[i] );
+			}
+		}
+		break;
 
 	case AB_VITUPERATUM:
 		if (flag&1)

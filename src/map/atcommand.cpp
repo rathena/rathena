@@ -1255,7 +1255,7 @@ ACMD_FUNC(heal)
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, bound = BOUND_NONE;
+	int number = 0, bound = BOUND_NONE, costume = 0;
 	char flag = 0;
 	struct item item_tmp;
 	struct item_data *item_data[10];
@@ -1304,6 +1304,27 @@ ACMD_FUNC(item)
 
 	for(j--; j>=0; j--){ //produce items in list
 		unsigned short item_id = item_data[j]->nameid;
+		if (!strcmpi(command + 1, "costumeitem"))
+		{
+			if (!battle_config.reserved_costume_id)
+			{
+				clif_displaymessage(fd, "Costume convertion is disable. Set a value for reserved_cosutme_id on your battle.conf file.");
+				return -1;
+			}
+			if (!(item_data[j]->equip&EQP_HEAD_LOW) &&
+				!(item_data[j]->equip&EQP_HEAD_MID) &&
+				!(item_data[j]->equip&EQP_HEAD_TOP) &&
+				!(item_data[j]->equip&EQP_COSTUME_HEAD_LOW) &&
+				!(item_data[j]->equip&EQP_COSTUME_HEAD_MID) &&
+				!(item_data[j]->equip&EQP_COSTUME_HEAD_TOP) &&
+				!(item_data[j]->equip&EQP_GARMENT) &&
+				!(item_data[j]->equip&EQP_COSTUME_GARMENT))
+			{
+				clif_displaymessage(fd, "You cannot costume this item. Costume only work for headgears.");
+				return -1;
+			}
+			costume = 1;
+		}
 		//Check if it's stackable.
 		if (!itemdb_isstackable2(item_data[j]))
 			get_count = 1;
@@ -1314,6 +1335,11 @@ ACMD_FUNC(item)
 				memset(&item_tmp, 0, sizeof(item_tmp));
 				item_tmp.nameid = item_id;
 				item_tmp.identify = 1;
+				if (costume == 1) { // Costume item
+					item_tmp.card[0] = CARD0_CREATE;
+					item_tmp.card[2] = GetWord(battle_config.reserved_costume_id, 0);
+					item_tmp.card[3] = GetWord(battle_config.reserved_costume_id, 1);
+				}
 				item_tmp.bound = bound;
 				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
 					clif_additem(sd, 0, 0, flag);
@@ -5530,6 +5556,7 @@ ACMD_FUNC(dropall)
 			if( type == -1 || type == (uint8)item_data->type ) {
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
+					pc_equipswitch_remove(sd, i);
 				if(pc_dropitem(sd, i, sd->inventory.u.items_inventory[i].amount))
 					count += sd->inventory.u.items_inventory[i].amount;
 				else count2 += sd->inventory.u.items_inventory[i].amount;
@@ -5562,6 +5589,7 @@ ACMD_FUNC(storeall)
 		if (sd->inventory.u.items_inventory[i].amount) {
 			if(sd->inventory.u.items_inventory[i].equip != 0)
 				pc_unequipitem(sd, i, 3);
+				pc_equipswitch_remove(sd, i);
 			storage_storageadd(sd, &sd->storage, i, sd->inventory.u.items_inventory[i].amount);
 		}
 	}
@@ -10700,6 +10728,7 @@ ACMD_DEF(whosell),
 		ACMD_DEF(clonestat),
 		ACMD_DEF(bodystyle),
 		ACMD_DEF(adopt),
+		ACMD_DEF2("costumeitem", item),
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),

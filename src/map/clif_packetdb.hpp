@@ -2332,13 +2332,6 @@
 	packet(0x0A37,59);
 #endif
 
-// 2016-09-28cRagexeRE
-#if PACKETVER >= 20160928
-	parseable_packet(0x0A97,8,clif_parse_dull,0);
-	parseable_packet(0x0A99,4,clif_parse_dull,0);
-	parseable_packet(0x0A9C,2,clif_parse_dull,0);
-#endif
-
 // 2016-10-12aRagexeRE
 #if PACKETVER >= 20161012
 	packet(0x0AA0,2);
@@ -2351,6 +2344,17 @@
 // 2016-10-26bRagexeRE
 #if PACKETVER >= 20161026
 	packet(0x0AA5,-1);
+#endif
+
+// 2017-02-08bRagexeRE
+#if PACKETVER >= 20170208
+	parseable_packet(0x0A97,8,clif_parse_equipswitch_add,2,4);
+	packet(0x0A98,12);
+	parseable_packet(0x0A99,8,clif_parse_equipswitch_remove,2,4,6);
+	packet(0x0A9A,10);
+	packet(0x0A9B,-1);
+	parseable_packet(0x0A9C,2,clif_parse_equipswitch_request,0);
+	packet(0x0A9D,4);
 #endif
 
 // 2017-03-15cRagexeRE
@@ -2370,8 +2374,12 @@
 	packet(0x0A44,-1);
 	packet(0x0AB2,7);
 	packet(0x0ABD,10);
-	parseable_packet(0x0ACE,4,clif_parse_dull,0);
+	// TODO: find correct packet ver
+	packet(0x0A98,10);
+	parseable_packet(0x0A99,4,clif_parse_equipswitch_remove,2,4);
+	parseable_packet(0x0ACE,4,clif_parse_equipswitch_request_single,0); // 20170531 has it
 #endif
+
 
 // 2017-08-30bRagexeRE
 #if PACKETVER >= 20170830

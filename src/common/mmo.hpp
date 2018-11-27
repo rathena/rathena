@@ -53,11 +53,11 @@
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1201 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1202 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
-#define MAX_STORAGE 900 ///Max number of storage slots a player can have
+#define MAX_STORAGE 800 ///Max number of storage slots a player can have
 #define MAX_GUILD_STORAGE 600 ///Max number of storage slots a guild
 #define MAX_PARTY 12 ///Max party member
 #define MAX_GUILD 16+10*6	///Increased max guild members +6 per 1 extension levels [Lupus]
@@ -254,6 +254,7 @@ struct item {
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;
+	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 };
 
 //Equip position constants

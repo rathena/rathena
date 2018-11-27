@@ -9940,6 +9940,20 @@ solution rather than sending the map and the monster_id.
 
 ---------------------------------------
 
+*costume <equipment position>;
+ Converts equipment in <equipment position> to costume version that has no stats.
+ Applicable positions are:
+ EQI_HEAD_TOP - Top Headgear
+ EQI_HEAD_MID - Middle Headgear
+ EQI_HEAD_LOW - Lower Headgear
+ EQI_GARMENT - Garment
+ 
+---------------------------------------
+*getcostumeitem <item id>;
+*getcostumeitem <"item name">;
+ Spawn a costume version of an <item id> or <"item name"> in attached player's inventory.
+ ---------------------------------------
+
 *hateffect(<Hat Effect ID>,<State>);
 
 This will set a Hat Effect onto the player. The state field allows you to

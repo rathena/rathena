@@ -8483,6 +8483,7 @@ static const struct _battle_data {
 	{ "exp_cost_inspiration",               &battle_config.exp_cost_inspiration,            1,      0,      100,            },
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
+	{ "reserved_costume_id",				&battle_config.reserved_costume_id,				999998,	0,		INT_MAX,		},
 	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
 	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
 	{ "tarotcard_equal_chance",             &battle_config.tarotcard_equal_chance,          0,      0,      1,              },
@@ -8511,6 +8512,7 @@ static const struct _battle_data {
 	{ "feature.attendance",                 &battle_config.feature_attendance,              1,      0,      1,              },
 	{ "feature.privateairship",             &battle_config.feature_privateairship,          1,      0,      1,              },
 	{ "rental_transaction",                 &battle_config.rental_transaction,              1,      0,      1,              },
+	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
 	{ "min_shop_buy",                       &battle_config.min_shop_buy,                    1,      0,      INT_MAX,        },
 	{ "min_shop_sell",                      &battle_config.min_shop_sell,                   0,      0,      INT_MAX,        },
 
@@ -8653,6 +8655,13 @@ void battle_adjust_conf()
 	if( battle_config.feature_refineui == 2 ){
 		ShowWarning("conf/battle/feature.conf refine UI is enabled in scripts but disabled in general, enabling...\n");
 		battle_config.feature_refineui = 3;
+	}
+#endif
+
+#if PACKETVER < 20170208
+	if (battle_config.feature_equipswitch) {
+		ShowWarning("conf/battle/feature.conf equip switch is enabled but it requires PACKETVER 2017-02-08 or newer, disabling...\n");
+		battle_config.feature_equipswitch = 0;
 	}
 #endif
 
