@@ -3168,7 +3168,7 @@ ma_fild01,251,93,3	script	Lost Child#malaya01	576,{
 		}
 	}
 	end;
-	
+
 OnInit:
 	if (strnpcinfo(0) != "Lost Child#malaya01")
 		disablenpc strnpcinfo(0);
@@ -3776,7 +3776,7 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 		.@newItem = 2492;
 		break;
 	}
-	
+
 	if (!getequipisequiped(.@part)) {
 		mes "[Bayani]";
 		mes "You should wear the equipment to upgrade and not come without it on you.";
@@ -3832,7 +3832,7 @@ ma_fild01,158,243,6	script	Tribe Blacksmith#malaya	582,{
 		close;
 
 	delequip .@part;
-	getitem .@newItem, 1; 
+	getitem .@newItem, 1;
 	mes "[Bayani]";
 	mes "Ha ha. Perfect.";
 	mes "Congratulations. Your armor is better than ever.";
@@ -8335,8 +8335,9 @@ ma_fild01,1,1,4	script	Pintados Manager#pin	894,{
 
 // Moved to individual NPCs for smoother processing.
 OnInit:
+	$malaya_pintados_00 = 1;
 	if ($malaya_pintados_00 > 0) {
-		// donpcevent "Pintados Manager#pin::OnEnableNPC";
+		donpcevent "Pintados Manager#pin::OnEnableNPC";
 		initnpctimer;// unoffical fix
 	}
 	end;
