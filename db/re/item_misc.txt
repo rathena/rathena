@@ -1405,17 +1405,12 @@ IG_PRIVATE_AIRSHIP,6909,1 // Actinidia_Cat_Fruit
 IG_PRIVATE_AIRSHIP,25464,1 // World_Moving_Rights
 
 // Milky Special Gift Box
-IG_MILKY_SGB,17256,1		// Good_Student_Gift_Box
-IG_MILKY_SGB,17257,1		// Bad_Student_Gift_Box
-IG_MILKY_SGB,7086,1			// Emblem of the Sun God
-IG_MILKY_SGB,12887,5		// Infinite Flywing
 IG_MILKY_SGB,644,25			// Gift_Box
 IG_MILKY_SGB,664,25			// Gift_Box_1
 IG_MILKY_SGB,665,25			// Gift_Box_2
 IG_MILKY_SGB,666,25			// Gift_Box_3
 IG_MILKY_SGB,667,25			// Gift_Box_4
 IG_MILKY_SGB,604,25 		// Branch_Of_Dead_Tree
-IG_MILKY_SGB,12103,10 		// Bloody_Dead_Branch
 IG_MILKY_SGB,12717,25 		// Poison_Paralysis
 IG_MILKY_SGB,12718,25 		// Poison_Leech
 IG_MILKY_SGB,12719,25 		// Poison_Oblivion
@@ -1435,21 +1430,10 @@ IG_MILKY_SGB,13261,25 		// Coconut_Bomb
 IG_MILKY_SGB,13262,25 		// Melon_Bomb
 IG_MILKY_SGB,13263,25 		// Pineapple_Bomb
 IG_MILKY_SGB,13264,25 		// Banana_Bomb
-IG_MILKY_SGB,12703,10 		// Holy_Egg_2
 IG_MILKY_SGB,603,25			// Old Blue Box
 IG_MILKY_SGB,617,25			// Old Purple Box
-IG_MILKY_SGB,12613,10		// High_Coin_Pocket
-IG_MILKY_SGB,12614,10		// Mid_Coin_Pocket
 IG_MILKY_SGB,12615,25		// Low_Coin_Pocket
-IG_MILKY_SGB,12623,10		// High_Weapon_Box
-IG_MILKY_SGB,12690,10		// Old_C_Album_Helm
-IG_MILKY_SGB,12691,10		// Old_C_Album_Armor
-IG_MILKY_SGB,12692,10		// Old_C_Album_Shield
-IG_MILKY_SGB,12694,10		// Old_C_Album_Shoes
-IG_MILKY_SGB,12695,10		// Old_C_Album_Acc
-IG_MILKY_SGB,12698,10		// Old_C_Album_Weapon
-IG_MILKY_SGB,12693,10		// Old_C_Album_Garment
-IG_MILKY_SGB,8500,20		// Milky_Platinum_Card
+
 IG_MILKY_SGB,975,25			// Scarlet Dyestuff
 IG_MILKY_SGB,976,25			// Lemon Dyestuff
 IG_MILKY_SGB,978,25			// Cobaltblue Dyestuff
@@ -1458,6 +1442,7 @@ IG_MILKY_SGB,980,25			// Orange Dyestuff
 IG_MILKY_SGB,981,25			// Violet Dyestuff
 IG_MILKY_SGB,982,25			// White Dyestuff
 IG_MILKY_SGB,983,25			// Black Dyestuff
+
 IG_MILKY_SGB,7289,25		// Peridot
 IG_MILKY_SGB,7290,25		// Phlogopite
 IG_MILKY_SGB,7291,25		// Agate
@@ -1467,10 +1452,8 @@ IG_MILKY_SGB,7294,25		// Turquoise
 IG_MILKY_SGB,7295,25		// Citrin
 IG_MILKY_SGB,7296,25		// Pyroxene
 IG_MILKY_SGB,7297,25		// Biotite
+
 IG_MILKY_SGB,12018,25		// Firecracker
-IG_MILKY_SGB,6380,10		// Mora_Coin
-IG_MILKY_SGB,13989,10		// Acidbomb_10_Box
-IG_MILKY_SGB,14004,10		// Poison_Bottle_10_Box
 IG_MILKY_SGB,519,25			// Milk
 IG_MILKY_SGB,732,25			// 3Carat Diamond
 IG_MILKY_SGB,2610,25		// Gold Ring
@@ -1478,6 +1461,7 @@ IG_MILKY_SGB,2611,25		// Silver Ring
 IG_MILKY_SGB,2613,25		// Diamond Ring
 IG_MILKY_SGB,670,25			// Gold_Coin_Moneybag
 IG_MILKY_SGB,969,25			// Gold
+
 IG_MILKY_SGB,14536,25		// Abrasive
 IG_MILKY_SGB,14537,25		// Regeneration Potion
 IG_MILKY_SGB,14538,25		// Glass of Illusion
@@ -1488,7 +1472,7 @@ IG_MILKY_SGB,14544,25		// Big Magic Defense Potion
 IG_MILKY_SGB,14545,25		// Field Manual 300%
 IG_MILKY_SGB,13609,25		// Megaphone 5 Box
 IG_MILKY_SGB,14546,25		// I Love You Firecracker
-IG_MILKY_SGB,14549,25		// 	Birthday Firecracker
+IG_MILKY_SGB,14549,25		// Birthday Firecracker
 IG_MILKY_SGB,16682,25		// Boarding Halter Box 7 day
 IG_MILKY_SGB,7776,25		// Gym Pass
 IG_MILKY_SGB,12412,25		// HE Bubble Gum
@@ -1496,19 +1480,14 @@ IG_MILKY_SGB,6240,25		// HD Oridecon
 IG_MILKY_SGB,6241,25		// HD Elunium
 IG_MILKY_SGB,6226,25		// HD Bradium
 IG_MILKY_SGB,6225,25		// HD Carnium
-IG_MILKY_SGB,529,25			//Candy
-IG_MILKY_SGB,530,25			//Candy Cane
-IG_MILKY_SGB,538,25			//Well-baked Cookie
-IG_MILKY_SGB,539,25			//Piece of Cake
+IG_MILKY_SGB,8500,25		// Milky_Platinum_Card
+
 IG_MILKY_SGB,558,25			//Chocolate
 IG_MILKY_SGB,559,25			//Hand-made Chocolate
 IG_MILKY_SGB,560,25			//Hand-made White Chocolate
 IG_MILKY_SGB,561,25			//White Chocolate
-IG_MILKY_SGB,564,25			//Rice Ball
-IG_MILKY_SGB,570,25			//Lucky Candy
-IG_MILKY_SGB,571,25			//Lucky Candy Cane
-IG_MILKY_SGB,572,25			//Lucky Cookie
 IG_MILKY_SGB,573,25			//Chocolate Drink
+
 IG_MILKY_SGB,2278,20		// Mr. Smile
 IG_MILKY_SGB,2281,20		// Opera Masque
 IG_MILKY_SGB,2288,20		// Mr. Scream
@@ -1520,24 +1499,7 @@ IG_MILKY_SGB,5087,20		// Poker Face
 IG_MILKY_SGB,5088,20		// Surprised Mask
 IG_MILKY_SGB,5089,20		// Annoyed Mask
 IG_MILKY_SGB,5090,20		// Goblin Leader Mask
-IG_MILKY_SGB,2659,2			// Vesper Core 01
-IG_MILKY_SGB,2660,2			// Vesper Core 02
-IG_MILKY_SGB,2661,2			// Vesper Core 03
-IG_MILKY_SGB,2662,2			// Vesper Core 04
-IG_MILKY_SGB,2671,3			// Bow Thimble
-IG_MILKY_SGB,2677,3			// Spiritual Ring
-IG_MILKY_SGB,2680,10		// Ring of Minor Spirits
-IG_MILKY_SGB,2700,3			// Red Silk of Seal
-IG_MILKY_SGB,2701,3			// Glove of Orleans
-IG_MILKY_SGB,2703,5			// Expert Ring
-IG_MILKY_SGB,2716,5			// Librarian Glove
-IG_MILKY_SGB,2717,5			// Pocket Watch
-IG_MILKY_SGB,2718,5			// Lunatic Brooch
-IG_MILKY_SGB,2719,5			// Iron Wrist
-IG_MILKY_SGB,5137,1			// Alice Doll
-IG_MILKY_SGB,5138,1			// Magic Eyes
-IG_MILKY_SGB,5139,10		// Lotus
-IG_MILKY_SGB,5140,10		// Kawaii Ribbon
+
 IG_MILKY_SGB,628,15			// Well-Dried Bone
 IG_MILKY_SGB,629,15			// Singing Flower
 IG_MILKY_SGB,630,15			// Dew Laden Moss
@@ -1556,6 +1518,49 @@ IG_MILKY_SGB,642,15			// Book of the Devil
 IG_MILKY_SGB,659,15			// Her Heart
 IG_MILKY_SGB,660,15			// Forbidden Red Candle
 IG_MILKY_SGB,661,15			// Soft Apron
+
+IG_MILKY_SGB,2680,10		// Ring of Minor Spirits
+IG_MILKY_SGB,12623,10		// High_Weapon_Box
+IG_MILKY_SGB,12690,10		// Old_C_Album_Helm
+IG_MILKY_SGB,12691,10		// Old_C_Album_Armor
+IG_MILKY_SGB,12692,10		// Old_C_Album_Shield
+IG_MILKY_SGB,12694,10		// Old_C_Album_Shoes
+IG_MILKY_SGB,12695,10		// Old_C_Album_Acc
+IG_MILKY_SGB,12698,10		// Old_C_Album_Weapon
+IG_MILKY_SGB,12693,10		// Old_C_Album_Garment
+IG_MILKY_SGB,6380,10		// Mora_Coin
+IG_MILKY_SGB,13989,10		// Acidbomb_10_Box
+IG_MILKY_SGB,14004,10		// Poison_Bottle_10_Box
+IG_MILKY_SGB,12613,10		// High_Coin_Pocket
+IG_MILKY_SGB,12614,10		// Mid_Coin_Pocket
+IG_MILKY_SGB,12703,10 		// Holy_Egg_2
+IG_MILKY_SGB,12103,10 		// Bloody_Dead_Branch
+
+IG_MILKY_SGB,2703,5			// Expert Ring
+IG_MILKY_SGB,2716,5			// Librarian Glove
+IG_MILKY_SGB,2717,5			// Pocket Watch
+IG_MILKY_SGB,2718,5			// Lunatic Brooch
+IG_MILKY_SGB,2719,5			// Iron Wrist
+IG_MILKY_SGB,12887,5		// Infinite Flywing
+
+IG_MILKY_SGB,2671,3			// Bow Thimble
+IG_MILKY_SGB,2677,3			// Spiritual Ring
+IG_MILKY_SGB,2700,3			// Red Silk of Seal
+IG_MILKY_SGB,2701,3			// Glove of Orleans
+
+IG_MILKY_SGB,2659,2			// Vesper Core 01
+IG_MILKY_SGB,2660,2			// Vesper Core 02
+IG_MILKY_SGB,2661,2			// Vesper Core 03
+IG_MILKY_SGB,2662,2			// Vesper Core 04
+
+IG_MILKY_SGB,5139,10		// Lotus
+IG_MILKY_SGB,5140,10		// Kawaii Ribbon
+
+IG_MILKY_SGB,5137,1			// Alice Doll
+IG_MILKY_SGB,5138,1			// Magic Eyes
+IG_MILKY_SGB,17256,1		// Good_Student_Gift_Box
+IG_MILKY_SGB,17257,1		// Bad_Student_Gift_Box
+IG_MILKY_SGB,7086,1			// Emblem of the Sun God
 
 // Custom WoE Siege Supply Box
 IG_MILKY_SIEGE_SB,12075,1	// Steamed Tongue
