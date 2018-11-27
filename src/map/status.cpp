@@ -13050,11 +13050,11 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_S_LIFEPOTION:
 	case SC_L_LIFEPOTION:
-		if( sd && --(sce->val4) >= 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			// val1 < 0 = per max% | val1 > 0 = exact amount
 			int hp = 0;
 			if( status->hp < status->max_hp )
-				hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
+				hp = (sce->val1 < 0) ? (int)(status->max_hp * -1 * sce->val1 / 100.) : sce->val1;
 			status_heal(bl, hp, 0, 2);
 			sc_timer_next((sce->val2 * 1000) + tick);
 			return 0;
