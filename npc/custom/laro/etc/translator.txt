@@ -1,6 +1,10 @@
 -	script	Language Changer	-1,{
 OnPCLoginEvent:	
 
+    if(#language == -1)
+	set #language, 0; 
+	
+	
 	if(!#language == 0)
 	end;
 

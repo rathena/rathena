@@ -12456,5 +12456,5 @@
 
 
 //CASH TICKETS
-32130,Update_Ticket,Cash Ticket [1000],2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{  set #CASHPOINTS,#CASHPOINTS+1000; if(#language == 1) { dispbottom "Você recebeu 1.000 CASH points!"; }else{ dispbottom "Você recebeu 1.000 CASH points!";} },{},{}
-32131,Update_Ticket,VIP Ticket [30],2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{  atcommand "@vip +30d "+strcharinfo(0)+""; },{},{}
+32130,Cash_Ticket,Cash Ticket [1000],2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{  set #CASHPOINTS,#CASHPOINTS+1000; if(#language == 1) { dispbottom "Você recebeu 1.000 CASH points!"; }else{ dispbottom "You receive 1.000 CASH points!";} },{},{}
+32131,Vip_Ticket,VIP Ticket [30],2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{  atcommand "@vip +30d "+strcharinfo(0)+""; },{},{}
