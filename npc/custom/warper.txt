@@ -553,7 +553,7 @@ I26: Restrict("RE");
 	Go("prt_cas_q",23,28);
 I27: Restrict("RE");
 	Go("moc_para01",26,90);
-I27: Restrict("RE");
+I28: Restrict("RE");
 	Go("verus04",77,118);
 
 // --------------------------------------------------
