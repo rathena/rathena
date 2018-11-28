@@ -195,10 +195,12 @@ switch( select( ( .@current_mission_size )?"Submit Mission":"",
 						// rewards
 						getexp .@baseexp,.@jobexp;
 						if( .@reward_size )
-							for( .@i = 0; .@i < .@reward_size; .@i++ )
-								getitem .@reward_list[.@i],.@reward_qty[.@i];
-						#CASHPOINTS += .@cash;
-						Zeny += .@zeny;
+							mail getcharid(0,strcharinfo(0)),"Adventurer's Guild","Rewards for Mission Completion","Thank you for your efforts in doing the mission\r\n["+.@title$+"].\r\n\r\nAttached to this mail are your rewards.",.@zeny, .@reward_list, .@reward_qty,
+
+						// 	for( .@i = 0; .@i < .@reward_size; .@i++ )
+						// 		getitem .@reward_list[.@i],.@reward_qty[.@i];
+						// #CASHPOINTS += .@cash;
+						// Zeny += .@zeny;
 						break;
 					}
 				mes "Something went wrong ..";
@@ -1399,7 +1401,7 @@ OnDisplayMissionInfo:
 						.@temp_color$ = "FF0000";
 					}
 				}
-				mes " ^777777"+.@quantity+" x "+getitemname( .@item_id )+" "+( ( .@item_type == 4 || .@item_type == 5 )?"["+getitemslots( .@item_id )+"]":"" )+"  "+( ( .@check_progress & 4 )?"^"+.@temp_color$+"(have "+.@item_count+")":"" )+"^000000";
+				mes " ^777777"+.@quantity+" x <ITEM>"+getitemname( .@item_id )+"<INFO>"+.@item_id+"</INFO></ITEM> "+( ( .@item_type == 4 || .@item_type == 5 )?"["+getitemslots( .@item_id )+"]":"" )+"  "+( ( .@check_progress & 4 )?"^"+.@temp_color$+"(have "+.@item_count+")":"" )+"^000000";
 			}
 		mes " ";
 		mes "Available Job Classes :";
@@ -1442,7 +1444,7 @@ OnDisplayMissionInfo:
 			for( .@i = 0; .@i < .@reward_size; .@i++ ){
 				.@item_id = getelementofarray( getarg(16),.@i );
 				.@item_type = getiteminfo( .@item_id,2 );
-				mes " ^777777 ~ "+getelementofarray( getarg(17),.@i )+" x "+getitemname( .@item_id )+" "+( ( .@item_type == 4 || .@item_type == 5 )?"["+getitemslots( .@item_id )+"]":"" )+"^000000";
+				mes " ^777777 ~ "+getelementofarray( getarg(17),.@i )+" x <ITEM>"+getitemname( .@item_id )+"<INFO>"+.@item_id+"</INFO></ITEM> "+( ( .@item_type == 4 || .@item_type == 5 )?"["+getitemslots( .@item_id )+"]":"" )+"^000000";
 			}
 		mes " ";
 
@@ -1501,4 +1503,7 @@ yuno,197,192,5	duplicate(mission_board)	Yuno Mission#6	888
 aldebaran,153,135,3	duplicate(mission_board)	Aldebaran Mission#7	888
 veins,222,138,4	duplicate(mission_board)	Veins Mission#8	888
 harboro1,303,211,3	duplicate(mission_board)	Rockridge Mission#9	888
-
+payon,162,178,3	duplicate(mission_board)	Payon Mission#10	888
+niflheim,225,195,3	duplicate(mission_board)	Niflheim Mission#11	888
+izlude,150,177,1	duplicate(mission_board)	Izlude Mission#12	888
+comodo,216,184,1	duplicate(mission_board)	Comodo Mission#13	888
