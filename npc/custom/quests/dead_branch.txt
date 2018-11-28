@@ -1,20 +1,20 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Dead Branch (+Bloody Branch) Quest
-//===== By: ================================================== 
+//===== By: ==================================================
 //= GM-Yevon
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 // Simple item trade-in quest, a person can get a Dead Branch
-// by simply providing the items: Log x3 (7201), Wooden Heart x1 (7189), 
+// by simply providing the items: Log x3 (7201), Wooden Heart x1 (7189),
 // Trunk x5 (1019), and Wooden Gnarl x1 (7222).
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.1 Optimized, added Bloody Branch with 0.01% chance [Lupus]
 //============================================================
 
-niflheim,204,179,3	script	Mister Mobry	121,{
+niflheim,208,168,1	script	Mister Mobry	121,{
 
 	mes "[Mister Mobry]";
 	mes "Trees possess spirits you know...";
