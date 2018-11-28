@@ -3517,7 +3517,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	base_status->race = ((battle_config.summoner_trait&1) && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? RC_BRUTE : RC_PLAYER;
 	base_status->class_ = CLASS_NORMAL;
 
-	// Zero up structures...
 	sd->autospell.clear();
 	sd->autospell2.clear();
 	sd->autospell3.clear();
@@ -3546,6 +3545,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	sd->subele2.clear();
 	sd->skilldelay.clear();
 
+	// Zero up structures...
 	memset(&sd->hp_loss, 0, sizeof(sd->sp_loss)
 		+ sizeof(sd->hp_regen)
 		+ sizeof(sd->sp_regen)

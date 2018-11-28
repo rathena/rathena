@@ -418,7 +418,6 @@ struct map_session_data {
 	int dropaddclass[CLASS_MAX];
 	// zeroed arrays end here.
 
-	// zeroed structures start here
 	std::vector<s_autospell> autospell, autospell2, autospell3;
 	std::vector<s_addeffect> addeff, addeff_atked;
 	std::vector<s_addeffectonskill> addeff_onskill;
@@ -426,7 +425,9 @@ struct map_session_data {
 		skillvarcast, skilldelay, itemhealrate, add_def, add_mdef, add_mdmg, reseff, itemgrouphealrate;
 	std::vector<s_add_drop> add_drop;
 	std::vector<s_addele2> subele2;
+	std::vector<s_autobonus> autobonus, autobonus2, autobonus3; //Auto script on attack, when attacked, on skill usage
 
+	// zeroed structures start here
 	struct s_regen {
 		short value;
 		int rate;
@@ -441,10 +442,6 @@ struct map_session_data {
 			per;	///< % HP/SP vanished/gained
 	} hp_vanish_race[RC_MAX], sp_vanish_race[RC_MAX];
 	// zeroed structures end here
-
-	// manually zeroed structures start here.
-	std::vector<s_autobonus> autobonus, autobonus2, autobonus3; //Auto script on attack, when attacked, on skill usage
-	// manually zeroed structures end here.
 
 	// zeroed vars start here.
 	struct s_bonus {
