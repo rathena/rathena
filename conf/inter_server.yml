@@ -33,6 +33,6 @@ Header:
   Version: 1
 
 Body:
-    - ID: 0
-      Name: "Storage"
-      Table: "storage"
+  - ID: 0
+    Name: "Storage"
+    Table: "storage"
