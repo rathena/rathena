@@ -10596,6 +10596,8 @@ static TIMER_FUNC(pc_autosave){
 	iter = mapit_getallusers();
 	for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
 	{
+		if (!sd->state.pc_loaded) // Player data hasn't fully loaded
+			continue;
 		if(sd->bl.id == last_save_id && save_flag != 1) {
 			save_flag = 1;
 			continue;
