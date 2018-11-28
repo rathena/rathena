@@ -5346,7 +5346,7 @@ prt_cas_q,21,83,3	script	Friedrich S. Heine#ep16	4_EP16_STOLZ,{
 		mes "See you tomorrow then.";
 		setquest 7706;// Nillem Is Not Almighty
 		erasequest 7705;// Hope You Cannot Let Go
-		getitem 6919,10;// Honor Token
+		getitem 6919,30;// Honor Token
 		getexp 400000,400000;
 		close3;
 	}
