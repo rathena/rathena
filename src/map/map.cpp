@@ -1791,7 +1791,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
  * @param mob_id: Monster ID if dropped by monster
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id)
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect)
 {
 	int r;
 	struct flooritem_data *fitem = NULL;
@@ -1834,7 +1834,7 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 	map_addiddb(&fitem->bl);
 	if (map_addblock(&fitem->bl))
 		return 0;
-	clif_dropflooritem(fitem);
+	clif_dropflooritem(fitem,canShowEffect);
 
 	return fitem->bl.id;
 }
