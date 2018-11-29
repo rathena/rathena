@@ -803,17 +803,17 @@ int inter_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"char_server_ip"))
-			strcpy(char_server_ip,w2);
+			safestrncpy(char_server_ip,w2,sizeof(char_server_ip));
 		else if(!strcmpi(w1,"char_server_port"))
 			char_server_port = atoi(w2);
 		else if(!strcmpi(w1,"char_server_id"))
-			strcpy(char_server_id,w2);
+			safestrncpy(char_server_id,w2,sizeof(char_server_id));
 		else if(!strcmpi(w1,"char_server_pw"))
-			strcpy(char_server_pw,w2);
+			safestrncpy(char_server_pw,w2,sizeof(char_server_pw));
 		else if(!strcmpi(w1,"char_server_db"))
-			strcpy(char_server_db,w2);
+			safestrncpy(char_server_db,w2,sizeof(char_server_db));
 		else if(!strcmpi(w1,"default_codepage"))
-			strcpy(default_codepage,w2);
+			safestrncpy(default_codepage,w2,sizeof(default_codepage));
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = (unsigned int)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
