@@ -2779,28 +2779,28 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 			// process script-granted extra drop bonuses
 			uint16 dropid = 0;
 
-			for (i = 0; i < ARRAYLENGTH(sd->add_drop); i++) {
+			for (const auto &it : sd->add_drop) {
 				struct s_mob_drop mobdrop;
-				if (!&sd->add_drop[i] || (!sd->add_drop[i].nameid && !sd->add_drop[i].group))
+				if (!&it || (!it.nameid && !it.group))
 					continue;
-				if ((sd->add_drop[i].race < RC_NONE_ && sd->add_drop[i].race == -md->mob_id) || //Race < RC_NONE_, use mob_id
-					(sd->add_drop[i].race == RC_ALL || sd->add_drop[i].race == status->race) || //Matched race
-					(sd->add_drop[i].class_ == CLASS_ALL || sd->add_drop[i].class_ == status->class_)) //Matched class
+				if ((it.race < RC_NONE_ && it.race == -md->mob_id) || //Race < RC_NONE_, use mob_id
+					(it.race == RC_ALL || it.race == status->race) || //Matched race
+					(it.class_ == CLASS_ALL || it.class_ == status->class_)) //Matched class
 				{
 					//Check if the bonus item drop rate should be multiplied with mob level/10 [Lupus]
-					if (sd->add_drop[i].rate < 0) {
+					if (it.rate < 0) {
 						//It's negative, then it should be multiplied. with mob_level/10
 						//rate = base_rate * (mob_level/10) + 1
-						drop_rate = (-sd->add_drop[i].rate) * md->level / 10 + 1;
+						drop_rate = (-it.rate) * md->level / 10 + 1;
 						drop_rate = cap_value(drop_rate, max(battle_config.item_drop_adddrop_min,1), min(battle_config.item_drop_adddrop_max,10000));
 					}
 					else
 						//it's positive, then it goes as it is
-						drop_rate = sd->add_drop[i].rate;
+						drop_rate = it.rate;
 
 					if (rnd()%10000 >= drop_rate)
 						continue;
-					dropid = (sd->add_drop[i].nameid > 0) ? sd->add_drop[i].nameid : itemdb_searchrandomid(sd->add_drop[i].group,1);
+					dropid = (it.nameid > 0) ? it.nameid : itemdb_searchrandomid(it.group,1);
 					memset(&mobdrop, 0, sizeof(struct s_mob_drop));
 					mobdrop.nameid = dropid;
 
