@@ -4,7 +4,7 @@ Header:
 
 Attendance:
   - Start: 20181001
-    End: 20181130
+    End: 20181206
     Rewards:
       - Day: 1
         ItemId: 7803
