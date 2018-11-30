@@ -57,7 +57,7 @@ int _msg_config_read(const char* cfgName,int size, char ** msg_table)
 			if (msg_number >= 0 && msg_number < size) {
 				if (msg_table[msg_number] != NULL)
 					aFree(msg_table[msg_number]);
-				size_t len = strnlen(w2,sizeof(w2));
+				size_t len = strnlen(w2,sizeof(w2)) + 1;
 				msg_table[msg_number] = (char *) aMalloc(len * sizeof (char));
 				safestrncpy(msg_table[msg_number], w2, len);
 				msg_count++;
