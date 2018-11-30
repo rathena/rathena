@@ -10377,15 +10377,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 500 + 100 * val1;
 			break;
 		case SC_STONEHARDSKIN:
-			{
-				int hp = status->hp / 5; // 20% of HP
-
-				if (sd)
-					val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
-				if (!status_charge(bl, hp, 0))
-					return 0;
-				val2 = hp;
-			}
+			if (!status_charge(bl, status->hp / 5, 0)) // 20% of HP
+				return 0;
+			if (sd)
+				val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
 			break;
 		case SC_REFRESH:
 			status_heal(bl, status_get_max_hp(bl) * 25 / 100, 0, 1);
