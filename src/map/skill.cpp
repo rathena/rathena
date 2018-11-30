@@ -10946,7 +10946,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SU_BUNCHOFSHRIMP:
 	case SU_HISS:
 	case SU_PURRING:
-	case SU_SHRIMPARTY:
 	case SU_MEOWMEOW:
 		if (sd == NULL || sd->status.party_id == 0 || flag&1) {
 			int duration = skill_get_time(skill_id, skill_lv);
@@ -10955,10 +10954,19 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				duration += skill_get_time2(SU_BUNCHOFSHRIMP, skill_lv);
 			clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_lv, duration));
 		} else if (sd) {
-			if (skill_id == SU_SHRIMPARTY)
-				sc_start(src, bl, SC_SHRIMPBLESSING, 100, skill_lv, skill_get_time2(skill_id, skill_lv));
 			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		}
+		break;
+
+	case SU_SHRIMPARTY:
+		if (sd == NULL || sd->status.party_id == 0 || flag&1) {
+			sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+			if (sd && (i = pc_checkskill(sd, SU_FRESHSHRIMP)) > 0) {
+				clif_skill_nodamage(bl, bl, SU_FRESHSHRIMP, i, 1);
+				sc_start(src, bl, SC_FRESHSHRIMP, 100, i, skill_get_time(SU_FRESHSHRIMP, i));
+			}
+		} else if (sd)
+			party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		break;
 
 	case SU_POWEROFFLOCK:
@@ -12479,12 +12487,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 			if (map_getmapflag(src->m, MF_NOTELEPORT) && !(map_getmapflag(src->m, MF_BATTLEGROUND) || map_flag_gvg2(src->m))) {
 				x = src->x;
 				y = src->y;
-			} else if (dir%2) { // Diagonal
-				x += dirx[dir] * (skill_lv * 4) / 3;
-				y += diry[dir] * (skill_lv * 4) / 3;
-			} else {
-				x += dirx[dir] * skill_lv * 2;
-				y += diry[dir] * skill_lv * 2;
 			}
 
 			clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
