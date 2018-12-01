@@ -19,7 +19,7 @@
 //============================================================
 
 //==================================================
-// moc_fild01 - Sograt Desert 
+// moc_fild01 - Sograt Desert
 //==================================================
 moc_fild01,0,0	monster	Peco Peco	1019,130,5000
 moc_fild01,0,0	monster	Muka	1055,50,5000
@@ -27,7 +27,7 @@ moc_fild01,0,0	monster	Peco Peco Egg	1047,20,5000
 moc_fild01,194,51,10,10	monster	Yellow Plant	1081,10,900000,450000
 
 //==================================================
-// moc_fild02 - Sograt Desert 
+// moc_fild02 - Sograt Desert
 //==================================================
 moc_fild02,0,0	monster	Muka	1055,130,5000
 moc_fild02,0,0	monster	Peco Peco	1019,60,5000
@@ -48,7 +48,7 @@ moc_fild02,353,103	monster	Green Plant	1080,1,180000,90000
 moc_fild02,337,35	monster	Green Plant	1080,1,180000,90000
 
 //==================================================
-// moc_fild03 - Sograt Desert 
+// moc_fild03 - Sograt Desert
 //==================================================
 moc_fild03,0,0	monster	Wolf	1013,140,5000
 moc_fild03,0,0	monster	Argos	1100,20,5000
@@ -74,7 +74,7 @@ moc_fild03,200,263,5,5	monster	Green Plant	1080,2,180000,90000
 //==================================================
 
 //==================================================
-// moc_fild07 - Sograt Desert 
+// moc_fild07 - Sograt Desert
 //==================================================
 moc_fild07,0,0	monster	Drops	1113,140,5000
 moc_fild07,0,0	monster	Chonchon	1011,30,5000
@@ -103,7 +103,7 @@ moc_fild11,0,0	monster	Condor	1009,30,5000
 moc_fild11,0,0	monster	Scorpion	1001,30,5000
 
 //==================================================
-// moc_fild12 - Sograt Desert 
+// moc_fild12 - Sograt Desert
 //==================================================
 moc_fild12,0,0	monster	Picky	1049,50,5000
 moc_fild12,0,0	monster	Picky	1050,50,5000
@@ -113,7 +113,7 @@ moc_fild12,0,0	monster	Condor	1009,30,5000
 moc_fild12,181,336,40,20	monster	Yellow Plant	1081,10,180000,90000
 
 //==================================================
-// moc_fild13 - Sograt Desert 
+// moc_fild13 - Sograt Desert
 //==================================================
 moc_fild13,0,0	monster	Steel Chonchon	1042,140,5000
 moc_fild13,0,0	monster	Wolf	1013,15,5000
@@ -156,14 +156,14 @@ moc_fild13,161,273,5,5	monster	Yellow Plant	1081,3,180000,90000
 //==================================================
 moc_fild16,0,0	monster	Sandman	1165,130,5000
 moc_fild16,0,0	monster	Hode	1127,30,5000
-moc_fild16,0,0	monster	Frilldora	1119,10,5000
+moc_fild16,0,0	monster	Frilldora	1119,25,5000
 
 //==================================================
-// moc_fild17 - Sograt Desert 
+// moc_fild17 - Sograt Desert
 //==================================================
 moc_fild17,0,0	monster	Hode	1127,130,5000
 moc_fild17,0,0	monster	Sandman	1165,30,5000
-moc_fild17,0,0	monster	Frilldora	1119,10,5000
+moc_fild17,0,0	monster	Frilldora	1119,25,5000
 moc_fild17,0,0,0,0	boss_monster	Phreeoni	1159,1,7200000,600000,1
 moc_fild17,40,258	monster	Yellow Plant	1081,1,180000,90000
 moc_fild17,144,151	monster	Yellow Plant	1081,1,180000,90000
@@ -194,7 +194,7 @@ moc_fild18,325,272	monster	Yellow Plant	1081,1,180000,90000
 //==================================================
 
 //==================================================
-// moc_fild20 - Sograt Desert - Continental Guard Quarantine 
+// moc_fild20 - Sograt Desert - Continental Guard Quarantine
 //==================================================
 moc_fild20,0,0	monster	Incarnation of Morroc	1918,1,30000
 moc_fild20,0,0	monster	Incarnation of Morroc	1919,1,30000
@@ -202,7 +202,7 @@ moc_fild20,0,0	monster	Incarnation of Morroc	1920,1,30000
 moc_fild20,0,0	monster	Incarnation of Morroc	1921,1,30000
 
 //==================================================
-// moc_fild21 - Dimensional Gorge 
+// moc_fild21 - Dimensional Gorge
 //==================================================
 moc_fild21,0,0	monster	Incarnation of Morroc	1918,46,30000
 moc_fild21,0,0	monster	Incarnation of Morroc	1919,46,30000
@@ -210,7 +210,7 @@ moc_fild21,0,0	monster	Incarnation of Morroc	1920,46,30000
 moc_fild21,0,0	monster	Incarnation of Morroc	1921,34,30000
 
 //==================================================
-// moc_fild22 - Dimensional Gorge 
+// moc_fild22 - Dimensional Gorge
 //==================================================
 moc_fild22,0,0	monster	Incarnation of Morroc	1918,60,30000
 moc_fild22,0,0	monster	Incarnation of Morroc	1919,60,30000
