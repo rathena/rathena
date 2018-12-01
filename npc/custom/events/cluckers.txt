@@ -114,7 +114,7 @@ prontera,156,219,4	script	Cluckers	800,{
 		if(.aTimer != 1) end;
 		announce "<Cluck! Cluck! Boom!> GO! Click the chicken to get the prize! You have 30 minutes!",bc_all | bc_blue;
 		if (!$cluck_item_id) set $cluck_item_id,8501;
-		if (!$cluck_item_amount) set $cluck_item_amount,5;
+		if (!$cluck_item_amount) set $cluck_item_amount,10;
 		set .EventON,1; set .aTimer,0;
 		end;
 
