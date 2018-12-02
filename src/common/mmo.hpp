@@ -991,8 +991,8 @@ enum e_pc_reg_loading {
 enum e_party_member_withdraw {
 	PARTY_MEMBER_WITHDRAW_LEAVE,	  ///< /leave
 	PARTY_MEMBER_WITHDRAW_EXPEL,	  ///< Kicked
-	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< TODO: Cannot /leave
-	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< TODO: Cannot be kicked
+	PARTY_MEMBER_WITHDRAW_CANT_LEAVE, ///< Cannot /leave
+	PARTY_MEMBER_WITHDRAW_CANT_EXPEL, ///< Cannot be kicked
 };
 
 enum e_rank {

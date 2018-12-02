@@ -857,17 +857,16 @@ int intif_guild_addmember(int guild_id,struct guild_member *m)
  * @param len : size of the name
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_change_gm(int guild_id, const char* name, int len)
-{
+bool intif_guild_change_gm( int guild_id, const char* name, int len ){
 	if (CheckForCharServer())
-		return 0;
+		return false;
 	WFIFOHEAD(inter_fd, len + 8);
 	WFIFOW(inter_fd, 0)=0x3033;
 	WFIFOW(inter_fd, 2)=len+8;
 	WFIFOL(inter_fd, 4)=guild_id;
 	memcpy(WFIFOP(inter_fd,8),name,len);
 	WFIFOSET(inter_fd,len+8);
-	return 1;
+	return true;
 }
 
 /**
@@ -879,10 +878,9 @@ int intif_guild_change_gm(int guild_id, const char* name, int len)
  * @param mes : quitting message (max 40)
  * @return 0=error, 1=msg_sent
  */
-int intif_guild_leave(int guild_id,uint32 account_id,uint32 char_id,int flag,const char *mes)
-{
+bool intif_guild_leave( int guild_id, uint32 account_id, uint32 char_id, int flag, const char *mes ){
 	if (CheckForCharServer())
-		return 0;
+		return false;
 	WFIFOHEAD(inter_fd, 55);
 	WFIFOW(inter_fd, 0) = 0x3034;
 	WFIFOL(inter_fd, 2) = guild_id;
@@ -891,7 +889,7 @@ int intif_guild_leave(int guild_id,uint32 account_id,uint32 char_id,int flag,con
 	WFIFOB(inter_fd,14) = flag;
 	safestrncpy(WFIFOCP(inter_fd,15),mes,40);
 	WFIFOSET(inter_fd,55);
-	return 1;
+	return true;
 }
 
 /**
