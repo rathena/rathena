@@ -594,6 +594,8 @@ yuno,162,47,4	duplicate(Warper)	Warper#yuno	604
 harboro1,291,199,4	duplicate(Warper)	Warper#harboro1	604
 verus04,114,256,4	duplicate(Warper)	Warper#verus04	604
 prt_monk,187,210,4	duplicate(Warper)	Warper#prt_monk	604
+moc_para01,34,22,4	duplicate(Warper)	Warper#eden	604
+
 
 // --------------------------------------------------
 //	Duplicates (Renewal):

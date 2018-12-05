@@ -1971,6 +1971,7 @@ yuno,151,45,4	duplicate(warpvip)	VIP Assistant#yuno	646
 harboro1,285,196,4	duplicate(warpvip)	VIP Assistant#harboro1	646 
 verus04,114,259,4	duplicate(warpvip)	VIP Assistant#verus04	646 
 prt_monk,184,215,4	duplicate(warpvip)	VIP Assistant#prt_monk	646 
+moc_para01,39,22,4	duplicate(warpvip)	VIP Assistant#eden	646 
 
 
 

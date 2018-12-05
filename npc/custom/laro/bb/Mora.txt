@@ -1,0 +1,35 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Mora
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+mora,98,110,3	script	Bounty Board 141#mo1	837,{
+	callfunc "F_Bounty_Board", 141, 0, 1, 4,
+		2137,	62821,		798750,		708750,	// MIMING
+		2136,	62822,		843750,		731250,	// LITTLE_FATUM
+		2365,	62823,		800662,		848137,	// CENERE
+		2363,	62824,		466875,		461812,	// MENBLATT
+		2364,	62825,		456525,		378112,	// PETAL
+		2133,	62826,		876375,		789750,	// ANGRA_MANTIS
+		2366,	62827,		812812,		871650,	// ANTIQUE_BOOK
+		2368,	62828,		795487,		862762,	// LICHTERN_Y
+		2367,	62829,		808537,		846562,	// LICHTERN_B
+		2369,	62830,		810112,		892800,	// LICHTERN_R
+		2370,	62831,		811575,		847912;	// LICHTERN_G
+	end;
+}

@@ -1,0 +1,54 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Payon City
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+payon,148,95,3	script	Bounty Board 1-20#pay1	837,{
+	callfunc "F_Bounty_Board", 1, 20, 1, 1,
+		1010,	62644,	 6975,		5175,	// WILOW
+		1014,	62565,	13050,		9675,	// SPORE
+		1025,	62566,	13050,		9675;	// SNAKE
+	end;
+}
+
+payon,148,93,3	script	Bounty Board 21-50#pay2	837,{
+	callfunc "F_Bounty_Board", 21, 50, 2, 1,
+		1060,	62567,	20250,		22725,	// BIGFOOT
+		1128,	62797,	24300,		27225,	// HORN
+		1076,	62560,	18225,		20475,	// SKELETON
+		1028,	62561,	24300,		27225;	// SOLDIER_SKELETON
+	end;
+}
+
+payon,148,91,3	script	Bounty Board 41-75#pay3	837,{
+	callfunc "F_Bounty_Board", 41, 75, 2, 1,
+		1277,	62569,	54675,		61650,	// GREATEST_GENERAL
+		1013,	62645,	38475,		43425,	// WOLF
+		1016,	62562,	45450,		51075,	// ARCHER_SKELETON
+		1026,	62646,	55575,		62550,	// MUNAK
+		1188,	62647,	59625,		67050;	// BON_GUN
+	end;
+}
+
+payon,148,89,3	script	Bounty Board 61-100#pay4	837,{
+	callfunc "F_Bounty_Board", 61, 100, 2, 1,
+		1170,	62648,	66750,		 75150,	// SOHEE
+		1110,	62649,	75900,		 85350,	// DOKEBI
+		1180,	62650,	99750,		112200;	// NINE_TAIL
+	end;
+}

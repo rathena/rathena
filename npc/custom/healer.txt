@@ -139,6 +139,7 @@ yuno,164,45,4	duplicate(Healer)	Healer#yuno	569
 harboro1,291,202,4	duplicate(Healer)	Healer#harboro1	569
 verus04,114,253,4	duplicate(Healer)	Healer#verus04	569
 prt_monk,176,209,4	duplicate(Healer)	Healer#prt_monk	569
+moc_para01,23,21,4	duplicate(Healer)	Healer#eden	569
 
 
 // Duplicates (Renewal)
