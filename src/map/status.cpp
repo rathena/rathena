@@ -3546,7 +3546,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	sd->skilldelay.clear();
 
 	// Zero up structures...
-	memset(&sd->hp_loss, 0, sizeof(sd->sp_loss)
+	memset(&sd->hp_loss, 0, sizeof(sd->hp_loss)
+		+ sizeof(sd->sp_loss)
 		+ sizeof(sd->hp_regen)
 		+ sizeof(sd->sp_regen)
 		+ sizeof(sd->percent_hp_regen)
