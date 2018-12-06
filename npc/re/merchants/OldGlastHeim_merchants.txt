@@ -18,7 +18,7 @@ glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 	mes "[Hugin's Buttler]";
 	mes "Bring Temporal Crystal items for various Temporal boots items. Pick something you want.";
 	next;
-	switch( select( "Cancel", "Buy Temporal Boots (Need 1 Temporal Crystal)", "Upgrade Temporal Boots (Need 5 Temporal Crystals)", "Upgrade Modified Boots (Need 5 Time Crystals)" ) ) {
+	switch( select( "Cancel", "Buy Temporal Boots (Need 1 Temporal Crystal)", "Upgrade Temporal Boots (Need 5 Temporal Crystals)", "Upgrade Modified Boots (Need 5 Time Crystals)", "White Knightage Card", "Khalitzburg Knightage Card" ) ) {
 	case 1:
 		mes "[Hugin's Buttler]";
 		mes "Come back whenever you want.";
@@ -52,6 +52,26 @@ glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 			22111,	// Modified_DEX_Boots
 			22112;	// Modified_LUK_Boots
 		break;
+	case 5:
+		if (countitem(6608) < 3000) {
+			mes "[Hugin's Buttler]";
+			mes "Hmm, you are missing 3000 Coagulated Spell items. Go get more, and then we can talk about White Knightage Card.";
+			close;
+		}
+		mes "[Hugin's Buttler]";
+		mes "Alright. Here is your card.";
+		delitem 6608,3000; // Coagulated_Spell
+		getitem 4608,1;
+		close;
+	case 6:
+		if (countitem(6608) < 5000) {
+			mes "[Hugin's Buttler]";
+			mes "Hmm, you are missing 5000 Coagulated Spell items. Go get more, and then we can talk about Khalitzburg Knightage Card.";
+			close;
+		}
+		delitem 6608,5000; // Coagulated_Spell
+		getitem 4609,1;
+		close;
 	}
 	if (!getequipisequiped(EQI_SHOES)) {
 		mes "[Hugin's Buttler]";
@@ -108,7 +128,8 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 	mes "[Hugin's Magic Master]";
 	mes "So you came to enchant the Temporal Boots. Be aware that Boots with sockets cannot be enchanted, and this upgrade is only possible for the boots you are wearing.";
 	next;
-	if (select( "How does the enchanting work?", "Give effect to my Temporal Boots" ) == 1) {
+	set .@menu, select( "How does the enchanting work?", "Give effect to my Temporal Boots", "Remove effect on my Temporal Boots" );
+	if (.@menu == 1) {
 		mes "[Hugin's Magic Master]";
 		mes "You can keep obtain ^0000FFCoagulated Spell^000000 through your travel times.";
 		next;
@@ -145,11 +166,32 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 	}
 	.@equip_id = getequipid(EQI_SHOES);
 
+	if (.@menu == 3) { // remove effect
+		mes "[Hugin's Magic Master]";
+		mes "To remove the effects from your Temporal Boots, I will require 10 x <ITEM>Coagulated Spell<INFO>6608</INFO></ITEM>.";
+		mes "And I must warn you, removing the effect will also ^FF0000DESTROYS^000000 any cards that you have insert into it.";
+		if(select("Quit", "Continue") == 1)
+			close;
+
+		if (countitem(6608) < 10) { // requires 10 x Coagulated Spell to remove
+			specialeffect2 EF_REPAIRWEAPON;
+			delitem 6608,10;// Coagulated_Spell
+			if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@equip_refine))
+				close;
+
+			delequip EQI_SHOES;
+			getitem .@equip_id,1;
+		}
+		close;
+	}
+
 	setarray .@enchant_1[0],4808,4832,4814,4741,4869,4752;// Fighting_Spirit4	Expert_Archer1	Spell2	Vitality2	DelayafterAttack1Lv	Luck3
 	setarray .@enchant_2[0],4820,4833,4813,4742,4872,4753;// Fighting_Spirit5	Expert_Archer2	Spell3	Vitality3	DelayafterAttack2Lv	Luck4
 	setarray .@enchant_3[0],4821,4834,4812,4861,4873,4754;// Fighting_Spirit6	Expert_Archer3	Spell4	MHP1		DelayafterAttack3Lv	Luck5
 	setarray .@enchant_4[0],4822,4835,4826,4862,4881,4755;// Fighting_Spirit7	Expert_Archer4	Spell5	MHP2		DelayafterAttack4Lv	Luck6
-	setarray .@enchant_cost[0],1,4,15,30,10;
+	// setarray .@enchant_cost[0],1,4,15,30,10;  //1x default
+	// setarray .@enchant_cost[0],3,12,45,90,30;  //3x default
+	setarray .@enchant_cost[0],5,20,75,150,50;	// 5x default
 
 	switch(.@equip_id) {
 	case 22000:	// Temporal_STR_Boots
@@ -159,12 +201,26 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 	case 22004:	// Temporal_DEX_Boots
 	case 22005:	// Temporal_LUK_Boots
 
+	case 22006:	// Temporal_STR_Boots[1]
+	case 22009:	// Temporal_INT_Boots[1]
+	case 22010:	// Temporal_AGI_Boots[1]
+	case 22007:	// Temporal_VIT_Boots[1]
+	case 22008:	// Temporal_DEX_Boots[1]
+	case 22011:	// Temporal_LUK_Boots[1]
+
 	case 22107:	// Modified_STR_Boots
 	case 22108:	// Modified_INT_Boots
 	case 22109:	// Modified_AGI_Boots
 	case 22110:	// Modified_VIT_Boots
 	case 22111:	// Modified_DEX_Boots
 	case 22112:	// Modified_LUK_Boots
+
+	case 22113:	// Modified_STR_Boots[1]
+	case 22114:	// Modified_INT_Boots[1]
+	case 22115:	// Modified_AGI_Boots[1]
+	case 22116:	// Modified_VIT_Boots[1]
+	case 22117:	// Modified_DEX_Boots[1]
+	case 22118:	// Modified_LUK_Boots[1]
 		.@equip_name$ = getequipname(EQI_SHOES);
 		setarray .@card[0],
 			getequipcardid(EQI_SHOES,0),

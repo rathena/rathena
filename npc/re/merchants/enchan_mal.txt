@@ -1,21 +1,21 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Malangdo Enchants
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Muad_Dib
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.0.3
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Adds enchantments to many high level weapons in exchange
 //= for Malangdo coins.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First Version. [Euphy]
 //= 1.0.1 Added 'delequip' command. [Euphy]
 //= 1.0.2 Remove redundant usage of 'getarg' [Cydh]
 //= 1.0.3 Fixed typo in 1.0.2 [Dastgir]
-//============================================================ 
+//============================================================
 
 // Enchanter NPC :: mal_yong
 //============================================================
@@ -228,8 +228,8 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 			case 1654: callsub L_Socket,1,2;	// Mental_Stick
 			case 1636: callsub L_Socket,2,2;	// Thorn_Staff
 			case 1637: callsub L_Socket,2,2;	// Eraser
-			// case 1697: callsub L_Socket,?,2;	// Exquisite_Yellow_Foxtail_Model
-			// case 1693: callsub L_Socket,?,2;	// Magical_Yellow_Foxtail_Staff
+			case 1697: callsub L_Socket,3,2;	// Exquisite_Yellow_Foxtail_Model
+			case 1693: callsub L_Socket,3,2;	// Magical_Yellow_Foxtail_Staff
 		}
 		break;
 	case 23:	// New 2-H Staves
@@ -603,7 +603,7 @@ L_Socket:
 		}
 
 		// anti-hack
-		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine) || 
+		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine) ||
 		    callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
 			close;
 
@@ -668,7 +668,7 @@ L_Socket:
 		delitem 6417,1;	// Silvervine
 
 		// anti-hack
-		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine) || 
+		if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine) ||
 		    callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]))
 			close;
 

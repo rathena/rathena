@@ -5013,6 +5013,7 @@
 	export_constant(IG_PRIVATE_AIRSHIP);
 	export_constant(IG_MILKY_SGB);
 	export_constant(IG_MILKY_SIEGE_SB);
+	export_constant(IG_MILKY_GLOVEB);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

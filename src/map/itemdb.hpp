@@ -730,6 +730,7 @@ enum e_random_item_group {
 	IG_PRIVATE_AIRSHIP,
 	IG_MILKY_SGB,
 	IG_MILKY_SIEGE_SB,
+	IG_MILKY_GLOVEB,
 };
 
 /// Enum for bound/sell restricted selling

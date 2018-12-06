@@ -123,531 +123,598 @@
 1301,16040,50,RDMOPTG_Crimson_Weapon // AM_MUT
 2362,28604,50,RDMOPTG_Crimson_Weapon // N_AMON_RA
 
-// Add HD Oridecon
-1038,6240,150,RDMOPTG_None // Osiris
-1039,6240,150,RDMOPTG_None // Baphomet
-1046,6240,150,RDMOPTG_None // Doppelganger
-1059,6240,150,RDMOPTG_None // Mistress
-1086,6240,150,RDMOPTG_None // Golden Thief Bug
-1087,6240,150,RDMOPTG_None // Orc Hero
-1112,6240,150,RDMOPTG_None // Drake
-1115,6240,150,RDMOPTG_None // Eddga
-1147,6240,150,RDMOPTG_None // Maya
-1150,6240,150,RDMOPTG_None // Moonlight Flower
-1157,6240,150,RDMOPTG_None // Pharaoh
-1159,6240,150,RDMOPTG_None // Phreeoni
-1190,6240,150,RDMOPTG_None // Orc Lord
-1251,6240,150,RDMOPTG_None // Stormy Knight
-1252,6240,150,RDMOPTG_None // Hatii
-1272,6240,150,RDMOPTG_None // Dark Lord
-1312,6240,150,RDMOPTG_None // Turtle General
-1373,6240,150,RDMOPTG_None // Lord of the Dead
-1389,6240,150,RDMOPTG_None // Dracula
-1399,6240,150,RDMOPTG_None // Baphomet
-1418,6240,150,RDMOPTG_None // Evil Snake Lord
-1492,6240,150,RDMOPTG_None // Samurai Specter
-1502,6240,150,RDMOPTG_None // Bring it on!
-1511,6240,150,RDMOPTG_None // Amon Ra
-1583,6240,150,RDMOPTG_None // Tao Gunka
-1623,6240,150,RDMOPTG_None // RSX-0806
-1630,6240,150,RDMOPTG_None // White Lady
-1688,6240,150,RDMOPTG_None // Lady Tanee
-1708,6240,150,RDMOPTG_None // Thanatos Phantom
-1734,6240,150,RDMOPTG_None // Kiel D-01
-1779,6240,150,RDMOPTG_None // Ktullanux
-1785,6240,150,RDMOPTG_None // Atroce
-1876,6240,150,RDMOPTG_None // Lord of the Dead
-1885,6240,150,RDMOPTG_None // Gopinich
-1956,6240,150,RDMOPTG_None // Naght Sieger
-1980,6240,150,RDMOPTG_None // Kublin
-2022,6240,150,RDMOPTG_None // Nidhoggur's Shadow
-2052,6240,150,RDMOPTG_None // Dark Lord
-2068,6240,150,RDMOPTG_None // Boitata
-2094,6240,150,RDMOPTG_None // Orc Hero
-2095,6240,150,RDMOPTG_None // Eddga
-2096,6240,150,RDMOPTG_None // Osiris
-2097,6240,150,RDMOPTG_None // Dracula
-2098,6240,150,RDMOPTG_None // Doppelganger
-2099,6240,150,RDMOPTG_None // Mistress
-2100,6240,150,RDMOPTG_None // Baphomet
-2101,6240,150,RDMOPTG_None // Lord of the Dead
-2102,6240,150,RDMOPTG_None // Dark Lord
-2103,6240,150,RDMOPTG_None // Ktullanux
-2104,6240,150,RDMOPTG_None // Evil Snake Lord
-2105,6240,150,RDMOPTG_None // Turtle General
-2156,6240,150,RDMOPTG_None // Leak
-2202,6240,150,RDMOPTG_None // Kraken
-2228,6240,150,RDMOPTG_None // Paladin Randel
-2229,6240,150,RDMOPTG_None // Creator Flamel
-2230,6240,150,RDMOPTG_None // Professor Celia
-2231,6240,150,RDMOPTG_None // Champion Chen
-2232,6240,150,RDMOPTG_None // Stalker Gertie
-2233,6240,150,RDMOPTG_None // Clown Alphoccio
-2234,6240,150,RDMOPTG_None // Gypsy Trentini
-2335,6240,150,RDMOPTG_None // Bakonawa's Treasure
-2441,6240,150,RDMOPTG_None // The Last One
-2442,6240,150,RDMOPTG_None // King of the Alley
-2443,6240,150,RDMOPTG_None // Aira
-2444,6240,150,RDMOPTG_None // Kuluna
-2445,6240,150,RDMOPTG_None // Mallina
-2446,6240,150,RDMOPTG_None // Ezella
-2447,6240,150,RDMOPTG_None // Lune
-2448,6240,150,RDMOPTG_None // Morin
-2449,6240,150,RDMOPTG_None // Nasarin
-3000,6240,150,RDMOPTG_None // Morocc Necromancer
-3741,6240,150,RDMOPTG_None // Spider Chariot
-
-// Add HD Elunium
-1038,6241,150,RDMOPTG_None // Osiris
-1039,6241,150,RDMOPTG_None // Baphomet
-1046,6241,150,RDMOPTG_None // Doppelganger
-1059,6241,150,RDMOPTG_None // Mistress
-1086,6241,150,RDMOPTG_None // Golden Thief Bug
-1087,6241,150,RDMOPTG_None // Orc Hero
-1112,6241,150,RDMOPTG_None // Drake
-1115,6241,150,RDMOPTG_None // Eddga
-1147,6241,150,RDMOPTG_None // Maya
-1150,6241,150,RDMOPTG_None // Moonlight Flower
-1157,6241,150,RDMOPTG_None // Pharaoh
-1159,6241,150,RDMOPTG_None // Phreeoni
-1190,6241,150,RDMOPTG_None // Orc Lord
-1251,6241,150,RDMOPTG_None // Stormy Knight
-1252,6241,150,RDMOPTG_None // Hatii
-1272,6241,150,RDMOPTG_None // Dark Lord
-1312,6241,150,RDMOPTG_None // Turtle General
-1373,6241,150,RDMOPTG_None // Lord of the Dead
-1389,6241,150,RDMOPTG_None // Dracula
-1399,6241,150,RDMOPTG_None // Baphomet
-1418,6241,150,RDMOPTG_None // Evil Snake Lord
-1492,6241,150,RDMOPTG_None // Samurai Specter
-1502,6241,150,RDMOPTG_None // Bring it on!
-1511,6241,150,RDMOPTG_None // Amon Ra
-1583,6241,150,RDMOPTG_None // Tao Gunka
-1623,6241,150,RDMOPTG_None // RSX-0806
-1630,6241,150,RDMOPTG_None // White Lady
-1688,6241,150,RDMOPTG_None // Lady Tanee
-1708,6241,150,RDMOPTG_None // Thanatos Phantom
-1734,6241,150,RDMOPTG_None // Kiel D-01
-1779,6241,150,RDMOPTG_None // Ktullanux
-1785,6241,150,RDMOPTG_None // Atroce
-1876,6241,150,RDMOPTG_None // Lord of the Dead
-1885,6241,150,RDMOPTG_None // Gopinich
-1956,6241,150,RDMOPTG_None // Naght Sieger
-1980,6241,150,RDMOPTG_None // Kublin
-2022,6241,150,RDMOPTG_None // Nidhoggur's Shadow
-2052,6241,150,RDMOPTG_None // Dark Lord
-2068,6241,150,RDMOPTG_None // Boitata
-2094,6241,150,RDMOPTG_None // Orc Hero
-2095,6241,150,RDMOPTG_None // Eddga
-2096,6241,150,RDMOPTG_None // Osiris
-2097,6241,150,RDMOPTG_None // Dracula
-2098,6241,150,RDMOPTG_None // Doppelganger
-2099,6241,150,RDMOPTG_None // Mistress
-2100,6241,150,RDMOPTG_None // Baphomet
-2101,6241,150,RDMOPTG_None // Lord of the Dead
-2102,6241,150,RDMOPTG_None // Dark Lord
-2103,6241,150,RDMOPTG_None // Ktullanux
-2104,6241,150,RDMOPTG_None // Evil Snake Lord
-2105,6241,150,RDMOPTG_None // Turtle General
-2156,6241,150,RDMOPTG_None // Leak
-2202,6241,150,RDMOPTG_None // Kraken
-2228,6241,150,RDMOPTG_None // Paladin Randel
-2229,6241,150,RDMOPTG_None // Creator Flamel
-2230,6241,150,RDMOPTG_None // Professor Celia
-2231,6241,150,RDMOPTG_None // Champion Chen
-2232,6241,150,RDMOPTG_None // Stalker Gertie
-2233,6241,150,RDMOPTG_None // Clown Alphoccio
-2234,6241,150,RDMOPTG_None // Gypsy Trentini
-2335,6241,150,RDMOPTG_None // Bakonawa's Treasure
-2441,6241,150,RDMOPTG_None // The Last One
-2442,6241,150,RDMOPTG_None // King of the Alley
-2443,6241,150,RDMOPTG_None // Aira
-2444,6241,150,RDMOPTG_None // Kuluna
-2445,6241,150,RDMOPTG_None // Mallina
-2446,6241,150,RDMOPTG_None // Ezella
-2447,6241,150,RDMOPTG_None // Lune
-2448,6241,150,RDMOPTG_None // Morin
-2449,6241,150,RDMOPTG_None // Nasarin
-3000,6241,150,RDMOPTG_None // Morocc Necromancer
-3741,6241,150,RDMOPTG_None // Spider Chariot
-
-// HD Bradium
-1038,6226,15,RDMOPTG_None // Osiris
-1039,6226,15,RDMOPTG_None // Baphomet
-1046,6226,15,RDMOPTG_None // Doppelganger
-1059,6226,15,RDMOPTG_None // Mistress
-1086,6226,15,RDMOPTG_None // Golden Thief Bug
-1087,6226,15,RDMOPTG_None // Orc Hero
-1112,6226,15,RDMOPTG_None // Drake
-1115,6226,15,RDMOPTG_None // Eddga
-1147,6226,15,RDMOPTG_None // Maya
-1150,6226,15,RDMOPTG_None // Moonlight Flower
-1157,6226,15,RDMOPTG_None // Pharaoh
-1159,6226,15,RDMOPTG_None // Phreeoni
-1190,6226,15,RDMOPTG_None // Orc Lord
-1251,6226,15,RDMOPTG_None // Stormy Knight
-1252,6226,15,RDMOPTG_None // Hatii
-1272,6226,15,RDMOPTG_None // Dark Lord
-1312,6226,15,RDMOPTG_None // Turtle General
-1373,6226,15,RDMOPTG_None // Lord of the Dead
-1389,6226,15,RDMOPTG_None // Dracula
-1399,6226,15,RDMOPTG_None // Baphomet
-1418,6226,15,RDMOPTG_None // Evil Snake Lord
-1492,6226,15,RDMOPTG_None // Samurai Specter
-1502,6226,15,RDMOPTG_None // Bring it on!
-1511,6226,15,RDMOPTG_None // Amon Ra
-1583,6226,15,RDMOPTG_None // Tao Gunka
-1623,6226,15,RDMOPTG_None // RSX-0806
-1630,6226,15,RDMOPTG_None // White Lady
-1688,6226,15,RDMOPTG_None // Lady Tanee
-1708,6226,15,RDMOPTG_None // Thanatos Phantom
-1734,6226,15,RDMOPTG_None // Kiel D-01
-1779,6226,15,RDMOPTG_None // Ktullanux
-1785,6226,15,RDMOPTG_None // Atroce
-1876,6226,15,RDMOPTG_None // Lord of the Dead
-1885,6226,15,RDMOPTG_None // Gopinich
-1956,6226,15,RDMOPTG_None // Naght Sieger
-1980,6226,15,RDMOPTG_None // Kublin
-2022,6226,15,RDMOPTG_None // Nidhoggur's Shadow
-2052,6226,15,RDMOPTG_None // Dark Lord
-2068,6226,15,RDMOPTG_None // Boitata
-2094,6226,15,RDMOPTG_None // Orc Hero
-2095,6226,15,RDMOPTG_None // Eddga
-2096,6226,15,RDMOPTG_None // Osiris
-2097,6226,15,RDMOPTG_None // Dracula
-2098,6226,15,RDMOPTG_None // Doppelganger
-2099,6226,15,RDMOPTG_None // Mistress
-2100,6226,15,RDMOPTG_None // Baphomet
-2101,6226,15,RDMOPTG_None // Lord of the Dead
-2102,6226,15,RDMOPTG_None // Dark Lord
-2103,6226,15,RDMOPTG_None // Ktullanux
-2104,6226,15,RDMOPTG_None // Evil Snake Lord
-2105,6226,15,RDMOPTG_None // Turtle General
-2156,6226,15,RDMOPTG_None // Leak
-2202,6226,15,RDMOPTG_None // Kraken
-2228,6226,15,RDMOPTG_None // Paladin Randel
-2229,6226,15,RDMOPTG_None // Creator Flamel
-2230,6226,15,RDMOPTG_None // Professor Celia
-2231,6226,15,RDMOPTG_None // Champion Chen
-2232,6226,15,RDMOPTG_None // Stalker Gertie
-2233,6226,15,RDMOPTG_None // Clown Alphoccio
-2234,6226,15,RDMOPTG_None // Gypsy Trentini
-2335,6226,15,RDMOPTG_None // Bakonawa's Treasure
-2441,6226,15,RDMOPTG_None // The Last One
-2442,6226,15,RDMOPTG_None // King of the Alley
-2443,6226,15,RDMOPTG_None // Aira
-2444,6226,15,RDMOPTG_None // Kuluna
-2445,6226,15,RDMOPTG_None // Mallina
-2446,6226,15,RDMOPTG_None // Ezella
-2447,6226,15,RDMOPTG_None // Lune
-2448,6226,15,RDMOPTG_None // Morin
-2449,6226,15,RDMOPTG_None // Nasarin
-3000,6226,15,RDMOPTG_None // Morocc Necromancer
-3741,6226,15,RDMOPTG_None // Spider Chariot
-
-// HD Carnium
-1038,6225,15,RDMOPTG_None // Osiris
-1039,6225,15,RDMOPTG_None // Baphomet
-1046,6225,15,RDMOPTG_None // Doppelganger
-1059,6225,15,RDMOPTG_None // Mistress
-1086,6225,15,RDMOPTG_None // Golden Thief Bug
-1087,6225,15,RDMOPTG_None // Orc Hero
-1112,6225,15,RDMOPTG_None // Drake
-1115,6225,15,RDMOPTG_None // Eddga
-1147,6225,15,RDMOPTG_None // Maya
-1150,6225,15,RDMOPTG_None // Moonlight Flower
-1157,6225,15,RDMOPTG_None // Pharaoh
-1159,6225,15,RDMOPTG_None // Phreeoni
-1190,6225,15,RDMOPTG_None // Orc Lord
-1251,6225,15,RDMOPTG_None // Stormy Knight
-1252,6225,15,RDMOPTG_None // Hatii
-1272,6225,15,RDMOPTG_None // Dark Lord
-1312,6225,15,RDMOPTG_None // Turtle General
-1373,6225,15,RDMOPTG_None // Lord of the Dead
-1389,6225,15,RDMOPTG_None // Dracula
-1399,6225,15,RDMOPTG_None // Baphomet
-1418,6225,15,RDMOPTG_None // Evil Snake Lord
-1492,6225,15,RDMOPTG_None // Samurai Specter
-1502,6225,15,RDMOPTG_None // Bring it on!
-1511,6225,15,RDMOPTG_None // Amon Ra
-1583,6225,15,RDMOPTG_None // Tao Gunka
-1623,6225,15,RDMOPTG_None // RSX-0806
-1630,6225,15,RDMOPTG_None // White Lady
-1688,6225,15,RDMOPTG_None // Lady Tanee
-1708,6225,15,RDMOPTG_None // Thanatos Phantom
-1734,6225,15,RDMOPTG_None // Kiel D-01
-1779,6225,15,RDMOPTG_None // Ktullanux
-1785,6225,15,RDMOPTG_None // Atroce
-1876,6225,15,RDMOPTG_None // Lord of the Dead
-1885,6225,15,RDMOPTG_None // Gopinich
-1956,6225,15,RDMOPTG_None // Naght Sieger
-1980,6225,15,RDMOPTG_None // Kublin
-2022,6225,15,RDMOPTG_None // Nidhoggur's Shadow
-2052,6225,15,RDMOPTG_None // Dark Lord
-2068,6225,15,RDMOPTG_None // Boitata
-2094,6225,15,RDMOPTG_None // Orc Hero
-2095,6225,15,RDMOPTG_None // Eddga
-2096,6225,15,RDMOPTG_None // Osiris
-2097,6225,15,RDMOPTG_None // Dracula
-2098,6225,15,RDMOPTG_None // Doppelganger
-2099,6225,15,RDMOPTG_None // Mistress
-2100,6225,15,RDMOPTG_None // Baphomet
-2101,6225,15,RDMOPTG_None // Lord of the Dead
-2102,6225,15,RDMOPTG_None // Dark Lord
-2103,6225,15,RDMOPTG_None // Ktullanux
-2104,6225,15,RDMOPTG_None // Evil Snake Lord
-2105,6225,15,RDMOPTG_None // Turtle General
-2156,6225,15,RDMOPTG_None // Leak
-2202,6225,15,RDMOPTG_None // Kraken
-2228,6225,15,RDMOPTG_None // Paladin Randel
-2229,6225,15,RDMOPTG_None // Creator Flamel
-2230,6225,15,RDMOPTG_None // Professor Celia
-2231,6225,15,RDMOPTG_None // Champion Chen
-2232,6225,15,RDMOPTG_None // Stalker Gertie
-2233,6225,15,RDMOPTG_None // Clown Alphoccio
-2234,6225,15,RDMOPTG_None // Gypsy Trentini
-2335,6225,15,RDMOPTG_None // Bakonawa's Treasure
-2441,6225,15,RDMOPTG_None // The Last One
-2442,6225,15,RDMOPTG_None // King of the Alley
-2443,6225,15,RDMOPTG_None // Aira
-2444,6225,15,RDMOPTG_None // Kuluna
-2445,6225,15,RDMOPTG_None // Mallina
-2446,6225,15,RDMOPTG_None // Ezella
-2447,6225,15,RDMOPTG_None // Lune
-2448,6225,15,RDMOPTG_None // Morin
-2449,6225,15,RDMOPTG_None // Nasarin
-3000,6225,15,RDMOPTG_None // Morocc Necromancer
-3741,6225,15,RDMOPTG_None // Spider Chariot
-
+// Enriched Elunium
+1089,7619,15,RDMOPTG_None	// Toad
+1090,7619,15,RDMOPTG_None	// Mastering
+1091,7619,15,RDMOPTG_None	// Dragon Fly
+1092,7619,15,RDMOPTG_None	// Vagabond Wolf
+1093,7619,15,RDMOPTG_None	// Eclipse
+1096,7619,15,RDMOPTG_None	// Angeling
+1120,7619,15,RDMOPTG_None	// Ghostring
+1203,7619,15,RDMOPTG_None	// Mysteltainn
+1204,7619,15,RDMOPTG_None	// Tirfing
+1205,7619,15,RDMOPTG_None	// Executioner
+1259,7619,15,RDMOPTG_None	// Gryphon
+1262,7619,15,RDMOPTG_None	// Mutant Dragon
+1283,7619,15,RDMOPTG_None	// Chimera
+1289,7619,15,RDMOPTG_None	// Maya Purple
+1307,7619,15,RDMOPTG_None	// Cat o' Nine Tails
+1388,7619,15,RDMOPTG_None	// Archangeling
+1582,7619,15,RDMOPTG_None	// Deviling
+1626,7619,15,RDMOPTG_None	// Hellion Revenant
+1704,7619,15,RDMOPTG_None	// Thanatos Odium
+1705,7619,15,RDMOPTG_None	// Thanatos Despero
+1706,7619,15,RDMOPTG_None	// Thanatos Maero
+1707,7619,15,RDMOPTG_None	// Thanatos Dolor
+1709,7619,15,RDMOPTG_None	// Thanatos Odium
+1710,7619,15,RDMOPTG_None	// Thanatos Despero
+1711,7619,15,RDMOPTG_None	// Thanatos Maero
+1712,7619,15,RDMOPTG_None	// Thanatos Dolor
+1720,7619,15,RDMOPTG_None	// Hydro
+1839,7619,15,RDMOPTG_None	// Byorgue
+1873,7619,15,RDMOPTG_None	// Beelzebub
+1990,7619,15,RDMOPTG_None	// Hardrock Mammoth
+2183,7619,15,RDMOPTG_None	// Mutant Anolian
+2185,7619,15,RDMOPTG_None	// Transform Kapha
+2194,7619,15,RDMOPTG_None	// Giant Octopus
+2198,7619,15,RDMOPTG_None	// King Kray
+2208,7619,15,RDMOPTG_None	// Wild Rider
+2332,7619,15,RDMOPTG_None	// Fake Buwaya
+2472,7619,15,RDMOPTG_None	// Bloody Knight
+2650,7619,15,RDMOPTG_None	// Elusive Lady Solace
+2665,7619,15,RDMOPTG_None	// Elusive Mistress of Shelter
+2675,7619,15,RDMOPTG_None	// Elusive Salamander
+2684,7619,15,RDMOPTG_None	// Furious Baroness of Retribution
+2685,7619,15,RDMOPTG_None	// Elusive Baroness of Retribution
+2686,7619,15,RDMOPTG_None	// Swift Baroness of Retribution
+2721,7619,15,RDMOPTG_None	// Owl Duke Ringleader
+2726,7619,15,RDMOPTG_None	// Dame of Sentinel Ringleader
+2736,7619,15,RDMOPTG_None	// Necromancer Ringleader
+2742,7619,15,RDMOPTG_None	// Furious Incarnation of Morroc
+2743,7619,15,RDMOPTG_None	// Elusive Incarnation of Morroc
+2744,7619,15,RDMOPTG_None	// Swift Incarnation of Morroc
+2788,7619,15,RDMOPTG_None	// Elusive Kasa
+2828,7619,15,RDMOPTG_None	// Elusive Galion
+2861,7619,15,RDMOPTG_None	// Furious Dark Priest
+2921,7619,15,RDMOPTG_None	// Owl Viscount
+2923,7619,15,RDMOPTG_None	// Owl Marquis
+3002,7619,15,RDMOPTG_None	// Morroc's Osiris
+3003,7619,15,RDMOPTG_None	// Morroc's Archer Skeleton
+3004,7619,15,RDMOPTG_None	// Morroc's Wraith
+3005,7619,15,RDMOPTG_None	// Morroc's Verit
+1991,7619,30,RDMOPTG_None	// Tendrillion
+2187,7619,30,RDMOPTG_None	// Dark Coelacanth
+2188,7619,30,RDMOPTG_None	// Grotesque Coelacanth
+2317,7619,30,RDMOPTG_None	// Bangungot
+2473,7619,30,RDMOPTG_None	// 1st Commander of Destruction
+2474,7619,30,RDMOPTG_None	// 2nd Commander of Destruction
+2998,7619,30,RDMOPTG_None	// Weakened Morroc
+1640,7619,45,RDMOPTG_None	// Lord Knight Seyren
+1641,7619,45,RDMOPTG_None	// Assassin Cross Eremes
+1642,7619,45,RDMOPTG_None	// Whitesmith Harword
+1643,7619,45,RDMOPTG_None	// High Priest Magaleta
+1644,7619,45,RDMOPTG_None	// Sniper Shecil
+1645,7619,45,RDMOPTG_None	// High Wizard Katrinn
+1765,7619,45,RDMOPTG_None	// Valkyrie
+1929,7619,45,RDMOPTG_None	// Great Demon Baphomet
+1956,7619,45,RDMOPTG_None	// Naght Sieger
+2189,7619,45,RDMOPTG_None	// Mutant Coelacanth
+2190,7619,45,RDMOPTG_None	// Ferocious Coelacanth
+2228,7619,45,RDMOPTG_None	// Paladin Randel
+2229,7619,45,RDMOPTG_None	// Creator Flamel
+2230,7619,45,RDMOPTG_None	// Professor Celia
+2231,7619,45,RDMOPTG_None	// Champion Chen
+2232,7619,45,RDMOPTG_None	// Stalker Gertie
+2233,7619,45,RDMOPTG_None	// Clown Alphoccio
+2234,7619,45,RDMOPTG_None	// Gypsy Trentini
+2562,7619,45,RDMOPTG_None	// Dwigh
+2563,7619,45,RDMOPTG_None	// Fei Kanabian
+2564,7619,45,RDMOPTG_None	// Geffen Fenrir
+2997,7619,45,RDMOPTG_None	// Kimi's Phantom
+3029,7619,45,RDMOPTG_None	// Grim Reaper Ankou
+3450,7619,45,RDMOPTG_None	// Bijou
 
 // Enriched Oridecon
-1089,7620,62,RDMOPTG_None // Toad
-1090,7620,62,RDMOPTG_None // Mastering
-1091,7620,62,RDMOPTG_None // Dragon Fly
-1092,7620,62,RDMOPTG_None // Vagabond Wolf
-1093,7620,62,RDMOPTG_None // Eclipse
-1096,7620,62,RDMOPTG_None // Angeling
-1120,7620,62,RDMOPTG_None // Ghostring
-1203,7620,62,RDMOPTG_None // Mysteltainn
-1204,7620,62,RDMOPTG_None // Ogretooth
-1205,7620,62,RDMOPTG_None // Executioner
-1259,7620,62,RDMOPTG_None // Gryphon
-1262,7620,62,RDMOPTG_None // Mutant Dragonoid
-1283,7620,62,RDMOPTG_None // Chimera
-1289,7620,62,RDMOPTG_None // Maya Purple
-1302,7620,62,RDMOPTG_None // Dark Illusion
-1307,7620,62,RDMOPTG_None // Cat o' Nine Tails
-1388,7620,62,RDMOPTG_None // Arc Angeling
-1582,7620,62,RDMOPTG_None // Deviling
-1592,7620,62,RDMOPTG_None // Gangster
-1609,7620,62,RDMOPTG_None // Zhu Po Long
-1626,7620,62,RDMOPTG_None // Hellion Revenant
-1674,7620,62,RDMOPTG_None // Monemus
-1681,7620,62,RDMOPTG_None // Gemini-S58
-1704,7620,62,RDMOPTG_None // Odium of Thanatos
-1705,7620,62,RDMOPTG_None // Despero of Thanatos
-1706,7620,62,RDMOPTG_None // Maero of Thanatos
-1707,7620,62,RDMOPTG_None // Dolor of Thanatos
-1709,7620,62,RDMOPTG_None // Odium of Thanatos
-1710,7620,62,RDMOPTG_None // Despero of Thanatos
-1711,7620,62,RDMOPTG_None // Maero of Thanatos
-1712,7620,62,RDMOPTG_None // Dolor of Thanatos
-1720,7620,62,RDMOPTG_None // Hydrolancer
-1765,7620,62,RDMOPTG_None // Valkyrie
-1795,7620,62,RDMOPTG_None // Bloody Knight
-1813,7620,62,RDMOPTG_None // Hydrolancer
-1817,7620,62,RDMOPTG_None // Detarderous
-1839,7620,62,RDMOPTG_None // Byrogue
-1840,7620,62,RDMOPTG_None // Golden Savage
-1889,7620,62,RDMOPTG_None // Marozka's Guard
-1916,7620,62,RDMOPTG_None // Satan Morroc
-1929,7620,62,RDMOPTG_None // Unsealed Baphomet
-1957,7620,62,RDMOPTG_None // Entweihen Crothen
-1990,7620,62,RDMOPTG_None // Hardrock Mammoth
-1991,7620,62,RDMOPTG_None // Tendrillion
-2174,7620,62,RDMOPTG_None // Deep Sea Vadon
-2175,7620,62,RDMOPTG_None // Deep Sea Marse
-2176,7620,62,RDMOPTG_None // Deep Sea Crab
-2177,7620,62,RDMOPTG_None // Deep Sea Cornutus
-2178,7620,62,RDMOPTG_None // Deep Sea Shellfish
-2179,7620,62,RDMOPTG_None // Deep Sea Kukre
-2180,7620,62,RDMOPTG_None // Deep Sea Strouf
-2181,7620,62,RDMOPTG_None // Deep Sea Sword Fish
-2182,7620,62,RDMOPTG_None // Deep Sea Marc
-2183,7620,62,RDMOPTG_None // Deep Sea Anolian
-2184,7620,62,RDMOPTG_None // Deep Sea Obeaune
-2185,7620,62,RDMOPTG_None // Deep Sea Kapha
-2186,7620,62,RDMOPTG_None // Coelacanth
-2187,7620,62,RDMOPTG_None // Gloomy Coelacanth
-2188,7620,62,RDMOPTG_None // Weird Coelacanth
-2189,7620,62,RDMOPTG_None // Mutant Coelacanth
-2190,7620,62,RDMOPTG_None // Violent Coelacanth
-2192,7620,62,RDMOPTG_None // Octopus
-2193,7620,62,RDMOPTG_None // Octopus Leg
-2194,7620,62,RDMOPTG_None // Giant Octopus
-2206,7620,62,RDMOPTG_None // Kraken Tentacle
-2208,7620,62,RDMOPTG_None // Wild Rider
-2327,7620,62,RDMOPTG_None // Bangungot
-2470,7620,62,RDMOPTG_None // Corrupted Abysmal Knight
-2471,7620,62,RDMOPTG_None // Suffering Khalitzburg
-2472,7620,62,RDMOPTG_None // Bloody Knight
-2473,7620,62,RDMOPTG_None // 1st Commander of Destruction
-2474,7620,62,RDMOPTG_None // 2nd Commander of Destruction
-2542,7620,62,RDMOPTG_None // Doyen Irene
-2564,7620,62,RDMOPTG_None // Fenrir
-2650,7620,62,RDMOPTG_None // Elusive Lady Solace
-2665,7620,62,RDMOPTG_None // Elusive Mistress of Shelter
-2675,7620,62,RDMOPTG_None // Elusive Salamander
-2684,7620,62,RDMOPTG_None // Furious Baroness of Retribution
-2685,7620,62,RDMOPTG_None // Elusive Baroness of Retribution
-2686,7620,62,RDMOPTG_None // Swift Baroness of Retribution
-2721,7620,62,RDMOPTG_None // Owl Duke Ringleader
-2726,7620,62,RDMOPTG_None // Dame of Sentinel Ringleader
-2736,7620,62,RDMOPTG_None // Necromancer Ringleader
-2742,7620,62,RDMOPTG_None // Furious Incarnation of Morroc
-2743,7620,62,RDMOPTG_None // Elusive Incarnation of Morroc
-2744,7620,62,RDMOPTG_None // Swift Incarnation of Morroc
-2788,7620,62,RDMOPTG_None // Elusive Kasa
-2828,7620,62,RDMOPTG_None // Elusive Galion
-2861,7620,62,RDMOPTG_None // Furious Dark Priest
-2921,7620,62,RDMOPTG_None // Owl Viscount
-2923,7620,62,RDMOPTG_None // Owl Marquis
-3029,7620,62,RDMOPTG_None // Reaper Yanku
+1089,7620,15,RDMOPTG_None	// Toad
+1090,7620,15,RDMOPTG_None	// Mastering
+1091,7620,15,RDMOPTG_None	// Dragon Fly
+1092,7620,15,RDMOPTG_None	// Vagabond Wolf
+1093,7620,15,RDMOPTG_None	// Eclipse
+1096,7620,15,RDMOPTG_None	// Angeling
+1120,7620,15,RDMOPTG_None	// Ghostring
+1203,7620,15,RDMOPTG_None	// Mysteltainn
+1204,7620,15,RDMOPTG_None	// Tirfing
+1205,7620,15,RDMOPTG_None	// Executioner
+1259,7620,15,RDMOPTG_None	// Gryphon
+1262,7620,15,RDMOPTG_None	// Mutant Dragon
+1283,7620,15,RDMOPTG_None	// Chimera
+1289,7620,15,RDMOPTG_None	// Maya Purple
+1307,7620,15,RDMOPTG_None	// Cat o' Nine Tails
+1388,7620,15,RDMOPTG_None	// Archangeling
+1582,7620,15,RDMOPTG_None	// Deviling
+1626,7620,15,RDMOPTG_None	// Hellion Revenant
+1704,7620,15,RDMOPTG_None	// Thanatos Odium
+1705,7620,15,RDMOPTG_None	// Thanatos Despero
+1706,7620,15,RDMOPTG_None	// Thanatos Maero
+1707,7620,15,RDMOPTG_None	// Thanatos Dolor
+1709,7620,15,RDMOPTG_None	// Thanatos Odium
+1710,7620,15,RDMOPTG_None	// Thanatos Despero
+1711,7620,15,RDMOPTG_None	// Thanatos Maero
+1712,7620,15,RDMOPTG_None	// Thanatos Dolor
+1720,7620,15,RDMOPTG_None	// Hydro
+1839,7620,15,RDMOPTG_None	// Byorgue
+1873,7620,15,RDMOPTG_None	// Beelzebub
+1990,7620,15,RDMOPTG_None	// Hardrock Mammoth
+2183,7620,15,RDMOPTG_None	// Mutant Anolian
+2185,7620,15,RDMOPTG_None	// Transform Kapha
+2194,7620,15,RDMOPTG_None	// Giant Octopus
+2198,7620,15,RDMOPTG_None	// King Kray
+2208,7620,15,RDMOPTG_None	// Wild Rider
+2332,7620,15,RDMOPTG_None	// Fake Buwaya
+2472,7620,15,RDMOPTG_None	// Bloody Knight
+2650,7620,15,RDMOPTG_None	// Elusive Lady Solace
+2665,7620,15,RDMOPTG_None	// Elusive Mistress of Shelter
+2675,7620,15,RDMOPTG_None	// Elusive Salamander
+2684,7620,15,RDMOPTG_None	// Furious Baroness of Retribution
+2685,7620,15,RDMOPTG_None	// Elusive Baroness of Retribution
+2686,7620,15,RDMOPTG_None	// Swift Baroness of Retribution
+2721,7620,15,RDMOPTG_None	// Owl Duke Ringleader
+2726,7620,15,RDMOPTG_None	// Dame of Sentinel Ringleader
+2736,7620,15,RDMOPTG_None	// Necromancer Ringleader
+2742,7620,15,RDMOPTG_None	// Furious Incarnation of Morroc
+2743,7620,15,RDMOPTG_None	// Elusive Incarnation of Morroc
+2744,7620,15,RDMOPTG_None	// Swift Incarnation of Morroc
+2788,7620,15,RDMOPTG_None	// Elusive Kasa
+2828,7620,15,RDMOPTG_None	// Elusive Galion
+2861,7620,15,RDMOPTG_None	// Furious Dark Priest
+2921,7620,15,RDMOPTG_None	// Owl Viscount
+2923,7620,15,RDMOPTG_None	// Owl Marquis
+3002,7620,15,RDMOPTG_None	// Morroc's Osiris
+3003,7620,15,RDMOPTG_None	// Morroc's Archer Skeleton
+3004,7620,15,RDMOPTG_None	// Morroc's Wraith
+3005,7620,15,RDMOPTG_None	// Morroc's Verit
+1991,7620,30,RDMOPTG_None	// Tendrillion
+2187,7620,30,RDMOPTG_None	// Dark Coelacanth
+2188,7620,30,RDMOPTG_None	// Grotesque Coelacanth
+2317,7620,30,RDMOPTG_None	// Bangungot
+2473,7620,30,RDMOPTG_None	// 1st Commander of Destruction
+2474,7620,30,RDMOPTG_None	// 2nd Commander of Destruction
+2998,7620,30,RDMOPTG_None	// Weakened Morroc
+1640,7620,45,RDMOPTG_None	// Lord Knight Seyren
+1641,7620,45,RDMOPTG_None	// Assassin Cross Eremes
+1642,7620,45,RDMOPTG_None	// Whitesmith Harword
+1643,7620,45,RDMOPTG_None	// High Priest Magaleta
+1644,7620,45,RDMOPTG_None	// Sniper Shecil
+1645,7620,45,RDMOPTG_None	// High Wizard Katrinn
+1765,7620,45,RDMOPTG_None	// Valkyrie
+1929,7620,45,RDMOPTG_None	// Great Demon Baphomet
+1956,7620,45,RDMOPTG_None	// Naght Sieger
+2189,7620,45,RDMOPTG_None	// Mutant Coelacanth
+2190,7620,45,RDMOPTG_None	// Ferocious Coelacanth
+2228,7620,45,RDMOPTG_None	// Paladin Randel
+2229,7620,45,RDMOPTG_None	// Creator Flamel
+2230,7620,45,RDMOPTG_None	// Professor Celia
+2231,7620,45,RDMOPTG_None	// Champion Chen
+2232,7620,45,RDMOPTG_None	// Stalker Gertie
+2233,7620,45,RDMOPTG_None	// Clown Alphoccio
+2234,7620,45,RDMOPTG_None	// Gypsy Trentini
+2562,7620,45,RDMOPTG_None	// Dwigh
+2563,7620,45,RDMOPTG_None	// Fei Kanabian
+2564,7620,45,RDMOPTG_None	// Geffen Fenrir
+2997,7620,45,RDMOPTG_None	// Kimi's Phantom
+3029,7620,45,RDMOPTG_None	// Grim Reaper Ankou
+3450,7620,45,RDMOPTG_None	// Bijou
 
-1198,7620,8,RDMOPTG_None // Dark Priest
-1295,7620,8,RDMOPTG_None // Owl Baron
-1320,7620,8,RDMOPTG_None // Owl Duke
-1700,7620,8,RDMOPTG_None // Dame of Sentinel
-1701,7620,8,RDMOPTG_None // Mistress of Shelter
-1702,7620,8,RDMOPTG_None // Baroness of Retribution
-1703,7620,8,RDMOPTG_None // Lady Solace
-1754,7620,8,RDMOPTG_None // Skeggiold
-1755,7620,8,RDMOPTG_None // Skeggiold
-1783,7620,8,RDMOPTG_None // Galion
-1829,7620,8,RDMOPTG_None // Sword Guardian
-1830,7620,8,RDMOPTG_None // Bow Guardian
-1831,7620,8,RDMOPTG_None // Salamander
-1833,7620,8,RDMOPTG_None // Kasa
-1870,7620,8,RDMOPTG_None // Necromancer
-1894,7620,8,RDMOPTG_None // Pouring
-1918,7620,8,RDMOPTG_None // Incarnation of Morroc
-1919,7620,8,RDMOPTG_None // Incarnation of Morroc
-1920,7620,8,RDMOPTG_None // Incarnation of Morroc
-1921,7620,8,RDMOPTG_None // Incarnation of Morroc
-2198,7620,8,RDMOPTG_None // King Dramoh
+// HD Oridecon
+1991,6240,15,RDMOPTG_None	// Tendrillion
+2187,6240,15,RDMOPTG_None	// Dark Coelacanth
+2188,6240,15,RDMOPTG_None	// Grotesque Coelacanth
+2317,6240,15,RDMOPTG_None	// Bangungot
+2473,6240,15,RDMOPTG_None	// 1st Commander of Destruction
+2474,6240,15,RDMOPTG_None	// 2nd Commander of Destruction
+2998,6240,15,RDMOPTG_None	// Weakened Morroc
+1640,6240,15,RDMOPTG_None	// Lord Knight Seyren
+1641,6240,15,RDMOPTG_None	// Assassin Cross Eremes
+1642,6240,15,RDMOPTG_None	// Whitesmith Harword
+1643,6240,15,RDMOPTG_None	// High Priest Magaleta
+1644,6240,15,RDMOPTG_None	// Sniper Shecil
+1645,6240,15,RDMOPTG_None	// High Wizard Katrinn
+1765,6240,15,RDMOPTG_None	// Valkyrie
+1929,6240,15,RDMOPTG_None	// Great Demon Baphomet
+1956,6240,15,RDMOPTG_None	// Naght Sieger
+2189,6240,15,RDMOPTG_None	// Mutant Coelacanth
+2190,6240,15,RDMOPTG_None	// Ferocious Coelacanth
+2228,6240,15,RDMOPTG_None	// Paladin Randel
+2229,6240,15,RDMOPTG_None	// Creator Flamel
+2230,6240,15,RDMOPTG_None	// Professor Celia
+2231,6240,15,RDMOPTG_None	// Champion Chen
+2232,6240,15,RDMOPTG_None	// Stalker Gertie
+2233,6240,15,RDMOPTG_None	// Clown Alphoccio
+2234,6240,15,RDMOPTG_None	// Gypsy Trentini
+2562,6240,15,RDMOPTG_None	// Dwigh
+2563,6240,15,RDMOPTG_None	// Fei Kanabian
+2564,6240,15,RDMOPTG_None	// Geffen Fenrir
+2997,6240,15,RDMOPTG_None	// Kimi's Phantom
+3029,6240,15,RDMOPTG_None	// Grim Reaper Ankou
+3450,6240,15,RDMOPTG_None	// Bijou
+1038,6240,40,RDMOPTG_None	// Osiris
+1039,6240,40,RDMOPTG_None	// Baphomet
+1046,6240,40,RDMOPTG_None	// Doppelganger
+1059,6240,40,RDMOPTG_None	// Mistress
+1086,6240,40,RDMOPTG_None	// Golden Thief Bug
+1087,6240,40,RDMOPTG_None	// Orc Hero
+1112,6240,40,RDMOPTG_None	// Drake
+1115,6240,40,RDMOPTG_None	// Eddga
+1147,6240,40,RDMOPTG_None	// Maya
+1150,6240,40,RDMOPTG_None	// Moonlight Flower
+1157,6240,40,RDMOPTG_None	// Pharaoh
+1159,6240,40,RDMOPTG_None	// Phreeoni
+1190,6240,40,RDMOPTG_None	// Orc Lord
+1251,6240,40,RDMOPTG_None	// Knight of Windstorm
+1252,6240,40,RDMOPTG_None	// Garm
+1272,6240,40,RDMOPTG_None	// Dark Lord
+1312,6240,40,RDMOPTG_None	// Turtle General
+1373,6240,40,RDMOPTG_None	// Lord of Death
+1389,6240,40,RDMOPTG_None	// Dracula
+1418,6240,40,RDMOPTG_None	// Evil Snake Lord
+1492,6240,40,RDMOPTG_None	// Incantation Samurai
+1511,6240,40,RDMOPTG_None	// Amon Ra
+1583,6240,40,RDMOPTG_None	// Tao Gunka
+1623,6240,40,RDMOPTG_None	// RSX 0806
+1630,6240,40,RDMOPTG_None	// Bacsojin
+1658,6240,40,RDMOPTG_None	// Ygnizem
+1685,6240,40,RDMOPTG_None	// Vesper
+1688,6240,40,RDMOPTG_None	// Lady Tanee
+1719,6240,40,RDMOPTG_None	// Detale
+1768,6240,40,RDMOPTG_None	// Gloom Under Night
+1779,6240,40,RDMOPTG_None	// Ktullanux
+1785,6240,40,RDMOPTG_None	// Atroce
+1832,6240,40,RDMOPTG_None	// Ifrit
+1871,6240,40,RDMOPTG_None	// Fallen Bishop
+1885,6240,40,RDMOPTG_None	// Gopinich
+1917,6240,40,RDMOPTG_None	// Wounded Morroc
+1980,6240,40,RDMOPTG_None	// Kubkin
+2022,6240,40,RDMOPTG_None	// Nidhoggr's Shadow
+2068,6240,40,RDMOPTG_None	// Boitata
+2087,6240,40,RDMOPTG_None	// Queen Scaraba
+2131,6240,40,RDMOPTG_None	// Lost Dragon
+2156,6240,40,RDMOPTG_None	// Leak
+2165,6240,40,RDMOPTG_None	// Gold Queen Scaraba
+2202,6240,40,RDMOPTG_None	// Kraken
+2251,6240,40,RDMOPTG_None	// Gioia
+2253,6240,40,RDMOPTG_None	// Daehyon
+2255,6240,40,RDMOPTG_None	// Kades
+2319,6240,40,RDMOPTG_None	// Buwaya
+2441,6240,40,RDMOPTG_None	// The Last One
+2442,6240,40,RDMOPTG_None	// King of the Alley
+2475,6240,40,RDMOPTG_None	// Corrupted Soul
+2476,6240,40,RDMOPTG_None	// Amdarias
+2530,6240,40,RDMOPTG_None	// Faceworm Dark
+2532,6240,40,RDMOPTG_None	// Faceworm Queen (Red)
+2942,6240,40,RDMOPTG_None	// Evil Fanatics
+2996,6240,40,RDMOPTG_None	// Celine Kimi
+2999,6240,40,RDMOPTG_None	// Morocc Necromancer
+3000,6240,40,RDMOPTG_None	// Morocc Necromancer
+3074,6240,40,RDMOPTG_None	// Time Holder
+3181,6240,40,RDMOPTG_None	// Captain Ferlock
+3191,6240,40,RDMOPTG_None	// Gigantes
+3192,6240,40,RDMOPTG_None	// Gigantes
+3193,6240,40,RDMOPTG_None	// Ancient Medium Gigantes
+3194,6240,40,RDMOPTG_None	// Large Gigantes
+3196,6240,40,RDMOPTG_None	// Ancient Gigantes
+3254,6240,40,RDMOPTG_None	// T_W_O
+3741,6240,40,RDMOPTG_None	// Mechaspider
+1708,6240,75,RDMOPTG_None	// Thanatos
+1734,6240,75,RDMOPTG_None	// Kiel D-01
+2249,6240,75,RDMOPTG_None	// Pyuriel
+2362,6240,75,RDMOPTG_None	// Nightmare Amon Ra
+3195,6240,75,RDMOPTG_None	// Large Gigantes
+1646,6240,100,RDMOPTG_None	// Lord Knight Seyren
+1647,6240,100,RDMOPTG_None	// Assassin Cross Eremes
+1648,6240,100,RDMOPTG_None	// Whitesmith Harword
+1649,6240,100,RDMOPTG_None	// High Priest Magaleta
+1650,6240,100,RDMOPTG_None	// Sniper Shecil
+1651,6240,100,RDMOPTG_None	// High Wizard Katrinn
+1751,6240,100,RDMOPTG_None	// Valkyrie Randgris
+2235,6240,100,RDMOPTG_None	// Paladin Randel
+2236,6240,100,RDMOPTG_None	// Creator Flamel
+2237,6240,100,RDMOPTG_None	// Professor Celia
+2238,6240,100,RDMOPTG_None	// Champion Chen
+2239,6240,100,RDMOPTG_None	// Stalker Gertie
+2240,6240,100,RDMOPTG_None	// Clown Alphoccio
+2241,6240,100,RDMOPTG_None	// Gypsy Trentini
 
-// Enriched Elunium
-1089,7619,62,RDMOPTG_None // Toad
-1090,7619,62,RDMOPTG_None // Mastering
-1091,7619,62,RDMOPTG_None // Dragon Fly
-1092,7619,62,RDMOPTG_None // Vagabond Wolf
-1093,7619,62,RDMOPTG_None // Eclipse
-1096,7619,62,RDMOPTG_None // Angeling
-1120,7619,62,RDMOPTG_None // Ghostring
-1203,7619,62,RDMOPTG_None // Mysteltainn
-1204,7619,62,RDMOPTG_None // Ogretooth
-1205,7619,62,RDMOPTG_None // Executioner
-1259,7619,62,RDMOPTG_None // Gryphon
-1262,7619,62,RDMOPTG_None // Mutant Dragonoid
-1283,7619,62,RDMOPTG_None // Chimera
-1289,7619,62,RDMOPTG_None // Maya Purple
-1302,7619,62,RDMOPTG_None // Dark Illusion
-1307,7619,62,RDMOPTG_None // Cat o' Nine Tails
-1388,7619,62,RDMOPTG_None // Arc Angeling
-1582,7619,62,RDMOPTG_None // Deviling
-1592,7619,62,RDMOPTG_None // Gangster
-1609,7619,62,RDMOPTG_None // Zhu Po Long
-1626,7619,62,RDMOPTG_None // Hellion Revenant
-1674,7619,62,RDMOPTG_None // Monemus
-1681,7619,62,RDMOPTG_None // Gemini-S58
-1704,7619,62,RDMOPTG_None // Odium of Thanatos
-1705,7619,62,RDMOPTG_None // Despero of Thanatos
-1706,7619,62,RDMOPTG_None // Maero of Thanatos
-1707,7619,62,RDMOPTG_None // Dolor of Thanatos
-1709,7619,62,RDMOPTG_None // Odium of Thanatos
-1710,7619,62,RDMOPTG_None // Despero of Thanatos
-1711,7619,62,RDMOPTG_None // Maero of Thanatos
-1712,7619,62,RDMOPTG_None // Dolor of Thanatos
-1720,7619,62,RDMOPTG_None // Hydrolancer
-1765,7619,62,RDMOPTG_None // Valkyrie
-1795,7619,62,RDMOPTG_None // Bloody Knight
-1813,7619,62,RDMOPTG_None // Hydrolancer
-1817,7619,62,RDMOPTG_None // Detarderous
-1839,7619,62,RDMOPTG_None // Byrogue
-1840,7619,62,RDMOPTG_None // Golden Savage
-1889,7619,62,RDMOPTG_None // Marozka's Guard
-1916,7619,62,RDMOPTG_None // Satan Morroc
-1929,7619,62,RDMOPTG_None // Unsealed Baphomet
-1957,7619,62,RDMOPTG_None // Entweihen Crothen
-1990,7619,62,RDMOPTG_None // Hardrock Mammoth
-1991,7619,62,RDMOPTG_None // Tendrillion
-2174,7619,62,RDMOPTG_None // Deep Sea Vadon
-2175,7619,62,RDMOPTG_None // Deep Sea Marse
-2176,7619,62,RDMOPTG_None // Deep Sea Crab
-2177,7619,62,RDMOPTG_None // Deep Sea Cornutus
-2178,7619,62,RDMOPTG_None // Deep Sea Shellfish
-2179,7619,62,RDMOPTG_None // Deep Sea Kukre
-2180,7619,62,RDMOPTG_None // Deep Sea Strouf
-2181,7619,62,RDMOPTG_None // Deep Sea Sword Fish
-2182,7619,62,RDMOPTG_None // Deep Sea Marc
-2183,7619,62,RDMOPTG_None // Deep Sea Anolian
-2184,7619,62,RDMOPTG_None // Deep Sea Obeaune
-2185,7619,62,RDMOPTG_None // Deep Sea Kapha
-2186,7619,62,RDMOPTG_None // Coelacanth
-2187,7619,62,RDMOPTG_None // Gloomy Coelacanth
-2188,7619,62,RDMOPTG_None // Weird Coelacanth
-2189,7619,62,RDMOPTG_None // Mutant Coelacanth
-2190,7619,62,RDMOPTG_None // Violent Coelacanth
-2192,7619,62,RDMOPTG_None // Octopus
-2193,7619,62,RDMOPTG_None // Octopus Leg
-2194,7619,62,RDMOPTG_None // Giant Octopus
-2206,7619,62,RDMOPTG_None // Kraken Tentacle
-2208,7619,62,RDMOPTG_None // Wild Rider
-2327,7619,62,RDMOPTG_None // Bangungot
-2470,7619,62,RDMOPTG_None // Corrupted Abysmal Knight
-2471,7619,62,RDMOPTG_None // Suffering Khalitzburg
-2472,7619,62,RDMOPTG_None // Bloody Knight
-2473,7619,62,RDMOPTG_None // 1st Commander of Destruction
-2474,7619,62,RDMOPTG_None // 2nd Commander of Destruction
-2542,7619,62,RDMOPTG_None // Doyen Irene
-2564,7619,62,RDMOPTG_None // Fenrir
-2650,7619,62,RDMOPTG_None // Elusive Lady Solace
-2665,7619,62,RDMOPTG_None // Elusive Mistress of Shelter
-2675,7619,62,RDMOPTG_None // Elusive Salamander
-2684,7619,62,RDMOPTG_None // Furious Baroness of Retribution
-2685,7619,62,RDMOPTG_None // Elusive Baroness of Retribution
-2686,7619,62,RDMOPTG_None // Swift Baroness of Retribution
-2721,7619,62,RDMOPTG_None // Owl Duke Ringleader
-2726,7619,62,RDMOPTG_None // Dame of Sentinel Ringleader
-2736,7619,62,RDMOPTG_None // Necromancer Ringleader
-2742,7619,62,RDMOPTG_None // Furious Incarnation of Morroc
-2743,7619,62,RDMOPTG_None // Elusive Incarnation of Morroc
-2744,7619,62,RDMOPTG_None // Swift Incarnation of Morroc
-2788,7619,62,RDMOPTG_None // Elusive Kasa
-2828,7619,62,RDMOPTG_None // Elusive Galion
-2861,7619,62,RDMOPTG_None // Furious Dark Priest
-2921,7619,62,RDMOPTG_None // Owl Viscount
-2923,7619,62,RDMOPTG_None // Owl Marquis
-3029,7619,62,RDMOPTG_None // Reaper Yanku
+// HD Elunium
+1991,6241,15,RDMOPTG_None	// Tendrillion
+2187,6241,15,RDMOPTG_None	// Dark Coelacanth
+2188,6241,15,RDMOPTG_None	// Grotesque Coelacanth
+2317,6241,15,RDMOPTG_None	// Bangungot
+2473,6241,15,RDMOPTG_None	// 1st Commander of Destruction
+2474,6241,15,RDMOPTG_None	// 2nd Commander of Destruction
+2998,6241,15,RDMOPTG_None	// Weakened Morroc
+1640,6241,15,RDMOPTG_None	// Lord Knight Seyren
+1641,6241,15,RDMOPTG_None	// Assassin Cross Eremes
+1642,6241,15,RDMOPTG_None	// Whitesmith Harword
+1643,6241,15,RDMOPTG_None	// High Priest Magaleta
+1644,6241,15,RDMOPTG_None	// Sniper Shecil
+1645,6241,15,RDMOPTG_None	// High Wizard Katrinn
+1765,6241,15,RDMOPTG_None	// Valkyrie
+1929,6241,15,RDMOPTG_None	// Great Demon Baphomet
+1956,6241,15,RDMOPTG_None	// Naght Sieger
+2189,6241,15,RDMOPTG_None	// Mutant Coelacanth
+2190,6241,15,RDMOPTG_None	// Ferocious Coelacanth
+2228,6241,15,RDMOPTG_None	// Paladin Randel
+2229,6241,15,RDMOPTG_None	// Creator Flamel
+2230,6241,15,RDMOPTG_None	// Professor Celia
+2231,6241,15,RDMOPTG_None	// Champion Chen
+2232,6241,15,RDMOPTG_None	// Stalker Gertie
+2233,6241,15,RDMOPTG_None	// Clown Alphoccio
+2234,6241,15,RDMOPTG_None	// Gypsy Trentini
+2562,6241,15,RDMOPTG_None	// Dwigh
+2563,6241,15,RDMOPTG_None	// Fei Kanabian
+2564,6241,15,RDMOPTG_None	// Geffen Fenrir
+2997,6241,15,RDMOPTG_None	// Kimi's Phantom
+3029,6241,15,RDMOPTG_None	// Grim Reaper Ankou
+3450,6241,15,RDMOPTG_None	// Bijou
+1038,6241,40,RDMOPTG_None	// Osiris
+1039,6241,40,RDMOPTG_None	// Baphomet
+1046,6241,40,RDMOPTG_None	// Doppelganger
+1059,6241,40,RDMOPTG_None	// Mistress
+1086,6241,40,RDMOPTG_None	// Golden Thief Bug
+1087,6241,40,RDMOPTG_None	// Orc Hero
+1112,6241,40,RDMOPTG_None	// Drake
+1115,6241,40,RDMOPTG_None	// Eddga
+1147,6241,40,RDMOPTG_None	// Maya
+1150,6241,40,RDMOPTG_None	// Moonlight Flower
+1157,6241,40,RDMOPTG_None	// Pharaoh
+1159,6241,40,RDMOPTG_None	// Phreeoni
+1190,6241,40,RDMOPTG_None	// Orc Lord
+1251,6241,40,RDMOPTG_None	// Knight of Windstorm
+1252,6241,40,RDMOPTG_None	// Garm
+1272,6241,40,RDMOPTG_None	// Dark Lord
+1312,6241,40,RDMOPTG_None	// Turtle General
+1373,6241,40,RDMOPTG_None	// Lord of Death
+1389,6241,40,RDMOPTG_None	// Dracula
+1418,6241,40,RDMOPTG_None	// Evil Snake Lord
+1492,6241,40,RDMOPTG_None	// Incantation Samurai
+1511,6241,40,RDMOPTG_None	// Amon Ra
+1583,6241,40,RDMOPTG_None	// Tao Gunka
+1623,6241,40,RDMOPTG_None	// RSX 0806
+1630,6241,40,RDMOPTG_None	// Bacsojin
+1658,6241,40,RDMOPTG_None	// Ygnizem
+1685,6241,40,RDMOPTG_None	// Vesper
+1688,6241,40,RDMOPTG_None	// Lady Tanee
+1719,6241,40,RDMOPTG_None	// Detale
+1768,6241,40,RDMOPTG_None	// Gloom Under Night
+1779,6241,40,RDMOPTG_None	// Ktullanux
+1785,6241,40,RDMOPTG_None	// Atroce
+1832,6241,40,RDMOPTG_None	// Ifrit
+1871,6241,40,RDMOPTG_None	// Fallen Bishop
+1885,6241,40,RDMOPTG_None	// Gopinich
+1917,6241,40,RDMOPTG_None	// Wounded Morroc
+1980,6241,40,RDMOPTG_None	// Kubkin
+2022,6241,40,RDMOPTG_None	// Nidhoggr's Shadow
+2068,6241,40,RDMOPTG_None	// Boitata
+2087,6241,40,RDMOPTG_None	// Queen Scaraba
+2131,6241,40,RDMOPTG_None	// Lost Dragon
+2156,6241,40,RDMOPTG_None	// Leak
+2165,6241,40,RDMOPTG_None	// Gold Queen Scaraba
+2202,6241,40,RDMOPTG_None	// Kraken
+2251,6241,40,RDMOPTG_None	// Gioia
+2253,6241,40,RDMOPTG_None	// Daehyon
+2255,6241,40,RDMOPTG_None	// Kades
+2319,6241,40,RDMOPTG_None	// Buwaya
+2441,6241,40,RDMOPTG_None	// The Last One
+2442,6241,40,RDMOPTG_None	// King of the Alley
+2475,6241,40,RDMOPTG_None	// Corrupted Soul
+2476,6241,40,RDMOPTG_None	// Amdarias
+2530,6241,40,RDMOPTG_None	// Faceworm Dark
+2532,6241,40,RDMOPTG_None	// Faceworm Queen (Red)
+2942,6241,40,RDMOPTG_None	// Evil Fanatics
+2996,6241,40,RDMOPTG_None	// Celine Kimi
+2999,6241,40,RDMOPTG_None	// Morocc Necromancer
+3000,6241,40,RDMOPTG_None	// Morocc Necromancer
+3074,6241,40,RDMOPTG_None	// Time Holder
+3181,6241,40,RDMOPTG_None	// Captain Ferlock
+3191,6241,40,RDMOPTG_None	// Gigantes
+3192,6241,40,RDMOPTG_None	// Gigantes
+3193,6241,40,RDMOPTG_None	// Ancient Medium Gigantes
+3194,6241,40,RDMOPTG_None	// Large Gigantes
+3196,6241,40,RDMOPTG_None	// Ancient Gigantes
+3254,6241,40,RDMOPTG_None	// T_W_O
+3741,6241,40,RDMOPTG_None	// Mechaspider
+1708,6241,75,RDMOPTG_None	// Thanatos
+1734,6241,75,RDMOPTG_None	// Kiel D-01
+2249,6241,75,RDMOPTG_None	// Pyuriel
+2362,6241,75,RDMOPTG_None	// Nightmare Amon Ra
+3195,6241,75,RDMOPTG_None	// Large Gigantes
+1646,6241,100,RDMOPTG_None	// Lord Knight Seyren
+1647,6241,100,RDMOPTG_None	// Assassin Cross Eremes
+1648,6241,100,RDMOPTG_None	// Whitesmith Harword
+1649,6241,100,RDMOPTG_None	// High Priest Magaleta
+1650,6241,100,RDMOPTG_None	// Sniper Shecil
+1651,6241,100,RDMOPTG_None	// High Wizard Katrinn
+1751,6241,100,RDMOPTG_None	// Valkyrie Randgris
+2235,6241,100,RDMOPTG_None	// Paladin Randel
+2236,6241,100,RDMOPTG_None	// Creator Flamel
+2237,6241,100,RDMOPTG_None	// Professor Celia
+2238,6241,100,RDMOPTG_None	// Champion Chen
+2239,6241,100,RDMOPTG_None	// Stalker Gertie
+2240,6241,100,RDMOPTG_None	// Clown Alphoccio
+2241,6241,100,RDMOPTG_None	// Gypsy Trentini
 
-1198,7619,8,RDMOPTG_None // Dark Priest
-1295,7619,8,RDMOPTG_None // Owl Baron
-1320,7619,8,RDMOPTG_None // Owl Duke
-1700,7619,8,RDMOPTG_None // Dame of Sentinel
-1701,7619,8,RDMOPTG_None // Mistress of Shelter
-1702,7619,8,RDMOPTG_None // Baroness of Retribution
-1703,7619,8,RDMOPTG_None // Lady Solace
-1754,7619,8,RDMOPTG_None // Skeggiold
-1755,7619,8,RDMOPTG_None // Skeggiold
-1783,7619,8,RDMOPTG_None // Galion
-1829,7619,8,RDMOPTG_None // Sword Guardian
-1830,7619,8,RDMOPTG_None // Bow Guardian
-1831,7619,8,RDMOPTG_None // Salamander
-1833,7619,8,RDMOPTG_None // Kasa
-1870,7619,8,RDMOPTG_None // Necromancer
-1894,7619,8,RDMOPTG_None // Pouring
-1918,7619,8,RDMOPTG_None // Incarnation of Morroc
-1919,7619,8,RDMOPTG_None // Incarnation of Morroc
-1920,7619,8,RDMOPTG_None // Incarnation of Morroc
-1921,7619,8,RDMOPTG_None // Incarnation of Morroc
-2198,7619,8,RDMOPTG_None // King Dramoh
+// HD Bradium
+1038,6225,20,RDMOPTG_None	// Osiris
+1039,6225,20,RDMOPTG_None	// Baphomet
+1046,6225,20,RDMOPTG_None	// Doppelganger
+1059,6225,20,RDMOPTG_None	// Mistress
+1086,6225,20,RDMOPTG_None	// Golden Thief Bug
+1087,6225,20,RDMOPTG_None	// Orc Hero
+1112,6225,20,RDMOPTG_None	// Drake
+1115,6225,20,RDMOPTG_None	// Eddga
+1147,6225,20,RDMOPTG_None	// Maya
+1150,6225,20,RDMOPTG_None	// Moonlight Flower
+1157,6225,20,RDMOPTG_None	// Pharaoh
+1159,6225,20,RDMOPTG_None	// Phreeoni
+1190,6225,20,RDMOPTG_None	// Orc Lord
+1251,6225,20,RDMOPTG_None	// Knight of Windstorm
+1252,6225,20,RDMOPTG_None	// Garm
+1272,6225,20,RDMOPTG_None	// Dark Lord
+1312,6225,20,RDMOPTG_None	// Turtle General
+1373,6225,20,RDMOPTG_None	// Lord of Death
+1389,6225,20,RDMOPTG_None	// Dracula
+1418,6225,20,RDMOPTG_None	// Evil Snake Lord
+1492,6225,20,RDMOPTG_None	// Incantation Samurai
+1511,6225,20,RDMOPTG_None	// Amon Ra
+1583,6225,20,RDMOPTG_None	// Tao Gunka
+1623,6225,20,RDMOPTG_None	// RSX 0806
+1630,6225,20,RDMOPTG_None	// Bacsojin
+1658,6225,20,RDMOPTG_None	// Ygnizem
+1685,6225,20,RDMOPTG_None	// Vesper
+1688,6225,20,RDMOPTG_None	// Lady Tanee
+1719,6225,20,RDMOPTG_None	// Detale
+1768,6225,20,RDMOPTG_None	// Gloom Under Night
+1779,6225,20,RDMOPTG_None	// Ktullanux
+1785,6225,20,RDMOPTG_None	// Atroce
+1832,6225,20,RDMOPTG_None	// Ifrit
+1871,6225,20,RDMOPTG_None	// Fallen Bishop
+1885,6225,20,RDMOPTG_None	// Gopinich
+1917,6225,20,RDMOPTG_None	// Wounded Morroc
+1980,6225,20,RDMOPTG_None	// Kubkin
+2022,6225,20,RDMOPTG_None	// Nidhoggr's Shadow
+2068,6225,20,RDMOPTG_None	// Boitata
+2087,6225,20,RDMOPTG_None	// Queen Scaraba
+2131,6225,20,RDMOPTG_None	// Lost Dragon
+2156,6225,20,RDMOPTG_None	// Leak
+2165,6225,20,RDMOPTG_None	// Gold Queen Scaraba
+2202,6225,20,RDMOPTG_None	// Kraken
+2251,6225,20,RDMOPTG_None	// Gioia
+2253,6225,20,RDMOPTG_None	// Daehyon
+2255,6225,20,RDMOPTG_None	// Kades
+2319,6225,20,RDMOPTG_None	// Buwaya
+2441,6225,20,RDMOPTG_None	// The Last One
+2442,6225,20,RDMOPTG_None	// King of the Alley
+2475,6225,20,RDMOPTG_None	// Corrupted Soul
+2476,6225,20,RDMOPTG_None	// Amdarias
+2530,6225,20,RDMOPTG_None	// Faceworm Dark
+2532,6225,20,RDMOPTG_None	// Faceworm Queen (Red)
+2942,6225,20,RDMOPTG_None	// Evil Fanatics
+2996,6225,20,RDMOPTG_None	// Celine Kimi
+2999,6225,20,RDMOPTG_None	// Morocc Necromancer
+3000,6225,20,RDMOPTG_None	// Morocc Necromancer
+3074,6225,20,RDMOPTG_None	// Time Holder
+3181,6225,20,RDMOPTG_None	// Captain Ferlock
+3191,6225,20,RDMOPTG_None	// Gigantes
+3192,6225,20,RDMOPTG_None	// Gigantes
+3193,6225,20,RDMOPTG_None	// Ancient Medium Gigantes
+3194,6225,20,RDMOPTG_None	// Large Gigantes
+3196,6225,20,RDMOPTG_None	// Ancient Gigantes
+3254,6225,20,RDMOPTG_None	// T_W_O
+3741,6225,20,RDMOPTG_None	// Mechaspider
+1708,6225,35,RDMOPTG_None	// Thanatos
+1734,6225,35,RDMOPTG_None	// Kiel D-01
+2249,6225,35,RDMOPTG_None	// Pyuriel
+2362,6225,35,RDMOPTG_None	// Nightmare Amon Ra
+3195,6225,35,RDMOPTG_None	// Large Gigantes
+1646,6225,75,RDMOPTG_None	// Lord Knight Seyren
+1647,6225,75,RDMOPTG_None	// Assassin Cross Eremes
+1648,6225,75,RDMOPTG_None	// Whitesmith Harword
+1649,6225,75,RDMOPTG_None	// High Priest Magaleta
+1650,6225,75,RDMOPTG_None	// Sniper Shecil
+1651,6225,75,RDMOPTG_None	// High Wizard Katrinn
+1751,6225,75,RDMOPTG_None	// Valkyrie Randgris
+2235,6225,75,RDMOPTG_None	// Paladin Randel
+2236,6225,75,RDMOPTG_None	// Creator Flamel
+2237,6225,75,RDMOPTG_None	// Professor Celia
+2238,6225,75,RDMOPTG_None	// Champion Chen
+2239,6225,75,RDMOPTG_None	// Stalker Gertie
+2240,6225,75,RDMOPTG_None	// Clown Alphoccio
+2241,6225,75,RDMOPTG_None	// Gypsy Trentini
+
+// HD Carnium
+1038,6226,20,RDMOPTG_None	// Osiris
+1039,6226,20,RDMOPTG_None	// Baphomet
+1046,6226,20,RDMOPTG_None	// Doppelganger
+1059,6226,20,RDMOPTG_None	// Mistress
+1086,6226,20,RDMOPTG_None	// Golden Thief Bug
+1087,6226,20,RDMOPTG_None	// Orc Hero
+1112,6226,20,RDMOPTG_None	// Drake
+1115,6226,20,RDMOPTG_None	// Eddga
+1147,6226,20,RDMOPTG_None	// Maya
+1150,6226,20,RDMOPTG_None	// Moonlight Flower
+1157,6226,20,RDMOPTG_None	// Pharaoh
+1159,6226,20,RDMOPTG_None	// Phreeoni
+1190,6226,20,RDMOPTG_None	// Orc Lord
+1251,6226,20,RDMOPTG_None	// Knight of Windstorm
+1252,6226,20,RDMOPTG_None	// Garm
+1272,6226,20,RDMOPTG_None	// Dark Lord
+1312,6226,20,RDMOPTG_None	// Turtle General
+1373,6226,20,RDMOPTG_None	// Lord of Death
+1389,6226,20,RDMOPTG_None	// Dracula
+1418,6226,20,RDMOPTG_None	// Evil Snake Lord
+1492,6226,20,RDMOPTG_None	// Incantation Samurai
+1511,6226,20,RDMOPTG_None	// Amon Ra
+1583,6226,20,RDMOPTG_None	// Tao Gunka
+1623,6226,20,RDMOPTG_None	// RSX 0806
+1630,6226,20,RDMOPTG_None	// Bacsojin
+1658,6226,20,RDMOPTG_None	// Ygnizem
+1685,6226,20,RDMOPTG_None	// Vesper
+1688,6226,20,RDMOPTG_None	// Lady Tanee
+1719,6226,20,RDMOPTG_None	// Detale
+1768,6226,20,RDMOPTG_None	// Gloom Under Night
+1779,6226,20,RDMOPTG_None	// Ktullanux
+1785,6226,20,RDMOPTG_None	// Atroce
+1832,6226,20,RDMOPTG_None	// Ifrit
+1871,6226,20,RDMOPTG_None	// Fallen Bishop
+1885,6226,20,RDMOPTG_None	// Gopinich
+1917,6226,20,RDMOPTG_None	// Wounded Morroc
+1980,6226,20,RDMOPTG_None	// Kubkin
+2022,6226,20,RDMOPTG_None	// Nidhoggr's Shadow
+2068,6226,20,RDMOPTG_None	// Boitata
+2087,6226,20,RDMOPTG_None	// Queen Scaraba
+2131,6226,20,RDMOPTG_None	// Lost Dragon
+2156,6226,20,RDMOPTG_None	// Leak
+2165,6226,20,RDMOPTG_None	// Gold Queen Scaraba
+2202,6226,20,RDMOPTG_None	// Kraken
+2251,6226,20,RDMOPTG_None	// Gioia
+2253,6226,20,RDMOPTG_None	// Daehyon
+2255,6226,20,RDMOPTG_None	// Kades
+2319,6226,20,RDMOPTG_None	// Buwaya
+2441,6226,20,RDMOPTG_None	// The Last One
+2442,6226,20,RDMOPTG_None	// King of the Alley
+2475,6226,20,RDMOPTG_None	// Corrupted Soul
+2476,6226,20,RDMOPTG_None	// Amdarias
+2530,6226,20,RDMOPTG_None	// Faceworm Dark
+2532,6226,20,RDMOPTG_None	// Faceworm Queen (Red)
+2942,6226,20,RDMOPTG_None	// Evil Fanatics
+2996,6226,20,RDMOPTG_None	// Celine Kimi
+2999,6226,20,RDMOPTG_None	// Morocc Necromancer
+3000,6226,20,RDMOPTG_None	// Morocc Necromancer
+3074,6226,20,RDMOPTG_None	// Time Holder
+3181,6226,20,RDMOPTG_None	// Captain Ferlock
+3191,6226,20,RDMOPTG_None	// Gigantes
+3192,6226,20,RDMOPTG_None	// Gigantes
+3193,6226,20,RDMOPTG_None	// Ancient Medium Gigantes
+3194,6226,20,RDMOPTG_None	// Large Gigantes
+3196,6226,20,RDMOPTG_None	// Ancient Gigantes
+3254,6226,20,RDMOPTG_None	// T_W_O
+3741,6226,20,RDMOPTG_None	// Mechaspider
+1708,6226,35,RDMOPTG_None	// Thanatos
+1734,6226,35,RDMOPTG_None	// Kiel D-01
+2249,6226,35,RDMOPTG_None	// Pyuriel
+2362,6226,35,RDMOPTG_None	// Nightmare Amon Ra
+3195,6226,35,RDMOPTG_None	// Large Gigantes
+1646,6226,75,RDMOPTG_None	// Lord Knight Seyren
+1647,6226,75,RDMOPTG_None	// Assassin Cross Eremes
+1648,6226,75,RDMOPTG_None	// Whitesmith Harword
+1649,6226,75,RDMOPTG_None	// High Priest Magaleta
+1650,6226,75,RDMOPTG_None	// Sniper Shecil
+1651,6226,75,RDMOPTG_None	// High Wizard Katrinn
+1751,6226,75,RDMOPTG_None	// Valkyrie Randgris
+2235,6226,75,RDMOPTG_None	// Paladin Randel
+2236,6226,75,RDMOPTG_None	// Creator Flamel
+2237,6226,75,RDMOPTG_None	// Professor Celia
+2238,6226,75,RDMOPTG_None	// Champion Chen
+2239,6226,75,RDMOPTG_None	// Stalker Gertie
+2240,6226,75,RDMOPTG_None	// Clown Alphoccio
+2241,6226,75,RDMOPTG_None	// Gypsy Trentini

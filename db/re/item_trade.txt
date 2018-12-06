@@ -980,7 +980,7 @@
 7416,475,100	// Letter_Of_Recommend
 7417,475,100	// Mission_ScrollA
 7418,475,100	// Mission_ScrollB
-7420,499,100	// Skull_
+// 7420,499,100	// Skull_
 7421,499,100	// Key_Red
 7422,499,100	// Key_Yellow
 7423,499,100	// Key_Blue
@@ -1066,7 +1066,7 @@
 7618,499,100	// Monster_Crystal
 // 7619,475,100	// Enriched_Elunium
 // 7620,475,100	// Enriched_Oridecon
-7621,475,100	// Token_Of_Siegfried
+// 7621,475,100	// Token_Of_Siegfried
 7622,475,100	// New_Style_Coupon
 7623,507,100	// Name_Change_Coupon
 7625,507,100	// Registration_Ticket
@@ -1297,7 +1297,7 @@
 12259,507,100	// Miracle_Medicine
 12261,507,100	// Secret_Medicine
 12262,507,100	// Inspector_Certificate_
-12263,507,100	// Comp_Battle_Manual
+// 12263,507,100	// Comp_Battle_Manual
 12264,475,100	// Comp_Bubble_Gum
 12265,475,100	// Comp_Insurance
 12266,507,100	// Sesame_Pastry_
@@ -4014,6 +4014,7 @@
 6240,329,100	// HD_Oridecon
 6241,329,100	// HD_Elunium
 12214,329,100	// Convex_Mirror
+7621,329,100	// Token_Of_Siegfried
 
 11503,329,100	// Siege_White_Potion
 11504,329,100	// Siege_Blue_Potion
@@ -4022,3 +4023,4 @@
 11549,329,100	// Woe_Blue_Potion
 
 6654,329,100	// Needle_And_Thread
+12263,329,100	// Comp_Battle_Manual

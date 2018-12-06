@@ -1,0 +1,405 @@
+//===== rAthena Script =======================================
+//= Unofficial Excellion Gear
+//===== By ===================================================
+//= llchrisll
+//===== Version ==============================================
+//= 1.0 - Initial Version
+//===== Tested With ==========================================
+//= rAthena 01/24/2018 Revision
+//= GIT Hash: bb0dd7b8dc05f7791b1a23d60dc0585db579da82
+//===== Description ==========================================
+//= Based on the information online like LimitRo and NovaRo
+//  But mostly based on the info of Limit Ro
+//= The text is done by llchrisll.
+//===== Comments =============================================
+//= ...
+//===== Credits ==============================================
+//= LimitRo for the Forum post:
+//  https://www.limitro.com/forums/topic/4757-fantasmagorica-memory-records-140/
+//= Nova Ro for their Wiki Page:
+//  https://www.novaragnarok.com/wiki/Verus_Equipment_Exchange#Excellion_Set
+//===== db/import/item_db.txt =================================================
+/*
+15128,Excellion_Suit,Excellion Suit,4,20,,1000,,100,,0,0x03EFDFFF,63,2,16,,99,1,0,{ bonus bUnbreakableArmor,0; bonus bVit,6+4*(BaseLevel >= 130); bonus bMaxHPrate,4*(getrefine()/3); if(isequipped(20773)) { bonus bFlee2,6; bonus bDelayRate,-10-10*(BaseLevel >= 130); } },{},{}
+20773,Excellion_Wing,Excellion Wing,4,20,,90,,40,,0,0x03EFDFFF,63,2,4,,99,1,0,{ bonus bFlee2,8+2*(BaseLevel >= 130); bonus bFlee,2*getrefine(); if(isequipped(15128)) bonus bDelayrate,-10; },{},{}
+4970,E_Fire,Fire Property Reacto,6,20,,10,,,,,,,,,,,,,{ bonus bDefEle,Ele_Fire; },{},{}
+4971,E_Water,Water Property Reacto,6,20,,10,,,,,,,,,,,,,{ bonus bDefEle,Ele_Water; },{},{}
+4972,E_Ground,Earth Property Reacto,6,20,,10,,,,,,,,,,,,,{ bonus bDefEle,Ele_Earth; },{},{}
+4973,E_Wind,Wind Property Reacto,6,20,,10,,,,,,,,,,,,,{ bonus bDefEle,Ele_Wind; },{},{}
+4974,R_Fire,Fire Resistance Reacto,6,20,,10,,,,,,,,,,,,,{ bonus2 bSubEle,Ele_Fire,25; bonus2 bSubEle,Ele_Water,-25; },{},{}
+4975,R_Water,Water Resistance Reacto,6,20,,10,,,,,,,,,,,,,{ bonus2 bSubEle,Ele_Water,25; bonus2 bSubEle,Ele_Wind,-25; },{},{}
+4976,R_Ground,Earth Resistance Reacto,6,20,,10,,,,,,,,,,,,,{ bonus2 bSubEle,Ele_Earth,25; bonus2 bSubEle,Ele_Fire,-25; },{},{}
+4977,R_Wind,Wind Resistance Reacto,6,20,,10,,,,,,,,,,,,,{ bonus2 bSubEle,Ele_Wind,25; bonus2 bSubEle,Ele_Earth,-25; },{},{}
+4978,C_Life,Recovery Reacto 101,6,20,,10,,,,,,,,,,,,,{ if(isequippedcnt(4978) == 1) set .@temp,0; else if(isequippedcnt(4978) == 2) set .@temp,1; else if(isequippedcnt(4978)== 3) set .@temp,2; else if(isequippedcnt(4978) == 4) set .@temp,3; else if(isequippedcnt(4978) == 5) set .@temp,4; else set .@temp,5; bonus2 bHPRegenRate,50+50*(getrefine()>= 7)+50*.@temp,5000; },{},{}
+4979,C_Soul,Recovery Reacto 102,6,20,,10,,,,,,,,,,,,,{  if(isequippedcnt(4979) == 1) set .@temp,0; else if(isequippedcnt(4979) == 2) set .@temp,1; else if(isequippedcnt(4979) == 3) set .@temp,2; else if(isequippedcnt(4979) == 4) set .@temp,3; else if(isequippedcnt(4979) == 5) set .@temp,4; else set .@temp,5; bonus2 bSPRegenRate,3+2*(getrefine()>= 7)+3*.@temp,5000; },{},{}
+4980,C_HPR,Recovery Reacto 201,6,20,,10,,,,,,,,,,,,,{ bonus bHPrecovRate,50; if(getrefine() >= 7) bonus bHPrecovRate,50; },{},{}
+4981,C_SPR,Recovery Reacto 202,6,20,,10,,,,,,,,,,,,,{ bonus bSPrecovRate,50; if(getrefine() >= 7) bonus bSPrecovRate,50; },{},{}
+4982,A_Str,Supportive Reacto STR,6,20,,10,,,,,,,,,,,,,{ bonus bBaseAtk,5*(readparam(bStr)/10); if(getrefine()>=7) bonus bBaseAtk,10; },{},{}
+4983,A_Int,Supportive Reacto INT,6,20,,10,,,,,,,,,,,,,{ bonus bMatk,5*(readparam(bInt)/10); if(getrefine()>=7) bonus bMatk,10; },{},{}
+4984,A_Def,Supportive Reacto DEF,6,20,,10,,,,,,,,,,,,,{ bonus bDef,100; },{},{}
+4985,A_Avoid,Supportive Reacto Perfect,6,20,,10,,,,,,,,,,,,,{ bonus bFlee2,3; },{},{}
+4986,A_Atk,Supportive Reacto Attack,6,20,,10,,,,,,,,,,,,,{ bonus bBaseAtk,20; },{},{}
+4987,A_Matk,Supportive Reacto Magic,6,20,,10,,,,,,,,,,,,,{ bonus bMatk,20; },{},{}
+4988,A_MaxHP,Supportive Reacto MaxHP,6,20,,10,,,,,,,,,,,,,{ bonus bMaxHPrate,5; },{},{}
+4989,A_MaxSP,Supportive Reacto MaxSP,6,20,,10,,,,,,,,,,,,,{ bonus bMaxSPrate,3; },{},{}
+4990,A_Frozen,Supportive Reacto Frozen,6,20,,10,,,,,,,,,,,,,{ bonus2 bResEff,Eff_Freeze,10000; },{},{}
+4991,A_ASPD,Supportive Reacto ASPD,6,20,,10,,,,,,,,,,,,,{ bonus bAspd,1; },{},{}
+6965,E_Fire_Blueprint,Fire Property Blueprint,3,20,,10,,,,,,,,,,,,,{},{},{}
+6966,E_Water_Blueprint,Water Property Blueprint,3,20,,10,,,,,,,,,,,,,{},{},{}
+6967,E_Ground_Blueprint,Earth Property Blueprint,3,20,,10,,,,,,,,,,,,,{},{},{}
+6968,E_Wind_Blueprint,Wind Property Blueprint,3,20,,10,,,,,,,,,,,,,{},{},{}
+6969,R_Fire_Blueprint,Fire Resistance Blueprint,3,20,,10,,,,,,,,,,,,,{},{},{}
+6970,R_Water_Blueprint,Water Resistance Blueprint,3,20,,10,,,,,,,,,,,,,{},{},{}
+6971,R_Ground_Blueprint,Earth Resistance Blueprint,3,20,,10,,,,,,,,,,,,,{},{},{}
+6972,R_Wind_Blueprint,Wind Resistance Blueprint,3,20,,10,,,,,,,,,,,,,{},{},{}
+6973,C_Life_Blueprint,Recovery Blueprint 101,3,20,,10,,,,,,,,,,,,,{},{},{}
+6974,C_Soul_Blueprint,Recovery Blueprint 102,3,20,,10,,,,,,,,,,,,,{},{},{}
+6975,C_HPR_Blueprint,Recovery Blueprint 201,3,20,,10,,,,,,,,,,,,,{},{},{}
+6976,C_SPR_Blueprint,Recovery Blueprint 202,3,20,,10,,,,,,,,,,,,,{},{},{}
+6977,A_Str_Blueprint,Supportive Blueprint STR,3,20,,10,,,,,,,,,,,,,{},{},{}
+6978,A_Int_Blueprint,Supportive Blueprint INT,3,20,,10,,,,,,,,,,,,,{},{},{}
+6979,A_Def_Blueprint,Supportive Blueprint DEF,3,20,,10,,,,,,,,,,,,,{},{},{}
+6980,A_Avoid_Blueprint,Supportive Blueprint Perfect,3,20,,10,,,,,,,,,,,,,{},{},{}
+6981,A_Atk_Blueprint,Supportive Blueprint Attack,3,20,,10,,,,,,,,,,,,,{},{},{}
+6982,A_Matk_Blueprint,Supportive Blueprint Magic,3,20,,10,,,,,,,,,,,,,{},{},{}
+6983,A_MaxHP_Blueprint,Supportive Blueprint MaxHP,3,20,,10,,,,,,,,,,,,,{},{},{}
+6984,A_MaxSP_Blueprint,Supportive Blueprint MaxSP,3,20,,10,,,,,,,,,,,,,{},{},{}
+6985,A_Frozen_Blueprint,Supportive Blueprint Frozen,3,20,,10,,,,,,,,,,,,,{},{},{}
+6986,A_ASPD_Blueprint,Supportive Blueprint ASPD,3,20,,10,,,,,,,,,,,,,{},{},{}
+*/
+//============================================================
+// - Craft Wing or Suit - PLUTO_09
+verus04,163,219,4	script	PLUTO_09	4_SCR_AT_ROBOTS,{
+
+if(V_Exc < 2) {
+	mes "[Powerless Robot]";
+	mes "........ ";
+	mes "....";
+	mes "..........";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Seems like it doesn't work....";
+	close;
+}
+mes .n$;
+mes "Ah hello, "+strcharinfo(0)+".";
+mes "What can I do for you?";
+next;
+switch(select("- Craft Blueprint:- Craft Excellion:- Nevermind")) {
+
+	case 1:
+		mes .n$;
+		mes "I am designed to produce a random blueprint (enchantment), however this process have a small chance of failure.";
+		mes "Generating a new blueprint requires 10x <ITEM>"+getitemname(6962)+"<INFO>6962</INFO></ITEM>.";
+		mes "Please select an option: ";
+		if(select("- Proceed:- Leave") - 1) break;
+		next;
+		mes .n$;
+		if(countitem(6962) < 10) {
+			mes "^CC0000System Error!^000000";
+			mes "The required materials are inadequate.";
+			mes "Please provide complete materials to continue production.";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",1;
+		delitem 6962,10;
+		if(rand(100) > 20) { // 20% chance of failure
+			specialeffect2 EF_REFINEOK;
+			set .@b,rand(600);
+			if(.@b < 75) getitem 6965,1; // Fire Properity Blueprint
+			else if(.@b < 100) getitem 6966,1; // Water Properity Blueprint
+			else if(.@b < 125) getitem 6967,1; // Earth Properity Blueprint
+			else if(.@b < 150) getitem 6968,1; // Wind Properity Blueprint
+			else if(.@b < 175) getitem 6969,1; // Fire Resistance Blueprint
+			else if(.@b < 200) getitem 6970,1; // Water Resistance Blueprint
+			else if(.@b < 225) getitem 6971,1; // Earth Resistance Blueprint
+			else if(.@b < 250) getitem 6972,1; // Wind Resistance Blueprint
+			else if(.@b < 275) getitem 6973,1; // Recovery 101 Blueprint
+			else if(.@b < 300) getitem 6974,1; // Recovery 102 Blueprint
+			else if(.@b < 325) getitem 6975,1; // Recovery 201 Blueprint
+			else if(.@b < 350) getitem 6976,1; // Recovery 202 Blueprint
+			else if(.@b < 375) getitem 6977,1; // STR Supplement Blueprint
+			else if(.@b < 400) getitem 6978,1; // INT Supplement Blueprint
+			else if(.@b < 425) getitem 6979,1; // DEF Supplement Blueprint
+			else if(.@b < 450) getitem 6980,1; // PD Supplement Blueprint
+			else if(.@b < 475) getitem 6981,1; // Attack Supplement Blueprint
+			else if(.@b < 500) getitem 6982,1; // Magic Supplement Blueprint
+			else if(.@b < 525) getitem 6983,1; // HP Supplement Blueprint
+			else if(.@b < 550) getitem 6984,1; // SP Supplement Blueprint
+			else if(.@b < 575) getitem 6985,1; // Frozen Supplement Blueprint
+			else if(.@b < 600) getitem 6986,1; // ASPD Supplement Blueprint
+			mes "The process was successfull!";
+			mes "Here is your blueprint.";
+		}
+		else
+		{
+			specialeffect2 EF_REFINEFAIL;
+			mes "^CC0000Critical Error!^000000";
+			mes "Generating blueprint failed! Materials provided was destroyed in the process.";
+			mes "Please try again later.";
+		}
+		break;
+
+	case 2:
+		mes .n$;
+		mes "I am also designed to produce <ITEM>"+getitemname(20773)+"<INFO>20773</INFO></ITEM> or <ITEM>"+getitemname(15128)+"<INFO>15128</INFO></ITEM>";
+		mes "Generating a new equipment piece requires 10x <ITEM>"+getitemname(6961)+"<INFO>6961</INFO></ITEM> and 5x <ITEM>"+getitemname(6962)+"<INFO>6962</INFO></ITEM>.";
+		mes "Please select an option: ";
+		if(select("- Proceed:- Leave") - 1) break;
+		next;
+		mes .n$;
+		if(countitem(6961) < 10 || countitem(6962) < 5) {
+			mes "The required materials are inadequate.";
+			mes "Please provide complete materials to continue production.";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		progressbar "ffff00",1;
+		specialeffect2 EF_REFINEOK;
+		mes "The process went successfull!";
+		set .@e,rand(1,100);
+
+		if(.@e < 50) getitem 20773,1;
+		else getitem 15128,1;
+		delitem 6961,10;
+		delitem 6962,5;
+		mes "I was able to craft "+( (.@e < 50)?getitemname(20773):getitemname(15128))+".";
+		break;
+
+	case 3:
+		mes .n$;
+		mes "Okay, see you next time.";
+		break;
+}
+close;
+
+OnInit:
+set .n$,"["+strnpcinfo(0)+"]";
+end;
+}
+
+// - Enchanter - MARS_01
+verus04,165,217,4	script	MARS_01	4_SCR_MT_ROBOTS,{
+
+if(!V_Exc) {
+	mes "[Powerless Robot]";
+	mes "........ ";
+	mes "....";
+	mes "..........";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Seems like it doesn't work....";
+	if(countitem(6962) < 1) close;
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Maybe I can use one of these \""+getitemname(6962)+"\" to get it to work.";
+	next;
+	if(select("- Use "+getitemname(6962)+":- Leave") - 1) close;
+	mes "You have used an Old Fuel Tank on this robot....";
+	next;
+	delitem 6962,1;
+	specialeffect 946; // Floating lights
+	sleep2 3000;
+	mes "[Powerless Robot]";
+	mes "Ah...zzz..hzg....";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Oh no, did I break something?";
+	next;
+	mes "[Powerless Robot]";
+	mes ".....";
+	mes "Tha...n..k y....ou, human f..or giv..ing me so..me fu..el.";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "You're welcome, little guy.";
+	next;
+	mes "[Unknown Robot]";
+	mes "My N..ame is "+strnpcinfo(0)+".";
+	mes "Cou..ld you w..ait.. a b..it unt...il my sy..stem is comp...letely tu..rned on?";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Nice to meet you, "+strnpcinfo(0)+".";
+	mes "I will come back later then.";
+	set V_Exc,1;
+
+} else if(V_Exc == 1) {
+	mes .n$;
+	mes "Hello, "+strcharinfo(0)+"!";
+	mes "Thank you again for your help.";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "No problem.";
+	next;
+	mes .n$;
+	mes "By helping me, I also could help \"PLUTO_09\" next to me.";
+	mes "In exchange for your help \"PLUTO_09\" can offer you to exchange equipment for some materials.";
+	next;
+	mes "["+strcharinfo(0)+"]";
+	mes "Oh, that would be awesome.";
+	mes "What kind of equipment do you exchange?";
+	next;
+	mes .n$;
+	mes "There are two parts of it, which are \""+getitemname(20773)+"\" and \""+getitemname(15128)+"\".";
+	mes "The chance to get either of them is random.";
+	mes "Both can be enchanted too in exchange for some more "+getitemname(6962)+", because the process requires much energy.";
+	next;
+	set V_Exc,2;
+
+} else if(V_Exc == 2) {
+
+	mes .n$;
+	mes "What do you want?";
+	next;
+	if(select("- Enchant:- Nevermind") - 1) {
+		mes .n$;
+		mes "Okay, see you next time.";
+		close;
+	}
+	mes .n$;
+	mes "What do you want to enchant?";
+	next;
+	if(select("- "+getitemname(15128)+":- "+getitemname(20773)) == 1) {
+		mes .n$;
+		mes "Let me check if you have it equipped...";
+		next;
+		mes .n$;
+		if(getequipid(EQI_ARMOR) != 15128) {
+			mes "Be sure, that you have the "+getitemname(15128)+" equipped first.";
+			close;
+		}
+		disable_items;
+		set .@exc_id,15128; // Saving Excellion Suit ID for faster handling
+		set .@eq,EQI_ARMOR; // Resaving equipment slot
+		set .@ref,getequiprefinerycnt(EQI_ARMOR);
+		set .@slot2,getequipcardid(EQI_ARMOR,1);
+		set .@slot3,getequipcardid(EQI_ARMOR,2);
+		set .@slot4,getequipcardid(EQI_ARMOR,3);
+		if(.@slot2 && .@slot3 && .@slot4) {
+			mes "It seems like this "+getitemname(.@exc_id)+" can't be enchanted any further.";
+			mes "Please use a different one.";
+			close;
+		}
+		mes "Now choose the blueprint you want to enchant it with:";
+		next;
+		getinventorylist;
+		for ( set .@i,0; .@i < @inventorylist_count; set .@i,.@i + 1)
+			switch(@inventorylist_id[.@i]) {
+				case 6965:
+				case 6966:
+				case 6967:
+				case 6968:
+				case 6977:
+				case 6978:
+				case 6980:
+				case 6985:
+				case 6986:
+				setarray .@limit[getarraysize(.@limit)],1;
+				setarray .@b_id[getarraysize(.@b_id)],@inventorylist_id[.@i];
+				break;
+
+				case 6973:
+				case 6974:
+				case 6975:
+				case 6976:
+				case 6979:
+				case 6981:
+				case 6982:
+				case 6983:
+				case 6984:
+				setarray .@limit[getarraysize(.@limit)],3;
+				setarray .@b_id[getarraysize(.@b_id)],@inventorylist_id[.@i];
+				break;
+			}
+	// Excellion Wing
+	} else {
+		mes .n$;
+		mes "Let me check if you have it equipped...";
+		next;
+		mes .n$;
+		if(getequipid(EQI_GARMENT) != 20773) {
+			mes "Be sure, that you have the "+getitemname(20773)+" equipped first.";
+			close;
+		}
+		disable_items;
+		set .@exc_id,20773; // Saving Excellion Wing ID for faster handling
+		set .@eq,EQI_GARMENT; // Resaving equipment slot
+		set .@ref,getequiprefinerycnt(EQI_GARMENT);
+		set .@slot2,getequipcardid(EQI_GARMENT,1);
+		set .@slot3,getequipcardid(EQI_GARMENT,2);
+		set .@slot4,getequipcardid(EQI_GARMENT,3);
+		if(.@slot2 && .@slot3 && .@slot4) {
+			mes "It seems like this "+getitemname(.@exc_id)+" can't be enchanted any further.";
+			mes "Please use a different one.";
+			close;
+		}
+		mes "Now choose the blueprint you want to enchant it with:";
+		next;
+		getinventorylist;
+		for ( set .@i,0; .@i < @inventorylist_count; set .@i,.@i + 1)
+			switch(@inventorylist_id[.@i]) {
+				case 6980:
+				case 6986:
+				setarray .@limit[getarraysize(.@limit)],1;
+				setarray .@b_id[getarraysize(.@b_id)],@inventorylist_id[.@i];
+				break;
+
+				case 6969:
+				case 6970:
+				case 6971:
+				case 6972:
+				case 6973:
+				case 6974:
+				case 6975:
+				case 6976:
+				case 6979:
+				case 6981:
+				case 6982:
+				case 6983:
+				case 6984:
+				setarray .@limit[getarraysize(.@limit)],3;
+				setarray .@b_id[getarraysize(.@b_id)],@inventorylist_id[.@i];
+				break;
+			}
+	}
+	if(getarraysize(.@b_id) < 1) {
+		mes .n$;
+		mes "You don't have any blueprint, so I can't enchant the gear.";
+		close;
+	}
+	for ( set .@d,0; .@d < getarraysize(.@b_id); set .@d,.@d + 1)
+		set .@blue_m$,.@blue_m$ + "- "+getitemname(.@b_id[.@d]) + ( (.@b_id[.@d+1] != 0)?":":"");
+
+	set .@b,select(.@blue_m$) - 1;
+	next;
+	// Getting the id of the Reactor by using the difference
+	set .@reac_id,.@b_id[.@b] - 1995;
+	mes .n$;
+	if(.@limit[.@b] == 1 && ( .@slot2 == .@reac_id || .@slot3 == .@reac_id || .@slot4 == .@reac_id) ) {
+		mes "I'm sorry, but you have this blueprint already enchanted.";
+		close;
+	}
+	mes "Now select which slot you want to enchant it with:";
+	next;
+
+	set .@s,select("- Slot 2 ("+( (.@slot2 != 0)?getitemname(.@slot2):"Empty")+"):- Slot 3 ("+( (.@slot3 != 0)?getitemname(.@slot3):"Empty")+"):- Slot 4 ("+( (.@slot4 != 0)?getitemname(.@slot4):"Empty")+")") + 1;
+	if(getd(".@slot"+.@s) != 0) {
+		mes "I'm sorry, but this slot is used already.";
+		close;
+	}
+	delitem .@b_id[.@b],1;
+	delequip .@eq;
+	if(.@s == 2) getitem2 .@exc_id,1,1,.@ref,0,0,.@reac_id,.@slot3,.@slot4;
+	else if(.@s == 3) getitem2 .@exc_id,1,1,.@ref,0,0,.@slot2,.@reac_id,.@slot4;
+	else if(.@s == 4) getitem2 .@exc_id,1,1,.@ref,0,0,.@slot2,.@slot3,.@reac_id;
+	equip .@exc_id;
+	mes .n$;
+	mes "The enchantment was successfull.";
+	enable_items;
+}
+close;
+
+OnInit:
+set .n$,"["+strnpcinfo(0)+"]";
+end;
+}

@@ -1,23 +1,23 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Dye Maker
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.4
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Quests to create the eight colored Dyestuffs.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 Fully working [kobra_k88]
-//= 1.1 Spell Checked [Nexon] 
+//= 1.1 Spell Checked [Nexon]
 //= 1.2 Rescripted to Aegis 10.3 standard. [L0ne_W0lf]
 //= 1.2b Fixed typos in variable names [ultramage]
 //= 1.3 Made the checks more dynamic [ultramage]
 //= 1.3b Fixed incorrect checking loop structure [ultramage]
 //= 1.4 Added a checkweight. [L0ne_W0lf]
-//============================================================ 
+//============================================================
 
 morocc_in,146,99,3	script	Java Dullihan	58,{
 	if ((MaxWeight-Weight) < 200 || checkweight(1201,1) == 0) {
@@ -32,7 +32,7 @@ morocc_in,146,99,3	script	Java Dullihan	58,{
 	mes "Wow...";
 	mes "Such a nice day. Days like this are perfect to make dyes.";
 	next;
-	switch(select("Talk:Make Dyestuffs:Cancel")) {
+	switch(select("Talk:Make Dyestuffs:Make 10x Dyestuffs:Cancel")) {
 	case 1:
 		mes "[Dye Maker Java Dullihan]";
 		mes "Erm, I don't really have much to say to you. But, if you would like me to tell you about my life, I can do that. It's a little long and boring, but would you like to listen?";
@@ -96,6 +96,31 @@ morocc_in,146,99,3	script	Java Dullihan	58,{
 
 	case 3:
 		mes "[Dye Maker Java Dullihan]";
+		mes "Great! If you want it, I'll make it for you. I promise I'll make you the color you want. But what color dye would you like to make? The fee is different depending on the color.";
+		next;
+		mes "[Dye Maker Java Dullihan]";
+		mes "Why, do you ask? Just remember that there are colors that are easy to make, and those that require more effort and work. Please don't think the fee is too expensive.";
+		next;
+		mes "[Dye Maker Java Dullihan]";
+		mes "The color of the dye is special, made with all my heart and soul.";
+		next;
+		switch(select("10 x Scarlet Dyestuffs:10 x Lemon Dyestuffs:10 x Cobaltblue Dyestuffs:10 x Darkgreen Dyestuffs:10 x Orange Dyestuffs:10 x Violet Dyestuffs:10 x White Dyestuffs:10 x Black Dyestuffs:Cancel")) {
+		case 1: callsub S_MakeDye,11,1; break;
+		case 2: callsub S_MakeDye,12,1; break;
+		case 3: callsub S_MakeDye,13,2; break;
+		case 4: callsub S_MakeDye,14,3; break;
+		case 5: callsub S_MakeDye,15,4; break;
+		case 6: callsub S_MakeDye,16,4; break;
+		case 7: callsub S_MakeDye,17,4; break;
+		case 8: callsub S_MakeDye,18,4; break;
+		case 9:
+			mes "[Dye Maker Java Dullihan]";
+			mes "Eeeehhhh!! What's this? You change your mind now!? So disappointing...";
+			close;
+		}
+
+	case 4:
+		mes "[Dye Maker Java Dullihan]";
 		mes "I'm not bragging or anything. But I have the skills to make dyestuff. If you ever need dyestuff, please come to me. I'll make them for you at a reasonable price.";
 		close;
 	}
@@ -148,7 +173,7 @@ S_MakeDye:
 	case 7:
 		mes "Mmm... I need 30 White Herbs, 1 Counteragent, and 1 Empty bottle to make White Dyestuffs. The fee will be 3000 zeny.";
 		setarray .@item[0], 509, 973, 713;
-		setarray .@count[0], 30,   1,   1; 
+		setarray .@count[0], 30,   1,   1;
 		set .@cost,3000;
 		set .@dyestuff,982;
 		break;
@@ -157,6 +182,63 @@ S_MakeDye:
 		setarray .@item[0], 507, 508, 511, 510, 974, 973, 713;
 		setarray .@count[0], 30,  30,  30,   5,   1,   1,   1;
 		set .@cost,7000;
+		set .@dyestuff,983;
+		break;
+
+	case 11:
+		mes "Mmm... I need 300 Red Herbs, 10 Counteragent, and 10 Empty Bottle to make Red Dyestuffs. The fee is only 30000 zeny to make it.";
+		setarray .@item[0], 507, 973, 713;
+		setarray .@count[0], 300,   10,   10;
+		set .@cost,30000;
+		set .@dyestuff,975;
+		break;
+	case 12:
+		mes "Mmm... I need 300 Yellow Herbs, 10 Couneragent, and 10 Empty Bottle to make Lemon Dyestuffs. The fee is only 30000 zeny to make it.";
+		setarray .@item[0], 508, 973, 713;
+		setarray .@count[0], 300,   10,   10;
+		set .@cost,30000;
+		set .@dyestuff,976;
+		break;
+	case 13:
+		mes "Mmm... I need 200 Blue Herbs, 10 Counteragent, and 10 Empty Bottle to make Cobaltblue Dyestuff. It's hard to use the Blue Herb, so the fee is going to be 35000 zeny.";
+		setarray .@item[0], 510, 973, 713;
+		setarray .@count[0], 200,   10,   10;
+		set .@cost,35000;
+		set .@dyestuff,978;
+		break;
+	case 14:
+		mes "Mmm... I need 50 Blue Herbs, 200 Green Herbs, 200 Yellow Herbs, 10 Counteragent, 10 Mixture, and 10 Empty Bottle to make Darkgreen Dyestuffs. Don't get all of the materials confused. The fee is only 50000 zeny.";
+		setarray .@item[0], 510, 511, 508, 974, 973, 713;
+		setarray .@count[0],  50,  200,  200,   10,   10,   10;
+		set .@cost,5000;
+		set .@dyestuff,979;
+		break;
+	case 15:
+		mes "Mmm... I need 200 Red Herbs, 200 Yellow Herbs, 10 Counteragent, 10 Mixture, and 10 Empty Bottle to make Orange Dyestuff. The fee is going to be 50000 zeny.";
+		setarray .@item[0], 507, 508, 974, 973, 713;
+		setarray .@count[0], 200,  200,   10,   10,   10;
+		set .@cost,50000;
+		set .@dyestuff,980;
+		break;
+	case 16:
+		mes "Mmm... I need 100 Blue Herbs, 300 Red Herbs, 10 Counteragent, 10 Mixture, and 10 Empty Bottle to make Violet Dyestuffs. The fee will be 50000 zeny.";
+		setarray .@item[0], 510, 507, 974, 973, 713;
+		setarray .@count[0], 100,  300,   10,   10,   10;
+		set .@cost,50000;
+		set .@dyestuff,981;
+		break;
+	case 17:
+		mes "Mmm... I need 300 White Herbs, 10 Counteragent, and 10 Empty bottle to make White Dyestuffs. The fee will be 30000 zeny.";
+		setarray .@item[0], 509, 973, 713;
+		setarray .@count[0], 300,   10,   10;
+		set .@cost,30000;
+		set .@dyestuff,982;
+		break;
+	case 18:
+		mes "Mmm... I need 300 of each Red, Yellow, and Green Herb, 50 Blue Herbs, 10 Counteragent, 10 Mixture, and 10 Empty Bottle. The process takes longer and more effort than the others, so it is going to be 70000 zeny.";
+		setarray .@item[0], 507, 508, 511, 510, 974, 973, 713;
+		setarray .@count[0], 300,  300,  300,   50,   10,   10,   10;
+		set .@cost,70000;
 		set .@dyestuff,983;
 		break;
 	}
@@ -186,8 +268,11 @@ S_MakeDye:
 			delitem .@item[.@i], .@count[.@i];
 		set Zeny, Zeny-.@cost;
 		// get dyestuff
-		getitem .@dyestuff,1;
-		
+		if(getarg(0) > 8)
+			getitem .@dyestuff,10;
+		else
+			getitem .@dyestuff,1;
+
 		mes "[Dye Maker Java Dullihan]";
 		mes "Hmm... It came out pretty well. A very rich color. Of course I'll be trying harder to make a more charming color...";
 		next;
