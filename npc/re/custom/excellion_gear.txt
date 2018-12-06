@@ -158,12 +158,12 @@ switch(select("- Craft Blueprint:- Craft Excellion:- Nevermind")) {
 		progressbar "ffff00",1;
 		specialeffect2 EF_REFINEOK;
 		mes "The process went successfull!";
-		set .@e,rand(1,100);
+		set .@e,rand(100);
 
-		if(.@e < 50) getitem 20773,1;
-		else getitem 15128,1;
 		delitem 6961,10;
 		delitem 6962,5;
+		if(.@e < 50) getitem 20773,1;
+		else getitem 15128,1;
 		mes "I was able to craft "+( (.@e < 50)?getitemname(20773):getitemname(15128))+".";
 		break;
 
