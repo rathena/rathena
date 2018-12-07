@@ -8054,7 +8054,13 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_COOKMASTERY:     val = sd->cook_mastery; break;
 		case SP_CRITICAL:        val = sd->battle_status.cri/10; break;
 		case SP_ASPD:            val = (2000-sd->battle_status.amotion)/10; break;
-		case SP_BASE_ATK:	     val = sd->battle_status.batk; break;
+		case SP_BASE_ATK:
+#ifdef RENEWAL
+			val = sd->bonus.eatk;
+#else
+			val = sd->battle_status.batk;
+#endif
+			break;
 		case SP_DEF1:		     val = sd->battle_status.def; break;
 		case SP_DEF2:		     val = sd->battle_status.def2; break;
 		case SP_MDEF1:		     val = sd->battle_status.mdef; break;
