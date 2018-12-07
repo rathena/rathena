@@ -3187,9 +3187,10 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				pc_setrestartvalue(sd,2);
 
 			pc_delinvincibletimer(sd);
-			pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),false);
-			pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),false);
-			pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),false);
+
+			pc_delautobonus(sd, sd->autobonus, false);
+			pc_delautobonus(sd, sd->autobonus2, false);
+			pc_delautobonus(sd, sd->autobonus3, false);
 
 			if( sd->followtimer != INVALID_TIMER )
 				pc_stop_following(sd);
@@ -3257,8 +3258,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			// Clearing...
 			if (sd->bonus_script.head)
 				pc_bonus_script_clear(sd, BSF_REM_ALL);
-
-			pc_itemgrouphealrate_clear(sd);
 			break;
 		}
 		case BL_PET: {

@@ -702,7 +702,7 @@
 6389,499,100	// Puddle_R_Sample
 6390,499,100	// Small_Pocket
 6391,499,100	// Splendid_Supply_Kit
-6392,499,100	// Bradium_Box
+6392,507,100	// Bradium_Box
 6396,475,100	// Auger_Of_Spirit
 6397,507,100	// PR_Team_Ticket
 6398,507,100	// Develop_Team_Ticket
@@ -815,12 +815,12 @@
 6704,499,100	// Warrior_Anger
 6705,499,100	// Warrior_Certificate
 6706,499,100	// Guardian_Flowers
-6708,499,100	// Magic_Crystal
+6708,499,100	// Mana_crystal
 6709,499,100	// Crisp_Silk
 6710,499,100	// Tied_Snake
 6713,499,100	// Heart_of_Soul
 6714,499,100	// Sheenas_Soul
-6715,467,100	// Gods_Soul_Piece
+6715,467,100	// P_Of_Evil_Soul
 6720,507,100	// Status_Reset_Coupon
 6721,507,100	// Status_Reset_Coupon_
 6722,499,100	// Delicious_Clam_Flesh
@@ -3769,6 +3769,7 @@
 22556,24,100	// Luxury_Chocolate
 22557,24,100	// Masterpieces_of_Artisan_Chocolate
 22566,48,100	// Last_Years_Frost
+22567,384,100	// Squad_Prize
 22569,499,100	// Gift_New_start
 22589,499,100	// Savage_Ora_Ora
 22590,499,100	// Grand_Peco_Ora_Ora

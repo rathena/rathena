@@ -109,7 +109,7 @@ monk_test,309,146,3	script	Friar Patrick#edq	412,{
 			//set .@ins_bapho_check2,checkquest(3045,PLAYTIME);
 
 			if (.@ins_bapho_check == -1) {
-				if (getpartyleader(.@party_id,2) == getcharid(0) && instance_check_party(.@party_id,2,75)) {
+				if (is_party_leader(.@party_id) == true && instance_check_party(.@party_id,2,75)) {
 					mes "[Friar Patrick]";
 					mes "Party name is "+getpartyname(.@party_id)+"...";
 					mes "Name of the leader is "+strcharinfo(0)+"...";
@@ -540,7 +540,7 @@ OnMyMobDead:
 		mes "If your ^0000FFparty leader^000000 brings me the pendant, my soul can be substantialized. So, hurry up.";
 		close;
 	}
-	else if (('ins_baphomet == 2) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+	else if (('ins_baphomet == 2) && is_party_leader(.@party_id) == true) {
 		mes "[Voice of the Gravestone]";
 		mes "Did you find the pendant?";
 		next;
@@ -652,7 +652,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 				break;
 			case 3:
 				set .@ins_baphomet_1f_3,.@ins_baphomet_1f_3+1;
-				if (getpartyleader(.@party_id,2) == getcharid(0)) {
+				if (is_party_leader(.@party_id) == true) {
 					mes "[Ancient Hero's Soul]";
 					mes "You look like the leader of this party. You need to go and get ^0000FF10 Essence of Fire^000000 from the torches.";
 					next;
@@ -704,7 +704,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 			}
 			if (.@exitloop) break;
 		}
-		if (getpartyleader(.@party_id,2) == getcharid(0)) {
+		if (is_party_leader(.@party_id) == true) {
 			mes "[Ancient Hero's Soul]";
 			mes "To remind you again, I must be substantialized within the next hour. So everyone, finish your work within that time!";
 			set 'ins_baphomet,3;
@@ -721,7 +721,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 		cutin "",255;
 		end;
 	}
-	else if (('ins_baphomet == 3) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+	else if (('ins_baphomet == 3) && is_party_leader(.@party_id) == true) {
 		cutin "ins_cata_champ_n",2;
 		mes "[Ancient Hero's Soul]";
 		mes "Did you get 10 ^0000FFEssence of Fire^000000 and ^0000FFToken of Apostle^000000?";
@@ -758,7 +758,7 @@ OnInstanceInit: // Temporary fix for @reloadscript.
 		cutin "",255;
 		end;
 	}
-	else if (('ins_baphomet == 4) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+	else if (('ins_baphomet == 4) && is_party_leader(.@party_id) == true) {
 		cutin "ins_cata_champ_n",2;
 		mes "[Ancient Hero's Soul]";
 		mes "Are you ready? I opened the sealed gate. To pass the gate, you should carry a ^0000FFToken of Apostle^000000.";
@@ -881,8 +881,7 @@ OnInstanceInit:
 // Bobbing Torches
 //============================================================
 -	script	Bobbing Torch#SS	-1,{
-	set .@party_id,getcharid(1);
-	if (getpartyleader(.@party_id,2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		if (('ins_baphomet == 3) && (countitem(6001) < 11)) {
 			mes "A huge torch appearing as if it can burn everything is bobbing up and down in front of me.";
 			next;
@@ -1120,8 +1119,7 @@ OnInstanceInit:
 2@cata,35,109,0	duplicate(Magical Seal#SS)	Magical Seal#10	844
 
 2@cata,79,65,0	script	The Main Altar#ss	844,{
-	set .@party_id,getcharid(1);
-	if (('ins_baphomet == 5) && (getpartyleader(.@party_id,2) == getcharid(0))) {
+	if (('ins_baphomet == 5) && is_party_leader() == true) {
 		mes "An evil power, too terrible to describe, lies under the great altar radiating a violet color.";
 		next;
 		mes "Complicated Magical Rune letters blink rapidly, attempting to suppress the dreadful power within.";

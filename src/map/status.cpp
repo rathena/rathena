@@ -416,7 +416,7 @@ void initChangeTables(void)
 	add_sc( NPC_INVISIBLE		, SC_CLOAKING		);
 	set_sc( LK_AURABLADE		, SC_AURABLADE		, EFST_AURABLADE		, SCB_NONE );
 	set_sc( LK_PARRYING		, SC_PARRYING		, EFST_PARRYING		, SCB_NONE );
-	set_sc( LK_CONCENTRATION	, SC_CONCENTRATION	, EFST_CONCENTRATION	,
+	set_sc( LK_CONCENTRATION	, SC_CONCENTRATION	, EFST_LKCONCENTRATION	,
 #ifndef RENEWAL
 		SCB_BATK|SCB_WATK|SCB_HIT|SCB_DEF|SCB_DEF2 );
 #else
@@ -627,6 +627,7 @@ void initChangeTables(void)
 	set_sc( MER_KYRIE		, SC_KYRIE		, EFST_KYRIE		, SCB_NONE );
 	set_sc( MER_BLESSING		, SC_BLESSING		, EFST_BLESSING		, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( MER_INCAGI		, SC_INCREASEAGI	, EFST_INC_AGI, SCB_AGI|SCB_SPEED );
+	set_sc( MER_INVINCIBLEOFF2	, SC_INVINCIBLEOFF	, SI_BLANK		, SCB_SPEED );
 
 	set_sc( GD_LEADERSHIP		, SC_LEADERSHIP		, EFST_BLANK		, SCB_STR );
 	set_sc( GD_GLORYWOUNDS		, SC_GLORYWOUNDS	, EFST_BLANK		, SCB_VIT );
@@ -1166,6 +1167,12 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_GLASTHEIM_STATE] = EFST_GLASTHEIM_STATE;
 	StatusIconChangeTable[SC_GLASTHEIM_ITEMDEF] = EFST_GLASTHEIM_ITEMDEF;
 	StatusIconChangeTable[SC_GLASTHEIM_HPSP] = EFST_GLASTHEIM_HPSP;
+
+	// Nightmare Biolab
+	StatusIconChangeTable[SC_LHZ_DUN_N1] = EFST_LHZ_DUN_N1;
+	StatusIconChangeTable[SC_LHZ_DUN_N2] = EFST_LHZ_DUN_N2;
+	StatusIconChangeTable[SC_LHZ_DUN_N3] = EFST_LHZ_DUN_N3;
+	StatusIconChangeTable[SC_LHZ_DUN_N4] = EFST_LHZ_DUN_N4;
 
 	StatusIconChangeTable[SC_ANCILLA] = EFST_ANCILLA;
 
@@ -2420,12 +2427,11 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 
 /**
  * Base attack value calculated for units
- * @param bl: Object to get attack for [PC|HOM]
+ * @param bl: Object to get attack for [BL_CHAR|BL_NPC]
  * @param status: Object status
  * @return base attack
- * Note: Function only calculates Homunculus bATK in RENEWAL
  */
-unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status)
+unsigned short status_base_atk(const struct block_list *bl, const struct status_data *status, int level)
 {
 	int flag = 0, str, dex, dstr;
 
@@ -2457,25 +2463,36 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 		str = status->str;
 		dex = status->dex;
 	}
+
 	/** [Skotlex]
 	* Normally only players have base-atk, but homunc have a different batk
 	* equation, hinting that perhaps non-players should use this for batk.
 	**/
+	switch (bl->type) {
+		case BL_HOM:
 #ifdef RENEWAL
-	if (bl->type == BL_HOM)
-		str = 2 * ((((TBL_HOM*)bl)->homunculus.level) + status_get_homstr(bl));
+			str = 2 * level + status_get_homstr(bl);
 #else
-	dstr = str/10;
-	str += dstr*dstr;
+			dstr = str / 10;
+			str += dstr*dstr;
 #endif
-	if (bl->type == BL_PC)
+			break;
+		case BL_PC:
 #ifdef RENEWAL
-		str = (dstr*10 + dex*10/5 + status->luk*10/3 + ((TBL_PC*)bl)->status.base_level*10/4)/10;
-	else if (bl->type == BL_MOB || bl->type == BL_MER)
-		str = dstr + ((TBL_MOB*)bl)->level;
+			str = (dstr * 10 + dex * 10 / 5 + status->luk * 10 / 3 + level * 10 / 4) / 10;
 #else
-		str+= dex/5 + status->luk/5;
+			str += dex / 5 + status->luk / 5;
 #endif
+			break;
+		default:// Others
+#ifdef RENEWAL
+			str = dstr + level;
+#else
+			str += dex / 5 + status->luk / 5;
+#endif
+			break;
+	}
+
 	return cap_value(str, 0, USHRT_MAX);
 }
 
@@ -2501,22 +2518,79 @@ unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd
 #endif
 
 #ifndef RENEWAL
-	unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
-	unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
-#endif
-
-#ifdef RENEWAL
-unsigned short status_base_matk(struct block_list *bl, const struct status_data* status, int level)
+unsigned short status_base_matk_min(const struct status_data* status) { return status->int_ + (status->int_ / 7) * (status->int_ / 7); }
+unsigned short status_base_matk_max(const struct status_data* status) { return status->int_ + (status->int_ / 5) * (status->int_ / 5); }
+#else
+/*
+* Calculates minimum attack variance 80% from db's ATK1 for non BL_PC
+* status->batk (base attack) will be added in battle_calc_base_damage
+*/
+unsigned short status_base_atk_min(struct block_list *bl, const struct status_data* status, int level)
 {
 	switch (bl->type) {
+		case BL_PET:
 		case BL_MOB:
-			///! TODO: Confirm these RENEWAL calculations. Currently is using previous calculation before 083cf5d9 (issue: #321) and until re/mob_db.txt is updated.
-			//return status->int_ + level;
-			return status->int_ + (status->int_ / 2) + (status->dex / 5) + (status->luk / 3) + (level / 4);
-		case BL_HOM:
-			return status_get_homint(bl) + level;
 		case BL_MER:
-			return status->int_ + status->int_ / 5 * status->int_ / 5;
+		case BL_ELEM:
+			return status->rhw.atk * 80 / 100;
+		case BL_HOM:
+			return (status_get_homstr(bl) + status_get_homdex(bl)) / 5;
+		default:
+			return status->rhw.atk;
+	}
+}
+
+/*
+* Calculates maximum attack variance 120% from db's ATK1 for non BL_PC
+* status->batk (base attack) will be added in battle_calc_base_damage
+*/
+unsigned short status_base_atk_max(struct block_list *bl, const struct status_data* status, int level)
+{
+	switch (bl->type) {
+		case BL_PET:
+		case BL_MOB:
+		case BL_MER:
+		case BL_ELEM:
+			return status->rhw.atk * 120 / 100;
+		case BL_HOM:
+			return (status_get_homluk(bl) + status_get_homstr(bl) + status_get_homdex(bl)) / 3;
+		default:
+			return status->rhw.atk2;
+	}
+}
+
+/*
+* Calculates minimum magic attack
+*/
+unsigned short status_base_matk_min(struct block_list *bl, const struct status_data* status, int level)
+{
+	switch (bl->type) {
+		case BL_PET:
+		case BL_MOB:
+		case BL_MER:
+		case BL_ELEM:
+			return status->int_ + level + status->rhw.matk * 70 / 100;
+		case BL_HOM:
+			return status_get_homint(bl) + level + (status_get_homint(bl) + status_get_homdex(bl)) / 5;
+		case BL_PC:
+		default:
+			return status->int_ + (status->int_ / 2) + (status->dex / 5) + (status->luk / 3) + (level / 4);
+	}
+}
+
+/*
+* Calculates maximum magic attack
+*/
+unsigned short status_base_matk_max(struct block_list *bl, const struct status_data* status, int level)
+{
+	switch (bl->type) {
+		case BL_PET:
+		case BL_MOB:
+		case BL_MER:
+		case BL_ELEM:
+			return status->int_ + level + status->rhw.matk * 130 / 100;
+		case BL_HOM:
+			return status_get_homint(bl) + level + (status_get_homluk(bl) + status_get_homint(bl) + status_get_homdex(bl)) / 3;
 		case BL_PC:
 		default:
 			return status->int_ + (status->int_ / 2) + (status->dex / 5) + (status->luk / 3) + (level / 4);
@@ -2561,12 +2635,6 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		// Flee
 		stat = level + status_get_homagi(bl);
 		status->flee = cap_value(stat, 1, SHRT_MAX);
-		// Atk
-		stat = (status_get_homstr(bl) + status_get_homdex(bl)) / 5;
-		status->rhw.atk = cap_value(stat, 0, SHRT_MAX);
-		// Atk2
-		stat = (status_get_homluk(bl) + status_get_homstr(bl) + status_get_homdex(bl)) / 3;
-		status->rhw.atk2 = cap_value(stat, 0, SHRT_MAX);
 	} else {
 		// Hit
 		stat = status->hit;
@@ -2594,20 +2662,15 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->mdef2 = cap_value(stat, 0, SHRT_MAX);
 	}
 
-	// MAtk
-	status->matk_min = status->matk_max = status_base_matk(bl, status, level);
+	// ATK
+	if (bl->type != BL_PC) {
+		status->rhw.atk2 = status_base_atk_max(bl, status, level);
+		status->rhw.atk = status_base_atk_min(bl, status, level);
+	}
 
-	///! TODO: Confirm these RENEWAL calculations. Currently is using previous calculation before 083cf5d9 (issue: #321) and until re/mob_db.txt is updated.
-	//switch (bl->type) {
-	//	case BL_MOB:
-	//		status->matk_min += 70 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
-	//		status->matk_max += 130 * ((TBL_MOB*)bl)->status.rhw.atk2 / 100;
-	//		break;
-	//	case BL_MER:
-	//		status->matk_min += 70 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
-	//		status->matk_max += 130 * ((TBL_MER*)bl)->battle_status.rhw.atk2 / 100;
-	//		break;
-	//}
+	// MAtk
+	status->matk_min = status_base_matk_min(bl, status, level);
+	status->matk_max = status_base_matk_max(bl, status, level);
 #else
 	// Matk
 	status->matk_min = status_base_matk_min(status);
@@ -2646,10 +2709,10 @@ void status_calc_misc(struct block_list *bl, struct status_data *status, int lev
 		status->flee2 = 0;
 
 	if (status->batk) {
-		int temp = status->batk + status_base_atk(bl, status);
+		int temp = status->batk + status_base_atk(bl, status, level);
 		status->batk = cap_value(temp, 0, USHRT_MAX);
 	} else
-		status->batk = status_base_atk(bl, status);
+		status->batk = status_base_atk(bl, status, level);
 
 	if (status->cri) {
 		switch (bl->type) {
@@ -3384,7 +3447,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->subclass)
 		+ sizeof(sd->subrace2)
 		+ sizeof(sd->subsize)
-		+ sizeof(sd->reseff)
 		+ sizeof(sd->coma_class)
 		+ sizeof(sd->coma_race)
 		+ sizeof(sd->weapon_coma_ele)
@@ -3455,53 +3517,53 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	base_status->race = ((battle_config.summoner_trait&1) && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? RC_BRUTE : RC_PLAYER;
 	base_status->class_ = CLASS_NORMAL;
 
+	sd->autospell.clear();
+	sd->autospell2.clear();
+	sd->autospell3.clear();
+	sd->addeff.clear();
+	sd->addeff_atked.clear();
+	sd->addeff_onskill.clear();
+	sd->skillatk.clear();
+	sd->skillusesprate.clear();
+	sd->skillusesp.clear();
+	sd->skillheal.clear();
+	sd->skillheal2.clear();
+	sd->skillblown.clear();
+	sd->skillcastrate.clear();
+	sd->skillfixcastrate.clear();
+	sd->subskill.clear();
+	sd->skillcooldown.clear();
+	sd->skillfixcast.clear();
+	sd->skillvarcast.clear();
+	sd->add_def.clear();
+	sd->add_mdef.clear();
+	sd->add_mdmg.clear();
+	sd->reseff.clear();
+	sd->itemgrouphealrate.clear();
+	sd->add_drop.clear();
+	sd->itemhealrate.clear();
+	sd->subele2.clear();
+	sd->skilldelay.clear();
+
 	// Zero up structures...
-	memset(&sd->autospell, 0, sizeof(sd->autospell)
-		+ sizeof(sd->autospell2)
-		+ sizeof(sd->autospell3)
-		+ sizeof(sd->addeff)
-		+ sizeof(sd->addeff_atked)
-		+ sizeof(sd->addeff_onskill)
-		+ sizeof(sd->skillatk)
-		+ sizeof(sd->skillusesprate)
-		+ sizeof(sd->skillusesp)
-		+ sizeof(sd->skillheal)
-		+ sizeof(sd->skillheal2)
-		+ sizeof(sd->skillblown)
-		+ sizeof(sd->skillcastrate)
-		+ sizeof(sd->skillfixcastrate)
-		+ sizeof(sd->subskill)
-		+ sizeof(sd->skillcooldown)
-		+ sizeof(sd->skillfixcast)
-		+ sizeof(sd->skillvarcast)
-		+ sizeof(sd->hp_loss)
-		+ sizeof(sd->sp_loss)
+	memset(&sd->hp_loss, 0, sizeof(sd->sp_loss)
 		+ sizeof(sd->hp_regen)
 		+ sizeof(sd->sp_regen)
 		+ sizeof(sd->percent_hp_regen)
 		+ sizeof(sd->percent_sp_regen)
-		+ sizeof(sd->add_def)
-		+ sizeof(sd->add_mdef)
-		+ sizeof(sd->add_mdmg)
-		+ sizeof(sd->add_drop)
-		+ sizeof(sd->itemhealrate)
-		+ sizeof(sd->subele2)
 		+ sizeof(sd->def_set_race)
 		+ sizeof(sd->mdef_set_race)
 		+ sizeof(sd->norecover_state_race)
 		+ sizeof(sd->hp_vanish_race)
 		+ sizeof(sd->sp_vanish_race)
-		+ sizeof(sd->skilldelay)
 	);
 
-	memset (&sd->bonus, 0, sizeof(sd->bonus));
+	memset(&sd->bonus, 0, sizeof(sd->bonus));
 
 	// Autobonus
-	pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),true);
-	pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),true);
-	pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),true);
-
-	pc_itemgrouphealrate_clear(sd);
+	pc_delautobonus(sd, sd->autobonus, true);
+	pc_delautobonus(sd, sd->autobonus2, true);
+	pc_delautobonus(sd, sd->autobonus3, true);
 
 	running_npc_stat_calc_event = true;
 	npc_script_event(sd, NPCE_STATCALC);
@@ -4401,7 +4463,6 @@ int status_calc_elemental_(struct elemental_data *ed, enum e_status_calc_opt opt
 		status->sp = ele->sp;
 		status->rhw.atk = ele->atk;
 		status->rhw.atk2 = ele->atk2;
-
 		status->matk_min += ele->matk;
 		status->def += ele->def;
 		status->mdef += ele->mdef;
@@ -4864,8 +4925,9 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 	}
 
 	if(flag&SCB_BATK && b_status->batk) {
-		status->batk = status_base_atk(bl,status);
-		temp = b_status->batk - status_base_atk(bl,b_status);
+		int lv = status_get_lv(bl);
+		status->batk = status_base_atk(bl, status, lv);
+		temp = b_status->batk - status_base_atk(bl, b_status, lv);
 		if (temp) {
 			temp += status->batk;
 			status->batk = cap_value(temp, 0, USHRT_MAX);
@@ -5090,7 +5152,9 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 		 * RE MATK Formula (from irowiki:http:// irowiki.org/wiki/MATK)
 		 * MATK = (sMATK + wMATK + eMATK) * Multiplicative Modifiers
 		 **/
-		status->matk_min = status->matk_max = status_base_matk(bl, status, status_get_lv(bl));
+		int lv = status_get_lv(bl);
+		status->matk_min = status_base_matk_min(bl, status, lv);
+		status->matk_max = status_base_matk_max(bl, status, lv);
 
 		switch( bl->type ) {
 			case BL_PC: {
@@ -5139,10 +5203,6 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 				status->matk_min += wMatk - variance;
 				status->matk_max += wMatk + variance;
 				}
-				break;
-			case BL_HOM:
-				status->matk_min += (status_get_homint(bl) + status_get_homdex(bl)) / 5;
-				status->matk_max += (status_get_homluk(bl) + status_get_homint(bl) + status_get_homdex(bl)) / 3;
 				break;
 		}
 #endif
@@ -8227,10 +8287,12 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		}
 
 		// Item resistance (only applies to rate%)
-		if(sd && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX) {
-			if( sd->reseff[type-SC_COMMON_MIN] )
-				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
-			if( sd->sc.data[SC_COMMONSC_RESIST] )
+		if (sd) {
+			for (const auto &it : sd->reseff) {
+				if (it.id == type)
+					rate -= rate * it.val / 10000;
+			}
+			if (sd->sc.data[SC_COMMONSC_RESIST] && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
 		}
 
@@ -8935,7 +8997,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC__UNLUCKY:
 			case SC__WEAKNESS:
 			case SC_BITE:
-			case SC_ELECTRICSHOCKER:
 			case SC_MAGNETICFIELD:
 			case SC_NETHERWORLD:
 			case SC_CRESCENTELBOW:
@@ -9333,6 +9394,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_OBLIVIONCURSE:
 			case SC_LEECHESEND:
 			case SC_CURSEDCIRCLE_TARGET:
+			case SC_ELECTRICSHOCKER:
 			case SC_BANDING_DEFENCE:
 			case SC__ENERVATION:
 			case SC__GROOMY:
@@ -9384,6 +9446,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_ARMOR_ELEMENT_WIND:
 			case SC_ARMOR_RESIST:
 			case SC_ATTHASTE_CASH:
+			case SC_LHZ_DUN_N1:
+			case SC_LHZ_DUN_N2:
+			case SC_LHZ_DUN_N3:
+			case SC_LHZ_DUN_N4:
 				break;
 			case SC_GOSPEL:
 				 // Must not override a casting gospel char.
@@ -10312,15 +10378,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 500 + 100 * val1;
 			break;
 		case SC_STONEHARDSKIN:
-			{
-				int hp = status->hp / 5; // 20% of HP
-
-				if (sd)
-					val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
-				if (!status_charge(bl, hp, 0))
-					return 0;
-				val2 = hp;
-			}
+			if (!status_charge(bl, status->hp / 5, 0)) // 20% of HP
+				return 0;
+			if (sd)
+				val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
 			break;
 		case SC_REFRESH:
 			status_heal(bl, status_get_max_hp(bl) * 25 / 100, 0, 1);
@@ -11086,7 +11147,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				int min = 0, max = 0;
 
 #ifdef RENEWAL
-				min = max = status_base_matk(src, status, status_get_lv(src));
+				min = status_base_matk_min(src, status, status_get_lv(src));
+				max = status_base_matk_max(src, status, status_get_lv(src));
 				if (status->rhw.matk > 0) {
 					int wMatk, variance;
 
@@ -11876,6 +11938,10 @@ int status_change_clear(struct block_list* bl, int type)
 			case SC_GEFFEN_MAGIC1:
 			case SC_GEFFEN_MAGIC2:
 			case SC_GEFFEN_MAGIC3:
+			case SC_LHZ_DUN_N1:
+			case SC_LHZ_DUN_N2:
+			case SC_LHZ_DUN_N3:
+			case SC_LHZ_DUN_N4:
 			// Costumes
 			case SC_MOONSTAR:
 			case SC_SUPER_STAR:
@@ -12725,7 +12791,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	if(opt_flag&4) // Out of hiding, invoke on place.
 		skill_unit_move(bl,gettick(),1);
 
-	if(opt_flag&2 && sd && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
+	if(opt_flag&2 && sd && !sd->state.warping && map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC))
 		npc_touch_areanpc(sd,bl->m,bl->x,bl->y); // Trigger on-touch event.
 
 	ers_free(sc_data_ers, sce);
@@ -12980,11 +13046,11 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_S_LIFEPOTION:
 	case SC_L_LIFEPOTION:
-		if( sd && --(sce->val4) >= 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			// val1 < 0 = per max% | val1 > 0 = exact amount
 			int hp = 0;
 			if( status->hp < status->max_hp )
-				hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
+				hp = (sce->val1 < 0) ? (int)(status->max_hp * -1 * sce->val1 / 100.) : sce->val1;
 			status_heal(bl, hp, 0, 2);
 			sc_timer_next((sce->val2 * 1000) + tick);
 			return 0;
@@ -13837,7 +13903,6 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_EXPBOOST:
 			case SC_JEXPBOOST:
 			case SC_ITEMBOOST:
-			case SC_ELECTRICSHOCKER:
 			case SC__MANHOLE:
 			case SC_GIANTGROWTH:
 			case SC_MILLENNIUMSHIELD:
@@ -13902,6 +13967,10 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_GEFFEN_MAGIC1:
 			case SC_GEFFEN_MAGIC2:
 			case SC_GEFFEN_MAGIC3:
+			case SC_LHZ_DUN_N1:
+			case SC_LHZ_DUN_N2:
+			case SC_LHZ_DUN_N3:
+			case SC_LHZ_DUN_N4:
 			// Clans
 			case SC_CLAN_INFO:
 			case SC_SWORDCLAN:

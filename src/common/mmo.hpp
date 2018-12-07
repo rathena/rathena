@@ -53,7 +53,7 @@
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1200 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1250 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -140,7 +140,7 @@
 
 //Mercenary System
 #define MC_SKILLBASE 8201
-#define MAX_MERCSKILL 40
+#define MAX_MERCSKILL 41
 
 //Elemental System
 #define MAX_ELEMENTALSKILL 42
@@ -699,6 +699,23 @@ struct guild_castle {
 	} guardian[MAX_GUARDIANS];
 	int* temp_guardians; // ids of temporary guardians (mobs)
 	int temp_guardians_max;
+};
+
+/// Enum for guild castle data script commands
+enum e_castle_data : uint8 {
+	CD_NONE = 0,
+	CD_GUILD_ID, ///< Guild ID
+	CD_CURRENT_ECONOMY, ///< Castle Economy score
+	CD_CURRENT_DEFENSE, ///< Castle Defense score
+	CD_INVESTED_ECONOMY, ///< Number of times the economy was invested in today
+	CD_INVESTED_DEFENSE, ///< Number of times the defense was invested in today
+	CD_NEXT_TIME, ///< unused
+	CD_PAY_TIME, ///< unused
+	CD_CREATE_TIME, ///< unused
+	CD_ENABLED_KAFRA, ///< Is 1 if a Kafra was hired for this castle, 0 otherwise
+	CD_ENABLED_GUARDIAN00, ///< Is 1 if the 1st guardian is present (Soldier Guardian)
+	// The others in between are not needed in src, but are exported for the script engine
+	CD_MAX = CD_ENABLED_GUARDIAN00 + MAX_GUARDIANS
 };
 
 /// Guild Permissions

@@ -108,7 +108,7 @@ bool mapif_achievement_delete(uint32 char_id, int achievement_id)
  * @param ad: Achievement data
  * @return false in case of errors, true otherwise
  */
-bool mapif_achievement_add(uint32 char_id, struct achievement ad)
+bool mapif_achievement_add(uint32 char_id, struct achievement* ad)
 {
 	StringBuf buf;
 	int i;
@@ -118,19 +118,19 @@ bool mapif_achievement_add(uint32 char_id, struct achievement ad)
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
 		StringBuf_Printf(&buf, ", `count%d`", i + 1);
 	StringBuf_AppendStr(&buf, ")");
-	StringBuf_Printf(&buf, " VALUES ('%u', '%d',", char_id, ad.achievement_id, (uint32)ad.completed, (uint32)ad.rewarded);
-	if( ad.completed ){
-		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u'),", (uint32)ad.completed);
+	StringBuf_Printf(&buf, " VALUES ('%u', '%d',", char_id, ad->achievement_id, (uint32)ad->completed, (uint32)ad->rewarded);
+	if( ad->completed ){
+		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u'),", (uint32)ad->completed);
 	}else{
 		StringBuf_AppendStr(&buf, "NULL,");
 	}
-	if( ad.rewarded ){
-		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u')", (uint32)ad.rewarded);
+	if( ad->rewarded ){
+		StringBuf_Printf(&buf, "FROM_UNIXTIME('%u')", (uint32)ad->rewarded);
 	}else{
 		StringBuf_AppendStr(&buf, "NULL");
 	}
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		StringBuf_Printf(&buf, ", '%d'", ad.count[i]);
+		StringBuf_Printf(&buf, ", '%d'", ad->count[i]);
 	StringBuf_AppendStr(&buf, ")");
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
@@ -150,26 +150,26 @@ bool mapif_achievement_add(uint32 char_id, struct achievement ad)
  * @param ad: Achievement data
  * @return false in case of errors, true otherwise
  */
-bool mapif_achievement_update(uint32 char_id, struct achievement ad)
+bool mapif_achievement_update(uint32 char_id, struct achievement* ad)
 {
 	StringBuf buf;
 	int i;
 
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "UPDATE `%s` SET ", schema_config.achievement_table);
-	if( ad.completed ){
-		StringBuf_Printf(&buf, "`completed` = FROM_UNIXTIME('%u'),", (uint32)ad.completed);
+	if( ad->completed ){
+		StringBuf_Printf(&buf, "`completed` = FROM_UNIXTIME('%u'),", (uint32)ad->completed);
 	}else{
 		StringBuf_AppendStr(&buf, "`completed` = NULL,");
 	}
-	if( ad.rewarded ){
-		StringBuf_Printf(&buf, "`rewarded` = FROM_UNIXTIME('%u')", (uint32)ad.rewarded);
+	if( ad->rewarded ){
+		StringBuf_Printf(&buf, "`rewarded` = FROM_UNIXTIME('%u')", (uint32)ad->rewarded);
 	}else{
 		StringBuf_AppendStr(&buf, "`rewarded` = NULL");
 	}
 	for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; ++i)
-		StringBuf_Printf(&buf, ", `count%d` = '%d'", i + 1, ad.count[i]);
-	StringBuf_Printf(&buf, " WHERE `id` = %d AND `char_id` = %u", ad.achievement_id, char_id);
+		StringBuf_Printf(&buf, ", `count%d` = '%d'", i + 1, ad->count[i]);
+	StringBuf_Printf(&buf, " WHERE `id` = %d AND `char_id` = %u", ad->achievement_id, char_id);
 
 	if (SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf))) {
 		Sql_ShowDebug(sql_handle);
@@ -216,7 +216,7 @@ int mapif_parse_achievement_save(int fd)
 			// Only counts, complete, and reward are changable.
 			ARR_FIND(0, MAX_ACHIEVEMENT_OBJECTIVES, k, new_ad[i].count[k] != old_ad[j].count[k]);
 			if (k != MAX_ACHIEVEMENT_OBJECTIVES || new_ad[i].completed != old_ad[j].completed || new_ad[i].rewarded != old_ad[j].rewarded) {
-				if ((success = mapif_achievement_update(char_id, new_ad[i])) == false)
+				if ((success = mapif_achievement_update(char_id, &new_ad[i])) == false)
 					break;
 			}
 
@@ -227,7 +227,7 @@ int mapif_parse_achievement_save(int fd)
 			}
 		} else { // Add new achievements
 			if (new_ad[i].achievement_id) {
-				if ((success = mapif_achievement_add(char_id, new_ad[i])) == false)
+				if ((success = mapif_achievement_add(char_id, &new_ad[i])) == false)
 					break;
 			}
 		}

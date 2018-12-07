@@ -17,7 +17,7 @@ dali02,43,129,5	script	Unpleasant Royal Guard#	4_M_SAKRAYROYAL,{
 		close;
 	}
 	.@party_id = getcharid(1);
-	if (getcharid(0) != getpartyleader(.@party_id,2) || .@party_id < 1) {
+	if (is_party_leader() == false || .@party_id < 1) {
 		mes "[Unpleasant Royal Guard]";
 		mes "I can only open the secret passage for party leaders. Please have your party leader talk to me.";
 		close;
@@ -98,7 +98,7 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 		close;
 	}
 	.@party_id = getcharid(1);
-	if (getcharid(0) != getpartyleader(.@party_id,2) || .@party_id < 1) {
+	if (is_party_leader() == false || .@party_id < 1) {
 		mes "[Unpleasant Royal Guard]";
 		mes "I can only open the secret passage for party leaders. Please have your party leader talk to me.";
 		close;

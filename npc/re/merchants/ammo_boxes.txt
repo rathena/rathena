@@ -1,22 +1,290 @@
 //===== rAthena Script =======================================
 //= Magazine Dealers
-//===== By: ==================================================
-//= Euphy
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= Turns bullets into magazines/packs.
-//===== Additional Comments: =================================
-//= 1.0 First version, Renewal duplicates.
-//= 1.1 Added Izlude duplicates. [Euphy]
-//= 1.2 Updated Izlude coordinates. [Euphy]
+//===== Changelogs: ==========================================
+//= 1.0 First version. [SinSloth]
+//= 1.1 Optimized version - Reduced to only one function [SinSloth]
+//= 1.2 Optimized^2, corrected npc's name [ultramage]
+//= 1.2a Optimized. Please, ommit extra NPC names [Lupus]
+//= 1.3 Updated to match AEGIS script. [Kisuka]
+//= 1.4 Updated to match AEGIS script again. [Masao]
+//= 1.5 Moved Izlude duplicate to pre-re/re paths. [Euphy]
+//= 2.0 Clean-up. [Capuche]
+//= 2.1 Fixes Issue #1482, where Rebellion jobs cannot use this npc. [Limestone]
+//= 2.2 Updated to new bullets. [Aleos]
 //============================================================
 
+alberta,118,157,3	script	Magazine Dealer Kenny::mdk	4_M_01,{
+	mes "[Kenny]";
+	mes "Bullet bags will help you carry bullets much more easily.";
+	mes "Come take a look~";
+	next;
+	switch(select("Various Bullet Cases:Sphere Exchange:Old Sphere Exchange:Slug Exchange:Cancel")) {
+	case 1:
+		switch(select("Bullet Case:Bloody Bullet Case:Silver Bullet Case:Ammo AP Bullet Case:Ammo Blazing Bullet Case:Ammo Freezing Bullet Case:Ammo Lightning Bullet Case:Ammo Magic Stone Bullet Case:Ammo Purifying Bullet Case:Flare Bullet Case:Lightning Bullet Case:Ice Bullet Case:Poison Bullet Case:Blind Bullet Case:Cancel")) {
+			case 1: callsub S_Casing,13200,12149;
+			case 2: callsub S_Casing,13222,22737;
+			case 3: callsub S_Casing,13221,22738;
+			case 4: callsub S_Casing,13215,22744;
+			case 5: callsub S_Casing,13216,22745;
+			case 6: callsub S_Casing,13217,22746;
+			case 7: callsub S_Casing,13218,22747;
+			case 8: callsub S_Casing,13219,22748;
+			case 9: callsub S_Casing,13220,22749;
+			case 10: callsub S_Casing,13228,23123;
+			case 11: callsub S_Casing,13229,23124;
+			case 12: callsub S_Casing,13230,23125;
+			case 13: callsub S_Casing,13231,23126;
+			case 14: callsub S_Casing,13232,23127;
+			case 15: callsub S_Close;
+		}
+	case 2:
+		switch(select("Fire Bullet:Wind Bullet:Freezing Bullet:Poison Bullet:Blind Bullet:Cancel")) {
+		case 1: callsub S_Sphere_Exchange,13223,13228;
+		case 2: callsub S_Sphere_Exchange,13224,13229;
+		case 3: callsub S_Sphere_Exchange,13227,13230;
+		case 4: callsub S_Sphere_Exchange,13225,13231;
+		case 5: callsub S_Sphere_Exchange,13226,13232;
+		case 6: callsub S_Close;
+		}
+	case 3:
+		switch(select("Fire Sphere:Wind Sphere:Freezing Sphere:Poison Sphere:Blind Sphere:Cancel")) {
+		case 1: callsub S_Old_Sphere_Exchange,13203,13228;
+		case 2: callsub S_Old_Sphere_Exchange,13204,13229;
+		case 3: callsub S_Old_Sphere_Exchange,13207,13230;
+		case 4: callsub S_Old_Sphere_Exchange,13205,13231;
+		case 5: callsub S_Old_Sphere_Exchange,13206,13232;
+		case 6: callsub S_Close;
+		}
+	case 4:
+		switch(select("Slug Ammunition L:Slug Ammunition M:Slug Ammunition H:Slug Ammunition SH:Slug Ammunition XH:Cancel")) {
+		case 1: callsub S_Slug_Exchange,13210,24;
+		case 2: callsub S_Slug_Exchange,13211,12;
+		case 3: callsub S_Slug_Exchange,13212,8;
+		case 4: callsub S_Slug_Exchange,13213,6;
+		case 5: callsub S_Slug_Exchange,13214,5;
+		case 6: callsub S_Close;
+		}
+	case 5:
+		callsub S_Close;
+	}
+
+S_Casing:
+	.@bullet_id = getarg(0);
+	.@pack_id = getarg(1);
+	.@bullet_str$ = getitemname(.@bullet_id);
+	.@pack_str$ = getitemname(.@pack_id);
+	.@bullet_count = countitem(.@bullet_id);
+	.@pack_count = .@bullet_count / 500;
+
+	if (.@bullet_count < 500 || getequipid(EQI_AMMO) != -1 || BaseClass != Job_Gunslinger) {
+		mes "[Kenny]";
+		mes "Hey~ You need the exact amount of items to exchange. Go get some more.";
+		mes "You must have 500 or more of ^FF0000" + .@bullet_str$ + "^000000, ok? Also, make sure not to ^FF0000wear^000000 them if you want to exchange.";
+		close;
+	}
+
+	mes "[Kenny]";
+	mes "You've chosen ^FF0000" + .@pack_str$ + "^000000.";
+	mes "You need 500 ^3131FF" + .@bullet_str$ + "^000000 to make 1 ^3131FF" + .@bullet_str$ + "^000000 item, and it will cost ^3131FF500^000000 zeny.";
+	mes "How many do you want to exchange?";
+	next;
+	switch(select("Exchange all:Make only 1:Cancel")) {
+		case 1:
+			mes "[Kenny]";
+			mes "Bullet count: ^3131FF" + .@bullet_count;
+			mes "Combination of bullet bags: ^3131FF" + .@pack_count;
+			mes "Zeny required: ^3131FF" + .@pack_count * 500;
+			next;
+			mes "Do you want to exchange?";
+			next;
+			switch(select("Exchange:Cancel")) {
+				case 1:
+					if (Zeny < .@pack_count * 500) {
+						mes "[Kenny]";
+						mes "Hey~ You need the exact amount of Zeny to exchange. Go get some more.";
+						mes "You must have ^FF0000" + .@pack_count * 500 + "^000000, ok?";
+						close;
+					}
+					mes "[Kenny]";
+					mes "All done.";
+					mes "The bag is useless when the weight of inventory gets over 70%. Please be careful.";
+					Zeny -= .@pack_count * 500;
+					delitem .@bullet_id, .@pack_count * 500;
+					getitem .@pack_id, .@pack_count;
+					close;
+				case 2:
+					close;
+			}
+		case 2:
+			if (Zeny < 500) {
+				mes "[Kenny]";
+				mes "Hey~ You need the exact amount of Zeny to exchange. Go get some more.";
+				mes "You must have ^FF0000500^000000, ok?";
+				close;
+			}
+			mes "[Kenny]";
+			mes "All done.";
+			mes "The bag is useless when the weight of inventory gets over 70%. Please be careful.";
+			Zeny -= 500;
+			delitem .@bullet_id, 500;
+			getitem .@pack_id, 1;
+			close;
+		case 3:
+			callsub S_Close;
+	}
+
+S_Sphere_Exchange:
+	.@old_id = getarg(0);
+	.@new_id = getarg(1);
+	.@old_str$ = getitemname(.@old_id);
+	.@new_str$ = getitemname(.@new_id);
+	.@old_count = countitem(.@old_id);
+	.@new_count = .@old_count / 10;
+
+	if (.@old_count < 10 || getequipid(EQI_AMMO) != -1 || BaseClass != Job_Gunslinger) {
+		mes "[Kenny]";
+		mes "Hey~ You need the exact amount of items to exchange. Go get some more.";
+		mes "You must have 10 or more of ^FF0000" + .@old_str$ + "^000000, ok? Also, make sure not to ^FF0000wear^000000 them if you want to exchange.";
+		close;
+	}
+
+	mes "[Kenny]";
+	mes "You've chosen ^FF0000" + .@old_str$ + "^000000.";
+	mes "You need 10 ^3131FF" + .@old_str$ + "^000000 to make 1 ^3131FF" + .@new_str$ + "^000000 item.";
+	mes "How many do you want to exchange?";
+	next;
+	switch(select("Exchange all:Make only 1:Cancel")) {
+		case 1:
+			mes "[Kenny]";
+			mes .@old_str$ + " count: ^3131FF" + .@old_count;
+			mes .@new_str$ + " count: ^3131FF" + .@new_count;
+			next;
+			mes "Do you want to exchange?";
+			next;
+			switch(select("Exchange:Cancel")) {
+				case 1:
+					mes "[Kenny]";
+					mes "All done.";
+					delitem .@slug_id, .@new_count * 10;
+					getitem .@new_slug_id, .@old_count;
+					close;
+				case 2:
+					close;
+			}
+		case 2:
+			mes "[Kenny]";
+			mes "All done.";
+			delitem .@old_id, 10;
+			getitem .@new_id, 1;
+			close;
+		case 3:
+			callsub S_Close;
+	}
+
+S_Old_Sphere_Exchange:
+	.@old_id = getarg(0);
+	.@new_id = getarg(1);
+	.@old_str$ = getitemname(.@old_id);
+	.@new_str$ = getitemname(.@new_id);
+	.@old_count = countitem(.@old_id);
+
+	if (.@old_count < 1 || getequipid(EQI_AMMO) != -1 || BaseClass != Job_Gunslinger) {
+		mes "[Kenny]";
+		mes "Hey~ You need the exact amount of items to exchange. Go get some more.";
+		mes "You must have 1 or more of ^FF0000" + .@old_str$ + "^000000, ok? Also, make sure not to ^FF0000wear^000000 them if you want to exchange.";
+		close;
+	}
+
+	mes "[Kenny]";
+	mes "You've chosen ^FF0000" + .@old_str$ + "^000000.";
+	mes "You need 1 ^3131FF" + .@old_str$ + "^000000 to make 1 ^3131FF" + .@new_str$ + "^000000 item.";
+	mes "How many do you want to exchange?";
+	next;
+	switch(select("Exchange all:Make only 1:Cancel")) {
+		case 1:
+			mes "[Kenny]";
+			mes .@old_str$ + " count: ^3131FF" + .@old_count;
+			mes .@new_str$ + " count: ^3131FF" + .@old_count;
+			next;
+			mes "Do you want to exchange?";
+			next;
+			switch(select("Exchange:Cancel")) {
+				case 1:
+					mes "[Kenny]";
+					mes "All done.";
+					delitem .@slug_id, .@old_count;
+					getitem .@new_slug_id, .@old_count;
+					close;
+				case 2:
+					close;
+			}
+		case 2:
+			mes "[Kenny]";
+			mes "All done.";
+			delitem .@old_id, 1;
+			getitem .@new_id, 1;
+			close;
+		case 3:
+			callsub S_Close;
+	}
+
+S_Slug_Exchange:
+	.@slug_id = getarg(0);
+	.@req_count = getarg(1);
+	.@slug_str$ = getitemname(.@slug_id);
+	.@new_slug_str$ = getitemname(25187);
+	.@count = countitem(.@slug_id);
+	.@new_count = .@count / .@req_count;
+
+	if (.@count < .@req_count || getequipid(EQI_AMMO) != -1 || BaseClass != Job_Gunslinger) {
+		mes "[Kenny]";
+		mes "Hey~ You need the exact amount of items to exchange. Go get some more.";
+		mes "You must have " + .@req_count + " or more of ^FF0000" + .@slug_str$ + "^000000, ok? Also, make sure not to ^FF0000wear^000000 them if you want to exchange.";
+		close;
+	}
+
+	mes "[Kenny]";
+	mes "You've chosen ^FF0000" + .@slug_str$ + "^000000.";
+	mes "You need " + .@req_count + " ^3131FF" + .@slug_str$ + "^000000 to make 1 ^3131FF" + .@new_slug_str$ + "^000000 item.";
+	mes "How many do you want to exchange?";
+	next;
+	switch(select("Exchange all:Make only 1:Cancel")) {
+		case 1:
+			mes "[Kenny]";
+			mes .@slug_str$ + " count: ^3131FF" + .@count;
+			mes .@new_slug_str$ + " count: ^3131FF" + .@new_count;
+			next;
+			mes "Do you want to exchange?";
+			next;
+			switch(select("Exchange:Cancel")) {
+				case 1:
+					mes "[Kenny]";
+					mes "All done.";
+					delitem .@slug_id, .@new_count * 500;
+					getitem 25187, .@new_count;
+					close;
+				case 2:
+					close;
+			}
+		case 2:
+			mes "[Kenny]";
+			mes "All done.";
+			delitem .@slug_id, .@req_count;
+			getitem 25187, 1;
+			close;
+		case 3:
+			callsub S_Close;
+	}
+
+S_Close:
+	mes "[Kenny]";
+	mes "Okay.";
+	mes "If you need anything";
+	mes "please come back.";
+	close;
+}
+
 que_ng,187,149,3	duplicate(mdk)	Magazine Dealer Kenny#ng	83
-izlude,155,135,3	duplicate(mdk)	Magazine Dealer Kenny#iz	83
-izlude_a,155,135,3	duplicate(mdk)	Magazine Dealer Kenny#a	83
-izlude_b,155,135,3	duplicate(mdk)	Magazine Dealer Kenny#b	83
-izlude_c,155,135,3	duplicate(mdk)	Magazine Dealer Kenny#c	83
-izlude_d,155,135,3	duplicate(mdk)	Magazine Dealer Kenny#d	83
+izlude_in,74,104,5	duplicate(mdk)	Magazine Dealer Kenny#iz	83

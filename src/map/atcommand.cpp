@@ -3910,8 +3910,10 @@ ACMD_FUNC(reload) {
 		//atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
 
 		iter = mapit_getallusers();
-		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-			pc_close_npc(pl_sd,2);
+		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ){
+			pc_close_npc(pl_sd,1);
+			clif_cutin(pl_sd, "", 255);
+		}
 		mapit_free(iter);
 
 		flush_fifos();
@@ -4042,31 +4044,35 @@ ACMD_FUNC(mapinfo) {
 	}
 
 	/* Skill damage adjustment info [Cydh] */
-	union u_mapflag_args args = {};
-
-	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
-	if (map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)) {
-		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
-		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
-			,(args.flag_val = SKILLDMG_PC && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_MOB && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_BOSS && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_OTHER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_CASTER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)));
+	if (mapdata->flag[MF_SKILL_DAMAGE]) {
+		clif_displaymessage(fd,msg_txt(sd,1052)); // Skill Damage Adjustments:
+		sprintf(atcmd_output, msg_txt(sd, 1053), // > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d
+			mapdata->damage_adjust.rate[SKILLDMG_PC],
+			mapdata->damage_adjust.rate[SKILLDMG_MOB],
+			mapdata->damage_adjust.rate[SKILLDMG_BOSS],
+			mapdata->damage_adjust.rate[SKILLDMG_OTHER],
+			mapdata->damage_adjust.caster);
 		clif_displaymessage(fd, atcmd_output);
-		if (mapdata->skill_damage.size()) {
-			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
-			for (int j = 0; j < mapdata->skill_damage.size(); j++) {
-				sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
-					,j+1
-					,skill_get_name(mapdata->skill_damage[j].skill_id)
-					,mapdata->skill_damage[j].rate[SKILLDMG_PC]
-					,mapdata->skill_damage[j].rate[SKILLDMG_MOB]
-					,mapdata->skill_damage[j].rate[SKILLDMG_BOSS]
-					,mapdata->skill_damage[j].rate[SKILLDMG_OTHER]
-					,mapdata->skill_damage[j].caster);
+		if (!mapdata->skill_damage.empty()) {
+			clif_displaymessage(fd, msg_txt(sd, 1054)); // > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster
+			for (auto skilldmg : mapdata->skill_damage) {
+				sprintf(atcmd_output,"     %s : %d%%, %d%%, %d%%, %d%% | %d",
+					skill_get_name(skilldmg.first),
+					skilldmg.second.rate[SKILLDMG_PC],
+					skilldmg.second.rate[SKILLDMG_MOB],
+					skilldmg.second.rate[SKILLDMG_BOSS],
+					skilldmg.second.rate[SKILLDMG_OTHER],
+					skilldmg.second.caster);
 				clif_displaymessage(fd,atcmd_output);
 			}
+		}
+	}
+
+	if (map_getmapflag(m_id, MF_SKILL_DURATION)) {
+		clif_displaymessage(fd, msg_txt(sd, 1055)); // Skill Duration Adjustments:
+		for (const auto &it : mapdata->skill_duration) {
+			sprintf(atcmd_output, " > %s : %d%%", skill_get_name(it.first), it.second);
+			clif_displaymessage(fd, atcmd_output);
 		}
 	}
 
@@ -7228,7 +7234,7 @@ ACMD_FUNC(mobinfo)
 		clif_displaymessage(fd, atcmd_output);
 
 		sprintf(atcmd_output, msg_txt(sd,1244), //  ATK:%d~%d  Range:%d~%d~%d  Size:%s  Race: %s  Element: %s (Lv:%d)
-			mob->status.rhw.atk, mob->status.rhw.atk2, mob->status.rhw.range,
+			mob->status.batk + mob->status.rhw.atk, mob->status.batk + mob->status.rhw.atk2, mob->status.rhw.range,
 			mob->range2 , mob->range3, msize[mob->status.size],
 			mrace[mob->status.race], melement[mob->status.def_ele], mob->status.ele_lv);
 		clif_displaymessage(fd, atcmd_output);
@@ -8167,7 +8173,8 @@ ACMD_FUNC(mapflag) {
 												MF_BEXP,
 												MF_JEXP,
 												MF_BATTLEGROUND,
-												MF_SKILL_DAMAGE };
+												MF_SKILL_DAMAGE,
+												MF_SKILL_DURATION };
 
 			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
 				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);

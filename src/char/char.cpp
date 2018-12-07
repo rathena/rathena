@@ -2823,7 +2823,7 @@ void char_config_split_startpoint(char *w1_value, char *w2_value, struct point s
 
 		start_point[i].map = mapindex_name2id(fields[1]);
 		if (!start_point[i].map) {
-			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", start_point[i].map);
+			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", fields[1]);
 			start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
 			start_point[i].x = MAP_DEFAULT_X;
 			start_point[i].y = MAP_DEFAULT_Y;
@@ -2951,7 +2951,7 @@ bool char_config_read(const char* cfgName, bool normal){
 		} else if (strcmpi(w1, "char_maintenance") == 0) {
 			charserv_config.char_maintenance = atoi(w2);
 		} else if (strcmpi(w1, "char_new") == 0) {
-			charserv_config.char_new = (bool)atoi(w2);
+			charserv_config.char_new = (bool)config_switch(w2);
 		} else if (strcmpi(w1, "char_new_display") == 0) {
 			charserv_config.char_new_display = atoi(w2);
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
@@ -2987,7 +2987,7 @@ bool char_config_read(const char* cfgName, bool normal){
 			char_config_split_startitem(w1, w2, charserv_config.start_items_doram);
 #endif
 		} else if(strcmpi(w1,"log_char")==0) {		//log char or not [devil]
-			charserv_config.log_char = atoi(w2);
+			charserv_config.log_char = config_switch(w2);
 		} else if (strcmpi(w1, "unknown_char_name") == 0) {
 			safestrncpy(charserv_config.char_config.unknown_char_name, w2, sizeof(charserv_config.char_config.unknown_char_name));
 			charserv_config.char_config.unknown_char_name[NAME_LENGTH-1] = '\0';

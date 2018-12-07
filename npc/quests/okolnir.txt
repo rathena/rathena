@@ -174,7 +174,7 @@ que_qsch05,345,23,0	warp	Gate02#gq_sch05	1,1,schg_cas05,369,306
 	set .@GID, GetCastleData(.@t$,1);
 	if (getcharid(2) == .@GID) {
 		cutin "wish_maiden31",1;
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			mes "[Wish Maiden]";
 			mes "I am... Wish maiden.";
 			mes "Mourning in this virtual realm, Okolnir.";
@@ -2146,7 +2146,7 @@ que_qsch05,251,255,3	duplicate(Wish Maiden#main_boss)	Wish Maiden#sch05_boss	193
 	set .@t$, ((compare(strnpcinfo(4),"aru"))?"arug_cas0":"schg_cas0")+(charat(strnpcinfo(4),getstrlen(strnpcinfo(4))-1));
 	set .@GID, GetCastleData(.@t$,1);
 	if (getcharid(2) == .@GID) {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			if (compare(.@sub$,"aru")) {
 				setarray .@n, 7835,1,7836,1,7837,1,7838,1,2513,1,7291,10,7293,10,7063,100,985,20;
 				set .@rwd, 2541; //Asprika
