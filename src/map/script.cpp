@@ -24065,6 +24065,7 @@ BUILDIN_FUNC(refineui){
 
 	return SCRIPT_CMD_SUCCESS;
 #endif
+}
 
 #include "../custom/script.inc"
 
