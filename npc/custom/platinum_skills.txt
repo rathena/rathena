@@ -21,6 +21,7 @@ prt_cas,108,280,4	script	Platinum Skill NPC	744,{
 	mes "[Platinum Skill NPC]";
 	mes "I can give you the special skills available to your job.";
 	mes "Would you like these skills now?";
+	skill "ALL_EQSWITCH",1,SKILL_PERM;
 	next;
 	if (select("Yes Please:No") == 2) {
 		mes "[Platinum Skill NPC]";

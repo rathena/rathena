@@ -1,8 +1,59 @@
--	script	autojoin	-1,{
-
-OnPCLoginEvent:
-	atcommand "@join #global";
-	atcommand "@join #support";
-	atcommand "@join #trade";
-end;
+prontera,149,175,5 	script	Channel Control	2_M_SAGE_OLD,{
+    doevent "channel_setting_main::OnTalk";
+}
+ 
+-	script	channel_setting_main	-1,{
+   
+    OnInit:
+        setarray .channel_list_name$, "Global", "Support", "Trade", "Portuguese", "Spanish", "English";
+        setarray .channel_list$, "#global", "#support", "#trade", "#portuguese","#spanish","#english";
+       
+        .channel_size = getarraysize(.channel_list$);
+        end;
+   
+    OnTalk:
+		mes "[ ^0055FFChannel Control^000000 ]";
+		if(#language == 1) {
+			mes "Olá "+strcharinfo(0);
+			mes "Selecione o canal de bate-papo que você deseja estar.";
+		}else{
+			mes "Hello "+strcharinfo(0);
+			mes "Select the Chat Channel you wish to be in.";
+		}
+		next;
+        for (.@i = 0; .@i < .channel_size; .@i++)
+            .@menu$ = .@menu$ + .channel_list_name$[.@i] + (#CHANNEL_SETTINGS & (1 << .@i) ? "[^00b51aOn^000000]":"[^ff0055Off^000000]") + ":";
+        .@i = select(.@menu$) - 1;
+		
+		mes "[ ^0055FFChannel Control^000000 ]";
+		mes ""+ .channel_list_name$[.@i] + ": " + (#CHANNEL_SETTINGS & (1 << .@i) ? "^00b51aOn^000000":"^ff0055Off^000000");
+		next;
+        .@subMenu$ = .@subMenu$ + (#CHANNEL_SETTINGS & (1 << .@i) ? "I want to ^ff0055Disable^000000 it.":"I want to ^00b51aEnable^000000 it.") + ":Cancel";
+        .@index = select(.@subMenu$);
+		if(.@index == 2) {
+			callsub(OnTalk);
+		}
+		
+        if (#CHANNEL_SETTINGS & (1 << .@i)) {
+            #CHANNEL_SETTINGS -= (1 << .@i);			
+			atcommand "@channel leave "+.channel_list$[.@i];
+        }else{
+            #CHANNEL_SETTINGS |= (1 << .@i);
+			atcommand "@channel join "+.channel_list$[.@i];
+		}
+		
+		mes "[ ^0055FFChannel Control^000000 ]";
+		mes ""+ .channel_list_name$[.@i] + ": " + (#CHANNEL_SETTINGS & (1 << .@i) ? "^00b51aOn^000000":"^ff0055Off^000000");
+		next;
+        callsub(OnTalk);
+   
+    OnPCLoginEvent:
+        // sleep2 1000;
+		.@i = 0;
+        while (.@i < .channel_size) {
+            if (#CHANNEL_SETTINGS & (1 << .@i))
+                atcommand "@channel join "+.channel_list$[.@i];
+            .@i++;
+        }
+        end;
 }

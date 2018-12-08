@@ -19,7 +19,7 @@
 
 // Information NPC
 //============================================================
-prontera,149,193,4	script	WOE Information	835,{
+prontera,149,197,4	script	WOE Information	4_M_KNIGHT_GOLD,{
 	doevent "WOE_CONTROL::OnMenu";
 	end;
 OnAgitStart:
