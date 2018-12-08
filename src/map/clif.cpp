@@ -21024,12 +21024,14 @@ void clif_parse_equipswitch_request( int fd, struct map_session_data* sd ){
 	unsigned int tick = gettick();
 	uint16 skill_id = ALL_EQSWITCH, skill_lv = 1;
 
-	if( DIFF_TICK(tick, sd->equipswitch_tick) < 0 ) {
+	/*
+	if( DIFF_TICK(sd->equipswitch_tick,tick) <= 0 ) {
 		// Client will not let you send a request
 		return;
 	}
 
 	sd->equipswitch_tick = tick + skill_get_cooldown( skill_id, skill_lv );
+	*/
 
 	if( !battle_config.feature_equipswitch ){
 		return;

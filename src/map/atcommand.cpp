@@ -10715,7 +10715,7 @@ ACMD_DEF(whosell),
 		ACMD_DEF(cart),
 		ACMD_DEF(mount2),
 		ACMD_DEF(join),
-		ACMD_DEFR(channel,ATCMD_NOSCRIPT),
+		ACMD_DEF(channel),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
 #ifdef VIP_ENABLE
