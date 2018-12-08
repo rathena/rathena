@@ -130,9 +130,9 @@
 1653,507,100	// Staff_Of_Healing_C
 1658,499,100	// P_Staff3
 1667,499,100	// TE_Woe_Staff
-1681,403,100	// Short_Foxtail_Staff
-1687,403,100	// Beginner_Foxtail_Staff
-1699,435,100	// Paradise_Foxtail_Staff_I
+1681,467,100	// Short_Foxtail_Staff
+1687,467,100	// Beginner_Foxtail_Staff
+1699,499,100	// Paradise_Foxtail_Staff_I
 1703,507,100	// Bow__
 1728,507,100	// Balistar_C
 1729,507,100	// Bow_Of_Rudra_C
@@ -249,7 +249,7 @@
 2559,467,100	// Time_Keepr_Manteau
 2560,499,100	// Para_Team_Manteau1
 2564,507,100	// Feral_Tail
-2566,507,100	// Half_Asprika
+2566,499,100	// Half_Asprika
 2568,467,100	// Muffler_Of_Roki
 2571,499,100	// Para_Team_Manteau2
 2634,507,100	// Bridegroom_Ring
@@ -264,7 +264,6 @@
 2676,507,100	// Hunter_Earring
 2681,507,100	// Republic_Ring
 2686,507,100	// Elven_Ears_C
-2686,475,100	// Elven_Ears_C
 2687,507,100	// Steel_Flower_C
 2688,507,100	// Critical_Ring_C
 2689,507,100	// Earring_C
@@ -349,7 +348,6 @@
 2821,499,100	// Acolyte_Manual
 2822,499,100	// Archer_Manual
 2823,499,100	// Merchant_Manual
-2823,499,100	// Merchant_Manual
 2824,499,100	// Mage_Manual
 2825,1,100	// Shaman_EaringB
 2826,1,100	// Dark_Knight_BeltB
@@ -358,16 +356,12 @@
 2841,507,100	// Caracas_Ring
 2843,507,100	// Gold_Trickle
 2844,475,100	// El_Dicastes_Light
-2856,507,100	// Half_Megin
-2857,507,100	// Half_Brysing
+2856,499,100	// Half_Megin
+2857,499,100	// Half_Brysing
 2858,475,100	// Pendant_Of_Guardian
 2863,507,100	// Ring_Of_Valkyrie
-2864,499,100	// Light_Of_Cure
-2865,499,100	// Seal_Of_Cathedral
-2866,499,100	// Ring_Of_Archbishop
 2872,475,100	// G_Honor_Certificate
 2875,475,100	// RO_Appreciation_Ring
-2885,507,100	// Mother_Heart
 2885,499,100	// Mother_Heart
 2897,475,100	// 2011RWC_Necklace_J
 2915,467,100	// Ettlang_Keepsake
@@ -441,10 +435,7 @@
 5430,1,100	// Sacred_Torch_Coronet
 5450,475,100	// Sun_Cap
 5451,475,100	// Dragonhelm_Gold
-5451,475,100	// Dragonhelm_Gold
 5452,475,100	// Dragonhelm_Silver
-5452,475,100	// Dragonhelm_Silver
-5453,475,100	// Dragonhelm_Copper
 5453,475,100	// Dragonhelm_Copper
 5460,499,100	// Adv_Dragon_Skull
 5461,499,100	// Adv_Whisper_Mask
@@ -508,14 +499,6 @@
 5823,467,100	// Love_Arrow
 5855,499,100	// Fishing_Rod
 5864,475,100	// Shadow_Booster
-5900,467,100	// Divine Guard Hat
-5901,467,100	// Focus Beret
-5902,467,100	// Harvester Hat
-5903,467,100	// Deadman Bandana
-5904,467,100	// Inconspicuous Hat
-5905,467,100	// Lyrica Hat
-5906,467,100	// Oni Horns
-5907,467,100	// Sea Captain Hat
 6000,475,100	// Dark_Ashes
 6005,467,100	// New_Year_Rice_Cake
 6006,499,100	// Rice_Cake_Delivery_Box
@@ -523,7 +506,6 @@
 6009,499,100	// Large_Magical_Fan
 6024,8,100	// 17Carat_Dia
 6025,507,100	// Towel_Of_Memory
-6026,475,100	// Marriage_Covenant
 6027,507,100	// Crystal_Of_Feardoom
 6028,507,100	// Seal_Scroll
 6029,507,100	// Morocc_Tracing_Log
@@ -554,8 +536,8 @@
 6077,507,100	// Rough_Mineral
 6078,507,100	// Stone_Fragments
 6079,507,100	// Flower_Of_Alfheim
-6080,507,100	// Manuk_Coin
-6081,507,100	// Splendide_Coin
+6080,467,100	// Manuk_Coin
+6081,467,100	// Splendide_Coin
 6082,507,100	// Spirit_Of_Alfheim
 6084,507,100	// Bradium_Fragments
 6085,507,100	// Shaggy_Muffler
@@ -573,25 +555,19 @@
 6126,507,100	// Happy_Box
 6127,507,100	// Purification_Stone
 6129,475,100	// Ticket_Nightmare
-6129,507,100	// Ticket_Nightmare
 6130,507,100	// Ticket_Loli_Ruri
-6131,475,100	// Ticket_Goblin_Leader
-6131,475,100	// Ticket_Goblin_Leader
 6131,475,100	// Ticket_Goblin_Leader
 6132,507,100	// Ticket_Incubus
 6133,507,100	// Ticket_Miyabi_Ningyo
 6134,507,100	// Ticket_Whisper
 6135,507,100	// Ticket_Wicked_Nymph
-6136,507,100	// Ticket_Medusa
 6136,475,100	// Ticket_Medusa
 6137,507,100	// Ticket_Stoneshooter
 6138,507,100	// Ticket_Marionette
 6139,507,100	// Ticket_Leafcat
 6140,507,100	// Ticket_Dullahan
 6141,507,100	// Ticket_Shinobi
-6142,507,100	// Ticket_Golem
 6142,475,100	// Ticket_Golem
-6143,507,100	// Ticket_Civil_Servant
 6143,475,100	// Ticket_Civil_Servant
 6148,499,100	// Chocolate_Of_Eternity
 6149,499,100	// Plain_Chocolate
@@ -628,7 +604,6 @@
 6181,475,100	// Bongun_Ticket
 6182,475,100	// Goblin_Ticket
 6183,475,100	// Hardtack_Ticket
-6184,475,100	// Zherlthsh_Ticket
 6184,475,100	// Zherlthsh_Ticket
 6185,475,100	// Alice_Ticket
 6206,499,100	// I_Love_You
@@ -702,7 +677,7 @@
 6389,499,100	// Puddle_R_Sample
 6390,499,100	// Small_Pocket
 6391,499,100	// Splendid_Supply_Kit
-6392,507,100	// Bradium_Box
+6392,499,100	// Bradium_Box
 6396,475,100	// Auger_Of_Spirit
 6397,507,100	// PR_Team_Ticket
 6398,507,100	// Develop_Team_Ticket
@@ -715,11 +690,6 @@
 6415,507,100	// Strange_Embryo
 6416,499,100	// Pet_Exchange
 6417,475,100	// Silvervine
-6418,499,100	// Agrade_Coin
-6419,499,100	// Bgrade_Coin
-6420,499,100	// Cgrade_Coin
-6421,499,100	// Dgrade_Coin
-6422,499,100	// Egrade_Coin
 6424,499,100	// Halloween_Fragment
 6425,499,100	// Halloween_Certificate
 6426,499,100	// Bad_Can
@@ -763,7 +733,7 @@
 6507,499,100	// Evil_Bone
 6519,467,100	// Collected_Samples
 6520,467,100	// Lost_Belongings
-6536,467,100	// Star_Decor
+6536,499,100	// Star_Decor
 6539,499,100	// Old_Left_Lapine
 6540,499,100	// Golden_Leaf
 6541,499,100	// Avant_Research_Data
@@ -793,13 +763,11 @@
 6655,499,100	// Firm_Pumpkin
 6656,499,100	// Goast_Free_Charm
 6657,499,100	// Memory_Of_Jack
-6671,467,100	// Geffen_Coin_Magic_Tournament
-6672,467,100	// Black_As_Night_Piece
 6673,507,100	// Bossnia_Tickets
-6674,507,100	// GM_Coin
+6674,499,100	// GM_Coin
 6681,467,100	// XMAS_Cookie
 6682,499,100	// Bag_Of_Selling_Goods
-6684,403,100	// TokenOfHero
+6684,467,100	// TokenOfHero
 6685,499,100	// Morocc_Certification
 6686,507,100	// Brick
 6687,507,100	// Rope
@@ -834,11 +802,8 @@
 6747,499,100	// Steel_Workpiece
 6748,507,100	// Daily_Report_He_And_His_Team
 6749,507,100	// Operation_Control_Device
-6752,467,100	// Charleston_Parts
-6753,507,100	// Token_Of_Destruction
+6753,467,100	// Token_Of_Destruction
 6754,507,100	// Collected_Medicinal_Herbs
-6756,507,100	// Cohesive_Energy
-6757,507,100	// The_Memory_Recorder
 6766,499,100	// Ice_World_Ticket
 6767,499,100	// Summer_Fes_Coin
 6768,499,100	// Red_Beans_Of_Ice
@@ -924,7 +889,7 @@
 6916,499,100	// Piece_Of_Soul_Monkey
 6917,499,100	// Piece_Of_Soul_Chicken
 6919,499,100	// Honor_Proof
-6920,499,100	// Rune_Magic_Powder
+6920,467,100	// Rune_Magic_Powder
 6923,499,100	// Bright_Fire_Lights
 6925,499,100	// Letter_Of_Prisoner
 6926,499,100	// Rune-Midgard_History_Book
@@ -1049,8 +1014,6 @@
 7572,475,100	// Magic_Necklace
 7573,475,100	// Magic_Necklace_
 7575,507,100	// Red_Jewel_
-7575,499,100	// Red_Jewel_
-7576,499,100	// Blue_Jewel_
 7576,507,100	// Blue_Jewel_
 7577,499,100	// Golden_Jewel_
 7579,499,100	// Silk_Handkerchief
@@ -1132,7 +1095,7 @@
 7822,475,100	// Whole_Barbecue
 7823,475,100	// Meat_Veg_Skewer
 7825,475,100	// Heroic_Stone
-7826,507,100	// Continental_Guard_Paper
+7826,499,100	// Continental_Guard_Paper
 7827,499,100	// Mineral_Report
 7828,499,100	// BF_Badge1
 7829,499,100	// BF_Badge2
@@ -1336,7 +1299,6 @@
 12311,467,100	// Large_Spray_Of_Flowers
 12313,499,100	// Protection_Of_Angel
 12314,507,100	// Noive_Box
-12314,475,100	// Noive_Box
 12319,467,100	// Strawberry_Cake
 12320,467,100	// Pineapple_Juice
 12321,467,100	// Spicy_Sandwich
@@ -1346,7 +1308,6 @@
 12325,499,100	// N_Magnifier
 12331,507,100	// Ginseng
 12332,467,100	// Fruit_Juice
-12333,507,100	// Ansila
 12333,507,100	// Ansila
 12340,499,100	// Mysterious_Rice_Powder
 12361,475,100	// Delicious_Shaved_Ice
@@ -1394,10 +1355,6 @@
 12504,475,100	// E_Dex_Dish10_
 12505,475,100	// E_Luk_Dish10_
 12506,475,100	// E_Vit_Dish10_
-12507,475,100	// E_WOB_Rune
-12508,475,100	// E_WOB_Schwaltz
-12509,475,100	// E_WOB_Rachel
-12510,475,100	// E_WOB_Local
 12514,475,100	// E_Abrasive
 12516,475,100	// E_Small_Life_Potion
 12522,475,100	// E_Blessing_10_Scroll
@@ -1495,7 +1452,6 @@
 12796,475,100	// Red_Booster
 12799,475,100	// PCBang_Coupon_Box5
 12802,507,100	// Time_Guardian_Box
-12802,475,100	// Time_Guardian_Box
 12803,507,100	// Beginner_Kit_Box
 12804,475,100	// Cru_Scroll
 12805,475,100	// Mystic_Powder
@@ -1552,7 +1508,6 @@
 12921,475,100	// Enriched_Oridecon_Box
 12922,475,100	// Token_Of_Siegfried_Box
 12927,475,100	// J_Aspersio_5_Scroll_Box
-12928,475,100	// J_Aspersio_5_Scroll
 12928,475,100	// J_Aspersio_5_Scroll
 12929,475,100	// Pet_Egg_Scroll_Box3
 12930,475,100	// Pet_Egg_Scroll_Box4
@@ -1905,7 +1860,6 @@
 13694,475,100	// Freyja_Crown_Box
 13695,475,100	// Battle_Manual25_Box
 13696,475,100	// Battle_Manual100_Box
-13696,475,100	// Battle_Manual100_Box
 13697,475,100	// J_Blessing10_Box
 13698,475,100	// J_Inc_Agi10_Box
 13699,475,100	// J_Wind_Walk10_Box
@@ -2146,7 +2100,6 @@
 13937,475,100	// Robo_Eye_Box
 13938,475,100	// Twin_Ribbon_Box
 13939,475,100	// Diadem_Box
-13940,475,100	// Siege_Tele_Scroll_Box
 13940,475,100	// Siege_Tele_Scroll_Box
 13941,475,100	// TW_Valentine_Scroll
 13942,475,100	// Love_Angel_Box_1m
@@ -2686,9 +2639,6 @@
 14509,475,100	// Light_Center_Pot
 14510,475,100	// Light_Awakening_Pot
 14511,475,100	// Light_Berserk_Pot
-14512,475,100	// Meteor_10_Scroll
-14513,475,100	// Storm_10_Scroll
-14514,475,100	// Vermilion_10_Scroll
 14515,475,100	// Lex_Aeterna_Scroll
 14516,475,100	// Magnificat_5_Scroll
 14517,475,100	// CP_Helm_Scroll
@@ -2707,7 +2657,6 @@
 14530,475,100	// Flee_30_Scroll
 14531,475,100	// Accuracy_30_Scroll
 14532,475,100	// Battle_Manual25
-14533,475,100	// Battle_Manual100
 14533,475,100	// Battle_Manual100
 14534,475,100	// Small_Life_Potion
 14535,475,100	// Med_Life_Potion
@@ -2766,7 +2715,6 @@
 14589,475,100	// Pty_Inc_Agi_Scroll
 14590,475,100	// Pty_Assumptio_Scroll
 14591,475,100	// Siege_Teleport_Scroll
-14591,475,100	// Siege_Teleport_Scroll
 14592,475,100	// Job_Manual50
 14593,475,100	// Magic_Power_Scroll
 14594,475,100	// Quagmire_Scroll
@@ -2818,20 +2766,18 @@
 14731,475,100	// Teleport_Shadow_Box
 14732,475,100	// Steal_Shadow_Box
 14733,475,100	// Sealed_Pharaoh_Scroll
-14735,475,100	// Shapeshifter_Costume
 14739,475,100	// Sealed_General_Egnigem_Cenia_Scroll
 14740,475,100	// Sealed_Vesper_Scroll
 14758,475,100	// Safe_To_Smelting_Scroll
 14765,475,100	// Limited_Edition_JOB_Battle_Manual
 14766,475,100	// Limited_Power_Booster
-14805,475,100	// Almighty_Lucky_Egg
 15001,507,100	// Odin's_Blessing_I
 15002,507,100	// Rune_Plate
 15007,467,100	// Time_Keepr_Robe
 15009,499,100	// Para_Team_Uniform1
 15010,499,100	// Para_Team_Uniform2
 15011,499,100	// Para_Team_Uniform3
-15023,507,100	// Half_Brynhild
+15023,499,100	// Half_Brynhild
 15031,499,100	// Para_Team_Armor
 15033,507,100	// Tutorial_Mattle
 15034,507,100	// Tutorial_Mattle_
@@ -2955,10 +2901,9 @@
 16227,475,100	// Aries_Crown_Box
 16228,475,100	// RJC_Katusa_Box
 16229,475,100	// Scarlet_Rose_Box
-16229,475,100	// Scarlet_Rose_Box
 16230,475,100	// Taurus_Diadem_Box
 16231,475,100	// Taurus_Crown_Box
-16232,409,100	// Reginleif_Box
+16232,25,100	// Reginleif_Box
 16235,475,100	// Octopus_Hat_Box
 16236,475,100	// Leaf_Cat_Hat_Box
 16237,475,100	// Fur_Seal_Hat_Box
@@ -3064,7 +3009,6 @@
 //16355,475,100	//
 //16356,475,100	//
 //16357,475,100	//
-//16358,475,100	//
 //16358,475,100	//
 16360,475,100	// Desert_Prince_Box
 16361,475,100	// FDesert_Prince_Box
@@ -3495,7 +3439,6 @@
 //17200,475,100	//
 //17201,475,100	//
 //17202,475,100	//
-17204,475,100	// Shining_Egg
 //17205,475,100	//
 //17206,475,100	//
 //17224,475,100	//
@@ -3567,28 +3510,23 @@
 17455,475,100	// Premium_Battle_Manual_Box
 17456,475,100	// Support_Package_II
 17457,475,100	// Support_Package_II(10)
-17461,475,100	// Frozen_Egg_Costume
 17465,475,100	// Refinement_Ore_Box_VI
 17466,475,100	// Refinement_Ore_Box_VI(10)
 17467,475,100	// (Limited)_Token_of_Ziegfried_Box(50)
 17468,475,100	// Neuralizer_II_Box_3
 17469,475,100	// Neuralizer_I_Box
-17470,475,100	// Headgear_Costume_Scroll
 17472,475,100	// Support_Package_III
 17473,475,100	// Support_Package_III(10)
 17474,475,100	// Infinite_Giant_Fly_Wing_Box_V
 17475,475,100	// (Limited)Gym_Membership_Card_Box(10)
 17477,475,100	// Unlimited_Box_II
 17478,475,100	// Unlimited_Box_II(10)
-17481,475,100	// Flower_Blossom_Scroll
 17483,475,100	// Three_Master_Package_III
 17484,475,100	// Three_Master_Package_III(10)
 17491,475,100	// Refinement_Ore_Box_VII
 17492,475,100	// Refinement_Ore_Box_VII(10)
-17493,475,100	// Burning_Feather_Costume_Scroll
 17495,475,100	// Lucky_Silvervine_Fruit_Box_III10
 17496,475,100	// Lucky_Silvervine_Fruit_Box_III110
-17497,475,100	// Seaside_Costume_Scroll
 17498,475,100	// Three_Master_Package_IV
 17499,475,100	// Three_Master_Package_IV(10)
 17501,475,100	// Support_Package_IV
@@ -3602,11 +3540,9 @@
 17513,475,100	// (Limited)Purified_Oridecon_Box(30)
 17515,475,100	// Unlimited_Box_III
 17516,475,100	// Unlimited_Box_III(10)
-17517,475,100	// Animal_Costume_Scroll
 17520,475,100	// Limited_Edition_Manual_Box
 17521,475,100	// Three_Master_Package_V
 17522,475,100	// Three_Master_Package_V(10)
-17523,475,100	// Mystical_Costume_Scroll
 17524,475,100	// Limited_Power_Booster_Box
 17525,475,100	// Limited_Power_Booster_Box(100)
 17527,475,100	// Actinidia_Cat_Fruit_Box(200)
@@ -3619,20 +3555,11 @@
 17567,475,100	// Event_Almighty_Box
 17568,475,100	// Event_Almighty_Box(100)
 17569,475,100	// Dungeon_1_hour_Ticket_Box
-17648,475,100	// Smithy_Lucky_Egg
-17659,475,100	// Ganymede_Lucky_Egg
-17665,475,100	// LastAngel_LuckyScroll
-17671,475,100	// Valkyrie_Lucky_Egg
-17674,475,100	// Splash_Rainbow_Lucky_Egg
-17681,475,100	// Midgard_Lucky_Scroll
-17692,475,100	// Blessing_Scarlet_Egg
 //17570,475,100	//
 //17573,475,100	//
 //17574,475,100	//
 //17582,475,100	//
 //17583,475,100	//
-17681,475,100	// Midgard_Lucky_Scroll
-17692,475,100	// Blessing_Scarlet_Egg
 18100,507,100	// Shooting_Star_C
 18106,499,100	// P_Bow3
 18107,507,100	// Malang_Snow_Crab
@@ -3688,7 +3615,6 @@
 19764,475,100	// C_Monster_Card
 19765,475,100	// C_Wing_Angels_Ears
 19853,507,100	// C_Filir Wings
-19996,467,100	// Horse_King
 19999,467,100	// C_Mouse_Hat1
 20000,467,100	// C_Mouse_Hat2
 20001,467,100	// C_Mouse_Hat3
@@ -3752,24 +3678,23 @@
 //22539,467,100	//
 22540,475,100	// Runstone_Luxanima
 22541,475,100	// PC_Room_Coupon_Box_VI
-22542,475,100	// Concentration_Potion
-22543,475,100	// Berserk_Potion
-22544,475,100	// Awakening_Potion
-22545,475,100	// Speed_Potion
-22546,475,100	// Slow_Potion
-22547,475,100	// Anti-Payne_Moment
-22548,475,100	// Wed_Cursed
-22549,475,100	// Poison_Bottle
-22550,475,100	// Sweets_Pocket
-22551,475,100	// Teacake
-22552,475,100	// Fried_Pastry
-22553,475,100	// Rainbow_Bread
-22554,467,100	// First_Aid_Box
+22542,467,100	// Concentration_Potion
+22543,467,100	// Berserk_Potion
+22544,467,100	// Awakening_Potion
+22545,507,100	// Speed_Potion
+22546,507,100	// Slow_Potion
+22547,507,100	// Anti-Payne_Moment
+22548,507,100	// Wed_Cursed
+22549,467,100	// Poison_Bottle
+22550,507,100	// Sweets_Pocket
+22551,507,100	// Teacake
+22552,507,100	// Fried_Pastry
+22553,507,100	// Rainbow_Bread
+22554,499,100	// First_Aid_Box
 22555,24,100	// Gourmet_Chocolate
 22556,24,100	// Luxury_Chocolate
 22557,24,100	// Masterpieces_of_Artisan_Chocolate
 22566,48,100	// Last_Years_Frost
-22567,384,100	// Squad_Prize
 22569,499,100	// Gift_New_start
 22589,499,100	// Savage_Ora_Ora
 22590,499,100	// Grand_Peco_Ora_Ora
@@ -3848,7 +3773,7 @@
 22870,467,100	// Christmas_Package
 22873,475,100	// Sealed_Beelzebub_Scroll_II
 22874,475,100	// Sealed_Beelzebub_Card_Album
-22875,475,100	// Sealed_Beelzebub_Card
+22875,467,100	// Sealed_Beelzebub_Card
 23280,499,100	// N_Fly_Wing_
 22881,499,100	// Rope_Gallows
 22883,475,100	// September_Gift_Box
@@ -3878,11 +3803,10 @@
 23046,475,100	// S_Mystic_Powder
 23047,475,100	// S_Blessing_Tyr
 23048,475,100	// S_Resilience_Potion
-23087,435,100	// Small_Leather_Bag
+23087,499,100	// Small_Leather_Bag
 23307,475,100	// S_Shining_Def_Scroll
-23340,475,100	// S_Megaphone
+23340,467,100	// S_Megaphone
 23177,475,100	// Kafra_Card_
-23196,475,100	// Shining_Blue_Lucky_Egg
 25043,499,100	// Thorny_Vine_Flute
 25045,499,100	// Luxurious_Cloth
 25046,499,100	// Boarding_Pass
@@ -3899,39 +3823,38 @@
 25148,499,100	// Cute_Starved_Demon_Doll
 25149,499,100	// Doll_With_Warm_Scarf
 25150,499,100	// Hugging_Alice_Pilow
-25246,403,100	// Juice_Mix_Package
-25247,403,100	// Purple_Ore
-25248,403,100	// Purple_Ore_Crate
-25249,403,100	// Buffalo_Bandit_Mane
-25151,435,100	// Rachel's_Revolver
-25152,435,100	// Cherished_Bouquet
-25153,435,100	// Broken_Gun_Wreck
-25154,384,100	// Antique_Gunpowder
-25155,435,100	// Schwartz's_Honor_Token
-25160,435,100	// Borrowed_Book
-25161,435,100	// Delicious_Handmade_Cookie
-25162,435,100	// Crispy_Anchovy
-25163,435,100	// Arms_Shop_Ad
-25164,435,100	// Fresh_Tea_Leaves
-25165,435,100	// High_Class_Tea
-25166,435,100	// Very_Shining_Ring
-25167,435,100	// Old_Letter
-25179,435,100	// Blessing_Star
-25180,435,100	// Old_Rings
-25181,435,100	// Wood_Rosary
-25182,435,100	// Assassin's_Mark_Dagger
-25183,435,100	// Decorated_Archer's_Thimble
-25184,435,100	// Portable_Sewingbox
-25185,435,100	// Locket_Pendant
-25260,435,100	// Fragment_of_Purple_Ore
-26100,435,100	// Paradise_Foxtail_Staff_II
-26101,435,100	// Paradise_Foxtail_Staff_III
+25246,467,100	// Juice_Mix_Package
+25247,467,100	// Purple_Ore
+25248,467,100	// Purple_Ore_Crate
+25249,467,100	// Buffalo_Bandit_Mane
+25151,499,100	// Rachel's_Revolver
+25152,499,100	// Cherished_Bouquet
+25153,499,100	// Broken_Gun_Wreck
+25155,499,100	// Schwartz's_Honor_Token
+25160,499,100	// Borrowed_Book
+25161,499,100	// Delicious_Handmade_Cookie
+25162,499,100	// Crispy_Anchovy
+25163,499,100	// Arms_Shop_Ad
+25164,499,100	// Fresh_Tea_Leaves
+25165,499,100	// High_Class_Tea
+25166,499,100	// Very_Shining_Ring
+25167,499,100	// Old_Letter
+25179,499,100	// Blessing_Star
+25180,499,100	// Old_Rings
+25181,499,100	// Wood_Rosary
+25182,499,100	// Assassin's_Mark_Dagger
+25183,499,100	// Decorated_Archer's_Thimble
+25184,499,100	// Portable_Sewingbox
+25185,499,100	// Locket_Pendant
+25260,499,100	// Fragment_of_Purple_Ore
+26100,499,100	// Paradise_Foxtail_Staff_II
+26101,499,100	// Paradise_Foxtail_Staff_III
 28105,467,100	// Infinity_Axe
 28310,467,100	// Sarah's_Left_Earring
 28311,467,100	// Sarah's_Right_Earring
 28333,475,100	// Gold_PC_Room_Ring
-28495,403,100	// Sheriffs_Left_Badge
-28496,403,100	// Sheriffs_Right_Badge
+28495,467,100	// Sheriffs_Left_Badge
+28496,467,100	// Sheriffs_Right_Badge
 28703,467,100	// Infinity_Dagger
-31140,403,100	// C_Cowboy_Hat_
-31141,403,100	// C_Rose_Corsage_
+31140,467,100	// C_Cowboy_Hat_
+31141,467,100	// C_Rose_Corsage_
