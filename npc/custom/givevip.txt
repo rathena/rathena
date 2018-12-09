@@ -69,35 +69,35 @@ OnPCLoginEvent:
 	// 	set #ServCrash20181030,1;
 	// }
 
-	if(! #Diwali2018)
-	{
-		// .@unique$ = get_unique_id();
-		.@c = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#Diwali2018' AND `value` = '"+get_unique_id()+"'",.@value);
-		debugmes "c: "+.@c;
-		dispbottom "===============================================================", 0x666666;
-		dispbottom "  We from MilkyRO wishes you a Happy Holidays!", 0x76daee;
-		dispbottom "===============================================================", 0x666666;
-		dispbottom " MilkyRO is currently holding <[DOUBLE EXP]> event for Deepavali 2018.";
-		if (.@c <= 0 ) // not cheating
-		{
-			dispbottom " To celebrate the occasion, we gift you a few items and one temporary headgear.";
-			getitem 8501, 5; 				// Milky Special Gift Box
-			getitem 12264, 3;				// Bubble gum x3
-			getitem 16361, 1;				// Costume Desert Prince = 20 days
-		}
-		else // dual client
-		{
-			dispbottom " To celebrate the occasion, we had gifted you a few items in the account you login to";
-			dispbottom " previously. In other words, <GM>Nubs doesn't like you abusing the free items by ";
-			dispbottom " making multiple accounts.";
-		}
-		dispbottom " ";
-		dispbottom "                                                                                                                                        MilkyRO Team", 0x76daee;
-		dispbottom "===============================================================", 0x666666;
+	//if(! #Diwali2018)
+	//{
+	//	// .@unique$ = get_unique_id();
+	//	.@c = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#Diwali2018' AND `value` = '"+get_unique_id()+"'",.@value);
+	//	debugmes "c: "+.@c;
+	//	dispbottom "===============================================================", 0x666666;
+	//	dispbottom "  We from MilkyRO wishes you a Happy Holidays!", 0x76daee;
+	//	dispbottom "===============================================================", 0x666666;
+	//	dispbottom " MilkyRO is currently holding <[DOUBLE EXP]> event for Deepavali 2018.";
+	//	if (.@c <= 0 ) // not cheating
+	//	{
+	//		dispbottom " To celebrate the occasion, we gift you a few items and one temporary headgear.";
+	//		getitem 8501, 5; 				// Milky Special Gift Box
+	//		getitem 12264, 3;				// Bubble gum x3
+	//		getitem 16361, 1;				// Costume Desert Prince = 20 days
+	//	}
+	//	else // dual client
+	//	{
+	//		dispbottom " To celebrate the occasion, we had gifted you a few items in the account you login to";
+	//		dispbottom " previously. In other words, <GM>Nubs doesn't like you abusing the free items by ";
+	//		dispbottom " making multiple accounts.";
+	//	}
+	//	dispbottom " ";
+	//	dispbottom "                                                                                                                                        MilkyRO Team", 0x76daee;
+	//	dispbottom "===============================================================", 0x666666;
 
-		set #Diwali2018, get_unique_id();
-	}
-	end;
+	//	set #Diwali2018, get_unique_id();
+	//}
+	//end;
 }
 
 sec_in02,11,32,3	script	VIP	90,{
