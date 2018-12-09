@@ -172,12 +172,13 @@ switch( select( ( .@current_mission_size )?"Submit Mission":"",
 			message strcharinfo(0),"Failed to submit this mission.";
 		}else{
 			next;
-			if( select( "Submit Completed Mission","Cancel" ) == 1 ){
-				for( .@ms = ( @ms_size - 1 ); .@ms >= 0; .@ms-- )
+			if( select( "Submit Completed Mission","Cancel" ) == 1 ) {
+				for( .@ms = ( @ms_size - 1 ); .@ms >= 0; .@ms-- ) {
 					if( @ms_list$[.@ms] == ""+.@mission_id ){
 						mes "^0055FF[ "+.@npc_name$+" ]^000000";
 						query_sql( "UPDATE `player_mission` SET `completion` = NOW() WHERE `cid` = "+getcharid(0)+" AND `mission_id` = "+.@mission_id +" AND `completion` = '0000-00-00 00:00:00'" );
-						mes "Mission accomplished.";
+						mes "Mission completed.";
+						mes "Thank you.";
 						@ms_size--;
 
 						// clear requirement.
@@ -191,11 +192,14 @@ switch( select( ( .@current_mission_size )?"Submit Mission":"",
 								delitem .@item_list[.@i],.@item_qty[.@i];
 							}
 
-						mes "Gained some mission's rewards.";
+						// mes "Gained some mission's rewards.";
 						// rewards
 						getexp .@baseexp,.@jobexp;
 						if( .@reward_size )
+						{
+							dispbottom "[Mission] Please check RoDEX for your mission's rewards.";
 							mail getcharid(0,strcharinfo(0)),"Adventurer's Guild","Rewards for Mission Completion","Thank you for your efforts in doing the mission\r\n["+.@title$+"].\r\n\r\nAttached to this mail are your rewards.",.@zeny, .@reward_list, .@reward_qty,
+						}
 
 						// 	for( .@i = 0; .@i < .@reward_size; .@i++ )
 						// 		getitem .@reward_list[.@i],.@reward_qty[.@i];
@@ -203,7 +207,8 @@ switch( select( ( .@current_mission_size )?"Submit Mission":"",
 						// Zeny += .@zeny;
 						break;
 					}
-				mes "Something went wrong ..";
+				}
+				// mes "Something went wrong ..";
 			}
 		}
 		break;
