@@ -198,7 +198,7 @@ switch( select( ( .@current_mission_size )?"Submit Mission":"",
 						if( .@reward_size )
 						{
 							dispbottom "[Mission] Please check RoDEX for your mission's rewards.";
-							mail getcharid(0,strcharinfo(0)),"Adventurer's Guild","Rewards for Mission Completion","Thank you for your efforts in doing the mission\r\n["+.@title$+"].\r\n\r\nAttached to this mail are your rewards.",.@zeny, .@reward_list, .@reward_qty,
+							mail getcharid(0,strcharinfo(0)),"Adventurer's Guild","Rewards for Mission Completion","Thank you for your efforts in doing the mission\r\n["+.@title$+"].\r\n\r\nAttached to this mail are your rewards.",.@zeny, .@reward_list, .@reward_qty;
 						}
 
 						// 	for( .@i = 0; .@i < .@reward_size; .@i++ )
