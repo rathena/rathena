@@ -21617,7 +21617,8 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
  */
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 {
-	uint16 id = 0, caster;
+	uint16 id = 0;
+	int caster;
 
 	trim(split[0]);
 	if (ISDIGIT(split[0][0]))
