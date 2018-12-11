@@ -497,11 +497,8 @@ menu	"Airship Assault",I22, "Bakonawa Lake",I1, "Bangungot Hospital 2F",I2, "Buw
 		"Faceworms Nest",I7, "Geffen Magic Tournament",I8, "Ghost Palace",I9,
 		"Hazy Forest",I10, "Horror Toy Factory",I11, "Isle of Bios",I23,"Last Room",I24, "Malangdo Culvert",I12,
 		"Morse Cave",I25,"Nidhoggur's Nest",I13, "Nightmarish Jitterbug",I27, "Octopus Cave",I14, "Old Glast Heim",I15,
-		"Orc's Memory",I16, "Room of Consciousness",I26, "Sarah and Fenrir",I17, "Sara Memory",I18,
+		"Orc's Memory",I16, "Room of Consciousness",I26, "Sarah and Fenrir",I17, "Sara Memory",I18, "Sky Fortress", I29,
 		"Sealed Shrine",I19, "Wolfchev's Laboratory",I20;
-
-// - SkyFortress
-// - Charleston Crisis
 
 I1: Restrict("RE");
 	Go("ma_scene01",172,175);
@@ -555,6 +552,8 @@ I27: Restrict("RE");
 	Go("moc_para01",26,90);
 I28: Restrict("RE");
 	Go("verus04",77,118);
+I29: Restrict("RE");
+	Go("prt_q",243,83);
 
 // --------------------------------------------------
 	Special:
