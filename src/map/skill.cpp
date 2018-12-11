@@ -21617,7 +21617,7 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
  */
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 {
-	uint16 id = 0;
+	uint16 id = 0, caster;
 
 	trim(split[0]);
 	if (ISDIGIT(split[0][0]))
@@ -21628,7 +21628,12 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 	id = skill_db_isset(id, __FUNCTION__);
 
 	skill_db[id]->damage = {};
-	skill_db[id]->damage.caster |= atoi(split[1]);
+	trim(split[1]);
+	if (ISDIGIT(split[1][0]))
+		caster = atoi(split[1]);
+	else // Try to parse caster as constant
+		script_get_constant(split[1], &caster);
+	skill_db[id]->damage.caster |= caster;
 	skill_db[id]->damage.map |= atoi(split[2]);
 
 	for(int offset = 3, i = 0; i < SKILLDMG_MAX && offset < columns; i++, offset++ ){
