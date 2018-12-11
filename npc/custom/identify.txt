@@ -22,8 +22,8 @@
 		setarray .@cOptVal[0], @inventorylist_option_value1[.@i], @inventorylist_option_value2[.@i], @inventorylist_option_value3[.@i], @inventorylist_option_value4[.@i], @inventorylist_option_value5[.@i];
 		setarray .@cOptPar[0], @inventorylist_option_parameter1[.@i], @inventorylist_option_parameter2[.@i], @inventorylist_option_parameter3[.@i], @inventorylist_option_parameter4[.@i], @inventorylist_option_parameter5[.@i];
 
-		message strcharinfo(0), " OPTIONS Inv: " +@inventorylist_option_id1[.@i];
-		message strcharinfo(0), " OPTIONS Var: " +.@cOptID[0];
+		// message strcharinfo(0), " OPTIONS Inv: " +@inventorylist_option_id1[.@i];
+		// message strcharinfo(0), " OPTIONS Var: " +.@cOptID[0];
 
 		if( .@cOptID[0] > 0 || .@cOptID[1] > 0 || .@cOptID[2] > 0 || .@cOptID[3] > 0 || .@cOptID[4] > 0 )
 			getitem3 @inventorylist_id[.@i],1,1,0,0,0,0,0,0,.@cOptID, .@cOptVal, .@cOptPar;
