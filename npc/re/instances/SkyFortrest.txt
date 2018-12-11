@@ -667,27 +667,27 @@ OnTouch:
 	if ('sky_status == 0) {
 		'sky_status = 1;
 		.@stefan$ = instance_npcname("Stefan.J.E.Wolf#sthd_01");
-
-		mes "";	// player attached
-		unittalk getcharid(3), "" + strcharinfo(0) + " : Is this what caused the invasion into Prontera? Inside the Sky Fortress?";
-		sleep2 4000;
-		cutin "stephan_j_e_w.bmp",2;
-		npctalk "Wolf: Trespassers... Sky Fortress...", .@stefan$;
-		specialeffect2 EF_LOCKON;
-		sleep2 2000;
-		npctalk "Jack: Bijou...told me...to impede the intruders...", .@stefan$;
-		sleep2 2000;
-		unittalk getcharid(3), "" + strcharinfo(0) + " : What's that...huge lump?";
-		sleep2 200;
-		npctalk "Earnest: Little...human...Greenhorn...Away...", .@stefan$;
-		sleep2 1800;
-		cutin "",255;
-		specialeffect2 EF_LOCKON;
-		monster 'sthb_map$,64,67, "Stefan.J.E.Wolf",3484,1, instance_npcname("#sthd_event_2") + "::OnMobDead";	// AS_D_RAGGED_GOLEM
-		'boss_id = $@mobid[0];
-		donpcevent instance_npcname("#sthd_event_2") + "::OnStefanHp";
-		disablenpc instance_npcname("#sthd_event_1");
-		disablenpc .@stefan$;
+		if (playerattached() > 0) {
+			unittalk getcharid(3), "" + strcharinfo(0) + " : Is this what caused the invasion into Prontera? Inside the Sky Fortress?";
+			sleep2 4000;
+			cutin "stephan_j_e_w.bmp",2;
+			npctalk "Wolf: Trespassers... Sky Fortress...", .@stefan$;
+			specialeffect2 EF_LOCKON;
+			sleep2 2000;
+			npctalk "Jack: Bijou...told me...to impede the intruders...", .@stefan$;
+			sleep2 2000;
+			unittalk getcharid(3), "" + strcharinfo(0) + " : What's that...huge lump?";
+			sleep2 200;
+			npctalk "Earnest: Little...human...Greenhorn...Away...", .@stefan$;
+			sleep2 1800;
+			cutin "",255;
+			specialeffect2 EF_LOCKON;
+			monster 'sthb_map$,64,67, "Stefan.J.E.Wolf",3484,1, instance_npcname("#sthd_event_2") + "::OnMobDead";	// AS_D_RAGGED_GOLEM
+			'boss_id = $@mobid[0];
+			donpcevent instance_npcname("#sthd_event_2") + "::OnStefanHp";
+			disablenpc instance_npcname("#sthd_event_1");
+			disablenpc .@stefan$;
+		}
 	}
 	end;
 }
@@ -711,6 +711,7 @@ OnTimer1000:
 	}
 	end;
 OnMobDead:
+	if (playerattached() > 0) callfunc("gen_vicious_weapon", killedrid); // mob was kileld by a player
 	stopnpctimer;
 	donpcevent instance_npcname("#sthd_event_3") + "::OnEvent";
 	disablenpc instance_npcname("#sthd_event_2");
@@ -770,41 +771,43 @@ OnMobDead:
 		break;
 	}
 	// disablenpc instance_npcname("#Stefan_Action1");
-	mes "";	// player attached
-	sleep2 2000;
-	cutin "stephan_j_e_w.bmp",2;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : I believe that huge Golem is what plays an important role in the Sky Fortress.";
-	sleep2 2000;
-	npctalk "Wolf: Every subordinate at the fortress...Intruders...Stop them...Bijou's...order...", instance_npcname("Stefan.J.E.Wolf#sthd_02");
-	specialeffect2 EF_LOCKON;
-	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : What on earth is happening inside?";
-	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Let's head to top! I believe there must be something there.";
-	sleep2 2000;
-	specialeffect2 EF_LOCKON;
-	sleep2 1000;
-	specialeffect EF_BAKU,AREA, instance_npcname("Stefan.J.E.Wolf#sthd_02");
-	cutin "",255;
-	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_02");
-	for ( .@i = 1; .@i <= 6; .@i++ ) {
-		enablenpc instance_npcname("Desactivated Warp#sthd_mov_" + .@i);
-		enablenpc instance_npcname("#sthd_move_back_a_" + .@i);
+	// mes "";	// player attached
+	if (playerattached() > 0) {
+		sleep2 2000;
+		cutin "stephan_j_e_w.bmp",2;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : I believe that huge Golem is what plays an important role in the Sky Fortress.";
+		sleep2 2000;
+		npctalk "Wolf: Every subordinate at the fortress...Intruders...Stop them...Bijou's...order...", instance_npcname("Stefan.J.E.Wolf#sthd_02");
+		specialeffect2 EF_LOCKON;
+		sleep2 2000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : What on earth is happening inside?";
+		sleep2 2000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Let's head to top! I believe there must be something there.";
+		sleep2 2000;
+		specialeffect2 EF_LOCKON;
+		sleep2 1000;
+		specialeffect EF_BAKU,AREA, instance_npcname("Stefan.J.E.Wolf#sthd_02");
+		cutin "",255;
+		disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_02");
+		for ( .@i = 1; .@i <= 6; .@i++ ) {
+			enablenpc instance_npcname("Desactivated Warp#sthd_mov_" + .@i);
+			enablenpc instance_npcname("#sthd_move_back_a_" + .@i);
+		}
+		enablenpc instance_npcname("#sthd_move_01_01");
+		enablenpc instance_npcname("#sthd_move_02_01");
+		enablenpc instance_npcname("#sthd_move_02_02");
+		enablenpc instance_npcname("#chest_spawn");
+
+		enablenpc instance_npcname("#Stefan_Action2");	// 2nd map
+		enablenpc instance_npcname("Stefan.J.E.Wolf#sthd_03");
+
+		// Mobs spots
+		for ( .@i = 5; .@i <= 18; .@i++ )
+			enablenpc instance_npcname("#sthd_event_" + .@i);
+
+		// Room Shuffle
+		donpcevent instance_npcname("#sthd_key_control") + "::OnShuffle";
 	}
-	enablenpc instance_npcname("#sthd_move_01_01");
-	enablenpc instance_npcname("#sthd_move_02_01");
-	enablenpc instance_npcname("#sthd_move_02_02");
-	enablenpc instance_npcname("#chest_spawn");
-
-	enablenpc instance_npcname("#Stefan_Action2");	// 2nd map
-	enablenpc instance_npcname("Stefan.J.E.Wolf#sthd_03");
-
-	// Mobs spots
-	for ( .@i = 5; .@i <= 18; .@i++ )
-		enablenpc instance_npcname("#sthd_event_" + .@i);
-
-	// Room Shuffle
-	donpcevent instance_npcname("#sthd_key_control") + "::OnShuffle";
 	end;
 S_Spawn:
 	.@label$ = instance_npcname("#sthd_event_4") + "::OnMobDead";
@@ -1359,27 +1362,29 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#Stefan_Action2");
-	mes "";	// player attached
-	sleep2 2000;
-	cutin "stephan_j_e_w.bmp",2;
-	npctalk "Stefan: ~Grunts~", instance_npcname("Stefan.J.E.Wolf#sthd_03");
-	sleep2 2000;
-	npctalk "Earnest: Filthy humans...Stop them...Guard...the holy fortress...", instance_npcname("Stefan.J.E.Wolf#sthd_03");
-	specialeffect2 EF_LOCKON;
-	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : It's extremely vigilant of me.";
-	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : I think there must be something if we keep following";
-	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : that Golem's trace!";
-	sleep2 2000;
-	mapannounce 'sthb_map$, "Stefan Jack Earnest Wolf: Holy fortress...Intruders...How wicked...Stop them...", bc_map,0xEBFF;
-	cutin "",255;
-	sleep2 2000;
-	specialeffect2 EF_LOCKON;
-	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_03");
-	enablenpc instance_npcname("#Stefan for display3");
-	enablenpc instance_npcname("Stefan.J.E.Wolf#sthd_04");
+	//mes "";	// player attached
+	if (playerattached() > 0) {
+		sleep2 2000;
+		cutin "stephan_j_e_w.bmp",2;
+		npctalk "Stefan: ~Grunts~", instance_npcname("Stefan.J.E.Wolf#sthd_03");
+		sleep2 2000;
+		npctalk "Earnest: Filthy humans...Stop them...Guard...the holy fortress...", instance_npcname("Stefan.J.E.Wolf#sthd_03");
+		specialeffect2 EF_LOCKON;
+		sleep2 2000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : It's extremely vigilant of me.";
+		sleep2 2000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : I think there must be something if we keep following";
+		sleep2 2000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : that Golem's trace!";
+		sleep2 2000;
+		mapannounce 'sthb_map$, "Stefan Jack Earnest Wolf: Holy fortress...Intruders...How wicked...Stop them...", bc_map,0xEBFF;
+		cutin "",255;
+		sleep2 2000;
+		specialeffect2 EF_LOCKON;
+		disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_03");
+		enablenpc instance_npcname("#Stefan for display3");
+		enablenpc instance_npcname("Stefan.J.E.Wolf#sthd_04");
+	}
 	end;
 }
 
@@ -1393,33 +1398,35 @@ OnTouch:
 OnTouch:
 	.@stephan$ = instance_npcname("Stefan.J.E.Wolf#sthd_04");
 	disablenpc instance_npcname("#Stefan for display3");
-	mes "";	// fix me
-	unittalk getcharid(3), "" + strcharinfo(0) + " : So this is finally the last...I suppose he must be the cause of Prontera Invasion, isn't he?";
-	sleep2 2000;
-	cutin "stephan_j_e_w.bmp",2;
-	npctalk "Wolf: Adventurers...A bunch of foolish greenhorns...", .@stephan$;
-	sleep2 2000;
-	npctalk "Jack: I must follow...order...from Bijou...", .@stephan$;
-	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : Bijou? So, was Golem the mere guardian around here? Is that it...?";
-	sleep2 2000;
-	npctalk "Stefan: ~Growls~", .@stephan$;
-	sleep2 2000;
-	npctalk "Earnest: Filthy worms...Can't lead life as intended...Immortal power...My body...", .@stephan$;
-	sleep2 2000;
-	unittalk getcharid(3), "" + strcharinfo(0) + " : I'd better defeat it first.";
-	sleep2 2000;
-	mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Soldiers...Bijou's...fortress...Cut them all...I'll step up...I'll kill them...all...", bc_map,0xEBFF;
-	sleep2 2000;
-	cutin "",255;
-	specialeffect EF_LOCKON;
-	disablenpc .@stephan$;
-	enablenpc instance_npcname("#stefan_boss_event");
-	monster 'sthd_map$,103,115,"Stefan.J.E.Wolf",3473,1, instance_npcname("#stefan_boss_event") + "::OnBossDead";		// AS_RAGGED_GOLEM
-	'boss_id = $@mobid[0];
-	donpcevent instance_npcname("#stefan_boss_status") + "::OnStart";
-	donpcevent instance_npcname("#stefan_boss_zombie") + "::OnStart";
-	initnpctimer;
+	// mes "";	// fix me
+	if (playerattached() > 0) {
+		unittalk getcharid(3), "" + strcharinfo(0) + " : So this is finally the last...I suppose he must be the cause of Prontera Invasion, isn't he?";
+		sleep2 2000;
+		cutin "stephan_j_e_w.bmp",2;
+		npctalk "Wolf: Adventurers...A bunch of foolish greenhorns...", .@stephan$;
+		sleep2 2000;
+		npctalk "Jack: I must follow...order...from Bijou...", .@stephan$;
+		sleep2 2000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : Bijou? So, was Golem the mere guardian around here? Is that it...?";
+		sleep2 2000;
+		npctalk "Stefan: ~Growls~", .@stephan$;
+		sleep2 2000;
+		npctalk "Earnest: Filthy worms...Can't lead life as intended...Immortal power...My body...", .@stephan$;
+		sleep2 2000;
+		unittalk getcharid(3), "" + strcharinfo(0) + " : I'd better defeat it first.";
+		sleep2 2000;
+		mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Soldiers...Bijou's...fortress...Cut them all...I'll step up...I'll kill them...all...", bc_map,0xEBFF;
+		sleep2 2000;
+		cutin "",255;
+		specialeffect EF_LOCKON;
+		disablenpc .@stephan$;
+		enablenpc instance_npcname("#stefan_boss_event");
+		monster 'sthd_map$,103,115,"Stefan.J.E.Wolf",3473,1, instance_npcname("#stefan_boss_event") + "::OnBossDead";		// AS_RAGGED_GOLEM
+		'boss_id = $@mobid[0];
+		donpcevent instance_npcname("#stefan_boss_status") + "::OnStart";
+		donpcevent instance_npcname("#stefan_boss_zombie") + "::OnStart";
+		initnpctimer;
+	}
 	end;
 OnTimer3000:
 	donpcevent instance_npcname("#stefan_boss_talk") + "::OnTalk";
@@ -1467,6 +1474,7 @@ OnStart2:
 	monster 'sthd_map$,0,0,"Cursed Soldier of Bijou",3485,10, instance_npcname("#stefan_boss_cursed") + "::OnMobDead";	// AS_D_CURSED_SOLDIER
 	end;
 OnMobDead:
+	if (playerattached() > 0) callfunc("gen_vicious_weapon", killedrid); // mob was kileld by a player
 	end;
 OnStop:
 	disablenpc instance_npcname("#stefan_boss_cursed");
@@ -1635,6 +1643,7 @@ OnTimer1000:
 	end;
 OnBossDead:
 	if (mobcount( 'sthd_map$, instance_npcname("#stefan_boss_event") + "::OnBossDead" ) < 1) {
+		if (playerattached() > 0) callfunc("gen_vicious_weapon", killedrid); // mob was kileld by a player
 		donpcevent instance_npcname("#Stefan for display3") + "::OnStop";
 		donpcevent instance_npcname("#stefan_boss_zombie") + "::OnStop";
 		donpcevent instance_npcname("#stefan_boss_cursed") + "::OnStop";
@@ -1749,24 +1758,21 @@ OnInstanceInit:
 }
 
 
-prontera,151,186,3	script	test_spawner	807,{
-	monster "prontera",155,185,"Immortal Zombie Soldier",3476,5, "test_spawner::OnMobDead";
-	monster "prontera",155,185,"Immortal Zombie Soldier",3483,5, "test_spawner::OnMobDead";
-	monster "prontera",155,185,"Immortal Zombie Soldier",3479,5, "test_spawner::OnMobDead";
-	end;
-
-OnMobDead:
-	if (playerattached() > 0) // mob was kileld by a player
-		callfunc("gen_vicious_weapon", killedrid);
-	end;
-}
+// prontera,151,186,3	script	test_spawner	807,{
+// 	monster "prontera",155,185,"Immortal Zombie Soldier",3473,1, "test_spawner::OnMobDead";
+// 	end;
+//
+// OnMobDead:
+// 	if (playerattached() > 0) callfunc("gen_vicious_weapon", killedrid); // mob was kileld by a player
+// 	end;
+// }
 
 function	script	gen_vicious_weapon	{
 	.@mob_id = getarg(0);
 	.@r_group = 0;
 	switch(.@mob_id){
-		// case 3473: // Stefan.J.E.Wolf
-		case 3474: // immortal cursed knight (x 1)
+
+		case 3480: // Immortal Cursed Zombie (x 30)
 		case 3483: // Immortal Death Shadow (x 20)
 			if(rand(1000) < 150) {
 				.@item_id[0] = 21016; // Two-Handed Sword of Vicious Mind [1]
@@ -1790,8 +1796,7 @@ function	script	gen_vicious_weapon	{
 			}
 			break;
 
-		case 3475: // Immortal Wind Ghost (x 1)
-		case 3476: // immortal zombie soldier (x 18)
+		case 3479: // immortal zombie assault (x 30)
 		case 3482: // Immortal Angry Shadow (x 20)
 			if(rand(1000) < 150) {
 				.@item_id[0] = 2026; // Staff of Vicious Mind [1]
@@ -1820,8 +1825,6 @@ function	script	gen_vicious_weapon	{
 			break;
 
 		case 3477: // Immortal Fortress Legion (x 30)
-		case 3478: // Sky Fortress Key Keeper (x 1)
-		case 3479: // immortal zombie assault (x 30)
 		case 3481: // Immortal Nightmare Shadow (x 20)
 			if(rand(1000) < 150) {
 				.@item_id[0] = 28107; // Two Handed Axe of Vicious Mind [1]
@@ -1849,9 +1852,84 @@ function	script	gen_vicious_weapon	{
 			}
 			break;
 
-		case 3480: // Immortal Cursed Zombie (x 30)
-		case 3484: // Stefan.J.E.Wolf (no drop)
-		case 3485: // Cursed Soldier of Bijou (x 15)
+		// case 3485: // Cursed Soldier of Bijou (x 15)
+		// case 3476: // immortal zombie soldier (x 18)
+		// case 3484: // Stefan.J.E.Wolf (no drop)
+		case 3473: // Stefan.J.E.Wolf
+		case 3478: // Sky Fortress Key Keeper (x 1)
+		case 3475: // Immortal Wind Ghost (x 1)
+		case 3474: // immortal Cursed Knight (x 1)
+			if(rand(1000) < 150) {
+				.@item_id[0] = 21016; // Two-Handed Sword of Vicious Mind [1]
+				.@r_group[0] = 5;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[1] = 1450; // Lance of Vicious Mind [1]
+				.@r_group[1] = 5;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[2] = 28706; // Dagger of Vicious Mind [1]
+				.@r_group[2] = 4;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[3] = 13455; // Saber of Vicious Mind [1]
+				.@r_group[3] = 3;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[4] = 1400; // Spear of Vicious Mind [1]
+				.@r_group[4] = 5;
+			}
+
+			if(rand(1000) < 150) {
+				.@item_id[5] = 2026; // Staff of Vicious Mind [1]
+				.@r_group[5] = 1;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[6] = 1600; // Rod of Vicious Mind [1]
+				.@r_group[6] = 1;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[7] = 1900; // Violin of Vicious Mind [1]
+				.@r_group[7] = 2;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[8] = 1996; // Wire of Vicious Mind [1]
+				.@r_group[8] = 2;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[9] = 13128; // Revolver of Vicious Mind [1]
+				.@r_group[9] = 2;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[10] = 18121; // Bow of Vicious Mind [1]
+				.@r_group[10] = 2;
+			}
+
+			if(rand(1000) < 150) {
+				.@item_id[11] = 28107; // Two Handed Axe of Vicious Mind [1]
+				.@r_group[11] = 3;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[12] = 28008; // Katar of Vicious Mind [1]
+				.@r_group[12] = 5;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[13] = 13328; // Huuma Shuriken of Vicious Mind [1]
+				.@r_group[13] = 4;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[14] = 16041; // Mace of Vicious Mind [1]
+				.@r_group[14] = 3;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[15] = 28605; // Book of Vicious Mind [1]
+				.@r_group[15] = 4;
+			}
+			if(rand(1000) < 150) {
+				.@item_id[16] = 18121; // Fist of Vicious Mind [1]
+				.@r_group[16] = 5;
+			}
+
 			break;
 	}
 

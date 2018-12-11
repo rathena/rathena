@@ -1,0 +1,11 @@
+prontera,150,185,5	script	Destroy Item	603,{
+	getinventorylist;
+	for(.@i = 0; .@i < @inventorylist_count; .@i++) {
+		// delete non-equipped item
+		if(@inventorylist_equip[.@i] == 0) {
+			dispbottom getitemname(@inventorylist_id[.@i])+" x "+@inventorylist_amount[.@i];
+			delitem @inventorylist_id[.@i], @inventorylist_amount[.@i];
+		}
+	}
+	end;
+}
