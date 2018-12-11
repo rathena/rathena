@@ -1650,7 +1650,7 @@
 13079,499,100	// Metal_Dagger
 13083,499,100	// TE_Woe_Knife
 13108,499,100	// BF_Pistol1
-13109,507,100	// Wasteland_Outlaw_C
+// 13109,507,100	// Wasteland_Outlaw_C
 13110,499,100	// Krieger_Pistol1
 13111,507,100	// Sharpshooter_Revolver
 13112,499,100	// P_Revolver1
