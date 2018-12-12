@@ -942,7 +942,7 @@
 6955,499,100	// Piece_Of_Soul_Pig
 6956,499,100	// Captured_Sheep
 6957,499,100	// Lamb_Fleece
-6960,467,100	// Key_Air_Fortress
+// 6960,467,100	// Key_Air_Fortress
 //6993,475,100	//
 //6994,475,100	//
 7025,475,100	// Lucifer's_Lament
@@ -4024,3 +4024,5 @@
 
 6654,329,100	// Needle_And_Thread
 12263,329,100	// Comp_Battle_Manual
+
+6960,329,100	// Key_Air_Fortress

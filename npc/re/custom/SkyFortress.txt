@@ -62,70 +62,19 @@ prt_q,252,79,4	script	Doek#a1	8W_SOLDIER,{
 
 prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 	if (BaseLevel < 145) {
-		mes "- You should be level 145 or higher";
-		mes "to proceed. -";
+		mes "- You must be level 145 or higher to proceed. -";
 		close;
 	}
-	switch( checkquest(9419,PLAYTIME) ) {
-	case -1:
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
-			callsub S_Info;
-			close;
-		}
-		if (isbegin_quest(9418) == 0) {// first entrance
-			mes "[Scientist Doyeon]";
-			mes "I'm a scientist";
-			mes "living in Prontera.";
-			mes "I'm just an ordinary scientist";
-			mes "teaching children and doing research.";
-			mes "And then...things came up";
-			mes "in Prontera all of a sudden....";
-			while(true) {
-				next;
-				switch( select( "About Sky Fortress", "Enter the Sky Fortress.", "End the dialogue." ) ) {
-				case 1:
-					callsub S_Info;
-					break;
-				case 2:
-					mes "[Scientist Doyeon]";
-					mes "I think I can open the warp,";
-					mes "at least for once, with the magic";
-					mes "that I've been collecting so hard.";
-					mes "I hope you would help me";
-					mes "destroy the fortress and";
-					mes "get back our Prontera.";
-					next;
-					if (select( "No", "Yes" ) == 1) {
-						mes "[Scientist Doyeon]";
-						mes "Come back";
-						mes "if you change your mind...";
-						mes "Just know that time is running out...";
-						break;
-					}
-					mes "[Scientist Doyeon]";
-					mes "There! I opened the warp";
-					mes "to the Sky Fortress!";
-					mes "The warp will be activated";
-					mes "only for a limited period of time.";
-					mes "Step inside it, quick!";
-					instance_create("Sky Fortress Invasion");
-					close;
-				case 3:
-					mes "[Scientist Doyeon]";
-					mes "I'm so worried about";
-					mes "the future of Prontera...";
-					mes "It appears this fortress";
-					mes "must be the source of all evil...";
-					close;
-				}
-			}
-		}
+	set .@md_name$, "Sky Fortress Invasion";
+
+	if (checkquest(9418) == 1) {
+		mes "[Scientist Doyeon]";
 		mes "You're back unscathed.";
 		mes "So...whatever happened";
 		mes "inside?";
 		next;
-		mes "- I told her everything that";
-		mes "happened inside the Sky Fortress. -";
+		mes "";
+		mes "- Explains to Scientist Doyeon -";
 		next;
 		mes "[Scientist Doyeon]";
 		mes "How could that be...";
@@ -134,259 +83,234 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		mes "in the Sky Fortress.";
 		next;
 		mes "[Scientist Doyeon]";
-		mes "Still, those filthy monsters";
-		mes "keep spawning in Prontera.";
-		mes "So I think what we've done";
-		mes "must not be enough.";
-		mes "***";
+		mes "However, those filthy monsters";
+		mes "are still spawning in Prontera.";
+		mes "So, I believe what we have done are not enough.";
 		next;
 		mes "[Scientist Doyeon]";
-		mes "To operate the warp,";
-		mes "a lot of magic is required.";
-		mes "Bring me the item called the -Dungeon Pass-,";
-		mes "or I need about";
-		mes "three days to collect magic.";
+		mes "Please come again in 3 days and help me clear these filthy monsters.";
+		mes "Eventually, we will rid of all these undeads from Prontera.";
 		next;
-		mes "[Scientist Doyeon]";
-		mes "I hope you'd enter the Sky Fortress";
-		mes "and help us save";
-		mes "Prontera.";
-		completequest 9418;// Attack Sky Fortress Invading Prontera
-		setquest 9419;// Attack Sky Fortress Invading Prontera
-		if (isbegin_quest(9427) == 0) {
-			setquest 9427;// Clearing the Sky Fortress for the Same Time
-			completequest 9427;
-			rentitem 14505,3600;// Sky Fortress Ticket
-		}
+		getexp 1500000,350000;
+		completequest 9418;
+		instance_destroy instance_id();
 		close;
-	case 0:
-	case 1:
-		mes "[Scientist Doyeon]";
-		mes "To operate the warp,";
-		mes "a lot of magic is required.";
-		mes "Bring me the item called the -Dungeon Pass-,";
-		mes "or I need about";
-		mes "three days to collect magic.";
-		next;
-		if (getcharid(1) > 0 && getpartyleader(getcharid(1),2) == getcharid(0)) {
-			if (select( "End the dialogue.", "Show the -Dungeon Pass-." ) == 2) {
-				if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
-					mes "[Scientist Doyeon]";
-					mes "I don't think this works";
-					mes "without the -Dungeon Pass-.";
-					mes "I can't open the warp without it.";
-					close;
-				}
-				mes "[Scientist Doyeon]";
-				mes "Oh! Where did you";
-				mes "get the -Dungeon Pass-?";
-				mes "With this item,";
-				mes "I can pretty much open the warp.";
-				next;
-				if (select( "End the dialogue.", "Activate the warp." ) == 1) {
-					mes "[Scientist Doyeon]";
-					mes "Are you not going";
-					mes "to help Prontera?";
-					close;
-				}
-				mes "[Scientist Doyeon]";
-				mes "There! I opened the warp";
-				mes "to the Sky Fortress!";
-				mes "The warp will be activated";
-				mes "only for a limited period of time.";
-				mes "Step inside it, quick!";
-				instance_create("Sky Fortress Invasion");
-				close;
+	}
+	.@iid = instance_id();
+
+	// dispbottom ""+checkquest(9419,PLAYTIME) + " | "+ .@iid;
+	switch( checkquest(9419,PLAYTIME) )  // check player cooldown for SF
+	{
+		case -1: // not started
+			callsub S_Info;
+			if (is_party_leader() == false) {
+				mes "- Only the Party Leader can initiate the quest. -";
+				close; // only party leader can initiate the quest
 			}
-		}
-		mes "[Scientist Doyeon]";
-		mes "I hope you'd enter the Sky Fortress";
-		mes "and help us save";
-		mes "Prontera.";
-		close;
-	case 2:
-		mes "[Scientist Doyeon]";
-		mes "You've come back! You didn't get away!";
-		mes "Thanks so much!";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "But still...";
-		mes "A ton of undead monsters kept swarming about";
-		mes "from that entrance seen behind me";
-		mes "as if the sap monster spits out the sap.";
-		mes "They kept coming out";
-		mes "no matter how many were killed.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "I suppose the monsters are being made up";
-		mes "inside the fortress.";
-		mes "My guess is that if we can defeat their ringleader in the fortress,";
-		mes "the monsters will go away";
-		mes "and Prontera will become stabilized.";
-		mes "***";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "I think I can open the warp,";
-		mes "at least for once, with the magic";
-		mes "that I've been collecting so hard.";
-		mes "I hope you would help me";
-		mes "destroy the fortress and";
-		mes "get back our Prontera.";
-		if (getcharid(1) > 0 && getpartyleader(getcharid(1),2) == getcharid(0)) {
+			mes "[Scientist Doyeon]";
+			mes "I think I can open the warp, ";
+			mes "at least for once, with the magic";
+			mes "that I've been collecting hard.";
+			mes "I hope you would help me to";
+			mes "destroy the fortress and";
+			mes "get back our Prontera.";
 			next;
-			if (select( "No", "Yes" ) == 1) {
+			if (select( "No", "Yes, generate "+.@md_name$+" Instance" ) == 1) {
 				mes "[Scientist Doyeon]";
-				mes "Come back";
-				mes "if you change your mind...";
-				mes "Just know that time is running out...";
+				mes "Please, come back if you change your mind.";
+				mes "Just know that time is running out.";
 				close;
 			}
+			misceffect 12;
 			mes "[Scientist Doyeon]";
 			mes "There! I opened the warp";
 			mes "to the Sky Fortress!";
 			mes "The warp will be activated";
 			mes "only for a limited period of time.";
 			mes "Step inside it, quick!";
-			instance_create("Sky Fortress Invasion");
-		}
-		close;
+
+			if (instance_create(.@md_name$) < 0) {
+				mes "Party Name: "+ getpartyname(getcharid(1));
+				mes "Party Leader: "+strcharinfo(0);
+				mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+				close;
+			}
+			setquest 9418; // enable enterance
+			break;
+
+		case 0: // inactive
+		case 1: // active
+			mes "[Scientist Doyeon]";
+			mes "To activate the warp portal, a lot of magic is required.";
+			mes "I need around three days to collect enough magic to open the portal.";
+			next;
+			mes "[Scientist Doyeon]";
+			mes "You can also bring me a <ITEM>Dungeon 1 Hour Ticket<INFO>14505</INFO></ITEM>.";
+			mes "This item allows me to claim enough magic from the Eden Group.";
+			next;
+			if (is_party_leader() == true) {
+				if (select( "End the dialogue.", "Give a Dungeon Ticket." ) == 2) {
+					if (countitem(14505) < 1 && countitem(14506) < 1) { // Sky Fortress Ticket
+						mes "[Scientist Doyeon]";
+						mes "What are you trying to give me?";
+						mes "I require <ITEM>Dungeon 1 Hour Ticket<INFO>14505</INFO></ITEM>";
+						mes "to open the warp portal earlier.";
+						next;
+						mes "[Scientist Doyeon]";
+						mes "You can always comes back when I am done collecting enough magic.";
+						close;
+					}
+					mes "[Scientist Doyeon]";
+					mes "O-Oh! Thank you.";
+					mes "With this item, I can claim enough magic to open the warp.";
+					next;
+					if (select( "End the dialogue.", "Activate the warp." ) == 1) {
+						mes "[Scientist Doyeon]";
+						mes "Ah! Are you not going to help Prontera?";
+						mes "...";
+						mes "I understand.";
+						close;
+					}
+					mes "[Scientist Doyeon]";
+					mes "There! I opened the warp";
+					mes "to the Sky Fortress!";
+					mes "The warp will be activated";
+					mes "only for a limited period of time.";
+					mes "Step inside it, quick!";
+
+					if (instance_create(.@md_name$) < 0) {
+						mes "Party Name: "+ getpartyname(getcharid(1));
+						mes "Party Leader: "+strcharinfo(0);
+						mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+						close;
+					}
+					setquest 9427; // enable enterance
+					close;
+				}
+			}
+			mes "[Scientist Doyeon]";
+			mes "I hope you will enter the Sky Fortress and help us save Prontera.";
+			close;
+			break;
+
+		case 2: // completed
+			if(.@iid > 0) {
+				mes "[Scientist Doyeon]";
+				mes "Why are you talking with me?";
+				mes "Step into the portal and kill the ringleader.";
+				close;
+			}
+			if(checkquest(9427) == 2) erasequest 9427;
+
+			mes "[Scientist Doyeon]";
+			mes "You came back!";
+			mes "There are still a ton of undead monsters spawning in Prontera.";
+			mes "Please enter the fortress and kill the ringleader.";
+			next;
+			mes "[Scientist Doyeon]";
+			mes "I have collected enough magic to open the warp into the fortress.";
+			mes "Will you enter?";
+			if (is_party_leader() == true) {
+				next;
+				if (select( "No", "Yes, generate "+.@md_name$+" Instance" ) == 1) {
+					mes "[Scientist Doyeon]";
+					mes "Please, come back if you change your mind.";
+					mes "Just know that time is running out.";
+					close;
+				}
+				mes "[Scientist Doyeon]";
+				mes "I have opened the warp portal to the Sky Fortress!";
+				mes "The warp will only be activated only for a limited period of time.";
+				if (instance_create(.@md_name$) < 0) {
+					mes "Party Name: "+ getpartyname(getcharid(1));
+					mes "Party Leader: "+strcharinfo(0);
+					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+					close;
+				}
+				setquest 9427; // enable enterance
+			}
+			close;
+			break;
 	}
 	end;
 
 S_Info:
 	mes "[Scientist Doyeon]";
-	mes "I'm a scientist";
-	mes "living in Prontera.";
-	mes "I'm just an ordinary scientist";
-	mes "teaching children and doing research.";
+	mes "I'm a scientist living in Prontera.";
+	mes "I'm just an ordinary scientist who teaches children and does research.";
 	next;
 	mes "[Scientist Doyeon]";
-	mes "But now...the life at least as I know it";
-	mes "has become shattered.";
+	mes "But now...the life that I have, at least as I know it has become shattered.";
 	next;
 	mes "[Scientist Doyeon]";
-	mes "Thanks to this fortress";
-	mes "looking like a huge trash can,";
-	mes "our village has turned into a trash heap";
-	mes "that doesn't even decay.";
+	mes "All thanks to this fortress that looks like a huge trash can.";
+	mes "My town has turned into a garbage dump that continues to rot.";
 	next;
 	mes "[Scientist Doyeon]";
-	mes "Buildings fall down,";
-	mes "people keep dying out...";
-	mes "I have to wonder what the nobility and soldiers at the Prontera Palace";
-	mes "are up to when things are like this.";
+	mes "Buildings destroyed...";
+	mes "and people keep dying...";
+	mes "I have to wonder what the nobility and the soldiers at the Prontera Castle are doing to even when things are like this.";
 	next;
 	mes "[Scientist Doyeon]";
-	mes "A ton of undead monsters kept swarming about";
-	mes "from that entrance seen behind me";
-	mes "as if the sap monster spits out the sap.";
-	mes "They kept coming out";
-	mes "no matter how many were killed.";
+	mes "Massive amounts of undead monsters kept spawning from the entrance that you can see behind me.";
 	next;
 	mes "[Scientist Doyeon]";
-	mes "I suppose the monsters are being made up";
-	mes "inside the fortress.";
-	mes "My guess is that if we can defeat their ringleader in the fortress,";
-	mes "the monsters will get away";
-	mes "and Prontera will become stabilized.";
-	mes "***";
+	mes "Like waters in a river that keeps flowing. They kept coming out no matter how many were killed.";
 	next;
 	mes "[Scientist Doyeon]";
-	mes "So I really wanted to enter the fortress";
-	mes "but couldn't find any entrance.";
-	mes "I studied day and night";
-	mes "and finally located it.";
+	mes "I belive the monsters are being created inside the fortress.";
+	mes "My guess is that if we can defeat the ringleader in the fortress,";
+	mes "the monsters spawns will eventually stop and Prontera will stabilized again.";
 	next;
 	mes "[Scientist Doyeon]";
-	mes "To enter the fortress,";
-	mes "the warp should be activated.";
-	mes "To do so, a lot of magic";
-	mes "is indispensable!";
+	mes "I wanted to find the enterance to the fortress but I couldn't find any that is safe enough. The other enterances are blocked by the undeads.";
 	next;
 	mes "[Scientist Doyeon]";
-	mes "And then...I've been preparing";
-	mes "a lot of magic necessary for the warp.";
-	mes "Now I could use a warrior";
-	mes "who can shatter the fortress";
-	mes "and bring peace to Prontera.";
+	mes "After I studied the fortress day and night, I finally managed located a gap in the fortress defence.";
+	next;
+	mes "[Scientist Doyeon]";
+	mes "This gap allows me to create a new warp point to enter the fortress.";
+	mes "To activate the warp, I require a lot of indispensable magic!";
+	next;
+	mes "[Scientist Doyeon]";
+	mes "I have been preparing a lot of magic necessary for the activate the warp. Now, all I need is strong adventurers who can break into the fortress and finally bring peace to Prontera.";
 	return;
 }
 
-prt_q,243,75,3	script	Fortress Entry Warp Portal#1	PORTAL,{
+prt_q,243,75,3	script	Fortress Entry Warp#1	PORTAL,{
 	if (BaseLevel < 145) {
-		mes "- You should be level 145 or higher";
-		mes "to proceed. -";
+		mes "- You should be level 145 or higher to proceed. -";
 		close;
 	}
-	if ((checkquest(9419,PLAYTIME) == -1 || checkquest(9419,PLAYTIME) == 2) && isbegin_quest(9418) != 1)
-		setarray .@menu$[0], "Don't step into the warp.", "Step into the warp.";
-	else {
+	if ((checkquest(9419,PLAYTIME) == -1 || checkquest(9419,PLAYTIME) == 2) && (isbegin_quest(9418) ==  1 || isbegin_quest(9427) ==  1 )) {
+		mes "- The warp is emanating bright lights. -";
+		next;
+		if (select("Don't step into the warp.","Step into the warp.") == 1) close;
+
+	} else {
 		mes "- The warp doesn't seem to work.";
 		mes "You can't seem to enter... -";
-		next;
-		setarray .@menu$[0], "End the dialogue.", "", "Put the - Dungeon Pass - near to the warp.";
-	}
-	switch( select( .@menu$[0], .@menu$[1], .@menu$[2] ) ) {
-	case 1:
-		mes "- The warp is emanating bright lights. -";
 		close;
-	case 2:
-		break;
-	case 3:
-		if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
-			mes "- You don't have -";
-			mes "- the Dungeon Pass. -";
-			close;
-		}
-		break;
 	}
+
 	.@md_name$ = "Sky Fortress Invasion";
+
 	switch( instance_enter(.@md_name$) ) {
-	case IE_OTHER:
-		mes "An unknown error occurred.";
-		close;
-	case IE_NOINSTANCE:
-		mes "Memorial Dungeon " + .@md_name$ + " doesn't exist.";
-		mes "Party leader hasn't created the Memorial Dungeon.";
-		close;
-	case IE_NOMEMBER:
-		mes "Only the party members may enter the Memorial Dungeon.";
-		close;
-	case IE_OK:
-		mapannounce "prt_q", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters " + .@md_name$ + "", bc_map,0xFF99;
-		switch( checkquest(9419,PLAYTIME) ) {
-		case -1:
-			switch( isbegin_quest(9418) ) {
-			case 0:
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			case 1:
-				break;
-			case 2:
-				erasequest 9418;
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			}
-			break;
-		case 0:
-		case 1:
-			break;
-		case 2:
-			erasequest 9419;
-			switch( isbegin_quest(9418) ) {
-			case 0:
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			case 1:
-				break;
-			case 2:
-				erasequest 9418;
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			}
-			break;
-		}
-		// warp "1@sthb",54,67;
+		case IE_OTHER:
+			mes "An unknown error occurred.";
+			close;
+		case IE_NOINSTANCE:
+			mes "Memorial Dungeon " + .@md_name$ + " doesn't exist.";
+			mes "Party leader hasn't created the Memorial Dungeon.";
+			close;
+		case IE_NOMEMBER:
+			mes "Only the party members may enter the Memorial Dungeon.";
+			close;
+		case IE_OK:
+			if(checkquest(9419,PLAYTIME) == 2) erasequest 9419; // reset cooldown
+
+			mapannounce "prt_q", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters " + .@md_name$ + "", bc_map,0xFF99;
+			setquest 9419;// Trace of Laboratory Access
 		end;
 	}
 	end;
@@ -399,258 +323,258 @@ OnInit:
 	end;
 }
 
-// Dali entrance
-dali02,115,61,3	script	Fortress Entry Warp Portal#2	PORTAL,{
-	if (BaseLevel < 145) {
-		mes "- You should be level 145 or higher";
-		mes "to proceed. -";
-		close;
-	}
-	mes "- The warp doesn't seem to work.";
-	mes "You can't seem to enter. -";
-	next;
-	if (select( "End the dialogue.", "Put the - Dungeon Pass - near to the warp." ) == 1) {
-		mes "- The warp is emanating bright lights. -";
-		close;
-	}
-	if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
-		mes "- You don't have -";
-		mes "- the Dungeon Pass. -";
-		close;
-	}
-	.@md_name$ = "Sky Fortress Invasion";
-	switch( instance_enter(.@md_name$) ) {
-	case IE_OTHER:
-		mes "An unknown error occurred.";
-		close;
-	case IE_NOINSTANCE:
-		mes "Memorial Dungeon " + .@md_name$ + " doesn't exist.";
-		mes "Party leader hasn't created the Memorial Dungeon.";
-		close;
-	case IE_NOMEMBER:
-		mes "Only the party members may enter the Memorial Dungeon.";
-		close;
-	case IE_OK:
-		mapannounce "prt_q", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters " + .@md_name$ + "", bc_map,0xFF99;
-		switch( checkquest(9419,PLAYTIME) ) {
-		case -1:
-			switch( isbegin_quest(9418) ) {
-			case 0:
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			case 1:
-				break;
-			case 2:
-				erasequest 9418;
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			}
-			break;
-		case 0:
-		case 1:
-			break;
-		case 2:
-			erasequest 9419;
-			switch( isbegin_quest(9418) ) {
-			case 0:
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			case 1:
-				break;
-			case 2:
-				erasequest 9418;
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			}
-			break;
-		}
-		// warp "1@sthb",54,67;
-		end;
-	}
-
-OnInit:
-	while(true) {
-		sleep 10000;
-		specialeffect EF_ENHANCE;
-	}
-	end;
-}
-
-dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
-	if (BaseLevel < 145) {
-		mes "- You should be level 145 or higher";
-		mes "to proceed. -";
-		close;
-	}
-	if (getcharid(1) < 1 || getcharid(0) != getpartyleader(getcharid(1),2)) {
-		mes "[Scientist Doyeon]";
-		mes "I'm a scientist";
-		mes "living in Prontera.";
-		mes "I'm just an ordinary scientist";
-		mes "teaching children and doing research.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "But now...my normal life";
-		mes "has become shattered.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "Thanks to this fortress";
-		mes "looking like a huge trash can,";
-		mes "our village has turned into a trash heap";
-		mes "that doesn't even decay.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "Buildings fall down,";
-		mes "people keep dying out...";
-		mes "I have to wonder what the nobility and soldiers at the Prontera Palace";
-		mes "are up to when things are like this.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "A ton of undead monsters kept swarming about";
-		mes "from that entrance seen behind me";
-		mes "as if the sap monster spits out the sap.";
-		mes "They kept coming out";
-		mes "no matter how many were killed.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "I suppose the monsters are being made up";
-		mes "inside the fortress.";
-		mes "My guess is that if we can defeat their ringleader in the fortress,";
-		mes "the monsters will go away";
-		mes "and Prontera will become stabilized.";
-		mes "***";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "So I really wanted to enter the fortress";
-		mes "but couldn't find any entrance.";
-		mes "I studied day and night";
-		mes "and finally located it.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "To enter the fortress,";
-		mes "the warp should be activated.";
-		mes "To do so,";
-		mes "the -Dungeon Pass-";
-		mes "is indispensable!";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "And then...I've been preparing";
-		mes "a lot of magic necessary for the warp.";
-		mes "Now I could use a warrior";
-		mes "who can shatter the fortress";
-		mes "and bring peace to Prontera.";
-		close;
-	}
-	mes "[Scientist Doyeon]";
-	mes "I'm a scientist";
-	mes "living in Prontera.";
-	mes "I teach children and perform research activities.";
-	mes "But it has become";
-	mes "so dangerous there,";
-	mes "so I moved in here.";
-	next;
-	switch( select( "About Sky Fortress", "Enter the Sky Fortress.", "End the dialogue." ) ) {
-	case 1:
-		mes "[Scientist Doyeon]";
-		mes "But now...my normal life";
-		mes "has become shattered.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "Thanks to this fortress";
-		mes "looking like a huge trash can,";
-		mes "our village has turned into a trash heap";
-		mes "that doesn't even decay.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "Buildings fall down,";
-		mes "people keep dying out...";
-		mes "I have to wonder what the nobility and soldiers at the Prontera Palace";
-		mes "are up to when things are like this.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "A ton of undead monsters kept swarming about";
-		mes "as if the sap monster spits out the sap.";
-		mes "They kept coming out";
-		mes "no matter how many were killed.";
-		mes "***";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "I suppose the monsters are being made up";
-		mes "inside the fortress.";
-		mes "My guess is that if we can defeat their ringleader in the fortress,";
-		mes "the monsters will go away";
-		mes "and Prontera will become stabilized.";
-		mes "***";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "So I wanted to enter the fortress";
-		mes "but couldn't find any entrance.";
-		mes "I studied day and night";
-		mes "and finally located it.";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "To enter the fortress,";
-		mes "the warp should be activated.";
-		mes "To do so, a lot of magic";
-		mes "is indispensable!";
-		next;
-		mes "[Scientist Doyeon]";
-		mes "And then...I've been preparing";
-		mes "a lot of magic necessary for the warp.";
-		mes "Now I could use a warrior";
-		mes "who can shatter the fortress";
-		mes "and bring peace to Prontera.";
-		mes "That's why I'm here.";
-		close;
-	case 2:
-		mes "[Scientist Doyeon]";
-		mes "To operate the warp,";
-		mes "a lot of magic is required.";
-		mes "Don't forget to bring me";
-		mes "the -Dungeon Pass-.";
-		mes "That's the only way to open";
-		mes "the warp to the Sky Fortress.";
-		next;
-		if (select( "End the dialogue.", "Show the -Dungeon Pass-." ) == 1) {
-			mes "[Scientist Doyeon]";
-			mes "Don't forget to bring me";
-			mes "the -Dungeon Pass-.";
-			mes "Enter the Sky Fortress";
-			mes "and help us save";
-			mes "the invaded Prontera.";
-			close;
-		}
-		if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
-			mes "[Scientist Doyeon]";
-			mes "I don't think this works";
-			mes "without the -Dungeon Pass-.";
-			mes "I can't open the warp without it.";
-			close;
-		}
-		mes "[Scientist Doyeon]";
-		mes "Oh! Where did you";
-		mes "get the -Dungeon Pass-?";
-		mes "This item is enough";
-		mes "to open the warp.";
-		next;
-		if (select( "End the dialogue.", "Activate the warp." ) == 1) {
-			mes "[Scientist Doyeon]";
-			mes "Are you not going";
-			mes "to help Prontera?";
-			close;
-		}
-		mes "[Scientist Doyeon]";
-		mes "There! I opened the warp";
-		mes "to the Sky Fortress!";
-		mes "The warp will be activated";
-		mes "only for a limited period of time.";
-		mes "Step inside it, quick!";
-		instance_create("Sky Fortress Invasion");
-		close;
-	case 3:
-		close;
-	}
-}
+// Dali entrance (disabled dali entrance for SF)
+// dali02,115,61,3	script	Fortress Entry Warp Portal#2	PORTAL,{
+// 	if (BaseLevel < 145) {
+// 		mes "- You should be level 145 or higher";
+// 		mes "to proceed. -";
+// 		close;
+// 	}
+// 	mes "- The warp doesn't seem to work.";
+// 	mes "You can't seem to enter. -";
+// 	next;
+// 	if (select( "End the dialogue.", "Put the - Dungeon Pass - near to the warp." ) == 1) {
+// 		mes "- The warp is emanating bright lights. -";
+// 		close;
+// 	}
+// 	if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
+// 		mes "- You don't have -";
+// 		mes "- the Dungeon Pass. -";
+// 		close;
+// 	}
+// 	.@md_name$ = "Sky Fortress Invasion";
+// 	switch( instance_enter(.@md_name$) ) {
+// 	case IE_OTHER:
+// 		mes "An unknown error occurred.";
+// 		close;
+// 	case IE_NOINSTANCE:
+// 		mes "Memorial Dungeon " + .@md_name$ + " doesn't exist.";
+// 		mes "Party leader hasn't created the Memorial Dungeon.";
+// 		close;
+// 	case IE_NOMEMBER:
+// 		mes "Only the party members may enter the Memorial Dungeon.";
+// 		close;
+// 	case IE_OK:
+// 		mapannounce "prt_q", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters " + .@md_name$ + "", bc_map,0xFF99;
+// 		switch( checkquest(9419,PLAYTIME) ) {
+// 		case -1:
+// 			switch( isbegin_quest(9418) ) {
+// 			case 0:
+// 				setquest 9418;// Attack Sky Fortress Invading Prontera
+// 				break;
+// 			case 1:
+// 				break;
+// 			case 2:
+// 				erasequest 9418;
+// 				setquest 9418;// Attack Sky Fortress Invading Prontera
+// 				break;
+// 			}
+// 			break;
+// 		case 0:
+// 		case 1:
+// 			break;
+// 		case 2:
+// 			erasequest 9419;
+// 			switch( isbegin_quest(9418) ) {
+// 			case 0:
+// 				setquest 9418;// Attack Sky Fortress Invading Prontera
+// 				break;
+// 			case 1:
+// 				break;
+// 			case 2:
+// 				erasequest 9418;
+// 				setquest 9418;// Attack Sky Fortress Invading Prontera
+// 				break;
+// 			}
+// 			break;
+// 		}
+// 		// warp "1@sthb",54,67;
+// 		end;
+// 	}
+//
+// OnInit:
+// 	while(true) {
+// 		sleep 10000;
+// 		specialeffect EF_ENHANCE;
+// 	}
+// 	end;
+// }
+//
+// dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
+// 	if (BaseLevel < 145) {
+// 		mes "- You should be level 145 or higher";
+// 		mes "to proceed. -";
+// 		close;
+// 	}
+// 	if (getcharid(1) < 1 || getcharid(0) != getpartyleader(getcharid(1),2)) {
+// 		mes "[Scientist Doyeon]";
+// 		mes "I'm a scientist";
+// 		mes "living in Prontera.";
+// 		mes "I'm just an ordinary scientist";
+// 		mes "teaching children and doing research.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "But now...my normal life";
+// 		mes "has become shattered.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "Thanks to this fortress";
+// 		mes "looking like a huge trash can,";
+// 		mes "our village has turned into a trash heap";
+// 		mes "that doesn't even decay.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "Buildings fall down,";
+// 		mes "people keep dying out...";
+// 		mes "I have to wonder what the nobility and soldiers at the Prontera Palace";
+// 		mes "are up to when things are like this.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "A ton of undead monsters kept swarming about";
+// 		mes "from that entrance seen behind me";
+// 		mes "as if the sap monster spits out the sap.";
+// 		mes "They kept coming out";
+// 		mes "no matter how many were killed.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "I suppose the monsters are being made up";
+// 		mes "inside the fortress.";
+// 		mes "My guess is that if we can defeat their ringleader in the fortress,";
+// 		mes "the monsters will go away";
+// 		mes "and Prontera will become stabilized.";
+// 		mes "***";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "So I really wanted to enter the fortress";
+// 		mes "but couldn't find any entrance.";
+// 		mes "I studied day and night";
+// 		mes "and finally located it.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "To enter the fortress,";
+// 		mes "the warp should be activated.";
+// 		mes "To do so,";
+// 		mes "the -Dungeon Pass-";
+// 		mes "is indispensable!";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "And then...I've been preparing";
+// 		mes "a lot of magic necessary for the warp.";
+// 		mes "Now I could use a warrior";
+// 		mes "who can shatter the fortress";
+// 		mes "and bring peace to Prontera.";
+// 		close;
+// 	}
+// 	mes "[Scientist Doyeon]";
+// 	mes "I'm a scientist";
+// 	mes "living in Prontera.";
+// 	mes "I teach children and perform research activities.";
+// 	mes "But it has become";
+// 	mes "so dangerous there,";
+// 	mes "so I moved in here.";
+// 	next;
+// 	switch( select( "About Sky Fortress", "Enter the Sky Fortress.", "End the dialogue." ) ) {
+// 	case 1:
+// 		mes "[Scientist Doyeon]";
+// 		mes "But now...my normal life";
+// 		mes "has become shattered.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "Thanks to this fortress";
+// 		mes "looking like a huge trash can,";
+// 		mes "our village has turned into a trash heap";
+// 		mes "that doesn't even decay.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "Buildings fall down,";
+// 		mes "people keep dying out...";
+// 		mes "I have to wonder what the nobility and soldiers at the Prontera Palace";
+// 		mes "are up to when things are like this.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "A ton of undead monsters kept swarming about";
+// 		mes "as if the sap monster spits out the sap.";
+// 		mes "They kept coming out";
+// 		mes "no matter how many were killed.";
+// 		mes "***";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "I suppose the monsters are being made up";
+// 		mes "inside the fortress.";
+// 		mes "My guess is that if we can defeat their ringleader in the fortress,";
+// 		mes "the monsters will go away";
+// 		mes "and Prontera will become stabilized.";
+// 		mes "***";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "So I wanted to enter the fortress";
+// 		mes "but couldn't find any entrance.";
+// 		mes "I studied day and night";
+// 		mes "and finally located it.";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "To enter the fortress,";
+// 		mes "the warp should be activated.";
+// 		mes "To do so, a lot of magic";
+// 		mes "is indispensable!";
+// 		next;
+// 		mes "[Scientist Doyeon]";
+// 		mes "And then...I've been preparing";
+// 		mes "a lot of magic necessary for the warp.";
+// 		mes "Now I could use a warrior";
+// 		mes "who can shatter the fortress";
+// 		mes "and bring peace to Prontera.";
+// 		mes "That's why I'm here.";
+// 		close;
+// 	case 2:
+// 		mes "[Scientist Doyeon]";
+// 		mes "To operate the warp,";
+// 		mes "a lot of magic is required.";
+// 		mes "Don't forget to bring me";
+// 		mes "the -Dungeon Pass-.";
+// 		mes "That's the only way to open";
+// 		mes "the warp to the Sky Fortress.";
+// 		next;
+// 		if (select( "End the dialogue.", "Show the -Dungeon Pass-." ) == 1) {
+// 			mes "[Scientist Doyeon]";
+// 			mes "Don't forget to bring me";
+// 			mes "the -Dungeon Pass-.";
+// 			mes "Enter the Sky Fortress";
+// 			mes "and help us save";
+// 			mes "the invaded Prontera.";
+// 			close;
+// 		}
+// 		if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
+// 			mes "[Scientist Doyeon]";
+// 			mes "I don't think this works";
+// 			mes "without the -Dungeon Pass-.";
+// 			mes "I can't open the warp without it.";
+// 			close;
+// 		}
+// 		mes "[Scientist Doyeon]";
+// 		mes "Oh! Where did you";
+// 		mes "get the -Dungeon Pass-?";
+// 		mes "This item is enough";
+// 		mes "to open the warp.";
+// 		next;
+// 		if (select( "End the dialogue.", "Activate the warp." ) == 1) {
+// 			mes "[Scientist Doyeon]";
+// 			mes "Are you not going";
+// 			mes "to help Prontera?";
+// 			close;
+// 		}
+// 		mes "[Scientist Doyeon]";
+// 		mes "There! I opened the warp";
+// 		mes "to the Sky Fortress!";
+// 		mes "The warp will be activated";
+// 		mes "only for a limited period of time.";
+// 		mes "Step inside it, quick!";
+// 		instance_create("Sky Fortress Invasion");
+// 		close;
+// 	case 3:
+// 		close;
+// 	}
+// }
 
 // Warps
 1@sthb,73,71,0	warp2	#sthd_move_01_01	1,1,1@sthb,73,84
@@ -790,7 +714,7 @@ OnMobDead:
 		cutin "",255;
 		disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_02");
 		for ( .@i = 1; .@i <= 6; .@i++ ) {
-			enablenpc instance_npcname("Desactivated Warp#sthd_mov_" + .@i);
+			enablenpc instance_npcname("Deactivated Warp#sthd_mov_" + .@i);
 			enablenpc instance_npcname("#sthd_move_back_a_" + .@i);
 		}
 		enablenpc instance_npcname("#sthd_move_01_01");
@@ -889,7 +813,7 @@ OnTouch:
 1@sthb,147,86,1	duplicate(Activated Warp#sthd_mov_1)	Activated Warp#sthd_mov_5	1_SHADOW_NPC
 1@sthb,179,51,1	duplicate(Activated Warp#sthd_mov_1)	Activated Warp#sthd_mov_6	1_SHADOW_NPC
 
-1@sthb,34,85,1	script	Desactivated Warp#sthd_mov_1	4_ENERGY_WHITE,{
+1@sthb,34,85,1	script	Deactivated Warp#sthd_mov_1	4_ENERGY_WHITE,{
 	if (select( "Desactivate the warp.", "Activate the warp." ) == 1) {
 		mes "- Move the fortress to a special place -";
 		mes "- Accessible door -";
@@ -912,11 +836,11 @@ OnTouch:
 	close;
 }
 
-1@sthb,83,99,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_2	4_ENERGY_WHITE
-1@sthb,24,39,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_3	4_ENERGY_WHITE
-1@sthb,206,79,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_4	4_ENERGY_WHITE
-1@sthb,147,87,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_5	4_ENERGY_WHITE
-1@sthb,178,51,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_6	4_ENERGY_WHITE
+1@sthb,83,99,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_2	4_ENERGY_WHITE
+1@sthb,24,39,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_3	4_ENERGY_WHITE
+1@sthb,206,79,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_4	4_ENERGY_WHITE
+1@sthb,147,87,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_5	4_ENERGY_WHITE
+1@sthb,178,51,1	duplicate(Deactivated Warp#sthd_mov_1)	Deactivated Warp#sthd_mov_6	4_ENERGY_WHITE
 
 // Rooms
 1@sthc,66,94,0	script	#sthd_event_13	HIDDEN_WARP_NPC,2,2,{
@@ -1207,7 +1131,7 @@ OnTouch:
 	monster 'sthb_map$,52,50,"Immortal Zombie Assault",3479,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,36,60,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,36,58,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
-	if (rand(100) < 10)	// unknown rates
+	if (rand(100) < 50)	// unknown rates
 		monster 'sthb_map$,65,86,"Sky Fortress Key Keeper",3478,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";	// unknown coord
 	end;
 }
@@ -1228,7 +1152,7 @@ OnTouch:
 	monster 'sthb_map$,84,95,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,83,94,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,84,86,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
-	if (rand(100) < 10)	// unknown rates
+	if (rand(100) < 50)	// unknown rates
 		monster 'sthb_map$,80,49,"Sky Fortress Key Keeper",3478,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	end;
 }
@@ -1250,7 +1174,7 @@ OnTouch:
 	monster 'sthb_map$,29,67,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,27,42,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,26,43,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
-	if (rand(100) < 10)	// unknown rates
+	if (rand(100) < 50)	// unknown rates
 		monster 'sthb_map$,57,96,"Sky Fortress Key Keeper",3478,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";	// unknown coord
 	end;
 }
@@ -1270,7 +1194,7 @@ OnTouch:
 	monster 'sthb_map$,90,40,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,93,39,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,94,39,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
-	if (rand(100) < 10)	// unknown rates
+	if (rand(100) < 50)	// unknown rates
 		monster 'sthb_map$,32,39,"Sky Fortress Key Keeper",3478,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";	// unknown coord
 	end;
 }
@@ -1289,7 +1213,7 @@ OnTouch:
 	monster 'sthb_map$,171,37,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,171,36,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,144,38,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
-	if (rand(100) < 10)	// unknown rates
+	if (rand(100) < 50)	// unknown rates
 		monster 'sthb_map$,163,38,"Sky Fortress Key Keeper",3478,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	end;
 }
@@ -1310,7 +1234,7 @@ OnTouch:
 	monster 'sthb_map$,144,93,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,143,94,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,155,92,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
-	if (rand(100) < 10)	// unknown rates
+	if (rand(100) < 50)	// unknown rates
 		monster 'sthb_map$,144,47,"Sky Fortress Key Keeper",3478,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";	// unknown coord
 	end;
 }
@@ -1331,7 +1255,7 @@ OnTouch:
 	monster 'sthb_map$,198,62,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,200,46,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,199,48,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
-	if (rand(100) < 10)	// unknown rates
+	if (rand(100) < 50)	// unknown rates
 		monster 'sthb_map$,178,94,"Sky Fortress Key Keeper",3478,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";	// unknown coord
 	end;
 }
@@ -1352,7 +1276,7 @@ OnTouch:
 	monster 'sthb_map$,155,78,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,155,76,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
 	monster 'sthb_map$,153,84,"Immortal Cursed Zombie",3480,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";
-	if (rand(100) < 10)	// unknown rates
+	if (rand(100) < 50)	// unknown rates
 		monster 'sthb_map$,179,48,"Sky Fortress Key Keeper",3478,1, instance_npcname("#sthd_mob_killed") + "::OnMobDead";	// unknown coord
 	end;
 }
@@ -1692,6 +1616,11 @@ OnStop:
 	mes "- You start to transport. -";
 	close2;
 	warp "prt_q",244,81;
+	if(checkquest(9427) == 0 || checkquest(9427) == 1 ) { // only complete if its already started
+		getexp 1500000,350000;
+		completequest 9427;
+		instance_destroy instance_id();
+	}
 	end;
 
 OnEnable:
@@ -1720,7 +1649,7 @@ OnInstanceInit:
 
 	for ( .@i = 1; .@i <= 6; .@i++ ) {
 		disablenpc instance_npcname("Activated Warp#sthd_mov_" + .@i);
-		disablenpc instance_npcname("Desactivated Warp#sthd_mov_" + .@i);
+		disablenpc instance_npcname("Deactivated Warp#sthd_mov_" + .@i);
 		disablenpc instance_npcname("#sthd_move_back_a_" + .@i);
 	}
 
@@ -2144,3 +2073,20 @@ function	script	gen_vicious_weapon	{
 	}
 	return;
 }
+
+// prt_q,246,81,3	script	killed_boss_x	570,{
+// 	switch(select("init 9418", "complete 9418", "erase 9418", "init 9419", "complete 9419", "erase 9419", "init 9427", "complete 9427", "erase 9427")){
+// 		case 1: setquest 9418; end;
+// 		case 2: completequest 9418; end;
+// 		case 3: erasequest 9418; end;
+//
+// 		case 4: setquest 9419; end;
+// 		case 5: completequest 9419; end;
+// 		case 6: erasequest 9419; end;
+//
+// 		case 7: setquest 9427; end;
+// 		case 8: completequest 9427; end;
+// 		case 9: erasequest 9427; end;
+// 	}
+// 	end;
+// }
