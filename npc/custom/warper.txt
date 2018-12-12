@@ -456,7 +456,7 @@ C8: Restrict("RE");
 // --------------------------------------------------
 	Guild_Dungeons:
 // --------------------------------------------------
-menu	"Baldur Realm",G1, "Luina Realm",G2, "Valkyrie Realm",G3, "Britoniah Realm",G4;
+menu	"Greenwood Lake",G1, "Luina",G2, "Valkyrie Realm",G3, "Britoniah",G4;
 G1: Go("pay_gld",203,184);
 G2: Go("alde_gld",186,155);
 G3: Go("prt_gld",159,91);

@@ -63,25 +63,35 @@ $@vfund_*_extra
 // Note: The times in this section are almost entirely custom.
 
 -	script	#invest_timer	-1,{
-OnClock0600:	// Open investments on Wednesday (1 hour after WoE)
-	if (gettime(DT_DAYOFWEEK) == THURSDAY && !agitcheck()) {
+// OnClock0600:	// Open investments on Wednesday (1 hour after WoE)
+OnThu0600:
+	// if (gettime(DT_DAYOFWEEK) == THURSDAY && !agitcheck()) {
+	if (!agitcheck()) {
 		set $2011_agit_invest,1;
 		donpcevent "#fund_master::OnInvest_start";
 	}
 	end;
-OnClock1800:	// Close investments on Friday (60 hours after investments open)
-	if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck()) {
+
+// OnClock1800:	// Close investments on Friday (60 hours after investments open)
+OnFri1800:
+	// if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck()) {
+	if (!agitcheck()) {
 		set $2011_agit_invest,2;
 		donpcevent "#fund_master::OnInvest_stop";
 	}
 	end;
-OnClock1835:	// Open dungeons on Friday (at least 31 minutes after investments close)
-	if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck())
+
+// OnClock1835:	// Open dungeons on Friday (at least 31 minutes after investments close)
+OnFri1835:
+	// if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck())
+	if (!agitcheck())
 		donpcevent "#fund_master::OnResult";
 	end;
-OnClock1900:	// Close dungeons on Tuesday (1 hour before WoE)
-	if (gettime(DT_DAYOFWEEK) == WEDNESDAY)
-		donpcevent "#fund_master::OnReset";
+
+// OnClock1900:	// Close dungeons on Tuesday (1 hour before WoE)
+OnWed1900:
+	// if (gettime(DT_DAYOFWEEK) == WEDNESDAY)
+	donpcevent "#fund_master::OnReset";
 	end;
 }
 
@@ -95,7 +105,7 @@ function	script	F_Invest_Status	{
 		return 0;
 
 	// Open for investments.
-	if ((.@day > THURSDAY || .@day >= THURSDAY && .hour <= 6) && (.@day < FRIDAY || (.@day == FRIDAY && .@hour <= 18)))
+	if ((.@day > THURSDAY || .@day == THURSDAY && .hour >= 6) && (.@day < FRIDAY || (.@day == FRIDAY && .@hour <= 18)))
 		return 1;
 
 	// Investments closed, calculating results.
@@ -103,8 +113,7 @@ function	script	F_Invest_Status	{
 		return 2;
 
 	// Calculations complete, dungeons open.
-	if ((.@day == FRIDAY && (.@hour > 18 || (.@hour == 18 && .@minute >= 35))) || .@day > FRIDAY ||
-	    .@day < WEDNESDAY || (.@day == WEDNESDAY && .@hour < 19))
+	if ((.@day == FRIDAY && (.@hour > 18 || (.@hour == 18 && .@minute >= 35))) || .@day > FRIDAY || .@day < WEDNESDAY || (.@day == WEDNESDAY && .@hour < 19))
 		return 3;
 
 	// Dungeons closed.
@@ -1060,6 +1069,7 @@ OnAgitInvest:
 		setarray .@invest_region$[0],  "Valkyrie Realm",  "Greenwood Lake",       "Britoniah",            "Luina";
 		mes "!- Investment Results of All Agit Regions -!";
 		for(set .@i,0; .@i<4; set .@i,.@i+1) {
+			// dispbottom .@invest_region$[.@i] + " "+.@invest_result[.@i];
 			if (.@invest_result[.@i] == 1)
 				mes "^aaaaaa["+.@invest_region$[.@i]+"] below minimum^000000";
 			else if (.@invest_result[.@i] == 2) {
