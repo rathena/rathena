@@ -5367,7 +5367,7 @@ ma_fild02,40,240,4	script	Malaya Immigrant#bako1	578,{
 	}
 }
 
-ma_fild01,165,237,4	script	Malaya Immigrant#bako2	582,{
+ma_fild01,171,248,4	script	Malaya Immigrant#bako2	582,{
 	if (malaya_bakona1 < 4) {
 		mes "[Malaya Immigrant]";
 		mes "Have you been to";
@@ -9013,7 +9013,7 @@ OnDisable:
 	end;
 }
 
-ma_fild01,162,235,6	script	Tourist#pin05	815,{
+ma_fild01,161,246,6	script	Tourist#pin05	815,{
 	mes "[Tourist]";
 	mes "They say the Pintados Festival will only be held for one week.";
 	next;
@@ -9032,7 +9032,7 @@ OnDisable:
 	end;
 }
 
-ma_fild01,164,234,6	script	Drumming Young Man#pin06	578,{
+ma_fild01,159,237,6	script	Drumming Young Man#pin06	578,{
 	mes "ba-dum-DUM- ba-dum-DUM";
 	next;
 	mes "[Drumming Young Man]";
@@ -9053,7 +9053,7 @@ OnDisable:
 	end;
 }
 
-ma_fild01,170,231,4	script	Drumming Young Man#pin07	578,{
+ma_fild01,165,237,4	script	Drumming Young Man#pin07	578,{
 	mes "ba-dum-DUM- ba-dum-DUM";
 	next;
 	mes "[Drumming Young Man]";
@@ -9074,7 +9074,7 @@ OnDisable:
 	end;
 }
 
-ma_fild01,164,228,6	script	Drumming Young Man#pin08	578,{
+ma_fild01,159,234,6	script	Drumming Young Man#pin08	578,{
 	mes "ba-dum-DUM- ba-dum-DUM";
 	next;
 	mes "[Drumming Young Man]";
@@ -9092,7 +9092,7 @@ OnDisable:
 	end;
 }
 
-ma_fild01,170,234,4	script	Beat Catching Boy#pin09	577,{
+ma_fild01,165,234,4	script	Beat Catching Boy#pin09	577,{
 	mes "ba-dum-TSH- ba-dum-TSH-";
 	next;
 	mes "[Beat Catching Boy]";
@@ -9113,7 +9113,7 @@ OnDisable:
 	end;
 }
 
-ma_fild01,164,231,6	script	Beat Catching Boy#pin10	577,{
+ma_fild01,159,230,6	script	Beat Catching Boy#pin10	577,{
 	mes "ba-dum-TSH- ba-dum-TSH-";
 	next;
 	mes "[Beat Catching Boy]";
@@ -9130,4 +9130,4 @@ OnDisable:
 	disablenpc strnpcinfo(0);
 	end;
 }
-ma_fild01,170,228,4	duplicate(Beat Catching Boy#pin10)	Beat Catching Boy#pin11	577
+ma_fild01,165,230,4	duplicate(Beat Catching Boy#pin10)	Beat Catching Boy#pin11	577
