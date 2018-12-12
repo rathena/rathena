@@ -1995,7 +1995,7 @@ void clif_selllist(struct map_session_data *sd)
 			if( !pc_can_sell_item(sd, &sd->inventory.u.items_inventory[i], nd->subtype))
 				continue;
 
-			val=sd->inventory_data[i]->value_sell;
+			val = sd->inventory.u.items_inventory[i].expire_time ? 0 : sd->inventory_data[i]->value_sell;
 			if( val < 0 )
 				continue;
 			WFIFOW(fd,4+c*10)=i+2;
