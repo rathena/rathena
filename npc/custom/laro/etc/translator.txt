@@ -1,37 +1,3 @@
--	script	Language Changer	-1,{
-OnPCLoginEvent:	
-
-    if(#language == -1)
-	set #language, 0; 
-	
-	
-	if(!#language == 0)
-	end;
-
-	mes "^0000FF[Translator]^000000";
-	mes " * Please choose a language:";
-	mes " * Por favor escolha o Idioma:";
-	next;
-		
-	switch(select("Português:English")){
-		next;
-		case 1:
-			set #language, 1; 
-			atcommand "@langtype POR";
-			mes "^0000FF[Tradutor]^000000";
-			mes "Obrigado.";
-			mes "Divirta-se no LaRO.";
-			close;
-		case 2:
-			set #language, 2; 
-			atcommand "@langtype ENG";
-			mes "^0000FF[Translator]^000000";
-			mes "Thank you.";
-			mes "Have fun on LaRO Server.";
-			close;
-		}
-}
-
 prt_cas,90,289,6	script	Translator	742 ,{
 	mes "^0000FF[Translator]^000000";
 	mes " * Please choose a language:";

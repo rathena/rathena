@@ -121,18 +121,34 @@ moc_para01,32,30,6	script	Spike	4_F_CHILD,{
 			}
 		}
 		else if (.@j >= 0) {
-			mes "[Spike]";
-			mes "You haven't finished your mission yet.";
-			mes "Keep up the good work. You are almost done.";
+			if(#language == 1) {
+				mes "[Spike]";
+				mes "Você ainda não terminou sua missão.";
+				mes "Mantenha o bom trabalho. Você está quase pronto.";
+			}else{
+				mes "[Spike]";
+				mes "You haven't finished your mission yet.";
+				mes "Keep up the good work. You are almost done.";
+			}
 			close;
 		}
 	}
-	mes "[Spike]";
-	mes "Are you looking for a job?";
-	mes "We always have lots of work to do.";
-	next;
-	mes "[Spike]";
-	mes "Why don't you look around and find some interesting tasks?";
+	
+	if(#language == 1) {
+		mes "[Spike]";
+		mes "Você está procurando emprego?";
+		mes "Nós sempre temos muito trabalho a fazer.";
+		next;
+		mes "[Spike]";
+		mes "Por que você não olha em volta e encontra algumas tarefas interessantes?";
+	}else{
+		mes "[Spike]";
+		mes "Are you looking for a job?";
+		mes "We always have lots of work to do.";
+		next;
+		mes "[Spike]";
+		mes "Why don't you look around and find some interesting tasks?";
+	}
 	close;
 
 L_Quest:

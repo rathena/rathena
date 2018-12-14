@@ -19,7 +19,32 @@
 //== Starting Point  (iz_int) =================================
 iz_int,18,30,0	script	iz_int#intro_start	HIDDEN_WARP_NPC,6,6,{
 	end;
+		
 OnTouch:
+	mes "^0000FF[Translator]^000000";
+	mes " * Please choose a language:";
+	mes " * Por favor escolha o Idioma:";
+	next;
+		
+	switch(select("Português:English")){
+		next;
+		case 1:
+			set #language, 1; 
+			atcommand "@langtype POR";
+			mes "^0000FF[Tradutor]^000000";
+			mes "Obrigado.";
+			mes "Divirta-se no LaRO.";
+			callsub(OnTalk);
+		case 2:
+			set #language, 2; 
+			atcommand "@langtype ENG";
+			mes "^0000FF[Translator]^000000";
+			mes "Thank you.";
+			mes "Have fun on LaRO Server.";
+			callsub(OnTalk);
+		}
+	
+OnTalk:	
 	navigateto("iz_int", 52, 30, NAV_NONE, 1); // Individual map name not required
 	if (getd(".start" + strnpcinfo(1)) == 0) {
 		setd ".start" + strnpcinfo(1), 1;
@@ -31,7 +56,7 @@ OnTouch:
 			mapannounce strnpcinfo(4), "[Tip] You can move to the desired point by clicking the ground with the left mouse button.", bc_map,0xFF0000;
 		}
 	}
-	end;
+	
 OnTimer9000:
 	if(#language == 1) {
 		mapannounce strnpcinfo(4), "[Dica] Enquanto mantém pressionado o botão direito do mouse, arraste para girar a tela.", bc_map,0xFF0000;

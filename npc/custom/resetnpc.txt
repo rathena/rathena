@@ -13,7 +13,7 @@
 //============================================================
 prt_cas,81,285,6	script	Reset Girl	4_F_SURA,{
 	//	 		Skills,	Stats,	Both,	Limit
-	setarray .@Reset,	5000,	5000,	9000,	0;
+	setarray .@Reset,	500000,	500000,	700000,	0;
 	mes "[Reset Girl]";
 	if(.@Reset[3] && reset_limit > .@Reset[3]) {
 		if(#language == 1) {

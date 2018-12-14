@@ -26,216 +26,432 @@
 // Common NPCs :: lv_tre
 //============================================================
 moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
-	if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
-		mes "- Wait a minute !! -";
-		mes "- Currently you're carrying -";
-		mes "- too many items with you. -";
-		mes "- Please try again -";
-		mes "- after you loose some weight. -";
-		close;
-	}
-	if (countitem(6219) > 0) {
-		mes "[Lime Evenor]";
-		mes "Thanks to many adventurers visiting our Eden Group, we've recently prepared a new version of Eden Group Mark for our visitors.";
-		mes "And it is also possible to exchange old version of Eden Group Mark into a new one.";
-		next;
-		mes "[Lime Evenor]";
-		mes "Though it has a slight time delay, this new version of Eden Group Mark will send you back to current saved location.";
-		mes "Would you like to exchange yours?";
-		next;
-		if (select("Sure:I'm good.") == 2){
-			mes "[Lime Evenor]";
-			mes "What possible reason would you have... to not exchange?";
+	
+	if(#language == 1) {
+		if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
+			mes "- Espere um minuto !! -";
+			mes "- Atualmente você está carregando -";
+			mes "- muitos itens com você. -";
+			mes "- Por favor, tente novamente -";
+			mes "- depois que você perder algum peso. -";
 			close;
 		}
-		delitem 6219,1;
-		getitem 22508,1;
-		mes "[Lime Evenor]";
-		mes "There you go. Come back again~";
-		close;
-	}
-	mes "[Lime Evenor]";
-	mes "People who follow their dreams and romances listen to me. We are representatives of the paradise called 'The garden of Eden' called the Eden group . There is no place like this anywhere.";
-	mes "Hello. Can I help you?";
-	next;
-	while (1) {
-		switch (select("What is Eden group?:Join the Eden Group.:Register new mission.:Search for missions.:Cancel.")) {
-		case 1:
+		if (countitem(6219) > 0) {
 			mes "[Lime Evenor]";
-			mes "Eden Group is a group that helps people who are suffering from distresses in Rune-Midgard.";
+			mes "Graças a muitos aventureiros visitando nosso Eden Group, nós preparamos recentemente uma nova versão do Eden Group Mark para nossos visitantes.";
+			mes "E também é possível trocar a versão antiga do Eden Group Mark por uma nova.";
 			next;
 			mes "[Lime Evenor]";
-			mes "If people need help, we put up the case on the bulletin board and introduce it to our members who are eager to help those in need.";
+			mes "Embora tenha um pequeno atraso de tempo, esta nova versão do Eden Group Mark o enviará de volta ao local atual salvo.";
+			mes "Você gostaria de trocar o seu?";
 			next;
-			mes "[Lime Evenor]";
-			mes "Eden members will review the missions and help those who post them up.";
-			mes "Members do these missions for rewards.";
-			next;
-			mes "[Lime Evenor]";
-			mes "If you are not too familiar with Rune-Midgard, this is a great way to explore the world.";
-			mes "Or, if you are mature enough, you can travel the world and make new friends while doing missions. Your honorable name will be spread out among lands.";
-			next;
-			break;
-		case 2:
-			if (!callfunc("F_HasEdenGroupMark")) {
+			if (select("Sure:I'm good.") == 2){
 				mes "[Lime Evenor]";
-				mes "You can be a Eden's member by simply registering with me.";
-				mes "Would you like to join Eden Group?";
+				mes "Qual possível motivo você teria ... para não trocar?";
+				close;
+			}
+			delitem 6219,1;
+			getitem 22508,1;
+			mes "[Lime Evenor]";
+			mes "Lá vai você. Volte novamente ~";
+			close;
+		}
+		mes "[Lime Evenor]";
+		mes "Pessoas que seguem seus sonhos e romances me escutam. Somos representantes do paraíso chamado 'O Jardim do Éden' chamado de grupo Éden. Não há lugar como este em qualquer lugar.";
+		mes "Olá. Posso te ajudar?";
+		next;
+		while (1) {
+			switch (select("O que é o grupo Eden?:Junte-se ao Eden Group.:Registre nova missão.:Procure por missões.:Cancelar.")) {
+			case 1:
+				mes "[Lime Evenor]";
+				mes "Eden Group é um grupo que ajuda pessoas que sofrem de problemas em Rune-Midgard.";
 				next;
-				switch (select("Yes, I want to join.:No, I don't want to join.")) {
-				case 1:
+				mes "[Lime Evenor]";
+				mes "Se as pessoas precisarem de ajuda, apresentamos o caso no quadro de avisos e apresentamos aos nossos membros que estão ansiosos para ajudar os necessitados.";
+				next;
+				mes "[Lime Evenor]";
+				mes "Os membros do Eden irão rever as missões e ajudar aqueles que as publicarem.";
+				mes "Os membros fazem essas missões por recompensas.";
+				next;
+				mes "[Lime Evenor]";
+				mes "Se você não está muito familiarizado com Rune-Midgard, esta é uma ótima maneira de explorar o mundo.";
+				mes "Ou, se você é maduro o suficiente, você pode viajar pelo mundo e fazer novos amigos enquanto estiver fazendo missões. Seu nome honrado será espalhado entre as terras.";
+				next;
+				break;
+			case 2:
+				if (!callfunc("F_HasEdenGroupMark")) {
 					mes "[Lime Evenor]";
-					mes "Aright. Excellent! Please write down your name here.";
+					mes "Você pode ser um membro do Éden simplesmente se registrando comigo.";
+					mes "Você gostaria de se juntar ao Eden Group?";
+					next;
+					switch (select("Sim, quero entrar.:Não, eu não quero entrar.")) {
+					case 1:
+						mes "[Lime Evenor]";
+						mes "Bem. Excelente! Por favor, anote seu nome aqui.";
+						input .@input$;
+						next;
+						mes "[Lime Evenor]";
+						mes "Você terminou?";
+						mes "Deixe-me ver.";
+						next;
+						mes "[Lime Evenor]";
+						mes "Seu nome é ^3131FFBo"+.@input$+"Ba^000000...? Isso esta certo?";
+						mes "Huh? Não é ??";
+						next;
+						emotion ET_SWEAT;
+						mes "[Lime Evenor]";
+						mes "Hmm, isso não é o que você escreveu?";
+						mes "Ok, hmm, parece um pouco difícil de ler.";
+						next;
+						mes "[Lime Evenor]";
+						mes "Você poderia por favor escrever seu nome de novo? Por favor, escreva isso ^3131FFClaramente^000000.";
+						input .@input$;
+						next;
+						mes "[Lime Evenor]";
+						mes "Ah ~ ha. Tu es ^3131FF"+strcharinfo(0)+"^000000.";
+						mes "Eu acertou desta vez.";
+						next;
+						emotion ET_BEST;
+						mes "[Lime Evenor]";
+						mes "Nós já colocamos seu nome na lista.";
+						mes "Bem vindo, novo membro do grupo do Éden!";
+						next;
+						mes "[Lime Evenor]";
+						mes "Espero que você possa fazer um ótimo trabalho como membro do Éden.";
+						getitem 22508,1; //Para_Team_Mark_
+						next;
+						break;
+					case 2:
+						mes "[Lime Evenor]";
+						mes "Você ainda tem dúvidas sobre o Eden Group?";
+						next;
+						break;
+					}
+				} else {
+					mes "[Lime Evenor]";
+					mes "Você já é um membro do Eden Group.";
+					next;
+				}
+				break;
+			case 3:
+				mes "[Lime Evenor]";
+				mes "Você quer registrar algumas missões que você quer que façamos?";
+				next;
+				if(select("Sim, quero me cadastrar.:Não, eu não sei.") == 1) {
+					mes "[Lime Evenor]";
+					mes "Tudo bem. Por favor, escreva seu nome nele.";
+					input .@input$;
+					next;
+					mes "[Lime Evenor]";
+					mes "^3131FF"+strcharinfo(0)+"^000000.. Esse é o seu nome?";
+					mes "Hmm, sua caligrafia não está clara. Eu não consigo ler.";
+					next;
+					mes "[Lime Evenor]";
+					mes "^3131FF"+strcharinfo(0)+"^000000, me diga o que você deseja registrar. para";
+					mes "Para qual mapa devemos ir?";
+					input .@input$;
+					next;
+					mes "[Lime Evenor]";
+					mes "^3131FFMapa da Missão: "+.@inputstr$+"^000000";
+					mes "hum, vou notar isso.";
+					next;
+					mes "[Lime Evenor]";
+					mes "Por favor, deixe-me saber que tipo de missões você está procurando."; 
+					mes "Deve ser brevemente como 'Caça aos 10 Porings'.";
+					input .@input$;
+					next;
+					mes "[Lime Evenor]";
+					mes "Você terminou?";
+					mes "Deixe-me checar.";
+					next;
+					mes "[Lime Evenor]";
+					mes "Huh...........";
+					next;
+					mes "[Lime Evenor]";
+					mes "Hum.. huh??..................";
+					next;
+					emotion ET_THINK;
+					mes "[Lime Evenor]";
+					mes "Eu acho que você deveria completar uma de nossas missões antes de você assumir uma nova missão.";
+					next;
+					emotion ET_HNG;
+					mes "[Lime Evenor]";
+					mes "^3131FFCliente: Lime Evenor^000000";
+					mes "^3131FFMissão: Pratique seu manuscrito por um mês. ^000000";
+					mes "Você tem uma caligrafia ruim!";
+					next;
+					mes "[Lime Evenor]";
+					mes "^3131FFMissão:"+.@input$+"^000000";
+					mes "De qualquer forma, você está se registrando para uma nova missão.";
+					next;
+					mes "[Lime Evenor]";
+					mes "As missões estão lotadas. Você tem que esperar por um lugar para limpar.";
+					mes "Por favor, espere até a sua vez.";
+					next;
+				}
+				break;
+			case 4:
+				if (callfunc("F_HasEdenGroupMark")) {
+					mes "[Lime Evenor]";
+					mes "Gostaria de tentar algumas missões como membro do Éden?";
+					next;
+					mes "[Lime Evenor]";
+					mes "Verifique o lado direito do quadro de avisos, existem vários tipos de missões esperando por você.";
+					mes "Por favor, leia atentamente a lista de missões e as qualificações e escolha uma delas.";
+					next;
+				}
+				else {
+					mes "[Lime Evenor]";
+					mes "Você precisa se juntar ao Eden Group primeiro se você quiser fazer algumas missões.";
+					close;
+				}
+				break;
+			case 5:
+				mes "[Lime Evenor]";
+				mes "Se você tiver alguma dúvida, por favor volte novamente.";
+				close;
+			}
+		}
+	}else{
+		
+				if (checkweight(1201,1) == 0 || (MaxWeight - Weight) < 2000) {
+			mes "- Wait a minute !! -";
+			mes "- Currently you're carrying -";
+			mes "- too many items with you. -";
+			mes "- Please try again -";
+			mes "- after you loose some weight. -";
+			close;
+		}
+		if (countitem(6219) > 0) {
+			mes "[Lime Evenor]";
+			mes "Thanks to many adventurers visiting our Eden Group, we've recently prepared a new version of Eden Group Mark for our visitors.";
+			mes "And it is also possible to exchange old version of Eden Group Mark into a new one.";
+			next;
+			mes "[Lime Evenor]";
+			mes "Though it has a slight time delay, this new version of Eden Group Mark will send you back to current saved location.";
+			mes "Would you like to exchange yours?";
+			next;
+			if (select("Sure:I'm good.") == 2){
+				mes "[Lime Evenor]";
+				mes "What possible reason would you have... to not exchange?";
+				close;
+			}
+			delitem 6219,1;
+			getitem 22508,1;
+			mes "[Lime Evenor]";
+			mes "There you go. Come back again~";
+			close;
+		}
+		mes "[Lime Evenor]";
+		mes "People who follow their dreams and romances listen to me. We are representatives of the paradise called 'The garden of Eden' called the Eden group . There is no place like this anywhere.";
+		mes "Hello. Can I help you?";
+		next;
+		while (1) {
+			switch (select("What is Eden group?:Join the Eden Group.:Register new mission.:Search for missions.:Cancel.")) {
+			case 1:
+				mes "[Lime Evenor]";
+				mes "Eden Group is a group that helps people who are suffering from distresses in Rune-Midgard.";
+				next;
+				mes "[Lime Evenor]";
+				mes "If people need help, we put up the case on the bulletin board and introduce it to our members who are eager to help those in need.";
+				next;
+				mes "[Lime Evenor]";
+				mes "Eden members will review the missions and help those who post them up.";
+				mes "Members do these missions for rewards.";
+				next;
+				mes "[Lime Evenor]";
+				mes "If you are not too familiar with Rune-Midgard, this is a great way to explore the world.";
+				mes "Or, if you are mature enough, you can travel the world and make new friends while doing missions. Your honorable name will be spread out among lands.";
+				next;
+				break;
+			case 2:
+				if (!callfunc("F_HasEdenGroupMark")) {
+					mes "[Lime Evenor]";
+					mes "You can be a Eden's member by simply registering with me.";
+					mes "Would you like to join Eden Group?";
+					next;
+					switch (select("Yes, I want to join.:No, I don't want to join.")) {
+					case 1:
+						mes "[Lime Evenor]";
+						mes "Aright. Excellent! Please write down your name here.";
+						input .@input$;
+						next;
+						mes "[Lime Evenor]";
+						mes "Are you done?";
+						mes "Let me see.";
+						next;
+						mes "[Lime Evenor]";
+						mes "Your name is ^3131FFBo"+.@input$+"Ba^000000...? Is that right?";
+						mes "Huh? Isn't it??";
+						next;
+						emotion ET_SWEAT;
+						mes "[Lime Evenor]";
+						mes "Hmm, that isn't what you wrote?";
+						mes "Ok, hmm, it seems a bit hard to read.";
+						next;
+						mes "[Lime Evenor]";
+						mes "Would you please write your name again? Please write it ^3131FFClearly^000000.";
+						input .@input$;
+						next;
+						mes "[Lime Evenor]";
+						mes "Ah~ ha. You are ^3131FF"+strcharinfo(0)+"^000000.";
+						mes "I got it right this time.";
+						next;
+						emotion ET_BEST;
+						mes "[Lime Evenor]";
+						mes "We already put your name on the list.";
+						mes "Welcome to Eden's group new member!";
+						next;
+						mes "[Lime Evenor]";
+						mes "Hopefully you can do great work as an Eden's member.";
+						getitem 22508,1; //Para_Team_Mark_
+						next;
+						break;
+					case 2:
+						mes "[Lime Evenor]";
+						mes "Do you still have questions about Eden Group?";
+						next;
+						break;
+					}
+				} else {
+					mes "[Lime Evenor]";
+					mes "You are already a member of Eden Group.";
+					next;
+				}
+				break;
+			case 3:
+				mes "[Lime Evenor]";
+				mes "Do you want to register some missions that you want us to do?";
+				next;
+				if(select("Yes, I want to register.:No, I don't.") == 1) {
+					mes "[Lime Evenor]";
+					mes "Alrigh. Please write down your name on it.";
+					input .@input$;
+					next;
+					mes "[Lime Evenor]";
+					mes "^3131FF"+strcharinfo(0)+"^000000.. Is that your name?";
+					mes "Hmm, your handwriting is not clear. I can't read. it";
+					next;
+					mes "[Lime Evenor]";
+					mes "^3131FF"+strcharinfo(0)+"^000000, tell me what you want to register. for";
+					mes "Which map should we go to?";
+					input .@input$;
+					next;
+					mes "[Lime Evenor]";
+					mes "^3131FFMission Map: "+.@inputstr$+"^000000";
+					mes "hum, I will note that.";
+					next;
+					mes "[Lime Evenor]";
+					mes "Please let me know what kind of missions your are lookng for.";
+					mes "It should be briefly like 'Hunt 10 Porings.'";
 					input .@input$;
 					next;
 					mes "[Lime Evenor]";
 					mes "Are you done?";
-					mes "Let me see.";
+					mes "Let me check.";
 					next;
 					mes "[Lime Evenor]";
-					mes "Your name is ^3131FFBo"+.@input$+"Ba^000000...? Is that right?";
-					mes "Huh? Isn't it??";
-					next;
-					emotion ET_SWEAT;
-					mes "[Lime Evenor]";
-					mes "Hmm, that isn't what you wrote?";
-					mes "Ok, hmm, it seems a bit hard to read.";
+					mes "Huh...........";
 					next;
 					mes "[Lime Evenor]";
-					mes "Would you please write your name again? Please write it ^3131FFClearly^000000.";
-					input .@input$;
+					mes "Hum.. huh??..................";
+					next;
+					emotion ET_THINK;
+					mes "[Lime Evenor]";
+					mes "I think you should complete one of our missions first before you take up a new mission.";
+					next;
+					emotion ET_HNG;
+					mes "[Lime Evenor]";
+					mes "^3131FFClient: Lime Evenor^000000";
+					mes "^3131FFMission: Practice your handwriting for one month.^000000";
+					mes "You've got really bad penmanship!";
 					next;
 					mes "[Lime Evenor]";
-					mes "Ah~ ha. You are ^3131FF"+strcharinfo(0)+"^000000.";
-					mes "I got it right this time.";
-					next;
-					emotion ET_BEST;
-					mes "[Lime Evenor]";
-					mes "We already put your name on the list.";
-					mes "Welcome to Eden's group new member!";
+					mes "^3131FFMission:"+.@input$+"^000000";
+					mes "Anyway, you are done registering for a new mission.";
 					next;
 					mes "[Lime Evenor]";
-					mes "Hopefully you can do great work as an Eden's member.";
-					getitem 22508,1; //Para_Team_Mark_
+					mes "Missions are fully booked. You have to wait for an spot to clear up.";
+					mes "Please kindly wait until your turn.";
 					next;
-					break;
-				case 2:
-					mes "[Lime Evenor]";
-					mes "Do you still have questions about Eden Group?";
-					next;
-					break;
 				}
-			} else {
+				break;
+			case 4:
+				if (callfunc("F_HasEdenGroupMark")) {
+					mes "[Lime Evenor]";
+					mes "Would like to try some missions as an Eden member?";
+					next;
+					mes "[Lime Evenor]";
+					mes "Check the right side of the bulletin board, there are various kinds of missions waiting for you.";
+					mes "Please carefully read the mission list and the qualifications and choose one of them.";
+					next;
+				}
+				else {
+					mes "[Lime Evenor]";
+					mes "You need to join Eden Group first if you want to do some missions.";
+					close;
+				}
+				break;
+			case 5:
 				mes "[Lime Evenor]";
-				mes "You are already a member of Eden Group.";
-				next;
-			}
-			break;
-		case 3:
-			mes "[Lime Evenor]";
-			mes "Do you want to register some missions that you want us to do?";
-			next;
-			if(select("Yes, I want to register.:No, I don't.") == 1) {
-				mes "[Lime Evenor]";
-				mes "Alrigh. Please write down your name on it.";
-				input .@input$;
-				next;
-				mes "[Lime Evenor]";
-				mes "^3131FF"+strcharinfo(0)+"^000000.. Is that your name?";
-				mes "Hmm, your handwriting is not clear. I can't read. it";
-				next;
-				mes "[Lime Evenor]";
-				mes "^3131FF"+strcharinfo(0)+"^000000, tell me what you want to register. for";
-				mes "Which map should we go to?";
-				input .@input$;
-				next;
-				mes "[Lime Evenor]";
-				mes "^3131FFMission Map: "+.@inputstr$+"^000000";
-				mes "hum, I will note that.";
-				next;
-				mes "[Lime Evenor]";
-				mes "Please let me know what kind of missions your are lookng for.";
-				mes "It should be briefly like 'Hunt 10 Porings.'";
-				input .@input$;
-				next;
-				mes "[Lime Evenor]";
-				mes "Are you done?";
-				mes "Let me check.";
-				next;
-				mes "[Lime Evenor]";
-				mes "Huh...........";
-				next;
-				mes "[Lime Evenor]";
-				mes "Hum.. huh??..................";
-				next;
-				emotion ET_THINK;
-				mes "[Lime Evenor]";
-				mes "I think you should complete one of our missions first before you take up a new mission.";
-				next;
-				emotion ET_HNG;
-				mes "[Lime Evenor]";
-				mes "^3131FFClient: Lime Evenor^000000";
-				mes "^3131FFMission: Practice your handwriting for one month.^000000";
-				mes "You've got really bad penmanship!";
-				next;
-				mes "[Lime Evenor]";
-				mes "^3131FFMission:"+.@input$+"^000000";
-				mes "Anyway, you are done registering for a new mission.";
-				next;
-				mes "[Lime Evenor]";
-				mes "Missions are fully booked. You have to wait for an spot to clear up.";
-				mes "Please kindly wait until your turn.";
-				next;
-			}
-			break;
-		case 4:
-			if (callfunc("F_HasEdenGroupMark")) {
-				mes "[Lime Evenor]";
-				mes "Would like to try some missions as an Eden member?";
-				next;
-				mes "[Lime Evenor]";
-				mes "Check the right side of the bulletin board, there are various kinds of missions waiting for you.";
-				mes "Please carefully read the mission list and the qualifications and choose one of them.";
-				next;
-			}
-			else {
-				mes "[Lime Evenor]";
-				mes "You need to join Eden Group first if you want to do some missions.";
+				mes "If you have any questions please come back again.";
 				close;
 			}
-			break;
-		case 5:
-			mes "[Lime Evenor]";
-			mes "If you have any questions please come back again.";
-			close;
-		}
+		}		
 	}
 	close;
 }
 
 -	script	Eden Teleport Officer#0::eto	-1,{
-	mes "[Eden Teleport Officer]";
-	mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
-	mes "Eden group is here to help you and will show you the great future.";
-	next;
-	mes "[Eden Teleport Officer]";
-	mes "You have nothing to do but waste your time?";
-	mes "You are eager to do something good but no one offers you work?";
-	mes "Would you like to be a problem solver?";
-	mes "Eden group is here to solve your problem.";
-	next;
-	switch (select("Move to Eden Group.:Don't want to talk anymore.")) {
-	case 1:
+	
+	if(#language == 1) {
 		mes "[Eden Teleport Officer]";
-		mes "Let's go to our secret base!";
-		set nak_warp,strnpcinfo(2);
-		close2;
-		warp "moc_para01",31,14;
-		end;
-	case 2:
+		mes "Aqueles que estão vagando neste mundo estranho com olhos sem objetivo, escutem e venham até mim!";
+		mes "O grupo Eden está aqui para ajudá-lo e lhe mostrará o grande futuro.";
+		next;
 		mes "[Eden Teleport Officer]";
-		mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
-		close;
+		mes "Você não tem nada a fazer além de perder seu tempo?";
+		mes "Você está ansioso para fazer algo bom, mas ninguém lhe oferece trabalho?";
+		mes "Você gostaria de ser um solucionador de problemas?";
+		mes "O grupo Eden está aqui para resolver o seu problema.";
+		next;
+		switch (select("Mover para o Eden Group.:Não quero mais falar.")) {
+		case 1:
+			mes "[Eden Teleport Officer]";
+			mes "Vamos para a nossa base secreta!";
+			set nak_warp,strnpcinfo(2);
+			close2;
+			warp "moc_para01",31,14;
+			end;
+		case 2:
+			mes "[Eden Teleport Officer]";
+			mes "Se você não sabe o que fazer para o seu futuro, não hesite em me contar. Apenas vá e fale comigo! Ok?";
+			close;
+		}
+	}else{
+		mes "[Eden Teleport Officer]";
+		mes "Those who are wandering around this strange world with aimless eyes listen up and come to me!";
+		mes "Eden group is here to help you and will show you the great future.";
+		next;
+		mes "[Eden Teleport Officer]";
+		mes "You have nothing to do but waste your time?";
+		mes "You are eager to do something good but no one offers you work?";
+		mes "Would you like to be a problem solver?";
+		mes "Eden group is here to solve your problem.";
+		next;
+		switch (select("Move to Eden Group.:Don't want to talk anymore.")) {
+		case 1:
+			mes "[Eden Teleport Officer]";
+			mes "Let's go to our secret base!";
+			set nak_warp,strnpcinfo(2);
+			close2;
+			warp "moc_para01",31,14;
+			end;
+		case 2:
+			mes "[Eden Teleport Officer]";
+			mes "If you don't know what to do for your future, don't hesitate to tell me. Just drop by and talk to me! Ok?";
+			close;
+		}
 	}
 }
 prontera,124,76,3	duplicate(eto)	Eden Teleport Officer#1	729
@@ -318,37 +534,72 @@ OnTouch:
 }
 
 moc_para01,47,39,3	script	#warp_2_pass	111,{
-	if (callfunc("F_HasEdenGroupMark")) {
-		mes "[Lime Evenor]";
-		mes "Oh, it is an exclusive place only for Eden's members.";
-		mes "If you are a member, you can come whenever you want!";
-		next;
-		switch (select("Enter.:Don't Enter.")) {
-		case 1:
-			mes "This door is beautifully decorated but seems a little bit too heavy.";
-			close2;
-			warp "moc_para01",106,14;
-			end;
-		case 2:
+	
+	if(#language == 1) {
+		if (callfunc("F_HasEdenGroupMark")) {
 			mes "[Lime Evenor]";
-			mes "Well, if you are not interested.";
-			close;
+			mes "Oh, é um lugar exclusivo apenas para membros do Éden.";
+			mes "Se você é um membro, você pode vir quando quiser!";
+			next;
+			switch (select("Entrar.:Não Entrar.")) {
+			case 1:
+				mes "Esta porta está lindamente decorada, mas parece um pouco pesada demais.";
+				close2;
+				warp "moc_para01",106,14;
+				end;
+			case 2:
+				mes "[Lime Evenor]";
+				mes "Bem, se você não está interessado.";
+				close;
+			}
 		}
+		mes "[Lime Evenor]";
+		mes "Oh, this is an exclusive place for Eden's members only.";
+		mes "If you want to go inside, you have to join the Eden Group.";
+		close;		
+	}else{
+		if (callfunc("F_HasEdenGroupMark")) {
+			mes "[Lime Evenor]";
+			mes "Oh, it is an exclusive place only for Eden's members.";
+			mes "If you are a member, you can come whenever you want!";
+			next;
+			switch (select("Enter.:Don't Enter.")) {
+			case 1:
+				mes "This door is beautifully decorated but seems a little bit too heavy.";
+				close2;
+				warp "moc_para01",106,14;
+				end;
+			case 2:
+				mes "[Lime Evenor]";
+				mes "Well, if you are not interested.";
+				close;
+			}
+		}
+		mes "[Lime Evenor]";
+		mes "Oh, this is an exclusive place for Eden's members only.";
+		mes "If you want to go inside, you have to join the Eden Group.";
+		close;
 	}
-	mes "[Lime Evenor]";
-	mes "Oh, this is an exclusive place for Eden's members only.";
-	mes "If you want to go inside, you have to join the Eden Group.";
-	close;
 }
 
 moc_para01,16,22,7	script	Old Adventurer#eden	900,{
-	mes "[Old Adventurer]";
-	mes "Harsh, I am strong enough even if I look old! What is his name? Lime Evenor? He just ignores me like I am a some kind of old senile bastard.";
-	next;
-	mes "[Old Adventurer]";
-	mes "I came here to join the Eden group! I don't deserve this!";
-	mes "Do you also think I look like I'm senile?";
+	if(#language == 1) {
+		mes "[Old Adventurer]";
+		mes "Harsh, eu sou forte o suficiente, mesmo que pareça velho! Qual é o nome dele? Lime Evenor? Ele apenas me ignora como se eu fosse algum tipo de velho bastardo senil.";
+		next;
+		mes "[Old Adventurer]";
+		mes "Eu vim aqui para me juntar ao grupo Eden! Eu não mereço isso!";
+		mes "Você também acha que eu pareço ser senil?";
+		close;
+	}else{
+		mes "[Old Adventurer]";
+		mes "Harsh, I am strong enough even if I look old! What is his name? Lime Evenor? He just ignores me like I am a some kind of old senile bastard.";
+		next;
+		mes "[Old Adventurer]";
+		mes "I came here to join the Eden group! I don't deserve this!";
+		mes "Do you also think I look like I'm senile?";
 	close;
+	}
 }
 
 moc_para01,182,48,3	script	Eden's Chief#eden	886,{
@@ -360,77 +611,151 @@ moc_para01,182,48,3	script	Eden's Chief#eden	886,{
 	mes ""+.@eggf+".. "+.@eggf_1+"... "+.@eggf_2+".... "+.@eggf_6+"..?";
 	next;
 	emotion ET_CRY;
-	mes "[Eden's Chief]";
-	mes "Oh, Shoot! How many eggs have I done?";
-	mes "Aww!!! I totally forgot! I have to count again!";
-	next;
-	emotion ET_CRY;
-	mes "[Eden's Chief]";
-	mes "Why have you asked me to do this? What kind of mission is that?";
-	next;
-	emotion ET_CRY;
-	mes "[Eden's Chief]";
-	mes "What are you going to with all of those fried eggs? I am sure you can't eat all of them. You just want to bother me, right?";
-	close;
+	
+	if(#language == 1) {
+		mes "[Eden's Chief]";
+		mes "Oh, Atire! Quantos ovos eu já fiz?";
+		mes "Aww !!! Eu esqueci completamente! Eu tenho que contar de novo!";
+		next;
+		emotion ET_CRY;
+		mes "[Eden's Chief]";
+		mes "Por que você me pediu para fazer isso? Que tipo de missão é essa?";
+		next;
+		emotion ET_CRY;
+		mes "[Eden's Chief]";
+		mes "Com o que você vai com todos esses ovos fritos? Tenho certeza que você não pode comer todos eles. Você só quer me incomodar, certo?";
+		close;
+	}else{
+		mes "[Eden's Chief]";
+		mes "Oh, Shoot! How many eggs have I done?";
+		mes "Aww!!! I totally forgot! I have to count again!";
+		next;
+		emotion ET_CRY;
+		mes "[Eden's Chief]";
+		mes "Why have you asked me to do this? What kind of mission is that?";
+		next;
+		emotion ET_CRY;
+		mes "[Eden's Chief]";
+		mes "What are you going to with all of those fried eggs? I am sure you can't eat all of them. You just want to bother me, right?";
+		close;
+	}
 }
 
 moc_para01,172,28,5	script	Eden's Intern#eden	883,{
-	mes "[Eden's Intern]";
-	mes "Actually, I realized that.";
-	next;
-	mes "[Eden's Intern]";
-	mes "We have to work really hard unless you want to fail.";
-	next;
-	mes "[Eden's Intern]";
-	mes "But, I have never learned about pharmaceuticals yet.";
-	next;
-	mes "[Eden's Intern]";
-	mes "I'm going to fail. I can't do this.";
+	if(#language == 1) {
+		mes "[Eden's Intern]";
+		mes "Na verdade, eu percebi isso.";
+		next;
+		mes "[Eden's Intern]";
+		mes "Nós temos que trabalhar muito a menos que você queira falhar.";
+		next;
+		mes "[Eden's Intern]";
+		mes "Mas, eu nunca aprendi sobre produtos farmacêuticos ainda.";
+		next;
+		mes "[Eden's Intern]";
+		mes "Eu vou falhar. Eu não posso fazer isso.";
+	}else{
+		mes "[Eden's Intern]";
+		mes "Actually, I realized that.";
+		next;
+		mes "[Eden's Intern]";
+		mes "We have to work really hard unless you want to fail.";
+		next;
+		mes "[Eden's Intern]";
+		mes "But, I have never learned about pharmaceuticals yet.";
+		next;
+		mes "[Eden's Intern]";
+		mes "I'm going to fail. I can't do this.";
+	}
 	close;
 }
 
 moc_para01,20,35,5	script	Office Assistant Neede	814,{
-	mes "[Neede]";
-	mes "I became a Eden's member several years ago, but it feels like it was yesterday.";
-	mes "I have been doing lots of work, so I didn't even notice how many years I spent here.";
-	next;
-	mes "[Neede]";
-	mes "It reminds me that it was like a war everyday.";
-	next;
-	mes "[Neede]";
-	mes "The chief of ^3131FFthe restaurant on the right side^000000";
-	mes "uses too much seasoning every time he cooks, the smell is all over the lobby. We have to open the window regularly because we can't stand the smell!";
-	next;
-	mes "[Neede]";
-	mes "And, do you see the ^3131FFgymnasium^000000 on the cross of ^3131FFthe north side of the lobby^000000? They always shout when they exercise, I can even hear them from here!";
-	next;
-	emotion ET_ANGER;
-	mes "[Neede]";
-	mes "Besides, the weird girl from ^3131FFthe second floor^000000 is crying all the time. Her cries drive me crazy.";
-	next;
-	mes "[Neede]";
-	mes "Ah, that weird girl is actually our boss...";
-	next;
-	mes "[Neede]";
-	mes "I don't know what she has been up to. But she cries and shouts all the time. Oh, sometimes I hear 'Bang!', loud booming sounds... I don't know where it came from.";
-	next;
-	emotion ET_HUK;
-	mes "[Neede]";
-	mes "Wait!";
-	mes "Shh! It is a secret, you can't tell anybody!";
-	next;
-	mes "[Neede]";
-	emotion ET_OHNO;
-	mes "I don't trust Evenor. She never shows her feelings... she's going to snitch on me to my boss.";
-	next;
-	emotion ET_HNG, getnpcid(0, "Secretary Lime Evenor");
-	mes "[Lime Evenor]";
-	mes "I am not that kind of guy.";
-	next;
-	emotion ET_KEK;
-	mes "[Neede]";
-	mes "Huh? Did you hear that? Gosh~!";
-	close;
+	if(#language == 1) {
+		mes "[Neede]";
+		mes "Eu me tornei membro do Éden há vários anos, mas parece que foi ontem.";
+		mes "Eu tenho feito muito trabalho, então nem notei quantos anos eu passei aqui.";
+		next;
+		mes "[Neede]";
+		mes "Isso me lembra que era como uma guerra todos os dias.";
+		next;
+		mes "[Neede]";
+		mes "O chefe do ^3131FFo restaurante do lado direito ^000000";
+		mes "usa muito tempero toda vez que ele cozinha, o cheiro está em todo o lobby. Nós temos que abrir a janela regularmente porque não podemos suportar o cheiro!";
+		next;
+		mes "[Neede]";
+		mes "E você vê o ^3131FFginásio^000000 na cruz de ^3131FFo lado norte do lobby ^000000? Eles sempre gritam quando se exercitam, eu posso até ouvi-los daqui!";
+		next;
+		emotion ET_ANGER;
+		mes "[Neede]";
+		mes "Além disso, a estranha garota do ^3131FFsegundo andar ^000000 está chorando o tempo todo. Seus gritos me deixam louca.";
+		next;
+		mes "[Neede]";
+		mes "Ah, essa garota estranha é realmente nossa chefe...";
+		next;
+		mes "[Neede]";
+		mes "Eu não sei o que ela tem feito. Mas ela chora e grita o tempo todo. Oh, às vezes eu ouço 'Bang!', sons altos e barulhentos... eu não sei de onde isso veio." ;
+		next;
+		emotion ET_HUK;
+		mes "[Neede]";
+		mes "Espere!";
+		mes "Shh! É um segredo, você não pode contar a ninguém!";
+		next;
+		mes "[Neede]";
+		emotion ET_OHNO;
+		mes "Eu não confio em Evenor. Ela nunca mostra seus sentimentos... ela vai me entregar ao meu chefe.";
+		next;
+		emotion ET_HNG, getnpcid(0, "Secretary Lime Evenor");
+		mes "[Lime Evenor]";
+		mes "Eu não sou esse tipo de cara.";
+		next;
+		emotion ET_KEK;
+		mes "[Neede]";
+		mes "Huh? Você ouviu isso? Gosh ~!";
+		close;
+	}else{
+		mes "[Neede]";
+		mes "I became a Eden's member several years ago, but it feels like it was yesterday.";
+		mes "I have been doing lots of work, so I didn't even notice how many years I spent here.";
+		next;
+		mes "[Neede]";
+		mes "It reminds me that it was like a war everyday.";
+		next;
+		mes "[Neede]";
+		mes "The chief of ^3131FFthe restaurant on the right side^000000";
+		mes "uses too much seasoning every time he cooks, the smell is all over the lobby. We have to open the window regularly because we can't stand the smell!";
+		next;
+		mes "[Neede]";
+		mes "And, do you see the ^3131FFgymnasium^000000 on the cross of ^3131FFthe north side of the lobby^000000? They always shout when they exercise, I can even hear them from here!";
+		next;
+		emotion ET_ANGER;
+		mes "[Neede]";
+		mes "Besides, the weird girl from ^3131FFthe second floor^000000 is crying all the time. Her cries drive me crazy.";
+		next;
+		mes "[Neede]";
+		mes "Ah, that weird girl is actually our boss...";
+		next;
+		mes "[Neede]";
+		mes "I don't know what she has been up to. But she cries and shouts all the time. Oh, sometimes I hear 'Bang!', loud booming sounds... I don't know where it came from.";
+		next;
+		emotion ET_HUK;
+		mes "[Neede]";
+		mes "Wait!";
+		mes "Shh! It is a secret, you can't tell anybody!";
+		next;
+		mes "[Neede]";
+		emotion ET_OHNO;
+		mes "I don't trust Evenor. She never shows her feelings... she's going to snitch on me to my boss.";
+		next;
+		emotion ET_HNG, getnpcid(0, "Secretary Lime Evenor");
+		mes "[Lime Evenor]";
+		mes "I am not that kind of guy.";
+		next;
+		emotion ET_KEK;
+		mes "[Neede]";
+		mes "Huh? Did you hear that? Gosh~!";
+		close;
+	}
 }
 
 function	script	F_HasEdenGroupMark	{
