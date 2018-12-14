@@ -21632,8 +21632,12 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 	trim(split[1]);
 	if (ISDIGIT(split[1][0]))
 		caster = atoi(split[1]);
-	else // Try to parse caster as constant
-		script_get_constant(split[1], &caster);
+	else { // Try to parse caster as constant
+		if (!script_get_constant(split[1], &caster)) {
+			ShowError("skill_parse_row_skilldamage: Invalid caster constant given for skill %d. Skipping.", id);
+			return false;
+		}
+	}
 	skill_db[id]->damage.caster |= caster;
 	skill_db[id]->damage.map |= atoi(split[2]);
 
