@@ -10004,12 +10004,26 @@ ACMD_FUNC(limitedsale){
 
 /**
  * Displays camera information from the client.
- * Usage: @camerainfo or client command /viewpointvalue on supported clients
+ * Usage: @camerainfo or client command /viewpointvalue or /setcamera on supported clients
  */
 ACMD_FUNC(camerainfo){
 	nullpo_retr(-1, sd);
 
-	clif_camerainfo( sd, true );
+	if( message == nullptr || message[0] == '\0' ){
+		clif_camerainfo( sd, true );
+		return 0;
+	}
+
+	float range = 0;
+	float rotation = 0;
+	float latitude = 0;
+
+	if( sscanf( message, "%f %f %f", &range, &rotation, &latitude ) < 3 ){
+		clif_displaymessage( fd, msg_txt( sd, 793 ) ); // Usage @camerainfo range rotation latitude
+		return -1;
+	}
+
+	clif_camerainfo( sd, false, range, rotation, latitude );
 
 	return 0;
 }

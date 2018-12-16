@@ -20581,13 +20581,19 @@ void clif_camerainfo( struct map_session_data* sd, bool show, float range, float
 #endif
 }
 
-/// Activates or deactives the client camera info.
-/// This packet is triggered by /viewpointvalue
-/// 0A77 <type>.B <unknown>.12B
+/// Activates or deactives the client camera info or updates the camera settings.
+/// This packet is triggered by /viewpointvalue or /setcamera
+/// 0A77 <type>.B <range>.F <rotation>.F <latitude>.F
 void clif_parse_camerainfo( int fd, struct map_session_data* sd ){
 	char command[CHAT_SIZE_MAX];
 
-	safesnprintf( command, sizeof( command ), "%ccamerainfo", atcommand_symbol );
+	// /viewpointvalue
+	if( RFIFOB( fd, 2 ) == 1 ){
+		safesnprintf( command, sizeof( command ), "%ccamerainfo", atcommand_symbol );
+	// /setcamera
+	}else{
+		safesnprintf( command, sizeof( command ), "%ccamerainfo %03.03f %03.03f %03.03f", atcommand_symbol, RFIFOF( fd, 3 ), RFIFOF( fd, 7 ), RFIFOF( fd, 11 ) );
+	}
 
 	is_atcommand( fd, sd, command, 1 );
 }
