@@ -518,7 +518,7 @@ struct mmo_charstatus {
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS];
 #endif
-	bool show_equip,allow_party;
+	bool show_equip;
 	short rename;
 
 	time_t delete_date;

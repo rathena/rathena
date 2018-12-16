@@ -414,7 +414,7 @@ bool party_invite( struct map_session_data *sd, struct map_session_data *tsd ){
 	}
 
 	// @noask [LuzZza]
-	if( tsd->state.noask ){
+	if( tsd->state.noask || tsd->state.refuse_party ){
 		clif_party_invite_reply( sd, tsd->status.name, PARTY_REPLY_JOINMSG_REFUSE );
 		return false;
 	}

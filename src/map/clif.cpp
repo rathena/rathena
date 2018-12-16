@@ -16566,13 +16566,13 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 }
 
 /// Request to change party invitation tick.
+/// 02C8 <enabled>.B (CZ_PARTY_CONFIG)
 /// value:
-///	 0 = disabled
-///	 1 = enabled
-void clif_parse_PartyTick(int fd, struct map_session_data* sd)
-{
-	bool flag = RFIFOB(fd,6) ? true : false;
-	sd->status.allow_party = flag;
+///	 0 = disabled, triggered by /refuse
+///	 1 = enabled, triggered by /accept
+void clif_parse_PartyTick( int fd, struct map_session_data* sd ){
+	bool flag = RFIFOB(fd,2) ? true : false;
+	sd->state.refuse_party = flag;
 	clif_partytickack(sd, flag);
 }
 
@@ -18475,7 +18475,9 @@ void __attribute__ ((unused)) clif_parse_dull(int fd, struct map_session_data *s
 	return;
 }
 
-void clif_partytickack(struct map_session_data* sd, bool flag) {
+/// Tells the client if all party invitations are blocked.
+/// 02C9 <enabled>.B (ZC_PARTY_CONFIG)
+void clif_partytickack( struct map_session_data* sd, bool flag ){
 	WFIFOHEAD(sd->fd, packet_len(0x2c9));
 	WFIFOW(sd->fd,0) = 0x2c9; 
 	WFIFOB(sd->fd,2) = flag;
