@@ -457,7 +457,7 @@
 5483,1,100	// Odin_Mask
 5492,507,100	// Boy's_Cap_I
 5493,507,100	// Ulle_Cap_I
-5494,507,100	// Spinx_Helm_I
+// 5494,507,100	// Spinx_Helm_I
 5521,507,100	// Angry_Mouth_C
 5536,507,100	// Spare_Card
 5544,467,100	// Time_Keeper_Hat
@@ -2680,7 +2680,7 @@
 14494,475,100	// Samambaia_Box
 14499,475,100	// Peacock_Feather_Box
 14500,475,100	// Insurance60
-14505,507,100	// Dungeon_1_hour_Ticket
+// 14505,507,100	// Dungeon_1_hour_Ticket
 14506,507,100	// Dungeon_Ticket
 14508,475,100	// Zeny_Scroll
 14509,475,100	// Light_Center_Pot
@@ -3921,7 +3921,7 @@
 25181,435,100	// Wood_Rosary
 25182,435,100	// Assassin's_Mark_Dagger
 25183,435,100	// Decorated_Archer's_Thimble
-25184,435,100	// Portable_Sewingbox
+// 25184,435,100	// Portable_Sewingbox
 25185,435,100	// Locket_Pendant
 25260,435,100	// Fragment_of_Purple_Ore
 26100,435,100	// Paradise_Foxtail_Staff_II
@@ -4026,3 +4026,4 @@
 12263,329,100	// Comp_Battle_Manual
 
 6960,329,100	// Key_Air_Fortress
+14505,329,100	// Dungeon_1_hour_Ticket

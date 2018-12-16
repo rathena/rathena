@@ -32,7 +32,7 @@ REPLACE INTO `mob_db2_re` (`ID`, `Sprite`, `kName`, `iName`, `LV`, `HP`, `SP`, `
 (3485, 'AS_D_CURSED_SOLDIER', 'Cursed Soldier of Bijou', 'Cursed Soldier of Bijou', 1, 100000, 1, 0, 0, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 10, 12, 1, 3, 21, 12437, 400, 1872, 672, 480, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 # Increase the drop rate of [item]6608[/item] #6608 | Coagulated Spell from 3% to 10% and from 10% to 30% (rates without vip)
-REPLACE INTO `mob_db_re` (`ID`, `Sprite`, `kName`, `iName`, `LV`, `HP`, `SP`, `EXP`, `JEXP`, `Range1`, `ATK1`, `ATK2`, `DEF`, `MDEF`, `STR`, `AGI`, `VIT`, `INT`, `DEX`, `LUK`, `Range2`, `Range3`, `Scale`, `Race`, `Element`, `Mode`, `Speed`, `aDelay`, `aMotion`, `dMotion`, `MEXP`, `MVP1id`, `MVP1per`, `MVP2id`, `MVP2per`, `MVP3id`, `MVP3per`, `Drop1id`, `Drop1per`, `Drop2id`, `Drop2per`, `Drop3id`, `Drop3per`, `Drop4id`, `Drop4per`, `Drop5id`, `Drop5per`, `Drop6id`, `Drop6per`, `Drop7id`, `Drop7per`, `Drop8id`, `Drop8per`, `Drop9id`, `Drop9per`, `DropCardid`, `DropCardper`) VALUES
+REPLACE INTO `mob_db2_re` (`ID`, `Sprite`, `kName`, `iName`, `LV`, `HP`, `SP`, `EXP`, `JEXP`, `Range1`, `ATK1`, `ATK2`, `DEF`, `MDEF`, `STR`, `AGI`, `VIT`, `INT`, `DEX`, `LUK`, `Range2`, `Range3`, `Scale`, `Race`, `Element`, `Mode`, `Speed`, `aDelay`, `aMotion`, `dMotion`, `MEXP`, `MVP1id`, `MVP1per`, `MVP2id`, `MVP2per`, `MVP3id`, `MVP3per`, `Drop1id`, `Drop1per`, `Drop2id`, `Drop2per`, `Drop3id`, `Drop3per`, `Drop4id`, `Drop4per`, `Drop5id`, `Drop5per`, `Drop6id`, `Drop6per`, `Drop7id`, `Drop7per`, `Drop8id`, `Drop8per`, `Drop9id`, `Drop9per`, `DropCardid`, `DropCardper`) VALUES
 (2474, 'MG_F_UNDEAD_KNIGHT', '2nd Commander of Destruction', '2nd Commander of Destruction', 145, 848011, 1, 159672, 120398, 2, 3090, 1488, 80, 180, 155, 88, 110, 135, 154, 59, 10, 12, 1, 1, 49, 102774421, 120, 350, 768, 480, 0, 0, 0, 0, 0, 0, 0, 6609, 5000, 6610, 5000, 6608, 150, 1163, 100, 1145, 50, 0, 0, 0, 0, 0, 0, 0, 0, 4606, 1),
 (2473, 'MG_M_UNDEAD_KNIGHT', '1st Commander of Destruction', '1st Commander of Destruction', 145, 950033, 1, 160018, 135184, 2, 3321, 1009, 80, 150, 165, 82, 110, 122, 154, 52, 10, 12, 1, 1, 49, 102774421, 130, 350, 864, 480, 0, 0, 0, 0, 0, 0, 0, 6609, 5000, 6610, 5000, 6608, 150, 1191, 10, 1163, 100, 1463, 200, 0, 0, 0, 0, 0, 0, 4605, 1),
 (2472, 'MG_BLOODY_KNIGHT', 'Bloody Knight', 'Bloody Knight', 143, 246751, 1, 20448, 21882, 2, 1881, 3200, 122, 300, 132, 55, 89, 151, 137, 45, 10, 12, 2, 1, 87, 102774421, 250, 828, 528, 192, 0, 0, 0, 0, 0, 0, 0, 6609, 3000, 6610, 2000, 6608, 150, 7054, 5000, 1160, 100, 1157, 100, 0, 0, 0, 0, 0, 0, 0, 0),
@@ -86,30 +86,6 @@ REPLACE INTO `mission_board` (`id`, `title`, `desc`, `mob_list`, `mob_qty`, `ite
 
 
 REPLACE INTO `mission_board` (`id`, `title`, `desc`, `mob_list`, `mob_qty`, `item_list`, `item_qty`, `class_limitation`, `class_branch`, `min_lv`, `max_lv`, `repeat`, `duration`, `reward_list`, `reward_qty`, `base_exp`, `job_exp`, `zeny`, `cash`, `aid`, `name`, `time_update`, `npc_id`, `redo_delay`) VALUES
-(1544614000,
-'Sphinx Hat',
-'The adventurers are called to clear the monsters in Sphinx. Bring in the materials that they drop and we will reward you with a Sphinx Hat. - Adventurer\'s Guild',
-'1098|1111|1140|1146|1149|1154|1178|1191|1037',
-'25|25|25|25|25|25|25|25|25',
-'941|954|7006|7110|1045',
-'25|25|25|25|25',
-1023,
-31,
-1,
-175,
-0,
-0,
-'|5053|',
-'|1|',
-100000,
-100000,
-500000,
-0,
-2000000,
-'<GM>Nubs',
-'2018-12-12 00:01:00',
-'|1|',
-21),
 (1544614010,
 'C Sphinx Hat',
 'I want to spread the love of cosplaying to the world. I want to convert the Sphinx Hat into a costume. I will give you one for the effort. - Cosplayer Designer',
@@ -148,30 +124,6 @@ REPLACE INTO `mission_board` (`id`, `title`, `desc`, `mob_list`, `mob_qty`, `ite
 0,
 0,
 '|5494|',
-'|1|',
-100000,
-100000,
-500000,
-0,
-2000000,
-'<GM>Nubs',
-'2018-12-12 00:01:00',
-'|1|',
-21),
-(1544614020,
-'Sphinx Hat [1]',
-'Someone designed the Sphinx Hat. And I perfected the design by adding slot to it. If you want it, get me the glasses with some other materials. I charge more than my other brothers though. - Heiyablem',
-'',
-'',
-'|969|1000|1061|5053|',
-'|25|25|10|1|',
-1023,
-31,
-1,
-175,
-0,
-0,
-'|5166|',
 '|1|',
 100000,
 100000,
@@ -243,7 +195,7 @@ REPLACE INTO `mission_board` (`id`, `title`, `desc`, `mob_list`, `mob_qty`, `ite
 175,
 0,
 0,
-'|5506|',
+'|5531|',
 '|1|',
 100000,
 100000,
@@ -383,3 +335,12 @@ REPLACE INTO `mob_db2_re` (`ID`, `Sprite`, `kName`, `iName`, `LV`, `HP`, `SP`, `
 (3126, 'ROCK_STEP', 'Lockstep', 'Lockstep', 131, 71056, 1, 360900, 220900, 1, 1100, 1425, 85, 59, 99, 95, 70, 124, 155, 80, 10, 12, 1, 6, 40, 35666069, 500, 1500, 500, 1000, 0, 0, 0, 0, 0, 0, 0, 6750, 150, 999, 350, 7319, 500, 6750, 150, 6961, 125, 6962, 125, 0, 0, 0, 0, 0, 0, 4699, 1),
 (3127, 'KICK_STEP', 'Hallway 1 Security Device', 'Hallway 1 Security Device', 132, 73644, 1, 360700, 220500, 7, 1151, 1369, 80, 50, 99, 92, 72, 122, 161, 76, 10, 12, 0, 7, 20, 35666069, 500, 1500, 500, 1000, 0, 0, 0, 0, 0, 0, 0, 6750, 150, 999, 250, 7319, 300, 6750, 150, 6961, 125, 6962, 125, 0, 0, 0, 0, 0, 0, 27012, 1),
 (3128, 'KICK_AND_KICK', 'Security Robot', 'Security Robot', 133, 68018, 1, 372900, 203200, 1, 1484, 1642, 98, 54, 164, 116, 66, 59, 141, 58, 10, 12, 1, 7, 20, 35666069, 500, 1500, 500, 1000, 0, 0, 0, 0, 0, 0, 0, 6751, 500, 998, 100, 6750, 150, 6750, 150, 6961, 50, 6962, 50, 0, 0, 0, 0, 0, 0, 27013, 1);
+
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(5506, 'Blue_Pajamas_Hat', 'Blue Night Cap', 4, 0, NULL, 100, NULL, 4, NULL, 0, 4294967295, 63, 2, 256, NULL, '0', 1, 501, 'bonus bAtkRate,5; bonus bMatkRate,5;', NULL, NULL),
+(18588, 'Silver_Bunny_Hairband', 'Silver Bunny Hairband', 4, 20, NULL, 10, NULL, 0, NULL, 1, 4294967295, 63, 2, 256, NULL, '0', 1, 754, 'bonus bStr,2; bonus bInt,3; bonus bVit,1; .@r = getrefine(); if (.@r > 8) { bonus bAtkRate,2; bonus bMatkRate,2; } if (.@r > 11) { bonus bFixedCastrate,10; }', NULL, NULL),
+(18791, 'Shrine_Maiden_Hat', 'Shrine Maiden Hat', 4, 20, NULL, 200, NULL, 30, NULL, 1, 4294967295, 63, 2, 256, NULL, NULL, NULL, 908, '.@r = getrefine(); bonus2 bSkillAtk,"PR_MAGNUS",30 + (.@r/2 * 5); if(.@r>6) { bonus3 bAutoSpellWhenHit, "AL_HEAL", MAX(getskilllv("AL_HEAL"), 0), 20; } if(.@r>8) { bonus bFixedCastrate,1; }', NULL, NULL),
+(19021, 'Gigant_Helm', 'Gigant Helm', 4, 0, NULL, 500, NULL, 10, NULL, 0, 4294967295, 63, 2, 256, NULL, NULL, 1, 1221, 'bonus bAtkRate,4; .@r = getrefine(); if(BaseLevel >= 99) { bonus bStr, 3 + .@r; } else { bonus bStr, 3 + .@r/2;  }', NULL, NULL);
+
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(28502, 'Mob_Scarf', 'Mob Scarf', 4, 20, NULL, 0, NULL, 0, NULL, 0, 4294967295, 63, 2, 1, NULL, '100', 0, 1568, 'skill \"SA_SPELLBREAKER\",2;', NULL, NULL);

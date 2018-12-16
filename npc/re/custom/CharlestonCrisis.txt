@@ -129,8 +129,8 @@ verus04,81,113,1	script	Teleport Machine#machine	PORTAL,{
 					}
 					mes "^ff0000Portal opened!^000000";
 				case 2:
-					getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
-					save .@map$, .@x, .@y;
+					// getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+					// save .@map$, .@x, .@y;
 					switch(instance_enter(.@md_name$))
 					{
 						case 0:
