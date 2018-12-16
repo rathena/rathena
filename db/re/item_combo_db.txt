@@ -820,3 +820,7 @@
 18574:4140,{ bonus2 bAddClass,Class_Boss,5; if (getequiprefinerycnt(EQI_HAND_R) >= 11) bonus2 bSubClass,Class_Normal,5; }
 19144:15116:20743:22046,{ bonus2 bHPDrainRate,5,3; bonus2 bSPDrainRate,5,2; }
 19144:15117:20744:22047,{ bonus2 bHPDrainRate,5,3; bonus2 bSPDrainRate,5,2; }
+28502:2201,{ callfunc "F_Mob_Scarf"; }
+28502:2202,{ callfunc "F_Mob_Scarf"; }
+28502:2203,{ callfunc "F_Mob_Scarf"; }
+28502:2204,{ callfunc "F_Mob_Scarf"; }

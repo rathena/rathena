@@ -1,0 +1,22 @@
+
+function	script	F_Mob_Scarf	{	//11536
+	bonus2 bSubRace,RC_DemiHuman,2;
+	bonus2 bSubRace,RC_Player,2;
+
+	.@i = (readparam(bInt) + readparam(bDex))/80;
+	bonus bMatk,120*.@i;
+	bonus bCastrate, -3*.@i;
+	bonus bHealPower,10*.@i;
+
+	.@j = (readparam(bStr) + readparam(bLuk))/80;
+	bonus bAtkRate,6*.@j;
+	bonus bCritical, 5*.@j;
+	bonus bCritAtkRate,10*.@j;
+
+	.@k = (readparam(bAgi) + readparam(bVit))/80;
+	bonus bMaxHPrate,5*.@k;
+	bonus bAspdRate, 5*.@k;
+	bonus2 bSubRace,RC_DemiHuman,2*.@k;
+	bonus2 bSubRace,RC_Player,2*.@k;
+	return;
+}
