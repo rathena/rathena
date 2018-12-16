@@ -10002,6 +10002,18 @@ ACMD_FUNC(limitedsale){
 	return 0;
 }
 
+/**
+ * Displays camera information from the client.
+ * Usage: @camerainfo or client command /viewpointvalue on supported clients
+ */
+ACMD_FUNC(camerainfo){
+	nullpo_retr(-1, sd);
+
+	clif_camerainfo( sd, true );
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10301,6 +10313,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(agitend3),
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;

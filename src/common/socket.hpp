@@ -32,6 +32,8 @@
 #define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
 #define RFIFOL(fd,pos) (*(uint32*)RFIFOP(fd,pos))
 #define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
+#define RFIFOF(fd,pos) (*(float*)RFIFOP(fd,pos))
+#define WFIFOF(fd,pos) (*(float*)WFIFOP(fd,pos))
 #define RFIFOQ(fd,pos) (*(uint64*)RFIFOP(fd,pos))
 #define WFIFOQ(fd,pos) (*(uint64*)WFIFOP(fd,pos))
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
