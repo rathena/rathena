@@ -16568,10 +16568,10 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 /// Request to change party invitation tick.
 /// 02C8 <enabled>.B (CZ_PARTY_CONFIG)
 /// value:
-///	 0 = disabled, triggered by /refuse
-///	 1 = enabled, triggered by /accept
+///	 0 = disabled, triggered by /accept
+///	 1 = enabled, triggered by /refuse
 void clif_parse_PartyTick( int fd, struct map_session_data* sd ){
-	bool flag = RFIFOB(fd,2) ? true : false;
+	bool flag = RFIFOB(fd,2) != 0;
 	sd->state.refuse_party = flag;
 	clif_partytickack(sd, flag);
 }
