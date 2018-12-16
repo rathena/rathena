@@ -4131,6 +4131,7 @@
 	export_constant(SCSTART_NORATEDEF);
 	export_constant(SCSTART_NOICON);
 
+	/* unit control - types */
 	export_constant(UNITTYPE_PC);
 	export_constant(UNITTYPE_NPC);
 	export_constant(UNITTYPE_PET);
@@ -7376,6 +7377,9 @@
 		script_set_constant( constant, i, false, false );
 	}
 	export_constant(CD_MAX);
+
+	/* timer related */
+	export_constant(INFINITE_TICK);
 
 	#undef export_constant
 	#undef export_constant2

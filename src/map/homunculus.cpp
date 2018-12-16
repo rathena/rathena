@@ -1260,7 +1260,7 @@ void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	clif_hominfo(sd,hd,0);
 	clif_homskillinfoblock(sd);
 	if (hd->homunculus.class_ == 6052) //eleanor
-		sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
+		sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
 }
 
 /**
