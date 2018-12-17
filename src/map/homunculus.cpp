@@ -891,6 +891,10 @@ static TIMER_FUNC(hom_hungry){
 		clif_emotion(&hd->bl, ET_OK);
 	}
 
+	if( battle_config.feature_homunculus_autofeed && hd->homunculus.autofeed && hd->homunculus.hunger <= battle_config.feature_homunculus_autofeed_rate ){
+		hom_food( sd, hd );
+	}
+
 	if (hd->homunculus.hunger < 0) {
 		hd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
