@@ -646,6 +646,7 @@ struct Battle_Config
 	int skill_drop_items_full;
 	int switch_remove_edp;
 	int feature_homunculus_autofeed;
+	int feature_homunculus_autofeed_rate;
 	int summoner_trait;
 	int homunculus_autofeed_always;
 	int feature_attendance;
