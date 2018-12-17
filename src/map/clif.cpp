@@ -17294,13 +17294,16 @@ void clif_bg_message( struct battleground_data *bg, int src_id, const char *name
 		return;
 	}
 
+	// limit length
+	len = min( len + 1, CHAT_SIZE_MAX );
+
 	unsigned char buf[8 + NAME_LENGTH + CHAT_SIZE_MAX];
 
 	WBUFW(buf,0) = 0x2dc;
-	WBUFW(buf,2) = len + 1 + NAME_LENGTH + 8;
+	WBUFW(buf,2) = len + NAME_LENGTH + 8;
 	WBUFL(buf,4) = src_id;
 	safestrncpy(WBUFCP(buf,8), name, NAME_LENGTH);
-	safestrncpy(WBUFCP(buf, 32), mes, min( len + 1, CHAT_SIZE_MAX ) );
+	safestrncpy(WBUFCP(buf,8+NAME_LENGTH), mes, len );
 
 	clif_send(buf,WBUFW(buf,2), &sd->bl, BG);
 }
