@@ -165,6 +165,14 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 		close;
 	}
 	.@equip_id = getequipid(EQI_SHOES);
+	.@equip_name$ = getequipname(EQI_SHOES);
+	setarray .@card[0],
+		getequipcardid(EQI_SHOES,0),
+		getequipcardid(EQI_SHOES,1),
+		getequipcardid(EQI_SHOES,2),
+		getequipcardid(EQI_SHOES,3);
+	copyarray .@equip_card[0], .@card[0], 4;	// for final check
+	.@equip_refine = getequiprefinerycnt(EQI_SHOES);
 
 	if (.@menu == 3) { // remove effect
 		mes "[Hugin's Magic Master]";
@@ -174,14 +182,20 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 			close;
 
 		if (countitem(6608) < 10) { // requires 10 x Coagulated Spell to remove
-			specialeffect2 EF_REPAIRWEAPON;
-			delitem 6608,10;// Coagulated_Spell
-			if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@equip_refine))
-				close;
-
-			delequip EQI_SHOES;
-			getitem .@equip_id,1;
+			mes "[Hugin's Magic Master]";
+			mes "You don't have 10 x Coagulated Spell.";
+			mes "Come back when you do.";
+			close;
 		}
+
+		specialeffect2 EF_REPAIRWEAPON;
+		if (callfunc("F_IsEquipIDHack", EQI_SHOES, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_SHOES, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", EQI_SHOES, .@equip_refine))
+			close;
+
+		delitem 6608,10;// Coagulated_Spell
+		delequip EQI_SHOES;
+		getitem .@equip_id,1;
+		equip .@equip_id;
 		close;
 	}
 
@@ -221,14 +235,6 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 	case 22116:	// Modified_VIT_Boots[1]
 	case 22117:	// Modified_DEX_Boots[1]
 	case 22118:	// Modified_LUK_Boots[1]
-		.@equip_name$ = getequipname(EQI_SHOES);
-		setarray .@card[0],
-			getequipcardid(EQI_SHOES,0),
-			getequipcardid(EQI_SHOES,1),
-			getequipcardid(EQI_SHOES,2),
-			getequipcardid(EQI_SHOES,3);
-		copyarray .@equip_card[0], .@card[0], 4;	// for final check
-		.@equip_refine = getequiprefinerycnt(EQI_SHOES);
 
 		if (.@card[2] > 0) {
 			mes "[Hugin's Magic master]";
@@ -299,6 +305,7 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 		mes "[Hugin's Magic Master]";
 		mes "Trying for " + .@string$;
 		getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@card[2],.@card[3];
+		equip .@equip_id;
 		close;
 	default:
 		mes "[Hugin's Magic Master]";
