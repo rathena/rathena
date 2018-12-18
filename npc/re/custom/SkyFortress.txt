@@ -1816,7 +1816,7 @@ function	script	gen_vicious_weapon	{
 				.@r_group[4] = 4;
 			}
 			if(rand(1000) < 150) {
-				.@item_id[5] = 18121; // Fist of Vicious Mind [1]
+				.@item_id[5] = 1800; // Fist of Vicious Mind [1]
 				.@r_group[5] = 5;
 			}
 			break;
@@ -1895,7 +1895,7 @@ function	script	gen_vicious_weapon	{
 				.@r_group[15] = 4;
 			}
 			if(rand(1000) < 150) {
-				.@item_id[16] = 18121; // Fist of Vicious Mind [1]
+				.@item_id[16] = 1800; // Fist of Vicious Mind [1]
 				.@r_group[16] = 5;
 			}
 
