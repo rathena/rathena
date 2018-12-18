@@ -12245,8 +12245,8 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		}
 	}
 
-	if ((pc_cant_act2(sd) || sd->chatID) && 
-		skill_id != RK_REFRESH && 
+	if ((pc_cant_act2(sd) || sd->chatID) &&
+		skill_id != RK_REFRESH &&
 		!(skill_id == SR_GENTLETOUCH_CURE && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
 		!(sd->state.storage_flag && (inf&INF_SELF_SKILL))) //SELF skills can be used with the storage open, issue: 8027
 		return;
@@ -20658,7 +20658,7 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 	struct item_data *id;
 	uint16 length;
 	struct refine_materials materials[REFINEUI_MAT_CNT];
-	uint8 i, material_count;
+	uint8 i, material_count, blessing_count;
 
 	// Get the item db reference
 	id = sd->inventory_data[index];
@@ -20711,11 +20711,21 @@ void clif_refineui_info( struct map_session_data* sd, uint16 index ){
 
 	length = 7 + material_count * 7;
 
+	// Calculate the number of Blacksmith Blessing required
+	if (item->refine < 9)
+		blessing_count = 1;
+	else if (item->refine < 13)
+		blessing_count = 2;
+	else if (item->refine < 17)
+		blessing_count = 3;
+	else // more than 17
+		blessing_count = 4;
+
 	WFIFOHEAD(fd,length);
 	WFIFOW(fd,0) = 0x0AA2;
 	WFIFOW(fd,2) = length;
 	WFIFOW(fd,4) = index + 2;
-	WFIFOB(fd,6) = 0; //TODO: required amount of "Blacksmith Blessing"(id: 6635)
+	WFIFOB(fd,6) = blessing_count; //TODO: required amount of "Blacksmith Blessing"(id: 6635)
 
 	for( i = 0; i < material_count; i++ ){
 		WFIFOW(fd,7 + i * 7) = materials[i].cost.nameid;
@@ -20759,8 +20769,8 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	uint16 material = RFIFOW( fd, 4 );
 	bool use_blacksmith_blessing = RFIFOB( fd, 6 ) != 0; // TODO: add logic
 	struct refine_materials materials[REFINEUI_MAT_CNT];
-	uint8 i, material_count;
-	uint16 j;
+	uint8 i, material_count, blessing_count;
+	uint16 j, k;
 	struct item *item;
 	struct item_data *id;
 
@@ -20857,19 +20867,65 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 		clif_refineui_info( sd, index );
 	}else{
 		// Failure
+		char output[128];
+		// delete the blacksmith bessing if its being used
+		if (use_blacksmith_blessing) { // only delete if the item is checked.
 
-		// Delete the item if it is breakable
-		if( materials[i].cost.breakable ){
-			clif_refine( fd, 1, index, item->refine );
-			pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_CONSUME );
-		}else{
-			if((rnd() % 100) > 45)
-			{
+			// Calculate the number of Blacksmith Blessing required
+			if (item->refine < 9)
+				blessing_count = 1;
+			else if (item->refine < 13)
+				blessing_count = 2;
+			else if (item->refine < 17)
+				blessing_count = 3;
+			else // more than 17
+				blessing_count = 4;
+
+			// Check if the player has the "Blacksmith Blessing"(id: 6635)
+			if( ( k = pc_search_inventory( sd, 6635 ) ) < 0 ){
+				return;
+			}
+
+			// Delete the "Blacksmith Blessing"
+			if( pc_delitem( sd, k, blessing_count, 0, 0, LOG_TYPE_CONSUME ) ){
+				return;
+			}
+
+			//	refine using HD (has chance to drop level)
+			if (materials[i].cost.nameid == 6241 || materials[i].cost.nameid == 6240 || materials[i].cost.nameid == 6226 || materials[i].cost.nameid == 6225) {
+				if((rnd() % 100) < 10) // 10% chance of dropping level
+				{
+					// Otherwise downgrade it
+					item->refine = cap_value( item->refine - 1, 0, MAX_REFINE );
+					sprintf(output, "%d x Blacksmith's Blessing failed to protect the item from dropping its refine levels.", blessing_count);
+					clif_displaymessage(fd, output);
+				} else {
+					sprintf(output, "%d x Blacksmith's Blessing was used to protect the item from dropping its refine levels.", blessing_count);
+					clif_displaymessage(fd, output);
+				}
+				clif_refine( fd, 2, index, item->refine );
+				clif_refineui_info(sd, index);
+			} else {
+				sprintf(output, "%d x Blacksmith's Blessing was used to protect the item from being destroyed.", blessing_count);
+				clif_displaymessage(fd, output);
 				// Otherwise downgrade it
 				item->refine = cap_value( item->refine - 1, 0, MAX_REFINE );
+				clif_refine( fd, 2, index, item->refine );
+				clif_refineui_info(sd, index);
 			}
-			clif_refine( fd, 2, index, item->refine );
-			clif_refineui_info(sd, index);
+			// do nothing otherwise
+		}
+		else {
+			// Delete the item if it is breakable
+			if( materials[i].cost.breakable ){
+				clif_refine( fd, 1, index, item->refine );
+				pc_delitem( sd, index, 1, 0, 0, LOG_TYPE_CONSUME );
+			} else {
+				// Otherwise downgrade it
+				item->refine = cap_value( item->refine - 1, 0, MAX_REFINE );
+				clif_refine( fd, 2, index, item->refine );
+				clif_refineui_info(sd, index);
+			}
 		}
 
 		clif_misceffect( &sd->bl, 2 );
