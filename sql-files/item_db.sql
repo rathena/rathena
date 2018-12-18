@@ -1628,7 +1628,7 @@ REPLACE INTO `item_db` VALUES (2772,'Krieger_Ring1','Glorious Ring',4,20,NULL,0,
 REPLACE INTO `item_db` VALUES (2773,'Krieger_Ring2','Glorious Mass-Production Ring',4,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFE,7,2,136,NULL,61,0,0,'bonus bAllStats,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2774,'Krieger_Ring3','Glorious Popularized Ring',4,20,NULL,0,NULL,0,NULL,0,0xFFFFFFFE,7,2,136,NULL,0,0,0,'bonus bAllStats,1;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2775,'Lure','Lure',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,NULL,NULL,NULL);
-REPLACE INTO `item_db` VALUES (2776,'Cool_Towel','Adventurer\'s Trusty Towel',4,20,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,NULL,'sc_start SC_SUMMER,-1,0;','sc_end SC_SUMMER;');
+REPLACE INTO `item_db` VALUES (2776,'Cool_Towel','Adventurer\'s Trusty Towel',4,20,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,7,2,136,NULL,0,0,0,NULL,'sc_start SC_SUMMER,INFINITE_TICK,0;','sc_end SC_SUMMER;');
 REPLACE INTO `item_db` VALUES (2777,'Shaman_Ring','Shaman Ring',4,20,NULL,100,NULL,0,NULL,1,0xFFFFFFFF,7,2,136,NULL,30,0,0,'bonus bUseSPrate,-5;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2778,'Shaman_Earing','Shaman Earrings',4,20,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,136,NULL,30,0,0,'bonus bInt,2;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2779,'Dark_Knight_Belt','Dark Knight Belt',4,20,NULL,500,NULL,1,NULL,0,0xFFFFFFFF,7,2,136,NULL,30,0,0,'bonus bStr,2; bonus bAgi,1;',NULL,NULL);
