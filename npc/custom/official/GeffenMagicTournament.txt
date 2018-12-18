@@ -836,10 +836,10 @@ dali,93,146,5	script	Geffen Enchanter	4_M_KHMAN,{
 	mes "To increase the efficiency of the research, we require <ITEM>"+getitemname(6671)+"<INFO>6671</INFO></ITEM>.";
 	next;
 	mes .@n$;
-	mes "Bring me 100 x <ITEM>"+getitemname(6671)+"<INFO>6671</INFO></ITEM>, and I will enchant the Armor and Accessories you obtain from the Tournament.";
+	mes "Bring me 100 x <ITEM>"+getitemname(6671)+"<INFO>6671</INFO></ITEM>, and I will enchant the Armor and Accessories you obtain from the instance.";
 	next;
 	mes .@n$;
-	mes "First, please select the item you want to me to enchant or remove its enchantment";
+	mes "Please select the item you want to me improve. Remember, I require 100 x <ITEM>"+getitemname(6671)+"<INFO>6671</INFO></ITEM> to upgrade your item.";
 	next;
 
 	if(countitem(6671) < 100){
@@ -856,7 +856,7 @@ dali,93,146,5	script	Geffen Enchanter	4_M_KHMAN,{
 	.@j = 1;
 	for( set .@i,1; .@i <= 3; set .@i,.@i+1 ) {
 		if( getequipisequiped(.@indices[.@i]) && inarray(.@enchantable, getequipid(.@indices[.@i])) >= 0) {
-			set .@menu$, .@menu$ + F_getpositionname(.@indices[.@i]) + "-[" + getequipname(.@indices[.@i]) + "]:";
+			set .@menu$, .@menu$ + getequipname(.@indices[.@i]) + " [ "+ getequiprandomoption(.@indices[.@i],0, ROA_ID) +"-"+getequiprandomoption(.@indices[.@i],0, ROA_VALUE)+" | "+getequiprandomoption(.@indices[.@i],1, ROA_ID)+"-"+getequiprandomoption(.@indices[.@i],1, ROA_VALUE)+" ]:";
 			.@selectable[.@j] = .@indices[.@i];
 			.@j++;
 		}
@@ -866,157 +866,112 @@ dali,93,146,5	script	Geffen Enchanter	4_M_KHMAN,{
 
 	.@equip_slot = .@selectable[.@sel];
 	.@equip_id = getequipid(.@equip_slot);
+	if(.@equip_id == 65535) {
+		mes " - Unknown Item ID - ";
+		close; // error prevention
+	}
 	.@equip_refine = getequiprefinerycnt(.@equip_slot);
 	.@equip_card = getequipcardid(.@equip_slot,0);
-	if(countitem(.@equip_id) > 0) {
+	// if(countitem(.@equip_id) > 0) {
+	// 	mes .@n$;
+	// 	mes "You seems to have the same item in your inventory. Please store it somewhere first. This is to prevent me from enchanting the wrong item.";
+	// 	close;
+	// }
+	setarray .@OptID[0], getequiprandomoption(.@equip_slot,0, ROA_ID), getequiprandomoption(.@equip_slot,1, ROA_ID);
+	setarray .@OptVal[0], getequiprandomoption(.@equip_slot,0, ROA_VALUE), getequiprandomoption(.@equip_slot,1, ROA_VALUE);
+	setarray .@OptParam[0], getequiprandomoption(.@equip_slot,0, ROA_PARAM), getequiprandomoption(.@equip_slot,1, ROA_PARAM);
+	// dispbottom .@OptID[0]+" | "+.@OptVal[0]+ " | "+.@OptParam[0];
+	// dispbottom .@OptID[1]+" | "+.@OptVal[1]+ " | "+.@OptParam[1];
+	// close;
+
+	.@selection$ = "Add enchantment effect to item.";
+	if( .@OptID[0] > 0 || .@OptID[1] > 0){
+		.@selection$ = "Replace enchantment with new effect.";
+	}
+
+	if(select(.@selection$, "I'll come back later.") == 2)
+	{
 		mes .@n$;
-		mes "You seems to have the same item in your inventory. Please store it somewhere first. This is to prevent me from enchanting the wrong item.";
+		mes "Alright. See you again later then.";
 		close;
 	}
 
-
-	getinventorylist;
-	for(.@x = 0; .@x < @inventorylist_count; .@x++) {
-		if(@inventorylist_equip[.@x] > 0 && @inventorylist_id[.@x] == .@equip_id){
-			// re-assign the previous options
-			setarray .@OptID_old[0], @inventorylist_option_id1[.@x], @inventorylist_option_id2[.@x];
-			setarray .@OptVal_old[0], @inventorylist_option_value1[.@x], @inventorylist_option_value2[.@x];
-			setarray .@OptParam_old[0], @inventorylist_option_parameter1[.@x], @inventorylist_option_parameter2[.@x];
-
-			setarray .@OptID[0], @inventorylist_option_id1[.@x], @inventorylist_option_id2[.@x];
-			setarray .@OptVal[0], @inventorylist_option_value1[.@x], @inventorylist_option_value2[.@x];
-			setarray .@OptParam[0], @inventorylist_option_parameter1[.@x], @inventorylist_option_parameter2[.@x];
-
-			dispbottom @inventorylist_option_id1[.@x]+" | "+@inventorylist_option_id2[.@x];
-			dispbottom @inventorylist_option_value1[.@x]+" | "+@inventorylist_option_value2[.@x];
-			dispbottom @inventorylist_option_parameter1[.@x]+" | "+@inventorylist_option_parameter2[.@x];
-		}
+	if( .@OptID[1] > 0){
+		mes .@n$;
+		mes "This item already been enchant before.";
+		mes "Are you sure you want to continue to replace the previous enchantment?";
+		if (select("No:Yes") == 1) close;
 	}
-	if(.@equip_id == 65535) close; // error prevention
 
-	switch(select("Enchant", "Remove Enchant", "I'll come back later")){
-		case 1:
-			if( .@OptID_old[1] > 0){
-				mes .@n$;
-				mes "This item already been enchant to its limit.";
-				mes "You have to reset it if you want to change its enchantments.";
-				close;
-			}
+	//	acccessory
+	if( .@equip_id == 2963 || .@equip_id == 2964 ) {
+		deletearray .@options, getarraysize(.@options);
+		setarray .@options[0], RDMOPT_VAR_PLUSASPDPERCENT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DAMAGE_CRI_TARGET, RDMOPT_ATTR_TOLERACE_WATER, RDMOPT_ATTR_TOLERACE_FIRE, RDMOPT_ATTR_TOLERACE_GROUND, RDMOPT_ATTR_TOLERACE_WIND, RDMOPT_DEC_SP_CONSUMPTION, RDMOPT_ATTR_TOLERACE_ALL, RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_VAR_ATKPERCENT, RDMOPT_VAR_MAGICATKPERCENT;
+		.@result = rand(getarraysize(.@options));
 
-			//	acccessory
-			if( .@equip_id == 2963 ||  .@equip_id == 2964 ) {
-				setarray .@options[0], RDMOPT_VAR_PLUSASPDPERCENT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DAMAGE_CRI_TARGET, RDMOPT_ATTR_TOLERACE_WATER, RDMOPT_ATTR_TOLERACE_FIRE, RDMOPT_ATTR_TOLERACE_GROUND, RDMOPT_ATTR_TOLERACE_WIND, RDMOPT_DEC_SP_CONSUMPTION, RDMOPT_ATTR_TOLERACE_ALL, RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_VAR_ATKPERCENT, RDMOPT_VAR_MAGICATKPERCENT;
-				.@result = rand(getarraysize(.@options));
-				// first enchant
-				if(.@OptID_old[0] == 0) {
-					.@OptID[0] = .@options[.@result];
-					if(.@result < 1) 									// aspd
-						.@OptVal[0] = rand(3,5);
-					else if(.@result < 2) 								// v. cast time
-						.@OptVal[0] = rand(5,7);
-					else if(.@result < 3) 								// crit dmg
-						.@OptVal[0] = rand(5,8);
-					else if(.@result < 7) 								// ele resistance
-						.@OptVal[0] = rand(3,5);
-					else				 								// all resistance
-						.@OptVal[0] = rand(1,3);
-					.@OptParam[0] = 0;
+		// first enchant
+		.@OptID[0] = .@options[.@result];
+		if(.@result < 1) 									// aspd
+			.@OptVal[0] = rand(3,5);
+		else if(.@result < 2) 								// v. cast time
+			.@OptVal[0] = rand(5,7);
+		else if(.@result < 3) 								// crit dmg
+			.@OptVal[0] = rand(5,8);
+		else if(.@result < 7) 								// ele resistance
+			.@OptVal[0] = rand(3,5);
+		else				 								// all resistance
+			.@OptVal[0] = rand(1,3);
+		.@OptParam[0] = 0;
 
-				} else {
-					// second enchant
-					.@OptID[1] = .@options[.@result];
-					if(.@result < 1) 									// aspd
-						.@OptVal[1] = rand(3,5);
-					else if(.@result < 2) 								// v. cast time
-						.@OptVal[1] = rand(5,7);
-					else if(.@result < 3) 								// crit dmg
-						.@OptVal[1] = rand(5,8);
-					else if(.@result < 7) 								// ele resistance
-						.@OptVal[1] = rand(3,5);
-					else				 								// all resistance
-						.@OptVal[1] = rand(1,3);
-					.@OptParam[1] = 0;
-				}
-
-				deletearray .@options, getarraysize(.@options);
-			}
-			else if ( .@equip_id == 15073 ||  .@equip_id == 15074 ) {
-
-				// first enchant
-				if(.@OptID_old[0] == 0) {
-					setarray .@options[0], RDMOPT_VAR_STRAMOUNT, RDMOPT_VAR_INTAMOUNT, RDMOPT_VAR_DEXAMOUNT, RDMOPT_VAR_AGIAMOUNT, RDMOPT_VAR_VITAMOUNT, RDMOPT_VAR_LUKAMOUNT, RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT;
-					.@result = rand(getarraysize(.@options));
-					.@OptID[0] = .@options[.@result];
-					if(.@result < 6) 									// Stats
-						.@OptVal[0] = rand(1,4);
-					else 												// MaxHP/MaxSP
-						.@OptVal[0] = rand(3,5);
-					.@OptParam[0] = 0;
-
-				} else {
-					// second enchant
-					setarray .@options[0], RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION, RDMOPT_VAR_HITSUCCESSVALUE, RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_HEAL_VALUE, RDMOPT_HEAL_MODIFY_PERCENT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_BODY_INDESTRUCTIBLE, RDMOPT_WEAPON_ATTR_WATER, RDMOPT_WEAPON_ATTR_FIRE, RDMOPT_WEAPON_ATTR_GROUND, RDMOPT_WEAPON_ATTR_WIND;
-					.@result = rand(getarraysize(.@options));
-					.@OptID[1] = .@options[.@result];
-					if(.@result < 2) 									// HP/SP Recovery  50~100%
-						.@OptVal[1] = rand(50,100);
-					if(.@result < 4) 									// Hit/Flee 15~30
-						.@OptVal[1] = rand(50,100);
-					if(.@result < 5) 									// DEF 20-60
-						.@OptVal[1] = rand(20,60);
-					if(.@result < 9) 									// MDEF/Heal Power/Received/Variable Cast Reduction 5-10
-						.@OptVal[1] = rand(5,10);
-					else 												// Elemental
-						.@OptVal[1] = 1;
-					.@OptParam[1] = 0;
-				}
-
-				deletearray .@options, getarraysize(.@options);
-			}
-
-			delitem 6671, 100;
-			for(.@i=0;.@i<getarraysize(.@OptID_old);.@i++)
-				dispbottom "yOLD "+.@OptID_old[.@i]+ " | "+.@OptVal_old[.@i]+ " | "+.@OptParam_old;
-			for(.@i=0;.@i<getarraysize(.@OptID);.@i++)
-				dispbottom "yNEW "+.@OptID[.@i]+ " | "+.@OptVal[.@i]+ " | "+.@OptParam;
-
-			dispbottom "size"+getarraysize(.@OptID_old);
-			if(getarraysize(.@OptID_old) == 0)
-				delitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card,0,0,0; // remove empty options
-			else
-				delitem3 .@equip_id,1,1,.@equip_refine,0,.@equip_card,0,0,0,.@OptID_old,.@OptVal_old,.@OptParam_old;
-
-			getitem3 .@equip_id,1,1,.@equip_refine,0,.@equip_card,0,0,0,.@OptID,.@OptVal,.@OptParam;
-			close;
-
-		case 2:
-			if( .@OptID_old[0] == 0){
-				mes .@n$;
-				mes "Are you messing with me?";
-				mes "This item doesn't have any enchantments.";
-				close;
-			}
-
-			mes .@n$;
-			mes "Are you sure you want to remove all the previous enchantment from this item?";
-			if(select("No:Yes") == 1) close;
-			next;
-			for(.@i=0;.@i<getarraysize(.@OptID_old);.@i++)
-				dispbottom "xOLD "+.@OptID_old[.@i]+ " | "+.@OptVal_old[.@i]+ " | "+.@OptParam_old;
-			for(.@i=0;.@i<getarraysize(.@OptID);.@i++)
-				dispbottom "xNEW "+.@OptID[.@i]+ " | "+.@OptVal[.@i]+ " | "+.@OptParam;
-
-
-			delitem 6671, 100;
-			delitem3 .@equip_id,1,1,.@equip_refine,0,.@equip_card,0,0,0,.@OptID_old,.@OptVal_old,.@OptParam_old;
-			getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card,0,0,0;
-			close;
-
-		case 3:
-			mes .@n$;
-			mes "See you later then.";
-			close;
+		// second enchant
+		.@result = rand(getarraysize(.@options));
+		.@OptID[1] = .@options[.@result];
+		if(.@result < 1) 									// aspd
+			.@OptVal[1] = rand(3,5);
+		else if(.@result < 2) 								// v. cast time
+			.@OptVal[1] = rand(5,7);
+		else if(.@result < 3) 								// crit dmg
+			.@OptVal[1] = rand(5,8);
+		else if(.@result < 7) 								// ele resistance
+			.@OptVal[1] = rand(3,5);
+		else				 								// all resistance
+			.@OptVal[1] = rand(1,3);
+		.@OptParam[1] = 0;
 	}
+	else if ( .@equip_id == 15073 ||  .@equip_id == 15074 ) {
+		deletearray .@options, getarraysize(.@options);
+
+		setarray .@options[0], RDMOPT_VAR_STRAMOUNT, RDMOPT_VAR_INTAMOUNT, RDMOPT_VAR_DEXAMOUNT, RDMOPT_VAR_AGIAMOUNT, RDMOPT_VAR_VITAMOUNT, RDMOPT_VAR_LUKAMOUNT, RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT;
+		.@result = rand(getarraysize(.@options));
+		.@OptID[0] = .@options[.@result];
+		if(.@result < 6) 									// Stats
+			.@OptVal[0] = rand(1,4);
+		else 												// MaxHP/MaxSP
+			.@OptVal[0] = rand(3,5);
+		.@OptParam[0] = 0;
+
+		// second enchant
+		deletearray .@options, getarraysize(.@options);
+		setarray .@options[0], RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION, RDMOPT_VAR_HITSUCCESSVALUE, RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_HEAL_VALUE, RDMOPT_HEAL_MODIFY_PERCENT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_BODY_INDESTRUCTIBLE, RDMOPT_WEAPON_ATTR_WATER, RDMOPT_WEAPON_ATTR_FIRE, RDMOPT_WEAPON_ATTR_GROUND, RDMOPT_WEAPON_ATTR_WIND;
+		.@result = rand(getarraysize(.@options));
+		.@OptID[1] = .@options[.@result];
+		if(.@result < 2) 									// HP/SP Recovery  50~100%
+			.@OptVal[1] = rand(50,100);
+		if(.@result < 4) 									// Hit/Flee 15~30
+			.@OptVal[1] = rand(50,100);
+		if(.@result < 5) 									// DEF 20-60
+			.@OptVal[1] = rand(20,60);
+		if(.@result < 9) 									// MDEF/Heal Power/Received/Variable Cast Reduction 5-10
+			.@OptVal[1] = rand(5,10);
+		else 												// Elemental
+			.@OptVal[1] = 1;
+		.@OptParam[1] = 0;
+
+	}
+
+	delitem 6671, 100;
+	setrandomoption(.@equip_slot, 0, .@OptID[0], .@OptVal[0], .@OptParam[0]);
+	setrandomoption(.@equip_slot, 1, .@OptID[1], .@OptVal[1], .@OptParam[1]);
 	close;
 }
 
