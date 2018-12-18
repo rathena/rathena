@@ -12149,7 +12149,7 @@ void pc_cell_basilica(struct map_session_data *sd) {
 			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
 	}
 	else if (!sd->sc.data[SC_BASILICA])
-		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,-1);
+		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,INFINITE_TICK);
 }
 
 /** [Cydh]

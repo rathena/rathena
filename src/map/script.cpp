@@ -20681,7 +20681,7 @@ BUILDIN_FUNC(setmounting) {
 		if( sd->sc.data[SC_ALL_RIDING] )
 			status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER); //release mount
 		else
-			sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER); //mount
+			sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INFINITE_TICK); //mount
 		script_pushint(st,1);//in both cases, return 1.
 	}
 	return SCRIPT_CMD_SUCCESS;
