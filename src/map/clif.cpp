@@ -17285,32 +17285,32 @@ void clif_bg_xy_remove(struct map_session_data *sd)
 	clif_send(buf, packet_len(0x2df), &sd->bl, BG_SAMEMAP_WOS);
 }
 
+/// Notifies clients of a battleground message.
+/// 02DC <packet len>.W <account id>.L <name>.24B <message>.?B (ZC_BATTLEFIELD_CHAT)
+void clif_bg_message( struct battleground_data *bg, int src_id, const char *name, const char *mes, int len ){
+	struct map_session_data *sd = bg_getavailablesd( bg );
 
-/// Notifies clients of a battleground message (ZC_BATTLEFIELD_CHAT).
-/// 02dc <packet len>.W <account id>.L <name>.24B <message>.?B
-void clif_bg_message(struct battleground_data *bg, int src_id, const char *name, const char *mes, int len)
-{
-	struct map_session_data *sd;
-	unsigned char *buf;
-	if( (sd = bg_getavailablesd(bg)) == NULL )
+	if( sd == nullptr ){
 		return;
+	}
 
-	buf = (unsigned char*)aMalloc((len + NAME_LENGTH + 8)*sizeof(unsigned char));
+	// limit length
+	len = min( len + 1, CHAT_SIZE_MAX );
+
+	unsigned char buf[8 + NAME_LENGTH + CHAT_SIZE_MAX];
 
 	WBUFW(buf,0) = 0x2dc;
 	WBUFW(buf,2) = len + NAME_LENGTH + 8;
 	WBUFL(buf,4) = src_id;
 	safestrncpy(WBUFCP(buf,8), name, NAME_LENGTH);
-	memcpy(WBUFP(buf,32), mes, len);
-	clif_send(buf,WBUFW(buf,2), &sd->bl, BG);
+	safestrncpy(WBUFCP(buf,8+NAME_LENGTH), mes, len );
 
-	if( buf )
-		aFree(buf);
+	clif_send(buf,WBUFW(buf,2), &sd->bl, BG);
 }
 
-
-/// Validates and processes battlechat messages [pakpil] (CZ_BATTLEFIELD_CHAT).
-/// 0x2db <packet len>.W <text>.?B (<name> : <message>) 00
+/// Validates and processes battlechat messages.
+/// All messages that are sent after enabling battleground chat with /battlechat.
+/// 02DB <packet len>.W <text>.?B (CZ_BATTLEFIELD_CHAT)
 void clif_parse_BattleChat(int fd, struct map_session_data* sd){
 	char name[NAME_LENGTH], message[CHAT_SIZE_MAX], output[CHAT_SIZE_MAX+NAME_LENGTH*2];
 
