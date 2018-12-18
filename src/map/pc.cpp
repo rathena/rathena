@@ -2356,10 +2356,14 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
 	if (!sd)
 		return;
 
-	for (uint8 i = 0; i < bonus.size(); i++) {
-		if (bonus[i].active != INVALID_TIMER) {
-			if (restore && (sd->state.autobonus&bonus[i].pos) == bonus[i].pos) {
-				if (bonus[i].bonus_script) {
+	std::vector<s_autobonus>::iterator it = bonus.begin();
+
+	while( it != bonus.end() ){
+		s_autobonus b = *it;
+
+		if (b.active != INVALID_TIMER) {
+			if (restore && (sd->state.autobonus&b.pos) == b.pos) {
+				if (b.bonus_script) {
 					unsigned int equip_pos_idx = 0;
 
 					// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
@@ -2368,22 +2372,26 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
 							equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
 					}
 
-					if ((equip_pos_idx&bonus[i].pos) == bonus[i].pos)
-						script_run_autobonus(bonus[i].bonus_script, sd, bonus[i].pos);
+					if ((equip_pos_idx&b.pos) == b.pos)
+						script_run_autobonus(b.bonus_script, sd, b.pos);
 				}
+
+				it++;
+
 				continue;
 			} else { // Logout / Unequipped an item with an activated bonus
-				delete_timer(bonus[i].active, pc_endautobonus);
-				bonus[i].active = INVALID_TIMER;
+				delete_timer(b.active, pc_endautobonus);
+				b.active = INVALID_TIMER;
 			}
 		}
 
-		if (bonus[i].bonus_script)
-			aFree(bonus[i].bonus_script);
-		if (bonus[i].other_script)
-			aFree(bonus[i].other_script);
+		if (b.bonus_script)
+			aFree(b.bonus_script);
+		if (b.other_script)
+			aFree(b.other_script);
+
+		it = bonus.erase(it);
 	}
-	bonus.clear();
 }
 
 /**
