@@ -550,6 +550,10 @@ lhz_in02,282,20,7	script	Fulerr	869,{
 	callfunc "refinemain","Fulerr",0;
 	end;
 }
+izlude,156,123,4	script	Ramone	98,{
+	callfunc "refinemain","Ramone",0;
+	end;
+}
 
 //============================================================
 //= Main Refiner Function
@@ -566,7 +570,7 @@ function	script	refinemain	{
 	if( getbattleflag( "feature.refineui" ) == 3 ){
 		mes "["+ .@npc_name$ +"]";
 		mes "I've spent a long time refining powerful weapons.";
-		mes "You are in the presence of 장춰탕넨 [Zhang Zhuangtan]"; // TODO: find a valid translation
+		// mes "You are in the presence of 장춰탕넨 [Zhang Zhuangtan]"; // TODO: find a valid translation
 		mes "Do you want to strengthen your equipment?";
 		close2;
 		refineui();
