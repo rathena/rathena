@@ -2399,7 +2399,7 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
  * @param sd: Player data
  * @param autobonus: Autobonus to run
  */
-void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
+void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus)
 {
 	if (!sd || !autobonus)
 		return;
@@ -2420,7 +2420,7 @@ void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
 			script_run_autobonus(autobonus->other_script,sd,autobonus->pos);
 	}
 
-	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)autobonus);
+	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
 	sd->state.autobonus |= autobonus->pos;
 	status_calc_pc(sd,SCO_FORCE);
 }
@@ -2430,13 +2430,19 @@ void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
  */
 TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
-	struct s_autobonus *autobonus = (struct s_autobonus *)data;
+	std::vector<s_autobonus> *bonus = (std::vector<s_autobonus> *)data;
 
 	nullpo_ret(sd);
-	nullpo_ret(autobonus);
+	nullpo_ret(bonus);
 
-	autobonus->active = INVALID_TIMER;
-	sd->state.autobonus &= ~autobonus->pos;
+	for( struct s_autobonus& autobonus : *bonus ){
+		if( autobonus.active == tid ){
+			autobonus.active = INVALID_TIMER;
+			sd->state.autobonus &= ~autobonus.pos;
+			break;
+		}
+	}
+	
 	status_calc_pc(sd,SCO_FORCE);
 	return 0;
 }
