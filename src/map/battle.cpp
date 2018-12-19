@@ -3601,11 +3601,11 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 35 * skill_lv;
 			break;
 		case AM_DEMONSTRATION:
-			skillratio += 20 * skill_lv;
+			skillratio += skill_lv / 2;
 			break;
 		case AM_ACIDTERROR:
 #ifdef RENEWAL
-			skillratio += 200 + 80 * skill_lv;
+			skillratio += 100 + 80 * skill_lv;
 #else
 			skillratio += 40 * skill_lv;
 #endif
@@ -6577,14 +6577,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case CR_ACIDDEMONSTRATION:
 		case GN_FIRE_EXPANSION_ACID:
 #ifdef RENEWAL
-			// Official Renewal formula [helvetica]
-			// damage = 7 * ((atk + matk)/skill level) * (target vit/100)
+			// Official Renewal formula [violetharmony]
+			// damage = 7 * ((atk + matk)*skill level) * (target vit/50)
 			// skill is a "forced neutral" type skill, it benefits from weapon element but final damage
 			// 	is considered "neutral" for purposes of resistances
 			{
 				struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 				struct Damage matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
-				md.damage = 7 * ((atk.damage/skill_lv + matk.damage/skill_lv) * tstatus->vit / 100 );
+				md.damage = 7 * ((atk.damage*skill_lv + matk.damage*skill_lv) * tstatus->vit / 50 );
 	
 				// AD benefits from endow/element but damage is forced back to neutral
 				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
