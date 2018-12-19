@@ -118,3 +118,25 @@ sec_in02,11,32,3	script	VIP	90,{
 	}
 	close;
 }
+
+prontera,156,285,1	script	Sakura	-1,{
+	end;
+	// We will do a script instead of function for it to call on the exact map and the exact coordinates.
+	// But you can use as well function then instead of script.
+	// We will also use -1 since we don't want to display the actual NPC. In other words, -1 will make the NPC invisible.
+OnInit:
+	// You can change @sakura to @snow, @clouds, @clouds2, @fog, @fireworks or @leaves
+	atcommand "@fireworks";
+	end;
+}
+
+-	script	candies	-1,{
+OnNPCKillEvent:
+	setarray .items,12355,539,555,5136,554,557,591,592,12132,593,5136,594,595,11589,12200,12354,12130,22882,530,5136;
+	set .theitem, getarraysize(.items);
+	set .dasitem, @items[@theitem];
+	if ( rand( 1000 ) < 25 ) { // 2.5% to drop
+		getitem .items[rand(.theitem-1)],1;
+	}
+	end;
+}

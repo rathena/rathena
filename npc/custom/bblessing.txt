@@ -1,0 +1,90 @@
+izlude,153,118,4	script	Blacksmith#izbb_01	813,5,7,{
+end;
+OnTouch:
+	specialeffect EF_REPAIRWEAPON;
+	end;
+}
+izlude,159,120,4	script	Blacksmith#izbb_02	63,5,7,{
+end;
+OnTouch:
+	specialeffect EF_REPAIRWEAPON;
+	end;
+
+}
+izlude,152,134,3	script	Wondering Priest#izbb_03	616,{
+	disable_items;
+	.@n$ = "[Wondering Priest]";
+	mes .@n$;
+	mes "I have always been fascinated by refining.";
+	mes "After staying and learning from the blacksmiths here, I found that I can gather the Blessing of the Blacksmith.";
+	next;
+	mes .@n$;
+	mes "However, this process requires rare materials and a lot of effort on my part. I would like to return the favour to the blacksmith here.";
+	next;
+	mes .@n$;
+	mes "So, I will trade 1 x <ITEM>Blacksmith Blessing<INFO>6635</INFO></ITEM> for the following item:";
+	mes "5 x <ITEM>"+getitemname(6471)+"<INFO>6471</INFO></ITEM> or";
+	mes "2 x <ITEM>"+getitemname(6719)+"<INFO>6719</INFO></ITEM> or";
+	mes "1 x <ITEM>"+getitemname(6960)+"<INFO>6960</INFO></ITEM> or";
+	mes "1 x <ITEM>"+getitemname(6750)+"<INFO>6750</INFO></ITEM> or";
+	mes "5 x <ITEM>"+getitemname(6961)+"<INFO>6961</INFO></ITEM> or";
+	mes "25 x <ITEM>"+getitemname(6962)+"<INFO>6962</INFO></ITEM> or";
+	mes "1 x <ITEM>"+getitemname(6607)+"<INFO>6607</INFO></ITEM> or";
+	mes "25 x <ITEM>"+getitemname(6608)+"<INFO>6608</INFO></ITEM>";
+	next;
+	switch(select("Maybe later.",
+		"5 x "+getitemname(6471),
+		"2 x "+getitemname(6719),
+		"1 x "+getitemname(6960),
+		"1 x "+getitemname(6750),
+		"5 x "+getitemname(6961),
+		"25 x "+getitemname(6962),
+		"1 x "+getitemname(6607),
+		"5 x "+getitemname(6608) )
+	){
+		case 1:
+			mes .@n$;
+			mes "I see you later then.";
+			close;
+		case 2: callsub (S_CreateItem, 6471, 5); break;	// 6471 | Chills of death x 5
+		case 3: callsub (S_CreateItem, 6719, 2); break;	// 6719 | Jitterbug's Tooth x 2
+		case 4: callsub (S_CreateItem, 6960, 1); break;	// 6960 | Sky Fortress Key x 1
+		case 5: callsub (S_CreateItem, 6750, 1); break;	// 6750 | Failed Engine x 1
+		case 6: callsub (S_CreateItem, 6961, 5); break;	// 6961 | Huge Metal Scrap x 5
+		case 7: callsub (S_CreateItem, 6962, 25); break;	// 6962 | Old Fuel x 25
+		case 8: callsub (S_CreateItem, 6607, 1); break;	// 6607 | Temporal Crystal x 1
+		case 9: callsub (S_CreateItem, 6608, 25); break;	// 6608 | Coagulated Spells x 25
+	}
+	close;
+
+S_CreateItem:
+	.@itemID = getarg(0);
+	.@itemCost = getarg(1);
+	.@n$ = "[Wondering Priest]";
+
+	if(countitem(.@itemID) < .@itemCost) {
+		mes .@n$;
+		mes "Please bring at least "+.@itemCost+" x "+getitemname(.@itemID)+" with you.";
+		close;
+	}
+	.@max = countitem(.@itemID)/.@itemCost;
+	mes .@n$;
+	mes "You can make as many as";
+	mes .@max+" x <ITEM>Blacksmith Blessing<INFO>6635</INFO></ITEM>";
+	mes " - 0 means canceling the request - ";
+	input .@amt, 0, .@max;
+	next;
+
+	mes .@n$;
+	mes "Alright, I will give you ";
+	mes .@amt+" x <ITEM>Blacksmith Blessing<INFO>6635</INFO></ITEM> for ";
+	mes "   "+(.@amt * .@itemCost)+" x <ITEM>"+getitemname(.@itemID)+"<INFO>"+.@itemID+"</INFO></ITEM>";
+	if(select("No:Yes") == 1) close;
+	next;
+
+	mes .@n$;
+	mes "Thank you. Come again if you want to trade.";
+	delitem .@itemID, (.@amt * .@itemCost);
+	getitem 6635, .@amt;
+	return;
+}

@@ -614,7 +614,7 @@ glast_01,372,308,4	duplicate(Warper)	Warper#glh	531
 gonryun,162,122,4	duplicate(Warper)	Warper#gon	531
 hugel,101,151,4	duplicate(Warper)	Warper#hug	531
 izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	531
-izlude,124,148,4	duplicate(Warper)	Warper#izl	531  	//Pre-RE: (132,120)
+izlude,124,148,5	duplicate(Warper)	Warper#izl	531  	//Pre-RE: (132,120)
 jawaii,221,164,4	duplicate(Warper)	Warper#jaw	531
 lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	531
 louyang,208,103,6	duplicate(Warper)	Warper#lou	531
