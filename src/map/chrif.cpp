@@ -236,12 +236,12 @@ bool chrif_auth_finished(struct map_session_data* sd) {
 }
 // sets char-server's user id
 void chrif_setuserid(char *id) {
-	memcpy(userid, id, NAME_LENGTH);
+	safestrncpy(userid, id, NAME_LENGTH);
 }
 
 // sets char-server's password
 void chrif_setpasswd(char *pwd) {
-	memcpy(passwd, pwd, NAME_LENGTH);
+	safestrncpy(passwd, pwd, NAME_LENGTH);
 }
 
 // security check, prints warning if using default password

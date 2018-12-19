@@ -510,12 +510,12 @@ void chmapif_send_maps(int fd, int map_id, int count, unsigned char *mapbuf) {
 		if (map_server[x].fd > 0 && x != map_id) {
 			uint16 i, j;
 
-			WFIFOHEAD(fd,10 +4*ARRAYLENGTH(map_server[x].map));
+			WFIFOHEAD(fd,10 +4*map_server[x].map.size());
 			WFIFOW(fd,0) = 0x2b04;
 			WFIFOL(fd,4) = htonl(map_server[x].ip);
 			WFIFOW(fd,8) = htons(map_server[x].port);
 			j = 0;
-			for(i = 0; i < ARRAYLENGTH(map_server[x].map); i++)
+			for(i = 0; i < map_server[x].map.size(); i++)
 				if (map_server[x].map[i])
 					WFIFOW(fd,10+(j++)*4) = map_server[x].map[i];
 			if (j > 0) {

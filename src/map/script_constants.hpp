@@ -6082,6 +6082,25 @@
 	export_constant_npc(JT_4_M_SILVANO_D);
 	export_constant_npc(JT_4_F_CECILIA);
 	export_constant_npc(JT_4_F_CECILIA_D);
+	export_constant_npc(JT_4_M_MD_SEYREN);
+	export_constant_npc(JT_4_M_MD_EREMES);
+	export_constant_npc(JT_4_M_MD_HARWORD);
+	export_constant_npc(JT_4_F_MD_MAGALETA);
+	export_constant_npc(JT_4_F_MD_SHECIL);
+	export_constant_npc(JT_4_F_MD_KATRINN);
+	export_constant_npc(JT_4_M_MD_SEYREN_H);
+	export_constant_npc(JT_4_M_MD_EREMES_H);
+	export_constant_npc(JT_4_M_MD_HARWORD_H);
+	export_constant_npc(JT_4_F_MD_MAGALETA_H);
+	export_constant_npc(JT_4_F_MD_SHECIL_H);
+	export_constant_npc(JT_4_F_MD_KATRINN_H);
+	export_constant_npc(JT_4_M_MD_SEYREN_D);
+	export_constant_npc(JT_4_M_MD_EREMES_D);
+	export_constant_npc(JT_4_M_MD_HARWORD_D);
+	export_constant_npc(JT_4_F_MD_MAGALETA_D);
+	export_constant_npc(JT_4_F_MD_SHECIL_D);
+	export_constant_npc(JT_4_F_MD_KATRINN_D);
+	export_constant_npc(JT_4_F_MD_YGNIZEM);
 	export_constant_npc(JT_4_F_ERENE);
 	#undef export_constant_npc
 

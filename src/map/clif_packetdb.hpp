@@ -2416,4 +2416,9 @@
 	packet(0x0A4C,28);
 #endif
 
+// 2018-04-18bRagexeRE
+#if PACKETVER >= 20180418
+	packet(0x0ADD, 22);
+#endif
+
 #endif /* CLIF_PACKETDB_HPP */
