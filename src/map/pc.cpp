@@ -2110,7 +2110,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 		}
 	}
 
-	struct s_autospell entry;
+	struct s_autospell entry = {};
 
 	entry.id = id;
 	entry.lv = lv;
@@ -2130,7 +2130,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
  * @param rate: Success chance
  * @param card_id: Used to prevent card stacking
  */
-static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
+static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
 {
 	if (spell.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", MAX_PC_BONUS);
@@ -2140,7 +2140,7 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src
 	if (!rate)
 		return;
 
-	struct s_autospell entry;
+	struct s_autospell entry = {};
 
 	entry.flag = src_skill;
 	entry.id = id;
@@ -2186,7 +2186,7 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 		}
 	}
 
-	struct s_addeffect entry;
+	struct s_addeffect entry = {};
 
 	entry.sc = sc;
 	entry.rate = rate;
@@ -2224,7 +2224,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 		}
 	}
 
-	struct s_addeffectonskill entry;
+	struct s_addeffectonskill entry = {};
 
 	entry.sc = sc;
 	entry.rate = rate;
@@ -2287,7 +2287,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 		}
 	}
 
-	struct s_add_drop entry;
+	struct s_add_drop entry = {};
 
 	entry.nameid = nameid;
 	entry.group = group;
@@ -2330,7 +2330,7 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 		}
 	}
 
-	struct s_autobonus entry;
+	struct s_autobonus entry = {};
 
 	entry.rate = rate;
 	entry.duration = dur;
@@ -2485,8 +2485,6 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
-	struct s_addele2 entry;
-
 	if (sd->subele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_subele: Reached max (%d) number of resist element damage bonuses per character!\n", MAX_PC_BONUS);
 		return;
@@ -2511,6 +2509,8 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 		}
 	}
 
+	struct s_addele2 entry = {};
+
 	entry.ele = ele;
 	entry.rate = rate;
 	entry.flag = flag;
@@ -2526,14 +2526,14 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int val)
 {
-	struct s_item_bonus entry;
-
 	for (auto &it : bonus) {
 		if (it.id == id) {
 			it.val += val;
 			return;
 		}
 	}
+
+	struct s_item_bonus entry = {};
 
 	entry.id = id;
 	entry.val = val;
