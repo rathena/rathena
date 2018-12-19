@@ -152,26 +152,26 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 L_Quest:
 	set .@quest, getarg(0);
 	switch(.@quest) {
-		case 10107: set .@name$,"Hunt Requiem"; set .@exp,15000; break;
-		case 10108: set .@name$,"Hunt Marduk"; set .@exp,15000; break;
-		case 10109: set .@name$,"Hunt Pasana"; set .@exp,15000; break;
-		case 10110: set .@name$,"Hunt Dark Frame"; set .@exp,20000; break;
-		case 10111: set .@name$,"Hunt Evil Druid"; set .@exp,20000; break;
-		case 10112: set .@name$,"Hunt Wraith"; set .@exp,20000; break;
-		case 10113: set .@name$,"Hunt Raydric Archer"; set .@exp,20000; break;
-		case 10114: set .@name$,"Hunt Grand Peco"; set .@exp,30000; break;
-		case 10115: set .@name$,"Hunt Sleeper"; set .@exp,30000; break;
-		case 10116: set .@name$,"Hunt Goat"; set .@exp,30000; break;
-		case 10117: set .@name$,"Hunt Harpy"; set .@exp,30000; break;
-		case 10118: set .@name$,"Hunt Clock"; set .@exp,25000; break;
-		case 10119: set .@name$,"Hunt Punk"; set .@exp,25000; break;
-		case 10120: set .@name$,"Hunt Rideword"; set .@exp,25000; break;
-		case 10121: set .@name$,"Hunt Kikimora"; set .@exp,30000; break;
-		case 10122: set .@name$,"Hunt Miyabi Doll"; set .@exp,30000; break;
-		case 10123: set .@name$,"Hunt Mi Gao"; set .@exp,30000; break;
-		case 5055: set .@name$,"Hunt Headless Mule"; set .@exp,30000; break;
-		case 5056: set .@name$,"Hunt Tamruan"; set .@exp,30000; break;
-		case 5057: set .@name$,"Gather Festival Masks for the Festival"; set .@exp,30000; break;
+		case 10107: set .@name$,"Hunt Requiem"; set .@exp,450000; break;
+		case 10108: set .@name$,"Hunt Marduk"; set .@exp,450000; break;
+		case 10109: set .@name$,"Hunt Pasana"; set .@exp,450000; break;
+		case 10110: set .@name$,"Hunt Dark Frame"; set .@exp,600000; break;
+		case 10111: set .@name$,"Hunt Evil Druid"; set .@exp,600000; break;
+		case 10112: set .@name$,"Hunt Wraith"; set .@exp,600000; break;
+		case 10113: set .@name$,"Hunt Raydric Archer"; set .@exp,600000; break;
+		case 10114: set .@name$,"Hunt Grand Peco"; set .@exp,900000; break;
+		case 10115: set .@name$,"Hunt Sleeper"; set .@exp,900000; break;
+		case 10116: set .@name$,"Hunt Goat"; set .@exp,900000; break;
+		case 10117: set .@name$,"Hunt Harpy"; set .@exp,900000; break;
+		case 10118: set .@name$,"Hunt Clock"; set .@exp,750000; break;
+		case 10119: set .@name$,"Hunt Punk"; set .@exp,750000; break;
+		case 10120: set .@name$,"Hunt Rideword"; set .@exp,750000; break;
+		case 10121: set .@name$,"Hunt Kikimora"; set .@exp,900000; break;
+		case 10122: set .@name$,"Hunt Miyabi Doll"; set .@exp,900000; break;
+		case 10123: set .@name$,"Hunt Mi Gao"; set .@exp,900000; break;
+		case 5055: set .@name$,"Hunt Headless Mule"; set .@exp,900000; break;
+		case 5056: set .@name$,"Hunt Tamruan"; set .@exp,900000; break;
+		case 5057: set .@name$,"Gather Festival Masks for the Festival"; set .@exp,900000; break;
 	}
 	if (getargcount() == 1) {
 		mes "'"+.@name$+"' completed. Do you want to turn it in and receive your reward?";

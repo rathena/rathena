@@ -58,7 +58,7 @@
 			//specialeffect2 EF_ASSUMPTIO; sc_start SC_ASSUMPTIO,900000,5;
 			//sc_start SC_ADRENALINE2,900000,1;
 			//sc_start SC_KAUPE,900000,3;
-			sc_start SC_KAITE,900000,7;
+			//sc_start SC_KAITE,900000,7;
 			sc_start SC_STRFOOD,900000,5;
 			sc_start SC_AGIFOOD,900000,5;
 			sc_start SC_VITFOOD,900000,5;
@@ -113,7 +113,7 @@ amatsu,200,79,4	duplicate(Healer)	Healer#ama	569
 ayothaya,207,169,6	duplicate(Healer)	Healer#ayo	569 
 comodo,184,158,6	duplicate(Healer)	Healer#com	569 
 einbech,57,36,6	duplicate(Healer)	Healer#einbe	569 
-einbroch,57,202,6	duplicate(Healer)	Healer#einbr	569 
+einbroch,56,200,6	duplicate(Healer)	Healer#einbr	569 
 geffen,115,72,6	duplicate(Healer)	Healer#gef	569 
 gonryun,156,122,6	duplicate(Healer)	Healer#gon	569 
 hugel,89,150,6	duplicate(Healer)	Healer#hug	569 

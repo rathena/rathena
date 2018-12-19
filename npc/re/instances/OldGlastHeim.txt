@@ -142,76 +142,65 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 		if (isbegin_quest(12322) == 1)
 			erasequest 12322;
 	}		
-	next;	
+		
+		next;	
+		mes "[Hugin]";
+		mes "Select Instance:";
+		
+		if (select("Old Glast Heim Normal","Old Glast Heim Hard") == 2) {
+		next;
 		if($OldGlastHeimLanguage == 1) {
 			mes "[Hugin]";
-			mes "Selecione a dificuldade:";
-			if (select("Modo Normal","Modo Difícil") == 2) {
-				set $OldGlastHeimMODE, 2;
-			}else{
-				set $OldGlastHeimMODE, 1;	
+			mes "^FF0000 Old Glast Heim: Modo Dificil ? ^000000";
+			if (select("Você tem certeza disso ?","Cancelar") == 2) {
+				close;
 			}
 		}else{
 			mes "[Hugin]";
-			mes "Select difficulty:";
-			if (select("Normal Mode","Hard Mode") == 2) {
-				set $OldGlastHeimMODE, 2;	
-			}else{
-				set $OldGlastHeimMODE, 1;	
-			}
-		}
-	next;
-	if($OldGlastHeimMODE == 2) {
-		switch( checkquest(12315,PLAYTIME) ) {
-		case -1:
-			.@party_id = getcharid(1);
-			.@p_name$ = getpartyname(.@party_id);
-			.@md_name$ = "Old Glast Heim Hard Mode";
-
-			if (!instance_check_party(.@party_id)) {
-				mes "[Hugin]";
-				if($OldGlastHeimLanguage == 1) {
-					mes "Por que você não faz um grupo com mais de uma pessoa e fala comigo de novo?";
-				}else{
-					mes "Why don't you make a party with more than 1 person and talk to me again?";
-				}
+			mes "^FF0000 Old Glast Heim: Hard Mode ?^000000";
+			if (select("Are you sure about that ?","Cancel") == 2) {
 				close;
 			}
-			if (is_party_leader() == true)
-				.@menu$ = "Generate Time Gap";
-			else {
-				mes "[Hugin]";
+		}
+			
+			
+			
+		set $OldGlastHeimMODE, 2;
+				
+		switch( checkquest(12315,PLAYTIME) ) {
+		case -1:
+		.@party_id = getcharid(1);
+		.@p_name$ = getpartyname(.@party_id);
+		.@md_name$ = "Old Glast Heim Hard Mode";
+
+		if (!instance_check_party(.@party_id)) {
+			mes "[Hugin]";
+			if($OldGlastHeimLanguage == 1) {
+				mes "Por que você não faz um grupo com mais de uma pessoa e fala comigo de novo?";
+			}else{
+				mes "Why don't you make a party with more than 1 person and talk to me again?";
+			}
+				close;
+		}
+				
+		if (is_party_leader() == true) {
+			//Aqui vai Gerar a Instancia
+			switch(instance_create(.@md_name$)) {
+			case -3:
+				callsub(OnMenuHard);
+			case -4:
+			case -2:
+			case -1:
 				if($OldGlastHeimLanguage == 1) {
-					mes "Já nos conhecemos antes? De jeito nenhum. É a primeira vez que vejo você. O que você quer?";
+					mes "Nome do Grupo: " + getpartyname( getcharid(1) );
+					mes "Lider do Grupo: " + strcharinfo(0);
+					mes "^0000ff" + .@md_name$ + "^000000 - falha de geração de intervalo de tempo.";
 				}else{
-					mes "Have we met before? No way. It's my first time seeing you. What do you want?";
+					mes "Party Name: " + getpartyname( getcharid(1) );
+					mes "Party Leader: " + strcharinfo(0);
+					mes "^0000ff" + .@md_name$ + "^000000 - time gap generation failed.";
 				}
 			}
-			if (isbegin_quest(12323) == 0)
-				setquest 12323;// Corrupted Soul Hunt
-			switch( select( .@menu$, "Enter Old Glast Heim Hard Mode", "Cancel" ) ) {
-			case 1:
-				switch( instance_create(.@md_name$) ) {
-				case -3:
-					if($OldGlastHeimLanguage == 1) {
-						dispbottom "Memorial Dungeon, 'Old Glast Heim Hard Mode' já está em andamento.",0xFFFFFF;
-					}else{
-						dispbottom "Memorial Dungeon, 'Old Glast Heim Hard Mode' is already in progress.",0xFFFFFF;
-					}
-					close;
-				case -4:
-				case -2:
-				case -1:
-					if($OldGlastHeimLanguage == 1) {
-						mes "Nome do Grupo: " + getpartyname( getcharid(1) );
-						mes "Lider do Grupo: " + strcharinfo(0);
-						mes "^0000ff" + .@md_name$ + "^000000 - falha de geração de intervalo de tempo.";
-					}else{
-						mes "Party Name: " + getpartyname( getcharid(1) );
-						mes "Party Leader: " + strcharinfo(0);
-						mes "^0000ff" + .@md_name$ + "^000000 - time gap generation failed.";
-					}
-				}
 				mes "[Hugin]";
 				if($OldGlastHeimLanguage == 1) {				
 					mes "Depois que a lacuna de tempo se abrir, por favor me diga novamente.";
@@ -219,9 +208,158 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 					mes "After the time gap opens, please tell me again.";
 				}
 				close;
-			case 2:
+		}else {
+			mes "[Hugin]";
+			if($OldGlastHeimLanguage == 1) {
+				mes "Já nos conhecemos antes? De jeito nenhum. É a primeira vez que vejo você. O que você quer?";
+			}else{
+				mes "Have we met before? No way. It's my first time seeing you. What do you want?";
+			}
+			next;
+			callsub(OnMenuHard);
+		}
+		case 0:
+		case 1:
+			if($OldGlastHeimLanguage == 1) {
+				mes "[Hugin]";
+				mes "Oh, meu ...";
+				mes "Você ainda tem efeitos posteriores de viagem no tempo. Você não pode viajar novamente com essa condição.";
 				next;
-				switch( instance_enter(.@md_name$) ) {
+				mes "[Hugin]";
+				mes "Manter-se saudável é importante, então, por favor, faça uma pausa e volte mais tarde.";
+				close;	
+			}else{
+				mes "[Hugin]";
+				mes "Oh, my...";
+				mes "You still have after-effects of time travel. You can't travel again with this condition.";
+				next;
+				mes "[Hugin]";
+				mes "Staying healthy is important, so please take a break and come back again later.";
+				close;			
+			}
+			case 2:
+				if($OldGlastHeimLanguage == 1) {
+					mes "^0000ffTodos os vestígios de acesso ao Old Glast Heim foram removidos. Agora você pode falar com Hugin novamente.^000000";
+				}else{
+					mes "^0000ffAll traces of access to Old Glast Heim have been removed. Now you can talk with Hugin again.^000000";
+				}
+				if (isbegin_quest(12323) == 0)
+					setquest 12323;// Corrupted Soul Hunt
+					erasequest 12315;
+					close;
+		}
+		
+	}else{
+		next;
+		if($OldGlastHeimLanguage == 1) {
+			mes "[Hugin]";
+			mes "^FF0000 Old Glast Heim: Modo Normal ? ^000000";
+			if (select("Você tem certeza disso ?","Cancelar") == 2) {
+				close;
+			}
+		}else{
+			mes "[Hugin]";
+			mes "^FF0000 Old Glast Heim: Normal Mode ?^000000";
+			if (select("Are you sure about that ?","Cancel") == 2) {
+				close;
+			}
+		}
+		
+		
+		set $OldGlastHeimMODE, 1;	
+		
+		switch( checkquest(12317,PLAYTIME) ) {
+		case -1:
+		.@party_id = getcharid(1);
+		.@p_name$ = getpartyname(.@party_id);
+		.@md_name$ = "Old Glast Heim";
+
+		if (!instance_check_party(.@party_id)) {
+			mes "[Hugin]";
+			if($OldGlastHeimLanguage == 1) {
+				mes "Por que você não faz um grupo com mais de uma pessoa e fala comigo de novo?";
+			}else{
+				mes "Why don't you make a party with more than 1 person and talk to me again?";
+			}
+				close;
+		}
+				
+		if (is_party_leader() == true) {
+			//Aqui vai Gerar a Instancia
+			switch(instance_create(.@md_name$)) {
+			case -3:
+				callsub(OnMenuNormal);
+			case -4:
+			case -2:
+			case -1:
+				if($OldGlastHeimLanguage == 1) {
+					mes "Nome do Grupo: " + getpartyname( getcharid(1) );
+					mes "Lider do Grupo: " + strcharinfo(0);
+					mes "^0000ff" + .@md_name$ + "^000000 - falha de geração de intervalo de tempo.";
+				}else{
+					mes "Party Name: " + getpartyname( getcharid(1) );
+					mes "Party Leader: " + strcharinfo(0);
+					mes "^0000ff" + .@md_name$ + "^000000 - time gap generation failed.";
+				}
+			}
+				mes "[Hugin]";
+				if($OldGlastHeimLanguage == 1) {				
+					mes "Depois que a lacuna de tempo se abrir, por favor me diga novamente.";
+				}else{
+					mes "After the time gap opens, please tell me again.";
+				}
+				close;
+		}else {
+			mes "[Hugin]";
+			if($OldGlastHeimLanguage == 1) {
+				mes "Já nos conhecemos antes? De jeito nenhum. É a primeira vez que vejo você. O que você quer?";
+			}else{
+				mes "Have we met before? No way. It's my first time seeing you. What do you want?";
+			}
+			next;
+			callsub(OnMenuNormal);
+		}
+		case 0:
+		case 1:
+			if($OldGlastHeimLanguage == 1) {
+				mes "[Hugin]";
+				mes "Oh, meu ...";
+				mes "Você ainda tem efeitos posteriores de viagem no tempo. Você não pode viajar novamente com essa condição.";
+				next;
+				mes "[Hugin]";
+				mes "Manter-se saudável é importante, então, por favor, faça uma pausa e volte mais tarde.";
+				close;	
+			}else{
+				mes "[Hugin]";
+				mes "Oh, my...";
+				mes "You still have after-effects of time travel. You can't travel again with this condition.";
+				next;
+				mes "[Hugin]";
+				mes "Staying healthy is important, so please take a break and come back again later.";
+				close;			
+			}
+			case 2:
+				if($OldGlastHeimLanguage == 1) {
+					mes "^0000ffTodos os vestígios de acesso ao Old Glast Heim foram removidos. Agora você pode falar com Hugin novamente.^000000";
+				}else{
+					mes "^0000ffAll traces of access to Old Glast Heim have been removed. Now you can talk with Hugin again.^000000";
+				}
+				if (isbegin_quest(12318) == 0)
+					setquest 12318;// Corrupted Soul Hunt
+					erasequest 12317;
+					close;
+		}	
+	}
+	
+	
+OnMenuHard:
+	.@md_name$ = "Old Glast Heim Hard Mode";
+	if (isbegin_quest(12323) == 0)
+		setquest 12323;// Corrupted Soul Hunt
+	switch(select("Enter", "Cancel")) {
+		case 1:
+			next;
+			switch( instance_enter(.@md_name$) ) {
 				case IE_OTHER:
 					mes "[Hugin]";
 					if($OldGlastHeimLanguage == 1) {	
@@ -230,6 +368,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 						mes "An unknown error has occurred.";
 					}
 					close;
+									
 				case IE_NOINSTANCE:
 					mes "[Hugin]";
 					if($OldGlastHeimLanguage == 1) {	
@@ -238,6 +377,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 						mes "The time gap is not yet open.";
 					}
 					close;
+									
 				case IE_NOMEMBER:
 					mes "[Hugin]";
 					if($OldGlastHeimLanguage == 1) {	
@@ -246,6 +386,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 						mes "Your body is not fit to enter the time gap. You won't be able to get in if you're not in a party.";
 					}
 					close;
+									
 				case IE_OK:
 					if($OldGlastHeimLanguage == 1) {	
 						mapannounce "glast_01", "" + getpartyname( getcharid(1) ) + " membro do grupo " + strcharinfo(0) + " entrou em  " + .@md_name$ + ".", bc_map,0x00FF99;
@@ -256,100 +397,18 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 					// warp "1@gl_k",150,20;
 					end;
 				}
-			case 3:
-				close;
-			}
-		case 0:
-		case 1:
-			if($OldGlastHeimLanguage == 1) {
-				mes "[Hugin]";
-				mes "Oh, meu ...";
-				mes "Você ainda tem efeitos posteriores de viagem no tempo. Você não pode viajar novamente com essa condição.";
-				next;
-				mes "[Hugin]";
-				mes "Manter-se saudável é importante, então, por favor, faça uma pausa e volte mais tarde.";
-				close;	
-			}else{
-				mes "[Hugin]";
-				mes "Oh, my...";
-				mes "You still have after-effects of time travel. You can't travel again with this condition.";
-				next;
-				mes "[Hugin]";
-				mes "Staying healthy is important, so please take a break and come back again later.";
-				close;			
-			}
 		case 2:
-			if($OldGlastHeimLanguage == 1) {
-				mes "^0000ffTodos os vestígios de acesso ao Old Glast Heim foram removidos. Agora você pode falar com Hugin novamente.^000000";
-			}else{
-				mes "^0000ffAll traces of access to Old Glast Heim have been removed. Now you can talk with Hugin again.^000000";
-			}
-			if (isbegin_quest(12323) == 0)
-				setquest 12323;// Corrupted Soul Hunt
-			erasequest 12315;
-			close;
-		}
-	}else{
-		switch( checkquest(12317,PLAYTIME) ) {
-		case -1:
-			.@party_id = getcharid(1);
-			.@p_name$ = getpartyname(.@party_id);
-			.@md_name$ = "Old Glast Heim";
+		close;
+	}	
 
-			if (!instance_check_party(.@party_id)) {
-				mes "[Hugin]";
-				if($OldGlastHeimLanguage == 1) {
-					mes "Por que você não faz um grupo com mais de uma pessoa e fala comigo de novo?";
-				}else{
-					mes "Why don't you make a party with more than 1 person and talk to me again?";
-				}
-				close;
-			}
-			if (is_party_leader() == true)
-				.@menu$ = "Generate Time Gap";
-			else {
-				mes "[Hugin]";
-				if($OldGlastHeimLanguage == 1) {
-					mes "Já nos conhecemos antes? De jeito nenhum. É a primeira vez que vejo você. O que você quer?";
-				}else{
-					mes "Have we met before? No way. It's my first time seeing you. What do you want?";
-				}
-			}
-			if (isbegin_quest(12318) == 0)
-				setquest 12318;// Corrupted Soul Hunt
-			switch( select( .@menu$, "Enter Old Glast Heim", "Cancel" ) ) {
-			case 1:
-				switch( instance_create(.@md_name$) ) {
-				case -3:
-					if($OldGlastHeimLanguage == 1) {
-						dispbottom "Memorial Dungeon, 'Old Glast Heim' já está em andamento.",0xFFFFFF;
-					}else{
-						dispbottom "Memorial Dungeon, 'Old Glast Heim' is already in progress.",0xFFFFFF;
-					}
-					close;
-				case -4:
-				case -2:
-				case -1:
-					if($OldGlastHeimLanguage == 1) {
-						mes "Nome do Grupo: " + getpartyname( getcharid(1) );
-						mes "Lider do Grupo: " + strcharinfo(0);
-						mes "^0000ff" + .@md_name$ + "^000000 - falha de geração de intervalo de tempo.";
-					}else{
-						mes "Party Name: " + getpartyname( getcharid(1) );
-						mes "Party Leader: " + strcharinfo(0);
-						mes "^0000ff" + .@md_name$ + "^000000 - time gap generation failed.";
-					}
-				}
-				mes "[Hugin]";
-				if($OldGlastHeimLanguage == 1) {				
-					mes "Depois que a lacuna de tempo se abrir, por favor me diga novamente.";
-				}else{
-					mes "After the time gap opens, please tell me again.";
-				}
-				close;
-			case 2:
-				next;
-				switch( instance_enter(.@md_name$) ) {
+OnMenuNormal:
+	.@md_name$ = "Old Glast Heim";
+	if (isbegin_quest(12318) == 0)
+		setquest 12318;// Corrupted Soul Hunt
+	switch(select("Enter", "Cancel")) {
+		case 1:
+			next;
+			switch( instance_enter(.@md_name$) ) {
 				case IE_OTHER:
 					mes "[Hugin]";
 					if($OldGlastHeimLanguage == 1) {	
@@ -358,6 +417,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 						mes "An unknown error has occurred.";
 					}
 					close;
+									
 				case IE_NOINSTANCE:
 					mes "[Hugin]";
 					if($OldGlastHeimLanguage == 1) {	
@@ -366,6 +426,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 						mes "The time gap is not yet open.";
 					}
 					close;
+									
 				case IE_NOMEMBER:
 					mes "[Hugin]";
 					if($OldGlastHeimLanguage == 1) {	
@@ -374,6 +435,7 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 						mes "Your body is not fit to enter the time gap. You won't be able to get in if you're not in a party.";
 					}
 					close;
+									
 				case IE_OK:
 					if($OldGlastHeimLanguage == 1) {	
 						mapannounce "glast_01", "" + getpartyname( getcharid(1) ) + " membro do grupo " + strcharinfo(0) + " entrou em  " + .@md_name$ + ".", bc_map,0x00FF99;
@@ -384,40 +446,9 @@ glast_01,204,273,5	script	Hugin	4_M_SAGE_C,{
 					// warp "1@gl_k",150,20;
 					end;
 				}
-			case 3:
-				close;
-			}
-		case 0:
-		case 1:
-			if($OldGlastHeimLanguage == 1) {
-				mes "[Hugin]";
-				mes "Oh, meu ...";
-				mes "Você ainda tem efeitos posteriores de viagem no tempo. Você não pode viajar novamente com essa condição.";
-				next;
-				mes "[Hugin]";
-				mes "Manter-se saudável é importante, então, por favor, faça uma pausa e volte mais tarde.";
-				close;	
-			}else{
-				mes "[Hugin]";
-				mes "Oh, my...";
-				mes "You still have after-effects of time travel. You can't travel again with this condition.";
-				next;
-				mes "[Hugin]";
-				mes "Staying healthy is important, so please take a break and come back again later.";
-				close;			
-			}
 		case 2:
-			if($OldGlastHeimLanguage == 1) {
-				mes "^0000ffTodos os vestígios de acesso ao Old Glast Heim foram removidos. Agora você pode falar com Hugin novamente.^000000";
-			}else{
-				mes "^0000ffAll traces of access to Old Glast Heim have been removed. Now you can talk with Hugin again.^000000";
-			}
-			if (isbegin_quest(12318) == 0)
-				setquest 12318;// Corrupted Soul Hunt
-			erasequest 12317;
-			close;
-		}
-	}
+		close;
+	}		
 }
 
 // Warps

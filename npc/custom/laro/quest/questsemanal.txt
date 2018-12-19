@@ -56,9 +56,10 @@ prt_cas,97,285,4	script	Weekly Quest#1	121 ,{
 
 OnMenu:
 next;
-switch(select("^3355FFRudolph's Nose^000000:^3355FFBrazil National Flag Hat [1]^000000 :Quit")) {
+//switch(select("^3355FFRudolph's Nose^000000:^3355FFBrazil National Flag Hat [1]^000000 :Quit")) {
+switch(select("^3355FFRudolph's Nose^000000:Quit")) {
 	case 1:
-	   if (countitem(2262) >= 1 && countitem(733) >= 50 && countitem(1001) >= 9) {
+	   if (countitem(2262) >= 1 && countitem(733) >= 250 && countitem(1001) >= 150) {
 		   
 	   }else{
 		    mes @npc$;
@@ -70,12 +71,12 @@ switch(select("^3355FFRudolph's Nose^000000:^3355FFBrazil National Flag Hat [1]^
 				mes "Need:";
 			}
 			mes "^FF00001^000000x "+callfunc("itemlink1",2262)+"";
-			mes "^FF000050^000000x "+callfunc("itemlink1",733)+"";
-			mes "^FF0000100^000000x "+callfunc("itemlink1",1001)+"";
+			mes "^FF0000250^000000x "+callfunc("itemlink1",733)+"";
+			mes "^FF0000150^000000x "+callfunc("itemlink1",1001)+"";
 			close;
 		}
-	case 2:
-	   if (countitem(2262) >= 1 && countitem(733) >= 50 && countitem(1001) >= 9) {
+	/*case 2:
+	   if (countitem(5123) >= 1 && countitem(733) >= 50 && countitem(1001) >= 9) {
 		   
 	   }else{
 		   mes @npc$;
@@ -86,12 +87,13 @@ switch(select("^3355FFRudolph's Nose^000000:^3355FFBrazil National Flag Hat [1]^
 				mes "Reward: "+callfunc("itemlink1",5308)+"";
 				mes "Need:";
 			}
-			mes "^FF00001^000000x "+callfunc("itemlink1",2262)+"";
+			mes "^FF00001^000000x "+callfunc("itemlink1",5123)+"";
 			mes "^FF000050^000000x "+callfunc("itemlink1",733)+"";
 			mes "^FF0000100^000000x "+callfunc("itemlink1",1001)+"";
 			close;
 		}
-	case 3:
+	*/
+	case 2:
 		mes @npc$;
 		if(#language == 1) {
 			mes "Tudo bem, estarei aqui se você mudar de idéia.";
@@ -99,6 +101,7 @@ switch(select("^3355FFRudolph's Nose^000000:^3355FFBrazil National Flag Hat [1]^
 			mes "All right, I'll be here if you change your mind.";
 		}
 		close;
+	
 }
 
 OnInit:	

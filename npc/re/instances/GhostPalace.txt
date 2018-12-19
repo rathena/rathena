@@ -978,7 +978,7 @@ OnTouch_:
 	else {
 		setquest 1263;// Cursed Swordman
 		completequest 1263;
-		getexp 900000,500000;
+		getexp 27000000,20000000;
 		getitem 6672,2;// Gray Shard
 	}
 	warp "dali02",46,129;

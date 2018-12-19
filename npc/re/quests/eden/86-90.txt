@@ -74,10 +74,10 @@ moc_para01,48,175,3	script	86-90 Mission Board	857,{
 			"Baba Yaga","Yao Jun","Firelock Soldier","Zipper Bear",
 			"Ground Petite","Rafflesia","Venomous","Pitman","Yellow Novus";
 		setarray .@exp[0],
-			76000,82000,82000,
-			72000,76000,
-			72000,78000,82000,80000,
-			72000,72000,72000,86000,80000;
+			2280000,2460000,2460000,
+			2160000,2280000,
+			2160000,2340000,2460000,2400000,
+			2160000,2160000,2160000,2580000,2400000;
 		mes "You must be within level 86-90 to accept these missions.";
 		for(set .@quest,4167; .@quest<=4180; set .@quest,.@quest+1) {
 			set .@hunting, checkquest(.@quest,HUNTING);
@@ -113,27 +113,27 @@ moc_para01,48,175,3	script	86-90 Mission Board	857,{
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFDragon Tail^000000:^0000FFSpring Rabbit^000000:^0000FFPest^000000")) {
-			case 1: callsub L_Quest,4167,"Dragon Tail",76000,"드래곤테일카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.","s";
-			case 2: callsub L_Quest,4168,"Spring Rabbit",82000,"스프링래빗카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.","s";
-			case 3: callsub L_Quest,4169,"Pest",82000,"페스트카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.","s";
+			case 1: callsub L_Quest,4167,"Dragon Tail",2280000,"드래곤테일카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.","s";
+			case 2: callsub L_Quest,4168,"Spring Rabbit",2460000,"스프링래빗카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.","s";
+			case 3: callsub L_Quest,4169,"Pest",2460000,"페스트카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.","s";
 		}
 	case 2:
 		mes "^8B4513Clock Tower Dungeon^000000.";
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFBathory^000000:^0000FFAlarm^000000")) {
-			case 1: callsub L_Quest,4170,"Bathory",72000,"바소리카드","The Clock Tower Dungeon is full of dangerous monsters.";
-			case 2: callsub L_Quest,4171,"Alarm",76000,"알람카드","The Clock Tower Dungeon is full of dangerous monsters.";
+			case 1: callsub L_Quest,4170,"Bathory",2160000,"바소리카드","The Clock Tower Dungeon is full of dangerous monsters.";
+			case 2: callsub L_Quest,4171,"Alarm",2280000,"알람카드","The Clock Tower Dungeon is full of dangerous monsters.";
 		}
 	case 3:
 		mes "^8B4513Expansion Cities^000000";
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFBaba Yaga^000000:^0000FFYao Jun^000000:^0000FFFirelock Soldier^000000:^0000FFZipper Bear^000000")) {
-			case 1: callsub L_Quest,4172,"Baba Yaga",72000,"","The witch Baba Yaga can be found in the outskirts of Moscovia.";
+			case 1: callsub L_Quest,4172,"Baba Yaga",2160000,"","The witch Baba Yaga can be found in the outskirts of Moscovia.";
 			case 2: callsub L_Quest,4173,"Yao Jun",117000,"혜군카드","There are human-like monsters that roam around the dungeon in Louyang.";
-			case 3: callsub L_Quest,4174,"Firelock Soldier",82000,"구식조총병카드","There are human-like monsters that roam around the dungeon in Amatsu.","s";
-			case 4: callsub L_Quest,4175,"Zipper Bear",120000,"지퍼베어카드","There are bear monsters swarming in the Kunlun dungeon.";
+			case 3: callsub L_Quest,4174,"Firelock Soldier",2460000,"구식조총병카드","There are human-like monsters that roam around the dungeon in Amatsu.","s";
+			case 4: callsub L_Quest,4175,"Zipper Bear",3600000,"지퍼베어카드","There are bear monsters swarming in the Kunlun dungeon.";
 		}
 	case 4:
 		mes "[86-90 Mission Board]";
@@ -141,11 +141,11 @@ moc_para01,48,175,3	script	86-90 Mission Board	857,{
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFGround Petite^000000:^0000FFRafflesia^000000:^0000FFVenomous^000000:^0000FFPitman^000000:^0000FFYellow Novus^000000")) {
-			case 1: callsub L_Quest,4176,"Ground Petite",72000,"지상쁘띠카드","There are dragon type monsters swarming the western region of Geffen.";
-			case 2: callsub L_Quest,4177,"Rafflesia",72000,"라플레시아카드","There are plant type monsters infesting the fields of Lighthalzen.";
-			case 3: callsub L_Quest,4178,"Venomous",72000,"베노머스","There are formless monsters floating around the fields of Einbroch.";
-			case 4: callsub L_Quest,4179,"Pitman",86000,"핏맨","There are undead monsters pushing a cart around the fields and dungeons of Einbroch.";
-			case 5: callsub L_Quest,4180,"Yellow Novus",80000,"옐로우노버스","There are yellow dragon type monsters terrorizing the fields of Hugel.";
+			case 1: callsub L_Quest,4176,"Ground Petite",2160000,"지상쁘띠카드","There are dragon type monsters swarming the western region of Geffen.";
+			case 2: callsub L_Quest,4177,"Rafflesia",2160000,"라플레시아카드","There are plant type monsters infesting the fields of Lighthalzen.";
+			case 3: callsub L_Quest,4178,"Venomous",2160000,"베노머스","There are formless monsters floating around the fields of Einbroch.";
+			case 4: callsub L_Quest,4179,"Pitman",2580000,"핏맨","There are undead monsters pushing a cart around the fields and dungeons of Einbroch.";
+			case 5: callsub L_Quest,4180,"Yellow Novus",2400000,"옐로우노버스","There are yellow dragon type monsters terrorizing the fields of Hugel.";
 		}
 	}
 	end;

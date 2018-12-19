@@ -40,3 +40,4 @@
 // 33,Sky Fortress Invasion,3600,300,1@sthb,54,67,1@sthc,1@sthd
 34,Charleston Crisis,7200,300,1@mcd,127,282
 35,Old Glast Heim Hard Mode,3600,300,1@gl_k,150,20,2@gl_k
+36,Temple of Demon God,7200,300,1@eom,102,16

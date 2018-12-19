@@ -108,16 +108,16 @@ moc_para01,32,30,6	script	Spike	4_F_CHILD,{
 		.@j = checkquest(.@i,HUNTING);
 		if (.@j == 2) {
 			switch(.@i) {
-				case 11114: callsub L_Quest,.@i,"Hornet Hunting",900;
-				case 11115: callsub L_Quest,.@i,"Condor Hunting",1800;
-				case 11116: callsub L_Quest,.@i,"Grasshopper's Leg",1400,940,10;
-				case 11117: callsub L_Quest,.@i,"Worm Tail Hunting",2600;
-				case 11118: callsub L_Quest,.@i,"Spore Hunting",3900;
-				case 11119: callsub L_Quest,.@i,"Extirpate Insects",2900,915,10;
-				case 11120: callsub L_Quest,.@i,"Muka Hunting",3200;
-				case 11121: callsub L_Quest,.@i,"Familiar Hunting",3200;
-				case 11122: callsub L_Quest,.@i,"Collect Feathers",5400;
-				case 11123: callsub L_Quest,.@i,"Collect Poison Spores",6000,7033,5;
+				case 11114: callsub L_Quest,.@i,"Hornet Hunting",27000;
+				case 11115: callsub L_Quest,.@i,"Condor Hunting",54000;
+				case 11116: callsub L_Quest,.@i,"Grasshopper's Leg",42000,940,10;
+				case 11117: callsub L_Quest,.@i,"Worm Tail Hunting",78000;
+				case 11118: callsub L_Quest,.@i,"Spore Hunting",117000;
+				case 11119: callsub L_Quest,.@i,"Extirpate Insects",87000,915,10;
+				case 11120: callsub L_Quest,.@i,"Muka Hunting",96000;
+				case 11121: callsub L_Quest,.@i,"Familiar Hunting",96000;
+				case 11122: callsub L_Quest,.@i,"Collect Feathers",162000;
+				case 11123: callsub L_Quest,.@i,"Collect Poison Spores",180000,7033,5;
 			}
 		}
 		else if (.@j >= 0) {

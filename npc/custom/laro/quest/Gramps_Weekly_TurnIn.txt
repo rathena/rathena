@@ -36,8 +36,9 @@ moc_para01,29,35,3	script	Gramps#Eden	866,{
 
 		}
 	}
-	if (checkquest(62837) != 2)
-		callsub S_GM_Notice;
+	//if (checkquest(62837) != 2)
+		//callsub S_GM_Notice;
+	
 	setarray .@Timer, 60444, 60495, 60449, 60450, 60486, 60487;
 	for (.@i = 0; .@i < getarraysize(.@Timer); .@i++){
 		if (checkquest(.@Timer[.@i],PLAYTIME) == 2)

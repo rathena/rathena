@@ -54,6 +54,62 @@
 //	-2: added for all normal types.
 //	-3: added for all mobs.
 
+// Mob Skill Database
+// Baseado no Episódio 11.1 da Aegis
+//
+// Estrutura do banco de dados:
+// MobID, Valor fictício (somente informação), Estado, SkillID, SkillLv, Taxa, Tempo de lançamento, Atraso, Cancelável, Destino, Tipo de condição, Valor da condição, val1, val2, val3, val4, val5, Emoção, Bate-papo
+//
+// RATE: a chance da habilidade ser conjurada quando a condição é satisfeita (10000 = 100%).
+// DELAY: o tempo (em milissegundos) antes de tentar reformular a mesma habilidade.
+//
+// ESTADO:
+// qualquer (exceto morto) / ocioso (em espera) / andar (em movimento) / morto (em morto) /
+// loot / attack / angry (como ataque, exceto que o jogador ainda não atacou mob) /
+// chase (seguindo o alvo, depois de ser atacado) / follow (seguindo o alvo,
+// sem ser atacado) / anytarget (attack + angry + chase + follow)
+//
+// ALVO:
+// target (target atual) / self / friend / master / randomtarget (qualquer inimigo dentro do alcance da habilidade)
+//
+// Os seguintes são para habilidades no solo, um bloco de destino aleatório é selecionado na área especificada:
+// around1 (área 3x3 em torno de si) / around2 (área 5x5 em torno de si) /
+// around3 (área de 7x7 em volta de si) / around4 (área de 9x9 em volta de si) /
+// around5 (área 3x3 em torno da meta) / around6 (área 5x5 em torno da meta) /
+// cerca de 7 (área 7x7 em torno da meta) / cerca de 8 (área 9x9 em torno da meta) /
+// around = around4
+//
+// CONDITION:
+// sempre Incondicional (sem valor de condição).
+// onspawn Quando mob gera / respawns (sem valor de condição).
+// myhpltmaxrate Quando o HP da mob cai para o% especificado.
+// myhpinrate Quando o HP do mob está em um determinado intervalo de% (valor da condição = limite inferior, val1 = limite superior).
+// mystatuson Se mob tem a anormalidade especificada no status.
+// mystatusoff Se mob terminou a anormalidade especificada no status.
+// friendhpltmaxrate Quando o HP do amigo da máfia cai para o% especificado.
+// friendhpinrate Quando o HP do amigo da máfia está em um determinado intervalo de% (valor da condição = limite inferior, val1 = limite superior).
+// friendstatuson Se um amigo tiver a anormalidade especificada no status.
+// friendstatusoff Se um amigo tiver terminado a anormalidade especificada no status.
+// attackpcgt Quando os PCs de ataque se tornam maiores que o número especificado.
+// attackpcge Quando os PCs de ataque se tornam maiores ou iguais ao número especificado.
+// slavelt Quando o número de escravos é menor que o número especificado original.
+// slavele Quando o número de escravos é menor ou igual ao número original especificado.
+// closedattacked Quando ataque corpo a corpo atacado atacado (sem valor de condição).
+// longrangeattacked Quando longo alcance atacado, ex. Arcos, armas, habilidades à distância (sem valor de condição).
+// skillused Quando a habilidade especificada é usada no mob.
+// afterskill Depois que mob lança a habilidade especificada.
+// casttargeted Quando um alvo está no alcance do elenco (sem valor de condição).
+// rudeattacked Quando mob é rude atacado (sem valor de condição).
+//
+// Anormalidades de status especificadas pelo statuson / statusoff do sistema:
+// anybad (qualquer tipo de alteração de estado) / stone / freeze / stun / sleep /
+// poison / maldição / silence / confusion / blind / hiding / sight (unhidden)
+//
+// Nota: se um MobID negativo for fornecido, a habilidade será tratada como 'global':
+// -1: adicionado para todos os tipos de chefe.
+// -2: adicionado para todos os tipos normais.
+// -3: adicionado para todos os mobs.
+
 1001,Scorpion@NPC_FIREATTACK,attack,186,1,2000,0,5000,yes,target,always,0,,,,,,,
 1001,Scorpion@NPC_POISON,attack,176,3,500,800,5000,no,target,always,0,,,,,,,
 1002,Poring@NPC_EMOTION,loot,197,1,2000,0,5000,yes,self,always,0,2,,,,,,
@@ -8791,24 +8847,31 @@
 2475,Corrupted Soul@NPC_WIDESILENCE,attack,663,5,8000,1000,5000,yes,self,always,0,,,,,,,
 2475,Corrupted Soul@NPC_WIDESTONE,attack,666,3,10000,1000,5000,yes,self,always,0,,,,,,,
 2475,Corrupted Soul@NPC_WIDESTUN,attack,678,3,5000,1000,5000,yes,self,always,0,,,,,,,
+
+
+2476,Amdarias@BS_MAXIMIZE,chase,114,5,5000,10,4000,no,self,always,0,,,,,,,
+2476,Amdarias@SM_MAGNUM,attack,7,25,10000,500,5000,yes,self,always,0,,,,,,,
+2476,Amdarias@NPC_GRANDDARKNESS,attack,339,10,5000,0,5000,no,target,always,0,,,,,,,
+2476,Amdarias@NPC_DRAGONFEAR,chase,659,5,10000,0,0,no,self,always,0,,,,,,,
+2476,Amdarias@NPC_DRAGONFEAR,attack,659,5,2000,1000,20000,yes,self,always,0,,,,,,,
+2476,Amdarias@HP_ASSUMPTIO,chase,361,5,10000,500,100000,yes,self,always,0,,,,,,,
+2476,Amdarias@NPC_JACKFROST,chase,720,4,10000,0,5000,no,self,always,0,,,,,,,
+2476,Amdarias@NPC_JACKFROST,attack,720,4,2000,1000,20000,yes,self,always,0,,,,,,,
+2476,Amdarias@NPC_POWERUP,attack,349,5,10000,0,50000,no,self,myhpltmaxrate,30,,,,,,6,
 2476,Amdarias@NPC_DARKSTRIKE,idle,340,10,10000,0,0,no,target,rudeattacked,,,,,,,,
 2476,Amdarias@NPC_DARKSTRIKE,chase,340,5,5000,0,1000,no,target,always,0,,,,,,,
 2476,Amdarias@NPC_HELLJUDGEMENT,chase,662,5,5000,4000,5000,yes,self,myhpltmaxrate,30,,,,,,7,
-2476,Amdarias@NPC_DRAGONFEAR,chase,659,5,10000,0,0,no,self,always,0,,,,,,,
-2476,Amdarias@NPC_DRAGONFEAR,attack,659,5,2000,1000,20000,yes,self,always,0,,,,,,,
 2476,Amdarias@NPC_HELLJUDGEMENT,attack,662,5,10000,4000,5000,yes,self,myhpltmaxrate,30,,,,,,7,
 2476,Amdarias@NPC_GRANDDARKNESS,attack,339,10,10000,2000,1000,yes,self,myhpltmaxrate,30,,,,,,9,
-2476,Amdarias@NPC_POWERUP,attack,349,5,10000,0,50000,no,self,myhpltmaxrate,30,,,,,,6,
 2476,Amdarias@NPC_VAMPIRE_GIFT,attack,679,5,10000,0,0,no,self,skillused,490,,,,,,42,
 2476,Amdarias@NPC_CRITICALWOUND,attack,673,4,500,500,5000,yes,target,always,0,,,,,,,
 2476,Amdarias@NPC_CHANGEUNDEAD,attack,348,1,500,0,5000,no,target,always,0,,,,,,44,
 2476,Amdarias@NPC_MENTALBREAKER,attack,159,4,500,1500,5000,no,target,always,0,,,,,,42,
 2476,Amdarias@NPC_CRITICALSLASH,attack,170,1,10000,0,5000,no,target,always,0,,,,,,,
-2476,Amdarias@NPC_DARKCROSS,attack,338,10,5000,0,5000,no,target,always,0,,,,,,,
+2476,Amdarias@NPC_DARKCROSS,attack,338,10,5000,0,900,no,target,always,0,,,,,,,
 2476,Amdarias@NPC_UNDEADATTACK,attack,347,10,10000,500,5000,yes,target,always,0,,,,,,,
 2476,Amdarias@NPC_CURSEATTACK,attack,181,5,4000,0,3000,no,target,always,0,,,,,,,
 2476,Amdarias@NPC_STUNATTACK,attack,179,5,2000,0,3000,no,target,always,0,,,,,,,
-2476,Amdarias@SM_MAGNUM,attack,7,25,10000,500,5000,yes,self,always,0,,,,,,,
 
 // Nightmare Glast Heim
 2477,Wanderer (Nightmare)@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
@@ -11200,6 +11263,83 @@
 3074,Time Holder@NPC_SUMMONSLAVE,attack,196,5,1000,700,10000,no,self,slavele,0,2917,,,,,,
 3074,Time Holder@NPC_SUMMONSLAVE,idle,196,5,1000,700,10000,no,self,slavele,0,2917,,,,,,
 
+
+
+3091,Brinaranea@WATERATTACK,chase,184,10,3000,1000,10000,yes,target,always,0,,,,,,,
+3091,Brinaranea@WATERATTACK,attack,184,10,3000,1000,10000,yes,target,always,0,,,,,,,
+3091,Brinaranea@COLDBOLT,chase,14,10,2500,1000,10000,yes,target,always,0,,,,,,,
+3091,Brinaranea@COLDBOLT,attack,14,10,2500,1000,10000,yes,target,always,0,,,,,,,
+3091,Brinaranea@FROSTDIVER,chase,15,10,1500,300,10000,yes,target,always,0,,,,,,,
+3091,Brinaranea@FROSTDIVER,attack,15,10,1500,300,10000,yes,target,always,0,,,,,,,
+3091,Brinaranea@QUAGMIRE,chase,92,5,3500,250,10000,yes,target,always,0,,,,,,,
+3091,Brinaranea@QUAGMIRE,attack,92,5,3500,250,10000,yes,target,always,0,,,,,,,
+
+3092,Muspelskoll@FIREATTACK,chase,186,10,3000,1000,10000,yes,target,always,0,,,,,,,
+3092,Muspelskoll@FIREATTACK,attack,186,10,3000,1000,10000,yes,target,always,0,,,,,,,
+3092,Muspelskoll@FIREBOLT,chase,19,10,2500,1000,15000,yes,target,always,0,,,,,,,
+3092,Muspelskoll@FIREBOLT,attack,19,10,2500,1000,15000,yes,target,always,0,,,,,,,
+3092,Muspelskoll@FIREBREATH,chase,654,5,2000,500,8000,yes,target,always,0,,,,,,,
+3092,Muspelskoll@FIREBREATH,attack,654,5,2000,500,8000,yes,target,always,0,,,,,,,
+3092,Muspelskoll@BEDLAM,chase,5006,5,10000,1000,30000,yes,target,always,0,,,,,,,
+3092,Muspelskoll@BEDLAM,attack,5006,5,10000,1000,30000,yes,target,always,0,,,,,,,
+
+3096,MoroccKid@BLOODDRAIN,chase,199,1,2500,0,60000,yes,target,always,0,,,,,,,
+3096,MoroccKid@BLOODDRAIN,attack,199,1,2500,0,60000,yes,target,always,0,,,,,,,
+3096,MoroccKid@DARKCROSS,chase,338,10,2000,0,90000,yes,target,always,0,,,,,,,
+3096,MoroccKid@DARKCROSS,attack,338,10,2000,0,90000,yes,target,always,0,,,,,,,
+3096,MoroccKid@BLEEDING,chase,660,5,3500,0,180000,yes,target,always,0,,,,,,,
+3096,MoroccKid@BLEEDING,attack,660,5,3500,0,180000,yes,target,always,0,,,,,,,
+3096,MoroccKid@HOLYATTACK,chase,189,10,2000,3000,15000,yes,target,always,0,,,,,,,
+3096,MoroccKid@HOLYATTACK,attack,189,10,2000,3000,15000,yes,target,always,0,,,,,,,
+3096,MoroccKid@EARTHQUAKE,chase,653,5,1000,1000,300000,no,self,myhpltmaxrate,50,,,,,,6,
+3096,MoroccKid@EARTHQUAKE,attack,653,5,1000,1000,300000,no,self,myhpltmaxrate,50,,,,,,6,
+3096,MoroccKid@SLOWCAST,chase,672,5,1000,1000,180000,yes,target,always,0,,,,,,,
+3096,MoroccKid@SLOWCAST,attack,672,5,1000,1000,180000,yes,target,always,0,,,,,,,
+
+3097,MoroccAdt@BLOODDRAIN,chase,199,1,2500,0,60000,yes,target,always,0,,,,,,,
+3097,MoroccAdt@BLOODDRAIN,attack,199,1,2500,0,60000,yes,target,always,0,,,,,,,
+3097,MoroccAdt@NPC_GRANDDARKNESS,chase,339,10,2000,0,90000,yes,target,always,0,,,,,,,
+3097,MoroccAdt@NPC_GRANDDARKNESS,attack,339,10,2000,0,90000,yes,target,always,0,,,,,,,
+3097,MoroccAdt@CRITICALWOUND,chase,673,5,3500,0,180000,yes,target,always,0,,,,,,,
+3097,MoroccAdt@CRITICALWOUND,attack,673,5,3500,0,180000,yes,target,always,0,,,,,,,
+3097,MoroccAdt@NPC_DARKNESSATTACK,chase,190,10,2000,3000,15000,yes,target,always,0,,,,,,,
+3097,MoroccAdt@NPC_DARKNESSATTACK,attack,190,10,2000,3000,15000,yes,target,always,0,,,,,,,
+3097,MoroccAdt@EARTHQUAKE,chase,653,5,1000,1000,300000,no,self,myhpltmaxrate,50,,,,,,6,
+3097,MoroccAdt@EARTHQUAKE,attack,653,5,1000,1000,300000,no,self,myhpltmaxrate,50,,,,,,6,
+3097,MoroccAdt@EVILLAND,chase,670,10,1000,1000,180000,no,self,myhpltmaxrate,70,,,,,,6,
+3097,MoroccAdt@EVILLAND,attack,670,10,1000,1000,180000,no,self,myhpltmaxrate,70,,,,,,6,
+3097,MoroccAdt@VAMPIREGIFT,chase,679,5,1000,1000,180000,no,self,myhpltmaxrate,80,,,,,,6,
+3097,MoroccAdt@VAMPIREGIFT,attack,679,5,1000,1000,180000,no,self,myhpltmaxrate,80,,,,,,6,
+
+3098,MoroccOrigin@DRAGONFEAR,chase,199,10,10000,0,600000,no,self,myhpltmaxrate,30,,,,,,6,
+3098,MoroccOrigin@DRAGONFEAR,attack,199,10,10000,0,600000,no,self,myhpltmaxrate,30,,,,,,6,
+3098,MoroccOrigin@METEORSTORM,chase,338,5,10000,800,690000,yes,target,myhpltmaxrate,80,,,,,,6,
+3098,MoroccOrigin@METEORSTORM,attack,338,5,10000,800,60000,yes,target,myhpltmaxrate,80,,,,,,6,
+3098,MoroccOrigin@FIREBOLT,chase,660,10,10000,800,20000,yes,target,myhpltmaxrate,80,,,,,,6,
+3098,MoroccOrigin@FIREBOLT,attack,660,10,10000,800,20000,yes,target,myhpltmaxrate,80,,,,,,6,
+3098,MoroccOrigin@FROSTDIVER,chase,189,10,10000,20000,20000,yes,target,myhpltmaxrate,80,,,,,,6,
+3098,MoroccOrigin@FROSTDIVER,attack,189,10,10000,20000,20000,yes,target,myhpltmaxrate,80,,,,,,6,
+3098,MoroccOrigin@EARTHQUAKE,chase,653,10,10000,2000,180000,no,self,myhpltmaxrate,40,,,,,,6,
+3098,MoroccOrigin@EARTHQUAKE,attack,653,10,10000,2000,180000,no,self,myhpltmaxrate,40,,,,,,6,
+3098,MoroccOrigin@JUPITELTHUNDER,chase,672,10,10000,1000,20000,yes,target,myhpltmaxrate,80,,,,,,6,
+3098,MoroccOrigin@JUPITELTHUNDER,attack,672,10,10000,1000,20000,yes,target,myhpltmaxrate,80,,,,,,6,
+
+3099,MoroccRest@PULSESTRIKE,chase,661,5,10000,800,600000,no,self,myhpltmaxrate,40,,,,,,6,
+3099,MoroccRest@PULSESTRIKE,attack,661,5,10000,800,600000,no,self,myhpltmaxrate,40,,,,,,6,
+3099,MoroccRest@HELLJUDGEMENT,chase,662,5,10000,800,35000,yes,target,myhpltmaxrate,60,,,,,,6,
+3099,MoroccRest@HELLJUDGEMENT,attack,662,5,10000,800,35000,yes,target,myhpltmaxrate,60,,,,,,6,
+3099,MoroccRest@STONECURSE,chase,16,10,10000,1000,60000,yes,target,myhpltmaxrate,80,,,,,,6,
+3099,MoroccRest@STONECURSE,attack,16,10,10000,1000,60000,yes,target,myhpltmaxrate,80,,,,,,6,
+3099,MoroccRest@SA_LANDPROTECTOR,chase,288,5,7,700,35000,yes,target,myhpltmaxrate,60,,,,,,6,
+3099,MoroccRest@SA_LANDPROTECTOR,attack,288,5,7,700,35000,yes,target,myhpltmaxrate,60,,,,,,6,
+3099,MoroccRest@VAMPIREGIFT,chase,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,6,
+3099,MoroccRest@VAMPIREGIFT,attack,679,9,10000,1000,50000,no,self,myhpltmaxrate,50,,,,,,6,
+3099,MoroccRest@HW_SOULDRAIN,chase,364,10,10000,1000,50000,yes,target,myhpltmaxrate,50,,,,,,6,
+3099,MoroccRest@HW_SOULDRAIN,attack,364,10,10000,1000,50000,yes,target,myhpltmaxrate,50,,,,,,6,
+3099,MoroccRest@EVILLAND,chase,670,10,10000,1000,50000,yes,target,myhpltmaxrate,50,,,,,,6,
+3099,MoroccRest@EVILLAND,attack,670,10,10000,1000,50000,yes,target,myhpltmaxrate,50,,,,,,6,
+
+
 3200,Wicked Chimera@WZ_HEAVENDRIVE,attack,91,5,500,1200,5000,yes,target,always,0,,,,,,6,
 3200,Wicked Chimera@WZ_HEAVENDRIVE,chase,91,5,500,1200,5000,yes,target,always,0,,,,,,6,
 3200,Wicked Chimera@CR_AUTOGUARD,attack,249,5,500,0,300000,yes,self,always,0,,,,,,,
@@ -12134,21 +12274,28 @@
 3151,Corrupted Soul@NPC_WIDESILENCE,attack,663,5,8000,1000,5000,no,self,always,0,,,,,,,
 3151,Corrupted Soul@NPC_WIDESTONE,attack,666,3,10000,1000,5000,no,self,always,0,,,,,,,
 3151,Corrupted Soul@NPC_WIDESTUN,attack,678,3,5000,1000,5000,no,self,always,0,,,,,,,
+
+
+3150,Amdarias@BS_MAXIMIZE,chase,114,5,5000,10,4000,no,self,always,0,,,,,,,
+3150,Amdarias@SM_MAGNUM,attack,7,25,10000,500,5000,yes,self,always,0,,,,,,,
+3150,Amdarias@NPC_GRANDDARKNESS,attack,339,10,5000,0,5000,no,target,always,0,,,,,,,
+3150,Amdarias@NPC_DRAGONFEAR,chase,659,5,10000,0,0,no,self,always,0,,,,,,,
+3150,Amdarias@NPC_DRAGONFEAR,attack,659,5,2000,1000,20000,yes,self,always,0,,,,,,,
+3150,Amdarias@HP_ASSUMPTIO,chase,361,5,10000,500,100000,yes,self,always,0,,,,,,,
+3150,Amdarias@NPC_JACKFROST,chase,720,4,10000,0,5000,no,self,always,0,,,,,,,
+3150,Amdarias@NPC_JACKFROST,attack,720,4,2000,1000,20000,yes,self,always,0,,,,,,,
+3150,Amdarias@NPC_POWERUP,attack,349,5,10000,0,50000,no,self,myhpltmaxrate,30,,,,,,6,
 3150,Amdarias@NPC_DARKSTRIKE,idle,340,10,10000,0,0,no,target,rudeattacked,,,,,,,,
 3150,Amdarias@NPC_DARKSTRIKE,chase,340,5,5000,0,1000,no,target,always,0,,,,,,,
 3150,Amdarias@NPC_HELLJUDGEMENT,chase,662,5,5000,4000,5000,yes,self,myhpltmaxrate,30,,,,,,7,
-3150,Amdarias@NPC_DRAGONFEAR,chase,659,5,10000,0,0,no,self,always,0,,,,,,,
-3150,Amdarias@NPC_DRAGONFEAR,attack,659,5,2000,1000,20000,yes,self,always,0,,,,,,,
 3150,Amdarias@NPC_HELLJUDGEMENT,attack,662,5,10000,4000,5000,yes,self,myhpltmaxrate,30,,,,,,7,
 3150,Amdarias@NPC_GRANDDARKNESS,attack,339,10,10000,2000,1000,yes,self,myhpltmaxrate,30,,,,,,9,
-3150,Amdarias@NPC_POWERUP,attack,349,5,10000,0,50000,no,self,myhpltmaxrate,30,,,,,,6,
 3150,Amdarias@NPC_VAMPIRE_GIFT,attack,679,5,10000,0,0,no,self,skillused,490,,,,,,42,
 3150,Amdarias@NPC_CRITICALWOUND,attack,673,4,500,500,5000,yes,target,always,0,,,,,,,
 3150,Amdarias@NPC_CHANGEUNDEAD,attack,348,1,500,0,5000,no,target,always,0,,,,,,44,
 3150,Amdarias@NPC_MENTALBREAKER,attack,159,4,500,1500,5000,no,target,always,0,,,,,,42,
 3150,Amdarias@NPC_CRITICALSLASH,attack,170,1,10000,0,5000,no,target,always,0,,,,,,,
-3150,Amdarias@NPC_DARKCROSS,attack,338,10,5000,0,5000,no,target,always,0,,,,,,,
+3150,Amdarias@NPC_DARKCROSS,attack,338,10,5000,0,900,no,target,always,0,,,,,,,
 3150,Amdarias@NPC_UNDEADATTACK,attack,347,10,10000,500,5000,yes,target,always,0,,,,,,,
 3150,Amdarias@NPC_CURSEATTACK,attack,181,5,4000,0,3000,no,target,always,0,,,,,,,
 3150,Amdarias@NPC_STUNATTACK,attack,179,5,2000,0,3000,no,target,always,0,,,,,,,
-3150,Amdarias@SM_MAGNUM,attack,7,25,10000,500,5000,yes,self,always,0,,,,,,,
