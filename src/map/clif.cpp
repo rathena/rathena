@@ -20746,7 +20746,7 @@ void clif_equipswitch_reply( struct map_session_data* sd, bool failed ){
 void clif_parse_equipswitch_request( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20170208
 	int i;
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	uint16 skill_id = ALL_EQSWITCH, skill_lv = 1;
 
 	if( DIFF_TICK(tick, sd->equipswitch_tick) < 0 ) {

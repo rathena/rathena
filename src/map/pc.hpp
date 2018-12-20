@@ -368,7 +368,7 @@ struct map_session_data {
 	t_tick canskill_tick; // used to prevent abuse from no-delay ACT files
 	t_tick cansendmail_tick; // [Mail System Flood Protection]
 	t_tick ks_floodprotect_tick; // [Kill Steal Protection]
-	unsigned int equipswitch_tick; // Equip switch
+	t_tick equipswitch_tick; // Equip switch
 
 	struct s_item_delay {
 		unsigned short nameid;
