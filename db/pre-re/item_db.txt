@@ -1596,7 +1596,7 @@
 2773,Krieger_Ring2,Glorious Mass-Production Ring,4,20,,0,,0,,0,0xFFFFFFFE,7,2,136,,61,0,0,{ bonus bAllStats,2; },{},{}
 2774,Krieger_Ring3,Glorious Popularized Ring,4,20,,0,,0,,0,0xFFFFFFFE,7,2,136,,0,0,0,{ bonus bAllStats,1; },{},{}
 2775,Lure,Lure,4,20,,100,,0,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{},{}
-2776,Cool_Towel,Adventurer's Trusty Towel,4,20,,100,,,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{ sc_start SC_SUMMER,-1,0; },{ sc_end SC_SUMMER; }
+2776,Cool_Towel,Adventurer's Trusty Towel,4,20,,100,,,,0,0xFFFFFFFF,7,2,136,,0,0,0,{},{ sc_start SC_SUMMER,INFINITE_TICK,0; },{ sc_end SC_SUMMER; }
 2777,Shaman_Ring,Shaman Ring,4,20,,100,,0,,1,0xFFFFFFFF,7,2,136,,30,0,0,{ bonus bUseSPrate,-5; },{},{}
 2778,Shaman_Earing,Shaman Earrings,4,20,,100,,0,,0,0xFFFFFFFF,7,2,136,,30,0,0,{ bonus bInt,2; },{},{}
 2779,Dark_Knight_Belt,Dark Knight Belt,4,20,,500,,1,,0,0xFFFFFFFF,7,2,136,,30,0,0,{ bonus bStr,2; bonus bAgi,1; },{},{}

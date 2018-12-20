@@ -67,8 +67,6 @@ struct s_subnet {
 } subnet[16];
 int subnet_count = 0;
 
-TIMER_FUNC(char_chardb_waiting_disconnect);
-
 DBMap* auth_db; // uint32 account_id -> struct auth_node*
 DBMap* online_char_db; // uint32 account_id -> struct online_char_data*
 DBMap* char_db_; // uint32 char_id -> struct mmo_charstatus*
@@ -899,7 +897,7 @@ int char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
 
 //=====================================================================================================
 // Loads the basic character rooster for the given account. Returns total buffer used.
-int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
+int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count ) {
 	SqlStmt* stmt;
 	struct mmo_charstatus p;
 	int j = 0, i;
@@ -990,6 +988,10 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 		// Addon System
 		// store the required info into the session
 		sd->char_moves[p.slot] = p.character_moves;
+	}
+
+	if( count != nullptr ){
+		*count = i;
 	}
 
 	memset(sd->new_name,0,sizeof(sd->new_name));

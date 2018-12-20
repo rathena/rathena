@@ -153,7 +153,7 @@ void pc_set_reg_load( bool val ){
  **/
 DBMap* itemcd_db = NULL; // char_id -> struct item_cd
 struct item_cd {
-	unsigned int tick[MAX_ITEMDELAYS]; //tick
+	t_tick tick[MAX_ITEMDELAYS]; //tick
 	unsigned short nameid[MAX_ITEMDELAYS]; //item id
 };
 
@@ -500,7 +500,7 @@ void pc_inventory_rentals(struct map_session_data *sd)
  */
 void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 {
-	unsigned int tick = seconds * 1000;
+	t_tick tick = seconds * 1000;
 
 	if( sd == NULL )
 		return;
@@ -514,7 +514,7 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 			sd->rental_timer = add_timer(gettick() + tick, pc_inventory_rental_end, sd->bl.id, 0);
 		}
 	} else
-		sd->rental_timer = add_timer(gettick() + umin(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
+		sd->rental_timer = add_timer(gettick() + i64min(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
 }
 
 /**
@@ -644,7 +644,7 @@ void pc_makesavestatus(struct map_session_data *sd) {
 /*==========================================
  * Off init ? Connection?
  *------------------------------------------*/
-void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, unsigned int client_tick, int sex, int fd) {
+void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, t_tick client_tick, int sex, int fd) {
 	nullpo_retv(sd);
 
 	sd->bl.id = account_id;
@@ -1138,7 +1138,7 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers)
 {
 	int i;
-	unsigned long tick = gettick();
+	t_tick tick = gettick();
 	uint32 ip = session[sd->fd]->client_addr;
 
 	sd->login_id2 = login_id2;
@@ -2110,7 +2110,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 		}
 	}
 
-	struct s_autospell entry;
+	struct s_autospell entry = {};
 
 	entry.id = id;
 	entry.lv = lv;
@@ -2130,7 +2130,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
  * @param rate: Success chance
  * @param card_id: Used to prevent card stacking
  */
-static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
+static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
 {
 	if (spell.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", MAX_PC_BONUS);
@@ -2140,7 +2140,7 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src
 	if (!rate)
 		return;
 
-	struct s_autospell entry;
+	struct s_autospell entry = {};
 
 	entry.flag = src_skill;
 	entry.id = id;
@@ -2186,7 +2186,7 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 		}
 	}
 
-	struct s_addeffect entry;
+	struct s_addeffect entry = {};
 
 	entry.sc = sc;
 	entry.rate = rate;
@@ -2224,7 +2224,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 		}
 	}
 
-	struct s_addeffectonskill entry;
+	struct s_addeffectonskill entry = {};
 
 	entry.sc = sc;
 	entry.rate = rate;
@@ -2287,7 +2287,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 		}
 	}
 
-	struct s_add_drop entry;
+	struct s_add_drop entry = {};
 
 	entry.nameid = nameid;
 	entry.group = group;
@@ -2330,7 +2330,7 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 		}
 	}
 
-	struct s_autobonus entry;
+	struct s_autobonus entry = {};
 
 	entry.rate = rate;
 	entry.duration = dur;
@@ -2356,10 +2356,14 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
 	if (!sd)
 		return;
 
-	for (uint8 i = 0; i < bonus.size(); i++) {
-		if (bonus[i].active != INVALID_TIMER) {
-			if (restore && (sd->state.autobonus&bonus[i].pos) == bonus[i].pos) {
-				if (bonus[i].bonus_script) {
+	std::vector<s_autobonus>::iterator it = bonus.begin();
+
+	while( it != bonus.end() ){
+		s_autobonus b = *it;
+
+		if (b.active != INVALID_TIMER) {
+			if (restore && (sd->state.autobonus&b.pos) == b.pos) {
+				if (b.bonus_script) {
 					unsigned int equip_pos_idx = 0;
 
 					// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
@@ -2368,22 +2372,26 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
 							equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
 					}
 
-					if ((equip_pos_idx&bonus[i].pos) == bonus[i].pos)
-						script_run_autobonus(bonus[i].bonus_script, sd, bonus[i].pos);
+					if ((equip_pos_idx&b.pos) == b.pos)
+						script_run_autobonus(b.bonus_script, sd, b.pos);
 				}
+
+				it++;
+
 				continue;
 			} else { // Logout / Unequipped an item with an activated bonus
-				delete_timer(bonus[i].active, pc_endautobonus);
-				bonus[i].active = INVALID_TIMER;
+				delete_timer(b.active, pc_endautobonus);
+				b.active = INVALID_TIMER;
 			}
 		}
 
-		if (bonus[i].bonus_script)
-			aFree(bonus[i].bonus_script);
-		if (bonus[i].other_script)
-			aFree(bonus[i].other_script);
+		if (b.bonus_script)
+			aFree(b.bonus_script);
+		if (b.other_script)
+			aFree(b.other_script);
+
+		it = bonus.erase(it);
 	}
-	bonus.clear();
 }
 
 /**
@@ -2391,7 +2399,7 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
  * @param sd: Player data
  * @param autobonus: Autobonus to run
  */
-void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
+void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus)
 {
 	if (!sd || !autobonus)
 		return;
@@ -2412,7 +2420,7 @@ void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
 			script_run_autobonus(autobonus->other_script,sd,autobonus->pos);
 	}
 
-	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)autobonus);
+	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
 	sd->state.autobonus |= autobonus->pos;
 	status_calc_pc(sd,SCO_FORCE);
 }
@@ -2422,13 +2430,19 @@ void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
  */
 TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
-	struct s_autobonus *autobonus = (struct s_autobonus *)data;
+	std::vector<s_autobonus> *bonus = (std::vector<s_autobonus> *)data;
 
 	nullpo_ret(sd);
-	nullpo_ret(autobonus);
+	nullpo_ret(bonus);
 
-	autobonus->active = INVALID_TIMER;
-	sd->state.autobonus &= ~autobonus->pos;
+	for( struct s_autobonus& autobonus : *bonus ){
+		if( autobonus.active == tid ){
+			autobonus.active = INVALID_TIMER;
+			sd->state.autobonus &= ~autobonus.pos;
+			break;
+		}
+	}
+	
 	status_calc_pc(sd,SCO_FORCE);
 	return 0;
 }
@@ -2485,8 +2499,6 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
-	struct s_addele2 entry;
-
 	if (sd->subele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_subele: Reached max (%d) number of resist element damage bonuses per character!\n", MAX_PC_BONUS);
 		return;
@@ -2511,6 +2523,8 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 		}
 	}
 
+	struct s_addele2 entry = {};
+
 	entry.ele = ele;
 	entry.rate = rate;
 	entry.flag = flag;
@@ -2526,14 +2540,14 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int val)
 {
-	struct s_item_bonus entry;
-
 	for (auto &it : bonus) {
 		if (it.id == id) {
 			it.val += val;
 			return;
 		}
 	}
+
+	struct s_item_bonus entry = {};
 
 	entry.id = id;
 	entry.val = val;
@@ -4697,7 +4711,7 @@ bool pc_dropitem(struct map_session_data *sd,int n,int amount)
 bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 {
 	int flag = 0;
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	struct party_data *p = NULL;
 
 	nullpo_ret(sd);
@@ -4943,7 +4957,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
  *------------------------------------------*/
 int pc_useitem(struct map_session_data *sd,int n)
 {
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	int amount;
 	unsigned short nameid;
 	struct script_code *script;
@@ -7666,7 +7680,7 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 int pc_dead(struct map_session_data *sd,struct block_list *src)
 {
 	int i=0,k=0;
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
@@ -8913,14 +8927,15 @@ void pc_setoption(struct map_session_data *sd,int type)
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
 		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
+			static const sc_type statuses [] = { SC_MAXIMIZEPOWER, SC_OVERTHRUST, SC_WEAPONPERFECTION, SC_ADRENALINE, SC_CARTBOOST, SC_MELTDOWN, SC_MAXOVERTHRUST };
+
 			status_calc_pc(sd,SCO_NONE);
-			status_change_end(&sd->bl,SC_MAXIMIZEPOWER,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERTHRUST,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_WEAPONPERFECTION,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_ADRENALINE,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_CARTBOOST,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MELTDOWN,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MAXOVERTHRUST,INVALID_TIMER);
+			for (uint8 i = 0; i < ARRAYLENGTH(statuses); i++) {
+				int skill_id = status_sc2skill(statuses[i]);
+
+				if (skill_id >= 0 && !(skill_get_inf3(skill_id)&INF3_USABLE_MADO))
+					status_change_end(&sd->bl,statuses[i],INVALID_TIMER);
+			}
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
 			status_calc_pc(sd,SCO_NONE);
@@ -9494,7 +9509,7 @@ void pc_addeventtimercount(struct map_session_data *sd,const char *name,int tick
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( sd->eventtimer[i] != INVALID_TIMER && strcmp(
 			(char *)(get_timer(sd->eventtimer[i])->data), name)==0 ){
-				addtick_timer(sd->eventtimer[i],tick);
+				addt_tickimer(sd->eventtimer[i],tick);
 				break;
 		}
 }
@@ -10429,7 +10444,7 @@ struct map_session_data *pc_get_child (struct map_session_data *sd)
 /*==========================================
  * Set player sd to bleed. (losing hp and/or sp each diff_tick)
  *------------------------------------------*/
-void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
+void pc_bleeding (struct map_session_data *sd, t_tick diff_tick)
 {
 	int hp = 0, sp = 0;
 
@@ -10461,7 +10476,7 @@ void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
 //Character regen. Flag is used to know which types of regen can take place.
 //&1: HP regen
 //&2: SP regen
-void pc_regen (struct map_session_data *sd, unsigned int diff_tick)
+void pc_regen (struct map_session_data *sd, t_tick diff_tick)
 {
 	int hp = 0, sp = 0;
 
@@ -11583,7 +11598,7 @@ void pc_itemcd_do(struct map_session_data *sd, bool load) {
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n) {
+uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
 	int i;
 	ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == id->nameid );
 	if( i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
@@ -11591,7 +11606,7 @@ uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, unsigned 
 	if( i < MAX_ITEMDELAYS ) {
 		if( sd->item_delay[i].nameid ) {// found
 			if( DIFF_TICK(sd->item_delay[i].tick, tick) > 0 ) {
-				int e_tick = DIFF_TICK(sd->item_delay[i].tick, tick)/1000;
+				t_tick e_tick = DIFF_TICK(sd->item_delay[i].tick, tick)/1000;
 				char e_msg[CHAT_SIZE_MAX];
 				if( e_tick > 99 )
 					sprintf(e_msg,msg_txt(sd,379), // Item Failed. [%s] is cooling down. Wait %.1f minutes.
@@ -11629,7 +11644,7 @@ uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, unsigned 
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n) {
+uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
 	struct status_change *sc = NULL;
 
 	nullpo_retr(0, sd);
@@ -11642,7 +11657,7 @@ uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, unsigne
 	// Send reply of delay remains
 	if (sc->data[id->delay_sc]) {
 		const struct TimerData *timer = get_timer(sc->data[id->delay_sc]->timer);
-		clif_msg_value(sd, ITEM_REUSE_LIMIT, timer ? DIFF_TICK(timer->tick, tick) / 1000 : 99);
+		clif_msg_value(sd, ITEM_REUSE_LIMIT, (int)(timer ? DIFF_TICK(timer->tick, tick) / 1000 : 99));
 		return 1;
 	}
 
@@ -11937,7 +11952,7 @@ void pc_show_version(struct map_session_data *sd) {
  * @author [Cydh]
  **/
 void pc_bonus_script(struct map_session_data *sd) {
-	int now = gettick();
+	t_tick now = gettick();
 	struct linkdb_node *node = NULL, *next = NULL;
 
 	if (!sd || !(node = sd->bonus_script.head))
@@ -11978,7 +11993,7 @@ void pc_bonus_script(struct map_session_data *sd) {
  * @return New created entry pointer or NULL if failed or NULL if duplicate fail
  * @author [Cydh]
  **/
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum efst_types icon, uint16 flag, uint8 type) {
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_types icon, uint16 flag, uint8 type) {
 	struct script_code *script = NULL;
 	struct linkdb_node *node = NULL;
 	struct s_bonus_script_entry *entry = NULL;
@@ -11996,9 +12011,9 @@ struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, co
 		while (node) {
 			entry = (struct s_bonus_script_entry *)node->data;
 			if (strcmpi(script_str, StringBuf_Value(entry->script_buf)) == 0) {
-				int newdur = gettick() + dur;
+				t_tick newdur = gettick() + dur;
 				if (flag&BSF_FORCE_REPLACE && entry->tick < newdur) { // Change duration
-					settick_timer(entry->tid, newdur);
+					sett_tickimer(entry->tid, newdur);
 					script_free_code(script);
 					return NULL;
 				}
@@ -12149,7 +12164,7 @@ void pc_cell_basilica(struct map_session_data *sd) {
 			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
 	}
 	else if (!sd->sc.data[SC_BASILICA])
-		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,-1);
+		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,INFINITE_TICK);
 }
 
 /** [Cydh]

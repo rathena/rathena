@@ -206,7 +206,7 @@ struct s_autobonus {
 struct s_bonus_script_entry {
 	struct script_code *script;
 	StringBuf *script_buf; //Used for comparing and storing on table
-	uint32 tick;
+	t_tick tick;
 	uint16 flag;
 	enum efst_types icon;
 	uint8 type; //0 - Ignore; 1 - Buff; 2 - Debuff
@@ -324,7 +324,7 @@ struct map_session_data {
 	int fd;
 	unsigned short mapindex;
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
-	unsigned int client_tick;
+	t_tick client_tick;
 	int npc_id,areanpc_id,npc_shopid,touching_id; //for script follow scriptoid;   ,npcid
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_menu; // internal variable, used in npc menu handling
@@ -337,7 +337,7 @@ struct map_session_data {
 
 	struct s_progressbar {
 		int npc_id;
-		unsigned int timeout;
+		t_tick timeout;
 	} progressbar; //Progress Bar [Inkfish]
 
 	struct s_ignore {
@@ -360,18 +360,18 @@ struct map_session_data {
 	int menuskill_id, menuskill_val, menuskill_val2;
 
 	int invincible_timer;
-	unsigned int canlog_tick;
-	unsigned int canuseitem_tick;	// [Skotlex]
-	unsigned int canusecashfood_tick;
-	unsigned int canequip_tick;	// [Inkfish]
-	unsigned int cantalk_tick;
-	unsigned int canskill_tick; // used to prevent abuse from no-delay ACT files
-	unsigned int cansendmail_tick; // [Mail System Flood Protection]
-	unsigned int ks_floodprotect_tick; // [Kill Steal Protection]
+	t_tick canlog_tick;
+	t_tick canuseitem_tick;	// [Skotlex]
+	t_tick canusecashfood_tick;
+	t_tick canequip_tick;	// [Inkfish]
+	t_tick cantalk_tick;
+	t_tick canskill_tick; // used to prevent abuse from no-delay ACT files
+	t_tick cansendmail_tick; // [Mail System Flood Protection]
+	t_tick ks_floodprotect_tick; // [Kill Steal Protection]
 
 	struct s_item_delay {
 		unsigned short nameid;
-		unsigned int tick;
+		t_tick tick;
 	} item_delay[MAX_ITEMDELAYS]; // [Paradox924X]
 
 	short weapontype1,weapontype2;
@@ -432,7 +432,7 @@ struct map_session_data {
 	struct s_regen {
 		short value;
 		int rate;
-		int tick;
+		t_tick tick;
 	} hp_loss, sp_loss, hp_regen, sp_regen, percent_hp_regen, percent_sp_regen;
 	struct {
 		short value;
@@ -639,7 +639,7 @@ struct map_session_data {
 	 * @info
 	 * - It is updated on every NPC iteration as mentioned above
 	 **/
-	unsigned int npc_idle_tick;
+	t_tick npc_idle_tick;
 	/* */
 	enum npc_timeout_type npc_idle_type;
 #endif
@@ -664,7 +664,7 @@ struct map_session_data {
 	struct Channel *gcbind;
 	bool stealth;
 	unsigned char fontcolor;
-	unsigned int *channel_tick;
+	t_tick *channel_tick;
 
 	/* [Ind] */
 	struct sc_display_entry **sc_display;
@@ -717,7 +717,7 @@ struct map_session_data {
 		int8 prizeIdx;
 		short prizeStage;
 		bool claimPrize;
-		unsigned int tick;
+		t_tick tick;
 	} roulette;
 
 	unsigned short instance_id;
@@ -993,7 +993,7 @@ bool pc_should_log_commands(struct map_session_data *sd);
 void pc_setrestartvalue(struct map_session_data *sd, char type);
 void pc_makesavestatus(struct map_session_data *sd);
 void pc_respawn(struct map_session_data* sd, clr_type clrtype);
-void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, unsigned int client_tick, int sex, int fd);
+void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, t_tick client_tick, int sex, int fd);
 bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers);
 void pc_authfail(struct map_session_data *sd);
 void pc_reg_received(struct map_session_data *sd);
@@ -1069,7 +1069,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 void pc_updateweightstatus(struct map_session_data *sd);
 
 bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short atk_type, const char *o_script, unsigned int pos, bool onskill);
-void pc_exeautobonus(struct map_session_data* sd, struct s_autobonus *bonus);
+void pc_exeautobonus(struct map_session_data* sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus);
 TIMER_FUNC(pc_endautobonus);
 void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore);
 
@@ -1194,8 +1194,8 @@ struct map_session_data *pc_get_father(struct map_session_data *sd);
 struct map_session_data *pc_get_mother(struct map_session_data *sd);
 struct map_session_data *pc_get_child(struct map_session_data *sd);
 
-void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick);
-void pc_regen (struct map_session_data *sd, unsigned int diff_tick);
+void pc_bleeding (struct map_session_data *sd, t_tick diff_tick);
+void pc_regen (struct map_session_data *sd, t_tick diff_tick);
 
 bool pc_setstand(struct map_session_data *sd, bool force);
 bool pc_candrop(struct map_session_data *sd,struct item *item);
@@ -1275,8 +1275,8 @@ bool pc_isautolooting(struct map_session_data *sd, unsigned short nameid);
 void pc_overheat(struct map_session_data *sd, int16 heat);
 
 void pc_itemcd_do(struct map_session_data *sd, bool load);
-uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n);
-uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n);
+uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n);
+uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n);
 
 int pc_load_combo(struct map_session_data *sd);
 
@@ -1299,7 +1299,7 @@ void pc_show_version(struct map_session_data *sd);
 
 TIMER_FUNC(pc_bonus_script_timer);
 void pc_bonus_script(struct map_session_data *sd);
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum efst_types icon, uint16 flag, uint8 type);
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_types icon, uint16 flag, uint8 type);
 void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag);
 
 void pc_cell_basilica(struct map_session_data *sd);

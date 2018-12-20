@@ -264,7 +264,7 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
 * @param isspdamage: If the damage is done to SP
 * @param tick: Current tick
 *------------------------------------------*/
-void battle_damage(struct block_list *src, struct block_list *target, int64 damage, int delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, unsigned int tick, bool isspdamage) {
+void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
 	map_freeblock_lock();
 	if (isspdamage)
 		status_fix_spdamage(src, target, damage, delay);
@@ -288,7 +288,7 @@ struct delay_damage {
 	int src_id;
 	int target_id;
 	int64 damage;
-	int delay;
+	t_tick delay;
 	unsigned short distance;
 	uint16 skill_lv;
 	uint16 skill_id;
@@ -339,7 +339,7 @@ TIMER_FUNC(battle_delay_damage_sub){
 	return 0;
 }
 
-int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects, bool isspdamage)
+int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool isspdamage)
 {
 	struct delay_damage *dat;
 	struct status_change *sc;
@@ -3307,7 +3307,7 @@ static void battle_apply_div_fix(struct Damage* d, uint16 skill_id)
 	if(d->damage) {
 		DAMAGE_DIV_FIX(d->damage, d->div_);
 		//Min damage
-		if(d->damage < d->div_ && (skill_id == SU_LUNATICCARROTBEAT || skill_id == SU_CN_METEOR || (battle_config.skill_min_damage&d->flag)))
+		if(d->damage < d->div_ && (skill_id == SU_LUNATICCARROTBEAT || skill_id == SU_LUNATICCARROTBEAT2 || skill_id == SU_CN_METEOR || skill_id == SU_CN_METEOR2 || (battle_config.skill_min_damage&d->flag)))
 			d->damage = d->div_;
 	} else if (d->div_ < 0) {
 		d->div_ *= -1;
@@ -4359,6 +4359,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 		case SU_LUNATICCARROTBEAT:
+		case SU_LUNATICCARROTBEAT2:
 			skillratio += 100 + 100 * skill_lv;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
@@ -5025,7 +5026,7 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				int64 damage = wd->damage + wd->damage2, rdamage = 0;
 				struct map_session_data *tsd = BL_CAST(BL_PC, target);
 				struct status_data *sstatus = status_get_status_data(src);
-				int tick = gettick(), rdelay = 0;
+				t_tick tick = gettick(), rdelay = 0;
 
 				rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id, false);
 				if( rdamage > 0 ) { //Item reflect gets calculated before any mapflag reducing is applicated
@@ -5292,7 +5293,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 		struct status_change *tsc = status_get_sc(target);
 		struct status_data *sstatus = status_get_status_data(src);
 		struct unit_data *ud = unit_bl2ud(target);
-		int tick = gettick(), rdelay = 0;
+		t_tick tick = gettick(), rdelay = 0;
 
 		if (!tsc)
 			return;
@@ -6206,6 +6207,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 600;
 						break;
 					case SU_CN_METEOR:
+					case SU_CN_METEOR2:
 						skillratio += 100 + 100 * skill_lv;
 						break;
 					case NPC_VENOMFOG:
@@ -7084,7 +7086,7 @@ void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rda
  *	Original coder pakpil
  */
 int battle_damage_area(struct block_list *bl, va_list ap) {
-	unsigned int tick;
+	t_tick tick;
 	int64 damage;
 	int amotion, dmotion;
 	struct block_list *src;
@@ -7117,7 +7119,7 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 /*==========================================
  * Do a basic physical attack (call through unit_attack_timer)
  *------------------------------------------*/
-enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag) {
+enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, t_tick tick, int flag) {
 	struct map_session_data *sd = NULL, *tsd = NULL;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
@@ -8514,6 +8516,7 @@ static const struct _battle_data {
 	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
 	{ "switch_remove_edp",                  &battle_config.switch_remove_edp,               2,      0,      3,              },
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
+	{ "feature.homunculus_autofeed_rate",   &battle_config.feature_homunculus_autofeed_rate,30,     0,    100,              },
 	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
 	{ "feature.attendance",                 &battle_config.feature_attendance,              1,      0,      1,              },

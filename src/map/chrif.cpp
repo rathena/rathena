@@ -1305,7 +1305,7 @@ int chrif_updatefamelist_ack(int fd) {
 int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
 #ifdef ENABLE_SC_SAVING
 	int i, count=0;
-	unsigned int tick;
+	t_tick tick;
 	struct status_change_data data;
 	struct status_change *sc = &sd->sc;
 	const struct TimerData *timer;
@@ -1330,7 +1330,7 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 			else
 				data.tick = 0; //Negative tick does not necessarily mean that sc has expired
 		} else
-			data.tick = -1; //Infinite duration
+			data.tick = INFINITE_TICK; //Infinite duration
 		data.type = i;
 		data.val1 = sc->data[i]->val1;
 		data.val2 = sc->data[i]->val2;
@@ -1351,7 +1351,7 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 int chrif_skillcooldown_save(struct map_session_data *sd) {
 	int i, count = 0;
 	struct skill_cooldown_data data;
-	unsigned int tick;
+	t_tick tick;
 	const struct TimerData *timer;
 
 	chrif_check(-1);
@@ -1681,7 +1681,7 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 	WFIFOL(char_fd, 4) = sd->status.char_id;
 
 	if (sd->bonus_script.count) {
-		unsigned int tick = gettick();
+		t_tick tick = gettick();
 		struct linkdb_node *node = NULL;
 
 		for (node = sd->bonus_script.head; node && i < MAX_PC_BONUS_SCRIPT; node = node->next) {

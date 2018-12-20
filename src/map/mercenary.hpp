@@ -72,7 +72,7 @@ bool mercenary_dead(struct mercenary_data *md);
 int mercenary_delete(struct mercenary_data *md, int reply);
 void mercenary_contract_stop(struct mercenary_data *md);
 
-int mercenary_get_lifetime(struct mercenary_data *md);
+t_tick mercenary_get_lifetime(struct mercenary_data *md);
 enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md);
 int mercenary_get_faith(struct mercenary_data *md);
 void mercenary_set_faith(struct mercenary_data *md, int value);
