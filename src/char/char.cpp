@@ -67,8 +67,6 @@ struct s_subnet {
 } subnet[16];
 int subnet_count = 0;
 
-TIMER_FUNC(char_chardb_waiting_disconnect);
-
 DBMap* auth_db; // uint32 account_id -> struct auth_node*
 DBMap* online_char_db; // uint32 account_id -> struct online_char_data*
 DBMap* char_db_; // uint32 char_id -> struct mmo_charstatus*
