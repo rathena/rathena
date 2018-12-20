@@ -4681,7 +4681,7 @@ ACMD_FUNC(reloadnpcfile) {
 /*==========================================
  * time in txt for time command (by [Yor])
  *------------------------------------------*/
-char* txt_time(tick_t duration_)
+char* txt_time(t_tick duration_)
 {
 	int days, hours, minutes, seconds;
 	char temp[CHAT_SIZE_MAX];
@@ -5763,7 +5763,7 @@ ACMD_FUNC(useskill)
 ACMD_FUNC(displayskill)
 {
 	struct status_data * status;
-	tick_t tick;
+	t_tick tick;
 	uint16 skill_id;
 	uint16 skill_lv = 1;
 	nullpo_retr(-1, sd);
@@ -6782,7 +6782,7 @@ ACMD_FUNC(summon)
 	int mob_id = 0;
 	int duration = 0;
 	struct mob_data *md;
-	tick_t tick=gettick();
+	t_tick tick=gettick();
 
 	nullpo_retr(-1, sd);
 

@@ -69,9 +69,9 @@ struct npc_data {
 			struct script_code *script;
 			short xs,ys; // OnTouch area radius
 			int guild_id;
-			tick_t timer;
+			t_tick timer;
 			int timerid,timeramount,rid;
-			tick_t timertick;
+			t_tick timertick;
 			struct npc_timerevent_list *timer_event;
 			int label_list_num;
 			struct npc_label_list *label_list;
@@ -100,7 +100,7 @@ struct npc_data {
 	unsigned char sc_display_count;
 
 	struct {
-		tick_t timeout;
+		t_tick timeout;
 		unsigned long color;
 	} progressbar;
 };
@@ -1221,7 +1221,7 @@ int npc_event_doall_id(const char* name, int rid);
 int npc_timerevent_start(struct npc_data* nd, int rid);
 int npc_timerevent_stop(struct npc_data* nd);
 void npc_timerevent_quit(struct map_session_data* sd);
-tick_t npc_gettimerevent_tick(struct npc_data* nd);
+t_tick npc_gettimerevent_tick(struct npc_data* nd);
 int npc_settimerevent_tick(struct npc_data* nd, int newtimer);
 int npc_remove_map(struct npc_data* nd);
 void npc_unload_duplicates (struct npc_data* nd);

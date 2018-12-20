@@ -120,7 +120,7 @@ unsigned int auction_create(struct auction_data *auction)
 	else
 	{
 		struct auction_data *auction_;
-		tick_t tick = auction->hours * 3600000;
+		t_tick tick = auction->hours * 3600000;
 
 		auction->item.amount = 1;
 		auction->item.identify = 1;
@@ -191,7 +191,7 @@ void inter_auctions_fromsql(void)
 	int i;
 	char *data;
 	StringBuf buf;
-	tick_t tick = gettick(), endtick;
+	t_tick tick = gettick(), endtick;
 	time_t now = time(NULL);
 
 	StringBuf_Init(&buf);

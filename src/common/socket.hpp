@@ -15,7 +15,7 @@
 #include <time.h>
 
 #include "cbasetypes.hpp"
-#include "timer.hpp" // tick_t
+#include "timer.hpp" // t_tick
 
 #define FIFOSIZE_SERVERLINK 256*1024
 
@@ -123,7 +123,7 @@ int realloc_writefifo(int fd, size_t addition);
 int WFIFOSET(int fd, size_t len);
 int RFIFOSKIP(int fd, size_t len);
 
-int do_sockets(tick_t next);
+int do_sockets(t_tick next);
 void do_close(int fd);
 void socket_init(void);
 void socket_final(void);

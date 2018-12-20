@@ -819,7 +819,7 @@ int WFIFOSET(int fd, size_t len)
 	return 0;
 }
 
-int do_sockets(tick_t next)
+int do_sockets(t_tick next)
 {
 	fd_set rfd;
 	struct timeval timeout;
@@ -955,7 +955,7 @@ int do_sockets(tick_t next)
 typedef struct _connect_history {
 	struct _connect_history* next;
 	uint32 ip;
-	tick_t tick;
+	t_tick tick;
 	int count;
 	unsigned ddos : 1;
 } ConnectHistory;

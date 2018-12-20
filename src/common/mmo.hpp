@@ -10,7 +10,7 @@
 
 #include "cbasetypes.hpp"
 #include "db.hpp"
-#include "timer.hpp" // tick_t
+#include "timer.hpp" // t_tick
 
 #ifndef PACKETVER
 	#error Please define PACKETVER in src/config/packets.hpp
@@ -334,13 +334,13 @@ struct script_reg_str {
 struct status_change_data {
 	unsigned short type; //SC_type
 	long val1, val2, val3, val4;
-	tick_t tick; //Remaining duration.
+	t_tick tick; //Remaining duration.
 };
 
 #define MAX_BONUS_SCRIPT_LENGTH 512
 struct bonus_script_data {
 	char script_str[MAX_BONUS_SCRIPT_LENGTH]; //< Script string
-	tick_t tick; ///< Tick
+	t_tick tick; ///< Tick
 	uint16 flag; ///< Flags @see enum e_bonus_script_flags
 	int16 icon; ///< Icon SI
 	uint8 type; ///< 0 - None, 1 - Buff, 2 - Debuff
@@ -348,7 +348,7 @@ struct bonus_script_data {
 
 struct skill_cooldown_data {
 	unsigned short skill_id;
-	tick_t tick;
+	t_tick tick;
 };
 
 enum storage_type {
@@ -447,7 +447,7 @@ struct s_mercenary {
 	short class_;
 	int hp, sp;
 	unsigned int kill_count;
-	tick_t life_time;
+	t_tick life_time;
 };
 
 struct s_elemental {
@@ -457,7 +457,7 @@ struct s_elemental {
 	enum e_mode mode;
 	int hp, sp, max_hp, max_sp, matk, atk, atk2;
 	short hit, flee, amotion, def, mdef;
-	tick_t life_time;
+	t_tick life_time;
 };
 
 struct s_friend {

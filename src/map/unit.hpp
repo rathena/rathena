@@ -39,9 +39,9 @@ struct unit_data {
 	bool stepaction; //Action should be executed on step [Playtester]
 	int steptimer; //Timer that triggers the action [Playtester]
 	uint16 stepskill_id, stepskill_lv; //Remembers skill that should be casted on step [Playtester]
-	tick_t attackabletime;
-	tick_t canact_tick;
-	tick_t canmove_tick;
+	t_tick attackabletime;
+	t_tick canact_tick;
+	t_tick canmove_tick;
 	bool immune_attack; ///< Whether the unit is immune to attacks
 	uint8 dir;
 	unsigned char walk_count;
@@ -117,7 +117,7 @@ TIMER_FUNC(unit_delay_walktobl_timer);
 int unit_stop_walking(struct block_list *bl,int type);
 int unit_can_move(struct block_list *bl);
 int unit_is_walking(struct block_list *bl);
-int unit_set_walkdelay(struct block_list *bl, tick_t tick, tick_t delay, int type);
+int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int type);
 
 int unit_escape(struct block_list *bl, struct block_list *target, short dist);
 

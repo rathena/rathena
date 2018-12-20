@@ -22,8 +22,8 @@
 // or many connected clients, please increase TIMER_MIN_INTERVAL.
 // The official interval of 20ms is however strongly recommended,
 // as it is needed for perfect server-client syncing.
-const tick_t TIMER_MIN_INTERVAL = 20;
-const tick_t TIMER_MAX_INTERVAL = 1000;
+const t_tick TIMER_MIN_INTERVAL = 20;
+const t_tick TIMER_MAX_INTERVAL = 1000;
 
 // timers (array)
 static struct TimerData* timer_data = NULL;
@@ -137,7 +137,7 @@ static void rdtsc_calibrate(){
 #endif
 
 /// platform-abstracted tick retrieval
-static tick_t tick(void)
+static t_tick tick(void)
 {
 #if defined(WIN32)
 #ifdef DEPRECATED_WINDOWS_SUPPORT
@@ -164,7 +164,7 @@ static tick_t tick(void)
 #if defined(TICK_CACHE) && TICK_CACHE > 1
 //////////////////////////////////////////////////////////////////////////
 // tick is cached for TICK_CACHE calls
-static tick_t gettick_cache;
+static t_tick gettick_cache;
 static int gettick_count = 1;
 
 unsigned int gettick_nocache(void)
@@ -174,7 +174,7 @@ unsigned int gettick_nocache(void)
 	return gettick_cache;
 }
 
-tick_t gettick(void)
+t_tick gettick(void)
 {
 	return ( --gettick_count == 0 ) ? gettick_nocache() : gettick_cache;
 }
@@ -182,12 +182,12 @@ tick_t gettick(void)
 #else
 //////////////////////////////
 // tick doesn't get cached
-tick_t gettick_nocache(void)
+t_tick gettick_nocache(void)
 {
 	return tick();
 }
 
-tick_t gettick(void)
+t_tick gettick(void)
 {
 	return tick();
 }
@@ -244,7 +244,7 @@ static int acquire_timer(void)
 
 /// Starts a new timer that is deleted once it expires (single-use).
 /// Returns the timer's id.
-int add_timer(tick_t tick, TimerFunc func, int id, intptr_t data)
+int add_timer(t_tick tick, TimerFunc func, int id, intptr_t data)
 {
 	int tid;
 
@@ -262,7 +262,7 @@ int add_timer(tick_t tick, TimerFunc func, int id, intptr_t data)
 
 /// Starts a new timer that automatically restarts itself (infinite loop until manually removed).
 /// Returns the timer's id, or INVALID_TIMER if it fails.
-int add_timer_interval(tick_t tick, TimerFunc func, int id, intptr_t data, int interval)
+int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int interval)
 {
 	int tid;
 
@@ -314,14 +314,14 @@ int delete_timer(int tid, TimerFunc func)
 
 /// Adjusts a timer's expiration time.
 /// Returns the new tick value, or -1 if it fails.
-tick_t addtick_timer(int tid, tick_t tick)
+t_tick addt_tickimer(int tid, t_tick tick)
 {
-	return settick_timer(tid, timer_data[tid].tick+tick);
+	return sett_tickimer(tid, timer_data[tid].tick+tick);
 }
 
 /// Modifies a timer's expiration time (an alternative to deleting a timer and starting a new one).
 /// Returns the new tick value, or -1 if it fails.
-tick_t settick_timer(int tid, tick_t tick)
+t_tick sett_tickimer(int tid, t_tick tick)
 {
 	size_t i;
 
@@ -329,7 +329,7 @@ tick_t settick_timer(int tid, tick_t tick)
 	ARR_FIND(0, BHEAP_LENGTH(timer_heap), i, BHEAP_DATA(timer_heap)[i] == tid);
 	if( i == BHEAP_LENGTH(timer_heap) )
 	{
-		ShowError("settick_timer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
+		ShowError("sett_tickimer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
 		return -1;
 	}
 
@@ -348,9 +348,9 @@ tick_t settick_timer(int tid, tick_t tick)
 
 /// Executes all expired timers.
 /// Returns the value of the smallest non-expired timer (or 1 second if there aren't any).
-tick_t do_timer(tick_t tick)
+t_tick do_timer(t_tick tick)
 {
-	tick_t diff = TIMER_MAX_INTERVAL; // return value
+	t_tick diff = TIMER_MAX_INTERVAL; // return value
 
 	// process all timers one by one
 	while( BHEAP_LENGTH(timer_heap) )
