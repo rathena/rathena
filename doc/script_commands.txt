@@ -7677,8 +7677,8 @@ The values given will be divided by 100 and transmitted as floating-point number
 				Maximum: 360000 (360.0°) when fully rotated
 
 	latitude	The angle of the camera.
-				Default: 50000 (50.0)
-				Maximum: 75000 (75.0)
+				Default: -50000 (-50.0)
+				Maximum: -75000 (-75.0)
 
 ---------------------------------------
 \\
