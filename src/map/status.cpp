@@ -12878,7 +12878,7 @@ TIMER_FUNC(status_change_timer){
 
 		if (!sc->data[SC_CHASEWALK2]) {
 			sc_start(bl,bl, SC_CHASEWALK2,100,1<<(sce->val1-1),
-				(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_ROGUE?10:1) // SL bonus -> x10 duration
+				(tick_t)(sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_ROGUE?10:1) // SL bonus -> x10 duration
 				*skill_get_time2(status_sc2skill(type),sce->val1));
 		}
 		sc_timer_next(sce->val2+tick);

@@ -429,9 +429,9 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, tick_t ti
 			ed->ud.skill_lv = skill_lv;
 
 			if( skill_get_inf(skill_id) & INF_GROUND_SKILL )
-				ed->ud.skilltimer = add_timer( tick+status_get_speed(&ed->bl)*walk_dist, skill_castend_pos, ed->bl.id, 0 );
+				ed->ud.skilltimer = add_timer( tick+(tick_t)status_get_speed(&ed->bl)*walk_dist, skill_castend_pos, ed->bl.id, 0 );
 			else
-				ed->ud.skilltimer = add_timer( tick+status_get_speed(&ed->bl)*walk_dist, skill_castend_id, ed->bl.id, 0 );
+				ed->ud.skilltimer = add_timer( tick+(tick_t)status_get_speed(&ed->bl)*walk_dist, skill_castend_id, ed->bl.id, 0 );
 		}
 		return 1;
 

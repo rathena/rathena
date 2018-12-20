@@ -5705,7 +5705,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				{
 					int skele = WL_RELEASE - 5 + sc->data[spheres[i]]->val1 - WLS_FIRE; // Convert Ball Element into Skill ATK for balls
 					// WL_SUMMON_ATK_FIRE, WL_SUMMON_ATK_WIND, WL_SUMMON_ATK_WATER, WL_SUMMON_ATK_GROUND
-					skill_addtimerskill(src,tick+status_get_adelay(src)*i,bl->id,0,0,skele,sc->data[spheres[i]]->val3,BF_MAGIC,flag|SD_LEVEL);
+					skill_addtimerskill(src,tick+(tick_t)status_get_adelay(src)*i,bl->id,0,0,skele,sc->data[spheres[i]]->val3,BF_MAGIC,flag|SD_LEVEL);
 					status_change_end(src, static_cast<sc_type>(spheres[i]), INVALID_TIMER); // Eliminate ball
 				}
 				clif_skill_nodamage(src,bl,skill_id,0,1);
@@ -13720,7 +13720,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, tic
 		ts->tick = tick+sg->interval;
 
 		if ((skill_id==CR_GRANDCROSS || skill_id==NPC_GRANDDARKNESS) && !battle_config.gx_allhit)
-			ts->tick += sg->interval*(map_count_oncell(bl->m,bl->x,bl->y,BL_CHAR,0)-1);
+			ts->tick += (tick_t)sg->interval*(map_count_oncell(bl->m,bl->x,bl->y,BL_CHAR,0)-1);
 	}
 
 	// Wall of Thorn damaged by Fire element unit [Cydh]
@@ -13764,7 +13764,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, tic
 							status_zap(bl, 0, 15); // sp damage to players
 						else // mobs
 						if( status_charge(ss, 0, 2) ) { // costs 2 SP per hit
-							if( !skill_attack(BF_WEAPON,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0) )
+							if( !skill_attack(BF_WEAPON,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick+(tick_t)count*sg->interval,0) )
 								status_charge(ss, 0, 8); //costs additional 8 SP if miss
 						} else { //should end when out of sp.
 							sg->limit = DIFF_TICK(tick,sg->tick);
@@ -13801,7 +13801,7 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, tic
 
 			//Take into account these hit more times than the timer interval can handle.
 			do
-				skill_attack(BF_MAGIC,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick+count*sg->interval,0);
+				skill_attack(BF_MAGIC,ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick+(tick_t)count*sg->interval,0);
 			while(sg->interval > 0 && --unit->val2 && x == bl->x && y == bl->y &&
 				++count < SKILLUNITTIMER_INTERVAL/sg->interval && !status_isdead(bl));
 
