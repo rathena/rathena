@@ -63,7 +63,7 @@ prontera,164,171,3	script	MvP Ladder Warper	56,{
 		mes "You have to form a party to play.";
 		close;
 	}
-	if ( getpartyleader( getcharid(1), 2 ) != getcharid(0) ) {
+	if ( is_party_leader() == false ) {
 		mes "[MvP Ladder Warper]";
 		mes "Only the party leader can register.";
 		close;

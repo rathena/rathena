@@ -1006,7 +1006,6 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 	mes "[Staff]";
 	mes "^3131FF"+$arena_pttopn$+"^000000's running time was ^3131FF"+$top_ptmin+"^000000minutes ^3131FF"+$top_ptsec+"^000000seconds.";
 	next;
-	set .arn_party,getcharid(1);
 	if (@gappt < 0) {
 		mes "[Staff]";
 		mes "Although you failed to make a new record, I hope you will succeed next time.";
@@ -1034,7 +1033,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			mes "See you later~";
 			close2;
 		}
-		if(getpartyleader(.arn_party,2) == getcharid(0)) {
+		if (is_party_leader() == true) {
 			donpcevent "#arn_timer_pt::OnStop";
 			donpcevent "alloff#pt::OnEnable";
 			donpcevent "Ponox::OnStart";
@@ -1049,7 +1048,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 		mes "Wow! You have renewed the record!";
 		mes "What a great job!";
 		next;
-		if(getpartyleader(.arn_party,2) == getcharid(0)) {
+		if (is_party_leader() == true) {
 			mes "[Staff]";
 			mes "You can record you and your party members on ^FF0000the hall of Arena Time Force Battle party ^000000.";
 			mes "When you enter a name, the name will be remained on the top unless someone make a new record.";
@@ -1112,7 +1111,7 @@ prt_are_in,77,135,3	script	Staff#party-2	67,{
 			mes "See you later~";
 			close2;
 		}
-		if(getpartyleader(.arn_party,2) == getcharid(0)) {
+		if (is_party_leader() == true) {
 			donpcevent "#arn_timer_pt::OnStop";
 			donpcevent "alloff#pt::OnEnable";
 			donpcevent "Ponox::OnStart";

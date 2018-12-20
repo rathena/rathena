@@ -126,6 +126,7 @@ dali,115,85,5	script	Party Leader#dali	2_M_SWORDMASTER,{
 dali,115,85,0	script	#dalichat	-1,{
 	end;
 OnInit:
+	hideonnpc "Party Leader#dali2";
 	disablenpc "#dalichat";
 	end;
 OnEnable:

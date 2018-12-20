@@ -57,6 +57,10 @@
 #include "unit.hpp"
 #include "vending.hpp"
 
+static inline uint32 client_tick( t_tick tick ){
+	return (uint32)tick;
+}
+
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
 
@@ -667,7 +671,7 @@ void clif_authok(struct map_session_data *sd)
 
 	WFIFOHEAD(fd,packet_len(cmd));
 	WFIFOW(fd, 0) = cmd;
-	WFIFOL(fd, 2) = gettick();
+	WFIFOL(fd, 2) = client_tick(gettick());
 	WFIFOPOS(fd, 6, sd->bl.x, sd->bl.y, sd->ud.dir);
 	WFIFOB(fd, 9) = 5; // ignored
 	WFIFOB(fd,10) = 5; // ignored
@@ -764,11 +768,15 @@ void clif_charselectok(int id, uint8 ok)
 }
 
 /// Makes an item appear on the ground.
-/// 009e <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
-/// 084b <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
-void clif_dropflooritem(struct flooritem_data* fitem)
+/// 009E <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
+/// 084B <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
+/// 0ADD <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
+void clif_dropflooritem(struct flooritem_data* fitem, bool canShowEffect)
 {
-#if PACKETVER >= 20130000
+#if PACKETVER >= 20180418
+	uint8 buf[22];
+	uint32 header = 0xadd;
+#elif PACKETVER >= 20130000
 	uint8 buf[19];
 	uint32 header=0x84b;
 #else
@@ -795,6 +803,22 @@ void clif_dropflooritem(struct flooritem_data* fitem)
 	WBUFB(buf, offset+13) = fitem->subx;
 	WBUFB(buf, offset+14) = fitem->suby;
 	WBUFW(buf, offset+15) = fitem->item.amount;
+#if PACKETVER >= 20180418
+	if( canShowEffect ){
+		uint8 dropEffect = itemdb_dropeffect(fitem->item.nameid);
+
+		if( dropEffect > 0 ){
+			WBUFB(buf, offset+17) = 1;
+			WBUFW(buf, offset+18) = dropEffect - 1;
+		}else{
+			WBUFB(buf, offset+17) = 0;
+			WBUFW(buf, offset+18) = 0;
+		}
+	}else{
+		WBUFB(buf, offset+17) = 0;
+		WBUFW(buf, offset+18) = 0;
+	}
+#endif
 
 	clif_send(buf, packet_len(header), &fitem->bl, AREA);
 }
@@ -875,7 +899,7 @@ static TIMER_FUNC(clif_clearunit_delayed_sub){
 	ers_free(delay_clearunit_ers,bl);
 	return 0;
 }
-void clif_clearunit_delayed(struct block_list* bl, clr_type type, unsigned int tick)
+void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
 {
 	struct block_list *tbl = ers_alloc(delay_clearunit_ers, struct block_list);
 	memcpy (tbl, bl, sizeof (struct block_list));
@@ -1226,12 +1250,12 @@ static int clif_set_unit_walking(struct block_list* bl, struct unit_data* ud, un
 	WBUFW(buf,18) = vd->weapon;
 #if PACKETVER < 4
 	WBUFW(buf,20) = vd->head_bottom;
-	WBUFL(buf,22) = gettick();
+	WBUFL(buf,22) = client_tick(gettick());
 	WBUFW(buf,26) = vd->shield;
 #else
 	WBUFW(buf,20) = vd->shield;
 	WBUFW(buf,22) = vd->head_bottom;
-	WBUFL(buf,24) = gettick();
+	WBUFL(buf,24) = client_tick(gettick());
 #endif
 	WBUFW(buf,28) = vd->head_top;
 	WBUFW(buf,30) = vd->head_mid;
@@ -1687,7 +1711,7 @@ void clif_walkok(struct map_session_data *sd)
 
 	WFIFOHEAD(fd, packet_len(0x87));
 	WFIFOW(fd,0)=0x87;
-	WFIFOL(fd,2)=gettick();
+	WFIFOL(fd,2)=client_tick(gettick());
 	WFIFOPOS2(fd,6,sd->bl.x,sd->bl.y,sd->ud.to_x,sd->ud.to_y,8,8);
 	WFIFOSET(fd,packet_len(0x87));
 }
@@ -1763,7 +1787,7 @@ void clif_move(struct unit_data *ud)
 			WBUFW(buf,0)=0x86;
 			WBUFL(buf,2)=-bl->id;
 			WBUFPOS2(buf,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
-			WBUFL(buf,12)=gettick();
+			WBUFL(buf,12)=client_tick(gettick());
 			clif_send(buf, packet_len(0x86), bl, SELF);
 		}
 		return;
@@ -1789,7 +1813,7 @@ void clif_move(struct unit_data *ud)
 	WBUFW(buf,0)=0x86;
 	WBUFL(buf,2)=bl->id;
 	WBUFPOS2(buf,6,bl->x,bl->y,ud->to_x,ud->to_y,8,8);
-	WBUFL(buf,12)=gettick();
+	WBUFL(buf,12)=client_tick(gettick());
 	clif_send(buf, packet_len(0x86), bl, AREA_WOS);
 	if (disguised(bl)) {
 		WBUFL(buf,2)=-bl->id;
@@ -2388,6 +2412,7 @@ void clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, in
 ///     2 = bottom right corner
 ///     3 = middle of screen, inside a movable window
 ///     4 = middle of screen, movable with a close button, chrome-less
+///   255 = clear all displayed cutins
 void clif_cutin(struct map_session_data* sd, const char* image, int type)
 {
 	int fd;
@@ -3693,7 +3718,7 @@ void clif_arrowequip(struct map_session_data *sd,int val) {
 	nullpo_retv(sd);
 
 #if PACKETVER >= 20121128
-	clif_status_change(&sd->bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INVALID_TIMER, 0, 0, 0);
+	clif_status_change(&sd->bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INFINITE_TICK, 0, 0, 0);
 #endif
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len(0x013c));
@@ -3950,7 +3975,7 @@ void clif_changeoption(struct block_list* bl)
 	//Whenever we send "changeoption" to the client, the provoke icon is lost
 	//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
 	if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
-		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, -1, 0, 0, 0);
+		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, INFINITE_TICK, 0, 0, 0);
 }
 
 
@@ -4756,7 +4781,7 @@ static int clif_hallucination_damage()
 ///     10 = critical hit
 ///     11 = lucky dodge
 ///     12 = (touch skill?)
-int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage)
+int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage)
 {
 	unsigned char buf[34];
 	struct status_change *sc;
@@ -4788,7 +4813,7 @@ int clif_damage(struct block_list* src, struct block_list* dst, unsigned int tic
 	WBUFW(buf,0) = cmd;
 	WBUFL(buf,2) = src->id;
 	WBUFL(buf,6) = dst->id;
-	WBUFL(buf,10) = tick;
+	WBUFL(buf,10) = client_tick(tick);
 	WBUFL(buf,14) = sdelay;
 	WBUFL(buf,18) = ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
@@ -5494,7 +5519,7 @@ void clif_skill_fail(struct map_session_data *sd,uint16 skill_id,enum useskill_f
 
 /// Skill cooldown display icon (ZC_SKILL_POSTDELAY).
 /// 043d <skill ID>.W <tick>.L
-void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, unsigned int tick)
+void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, t_tick tick)
 {
 #if PACKETVER>=20081112
 	int fd;
@@ -5505,7 +5530,7 @@ void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, unsigned 
 	WFIFOHEAD(fd,packet_len(0x43d));
 	WFIFOW(fd,0) = 0x43d;
 	WFIFOW(fd,2) = skill_id;
-	WFIFOL(fd,4) = tick;
+	WFIFOL(fd,4) = client_tick(tick);
 	WFIFOSET(fd,packet_len(0x43d));
 #endif
 }
@@ -5513,7 +5538,7 @@ void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, unsigned 
 /// Skill attack effect and damage.
 /// 0114 <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.W <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL)
 /// 01de <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <damage>.L <level>.W <div>.W <type>.B (ZC_NOTIFY_SKILL2)
-int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
+int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
 {
 	unsigned char buf[64];
 	struct status_change *sc;
@@ -5534,7 +5559,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	WBUFW(buf,2)=skill_id;
 	WBUFL(buf,4)=src->id;
 	WBUFL(buf,8)=dst->id;
-	WBUFL(buf,12)=tick;
+	WBUFL(buf,12)=client_tick(tick);
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
@@ -5565,7 +5590,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 	WBUFW(buf,2)=skill_id;
 	WBUFL(buf,4)=src->id;
 	WBUFL(buf,8)=dst->id;
-	WBUFL(buf,12)=tick;
+	WBUFL(buf,12)=client_tick(tick);
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
 	if (battle_config.hide_woe_damage && map_flag_gvg(src->m)) {
@@ -5609,7 +5634,7 @@ int clif_skill_damage(struct block_list *src,struct block_list *dst,unsigned int
 /// Ground skill attack effect and damage (ZC_NOTIFY_SKILL_POSITION).
 /// 0115 <skill id>.W <src id>.L <dst id>.L <tick>.L <src delay>.L <dst delay>.L <x>.W <y>.W <damage>.W <level>.W <div>.W <type>.B
 /*
-int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned int tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
+int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type)
 {
 	unsigned char buf[64];
 	struct status_change *sc;
@@ -5630,7 +5655,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned in
 	WBUFW(buf,2)=skill_id;
 	WBUFL(buf,4)=src->id;
 	WBUFL(buf,8)=dst->id;
-	WBUFL(buf,12)=tick;
+	WBUFL(buf,12)=client_tick(tick);
 	WBUFL(buf,16)=sdelay;
 	WBUFL(buf,20)=ddelay;
 	WBUFW(buf,24)=dst->x;
@@ -5668,7 +5693,7 @@ int clif_skill_damage2(struct block_list *src,struct block_list *dst,unsigned in
 /// Non-damaging skill effect
 /// 011a <skill id>.W <heal>.W <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL).
 /// 09cb <skill id>.W <heal>.L <dst id>.L <src id>.L <result>.B (ZC_USE_SKILL2).
-int clif_skill_nodamage(struct block_list *src,struct block_list *dst, uint16 skill_id, int heal, int fail)
+bool clif_skill_nodamage(struct block_list *src,struct block_list *dst, uint16 skill_id, int heal, t_tick tick)
 {
 	unsigned char buf[17];
 #if PACKETVER < 20130731
@@ -5677,6 +5702,7 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst, uint16 sk
 	const int cmd = 0x9cb;
 #endif
 	int offset = 0;
+	bool success = ( tick != 0 );
 
 	nullpo_ret(dst);
 
@@ -5690,7 +5716,7 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst, uint16 sk
 #endif
 	WBUFL(buf,6+offset) = dst->id;
 	WBUFL(buf,10+offset) = src ? src->id : 0;
-	WBUFB(buf,14+offset) = fail;
+	WBUFB(buf,14+offset) = success;
 
 	if (disguised(dst)) {
 		clif_send(buf, packet_len(cmd), dst, AREA_WOS);
@@ -5706,13 +5732,13 @@ int clif_skill_nodamage(struct block_list *src,struct block_list *dst, uint16 sk
 		clif_send(buf, packet_len(cmd), src, SELF);
 	}
 
-	return fail;
+	return success;
 }
 
 
 /// Non-damaging ground skill effect (ZC_NOTIFY_GROUNDSKILL).
 /// 0117 <skill id>.W <src id>.L <level>.W <x>.W <y>.W <tick>.L
-void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,int tick)
+void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick)
 {
 	unsigned char buf[32];
 
@@ -5724,7 +5750,7 @@ void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,i
 	WBUFW(buf,8)=val;
 	WBUFW(buf,10)=x;
 	WBUFW(buf,12)=y;
-	WBUFL(buf,14)=tick;
+	WBUFL(buf,14)=client_tick(tick);
 	if(disguised(src)) {
 		clif_send(buf,packet_len(0x117),src,AREA_WOS);
 		WBUFL(buf,4)=-src->id;
@@ -5954,7 +5980,7 @@ void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id
 /// @param val1
 /// @param val2
 /// @param val3
-void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, int tick, int val1, int val2, int val3, enum send_target target_type)
+void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t_tick tick, int val1, int val2, int val3, enum send_target target_type)
 {
 	unsigned char buf[32];
 
@@ -5984,8 +6010,8 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, i
 		if (tick <= 0)
 			tick = 9999; // this is indeed what official servers do
 
-		WBUFL(buf,9) = tick;/* at this stage remain and total are the same value I believe */
-		WBUFL(buf,13) = tick;
+		WBUFL(buf,9) = client_tick(tick);/* at this stage remain and total are the same value I believe */
+		WBUFL(buf,13) = client_tick(tick);
 		WBUFL(buf,17) = val1;
 		WBUFL(buf,21) = val2;
 		WBUFL(buf,25) = val3;
@@ -5995,7 +6021,7 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, i
 		if (tick <= 0)
 			tick = 9999; // this is indeed what official servers do
 
-		WBUFL(buf,9) = tick;
+		WBUFL(buf,9) = client_tick(tick);
 		WBUFL(buf,13) = val1;
 		WBUFL(buf,17) = val2;
 		WBUFL(buf,21) = val3;
@@ -6013,7 +6039,7 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, i
  * @param val2
  * @param val3
  */
-void clif_status_change(struct block_list *bl, int type, int flag, int tick, int val1, int val2, int val3) {
+void clif_status_change(struct block_list *bl, int type, int flag, t_tick tick, int val1, int val2, int val3) {
 	struct map_session_data *sd = NULL;
 
 	if (type == EFST_BLANK)  //It shows nothing on the client...
@@ -6074,7 +6100,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 		enum sc_type type = sc_display[i]->type;
 		struct status_change *sc = status_get_sc(bl);
 		const struct TimerData *td = (sc && sc->data[type] ? get_timer(sc->data[type]->timer) : NULL);
-		int tick = 0;
+		t_tick tick = 0;
 
 		if (td)
 			tick = DIFF_TICK(td->tick, gettick());
@@ -6098,7 +6124,7 @@ void clif_efst_status_change_sub(struct block_list *tbl, struct block_list *bl, 
 /// Notifies the client when a player enters the screen with an active EFST.
 /// 08ff <id>.L <index>.W <remain msec>.L { <val>.L }*3  (ZC_EFST_SET_ENTER) (PACKETVER >= 20111108)
 /// 0984 <id>.L <index>.W <total msec>.L <remain msec>.L { <val>.L }*3 (ZC_EFST_SET_ENTER2) (PACKETVER >= 20120618)
-void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, int tick, int val1, int val2, int val3) {
+void clif_efst_status_change(struct block_list *bl, int tid, enum send_target target, int type, t_tick tick, int val1, int val2, int val3) {
 #if PACKETVER >= 20111108
 	unsigned char buf[32];
 #if PACKETVER >= 20120618
@@ -6120,9 +6146,9 @@ void clif_efst_status_change(struct block_list *bl, int tid, enum send_target ta
 	WBUFL(buf,offset + 2) = tid;
 	WBUFW(buf,offset + 6) = type;
 #if PACKETVER >= 20111108
-	WBUFL(buf,offset + 8) = tick; // Set remaining status duration [exneval]
+	WBUFL(buf,offset + 8) = client_tick(tick); // Set remaining status duration [exneval]
 #if PACKETVER >= 20120618
-	WBUFL(buf,offset + 12) = tick;
+	WBUFL(buf,offset + 12) = client_tick(tick);
 	offset += 4;
 #endif
 	WBUFL(buf,offset + 12) = val1;
@@ -6216,7 +6242,7 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 
 	static_assert(CHAT_SIZE_MAX > 8, "CHAT_SIZE_MAX too small for packet");
 	if( len > CHAT_SIZE_MAX ) {
-		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%d).\n", message, len);
+		ShowWarning("clif_GlobalMessage: Truncating too long message '%s' (len=%" PRIuPTR ").\n", message, len);
 		len = CHAT_SIZE_MAX;
 	}
 	std::unique_ptr<char> buf(new char[8+len]);
@@ -7632,7 +7658,7 @@ void clif_party_message(struct party_data* p, uint32 account_id, const char* mes
 
 		if( len > sizeof(buf)-8 )
 		{
-			ShowWarning("clif_party_message: Truncated message '%s' (len=%d, max=%d, party_id=%d).\n", mes, len, sizeof(buf)-8, p->party.party_id);
+			ShowWarning("clif_party_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", party_id=%d).\n", mes, len, sizeof(buf)-8, p->party.party_id);
 			len = sizeof(buf)-8;
 		}
 
@@ -8097,7 +8123,7 @@ void clif_spiritball(struct block_list *bl) {
 
 /// Notifies clients in area of a character's combo delay (ZC_COMBODELAY).
 /// 01d2 <account id>.L <delay>.L
-void clif_combo_delay(struct block_list *bl,int wait)
+void clif_combo_delay(struct block_list *bl,t_tick wait)
 {
 	unsigned char buf[32];
 
@@ -8105,7 +8131,7 @@ void clif_combo_delay(struct block_list *bl,int wait)
 
 	WBUFW(buf,0)=0x1d2;
 	WBUFL(buf,2)=bl->id;
-	WBUFL(buf,6)=wait;
+	WBUFL(buf,6)=client_tick(wait);
 	clif_send(buf,packet_len(0x1d2),bl,AREA);
 }
 
@@ -8826,7 +8852,7 @@ void clif_guild_message(struct guild *g,uint32 account_id,const char *mes,int le
 	}
 	else if( len > sizeof(buf)-5 )
 	{
-		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%d, guild_id=%d).\n", mes, len, sizeof(buf)-5, g->guild_id);
+		ShowWarning("clif_guild_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", guild_id=%d).\n", mes, len, sizeof(buf)-5, g->guild_id);
 		len = sizeof(buf)-5;
 	}
 
@@ -9085,7 +9111,7 @@ void clif_disp_message(struct block_list* src, const char* mes, int len, enum se
 	if( len == 0 ) {
 		return;
 	} else if( len > sizeof(buf)-5 ) {
-		ShowWarning("clif_disp_message: Truncated message '%s' (len=%d, max=%d, aid=%d).\n", mes, len, sizeof(buf)-5, src->id);
+		ShowWarning("clif_disp_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", aid=%d).\n", mes, len, sizeof(buf)-5, src->id);
 		len = sizeof(buf)-5;
 	}
 
@@ -10170,7 +10196,7 @@ void clif_parse_WantToConnection(int fd, struct map_session_data* sd)
 	struct block_list* bl;
 	struct auth_node* node;
 	int cmd, account_id, char_id, login_id1, sex, err;
-	unsigned int client_tick; //The client tick is a tick, therefore it needs be unsigned. [Skotlex]
+	t_tick client_tick; //The client tick is a tick, therefore it needs be unsigned. [Skotlex]
 
 	if (sd) {
 		ShowError("clif_parse_WantToConnection : invalid request (character already logged in)\n");
@@ -10273,7 +10299,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	// Autotraders should ignore this entirely, clif_parse_LoadEndAck is always invoked manually for them
 	if (!sd->state.active || (!sd->state.autotrade && !sd->state.pc_loaded)) { //Character loading is not complete yet!
-		//Let pc_reg_received or intif_parse_StorageReceived reinvoke this when ready.
+		//Let pc_reg_received or pc_scdata_received reinvoke this when ready.
 		sd->state.connect_new = 0;
 		return;
 	}
@@ -10590,7 +10616,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	mail_clear(sd);
 
 	/* Guild Aura Init */
-	if( sd->state.gmaster_flag ) {
+	if( sd->guild && sd->state.gmaster_flag ) {
 		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild,GD_LEADERSHIP));
 		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->guild,GD_GLORYWOUNDS));
 		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));
@@ -10659,13 +10685,13 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 /// Server's tick (ZC_NOTIFY_TIME).
 /// 007f <time>.L
-void clif_notify_time(struct map_session_data* sd, unsigned long time)
+void clif_notify_time(struct map_session_data* sd, t_tick time)
 {
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd,packet_len(0x7f));
 	WFIFOW(fd,0) = 0x7f;
-	WFIFOL(fd,2) = time;
+	WFIFOL(fd,2) = client_tick(time);
 	WFIFOSET(fd,packet_len(0x7f));
 }
 
@@ -10774,7 +10800,8 @@ void clif_parse_progressbar(int fd, struct map_session_data * sd)
 	if( gettick() < sd->progressbar.timeout && sd->st )
 		sd->st->state = END;
 
-	sd->progressbar.npc_id = sd->progressbar.timeout = 0;
+	sd->progressbar.npc_id = 0;
+	sd->progressbar.timeout = 0;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 	npc_scriptcont(sd, npc_id, false);
 }
@@ -10789,7 +10816,7 @@ void clif_progressbar_npc( struct npc_data *nd, struct map_session_data* sd ){
 		WBUFW(buf,0) = 0x9d1;
 		WBUFL(buf,2) = nd->bl.id;
 		WBUFL(buf,6) = nd->progressbar.color;
-		WBUFL(buf,10) = ( nd->progressbar.timeout - gettick() ) / 1000;
+		WBUFL(buf,10) = client_tick( ( nd->progressbar.timeout - gettick() ) / 1000 );
 
 		if( sd ){
 			clif_send(buf, packet_len(0x9d1), &sd->bl, SELF);
@@ -11089,7 +11116,7 @@ void clif_parse_HowManyConnections(int fd, struct map_session_data *sd)
 }
 
 
-void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, unsigned int tick)
+void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, t_tick tick)
 {
 	if (pc_isdead(sd)) {
 		clif_clearunit_area(&sd->bl, CLR_DEAD);
@@ -12057,7 +12084,7 @@ void clif_parse_SkillUp(int fd,struct map_session_data *sd)
 	pc_skillup(sd,RFIFOW(fd,packet_db[RFIFOW(fd,0)].pos[0]));
 }
 
-static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_session_data *sd, unsigned int tick, uint16 skill_id, uint16 skill_lv, int target_id)
+static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int target_id)
 {
 	int lv;
 
@@ -12085,7 +12112,7 @@ static void clif_parse_UseSkillToId_homun(struct homun_data *hd, struct map_sess
 		unit_skilluse_id(&hd->bl, target_id, skill_id, skill_lv);
 }
 
-static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_session_data *sd, unsigned int tick, uint16 skill_id, uint16 skill_lv, short x, short y, int skillmoreinfo)
+static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, short x, short y, int skillmoreinfo)
 {
 	int lv;
 	if( !hd )
@@ -12112,7 +12139,7 @@ static void clif_parse_UseSkillToPos_homun(struct homun_data *hd, struct map_ses
 		unit_skilluse_pos(&hd->bl, x, y, skill_id, skill_lv);
 }
 
-static void clif_parse_UseSkillToId_mercenary(struct mercenary_data *md, struct map_session_data *sd, unsigned int tick, uint16 skill_id, uint16 skill_lv, int target_id)
+static void clif_parse_UseSkillToId_mercenary(struct mercenary_data *md, struct map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, int target_id)
 {
 	int lv;
 
@@ -12136,7 +12163,7 @@ static void clif_parse_UseSkillToId_mercenary(struct mercenary_data *md, struct 
 		unit_skilluse_id(&md->bl, target_id, skill_id, skill_lv);
 }
 
-static void clif_parse_UseSkillToPos_mercenary(struct mercenary_data *md, struct map_session_data *sd, unsigned int tick, uint16 skill_id, uint16 skill_lv, short x, short y, int skillmoreinfo)
+static void clif_parse_UseSkillToPos_mercenary(struct mercenary_data *md, struct map_session_data *sd, t_tick tick, uint16 skill_id, uint16 skill_lv, short x, short y, int skillmoreinfo)
 {
 	int lv;
 	if( !md )
@@ -12170,7 +12197,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 {
 	uint16 skill_id, skill_lv;
 	int inf,target_id;
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 
 	skill_lv = RFIFOW(fd,info->pos[0]);
@@ -12208,7 +12235,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if ((pc_cant_act2(sd) || sd->chatID) && 
 		skill_id != RK_REFRESH && 
-		!(skill_id == SR_GENTLETOUCH_CURE && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
+		!( ( skill_id == SR_GENTLETOUCH_CURE || skill_id == SU_GROOMING ) && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
 		!(sd->state.storage_flag && (inf&INF_SELF_SKILL))) //SELF skills can be used with the storage open, issue: 8027
 		return;
 
@@ -12277,7 +12304,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
  *------------------------------------------*/
 static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uint16 skill_lv, uint16 skill_id, short x, short y, int skillmoreinfo)
 {
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 
 	if( !(skill_get_inf(skill_id)&INF_GROUND_SKILL) )
 		return; //Using a target skill on the ground? WRONG.
@@ -15790,7 +15817,7 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 
 	if( !chrif_isconnected() )
 		return;
-	if (idx < 0 || amount < 0)
+	if (idx < 0 || amount < 0 || idx >= MAX_INVENTORY)
 		return;
 
 	flag = mail_setitem(sd, idx, amount);
@@ -16595,7 +16622,7 @@ void clif_bossmapinfo(struct map_session_data *sd, struct mob_data *md, enum e_b
 			unsigned int seconds;
 			int hours, minutes;
 
-			seconds = DIFF_TICK(timer_data->tick, gettick()) / 1000 + 60;
+			seconds = (unsigned int)(DIFF_TICK(timer_data->tick, gettick()) / 1000 + 60);
 			hours = seconds / (60 * 60);
 			seconds = seconds - (60 * 60 * hours);
 			minutes = seconds / 60;
@@ -17102,7 +17129,7 @@ void clif_mercenary_info(struct map_session_data *sd)
 	WFIFOL(fd,52) = status->max_hp;
 	WFIFOL(fd,56) = status->sp;
 	WFIFOL(fd,60) = status->max_sp;
-	WFIFOL(fd,64) = (int)time(NULL) + (mercenary_get_lifetime(md) / 1000);
+	WFIFOL(fd,64) = client_tick(time(NULL) + (mercenary_get_lifetime(md) / 1000));
 	WFIFOW(fd,68) = mercenary_get_faith(md);
 	WFIFOL(fd,70) = mercenary_get_calls(md);
 	WFIFOL(fd,74) = md->mercenary.kill_count;
@@ -17281,32 +17308,32 @@ void clif_bg_xy_remove(struct map_session_data *sd)
 	clif_send(buf, packet_len(0x2df), &sd->bl, BG_SAMEMAP_WOS);
 }
 
+/// Notifies clients of a battleground message.
+/// 02DC <packet len>.W <account id>.L <name>.24B <message>.?B (ZC_BATTLEFIELD_CHAT)
+void clif_bg_message( struct battleground_data *bg, int src_id, const char *name, const char *mes, int len ){
+	struct map_session_data *sd = bg_getavailablesd( bg );
 
-/// Notifies clients of a battleground message (ZC_BATTLEFIELD_CHAT).
-/// 02dc <packet len>.W <account id>.L <name>.24B <message>.?B
-void clif_bg_message(struct battleground_data *bg, int src_id, const char *name, const char *mes, int len)
-{
-	struct map_session_data *sd;
-	unsigned char *buf;
-	if( (sd = bg_getavailablesd(bg)) == NULL )
+	if( sd == nullptr ){
 		return;
+	}
 
-	buf = (unsigned char*)aMalloc((len + NAME_LENGTH + 8)*sizeof(unsigned char));
+	// limit length
+	len = min( len + 1, CHAT_SIZE_MAX );
+
+	unsigned char buf[8 + NAME_LENGTH + CHAT_SIZE_MAX];
 
 	WBUFW(buf,0) = 0x2dc;
 	WBUFW(buf,2) = len + NAME_LENGTH + 8;
 	WBUFL(buf,4) = src_id;
 	safestrncpy(WBUFCP(buf,8), name, NAME_LENGTH);
-	memcpy(WBUFP(buf,32), mes, len);
-	clif_send(buf,WBUFW(buf,2), &sd->bl, BG);
+	safestrncpy(WBUFCP(buf,8+NAME_LENGTH), mes, len );
 
-	if( buf )
-		aFree(buf);
+	clif_send(buf,WBUFW(buf,2), &sd->bl, BG);
 }
 
-
-/// Validates and processes battlechat messages [pakpil] (CZ_BATTLEFIELD_CHAT).
-/// 0x2db <packet len>.W <text>.?B (<name> : <message>) 00
+/// Validates and processes battlechat messages.
+/// All messages that are sent after enabling battleground chat with /battlechat.
+/// 02DB <packet len>.W <text>.?B (CZ_BATTLEFIELD_CHAT)
 void clif_parse_BattleChat(int fd, struct map_session_data* sd){
 	char name[NAME_LENGTH], message[CHAT_SIZE_MAX], output[CHAT_SIZE_MAX+NAME_LENGTH*2];
 
@@ -19049,7 +19076,7 @@ void clif_showscript(struct block_list* bl, const char* message, enum send_targe
 	len = strlen(message)+1;
 
 	if( len > sizeof(buf)-8 ) {
-		ShowWarning("clif_showscript: Truncating too long message '%s' (len=%d).\n", message, len);
+		ShowWarning("clif_showscript: Truncating too long message '%s' (len=%" PRIuPTR ").\n", message, len);
 		len = sizeof(buf)-8;
 	}
 
@@ -19087,7 +19114,7 @@ void clif_clan_message(struct clan *clan,const char *mes,int len){
 	if( len == 0 ){
 		return;
 	}else if( len > (sizeof(buf)-5-NAME_LENGTH) ){
-		ShowWarning("clif_clan_message: Truncated message '%s' (len=%d, max=%d, clan_id=%d).\n", mes, len, sizeof(buf)-5, clan->id);
+		ShowWarning("clif_clan_message: Truncated message '%s' (len=%d, max=%" PRIuPTR ", clan_id=%d).\n", mes, len, sizeof(buf)-5, clan->id);
 		len = sizeof(buf)-5-NAME_LENGTH;
 	}
 
@@ -20559,6 +20586,39 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 
 	WFIFOSET(fd, size);
 #endif
+}
+
+/// Activates the client camera info or updates the client camera with the given values.
+/// 0A78 <type>.B <range>.F <rotation>.F <latitude>.F
+void clif_camerainfo( struct map_session_data* sd, bool show, float range, float rotation, float latitude ){
+#if PACKETVER >= 20160525
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0xa78));
+	WFIFOW(fd, 0) = 0xa78;
+	WFIFOB(fd, 2) = show;
+	WFIFOF(fd, 3) = range;
+	WFIFOF(fd, 7) = rotation;
+	WFIFOF(fd, 11) = latitude;
+	WFIFOSET(fd, packet_len(0xa78));
+#endif
+}
+
+/// Activates or deactives the client camera info or updates the camera settings.
+/// This packet is triggered by /viewpointvalue or /setcamera
+/// 0A77 <type>.B <range>.F <rotation>.F <latitude>.F
+void clif_parse_camerainfo( int fd, struct map_session_data* sd ){
+	char command[CHAT_SIZE_MAX];
+
+	// /viewpointvalue
+	if( RFIFOB( fd, 2 ) == 1 ){
+		safesnprintf( command, sizeof( command ), "%ccamerainfo", atcommand_symbol );
+	// /setcamera
+	}else{
+		safesnprintf( command, sizeof( command ), "%ccamerainfo %03.03f %03.03f %03.03f", atcommand_symbol, RFIFOF( fd, 3 ), RFIFOF( fd, 7 ), RFIFOF( fd, 11 ) );
+	}
+
+	is_atcommand( fd, sd, command, 1 );
 }
 
 /// Send the full list of items in the equip switch window

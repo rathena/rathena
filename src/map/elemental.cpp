@@ -130,7 +130,7 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 	return 1;
 }
 
-int elemental_get_lifetime(struct elemental_data *ed) {
+t_tick elemental_get_lifetime(struct elemental_data *ed) {
 	const struct TimerData * td;
 	if( ed == NULL || ed->summon_timer == INVALID_TIMER )
 		return 0;
@@ -385,7 +385,7 @@ int elemental_clean_effect(struct elemental_data *ed) {
 	return 1;
 }
 
-int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned int tick) {
+int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick tick) {
 	struct skill_condition req;
 	uint16 skill_id, skill_lv;
 	int i;
@@ -429,9 +429,9 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned 
 			ed->ud.skill_lv = skill_lv;
 
 			if( skill_get_inf(skill_id) & INF_GROUND_SKILL )
-				ed->ud.skilltimer = add_timer( tick+status_get_speed(&ed->bl)*walk_dist, skill_castend_pos, ed->bl.id, 0 );
+				ed->ud.skilltimer = add_timer( tick+(t_tick)status_get_speed(&ed->bl)*walk_dist, skill_castend_pos, ed->bl.id, 0 );
 			else
-				ed->ud.skilltimer = add_timer( tick+status_get_speed(&ed->bl)*walk_dist, skill_castend_id, ed->bl.id, 0 );
+				ed->ud.skilltimer = add_timer( tick+(t_tick)status_get_speed(&ed->bl)*walk_dist, skill_castend_id, ed->bl.id, 0 );
 		}
 		return 1;
 
@@ -633,7 +633,7 @@ static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap
 	return 0;
 }
 
-static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, unsigned int tick) {
+static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, t_tick tick) {
 	struct block_list *target = NULL;
 	int master_dist, view_range;
 	enum e_mode mode;
@@ -744,7 +744,7 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 }
 
 static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list ap) {
-	unsigned int tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 	if(sd->status.ele_id && sd->ed)
 		elemental_ai_sub_timer(sd->ed,sd,tick);
 
