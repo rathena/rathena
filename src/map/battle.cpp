@@ -3605,7 +3605,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case AM_ACIDTERROR:
 #ifdef RENEWAL
-			skillratio += 100 + 80 * skill_lv;
+			skillratio += 200 + 80 * skill_lv;
 #else
 			skillratio += 40 * skill_lv;
 #endif
@@ -6578,7 +6578,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case GN_FIRE_EXPANSION_ACID:
 #ifdef RENEWAL
 			// Official Renewal formula [violetharmony]
-			// damage = 7 * ((atk + matk)*skill level) * (target vit/50)
+			// damage = 7 * ((atk + matk)*skill level) * (target vit/50) - ((sofdef + harddef + softmdef + hardmdef)/skill level)
 			// skill is a "forced neutral" type skill, it benefits from weapon element but final damage
 			// 	is considered "neutral" for purposes of resistances
 			{
