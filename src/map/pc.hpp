@@ -1068,7 +1068,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 void pc_updateweightstatus(struct map_session_data *sd);
 
 bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short atk_type, const char *o_script, unsigned int pos, bool onskill);
-void pc_exeautobonus(struct map_session_data* sd, struct s_autobonus *bonus);
+void pc_exeautobonus(struct map_session_data* sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus);
 TIMER_FUNC(pc_endautobonus);
 void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore);
 
