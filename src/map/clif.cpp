@@ -12188,27 +12188,18 @@ static void clif_parse_UseSkillToPos_mercenary(struct mercenary_data *md, struct
 		unit_skilluse_pos(&md->bl, x, y, skill_id, skill_lv);
 }
 
-
-/// Request to use a targeted skill.
-/// 0113 <skill lv>.W <skill id>.W <target id>.L (CZ_USE_SKILL)
-/// 0438 <skill lv>.W <skill id>.W <target id>.L (CZ_USE_SKILL2)
-/// There are various variants of this packet, some of them have padding between fields.
-void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
-{
-	uint16 skill_id, skill_lv;
-	int inf,target_id;
+void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16 skill_lv, int target_id ){
 	t_tick tick = gettick();
-	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
-
-	skill_lv = RFIFOW(fd,info->pos[0]);
-	skill_id = RFIFOW(fd,info->pos[1]);
-	target_id = RFIFOL(fd,info->pos[2]);
 
 	if( skill_lv < 1 ) skill_lv = 1; //No clue, I have seen the client do this with guild skills :/ [Skotlex]
 
-	inf = skill_get_inf(skill_id);
+	int inf = skill_get_inf(skill_id);
 	if (inf&INF_GROUND_SKILL || !inf)
 		return; //Using a ground/passive skill on a target? WRONG.
+
+	// Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
+	if (battle_config.idletime_option&IDLE_USESKILLTOID)
+		sd->idletime = last_tick;
 
 	if( SKILL_CHK_HOMUN(skill_id) ) {
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skill_id, skill_lv, target_id);
@@ -12219,10 +12210,6 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		clif_parse_UseSkillToId_mercenary(sd->md, sd, tick, skill_id, skill_lv, target_id);
 		return;
 	}
-
-	// Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
-	if (battle_config.idletime_option&IDLE_USESKILLTOID)
-		sd->idletime = last_tick;
 
 	if( sd->npc_id ){
 		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) || !sd->npc_item_flag || !( inf & INF_SELF_SKILL ) ){
@@ -12273,7 +12260,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 		} else if( sd->menuskill_id != SA_AUTOSPELL )
 			return; //Can't use skills while a menu is open.
 	}
-        
+
 	if( sd->skillitem == skill_id ) {
 		if( skill_lv != sd->skillitemlv )
 			skill_lv = sd->skillitemlv;
@@ -12297,6 +12284,17 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if( skill_lv )
 		unit_skilluse_id(&sd->bl, target_id, skill_id, skill_lv);
+}
+
+
+/// Request to use a targeted skill.
+/// 0113 <skill lv>.W <skill id>.W <target id>.L (CZ_USE_SKILL)
+/// 0438 <skill lv>.W <skill id>.W <target id>.L (CZ_USE_SKILL2)
+/// There are various variants of this packet, some of them have padding between fields.
+void clif_parse_UseSkillToId( int fd, struct map_session_data *sd ){
+	struct s_packet_db* info = &packet_db[RFIFOW(fd, 0)];
+
+	clif_parse_skill_toid( sd, RFIFOW(fd, info->pos[0]), RFIFOW(fd, info->pos[1]), RFIFOL(fd, info->pos[2]) );
 }
 
 /*==========================================
@@ -20768,52 +20766,7 @@ void clif_parse_equipswitch_request( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	// Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
-	if (battle_config.idletime_option&IDLE_USESKILLTOID)
-		sd->idletime = last_tick;
-
-	if( sd->npc_id ){
-#ifdef RENEWAL
-		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
-			clif_msg( sd, WORK_IN_PROGRESS );
-			return;
-		}
-#endif
-		if( !sd->npc_item_flag ){
-			return;
-		}
-	}
-
-	if( pc_cant_act(sd) )
-		return;
-
-	if( pc_issit(sd) )
-		return;
-
-	if( skill_isNotOk(skill_id, sd) )
-		return;
-
-	if( sd->ud.skilltimer != INVALID_TIMER ) {
-		// Client will not let you send a request
-		return;
-	} else if( DIFF_TICK(tick, sd->ud.canact_tick) < 0 ) {
-		// Client will not let you send a request
-		return;
-	}
-
-	if( sd->sc.option&OPTION_COSTUME )
-		return;
-
-	if( sd->menuskill_id ) {
-		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
-			clif_menuskill_clear(sd); //Cancel pet capture.
-		} else if( sd->menuskill_id != SA_AUTOSPELL )
-			return; //Can't use skills while a menu is open.
-	}
-
-	pc_delinvincibletimer(sd);
-
-	unit_skilluse_id( &sd->bl, sd->bl.id, skill_id, skill_lv );
+	clif_parse_skill_toid( sd, skill_id, skill_lv, sd->bl.id );
 #endif
 }
 
