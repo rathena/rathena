@@ -6527,6 +6527,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			// damage = ((atk + matk) * (3 + (.5 * skill level))) - (edef + sdef + emdef + smdef)
 			// atk part takes weapon element, matk part is non-elemental
 			// modified def formula
+			// add little atk part
 			{
 				short totaldef, totalmdef;
 				struct Damage atk, matk;
@@ -6536,7 +6537,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
 
 				// (atk + matk) * (3 + (.5 * skill level))
-				md.damage = ((30 + (5 * skill_lv)) * (atk.damage + matk.damage)) / 10;
+				md.damage = (((35 + (5 * skill_lv)) * (atk.damage + matk.damage)) / 10) - ((atk.damage + matk.damage) / 2);
 
 				// modified def reduction, final damage = base damage - (edef + sdef + emdef + smdef)
 				totaldef = tstatus->def2 + (short)status_get_def(target);
