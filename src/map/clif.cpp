@@ -20766,6 +20766,10 @@ void clif_parse_equipswitch_request( int fd, struct map_session_data* sd ){
 		return;
 	}
 
+	if( pc_issit(sd) && !pc_setstand( sd, false ) ){
+		return;
+	}
+
 	clif_parse_skill_toid( sd, skill_id, skill_lv, sd->bl.id );
 #endif
 }
