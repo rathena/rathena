@@ -12296,7 +12296,7 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 void clif_parse_UseSkillToId( int fd, struct map_session_data *sd ){
 	struct s_packet_db* info = &packet_db[RFIFOW(fd, 0)];
 
-	clif_parse_skill_toid( sd, RFIFOW(fd, info->pos[0]), RFIFOW(fd, info->pos[1]), RFIFOL(fd, info->pos[2]) );
+	clif_parse_skill_toid( sd, RFIFOW(fd, info->pos[1]), RFIFOW(fd, info->pos[0]), RFIFOL(fd, info->pos[2]) );
 }
 
 /*==========================================
