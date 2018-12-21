@@ -4392,8 +4392,7 @@ static int64 battle_calc_skill_constant_addition(struct Damage* wd, struct block
 	//Constant/misc additions from skills
 	switch (skill_id) {
 		case MO_EXTREMITYFIST:
-			short totaldef;
-			totaldef = tstatus->def2 + (short)status_get_def(target);
+			int totaldef = tstatus->def2 + (short)status_get_def(target);
 			atk = 250 + 150 * skill_lv;
 			ATK_ADD(-(wd.damage / 10))
 			ATK_ADD(-totaldef);
