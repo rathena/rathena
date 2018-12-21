@@ -6524,7 +6524,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case ASC_BREAKER:
 #ifdef RENEWAL
 			// Official Renewal formula [helvetica]
-			// damage = ((atk + matk) * (3 + (.5 * skill level))) - (edef + sdef + emdef + smdef)
+			// damage = ((atk + matk) * (3.5 + (.5 * skill level))) - (edef + sdef + emdef + smdef)
 			// atk part takes weapon element, matk part is non-elemental
 			// modified def formula
 			// add little atk part
