@@ -5458,11 +5458,11 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 #ifdef RENEWAL
 	if (!skill_id && is_attack_critical(&wd, src, target, skill_id, skill_lv, false)) {
 		if (sd) { //Check for player so we don't crash out, monsters don't have bonus crit rates [helvetica]
-			wd.damage = (int)floor((float)((wd.damage * 140) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
+			wd.damage = (int)floor((float)((wd.damage * 140) / 200 * (100 + sd->bonus.crit_atk_rate)) / 200);
 			if (is_attack_left_handed(src, skill_id))
-				wd.damage2 = (int)floor((float)((wd.damage2 * 140) / 100 * (100 + sd->bonus.crit_atk_rate)) / 100);
+				wd.damage2 = (int)floor((float)((wd.damage2 * 140) / 200 * (100 + sd->bonus.crit_atk_rate)) / 200);
 		} else
-			wd.damage = (int)floor((float)(wd.damage * 140) / 100);
+			wd.damage = (int)floor((float)(wd.damage * 140) / 200);
 	}
 #endif
 
