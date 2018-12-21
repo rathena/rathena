@@ -15,6 +15,7 @@
 #include <time.h>
 
 #include "cbasetypes.hpp"
+#include "timer.hpp" // t_tick
 
 #define FIFOSIZE_SERVERLINK 256*1024
 
@@ -162,6 +163,8 @@ void gepard_process_sc_packet(int fd, struct socket_data* s, size_t packet_size)
 #define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
 #define RFIFOL(fd,pos) (*(uint32*)RFIFOP(fd,pos))
 #define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
+#define RFIFOF(fd,pos) (*(float*)RFIFOP(fd,pos))
+#define WFIFOF(fd,pos) (*(float*)WFIFOP(fd,pos))
 #define RFIFOQ(fd,pos) (*(uint64*)RFIFOP(fd,pos))
 #define WFIFOQ(fd,pos) (*(uint64*)WFIFOP(fd,pos))
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
@@ -260,7 +263,7 @@ int realloc_writefifo(int fd, size_t addition);
 int WFIFOSET(int fd, size_t len);
 int RFIFOSKIP(int fd, size_t len);
 
-int do_sockets(int next);
+int do_sockets(t_tick next);
 void do_close(int fd);
 void socket_init(void);
 void socket_final(void);

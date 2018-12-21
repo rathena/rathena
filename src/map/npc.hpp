@@ -69,8 +69,9 @@ struct npc_data {
 			struct script_code *script;
 			short xs,ys; // OnTouch area radius
 			int guild_id;
-			int timer,timerid,timeramount,rid;
-			unsigned int timertick;
+			t_tick timer;
+			int timerid,timeramount,rid;
+			t_tick timertick;
 			struct npc_timerevent_list *timer_event;
 			int label_list_num;
 			struct npc_label_list *label_list;
@@ -99,7 +100,7 @@ struct npc_data {
 	unsigned char sc_display_count;
 
 	struct {
-		unsigned int timeout;
+		t_tick timeout;
 		unsigned long color;
 	} progressbar;
 };
@@ -1117,8 +1118,26 @@ enum e_job_types
 	JT_4_M_SILVANO_D,
 	JT_4_F_CECILIA,
 	JT_4_F_CECILIA_D,
-
-	JT_4_F_ERENE = 10337,
+	JT_4_M_MD_SEYREN,
+	JT_4_M_MD_EREMES,
+	JT_4_M_MD_HARWORD,
+	JT_4_F_MD_MAGALETA,
+	JT_4_F_MD_SHECIL,
+	JT_4_F_MD_KATRINN,
+	JT_4_M_MD_SEYREN_H,
+	JT_4_M_MD_EREMES_H,
+	JT_4_M_MD_HARWORD_H,
+	JT_4_F_MD_MAGALETA_H,
+	JT_4_F_MD_SHECIL_H,
+	JT_4_F_MD_KATRINN_H,
+	JT_4_M_MD_SEYREN_D,
+	JT_4_M_MD_EREMES_D,
+	JT_4_M_MD_HARWORD_D,
+	JT_4_F_MD_MAGALETA_D,
+	JT_4_F_MD_SHECIL_D,
+	JT_4_F_MD_KATRINN_D,
+	JT_4_F_MD_YGNIZEM,
+	JT_4_F_ERENE,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1202,7 +1221,7 @@ int npc_event_doall_id(const char* name, int rid);
 int npc_timerevent_start(struct npc_data* nd, int rid);
 int npc_timerevent_stop(struct npc_data* nd);
 void npc_timerevent_quit(struct map_session_data* sd);
-int npc_gettimerevent_tick(struct npc_data* nd);
+t_tick npc_gettimerevent_tick(struct npc_data* nd);
 int npc_settimerevent_tick(struct npc_data* nd, int newtimer);
 int npc_remove_map(struct npc_data* nd);
 void npc_unload_duplicates (struct npc_data* nd);

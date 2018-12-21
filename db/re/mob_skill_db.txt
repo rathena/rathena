@@ -12040,7 +12040,7 @@
 3254,T_W_O@NPC_WIDESOULDRAIN,attack,680,10,1000,0,60000,no,self,always,0,,,,,,,
 3254,T_W_O@NPC_CRITICALWOUND,attack,673,5,150,500,45000,no,target,always,,,,,,,,
 
-
+3505,DR_BIG_EGGRING@NPC_SUMMONSLAVE,attack,196,4,10000,2000,10000,no,self,slavele,3,3508,,,,,,
 3421,Toad@AL_TELEPORT,idle,26,1,10000,0,0,yes,self,rudeattacked,,,,,,,,
 3421,Toad@NPC_SUMMONSLAVE,attack,196,5,10000,2000,60000,no,self,slavele,3,1012,,,,,,
 3421,Toad@NPC_SUMMONSLAVE,idle,196,6,10000,0,0,no,self,onspawn,0,1012,,,,,,

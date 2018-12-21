@@ -102,13 +102,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 
-void battle_damage(struct block_list *src, struct block_list *target, int64 damage, int delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, unsigned int tick, bool spdamage);
-int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects, bool spdamage);
+void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
+int battle_delay_damage (t_tick tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool spdamage);
 
 int battle_calc_chorusbonus(struct map_session_data *sd);
 
 // Summary normal attack treatment (basic attack)
-enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,unsigned int tick,int flag);
+enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,t_tick tick,int flag);
 
 // Accessors
 struct block_list* battle_get_master(struct block_list *src);
@@ -647,6 +647,7 @@ struct Battle_Config
 	int skill_drop_items_full;
 	int switch_remove_edp;
 	int feature_homunculus_autofeed;
+	int feature_homunculus_autofeed_rate;
 	int summoner_trait;
 	int homunculus_autofeed_always;
 	int feature_attendance;

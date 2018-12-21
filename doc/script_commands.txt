@@ -5661,6 +5661,7 @@ with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
 they are not currently documented.
 
 The duration of the status is given in <ticks>, or milleseconds.
+Use INFINITE_TICK for infinite duration.
 
 Certain status changes take an additional parameter <value 1>, which typically
 modifies player stats by the given number or percentage. This differs for each
@@ -7679,6 +7680,28 @@ and attempt to execute a source-defined command.
 
 The three .@atcmd_***** variables will NOT be set when invoking script-bound atcommands
 in this way.
+
+---------------------------------------
+
+*camerainfo <range>,<rotation>,<latitude>{,<char id>};
+
+This command will update the client's camera information with the given values where
+the client can be the attached character or the player given by the char id parameter.
+Note: This requires 2016-05-25aRagexeRE or newer.
+
+The values given will be divided by 100 and transmitted as floating-point number.
+
+	range		The zoomfactor of the camera.
+				Default: 230000 (230.0) when fully zoomed in
+				Maximum: 400000 (400.0) when fully zoomed out
+
+	rotation	The rotation of the camera.
+				Default: 0 (0.0) when no rotation is applied
+				Maximum: 360000 (360.0°) when fully rotated
+
+	latitude	The angle of the camera.
+				Default: -50000 (-50.0)
+				Maximum: -75000 (-75.0)
 
 ---------------------------------------
 \\
