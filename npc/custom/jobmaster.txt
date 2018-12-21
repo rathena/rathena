@@ -503,6 +503,8 @@ function	Get_Job_Equip	{
 	} else {
 		// Neither Second or Third Cls
 		// => First Cls or not covered by the switch
+		getitem 569, 200; //Novice potion
+		getitem 12323, 50; //Novice Fly Wing
 		switch(BaseClass) {
 			// First Class
 			case Job_Swordman:
@@ -539,7 +541,7 @@ OnInit:
 	.LastJob = true;				// Enforce linear class changes?
 	.SkillPointCheck = true;		// Force player to use up all skill points?
 	.Platinum = true;				// Get platinum skills automatically?
-	.GetJobEquip = false;			// Get job equipment (mostly weapons) on job change?
+	.GetJobEquip = true;			// Get job equipment (mostly weapons) on job change?
 
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class

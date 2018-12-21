@@ -857,18 +857,11 @@ sec_in01,98,180,3	script	Gramps#Control	4_M_LGTGRAND,{
 				}
 				break;
 			case 2:
-				setarray .@T_MapName$,	 "Abyss Lake Dungeon",	"Abyss Lake Dungeon",	"Beach Dungeon",	 "Bifrost Field",
-						"Scaraba Hole",	 "Scaraba Hole",		"El Dicastes Field",	"Geffen Dungeon",	 "Glast Heim Churchyard",
-						"Thor Volcano",	 "Hugel Field",			"Rachel Field",			"Holy Ground",		 "Thanatos Tower",
-						"Turtle Island", "Juno Field",			"Magma Dungeon",		"Lighthalzen Field", "Manuk Field",
-						"Payon Dungeon", "Moscovia Dungeon";
-				setarray .@T_MapWarp$,	 "eabyss_01",			"eabyss_03",			"ebeach_dun",		 "ebif_fld01",
-						"edic_dun01",	 "edic_dun02",			"edic_fld01",			"egef_dun03",		 "egl_chyard",
-						"ethor_v02",	 "ehu_fild01",			"era_fild12",			"era_san04",		 "etha_t04",
-						"etur_dun03",	 "eyno_fld07",			"emag_dun02",			"elhz_fld01",		 "eman_fld03",
-						"gramps_20",	 "emos_dun02";
-				setarray .@T_MapX, 0, 0, 0, 0, 0, 0, 0, 138, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  22, 156;
-				setarray .@T_MapY, 0, 0, 0, 0, 0, 0, 0, 117, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 181,  47;
+				setarray .@T_MapName$,	  "Payon Dungeon", "Geffen Dungeon", "Moscovia Dungeon";
+				setarray .@T_MapWarp$,	  "gramps_20",	 	"gramps_21",	  "gramps_22";
+				setarray .@T_MapX, 22, 138, 156;
+				setarray .@T_MapY, 181,117, 47;	
+	
 				setarray .@Map_Type$, "l", "m", "h";
 				for (.@i = 0; .@i < getarraysize(.@T_MapWarp$); ++.@i)
 					.@map_menu$ += .@T_MapWarp$[.@i] + ":";
@@ -1033,9 +1026,9 @@ OnInit:
 	if (!getarraysize($Gramps_MapWarp$)) setarray $Gramps_MapWarp$, "gramps_20", "gramps_21", "gramps_22";
 	if (!getarraysize($Gramps_MapX)) setarray $Gramps_MapX, 22, 138, 156;
 	if (!getarraysize($Gramps_MapY)) setarray $Gramps_MapY, 181, 117, 47;
-	if (!getarraysize($Gramps_Turn)) setarray $Gramps_Turn, 60602, 60508, 60594, 60502, 60469, 60470;
-	if (!getarraysize($Gramps_Quest)) setarray $Gramps_Quest, 60602,  60508, 60594, 60502, 60470, 60485;
-	if (!getarraysize($Gramps_Last)) setarray $Gramps_Last, 60535, 60832, 60866, 60527, 60857, 60547;
+	if (!getarraysize($Gramps_Turn)) setarray $Gramps_Turn, 1102, 1617, 1163, 1098, 2086, 1986;
+	if (!getarraysize($Gramps_Quest)) setarray $Gramps_Quest, 60602,  60508, 60501, 60842, 60464, 60541;
+	if (!getarraysize($Gramps_Last)) setarray $Gramps_Last, 1102, 1617, 1163, 1098, 2086, 1986;
 	for (.@i = 0; .@i < 3; ++.@i)
 		killmonsterall $Gramps_MapWarp$[.@i];
 	// Spawn monsters:

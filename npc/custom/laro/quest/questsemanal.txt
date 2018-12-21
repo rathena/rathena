@@ -60,7 +60,10 @@ next;
 switch(select("^3355FFRudolph's Nose^000000:Quit")) {
 	case 1:
 	   if (countitem(2262) >= 1 && countitem(733) >= 250 && countitem(1001) >= 150) {
-		   
+		   delitem 2262,1;
+		   delitem 733,250;
+		   delitem 1001,150;
+		   getitem 5204, 1;
 	   }else{
 		    mes @npc$;
 			if(#language == 1) {

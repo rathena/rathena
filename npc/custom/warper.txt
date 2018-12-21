@@ -29,10 +29,10 @@ set #language, 2;
 if(#language == 1) {
 menu	"Ultimo Warp ^777777["+lastwarp$+"]^000000",-,
     	" ~ Cidades",Towns,
-    	" ~ Campos",Fields,
+    	//" ~ Campos",Fields,
     	" ~ Cavernas",Dungeons,
     	" ~ Castelos da Guilda",Castles,
-    	" ~ Carvenas da Guilda",Guild_Dungeons,
+    	//" ~ Carvenas da Guilda",Guild_Dungeons,
     	" ~ Instâncias",Instances,
     	" ~ Áreas Especiais",Special;
 
@@ -44,10 +44,10 @@ menu	"Ultimo Warp ^777777["+lastwarp$+"]^000000",-,
 }else{
 menu	"Last Warp ^777777["+lastwarp$+"]^000000",-,
     	" ~ Towns",Towns,
-    	" ~ Fields",Fields,
+    	//" ~ Fields",Fields,
     	" ~ Dungeons",Dungeons,
     	" ~ Guild Castles",Castles,
-    	" ~ Guild Dungeons",Guild_Dungeons,
+    	//" ~ Guild Dungeons",Guild_Dungeons,
     	" ~ Instances",Instances,
     	" ~ Special Areas",Special;
 
@@ -300,17 +300,17 @@ F29: Restrict("Pre-RE",5,10);
 // --------------------------------------------------
 @d = true;
 menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
-    	"Ayothaya Dungeon",D4, "Beach Dungeon",D5, "Bifrost Tower",D42,
-    	"Bio Labs",D6, "Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
+    	"Ayothaya Dungeon",D4, "Bifrost Tower",D42,
+    	"Bio Labs",D6, "Brasilis Dungeon",D7, "Byalan Dungeon",D8,
     	"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D13,
-    	"Einbroch Dungeon",D14, "Gefenia",D15, "Geffen Dungeon",D16,
+    	"Einbroch Dungeon",D14, "Geffen Dungeon",D16,
     	"Glast Heim",D17, "Gonryun Dungeon",D18, "Hidden Dungeon",D19,
     	"Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22, "Lasagna Dungeon",D23,
 		"Louyang Dungeon",D24, "Magma Dungeon",D25, "Malangdo Dungeon",D26,
 		"Moscovia Dungeon",D27, "Nidhogg's Dungeon",D28, "Odin Temple",D29,
 		"Orc Dungeon",D30, "Payon Dungeon",D31, "Pyramids",D32, "Rachel Sanctuary",D33,
     	"Scaraba Hole",D34, "Sphinx",D35, "Sunken Ship",D36, "Thanatos Tower",D37,
-    	"Thor Volcano",D38, "Toy Factory",D39, "Turtle Dungeon",D40, "Umbala Dungeon",D41;
+    	"Thor Volcano",D38, "Toy Factory",D39, "Turtle Dungeon",D40;
 
 D1: setarray @c[2],261,272,275,270,116,27;
 	Disp("Abyss Lakes",1,1); Pick("abyss_");
@@ -318,8 +318,8 @@ D2: setarray @c[2],228,11,34,41,119,14;
 	Disp("Amatsu Dungeon",1,1); Pick("ama_dun");
 D3: setarray @c[2],35,262,168,170;
 	Disp("Anthell",1,1); Pick("anthell");
-D4: setarray @c[2],275,19,24,26;
-	Disp("Ancient Shrine Maze:Inside Ancient Shrine"); Pick("ayo_dun");
+D4: setarray @c[2],278,149;
+	Disp("Ayothaya Dungeon"); Pick("","ayo_fild02");
 D5: setarray @c[2],266,67,255,244,23,260;
 	Disp("Beach Dungeon",1,1); Pick("","beach_dun","beach_dun2","beach_dun3");
 D6: Restrict("RE",4);
@@ -359,15 +359,15 @@ D19: setarray @c[2],176,7,93,20,23,8;
 D20: setarray @c[2],157,14,151,155,149,22,33,158;
 	 Disp("Ice Dungeon",1,1); Pick("ice_dun");
 D21: setarray @c[2],140,51,53,247,37,63,150,285;
-	 Disp("Entrance:Juperos 1:Juperos 2:Core");
-	 Pick("","jupe_cave","juperos_01","juperos_02","jupe_core");
+	 Disp("Entrance");
+	 Pick("","jupe_cave");
 D22: setarray @c[2],28,226,41,198;
 	 Disp("Kiel Dungeon",1,1); Pick("kh_dun");
 D23: Restrict("RE");
 	 setarray @c[2],24,143,22,171,190,18;
 	 Disp("Lasagna Dungeon",1,1); Pick("lasa_dun");
 D24: setarray @c[2],218,196,282,20,165,38;
-	 Disp("The Royal Tomb:Inside the Royal Tomb:Suei Long Gon"); Pick("lou_dun");
+	 Disp("Inside the Royal Tomb"); Pick("", "lou_dun01");
 D25: setarray @c[2],126,68,47,30;
 	 Disp("Magma Dungeon",1,1); Pick("mag_dun");
 D26: Restrict("RE");
@@ -385,7 +385,7 @@ D31: setarray @c[0],21,183,19,33,19,63,155,159,201,204;
 	 Disp("Payon Dungeon",1,1); Pick("pay_dun",1);
 D32: Restrict("RE",7,8);
 	 setarray @c[2],192,9,10,192,100,92,181,11,94,96,192,8,94,96,192,8;
-	 Disp("Pyramids 1:Pyramids 2:Pyramids 3:Pyramids 4:Basement 1:Basement 2:Basement 1 - Nightmare Mode:Basement 2 - Nightmare Mode");
+	 Disp("Pyramids 1");
 	 Pick("","moc_pryd01","moc_pryd02","moc_pryd03","moc_pryd04","moc_pryd05","moc_pryd06","moc_prydn1","moc_prydn2");
 D33: setarray @c[2],140,11,32,21,8,149,204,218,150,9;
 	 Disp("Rachel Sanctuary",1,1); Pick("ra_san");
@@ -403,7 +403,7 @@ D38: setarray @c[2],21,228,75,205,34,272;
 D39: setarray @c[2],205,15,129,133;
 	 Disp("Toy Factory",1,1); Pick("xmas_dun");
 D40: setarray @c[2],154,49,148,261,132,189,100,192;
-	 Disp("Entrance:Turtle Dungeon 1:Turtle Dungeon 2:Turtle Dungeon 3"); Pick("tur_dun");
+	 Disp("Entrance"); Pick("tur_dun");
 D41: Restrict("Pre-RE",1,1);
 	 setarray @c[2],42,31,48,30,204,78;
 	 Disp("Carpenter's Shop in the Tree:Passage to a Foreign World:Hvergermil's Fountain");
@@ -565,7 +565,7 @@ einbroch,69,202,4	duplicate(Warper)	Warper#einbr	604
 gef_fild10,71,339,4	duplicate(Warper)	Warper#orc	604 
 geffen,124,72,4	duplicate(Warper)	Warper#gef	604 
 glast_01,372,308,4	duplicate(Warper)	Warper#glh	604 
-gonryun,162,122,4	duplicate(Warper)	Warper#gon	604 
+gonryun,165,120,4	duplicate(Warper)	Warper#gon	604 
 hugel,101,151,4	duplicate(Warper)	Warper#hug	604 
 izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	604 
 izlude,134,150,4	duplicate(Warper)	Warper#izl	604 	//Pre-RE: (132,120)
