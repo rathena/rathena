@@ -6578,7 +6578,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case GN_FIRE_EXPANSION_ACID:
 #ifdef RENEWAL
 			// Official Renewal formula [violetharmony]
-			// damage = (atk + matk)*7/100*target vit*skill level - (sofdef + harddef + softmdef + hardmdef)/2
+			// damage = (atk + matk)*0.07*target vit*skill level - (sofdef + harddef + softmdef + hardmdef)/2
 			// skill is a "forced neutral" type skill, it benefits from weapon element but final damage
 			// 	is considered "neutral" for purposes of resistances
 			{
@@ -6587,7 +6587,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage = ((atk.damage*skill_lv + matk.damage*skill_lv) * tstatus->vit *7 / 100 );
 				// final damage = base damage - (sdef + edef)/2 - (smdef + emdef)/2
 				totaldef = (tstatus->def2 + status_get_def(target))/2;
-				totalmdef = (tstatus->mdef2 + status_get_mdef(target))/2;
+				totalmdef = (tstatus->mdef + tstatus->mdef2;)/2;
 				md.damage -= totaldef + totalmdef;
 				
 				// AD benefits from endow/element but damage is forced back to neutral
