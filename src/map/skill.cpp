@@ -676,7 +676,9 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	if (skill_id == AL_TELEPORT && sd->skillitem == skill_id && sd->skillitemlv > 2)
 		return false; // Teleport lv 3 bypasses this check.[Inkfish]
 
-	if (map_getmapflag(m, MF_NOSKILL))
+	struct map_data *mapdata = map_getmapdata(m);
+
+	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH)
 		return true;
 
 	// Epoque:
@@ -700,8 +702,6 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	 */
 	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
 		return false;
-
-	struct map_data *mapdata = map_getmapdata(m);
 
 	skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
