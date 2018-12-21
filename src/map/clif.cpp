@@ -12277,7 +12277,9 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 		else
 			skill_lv = 0;
 	} else {
-		skill_lv = min(pc_checkskill(sd, skill_id),skill_lv); //never trust client
+		if( skill_id != ALL_EQSWITCH ){
+			skill_lv = min(pc_checkskill(sd, skill_id),skill_lv); //never trust client
+		}
 	}
 
 	pc_delinvincibletimer(sd);
