@@ -5826,15 +5826,21 @@ static void pc_checkallowskill(struct map_session_data *sd)
  * -1 : Nothing equipped
  * idx : (this index could be used in inventory to found item_data)
  *------------------------------------------*/
-short pc_checkequip(struct map_session_data *sd,int pos)
+short pc_checkequip(struct map_session_data *sd,int pos, bool checkall)
 {
 	uint8 i;
 
 	nullpo_retr(-1, sd);
 
 	for(i=0;i<EQI_MAX;i++){
-		if(pos & equip_bitmask[i])
+		if(pos & equip_bitmask[i]){
+			if( checkall && ( pos&~equip_bitmask[i] ) != 0 && sd->equip_index[i] == -1 ){
+				// Check all if any match is found
+				continue;
+			}
+
 			return sd->equip_index[i];
+		}
 	}
 
 	return -1;
@@ -10230,7 +10236,7 @@ int pc_equipswitch( struct map_session_data* sd, int index ){
 	int position = sd->inventory.u.items_inventory[index].equipSwitch;
 
 	// Get the currently equipped item
-	short equippedItem = pc_checkequip( sd, position );
+	short equippedItem = pc_checkequip( sd, position, true );
 
 	// No item equipped at the target
 	if( equippedItem == -1 ){
