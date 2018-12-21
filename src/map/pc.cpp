@@ -8927,7 +8927,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
 		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
-			static const sc_type statuses [] = { SC_MAXIMIZEPOWER, SC_OVERTHRUST, SC_WEAPONPERFECTION, SC_ADRENALINE, SC_CARTBOOST, SC_MELTDOWN, SC_MAXOVERTHRUST };
+			static const sc_type statuses [] = { SC_LOUD, SC_CARTBOOST, SC_MELTDOWN, SC_ADRENALINE, SC_ADRENALINE2, SC_WEAPONPERFECTION, SC_MAXIMIZEPOWER, SC_OVERTHRUST, SC_MAXOVERTHRUST };
 
 			status_calc_pc(sd,SCO_NONE);
 			for (uint8 i = 0; i < ARRAYLENGTH(statuses); i++) {

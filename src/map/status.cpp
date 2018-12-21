@@ -8585,6 +8585,25 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 	int tick = (int)duration;
 
+	switch (type) { // Statuses from Merchant/Blacksmith/Whitesmith skills that can be blocked while using Mado Gear; see pc.cpp::pc_setoption for cancellation
+		case SC_LOUD:
+		case SC_CARTBOOST:
+		case SC_MELTDOWN:
+		case SC_ADRENALINE:
+		case SC_ADRENALINE2:
+		case SC_WEAPONPERFECTION:
+		case SC_MAXIMIZEPOWER:
+		case SC_OVERTHRUST:
+		case SC_MAXOVERTHRUST:
+			if (sc->option&OPTION_MADOGEAR) {
+				int skill_id = status_sc2skill(type);
+
+				if (skill_id >= 0 && !(skill_get_inf3(skill_id)&INF3_USABLE_MADO))
+					return 0;
+			}
+			break;
+	}
+
 	sd = BL_CAST(BL_PC, bl);
 	vd = status_get_viewdata(bl);
 
@@ -8693,21 +8712,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_OVERTHRUST:
 		if (sc->data[SC_MAXOVERTHRUST])
 			return 0; // Overthrust can't take effect if under Max Overthrust. [Skotlex]
-	case SC_MAXOVERTHRUST:
-		if( sc->option&OPTION_MADOGEAR )
-			return 0; // Overthrust and Overthrust Max cannot be used on Mado Gear [Ind]
 	break;
 	case SC_ADRENALINE:
-		if (sc->data[SC_QUAGMIRE] ||
-			sc->data[SC_DECREASEAGI] ||
-			sc->option&OPTION_MADOGEAR // Adrenaline doesn't affect Mado Gear [Ind]
-		)
-			return 0;
-	break;
 	case SC_ADRENALINE2:
-		if (sc->data[SC_QUAGMIRE] ||
-			sc->data[SC_DECREASEAGI]
-		)
+		if (sc->data[SC_QUAGMIRE] || sc->data[SC_DECREASEAGI])
 			return 0;
 	break;
 	case SC_MAGNIFICAT:
@@ -8724,10 +8732,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_SPEARQUICKEN:
 	case SC_TRUESIGHT:
 	case SC_WINDWALK:
-	case SC_CARTBOOST:
 	case SC_ASSNCROS:
 		if (sc->option&OPTION_MADOGEAR)
-			return 0; // Mado is immune to Wind Walk, Cart Boost, etc (others above) [Ind]
+			return 0; // Mado is immune to the above [Ind]
+	case SC_CARTBOOST:
 		if (sc->data[SC_QUAGMIRE])
 			return 0;
 	break;
