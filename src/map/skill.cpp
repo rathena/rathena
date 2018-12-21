@@ -10983,11 +10983,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case ALL_EQSWITCH:
-		clif_equipswitch_reply( sd, false );
+		if( sd ){
+			clif_equipswitch_reply( sd, false );
 
-		for( int i = 0, position = 0; i < EQI_MAX; i++ ){
-			if( sd->equip_switch_index[i] >= 0 && !( position & equip_bitmask[i] ) ){
-				position |= pc_equipswitch( sd, sd->equip_switch_index[i] );
+			for( int i = 0, position = 0; i < EQI_MAX; i++ ){
+				if( sd->equip_switch_index[i] >= 0 && !( position & equip_bitmask[i] ) ){
+					position |= pc_equipswitch( sd, sd->equip_switch_index[i] );
+				}
 			}
 		}
 		break;
