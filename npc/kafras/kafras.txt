@@ -300,7 +300,7 @@ prontera,146,89,6	script	Kafra Employee::kaf_prontera5	117,{
 	callfunc "F_KafEnd",0,1,"in the city of Prontera";
 }
 
-prontera,164,180,6	script	Kafra Employee::kaf_prontera6	117,{
+prontera,164,196,3	script	Kafra Employee::kaf_prontera6	117,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSet";
 	if(#language == 1) {

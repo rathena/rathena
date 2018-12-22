@@ -43,7 +43,7 @@
 			end;
 		Zeny -= .@Price;
 	}
-	specialeffect2 EF_HEAL2;
+	//specialeffect2 EF_HEAL2;
 	percentheal 100,100;
 
 	if (.@Buffs) {
@@ -59,12 +59,12 @@
 			//sc_start SC_ADRENALINE2,900000,1;
 			//sc_start SC_KAUPE,900000,3;
 			//sc_start SC_KAITE,900000,7;
-			sc_start SC_STRFOOD,900000,5;
-			sc_start SC_AGIFOOD,900000,5;
-			sc_start SC_VITFOOD,900000,5;
-			sc_start SC_INTFOOD,900000,5;
-			sc_start SC_DEXFOOD,900000,5;
-			sc_start SC_LUKFOOD,900000,5;
+			//sc_start SC_STRFOOD,900000,5;
+			//sc_start SC_AGIFOOD,900000,5;
+			//sc_start SC_VITFOOD,900000,5;
+			//sc_start SC_INTFOOD,900000,5;
+			//sc_start SC_DEXFOOD,900000,5;
+			//sc_start SC_LUKFOOD,900000,5;
 			if(#language == 1) {
 				dispbottom "[Healer] Continue se esforçando até chegar ao nível 180.";
 			}else{

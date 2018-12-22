@@ -10308,6 +10308,62 @@ ACMD_FUNC(gepard_unblock_unique_id)
 // (^~_~^) Gepard Shield End
 
 /*==========================================
+* @whobuy - List who is buying the item (amount, price, and location).
+* remake by VoidLess, original by zephyrus_cr
+* re-edit by deathscythe to work in rAthena
+*------------------------------------------*/
+ACMD_FUNC(whobuy){
+	char item_name[100];
+	int item_id, j, count = 0, sat_num = 0;
+	bool flag = 0; // place dot on the minimap?
+	struct map_session_data* pl_sd;
+	struct s_mapiterator* iter;
+	unsigned int MinPrice = battle_config.vending_max_value, MaxPrice = 0;
+	struct item_data *item_data;
+	
+		nullpo_retr(-1, sd);
+	memset(item_name, '\0', sizeof(item_name));
+	
+		if (!message || !*message || sscanf(message, "%99[^\n]", item_name) < 1) {
+			clif_displaymessage(fd, "Input item name or ID (use: @whobuy <name or ID>).");
+		return -1;
+		
+	}
+	if ((item_data = itemdb_searchname(item_name)) == NULL && (item_data = itemdb_exists(atoi(item_name))) == NULL) {
+		clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @whobuy <item name or ID> {<min price>}).");
+		return -1;
+	}
+		item_id = item_data->nameid;
+		iter = mapit_getallusers();
+	for (pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter)) {
+		if (pl_sd->buyer_id) {//check if player is autobuying
+			for (j = 0; j < pl_sd->buyingstore.slots; j++) {
+				if (pl_sd->buyingstore.items[j].nameid == item_id) {
+					snprintf(atcmd_output, CHAT_SIZE_MAX, "Price %d | Amount %d | Buyer %s | Map %s[%d,%d]", pl_sd->buyingstore.items[j].price, pl_sd->buyingstore.items[j].amount, pl_sd->status.name, mapindex_id2name(pl_sd->mapindex), pl_sd->bl.x, pl_sd->bl.y);
+					if (pl_sd->buyingstore.items[j].price < MinPrice) MinPrice = pl_sd->buyingstore.items[j].price;
+					if (pl_sd->buyingstore.items[j].price > MaxPrice) MaxPrice = pl_sd->buyingstore.items[j].price;
+					clif_displaymessage(fd, atcmd_output);
+					count++;
+					flag = 1;
+				}
+			}
+			if (flag && pl_sd->mapindex == sd->mapindex) {
+				clif_viewpoint(sd, 1, 1, pl_sd->bl.x, pl_sd->bl.y, ++sat_num, 0xFFFFFF);
+				flag = 0;
+			}
+		}
+	}
+	mapit_free(iter);
+		if (count > 0) {
+			snprintf(atcmd_output, CHAT_SIZE_MAX, "Found %d ea. Prices from %dz to %dz", count, MinPrice, MaxPrice);
+			clif_displaymessage(fd, atcmd_output);
+		}else
+		 clif_displaymessage(fd, "Nobody buying it now.");
+
+		return 0;
+}
+
+/*==========================================
 * @whosell command
 *------------------------------------------*/
 ACMD_FUNC(whosell)
@@ -10476,6 +10532,7 @@ void atcommand_basecommands(void) {
 
 // (^~_~^) Gepard Shield End
 
+ACMD_DEF(whobuy),
 ACMD_DEF(whosell),
 
 #include "../custom/atcommand_def.inc"

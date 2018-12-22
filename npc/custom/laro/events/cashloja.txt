@@ -1,0 +1,58 @@
+prontera,156,173,4	script	Cash Dealer#1	573 ,{ 
+
+	if(#language == 1) {
+	mes "[Cash Dealer]";
+	mes "Olá "+strcharinfo(0)+", eu vendo Ticket de Cash.";
+	next;
+	switch(select("Comprar Cash Ticket [1000]:Cancel.")) {
+		case 1:
+			mes "[Cash Dealer]";
+			mes "Você tem Certeza?";
+			if (select("Sim:Não") == 2) {
+				close;
+			}
+			next;
+			if (Zeny >= 1000000) {
+				mes "[Cash Dealer]";
+				mes "Parabéns você adquiriu um Ticket de Cash [1000].";
+				Zeny = Zeny-1000000;
+				getitem 32130,1; //Cash Ticket
+				close;
+			}else{
+				mes "[Cash Dealer]";
+				mes "Oque? Você deveria dizer antes se você não tem dinheiro!";
+				mes "Mesmo se você é pobre, eu não posso dar Cash Ticket de graça";
+				close;
+			}
+		case 2:
+			close;
+		}
+	}else{
+		mes "[Cash Dealer]";
+		mes "Hello "+strcharinfo(0)+", i sell Cash Ticket.";
+		next;
+		switch(select("Buy Cash Ticket [1000]:Cancel.")) {
+		case 1:
+			mes "[Cash Dealer]";
+			mes "Are you sure?";
+			if (select("Yes:No") == 2) {
+				close;
+			}
+			next;
+			if (Zeny >= 1000000) {
+				mes "[Cash Dealer]";
+				mes "Congratulations you got a Cash [1000] Ticket.";
+				Zeny = Zeny-1000000;
+				getitem 32130,1; //Cash Ticket
+				close;
+			}else{
+				mes "[Cash Dealer]";
+				mes "What? You should tell them first if you do not have the money!";
+				mes "Even if you're poor, I can not give you Cash Cash for free";
+				close;
+			}
+		case 2:
+			close;
+		}
+	}
+}

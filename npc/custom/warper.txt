@@ -570,7 +570,7 @@ hugel,101,151,4	duplicate(Warper)	Warper#hug	604
 izlu2dun,110,92,4	duplicate(Warper)	Warper#izd	604 
 izlude,134,150,4	duplicate(Warper)	Warper#izl	604 	//Pre-RE: (132,120)
 jawaii,253,138,4	duplicate(Warper)	Warper#jaw	604 
-lighthalzen,162,102,4	duplicate(Warper)	Warper#lhz	604 
+lighthalzen,162,106,4	duplicate(Warper)	Warper#lhz	604 
 louyang,208,103,6	duplicate(Warper)	Warper#lou	604 
 manuk,274,146,6	duplicate(Warper)	Warper#man	604 
 mid_camp,216,288,4	duplicate(Warper)	Warper#mid	604 

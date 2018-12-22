@@ -158,7 +158,7 @@ geffen,123,68,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ge	4_M_ZON
 payon,168,65,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_pa	4_M_ZONDAOYAJI
 morocc,147,87,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_mo	4_M_ZONDAOYAJI
 yuno,162,132,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_yu	4_M_ZONDAOYAJI
-lighthalzen,152,100,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_lh	4_M_ZONDAOYAJI
+lighthalzen,150,100,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_lh	4_M_ZONDAOYAJI
 
 prontera,150,331,4	script	Royal Guard#ep16_ect01	8W_SOLDIER,4,4,{
 	if (banquet_main_quest == 1) {

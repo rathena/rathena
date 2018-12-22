@@ -1,0 +1,207 @@
+//===== rAthena Script =======================================
+//= Portrait Collector
+//===== By: ==================================================
+//= Mateuus
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= O Portrait Collector irá trocar o itemID 6608 ou 6755 por White Knight Card e Khalitzburg Knight Card.
+//===== Additional Comments: =================================
+//= 
+//============================================================
+
+glast_01,189,273,4	script	Portrait Collector	878,{
+	if(#language == 1) {
+		mes "[Portrait Collector]";
+		mes ""+callfunc("PortraitCollectorLink",4608)+"";
+		mes ""+callfunc("PortraitCollectorLink",4609)+"";
+		mes "Eu coleciono esses retratos há um ano...";
+		mes "é hora de mostrar minha coleção para o mundo.";
+		next;
+		mes "[Portrait Collector]";
+		mes "Estou disposto a vendê-los por "+callfunc("PortraitCollectorLink",6608)+" ou "+callfunc("PortraitCollectorLink",6755)+".";
+		next;
+		switch(select("Perguntar os Preços:Comprar White Knight Card:Comprar Khalitzburg Knight Card:Terminar conversa")) {
+			case 1:
+				mes "[Portrait Collector]";
+				mes "O preço de uma "+callfunc("PortraitCollectorLink",4608)+" é de 6,000 "+callfunc("PortraitCollectorLink",6608)+" ou 700 "+callfunc("PortraitCollectorLink",6755)+".";
+				next;
+				mes "[Portrait Collector]";
+				mes "O preço de uma "+callfunc("PortraitCollectorLink",4609)+" é de 10,000 "+callfunc("PortraitCollectorLink",6608)+" ou 1000 "+callfunc("PortraitCollectorLink",6755)+".";
+				close;
+			case 2:
+				mes "[Portrait Collector]";
+				mes "Como você gostaria de pagar pela minha";
+				mes ""+callfunc("PortraitCollectorLink",4608)+"";
+				next;
+				switch(select("6,000 Coagulated Spells:700 Contaminated Magics:Terminar conversa")) {
+					case 1:
+						 if (countitem(6608) >= 6000) {
+						   mes "[Portrait Collector]";
+						   mes "Obrigado, faça bom aproveito!!!";
+						   close;
+						   delitem 6608,6000;	
+						   getitem 4608, 1;
+						 }else{
+						   mes "[Portrait Collector]";
+						   mes "You don't have enough "+callfunc("PortraitCollectorLink",6608)+", please check your inventory.";
+						   close;
+						 }
+					case 2:
+						if (countitem(6755) >= 700) {
+						   mes "[Portrait Collector]";
+						   mes "Obrigado, faça bom aproveito!!!";
+						   close;
+						   delitem 6755,700;	
+						   getitem 4608, 1;
+						 }else{
+						   mes "[Portrait Collector]";
+						   mes "You don't have enough "+callfunc("PortraitCollectorLink",6608)+", please check your inventory.";
+						   close;
+						 }
+					case 3:
+					 mes "[Portrait Collector]";
+					 mes "Volte se você decidir que quer comprar uma.";
+					 close;
+			}
+			case 3:
+				mes "[Portrait Collector]";
+				mes "How would you like to pay for your";
+				mes ""+callfunc("PortraitCollectorLink",4609)+"";
+				next;
+				switch(select("10,000 Coagulated Spells:1000 Contaminated Magics:Terminar conversa")) {
+					case 1:
+						 if (countitem(6608) >= 10000) {
+						   mes "[Portrait Collector]";
+						   mes "Thanks!!!";
+						   close;
+						   delitem 6608,1000;	
+						   getitem 4609, 1;
+						 }else{
+						   mes "[Portrait Collector]";
+						   mes "You don't have enough "+callfunc("PortraitCollectorLink",6608)+", please check your inventory.";
+						   close;
+						 }
+					case 2:
+						if (countitem(6755) >= 1000) {
+						   mes "[Portrait Collector]";
+						   mes "Thanks!!!";
+						   close;
+						   delitem 6755,1000;	
+						   getitem 4609, 1;
+						 }else{
+						   mes "[Portrait Collector]";
+						   mes "You don't have enough "+callfunc("PortraitCollectorLink",6608)+", please check your inventory.";
+						   close;
+						 }
+					case 3:
+					 mes "[Portrait Collector]";
+					 mes "Volte se você decidir que quer comprar uma.";
+					 close;
+			}
+			case 4:
+				mes "[Portrait Collector]";
+				mes "Volte se você decidir que quer comprar uma.";
+				close;
+		}
+	}else{
+		mes "[Portrait Collector]";
+		mes ""+callfunc("PortraitCollectorLink",4608)+"";
+		mes ""+callfunc("PortraitCollectorLink",4609)+"";
+		mes "I have been collecting these portraits for a year now...";
+		mes "its is time show my collection to the world.";
+		next;
+		mes "[Portrait Collector]";
+		mes "I'm willing to sell them for "+callfunc("PortraitCollectorLink",6608)+" or "+callfunc("PortraitCollectorLink",6755)+".";
+		next;
+		switch(select("Ask about pricing:Buy White Knight Card:Buy Khalitzburg Knight Card:End Conversation")) {
+			case 1:
+				mes "[Portrait Collector]";
+				mes "The price of a "+callfunc("PortraitCollectorLink",4608)+" is 6,000 "+callfunc("PortraitCollectorLink",6608)+" or 700 "+callfunc("PortraitCollectorLink",6755)+".";
+				next;
+				mes "[Portrait Collector]";
+				mes "The price of a "+callfunc("PortraitCollectorLink",4609)+" is 10,000 "+callfunc("PortraitCollectorLink",6608)+" or 1000 "+callfunc("PortraitCollectorLink",6755)+".";
+				close;
+			case 2:
+				mes "[Portrait Collector]";
+				mes "How would you like to pay for your";
+				mes ""+callfunc("PortraitCollectorLink",4608)+"";
+				next;
+				switch(select("6,000 Coagulated Spells:700 Contaminated Magics:End Conversation")) {
+					case 1:
+						 if (countitem(6608) >= 6000) {
+						   mes "[Portrait Collector]";
+						   mes "Thanks!!!";
+						   close;
+						   delitem 6608,6000;	
+						   getitem 4608, 1;
+						 }else{
+						   mes "[Portrait Collector]";
+						   mes "You don't have enough "+callfunc("PortraitCollectorLink",6608)+", please check your inventory.";
+						   close;
+						 }
+					case 2:
+						if (countitem(6755) >= 700) {
+						   mes "[Portrait Collector]";
+						   mes "Thanks!!!";
+						   close;
+						   delitem 6755,700;	
+						   getitem 4608, 1;
+						 }else{
+						   mes "[Portrait Collector]";
+						   mes "You don't have enough "+callfunc("PortraitCollectorLink",6608)+", please check your inventory.";
+						   close;
+						 }
+					case 3:
+					 mes "[Portrait Collector]";
+					 mes "Come back if you decide you do want yo purchase one.";
+					 close;
+			}
+			case 3:
+				mes "[Portrait Collector]";
+				mes "How would you like to pay for your";
+				mes ""+callfunc("PortraitCollectorLink",4609)+"";
+				next;
+				switch(select("10,000 Coagulated Spells:1000 Contaminated Magics:End Conversation")) {
+					case 1:
+						 if (countitem(6608) >= 10000) {
+						   mes "[Portrait Collector]";
+						   mes "Thanks!!!";
+						   close;
+						   delitem 6608,1000;	
+						   getitem 4609, 1;
+						 }else{
+						   mes "[Portrait Collector]";
+						   mes "You don't have enough "+callfunc("PortraitCollectorLink",6608)+", please check your inventory.";
+						   close;
+						 }
+					case 2:
+						if (countitem(6755) >= 1000) {
+						   mes "[Portrait Collector]";
+						   mes "Thanks!!!";
+						   close;
+						   delitem 6755,1000;	
+						   getitem 4609, 1;
+						 }else{
+						   mes "[Portrait Collector]";
+						   mes "You don't have enough "+callfunc("PortraitCollectorLink",6608)+", please check your inventory.";
+						   close;
+						 }
+					case 3:
+						mes "[Portrait Collector]";
+						mes "Come back if you decide you do want yo purchase one.";
+						close;
+			}
+			case 4:
+				mes "[Portrait Collector]";
+				mes "Come back if you decide you do want yo purchase one.";
+				close;
+		}
+	}
+}
+
+function	script	PortraitCollectorLink	{ 
+	return "<ITEM>"+getitemname(getarg(0))+"<INFO>"+getarg(0)+"</INFO></ITEM>";
+}

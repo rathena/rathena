@@ -229,7 +229,7 @@ OnLoadMapFlags:
 	end;
 }
 
-prontera,164,196,3	script	Death Arena#da_arena01::da_arena	4_F_NFDEADKAFRA,{
+prontera,185,212,3	script	Death Arena#da_arena01::da_arena	4_F_NFDEADKAFRA,{
 
 	set .@loop_1, 1;
 	while(.@loop_1)

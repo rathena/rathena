@@ -12553,7 +12553,7 @@
 32239,Illusion_Morpheus's_Bracelet,Illusion Morpheus's Bracelet,4,20,,100,,0,,1,0xFFFFFFFF,63,2,128,,130,0,0,{ bonus bInt,3; bonus bMaxSPrate,5; },{},{}
 //===================================================================
 //CASH TICKETS
-32130,Cash_Ticket,Cash Ticket [1000],2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{  set #CASHPOINTS,#CASHPOINTS+1000; if(#language == 1) { dispbottom "Você recebeu 1.000 CASH points!"; }else{ dispbottom "You receive 1.000 CASH points!";} },{},{}
+32130,Cash_Ticket,Cash Ticket [1000],2,1000000,,0,,,,,0xFFFFFFFF,63,2,,,,,,{  set #CASHPOINTS,#CASHPOINTS+1000; if(#language == 1) { dispbottom "Você recebeu 1.000 CASH points!"; }else{ dispbottom "You receive 1.000 CASH points!";} },{},{}
 32131,Vip_Ticket,VIP Ticket [30],2,2,,0,,,,,0xFFFFFFFF,63,2,,,,,,{  atcommand "@vip +30d "+strcharinfo(0)+""; },{},{}
 // More Guns
 //===================================================================
