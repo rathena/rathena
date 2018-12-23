@@ -4839,8 +4839,8 @@
 12271,Mre_A,Military Ration A,0,2,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ percentheal 5,0; },{},{}
 12272,Mre_B,Military Ration B,2,2,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCHIT,600000,33; },{},{}
 12273,Mre_C,Military Ration C,2,2,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCFLEE,600000,33; },{},{}
-12274,Gold_Pill_1,Daehwandan,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMHPRATE,36000000,5; percentheal 10,0; },{},{}
-12275,Gold_Pill_2,Taecheongdan,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,36000000,5; percentheal 0,10; },{},{}
+12274,Gold_Pill_1,Daehwandan,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMHPRATE,3600000,5; percentheal 10,0; },{},{}
+12275,Gold_Pill_2,Taecheongdan,0,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ sc_start SC_INCMSPRATE,3600000,5; percentheal 0,10; },{},{}
 12276,Mimic_Scroll,Mimic Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 2058,1800000; },{},{}
 12277,Disguise_Scroll,Disguise Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 2059,1800000; },{},{}
 12278,Alice_Scroll,Alice Scroll,2,2,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ mercenary_create 2060,1800000; },{},{}
