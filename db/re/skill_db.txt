@@ -1455,8 +1455,6 @@
 5064,3,6,16,0,0x1,0,1,1,yes,0,0x4,0,none,0,0,	WE_ONEFOREVER,One Forever
 5065,1,6,4,0,0x3,3,1,1,yes,0,0x4,0,none,0,0,	WE_CHEERUP,Cheer Up
 
-5067,0,0,4,0,0x1,0,1,0,no,0,0,0,none,0,0x0,		ALL_EQSWITCH,Equip Switch
-
 // New Arch Bishop Skills
 5072,9,6,1,0,0x3,1:1:1:2:2,5,0,yes,0,0,0,magic,0,0x0,		AB_VITUPERATUM,Vituperatum
 5073,0,6,4,0,0x1,0,1,0,yes,0,0,0,none,0,0x0,		AB_CONVENIO,Convenio

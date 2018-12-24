@@ -1,137 +1,51 @@
+//===== rAthena Script =======================================
 //= Stylist
-//===== By: ================================================== 
-//= Akira
-//===== Current Version: ===================================== 
+//===== By: ==================================================
+//= Euphy
+//===== Current Version: =====================================
 //= 1.1
-//===== Compatible With: ===================================== 
-//= rAthena SVN
-//===== Description: ========================================= 
-//= A stylist with dress room feature
-//===== Todo: ================================================
-//= Set .@hairstylemaxf and .@hairstylemaxm with the max number of hairstyles of your server for female and male respectively.
-//= Suggestions?
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Changes your hair style, hair color, and cloth color.
 //===== Additional Comments: =================================
-//= 1.0 First Release
-//= 1.1 Now using eA Job System, Variable Improvements and Blacklist added. Special Thanks to Secrets from rAthena Dev Team 
-//===== Contact Info: ========================================
-//= [Akira] 
-//= Email: kvictor@protonmail.com
+//= 1.0 Initial script.
+//= 1.1 Switched to 'getbattleflag', credits to Saithis. [Euphy]
 //============================================================
-prontera,163,201,1	script	Super Stylist#super_stylist	122,{
-	doevent "super_stylist_main::OnTalk";
-}
 
-
--	script	super_stylist_main	-1,{
-	OnTalk:
-		.@eac = eaclass();
-		.@gm_level = getgmlevel();
-	cutin "prm_1",2;
-	mes "^FF0000[ Super Stylist - Introduction ]^000000";
-	mes "Hi "+strcharinfo(0)+", I'm [your server]'s super stylist.";
-	mes "I can change your character appearance ";
-	switch (select(
-		"Open Dress Room",
-		"Cancel"
-	)) {
+prontera,170,180,1	script	Stylist#custom_stylist	122,{
+	setarray .@Styles[1],
+		getbattleflag("max_cloth_color"),
+		getbattleflag("max_hair_style"),
+		getbattleflag("max_hair_color");
+	setarray .@Look[1],
+		LOOK_CLOTHES_COLOR,
+		LOOK_HAIR,
+		LOOK_HAIR_COLOR;
+	set .@s, select(" ~ Cloth color: ~ Hairstyle: ~ Hair color");
+	set .@Revert, getlook(.@Look[.@s]);
+	set .@Style,1;
+	while(1) {
+		setlook .@Look[.@s], .@Style;
+		message strcharinfo(0),"This is style #"+.@Style+".";
+		set .@menu$, " ~ Next (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Previous (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Jump to...: ~ Revert to original (^0055FF"+.@Revert+"^000000)";
+		switch(select(.@menu$)) {
 		case 1:
-			next;
-			opendressroom(0);
-
-			Lmain:
-				mes "^FF0000[ Super Stylist - Dress Room ]^000000";
-				mes "Ok, use the dress room to pick a style";
-				switch (select(
-					"Change Hairstyle",
-					"Change Hairdye",
-					"Change Cloth Color",
-					"Change Bodystyle"
-				)) {
-					case 1:
-						set .@hairstylemin,getBattleFlag("min_hair_style");
-						if (.@eac != EAJL_SUMMONER) {
-						set .@hairstylemaxf,97;
-						set .@hairstylemaxm,82;
-						} else {
-							set .@hairstylemaxf,6;
-							set .@hairstylemaxm,6;
-						}
-						next;
-						mes "^FF0000[ Super Stylist - Hairstyle ]^000000";
-						mes "Insert a hairstyle number";
-						if (Sex) {
-							mes "Hairstyles: " +.@hairstylemin+ " to " +.@hairstylemaxm;
-						} else {
-							mes "Hairstyles: " +.@hairstylemin+ " to " +.@hairstylemaxf;
-						}
-						input .@hairstyle;
-						if (Sex) {
-							if (.@hairstyle < .@hairstylemin || .@hairstyle > .@hairstylemaxm) { 
-							set .@hairstyle,0; 
-							}
-						} else {
-							if (.@hairstyle < .@hairstylemin || .@hairstyle > .@hairstylemaxf) { 
-							set .@hairstyle,0; 
-							}
-						}
-						setlook LOOK_HAIR,.@hairstyle;
-						next;
-						break;
-					case 2:
-						next;
-						set .@hairdyemin,getBattleFlag("min_hair_color");
-						set .@hairdyemax,getBattleFlag("max_hair_color");
-						mes "^FF0000[ Super Stylist - Hairdye ]^000000";
-						mes "Insert a hairdye number";
-						mes "Hairdyes: " +.@hairdyemin+ " to " +.@hairdyemax;
-						input .@hairdye;
-						if (.@hairdye < .@hairdyemin || .@hairdye > .@hairdyemax) { 
-						set .@hairdye,0; 
-						}
-						setlook LOOK_HAIR_COLOR,.@hairdye;
-						next;
-						break;
-					case 3:
-						next;
-						set .@clothcolormin,getBattleFlag("min_cloth_color");
-						set .@clothcolormax,getBattleFlag("max_cloth_color");
-						mes "^FF0000[ Super Stylist - Cloth Color ]^000000";
-						mes "Insert a cloth color number";
-						mes "Cloth Colors: " +.@clothcolormin+ " to " +.@clothcolormax;
-						input .@clothcolor;
-						if (.@clothcolor < .@clothcolormin || .@clothcolor > .@clothcolormax) { 
-						set .@clothcolor,0; 
-						}
-						setlook LOOK_CLOTHES_COLOR,.@clothcolor;
-						next;
-						break;
-					case 4:
-						next;
-						set .@blacklist,roclass(.@eac&EAJ_THIRDMASK) == 4054 || 
-										roclass(.@eac&EAJ_THIRDMASK) == 4067 || 
-										roclass(.@eac&EAJ_THIRDMASK) == 4072;
-						//if (.@eac&EAJ_THIRD && !.@blacklist) {
-							mes "^FF0000[ Super Stylist - Bodystyle ]^000000";
-							mes "Insert a bodystyle number";
-							mes "Bodystyles: 0 to 1";
-							input .@bodystyle;
-							if (.@bodystyle < 0 || .@bodystyle > 1) {
-								set .@bodystyle,0;
-							}
-							setlook LOOK_BODY2,.@bodystyle;
-							next;
-							break;
-					//	} else {
-					//		mes "This service isn't avaible for " +jobname(roclass(.@eac));
-					//		next;
-					//		break;
-					//	}
-				}
-				goto Lmain;
-		case 2:
+			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
 			break;
+		case 2:
+			set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
+			break;
+		case 3:
+			message strcharinfo(0),"Choose a style between 1 - "+.@Styles[.@s]+".";
+			input .@Style,0,.@Styles[.@s];
+			if (!.@Style)
+				set .@Style, rand(1,.@Styles[.@s]);
+			break;
+		case 4:
+			set .@Style, .@Revert;
+			setlook .@Look[.@s], .@Revert;
+			break;
+		}
 	}
-	cutin "",255;
-	close2;
-	end;
 }

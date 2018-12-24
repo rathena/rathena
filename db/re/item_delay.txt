@@ -40,7 +40,7 @@
 11524,3000,SC_REUSE_LIMIT_E	//White_Raffle_Sap
 
 // SC_REUSE_LIMIT_F
-//607,5000,SC_REUSE_LIMIT_F	//Yggdrasil_Berry
+607,5000,SC_REUSE_LIMIT_F	//Yggdrasil_Berry
 
 // SC_REUSE_LIMIT_G
 608,3000,SC_REUSE_LIMIT_G	//Yggdrasil_Seed

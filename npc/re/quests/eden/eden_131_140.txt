@@ -60,7 +60,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13144,PLAYTIME) == 0)
 							mes "Some adventurers tell me stories a little bit but they are not enough to make a song out of.";
 						else if (checkquest(13143,HUNTING) == 1) {
-							//cutin "이그니젬세니아카드",3;  //ygnizem_card
+							cutin "이그니젬세니아카드",3;  //ygnizem_card
 							mes "She is a sad swordman in such a far away place. What brought here there do you think?";
 							next;
 							mes "[Ragi]";
@@ -69,10 +69,10 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13143,HUNTING) == 2) {
 							mes "Have you heard any new stories? Please tell me stories if you have any from your journey.";
-							callsub S_Quest,13143,13144,33000000,9000000;
+							callsub S_Quest,13143,13144,1100000,300000;
 						}
 						else {
-							//cutin "이그니젬세니아카드",3;  //ygnizem_card
+							cutin "이그니젬세니아카드",3;  //ygnizem_card
 							mes "A sword woman who is stronger than any swordmen. Egnigem Cenia. That is her name. I am not sure if that is her or someone else.";
 							next;
 							mes "[Ragi]";
@@ -90,7 +90,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13146,PLAYTIME) == 0)
 							mes "Some adventurers tell me stories a little bit but they are not enough to make a song out of.";
 						else if (checkquest(13145,HUNTING) == 1) {
-							//cutin "아르마이어딘제카드",3;  //armaia_card
+							cutin "아르마이어딘제카드",3;  //armaia_card
 							mes "How far could she have continued her journey? I guess she could not do it alone.";
 							next;
 							mes "[Ragi]";
@@ -102,10 +102,10 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13145,HUNTING) == 2) {
 							mes "Have you heard any new stories? Please tell me stories if you have any from your journey.";
-							callsub S_Quest,13145,13146,33000000,9000000;
+							callsub S_Quest,13145,13146,1100000,300000;
 						}
 						else {
-							//cutin "아르마이어딘제카드",3;  //armaia_card
+							cutin "아르마이어딘제카드",3;  //armaia_card
 							mes "A daughter of a merchant. Armeyer Dinze, she looks like a rich woman. But she looks insecure.";
 							next;
 							mes "[Ragi]";
@@ -123,7 +123,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13148,PLAYTIME) == 0)
 							mes "Some adventurers tell me stories a little bit but they are not enough to make a song out of.";
 						else if (checkquest(13147,HUNTING) == 1) {
-							//cutin "휘케바인트리스카드",3;  //whikebain_card
+							cutin "휘케바인트리스카드",3;  //whikebain_card
 							mes "What might have moved her mind? She only cared about money.";
 							next;
 							mes "[Ragi]";
@@ -135,10 +135,10 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13147,HUNTING) == 2) {
 							mes "Have you heard any new stories? Please tell me stories if you have any from your journey.";
-							callsub S_Quest,13147,13148,33000000,9000000;
+							callsub S_Quest,13147,13148,1100000,300000;
 						}
 						else {
-							//cutin "휘케바인트리스카드",3;  //whikebain_card
+							cutin "휘케바인트리스카드",3;  //whikebain_card
 							mes "Nobody knows how it has started. Wickebine Tres is the name who could have found a true companion.";
 							next;
 							mes "[Ragi]";
@@ -157,7 +157,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13150,PLAYTIME) == 0)
 							mes "Some adventurers tell me stories a little bit but they are not enough to make a song out of.";
 						else if (checkquest(13149,HUNTING) == 1) {
-							//cutin "카바크이카루스카드",3;  //kavac_card
+							cutin "카바크이카루스카드",3;  //kavac_card
 							mes "Yes. It seems that I have heard the same name from Payon. I am not sure it means the same.";
 							next;
 							mes "[Ragi]";
@@ -169,10 +169,10 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13149,HUNTING) == 2) {
 							mes "Have you heard any new stories? Please tell me stories if you have any from your journey.";
-							callsub S_Quest,13149,13150,33000000,9000000;
+							callsub S_Quest,13149,13150,1100000,300000;
 						}
 						else {
-							//cutin "카바크이카루스카드",3;  //kavac_card
+							cutin "카바크이카루스카드",3;  //kavac_card
 							mes "Kavach Icarus is the name whose hands are faster than eyes and shoots arrows swiftly.";
 							next;
 							mes "[Ragi]";
@@ -190,7 +190,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13152,PLAYTIME) == 0)
 							mes "Some adventurers tell me stories a little bit but they are not enough to make a song out of.";
 						else if (checkquest(13151,HUNTING) == 1) {
-							//cutin "이렌드에베시카드",3;  //erend_card
+							cutin "이렌드에베시카드",3;  //erend_card
 							mes "No matter if it was for friendship or a mission. If that journey was for someone, It would not be easy to stop the journey.";
 							next;
 							mes "[Ragi]";
@@ -202,10 +202,10 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13151,HUNTING) == 2) {
 							mes "Have you heard any new stories? Please tell me stories if you have any from your journey.";
-							callsub S_Quest,13151,13152,33000000,9000000;
+							callsub S_Quest,13151,13152,1100000,300000;
 						}
 						else {
-							//cutin "이렌드에베시카드",3;  //erend_card
+							cutin "이렌드에베시카드",3;  //erend_card
 							mes "Errende Ebecee is the one who started a journey to look for someone.";
 							next;
 							mes "[Ragi]";
@@ -223,7 +223,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13154,PLAYTIME) == 0)
 							mes "Some adventurers tell me stories a little bit but they are not enough to make a song out of.";
 						else if (checkquest(13153,HUNTING) == 1) {
-							//cutin "라우렐뷘더카드",3;  //rawrel_card
+							cutin "라우렐뷘더카드",3;  //rawrel_card
 							mes "By the way. I have read a book called ^FF0000How to be a wizard^000000...";
 							next;
 							mes "[Ragi]";
@@ -235,10 +235,10 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13153,HUNTING) == 2) {
 							mes "Have you heard any new stories? Please tell me stories if you have any from your journey.";
-							callsub S_Quest,13153,13154,33000000,9000000;
+							callsub S_Quest,13153,13154,1100000,300000;
 						}
 						else {
-							//cutin "라우렐뷘더카드",3;  //rawrel_card
+							cutin "라우렐뷘더카드",3;  //rawrel_card
 							mes "Laurell Weinder, who decided to have a difficult journey to repay gratitude for some wizards deed.";
 							next;
 							mes "[Ragi]";
@@ -276,7 +276,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13155,HUNTING) == 2) {
 							mes "Wow. There are so many stories coming to me! Thanks to you!";
-							callsub S_Quest,13155,13156,33000000,6000000;
+							callsub S_Quest,13155,13156,1100000,200000;
 						}
 						else {
 							mes "Well... This song is not about the prince of darkness, but it is taken from people who claim to have seen him.";
@@ -305,7 +305,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13157,HUNTING) == 2) {
 							mes "Wow. There are so many stories coming to me! Thanks to you!";
-							callsub S_Quest,13157,13158,33000000,6000000;
+							callsub S_Quest,13157,13158,1100000,200000;
 						}
 						else {
 							mes "I do not know if everything came out from Satan Morocc himself but things like this look horrible.";
@@ -331,7 +331,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13159,HUNTING) == 2) {
 							mes "Wow. There are so many stories coming to me! Thanks to you!";
-							callsub S_Quest,13159,13160,33000000,6000000;
+							callsub S_Quest,13159,13160,1100000,200000;
 						}
 						else {
 							mes "This one is weird.. But he is also is an Incarnation of Morocc.";
@@ -356,17 +356,17 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13162,PLAYTIME) == 0)
 							mes "I am making a story about Uni-Horn Scaraba. One means less than two!~ I started but it is difficult to finish. Can you help me?";
 						else if (checkquest(13161,HUNTING) == 1) {
-							//cutin "스카라바카드",3;  //scaraba_card
+							cutin "스카라바카드",3;  //scaraba_card
 							mes "They also have some stories right? First, I wonder about the shape of the one with one horn.";
 							next;
 							cutin "ragi01",0;
 						}
 						else if (checkquest(13161,HUNTING) == 2) {
 							mes "I wonder what Uni-Horn Scarabas think? I want to make a song. Thanks for your help!";
-							callsub S_Quest,13161,13162,33000000,6000000;
+							callsub S_Quest,13161,13162,1100000,200000;
 						}
 						else {
-							//cutin "스카라바카드",3;  //scaraba_card
+							cutin "스카라바카드",3;  //scaraba_card
 							mes "New world is full of amazing monsters. They will become a dream for children who want to be adventurers.";
 							next;
 							mes "[Ragi]";
@@ -384,7 +384,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13164,PLAYTIME) == 0)
 							mes "I am making a story... Two means less than three~ I started to make a story but I can not finish. Will you help me?";
 						else if (checkquest(13163,HUNTING) == 1) {
-							//cutin "스카라바카드",3;  //scaraba_card
+							cutin "스카라바카드",3;  //scaraba_card
 							mes "That horn thing bothers me a little bit. What is the difference between one and two horns? Just appearance?";
 							next;
 							mes "[Ragi]";
@@ -393,10 +393,10 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13163,HUNTING) == 2) {
 							mes "You came back safely! How is it? Horn Scaraba seemed to be a fun story. You really did a good job.";
-							callsub S_Quest,13163,13164,33000000,6000000;
+							callsub S_Quest,13163,13164,1100000,200000;
 						}
 						else {
-							//cutin "스카라바카드",3;  //scaraba_card
+							cutin "스카라바카드",3;  //scaraba_card
 							mes "We talk about Horn Scaraba? There is one more we should mention.. That is Horn Scaraba!";
 							next;
 							mes "[Ragi]";
@@ -414,7 +414,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13166,PLAYTIME) == 0)
 							mes "There seem to be more story about Antler Scaraba! Please help me if you have time.";
 						else if (checkquest(13165,HUNTING) == 1) {
-							//cutin "스카라바카드",3;  //scaraba_card
+							cutin "스카라바카드",3;  //scaraba_card
 							mes "There seemed to be more special Scarabas according to rumors. Stronger and more scary ones.";
 							next;
 							mes "[Ragi]";
@@ -423,10 +423,10 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13165,HUNTING) == 2) {
 							mes "It must be tiring traveling long distance! Please tell me if there are more interesting stories!";
-							callsub S_Quest,13165,13166,33000000,6000000;
+							callsub S_Quest,13165,13166,1100000,200000;
 						}
 						else {
-							//cutin "스카라바카드",3;  //scaraba_card
+							cutin "스카라바카드",3;  //scaraba_card
 							mes "This one is very unique! Horns look like the one of a deer so it is called an Antler Scaraba.";
 							next;
 							mes "[Ragi]";
@@ -444,7 +444,7 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						if (checkquest(13168,PLAYTIME) == 0)
 							mes "I feel like Rake Horn Scaraba has more story. Please help me if you have time.";
 						else if (checkquest(13167,HUNTING) == 1) {
-							//cutin "스카라바카드",3;  //scaraba_card
+							cutin "스카라바카드",3;  //scaraba_card
 							mes "Here my plan is. I am making 4 passages for each Scaraba.";
 							next;
 							mes "[Ragi]";
@@ -453,10 +453,10 @@ moc_para01,41,76,3	script	Ragi#1	4_M_RAGI,{
 						}
 						else if (checkquest(13167,HUNTING) == 2) {
 							mes "Thank you ! I am sure that I can make a great song.";
-							callsub S_Quest,13167,13168,33000000,6000000;
+							callsub S_Quest,13167,13168,1100000,200000;
 						}
 						else {
-							//cutin "스카라바카드",3;  //scaraba_card
+							cutin "스카라바카드",3;  //scaraba_card
 							mes "I'm starting to get confused. I am going to make a song of the Rake Horn Scarabas story.";
 							next;
 							mes "[Ragi]";
@@ -568,15 +568,15 @@ S_Erasequest:
 			switch( getarg(.@i+1) ) {
 			case 1:
 				mes "Did you hear the story of "+ getarg(.@i+2) +"? Thanks you. I promise to make a good song.";
-				getexp 33000000,9000000;
+				getexp 1100000,300000;
 				break;
 			case 2:
 				mes "Is Morocc's story good enough for songs? You did a good job.";
-				getexp 33000000,6000000;
+				getexp 1100000,200000;
 				break;
 			case 3:
 				mes "How was your adventure? Was it fun? Please let me hear your adventure story someday.";
-				getexp 33000000,6000000;
+				getexp 1100000,200000;
 				break;
 			}
 		}

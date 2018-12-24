@@ -130,11 +130,11 @@ geffen,103,42,5	script	Sponiac	99,{
 	mes "What mission do you have?";
 	next;
 	switch(select("Hunting Poison Spore:Hunting Smokie:Hunting Elder Willow:Hunting Coco:Hunting Thara Frog")) {
-		case 1: callsub L_Quest,8266,"Hunting Poison Spore",30000,0,100,"You can find Poison Spores on the Geffen Dungeon 1F or northeast of Prontera. There are other spots but I'll leave it up to you to find out.";
-		case 2: callsub L_Quest,8267,"Hunting Smokie",30000,0,100,"You can find Smokies northeast and northwest of Geffen. Oh, also the field east of Ayotaya is good spot to find them.";
-		case 3: callsub L_Quest,8268,"Hunting Elder Willow",30000,3000,110,"You can find Elder Willows northeast of Geffen, east of payon and southwest of Prontera.";
-		case 4: callsub L_Quest,8269,"Hunting Coco",30000,6000,150,"You can find Cocos around the east of Payon, southwest of Prontera and the field east of Ayotaya.";
-		case 5: callsub L_Quest,8270,"Hunting Thara Frog",45000,9000,200,"You can find Thara Frogs in the Cave east of Comodo or on Turtle Island.";
+		case 1: callsub L_Quest,8266,"Hunting Poison Spore",1000,0,100,"You can find Poison Spores on the Geffen Dungeon 1F or northeast of Prontera. There are other spots but I'll leave it up to you to find out.";
+		case 2: callsub L_Quest,8267,"Hunting Smokie",1000,0,100,"You can find Smokies northeast and northwest of Geffen. Oh, also the field east of Ayotaya is good spot to find them.";
+		case 3: callsub L_Quest,8268,"Hunting Elder Willow",1000,100,110,"You can find Elder Willows northeast of Geffen, east of payon and southwest of Prontera.";
+		case 4: callsub L_Quest,8269,"Hunting Coco",1000,200,150,"You can find Cocos around the east of Payon, southwest of Prontera and the field east of Ayotaya.";
+		case 5: callsub L_Quest,8270,"Hunting Thara Frog",1500,300,200,"You can find Thara Frogs in the Cave east of Comodo or on Turtle Island.";
 	}
 	end;
 L_Quest:
@@ -315,7 +315,7 @@ pay_fild07,83,89,7	script	Zoologist	89,{
 		delitem 6218,1; //Disin_Delivery_Box
 		erasequest 8271;
 		getitem 569,100; //Novice_Potion
-		getexp 30000,0;
+		getexp 1000,0;
 		close;
 	}
 	mes "[Zoologist]";
@@ -380,7 +380,7 @@ prt_fild03,30,254,3	script	Entomologist	83,{
 		delitem 6218,1; //Disin_Delivery_Box
 		erasequest 8272;
 		getitem 569,100; //Novice_Potion
-		getexp 30000,0;
+		getexp 1000,0;
 		close;
 	}
 	mes "[Entomologist]";
@@ -445,7 +445,7 @@ xmas_fild01,92,57,3	script	Biologist	97,{
 		delitem 6218,1; //Disin_Delivery_Box
 		erasequest 8273;
 		getitem 569,100; //Novice_Potion
-		getexp 30000,0;
+		getexp 1000,0;
 		close;
 	}
 	mes "[Biologist]";
@@ -495,7 +495,7 @@ payon,179,66,3	script	Dashia	931,{
 			callsub L_Reward;
 			delitem 932,10; //Skel_Bone
 			getitem 569,100; //Novice_Potion
-			getexp 30000,3000;
+			getexp 1000,100;
 			erasequest 8274;
 			close;
 		}
@@ -519,7 +519,7 @@ payon,179,66,3	script	Dashia	931,{
 			getitem 569,100; //Novice_Potion
 			delitem 948,10; //Bear's_Foot
 			delitem 919,5; //Animal's_Skin
-			getexp 30000,3000;
+			getexp 1000,100;
 			erasequest 8275;
 			close;
 		}
@@ -544,7 +544,7 @@ payon,179,66,3	script	Dashia	931,{
 			delitem 955,20; //Worm_Peelings
 			delitem 910,20; //Garlet
 			getitem 569,100; //Novice_Potion
-			getexp 30000,3000;
+			getexp 1000,100;
 			erasequest 8276;
 			close;
 		}
@@ -572,7 +572,7 @@ payon,179,66,3	script	Dashia	931,{
 			delitem 1026,10; //Acorn
 			delitem 945,10; //Raccoon_Leaf
 			getitem 569,150; //Novice_Potion
-			getexp 30000,3000;
+			getexp 1000,200;
 			erasequest 8277;
 			close;
 		}
@@ -600,7 +600,7 @@ payon,179,66,3	script	Dashia	931,{
 			delitem 538,5; //Well_Baked_Cookie
 			delitem 539,1; //Piece_Of_Cake
 			getitem 569,150; //Novice_Potion
-			getexp 30000,3000;
+			getexp 1000,200;
 			erasequest 8278;
 			close;
 		}
@@ -626,7 +626,7 @@ payon,179,66,3	script	Dashia	931,{
 			delitem 1017,5; //Moustache_Of_Mole
 			delitem 1018,3; //Nail_Of_Mole
 			getitem 569,150; //Novice_Potion
-			getexp 30000,3000;
+			getexp 1000,200;
 			erasequest 8279;
 			close;
 		}

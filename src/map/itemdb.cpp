@@ -1261,16 +1261,6 @@ static void itemdb_re_split_atoi(char *str, int *val1, int *val2) {
 	return;
 }
 
-static inline uint8 itemdb_set_refine_type(int type, int wlv, int loc) {
-	if (type == IT_WEAPON)
-		return (enum refine_type)wlv;
-	if (type == IT_ARMOR)
-		return (loc&EQP_COSTUME) ? REFINE_TYPE_COSTUME : REFINE_TYPE_ARMOR;
-	if (type == IT_SHADOWGEAR)
-		return (loc == EQP_SHADOW_WEAPON) ? REFINE_TYPE_SHADOW_WEAPON : REFINE_TYPE_SHADOW;
-	return REFINE_TYPE_MAX;
-}
-
 /**
 * Processes one itemdb entry
 */
@@ -1404,7 +1394,6 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 		id->equip_script = parse_script(str[20], source, line, scriptopt);
 	if (*str[21])
 		id->unequip_script = parse_script(str[21], source, line, scriptopt);
-		id->refine_type = itemdb_set_refine_type(id->type, id->wlv, id->equip);
 
 	if (!id->nameid) {
 		id->nameid = nameid;

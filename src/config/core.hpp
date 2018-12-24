@@ -47,7 +47,7 @@
 #define HP_SP_TABLES
 
 /// Uncomment to enable VIP system.
-#define VIP_ENABLE
+//#define VIP_ENABLE
 
 /// Enable VIP script changes? (requires VIP_ENABLE)
 /// The primary effects of this are restrictions on non-VIP players, such as requiring
@@ -56,9 +56,9 @@
 #define VIP_SCRIPT 0
 
 #ifdef VIP_ENABLE
-	#define MIN_STORAGE 600 // Default number of storage slots.
-	#define MIN_CHARS 20 // Default number of characters per account.
-	#define MAX_CHAR_VIP 10 // This must be less than MAX_CHARS
+	#define MIN_STORAGE 300 // Default number of storage slots.
+	#define MIN_CHARS 3 // Default number of characters per account.
+	#define MAX_CHAR_VIP 6 // This must be less than MAX_CHARS
 	#define MAX_CHAR_BILLING 0 // This must be less than MAX_CHARS
 #endif
 
@@ -67,12 +67,6 @@
 
 /// Comment to disable warnings for deprecated script constants
 #define SCRIPT_CONSTANT_DEPRECATION
-
-// Uncomment to enable deprecated support for Windows XP and lower
-// Note:
-// Windows XP still has 32bit ticks. This means you need to restart your operating system before time
-// overflows, which is approximately every ~49 days.
-//#define DEPRECATED_WINDOWS_SUPPORT
 
 /**
  * No settings past this point

@@ -29,18 +29,16 @@ struct status_change;
 
 /// Refine type
 enum refine_type {
-	REFINE_TYPE_ARMOR = 0,
-	REFINE_TYPE_WEAPON1,
-	REFINE_TYPE_WEAPON2,
-	REFINE_TYPE_WEAPON3,
-	REFINE_TYPE_WEAPON4,
-	REFINE_TYPE_SHADOW,
-	REFINE_TYPE_SHADOW_WEAPON,
-	REFINE_TYPE_COSTUME,
-	REFINE_TYPE_MAX
+	REFINE_TYPE_ARMOR	= 0,
+	REFINE_TYPE_WEAPON1	= 1,
+	REFINE_TYPE_WEAPON2	= 2,
+	REFINE_TYPE_WEAPON3	= 3,
+	REFINE_TYPE_WEAPON4	= 4,
+	REFINE_TYPE_SHADOW	= 5,
+	REFINE_TYPE_MAX		= 6
 };
 
-/// Refine cost & chance type
+/// Refine cost type
 enum refine_cost_type {
 	REFINE_COST_NORMAL = 0,
 	REFINE_COST_OVER10,
@@ -49,38 +47,17 @@ enum refine_cost_type {
 	REFINE_COST_OVER10_HD,
 	REFINE_COST_HOLINK,
 	REFINE_COST_WAGJAK,
-	REFINE_COST_BLESSED,
-	REFINE_COST_EVT_ENRICHED,
-	REFINE_COST_EVT_OVER10_HD,
 	REFINE_COST_MAX
-};
-
-// Refine information type
-enum refine_info_type {
-	REFINE_MATERIAL_ID = 0,
-	REFINE_ZENY_COST,
-	REFINE_REFINEUI_ENABLED
 };
 
 struct refine_cost {
 	unsigned short nameid;
 	int zeny;
-	bool refineui;
-	uint16 breaking;
-	uint16 downrefine;
-	uint16 downrefine_num;
 };
-
-struct refine_bs_blessing {
-	unsigned short nameid, count;
-};
-
 
 /// Get refine chance
-int status_get_refine_chance(enum refine_type refine_type, int refine, enum refine_cost_type type);
-int status_get_refine_cost(enum refine_type refine_type, int type, enum refine_info_type what);
-bool status_get_refine_blacksmithBlessing(struct refine_bs_blessing* bs, enum refine_type type, int refine);
-struct refine_cost *status_get_refine_cost_(enum refine_type refine_type, int type);
+int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
+int status_get_refine_cost(int weapon_lv, int type, bool what);
 
 /// Status changes listing. These code are for use by the server.
 enum sc_type : int16 {
@@ -2199,7 +2176,14 @@ enum e_status_calc_weight_opt {
 	CALCWT_CARTSTATE = 0x4,	///< Whether to check for cart state
 };
 
-
+// Enum for refine chance types
+enum e_refine_chance_type {
+	REFINE_CHANCE_NORMAL = 0,
+	REFINE_CHANCE_ENRICHED,
+	REFINE_CHANCE_EVENT_NORMAL,
+	REFINE_CHANCE_EVENT_ENRICHED,
+	REFINE_CHANCE_TYPE_MAX
+};
 
 ///Define to determine who gets HP/SP consumed on doing skills/etc. [Skotlex]
 #define BL_CONSUME (BL_PC|BL_HOM|BL_MER|BL_ELEM)
@@ -2356,7 +2340,7 @@ int status_sc2skill(sc_type sc);
 unsigned int status_sc2scb_flag(sc_type sc);
 int status_type2relevant_bl_types(int type);
 
-int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag);
+int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, int walkdelay, int flag);
 //Define for standard HP damage attacks.
 #define status_fix_damage(src, target, hp, walkdelay) status_damage(src, target, hp, 0, walkdelay, 0)
 //Define for standard SP damage attacks.
@@ -2449,13 +2433,13 @@ struct status_change *status_get_sc(struct block_list *bl);
 int status_isdead(struct block_list *bl);
 int status_isimmune(struct block_list *bl);
 
-t_tick status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, t_tick tick, unsigned char flag);
+int status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, int tick, unsigned char flag);
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
 #define sc_start(src, bl, type, rate, val1, tick) status_change_start(src,bl,type,100*(rate),val1,0,0,0,tick,SCSTART_NONE)
 #define sc_start2(src, bl, type, rate, val1, val2, tick) status_change_start(src,bl,type,100*(rate),val1,val2,0,0,tick,SCSTART_NONE)
 #define sc_start4(src, bl, type, rate, val1, val2, val3, val4, tick) status_change_start(src,bl,type,100*(rate),val1,val2,val3,val4,tick,SCSTART_NONE)
 
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag);
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,int tick,unsigned char flag);
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
 #define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
 TIMER_FUNC(status_change_timer);

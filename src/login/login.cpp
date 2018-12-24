@@ -215,8 +215,8 @@ static TIMER_FUNC(login_online_data_cleanup){
  */
 int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
 	static int num_regs = 0; // registration counter
-	static t_tick new_reg_tick = 0;
-	t_tick tick = gettick();
+	static unsigned int new_reg_tick = 0;
+	unsigned int tick = gettick();
 	struct mmo_account acc;
 
 	//Account Registration Flood Protection by [Kevin]
@@ -773,20 +773,7 @@ void do_final(void) {
 		aFree(tmp);
 	}
 
-// (^~_~^) Gepard Shield Start
-/*
-// (^~_~^) Gepard Shield End
 	login_log(0, "login server", 100, "login server shutdown");
-// (^~_~^) Gepard Shield Start
-*/
-// (^~_~^) Gepard Shield End
-
-// (^~_~^) Gepard Shield Start
-
-	login_gepard_log(0, 0, "login server", 100, "login server shutdown");
-
-// (^~_~^) Gepard Shield End
-
 	ShowStatus("Terminating...\n");
 
 	if( login_config.log_login )
@@ -917,19 +904,7 @@ int do_init(int argc, char** argv) {
 	do_init_logincnslif();
 
 	ShowStatus("The login-server is " CL_GREEN "ready" CL_RESET " (Server is listening on the port %u).\n\n", login_config.login_port);
-// (^~_~^) Gepard Shield Start
-/*
-// (^~_~^) Gepard Shield End
 	login_log(0, "login server", 100, "login server started");
-// (^~_~^) Gepard Shield Start
-*/
-// (^~_~^) Gepard Shield End
-
-// (^~_~^) Gepard Shield Start
-
-	login_gepard_log(0, 0, "login server", 100, "login server started");
-
-// (^~_~^) Gepard Shield End
 
 	return 0;
 }

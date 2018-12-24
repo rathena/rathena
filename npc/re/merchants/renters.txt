@@ -267,7 +267,7 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 	mes "Magic Gears are only available for Mechanics.";
 	close;
 }
-prontera,165,173,3	duplicate(mgm)	Magic Gear Master#prt	105
+prontera,163,178,3	duplicate(mgm)	Magic Gear Master#prt	105
 geffen,103,55,5	duplicate(mgm)	Magic Gear Master#gef	105
 payon,166,106,5	duplicate(mgm)	Magic Gear Master#pay	105
 aldebaran,133,112,5	duplicate(mgm)	Magic Gear Master#alde	105

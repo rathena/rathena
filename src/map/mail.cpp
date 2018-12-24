@@ -145,11 +145,6 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 
 		if( idx < 0 || idx >= MAX_INVENTORY || sd->inventory_data[idx] == nullptr )
 			return MAIL_ATTACH_ERROR;
-		
-		if( sd->inventory.u.items_inventory[idx].equipSwitch ){
-			return MAIL_ATTACH_EQUIPSWITCH;
-		}
-
 
 #if PACKETVER < 20150513
 		i = 0;

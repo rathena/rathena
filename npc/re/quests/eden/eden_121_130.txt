@@ -526,7 +526,7 @@ S_Quest:
 		erasequest getarg(0);
 	setquest getarg(1);
 	if (getarg(2,0))
-		getexp 27000000,6000000;
+		getexp 900000,200000;
 	return;
 S_Erasequest:
 	.@total = getargcount();
@@ -545,7 +545,7 @@ S_Erasequest:
 		case 2:
 			mes "[Melody-Jack]";
 			mes getarg(.@i+1) +" is cleared. A deal is a deal. I need to get paid.";
-			getexp 27000000,6000000;
+			getexp 900000,200000;
 			break;
 		}
 		erasequest .@quest_id;
@@ -620,7 +620,7 @@ moc_para01,17,77,5	script	Aigu#1	4_F_IU,{
 				else if (isbegin_quest(13111) == 1) {
 					cutin "igu04",2;
 					mes "You know someone went there but you do not know who that is? Thank you. But let me ask you to search again tomorrow since we do not know who it is.";
-					callsub S_Quest,13111,13115,37500000,9000000;
+					callsub S_Quest,13111,13115,1250000,300000;
 				}
 				else if (isbegin_quest(13107) == 1)
 					mes "You may find shelter on top of the tower. Even that shelter only has water and a bonfire.";
@@ -639,7 +639,7 @@ moc_para01,17,77,5	script	Aigu#1	4_F_IU,{
 					mes "Searching Rachel was enough. I will ask you again after a while.";
 				else if (isbegin_quest(13112) == 1) {
 					mes "How was your trip? No special news. But it is not done yet so I will ask you to search again.";
-					callsub S_Quest,13112,13116,30000000,9000000;
+					callsub S_Quest,13112,13116,1000000,300000;
 				}
 				else if (isbegin_quest(13108) == 1)
 					mes "Not able to enter the sanctuary in a usual way. It is not easy but we can find a clue at Rachel.";
@@ -663,7 +663,7 @@ moc_para01,17,77,5	script	Aigu#1	4_F_IU,{
 					mes "Searching Nameless Island will continue at another time. How about taking a rest for a while?";
 				else if (isbegin_quest(13113) == 1) {
 					mes "Thank you! There are wandering adventurers also helping! We should continue to search anyway. Please help me next time again.";
-					callsub S_Quest,13113,13117,27000000,9000000;
+					callsub S_Quest,13113,13117,900000,300000;
 				}
 				else if (isbegin_quest(13109) == 1) {
 					cutin "igu04",2;
@@ -687,7 +687,7 @@ moc_para01,17,77,5	script	Aigu#1	4_F_IU,{
 				else if (isbegin_quest(13114) == 1) {
 					cutin "igu05",2;
 					mes "You came back safely but I guess there was no good result for your face. I will search more so do not disappoint! Thank you.";
-					callsub S_Quest,13114,13118,27000000,6000000;
+					callsub S_Quest,13114,13118,900000,200000;
 				}
 				else if (isbegin_quest(13110) == 1) {
 					cutin "igu05",2;
@@ -717,10 +717,10 @@ moc_para01,17,77,5	script	Aigu#1	4_F_IU,{
 				13109,"Nameless Island",
 				13110,"Abyss Lake";
 			callsub S_Erasequest2,
-				13111,"Thanatos Tower",37500000,9000000,
-				13112,"Rachel Shrine",30000000,9000000,
-				13113,"Nameless Island",27000000,9000000,
-				13114,"Abyss Lake",27000000,6000000;
+				13111,"Thanatos Tower",1250000,300000,
+				13112,"Rachel Shrine",1000000,300000,
+				13113,"Nameless Island",900000,300000,
+				13114,"Abyss Lake",900000,200000;
 			for ( .@i = 13115; .@i <= 13118; .@i++ )
 				if (isbegin_quest(.@i)) erasequest .@i;
 		}

@@ -7,7 +7,6 @@
 #include <time.h>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/timer.hpp" // t_tick
 #include "../common/socket.hpp" // enum chrif_req_op
 
 //fwd declaration
@@ -31,7 +30,7 @@ struct auth_node {
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	struct map_session_data *sd;	//Data from logged on char.
 	struct mmo_charstatus *char_dat;	//Data from char server.
-	t_tick node_created; //timestamp for node timeouts
+	unsigned int node_created; //timestamp for node timeouts
 	enum sd_state state; //To track whether player was login in/out or changing maps.
 };
 
@@ -92,12 +91,5 @@ void do_final_chrif(void);
 void do_init_chrif(void);
 
 int chrif_flush_fifo(void);
-
-// (^~_~^) Gepard Shield Start
-int chrif_gepard_req_block(unsigned int unique_id, const char* violator_name, unsigned int violator_aid, const char* initiator_name, unsigned int initiator_aid, const char* unban_time_str, const char* reason_str);
-bool chrif_gepard_ack_block(int fd);
-int chrif_gepard_req_unblock(unsigned int unique_id, const char* violator_name, unsigned int violator_aid, unsigned int initiator_aid);
-bool chrif_gepard_ack_unblock(int fd);
-// (^~_~^) Gepard Shield End
 
 #endif /* CHRIF_HPP */

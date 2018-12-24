@@ -91,7 +91,7 @@ morocc,153,286,6	script	Guide#01morocc::GuideMorroc	707,{
 				switch(select("[ Kafra Employee ]:[ Poison Herb Salesman ]:[ Dye Maker ]:[ Seiyablem ]:Previous Menu")) {
 				case 1:
 					callsub L_Mark,"^0000FFKafra Employees^000000";
-					viewpoint 1,165,103,7,0x0A82FF;
+					viewpoint 1,156,97,7,0x0A82FF;
 					viewpoint 1,160,258,8,0x0A82FF;
 					next;
 					break;

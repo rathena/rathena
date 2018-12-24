@@ -816,8 +816,8 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 										mes "Have you seen the sunken ship near Alberta?";
 										next;
 										mes "Master Rohter and I traveled deep into the ship and battled a monster known as ^FF0000Drake^000000. That day I was determined that I would be the best adventurer.";
-										.@exp = 6000000;
-										.@jexp = 4440000;
+										.@exp = 200000;
+										.@jexp = 148000;
 									}
 									else if (.@story == 2) {
 										cutin "gelca03",2;
@@ -826,18 +826,18 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 										mes "Oh boy the look on his face was priceless!";
 										emotion ET_BIGTHROB;
 										emotion ET_THINK, playerattached();
-										.@exp = 5400000;
-										.@jexp = 5040000;
+										.@exp = 180000;
+										.@jexp = 168000;
 									}
 									else {
 										mes "I once got lost in a maze north of Prontera. I thought I was going in circles forever until I finally made it out.";
 										next;
 										mes "Rumor has it that if you get lost in that maze you'll turn into one of the monsters there.";
-										.@exp = 6600000;
-										.@jexp = 3840000;
+										.@exp = 220000;
+										.@jexp = 128000;
 									}
 									if (JobLevel < 6)
-										.@jexp = 3180000;
+										.@jexp = 106000;
 									getexp .@exp,.@jexp;
 									delitem 6549,10;
 									para_100lv02 += 1;
@@ -854,26 +854,26 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 										next;
 										mes "Kind of useless to be there without a partner but oh well.";
 										emotion ET_THROB;
-										.@exp = 16500000;
-										.@jexp = 10200000;
+										.@exp = 550000;
+										.@jexp = 340000;
 									}
 									else if (.@story == 2) {
 										cutin "gelca03",2;
 										mes "So one time, master was part of a guild called wing something... Chicken wing...?";
 										next;
 										mes "It was a fun guild because no one took things seriously but master got tired of their laziness so he left.";
-										.@exp = 12000000;
-										.@jexp = 7200000;
+										.@exp = 400000;
+										.@jexp = 240000;
 									}
 									else {
 										mes "Have you been up to ^FF0000endless tower^000000? Master and I went there but only got to the 20th floor because his knee gave out while climbing...";
 										next;
 										mes "^FF0000Endless tower^000000 is somewhere in the sea. You have to find a guy named Jansor or Jans-something in Alberta and he'll sail you there.";
-										.@exp = 16500000;
-										.@jexp = 8700000;
+										.@exp = 550000;
+										.@jexp = 290000;
 									}
 									if (JobLevel < 6)
-										.@jexp = 6180000;
+										.@jexp = 206000;
 									getexp .@exp, .@jexp;
 									delitem 6549,20;
 									para_100lv02 += 1;
@@ -893,7 +893,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 										next;
 										mes "[Gelkah]";
 										mes "I don't think he ever saw that guild master again after that day.";
-										getexp 19500000,14640000;
+										getexp 650000,488000;
 									}
 									else {
 										cutin "gelca03",2;
@@ -902,7 +902,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 										next;
 										mes "[Gelkah]";
 										mes "But he was also regarded as a troublemaker because of his competitive nature so he left.";
-										getexp 21000000,12900000;
+										getexp 700000,430000;
 									}
 									delitem 6549,30;
 									para_100lv02 += 1;
@@ -925,21 +925,21 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 			mes strcharinfo(0) +"! You did a good job! There are more requests but reserve them for the other adventurers.";
 		if (para_100lv02 < 101)
 			mes "I do not think you are suitable to the request I can give. Please find other adventures.";
-		callsub S_Hunting,13003,3180000,4440000,"Carat";// <quest id>, <job exp if joblevel < 6>, <job exp>, <quest name>
-		callsub S_Hunting,13005,3180000,4440000,"Arclouse";
-		callsub S_Hunting,13007,3360000,5595000,"Anolian";
-		callsub S_Hunting,13009,3360000,5595000,"Sting";
-		callsub S_Hunting,13011,3360000,7560000,"Majoruros";
-		callsub S_Hunting,13013,3180000,4440000,"Pinguicula";
-		callsub S_Hunting,13015,3360000,5595000,"Luciola Vespa";
-		callsub S_Hunting,13017,3180000,4440000,"Desert Wolf";
-		callsub S_Hunting,13019,3180000,4440000,"Snowier";
-		callsub S_Hunting,13021,3360000,5595000,"Ice Titan";
-		callsub S_Hunting,13023,3180000,4440000,"Nightmare Terror";
-		callsub S_Hunting,13025,3180000,4440000,"Flying Deleter";
-		callsub S_Hunting,13040,3360000,5595000,"Loli Ruri";
-		callsub S_Hunting,13042,3180000,4440000,"Medusa";
-		callsub S_Hunting,13044,3360000,5595000,"Anubis";
+		callsub S_Hunting,13003,106000,148000,"Carat";// <quest id>, <job exp if joblevel < 6>, <job exp>, <quest name>
+		callsub S_Hunting,13005,106000,148000,"Arclouse";
+		callsub S_Hunting,13007,112000,186500,"Anolian";
+		callsub S_Hunting,13009,112000,186500,"Sting";
+		callsub S_Hunting,13011,112000,252000,"Majoruros";
+		callsub S_Hunting,13013,106000,148000,"Pinguicula";
+		callsub S_Hunting,13015,112000,186500,"Luciola Vespa";
+		callsub S_Hunting,13017,106000,148000,"Desert Wolf";
+		callsub S_Hunting,13019,106000,148000,"Snowier";
+		callsub S_Hunting,13021,112000,186500,"Ice Titan";
+		callsub S_Hunting,13023,106000,148000,"Nightmare Terror";
+		callsub S_Hunting,13025,106000,148000,"Flying Deleter";
+		callsub S_Hunting,13040,112000,186500,"Loli Ruri";
+		callsub S_Hunting,13042,106000,148000,"Medusa";
+		callsub S_Hunting,13044,112000,186500,"Anubis";
 		setarray .@quest_id[0],13004,13006,13008,130010,13012,13014,13016,13018,13020,13022,13024,13026,13041,13043,13045;
 		for ( .@i = 0; .@i < 15; .@i++ ) {
 			if (checkquest(.@quest_id[.@i],PLAYTIME) == 2) {
@@ -956,9 +956,9 @@ S_Quest:
 		getitem 6549,1;// Courtesy_Ticket
 		para_100lv02 += 1;
 		if (JobLevel < 6)
-			getexp 16500000,getarg(1);
+			getexp 550000,getarg(1);
 		else
-			getexp 16500000,getarg(2);
+			getexp 550000,getarg(2);
 	}
 	else {
 		next;
@@ -990,9 +990,9 @@ S_Hunting:
 		mes "I will mark you down as having completed this request.";
 		para_100lv02 += 1;
 		if (JobLevel < 6)
-			getexp 16500000,getarg(1);
+			getexp 550000,getarg(1);
 		else
-			getexp 16500000,getarg(2);
+			getexp 550000,getarg(2);
 		break;
 	case 0:
 	case 1:// untranslated these cases
@@ -1106,7 +1106,7 @@ moc_para01,41,95,5	script	Rohtert#12	4_M_ROTERT,{
 					mes "Good ! You are becoming a good adventurer! Do your best!";
 					erasequest 13048;// Tendrilion Request
 					setquest 13049;// Tendrilion Request Timer
-					getexp 10560000,7590000;
+					getexp 352000,253000;
 				}
 				else {
 					cutin "rote02",2;
@@ -1136,7 +1136,7 @@ moc_para01,41,95,5	script	Rohtert#12	4_M_ROTERT,{
 				mes "I guess you're not a scrub like I thought you were.";
 				completequest 13046;// Tendrilion Request
 				setquest 13047;// Tendrilion Request Timer
-				getexp 10560000,7590000;
+				getexp 352000,253000;
 			}
 			else {
 				cutin "rote04",2;

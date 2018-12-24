@@ -102,13 +102,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 int64 battle_calc_bg_damage(struct block_list *src,struct block_list *bl,int64 damage,uint16 skill_id,int flag);
 
-void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool spdamage);
-int battle_delay_damage (t_tick tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool spdamage);
+void battle_damage(struct block_list *src, struct block_list *target, int64 damage, int delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, unsigned int tick, bool spdamage);
+int battle_delay_damage (unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects, bool spdamage);
 
 int battle_calc_chorusbonus(struct map_session_data *sd);
 
 // Summary normal attack treatment (basic attack)
-enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,t_tick tick,int flag);
+enum damage_lv battle_weapon_attack( struct block_list *bl,struct block_list *target,unsigned int tick,int flag);
 
 // Accessors
 struct block_list* battle_get_master(struct block_list *src);
@@ -623,7 +623,6 @@ struct Battle_Config
 	int exp_cost_inspiration;
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
-	int reserved_costume_id;
 	int atcommand_levelup_events;
 	int block_account_in_same_party;
 	int tarotcard_equal_chance; //Official or equal chance for each card
@@ -641,7 +640,7 @@ struct Battle_Config
 	int guild_alliance_onlygm;
 	int feature_achievement;
 	int allow_bound_sell;
-	int feature_refineui;
+	int event_refine_chance;
 	int autoloot_adjust;
 	int broadcast_hide_name;
 	int skill_drop_items_full;
@@ -653,7 +652,6 @@ struct Battle_Config
 	int feature_attendance;
 	int feature_privateairship;
 	int rental_transaction;
-	int feature_equipswitch;
 	int min_shop_buy;
 	int min_shop_sell;
 

@@ -11,307 +11,10 @@
 #include "../common/socket.hpp"
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"
-#include "../common/timer.hpp"
 
 #include "char.hpp"
 #include "char_logif.hpp"
 #include "inter.hpp"
-
-// (^~_~^) Gepard Shield Start
-
-int chmapif_parse_gepard_block(int fd)
-{
-	unsigned int unique_id;
-	char* sql_data;
-	char result_str[GEPARD_RESULT_STR_LENGTH];
-	char reason_str_esc[GEPARD_REASON_LENGTH*2+1];
-	char unban_time_str_esc[GEPARD_TIME_STR_LENGTH*2+1];
-	int initiator_aid = 0, violator_aid = 0, offset;
-	char violator_name_esc[NAME_LENGTH*2+1], initiator_name_esc[NAME_LENGTH*2+1];
-	const char* violator_name, *initiator_name, *reason_str, *unban_time_str;
-	unsigned int packet_len = (2 + 4 + 4 + 4 + NAME_LENGTH + NAME_LENGTH + GEPARD_TIME_STR_LENGTH + GEPARD_REASON_LENGTH);
-
-	safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: unkqnown");
-
-	if (RFIFOREST(fd) < packet_len)
-	{
-		return 0;
-	}
-
-	unique_id = RFIFOL(fd, 2);
-	violator_aid = RFIFOL(fd, 6);
-	initiator_aid = RFIFOL(fd, 10);
-	offset = (2 + 4 + 4 + 4);
-
-	unban_time_str = (const char*)RFIFOP(fd,offset);
-	offset += GEPARD_TIME_STR_LENGTH;
-
-	reason_str = (const char*)RFIFOP(fd,offset);
-	offset += GEPARD_REASON_LENGTH;
-
-	violator_name = (const char*)RFIFOP(fd,offset);
-	offset += NAME_LENGTH;
-
-	initiator_name = (const char*)RFIFOP(fd,offset);
-	offset += NAME_LENGTH;
-
-	while ("Gepard")
-	{
-		Sql_EscapeStringLen(sql_handle, violator_name_esc, violator_name, strnlen(violator_name, NAME_LENGTH));
-
-		if (violator_aid == 0 && *violator_name != '\0')
-		{
-			// Get violator's account ID
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id` FROM `char` WHERE `name` = '%s'", violator_name_esc))
-			{
-				Sql_ShowDebug(sql_handle);
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-				break;
-			}
-			else if (Sql_NumRows(sql_handle) == 0)
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: The player has not found.");
-				break;
-			}
-			else if (SQL_SUCCESS != Sql_NextRow(sql_handle))
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-				Sql_ShowDebug(sql_handle);
-				break;
-			}
-
-			Sql_GetData(sql_handle, 0, &sql_data, NULL); 
-			violator_aid = atoi(sql_data);
-			Sql_FreeResult(sql_handle);
-		}
-
-		if (unique_id == 0)
-		{
-			if (violator_aid == 0)
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: unique_id and violator_aid == 0! ERROR");
-				break;
-			}
-
-			// Get violator's unique ID
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `last_unique_id` FROM `login` WHERE `account_id` = '%d'", violator_aid))
-			{
-				Sql_ShowDebug(sql_handle);
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-				break;
-			}
-			else if (Sql_NumRows(sql_handle) == 0)
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: The account has not been found.");
-				break;
-			}
-			else if (SQL_SUCCESS != Sql_NextRow(sql_handle))
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-				Sql_ShowDebug(sql_handle);
-				break;
-			}
-
-			Sql_GetData(sql_handle, 0, &sql_data, NULL); 
-			unique_id = strtoul(sql_data, NULL, 10);
-			Sql_FreeResult(sql_handle);
-		}
-
-		if (unique_id == 0)
-		{
-			safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: You can not block unique_id which equal 0.");
-			break;
-		}
-
-		if (violator_aid != 0)
-		{
-			if (SQL_ERROR == Sql_Query(sql_handle, "UPDATE `login` SET `blocked_unique_id` = '%u' WHERE `account_id` = '%d'", unique_id, violator_aid))
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-				Sql_ShowDebug(sql_handle);
-				break;
-			}
-
-			Sql_FreeResult(sql_handle);
-		}
-
-		if (SQL_ERROR == Sql_Query(sql_handle, "SELECT * FROM `gepard_block` WHERE `unique_id` = '%u'", unique_id))
-		{
-			safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-			Sql_ShowDebug(sql_handle);
-			break;
-		}
-		else if (Sql_NumRows(sql_handle) > 0)
-		{
-			if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `gepard_block` WHERE `unique_id` = '%u'", unique_id))
-			{
-				Sql_ShowDebug(sql_handle);
-			}
-		}
-
-		Sql_EscapeStringLen(sql_handle, unban_time_str_esc, unban_time_str, strnlen(unban_time_str, GEPARD_TIME_STR_LENGTH));
-		Sql_EscapeStringLen(sql_handle, initiator_name_esc, initiator_name, strnlen(initiator_name, NAME_LENGTH));
-		Sql_EscapeStringLen(sql_handle, reason_str_esc, reason_str, strnlen(reason_str, GEPARD_REASON_LENGTH));
-
-		if (SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `gepard_block` (`unique_id`, `unban_time`, `reason`) VALUES ('%u', '%s', '%s')",
-			unique_id, unban_time_str_esc, reason_str_esc))
-		{
-			safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-			Sql_ShowDebug(sql_handle);
-			break;
-		}
-
-		if (SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `gepard_block_log` (`unique_id`,`block_time`,`unban_time`,`violator_name`,`violator_account_id`,`initiator_name`,`initiator_account_id`,`reason`)"
-			"VALUES ('%u', NOW(), '%s', '%s', '%u', '%s', '%u', '%s')",
-			unique_id, unban_time_str_esc, violator_name_esc, violator_aid, initiator_name_esc, initiator_aid, reason_str_esc))
-		{
-			safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-			Sql_ShowDebug(sql_handle);
-			break;
-		}
-
-		safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: Success!");
-
-		break;
-	}
-
-	Sql_FreeResult(sql_handle);
-
-	WFIFOHEAD(fd, 2 + 4 + 4 + 4 + GEPARD_TIME_STR_LENGTH + GEPARD_TIME_STR_LENGTH + GEPARD_RESULT_STR_LENGTH);
-	WFIFOW(fd, 0) = GEPARD_C2M_BLOCK_ACK;
-	WFIFOL(fd, 2) = unique_id;
-	WFIFOL(fd, 6) = violator_aid;
-	WFIFOL(fd,10) = initiator_aid;
-	offset = (2 + 4 + 4 + 4);
-
-	safestrncpy((char*)WFIFOP(fd, offset), (const char*)RFIFOP(fd, offset), GEPARD_TIME_STR_LENGTH);
-	offset += GEPARD_TIME_STR_LENGTH;
-
-	safestrncpy((char*)WFIFOP(fd, offset), (const char*)RFIFOP(fd, offset), GEPARD_REASON_LENGTH);
-	offset += GEPARD_REASON_LENGTH;
-
-	safestrncpy((char*)WFIFOP(fd, offset), result_str, GEPARD_RESULT_STR_LENGTH);
-	offset += GEPARD_RESULT_STR_LENGTH;
-
-	WFIFOSET(fd, offset);
-	RFIFOSKIP(fd, packet_len);
-
-	return 1;
-}
-
-int chmapif_parse_gepard_unblock(int fd)
-{
-	unsigned int unique_id;
-	char* sql_data;
-	char result_str[GEPARD_RESULT_STR_LENGTH];
-	int initiator_aid = 0, violator_aid = 0, offset;
-	char violator_name_esc[NAME_LENGTH*2+1];
-	const char* violator_name;
-	unsigned int packet_len = (2 + 4 + 4 + 4 + NAME_LENGTH);
-
-	if (RFIFOREST(fd) < packet_len)
-	{
-		return 0;
-	}
-
-	unique_id = RFIFOL(fd, 2);
-	violator_aid = RFIFOL(fd, 6);
-	initiator_aid = RFIFOL(fd, 10);
-	offset = (2 + 4 + 4 + 4);
-
-	violator_name = (const char*)RFIFOP(fd,offset);
-	offset += NAME_LENGTH;
-
-	while ("Gepard")
-	{
-		if (violator_aid == 0 && *violator_name != '\0')
-		{
-			Sql_EscapeStringLen(sql_handle, violator_name_esc, violator_name, strnlen(violator_name, NAME_LENGTH));
-			offset += NAME_LENGTH;
-
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `account_id` FROM `char` WHERE `name` = '%s'", violator_name))
-			{
-				Sql_ShowDebug(sql_handle);
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-				break;
-			}
-			else if (Sql_NumRows(sql_handle) == 0)
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: The player has not found.");
-				break;
-			}
-			else if (SQL_SUCCESS != Sql_NextRow(sql_handle))
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-				Sql_ShowDebug(sql_handle);
-				break;
-			}
-
-			Sql_GetData(sql_handle, 0, &sql_data, NULL); 
-			violator_aid = atoi(sql_data);
-			Sql_FreeResult(sql_handle);
-		}
-
-		if (violator_aid != 0)
-		{
-			if (SQL_ERROR == Sql_Query(sql_handle, "SELECT `blocked_unique_id` FROM `login` WHERE `account_id` = '%d'", violator_aid))
-			{
-				Sql_ShowDebug(sql_handle);
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-				break;
-			}
-			else if (Sql_NumRows(sql_handle) == 0)
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: The account has not been found.");
-				break;
-			}
-			else if (SQL_SUCCESS != Sql_NextRow(sql_handle))
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-				Sql_ShowDebug(sql_handle);
-				Sql_FreeResult(sql_handle);
-				break;
-			}
-
-			Sql_GetData(sql_handle, 0, &sql_data, NULL); 
-			unique_id = strtoul(sql_data, NULL, 10);
-			Sql_FreeResult(sql_handle);
-
-			if (unique_id == 0)
-			{
-				safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: account don't have block information.");
-				break;
-			}
-		}
-
-		if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `gepard_block` WHERE `unique_id` = '%u'", unique_id))
-		{
-			safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: An error has been occurred. You should see console..");
-			Sql_ShowDebug(sql_handle);
-			Sql_FreeResult(sql_handle);
-			break;
-		}
-
-		safesnprintf(result_str, GEPARD_RESULT_STR_LENGTH, "Result: Success!");
-
-		break;
-	}
-
-	WFIFOHEAD(fd, 2 + 4 + GEPARD_RESULT_STR_LENGTH);
-	WFIFOW(fd, 0) = GEPARD_C2M_UNBLOCK_ACK;
-	WFIFOL(fd, 2) = initiator_aid;
-	offset = 2 + 4;
-
-	safestrncpy((char*)WFIFOP(fd, offset), result_str, GEPARD_RESULT_STR_LENGTH);
-	offset += GEPARD_RESULT_STR_LENGTH;
-
-	WFIFOSET(fd, offset);
-	RFIFOSKIP(fd, packet_len);
-
-	return 1;
-}
-
-// (^~_~^) Gepard Shield End
 
 /**
  * Packet send to all map-servers, attach to ourself
@@ -594,7 +297,7 @@ int chmapif_parse_askscdata(int fd){
 			for( count = 0; count < 50 && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count )
 			{
 				Sql_GetData(sql_handle, 0, &data, NULL); scdata.type = atoi(data);
-				Sql_GetData(sql_handle, 1, &data, NULL); scdata.tick = strtoll( data, nullptr, 10 );
+				Sql_GetData(sql_handle, 1, &data, NULL); scdata.tick = atoi(data);
 				Sql_GetData(sql_handle, 2, &data, NULL); scdata.val1 = atoi(data);
 				Sql_GetData(sql_handle, 3, &data, NULL); scdata.val2 = atoi(data);
 				Sql_GetData(sql_handle, 4, &data, NULL); scdata.val3 = atoi(data);
@@ -809,7 +512,7 @@ int chmapif_parse_req_saveskillcooldown(int fd){
 				memcpy(&data,RFIFOP(fd,14+i*sizeof(struct skill_cooldown_data)),sizeof(struct skill_cooldown_data));
 				if( i > 0 )
 					StringBuf_AppendStr(&buf, ", ");
-				StringBuf_Printf(&buf, "('%d','%d','%d','%" PRtf "')", aid, cid, data.skill_id, data.tick);
+				StringBuf_Printf(&buf, "('%d','%d','%d','%d')", aid, cid, data.skill_id, data.tick);
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
 				Sql_ShowDebug(sql_handle);
@@ -848,7 +551,7 @@ int chmapif_parse_req_skillcooldown(int fd){
 			for( count = 0; count < MAX_SKILLCOOLDOWN && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count )
 			{
 				Sql_GetData(sql_handle, 0, &data, NULL); scd.skill_id = atoi(data);
-				Sql_GetData(sql_handle, 1, &data, NULL); scd.tick = strtoll( data, nullptr, 10 );
+				Sql_GetData(sql_handle, 1, &data, NULL); scd.tick = atoi(data);
 				memcpy(WFIFOP(fd,14+count*sizeof(struct skill_cooldown_data)), &scd, sizeof(struct skill_cooldown_data));
 			}
 			if( count >= MAX_SKILLCOOLDOWN )
@@ -1264,7 +967,7 @@ int chmapif_parse_save_scdata(int fd){
 				memcpy (&data, RFIFOP(fd, 14+i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
 				if( i > 0 )
 					StringBuf_AppendStr(&buf, ", ");
-				StringBuf_Printf(&buf, "('%d','%d','%hu','%" PRtf "','%ld','%ld','%ld','%ld')", aid, cid,
+				StringBuf_Printf(&buf, "('%d','%d','%hu','%d','%ld','%ld','%ld','%ld')", aid, cid,
 					data.type, data.tick, data.val1, data.val2, data.val3, data.val4);
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
@@ -1592,7 +1295,7 @@ int chmapif_bonus_script_get(int fd) {
 			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
 			SQL_ERROR == SqlStmt_Execute(stmt) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), NULL, NULL) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT64, &tmp_bsdata.tick, 0, NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UINT32, &tmp_bsdata.tick, 0, NULL, NULL) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT16, &tmp_bsdata.flag, 0, NULL, NULL) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_UINT8,  &tmp_bsdata.type, 0, NULL, NULL) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT16,  &tmp_bsdata.icon, 0, NULL, NULL)
@@ -1669,7 +1372,7 @@ int chmapif_bonus_script_save(int fd) {
 				Sql_EscapeString(sql_handle, esc_script, bsdata.script_str);
 				if (i > 0)
 					StringBuf_AppendStr(&buf,", ");
-				StringBuf_Printf(&buf, "('%d','%s','%" PRtf "','%d','%d','%d')", cid, esc_script, bsdata.tick, bsdata.flag, bsdata.type, bsdata.icon);
+				StringBuf_Printf(&buf, "('%d','%s','%d','%d','%d','%d')", cid, esc_script, bsdata.tick, bsdata.flag, bsdata.type, bsdata.icon);
 			}
 			if (SQL_ERROR == Sql_QueryStr(sql_handle,StringBuf_Value(&buf)))
 				Sql_ShowDebug(sql_handle);
@@ -1722,14 +1425,6 @@ int chmapif_parse(int fd){
 	while(RFIFOREST(fd) >= 2){
 		int next=1;
 		switch(RFIFOW(fd,0)){
-
-// (^~_~^) Gepard Shield Start
-
-			case GEPARD_M2C_BLOCK_REQ: next=chmapif_parse_gepard_block(fd); break;
-			case GEPARD_M2C_UNBLOCK_REQ: next=chmapif_parse_gepard_unblock(fd); break;
-
-// (^~_~^) Gepard Shield End
-
 			case 0x2afa: next=chmapif_parse_getmapname(fd,id); break;
 			case 0x2afc: next=chmapif_parse_askscdata(fd); break;
 			case 0x2afe: next=chmapif_parse_getusercount(fd,id); break; //get nb user

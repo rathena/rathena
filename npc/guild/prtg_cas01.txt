@@ -96,7 +96,7 @@ prtg_cas01,45,46,4	duplicate(InsideFlagsPR1)	Kriemhild#14	722
 
 // Guild Flag (Town)
 //============================================================
-prontera,158,199,4	duplicate(InsideFlagsPR1)	Kriemhild#15	722
+prontera,155,190,4	duplicate(InsideFlagsPR1)	Kriemhild#15	722
 
 // Kafra Employee
 //============================================================

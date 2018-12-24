@@ -103,7 +103,7 @@ morocc,168,107,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#morocc	896
 moscovia,211,200,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#moscovia	896
 niflheim,200,184,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#niflheim	896
 payon,180,106,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#payon	896
-prontera,143,178,5	duplicate(GuildWarehouse)	Guild Warehouse Manager#prontera	896
+prontera,150,191,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#prontera	896
 rachel,123,145,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#rachel	896
 umbala,106,160,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#umbala	896
 veins,205,130,3	duplicate(GuildWarehouse)	Guild Warehouse Manager#veins	896

@@ -6,14 +6,6 @@
 //= 1.0 Prontera castle map changed in ep16.1 [Capuche]
 //============================================================
 
-//=Main Office  ============================================
-prontera,171,167,0	warp	prontera_office#prt_cas_office	1,1,prt_cas,94,261
-prt_cas,94,257,0	warp	prt_cas_office#prontera_office	1,1,prontera,169,167
-
-//=Event Room,
-prontera,140,153,0	warp	prontera_Event#pvpcromEvent	1,1,pvp_c_room,51,42
-pvp_c_room,51,16,0	warp	pvpcromEvent#prontera_Event	1,1,prontera,143,153
-
 //= Prontera City ============================================
 prontera,156,358,0	warp	prt_cas_B#prt_cas_A	1,1,prt_cas,216,146
 

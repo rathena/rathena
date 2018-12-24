@@ -31,25 +31,25 @@ moc_para01,42,38,3	script	Mission [56 - 70]	857,{
 	switch(select("Mission Numbers 1~5:Mission Numbers 6~10:Mission Numbers 11~15")) {
 	case 1:
 		switch(select("What is this Bandage?:Dangerous Alligators.:That wasn't a mermaid...:My country is calling me!")) {
-			case 1: callsub L_HuntingQuest,3250,450000,150000,930,30;
-			case 2: callsub L_HuntingQuest,3251,480000,180000;
-			case 3: callsub L_HuntingQuest,3252,510000,240000;
-			case 4: callsub L_Quest,3254,18000,240000,7043,10,1056,30;
+			case 1: callsub L_HuntingQuest,3250,15000,5000,930,30;
+			case 2: callsub L_HuntingQuest,3251,16000,6000;
+			case 3: callsub L_HuntingQuest,3252,17000,8000;
+			case 4: callsub L_Quest,3254,18000,8000,7043,10,1056,30;
 		}
 	case 2:
 		switch(select("Hunt Wild Boar:Preparing the Summer:A Woman's Grudge:Special ingredients:Puppet Master's Agony")) {
-			case 1: callsub L_HuntingQuest,3255,480000,210000;
-			case 2: callsub L_Quest,3256,450000,150000,918,30;
-			case 3: callsub L_HuntingQuest,3257,510000,240000;
-			case 4: callsub L_Quest,3258,480000,210000,7198,40;
-			case 5: callsub L_HuntingQuest,3259,17000,210000,1060,30;
+			case 1: callsub L_HuntingQuest,3255,16000,7000;
+			case 2: callsub L_Quest,3256,15000,5000,918,30;
+			case 3: callsub L_HuntingQuest,3257,17000,8000;
+			case 4: callsub L_Quest,3258,16000,7000,7198,40;
+			case 5: callsub L_HuntingQuest,3259,17000,7000,1060,30;
 		}
 	case 3:
 		switch(select("Tiresome Flies:Dangerous Munak:Make the World green:Magic Wand")) {
-			case 1: callsub L_HuntingQuest,3260,480000,210000;
-			case 2: callsub L_HuntingQuest,3261,480000,210000;
-			case 3: callsub L_Quest,3262,510000,210000,1032,40;
-			case 4: callsub L_Quest,3263,540000,240000,1021,30,7150,30;
+			case 1: callsub L_HuntingQuest,3260,16000,6000;
+			case 2: callsub L_HuntingQuest,3261,16000,7000;
+			case 3: callsub L_Quest,3262,17000,7000,1032,40;
+			case 4: callsub L_Quest,3263,18000,8000,1021,30,7150,30;
 		}
 	}
 	end;
