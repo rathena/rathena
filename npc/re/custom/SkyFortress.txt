@@ -1728,11 +1728,11 @@ OnInstanceInit:
 
 
 // prontera,151,186,3	script	test_spawner	807,{
-// 	monster "prontera",155,185,"Immortal Zombie Soldier",3473,1, "test_spawner::OnMobDead";
-// 	end;
-//
-// OnMobDead:
-// 	if (playerattached() > 0) callfunc("gen_vicious_weapon", killedrid); // mob was kileld by a player
+// 	if (playerattached() > 0)
+// 	{
+// 		debugmes "----------------------------------------------";
+// 		callfunc("gen_vicious_weapon", 3473);
+// 	}
 // 	end;
 // }
 
@@ -1905,205 +1905,475 @@ function	script	gen_vicious_weapon	{
 	for(.@i = 0; .@i < getarraysize(.@item_id); .@i++) {
 		if(.@item_id[.@i] > 0) {
 			switch(.@r_group[.@i]) {
+				// options 1
 				case 1:
-					// options 1
-					setarray .@options[0], RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET, RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET, RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET, RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET, RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET, RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET, RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET, RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET, RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET, RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET, RDMOPT_HEAL_VALUE, RDMOPT_VAR_MAGICATKPERCENT, RDMOPT_VAR_MAGICATKPERCENT;
-					.@result = rand(getarraysize(.@options));
+					// slot 1
+					setarray .@options[1],
+						RDMOPT_MDAMAGE_PROPERTY_NOTHING_TARGET,
+						RDMOPT_MDAMAGE_PROPERTY_WATER_TARGET,
+						RDMOPT_MDAMAGE_PROPERTY_GROUND_TARGET,
+						RDMOPT_MDAMAGE_PROPERTY_FIRE_TARGET,
+						RDMOPT_MDAMAGE_PROPERTY_WIND_TARGET,
+						RDMOPT_MDAMAGE_PROPERTY_POISON_TARGET,
+						RDMOPT_MDAMAGE_PROPERTY_SAINT_TARGET,
+						RDMOPT_MDAMAGE_PROPERTY_DARKNESS_TARGET,
+						RDMOPT_MDAMAGE_PROPERTY_TELEKINESIS_TARGET,
+						RDMOPT_MDAMAGE_PROPERTY_UNDEAD_TARGET,
+						RDMOPT_HEAL_VALUE,
+						RDMOPT_VAR_MAGICATKPERCENT,
+						RDMOPT_VAR_MAGICATKPERCENT;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[0] = .@options[.@result];
-					if(.@result < 11) 									// elemental  & Heal Power
+					if(.@result <= 10) 									// elemental  & Heal Power
 						.@OptVal[0] = rand(1,20);
 					else 												// MATK %
 						.@OptVal[0] = rand(1,15);
+					// debugmes "Option1 Slot1: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[0];
 					.@OptParam[0] = 0;
 
-					// options 2
-					setarray .@options[0], RDMOPT_RACE_MDAMAGE_NOTHING, RDMOPT_RACE_MDAMAGE_UNDEAD, RDMOPT_RACE_MDAMAGE_ANIMAL, RDMOPT_RACE_MDAMAGE_PLANT, RDMOPT_RACE_MDAMAGE_INSECT, RDMOPT_RACE_MDAMAGE_FISHS, RDMOPT_RACE_MDAMAGE_DEVIL, RDMOPT_RACE_MDAMAGE_HUMAN, RDMOPT_RACE_MDAMAGE_ANGEL, RDMOPT_RACE_MDAMAGE_DRAGON, RDMOPT_CLASS_MDAMAGE_NORMAL, RDMOPT_CLASS_MDAMAGE_BOSS, RDMOPT_RACE_IGNORE_MDEF_PERCENT_NOTHING, RDMOPT_RACE_IGNORE_MDEF_PERCENT_UNDEAD, RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANIMAL, RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLANT, RDMOPT_RACE_IGNORE_MDEF_PERCENT_INSECT, RDMOPT_RACE_IGNORE_MDEF_PERCENT_FISHS, RDMOPT_RACE_IGNORE_MDEF_PERCENT_DEVIL, RDMOPT_RACE_IGNORE_MDEF_PERCENT_HUMAN, RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANGEL, RDMOPT_RACE_IGNORE_MDEF_PERCENT_DRAGON, RDMOPT_CLASS_IGNORE_MDEF_PERCENT_NORMAL, RDMOPT_CLASS_IGNORE_MDEF_PERCENT_BOSS;
-					.@result = rand(getarraysize(.@options));
+					// slot 2
+					setarray .@options[1],
+						RDMOPT_RACE_MDAMAGE_NOTHING,
+						RDMOPT_RACE_MDAMAGE_UNDEAD,
+						RDMOPT_RACE_MDAMAGE_ANIMAL,
+						RDMOPT_RACE_MDAMAGE_PLANT,
+						RDMOPT_RACE_MDAMAGE_INSECT,
+						RDMOPT_RACE_MDAMAGE_FISHS,
+						RDMOPT_RACE_MDAMAGE_DEVIL,
+						RDMOPT_RACE_MDAMAGE_HUMAN,
+						RDMOPT_RACE_MDAMAGE_ANGEL,
+						RDMOPT_RACE_MDAMAGE_DRAGON,
+						RDMOPT_CLASS_MDAMAGE_NORMAL,
+						RDMOPT_CLASS_MDAMAGE_BOSS,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_NOTHING,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_UNDEAD,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANIMAL,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_PLANT,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_INSECT,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_FISHS,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_DEVIL,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_HUMAN,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_ANGEL,
+						RDMOPT_RACE_IGNORE_MDEF_PERCENT_DRAGON,
+						RDMOPT_CLASS_IGNORE_MDEF_PERCENT_NORMAL,
+						RDMOPT_CLASS_IGNORE_MDEF_PERCENT_BOSS;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[1] = .@options[.@result];
-					if(.@result < 10) 									// Race, normal, boss
+					if(.@result <= 12) 									// Race, normal, boss
 						.@OptVal[1] = rand(1,20);
 					else 												// pierce mdef
 						.@OptVal[1] = rand(1,30);
+					// debugmes "Option1 Slot2: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[1];
 					.@OptParam[1] = 0;
 
-					setarray .@options[0], RDMOPT_VAR_INTAMOUNT, RDMOPT_VAR_DEXAMOUNT, RDMOPT_VAR_ATTMPOWER, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DEC_SPELL_DELAY_TIME, RDMOPT_DEC_SP_CONSUMPTION, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DEC_SPELL_DELAY_TIME, RDMOPT_DEC_SP_CONSUMPTION;
-					.@result = rand(getarraysize(.@options));
+					// slot 3
+					setarray .@options[1],
+						RDMOPT_VAR_INTAMOUNT,
+						RDMOPT_VAR_DEXAMOUNT,
+						RDMOPT_VAR_ATTMPOWER,
+						RDMOPT_DEC_SPELL_CAST_TIME,
+						RDMOPT_DEC_SPELL_DELAY_TIME,
+						RDMOPT_DEC_SP_CONSUMPTION,
+						RDMOPT_DEC_SPELL_CAST_TIME,
+						RDMOPT_DEC_SPELL_DELAY_TIME,
+						RDMOPT_DEC_SP_CONSUMPTION;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[2] = .@options[.@result];
-					if(.@result < 2) 									// Stats
+					if(.@result <= 2) 									// Stats
 						.@OptVal[2] = rand(1,10);
-					else if(.@result < 3) 								// MATK
-						.@OptVal[2] = rand(1,50);
-					else if(.@result == 5 || .@result == 8) 			// SP Cost reduction
+					else if(.@result == 3) 								// MATK
+						.@OptVal[2] = rand(1, 50);
+					else if(.@result == 6 || .@result == 9) 			// SP Cost reduction
 						.@OptVal[2] = rand(1,5);
-					else 												// Cast Time
+					else 												// Cast/Delay Time
 						.@OptVal[2] = rand(1,20);
+					// debugmes "Option1 Slot3: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[2];
 					.@OptParam[2] = 0;
 				break;
 
+				// options 2
 				case 2:
-					// options 1
-					setarray .@options[0], RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET, RDMOPT_DAMAGE_PROPERTY_WATER_TARGET, RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET, RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET, RDMOPT_DAMAGE_PROPERTY_WIND_TARGET, RDMOPT_DAMAGE_PROPERTY_POISON_TARGET, RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET, RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET, RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET, RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET, RDMOPT_VAR_ATKPERCENT, RDMOPT_WEAPON_INDESTRUCTIBLE, RDMOPT_DAMAGE_SIZE_PERFECT, RDMOPT_VAR_ATKPERCENT;
-					.@result = rand(getarraysize(.@options));
+					// slot 1
+					setarray .@options[1],
+						RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_WATER_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_WIND_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_POISON_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET,
+						RDMOPT_VAR_ATKPERCENT,
+						RDMOPT_WEAPON_INDESTRUCTIBLE,
+						RDMOPT_DAMAGE_SIZE_PERFECT,
+						RDMOPT_VAR_ATKPERCENT;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[0] = .@options[.@result];
-					if (.@result < 10) 									// elemental
+					if (.@result <= 10) 								// elemental
 						.@OptVal[0] = rand(1,20);
-					else if (.@result == 10 || .@result == 13 )	 		// ATK %
+					else if (.@result == 11 || .@result == 14 )	 		// ATK %
 						.@OptVal[0] = rand(1,15);
-					else 												// indestructible
+					else 												// indestructible / ignore size
 						.@OptVal[0] = 1;
+					// debugmes "Option2 Slot1: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[0];
 					.@OptParam[0] = 0;
 					deletearray .@options, getarraysize(.@options);
 
-					// options 2
-					setarray .@options[0], RDMOPT_RACE_DAMAGE_NOTHING, RDMOPT_RACE_DAMAGE_UNDEAD, RDMOPT_RACE_DAMAGE_ANIMAL, RDMOPT_RACE_DAMAGE_PLANT, RDMOPT_RACE_DAMAGE_INSECT, RDMOPT_RACE_DAMAGE_FISHS, RDMOPT_RACE_DAMAGE_DEVIL, RDMOPT_RACE_DAMAGE_HUMAN, RDMOPT_RACE_DAMAGE_ANGEL, RDMOPT_RACE_DAMAGE_DRAGON, RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, RDMOPT_CLASS_DAMAGE_BOSS_TARGET, RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING, RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD, RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL, RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT, RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT, RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS, RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL, RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN, RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL, RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON, RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL, RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS;
-					.@result = rand(getarraysize(.@options));
+					// slot 2
+					setarray .@options[1],
+						RDMOPT_RACE_DAMAGE_NOTHING,
+						RDMOPT_RACE_DAMAGE_UNDEAD,
+						RDMOPT_RACE_DAMAGE_ANIMAL,
+						RDMOPT_RACE_DAMAGE_PLANT,
+						RDMOPT_RACE_DAMAGE_INSECT,
+						RDMOPT_RACE_DAMAGE_FISHS,
+						RDMOPT_RACE_DAMAGE_DEVIL,
+						RDMOPT_RACE_DAMAGE_HUMAN,
+						RDMOPT_RACE_DAMAGE_ANGEL,
+						RDMOPT_RACE_DAMAGE_DRAGON,
+						RDMOPT_CLASS_DAMAGE_NORMAL_TARGET,
+						RDMOPT_CLASS_DAMAGE_BOSS_TARGET,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON,
+						RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL,
+						RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[1] = .@options[.@result];
-					if(.@result < 10) 									// Race, normal, boss
+					if(.@result <= 12) 									// Race, normal, boss
 						.@OptVal[1] = rand(1,20);
 					else 												// pierce def
 						.@OptVal[1] = rand(1,30);
+					// debugmes "Option2 Slot2: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[1];
 					.@OptParam[1] = 0;
 					deletearray .@options, getarraysize(.@options);
 
-					setarray .@options[0], RDMOPT_VAR_LUKAMOUNT, RDMOPT_VAR_DEXAMOUNT, RDMOPT_VAR_AGIAMOUNT, RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE, RDMOPT_DAMAGE_CRI_TARGET, RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_PLUSASPD;
-					.@result = rand(getarraysize(.@options));
+					// slot 3
+					setarray .@options[1],
+						RDMOPT_VAR_LUKAMOUNT,
+						RDMOPT_VAR_DEXAMOUNT,
+						RDMOPT_VAR_AGIAMOUNT,
+						RDMOPT_VAR_ATTPOWER,
+						RDMOPT_VAR_CRITICALSUCCESSVALUE,
+						RDMOPT_DAMAGE_CRI_TARGET,
+						RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,
+						RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,
+						RDMOPT_VAR_PLUSASPD;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[2] = .@options[.@result];
-					if(.@result < 3) 									// Stats
+					if(.@result <= 3) 									// Stats
 						.@OptVal[2] = rand(1,10);
-					else if(.@result == 3) 								// MATK
+					else if(.@result == 4) 								// MATK
 						.@OptVal[2] = rand(1,50);
-					else if(.@result == 4) 								// CRIT
-						.@OptVal[2] = rand(1,50);
-					else if(.@result < 8) 								// Crit Damage
+					else if(.@result == 5) 								// CRIT
+						.@OptVal[2] = rand(1,15);
+					else if(.@result <= 8) 								// Crit Damage / Range ATK Dmg
 						.@OptVal[2] = rand(1,20);
 					else 												// ASPD
 						.@OptVal[2] = rand(1,5);
+					// debugmes "Option2 Slot3: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[2];
 					.@OptParam[2] = 0;
-					deletearray .@options, getarraysize(.@options);
+					deletearray .@options,
+						getarraysize(.@options);
 				break;
 
+				// options 3
 				case 3:
-					// options 1
-					setarray .@options[0], RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET, RDMOPT_DAMAGE_PROPERTY_WATER_TARGET, RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET, RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET, RDMOPT_DAMAGE_PROPERTY_WIND_TARGET, RDMOPT_DAMAGE_PROPERTY_POISON_TARGET, RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET, RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET, RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET, RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET, RDMOPT_VAR_ATKPERCENT, RDMOPT_WEAPON_ATTR_WATER, RDMOPT_WEAPON_ATTR_GROUND, RDMOPT_WEAPON_ATTR_FIRE, RDMOPT_WEAPON_ATTR_WIND, RDMOPT_WEAPON_ATTR_DARKNESS, RDMOPT_WEAPON_ATTR_SAINT, RDMOPT_VAR_ATKPERCENT, RDMOPT_DAMAGE_SIZE_PERFECT;
-					.@result = rand(getarraysize(.@options));
+					// slot 1
+					setarray .@options[1],
+						RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_WATER_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_WIND_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_POISON_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET,
+						RDMOPT_VAR_ATKPERCENT,
+						RDMOPT_WEAPON_ATTR_WATER,
+						RDMOPT_WEAPON_ATTR_GROUND,
+						RDMOPT_WEAPON_ATTR_FIRE,
+						RDMOPT_WEAPON_ATTR_WIND,
+						RDMOPT_WEAPON_ATTR_DARKNESS,
+						RDMOPT_WEAPON_ATTR_SAINT,
+						RDMOPT_VAR_ATKPERCENT,
+						RDMOPT_DAMAGE_SIZE_PERFECT;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[0] = .@options[.@result];
-					if (.@result < 10) 									// elemental
+					if (.@result <= 10) 								// elemental
 						.@OptVal[0] = rand(1,20);
-					else if (.@result == 10 || .@result == 17 )	 		// ATK %
+					else if (.@result == 11 || .@result == 18 )	 		// ATK %
 						.@OptVal[0] = rand(1,15);
 					else 												// element damage type
 						.@OptVal[0] = 1;
+					// debugmes "Option3 Slot1: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[0];
 					.@OptParam[0] = 0;
 					deletearray .@options, getarraysize(.@options);
 
-					// options 2
-					setarray .@options[0], RDMOPT_RACE_DAMAGE_NOTHING, RDMOPT_RACE_DAMAGE_UNDEAD, RDMOPT_RACE_DAMAGE_ANIMAL, RDMOPT_RACE_DAMAGE_PLANT, RDMOPT_RACE_DAMAGE_INSECT, RDMOPT_RACE_DAMAGE_FISHS, RDMOPT_RACE_DAMAGE_DEVIL, RDMOPT_RACE_DAMAGE_HUMAN, RDMOPT_RACE_DAMAGE_ANGEL, RDMOPT_RACE_DAMAGE_DRAGON, RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, RDMOPT_CLASS_DAMAGE_BOSS_TARGET, RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING, RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD, RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL, RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT, RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT, RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS, RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL, RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN, RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL, RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON, RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL, RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS;
-					.@result = rand(getarraysize(.@options));
+					// slot 2
+					setarray .@options[1],
+						RDMOPT_RACE_DAMAGE_NOTHING,
+						RDMOPT_RACE_DAMAGE_UNDEAD,
+						RDMOPT_RACE_DAMAGE_ANIMAL,
+						RDMOPT_RACE_DAMAGE_PLANT,
+						RDMOPT_RACE_DAMAGE_INSECT,
+						RDMOPT_RACE_DAMAGE_FISHS,
+						RDMOPT_RACE_DAMAGE_DEVIL,
+						RDMOPT_RACE_DAMAGE_HUMAN,
+						RDMOPT_RACE_DAMAGE_ANGEL,
+						RDMOPT_RACE_DAMAGE_DRAGON,
+						RDMOPT_CLASS_DAMAGE_NORMAL_TARGET,
+						RDMOPT_CLASS_DAMAGE_BOSS_TARGET,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON,
+						RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL,
+						RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[1] = .@options[.@result];
-					if(.@result < 10) 									// Race, normal, boss
+					if(.@result <= 12) 									// Race, normal, boss
 						.@OptVal[1] = rand(1,20);
 					else 												// pierce mdef
 						.@OptVal[1] = rand(1,30);
+					// debugmes "Option3 Slot2: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[1];
 					.@OptParam[1] = 0;
 					deletearray .@options, getarraysize(.@options);
 
-					setarray .@options[0], RDMOPT_VAR_DEXAMOUNT, RDMOPT_VAR_STRAMOUNT, RDMOPT_VAR_AGIAMOUNT, RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE, RDMOPT_DAMAGE_CRI_TARGET, RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, RDMOPT_RANGE_ATTACK_DAMAGE_TARGET, RDMOPT_VAR_PLUSASPD;
-					.@result = rand(getarraysize(.@options));
+					setarray .@options[1],
+						RDMOPT_VAR_DEXAMOUNT,
+						RDMOPT_VAR_STRAMOUNT,
+						RDMOPT_VAR_AGIAMOUNT,
+						RDMOPT_VAR_ATTPOWER,
+						RDMOPT_VAR_CRITICALSUCCESSVALUE,
+						RDMOPT_DAMAGE_CRI_TARGET,
+						RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,
+						RDMOPT_RANGE_ATTACK_DAMAGE_TARGET,
+						RDMOPT_VAR_PLUSASPD;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[2] = .@options[.@result];
-					if(.@result < 3) 									// Stats
+					if(.@result <= 3) 									// Stats
 						.@OptVal[2] = rand(1,10);
-					else if(.@result < 4) 								// ATK
+					else if(.@result == 4) 								// ATK
 						.@OptVal[2] = rand(1,50);
-					else if(.@result < 5) 								// Crit
+					else if(.@result == 5) 								// Crit
 						.@OptVal[2] = rand(1,15);
-					else if(.@result < 8) 								// Crit Damage
+					else if(.@result <= 8) 								// Crit Damage / Range Atk Dmg
 						.@OptVal[2] = rand(1,20);
 					else 												// ASPD
 						.@OptVal[2] = rand(1,5);
+					// debugmes "Option3 Slot3: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[2];
 					.@OptParam[2] = 0;
 					deletearray .@options, getarraysize(.@options);
 				break;
 
 				case 4:
 					// options 1
-					setarray .@options[0], RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET, RDMOPT_DAMAGE_PROPERTY_WATER_TARGET, RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET, RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET, RDMOPT_DAMAGE_PROPERTY_WIND_TARGET, RDMOPT_DAMAGE_PROPERTY_POISON_TARGET, RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET, RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET, RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET, RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET, RDMOPT_VAR_ATKPERCENT, RDMOPT_WEAPON_ATTR_WATER, RDMOPT_WEAPON_ATTR_GROUND, RDMOPT_WEAPON_ATTR_FIRE, RDMOPT_WEAPON_ATTR_WIND, RDMOPT_WEAPON_ATTR_DARKNESS, RDMOPT_WEAPON_ATTR_SAINT, RDMOPT_VAR_ATKPERCENT, RDMOPT_DAMAGE_SIZE_PERFECT;
-					.@result = rand(getarraysize(.@options));
+					setarray .@options[1],
+						RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_WATER_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_WIND_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_POISON_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET,
+						RDMOPT_VAR_ATKPERCENT,
+						RDMOPT_WEAPON_ATTR_WATER,
+						RDMOPT_WEAPON_ATTR_GROUND,
+						RDMOPT_WEAPON_ATTR_FIRE,
+						RDMOPT_WEAPON_ATTR_WIND,
+						RDMOPT_WEAPON_ATTR_DARKNESS,
+						RDMOPT_WEAPON_ATTR_SAINT,
+						RDMOPT_VAR_ATKPERCENT,
+						RDMOPT_DAMAGE_SIZE_PERFECT;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[0] = .@options[.@result];
-					if (.@result < 10) 									// elemental
+					if (.@result <= 10) 								// elemental
 						.@OptVal[0] = rand(1,20);
-					else if (.@result == 10 || .@result == 17 )	 		// ATK %
+					else if (.@result == 11 || .@result == 11 )	 		// ATK %
 						.@OptVal[0] = rand(1,15);
 					else 												// element damage type
 						.@OptVal[0] = 1;
+					// debugmes "Option4 Slot1: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[0];
 					.@OptParam[0] = 0;
 					deletearray .@options, getarraysize(.@options);
 
 					// options 2
-					setarray .@options[0], RDMOPT_RACE_DAMAGE_NOTHING, RDMOPT_RACE_DAMAGE_UNDEAD, RDMOPT_RACE_DAMAGE_ANIMAL, RDMOPT_RACE_DAMAGE_PLANT, RDMOPT_RACE_DAMAGE_INSECT, RDMOPT_RACE_DAMAGE_FISHS, RDMOPT_RACE_DAMAGE_DEVIL, RDMOPT_RACE_DAMAGE_HUMAN, RDMOPT_RACE_DAMAGE_ANGEL, RDMOPT_RACE_DAMAGE_DRAGON, RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, RDMOPT_CLASS_DAMAGE_BOSS_TARGET, RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING, RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD, RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL, RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT, RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT, RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS, RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL, RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN, RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL, RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON, RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL, RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS;
-					.@result = rand(getarraysize(.@options));
+					setarray .@options[1],
+						RDMOPT_RACE_DAMAGE_NOTHING,
+						RDMOPT_RACE_DAMAGE_UNDEAD,
+						RDMOPT_RACE_DAMAGE_ANIMAL,
+						RDMOPT_RACE_DAMAGE_PLANT,
+						RDMOPT_RACE_DAMAGE_INSECT,
+						RDMOPT_RACE_DAMAGE_FISHS,
+						RDMOPT_RACE_DAMAGE_DEVIL,
+						RDMOPT_RACE_DAMAGE_HUMAN,
+						RDMOPT_RACE_DAMAGE_ANGEL,
+						RDMOPT_RACE_DAMAGE_DRAGON,
+						RDMOPT_CLASS_DAMAGE_NORMAL_TARGET,
+						RDMOPT_CLASS_DAMAGE_BOSS_TARGET,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON,
+						RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL,
+						RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[1] = .@options[.@result];
-					if(.@result < 10) 									// Race, normal, boss
+					if(.@result <= 12) 									// Race, normal, boss
 						.@OptVal[1] = rand(1,20);
 					else 												// pierce mdef
 						.@OptVal[1] = rand(1,30);
+					// debugmes "Option4 Slot2: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[1];
 					.@OptParam[1] = 0;
 					deletearray .@options, getarraysize(.@options);
 
-					setarray .@options[0], RDMOPT_VAR_STRAMOUNT, RDMOPT_VAR_INTAMOUNT, RDMOPT_VAR_AGIAMOUNT, RDMOPT_VAR_ATTMPOWER, RDMOPT_VAR_ATTPOWER, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DEC_SPELL_DELAY_TIME, RDMOPT_VAR_PLUSASPD, RDMOPT_VAR_PLUSASPD, RDMOPT_VAR_PLUSASPD;
-					.@result = rand(getarraysize(.@options));
+					setarray .@options[1],
+						RDMOPT_VAR_STRAMOUNT,
+						RDMOPT_VAR_INTAMOUNT,
+						RDMOPT_VAR_AGIAMOUNT,
+						RDMOPT_VAR_ATTMPOWER,
+						RDMOPT_VAR_ATTPOWER,
+						RDMOPT_DEC_SPELL_CAST_TIME,
+						RDMOPT_DEC_SPELL_DELAY_TIME,
+						RDMOPT_VAR_PLUSASPD,
+						RDMOPT_VAR_PLUSASPD,
+						RDMOPT_VAR_PLUSASPD;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[2] = .@options[.@result];
-					if(.@result < 3) 									// Stats
+					if(.@result <= 3) 									// Stats
 						.@OptVal[2] = rand(1,10);
-					else if(.@result < 5) 								// ATK / MATK
+					else if(.@result <= 5) 								// ATK / MATK
 						.@OptVal[2] = rand(1,50);
-					else if(.@result < 7) 								// Cast Time
-						.@OptVal[2] = rand(1,20);
-					else if(.@result < 8) 								// Crit Damage
+					else if(.@result <= 7) 								// Cast Time
 						.@OptVal[2] = rand(1,20);
 					else 												// ASPD
 						.@OptVal[2] = rand(1,5);
+					// debugmes "Option4 Slot3: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[2];
 					.@OptParam[2] = 0;
 					deletearray .@options, getarraysize(.@options);
 				break;
 
 				case 5:
 					// options 1
-					setarray .@options[0], RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET, RDMOPT_DAMAGE_PROPERTY_WATER_TARGET, RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET, RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET, RDMOPT_DAMAGE_PROPERTY_WIND_TARGET, RDMOPT_DAMAGE_PROPERTY_POISON_TARGET, RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET, RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET, RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET, RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET, RDMOPT_VAR_ATKPERCENT, RDMOPT_WEAPON_ATTR_WATER, RDMOPT_WEAPON_ATTR_GROUND, RDMOPT_WEAPON_ATTR_FIRE, RDMOPT_WEAPON_ATTR_WIND, RDMOPT_WEAPON_ATTR_DARKNESS, RDMOPT_WEAPON_ATTR_SAINT, RDMOPT_VAR_ATKPERCENT, RDMOPT_WEAPON_INDESTRUCTIBLE, RDMOPT_DAMAGE_SIZE_PERFECT;
-					.@result = rand(getarraysize(.@options));
+					setarray .@options[1],
+						RDMOPT_DAMAGE_PROPERTY_NOTHING_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_WATER_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_GROUND_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_FIRE_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_WIND_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_POISON_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_SAINT_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_DARKNESS_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_TELEKINESIS_TARGET,
+						RDMOPT_DAMAGE_PROPERTY_UNDEAD_TARGET,
+						RDMOPT_VAR_ATKPERCENT,
+						RDMOPT_WEAPON_ATTR_WATER,
+						RDMOPT_WEAPON_ATTR_GROUND,
+						RDMOPT_WEAPON_ATTR_FIRE,
+						RDMOPT_WEAPON_ATTR_WIND,
+						RDMOPT_WEAPON_ATTR_DARKNESS,
+						RDMOPT_WEAPON_ATTR_SAINT,
+						RDMOPT_VAR_ATKPERCENT,
+						RDMOPT_WEAPON_INDESTRUCTIBLE,
+						RDMOPT_DAMAGE_SIZE_PERFECT;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[0] = .@options[.@result];
-					if (.@result < 10) 									// elemental
+					if (.@result <= 10) 								// elemental
 						.@OptVal[0] = rand(1,20);
-					else if (.@result == 10 || .@result == 17 )	 		// ATK %
+					else if (.@result == 11 || .@result == 18 )	 		// ATK %
 						.@OptVal[0] = rand(1,15);
 					else 												// element damage type
 						.@OptVal[0] = 1;
+					// debugmes "Option5 Slot1: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[0];
 					.@OptParam[0] = 0;
 					deletearray .@options, getarraysize(.@options);
 
 					// options 2
-					setarray .@options[0], RDMOPT_RACE_DAMAGE_NOTHING, RDMOPT_RACE_DAMAGE_UNDEAD, RDMOPT_RACE_DAMAGE_ANIMAL, RDMOPT_RACE_DAMAGE_PLANT, RDMOPT_RACE_DAMAGE_INSECT, RDMOPT_RACE_DAMAGE_FISHS, RDMOPT_RACE_DAMAGE_DEVIL, RDMOPT_RACE_DAMAGE_HUMAN, RDMOPT_RACE_DAMAGE_ANGEL, RDMOPT_RACE_DAMAGE_DRAGON, RDMOPT_CLASS_DAMAGE_NORMAL_TARGET, RDMOPT_CLASS_DAMAGE_BOSS_TARGET, RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING, RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD, RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL, RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT, RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT, RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS, RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL, RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN, RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL, RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON, RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL, RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS;
-					.@result = rand(getarraysize(.@options));
+					setarray .@options[1],
+						RDMOPT_RACE_DAMAGE_NOTHING,
+						RDMOPT_RACE_DAMAGE_UNDEAD,
+						RDMOPT_RACE_DAMAGE_ANIMAL,
+						RDMOPT_RACE_DAMAGE_PLANT,
+						RDMOPT_RACE_DAMAGE_INSECT,
+						RDMOPT_RACE_DAMAGE_FISHS,
+						RDMOPT_RACE_DAMAGE_DEVIL,
+						RDMOPT_RACE_DAMAGE_HUMAN,
+						RDMOPT_RACE_DAMAGE_ANGEL,
+						RDMOPT_RACE_DAMAGE_DRAGON,
+						RDMOPT_CLASS_DAMAGE_NORMAL_TARGET,
+						RDMOPT_CLASS_DAMAGE_BOSS_TARGET,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_NOTHING,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_UNDEAD,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_ANIMAL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_PLANT,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_INSECT,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_FISHS,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_DEVIL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_HUMAN,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_ANGEL,
+						RDMOPT_RACE_IGNORE_DEF_PERCENT_DRAGON,
+						RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL,
+						RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[1] = .@options[.@result];
-					if(.@result < 10) 									// Race, normal, boss
+					if(.@result <= 12) 									// Race, normal, boss
 						.@OptVal[1] = rand(1,20);
 					else 												// pierce def
 						.@OptVal[1] = rand(1,30);
+					// debugmes "Option5 Slot2: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[1];
 					.@OptParam[1] = 0;
 					deletearray .@options, getarraysize(.@options);
 
-					setarray .@options[0], RDMOPT_VAR_LUKAMOUNT, RDMOPT_VAR_STRAMOUNT, RDMOPT_VAR_AGIAMOUNT, RDMOPT_VAR_ATTPOWER, RDMOPT_VAR_CRITICALSUCCESSVALUE, RDMOPT_DAMAGE_CRI_TARGET, RDMOPT_VAR_PLUSASPD, RDMOPT_VAR_PLUSASPD, RDMOPT_VAR_PLUSASPD;
-					.@result = rand(getarraysize(.@options));
+					setarray .@options[1],
+						RDMOPT_VAR_LUKAMOUNT,
+						RDMOPT_VAR_STRAMOUNT,
+						RDMOPT_VAR_AGIAMOUNT,
+						RDMOPT_VAR_ATTPOWER,
+						RDMOPT_VAR_CRITICALSUCCESSVALUE,
+						RDMOPT_DAMAGE_CRI_TARGET,
+						RDMOPT_VAR_PLUSASPD,
+						RDMOPT_VAR_PLUSASPD,
+						RDMOPT_VAR_PLUSASPD;
+					.@result = rand(1,getarraysize(.@options)-1);
 					.@OptID[2] = .@options[.@result];
-					if(.@result < 3) 									// Stats
+					if(.@result <= 3) 									// Stats
 						.@OptVal[2] = rand(1,10);
-					else if(.@result < 4) 								// ATK
+					else if(.@result == 4) 								// ATK
 						.@OptVal[2] = rand(1,50);
-					else if(.@result < 5) 								// Crit
+					else if(.@result == 5) 								// Crit
 						.@OptVal[2] = rand(1,15);
-					else if(.@result < 6) 								// Crit Damage
+					else if(.@result == 6) 								// Crit Damage
 						.@OptVal[2] = rand(1,20);
 					else 												// ASPD
 						.@OptVal[2] = rand(1,5);
+					// debugmes "Option5 Slot3: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[2];
 					.@OptParam[2] = 0;
 					deletearray .@options, getarraysize(.@options);
 				break;

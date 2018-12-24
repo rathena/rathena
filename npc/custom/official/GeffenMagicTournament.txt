@@ -906,65 +906,105 @@ dali,93,146,5	script	Geffen Enchanter	4_M_KHMAN,{
 	//	acccessory
 	if( .@equip_id == 2963 || .@equip_id == 2964 ) {
 		deletearray .@options, getarraysize(.@options);
-		setarray .@options[0], RDMOPT_VAR_PLUSASPDPERCENT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_DAMAGE_CRI_TARGET, RDMOPT_ATTR_TOLERACE_WATER, RDMOPT_ATTR_TOLERACE_FIRE, RDMOPT_ATTR_TOLERACE_GROUND, RDMOPT_ATTR_TOLERACE_WIND, RDMOPT_DEC_SP_CONSUMPTION, RDMOPT_ATTR_TOLERACE_ALL, RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT, RDMOPT_VAR_ATKPERCENT, RDMOPT_VAR_MAGICATKPERCENT;
-		.@result = rand(getarraysize(.@options));
+		setarray .@options[1],
+			RDMOPT_VAR_PLUSASPDPERCENT,
+			RDMOPT_DEC_SPELL_CAST_TIME,
+			RDMOPT_DAMAGE_CRI_TARGET,
+			RDMOPT_ATTR_TOLERACE_WATER,
+			RDMOPT_ATTR_TOLERACE_FIRE,
+			RDMOPT_ATTR_TOLERACE_GROUND,
+			RDMOPT_ATTR_TOLERACE_WIND,
+			RDMOPT_DEC_SP_CONSUMPTION,
+			RDMOPT_ATTR_TOLERACE_ALL,
+			RDMOPT_VAR_MAXHPAMOUNT,
+			RDMOPT_VAR_MAXSPAMOUNT,
+			RDMOPT_VAR_ATKPERCENT,
+			RDMOPT_VAR_MAGICATKPERCENT;
+		.@result = rand(1,getarraysize(.@options)-1);
 
 		// first enchant
 		.@OptID[0] = .@options[.@result];
-		if(.@result < 1) 									// aspd
+		if(.@result == 1) 									// aspd%
 			.@OptVal[0] = rand(3,5);
-		else if(.@result < 2) 								// v. cast time
+		else if(.@result == 2) 								// v. cast time
 			.@OptVal[0] = rand(5,7);
-		else if(.@result < 3) 								// crit dmg
+		else if(.@result == 3) 								// crit dmg
 			.@OptVal[0] = rand(5,8);
-		else if(.@result < 7) 								// ele resistance
+		else if(.@result <= 8) 								// ele resistance
 			.@OptVal[0] = rand(3,5);
-		else				 								// all resistance
+		else				 								// all resistance, mhp, msp, atk%, matk%
 			.@OptVal[0] = rand(1,3);
+		debugmes "Option1 Slot1: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[0];
 		.@OptParam[0] = 0;
 
 		// second enchant
-		.@result = rand(getarraysize(.@options));
+		.@result = rand(1,getarraysize(.@options)-1);
 		.@OptID[1] = .@options[.@result];
-		if(.@result < 1) 									// aspd
-			.@OptVal[1] = rand(3,5);
-		else if(.@result < 2) 								// v. cast time
-			.@OptVal[1] = rand(5,7);
-		else if(.@result < 3) 								// crit dmg
-			.@OptVal[1] = rand(5,8);
-		else if(.@result < 7) 								// ele resistance
-			.@OptVal[1] = rand(3,5);
-		else				 								// all resistance
-			.@OptVal[1] = rand(1,3);
+		if(.@result == 1) 									// aspd%
+			.@OptVal[0] = rand(3,5);
+		else if(.@result == 2) 								// v. cast time
+			.@OptVal[0] = rand(5,7);
+		else if(.@result == 3) 								// crit dmg
+			.@OptVal[0] = rand(5,8);
+		else if(.@result <= 8) 								// ele resistance
+			.@OptVal[0] = rand(3,5);
+		else				 								// all resistance, mhp, msp, atk%, matk%
+			.@OptVal[0] = rand(1,3);
+		debugmes "Option1 Slot2: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[1];
 		.@OptParam[1] = 0;
 	}
 	else if ( .@equip_id == 15073 ||  .@equip_id == 15074 ) {
 		deletearray .@options, getarraysize(.@options);
 
-		setarray .@options[0], RDMOPT_VAR_STRAMOUNT, RDMOPT_VAR_INTAMOUNT, RDMOPT_VAR_DEXAMOUNT, RDMOPT_VAR_AGIAMOUNT, RDMOPT_VAR_VITAMOUNT, RDMOPT_VAR_LUKAMOUNT, RDMOPT_VAR_MAXHPAMOUNT, RDMOPT_VAR_MAXSPAMOUNT;
-		.@result = rand(getarraysize(.@options));
+		setarray .@options[0],
+			RDMOPT_VAR_STRAMOUNT,
+			RDMOPT_VAR_INTAMOUNT,
+			RDMOPT_VAR_DEXAMOUNT,
+			RDMOPT_VAR_AGIAMOUNT,
+			RDMOPT_VAR_VITAMOUNT,
+			RDMOPT_VAR_LUKAMOUNT,
+			RDMOPT_VAR_MAXHPAMOUNT,
+			RDMOPT_VAR_MAXSPAMOUNT;
+		.@result = rand(1,getarraysize(.@options)-1);
 		.@OptID[0] = .@options[.@result];
-		if(.@result < 6) 									// Stats
+		if(.@result <= 6) 									// Stats
 			.@OptVal[0] = rand(1,4);
 		else 												// MaxHP/MaxSP
 			.@OptVal[0] = rand(3,5);
 		.@OptParam[0] = 0;
+		debugmes "Option2 Slot1: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[0];
 
 		// second enchant
-		deletearray .@options, getarraysize(.@options);
-		setarray .@options[0], RDMOPT_VAR_HPACCELERATION, RDMOPT_VAR_SPACCELERATION, RDMOPT_VAR_HITSUCCESSVALUE, RDMOPT_VAR_AVOIDSUCCESSVALUE, RDMOPT_VAR_ITEMDEFPOWER, RDMOPT_VAR_MDEFPOWER, RDMOPT_HEAL_VALUE, RDMOPT_HEAL_MODIFY_PERCENT, RDMOPT_DEC_SPELL_CAST_TIME, RDMOPT_BODY_INDESTRUCTIBLE, RDMOPT_WEAPON_ATTR_WATER, RDMOPT_WEAPON_ATTR_FIRE, RDMOPT_WEAPON_ATTR_GROUND, RDMOPT_WEAPON_ATTR_WIND;
-		.@result = rand(getarraysize(.@options));
+		deletearray .@options,
+			getarraysize(.@options);
+		setarray .@options[0],
+			RDMOPT_VAR_HPACCELERATION,
+			RDMOPT_VAR_SPACCELERATION,
+			RDMOPT_VAR_HITSUCCESSVALUE,
+			RDMOPT_VAR_AVOIDSUCCESSVALUE,
+			RDMOPT_VAR_ITEMDEFPOWER,
+			RDMOPT_VAR_MDEFPOWER,
+			RDMOPT_HEAL_VALUE,
+			RDMOPT_HEAL_MODIFY_PERCENT,
+			RDMOPT_DEC_SPELL_CAST_TIME,
+			RDMOPT_BODY_INDESTRUCTIBLE,
+			RDMOPT_WEAPON_ATTR_WATER,
+			RDMOPT_WEAPON_ATTR_FIRE,
+			RDMOPT_WEAPON_ATTR_GROUND,
+			RDMOPT_WEAPON_ATTR_WIND;
+		.@result = rand(1,getarraysize(.@options)-1);
 		.@OptID[1] = .@options[.@result];
-		if(.@result < 2) 									// HP/SP Recovery  50~100%
+		if(.@result <= 2) 									// HP/SP Recovery  50~100%
 			.@OptVal[1] = rand(50,100);
-		if(.@result < 4) 									// Hit/Flee 15~30
+		if(.@result <= 4) 									// Hit/Flee 15~30
 			.@OptVal[1] = rand(50,100);
-		if(.@result < 5) 									// DEF 20-60
+		if(.@result == 5) 									// DEF 20-60
 			.@OptVal[1] = rand(20,60);
-		if(.@result < 9) 									// MDEF/Heal Power/Received/Variable Cast Reduction 5-10
+		if(.@result <= 9) 									// MDEF/Heal Power/Received/Variable Cast Reduction 5-10
 			.@OptVal[1] = rand(5,10);
 		else 												// Elemental
 			.@OptVal[1] = 1;
+		debugmes "Option2 Slot2: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[1];
 		.@OptParam[1] = 0;
 
 	}

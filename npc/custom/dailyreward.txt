@@ -1,0 +1,115 @@
+prontera,158,285,3	script	Special Daily Login	743,{
+OnPCLoginEvent:
+	// get data from login (positive value)
+	// .@c = query_sql("SELECT account_id FROM `login` WHERE last_unique_id = '"+get_unique_id()+"'", .@acc);
+	// // get the most recent data
+	// .@accounts$ = "";
+	// if(.@c > 0 ) {
+	// 	for(.@i = 0; .@i < getarraysize(.@acc); .@i++) {
+	// 		if(.@i > 0) .@accounts$ = .@accounts$ + ",";
+	// 		.@accounts$ = .@accounts$+""+.@acc[.@i];
+	// 	}
+	// 	query_sql("SELECT `account_id`, `value` FROM `acc_reg_num` WHERE `key` = '#LastDailyReward' AND `account_id` IN ("+.@accounts$+") ORDER BY `value` DESC", .@acc, .@last);
+	// 	// dispbottom ""+.@last;
+//
+	// 	// previously login using a different account, then transfer all the data to the other account.
+	// 	if(getcharid(3) != .@acc) {
+	// 		.@x = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#DailyRewardCount' AND `account_id` = '"+.@acc+"'", .@count);
+	// 		if(.@x > 0) #DailyRewardCount = .@count;
+	// 		.@x = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#LastDailyReward' AND `account_id` = '"+.@acc+"'", .@last);
+	// 		if(.@x > 0) #LastDailyReward = .@last;
+	// 		.@x = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#DailyRewardUnique' AND `account_id` = '"+.@acc+"'", .@unique);
+	// 		if(.@x > 0) #DailyRewardUnique = .@unique;
+	// 	}
+	// }
+
+	// get the most recent data
+	.@c = query_sql("SELECT `account_id` FROM `acc_reg_num` WHERE `key` = '#DailyRewardUnique' AND `account_id` != "+getcharid(3)+" AND `value` = '"+get_unique_id()+"'", .@acc);
+	if(.@c > 0) {
+		.@accounts$ = "";
+		for(.@i = 0; .@i < getarraysize(.@acc); .@i++) {
+			if(.@i > 0) .@accounts$ = .@accounts$ + ",";
+			.@accounts$ = .@accounts$+""+.@acc[.@i];
+		}
+		query_sql("SELECT `account_id`, `value` FROM `acc_reg_num` WHERE `key` = '#LastDailyReward' AND `account_id` IN ("+.@accounts$+") ORDER BY `value` DESC", .@acc, .@last);
+		// dispbottom ""+.@last;
+
+		// previously login using a different account, then transfer all the data to the other account.
+		if(getcharid(3) != .@acc) {
+			.@x = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#DailyRewardCount' AND `account_id` = '"+.@acc+"'", .@count);
+			if(.@x > 0) #DailyRewardCount = .@count;
+			.@x = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#LastDailyReward' AND `account_id` = '"+.@acc+"'", .@last);
+			if(.@x > 0) #LastDailyReward = .@last;
+			.@x = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#DailyRewardUnique' AND `account_id` = '"+.@acc+"'", .@unique);
+			if(.@x > 0) #DailyRewardUnique = .@unique;
+		}
+
+	}
+	// debugmes "SELECT `value` FROM `acc_reg_num` WHERE `key` = '#DailyRewardUnique' AND `account_id` != "+getcharid(3)+" `value` = '"+get_unique_id()+"'";
+	// dispbottom ""+#DailyRewardUnique + " | "+get_unique_id();
+
+	if (.@c <= 0 ) // not cheating
+	// if (#DailyRewardUnique != 0)
+	{
+		.@gdate$ = callfunc("get_date", 0,0);
+		explode(@temp$, .@gdate$, "-");
+		.@current = atoi(@temp$[0]+""+@temp$[1]+""+@temp$[2]);
+
+		// dispbottom ""+ #LastDailyReward + " | "+.@current;
+		if(#LastDailyReward < .@current) {// first time
+
+			#LastDailyReward = .@current;
+
+			deletearray .@CurrentReward$[0],getarraysize(.@CurrentReward$);
+			#DailyRewardCount = #DailyRewardCount + 1;
+			.@RewardCount = #DailyRewardCount;
+			explode(.@CurrentReward$,.Rewards$[.@RewardCount],",");
+
+			dispbottom "===============================================================", 0x666666;
+			dispbottom "  We from MilkyRO wishes you a Happy Holidays!", 0x76daee;
+			dispbottom "===============================================================", 0x666666;
+			dispbottom " MilkyRO is currently holding Milky Special Yogurt Festival (2018). Please check the forum for more info.";
+			dispbottom " ";
+			dispbottom " To celebrate the occasion, we will gift you a few items every day.";
+			dispbottom " Here are your freebie of Day-"+.@RewardCount+": ";
+
+			// give zeny
+			if(atoi(.@CurrentReward$[0]) > 0) {
+				dispbottom callfunc("F_InsertComma", .@CurrentReward$[0]) + " Zeny";
+				Zeny += atoi(.CurrentReward$[0]);
+			}
+
+			// give item
+			for(.@i = 1; .@i < getarraysize(.@CurrentReward$); .@i=.@i+2){
+				getitem atoi(.@CurrentReward$[.@i]), atoi(.@CurrentReward$[(.@i+1)]);
+			}
+			dispbottom " ";
+			dispbottom " ~ MilkyRO Team", 0x76daee;
+			dispbottom "===============================================================", 0x666666;
+		}
+		#DailyRewardUnique = get_unique_id();
+	}
+	end;
+
+OnInit:
+	setarray .Rewards$[1],
+		"25000,8504,1",			// Day 1: 25000 Zeny + 20 Blacksmith Blessing
+		"0,11504,10",				// Day 2: 10 WOE Blue Pot
+		"0,7621,3",				// Day 3: 3 Token of Siegfried
+		"0,12212,5",				// Day 4: 5 Giant Fly Wing
+		"0,7619,5,7620,5",		// Day 5: 5 Enriched Oridecon + 5 Enriched Elunium
+		"0,8501,10",				// Day 6: 10 Milky Special Gift Box
+		"0,12208,2",				// Day 7: 2 Battle Manual
+		"0,11547,15",				// Day 8: 15 Seige Purple Pot
+		"50000,7776,2",			// Day 9: 50000 Zeny + 2 Gym Pass
+		"0,11548,15,11549,15",	// Day 10: 15 Siege White Pot + 15 Siege Blue Pot
+		"0,6240,5,6241,5",		// Day 11: 5 HD Bradium + 5 HD Carnium
+		"0,12214,5,12103,3",		// Day 12: 5 Convex Mirror + 3 Bloody Branch
+		"0,8502,5",				// Day 13: 5 +10 Food Box
+		"0,8505,1";				// Day 14: 40 Blacksmith Blessing
+	end;
+
+OnClock0001: //daily reset
+	query_sql("DELETE FROM `acc_reg_num` WHERE `key` = '#DailyRewardUnique'");
+	end;
+}

@@ -20789,7 +20789,7 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 	uint16 material = RFIFOW( fd, 4 );
 	bool use_blacksmith_blessing = RFIFOB( fd, 6 ) != 0; // TODO: add logic
 	struct refine_materials materials[REFINEUI_MAT_CNT];
-	uint8 i, material_count, blessing_count;
+	uint8 i, material_count, blessing_count, r;
 	uint16 j, k;
 	struct item *item;
 	struct item_data *id;
@@ -20913,14 +20913,15 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 
 			//	refine using HD (has chance to drop level)
 			if (materials[i].cost.nameid == 6241 || materials[i].cost.nameid == 6240 || materials[i].cost.nameid == 6226 || materials[i].cost.nameid == 6225) {
-				if((rnd() % 100) < 10) // 10% chance of dropping level
+				r = (rnd() % 10000)
+				if( r < 1000) // 10% chance of dropping level
 				{
 					// Otherwise downgrade it
 					item->refine = cap_value( item->refine - 1, 0, MAX_REFINE );
-					sprintf(output, "%d x Blacksmith's Blessing failed to protect the item from dropping its refine levels.", blessing_count);
+					sprintf(output, "%d x Blacksmith's Blessing FAILED to protect the item from dropping its refine levels ( %d ).", blessing_count, r);
 					clif_displaymessage(fd, output);
 				} else {
-					sprintf(output, "%d x Blacksmith's Blessing was used to protect the item from dropping its refine levels.", blessing_count);
+					sprintf(output, "%d x Blacksmith's Blessing was used to protect the item from dropping its refine levels ( %d ).", blessing_count, r);
 					clif_displaymessage(fd, output);
 				}
 				clif_refine( fd, 2, index, item->refine );

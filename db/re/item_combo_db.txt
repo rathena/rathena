@@ -858,3 +858,18 @@
 28502:2203,{ callfunc "F_Mob_Scarf"; }
 28502:2204,{ callfunc "F_Mob_Scarf"; }
 32238:32239,{ bonus bVariableCastrate,-10; bonus bMatkRate,10;  }
+32204:28010,{.@r=getequiprefinerycnt(EQI_HAND_R); bonus2 bAddClass,Class_All,(5*(.@r/2)); bonus5 bAutoSpellOnSkill,"GC_ROLLINGCUTTER","AB_ORATIO",10,(10*(.@r/2)),1;}
+32204:2027,{.@r=getequiprefinerycnt(EQI_HAND_R); bonus bInt,(2*(.@r/2)); bonus bVariableCastrate,-(1*(.@r/2)); bonus2 bSkillAtk,"WL_CRIMSONROCK",(1*(.@r/2)); autobonus "{ bonus2 bMagicAtkEle,Ele_Fire,(3*(.@r/2));}",100,10000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }";}
+32204:21018,{.@r=getequiprefinerycnt(EQI_HAND_R); bonus bCritical,(2*(.@r/2)); bonus bCritAtkRate,(2*(.@r/2)); bonus2 bAddClass,Class_Boss,(1*(.@r/2));}
+// Hawkeye
+28594:4879,{.@r=getequiprefinerycnt(EQI_SHOES); bonus bDex,(1*.@r); bonus bHit,(2*.@r); }
+// Lucky Day
+28594:4880,{.@r=getequiprefinerycnt(EQI_SHOES); bonus bLuk,(1*.@r); bonus bCritAtkRate,(1*.@r); }
+// Muscle Fool
+28594:4878,{.@r=getequiprefinerycnt(EQI_SHOES); bonus bMdef,(1*.@r); bonus bVariableCastrate,(-1*.@r); }
+// Runaway Magic
+28594:4876,{.@r=getequiprefinerycnt(EQI_SHOES); bonus bInt,(1*.@r); bonus bMaxSPrate,(1*.@r); }
+// Speed of Light
+28594:4877,{.@r=getequiprefinerycnt(EQI_SHOES); bonus bFlee,(2*.@r); bonus bDelayrate,(-1*.@r); }
+// Bear's Power
+28594:4875,{.@r=getequiprefinerycnt(EQI_SHOES); bonus bStr,(1*.@r); bonus bMaxHPrate,(1*.@r); }

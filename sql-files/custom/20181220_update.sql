@@ -8,9 +8,9 @@ REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `pric
 
 # Blacksmith Blessing boxes
 REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
-(8504, 'Blacksmith_Blessing_20Box', 'Blacksmith Blessing x 20 Box', 2, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getitem 6226,10;', NULL, NULL),
-(8505, 'Blacksmith_Blessing_40Box', 'Blacksmith Blessing x 40 Box', 2, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getitem 6226,10;', NULL, NULL),
-(8506, 'Blacksmith_Blessing_1000Box', 'Blacksmith Blessing x 100 Box', 2, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getitem 6226,10;', NULL, NULL);
+(8504, 'Blacksmith_Blessing_20Box', 'Blacksmith Blessing x 20 Box', 2, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getitem 6635,20;', NULL, NULL),
+(8505, 'Blacksmith_Blessing_40Box', 'Blacksmith Blessing x 40 Box', 2, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getitem 6635,40;', NULL, NULL),
+(8506, 'Blacksmith_Blessing_1000Box', 'Blacksmith Blessing x 100 Box', 2, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getitem 6635,100;', NULL, NULL);
 
 # All mission board now requires at least lv lv99
 UPDATE `mission_board` SET `min_lv` = '99' WHERE `mission_board`.`min_lv` < 100;

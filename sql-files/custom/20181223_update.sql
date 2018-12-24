@@ -1,0 +1,3 @@
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(32204, 'Immortal_Dog_Tag', 'Immortal Dog Tag', 4, 10, NULL, 100, '50:50', 0, NULL, 0, 4294967295, 63, 2, 136, NULL, '100', 0, 0, 'bonus2 bSubRace,Ele_Undead,4;', NULL, NULL),
+(28594, 'Temporal_Ring', 'Temporal Ring', 4, 10, NULL, 100, '50:50', 0, NULL, 0, 4294967295, 63, 2, 136, NULL, '100', 0, 0, 'bonus bMaxHPrate,10; bonus bMaxSPrate,10;', NULL, NULL);
