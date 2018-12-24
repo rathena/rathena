@@ -654,6 +654,7 @@ struct Battle_Config
 	int rental_transaction;
 	int min_shop_buy;
 	int min_shop_sell;
+	int feature_equipswitch;
 
 #include "../custom/battle_config_struct.inc"
 };
