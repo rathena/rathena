@@ -3305,7 +3305,7 @@ static void battle_apply_div_fix(struct Damage* d, uint16 skill_id)
 	if(d->damage) {
 		DAMAGE_DIV_FIX(d->damage, d->div_);
 		//Min damage
-		if(d->damage < d->div_ && (skill_id == SU_LUNATICCARROTBEAT || skill_id == SU_CN_METEOR || (battle_config.skill_min_damage&d->flag)))
+		if(d->damage < d->div_ && (skill_id == SU_LUNATICCARROTBEAT || skill_id == SU_LUNATICCARROTBEAT2 || skill_id == SU_CN_METEOR || skill_id == SU_CN_METEOR2 || (battle_config.skill_min_damage&d->flag)))
 			d->damage = d->div_;
 	} else if (d->div_ < 0) {
 		d->div_ *= -1;
@@ -4357,6 +4357,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 		case SU_LUNATICCARROTBEAT:
+		case SU_LUNATICCARROTBEAT2:
 			skillratio += 100 + 100 * skill_lv;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
@@ -6212,6 +6213,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 600;
 						break;
 					case SU_CN_METEOR:
+					case SU_CN_METEOR2:
 						skillratio += 100 + 100 * skill_lv;
 						break;
 					case NPC_VENOMFOG:

@@ -627,7 +627,7 @@ void initChangeTables(void)
 	set_sc( MER_KYRIE		, SC_KYRIE		, EFST_KYRIE		, SCB_NONE );
 	set_sc( MER_BLESSING		, SC_BLESSING		, EFST_BLESSING		, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( MER_INCAGI		, SC_INCREASEAGI	, EFST_INC_AGI, SCB_AGI|SCB_SPEED );
-	set_sc( MER_INVINCIBLEOFF2	, SC_INVINCIBLEOFF	, SI_BLANK		, SCB_SPEED );
+	set_sc( MER_INVINCIBLEOFF2	, SC_INVINCIBLEOFF	, EFST_BLANK, SCB_SPEED );
 
 	set_sc( GD_LEADERSHIP		, SC_LEADERSHIP		, EFST_BLANK		, SCB_STR );
 	set_sc( GD_GLORYWOUNDS		, SC_GLORYWOUNDS	, EFST_BLANK		, SCB_VIT );
@@ -893,7 +893,7 @@ void initChangeTables(void)
 	set_sc( SU_NYANGGRASS			, SC_NYANGGRASS		, EFST_NYANGGRASS		, SCB_DEF|SCB_MDEF );
 	set_sc( SU_GROOMING				, SC_GROOMING		, EFST_GROOMING		, SCB_FLEE );
 	add_sc( SU_PURRING				, SC_GROOMING );
-	add_sc( SU_SHRIMPARTY			, SC_FRESHSHRIMP );
+	set_sc( SU_SHRIMPARTY			, SC_SHRIMPBLESSING , EFST_PROTECTIONOFSHRIMP , SCB_REGEN );
 	add_sc( SU_MEOWMEOW				, SC_CHATTERING );
 	set_sc( SU_CHATTERING			, SC_CHATTERING		, EFST_CHATTERING		, SCB_WATK|SCB_MATK );
 
@@ -1118,7 +1118,6 @@ void initChangeTables(void)
 
 	/* Summoners status icons */
 	StatusIconChangeTable[SC_SPRITEMABLE] = EFST_SPRITEMABLE;
-	StatusIconChangeTable[SC_SHRIMPBLESSING] = EFST_PROTECTIONOFSHRIMP;
 	StatusIconChangeTable[SC_DORAM_BUF_01] = EFST_DORAM_BUF_01;
 	StatusIconChangeTable[SC_DORAM_BUF_02] = EFST_DORAM_BUF_02;
 
@@ -1331,7 +1330,6 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_GLASTHEIM_HPSP] |= SCB_MAXHP|SCB_MAXSP;
 
 	// Summoner
-	StatusChangeFlagTable[SC_SHRIMPBLESSING] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_DORAM_WALKSPEED] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_DORAM_MATK] |= SCB_MATK;
 	StatusChangeFlagTable[SC_DORAM_FLEE2] |= SCB_FLEE2;
@@ -4288,7 +4286,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	// If the skill is learned, the status is infinite.
 	if( (skill = pc_checkskill(sd,SU_SPRITEMABLE)) > 0 && !sd->sc.data[SC_SPRITEMABLE] )
-		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, -1);
+		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, INFINITE_TICK);
 
 	calculating = 0;
 
@@ -4423,7 +4421,7 @@ int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt)
 		hd->battle_status.hp = hom->hp;
 		hd->battle_status.sp = hom->sp;
 		if(hom->class_ == 6052) // Eleanor
-			sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
+			sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
 	}
 
 #ifndef RENEWAL
@@ -4589,7 +4587,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 
 		if (sc && sc->count) {
 			if (sc->data[SC_SHRIMPBLESSING])
-				val += 150 / 100;
+				val *= 150 / 100;
 			if (sc->data[SC_ANCILLA])
 				val += sc->data[SC_ANCILLA]->val2 / 100;
 		}
@@ -9516,7 +9514,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SPRITEMABLE:
 		case SC_CLAN_INFO:
 		case SC_DAILYSENDMAILCNT:
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 
 		case SC_DECREASEAGI:
@@ -9546,22 +9544,22 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			// val4 signals infinite endure (if val4 == 2 it is infinite endure from Berserk)
 			if( val4 )
-				tick = -1;
+				tick = INFINITE_TICK;
 			break;
 		case SC_AUTOBERSERK:
 			if (status->hp < status->max_hp>>2 &&
 				(!sc->data[SC_PROVOKE] || sc->data[SC_PROVOKE]->val2==0))
 					sc_start4(src,bl,SC_PROVOKE,100,10,1,0,0,60000);
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC_SIGNUMCRUCIS:
 			val2 = 10 + 4*val1; // Def reduction
-			tick = -1;
+			tick = INFINITE_TICK;
 			clif_emotion(bl, ET_SWEAT);
 			break;
 		case SC_MAXIMIZEPOWER:
 			tick_time = val2 = tick>0?tick:60000;
-			tick = -1; // Duration sent to the client should be infinite
+			tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			break;
 		case SC_EDP:
 			val2 = val1 + 2; // Chance to Poison enemies.
@@ -9595,7 +9593,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_SACRIFICE:
 			val2 = 5; // Lasts 5 hits
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC_ENCPOISON:
 			val2= 250+50*val1; // Poisoning Chance (2.5+0.5%) in 1/10000 rate
@@ -9850,7 +9848,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (!sd) // Monsters should be able to walk with no penalties. [Skotlex]
 				val1 = 10;
 			tick_time = val2 = tick>0?tick:60000; // SP consumption rate.
-			tick = -1; // Duration sent to the client should be infinite
+			tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			val3 = 0; // Unused, previously walk speed adjustment
 			// val4&1 signals the presence of a wall.
 			// val4&2 makes cloak not end on normal attacks [Skotlex]
@@ -9916,7 +9914,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 12; // SP cost
 			tick_time = 10000; // Decrease at 10secs intervals.
 			val3 = tick / tick_time;
-			tick = -1; // Duration sent to the client should be infinite
+			tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			break;
 		case SC_PARRYING:
 		    val2 = 20 + val1*3; // Block Chance
@@ -10011,12 +10009,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_REJECTSWORD:
 			val2 = 15*val1; // Reflect chance
 			val3 = 3; // Reflections
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 
 		case SC_MEMORIZE:
 			val2 = 5; // Memorized casts.
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 
 		case SC_GRAVITATION:
@@ -10117,7 +10115,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_RUN:
 			val4 = gettick(); // Store time at which you started running.
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC_KAAHI:
 			val2 = 200*val1; // HP heal
@@ -10131,7 +10129,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_TRICKDEAD:
 			if (vd) vd->dead_sit = 1;
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC_CONCENTRATE:
 			val2 = 2 + val1;
@@ -10494,7 +10492,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_WUGDASH:
 			val4 = gettick(); // Store time at which you started running.
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC__SHADOWFORM:
 			{
@@ -10513,7 +10511,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 50 - 10 * val1; // ASPD
 			val3 = 20 * val1; // CRITICAL
 			val4 = tick / 1000;
-			tick = -1; // Duration sent to the client should be infinite
+			tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC__ENERVATION:
@@ -10578,7 +10576,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_WARMER:
 			val4 = tick / 3000;
-			tick = -1; // Duration sent to the client should be infinite
+			tick = INFINITE_TICK; // Duration sent to the client should be infinite
 			tick_time = 3000;
 			break;
 		case SC_BLOODSUCKER:
@@ -10680,7 +10678,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_FORCEOFVANGUARD:
 			val2 = 8 + 12 * val1; // Chance
 			val3 = 5 + 2 * val1; // Max rage counters
-			tick = -1; // Endless duration in the client
+			tick = INFINITE_TICK; // Endless duration in the client
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
 		case SC_EXEEDBREAK:
@@ -10964,7 +10962,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				sc_start(src,bl, SC_ENDURE, 100, val1, tick); // Start endure for same duration
 			break;
 		case SC_STYLE_CHANGE:
-			tick = -1; // Infinite duration
+			tick = INFINITE_TICK; // Infinite duration
 			break;
 		case SC_CBC:
 			val3 = 10; // Drain sp % dmg
@@ -11052,7 +11050,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_OVERHEAT_LIMITPOINT:
 		case SC_STEALTHFIELD:
 			tick_time = tick;
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC_STEALTHFIELD_MASTER:
 			tick_time = val3 = 2000 + 1000 * val1;
@@ -11077,7 +11075,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_NEUTRALBARRIER:
 			val2 = 10 + val1 * 5; // Def/Mdef
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 
 		/* Rebellion */
@@ -11208,8 +11206,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_GOLDENMACECLAN:
 		case SC_CROSSBOWCLAN:
 		case SC_JUMPINGCLAN:
-			tick = -1;
-			status_change_start(src,bl,SC_CLAN_INFO,10000,0,val2,0,0,-1,flag);
+			tick = INFINITE_TICK;
+			status_change_start(src,bl,SC_CLAN_INFO,10000,0,val2,0,0,INFINITE_TICK,flag);
 			break;
 		case SC_DORAM_BUF_01:
 		case SC_DORAM_BUF_02:
@@ -14148,7 +14146,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 				if (sc->data[i]->timer != INVALID_TIMER)
 					data.tick = DIFF_TICK(timer->tick, tick);
 				else
-					data.tick = INVALID_TIMER;
+					data.tick = INFINITE_TICK;
 				break;
 			// Special cases
 			case SC_TOXIN:
@@ -14164,7 +14162,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 				if (sc->data[i]->timer != INVALID_TIMER)
 					data.tick = DIFF_TICK(timer->tick, tick) + sc->data[i]->val4;
 				else
-					data.tick = INVALID_TIMER;
+					data.tick = INFINITE_TICK;
 				break;
 			default:
 				continue;

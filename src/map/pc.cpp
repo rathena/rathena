@@ -2112,7 +2112,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 		}
 	}
 
-	struct s_autospell entry;
+	struct s_autospell entry = {};
 
 	entry.id = id;
 	entry.lv = lv;
@@ -2132,7 +2132,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
  * @param rate: Success chance
  * @param card_id: Used to prevent card stacking
  */
-static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
+static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
 {
 	if (spell.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", MAX_PC_BONUS);
@@ -2142,7 +2142,7 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src
 	if (!rate)
 		return;
 
-	struct s_autospell entry;
+	struct s_autospell entry = {};
 
 	entry.flag = src_skill;
 	entry.id = id;
@@ -2188,7 +2188,7 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 		}
 	}
 
-	struct s_addeffect entry;
+	struct s_addeffect entry = {};
 
 	entry.sc = sc;
 	entry.rate = rate;
@@ -2226,7 +2226,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 		}
 	}
 
-	struct s_addeffectonskill entry;
+	struct s_addeffectonskill entry = {};
 
 	entry.sc = sc;
 	entry.rate = rate;
@@ -2289,7 +2289,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 		}
 	}
 
-	struct s_add_drop entry;
+	struct s_add_drop entry = {};
 
 	entry.nameid = nameid;
 	entry.group = group;
@@ -2332,7 +2332,7 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 		}
 	}
 
-	struct s_autobonus entry;
+	struct s_autobonus entry = {};
 
 	entry.rate = rate;
 	entry.duration = dur;
@@ -2358,10 +2358,14 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
 	if (!sd)
 		return;
 
-	for (uint8 i = 0; i < bonus.size(); i++) {
-		if (bonus[i].active != INVALID_TIMER) {
-			if (restore && (sd->state.autobonus&bonus[i].pos) == bonus[i].pos) {
-				if (bonus[i].bonus_script) {
+	std::vector<s_autobonus>::iterator it = bonus.begin();
+
+	while( it != bonus.end() ){
+		s_autobonus b = *it;
+
+		if (b.active != INVALID_TIMER) {
+			if (restore && (sd->state.autobonus&b.pos) == b.pos) {
+				if (b.bonus_script) {
 					unsigned int equip_pos_idx = 0;
 
 					// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
@@ -2370,22 +2374,26 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
 							equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
 					}
 
-					if ((equip_pos_idx&bonus[i].pos) == bonus[i].pos)
-						script_run_autobonus(bonus[i].bonus_script, sd, bonus[i].pos);
+					if ((equip_pos_idx&b.pos) == b.pos)
+						script_run_autobonus(b.bonus_script, sd, b.pos);
 				}
+
+				it++;
+
 				continue;
 			} else { // Logout / Unequipped an item with an activated bonus
-				delete_timer(bonus[i].active, pc_endautobonus);
-				bonus[i].active = INVALID_TIMER;
+				delete_timer(b.active, pc_endautobonus);
+				b.active = INVALID_TIMER;
 			}
 		}
 
-		if (bonus[i].bonus_script)
-			aFree(bonus[i].bonus_script);
-		if (bonus[i].other_script)
-			aFree(bonus[i].other_script);
+		if (b.bonus_script)
+			aFree(b.bonus_script);
+		if (b.other_script)
+			aFree(b.other_script);
+
+		it = bonus.erase(it);
 	}
-	bonus.clear();
 }
 
 /**
@@ -2393,7 +2401,7 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
  * @param sd: Player data
  * @param autobonus: Autobonus to run
  */
-void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
+void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus)
 {
 	if (!sd || !autobonus)
 		return;
@@ -2414,7 +2422,7 @@ void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
 			script_run_autobonus(autobonus->other_script,sd,autobonus->pos);
 	}
 
-	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)autobonus);
+	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
 	sd->state.autobonus |= autobonus->pos;
 	status_calc_pc(sd,SCO_FORCE);
 }
@@ -2424,13 +2432,19 @@ void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
  */
 TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
-	struct s_autobonus *autobonus = (struct s_autobonus *)data;
+	std::vector<s_autobonus> *bonus = (std::vector<s_autobonus> *)data;
 
 	nullpo_ret(sd);
-	nullpo_ret(autobonus);
+	nullpo_ret(bonus);
 
-	autobonus->active = INVALID_TIMER;
-	sd->state.autobonus &= ~autobonus->pos;
+	for( struct s_autobonus& autobonus : *bonus ){
+		if( autobonus.active == tid ){
+			autobonus.active = INVALID_TIMER;
+			sd->state.autobonus &= ~autobonus.pos;
+			break;
+		}
+	}
+	
 	status_calc_pc(sd,SCO_FORCE);
 	return 0;
 }
@@ -2487,8 +2501,6 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
-	struct s_addele2 entry;
-
 	if (sd->subele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_subele: Reached max (%d) number of resist element damage bonuses per character!\n", MAX_PC_BONUS);
 		return;
@@ -2513,6 +2525,8 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 		}
 	}
 
+	struct s_addele2 entry = {};
+
 	entry.ele = ele;
 	entry.rate = rate;
 	entry.flag = flag;
@@ -2528,14 +2542,14 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int val)
 {
-	struct s_item_bonus entry;
-
 	for (auto &it : bonus) {
 		if (it.id == id) {
 			it.val += val;
 			return;
 		}
 	}
+
+	struct s_item_bonus entry = {};
 
 	entry.id = id;
 	entry.val = val;
@@ -12151,7 +12165,7 @@ void pc_cell_basilica(struct map_session_data *sd) {
 			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
 	}
 	else if (!sd->sc.data[SC_BASILICA])
-		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,-1);
+		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,INFINITE_TICK);
 }
 
 /** [Cydh]

@@ -3739,7 +3739,7 @@ void clif_arrowequip(struct map_session_data *sd,int val) {
 	nullpo_retv(sd);
 
 #if PACKETVER >= 20121128
-	clif_status_change(&sd->bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INVALID_TIMER, 0, 0, 0);
+	clif_status_change(&sd->bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INFINITE_TICK, 0, 0, 0);
 #endif
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len(0x013c));
@@ -3996,7 +3996,7 @@ void clif_changeoption(struct block_list* bl)
 	//Whenever we send "changeoption" to the client, the provoke icon is lost
 	//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
 	if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
-		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, -1, 0, 0, 0);
+		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, INFINITE_TICK, 0, 0, 0);
 }
 
 
@@ -12267,7 +12267,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if ((pc_cant_act2(sd) || sd->chatID) &&
 		skill_id != RK_REFRESH &&
-		!(skill_id == SR_GENTLETOUCH_CURE && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
+		!( ( skill_id == SR_GENTLETOUCH_CURE || skill_id == SU_GROOMING ) && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
 		!(sd->state.storage_flag && (inf&INF_SELF_SKILL))) //SELF skills can be used with the storage open, issue: 8027
 		return;
 
@@ -17325,32 +17325,32 @@ void clif_bg_xy_remove(struct map_session_data *sd)
 	clif_send(buf, packet_len(0x2df), &sd->bl, BG_SAMEMAP_WOS);
 }
 
+/// Notifies clients of a battleground message.
+/// 02DC <packet len>.W <account id>.L <name>.24B <message>.?B (ZC_BATTLEFIELD_CHAT)
+void clif_bg_message( struct battleground_data *bg, int src_id, const char *name, const char *mes, int len ){
+	struct map_session_data *sd = bg_getavailablesd( bg );
 
-/// Notifies clients of a battleground message (ZC_BATTLEFIELD_CHAT).
-/// 02dc <packet len>.W <account id>.L <name>.24B <message>.?B
-void clif_bg_message(struct battleground_data *bg, int src_id, const char *name, const char *mes, int len)
-{
-	struct map_session_data *sd;
-	unsigned char *buf;
-	if( (sd = bg_getavailablesd(bg)) == NULL )
+	if( sd == nullptr ){
 		return;
+	}
 
-	buf = (unsigned char*)aMalloc((len + NAME_LENGTH + 8)*sizeof(unsigned char));
+	// limit length
+	len = min( len + 1, CHAT_SIZE_MAX );
+
+	unsigned char buf[8 + NAME_LENGTH + CHAT_SIZE_MAX];
 
 	WBUFW(buf,0) = 0x2dc;
 	WBUFW(buf,2) = len + NAME_LENGTH + 8;
 	WBUFL(buf,4) = src_id;
 	safestrncpy(WBUFCP(buf,8), name, NAME_LENGTH);
-	memcpy(WBUFP(buf,32), mes, len);
-	clif_send(buf,WBUFW(buf,2), &sd->bl, BG);
+	safestrncpy(WBUFCP(buf,8+NAME_LENGTH), mes, len );
 
-	if( buf )
-		aFree(buf);
+	clif_send(buf,WBUFW(buf,2), &sd->bl, BG);
 }
 
-
-/// Validates and processes battlechat messages [pakpil] (CZ_BATTLEFIELD_CHAT).
-/// 0x2db <packet len>.W <text>.?B (<name> : <message>) 00
+/// Validates and processes battlechat messages.
+/// All messages that are sent after enabling battleground chat with /battlechat.
+/// 02DB <packet len>.W <text>.?B (CZ_BATTLEFIELD_CHAT)
 void clif_parse_BattleChat(int fd, struct map_session_data* sd){
 	char name[NAME_LENGTH], message[CHAT_SIZE_MAX], output[CHAT_SIZE_MAX+NAME_LENGTH*2];
 
@@ -20913,7 +20913,7 @@ void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
 
 			//	refine using HD (has chance to drop level)
 			if (materials[i].cost.nameid == 6241 || materials[i].cost.nameid == 6240 || materials[i].cost.nameid == 6226 || materials[i].cost.nameid == 6225) {
-				r = (rnd() % 10000)
+				r = (rnd() % 10000);
 				if( r < 1000) // 10% chance of dropping level
 				{
 					// Otherwise downgrade it

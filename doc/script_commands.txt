@@ -5704,6 +5704,7 @@ with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
 they are not currently documented.
 
 The duration of the status is given in <ticks>, or milleseconds.
+Use INFINITE_TICK for infinite duration.
 
 Certain status changes take an additional parameter <value 1>, which typically
 modifies player stats by the given number or percentage. This differs for each
