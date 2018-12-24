@@ -2371,10 +2371,9 @@
 	packet(0x0A44,-1);
 	packet(0x0AB2,7);
 	packet(0x0ABD,10);
-	// TODO: find correct packet ver
 	packet(0x0A98,10);
 	parseable_packet(0x0A99,4,clif_parse_equipswitch_remove,2,4);
-	parseable_packet(0x0ACE,4,clif_parse_equipswitch_request_single,0); // 20170531 has it
+	parseable_packet(0x0ACE,4,clif_parse_equipswitch_request_single,0);
 #endif
 
 // 2017-08-30bRagexeRE
