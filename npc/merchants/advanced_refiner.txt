@@ -66,7 +66,7 @@ payon,157,146,6	script	Suhnbi#cash	85,{
 
 	mes "[Suhnbi]";
 	mes "Clang! Clang! Clang!";
-	if (getequippercentrefinery(.@part, true) > rand(100)) {
+	if (getequippercentrefinery(.@part, REFINE_COST_ENRICHED) > rand(100)) {
 		successrefitem .@part;
 		next;
 		emotion ET_BEST;
@@ -113,7 +113,7 @@ S_RefineValidate:
 	mes "Would you like to continue?";
 	next;
 	if(select("Yes:No") == 1) {
-		if (getequippercentrefinery(.@part) < 100) {
+		if (getequippercentrefinery(.@part,REFINE_COST_ENRICHED) < 100) {
 			if (.@weapon_lvl) {
 				mes "[Suhnbi]";
 				mes "Wow!!";

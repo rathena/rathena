@@ -623,6 +623,7 @@ struct Battle_Config
 	int exp_cost_inspiration;
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
+	int reserved_costume_id;
 	int atcommand_levelup_events;
 	int block_account_in_same_party;
 	int tarotcard_equal_chance; //Official or equal chance for each card
@@ -640,18 +641,18 @@ struct Battle_Config
 	int guild_alliance_onlygm;
 	int feature_achievement;
 	int allow_bound_sell;
-	int event_refine_chance;
+	int feature_refineui;
 	int autoloot_adjust;
 	int broadcast_hide_name;
 	int skill_drop_items_full;
 	int switch_remove_edp;
 	int feature_homunculus_autofeed;
-	int feature_homunculus_autofeed_rate;
 	int summoner_trait;
 	int homunculus_autofeed_always;
 	int feature_attendance;
 	int feature_privateairship;
 	int rental_transaction;
+	int feature_equipswitch;
 	int min_shop_buy;
 	int min_shop_sell;
 

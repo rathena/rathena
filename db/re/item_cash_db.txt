@@ -17,3 +17,63 @@
 //
 // Price:
 //    Item cost, in cash points (#CASHPOINTS).
+
+// NEW
+
+//HOT
+//1,5897,10000 // Coroa de Petalas
+//1,19308,10000 //Amistr Beret
+//1,18795,10000 //Bone Asinhas 1
+1,5564,10000 //Crown of Deceit
+1,18791,10000 //Laco Divino
+1,5907,10000 //Chapeu da Almirante
+1,5906,10000 //Chifres maléficos
+1,5904,10000 //Chapeu Luxoso
+1,5388,10000 //Snake Head
+1,5359,10000 //Airship Captains
+1,5902,10000 //Chapeu de Jardinagem
+1,5901,10000 //Boina de Vigia
+//1,5899,10000 //Laço Punk
+//1,5898,10000 //Tiara de Outono
+//1,18794,10000 //Black Magician Hat
+1,5902,10000 //Harvester hat
+1,5325,8000 //Robo Eye
+1,5592,10000 //Sigruns Wings
+1,28902,10000 //Coelho Macabro
+1,18522,10000 //Evil Marching Hat
+1,18791,10000 //Shrine Maiden
+1,18523,10000 //Super Nimbus
+
+
+//LIMITED
+
+//RENTAL
+
+//GEAR
+
+//BUFF
+5,12215,100 //Blessing Scroll
+5,12216,100 //Agility Scroll
+5,14588,200 //Party Blessing Scroll
+5,14589,200 //Party Inc. Agi Scroll
+5,12218,100 //LV5 Assumption Scroll
+
+5,14592,200 //Job Battle Manual
+5,12209,200 //Life Insurance
+5,14533,200 //Field Manual 100%
+5,14537,400 //Regeneration Potion
+5,12210,1000 //Bubble Gum
+
+
+
+
+//-Box
+
+
+//HEAL
+
+//OTHER
+7,32130,1000    //Cash Ticket[1000]
+7,32131,20000   //Vip Ticket [30]
+
+//SALE

@@ -108,7 +108,7 @@ int guild_skill_get_max (int id) {
 
 // Retrieve skill_lv learned by guild
 int guild_checkskill(struct guild *g, int id) {
-	if ( g == nullptr || (id = guild_skill_get_index(id)) < 0)
+	if ((id = guild_skill_get_index(id)) < 0)
 		return 0;
 	return g->skill[id].lv;
 }
@@ -273,8 +273,8 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd) {
 //	m->exp_payper	= 0;
 	m->online		= 1;
 	m->position		= MAX_GUILDPOSITION-1;
-	safestrncpy(m->name,sd->status.name,NAME_LENGTH);
-	m->last_login	= (uint32)time(NULL);
+	memcpy(m->name,sd->status.name,NAME_LENGTH);
+	return;
 }
 
 /**

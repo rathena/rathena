@@ -1,0 +1,272 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.1 Added vip function to collect all bounties,
+//=     Fixed a minnor bug with one use of a close command.
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+function	script	F_Bounty_Board	{
+	if (BaseLevel < getarg(0) || (BaseLevel > getarg(1) && getarg(1))){
+		for (.@i = 5; .@i < getargcount(); .@i += 4){
+			if (checkquest(getarg(.@i)) != -1){
+				mes "[Bounty Board]";
+				mes "You are ready to collect your bounty.";
+				mes "Which bounty do you want to collect?";
+				next;
+				switch(select("Collect 1 bounty", "Collect ALL bounties", "I want to QUIT hunting", "cancel")){
+					case 1: goto L_BountyOne;
+					case 2: goto L_BountyAll;
+					case 3: goto L_BountyDel;
+					case 4: close;
+				}
+			}
+		}
+		switch(getarg(3)){
+			case 1: mes "These bounties are available only to adventurers who are between the levels "+getarg(0)+"-"+getarg(1)+"."; break;
+			case 2: mes "These bounties are available only to adventurers who are between levels "+getarg(0)+" and "+getarg(1)+"."; break;
+			case 3: mes "These bounties are available only to adventurers who are above level "+getarg(0)+"."; break;
+			case 4: mes "These bounties are available only to adventurers who are higher than level "+getarg(0)+"."; break;
+			case 5: mes "You've stumbled upon what appears to be a bulletin board with wanted ads. Nothing looks that interesting."; break;
+		}
+		close;
+	}
+	mes "[Bounty Board]";
+	mes "You've stumbled upon what appears to be a bulletin board with wanted ads.";
+	mes "Take a closer look?";
+	next;
+	mes "[Bounty Board]";
+	mes "There are many listings for monster hunting.";
+	next;
+	switch(select("Check bounty missions", "Collect bounty rewards", "Where do I go to hunt?", "Search for other bounty hunters.", "I want to QUIT hunting", "Not interested.")){
+	case 1:	// Check bounty missions
+		mes "[Bounty Board]";
+		mes "There is a list of monsters on the board.";
+		mes "Looking through it you decide to take one hunting task.";
+		next;
+		for (.@i = 4; .@i < getargcount(); .@i += 4)
+			.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + ":";
+		.@menu$ = .@menu$ + "Hunt All:Cancel";
+		.@bounty = (select(.@menu$) * 4) + 1;
+		if (.@bounty > getargcount()+1){
+			mes "[Bounty Board]";
+			mes "You have decided not to take any bounties.";
+			close;
+		} else if (.@bounty == getargcount()+1){
+			for (.@i = 5; .@i < getargcount(); .@i += 4){
+				if (checkquest(getarg(.@i)) == -1)
+					setquest getarg(.@i);
+				.@HuntAllList$ = .@HuntAllList$ + (.@i+4 > getargcount()?" and ":(.@i > 5?", ":"")) + getmonsterinfo(getarg(.@i-1),MOB_NAME);
+			}
+			mes "[Bounty Board]";
+			mes "There is a bounty to hunt 150 " + .@HuntAllList$ + " hunt them all.";
+			close;
+		}
+		.@monster$ = getmonsterinfo(getarg(.@bounty-1),MOB_NAME);
+		mes "[Bounty Board]";
+		mes "There is a bounty to hunt 150 " + .@monster$ + ".";
+		next;
+		if (select("I'll do it.", "Uhh actually nevermind.") == 1){
+			if (checkquest(getarg(.@bounty),HUNTING) == -1)
+				setquest getarg(.@bounty);
+			mes "[Bounty Board]";
+			mes "You have accepted the bounty to hunt "+.@monster$+".";
+		}
+		close;
+	case 2:	// Collect bounty rewards
+		mes "[Bounty Board]";
+		mes "You are ready to collect your bounty.";
+		mes "Which bounty do you want to collect?";
+		next;
+		switch(select("Collect 1 bounty", "Collect ALL bounties", "cancel")){
+			case 1: goto L_BountyOne;
+			case 2: goto L_BountyAll;
+			case 3: close;
+		}
+	case 3:	// Where do I go to hunt?
+		mes "[Bounty Board]";
+		switch(getarg(2)){
+			case 1: mes "You can hunt them at the dungeon. You're staring at the entrance now!"; break;
+			case 2: mes "You can hunt them at the forests surrounding Payon and at the Cave up north at Archer Village."; break;
+			case 3: mes "You can hunt them at various fields surrounding Prontera."; break;
+			case 4: mes "You can hunt them at various fields and dungeons around Prontera."; break;
+			case 5: mes "You can hunt at the Umbala Fields to fulfill these bounties."; break;
+			case 6:
+				mes "Wich monster hunting field do you want to go to?";
+				next;
+				.@bounty = (select("Golem", "Stalactic Golem", "Medusa", "Cancel") * 4) + 1;
+				if (.@bounty > getargcount())
+					close;
+				mes "[Bounty Board]";
+				if (checkquest(getarg(.@bounty),HUNTING) == -1){
+					mes "You're currently not hunting "+getmonsterinfo(getarg(.@bounty-1),MOB_NAME)+".";
+					close;
+				}
+				mes "Sending you now.";
+				close2;
+				switch(.@bounty){
+					case 1: warp "cmd_fild06",147,36; break;
+					case 2: warp "beach_dun2",154,25; break;
+					case 3: warp "beach_dun",266,67; break;
+				}
+				end;
+			case 7: mes "You can hunt at the <NAVI>Juno Fields<INFO>yuno,158,16,</INFO></NAVI> to fulfill these bounties."; break;
+			case 8: mes "You can hunt at <NAVI>Brasilis Field<INFO>brasilis,309,304,</INFO></NAVI> and <NAVI>Brasilis Dungeon<INFO>brasilis,183,284,</INFO></NAVI> to fulfill these bounties."; break;
+			case 9: mes "You can hunt them at various fields surrounding Lighthalzen."; break;
+			case 10: mes "You can hunt them at various fields and dungeons around Lighthalzen."; break;
+			case 11:
+				mes "You can hunt at <NAVI>Splendide Field<INFO>mid_camp,14,143,</INFO></NAVI> to fulfill these bounties.";
+				mes "Be sure that you're an authorized member of the Midgard Alliance before you go there.";
+				break;
+			case 12: mes "You can hunt at the two Dicastes Fields to fulfill these bounties."; break;
+		}
+		close;
+	case 4:	// Search for other bounty hunters.
+		mes "[Bounty Board]";
+		mes "To find players to party with, click on the [Booking] button in, your user menu or type \"/booking\" in the chat box to bring up the window.";
+		next;
+		mes "[Bounty Board]";
+		mes "Then click \"Search\" to bring up all party listings.";
+		mes "To post a party wanted ad, type \"/recruit\" into the chat box.";
+		close;
+	case 5:	// I want to QUIT hunting
+		goto L_BountyDel;
+	case 6:	// Not interested.
+		mes "[Bounty Board]";
+		mes "Life is full of dangers.";
+		mes "You don't live life unless you put yourself in danger from time to time";
+		close;
+	}
+
+L_BountyOne:
+	mes "[Bounty Board]";
+	mes "You will receive ^FF00001 Eden Merit Badge if all bounties are collected together.^000000";
+	mes "Otherwise, zeny and EXP/JEXP are rewarded alone.";
+	mes "^FF0000VIP accounts get to choose how to distribute experience prizes^000000.";
+	next;
+	for (.@i = 4; .@i < getargcount(); .@i += 4)
+		.@menu$ = .@menu$ + getmonsterinfo(getarg(.@i),MOB_NAME) + ":";
+	.@menu$ = .@menu$ + "Cancel";
+	.@bounty = (select(.@menu$) * 4) + 1;
+	if (.@bounty > getargcount()){
+		mes "^000000[Bounty Board]^000000";
+		mes "Come back when you have a bounty completed.";
+		close;
+	}
+	if (checkquest(getarg(.@bounty),HUNTING) == 2){
+		if (vip_status(1)){
+			mes "^000000[Bounty Board]^000000";
+			mes "How will you distribute your newfound experience?";
+			next;
+			.@vip_reward = select("^FF0000Both Base and Job EXP^000000", "^0000FFI want Base EXP only.^000000", "^FFA400I want Job EXP only.^000000");
+		}
+		erasequest getarg(.@bounty);
+		if (Zeny + 37500 <= MAX_ZENY)
+			Zeny += 37500;
+		.@BaseExp = getarg(.@bounty+1);
+		.@JobExp = getarg(.@bounty+2);
+		switch(.@vip_reward){
+			case 2:
+				getexp .@BaseExp,0;
+				getexp .@JobExp,0;
+				break;
+			case 3:
+				getexp 0,.@BaseExp;
+				getexp 0,.@JobExp;
+				break;
+			default:
+				getexp .@BaseExp,.@JobExp;
+				break;
+		}
+	} else {
+		mes "^000000[Bounty Board]^000000";
+		mes "The bounty to hunt "+getmonsterinfo(getarg(.@bounty-1),MOB_NAME)+" has not been completed.";
+	}
+	close;
+
+L_BountyAll:
+	mes "[Bounty Board]";
+	mes "Oh you fancy yourself a good hunter eh?";
+	mes "Let me see if you've actually hunted all the monsters you said you would.";
+	next;
+	for (.@i = 5; .@i < getargcount(); .@i += 4){
+		if (checkquest(getarg(.@i),HUNTING) < 2){
+			mes "[Bounty Board]";
+			mes "The bounty to hunt all has not been completed.";
+			mes "Lying will not be tolerated.";
+			close;
+		}
+	}
+	if (vip_status(1)){
+		mes "^000000[Bounty Board]^000000";
+		mes "How will you distribute your newfound experience?";
+		next;
+		.@vip_reward = select("^FF0000Both Base and Job EXP^000000", "^0000FFI want Base EXP only.^000000", "^FFA400I want Job EXP only.^000000");
+	}
+	for (.@i = 5; .@i < getargcount(); .@i += 4)
+		erasequest getarg(.@i);
+	for (.@i = 6; .@i < getargcount(); .@i += 4){
+		if (Zeny + 37500 <= MAX_ZENY)
+			Zeny += 37500;
+		.@BaseExp = getarg(.@i);
+		.@JobExp = getarg(.@i+1);
+		switch(.@vip_reward){
+			case 2:
+				getexp .@BaseExp,0;
+				getexp .@JobExp,0;
+				break;
+			case 3:
+				getexp 0,.@BaseExp;
+				getexp 0,.@JobExp;
+				break;
+			default:
+				getexp .@BaseExp,.@JobExp;
+				break;
+		}
+	}
+	getitem "Para_Logro_Badge",1;
+	mes "[Bounty Board]";
+	mes "Here is your reward.";
+	close;
+
+L_BountyDel:
+	mes "[Bounty Board]";
+	mes "I'll check what missions that you've taken so far.";
+	mes "Which ones do you want to quit?";
+	next;
+	for (.@i = 5; .@i < getargcount(); .@i += 4){
+		if (checkquest(getarg(.@i),HUNTING) == 1){
+			.@monster$ = getmonsterinfo(getarg(.@i-1),MOB_NAME);
+			mes "[Bounty Board]";
+			mes "You have NOT completed the " + .@monster$ + " hunt mission.";
+			mes "Do you want to continue or quit?";
+			next;
+			if (select("Keep hunting "+.@monster$, "^FF0000Get rid of my quest^000000") == 2){
+				erasequest getarg(.@i);
+				mes "[Bounty Board]";
+				mes "All of your records for this quest have been deleted.";
+				close2;
+				.@questerased = 1;
+			}
+		}
+	}
+	if (!.@questerased)
+		close;
+	else
+		end;
+
+}

@@ -157,7 +157,7 @@ geffen,203,123,2	script	Kafra Employee::geffen2	114,{
 
 // Morocc
 //============================================================
-morocc,156,97,4	script	Kafra Employee::kaf_morocc	113,{
+morocc,165,103,4	script	Kafra Employee::kaf_morocc	113,{
 	cutin "kafra_05",2;
 	callfunc "F_KafSet";
 	mes "[Kafra Employee]";
@@ -298,6 +298,50 @@ prontera,146,89,6	script	Kafra Employee::kaf_prontera5	117,{
 	callfunc "F_Kafra",5,0,0,40,800;
 	savepoint "prontera",116,73,1,1;
 	callfunc "F_KafEnd",0,1,"in the city of Prontera";
+}
+
+prontera,164,180,6	script	Kafra Employee::kaf_prontera6	117,{
+	cutin "kafra_01",2;
+	callfunc "F_KafSet";
+	if(#language == 1) {
+		mes "Bem vindo ao";
+		mes "Corporação Kafra.";
+		mes "Os serviços de Kafra";
+		mes "está sempre do seu lado.";
+		mes "Como posso te ajudar?";
+	}else{
+		mes "[Kafra Employee]";
+		mes "Welcome to the";
+		mes "Kafra Corporation.";
+		mes "The Kafra services";
+		mes "are always on your side.";
+		mes "How may I assist you?";
+	}
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "prontera",142,173,1,1;
+	callfunc "F_KafEnd",0,1,"in the city of Prontera";
+}
+
+verus04,129,256,6	script	Kafra Employee::kaf_prontera7	117,{
+	cutin "kafra_01",2;
+	callfunc "F_KafSet";
+	if(#language == 1) {
+		mes "Bem vindo ao";
+		mes "Corporação Kafra.";
+		mes "Os serviços de Kafra";
+		mes "está sempre do seu lado.";
+		mes "Como posso te ajudar?";
+	}else{
+		mes "[Kafra Employee]";
+		mes "Welcome to the";
+		mes "Kafra Corporation.";
+		mes "The Kafra services";
+		mes "are always on your side.";
+		mes "How may I assist you?";
+	}
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "verus04",123,251,1,1;
+	callfunc "F_KafEnd",0,1,"in the city of Verus";
 }
 
 // Yuno

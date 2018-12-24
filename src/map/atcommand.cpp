@@ -1,4 +1,4 @@
-// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+﻿// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "atcommand.hpp"
@@ -1255,7 +1255,7 @@ ACMD_FUNC(heal)
 ACMD_FUNC(item)
 {
 	char item_name[100];
-	int number = 0, bound = BOUND_NONE;
+	int number = 0, bound = BOUND_NONE, costume = 0;
 	char flag = 0;
 	struct item item_tmp;
 	struct item_data *item_data[10];
@@ -1304,6 +1304,27 @@ ACMD_FUNC(item)
 
 	for(j--; j>=0; j--){ //produce items in list
 		unsigned short item_id = item_data[j]->nameid;
+		if (!strcmpi(command + 1, "costumeitem"))
+		{
+			if (!battle_config.reserved_costume_id)
+			{
+				clif_displaymessage(fd, "Costume convertion is disable. Set a value for reserved_cosutme_id on your battle.conf file.");
+				return -1;
+			}
+			if (!(item_data[j]->equip&EQP_HEAD_LOW) &&
+				!(item_data[j]->equip&EQP_HEAD_MID) &&
+				!(item_data[j]->equip&EQP_HEAD_TOP) &&
+				!(item_data[j]->equip&EQP_COSTUME_HEAD_LOW) &&
+				!(item_data[j]->equip&EQP_COSTUME_HEAD_MID) &&
+				!(item_data[j]->equip&EQP_COSTUME_HEAD_TOP) &&
+				!(item_data[j]->equip&EQP_GARMENT) &&
+				!(item_data[j]->equip&EQP_COSTUME_GARMENT))
+			{
+				clif_displaymessage(fd, "You cannot costume this item. Costume only work for headgears.");
+				return -1;
+			}
+			costume = 1;
+		}
 		//Check if it's stackable.
 		if (!itemdb_isstackable2(item_data[j]))
 			get_count = 1;
@@ -1314,6 +1335,11 @@ ACMD_FUNC(item)
 				memset(&item_tmp, 0, sizeof(item_tmp));
 				item_tmp.nameid = item_id;
 				item_tmp.identify = 1;
+				if (costume == 1) { // Costume item
+					item_tmp.card[0] = CARD0_CREATE;
+					item_tmp.card[2] = GetWord(battle_config.reserved_costume_id, 0);
+					item_tmp.card[3] = GetWord(battle_config.reserved_costume_id, 1);
+				}
 				item_tmp.bound = bound;
 				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_COMMAND)))
 					clif_additem(sd, 0, 0, flag);
@@ -1914,6 +1940,15 @@ ACMD_FUNC(go)
 		{ MAP_MALAYA,      242, 211 }, // 34=Malaya Port
 		{ MAP_ECLAGE,      110,  39 }, // 35=Eclage
 		{ MAP_LASAGNA,     193, 182 }, // 36=Lasagna
+		{ MAP_EDENGROUP,     31, 14 }, // 37=Eden Group
+		{ MAP_VERUS,     120, 246 }, // 38=Verus
+		{ MAP_ROCKRIDGE,     286, 189 }, // 39=Rock Ridge
+		{ MAP_CAPITOLINA,     182, 207 }, // 40=St.Capitolina Abbey
+		{ MAP_MARKET,     127, 162 }, // 41=Market
+		{ MAP_THORCAMP,     251, 67 }, // 42=Thor Volcano
+
+		
+
 	};
 
 	nullpo_retr(-1, sd);
@@ -5521,6 +5556,7 @@ ACMD_FUNC(dropall)
 			if( type == -1 || type == (uint8)item_data->type ) {
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
+					pc_equipswitch_remove(sd, i);
 				if(pc_dropitem(sd, i, sd->inventory.u.items_inventory[i].amount))
 					count += sd->inventory.u.items_inventory[i].amount;
 				else count2 += sd->inventory.u.items_inventory[i].amount;
@@ -5553,6 +5589,7 @@ ACMD_FUNC(storeall)
 		if (sd->inventory.u.items_inventory[i].amount) {
 			if(sd->inventory.u.items_inventory[i].equip != 0)
 				pc_unequipitem(sd, i, 3);
+				pc_equipswitch_remove(sd, i);
 			storage_storageadd(sd, &sd->storage, i, sd->inventory.u.items_inventory[i].amount);
 		}
 	}
@@ -9128,7 +9165,7 @@ ACMD_FUNC(mount2) {
 	clif_displaymessage(sd->fd,msg_txt(sd,1362)); // NOTICE: If you crash with mount your LUA is outdated.
 	if (!sd->sc.data[SC_ALL_RIDING]) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1363)); // You have mounted.
-		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INFINITE_TICK);
+		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER);
 	} else {
 		clif_displaymessage(sd->fd,msg_txt(sd,1364)); // You have released your mount.
 		status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
@@ -9784,7 +9821,7 @@ ACMD_FUNC(costume) {
 		return -1;
 	}
 
-	sc_start(&sd->bl, &sd->bl, (sc_type)name2id[k], 100, name2id[k] == SC_DRESSUP ? 1 : 0, INFINITE_TICK);
+	sc_start(&sd->bl, &sd->bl, (sc_type)name2id[k], 100, name2id[k] == SC_DRESSUP ? 1 : 0, -1);
 
 	return 0;
 }
@@ -10002,31 +10039,385 @@ ACMD_FUNC(limitedsale){
 	return 0;
 }
 
-/**
- * Displays camera information from the client.
- * Usage: @camerainfo or client command /viewpointvalue or /setcamera on supported clients
- */
-ACMD_FUNC(camerainfo){
+// (^~_~^) Gepard Shield Start
+
+ACMD_FUNC(gepard_block_nick)
+{
+	struct map_session_data* violator_sd;
+	time_t time_server;
+	unsigned int duration;
+	unsigned int violator_account_id = 0;
+	unsigned int violator_unique_id = 0;
+	char reason_str[GEPARD_REASON_LENGTH];
+	char unban_time_str[GEPARD_TIME_STR_LENGTH];
+	char duration_type, violator_name[NAME_LENGTH];
+	const char* command_info = "Wrong input (usage: @gepard_block_nick <duration> <duration_type m/h/d> \"<char name>\" <reason>)";
+
 	nullpo_retr(-1, sd);
 
-	if( message == nullptr || message[0] == '\0' ){
-		clif_camerainfo( sd, true );
-		return 0;
-	}
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
 
-	float range = 0;
-	float rotation = 0;
-	float latitude = 0;
-
-	if( sscanf( message, "%f %f %f", &range, &rotation, &latitude ) < 3 ){
-		clif_displaymessage( fd, msg_txt( sd, 793 ) ); // Usage @camerainfo range rotation latitude
+	if (!*message || sscanf(message, "%u %c \"%23[^\"]\" %99[^\n]", &duration, &duration_type, violator_name, reason_str) < 4)
+	{
+		clif_displaymessage(fd, command_info);
 		return -1;
 	}
 
-	clif_camerainfo( sd, false, range, rotation, latitude );
+	time(&time_server);
+
+	switch (duration_type)
+	{
+		case 'm':
+			time_server += (duration * 60);
+		break;
+
+		case 'h':
+			time_server += (duration * 3600);
+		break;
+
+		case 'd':
+			time_server += (duration * 86400);
+		break;
+
+		default:
+			duration = 0;
+		break;
+	}
+
+	if (duration == 0)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server)); 
+
+	sprintf(atcmd_output, "Request: block by name - %s", violator_name);
+	clif_displaymessage(fd, atcmd_output);
+
+	violator_sd = map_nick2sd(violator_name, false);
+
+	if (violator_sd != NULL)
+	{
+		violator_account_id = violator_sd->status.account_id;
+		violator_unique_id = session[violator_sd->fd]->gepard_info.unique_id;
+	}
+
+	chrif_gepard_req_block(violator_unique_id, violator_name, violator_account_id, sd->status.name, sd->status.account_id, unban_time_str, reason_str);
 
 	return 0;
 }
+
+// (^~_~^) Gepard Shield End
+
+// (^~_~^) Gepard Shield Start
+
+ACMD_FUNC(gepard_block_account_id)
+{
+	struct map_session_data* violator_sd;
+	time_t time_server;
+	unsigned int duration;
+	unsigned int violator_account_id = 0;
+	unsigned int violator_unique_id = 0;
+	char reason_str[GEPARD_REASON_LENGTH];
+	char duration_type, unban_time_str[GEPARD_TIME_STR_LENGTH];
+	const char* command_info = "Wrong input (usage: @gepard_block_account_id <duration> <duration_type m/h/d> <account ID> <reason>)";
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!*message || sscanf(message, "%u %c %u %99[^\n]", &duration, &duration_type, &violator_account_id, reason_str) < 4)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	time(&time_server);
+
+	switch (duration_type)
+	{
+		case 'm':
+			time_server += (duration * 60);
+		break;
+
+		case 'h':
+			time_server += (duration * 3600);
+		break;
+
+		case 'd':
+			time_server += (duration * 86400);
+		break;
+
+		default:
+			duration = 0;
+		break;
+	}
+
+	if (duration == 0)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server)); 
+
+	sprintf(atcmd_output, "Request: block by account ID: %u", violator_account_id);
+	clif_displaymessage(fd, atcmd_output);
+
+	violator_sd = map_id2sd(violator_account_id);
+
+	if (violator_sd != NULL)
+	{
+		violator_account_id = violator_sd->status.account_id;
+		violator_unique_id = session[violator_sd->fd]->gepard_info.unique_id;
+	}
+
+	chrif_gepard_req_block(violator_unique_id, atcmd_player_name, violator_account_id, sd->status.name, sd->status.account_id, unban_time_str, reason_str);
+
+	return 0;
+}
+
+ACMD_FUNC(gepard_block_unique_id)
+{
+	time_t time_server;
+	unsigned int duration;
+	unsigned int violator_unique_id = 0;
+	char reason_str[GEPARD_REASON_LENGTH];
+	char duration_type, unban_time_str[GEPARD_TIME_STR_LENGTH];
+	const char* command_info = "Wrong input (usage: @gepard_block_unique_id <duration> <duration_type m/h/d> <unique ID> <reason>)";
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!*message || sscanf(message, "%u %c %u %99[^\n]", &duration, &duration_type, &violator_unique_id, reason_str) < 4)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	time(&time_server);
+
+	switch (duration_type)
+	{
+		case 'm':
+			time_server += (duration * 60);
+		break;
+
+		case 'h':
+			time_server += (duration * 3600);
+		break;
+
+		case 'd':
+			time_server += (duration * 86400);
+		break;
+
+		default:
+			duration = 0;
+		break;
+	}
+
+	if (duration == 0)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	strftime(unban_time_str, sizeof(unban_time_str), "%Y-%m-%d %H:%M:%S", localtime(&time_server)); 
+
+	sprintf(atcmd_output, "Request: block by unqiue ID: %u", violator_unique_id);
+	clif_displaymessage(fd, atcmd_output);
+
+	chrif_gepard_req_block(violator_unique_id, NULL, 0, sd->status.name, sd->status.account_id, unban_time_str, reason_str);
+
+	return 0;
+}
+
+ACMD_FUNC(gepard_unblock_nick)
+{
+	char violator_name[NAME_LENGTH];
+	const char* command_info = "Wrong input (usage: @gepard_unblock_nick <char name>)";
+
+	nullpo_retr(-1, sd);
+
+	if (!*message || sscanf(message, "\"%23[^\"]\"[^\n]", violator_name) < 1)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	sprintf(atcmd_output, "Request: unblock by name - %s", violator_name);
+
+	clif_displaymessage(fd, atcmd_output);
+
+	chrif_gepard_req_unblock(0, violator_name, 0, sd->status.account_id);
+
+	return 0;
+}
+
+ACMD_FUNC(gepard_unblock_account_id)
+{
+	int violator_aid;
+	const char* command_info = "Wrong input (usage: @gepard_unblock_account_id <account ID>)";
+
+	nullpo_retr(-1, sd);
+
+	memset(atcmd_player_name, '\0', sizeof(atcmd_player_name));
+
+	if (!*message || sscanf(message, "%d", &violator_aid) < 1)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	sprintf(atcmd_output, "Request: unblock by account id - %d", violator_aid);
+
+	clif_displaymessage(fd, atcmd_output);
+
+	chrif_gepard_req_unblock(0, NULL, violator_aid, sd->status.account_id);
+
+	return 0;
+}
+
+ACMD_FUNC(gepard_unblock_unique_id)
+{
+	unsigned int violator_unique_id;
+	const char* command_info = "Wrong input (usage: @gepard_unblock_unique_id <unique ID>)";
+
+	nullpo_retr(-1, sd);
+
+	if (!*message || sscanf(message, "%u", &violator_unique_id) < 1)
+	{
+		clif_displaymessage(fd, command_info);
+		return -1;
+	}
+
+	sprintf(atcmd_output, "Request: unblock by unique id - %u", violator_unique_id);
+
+	clif_displaymessage(fd, atcmd_output);
+
+	chrif_gepard_req_unblock(violator_unique_id, NULL, 0, sd->status.account_id);
+
+	return 0;
+}
+
+// (^~_~^) Gepard Shield End
+
+/*==========================================
+* @whosell command
+*------------------------------------------*/
+ACMD_FUNC(whosell)
+{
+	struct map_session_data *pl_sd, *b_sd[MAX_SEARCH];
+	struct s_mapiterator* iter;
+
+	struct item_data *item_array[MAX_SEARCH];
+	int total[MAX_SEARCH], amount[MAX_SEARCH];
+	unsigned int MinPrice[MAX_SEARCH], MaxPrice[MAX_SEARCH];
+	char output[256];
+	int i, j, count = 1;
+	char item_name[100];
+	int minprice = 0;
+
+	if (!message || !*message || (
+		sscanf(message, "\"%99[^\"]\" %11d", item_name, &minprice) < 1
+		&& sscanf(message, "%99s %11d", item_name, &minprice) < 1)
+		)
+	{
+		clif_displaymessage(fd, "Please, enter Item name or its ID (usage: @whosell <item name or ID> {<min price>}).");
+		return -1;
+	}
+
+	if ((item_array[0] = itemdb_searchname(item_name)) == NULL &&
+		(item_array[0] = itemdb_exists(atoi(item_name))) == NULL)
+		count = itemdb_searchname_array(item_array, MAX_SEARCH, message);
+
+	if (count < 1)
+	{ // No items found
+		clif_displaymessage(fd, msg_txt(sd, 19));
+		return -1;
+	}
+
+	if (count > MAX_SEARCH) count = MAX_SEARCH;
+
+	// Preparing Search Recorders
+	for (i = 0; i < MAX_SEARCH; i++)
+	{
+		total[i] = amount[i] = MaxPrice[i] = 0;
+		MinPrice[i] = battle_config.vending_max_value + 1;
+		b_sd[i] = NULL;
+	}
+
+	iter = mapit_getallusers();
+	for (pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter))
+	{
+		if (!pl_sd->vender_id) continue;
+		for (i = 0; i < pl_sd->vend_num; i++)
+		{ // Searching in the Vending List
+			for (j = 0; j < count; j++)
+			{ // Compares with each search result
+				if (pl_sd->cart.u.items_cart[pl_sd->vending[i].index].nameid != item_array[j]->nameid)
+					continue;
+				if (pl_sd->vending[i].value < minprice)
+					continue;
+
+				amount[j] += pl_sd->vending[i].amount;
+				total[j]++;
+
+				if (pl_sd->vending[i].value < MinPrice[j])
+				{ // Best Price
+					MinPrice[j] = pl_sd->vending[i].value;
+					b_sd[j] = pl_sd;
+				}
+				if (pl_sd->vending[i].value > MaxPrice[j])
+					MaxPrice[j] = pl_sd->vending[i].value;
+			}
+		}
+	}
+	mapit_free(iter);
+
+	for (i = 0; i < count; i++)
+	{
+		if (total[i] > 0 && b_sd[i] != NULL)
+		{
+			sprintf(output, "[%d] The best price found for '%s' is %u sold by '%s' at %s <%d,%d>. Max Price %u. Item found in %d shops, %d pieces for sale.", item_array[i]->nameid, item_array[i]->jname, MinPrice[i], b_sd[i]->status.name, map[b_sd[i]->bl.m].name, b_sd[i]->bl.x, b_sd[i]->bl.y, MaxPrice[i], total[i], amount[i]);
+			if (sd->bl.m == b_sd[i]->bl.m)
+				clif_viewpoint(sd, 1, 1, b_sd[i]->bl.x, b_sd[i]->bl.y, i, 0xFFFFFF);
+		}
+		else
+			sprintf(output, "[%d] '%s' is not being sold at the moment...", item_array[i]->nameid, item_array[i]->jname);
+
+		clif_displaymessage(sd->fd, output);
+	}
+
+	return 0;
+}
+
+/**
+ * Opens the refineUI
+ * Usage: @refineui
+ */
+ACMD_FUNC(refineui)
+{
+	nullpo_retr(-1, sd);
+ #if PACKETVER < 20161012
+	clif_displaymessage(fd, msg_txt(sd, 773)); // This command requires packet version 2016-10-12 or newer.
+	return -1;
+#else
+	if( !battle_config.feature_refineui ){
+		clif_displaymessage(fd, msg_txt(sd, 774)); // This command is disabled via configuration.
+		return -1;
+	}
+ 	if( sd->state.refineui_open ){
+		clif_displaymessage(fd, msg_txt(sd, 775)); // You have already opened the refine UI.
+		return -1;
+	}
+ 	clif_refineui_open(sd);
+	return 0;
+#endif
+}
+
 
 #include "../custom/atcommand.inc"
 
@@ -10044,6 +10435,20 @@ void atcommand_basecommands(void) {
 	 * TODO: List all commands that causing crash
 	 **/
 	AtCommandInfo atcommand_base[] = {
+
+// (^~_~^) Gepard Shield Start
+
+		ACMD_DEF(gepard_block_nick),
+		ACMD_DEF(gepard_block_account_id),
+		ACMD_DEF(gepard_block_unique_id),
+		ACMD_DEF(gepard_unblock_nick),
+		ACMD_DEF(gepard_unblock_account_id),
+		ACMD_DEF(gepard_unblock_unique_id),
+
+// (^~_~^) Gepard Shield End
+
+ACMD_DEF(whosell),
+
 #include "../custom/atcommand_def.inc"
 		ACMD_DEF2R("warp", mapmove, ATCMD_NOCONSOLE),
 		ACMD_DEF(where),
@@ -10310,7 +10715,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(cart),
 		ACMD_DEF(mount2),
 		ACMD_DEF(join),
-		ACMD_DEFR(channel,ATCMD_NOSCRIPT),
+		ACMD_DEF(channel),
 		ACMD_DEF(fontcolor),
 		ACMD_DEF(langtype),
 #ifdef VIP_ENABLE
@@ -10323,11 +10728,12 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(clonestat),
 		ACMD_DEF(bodystyle),
 		ACMD_DEF(adopt),
+		ACMD_DEF2("costumeitem", item),
 		ACMD_DEF(agitstart3),
 		ACMD_DEF(agitend3),
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
-		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEF(refineui),
 	};
 	AtCommandInfo* atcommand;
 	int i;

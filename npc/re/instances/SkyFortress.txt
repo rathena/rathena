@@ -1,0 +1,1097 @@
+//===== Alayne Scripts =======================================
+//= Sky Fortress Instance
+//===== By: ================================================== 
+//= Alayne
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena SVN
+//= hercules SVN
+//===== Description: ========================================= 
+//= The official instance Sky Fortress transcription
+//===== Todo Remaining: ======================================
+//
+//===== Additional Comments: =================================
+//
+//
+//============================================================
+
+prt_q,248,79,3	script	Scientist Doyeon::alasfscd	4_M_MAYOR,{
+OnStart:
+	set .@party_id, getcharid(1);
+	set .@sf_leader, ( getcharid(0) == getpartyleader(.@party_id,2) );
+
+	//RATHENA
+	set .@has_instance, SF_INSTANCE_ID > 0;
+	//HERCULES
+	//set .@has_instance, has_instance(.map$[0], instance_id());
+	
+	set .@instance_delay, ( instance_delay_skyf - gettimetick(2) );
+
+	set .@npcname$, "[Scientist Doyeon]";
+	mes .@npcname$;
+	mes "Did you ever heard about the Sky Fortress";
+	mes "That's known to be the craddle of all plagues that spread around the world...";
+	next;
+	switch( select( 
+		(( .@party_id && .@sf_leader && !.@has_instance )?"Create " + .instance_name$:""),
+		(( .@party_id && .@sf_leader && .@has_instance )?"Destroy " + .instance_name$:""),
+	"Nevermind."
+		)){
+	case 1:
+		if( .@instance_delay > 0 )
+		{
+			mes "You have to wait : ^FF0000"+.@instance_delay+" Seconds.^000000";
+			close;
+		}
+		getpartymember .@party_id,2;
+		if( .min_party_member >= 1 ){
+			set .@origin, getcharid(3);
+			set .@gettimetick, gettimetick(2);
+			for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
+				if( attachrid( $@partymemberaid[.@i] ) ){
+					set .@member_count, .@member_count + 1;
+					if( BaseLevel < .base_level[0] || BaseLevel > .base_level[1] ) set .@fail, .@fail|1;
+					if( Zeny < .instance_zeny ) set .@fail, .@fail|2;
+					if( instance_delay_skyf > .@gettimetick ) set .@fail, .@fail|4;
+					if( .@fail ){
+						set .@name$, strcharinfo(0);
+						break;
+					}
+				}
+			attachrid( .@origin );
+		}
+		
+		//check that nobody else is inside
+		for(set .@i,0; .@i<getarraysize(.map$); set .@i,.@i+1)
+		{
+			if (.map$[.@i] != "" && getmapusers(instance_mapname(.map$[.@i], -1)) > 0) {
+				mes "Another team is already in the " + .instance_name$ + ". I can't send you there, sorry.";
+				//close;
+			}
+		}
+		
+		//clean any previously remaining instance
+		if(SF_INSTANCE_ID != -1)
+		{		
+			getpartymember getcharid(1),2;
+			for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
+				if( attachrid( $@partymemberaid[.@i] ) && SF_INSTANCE_ID > 0){
+					set SF_INSTANCE_ID, -1;
+				}
+			instance_destroy instance_id();
+		}
+		
+		if( .@name$ != "" && .@fail ){
+			mes "^FF0000[ Failed ]^000000";
+			mes "^0055FF"+.@name$+"^000000, You cannot join right now.";
+			mes " ";
+			mes "^FF0000[ Reason: ]^000000";
+			if( .@fail & 1 ) mes "^777777You must be Level: "+.base_level[0]+" - "+.base_level[1]+"^000000";
+			if( .@fail & 2 ) mes "^777777You need "+ .instance_zeny +" Zeny^000000";
+			if( .@fail & 4 ) mes "^777777You still have cooldown.^000000";
+			//break;
+		}
+		
+		getpartymember getcharid(1),0;
+		if (instance_check_party(.@party_id, .min_party_member, .base_level[0], .base_level[1]) == 0) {
+			mes "^0055FF[ "+.instance_name$+" ]^000000";
+			mes "Make or join a party with at least "+.min_party_member+" member and try again, with level between " +.base_level[0] + " and " + .base_level[1] + ".";
+		}
+		else{	
+			//RATHENA
+			set .@instance, instance_create( .instance_name$ );
+			//HERCULES
+			//set .@instance, instance_create( .instance_name$, .@party_id, IOT_PARTY );
+			if( .@instance < 0 ) {
+				npctalk .instance_name$ + " reservation failed.";
+				mes "^0000FF"+ .instance_name$ +" ^000000 - Reservation Failed!";
+				close;
+			}
+			mes "^0055FF[ "+.instance_name$+" ]^000000";
+			mes "^0000FF"+.instance_name$+" ^000000 - Reserved";
+			set .@gettimetick, gettimetick(2);
+			getpartymember .@party_id,2;
+			for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
+				if( attachrid( $@partymemberaid[.@i] ) ){
+					set instance_delay_skyf, ( .@gettimetick + ( .instance_delay ));
+					set Zeny, Zeny - .instance_zeny;
+					set SF_INSTANCE_ID, .@instance;
+					dispbottom "["+.instance_name$+"] -"+ .instance_zeny +" Zeny and Instance Cooldown Applied.";
+				}
+			attachrid( .@origin );
+			npctalk .instance_name$ + " has been generated for Party - " + getpartyname( .@party_id );
+			
+			set $instance_sf_id, getcharid(1);
+			
+			//HERCULES
+			//for( set .@i, 0; .@i < getarraysize(.map$); set .@i,.@i+1 )
+			//{
+			//	if( instance_attachmap( .map$[.@i],.@instance ) == "" ){
+			//		setmapflag .map$[.@i],mf_zone,"Memorial Dungeon";
+			//		npctalk .instance_name$ + " reservation failed due to map attach failure.";
+			//		mes "- ^FF0000Reservation Failed!^000000";
+			//		instance_destroy( instance_id() );
+			//		close;
+			//	}
+			//}
+			//instance_set_timeout .instance_delay,300,.@instance;
+			//instance_init(.@instance);
+			
+			//disable unused npcs for now
+			disablenpc instance_npcname( "sfwarp#1", instance_id() );
+			disablenpc instance_npcname( "sfwarp#2", instance_id() );
+			
+			next;
+			mes "^0055FF[ "+.instance_name$+" ]^000000";
+			mes "Go to the Portal, to enter inside the " + .instance_name$;
+ 		}
+		break;
+	case 2:
+		next;
+		mes .instance_name$ + " Destroyed.";
+		getpartymember getcharid(1),2;
+		for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
+			if( attachrid( $@partymemberaid[.@i] ) && SF_INSTANCE_ID > 0){
+				set SF_INSTANCE_ID, -1;
+			}
+		instance_destroy instance_id();
+		break;
+	default: 
+		break;
+}
+close;
+
+OnPCLoginEvent:
+OnPCLogoutEvent:
+	set SF_INSTANCE_ID, -1;
+	end;
+
+OnInit:
+	setarray .base_level[0],145,175;
+	setarray .map$[0],"1@sthb", "1@sthd", "1@sthc";
+	set .map_size, getarraysize( .map$ );
+	set .min_party_member, 1;
+	set .instance_zeny, 0;
+	set .instance_delay, 7200;
+	set $sf_timer_delay, 3600; //1 hour to clean the instance
+	set .instance_name$, "Sky Fortress";
+	end;
+}
+
+prt_q,243,74,3	script	Dimensional Device::alasfdd	PORTAL,{
+	if( SF_INSTANCE_ID <= 0 ){
+		mes "The device doesn't seems to work. You can't seem to enter.";
+		close;
+	}
+	else{
+		//RATHENA
+		getmapxy(.@map$, .@x, .@y, UNITTYPE_PC);
+		save .@map$, .@x, .@y;
+		switch(instance_enter(.instance_name$)) {
+			default:
+				mes "An unknown error has occurred.";
+				close;
+			case 2:
+				mes "The memorial dungeon " + .instance_name$ + " does not exist.";
+				mes "The party leader did not generate the dungeon yet.";
+				close;
+			case 1:
+				mes "You can enter the dungeon after making the party.";
+				close;
+			case 0:
+				instance_announce instance_id(), strcharinfo(0)+" from party, " +getpartyname( .@party_id )+", is entering the dungeon, "+.instance_name$+".",bc_map,"0x00ff99",FW_NORMAL,12;
+				end;
+		}
+		
+		//HERCULES
+		//if( has_instance( .map$[0] ) == "" ){
+		//	mes .instance_name$ + " doesnt exist for Party - "+getpartyname( .@party_id );
+		//}
+		//else{
+		//	warp .map$[0],56,68;
+		//	instance_announce instance_id(), getpartyname(getcharid(1))+"  entered in the "+.instance_name$+"!",bc_map,"0x00ff99";
+		//}
+	}
+	end;
+
+OnInit:
+	set .instance_name$, "Sky Fortress";
+	setarray .map$[0],"1@sthb", "1@sthd", "1@sthc";
+	end;
+}
+
+1@sthd,101,107,4	script	sky_fortress	HIDDEN_WARP_NPC,2,2,{
+function summon_normal;
+function summon_doormob;
+function summon_guardian;
+end;
+
+OnInstanceInit:
+	set .@map$, strnpcinfo(4);
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+	
+	//apply mapflags
+	setmapflag .@map$,mf_nomobloot;
+	setmapflag .@map$,mf_nomvploot;
+	
+	set 'instance_sf_level, 0;
+	set .randomPop, 0;
+	set .max_sf_level, 4;
+
+	set 'doorOpened, -1;
+	set 'warpPoint, -1;
+	set 'ldEntryX, -1;
+	set 'ldEntryY, -1;
+	
+	set .stephanId, -1;
+	deletearray .stephanData[0], getarraysize(.@stephanData);
+	deletearray .stephanFollower[0], getarraysize(.stephanFollower);
+	set .eQCount, -1;
+	set .maxStephanServant, 10;
+	
+	set 'sfKeyId, 6960;
+	
+	set .timerCount, 0;
+	initnpctimer;
+	end;
+
+function	summon_normal	{
+	set .@map$, getarg(0);
+	set .@npcname$, getarg(1);
+	set .@increaseFloor, getarg(2);
+	
+	if(.@increaseFloor == 1)
+	{
+		'instance_sf_level++;
+	}
+	setarray .@coordinate,77,158,122,47;
+	
+	switch( 'instance_sf_level ){
+		case 1:
+			//Immortal Zombie Soldiers
+			setarray .@monster,3476;
+			setarray .@amount,6;
+			setarray .@coordinate,45,77,67,58;
+
+			set .@clabel$, .@npcname$ + "::OnNormalDied";
+			areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[0],.@amount[0],.@clabel$;
+			break;
+		case 2:
+			set .@clabel$, .@npcname$ + "::OnNormalDied";
+			
+			setarray .@monster,3477;
+			setarray .@amount,3;
+			setarray .@coordinate,43,89,69,83;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477, 3479;
+			setarray .@amount,3, 1;
+			setarray .@coordinate,41,55,34,81;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3480;
+			setarray .@amount,1;
+			setarray .@coordinate,34,54,41,46;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3478;
+			setarray .@amount,2,1;
+			setarray .@coordinate,87,54,81,99;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3478,3480,3477;
+			setarray .@amount,1,2,1;
+			setarray .@coordinate,79,99,24,92;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3478,3480;
+			setarray .@amount,3,1,2;
+			setarray .@coordinate,24,91,31,36;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3478,3480;
+			setarray .@amount,3,1,2;
+			setarray .@coordinate,97,43,32,36;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3480;
+			setarray .@amount,2,1;
+			setarray .@coordinate,90,44,97,69;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+
+			break;
+		case 3:
+			set .@clabel$, .@npcname$ + "::OnNormalDied";
+			
+			setarray .@monster,3477;
+			setarray .@amount,2,1;
+			setarray .@coordinate,217,77,206,34;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3478,3479,3480;
+			setarray .@amount,2,1,1,2;
+			setarray .@coordinate,205,34,140,41;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3478,3480;
+			setarray .@amount,3,1,2;
+			setarray .@coordinate,140,43,147,97;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3479,3478;
+			setarray .@amount,3,2,1;
+			setarray .@coordinate,148,97,203,90;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3479,3478;
+			setarray .@amount,3,2,1;
+			setarray .@coordinate,148,97,203,90;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3479,3478,3480;
+			setarray .@amount,2,2,1,2;
+			setarray .@coordinate,203,88,196,44;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3479,3478;
+			setarray .@amount,2,2,1;
+			setarray .@coordinate,195,44,150,51;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3479,3480;
+			setarray .@amount,3,1,2;
+			setarray .@coordinate,150,53,157,87;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3478,3480;
+			setarray .@amount,2,1,2;
+			setarray .@coordinate,158,87,193,79;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			
+			setarray .@monster,3477,3480;
+			setarray .@amount,2,3;
+			setarray .@coordinate,193,78,186,58;
+			set .@monster_size, getarraysize( .@monster );
+			for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){				
+				areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+			}
+			break;
+		case 4:
+			//Immortal Zombie Soldiers
+			setarray .@monster,3480;
+			setarray .@amount,5;
+			setarray .@coordinate,93,110,117,82;
+
+			set .@clabel$, .@npcname$ + "::OnNormalDied";
+			//RATHENA
+			areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[0],.@amount[0],.@clabel$;
+			copyarray .stephanFollower, $@mobId[0], .@amount;
+			//HERCULES
+			//set .stephanFollower, areamonster(.@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[0],.@amount[0],.@clabel$);			
+			break;
+	}
+	return;
+}
+
+function	summon_doormob	{
+	set .@map$, getarg(0);
+	set .@npcname$, getarg(1);
+
+	set .@map$, instance_mapname( "1@sthc" );
+	killmonster .@map$, "All";
+
+	switch('warpPoint)
+	{
+		case 0:
+			setarray .@coordinate,106,88,125,137;
+			setarray .@monster,3481,3482;
+			setarray .@amount,5,3;
+			setarray .@label$[0], "OnDoorMobDied", "OnDoorMobDied";
+
+			areamonster .@map$,115,130,116,129,"--ja--",2288,1,.@npcname$ + "::OnDoorMobDied";
+			break;
+		case 1:
+			setarray .@coordinate,75,55,56,6;
+			setarray .@monster,3482,3483;
+			setarray .@amount,3,4;
+			setarray .@label$[0], "OnDoorMobDied", "OnDoorMobDied";
+
+			areamonster .@map$,65,48,66,47,"--ja--",2288,1,.@npcname$ + "::OnDoorMobDied";
+			break;
+		case 2:
+			setarray .@coordinate,56,88,75,137;
+			setarray .@monster,3481,3483;
+			setarray .@amount,5,2;
+			setarray .@label$[0], "OnDoorMobDied", "OnDoorMobDied";
+
+			areamonster .@map$,65,130,66,129,"--ja--",2288,1,.@npcname$ + "::OnDoorMobDied";
+			break;
+		case 3:
+			setarray .@coordinate,6,6,25,55;
+			setarray .@monster,3481,3482,3483;
+			setarray .@amount,3,3,3;
+			setarray .@label$[0], "OnDoorMobDied", "OnDoorMobDied", "OnDoorMobDied";
+			break;
+		case 4:
+			setarray .@coordinate,6,88,24,135;
+			setarray .@monster,3481,3483;
+			setarray .@amount,6,5;
+			setarray .@label$[0], "OnDoorMobDied", "OnDoorMobDied";
+			break;
+	}
+
+	set .@monster_size, getarraysize( .@monster );
+	for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){	
+		set .@clabel$, .@npcname$ + "::" + .@label$[.@i];			
+		areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],.@amount[.@i],.@clabel$;
+	}
+	return;
+}
+
+
+function	summon_guardian	{
+	set .@map$, getarg(0);
+	set .@npcname$, getarg(1);
+	set .@label$, .@npcname$ + "::OnGuardianDied";
+			
+	if('instance_sf_level == 2)
+	{
+		//mvp or treasure chest
+
+		switch('warpPoint)
+		{
+
+			case 3:
+				setarray .@coordinate,14,51,17,48;
+				setarray .@monster,rand(3474,3475);
+				setarray .@amount,1;
+				setarray .@label$, .@npcname$ + "::OnDoorGuardianDied";
+				break;
+			case 4:
+				setarray .@coordinate,13,134,18,129;
+				setarray .@monster,rand(3474,3475);
+				setarray .@amount,1;
+				setarray .@label$, .@npcname$ + "::OnDoorGuardianDied";
+				break;
+		}
+	}
+	else
+	{
+		switch( 'instance_sf_level ){
+			case 1:
+				//weakened mvp
+				setarray .@monster,3473;
+				setarray .@coordinate,61,69,61,69;
+				break;
+			case 4:
+				//stephan
+				setarray .@monster,3484;
+				setarray .@coordinate,103,114,103,114;
+				break;
+			default: 
+				instance_announce instance_id(), "[ Sky Fortress ] : Cleared!! Congratulation!!",bc_map,0x00FF99;
+				return;
+		}
+	}
+	set .@monster_size, getarraysize( .@monster );
+	for( set .@i, 0; .@i < .@monster_size; set .@i,.@i+1 ){
+		if('instance_sf_level == .max_sf_level)
+		{
+			//RATHENA
+			areamonster(.@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],1,.@label$);
+			set 'stefanId, $@mobId[0];
+			//HERCULES
+			//set 'stefanId, monster(.@map$,.@coordinate[0],.@coordinate[1],"--ja--",.@monster[.@i],1,.@label$);
+		}
+		else
+		{
+			areamonster .@map$,.@coordinate[0],.@coordinate[1],.@coordinate[2],.@coordinate[3],"--ja--",.@monster[.@i],1,.@label$;
+		}
+	}
+	return;
+}
+
+OnDoorMobDied:
+	//nothing, used to clean
+	end;
+	
+OnDoorGuardianDied:
+	//nothing, used to clean
+	end;
+
+OnNormalDied:
+	if('instance_sf_level == .max_sf_level)
+	{
+		set .@map$, instance_mapname( "1@sthd" );
+	}
+	else
+	{
+		set .@map$, instance_mapname( "1@sthb" );
+	}
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() ) ;
+	set .@mob_dead_num, mobcount(.@map$,.@npc_name$+"::OnNormalDied" );
+	set .@mvp_dead_num, mobcount(.@map$,.@npc_name$+"::OnGuardianDied" );
+	if( .@mob_dead_num == 0 ){	
+		if('instance_sf_level == 1)
+		{
+			if(.@mvp_dead_num == 0)
+			{
+				enablenpc instance_npcname( "alasfshew", instance_id() );
+				donpcevent instance_npcname( "alasfshew", instance_id() ) + "::OnTalkEnabled";
+			}
+			else
+			{
+				summon_normal( .@map$, .@npc_name$, 0 );
+			}
+		}
+	}
+	end;
+	
+OnGuardianDied:
+	if('instance_sf_level == .max_sf_level)
+	{
+		set .@map$, instance_mapname( "1@sthd" );
+	}
+	else
+	{
+		set .@map$, instance_mapname( "1@sthb" );
+	}
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+	set .@mob_dead_num, mobcount(.@map$,.@npc_name$+"::OnNormalDied" );
+	set .@mvp_dead_num, mobcount(.@map$,.@npc_name$+"::OnGuardianDied" );
+	set .@party_id, getcharid(1);
+	
+	if( .@mvp_dead_num == 0 ){	
+		if('instance_sf_level == 1)
+		{
+			if(.@mob_dead_num == 0)
+			{
+				enablenpc instance_npcname( "alasfshew", instance_id() );
+				donpcevent instance_npcname( "alasfshew", instance_id() ) + "::OnTalkEnabled";
+			}
+		}
+		else if ('instance_sf_level == .max_sf_level)
+		{
+			instance_announce instance_id(), "[ Stefan J.E Wolf ] : Dead...I was...I won't be dead...", bc_map, 0x0000FF;
+			sleep2 1500;
+			instance_announce instance_id(), "[ Stefan J.E Wolf ] : Come back...the power of Bijou...Eternal body...again!", bc_map, 0x0000FF;
+			sleep2 1500;
+
+			set .randomPop, 0;
+			killmonster instance_mapname( "1@sthd" ), "All";
+			
+			//enable portal
+			enablenpc instance_npcname( "alasfdeo", instance_id() );
+		
+			sleep2 15000;
+			getpartymember getcharid(1),2;
+			for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
+				if( attachrid( $@partymemberaid[.@i] ) && SF_INSTANCE_ID > 0){
+					set SF_INSTANCE_ID, -1;
+				}
+			instance_destroy instance_id();
+			end;
+		}
+	}
+	end;
+	
+OnTimer10000:
+	stopnpctimer;
+	//each 10s, increase timer
+	set .timerCount, .timerCount + 10;
+	if(.timerCount == $sf_timer_delay)
+	{
+		instance_announce instance_id(), "[ Sky Fortress ] The Dimension collapse! I have to get you out of there!", bc_map, 0xFF0000;
+		sleep 5000;
+		getpartymember getcharid(1),2;
+		for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
+			if( attachrid( $@partymemberaid[.@i] ) && SF_INSTANCE_ID > 0){
+				set SF_INSTANCE_ID, -1;
+			}
+		instance_destroy instance_id();
+		stopnpctimer;
+	}
+	if(.randomPop == 1)
+	{
+		if(.eQCount >= 0)
+		{
+			set .eQCount, .eQCount + 1;
+		}
+		set .@map$, instance_mapname( "1@sthd" );
+		set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+		set .@mob_dead_num, mobcount(.@map$,.@npc_name$+"::OnNormalDied" );
+		if(.@mob_dead_num == 0 || .@mob_dead_num < .maxStephanServant)
+		{
+			summon_normal( .@map$,.@npc_name$, 0 );
+		}
+
+		getpartymember $instance_sf_id,2;
+		set .@continue, 1;
+		for( set .@i, 0; .@i < $@partymembercount && .@continue == 1; set .@i, .@i+1 )
+		{
+			if( attachrid( $@partymemberaid[.@i] ) ){
+				if(strcharinfo(3) == instance_mapname( "1@sthd" ))
+				{
+					//RATHENA
+					if(unitexists('stefanId))
+					{
+						getunitdata('stefanId, .@stephanData);
+					}
+					set .@mvpHp, .@stephanData[2] <= .@stephanData[3] / 3;
+					//HERCULES
+					//set .@hp, getunitdata('stefanId, UDT_HP);
+					//set .@mhp, getunitdata('stefanId, UDT_MAXHP);
+					//set .@mvpHp, .@hp <= .@mhp / 3;
+					
+					//if mob hp is inferior to 1/3, that an earthquake didn't pop in the last minute, and that rand is okay
+					if(.@mvpHp == 1 && .eQCount >= 6 && rand(0,1) == 1)
+					{
+						set .eQCount, 0;
+						addtimer 3000, strnpcinfo(3) + "::OnEarthquakePop";
+						set .@continue, 0;
+					}
+				}
+
+			}
+		}
+	}
+	initnpctimer;
+	end;
+	
+OnEarthquakePop:
+	set .@map$, strnpcinfo(4);
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+	for(set .@i, 0; .@i<getarraysize(.stephanFollower); set .@i,.@i+1)
+	{
+		//earthquake on all mobs
+		if(unitexists(.stephanFollower[.@i]))
+		{
+			unitskilluseid .stephanFollower[.@i], 653, 10;
+		}
+		else
+		{
+			deletearray .stephanFollower[.@i], 1;
+		}
+	}	
+	end;
+	
+OnFirstFloorOn:
+	set .@map$, instance_mapname( "1@sthb" );
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+	//pop mvp + wave mobs
+	summon_normal( .@map$, .@npc_name$, 1 );
+	summon_guardian( .@map$, .@npc_name$ );
+	end;
+	
+OnSecondFloorOn:
+	set .@map$, instance_mapname( "1@sthb" );
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+	//wave mobs
+	summon_normal( .@map$, .@npc_name$, 1 );
+	end;	
+	
+OnDoorOpen:
+	set .@map$, instance_mapname( "1@sthc" );
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+	//wave mobs	
+	summon_doormob( .@map$, .@npc_name$, 0 );	
+	end;
+
+OnDevicePoped:
+	set .@map$, instance_mapname( "1@sthc" );
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+	//pop mvp
+	summon_guardian( .@map$, .@npc_name$ );	
+	end;
+
+OnThirdFloorOn:
+	set .@map$, instance_mapname( "1@sthb" );
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+	//wave mobs
+	summon_normal( .@map$, .@npc_name$, 1 );	
+	end;	
+	
+OnLastFloorOn:
+	set .@map$, instance_mapname( "1@sthd" );
+	set .@npc_name$, instance_npcname( strnpcinfo(0), instance_id() );
+	//pop mvp
+	set .randomPop, 1;
+	set .eQCount, 0;
+	summon_normal( .@map$, .@npc_name$, 1 );
+	summon_guardian( .@map$, .@npc_name$ );	
+	end;	
+}
+
+1@sthb,61,69,3	script	Stefan J.E. Wolf::alasfshew	3484,2,2,{
+	end;
+
+OnTouch:
+	if(.talking == 0)
+	{
+		set 'sfTalking, getcharid(3);
+		set .talking, 1;
+		if('instance_sf_level == 0)
+		{
+			charcommand "#me " + strcharinfo(0) + " Is this what caused the invasion into Prontera? Inside the Sky Fortress?";
+			
+			cutin "stephan_j_e_w", 2;
+			sleep2 1500;
+			npctalk "Intruders...Inside the Sky Fortress";
+			instance_announce instance_id(), "Intruders...Inside the Sky Fortress", bc_map, 0x0000FF;
+			sleep2 1500;
+			npctalk "Bijou...Told me to destroy the intruders!";
+			instance_announce instance_id(), "Bijou...Told me to destroy the intruders!", bc_map, 0x0000FF;
+			sleep2 1500;
+			npctalk "Little...human...Greenhorn...Away!";
+			instance_announce instance_id(), "Little...human...Greenhorn...Away!", bc_map, 0x0000FF;
+			
+			cutin "", 255;
+			disablenpc strnpcinfo(3);
+			donpcevent instance_npcname( "sky_fortress", instance_id() ) + "::OnFirstFloorOn";
+		}
+		else if('instance_sf_level == 1)
+		{
+			npctalk "Grunts!";
+			cutin "stephan_j_e_w", 2;
+			instance_announce instance_id(), "Grunts", bc_map, 0x0000FF;
+			sleep2 1500;
+			
+			npctalk "What a bunch of...Annoying worms!";
+			instance_announce instance_id(), "What a bunch of...Annoying worms!", bc_map, 0x0000FF;
+			sleep2 1500;
+						
+			attachrid 'sfTalking;
+			charcommand "#me " + strcharinfo(0) + " I believe that huge golem play an important role here...";
+			
+			npctalk "Subordinates of the Sky Fortress...Stop them...Bijou's order!";
+			instance_announce instance_id(), "Subordinates of the Sky Fortress...Stop them...Bijou's order!", bc_map, 0x0000FF;
+			sleep2 1500;
+			
+			cutin "", 255;
+			
+			specialeffect 96;
+			
+			disablenpc strnpcinfo(3);
+			enablenpc instance_npcname( "sfwarp#1", instance_id() );
+			enablenpc instance_npcname( "sfwarp#2", instance_id() );
+			enablenpc instance_npcname( "alasfshew2", instance_id() );
+			donpcevent instance_npcname( "sky_fortress", instance_id() ) + "::OnSecondFloorOn";
+		}
+	}
+	end;
+	
+OnTalkEnabled:
+	set .talking, 0;	
+	end;
+	
+OnInstanceInit:
+OnInit:
+	enablenpc strnpcinfo(3);
+	set .talking, 0;
+	end;
+}
+
+1@sthb,208,93,3	script	Stefan J.E. Wolf::alasfshew2	3484,5,5,{
+	end;
+
+OnTouch:
+	if(.talking == 0)
+	{
+		set 'sfTalking, getcharid(3);
+		set .talking, 1;
+		npctalk "Grunts";
+		instance_announce instance_id(), "Grunts", bc_map, 0x0000FF;
+		sleep2 1500;
+		
+		npctalk "Filthy humans! Stop them! Guard...The Holy Fortress!";
+		instance_announce instance_id(), "Filthy humans! Stop them! Guard...The Holy Fortress!", bc_map, 0x0000FF;
+		sleep2 1500;
+		
+		attachrid 'sfTalking;
+		charcommand "#me " + strcharinfo(0) + " It's extremly vigilante...";
+		sleep2 1500;
+		charcommand "#me " + strcharinfo(0) + " I thinks there must be something";
+		sleep2 1500;
+		charcommand "#me " + strcharinfo(0) + " if we follow those Golem's traces.";
+		sleep2 1500;
+
+		disablenpc strnpcinfo(3);
+		donpcevent instance_npcname( "sky_fortress", instance_id() ) + "::OnThirdFloorOn";
+	}
+	end;
+	
+OnTalkEnabled:
+	set .talking, 0;	
+	end;
+	
+OnInstanceInit:
+OnInit:
+	disablenpc strnpcinfo(3);
+	set .talking, 0;
+	end;
+}
+
+1@sthb,34,85,3	script	Locked Door#7::alasfld	4_ENERGY_RED,{
+	getmapxy(.@map$, .@x, .@y, UNITTYPE_NPC);
+
+	//debugmes "entry: [" + .@x + "," + .@y + "] / [" + 'ldEntryX + "," + 'ldEntryY + "]";
+	sleep2 200;
+
+	if(countitem('sfKeyId) > 0 && .@x != 'ldEntryX && .@y != 'ldEntryY)
+	{
+		mes "[Locked Door]";
+		mes "Do you want to open the door?";
+		if(select("Yes","No") == 1)
+		{
+			delitem 'sfKeyId, 1;
+			set 'ldEntryX, .@x;
+			set 'ldEntryY, .@y;
+			set 'warpPoint, rand(0,4);
+			switch('warpPoint)
+			{
+				case 0:
+					setarray .entry[0], 115, 92;
+					break;
+				case 1:
+					setarray .entry[0], 66, 10;
+					break;
+				case 2:
+					setarray .entry[0], 66, 92;
+					break;
+				case 3:
+					setarray .entry[0], 16, 9;
+					break;
+				case 4:
+					setarray .entry[0], 15, 93;
+					break;
+			}
+
+			getpartymember getcharid(1),2;
+			for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
+				if( attachrid( $@partymemberaid[.@i] ) ){
+					if(strcharinfo(3) == instance_mapname( "1@sthb" ))
+					{
+						warp instance_mapname( "1@sthc" ), .entry[0], .entry[1];
+					}
+				}
+
+			donpcevent instance_npcname( "sky_fortress", instance_id() ) + "::OnDoorOpen";
+		}
+	}
+	else if('ldEntryX != 0 && 'ldEntryY != 0)
+	{
+		if(.@x == 'ldEntryX && .@y == 'ldEntryY)
+		{
+			switch('warpPoint)
+			{
+				case 0:
+					setarray .entry[0], 115, 92;
+					break;
+				case 1:
+					setarray .entry[0], 66, 10;
+					break;
+				case 2:
+					setarray .entry[0], 66, 92;
+					break;
+				case 3:
+					setarray .entry[0], 16, 9;
+					break;
+				case 4:
+					setarray .entry[0], 15, 93;
+					break;
+			}
+
+			getpartymember getcharid(1),2;
+			for( set .@i, 0; .@i < $@partymembercount; set .@i, .@i+1 )
+				if( attachrid( $@partymemberaid[.@i] ) ){
+					if(strcharinfo(3) == instance_mapname( "1@sthb" ))
+					{
+						warp instance_mapname( "1@sthc" ), .entry[0], .entry[1];
+					}
+				}
+		}
+	}
+	end;
+	
+OnInstanceInit:
+OnInit:
+	set .opened, 0;
+	end;
+}
+
+1@sthc,16,6,3	script	warp::alasfow	WARPNPC,2,2,{
+	end;
+
+OnTouch:
+	warp instance_mapname( "1@sthb" ), 'ldEntryX, 'ldEntryY;
+	end;
+}
+
+1@sthb,189,55,3	script	warp::alasfli	WARPNPC,2,2,{
+	end;
+
+OnTouch:
+	warp instance_mapname( "1@sthd" ), 105, 72;
+	enablenpc instance_npcname( "alasfshew3" );
+	end;
+}
+
+1@sthd,103,114,3	script	Stefan J.E. Wolf::alasfshew3	3484,5,5,{
+	end;
+
+OnTouch:
+	if(.talking == 0)
+	{
+		set 'sfTalking, getcharid(3);
+		set .talking, 1;
+		charcommand "#me " + strcharinfo(0) + " So this is finally the last...I suppose he must be the cause of Prontera invasion isn't he?";
+		sleep2 1500;
+		
+		cutin "stephan_j_e_w", 2;
+		npctalk "Adventurers...A bunch of foolish greenhorns!";
+		instance_announce instance_id(), "[Wolf] Adventurers...A bunch of foolish greenhorns!", bc_map, 0x0000FF;
+		sleep2 1500;
+
+		npctalk "I must follow orders...From Bijou!";
+		instance_announce instance_id(), "[Jack] I must follow orders...From Bijou!", bc_map, 0x0000FF;
+		sleep2 1500;
+
+		charcommand "#me " + strcharinfo(0) + " Bijou? So was the golem the mere guardian around here? Is that it?";
+		sleep2 1500;
+
+		npctalk "Growl!";
+		instance_announce instance_id(), "[Stefan] Growl!", bc_map, 0x0000FF;
+		sleep2 1500;
+
+		npctalk "Filthy worms...Can't lead life as intended. Immortal power...My body...";
+		instance_announce instance_id(), "[Earnest] Filthy worms...Can't lead life as intended. Immortal power...My body...", bc_map, 0x0000FF;
+		sleep2 1500;
+
+		charcommand "#me " + strcharinfo(0) + " I'd better defeat it first.";
+		sleep2 1500;
+
+		npctalk "Soldiers...Bijou's Fortress...Cut them all...I'll step up...I'll kill them...All.";
+		instance_announce instance_id(), "[Stefan J.E Wolf] Soldiers...Bijou's Fortress...Cut them all...I'll step up...I'll kill them...All", bc_map, 0x0000FF;
+		sleep2 1500;
+
+		disablenpc strnpcinfo(3);
+		cutin "", 255;
+		donpcevent instance_npcname( "sky_fortress" ) + "::OnLastFloorOn";
+	}
+	end;
+	
+OnInstanceInit:
+OnInit:
+	disablenpc strnpcinfo(3);
+	set .talking, 0;
+	end;
+}
+
+1@sthc,66,6,3	duplicate(alasfow)	warp::alasfow2	WARPNPC,2,2
+1@sthc,15,88,3	duplicate(alasfow)	warp::alasfow3	WARPNPC,2,2
+1@sthc,66,88,3	duplicate(alasfow)	warp::alasfow4	WARPNPC,2,2
+1@sthc,115,88,3	duplicate(alasfow)	warp::alasfow5	WARPNPC,2,2
+
+1@sthc,15,51,3	script	Strange Device#0::alasfsd	HIDDEN_NPC,{
+	mes "[Strange Device]";
+	mes "Do you want to activate the device?";
+	if(select("Yes","No") == 1)
+	{
+		if(.used == 0)
+		{
+			donpcevent instance_npcname( "sky_fortress", instance_id() ) + "::OnDevicePoped";
+			set .used, 1;
+		}
+		else
+		{
+			next;
+			mes "[Strange Device]";
+			mes "Nothing happens.";
+		}
+	}
+	close;
+
+OnInit:
+OnInstanceInit:
+	set .used, 0;
+	end;
+}
+
+1@sthd,103,95,3	script	Dimensional Device::alasfdeo	PORTAL,{
+	mes "[Dimensional Device]";
+	mes "Do you want to leave?";
+	if(select("Yes","No") == 1)
+	{
+		warp "SavePoint", 0, 0;
+	}
+	close;
+
+OnInstanceInit:
+OnInit:
+	disablenpc strnpcinfo(3);
+	end;
+}
+
+1@sthc,15,133,3	duplicate(alasfsd)	Strange Device#2::alasfsd3	HIDDEN_NPC
+
+1@sthb,83,99,3	duplicate(alasfld)	Locked Door#1::alasfld2	4_ENERGY_BLUE
+1@sthb,24,40,3	duplicate(alasfld)	Locked Door#2::alasfld3	4_ENERGY_YELLOW
+1@sthb,206,79,3	duplicate(alasfld)	Locked Door#3::alasfld4	4_ENERGY_BLACK
+1@sthb,147,86,3	duplicate(alasfld)	Locked Door#4::alasfld5	4_ENERGY_WHITE
+1@sthb,179,51,3	duplicate(alasfld)	Locked Door#5::alasfld6	4_ENERGY_RED
+
+1@sthb,73,70	warp	sfwarp#1	2,2,1@sthb,73,75
+1@sthb,93,74	warp	sfwarp#2	2,2,1@sthb,210,98
+

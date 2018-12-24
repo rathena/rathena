@@ -1,0 +1,232 @@
+//                                                                                                 
+//                                                                                                    
+//  DDDDDDDD      D                          D       DDDDDDDDDD                                       
+// DDDDDDDDDDD  DDDD                      DDDDD      DDDDDDDDDDD                                      
+//  DDDDDDDDDD DDDDD                      DDDDD       DDDD  DDDD                                      
+//   DDDD  DDDD DD                        DDDDD       DDDD    DD                                      
+//   DDDD  DDDD    D    DD   DD     DD     DDDD       DDDD          DD       DD  D     D   D    D     
+//   DDDD  DDDD DDDD  DDDDDD DDD  DDDDDD   DDDD       DDDD  D     DDDDDD   DDDD DDD DDDD DDDD DDDDD   
+//   DDDD  DDDDDDDDD  DDDDDD DD  DDD  DD   DDDD       DDDD DD    DD  DDD  DDDDDDDDD DDDDDDDDDDDDDDD   
+//   DDDDDDDDD  DDDD   DDDDD D   DDD  DDD  DDDD       DDDDDDD    DD  DDDD  DDDDDDDD DDDDDDDDDD DDDD   
+//   DDDDDDDD   DDDD    DDDDDD  DDDDDDDDD  DDDD       DDDDDDD        DDDD  DDDD DD  DDDD  DDDD DDDD   
+//   DDDDDD     DDDD     DDDD   DDDDDDDDD  DDDD       DDDD  D     DDDDDDD  DDDD     DDDD  DDDD  DDD   
+//   DDDD       DDDD    DDDDDD  DDDD       DDDD       DDDD  D    DDD DDDD  DDDD     DDDD  DDDD  DDD   
+//   DDDD       DDDD    D DDDD   DDD       DDDD       DDDD      DDDD DDDD  DDDD     DDDD  DDDD DDDD   
+//   DDDD       DDDD   DD DDDDD  DDDD  DD  DDDD       DDDD      DDDD DDDDD DDDD     DDDD  DDDD DDDD   
+//  DDDDDD     DDDDDD DDD DDDDDD DDDDDDD  DDDDDD    DDDDDDD     DDDDDDDDD DDDDDD    DDDDDDDDDD DDDDD  
+//  DDDDDD     DDDDDDDDDD DDDDDD  DDDDD   DDDDD      DDDDDD      DDDD DDD DDDDDD   DDDDD DDDDD DDDDD  
+// ===========================================================
+//===== Cronus Script ========================================
+//= War of Treasure
+//===== Por: =================================================
+//= Pixel Farm
+//===== Versão Atual: ========================================
+//= 1.1
+//===== Compatibilidade: =====================================
+//= Cronus Emulador
+//===== Descrição: ===========================================
+//= Guerra dos tesouros que se inicia a cada 2 horas depois de 10 minutos  no mapa apareçe dois baús um de cada lado.
+//===== ChangeLog: ===========================================
+//25/06/11 = Corrigido Bug da wot esta iniciando de 1 em 1 hora. [Pixel Farm]
+//============================================================
+prontera.gat,0,0,0	script	War of Treasure	-1,{
+
+OnClock0645:
+OnClock0845:
+OnClock1045:
+OnClock1245:
+OnClock1445:
+OnClock1645:
+OnClock1845:
+OnClock2045:
+OnClock2245:
+OnClock0045:
+OnClock0245:
+OnClock0445:
+
+
+announce "[Treasure War]: Treasures will emerge in 15 minutes!",8;
+initnpctimer;
+end;
+
+
+
+OnTimer900000: //15 Min Final
+announce "[Treasure War]: Boxes did not show up because there are not enough players on Wot",8;
+stopnpctimer;
+end;
+
+
+announce "[Treasure War]: The treasures have just appeared!",8;
+
+monster	"prt_are_in",22,89,	"Treasure's box",rand(1324,1363),1,"War of Treasure::OnThisMobDeath"; //Sala de Cima
+monster	"prt_are_in",74,141,	"Treasure's box",rand(1324,1363),1,"War of Treasure::OnThisMobDeath"; //Sala do Meio
+monster	"prt_are_in",178,140,	"Treasure's box",rand(1324,1363),1,"War of Treasure::OnThisMobDeath"; //Sala de Baixo
+stopnpctimer;
+
+OnThisMobDeath:
+set .@GID,getcharid(2);  //Guild ID
+set .@CID,getcharid(0); //Char ID
+set .@ACC,getcharid(3); //Account ID
+
+announce "[Treasure War]: [" + strcharinfo( 0 ) + "] of the clan [" + getguildname( .@GID ) + "] conquered one of the box.", 8;
+	
+	
+query_sql "UPDATE `char` SET `baus` = `baus` +1 WHERE `char_id`="+.@CID+"";
+query_sql "UPDATE `login` SET `pontoswot` = `pontoswot` +10 WHERE `account_id`="+.@ACC+"";
+
+query_sql "UPDATE `guild` SET `baus` = `baus` +1 WHERE `guild_id`="+.@GID+"";
+query_sql "UPDATE `guild` SET `pontosgwot` = `pontosgwot` +100 WHERE `guild_id`="+.@GID+"";
+end;
+}
+
+izlude,212,157,3	script	Ranking WOT	857,{
+
+mes "[Ranking WOT]";
+mes "Olá "+strcharinfo(0)+" qual ranking da wot deseja visualizar?";
+switch(select("- Ranking Jogadores:- Ranking Clãs")){
+
+case 1:
+next;
+mes "[Ranking WOT]";
+query_sql "SELECT `name`, `baus` FROM `char` WHERE '"+getcharid(O)+"' ORDER BY `Baus` DESC LIMIT 10",@nome$,@baus;
+mes @np$;
+mes "Posição - ^228B22Nome^000000 - ^00B2EEBaus^000000";
+for (set .@i,0; .@i < 10; set .@i, .@i + 1)
+mes (.@i+1)+"º^000000 - ^228B22"+@nome$[.@i]+"^000000 - ^00B2EE"+@baus[.@i]+"^000000";
+close;
+
+case 2:
+next;
+mes "[Ranking WOT]";
+query_sql "SELECT `name`, `baus` FROM `guild` WHERE '"+getcharid(2)+"' ORDER BY `Baus` DESC LIMIT 10",@nom$,@bau;
+mes @np$;
+mes "Posição - ^228B22Clã^000000 - ^00B2EEBaus^000000";
+for (set .@i,0; .@i < 10; set .@i, .@i + 1)
+mes (.@i+1)+"º^000000 - ^228B22"+@nom$[.@i]+"^000000 - ^00B2EE"+@bau[.@i]+"^000000";
+close;
+}
+}
+
+-	script	War of Treasure#1-1	-1,{
+
+OnPCLoadMapEvent:
+	getmapxy @map$,@x,@y,0;
+
+	if (@map$ == "arena_room"){
+		if (getcharid(2) == 0){ 
+			sleep2 1000; 
+			dispbottom "Sorry but you can not join wot without a clan"; 
+			warp "SavePoint",0,0; 
+			end; 
+		}
+		end;
+	}
+	end;
+}
+
+
+// Portais
+
+//izlude,128,226,0	warp	War Of Treasure1	1,1,arena_room,115,103
+
+
+//izlude,128,226,0	script	War Of Treasure1	45,1,1,{
+//	switch(rand(4)) {
+//		case 1:	warp "arena_room",115,103; end;
+//		case 2:	warp "arena_room",84,103; end;
+//		case 3:	warp "arena_room",115,72; end;
+//		default:	warp "arena_room",84,72; end;
+//	}
+//}
+
+izlude,213,161,0	script	War Of Treasure	45,2,2,{
+end;
+
+OnTouch:
+if (getcharid(2) == 0){ 
+	mes "[^0055FFTreasure War^000000]";
+	mes "Sorry but you can not join wot without a clan";
+	//dispbottom "Sorry but you can not join wot without a clan"; 
+	//warp "SavePoint",0,0; 
+	end; 
+}
+callsub(OnTeleport);
+
+OnTeleport:
+	switch (rand(1,7)) {
+		case 1: // Left
+			warp "arena_room",85,73; 
+			break;
+			
+		case 2: // Down
+			warp "arena_room",85,88;  
+			break;
+		
+		case 3: // Right
+			warp "arena_room",87,100; 
+			break;
+			
+		case 4: // Up
+			warp "arena_room",99,100; 
+			break;
+			
+		case 5: // Random
+			warp "arena_room",112,100;  
+			break;
+
+		case 6: // Random
+			warp "arena_room",115,88;  
+			break;
+
+		case 7: // Random
+			warp "arena_room",113,77;  
+			break;
+	} // End switch
+end;
+} // End Script
+
+
+
+prt_are_in,55,13,0	warp	War Of Treasure2	1,1,prt_are_in,177,129 // Saida Sala de Cima
+prt_are_in,177,127,0	warp	War Of Treasure3	1,1,prt_are_in,57,13 //Entrada Sala de Baixo
+prt_are_in,21,75,0	warp	War Of Treasure4	1,1,prt_are_in,140,13 //Entrada Sala de Cima
+prt_are_in,142,13,0	warp	War Of Treasure5	1,1,prt_are_in,21,77  //Saida Sala de Cima
+prt_are_in,97,7,0	warp	War Of Treasure6	1,1,prt_are_in,74,129 //Entrada Sala Meio
+prt_are_in,74,126,0	warp	War Of Treasure7	1,1,prt_are_in,98,10 //Saida Sala Meio
+prt_are_in,97,30,0	warp	War Of Treasure8	1,1,arena_room,99,28 //Saida Sala Centro
+arena_room,99,26,0	warp	War Of TreasureEntra	1,1,prt_are_in,98,23 //Entrada Sala Centro
+arena_room,100,88,0	warp	War Of TreasureExit	1,1,izlude,209,161 //Saida da wot
+
+
+// --- Mapflags wot.
+//prt_are_in	mapflag	nobranch
+//prt_are_in	mapflag	noreturn
+//prt_are_in	mapflag	nomemo
+//prt_are_in	mapflag	noteleport
+//prt_are_in	mapflag	gvg
+//prt_are_in	mapflag	nosave
+//arena_room	mapflag	nobranch
+//arena_room	mapflag	noreturn
+//arena_room	mapflag	nomemo
+//arena_room	mapflag	noteleport
+//arena_room	mapflag	gvg
+//arena_room	mapflag	nosave
+//arena_room	mapflag	loadevent
+
+prt_are_in	mapflag	nomemo
+prt_are_in	mapflag	nowarp
+prt_are_in	mapflag	nowarpto
+prt_are_in	mapflag	gvg_castle
+prt_are_in	mapflag	noicewall
+prt_are_in	mapflag	nomemo
+prt_are_in	mapflag	noreturn
+prt_are_in	mapflag	gvg
+arena_room	mapflag	gvg
+arena_room	mapflag	nomemo
+arena_room	mapflag	nowarp
+arena_room	mapflag	nowarpto
+arena_room	mapflag	gvg_castle
+arena_room	mapflag	noicewall
+arena_room	mapflag	nomemo
+arena_room	mapflag	noreturn

@@ -30,3 +30,6 @@ p_track01	mapflag	noskill
 p_track02	mapflag	noskill
 
 //evt_zombie	mapflag	noskill
+
+
+//prontera	mapflag	noskill

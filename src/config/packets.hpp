@@ -17,9 +17,8 @@
 #endif
 
 #ifndef PACKETVER_RE
-	/// From November 2015 only RagexeRE are supported.
-	/// After July 2018 only Ragexe are supported.
-	#if PACKETVER > 20151104 && PACKETVER < 20180704
+	/// From this point on only kRO RE clients are supported
+	#if PACKETVER > 20151104
 		#define PACKETVER_RE
 	#endif
 #endif
@@ -28,7 +27,7 @@
 	/// Comment to disable the official packet obfuscation support.
 	/// This requires PACKETVER 2011-08-17 or newer.
 	#ifndef PACKET_OBFUSCATION
-		#define PACKET_OBFUSCATION
+		//#define PACKET_OBFUSCATION
 
 		// Define these inside src/custom/defines_pre.hpp or src/custom/defines_post.hpp
 		//#define PACKET_OBFUSCATION_KEY1 <key1>

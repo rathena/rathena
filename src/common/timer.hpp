@@ -10,8 +10,6 @@
 
 #define DIFF_TICK(a,b) ((int)((a)-(b)))
 
-const int32 INFINITE_TICK = -1;
-
 #define INVALID_TIMER -1
 #define CLIF_WALK_TIMER -2
 

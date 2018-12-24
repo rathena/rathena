@@ -15,23 +15,38 @@
 //= 1.9 Migrate/Integrate to Global Functions Platinum Skills. [mazvi]
 //============================================================
 
-prontera,153,193,6	script	Job Master	123,{
+prt_cas,108,276,6	script	Job Master	743,{
 function Get_Job_Equip;
+if(#language == NULL)
+set #language, 2; 
+
 // Checks if the Player has the required level.
 // closes if not, returns if yes
 function	Require_Level	{
 	if (BaseLevel < getarg(0) || JobLevel < getarg(1)) {
 		.@blvl = getarg(0) - BaseLevel;
 		.@jlvl = getarg(1) - JobLevel;
-		mes "Level requirement:";
-		mes ((getarg(0)>1)? 
+		if(#language == 1){
+			mes "Exigência de nível:";
+			mes ((getarg(0)>1)? 
 			"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
 			getarg(1)+"^000000 (^00bb00Job^000000)";
-		mes "You need " +
+			mes "Você precisa " +
+			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 mais níveis básicos" + 
+				((.@jlvl > 0) ? "and " : "") : "") +
+			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 mais níveis de trabalho " : "") +
+			"continue.";
+		}else{
+			mes "Level requirement:";
+			mes ((getarg(0)>1)? 
+			"^bb0000"+getarg(0)+"^000000 (^bb0000Base^000000) / ":"")+"^00bb00"+
+			getarg(1)+"^000000 (^00bb00Job^000000)";
+			mes "You need " +
 			((.@blvl > 0) ? "^bb0000"+.@blvl+"^000000 more base levels " + 
 				((.@jlvl > 0) ? "and " : "") : "") +
 			((.@jlvl > 0) ? "^00bb00"+.@jlvl+"^000000 more job levels " : "") +
 			"to continue.";
+		}
 		close;
 	}
 	return;
@@ -91,19 +106,31 @@ function	Check_Riding	{
 	// would make this NPC bigger just to handle with
 	// those special cases.
 	if (checkfalcon() || checkcart() || checkriding() || ismounting()) {
+		if(#language == 1){
+		mes "Por favor, remova o seu " +
+			((checkfalcon()) ? "falcão" : "") +
+			((checkcart()) ? "carrinho" : "") +
+			((checkriding()) ? "Peco" : "") +
+			((ismounting()) ? "montaria" : "") +
+			" antes de proceder.";
+		}else{
 		mes "Please remove your " +
 			((checkfalcon()) ? "falcon" : "") +
 			((checkcart()) ? "cart" : "") +
 			((checkriding()) ? "Peco" : "") +
 			((ismounting()) ? "mount" : "") +
 			" before proceeding.";
-		close;
+		}
 	}
 	return;
 }
 function	Check_SkillPoints	{
 	if (.SkillPointCheck && SkillPoint) {
-		mes "Please use all your skill points before proceeding.";
+		if(#language == 1){
+			mes "Por favor, use todos os seus pontos de habilidade antes de prosseguir.";
+		}else{
+			mes "Please use all your skill points before proceeding.";
+		}
 		close;
 	}
 	return;
@@ -213,7 +240,11 @@ function	Job_Options	{
 					Job_Options(.@job_opt, Job_Baby_Summoner);
 				break;
 			default:
-				mes "An error has occurred.";
+				if(#language == 1){
+					mes "Ocorreu um erro.";
+				}else{
+					mes "An error has occurred.";
+				}
 				close;
 		}
 	} else if( Is_First_Cls(.@eac) || 				// First Class
@@ -254,7 +285,11 @@ function	Job_Menu	{
 	while(true) {
 		.@opt_cnt =  getarraysize(getarg(0));
 		if( .@opt_cnt <= 0 ) {
-			mes "No more jobs are available.";
+			if(#language == 1){
+				mes "Não há mais empregos disponíveis.";
+			}else{
+				mes "No more jobs are available.";
+			}
 			close;
 		}
 
@@ -262,14 +297,26 @@ function	Job_Menu	{
 		if (.@opt_cnt > 1) {
 			// Multiple job classes given. Select one and save it to .@class
 			// After that confirm .@class
-			mes "Select a job.";
+			if(#language == 1){
+				mes "Selecione um trabalho.";
+			}else{
+				mes "Select a job.";
+			}
 			.@menu$ = "";
 			for (.@i = 0; .@i < .@opt_cnt; .@i++) {
-				if( getelementofarray(getarg(0), .@i) == Job_Novice_High)
-					.@jobname$ = "^0055FFRebirth^000000";
-				else
-					.@jobname$ = jobname(getelementofarray(getarg(0), .@i));
-				.@menu$ = .@menu$ + " ~ " + .@jobname$ + ":";
+				if(#language == 1){
+					if( getelementofarray(getarg(0), .@i) == Job_Novice_High)
+						.@jobname$ = "^0055FFRenascimento^000000";
+					else
+						.@jobname$ = jobname(getelementofarray(getarg(0), .@i));
+						.@menu$ = .@menu$ + " ~ " + .@jobname$ + ":";
+				}else{
+					if( getelementofarray(getarg(0), .@i) == Job_Novice_High)
+						.@jobname$ = "^0055FFRebirth^000000";
+					else
+						.@jobname$ = jobname(getelementofarray(getarg(0), .@i));
+						.@menu$ = .@menu$ + " ~ " + .@jobname$ + ":";
+				}
 			}
 			.@menu$ = .@menu$+" ~ ^777777Cancel^000000";
 			.@selected = select(.@menu$) - 1;
@@ -285,8 +332,13 @@ function	Job_Menu	{
 			// Super Baby can both be selected in one of the first class
 			// changes. That's why the Level Requirement is after and not before
 			// the selection.
-			mes "A base level of " + .SNovice +
-				" is required to turn into a " + jobname(.@class) + ".";
+			if(#language == 1){
+				mes "Um nível básico de " + .SNovice +
+					" é necessário para se transformar em um " + jobname(.@class) + ".";
+			}else{
+				mes "A base level of " + .SNovice +
+					" is required to turn into a " + jobname(.@class) + ".";
+			}
 			return;
 		}
 		// Confirm the Class
@@ -303,7 +355,11 @@ function	Job_Change	{
 	.@to_cls = getarg(0);
 	next;
 	mes .NPCName$;
-	mes "You are now " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
+	if(#language == 1){
+		mes "Você é agora é " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
+	}else{
+		mes "You are now " + callfunc("F_InsertArticle", jobname(.@to_cls)) + "!";
+	}
 	if (.@to_cls == Job_Novice_High && .LastJob)
 		lastJob = Class; // Saves the lastJob for rebirth
 	jobchange .@to_cls;
@@ -327,18 +383,35 @@ function	Confirm_Change	{
 	// Player confirms he want to change into .@class
 	.@class = getarg(0, -1);
 	.@back = getarg(1, false);
-	if( .@class < 0 ) {
-		mes "Unknown Class Error.";
-		close;
-	}
-	mes "Do you want to change into ^0055FF"+jobname(.@class)+"^000000 class?";
-	.@job_option$ = " ~ Change into ^0055FF"+jobname(.@class)+"^000000 class";
-	if( .@class == Job_Novice_High)
+	
+	if(#language == 1){
+		if( .@class < 0 ) {
+			mes "Unknown Class Error.";
+			close;
+		}
+			mes "Você quer mudar para ^0055FF"+jobname(.@class)+"^000000 classe?";
+			.@job_option$ = " ~ Mudar para ^0055FF"+jobname(.@class)+"^000000 classe";
+		if( .@class == Job_Novice_High)
+		.@job_option$ = " ~ ^0055FFRenascimento^000000";
+	
+		if (select(.@job_option$+": ~ ^777777" + 
+			((.@back) ?"Volte" : "Cancelar") + "^000000") == 1) {
+			Job_Change(.@class);
+		}
+	}else{
+		if( .@class < 0 ) {
+			mes "Unknown Class Error.";
+			close;
+		}
+			mes "Do you want to change into ^0055FF"+jobname(.@class)+"^000000 class?";
+			.@job_option$ = " ~ Change into ^0055FF"+jobname(.@class)+"^000000 class";
+		if( .@class == Job_Novice_High)
 		.@job_option$ = " ~ ^0055FFRebirth^000000";
 	
-	if (select(.@job_option$+": ~ ^777777" + 
+		if (select(.@job_option$+": ~ ^777777" + 
 			((.@back) ?"Go back" : "Cancel") + "^000000") == 1) {
-		Job_Change(.@class);
+			Job_Change(.@class);
+		}
 	}
 	if (!.@back)
 		close; // "Cancel" pressed
@@ -430,6 +503,8 @@ function	Get_Job_Equip	{
 	} else {
 		// Neither Second or Third Cls
 		// => First Cls or not covered by the switch
+		getitem 569, 200; //Novice potion
+		getitem 12323, 50; //Novice Fly Wing
 		switch(BaseClass) {
 			// First Class
 			case Job_Swordman:
@@ -452,6 +527,7 @@ function	Get_Job_Equip	{
 OnInit:
 	// Initialisation, do not edit these
 	.NPCName$ = "[Job Master]";
+
 	
 	// Settings
 	.ThirdClass = true;			// Enable third classes?
@@ -465,7 +541,7 @@ OnInit:
 	.LastJob = true;				// Enforce linear class changes?
 	.SkillPointCheck = true;		// Force player to use up all skill points?
 	.Platinum = true;				// Get platinum skills automatically?
-	.GetJobEquip = false;			// Get job equipment (mostly weapons) on job change?
+	.GetJobEquip = true;			// Get job equipment (mostly weapons) on job change?
 
 	// Level Requirements
 	setarray .Req_First[0],1,10; 		// Minimum base level, job level to turn into 1st class

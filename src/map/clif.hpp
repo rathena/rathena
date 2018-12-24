@@ -519,6 +519,8 @@ enum clif_messages : uint16_t {
 	GUILD_MASTER_WOE = 0xb93, /// <"Currently in WoE hours, unable to delegate Guild leader"
 	GUILD_MASTER_DELAY = 0xb94, /// <"You have to wait for one day before delegating a new Guild leader"
 	MSG_ATTENDANCE_DISABLED = 0xd92,
+	// Unofficial names
+	C_ITEM_EQUIP_SWITCH = 0xbc7, 
 };
 
 enum e_personalinfo : uint8_t {
@@ -564,7 +566,7 @@ void clif_authok(struct map_session_data *sd);
 void clif_authrefuse(int fd, uint8 error_code);
 void clif_authfail_fd(int fd, int type);
 void clif_charselectok(int id, uint8 ok);
-void clif_dropflooritem(struct flooritem_data* fitem, bool canShowEffect);
+void clif_dropflooritem(struct flooritem_data* fitem);
 void clif_clearflooritem(struct flooritem_data *fitem, int fd);
 
 void clif_clearunit_single(int id, clr_type type, int fd);
@@ -1043,6 +1045,9 @@ void clif_sale_end(struct sale_item_data* sale_item, struct block_list* bl, enum
 void clif_sale_amount(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
 void clif_sale_open(struct map_session_data* sd);
 
+// Refine UI
+void clif_refineui_open( struct map_session_data* sd );
+
 /**
  * Color Table
  **/
@@ -1101,6 +1106,10 @@ void clif_weight_limit( struct map_session_data* sd );
 
 void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result );
 
-void clif_camerainfo( struct map_session_data* sd, bool show, float range = 0.0f, float rotation = 0.0f, float latitude = 0.0f );
+/// Equip Switch System
+void clif_equipswitch_list( struct map_session_data* sd );
+void clif_equipswitch_add( struct map_session_data* sd,uint16 index, uint32 pos, bool failed );
+void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 pos, bool failed );
+void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 
 #endif /* CLIF_HPP */

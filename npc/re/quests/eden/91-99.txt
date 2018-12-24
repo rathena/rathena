@@ -75,11 +75,11 @@ moc_para01,48,177,3	script	91-99 Mission Board	857,{
 			"Shinobi","Evil Nymph",
 			"Deviruchi","Mineral","Kaho","Neraid","Disguise";
 		setarray .@exp[0],
-			90000,94000,114000,
-			96000,96000,146000,
-			96000,102000,110000,
-			102000,108000,
-			110000,138000,118000,96000,134000;
+			2700000,2820000,3420000,
+			2880000,2880000,4380000,
+			2880000,3060000,110000,
+			3060000,3240000,
+			3300000,4140000,3540000,2880000,4020000;
 		mes "You must be within level 91-99 to accept these missions.";
 		for(set .@quest,4181; .@quest<=4196; set .@quest,.@quest+1) {
 			set .@hunting, checkquest(.@quest,HUNTING);
@@ -115,46 +115,46 @@ moc_para01,48,177,3	script	91-99 Mission Board	857,{
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFSolider^000000:^0000FFFreezer^000000:^0000FFHeater^000000")) {
-			case 1: callsub L_Quest,4181,"Solider",90000,"솔리더카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.";
-			case 2: callsub L_Quest,4182,"Freezer",94000,"프리저카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.";
-			case 3: callsub L_Quest,4183,"Heater",114000,"히터카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.";
+			case 1: callsub L_Quest,4181,"Solider",2700000,"솔리더카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.";
+			case 2: callsub L_Quest,4182,"Freezer",2820000,"프리저카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.";
+			case 3: callsub L_Quest,4183,"Heater",3420000,"히터카드","There is a monster that only can be found on ^8B4513Turtle Island^000000.";
 		}
 	case 2:
 		mes "^8B4513Glast Heim^000000.";
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFInjustice^000000:^0000FFRybio^000000:^0000FFDark Priest^000000")) {
-			case 1: callsub L_Quest,4184,"Injustice",96000,"인저스티스카드","There is a monster only found in ^8B4513Glast Heim prison^000000.";
-			case 2: callsub L_Quest,4185,"Rybio",96000,"리비오카드","There is a monster only found in ^8B4513Glast Heim prison^000000.";
-			case 3: callsub L_Quest,4186,"Dark Priest",146000,"다크프리스트카드","There is a monster only found in ^8B4513Glast Heim prison^000000.";
+			case 1: callsub L_Quest,4184,"Injustice",2880000,"인저스티스카드","There is a monster only found in ^8B4513Glast Heim prison^000000.";
+			case 2: callsub L_Quest,4185,"Rybio",2880000,"리비오카드","There is a monster only found in ^8B4513Glast Heim prison^000000.";
+			case 3: callsub L_Quest,4186,"Dark Priest",4380000,"다크프리스트카드","There is a monster only found in ^8B4513Glast Heim prison^000000.";
 		}
 	case 3:
 		mes "^8B4513Rachel / Veins^000000.";
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFStapo^000000:^0000FFRoween^000000:^0000FFSiroma^000000")) {
-			case 1: callsub L_Quest,4187,"Stapo",96000,"스태포카드","There is a monster only found in ^8B4513Veins^000000.";
-			case 2: callsub L_Quest,4188,"Roween",102000,"로우윈카드","There is a monster only found in ^8B4513Rachel^000000.";
-			case 3: callsub L_Quest,4189,"Siroma",110000,"시로마카드","There is a monster only found in ^8B4513Ice Dungeon^000000.";
+			case 1: callsub L_Quest,4187,"Stapo",2880000,"스태포카드","There is a monster only found in ^8B4513Veins^000000.";
+			case 2: callsub L_Quest,4188,"Roween",3060000,"로우윈카드","There is a monster only found in ^8B4513Rachel^000000.";
+			case 3: callsub L_Quest,4189,"Siroma",3300000,"시로마카드","There is a monster only found in ^8B4513Ice Dungeon^000000.";
 		}
 	case 4:
 		mes "^8B4513Expansion Cities^000000.";
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFShinobi^000000:^0000FFEvil Nymph^000000")) {
-			case 1: callsub L_Quest,4190,"Shinobi",102000,"시노비카드","There is a monster only found in ^8B4513Amatsu Dungeon^000000.";
-			case 2: callsub L_Quest,4191,"Evil Nymph",108000,"요선녀카드","There is a monster only found in ^8B4513Kunlun Dungeon^000000.";
+			case 1: callsub L_Quest,4190,"Shinobi",3060000,"시노비카드","There is a monster only found in ^8B4513Amatsu Dungeon^000000.";
+			case 2: callsub L_Quest,4191,"Evil Nymph",3240000,"요선녀카드","There is a monster only found in ^8B4513Kunlun Dungeon^000000.";
 		}
 	case 5:
 		mes "Other Regions.";
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFDeviruchi^000000:^0000FFMineral^000000:^0000FFKaho^000000:^0000FFNeraid^000000:^0000FFDisguise^000000")) {
-			case 1: callsub L_Quest,4192,"Deviruchi",110000,"데비루치카드","There is a monster only found in ^8B4513Geffen Dungeon^000000.";
-			case 2: callsub L_Quest,4193,"Mineral",138000,"미네랄","There is a monster only found in ^8B4513Einbech Dungeon^000000.";
-			case 3: callsub L_Quest,4194,"Kaho",118000,"카호카드","There is a monster found in ^8B4513Nogg Road Magma 1^000000.";
-			case 4: callsub L_Quest,4195,"Neraid",96000,"네레이드카드","There is a monster only found in ^8B4513Comodo Dungeon^000000.";
-			case 5: callsub L_Quest,4196,"Disguise",134000,"디스가이즈카드","There is a monster only found in ^8B4513Niflheim^000000.";
+			case 1: callsub L_Quest,4192,"Deviruchi",3300000,"데비루치카드","There is a monster only found in ^8B4513Geffen Dungeon^000000.";
+			case 2: callsub L_Quest,4193,"Mineral",4140000,"미네랄","There is a monster only found in ^8B4513Einbech Dungeon^000000.";
+			case 3: callsub L_Quest,4194,"Kaho",3540000,"카호카드","There is a monster found in ^8B4513Nogg Road Magma 1^000000.";
+			case 4: callsub L_Quest,4195,"Neraid",2880000,"네레이드카드","There is a monster only found in ^8B4513Comodo Dungeon^000000.";
+			case 5: callsub L_Quest,4196,"Disguise",4020000,"디스가이즈카드","There is a monster only found in ^8B4513Niflheim^000000.";
 		}
 	}
 	end;
@@ -184,10 +184,10 @@ L_Quest:
 		setquest .@quest2;
 
 		// Job Experience calculation.
-		if (JobLevel > 50 && JobLevel < 56) set .@jexp,67000;
-		else if (JobLevel > 55 && JobLevel < 61) set .@jexp,94000;
-		else if (JobLevel > 60 && JobLevel < 66) set .@jexp,141000;
-		else if (JobLevel > 65 && JobLevel < 69) set .@jexp,212000;
+		if (JobLevel > 50 && JobLevel < 56) set .@jexp,2010000;
+		else if (JobLevel > 55 && JobLevel < 61) set .@jexp,2820000;
+		else if (JobLevel > 60 && JobLevel < 66) set .@jexp,4230000;
+		else if (JobLevel > 65 && JobLevel < 69) set .@jexp,6360000;
 		else if (JobLevel == 69) set .@jexp,311000;
 
 		getexp getarg(2),.@jexp;

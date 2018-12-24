@@ -1,0 +1,293 @@
+//===== rathena Script =======================================
+//= Roda da Fortuna
+//===== By ===================================================
+//= Habilis
+//= Edited by Mateuus
+//===== Version ==============================================
+//	- Initial script edit for Mateuus.
+//===== Description ==========================================
+//= Roda da fortuna
+//============================================================
+
+prt_cas,84,293,4	script	Roda da Fortuna#Main	2_SLOT_MACHINE,{
+	
+	if(#language == 1) {
+		set .npcname$,"[ ^0055FFRoda da Fortuna^000000 ]";
+	}else{
+		set .npcname$,"[ ^0055FFWheel of Fortune^000000 ]";
+	}
+	
+	
+	
+mes .npcname$;
+cutin("aca_salim02", 2);
+addtimer(1, sprintf("%s::OnEnd", strnpcinfo(NPC_NAME)));
+if(#language == 1) {
+	mes "Você quer girar a roda?";
+	mes "Você precisa de ^0055FF"+.ItemQ+"^000000x ^0055FF"+getitemname(.ItemN)+"^000000 para girar a roda";
+}else{
+	mes "Do you want to turn the wheel?";
+	mes "to turn the wheel ^0055FF"+.ItemQ+"^000000x ^0055FF"+getitemname(.ItemN)+"^000000 to turn the wheel";
+}
+next;
+while (true) {
+		if(countitem(.ItemN) < .ItemQ) {
+			if(#language == 1) {
+				mes "Você não tem "+getitemname(.ItemN)+" suficiente.";
+				dispbottom "[Roda da Fortuna] Você não tem "+getitemname(.ItemN)+" suficiente.";
+			}else{
+				mes "You do not have "+getitemname(.ItemN)+" enough.";
+				dispbottom "[Roda da Fortuna] You do not have "+getitemname(.ItemN)+" enough.";
+			}
+			callsub(S_End);
+		}
+		
+		switch (select("Sim, (Yes)","Não (no)")) {
+		// Pay with .ItemN 
+		case 1:
+			if (countitem(.ItemN) >= .ItemQ) {
+			    delitem .ItemN, .ItemQ;
+				callsub(S_Spin);
+			} else {
+				cutin("aca_salim02", 2);
+				mes .npcname$;
+				if(#language == 1) {
+					mes("Awww, você não tem o suficiente para jogar...");
+				}else{
+					mes("Awww, you do not have enough to play...");
+				}
+				mes("Byeeeeeeeeeeeeee ;)");
+				callsub(S_End);
+			}
+			break;
+		default:
+			callsub(S_End);
+		}
+}
+	
+	
+//Roda Animação
+S_Spin:
+	.@Sector = rand(.Sector_Range[0], .Sector_Range[1]);
+	.@Display = .@Sector * 2 - 1;
+	.@Speed = .Spin_Speed;	
+	
+	.@Surprise = rand(0, 100);
+	.@SurpriseArrayQty = getarraysize(.Surprise_ID) - 1;
+	.@SurpriseOvo = rand(0, 100);
+	.@SurpriseOvoArrayQty = getarraysize(.SurpriseOvo_ID) - 1;
+	.@SurpriseBox = rand(0, 100);
+	.@SurpriseBoxArrayQty = getarraysize(.SurpriseBox_ID) - 1;
+	
+	for (.@i = 0; .@i < .nbTurns; .@i++) {
+		.@b = .Cutin_Range[0];
+		while (.@b <= .Cutin_Range[1]) {
+			cutin(sprintf("%s%d", .Cutin$, .@b), 4);
+			sleep2(.@Speed);
+			.@b++;
+			.@Speed += 1; // not ++, because  you may want to adjust the stopping +1 +2 +3
+		}
+	}
+	
+	.@b = .Cutin_Range[0];
+	while (.@b < .@Display) {
+		cutin(sprintf("%s%d", .Cutin$, .@b), 4);
+		sleep2(.@Speed);
+		.@b++;
+	}
+	
+	cutin(sprintf("%s%d", .Cutin$, .@b), 4);
+	
+	if (.Prize_ID[.@Sector] == -1) {
+		if (.Sound_Effects)
+			soundeffect("wheel_jackpot.wav", 0);
+		
+		mes .npcname$;
+		if(#language == 1) {
+			mes "^FF0004Uaah^000000. parece que você tirou a sorte grande.";
+			mes "Você tem 10% de chance de ganhar.";
+			mes "";
+			mes "^FF0004Boa Sorte^000000!";
+		}else{
+			mes "^FF0004Uaah^000000. It seems like you took the big luck.";
+			mes "You have a 10% chance to win.";
+			mes "";
+			mes "^FF0004Good luck^000000!";
+
+		}
+		next;
+		if(.@SurpriseOvo >= 90){
+				if (.Sound_Effects)
+				soundeffect("wheel_won.wav", 0);
+				
+				.@SurpriseOvoSector = rand(1, .@SurpriseOvoArrayQty);
+				if(#language == 1) {
+					announce(sprintf("[Roda da Fortuna] : %dx %s - aproveite seu prêmio!",.SurpriseOvo_Qty[.@SurpriseOvoSector], getitemname(.SurpriseOvo_ID[.@SurpriseOvoSector])), bc_blue | bc_self);
+				}else{
+					announce(sprintf("[Wheel of Fortune] : %dx %s - enjoy your prize!",.SurpriseOvo_Qty[.@SurpriseOvoSector], getitemname(.SurpriseOvo_ID[.@SurpriseOvoSector])), bc_blue | bc_self);
+				}
+				getitem(.SurpriseOvo_ID[.@SurpriseOvoSector], .SurpriseOvo_Qty[.@SurpriseOvoSector]);
+		}else{
+			// Nothing
+			if (.Sound_Effects)
+				soundeffect("wheel_lost.wav", 0);
+			
+			if(#language == 1) {
+				mes "^FF0004Awwww, hoje não é seu dia de sorte^000000...";
+				announce(sprintf("[Roda da Fortuna] : Awwww, hoje não é seu dia de sorte..."), bc_blue | bc_self);
+			}else{
+				mes "^FF0004Awwww, It's not your lucky day today.^000000...";
+				announce(sprintf("[Wheel of Fortune] : Awwww, It's not your lucky day today...."), bc_blue | bc_self);
+			}
+		}
+	} else if (.Prize_ID[.@Sector] == -998) {
+			if (.Sound_Effects)
+			soundeffect("wheel_jackpot.wav", 0);
+		
+			mes .npcname$;
+			if(#language == 1) {
+				mes "Parabéns, vamos sorter oque tem dentro dessa caixa para você.";
+				mes "a caixa pode está vazia.";
+				mes "";
+				mes "^FF0004Boa Sorte^000000!";
+			}else{
+				mes "Congratulations, let's have a look at what's inside that box for you.";
+				mes "the box may be empty.";
+				mes "";
+				mes "^FF0004Good Luck^000000!";
+			}
+			next;
+			
+			.@SurpriseBoxSector = rand(1, .@SurpriseBoxArrayQty);
+			.@vazia = .SurpriseBox_ID[.@SurpriseBoxSector];
+			
+			if(.@vazia == 0) {
+				if (.Sound_Effects)
+				soundeffect("wheel_lost.wav", 0);
+				
+				if(#language == 1) {
+					mes "^FF0004Caixa vazia, hoje não é seu dia de sorte^000000...";
+					announce(sprintf("[Roda da Fortuna] : Caixa vazia, hoje não é seu dia de sorte..."), bc_blue | bc_self);
+				}else{
+					mes "^FF0004Empty box, today is not your lucky day.^000000...";
+					announce(sprintf("[Wheel of Fortune] : Empty box, today is not your lucky day...."), bc_blue | bc_self);
+				}
+			}else{
+				if (.Sound_Effects)
+				soundeffect("wheel_won.wav", 0);
+				
+				if(#language == 1) {
+					announce(sprintf("[Roda da Fortuna] : %dx %s - aproveite seu prêmio!",.SurpriseBox_Qty[.@SurpriseBoxSector], getitemname(.SurpriseBox_ID[.@SurpriseBoxSector])), bc_blue | bc_self);
+				}else{
+					announce(sprintf("[Wheel of Fortune] : %dx %s - enjoy your prize!",.SurpriseBox_Qty[.@SurpriseBoxSector], getitemname(.SurpriseBox_ID[.@SurpriseBoxSector])), bc_blue | bc_self);
+				}
+				getitem(.SurpriseBox_ID[.@SurpriseBoxSector], .SurpriseBox_Qty[.@SurpriseBoxSector]);
+			}	
+	} else if (.Prize_ID[.@Sector] == -999) {
+		if (.Sound_Effects)
+			soundeffect("wheel_jackpot.wav", 0);
+		
+		mes .npcname$;
+		if(#language == 1) {
+			mes "Você tem 40% de chance de ganhar.";
+			mes "";
+			mes "^FF0004Boa Sorte^000000!";
+		}else{
+			mes "You have a 40% chance to win.";
+			mes "";
+			mes "^FF0004Good Luck^000000!";
+		}
+		next;
+			
+		if(.@Surprise >= 60){
+				if (.Sound_Effects)
+				soundeffect("wheel_won.wav", 0);
+				
+				.@SurpriseSector = rand(1, .@SurpriseArrayQty);
+				if(#language == 1) {
+					announce(sprintf("[Roda da Fortuna] : %dx %s - aproveite seu prêmio!",.Surprise_Qty[.@SurpriseSector], getitemname(.Surprise_ID[.@SurpriseSector])), bc_blue | bc_self);
+				}else{
+					announce(sprintf("[Wheel of Fortune] : %dx %s - aproveite seu prêmio!",.Surprise_Qty[.@SurpriseSector], getitemname(.Surprise_ID[.@SurpriseSector])), bc_blue | bc_self);
+				}
+				getitem(.Surprise_ID[.@SurpriseSector], .Surprise_Qty[.@SurpriseSector]);
+		}else{
+			// Nothing
+			if (.Sound_Effects)
+				soundeffect("wheel_lost.wav", 0);
+			if(#language == 1) {
+				mes "^FF0004Awwww, hoje não é seu dia de sorte^000000...";
+				announce(sprintf("[Roda da Fortuna] : Awwww, hoje não é seu dia de sorte..."), bc_blue | bc_self);
+			}else{
+				mes "^FF0004Awwww, It's not your lucky day today.^000000...";
+				announce(sprintf("[Wheel of Fortune] : Awwww, It's not your lucky day today...."), bc_blue | bc_self);
+			}
+		}		
+	} else { 
+		// Item
+		if (.Sound_Effects)
+			soundeffect("wheel_won.wav", 0);
+		if(#language == 1) {
+			announce(sprintf("[Roda da Fortuna] : %dx %s - aproveite seu prêmio!",.Prize_Qty[.@Sector], getitemname(.Prize_ID[.@Sector])), bc_blue | bc_self);
+		}else{
+			announce(sprintf("[Wheel of Fortune] : %dx %s - enjoy your prize!",.Prize_Qty[.@Sector], getitemname(.Prize_ID[.@Sector])), bc_blue | bc_self);
+		}
+		getitem(.Prize_ID[.@Sector], .Prize_Qty[.@Sector]);
+	}
+	
+	
+	sleep2(1000);
+	if(countitem(.ItemN) < .ItemQ) {
+			mes .npcname$;
+			if(#language == 1) {
+				mes "Você não tem "+getitemname(.ItemN)+" suficiente.";
+				mes "Obrigado volte sempre!";
+			}else{
+				mes "You do not have "+getitemname(.ItemN)+" enough.";
+				mes "Thank you, come back always!";
+			}
+		close();
+	}
+	return;
+
+S_End:
+	close2();
+OnEnd:
+	cutin("", 255);
+	end;
+	
+OnInit:
+	
+	//bindatcmd("wheel_of_fortune", "Wheel_of_Fortune::OnCommand", 98, 98);
+	.Spin_Speed = 3; // What is the base spin speed? (ms)
+	.nbTurns = 6; // Quantas vezes a seta faz um giro completo, antes de entrar na rotina de parada
+	.ItemN = 6153; // Item Necessario para jogar
+	.ItemQ = 2; // Quantidade do .ItemN para poder jogar
+	.Sound_Effects = true; // Enable sound effects? (true/false)
+
+	// Você deve ter um total de 10 prêmios.
+	// mude sua ordem. 
+	setarray(.Prize_ID[1], -1, 12103, 501, -998,   -999,   607, -998,   604, -999, -998); //Sempre tem quer te 10
+	setarray(.Prize_Qty[1], 2,     1,  1,  1,    3,   100,  1,     3, 0,   0);  //Sempre tem quer te 10
+	//////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	//Prêmios da ?? 
+	setarray(.Surprise_ID[1], 7619, 7620, 12218, 12214);
+	setarray(.Surprise_Qty[1], 3,     3, 	 25, 	 3);
+	
+	//Prêmios do Ovo
+	setarray(.SurpriseOvo_ID[1], 5100, 5084, 5491, 5501,5508,5519,5528, 5332,5333,5334,5335,5336,5337,5338,5339,5340,5341,5342,5343,5344,5346);
+	setarray(.SurpriseOvo_Qty[1], 	1,    1, 	1, 	  1,   1,	1,	 1,	   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1,   1);
+	
+	//Prêmios das Caixas
+	setarray(.SurpriseBox_ID[1], 12916,	0,0,0,0,   12213,	0,0, 13973,	0,	 12208,	0, 12903,	0,0,0,0, 	7621,	0,  12904,	0,	12210, 0,	12905, 0,	12710,	12906,	0,0,0,0,0,	12214,	12907,	7619,	12908,	7620,0);
+	setarray(.SurpriseBox_Qty[1],	 1,	0,0,0,0,  	   1,	0,0, 	1,	0,	     1,	0,     1,	0,0,0,0,	   3,	0,	    1,	0,		1, 0,		1, 0,	   25,		1,	0,0,0,0,0,		5,		1,	   1,		1,	   5,0);
+	 
+	
+
+	// Don't touch below
+	.Cutin$ = "WheelOfFortune_";
+	setarray(.Sector_Range, 1, 10); // Sector range
+	setarray(.Cutin_Range, 0, 19); // Cutin range
+	end;
+}

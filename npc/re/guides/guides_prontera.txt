@@ -15,7 +15,7 @@
 //=     Optimized.
 //============================================================ 
 
-prontera,154,187,4	script	Guide#01prontera::GuideProntera	105,{
+prontera,146,173,4	script	Guide#01prontera::GuideProntera	105,{
 	cutin "prt_soldier",2;
 	mes "[Prontera Guide]";
 	mes "Welcome to ^8B4513Prontera^000000,";
@@ -157,13 +157,13 @@ prontera,154,187,4	script	Guide#01prontera::GuideProntera	105,{
 					break;
 				case 4:
 					mes "[Prontera Guide]";
-					mes "The "+F_Navi("Magic Gear Master","prontera,163,178","^006400");
+					mes "The "+F_Navi("Magic Gear Master","prontera,165,173","^006400");
 					mes "provides services for";
 					mes "^006400Mechanics^000000.";
 					mes "Let me mark his location";
 					mes "on your mini-map.";
 					mes .@str$;
-					viewpoint 1,163,178,17,0xAAFF00;
+					viewpoint 1,165,173,17,0xAAFF00;
 					next;
 					break;
 				case 5:

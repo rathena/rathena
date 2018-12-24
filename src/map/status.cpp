@@ -47,10 +47,11 @@ enum e_regen {
 
 // Bonus values and upgrade chances for refining equipment
 static struct {
-	int chance[REFINE_CHANCE_TYPE_MAX][MAX_REFINE]; /// Success chance
+	int chance[REFINE_COST_MAX][MAX_REFINE]; /// Success chance
 	int bonus[MAX_REFINE]; /// Cumulative fixed bonus damage
 	int randombonus_max[MAX_REFINE]; /// Cumulative maximum random bonus damage
 	struct refine_cost cost[REFINE_COST_MAX];
+	struct refine_bs_blessing bs_blessing[MAX_REFINE];
 } refine_info[REFINE_TYPE_MAX];
 
 static int atkmods[SZ_ALL][MAX_WEAPON_TYPE];	/// ATK weapon modification for size (size_fix.txt)
@@ -627,7 +628,7 @@ void initChangeTables(void)
 	set_sc( MER_KYRIE		, SC_KYRIE		, EFST_KYRIE		, SCB_NONE );
 	set_sc( MER_BLESSING		, SC_BLESSING		, EFST_BLESSING		, SCB_STR|SCB_INT|SCB_DEX );
 	set_sc( MER_INCAGI		, SC_INCREASEAGI	, EFST_INC_AGI, SCB_AGI|SCB_SPEED );
-	set_sc( MER_INVINCIBLEOFF2	, SC_INVINCIBLEOFF	, EFST_BLANK, SCB_SPEED );
+	set_sc( MER_INVINCIBLEOFF2	, SC_INVINCIBLEOFF	, SI_BLANK		, SCB_SPEED );
 
 	set_sc( GD_LEADERSHIP		, SC_LEADERSHIP		, EFST_BLANK		, SCB_STR );
 	set_sc( GD_GLORYWOUNDS		, SC_GLORYWOUNDS	, EFST_BLANK		, SCB_VIT );
@@ -893,7 +894,7 @@ void initChangeTables(void)
 	set_sc( SU_NYANGGRASS			, SC_NYANGGRASS		, EFST_NYANGGRASS		, SCB_DEF|SCB_MDEF );
 	set_sc( SU_GROOMING				, SC_GROOMING		, EFST_GROOMING		, SCB_FLEE );
 	add_sc( SU_PURRING				, SC_GROOMING );
-	set_sc( SU_SHRIMPARTY			, SC_SHRIMPBLESSING , EFST_PROTECTIONOFSHRIMP , SCB_REGEN );
+	add_sc( SU_SHRIMPARTY			, SC_FRESHSHRIMP );
 	add_sc( SU_MEOWMEOW				, SC_CHATTERING );
 	set_sc( SU_CHATTERING			, SC_CHATTERING		, EFST_CHATTERING		, SCB_WATK|SCB_MATK );
 
@@ -1118,6 +1119,7 @@ void initChangeTables(void)
 
 	/* Summoners status icons */
 	StatusIconChangeTable[SC_SPRITEMABLE] = EFST_SPRITEMABLE;
+	StatusIconChangeTable[SC_SHRIMPBLESSING] = EFST_PROTECTIONOFSHRIMP;
 	StatusIconChangeTable[SC_DORAM_BUF_01] = EFST_DORAM_BUF_01;
 	StatusIconChangeTable[SC_DORAM_BUF_02] = EFST_DORAM_BUF_02;
 
@@ -1330,6 +1332,7 @@ void initChangeTables(void)
 	StatusChangeFlagTable[SC_GLASTHEIM_HPSP] |= SCB_MAXHP|SCB_MAXSP;
 
 	// Summoner
+	StatusChangeFlagTable[SC_SHRIMPBLESSING] |= SCB_REGEN;
 	StatusChangeFlagTable[SC_DORAM_WALKSPEED] |= SCB_SPEED;
 	StatusChangeFlagTable[SC_DORAM_MATK] |= SCB_MATK;
 	StatusChangeFlagTable[SC_DORAM_FLEE2] |= SCB_FLEE2;
@@ -2479,8 +2482,6 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 #ifdef RENEWAL
 			str = (dstr * 10 + dex * 10 / 5 + status->luk * 10 / 3 + level * 10 / 4) / 10;
 #else
-			dstr = str / 10;
-			str += dstr*dstr;
 			str += dex / 5 + status->luk / 5;
 #endif
 			break;
@@ -2488,8 +2489,6 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 #ifdef RENEWAL
 			str = dstr + level;
 #else
-			dstr = str / 10;
-			str += dstr*dstr;
 			str += dex / 5 + status->luk / 5;
 #endif
 			break;
@@ -3449,6 +3448,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		+ sizeof(sd->subclass)
 		+ sizeof(sd->subrace2)
 		+ sizeof(sd->subsize)
+		+ sizeof(sd->reseff)
 		+ sizeof(sd->coma_class)
 		+ sizeof(sd->coma_race)
 		+ sizeof(sd->weapon_coma_ele)
@@ -3519,54 +3519,53 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	base_status->race = ((battle_config.summoner_trait&1) && (sd->class_&MAPID_BASEMASK) == MAPID_SUMMONER) ? RC_BRUTE : RC_PLAYER;
 	base_status->class_ = CLASS_NORMAL;
 
-	sd->autospell.clear();
-	sd->autospell2.clear();
-	sd->autospell3.clear();
-	sd->addeff.clear();
-	sd->addeff_atked.clear();
-	sd->addeff_onskill.clear();
-	sd->skillatk.clear();
-	sd->skillusesprate.clear();
-	sd->skillusesp.clear();
-	sd->skillheal.clear();
-	sd->skillheal2.clear();
-	sd->skillblown.clear();
-	sd->skillcastrate.clear();
-	sd->skillfixcastrate.clear();
-	sd->subskill.clear();
-	sd->skillcooldown.clear();
-	sd->skillfixcast.clear();
-	sd->skillvarcast.clear();
-	sd->add_def.clear();
-	sd->add_mdef.clear();
-	sd->add_mdmg.clear();
-	sd->reseff.clear();
-	sd->itemgrouphealrate.clear();
-	sd->add_drop.clear();
-	sd->itemhealrate.clear();
-	sd->subele2.clear();
-	sd->skilldelay.clear();
-
 	// Zero up structures...
-	memset(&sd->hp_loss, 0, sizeof(sd->hp_loss)
+	memset(&sd->autospell, 0, sizeof(sd->autospell)
+		+ sizeof(sd->autospell2)
+		+ sizeof(sd->autospell3)
+		+ sizeof(sd->addeff)
+		+ sizeof(sd->addeff_atked)
+		+ sizeof(sd->addeff_onskill)
+		+ sizeof(sd->skillatk)
+		+ sizeof(sd->skillusesprate)
+		+ sizeof(sd->skillusesp)
+		+ sizeof(sd->skillheal)
+		+ sizeof(sd->skillheal2)
+		+ sizeof(sd->skillblown)
+		+ sizeof(sd->skillcastrate)
+		+ sizeof(sd->skillfixcastrate)
+		+ sizeof(sd->subskill)
+		+ sizeof(sd->skillcooldown)
+		+ sizeof(sd->skillfixcast)
+		+ sizeof(sd->skillvarcast)
+		+ sizeof(sd->hp_loss)
 		+ sizeof(sd->sp_loss)
 		+ sizeof(sd->hp_regen)
 		+ sizeof(sd->sp_regen)
 		+ sizeof(sd->percent_hp_regen)
 		+ sizeof(sd->percent_sp_regen)
+		+ sizeof(sd->add_def)
+		+ sizeof(sd->add_mdef)
+		+ sizeof(sd->add_mdmg)
+		+ sizeof(sd->add_drop)
+		+ sizeof(sd->itemhealrate)
+		+ sizeof(sd->subele2)
 		+ sizeof(sd->def_set_race)
 		+ sizeof(sd->mdef_set_race)
 		+ sizeof(sd->norecover_state_race)
 		+ sizeof(sd->hp_vanish_race)
 		+ sizeof(sd->sp_vanish_race)
+		+ sizeof(sd->skilldelay)
 	);
 
-	memset(&sd->bonus, 0, sizeof(sd->bonus));
+	memset (&sd->bonus, 0, sizeof(sd->bonus));
 
 	// Autobonus
-	pc_delautobonus(sd, sd->autobonus, true);
-	pc_delautobonus(sd, sd->autobonus2, true);
-	pc_delautobonus(sd, sd->autobonus3, true);
+	pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),true);
+	pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),true);
+	pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),true);
+
+	pc_itemgrouphealrate_clear(sd);
 
 	running_npc_stat_calc_event = true;
 	npc_script_event(sd, NPCE_STATCALC);
@@ -3583,6 +3582,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		if (pc_is_same_equip_index((enum equip_index)i, sd->equip_index, index))
 			continue;
 		if (!sd->inventory_data[index])
+			continue;
+		if (sd->inventory.u.items_inventory[current_equip_item_index].card[0] == CARD0_CREATE && MakeDWord(sd->inventory.u.items_inventory[current_equip_item_index].card[2], sd->inventory.u.items_inventory[current_equip_item_index].card[3]) == battle_config.reserved_costume_id)
 			continue;
 
 		base_status->def += sd->inventory_data[index]->def;
@@ -3604,8 +3605,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			struct weapon_data *wd;
 			struct weapon_atk *wa;
 
-			if(wlv >= REFINE_TYPE_MAX)
-				wlv = REFINE_TYPE_MAX - 1;
+			if(wlv >= REFINE_TYPE_WEAPON4)
+				wlv = REFINE_TYPE_WEAPON4 - 1;
 			if(i == EQI_HAND_L && sd->inventory.u.items_inventory[index].equip == EQP_HAND_L) {
 				wd = &sd->left_weapon; // Left-hand weapon
 				wa = &base_status->lhw;
@@ -3615,15 +3616,15 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			}
 			wa->atk += sd->inventory_data[index]->atk;
 			if(r)
-				wa->atk2 = refine_info[wlv].bonus[r-1] / 100;
+				wa->atk2 = refine_info[sd->inventory_data[index]->refine_type].bonus[r-1] / 100;
 #ifdef RENEWAL
 			wa->matk += sd->inventory_data[index]->matk;
 			wa->wlv = wlv;
 			if(r && sd->weapontype1 != W_BOW) // Renewal magic attack refine bonus
-				wa->matk += refine_info[wlv].bonus[r-1] / 100;
+				wa->matk += refine_info[sd->inventory_data[index]->refine_type].bonus[r-1] / 100;
 #endif
 			if(r) // Overrefine bonus.
-				wd->overrefine = refine_info[wlv].randombonus_max[r-1] / 100;
+				wd->overrefine = refine_info[sd->inventory_data[index]->refine_type].randombonus_max[r-1] / 100;
 			wa->range += sd->inventory_data[index]->range;
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if (wd == &sd->left_weapon) {
@@ -3651,7 +3652,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			int r;
 
 			if ( (r = sd->inventory.u.items_inventory[index].refine) )
-				refinedef += refine_info[REFINE_TYPE_ARMOR].bonus[r-1];
+				refinedef += refine_info[sd->inventory_data[index]->refine_type].bonus[r-1];
 			if(sd->inventory_data[index]->script && (pc_has_permission(sd,PC_PERM_USE_ALL_EQUIPMENT) || !itemdb_isNoEquip(sd->inventory_data[index],sd->bl.m))) {
 				if( i == EQI_HAND_L ) // Shield
 					sd->state.lr_flag = 3;
@@ -4286,7 +4287,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	// If the skill is learned, the status is infinite.
 	if( (skill = pc_checkskill(sd,SU_SPRITEMABLE)) > 0 && !sd->sc.data[SC_SPRITEMABLE] )
-		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, INFINITE_TICK);
+		sc_start(&sd->bl, &sd->bl, SC_SPRITEMABLE, 100, 1, -1);
 
 	calculating = 0;
 
@@ -4421,7 +4422,7 @@ int status_calc_homunculus_(struct homun_data *hd, enum e_status_calc_opt opt)
 		hd->battle_status.hp = hom->hp;
 		hd->battle_status.sp = hom->sp;
 		if(hom->class_ == 6052) // Eleanor
-			sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
+			sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
 	}
 
 #ifndef RENEWAL
@@ -4587,7 +4588,7 @@ void status_calc_regen(struct block_list *bl, struct status_data *status, struct
 
 		if (sc && sc->count) {
 			if (sc->data[SC_SHRIMPBLESSING])
-				val *= 150 / 100;
+				val += 150 / 100;
 			if (sc->data[SC_ANCILLA])
 				val += sc->data[SC_ANCILLA]->val2 / 100;
 		}
@@ -8290,12 +8291,10 @@ int status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_typ
 		}
 
 		// Item resistance (only applies to rate%)
-		if (sd) {
-			for (const auto &it : sd->reseff) {
-				if (it.id == type)
-					rate -= rate * it.val / 10000;
-			}
-			if (sd->sc.data[SC_COMMONSC_RESIST] && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
+		if(sd && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX) {
+			if( sd->reseff[type-SC_COMMON_MIN] )
+				rate -= rate*sd->reseff[type-SC_COMMON_MIN]/10000;
+			if( sd->sc.data[SC_COMMONSC_RESIST] )
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
 		}
 
@@ -9000,6 +8999,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC__UNLUCKY:
 			case SC__WEAKNESS:
 			case SC_BITE:
+			case SC_ELECTRICSHOCKER:
 			case SC_MAGNETICFIELD:
 			case SC_NETHERWORLD:
 			case SC_CRESCENTELBOW:
@@ -9397,7 +9397,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_OBLIVIONCURSE:
 			case SC_LEECHESEND:
 			case SC_CURSEDCIRCLE_TARGET:
-			case SC_ELECTRICSHOCKER:
 			case SC_BANDING_DEFENCE:
 			case SC__ENERVATION:
 			case SC__GROOMY:
@@ -9514,7 +9513,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SPRITEMABLE:
 		case SC_CLAN_INFO:
 		case SC_DAILYSENDMAILCNT:
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 
 		case SC_DECREASEAGI:
@@ -9544,22 +9543,22 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			}
 			// val4 signals infinite endure (if val4 == 2 it is infinite endure from Berserk)
 			if( val4 )
-				tick = INFINITE_TICK;
+				tick = -1;
 			break;
 		case SC_AUTOBERSERK:
 			if (status->hp < status->max_hp>>2 &&
 				(!sc->data[SC_PROVOKE] || sc->data[SC_PROVOKE]->val2==0))
 					sc_start4(src,bl,SC_PROVOKE,100,10,1,0,0,60000);
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 		case SC_SIGNUMCRUCIS:
 			val2 = 10 + 4*val1; // Def reduction
-			tick = INFINITE_TICK;
+			tick = -1;
 			clif_emotion(bl, ET_SWEAT);
 			break;
 		case SC_MAXIMIZEPOWER:
 			tick_time = val2 = tick>0?tick:60000;
-			tick = INFINITE_TICK; // Duration sent to the client should be infinite
+			tick = -1; // Duration sent to the client should be infinite
 			break;
 		case SC_EDP:
 			val2 = val1 + 2; // Chance to Poison enemies.
@@ -9593,7 +9592,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_SACRIFICE:
 			val2 = 5; // Lasts 5 hits
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 		case SC_ENCPOISON:
 			val2= 250+50*val1; // Poisoning Chance (2.5+0.5%) in 1/10000 rate
@@ -9848,7 +9847,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (!sd) // Monsters should be able to walk with no penalties. [Skotlex]
 				val1 = 10;
 			tick_time = val2 = tick>0?tick:60000; // SP consumption rate.
-			tick = INFINITE_TICK; // Duration sent to the client should be infinite
+			tick = -1; // Duration sent to the client should be infinite
 			val3 = 0; // Unused, previously walk speed adjustment
 			// val4&1 signals the presence of a wall.
 			// val4&2 makes cloak not end on normal attacks [Skotlex]
@@ -9914,7 +9913,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 12; // SP cost
 			tick_time = 10000; // Decrease at 10secs intervals.
 			val3 = tick / tick_time;
-			tick = INFINITE_TICK; // Duration sent to the client should be infinite
+			tick = -1; // Duration sent to the client should be infinite
 			break;
 		case SC_PARRYING:
 		    val2 = 20 + val1*3; // Block Chance
@@ -10009,12 +10008,12 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_REJECTSWORD:
 			val2 = 15*val1; // Reflect chance
 			val3 = 3; // Reflections
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 
 		case SC_MEMORIZE:
 			val2 = 5; // Memorized casts.
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 
 		case SC_GRAVITATION:
@@ -10115,7 +10114,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_RUN:
 			val4 = gettick(); // Store time at which you started running.
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 		case SC_KAAHI:
 			val2 = 200*val1; // HP heal
@@ -10129,7 +10128,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_TRICKDEAD:
 			if (vd) vd->dead_sit = 1;
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 		case SC_CONCENTRATE:
 			val2 = 2 + val1;
@@ -10381,10 +10380,15 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 500 + 100 * val1;
 			break;
 		case SC_STONEHARDSKIN:
-			if (!status_charge(bl, status->hp / 5, 0)) // 20% of HP
-				return 0;
-			if (sd)
-				val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
+			{
+				int hp = status->hp / 5; // 20% of HP
+
+				if (sd)
+					val1 = sd->status.job_level * pc_checkskill(sd, RK_RUNEMASTERY) / 4; // DEF/MDEF Increase
+				if (!status_charge(bl, hp, 0))
+					return 0;
+				val2 = hp;
+			}
 			break;
 		case SC_REFRESH:
 			status_heal(bl, status_get_max_hp(bl) * 25 / 100, 0, 1);
@@ -10492,7 +10496,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_WUGDASH:
 			val4 = gettick(); // Store time at which you started running.
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 		case SC__SHADOWFORM:
 			{
@@ -10511,7 +10515,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 50 - 10 * val1; // ASPD
 			val3 = 20 * val1; // CRITICAL
 			val4 = tick / 1000;
-			tick = INFINITE_TICK; // Duration sent to the client should be infinite
+			tick = -1; // Duration sent to the client should be infinite
 			tick_time = 1000; // [GodLesZ] tick time
 			break;
 		case SC__ENERVATION:
@@ -10576,7 +10580,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_WARMER:
 			val4 = tick / 3000;
-			tick = INFINITE_TICK; // Duration sent to the client should be infinite
+			tick = -1; // Duration sent to the client should be infinite
 			tick_time = 3000;
 			break;
 		case SC_BLOODSUCKER:
@@ -10678,7 +10682,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_FORCEOFVANGUARD:
 			val2 = 8 + 12 * val1; // Chance
 			val3 = 5 + 2 * val1; // Max rage counters
-			tick = INFINITE_TICK; // Endless duration in the client
+			tick = -1; // Endless duration in the client
 			tick_time = 10000; // [GodLesZ] tick time
 			break;
 		case SC_EXEEDBREAK:
@@ -10962,7 +10966,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				sc_start(src,bl, SC_ENDURE, 100, val1, tick); // Start endure for same duration
 			break;
 		case SC_STYLE_CHANGE:
-			tick = INFINITE_TICK; // Infinite duration
+			tick = -1; // Infinite duration
 			break;
 		case SC_CBC:
 			val3 = 10; // Drain sp % dmg
@@ -11050,7 +11054,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_OVERHEAT_LIMITPOINT:
 		case SC_STEALTHFIELD:
 			tick_time = tick;
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 		case SC_STEALTHFIELD_MASTER:
 			tick_time = val3 = 2000 + 1000 * val1;
@@ -11075,7 +11079,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_NEUTRALBARRIER:
 			val2 = 10 + val1 * 5; // Def/Mdef
-			tick = INFINITE_TICK;
+			tick = -1;
 			break;
 
 		/* Rebellion */
@@ -11206,8 +11210,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_GOLDENMACECLAN:
 		case SC_CROSSBOWCLAN:
 		case SC_JUMPINGCLAN:
-			tick = INFINITE_TICK;
-			status_change_start(src,bl,SC_CLAN_INFO,10000,0,val2,0,0,INFINITE_TICK,flag);
+			tick = -1;
+			status_change_start(src,bl,SC_CLAN_INFO,10000,0,val2,0,0,-1,flag);
 			break;
 		case SC_DORAM_BUF_01:
 		case SC_DORAM_BUF_02:
@@ -13049,11 +13053,11 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_S_LIFEPOTION:
 	case SC_L_LIFEPOTION:
-		if( --(sce->val4) >= 0 ) {
+		if( sd && --(sce->val4) >= 0 ) {
 			// val1 < 0 = per max% | val1 > 0 = exact amount
 			int hp = 0;
 			if( status->hp < status->max_hp )
-				hp = (sce->val1 < 0) ? (int)(status->max_hp * -1 * sce->val1 / 100.) : sce->val1;
+				hp = (sce->val1 < 0) ? (int)(sd->status.max_hp * -1 * sce->val1 / 100.) : sce->val1 ;
 			status_heal(bl, hp, 0, 2);
 			sc_timer_next((sce->val2 * 1000) + tick);
 			return 0;
@@ -13906,6 +13910,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 			case SC_EXPBOOST:
 			case SC_JEXPBOOST:
 			case SC_ITEMBOOST:
+			case SC_ELECTRICSHOCKER:
 			case SC__MANHOLE:
 			case SC_GIANTGROWTH:
 			case SC_MILLENNIUMSHIELD:
@@ -14146,7 +14151,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 				if (sc->data[i]->timer != INVALID_TIMER)
 					data.tick = DIFF_TICK(timer->tick, tick);
 				else
-					data.tick = INFINITE_TICK;
+					data.tick = INVALID_TIMER;
 				break;
 			// Special cases
 			case SC_TOXIN:
@@ -14162,7 +14167,7 @@ int status_change_spread(struct block_list *src, struct block_list *bl, bool typ
 				if (sc->data[i]->timer != INVALID_TIMER)
 					data.tick = DIFF_TICK(timer->tick, tick) + sc->data[i]->val4;
 				else
-					data.tick = INFINITE_TICK;
+					data.tick = INVALID_TIMER;
 				break;
 			default:
 				continue;
@@ -14389,19 +14394,32 @@ static TIMER_FUNC(status_natural_heal_timer){
  * Get the chance to upgrade a piece of equipment
  * @param wlv: The weapon type of the item to refine (see see enum refine_type)
  * @param refine: The target's refine level
+  * @param type: refine type for cost & rate
  * @return The chance to refine the item, in percent (0~100)
  */
-int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
+int status_get_refine_chance(enum refine_type refine_type, int refine, enum refine_cost_type type)
 {
-	if ( refine < 0 || refine >= MAX_REFINE)
+	if (type < REFINE_COST_NORMAL || type >= REFINE_COST_MAX)
 		return 0;
-	
-	int type = enriched ? 1 : 0;
-	if (battle_config.event_refine_chance)
-		type |= 2;
-
-	return refine_info[wlv].chance[type][refine];
+ 	return refine_info[refine_type].chance[type][refine];
 }
+ /**
+ * Get Blacksmith Blessing requirement for refining
+ * @param bs Pointer to store the value
+ * @param type Armor or weapon level (see enum refine_type)
+ * @param refine Current refine level
+ * @return True if has valid value, false otherwise.
+ **/
+bool status_get_refine_blacksmithBlessing(struct refine_bs_blessing* bs, enum refine_type type, int refine)
+{
+	if (refine < 0 || refine >= MAX_REFINE)
+		return false;
+ 	if (type < REFINE_TYPE_ARMOR || type >= REFINE_TYPE_MAX)
+		return false;
+ 	memcpy(bs, &refine_info[type].bs_blessing[refine], sizeof(struct refine_bs_blessing));
+	return true;
+}
+
 
 /**
  * Check if status is disabled on a map
@@ -14512,7 +14530,7 @@ static bool status_readdb_sizefix(char* fields[], int columns, int current)
  * @param file_name: File name for displaying only
  * @return True on success or false on failure
  */
-static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_info_index, const std::string &file_name) {
+static bool status_yaml_readdb_refine_sub(const YAML::Node &node, enum refine_type refine_info_index, const std::string &file_name) {
 	if (refine_info_index < 0 || refine_info_index >= REFINE_TYPE_MAX)
 		return false;
 
@@ -14520,10 +14538,7 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 	int random_bonus_start_level = node["RandomBonusStartLevel"].as<int>();
 	int random_bonus = node["RandomBonusValue"].as<int>();
 
-	if (file_name.find("import") != std::string::npos) { // Import file, reset refine bonus before calculation
-		for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
-			refine_info[refine_info_index].bonus[refine_level] = 0;
-	}
+
 
 	const YAML::Node &costs = node["Costs"];
 
@@ -14548,6 +14563,18 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 
 		refine_info[refine_info_index].cost[idx].nameid = material;
 		refine_info[refine_info_index].cost[idx].zeny = price;
+		refine_info[refine_info_index].cost[idx].refineui = (type["RefineUI"].IsDefined()) ? type["RefineUI"].as<bool>() : true;
+ 		if (type["OnFail"].IsDefined()) {
+			const YAML::Node &onfail = type["OnFail"];
+			if (onfail["Break"].IsDefined()) {
+				refine_info[refine_info_index].cost[idx].breaking = onfail["Break"].as<uint16>();
+			}
+			if (onfail["DownRefine"].IsDefined()) {
+				refine_info[refine_info_index].cost[idx].downrefine = onfail["DownRefine"].as<uint16>();
+				refine_info[refine_info_index].cost[idx].downrefine_num = onfail["DownRefineNum"].IsDefined() ? onfail["DownRefineNum"].as<uint16>() : 1;
+			}
+		}
+	
 	}
 
 	const YAML::Node &rates = node["Rates"];
@@ -14559,19 +14586,50 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 		if (refine_level >= MAX_REFINE)
 			continue;
 
-		if (level["NormalChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_NORMAL][refine_level] = level["NormalChance"].as<int>();
-		if (level["EnrichedChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_ENRICHED][refine_level] = level["EnrichedChance"].as<int>();
-		if (level["EventNormalChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_NORMAL][refine_level] = level["EventNormalChance"].as<int>();
-		if (level["EventEnrichedChance"].IsDefined())
-			refine_info[refine_info_index].chance[REFINE_CHANCE_EVENT_ENRICHED][refine_level] = level["EventEnrichedChance"].as<int>();
-		if (level["Bonus"].IsDefined())
-			refine_info[refine_info_index].bonus[refine_level] = level["Bonus"].as<int>();
-
-		if (refine_level >= random_bonus_start_level - 1)
-			refine_info[refine_info_index].randombonus_max[refine_level] = random_bonus * (refine_level - random_bonus_start_level + 2);
+		if (level["Chances"].IsDefined()) {
+			const YAML::Node &chances = level["Chances"];
+			for (const auto chanceit : chances) {
+				int i;
+				const YAML::Node &chance = chanceit;
+				const std::string keys[] = { "Type", "Rate" };
+ 				for (i = 0; i < ARRAYLENGTH(keys); i++) {
+					if (!chance[keys[i]].IsDefined()) {
+						ShowWarning("status_yaml_readdb_refine_sub: Invalid Chances with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", keys[i].c_str(), file_name.c_str());
+						break;
+					}
+				}
+				if (i != ARRAYLENGTH(keys)) {
+					ShowError("status_yaml_readdb_refine_sub: Skipping incomplete node for Chances list.\n");
+					continue;
+				}
+ 				std::string chance_type = chance["Type"].as<std::string>();
+				int chance_idx = 0;
+				if (!script_get_constant(chance_type.c_str(), &chance_idx)) {
+					ShowWarning("status_yaml_readdb_refine_sub: Invalid Chance Type " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", chance_type.c_str(), file_name.c_str());
+					continue;
+				}
+				refine_info[refine_info_index].chance[chance_idx][refine_level] = chance["Rate"].as<int>();
+			}
+		}
+ 		if (level["BlacksmithBlessing"].IsDefined()) {
+			int i = 0;
+			const YAML::Node &bb = level["BlacksmithBlessing"];
+			const std::string keys[] = { "ItemID", "Count" };
+ 			for (i = 0; i < ARRAYLENGTH(keys); i++) {
+				if (!bb[keys[i]].IsDefined()) {
+					ShowWarning("status_yaml_readdb_refine_sub: Invalid BlacksmithBlessing with undefined " CL_WHITE "%s" CL_RESET "in file" CL_WHITE "%s" CL_RESET ".\n", keys[i].c_str(), file_name.c_str());
+					break;
+				}
+			}
+			if (i != ARRAYLENGTH(keys)) {
+				ShowError("status_yaml_readdb_refine_sub: Skipping incomplete node for BlacksmithBlessing list.\n");
+				continue;
+			}
+			refine_info[refine_info_index].bs_blessing[refine_level].nameid = bb["ItemID"].as<uint16>();
+			refine_info[refine_info_index].bs_blessing[refine_level].count = bb["Count"].as<uint16>();
+		}
+ 		if (level["Bonus"].IsDefined())
+			refine_info[refine_info_index].bonus[refine_level] = level["Bonus"].as<int>();	
 	}
 	for (int refine_level = 0; refine_level < MAX_REFINE; ++refine_level)
 		refine_info[refine_info_index].bonus[refine_level] += bonus_per_level + (refine_level > 0 ? refine_info[refine_info_index].bonus[refine_level - 1] : 0);
@@ -14586,7 +14644,19 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
  */
 static void status_yaml_readdb_refine(const std::string &directory, const std::string &file) {
 	int count = 0;
-	const std::string labels[] = { "Armor", "WeaponLv1", "WeaponLv2", "WeaponLv3", "WeaponLv4", "Shadow" };
+	struct s_labels {
+		enum refine_type type;
+		const std::string label;
+	} labels[] = {
+		{ REFINE_TYPE_ARMOR, "Armor"},
+		{ REFINE_TYPE_WEAPON1, "WeaponLv1" },
+		{ REFINE_TYPE_WEAPON2, "WeaponLv2" },
+		{ REFINE_TYPE_WEAPON3, "WeaponLv3" },
+		{ REFINE_TYPE_WEAPON4, "WeaponLv4" },
+		{ REFINE_TYPE_SHADOW, "Shadow" },
+		{ REFINE_TYPE_SHADOW_WEAPON, "ShadowWeapon" },
+		{ REFINE_TYPE_COSTUME, "Costume" },
+	};
 	const std::string current_file = directory + "/" + file;
 	YAML::Node config;
 
@@ -14599,9 +14669,10 @@ static void status_yaml_readdb_refine(const std::string &directory, const std::s
 	}
 
 	for (int i = 0; i < ARRAYLENGTH(labels); i++) {
-		const YAML::Node &node = config[labels[i]];
+		const YAML::Node &node = config[labels[i].label];
+		
 
-		if (node.IsDefined() && status_yaml_readdb_refine_sub(node, i, current_file))
+		if (node.IsDefined() && status_yaml_readdb_refine_sub(node, labels[i].type, current_file))
 			count++;
 	}
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, current_file.c_str());
@@ -14609,13 +14680,28 @@ static void status_yaml_readdb_refine(const std::string &directory, const std::s
 
 /**
  * Returns refine cost (zeny or item) for a weapon level.
- * @param weapon_lv Weapon level
+ * @param refine_type Refine type see enum refine_type
  * @param type Refine type (can be retrieved from refine_cost_type enum)
  * @param what true = returns zeny, false = returns item id
  * @return Refine cost for a weapon level
  */
-int status_get_refine_cost(int weapon_lv, int type, bool what) {
-	return what ? refine_info[weapon_lv].cost[type].zeny : refine_info[weapon_lv].cost[type].nameid;
+int status_get_refine_cost(enum refine_type refine_type, int type, enum refine_info_type what) {
+	switch( what ){
+		case REFINE_MATERIAL_ID:
+			return refine_info[refine_type].cost[type].nameid;
+		case REFINE_ZENY_COST:
+			return refine_info[refine_type].cost[type].zeny;
+		case REFINE_REFINEUI_ENABLED:
+			return refine_info[refine_type].cost[type].refineui;
+	}
+ 	return 0;
+}
+ struct refine_cost *status_get_refine_cost_(enum refine_type refine_type, int type) {
+	if (refine_type < REFINE_TYPE_ARMOR || refine_type >= REFINE_TYPE_MAX)
+		return NULL;
+	if (type < REFINE_COST_NORMAL || type >= REFINE_COST_MAX)
+		return NULL;
+	return &refine_info[refine_type].cost[type];
 }
 
 /**
@@ -14700,14 +14786,17 @@ int status_readdb(void)
 	// refine_db.yml
 	for(i=0;i<ARRAYLENGTH(refine_info);i++)
 	{
-		memset(refine_info[i].cost, 0, sizeof(struct refine_cost));
-		for(j = 0; j < REFINE_CHANCE_TYPE_MAX; j++)
-			for(k=0;k<MAX_REFINE; k++)
+		memset(&refine_info[i].cost, 0, sizeof(struct refine_cost)*REFINE_COST_MAX);
+		memset(&refine_info[i].bs_blessing, 0, sizeof(struct refine_bs_blessing)*MAX_REFINE);
+		for (j = 0; j < REFINE_COST_MAX; j++) {
+			for (k = 0; k < MAX_REFINE; k++)
 			{
-				refine_info[i].chance[j][k] = 100;
+				refine_info[i].chance[j][k] = 0;
 				refine_info[i].bonus[k] = 0;
 				refine_info[i].randombonus_max[k] = 0;
 			}
+			refine_info[i].cost[j].breaking = 100;
+		}
 	}
 	// attr_fix.txt
 	for(i=0;i<MAX_ELE_LEVEL;i++)

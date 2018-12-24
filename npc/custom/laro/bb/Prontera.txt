@@ -1,0 +1,67 @@
+//===== Atlantis Script ======================================
+//= iRO Bounty Boards : Prontera
+//===== By: ==================================================
+//= Ragno / AtlantisRO
+//===== Actual Version: ======================================
+//= 1.0.2 Removed += operations with strings.
+//= 1.0.1 Changed npc and monsters constants to numerical ids
+//= 1.0 Starting Release
+//===== General Description: =================================
+//= Hunting Quest designed by iRO:
+//=    http://irowiki.org/wiki/Bounty_Board_Quests
+//===== How to Use: ==========================================
+//= Uses function "F_Bounty_Board" to manage the Bounty Boards
+//= npc on cities.
+//= The function arguments are this:
+//= 	callfunc "F_Bounty_Board", MinLevel, MaxLevel, MsgHuntPlace, MsgOutLevel,
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp{, 
+//=			MonsterID, 		QuestID, 	BaseExp, 	JobExp};
+//============================================================
+
+prontera,136,225,3	script	Bounty Board 1-20#prt1	837,{
+	callfunc "F_Bounty_Board", 1, 20, 3, 1,
+		1004,	62722,	 900000,		 675000,	// HORNET
+		1012,	62723,	1012005,		 765000,	// RODA_FROG
+		1052,	62724,	1102005,		 832500,	// ROCKER
+		1167,	62725,	1012005,		 765000,	// SAVAGE_BABE
+		1048,	62726,	1417005,		1597500,	// THIEF_BUG_EGG
+		1063,	62816,	 540000,		 390000,	// LUNATIC
+		1094,	62817,	1305000,		 967500;	// AMBERNITE
+	end;
+}
+
+prontera,138,227,3	script	Bounty Board 21-50#prt2	837,{
+	callfunc "F_Bounty_Board", 21, 50, 4, 1,
+		1051,	62727,	1417500,		1597500,	// THIEF_BUG
+		1175,	62728,	1507500,		1710000,	// TAROU
+		1174,	62729,	1417500,		1597500,	// STAINER
+		1019,	62730,	1822500,		2047500,	// PECOPECO
+		1104,	62731,	3037500,		3420000,	// COCO
+		1057,	62732,	3037500,		3420000,	// YOYO
+		1053,	62733,	2025000,		2272500,	// THIEF_BUG_
+		1054,	62734,	2227500,		2520000,	// THIEF_BUG__
+		1031,	62735,	2227500,		2520000,	// POPORING
+		1033,	62736,	2610000,		2947500,	// ELDER_WILOW
+		1055,	62818,	1215000,		2733700;	// MUKA
+	end;
+}
+
+prontera,140,229,3	script	Bounty Board 41-70#prt3	837,{
+	callfunc "F_Bounty_Board", 41, 70, 4, 1,
+		1100,	62737,	4050000,		4545000,	// ARGOS
+		1494,	62738,	5062500,		5692500,	// KIND_OF_BEETLE
+		1166,	62739,	6435000,		7245000,	// SAVAGE
+		1138,	62819,	4950000,		5557500;	// MAGNOLIA
+	end;
+}
+
+prontera,142,231,3	script	Bounty Board 61-100#prt4	837,{
+	callfunc "F_Bounty_Board", 61, 100, 4, 1,
+		1380,	62740,	 6682500,		 7515000,	// DRILLER
+		1035,	62741,	 6795000,		 7650000,	// HUNTER_FLY
+		1139,	62742,	 6682500,		 7526300,	// MANTIS
+		1037,	62743,	16200000,		18225000,	// SIDE_WINDER
+		1099,	62744,	 9112500,		10260000;	// ARGIOPE
+	end;
+}
+

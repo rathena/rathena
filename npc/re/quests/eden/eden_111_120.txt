@@ -926,25 +926,25 @@ moc_para01,17,95,5	script	Mingmin#1	4_F_GENETIC,{
 				para_110lv01 = 6;
 				next;
 				callsub S_Hunting,
-					13067,200000,"Raydric",
-					13069,200000,"Khalitzburg",
-					13071,200000,"Wanderer",
-					13073,300000,"Ancient Mimic",
-					13075,300000,"Deathword",
-					13077,300000,"Owl Baron";
-				callsub S_Gathering,13079,300000,"Bloody Page",7449,20;
+					13067,6000000,"Raydric",
+					13069,6000000,"Khalitzburg",
+					13071,6000000,"Wanderer",
+					13073,9000000,"Ancient Mimic",
+					13075,9000000,"Deathword",
+					13077,9000000,"Owl Baron";
+				callsub S_Gathering,13079,9000000,"Bloody Page",7449,20;
 				callsub S_Hunting,
-					13081,180000,"Dark Pinguicula",
-					13083,180000,"Nepenthes",
-					13085,180000,"Naga",
-					13087,180000,"Centipede Larva",
-					13089,180000,"Cornus";
-				callsub S_Gathering,13091,180000,"Mystic Horn",6023,20;
+					13081,5400000,"Dark Pinguicula",
+					13083,5400000,"Nepenthes",
+					13085,5400000,"Naga",
+					13087,5400000,"Centipede Larva",
+					13089,5400000,"Cornus";
+				callsub S_Gathering,13091,5400000,"Mystic Horn",6023,20;
 				callsub S_Hunting,
-					13093,200000,"Ancient Mummy",
-					13095,200000,"Geffenia expedition",
-					13097,300000,"Juperos";
-				callsub S_Gathering,13099,200000,"Fragments and Rusty Screws",7094,10,7317,20;
+					13093,6000000,"Ancient Mummy",
+					13095,6000000,"Geffenia expedition",
+					13097,9000000,"Juperos";
+				callsub S_Gathering,13099,6000000,"Fragments and Rusty Screws",7094,10,7317,20;
 				mes "[Mingmin]";
 				mes "It is a little bit inconvenient. I will read to you politely ^FF0000again^000000 in public.";
 				next;
@@ -1109,7 +1109,7 @@ S_Hunting:
 		case 2:
 			mes "[Mingmin]";
 			mes "You finished researching about "+ getarg(.@i+2) +". Thank you.";
-			getexp 700000,getarg(.@i+1);
+			getexp 21000000,getarg(.@i+1);
 			break;
 		case 0:
 		case 1:
@@ -1134,7 +1134,7 @@ S_Gathering:
 			delitem getarg(3),getarg(4);
 			if (getarg(5,0))
 				delitem getarg(5),getarg(6);
-			getexp 700000,getarg(1);
+			getexp 21000000,getarg(1);
 		}
 		else {
 			if (getarg(5,0))

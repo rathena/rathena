@@ -18,6 +18,136 @@
 
 #define FIFOSIZE_SERVERLINK 256*1024
 
+// (^~_~^) Gepard Shield Start
+
+#define  LICENSE_ID  947361567
+#define  CODE_VERSION  2016122701
+
+#define  SESSION_CONST_1  0xA7768AAE
+#define  SESSION_CONST_2  0x3C41D832
+
+#define  ALGO_KEY_1  0xD3
+#define  ALGO_KEY_2  0x38
+#define  ALGO_KEY_3  0x95
+
+#define  DATA_HASH_CONST_1  0x4C5FAF97
+#define  DATA_HASH_CONST_2  0x1EC566AD
+
+// (^~_~^) Gepard Shield End
+
+// (^~_~^) Gepard Shield Start
+
+extern long long start_tick;
+extern bool is_gepard_active;
+extern unsigned int min_allowed_license_version;
+
+#define MATRIX_SIZE     2048
+#define KEY_SIZE        32
+
+#define GEPARD_REASON_LENGTH 99
+#define GEPARD_TIME_STR_LENGTH 24
+#define GEPARD_RESULT_STR_LENGTH 100
+
+struct gepard_crypt_unit
+{
+	unsigned int flag;
+	unsigned char pos_1;
+	unsigned char pos_2;
+	unsigned char pos_3;
+	unsigned char key[256];
+};
+
+struct gepard_info_data
+{
+	
+	long long sync_tick;
+	unsigned int unique_id;
+	unsigned int license_version;
+	unsigned char mac_address[6];
+	unsigned int is_init_ack_received;
+	unsigned short cs_packet_request_move;
+	unsigned short cs_packet_action_request;
+	unsigned short cs_packet_use_skill_to_id;
+	unsigned short cs_packet_use_skill_to_ground;
+};
+
+enum gepard_server_types
+{
+	GEPARD_MAP      = 0xCCCC,
+	GEPARD_LOGIN    = 0xAAAA,
+};
+
+enum gepard_info_type
+{
+	GEPARD_INFO_MESSAGE,
+	GEPARD_INFO_MESSAGE_EXIT,
+	GEPARD_INFO_INVALID_INIT_ACK,
+	GEPARD_INFO_BANNED,
+	GEPARD_INFO_OLD_LICENSE_VERSION,
+};
+
+enum gepard_packets
+{
+	CS_LOAD_END_ACK        = 0x007D,
+	CS_WHISPER_TO          = 0x0096,
+
+	CS_LOGIN_PACKET_1      = 0x0064,
+	CS_LOGIN_PACKET_2      = 0x0277,
+	CS_LOGIN_PACKET_3      = 0x02b0,
+	CS_LOGIN_PACKET_4      = 0x01dd,
+	CS_LOGIN_PACKET_5      = 0x01fa,
+	CS_LOGIN_PACKET_6      = 0x027c,
+	CS_LOGIN_PACKET_7      = 0x0825,
+
+	SC_SET_UNIT_WALKING_1  = 0x07F7,
+	SC_SET_UNIT_WALKING_2  = 0x0856,
+	SC_SET_UNIT_WALKING_3  = 0x0914,
+	SC_SET_UNIT_WALKING_4  = 0x09DB,
+	SC_SET_UNIT_WALKING_5  = 0x09FD,
+
+	SC_SET_UNIT_IDLE_1     = 0x07F9,
+	SC_SET_UNIT_IDLE_2     = 0x0857,
+	SC_SET_UNIT_IDLE_3     = 0x0915,
+	SC_SET_UNIT_IDLE_4     = 0x09DD,
+	SC_SET_UNIT_IDLE_5     = 0x09FF,
+
+	SC_NOTIFY_TIME         = 0x007F,
+	SC_STATE_CHANGE        = 0x0229,
+
+	SC_MSG_STATE_CHANGE_1  = 0x0196,
+	SC_MSG_STATE_CHANGE_2  = 0x043F,
+	SC_MSG_STATE_CHANGE_3  = 0x0983,
+
+	SC_WHISPER_FROM        = 0x0097,
+	SC_WHISPER_SEND_ACK    = 0x0098,
+
+	CS_GEPARD_SYNC         = 0x8285,
+	CS_GEPARD_INIT_ACK     = 0xC392,
+
+	SC_GEPARD_INIT         = 0x4753,
+	SC_GEPARD_INFO         = 0xBCDE,
+	SC_GEPARD_SETTINGS     = 0x5395,
+};
+
+enum gepard_internal_packets
+{
+	GEPARD_M2C_BLOCK_REQ   = 0x5000,
+	GEPARD_C2M_BLOCK_ACK   = 0x5001,
+	GEPARD_M2C_UNBLOCK_REQ = 0x5002,
+	GEPARD_C2M_UNBLOCK_ACK = 0x5003,
+};
+
+void gepard_set_eof(int fd);
+long long gepard_get_tick(void);
+unsigned int gepard_get_unique_id(int fd);
+struct socket_data* gepard_get_socket_data(int fd);
+void gepard_init(struct socket_data* s, int fd, uint16 server_type);
+void gepard_send_info(int fd, unsigned short info_type, const char* message);
+bool gepard_process_cs_packet(int fd, struct socket_data* s, size_t packet_size);
+void gepard_process_sc_packet(int fd, struct socket_data* s, size_t packet_size);
+
+// (^~_~^) Gepard Shield End
+
 // socket I/O macros
 #define RFIFOHEAD(fd)
 #define WFIFOHEAD(fd, size) do{ if((fd) && session[fd]->wdata_size + (size) > session[fd]->max_wdata ) realloc_writefifo(fd, size); }while(0)
@@ -32,8 +162,6 @@
 #define WFIFOW(fd,pos) (*(uint16*)WFIFOP(fd,pos))
 #define RFIFOL(fd,pos) (*(uint32*)RFIFOP(fd,pos))
 #define WFIFOL(fd,pos) (*(uint32*)WFIFOP(fd,pos))
-#define RFIFOF(fd,pos) (*(float*)RFIFOP(fd,pos))
-#define WFIFOF(fd,pos) (*(float*)WFIFOP(fd,pos))
 #define RFIFOQ(fd,pos) (*(uint64*)RFIFOP(fd,pos))
 #define WFIFOQ(fd,pos) (*(uint64*)WFIFOP(fd,pos))
 #define RFIFOSPACE(fd) (session[fd]->max_rdata - session[fd]->rdata_size)
@@ -97,6 +225,14 @@ struct socket_data
 	ParseFunc func_parse;
 
 	void* session_data; // stores application-specific data related to the session
+
+// (^~_~^) Gepard Shield Start
+	struct gepard_info_data gepard_info;
+	struct gepard_crypt_unit send_crypt;
+	struct gepard_crypt_unit recv_crypt;
+	struct gepard_crypt_unit sync_crypt;
+// (^~_~^) Gepard Shield End
+
 };
 
 

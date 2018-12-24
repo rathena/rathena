@@ -125,7 +125,7 @@ function	script	refinenew	{
 		close;
 	}
 	if (getarg(1) != 1) {
-		if (getequippercentrefinery(.@part) < 100) {
+		if (getequippercentrefinery(.@part, REFINE_COST_OVER10) < 100) {
 			mes "["+ .@npc_name$ +"]";
 			mes "This "+.@type$+" already has been refined serveral times.";
 			mes "It could be destroyed if I try again.";
@@ -166,7 +166,7 @@ function	script	refinenew	{
 			close;
 		}
 
-		if (getequippercentrefinery(.@part) > rand(100)) {
+		if (getequippercentrefinery(.@part, REFINE_COST_OVER10) > rand(100)) {
 			mes "Clang! Clang! Clang! Clang!";
 			successrefitem .@part;
 			next;
@@ -277,14 +277,14 @@ function	script	refinenew	{
 		    callfunc("F_IsEquipRefineHack", .@part, .@refinerycnt))
 			close;
 
-		if (getequipid(.@part) != .@refineitemid || (.@menu2 == 1 && getequippercentrefinery(.@part) < 100)) {
+		if (getequipid(.@part) != .@refineitemid || (.@menu2 == 1 && getequippercentrefinery(.@part, REFINE_COST_OVER10) < 100)) {
 			mes "["+ .@npc_name$ +"]";
 			mes "Clang... No, but did you imagine I could be so stupid?!";
 			mes "You changed it...";
 			mes "Get out before I stun you with my Hammer!!";
 			close;
 		}
-		if (getequippercentrefinery(.@part) > rand(100)) {
+		if (getequippercentrefinery(.@part, REFINE_COST_OVER10) > rand(100)) {
 			mes "Clang! Clang! Clang! Clang!";
 			successrefitem .@part;
 			.@refinecnt = .@refinecnt - 1;
@@ -485,7 +485,7 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 		mes "I knew you were not worth trying my magical refining hammer for.";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) < 100) {
 		mes "[Clink]";
 		mes "Wow!!";
 		mes "This "+.@type$+" has been refined quite a bit, huh?";
@@ -524,7 +524,7 @@ malangdo,224,172,6	script	Clink#mal_normal	544,{
 		close;
 	}
 
-	if (getequippercentrefinery(.@part) <= rand(100)) {
+	if (getequippercentrefinery(.@part, REFINE_COST_NORMAL) <= rand(100)) {
 		failedrefitem .@part;
 		mes "[Clink]";
 		mes "Cry Hammer!! Cry!!!";

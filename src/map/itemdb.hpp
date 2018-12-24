@@ -38,6 +38,7 @@ enum item_itemid
 	ITEMID_WHITE_POTION					= 504,
 	ITEMID_BLUE_POTION					= 505,
 	ITEMID_APPLE						= 512,
+	ITEMID_CARROT						= 515,
 	ITEMID_HOLY_WATER					= 523,
 	ITEMID_PUMPKIN						= 535,
 	ITEMID_RED_SLIM_POTION				= 545,
@@ -89,6 +90,7 @@ enum item_itemid
 	ITEMID_SKULL_						= 7420,
 	ITEMID_TOKEN_OF_SIEGFRIED			= 7621,
 	ITEMID_TRAP_ALLOY					= 7940,
+	ITEMID_CATNIP_FRUIT					= 11602,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
 	ITEMID_GIANT_FLY_WING				= 12212,
@@ -837,7 +839,6 @@ struct item_data
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
 		unsigned broadcast : 1; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
-		uint8 dropEffect; ///< Drop Effect Mode
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;
@@ -855,6 +856,7 @@ struct item_data
 	struct item_combo **combos;
 	unsigned char combos_count;
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+	uint8 refine_type; /// pre-defined refine type, depreciate wlv for refine_info[] lookup. REFINE_TYPE_MAX for not IT_WEAPON, IT_ARMOR, or IT_SHADOWGEAR
 };
 
 // Struct for item random option [Secret]
@@ -903,7 +905,6 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_traderight(n) (itemdb_search(n)->flag.trade_restriction)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
-#define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 bool itemdb_is_spellbook2(unsigned short nameid);

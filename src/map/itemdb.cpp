@@ -914,7 +914,7 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 */
 static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	unsigned short nameid = atoi(fields[0]);
-	uint16 flag;
+	uint8 flag;
 	bool set;
 	struct item_data *id;
 
@@ -932,20 +932,6 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	if (flag&8) id->flag.bindOnEquip = true;
 	if (flag&16) id->flag.broadcast = 1;
 	if (flag&32) id->flag.delay_consume = 2;
-
-	if( flag & 64 ){
-		id->flag.dropEffect = 1;
-	}else if( flag & 128 ){
-		id->flag.dropEffect = 2;
-	}else if( flag & 256 ){
-		id->flag.dropEffect = 3;
-	}else if( flag & 512 ){
-		id->flag.dropEffect = 4;
-	}else if( flag & 1024 ){
-		id->flag.dropEffect = 5;
-	}else if( flag & 2048 ){
-		id->flag.dropEffect = 6;
-	}
 
 	return true;
 }
@@ -1261,6 +1247,16 @@ static void itemdb_re_split_atoi(char *str, int *val1, int *val2) {
 	return;
 }
 
+static inline uint8 itemdb_set_refine_type(int type, int wlv, int loc) {
+	if (type == IT_WEAPON)
+		return (enum refine_type)wlv;
+	if (type == IT_ARMOR)
+		return (loc&EQP_COSTUME) ? REFINE_TYPE_COSTUME : REFINE_TYPE_ARMOR;
+	if (type == IT_SHADOWGEAR)
+		return (loc == EQP_SHADOW_WEAPON) ? REFINE_TYPE_SHADOW_WEAPON : REFINE_TYPE_SHADOW;
+	return REFINE_TYPE_MAX;
+}
+
 /**
 * Processes one itemdb entry
 */
@@ -1394,6 +1390,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 		id->equip_script = parse_script(str[20], source, line, scriptopt);
 	if (*str[21])
 		id->unequip_script = parse_script(str[21], source, line, scriptopt);
+		id->refine_type = itemdb_set_refine_type(id->type, id->wlv, id->equip);
 
 	if (!id->nameid) {
 		id->nameid = nameid;

@@ -354,3 +354,10 @@ spl_in02	mapflag	nobranch
 2012rwc_08	mapflag	nobranch
 
 //evt_zombie	mapflag	nobranch
+
+gramps_20	mapflag	nobranch
+gramps_21	mapflag	nobranch
+gramps_22	mapflag	nobranch
+
+
+guild_vs2-1	mapflag	nobranch

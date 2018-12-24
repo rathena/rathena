@@ -57,6 +57,31 @@
 #include "unit.hpp"
 #include "vending.hpp"
 
+// (^~_~^) Gepard Shield Start
+
+bool clif_gepard_process_packet(struct map_session_data* sd)
+{
+	int fd = sd->fd;
+	struct socket_data* s = session[fd];
+	int packet_id = RFIFOW(fd, 0);
+	long long diff_time = gettick() - session[fd]->gepard_info.sync_tick;
+
+	if (diff_time > 40000)
+	{
+		clif_authfail_fd(sd->fd, 15);
+		return true;
+	}
+
+	if (packet_id <= MAX_PACKET_DB)
+	{
+		return gepard_process_cs_packet(fd, s, packet_db[packet_id].len);
+	}
+
+	return gepard_process_cs_packet(fd, s, 0);
+}
+
+// (^~_~^) Gepard Shield End
+
 /* for clif_clearunit_delayed */
 static struct eri *delay_clearunit_ers;
 
@@ -764,15 +789,11 @@ void clif_charselectok(int id, uint8 ok)
 }
 
 /// Makes an item appear on the ground.
-/// 009E <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
-/// 084B <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
-/// 0ADD <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
-void clif_dropflooritem(struct flooritem_data* fitem, bool canShowEffect)
+/// 009e <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
+/// 084b <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
+void clif_dropflooritem(struct flooritem_data* fitem)
 {
-#if PACKETVER >= 20180418
-	uint8 buf[22];
-	uint32 header = 0xadd;
-#elif PACKETVER >= 20130000
+#if PACKETVER >= 20130000
 	uint8 buf[19];
 	uint32 header=0x84b;
 #else
@@ -799,22 +820,6 @@ void clif_dropflooritem(struct flooritem_data* fitem, bool canShowEffect)
 	WBUFB(buf, offset+13) = fitem->subx;
 	WBUFB(buf, offset+14) = fitem->suby;
 	WBUFW(buf, offset+15) = fitem->item.amount;
-#if PACKETVER >= 20180418
-	if( canShowEffect ){
-		uint8 dropEffect = itemdb_dropeffect(fitem->item.nameid);
-
-		if( dropEffect > 0 ){
-			WBUFB(buf, offset+17) = 1;
-			WBUFW(buf, offset+18) = dropEffect - 1;
-		}else{
-			WBUFB(buf, offset+17) = 0;
-			WBUFW(buf, offset+18) = 0;
-		}
-	}else{
-		WBUFB(buf, offset+17) = 0;
-		WBUFW(buf, offset+18) = 0;
-	}
-#endif
 
 	clif_send(buf, packet_len(header), &fitem->bl, AREA);
 }
@@ -3714,7 +3719,7 @@ void clif_arrowequip(struct map_session_data *sd,int val) {
 	nullpo_retv(sd);
 
 #if PACKETVER >= 20121128
-	clif_status_change(&sd->bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INFINITE_TICK, 0, 0, 0);
+	clif_status_change(&sd->bl, EFST_CLIENT_ONLY_EQUIP_ARROW, 1, INVALID_TIMER, 0, 0, 0);
 #endif
 	fd=sd->fd;
 	WFIFOHEAD(fd, packet_len(0x013c));
@@ -3971,7 +3976,7 @@ void clif_changeoption(struct block_list* bl)
 	//Whenever we send "changeoption" to the client, the provoke icon is lost
 	//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
 	if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
-		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, INFINITE_TICK, 0, 0, 0);
+		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, -1, 0, 0, 0);
 }
 
 
@@ -6449,6 +6454,7 @@ void clif_map_property_mapall(int map_idx, enum map_property property)
 ///     0 = success
 ///     1 = failure
 ///     2 = downgrade
+///     3 = failure without breaking nor downgrade
 void clif_refine(int fd, int fail, int index, int val)
 {
 	WFIFOHEAD(fd,packet_len(0x188));
@@ -9425,6 +9431,7 @@ void clif_refresh(struct map_session_data *sd)
 
 	clif_changemap(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	clif_inventorylist(sd);
+	clif_equipswitch_list(sd);
 	if(pc_iscarton(sd)) {
 		clif_cartlist(sd);
 		clif_updatestatus(sd,SP_CARTINFO);
@@ -10265,6 +10272,16 @@ void clif_parse_WantToConnection(int fd, struct map_session_data* sd)
 #endif
 	session[fd]->session_data = sd;
 
+// (^~_~^) Gepard Shield Start
+
+	if (is_gepard_active)
+	{
+		gepard_init(session[fd], fd, GEPARD_MAP);
+		session[fd]->gepard_info.sync_tick = gettick();
+	}
+
+// (^~_~^) Gepard Shield End
+
 	pc_setnewpc(sd, account_id, char_id, login_id1, client_tick, sex, fd);
 
 #if PACKETVER < 20070521
@@ -10293,7 +10310,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 
 	// Autotraders should ignore this entirely, clif_parse_LoadEndAck is always invoked manually for them
 	if (!sd->state.active || (!sd->state.autotrade && !sd->state.pc_loaded)) { //Character loading is not complete yet!
-		//Let pc_reg_received or pc_scdata_received reinvoke this when ready.
+		//Let pc_reg_received or intif_parse_StorageReceived reinvoke this when ready.
 		sd->state.connect_new = 0;
 		return;
 	}
@@ -10323,6 +10340,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	// item
 	clif_inventorylist(sd);  // inventory list first, otherwise deleted items in pc_checkitem show up as 'unknown item'
 	pc_checkitem(sd);
+	clif_equipswitch_list(sd);
 
 	// cart
 	if(pc_iscarton(sd)) {
@@ -10609,7 +10627,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	mail_clear(sd);
 
 	/* Guild Aura Init */
-	if( sd->guild && sd->state.gmaster_flag ) {
+	if( sd->state.gmaster_flag ) {
 		guild_guildaura_refresh(sd,GD_LEADERSHIP,guild_checkskill(sd->guild,GD_LEADERSHIP));
 		guild_guildaura_refresh(sd,GD_GLORYWOUNDS,guild_checkskill(sd->guild,GD_GLORYWOUNDS));
 		guild_guildaura_refresh(sd,GD_SOULCOLD,guild_checkskill(sd->guild,GD_SOULCOLD));
@@ -12227,7 +12245,7 @@ void clif_parse_UseSkillToId(int fd, struct map_session_data *sd)
 
 	if ((pc_cant_act2(sd) || sd->chatID) && 
 		skill_id != RK_REFRESH && 
-		!( ( skill_id == SR_GENTLETOUCH_CURE || skill_id == SU_GROOMING ) && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
+		!(skill_id == SR_GENTLETOUCH_CURE && (sd->sc.opt1 == OPT1_STONE || sd->sc.opt1 == OPT1_FREEZE || sd->sc.opt1 == OPT1_STUN)) &&
 		!(sd->state.storage_flag && (inf&INF_SELF_SKILL))) //SELF skills can be used with the storage open, issue: 8027
 		return;
 
@@ -12796,6 +12814,10 @@ void clif_parse_MoveToKafra(int fd, struct map_session_data *sd)
 	item_amount = RFIFOL(fd,info->pos[1]);
 	if (item_index < 0 || item_index >= MAX_INVENTORY || item_amount < 1)
 		return;
+	if( sd->inventory.u.items_inventory[item_index].equipSwitch ){
+		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		return;
+	}
 
 	if (sd->state.storage_flag == 1)
 		storage_storageadd(sd, &sd->storage, item_index, item_amount);
@@ -12840,6 +12862,13 @@ void clif_parse_MoveToKafraFromCart(int fd, struct map_session_data *sd){
 		return;
 	if (!pc_iscarton(sd))
 		return;
+
+	if (idx < 0 || idx >= MAX_INVENTORY || amount < 1)
+		return;
+	if( sd->inventory.u.items_inventory[idx].equipSwitch ){
+		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		return;
+	}
 
 	if (sd->state.storage_flag == 1)
 		storage_storageaddfromcart(sd, &sd->storage, idx, amount);
@@ -15803,7 +15832,11 @@ void clif_parse_Mail_setattach(int fd, struct map_session_data *sd){
 
 	flag = mail_setitem(sd, idx, amount);
 
-	clif_Mail_setattachment(sd,idx,amount,flag);
+	if( flag == MAIL_ATTACH_EQUIPSWITCH ){
+		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+	}else{
+		clif_Mail_setattachment(sd,idx,amount,flag);
+	}
 }
 
 /// Remove an item from a mail
@@ -17285,32 +17318,32 @@ void clif_bg_xy_remove(struct map_session_data *sd)
 	clif_send(buf, packet_len(0x2df), &sd->bl, BG_SAMEMAP_WOS);
 }
 
-/// Notifies clients of a battleground message.
-/// 02DC <packet len>.W <account id>.L <name>.24B <message>.?B (ZC_BATTLEFIELD_CHAT)
-void clif_bg_message( struct battleground_data *bg, int src_id, const char *name, const char *mes, int len ){
-	struct map_session_data *sd = bg_getavailablesd( bg );
 
-	if( sd == nullptr ){
+/// Notifies clients of a battleground message (ZC_BATTLEFIELD_CHAT).
+/// 02dc <packet len>.W <account id>.L <name>.24B <message>.?B
+void clif_bg_message(struct battleground_data *bg, int src_id, const char *name, const char *mes, int len)
+{
+	struct map_session_data *sd;
+	unsigned char *buf;
+	if( (sd = bg_getavailablesd(bg)) == NULL )
 		return;
-	}
 
-	// limit length
-	len = min( len + 1, CHAT_SIZE_MAX );
-
-	unsigned char buf[8 + NAME_LENGTH + CHAT_SIZE_MAX];
+	buf = (unsigned char*)aMalloc((len + NAME_LENGTH + 8)*sizeof(unsigned char));
 
 	WBUFW(buf,0) = 0x2dc;
 	WBUFW(buf,2) = len + NAME_LENGTH + 8;
 	WBUFL(buf,4) = src_id;
 	safestrncpy(WBUFCP(buf,8), name, NAME_LENGTH);
-	safestrncpy(WBUFCP(buf,8+NAME_LENGTH), mes, len );
-
+	memcpy(WBUFP(buf,32), mes, len);
 	clif_send(buf,WBUFW(buf,2), &sd->bl, BG);
+
+	if( buf )
+		aFree(buf);
 }
 
-/// Validates and processes battlechat messages.
-/// All messages that are sent after enabling battleground chat with /battlechat.
-/// 02DB <packet len>.W <text>.?B (CZ_BATTLEFIELD_CHAT)
+
+/// Validates and processes battlechat messages [pakpil] (CZ_BATTLEFIELD_CHAT).
+/// 0x2db <packet len>.W <text>.?B (<name> : <message>) 00
 void clif_parse_BattleChat(int fd, struct map_session_data* sd){
 	char name[NAME_LENGTH], message[CHAT_SIZE_MAX], output[CHAT_SIZE_MAX+NAME_LENGTH*2];
 
@@ -20329,6 +20362,304 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 	WFIFOSET(fd, packet_len(0xa26));
 }
 
+/**
+ * Opens the refine UI on the designated client.
+ * 0aa0
+ */
+void clif_refineui_open( struct map_session_data* sd ){
+#if PACKETVER >= 20161012
+	int fd = sd->fd;
+ 	WFIFOHEAD(fd,packet_len(0x0AA0));
+	WFIFOW(fd,0) = 0x0AA0;
+	WFIFOSET(fd,packet_len(0x0AA0));
+ 	sd->state.refineui_open = true;
+#endif
+}
+ /**
+ * Parses cancel/close of the refine UI on client side.
+ * 0aa4
+ */
+void clif_parse_refineui_close( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20161012
+	sd->state.refineui_open = false;
+#endif
+}
+ #define REFINEUI_MAT_BS_BLESS 4
+#define REFINEUI_MAT_CNT (REFINEUI_MAT_BS_BLESS+1)
+ /**
+ * Structure to store all required data about refine requirements
+ */
+struct refine_materials {
+	struct refine_cost cost;
+	uint8 chance;
+	struct refine_bs_blessing bs_bless;
+};
+ /**
+ * Fills the given index with the requested data for that item and
+ * returns true on success or false on failure.
+ */
+static inline bool clif_refineui_materials_sub( struct item *item, struct item_data *id, struct refine_materials materials[REFINEUI_MAT_CNT], int index, enum refine_cost_type type ){
+	if( index < 0 || index >= REFINEUI_MAT_CNT ){
+		return false;
+	}
+ 	struct refine_cost *cost = status_get_refine_cost_((enum refine_type)id->refine_type, type);
+	if (!cost || !cost->refineui)
+		return false;
+	memcpy(&materials[index].cost, cost, sizeof(struct refine_cost));
+ 	// Get the chance for refining the item with this material
+	materials[index].chance = status_get_refine_chance((enum refine_type)id->refine_type, item->refine, type);
+ 	// Either of the values was not set
+	if( materials[index].cost.nameid == 0 || materials[index].cost.zeny == 0 || materials[index].chance == 0 ){
+		// Reset all entries properly
+		materials[index].cost.nameid = materials[index].cost.zeny = materials[index].chance = 0;
+		return false;
+	}else{
+		// Everything was set properly
+		return true;
+	}
+}
+ /**
+ * Calculates all possible materials for the given item.
+ * Returns the count of materials that were filled in the materials array.
+ */
+static inline uint8 clif_refineui_materials( struct item *item, struct item_data *id, struct refine_materials materials[REFINEUI_MAT_CNT] ){
+	// Initialize the counter
+	uint8 count = 0;
+ 	// Zero the memory
+	memset( materials, 0, sizeof(struct refine_materials)*REFINEUI_MAT_CNT );
+ 	/**
+	 * Default material indexing is follow as
+	 * 0: Normal refine for +1 ~ +10 or +11 ~ +20
+	 * 1: HD materials for +7 ~ +9 and +11 ~ +20
+	 * 2: Enriched
+	 * 3: Undecided yet, you can add yours later
+	 * 4: Is always for 'Blacksmith Blessing' item to prevent downrefine/break
+	 **/
+ 	for (int i = 0; i < REFINE_COST_MAX; i++) {
+		if (clif_refineui_materials_sub(item, id, materials, count, (enum refine_cost_type)i))
+			count++;
+	}
+ 	// Blacksmith Blessing requirements if any
+	status_get_refine_blacksmithBlessing(&materials[REFINEUI_MAT_BS_BLESS].bs_bless, (enum refine_type)id->wlv, item->refine);
+ 	// Return the amount of found materials
+	return count;
+}
+ void clif_refineui_notrefineable(struct map_session_data *sd, uint16 index) {
+	int fd = sd->fd;
+	WFIFOHEAD(fd, 7);
+	WFIFOW(fd, 0) = 0x0AA2;
+	WFIFOW(fd, 2) = 7;
+	WFIFOW(fd, 4) = index + 2;
+	WFIFOB(fd, 6) = 0;
+	WFIFOSET(fd, 7);
+}
+ /**
+ * Adds the selected item into the refine UI and sends the possible materials
+ * to the client.
+ * 0aa2 <length>.W <index>.W <catalyst count>.B { <material>.W <chance>.B <price>.L }*
+ */
+void clif_refineui_info( struct map_session_data* sd, uint16 index ){
+	int fd = sd->fd;
+	struct item *item;
+	struct item_data *id;
+	uint16 length;
+	struct refine_materials materials[REFINEUI_MAT_CNT];
+	uint8 i, material_count;
+ 	// Get the item db reference
+	id = sd->inventory_data[index];
+ 	// No item data was found
+	if( id == NULL || id->refine_type == REFINE_TYPE_MAX){
+		return;
+	}
+ 	// Check if the item can be refined
+	if( id->flag.no_refine ){
+		clif_refineui_notrefineable(sd, index);
+		return;
+	}
+ 	// Check the inventory
+	item = &sd->inventory.u.items_inventory[index];
+ 	// No item was found at the given index
+	if( item == NULL ){
+		return;
+	}
+ 	// Check if the item is identified
+	if( !item->identify ){
+		clif_refineui_notrefineable(sd, index);
+		return;
+	}
+ 	// Check if the item is broken
+	if( item->attribute ){
+		clif_refineui_notrefineable(sd, index);
+		return;
+	}
+ 	// Check the current refine level
+	if( item->refine < 0 || item->refine >= MAX_REFINE ){
+		clif_refineui_notrefineable(sd, index);
+		return;
+	}
+ 	// Calculate the possible materials
+	material_count = clif_refineui_materials( item, id, materials );
+ 	// No possibilities were found
+	if( material_count == 0 ){
+		clif_refineui_notrefineable(sd, index);
+		return;
+	}
+ 	length = 7 + material_count * 7;
+ 	WFIFOHEAD(fd,length);
+	WFIFOW(fd,0) = 0x0AA2;
+	WFIFOW(fd,2) = length;
+	WFIFOW(fd,4) = index + 2;
+	WFIFOB(fd,6) = (uint8)materials[REFINEUI_MAT_BS_BLESS].bs_bless.count;
+ 	for( i = 0; i < material_count; i++ ){
+		WFIFOW(fd,7 + i * 7) = materials[i].cost.nameid;
+		WFIFOB(fd,7 + i * 7 + 2) = materials[i].chance;
+		WFIFOL(fd,7 + i * 7 + 3) = materials[i].cost.zeny;
+	}
+ 	WFIFOSET(fd,length);
+}
+ /**
+ * Client request to add an item to the refine UI.
+ * 0aa1 <index>.W
+ */
+void clif_parse_refineui_add( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20161012
+	uint16 index = RFIFOW(fd, 2) - 2;
+ 	// Check if the refine UI is open
+	if( !sd->state.refineui_open ){
+		return;
+	}
+ 	// Check if the index is valid
+	if( index < 0 || index >= MAX_INVENTORY ){
+		return;
+	}
+ 	// Send out the requirements for the refine process
+	clif_refineui_info( sd, index );
+#endif
+}
+ /**
+ * Client requests to try to refine an item.
+ * 0aa3 <index>.W <material>.W <catalyst>.B
+ */
+void clif_parse_refineui_refine( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20161012
+	uint16 index = RFIFOW( fd, 2 ) - 2;
+	uint16 material = RFIFOW( fd, 4 );
+	bool use_blacksmith_blessing = RFIFOB( fd, 6 ) != 0;
+	struct refine_materials materials[REFINEUI_MAT_CNT];
+	uint8 i, material_count;
+	uint16 j;
+	struct item *item;
+	struct item_data *id;
+ 	// Check if the refine UI is open
+	if( !sd->state.refineui_open ){
+		return;
+	}
+ 	// Check if the index is valid
+	if( index < 0 || index >= MAX_INVENTORY ){
+		return;
+	}
+ 	// Get the item db reference
+	id = sd->inventory_data[index];
+ 	// No item data was found
+	if( id == NULL || id->refine_type == REFINE_TYPE_MAX){
+		return;
+	}
+ 	// Check if the item can be refined
+	if( id->flag.no_refine ){
+		return;
+	}
+ 	// Check the inventory
+	item = &sd->inventory.u.items_inventory[index];
+ 	// No item was found at the given index
+	if( item == NULL ){
+		return;
+	}
+ 	// Check if the item is identified
+	if( !item->identify ){
+		return;
+	}
+ 	// Check if the item is broken
+	if( item->attribute ){
+		return;
+	}
+ 	// Check the current refine level
+	if( item->refine < 0 || item->refine >= MAX_REFINE ){
+		return;
+	}
+ 	// Check if the player has the selected material
+	if( ( j = pc_search_inventory( sd, material ) ) < 0 ){
+		return;
+	}
+ 	// Calculate the possible materials
+	material_count = clif_refineui_materials( item, id, materials );
+ 	// No possibilities were found
+	if( material_count == 0 ){
+		return;
+	}
+ 	// Find the selected material
+	ARR_FIND( 0, REFINEUI_MAT_CNT, i, materials[i].cost.nameid == material );
+ 	// The material was not in the list of possible materials
+	if( i >= REFINEUI_MAT_CNT || i < 0 ){
+		return;
+	}
+ 	// Try to pay for the refine. By default, client checked if player has enough zeny or not
+	if( pc_payzeny( sd, materials[i].cost.zeny, LOG_TYPE_CONSUME, NULL ) ){
+		clif_npc_buy_result( sd, 1 ); // "You do not have enough zeny."
+		return;
+	}
+ 	// Delete the required material
+	if( pc_delitem( sd, j, 1, 0, 0, LOG_TYPE_CONSUME ) ){
+		return;
+	}
+ 	if (use_blacksmith_blessing && materials[REFINEUI_MAT_BS_BLESS].bs_bless.count) {
+		if ((j = pc_search_inventory(sd, materials[REFINEUI_MAT_BS_BLESS].bs_bless.nameid)) < 0) {
+			return;
+		}
+ 		if (pc_delitem(sd, j, materials[REFINEUI_MAT_BS_BLESS].bs_bless.count, 0, 0, LOG_TYPE_CONSUME)) {
+			return;
+		}
+	}
+	else {
+		use_blacksmith_blessing = false;
+	}
+ 	// Try to refine the item
+	if( materials[i].chance >= rnd() % 100 ){
+		// Success
+		item->refine = cap_value( item->refine + 1, 0, MAX_REFINE );
+		clif_misceffect( &sd->bl, 3 );
+		clif_refine( fd, 0, index, item->refine );
+		achievement_update_objective( sd, AG_REFINE_SUCCESS, 2, id->wlv, item->refine );
+		clif_refineui_info( sd, index );
+	}else{
+		// Failure
+ 		do {
+			if (!use_blacksmith_blessing) {
+				int r = rnd() % 100;
+				if (r < materials[i].cost.breaking) { // Breaking chance
+					clif_refine(fd, 1, index, item->refine);
+					pc_delitem(sd, index, 1, 0, 0, LOG_TYPE_CONSUME);
+					break;
+				}
+				else if (r < (materials[i].cost.breaking + materials[i].cost.downrefine)) { // Downrefine chance
+					item->refine = cap_value(item->refine - materials[i].cost.downrefine_num, 0, MAX_REFINE);
+					clif_refine(fd, 2, index, item->refine);
+					clif_refineui_info(sd, index);
+					break;
+				}
+			}
+			// Blacksmith Blessing were used, no break & no down refine
+			clif_refine(fd, 3, index, item->refine);
+			clif_refineui_info(sd, index);
+		} while (0);
+ 		clif_misceffect( &sd->bl, 2 );
+		achievement_update_objective( sd, AG_REFINE_FAIL, 1, 1 );
+	}
+#endif
+}
+ #undef REFINEUI_MAT_CNT
+
+
+
 /*
  * This packet is sent by /changedress or /nocosplay
  *
@@ -20565,37 +20896,238 @@ void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct gui
 #endif
 }
 
-/// Activates the client camera info or updates the client camera with the given values.
-/// 0A78 <type>.B <range>.F <rotation>.F <latitude>.F
-void clif_camerainfo( struct map_session_data* sd, bool show, float range, float rotation, float latitude ){
-#if PACKETVER >= 20160525
+/// Send the full list of items in the equip switch window
+/// 0a9b <length>.W { <index>.W <position>.L }*
+void clif_equipswitch_list( struct map_session_data* sd ){
+#if PACKETVER >= 20170208
 	int fd = sd->fd;
+	int offset, i, position;
 
-	WFIFOHEAD(fd, packet_len(0xa78));
-	WFIFOW(fd, 0) = 0xa78;
-	WFIFOB(fd, 2) = show;
-	WFIFOF(fd, 3) = range;
-	WFIFOF(fd, 7) = rotation;
-	WFIFOF(fd, 11) = latitude;
-	WFIFOSET(fd, packet_len(0xa78));
+	WFIFOW(fd, 0) = 0xa9b;
+	for( i = 0, offset = 4, position = 0; i < EQI_MAX; i++ ){
+		short index = sd->equip_switch_index[i];
+
+		if( index >= 0 && !( position & equip_bitmask[i] ) ){
+			WFIFOW(fd, offset) = index + 2;
+			WFIFOL(fd, offset + 2) = sd->inventory.u.items_inventory[index].equipSwitch;
+			position |= sd->inventory.u.items_inventory[index].equipSwitch;
+			offset += 6;
+		}
+	}
+	WFIFOW(fd, 2) = offset;
+	WFIFOSET(fd, offset);
 #endif
 }
 
-/// Activates or deactives the client camera info or updates the camera settings.
-/// This packet is triggered by /viewpointvalue or /setcamera
-/// 0A77 <type>.B <range>.F <rotation>.F <latitude>.F
-void clif_parse_camerainfo( int fd, struct map_session_data* sd ){
-	char command[CHAT_SIZE_MAX];
+/// Acknowledgement for removing an equip to the equip switch window
+/// 0a9a <index>.W <position.>.L <failure>.W
+void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 pos, bool failed ){
+#if PACKETVER >= 20170208
+	int fd = sd->fd;
 
-	// /viewpointvalue
-	if( RFIFOB( fd, 2 ) == 1 ){
-		safesnprintf( command, sizeof( command ), "%ccamerainfo", atcommand_symbol );
-	// /setcamera
-	}else{
-		safesnprintf( command, sizeof( command ), "%ccamerainfo %03.03f %03.03f %03.03f", atcommand_symbol, RFIFOF( fd, 3 ), RFIFOF( fd, 7 ), RFIFOF( fd, 11 ) );
+	WFIFOHEAD(fd, packet_len(0xa9a));
+	WFIFOW(fd, 0) = 0xa9a;
+	WFIFOW(fd, 2) = index + 2;
+	WFIFOL(fd, 4) = pos;
+	WFIFOW(fd, 8) = failed;
+	WFIFOSET(fd, packet_len(0xa9a));
+#endif
+}
+
+/// Request to remove an equip from the equip switch window
+/// 0a99 <index>.W <position>.L <= 20170502
+/// 0a99 <index>.W
+void clif_parse_equipswitch_remove( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20170208
+	uint16 index = RFIFOW(fd, 2) - 2;
+	bool removed = false;
+
+	if( !battle_config.feature_equipswitch ){
+		return;
 	}
 
-	is_atcommand( fd, sd, command, 1 );
+	// Check if the index is valid
+	if( index < 0 || index >= MAX_INVENTORY ){
+		return;
+	}
+
+	pc_equipswitch_remove( sd, index );
+#endif
+}
+
+/// Acknowledgement for adding an equip to the equip switch window
+/// 0a98 <index>.W <position.>.L <failure>.L  <= 20170502
+/// 0a98 <index>.W <position.>.L <failure>.W
+void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos, bool failed ){
+#if PACKETVER >= 20170208
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0xa98));
+	WFIFOW(fd, 0) = 0xa98;
+	WFIFOW(fd, 2) = index + 2;
+	WFIFOL(fd, 4) = pos;
+#if PACKETVER <= 20170502
+	WFIFOL(fd, 8) = failed;
+#else
+	WFIFOW(fd, 8) = failed;
+#endif
+	WFIFOSET(fd,packet_len(0xa98));
+#endif
+}
+
+/// Request to add an equip to the equip switch window
+/// 0a97 <index>.W <position>.L
+void clif_parse_equipswitch_add( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20170208
+	uint16 index = RFIFOW(fd, 2) - 2;
+	uint32 position = RFIFOL(fd, 4);
+
+	if( !battle_config.feature_equipswitch ){
+		return;
+	}
+
+	if( index < 0 || index >= MAX_INVENTORY || sd->inventory_data[index] == nullptr ){
+		return;
+	}
+
+	if( sd->state.trading || sd->npc_shopid ){
+		clif_equipswitch_add( sd, index, position, true );
+		return;
+	}
+
+	if( sd->inventory_data[index]->type == IT_AMMO ){
+		position = EQP_AMMO;
+	}
+
+	pc_equipitem( sd, index, position, true );
+#endif
+}
+
+/// Acknowledgement packet for the full equip switch
+/// 0a9d <failed>.W
+void clif_equipswitch_reply( struct map_session_data* sd, bool failed ){
+#if PACKETVER >= 20170208
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0xa9d));
+	WFIFOW(fd, 0) = 0xa9d;
+	WFIFOW(fd, 2) = failed;
+	WFIFOSET(fd, packet_len(0xa9d));
+#endif
+}
+
+/// Request to do a full equip switch
+/// 0a9c
+void clif_parse_equipswitch_request( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20170208
+	int i;
+	unsigned int tick = gettick();
+	uint16 skill_id = ALL_EQSWITCH, skill_lv = 1;
+
+	/*
+	if( DIFF_TICK(sd->equipswitch_tick,tick) <= 0 ) {
+		// Client will not let you send a request
+		return;
+	}
+
+	sd->equipswitch_tick = tick + skill_get_cooldown( skill_id, skill_lv );
+	*/
+
+	if( !battle_config.feature_equipswitch ){
+		return;
+	}
+
+	ARR_FIND( 0, EQI_MAX, i, sd->equip_switch_index[i] >= 0 );
+
+	if( i == EQI_MAX ){
+		// client will show: "There is no item to replace." and should not even come here
+		clif_equipswitch_reply( sd, false );
+		return;
+	}
+
+	// Whether skill fails or not is irrelevant, the char ain't idle. [Skotlex]
+	if (battle_config.idletime_option&IDLE_USESKILLTOID)
+		sd->idletime = last_tick;
+
+	if( sd->npc_id ){
+#ifdef RENEWAL
+		if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
+			clif_msg( sd, WORK_IN_PROGRESS );
+			return;
+		}
+#endif
+		if( !sd->npc_item_flag ){
+			return;
+		}
+	}
+
+	if( pc_cant_act(sd) )
+		return;
+
+	if( pc_issit(sd) )
+		return;
+
+	if( skill_isNotOk(skill_id, sd) )
+		return;
+
+	if( sd->ud.skilltimer != INVALID_TIMER ) {
+		// Client will not let you send a request
+		return;
+	} else if( DIFF_TICK(tick, sd->ud.canact_tick) < 0 ) {
+		// Client will not let you send a request
+		return;
+	}
+
+	if( sd->sc.option&OPTION_COSTUME )
+		return;
+
+	if( sd->menuskill_id ) {
+		if( sd->menuskill_id == SA_TAMINGMONSTER ) {
+			clif_menuskill_clear(sd); //Cancel pet capture.
+		} else if( sd->menuskill_id != SA_AUTOSPELL )
+			return; //Can't use skills while a menu is open.
+	}
+
+	pc_delinvincibletimer(sd);
+
+	unit_skilluse_id( &sd->bl, sd->bl.id, skill_id, skill_lv );
+#endif
+}
+
+/// Request to do a single equip switch
+/// 0ace <index>.W
+void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd ){
+#if PACKETVER >= 20170502
+	uint16 index = RFIFOW(fd, 2) - 2;
+
+	if( !battle_config.feature_equipswitch ){
+		return;
+	}
+
+	// Check if the index is valid
+	if( index < 0 || index >= MAX_INVENTORY ){
+		return;
+	}
+
+	// Check if the item was already added to equip switch
+	if( sd->inventory.u.items_inventory[index].equipSwitch ){
+		if( sd->npc_id ){
+#ifdef RENEWAL
+			if( pc_hasprogress( sd, WIP_DISABLE_SKILLITEM ) ){
+				clif_msg( sd, WORK_IN_PROGRESS );
+				return;
+			}
+#endif
+			if( !sd->npc_item_flag ){
+				return;
+			}
+		}
+
+		pc_equipswitch( sd, index );
+	}else{
+		pc_equipitem( sd, index, pc_equippoint(sd, index), true );
+	}
+#endif
 }
 
 /*==========================================
@@ -20644,6 +21176,15 @@ static int clif_parse(int fd)
 
 	if (RFIFOREST(fd) < 2)
 		return 0;
+
+// (^~_~^) Gepard Shield Start
+
+	if (is_gepard_active == true && sd != NULL && clif_gepard_process_packet(sd) == true)
+	{
+		return 0;
+	}
+
+// (^~_~^) Gepard Shield End
 
 	cmd = RFIFOW(fd, 0);
 

@@ -1791,7 +1791,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
  * @param mob_id: Monster ID if dropped by monster
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect)
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id)
 {
 	int r;
 	struct flooritem_data *fitem = NULL;
@@ -1834,7 +1834,7 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 	map_addiddb(&fitem->bl);
 	if (map_addblock(&fitem->bl))
 		return 0;
-	clif_dropflooritem(fitem,canShowEffect);
+	clif_dropflooritem(fitem);
 
 	return fitem->bl.id;
 }
@@ -1906,6 +1906,12 @@ void map_reqnickdb(struct map_session_data * sd, int charid)
 	struct map_session_data* tsd;
 
 	nullpo_retv(sd);
+	
+	if (battle_config.reserved_costume_id && battle_config.reserved_costume_id == charid)
+	{
+		clif_solved_charname(sd->fd, charid, "Costume");
+		return;
+	}
 
 	tsd = map_charid2sd(charid);
 	if( tsd )
@@ -3998,13 +4004,13 @@ int map_config_read(const char *cfgName)
 		} else if (strcmpi(w1, "save_settings") == 0)
 			save_settings = cap_value(atoi(w2),CHARSAVE_NONE,CHARSAVE_ALL);
 		else if (strcmpi(w1, "motd_txt") == 0)
-			safestrncpy(motd_txt, w2, sizeof(motd_txt));
+			strcpy(motd_txt, w2);
 		else if (strcmpi(w1, "help_txt") == 0)
-			safestrncpy(help_txt, w2, sizeof(help_txt));
+			strcpy(help_txt, w2);
 		else if (strcmpi(w1, "help2_txt") == 0)
-			safestrncpy(help2_txt, w2, sizeof(help2_txt));
+			strcpy(help2_txt, w2);
 		else if (strcmpi(w1, "charhelp_txt") == 0)
-			safestrncpy(charhelp_txt, w2, sizeof(charhelp_txt));
+			strcpy(charhelp_txt, w2);
 		else if (strcmpi(w1, "channel_conf") == 0)
 			safestrncpy(channel_conf, w2, sizeof(channel_conf));
 		else if(strcmpi(w1,"db_path") == 0)
@@ -4115,75 +4121,75 @@ int inter_config_read(const char *cfgName)
 #undef RENEWALPREFIX
 
 		if( strcmpi( w1, "buyingstore_db" ) == 0 )
-			safestrncpy( buyingstores_table, w2, sizeof(buyingstores_table) );
+			strcpy( buyingstores_table, w2 );
 		else if( strcmpi( w1, "buyingstore_items_table" ) == 0 )
-			safestrncpy( buyingstore_items_table, w2, sizeof(buyingstore_items_table) );
+			strcpy( buyingstore_items_table, w2 );
 		else if(strcmpi(w1,"item_table")==0)
-			safestrncpy(item_table,w2,sizeof(item_table));
+			strcpy(item_table,w2);
 		else if(strcmpi(w1,"item2_table")==0)
-			safestrncpy(item2_table,w2,sizeof(item2_table));
+			strcpy(item2_table,w2);
 		else if(strcmpi(w1,"mob_table")==0)
-			safestrncpy(mob_table,w2,sizeof(mob_table));
+			strcpy(mob_table,w2);
 		else if(strcmpi(w1,"mob2_table")==0)
-			safestrncpy(mob2_table,w2,sizeof(mob2_table));
+			strcpy(mob2_table,w2);
 		else if(strcmpi(w1,"mob_skill_table")==0)
-			safestrncpy(mob_skill_table,w2,sizeof(mob_skill_table));
+			strcpy(mob_skill_table,w2);
 		else if(strcmpi(w1,"mob_skill2_table")==0)
-			safestrncpy(mob_skill2_table,w2,sizeof(mob_skill2_table));
+			strcpy(mob_skill2_table,w2);
 		else if( strcmpi( w1, "item_cash_table" ) == 0 )
-			safestrncpy( item_cash_table, w2, sizeof(item_cash_table) );
+			strcpy( item_cash_table, w2 );
 		else if( strcmpi( w1, "item_cash2_table" ) == 0 )
-			safestrncpy( item_cash2_table, w2, sizeof(item_cash2_table) );
+			strcpy( item_cash2_table, w2 );
 		else if( strcmpi( w1, "vending_db" ) == 0 )
-			safestrncpy( vendings_table, w2, sizeof(vendings_table) );
+			strcpy( vendings_table, w2 );
 		else if( strcmpi( w1, "vending_items_table" ) == 0 )
-			safestrncpy(vending_items_table, w2, sizeof(vending_items_table));
+			strcpy(vending_items_table, w2);
 		else if( strcmpi(w1, "roulette_table") == 0)
-			safestrncpy(roulette_table, w2, sizeof(roulette_table));
+			strcpy(roulette_table, w2);
 		else if (strcmpi(w1, "market_table") == 0)
-			safestrncpy(market_table, w2, sizeof(market_table));
+			strcpy(market_table, w2);
 		else if (strcmpi(w1, "sales_table") == 0)
-			safestrncpy(sales_table, w2, sizeof(sales_table));
+			strcpy(sales_table, w2);
 		else if (strcmpi(w1, "guild_storage_log") == 0)
-			safestrncpy(guild_storage_log_table, w2, sizeof(guild_storage_log_table));
+			strcpy(guild_storage_log_table, w2);
 		else
 		//Map Server SQL DB
 		if(strcmpi(w1,"map_server_ip")==0)
-			safestrncpy(map_server_ip, w2, sizeof(map_server_ip));
+			strcpy(map_server_ip, w2);
 		else
 		if(strcmpi(w1,"map_server_port")==0)
 			map_server_port=atoi(w2);
 		else
 		if(strcmpi(w1,"map_server_id")==0)
-			safestrncpy(map_server_id, w2, sizeof(map_server_id));
+			strcpy(map_server_id, w2);
 		else
 		if(strcmpi(w1,"map_server_pw")==0)
-			safestrncpy(map_server_pw, w2, sizeof(map_server_pw));
+			strcpy(map_server_pw, w2);
 		else
 		if(strcmpi(w1,"map_server_db")==0)
-			safestrncpy(map_server_db, w2, sizeof(map_server_db));
+			strcpy(map_server_db, w2);
 		else
 		if(strcmpi(w1,"default_codepage")==0)
-			safestrncpy(default_codepage, w2, sizeof(default_codepage));
+			strcpy(default_codepage, w2);
 		else
 		if(strcmpi(w1,"use_sql_db")==0) {
 			db_use_sqldbs = config_switch(w2);
 			ShowStatus ("Using SQL dbs: %s\n",w2);
 		} else
 		if(strcmpi(w1,"log_db_ip")==0)
-			safestrncpy(log_db_ip, w2, sizeof(log_db_ip));
+			strcpy(log_db_ip, w2);
 		else
 		if(strcmpi(w1,"log_db_id")==0)
-			safestrncpy(log_db_id, w2, sizeof(log_db_id));
+			strcpy(log_db_id, w2);
 		else
 		if(strcmpi(w1,"log_db_pw")==0)
-			safestrncpy(log_db_pw, w2, sizeof(log_db_pw));
+			strcpy(log_db_pw, w2);
 		else
 		if(strcmpi(w1,"log_db_port")==0)
 			log_db_port = atoi(w2);
 		else
 		if(strcmpi(w1,"log_db_db")==0)
-			safestrncpy(log_db_db, w2, sizeof(log_db_db));
+			strcpy(log_db_db, w2);
 		else
 		if( mapreg_config_read(w1,w2) )
 			continue;

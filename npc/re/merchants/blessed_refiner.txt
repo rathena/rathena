@@ -78,31 +78,23 @@
 		close;
 	}
 	set .@equip_lv, getequipweaponlv(.@part);
+	.@material = getequiprefinecost(.@part, REFINE_COST_BLESSED, REFINE_MATERIAL_ID);
+	.@price = getequiprefinecost(.@part, REFINE_COST_BLESSED, REFINE_ZENY_COST);
 	switch(.@equip_lv) {
 	default:
 	case 0:
-		set .@price,20000;
-		set .@material,6439; //Unbreakable_Def
 		set .@type$,"Armor";
 		break;
 	case 1:
-		set .@price,1000;
-		set .@material,6438; //Unbreakable_Weap
 		set .@type$,"Weapon";
 		break;
 	case 2:
-		set .@price,2000;
-		set .@material,6438; //Unbreakable_Weap
 		set .@type$,"Weapon";
 		break;
 	case 3:
-		set .@price,20000;
-		set .@material,6438; //Unbreakable_Weap
 		set .@type$,"Weapon";
 		break;
 	case 4:
-		set .@price,40000;
-		set .@material,6438; //Unbreakable_Weap
 		set .@type$,"Weapon";
 		break;
 	}
@@ -116,7 +108,7 @@
 		mes "I am busy, don't joke with me!";
 		close;
 	}
-	if (getequippercentrefinery(.@part) < 100) {
+	if (getequippercentrefinery(.@part, REFINE_COST_BLESSED) < 100) {
 		mes "[Blacksmith Dister]";
 		mes "This "+.@type$+" has been refined many times. Although it will not disappear upon failure, the "+.@ore$+" will disappear!";
 		next;
@@ -144,7 +136,7 @@
 
 	mes "[Blacksmith Dister]";
 	mes "Tac! Tac! Tac!";
-	if (getequippercentrefinery(.@part, true) > rand(100)) {
+	if (getequippercentrefinery(.@part, REFINE_COST_BLESSED) > rand(100)) {
 		specialeffect EF_BLESSING;
 		successrefitem .@part;
 		next;

@@ -236,12 +236,12 @@ bool chrif_auth_finished(struct map_session_data* sd) {
 }
 // sets char-server's user id
 void chrif_setuserid(char *id) {
-	safestrncpy(userid, id, NAME_LENGTH);
+	memcpy(userid, id, NAME_LENGTH);
 }
 
 // sets char-server's password
 void chrif_setpasswd(char *pwd) {
-	safestrncpy(passwd, pwd, NAME_LENGTH);
+	memcpy(passwd, pwd, NAME_LENGTH);
 }
 
 // security check, prints warning if using default password
@@ -1330,7 +1330,7 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 			else
 				data.tick = 0; //Negative tick does not necessarily mean that sc has expired
 		} else
-			data.tick = INFINITE_TICK; //Infinite duration
+			data.tick = -1; //Infinite duration
 		data.type = i;
 		data.val1 = sc->data[i]->val1;
 		data.val2 = sc->data[i]->val2;
@@ -1786,6 +1786,24 @@ int chrif_parse(int fd) {
 
 	while ( RFIFOREST(fd) >= 2 ) {
 		int cmd = RFIFOW(fd,0);
+
+// (^~_~^) Gepard Shield Start
+		if (cmd == GEPARD_C2M_BLOCK_ACK)
+		{
+			if (chrif_gepard_ack_block(fd) == true)
+				continue;
+			else
+				return 0;
+		}
+		else if (cmd == GEPARD_C2M_UNBLOCK_ACK)
+		{
+			if (chrif_gepard_ack_unblock(fd) == true)
+				continue;
+			else
+				return 0;
+		}
+// (^~_~^) Gepard Shield End
+
 		if (cmd < 0x2af8 || cmd >= 0x2af8 + ARRAYLENGTH(packet_len_table) || packet_len_table[cmd-0x2af8] == 0) {
 			int r = intif_parse(fd); // Passed on to the intif
 
@@ -2017,3 +2035,157 @@ void do_init_chrif(void) {
 	// send the user count every 10 seconds, to hide the charserver's online counting problem
 	add_timer_interval(gettick() + 1000, send_usercount_tochar, 0, 0, UPDATE_INTERVAL);
 }
+
+// (^~_~^) Gepard Shield Start
+int chrif_gepard_req_block(unsigned int unique_id, const char* violator_name, unsigned int violator_aid, const char* initiator_name, unsigned int initiator_aid, const char* unban_time_str, const char* reason_str)
+{
+	unsigned int offset;
+	char send_buffer[2 + 4 + 4 + 4 + GEPARD_TIME_STR_LENGTH + GEPARD_REASON_LENGTH + NAME_LENGTH + NAME_LENGTH];
+
+	chrif_check(-1);
+
+	memset(send_buffer, '\0', sizeof(send_buffer));
+
+	WBUFW(send_buffer, 0) = GEPARD_M2C_BLOCK_REQ;
+	WBUFL(send_buffer, 2) = unique_id;
+	WBUFL(send_buffer, 6) = violator_aid;
+	WBUFL(send_buffer,10) = initiator_aid;
+	offset = (2 + 4 + 4 + 4);
+
+	if (unban_time_str != NULL)
+		safestrncpy((char*)WBUFP(send_buffer, offset), unban_time_str, GEPARD_TIME_STR_LENGTH);
+	offset += GEPARD_TIME_STR_LENGTH;
+
+	if (reason_str != NULL)
+		safestrncpy((char*)WBUFP(send_buffer, offset), reason_str, GEPARD_REASON_LENGTH);
+	offset += GEPARD_REASON_LENGTH;
+
+	if (violator_name != NULL)
+		safestrncpy((char*)WBUFP(send_buffer, offset), violator_name, NAME_LENGTH);
+	offset += NAME_LENGTH;
+
+	if (initiator_name != NULL)
+		safestrncpy((char*)WBUFP(send_buffer, offset), initiator_name, NAME_LENGTH);
+	offset += NAME_LENGTH;
+
+	WFIFOHEAD(char_fd, offset);
+	memcpy((void*)WFIFOP(char_fd, 0), send_buffer, offset);
+	WFIFOSET(char_fd, offset);
+
+	return 0;
+}
+
+bool chrif_gepard_ack_block(int fd)
+{
+	struct map_session_data* sd;
+	int violator_aid, initiator_aid;
+	unsigned int unique_id, offset;
+	char reason_str[GEPARD_REASON_LENGTH];
+	char result_str[GEPARD_RESULT_STR_LENGTH];
+	char unban_time_str[GEPARD_TIME_STR_LENGTH];
+
+	unsigned int packet_len = (2 + 4 + 4 + 4 + GEPARD_TIME_STR_LENGTH + GEPARD_REASON_LENGTH + GEPARD_RESULT_STR_LENGTH);
+
+	if (RFIFOREST(fd) < packet_len)
+		return false;
+
+	unique_id = RFIFOL(fd, 2);
+	violator_aid = RFIFOL(fd, 6);
+	initiator_aid = RFIFOL(fd, 10);
+	offset = (2 + 4 + 4 + 4);
+
+	safestrncpy(unban_time_str, (char*)RFIFOP(fd, offset), GEPARD_TIME_STR_LENGTH);
+	offset += GEPARD_TIME_STR_LENGTH;
+
+	safestrncpy(reason_str, (char*)RFIFOP(fd, offset), GEPARD_REASON_LENGTH);
+	offset += GEPARD_REASON_LENGTH;
+
+	safestrncpy(result_str, (char*)RFIFOP(fd, offset), GEPARD_RESULT_STR_LENGTH);
+	offset += GEPARD_RESULT_STR_LENGTH;
+
+	if (violator_aid != 0 && (sd = map_id2sd(violator_aid)) != NULL)
+	{
+		char message_info[300];
+		struct s_mapiterator* iter;
+	
+		safesnprintf(message_info, 300, "Unique ID has been banned!\r\rDate of unban:  %s\r\rUnique id: %u\r\rReason: %s", unban_time_str, unique_id, reason_str);
+
+		iter = mapit_getallusers();
+
+		for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter))
+		{
+			if (session[sd->fd]->gepard_info.unique_id == unique_id)
+			{
+				gepard_send_info(sd->fd, GEPARD_INFO_BANNED, message_info);
+				session[sd->fd]->recv_crypt.pos_1 = rand() % 255;
+				session[sd->fd]->recv_crypt.pos_2 = rand() % 255;
+				session[sd->fd]->recv_crypt.pos_3 = rand() % 255;
+			}
+		}
+	
+		mapit_free(iter);
+	}
+
+	RFIFOSKIP(fd, offset);
+
+	if (initiator_aid != 0 && (sd = map_id2sd(initiator_aid)) != NULL)
+	{
+		clif_displaymessage(sd->fd, result_str);
+	}
+
+	return true;
+}
+
+int chrif_gepard_req_unblock(unsigned int unique_id, const char* violator_name, unsigned int violator_aid, unsigned int initiator_aid)
+{
+	unsigned int offset;
+	char send_buffer[2 + 4 + 4 + 4 + NAME_LENGTH];
+
+	chrif_check(-1);
+
+	memset(send_buffer, '\0', sizeof(send_buffer));
+
+	WBUFW(send_buffer, 0) = GEPARD_M2C_UNBLOCK_REQ;
+	WBUFL(send_buffer, 2) = unique_id;
+	WBUFL(send_buffer, 6) = violator_aid;
+	WBUFL(send_buffer,10) = initiator_aid;
+	offset = (2 + 4 + 4 + 4);
+
+	if (violator_name != NULL)
+		safestrncpy((char*)WBUFP(send_buffer, offset), violator_name, NAME_LENGTH);
+	offset += NAME_LENGTH;
+
+	WFIFOHEAD(char_fd, offset);
+	memcpy((void*)WFIFOP(char_fd, 0), send_buffer, offset);
+	WFIFOSET(char_fd, offset);
+
+	return 0;
+}
+
+bool chrif_gepard_ack_unblock(int fd)
+{
+	struct map_session_data* sd;
+	int initiator_aid, offset;
+	char result_str[GEPARD_RESULT_STR_LENGTH];
+	unsigned int packet_len = (2 + 4 + GEPARD_RESULT_STR_LENGTH);
+
+	if (RFIFOREST(fd) < packet_len)
+		return false;
+
+	initiator_aid = RFIFOL(fd, 2);
+	offset = 2 + 4;
+
+	safestrncpy(result_str, (char*)RFIFOP(fd, offset), GEPARD_RESULT_STR_LENGTH);
+	offset += GEPARD_RESULT_STR_LENGTH;
+
+	RFIFOSKIP(fd, offset);
+
+	if (initiator_aid != 0 && (sd = map_id2sd(initiator_aid)) != NULL)
+	{
+		clif_displaymessage(sd->fd, result_str);
+	}
+
+	return true;
+}
+// (^~_~^) Gepard Shield End
+

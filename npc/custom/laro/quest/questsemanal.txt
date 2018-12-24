@@ -1,0 +1,118 @@
+//===== Hercules Script ======================================
+//= Quest Semanal
+//===== By: ==================================================
+//= Mateuus
+//===== Current Version: =====================================
+//= 1.0a
+//===== Description: =========================================
+// = 
+// = 
+// ===== Comentários Adicionais: =================================
+// = 1.0 roteiro inicial.
+//============================================================
+//searchstores 10,0;
+    //mes "Look at that "+callfunc("itemlink1",607)+"! Isn't it awesome!?";
+
+//============================================================
+prt_cas,97,285,4	script	Weekly Quest#1	121 ,{ 
+	if(#language == 1) {
+		set @npc$,"[ ^FF0000 Quest Semanal ^000000 ]";
+	}else{
+		set @npc$,"[ ^FF0000 Weekly Quest ^000000 ]";
+	}
+	
+	mes @npc$;
+	if(#language == 1) {
+		mes "Olá ^CD3333"+strcharinfo(0)+"^000000!";
+		mes "Eu tenho alguns itens interessantes aqui, deseja dar uma olhada?";
+		next;
+		switch (select("Sim, Claro:Talvez mais tarde.")) {
+			case 1:
+				mes @npc$;
+				mes "Bem, estes são os itens que eu tenho.";
+				callsub(OnMenu);
+				close;
+			case 2:
+				mes @npc$;
+				mes "Tudo bem, estarei aqui se você mudar de idéia.";
+				close;
+		}
+	}else{
+		mes "Hello ^CD3333"+strcharinfo(0)+"^000000!";
+		mes "Do you have any interesting items here, would you like a look?";
+		next;
+		switch (select("Yes:Maybe later.")) {
+			case 1:
+				mes @npc$;
+				mes "Well, these are the items I have.";
+				callsub(OnMenu);
+				close;
+			case 2:
+				mes @npc$;
+				mes "All right, I'll be here if you change your mind.";
+				close;
+		}
+	}
+
+OnMenu:
+next;
+//switch(select("^3355FFRudolph's Nose^000000:^3355FFBrazil National Flag Hat [1]^000000 :Quit")) {
+switch(select("^3355FFRudolph's Nose^000000:Quit")) {
+	case 1:
+	   if (countitem(2262) >= 1 && countitem(733) >= 250 && countitem(1001) >= 150) {
+		   delitem 2262,1;
+		   delitem 733,250;
+		   delitem 1001,150;
+		   getitem 5204, 1;
+	   }else{
+		    mes @npc$;
+			if(#language == 1) {
+				mes "Recompensa: "+callfunc("itemlink1",5204)+"";
+				mes "Requerimento:";
+			}else{
+				mes "Reward: "+callfunc("itemlink1",5204)+"";
+				mes "Need:";
+			}
+			mes "^FF00001^000000x "+callfunc("itemlink1",2262)+"";
+			mes "^FF0000250^000000x "+callfunc("itemlink1",733)+"";
+			mes "^FF0000150^000000x "+callfunc("itemlink1",1001)+"";
+			close;
+		}
+	/*case 2:
+	   if (countitem(5123) >= 1 && countitem(733) >= 50 && countitem(1001) >= 9) {
+		   
+	   }else{
+		   mes @npc$;
+			if(#language == 1) {
+				mes "Recompensa: "+callfunc("itemlink1",5308)+"";
+				mes "Requerimento:";
+			}else{
+				mes "Reward: "+callfunc("itemlink1",5308)+"";
+				mes "Need:";
+			}
+			mes "^FF00001^000000x "+callfunc("itemlink1",5123)+"";
+			mes "^FF000050^000000x "+callfunc("itemlink1",733)+"";
+			mes "^FF0000100^000000x "+callfunc("itemlink1",1001)+"";
+			close;
+		}
+	*/
+	case 2:
+		mes @npc$;
+		if(#language == 1) {
+			mes "Tudo bem, estarei aqui se você mudar de idéia.";
+		}else{
+			mes "All right, I'll be here if you change your mind.";
+		}
+		close;
+	
+}
+
+OnInit:	
+	questinfo 1322, QTYPE_QUEST, 1;
+	end;
+}
+
+function	script	itemlink1	{ 
+	return "<ITEM>"+getitemname(getarg(0))+"<INFO>"+getarg(0)+"</INFO></ITEM>";
+}
+

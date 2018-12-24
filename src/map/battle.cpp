@@ -615,6 +615,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 	struct status_data *sstatus, ///< Attacker status data
 		*tstatus; ///< Target status data
 	int64 original_damage;
+	int i;
 
 	if( !damage )
 		return 0;
@@ -646,9 +647,9 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				}
 				cardfix = cardfix * (100 + sd->magic_addsize[tstatus->size] + sd->magic_addsize[SZ_ALL]) / 100;
 				cardfix = cardfix * (100 + sd->magic_addclass[tstatus->class_] + sd->magic_addclass[CLASS_ALL]) / 100;
-				for (const auto &it : sd->add_mdmg) {
-					if (it.id == t_class) {
-						cardfix = cardfix * (100 + it.val) / 100;
+				for( i = 0; i < ARRAYLENGTH(sd->add_mdmg) && sd->add_mdmg[i].rate; i++ ) {
+					if( sd->add_mdmg[i].class_ == t_class ) {
+						cardfix = cardfix * (100 + sd->add_mdmg[i].rate) / 100;
 						break;
 					}
 				}
@@ -662,14 +663,14 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
 					int ele_fix = tsd->subele[rh_ele] + tsd->subele[ELE_ALL] + tsd->subele_script[rh_ele] + tsd->subele_script[ELE_ALL];
 
-					for (const auto &it : tsd->subele2) {
-						if (it.ele != rh_ele)
+					for( i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++ ) {
+						if( tsd->subele2[i].ele != rh_ele )
 							continue;
-						if (!(((it.flag)&flag)&BF_WEAPONMASK &&
-							((it.flag)&flag)&BF_RANGEMASK &&
-							((it.flag)&flag)&BF_SKILLMASK))
+						if( !(((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_SKILLMASK) )
 							continue;
-						ele_fix += it.rate;
+						ele_fix += tsd->subele2[i].rate;
 					}
 					if (s_defele != ELE_NONE)
 						ele_fix += tsd->subdefele[s_defele] + tsd->subdefele[ELE_ALL];
@@ -680,9 +681,9 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] - tsd->subclass[CLASS_ALL]) / 100;
 
-				for (const auto &it : tsd->add_mdef) {
-					if (it.id == s_class) {
-						cardfix = cardfix * (100 - it.val) / 100;
+				for( i = 0; i < ARRAYLENGTH(tsd->add_mdef) && tsd->add_mdef[i].rate; i++ ) {
+					if( tsd->add_mdef[i].class_ == s_class ) {
+						cardfix = cardfix * (100 - tsd->add_mdef[i].rate) / 100;
 						break;
 					}
 				}
@@ -713,14 +714,14 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 						int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->arrow_addele[tstatus->def_ele] +
 							sd->right_weapon.addele[ELE_ALL] + sd->arrow_addele[ELE_ALL];
 
-						for (const auto &it : sd->right_weapon.addele2) {
-							if (it.ele != tstatus->def_ele)
+						for( i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++ ) {
+							if( sd->right_weapon.addele2[i].ele != tstatus->def_ele )
 								continue;
-							if (!(((it.flag)&flag)&BF_WEAPONMASK &&
-								((it.flag)&flag)&BF_RANGEMASK &&
-								((it.flag)&flag)&BF_SKILLMASK))
+							if( !(((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+								((sd->right_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+								((sd->right_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
 								continue;
-							ele_fix += it.rate;
+							ele_fix += sd->right_weapon.addele2[i].rate;
 						}
 						cardfix = cardfix * (100 + ele_fix) / 100;
 					}
@@ -739,14 +740,14 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 						if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
 							int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->right_weapon.addele[ELE_ALL];
 
-							for (const auto &it : sd->right_weapon.addele2) {
-								if (it.ele != tstatus->def_ele)
+							for( i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++ ) {
+								if( sd->right_weapon.addele2[i].ele != tstatus->def_ele )
 									continue;
-								if (!(((it.flag)&flag)&BF_WEAPONMASK &&
-									((it.flag)&flag)&BF_RANGEMASK &&
-									((it.flag)&flag)&BF_SKILLMASK))
+								if( !(((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+									((sd->right_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+									((sd->right_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
 									continue;
-								ele_fix += it.rate;
+								ele_fix += sd->right_weapon.addele2[i].rate;
 							}
 							cardfix = cardfix * (100 + ele_fix) / 100;
 						}
@@ -759,14 +760,14 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 							if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
 								int ele_fix_lh = sd->left_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[ELE_ALL];
 
-								for (const auto &it : sd->left_weapon.addele2) {
-									if (it.ele != tstatus->def_ele)
+								for( i = 0; ARRAYLENGTH(sd->left_weapon.addele2) > i && sd->left_weapon.addele2[i].rate != 0; i++ ) {
+									if( sd->left_weapon.addele2[i].ele != tstatus->def_ele )
 										continue;
-									if (!(((it.flag)&flag)&BF_WEAPONMASK &&
-										((it.flag)&flag)&BF_RANGEMASK &&
-										((it.flag)&flag)&BF_SKILLMASK))
+									if( !(((sd->left_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+										((sd->left_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+										((sd->left_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
 										continue;
-									ele_fix_lh += it.rate;
+									ele_fix_lh += sd->left_weapon.addele2[i].rate;
 								}
 								cardfix_ = cardfix_ * (100 + ele_fix_lh) / 100;
 							}
@@ -782,23 +783,23 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 							int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[tstatus->def_ele]
 										+ sd->right_weapon.addele[ELE_ALL] + sd->left_weapon.addele[ELE_ALL];
 
-							for (const auto &it : sd->right_weapon.addele2) {
-								if (it.ele != tstatus->def_ele)
+							for( i = 0; ARRAYLENGTH(sd->right_weapon.addele2) > i && sd->right_weapon.addele2[i].rate != 0; i++ ) {
+								if( sd->right_weapon.addele2[i].ele != tstatus->def_ele )
 									continue;
-								if (!(((it.flag)&flag)&BF_WEAPONMASK &&
-									((it.flag)&flag)&BF_RANGEMASK &&
-									((it.flag)&flag)&BF_SKILLMASK))
+								if( !(((sd->right_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+									((sd->right_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+									((sd->right_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
 									continue;
-								ele_fix += it.rate;
+								ele_fix += sd->right_weapon.addele2[i].rate;
 							}
-							for (const auto &it : sd->left_weapon.addele2) {
-								if (it.ele != tstatus->def_ele)
+							for( i = 0; ARRAYLENGTH(sd->left_weapon.addele2) > i && sd->left_weapon.addele2[i].rate != 0; i++ ) {
+								if( sd->left_weapon.addele2[i].ele != tstatus->def_ele )
 									continue;
-								if (!(((it.flag)&flag)&BF_WEAPONMASK &&
-									((it.flag)&flag)&BF_RANGEMASK &&
-									((it.flag)&flag)&BF_SKILLMASK))
+								if( !(((sd->left_weapon.addele2[i].flag)&flag)&BF_WEAPONMASK &&
+									((sd->left_weapon.addele2[i].flag)&flag)&BF_RANGEMASK &&
+									((sd->left_weapon.addele2[i].flag)&flag)&BF_SKILLMASK) )
 									continue;
-								ele_fix += it.rate;
+								ele_fix += sd->left_weapon.addele2[i].rate;
 							}
 							cardfix = cardfix * (100 + ele_fix) / 100;
 						//}
@@ -815,16 +816,16 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				}
 
 				//! CHECKME: These right & left hand weapon ignores 'left_cardfix_to_right'?
-				for (const auto &it : sd->right_weapon.add_dmg) {
-					if (it.id == t_class) {
-						cardfix = cardfix * (100 + it.val) / 100;
+				for( i = 0; i < ARRAYLENGTH(sd->right_weapon.add_dmg) && sd->right_weapon.add_dmg[i].rate; i++ ) {
+					if( sd->right_weapon.add_dmg[i].class_ == t_class ) {
+						cardfix = cardfix * (100 + sd->right_weapon.add_dmg[i].rate) / 100;
 						break;
 					}
 				}
 				if( left&1 ) {
-					for (const auto &it : sd->left_weapon.add_dmg) {
-						if (it.id == t_class) {
-							cardfix_ = cardfix_ * (100 + it.val) / 100;
+					for( i = 0; i < ARRAYLENGTH(sd->left_weapon.add_dmg) && sd->left_weapon.add_dmg[i].rate; i++ ) {
+						if( sd->left_weapon.add_dmg[i].class_ == t_class ) {
+							cardfix_ = cardfix_ * (100 + sd->left_weapon.add_dmg[i].rate) / 100;
 							break;
 						}
 					}
@@ -844,28 +845,28 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
 					int ele_fix = tsd->subele[rh_ele] + tsd->subele[ELE_ALL] + tsd->subele_script[rh_ele] + tsd->subele_script[ELE_ALL];
 
-					for (const auto &it : tsd->subele2) {
-						if (it.ele != rh_ele)
+					for( i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++ ) {
+						if( tsd->subele2[i].ele != rh_ele )
 							continue;
-						if (!(((it.flag)&flag)&BF_WEAPONMASK &&
-							((it.flag)&flag)&BF_RANGEMASK &&
-							((it.flag)&flag)&BF_SKILLMASK))
+						if( !(((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_SKILLMASK) )
 							continue;
-						ele_fix += it.rate;
+						ele_fix += tsd->subele2[i].rate;
 					}
 					cardfix = cardfix * (100 - ele_fix) / 100;
 
 					if( left&1 && lh_ele != rh_ele ) {
 						int ele_fix_lh = tsd->subele[lh_ele] + tsd->subele[ELE_ALL] + tsd->subele_script[lh_ele] + tsd->subele_script[ELE_ALL];
 
-						for (const auto &it : tsd->subele2) {
-							if (it.ele != lh_ele)
+						for( i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++ ) {
+							if( tsd->subele2[i].ele != lh_ele )
 								continue;
-							if (!(((it.flag)&flag)&BF_WEAPONMASK &&
-								((it.flag)&flag)&BF_RANGEMASK &&
-								((it.flag)&flag)&BF_SKILLMASK))
+							if( !(((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
+								((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
+								((tsd->subele2[i].flag)&flag)&BF_SKILLMASK) )
 								continue;
-							ele_fix_lh += it.rate;
+							ele_fix_lh += tsd->subele2[i].rate;
 						}
 						cardfix = cardfix * (100 - ele_fix_lh) / 100;
 					}
@@ -876,9 +877,9 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				cardfix = cardfix * (100 - tsd->subrace2[s_race2]) / 100;
 				cardfix = cardfix * (100 - tsd->subrace[sstatus->race] - tsd->subrace[RC_ALL]) / 100;
 				cardfix = cardfix * (100 - tsd->subclass[sstatus->class_] - tsd->subclass[CLASS_ALL]) / 100;
-				for (const auto &it : tsd->add_def) {
-					if (it.id == s_class) {
-						cardfix = cardfix * (100 - it.val) / 100;
+				for( i = 0; i < ARRAYLENGTH(tsd->add_def) && tsd->add_def[i].rate; i++ ) {
+					if( tsd->add_def[i].class_ == s_class ) {
+						cardfix = cardfix * (100 - tsd->add_def[i].rate) / 100;
 						break;
 					}
 				}
@@ -898,14 +899,14 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 				if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
 					int ele_fix = tsd->subele[rh_ele] + tsd->subele[ELE_ALL] + tsd->subele_script[rh_ele] + tsd->subele_script[ELE_ALL];
 
-					for (const auto &it : tsd->subele2) {
-						if (it.ele != rh_ele)
+					for( i = 0; ARRAYLENGTH(tsd->subele2) > i && tsd->subele2[i].rate != 0; i++ ) {
+						if( tsd->subele2[i].ele != rh_ele )
 							continue;
-						if (!(((it.flag)&flag)&BF_WEAPONMASK &&
-							((it.flag)&flag)&BF_RANGEMASK &&
-							((it.flag)&flag)&BF_SKILLMASK))
+						if( !(((tsd->subele2[i].flag)&flag)&BF_WEAPONMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_RANGEMASK &&
+							((tsd->subele2[i].flag)&flag)&BF_SKILLMASK))
 							continue;
-						ele_fix += it.rate;
+						ele_fix += tsd->subele2[i].rate;
 					}
 					if (s_defele != ELE_NONE)
 						ele_fix += tsd->subdefele[s_defele] + tsd->subdefele[ELE_ALL];
@@ -1256,10 +1257,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 #ifdef RENEWAL
 		if( sc->data[SC_RAID] ) {
-			if (status_get_class_(bl) == CLASS_BOSS)
-				damage += damage * 10 / 100;
-			else
-				damage += damage * 20 / 100;
+			damage += damage * 20 / 100;
 
 			if (--sc->data[SC_RAID]->val1 == 0)
 				status_change_end(bl, SC_RAID, INVALID_TIMER);
@@ -1425,10 +1423,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			skill_castend_damage_id(bl,src,MH_MAGMA_FLOW,sce->val1,gettick(),0);
 
 		if( damage > 0 && (sce = sc->data[SC_STONEHARDSKIN]) ) {
+			sce->val2 -= (int)cap_value(damage,INT_MIN,INT_MAX);
 			if( src->type == BL_MOB ) //using explicit call instead break_equip for duration
 				sc_start(src,src, SC_STRIPWEAPON, 30, 0, skill_get_time2(RK_STONEHARDSKIN, sce->val1));
 			else if (flag&(BF_WEAPON|BF_SHORT))
 				skill_break_equip(src,src, EQP_WEAPON, 3000, BCT_SELF);
+			if( sce->val2 <= 0 )
+				status_change_end(bl, SC_STONEHARDSKIN, INVALID_TIMER);
 		}
 
 		if (src->type == BL_PC && sc->data[SC_GVG_GOLEM]) {
@@ -2154,12 +2155,13 @@ static int battle_range_type(struct block_list *src, struct block_list *target, 
 
 static int battle_blewcount_bonus(struct map_session_data *sd, uint16 skill_id)
 {
-	if (sd->skillblown.empty())
+	uint8 i;
+	if (!sd->skillblown[0].id)
 		return 0;
 	//Apply the bonus blewcount. [Skotlex]
-	for (const auto &it : sd->skillblown) {
-		if (it.id == skill_id)
-			return it.val;
+	for (i = 0; i < ARRAYLENGTH(sd->skillblown) && sd->skillblown[i].id; i++) {
+		if (sd->skillblown[i].id == skill_id)
+			return sd->skillblown[i].val;
 	}
 	return 0;
 }
@@ -3307,7 +3309,7 @@ static void battle_apply_div_fix(struct Damage* d, uint16 skill_id)
 	if(d->damage) {
 		DAMAGE_DIV_FIX(d->damage, d->div_);
 		//Min damage
-		if(d->damage < d->div_ && (skill_id == SU_LUNATICCARROTBEAT || skill_id == SU_LUNATICCARROTBEAT2 || skill_id == SU_CN_METEOR || skill_id == SU_CN_METEOR2 || (battle_config.skill_min_damage&d->flag)))
+		if(d->damage < d->div_ && (skill_id == SU_LUNATICCARROTBEAT || skill_id == SU_CN_METEOR || (battle_config.skill_min_damage&d->flag)))
 			d->damage = d->div_;
 	} else if (d->div_ < 0) {
 		d->div_ *= -1;
@@ -3573,14 +3575,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += 200 + 40 * skill_lv;
 			break;
 		case RG_RAID:
-#ifdef RENEWAL
-			if (status_get_class_(target) == CLASS_BOSS)
-				skillratio += 10 * skill_lv;
-			else
-				skillratio += 20 * skill_lv;
-#else
 			skillratio += 40 * skill_lv;
-#endif
 			break;
 		case RG_INTIMIDATE:
 			skillratio += 30 * skill_lv;
@@ -4359,7 +4354,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 		case SU_LUNATICCARROTBEAT:
-		case SU_LUNATICCARROTBEAT2:
 			skillratio += 100 + 100 * skill_lv;
 			if (sd && pc_checkskill(sd, SU_SPIRITOFLIFE))
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
@@ -5923,7 +5917,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NJ_BAKUENRYU:
 						skillratio += 50 + 150 * skill_lv;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 15 * sd->spiritcharm;
+							skillratio += 45 * sd->spiritcharm;
 						break;
 					case NJ_HYOUSENSOU:
 #ifdef RENEWAL
@@ -6207,7 +6201,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio += 600;
 						break;
 					case SU_CN_METEOR:
-					case SU_CN_METEOR2:
 						skillratio += 100 + 100 * skill_lv;
 						break;
 					case NPC_VENOMFOG:
@@ -6848,9 +6841,6 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	sd = BL_CAST(BL_PC, bl);
 	sc = status_get_sc(bl);
 	ssc = status_get_sc(src);
-
-	if (sc && sc->data[SC_WHITEIMPRISON])
-		return 0; // White Imprison does not reflect any damage
 
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id)&INF2_TRAP || !status_reflect) && sd && sd->bonus.short_weapon_damage_return ) {
@@ -8493,6 +8483,7 @@ static const struct _battle_data {
 	{ "exp_cost_inspiration",               &battle_config.exp_cost_inspiration,            1,      0,      100,            },
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
+	{ "reserved_costume_id",				&battle_config.reserved_costume_id,				999998,	0,		INT_MAX,		},
 	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
 	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
 	{ "tarotcard_equal_chance",             &battle_config.tarotcard_equal_chance,          0,      0,      1,              },
@@ -8510,18 +8501,18 @@ static const struct _battle_data {
 	{ "guild_alliance_onlygm",              &battle_config.guild_alliance_onlygm,           0,      0,      1, },
 	{ "feature.achievement",                &battle_config.feature_achievement,             1,      0,      1,              },
 	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                0,      0,      0xF,            },
-	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
+	{ "feature.refineui",                   &battle_config.feature_refineui,                0,      0,      3,              },
 	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
 	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
 	{ "switch_remove_edp",                  &battle_config.switch_remove_edp,               2,      0,      3,              },
 	{ "feature.homunculus_autofeed",        &battle_config.feature_homunculus_autofeed,     1,      0,      1,              },
-	{ "feature.homunculus_autofeed_rate",   &battle_config.feature_homunculus_autofeed_rate,30,     0,    100,              },
 	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
 	{ "feature.attendance",                 &battle_config.feature_attendance,              1,      0,      1,              },
 	{ "feature.privateairship",             &battle_config.feature_privateairship,          1,      0,      1,              },
 	{ "rental_transaction",                 &battle_config.rental_transaction,              1,      0,      1,              },
+	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
 	{ "min_shop_buy",                       &battle_config.min_shop_buy,                    1,      0,      INT_MAX,        },
 	{ "min_shop_sell",                      &battle_config.min_shop_sell,                   0,      0,      INT_MAX,        },
 
@@ -8651,6 +8642,26 @@ void battle_adjust_conf()
 	if (battle_config.feature_achievement) {
 		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
 		battle_config.feature_achievement = 0;
+	}
+#endif
+
+#if PACKETVER < 20161012
+	if (battle_config.feature_refineui) {
+		ShowWarning("conf/battle/feature.conf refine UI is enabled but it requires PACKETVER 2016-10-12 or newer, disabling...\n");
+		battle_config.feature_refineui = 0;
+	}
+#else
+	// Check if Refine UI is only enabled in scripts
+	if( battle_config.feature_refineui == 2 ){
+		ShowWarning("conf/battle/feature.conf refine UI is enabled in scripts but disabled in general, enabling...\n");
+		battle_config.feature_refineui = 3;
+	}
+#endif
+
+#if PACKETVER < 20170208
+	if (battle_config.feature_equipswitch) {
+		ShowWarning("conf/battle/feature.conf equip switch is enabled but it requires PACKETVER 2017-02-08 or newer, disabling...\n");
+		battle_config.feature_equipswitch = 0;
 	}
 #endif
 
