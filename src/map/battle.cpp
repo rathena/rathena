@@ -6582,8 +6582,8 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			// skill is a "forced neutral" type skill, it benefits from weapon element but final damage
 			// 	is considered "neutral" for purposes of resistances
 			{
-				totaldef = (tstatus->def2 + status_get_def(target)) >> 1;
-				totalmdef = (tstatus->mdef + tstatus->mdef2;) >> 1;
+				totaldef = (tstatus->def2 + status_get_def(target)) / 2;
+				totalmdef = (tstatus->mdef + tstatus->mdef2;) / 2;
 				atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 				matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
 				md.damage = ((atk.damage*skill_lv + matk.damage*skill_lv) * 7 / 100 * tstatus->vit);
