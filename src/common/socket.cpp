@@ -1206,7 +1206,7 @@ int WFIFOSET(int fd, size_t len)
 	return 0;
 }
 
-int do_sockets(int next)
+int do_sockets(t_tick next)
 {
 	fd_set rfd;
 	struct timeval timeout;
@@ -1228,8 +1228,8 @@ int do_sockets(int next)
 #endif
 
 	// can timeout until the next tick
-	timeout.tv_sec  = next/1000;
-	timeout.tv_usec = next%1000*1000;
+	timeout.tv_sec  = (long)(next/1000);
+	timeout.tv_usec = (long)(next%1000*1000);
 
 	memcpy(&rfd, &readfds, sizeof(rfd));
 	ret = sSelect(fd_max, &rfd, NULL, NULL, &timeout);
@@ -1342,7 +1342,7 @@ int do_sockets(int next)
 typedef struct _connect_history {
 	struct _connect_history* next;
 	uint32 ip;
-	uint32 tick;
+	t_tick tick;
 	int count;
 	unsigned ddos : 1;
 } ConnectHistory;

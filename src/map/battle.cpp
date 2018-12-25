@@ -264,7 +264,7 @@ struct block_list* battle_getenemyarea(struct block_list *src, int x, int y, int
 * @param isspdamage: If the damage is done to SP
 * @param tick: Current tick
 *------------------------------------------*/
-void battle_damage(struct block_list *src, struct block_list *target, int64 damage, int delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, unsigned int tick, bool isspdamage) {
+void battle_damage(struct block_list *src, struct block_list *target, int64 damage, t_tick delay, uint16 skill_lv, uint16 skill_id, enum damage_lv dmg_lv, unsigned short attack_type, bool additional_effects, t_tick tick, bool isspdamage) {
 	map_freeblock_lock();
 	if (isspdamage)
 		status_fix_spdamage(src, target, damage, delay);
@@ -288,7 +288,7 @@ struct delay_damage {
 	int src_id;
 	int target_id;
 	int64 damage;
-	int delay;
+	t_tick delay;
 	unsigned short distance;
 	uint16 skill_lv;
 	uint16 skill_id;
@@ -339,7 +339,7 @@ TIMER_FUNC(battle_delay_damage_sub){
 	return 0;
 }
 
-int battle_delay_damage(unsigned int tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, int ddelay, bool additional_effects, bool isspdamage)
+int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct block_list *target, int attack_type, uint16 skill_id, uint16 skill_lv, int64 damage, enum damage_lv dmg_lv, t_tick ddelay, bool additional_effects, bool isspdamage)
 {
 	struct delay_damage *dat;
 	struct status_change *sc;
@@ -5024,7 +5024,7 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				int64 damage = wd->damage + wd->damage2, rdamage = 0;
 				struct map_session_data *tsd = BL_CAST(BL_PC, target);
 				struct status_data *sstatus = status_get_status_data(src);
-				int tick = gettick(), rdelay = 0;
+				t_tick tick = gettick(), rdelay = 0;
 
 				rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id, false);
 				if( rdamage > 0 ) { //Item reflect gets calculated before any mapflag reducing is applicated
@@ -5291,7 +5291,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 		struct status_change *tsc = status_get_sc(target);
 		struct status_data *sstatus = status_get_status_data(src);
 		struct unit_data *ud = unit_bl2ud(target);
-		int tick = gettick(), rdelay = 0;
+		t_tick tick = gettick(), rdelay = 0;
 
 		if (!tsc)
 			return;
@@ -7092,7 +7092,7 @@ void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rda
  *	Original coder pakpil
  */
 int battle_damage_area(struct block_list *bl, va_list ap) {
-	unsigned int tick;
+	t_tick tick;
 	int64 damage;
 	int amotion, dmotion;
 	struct block_list *src;
@@ -7125,7 +7125,7 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 /*==========================================
  * Do a basic physical attack (call through unit_attack_timer)
  *------------------------------------------*/
-enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, unsigned int tick, int flag) {
+enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* target, t_tick tick, int flag) {
 	struct map_session_data *sd = NULL, *tsd = NULL;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
@@ -8532,6 +8532,7 @@ static const struct _battle_data {
 	{ "rental_transaction",                 &battle_config.rental_transaction,              1,      0,      1,              },
 	{ "min_shop_buy",                       &battle_config.min_shop_buy,                    1,      0,      INT_MAX,        },
 	{ "min_shop_sell",                      &battle_config.min_shop_sell,                   0,      0,      INT_MAX,        },
+	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8659,6 +8660,13 @@ void battle_adjust_conf()
 	if (battle_config.feature_achievement) {
 		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
 		battle_config.feature_achievement = 0;
+	}
+#endif
+
+#if PACKETVER < 20170208
+	if (battle_config.feature_equipswitch) {
+		ShowWarning("conf/battle/feature.conf equip switch is enabled but it requires PACKETVER 2017-02-08 or newer, disabling...\n");
+		battle_config.feature_equipswitch = 0;
 	}
 #endif
 

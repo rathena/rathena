@@ -11,6 +11,7 @@
 #include "../common/socket.hpp"
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
 #include "char.hpp"
 #include "char_logif.hpp"
@@ -593,7 +594,7 @@ int chmapif_parse_askscdata(int fd){
 			for( count = 0; count < 50 && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count )
 			{
 				Sql_GetData(sql_handle, 0, &data, NULL); scdata.type = atoi(data);
-				Sql_GetData(sql_handle, 1, &data, NULL); scdata.tick = atoi(data);
+				Sql_GetData(sql_handle, 1, &data, NULL); scdata.tick = strtoll( data, nullptr, 10 );
 				Sql_GetData(sql_handle, 2, &data, NULL); scdata.val1 = atoi(data);
 				Sql_GetData(sql_handle, 3, &data, NULL); scdata.val2 = atoi(data);
 				Sql_GetData(sql_handle, 4, &data, NULL); scdata.val3 = atoi(data);
@@ -808,7 +809,7 @@ int chmapif_parse_req_saveskillcooldown(int fd){
 				memcpy(&data,RFIFOP(fd,14+i*sizeof(struct skill_cooldown_data)),sizeof(struct skill_cooldown_data));
 				if( i > 0 )
 					StringBuf_AppendStr(&buf, ", ");
-				StringBuf_Printf(&buf, "('%d','%d','%d','%d')", aid, cid, data.skill_id, data.tick);
+				StringBuf_Printf(&buf, "('%d','%d','%d','%" PRtf "')", aid, cid, data.skill_id, data.tick);
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
 				Sql_ShowDebug(sql_handle);
@@ -847,7 +848,7 @@ int chmapif_parse_req_skillcooldown(int fd){
 			for( count = 0; count < MAX_SKILLCOOLDOWN && SQL_SUCCESS == Sql_NextRow(sql_handle); ++count )
 			{
 				Sql_GetData(sql_handle, 0, &data, NULL); scd.skill_id = atoi(data);
-				Sql_GetData(sql_handle, 1, &data, NULL); scd.tick = atoi(data);
+				Sql_GetData(sql_handle, 1, &data, NULL); scd.tick = strtoll( data, nullptr, 10 );
 				memcpy(WFIFOP(fd,14+count*sizeof(struct skill_cooldown_data)), &scd, sizeof(struct skill_cooldown_data));
 			}
 			if( count >= MAX_SKILLCOOLDOWN )
@@ -1263,7 +1264,7 @@ int chmapif_parse_save_scdata(int fd){
 				memcpy (&data, RFIFOP(fd, 14+i*sizeof(struct status_change_data)), sizeof(struct status_change_data));
 				if( i > 0 )
 					StringBuf_AppendStr(&buf, ", ");
-				StringBuf_Printf(&buf, "('%d','%d','%hu','%d','%ld','%ld','%ld','%ld')", aid, cid,
+				StringBuf_Printf(&buf, "('%d','%d','%hu','%" PRtf "','%ld','%ld','%ld','%ld')", aid, cid,
 					data.type, data.tick, data.val1, data.val2, data.val3, data.val4);
 			}
 			if( SQL_ERROR == Sql_QueryStr(sql_handle, StringBuf_Value(&buf)) )
@@ -1591,7 +1592,7 @@ int chmapif_bonus_script_get(int fd) {
 			schema_config.bonus_script_db, cid, MAX_PC_BONUS_SCRIPT) ||
 			SQL_ERROR == SqlStmt_Execute(stmt) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_STRING, &tmp_bsdata.script_str, sizeof(tmp_bsdata.script_str), NULL, NULL) ||
-			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_UINT32, &tmp_bsdata.tick, 0, NULL, NULL) ||
+			SQL_ERROR == SqlStmt_BindColumn(stmt, 1, SQLDT_INT64, &tmp_bsdata.tick, 0, NULL, NULL) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 2, SQLDT_UINT16, &tmp_bsdata.flag, 0, NULL, NULL) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 3, SQLDT_UINT8,  &tmp_bsdata.type, 0, NULL, NULL) ||
 			SQL_ERROR == SqlStmt_BindColumn(stmt, 4, SQLDT_INT16,  &tmp_bsdata.icon, 0, NULL, NULL)
@@ -1668,7 +1669,7 @@ int chmapif_bonus_script_save(int fd) {
 				Sql_EscapeString(sql_handle, esc_script, bsdata.script_str);
 				if (i > 0)
 					StringBuf_AppendStr(&buf,", ");
-				StringBuf_Printf(&buf, "('%d','%s','%d','%d','%d','%d')", cid, esc_script, bsdata.tick, bsdata.flag, bsdata.type, bsdata.icon);
+				StringBuf_Printf(&buf, "('%d','%s','%" PRtf "','%d','%d','%d')", cid, esc_script, bsdata.tick, bsdata.flag, bsdata.type, bsdata.icon);
 			}
 			if (SQL_ERROR == Sql_QueryStr(sql_handle,StringBuf_Value(&buf)))
 				Sql_ShowDebug(sql_handle);

@@ -2348,7 +2348,7 @@ int status_sc2skill(sc_type sc);
 unsigned int status_sc2scb_flag(sc_type sc);
 int status_type2relevant_bl_types(int type);
 
-int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, int walkdelay, int flag);
+int status_damage(struct block_list *src,struct block_list *target,int64 dhp,int64 dsp, t_tick walkdelay, int flag);
 //Define for standard HP damage attacks.
 #define status_fix_damage(src, target, hp, walkdelay) status_damage(src, target, hp, 0, walkdelay, 0)
 //Define for standard SP damage attacks.
@@ -2441,13 +2441,13 @@ struct status_change *status_get_sc(struct block_list *bl);
 int status_isdead(struct block_list *bl);
 int status_isimmune(struct block_list *bl);
 
-int status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, int tick, unsigned char flag);
+t_tick status_get_sc_def(struct block_list *src,struct block_list *bl, enum sc_type type, int rate, t_tick tick, unsigned char flag);
 //Short version, receives rate in 1->100 range, and does not uses a flag setting.
 #define sc_start(src, bl, type, rate, val1, tick) status_change_start(src,bl,type,100*(rate),val1,0,0,0,tick,SCSTART_NONE)
 #define sc_start2(src, bl, type, rate, val1, val2, tick) status_change_start(src,bl,type,100*(rate),val1,val2,0,0,tick,SCSTART_NONE)
 #define sc_start4(src, bl, type, rate, val1, val2, val3, val4, tick) status_change_start(src,bl,type,100*(rate),val1,val2,val3,val4,tick,SCSTART_NONE)
 
-int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,int tick,unsigned char flag);
+int status_change_start(struct block_list* src, struct block_list* bl,enum sc_type type,int rate,int val1,int val2,int val3,int val4,t_tick duration,unsigned char flag);
 int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const char* file, int line);
 #define status_change_end(bl,type,tid) status_change_end_(bl,type,tid,__FILE__,__LINE__)
 TIMER_FUNC(status_change_timer);

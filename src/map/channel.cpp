@@ -219,7 +219,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 	RECREATE(sd->channels, struct Channel *, ++sd->channel_count);
 	sd->channels[ sd->channel_count - 1 ] = channel;
 	idb_put(channel->users, sd->status.char_id, sd);
-	RECREATE(sd->channel_tick, unsigned int, sd->channel_count);
+	RECREATE(sd->channel_tick, t_tick, sd->channel_count);
 	sd->channel_tick[sd->channel_count-1] = 0;
 
 	if( sd->stealth ) {
