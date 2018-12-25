@@ -4392,10 +4392,8 @@ static int64 battle_calc_skill_constant_addition(struct Damage* wd, struct block
 	//Constant/misc additions from skills
 	switch (skill_id) {
 		case MO_EXTREMITYFIST:
-			short totaldef = tstatus->def2 + (short)status_get_def(target);
-			struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
-			md.damage = ((atk.damage)*(8 + (sstatus->sp / 10))) + (250 + 150 * skill_lv) - (atk.damage / 10);
-			md.damage -= totaldef;
+			atk = 250 + 150 * skill_lv - (atk.damage / 10);
+			atk = - tstatus->def2 - (short)status_get_def(target);
 			break;
 #ifndef RENEWAL
 		case GS_MAGICALBULLET:
