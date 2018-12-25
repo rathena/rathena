@@ -6586,7 +6586,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				totalmdef = (tstatus->mdef + tstatus->mdef2;) >> 1;
 				atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 				matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
-				md.damage = ((atk.damage*skill_lv + matk.damage*skill_lv) * tstatus->vit * 7 / 100 );
+				md.damage = ((atk.damage*skill_lv + matk.damage*skill_lv) * 7 / 100 * tstatus->vit);
 				// final damage = base damage - (sdef + edef)/2 - (smdef + emdef)/2
 				md.damage -= totaldef + totalmdef;
 				
