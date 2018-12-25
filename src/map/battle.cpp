@@ -6578,14 +6578,14 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		case GN_FIRE_EXPANSION_ACID:
 #ifdef RENEWAL
 			// Official Renewal formula [violetharmony]
-			// damage = (atk + matk) * 0.07 * target vit * skill level - (sofdef + harddef + softmdef + hardmdef)/2
+			// damage = (atk + matk)*0.07*target vit*skill level - (sofdef + harddef + softmdef + hardmdef)/2
 			// skill is a "forced neutral" type skill, it benefits from weapon element but final damage
 			// 	is considered "neutral" for purposes of resistances
 			{
+				short totaldef = (tstatus->def2 + (short)status_get_def(target)) / 2;
+				short totalmdef = (tstatus->mdef + tstatus->mdef2;) / 2;
 				struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 				struct Damage matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
-				totaldef = (tstatus->def2 + status_get_def(target)) >> 1;
-				totalmdef = (tstatus->mdef + tstatus->mdef2;) >> 1;
 				md.damage = ((atk.damage*skill_lv + matk.damage*skill_lv) * 7 / 100 * tstatus->vit);
 				// final damage = base damage - (sdef + edef)/2 - (smdef + emdef)/2
 				md.damage -= totaldef + totalmdef;
