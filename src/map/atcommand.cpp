@@ -10312,6 +10312,7 @@ ACMD_FUNC(gepard_unblock_unique_id)
 
 // (^~_~^) Gepard Shield End
 
+/*
  * Displays camera information from the client.
  * Usage: @camerainfo or client command /viewpointvalue or /setcamera on supported clients
  */
