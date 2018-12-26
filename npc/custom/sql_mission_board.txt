@@ -1512,5 +1512,7 @@ payon,162,178,3	duplicate(mission_board)	Payon Mission#10	888
 niflheim,225,195,3	duplicate(mission_board)	Niflheim Mission#11	888
 izlude,150,177,1	duplicate(mission_board)	Izlude Mission#12	888
 comodo,216,184,1	duplicate(mission_board)	Comodo Mission#13	888
+prontera,162,326,1	duplicate(mission_board)	Honor Mission#14	888
+mid_camp,133,261,5	duplicate(mission_board)	3rd Class Headgear#15	888
 
 prontera,153,285,5	duplicate(mission_board)	Special Mission#100	811
