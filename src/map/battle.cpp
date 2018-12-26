@@ -6350,8 +6350,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		switch(skill_id) {
 			case CR_GRANDCROSS:
 			case NPC_GRANDDARKNESS: {
+					short totaldef = (tstatus->def2 + status_get_def(target));
+					short totalmdef = (tstatus->mdef + tstatus->mdef2);
 					struct Damage wd = battle_calc_weapon_attack(src,target,skill_id,skill_lv,mflag);
 					ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv) * (100 + 40 * skill_lv) / 200;
+					md.damage -= totaldef + totalmdef 
 					if(src == target) {
 						if(src->type == BL_PC)
 							ad.damage = ad.damage / 2;
