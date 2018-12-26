@@ -1,0 +1,236 @@
+//===== rAthena Script =======================================
+//= Unofficial Fallen Angel Wing (FAW) Enchants
+//===== By: ==================================================
+//= Nerfwood
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Enchants FAW as per iROWiki's information
+//= Dialogue are unofficial
+//===== Additional Comments: =================================
+//= 1.0 First Version
+//============================================================
+
+//Decreasing Chance of Enchantment
+// 60% low, 30% mid, 10% high for 1st & 2nd enchant slot
+//40% low, 30% mid, 20% high, 10% special for 3rd enchant slot
+function	script	EnchantStat_1	{
+
+	.chance = rand(1,10);
+
+	if(@card2 && @card3) { //For 4th Slot aka 3rd Enchant Slot
+
+		if(.chance<5) .x=0;
+		else if(.chance<7) .x=1;
+		else if(.chance<9) .x=2;
+		else .x=3;
+
+	}
+	else {	//For 2nd and 3rd card slot aka 1st and 2nd Enchant Slot
+
+		if(.chance<7) .x=0;
+		else if(.chance<10) .x=1;
+		else .x=2;
+	}
+	return getelementofarray(getvariableofnpc( getd(".enc" + getarg(0) )  , "Valkyrie#faw"), .x );
+
+}
+
+
+
+
+//Equal Chance of Enchanting
+function	script	EnchantStat_0	{
+	if(@card2 && @card3)
+		return  getelementofarray(getvariableofnpc( getd(".enc" + getarg(0) )  , "Valkyrie#faw"), rand(0,3) );
+	else
+		return  getelementofarray(getvariableofnpc( getd(".enc" + getarg(0) )  , "Valkyrie#faw"), rand(0,2) );
+
+}
+
+
+//=======MAIN NPC
+
+moc_para01,180,23,3	script	Valkyrie#faw	403,{
+	mes .npc$;
+	mes "I am here to enchant the",
+		"magnificent ^000099Fallen Angel Wing^000000.",
+		"Would you like to enchant yours?";
+	if(countitem(2589)) {
+		set .@menu$, "Enchant Fallen Angel Wing";
+	}
+	else .@menu$="";
+	next;
+	switch(select("Information:" + .@menu$ + ":Reset Enchantment"))
+	{
+		case 1: goto OnInformation;
+		case 2: goto OnEnchantNow;
+		case 3: goto OnResetEnchant;
+		default: close;
+	}
+
+OnInformation:
+	mes .npc$,
+		"I can enchant your",
+		"^000099Fallen Angel Wing^000000 for",
+		(.cost?callfunc("F_InsertComma",.cost)+"z":"free")+" to give it various.",
+		"effects. In fact, I can do it",
+		"twice if its refinement level is",
+		"+7 ~ +8, and thrice if its",
+		"+9 and above.";
+	next;
+	mes .npc$,
+		"The 3rd enchantment has a",
+		"chance to be more powerful",
+		"than the first two.";
+	next;
+	mes .npc$,
+		"There is no chance to",
+		"fail, so enchant away",
+		"as much as you like.";
+	next;
+	mes .npc$,
+		"But if you're not happy",
+		"with the results, you can",
+		"reset the enchantments",
+		"for ^009900"+ callfunc("F_InsertComma",.cost2) + "z^000000.";
+	next;
+	mes .npc$,
+		"That's about everything.";
+		close;
+
+OnEnchantNow:
+	mes .npc$;
+	if( (getequipid(EQI_GARMENT)!=2589) ) {
+		mes "Please equip your",
+			"^000099Fallen Angel Wing^000000 if",
+			"you want to have it enchanted.";
+		if(!.autoequip) close;
+		next;
+		if(select("Equip:Don't Equip")==2) close;
+		equip 2589;
+		mes .npc$;
+	}
+	.@refeq = getequiprefinerycnt(EQI_GARMENT);
+	if(.@refeq<7) .@refeq2 = 1;
+	else if(.@refeq>8) .@refeq2 = 3;
+	else .@refeq2 = 2;
+
+	@card1 = getequipcardid(EQI_GARMENT,0);
+	@card2 = getequipcardid(EQI_GARMENT,1);
+	@card3 = getequipcardid(EQI_GARMENT,2);
+	@card4 = getequipcardid(EQI_GARMENT,3);
+
+	mes "You have a ^000099+" +.@refeq + " Fallen Angel Wing^000000.";
+	mes	"It can have a total of " + .@refeq2 + " enchantment"  +( .@refeq2>1?"s.":".");
+	// dispbottom .@refeq2;
+	// dispbottom @card1+ " | "+@card2+ " | "+@card3+ " | "+@card4;
+	if((.@refeq2 == 1 && @card2 > 0) || (.@refeq2 == 2 && @card3 > 0)) {
+		mes "You need to higher refine levels to get more enchantments.";
+		close;
+	}
+	if( @card2 && @card3 && @card4) {
+		mes "Hmm.. it seems that all slots have already been enchanted.";
+		close;
+	}
+
+	mes "You require 100,000 zeny to enchant.";
+	mes "Please select your preferred","enchantment.";
+	next;
+	setd ".@enc$", select("Fighting Enchant:Magic Enchant:Archer Enchant:Critical/Fatal Enchant:Max HP Enchant:Max SP Enchant:ASPD Enchant:STR Enchant:AGI Enchant:DEX Enchant:VIT Enchant:INT Enchant:LUK Enchant");
+	if(.cost) callsub OnCostlyEnchant;
+	.@EnStat =   callfunc( (.chancetype?"EnchantStat_1":"EnchantStat_0"), .@enc$) ;
+
+	if(!@card2) callsub OnFawEnchant , .@EnStat , @card3 , @card4 , .@refeq;
+	else if(!@card3 && .@refeq>6) callsub OnFawEnchant , @card2 , .@EnStat , @card4 , .@refeq;
+	else if(!@card4 && .@refeq>8) callsub OnFawEnchant , @card2 , @card3 , .@EnStat , .@refeq;
+	else {
+		mes .npc$,
+		"Sorry, but your",
+		"^000099Fallen Angel Wing^000000's",
+		"refinement level is too",
+		"low to continue";
+		close;
+	}
+
+	mes .npc$,
+		"Your ^000099Fallen Angel Wing^000000 has",
+		"been enchanted with ^000099"+getitemname(.@EnStat)+"^000000.";
+	close;
+
+OnFawEnChant:
+	delitem2 2589, 1, 1, getarg(3), 0, @card1, @card2, @card3, @card4;
+	getitem2 2589, 1, 1, getarg(3) , 0, @card1, getarg(0), getarg(1), getarg(2);
+	equip 2589;
+	specialeffect2 1019;
+	specialeffect2 98;
+	return;
+
+
+OnResetEnchant:
+	mes .npc$,
+		"This will cost " + callfunc("F_InsertComma",.cost2) + "z.",
+		"Are you sure?";
+	next;
+	if(select("Yes:No")==2) close;
+	mes .npc$;
+	if(Zeny<1000000) {
+		mes "You don't have enough zeny.";
+		close;
+	}
+	Zeny -= 1000000;
+	mes "Your ^000099Fallen Angel Wing^000000's",
+		"enchantments have been reset.";
+	.@refeq = getequiprefinerycnt(EQI_GARMENT);
+	@card1 = getequipcardid(EQI_GARMENT,0);
+	@card2 = getequipcardid(EQI_GARMENT,1);
+	@card3 = getequipcardid(EQI_GARMENT,2);
+	@card4 = getequipcardid(EQI_GARMENT,3);
+	delitem2 2589, 1, 1, .@refeq, 0, @card1, @card2, @card3, @card4;
+	getitem2 2589, 1, 1, .@refeq, 0, @card1, 0, 0, 0;
+	equip 2589;
+	specialeffect2 261;
+	specialeffect2 119;
+	close;
+
+//Only called when .cost is defined
+OnCostlyEnchant:
+	if(Zeny<.cost) {
+
+		mes .npc$, "You require "+.cost+" to enchant. You don't have enough zeny.";
+		close;
+	}
+	Zeny -= .cost;
+	return;
+
+
+
+
+OnInit:
+	.npc$ = "[^AA0000Valkyrie^000000]";
+	setarray .enc1[0], 4809,4808,4820, 4821;	//Fighting 3~5
+	setarray .enc2[0], 4812,4826,4827, 4828;	//Magic 4~6
+	setarray .enc3[0], 4832,4833,4834, 4835;	//Expert Arc 1~3
+	setarray .enc4[0], 4863,4864,4865, 4866;	//Fatal 1~3
+	setarray .enc5[0], 4861,4862,4867, 4868;	//MHPP 1~3%
+	setarray .enc6[0], 4870,4800,4871, 4801;	//MaxSP 25,50,75
+	setarray .enc7[0], 4869,4872,4873, 4807;	//ASPD 1~3
+//	setarray .enc7[0], 4869,4872,4873, 4881;	//ASPD 1~3
+	setarray .enc8[0], 4702,4703,4704, 4853;	//STR 3~5 | Special Str
+	setarray .enc9[0], 4731,4732,4733, 4854;	//AGI 2~4
+	setarray .enc10[0], 4722,4723,4724, 4857;	//DEX 3~5
+	setarray .enc11[0], 4742,4743,4744, 4855;	//VIT 3~5
+	setarray .enc12[0], 4712,4713,4714, 4856;	//INT 3~5
+	setarray .enc13[0], 4752,4753,4754, 4858;	//LUK 3~5
+	// 1 = 60% low, 30% mid, 10% high for 1st & 2nd enchant slot && 40% low, 30% mid, 20% high, 10% special for 3rd enchant slot
+	// 0 = Equal Chance
+	.chancetype = 1;
+	//Turn on Equip Selection if garment is unequipped? 1 = Yes
+	.autoequip =1;
+	//Cost for Enchanting. It's free in iRO
+	.cost=100000;
+	//Cost to reset | Costs 1Mz in iRO
+	.cost2 = 1000000;
+}
