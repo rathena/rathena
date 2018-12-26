@@ -182,13 +182,14 @@
 					mes "Huh, S Class?! Oh my god, are you serious?*Tremble*";
 					mes "So...which S class armor would you like to make a slot?!";
 					next;
-					switch(select("Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie"))
+					switch(select("Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie:Cursed Mad Bunny"))
 					{
 						case 1: callfunc "Func_Socket2",2334,2372,40,51,1000,985,1; // Mage Coat has 10% success chance
 						case 2: callfunc "Func_Socket2",2327,2373,45,51,1000,985,1; // the rest has 5%
 						case 3: callfunc "Func_Socket2",2111,2128,45,51,1000,985,1;
 						case 4: callfunc "Func_Socket2",2522,2523,45,51,1000,985,1;
 						case 5: callfunc "Func_Socket2",2339,2371,45,51,1000,985,1;
+						case 6: callfunc "Func_Socket2",28901,28902,40,51,1000,985,1;
 					}
 			}
 		case 3:
