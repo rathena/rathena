@@ -1,0 +1,101 @@
+
+
+prontera,182,217,1	script	Super Stylist#super_stylist	625,{
+	doevent "super_stylist_main::OnTalk";
+}
+
+
+-	script	super_stylist_main	-1,{
+	OnTalk:
+	cutin "nines02",2;
+	mes "Super Stylist";
+	if(#language == 1) {
+		mes "Bem vindo, meu caro Aventureiro.";
+		mes "Eu posso tingir e trocar seu estilo";
+		mes "de cabelo e mudar a cor da sua";
+		mes "roupa.";
+		mes "O que você deseja?";
+	}else{
+		mes "Welcome, my dear Adventurer.";
+		mes "and I can change your style";
+		mes "hair and change the color of your";
+		mes "clothing.";
+		mes "What do you want?";
+	}
+opendressroom(0);
+.@eac = eaclass();
+next;
+if(#language == 1) {
+	menu "- Estilista",L_c,"- Vestuário",L_vest;
+}else{
+	menu "- Stylist",L_c,"- Clothing",L_vest;
+}
+L_vest:
+	next;
+	set .@blacklist,roclass(.@eac&EAJ_THIRDMASK) == 4054 || roclass(.@eac&EAJ_THIRDMASK) == 4067 || roclass(.@eac&EAJ_THIRDMASK) == 4072;
+						if (.@eac&EAJL_THIRD && !.@blacklist) {
+							mes "^FF0000[ Super Stylist - Bodystyle ]^000000";
+							if(#language == 1) {
+								mes "Insira um número de bodystyle";
+								mes "Bodystyles: 0 a 1";
+							}else{
+								mes "Insert a bodystyle number";
+								mes "Bodystyles: 0 to 1";
+							}
+							input .@bodystyle;
+							if (.@bodystyle < 0 || .@bodystyle > 1) {
+								set .@bodystyle,0;
+							}
+							setlook LOOK_BODY2,.@bodystyle;
+							next;
+						} else {
+							mes "This service isn't avaible for " +jobname(roclass(.@eac));
+							next;
+						}
+
+L_c:
+	mes @npc$;
+	if(#language == 1) {
+		mes "Bem vindo, meu caro Aventureiro.";
+		mes "Eu posso tingir e trocar seu estilo";
+		mes "de cabelo e mudar a cor da sua";
+		mes "roupa.";
+		mes "O que você deseja?";
+	}else{
+		mes "Welcome, my dear Adventurer.";
+		mes "and I can change your style";
+		mes "hair and change the color of your";
+		mes "clothing.";
+		mes "What do you want?";
+	}
+
+
+	setarray .@styles[1],10,10,10;
+	setarray .@Look[1],7,1,6;
+	if(#language == 1) {
+		set .@s, select(" ~ Cor das Roupas: ~ Corte de Cabelo: ~ Cor do Cabelo");
+	}else{
+		set .@s, select(" ~ Color of Clothes: ~ Haircut: ~ Hair Color");
+	}
+	set .@Revert, getlook(.@Look[.@s]);
+	set .@style,1;
+	while(1) {
+		setlook .@Look[.@s], .@style;
+		message strcharinfo(0),"Este é o estilo #"+.@style+".";
+		set .@menu$, " ~ Próximo (^0055FF"+((.@style!=.@styles[.@s])?.@style+1:1)+"^000000): ~ Anterior (^0055FF"+((.@style!=1)?.@style-1:.@styles[.@s])+"^000000): ~ Pule para...: ~ Reverter para o original (^0055FF"+.@Revert+"^000000)";
+		switch(select(.@menu$)) {
+			case 1: set .@style, ((.@style!=.@styles[.@s])?.@style+1:1); break;
+			case 2: set .@style, ((.@style!=1)?.@style-1:.@styles[.@s]); break;
+			case 3: message strcharinfo(0),"Escolha um estilo entre 1 - "+.@styles[.@s]+".";
+				input .@style,0,.@styles[.@s];
+				if (!.@style) set .@style, rand(1,.@styles[.@s]);
+				break;
+			case 4: set .@style, .@Revert; setlook .@Look[.@s], .@Revert; break;
+		}
+	}
+
+
+cutin "",255;
+close;
+		
+}

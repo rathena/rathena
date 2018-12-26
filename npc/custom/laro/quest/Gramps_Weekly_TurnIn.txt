@@ -614,8 +614,8 @@ moc_para01,29,35,3	script	Gramps#Eden	866,{
 	end;
 
 S_CheckLevel:
-	setarray .@BaseMin,  70, 101, 126;
-	setarray .@BaseMax, 100, 125, 150;
+	setarray .@BaseMin,  70, 101, 126, 151;
+	setarray .@BaseMax, 100, 125, 150, 175;
 	if (BaseLevel >= .@BaseMin[getarg(0)] && BaseLevel <= .@BaseMax[getarg(0)])
 		return;
 	mes "[Gramps]";

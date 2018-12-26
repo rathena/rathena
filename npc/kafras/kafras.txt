@@ -731,3 +731,27 @@ alb2trea,59,69,5	script	Kafra Employee::kaf_alb2trea	117,{
 	savepoint "alb2trea",92,64,1,1;
 	callfunc "F_KafEnd",0,1,"at Sunken Ship";
 }
+
+//MORA
+mora,49,139,6	script	Kafra Employee::kaf_mora1	117,{
+	cutin "kafra_01",2;
+	callfunc "F_KafSet";
+	if(#language == 1) {
+		mes "Bem vindo ao";
+		mes "Corporação Kafra.";
+		mes "Os serviços de Kafra";
+		mes "está sempre do seu lado.";
+		mes "Como posso te ajudar?";
+	}else{
+		mes "[Kafra Employee]";
+		mes "Welcome to the";
+		mes "Kafra Corporation.";
+		mes "The Kafra services";
+		mes "are always on your side.";
+		mes "How may I assist you?";
+	}
+	callfunc "F_Kafra",5,0,0,40,800;
+	savepoint "mora",45,148,1,1;
+	callfunc "F_KafEnd",0,1,"in the city of Prontera";
+}
+

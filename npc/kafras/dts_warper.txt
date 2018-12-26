@@ -1111,6 +1111,7 @@ alberta,114,70,6	duplicate(VotingStaffCCE)	Cool Event Staff#alb	874
 aldebaran,138,102,6	duplicate(VotingStaffCCE)	Cool Event Staff#alde	874
 lighthalzen,154,60,6	duplicate(VotingStaffCCE)	Cool Event Staff#lhz	874
 
+/*
 yuno,103,225,0	script	Scrutiny Association#5	-1,{
 OnInit:
 	initnpctimer;
@@ -1174,7 +1175,7 @@ OnTimer15000:
 	stopnpctimer;
 	end;
 }
-
+*/
 /*
 // GM only NPC used for modifying values related to the DTS system.
 // Disabled in official script.
