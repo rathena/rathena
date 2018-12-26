@@ -4,6 +4,8 @@
 #ifndef SOCKET_HPP
 #define SOCKET_HPP
 
+#include "../config/core.hpp"
+
 #ifdef WIN32
 	#include "winapi.hpp"
 	typedef long in_addr_t;
@@ -16,6 +18,14 @@
 
 #include "cbasetypes.hpp"
 #include "timer.hpp" // t_tick
+
+#ifndef MAXCONN
+	#ifdef WIN32
+		#define MAXCONN FD_SETSIZE
+	#else
+		#define MAXCONN 1024
+	#endif
+#endif
 
 #define FIFOSIZE_SERVERLINK 256*1024
 
@@ -103,7 +113,7 @@ struct socket_data
 
 // Data prototype declaration
 
-extern struct socket_data* session[FD_SETSIZE];
+extern struct socket_data* session[MAXCONN];
 
 extern int fd_max;
 

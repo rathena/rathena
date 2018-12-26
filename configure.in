@@ -302,11 +302,11 @@ AC_ARG_WITH(
 	[maxconn],
 	AC_HELP_STRING(
 		[--with-maxconn@<:@=ARG@:>@],
-		[optionally set the maximum connections the core can handle (default: 16384) NOT USED YET - EXPERIMENTAL]
+		[optionally set the maximum connections the core can handle (default: 1024)]
 	),
 	[
 		if test "$withval" == "no";	 then
-			CPPFLAGS="$CPPFLAGS -DMAXCONN=16384"
+			CPPFLAGS="$CPPFLAGS -DMAXCONN=1024"
 		else
 
 			if ! test "$withval" -ge 0 -o "$withval" -lt 0 2>&- ; then
@@ -317,7 +317,7 @@ AC_ARG_WITH(
 		fi
 	],
 	[
-		CPPFLAGS="$CPPFLAGS -DMAXCONN=16384"
+		CPPFLAGS="$CPPFLAGS -DMAXCONN=1024"
 	]
 )
 
