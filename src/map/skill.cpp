@@ -8036,13 +8036,12 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TK_HIGHJUMP:
 		{
 			int x,y, dir = unit_getdir(src);
+			struct map_data *mapdata = &map[src->m];
 
 			//Fails on noteleport maps, except for GvG and BG maps [Skotlex]
-			if( map_getmapflag(src->m, MF_NOTELEPORT) &&
-				!(map_getmapflag(src->m, MF_BATTLEGROUND) || map_flag_gvg2(src->m) )
-			) {
-				x = src->x;
-				y = src->y;
+			if(mapdata->flag[MF_NOTELEPORT] && !(mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata))) {
+				clif_skill_nodamage(src, bl, TK_HIGHJUMP, skill_lv, 1);
+				break;
 			} else if(dir%2) {
 				//Diagonal
 				x = src->x + dirx[dir]*(skill_lv*4)/3;
@@ -8052,11 +8051,17 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				y = src->y + diry[dir]*skill_lv*2;
 			}
 
+			int x1 = x + dirx[dir];
+			int y1 = y + diry[dir];
+
 			clif_skill_nodamage(src,bl,TK_HIGHJUMP,skill_lv,1);
-			if(!map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB,0) && map_getcell(src->m,x,y,CELL_CHKREACH) && unit_movepos(src, x, y, 1, 0))
+			if( !map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB,0) && map_getcell(src->m,x,y,CELL_CHKREACH) &&
+				!map_count_oncell(src->m,x1,y1,BL_PC|BL_NPC|BL_MOB,0) && map_getcell(src->m,x1,y1,CELL_CHKREACH) &&
+				unit_movepos(src, x, y, 1, 0))
 				clif_blown(src);
 		}
 		break;
+
 
 	case SA_CASTCANCEL:
 	case SO_SPELLFIST:

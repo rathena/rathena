@@ -24177,7 +24177,22 @@ BUILDIN_FUNC(getblacksmithblessing) {
 #endif
 }
 
+BUILDIN_FUNC( camerainfo ){
+#if PACKETVER < 20160525
+	ShowError("buildin_camerainfo: This command requires PACKETVER 2016-05-25 or newer.\n");
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data* sd;
 
+	if( !script_charid2sd( 5, sd ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	clif_camerainfo( sd, false, script_getnum( st, 2 ) / 100.0f, script_getnum( st, 3 ) / 100.0f, script_getnum( st, 4 ) / 100.0f );
+
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
 
 #include "../custom/script.inc"
 
@@ -24872,6 +24887,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(identifyall,"??"),
 	BUILDIN_DEF(is_guild_leader,"?"),
 	BUILDIN_DEF(is_party_leader,"?"),
+	BUILDIN_DEF(camerainfo,"iii?"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

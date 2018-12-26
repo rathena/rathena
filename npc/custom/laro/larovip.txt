@@ -1960,7 +1960,7 @@ morocc,150,107,4	duplicate(warpvip)	VIP Assistant#mor	646
 moscovia,218,191,4	duplicate(warpvip)	VIP Assistant#mos	646
 niflheim,214,189,5	duplicate(warpvip)	VIP Assistant#nif	646 
 payon,183,103,4	duplicate(warpvip)	VIP Assistant#pay	646
-prontera,161,198,3	duplicate(warpvip)	VIP Assistant#prt	646
+prontera,161,196,3	duplicate(warpvip)	VIP Assistant#prt	646
 rachel,130,117,4	duplicate(warpvip)	VIP Assistant#rac	646
 splendide,212,185,4	duplicate(warpvip)	VIP Assistant#spl	646
 thor_camp,247,79,4	duplicate(warpvip)	VIP Assistant#thor	646 

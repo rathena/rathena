@@ -2317,6 +2317,12 @@
 	parseable_packet(0x0A6E,-1,clif_parse_Mail_send,2,4,28,52,60,62,64,68); // CZ_REQ_WRITE_MAIL2
 #endif
 
+// 2016-05-25aRagexeRE
+#if PACKETVER >= 20160525
+	parseable_packet(0x0A77,15,clif_parse_camerainfo,0);
+	packet(0x0A78, 15);
+#endif
+
 // 2016-06-01aRagexe
 #if PACKETVER >= 20160601
 	packet(0x0A7D,-1);

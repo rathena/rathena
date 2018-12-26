@@ -48,14 +48,14 @@
 
 	if (.@Buffs) {
 		 if(BaseLevel < 50) {
-		   // specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,900000,10;
-			//specialeffect2 EF_BLESSING; sc_start SC_BLESSING,900000,10;
-			//specialeffect2 EF_ANGELUS; sc_start SC_ANGELUS,900000,10;
-			//specialeffect2 EF_SUFFRAGIUM; sc_start SC_SUFFRAGIUM,900000,3;
-			//specialeffect2 EF_IMPOSITIO; sc_start SC_IMPOSITIO,900000,5;
-			//specialeffect2 EF_GLORIA; sc_start SC_GLORIA,900000,5;
-			//specialeffect2 EF_MAGNIFICAT; sc_start SC_MAGNIFICAT,900000,5;
-			//specialeffect2 EF_ASSUMPTIO; sc_start SC_ASSUMPTIO,900000,5;
+		    specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,900000,10;
+			specialeffect2 EF_BLESSING; sc_start SC_BLESSING,900000,10;
+			specialeffect2 EF_ANGELUS; sc_start SC_ANGELUS,900000,10;
+			specialeffect2 EF_SUFFRAGIUM; sc_start SC_SUFFRAGIUM,900000,3;
+			specialeffect2 EF_IMPOSITIO; sc_start SC_IMPOSITIO,900000,5;
+			specialeffect2 EF_GLORIA; sc_start SC_GLORIA,900000,5;
+			specialeffect2 EF_MAGNIFICAT; sc_start SC_MAGNIFICAT,900000,5;
+			specialeffect2 EF_ASSUMPTIO; sc_start SC_ASSUMPTIO,900000,5;
 			//sc_start SC_ADRENALINE2,900000,1;
 			//sc_start SC_KAUPE,900000,3;
 			//sc_start SC_KAITE,900000,7;
@@ -66,9 +66,51 @@
 			sc_start SC_DEXFOOD,900000,5;
 			sc_start SC_LUKFOOD,900000,5;
 			if(#language == 1) {
-				dispbottom "[Healer] Continue se esforçando até chegar ao nível 180.";
+				dispbottom "[Healer] Continue se esforçando até chegar ao nível 175.";
 			}else{
-				dispbottom "[Healer] Keep striving until you reach the level 180.";
+				dispbottom "[Healer] Keep striving until you reach the level 175.";
+			}
+		}else{		   
+		   	if (getgroupid() < 1){
+			 // specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,450000,10;
+			 //  specialeffect2 EF_BLESSING; sc_start SC_BLESSING,450000,10;
+			  // specialeffect2 EF_ANGELUS; sc_start SC_ANGELUS,450000,10;
+			} else {
+			//	specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,900000,10;
+				//specialeffect2 EF_BLESSING; sc_start SC_BLESSING,900000,10;
+				//specialeffect2 EF_ANGELUS; sc_start SC_ANGELUS,900000,10;
+				//specialeffect2 EF_SUFFRAGIUM; sc_start SC_SUFFRAGIUM,900000,3;
+				//specialeffect2 EF_IMPOSITIO; sc_start SC_IMPOSITIO,900000,5;
+				//specialeffect2 EF_GLORIA; sc_start SC_GLORIA,900000,5;
+				//specialeffect2 EF_MAGNIFICAT; sc_start SC_MAGNIFICAT,900000,5;
+			}
+		   
+		}
+	
+	}
+		if (.@Buffs) {
+		 if(BaseLevel > 50) {
+		    specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,300000,10;
+			specialeffect2 EF_BLESSING; sc_start SC_BLESSING,300000,10;
+			//specialeffect2 EF_ANGELUS; sc_start SC_ANGELUS,900000,10;
+			//specialeffect2 EF_SUFFRAGIUM; sc_start SC_SUFFRAGIUM,900000,3;
+			//specialeffect2 EF_IMPOSITIO; sc_start SC_IMPOSITIO,900000,5;
+			//specialeffect2 EF_GLORIA; sc_start SC_GLORIA,900000,5;
+			//specialeffect2 EF_MAGNIFICAT; sc_start SC_MAGNIFICAT,900000,5;
+			//specialeffect2 EF_ASSUMPTIO; sc_start SC_ASSUMPTIO,900000,5;
+			//sc_start SC_ADRENALINE2,900000,1;
+			//sc_start SC_KAUPE,900000,3;
+			//sc_start SC_KAITE,900000,7;
+			//sc_start SC_STRFOOD,900000,5;
+			//sc_start SC_AGIFOOD,900000,5;
+			//sc_start SC_VITFOOD,900000,5;
+			//sc_start SC_INTFOOD,900000,5;
+			//sc_start SC_DEXFOOD,900000,5;
+			//sc_start SC_LUKFOOD,900000,5;
+			if(#language == 1) {
+				dispbottom "[Healer] Continue se esforçando até chegar ao nível 175.";
+			}else{
+				dispbottom "[Healer] Keep striving until you reach the level 175.";
 			}
 		}else{		   
 		   	if (getgroupid() < 1){

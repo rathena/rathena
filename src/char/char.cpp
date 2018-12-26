@@ -903,7 +903,7 @@ int char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
 
 //=====================================================================================================
 // Loads the basic character rooster for the given account. Returns total buffer used.
-int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
+int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count ) {
 	SqlStmt* stmt;
 	struct mmo_charstatus p;
 	int j = 0, i;
@@ -994,6 +994,10 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 		// Addon System
 		// store the required info into the session
 		sd->char_moves[p.slot] = p.character_moves;
+	}
+	
+	if(count != nullptr){
+		*count = i;
 	}
 
 	memset(sd->new_name,0,sizeof(sd->new_name));
