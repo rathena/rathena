@@ -23,12 +23,14 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 	mes "What do you want exchange Hero Tokens with?";
 	while(true) {
 		next;
-		switch( select( "Exchange for the Prize of Hero.",
-			"Exchange for the Hero Ring.",
-			"Exchange for Random Hero Shoe.",
-			"Exchange for specific Hero Shoe.",
-			"Exchange for Random Hero Armor.",
-			"Exchange for specific Hero Armor.",
+		switch( select(
+			"Exchange 3 x tokens for the Prize of Hero.",
+			"Exchange 5 x tokens for the High Weapon Box.",
+			"Exchange 30 x tokens for the Hero Ring.",
+			"Exchange 15 x tokens for Random Hero Shoe.",
+			"Exchange 25 x tokens for specific Hero Shoe.",
+			"Exchange 35 x tokens for Random Hero Armor.",
+			"Exchange 50 x tokens for specific Hero Armor.",
 			"End conversation." ) ) {
 		case 1:
 			mes "[Hero Token Exchanger]";
@@ -56,7 +58,34 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			getitem 22537,1;	// Prize Of Hero
 			continue;
 
+
 		case 2:
+			mes "[Hero Token Exchanger]";
+			mes "I will exchange 5 x Hero Token for a <ITEM>"+getitemname(12623)+"<INFO>12623</INFO></ITEM>.";
+			mes "Do you want to exchange?";
+			if (select( "Previous menu.", "Exchange 5 x Hero Tokens." ) == 1) {
+				mes "[Hero Token Exchanger]";
+				mes "Think again.";
+				continue;
+			}
+			if (countitem(6684) < 5) {
+				mes "[Hero Token Exchanger]";
+				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO><ITEM>,";
+				mes "is given to those who bravely fought Morroc.";
+				mes "You don't have 5 x ^006400Hero Tokens^000000,";
+				mes "and therefore I can't assist you.";
+				continue;
+			}
+			mes "[Hero Token Exchanger]";
+			mes "I'll exchange";
+			mes "5 x ^006400Hero Tokens^000000";
+			mes "with 1 x ^006400"+getitemname(12623)+"^000000.";
+			mes "Anything else?";
+			delitem 6684,5;	// Hero Token
+			getitem 12623,1;	// Prize Of Hero
+			continue;
+
+		case 3:
 			mes "[Hero Token Exchanger]";
 			mes "This Hero Ring may not look impressive,";
 			next;
@@ -116,7 +145,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			getitem 2981,1;		// RingOfHero
 			continue;
 
-		case 3:
+		case 4:
 			mes "[Hero Token Exchanger]";
 			mes "I will exchange 15 x Hero Token for a random hero shoe as listed below:";
 			mes "- <ITEM>"+getitemname(22035)+"<INFO>22035</INFO></ITEM>";
@@ -146,7 +175,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			getitem .@shoe[rand(2)],1;	// random shoe
 			continue;
 
-		case 4:
+		case 5:
 			mes "[Hero Token Exchanger]";
 			mes "I will exchange 25 x Hero Token for any hero shoe as listed below:";
 			mes "- <ITEM>"+getitemname(22035)+"<INFO>22035</INFO></ITEM>";
@@ -193,7 +222,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			}
 			continue;
 
-		case 5:
+		case 6:
 			mes "[Hero Token Exchanger]";
 			mes "I will exchange 35 x Hero Token for a random hero shoe as listed below:";
 			mes "- <ITEM>"+getitemname(15093)+"<INFO>15093</INFO></ITEM>";
@@ -226,7 +255,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			getitem .@armor[rand(5)],1;	// random armor
 			continue;
 
-		case 6:
+		case 7:
 			mes "[Hero Token Exchanger]";
 			mes "I will exchange 50 x Hero Token for any hero armor as listed below:";
 			mes "- <ITEM>"+getitemname(15093)+"<INFO>15093</INFO></ITEM>";
@@ -300,7 +329,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			}
 			continue;
 
-		case 7:
+		case 8:
 			mes "[Hero Token Exchanger]";
 			mes "One day";
 			mes "you'll find yourself";
