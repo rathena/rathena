@@ -3603,13 +3603,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case AM_DEMONSTRATION:
 			skillratio += 20 * skill_lv;
 			break;
-		case AM_ACIDTERROR:
-#ifdef RENEWAL
-			skillratio += 200 + 80 * skill_lv;
-#else
-			skillratio += 40 * skill_lv;
-#endif
-			break;
 		case MO_FINGEROFFENSIVE:
 			skillratio += 50 * skill_lv;
 			break;
@@ -4737,14 +4730,6 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 				def2 -= (target_count - (battle_config.vit_penalty_count - 1))*battle_config.vit_penalty_num;
 			}
 		}
-		if (skill_id == AM_ACIDTERROR)
-#ifdef RENEWAL
-			def2 = 0; //Ignore only status defense. [FatalEror]
-#else
-			def1 = 0; //Ignores only armor defense. [Skotlex]
-#endif
-		if(def2 < 1)
-			def2 = 1;
 	}
 
 	//Vitality reduction from rodatazone: http://rodatazone.simgaming.net/mechanics/substats.php#def
