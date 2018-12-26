@@ -6559,6 +6559,23 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 					md.damage = 0;
 			}
 			break;
+		case AM_ACIDTERROR:
+#ifdef RENEWAL
+			{
+				short totaldef = (tstatus->def2 + status_get_def(target));
+				short totalmdef = (tstatus->mdef + tstatus->mdef2);
+				struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
+				struct Damage matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
+				md.damage = (atk.damage + matk.damage) * (200 + 80 * skill_lv);
+				md.damage -= totaldef + totalmdef;
+			}
+#else
+			short totaldef = 0;
+			struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
+			md.damage = atk.damage * (100 + 40 * skill_lv);
+			md.damage -= totaldef; 
+#endif
+			break;
 		case CR_ACIDDEMONSTRATION:
 		case GN_FIRE_EXPANSION_ACID:
 #ifdef RENEWAL
