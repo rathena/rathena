@@ -1305,28 +1305,28 @@
 //2574,0,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0,	RL_GLITTERING_GREED_ATK,Flip The Coin Greed Attack
 
 // Star Emperor
-2574,0,0,4,0,0,0,5,0,yes,0,0,0,none,0,0,		SJ_LIGHTOFMOON,Light of Moon
-2575,0,0,4,0,0,0,3,0,yes,0,0,0,none,0,0,		SJ_LUNARSTANCE,Lunar Stance
-2576,0,0,4,0,0,0,7,0,yes,0,0,0,none,0,0,		SJ_FULLMOONKICK,Full Moon Kick
-2577,0,0,4,0,0,0,5,0,yes,0,0,0,none,0,0,		SJ_LIGHTOFSTAR,Light of Star
-2578,0,0,4,0,0,0,3,0,yes,0,0,0,none,0,0,		SJ_STARSTANCE,Star Stance
-2579,0,0,4,0,0,0,7,0,yes,0,0,0,none,0,0,		SJ_NEWMOONKICK,New Moon Kick
-2580,1,0,1,0,0,0,7,0,yes,0,0,0,none,0,0,		SJ_FLASHKICK,Flash Kick
-2581,0,0,4,0,0,0,5,0,yes,0,0,0,none,0,0,		SJ_STAREMPEROR,Star Emperor
-2582,3,0,1,0,0,0,5,0,yes,0,0,0,none,0,0,		SJ_NOVAEXPLOSING,Nova Explosing
-2583,0,0,4,0,0,0,3,0,yes,0,0,0,none,0,0,		SJ_UNIVERSESTANCE,Universe Stance
-2584,0,0,4,0,0,0,7,0,yes,0,0,0,none,0,0,		SJ_FALLINGSTAR,Falling Star
-2585,9,0,1,0,0,0,1,0,yes,0,0,0,none,0,0,		SJ_GRAVITYCONTROL,Gravity Control
-2586,0,0,4,0,0,0,5,0,yes,0,0,0,none,0,0,		SJ_BOOKOFDIMENSION,Book of Dimension
-2587,7,0,2,0,0,0,5,0,yes,0,0,0,none,0,0,		SJ_BOOKOFCREATINGSTAR,Book of Creating Star
-2588,0,0,4,0,0,0,3,0,yes,0,0,0,none,0,0,		SJ_DOCUMENT,Document
-2589,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0,		SJ_PURIFY,Purify
-2590,0,0,4,0,0,0,5,0,yes,0,0,0,none,0,0,		SJ_LIGHTOFSUN,Light of Sun
-2591,0,0,4,0,0,0,3,0,yes,0,0,0,none,0,0,		SJ_SUNSTANCE,Sun Stance
-2592,0,0,4,0,0,0,7,0,yes,0,0,0,none,0,0,		SJ_SOLARBURST,Solar Burst
-2593,1,0,1,0,0,0,7,0,yes,0,0,0,none,0,0,		SJ_PROMINENCEKICK,Prominence Kick
-2594,0,0,1,0,0,0,7,0,yes,0,0x4000,0,none,0,0,	SJ_FALLINGSTAR_ATK,Falling Star Attack
-2595,0,0,1,0,0,0,7,0,yes,0,0x4000,0,none,0,0,	SJ_FALLINGSTAR_ATK2,Falling Star Attack 2
+2574,0,6,4,4,0x1,0,5,1,yes,0,0,0,none,0,0x0,	SJ_LIGHTOFMOON,Light of Moon
+2575,0,6,4,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SJ_LUNARSTANCE,Lunar Stance
+2576,0,6,4,-1,0x2,3,7,1,yes,0,0,0,weapon,0,0x0,		SJ_FULLMOONKICK,Full Moon Kick
+2577,0,6,4,4,0x1,0,5,1,yes,0,0,0,none,0,0x0,		SJ_LIGHTOFSTAR,Light of Star
+2578,0,6,4,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,		SJ_STARSTANCE,Star Stance
+2579,0,6,4,-1,0x2,3,7,1,yes,0,0,0,weapon,0,0x0,		SJ_NEWMOONKICK,New Moon Kick
+2580,1,0,1,0,0,0,7,0,yes,0,0,0,none,0,0x0,		SJ_FLASHKICK,Flash Kick
+2581,0,0,4,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SJ_STAREMPEROR,Star Emperor
+2582,3,0,1,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SJ_NOVAEXPLOSING,Nova Explosing
+2583,0,6,4,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,		SJ_UNIVERSESTANCE,Universe Stance
+2584,0,0,4,0,0,0,7,0,yes,0,0,0,none,0,0x0,		SJ_FALLINGSTAR,Falling Star
+2585,9,6,1,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,		SJ_GRAVITYCONTROL,Gravity Control
+2586,0,0,4,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SJ_BOOKOFDIMENSION,Book of Dimension
+2587,7,0,2,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SJ_BOOKOFCREATINGSTAR,Book of Creating Star
+2588,0,6,4,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SJ_DOCUMENT,Document
+2589,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SJ_PURIFY,Purify
+2590,0,6,4,4,0x1,0,5,1,yes,0,0,0,none,0,0x0,	SJ_LIGHTOFSUN,Light of Sun
+2591,0,6,4,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,		SJ_SUNSTANCE,Sun Stance
+2592,0,8,4,-1,0x2,2,7,3,yes,0,0,0,weapon,0,0x0,		SJ_SOLARBURST,Solar Burst
+2593,1,6,1,-1,0x2,1,7,1,yes,0,0,0,weapon,0,0x0,		SJ_PROMINENCEKICK,Prominence Kick
+2594,0,0,1,0,0,0,7,0,yes,0,0x4000,0,none,0,0x0,	SJ_FALLINGSTAR_ATK,Falling Star Attack
+2595,0,0,1,0,0,0,7,0,yes,0,0x4000,0,none,0,0x0,	SJ_FALLINGSTAR_ATK2,Falling Star Attack 2
 
 // Soul Reaper
 2596,9,0,16,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULGOLEM,Soul Golem

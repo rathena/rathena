@@ -828,6 +828,25 @@ void initChangeTables(void)
 	set_sc( EL_ROCK_CRUSHER		, SC_ROCK_CRUSHER		, EFST_ROCK_CRUSHER		, SCB_DEF );
 	set_sc( EL_ROCK_CRUSHER_ATK	, SC_ROCK_CRUSHER_ATK		, EFST_ROCK_CRUSHER_ATK		, SCB_SPEED );
 
+
+	//Star Emperor
+	set_sc(SJ_LIGHTOFMOON, SC_LIGHTOFMOON, EFST_LIGHTOFMOON, SCB_NONE);
+	set_sc(SJ_LUNARSTANCE, SC_LUNARSTANCE, EFST_LUNARSTANCE, SCB_MAXHP);
+	add_sc(SJ_FULLMOONKICK, SC_BLIND);
+	set_sc(SJ_NEWMOONKICK, SC_NEWMOON, EFST_NEWMOON, SCB_NONE);
+	set_sc(SJ_FLASHKICK, SC_FLASHKICK, EFST_FLASHKICK, SCB_NONE);
+	set_sc(SJ_BOOKOFDIMENSION, SC_DIMENSION, EFST_DIMENSION, SCB_NONE);
+	set_sc(SJ_BOOKOFCREATINGSTAR, SC_CREATINGSTAR, EFST_CREATINGSTAR, SCB_SPEED);
+	set_sc(SJ_SUNSTANCE, SC_SUNSTANCE, EFST_SUNSTANCE, SCB_BATK | SCB_WATK);
+	set_sc(SJ_STARSTANCE, SC_STARSTANCE, EFST_STARSTANCE, SCB_ASPD);
+	set_sc(SJ_UNIVERSESTANCE, SC_UNIVERSESTANCE, EFST_UNIVERSESTANCE, SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK);
+	set_sc(SJ_FALLINGSTAR, SC_FALLINGSTAR, EFST_FALLINGSTAR, SCB_NONE);
+	set_sc(SJ_LIGHTOFSUN, SC_LIGHTOFSUN, EFST_LIGHTOFSUN, SCB_NONE);
+	set_sc(SJ_LIGHTOFSTAR, SC_LIGHTOFSTAR, EFST_LIGHTOFSTAR, SCB_NONE);
+	set_sc(SJ_NOVAEXPLOSING, SC_NOVAEXPLOSING, EFST_NOVAEXPLOSING, SCB_NONE);
+	add_sc(SJ_STAREMPEROR, SC_SILENCE);
+	set_sc(SJ_GRAVITYCONTROL, SC_GRAVITYCONTROL, EFST_GRAVITYCONTROL, SCB_NONE);
+
 	add_sc( KO_YAMIKUMO			, SC_HIDING		);
 	set_sc_with_vfx( KO_JYUMONJIKIRI	, SC_JYUMONJIKIRI	, EFST_KO_JYUMONJIKIRI	, SCB_NONE );
 	add_sc( KO_MAKIBISHI			, SC_STUN		);
@@ -1721,6 +1740,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 			status_change_end(target, SC_CHASEWALK, INVALID_TIMER);
 			status_change_end(target, SC_CAMOUFLAGE, INVALID_TIMER);
 			status_change_end(target, SC_DEEPSLEEP, INVALID_TIMER);
+			status_change_end(target, SC_NEWMOON, INVALID_TIMER);
 			status_change_end(target, SC_SUHIDE, INVALID_TIMER);
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				/** [Skotlex]
@@ -2277,7 +2297,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 				if (tsc) {
 					if ((tsc->option&hide_flag) && !is_boss && (tsd->special_state.perfect_hiding || !is_detect))
 						return false;
-					if (tsc->data[SC_CLOAKINGEXCEED] && !is_boss && (tsd->special_state.perfect_hiding || is_detect))
+					if ((tsc->data[SC_CLOAKINGEXCEED] || tsc->data[SC_NEWMOON]) && !is_boss && (tsd->special_state.perfect_hiding || is_detect))
 						return false; // Works against insect and demon but not against bosses
 					if (tsc->data[SC__FEINTBOMB] && (is_boss || is_detect))
 						return false; // Works against all
@@ -2349,7 +2369,7 @@ int status_check_visibility(struct block_list *src, struct block_list *target)
 
 					if (((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC_SUHIDE]) && !is_boss && (tsd->special_state.perfect_hiding || !is_detector))
 						return 0;
-					if (tsc->data[SC_CLOAKINGEXCEED] && !is_boss && ((tsd && tsd->special_state.perfect_hiding) || is_detector))
+					if ((tsc->data[SC_CLOAKINGEXCEED] || tsc->data[SC_NEWMOON]) && !is_boss && ((tsd && tsd->special_state.perfect_hiding) || is_detector))
 						return 0;
 					if (tsc->data[SC__FEINTBOMB] && !is_boss && !is_detector)
 						return 0;
@@ -3150,6 +3170,10 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus -= (4 * sc->data[SC_GT_CHANGE]->val1);
 			if(sc->data[SC_EQC])
 				bonus -= sc->data[SC_EQC]->val3;
+
+			//Star Emperor
+			if (sc->data[SC_LUNARSTANCE])
+				bonus += sc->data[SC_LUNARSTANCE]->val2;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -5581,6 +5605,10 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 	if(sc->data[SC_GLASTHEIM_STATE])
 		str += sc->data[SC_GLASTHEIM_STATE]->val1;
 
+	//Star Emperor
+	if (sc->data[SC_UNIVERSESTANCE])
+		str += sc->data[SC_UNIVERSESTANCE]->val2;
+
 	return (unsigned short)cap_value(str,0,USHRT_MAX);
 }
 
@@ -5657,6 +5685,10 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 	if(sc->data[SC_GLASTHEIM_STATE])
 		agi += sc->data[SC_GLASTHEIM_STATE]->val1;
 
+	//Star Emperor
+	if (sc->data[SC_UNIVERSESTANCE])
+		agi += sc->data[SC_UNIVERSESTANCE]->val2;
+
 	return (unsigned short)cap_value(agi,0,USHRT_MAX);
 }
 
@@ -5722,6 +5754,11 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 		vit += 3;
 	if(sc->data[SC_GLASTHEIM_STATE])
 		vit += sc->data[SC_GLASTHEIM_STATE]->val1;
+
+	//Star Emperor
+	if (sc->data[SC_UNIVERSESTANCE])
+		vit += sc->data[SC_UNIVERSESTANCE]->val2;
+
 
 	return (unsigned short)cap_value(vit,0,USHRT_MAX);
 }
@@ -5804,6 +5841,10 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 			int_ -= int_ * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 	}
 
+	//Star Emperor
+	if (sc->data[SC_UNIVERSESTANCE])
+		int_ += sc->data[SC_UNIVERSESTANCE]->val2;
+
 	return (unsigned short)cap_value(int_,0,USHRT_MAX);
 }
 
@@ -5882,6 +5923,10 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 	if(sc->data[SC_GLASTHEIM_STATE])
 		dex += sc->data[SC_GLASTHEIM_STATE]->val1;
 
+	//Star Emperor
+	if (sc->data[SC_UNIVERSESTANCE])
+		dex += sc->data[SC_UNIVERSESTANCE]->val2;
+
 	return (unsigned short)cap_value(dex,0,USHRT_MAX);
 }
 
@@ -5945,6 +5990,10 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 		luk += 3;
 	if(sc->data[SC_GLASTHEIM_STATE])
 		luk += sc->data[SC_GLASTHEIM_STATE]->val1;
+
+	//Star Emperor
+	if (sc->data[SC_UNIVERSESTANCE])
+		luk += sc->data[SC_UNIVERSESTANCE]->val2;
 
 	return (unsigned short)cap_value(luk,0,USHRT_MAX);
 }
@@ -6016,6 +6065,9 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 		batk += sc->data[SC_QUEST_BUFF3]->val1;
 	if (sc->data[SC_SHRIMP])
 		batk += batk * sc->data[SC_SHRIMP]->val2 / 100;
+	//Star Emperor
+	if (sc->data[SC_SUNSTANCE])
+		batk += batk * sc->data[SC_SUNSTANCE]->val2 / 100;
 
 	return (unsigned short)cap_value(batk,0,USHRT_MAX);
 }
@@ -6116,6 +6168,10 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk -= watk * sc->data[SC_CATNIPPOWDER]->val2 / 100;
 	if (sc->data[SC_CHATTERING])
 		watk += sc->data[SC_CHATTERING]->val2;
+
+	//Star Emperor
+	if (sc->data[SC_SUNSTANCE])
+		watk += watk * sc->data[SC_SUNSTANCE]->val2 / 100;
 
 	return (unsigned short)cap_value(watk,0,USHRT_MAX);
 }
@@ -6846,6 +6902,10 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			if (sc->data[SC_CATNIPPOWDER])
 				val = max(val, sc->data[SC_CATNIPPOWDER]->val3);
 
+			//Star Empe
+			if (sc->data[SC_CREATINGSTAR])
+				val = max(val, 90);
+
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
 		}
@@ -7218,6 +7278,10 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate -= sc->data[SC_GOLDENE_FERSE]->val3 * 10;
 	if (sc->data[SC_WIND_INSIGNIA] && sc->data[SC_WIND_INSIGNIA]->val1 == 2)
 		aspd_rate -= 100;
+
+	//Star Emperor
+	if (sc->data[SC_STARSTANCE])
+	    aspd_rate += sc->data[SC_STARSTANCE]->val2 * 10;
 
 	return (short)cap_value(aspd_rate,0,SHRT_MAX);
 }
@@ -8736,6 +8800,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		if( sd && pc_checkskill(sd, AS_CLOAKING) < 3 && !skill_check_cloaking(bl,NULL) )
 			return 0;
 	break;
+	case SC_NEWMOON:
+		if (sc->data[SC_BITE]) //Star Emperor
+			return 0; // Prevent Cloaking, Exceed and Hiding
+		break;
 	case SC_MODECHANGE:
 	{
 		enum e_mode mode;
@@ -9345,6 +9413,25 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_KAAHI:
 		//These status changes always overwrite themselves even when a lower level is cast
 		status_change_end(bl, type, INVALID_TIMER);
+		break;
+
+	//Star Emperor
+	case SC_LUNARSTANCE:
+	case SC_SUNSTANCE:
+	case SC_STARSTANCE:
+	case SC_UNIVERSESTANCE:
+		status_change_end(bl, SC_LIGHTOFSUN, INVALID_TIMER);
+		status_change_end(bl, SC_LIGHTOFSTAR, INVALID_TIMER);
+		status_change_end(bl, SC_LIGHTOFMOON, INVALID_TIMER);
+
+		if (type != SC_LUNARSTANCE)
+			status_change_end(bl, SC_LUNARSTANCE, INVALID_TIMER);
+		if (type != SC_SUNSTANCE)
+			status_change_end(bl, SC_SUNSTANCE, INVALID_TIMER);
+		if (type != SC_STARSTANCE)
+			status_change_end(bl, SC_STARSTANCE, INVALID_TIMER);
+		if (type != SC_UNIVERSESTANCE)
+			status_change_end(bl, SC_UNIVERSESTANCE, INVALID_TIMER);
 		break;
 	}
 
@@ -11246,6 +11333,42 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 30; // SP Recovery rate bonus
 			break;
 
+		//Star Emperor
+		case SC_SUNSTANCE:
+			val2 = 2 + val1;// ATK Increase
+			tick = -1;
+			break;
+		case SC_LUNARSTANCE:
+			val2 = 2 + val1;// MaxHP Increase
+			tick = -1;
+			break;
+		case SC_STARSTANCE:
+			val2 = 4 + 2 * val1;// ASPD Increase
+			tick = -1;
+			break;
+		case SC_UNIVERSESTANCE:
+			val2 = 2 + val1;// All Stats Increase
+			tick = -1;
+			break;
+		case SC_NEWMOON:
+			val2 = 7;// Number of Regular Attacks Until Reveal
+			break;
+		case SC_FALLINGSTAR:
+			val2 = 8 + 2 * (1 + val1) / 2;// Autocast Chance
+			if (val1 >= 7)
+				val2 += 1;// Make it 15% at level 7.
+			break;
+		case SC_CREATINGSTAR:
+			val4 = tick / 500;
+			tick = 10;
+			break;
+		case SC_LIGHTOFSUN:
+		case SC_LIGHTOFMOON:
+		case SC_LIGHTOFSTAR:
+			val2 = 5 * val1;// Skill Damage Increase.
+			break;
+		case SC_FLASHKICK:
+			break;
 		default:
 			if( calc_flag == SCB_NONE && StatusSkillChangeTable[type] == -1 && StatusIconChangeTable[type] == EFST_BLANK ) {
 				// Status change with no calc, no icon, and no skill associated...?
@@ -11466,6 +11589,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_HANBOK:
 		case SC_OKTOBERFEST:
 		case SC_DRESSUP:
+		case SC_NEWMOON://Star Emperor
 		case SC_SUHIDE:
 			unit_stop_attack(bl);
 			break;
@@ -11477,6 +11601,33 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if (sd && val2 != EFST_BLANK)
 				clif_status_change(bl, (enum efst_types)val2, 1, tick, 0, 0, 0);
 			break;
+
+		//Star Emperor
+		case SC_SUNSTANCE:
+			status_change_end(bl, SC_LIGHTOFSUN, INVALID_TIMER);
+			break;
+		case SC_LUNARSTANCE:
+			status_change_end(bl, SC_NEWMOON, INVALID_TIMER);
+			status_change_end(bl, SC_LIGHTOFMOON, INVALID_TIMER);
+			break;
+		case SC_STARSTANCE:
+			status_change_end(bl, SC_FALLINGSTAR, INVALID_TIMER);
+			status_change_end(bl, SC_LIGHTOFSTAR, INVALID_TIMER);
+			break;
+		case SC_UNIVERSESTANCE:
+			status_change_end(bl, SC_LIGHTOFSUN, INVALID_TIMER);
+			status_change_end(bl, SC_NEWMOON, INVALID_TIMER);
+			status_change_end(bl, SC_LIGHTOFMOON, INVALID_TIMER);
+			status_change_end(bl, SC_FALLINGSTAR, INVALID_TIMER);
+			status_change_end(bl, SC_LIGHTOFSTAR, INVALID_TIMER);
+			status_change_end(bl, SC_DIMENSION, INVALID_TIMER);
+			break;
+		/*case SC_GRAVITYCONTROL:
+			clif_damage(bl, bl, tick, 0, 0, sce->val2, 1, DMG_NORMAL, 0, false);
+			status_fix_damage(bl, bl, sce->val2, 0);
+			clif_specialeffect(bl, 223, AREA);
+			clif_specialeffect(bl, 330, AREA);
+			break;*/
 	}
 
 	// Set option as needed.
@@ -11600,6 +11751,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CLOAKING:
 		case SC_CLOAKINGEXCEED:
 		case SC__INVISIBILITY:
+		case SC_NEWMOON: //Star Emperor
 			sc->option |= OPTION_CLOAK;
 		case SC_CAMOUFLAGE:
 		case SC_STEALTHFIELD:
@@ -12562,6 +12714,15 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				map_addflooritem(&it, it.amount, bl->m,bl->x, bl->y, caster->status.char_id, 0, 0, 4, 0);
 			}
 			break;
+		case SC_FLASHKICK:
+		{
+			struct block_list *d_bl = map_id2bl(sce->val1);
+			if (d_bl) {
+				if (d_bl->type == BL_PC)
+					((TBL_PC*)d_bl)->stellar_mark[sce->val2] = 0;
+			}
+		}
+		break;
 		case SC_VACUUM_EXTREME:
 			///< !CHECKME: Seems on official, there's delay before same target can be vacuumed in same area again [Cydh]
 			sc_start2(bl, bl, SC_VACUUM_EXTREME_POSTDELAY, 100, sce->val1, sce->val2, skill_get_time2(SO_VACUUM_EXTREME,sce->val1));
@@ -12606,6 +12767,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	case SC_CLOAKING:
 	case SC_CLOAKINGEXCEED:
 	case SC__INVISIBILITY:
+	case SC_NEWMOON://Star Emperor
 		sc->option &= ~OPTION_CLOAK;
 	case SC_CAMOUFLAGE:
 	case SC_STEALTHFIELD:
@@ -13742,6 +13904,21 @@ TIMER_FUNC(status_change_timer){
 			return 0;
 		}
 		break;
+
+	//Star Empe
+		case SC_CREATINGSTAR:
+		if (--(sce->val4) >= 0){
+			// Needed to check who the caster is and what AoE is giving the status.
+			struct block_list *star_caster = map_id2bl(sce->val2);
+			struct skill_unit *star_aoe = (struct skill_unit *)map_id2bl(sce->val3);
+
+			sc_timer_next(500 + tick);
+
+			// Must be placed after sc_timer_next to prevent null errors.
+			skill_attack(BF_WEAPON, star_caster, &star_aoe->bl, bl, SJ_BOOKOFCREATINGSTAR, sce->val1, tick, 0);
+			return 0;
+		}
+		break;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval
@@ -13786,16 +13963,18 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 		status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 		status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 		status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
+		status_change_end(bl, SC_NEWMOON, INVALID_TIMER);
 		if (tsc && tsc->data[SC__SHADOWFORM] && (sce && sce->val4 > 0 && sce->val4%2000 == 0) && // For every 2 seconds do the checking
 			rnd()%100 < 100 - tsc->data[SC__SHADOWFORM]->val1 * 10) // [100 - (Skill Level x 10)] %
 				status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 		break;
 	case SC_RUWACH: // Reveal hidden target and deal little dammages if enemy
 		if (tsc && (tsc->data[SC_HIDING] || tsc->data[SC_CLOAKING] ||
-				tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_CLOAKINGEXCEED])) {
+				tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_CLOAKINGEXCEED] || tsc->data[SC_NEWMOON])) {
 			status_change_end(bl, SC_HIDING, INVALID_TIMER);
 			status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 			status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
+			status_change_end(bl, SC_NEWMOON, INVALID_TIMER);
 			status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 			if(battle_check_target( src, bl, BCT_ENEMY ) > 0)
 				skill_attack(BF_MAGIC,src,src,bl,AL_RUWACH,1,tick,0);

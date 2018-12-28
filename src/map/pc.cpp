@@ -7802,6 +7802,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			sd->devotion[k] = 0;
 		}
 	}
+	for (k = 0; k < MAX_STELLAR_MARKS; k++) {
+		if (sd->stellar_mark[k]) {
+			struct map_session_data *smarksd = map_id2sd(sd->stellar_mark[k]);
+			if (smarksd)
+				status_change_end(&smarksd->bl, SC_FLASHKICK, INVALID_TIMER);
+			sd->stellar_mark[k] = 0;
+		}
+	}
 	if(sd->shadowform_id) { //if we were target of shadowform
 		status_change_end(map_id2bl(sd->shadowform_id), SC__SHADOWFORM, INVALID_TIMER);
 		sd->shadowform_id = 0; //should be remove on status end anyway

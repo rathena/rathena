@@ -1094,6 +1094,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (skill_id == PA_PRESSURE || skill_id == HW_GRAVITATION)
 		return damage; //These skills bypass everything else.
 
+	// Nothing can reduce the damage, but Safety Wall and Millennium Shield can block it completely.
+	// So can defense sphere's but what the heck is that??? [Rytech]
+	if (skill_id == SJ_NOVAEXPLOSING && !(sc && (sc->data[SC_SAFETYWALL] || sc->data[SC_MILLENNIUMSHIELD])))
+		return damage;
+
 	if( sc && sc->count ) { // SC_* that reduce damage to 0.
 		if( sc->data[SC_BASILICA] && !status_bl_has_mode(src,MD_STATUS_IMMUNE) ) {
 			d->dmg_lv = ATK_BLOCK;
@@ -2818,6 +2823,8 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 			if (sc && sc->data[SC_BANDING] && sc->data[SC_BANDING]->val2 > 4)
 				element = ELE_HOLY;
 			break;
+		//Star Emperor
+		case SJ_PROMINENCEKICK:
 		case RL_H_MINE:
 			if (sd && sd->flicker) //Force RL_H_MINE deals fire damage if activated by RL_FLICKER
 				element = ELE_FIRE;
@@ -4042,7 +4049,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			}
 			break;
 		case SR_EARTHSHAKER:
-			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC__SHADOWFORM])) {
+			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC__SHADOWFORM] || tsc->data[SC_NEWMOON])) {
 				//[(Skill Level x 150) x (Caster Base Level / 100) + (Caster INT x 3)] %
 				skillratio += -100 + 150 * skill_lv;
 				RE_LVL_DMOD(100);
@@ -6211,6 +6218,40 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						i = cap_value(i, 1, 4);
 						skillratio = 2500 + ((skill_lv - i + 1) * 500);
 						break;
+
+					//Star Emperor
+					case SJ_FULLMOONKICK:
+						skillratio = 1100 + 100 * skill_lv;
+						if (status_get_lv(src) > 100)
+							skillratio = skillratio * status_get_lv(src) / 100;
+						if (sc && sc->data[SC_LIGHTOFMOON])
+							skillratio += skillratio * sc->data[SC_LIGHTOFMOON]->val2 / 100;
+						break;
+					case SJ_NEWMOONKICK:
+						skillratio = 700 + 100 * skill_lv;
+						break;
+					case SJ_STAREMPEROR:
+						skillratio = 800 + 200 * skill_lv;
+						break;
+					case SJ_SOLARBURST:
+						skillratio = 900 + 100 * skill_lv;
+						if (status_get_lv(src) > 100)
+							skillratio = skillratio * status_get_lv(src) / 100;
+						if (sc && sc->data[SC_LIGHTOFSUN])
+							skillratio += skillratio * sc->data[SC_LIGHTOFSUN]->val2 / 100;
+						break;
+					case SJ_PROMINENCEKICK:
+						if (!(mflag&8))// Ratio for main hit. The fire hit is just 100%.						
+							skillratio = 150 + 50 * skill_lv;
+						break;
+					case SJ_FALLINGSTAR_ATK:
+					case SJ_FALLINGSTAR_ATK2:
+						skillratio = 100 + 100 * skill_lv;
+						if (status_get_lv(src) > 100)
+							skillratio = skillratio * status_get_lv(src) / 100;
+						if (sc && sc->data[SC_LIGHTOFSTAR])
+							skillratio += skillratio * sc->data[SC_LIGHTOFSTAR]->val2 / 100;
+						break;
 				}
 
 				if (sc) {// Insignia's increases the damage of offensive magic by a fixed percentage depending on the element.
@@ -6659,6 +6700,21 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			//[{( Hell Plant Skill Level x Casters Base Level ) x 10 } + {( Casters INT x 7 ) / 2 } x { 18 + ( Casters Job Level / 4 )] x ( 5 / ( 10 - Summon Flora Skill Level ))
 			md.damage = skill_lv * status_get_lv(src) * 10 + status_get_int(src) * 7 / 2 * (18 + (sd ? sd->status.job_level : 0) / 4) * 5 / (10 - (sd ? pc_checkskill(sd, AM_CANNIBALIZE) : 0));
 			break;
+		//Star Emp
+		case SJ_NOVAEXPLOSING:
+		{
+			short hp_skilllv = skill_lv;
+
+			if (hp_skilllv > 5)
+				hp_skilllv = 5;// Prevents dividing the MaxHP by 0 on levels higher then 5.
+
+			// (Base ATK + Weapon ATK) * Ratio
+			md.damage = ((int64)sstatus->batk + (int64)sstatus->rhw.atk) * (200 + 100 * skill_lv) / 100;
+
+			// Additional Damage
+			md.damage += sstatus->max_hp / (6 - hp_skilllv) + status_get_max_sp(src) * (2 * skill_lv);
+		}
+		break;
 		case RL_B_TRAP:
 			// kRO 2014-02-12: Damage: Caster's DEX, Target's current HP, Skill Level
 			md.damage = status_get_dex(src) * 10 + (skill_lv * 3 * status_get_hp(target)) / 100;
@@ -7184,6 +7240,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			status_change_end(src, SC_CLOAKING, INVALID_TIMER);
 		else if (sc->data[SC_CLOAKINGEXCEED] && !(sc->data[SC_CLOAKINGEXCEED]->val4 & 2))
 			status_change_end(src, SC_CLOAKINGEXCEED, INVALID_TIMER);
+		else if (sc->data[SC_NEWMOON] && (sc->data[SC_NEWMOON]->val2) <= 0)
+			status_change_end(src, SC_NEWMOON, INVALID_TIMER);
 	}
 	if (tsc && tsc->data[SC_AUTOCOUNTER] && status_check_skilluse(target, src, KN_AUTOCOUNTER, 1)) {
 		uint8 dir = map_calc_dir(target,src->x,src->y);
@@ -7508,6 +7566,17 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			else
 				battle_drain(sd, target, wd.damage, wd.damage2, tstatus->race, tstatus->class_);
 		}
+
+		if (wd.flag	&	BF_WEAPON && sc && sc->data[SC_FALLINGSTAR] && rand() % 100 < sc->data[SC_FALLINGSTAR]->val2) {
+			short skillid = SJ_FALLINGSTAR_ATK;
+			short skilllv = sc->data[SC_FALLINGSTAR]->val1;
+
+			if (sd) sd->state.autocast = 1;
+			if (status_charge(src, 0, skill_get_sp(skillid, skilllv)))
+				skill_castend_nodamage_id(src, src, skillid, skilllv, tick, flag);
+			if (sd) sd->state.autocast = 0;
+		}
+
 	}
 
 	if (tsc) {

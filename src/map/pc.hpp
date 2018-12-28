@@ -526,6 +526,7 @@ struct map_session_data {
 	short mission_mobid; //Stores the target mob_id for TK_MISSION
 	int die_counter; //Total number of times you've died
 	int devotion[MAX_DEVOTION]; //Stores the account IDs of chars devoted to.
+	int stellar_mark[MAX_STELLAR_MARKS];// Stores the account ID's of character's with a stellar mark. //Star Empe
 
 	int trade_partner;
 	struct s_deal {
