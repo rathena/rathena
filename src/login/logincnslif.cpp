@@ -7,7 +7,6 @@
 #include <string.h>
 
 #include "../common/cli.hpp"
-#include "../common/ers.hpp"
 #include "../common/md5calc.hpp"
 #include "../common/mmo.hpp" //cbasetype + NAME_LENGTH
 #include "../common/showmsg.hpp" //show notice
@@ -143,15 +142,11 @@ int cnslif_parse(const char* buf){
 			ShowStatus("Console: Account '%s' created successfully.\n", username);
 		}
 	}
-	else if( strcmpi("ers_report", type) == 0 ){
-		ers_report();
-	}
 	else if( strcmpi("help", type) == 0 ){
 		ShowInfo("Available commands:\n");
 		ShowInfo("\t server:shutdown => Stops the server.\n");
 		ShowInfo("\t server:alive => Checks if the server is running.\n");
 		ShowInfo("\t server:reloadconf => Reload config file: \"%s\"\n", login_config.loginconf_name);
-		ShowInfo("\t ers_report => Displays database usage.\n");
 		ShowInfo("\t create:<username> <password> <sex:M|F> => Creates a new account.\n");
 	}
 	return 1;

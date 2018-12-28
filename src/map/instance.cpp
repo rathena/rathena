@@ -806,12 +806,6 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short
 	if (pc_setpos(sd, map_id2index(m), x, y, CLR_OUTSIGHT))
 		return IE_OTHER;
 
-	// If there was an idle timer, let's stop it
-	instance_stopidletimer(im, instance_id);
-
-	// Now we start the instance timer
-	instance_startkeeptimer(im, instance_id);
-
 	return IE_OK;
 }
 
@@ -1157,10 +1151,10 @@ void do_init_instance(void) {
 void do_final_instance(void) {
 	int i;
 
-	ers_destroy(instance_maps_ers);
 	for( i = 1; i < MAX_INSTANCE_DATA; i++ )
 		instance_destroy(i);
 
 	InstanceDB->destroy(InstanceDB, instance_db_free);
 	db_destroy(InstanceNameDB);
+	ers_destroy(instance_maps_ers);
 }

@@ -47,7 +47,6 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 
 	uint8 server_num, n;
 	uint32 subnet_char_ip;
-	struct auth_node* node;
 	int i;
 
 #if PACKETVER < 20170315
@@ -89,7 +88,8 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	}
 
 	{
-		struct online_login_data* data = (struct online_login_data*)idb_get(online_db, sd->account_id);
+		struct online_login_data* data = login_get_online_user( sd->account_id );
+
 		if( data )
 		{// account is already marked as online!
 			if( data->char_server > -1 )
@@ -108,7 +108,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 			if( data->char_server == -1 )
 			{// client has authed but did not access char-server yet
 				// wipe previous session
-				idb_remove(auth_db, sd->account_id);
+				login_remove_auth_node(sd->account_id);
 				login_remove_online_user(sd->account_id);
 				data = NULL;
 			}
@@ -139,7 +139,7 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 		WFIFOL(fd,header+n*size) = htonl((subnet_char_ip) ? subnet_char_ip : ch_server[i].ip);
 		WFIFOW(fd,header+n*size+4) = ntows(htons(ch_server[i].port)); // [!] LE byte order here [!]
 		memcpy(WFIFOP(fd,header+n*size+6), ch_server[i].name, 20);
-		WFIFOW(fd,header+n*size+26) = ch_server[i].users;
+		WFIFOW(fd,header+n*size+26) = login_get_usercount( ch_server[i].users );
 		WFIFOW(fd,header+n*size+28) = ch_server[i].type;
 		WFIFOW(fd,header+n*size+30) = ch_server[i].new_;
 #if PACKETVER >= 20170315
@@ -150,21 +150,12 @@ static void logclif_auth_ok(struct login_session_data* sd) {
 	WFIFOSET(fd,header+size*server_num);
 
 	// create temporary auth entry
-	CREATE(node, struct auth_node, 1);
-	node->account_id = sd->account_id;
-	node->login_id1 = sd->login_id1;
-	node->login_id2 = sd->login_id2;
-	node->sex = sd->sex;
-	node->ip = ip;
-	node->clienttype = sd->clienttype;
-	idb_put(auth_db, sd->account_id, node);
-	{
-		struct online_login_data* data;
-		// mark client as 'online'
-		data = login_add_online_user(-1, sd->account_id);
-		// schedule deletion of this node
-		data->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, login_waiting_disconnect_timer, sd->account_id, 0);
-	}
+	login_add_auth_node( sd, ip );
+
+	// mark client as 'online'
+	struct online_login_data* data = login_add_online_user(-1, sd->account_id);
+	// schedule deletion of this node
+	data->waiting_disconnect = add_timer(gettick()+AUTH_TIMEOUT, login_waiting_disconnect_timer, sd->account_id, 0);
 }
 
 /**
