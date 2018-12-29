@@ -17,6 +17,11 @@
 //= 1.5 Added Hercules support
 //============================================================
 
+verus04,72,123,5	script	CharlestonTest	4_F_CHARLESTON02,{
+	instance_destroy();
+	end;
+}
+
 verus04,75,114,5	script	Charleston#charleston2	4_F_CHARLESTON02,{
 	if (checkquest(13186) == -1) {
 		// check instance ready or not
@@ -169,7 +174,7 @@ verus04,81,113,1	script	Teleport Machine#machine	PORTAL,{
 1@mcd,127,277,4	script	Charleston#0_00y	4_F_CHARLESTON01,10,2,{
 	end;
 OnTouch:
-	if ((getvariableofnpc(cc_status,instance_npcname("Charleston#0_00y"))) == 1) {
+	if ('cc_status == 1) {
 		cutin "dalle01.bmp",2;
 		mes "[Charleston]";
 		mes "Good luck and watch out front.";
@@ -197,7 +202,7 @@ OnTouch:
 			mes "Please help us know what happens to Charleston.";
 			npctalk "Please help us know what happens to Charleston.";
 			emotion ET_PROFUSELY_SWEAT;
-			cc_status = 1;
+			'cc_status = 1;
 			close2;
 			donpcevent instance_npcname("Charleston#0_00y") + "::OnAnnounce";
 			cutin "dalle01.bmp",255;
@@ -228,17 +233,17 @@ OnTimer5000:
 }
 
 1@mcd,116,213,5	script	Dr Ve#1_00y	4_M_DOCTOR,5,5,{
-	if ((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 0) {
+	if ('cc_status == 0) {
 		mes "Help us with the robots please.";
 		close;
 	}
-	else if ((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) > 0) {
+	else if ('cc_status > 0) {
 		mes "Give us your power to see what happens to the great Charleston robot..";
 		close;
 	}
 OnTouch:
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
-		if ((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 0) {
+		if ('cc_status == 0) {
 			mes "[Dr. Ve]";
 			mes "I'm glad you finally got to this point..";
 			npctalk "I'm glad you finally got to this point.";
@@ -310,7 +315,7 @@ OnChat1:
 
 1@mcd,121,217,4	script	Charleston#1_00y	4_F_CHARLESTON01,{
 	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
-		if ((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 0) {
+		if ('cc_status == 0) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "Thank you for your efforts to discover the laboratory problem..";
@@ -318,7 +323,7 @@ OnChat1:
 			cutin "dalle01.bmp",255;
 			end;
 		}
-		else if((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 1) {
+		else if('cc_status == 1) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "Okay, first we must destroy the robots of the security system in order to work quietly.";
@@ -336,7 +341,7 @@ OnChat1:
 			mes "I will indicate in your map the coordinates where these robots are to destroy them.";
 			npctalk "I will indicate in your map the coordinates where these robots are to destroy them.";
 			next;
-			cc_status = 2;
+			'cc_status = 2;
 			emotion ET_QUESTION;
 			donpcevent instance_npcname("#systemsecurity") + "::OnEnable";
 			viewpoint 1,84,226,0,0x00FF00;
@@ -350,7 +355,7 @@ OnChat1:
 			cutin "dalle01.bmp",255;
 			end;
 		}
-		else if((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 2) {
+		else if('cc_status == 2) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "Please destroy the security robots to continue, I have marked the points on the map.";
@@ -365,7 +370,7 @@ OnChat1:
 			cutin "dalle01.bmp",255;
 			end;
 		}
-		else if((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 3) {
+		else if('cc_status == 3) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "Okay, you've already destroyed the security system, now we've discovered that there's a serious problem.";
@@ -386,7 +391,7 @@ OnChat1:
 			viewpoint 1,86,231,7,0x00FF00;
 			viewpoint 1,172,196,8,0x00FF00;
 			viewpoint 1,126,84,9,0x00FF00;
-			cc_status = 4;
+			'cc_status = 4;
 			donpcevent instance_npcname("Virus#1_00p") + "::OnEnable";
 			donpcevent instance_npcname("Virus#2_00p") + "::OnEnable";
 			donpcevent instance_npcname("Virus#3_00p") + "::OnEnable";
@@ -396,7 +401,7 @@ OnChat1:
 			cutin "dalle03.bmp",255;
 			end;
 		}
-		else if((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 4) {
+		else if('cc_status == 4) {
 			cutin "dalle03.bmp",2;
 			mes "[Charleston]";
 			mes "I'm marking the points on the map where are the essential appliances that I mentioned before.";
@@ -410,7 +415,7 @@ OnChat1:
 			cutin "dalle03.bmp",255;
 			end;
 		}
-		else if((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 5) {
+		else if('cc_status == 5) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "The viruses have been destroyed, we can now proceed to unlock the main gear.";
@@ -465,7 +470,7 @@ OnChat1:
 		}
 
 	} else {
-		if ((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 0) {
+		if ('cc_status == 0) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "Please talk to the Dr Ve.";
@@ -473,7 +478,7 @@ OnChat1:
 			cutin "dalle01.bmp",255;
 			end;
 		}
-		else if ((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 1) {
+		else if ('cc_status == 1) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "Please talk to the Dr Ve.";
@@ -481,7 +486,7 @@ OnChat1:
 			cutin "dalle01.bmp",255;
 			end;
 		}
-		else if ((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 2) {
+		else if ('cc_status == 2) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "First you must destroy the security robots, I'll mark them on the map.";
@@ -496,7 +501,7 @@ OnChat1:
 			cutin "dalle01.bmp",255;
 			end;
 		}
-		else if((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 3) {
+		else if('cc_status == 3) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "Already released the security system there are still several things that we have to take care of.";
@@ -510,7 +515,7 @@ OnChat1:
 			cutin "dalle03.bmp",255;
 			end;
 		}
-		else if((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 4) {
+		else if('cc_status == 4) {
 			cutin "dalle03.bmp",2;
 			mes "[Charleston]";
 			mes "We have found several viruses that threaten the factory, go deactivate them.";
@@ -521,7 +526,7 @@ OnChat1:
 			cutin "dalle03.bmp",255;
 			end;
 		}
-		else if((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) == 5) {
+		else if('cc_status == 5) {
 			cutin "dalle01.bmp",2;
 			mes "[Charleston]";
 			mes "Please, talk to the Dr Ve first.";
@@ -553,20 +558,20 @@ OnChat5:
 	npctalk "The security system is robots that monitor the area, so we take your help.";
 	end;
 OnChat8:
-	cc_status = 1;
+	'cc_status = 1;
 	emotion ET_QUESTION;
 	npctalk "Okay, please come with me to tell you where the robots in the security system are located.";
 	end;
 OnCompleteSetp1:
-	cc_status = 3;
+	'cc_status = 3;
 	end;
 OnCompleteSetp2:
-	cc_status = 5;
+	'cc_status = 5;
 	end;
 }
 
 1@mcd,120,224,5	script	Charleston No.2#0_00y	4_F_CHARLESTON02,{
-	if((getvariableofnpc(cc_status,instance_npcname("Charleston#1_00y"))) < 5) {
+	if('cc_status < 5) {
 		cutin "nale04.bmp",0;
 		mes "[Charleston No.2]";
 		mes "All this confuses me a lot.";
@@ -2361,6 +2366,7 @@ OnEnable:
 OnMyMobDead:
 	set .@map$, instance_mapname(strnpcinfo(4));
 	set .MyMobs, .MyMobs-1;
+	mapannounce .@map$, "Charleston: "+.MyMobs+" x Security Robot left!",bc_map,"0xFFFF00";
 	if (.MyMobs == 0) {
 		donpcevent instance_npcname(strnpcinfo(0))+"::OnComplete";
 		donpcevent instance_npcname("Charleston#1_00y")+"::OnCompleteSetp1";
@@ -2419,19 +2425,19 @@ OnTimer5000:
 1@mcd,172,198,5	script	Virus#2_00p	CLEAR_NPC,2,2,{
 	end;
 OnTouch:
-	if ((getvariableofnpc(cc_status,instance_npcname("panelcount#inst"))) == 0) {
+	if ('cc_status == 0) {
 		mes "Virus deactivated..";
 		donpcevent instance_npcname("panelcount#inst")+"::OnCheck";
 		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
 		close;
 	}
-	else if ((getvariableofnpc(cc_status,instance_npcname("panelcount#inst"))) == 1) {
+	else if ('cc_status == 1) {
 		mes "Virus deactivated..";
 		donpcevent instance_npcname("panelcount#inst")+"::OnCheck1";
 		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
 		close;
 	}
-	if ((getvariableofnpc(cc_status,instance_npcname("panelcount#inst"))) == 2) {
+	if ('cc_status == 2) {
 		mes "Virus deactivated..";
 		next;
 		mes "Everything seems to work fine now.";
@@ -2452,19 +2458,19 @@ OnEnable:
 1@mcd,126,84,5	script	Virus#3_00p	CLEAR_NPC,2,2,{
 	end;
 OnTouch:
-	if ((getvariableofnpc(cc_status,instance_npcname("panelcount#inst"))) == 0) {
+	if ('cc_status == 0) {
 		mes "Virus deactivated..";
 		donpcevent instance_npcname("panelcount#inst")+"::OnCheck";
 		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
 		close;
 	}
-	else if ((getvariableofnpc(cc_status,instance_npcname("panelcount#inst"))) == 1) {
+	else if ('cc_status == 1) {
 		mes "Virus deactivated..";
 		donpcevent instance_npcname("panelcount#inst")+"::OnCheck1";
 		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
 		close;
 	}
-	else if ((getvariableofnpc(cc_status,instance_npcname("panelcount#inst"))) == 2) {
+	else if ('cc_status == 2) {
 		mes "Virus deactivated..";
 		next;
 		mes "Apparatus back in operation.";
@@ -2485,19 +2491,19 @@ OnEnable:
 1@mcd,86,231,5	script	Virus#1_00p	CLEAR_NPC,2,2,{
 	end;
 OnTouch:
-	if ((getvariableofnpc(cc_status,instance_npcname("panelcount#inst"))) == 0) {
+	if ('cc_status == 0) {
 		mes "Virus deactivated..";
 		donpcevent instance_npcname("panelcount#inst")+"::OnCheck";
 		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
 		close;
 	}
-	else if ((getvariableofnpc(cc_status,instance_npcname("panelcount#inst"))) == 1) {
+	else if ('cc_status == 1) {
 		mes "Virus deactivated..";
 		donpcevent instance_npcname("panelcount#inst")+"::OnCheck1";
 		donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
 		close;
 	}
-	else if ((getvariableofnpc(cc_status,instance_npcname("panelcount#inst"))) == 2) {
+	else if ('cc_status == 2) {
 		mes "Virus deactivated..";
 		next;
 		mes "Apparatus back in operation.";
@@ -2523,13 +2529,13 @@ OnDisable:
 	end;
 OnEnable:
 	enablenpc instance_npcname(strnpcinfo(0));
-	cc_status = 0;
+	'cc_status = 0;
 	end;
 OnCheck:
-	cc_status = 1;
+	'cc_status = 1;
 	end;
 OnCheck1:
-	cc_status = 2;
+	'cc_status = 2;
 	end;
 OnComplete:
 	initnpctimer;
