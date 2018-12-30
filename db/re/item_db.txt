@@ -10296,7 +10296,7 @@
 19818,C_Drooping_Morooc_Minion,Costume Drooping Morooc Minion,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,600,{},{},{}
 19819,C_Gang_Doogun,Costume Gang Doogun,4,10,,0,,,,0,0xFFFFFFFF,63,2,3072,,1,0,491,{},{},{}
 19821,C_Hyegun_Hat,Costume Yao Jun,4,20,,10,,0,,0,0xFFFFFFFF,63,2,7168,,1,0,375,{},{},{}
-19822,C_Yellow Doogun,Yellow Doogun,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,309,{},{},{}
+19822,C_Yellow Doogun,Costume Yellow Doogun,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,309,{},{},{}
 19823,C_White_Cat_Hood,Costume White Cat Hood,4,20,,10,,0,,0,0xFFFFFFFF,63,2,3072,,1,0,1052,{},{},{}
 19824,C_Evil_Druid_Hat,Costume Evil Druid Hat,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,1053,{},{},{}
 19825,C_Vicious_Stop_Bandage,Costume Vicious Stop Bandage,4,0,,0,,,,,0xFFFFFFFF,63,2,1024,,1,,1054,{},{},{}
@@ -10311,6 +10311,7 @@
 19834,C_Baseball_Cap,Costume Baseball Cap,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,216,{},{},{}
 19835,C_Lif_Doll_Hat,Costume Lif Doll Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,297,{},{},{}
 19836,C_L_Magestic_Goat,Costume Majestic Goat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,380,{},{},{}
+19837,C_Asara_Fairy,Costume Asara Fairy Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,492,{},{},{}
 19839,C_Vanilmirth_Hat,Costume Vanilmirth Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,317,{},{},{}
 19841,C_Dragonhelm_Copper,Costume Dragon Helm Copper,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,454,{},{},{}
 19842,C_Puppy_Hat,Costume Puppy Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,234,{},{},{}
