@@ -35,8 +35,6 @@ prt_q,249,82,2	script	Han#a1	8W_SOLDIER,{
 }
 
 prt_q,252,79,4	script	Doek#a1	8W_SOLDIER,{
-	instance_destroy instance_id();
-	end;
 	mes "[Doek]";
 	mes "Can this scientist you're seeing here";
 	mes "really protect Prontera?";
@@ -68,13 +66,18 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		close;
 	}
 	set .@md_name$, "Sky Fortress Invasion";
-	.@iid = instance_id();
+	// dispbottom "----- Doeyon --------------";
+	// dispbottom "18 "+checkquest(9418,HUNTING);
+	// dispbottom "18 "+checkquest(9418);
+	// dispbottom "19 "+checkquest(9419,PLAYTIME);
+	// dispbottom "27 "+checkquest(9427,HUNTING);
+	// dispbottom "27 "+checkquest(9427);
+	// dispbottom "---------------------------";
 
 	if ( checkquest(9419,PLAYTIME) != -1 && (checkquest(9418,HUNTING) == 2 || checkquest(9427,HUNTING) == 2)) {
 		mes "[Scientist Doyeon]";
 		mes "You're back unscathed.";
-		mes "So...whatever happened";
-		mes "inside?";
+		mes "So...what happened inside?";
 		next;
 		mes "";
 		mes "- Explains to Scientist Doyeon -";
@@ -101,11 +104,11 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 			completequest 9418;
 		if(checkquest(9427,HUNTING) == 2 )
 			completequest 9427;
-
-		instance_destroy .@iid;
 		close;
 	}
-	if(.@iid > 0) {
+
+	.@iid = instance_id();
+	if(is_party_leader() == false && .@iid > 0) {
 		mes "[Scientist Doyeon]";
 		mes "Why are you talking with me?";
 		mes "Step into the portal and kill the ringleader.";
@@ -155,6 +158,13 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 
 		case 0: // inactive
 		case 1: // active
+			if (.@iid > 0) {
+				mes "[Scientist Doyeon]";
+				mes "The previous instance are still open.";
+				mes "Do you want to ^990000destroy^000000 that instance and create a new one?";
+				if(select("No","Yes") == 1) close;
+				instance_destroy instance_id();
+			}
 			mes "[Scientist Doyeon]";
 			mes "To activate the warp portal, a lot of magic is required.";
 			mes "I need around three days to collect enough magic to open the portal.";
@@ -165,7 +175,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 			next;
 			if (is_party_leader() == true) {
 				if (select( "End the dialogue.", "Give a Dungeon Ticket." ) == 2) {
-					if (countitem(14505) < 1 && countitem(14506) < 1) { // Sky Fortress Ticket
+					if (countitem(14505) < 1) { // Sky Fortress Ticket
 						mes "[Scientist Doyeon]";
 						mes "What are you trying to give me?";
 						mes "I require <ITEM>Dungeon 1 Hour Ticket<INFO>14505</INFO></ITEM>";
@@ -186,6 +196,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 						mes "I understand.";
 						close;
 					}
+
 					mes "[Scientist Doyeon]";
 					mes "There! I opened the warp";
 					mes "to the Sky Fortress!";
@@ -205,12 +216,13 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 					if(checkquest(9427) == 2) erasequest 9427;
 					setquest 9427; // enable enterance
 					skyfortress_entry = 1;
+					if(checkquest(9419,PLAYTIME) == 2) erasequest 9419; // reset cooldown
 					close;
 				}
+			} else {
+				mes "- Only the Party Leader can initiate the quest. -";
+				close; // only party leader can initiate the quest
 			}
-			mes "[Scientist Doyeon]";
-			mes "I hope you will enter the Sky Fortress and help us save Prontera.";
-			close;
 			break;
 
 		case 2: // completed
@@ -301,6 +313,13 @@ prt_q,243,75,3	script	Fortress Entry Warp#1	PORTAL,{
 		mes "- You should be level 145 or higher to proceed. -";
 		close;
 	}
+	// dispbottom "------- Portal ------------";
+	// dispbottom "18 "+checkquest(9418,HUNTING);
+	// dispbottom "18 "+checkquest(9418);
+	// dispbottom "19 "+checkquest(9419,PLAYTIME);
+	// dispbottom "27 "+checkquest(9427,HUNTING);
+	// dispbottom "27 "+checkquest(9427);
+	// dispbottom "---------------------------";
 	// if ((checkquest(9419,PLAYTIME) == -1 || checkquest(9419,PLAYTIME) == 2) && (isbegin_quest(9418) ==  1 || isbegin_quest(9427) ==  1 )) {
 
 	.@party_id = getcharid(1);
@@ -308,16 +327,25 @@ prt_q,243,75,3	script	Fortress Entry Warp#1	PORTAL,{
 	.@md_name$ = "Sky Fortress Invasion";
 	.@iid = instance_id();
 
-	if(is_party_leader() == false && .@iid) { // instance generated but quest was not started yet (only leader gets quest update, now we give quest to normal members)
+	if(!.@iid) {
+		mes "- The warp portal doesn't seem to work. -";
+		close;
+	}
+
+	if(is_party_leader() == false) { // instance generated but quest was not started yet (only leader gets quest update, now we give quest to normal members)
+		// dispbottom "x0";
 		if(checkquest(9418,HUNTING) == -1) { // initial start
 			setquest 9418;
 			skyfortress_entry = 1;
-		} else if(checkquest(9427,HUNTING) == -1 ) {// 1st repeat
+			// dispbottom "x1";
+		} else if(checkquest(9418,HUNTING) == 2 && checkquest(9427,HUNTING) == -1 ) { // 1st completed and going to repeat
 			setquest 9427;
 			skyfortress_entry = 1;
-		} else if(checkquest(9427,HUNTING) == 2 ) { // more repeat
+			// dispbottom "x3";
+		} else if(checkquest(9427,HUNTING) == 2 || checkquest(9427) == 2 ) { // more repeat
 			erasequest 9427; setquest 9427;
 			skyfortress_entry = 1;
+			// dispbottom "x4";
 		}
 	}
 
@@ -326,17 +354,49 @@ prt_q,243,75,3	script	Fortress Entry Warp#1	PORTAL,{
 		close;
 	}
 
-	if (.@iid && (isbegin_quest(9418) ==  1 || isbegin_quest(9427) ==  1 ) && skyfortress_entry == 1) {
-		mes "- The warp is emanating bright lights. -";
-		next;
-		if (select("Don't step into the warp.","Step into the warp.") == 1) close;
-
-	} else {
-		mes "- The warp doesn't seem to work.";
-		mes "You can't seem to enter... -";
-		close;
+	// if (.@iid && (isbegin_quest(9418) ==  1 || isbegin_quest(9427) ==  1 ) && skyfortress_entry == 1) {
+	.@ticket = 0; // using ticket means directly enter
+	// check only non-leader
+	if (is_party_leader() == false && (isbegin_quest(9418) ==  1 || isbegin_quest(9427) ==  1 ))
+	{
+		// first time entering
+		if(checkquest(9419,PLAYTIME) == -1)
+		{
+			setquest 9419; // intiate cooldown
+		}
+		// cooldown ended normally
+		else if(checkquest(9419,PLAYTIME) == 2)
+		{
+			erasequest 9419;  setquest 9419; // reset cooldown
+		}
+		else // cooldown still active
+		{
+			mes "- The warp doesn't seem to work. -";
+			mes "Based upon what Scientist Doyeon said, you require a ";
+			mes "<ITEM>Dungeon 1 Hour Ticket<INFO>14505</INFO></ITEM> to enter the instance.";
+			if (countitem(14505) > 0) { // Sky Fortress Ticket
+				if (select( "Leave", "Give a Dungeon Ticket to Scientist Doyeon." ) == 1) close;
+				delitem 14505,1;
+				erasequest 9419;  setquest 9419; // reset cooldown
+				.@ticket = 1;
+			} else {
+				close;
+			}
+		}
 	}
 
+	if(.@ticket == 0){
+		if(checkquest(9419,PLAYTIME) == 0 || checkquest(9419,PLAYTIME) == 1)
+		{
+			mes "- The warp is emanating bright lights. -";
+			next;
+			if (select("Don't step into the warp.","Step into the warp.") == 1) close;
+		} else {
+			mes "- The warp doesn't seem to work. -";
+			mes "You can't seem to enter...";
+			close;
+		}
+	}
 
 	switch( instance_enter(.@md_name$) ) {
 		case IE_OTHER:
@@ -350,11 +410,8 @@ prt_q,243,75,3	script	Fortress Entry Warp#1	PORTAL,{
 			mes "Only the party members may enter the Memorial Dungeon.";
 			close;
 		case IE_OK:
-			if(checkquest(9419,PLAYTIME) == 2) erasequest 9419; // reset cooldown
 			skyfortress_entry = 0; // can only enter once
-
 			mapannounce "prt_q", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters " + .@md_name$ + "", bc_map,0xFF99;
-			setquest 9419;// Trace of Laboratory Access
 		end;
 	}
 	end;
@@ -1653,14 +1710,26 @@ OnStop:
 }
 
 1@sthd,104,96,4	script	Sky Fortress Escape Warp	1_SHADOW_NPC,{
+	mes "--^990000Exiting the map will destroy the instance^000000--";
 	if (select( "Do not go outside of the Sky Fortress.", "Go outside of the Sky Fortress." ) == 1) {
 		mes "- The warp is emanating bright lights. -";
 		close;
 	}
 	mes "- You start to transport. -";
 	close2;
+
+	getpartymember getcharid(1),2;
+	for(.@i=0; .@i < $@partymembercount; .@i++){
+		attachrid $@partymemberaid[.@i];
+		if(strcharinfo(3) == instance_mapname("1@sthd"))
+		{
+			dispbottom "Hmm... I should report this to Scientist Doyeon.";
+			dispbottom "";
+		}
+	}
 	// warp "prt_q",244,81;
 	warpparty "prt_q",243,83,getcharid(1);
+	instance_destroy instance_id();
 	end;
 
 OnEnable:
@@ -2384,25 +2453,35 @@ function	script	gen_vicious_weapon	{
 	return;
 }
 
-// prt_q,246,81,3	script	killed_boss_x	570,{
-// 	debugmes "18 "+checkquest(9418,HUNTING);
-// 	debugmes "18 "+checkquest(9418);
-// 	debugmes "19 "+checkquest(9419,PLAYTIME);
-// 	debugmes "27 "+checkquest(9427,HUNTING);
-// 	debugmes "27 "+checkquest(9427);
-//
-// 	switch(select("init 9418", "complete 9418", "erase 9418", "init 9419", "complete 9419", "erase 9419", "init 9427", "complete 9427", "erase 9427")){
-// 		case 1: setquest 9418; end;
-// 		case 2: completequest 9418; end;
-// 		case 3: erasequest 9418; end;
-//
-// 		case 4: setquest 9419; end;
-// 		case 5: completequest 9419; end;
-// 		case 6: erasequest 9419; end;
-//
-// 		case 7: setquest 9427; end;
-// 		case 8: completequest 9427; end;
-// 		case 9: erasequest 9427; end;
-// 	}
-// 	end;
-// }
+/*
+prt_q,246,81,3	script	sf_debug	570,{
+	dispbottom "----- debug -------------";
+	dispbottom "18 "+checkquest(9418,HUNTING);
+	dispbottom "18 "+checkquest(9418);
+	dispbottom "19 "+checkquest(9419,PLAYTIME);
+	dispbottom "27 "+checkquest(9427,HUNTING);
+	dispbottom "27 "+checkquest(9427);
+	dispbottom "---------------------------";
+
+	switch(select("init 9418", "complete 9418", "erase 9418", "init 9419", "complete 9419", "erase 9419", "init 9427", "complete 9427", "erase 9427")){
+		case 1: setquest 9418; end;
+		case 2: completequest 9418; end;
+		case 3: erasequest 9418; end;
+
+		case 4: setquest 9419; end;
+		case 5: completequest 9419; end;
+		case 6: erasequest 9419; end;
+
+		case 7: setquest 9427; end;
+		case 8: completequest 9427; end;
+		case 9: erasequest 9427; end;
+	}
+	end;
+}
+
+
+prt_q,237,83,3	script	destory_instace	570,{
+	instance_destroy instance_id();
+	end;
+}
+*/
