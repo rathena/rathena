@@ -18,7 +18,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 	}
 	mes "[Hero Token Exchanger]";
 	mes "If you fought Morroc and collected";
-	mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO><ITEM>,";
+	mes "<ITEM>"+getitemname(6684)+"<INFO>"+6684+"</INFO></ITEM>,";
 	mes "I can exchange them with a special gear for you.";
 	mes "What do you want exchange Hero Tokens with?";
 	while(true) {
@@ -36,6 +36,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			mes "[Hero Token Exchanger]";
 			mes "I will exchange 3 x Hero Token for a <ITEM>"+getitemname(22537)+"<INFO>22537</INFO></ITEM>.";
 			mes "Do you want to exchange?";
+			next;
 			if (select( "Previous menu.", "Exchange 3 x Hero Tokens." ) == 1) {
 				mes "[Hero Token Exchanger]";
 				mes "Think again.";
@@ -43,7 +44,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			}
 			if (countitem(6684) < 3) {
 				mes "[Hero Token Exchanger]";
-				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO><ITEM>,";
+				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO></ITEM>,";
 				mes "is given to those who bravely fought Morroc.";
 				mes "You don't have 3 x ^006400Hero Tokens^000000,";
 				mes "and therefore I can't assist you.";
@@ -63,6 +64,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			mes "[Hero Token Exchanger]";
 			mes "I will exchange 5 x Hero Token for a <ITEM>"+getitemname(12623)+"<INFO>12623</INFO></ITEM>.";
 			mes "Do you want to exchange?";
+			next;
 			if (select( "Previous menu.", "Exchange 5 x Hero Tokens." ) == 1) {
 				mes "[Hero Token Exchanger]";
 				mes "Think again.";
@@ -70,7 +72,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			}
 			if (countitem(6684) < 5) {
 				mes "[Hero Token Exchanger]";
-				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO><ITEM>,";
+				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO></ITEM>,";
 				mes "is given to those who bravely fought Morroc.";
 				mes "You don't have 5 x ^006400Hero Tokens^000000,";
 				mes "and therefore I can't assist you.";
@@ -152,6 +154,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			mes "- <ITEM>"+getitemname(22036)+"<INFO>22036</INFO></ITEM>";
 			mes "- <ITEM>"+getitemname(22037)+"<INFO>22037</INFO></ITEM>";
 			mes "Do you want to exchange?";
+			next;
 			if (select( "Previous menu.", "Exchange 15 x Hero Tokens." ) == 1) {
 				mes "[Hero Token Exchanger]";
 				mes "Think again.";
@@ -159,7 +162,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			}
 			if (countitem(6684) < 15) {
 				mes "[Hero Token Exchanger]";
-				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO><ITEM>,";
+				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO></ITEM>,";
 				mes "is given to those who bravely fought Morroc.";
 				mes "You don't have 15 x ^006400Hero Tokens^000000,";
 				mes "and therefore I can't assist you.";
@@ -182,7 +185,11 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			mes "- <ITEM>"+getitemname(22036)+"<INFO>22036</INFO></ITEM>";
 			mes "- <ITEM>"+getitemname(22037)+"<INFO>22037</INFO></ITEM>";
 			mes "Which one do you want to exchange?";
-			.@s = select( "Previous menu.", "Exchange for "+getitemname(22035), "Exchange for "+getitemname(22036), "Exchange for "+getitemname(22037) );
+			next;
+			.@s = select( "Previous menu.",
+				"Exchange for "+getitemname(22035),
+				"Exchange for "+getitemname(22036),
+				"Exchange for "+getitemname(22037) );
 			if(.@s == 1) {
 				mes "[Hero Token Exchanger]";
 				mes "Think again.";
@@ -190,7 +197,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			}
 			if (countitem(6684) < 25) {
 				mes "[Hero Token Exchanger]";
-				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO><ITEM>,";
+				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO></ITEM>,";
 				mes "is given to those who bravely fought Morroc.";
 				mes "You don't have 25 x ^006400Hero Tokens^000000,";
 				mes "and therefore I can't assist you.";
@@ -232,6 +239,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			mes "- <ITEM>"+getitemname(15097)+"<INFO>15097</INFO></ITEM>";
 			mes "- <ITEM>"+getitemname(15098)+"<INFO>15098</INFO></ITEM>";
 			mes "Do you want to exchange?";
+			next;
 			if (select( "Previous menu.", "Exchange 35 x Hero Tokens." ) == 1) {
 				mes "[Hero Token Exchanger]";
 				mes "Think again.";
@@ -239,7 +247,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			}
 			if (countitem(6684) < 35) {
 				mes "[Hero Token Exchanger]";
-				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO><ITEM>,";
+				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO></ITEM>,";
 				mes "is given to those who bravely fought Morroc.";
 				mes "You don't have 35 x ^006400Hero Tokens^000000,";
 				mes "and therefore I can't assist you.";
@@ -265,6 +273,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			mes "- <ITEM>"+getitemname(15097)+"<INFO>15097</INFO></ITEM>";
 			mes "- <ITEM>"+getitemname(15098)+"<INFO>15098</INFO></ITEM>";
 			mes "Which one do you want to exchange?";
+			next;
 			.@s = select( "Previous menu.",
 				"Exchange for "+getitemname(15093),
 				"Exchange for "+getitemname(15094),
@@ -279,7 +288,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			}
 			if (countitem(6684) < 50) {
 				mes "[Hero Token Exchanger]";
-				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO><ITEM>,";
+				mes "<ITEM>"+getitemname(6684)+"<INFO>6684</INFO></ITEM>,";
 				mes "is given to those who bravely fought Morroc.";
 				mes "You don't have 50 x ^006400Hero Tokens^000000,";
 				mes "and therefore I can't assist you.";
