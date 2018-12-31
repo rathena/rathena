@@ -239,7 +239,7 @@ malangdo,213,167,4	script	Mayomayo#mal	555,{
 			case 2005: callsub L_Socket,1,2;	// Dea_Staff
 			case 2001: callsub L_Socket,2,2;	// Divine_Cross
 			case 2000: callsub L_Socket,4,2;	// Destruction_Rod
-			// case 2027: callsub L_Socket,4,?;	// Sunflower_Kid
+			case 2027: callsub L_Socket,4,2;	// Sunflower_Kid
 		}
 		break;
 	case 8:	// Maces
