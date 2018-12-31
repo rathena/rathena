@@ -4676,3 +4676,9 @@ IG_Santa_Gift,14586,500,5,1,0,0,0	// 5x Spark_Candy
 IG_Santa_Gift,12350,500,5,1,0,0,0	// 5x Angeling_Potion
 IG_Santa_Gift,12710,500,5,1,0,0,0	// 5x Guyak_Pudding
 IG_Santa_Gift,12259,500,2,1,0,0,0	// 2x Miracle_Medicine
+
+// GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,GUID,isBound,isNamed}
+IG_MILKY_ACIDBOMB_10_BOX,7135,0,10,0,0,0,0,Bound_Account,1	// 10x Fire_Bottle
+IG_MILKY_ACIDBOMB_10_BOX,7136,0,10,0,0,0,0,Bound_Account,1	// 10x Acid_Bottle
+IG_MILKY_ACIDBOMB_50_BOX,7135,0,50,0,0,0,0,Bound_Account,1	// 50x Fire_Bottle
+IG_MILKY_ACIDBOMB_50_BOX,7136,0,50,0,0,0,0,Bound_Account,1	// 50x Acid_Bottle

@@ -729,6 +729,8 @@ enum e_random_item_group {
 	IG_MILKY_SGB,
 	IG_MILKY_SIEGE_SB,
 	IG_MILKY_GLOVEB,
+	IG_MILKY_ACIDBOMB_10_BOX,
+	IG_MILKY_ACIDBOMB_50_BOX,
 };
 
 /// Enum for bound/sell restricted selling

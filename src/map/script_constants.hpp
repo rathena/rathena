@@ -4813,6 +4813,8 @@
 	export_constant(IG_MILKY_SGB);
 	export_constant(IG_MILKY_SIEGE_SB);
 	export_constant(IG_MILKY_GLOVEB);
+	export_constant(IG_MILKY_ACIDBOMB_10_BOX);
+	export_constant(IG_MILKY_ACIDBOMB_50_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

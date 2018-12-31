@@ -1,0 +1,3 @@
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(8507, 'Acidbomb_10_Box_F', 'Acid Bomb 10 Box', 18, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getgroupitem(IG_MILKY_ACIDBOMB_10_BOX);', NULL, NULL),
+(8508, 'Acidbomb_50_Box_F', 'Acid Bomb 50 Box', 18, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getgroupitem(IG_MILKY_ACIDBOMB_50_BOX);', NULL, NULL);
