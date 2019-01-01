@@ -59,6 +59,7 @@ OnPCLoginEvent:
 		if(#LastDailyReward < .@current) {// first time
 
 			#LastDailyReward = .@current;
+			if(#DailyRewardCount >= (getarraysize(.Rewards$)-1)) end;
 
 			deletearray .@CurrentReward$[0],getarraysize(.@CurrentReward$);
 			#DailyRewardCount = #DailyRewardCount + 1;
@@ -93,20 +94,28 @@ OnPCLoginEvent:
 
 OnInit:
 	setarray .Rewards$[1],
-		"25000,8504,1",			// Day 1: 25000 Zeny + 20 Blacksmith Blessing
-		"0,11504,10",				// Day 2: 10 WOE Blue Pot
-		"0,7621,3",				// Day 3: 3 Token of Siegfried
-		"0,12212,5",				// Day 4: 5 Giant Fly Wing
-		"0,7619,5,7620,5",		// Day 5: 5 Enriched Oridecon + 5 Enriched Elunium
-		"0,8501,10",				// Day 6: 10 Milky Special Gift Box
-		"0,12208,2",				// Day 7: 2 Battle Manual
-		"0,11547,15",				// Day 8: 15 Seige Purple Pot
-		"50000,7776,2",			// Day 9: 50000 Zeny + 2 Gym Pass
-		"0,11548,15,11549,15",	// Day 10: 15 Siege White Pot + 15 Siege Blue Pot
-		"0,6240,5,6241,5",		// Day 11: 5 HD Bradium + 5 HD Carnium
-		"0,12214,5,12103,3",		// Day 12: 5 Convex Mirror + 3 Bloody Branch
-		"0,8502,5",				// Day 13: 5 +10 Food Box
-		"0,8505,1";				// Day 14: 40 Blacksmith Blessing
+		"25000,8504,1",					// Day 1: 25000 Zeny + 20 Blacksmith Blessing
+		"0,11504,10",					// Day 2: 10 WOE Blue Pot
+		"0,7621,3",						// Day 3: 3 Token of Siegfried
+		"0,12212,5",					// Day 4: 5 Giant Fly Wing
+		"0,7619,5,7620,5",				// Day 5: 5 Enriched Oridecon + 5 Enriched Elunium
+		"0,8501,10",					// Day 6: 10 Milky Special Gift Box
+		"0,12208,2",					// Day 7: 2 Battle Manual
+		"0,11547,15",					// Day 8: 15 Seige Purple Pot
+		"50000,7776,2",					// Day 9: 50000 Zeny + 2 Gym Pass
+		"0,11548,15,11549,15",			// Day 10: 15 Siege White Pot + 15 Siege Blue Pot
+		"0,6240,5,6241,5",				// Day 11: 5 HD Oridecon + 5 HD Elunium
+		"0,12214,5,12103,3",			// Day 12: 5 Convex Mirror + 3 Bloody Branch
+		"0,8502,5",						// Day 13: 5 +10 Food Box
+		"0,8505,1",						// Day 14: 40 Blacksmith Blessing
+		"0,12298,5";					// Day 15: 5 x SP Consumption Reduction Potion
+		"0,6226,5,6225,5",				// Day 16: 5 x HD Bradium + 5 x HD Carnium
+		"0,14536,3,14537,3,14538,3",	// Day 17: 3 x Abrasive + 3 x Regeneration_Potion + 3 x Glass_Of_Illusion
+		"0,11547,15,11548,15,11549,15",	// Day 18: 15 Seige Purple Pot + 15 Siege White Pot + 15 Siege Blue Pot
+		"0,5394,5",						// Day 19: 5 x Bubble Gum
+		"0,12214,3,12103,5",			// Day 20: 3 Convex Mirror + 5 Bloody Branch
+		"0,20371,1",					// Day 21: Costume Special Kafra Hat
+
 	end;
 
 OnClock0001: //daily reset
