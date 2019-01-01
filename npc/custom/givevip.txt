@@ -132,11 +132,45 @@ OnInit:
 
 -	script	candies	-1,{
 OnNPCKillEvent:
-	setarray .items,12355,539,555,5136,554,557,591,592,12132,593,5136,594,595,11589,12200,12354,12130,22882,530,5136;
-	set .theitem, getarraysize(.items);
+	setarray .items,
+		542, // festival cookie
+		543, // festival rainbow cake
+		663, // korean rice cake
+		554, // mochi
+		5386, // ayam
+		12646, // Fried Octopus Legs
+		539, // Piece_Of_Cake
+		555, // Rice_Cake
+		557, // Hash_Rice_Cake
+		591, // Caviar_Pancake
+		592, // Jam_Pancake
+		5060, // party hat
+		593, // Honey_Pancake
+		594, // Sour_Cream_Pancake
+		595, // Mushroom_Pancake
+		22882, // Choco_Tteokguk
+		5060, // party hat
+		684, // Choco_Tteokguk
+		12122, // Sesame_Pastry
+		12123, // Honey_Pastry
+		12124, // Rainbow_Cake
+		12198, // Lucky_Rice_Cake
+		12247, // Halohalo
+		12320, // Pineapple_Juice
+		12321, // Spicy_Sandwich
+		12414, // Guarana_Candy
+		12417, // Boost500
+		14536, // Abrasive
+		14537, // Regeneration_Potion
+		14538, // Glass_Of_Illusion
+		14607, // Luxurious_Dinner_W
+		5318, // Poring Party Hat
+		14608; // Luxurious_Dinner_E
+
+	set .theitem, getarraysize(.items)-1;
 	set .dasitem, @items[@theitem];
-	if ( rand( 1000 ) < 25 ) { // 2.5% to drop
-		getitem .items[rand(.theitem-1)],1;
+	if ( rand( 1000 ) < 20 ) { // 2.0% to drop
+		getitem .items[rand(.theitem)],1;
 	}
 	end;
 }
