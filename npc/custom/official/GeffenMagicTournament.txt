@@ -916,8 +916,8 @@ dali,93,146,5	script	Geffen Enchanter	4_M_KHMAN,{
 			RDMOPT_ATTR_TOLERACE_WIND,
 			RDMOPT_DEC_SP_CONSUMPTION,
 			RDMOPT_ATTR_TOLERACE_ALL,
-			RDMOPT_VAR_MAXHPAMOUNT,
-			RDMOPT_VAR_MAXSPAMOUNT,
+			RDMOPT_VAR_MAXHPPERCENT,
+			RDMOPT_VAR_MAXSPPERCENT,
 			RDMOPT_VAR_ATKPERCENT,
 			RDMOPT_VAR_MAGICATKPERCENT;
 		.@result = rand(1,getarraysize(.@options)-1);
@@ -941,15 +941,15 @@ dali,93,146,5	script	Geffen Enchanter	4_M_KHMAN,{
 		.@result = rand(1,getarraysize(.@options)-1);
 		.@OptID[1] = .@options[.@result];
 		if(.@result == 1) 									// aspd%
-			.@OptVal[0] = rand(3,5);
+			.@OptVal[1] = rand(3,5);
 		else if(.@result == 2) 								// v. cast time
-			.@OptVal[0] = rand(5,7);
+			.@OptVal[1] = rand(5,7);
 		else if(.@result == 3) 								// crit dmg
-			.@OptVal[0] = rand(5,8);
+			.@OptVal[1] = rand(5,8);
 		else if(.@result <= 8) 								// ele resistance
-			.@OptVal[0] = rand(3,5);
+			.@OptVal[1] = rand(3,5);
 		else				 								// all resistance, mhp, msp, atk%, matk%
-			.@OptVal[0] = rand(1,3);
+			.@OptVal[1] = rand(1,3);
 		debugmes "Option1 Slot2: "+.@result + " | "+.@options[.@result]+" | "+ getarraysize(.@options)+ " | "+ .@OptVal[1];
 		.@OptParam[1] = 0;
 	}
@@ -963,8 +963,8 @@ dali,93,146,5	script	Geffen Enchanter	4_M_KHMAN,{
 			RDMOPT_VAR_AGIAMOUNT,
 			RDMOPT_VAR_VITAMOUNT,
 			RDMOPT_VAR_LUKAMOUNT,
-			RDMOPT_VAR_MAXHPAMOUNT,
-			RDMOPT_VAR_MAXSPAMOUNT;
+			RDMOPT_VAR_MAXHPPERCENT,
+			RDMOPT_VAR_MAXSPPERCENT;
 		.@result = rand(1,getarraysize(.@options)-1);
 		.@OptID[0] = .@options[.@result];
 		if(.@result <= 6) 									// Stats
