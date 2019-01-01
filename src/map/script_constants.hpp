@@ -4813,8 +4813,24 @@
 	export_constant(IG_MILKY_SGB);
 	export_constant(IG_MILKY_SIEGE_SB);
 	export_constant(IG_MILKY_GLOVEB);
+	export_constant(IG_MILKY_CASH_FOOD);
 	export_constant(IG_MILKY_ACIDBOMB_10_BOX);
 	export_constant(IG_MILKY_ACIDBOMB_50_BOX);
+	export_constant(IG_MILKY_POISON_10_BOX);
+	export_constant(IG_MILKY_POISON_50_BOX);
+	export_constant(IG_MILKY_BLESSING_20_BOX);
+	export_constant(IG_MILKY_ENELU_5_BOX);
+	export_constant(IG_MILKY_ENELU_10_BOX);
+	export_constant(IG_MILKY_ENORI_5_BOX);
+	export_constant(IG_MILKY_ENORI_10_BOX);
+	export_constant(IG_MILKY_HDBRA_5_BOX);
+	export_constant(IG_MILKY_HDCAR_5_BOX);
+	export_constant(IG_MILKY_HDELU_5_BOX);
+	export_constant(IG_MILKY_HDORI_5_BOX);
+	export_constant(IG_MILKY_BM_5_BOX);
+	export_constant(IG_MILKY_CM_5_BOX);
+	export_constant(IG_MILKY_BG_5_BOX);
+	export_constant(IG_MILKY_TS_5_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

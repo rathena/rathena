@@ -4678,7 +4678,32 @@ IG_Santa_Gift,12710,500,5,1,0,0,0	// 5x Guyak_Pudding
 IG_Santa_Gift,12259,500,2,1,0,0,0	// 2x Miracle_Medicine
 
 // GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,GUID,isBound,isNamed}
-IG_MILKY_ACIDBOMB_10_BOX,7135,0,10,0,0,0,0,Bound_Account,1	// 10x Fire_Bottle
-IG_MILKY_ACIDBOMB_10_BOX,7136,0,10,0,0,0,0,Bound_Account,1	// 10x Acid_Bottle
-IG_MILKY_ACIDBOMB_50_BOX,7135,0,50,0,0,0,0,Bound_Account,1	// 50x Fire_Bottle
-IG_MILKY_ACIDBOMB_50_BOX,7136,0,50,0,0,0,0,Bound_Account,1	// 50x Acid_Bottle
+IG_MILKY_CASH_FOOD,12202,1,1,1,0,0,0,1,1 // Str_Dish10_
+IG_MILKY_CASH_FOOD,12203,1,1,1,0,0,0,1,1 // Agi_Dish10_
+IG_MILKY_CASH_FOOD,12204,1,1,1,0,0,0,1,1 // Int_Dish10_
+IG_MILKY_CASH_FOOD,12205,1,1,1,0,0,0,1,1 // Dex_Dish10_
+IG_MILKY_CASH_FOOD,12206,1,1,1,0,0,0,1,1 // Luk_Dish10_
+IG_MILKY_CASH_FOOD,12207,1,1,1,0,0,0,1,1 // Vit_Dish10_
+
+IG_MILKY_ACIDBOMB_10_BOX,7135,0,10,0,0,0,0,1,1	// 10x Fire_Bottle
+IG_MILKY_ACIDBOMB_10_BOX,7136,0,10,0,0,0,0,1,1	// 10x Acid_Bottle
+IG_MILKY_ACIDBOMB_50_BOX,7135,0,50,0,0,0,0,1,1	// 50x Fire_Bottle
+IG_MILKY_ACIDBOMB_50_BOX,7136,0,50,0,0,0,0,1,1	// 50x Acid_Bottle
+
+IG_MILKY_POISON_10_BOX,678,0,50,0,0,0,0,1,1	// 10x Poison_bottle
+IG_MILKY_POISON_50_BOX,678,0,50,0,0,0,0,1,1	// 50x Poison_bottle
+
+IG_MILKY_BLESSING_20_BOX,6635,0,20,0,0,0,0,1,1	// 20x Blacksmith_blessing
+IG_MILKY_ENELU_5_BOX,7619,0,5,0,0,0,0,1,1	// 5x Enriched_Elunium
+IG_MILKY_ENELU_10_BOX,7619,0,10,0,0,0,0,1,1	// 10x Enriched_Elunium
+IG_MILKY_ENORI_5_BOX,7620,0,5,0,0,0,0,1,1	// 5x Enriched_Oridecon
+IG_MILKY_ENORI_10_BOX,7620,0,10,0,0,0,0,1,1	// 10x Enriched_Oridecon
+IG_MILKY_HDELU_5_BOX,6241,0,5,0,0,0,0,1,1	// 5x HD_Elunium
+IG_MILKY_HDORI_5_BOX,6240,0,5,0,0,0,0,1,1	// 5x HD_Oridecon
+IG_MILKY_HDBRA_5_BOX,6226,0,5,0,0,0,0,1,1	// 5x HD_Bradium
+IG_MILKY_HDCAR_5_BOX,6225,0,5,0,0,0,0,1,1	// 5x HD_Carnium
+
+IG_MILKY_BG_5_BOX,12210,0,5,0,0,0,0,1,1	// 5x Bubble_Gum
+IG_MILKY_CM_5_BOX,12214,0,5,0,0,0,0,1,1	// 5x Convex_Mirror
+IG_MILKY_BM_5_BOX,12208,0,5,0,0,0,0,1,1	// 5x Battle_Manual
+IG_MILKY_TS_5_BOX,7621,0,5,0,0,0,0,1,1	// 5x Token_Of_Siegfried
