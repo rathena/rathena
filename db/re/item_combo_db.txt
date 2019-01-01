@@ -873,3 +873,5 @@
 28594:4877,{.@r=getequiprefinerycnt(EQI_SHOES); bonus bFlee,(2*.@r); bonus bDelayrate,(-1*.@r); }
 // Bear's Power
 28594:4875,{.@r=getequiprefinerycnt(EQI_SHOES); bonus bStr,(1*.@r); bonus bMaxHPrate,(1*.@r); }
+18540:5066,{ bonus bAspd,1; bonus bAspdRate,9; bonus2 bSPLossRate,3,2000; }
+18540:5072,{ bonus bAspd,1; bonus bAspdRate,9; bonus2 bSPLossRate,3,2000; }
