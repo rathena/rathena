@@ -405,7 +405,7 @@ D42: Restrict("RE");
 	 Disp("Bifrost Tower",1,4); Pick("ecl_tdun");
 D43: Restrict("RE");
 	 setarray @c[2],247,19,329,187;
-	 Disp("Rockridge Mines 1", "Rockridge Culvert");
+	 Disp("Rockridge Mines", "Rockridge's Culvert");
 	 Pick("","rockmi1", "harboro2");
 D44: Restrict("RE");
 	 setarray @c[2],98,91,13,148;
