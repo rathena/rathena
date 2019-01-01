@@ -793,7 +793,7 @@
 6655,499,100	// Firm_Pumpkin
 6656,499,100	// Goast_Free_Charm
 6657,499,100	// Memory_Of_Jack
-6671,467,100	// Geffen_Coin_Magic_Tournament
+// 6671,467,100	// Geffen_Coin_Magic_Tournament
 6672,467,100	// Black_As_Night_Piece
 6673,507,100	// Bossnia_Tickets
 6674,507,100	// GM_Coin
@@ -1682,7 +1682,7 @@
 13305,499,100	// BF_Huuma_Shuriken1
 13306,499,100	// BF_Huuma_Shuriken2
 13307,499,100	// Krieger_Huuma_Shuriken1
-13308,507,100	// Huuma_Blaze_I
+// 13308,507,100	// Huuma_Blaze_I
 13309,507,100	// Huuma_Giant_Wheel_C
 13310,499,100	// P_Huuma_Suriken1
 13312,507,100	// Huuma_Job_Test
@@ -2363,9 +2363,9 @@
 14153,475,100	// F_Vigorgra_Package10
 14154,475,100	// F_Vigorgra_Package11
 14155,475,100	// F_Vigorgra_Package12
-14156,475,100	// F_Battle_Manual_Box
+// 14156,475,100	// F_Battle_Manual_Box
 14157,475,100	// F_Insurance_Package
-14158,475,100	// F_Bubble_Gum_Box
+// 14158,475,100	// F_Bubble_Gum_Box
 14159,475,100	// F_Str_Dish_Box
 14160,475,100	// F_Agi_Dish_Box
 14161,475,100	// F_Int_Dish_Box
@@ -2375,7 +2375,7 @@
 14165,475,100	// F_Kafra_Card_Box
 14166,475,100	// F_Giant_Fly_Wing_Box
 14167,475,100	// F_Neuralizer_Box
-14168,475,100	// F_Convex_Mirror_Box
+// 14168,475,100	// F_Convex_Mirror_Box
 14169,475,100	// F_Blessing_10_Scroll_Box
 14170,475,100	// F_Inc_Agi_10_Scroll_Box
 14171,475,100	// F_Aspersio_5_Scroll_Box
@@ -2383,9 +2383,9 @@
 14173,475,100	// F_Wind_Walk_10_Scroll_Box
 14174,475,100	// F_Adrenaline_Scroll_Box
 // 14175,475,100	// F_Megaphone_Box
-14176,475,100	// F_Enriched_Elunium_Box
-14177,475,100	// F_Enriched_Oridecon_Box
-14178,475,100	// F_Token_Of_Siegfried_Box
+// 14176,475,100	// F_Enriched_Elunium_Box
+// 14177,475,100	// F_Enriched_Oridecon_Box
+// 14178,475,100	// F_Token_Of_Siegfried_Box
 14179,475,100	// F_Giant_Fly_Wing_Box50
 14180,475,100	// F_Giant_Fly_Wing_Box100
 14181,475,100	// F_Dex_Dish_Box30
@@ -2426,8 +2426,8 @@
 14216,475,100	// F_Bubble_Gum_Box5
 14217,475,100	// F_Megaphone_Box1
 14218,475,100	// F_Megaphone_Box5
-14219,475,100	// F_Enriched_Elunium_Box5
-14220,475,100	// F_Enriched_Oridecon_Box5
+// 14219,475,100	// F_Enriched_Elunium_Box5
+// 14220,475,100	// F_Enriched_Oridecon_Box5
 14221,475,100	// MP_Scroll_Box
 14222,475,100	// MP_Scroll_Box30
 14223,475,100	// MP_Scroll_Box50
@@ -2678,7 +2678,7 @@
 //14492,475,100	//
 //14493,475,100	//
 14494,475,100	// Samambaia_Box
-14499,475,100	// Peacock_Feather_Box
+// 14499,475,100	// Peacock_Feather_Box
 14500,475,100	// Insurance60
 // 14505,507,100	// Dungeon_1_hour_Ticket
 14506,507,100	// Dungeon_Ticket
@@ -2979,8 +2979,8 @@
 // 16259,475,100	// HD_Carnium_5_Box
 // 16260,475,100	// HD_Bradium_10_Box
 // 16261,475,100	// HD_Carnium_10_Box
-16262,475,100	// HD_Bradium_5_Box2
-16263,475,100	// HD_Carnium_5_Box2
+// 16262,475,100	// HD_Bradium_5_Box2
+// 16263,475,100	// HD_Carnium_5_Box2
 16264,475,100	// HD_Bradium_10_Box2
 16265,475,100	// HD_Carnium_10_Box2
 //16271,475,100	//
@@ -3507,8 +3507,8 @@
 17232,475,100	// Refinement_box(7)
 17241,475,100	// Amistr_Cap_Box
 17244,475,100	// Event_Almighty_Box
-17246,475,100	// HD_Elunium_Box(30)
-17247,475,100	// HD_Oridecon_Box(30)
+// 17246,475,100	// HD_Elunium_Box(30)
+// 17247,475,100	// HD_Oridecon_Box(30)
 17251,475,100	// C_Wing_Of_Fly_3Day_Box
 17252,475,100	// RWC_2012_Set_Box
 17253,475,100	// RWC_2012_Ring_Box
@@ -3967,6 +3967,7 @@
 16395,329,100	// HD_Elu_Box5
 16396,329,100	// HD_Elu_Box10
 16770,329,100	// Silvervine_Fruit_Box10
+6671,329,100	// Geffen_Coin_Magic_Tournament
 
 5377,329,100	// Gentleman's Pipe
 5548,329,100	// Scarlet Rose
@@ -4031,3 +4032,22 @@
 8504,329,100	// Blacksmith Blessing 20x
 8505,329,100	// Blacksmith Blessing 40x
 8506,329,100	// Blacksmith Blessing 100x
+
+8503,475,100	// F_10_Food_Box
+8507,475,100	// F_Acidbomb_10_Box
+8508,475,100	// F_Acidbomb_50_Box
+8509,475,100	// F_Poison_Bottle_10_Box
+8510,475,100	// F_Poison_Bottle_50_Box
+8511,475,100	// F_Blacksmith_Blessing_20Box
+14219,475,100	// F_Enriched_Elunium_Box5
+14176,475,100	// F_Enriched_Elunium_Box10
+14177,475,100	// F_Enriched_Oridecon_Box5
+14220,475,100	// F_Enriched_Oridecon_Box10
+16262,475,100	// F_HD_Bradium_Box5
+16263,475,100	// F_HD_Carnium_Box5
+17246,475,100	// F_HD_Elunium_Box_5
+17247,475,100	// F_HD_Oridecon_Box_5
+14158,475,100	// F_Bubble_Gum_Box
+14168,475,100	// F_Convex_Mirror_Box
+14156,475,100	// F_Battle_Manual_Box
+14178,475,100	// F_Token_Of_Siegfried_Box
