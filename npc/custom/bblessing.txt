@@ -42,7 +42,7 @@ izlude,152,134,3	script	Wondering Priest#izbb_03	616,{
 		"5 x "+getitemname(6961),
 		"25 x "+getitemname(6962),
 		"1 x "+getitemname(6607),
-		"5 x "+getitemname(6608) )
+		"25 x "+getitemname(6608) )
 	){
 		case 1:
 			mes .@n$;
