@@ -108,13 +108,13 @@ OnInit:
 		"0,12214,5,12103,3",			// Day 12: 5 Convex Mirror + 3 Bloody Branch
 		"0,8502,5",						// Day 13: 5 +10 Food Box
 		"0,8505,1",						// Day 14: 40 Blacksmith Blessing
-		"0,12298,5";					// Day 15: 5 x SP Consumption Reduction Potion
+		"0,12298,5",					// Day 15: 5 x SP Consumption Reduction Potion
 		"0,6226,5,6225,5",				// Day 16: 5 x HD Bradium + 5 x HD Carnium
 		"0,14536,3,14537,3,14538,3",	// Day 17: 3 x Abrasive + 3 x Regeneration_Potion + 3 x Glass_Of_Illusion
 		"0,11547,15,11548,15,11549,15",	// Day 18: 15 Seige Purple Pot + 15 Siege White Pot + 15 Siege Blue Pot
 		"0,5394,5",						// Day 19: 5 x Bubble Gum
 		"0,12214,3,12103,5",			// Day 20: 3 Convex Mirror + 5 Bloody Branch
-		"0,20371,1",					// Day 21: Costume Special Kafra Hat
+		"0,20371,1";					// Day 21: Costume Special Kafra Hat
 
 	end;
 
