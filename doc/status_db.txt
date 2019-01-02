@@ -6,9 +6,9 @@
 
 ---------------------------------------
 
-StatusID
+Status
 
-Status Change ID.
+Status Change Name.
 See src/map/script_constants.hpp for SC_ constants.
 
 ---------------------------------------

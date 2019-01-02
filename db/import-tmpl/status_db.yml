@@ -22,7 +22,7 @@
 # Status Change Settings
 #
 ###########################################################################
-# StatusID - Unique status change ID.
+# Status - Unique status change ID.
 ###########################################################################
 # Icon - Status change Icon. Default is EFST_BLANK.
 ###########################################################################

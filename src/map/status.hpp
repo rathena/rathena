@@ -2072,7 +2072,7 @@ enum manner_flags
 };
 
 /// Status Change State Flags
-enum scs_flag {
+enum scs_flag : uint64 {
 	SCS_NONE				= 0x0,
 	SCS_NOMOVECOND			= 0x00001, ///< cond flag for SCS_NOMOVE
 	SCS_NOMOVE				= 0x00002, ///< unit unable to move
@@ -2096,7 +2096,7 @@ enum scs_flag {
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
-enum scb_flag {
+enum scb_flag : uint64 {
 	SCB_NONE	= 0x0,
 	SCB_BASE	= 0x00000001,
 	SCB_MAXHP	= 0x00000002,
@@ -2129,10 +2129,10 @@ enum scb_flag {
 	SCB_RANGE	= 0x10000000,
 	SCB_REGEN	= 0x20000000,
 	SCB_DYE		= 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
+	SCB_MAX,
 
-	SCB_BATTLE	= 0x3FFFFFFE,
-	SCB_ALL		= 0x3FFFFFFF,
-	SCB_MAX
+	SCB_BATTLE = 0x3FFFFFFE,
+	SCB_ALL = 0x3FFFFFFF,
 };
 
 enum e_status_calc_opt {
@@ -2142,7 +2142,7 @@ enum e_status_calc_opt {
 };
 
 /// Flags for status_change_start and status_get_sc_def
-enum e_status_change_start_flags : uint16 {
+enum e_status_change_start_flags : uint64 {
 	SCSTART_NONE       = 0x00,
 	SCSTART_NOAVOID    = 0x01, /// Cannot be avoided (it has to start)
 	SCSTART_NOTICKDEF  = 0x02, /// Tick should not be reduced (by statuses or bonuses)
@@ -2152,7 +2152,7 @@ enum e_status_change_start_flags : uint16 {
 };
 
 /// Enum for status_change_clear_buffs
-enum e_status_change_clear_buffs_flags : uint16 {
+enum e_status_change_clear_buffs_flags : uint64 {
 	SCCB_BUFFS        = 0x01,
 	SCCB_DEBUFFS      = 0x02,
 	SCCB_REFRESH      = 0x04,

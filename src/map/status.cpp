@@ -12325,14 +12325,14 @@ static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const 
 * @param source: The source YAML file.
 * @return True on successful parse or false otherwise
 */
-bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, const std::string &source)
+bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string &source)
 {
 	int sc_id = 0;
 	std::string name;
 	bool existing = false;
 
 	try {
-		name = node.first.as<std::string>();
+		name = node["Status"].as<std::string>();
 	}
 	catch (...) {
 		yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Name field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12401,12 +12401,9 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 			const YAML::Node scs_list = node["SCS"];
 
 			if (scs_list.IsSequence()) {
-				for (const auto &it : scs_list) {
-					std::string scs = it.second.as<std::string>();
+				for (int i = 0; i < scs_list.size(); i++) {
+					std::string scs = scs_list[i].as<std::string>();
 					int scs_id = 0;
-
-					if (scs.empty())
-						continue;
 
 					if (!script_get_constant(scs.c_str(), &scs_id) || scs_id < SCS_NONE || scs_id >= SCS_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status SCS %s. Non-existent constant in \"%s\", skipping.\n", scs.c_str(), source.c_str());
@@ -12429,12 +12426,9 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 			const YAML::Node scb_list = node["SCB"];
 
 			if (scb_list.IsSequence()) {
-				for (const auto &it : scb_list) {
-					std::string scb = it.second.as<std::string>();
+				for (int i = 0; i < scb_list.size(); i++) {
+					std::string scb = scb_list[i].as<std::string>();
 					int scb_id = 0;
-
-					if (scb.empty())
-						continue;
 
 					if (!script_get_constant(scb.c_str(), &scb_id) || scb_id < SCB_NONE || scb_id >= SCB_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status SCB %s. Non-existent constant in \"%s\", skipping.\n", scb.c_str(), source.c_str());
@@ -12474,12 +12468,9 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 			const YAML::Node opt_list = node["OPT2"];
 
 			if (opt_list.IsSequence()) {
-				for (const auto &it : opt_list) {
-					std::string opt = it.second.as<std::string>();
+				for (int i = 0; i < opt_list.size(); i++) {
+					std::string opt = opt_list[i].as<std::string>();
 					int opt_id = 0;
-
-					if (opt.empty())
-						continue;
 
 					if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT2_NONE || opt_id >= OPT2_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status OPT2 %s. Non-existent constant in \"%s\", skipping.\n", opt.c_str(), source.c_str());
@@ -12502,12 +12493,9 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 			const YAML::Node opt_list = node["OPT3"];
 
 			if (opt_list.IsSequence()) {
-				for (const auto &it : opt_list) {
-					std::string opt = it.second.as<std::string>();
+				for (int i = 0; i < opt_list.size(); i++) {
+					std::string opt = opt_list[i].as<std::string>();
 					int opt_id = 0;
-
-					if (opt.empty())
-						continue;
 
 					if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT3_NORMAL || opt_id >= OPT3_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status OPT3 %s. Non-existent constant in \"%s\", skipping.\n", opt.c_str(), source.c_str());
@@ -12530,12 +12518,9 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 			const YAML::Node option_list = node["Option"];
 
 			if (option_list.IsSequence()) {
-				for (const auto &it : option_list) {
-					std::string option = it.second.as<std::string>();
+				for (int i = 0; i < option_list.size(); i++) {
+					std::string option = option_list[i].as<std::string>();
 					int option_id = 0;
-
-					if (option.empty())
-						continue;
 
 					if (!script_get_constant(option.c_str(), &option_id) || option_id < OPTION_NOTHING || option_id >= OPTION_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status Option %s. Non-existent constant in \"%s\", skipping.\n", option.c_str(), source.c_str());
@@ -12558,12 +12543,9 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 			const YAML::Node flag_list = node["Flag"];
 
 			if (flag_list.IsSequence()) {
-				for (const auto &it : flag_list) {
-					std::string flag = it.second.as<std::string>();
+				for (int i = 0; i < flag_list.size(); i++) {
+					std::string flag = flag_list[i].as<std::string>();
 					int flag_id = 0;
-
-					if (flag.empty())
-						continue;
 
 					if (!script_get_constant(flag.c_str(), &flag_id) || flag_id < SCF_NONE || flag_id >= SCF_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status Flag %s. Non-existent constant in \"%s\", skipping.\n", flag.c_str(), source.c_str());
@@ -12606,12 +12588,9 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 			const YAML::Node fail_list = node["Fail"];
 
 			if (fail_list.IsSequence()) {
-				for (const auto &it : fail_list) {
-					std::string fail_sc = it.second.as<std::string>();
+				for (int i = 0; i < fail_list.size(); i++) {
+					std::string fail_sc = fail_list[i].as<std::string>();
 					int fail_sc_id = 0;
-
-					if (fail_sc.empty())
-						continue;
 
 					if (!script_get_constant(fail_sc.c_str(), &fail_sc_id) || !CHK_SC(fail_sc_id)) {
 						ShowWarning("status_read_status_db_sub: Invalid status Fail SC %s. Non-existent constant in \"%s\", skipping.\n", fail_sc.c_str(), source.c_str());
@@ -12634,12 +12613,9 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 			const YAML::Node end_list = node["End"];
 
 			if (end_list.IsSequence()) {
-				for (const auto &it : end_list) {
-					std::string end_sc = it.second.as<std::string>();
+				for (int i = 0; i < end_list.size(); i++) {
+					std::string end_sc = end_list[i].as<std::string>();
 					int end_sc_id = 0;
-
-					if (end_sc.empty())
-						continue;
 
 					if (!script_get_constant(end_sc.c_str(), &end_sc_id) || !CHK_SC(end_sc_id)) {
 						ShowWarning("status_read_status_db_sub: Invalid status End SC %s. Non-existent constant in \"%s\", skipping.\n", end_sc.c_str(), source.c_str());
@@ -12672,8 +12648,8 @@ bool status_read_status_db_sub(const YAML::detail::iterator_value &node, int n, 
 			const YAML::Node disabledon_list = node["DisabledOn"];
 
 			if (disabledon_list.IsSequence()) {
-				for (const auto &it : disabledon_list) {
-					int disabledon_id = it.second.as<int>();
+				for (int i = 0; i < disabledon_list.size(); i++) {
+					int disabledon_id = disabledon_list[i].as<int>();
 
 					if (disabledon_id <= 0) {
 						ShowWarning("status_read_status_db_sub: Invalid status DisabledOn %d. Non-existent constant in \"%s\", skipping.\n", disabledon_id, source.c_str());
@@ -12730,7 +12706,7 @@ static void status_readdb_status(const std::string &directory, const std::string
 		return;
 	}
 
-	for (const auto &node : config) {
+	for (const auto &node : config["Body"]) {
 		if (node.IsDefined() && status_read_status_db_sub(node, count, current_file))
 			count++;
 	}
