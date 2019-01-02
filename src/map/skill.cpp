@@ -18445,7 +18445,7 @@ int skill_unit_timer_sub_onplace(struct block_list* bl, va_list ap)
 {
 	struct skill_unit* unit = va_arg(ap,struct skill_unit *);
 	struct skill_unit_group* group = NULL;
-	t_tick tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 
 	nullpo_ret(unit);
 
@@ -18472,7 +18472,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 {
 	struct skill_unit* unit = (struct skill_unit*)db_data2ptr(data);
 	struct skill_unit_group* group = NULL;
-	t_tick tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 	bool dissonance;
 	struct block_list* bl = &unit->bl;
 
@@ -18755,7 +18755,7 @@ int skill_unit_move_sub(struct block_list* bl, va_list ap)
 	struct skill_unit_group* group = NULL;
 
 	struct block_list* target = va_arg(ap,struct block_list*);
-	t_tick tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 	int flag = va_arg(ap,int);
 	bool dissonance;
 	uint16 skill_id;
