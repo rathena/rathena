@@ -3,66 +3,66 @@ Header:
   Version: 1
 
 Attendance:
-  - Start: 20181205
-    End: 20190102
+  - Start: 20190102
+    End: 20190130
     Rewards:
       - Day: 1
-        ItemId: 12263
-        Amount: 5
+        ItemId: 14156
+        Amount: 1
       - Day: 2
-        ItemId: 7621
-        Amount: 5
+        ItemId: 14178
+        Amount: 1
       - Day: 3
-        ItemId: 7619
-        Amount: 5
+        ItemId: 14219
+        Amount: 1
       - Day: 4
-        ItemId: 7620
-        Amount: 5
+        ItemId: 14176
+        Amount: 1
       - Day: 5
-        ItemId: 20231
+        ItemId: 5429
         Amount: 1
       - Day: 6
-        ItemId: 12210
-        Amount: 5
+        ItemId: 14158
+        Amount: 1
       - Day: 7
-        ItemId: 12214
-        Amount: 5
+        ItemId: 14168
+        Amount: 1
       - Day: 8
         ItemId: 12103
-        Amount: 5
+        Amount: 2
       - Day: 9
         ItemId: 7776
         Amount: 2
       - Day: 10
-        ItemId: 20499
+        ItemId: 14499
         Amount: 1
       - Day: 11
         ItemId: 8501
-        Amount: 15
+        Amount: 10
       - Day: 12
-        ItemId: 6240
-        Amount: 5
+        ItemId: 16262
+        Amount: 1
       - Day: 13
-        ItemId: 6241
-        Amount: 5
+        ItemId: 16263
+        Amount: 1
       - Day: 14
-        ItemId: 12132
-        Amount: 3
+        ItemId: 8511
+        Amount: 1
       - Day: 15
-        ItemId: 20404
+        ItemId: 20381
         Amount: 1
       - Day: 16
         ItemId: 8503
-        Amount: 5
+        Amount: 3
       - Day: 17
-        ItemId: 13989
-        Amount: 10
+        ItemId: 8507
+        Amount: 5
       - Day: 18
-        ItemId: 14004
-        Amount: 10
+        ItemId: 8509
+        Amount: 5
       - Day: 19
-        ItemId: 13635
+        ItemId: 13636
         Amount: 1
       - Day: 20
-        ItemId: 19148
+        ItemId: 19808
         Amount: 1

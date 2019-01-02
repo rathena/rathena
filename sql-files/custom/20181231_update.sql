@@ -34,6 +34,7 @@ REPLACE INTO `mob_db2_re` (`ID`, `Sprite`, `kName`, `iName`, `LV`, `HP`, `SP`, `
 DELETE FROM `mission_board` WHERE `id` IN (1545197000, 1545197010, 1545197020, 1545197030, 1545197040, 1545197050, 1545197060);
 DELETE FROM `player_mission` WHERE `mission_id` IN (1545197000, 1545197010, 1545197020, 1545197030, 1545197040, 1545197050, 1545197060);
 
+# New Missions
 REPLACE INTO `mission_board` (`id`, `title`, `desc`, `mob_list`, `mob_qty`, `item_list`, `item_qty`, `class_limitation`, `class_branch`, `min_lv`, `max_lv`, `repeat`, `duration`, `reward_list`, `reward_qty`, `base_exp`, `job_exp`, `zeny`, `cash`, `aid`, `name`, `time_update`, `npc_id`, `redo_delay`) VALUES
 (1546372800, 'Costume Eremes Scarf', 'I idolize Eremes! I want to be like him and wear a scarf just like him. Please make my dream come true. - Ulquiorra F2W', '|1506|', '|300|', '|7216|10019|975|6654|', '|300|20|30|2|', 1023, 31, 50, 175, 0, 0, '|20405|', '|1|', 100000, 100000, 250000, 0, 2000000, '<GM>Nubs', '2019-01-02 04:15:00', '|1|', 21),
 (1546372810, 'Costume Eremes Scarf Black', 'I idolize Eremes! I want to be like him and wear a scarf just like him. Please make my dream come true. - Ulquiorra F2W', '', '', '|983|20405|25184|', '|10|1|1|', 1023, 31, 50, 175, 0, 0, '|31057|', '|1|', 100000, 100000, 250000, 0, 2000000, '<GM>Nubs', '2019-01-02 04:15:00', '|1|', 21),
@@ -47,10 +48,18 @@ REPLACE INTO `mission_board` (`id`, `title`, `desc`, `mob_list`, `mob_qty`, `ite
 (1546372890, 'New Advanced Lubricant', 'There are not enough lubricants for these mechanical parts. I can make more if I have enough materials. I can share some with you if you help me get the materials. - Mado Mechanic', '', '', '|6395|924|6246|6216|971|972|6962|', '|50|50|50|45|15|15|3|', 1023, 31, 50, 175, 0, 0, '|25239|', '|1|', 100000, 100000, 250000, 0, 2000000, '<GM>Nubs', '2019-01-02 04:15:00', '|16|', 21),
 (1546372891, 'Costume Wild Rose', 'Wild Rose is so cute! You could catch one to put on your head but it will probably scratch you. I could make a Wild Rose doll for you to put on top of your head. - Cat Lover', '', '', '|7038|10007|983|969|5099|25184|', '|50|15|5|5|1|1|', 1023, 31, 50, 175, 0, 0, '|19530|', '|1|', 100000, 100000, 250000, 0, 2000000, '<GM>Nubs', '2019-01-02 04:15:00', '|9|', 21);
 
-
+# Special Missions
 REPLACE INTO `mission_board` (`id`, `title`, `desc`, `mob_list`, `mob_qty`, `item_list`, `item_qty`, `class_limitation`, `class_branch`, `min_lv`, `max_lv`, `repeat`, `duration`, `reward_list`, `reward_qty`, `base_exp`, `job_exp`, `zeny`, `cash`, `aid`, `name`, `time_update`, `npc_id`, `redo_delay`) VALUES
 (1546372900, 'Asgard Blessing', 'This is a limited timed missions from 2019-01-03 to 2019-01-16. - Special Event', '', '', '|6393|6395|976|6654|', '|200|50|10|2|', 1023, 31, 50, 175, 0, 0, '|18550|', '|1|', 100000, 100000, 250000, 0, 2000000, '<GM>Nubs', '2019-01-02 04:15:00', '|99|', 21),
 (1546372910, 'Costume Wings of Victory', 'This is a limited timed missions from 2019-01-03 to 2019-01-16. - Special Event', '', '', '|7063|949|914|7293|980|978|981|6654|', '|200|200|200|2|20|10|10|1|', 1023, 31, 50, 175, 0, 0, '|19710|', '|1|', 100000, 100000, 250000, 0, 2000000, '<GM>Nubs', '2019-01-02 04:15:00', '|99|', 21),
 (1546372920, 'Costume Wild Poring Rider', 'This is a limited timed missions from 2019-01-03 to 2019-01-16. - Special Event', '', '', '|5557|7216|10007|978|5318|6654|', '|1|100|25|10|3|2|', 1023, 31, 50, 175, 0, 0, '|20458|', '|1|', 100000, 100000, 250000, 0, 2000000, '<GM>Nubs', '2019-01-02 04:15:00', '|99|', 21),
 (1546372930, 'Evil Mask', 'This is a limited timed missions from 2019-01-03 to 2019-01-16. - Special Event', '', '', '|923|642|641|975|983|25238|', '|100|25|25|15|5|2|', 1023, 31, 50, 175, 0, 0, '|18540|', '|1|', 100000, 100000, 250000, 0, 2000000, '<GM>Nubs', '2019-01-02 04:15:00', '|99|', 21),
 (1546372940, 'Happy Balloon', 'This is a limited timed missions from 2019-01-03 to 2019-01-16. - Special Event', '', '', '|909|911|7126|924|1001|7162|1057|981|976|978|979|975|25238|', '|200|200|200|100|100|100|100|3|3|3|3|3|2|', 1023, 31, 50, 175, 0, 0, '|19095|', '|1|', 100000, 100000, 250000, 0, 2000000, '<GM>Nubs', '2019-01-02 04:15:00', '|99|', 21);
+
+# Reset the Daily Login Attendance for January 2019
+DELETE FROM `acc_reg_num` WHERE `key` = '#AttendanceCounter' OR `key` = '#AttendanceDate';
+
+# Remove C Snownow
+DELETE FROM `item_cash_db` WHERE `item_id` = '20242';
+# Add C New Year Shine
+REPLACE INTO `item_cash_db` (`tab`, `item_id`, `price`) VALUES (2, 20439, 25);
