@@ -63,3 +63,15 @@ DELETE FROM `acc_reg_num` WHERE `key` = '#AttendanceCounter' OR `key` = '#Attend
 DELETE FROM `item_cash_db` WHERE `item_id` = '20242';
 # Add C New Year Shine
 REPLACE INTO `item_cash_db` (`tab`, `item_id`, `price`) VALUES (2, 20439, 25);
+
+# Elemental Converter + Cursed water icons
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(12032, 'Box_Of_Storm', 'Box of Storms', 11, 1000, NULL, 200, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_WATERWEAPON,180000,1;', NULL, NULL),
+(12020, 'Water_Of_Darkness', 'Cursed Water', 11, 2, NULL, 30, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_SHADOWWEAPON,180000,1;', NULL, NULL),
+(12114, 'Elemental_Fire', 'Elemental Converter', 11, 2, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_FIREWEAPON,180000,1;', NULL, NULL),
+(12115, 'Elemental_Water', 'Elemental Converter', 11, 2, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_WATERWEAPON,180000,1;', NULL, NULL),
+(12116, 'Elemental_Earth', 'Elemental Converter', 11, 2, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_EARTHWEAPON,180000,1;', NULL, NULL),
+(12117, 'Elemental_Wind', 'Elemental Converter', 11, 2, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_WINDWEAPON,180000,1;', NULL, NULL);
+
+#manually reset the daily login
+DELETE FROM `acc_reg_num` WHERE `key` = '#DailyRewardUnique';
