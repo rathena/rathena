@@ -5899,6 +5899,7 @@
 	export_constant_npc(JT_4_F_ERENE);
 	export_constant_npc(JT_4_M_EINCPTMINER);
 	export_constant_npc(JT_4_F_EINRESERCHER);
+	export_constant_npc(JT_4_PIGOCTO);
 	#undef export_constant_npc
 
 	/* special effects */

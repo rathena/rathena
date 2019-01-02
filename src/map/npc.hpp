@@ -1140,6 +1140,8 @@ enum e_job_types
 	JT_4_F_ERENE,
 	JT_4_M_EINCPTMINER,
 	JT_4_F_EINRESERCHER,
+
+	JT_4_PIGOCTO = 10341,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
