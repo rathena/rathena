@@ -1514,5 +1514,7 @@ izlude,150,177,1	duplicate(mission_board)	Izlude Mission#12	888
 comodo,216,184,1	duplicate(mission_board)	Comodo Mission#13	888
 prontera,162,326,1	duplicate(mission_board)	Honor Mission#14	888
 mid_camp,133,261,5	duplicate(mission_board)	3rd Class Headgear#15	888
+lighthalzen,204,86,3	duplicate(mission_board)	Lighthalzen Mission#16	888
+einbech,140,154,4	duplicate(mission_board)	Einbech Mission#17	888
 
 prontera,153,285,5	duplicate(mission_board)	Special Mission#100	811
