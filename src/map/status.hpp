@@ -1965,7 +1965,7 @@ extern short current_equip_opt_index;
 //who were not on your field of sight when it happened)
 
 ///opt1: (BODYSTATE_*) Non stackable status changes.
-enum sc_opt1 {
+enum e_sc_opt1 : uint16 {
 	OPT1_NONE = 0,
 	OPT1_STONE = 1, //Petrified
 	OPT1_FREEZE,
@@ -1979,8 +1979,8 @@ enum sc_opt1 {
 };
 
 ///opt2: (HEALTHSTATE_*) Stackable status changes.
-enum sc_opt2 {
-	OPT2_NONE = 0,
+enum e_sc_opt2 : uint16 {
+	OPT2_NONE		= 0x0,
 	OPT2_POISON		= 0x0001,
 	OPT2_CURSE		= 0x0002,
 	OPT2_SILENCE		= 0x0004,
@@ -1994,8 +1994,8 @@ enum sc_opt2 {
 };
 
 ///opt3: (SHOW_EFST_*)
-enum sc_opt3 {
-	OPT3_NORMAL		= 0x0,
+enum e_sc_opt3 : uint64 {
+	OPT3_NORMAL			= 0x0,
 	OPT3_QUICKEN		= 0x00000001,
 	OPT3_OVERTHRUST		= 0x00000002,
 	OPT3_ENERGYCOAT		= 0x00000004,
@@ -2018,8 +2018,8 @@ enum sc_opt3 {
 };
 
 ///Option (EFFECTSTATE_*)
-enum e_option {
-	OPTION_NOTHING		= 0x00000000,
+enum e_option : uint64 {
+	OPTION_NOTHING		= 0x0,
 	OPTION_SIGHT		= 0x00000001,
 	OPTION_HIDE			= 0x00000002,
 	OPTION_CLOAK		= 0x00000004,
@@ -2050,6 +2050,7 @@ enum e_option {
 	OPTION_HANBOK		= 0x08000000,
 	OPTION_OKTOBERFEST	= 0x10000000,
 	OPTION_SUMMER2		= 0x20000000,
+	OPTION_MAX,
 
 	// compound constant for older carts
 	OPTION_CART	= OPTION_CART1|OPTION_CART2|OPTION_CART3|OPTION_CART4|OPTION_CART5,
@@ -2057,8 +2058,6 @@ enum e_option {
 	// compound constants
 	OPTION_DRAGON	= OPTION_DRAGON1|OPTION_DRAGON2|OPTION_DRAGON3|OPTION_DRAGON4|OPTION_DRAGON5,
 	OPTION_COSTUME	= OPTION_WEDDING|OPTION_XMAS|OPTION_SUMMER|OPTION_HANBOK|OPTION_OKTOBERFEST|OPTION_SUMMER2,
-
-	OPTION_MAX
 };
 
 ///Defines for the manner system [Skotlex]
@@ -2072,7 +2071,7 @@ enum manner_flags
 };
 
 /// Status Change State Flags
-enum scs_flag : uint64 {
+enum e_scs_flag : uint64 {
 	SCS_NONE				= 0x0,
 	SCS_NOMOVECOND			= 0x00001, ///< cond flag for SCS_NOMOVE
 	SCS_NOMOVE				= 0x00002, ///< unit unable to move
@@ -2096,7 +2095,7 @@ enum scs_flag : uint64 {
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
-enum scb_flag : uint64 {
+enum e_scb_flag : uint64 {
 	SCB_NONE	= 0x0,
 	SCB_BASE	= 0x00000001,
 	SCB_MAXHP	= 0x00000002,
@@ -2131,8 +2130,8 @@ enum scb_flag : uint64 {
 	SCB_DYE		= 0x40000000, // force cloth-dye change to 0 to avoid client crashes.
 	SCB_MAX,
 
-	SCB_BATTLE = 0x3FFFFFFE,
-	SCB_ALL = 0x3FFFFFFF,
+	SCB_BATTLE	= 0x3FFFFFFE,
+	SCB_ALL		= 0x3FFFFFFF
 };
 
 enum e_status_calc_opt {
@@ -2143,7 +2142,7 @@ enum e_status_calc_opt {
 
 /// Flags for status_change_start and status_get_sc_def
 enum e_status_change_start_flags : uint64 {
-	SCSTART_NONE       = 0x00,
+	SCSTART_NONE       = 0x0,
 	SCSTART_NOAVOID    = 0x01, /// Cannot be avoided (it has to start)
 	SCSTART_NOTICKDEF  = 0x02, /// Tick should not be reduced (by statuses or bonuses)
 	SCSTART_LOADED     = 0x04, /// When sc_data loaded (fetched from table), no values (val1 ~ val4) have to be altered/recalculate
@@ -2174,13 +2173,13 @@ enum e_bonus_script_flags : uint64 {
 	BSF_PERMANENT				= 0x200, ///< Cannot be removed by sc_end SC_ALL
 
 	// These flags cannot be stacked, BSF_FORCE_REPLACE has highest priority to check if YOU force to add both
-	BSF_FORCE_REPLACE			= 0x10000, ///< Force to replace duplicated script by expanding the duration
-	BSF_FORCE_DUPLICATE			= 0x20000, ///< Force to add duplicated script
+	BSF_FORCE_REPLACE			= 0x400, ///< Force to replace duplicated script by expanding the duration
+	BSF_FORCE_DUPLICATE			= 0x800, ///< Force to add duplicated script
 
 	// These flags aren't part of 'bonus_script' scripting flags
 	BSF_REM_ALL		= 0x0,		///< Remove all bonus script
-	BSF_REM_BUFF	= 0x100000,	///< Remove positive buff if battle_config.debuff_on_logout&1
-	BSF_REM_DEBUFF	= 0x200000,	///< Remove negative buff if battle_config.debuff_on_logout&2
+	BSF_REM_BUFF	= 0x4000,	///< Remove positive buff if battle_config.debuff_on_logout&1
+	BSF_REM_DEBUFF	= 0x8000,	///< Remove negative buff if battle_config.debuff_on_logout&2
 };
 
 ///Enum for status_get_hpbonus and status_get_spbonus
@@ -2191,7 +2190,7 @@ enum e_status_bonus {
 
 ///Enum of Status Change Flags [Cydh]
 enum e_status_change_flag : uint64 {
-	SCF_NONE = 0x0,
+	SCF_NONE				= 0x0,
 	SCF_BLEFFECT			= 0x00000001,
 	SCF_DISPLAY_PC			= 0x00000002,
 	SCF_PERMANENT			= 0x00000004,
@@ -2225,6 +2224,8 @@ enum e_status_change_flag : uint64 {
 	SCF_MAX
 };
 
+#define SCF_OPT_FLAGS (SCF_OPT_CHANGEOPTION|SCF_OPT_CHANGELOOK|SCF_TRIGGER_ONTOUCH_)
+
 /// Enum for status_calc_weight and status_calc_cart_weight
 enum e_status_calc_weight_opt {
 	CALCWT_NONE = 0x0,
@@ -2232,8 +2233,6 @@ enum e_status_calc_weight_opt {
 	CALCWT_MAXBONUS = 0x2,	///< Recalculate max weight based on skill/status/configuration bonuses
 	CALCWT_CARTSTATE = 0x4,	///< Whether to check for cart state
 };
-
-#define SCF_OPT_FLAGS (SCF_OPT_CHANGEOPTION|SCF_OPT_CHANGELOOK|SCF_TRIGGER_ONTOUCH_)
 
 // Enum for refine chance types
 enum e_refine_chance_type {
@@ -2497,7 +2496,7 @@ int status_change_clear(struct block_list* bl, int type);
 void status_change_clear_buffs(struct block_list* bl, uint8 type);
 void status_change_clear_onChangeMap(struct block_list *bl, struct status_change *sc);
 
-#define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum scb_flag)(flag), SCO_NONE)
+#define status_calc_bl(bl, flag) status_calc_bl_(bl, (enum e_scb_flag)(flag), SCO_NONE)
 #define status_calc_mob(md, opt) status_calc_bl_(&(md)->bl, SCB_ALL, opt)
 #define status_calc_pet(pd, opt) status_calc_bl_(&(pd)->bl, SCB_ALL, opt)
 #define status_calc_pc(sd, opt) status_calc_bl_(&(sd)->bl, SCB_ALL, opt)
@@ -2508,7 +2507,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 
 bool status_calc_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
 bool status_calc_cart_weight(struct map_session_data *sd, enum e_status_calc_weight_opt flag);
-void status_calc_bl_(struct block_list *bl, enum scb_flag flag, enum e_status_calc_opt opt);
+void status_calc_bl_(struct block_list *bl, enum e_scb_flag flag, enum e_status_calc_opt opt);
 int status_calc_mob_(struct mob_data* md, enum e_status_calc_opt opt);
 void status_calc_pet_(struct pet_data* pd, enum e_status_calc_opt opt);
 int status_calc_pc_(struct map_session_data* sd, enum e_status_calc_opt opt);
@@ -2520,7 +2519,7 @@ int status_calc_npc_(struct npc_data *nd, enum e_status_calc_opt opt);
 void status_calc_misc(struct block_list *bl, struct status_data *status, int level);
 void status_calc_regen(struct block_list *bl, struct status_data *status, struct regen_data *regen);
 void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, struct status_change *sc);
-void status_calc_state(struct block_list *bl, struct status_change *sc, uint32 flag, bool start);
+void status_calc_state(struct block_list *bl, struct status_change *sc, enum e_scs_flag flag, bool start);
 
 void status_calc_slave_mode(struct mob_data *md, struct mob_data *mmd);
 
@@ -2544,8 +2543,8 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 
 // Status changes accessors for StatusChange database
 enum efst_type status_sc_get_icon(enum sc_type sc);
-uint32 status_sc_get_calc_flag(enum sc_type sc);
-uint32 status_sc_get_flag(enum sc_type sc);
+uint64 status_sc_get_calc_flag(enum sc_type sc);
+uint64 status_sc_get_flag(enum sc_type sc);
 uint16 status_sc_get_skill(enum sc_type sc_type);
 uint16 status_efst_get_bl_type(enum efst_type efst);
 

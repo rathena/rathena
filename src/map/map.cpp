@@ -2033,7 +2033,8 @@ int map_quit(struct map_session_data *sd) {
 			if (!sd->sc.data[i])
 				continue;
 			else {
-				uint32 flag = status_sc_get_flag((sc_type)i);
+				enum e_scb_flag flag = static_cast<e_scb_flag>(status_sc_get_flag((sc_type)i));
+
 				switch (i) {
 					case SC_ENDURE: //No need to save infinite endure.
 					case SC_REGENERATION:

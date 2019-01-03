@@ -1405,8 +1405,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case NPC_POISON:
 	case NPC_SILENCEATTACK:
 	case NPC_STUNATTACK:
-	case NPC_HELLPOWER:
-		sc_start(src,bl,skill_get_sc(skill_id),50+10*skill_lv,skill_lv,skill_get_time2(skill_id,skill_lv));
+	case NPC_BLEEDING:
+		sc_start(src,bl,skill_get_sc(skill_id),(20*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case NPC_ACIDBREATH:
 	case NPC_ICEBREATH:
@@ -4373,9 +4373,8 @@ static int skill_active_reverberation(struct block_list *bl, va_list ap) {
 	if (bl->type != BL_SKILL)
 		return 0;
 	if (su->alive && (sg = su->group) && sg->skill_id == WM_REVERBERATION) {
-		clif_changetraplook(bl, UNT_USED_TRAPS);
 		map_foreachinallrange(skill_trap_splash, bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, bl, gettick());
-		su->limit = DIFF_TICK(gettick(), sg->tick) + 1500;
+		su->limit = DIFF_TICK(gettick(), sg->tick);
 		sg->unit_id = UNT_USED_TRAPS;
 	}
 	return 1;
@@ -5961,7 +5960,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,
 				sc_start4(src,bl,skill_get_sc(skill_id),100,skill_lv,src->id,0,0,duration));
-			hom_delspiritball(hd,skill_id==MH_EQC?3:2,0); //only EQC consume 3 in grp 2
 			skill_attack(skill_get_type(skill_id),src,src,bl,skill_id,skill_lv,tick,flag);
 		}
 		break;
@@ -7846,11 +7844,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if(!tsc || !tsc->count)
 				break;
 
-			if( sd && dstsd && !map_flag_vs(sd->bl.m) && sd->status.guild_id == dstsd->status.guild_id ) {
-				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
-				break;
-			}
-
 			//Statuses that can't be Dispelled
 			for(i=0;i<SC_MAX;i++) {
 				if (!tsc->data[i])
@@ -7876,6 +7869,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 			break;
 		}
+
 		//Affect all targets on splash area.
 		map_foreachinallrange(skill_area_sub, bl, i, BL_CHAR,
 			src, skill_id, skill_lv, tick, flag|1,
@@ -13176,7 +13170,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 		return 0; // Under Hovering characters are immune to select trap and ground target skills.
 
 	type = skill_get_sc(sg->skill_id);
-	sce = (sc && type != SC_NONE)?sc->data[type]:NULL;
+	sce = (sc && type != SC_NONE) ? sc->data[type] : NULL;
 	skill_id = sg->skill_id; //In case the group is deleted, we need to return the correct skill id, still.
 	switch (sg->unit_id) {
 		case UNT_SPIDERWEB:
@@ -14516,7 +14510,7 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap)
 	if (bl == src)
 		return 0;
 
-	if (pc_isdead(tsd))
+	if(pc_isdead(tsd))
 		return 0;
 
 	if (tsd->sc.cant.cast)
@@ -20677,6 +20671,7 @@ int skill_block_check(struct block_list *bl, sc_type type , uint16 skill_id) {
 int skill_disable_check(struct status_change *sc, uint16 skill_id)
 {
 	enum sc_type type = skill_get_sc(skill_id);
+
 	if (type <= SC_NONE || type >= SC_MAX)
 		return 0;
 	switch( skill_id ) { //HP & SP Consumption Check
@@ -20702,7 +20697,6 @@ int skill_disable_check(struct status_change *sc, uint16 skill_id)
 		case KO_YAMIKUMO:
 		case RA_WUGDASH:
 		case RA_CAMOUFLAGE:
-		case SU_HIDE:
 			if( sc->data[type] )
 				return 1;
 			break;

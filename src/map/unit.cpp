@@ -2241,10 +2241,10 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 	}
 
 	if( src->type == BL_PC &&
-		target->type == BL_NPC) {
-			// Monster npcs [Valaris]
-			npc_click((TBL_PC*)src,(TBL_NPC*)target); // Submitted by leinsirk10 [Celest]
-			return 0;
+		target->type == BL_NPC ) {
+		// Monster npcs [Valaris]
+		npc_click((TBL_PC*)src,(TBL_NPC*)target);
+		return 0;
 	}
 
 	sc = status_get_sc(src);
@@ -2870,8 +2870,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
 
 	if(sc && sc->count ) { // map-change/warp dispells.
-		uint16 i;
-		for (i = 0; i < SC_MAX; i++) {
+		for (int i = 0; i < SC_MAX; i++) {
 			if (!sc->data[i] || !(status_sc_get_flag((sc_type)i)&SCF_REM_ON_CHANGEMAP))
 				continue;
 			status_change_end(bl, (sc_type)i, INVALID_TIMER);
@@ -3198,8 +3197,7 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				sd->combos.count = 0;
 			}
 
-			/* [Ind] */
-			if( sd->sc_display_count ) {
+			if( sd->sc_display_count ) { /* [Ind] */
 				for( i = 0; i < sd->sc_display_count; i++ )
 					ers_free(pc_sc_display_ers, sd->sc_display[i]);
 

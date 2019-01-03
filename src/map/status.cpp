@@ -1,6 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include "status.hpp"
+
 #include <functional>
 #include <math.h>
 #include <stdlib.h>
@@ -67,13 +69,13 @@ short current_equip_opt_index; /// Contains random option index of an equipped i
 struct s_status_change_db {
 	enum sc_type type;			///< SC_
 	enum efst_type icon;		///< EFST_
-	uint32 state;				///< SCS_
-	uint32 calc_flag;			///< SCB_ flags
-	uint8 opt1;					///< OPT1_
+	uint64 state;				///< SCS_
+	uint64 calc_flag;			///< SCB_ flags
+	uint16 opt1;				///< OPT1_
 	uint16 opt2;				///< OPT2_
-	uint32 opt3;				///< OPT1_
-	uint32 look;				///, OPTION_ Changelook
-	uint32 flag;				///< SCF_ Flags, enum e_status_change_flag
+	uint64 opt3;				///< OPT1_
+	uint64 look;				///, OPTION_ Changelook
+	uint64 flag;				///< SCF_ Flags, enum e_status_change_flag
 	bool display;				///< Display status effect/icon (for certain state)
 	uint16 skill_id;			///< Associated skill for (addeff) duration lookups
 	std::vector<sc_type> end;	///< List of SC that will be ended when this SC is activated
@@ -200,21 +202,21 @@ enum efst_type status_sc_get_icon(enum sc_type type) { CHK_SC2(type, icon, EFST_
  * @param type: SC type
  * @return state: State value
  **/
-uint32 status_sc_get_state(enum sc_type type) { CHK_SC2(type, state, SCS_NONE); }
+uint64 status_sc_get_state(enum sc_type type) { CHK_SC2(type, state, SCS_NONE); }
 
 /**
  * Get flag of SC (SCB value) for status_calc_ flag
  * @param type: SC type
  * @return cal_flag: Calc value 
  **/
-uint32 status_sc_get_calc_flag(enum sc_type type) { CHK_SC2(type, calc_flag, SCB_NONE); }
+uint64 status_sc_get_calc_flag(enum sc_type type) { CHK_SC2(type, calc_flag, SCB_NONE); }
 
 /**
  * Get Opt1 of SC
  * @param type: SC type
  * @return opt1: OPT1 value
  **/
-uint8 status_sc_get_opt1(enum sc_type type) { CHK_SC2(type, opt1, OPT1_NONE); }
+uint16 status_sc_get_opt1(enum sc_type type) { CHK_SC2(type, opt1, OPT1_NONE); }
 
 /**
  * Get Opt2 of SC
@@ -228,21 +230,21 @@ uint16 status_sc_get_opt2(enum sc_type type) { CHK_SC2(type, opt2, OPT2_NONE); }
  * @param type: SC type
  * @return opt3: OPT3 value
  **/
-uint32 status_sc_get_opt3(enum sc_type type) { CHK_SC2(type, opt3, OPT3_NORMAL); }
+uint64 status_sc_get_opt3(enum sc_type type) { CHK_SC2(type, opt3, OPT3_NORMAL); }
 
 /**
  * Get Option look of SC
  * @param type: SC type
  * @return look: OPTION_ value
  **/
-uint32 status_sc_get_look(enum sc_type type) { CHK_SC2(type, look, OPTION_NOTHING); }
+uint64 status_sc_get_look(enum sc_type type) { CHK_SC2(type, look, OPTION_NOTHING); }
 
 /**
  * Get SC's option flags (SCO value)
  * @param type: SC type
  * @return flags: Option flags for SC
  **/
-uint32 status_sc_get_flag(enum sc_type type) { CHK_SC2(type, flag, 0); }
+uint64 status_sc_get_flag(enum sc_type type) { CHK_SC2(type, flag, SCB_NONE); }
 
 /**
  * Get SC's minimum duration after sc_def calculation
@@ -270,7 +272,7 @@ struct script_code *status_sc_get_script(enum sc_type type) { CHK_SC2(type, scri
  * @param sc: SC type
  * @return True: Stop, False: Continue
  **/
-bool status_sc_get_end_return(enum sc_type type) { CHK_SC2(type, end_return, 0); }
+bool status_sc_get_end_return(enum sc_type type) { CHK_SC2(type, end_return, false); }
 
 /**
  * Get SC's END list
@@ -557,11 +559,11 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	if( hp && !(flag&1) ) {
 		if( sc ) {
 			struct status_change_entry *sce;
-			uint16 i;
-			for (i = 0; i < SC_MAX; i++) {
+
+			for (int i = 0; i < SC_MAX; i++) {
 				if (status_sc_get_flag((sc_type)i)&SCF_REM_ON_DAMAGED)
-					if (i != SC_STONE || (sc->data[SC_STONE] && sc->opt1 == OPT1_STONE))
-						status_change_end(target, SC_STONE, INVALID_TIMER);
+					if (i != SC_STONE || (i == SC_STONE && sc->data[SC_STONE] && sc->opt1 == OPT1_STONE))
+						status_change_end(target, (sc_type)i, INVALID_TIMER);
 			}
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				/** [Skotlex]
@@ -3629,7 +3631,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
  * @param flag: Which state to apply to bl
  * @param start: (1) start state, (0) remove state
  */
-void status_calc_state( struct block_list *bl, struct status_change *sc, uint32 flag, bool start )
+void status_calc_state( struct block_list *bl, struct status_change *sc, enum e_scs_flag flag, bool start )
 {
 
 	/// No sc at all, we can zero without any extra weight over our conciousness
@@ -4222,7 +4224,7 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
  * @param flag: Which status has changed on bl
  * @param opt: If true, will cause status_calc_* functions to run their base status initialization code
  */
-void status_calc_bl_(struct block_list* bl, enum scb_flag flag, enum e_status_calc_opt opt)
+void status_calc_bl_(struct block_list* bl, enum e_scb_flag flag, enum e_status_calc_opt opt)
 {
 	struct status_data b_status; // Previous battle status
 	struct status_data* status; // Pointer to current battle status
@@ -5008,8 +5010,6 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		watk += sc->data[SC_PYROCLASTIC]->val2;
 	if(sc->data[SC_ANGRIFFS_MODUS])
 		watk += watk * sc->data[SC_ANGRIFFS_MODUS]->val2/100;
-	if( sc->data[SC_FLASHCOMBO] )
-		watk += sc->data[SC_FLASHCOMBO]->val2;
 	if(sc->data[SC_ODINS_POWER])
 		watk += 40 + 30 * sc->data[SC_ODINS_POWER]->val1;
 	if (sc->data[SC_FLASHCOMBO])
@@ -7364,8 +7364,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	struct status_change_entry* sce;
 	struct status_data *status;
 	struct view_data *vd;
-	int opt_flag, calc_flag, undead_flag, val_flag = 0, t_tickime = 0;
+	int opt_flag, undead_flag, val_flag = 0, t_tickime = 0;
 	bool sc_isnew = true;
+	uint64 calc_flag;
 
 	nullpo_ret(bl);
 	sc = status_get_sc(bl);
@@ -7790,7 +7791,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	vd = status_get_viewdata(bl);
 	calc_flag = scdb->calc_flag;
 	if(!(flag&SCSTART_LOADED)) // &4 - Do not parse val settings when loading SCs
-	switch(type) {
+	switch(type)
+	{
 		/* Permanent effects */
 		case SC_AETERNA:
 		case SC_MODECHANGE:
@@ -8066,7 +8068,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val3 = max(val3, 100); // Incubation time
 			val4 = max(tick-val3, 100); // Petrify time
 			tick = val3;
-			calc_flag = 0; // Actual status changes take effect on petrified state.
+			calc_flag = SCB_NONE; // Actual status changes take effect on petrified state.
 			break;
 
 		case SC_DPOISON:
@@ -9732,13 +9734,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	if (battle_config.sc_castcancel&bl->type && scdb->flag&SCF_STOP_CASTING)
 		unit_skillcastcancel(bl,0);
 
-	opt_flag = 0;
+	opt_flag = scdb->flag&SCF_OPT_FLAGS;
 	sc->opt1 = scdb->opt1;
 	sc->opt2 |= scdb->opt2;
 	sc->opt3 |= scdb->opt3;
 	sc->option |= scdb->look;
-
-	opt_flag = scdb->flag&SCF_OPT_FLAGS;
 
 	switch(type) {
 		case SC_STONE: 
@@ -9821,8 +9821,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// Non-zero
 	// Calc state for SC_STONE when OPT1_STONE in the timer
 	if (sc_isnew && scdb->state && type != SC_STONE)
-		status_calc_state(bl,sc,scdb->state,true);
-
+		status_calc_state(bl,sc,static_cast<e_scs_flag>(scdb->state),true);
 
 	if(sd) {
 		if (sd->pd)
@@ -9910,7 +9909,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_ITEMSCRIPT: // Shows Buff Icons
 			if (sd && val2 != EFST_BLANK)
-				clif_status_change(bl, (enum efst_type)val2, 1, tick, 0, 0, 0);
+				clif_status_change(bl, (efst_type)val2, 1, tick, 0, 0, 0);
 			break;
 		case SC_GVG_GIANT:
 		case SC_GVG_GOLEM:
@@ -9965,11 +9964,11 @@ int status_change_clear(struct block_list* bl, int type)
 		return 0;
 
 	for (i = 0; i < SC_MAX; i++) {
-		uint32 sc_flag = 0;
 		if (!sc->data[i])
 			continue;
 
-		sc_flag = status_sc_get_flag((sc_type)i);
+		enum e_scb_flag sc_flag = static_cast<e_scb_flag>(status_sc_get_flag((sc_type)i));
+
 		if (type == 0) { // Type 0: PC killed
 			if (sc_flag&SCF_NO_REM_ONDEAD) {
 				switch (i) {
@@ -9986,8 +9985,7 @@ int status_change_clear(struct block_list* bl, int type)
 			continue;
 
 		status_change_end(bl, (sc_type)i, INVALID_TIMER);
-		
-		if (type == 1 && sc->data[i]) { // If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
+		if( type == 1 && sc->data[i] ) { // If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
 			(sc->count)--;
 			if (sc->data[i]->timer != INVALID_TIMER)
 				delete_timer(sc->data[i]->timer, status_change_timer);
@@ -10023,7 +10021,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	struct status_data *status;
 	struct view_data *vd;
 	int opt_flag = 0;
-	enum scb_flag calc_flag = SCB_NONE;
+	enum e_scb_flag calc_flag = SCB_NONE;
 
 	nullpo_ret(bl);
 
@@ -10104,7 +10102,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	(sc->count)--;
 
 	if (scdb->state)
-		status_calc_state(bl,sc,scdb->state,false);
+		status_calc_state(bl,sc,static_cast<e_scs_flag>(scdb->state),false);
 
 	sc->data[type] = NULL;
 
@@ -10112,7 +10110,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		status_display_remove(bl,type);
 
 	vd = status_get_viewdata(bl);
-	calc_flag = static_cast<scb_flag>(scdb->calc_flag);
+	calc_flag = static_cast<e_scb_flag>(scdb->calc_flag);
 
 	switch(type) {
 		case SC_GRANITIC_ARMOR:
@@ -10562,7 +10560,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	switch (type) {
 		case SC_SWOO:
 		case SC_SKA:
-			opt_flag = 0x8;
+			opt_flag = SCF_OPT_CHANGEOPTION;
  			break;
 		case SC_DANCING:
 			if ((sce->val1&0xFFFF) == CG_MOONLIT)
@@ -10592,7 +10590,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	if (calc_flag&SCB_DYE) { // Restore DYE color
 		if (vd && !vd->cloth_color && sce->val4)
 			clif_changelook(bl,LOOK_CLOTHES_COLOR,sce->val4);
-		calc_flag = static_cast<scb_flag>(calc_flag&~SCB_DYE);
+		calc_flag = static_cast<e_scb_flag>(calc_flag&~SCB_DYE);
 	}
 
 	/*if (calc_flag&SCB_BODY)// Might be needed in the future. [Rytech]
@@ -10605,7 +10603,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
 	clif_status_change(bl,scdb->icon,0,0,0,0,0);
 
-	if( opt_flag&0x8 ) // bugreport:681
+	if( opt_flag&SCF_OPT_CHANGEOPTION ) // bugreport:681
 		clif_changeoption2(bl);
 	else if(opt_flag) {
 		clif_changeoption(bl);
@@ -10754,7 +10752,7 @@ TIMER_FUNC(status_change_timer){
 			}
 			status_change_end(bl, SC_AETERNA, INVALID_TIMER);
 			sc->opt1 = OPT1_STONE;
-			status_calc_state(bl,sc,status_sc_get_calc_flag(SC_STONE),1);
+			status_calc_state(bl,sc,static_cast<e_scs_flag>(status_sc_get_state(SC_STONE)),1);
 			clif_changeoption(bl);
 			sc_timer_next(min(sce->val4, interval) + tick);
 			sce->val4 -= interval; //Remaining time
@@ -11702,7 +11700,8 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 
 	//Clears buffs with specified flag and type
 	for (i = 0; i < SC_MAX; i++) {
-		uint32 flag = status_sc_get_flag((sc_type)i);
+		enum e_scb_flag flag = static_cast<e_scb_flag>(status_sc_get_flag((sc_type)i));
+
 		if (!sc->data[i] || flag&SCF_NO_CLEARBUFF) //Skip status with SCF_NO_CLEARBUFF, no matter what
 			continue;
 		// &SCCB_LUXANIMA : Cleared by RK_LUXANIMA
@@ -11720,7 +11719,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 		// &SCCB_BUFFS : Clears buffs
 		if (!(type&SCCB_BUFFS) && !(flag&SCF_DEBUFF))
 			continue;		
-		if (i == SC_SATURDAYNIGHTFEVER || i == SC_BERSERK) // Mark to not lose hp
+		if (i == SC_SATURDAYNIGHTFEVER || i == SC_BERSERK) // Mark to not lose HP
 			sc->data[i]->val2 = 0;
 		status_change_end(bl,(sc_type)i, INVALID_TIMER);
 	}
@@ -12372,7 +12371,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 			if (!script_get_constant(icon.c_str(), &icon_id) || icon_id <= EFST_BLANK || icon_id >= EFST_MAX)
 				ShowWarning("status_read_status_db_sub: Invalid status Icon %s. Non-existent constant in \"%s\", defaulting to EFST_BLANK.\n", icon.c_str(), source.c_str());
 			else
-				entry->icon = (efst_type)icon_id;
+				entry->icon = static_cast<efst_type>(icon_id);
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid Icon field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12455,7 +12454,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 				ShowWarning("status_read_status_db_sub: Invalid status OPT1 %s. Non-existent constant in \"%s\", defaulting to OPT1_NONE.\n", opt.c_str(), source.c_str());
 				entry->opt1 = OPT1_NONE;
 			} else
-				entry->opt1 = opt_id;
+				entry->opt1 = static_cast<e_sc_opt1>(opt_id);
 		}
 		catch (...) {
 			yaml_invalid_warning("status_read_status_db_sub: Status definition with invalid OPT1 field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
@@ -12724,7 +12723,8 @@ static void status_readdb_status(const std::string &directory, const std::string
  *	refine_db.txt: Refining data table
  * @return 0
  */
-void status_readdb(void) {
+void status_readdb(void)
+{
 	int i, j, k;
 	const char* dbsubpath[] = {
 		"",
@@ -12777,8 +12777,8 @@ void status_readdb(void) {
 			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
 		}
 
+		status_readdb_attrfix(dbsubpath2,i > 0); // !TODO use sv_readdb ?
 		status_readdb_status(dbsubpath2, "status_db.yml");
-		status_readdb_attrfix(dbsubpath2, i > 0); // !TODO use sv_readdb ?
 		sv_readdb(dbsubpath1, "size_fix.txt",',',MAX_WEAPON_TYPE,MAX_WEAPON_TYPE,ARRAYLENGTH(atkmods),&status_readdb_sizefix, i > 0);
 
 		status_yaml_readdb_refine(dbsubpath2, "refine_db.yml");

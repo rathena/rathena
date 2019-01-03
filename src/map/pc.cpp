@@ -1653,7 +1653,6 @@ void pc_calc_skilltree(struct map_session_data *sd)
 	for( i = 0; i < MAX_SKILL; i++ ) {
 		if( sd->status.skill[i].flag != SKILL_FLAG_PLAGIARIZED && sd->status.skill[i].flag != SKILL_FLAG_PERM_GRANTED ) //Don't touch these
 			sd->status.skill[i].id = 0; //First clear skills.
-
 		/* permanent skills that must be re-checked */
 		if( sd->status.skill[i].flag == SKILL_FLAG_PERM_GRANTED ) {
 			uint16 sk_id = skill_idx2id(i);
@@ -8957,8 +8956,12 @@ void pc_setoption(struct map_session_data *sd,int type)
 			status_calc_pc(sd,SCO_NONE);
 			if (sd->sc.count) {
 				for (int i = 0; i < SC_MAX; i++) {
-					if (sd->sc.data[i] && (status_sc_get_flag((sc_type)i)&SCF_REM_ON_MADOGEAR))
-						status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
+					if (sd->sc.data[i]) {
+						int skill_id;
+
+						if (status_sc_get_flag((sc_type)i)&SCF_REM_ON_MADOGEAR || ((skill_id = status_sc_get_skill((sc_type)i)) >= 0 && !(skill_get_inf3(skill_id)&INF3_USABLE_MADO) && skill_get_sc(skill_id) != SC_NONE))
+							status_change_end(&sd->bl,(sc_type)i, INVALID_TIMER);
+					}
 				}
 			}
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
