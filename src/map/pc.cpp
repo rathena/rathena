@@ -8955,7 +8955,7 @@ void pc_setoption(struct map_session_data *sd,int type)
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
 		if( (type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR)) || (!(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR) ) {
 			status_calc_pc(sd,SCO_NONE);
-			if (&sd->sc) {
+			if (sd->sc.count) {
 				for (int i = 0; i < SC_MAX; i++) {
 					if (sd->sc.data[i] && (status_sc_get_flag((sc_type)i)&SCF_REM_ON_MADOGEAR))
 						status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
