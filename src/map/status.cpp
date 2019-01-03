@@ -915,6 +915,8 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		return false;
 
 	if (!skill_id) { // Normal attack checks.
+		if (sc && sc->count && sc->cant.attack)
+			return false;
 		// This mode is only needed for melee attacking.
 		if (!status_has_mode(status,MD_CANATTACK))
 			return false;
@@ -969,7 +971,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			return false;
 		}
 
-		if (skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
+		if (sc->cant.cast && skill_id != RK_REFRESH && skill_id != SU_GROOMING && skill_id != SR_GENTLETOUCH_CURE) { // Stuned/Frozen/etc
 			if (flag != 1) // Can't cast, casted stuff can't damage.
 				return false;
 			if (skill_get_casttype(skill_id) == CAST_DAMAGE)
