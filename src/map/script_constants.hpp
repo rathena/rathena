@@ -7312,6 +7312,8 @@
 	export_constant(SCF_OPT_CHANGELOOK);
 	export_constant(SCF_TRIGGER_ONTOUCH_);
 	export_constant(SCF_DISPLAY_NPC);
+	export_constant(SCF_REQUIRE_WEAPON);
+	export_constant(SCF_REQUIRE_SHIELD);
 
 	#undef export_constant
 	#undef export_constant2
