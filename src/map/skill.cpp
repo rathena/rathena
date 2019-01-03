@@ -1842,8 +1842,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		sc_start(src,bl,SC_STUN,100,skill_lv,skill_get_time2(skill_id,skill_lv));
 		break;
 	case RL_BANISHING_BUSTER: {
-			uint16 i, n = skill_lv;
-
 			if (!tsc || !tsc->count)
 				break;
 
@@ -1856,18 +1854,24 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 				break;
 			}
 
-			for (i = 0; n > 0 && i < SC_MAX; i++) {
-				if (!tsc->data[i])
+			uint16 n = skill_lv;
+
+			for (const auto &it : statuses) {
+				enum sc_type status = static_cast<sc_type>(it.first);
+
+				if (n <= 0)
+					break;
+				if (!tsc->data[status])
 					continue;
 				
-				if (status_sc_get_flag((enum sc_type)i)&SCF_NO_BANISHING_BUSTER)
+				if (status_sc_get_flag(status)&SCF_NO_BANISHING_BUSTER)
 					continue;
 
-				switch (i) {
+				switch (status) {
 					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
 					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
 					case SC_FORTUNE:		case SC_SERVICE4U:
-						if (!battle_config.dispel_song || tsc->data[i]->val4 == 0)
+						if (!battle_config.dispel_song || tsc->data[status]->val4 == 0)
 							continue; //If in song area don't end it, even if config enabled
 						break;
 					case SC_ASSUMPTIO:
@@ -1875,9 +1879,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 							continue;
 						break;
 				}
-				if( i == SC_BERSERK || i == SC_SATURDAYNIGHTFEVER )
-					tsc->data[i]->val2 = 0;
-				status_change_end(bl,(sc_type)i,INVALID_TIMER);
+				if( status == SC_BERSERK || status == SC_SATURDAYNIGHTFEVER )
+					tsc->data[status]->val2 = 0;
+				status_change_end(bl,status,INVALID_TIMER);
 				n--;
 			}
 			//Remove bonus_script by Banishing Buster
@@ -7845,18 +7849,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 
 			//Statuses that can't be Dispelled
-			for(i=0;i<SC_MAX;i++) {
-				if (!tsc->data[i])
+			for(const auto &it : status) {
+				enum sc_type status = static_cast<sc_type>(it.first);
+
+				if (!tsc->data[status])
 					continue;
 
-				if (status_sc_get_flag((enum sc_type)i)&SCF_NO_DISPELL)
+				if (status_sc_get_flag(status)&SCF_NO_DISPELL)
 					continue;
-				switch (i) {
+				switch (status) {
 					// bugreport:4888 these songs may only be dispelled if you're not in their song area anymore
 					case SC_WHISTLE:		case SC_ASSNCROS:		case SC_POEMBRAGI:
 					case SC_APPLEIDUN:		case SC_HUMMING:		case SC_DONTFORGETME:
 					case SC_FORTUNE:		case SC_SERVICE4U:
-						if (!battle_config.dispel_song || tsc->data[i]->val4 == 0)
+						if (!battle_config.dispel_song || tsc->data[status]->val4 == 0)
 							continue; //If in song area don't end it, even if config enabled
 						break;
 					case SC_ASSUMPTIO:
@@ -7864,8 +7870,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 							continue;
 						break;
 				}
-				if(i == SC_BERSERK) tsc->data[i]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
-				status_change_end(bl, (sc_type)i, INVALID_TIMER);
+				if(i == SC_BERSERK) tsc->data[status]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
+				status_change_end(bl, status, INVALID_TIMER);
 			}
 			break;
 		}
@@ -9233,21 +9239,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 
 			//Statuses change that can't be removed by Cleareance
-			for( i = 0; i < SC_MAX; i++ ) {
-				if (!tsc->data[i])
+			for(const auto &it : statuses) {
+				enum sc_type status = static_cast<sc_type>(it.first);
+
+				if (!tsc->data[status])
 					continue;
 
-				if (status_sc_get_flag((enum sc_type)i)&SCF_NO_CLEARANCE)
+				if (status_sc_get_flag(status)&SCF_NO_CLEARANCE)
 					continue;
 
-				switch (i) {
+				switch (status) {
 					case SC_ASSUMPTIO:
 						if (bl->type == BL_MOB)
 							continue;
 						break;
 				}
-				if(i == SC_BERSERK) tsc->data[i]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
-				status_change_end(bl,(sc_type)i,INVALID_TIMER);
+				if(i == SC_BERSERK) tsc->data[status]->val2=0; //Mark a dispelled berserk to avoid setting hp to 100 by setting hp penalty to 0.
+				status_change_end(bl,status,INVALID_TIMER);
 			}
 			break;
 		}

@@ -5470,9 +5470,11 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		if (sd->sc.count) { // Cancel some map related stuff.
 			if (sd->sc.data[SC_JAILED])
 				return SETPOS_MAPINDEX; //You may not get out!
-			for (int i = 0; i < SC_MAX; i++) {
-				if (sd->sc.data[i] && status_sc_get_flag((sc_type)i)&SCF_REM_ON_MAPWARP)
-					status_change_end(&sd->bl, (sc_type)i, INVALID_TIMER);
+			for (const auto &it : statuses) {
+				enum sc_type status = static_cast<sc_type>(it.first);
+
+				if (sd->sc.data[status] && status_sc_get_flag(status)&SCF_REM_ON_MAPWARP)
+					status_change_end(&sd->bl, status, INVALID_TIMER);
 			}
 			if (sd->sc.data[SC_KNOWLEDGE]) {
 				struct status_change_entry *sce = sd->sc.data[SC_KNOWLEDGE];
@@ -5772,47 +5774,30 @@ uint8 pc_checkskill(struct map_session_data *sd, uint16 skill_id)
  */
 static void pc_checkallowskill(struct map_session_data *sd)
 {
-	const enum sc_type scw_list[] = {
-		SC_TWOHANDQUICKEN,
-		SC_ONEHAND,
-		SC_AURABLADE,
-		SC_PARRYING,
-		SC_SPEARQUICKEN,
-		SC_ADRENALINE,
-		SC_ADRENALINE2,
-		SC_DANCING,
-		SC_GATLINGFEVER,
-	};
-	uint8 i;
 	nullpo_retv(sd);
 
 	if(!sd->sc.count)
 		return;
 
-	for (i = 0; i < ARRAYLENGTH(scw_list); i++)
-	{	// Skills requiring specific weapon types
-		if( scw_list[i] == SC_DANCING && !battle_config.dancing_weaponswitch_fix )
-			continue;
-		if(sd->sc.data[scw_list[i]] &&
-			!pc_check_weapontype(sd,skill_get_weapontype(status_sc_get_skill(scw_list[i]))))
-			status_change_end(&sd->bl, scw_list[i], INVALID_TIMER);
+	for (const auto &it : statuses) {
+		enum sc_type status = static_cast<sc_type>(it.first);
+
+		if (status_sc_get_flag(status)&SCF_REQUIRE_WEAPON) { // Skills requiring specific weapon types
+			if (status == SC_DANCING && !battle_config.dancing_weaponswitch_fix)
+				continue;
+			if (sd->sc.data[status] && !pc_check_weapontype(sd, skill_get_weapontype(status_sc_get_skill(status))))
+				status_change_end(&sd->bl, status, INVALID_TIMER);
+		}
+
+		if (status_sc_get_flag(status)&SCF_REQUIRE_SHIELD) { // Skills requiring a shield
+			if (sd->sc.data[status] && sd->status.shield <= 0)
+				status_change_end(&sd->bl, status, INVALID_TIMER);
+		}
 	}
 
 	if(sd->sc.data[SC_SPURT] && sd->status.weapon)
 		// Spurt requires bare hands (feet, in fact xD)
 		status_change_end(&sd->bl, SC_SPURT, INVALID_TIMER);
-
-	if(sd->status.shield <= 0) { // Skills requiring a shield
-		const enum sc_type scs_list[] = {
-			SC_AUTOGUARD,
-			SC_DEFENDER,
-			SC_REFLECTSHIELD,
-			SC_REFLECTDAMAGE
-		};
-		for (i = 0; i < ARRAYLENGTH(scs_list); i++)
-			if(sd->sc.data[scs_list[i]])
-				status_change_end(&sd->bl, scs_list[i], INVALID_TIMER);
-	}
 }
 
 /*==========================================
@@ -8955,12 +8940,14 @@ void pc_setoption(struct map_session_data *sd,int type)
 		if( (type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR)) || (!(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR) ) {
 			status_calc_pc(sd,SCO_NONE);
 			if (sd->sc.count) {
-				for (int i = 0; i < SC_MAX; i++) {
-					if (sd->sc.data[i]) {
+				for (const auto &it : statuses) {
+					enum sc_type status = static_cast<sc_type>(it.first);
+
+					if (sd->sc.data[status]) {
 						int skill_id;
 
-						if (status_sc_get_flag((sc_type)i)&SCF_REM_ON_MADOGEAR || ((skill_id = status_sc_get_skill((sc_type)i)) >= 0 && !(skill_get_inf3(skill_id)&INF3_USABLE_MADO) && skill_get_sc(skill_id) != SC_NONE))
-							status_change_end(&sd->bl,(sc_type)i, INVALID_TIMER);
+						if (status_sc_get_flag(status)&SCF_REM_ON_MADOGEAR || ((skill_id = status_sc_get_skill(status)) >= 0 && !(skill_get_inf3(skill_id)&INF3_USABLE_MADO) && skill_get_sc(skill_id) != SC_NONE))
+							status_change_end(&sd->bl, status, INVALID_TIMER);
 					}
 				}
 			}

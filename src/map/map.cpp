@@ -2029,24 +2029,26 @@ int map_quit(struct map_session_data *sd) {
 	//map_quit handles extra specific data which is related to quitting normally
 	//(changing map-servers invokes unit_free but bypasses map_quit)
 	if( sd->sc.count ) {
-		for (i = 0; i < SC_MAX; i++) {
-			if (!sd->sc.data[i])
+		for (const auto &it : statuses) {
+			enum sc_type status = static_cast<sc_type>(it.first);
+
+			if (!sd->sc.data[status])
 				continue;
 			else {
-				enum e_scb_flag flag = static_cast<e_scb_flag>(status_sc_get_flag((sc_type)i));
+				enum e_scb_flag flag = static_cast<e_scb_flag>(status_sc_get_flag(status));
 
-				switch (i) {
+				switch (status) {
 					case SC_ENDURE: //No need to save infinite endure.
 					case SC_REGENERATION:
-						if (sd->sc.data[i]->val4) {
-							status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
+						if (sd->sc.data[status] && sd->sc.data[status]->val4) {
+							status_change_end(&sd->bl,status,INVALID_TIMER);
 							continue;
 						}
 						break;
 				}
 				//Status that are not saved
 				if (flag&SCF_NO_SAVE) {
-					status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
+					status_change_end(&sd->bl,status,INVALID_TIMER);
 					continue;
 				}
 				//Removes status by config
@@ -2054,7 +2056,7 @@ int map_quit(struct map_session_data *sd) {
 					if ((battle_config.debuff_on_logout&1 && !(flag&SCF_DEBUFF)) || //Removes buffs
 						(battle_config.debuff_on_logout&2 && flag&SCF_DEBUFF)) //Removes debuffs
 					{
-						status_change_end(&sd->bl,(sc_type)i,INVALID_TIMER);
+						status_change_end(&sd->bl,status,INVALID_TIMER);
 						continue;
 					}
 				}

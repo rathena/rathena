@@ -2870,10 +2870,12 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 	ud->attackabletime = ud->canmove_tick /*= ud->canact_tick*/ = gettick();
 
 	if(sc && sc->count ) { // map-change/warp dispells.
-		for (int i = 0; i < SC_MAX; i++) {
-			if (!sc->data[i] || !(status_sc_get_flag((sc_type)i)&SCF_REM_ON_CHANGEMAP))
+		for (const auto &it : statuses) {
+			enum sc_type status = static_cast<sc_type>(it.first);
+
+			if (!sc->data[status] || !(status_sc_get_flag(status)&SCF_REM_ON_CHANGEMAP))
 				continue;
-			status_change_end(bl, (sc_type)i, INVALID_TIMER);
+			status_change_end(bl, status, INVALID_TIMER);
 		}
 		// Ensure the bl is a PC; if so, we'll handle the removal of cloaking and cloaking exceed later
 		if ( bl->type != BL_PC ) {

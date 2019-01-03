@@ -2221,10 +2221,46 @@ enum e_status_change_flag : uint64 {
 	SCF_OPT_CHANGELOOK		= 0x08000000,
 	SCF_TRIGGER_ONTOUCH_	= 0x10000000,
 	SCF_DISPLAY_NPC			= 0x20000000,
+	SCF_REQUIRE_WEAPON		= 0x40000000,
+	SCF_REQUIRE_SHIELD		= 0x80000000,
 	SCF_MAX
 };
 
 #define SCF_OPT_FLAGS (SCF_OPT_CHANGEOPTION|SCF_OPT_CHANGELOOK|SCF_TRIGGER_ONTOUCH_)
+
+/// Struct of SC configs [Cydh]
+struct s_status_change_db {
+	enum sc_type type;			///< SC_
+	enum efst_type icon;		///< EFST_
+	uint64 state;				///< SCS_
+	uint64 calc_flag;			///< SCB_ flags
+	uint16 opt1;				///< OPT1_
+	uint16 opt2;				///< OPT2_
+	uint64 opt3;				///< OPT1_
+	uint64 look;				///, OPTION_ Changelook
+	uint64 flag;				///< SCF_ Flags, enum e_status_change_flag
+	bool display;				///< Display status effect/icon (for certain state)
+	uint16 skill_id;			///< Associated skill for (addeff) duration lookups
+	std::vector<sc_type> end;	///< List of SC that will be ended when this SC is activated
+	std::vector<sc_type> fail;	///< List of SC that causing this SC cannot be activated
+	bool end_return;			///< After SC ends the SC from end list, it does nothing
+	struct script_code *script;	///< Executes this script when SC is active
+	t_tick min_duration;		///< Minimum duration effect (after all status reduction)
+	uint16 min_rate;			///< Minimum rate to be applied (after all status reduction)
+	uint32 disabledon;			///< SC disabled on map zones
+
+	~s_status_change_db()
+	{
+		if (script)
+			script_free_code(script);
+	}
+};
+
+/// Status Change DB
+std::unordered_map<int, std::shared_ptr<s_status_change_db>> statuses;
+
+/// Determine who will receive a clif_status_change packet for effects that require one to display correctly
+static uint16 StatusRelevantBLTypes[EFST_MAX];
 
 /// Enum for status_calc_weight and status_calc_cart_weight
 enum e_status_calc_weight_opt {

@@ -65,40 +65,6 @@ bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
-/// Struct of SC configs [Cydh]
-struct s_status_change_db {
-	enum sc_type type;			///< SC_
-	enum efst_type icon;		///< EFST_
-	uint64 state;				///< SCS_
-	uint64 calc_flag;			///< SCB_ flags
-	uint16 opt1;				///< OPT1_
-	uint16 opt2;				///< OPT2_
-	uint64 opt3;				///< OPT1_
-	uint64 look;				///, OPTION_ Changelook
-	uint64 flag;				///< SCF_ Flags, enum e_status_change_flag
-	bool display;				///< Display status effect/icon (for certain state)
-	uint16 skill_id;			///< Associated skill for (addeff) duration lookups
-	std::vector<sc_type> end;	///< List of SC that will be ended when this SC is activated
-	std::vector<sc_type> fail;	///< List of SC that causing this SC cannot be activated
-	bool end_return;			///< After SC ends the SC from end list, it does nothing
-	struct script_code *script;	///< Executes this script when SC is active
-	t_tick min_duration;		///< Minimum duration effect (after all status reduction)
-	uint16 min_rate;			///< Minimum rate to be applied (after all status reduction)
-	uint32 disabledon;			///< SC disabled on map zones
-
-	~s_status_change_db()
-	{
-		if (script)
-			script_free_code(script);
-	}
-};
-
-/// Status Change DB
-std::unordered_map<int, std::shared_ptr<s_status_change_db>> statuses;
-
-/// Determine who will receive a clif_status_change packet for effects that require one to display correctly
-static uint16 StatusRelevantBLTypes[EFST_MAX];
-
 /**
  * Validates if type is in SC ranges
  * @param type SC type
@@ -560,10 +526,12 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 		if( sc ) {
 			struct status_change_entry *sce;
 
-			for (int i = 0; i < SC_MAX; i++) {
-				if (status_sc_get_flag((sc_type)i)&SCF_REM_ON_DAMAGED)
-					if (i != SC_STONE || (i == SC_STONE && sc->data[SC_STONE] && sc->opt1 == OPT1_STONE))
-						status_change_end(target, (sc_type)i, INVALID_TIMER);
+			for (const auto &it : statuses) {
+				enum sc_type type = static_cast<sc_type>(it.first);
+
+				if (status_sc_get_flag(type)&SCF_REM_ON_DAMAGED)
+					if (type != SC_STONE || (type == SC_STONE && sc->data[SC_STONE] && sc->opt1 == OPT1_STONE))
+						status_change_end(target, type, INVALID_TIMER);
 			}
 			if ((sce=sc->data[SC_ENDURE]) && !sce->val4) {
 				/** [Skotlex]
@@ -2663,9 +2631,11 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	pc_bonus_script(sd);
 
 	if (sd->sc.count) { // Script bonus from SC [Cydh]
-		struct script_code *script = NULL;
-		for (i = 0; i < SC_MAX; i++) {
-			if (!sc->data[i] || !(script = status_sc_get_script((sc_type)i)))
+		for (const auto &it : statuses) {
+			enum sc_type type = static_cast<sc_type>(it.first);
+			struct script_code *script = nullptr;
+
+			if (!sc->data[type] || !(script = status_sc_get_script(type)))
 				continue;
 			run_script(script, 0, sd->bl.id, 0);
 			if (!calculating)
@@ -9945,7 +9915,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 int status_change_clear(struct block_list* bl, int type)
 {
 	struct status_change* sc;
-	int i;
 
 	sc = status_get_sc(bl);
 
@@ -9963,17 +9932,19 @@ int status_change_clear(struct block_list* bl, int type)
 	if (!sc->count)
 		return 0;
 
-	for (i = 0; i < SC_MAX; i++) {
-		if (!sc->data[i])
+	for (const auto &it : statuses) {
+		enum sc_type status = static_cast<sc_type>(it.first);
+
+		if (!sc->data[status])
 			continue;
 
-		enum e_scb_flag sc_flag = static_cast<e_scb_flag>(status_sc_get_flag((sc_type)i));
+		enum e_scb_flag sc_flag = static_cast<e_scb_flag>(status_sc_get_flag(status));
 
 		if (type == 0) { // Type 0: PC killed
 			if (sc_flag&SCF_NO_REM_ONDEAD) {
-				switch (i) {
+				switch (status) {
 					case SC_ELEMENTALCHANGE: // Only when its Holy or Dark that it doesn't dispell on death
-						if (sc->data[i]->val2 != ELE_HOLY && sc->data[i]->val2 != ELE_DARK)
+						if (sc->data[status]->val2 != ELE_HOLY && sc->data[status]->val2 != ELE_DARK)
 							break;
 					default:
 						continue;
@@ -9984,13 +9955,13 @@ int status_change_clear(struct block_list* bl, int type)
 		if (type == 3 && sc_flag&SCF_PERMANENT)
 			continue;
 
-		status_change_end(bl, (sc_type)i, INVALID_TIMER);
-		if( type == 1 && sc->data[i] ) { // If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
+		status_change_end(bl, status, INVALID_TIMER);
+		if( type == 1 && sc->data[status] ) { // If for some reason status_change_end decides to still keep the status when quitting. [Skotlex]
 			(sc->count)--;
-			if (sc->data[i]->timer != INVALID_TIMER)
-				delete_timer(sc->data[i]->timer, status_change_timer);
-			ers_free(sc_data_ers, sc->data[i]);
-			sc->data[i] = NULL;
+			if (sc->data[status]->timer != INVALID_TIMER)
+				delete_timer(sc->data[status]->timer, status_change_timer);
+			ers_free(sc_data_ers, sc->data[status]);
+			sc->data[status] = NULL;
 		}
 	}
 
@@ -11692,17 +11663,18 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
  */
 void status_change_clear_buffs(struct block_list* bl, uint8 type)
 {
-	int i;
 	struct status_change *sc= status_get_sc(bl);
 
 	if (!sc || !sc->count)
 		return;
 
 	//Clears buffs with specified flag and type
-	for (i = 0; i < SC_MAX; i++) {
-		enum e_scb_flag flag = static_cast<e_scb_flag>(status_sc_get_flag((sc_type)i));
+	for (const auto &it : statuses) {
+		enum sc_type status = static_cast<sc_type>(it.first);
 
-		if (!sc->data[i] || flag&SCF_NO_CLEARBUFF) //Skip status with SCF_NO_CLEARBUFF, no matter what
+		enum e_scb_flag flag = static_cast<e_scb_flag>(status_sc_get_flag(status));
+
+		if (!sc->data[status] || flag&SCF_NO_CLEARBUFF) //Skip status with SCF_NO_CLEARBUFF, no matter what
 			continue;
 		// &SCCB_LUXANIMA : Cleared by RK_LUXANIMA
 		if (!(type&SCCB_LUXANIMA) && flag&SCF_REM_ON_LUXANIMA)
@@ -11719,14 +11691,15 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 		// &SCCB_BUFFS : Clears buffs
 		if (!(type&SCCB_BUFFS) && !(flag&SCF_DEBUFF))
 			continue;		
-		if (i == SC_SATURDAYNIGHTFEVER || i == SC_BERSERK) // Mark to not lose HP
-			sc->data[i]->val2 = 0;
-		status_change_end(bl,(sc_type)i, INVALID_TIMER);
+		if (status == SC_SATURDAYNIGHTFEVER || status == SC_BERSERK) // Mark to not lose HP
+			sc->data[status]->val2 = 0;
+		status_change_end(bl, status, INVALID_TIMER);
 	}
 
 	//Removes bonus_script
 	if (bl->type == BL_PC) {
-		i = 0;
+		uint64 i = 0;
+
 		if (type&SCCB_BUFFS)    i |= BSF_REM_BUFF;
 		if (type&SCCB_DEBUFFS)  i |= BSF_REM_DEBUFF;
 		if (type&SCCB_REFRESH)  i |= BSF_REM_ON_REFRESH;
@@ -12106,7 +12079,6 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 
 	if (sc && sc->count) {
 		struct map_data *mapdata = map_getmapdata(bl->m);
-		unsigned short i;
 		bool mapIsVS = mapdata_flag_vs2(mapdata);
 		bool mapIsPVP = mapdata->flag[MF_PVP] != 0;
 		bool mapIsGVG = mapdata_flag_gvg2_no_te(mapdata);
@@ -12114,14 +12086,15 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 		bool mapIsTE = mapdata_flag_gvg2_te(mapdata);
 		unsigned int mapZone = mapdata->zone << 3;
 
-		for (i = 0; i < SC_MAX; i++) {
-			auto scdb = status_get((sc_type)i);
+		for (const auto &it : statuses) {
+			enum sc_type status = static_cast<sc_type>(it.first);
+			auto scdb = status_get(status);
 
-			if (!sc->data[i] || !scdb || !scdb->disabledon)
+			if (!sc->data[status] || !scdb || !scdb->disabledon)
 				continue;
 
 			if (status_change_isDisabledOnMap_(scdb, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone, mapIsTE))
-				status_change_end(bl, (sc_type)i, INVALID_TIMER);
+				status_change_end(bl, status, INVALID_TIMER);
 		}
 	}
 }
@@ -12366,7 +12339,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 	if (node["Icon"]) {
 		try {
 			std::string icon = node["Icon"].as<std::string>();
-			int icon_id;
+			int icon_id = -1;
 
 			if (!script_get_constant(icon.c_str(), &icon_id) || icon_id <= EFST_BLANK || icon_id >= EFST_MAX)
 				ShowWarning("status_read_status_db_sub: Invalid status Icon %s. Non-existent constant in \"%s\", defaulting to EFST_BLANK.\n", icon.c_str(), source.c_str());
@@ -12402,7 +12375,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 			if (scs_list.IsSequence()) {
 				for (int i = 0; i < scs_list.size(); i++) {
 					std::string scs = scs_list[i].as<std::string>();
-					int scs_id;
+					int scs_id = -1;
 
 					if (!script_get_constant(scs.c_str(), &scs_id) || scs_id < SCS_NONE || scs_id >= SCS_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status SCS %s. Non-existent constant in \"%s\", skipping.\n", scs.c_str(), source.c_str());
@@ -12427,7 +12400,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 			if (scb_list.IsSequence()) {
 				for (int i = 0; i < scb_list.size(); i++) {
 					std::string scb = scb_list[i].as<std::string>();
-					int scb_id;
+					int scb_id = -1;
 
 					if (!script_get_constant(scb.c_str(), &scb_id) || scb_id < SCB_NONE || scb_id >= SCB_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status SCB %s. Non-existent constant in \"%s\", skipping.\n", scb.c_str(), source.c_str());
@@ -12448,7 +12421,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 	if (node["OPT1"]) {
 		try {
 			std::string opt = node["OPT1"].as<std::string>();
-			int opt_id;
+			int opt_id = -1;
 
 			if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT1_NONE || opt_id >= OPT1_MAX) {
 				ShowWarning("status_read_status_db_sub: Invalid status OPT1 %s. Non-existent constant in \"%s\", defaulting to OPT1_NONE.\n", opt.c_str(), source.c_str());
@@ -12469,7 +12442,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 			if (opt_list.IsSequence()) {
 				for (int i = 0; i < opt_list.size(); i++) {
 					std::string opt = opt_list[i].as<std::string>();
-					int opt_id;
+					int opt_id = -1;
 
 					if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT2_NONE || opt_id >= OPT2_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status OPT2 %s. Non-existent constant in \"%s\", skipping.\n", opt.c_str(), source.c_str());
@@ -12494,7 +12467,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 			if (opt_list.IsSequence()) {
 				for (int i = 0; i < opt_list.size(); i++) {
 					std::string opt = opt_list[i].as<std::string>();
-					int opt_id;
+					int opt_id = -1;
 
 					if (!script_get_constant(opt.c_str(), &opt_id) || opt_id < OPT3_NORMAL || opt_id >= OPT3_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status OPT3 %s. Non-existent constant in \"%s\", skipping.\n", opt.c_str(), source.c_str());
@@ -12519,7 +12492,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 			if (option_list.IsSequence()) {
 				for (int i = 0; i < option_list.size(); i++) {
 					std::string option = option_list[i].as<std::string>();
-					int option_id;
+					int option_id = -1;
 
 					if (!script_get_constant(option.c_str(), &option_id) || option_id < OPTION_NOTHING || option_id >= OPTION_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status Option %s. Non-existent constant in \"%s\", skipping.\n", option.c_str(), source.c_str());
@@ -12544,7 +12517,7 @@ bool status_read_status_db_sub(const YAML::Node &node, int n, const std::string 
 			if (flag_list.IsSequence()) {
 				for (int i = 0; i < flag_list.size(); i++) {
 					std::string flag = flag_list[i].as<std::string>();
-					int flag_id;
+					int flag_id = -1;
 
 					if (!script_get_constant(flag.c_str(), &flag_id) || flag_id < SCF_NONE || flag_id >= SCF_MAX) {
 						ShowWarning("status_read_status_db_sub: Invalid status Flag %s. Non-existent constant in \"%s\", skipping.\n", flag.c_str(), source.c_str());

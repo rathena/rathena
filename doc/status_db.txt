@@ -229,6 +229,9 @@ Various status flags for specific usage.
 	SCF_OPT_CHANGELOOK      = Sends clif_changelook, usually for SC that has body/look changes by OPTION_ (only for BL_PC).
 	SCF_TRIGGER_ONTOUCH_    = Triggers OnTouch_ event, usually for SC that has invisible effect.
 
+	SCF_REQUIRE_WEAPON		= Status requires a weapon to be active.
+	SCF_REQUIRE_SHIELD		= Status requires a shield to be active.
+
 ---------------------------------------
 
 MinDuration
