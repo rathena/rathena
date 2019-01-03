@@ -65,6 +65,12 @@ bool running_npc_stat_calc_event; /// Indicate if OnPCStatCalcEvent is running.
 // We need it for new cards 15 Feb 2005, to check if the combo cards are insrerted into the CURRENT weapon only to avoid cards exploits
 short current_equip_opt_index; /// Contains random option index of an equipped item. [Secret]
 
+/// Status Change DB
+std::unordered_map<int, std::shared_ptr<s_status_change_db>> statuses;
+
+/// Determine who will receive a clif_status_change packet for effects that require one to display correctly
+static uint16 StatusRelevantBLTypes[EFST_MAX];
+
 /**
  * Validates if type is in SC ranges
  * @param type SC type
@@ -11704,7 +11710,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 		if (type&SCCB_DEBUFFS)  i |= BSF_REM_DEBUFF;
 		if (type&SCCB_REFRESH)  i |= BSF_REM_ON_REFRESH;
 		if (type&SCCB_LUXANIMA) i |= BSF_REM_ON_LUXANIMA;
-		pc_bonus_script_clear(BL_CAST(BL_PC,bl),i);
+		pc_bonus_script_clear(BL_CAST(BL_PC,bl),static_cast<e_bonus_script_flags>(i));
 	}
 
 	// Cleaning all extras vars

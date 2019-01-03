@@ -7849,7 +7849,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 
 			//Statuses that can't be Dispelled
-			for(const auto &it : status) {
+			for(const auto &it : statuses) {
 				enum sc_type status = static_cast<sc_type>(it.first);
 
 				if (!tsc->data[status])

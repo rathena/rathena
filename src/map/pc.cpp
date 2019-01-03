@@ -12262,7 +12262,7 @@ TIMER_FUNC(pc_bonus_script_timer){
 * @param flag: Reason to remove the bonus_script. e_bonus_script_flags or e_bonus_script_types
 * @author [Cydh]
 **/
-void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
+void pc_bonus_script_clear(struct map_session_data *sd, enum e_bonus_script_flags flag) {
 	struct linkdb_node *node = NULL;
 	uint16 count = 0;
 

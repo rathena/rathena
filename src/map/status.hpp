@@ -11,6 +11,8 @@
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
+#include "script.hpp"
+
 enum e_race2 : uint8;
 struct block_list;
 struct mob_data;
@@ -2256,11 +2258,7 @@ struct s_status_change_db {
 	}
 };
 
-/// Status Change DB
-std::unordered_map<int, std::shared_ptr<s_status_change_db>> statuses;
-
-/// Determine who will receive a clif_status_change packet for effects that require one to display correctly
-static uint16 StatusRelevantBLTypes[EFST_MAX];
+extern std::unordered_map<int, std::shared_ptr<s_status_change_db>> statuses;
 
 /// Enum for status_calc_weight and status_calc_cart_weight
 enum e_status_calc_weight_opt {
