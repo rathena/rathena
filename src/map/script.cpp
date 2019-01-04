@@ -24061,6 +24061,17 @@ BUILDIN_FUNC( camerainfo ){
 #endif
 }
 
+// This function is only meant to be used inside of achievement conditions
+BUILDIN_FUNC(achievement_condition){
+	// Push what we get from the script
+	script_pushint( st, 2 );
+
+	// Otherwise the script is freed afterwards
+	st->state = RERUNLINE;
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24724,6 +24735,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(is_guild_leader,"?"),
 	BUILDIN_DEF(is_party_leader,"?"),
 	BUILDIN_DEF(camerainfo,"iii?"),
+
+	BUILDIN_DEF(achievement_condition,"i"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
