@@ -10830,7 +10830,7 @@ REPLACE INTO `item_db_re` VALUES (20375,'C_Ignis_Cap','Costume Ignis Cap',4,0,NU
 REPLACE INTO `item_db_re` VALUES (20376,'C_Memory_of_Lovers','Costume Memory of Lovers',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,1072,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20377,'C_Flight_Cap','Costume Flight Cap',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,820,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20378,'C_Skymet','Costume Sky Met',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,868,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (20379,'C_Pocketwatch_Hair_Ornament','Costume Pocketwatch Hair Ornament',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1404,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20379,'C_Pocketwatch_Hair_Ornament','Costume Pocketwatch Hair Ornament',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,1404,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20380,'C_Mechanical_Feather_Hairband','Costume Mechanical Feather Hairband',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1405,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20381,'C_Steampunk_Hat','Costume Steampunk Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1406,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20382,'C_Silver_Sniper_Doll','Costume Silver Sniper Doll',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1407,NULL,NULL,NULL);
