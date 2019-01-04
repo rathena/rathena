@@ -4904,7 +4904,7 @@
 6915,Captured_Soul,Captured Soul,3,10,,0,,,,,,,,,,,,,{},{},{}
 6916,Piece_Of_Soul_Monkey,Piece Of Soul Monkey,3,10,,0,,,,,,,,,,,,,{},{},{}
 6917,Piece_Of_Soul_Chicken,Piece Of Soul Chicken,3,10,,0,,,,,,,,,,,,,{},{},{}
-6919,Honor_Proof,Honor Token,3,10,,10,,,,,,,,,,,,,{},{},{}
+6919,Honor_Proof,Honor Token,3,10,,0,,,,,,,,,,,,,{},{},{}
 6920,Rune_Magic_Powder,Rune Magic Powder,3,10,,10,,,,,,,,,,,,,{},{},{}
 6921,Dehumidifiers,Dehumidifiers,3,10,,10,,,,,,,,,,,,,{},{},{}
 6922,Sandpaper,Sandpaper,3,10,,10,,,,,,,,,,,,,{},{},{}
