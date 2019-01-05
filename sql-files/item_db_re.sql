@@ -10801,6 +10801,7 @@ REPLACE INTO `item_db_re` VALUES (20345,'C_Seagod_Protector','Costume Seagod Pro
 REPLACE INTO `item_db_re` VALUES (20346,'C_Drooping_Permeter','Costume Drooping Permeter',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,694,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20347,'C_Poring_Pirate_Hat','Costume Poring Pirate Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,726,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20348,'C_Sunday_Hat','Costume Sunday Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,117,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20349,'C_Flying_Galapago','Costume Flying Galapago',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1358,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20350,'C_Bouncing_Hair_Yellow','Costume Bouncing Hair Yellow',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,1382,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20351,'C_Bouncing_Hair_Green','Costume Bouncing Hair Green',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,1383,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20352,'C_Bouncing_Hair_Purple','Costume Bouncing Hair Purple',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,1384,NULL,NULL,NULL);
