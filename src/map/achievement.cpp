@@ -501,6 +501,12 @@ static bool achievement_check_condition( struct script_code* condition, struct m
 	// Save the old script the player was attached to
 	struct script_state* previous_st = sd->st;
 
+	// Only if there was an old script
+	if( previous_st != nullptr ){
+		// Detach the player from the current script
+		script_detach_rid(previous_st);
+	}
+
 	run_script( condition, 0, sd->bl.id, fake_nd->bl.id );
 
 	struct script_state* st = sd->st;
@@ -511,6 +517,9 @@ static bool achievement_check_condition( struct script_code* condition, struct m
 
 	// If an old script is present
 	if( previous_st != nullptr ){
+		// Because of detach the RID will be removed, so we need to restore it
+		previous_st->rid = sd->bl.id;
+
 		// Reattach the player to it, so that the limitations of that script kick back in
 		script_attach_state( previous_st );
 	}
