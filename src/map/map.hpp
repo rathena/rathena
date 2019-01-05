@@ -1,12 +1,12 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MAP_HPP_
-#define _MAP_HPP_
+#ifndef MAP_HPP
+#define MAP_HPP
 
 #include <algorithm>
-#include <map>
 #include <stdarg.h>
+#include <unordered_map>
 #include <vector>
 
 #include "../common/cbasetypes.hpp"
@@ -29,6 +29,7 @@ enum E_MAPSERVER_ST {
 	MAPSERVER_ST_LAST
 };
 
+struct map_data *map_getmapdata(int16 m);
 #define msg_config_read(cfgName,isnew) map_msg_config_read(cfgName,isnew)
 #define msg_txt(sd,msg_number) map_msg_txt(sd,msg_number)
 #define do_final_msg() map_do_final_msg()
@@ -230,22 +231,6 @@ enum e_mapid {
 
 #define DEFAULT_AUTOSAVE_INTERVAL 5*60*1000
 
-/// Specifies maps where players may hit each other
-#define map_flag_vs(m) (map_getmapflag(m, MF_PVP) || map_getmapflag(m, MF_GVG_DUNGEON) ||map_getmapflag(m, MF_GVG) || ((agit_flag || agit2_flag) && map_getmapflag(m, MF_GVG_CASTLE)) || map_getmapflag(m, MF_GVG_TE) || (agit3_flag && map_getmapflag(m, MF_GVG_TE_CASTLE)) || map_getmapflag(m, MF_BATTLEGROUND))
-/// Versus map: PVP, BG, GVG, GVG Dungeons, and GVG Castles (regardless of agit_flag status)
-#define map_flag_vs2(m) (map_getmapflag(m, MF_PVP) || map_getmapflag(m, MF_GVG_DUNGEON) || map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_CASTLE) || map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_GVG_TE_CASTLE) || map_getmapflag(m, MF_BATTLEGROUND))
-/// Specifies maps that have special GvG/WoE restrictions
-#define map_flag_gvg(m) (map_getmapflag(m, MF_GVG) || ((agit_flag || agit2_flag) && map_getmapflag(m, MF_GVG_CASTLE)) || map_getmapflag(m, MF_GVG_TE) || (agit3_flag && map_getmapflag(m, MF_GVG_TE_CASTLE)))
-/// Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
-#define map_flag_gvg2(m) (map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_GVG_CASTLE) || map_getmapflag(m, MF_GVG_TE_CASTLE))
-/// No Kill Steal Protection
-#define map_flag_ks(m) (map_getmapflag(m, MF_TOWN) || map_getmapflag(m, MF_PVP) || map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_BATTLEGROUND))
-
-/// WOE:TE Maps (regardless of agit_flag status) [Cydh]
-#define map_flag_gvg2_te(m) (map_getmapflag(m, MF_GVG_TE) || map_getmapflag(m, MF_GVG_TE_CASTLE))
-/// Check if map is GVG maps exclusion for item, skill, and status restriction check (regardless of agit_flag status) [Cydh]
-#define map_flag_gvg2_no_te(m) (map_getmapflag(m, MF_GVG) || map_getmapflag(m, MF_GVG_CASTLE))
-
 //This stackable implementation does not means a BL can be more than one type at a time, but it's
 //meant to make it easier to check for multiple types at a time on invocations such as map_foreach* calls [Skotlex]
 enum bl_type : uint16{
@@ -323,6 +308,10 @@ enum e_race2 : uint8{
 	RC2_SCARABA,
 	RC2_OGH_ATK_DEF,
 	RC2_OGH_HIDDEN,
+	RC2_BIO5_SWORDMAN_THIEF,
+	RC2_BIO5_ACOLYTE_MERCHANT,
+	RC2_BIO5_MAGE_ARCHER,
+	RC2_BIO5_MVP,
 	RC2_MAX
 };
 
@@ -410,7 +399,7 @@ struct flooritem_data {
 	unsigned char subx,suby;
 	int cleartimer;
 	int first_get_charid,second_get_charid,third_get_charid;
-	unsigned int first_get_tick,second_get_tick,third_get_tick;
+	t_tick first_get_tick,second_get_tick,third_get_tick;
 	struct item item;
 	unsigned short mob_id; ///< ID of monster who dropped it. 0 for non-monster who dropped it.
 };
@@ -426,6 +415,7 @@ enum _sp {
 	SP_UPPER,SP_PARTNER,SP_CART,SP_FAME,SP_UNBREAKABLE,	//56-60
 	SP_CARTINFO=99,	// 99
 
+	SP_KILLEDGID=118,
 	SP_BASEJOB=119,	// 100+19 - celest
 	SP_BASECLASS=120,	//Hmm.. why 100+19? I just use the next one... [Skotlex]
 	SP_KILLERRID=121,
@@ -586,6 +576,9 @@ enum e_mapflag : int16 {
 	MF_HIDEMOBHPBAR,
 	MF_NOLOOT,
 	MF_NOEXP,
+	MF_PRIVATEAIRSHIP_SOURCE,
+	MF_PRIVATEAIRSHIP_DESTINATION,
+	MF_SKILL_DURATION,
 	MF_MAX
 };
 
@@ -602,9 +595,14 @@ enum e_skill_damage_type : uint8 {
 /// Struct for MF_SKILL_DAMAGE
 struct s_skill_damage {
 	unsigned int map; ///< Maps (used for skill_damage_db.txt)
-	uint16 skill_id; ///< Skill ID (used for mapflag)
 	uint16 caster; ///< Caster type
 	int rate[SKILLDMG_MAX]; ///< Used for when all skills are adjusted
+};
+
+/// Struct of MF_SKILL_DURATION
+struct s_skill_duration {
+	uint16 skill_id; ///< Skill ID
+	uint16 per; ///< Rate
 };
 
 /// Enum for item drop type for MF_PVP_NIGHTMAREDROP
@@ -626,6 +624,7 @@ union u_mapflag_args {
 	struct point nosave;
 	struct s_drop_list nightmaredrop;
 	struct s_skill_damage skill_damage;
+	struct s_skill_duration skill_duration;
 	int flag_val;
 };
 
@@ -732,12 +731,13 @@ struct map_data {
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
 
-	std::map<e_mapflag, int> flag;
+	std::unordered_map<int16, int> flag;
 	struct point save;
 	std::vector<s_drop_list> drop_list;
 	uint32 zone; // zone number (for item/skill restrictions)
 	struct s_skill_damage damage_adjust; // Used for overall skill damage adjustment
-	std::vector<s_skill_damage> skill_damage; // Used for single skill damage adjustment
+	std::unordered_map<uint16, s_skill_damage> skill_damage; // Used for single skill damage adjustment
+	std::unordered_map<uint16, int> skill_duration;
 
 	struct npc_data *npc[MAX_NPC_PER_MAP];
 	struct spawn_data *moblist[MAX_MOB_LIST_PER_MAP]; // [Wizputer]
@@ -773,7 +773,8 @@ int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk);
 void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag);
 void map_setgatcell(int16 m, int16 x, int16 y, int gat);
 
-extern std::vector<map_data> map;
+extern struct map_data map[];
+extern int map_num;
 
 extern int autosave_interval;
 extern int minsave_interval;
@@ -786,6 +787,177 @@ extern bool agit_flag;
 extern bool agit2_flag;
 extern bool agit3_flag;
 #define is_agit_start() (agit_flag || agit2_flag || agit3_flag)
+
+/**
+ * Specifies maps where players may hit each other
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_vs(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]) || mapdata->flag[MF_BATTLEGROUND])
+		return true;
+
+	return false;
+}
+
+/**
+ * Versus map: PVP, BG, GVG, GVG Dungeons, and GVG Castles (regardless of agit_flag status)
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_vs2(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG_DUNGEON] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE] || mapdata->flag[MF_BATTLEGROUND])
+		return true;
+
+	return false;
+}
+
+/**
+ * Specifies maps that have special GvG/WoE restrictions
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_gvg(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_GVG] || ((agit_flag || agit2_flag) && mapdata->flag[MF_GVG_CASTLE]) || mapdata->flag[MF_GVG_TE] || (agit3_flag && mapdata->flag[MF_GVG_TE_CASTLE]))
+		return true;
+
+	return false;
+}
+
+/**
+ * Specifies if the map is tagged as GvG/WoE (regardless of agit_flag status)
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_gvg2(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_CASTLE] || mapdata->flag[MF_GVG_TE_CASTLE])
+		return true;
+
+	return false;
+}
+
+/**
+ * No Kill Steal Protection
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ */
+inline bool mapdata_flag_ks(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_TOWN] || mapdata->flag[MF_PVP] || mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_BATTLEGROUND])
+		return true;
+
+	return false;
+}
+
+/**
+ * WOE:TE Maps (regardless of agit_flag status)
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ * @author Cydh
+ */
+inline bool mapdata_flag_gvg2_te(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_GVG_TE] || mapdata->flag[MF_GVG_TE_CASTLE])
+		return true;
+
+	return false;
+}
+
+/**
+ * Check if map is GVG maps exclusion for item, skill, and status restriction check (regardless of agit_flag status)
+ * @param mapdata: Map Data
+ * @return True on success or false otherwise
+ * @author Cydh
+ */
+inline bool mapdata_flag_gvg2_no_te(struct map_data *mapdata) {
+	if (mapdata == nullptr)
+		return false;
+
+	if (mapdata->flag[MF_GVG] || mapdata->flag[MF_GVG_CASTLE])
+		return true;
+
+	return false;
+}
+
+/// Backwards compatibility
+inline bool map_flag_vs(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_vs(mapdata);
+}
+
+inline bool map_flag_vs2(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_vs2(mapdata);
+}
+
+inline bool map_flag_gvg(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg(mapdata);
+}
+
+inline bool map_flag_gvg2(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg2(mapdata);
+}
+
+inline bool map_flag_ks(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_ks(mapdata);
+}
+
+inline bool map_flag_gvg2_te(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg2_te(mapdata);
+}
+
+inline bool map_flag_gvg2_no_te(int16 m) {
+	if (m < 0)
+		return false;
+
+	struct map_data *mapdata = &map[m];
+
+	return mapdata_flag_gvg2_no_te(mapdata);
+}
 
 extern char motd_txt[];
 extern char help_txt[];
@@ -829,7 +1001,7 @@ int map_freeblock_unlock(void);
 // blocklist manipulation
 int map_addblock(struct block_list* bl);
 int map_delblock(struct block_list* bl);
-int map_moveblock(struct block_list *, int, int, unsigned int);
+int map_moveblock(struct block_list *, int, int, t_tick);
 int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
 int map_foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
 int map_foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
@@ -859,11 +1031,13 @@ bool map_addnpc(int16 m,struct npc_data *);
 TIMER_FUNC(map_clearflooritem_timer);
 TIMER_FUNC(map_removemobs_timer);
 void map_clearflooritem(struct block_list* bl);
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id);
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
 int map_addinstancemap(const char *name, unsigned short instance_id);
 int map_delinstancemap(int m);
+void map_data_copyall(void);
+void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
 
 // player to map session
 void map_addnickdb(int charid, const char* nick);
@@ -939,6 +1113,7 @@ int cleanup_sub(struct block_list *bl, va_list ap);
 int map_delmap(char* mapname);
 void map_flags_init(void);
 
+bool map_iwall_exist(const char* wall_name);
 bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name);
 void map_iwall_get(struct map_session_data *sd);
 bool map_iwall_remove(const char *wall_name);
@@ -950,6 +1125,7 @@ void map_addmap2db(struct map_data *m);
 void map_removemapdb(struct map_data *m);
 
 void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
+void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
 
 enum e_mapflag map_getmapflag_by_name(char* name);
 bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
@@ -1010,7 +1186,8 @@ extern char vendings_table[32];
 extern char vending_items_table[32];
 extern char market_table[32];
 extern char roulette_table[32];
+extern char guild_storage_log_table[32];
 
 void do_shutdown(void);
 
-#endif /* _MAP_HPP_ */
+#endif /* MAP_HPP */

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _ITEMDB_HPP_
-#define _ITEMDB_HPP_
+#ifndef ITEMDB_HPP
+#define ITEMDB_HPP
 
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
@@ -38,7 +38,6 @@ enum item_itemid
 	ITEMID_WHITE_POTION					= 504,
 	ITEMID_BLUE_POTION					= 505,
 	ITEMID_APPLE						= 512,
-	ITEMID_CARROT						= 515,
 	ITEMID_HOLY_WATER					= 523,
 	ITEMID_PUMPKIN						= 535,
 	ITEMID_RED_SLIM_POTION				= 545,
@@ -90,7 +89,6 @@ enum item_itemid
 	ITEMID_SKULL_						= 7420,
 	ITEMID_TOKEN_OF_SIEGFRIED			= 7621,
 	ITEMID_TRAP_ALLOY					= 7940,
-	ITEMID_CATNIP_FRUIT					= 11602,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
 	ITEMID_GIANT_FLY_WING				= 12212,
@@ -106,11 +104,6 @@ enum item_itemid
 	ITEMID_REINS_OF_MOUNT				= 12622,
 	ITEMID_NOBLE_NAMEPLATE				= 12705,
 	ITEMID_SILVER_BULLET				= 13201,
-	ITEMID_SLUG_AMMUNITION_L			= 13210,
-	ITEMID_SLUG_AMMUNITION_M			= 13211,
-	ITEMID_SLUG_AMMUNITION_H			= 13212,
-	ITEMID_SLUG_AMMUNITION_SH			= 13213,
-	ITEMID_SLUG_AMMUNITION_XH			= 13214,
 	ITEMID_PURIFICATION_BULLET			= 13220,
 	ITEMID_SILVER_BULLET_				= 13221,
 	ITEMID_DUN_TELE_SCROLL1				= 14527,
@@ -732,6 +725,7 @@ enum e_random_item_group {
 	IG_SPECIAL_CHRISTMAS_BOX,
 	IG_SANTA_GIFT,
 	IG_PRIZEOFHERO,
+	IG_PRIVATE_AIRSHIP,
 };
 
 /// Enum for bound/sell restricted selling
@@ -739,7 +733,8 @@ enum e_itemshop_restrictions {
 	ISR_NONE = 0x0,
 	ISR_BOUND = 0x1,
 	ISR_SELLABLE = 0x2,
-	ISR_ALL = 0x3,
+	ISR_BOUND_SELLABLE = 0x4,
+	ISR_BOUND_GUILDLEADER_ONLY = 0x8,
 };
 
 ///Item combo struct
@@ -842,6 +837,7 @@ struct item_data
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
 		unsigned broadcast : 1; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
+		uint8 dropEffect; ///< Drop Effect Mode
 	} flag;
 	struct {// item stacking limitation
 		unsigned short amount;
@@ -907,6 +903,7 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_traderight(n) (itemdb_search(n)->flag.trade_restriction)
 #define itemdb_viewid(n) (itemdb_search(n)->view_id)
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
+#define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 bool itemdb_is_spellbook2(unsigned short nameid);
@@ -961,4 +958,4 @@ void itemdb_reload(void);
 void do_final_itemdb(void);
 void do_init_itemdb(void);
 
-#endif /* _ITEMDB_HPP_ */
+#endif /* ITEMDB_HPP */

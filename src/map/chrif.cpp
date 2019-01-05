@@ -236,12 +236,12 @@ bool chrif_auth_finished(struct map_session_data* sd) {
 }
 // sets char-server's user id
 void chrif_setuserid(char *id) {
-	memcpy(userid, id, NAME_LENGTH);
+	safestrncpy(userid, id, NAME_LENGTH);
 }
 
 // sets char-server's password
 void chrif_setpasswd(char *pwd) {
-	memcpy(passwd, pwd, NAME_LENGTH);
+	safestrncpy(passwd, pwd, NAME_LENGTH);
 }
 
 // security check, prints warning if using default password
@@ -341,7 +341,7 @@ int chrif_save(struct map_session_data *sd, int flag) {
 	WFIFOB(char_fd,12) = (flag&CSAVE_QUIT) ? 1 : 0; //Flag to tell char-server this character is quitting.
 
 	// If the user is on a instance map, we have to fake his current position
-	if( map[sd->bl.m].instance_id ){
+	if( map_getmapdata(sd->bl.m)->instance_id ){
 		struct mmo_charstatus status;
 
 		// Copy the whole status
@@ -395,17 +395,15 @@ int chrif_connect(int fd) {
 
 // sends maps to char-server
 int chrif_sendmap(int fd) {
-	int i;
-
 	ShowStatus("Sending maps to char server...\n");
 
 	// Sending normal maps, not instances
-	WFIFOHEAD(fd, 4 + map.size() * 4);
+	WFIFOHEAD(fd, 4 + instance_start * 4);
 	WFIFOW(fd,0) = 0x2afa;
-	for(i = 0; i < map.size(); i++)
-		WFIFOW(fd,4+i*4) = map[i].index;
-	WFIFOW(fd,2) = 4 + i * 4;
-	WFIFOSET(fd,WFIFOW(fd,2));
+	for (int i = 0; i < instance_start; i++)
+		WFIFOW(fd, 4 + i * 4) = map[i].index;
+	WFIFOW(fd, 2) = 4 + instance_start * 4;
+	WFIFOSET(fd, WFIFOW(fd, 2));
 
 	return 0;
 }
@@ -585,7 +583,7 @@ void chrif_on_ready(void) {
 	do_reconnect_storage();
 
 	//Re-save any guild castles that were modified in the disconnection time.
-	guild_castle_reconnect(-1, 0, 0);
+	guild_castle_reconnect(-1, CD_NONE, 0);
 	
 	// Charserver is ready for loading autotrader
 	if (!char_init_done)
@@ -694,7 +692,7 @@ void chrif_authok(int fd) {
 
 	//Check if both servers agree on the struct's size
 	if( RFIFOW(fd,2) - 25 != sizeof(struct mmo_charstatus) ) {
-		ShowError("chrif_authok: Data size mismatch! %d != %d\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
+		ShowError("chrif_authok: Data size mismatch! %d != %" PRIuPTR "\n", RFIFOW(fd,2) - 25, sizeof(struct mmo_charstatus));
 		return;
 	}
 
@@ -1307,7 +1305,7 @@ int chrif_updatefamelist_ack(int fd) {
 int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the player and sends it to the char-server for saving. [Skotlex]
 #ifdef ENABLE_SC_SAVING
 	int i, count=0;
-	unsigned int tick;
+	t_tick tick;
 	struct status_change_data data;
 	struct status_change *sc = &sd->sc;
 	const struct TimerData *timer;
@@ -1332,7 +1330,7 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 			else
 				data.tick = 0; //Negative tick does not necessarily mean that sc has expired
 		} else
-			data.tick = -1; //Infinite duration
+			data.tick = INFINITE_TICK; //Infinite duration
 		data.type = i;
 		data.val1 = sc->data[i]->val1;
 		data.val2 = sc->data[i]->val2;
@@ -1353,7 +1351,7 @@ int chrif_save_scdata(struct map_session_data *sd) { //parses the sc_data of the
 int chrif_skillcooldown_save(struct map_session_data *sd) {
 	int i, count = 0;
 	struct skill_cooldown_data data;
-	unsigned int tick;
+	t_tick tick;
 	const struct TimerData *timer;
 
 	chrif_check(-1);
@@ -1683,7 +1681,7 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 	WFIFOL(char_fd, 4) = sd->status.char_id;
 
 	if (sd->bonus_script.count) {
-		unsigned int tick = gettick();
+		t_tick tick = gettick();
 		struct linkdb_node *node = NULL;
 
 		for (node = sd->bonus_script.head; node && i < MAX_PC_BONUS_SCRIPT; node = node->next) {
@@ -1988,13 +1986,13 @@ void do_final_chrif(void) {
  *------------------------------------------*/
 void do_init_chrif(void) {
 	if(sizeof(struct mmo_charstatus) > 0xFFFF){
-		ShowError("mmo_charstatus size = %d is too big to be transmitted. (must be below 0xFFFF)\n",
+		ShowError("mmo_charstatus size = %" PRIuPTR " is too big to be transmitted. (must be below 0xFFFF)\n",
 			sizeof(struct mmo_charstatus));
 		exit(EXIT_FAILURE);
 	}
 
 	if (sizeof(struct s_storage) > 0xFFFF) {
-		ShowError("s_storage size = %d is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
+		ShowError("s_storage size = %" PRIuPTR " is too big to be transmitted. (must be below 0xFFFF)\n", sizeof(struct s_storage));
 		exit(EXIT_FAILURE);
 	}
 

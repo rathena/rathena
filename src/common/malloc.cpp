@@ -235,7 +235,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 	struct unit_head *head;
 
 	if (((long) size) < 0) {
-		ShowError("_mmalloc: %d\n", size);
+		ShowError("_mmalloc: %" PRIuPTR "\n", size);
 		return NULL;
 	}
 	
@@ -265,7 +265,7 @@ void* _mmalloc(size_t size, const char *file, int line, const char *func )
 			*(long*)((char*)p + sizeof(struct unit_head_large) - sizeof(long) + size) = FREED_POINTER;
 			return (char *)p + sizeof(struct unit_head_large) - sizeof(long);
 		} else {
-			ShowFatalError("Memory manager::memmgr_alloc failed (allocating %d+%d bytes at %s:%d).\n", sizeof(struct unit_head_large), size, file, line);
+			ShowFatalError("Memory manager::memmgr_alloc failed (allocating %" PRIuPTR  "+%" PRIuPTR " bytes at %s:%d).\n", sizeof(struct unit_head_large), size, file, line);
 			exit(EXIT_FAILURE);
 		}
 	}

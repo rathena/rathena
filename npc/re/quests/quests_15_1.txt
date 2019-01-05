@@ -76,6 +76,9 @@ OnInit:
 	end;
 }
 geffen,135,64,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#2	4_F_ZONDAGIRL
+alberta,119,65,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#3	4_F_ZONDAGIRL
+morocc,208,287,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#4	4_F_ZONDAGIRL
+payon,174,113,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#5	4_F_ZONDAGIRL
 
 moc_para01,31,14,0	script	#atnevt01	HIDDEN_WARP_NPC,2,2,{
 	end;
@@ -6439,7 +6442,7 @@ lhz_in01,275,251,3	script	Luke Lapez#ep152i01	4_M_EDEN_GUARDER,{
 	cutin "",255;
 	npctalk "So much for the damn escort...", "Luke Lapez#ep152i01";
 	sleep 400;
-	emotion ET_FRET, getnpcid(0, "Commander Arquien#ep152");
+	emotion ET_FRET, getnpcid(0, "Commander Arquien#ep152i");
 	sleep 200;
 	emotion ET_THINK, getnpcid(0, "Luke Lapez#ep152i01");
 	end;
@@ -6535,7 +6538,7 @@ lhz_in01,270,257,4	script	Rekenber Chairman#e152i	4_M_REKENBER,{
 		mes "The time, that accident or whatever you call it.";
 		mes "When I found a seemingly artificial obstacle during the juperos excavation..";
 		mes "Ian suddenly disappeared.";
-		emotion ET_SURPRISE, getnpcid(0, "Commander Arquien#ep152");
+		emotion ET_SURPRISE, getnpcid(0, "Commander Arquien#ep152i");
 		next;
 		cutin "verus_ian01.bmp",2;
 		mes "[Ian Atnad]";

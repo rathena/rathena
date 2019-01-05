@@ -5,19 +5,20 @@
 //= Ghost Palace Instance
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.1 Fixed NPC names. [zackdreaver]
 //============================================================
 
 dali02,43,129,5	script	Unpleasant Royal Guard#	4_M_SAKRAYROYAL,{
 	if (BaseLevel < 120) {
 		mes "[Unpleasant Royal Guard]";
-		mes "Althought I need help with a task, you are not strong enough to assist me, noob~!";
+		mes "Although I need help with a task, you are not strong enough to assist me, noob~!";
 		next;
 		mes "[Unpleasant Royal Guard]";
 		mes "Come back later when you have done some training and are at least level 120!";
 		close;
 	}
 	.@party_id = getcharid(1);
-	if (getcharid(0) != getpartyleader(.@party_id,2) || .@party_id < 1) {
+	if (is_party_leader() == false || .@party_id < 1) {
 		mes "[Unpleasant Royal Guard]";
 		mes "I can only open the secret passage for party leaders. Please have your party leader talk to me.";
 		close;
@@ -98,7 +99,7 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 		close;
 	}
 	.@party_id = getcharid(1);
-	if (getcharid(0) != getpartyleader(.@party_id,2) || .@party_id < 1) {
+	if (is_party_leader() == false || .@party_id < 1) {
 		mes "[Unpleasant Royal Guard]";
 		mes "I can only open the secret passage for party leaders. Please have your party leader talk to me.";
 		close;
@@ -138,8 +139,8 @@ dali02,40,134,5	script	Interdimensional Device#dk	PORTAL,{
 	npctalk "King: The marriage arrangements are going as planned. The prince is here to meet with the princess.";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "...Yes, your majesty.";
-	npctalk "Lurid Royal Guard: ...Yes, your majesty.", instance_npcname("Lurid Royal Guard#dk");
+	mes "...Yes, Your Majesty.";
+	npctalk "Lurid Royal Guard: ...Yes, Your Majesty.", instance_npcname("Lurid Royal Guard#dk");
 	next;
 	mes "[King]";
 	mes "My gods, there are monsters in the castle! Get rid of them now!";
@@ -177,13 +178,13 @@ OnInstanceInit:
 	disablenpc instance_npcname("Soldier#dk2");
 	disablenpc instance_npcname("Soldier#dk3");
 	disablenpc instance_npcname("Lurid Royal Guard#dk3");
-	disablenpc instance_npcname("Thanatos Magic Trace#dk1");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk1");
 	disablenpc instance_npcname("#gp_control_3");
 
 	// 4th floor
 	disablenpc instance_npcname("#gp_control_4");
 	disablenpc instance_npcname("#gp_control_5");
-	disablenpc instance_npcname("Thanatos Magic Trace#dk2");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk2");
 	disablenpc instance_npcname("Visiting Prince#dk");
 	disablenpc instance_npcname("Lurid Royal Guard#dk4");
 	disablenpc instance_npcname("King's Corpse#dk");
@@ -200,7 +201,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("Lurid Royal Guard#dk5");
 	disablenpc instance_npcname("King#dk11");
 	disablenpc instance_npcname("Sakray#dk");
-	disablenpc instance_npcname("Thanatos Magic Trace#dk3");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk3");
 	disablenpc instance_npcname("#tb");
 	disablenpc instance_npcname("#sv");
 	disablenpc instance_npcname("#tv");
@@ -264,8 +265,8 @@ OnMyMobDead3:
 	.@tiara$ = instance_npcname("Princess Tiara#dk");
 	cutin "npc-tiara.bmp",3;
 	mes "[Lurid Royal Guard]";
-	mes "Your highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
-	npctalk "Lurid Royal Guard: Your highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
+	mes "Your Highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
+	npctalk "Lurid Royal Guard: Your Highness, the King has invited a prince from a neighboring country to be your betrothed. Be ready to meet him...";
 	next;
 	mes "[Princess Tiara]";
 	mes "If...If a marriage is arranged what should I do?";
@@ -280,8 +281,8 @@ OnMyMobDead3:
 	npctalk "Princess Tiara: Then, what can I do?", .@tiara$;
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "You must decide that for yourself your highness...";
-	npctalk "Lurid Royal Guard: You must decide that for yourself your highness...";
+	mes "You must decide that for yourself Your Highness...";
+	npctalk "Lurid Royal Guard: You must decide that for yourself Your Highness...";
 	next;
 	mes "[Princess Tiara]";
 	mes "Would it be easier for you if I were married and sent off to another country?";
@@ -368,8 +369,8 @@ OnMyMobDead3:
 	npctalk "King: It was you who brought the monsters here! You want to get rid of me and have the princess for yourself?";
 	next;
 	mes "[Lurid Royal Guard]";
-	mes "It is a trap your majesty! You must trust me!";
-	npctalk "Lurid Royal Guard: It is a trap your majesty! You must trust me!", instance_npcname("Lurid Royal Guard#dk2");
+	mes "It is a trap Your Majesty! You must trust me!";
+	npctalk "Lurid Royal Guard: It is a trap Your Majesty! You must trust me!", instance_npcname("Lurid Royal Guard#dk2");
 	next;
 	mes "[King]";
 	mes "Shut up! You've betrayed me! I trusted you... you must pay for your disgrace.";
@@ -386,14 +387,14 @@ OnMyMobDead3:
 	disablenpc instance_npcname("Soldier#dk2");
 	disablenpc instance_npcname("Soldier#dk3");
 	disablenpc instance_npcname("Lurid Royal Guard#dk2");
-	donpcevent instance_npcname("Thanatos Magic Trace#dk1") + "::OnStart";
+	donpcevent instance_npcname("Magic Sword Tartanos#dk1") + "::OnStart";
 	end;
 }
 
-1@spa,35,56,5	script	Thanatos Magic Trace#dk1	4_TRACE,{
+1@spa,35,56,5	script	Magic Sword Tartanos#dk1	4_TRACE,{
 	end;
 OnStart:
-	enablenpc instance_npcname("Thanatos Magic Trace#dk1");
+	enablenpc instance_npcname("Magic Sword Tartanos#dk1");
 	enablenpc instance_npcname("Lurid Royal Guard#dk3");
 	initnpctimer;
 	end;
@@ -419,11 +420,11 @@ OnTimer28000:
 	npctalk "Lurid Royal Guard: I..I...", instance_npcname("Lurid Royal Guard#dk3");
 	end;
 OnTimer33000:
-	npctalk "Thanatos Magic Trace: Kukuku... What do you want boy?";
+	npctalk "Magic Sword Tartanos: Kukuku... What do you want boy?";
 	end;
 OnTimer34000:
 	stopnpctimer;
-	disablenpc instance_npcname("Thanatos Magic Trace#dk1");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk1");
 	disablenpc instance_npcname("Lurid Royal Guard#dk3");
 	donpcevent instance_npcname("#gp_control_3") + "::OnStart";
 	end;
@@ -573,7 +574,7 @@ OnSpawn1:
 	end;
 OnMyMobDead2:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_4") + "::OnMyMobDead2") < 1) {
-		enablenpc instance_npcname("Thanatos Magic Trace#dk2");
+		enablenpc instance_npcname("Magic Sword Tartanos#dk2");
 		enablenpc instance_npcname("Visiting Prince#dk");
 		enablenpc instance_npcname("Lurid Royal Guard#dk4");
 		enablenpc instance_npcname("King's Corpse#dk");
@@ -598,13 +599,13 @@ OnMyMobDead2:
 	npctalk "Visiting Prince: You are too late... but you brought what I was looking for. Thanks for your help.", .@prince$;
 	next;
 	mes "[Visiting Prince]";
-	mes "Cursed Thanatos Magic Trace! Are you ready to have a new master?";
-	npctalk "Visiting Prince: Cursed Thanatos Magic Trace! Are you ready to have a new master?", .@prince$;
+	mes "Cursed Magic Sword Tartanos! Are you ready to have a new master?";
+	npctalk "Visiting Prince: Cursed Magic Sword Tartanos! Are you ready to have a new master?", .@prince$;
 	next;
 	cutin "tartanos.bmp",3;
-	mes "[Thanatos Magic Trace]";
+	mes "[Magic Sword Tartanos]";
 	mes "How dare you!";
-	npctalk "Thanatos Magic Trace: How dare you!", instance_npcname("Thanatos Magic Trace#dk2");
+	npctalk "Magic Sword Tartanos: How dare you!", instance_npcname("Magic Sword Tartanos#dk2");
 	next;
 	mes "[Visiting Prince]";
 	mes "aah, aah !!!";
@@ -614,7 +615,7 @@ OnMyMobDead2:
 	cutin "",255;
 	end;
 }
-1@spa,201,214,1	duplicate(Lurid Royal Guard#dk)	Thanatos Magic Trace#dk2	CLEAR_NPC
+1@spa,201,214,1	duplicate(Lurid Royal Guard#dk)	Magic Sword Tartanos#dk2	CLEAR_NPC
 1@spa,197,218,5	duplicate(Lurid Royal Guard#dk)	Visiting Prince#dk	4_M_KNIGHT_SILVER
 1@spa,194,214,5	duplicate(Lurid Royal Guard#dk)	King's Corpse#dk	4_M_TRISTAN
 1@spa,211,194,3	duplicate(Lurid Royal Guard#dk)	Captain's Corpse#dk	4_M_LIEMAN
@@ -628,7 +629,7 @@ OnMyMobDead2:
 	end;
 OnStart:
 	enablenpc instance_npcname("#gp_control_5");
-	disablenpc instance_npcname("Thanatos Magic Trace#dk2");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk2");
 	disablenpc instance_npcname("Visiting Prince#dk");
 	disablenpc instance_npcname("Lurid Royal Guard#dk4");
 	disablenpc instance_npcname("King's Corpse#dk");
@@ -755,11 +756,11 @@ OnMyMobDead3:
 	if (mobcount('map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead3") < 1) {
 		sleep 2000;
 		monster 'map_spa$,200,45, "Torturous Redeemer" ,2961,1, instance_npcname("#gp_control_6") + "::OnMyMobDead4";	// E_TORTUROUS_REDEEMER
-		unittalk $@mobid[0], "Thanatos Magic Trace! I will destroy you if I can't have you... Oh no! How could this be?";
+		unittalk $@mobid[0], "Magic Sword Tartanos! I will destroy you if I can't have you... Oh no! How could this be?";
 		sleep 5000;
 		killmonster 'map_spa$, instance_npcname("#gp_control_6") + "::OnMyMobDead4";
 		enablenpc instance_npcname("Sakray#dk");
-		enablenpc instance_npcname("Thanatos Magic Trace#dk3");
+		enablenpc instance_npcname("Magic Sword Tartanos#dk3");
 		disablenpc instance_npcname("#gp_control_6");
 	}
 	end;
@@ -769,12 +770,12 @@ OnMyMobDead4:
 
 1@spa,196,44,5	script	Sakray#dk	4_M_SAKRAY,{
 	mes "[Lurid Royal Guard]";
-	mes "Are you satisfied..? Thanatos Magic Trace?";
-	npctalk "Lurid Royal Guard: Are you satisfied..? Thanatos Magic Trace?";
+	mes "Are you satisfied..? Magic Sword Tartanos?";
+	npctalk "Lurid Royal Guard: Are you satisfied..? Magic Sword Tartanos?";
 	next;
-	mes "[Thanatos Magic Trace]";
+	mes "[Magic Sword Tartanos]";
 	mes "I need more blood..Sakray, offer me his blood.";
-	npctalk "Thanatos Magic Trace: I need more blood..Sakray, offer me his blood.", instance_npcname("Thanatos Magic Trace#dk3");
+	npctalk "Magic Sword Tartanos: I need more blood..Sakray, offer me his blood.", instance_npcname("Magic Sword Tartanos#dk3");
 	next;
 	mes "[Sakray]";
 	mes "Okay, that is good. A traveller. Did you see?";
@@ -801,9 +802,9 @@ OnMyMobDead4:
 	mes "I am quite satisfied with the result.";
 	npctalk "Sakray: I am quite satisfied with the result.";
 	next;
-	mes "[Thanatos Magic Trace]";
+	mes "[Magic Sword Tartanos]";
 	mes "Sakray, offer the blood to me now!";
-	npctalk "Thanatos Magic Trace: Sakray, offer the blood to me now!", instance_npcname("Thanatos Magic Trace#dk3");
+	npctalk "Magic Sword Tartanos: Sakray, offer the blood to me now!", instance_npcname("Magic Sword Tartanos#dk3");
 	next;
 	mes "[Sakray]";
 	mes "If you were me, what would you do?";
@@ -822,8 +823,8 @@ OnMyMobDead4:
 	npctalk "Sakray: Heh heh... I will keep watching you until the day comes when you are old enough.";
 	next;
 	mes "[Sakray]";
-	mes "I am willing to hunt you later for Thanatos.";
-	npctalk "Sakray: I am willing to hunt you later for Thanatos.";
+	mes "I am willing to hunt you later for Tartanos.";
+	npctalk "Sakray: I am willing to hunt you later for Tartanos.";
 	cutin "",255;
 	next;
 	mes "[Sakray]";
@@ -838,7 +839,7 @@ OnMyMobDead4:
 	end;
 OnStart:
 	disablenpc instance_npcname("Sakray#dk");
-	disablenpc instance_npcname("Thanatos Magic Trace#dk3");
+	disablenpc instance_npcname("Magic Sword Tartanos#dk3");
 	enablenpc instance_npcname("#tb");
 	enablenpc instance_npcname("#sv");
 	enablenpc instance_npcname("#tv");
@@ -851,10 +852,10 @@ OnTimer8000:
 	npctalk "Voice of Sakray : I will always stand by you. Please rest beside me.", instance_npcname("#sv");
 	end;
 OnTimer13000:
-	npctalk "Thanatos Magic Trace: Sakray, do not forget the covenant of blood between us.", instance_npcname("#tv");
+	npctalk "Magic Sword Tartanos: Sakray, do not forget the covenant of blood between us.", instance_npcname("#tv");
 	end;
 OnTimer17000:
-	npctalk "Thanatos Magic Trace: Your soul is mine until you find the blood that satisfies me...", instance_npcname("#tv");
+	npctalk "Magic Sword Tartanos: Your soul is mine until you find the blood that satisfies me...", instance_npcname("#tv");
 	end;
 OnTimer22000:
 	npctalk "Voice of Sakray : Rest in the shadow with me.", instance_npcname("#sv");
@@ -872,7 +873,7 @@ OnTimer28500:
 	end;
 }
 
-1@spa,195,41,1	duplicate(Lurid Royal Guard#dk)	Thanatos Magic Trace#dk3	CLEAR_NPC
+1@spa,195,41,1	duplicate(Lurid Royal Guard#dk)	Magic Sword Tartanos#dk3	CLEAR_NPC
 1@spa,198,43,1	duplicate(Lurid Royal Guard#dk)	#sv	CLEAR_NPC
 1@spa,196,41,1	duplicate(Lurid Royal Guard#dk)	#tv	CLEAR_NPC
 
@@ -892,7 +893,7 @@ OnTimer28500:
 	mes "[King]";
 	mes "Will you give the ^006400Gray Shard^000000 to me?";
 	mes "The guilt is eating my soul.";
-	mes "My soul is stuck within the Ghost Palace.";
+	mes "My soul is trapped inside the Ghost Palace.";
 	next;
 	mes "[King]";
 	mes "I am collecting Sakray's abandoned memories from these shards.";
@@ -905,9 +906,9 @@ OnTimer28500:
 	mes "Please help me save the soul of Sakray.";
 	next;
 	setarray .@item_name$[0],
-		"Thanatos Sword", "Thanatos Great Sword", "Thanatos Spear", "Thanatos Long Spear", "Thanatos Staff",
-		"Thanatos Two-handed Staff", "Thanatos Bow", "Thanatos Dagger", "Thanatos Katar", "Thanatos Knuckle",
-		"Thanatos Hammer", "Thanatos Axe", "Thanatos Violin", "Thanatos Whip",
+		"Thanos Sword", "Thanos Broadsword", "Thanos Spear", "Thanos Two-Handed Spear", "Thanos Staff",
+		"Thanos Two-handed Staff", "Thanos Bow", "Thanos Dagger", "Thanos Katar", "Thanos Knuckle",
+		"Thanos Hammer", "Thanos Axe", "Thanos Violin", "Thanos Whip",
 		"Gray Shield", "Gray Armor", "Gray Robe", "Gray Cloak", "Gray Shoes", "Gray Helmet";
 	setarray .@items_list[0],13441,21009,1438,1496,1669,2023,18119,13093,28000,1836,16028,28100,1933,1988,2187,15090,15091,20721,22033,18820;
 
@@ -955,7 +956,7 @@ OnTimer28500:
 		mes "[King]";
 		mes "All right, it is done.";
 		mes "Take this ^FF0000" + .@item_name$[.@s] + "^000000";
-		mes "to confront Sakray and Thanatos.";
+		mes "to confront Sakray and Tartanos.";
 		next;
 		mes "[King]";
 		mes "The power requires a sacrifice.";
