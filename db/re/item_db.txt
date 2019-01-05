@@ -10358,7 +10358,7 @@
 19834,C_Baseball_Cap,Costume Baseball Cap,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,216,{},{},{}
 19835,C_Lif_Doll_Hat,Costume Lif Doll Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,297,{},{},{}
 19836,C_L_Magestic_Goat,Costume Majestic Goat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,380,{},{},{}
-19837,C_Asara_Fairy,Costume Asara Fairy Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,492,{},{},{}
+19837,C_Asara_Fairy,Costume Asara Fairy Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,3072,,1,0,492,{},{},{}
 19839,C_Vanilmirth_Hat,Costume Vanilmirth Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,317,{},{},{}
 19841,C_Dragonhelm_Copper,Costume Dragon Helm Copper,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,454,{},{},{}
 19842,C_Puppy_Hat,Costume Puppy Hat,4,20,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,234,{},{},{}
