@@ -1,15 +1,120 @@
 //===== rAthena Script =======================================
 //= Bullet Dealers
-//===== By ===================================================
-//= Euphy
-//===== Version ==============================================
-//= 1.0
-//===== Compatible With ======================================
-//= rAthena Project
-//===== Description ==========================================
+//===== Description: =========================================
 //= Bullet trader.
-//===== Comments =============================================
-//= 1.0 First version, Pre-Renewal duplicates.
+//===== Changelogs: ==========================================
+//= 1.0 First version [Playtester]
+//= 1.1 Converted from Aegis [Paradox924X]
+//= 1.2 More optimized conversion [Legionaire]
+//= 1.2a Removed .GATs [Lupus]
+//= 1.3 Fixed [Playtester] Optimized. Got rid of @vars [Lupus]
+//= 1.4 Updated to match AEGIS script. [Kisuka]
+//= 1.5 Updated to match AEGIS script again. [Masao]
+//= 1.6 Moved Izlude duplicate to pre-re/re paths. [Euphy]
+//= 2.0 Clean-up. [Capuche]
+//= 2.1 Fixes Issue #1482, where Rebellion jobs cannot use this npc. [Limestone]
 //============================================================
 
+alberta,118,160,3	script	Bullet Dealer Tony#alb::bdt	4_M_04,{
+	mes "[Tony]";
+	if (BaseClass == Job_Gunslinger) {
+		mes "I'm Tony, the Bullet Dealer.";
+		mes "Come to me whenever you're";
+		mes "short on ammo. Just bring me";
+		mes "the materials, and I'll make";
+		mes "you the bullets you need.";
+		next;
+		switch(select("Poison Sphere:Flare Sphere:Lighting Sphere:Blind Sphere:Freezing Sphere:Cancel")) {
+		case 1: callsub S_BulletTrade,937,10,13205;// <item required>, <amount req>, <bullet id>
+		case 2: callsub S_BulletTrade,7097,2,13203;
+		case 3: callsub S_BulletTrade,7053,3,13204;
+		case 4: callsub S_BulletTrade,1024,5,13206;
+		case 5: callsub S_BulletTrade,7054,2,13207;
+		case 6:
+			mes "[Tony]";
+			mes "Changed your mind?";
+			mes "Well, if you ever need";
+			mes "any bullets, I'll be right";
+			mes "here. Come back whenever";
+			mes "you think you'll need more";
+			mes "ammunition, Gunslinger.";
+			close;
+		}
+	}
+	mes "Hey, I'm Tony. I'm in";
+	mes "charge of distributing";
+	mes "and making bullets for";
+	mes "Gunslingers. It's just";
+	mes "how our guild likes";
+	mes "to do things.";
+	next;
+	mes "[Tony]";
+	mes "I'm sorry if you came";
+	mes "here to buy some bullets.";
+	mes "I can only do business with";
+	mes "fully fledged Gunslingers.";
+	close;
+
+S_BulletTrade:
+	.@required_id = getarg(0);
+	.@required_amount = getarg(1);
+	.@bullet_id = getarg(2);
+
+	mes "[Tony]";
+	mes "For every set of";
+	mes callfunc("F_InsertPlural",30,getitemname(.@bullet_id))+",";
+	mes "you must give me";
+	mes "1 Emveretarcon,";
+	mes "1 Phracon, and";
+	mes callfunc("F_InsertPlural",.@required_amount,getitemname(.@required_id))+".";
+	next;
+	mes "[Tony]";
+	mes "Remember that I can give";
+	mes "a maximum of 500 sets of";
+	mes "30 bullets at a time. Please";
+	mes "enter the number of bullet sets";
+	mes "that you'd like. If you want to";
+	mes "cancel, then just enter ''0.''";
+	next;
+	input .@amount;
+	mes "[Tony]";
+	if (.@amount < 1 || .@amount > 500) {
+		mes "Hey, I can't give you";
+		mes "that many bullets. Don't";
+		mes "forget to enter a number";
+		mes "that's no higher than 500";
+		mes "if you want to trade your";
+		mes "items for some bullets.";
+	}
+	else if (countitem(1010) >= .@amount && countitem(1011) >= .@amount && countitem(.@required_id) >= (.@amount*.@required_amount)) {
+		if (checkweight(.@bullet_id,.@amount * 30) == 0) {
+			mes "Eh? Your Inventory doesn't";
+			mes "have enough space for this";
+			mes "many bullets. Come back later";
+			mes "after you make more space";
+			mes "available. Try putting some of";
+			mes "your things into Kafra Storage.";
+		} else {
+			mes "Great, everything seems";
+			mes "to be in order. Let me take";
+			mes "these materials, and here are";
+			mes "your bullets. It's a pleasure";
+			mes "to do business with you~";
+			delitem 1010,.@amount; //Phracon
+			delitem 1011,.@amount; //Emveretarcon
+			delitem .@required_id,.@amount * .@required_amount;
+			getitem .@bullet_id,.@amount * 30;
+		}
+	} else {
+		mes "Huh. It looks like you";
+		mes "don't have enough materials";
+		mes "for that many bullets. Well,";
+		mes "it's no problem. Just come";
+		mes "back after gathering everything";
+		mes "that you need, okay?";
+	}
+	close;
+}
+
+que_ng,187,156,3	duplicate(bdt)	Bullet Dealer Tony#ng	86
 izlude,171,133,3	duplicate(bdt)	Bullet Dealer Tony#iz	86

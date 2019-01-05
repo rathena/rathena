@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _PARTY_HPP_
-#define _PARTY_HPP_
+#ifndef PARTY_HPP
+#define PARTY_HPP
 
 #include <stdarg.h>
 
@@ -89,6 +89,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 int party_send_dot_remove(struct map_session_data *sd);
 int party_sub_count(struct block_list *bl, va_list ap);
 int party_sub_count_class(struct block_list *bl, va_list ap);
+int party_sub_count_banding(struct block_list *bl, va_list ap);
 int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_session_data *sd,int range,...);
 
 /*==========================================
@@ -99,4 +100,4 @@ void party_booking_update(struct map_session_data *sd, short* job);
 void party_booking_search(struct map_session_data *sd, short level, short mapid, short job, unsigned long lastindex, short resultcount);
 bool party_booking_delete(struct map_session_data *sd);
 
-#endif /* _PARTY_HPP_ */
+#endif /* PARTY_HPP */

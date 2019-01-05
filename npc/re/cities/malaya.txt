@@ -221,7 +221,7 @@ OnBingx2:
 OnTouch_:
 	set .@i, atoi(strnpcinfo(2));
 	if (.@i%4 == 2) {
-		if (getcharid(0) == getpartyleader(getcharid(1),2))
+		if (is_party_leader() == true)
 			set .@pass,1;
 	} else if (.@i%4 == 3) {
 		if (checkquest(4229,PLAYTIME) > -1 && checkquest(9223,PLAYTIME) > -1 && checkquest(12278,PLAYTIME) > -1)

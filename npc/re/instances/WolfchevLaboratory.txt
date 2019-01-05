@@ -21,7 +21,7 @@ lighthalzen,303,303,6	script	Giacomo Girolamo#kiup2	4_M_KHMAN,3,3,{
 		mes "^FF0000 Check up your inventory. You got too many items to carry out the quest. ^000000";
 		close;
 	}
-	if (lhz_boss > 30) {
+	if (lhz_curse > 30) {
 		if (!lght_duk01) {
 			if (Sex == SEX_MALE) {
 				emotion ET_HNG;
@@ -309,7 +309,7 @@ OnTouch:
 			warp "que_lhz", 148, 215;
 		}
 	} else {
-		if (lhz_boss < 31) {
+		if (lhz_curse < 31) {
 			mes "- Whistling sound -";
 			mes "From below, there comes a gruesome sound mingling with the wind.";
 			close2;
@@ -818,7 +818,7 @@ lhz_dun04,151,276,3	script	Researcher#memo	4_LGTSCIENCE,{
 						}
 					}
 				}
-				if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+				if (is_party_leader() == true) {
 					if (instance_create("Wolfchev's Laboratory") < 0) {
 						mes "[Wolfchev]";
 						mes "Hmm.. Lab entering system is a bit weird. Would wait for me to check the system?";
@@ -990,7 +990,7 @@ OnMyMobDead:
 1@lhz,39,168,0	script	Manual Sheet#1_1	CLEAR_NPC,{
 	mes "There are valve manual sheets littered on the floor.";
 	next;
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		mes "You the party leader, started to read the manual.";
 		next;
 		mes "[Emergency Access Valve Manual]";
@@ -1068,7 +1068,7 @@ OnEnable:
 1@lhz,41,172,0	script	Valve#1_2	CLEAR_NPC,{
 	.@open_portal = 0;
 	mes "This is the left valve for the emergency access.";
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		next;
 		mes "To which direction do you wish to turn?";
 		next;
@@ -1131,7 +1131,7 @@ OnEnable:
 1@lhz,52,172,0	script	Valve#1_3	CLEAR_NPC,{
 	.@open_portal = 0;
 	mes "This is the left valve for the emergency access.";
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		next;
 		mes "To which direction do you wish to turn?";
 		next;
@@ -1526,7 +1526,7 @@ OnMyMobDead:
 // The Lab No.2 Valves
 //============================================================
 -	script	bio4FLab2Valve	-1,{
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		progressbar "0xffff00", 20;
 		stopnpctimer;
 		donpcevent instance_npcname("Lab2#2_2")+"::OnDisableValve1";
