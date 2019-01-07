@@ -51,7 +51,7 @@ enum CASHSHOP_BUY_RESULT
 };
 
 struct cash_item_data{
-	unsigned short nameid;
+	nameid_t nameid;
 	uint32 price;
 };
 
@@ -71,7 +71,7 @@ enum e_sale_add_result {
 
 struct sale_item_data{
 	// Data
-	uint16 nameid;
+	nameid_t nameid;
 	time_t start;
 	time_t end;
 	uint32 amount;
@@ -89,9 +89,9 @@ struct sale_item_db{
 #if PACKETVER_SUPPORTS_SALES
 extern struct sale_item_db sale_items;
 
-struct sale_item_data* sale_find_item(uint16 nameid, bool onsale);
-enum e_sale_add_result sale_add_item(uint16 nameid, int32 count, time_t from, time_t to);
-bool sale_remove_item(uint16 nameid);
+struct sale_item_data* sale_find_item(nameid_t nameid, bool onsale);
+enum e_sale_add_result sale_add_item(nameid_t nameid, int32 count, time_t from, time_t to);
+bool sale_remove_item(nameid_t nameid);
 void sale_notify_login( struct map_session_data* sd );
 #endif
 

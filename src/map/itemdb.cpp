@@ -55,7 +55,7 @@ struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
  * @param nameid: Item to check for in group
  * @return True if item is in group, else false
  */
-bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid)
+bool itemdb_group_item_exists(unsigned short group_id, nameid_t nameid)
 {
 	struct s_item_group_db *group = (struct s_item_group_db *)uidb_get(itemdb_group, group_id);
 	unsigned short i, j;

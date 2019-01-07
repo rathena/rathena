@@ -79,7 +79,8 @@ struct s_achievement_db {
 	struct script_code* condition;
 	int16 mapindex;
 	struct ach_reward {
-		unsigned short nameid, amount;
+		nameid_t nameid;
+		unsigned short amount;
 		struct script_code *script;
 		uint32 title_id;
 		ach_reward();

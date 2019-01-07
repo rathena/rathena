@@ -33,13 +33,13 @@ extern char sales_table[32];
  */
 static bool cashshop_parse_dbrow(char* fields[], int columns, int current) {
 	uint16 tab = atoi(fields[0]);
-	unsigned short nameid = atoi(fields[1]);
+	nameid_t nameid = strtoul(fields[1], NULL, 10);
 	uint32 price = atoi(fields[2]);
 	int j;
 	struct cash_item_data* cid;
 
 	if( !itemdb_exists( nameid ) ){
-		ShowWarning( "cashshop_parse_dbrow: Invalid ID %hu in line '%d', skipping...\n", nameid, current );
+		ShowWarning( "cashshop_parse_dbrow: Invalid ID %u in line '%d', skipping...\n", nameid, current );
 		return 0;
 	}
 
@@ -151,32 +151,32 @@ static int cashshop_read_db_sql( void ){
 
 #if PACKETVER_SUPPORTS_SALES
 static bool sale_parse_dbrow( char* fields[], int columns, int current ){
-	unsigned short nameid = atoi(fields[0]);
+	nameid_t nameid = strtoul(fields[0], NULL, 10);
 	int start = atoi(fields[1]), end = atoi(fields[2]), amount = atoi(fields[3]), i;
 	time_t now = time(NULL);
 	struct sale_item_data* sale_item = NULL;
 
 	if( !itemdb_exists(nameid) ){
-		ShowWarning( "sale_parse_dbrow: Invalid ID %hu in line '%d', skipping...\n", nameid, current );
+		ShowWarning( "sale_parse_dbrow: Invalid ID %u in line '%d', skipping...\n", nameid, current );
 		return false;
 	}
 
 	ARR_FIND( 0, cash_shop_items[CASHSHOP_TAB_SALE].count, i, cash_shop_items[CASHSHOP_TAB_SALE].item[i]->nameid == nameid );
 
 	if( i == cash_shop_items[CASHSHOP_TAB_SALE].count ){
-		ShowWarning( "sale_parse_dbrow: ID %hu is not registered in the limited tab in line '%d', skipping...\n", nameid, current );
+		ShowWarning( "sale_parse_dbrow: ID %u is not registered in the limited tab in line '%d', skipping...\n", nameid, current );
 		return false;
 	}
 
 	// Check if the end is after the start
 	if( start >= end ){
-		ShowWarning( "sale_parse_dbrow: Sale for item %hu was ignored, because the timespan was not correct.\n", nameid );
+		ShowWarning( "sale_parse_dbrow: Sale for item %u was ignored, because the timespan was not correct.\n", nameid );
 		return false;
 	}
 
 	// Check if it is already in the past
 	if( end < now ){
-		ShowWarning( "sale_parse_dbrow: An outdated sale for item %hu was ignored.\n", nameid );
+		ShowWarning( "sale_parse_dbrow: An outdated sale for item %u was ignored.\n", nameid );
 		return false;
 	}
 
@@ -267,7 +267,7 @@ static TIMER_FUNC(sale_start_timer){
 	return 1;
 }
 
-enum e_sale_add_result sale_add_item( uint16 nameid, int32 count, time_t from, time_t to ){
+enum e_sale_add_result sale_add_item(nameid_t nameid, int32 count, time_t from, time_t to ){
 	int i;
 	struct sale_item_data* sale_item;
 
@@ -299,7 +299,7 @@ enum e_sale_add_result sale_add_item( uint16 nameid, int32 count, time_t from, t
 		return SALE_ADD_DUPLICATE;
 	}
 	
-	if( SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`nameid`,`start`,`end`,`amount`) VALUES ( '%d', FROM_UNIXTIME(%d), FROM_UNIXTIME(%d), '%d' )", sales_table, nameid, (uint32)from, (uint32)to, count) ){
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "INSERT INTO `%s`(`nameid`,`start`,`end`,`amount`) VALUES ( '%u', FROM_UNIXTIME(%d), FROM_UNIXTIME(%d), '%d' )", sales_table, nameid, (uint32)from, (uint32)to, count) ){
 		Sql_ShowDebug(mmysql_handle);
 		return SALE_ADD_FAILED;
 	}
@@ -318,7 +318,7 @@ enum e_sale_add_result sale_add_item( uint16 nameid, int32 count, time_t from, t
 	return SALE_ADD_SUCCESS;
 }
 
-bool sale_remove_item( uint16 nameid ){
+bool sale_remove_item(nameid_t nameid){
 	struct sale_item_data* sale_item;
 	int i;
 
@@ -330,7 +330,7 @@ bool sale_remove_item( uint16 nameid ){
 	}
 
 	// Delete it from the database
-	if( SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `nameid` = '%d'", sales_table, nameid ) ){
+	if( SQL_ERROR == Sql_Query(mmysql_handle, "DELETE FROM `%s` WHERE `nameid` = '%u'", sales_table, nameid ) ){
 		Sql_ShowDebug(mmysql_handle);
 		return false;
 	}
@@ -371,7 +371,7 @@ bool sale_remove_item( uint16 nameid ){
 	return true;
 }
 
-struct sale_item_data* sale_find_item( uint16 nameid, bool onsale ){
+struct sale_item_data* sale_find_item(nameid_t nameid, bool onsale ){
 	int i;
 	struct sale_item_data* sale_item;
 	time_t now = time(NULL);
@@ -487,7 +487,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 	new_ = 0;
 
 	for( i = 0; i < n; ++i ){
-		unsigned short nameid = item_list[i].itemId;
+		nameid_t nameid = item_list[i].itemId;
 		uint32 quantity = item_list[i].amount;
 		uint16 tab = item_list[i].tab;
 		int j;
@@ -569,7 +569,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 	}
 
 	for( i = 0; i < n; ++i ){
-		unsigned short nameid = item_list[i].itemId;
+		nameid_t nameid = item_list[i].itemId;
 		uint32 quantity = item_list[i].amount;
 #if PACKETVER_SUPPORTS_SALES
 		uint16 tab = item_list[i].tab;
@@ -615,7 +615,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 					if( new_amount == 0 ){
 						sale_remove_item(sale->nameid);
 					}else{
-						if( SQL_ERROR == Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = '%d' WHERE `nameid` = '%d'", sales_table, new_amount, nameid ) ){
+						if( SQL_ERROR == Sql_Query( mmysql_handle, "UPDATE `%s` SET `amount` = '%d' WHERE `nameid` = '%u'", sales_table, new_amount, nameid ) ){
 							Sql_ShowDebug(mmysql_handle);
 						}
 

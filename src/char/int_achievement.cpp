@@ -320,14 +320,14 @@ int mapif_parse_achievement_reward(int fd){
 		struct item item;
 
 		memset(&item, 0, sizeof(struct item));
-		item.nameid = RFIFOW(fd, 10);
-		item.amount = RFIFOL(fd, 12);
+		item.nameid = RFIFONID(fd, 10);
+		item.amount = RFIFOL(fd, 10 + sizeof(nameid_t));
 		item.identify = 1;
 
 		safesnprintf(mail_sender, NAME_LENGTH, char_msg_txt(227)); // 227: GM
-		safestrncpy(mail_receiver, RFIFOCP(fd,16), NAME_LENGTH);
+		safestrncpy(mail_receiver, RFIFOCP(fd, 14 + sizeof(nameid_t)), NAME_LENGTH);
 		safesnprintf(mail_title, MAIL_TITLE_LENGTH, char_msg_txt(228)); // 228: Achievement Reward Mail
-		safesnprintf(mail_text, MAIL_BODY_LENGTH, char_msg_txt(229), RFIFOCP(fd,16+NAME_LENGTH) ); // 229: [%s] Achievement Reward.
+		safesnprintf(mail_text, MAIL_BODY_LENGTH, char_msg_txt(229), RFIFOCP(fd, 14 + sizeof(nameid_t) + NAME_LENGTH)); // 229: [%s] Achievement Reward.
 
 		if( !mail_sendmail(0, mail_sender, char_id, mail_receiver, mail_title, mail_text, 0, &item, 1) ){
 			current = 0;

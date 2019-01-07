@@ -67,7 +67,7 @@
 	packet(0x009a,-1);
 	parseable_packet(0x009b,5,clif_parse_ChangeDir,2,4);
 	packet(0x009c,9);
-	packet(0x009d,17);
+	packet(0x009d,15 +sizeof(nameid_t));
 	packet(0x009e,17);
 	parseable_packet(0x009f,6,clif_parse_TakeItem,2);
 	packet(0x00a0,23);
@@ -366,7 +366,7 @@
 	packet(0x01c5,22);
 	packet(0x01c6,4);
 	packet(0x01c7,2);
-	packet(0x01c8,13);
+	packet(0x01c8,11+sizeof(nameid_t));
 	packet(0x01c9,97);
 	//packet(0x01ca,-1);
 	packet(0x01cb,9);
@@ -636,7 +636,7 @@
 	parseable_packet(0x0193,21,clif_parse_MoveFromKafra,4,17);
 	packet(0x0221,-1);
 	parseable_packet(0x0222,6,clif_parse_WeaponRefine,2);
-	packet(0x0223,8);
+	packet(0x0223,6 + sizeof(nameid_t));
 #endif
 
 // 2004-12-13aSakexe
@@ -2163,7 +2163,7 @@
 	parseable_packet(0x09D4,2,clif_parse_NPCShopClosed,0);
 	//NPC Market
 	packet(0x09D5,-1);
-	parseable_packet(0x09D6,-1,clif_parse_NPCMarketPurchase,2,4,6);
+	parseable_packet(0x09D6,-1,clif_parse_NPCMarketPurchase,2,4,4+sizeof(nameid_t));
 	packet(0x09D7,-1);
 	parseable_packet(0x09D8,2,clif_parse_NPCMarketClosed,0);
 	// Clan System
@@ -2244,8 +2244,8 @@
 // 2015-02-25aRagexeRE
 #if PACKETVER >= 20150225
 	packet(0x0A09,45); // ZC_ADD_EXCHANGE_ITEM3
-	packet(0x0A0A,47); // ZC_ADD_ITEM_TO_STORE3
-	packet(0x0A0B,47); // ZC_ADD_ITEM_TO_CART3
+	packet(0x0A0A,37 + 5 * sizeof(nameid_t)); // ZC_ADD_ITEM_TO_STORE3
+	packet(0x0A0B,37 + 5 * sizeof(nameid_t)); // ZC_ADD_ITEM_TO_CART3
 	packet(0x0A0C,56); // ZC_ITEM_PICKUP_ACK_V6
 	packet(0x0A0D,-1); // ZC_INVENTORY_ITEMLIST_EQUIP_V6
 	packet(0x0A0F,-1); // ZC_CART_ITEMLIST_EQUIP_V6

@@ -96,7 +96,7 @@ enum e_inventory_type{
 * @param nameid: Item ID
 * @return item type. For IT_PETEGG will be displayed as IT_ARMOR. If Shadow Weapon of IT_SHADOWGEAR as IT_WEAPON and else as IT_ARMOR
 */
-static inline int itemtype(unsigned short nameid) {
+static inline int itemtype(nameid_t nameid) {
 	struct item_data* id = itemdb_search(nameid); //Use itemdb_search, so non-existance item will use dummy data and won't crash the server. bugreport:8468
 	int type = id->type;
 	if( type == IT_SHADOWGEAR ) {
@@ -830,9 +830,9 @@ void clif_charselectok(int id, uint8 ok)
 }
 
 /// Makes an item appear on the ground.
-/// 009E <id>.L <name id>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
-/// 084B <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
-/// 0ADD <id>.L <name id>.W <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
+/// 009E <id>.L <name id>.NID <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY)
+/// 084B <id>.L <name id>.NID <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W (ZC_ITEM_FALL_ENTRY4)
+/// 0ADD <id>.L <name id>.NID <type>.W <identified>.B <x>.W <y>.W <subX>.B <subY>.B <amount>.W <show drop effect>.B <drop effect mode>.W (ZC_ITEM_FALL_ENTRY5)
 void clif_dropflooritem( struct flooritem_data* fitem, bool canShowEffect ){
 	nullpo_retv(fitem);
 
@@ -958,7 +958,7 @@ void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
 	add_timer(tick, clif_clearunit_delayed_sub, (int)type, (intptr_t)tbl);
 }
 
-void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand)
+void clif_get_weapon_view(struct map_session_data* sd, nameid_t *rhand, nameid_t *lhand)
 {
 	if(sd->sc.option&OPTION_COSTUME)
 	{
@@ -2063,11 +2063,10 @@ void clif_npcbuysell(struct map_session_data* sd, int id)
 
 
 /// Presents list of items, that can be bought in an NPC shop.
-/// 00c6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.W }* (ZC_PC_PURCHASE_ITEMLIST)
+/// 00c6 <packet len>.W { <price>.L <discount price>.L <item type>.B <name id>.NID }* (ZC_PC_PURCHASE_ITEMLIST)
 void clif_buylist( struct map_session_data *sd, struct npc_data *nd ){
 	nullpo_retv( sd );
 	nullpo_retv( nd );
-
 	int fd = sd->fd;
 
 	if( !session_isActive( fd ) ){
@@ -2144,6 +2143,7 @@ void clif_parse_NPCShopClosed(int fd, struct map_session_data *sd) {
  * Presents list of items, that can be sold to a Market shop.
  * @author: Ind and Yommy
  **/
+/// 0x9d5 <packet len>.W { <name id>.NID <type>.B <price>.L <qty>.L <weight>.W }*
 void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd) {
 #if PACKETVER >= 20131223
 	nullpo_retv( sd );
@@ -2198,6 +2198,7 @@ void clif_parse_NPCMarketClosed(int fd, struct map_session_data *sd) {
 
 
 /// Purchase item from Market shop.
+/// 0x9d7 <packet len>.W <count>.B { <name id>.NID <qty>.W <price>.L }*
 void clif_npc_market_purchase_ack(struct map_session_data *sd, uint8 res, uint8 n, struct s_npc_buy_list *list) {
 #if PACKETVER >= 20131223
 	nullpo_retv( sd );
@@ -2244,6 +2245,7 @@ void clif_npc_market_purchase_ack(struct map_session_data *sd, uint8 res, uint8 
 
 
 /// Purchase item from Market shop.
+/// 0x9d6 <len>.W { <name id>.NID <qty>.L }
 void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd) {
 #if PACKETVER >= 20131223
 	nullpo_retv( sd );
@@ -2654,14 +2656,15 @@ static uint8 clif_add_random_options( struct ItemOptions buf[MAX_ITEM_RDM_OPT], 
 }
 
 /// Notifies the client, about a received inventory item or the result of a pick-up request.
-/// 00a0 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B (ZC_ITEM_PICKUP_ACK)
-/// 029a <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L (ZC_ITEM_PICKUP_ACK2)
-/// 02d4 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.W <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK3)
-/// 0990 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK_V5)
-/// 0a0c <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ITEM_PICKUP_ACK_V6)
-/// 0a37 <index>.W <amount>.W <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W { <option id>.W <option value>.W <option param>.B }*5 <favorite>.B <view id>.W (ZC_ITEM_PICKUP_ACK_V7)
+/// 00a0 <index>.W <amount>.W <name id>.NID <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID <equip location>.W <item type>.B <result>.B (ZC_ITEM_PICKUP_ACK)
+/// 029a <index>.W <amount>.W <name id>.NID <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID <equip location>.W <item type>.B <result>.B <expire time>.L (ZC_ITEM_PICKUP_ACK2)
+/// 02d4 <index>.W <amount>.W <name id>.NID <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID <equip location>.W <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK3)
+/// 0990 <index>.W <amount>.W <name id>.NID <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W (ZC_ITEM_PICKUP_ACK_V5)
+/// 0a0c <index>.W <amount>.W <name id>.NID <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ITEM_PICKUP_ACK_V6)
+/// 0a37 <index>.W <amount>.W <name id>.NID <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID <equip location>.L <item type>.B <result>.B <expire time>.L <bindOnEquipType>.W { <option id>.W <option value>.W <option param>.B }*5 <favorite>.B <view id>.W (ZC_ITEM_PICKUP_ACK_V7)
 void clif_additem( struct map_session_data *sd, int n, int amount, unsigned char fail ){
 	nullpo_retv( sd );
+
 
 	int fd = sd->fd;
 
@@ -2685,6 +2688,7 @@ void clif_additem( struct map_session_data *sd, int n, int amount, unsigned char
 		clif_addcards( &p.slot, &sd->inventory.u.items_inventory[n] );
 		p.location = pc_equippoint(sd,n);
 		p.type = itemtype( sd->inventory.u.items_inventory[n].nameid );
+
 #if PACKETVER >= 20061218
 		p.HireExpireDate = sd->inventory.u.items_inventory[n].expire_time;
 #endif
@@ -2979,6 +2983,7 @@ void clif_equiplist( struct map_session_data *sd ){
 	// TODO: implement again => only send equip part
 	clif_inventorylist( sd );
 }
+
 
 void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length, const char *storename){
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
@@ -4092,12 +4097,11 @@ void clif_changeoption2(struct block_list* bl)
 
 /// Notifies the client about the result of an item use request.
 /// 00a8 <index>.W <amount>.W <result>.B (ZC_USE_ITEM_ACK)
-/// 01c8 <index>.W <name id>.W <id>.L <amount>.W <result>.B (ZC_USE_ITEM_ACK2)
+/// 01c8 <index>.W <name id>.NID <id>.L <amount>.W <result>.B (ZC_USE_ITEM_ACK2)
 void clif_useitemack( struct map_session_data *sd, int index, int amount, bool ok ){
 	nullpo_retv( sd );
 
 	int fd = sd->fd;
-
 	if( !session_isActive( fd ) ){
 		return;
 	}
@@ -4421,7 +4425,7 @@ void clif_tradestart(struct map_session_data* sd, uint8 type)
 /// Notifies the client about an item from other player in current trade.
 /// 00e9 <amount>.L <nameid>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_EXCHANGE_ITEM)
 /// 080f <nameid>.W <item type>.B <amount>.L <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_EXCHANGE_ITEM2)
-/// 0a09 <nameid>.W <item type>.B <amount>.L <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ADD_EXCHANGE_ITEM3)
+/// 0a09 <nameid>.NID <item type>.B <amount>.L <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID { <option id>.W <option value>.W <option param>.B }*5 (ZC_ADD_EXCHANGE_ITEM3)
 void clif_tradeadditem( struct map_session_data* sd, struct map_session_data* tsd, int index, int amount ){
 	nullpo_retv( sd );
 	nullpo_retv( tsd );
@@ -4567,7 +4571,7 @@ void clif_updatestorageamount(struct map_session_data* sd, int amount, int max_a
 /// Notifies the client of an item being added to the storage.
 /// 00f4 <index>.W <amount>.L <nameid>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_STORE)
 /// 01c4 <index>.W <amount>.L <nameid>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_STORE2)
-/// 0a0a <index>.W <amount>.L <nameid>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ADD_ITEM_TO_STORE3)
+/// 0a0a <index>.W <amount>.L <nameid>.NID <type>.B <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID { <option id>.W <option value>.W <option param>.B }*5 (ZC_ADD_ITEM_TO_STORE3)
 void clif_storageitemadded( struct map_session_data* sd, struct item* i, int index, int amount ){
 	nullpo_retv( sd );
 	nullpo_retv( i );
@@ -5034,7 +5038,7 @@ void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_targe
 
 
 /// Notifies the client about an item on floor (ZC_ITEM_ENTRY).
-/// 009d <id>.L <name id>.W <identified>.B <x>.W <y>.W <amount>.W <subX>.B <subY>.B
+/// 009d <id>.L <name id>.NID <identified>.B <x>.W <y>.W <amount>.W <subX>.B <subY>.B
 void clif_getareachar_item( struct map_session_data* sd,struct flooritem_data* fitem ){
 	nullpo_retv( sd );
 	nullpo_retv( fitem );
@@ -5976,7 +5980,7 @@ void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 
 
 /// Presents a textual list of producable items (ZC_MAKABLEITEMLIST).
-/// 018d <packet len>.W { <name id>.W { <material id>.W }*3 }*
+/// 018d <packet len>.W { <name id>.NID { <material id>.NID }*3 }*
 /// material id:
 ///     unused by the client
 void clif_skill_produce_mix_list( struct map_session_data *sd, int skill_id, int trigger ){
@@ -6589,7 +6593,7 @@ void clif_refine(int fd, int fail, int index, int val)
 
 
 /// Notifies the client about the result of a weapon refine attempt (ZC_ACK_WEAPONREFINE).
-/// 0223 <result>.L <nameid>.W
+/// 0223 <result>.L <nameid>.NID
 /// result:
 ///     0 = "weapon upgraded: %s" MsgStringTable[911] in rgb(0,255,255)
 ///     1 = "weapon upgraded: %s" MsgStringTable[912] in rgb(0,205,205)
@@ -6819,7 +6823,7 @@ void clif_item_identified(struct map_session_data *sd,int idx,int flag)
 
 
 /// Presents a list of items that can be repaired.
-/// 01fc <packet len>.W { <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }* (ZC_REPAIRITEMLIST)
+/// 01fc <packet len>.W { <index>.W <name id>.NID <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID }* (ZC_REPAIRITEMLIST)
 void clif_item_repair_list( struct map_session_data *sd,struct map_session_data *dstsd, int lv ){
 	nullpo_retv( sd );
 	nullpo_retv( dstsd );
@@ -6906,7 +6910,7 @@ void clif_item_damaged(struct map_session_data* sd, unsigned short position)
 
 
 /// Presents a list of weapon items that can be refined [Taken from jAthena] (ZC_NOTIFY_WEAPONITEMLIST).
-/// 0221 <packet len>.W { <index>.W <name id>.W <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }*
+/// 0221 <packet len>.W { <index>.W <name id>.NID <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID }*
 void clif_item_refine_list( struct map_session_data *sd ){
 	nullpo_retv( sd );
 
@@ -6978,10 +6982,9 @@ void clif_item_skill( struct map_session_data *sd, uint16 skill_id, uint16 skill
 /// Adds an item to character's cart.
 /// 0124 <index>.W <amount>.L <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_CART)
 /// 01c5 <index>.W <amount>.L <name id>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W (ZC_ADD_ITEM_TO_CART2)
-/// 0a0b <index>.W <amount>.L <name id>.W <type>.B <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W { <option id>.W <option value>.W <option param>.B }*5 (ZC_ADD_ITEM_TO_CART3)
+/// 0a0b <index>.W <amount>.L <name id>.NID <type>.B <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID { <option id>.W <option value>.W <option param>.B }*5 (ZC_ADD_ITEM_TO_CART3)
 void clif_cart_additem( struct map_session_data *sd, int n, int amount ){
 	nullpo_retv( sd );
-
 	int fd = sd->fd;
 
 	if( !session_isActive( fd ) ){
@@ -7322,7 +7325,7 @@ void clif_closevendingboard(struct block_list* bl, int fd)
 
 /// Sends a list of items in a shop.
 /// R 0133 <packet len>.W <owner id>.L { <price>.L <amount>.W <index>.W <type>.B <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }* (ZC_PC_PURCHASE_ITEMLIST_FROMMC)
-/// R 0800 <packet len>.W <owner id>.L <unique id>.L { <price>.L <amount>.W <index>.W <type>.B <name id>.W <identified>.B <damaged>.B <refine>.B <card1>.W <card2>.W <card3>.W <card4>.W }* (ZC_PC_PURCHASE_ITEMLIST_FROMMC2)
+/// R 0800 <packet len>.W <owner id>.L <unique id>.L { <price>.L <amount>.W <index>.W <type>.B <name id>.NID <identified>.B <damaged>.B <refine>.B <card1>.NID <card2>.NID <card3>.NID <card4>.NID }* (ZC_PC_PURCHASE_ITEMLIST_FROMMC2)
 void clif_vendinglist( struct map_session_data* sd, struct map_session_data* vsd ){
 	nullpo_retv( sd );
 	nullpo_retv( vsd );
@@ -7421,7 +7424,6 @@ void clif_openvending_ack(struct map_session_data* sd, int result)
 void clif_openvending( struct map_session_data* sd, int id, struct s_vending* vending ){
 	nullpo_retv( sd );
 	nullpo_retv( vending );
-
 	int fd = sd->fd;
 
 	if( !session_isActive( fd ) ){
@@ -16684,7 +16686,7 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 	WFIFOSET(fd, packet_len(0x289));
 }
 
-void clif_cashshop_result( struct map_session_data *sd, unsigned short item_id, uint16 result ){
+void clif_cashshop_result( struct map_session_data *sd, nameid_t item_id, uint16 result ){
 #if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined( PACKETVER_ZERO )
 	nullpo_retv( sd );
 

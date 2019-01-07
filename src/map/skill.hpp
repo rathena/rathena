@@ -417,7 +417,7 @@ enum e_skill_blown	{
 
 /// Create Database item
 struct s_skill_produce_db {
-	unsigned short nameid; /// Product ID
+	nameid_t nameid; /// Product ID
 	unsigned short req_skill; /// Required Skill
 	unsigned char req_skill_lv, /// Required Skill Level
 		itemlv; /// Item Level
@@ -428,7 +428,7 @@ extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 
 /// Creating database arrow
 struct s_skill_arrow_db {
-	unsigned short nameid, /// Material ID
+	nameid_t nameid, /// Material ID
 		cre_id[MAX_ARROW_RESULT], /// Arrow created
 		cre_amount[MAX_ARROW_RESULT]; /// Amount of each arrow created
 };
@@ -601,10 +601,10 @@ bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md);
 bool skill_isNotOk_npcRange(struct block_list *src, uint16 skill_id, uint16 skill_lv, int pos_x, int pos_y);
 
 // Item creation
-short skill_can_produce_mix( struct map_session_data *sd, unsigned short nameid, int trigger, int qty);
-bool skill_produce_mix( struct map_session_data *sd, uint16 skill_id, unsigned short nameid, int slot1, int slot2, int slot3, int qty, short produce_idx );
+short skill_can_produce_mix( struct map_session_data *sd, nameid_t nameid, int trigger, int qty);
+bool skill_produce_mix( struct map_session_data *sd, uint16 skill_id, nameid_t nameid, int slot1, int slot2, int slot3, int qty, short produce_idx );
 
-bool skill_arrow_create( struct map_session_data *sd, unsigned short nameid);
+bool skill_arrow_create( struct map_session_data *sd, nameid_t nameid);
 
 // skills for the mob
 int skill_castend_nodamage_id( struct block_list *src, struct block_list *bl,uint16 skill_id,uint16 skill_lv,t_tick tick,int flag );
@@ -2266,7 +2266,8 @@ enum wl_spheres {
 };
 
 struct s_skill_spellbook_db {
-	uint16 skill_id, nameid, points;
+	uint16 skill_id, points;
+	nameid_t nameid;
 };
 
 class ReadingSpellbookDatabase : public TypesafeYamlDatabase<uint16, s_skill_spellbook_db> {
@@ -2277,12 +2278,13 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
-	std::shared_ptr<s_skill_spellbook_db> findBook(int32 nameid);
+	std::shared_ptr<s_skill_spellbook_db> findBook(nameid_t nameid);
 };
 
 extern ReadingSpellbookDatabase reading_spellbook_db;
 
-void skill_spellbook(struct map_session_data *sd, unsigned short nameid);
+void skill_spellbook(struct map_session_data *sd, nameid_t nameid);
+
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 
 struct s_skill_magicmushroom_db {
@@ -2313,12 +2315,12 @@ bool skill_check_camouflage(struct block_list *bl, struct status_change_entry *s
 /**
  * Mechanic
  **/
-int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid);
+int skill_magicdecoy(struct map_session_data *sd, nameid_t nameid);
 
 /**
  * Guiltoine Cross
  **/
-int skill_poisoningweapon( struct map_session_data *sd, unsigned short nameid);
+int skill_poisoningweapon( struct map_session_data *sd, nameid_t nameid);
 
 /**
  * Auto Shadow Spell (Shadow Chaser)
