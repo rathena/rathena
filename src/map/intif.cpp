@@ -2260,7 +2260,7 @@ int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_d
 		return 0;
 	}
 
-	WFIFOHEAD(inter_fd, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
+	WFIFOHEAD(inter_fd, 14 + sizeof(nameid_t) +NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
 	WFIFOW(inter_fd, 0) = 0x3064;
 	WFIFOL(inter_fd, 2) = sd->status.char_id;
 	WFIFOL(inter_fd, 6) = adb->achievement_id;
@@ -3229,14 +3229,14 @@ void intif_parse_MessageToFD(int fd) {
 
 /**
  * Request to send broadcast item to all servers
- * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.?B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.NID <source>.W <type>.B <name>.?B
  * @param sd Player who obtain the item
  * @param nameid Obtained item
  * @param sourceid Source of item, another item ID or monster ID
  * @param type Obtain type @see enum BROADCASTING_SPECIAL_ITEM_OBTAIN
  * @return
  **/
-int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned short nameid, unsigned int sourceid, unsigned char type) {
+int intif_broadcast_obtain_special_item(struct map_session_data *sd, nameid_t nameid, unsigned int sourceid, unsigned char type) {
 	nullpo_retr(0, sd);
 
 	// Should not be here!
@@ -3254,13 +3254,13 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 	if (other_mapserver_count < 1)
 		return 0;
 
-	WFIFOHEAD(inter_fd, 9 + NAME_LENGTH);
+	WFIFOHEAD(inter_fd, 7 + sizeof(nameid_t) + NAME_LENGTH);
 	WFIFOW(inter_fd, 0) = 0x3009;
 	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH;
-	WFIFOW(inter_fd, 4) = nameid;
-	WFIFOW(inter_fd, 6) = sourceid;
-	WFIFOB(inter_fd, 8) = type;
-	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	WFIFONID(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 4 + sizeof(nameid_t)) = sourceid;
+	WFIFOB(inter_fd, 6 + sizeof(nameid_t)) = type;
+	safestrncpy(WFIFOCP(inter_fd, 7 + sizeof(nameid_t)), sd->status.name, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3269,7 +3269,7 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 /**
  * Request to send broadcast item to all servers.
  * TODO: Confirm the usage. Maybe on getitem-like command?
- * ZI 3009 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <npcname>.24B
+ * ZI 3009 <cmd>.W <len>.W <nameid>.NID <source>.W <type>.B <name>.24B <npcname>.24B
  * @param sd Player who obtain the item
  * @param nameid Obtained item
  * @param srcname Source name
@@ -3287,13 +3287,13 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 	if (other_mapserver_count < 1)
 		return 0;
 
-	WFIFOHEAD(inter_fd, 9 + NAME_LENGTH*2);
+	WFIFOHEAD(inter_fd, 7 + sizeof(nameid_t) + NAME_LENGTH*2);
 	WFIFOW(inter_fd, 0) = 0x3009;
 	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH*2;
-	WFIFOW(inter_fd, 4) = nameid;
-	WFIFOW(inter_fd, 6) = 0;
-	WFIFOB(inter_fd, 8) = ITEMOBTAIN_TYPE_NPC;
-	safestrncpy(WFIFOCP(inter_fd, 9), sd->status.name, NAME_LENGTH);
+	WFIFONID(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 4 + sizeof(nameid_t)) = 0;
+	WFIFOB(inter_fd, 6 + sizeof(nameid_t)) = ITEMOBTAIN_TYPE_NPC;
+	safestrncpy(WFIFOCP(inter_fd, 7 + sizeof(nameid_t)), sd->status.name, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3301,18 +3301,18 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 
 /**
  * Received broadcast item and broadcast on local map.
- * IZ 3809 <cmd>.W <len>.W <nameid>.W <source>.W <type>.B <name>.24B <srcname>.24B
+ * IZ 3809 <cmd>.W <len>.W <nameid>.NID <source>.W <type>.B <name>.24B <srcname>.24B
  * @param fd
  **/
 void intif_parse_broadcast_obtain_special_item(int fd) {
-	int type = RFIFOB(fd, 8);
+	int type = RFIFOB(fd, 6 + sizeof(nameid_t));
 	char name[NAME_LENGTH];
 
-	safestrncpy(name, RFIFOCP(fd, 9), NAME_LENGTH);
+	safestrncpy(name, RFIFOCP(fd, 7 + sizeof(nameid_t)), NAME_LENGTH);
 	if (type == ITEMOBTAIN_TYPE_NPC)
-		safestrncpy(name, RFIFOCP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
+		safestrncpy(name, RFIFOCP(fd, 7 + sizeof(nameid_t) + NAME_LENGTH), NAME_LENGTH);
 
-	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
+	clif_broadcast_obtain_special_item(name, RFIFONID(fd, 4), RFIFOW(fd, 4 + sizeof(nameid_t)), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 }
 
 /*==========================================

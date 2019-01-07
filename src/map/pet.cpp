@@ -1413,7 +1413,7 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 int pet_equipitem(struct map_session_data *sd,int index)
 {
 	struct pet_data *pd;
-	unsigned short nameid;
+	nameid_t nameid;
 
 	nullpo_retr(1, sd);
 
@@ -1466,7 +1466,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 {
 	struct item tmp_item;
-	unsigned short nameid;
+	nameid_t nameid;
 	unsigned char flag = 0;
 
 	if(pd->pet.equip == 0)

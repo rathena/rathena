@@ -28,10 +28,10 @@ struct s_pet_evo_data {
 /// Pet DB
 struct s_pet_db {
 	uint16 class_; ///< Monster ID
-	uint16 itemID; ///< Lure ID
-	uint16 EggID; ///< Egg ID
-	uint16 AcceID; ///< Accessory ID
-	uint16 FoodID; ///< Food ID
+	nameid_t itemID; ///< Lure ID
+	nameid_t EggID; ///< Egg ID
+	nameid_t AcceID; ///< Accessory ID
+	nameid_t FoodID; ///< Food ID
 	uint16 fullness; ///< Amount of hunger decresed each hungry_delay interval
 	uint32 hungry_delay; ///< Hunger value decrease each x seconds
 	int32 hunger_increase; ///< Hunger increased every time the pet is fed.
@@ -47,6 +47,7 @@ struct s_pet_db {
 	uint16 change_target_rate; ///< Rate of which the pet will change its attack target.
 	bool allow_autofeed; ///< Can this pet use auto feeding mechanic.
 	std::unordered_map<uint16, std::shared_ptr<s_pet_evo_data>> evolution_data; ///< Data for evolving the pet.
+
 	struct script_code
 		*pet_support_script, ///< Script since pet hatched. For pet* script commands only.
 		*pet_bonus_script; ///< Bonus script for this pet.
