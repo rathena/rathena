@@ -86,6 +86,17 @@ struct s_packet_keys {
 };
 #endif
 
+struct s_item_list_1 {
+	unsigned short amount;
+	nameid_t nameid;
+}__attribute__((packed));
+
+struct s_item_list_2 {
+	unsigned int nameid;
+	unsigned int amount;
+	unsigned short tab;
+}__attribute__((packed));
+
 enum e_CASHSHOP_ACK : uint8_t{
 	ERROR_TYPE_NONE             = 0, ///< The deal has successfully completed.
 	ERROR_TYPE_NPC              = 1, ///< The Purchase has failed because the NPC does not exist.

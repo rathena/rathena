@@ -1685,7 +1685,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, struct PACKET_CZ_PC_BUY_CASH_POINT_ITEM_sub* item_list)
 {
 	int i, j, amount, new_, w, vt;
-	unsigned short nameid;
+	nameid_t nameid;
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 	enum e_CASHSHOP_ACK res;
 	item_data *id;
@@ -3641,7 +3641,7 @@ void npc_market_tosql(const char *exname, struct npc_item_list *list) {
  * @param nameid Item ID
  * @param clear True: will removes all records related with the NPC
  **/
-void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clear) {
+void npc_market_delfromsql_(const char *exname, nameid_t nameid, bool clear) {
 	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
 	if (clear) {
 		if( SQL_ERROR == SqlStmt_Prepare(stmt, "DELETE FROM `%s` WHERE `name`='%s'", market_table, exname) ||

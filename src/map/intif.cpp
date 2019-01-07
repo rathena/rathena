@@ -2264,11 +2264,11 @@ int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_d
 	WFIFOW(inter_fd, 0) = 0x3064;
 	WFIFOL(inter_fd, 2) = sd->status.char_id;
 	WFIFOL(inter_fd, 6) = adb->achievement_id;
-	WFIFOW(inter_fd, 10) = adb->rewards.nameid;
-	WFIFOL(inter_fd, 12) = adb->rewards.amount;
-	safestrncpy(WFIFOCP(inter_fd, 16), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 16+NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
-	WFIFOSET(inter_fd, 16+NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
+	WFIFONID(inter_fd, 10) = adb->rewards.nameid;
+	WFIFOL(inter_fd, 10 + sizeof(nameid_t)) = adb->rewards.amount;
+	safestrncpy(WFIFOCP(inter_fd, 14 + sizeof(nameid_t)), sd->status.name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd, 14 + sizeof(nameid_t) +NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
+	WFIFOSET(inter_fd, 14 + sizeof(nameid_t) +NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
 
 	return 1;
 }

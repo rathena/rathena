@@ -176,7 +176,7 @@
 	packet(0x0107,10);
 	parseable_packet(0x0108,-1,clif_parse_PartyMessage,2,4);
 	packet(0x0109,-1);
-	packet(0x010a,4);
+	packet(0x010a,2 + sizeof(nameid_t));
 	packet(0x010b,6);
 	packet(0x010c,6);
 	packet(0x010d,2);
@@ -309,7 +309,7 @@
 	packet(0x018c,29);
 	packet(0x018d,-1);
 	parseable_packet( HEADER_CZ_REQMAKINGITEM, sizeof( struct PACKET_CZ_REQMAKINGITEM ), clif_parse_ProduceMix, 0 );
-	packet(0x018f,6);
+	packet(0x018f,sizeof(PACKET_ZC_ACK_REQMAKINGITEM));
 	parseable_packet(0x0190,90,clif_parse_UseSkillToPosMoreInfo,2,4,6,8,10);
 	packet( HEADER_ZC_TALKBOX_CHATCONTENTS, sizeof( struct PACKET_ZC_TALKBOX_CHATCONTENTS ) );
 	packet(0x0192,24);
@@ -1001,8 +1001,8 @@
 	packet(0x0295,-1);
 	packet(0x0296,-1);
 	packet(0x0297,-1);
-	packet(0x0298,8);
-	packet(0x0299,6);
+	packet(0x0298,6+sizeof(nameid_t));
+	packet(0x0299,4+sizeof(nameid_t));
 	packet(0x029a,27);
 	packet(0x029c,66);
 	packet(0x029d,-1);
@@ -1089,7 +1089,7 @@
 	packet(0x02b5,-1);
 	parseable_packet(0x02b6,7,clif_parse_questStateAck,2,6);
 	packet(0x02b7,7);
-	packet(0x02b8,22);
+	packet(0x02b8,12+5*sizeof(nameid_t));
 	packet(0x02b9,191);
 	parseable_packet(0x02ba,11,clif_parse_Hotkey,2,4,5,9);
 	packet(0x02bb,8);
@@ -1739,7 +1739,7 @@
 	packet(0x081a,4);
 	packet(0x081b,10);
 	packet(0x081c,10);
-	packet(0x0824,6);
+	packet(0x0824,4+sizeof(nameid_t));
 #endif
 
 // 2010-06-01aRagexeRE
@@ -1757,7 +1757,7 @@
 	parseable_packet(0x0838,2,clif_parse_SearchStoreInfoNextPage,0);
 	packet(0x083A,4); // Search Stalls Feature
 	parseable_packet(0x083B,2,clif_parse_CloseSearchStoreInfo,0);
-	parseable_packet(0x083C,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x083C,10+sizeof(nameid_t),clif_parse_SearchStoreInfoListItemClick,2,6,10);
 	packet(0x083D,6);
 #endif
 
