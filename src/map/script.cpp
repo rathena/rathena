@@ -378,7 +378,7 @@ static struct linkdb_node *sleep_db; // int oid -> struct script_state *
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
 int run_func(struct script_state *st);
-unsigned short script_instancegetid(struct script_state *st);
+unsigned short script_instancegetid(struct script_state *st, bool use_mode = false, enum instance_mode mode = IM_PARTY);
 
 const char* script_op2name(int op)
 {
@@ -19705,7 +19705,7 @@ BUILDIN_FUNC(bg_get_data)
  *------------------------------------------*/
 //Returns an Instance ID
 //Checks NPC first, then if player is attached we check
-unsigned short script_instancegetid(struct script_state* st)
+unsigned short script_instancegetid(struct script_state* st, bool use_mode, enum instance_mode mode)
 {
 	unsigned short instance_id = 0;
 	struct npc_data *nd;
@@ -19719,14 +19719,35 @@ unsigned short script_instancegetid(struct script_state* st)
 		struct clan *cd = NULL;
 
 		if ((sd = map_id2sd(st->rid))) {
-			if (sd->instance_id)
-				instance_id = sd->instance_id;
-			if (instance_id == 0 && sd->status.party_id && (pd = party_search(sd->status.party_id)) != NULL && pd->instance_id)
-				instance_id = pd->instance_id;
-			if (instance_id == 0 && sd->status.guild_id && (gd = guild_search(sd->status.guild_id)) != NULL && gd->instance_id)
-				instance_id = gd->instance_id;
-			if (instance_id == 0 && sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
-				instance_id = cd->instance_id;
+			if(use_mode) {
+				switch(mode) {
+					case IM_CHAR:
+						if (sd->instance_id)
+							instance_id = sd->instance_id;
+						break;
+					case IM_PARTY:
+						if (sd->status.party_id && (pd = party_search(sd->status.party_id)) != NULL && pd->instance_id)
+							instance_id = pd->instance_id;
+						break;
+					case IM_GUILD:
+						if (sd->status.guild_id && (gd = guild_search(sd->status.guild_id)) != NULL && gd->instance_id)
+							instance_id = gd->instance_id;
+						break;
+					case IM_CLAN:
+						if (sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
+							instance_id = cd->instance_id;
+						break;
+				}
+			} else {
+				if (sd->instance_id)
+					instance_id = sd->instance_id;
+				if (instance_id == 0 && sd->status.party_id && (pd = party_search(sd->status.party_id)) != NULL && pd->instance_id)
+					instance_id = pd->instance_id;
+				if (instance_id == 0 && sd->status.guild_id && (gd = guild_search(sd->status.guild_id)) != NULL && gd->instance_id)
+					instance_id = gd->instance_id;
+				if (instance_id == 0 && sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
+					instance_id = cd->instance_id;
+			}
 		}
 	}
 
@@ -19901,7 +19922,16 @@ BUILDIN_FUNC(instance_mapname)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_id)
 {
-	script_pushint(st, script_instancegetid(st));
+	if (script_hasdata(st, 2)) {
+		enum instance_mode mode = static_cast<instance_mode>(script_getnum(st, 2));
+		
+		if (mode < IM_NONE || mode >= IM_MAX) {
+			ShowError("buildin_instance_create: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 2));
+			return SCRIPT_CMD_FAILURE;
+		}
+		script_pushint(st, script_instancegetid(st, true, mode));
+	} else
+		script_pushint(st, script_instancegetid(st));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -24568,7 +24598,7 @@ struct script_function buildin_func[] = {
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),
 	BUILDIN_DEF(instance_destroy,"?"),
-	BUILDIN_DEF(instance_id,""),
+	BUILDIN_DEF(instance_id,"?"),
 	BUILDIN_DEF(instance_enter,"s????"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),

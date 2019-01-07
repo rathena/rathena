@@ -8885,13 +8885,20 @@ to be attached. If that fails, the command returns an empty string instead.
 
 ---------------------------------------
 
-*instance_id()
+*instance_id({<instance mode>})
 
 Returns the unique instance id of the attached script. If the script is not
 attached to an instance, the instance of the currently attached player is
 used (if it is a character, party, guild or clan mode). If it is not owned by anyone, no
 player needs to be attached. If that fails, the function will return 0.
 
+When a player is attached, you can search id related to a particular mode.
+Instance Mode options:
+ IM_CHAR: Attached to the character.
+ IM_PARTY: Attached to the player's party.
+ IM_GUILD: Attached to the player's guild.
+ IM_CLAN: Attached to the player's clan.
+ 
 ---------------------------------------
 
 *instance_warpall "<map name>",<x>,<y>{,<instance id>};
