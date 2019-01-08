@@ -5541,6 +5541,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 			case ASC_BREAKER:
 			case CR_ACIDDEMONSTRATION:
 			case GN_FIRE_EXPANSION_ACID:
+				break; //These skills will do a card fix later
 #endif
 			default:
 				wd.damage += battle_calc_cardfix(BF_WEAPON, src, target, battle_skill_get_damage_properties(skill_id, wd.miscflag), right_element, left_element, wd.damage, 0, wd.flag);
@@ -5620,6 +5621,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case ASC_BREAKER:
 		case CR_ACIDDEMONSTRATION:
 		case GN_FIRE_EXPANSION_ACID:
+			return wd; //These skills will do a GVG fix later
 #endif
 		default:
 			battle_calc_attack_gvg_bg(&wd, src, target, skill_id, skill_lv);
