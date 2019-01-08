@@ -34,8 +34,8 @@
 ###########################################################################
 
 Header:
-    Type: GUILD_SKILL_TREE_DB
-    Version: 1
+  Type: GUILD_SKILL_TREE_DB
+  Version: 1
 
 Body:
   - ID: GD_APPROVAL
