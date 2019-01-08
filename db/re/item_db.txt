@@ -7052,8 +7052,8 @@
 12814,Slapping_Herb,Slapping Herb,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "ECL_SADAGUI",1; },{},{}
 12815,Yggdrasil_Dust,Yggdrasil Dust,11,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "ECL_SEQUOIADUST",1; },{},{}
 12816,Old_Ore_Box_,Old Ore Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,60,,,{},{},{}
-12817,Old_Card_Album_,Old Card Album,2,0,,0,,,,,0xFFFFFFFF,63,2,,,80,,,{},{},{}
-12818,High_Weapon_Box_,High Weapon Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,100,,,{ getrandgroupitem(IG_Advanced_Weapons_Box,1); },{},{}
+12817,Old_Card_Album_,Old Card Album,2,0,,0,,,,,0xFFFFFFFF,63,2,,,80,,,{ getrandgroupitem(IG_CardAlbum,1); getitem 12818,1; },{},{}
+12818,High_Weapon_Box_,High Weapon Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,100,,,{ getrandgroupitem(IG_Advanced_Weapons_Box,1); getitem 12809,1; },{},{}
 12819,Zherlthsh_Tck_Box_,Zherlthsh Tck Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,150,,,{ getitem 6184,1; },{},{}
 12820,Mao_Guai_Scroll,Mao Guai Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ mercenary_create 2348,1800000; },{},{}
 12821,Loli_Ruri_Scroll,Loli Ruri Scroll,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ mercenary_create 2349,1800000; },{},{}
