@@ -1,0 +1,122 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2019 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Pre-Renewal Guild Skill Database
+###########################################################################
+#
+# Guild Skill Settings
+#
+###########################################################################
+# ID - Skill ID of the guild skill.
+###########################################################################
+# MaxLvl - Maximum level of the guild skill.
+###########################################################################
+# Required - A list of required skills for the skill to become available.
+#   ID: Skill ID of the required guild skill.
+#   Level: Level of the required guild skill.
+###########################################################################
+# NOTE: MAX_GUILD_SKILL_REQUIRE (typically 5) ID/Lv pairs must be specified.
+###########################################################################
+
+Header:
+    Type: GUILD_SKILL_TREE_DB
+    Version: 1
+
+Body:
+  - ID: GD_APPROVAL
+    MaxLvl: 1
+
+  - ID: GD_KAFRACONTRACT
+    MaxLvl: 1
+    Required:
+    - ID: GD_APPROVAL
+      Level: 1
+
+  - ID: GD_GUARDRESEARCH
+    MaxLvl: 1
+    Required:
+    - ID: GD_APPROVAL
+        Level: 1
+
+  - ID: GD_GUARDUP
+    MaxLvl: 3
+
+  - ID: GD_GLORYGUILD
+    MaxLvl: 0
+
+  - ID: GD_LEADERSHIP
+    MaxLvl: 5
+
+  - ID: GD_GLORYWOUNDS
+    MaxLvl: 5
+
+  - ID: GD_SOULCOLD
+    MaxLvl: 5
+    Required:
+    - ID: GD_GLORYWOUNDS
+      Level: 1
+
+  - ID: GD_HAWKEYES
+    MaxLvl: 5
+    Required:
+    - ID: GD_LEADERSHIP
+      Level: 1
+
+  - ID: GD_BATTLEORDER
+    MaxLvl: 1
+    Required:
+    - ID: GD_APPROVAL
+      Level: 1
+    - ID: GD_EXTENSION
+      Level: 2
+
+  - ID: GD_REGENERATION
+    MaxLvl: 3
+    Required:
+    - ID: GD_APPROVAL
+      Level: 1
+    - ID: GD_EXTENSION
+      Level: 5
+    - ID: GD_BATTLEORDER
+      Level: 1
+
+  - ID: GD_RESTORE
+    MaxLvl: 1
+    Required:
+    - ID: GD_REGENERATION
+      Level: 1
+
+  - ID: GD_EMERGENCYCALL
+    MaxLvl: 1
+    Required:
+    - ID: GD_APPROVAL
+      Level: 1
+    - ID: GD_GUARDRESEARCH
+      Level: 1
+    - ID: GD_EXTENSION
+      Level: 5
+    - ID: GD_BATTLEORDER
+      Level: 1
+    - ID: GD_REGENERATION
+      Level: 1
+
+  - ID: GD_DEVELOPMENT
+    MaxLvl: 1
+
+#  - ID: GD_GUILD_STORAGE
+#    MaxLvl: 5

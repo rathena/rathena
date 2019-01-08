@@ -4,6 +4,7 @@
 #include "guild.hpp"
 
 #include <stdlib.h>
+#include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
 #include "../common/ers.hpp"
@@ -113,31 +114,113 @@ int guild_checkskill(struct guild *g, int id) {
 	return g->skill[id].lv;
 }
 
-/*==========================================
- * guild_skill_tree.txt reading - from jA [Komurka]
- *------------------------------------------*/
-static bool guild_read_guildskill_tree_db(char* split[], int columns, int current) {// <skill id>,<max lv>,<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
-	int k, skill_id = atoi(split[0]);
+static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file) {
+	YAML::Emitter out;
+	out << node;
+	ShowWarning(fmt, file.c_str());
+	ShowMessage("%s\n", out.c_str());
+}
+
+/**
+ * Reads and parses an entry from the guild_skill_tree database.
+ * @param node: YAML node containing the entry.
+ * @param n: The sequential index of the current entry.
+ * @param source: The source YAML file.
+ * @return True on successful parse or false otherwise
+ */
+bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std::string &source)
+{
+	int skill_id = 0, level = 0;
 	short idx = -1;
 
+	if (!node["ID"]) {
+		yaml_invalid_warning("guild_read_guildskill_tree_db_sub: Missing ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		return false;
+	}
+	try {
+		skill_id = node["ID"].as<int>();
+	} catch (...) {
+		yaml_invalid_warning("guild_read_guildskill_tree_db_sub: Guild skill definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		return false;
+	}
 	if ((idx = guild_skill_get_index(skill_id)) < 0) {
-		ShowError("guild_read_guildskill_tree_db: Invalid Guild skill '%s'.\n", split[1]);
+		ShowError("guild_read_guildskill_tree_db_sub: Invalid guild skill ID %d in \"%s\", entry #%d (min: 10000, max: %d), skipping.\n", skill_id, source.c_str(), n, GD_MAX);
+		return false;
+	}
+
+	if (!node["MaxLvl"]) {
+		yaml_invalid_warning("guild_read_guildskill_tree_db_sub: Missing max level field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		return false;
+	}
+	try {
+		level = node["MaxLvl"].as<int>();
+	} catch (...) {
+		yaml_invalid_warning("guild_read_guildskill_tree_db_sub: Guild skill max level definition with invalid level field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 
 	guild_skill_tree[idx].id = skill_id;
-	guild_skill_tree[idx].max = atoi(split[1]);
+	guild_skill_tree[idx].max = level;
 
-	if( guild_skill_tree[idx].id == GD_GLORYGUILD && battle_config.require_glory_guild && guild_skill_tree[idx].max == 0 ) 	{// enable guild's glory when required for emblems
+	if (guild_skill_tree[idx].id == GD_GLORYGUILD && battle_config.require_glory_guild && guild_skill_tree[idx].max == 0) // Enable Guild's Glory when required for emblems
 		guild_skill_tree[idx].max = 1;
-	}
 
-	for( k = 0; k < MAX_GUILD_SKILL_REQUIRE; k++ ) 	{
-		guild_skill_tree[idx].need[k].id = atoi(split[k*2+2]);
-		guild_skill_tree[idx].need[k].lv = atoi(split[k*2+3]);
+	if (node["Required"]) {
+		try {
+			const YAML::Node req_list = node["Required"];
+
+			if (req_list.IsSequence()) {
+				for (uint8 i = 0; i < req_list.size() && req_list.size() < MAX_GUILD_SKILL_REQUIRE; i++) {
+					const YAML::Node &req_skill = req_list[i];
+					int req_skill_id = req_skill["ID"].as<int>();
+
+					if (guild_skill_get_index(req_skill_id) < 0) {
+						ShowError("guild_read_guildskill_tree_db_sub: Invalid required guild skill ID %d in \"%s\", entry #%d (min: 10000, max: %d), skipping.\n", req_skill_id, source.c_str(), n, GD_MAX);
+						continue;
+					}
+
+					guild_skill_tree[idx].need[i].id = req_skill_id;
+					guild_skill_tree[idx].need[i].lv = req_skill["Level"].as<int>();
+				}
+			} else
+				ShowWarning("guild_read_guildskill_tree_db_sub: Invalid required format for guild skill %d in \"%s\".\n", skill_id, source.c_str());
+		} catch (...) {
+			yaml_invalid_warning("guild_read_guildskill_tree_db_sub: Guild skill definition with invalid required field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			return false;
+		}
 	}
 
 	return true;
+}
+
+/**
+ * Loads achievements from the achievement db.
+ */
+void guild_read_guildskill_tree_db(void)
+{
+	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH),  std::string(db_path) + "/" + std::string(DBIMPORT) + "/" };
+	static const std::string file_name("guild_skill_db.yml");
+
+	for (auto &directory : directories) {
+		std::string current_file = directory + file_name;
+		YAML::Node config;
+		int count = 0;
+
+		try {
+			config = YAML::LoadFile(current_file);
+		} catch (...) {
+			ShowError("Cannot read '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
+			return;
+		}
+
+		for (const auto &node : config["Body"]) {
+			if (node.IsDefined() && guild_read_guildskill_tree_db_sub(node, count, current_file))
+				count++;
+		}
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, current_file.c_str());
+	}
+
+	return;
 }
 
 /*==========================================
@@ -2333,12 +2416,13 @@ void do_init_guild(void) {
 		}
 		
 		sv_readdb(dbsubpath1, "castle_db.txt", ',', 4, 4, -1, &guild_read_castledb, i > 0);
-		sv_readdb(dbsubpath2, "guild_skill_tree.txt", ',', 2+MAX_GUILD_SKILL_REQUIRE*2, 2+MAX_GUILD_SKILL_REQUIRE*2, -1, &guild_read_guildskill_tree_db, i > 0); //guild skill tree [Komurka]
-		
+
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
-	
+
+	guild_read_guildskill_tree_db();
+
 	add_timer_func_list(guild_payexp_timer,"guild_payexp_timer");
 	add_timer_func_list(guild_send_xy_timer, "guild_send_xy_timer");
 	add_timer_interval(gettick()+GUILD_PAYEXP_INTERVAL,guild_payexp_timer,0,0,GUILD_PAYEXP_INTERVAL);

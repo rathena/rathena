@@ -7182,6 +7182,25 @@
 	/* timer related */
 	export_constant(INFINITE_TICK);
 
+	/* skill names */
+	export_constant(GD_APPROVAL);
+	export_constant(GD_KAFRACONTRACT);
+	export_constant(GD_GUARDRESEARCH);
+	export_constant(GD_GUARDUP);
+	export_constant(GD_EXTENSION);
+	export_constant(GD_GLORYGUILD);
+	export_constant(GD_LEADERSHIP);
+	export_constant(GD_GLORYWOUNDS);
+	export_constant(GD_SOULCOLD);
+	export_constant(GD_HAWKEYES);
+	export_constant(GD_BATTLEORDER);
+	export_constant(GD_REGENERATION);
+	export_constant(GD_RESTORE);
+	export_constant(GD_EMERGENCYCALL);
+	export_constant(GD_DEVELOPMENT);
+	export_constant(GD_ITEMEMERGENCYCALL);
+	export_constant(GD_GUILD_STORAGE);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
