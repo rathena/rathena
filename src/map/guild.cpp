@@ -199,7 +199,7 @@ bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std:
 void guild_read_guildskill_tree_db(void)
 {
 	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH),  std::string(db_path) + "/" + std::string(DBIMPORT) + "/" };
-	static const std::string file_name("guild_skill_db.yml");
+	static const std::string file_name("guild_skill_tree.yml");
 
 	for (auto &directory : directories) {
 		std::string current_file = directory + file_name;
