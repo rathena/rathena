@@ -378,7 +378,7 @@ static struct linkdb_node *sleep_db; // int oid -> struct script_state *
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
 int run_func(struct script_state *st);
-unsigned short script_instancegetid(struct script_state *st, bool use_mode = false, enum instance_mode mode = IM_PARTY);
+unsigned short script_instancegetid(struct script_state *st, enum instance_mode mode = IM_NONE);
 
 const char* script_op2name(int op)
 {
@@ -19705,7 +19705,7 @@ BUILDIN_FUNC(bg_get_data)
  *------------------------------------------*/
 //Returns an Instance ID
 //Checks NPC first, then if player is attached we check
-unsigned short script_instancegetid(struct script_state* st, bool use_mode, enum instance_mode mode)
+unsigned short script_instancegetid(struct script_state* st, enum instance_mode mode)
 {
 	unsigned short instance_id = 0;
 	struct npc_data *nd;
@@ -19719,7 +19719,7 @@ unsigned short script_instancegetid(struct script_state* st, bool use_mode, enum
 		struct clan *cd = NULL;
 
 		if ((sd = map_id2sd(st->rid))) {
-			if(use_mode) {
+			if(mode != IM_NONE) {
 				switch(mode) {
 					case IM_CHAR:
 						if (sd->instance_id)
