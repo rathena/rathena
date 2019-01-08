@@ -176,7 +176,10 @@ bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std:
 			const YAML::Node req_list = node["Required"];
 
 			if (req_list.IsSequence()) {
-				for (uint8 i = 0; i < req_list.size() && req_list.size() < MAX_GUILD_SKILL_REQUIRE; i++) {
+				if (req_list.size() > MAX_GUILD_SKILL_REQUIRE)
+					ShowWarning("guild_read_guildskill_tree_db_sub: Required guild skills exceeds MAX_GUILD_SKILL_REQUIRE limit for %s (%d) in \"%s\".\n", name.c_str(), skill_id, source.c_str());
+
+				for (uint8 i = 0; i < MAX_GUILD_SKILL_REQUIRE; i++) {
 					const YAML::Node &req_skill = req_list[i];
 					std::string req_name = req_skill["ID"].as<std::string>();
 					int req_skill_id;
