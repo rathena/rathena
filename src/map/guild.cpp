@@ -26,6 +26,7 @@
 #include "mob.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
+#include "script.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
 
@@ -131,6 +132,7 @@ static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const 
 bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std::string &source)
 {
 	int skill_id = 0, level = 0;
+	std::string name;
 	short idx = -1;
 
 	if (!node["ID"]) {
@@ -138,9 +140,13 @@ bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std:
 		return false;
 	}
 	try {
-		skill_id = node["ID"].as<int>();
+		name = node["ID"].as<std::string>();
 	} catch (...) {
 		yaml_invalid_warning("guild_read_guildskill_tree_db_sub: Guild skill definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		return false;
+	}
+	if (!script_get_constant(name.c_str(), (int *)&skill_id)) {
+		ShowWarning("guild_read_guildskill_tree_db_sub: Invalid guild skill name %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
 		return false;
 	}
 	if ((idx = guild_skill_get_index(skill_id)) < 0) {
@@ -172,8 +178,13 @@ bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std:
 			if (req_list.IsSequence()) {
 				for (uint8 i = 0; i < req_list.size() && req_list.size() < MAX_GUILD_SKILL_REQUIRE; i++) {
 					const YAML::Node &req_skill = req_list[i];
-					int req_skill_id = req_skill["ID"].as<int>();
+					std::string req_name = req_skill["ID"].as<std::string>();
+					int req_skill_id;
 
+					if (!script_get_constant(req_name.c_str(), (int *)&req_skill_id)) {
+						ShowWarning("guild_read_guildskill_tree_db_sub: Invalid required guild skill name %s in \"%s\", skipping.\n", req_name.c_str(), source.c_str());
+						return false;
+					}
 					if (guild_skill_get_index(req_skill_id) < 0) {
 						ShowError("guild_read_guildskill_tree_db_sub: Invalid required guild skill ID %d in \"%s\", entry #%d (min: 10000, max: %d), skipping.\n", req_skill_id, source.c_str(), n, GD_MAX);
 						continue;
