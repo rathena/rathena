@@ -3068,7 +3068,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			if(sc->data[SC_LERADSDEW])
 				bonus += sc->data[SC_LERADSDEW]->val3;
 			if (sc->data[SC_PROMOTE_HEALTH_RESERCH])
-				bonus += sc->data[SC_PROMOTE_HEALTH_RESERCH]->val4;
+				bonus += sc->data[SC_PROMOTE_HEALTH_RESERCH]->val3;
 			if(sc->data[SC_INSPIRATION])
 				bonus += (600 * sc->data[SC_INSPIRATION]->val1);
 			if(sc->data[SC_SOLID_SKIN_OPTION])
@@ -3245,7 +3245,7 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 			if(sc->data[SC_VITATA_500])
 				bonus += sc->data[SC_VITATA_500]->val2;
 			if (sc->data[SC_ENERGY_DRINK_RESERCH])
-				bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val4;
+				bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val3;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -4727,6 +4727,10 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		regen->hp += cap_value(regen->hp * sc->data[SC_GT_REVITALIZE]->val3/100, 1, SHRT_MAX);
 		regen->state.walk = 1;
 	}
+	if (sc->data[SC_EXTRACT_WHITE_POTION_Z])
+		regen->hp += cap_value(regen->hp * sc->data[SC_EXTRACT_WHITE_POTION_Z]->val1 / 100, 1, SHRT_MAX);
+	if (sc->data[SC_VITATA_500])
+		regen->sp += cap_value(regen->sp * sc->data[SC_VITATA_500]->val1 / 100, 1, SHRT_MAX);
 	if (bl->type == BL_ELEM) { // Recovery bonus only applies to the Elementals.
 		int ele_class = status_get_class(bl);
 
@@ -4757,10 +4761,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 			break;
 		}
 	}
-	if (sc->data[SC_EXTRACT_WHITE_POTION_Z])
-		regen->rate.hp += (unsigned short)(regen->rate.hp * sc->data[SC_EXTRACT_WHITE_POTION_Z]->val1 / 100.);
-	if (sc->data[SC_VITATA_500])
-		regen->rate.sp += (unsigned short)(regen->rate.sp * sc->data[SC_VITATA_500]->val1 / 100.);
+
 	if (sc->data[SC_CATNIPPOWDER]) {
 		regen->rate.hp *= 2;
 		regen->rate.sp *= 2;
@@ -10874,26 +10875,24 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_PROMOTE_HEALTH_RESERCH:
 			//val1: 1 = Regular Potion, 2 = Thrown Potion
 			//val2: 1 = Small Potion, 2 = Medium Potion, 3 = Large Potion
-			//val3: BaseLV of Thrower For Thrown Potions
-			//val4: MaxHP Increase By Fixed Amount
+			//val3: MaxHP Increase By Fixed Amount
 			if (val1 == 1) // If potion was normally used, take the user's BaseLv
-				val4 = 1000 * val2 - 500 + status_get_lv(bl) * 10 / 3;
+				val3 = 1000 * val2 - 500 + status_get_lv(bl) * 10 / 3;
 			else if (val1 == 2) // If potion was thrown at someone, take the thrower's BaseLv
-				val4 = 1000 * val2 - 500 + val3 * 10 / 3;
-			if (val4 <= 0) // Prevents a negeative value from happening
-				val4 = 0;
+				val3 = 1000 * val2 - 500 + status_get_lv(src) * 10 / 3;
+			if (val3 <= 0) // Prevents a negeative value from happening
+				val3 = 0;
 			break;
 		case SC_ENERGY_DRINK_RESERCH:
 			//val1: 1 = Regular Potion, 2 = Thrown Potion
 			//val2: 1 = Small Potion, 2 = Medium Potion, 3 = Large Potion
-			//val3: BaseLV of Thrower For Thrown Potions
-			//val4: MaxSP Increase By Percentage Amount
+			//val3: MaxSP Increase By Percentage Amount
 			if (val1 == 1) // If potion was normally used, take the user's BaseLv
-				val4 = status_get_lv(bl) / 10 + 5 * val2 - 10;
+				val3 = status_get_lv(bl) / 10 + 5 * val2 - 10;
 			else if (val1 == 2) // If potion was thrown at someone, take the thrower's BaseLv
-				val4 = val3 / 10 + 5 * val2 - 10;
-			if (val4 <= 0) // Prevents a negeative value from happening
-				val4 = 0;
+				val3 = status_get_lv(src) / 10 + 5 * val2 - 10;
+			if (val3 <= 0) // Prevents a negeative value from happening
+				val3 = 0;
 			break;
 		case SC_KYOUGAKU:
 			val2 = 2*val1 + rnd()%val1;

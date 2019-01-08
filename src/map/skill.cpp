@@ -529,8 +529,6 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 		if (skill_id != NPC_EVILLAND && skill_id != BA_APPLEIDUN) {
 			if (tsc->data[SC_INCHEALRATE])
 				hp_bonus += tsc->data[SC_INCHEALRATE]->val1; //Only affects Heal, Sanctuary and PotionPitcher.(like bHealPower) [Inkfish]
-			if (tsc->data[SC_EXTRACT_WHITE_POTION_Z])
-				hp_bonus += tsc->data[SC_EXTRACT_WHITE_POTION_Z]->val1;
 			if (tsc->data[SC_GLASTHEIM_HEAL])
 				hp_bonus += tsc->data[SC_GLASTHEIM_HEAL]->val2;
 			if (tsc->data[SC_ANCILLA])
@@ -10492,7 +10490,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case GN_SLINGITEM:
 		if( sd ) {
-			short ammo_id;
+			int ammo_id;
+
 			i = sd->equip_index[EQI_AMMO];
 			if( i < 0 )
 				break; // No ammo.
@@ -10508,9 +10507,38 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 						skill_attack(BF_WEAPON,src,src,bl,GN_SLINGITEM_RANGEMELEEATK,skill_lv,tick,flag);
 				} else //Otherwise, it fails, shows animation and removes items.
 					clif_skill_fail(sd,GN_SLINGITEM_RANGEMELEEATK,USESKILL_FAIL,0);
-			} else if (itemdb_group_item_exists(IG_THROWABLE, ammo_id))
-				if (dstsd)
-					run_script(sd->inventory_data[i]->script, 0, dstsd->bl.id, fake_nd->bl.id);
+			} else if (itemdb_group_item_exists(IG_THROWABLE, ammo_id)) {
+				switch (ammo_id) {
+					case ITEMID_HP_INC_POTS_TO_THROW: // MaxHP +(500 + Thrower BaseLv * 10 / 3) and heals 1% MaxHP
+						sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 1, 500000);
+						status_percent_heal(bl, 1, 0);
+						break;
+					case ITEMID_HP_INC_POTM_TO_THROW: // MaxHP +(1500 + Thrower BaseLv * 10 / 3) and heals 2% MaxHP
+						sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 2, 500000);
+						status_percent_heal(bl, 2, 0);
+						break;
+					case ITEMID_HP_INC_POTL_TO_THROW: // MaxHP +(2500 + Thrower BaseLv * 10 / 3) and heals 5% MaxHP
+						sc_start2(src, bl, SC_PROMOTE_HEALTH_RESERCH, 100, 2, 3, 500000);
+						status_percent_heal(bl, 5, 0);
+						break;
+					case ITEMID_SP_INC_POTS_TO_THROW: // MaxSP +(Thrower BaseLv / 10 - 5)% and recovers 2% MaxSP
+						sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 1, 500000);
+						status_percent_heal(bl, 0, 2);
+						break;
+					case ITEMID_SP_INC_POTM_TO_THROW: // MaxSP +(Thrower BaseLv / 10)% and recovers 4% MaxSP
+						sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 2, 500000);
+						status_percent_heal(bl, 0, 4);
+						break;
+					case ITEMID_SP_INC_POTL_TO_THROW: // MaxSP +(Thrower BaseLv / 10 + 5)% and recovers 8% MaxSP
+						sc_start2(src, bl, SC_ENERGY_DRINK_RESERCH, 100, 2, 3, 500000);
+						status_percent_heal(bl, 0, 8);
+						break;
+					default:
+						if (dstsd)
+							run_script(sd->inventory_data[i]->script, 0, dstsd->bl.id, fake_nd->bl.id);
+						break;
+				}
+			}
 		}
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);// This packet is received twice actually, I think it is to show the animation.
