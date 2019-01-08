@@ -51,7 +51,7 @@ Body:
     MaxLvl: 1
     Required:
     - ID: GD_APPROVAL
-        Level: 1
+      Level: 1
 
   - ID: GD_GUARDUP
     MaxLvl: 3
