@@ -20,11 +20,7 @@
 #include "timer.hpp" // t_tick
 
 #ifndef MAXCONN
-	#ifdef WIN32
-		#define MAXCONN FD_SETSIZE
-	#else
-		#define MAXCONN 1024
-	#endif
+	#define MAXCONN FD_SETSIZE
 #endif
 
 #define FIFOSIZE_SERVERLINK 256*1024
