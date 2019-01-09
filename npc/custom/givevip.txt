@@ -99,7 +99,7 @@ OnPCLoginEvent:
 	//}
 	//end;
 }
-
+/*
 sec_in02,11,32,3	script	VIP	90,{
 	if (vip_status(1)) {
 		mes "VIP";
@@ -118,6 +118,7 @@ sec_in02,11,32,3	script	VIP	90,{
 	}
 	close;
 }
+*/
 
 prontera,156,285,1	script	Sakura	-1,{
 	end;
