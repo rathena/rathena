@@ -1131,7 +1131,7 @@ int mapif_parse_broadcast(int fd)
  * @return
  **/
 int mapif_parse_broadcast_item(int fd) {
-	unsigned char buf[7 + sizeof(nameid_t) + NAME_LENGTH*2];
+	unsigned char buf[7 + sizeof(t_nameid) + NAME_LENGTH*2];
 
 	memcpy(WBUFP(buf, 0), RFIFOP(fd, 0), RFIFOW(fd,2));
 	WBUFW(buf, 0) = 0x3809;

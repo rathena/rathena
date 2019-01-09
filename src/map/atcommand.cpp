@@ -1391,7 +1391,7 @@ ACMD_FUNC(item)
 	get_count = number;
 
 	for(j--; j>=0; j--){ //produce items in list
-		nameid_t item_id = item_data[j]->nameid;
+		t_nameid item_id = item_data[j]->nameid;
 		//Check if it's stackable.
 		if (!itemdb_isstackable2(item_data[j]))
 			get_count = 1;
@@ -1422,7 +1422,7 @@ ACMD_FUNC(item2)
 	struct item item_tmp;
 	struct item_data *item_data;
 	char item_name[100];
-	nameid_t item_id;
+	t_nameid item_id;
 	int number = 0, bound = BOUND_NONE;
 	int identify = 0, refine = 0, attr = 0;
 	int c1 = 0, c2 = 0, c3 = 0, c4 = 0;
@@ -2373,7 +2373,7 @@ ACMD_FUNC(refine)
 ACMD_FUNC(produce)
 {
 	char item_name[100];
-	nameid_t item_id;
+	t_nameid item_id;
 	int attribute = 0, star = 0;
 	struct item_data *item_data;
 	struct item tmp_item;
@@ -5962,7 +5962,7 @@ ACMD_FUNC(skilltree)
 void getring (struct map_session_data* sd)
 {
 	char flag = 0;
-	nameid_t item_id;
+	t_nameid item_id;
 	struct item item_tmp;
 	item_id = (sd->status.sex) ? WEDDING_RING_M : WEDDING_RING_F;
 
@@ -9053,7 +9053,7 @@ ACMD_FUNC(stats)
 ACMD_FUNC(delitem)
 {
 	char item_name[100];
-	nameid_t nameid;
+	t_nameid nameid;
 	int amount = 0, total, idx;
 	struct item_data* id;
 

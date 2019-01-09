@@ -96,7 +96,7 @@ enum e_inventory_type{
 * @param nameid: Item ID
 * @return item type. For IT_PETEGG will be displayed as IT_ARMOR. If Shadow Weapon of IT_SHADOWGEAR as IT_WEAPON and else as IT_ARMOR
 */
-static inline int itemtype(nameid_t nameid) {
+static inline int itemtype(t_nameid nameid) {
 	struct item_data* id = itemdb_search(nameid); //Use itemdb_search, so non-existance item will use dummy data and won't crash the server. bugreport:8468
 	int type = id->type;
 	if( type == IT_SHADOWGEAR ) {
@@ -958,7 +958,7 @@ void clif_clearunit_delayed(struct block_list* bl, clr_type type, t_tick tick)
 	add_timer(tick, clif_clearunit_delayed_sub, (int)type, (intptr_t)tbl);
 }
 
-void clif_get_weapon_view(struct map_session_data* sd, nameid_t *rhand, nameid_t *lhand)
+void clif_get_weapon_view(struct map_session_data* sd, t_nameid *rhand, t_nameid *lhand)
 {
 	if(sd->sc.option&OPTION_COSTUME)
 	{
@@ -2983,7 +2983,6 @@ void clif_equiplist( struct map_session_data *sd ){
 	// TODO: implement again => only send equip part
 	clif_inventorylist( sd );
 }
-
 
 void clif_storagelist(struct map_session_data* sd, struct item* items, int items_length, const char *storename){
 #if PACKETVER_RE_NUM >= 20180912 || PACKETVER_ZERO_NUM >= 20180919 || PACKETVER_MAIN_NUM >= 20181002
@@ -5593,7 +5592,7 @@ void clif_skillcastcancel(struct block_list* bl)
 /// if(result!=0) doesn't display any of the previous messages
 /// Note: when this packet is received an unknown flag is always set to 0,
 /// suggesting this is an ACK packet for the UseSkill packets and should be sent on success too [FlavioJS]
-void clif_skill_fail( struct map_session_data *sd, uint16 skill_id, enum useskill_fail_cause cause, int btype, nameid_t itemId ){
+void clif_skill_fail( struct map_session_data *sd, uint16 skill_id, enum useskill_fail_cause cause, int btype, t_nameid itemId ){
 	nullpo_retv( sd );
 
 	int fd = sd->fd;
@@ -6598,7 +6597,7 @@ void clif_refine(int fd, int fail, int index, int val)
 ///     1 = "weapon upgraded: %s" MsgStringTable[912] in rgb(0,205,205)
 ///     2 = "cannot upgrade %s until you level up the upgrade weapon skill" MsgStringTable[913] in rgb(255,200,200)
 ///     3 = "you lack the item %s to upgrade the weapon" MsgStringTable[914] in rgb(255,200,200)
-void clif_upgrademessage( struct map_session_data* sd, int result, nameid_t item_id ){
+void clif_upgrademessage( struct map_session_data* sd, int result, t_nameid item_id ){
 	struct PACKET_ZC_ACK_WEAPONREFINE p;
 
 	p.packetType = 0x223;
@@ -7951,7 +7950,7 @@ void clif_movetoattack(struct map_session_data *sd,struct block_list *bl)
 ///     1 = failure
 ///     2 = success (alchemist)
 ///     3 = failure (alchemist)
-void clif_produceeffect(struct map_session_data* sd,int flag, nameid_t nameid){
+void clif_produceeffect(struct map_session_data* sd,int flag, t_nameid nameid){
 	nullpo_retv( sd );
 
 	clif_solved_charname( sd->fd, sd->status.char_id, sd->status.name );
@@ -8307,7 +8306,7 @@ void clif_mvp_effect(struct map_session_data *sd)
 
 /// MVP item reward message (ZC_MVP_GETTING_ITEM).
 /// 010a <name id>.NID
-void clif_mvp_item( struct map_session_data *sd, nameid_t nameid ){
+void clif_mvp_item( struct map_session_data *sd, t_nameid nameid ){
 	struct PACKET_ZC_MVP_GETTING_ITEM p;
 
 	p.packetType = 0x10a;
@@ -12737,7 +12736,7 @@ void clif_parse_Cooking(int fd,struct map_session_data *sd) {
 	const struct PACKET_CZ_REQ_MAKINGITEM *p = (struct PACKET_CZ_REQ_MAKINGITEM *)RFIFOP( fd, 0 );
 
 	int amount = sd->menuskill_val2 ? sd->menuskill_val2 : 1;
-	nameid_t food_idx = 0;
+	t_nameid food_idx = 0;
 
 	if( p->type == 6 && sd->menuskill_id != GN_MIX_COOKING && sd->menuskill_id != GN_S_PHARMACY )
 		return;
@@ -15228,7 +15227,6 @@ void clif_Mail_setattachment( struct map_session_data* sd, int index, int amount
 			if( sd->mail.item[i].nameid == 0 ){
 				continue;
 			}
-
 			p.weight += sd->mail.item[i].amount * ( sd->inventory_data[sd->mail.item[i].index]->weight / 10 );
 		}
 		p.favorite = item->favorite;
@@ -16185,32 +16183,32 @@ void clif_Auction_results(struct map_session_data *sd, short count, short pages,
 	int i, fd = sd->fd, len = sizeof(struct auction_data);
 	struct auction_data auction;
 
-	WFIFOHEAD(fd,12 + (count * (73 + 5 * sizeof(nameid_t))));
+	WFIFOHEAD(fd,12 + (count * (73 + 5 * sizeof(t_nameid))));
 	WFIFOW(fd,0) = 0x252;
-	WFIFOW(fd,2) = 12 + (count * (73 + 5 * sizeof(nameid_t)));
+	WFIFOW(fd,2) = 12 + (count * (73 + 5 * sizeof(t_nameid)));
 	WFIFOL(fd,4) = pages;
 	WFIFOL(fd,8) = count;
 
 	for( i = 0; i < count; i++ ) {
-		int k = 12 + (i * (73 + 5 * sizeof(nameid_t)));
+		int k = 12 + (i * (73 + 5 * sizeof(t_nameid)));
 		memcpy(&auction, RBUFP(buf,i * len), len);
 
 		WFIFOL(fd,k) = auction.auction_id;
 		safestrncpy(WFIFOCP(fd, 4 + k), auction.seller_name, NAME_LENGTH);
-		WFIFONID(fd, 28 + k) = client_nameid(auction.item.nameid);
-		WFIFOL(fd, 28 + 1 * sizeof(nameid_t) + k) = auction.type;
-		WFIFOW(fd, 32 + 1 * sizeof(nameid_t) + k) = auction.item.amount; // Always 1
-		WFIFOB(fd, 34 + 1 * sizeof(nameid_t) + k) = auction.item.identify;
-		WFIFOB(fd, 35 + 1 * sizeof(nameid_t) + k) = auction.item.attribute;
-		WFIFOB(fd, 36 + 1 * sizeof(nameid_t) + k) = auction.item.refine;
-		WFIFOW(fd, 37 + 1 * sizeof(nameid_t) + k) = auction.item.card[0];
-		WFIFOW(fd, 37 + 2 * sizeof(nameid_t) + k) = auction.item.card[1];
-		WFIFOW(fd, 37 + 3 * sizeof(nameid_t) + k) = auction.item.card[2];
-		WFIFOW(fd, 37 + 4 * sizeof(nameid_t) + k) = auction.item.card[3];
-		WFIFOL(fd, 37 + 5 * sizeof(nameid_t) + k) = auction.price;
-		WFIFOL(fd, 41 + 5 * sizeof(nameid_t) + k) = auction.buynow;
-		safestrncpy(WFIFOCP(fd, 45 + 5 * sizeof(nameid_t) + k), auction.buyer_name, NAME_LENGTH);
-		WFIFOL(fd, 69 + 5 * sizeof(nameid_t) + k) = (uint32)auction.timestamp;
+		WFIFON(fd, 28 + k) = client_nameid(auction.item.nameid);
+		WFIFOL(fd, 28 + 1 * sizeof(t_nameid) + k) = auction.type;
+		WFIFOW(fd, 32 + 1 * sizeof(t_nameid) + k) = auction.item.amount; // Always 1
+		WFIFOB(fd, 34 + 1 * sizeof(t_nameid) + k) = auction.item.identify;
+		WFIFOB(fd, 35 + 1 * sizeof(t_nameid) + k) = auction.item.attribute;
+		WFIFOB(fd, 36 + 1 * sizeof(t_nameid) + k) = auction.item.refine;
+		WFIFOW(fd, 37 + 1 * sizeof(t_nameid) + k) = auction.item.card[0];
+		WFIFOW(fd, 37 + 2 * sizeof(t_nameid) + k) = auction.item.card[1];
+		WFIFOW(fd, 37 + 3 * sizeof(t_nameid) + k) = auction.item.card[2];
+		WFIFOW(fd, 37 + 4 * sizeof(t_nameid) + k) = auction.item.card[3];
+		WFIFOL(fd, 37 + 5 * sizeof(t_nameid) + k) = auction.price;
+		WFIFOL(fd, 41 + 5 * sizeof(t_nameid) + k) = auction.buynow;
+		safestrncpy(WFIFOCP(fd, 45 + 5 * sizeof(t_nameid) + k), auction.buyer_name, NAME_LENGTH);
+		WFIFOL(fd, 69 + 5 * sizeof(t_nameid) + k) = (uint32)auction.timestamp;
 	}
 	WFIFOSET(fd, WFIFOW(fd, 2));
 }
@@ -16548,18 +16546,18 @@ void clif_parse_CashShopReqTab(int fd, struct map_session_data *sd) {
 	if( tab < 0 || tab >= CASHSHOP_TAB_MAX )
 		return;
 
-	WFIFOHEAD(fd, 10 + ( cash_shop_items[tab].count * (4 + sizeof(nameid_t))) );
+	WFIFOHEAD(fd, 10 + ( cash_shop_items[tab].count * (4 + sizeof(t_nameid))) );
 	WFIFOW(fd, 0) = 0x8c0;
-	WFIFOW(fd, 2) = 10 + ( cash_shop_items[tab].count * (4 + sizeof(nameid_t)));
+	WFIFOW(fd, 2) = 10 + ( cash_shop_items[tab].count * (4 + sizeof(t_nameid)));
 	WFIFOL(fd, 4) = tab;
 	WFIFOW(fd, 8) = cash_shop_items[tab].count;
 
 	for( j = 0; j < cash_shop_items[tab].count; j++ ) {
-		WFIFONID(fd, 10 + ( (4 + sizeof(nameid_t)) * j) ) = client_nameid( cash_shop_items[tab].item[j]->nameid );
-		WFIFOL(fd, 10 + sizeof(nameid_t) + ( (4 + sizeof(nameid_t)) * j ) ) = cash_shop_items[tab].item[j]->price;
+		WFIFONID(fd, 10 + ( (4 + sizeof(t_nameid)) * j) ) = client_nameid( cash_shop_items[tab].item[j]->nameid );
+		WFIFOL(fd, 10 + sizeof(t_nameid) + ( (4 + sizeof(t_nameid)) * j ) ) = cash_shop_items[tab].item[j]->price;
 	}
 
-	WFIFOSET(fd, 10 + ( cash_shop_items[tab].count * (4 + sizeof(nameid_t)) ));
+	WFIFOSET(fd, 10 + ( cash_shop_items[tab].count * (4 + sizeof(t_nameid)) ));
 }
 
 //08ca <len>.W <itemcount> W <tabcode>.W (ZC_ACK_SCHEDULER_CASHITEM)
@@ -16686,7 +16684,7 @@ void clif_cashshop_ack(struct map_session_data* sd, int error)
 	WFIFOSET(fd, packet_len(0x289));
 }
 
-void clif_cashshop_result( struct map_session_data *sd, nameid_t item_id, uint16 result ){
+void clif_cashshop_result( struct map_session_data *sd, t_nameid item_id, uint16 result ){
 #if PACKETVER_MAIN_NUM >= 20101123 || PACKETVER_RE_NUM >= 20120328 || defined( PACKETVER_ZERO )
 	nullpo_retv( sd );
 
@@ -17453,7 +17451,7 @@ void clif_mercenary_message(struct map_session_data* sd, int message){
 
 /// Notification about the remaining time of a rental item.
 /// 0298 <name id>.NID <seconds>.L (ZC_CASH_TIME_COUNTER)
-void clif_rental_time( struct map_session_data* sd, nameid_t nameid, int seconds ){
+void clif_rental_time( struct map_session_data* sd, t_nameid nameid, int seconds ){
 	// '<ItemName>' item will disappear in <seconds/60> minutes.
 	struct PACKET_ZC_CASH_TIME_COUNTER p;
 
@@ -17467,7 +17465,7 @@ void clif_rental_time( struct map_session_data* sd, nameid_t nameid, int seconds
 
 /// Deletes a rental item from client's inventory.
 /// 0299 <index>.W <name id>.W (ZC_CASH_ITEM_DELETE)
-void clif_rental_expired( struct map_session_data* sd, int index, nameid_t nameid ){
+void clif_rental_expired( struct map_session_data* sd, int index, t_nameid nameid ){
 	// '<ItemName>' item has been deleted from the Inventory
 	struct PACKET_ZC_CASH_ITEM_DELETE p;
 
@@ -17476,7 +17474,6 @@ void clif_rental_expired( struct map_session_data* sd, int index, nameid_t namei
 	p.itemId = client_nameid( nameid );
 
 	clif_send( &p, sizeof( p ), &sd->bl, SELF );
-
 }
 
 
@@ -18423,7 +18420,7 @@ void clif_buyingstore_trade_failed_buyer(struct map_session_data* sd, short resu
 /// Updates the zeny limit and an item in the buying store item list.
 /// 081b <name id>.W <amount>.W <limit zeny>.L (ZC_UPDATE_ITEM_FROM_BUYING_STORE)
 /// 09e6 <name id>.NID <amount>.W <zeny>.L <limit zeny>.L <GID>.L <Date>.L (ZC_UPDATE_ITEM_FROM_BUYING_STORE2)
-void clif_buyingstore_update_item( struct map_session_data* sd, nameid_t nameid, unsigned short amount, uint32 char_id, int zeny ){
+void clif_buyingstore_update_item( struct map_session_data* sd, t_nameid nameid, unsigned short amount, uint32 char_id, int zeny ){
 	struct PACKET_ZC_UPDATE_ITEM_FROM_BUYING_STORE p;
 
 	p.packetType = buyingStoreUpdateItemType;
@@ -18466,7 +18463,7 @@ void clif_buyingstore_delete_item(struct map_session_data* sd, short index, unsi
 ///     6 = "The trade failed, because the entered amount of item %s is higher, than the buyer is willing to buy." (0x6d3, MSI_BUYINGSTORE_TRADE_OVERCOUNT)
 ///     7 = "The trade failed, because the buyer is lacking required balance." (0x6d1, MSI_BUYINGSTORE_TRADE_LACKBUYERZENY)
 ///     ? = nothing
-void clif_buyingstore_trade_failed_seller( struct map_session_data* sd, short result, nameid_t nameid ){
+void clif_buyingstore_trade_failed_seller( struct map_session_data* sd, short result, t_nameid nameid ){
 	struct PACKET_ZC_FAILED_TRADE_BUYING_STORE_TO_SELLER p;
 
 	p.packetType = 0x824;
@@ -18636,7 +18633,6 @@ static void clif_parse_CloseSearchStoreInfo(int fd, struct map_session_data* sd)
 /// 083c <account id>.L <store id>.L <nameid>.NID
 static void clif_parse_SearchStoreInfoListItemClick( int fd, struct map_session_data* sd ){
 	const struct PACKET_CZ_SSILIST_ITEM_CLICK *p = (struct PACKET_CZ_SSILIST_ITEM_CLICK *)RFIFOP( fd, 0 );
-
 	searchstore_click( sd, p->AID, p->storeId, p->itemId );
 }
 
@@ -19916,7 +19912,7 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 
 /// Update Roulette window with current stats
 /// 0A20 <result>.B <stage>.W <price index>.W <bonus item>.NID <gold>.L <silver>.L <bronze>.L (ZC_ACK_GENERATE_ROULETTE)
-void clif_roulette_generate( struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, nameid_t bonusItemID ){
+void clif_roulette_generate( struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, t_nameid bonusItemID ){
 	nullpo_retv( sd );
 
 	struct packet_roulette_generate_ack p;
@@ -20222,7 +20218,7 @@ void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
  * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [sourcename] ... [itemname]" -> MsgStringTable[1629]
  * type: ITEMOBTAIN_TYPE_NPC "[playername] ... [itemname]" -> MsgStringTable[1870]
  **/
-void clif_broadcast_obtain_special_item( const char *char_name, nameid_t nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type ){
+void clif_broadcast_obtain_special_item( const char *char_name, t_nameid nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type ){
 	char name[NAME_LENGTH];
 
 	if( battle_config.broadcast_hide_name ){
@@ -20989,7 +20985,7 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	nameid_t item_id = p->ItemID;
+	t_nameid item_id = p->ItemID;
 
 	// Check if the item sent by the client is known to us
 	if( !itemdb_group_item_exists(IG_PRIVATE_AIRSHIP, item_id) ){

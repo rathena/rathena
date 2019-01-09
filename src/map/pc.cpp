@@ -321,7 +321,7 @@ void pc_set_reg_load( bool val ){
 DBMap* itemcd_db = NULL; // char_id -> struct item_cd
 struct item_cd {
 	t_tick tick[MAX_ITEMDELAYS]; //tick
-	nameid_t nameid[MAX_ITEMDELAYS]; //item id
+	t_nameid nameid[MAX_ITEMDELAYS]; //item id
 };
 
 /**
@@ -1057,7 +1057,7 @@ void pc_setinventorydata(struct map_session_data *sd)
 	nullpo_retv(sd);
 
 	for(i = 0; i < MAX_INVENTORY; i++) {
-		nameid_t id = sd->inventory.u.items_inventory[i].nameid;
+		t_nameid id = sd->inventory.u.items_inventory[i].nameid;
 		sd->inventory_data[i] = id?itemdb_search(id):NULL;
 	}
 }
@@ -1183,7 +1183,7 @@ void pc_setequipindex(struct map_session_data *sd)
  * @param nameid : itemid
  * @return 1:yes, 0:no
  */
-bool pc_isequipped(struct map_session_data *sd, nameid_t nameid)
+bool pc_isequipped(struct map_session_data *sd, t_nameid nameid)
 {
 	uint8 i;
 
@@ -2638,7 +2638,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
  * @param race: target race. if < 0, means monster_id
  * @param rate: rate value: 1 ~ 10000. If < 0, it will be multiplied with mob level/10
  */
-static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, nameid_t nameid, uint16 group, int class_, short race, int rate)
+static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, t_nameid nameid, uint16 group, int class_, short race, int rate)
 {
 	if (!nameid && !group) {
 		ShowWarning("pc_bonus_item_drop: No Item ID nor Item Group ID specified.\n");
@@ -4609,7 +4609,8 @@ int pc_insert_card(struct map_session_data* sd, int idx_card, int idx_equip)
 	int i;
 	struct item_data* item_eq = sd->inventory_data[idx_equip];
 	struct item_data* item_card = sd->inventory_data[idx_card];
-	nameid_t nameid;
+
+	t_nameid nameid;
 
 	if( idx_equip < 0 || idx_equip >= MAX_INVENTORY || item_eq == NULL )
 		return 0; //Invalid item index.
@@ -4728,7 +4729,7 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
  * @param amount
  * @return e_chkitem_result
  *------------------------------------------*/
-char pc_checkadditem(struct map_session_data *sd, nameid_t nameid, int amount)
+char pc_checkadditem(struct map_session_data *sd, t_nameid nameid, int amount)
 {
 	int i;
 	struct item_data* data;
@@ -4964,7 +4965,7 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
  * @param nameid Find this Item!
  * @return Stored index in inventory, or -1 if not found.
  **/
-short pc_search_inventory(struct map_session_data *sd, nameid_t nameid) {
+short pc_search_inventory(struct map_session_data *sd, t_nameid nameid) {
 	short i;
 	nullpo_retr(-1, sd);
 
@@ -5252,7 +5253,7 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 bool pc_isUseitem(struct map_session_data *sd,int n)
 {
 	struct item_data *item;
-	nameid_t nameid;
+	t_nameid nameid;
 
 	nullpo_ret(sd);
 
@@ -5425,7 +5426,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 {
 	t_tick tick = gettick();
 	int amount;
-	nameid_t nameid;
+	t_nameid nameid;
 	struct script_code *script;
 	struct item item;
 	struct item_data *id;
@@ -5731,7 +5732,7 @@ int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist)
 int pc_show_steal(struct block_list *bl,va_list ap)
 {
 	struct map_session_data *sd;
-	nameid_t itemid;
+	t_nameid itemid;
 
 	struct item_data *item=NULL;
 	char output[100];
@@ -5758,7 +5759,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 {
 	int i;
-	nameid_t itemid;
+	t_nameid itemid;
 	double rate;
 	unsigned char flag = 0;
 	struct status_data *sd_status, *md_status;
@@ -6363,7 +6364,7 @@ short pc_checkequip(struct map_session_data *sd,int pos, bool checkall)
  * @max : see pc.hpp enum equip_index for @min to ?
  * -return true,false
  *------------------------------------------*/
-bool pc_checkequip2(struct map_session_data *sd, nameid_t nameid, int min, int max)
+bool pc_checkequip2(struct map_session_data *sd, t_nameid nameid, int min, int max)
 {
 	int i;
 
@@ -9043,7 +9044,7 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
  * @param sp: SP to heal
  * @return Amount healed to an object
  */
-int pc_itemheal(struct map_session_data *sd, nameid_t itemid, int hp, int sp)
+int pc_itemheal(struct map_session_data *sd, t_nameid itemid, int hp, int sp)
 {
 	int bonus, tmp, penalty = 0;
 
@@ -10181,8 +10182,8 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 	for( i = 0; i < data->combos_count; i++ ) {
 		struct itemchk {
 			int idx;
-			nameid_t nameid;
-			nameid_t card[MAX_SLOTS];
+			t_nameid nameid;
+			t_nameid card[MAX_SLOTS];
 		} *combo_idx;
 		int idx, j;
 		int nb_itemCombo;
@@ -10203,11 +10204,11 @@ static int pc_checkcombo(struct map_session_data *sd, struct item_data *data) {
 		for(j=0; j < nb_itemCombo; j++){
 			combo_idx[j].idx=-1;
 			combo_idx[j].nameid=-1;
-			memset(combo_idx[j].card,-1,MAX_SLOTS*sizeof(nameid_t));
+			memset(combo_idx[j].card,-1,MAX_SLOTS*sizeof(t_nameid));
 		}
 			
 		for( j = 0; j < nb_itemCombo; j++ ) {
-			nameid_t id = data->combos[i]->nameid[j];
+			t_nameid id = data->combos[i]->nameid[j];
 			uint16 k;
 			bool found = false;
 			
@@ -11025,7 +11026,7 @@ void pc_checkitem(struct map_session_data *sd) {
 void pc_check_available_item(struct map_session_data *sd, uint8 type)
 {
 	int i;
-	nameid_t nameid;
+	t_nameid nameid;
 	char output[256];
 
 	nullpo_retv(sd);
@@ -11499,7 +11500,7 @@ void pc_overheat(struct map_session_data *sd, int16 heat) {
 /**
  * Check if player is autolooting given itemID.
  */
-bool pc_isautolooting(struct map_session_data *sd, nameid_t nameid)
+bool pc_isautolooting(struct map_session_data *sd, t_nameid nameid)
 {
 	uint8 i = 0;
 
@@ -13078,7 +13079,7 @@ short pc_maxaspd(struct map_session_data *sd) {
 * @param nameid Item ID
 * @return Heal rate
 **/
-short pc_get_itemgroup_bonus(struct map_session_data* sd, nameid_t nameid) {
+short pc_get_itemgroup_bonus(struct map_session_data* sd, t_nameid nameid) {
 	if (sd->itemgrouphealrate.empty())
 		return 0;
 

@@ -184,7 +184,7 @@ int mapif_delete_pet_ack(int fd, int flag){
 	return 0;
 }
 
-int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class, short pet_lv, nameid_t pet_egg_id, nameid_t pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
+int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class, short pet_lv, t_nameid pet_egg_id, t_nameid pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
 {
 	memset(pet_pt, 0, sizeof(struct s_pet));
 	safestrncpy(pet_pt->name, pet_name, NAME_LENGTH);

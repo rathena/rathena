@@ -95,7 +95,7 @@ struct map_session_data *inter_search_sd(uint32 account_id, uint32 char_id)
  * @param pet_name
  * @return 
  */
-int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, nameid_t pet_egg_id, nameid_t pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
+int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, t_nameid pet_egg_id, t_nameid pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
 {
 	if (CheckForCharServer())
 		return 0;
@@ -105,14 +105,14 @@ int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_
 	WFIFOL(inter_fd, 6) = char_id;
 	WFIFOW(inter_fd, 10) = pet_class;
 	WFIFOW(inter_fd, 12) = pet_lv;
-	WFIFONID(inter_fd, 14) = pet_egg_id;
-	WFIFONID(inter_fd, 14 + sizeof(nameid_t)) = pet_equip;
-	WFIFOW(inter_fd, 14 + 2 * sizeof(nameid_t)) = intimate;
-	WFIFOW(inter_fd, 16 + 2 * sizeof(nameid_t)) = hungry;
-	WFIFOB(inter_fd, 20 + 2 * sizeof(nameid_t)) = rename_flag;
-	WFIFOB(inter_fd, 21 + 2 * sizeof(nameid_t)) = incubate;
-	memcpy(WFIFOP(inter_fd, 22 + 2 * sizeof(nameid_t)), pet_name, NAME_LENGTH);
-	WFIFOSET(inter_fd, 22 + 2 * sizeof(nameid_t) + NAME_LENGTH);
+	WFIFON(inter_fd, 14) = pet_egg_id;
+	WFIFON(inter_fd, 14 + sizeof(t_nameid)) = pet_equip;
+	WFIFOW(inter_fd, 14 + 2 * sizeof(t_nameid)) = intimate;
+	WFIFOW(inter_fd, 16 + 2 * sizeof(t_nameid)) = hungry;
+	WFIFOB(inter_fd, 20 + 2 * sizeof(t_nameid)) = rename_flag;
+	WFIFOB(inter_fd, 21 + 2 * sizeof(t_nameid)) = incubate;
+	memcpy(WFIFOP(inter_fd, 22 + 2 * sizeof(t_nameid)), pet_name, NAME_LENGTH);
+	WFIFOSET(inter_fd, 22 + 2 * sizeof(t_nameid) + NAME_LENGTH);
 
 	return 1;
 }
@@ -2260,15 +2260,15 @@ int intif_achievement_reward(struct map_session_data *sd, struct s_achievement_d
 		return 0;
 	}
 
-	WFIFOHEAD(inter_fd, 14 + sizeof(nameid_t) +NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
+	WFIFOHEAD(inter_fd, 14 + sizeof(t_nameid) +NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
 	WFIFOW(inter_fd, 0) = 0x3064;
 	WFIFOL(inter_fd, 2) = sd->status.char_id;
 	WFIFOL(inter_fd, 6) = adb->achievement_id;
-	WFIFONID(inter_fd, 10) = adb->rewards.nameid;
-	WFIFOL(inter_fd, 10 + sizeof(nameid_t)) = adb->rewards.amount;
-	safestrncpy(WFIFOCP(inter_fd, 14 + sizeof(nameid_t)), sd->status.name, NAME_LENGTH);
-	safestrncpy(WFIFOCP(inter_fd, 14 + sizeof(nameid_t) +NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
-	WFIFOSET(inter_fd, 14 + sizeof(nameid_t) +NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
+	WFIFON(inter_fd, 10) = adb->rewards.nameid;
+	WFIFOL(inter_fd, 10 + sizeof(t_nameid)) = adb->rewards.amount;
+	safestrncpy(WFIFOCP(inter_fd, 14 + sizeof(t_nameid)), sd->status.name, NAME_LENGTH);
+	safestrncpy(WFIFOCP(inter_fd, 14 + sizeof(t_nameid) +NAME_LENGTH), adb->name.c_str(), ACHIEVEMENT_NAME_LENGTH);
+	WFIFOSET(inter_fd, 14 + sizeof(t_nameid) +NAME_LENGTH+ACHIEVEMENT_NAME_LENGTH);
 
 	return 1;
 }
@@ -3236,7 +3236,7 @@ void intif_parse_MessageToFD(int fd) {
  * @param type Obtain type @see enum BROADCASTING_SPECIAL_ITEM_OBTAIN
  * @return
  **/
-int intif_broadcast_obtain_special_item(struct map_session_data *sd, nameid_t nameid, unsigned int sourceid, unsigned char type) {
+int intif_broadcast_obtain_special_item(struct map_session_data *sd, t_nameid nameid, unsigned int sourceid, unsigned char type) {
 	nullpo_retr(0, sd);
 
 	// Should not be here!
@@ -3254,13 +3254,13 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, nameid_t na
 	if (other_mapserver_count < 1)
 		return 0;
 
-	WFIFOHEAD(inter_fd, 7 + sizeof(nameid_t) + NAME_LENGTH);
+	WFIFOHEAD(inter_fd, 7 + sizeof(t_nameid) + NAME_LENGTH);
 	WFIFOW(inter_fd, 0) = 0x3009;
 	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH;
-	WFIFONID(inter_fd, 4) = nameid;
-	WFIFOW(inter_fd, 4 + sizeof(nameid_t)) = sourceid;
-	WFIFOB(inter_fd, 6 + sizeof(nameid_t)) = type;
-	safestrncpy(WFIFOCP(inter_fd, 7 + sizeof(nameid_t)), sd->status.name, NAME_LENGTH);
+	WFIFON(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 4 + sizeof(t_nameid)) = sourceid;
+	WFIFOB(inter_fd, 6 + sizeof(t_nameid)) = type;
+	safestrncpy(WFIFOCP(inter_fd, 7 + sizeof(t_nameid)), sd->status.name, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3275,7 +3275,7 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, nameid_t na
  * @param srcname Source name
  * @return
  **/
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, nameid_t nameid) {
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, t_nameid nameid) {
 	nullpo_retr(0, sd);
 
 	// Send local
@@ -3287,13 +3287,13 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, nameid_
 	if (other_mapserver_count < 1)
 		return 0;
 
-	WFIFOHEAD(inter_fd, 7 + sizeof(nameid_t) + NAME_LENGTH*2);
+	WFIFOHEAD(inter_fd, 7 + sizeof(t_nameid) + NAME_LENGTH*2);
 	WFIFOW(inter_fd, 0) = 0x3009;
 	WFIFOW(inter_fd, 2) = 9 + NAME_LENGTH*2;
-	WFIFONID(inter_fd, 4) = nameid;
-	WFIFOW(inter_fd, 4 + sizeof(nameid_t)) = 0;
-	WFIFOB(inter_fd, 6 + sizeof(nameid_t)) = ITEMOBTAIN_TYPE_NPC;
-	safestrncpy(WFIFOCP(inter_fd, 7 + sizeof(nameid_t)), sd->status.name, NAME_LENGTH);
+	WFIFON(inter_fd, 4) = nameid;
+	WFIFOW(inter_fd, 4 + sizeof(t_nameid)) = 0;
+	WFIFOB(inter_fd, 6 + sizeof(t_nameid)) = ITEMOBTAIN_TYPE_NPC;
+	safestrncpy(WFIFOCP(inter_fd, 7 + sizeof(t_nameid)), sd->status.name, NAME_LENGTH);
 	WFIFOSET(inter_fd, WFIFOW(inter_fd, 2));
 
 	return 1;
@@ -3305,14 +3305,14 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, nameid_
  * @param fd
  **/
 void intif_parse_broadcast_obtain_special_item(int fd) {
-	int type = RFIFOB(fd, 6 + sizeof(nameid_t));
+	int type = RFIFOB(fd, 6 + sizeof(t_nameid));
 	char name[NAME_LENGTH];
 
-	safestrncpy(name, RFIFOCP(fd, 7 + sizeof(nameid_t)), NAME_LENGTH);
+	safestrncpy(name, RFIFOCP(fd, 7 + sizeof(t_nameid)), NAME_LENGTH);
 	if (type == ITEMOBTAIN_TYPE_NPC)
-		safestrncpy(name, RFIFOCP(fd, 7 + sizeof(nameid_t) + NAME_LENGTH), NAME_LENGTH);
+		safestrncpy(name, RFIFOCP(fd, 7 + sizeof(t_nameid) + NAME_LENGTH), NAME_LENGTH);
 
-	clif_broadcast_obtain_special_item(name, RFIFONID(fd, 4), RFIFOW(fd, 4 + sizeof(nameid_t)), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
+	clif_broadcast_obtain_special_item(name, RFIFON(fd, 4), RFIFOW(fd, 4 + sizeof(t_nameid)), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 }
 
 /*==========================================

@@ -33,7 +33,7 @@ extern char sales_table[32];
  */
 static bool cashshop_parse_dbrow(char* fields[], int columns, int current) {
 	uint16 tab = atoi(fields[0]);
-	nameid_t nameid = strtoul(fields[1], NULL, 10);
+	t_nameid nameid = strtoul(fields[1], NULL, 10);
 	uint32 price = atoi(fields[2]);
 	int j;
 	struct cash_item_data* cid;
@@ -151,7 +151,7 @@ static int cashshop_read_db_sql( void ){
 
 #if PACKETVER_SUPPORTS_SALES
 static bool sale_parse_dbrow( char* fields[], int columns, int current ){
-	nameid_t nameid = strtoul(fields[0], NULL, 10);
+	t_nameid nameid = strtoul(fields[0], NULL, 10);
 	int start = atoi(fields[1]), end = atoi(fields[2]), amount = atoi(fields[3]), i;
 	time_t now = time(NULL);
 	struct sale_item_data* sale_item = NULL;
@@ -267,7 +267,7 @@ static TIMER_FUNC(sale_start_timer){
 	return 1;
 }
 
-enum e_sale_add_result sale_add_item(nameid_t nameid, int32 count, time_t from, time_t to ){
+enum e_sale_add_result sale_add_item(t_nameid nameid, int32 count, time_t from, time_t to ){
 	int i;
 	struct sale_item_data* sale_item;
 
@@ -318,7 +318,7 @@ enum e_sale_add_result sale_add_item(nameid_t nameid, int32 count, time_t from, 
 	return SALE_ADD_SUCCESS;
 }
 
-bool sale_remove_item(nameid_t nameid){
+bool sale_remove_item(t_nameid nameid){
 	struct sale_item_data* sale_item;
 	int i;
 
@@ -371,7 +371,7 @@ bool sale_remove_item(nameid_t nameid){
 	return true;
 }
 
-struct sale_item_data* sale_find_item(nameid_t nameid, bool onsale ){
+struct sale_item_data* sale_find_item(t_nameid nameid, bool onsale ){
 	int i;
 	struct sale_item_data* sale_item;
 	time_t now = time(NULL);
@@ -487,7 +487,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 	new_ = 0;
 
 	for( i = 0; i < n; ++i ){
-		nameid_t nameid = item_list[i].itemId;
+		t_nameid nameid = item_list[i].itemId;
 		uint32 quantity = item_list[i].amount;
 		uint16 tab = item_list[i].tab;
 		int j;
@@ -569,7 +569,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, s
 	}
 
 	for( i = 0; i < n; ++i ){
-		nameid_t nameid = item_list[i].itemId;
+		t_nameid nameid = item_list[i].itemId;
 		uint32 quantity = item_list[i].amount;
 #if PACKETVER_SUPPORTS_SALES
 		uint16 tab = item_list[i].tab;

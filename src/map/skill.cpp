@@ -94,7 +94,7 @@ ReadingSpellbookDatabase reading_spellbook_db;
 #define MAX_SKILL_CHANGEMATERIAL_DB 75
 #define MAX_SKILL_CHANGEMATERIAL_SET 3
 struct s_skill_changematerial_db {
-	nameid_t nameid;
+	t_nameid nameid;
 	unsigned short rate;
 	unsigned short qty[MAX_SKILL_CHANGEMATERIAL_SET];
 	unsigned short qty_rate[MAX_SKILL_CHANGEMATERIAL_SET];
@@ -4056,7 +4056,7 @@ static int skill_check_condition_mercenary(struct block_list *bl, uint16 skill_i
 	struct status_data *status;
 	struct map_session_data *sd = NULL;
 	int i, hp, sp, hp_rate, sp_rate, state, mhp;
-	nameid_t itemid[MAX_SKILL_ITEM_REQUIRE];
+	t_nameid itemid[MAX_SKILL_ITEM_REQUIRE];
 	int amount[ARRAYLENGTH(itemid)], index[ARRAYLENGTH(itemid)];
 
 	nullpo_retr(0, bl);
@@ -11002,8 +11002,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case GN_SLINGITEM:
 		if( sd ) {
-			nameid_t ammo_id;
-
+			t_nameid ammo_id;
 			i = sd->equip_index[EQI_AMMO];
 			if( i < 0 )
 				break; // No ammo.
@@ -13293,7 +13292,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 	t_tick limit;
 	int link_group_id = 0;
 	int target, interval, range;
-	nameid_t req_item = 0;
+	t_nameid req_item = 0;
 	struct s_skill_unit_layout *layout;
 	struct map_session_data *sd;
 	struct status_data *status;
@@ -17503,7 +17502,7 @@ int skill_delayfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv)
  * Weapon Repair [Celest/DracoRPG]
  *------------------------------------------*/
 void skill_repairweapon(struct map_session_data *sd, int idx) {
-	nameid_t material, materials[4] = { ITEMID_IRON_ORE, ITEMID_IRON, ITEMID_STEEL, ITEMID_ORIDECON_STONE };
+	t_nameid material, materials[4] = { ITEMID_IRON_ORE, ITEMID_IRON, ITEMID_STEEL, ITEMID_ORIDECON_STONE };
 	struct item *item;
 	struct map_session_data *target_sd;
 
@@ -17587,7 +17586,7 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 
 		if(item->nameid > 0 && ditem->type == IT_WEAPON) {
 			int i = 0, per;
-			nameid_t material[5] = { 0, ITEMID_PHRACON, ITEMID_EMVERETARCON, ITEMID_ORIDECON, ITEMID_ORIDECON };
+			t_nameid material[5] = { 0, ITEMID_PHRACON, ITEMID_EMVERETARCON, ITEMID_ORIDECON, ITEMID_ORIDECON };
 			if( ditem->flag.no_refine ) { 	// if the item isn't refinable
 				clif_skill_fail(sd,sd->menuskill_id,USESKILL_FAIL_LEVEL,0);
 				return;
@@ -19721,7 +19720,7 @@ void skill_unit_move_unit_group(struct skill_unit_group *group, int16 m, int16 d
  * @param qty Amount of item will be created
  * @return 0 If failed or Index+1 of item found on skill_produce_db[]
  */
-short skill_can_produce_mix(struct map_session_data *sd, nameid_t nameid, int trigger, int qty)
+short skill_can_produce_mix(struct map_session_data *sd, t_nameid nameid, int trigger, int qty)
 {
 	short i, j;
 
@@ -19764,7 +19763,7 @@ short skill_can_produce_mix(struct map_session_data *sd, nameid_t nameid, int tr
 
 	// Check on player's inventory
 	for (j = 0; j < MAX_PRODUCE_RESOURCE; j++) {
-		nameid_t nameid_produce;
+		t_nameid nameid_produce;
 
 		if (!(nameid_produce = skill_produce_db[i].mat_id[j]))
 			continue;
@@ -19796,7 +19795,7 @@ short skill_can_produce_mix(struct map_session_data *sd, nameid_t nameid, int tr
  * @param produce_idx Index of produce entry in skill_produce_db[]. (Optional. Assumed the requirements are complete, checked somewhere)
  * @return True is success, False if failed
  */
-bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, nameid_t nameid, int slot1, int slot2, int slot3, int qty, short produce_idx)
+bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, t_nameid nameid, int slot1, int slot2, int slot3, int qty, short produce_idx)
 {
 	int slot[3];
 	int i, sc, ele, idx, equip, wlv, make_per = 0, flag = 0, skill_lv = 0;
@@ -20364,7 +20363,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, nameid_t na
 			case GN_MIX_COOKING:
 				if (qty == 0) {
 					item tmp_item;
-					const int compensation[5] = { ITEMID_BLACK_LUMP, ITEMID_BLACK_HARD_LUMP, ITEMID_VERY_HARD_LUMP, ITEMID_BLACK_MASS, ITEMID_MYSTERIOUS_POWDER };
+					const t_nameid compensation[5] = { ITEMID_BLACK_LUMP, ITEMID_BLACK_HARD_LUMP, ITEMID_VERY_HARD_LUMP, ITEMID_BLACK_MASS, ITEMID_MYSTERIOUS_POWDER };
 					int rate = rnd() % 1000 + 1;
 
 					memset(&tmp_item, 0, sizeof(tmp_item));
@@ -20419,7 +20418,7 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, nameid_t na
  * @param nameid Item ID of material
  * @return True if created, False is failed
  */
-bool skill_arrow_create(struct map_session_data *sd, nameid_t nameid)
+bool skill_arrow_create(struct map_session_data *sd, t_nameid nameid)
 {
 	short i, j, idx = -1;
 	struct item tmp_item;
@@ -20468,7 +20467,7 @@ bool skill_arrow_create(struct map_session_data *sd, nameid_t nameid)
  * @param sd Player
  * @nameid Item ID of poison type
  */
-int skill_poisoningweapon(struct map_session_data *sd, nameid_t nameid)
+int skill_poisoningweapon(struct map_session_data *sd, t_nameid nameid)
 {
 	nullpo_ret(sd);
 
@@ -20537,7 +20536,7 @@ void skill_toggle_magicpower(struct block_list *bl, uint16 skill_id)
 }
 
 
-int skill_magicdecoy(struct map_session_data *sd, nameid_t nameid) {
+int skill_magicdecoy(struct map_session_data *sd, t_nameid nameid) {
 	int x, y, i, class_, skill;
 	struct mob_data *md;
 	nullpo_ret(sd);
@@ -20586,7 +20585,7 @@ int skill_magicdecoy(struct map_session_data *sd, nameid_t nameid) {
 }
 
 // Warlock Spellbooks. [LimitLine/3CeAM]
-void skill_spellbook(struct map_session_data *sd, nameid_t nameid) {
+void skill_spellbook(struct map_session_data *sd, t_nameid nameid) {
 	nullpo_retv(sd);
 
 	if (reading_spellbook_db.empty())
@@ -20683,9 +20682,9 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, uint16 skill_lv,
 		return 1;
 
 	for( i = 0; i < n; i++ ) {
-		nameid_t nameid;
+		t_nameid nameid;
 		int add_amount, del_amount, idx;
-		nameid_t product;
+		t_nameid product;
 		struct item tmp_item;
 
 		idx = item_list[i*2+0]-2;
@@ -20751,7 +20750,7 @@ int skill_elementalanalysis(struct map_session_data* sd, int n, uint16 skill_lv,
 
 int skill_changematerial(struct map_session_data *sd, int n, unsigned short *item_list) {
 	int i, j, k, c, p = 0, amount;
-	nameid_t nameid;
+	t_nameid nameid;
 
 	nullpo_ret(sd);
 	nullpo_ret(item_list);
@@ -22920,7 +22919,7 @@ uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 static bool skill_parse_row_changematerialdb(char* split[], int columns, int current)
 {
 	uint16 id = atoi(split[0]);
-	nameid_t nameid = strtoul(split[1], NULL, 10);
+	t_nameid nameid = strtoul(split[1], NULL, 10);
 	short rate = atoi(split[2]);
 	bool found = false;
 	int x, y;

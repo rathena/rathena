@@ -67,7 +67,7 @@
 	packet(0x009a,-1);
 	parseable_packet(0x009b,5,clif_parse_ChangeDir,2,4);
 	packet(0x009c,9);
-	packet(0x009d,15 +sizeof(nameid_t));
+	packet(0x009d,15 +sizeof(t_nameid));
 	packet(0x009e,17);
 	parseable_packet(0x009f,6,clif_parse_TakeItem,2);
 	packet(0x00a0,23);
@@ -176,13 +176,13 @@
 	packet(0x0107,10);
 	parseable_packet(0x0108,-1,clif_parse_PartyMessage,2,4);
 	packet(0x0109,-1);
-	packet(0x010a,2 + sizeof(nameid_t));
+	packet(0x010a,2 + sizeof(t_nameid));
 	packet(0x010b,6);
 	packet(0x010c,6);
 	packet(0x010d,2);
 	packet(0x010e,11);
 	packet(0x010f,-1);
-	packet(0x0110,6 + 2*sizeof(nameid_t));
+	packet(0x0110,6 + 2*sizeof(t_nameid));
 	packet(0x0111,39);
 	parseable_packet(0x0112,4,clif_parse_SkillUp,2);
 	parseable_packet(0x0113,10,clif_parse_UseSkillToId,2,4,6);
@@ -366,7 +366,7 @@
 	packet(0x01c5,22);
 	packet(0x01c6,4);
 	packet(0x01c7,2);
-	packet(0x01c8,11+sizeof(nameid_t));
+	packet(0x01c8,11+sizeof(t_nameid));
 	packet(0x01c9,97);
 	//packet(0x01ca,-1);
 	packet(0x01cb,9);
@@ -636,7 +636,7 @@
 	parseable_packet(0x0193,21,clif_parse_MoveFromKafra,4,17);
 	packet(0x0221,-1);
 	parseable_packet(0x0222,6,clif_parse_WeaponRefine,2);
-	packet(0x0223,6 + sizeof(nameid_t));
+	packet(0x0223,6 + sizeof(t_nameid));
 #endif
 
 // 2004-12-13aSakexe
@@ -1001,8 +1001,8 @@
 	packet(0x0295,-1);
 	packet(0x0296,-1);
 	packet(0x0297,-1);
-	packet(0x0298,6+sizeof(nameid_t));
-	packet(0x0299,4+sizeof(nameid_t));
+	packet(0x0298,6+sizeof(t_nameid));
+	packet(0x0299,4+sizeof(t_nameid));
 	packet(0x029a,27);
 	packet(0x029c,66);
 	packet(0x029d,-1);
@@ -1089,7 +1089,7 @@
 	packet(0x02b5,-1);
 	parseable_packet(0x02b6,7,clif_parse_questStateAck,2,6);
 	packet(0x02b7,7);
-	packet(0x02b8,12+5*sizeof(nameid_t));
+	packet(0x02b8,12+5*sizeof(t_nameid));
 	packet(0x02b9,191);
 	parseable_packet(0x02ba,11,clif_parse_Hotkey,2,4,5,9);
 	packet(0x02bb,8);
@@ -1739,7 +1739,7 @@
 	packet(0x081a,4);
 	packet(0x081b,10);
 	packet(0x081c,10);
-	packet(0x0824,4+sizeof(nameid_t));
+	packet(0x0824,4+sizeof(t_nameid));
 #endif
 
 // 2010-06-01aRagexeRE
@@ -1757,7 +1757,7 @@
 	parseable_packet(0x0838,2,clif_parse_SearchStoreInfoNextPage,0);
 	packet(0x083A,4); // Search Stalls Feature
 	parseable_packet(0x083B,2,clif_parse_CloseSearchStoreInfo,0);
-	parseable_packet(0x083C,10+sizeof(nameid_t),clif_parse_SearchStoreInfoListItemClick,2,6,10);
+	parseable_packet(0x083C,10+sizeof(t_nameid),clif_parse_SearchStoreInfoListItemClick,2,6,10);
 	packet(0x083D,6);
 #endif
 
@@ -2163,7 +2163,7 @@
 	parseable_packet(0x09D4,2,clif_parse_NPCShopClosed,0);
 	//NPC Market
 	packet(0x09D5,-1);
-	parseable_packet(0x09D6,-1,clif_parse_NPCMarketPurchase,2,4,4+sizeof(nameid_t));
+	parseable_packet(0x09D6,-1,clif_parse_NPCMarketPurchase,2,4,4+sizeof(t_nameid));
 	packet(0x09D7,-1);
 	parseable_packet(0x09D8,2,clif_parse_NPCMarketClosed,0);
 	// Clan System
@@ -2223,7 +2223,7 @@
 	parseable_packet(0x0A1D,2,clif_parse_roulette_close,0); // CZ_REQ_CLOSE_ROULETTE
 	packet(0x0A1E,3); // ZC_ACK_CLOSE_ROULETTE
 	parseable_packet(0x0A1F,2,clif_parse_roulette_generate,0); // CZ_REQ_GENERATE_ROULETTE
-	packet(0x0A20,19 + +sizeof(nameid_t)); // ZC_ACK_GENERATE_ROULETTE
+	packet(0x0A20,19 + +sizeof(t_nameid)); // ZC_ACK_GENERATE_ROULETTE
 	parseable_packet(0x0A21,3,clif_parse_roulette_item,2); // CZ_RECV_ROULETTE_ITEM
 	packet(0x0A22,5); // ZC_RECV_ROULETTE_ITEM
 #endif
@@ -2244,8 +2244,8 @@
 // 2015-02-25aRagexeRE
 #if PACKETVER >= 20150225
 	packet(0x0A09,45); // ZC_ADD_EXCHANGE_ITEM3
-	packet(0x0A0A,37 + 5 * sizeof(nameid_t)); // ZC_ADD_ITEM_TO_STORE3
-	packet(0x0A0B,37 + 5 * sizeof(nameid_t)); // ZC_ADD_ITEM_TO_CART3
+	packet(0x0A0A,37 + 5 * sizeof(t_nameid)); // ZC_ADD_ITEM_TO_STORE3
+	packet(0x0A0B,37 + 5 * sizeof(t_nameid)); // ZC_ADD_ITEM_TO_CART3
 	packet(0x0A0C,56); // ZC_ITEM_PICKUP_ACK_V6
 	packet(0x0A0D,-1); // ZC_INVENTORY_ITEMLIST_EQUIP_V6
 	packet(0x0A0F,-1); // ZC_CART_ITEMLIST_EQUIP_V6

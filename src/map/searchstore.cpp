@@ -38,7 +38,7 @@ enum e_searchstore_effecttype
 };
 
 /// Type for shop search function
-typedef bool (*searchstore_search_t)(struct map_session_data* sd, nameid_t nameid);
+typedef bool (*searchstore_search_t)(struct map_session_data* sd, t_nameid nameid);
 typedef bool (*searchstore_searchall_t)(struct map_session_data* sd, const struct s_search_store_search* s);
 
 /**
@@ -309,7 +309,7 @@ void searchstore_close(struct map_session_data* sd)
  * @param store_id : store ID created by client
  * @param nameid : item being searched
  */
-void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, nameid_t nameid)
+void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, t_nameid nameid)
 {
 	unsigned int i;
 	struct map_session_data* pl_sd;
@@ -400,7 +400,7 @@ void searchstore_clearremote(struct map_session_data* sd)
  * @param card : card in the item
  * @param refine : refine of the item
  */
-bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, nameid_t nameid, unsigned short amount, unsigned int price, const nameid_t* card, unsigned char refine)
+bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, t_nameid nameid, unsigned short amount, unsigned int price, const t_nameid* card, unsigned char refine)
 {
 	struct s_search_store_info_item* ssitem;
 
