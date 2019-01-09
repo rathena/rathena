@@ -6011,7 +6011,7 @@
 9087,High_Orc_Egg,High Orc Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9088,Angeling_Egg,Angeling Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9089,Am_Mut_Egg,Am Mut Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
-9091,Little_Isis_Egg,Little Isis Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9090,Little_Isis_Egg,Little Isis Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9091,Choco_Egg,Choco Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9092,Eggring_Egg,Eggring Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9093,Hyegun_Egg,Hyegun Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
