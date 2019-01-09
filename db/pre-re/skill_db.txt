@@ -1289,7 +1289,7 @@
 2568,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_HEAT_BARREL,Heat Barrel
 2569,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_AM_BLAST,Anti-Material Blast
 2570,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,6,0x0,	RL_SLUGSHOT,Slug Shot
-2571,-9,6,1,-1,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_HAMMER_OF_GOD,Hammer of God
+2571,7:8:9:10:11,6,1,0,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_HAMMER_OF_GOD,Hammer of God
 2572,0,6,1,-1,0x40,0,5,1,no,0,0,0,weapon,0,0,	RL_R_TRIP_PLUSATK,Round Trip Plus Attack
 //2573,0,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0,	RL_B_FLICKER_ATK,Bind Flicker Attack
 //2574,0,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0,	RL_GLITTERING_GREED_ATK,Flip The Coin Greed Attack
@@ -1380,11 +1380,8 @@
 5039,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_TUNAPARTY,Tuna Party
 5040,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_BUNCHOFSHRIMP,Bunch of Shrimp
 5041,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_FRESHSHRIMP,Fresh Shrimp
-
-// Unknown Unconfirmed Summoner Skills - Animations Show On These
-//5042,0,0,0,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SU_CN_METEOR_SEC,
-//5043,0,0,0,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SU_LUNATICCARROTBEAT_SEC,
-
+5042,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_CN_METEOR2,Catnip Meteor 2
+5043,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_LUNATICCARROTBEAT2,Lunatic Carrot Beat 2
 5044,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_SOULATTACK,Soul Attack
 5045,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_POWEROFFLOCK,Power of Flock
 5046,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SU_SVG_SPIRIT,Spirit of Savage
@@ -1403,6 +1400,8 @@
 5063,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	WE_CALLALLFAMILY,Call All Family
 5064,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	WE_ONEFOREVER,One Forever
 5065,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	WE_CHEERUP,Cheer Up
+
+5067,0,0,4,0,0x1,0,1,0,no,0,0,0,none,0,0x0,		ALL_EQSWITCH,Equip Switch
 
 // New Arch Bishop Skills
 5072,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		AB_VITUPERATUM,Vituperatum

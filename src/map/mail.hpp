@@ -12,13 +12,16 @@ enum mail_attach_result {
 	MAIL_ATTACH_WEIGHT = 1,
 	MAIL_ATTACH_ERROR = 2,
 	MAIL_ATTACH_SPACE = 3,
-	MAIL_ATTACH_UNTRADEABLE = 4
+	MAIL_ATTACH_UNTRADEABLE = 4,
 #else
 	MAIL_ATTACH_WEIGHT = 1,
 	MAIL_ATTACH_ERROR = 1,
 	MAIL_ATTACH_SPACE = 1,
-	MAIL_ATTACH_UNTRADEABLE = 1
+	MAIL_ATTACH_UNTRADEABLE = 1,
 #endif
+
+	// Unofficial
+	MAIL_ATTACH_EQUIPSWITCH = 99,
 };
 
 void mail_clear(struct map_session_data *sd);

@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `db_roulette` (
 CREATE TABLE IF NOT EXISTS `bonus_script` (
   `char_id` INT(11) UNSIGNED NOT NULL,
   `script` TEXT NOT NULL,
-  `tick` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `tick` BIGINT(20) NOT NULL DEFAULT '0',
   `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
   `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
   `icon` SMALLINT(3) NOT NULL DEFAULT '-1'
@@ -375,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `elemental` (
   `mdef` smallint(4) unsigned NOT NULL default '0',
   `flee` smallint(4) unsigned NOT NULL default '0',
   `hit` smallint(4) unsigned NOT NULL default '0',
-  `life_time` int(11) NOT NULL default '0',
+  `life_time` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`ele_id`)
 ) ENGINE=MyISAM;
 
@@ -721,6 +721,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `favorite` tinyint(3) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
+  `equip_switch` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;
@@ -873,7 +874,7 @@ CREATE TABLE IF NOT EXISTS `mercenary` (
   `hp` int(11) unsigned NOT NULL default '0',
   `sp` int(11) unsigned NOT NULL default '0',
   `kill_counter` int(11) NOT NULL,
-  `life_time` int(11) NOT NULL default '0',
+  `life_time` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`mer_id`)
 ) ENGINE=MyISAM;
 
@@ -913,7 +914,7 @@ CREATE TABLE IF NOT EXISTS `sc_data` (
   `account_id` int(11) unsigned NOT NULL,
   `char_id` int(11) unsigned NOT NULL,
   `type` smallint(11) unsigned NOT NULL,
-  `tick` int(11) NOT NULL,
+  `tick` bigint(20) NOT NULL,
   `val1` int(11) NOT NULL default '0',
   `val2` int(11) NOT NULL default '0',
   `val3` int(11) NOT NULL default '0',
@@ -930,7 +931,7 @@ CREATE TABLE IF NOT EXISTS `skillcooldown` (
   `account_id` int(11) unsigned NOT NULL,
   `char_id` int(11) unsigned NOT NULL,
   `skill` smallint(11) unsigned NOT NULL DEFAULT '0',
-  `tick` int(11) NOT NULL,
+  `tick` bigint(20) NOT NULL,
   KEY `account_id` (`account_id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;

@@ -914,7 +914,7 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 */
 static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	unsigned short nameid = atoi(fields[0]);
-	uint8 flag;
+	uint16 flag;
 	bool set;
 	struct item_data *id;
 
@@ -932,6 +932,20 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	if (flag&8) id->flag.bindOnEquip = true;
 	if (flag&16) id->flag.broadcast = 1;
 	if (flag&32) id->flag.delay_consume = 2;
+
+	if( flag & 64 ){
+		id->flag.dropEffect = 1;
+	}else if( flag & 128 ){
+		id->flag.dropEffect = 2;
+	}else if( flag & 256 ){
+		id->flag.dropEffect = 3;
+	}else if( flag & 512 ){
+		id->flag.dropEffect = 4;
+	}else if( flag & 1024 ){
+		id->flag.dropEffect = 5;
+	}else if( flag & 2048 ){
+		id->flag.dropEffect = 6;
+	}
 
 	return true;
 }

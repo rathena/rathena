@@ -1250,8 +1250,8 @@ OnClock0001:
 	// Apply investment to Eco. and Def. Only happens if there were investments made.
 	// Permanent Development can only happen once per day.
 	if (GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY)) {
-		set .@Economy,GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY);
-		SetCastleData strnpcinfo(2),CD_INVESTED_ECONOMY,.@Economy + GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY) + (rand(2) && getgdskilllv(.@GID,10014));
+		set .@Economy,GetCastleData(strnpcinfo(2),CD_CURRENT_ECONOMY);
+		SetCastleData strnpcinfo(2),CD_CURRENT_ECONOMY,.@Economy + GetCastleData(strnpcinfo(2),CD_INVESTED_ECONOMY) + (rand(2) && getgdskilllv(.@GID,10014));
 		if (GetCastleData(strnpcinfo(2),CD_CURRENT_ECONOMY) > 100) SetCastleData strnpcinfo(2),CD_CURRENT_ECONOMY,100;
 	}
 	if (GetCastleData(strnpcinfo(2),CD_INVESTED_DEFENSE)) {
