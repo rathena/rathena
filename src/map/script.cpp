@@ -19929,7 +19929,7 @@ BUILDIN_FUNC(instance_id)
 			ShowError("buildin_instance_create: Unknown instance mode %d for '%s'\n", mode, script_getstr(st, 2));
 			return SCRIPT_CMD_FAILURE;
 		}
-		script_pushint(st, script_instancegetid(st, true, mode));
+		script_pushint(st, script_instancegetid(st, mode));
 	} else
 		script_pushint(st, script_instancegetid(st));
 	return SCRIPT_CMD_SUCCESS;
