@@ -25,10 +25,17 @@ REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `pric
 (5462, 'Spiked_Scarf', 'Spiked Scarf', 4, 20, NULL, 100, NULL, 1, NULL, 0, 4294967295, 63, 2, 1, NULL, '90', 0, 459, 'bonus bAtk,30; bonus bMaxHPrate,-2; if(vip_status(VIP_STATUS_ACTIVE)){ bonus bAllStats,1; bonus2 bMaxHPrate,2; bonus2 bLongAtkRate,2; }', NULL, NULL),
 (5463, 'Rainbow_Scarf', 'Rainbow Scarf', 4, 20, NULL, 0, NULL, 1, NULL, 0, 4294967295, 63, 2, 1, NULL, '90', 0, 460, 'bonus bMatk,30; bonus bMaxSPrate,-2; if(vip_status(VIP_STATUS_ACTIVE)){ bonus bAllStats,1; bonus2 bMaxSPrate,2; bonus bVariableCastrate,2; }', NULL, NULL),
 (5597, 'Bubble_Gum_In_Mouth', 'Bubble Gum In Mouth', 4, 20, NULL, 0, NULL, 2, NULL, 0, 4294967295, 63, 2, 1, NULL, '1', 0, 572, 'bonus bBaseAtk,5; bonus bMatk,5; bonus bMdef,2; if(vip_status(VIP_STATUS_ACTIVE)){ bonus bAllStats,1; bonus2 bDropAddRace,RC_All,5; }', NULL, NULL),
-(5286, 'Pecopeco_Hairband', 'Pecopeco Hairband', 4, 20, NULL, 0, NULL, 6, NULL, 0, 4294967295, 63, 2, 256, NULL, '70', 0, 314, 'bonus bSpeedRate,25; bonus bAspdRate,5; bonus bVariableCastrate,-5; if(vip_status(VIP_STATUS_ACTIVE)){ bonus bAllStats,1; }', NULL, NULL),
+(5286, 'Pecopeco_Hairband', 'Pecopeco Hairband', 4, 20, NULL, 0, NULL, 6, NULL, 0, 4294967295, 63, 2, 256, NULL, '70', 0, 314, 'bonus bSpeedRate,25; bonus bAspdRate,5; bonus bVariableCastrate,-5; if(vip_status(VIP_STATUS_ACTIVE)){ bonus bAllStats,1; }', NULL, NULL);
 
+# Elemental Converter + Cursed water icons
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(12032, 'Box_Of_Storm', 'Box of Storms', 2, 1000, NULL, 200, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_WATERWEAPON,180000,1;', NULL, NULL),
+(12020, 'Water_Of_Darkness', 'Cursed Water', 2, 2, NULL, 30, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_SHADOWWEAPON,180000,1;', NULL, NULL),
+(12114, 'Elemental_Fire', 'Elemental Converter', 2, 2, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_FIREWEAPON,180000,1;', NULL, NULL),
+(12115, 'Elemental_Water', 'Elemental Converter', 2, 2, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_WATERWEAPON,180000,1;', NULL, NULL),
+(12116, 'Elemental_Earth', 'Elemental Converter', 2, 2, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_EARTHWEAPON,180000,1;', NULL, NULL),
+(12117, 'Elemental_Wind', 'Elemental Converter', 2, 2, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'sc_start SC_WINDWEAPON,180000,1;', NULL, NULL);
 
-(22876, 'Old_Money_Pocket', 'Old Money Pocket', 2, 0, NULL, 0, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'Zeny += rand(500,550);', NULL, NULL),
-(18597, 'Mercury_Helm', 'Mercury Riser', 4, 40, NULL, 200, NULL, 10, NULL, 1, 4294967295, 63, 2, 256, NULL, '0', 1, 759, 'bonus2 bSubRace,RC_DemiHuman,10; bonus2 bAddRace,RC_DemiHuman,10; bonus bAspdRate,3; bonus bDelayrate,-3; bonus bCritical,3; .@r = getrefine(); if(.@r >= 7) { bonus bAspdRate,2; bonus bDelayrate,-2; bonus bCritical,2; } if(.@r >= 9) { bonus bAspdRate,2; bonus bDelayrate,-2; bonus bCritical,2; }', NULL, NULL),
-(18600, 'Cat_Ears_Beret', 'Cat Ear Beret', 4, 20, NULL, 100, NULL, 5, NULL, 1, 4294967295, 63, 2, 256, NULL, '0', 1, 761, 'bonus bAtkRate,5; .@r = getrefine(); if(.@r < 5) { .@r = 5; bonus2 bSubRace,RC_DemiHuman,(.@r - 5); bonus2 bAddRace,RC_DemiHuman,(.@r - 5); }', NULL, NULL),
-(19086, 'Robo_Eye_', 'Robo Eye', 4, 20, NULL, 200, NULL, 2, NULL, 1, 4294967295, 63, 2, 512, NULL, '10', 0, 345, 'bonus bAtkRate,1; bonus bMatkRate,1; bonus bDex,1;', NULL, NULL);
+# "revert" happy balloon
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(19095, 'Happy_Balloon', 'Happy Balloon', 4, 0, NULL, 10, NULL, 0, NULL, 0, 4294967295, 63, 2, 1, NULL, '1', 0, 1289, 'bonus2 bDropAddRace,RC_All,10; bonus2 bExpAddRace,RC_All,5;', NULL, NULL);
