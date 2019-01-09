@@ -979,10 +979,12 @@ OnAgitInvest:
 	}
 	set .@status, getd("$"+.@npc$+"_invest_result");
 	if (.@status == 3 || .@status == 2) {
-		mes .@n$;
-		mes "We've successfully connected the Abyss Gate ["+.@gate$+"] with the help from your investment.";
-		mes "The Agit dungeon will be open to everyone with a small entrance fee in "+.@realm$+".";
-		next;
+		if(.@status == 3) {
+			mes .@n$;
+			mes "We've successfully connected the Abyss Gate ["+.@gate$+"] with the help from your investment.";
+			mes "The Agit dungeon will be open to everyone with a small entrance fee in "+.@realm$+".";
+			next;
+		}
 		mes .@n$;
 		mes "Please visit as often as possible since the entrance fee is saved as an investment for the region.";
 		mes "Do you want to enter the Agit dungeon?";
