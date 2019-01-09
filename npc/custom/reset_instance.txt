@@ -1,0 +1,49 @@
+function	script	get_charid	{
+	if(getarg(0) != "")
+	{
+		// debugmes "SELECT `char_id` FROM `char` WHERE `name` = '"+escape_sql(getarg(0))+"' LIMIT 1;";
+		if(query_sql("SELECT `char_id` FROM `char` WHERE `name` = '"+escape_sql(getarg(0))+"' LIMIT 1;",.@cid) > 0)
+			return .@cid[0];
+		else
+			return 0;
+	}
+	return 0;
+}
+
+guild_vs1-1,31,72,5	script	Reset Instance	97,{
+	callfunc "F_GM_NPC";
+	mes "Enter the password.";
+	next;
+	if (callfunc("F_GM_NPC","eureka346405",1) == 0) {
+		mes "Incorrect password.";
+		close;
+	}
+
+	.@name$ = "";
+	mes "Enter Name";
+	next;
+	input .@name$;
+	.@cid = get_charid(.@name$);
+	debugmes ""+.@cid;
+	if(.@cid == 0) {
+		mes "Name not found";
+		close;
+	}
+
+	next;
+	switch(select("Isle of Bios", "Sky Fortress")){
+		case 1:
+			if(isbegin_quest(15005, .@cid) > 0) erasequest 15005, .@cid;
+			if(isbegin_quest(15006, .@cid) > 0) erasequest 15006, .@cid;
+			if(isbegin_quest(15007, .@cid) > 0) erasequest 15007, .@cid;
+			if(isbegin_quest(15008, .@cid) > 0) erasequest 15008, .@cid;
+			close;
+
+		case 2:
+			if(isbegin_quest(9418, .@cid) > 0) erasequest 9418, .@cid;
+			if(isbegin_quest(9419, .@cid) > 0) erasequest 9419, .@cid;
+			if(isbegin_quest(9427, .@cid) > 0) erasequest 9427, .@cid;
+			close;
+	}
+	close;
+}
