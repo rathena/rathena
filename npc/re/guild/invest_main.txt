@@ -978,7 +978,7 @@ OnAgitInvest:
 		close;
 	}
 	set .@status, getd("$"+.@npc$+"_invest_result");
-	if (.@status == 3) {
+	if (.@status == 3 || .@status == 2) {
 		mes .@n$;
 		mes "We've successfully connected the Abyss Gate ["+.@gate$+"] with the help from your investment.";
 		mes "The Agit dungeon will be open to everyone with a small entrance fee in "+.@realm$+".";
@@ -1014,11 +1014,11 @@ OnAgitInvest:
 		else if (compare(strnpcinfo(2),"prt"))
 			warp "gld_dun03"+((.@i == 2)?"_2":""),164,268;
 		end;
-	} else if (.@status == 2) {
-		mes .@n$;
-		mes "The "+.@realm$+" Agit Dungeon 2F is now available but since it is not connected with the Abyss Gate,";
-		mes "the Agit dungeon is only accessible to the Agit guild.";
-		close;
+	// } else if (.@status == 2) {
+	// 	mes .@n$;
+	// 	mes "The "+.@realm$+" Agit Dungeon 2F is now available but since it is not connected with the Abyss Gate,";
+	// 	mes "the Agit dungeon is only accessible to the Agit guild.";
+	// 	close;
 	} else {
 		mes .@n$;
 		mes .@realm$+" was not chosen to be connected with a gate this time.";
