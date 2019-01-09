@@ -153,11 +153,16 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 				close;
 			}
 			setquest 9418; // enable enterance
+			setquest 9419; // intiate cooldown
 			skyfortress_entry = 1;
 			break;
 
 		case 0: // inactive
 		case 1: // active
+			if (is_party_leader() == false) {
+				mes "- Only the Party Leader can initiate the quest. -";
+				close; // only party leader can initiate the quest
+			}
 			if (.@iid > 0) {
 				mes "[Scientist Doyeon]";
 				mes "The previous instance are still open.";
@@ -173,61 +178,57 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 			mes "You can also bring me a <ITEM>Dungeon 1 Hour Ticket<INFO>14505</INFO></ITEM>.";
 			mes "This item allows me to claim enough magic from the Eden Group.";
 			next;
-			if (is_party_leader() == true) {
-				if (select( "End the dialogue.", "Give a Dungeon Ticket." ) == 2) {
-					if (countitem(14505) < 1) { // Sky Fortress Ticket
-						mes "[Scientist Doyeon]";
-						mes "What are you trying to give me?";
-						mes "I require <ITEM>Dungeon 1 Hour Ticket<INFO>14505</INFO></ITEM>";
-						mes "to open the warp portal earlier.";
-						next;
-						mes "[Scientist Doyeon]";
-						mes "You can always comes back when I am done collecting enough magic.";
-						close;
-					}
+			if (select( "End the dialogue.", "Give a Dungeon Ticket." ) == 2) {
+				if (countitem(14505) < 1) { // Sky Fortress Ticket
 					mes "[Scientist Doyeon]";
-					mes "O-Oh! Thank you.";
-					mes "With this item, I can claim enough magic to open the warp.";
+					mes "What are you trying to give me?";
+					mes "I require <ITEM>Dungeon 1 Hour Ticket<INFO>14505</INFO></ITEM>";
+					mes "to open the warp portal earlier.";
 					next;
-					if (select( "End the dialogue.", "Activate the warp." ) == 1) {
-						mes "[Scientist Doyeon]";
-						mes "Ah! Are you not going to help Prontera?";
-						mes "...";
-						mes "I understand.";
-						close;
-					}
-
 					mes "[Scientist Doyeon]";
-					mes "There! I opened the warp";
-					mes "to the Sky Fortress!";
-					mes "The warp will be activated";
-					mes "only for a limited period of time.";
-					mes "Step inside it, quick!";
-
-					if (instance_create(.@md_name$) < 0) {
-						mes "Party Name: "+ getpartyname(getcharid(1));
-						mes "Party Leader: "+strcharinfo(0);
-						mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
-						close;
-					}
-					delitem 14505,1;
-
-					// clean old quest to allow reentry
-					if(checkquest(9427) == 2) erasequest 9427;
-					setquest 9427; // enable enterance
-					skyfortress_entry = 1;
-					if(checkquest(9419,PLAYTIME) == 2) erasequest 9419; // reset cooldown
+					mes "You can always comes back when I am done collecting enough magic.";
 					close;
 				}
-			} else {
-				mes "- Only the Party Leader can initiate the quest. -";
-				close; // only party leader can initiate the quest
+				mes "[Scientist Doyeon]";
+				mes "O-Oh! Thank you.";
+				mes "With this item, I can claim enough magic to open the warp.";
+				next;
+				if (select( "End the dialogue.", "Activate the warp." ) == 1) {
+					mes "[Scientist Doyeon]";
+					mes "Ah! Are you not going to help Prontera?";
+					mes "...";
+					mes "I understand.";
+					close;
+				}
+
+				mes "[Scientist Doyeon]";
+				mes "There! I opened the warp";
+				mes "to the Sky Fortress!";
+				mes "The warp will be activated";
+				mes "only for a limited period of time.";
+				mes "Step inside it, quick!";
+
+				if (instance_create(.@md_name$) < 0) {
+					mes "Party Name: "+ getpartyname(getcharid(1));
+					mes "Party Leader: "+strcharinfo(0);
+					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+					close;
+				}
+				delitem 14505,1;
+
+				// clean old quest to allow reentry
+				if(checkquest(9427) == 2) erasequest 9427;
+				setquest 9427; // enable enterance
+				skyfortress_entry = 1;
+				if(checkquest(9419,PLAYTIME) == 2) {
+					erasequest 9419; // reset cooldown
+					setquest 9419; // intiate cooldown
+				}
+				close;
 			}
 			break;
 
 		case 2: // completed
-			if(checkquest(9427) == 2) erasequest 9427;
-
 			mes "[Scientist Doyeon]";
 			mes "You came back!";
 			mes "There are still a ton of undead monsters spawning in Prontera.";
@@ -251,14 +252,21 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 				mes "[Scientist Doyeon]";
 				mes "I have opened the warp portal to the Sky Fortress!";
 				mes "The warp will only be activated only for a limited period of time.";
-				if (instance_create(.@md_name$) < 0) {
+				.@err = instance_create(.@md_name$);
+				if (.@err < 0) {
+					next;
 					mes "Party Name: "+ getpartyname(getcharid(1));
 					mes "Party Leader: "+strcharinfo(0);
-					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+					mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed! ("+.@err+")";
 					close;
 				}
+				if(checkquest(9427) == 2) erasequest 9427;
 				setquest 9427; // enable enterance
 				skyfortress_entry = 1;
+				if(checkquest(9419,PLAYTIME) == 2) {
+					erasequest 9419; // reset cooldown
+					setquest 9419; // intiate cooldown
+				}
 			}
 			close;
 			break;
