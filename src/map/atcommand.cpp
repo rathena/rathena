@@ -9745,11 +9745,11 @@ ACMD_FUNC(changedress){
 		if( sd->sc.data[type] ) {
 			status_change_end( &sd->bl, type, INVALID_TIMER );
 			// You should only be able to have one - so we cancel here
-			return 0;
+			break;
 		}
 	}
 
-	return -1;
+	return 0;
 }
 
 ACMD_FUNC(costume) {

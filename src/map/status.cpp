@@ -13786,7 +13786,7 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 	struct block_list* src = va_arg(ap,struct block_list*);
 	struct status_change_entry* sce = va_arg(ap,struct status_change_entry*);
 	enum sc_type type = (sc_type)va_arg(ap,int); // gcc: enum args get promoted to int
-	t_tick tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 
 	if (status_isdead(bl))
 		return 0;
