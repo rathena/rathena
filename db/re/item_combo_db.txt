@@ -875,3 +875,5 @@
 28594:4875,{.@r=getequiprefinerycnt(EQI_SHOES); bonus bStr,(1*.@r); bonus bMaxHPrate,(1*.@r); }
 18540:5066,{ bonus bAspd,1; bonus bAspdRate,9; bonus2 bSPLossRate,3,2000; }
 18540:5072,{ bonus bAspd,1; bonus bAspdRate,9; bonus2 bSPLossRate,3,2000; }
+
+15166:5968,{ if (BaseClass == Job_Acolyte) { bonus bHealPower,getequiprefinerycnt(EQI_HEAD_TOP)*2; bonus bFlee2,getequiprefinerycnt(EQI_HEAD_TOP)*1;  } }
