@@ -267,11 +267,11 @@ prontera,123,208,5	script	Peco Peco Remover	652,{
 	mes "Magic Gears are only available for Mechanics.";
 	close;
 }
-prontera,163,178,3	duplicate(mgm)	Mado Gear Armourer#prt	105
+prontera,181,191,3	duplicate(mgm)	Mado Gear Armourer#prt	105
 geffen,103,55,5	duplicate(mgm)	Mado Gear Armourer#gef	105
 payon,166,106,5	duplicate(mgm)	Mado Gear Armourer#pay	105
-aldebaran,133,112,5	duplicate(mgm)	Mado Gear Armourer#alde	105
-yuno,167,187,3	duplicate(mgm)	Mado Gear Armourer#yuno	105
+aldebaran,133,122,5	duplicate(mgm)	Mado Gear Armourer#alde	105
+yuno,179,186,3	duplicate(mgm)	Mado Gear Armourer#yuno	105
 rachel,106,134,5	duplicate(mgm)	Mado Gear Armourer#ra	105
 dicastes01,187,207,3	duplicate(mgm)	Mado Gear Armourer#dic	105
 manuk,273,212,5	duplicate(mgm)	Mado Gear Armourer#man	105
