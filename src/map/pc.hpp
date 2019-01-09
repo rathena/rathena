@@ -530,7 +530,7 @@ struct map_session_data {
 	int matk_rate;
 	int critical_rate,hit_rate,flee_rate,flee2_rate,def_rate,def2_rate,mdef_rate,mdef2_rate;
 
-	int itemid;
+	nameid_t itemid;
 	short itemindex;	//Used item's index in sd->inventory [Skotlex]
 
 	uint16 catch_target_class; // pet catching, stores a pet class to catch [zzo]
@@ -1227,7 +1227,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src);
 void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp);
 bool pc_revive_item(struct map_session_data *sd);
 void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int type);
-int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp);
+int pc_itemheal(struct map_session_data *sd,nameid_t itemid, int hp,int sp);
 int pc_percentheal(struct map_session_data *sd,int,int);
 bool pc_jobchange(struct map_session_data *sd, int job, char upper);
 void pc_setoption(struct map_session_data *,int);

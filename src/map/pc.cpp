@@ -5731,7 +5731,7 @@ int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist)
 int pc_show_steal(struct block_list *bl,va_list ap)
 {
 	struct map_session_data *sd;
-	int itemid;
+	nameid_t itemid;
 
 	struct item_data *item=NULL;
 	char output[100];
@@ -5740,7 +5740,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 	itemid=va_arg(ap,int);
 
 	if((item=itemdb_exists(itemid))==NULL)
-		sprintf(output,"%s stole an Unknown Item (id: %i).",sd->status.name, itemid);
+		sprintf(output,"%s stole an Unknown Item (id: %u).",sd->status.name, itemid);
 	else
 		sprintf(output,"%s stole %s.",sd->status.name,item->jname);
 	clif_displaymessage( ((struct map_session_data *)bl)->fd, output);
@@ -5757,7 +5757,8 @@ int pc_show_steal(struct block_list *bl,va_list ap)
  */
 bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 skill_lv)
 {
-	int i,itemid;
+	int i;
+	nameid_t itemid;
 	double rate;
 	unsigned char flag = 0;
 	struct status_data *sd_status, *md_status;
@@ -9042,7 +9043,7 @@ void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int ty
  * @param sp: SP to heal
  * @return Amount healed to an object
  */
-int pc_itemheal(struct map_session_data *sd, int itemid, int hp, int sp)
+int pc_itemheal(struct map_session_data *sd, nameid_t itemid, int hp, int sp)
 {
 	int bonus, tmp, penalty = 0;
 

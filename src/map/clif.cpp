@@ -3541,7 +3541,7 @@ void clif_changestatus(struct map_session_data* sd,int type,int val)
 
 
 /// 00c3 <id>.L <type>.B <value>.B (ZC_SPRITE_CHANGE)
-/// 01d7 <id>.L <type>.B <value>.L (ZC_SPRITE_CHANGE2)
+/// 01d7 <id>.L <type>.B <value1>.NID <value2>.NID (ZC_SPRITE_CHANGE2)
 void clif_sprite_change( struct block_list *bl, int id, int type, int val, int val2, enum send_target target ){
 	struct PACKET_ZC_SPRITE_CHANGE p;
 
@@ -5593,11 +5593,10 @@ void clif_skillcastcancel(struct block_list* bl)
 /// if(result!=0) doesn't display any of the previous messages
 /// Note: when this packet is received an unknown flag is always set to 0,
 /// suggesting this is an ACK packet for the UseSkill packets and should be sent on success too [FlavioJS]
-void clif_skill_fail( struct map_session_data *sd, uint16 skill_id, enum useskill_fail_cause cause, int btype, int itemId ){
+void clif_skill_fail( struct map_session_data *sd, uint16 skill_id, enum useskill_fail_cause cause, int btype, nameid_t itemId ){
 	nullpo_retv( sd );
 
 	int fd = sd->fd;
-
 	if( !session_isActive( fd ) ){
 		return;
 	}
@@ -6599,7 +6598,7 @@ void clif_refine(int fd, int fail, int index, int val)
 ///     1 = "weapon upgraded: %s" MsgStringTable[912] in rgb(0,205,205)
 ///     2 = "cannot upgrade %s until you level up the upgrade weapon skill" MsgStringTable[913] in rgb(255,200,200)
 ///     3 = "you lack the item %s to upgrade the weapon" MsgStringTable[914] in rgb(255,200,200)
-void clif_upgrademessage( struct map_session_data* sd, int result, unsigned short item_id ){
+void clif_upgrademessage( struct map_session_data* sd, int result, nameid_t item_id ){
 	struct PACKET_ZC_ACK_WEAPONREFINE p;
 
 	p.packetType = 0x223;
@@ -18482,7 +18481,7 @@ void clif_buyingstore_trade_failed_seller( struct map_session_data* sd, short re
 ///
 
 /// Request to search for stores (CZ_SEARCH_STORE_INFO).
-/// 0835 <packet len>.W <type>.B <max price>.L <min price>.L <name id count>.B <card count>.B { <name id>.W }* { <card>.W }*
+/// 0835 <packet len>.W <type>.B <max price>.L <min price>.L <name id count>.B <card count>.B { <name id>.NID <card>.NID }*
 /// type:
 ///     0 = Vending
 ///     1 = Buying Store
@@ -19916,8 +19915,8 @@ static uint8 clif_roulette_getitem(struct map_session_data *sd) {
 }
 
 /// Update Roulette window with current stats
-/// 0A20 <result>.B <stage>.W <price index>.W <bonus item>.W <gold>.L <silver>.L <bronze>.L (ZC_ACK_GENERATE_ROULETTE)
-void clif_roulette_generate( struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, short bonusItemID ){
+/// 0A20 <result>.B <stage>.W <price index>.W <bonus item>.NID <gold>.L <silver>.L <bronze>.L (ZC_ACK_GENERATE_ROULETTE)
+void clif_roulette_generate( struct map_session_data *sd, unsigned char result, short stage, short prizeIdx, nameid_t bonusItemID ){
 	nullpo_retv( sd );
 
 	struct packet_roulette_generate_ack p;
@@ -20218,8 +20217,8 @@ void clif_parse_merge_item_cancel(int fd, struct map_session_data* sd) {
 }
 
 /**
- * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <containerid>.W (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
- * 07fd <size>.W <type>.B <itemid>.W <charname_len>.B <charname>.24B <source_len>.B <srcname>.24B (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
+ * 07fd <size>.W <type>.B <itemid>.NID <charname_len>.B <charname>.24B <source_len>.B <containerid>.W (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
+ * 07fd <size>.W <type>.B <itemid>.NID <charname_len>.B <charname>.24B <source_len>.B <srcname>.24B (ZC_BROADCASTING_SPECIAL_ITEM_OBTAIN)
  * type: ITEMOBTAIN_TYPE_BOXITEM & ITEMOBTAIN_TYPE_MONSTER_ITEM "[playername] ... [sourcename] ... [itemname]" -> MsgStringTable[1629]
  * type: ITEMOBTAIN_TYPE_NPC "[playername] ... [itemname]" -> MsgStringTable[1870]
  **/
@@ -20935,7 +20934,7 @@ void clif_private_airship_response( struct map_session_data* sd, enum e_private_
 }
 
 /// Parses a request for a private airship
-/// 0A49 <mapname>.16B <itemid>.W
+/// 0A49 <mapname>.16B <itemid>.NID
 void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 #if PACKETVER >= 20180321
 	// Check if the feature is enabled
@@ -20990,7 +20989,7 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 		return;
 	}
 
-	uint16 item_id = p->ItemID;
+	nameid_t item_id = p->ItemID;
 
 	// Check if the item sent by the client is known to us
 	if( !itemdb_group_item_exists(IG_PRIVATE_AIRSHIP, item_id) ){

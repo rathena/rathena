@@ -33,7 +33,7 @@ struct s_autotrade_entry {
 	uint16 amount; ///< Amount
 	uint32 price; ///< Price
 	uint16 index; ///< Item index in cart
-	uint32 item_id; ///< Item ID (for buyingstore)
+	nameid_t item_id; ///< Item ID (for buyingstore)
 };
 
 /// Struct of autotrader

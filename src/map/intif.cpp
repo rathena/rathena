@@ -95,24 +95,24 @@ struct map_session_data *inter_search_sd(uint32 account_id, uint32 char_id)
  * @param pet_name
  * @return 
  */
-int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, unsigned short pet_egg_id, unsigned short pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
+int intif_create_pet(uint32 account_id,uint32 char_id,short pet_class,short pet_lv, nameid_t pet_egg_id, nameid_t pet_equip,short intimate,short hungry,char rename_flag,char incubate,char *pet_name)
 {
 	if (CheckForCharServer())
 		return 0;
 	WFIFOHEAD(inter_fd, 24 + NAME_LENGTH);
-	WFIFOW(inter_fd,0) = 0x3080;
-	WFIFOL(inter_fd,2) = account_id;
-	WFIFOL(inter_fd,6) = char_id;
-	WFIFOW(inter_fd,10) = pet_class;
-	WFIFOW(inter_fd,12) = pet_lv;
-	WFIFOW(inter_fd,14) = pet_egg_id;
-	WFIFOW(inter_fd,16) = pet_equip;
-	WFIFOW(inter_fd,18) = intimate;
-	WFIFOW(inter_fd,20) = hungry;
-	WFIFOB(inter_fd,22) = rename_flag;
-	WFIFOB(inter_fd,23) = incubate;
-	memcpy(WFIFOP(inter_fd,24),pet_name,NAME_LENGTH);
-	WFIFOSET(inter_fd,24+NAME_LENGTH);
+	WFIFOW(inter_fd, 0) = 0x3080;
+	WFIFOL(inter_fd, 2) = account_id;
+	WFIFOL(inter_fd, 6) = char_id;
+	WFIFOW(inter_fd, 10) = pet_class;
+	WFIFOW(inter_fd, 12) = pet_lv;
+	WFIFONID(inter_fd, 14) = pet_egg_id;
+	WFIFONID(inter_fd, 14 + sizeof(nameid_t)) = pet_equip;
+	WFIFOW(inter_fd, 14 + 2 * sizeof(nameid_t)) = intimate;
+	WFIFOW(inter_fd, 16 + 2 * sizeof(nameid_t)) = hungry;
+	WFIFOB(inter_fd, 20 + 2 * sizeof(nameid_t)) = rename_flag;
+	WFIFOB(inter_fd, 21 + 2 * sizeof(nameid_t)) = incubate;
+	memcpy(WFIFOP(inter_fd, 22 + 2 * sizeof(nameid_t)), pet_name, NAME_LENGTH);
+	WFIFOSET(inter_fd, 22 + 2 * sizeof(nameid_t) + NAME_LENGTH);
 
 	return 1;
 }
@@ -3275,7 +3275,7 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, nameid_t na
  * @param srcname Source name
  * @return
  **/
-int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigned short nameid) {
+int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, nameid_t nameid) {
 	nullpo_retr(0, sd);
 
 	// Send local

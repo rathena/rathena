@@ -38,7 +38,7 @@ enum e_searchstore_effecttype
 };
 
 /// Type for shop search function
-typedef bool (*searchstore_search_t)(struct map_session_data* sd, unsigned short nameid);
+typedef bool (*searchstore_search_t)(struct map_session_data* sd, nameid_t nameid);
 typedef bool (*searchstore_searchall_t)(struct map_session_data* sd, const struct s_search_store_search* s);
 
 /**
@@ -309,7 +309,7 @@ void searchstore_close(struct map_session_data* sd)
  * @param store_id : store ID created by client
  * @param nameid : item being searched
  */
-void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, unsigned short nameid)
+void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, nameid_t nameid)
 {
 	unsigned int i;
 	struct map_session_data* pl_sd;
@@ -322,7 +322,7 @@ void searchstore_click(struct map_session_data* sd, uint32 account_id, int store
 
 	ARR_FIND( 0, sd->searchstore.count, i,  sd->searchstore.items[i].store_id == store_id && sd->searchstore.items[i].account_id == account_id && sd->searchstore.items[i].nameid == nameid );
 	if( i == sd->searchstore.count ) { // no such result, crafted
-		ShowWarning("searchstore_click: Received request with item %hu of account %d, which is not part of current result set (account_id=%d, char_id=%d).\n", nameid, account_id, sd->bl.id, sd->status.char_id);
+		ShowWarning("searchstore_click: Received request with item %u of account %d, which is not part of current result set (account_id=%d, char_id=%d).\n", nameid, account_id, sd->bl.id, sd->status.char_id);
 		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}
@@ -400,7 +400,7 @@ void searchstore_clearremote(struct map_session_data* sd)
  * @param card : card in the item
  * @param refine : refine of the item
  */
-bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, unsigned short nameid, unsigned short amount, unsigned int price, const unsigned short* card, unsigned char refine)
+bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, nameid_t nameid, unsigned short amount, unsigned int price, const nameid_t* card, unsigned char refine)
 {
 	struct s_search_store_info_item* ssitem;
 

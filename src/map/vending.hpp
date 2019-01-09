@@ -6,6 +6,7 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
+#include "../common/mmo.hpp"
 
 struct map_session_data;
 struct s_search_store_search;

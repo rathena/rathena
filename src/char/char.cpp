@@ -812,7 +812,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	}
 
 	SqlStmt_BindColumn(stmt, 0, SQLDT_INT,          &item.id,        0, NULL, NULL);
-	SqlStmt_BindColumn(stmt, 1, SQLDT_NAMEID,       &item.nameid,    0, NULL, NULL);
+	SqlStmt_BindColumn(stmt, 1, SQLDT_UINT,       &item.nameid,    0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 2, SQLDT_SHORT,        &item.amount,    0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 3, SQLDT_UINT,         &item.equip,     0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 4, SQLDT_CHAR,         &item.identify,  0, NULL, NULL);

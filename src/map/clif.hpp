@@ -711,7 +711,7 @@ void clif_deleteskill(struct map_session_data *sd, int skill_id);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, uint16 skill_lv, int property, int casttime);
 void clif_skillcastcancel(struct block_list* bl);
-void clif_skill_fail(struct map_session_data *sd,uint16 skill_id,enum useskill_fail_cause cause,int btype, int itemId = 0);
+void clif_skill_fail(struct map_session_data *sd,uint16 skill_id,enum useskill_fail_cause cause,int btype, nameid_t itemId = 0);
 void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, t_tick tick);
 int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
@@ -874,7 +874,7 @@ void clif_map_property(struct block_list *bl, enum map_property property, enum s
 void clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum,int type);
 void clif_map_property_mapall(int map, enum map_property property);
 void clif_refine(int fd, int fail, int index, int val);
-void clif_upgrademessage( struct map_session_data* sd, int result, unsigned short item_id );
+void clif_upgrademessage( struct map_session_data* sd, int result, nameid_t item_id );
 
 //petsystem
 void clif_catch_process(struct map_session_data *sd);
@@ -908,7 +908,7 @@ void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, 
 void clif_disp_overhead_(struct block_list *bl, const char* mes, enum send_target flag);
 #define clif_disp_overhead(bl, mes) clif_disp_overhead_(bl, mes, AREA)
 
-void clif_get_weapon_view(struct map_session_data* sd, unsigned short *rhand, unsigned short *lhand);
+void clif_get_weapon_view(struct map_session_data* sd, nameid_t *rhand, nameid_t *lhand);
 
 void clif_party_xy_remove(struct map_session_data *sd); //Fix for minimap [Kevin]
 void clif_gospel_info(struct map_session_data *sd, int type);

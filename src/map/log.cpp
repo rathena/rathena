@@ -314,8 +314,8 @@ void log_mvpdrop(struct map_session_data* sd, int monster_id, unsigned int* log_
 
 	if( log_config.sql_logs )
 	{
-		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%hu', '%u', '%s') ",
-			log_config.log_mvpdrop, sd->status.char_id, monster_id, (unsigned short)log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex)) )
+		if( SQL_ERROR == Sql_Query(logmysql_handle, LOG_QUERY " INTO `%s` (`mvp_date`, `kill_char_id`, `monster_id`, `prize`, `mvpexp`, `map`) VALUES (NOW(), '%d', '%d', '%u', '%u', '%s') ",
+			log_config.log_mvpdrop, sd->status.char_id, monster_id, log_mvp[0], log_mvp[1], mapindex_id2name(sd->mapindex)) )
 		{
 			Sql_ShowDebug(logmysql_handle);
 			return;

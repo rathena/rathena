@@ -5,6 +5,7 @@
 #define LOG_HPP
 
 #include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 struct block_list;
 struct map_session_data;

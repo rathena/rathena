@@ -204,7 +204,7 @@ struct s_skill_condition {
 	int32 ammo_qty;							/// Amount of ammo
 	int32 state;							/// State/condition. @see enum e_require_state
 	int32 spiritball;						/// Spiritball cost
-	int32 itemid[MAX_SKILL_ITEM_REQUIRE];	/// Required item
+	nameid_t itemid[MAX_SKILL_ITEM_REQUIRE];	/// Required item
 	int32 amount[MAX_SKILL_ITEM_REQUIRE];	/// Amount of item
 	std::vector<int32> eqItem;				/// List of equipped item
 	std::vector<sc_type> status;			/// List of Status required (SC)
@@ -223,7 +223,7 @@ struct s_skill_require {
 	int32 ammo_qty[MAX_SKILL_LEVEL];		/// Amount of ammo
 	int32 state;							/// State/condition. @see enum e_require_state
 	int32 spiritball[MAX_SKILL_LEVEL];		/// Spiritball cost
-	int32 itemid[MAX_SKILL_ITEM_REQUIRE];	/// Required item
+	nameid_t itemid[MAX_SKILL_ITEM_REQUIRE];	/// Required item
 	int32 amount[MAX_SKILL_ITEM_REQUIRE];	/// Amount of item
 	std::vector<int32> eqItem;				/// List of equipped item
 	std::vector<sc_type> status;			/// List of Status required (SC)
@@ -361,7 +361,7 @@ struct skill_unit_group {
 	int link_group_id; /// Linked group that should be deleted if this one is deleted
 	int unit_count, /// Number of unit at this group
 		alive_count; /// Number of alive unit
-	int item_id; /// Store item used.
+	nameid_t item_id; /// Store item used.
 	struct skill_unit *unit; /// Skill Unit
 	struct {
 		unsigned ammo_consume : 1; // Need to consume ammo
@@ -421,8 +421,8 @@ struct s_skill_produce_db {
 	unsigned short req_skill; /// Required Skill
 	unsigned char req_skill_lv, /// Required Skill Level
 		itemlv; /// Item Level
-	unsigned short mat_id[MAX_PRODUCE_RESOURCE], /// Materials needed
-		mat_amount[MAX_PRODUCE_RESOURCE]; /// Amount of each materials
+	nameid_t mat_id[MAX_PRODUCE_RESOURCE]; /// Materials needed
+	unsigned short mat_amount[MAX_PRODUCE_RESOURCE]; /// Amount of each materials
 };
 extern struct s_skill_produce_db skill_produce_db[MAX_SKILL_PRODUCE_DB];
 

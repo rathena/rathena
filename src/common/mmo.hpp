@@ -424,8 +424,8 @@ struct s_pet {
 	int pet_id;
 	short class_;
 	short level;
-	unsigned short egg_id;//pet egg id
-	unsigned short equip;//pet equip name_id
+	nameid_t egg_id;//pet egg id
+	nameid_t equip;//pet equip name_id
 	short intimate;//pet friendly
 	short hungry;//pet hungry
 	char name[NAME_LENGTH];

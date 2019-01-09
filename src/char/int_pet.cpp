@@ -34,7 +34,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 	{// New pet.
 		if( SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s` "
 			"(`class`,`name`,`account_id`,`char_id`,`level`,`egg_id`,`equip`,`intimate`,`hungry`,`rename_flag`,`incubate`,`autofeed`) "
-			"VALUES ('%d', '%s', '%d', '%d', '%d', '%hu', '%hu', '%d', '%d', '%d', '%d', '%d')",
+			"VALUES ('%d', '%s', '%d', '%d', '%d', '%u', '%u', '%d', '%d', '%d', '%d', '%d')",
 			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incubate, p->autofeed) )
 		{
@@ -45,7 +45,7 @@ int inter_pet_tosql(int pet_id, struct s_pet* p)
 	}
 	else
 	{// Update pet.
-		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%hu',`equip`='%hu',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incubate`='%d',`autofeed`='%d' WHERE `pet_id`='%d'",
+		if( SQL_ERROR == Sql_Query(sql_handle, "UPDATE `%s` SET `class`='%d',`name`='%s',`account_id`='%d',`char_id`='%d',`level`='%d',`egg_id`='%u',`equip`='%u',`intimate`='%d',`hungry`='%d',`rename_flag`='%d',`incubate`='%d',`autofeed`='%d' WHERE `pet_id`='%d'",
 			schema_config.pet_db, p->class_, esc_name, p->account_id, p->char_id, p->level, p->egg_id,
 			p->equip, p->intimate, p->hungry, p->rename_flag, p->incubate, p->autofeed, p->pet_id) )
 		{
@@ -85,8 +85,8 @@ int inter_pet_fromsql(int pet_id, struct s_pet* p)
 		Sql_GetData(sql_handle,  3, &data, NULL); p->account_id = atoi(data);
 		Sql_GetData(sql_handle,  4, &data, NULL); p->char_id = atoi(data);
 		Sql_GetData(sql_handle,  5, &data, NULL); p->level = atoi(data);
-		Sql_GetData(sql_handle,  6, &data, NULL); p->egg_id = atoi(data);
-		Sql_GetData(sql_handle,  7, &data, NULL); p->equip = atoi(data);
+		Sql_GetData(sql_handle,  6, &data, NULL); p->egg_id = strtoul(data, NULL, 10);
+		Sql_GetData(sql_handle,  7, &data, NULL); p->equip = strtoul(data, NULL, 10);
 		Sql_GetData(sql_handle,  8, &data, NULL); p->intimate = atoi(data);
 		Sql_GetData(sql_handle,  9, &data, NULL); p->hungry = atoi(data);
 		Sql_GetData(sql_handle, 10, &data, NULL); p->rename_flag = atoi(data);
@@ -184,7 +184,7 @@ int mapif_delete_pet_ack(int fd, int flag){
 	return 0;
 }
 
-int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class, short pet_lv, unsigned short pet_egg_id, unsigned short pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
+int mapif_create_pet(int fd, uint32 account_id, uint32 char_id, short pet_class, short pet_lv, nameid_t pet_egg_id, nameid_t pet_equip, short intimate, short hungry, char rename_flag, char incubate, char *pet_name)
 {
 	memset(pet_pt, 0, sizeof(struct s_pet));
 	safestrncpy(pet_pt->name, pet_name, NAME_LENGTH);

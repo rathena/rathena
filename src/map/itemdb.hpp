@@ -7,8 +7,15 @@
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
+
+#ifdef NAMEID_32BIT
+///Maximum allowed Item ID (range: 1 ~ 2,147,483,647)
+#define MAX_ITEMID INT32_MAX
+#else
 ///Maximum allowed Item ID (range: 1 ~ 65,534)
 #define MAX_ITEMID USHRT_MAX
+#endif
+
 ///Use apple for unknown items.
 #define UNKNOWN_ITEM_ID 512
 /// The maximum number of item delays
@@ -930,7 +937,7 @@ const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
-unsigned short itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
+nameid_t itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell

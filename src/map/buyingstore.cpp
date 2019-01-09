@@ -51,7 +51,7 @@ enum e_buyingstore_failure
 
 
 static unsigned int buyingstore_nextid = 0;
-static const unsigned short buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
+static const nameid_t buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
 
 
 /// Returns unique buying store id
@@ -241,7 +241,7 @@ int8 buyingstore_create( struct map_session_data* sd, int zenylimit, unsigned ch
 	StringBuf_Init(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s`(`buyingstore_id`,`index`,`item_id`,`amount`,`price`) VALUES", buyingstore_items_table);
 	for (i = 0; i < sd->buyingstore.slots; i++){
-		StringBuf_Printf(&buf, "(%d,%d,%d,%d,%d)", sd->buyer_id, i, sd->buyingstore.items[i].nameid, sd->buyingstore.items[i].amount, sd->buyingstore.items[i].price);
+		StringBuf_Printf(&buf, "(%d,%d,%u,%d,%d)", sd->buyer_id, i, sd->buyingstore.items[i].nameid, sd->buyingstore.items[i].amount, sd->buyingstore.items[i].price);
 		if (i < sd->buyingstore.slots-1)
 			StringBuf_AppendStr(&buf, ",");
 	}
@@ -729,7 +729,7 @@ void do_init_buyingstore_autotrade( void ) {
 				while (SQL_SUCCESS == Sql_NextRow(mmysql_handle) && j < at->count) {
 					char *data;
 					CREATE(at->entries[j], struct s_autotrade_entry, 1);
-					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->item_id = atoi(data);
+					Sql_GetData(mmysql_handle, 0, &data, NULL); at->entries[j]->item_id = strtoul(data, NULL, 10);
 					Sql_GetData(mmysql_handle, 1, &data, NULL); at->entries[j]->amount = atoi(data);
 					Sql_GetData(mmysql_handle, 2, &data, NULL); at->entries[j]->price = atoi(data);
 					j++;

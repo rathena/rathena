@@ -182,7 +182,7 @@
 	packet(0x010d,2);
 	packet(0x010e,11);
 	packet(0x010f,-1);
-	packet(0x0110,10);
+	packet(0x0110,6 + 2*sizeof(nameid_t));
 	packet(0x0111,39);
 	parseable_packet(0x0112,4,clif_parse_SkillUp,2);
 	parseable_packet(0x0113,10,clif_parse_UseSkillToId,2,4,6);
@@ -2223,7 +2223,7 @@
 	parseable_packet(0x0A1D,2,clif_parse_roulette_close,0); // CZ_REQ_CLOSE_ROULETTE
 	packet(0x0A1E,3); // ZC_ACK_CLOSE_ROULETTE
 	parseable_packet(0x0A1F,2,clif_parse_roulette_generate,0); // CZ_REQ_GENERATE_ROULETTE
-	packet(0x0A20,21); // ZC_ACK_GENERATE_ROULETTE
+	packet(0x0A20,19 + +sizeof(nameid_t)); // ZC_ACK_GENERATE_ROULETTE
 	parseable_packet(0x0A21,3,clif_parse_roulette_item,2); // CZ_RECV_ROULETTE_ITEM
 	packet(0x0A22,5); // ZC_RECV_ROULETTE_ITEM
 #endif
