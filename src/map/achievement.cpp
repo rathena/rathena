@@ -511,9 +511,13 @@ static bool achievement_check_condition( struct script_code* condition, struct m
 
 	struct script_state* st = sd->st;
 
-	int value = script_getnum( st, 2 );
+	int value = 0;
 
-	script_free_state(st);
+	if( st != nullptr ){
+		value = script_getnum( st, 2 );
+
+		script_free_state(st);
+	}
 
 	// If an old script is present
 	if( previous_st != nullptr ){
