@@ -1996,7 +1996,7 @@ enum e_sc_opt2 : uint16 {
 };
 
 ///opt3: (SHOW_EFST_*)
-enum e_sc_opt3 : uint64 {
+enum e_sc_opt3 : int64 {
 	OPT3_NORMAL			= 0x0,
 	OPT3_QUICKEN		= 0x00000001,
 	OPT3_OVERTHRUST		= 0x00000002,
@@ -2020,7 +2020,7 @@ enum e_sc_opt3 : uint64 {
 };
 
 ///Option (EFFECTSTATE_*)
-enum e_option : uint64 {
+enum e_option : int64 {
 	OPTION_NOTHING		= 0x0,
 	OPTION_SIGHT		= 0x00000001,
 	OPTION_HIDE			= 0x00000002,
@@ -2073,7 +2073,7 @@ enum manner_flags
 };
 
 /// Status Change State Flags
-enum e_scs_flag : uint64 {
+enum e_scs_flag : int64 {
 	SCS_NONE				= 0x0,
 	SCS_NOMOVECOND			= 0x00001, ///< cond flag for SCS_NOMOVE
 	SCS_NOMOVE				= 0x00002, ///< unit unable to move
@@ -2097,7 +2097,7 @@ enum e_scs_flag : uint64 {
 };
 
 ///Define flags for the status_calc_bl function. [Skotlex]
-enum e_scb_flag : uint64 {
+enum e_scb_flag : int64 {
 	SCB_NONE	= 0x0,
 	SCB_BASE	= 0x00000001,
 	SCB_MAXHP	= 0x00000002,
@@ -2143,7 +2143,7 @@ enum e_status_calc_opt {
 };
 
 /// Flags for status_change_start and status_get_sc_def
-enum e_status_change_start_flags : uint64 {
+enum e_status_change_start_flags : int64 {
 	SCSTART_NONE       = 0x0,
 	SCSTART_NOAVOID    = 0x01, /// Cannot be avoided (it has to start)
 	SCSTART_NOTICKDEF  = 0x02, /// Tick should not be reduced (by statuses or bonuses)
@@ -2153,7 +2153,7 @@ enum e_status_change_start_flags : uint64 {
 };
 
 /// Enum for status_change_clear_buffs
-enum e_status_change_clear_buffs_flags : uint64 {
+enum e_status_change_clear_buffs_flags : int64 {
 	SCCB_BUFFS        = 0x01,
 	SCCB_DEBUFFS      = 0x02,
 	SCCB_REFRESH      = 0x04,
@@ -2162,7 +2162,7 @@ enum e_status_change_clear_buffs_flags : uint64 {
 };
 
 ///Enum for bonus_script's flag [Cydh]
-enum e_bonus_script_flags : uint64 {
+enum e_bonus_script_flags : int64 {
 	BSF_REM_ON_DEAD				= 0x001, ///< Removed when dead
 	BSF_REM_ON_DISPELL			= 0x002, ///< Removed by Dispell
 	BSF_REM_ON_CLEARANCE		= 0x004, ///< Removed by Clearance
@@ -2191,7 +2191,7 @@ enum e_status_bonus {
 };
 
 ///Enum of Status Change Flags [Cydh]
-enum e_status_change_flag : uint64 {
+enum e_status_change_flag : int64 {
 	SCF_NONE				= 0x0,
 	SCF_BLEFFECT			= 0x00000001,
 	SCF_DISPLAY_PC			= 0x00000002,
@@ -2234,13 +2234,13 @@ enum e_status_change_flag : uint64 {
 struct s_status_change_db {
 	enum sc_type type;			///< SC_
 	enum efst_type icon;		///< EFST_
-	uint64 state;				///< SCS_
-	uint64 calc_flag;			///< SCB_ flags
+	int64 state;				///< SCS_
+	int64 calc_flag;			///< SCB_ flags
 	uint16 opt1;				///< OPT1_
 	uint16 opt2;				///< OPT2_
-	uint64 opt3;				///< OPT1_
-	uint64 look;				///, OPTION_ Changelook
-	uint64 flag;				///< SCF_ Flags, enum e_status_change_flag
+	int64 opt3;					///< OPT1_
+	int64 look;					///, OPTION_ Changelook
+	int64 flag;					///< SCF_ Flags, enum e_status_change_flag
 	bool display;				///< Display status effect/icon (for certain state)
 	uint16 skill_id;			///< Associated skill for (addeff) duration lookups
 	std::vector<sc_type> end;	///< List of SC that will be ended when this SC is activated
@@ -2577,8 +2577,8 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 
 // Status changes accessors for StatusChange database
 enum efst_type status_sc_get_icon(enum sc_type sc);
-uint64 status_sc_get_calc_flag(enum sc_type sc);
-uint64 status_sc_get_flag(enum sc_type sc);
+int64 status_sc_get_calc_flag(enum sc_type sc);
+int64 status_sc_get_flag(enum sc_type sc);
 uint16 status_sc_get_skill(enum sc_type sc_type);
 uint16 status_efst_get_bl_type(enum efst_type efst);
 

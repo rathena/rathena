@@ -1666,7 +1666,7 @@ int chrif_bsdata_save(struct map_session_data *sd, bool quit) {
 
 	// Removing...
 	if (quit && sd->bonus_script.head) {
-		uint64 flag = BSF_REM_ON_LOGOUT; //Remove bonus when logout
+		int64 flag = BSF_REM_ON_LOGOUT; //Remove bonus when logout
 
 		if (battle_config.debuff_on_logout&1) //Remove negative buffs
 			flag |= BSF_REM_DEBUFF;

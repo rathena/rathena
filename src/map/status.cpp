@@ -174,14 +174,14 @@ enum efst_type status_sc_get_icon(enum sc_type type) { CHK_SC2(type, icon, EFST_
  * @param type: SC type
  * @return state: State value
  **/
-uint64 status_sc_get_state(enum sc_type type) { CHK_SC2(type, state, SCS_NONE); }
+int64 status_sc_get_state(enum sc_type type) { CHK_SC2(type, state, SCS_NONE); }
 
 /**
  * Get flag of SC (SCB value) for status_calc_ flag
  * @param type: SC type
  * @return cal_flag: Calc value 
  **/
-uint64 status_sc_get_calc_flag(enum sc_type type) { CHK_SC2(type, calc_flag, SCB_NONE); }
+int64 status_sc_get_calc_flag(enum sc_type type) { CHK_SC2(type, calc_flag, SCB_NONE); }
 
 /**
  * Get Opt1 of SC
@@ -202,21 +202,21 @@ uint16 status_sc_get_opt2(enum sc_type type) { CHK_SC2(type, opt2, OPT2_NONE); }
  * @param type: SC type
  * @return opt3: OPT3 value
  **/
-uint64 status_sc_get_opt3(enum sc_type type) { CHK_SC2(type, opt3, OPT3_NORMAL); }
+int64 status_sc_get_opt3(enum sc_type type) { CHK_SC2(type, opt3, OPT3_NORMAL); }
 
 /**
  * Get Option look of SC
  * @param type: SC type
  * @return look: OPTION_ value
  **/
-uint64 status_sc_get_look(enum sc_type type) { CHK_SC2(type, look, OPTION_NOTHING); }
+int64 status_sc_get_look(enum sc_type type) { CHK_SC2(type, look, OPTION_NOTHING); }
 
 /**
  * Get SC's option flags (SCO value)
  * @param type: SC type
  * @return flags: Option flags for SC
  **/
-uint64 status_sc_get_flag(enum sc_type type) { CHK_SC2(type, flag, SCB_NONE); }
+int64 status_sc_get_flag(enum sc_type type) { CHK_SC2(type, flag, SCB_NONE); }
 
 /**
  * Get SC's minimum duration after sc_def calculation
@@ -7344,7 +7344,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	struct view_data *vd;
 	int opt_flag, undead_flag, val_flag = 0, t_tickime = 0;
 	bool sc_isnew = true;
-	uint64 calc_flag;
+	int64 calc_flag;
 
 	nullpo_ret(bl);
 	sc = status_get_sc(bl);
@@ -11706,7 +11706,7 @@ void status_change_clear_buffs(struct block_list* bl, uint8 type)
 
 	//Removes bonus_script
 	if (bl->type == BL_PC) {
-		uint64 i = 0;
+		int64 i = 0;
 
 		if (type&SCCB_BUFFS)    i |= BSF_REM_BUFF;
 		if (type&SCCB_DEBUFFS)  i |= BSF_REM_DEBUFF;
