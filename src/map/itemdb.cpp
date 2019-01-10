@@ -1985,10 +1985,8 @@ void itemdb_reload(void) {
 			sd->combos.id = NULL;
 			sd->combos.pos = NULL;
 			sd->combos.count = 0;
-			if( pc_load_combo(sd) > 0 )
-				status_calc_pc(sd, SCO_FORCE);
 		}
-
+		status_calc_pc(sd, SCO_FORCE);
 	}
 	mapit_free(iter);
 }
