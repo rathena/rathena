@@ -2922,7 +2922,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 	}
 }
 
-mid_camp,266,263,4	script	Diego#ep13bs	931,{
+-	script	Diego#ep13bs_	-1,{
 	if (ep13_newbs < 5) {
 		mes "[Diego]";
 		mes "I'm busy right now!";
