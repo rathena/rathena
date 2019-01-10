@@ -51,7 +51,7 @@ enum e_buyingstore_failure
 
 
 static unsigned int buyingstore_nextid = 0;
-static const t_nameid buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
+static const uint32 buyingstore_blankslots[MAX_SLOTS] = { 0 };  // used when checking whether or not an item's card slots are blank
 
 
 /// Returns unique buying store id
@@ -509,7 +509,7 @@ void buyingstore_trade( struct map_session_data* sd, uint32 account_id, unsigned
 
 
 /// Checks if an item is being bought in given player's buying store.
-bool buyingstore_search(struct map_session_data* sd, t_nameid nameid)
+bool buyingstore_search(struct map_session_data* sd, uint32 nameid)
 {
 	unsigned int i;
 
@@ -542,6 +542,7 @@ bool buyingstore_searchall(struct map_session_data* sd, const struct s_search_st
 	if( !sd->state.buyingstore )
 	{// not buying
 		return true;
+
 	}
 
 	for( idx = 0; idx < s->item_count; idx++ )

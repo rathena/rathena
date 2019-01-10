@@ -7258,7 +7258,7 @@ BUILDIN_FUNC(checkweight)
 	slots = pc_inventoryblank(sd); //nb of empty slot
 
 	for (i = 2; i < nbargs; i += 2) {
-		t_nameid nameid;
+		uint32 nameid;
 		unsigned short amount;
 
 		if( script_isstring(st, i) ) // item name
@@ -7368,7 +7368,7 @@ BUILDIN_FUNC(checkweight2)
 
 	slots = pc_inventoryblank(sd);
 	for(i=0; i<nb_it; i++) {
-		t_nameid nameid = (nameid_t)get_val2_num( st, reference_uid( id_it, idx_it + i ), reference_getref( data_it ) );
+		uint32 nameid = (uint32)get_val2_num( st, reference_uid( id_it, idx_it + i ), reference_getref( data_it ) );
 		unsigned short amount = (unsigned short)get_val2_num( st, reference_uid( id_nb, idx_nb + i ), reference_getref( data_nb ) );
 
 		if(fail)
@@ -7431,7 +7431,7 @@ BUILDIN_FUNC(checkweight2)
 BUILDIN_FUNC(getitem)
 {
 	int get_count, i;
-	t_nameid nameid;
+	uint32 nameid;
 	unsigned short amount;
 	struct item it;
 	TBL_PC *sd;
@@ -7646,7 +7646,7 @@ BUILDIN_FUNC(rentitem) {
 	struct map_session_data *sd;
 	struct item it;
 	int seconds;
-	t_nameid nameid = 0;
+	uint32 nameid = 0;
 	unsigned char flag = 0;
 
 	if (!script_accid2sd(4,sd))
@@ -7702,7 +7702,7 @@ BUILDIN_FUNC(rentitem2) {
 	struct item it;
 	struct item_data *id;
 	int seconds;
-	t_nameid nameid = 0;
+	uint32 nameid = 0;
 	unsigned char flag = 0;
 	int iden,ref,attr,c1,c2,c3,c4;
 	const char *funcname = script_getfuncname(st);
@@ -7786,7 +7786,7 @@ BUILDIN_FUNC(rentitem2) {
  *------------------------------------------*/
 BUILDIN_FUNC(getnameditem)
 {
-	t_nameid nameid;
+	uint32 nameid;
 	struct item item_tmp;
 	TBL_PC *sd, *tsd;
 
@@ -7866,7 +7866,7 @@ BUILDIN_FUNC(grouprandomitem) {
 * makeitem "<item name>",<amount>,"<map name>",<X>,<Y>;
 */
 BUILDIN_FUNC(makeitem) {
-	t_nameid nameid;
+	uint32 nameid;
 	uint16 amount, flag = 0, x, y;
 	const char *mapname;
 	int m;
@@ -7923,7 +7923,7 @@ BUILDIN_FUNC(makeitem) {
  * makeitem3 "<item name>",<amount>,"<map name>",<X>,<Y>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>;
  */
 BUILDIN_FUNC(makeitem2) {
-	t_nameid nameid;
+	uint32 nameid;
 	uint16 amount, x, y;
 	const char *mapname;
 	int m;
@@ -11530,7 +11530,7 @@ BUILDIN_FUNC(getunits)
  *------------------------------------------*/
 static int buildin_getareadropitem_sub(struct block_list *bl,va_list ap)
 {
-	t_nameid nameid = (unsigned short)va_arg(ap, int);
+	uint32 nameid = va_arg(ap, int);
 	unsigned short *amount = (unsigned short *)va_arg(ap, int *);
 	struct flooritem_data *drop=(struct flooritem_data *)bl;
 
@@ -11543,7 +11543,7 @@ BUILDIN_FUNC(getareadropitem)
 {
 	const char *str;
 	int16 m,x0,y0,x1,y1;
-	t_nameid nameid;
+	uint32 nameid;
 	unsigned short amount = 0;
 
 	str=script_getstr(st,2);
@@ -13839,7 +13839,7 @@ BUILDIN_FUNC(guardianinfo)
  *------------------------------------------*/
 BUILDIN_FUNC(getitemname)
 {
-	t_nameid item_id = 0;
+	uint32 item_id = 0;
 	struct item_data *i_data;
 	char *item_name;
 
@@ -13870,7 +13870,7 @@ BUILDIN_FUNC(getitemname)
  *------------------------------------------*/
 BUILDIN_FUNC(getitemslots)
 {
-	t_nameid item_id;
+	uint32 item_id;
 	struct item_data *i_data;
 
 	item_id=script_getnum(st,2);
@@ -13912,7 +13912,7 @@ BUILDIN_FUNC(getitemslots)
  *------------------------------------------*/
 BUILDIN_FUNC(getiteminfo)
 {
-	t_nameid item_id;
+	uint32 item_id;
 	unsigned short n;
 	struct item_data *i_data;
 
@@ -13958,7 +13958,7 @@ BUILDIN_FUNC(getiteminfo)
  *------------------------------------------*/
 BUILDIN_FUNC(setiteminfo)
 {
-	t_nameid item_id;
+	uint32 item_id;
 	int n,value;
 	struct item_data *i_data;
 
@@ -15778,7 +15778,7 @@ BUILDIN_FUNC(unequip) {
  * equip <item id>{,<char_id>};
  **/
 BUILDIN_FUNC(equip) {
-	t_nameid nameid = 0;
+	uint32 nameid = 0;
 	TBL_PC *sd;
 	struct item_data *item_data;
 
@@ -15804,7 +15804,7 @@ BUILDIN_FUNC(equip) {
 
 BUILDIN_FUNC(autoequip)
 {
-	t_nameid nameid;
+	uint32 nameid;
 	int flag;
 	struct item_data *item_data;
 	nameid=script_getnum(st,2);
@@ -17101,7 +17101,7 @@ BUILDIN_FUNC(npcshopadditem)
 #if PACKETVER >= 20131223
 	if (nd->subtype == NPCTYPE_MARKETSHOP) {
 		for (n = 0, i = 3; n < amount; n++, i += offs) {
-			t_nameid nameid = script_getnum(st,i), j;
+			uint32 nameid = script_getnum(st,i), j;
 
 			// Check existing entries
 			ARR_FIND(0, nd->u.shop.count, j, nd->u.shop.shop_item[j].nameid == nameid);
@@ -17153,7 +17153,7 @@ BUILDIN_FUNC(npcshopdelitem)
 
 	// remove specified items from the shop item list
 	for( i = 3; i < 3 + amount; i++ ) {
-		t_nameid nameid = script_getnum(st,i);
+		uint32 nameid = script_getnum(st,i);
 
 		ARR_FIND( 0, size, n, nd->u.shop.shop_item[n].nameid == nameid );
 		if( n < size ) {
@@ -17212,7 +17212,7 @@ BUILDIN_FUNC(npcshopattach)
  *------------------------------------------*/
 BUILDIN_FUNC(setitemscript)
 {
-	t_nameid item_id;
+	uint32 item_id;
 	int n = 0;
 	const char *script;
 	struct item_data *i_data;
@@ -17260,7 +17260,7 @@ BUILDIN_FUNC(setitemscript)
 BUILDIN_FUNC(addmonsterdrop)
 {
 	struct mob_db *mob;
-	t_nameid item_id;
+	uint32 item_id;
 	int rate;
 
 	if(script_isstring(st, 2))
@@ -17315,7 +17315,7 @@ BUILDIN_FUNC(addmonsterdrop)
 BUILDIN_FUNC(delmonsterdrop)
 {
 	struct mob_db *mob;
-	t_nameid item_id;
+	uint32 item_id;
 
 	if(script_isstring(st, 2))
 		mob = mob_db(mobdb_searchname(script_getstr(st,2)));
@@ -21709,8 +21709,7 @@ BUILDIN_FUNC(consumeitem)
 			ShowError( "buildin_consumeitem: Nonexistant item %s requested.\n", name );
 			return SCRIPT_CMD_FAILURE;
 		}
-	} else {
-		t_nameid nameid = script_getnum(st, 2);
+		uint32 nameid = script_getnum(st, 2);
 
 		if( ( item_data = itemdb_exists( nameid ) ) == NULL ){
 			ShowError("buildin_consumeitem: Nonexistant item %u requested.\n", nameid );
@@ -22441,7 +22440,7 @@ BUILDIN_FUNC(mergeitem2) {
 	struct map_session_data *sd;
 	struct item *items = NULL;
 	uint16 i, count = 0;
-	t_nameid nameid = 0;
+	uint32 nameid = 0;
 
 	if (!script_charid2sd(3, sd))
 		return SCRIPT_CMD_FAILURE;
@@ -22522,7 +22521,7 @@ BUILDIN_FUNC(mergeitem2) {
 BUILDIN_FUNC(npcshopupdate) {
 	const char* npcname = script_getstr(st, 2);
 	struct npc_data* nd = npc_name2id(npcname);
-	t_nameid nameid = script_getnum(st, 3);
+	uint32 nameid = script_getnum(st, 3);
 	int price = script_getnum(st, 4);
 #if PACKETVER >= 20131223
 	uint16 stock = script_hasdata(st,5) ? script_getnum(st,5) : 0;
@@ -24251,7 +24250,7 @@ BUILDIN_FUNC(mail){
 		}
 
 		for( i = 0; i < num_items && start < end; i++, start++ ){
-			msg.item[i].nameid = (t_nameid)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
+			msg.item[i].nameid = (uint32)get_val2_num( st, reference_uid( id, start ), reference_getref( data ) );
 			msg.item[i].identify = 1;
 
 			if( !itemdb_exists(msg.item[i].nameid) ){

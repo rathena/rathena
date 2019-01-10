@@ -27,10 +27,10 @@ struct s_search_store_info_item {
 	int store_id;
 	uint32 account_id;
 	char store_name[MESSAGE_SIZE];
-	t_nameid nameid;
+	uint32 nameid;
 	unsigned short amount;
 	unsigned int price;
-	t_nameid card[MAX_SLOTS];
+	uint32 card[MAX_SLOTS];
 	unsigned char refine;
 };
 
@@ -52,9 +52,9 @@ bool searchstore_querynext(struct map_session_data* sd);
 void searchstore_next(struct map_session_data* sd);
 void searchstore_clear(struct map_session_data* sd);
 void searchstore_close(struct map_session_data* sd);
-void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, t_nameid nameid);
+void searchstore_click(struct map_session_data* sd, uint32 account_id, int store_id, uint32 nameid);
 bool searchstore_queryremote(struct map_session_data* sd, uint32 account_id);
 void searchstore_clearremote(struct map_session_data* sd);
-bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, t_nameid nameid, unsigned short amount, unsigned int price, const t_nameid* card, unsigned char refine);
+bool searchstore_result(struct map_session_data* sd, int store_id, uint32 account_id, const char* store_name, uint32 nameid, unsigned short amount, unsigned int price, const uint32* card, unsigned char refine);
 
 #endif /* SEARCHSTORE_HPP */

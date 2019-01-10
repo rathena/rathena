@@ -619,7 +619,7 @@ void pet_set_intimate(struct pet_data *pd, int value)
  * @param item_id : item ID of tamer
  * @return true:success, false:failure
  */
-bool pet_create_egg(struct map_session_data *sd, t_nameid item_id)
+bool pet_create_egg(struct map_session_data *sd, uint32 item_id)
 {
 	std::shared_ptr<s_pet_db> pet = pet_db_search(item_id, PET_EGG);
 
@@ -1414,7 +1414,7 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 int pet_equipitem(struct map_session_data *sd,int index)
 {
 	struct pet_data *pd;
-	t_nameid nameid;
+	uint32 nameid;
 
 	nullpo_retr(1, sd);
 
@@ -1467,7 +1467,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 {
 	struct item tmp_item;
-	t_nameid nameid;
+	uint32 nameid;
 	unsigned char flag = 0;
 
 	if(pd->pet.equip == 0)

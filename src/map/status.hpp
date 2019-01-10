@@ -52,7 +52,7 @@ enum refine_cost_type {
 };
 
 struct refine_cost {
-	t_nameid nameid;
+	uint32 nameid;
 	int zeny;
 };
 

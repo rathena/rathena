@@ -67,7 +67,7 @@ struct view_data {
 #else
 	unsigned short class_;
 #endif
-	t_nameid
+	uint32
 		weapon,
 		shield, //Or left-hand weapon.
 		robe,

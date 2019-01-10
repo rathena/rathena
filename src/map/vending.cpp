@@ -401,7 +401,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
  * @param nameid : item id
  * @return 0:not selling it, 1: yes
  */
-bool vending_search(struct map_session_data* sd, t_nameid nameid)
+bool vending_search(struct map_session_data* sd, uint32 nameid)
 {
 	int i;
 

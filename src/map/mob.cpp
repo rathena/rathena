@@ -87,7 +87,7 @@ struct mob_chat *mob_chat(short id) {
 //Dynamic item drop ratio database for per-item drop ratio modifiers overriding global drop ratios.
 #define MAX_ITEMRATIO_MOBS 10
 struct s_mob_item_drop_ratio {
-	t_nameid nameid;
+	uint32 nameid;
 	int drop_ratio;
 	unsigned short mob_id[MAX_ITEMRATIO_MOBS];
 };
@@ -2813,7 +2813,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if(sd) {
 			// process script-granted extra drop bonuses
-			t_nameid dropid = 0;
+			uint32 dropid = 0;
 
 			for (const auto &it : sd->add_drop) {
 				struct s_mob_drop mobdrop;
@@ -4110,7 +4110,7 @@ static unsigned int mob_drop_adjust(int baserate, int rate_adjust, unsigned shor
  * @param mob_id ID of the monster
  * @param rate_adjust pointer to store ratio if found
  */
-static void item_dropratio_adjust(t_nameid nameid, int mob_id, int *rate_adjust)
+static void item_dropratio_adjust(uint32 nameid, int mob_id, int *rate_adjust)
 {
 	struct s_mob_item_drop_ratio *item_ratio = (struct s_mob_item_drop_ratio *)idb_get(mob_item_drop_ratio, nameid);
 	if( item_ratio) {
@@ -5151,7 +5151,7 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
  */
 static bool mob_readdb_itemratio(char* str[], int columns, int current)
 {
-	t_nameid nameid;
+	uint32 nameid;
 	int ratio, i;
 	struct s_mob_item_drop_ratio *item_ratio;
 	nameid = strtoul(str[0], NULL, 10);
@@ -5190,7 +5190,7 @@ static bool mob_readdb_itemratio(char* str[], int columns, int current)
  **/
 static bool mob_readdb_drop(char* str[], int columns, int current) {
 	unsigned short mobid;
-	t_nameid nameid;
+	uint32 nameid;
 	int rate, i, size, flag = 0;
 	struct mob_db *mob;
 	struct s_mob_drop *drop;
@@ -5279,7 +5279,7 @@ static void mob_drop_ratio_adjust(void){
 	for( auto &pair : mob_db_data ){
 		struct mob_db *mob;
 		struct item_data *id;
-		t_nameid nameid;
+		uint32 nameid;
 		int j, rate, rate_adjust = 0, mob_id;
 
 		mob_id = pair.first;

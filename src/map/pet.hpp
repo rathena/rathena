@@ -28,10 +28,10 @@ struct s_pet_evo_data {
 /// Pet DB
 struct s_pet_db {
 	uint16 class_; ///< Monster ID
-	t_nameid itemID; ///< Lure ID
-	t_nameid EggID; ///< Egg ID
-	t_nameid AcceID; ///< Accessory ID
-	t_nameid FoodID; ///< Food ID
+	uint32 itemID; ///< Lure ID
+	uint32 EggID; ///< Egg ID
+	uint32 AcceID; ///< Accessory ID
+	uint32 FoodID; ///< Food ID
 	uint16 fullness; ///< Amount of hunger decresed each hungry_delay interval
 	uint32 hungry_delay; ///< Hunger value decrease each x seconds
 	int32 hunger_increase; ///< Hunger increased every time the pet is fed.
@@ -185,7 +185,7 @@ struct pet_data {
 	}
 };
 
-bool pet_create_egg(struct map_session_data *sd, t_nameid item_id);
+bool pet_create_egg(struct map_session_data *sd, uint32 item_id);
 int pet_hungry_val(struct pet_data *pd);
 void pet_set_intimate(struct pet_data *pd, int value);
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);

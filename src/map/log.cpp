@@ -136,7 +136,7 @@ static char log_feedingtype2char(e_log_feeding_type type) {
 }
 
 /// check if this item should be logged according the settings
-static bool should_log_item(t_nameid nameid, int amount, int refine)
+static bool should_log_item(uint32 nameid, int amount, int refine)
 {
 	int filter = log_config.filter;
 	struct item_data* id;
@@ -530,7 +530,7 @@ void log_cash( struct map_session_data* sd, e_log_pick_type type, e_log_cash_typ
  * @param type Log type, @see e_log_feeding_type
  * @param nameid Item used as food
  **/
-void log_feeding(struct map_session_data *sd, e_log_feeding_type type, t_nameid nameid) {
+void log_feeding(struct map_session_data *sd, e_log_feeding_type type, uint32 nameid) {
 	unsigned int target_id = 0, intimacy = 0;
 	unsigned short target_class = 0;
 

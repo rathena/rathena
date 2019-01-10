@@ -51,10 +51,10 @@ void auction_save(struct auction_data *auction)
 		return;
 
 	StringBuf_Init(&buf);
-	StringBuf_Printf(&buf, "UPDATE `%s` SET `seller_id` = '%d', `seller_name` = ?, `buyer_id` = '%d', `buyer_name` = ?, `price` = '%d', `buynow` = '%d', `hours` = '%d', `timestamp` = '%lu', `nameid` = '%" PRInameid "', `item_name` = ?, `type` = '%d', `refine` = '%d', `attribute` = '%d'",
+	StringBuf_Printf(&buf, "UPDATE `%s` SET `seller_id` = '%d', `seller_name` = ?, `buyer_id` = '%d', `buyer_name` = ?, `price` = '%d', `buynow` = '%d', `hours` = '%d', `timestamp` = '%lu', `nameid` = '%u', `item_name` = ?, `type` = '%d', `refine` = '%d', `attribute` = '%d'",
 		schema_config.auction_db, auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute);
 	for( j = 0; j < MAX_SLOTS; j++ )
-		StringBuf_Printf(&buf, ", `card%d` = '%" PRInameid "'", j, auction->item.card[j]);
+		StringBuf_Printf(&buf, ", `card%d` = '%u'", j, auction->item.card[j]);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; j++) {
 		StringBuf_Printf(&buf, ", `option_id%d` = '%d'", j, auction->item.option[j].id);
 		StringBuf_Printf(&buf, ", `option_val%d` = '%d'", j, auction->item.option[j].value);
@@ -96,10 +96,10 @@ unsigned int auction_create(struct auction_data *auction)
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
 		StringBuf_Printf(&buf, ", `option_parm%d`", j);
 	}
-	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%" PRInameid "',?,'%d','%d','%d','%" PRIu64 "'",
+	StringBuf_Printf(&buf, ") VALUES ('%d',?,'%d',?,'%d','%d','%d','%lu','%u',?,'%d','%d','%d','%" PRIu64 "'",
 		auction->seller_id, auction->buyer_id, auction->price, auction->buynow, auction->hours, (unsigned long)auction->timestamp, auction->item.nameid, auction->type, auction->item.refine, auction->item.attribute, auction->item.unique_id);
 	for( j = 0; j < MAX_SLOTS; j++ )	
-		StringBuf_Printf(&buf, ",'%" PRInameid "'", auction->item.card[j]);
+		StringBuf_Printf(&buf, ",'%u'", auction->item.card[j]);
 	for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
 		StringBuf_Printf(&buf, ", '%d'", auction->item.option[j].id);
 		StringBuf_Printf(&buf, ", '%d'", auction->item.option[j].value);

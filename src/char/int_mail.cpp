@@ -127,9 +127,9 @@ int mail_savemessage(struct mail_message* msg)
 			found = true;
 		}
 
-		StringBuf_Printf(&buf, "('%" PRIu64 "', '%hu', '%d', '%" PRInameid "', '%d', '%d', '%d', '%" PRIu64 "', '%d'", (uint64)msg->id, i, msg->item[i].amount, msg->item[i].nameid, msg->item[i].refine, msg->item[i].attribute, msg->item[i].identify, msg->item[i].unique_id, msg->item[i].bound);
+		StringBuf_Printf(&buf, "('%" PRIu64 "', '%hu', '%d', '%u', '%d', '%d', '%d', '%" PRIu64 "', '%d'", (uint64)msg->id, i, msg->item[i].amount, msg->item[i].nameid, msg->item[i].refine, msg->item[i].attribute, msg->item[i].identify, msg->item[i].unique_id, msg->item[i].bound);
 		for (j = 0; j < MAX_SLOTS; j++)
-			StringBuf_Printf(&buf, ", '%" PRInameid "'", msg->item[i].card[j]);
+			StringBuf_Printf(&buf, ", '%u'", msg->item[i].card[j]);
 		for (j = 0; j < MAX_ITEM_RDM_OPT; ++j) {
 			StringBuf_Printf(&buf, ", '%d'", msg->item[i].option[j].id);
 			StringBuf_Printf(&buf, ", '%d'", msg->item[i].option[j].value);

@@ -25,7 +25,7 @@ struct npc_label_list {
 
 /// Item list for NPC sell/buy list
 struct npc_item_list {
-	t_nameid nameid;
+	uint32 nameid;
 	unsigned int value;
 #if PACKETVER >= 20131223
 	unsigned short qty; ///< Stock counter (Market shop)
@@ -92,7 +92,7 @@ struct npc_data {
 		struct {
 			struct npc_item_list *shop_item;
 			uint16 count;
-			t_nameid itemshop_nameid; // Item Shop cost item ID
+			uint32 itemshop_nameid; // Item Shop cost item ID
 			char pointshop_str[32]; // Point Shop cost variable name
 			bool discount;
 		} shop;
@@ -1285,7 +1285,7 @@ int npc_script_event(struct map_session_data* sd, enum npce_event type);
 int npc_duplicate4instance(struct npc_data *snd, int16 m);
 int npc_instanceinit(struct npc_data* nd);
 int npc_instancedestroy(struct npc_data* nd);
-int npc_cashshop_buy(struct map_session_data *sd, t_nameid nameid, int amount, int points);
+int npc_cashshop_buy(struct map_session_data *sd, uint32 nameid, int amount, int points);
 
 void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, int cost[2], bool display);
 
@@ -1296,7 +1296,7 @@ bool npc_shop_discount(struct npc_data* nd);
 
 #if PACKETVER >= 20131223
 void npc_market_tosql(const char *exname, struct npc_item_list *list);
-void npc_market_delfromsql_(const char *exname, t_nameid nameid, bool clear);
+void npc_market_delfromsql_(const char *exname, uint32 nameid, bool clear);
 #endif
 
 #ifdef SECURE_NPCTIMEOUT

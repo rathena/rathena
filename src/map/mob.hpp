@@ -155,7 +155,7 @@ struct s_mob_lootitem {
 
 /// Struct for monster's drop item
 struct s_mob_drop {
-	t_nameid nameid;
+	uint32 nameid;
 	int p;
 	uint8 randomopt_group;
 	unsigned steal_protected : 1;

@@ -15568,7 +15568,7 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 		int64 idx_tmp = 0;
 		const YAML::Node &type = costit;
 		int idx = 0, price;
-		t_nameid material;
+		uint32 material;
 		const std::string keys[] = { "Type", "Price", "Material" };
 
 		for (int i = 0; i < ARRAYLENGTH(keys); i++) {
@@ -15584,7 +15584,7 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 			idx = static_cast<int>(idx_tmp);
 		}
 		price = type["Price"].as<int>();
-		material = type["Material"].as<t_nameid>();
+		material = type["Material"].as<uint32>();
 
 		refine_info[refine_info_index].cost[idx].nameid = material;
 		refine_info[refine_info_index].cost[idx].zeny = price;

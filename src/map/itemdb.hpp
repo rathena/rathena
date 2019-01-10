@@ -766,7 +766,7 @@ enum e_itemshop_restrictions {
 struct item_combo
 {
 	struct script_code *script;
-	t_nameid *nameid;/* nameid array */
+	uint32 *nameid;/* nameid array */
 	unsigned char count;
 	unsigned short id;/* id of this combo */
 	bool isRef;/* whether this struct is a reference or the master */
@@ -776,7 +776,7 @@ struct item_combo
 /// Struct of item group entry
 struct s_item_group_entry
 {
-	t_nameid nameid; /// Item ID
+	uint32 nameid; /// Item ID
 	unsigned short duration, /// Duration if item as rental item (in minutes)
 		amount; /// Amount of item will be obtained
 	bool isAnnounced, /// Broadcast if player get this item
@@ -803,7 +803,7 @@ struct s_item_group_db
 
 /// Struct of Roulette db
 struct s_roulette_db {
-	t_nameid *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
+	uint32 *nameid[MAX_ROULETTE_LEVEL]; /// Item ID
 	unsigned short *qty[MAX_ROULETTE_LEVEL]; /// Amount of Item ID
 	int *flag[MAX_ROULETTE_LEVEL]; /// Whether the item is for loss or win
 	int items[MAX_ROULETTE_LEVEL]; /// Number of items in the list for each
@@ -813,7 +813,7 @@ extern struct s_roulette_db rd;
 ///Main item data struct
 struct item_data
 {
-	t_nameid nameid;
+	uint32 nameid;
 	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
 
 	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
@@ -913,8 +913,8 @@ struct s_random_opt_group {
 struct item_data* itemdb_searchname(const char *name);
 struct item_data* itemdb_search_aegisname( const char *str );
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
-struct item_data* itemdb_search(t_nameid nameid);
-struct item_data* itemdb_exists(t_nameid nameid);
+struct item_data* itemdb_search(uint32 nameid);
+struct item_data* itemdb_exists(uint32 nameid);
 #define itemdb_name(n) itemdb_search(n)->name
 #define itemdb_jname(n) itemdb_search(n)->jname
 #define itemdb_type(n) itemdb_search(n)->type
@@ -937,7 +937,7 @@ const char* itemdb_typename(enum item_types type);
 const char *itemdb_typename_ammo (enum e_item_ammo ammo);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
-t_nameid itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
+uint32 itemdb_searchrandomid(uint16 group_id, uint8 sub_group);
 
 #define itemdb_value_buy(n) itemdb_search(n)->value_buy
 #define itemdb_value_sell(n) itemdb_search(n)->value_sell
@@ -966,7 +966,7 @@ bool itemdb_ishatched_egg(struct item* item);
 
 bool itemdb_isequip2(struct item_data *id);
 #define itemdb_isequip(nameid) itemdb_isequip2(itemdb_search(nameid))
-char itemdb_isidentified(t_nameid nameid);
+char itemdb_isidentified(uint32 nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
@@ -974,7 +974,7 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m);
 struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
-bool itemdb_group_item_exists(unsigned short group_id, t_nameid nameid);
+bool itemdb_group_item_exists(unsigned short group_id, uint32 nameid);
 int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id);
 char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd);
 
