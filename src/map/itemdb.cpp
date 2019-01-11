@@ -1985,6 +1985,7 @@ void itemdb_reload(void) {
 			sd->combos.id = NULL;
 			sd->combos.pos = NULL;
 			sd->combos.count = 0;
+			pc_load_combo(sd);
 		}
 		status_calc_pc(sd, SCO_FORCE);
 	}
