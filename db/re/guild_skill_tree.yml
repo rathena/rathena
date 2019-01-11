@@ -56,6 +56,9 @@ Body:
   - ID: GD_GUARDUP
     MaxLvl: 3
 
+  - ID: GD_EXTENSION
+    MaxLvl: 10
+
   - ID: GD_GLORYGUILD
     MaxLvl: 0
 
