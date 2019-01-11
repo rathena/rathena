@@ -208,7 +208,7 @@ bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std:
 }
 
 /**
- * Loads achievements from the achievement db.
+ * Loads guild skills from the guild skill db.
  */
 void guild_read_guildskill_tree_db(void)
 {
