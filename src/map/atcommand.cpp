@@ -5524,6 +5524,7 @@ ACMD_FUNC(dropall)
 			if( type == -1 || type == (uint8)item_data->type ) {
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
+				pc_equipswitch_remove(sd, i);
 				if(pc_dropitem(sd, i, sd->inventory.u.items_inventory[i].amount))
 					count += sd->inventory.u.items_inventory[i].amount;
 				else count2 += sd->inventory.u.items_inventory[i].amount;
@@ -5556,6 +5557,7 @@ ACMD_FUNC(storeall)
 		if (sd->inventory.u.items_inventory[i].amount) {
 			if(sd->inventory.u.items_inventory[i].equip != 0)
 				pc_unequipitem(sd, i, 3);
+			pc_equipswitch_remove(sd, i);
 			storage_storageadd(sd, &sd->storage, i, sd->inventory.u.items_inventory[i].amount);
 		}
 	}
@@ -9725,11 +9727,11 @@ ACMD_FUNC(changedress){
 		if( sd->sc.data[type] ) {
 			status_change_end( &sd->bl, type, INVALID_TIMER );
 			// You should only be able to have one - so we cancel here
-			return 0;
+			break;
 		}
 	}
 
-	return -1;
+	return 0;
 }
 
 ACMD_FUNC(costume) {

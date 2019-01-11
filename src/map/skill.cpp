@@ -676,7 +676,9 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	if (skill_id == AL_TELEPORT && sd->skillitem == skill_id && sd->skillitemlv > 2)
 		return false; // Teleport lv 3 bypasses this check.[Inkfish]
 
-	if (map_getmapflag(m, MF_NOSKILL))
+	struct map_data *mapdata = map_getmapdata(m);
+
+	if (mapdata->flag[MF_NOSKILL] && skill_id != ALL_EQSWITCH)
 		return true;
 
 	// Epoque:
@@ -700,8 +702,6 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 	 */
 	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
 		return false;
-
-	struct map_data *mapdata = map_getmapdata(m);
 
 	skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
@@ -3438,10 +3438,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				if (sc_cur && !sc_cur->data[SC_SMA])
 					sc_start(src,src,SC_SMA,100,skill_lv,skill_get_time(SL_SMA, skill_lv));
 			}
-			break;
-		case GS_FULLBUSTER:
-			if (sd) //Can't attack nor use items until skill's delay expires. [Skotlex]
-				sd->ud.attackabletime = sd->canuseitem_tick = sd->ud.canact_tick;
 			break;
 	}
 
@@ -8032,13 +8028,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case TK_HIGHJUMP:
 		{
 			int x,y, dir = unit_getdir(src);
+			struct map_data *mapdata = &map[src->m];
 
 			//Fails on noteleport maps, except for GvG and BG maps [Skotlex]
-			if( map_getmapflag(src->m, MF_NOTELEPORT) &&
-				!(map_getmapflag(src->m, MF_BATTLEGROUND) || map_flag_gvg2(src->m) )
+			if( mapdata->flag[MF_NOTELEPORT] &&
+				!(mapdata->flag[MF_BATTLEGROUND] || mapdata_flag_gvg2(mapdata) )
 			) {
-				x = src->x;
-				y = src->y;
+				clif_skill_nodamage(src, bl, TK_HIGHJUMP, skill_lv, 1);
+				break;
 			} else if(dir%2) {
 				//Diagonal
 				x = src->x + dirx[dir]*(skill_lv*4)/3;
@@ -8048,8 +8045,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				y = src->y + diry[dir]*skill_lv*2;
 			}
 
+			int x1 = x + dirx[dir];
+			int y1 = y + diry[dir];
+
 			clif_skill_nodamage(src,bl,TK_HIGHJUMP,skill_lv,1);
-			if(!map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB,0) && map_getcell(src->m,x,y,CELL_CHKREACH) && unit_movepos(src, x, y, 1, 0))
+			if( !map_count_oncell(src->m,x,y,BL_PC|BL_NPC|BL_MOB,0) && map_getcell(src->m,x,y,CELL_CHKREACH) &&
+				!map_count_oncell(src->m,x1,y1,BL_PC|BL_NPC|BL_MOB,0) && map_getcell(src->m,x1,y1,CELL_CHKREACH) &&
+				unit_movepos(src, x, y, 1, 0))
 				clif_blown(src);
 		}
 		break;
@@ -10979,6 +10981,18 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				map_foreachinshootrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
 			else
 				map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_nodamage_id);
+		}
+		break;
+
+	case ALL_EQSWITCH:
+		if( sd ){
+			clif_equipswitch_reply( sd, false );
+
+			for( int i = 0, position = 0; i < EQI_MAX; i++ ){
+				if( sd->equip_switch_index[i] >= 0 && !( position & equip_bitmask[i] ) ){
+					position |= pc_equipswitch( sd, sd->equip_switch_index[i] );
+				}
+			}
 		}
 		break;
 
@@ -18427,7 +18441,7 @@ int skill_unit_timer_sub_onplace(struct block_list* bl, va_list ap)
 {
 	struct skill_unit* unit = va_arg(ap,struct skill_unit *);
 	struct skill_unit_group* group = NULL;
-	t_tick tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 
 	nullpo_ret(unit);
 
@@ -18454,7 +18468,7 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 {
 	struct skill_unit* unit = (struct skill_unit*)db_data2ptr(data);
 	struct skill_unit_group* group = NULL;
-	t_tick tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 	bool dissonance;
 	struct block_list* bl = &unit->bl;
 
@@ -18737,7 +18751,7 @@ int skill_unit_move_sub(struct block_list* bl, va_list ap)
 	struct skill_unit_group* group = NULL;
 
 	struct block_list* target = va_arg(ap,struct block_list*);
-	t_tick tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 	int flag = va_arg(ap,int);
 	bool dissonance;
 	uint16 skill_id;
