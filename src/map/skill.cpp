@@ -17144,7 +17144,7 @@ int skill_frostjoke_scream(struct block_list *bl, va_list ap)
 	skill_lv = va_arg(ap,int);
 	if(!skill_lv)
 		return 0;
-	tick = va_arg(ap,unsigned int);
+	tick = va_arg(ap,t_tick);
 
 	if (src == bl || status_isdead(bl))
 		return 0;
@@ -17202,7 +17202,7 @@ int skill_attack_area(struct block_list *bl, va_list ap)
 	dsrc = va_arg(ap,struct block_list*);
 	skill_id = va_arg(ap,int);
 	skill_lv = va_arg(ap,int);
-	tick = va_arg(ap,unsigned int);
+	tick = va_arg(ap,t_tick);
 	flag = va_arg(ap,int);
 	type = va_arg(ap,int);
 
@@ -17587,7 +17587,7 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 {
 	struct block_list *src = va_arg(ap,struct block_list *);
 	struct skill_unit *unit = NULL;
-	int tick = va_arg(ap,int);
+	t_tick tick = va_arg(ap,t_tick);
 	struct skill_unit_group *sg;
 	struct block_list *ss; //Skill src bl
 
@@ -20086,7 +20086,7 @@ static int skill_destroy_trap(struct block_list *bl, va_list ap)
 
 	nullpo_ret(su);
 
-	tick = va_arg(ap, unsigned int);
+	tick = va_arg(ap, t_tick);
 
 	if (su->alive && (sg = su->group) && skill_get_inf2(sg->skill_id)&INF2_TRAP) {
 		switch( sg->unit_id ) {
