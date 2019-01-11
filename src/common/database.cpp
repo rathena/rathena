@@ -68,12 +68,12 @@ bool Database::load(const std::string& path) {
 	}
 	catch(YAML::Exception &e) {
 		ShowError("Failed to read %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
-		ShowError("%s (%d:%d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
+		ShowError("%s (Line %d: Column %d)\n", e.msg.c_str(), e.mark.line, e.mark.column);
 		return false;
 	}
 
 	if (!this->verifyCompatability(rootNode)){
-		ShowError("Failed to verify compatability with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
+		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
 		return false;
 	}
 
