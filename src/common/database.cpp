@@ -106,7 +106,7 @@ bool Database::parse(const std::vector<std::string> &location, parse_t func) {
 
 template <typename R> bool asType( const YAML::Node& node, const std::string& name, R* out, R* defaultValue ){
 	if( out == nullptr ){
-		// TODO: fail
+		ShowFatalError( "asType: No output pointer was given\n" );
 		return false;
 	}else if( Database::nodeExists( node, name ) ){
 		const YAML::Node& dataNode = node[name];
