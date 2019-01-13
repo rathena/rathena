@@ -7388,7 +7388,7 @@
 13193,R_THUNDER,Rolling Thunder,5,1350000,,1800,280,,9,1,0x40000000,63,2,34,3,120,1,20,{ bonus bHit,-10; bonus bDelayrate,-10; bonus3 bAutoSpell,"MG_THUNDERSTORM",5,500; },{},{}
 13194,P_BREAKER,Peace Breaker,5,1950000,,1400,250,,9,0,0x41000000,63,2,34,3,140,1,20,{ bonus bHit,-25; bonus bAspdRate,25; },{},{}
 13195,RAG203,RAG203,5,1800000,,1300,260,,9,0,0x40000000,63,2,34,3,140,1,18,{ bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,"AL_DECAGI",1,10,1; },{},{}
-13196,P_BREAKER_,Peace Breaker,5,1600000,,1400,250,,9,1,0x41000000,63,2,34,3,140,1,20,{ bonus bHit,-25; bonus bAspdRate,25; },{},{}
+13196,P_BREAKER_,Peace Breaker,5,1950000,,1400,250,,9,1,0x41000000,63,2,34,3,140,1,20,{ bonus bHit,-25; bonus bAspdRate,25; },{},{}
 13197,MINIMAY,Mini Mei,5,1600000,,2500,220,,9,2,0x41000000,63,2,34,2,106,1,19,{},{},{}
 13198,TEMPEST,Tempest,5,2200000,,2500,250,,9,0,0x41000000,63,2,34,4,140,1,19,{ bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20; },{},{}
 13199,TEMPEST_,Tempest,5,2200000,,2500,250,,9,1,0x41000000,63,2,34,4,140,1,19,{ bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20; },{},{}
