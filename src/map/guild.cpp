@@ -273,8 +273,8 @@ void guild_makemember(struct guild_member *m,struct map_session_data *sd) {
 //	m->exp_payper	= 0;
 	m->online		= 1;
 	m->position		= MAX_GUILDPOSITION-1;
-	memcpy(m->name,sd->status.name,NAME_LENGTH);
-	return;
+	safestrncpy(m->name,sd->status.name,NAME_LENGTH);
+	m->last_login	= (uint32)time(NULL);
 }
 
 /**

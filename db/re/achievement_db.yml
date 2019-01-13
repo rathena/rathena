@@ -1694,72 +1694,72 @@ Body:
   - ID: 200017
     Group: "AG_GOAL_STATUS"
     Name: "Bearish Power!"
-    Condition: " bStr >= 90 "
+    Condition: " readparam(bStr) >= 90 "
     Score: 10
   - ID: 200018
     Group: "AG_GOAL_STATUS"
     Name: "Overflowing Magic!"
-    Condition: " bInt >= 90 "
+    Condition: " readparam(bInt) >= 90 "
     Score: 10
   - ID: 200019
     Group: "AG_GOAL_STATUS"
     Name: "Healthy Body and Mental Health!"
-    Condition: " bVit >= 90 "
+    Condition: " readparam(bVit) >= 90 "
     Score: 10
   - ID: 200020
     Group: "AG_GOAL_STATUS"
     Name: "Speed of Light"
-    Condition: " bAgi >= 90 "
+    Condition: " readparam(bAgi) >= 90 "
     Score: 10
   - ID: 200021
     Group: "AG_GOAL_STATUS"
     Name: "Hawk Eyes"
-    Condition: " bDex >= 90 "
+    Condition: " readparam(bDex) >= 90 "
     Score: 10
   - ID: 200022
     Group: "AG_GOAL_STATUS"
     Name: "Maximum Luck"
-    Condition: " bLuk >= 90 "
+    Condition: " readparam(bLuk) >= 90 "
     Score: 10
   - ID: 200023
     Group: "AG_GOAL_STATUS"
     Name: "Dragonlike Power!"
-    Condition: " bStr >= 125 "
+    Condition: " readparam(bStr) >= 125 "
     Reward:
       Script: " sc_start SC_GIANTGROWTH,180000,1; "
     Score: 20
   - ID: 200024
     Group: "AG_GOAL_STATUS"
     Name: "Magic Insanity"
-    Condition: " bInt >= 125 "
+    Condition: " readparam(bInt) >= 125 "
     Reward:
       Script: " specialeffect2 EF_HASTEUP; bonus_script \"{ bonus2 bHPLossRate,100,10000; bonus bBaseAtk,20; bonus bAspdRate,25; }\",60,0,0,EFST_STEAMPACK; "
     Score: 20
   - ID: 200025
     Group: "AG_GOAL_STATUS"
     Name: "Rock Alloy"
-    Condition: " bVit >= 125 "
+    Condition: " readparam(bVit) >= 125 "
     Reward:
       Script: " specialeffect2 EF_HEAL3; sc_start2 SC_S_LIFEPOTION,600000,-5,5; "
     Score: 20
   - ID: 200026
     Group: "AG_GOAL_STATUS"
     Name: "Speed of Light"
-    Condition: " bAgi >= 125 "
+    Condition: " readparam(bAgi) >= 125 "
     Reward:
       Script: " specialeffect2 EF_STEAL; sc_start SC_INCFLEE2,60000,20; "
     Score: 20
   - ID: 200027
     Group: "AG_GOAL_STATUS"
     Name: "Falcon's Eyes"
-    Condition: " bDex >= 125 "
+    Condition: " readparam(bDex) >= 125 "
     Reward:
       Script: " specialeffect2 EF_MAGICALATTHIT; sc_start SC_INCCRI,300000,30; "
     Score: 20
   - ID: 200028
     Group: "AG_GOAL_STATUS"
     Name: "Lucky Fever"
-    Condition: " bLuk >= 125 "
+    Condition: " readparam(bLuk) >= 125 "
     Reward:
       Script: " specialeffect2 EF_GLORIA; sc_start SC_GLORIA,15000,0; "
     Score: 20
@@ -2004,12 +2004,10 @@ Body:
   - ID: 220000
     Group: "AG_CHATTING_CREATE"
     Name: "Community begin"
-    Condition: " true "
     Score: 10
   - ID: 220001
     Group: "AG_CHATTING_DYING"
     Name: "A mouth only moment"
-    Condition: " true "
     Score: 10
   - ID: 220002
     Group: "AG_CHATTING_COUNT"
@@ -2029,12 +2027,10 @@ Body:
   - ID: 220005
     Group: "AG_PARTY"
     Name: "Let's Party~"
-    Condition: " true "
     Score: 10
   - ID: 220006
     Group: "AG_MARRY"
     Name: "Married with who..?"
-    Condition: " true "
     Reward:
       TitleID: 1022
     Score: 20
@@ -2130,7 +2126,6 @@ Body:
   - ID: 220022
     Group: "AG_ENCHANT_FAIL"
     Name: "Human's greed has no ending.."
-    Condition: " true "
     Score: 10
   - ID: 220023
     Group: "AG_GET_ITEM"
