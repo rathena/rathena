@@ -861,7 +861,7 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
 	unsigned int id;
 
 	if (!node["ID"]) {
-		yaml_invalid_warning("inter_server_read_db_sub: Storage definition with no ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		Database::invalidWarning("inter_server_read_db_sub: Storage definition with no ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 
@@ -869,12 +869,12 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
 		id = node["ID"].as<unsigned int>();
 	}
 	catch (const std::exception&) {
-		yaml_invalid_warning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		Database::invalidWarning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 
 	if (id > UINT8_MAX) {
-		yaml_invalid_warning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		Database::invalidWarning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 
@@ -882,7 +882,7 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
 	auto storage_table = existing ? interserv_config.storages[id] : std::make_shared<s_storage_table>();
 
 	if (!existing && (!node["Name"] || !node["Table"])) {
-		yaml_invalid_warning("inter_server_read_db_sub: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", node, source);
+		Database::invalidWarning("inter_server_read_db_sub: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", node, source);
 		return false;
 	}
 
@@ -895,7 +895,7 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
 			storage_table->max_num = node["Max"].as<uint16>();
 		}
 		catch (const std::exception&) {
-			yaml_invalid_warning("inter_server_read_db_sub: Storage definition with invalid Max field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			Database::invalidWarning("inter_server_read_db_sub: Storage definition with invalid Max field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
 	} else if (!existing)

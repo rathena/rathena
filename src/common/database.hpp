@@ -67,8 +67,8 @@ public:
 
 	static bool asString(const YAML::Node &node, const std::string &name, std::string *out);
 	static bool asString(const YAML::Node &node, const std::string &name, std::string *out, std::string defaultValue);
-};
 
-void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file);
+	static void invalidWarning(const char* fmt, const YAML::Node &node, const std::string &file);
+};
 
 #endif /* DATABASE_HPP */

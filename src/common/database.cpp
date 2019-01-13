@@ -219,7 +219,7 @@ bool Database::asString(const YAML::Node &node, const std::string &name, std::st
 	return asType<std::string>(node, name, out, &defaultValue);
 }
 
-void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file) {
+void Database::invalidWarning(const char* fmt, const YAML::Node &node, const std::string &file) {
 	YAML::Emitter out;
 	out << node;
 	ShowWarning(fmt, file.c_str());

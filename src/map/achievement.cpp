@@ -992,13 +992,13 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 	bool existing = false;
 
 	if (!node["ID"]) {
-		yaml_invalid_warning("achievement_read_db_sub: Missing ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		Database::invalidWarning("achievement_read_db_sub: Missing ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 	try {
 		achievement_id = node["ID"].as<unsigned int>();
 	} catch (...) {
-		yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		Database::invalidWarning("achievement_read_db_sub: Achievement definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 	if (achievement_id < 1 || achievement_id > INT_MAX) {
@@ -1021,13 +1021,13 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 	entry->achievement_id = achievement_id;
 
 	if (!node["Group"]) {
-		yaml_invalid_warning("achievement_read_db_sub: Missing group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		Database::invalidWarning("achievement_read_db_sub: Missing group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 	try {
 		group_char = node["Group"].as<std::string>();
 	} catch (...) {
-		yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		Database::invalidWarning("achievement_read_db_sub: Achievement definition with invalid group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 	if (!script_get_constant(group_char.c_str(), (int *)&group)) {
@@ -1042,7 +1042,7 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 	try {
 		name = node["Name"].as<std::string>();
 	} catch (...) {
-		yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid name field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		Database::invalidWarning("achievement_read_db_sub: Achievement definition with invalid name field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 	
@@ -1072,7 +1072,7 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 				entry->targets.push_back({ mobid, count });
 			}
 		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid target field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			Database::invalidWarning("achievement_read_db_sub: Achievement definition with invalid target field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
 	}
@@ -1081,7 +1081,7 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 		try {
 			condition = node["Condition"].as<std::string>();
 		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid condition field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			Database::invalidWarning("achievement_read_db_sub: Achievement definition with invalid condition field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
 		entry->condition = parse_condition(condition.c_str(), source.c_str(), node["Condition"].Mark().line);
@@ -1091,7 +1091,7 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 		try {
 			mapname = node["Map"].as<std::string>();
 		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid map field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			Database::invalidWarning("achievement_read_db_sub: Achievement definition with invalid map field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
 		if (group != AG_CHAT)
@@ -1114,7 +1114,7 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 			} else
 				ShowWarning("achievement_read_db_sub: Invalid dependent format for achievement %d in \"%s\".\n", achievement_id, source.c_str());
 		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid dependent field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			Database::invalidWarning("achievement_read_db_sub: Achievement definition with invalid dependent field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
 	}
@@ -1141,7 +1141,7 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 			if (reward_list["TitleID"] && (titleid = reward_list["TitleID"].as<int>()) && titleid > 0)
 				entry->rewards.title_id = titleid;
 		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid target field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			Database::invalidWarning("achievement_read_db_sub: Achievement definition with invalid target field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
 	}
@@ -1150,7 +1150,7 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 		try {
 			entry->score = node["Score"].as<int>();
 		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid score field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			Database::invalidWarning("achievement_read_db_sub: Achievement definition with invalid score field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
 	}
