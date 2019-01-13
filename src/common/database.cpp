@@ -5,7 +5,7 @@
 
 #include "showmsg.hpp"
 
-bool Database::nodeExists( const YAML::Node& node, const std::string& name ){
+bool YamlDatabase::nodeExists( const YAML::Node& node, const std::string& name ){
 	try{
 		if( node[name] ){
 			return true;
@@ -17,7 +17,7 @@ bool Database::nodeExists( const YAML::Node& node, const std::string& name ){
 	}
 }
 
-bool Database::verifyCompatibility( const YAML::Node& rootNode ){
+bool YamlDatabase::verifyCompatibility( const YAML::Node& rootNode ){
 	if( !nodeExists( rootNode, "Header" ) ){
 		ShowError( "No database header was found.\n" );
 		return false;
@@ -60,7 +60,7 @@ bool Database::verifyCompatibility( const YAML::Node& rootNode ){
 	return true;
 }
 
-bool Database::load(const std::string& path) {
+bool YamlDatabase::load(const std::string& path) {
 	YAML::Node rootNode;
 
 	try {
@@ -82,11 +82,11 @@ bool Database::load(const std::string& path) {
 	return true;
 }
 
-const YAML::Node& Database::getRootNode(){
+const YAML::Node& YamlDatabase::getRootNode(){
 	return this->root;
 }
 
-bool Database::parse(const std::vector<std::string> &location, parse_t func) {
+bool YamlDatabase::parse(const std::vector<std::string> &location, parse_t func) {
 	for (auto &current_file : location) {
 		int count = 0;
 
@@ -108,7 +108,7 @@ template <typename R> bool asType( const YAML::Node& node, const std::string& na
 	if( out == nullptr ){
 		ShowFatalError( "asType: No output pointer was given\n" );
 		return false;
-	}else if( Database::nodeExists( node, name ) ){
+	}else if( YamlDatabase::nodeExists( node, name ) ){
 		const YAML::Node& dataNode = node[name];
 
 		try {
@@ -139,87 +139,87 @@ template <typename R> bool asType( const YAML::Node& node, const std::string& na
 	}
 }
 
-bool Database::asBool(const YAML::Node &node, const std::string &name, bool *out) {
+bool YamlDatabase::asBool(const YAML::Node &node, const std::string &name, bool *out) {
 	return asType<bool>(node, name, out, nullptr);
 }
 
-bool Database::asBool(const YAML::Node &node, const std::string &name, bool *out, bool defaultValue) {
+bool YamlDatabase::asBool(const YAML::Node &node, const std::string &name, bool *out, bool defaultValue) {
 	return asType<bool>(node, name, out, &defaultValue);
 }
 
-bool Database::asInt16( const YAML::Node& node, const std::string& name, int16* out ){
+bool YamlDatabase::asInt16( const YAML::Node& node, const std::string& name, int16* out ){
 	return asType<int16>( node, name, out, nullptr );
 }
 
-bool Database::asInt16( const YAML::Node& node, const std::string& name, int16* out, int16 defaultValue ){
+bool YamlDatabase::asInt16( const YAML::Node& node, const std::string& name, int16* out, int16 defaultValue ){
 	return asType<int16>( node, name, out, &defaultValue );
 }
 
-bool Database::asUInt16(const YAML::Node& node, const std::string& name, uint16* out) {
+bool YamlDatabase::asUInt16(const YAML::Node& node, const std::string& name, uint16* out) {
 	return asType<uint16>(node, name, out, nullptr);
 }
 
-bool Database::asUInt16(const YAML::Node& node, const std::string& name, uint16* out, uint16 defaultValue) {
+bool YamlDatabase::asUInt16(const YAML::Node& node, const std::string& name, uint16* out, uint16 defaultValue) {
 	return asType<uint16>(node, name, out, &defaultValue);
 }
 
-bool Database::asInt32(const YAML::Node &node, const std::string &name, int32 *out) {
+bool YamlDatabase::asInt32(const YAML::Node &node, const std::string &name, int32 *out) {
 	return asType<int32>(node, name, out, nullptr);
 }
 
-bool Database::asInt32(const YAML::Node &node, const std::string &name, int32 *out, int32 defaultValue) {
+bool YamlDatabase::asInt32(const YAML::Node &node, const std::string &name, int32 *out, int32 defaultValue) {
 	return asType<int32>(node, name, out, &defaultValue);
 }
 
-bool Database::asUInt32(const YAML::Node &node, const std::string &name, uint32 *out) {
+bool YamlDatabase::asUInt32(const YAML::Node &node, const std::string &name, uint32 *out) {
 	return asType<uint32>(node, name, out, nullptr);
 }
 
-bool Database::asUInt32(const YAML::Node &node, const std::string &name, uint32 *out, uint32 defaultValue) {
+bool YamlDatabase::asUInt32(const YAML::Node &node, const std::string &name, uint32 *out, uint32 defaultValue) {
 	return asType<uint32>(node, name, out, &defaultValue);
 }
 
-bool Database::asInt64(const YAML::Node &node, const std::string &name, int64 *out) {
+bool YamlDatabase::asInt64(const YAML::Node &node, const std::string &name, int64 *out) {
 	return asType<int64>(node, name, out, nullptr);
 }
 
-bool Database::asInt64(const YAML::Node &node, const std::string &name, int64 *out, int64 defaultValue) {
+bool YamlDatabase::asInt64(const YAML::Node &node, const std::string &name, int64 *out, int64 defaultValue) {
 	return asType<int64>(node, name, out, &defaultValue);
 }
 
-bool Database::asUInt64(const YAML::Node &node, const std::string &name, uint64 *out) {
+bool YamlDatabase::asUInt64(const YAML::Node &node, const std::string &name, uint64 *out) {
 	return asType<uint64>(node, name, out, nullptr);
 }
 
-bool Database::asUInt64(const YAML::Node &node, const std::string &name, uint64 *out, uint64 defaultValue) {
+bool YamlDatabase::asUInt64(const YAML::Node &node, const std::string &name, uint64 *out, uint64 defaultValue) {
 	return asType<uint64>(node, name, out, &defaultValue);
 }
 
-bool Database::asFloat(const YAML::Node &node, const std::string &name, float *out) {
+bool YamlDatabase::asFloat(const YAML::Node &node, const std::string &name, float *out) {
 	return asType<float>(node, name, out, nullptr);
 }
 
-bool Database::asFloat(const YAML::Node &node, const std::string &name, float *out, float defaultValue) {
+bool YamlDatabase::asFloat(const YAML::Node &node, const std::string &name, float *out, float defaultValue) {
 	return asType<float>(node, name, out, &defaultValue);
 }
 
-bool Database::asDouble(const YAML::Node &node, const std::string &name, double *out) {
+bool YamlDatabase::asDouble(const YAML::Node &node, const std::string &name, double *out) {
 	return asType<double>(node, name, out, nullptr);
 }
 
-bool Database::asDouble(const YAML::Node &node, const std::string &name, double *out, double defaultValue) {
+bool YamlDatabase::asDouble(const YAML::Node &node, const std::string &name, double *out, double defaultValue) {
 	return asType<double>(node, name, out, &defaultValue);
 }
 
-bool Database::asString(const YAML::Node &node, const std::string &name, std::string *out) {
+bool YamlDatabase::asString(const YAML::Node &node, const std::string &name, std::string *out) {
 	return asType<std::string>(node, name, out, nullptr);
 }
 
-bool Database::asString(const YAML::Node &node, const std::string &name, std::string *out, std::string defaultValue) {
+bool YamlDatabase::asString(const YAML::Node &node, const std::string &name, std::string *out, std::string defaultValue) {
 	return asType<std::string>(node, name, out, &defaultValue);
 }
 
-void Database::invalidWarning(const char* fmt, const YAML::Node &node, const std::string &file) {
+void YamlDatabase::invalidWarning(const char* fmt, const YAML::Node &node, const std::string &file) {
 	YAML::Emitter out;
 	out << node;
 	ShowWarning(fmt, file.c_str());

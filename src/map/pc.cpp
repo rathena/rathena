@@ -12858,7 +12858,7 @@ bool attendance_read_db_sub(const YAML::Node &node, const std::string &source)
  */
 void pc_attendance_read_db(){
 	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH) + "attendance.yml", std::string(db_path) + "/" + std::string(DBIMPORT) + "/attendance.yml" };
-	Database db("ATTENDANCE_DB", 1);
+	YamlDatabase db("ATTENDANCE_DB", 1);
 
 	if (!db.parse(directories, parse_t(attendance_read_db_sub)))
 		return;

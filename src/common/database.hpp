@@ -11,7 +11,7 @@
 
 typedef std::function<bool(const YAML::Node, const std::string)> parse_t;
 
-class Database{
+class YamlDatabase{
 	std::string type;
 	uint16 version;
 	uint16 minimumVersion;
@@ -20,13 +20,13 @@ class Database{
 	bool verifyCompatibility( const YAML::Node& rootNode );
 
 public:
-	Database( const std::string type_, uint16 version_, uint16 minimumVersion_ ){
+	YamlDatabase( const std::string type_, uint16 version_, uint16 minimumVersion_ ){
 		this->type = type_;
 		this->version = version_;
 		this->minimumVersion = minimumVersion_;
 	}
 
-	Database( const std::string& type_, uint16 version_ ) : Database( type_, version_, version_ ){
+	YamlDatabase( const std::string& type_, uint16 version_ ) : YamlDatabase( type_, version_, version_ ){
 		// Empty since everything is handled by the real constructor
 	}
 

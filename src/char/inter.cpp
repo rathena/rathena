@@ -861,7 +861,7 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
 	unsigned int id;
 
 	if (!node["ID"]) {
-		Database::invalidWarning("inter_server_read_db_sub: Storage definition with no ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		YamlDatabase::invalidWarning("inter_server_read_db_sub: Storage definition with no ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 
@@ -869,12 +869,12 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
 		id = node["ID"].as<unsigned int>();
 	}
 	catch (const std::exception&) {
-		Database::invalidWarning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		YamlDatabase::invalidWarning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 
 	if (id > UINT8_MAX) {
-		Database::invalidWarning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+		YamlDatabase::invalidWarning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
 
@@ -882,7 +882,7 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
 	auto storage_table = existing ? interserv_config.storages[id] : std::make_shared<s_storage_table>();
 
 	if (!existing && (!node["Name"] || !node["Table"])) {
-		Database::invalidWarning("inter_server_read_db_sub: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", node, source);
+		YamlDatabase::invalidWarning("inter_server_read_db_sub: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", node, source);
 		return false;
 	}
 
@@ -895,7 +895,7 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
 			storage_table->max_num = node["Max"].as<uint16>();
 		}
 		catch (const std::exception&) {
-			Database::invalidWarning("inter_server_read_db_sub: Storage definition with invalid Max field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
+			YamlDatabase::invalidWarning("inter_server_read_db_sub: Storage definition with invalid Max field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
 	} else if (!existing)
@@ -914,7 +914,7 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
  */
 void inter_config_readConf(void) {
 	std::vector<std::string> directories = { "conf/" + interserv_config.cfgFile, "conf/import/" + interserv_config.cfgFile };
-	Database db("INTER_SERVER_DB", 1);
+	YamlDatabase db("INTER_SERVER_DB", 1);
 
 	if (!db.parse(directories, parse_t(inter_server_read_db_sub)))
 		return;
