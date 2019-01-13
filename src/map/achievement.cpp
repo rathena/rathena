@@ -1084,7 +1084,7 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid condition field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
-		entry->condition = parse_condition(condition.c_str(), source.c_str(), 0);
+		entry->condition = parse_condition(condition.c_str(), source.c_str(), node["Condition"].Mark().line);
 	}
 
 	if (node["Map"]) {

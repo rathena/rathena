@@ -17,7 +17,7 @@ class Database{
 	uint16 minimumVersion;
 	YAML::Node root;
 
-	bool verifyCompatability( const YAML::Node& rootNode );
+	bool verifyCompatibility( const YAML::Node& rootNode );
 
 public:
 	Database( const std::string type_, uint16 version_, uint16 minimumVersion_ ){

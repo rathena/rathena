@@ -17,7 +17,7 @@ bool Database::nodeExists( const YAML::Node& node, const std::string& name ){
 	}
 }
 
-bool Database::verifyCompatability( const YAML::Node& rootNode ){
+bool Database::verifyCompatibility( const YAML::Node& rootNode ){
 	if( !nodeExists( rootNode, "Header" ) ){
 		ShowError( "No database header was found.\n" );
 		return false;
@@ -72,7 +72,7 @@ bool Database::load(const std::string& path) {
 		return false;
 	}
 
-	if (!this->verifyCompatability(rootNode)){
+	if (!this->verifyCompatibility(rootNode)){
 		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
 		return false;
 	}
