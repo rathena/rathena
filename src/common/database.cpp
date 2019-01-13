@@ -5,7 +5,7 @@
 
 #include "showmsg.hpp"
 
-bool nodeExists( const YAML::Node& node, const std::string& name ){
+bool Database::nodeExists( const YAML::Node& node, const std::string& name ){
 	try{
 		if( node[name] ){
 			return true;
@@ -94,7 +94,7 @@ bool Database::parse(const std::vector<std::string> &location, parse_t func) {
 			return false;
 
 		for (const auto &node : this->getRootNode()["Body"]) {
-			if (node.IsDefined() && func(node, count, current_file))
+			if (node.IsDefined() && func(node, current_file))
 				count++;
 		}
 
@@ -108,7 +108,7 @@ template <typename R> bool asType( const YAML::Node& node, const std::string& na
 	if( out == nullptr ){
 		// TODO: fail
 		return false;
-	}else if( nodeExists( node, name ) ){
+	}else if( Database::nodeExists( node, name ) ){
 		const YAML::Node& dataNode = node[name];
 
 		try {

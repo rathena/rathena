@@ -856,7 +856,7 @@ int inter_log(const char* fmt, ...)
  * @param source: The source YAML file.
  * @return True on successful parse or false otherwise
  */
-bool inter_server_read_db_sub(const YAML::Node &node, int n, const std::string &source)
+bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
 {
 	unsigned int id;
 

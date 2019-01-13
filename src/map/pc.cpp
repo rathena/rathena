@@ -12732,7 +12732,7 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
  * @param source: The source YAML file.
  * @return True on successful parse or false otherwise
  */
-bool attendance_read_db_sub(const YAML::Node &node, int n, const std::string &source)
+bool attendance_read_db_sub(const YAML::Node &node, const std::string &source)
 {
 	if( !node["Start"].IsDefined() ){
 		ShowError( "pc_attendance_load: Missing \"Start\" for period in line %d.\n", node.Mark().line );

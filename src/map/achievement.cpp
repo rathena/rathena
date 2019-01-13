@@ -984,7 +984,7 @@ std::shared_ptr<struct av_condition> parse_condition(const char *p, const char *
  * @param source: The source YAML file.
  * @return True on successful parse or false otherwise
  */
-bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &source)
+bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
 {
 	enum e_achievement_group group = AG_NONE;
 	int achievement_id = 0;
@@ -1002,7 +1002,7 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 		return false;
 	}
 	if (achievement_id < 1 || achievement_id > INT_MAX) {
-		ShowWarning("achievement_read_db_sub: Invalid achievement ID %d in \"%s\", entry #%d (min: 1, max: %d), skipping.\n", achievement_id, source.c_str(), n, INT_MAX);
+		ShowWarning("achievement_read_db_sub: Invalid achievement ID %d in \"%s\", line %d (min: 1, max: %d), skipping.\n", achievement_id, source.c_str(), node.Mark().line, INT_MAX);
 		return false;
 	}
 
@@ -1084,7 +1084,7 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid condition field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
-		entry->condition = parse_condition(condition.c_str(), source.c_str(), n);
+		entry->condition = parse_condition(condition.c_str(), source.c_str(), 0);
 	}
 
 	if (node["Map"]) {

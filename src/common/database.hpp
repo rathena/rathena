@@ -9,7 +9,7 @@
 
 #include "cbasetypes.hpp"
 
-typedef std::function<bool(const YAML::Node, int, const std::string)> parse_t;
+typedef std::function<bool(const YAML::Node, const std::string)> parse_t;
 
 class Database{
 	std::string type;
@@ -35,36 +35,38 @@ public:
 
 	const YAML::Node& getRootNode();
 
+	static bool Database::nodeExists( const YAML::Node& node, const std::string& name );
+
 	// Conversion functions
-	bool asBool(const YAML::Node &node, const std::string &name, bool *out);
-	bool asBool(const YAML::Node &node, const std::string &name, bool *out, bool defaultValue);
+	static bool asBool(const YAML::Node &node, const std::string &name, bool *out);
+	static bool asBool(const YAML::Node &node, const std::string &name, bool *out, bool defaultValue);
 
-	bool asInt16( const YAML::Node& node, const std::string& name, int16* out );
-	bool asInt16( const YAML::Node& node, const std::string& name, int16* out, int16 defaultValue );
+	static bool asInt16(const YAML::Node& node, const std::string& name, int16* out );
+	static bool asInt16(const YAML::Node& node, const std::string& name, int16* out, int16 defaultValue );
 
-	bool asUInt16(const YAML::Node& node, const std::string& name, uint16* out);
-	bool asUInt16(const YAML::Node& node, const std::string& name, uint16* out, uint16 defaultValue);
+	static bool asUInt16(const YAML::Node& node, const std::string& name, uint16* out);
+	static bool asUInt16(const YAML::Node& node, const std::string& name, uint16* out, uint16 defaultValue);
 
-	bool asInt32(const YAML::Node &node, const std::string &name, int32 *out);
-	bool asInt32(const YAML::Node &node, const std::string &name, int32 *out, int32 defaultValue);
+	static bool asInt32(const YAML::Node &node, const std::string &name, int32 *out);
+	static bool asInt32(const YAML::Node &node, const std::string &name, int32 *out, int32 defaultValue);
 
-	bool asUInt32(const YAML::Node &node, const std::string &name, uint32 *out);
-	bool asUInt32(const YAML::Node &node, const std::string &name, uint32 *out, uint32 defaultValue);
+	static bool asUInt32(const YAML::Node &node, const std::string &name, uint32 *out);
+	static bool asUInt32(const YAML::Node &node, const std::string &name, uint32 *out, uint32 defaultValue);
 
-	bool asInt64(const YAML::Node &node, const std::string &name, int64 *out);
-	bool asInt64(const YAML::Node &node, const std::string &name, int64 *out, int64 defaultValue);
+	static bool asInt64(const YAML::Node &node, const std::string &name, int64 *out);
+	static bool asInt64(const YAML::Node &node, const std::string &name, int64 *out, int64 defaultValue);
 
-	bool asUInt64(const YAML::Node &node, const std::string &name, uint64 *out);
-	bool asUInt64(const YAML::Node &node, const std::string &name, uint64 *out, uint64 defaultValue);
+	static bool asUInt64(const YAML::Node &node, const std::string &name, uint64 *out);
+	static bool asUInt64(const YAML::Node &node, const std::string &name, uint64 *out, uint64 defaultValue);
 
-	bool asFloat(const YAML::Node &node, const std::string &name, float *out);
-	bool asFloat(const YAML::Node &node, const std::string &name, float *out, float defaultValue);
+	static bool asFloat(const YAML::Node &node, const std::string &name, float *out);
+	static bool asFloat(const YAML::Node &node, const std::string &name, float *out, float defaultValue);
 
-	bool asDouble(const YAML::Node &node, const std::string &name, double *out);
-	bool asDouble(const YAML::Node &node, const std::string &name, double *out, double defaultValue);
+	static bool asDouble(const YAML::Node &node, const std::string &name, double *out);
+	static bool asDouble(const YAML::Node &node, const std::string &name, double *out, double defaultValue);
 
-	bool asString(const YAML::Node &node, const std::string &name, std::string *out);
-	bool asString(const YAML::Node &node, const std::string &name, std::string *out, std::string defaultValue);
+	static bool asString(const YAML::Node &node, const std::string &name, std::string *out);
+	static bool asString(const YAML::Node &node, const std::string &name, std::string *out, std::string defaultValue);
 };
 
 void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file);
