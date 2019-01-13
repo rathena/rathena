@@ -12860,7 +12860,7 @@ void pc_attendance_read_db(){
 	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH) + "attendance.yml", std::string(db_path) + "/" + std::string(DBIMPORT) + "/attendance.yml" };
 	YamlDatabase db("ATTENDANCE_DB", 1);
 
-	if (!db.parse(directories, parse_t(attendance_read_db_sub)))
+	if (!db.parse(directories, attendance_read_db_sub))
 		return;
 }
 

@@ -916,7 +916,7 @@ void inter_config_readConf(void) {
 	std::vector<std::string> directories = { "conf/" + interserv_config.cfgFile, "conf/import/" + interserv_config.cfgFile };
 	YamlDatabase db("INTER_SERVER_DB", 1);
 
-	if (!db.parse(directories, parse_t(inter_server_read_db_sub)))
+	if (!db.parse(directories, inter_server_read_db_sub))
 		return;
 }
 

@@ -86,7 +86,7 @@ const YAML::Node& YamlDatabase::getRootNode(){
 	return this->root;
 }
 
-bool YamlDatabase::parse(const std::vector<std::string> &location, parse_t func) {
+bool YamlDatabase::parse(const std::vector<std::string> &location, std::function<bool(const YAML::Node, const std::string)> func) {
 	for (auto &current_file : location) {
 		int count = 0;
 

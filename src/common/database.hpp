@@ -9,8 +9,6 @@
 
 #include "cbasetypes.hpp"
 
-typedef std::function<bool(const YAML::Node, const std::string)> parse_t;
-
 class YamlDatabase{
 	std::string type;
 	uint16 version;
@@ -31,7 +29,7 @@ public:
 	}
 
 	bool load( const std::string& path );
-	bool parse(const std::vector<std::string> &location, parse_t func);
+	bool parse(const std::vector<std::string> &location, std::function<bool(const YAML::Node, const std::string)> func);
 
 	const YAML::Node& getRootNode();
 

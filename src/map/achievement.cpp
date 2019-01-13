@@ -1166,7 +1166,7 @@ void achievement_read_db(void)
 	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH) + "achievement_db.yml", std::string(db_path) + "/" + std::string(DBIMPORT) + "/achievement_db.yml" };
 	YamlDatabase db("ACHIEVEMENT_DB", 1);
 		
-	if (!db.parse(directories, parse_t(achievement_read_db_sub)))
+	if (!db.parse(directories, achievement_read_db_sub))
 		return;
 
 	for (auto &achit : achievements) {
