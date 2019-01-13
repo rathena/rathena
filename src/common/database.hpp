@@ -35,7 +35,7 @@ public:
 
 	const YAML::Node& getRootNode();
 
-	static bool Database::nodeExists( const YAML::Node& node, const std::string& name );
+	static bool nodeExists( const YAML::Node& node, const std::string& name );
 
 	// Conversion functions
 	static bool asBool(const YAML::Node &node, const std::string &name, bool *out);
