@@ -15,7 +15,7 @@
 //= 1.2 Navigation system update. [Euphy]
 //============================================================ 
 
-payon,163,64,3	script	Guide#01payon::GuidePayon	708,{
+payon,160,67,3	script	Guide#01payon::GuidePayon	708,{
 	cutin "pay_soldier",2;
 	mes "[Payon Guide]";
 	mes "Welcome to ^8B4513Payon^000000,";

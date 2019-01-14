@@ -25,7 +25,7 @@
 
 // Prontera
 //============================================================
-prontera,160,330,0	script	Guard#pront::prtguard	105,{
+-	script	Guard#pront::prtguard	105,{
 	mes "[Prontera Guard]";
 	mes "Welcome to Prontera.";
 	close;

@@ -299,4 +299,4 @@ L_Mark:
 prontera,282,208,2	duplicate(GuideProntera)	Guide#02prontera	105
 prontera,29,200,6	duplicate(GuideProntera)	Guide#03prontera	105
 prontera,160,29,0	duplicate(GuideProntera)	Guide#04prontera	105
-prontera,151,330,4	duplicate(GuideProntera)	Guide#05prontera	105
+prontera,159,326,4	duplicate(GuideProntera)	Guide#05prontera	105

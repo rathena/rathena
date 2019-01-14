@@ -1,0 +1,28 @@
+//===== rAthena Script =======================================
+//= Prontera Town
+//===== By: ==================================================
+//= kobra_k88
+//===== Current Version: =====================================
+//= 2.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= NPCs in Prontera
+//===== Additional Comments: =================================
+//= Fully working
+//= +AntiNovice exploit fix [Lupus] 1.2 added baby novice check
+//= Spellchecked [massdriller]
+//= 1.4 Optimized. Novices > 20 BaseJob can go to Culvert, too [Lupus]
+//= 1.5a Added a Jawaii related npc [MasterOfMuppets]
+//= 1.6 Replaced sewer_prt with (MISC_QUEST & 8) [Lupus]
+//= 1.7 Removed Duplicates [Silent]
+//= 1.8 Moved Culvert to quests/quests_prontera.txt
+//= 1.9 Rescripted to Aegis 10.3 standards. [L0ne_W0lf]
+//= 2.0 Removed "Hans Solo", as he is a Jawaii NPC. [L0ne_W0lf]
+//= 2.1 Disabled the Library Curator (bugreport:4105) [L0ne_W0lf]
+//============================================================
+
+// Prontera
+//============================================================
+prontera,160,330,4	duplicate(prtguard)	Guard#5pront	105
