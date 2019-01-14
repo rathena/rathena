@@ -104,8 +104,10 @@ function	script	F_Invest_Status	{
 	if (agitcheck())
 		return 0;
 
+	// debugmes .@day + " | " + .@hour +" : " +.@minute;
+
 	// Open for investments.
-	if ((.@day > THURSDAY || .@day == THURSDAY && .hour >= 6) && (.@day < FRIDAY || (.@day == FRIDAY && .@hour <= 18)))
+	if ((.@day > THURSDAY || .@day == THURSDAY && .@hour >= 6) && (.@day < FRIDAY || (.@day == FRIDAY && .@hour <= 18)))
 		return 1;
 
 	// Investments closed, calculating results.
