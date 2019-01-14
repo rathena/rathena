@@ -61,10 +61,10 @@ function	Can_Change_Third	{
 		return false; // Exp. Super Novice equals 3rd Cls, but has it's own case
 	if( Is_Baby() && (!.BabyClass || !.BabyThird) )
 		return false; // No Baby (Third) change allowed
-	if( Class == 4047 || Class == 4049)// disallow star gladiator and soul emperor
-		return false;
-	if( Class == 4226 || Class == 4227)// disallow baby star gladiator and baby soul emperor
-		return false;
+	//if( Class == 4047 || Class == 4049)// disallow star gladiator and soul emperor
+	//	return false;
+	//if( Class == 4226 || Class == 4227)// disallow baby star gladiator and baby soul emperor
+	//	return false;
 	return true;
 }
 
