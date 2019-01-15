@@ -4393,7 +4393,7 @@ char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type
 /**
  * Attempts to remove Cash Points from player
  * @param sd: Player
- * @param price: Total points the (cash + kafra) player has to pay
+ * @param price: Total points (cash + kafra) the player has to pay
  * @param points: Kafra points the player has to pay
  * @param type: Log type
  * @return -1: Not enough points, otherwise success (cash+points)
