@@ -1517,4 +1517,4 @@ mid_camp,133,261,5	duplicate(mission_board)	3rd Class Headgear#15	888
 lighthalzen,204,86,3	duplicate(mission_board)	Lighthalzen Mission#16	888
 einbech,140,154,4	duplicate(mission_board)	Einbech Mission#17	888
 
-prontera,153,285,5	duplicate(mission_board)	Special Mission#100	811
+// prontera,153,285,5	duplicate(mission_board)	Special Mission#100	811

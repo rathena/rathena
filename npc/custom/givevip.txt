@@ -118,7 +118,6 @@ sec_in02,11,32,3	script	VIP	90,{
 	}
 	close;
 }
-*/
 
 prontera,156,285,1	script	Sakura	-1,{
 	end;
@@ -175,3 +174,5 @@ OnNPCKillEvent:
 	}
 	end;
 }
+
+*/
