@@ -2610,6 +2610,8 @@ ACMD_FUNC(param)
 		clif_updatestatus(sd, SP_USTR + i);
 		status_calc_pc(sd, SCO_FORCE);
 		clif_displaymessage(fd, msg_txt(sd,42)); // Stat changed.
+
+		achievement_update_objective(sd, AG_GOAL_STATUS, 0);
 	} else {
 		if (value < 0)
 			clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
@@ -2681,6 +2683,8 @@ ACMD_FUNC(stat_all)
 	if (count > 0) { // if at least 1 stat modified
 		status_calc_pc(sd, SCO_FORCE);
 		clif_displaymessage(fd, msg_txt(sd,84)); // All stats changed!
+
+		achievement_update_objective(sd, AG_GOAL_STATUS, 0);
 	} else {
 		if (value < 0)
 			clif_displaymessage(fd, msg_txt(sd,177)); // You cannot decrease that stat anymore.

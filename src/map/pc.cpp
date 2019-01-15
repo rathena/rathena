@@ -9773,7 +9773,7 @@ int pc_load_combo(struct map_session_data *sd) {
 		if(!itemdb_isspecial(sd->inventory.u.items_inventory[idx].card[0])) {
 			struct item_data *data;
 			int j;
-			for( j = 0; j < id->slot; j++ ) {
+			for( j = 0; j < MAX_SLOTS; j++ ) {
 				if (!sd->inventory.u.items_inventory[idx].card[j])
 					continue;
 				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[idx].card[j]) ) != NULL ) {

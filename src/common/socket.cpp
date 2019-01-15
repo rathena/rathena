@@ -72,7 +72,7 @@ typedef int socklen_t;
 
 // global array of sockets (emulating linux)
 // fd is the position in the array
-static SOCKET sock_arr[FD_SETSIZE];
+static SOCKET sock_arr[MAXCONN];
 static int sock_arr_len = 0;
 
 /// Returns the socket associated with the target fd.
@@ -104,7 +104,7 @@ int sock2fd(SOCKET s)
 /// Returns a new fd associated with the socket.
 /// If there are too many sockets it closes the socket, sets an error and
 //  returns -1 instead.
-/// Since fd 0 is reserved, it returns values in the range [1,FD_SETSIZE[.
+/// Since fd 0 is reserved, it returns values in the range [1,MAXCONN[.
 ///
 /// @param s Socket
 /// @return New fd or -1
@@ -226,7 +226,7 @@ char* sErr(int code)
 	fd_set readfds;
 #else
 	// Epoll based Event Dispatcher
-	static int epoll_maxevents = (FD_SETSIZE / 2);
+	static int epoll_maxevents = (MAXCONN / 2);
 	static int epfd = SOCKET_ERROR;
 	static struct epoll_event epevent;
 	static struct epoll_event *epevents = nullptr;
@@ -635,12 +635,12 @@ static time_t socket_data_last_tick = 0;
 // The connection is closed if it goes over the limit.
 #define WFIFO_MAX (1*1024*1024)
 
-struct socket_data* session[FD_SETSIZE];
+struct socket_data* session[MAXCONN];
 
 #ifdef SEND_SHORTLIST
-int send_shortlist_array[FD_SETSIZE];// we only support FD_SETSIZE sockets, limit the array to that
+int send_shortlist_array[MAXCONN];// we only support MAXCONN sockets, limit the array to that
 size_t send_shortlist_count = 0;// how many fd's are in the shortlist
-uint32 send_shortlist_set[(FD_SETSIZE+31)/32];// to know if specific fd's are already in the shortlist
+uint32 send_shortlist_set[(MAXCONN+31)/32];// to know if specific fd's are already in the shortlist
 #endif
 
 static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
@@ -860,9 +860,9 @@ int connect_client(int listen_fd)
 		sClose(fd);
 		return -1;
 	}
-	if( fd >= FD_SETSIZE )
+	if( fd >= MAXCONN )
 	{// socket number too big
-		ShowError("connect_client: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
+		ShowError("connect_client: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n", fd, MAXCONN);
 		sClose(fd);
 		return -1;
 	}
@@ -919,9 +919,9 @@ int make_listen_bind(uint32 ip, uint16 port)
 		sClose(fd);
 		return -1;
 	}
-	if( fd >= FD_SETSIZE )
+	if( fd >= MAXCONN )
 	{// socket number too big
-		ShowError("make_listen_bind: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
+		ShowError("make_listen_bind: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n", fd, MAXCONN);
 		sClose(fd);
 		return -1;
 	}
@@ -985,9 +985,9 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 		sClose(fd);
 		return -1;
 	}
-	if( fd >= FD_SETSIZE )
+	if( fd >= MAXCONN )
 	{// socket number too big
-		ShowError("make_connection: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
+		ShowError("make_connection: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n", fd, MAXCONN);
 		sClose(fd);
 		return -1;
 	}
@@ -1804,7 +1804,7 @@ void socket_final(void)
 /// Closes a socket.
 void do_close(int fd)
 {
-	if( fd <= 0 ||fd >= FD_SETSIZE )
+	if( fd <= 0 ||fd >= MAXCONN )
 		return;// invalid
 
 	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
@@ -1913,7 +1913,7 @@ int socket_getips(uint32* ips, int max)
 void socket_init(void)
 {
 	const char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
-	unsigned int rlim_cur = FD_SETSIZE;
+	unsigned int rlim_cur = MAXCONN;
 
 #ifdef WIN32
 	{// Start up windows networking
@@ -1933,14 +1933,14 @@ void socket_init(void)
 #elif defined(HAVE_SETRLIMIT) && !defined(CYGWIN)
 	// NOTE: getrlimit and setrlimit have bogus behaviour in cygwin.
 	//       "Number of fds is virtually unlimited in cygwin" (sys/param.h)
-	{// set socket limit to FD_SETSIZE
+	{// set socket limit to MAXCONN
 		struct rlimit rlp;
 		if( 0 == getrlimit(RLIMIT_NOFILE, &rlp) )
 		{
-			rlp.rlim_cur = FD_SETSIZE;
+			rlp.rlim_cur = MAXCONN;
 			if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
 			{// failed, try setting the maximum too (permission to change system limits is required)
-				rlp.rlim_max = FD_SETSIZE;
+				rlp.rlim_max = MAXCONN;
 				if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
 				{// failed
 					const char *errmsg = error_msg();
@@ -1953,7 +1953,7 @@ void socket_init(void)
 					// report limit
 					getrlimit(RLIMIT_NOFILE, &rlp);
 					rlim_cur = rlp.rlim_cur;
-					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, %s).\n", FD_SETSIZE, rlim_ori, (int)rlp.rlim_cur, (int)rlp.rlim_max, errmsg);
+					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, %s).\n", MAXCONN, rlim_ori, (int)rlp.rlim_cur, (int)rlp.rlim_max, errmsg);
 				}
 			}
 		}
@@ -1969,7 +1969,7 @@ void socket_init(void)
 	ShowInfo( "Server uses '" CL_WHITE "select" CL_RESET "' as event dispatcher\n" );
 #else
 	// Epoll based Event Dispatcher
-	epfd = epoll_create( FD_SETSIZE ); // 2.6.8 or newer ignores the expected socket amount argument
+	epfd = epoll_create( MAXCONN ); // 2.6.8 or newer ignores the expected socket amount argument
 
 	if( epfd == SOCKET_ERROR ){
 		ShowError( "Failed to create epoll event dispatcher: %s\n", error_msg() );
@@ -2014,7 +2014,7 @@ void socket_init(void)
 
 bool session_isValid(int fd)
 {
-	return ( fd > 0 && fd < FD_SETSIZE && session[fd] != NULL );
+	return ( fd > 0 && fd < MAXCONN && session[fd] != NULL );
 }
 
 bool session_isActive(int fd)
@@ -2096,7 +2096,7 @@ void send_shortlist_do_sends()
 		send_shortlist_array[i] = send_shortlist_array[send_shortlist_count];
 		send_shortlist_array[send_shortlist_count] = 0;
 
-		if( fd <= 0 || fd >= FD_SETSIZE )
+		if( fd <= 0 || fd >= MAXCONN )
 		{
 			ShowDebug("send_shortlist_do_sends: fd is out of range, corrupted memory? (fd=%d)\n", fd);
 			continue;

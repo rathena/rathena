@@ -744,6 +744,11 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	// Required for delayed monster removal in instances
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
+
 	x0 = i16max(x0, 0);
 	y0 = i16max(y0, 0);
 	x1 = i16min(x1, mapdata->xs - 1);

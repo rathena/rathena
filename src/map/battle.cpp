@@ -7099,7 +7099,7 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 
 	nullpo_ret(bl);
 
-	tick = va_arg(ap, unsigned int);
+	tick = va_arg(ap, t_tick);
 	src = va_arg(ap,struct block_list *);
 	amotion = va_arg(ap,int);
 	dmotion = va_arg(ap,int);
