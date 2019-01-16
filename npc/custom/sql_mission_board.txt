@@ -1073,7 +1073,7 @@ if( strnpcinfo(0) == "mission_board" ){
 	// max amount of mission per page
 	.max_page_size = 30;
 	// max mission per npc take by character
-	.max_mission_per_char = 3;
+	.max_mission_per_char = 1;
 
 	// predefined values.
 	.npc_name$ = strnpcinfo(0);
@@ -1516,5 +1516,8 @@ prontera,162,326,1	duplicate(mission_board)	Honor Mission#14	888
 mid_camp,133,261,5	duplicate(mission_board)	3rd Class Headgear#15	888
 lighthalzen,204,86,3	duplicate(mission_board)	Lighthalzen Mission#16	888
 einbech,140,154,4	duplicate(mission_board)	Einbech Mission#17	888
+louyang,208,166,4	duplicate(mission_board)	Louyang Mission#18	888
+gonryun,178,141,4	duplicate(mission_board)	Gontryun Mission#19	888
+
 
 // prontera,153,285,5	duplicate(mission_board)	Special Mission#100	811
