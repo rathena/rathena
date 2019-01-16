@@ -31,7 +31,8 @@ izlude,152,134,3	script	Wondering Priest#izbb_03	616,{
 	mes "5 x <ITEM>"+getitemname(6961)+"<INFO>6961</INFO></ITEM> or";
 	mes "25 x <ITEM>"+getitemname(6962)+"<INFO>6962</INFO></ITEM> or";
 	mes "1 x <ITEM>"+getitemname(6607)+"<INFO>6607</INFO></ITEM> or";
-	mes "25 x <ITEM>"+getitemname(6608)+"<INFO>6608</INFO></ITEM>";
+	mes "25 x <ITEM>"+getitemname(6608)+"<INFO>6608</INFO></ITEM> or";
+	mes "1 x <ITEM>"+getitemname(6941)+"<INFO>6941</INFO></ITEM>";
 	next;
 	switch(select("Maybe later.",
 		"5 x "+getitemname(6471),
@@ -42,8 +43,9 @@ izlude,152,134,3	script	Wondering Priest#izbb_03	616,{
 		"5 x "+getitemname(6961),
 		"25 x "+getitemname(6962),
 		"1 x "+getitemname(6607),
-		"25 x "+getitemname(6608) )
-	){
+		"25 x "+getitemname(6608),
+		"1 x "+getitemname(6941)
+	)){
 		case 1:
 			mes .@n$;
 			mes "I see you later then.";
@@ -57,6 +59,7 @@ izlude,152,134,3	script	Wondering Priest#izbb_03	616,{
 		case 8: callsub (S_CreateItem, 6962, 25); break;	// 6962 | Old Fuel x 25
 		case 9: callsub (S_CreateItem, 6607, 1); break;	// 6607 | Temporal Crystal x 1
 		case 10: callsub (S_CreateItem, 6608, 25); break;	// 6608 | Coagulated Spells x 25
+		case 11: callsub (S_CreateItem, 6941, 1); break;	// 6941 | Fragments Valkyrie Power x 1
 	}
 	close;
 
