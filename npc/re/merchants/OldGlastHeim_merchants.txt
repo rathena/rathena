@@ -177,11 +177,18 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 	if (.@menu == 3) { // remove effect
 		mes "[Hugin's Magic Master]";
 		mes "To remove the effects from your Temporal Boots, I will require 10 x <ITEM>Coagulated Spell<INFO>6608</INFO></ITEM>.";
-		mes "And I must warn you, removing the effect will also ^FF0000DESTROYS^000000 any cards that you have insert into it.";
 		if(select("Quit", "Continue") == 1)
 			close;
 
+		if (.@card[3] == 0) {
+			next;
+			mes "[Hugin's Magic master]";
+			mes "I think you made a mistake here. These boots have no enchants.";
+			close;
+		}
+
 		if (countitem(6608) < 10) { // requires 10 x Coagulated Spell to remove
+			next;
 			mes "[Hugin's Magic Master]";
 			mes "You don't have 10 x Coagulated Spell.";
 			mes "Come back when you do.";
@@ -194,7 +201,7 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 
 		delitem 6608,10;// Coagulated_Spell
 		delequip EQI_SHOES;
-		getitem .@equip_id,1;
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],0,0,0;
 		equip .@equip_id;
 		close;
 	}
