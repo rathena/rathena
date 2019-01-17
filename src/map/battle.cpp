@@ -5167,6 +5167,12 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 #endif
 	}
 
+	// add any miscellaneous player ATK bonuses
+	if (sd && (skill_damage = pc_skillatk_bonus(sd, skill_id)))
+		ATK_ADDRATE(wd->damage, wd->damage2, skill_damage);
+	if (tsd && (skill_damage = pc_sub_skillatk_bonus(tsd, skill_id)))
+		ATK_ADDRATE(wd->damage, wd->damage2, -skill_damage);
+
 	// Skill damage adjustment
 	if ((skill_damage = battle_skill_damage(src, target, skill_id)) != 0)
 		ATK_ADDRATE(wd->damage, wd->damage2, skill_damage);
@@ -5411,15 +5417,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, sstatus->matk_min);
 		}
 #endif
-		// add any miscellaneous player ATK bonuses
-		if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
-			ATK_ADDRATE(wd.damage, wd.damage2, i);
-			RE_ALLATK_ADDRATE(&wd, i);
-		}
-		if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id))) {
-			ATK_ADDRATE(wd.damage, wd.damage2, -i);
-			RE_ALLATK_ADDRATE(&wd, -i);
-		}
 
 #ifdef RENEWAL
 		// In Renewal we only cardfix to the weapon and equip ATK
