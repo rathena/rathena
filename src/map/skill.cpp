@@ -4270,7 +4270,7 @@ static TIMER_FUNC(skill_timerskill){
 						struct map_session_data *tsd = NULL;
 						if( (tsd = ((TBL_PC*)target)) && !pc_issit(tsd) ) {
 							pc_setsit(tsd);
-							skill_sit(tsd, 1);
+							skill_sit(tsd, true);
 							clif_sitting(&tsd->bl);
 						}
 					}
@@ -17033,41 +17033,47 @@ int skill_autospell(struct map_session_data *sd, uint16 skill_id)
 	return 0;
 }
 
-/*==========================================
- * Sitting skills functions.
- *------------------------------------------*/
+/**
+ * Count the number of players with Gangster Paradise, Peaceful Break, or Happy Break.
+ * @param bl: Player object
+ * @param ap: va_arg list
+ * @return 1 if the player has learned Gangster Paradise, Peaceful Break, or Happy Break otherwise 0
+ */
 static int skill_sit_count(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd;
-	int type =va_arg(ap,int);
-	sd=(struct map_session_data*)bl;
+	struct map_session_data *sd = (struct map_session_data*)bl;
+	int flag = va_arg(ap, int);
 
-	if(!pc_issit(sd))
+	if (!pc_issit(sd))
 		return 0;
 
-	if(type&1 && pc_checkskill(sd,RG_GANGSTER) > 0)
+	if (flag&1 && pc_checkskill(sd, RG_GANGSTER) > 0)
 		return 1;
 
-	if(type&2 && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0))
+	if (flag&2 && (pc_checkskill(sd, TK_HPTIME) > 0 || pc_checkskill(sd, TK_SPTIME) > 0))
 		return 1;
 
 	return 0;
 }
 
-static int skill_sit_in (struct block_list *bl, va_list ap)
+/**
+ * Triggered when a player sits down to activate bonus states.
+ * @param bl: Player object
+ * @param ap: va_arg list
+ * @return 0
+ */
+static int skill_sit_in(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd;
-	int type = va_arg(ap,int);
+	struct map_session_data *sd = (struct map_session_data*)bl;
+	int flag = va_arg(ap, int);
 
-	sd = (struct map_session_data*)bl;
-
-	if(!pc_issit(sd))
+	if (!pc_issit(sd))
 		return 0;
 
-	if(type&1 && pc_checkskill(sd,RG_GANGSTER) > 0)
+	if (flag&1 && pc_checkskill(sd, RG_GANGSTER) > 0)
 		sd->state.gangsterparadise = 1;
 
-	if(type&2 && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0 )) {
+	if (flag&2 && (pc_checkskill(sd, TK_HPTIME) > 0 || pc_checkskill(sd, TK_SPTIME) > 0 )) {
 		sd->state.rest = 1;
 		status_calc_regen(bl, &sd->battle_status, &sd->regen);
 		status_calc_regen_rate(bl, &sd->regen, &sd->sc);
@@ -17076,34 +17082,48 @@ static int skill_sit_in (struct block_list *bl, va_list ap)
 	return 0;
 }
 
-static int skill_sit_out (struct block_list *bl, va_list ap)
+/**
+ * Triggered when a player stands up to deactivate bonus states.
+ * @param bl: Player object
+ * @param ap: va_arg list
+ * @return 0
+ */
+static int skill_sit_out(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd;
-	int type = va_arg(ap,int);
+	struct map_session_data *sd = (struct map_session_data*)bl;
+	int flag = va_arg(ap, int), range = va_arg(ap, int);
 
-	sd = (struct map_session_data*)bl;
+	if (map_foreachinallrange(skill_sit_count, &sd->bl, range, BL_PC, flag) > 1)
+		return 0;
 
-	if(sd->state.gangsterparadise && type&1)
+	if (flag&1 && sd->state.gangsterparadise)
 		sd->state.gangsterparadise = 0;
-	if(sd->state.rest && type&2) {
+	if (flag&2 && sd->state.rest) {
 		sd->state.rest = 0;
 		status_calc_regen(bl, &sd->battle_status, &sd->regen);
 		status_calc_regen_rate(bl, &sd->regen, &sd->sc);
 	}
+
 	return 0;
 }
 
-int skill_sit (struct map_session_data *sd, int type)
+/**
+ * Toggle Sit icon and player bonuses when sitting/standing.
+ * @param sd: Player data
+ * @param sitting: True when sitting or false when standing
+ * @return 0
+ */
+int skill_sit(struct map_session_data *sd, bool sitting)
 {
-	int flag = 0;
-	int range = 0, lv;
+	int flag = 0, range = 0, lv;
+
 	nullpo_ret(sd);
 
-	if((lv = pc_checkskill(sd, RG_GANGSTER)) > 0) {
+	if ((lv = pc_checkskill(sd, RG_GANGSTER)) > 0) {
 		flag |= 1;
 		range = skill_get_splash(RG_GANGSTER, lv);
 	}
-	if((lv = pc_checkskill(sd, TK_HPTIME)) > 0) {
+	if ((lv = pc_checkskill(sd, TK_HPTIME)) > 0) {
 		flag |= 2;
 		range = skill_get_splash(TK_HPTIME, lv);
 	} else if ((lv = pc_checkskill(sd, TK_SPTIME)) > 0) {
@@ -17111,20 +17131,20 @@ int skill_sit (struct map_session_data *sd, int type)
 		range = skill_get_splash(TK_SPTIME, lv);
 	}
 
-	if (type)
+	if (sitting)
 		clif_status_load(&sd->bl, EFST_SIT, 1);
 	else
 		clif_status_load(&sd->bl, EFST_SIT, 0);
 
-	if (!flag) return 0;
+	if (!flag) // No need to count area if no skills are learned.
+		return 0;
 
-	if(type) {
-		if (map_foreachinallrange(skill_sit_count,&sd->bl, range, BL_PC, flag) > 1)
-			map_foreachinallrange(skill_sit_in,&sd->bl, range, BL_PC, flag);
-	} else {
-		if (map_foreachinallrange(skill_sit_count,&sd->bl, range, BL_PC, flag) < 2)
-			map_foreachinallrange(skill_sit_out,&sd->bl, range, BL_PC, flag);
-	}
+	if (sitting) {
+		if (map_foreachinallrange(skill_sit_count, &sd->bl, range, BL_PC, flag) > 1)
+			map_foreachinallrange(skill_sit_in, &sd->bl, range, BL_PC, flag);
+	} else
+		map_foreachinallrange(skill_sit_out, &sd->bl, range, BL_PC, flag, range);
+
 	return 0;
 }
 
