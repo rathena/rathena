@@ -185,3 +185,4 @@ L_Mark:
 lighthalzen,220,310,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz02	852
 lighthalzen,154,100,5	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz03	852
 lighthalzen,307,224,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz04	852
+lighthalzen,247,82,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz05	852
