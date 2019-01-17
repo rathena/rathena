@@ -9,3 +9,8 @@ prontera,150,185,5	script	Destroy Item	603,{
 	}
 	end;
 }
+
+prontera,163,184,3	script	Maximize	604,{
+	sc_start SC_MAXIMIZEPOWER,360000,5;
+	end;
+}
