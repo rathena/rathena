@@ -1034,7 +1034,10 @@ spl_in01,104,56,3	script	Aide Arioss#edq	437,3,3,{
 			next;
 			mes "[Aide Arioss]";
 			mes "It can't compare with the effort you have put in for us... but please accept our token of friendship.";
-			getexp 1500000,350000;
+			if (checkre(3))
+				getexp 1500000,350000;
+			else
+				getexp 150000,35000;
 			getitem 6081,10; //Splendide_Coin
 			set ins_nyd,131;
 			mes "[Aide Arioss]";
@@ -1270,7 +1273,10 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 			next;
 			mes "[Neat Etorr]";
 			mes "It's not a lot, but please this as a token of our appreciation.";
-			getexp 1500000,350000;
+			if (checkre(3))
+				getexp 1500000,350000;
+			else
+				getexp 150000,35000;
 			getitem 6080,10; //Manuk_Coin
 			set ins_nyd,132;
 			close;
