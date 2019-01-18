@@ -55,3 +55,8 @@ REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `pric
 
 REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
 (18910, 'Isabella_Blue_Ear', 'Isabella Blue Ear', 4, 10, NULL, 300, NULL, 8, NULL, 1, 4294967295, 63, 2, 256, NULL, '1', 1, 1032, 'bonus2 bSubRace,RC_DemiHuman,5; bonus2 bAddSize,Size_Medium,10; if(getrefine()>=12){ bonus bShortWeaponDamageReturn,5; }', NULL, NULL);
+
+
+REPLACE INTO `mission_board` (`id`, `title`, `desc`, `mob_list`, `mob_qty`, `item_list`, `item_qty`, `class_limitation`, `class_branch`, `min_lv`, `max_lv`, `repeat`, `duration`, `reward_list`, `reward_qty`, `base_exp`, `job_exp`, `zeny`, `cash`, `aid`, `name`, `time_update`, `npc_id`, `redo_delay`) VALUES
+(1545814020, 'Isabella Brown Ear [1]', 'In my travels, I saw a small girl wearing a very sweet design ribbon. I already made the red version, now i want to recolour it to brown. - Ribbon Seemstress', '', '', '|18908|983|980|', '|1|10|10|', 1023, 31, 50, 175, 0, 0, '|18909|', '|1|', 100000, 100000, 500000, 0, 2000000, '<GM>Nubs', '2018-12-26 00:01:00', '|4|', 21),
+(1545814030, 'Isabella Blue Ear [1]', 'In my travels, I saw a small girl wearing a very sweet design ribbon. I already made the red version, now i want to recolour it to blue. - Ribbon Seemstress', '', '', '|18908|978|', '|1|20|', 1023, 31, 50, 175, 0, 0, '|18910|', '|1|', 100000, 100000, 500000, 0, 2000000, '<GM>Nubs', '2018-12-26 00:01:00', '|4|', 21);
