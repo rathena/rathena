@@ -1729,18 +1729,36 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 	if (md && md->guardian_data)
 		damage -= damage * (md->guardian_data->castle->defense/100) * battle_config.castle_defense_rate/100;
 	*/
-	if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
-		if (flag&BF_WEAPON)
-			damage = damage * battle_config.gvg_weapon_damage_rate / 100;
-		if (flag&BF_MAGIC)
-			damage = damage * battle_config.gvg_magic_damage_rate / 100;
-		if (flag&BF_MISC)
-			damage = damage * battle_config.gvg_misc_damage_rate / 100;
-	} else { //Normal attacks get reductions based on range.
-		if (flag & BF_SHORT)
-			damage = damage * battle_config.gvg_short_damage_rate / 100;
-		if (flag & BF_LONG)
-			damage = damage * battle_config.gvg_long_damage_rate / 100;
+	// special reduction for TE
+	if(map_getmapflag(bl->m, MF_GVG_TE_CASTLE) || map_getmapflag(bl->m, MF_GVG_TE)) {
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag&BF_WEAPON)
+				damage = damage * battle_config.gvg_te_weapon_damage_rate / 100;
+			if (flag&BF_MAGIC)
+				damage = damage * battle_config.gvg_te_magic_damage_rate / 100;
+			if (flag&BF_MISC)
+				damage = damage * battle_config.gvg_te_misc_damage_rate / 100;
+		} else { //Normal attacks get reductions based on range.
+			if (flag & BF_SHORT)
+				damage = damage * battle_config.gvg_te_short_damage_rate / 100;
+			if (flag & BF_LONG)
+				damage = damage * battle_config.gvg_te_long_damage_rate / 100;
+		}
+	}
+	else {
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag&BF_WEAPON)
+				damage = damage * battle_config.gvg_weapon_damage_rate / 100;
+			if (flag&BF_MAGIC)
+				damage = damage * battle_config.gvg_magic_damage_rate / 100;
+			if (flag&BF_MISC)
+				damage = damage * battle_config.gvg_misc_damage_rate / 100;
+		} else { //Normal attacks get reductions based on range.
+			if (flag & BF_SHORT)
+				damage = damage * battle_config.gvg_short_damage_rate / 100;
+			if (flag & BF_LONG)
+				damage = damage * battle_config.gvg_long_damage_rate / 100;
+		}
 	}
 	damage = i64max(damage,1);
 	return damage;
@@ -8178,6 +8196,11 @@ static const struct _battle_data {
 	{ "gvg_weapon_attack_damage_rate",      &battle_config.gvg_weapon_damage_rate,          60,     0,      INT_MAX,        },
 	{ "gvg_magic_attack_damage_rate",       &battle_config.gvg_magic_damage_rate,           60,     0,      INT_MAX,        },
 	{ "gvg_misc_attack_damage_rate",        &battle_config.gvg_misc_damage_rate,            60,     0,      INT_MAX,        },
+	{ "gvg_te_short_attack_damage_rate",    &battle_config.gvg_te_short_damage_rate,        80,     0,      INT_MAX,        },
+	{ "gvg_te_long_attack_damage_rate",     &battle_config.gvg_te_long_damage_rate,         80,     0,      INT_MAX,        },
+	{ "gvg_te_weapon_attack_damage_rate",   &battle_config.gvg_te_weapon_damage_rate,       60,     0,      INT_MAX,        },
+	{ "gvg_te_magic_attack_damage_rate",    &battle_config.gvg_te_magic_damage_rate,        60,     0,      INT_MAX,        },
+	{ "gvg_te_misc_attack_damage_rate",     &battle_config.gvg_te_misc_damage_rate,         60,     0,      INT_MAX,        },
 	{ "gvg_flee_penalty",                   &battle_config.gvg_flee_penalty,                20,     0,      INT_MAX,        },
 	{ "pk_short_attack_damage_rate",        &battle_config.pk_short_damage_rate,            80,     0,      INT_MAX,        },
 	{ "pk_long_attack_damage_rate",         &battle_config.pk_long_damage_rate,             70,     0,      INT_MAX,        },
