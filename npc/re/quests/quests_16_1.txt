@@ -144,7 +144,7 @@ prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	}
 
 OnTouch:
-	if (banquet_main_quest == 0)
+	if (banquet_main_quest == 0 && BaseLevel > 99 && (ep13_ryu > 99 || ep13_start > 99))
 		npctalk "Wait! You must be... " + strcharinfo(0) + ". I have something to tell you!", "", bc_self;
 	else
 		npctalk "I am looking for the hero who returned from the expedition...", "", bc_self;
