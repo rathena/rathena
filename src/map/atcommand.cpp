@@ -8490,6 +8490,8 @@ ACMD_FUNC(cash)
 			}
 			else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
 		} else {
+			if (-value > sd->kafraPoints) //By command, if cash < value, force it to remove all
+				value = -sd->kafraPoints;
 			if( (ret=pc_paycash(sd, 0, -value, LOG_TYPE_COMMAND)) >= 0){
 				sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
 				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
