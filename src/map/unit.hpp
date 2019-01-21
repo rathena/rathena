@@ -57,6 +57,7 @@ struct unit_data {
 		unsigned walk_script : 1;
 		unsigned blockedmove : 1;
 		unsigned blockedskill : 1;
+		unsigned ignore_cell_stack_limit : 1;
 	} state;
 	char walk_done_event[EVENT_NAME_LENGTH];
 };

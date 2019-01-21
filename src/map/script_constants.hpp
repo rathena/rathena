@@ -3683,6 +3683,7 @@
 	export_constant(AI_ZANZOU);
 	export_constant(AI_LEGION);
 	export_constant(AI_FAW);
+	export_constant(AI_SPECIAL);
 
 	/* battle flags */
 	export_constant(BF_WEAPON);

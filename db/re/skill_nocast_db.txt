@@ -19,6 +19,7 @@
 // 1024 - cannot be used in zone 6 maps
 // 2048 - cannot be used in zone 7 maps
 // 4096 - cannot be used in zone 8 maps
+// 8192 - cannot be used in zone 9 maps
 //
 // Example:
 // 8,6  // Endure cannot be used in PvP and GvG maps (2+4)
@@ -222,3 +223,17 @@
 409,4096 // WE_CALLPARENT
 410,4096 // WE_CALLBABY
 5063,4096	//WE_CALLALLFAMILY
+
+//----------------------------------------------------------------------------
+// Zone 9 - Wave Mode
+//----------------------------------------------------------------------------
+26,8192	//AL_TELEPORT
+87,8192	//WZ_ICEWALL
+197,8192	//NPC_EMOTION
+219,8192	//RG_INTIMIDATE
+405,8192	//PF_SPIDERWEB
+474,8192	//NPC_EMOTION_ON
+674,8192	//NPC_EXPULSION
+2284,8192	//SC_FATALMENACE
+2294,8192	//SC_IGNORANCE
+2300,8192	//SC_DIMENSIONDOOR

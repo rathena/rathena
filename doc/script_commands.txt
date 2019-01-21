@@ -168,6 +168,7 @@ player who triggers the script must be within 'trigger' range for the event to
 work.
 
 There are two optional fields for monster size and AI.
+Natural enemies for AI monsters are normal monsters.
 
 <mob size> can be:
 	Size_Small	(0)
@@ -182,6 +183,7 @@ There are two optional fields for monster size and AI.
 	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
 	AI_LEGION	(5)		(Sera skill)
 	AI_FAW		(6)		(Mechanic skill)
+	AI_SPECIAL	(7)		Normal monsters will ignore attack from AI_SPECIAL monsters
 
 Alternately, a monster spawned using 'boss_monster' instead of 'monster' is able
 to be detected on the map with the SC_BOSSMAPINFO status (used by Convex Mirror).
@@ -6168,6 +6170,7 @@ The variable 'killedgid' is set to the ID (unique mob game ID) of the monster ki
 	AI_ZANZOU	(4)		(Kagerou/Oboro skill)
 	AI_LEGION	(5)		(Sera skill)
 	AI_FAW		(6)		(Mechanic skill)
+	AI_SPECIAL	(7)		Normal monsters will ignore attack from AI_SPECIAL monsters
 
     monster "place",60,100,"Poring",1002,1,"NPCNAME::OnLabel";
 
@@ -6371,6 +6374,37 @@ Examples:
 
 	// Deletes Executioner's Mitten from Rybio.
 	delmonsterdrop 1201,7017;
+
+---------------------------------------
+
+*mobchat <GID>,<Line_ID>{,<color>,<message>};
+
+This command will make the monster with the given <GID> say a message.
+If <Line_ID> is 0, the monster will say the <message> with the given <color>.
+Otherwise it will say the message from 'Line_ID' in mob_chat_db.txt with the defined color.
+
+Examples:
+	// The monster says the message in 0xFF0000 color defined in mob_chat_db.txt "Don't you run away!"
+	mobchat $@mobid[0],5;
+
+	// The monster says the message "Don't you run away!" in 0x00FF00 color
+	mobchat $@mobid[0],0,0x00FF00,"Don't you run away!";
+
+---------------------------------------
+
+*mob_setidleevent <GID>,<event>;
+
+This command will attach an event label to the monster with the given <GID> which will execute
+when the <GID> is idle.
+
+Example:
+	monster "prontera",0,0,"Quest Poring",1002,1;
+	mob_setidleevent $@mobid[0], "NPC NAME::OnIdle";
+	end;
+
+OnIdle:
+	mobchat getattachedrid(),0,0x00FF00,"I'm IDLE!";
+	end;
 
 ---------------------------------------
 
@@ -7754,10 +7788,10 @@ flag: Specify target
 
 ---------------------------------------
 
-*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>};
-*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>};
-*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>};
-*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>};
+*unitskilluseid <GID>,<skill id>,<skill lvl>{,<target id>,<casttime>,<cancel>};
+*unitskilluseid <GID>,"<skill name>",<skill lvl>{,<target id>,<casttime>,<cancel>};
+*unitskillusepos <GID>,<skill id>,<skill lvl>,<x>,<y>{,<casttime>,<cancel>};
+*unitskillusepos <GID>,"<skill name>",<skill lvl>,<x>,<y>{,<casttime>,<cancel>};
 
 This is the replacement of the older commands, these use the same values for
 GID as the other unit* commands (See 'GID').
@@ -7767,12 +7801,27 @@ Cast time is the amount of seconds to add or remove from the skill. Use a positi
 add and negative value to subtract. Using 0 or no value will use the default skill cast time.
 For the position, the x and y are given in the UnitSkillUsePos.
 
+<cancel> define if the cast can be interrupted when hit (true/false).
+By default <cancel> parameter take the value defined in skill_db.txt
+
 ---------------------------------------
 
 *unitexists <GID>;
 
 Checks if the given Game ID exists. Returns false if the object doesn't exist, or true if
 it does.
+
+---------------------------------------
+
+*unitignorecellstack <GID>{,<flag>};
+
+The unit with the given GID will ignore the stack limit
+(max number of characters that can stack within a single cell) defined by
+'official_cell_stack_limit' in misc.conf
+
+<flag>
+	true	(default)	Ignore the stack limit
+	false				Return to original state
 
 ---------------------------------------
 

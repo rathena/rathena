@@ -1513,6 +1513,10 @@ int mob_unlocktarget(struct mob_data *md, unsigned int tick)
 		//Because it is not unset when the mob finishes walking.
 		md->state.skillstate = MSS_IDLE;
 	case MSS_IDLE:
+		if( md->ud.walktimer == INVALID_TIMER && md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0 ){
+			md->idle_event[0] = 0;
+			break;
+		}
 		// Idle skill.
 		if (!(++md->ud.walk_count%IDLE_SKILL_INTERVAL) && mobskill_use(md, tick, -1))
 			break;
@@ -2041,6 +2045,15 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 		return 0;
 	}
 
+	if (md->ud.walktimer == INVALID_TIMER) {
+		// Because it is not unset when the mob finishes walking.
+		md->state.skillstate = MSS_IDLE;
+		if (md->idle_event[0] && npc_event_do_id( md->idle_event, md->bl.id ) > 0) {
+			md->idle_event[0] = 0;
+			return 0;
+		}
+	}
+
 	if( DIFF_TICK(md->next_walktime,tick) < 0 && status_has_mode(&md->status,MD_CANMOVE) && unit_can_move(&md->bl) )
 	{
 		if( rnd()%1000 < MOB_LAZYMOVEPERC(md) )
@@ -2048,8 +2061,6 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	}
 	else if( md->ud.walktimer == INVALID_TIMER )
 	{
-		//Because it is not unset when the mob finishes walking.
-		md->state.skillstate = MSS_IDLE;
 		if( rnd()%1000 < MOB_LAZYSKILLPERC(md) ) //Chance to do a mob's idle skill.
 			mobskill_use(md, tick, -1);
 	}
@@ -3537,6 +3548,24 @@ struct mob_data *mob_getfriendstatus(struct mob_data *md,int cond1,int cond2)
 	return fr;
 }
 
+// Display message from mob_chat_db.txt
+bool mob_chat_display_message (struct mob_data *md, short msg_id) {
+	struct mob_chat *mc = mob_chat(msg_id);
+
+	if (mc) {
+		std::string name = md->name, output;
+		std::size_t unique = name.find("#");
+
+		if (unique != std::string::npos)
+			name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
+		output = name + " : " + mc->msg;
+
+		clif_messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
+		return true;
+	}
+	return false;
+}
+
 /*==========================================
  * Skill use judging
  *------------------------------------------*/
@@ -3736,18 +3765,7 @@ int mobskill_use(struct mob_data *md, unsigned int tick, int event)
 		}
 		//Skill used. Post-setups...
 		if ( ms[ i ].msg_id ){ //Display color message [SnakeDrak]
-			struct mob_chat *mc = mob_chat(ms[i].msg_id);
-
-			if (mc) {
-				std::string name = md->name, output;
-				std::size_t unique = name.find("#");
-
-				if (unique != std::string::npos)
-					name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
-				output = name + " : " + mc->msg;
-
-				clif_messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
-			}
+			mob_chat_display_message(md, ms[i].msg_id);
 		}
 		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
 			for (j = 0; j < md->db->maxskill; j++)

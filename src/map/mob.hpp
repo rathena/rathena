@@ -232,6 +232,7 @@ struct mob_data {
 	int8 skill_idx; // Index of last used skill from db->skill[]
 	unsigned int skilldelay[MAX_MOBSKILL];
 	char npc_event[EVENT_NAME_LENGTH];
+	char idle_event[EVENT_NAME_LENGTH];
 	/**
 	 * Did this monster summon something?
 	 * Used to flag summon deletions, saves a worth amount of memory
@@ -353,6 +354,7 @@ int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);
 
+bool mob_chat_display_message (struct mob_data *md, short msg_id);
 int mobskill_use(struct mob_data *md,unsigned int tick,int event);
 int mobskill_event(struct mob_data *md,struct block_list *src,unsigned int tick, int flag);
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);

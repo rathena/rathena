@@ -18444,11 +18444,12 @@ BUILDIN_FUNC(unitemote)
 
 /// Makes the unit cast the skill on the target or self if no target is specified.
 ///
-/// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>,<casttime>};
-/// unitskilluseid <unit_id>,"<skill name>",<skill_lv>{,<target_id>,<casttime>};
+/// unitskilluseid <unit_id>,<skill_id>,<skill_lv>{,<target_id>,<casttime>,<cancel>};
+/// unitskilluseid <unit_id>,"<skill name>",<skill_lv>{,<target_id>,<casttime>,<cancel>};
 BUILDIN_FUNC(unitskilluseid)
 {
 	int unit_id, target_id, casttime;
+	bool cancel;
 	uint16 skill_id, skill_lv;
 	struct block_list* bl;
 	struct script_data *data;
@@ -18460,6 +18461,7 @@ BUILDIN_FUNC(unitskilluseid)
 	skill_lv = script_getnum(st,4);
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
+	cancel = ( script_hasdata(st,7) ? script_getnum(st,7) > 0 : skill_get_castcancel(skill_id) );
 	
 	if(script_rid2bl(2,bl)){
 		if (bl->type == BL_NPC) {
@@ -18468,7 +18470,7 @@ BUILDIN_FUNC(unitskilluseid)
 			else
 				status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
 		}
-		unit_skilluse_id2(bl, target_id, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
+		unit_skilluse_id2(bl, target_id, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), cancel);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -18476,11 +18478,12 @@ BUILDIN_FUNC(unitskilluseid)
 
 /// Makes the unit cast the skill on the target position.
 ///
-/// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>{,<casttime>};
-/// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>{,<casttime>};
+/// unitskillusepos <unit_id>,<skill_id>,<skill_lv>,<target_x>,<target_y>{,<casttime>,<cancel>};
+/// unitskillusepos <unit_id>,"<skill name>",<skill_lv>,<target_x>,<target_y>{,<casttime>,<cancel>};
 BUILDIN_FUNC(unitskillusepos)
 {
 	int skill_x, skill_y, casttime;
+	bool cancel;
 	uint16 skill_id, skill_lv;
 	struct block_list* bl;
 	struct script_data *data;
@@ -18492,6 +18495,7 @@ BUILDIN_FUNC(unitskillusepos)
 	skill_x  = script_getnum(st,5);
 	skill_y  = script_getnum(st,6);
 	casttime = ( script_hasdata(st,7) ? script_getnum(st,7) : 0 );
+	cancel = ( script_hasdata(st,8) ? script_getnum(st,8) > 0 : skill_get_castcancel(skill_id) );
 
 	if(script_rid2bl(2,bl)){
 		if (bl->type == BL_NPC) {
@@ -18500,7 +18504,7 @@ BUILDIN_FUNC(unitskillusepos)
 			else
 				status_calc_npc(((TBL_NPC*)bl), SCO_NONE);
 		}
-		unit_skilluse_pos2(bl, skill_x, skill_y, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), skill_get_castcancel(skill_id));
+		unit_skilluse_pos2(bl, skill_x, skill_y, skill_id, skill_lv, (casttime * 1000) + skill_castfix(bl, skill_id, skill_lv), cancel);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -23956,6 +23960,83 @@ BUILDIN_FUNC(identifyall) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*==========================================
+ * mob_setidleevent( <monster game ID>, "<event label>" )
+ *------------------------------------------*/
+BUILDIN_FUNC(mob_setidleevent){
+	struct block_list* bl;
+
+	if( !script_rid2bl( 2, bl ) ){
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if( bl->type != BL_MOB ){
+		ShowError( "buildin_mob_setidleevent: the target GID was not a monster.\n" );
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct mob_data* md = (struct mob_data*)bl;
+	const char* idle_event = script_getstr( st, 3 );
+
+	check_event( st, idle_event );
+	safestrncpy( md->idle_event, idle_event, EVENT_NAME_LENGTH );
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*==========================================
+ * unitignorecellstack <unit game ID>{,<flag>};
+ *------------------------------------------*/
+BUILDIN_FUNC(unitignorecellstack)
+{
+	struct block_list *bl = NULL;
+
+	if (script_getnum(st, 2))
+		bl = map_id2bl(script_getnum(st,2));
+	else
+		bl = map_id2bl(st->rid);
+
+	if (bl) {
+		struct unit_data *ud = unit_bl2ud(bl);
+		bool ignore = script_hasdata(st, 3) ? (script_getnum(st, 3) != 0) : true;
+
+		if (ud)
+			ud->state.ignore_cell_stack_limit = ignore;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(mobchat)
+{
+	struct block_list* bl;
+
+	if (!script_rid2bl(2,bl) || bl->type != BL_MOB)
+		return SCRIPT_CMD_SUCCESS;
+
+	short msg_id = script_getnum(st, 3);
+	if (msg_id < 0)
+		return SCRIPT_CMD_SUCCESS;
+
+	if (msg_id == 0) {
+		if (!script_hasdata(st, 4) || !script_hasdata(st, 5))
+			return SCRIPT_CMD_SUCCESS;
+		
+		const char *message;
+		int color = script_getnum(st,4);
+		message = script_getstr(st,5);
+
+		clif_messagecolor(bl, color, message, true, AREA_CHAT_WOC);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	TBL_MOB* md = map_id2md(bl->id);
+	if (md)
+		mob_chat_display_message(md, msg_id);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24397,8 +24478,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(unitstopwalk,"i?"),
 	BUILDIN_DEF(unittalk,"is?"),
 	BUILDIN_DEF_DEPRECATED(unitemote,"ii","20170811"),
-	BUILDIN_DEF(unitskilluseid,"ivi??"), // originally by Qamera [Celest]
-	BUILDIN_DEF(unitskillusepos,"iviii?"), // [Celest]
+	BUILDIN_DEF(unitskilluseid,"ivi???"), // originally by Qamera [Celest]
+	BUILDIN_DEF(unitskillusepos,"iviii??"), // [Celest]
 // <--- [zBuffer] List of unit control commands
 	BUILDIN_DEF(sleep,"i"),
 	BUILDIN_DEF(sleep2,"i"),
@@ -24616,6 +24697,11 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(mail, "isss*"),
 	BUILDIN_DEF(open_roulette,"?"),
 	BUILDIN_DEF(identifyall,"??"),
+
+	BUILDIN_DEF(mob_setidleevent, "is"),
+	BUILDIN_DEF(mobchat, "ii??"),
+	BUILDIN_DEF(unitignorecellstack,"i?"),
+	
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

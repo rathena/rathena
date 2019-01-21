@@ -26,8 +26,8 @@
 19,Devil's Tower,3600,300,1@tnm1,50,104,1@tnm2,1@tnm3
 20,Assault on the Airship,3600,300,1@air1,244,73,1@air2
 21,Fenrir and Sarah,3600,300,1@glast,367,304
-// 22,Wave Mode - Forest,3600,300,1@def01,50,21
-// 23,Wave Mode - Sky,3600,300,1@def02,29,35
+22,Wave Mode - Forest,3600,300,1@def01,50,21
+23,Wave Mode - Sky,3600,300,1@def02,29,35
 // 24,Nightmarish Jitterbug,3600,300,1@jtb,16,17
 25,Isle of Bios,3600,300,1@dth1,17,93,1@dth2,1@dth3
 26,Morse's Cave,3600,300,1@rev,26,181
