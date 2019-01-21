@@ -17,10 +17,10 @@
 //= 1.5 Added Hercules support
 //============================================================
 
-verus04,72,123,5	script	CharlestonTest	4_F_CHARLESTON02,{
-	instance_destroy();
-	end;
-}
+// verus04,72,123,5	script	CharlestonTest	4_F_CHARLESTON02,{
+// 	instance_destroy();
+// 	end;
+// }
 
 verus04,75,114,5	script	Charleston#charleston2	4_F_CHARLESTON02,{
 	if (checkquest(13186) == -1) {
@@ -1856,7 +1856,7 @@ OnEnable:
 				close2;
 				cutin "shaloshi01.bmp",255;
 				warp "verus04",77,119;
-				instance_destroy instance_id();
+				// instance_destroy instance_id();
 				end;
 			}
 	}

@@ -1,0 +1,5 @@
+guild_vs1,45,50,3	script	Maximization	604,{
+	sc_start SC_MAXIMIZEPOWER,30000,5;
+	end;
+}
+guild_vs1,49,55,3	duplicate(Healer)	Healer#test	501
