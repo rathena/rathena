@@ -1707,7 +1707,7 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
  * Returns true on success and sets x and y to cell found.
  * Otherwise returns false and x and y are not changed.
  * type: Types of block to count
- * flag: 
+ * flag:
  *		0x1 - only count standing units
  *------------------------------------------*/
 bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
@@ -1734,7 +1734,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
 				*y = ty;
 				return true;
 			}
-		} 
+		}
 		//Full diagonal search
 		else if(dir%2 == 1 && costrange%MOVE_DIAGONAL_COST == 0) {
 			tx = *x+dx*(costrange/MOVE_DIAGONAL_COST);
@@ -1859,7 +1859,7 @@ static DBData create_charid2nick(DBKey key, va_list args)
 void map_addnickdb(int charid, const char* nick)
 {
 	struct charid2nick* p;
-	
+
 	if( map_charid2sd(charid) )
 		return;// already online
 
@@ -2065,10 +2065,10 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SV_ROOTTWIST, INVALID_TIMER);
 		// Remove visuals effect from headgear
-		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER); 
-		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER); 
-		status_change_end(&sd->bl, SC_STRANGELIGHTS, INVALID_TIMER); 
-		status_change_end(&sd->bl, SC_DECORATION_OF_MUSIC, INVALID_TIMER); 
+		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_STRANGELIGHTS, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_DECORATION_OF_MUSIC, INVALID_TIMER);
 		if (battle_config.debuff_on_logout&1) { //Remove negative buffs
 			status_change_end(&sd->bl, SC_ORCISH, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_STRIPWEAPON, INVALID_TIMER);
@@ -4648,6 +4648,9 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			}
 			mapdata->flag[mapflag] = status;
 			break;
+		case MF_PVP_TE:
+			mapdata->flag[mapflag] = status; // Must come first to properly set map property
+			break;
 		case MF_PVP:
 			mapdata->flag[mapflag] = status; // Must come first to properly set map property
 			if (!status) {
@@ -5237,7 +5240,7 @@ int do_init(int argc, char *argv[])
 	add_timer_func_list(map_clearflooritem_timer, "map_clearflooritem_timer");
 	add_timer_func_list(map_removemobs_timer, "map_removemobs_timer");
 	add_timer_interval(gettick()+1000, map_freeblock_timer, 0, 0, 60*1000);
-	
+
 	map_do_init_msg();
 	do_init_path();
 	do_init_atcommand();
