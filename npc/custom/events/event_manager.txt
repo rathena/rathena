@@ -452,7 +452,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 
 			if ( .register_count > 1 ) end;
 			announce "[Event Manager] Congratulations ~ ! The Winner of this round of <Last Man Standing (PvP)> is "+rid2name(.register_aid),bc_all | bc_blue;
-			getitem .prize, 5, .register_aid; // winner prize
+			getitem .prize, 15, .register_aid; // winner prize
 			warp "SavePoint", 0,0, getcharid( 0, rid2name( .register_aid ) );
 			goto Reset_Game;
 		}

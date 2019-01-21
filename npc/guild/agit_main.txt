@@ -157,7 +157,7 @@ OnAgitEnd:
 		setarray .@unique_ids[0],0;
 		setarray .@unique_char[0],0;
 		setarray .@items[0], 8500, 8501;
-		setarray .@items_count[0], 1, 5;
+		setarray .@items_count[0], 1, 10;
 		.@sender$ = "WoE:FE Manager";
 		.@title$ = "Congrats for WoE:FE Win!";
 		.@body_good$ = "Congratulations for Winning\r\n--------------------------------\r\n[WoE: First Edition - Neuschwanstein Castle]\r\n--------------------------------\r\n\r\nWe from the [WoE Managers] will also give you\r\nsome extra insentives.\r\n\r\nHave a nice day.";

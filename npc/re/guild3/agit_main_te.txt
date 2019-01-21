@@ -133,7 +133,7 @@ OnAgitEnd3:
 		setarray .@block[0],9999,4050,4051,4052,4190,4191,4211,4212,4215,4218,4220,4223,4224,4229,4239,4240,4241,4242,4054,4055,4056,4057,4058,4059,4066,4067,4068,4069,4070,4071,4072,4060,4061,4062,4063,4064,4065,4073,4074,4075,4076,4077,4078,4079,4096,4097,4098,4099,4100,4101,4102,4103,4104,4105,4106,4107,4108;
 
 		setarray .@items[0], 8500, 8501;
-		setarray .@items_count[0], 1, 5;
+		setarray .@items_count[0], 1, 10;
 		.@sender$ = "WoE:FE Manager";
 		.@title$ = "Congrats for WoE:FE Win!";
 		.@body_good$ = "Congratulations for Winning\r\n--------------------------------\r\n[WoE: Training Edition - Gaebolg Castle]\r\n--------------------------------\r\n\r\nWe from the [WoE Managers] will also give you\r\nsome extra insentives.\r\n\r\nHave a nice day.";
