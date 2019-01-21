@@ -3355,6 +3355,13 @@ guild specified by the ID. 0 if the character is not a guild master of any guild
 
 ---------------------------------------
 
+*is_guild_leader({<guild ID>})
+
+This command will return true if the player attached to the script is the leader
+of his/her guild, or, if a guild ID is specified, of that guild.
+
+---------------------------------------
+
 *getcastlename("<map name>")
 
 This function returns the name of the castle when given the map name for that
@@ -3370,29 +3377,29 @@ to by its map name. Castle information is stored in `guild_castle` SQL table.
 
 Types of data correspond to `guild_castle` table columns:
 
- 1 - `guild_id`   - Guild ID.
- 2 - `economy`    - Castle Economy score.
- 3 - `defense`    - Castle Defense score.
- 4 - `triggerE`   - Number of times the economy was invested in today.
- 5 - `triggerD`   - Number of times the defense was invested in today.
- 6 - `nextTime`   - unused
- 7 - `payTime`    - unused
- 8 - `createTime` - unused
- 9 - `visibleC`   - Is 1 if a Kafra was hired for this castle, 0 otherwise.
-10 - `visibleG0`  - Is 1 if the 1st guardian is present (Soldier Guardian)
-11 - `visibleG1`  - Is 1 if the 2nd guardian is present (Soldier Guardian)
-12 - `visibleG2`  - Is 1 if the 3rd guardian is present (Soldier Guardian)
-13 - `visibleG3`  - Is 1 if the 4th guardian is present (Archer Guardian)
-14 - `visibleG4`  - Is 1 if the 5th guardian is present (Archer Guardian)
-15 - `visibleG5`  - Is 1 if the 6th guardian is present (Knight Guardian)
-16 - `visibleG6`  - Is 1 if the 7th guardian is present (Knight Guardian)
-17 - `visibleG7`  - Is 1 if the 8th guardian is present (Knight Guardian)
+CD_GUILD_ID          - Guild ID.
+CD_CURRENT_ECONOMY   - Castle Economy score.
+CD_CURRENT_DEFENSE   - Castle Defense score.
+CD_INVESTED_ECONOMY  - Number of times the economy was invested in today.
+CD_INVESTED_DEFENSE  - Number of times the defense was invested in today.
+CD_NEXT_TIME         - unused
+CD_PAY_TIME          - unused
+CD_CREATE_TIME       - unused
+CD_ENABLED_KAFRA     - Is 1 if a Kafra was hired for this castle, 0 otherwise.
+CD_ENABLED_GUARDIAN0 - Is 1 if the 1st guardian is present (Soldier Guardian)
+CD_ENABLED_GUARDIAN1 - Is 1 if the 2nd guardian is present (Soldier Guardian)
+CD_ENABLED_GUARDIAN2 - Is 1 if the 3rd guardian is present (Soldier Guardian)
+CD_ENABLED_GUARDIAN3 - Is 1 if the 4th guardian is present (Archer Guardian)
+CD_ENABLED_GUARDIAN4 - Is 1 if the 5th guardian is present (Archer Guardian)
+CD_ENABLED_GUARDIAN5 - Is 1 if the 6th guardian is present (Knight Guardian)
+CD_ENABLED_GUARDIAN6 - Is 1 if the 7th guardian is present (Knight Guardian)
+CD_ENABLED_GUARDIAN7 - Is 1 if the 8th guardian is present (Knight Guardian)
 
 All types of data have their meaning determined by War of Emperium scripts,
 with exception of:
- - `guild_id` that is always considered ID of the guild that owns the castle,
- - `defense` that is used in Guardians & Emperium HP calculations,
- - `visibleG` that is always considered to hold guardian presence bits.
+ - CD_GUILD_ID that is always considered ID of the guild that owns the castle,
+ - CD_CURRENT_DEFENSE that is used in Guardians & Emperium HP calculations,
+ - CD_ENABLED_GUARDIANX that is always considered to hold guardian presence bits.
 
 The 'setcastledata' command will behave identically, but instead of returning
 values for the specified types of accessible data, it will alter them and cause
@@ -5634,6 +5641,7 @@ with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
 they are not currently documented.
 
 The duration of the status is given in <ticks>, or milleseconds.
+Use INFINITE_TICK for infinite duration.
 
 Certain status changes take an additional parameter <value 1>, which typically
 modifies player stats by the given number or percentage. This differs for each
@@ -7155,6 +7163,9 @@ For 'skill_damage' mapflag:
 	- Setting the flag here will adjust the global (all skills) damage on the map.
 	- <zone> is the -100 to 100000 damage adjustment value of the skills.
 	- See 'getmapflag' for the different <type> values.
+For 'skill_duration' mapflag:
+	- <zone> is the skill ID to adjust.
+	- <type> is the percentage of adjustment from 0 to 100000.
 
 ---------------------------------------
 
@@ -7501,11 +7512,12 @@ This command will display a picture, usually an NPC illustration, also called
 cutin, for the currently attached client. The position parameter determines the
 placement of the illustration and takes following values:
 
-	0 - bottom left corner
-	1 - bottom middle
-	2 - bottom right corner
-	3 - middle of screen in a movable window with an empty title bar
-	4 - middle of screen without the window header, but still movable
+	0	bottom left corner
+	1	bottom middle
+	2	bottom right corner
+	3	middle of screen in a movable window with an empty title bar
+	4	middle of screen without the window header, but still movable
+	255	clear all displayed cutins
 
 The picture is read from data\texture\유저인터페이스\illust, from both the GRF archive
 and data folder, and is required to be a bitmap. The file extension .bmp can be
@@ -7680,6 +7692,28 @@ and attempt to execute a source-defined command.
 
 The three .@atcmd_***** variables will NOT be set when invoking script-bound atcommands
 in this way.
+
+---------------------------------------
+
+*camerainfo <range>,<rotation>,<latitude>{,<char id>};
+
+This command will update the client's camera information with the given values where
+the client can be the attached character or the player given by the char id parameter.
+Note: This requires 2016-05-25aRagexeRE or newer.
+
+The values given will be divided by 100 and transmitted as floating-point number.
+
+	range		The zoomfactor of the camera.
+				Default: 230000 (230.0) when fully zoomed in
+				Maximum: 400000 (400.0) when fully zoomed out
+
+	rotation	The rotation of the camera.
+				Default: 0 (0.0) when no rotation is applied
+				Maximum: 360000 (360.0°) when fully rotated
+
+	latitude	The angle of the camera.
+				Default: -50000 (-50.0)
+				Maximum: -75000 (-75.0)
 
 ---------------------------------------
 \\
@@ -9819,6 +9853,13 @@ Possible types are:
 
 If retrieval fails (leader not found or party does not exist), this function
 returns "null" instead of the character name, and -1 for the other types.
+
+---------------------------------------
+
+*is_party_leader({<party ID>})
+
+This command will return true if the player attached to the script is the leader
+of his/her party, or, if a party ID is specified, of that party.
 
 ---------------------------------------
 

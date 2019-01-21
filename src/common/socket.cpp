@@ -9,22 +9,34 @@
 	#include "winapi.hpp"
 #else
 	#include <errno.h>
-#include <netinet/tcp.h>
-	#include <net/if.h>
-	#include <unistd.h>
-#include <sys/ioctl.h>
-	#include <netdb.h>
 	#include <arpa/inet.h>
+	#include <net/if.h>
+	#include <netdb.h>
+	#include <sys/ioctl.h>
+	#include <sys/socket.h>
+	#include <sys/time.h>
+	#include <unistd.h>
+
+	#if defined(__linux__) || defined(__linux)
+		#include <linux/tcp.h>
+
+		#ifdef SOCKET_EPOLL
+			#include <sys/epoll.h>
+		#endif
+	#else 
+		#include <netinet/in.h>
+		#include <netinet/tcp.h>
+	#endif
 
 	#ifndef SIOCGIFCONF
-	#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
+		#include <sys/sockio.h> // SIOCGIFCONF on Solaris, maybe others? [Shinomori]
 	#endif
 	#ifndef FIONBIO
-	#include <sys/filio.h> // FIONBIO on Solaris [FlavioJS]
+		#include <sys/filio.h> // FIONBIO on Solaris [FlavioJS]
 	#endif
 
 	#ifdef HAVE_SETRLIMIT
-	#include <sys/resource.h>
+		#include <sys/resource.h>
 	#endif
 #endif
 
@@ -54,7 +66,7 @@ typedef int socklen_t;
 
 // global array of sockets (emulating linux)
 // fd is the position in the array
-static SOCKET sock_arr[FD_SETSIZE];
+static SOCKET sock_arr[MAXCONN];
 static int sock_arr_len = 0;
 
 /// Returns the socket associated with the target fd.
@@ -86,7 +98,7 @@ int sock2fd(SOCKET s)
 /// Returns a new fd associated with the socket.
 /// If there are too many sockets it closes the socket, sets an error and
 //  returns -1 instead.
-/// Since fd 0 is reserved, it returns values in the range [1,FD_SETSIZE[.
+/// Since fd 0 is reserved, it returns values in the range [1,MAXCONN[.
 ///
 /// @param s Socket
 /// @return New fd or -1
@@ -203,7 +215,17 @@ char* sErr(int code)
 	#define MSG_NOSIGNAL 0
 #endif
 
-fd_set readfds;
+#ifndef SOCKET_EPOLL
+	// Select based Event Dispatcher
+	fd_set readfds;
+#else
+	// Epoll based Event Dispatcher
+	static int epoll_maxevents = (MAXCONN / 2);
+	static int epfd = SOCKET_ERROR;
+	static struct epoll_event epevent;
+	static struct epoll_event *epevents = nullptr;
+#endif
+
 int fd_max;
 time_t last_tick;
 time_t stall_time = 60;
@@ -236,12 +258,12 @@ static time_t socket_data_last_tick = 0;
 // The connection is closed if it goes over the limit.
 #define WFIFO_MAX (1*1024*1024)
 
-struct socket_data* session[FD_SETSIZE];
+struct socket_data* session[MAXCONN];
 
 #ifdef SEND_SHORTLIST
-int send_shortlist_array[FD_SETSIZE];// we only support FD_SETSIZE sockets, limit the array to that
+int send_shortlist_array[MAXCONN];// we only support MAXCONN sockets, limit the array to that
 size_t send_shortlist_count = 0;// how many fd's are in the shortlist
-uint32 send_shortlist_set[(FD_SETSIZE+31)/32];// to know if specific fd's are already in the shortlist
+uint32 send_shortlist_set[(MAXCONN+31)/32];// to know if specific fd's are already in the shortlist
 #endif
 
 static int create_session(int fd, RecvFunc func_recv, SendFunc func_send, ParseFunc func_parse);
@@ -321,9 +343,9 @@ void setsocketopts(int fd,int delay_timeout){
 #endif
 
 		if (sSetsockopt (fd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
-			ShowError("setsocketopts: Unable to set SO_RCVTIMEO timeout for connection #%d!\n");
+			ShowError("setsocketopts: Unable to set SO_RCVTIMEO timeout for connection #%d!\n", fd);
 		if (sSetsockopt (fd, SOL_SOCKET, SO_SNDTIMEO, (char *)&timeout,sizeof(timeout)) < 0)
-			ShowError("setsocketopts: Unable to set SO_SNDTIMEO timeout for connection #%d!\n");
+			ShowError("setsocketopts: Unable to set SO_SNDTIMEO timeout for connection #%d!\n", fd);
 	}
 }
 
@@ -461,9 +483,9 @@ int connect_client(int listen_fd)
 		sClose(fd);
 		return -1;
 	}
-	if( fd >= FD_SETSIZE )
+	if( fd >= MAXCONN )
 	{// socket number too big
-		ShowError("connect_client: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
+		ShowError("connect_client: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n", fd, MAXCONN);
 		sClose(fd);
 		return -1;
 	}
@@ -478,8 +500,22 @@ int connect_client(int listen_fd)
 	}
 #endif
 
-	if( fd_max <= fd ) fd_max = fd + 1;
+#ifndef SOCKET_EPOLL
+	// Select Based Event Dispatcher
 	sFD_SET(fd,&readfds);
+#else
+	// Epoll based Event Dispatcher
+	epevent.data.fd = fd;
+	epevent.events = EPOLLIN;
+
+	if( epoll_ctl( epfd, EPOLL_CTL_ADD, fd, &epevent ) == SOCKET_ERROR ){
+		ShowError( "connect_client: Failed to add to epoll event dispatcher for new socket #%d: %s\n", fd, error_msg() );
+		sClose( fd );
+		return -1;
+	}
+#endif
+
+	if( fd_max <= fd ) fd_max = fd + 1;
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = ntohl(client_address.sin_addr.s_addr);
@@ -506,9 +542,9 @@ int make_listen_bind(uint32 ip, uint16 port)
 		sClose(fd);
 		return -1;
 	}
-	if( fd >= FD_SETSIZE )
+	if( fd >= MAXCONN )
 	{// socket number too big
-		ShowError("make_listen_bind: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
+		ShowError("make_listen_bind: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n", fd, MAXCONN);
 		sClose(fd);
 		return -1;
 	}
@@ -531,8 +567,22 @@ int make_listen_bind(uint32 ip, uint16 port)
 		exit(EXIT_FAILURE);
 	}
 
-	if(fd_max <= fd) fd_max = fd + 1;
+#ifndef SOCKET_EPOLL
+	// Select Based Event Dispatcher
 	sFD_SET(fd, &readfds);
+#else
+	// Epoll based Event Dispatcher
+	epevent.data.fd = fd;
+	epevent.events = EPOLLIN;
+
+	if( epoll_ctl( epfd, EPOLL_CTL_ADD, fd, &epevent ) == SOCKET_ERROR ){
+		ShowError( "make_listen_bind: failed to add listener socket #%d to epoll event dispatcher: %s\n", fd, error_msg() );
+		sClose(fd);
+		exit(EXIT_FAILURE);
+	}
+#endif
+
+	if(fd_max <= fd) fd_max = fd + 1;
 
 	create_session(fd, connect_client, null_send, null_parse);
 	session[fd]->client_addr = 0; // just listens
@@ -558,9 +608,9 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 		sClose(fd);
 		return -1;
 	}
-	if( fd >= FD_SETSIZE )
+	if( fd >= MAXCONN )
 	{// socket number too big
-		ShowError("make_connection: New socket #%d is greater than can we handle! Increase the value of FD_SETSIZE (currently %d) for your OS to fix this!\n", fd, FD_SETSIZE);
+		ShowError("make_connection: New socket #%d is greater than can we handle! Increase the value of MAXCONN (currently %d) for your OS to fix this!\n", fd, MAXCONN);
 		sClose(fd);
 		return -1;
 	}
@@ -643,8 +693,22 @@ int make_connection(uint32 ip, uint16 port, bool silent,int timeout) {
 	set_nonblocking(fd, 1);
 #endif
 
-	if (fd_max <= fd) fd_max = fd + 1;
+#ifndef SOCKET_EPOLL
+	// Select Based Event Dispatcher
 	sFD_SET(fd,&readfds);
+#else
+	// Epoll based Event Dispatcher
+	epevent.data.fd = fd;
+	epevent.events = EPOLLIN;
+
+	if( epoll_ctl( epfd, EPOLL_CTL_ADD, fd, &epevent ) == SOCKET_ERROR ){
+		ShowError( "make_connection: failed to add socket #%d to epoll event dispatcher: %s\n", fd, error_msg() );
+		sClose(fd);
+		return -1;
+	}
+#endif
+
+	if (fd_max <= fd) fd_max = fd + 1;
 
 	create_session(fd, recv_to_fifo, send_from_fifo, default_func_parse);
 	session[fd]->client_addr = ntohl(remote_address.sin_addr.s_addr);
@@ -737,7 +801,7 @@ int RFIFOSKIP(int fd, size_t len)
 	s = session[fd];
 
 	if ( s->rdata_size < s->rdata_pos + len ) {
-		ShowError("RFIFOSKIP: skipped past end of read buffer! Adjusting from %d to %d (session #%d)\n", len, RFIFOREST(fd), fd);
+		ShowError("RFIFOSKIP: skipped past end of read buffer! Adjusting from %" PRIuPTR " to %d (session #%d)\n", len, RFIFOREST(fd), fd);
 		len = RFIFOREST(fd);
 	}
 
@@ -786,12 +850,12 @@ int WFIFOSET(int fd, size_t len)
 	if( !s->flag.server ) {
 
 		if( len > socket_max_client_packet ) {// see declaration of socket_max_client_packet for details
-			ShowError("WFIFOSET: Dropped too large client packet 0x%04x (length=%u, max=%u).\n", WFIFOW(fd,0), len, socket_max_client_packet);
+			ShowError("WFIFOSET: Dropped too large client packet 0x%04x (length=%" PRIuPTR ", max=%" PRIuPTR ").\n", WFIFOW(fd,0), len, socket_max_client_packet);
 			return 0;
 		}
 
 		if( s->wdata_size+len > WFIFO_MAX ) {// reached maximum write fifo size
-			ShowError("WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet 0x%04x (len=%u, ip=%lu.%lu.%lu.%lu).\n", fd, WFIFOW(fd,0), len, CONVIP(s->client_addr));
+			ShowError("WFIFOSET: Maximum write buffer size for client connection %d exceeded, most likely caused by packet 0x%04x (len=%" PRIuPTR ", ip=%lu.%lu.%lu.%lu).\n", fd, WFIFOW(fd,0), len, CONVIP(s->client_addr));
 			set_eof(fd);
 			return 0;
 		}
@@ -819,10 +883,12 @@ int WFIFOSET(int fd, size_t len)
 	return 0;
 }
 
-int do_sockets(int next)
+int do_sockets(t_tick next)
 {
+#ifndef SOCKET_EPOLL
 	fd_set rfd;
 	struct timeval timeout;
+#endif
 	int ret,i;
 
 	// PRESEND Timers are executed before do_sendrecv and can send packets and/or set sessions to eof.
@@ -840,9 +906,12 @@ int do_sockets(int next)
 	}
 #endif
 
+#ifndef SOCKET_EPOLL
+	// Select based Event Dispatcher
+
 	// can timeout until the next tick
-	timeout.tv_sec  = next/1000;
-	timeout.tv_usec = next%1000*1000;
+	timeout.tv_sec  = (long)(next/1000);
+	timeout.tv_usec = (long)(next%1000*1000);
 
 	memcpy(&rfd, &readfds, sizeof(rfd));
 	ret = sSelect(fd_max, &rfd, NULL, NULL, &timeout);
@@ -856,6 +925,20 @@ int do_sockets(int next)
 		}
 		return 0; // interrupted by a signal, just loop and try again
 	}
+#else
+	// Epoll based Event Dispatcher
+
+	ret = epoll_wait( epfd, epevents, epoll_maxevents, next );
+
+	if( ret == SOCKET_ERROR ){
+		if( sErrno != S_EINTR ){
+			ShowFatalError( "do_sockets: epoll_wait() failed, %s!\n", error_msg() );
+			exit( EXIT_FAILURE );
+		}
+
+		return 0; // interrupted by a signal, just loop and try again
+	}
+#endif
 
 	last_tick = time(NULL);
 
@@ -866,6 +949,26 @@ int do_sockets(int next)
 		int fd = sock2fd(rfd.fd_array[i]);
 		if( session[fd] )
 			session[fd]->func_recv(fd);
+	}
+#elif defined(SOCKET_EPOLL)
+	// epoll based selection
+
+	for( i = 0; i < ret; i++ ){
+		struct epoll_event *it = &epevents[i];
+		int fd = it->data.fd;
+		struct socket_data *sock = session[fd];
+
+		if( !sock ){
+			continue;
+		}
+
+		if( ( it->events & (EPOLLERR|EPOLLHUP) ) || !( it->events & EPOLLIN ) ){
+			// Got Error on this connection
+			set_eof( fd );
+		}else if( it->events & EPOLLIN ){
+			// data waiting
+			sock->func_recv( fd );
+		}
 	}
 #else
 	// otherwise assume that the fd_set is a bit-array and enumerate it in a standard way
@@ -955,7 +1058,7 @@ int do_sockets(int next)
 typedef struct _connect_history {
 	struct _connect_history* next;
 	uint32 ip;
-	uint32 tick;
+	t_tick tick;
 	int count;
 	unsigned ddos : 1;
 } ConnectHistory;
@@ -1238,6 +1341,17 @@ int socket_config_read(const char* cfgName)
 			ddos_autoreset = atoi(w2);
 		else if (!strcmpi(w1,"debug"))
 			access_debug = config_switch(w2);
+#ifdef SOCKET_EPOLL
+		else if( !strcmpi( w1, "epoll_maxevents" ) ){
+			epoll_maxevents = atoi(w2);
+
+			// minimum that seems to be useful
+			if( epoll_maxevents < 16 ){
+				ShowWarning( "socket_config_read: epoll_maxevents is set too low. Defaulting to 16...\n" );
+				epoll_maxevents = 16;
+			}
+		}
+#endif
 #endif
 		else if (!strcmpi(w1, "import"))
 			socket_config_read(w2);
@@ -1287,17 +1401,37 @@ void socket_final(void)
 	if( WSACleanup() != 0 ){
 		ShowError("socket_final: WinSock could not be cleaned up! %s\n", error_msg() );
 	}
+#elif defined(SOCKET_EPOLL)
+	if( epfd != SOCKET_ERROR ){
+		sClose(epfd);
+		epfd = SOCKET_ERROR;
+	}
+
+	if( epevents != nullptr ){
+		aFree( epevents );
+		epevents = nullptr;
+	}
 #endif
 }
 
 /// Closes a socket.
 void do_close(int fd)
 {
-	if( fd <= 0 ||fd >= FD_SETSIZE )
+	if( fd <= 0 ||fd >= MAXCONN )
 		return;// invalid
 
 	flush_fifo(fd); // Try to send what's left (although it might not succeed since it's a nonblocking socket)
+
+#ifndef SOCKET_EPOLL
+	// Select based Event Dispatcher
 	sFD_CLR(fd, &readfds);// this needs to be done before closing the socket
+#else
+	// Epoll based Event Dispatcher
+	epevent.data.fd = fd;
+	epevent.events = EPOLLIN;
+	epoll_ctl( epfd, EPOLL_CTL_DEL, fd, &epevent ); // removing the socket from epoll when it's being closed is not required but recommended
+#endif
+
 	sShutdown(fd, SHUT_RDWR); // Disallow further reads/writes
 	sClose(fd); // We don't really care if these closing functions return an error, we are just shutting down and not reusing this socket.
 	if (session[fd]) delete_session(fd);
@@ -1392,7 +1526,7 @@ int socket_getips(uint32* ips, int max)
 void socket_init(void)
 {
 	const char *SOCKET_CONF_FILENAME = "conf/packet_athena.conf";
-	unsigned int rlim_cur = FD_SETSIZE;
+	unsigned int rlim_cur = MAXCONN;
 
 #ifdef WIN32
 	{// Start up windows networking
@@ -1412,14 +1546,14 @@ void socket_init(void)
 #elif defined(HAVE_SETRLIMIT) && !defined(CYGWIN)
 	// NOTE: getrlimit and setrlimit have bogus behaviour in cygwin.
 	//       "Number of fds is virtually unlimited in cygwin" (sys/param.h)
-	{// set socket limit to FD_SETSIZE
+	{// set socket limit to MAXCONN
 		struct rlimit rlp;
 		if( 0 == getrlimit(RLIMIT_NOFILE, &rlp) )
 		{
-			rlp.rlim_cur = FD_SETSIZE;
+			rlp.rlim_cur = MAXCONN;
 			if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
 			{// failed, try setting the maximum too (permission to change system limits is required)
-				rlp.rlim_max = FD_SETSIZE;
+				rlp.rlim_max = MAXCONN;
 				if( 0 != setrlimit(RLIMIT_NOFILE, &rlp) )
 				{// failed
 					const char *errmsg = error_msg();
@@ -1432,7 +1566,7 @@ void socket_init(void)
 					// report limit
 					getrlimit(RLIMIT_NOFILE, &rlp);
 					rlim_cur = rlp.rlim_cur;
-					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, %s).\n", FD_SETSIZE, rlim_ori, (int)rlp.rlim_cur, (int)rlp.rlim_max, errmsg);
+					ShowWarning("socket_init: failed to set socket limit to %d, setting to maximum allowed (original limit=%d, current limit=%d, maximum allowed=%d, %s).\n", MAXCONN, rlim_ori, (int)rlp.rlim_cur, (int)rlp.rlim_max, errmsg);
 				}
 			}
 		}
@@ -1442,7 +1576,25 @@ void socket_init(void)
 	// Get initial local ips
 	naddr_ = socket_getips(addr_,16);
 
+#ifndef SOCKET_EPOLL
+	// Select based Event Dispatcher:
 	sFD_ZERO(&readfds);
+	ShowInfo( "Server uses '" CL_WHITE "select" CL_RESET "' as event dispatcher\n" );
+#else
+	// Epoll based Event Dispatcher
+	epfd = epoll_create( MAXCONN ); // 2.6.8 or newer ignores the expected socket amount argument
+
+	if( epfd == SOCKET_ERROR ){
+		ShowError( "Failed to create epoll event dispatcher: %s\n", error_msg() );
+		exit( EXIT_FAILURE );
+	}
+
+	memset( &epevent, 0x00, sizeof( struct epoll_event ) );
+	epevents = (struct epoll_event *)aCalloc( epoll_maxevents, sizeof( struct epoll_event ) );
+
+	ShowInfo( "Server uses '" CL_WHITE "epoll" CL_RESET "' with up to " CL_WHITE "%d" CL_RESET " events per cycle as event dispatcher\n", epoll_maxevents );
+#endif
+
 #if defined(SEND_SHORTLIST)
 	memset(send_shortlist_set, 0, sizeof(send_shortlist_set));
 #endif
@@ -1469,7 +1621,7 @@ void socket_init(void)
 
 bool session_isValid(int fd)
 {
-	return ( fd > 0 && fd < FD_SETSIZE && session[fd] != NULL );
+	return ( fd > 0 && fd < MAXCONN && session[fd] != NULL );
 }
 
 bool session_isActive(int fd)
@@ -1525,7 +1677,7 @@ void send_shortlist_add_fd(int fd)
 
 	if( send_shortlist_count >= ARRAYLENGTH(send_shortlist_array) )
 	{
-		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%d shortlist.length=%d)\n", fd, send_shortlist_count, ARRAYLENGTH(send_shortlist_array));
+		ShowDebug("send_shortlist_add_fd: shortlist is full, ignoring... (fd=%d shortlist.count=%" PRIuPTR " shortlist.length=%d)\n", fd, send_shortlist_count, ARRAYLENGTH(send_shortlist_array));
 		return;
 	}
 
@@ -1551,7 +1703,7 @@ void send_shortlist_do_sends()
 		send_shortlist_array[i] = send_shortlist_array[send_shortlist_count];
 		send_shortlist_array[send_shortlist_count] = 0;
 
-		if( fd <= 0 || fd >= FD_SETSIZE )
+		if( fd <= 0 || fd >= MAXCONN )
 		{
 			ShowDebug("send_shortlist_do_sends: fd is out of range, corrupted memory? (fd=%d)\n", fd);
 			continue;

@@ -62,7 +62,8 @@
 // debug function name
 #ifndef __NETBSD__
 #if __STDC_VERSION__ < 199901L
-#	if __GNUC__ >= 2
+// Microsoft also supports this since C++11
+#	if __GNUC__ >= 2 || defined(_MSC_VER)
 #		define __func__ __FUNCTION__
 #	else
 #		define __func__ ""

@@ -2922,7 +2922,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 	}
 }
 
-mid_camp,264,263,4	script	Diego#ep13bs	931,{
+-	script	Diego#ep13bs_	-1,{
 	if (ep13_newbs < 5) {
 		mes "[Diego]";
 		mes "I'm busy right now!";
@@ -3163,7 +3163,7 @@ mid_campin,295,128,4	script	Lucas#ep13bs	884,{
 			mes "No, just ignore what I said.";
 			mes "......";
 			set ep13_newbs,12;
-			//getitem 12322,1; //Chocolate_Pie
+			getitem 12322,1; //Chocolate_Pie
 			close;
 		case 2:
 			mes "[Lucas]";
@@ -4213,7 +4213,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "I hope you'll make yourself known in Ash Vacuum with your great accomplishments.";
 				set ep13_animal,15;
 				completequest 2157;
-				getexp (checkre(3))?100000:1500000,0;
+				getexp (checkre(3))?100000:150000,0;
 				close;
 			}
 			else {
@@ -4310,7 +4310,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "- You really hope that Rumis will be able to go back home. -";
 				set ep13_animal,100;
 				delitem 6033,1; //Horn_Of_Tendrilion
-				getexp (checkre(3))?50000:1000000,0;
+				getexp (checkre(3))?50000:100000,0;
 				close;
 			}
 			else {
@@ -4946,7 +4946,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 			mes "I'll discuss this more with the expedition management.";
 			mes "Thank you for your valuable information.";
 			completequest 2158;
-			getexp (checkre(3))?90000:900000,0;
+			getexp (checkre(3))?90000:70000,0;
 			close;
 		}
 		else if (checkquest(2158) == -1) {
@@ -4967,7 +4967,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 				mes "I'll discuss this more with the expedition management.";
 				mes "Thank you for your valuable information.";
 				completequest 2159;
-				getexp (checkre(3))?90000:900000,0;
+				getexp (checkre(3))?90000:70000,0;
 				close;
 			}
 			else {
@@ -5395,7 +5395,7 @@ OnTouch_:
 			if (checkre(3))
 				getexp 80000,3000;
 			else
-				getexp 300000,10000;
+				getexp 300000,100000;
 			completequest 8210;
 			next;
 			mes "[United Research Official]";
@@ -8888,10 +8888,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "And please take this small reward.";
 		mes "Thank you for your help so far.";
 		next;
-		if (checkre(3))
-			getexp 300000,0;
-		else
-			getexp 2500000,0;
+		getexp (checkre(3))?300000:250000,0;
 		getitem 12110,3; //First_Aid_Kit
 		set ep13_1_edq,14;
 		completequest 3094;
@@ -12479,7 +12476,7 @@ OnStop:
 	mapannounce "que_job01", "The security magic in the Master Zone, Area 1 is deactivated.",bc_map,"0x70DBDB";
 	donpcevent "#room1_warp13::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	donpcevent "que_job01#room_1::OnReset";
 	stopnpctimer;
 	end;
@@ -12491,7 +12488,7 @@ OnTimer240000:
 OnTimer245000:
 	donpcevent "#room1_warp13::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	end;
 
 OnTimer250000:

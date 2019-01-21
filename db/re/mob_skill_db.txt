@@ -11899,3 +11899,7 @@
 3254,T_W_O@NPC_WIDESTONE,attack,666,5,600,0,30000,no,self,always,0,,,,,,,
 3254,T_W_O@NPC_WIDESOULDRAIN,attack,680,10,1000,0,60000,no,self,always,0,,,,,,,
 3254,T_W_O@NPC_CRITICALWOUND,attack,673,5,150,500,45000,no,target,always,,,,,,,,
+
+3505,DR_BIG_EGGRING@NPC_SUMMONSLAVE,attack,196,4,10000,2000,10000,no,self,slavele,3,3508,,,,,,
+3505,DR_BIG_EGGRING@NPC_SUMMONSLAVE,idle,196,4,10000,2000,10000,no,self,slavele,3,3508,,,,,,
+
