@@ -29,7 +29,7 @@
 
 using namespace rathena;
 
-#define MIN_PETTHINKTIME 100
+const t_tick MIN_PETTHINKTIME = 100;
 
 //Dynamic pet database
 std::map<uint16, struct s_pet_db> pet_db_data;
