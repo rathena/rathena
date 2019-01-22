@@ -1886,7 +1886,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		ud->state.skillcastcancel = 0;
 
 	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
-		ud->canact_tick = tick + max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
+		ud->canact_tick = tick + i64max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
 
 	if( sd ) {
 		switch( skill_id ) {
@@ -2058,7 +2058,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
-		ud->canact_tick = tick + max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
+		ud->canact_tick = tick + i64max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
 
 // 	if( sd )
 // 	{

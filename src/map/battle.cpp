@@ -7233,7 +7233,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 		if (rnd()%100 < triple_rate) {
 			//Need to apply canact_tick here because it doesn't go through skill_castend_id
-			sd->ud.canact_tick = max(tick + skill_delayfix(src, MO_TRIPLEATTACK, skillv), sd->ud.canact_tick);
+			sd->ud.canact_tick = i64max(tick + skill_delayfix(src, MO_TRIPLEATTACK, skillv), sd->ud.canact_tick);
 			if( skill_attack(BF_WEAPON,src,src,target,MO_TRIPLEATTACK,skillv,tick,0) )
 				return ATK_DEF;
 			return ATK_MISS;
@@ -7443,7 +7443,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				int autospell_tick = skill_delayfix(src, skill_id, skill_lv);
 
 				if (DIFF_TICK(ud->canact_tick, tick + autospell_tick) < 0) {
-					ud->canact_tick = max(tick + autospell_tick, ud->canact_tick);
+					ud->canact_tick = i64max(tick + autospell_tick, ud->canact_tick);
 					if (battle_config.display_status_timers && sd)
 						clif_status_change(src, EFST_POSTDELAY, 1, autospell_tick, 0, 0, 0);
 				}
@@ -7507,7 +7507,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				}
 				sd->state.autocast = 0;
 
-				sd->ud.canact_tick = max(tick + skill_delayfix(src, r_skill, r_lv), sd->ud.canact_tick);
+				sd->ud.canact_tick = i64max(tick + skill_delayfix(src, r_skill, r_lv), sd->ud.canact_tick);
 				clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
 			}
 		}

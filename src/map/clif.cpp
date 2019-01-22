@@ -19544,7 +19544,7 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		sd->roulette.prizeStage = sd->roulette.stage;
 		sd->roulette.prizeIdx = rnd()%rd.items[sd->roulette.stage];
 		sd->roulette.claimPrize = true;
-		sd->roulette.tick = gettick() + max( 1, ( MAX_ROULETTE_COLUMNS - sd->roulette.prizeStage - 3 ) ) * 1000;
+		sd->roulette.tick = gettick() + i64max( 1, ( MAX_ROULETTE_COLUMNS - sd->roulette.prizeStage - 3 ) ) * 1000;
 
 		if( rd.flag[sd->roulette.stage][sd->roulette.prizeIdx]&1 ){
 			result = GENERATE_ROULETTE_LOSING;
