@@ -5659,7 +5659,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 						break;
 				}
 
-				sd->ud.canact_tick = max(tick + skill_delayfix(src, pres_skill_id, pres_skill_lv), sd->ud.canact_tick);
+				sd->ud.canact_tick = i64max(tick + skill_delayfix(src, pres_skill_id, pres_skill_lv), sd->ud.canact_tick);
 				clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, pres_skill_id, pres_skill_lv), 0, 0, 0);
 
 				cooldown = pc_get_skillcooldown(sd,pres_skill_id, pres_skill_lv);
@@ -13413,7 +13413,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 					//Overwrite status change with new duration
 					if ((td = get_timer(sc->data[type]->timer))!=NULL)
 						status_change_start(ss, bl, type, 10000, sc->data[type]->val1 + 1, sc->data[type]->val2, sc->data[type]->val3, sc->data[type]->val4,
-							max(DIFF_TICK(td->tick, tick), sec), SCSTART_NORATEDEF);
+							i64max(DIFF_TICK(td->tick, tick), sec), SCSTART_NORATEDEF);
 				}
 				else {
 					if (status_change_start(ss, bl, type, 10000, 1, sg->group_id, 0, 0, sec, SCSTART_NORATEDEF)) {
