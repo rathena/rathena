@@ -68,8 +68,6 @@ OnPCLoginEvent:
 			getitem 8501, 50;	// Milky Special Gift Box 			~ 50 	x Milky Special Gift Box
 			getitem 14017, 1;	// All In One Ring Box				~ 1 	x All in One Ring
 			getitem 12103, 10;	// Bloody Branch					~ 10 	x Bloody Branch
-			setarray .@eq[0], 15152,15153,15154,15155;
-			getitem .@eq[(rand(4))],1;  //							~ 1		x Random unity armor
 			Zeny += 1000000;	// Give 1M Zeny
 			vip_time 30240;		// 3 week worth of vip time (10080)
 			dispbottom " ";
