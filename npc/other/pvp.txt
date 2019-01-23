@@ -327,7 +327,7 @@ function	script	F_PVP_FSRS	{
 	while ( $@victim_unique[.@j] != get_unique_id() && .@j < getarraysize($@victim_unique) ) { .@j++; }
 	// .@j = inarray($@victim_unique, get_unique_id());
 	if (.@j >= 0 ) {
-		if ($@victim_count[.@j] >= 15){ // Died x times already. Start delaying PvP
+		if ($@victim_count[.@j] >= 10){ // Died x times already. Start delaying PvP
 			next;
 			mes "[PVP Warper]";
 			mes "You were killed too ^CC0000many^000000 times.";

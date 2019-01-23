@@ -351,7 +351,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 			debugmes "Unique: "+ $@victim_unique[.@k]+ " | Count: "+$@victim_count[.@k];
 
 			if ($@victim_count[.@k] == 1)
-				$@victim_time[.@k] = gettimetick(2) + 60 * 60 * 2; // PvP Delay
+				$@victim_time[.@k] = gettimetick(2) + 60 * 60 * 4; // PvP Delay
 			if ($@victim_count[.@k] >= 1)
 				donpcevent "pvp_prevent_abuse::OnStart";
 
@@ -930,7 +930,7 @@ OnStart:
 	end;
 
 OnAgain:
-OnTimer60005: // every minute
+OnTimer180005: // every minute
 	for(.@i = 0; .@i < getarraysize($@victim_time); .@i++){
 		.@ticks = ($@victim_time[.@i] - gettimetick(2));
 		// debugmes "Unique: "+ $@victim_unique[.@i] +" | Ticks: "+ .@ticks +" | Count: "+ $@victim_count[.@i];
