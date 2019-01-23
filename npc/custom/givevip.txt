@@ -8,30 +8,79 @@
 //= rAthena Project
 //============================================================
 
+function	script	get_unique_by_uid	{
+	if(getarg(0) > 0)
+	{
+		query_sql("SELECT `unique_id` FROM `multi_pc` WHERE `unique_id` IN ("+escape_sql(getarg(0))+")", .@uid);
+		return .@uid;
+	}
+	return false;
+}
+
+function	script	get_unique_by_aid	{
+	if(getarg(0) > 0)
+	{
+		query_sql("SELECT `unique_id` FROM `multi_pc` WHERE `account_id` = "+escape_sql(getarg(0)), .@uid);
+		return .@uid;
+	}
+	return false;
+}
+
 -	script	nubs_vip_giver	-1,{
 	end;
 
 OnPCLoginEvent:
+	.@c = query_sql("SELECT `account_id`, `unique_id` FROM `multi_pc` WHERE `account_id` = '"+getcharid(3)+"' AND `unique_id` = '"+get_unique_id()+"'", .@aid, .@uid);
+	if(.@c ==  0) {
+		query_sql("INSERT INTO `multi_pc` (`account_id`, `unique_id`) VALUES ('"+getcharid(3)+"', '"+get_unique_id()+"')");
+	}
+
 	if(! #xlaunch_vipx) {
+		.@c = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#xlaunch_vipx' AND `value` = '"+get_unique_id()+"'",.@value);
 		dispbottom "===============================================================", 0x666666;
 		dispbottom "  Welcome to MilkyRO.", 0x76daee;
 		dispbottom "===============================================================", 0x666666;
-		dispbottom " Here are some items to help you start playing the game. ";
-		dispbottom " ";
-		getitem 11501, 100;	// Light White Potion  x50
-		getitem 11502, 30;	// Light Blue Potion x30
-		getitem 13697, 1;	// Blessing Scroll lv10 x10
-		getitem 12914, 1;	// Increase Agility lv10 x10
-		getitem 7621, 3;	// Token of Siegfried x3
-		getitem 12210, 3;	// Bubble gum x3 (+100%)
-		getitem 662, 15;	// Authorative Badge x15
-		getitem 12324, 15;	// Novice Butterfly Wings
-		Zeny += 250000;		// Give 250k Zeny
-		vip_time 30240;		// 1 week worth of vip time (10080)
-		dispbottom " ";
-		dispbottom " Other freebies are given in the form of Daily Attendance. Make sure you check-in every day.";
-		dispbottom " Take note that we DO NOT have @go or @load/@return. We DO have @kill/@die (if you don't have Butterfly Wings).";
-		dispbottom "                                                                                                                                        MilkyRO Team", 0x76daee;
+
+		if (.@c <= 0 ) { // not cheating
+			dispbottom " Here are some items to help you start playing the game. ";
+			dispbottom " ";
+			getitem 16979,1;	// Silvervine_Fruit_Box10			~ 10 	x Silvervine Fruit
+			getitem 8503,5;		// +10_Food_Box						~ 5 	x +10 Food
+			getitem 8508,1;		// Acidbomb_50_Box					~ 50	x Acid Bottle + Grenade
+			getitem 8510,1;		// Poison_Bottle_50_Box				~ 50	x Poison Bottle
+			getitem 8511,1;		// Blacksmith_Blessing_20Box		~ 20	x Blacksmith Blessing
+			getitem 14176,1;	// Enriched_Elunium_Box10			~ 10	x Enriched Elunium
+			getitem 14177,1;	// Enriched_Oridecon_Box10			~ 10	x Enriched Oridecon
+			getitem 16262,2;	// HD_Bradium_Box5					~ 10	x HD Bradium
+			getitem 16263,2;	// HD_Carnium_Box5					~ 10	x HD Carnium
+			getitem 17246,2;	// HD_Elunium_Box_5					~ 10	x HD Elunium
+			getitem 17247,2;	// HD_Oridecon_Box_5				~ 10	x HD Oridecon
+			getitem 14158,2;	// Bubble_Gum_Box					~ 10	x Bubble Gum
+			getitem 14168,2;	// Convex_Mirror_Box				~ 10	x Convex Mirror
+			getitem 14156,2;	// Battle_Manual_Box				~ 10	x Battle Manual
+			getitem 14178,2;	// Token_Of_Siegfried_Box			~ 10	x Token of Siegfried
+			getitem 12535,2;	// Yggdrasilberry_Box				~ 10	x Yggdrasil Berry
+			getitem 12679,3; 	// Siege White Potion Box (30)		~ 90 	x Siege White Potion
+			getitem 12680,3; 	// Siege Blue Potion Box (30)		~ 90 	x Siege Blue Potion
+			getitem 13697, 1;	// Blessing Scroll lv10 Box			~ 10 	x Blessing Scroll lv10
+			getitem 12914, 1;	// Increase Agility lv10 Box		~ 10 	x Increase Agility lv10
+			getitem 12324, 25;	// Novice Butterfly Wings 			~ 15 	x Novice Butterfly Wings
+			getitem 8501, 50;	// Milky Special Gift Box 			~ 50 	x Milky Special Gift Box
+			getitem 14017, 1;	// All In One Ring Box				~ 1 	x All in One Ring
+			getitem 12103, 10;	// Bloody Branch					~ 10 	x Bloody Branch
+			setarray .@eq[0], 15152,15153,15154,15155;
+			getitem .@eq[(rand(4))],1;  //							~ 1		x Random unity armor
+			Zeny += 1000000;	// Give 1M Zeny
+			vip_time 30240;		// 3 week worth of vip time (10080)
+			dispbottom " ";
+			dispbottom " Other freebies are given in the form of Daily Attendance. Make sure you check-in every day.";
+			dispbottom " Take note that we DO NOT have @go or @load/@return. We DO have @kill/@die (if you don't have Butterfly Wings).";
+		} else {
+			dispbottom " We had gifted you a few items in the account you login to";
+			dispbottom " previously. In other words, <GM>Nubs doesn't like you abusing the free items by ";
+			dispbottom " making multiple accounts.";
+		}
+		dispbottom "                                                                                                                MilkyRO Team", 0x76daee;
 		dispbottom "===============================================================", 0x666666;
 
 		// announce "Welcome to MilkyRO. Here are some things to start you with along with a 1 week VIP (only given by the gm) bonus.", BC_SELF;
