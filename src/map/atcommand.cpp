@@ -4091,6 +4091,8 @@ ACMD_FUNC(mapinfo) {
 		strcat(atcmd_output, " NightmareDrop |");
 	if (map_getmapflag(m_id, MF_PVP_NOCALCRANK))
 		strcat(atcmd_output, " NoCalcRank |");
+	if (map_getmapflag(m_id, MF_PVP_TE))
+		strcat(atcmd_output, " Trans Reduction |");
 	clif_displaymessage(fd, atcmd_output);
 
 	strcpy(atcmd_output,msg_txt(sd,1047)); // GvG Flags:
