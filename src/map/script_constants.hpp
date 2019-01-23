@@ -4831,6 +4831,13 @@
 	export_constant(IG_MILKY_CM_5_BOX);
 	export_constant(IG_MILKY_BG_5_BOX);
 	export_constant(IG_MILKY_TS_5_BOX);
+	export_constant(IG_MILKY_YGG_5_BOX);
+	export_constant(IG_MILKY_GPS1_BOX);
+	export_constant(IG_MILKY_GPS2_BOX);
+	export_constant(IG_MILKY_GPS3_BOX);
+	export_constant(IG_MILKY_GP1_BOX);
+	export_constant(IG_MILKY_GP2_BOX);
+	export_constant(IG_MILKY_GPSC_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);

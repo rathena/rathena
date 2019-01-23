@@ -1408,7 +1408,7 @@
 12532,475,100	// Royal_Jelly_Box2
 12533,475,100	// Blue_Herb_Box2
 12534,475,100	// Yggdrasil_Seed_Box
-12535,475,100	// Iggdrasilberry_Box
+// 12535,475,100	// Iggdrasilberry_Box
 12540,499,100	// GM_Warp_Box
 12541,499,100	// Fortune_Cookie1
 12542,499,100	// Fortune_Cookie2
@@ -4051,3 +4051,9 @@
 14168,475,100	// F_Convex_Mirror_Box
 14156,475,100	// F_Battle_Manual_Box
 14178,475,100	// F_Token_Of_Siegfried_Box
+12535,475,100	// F_Yggdrasilberry_Box
+
+8512,475,100	// F_GuildPax1
+8513,475,100	// F_GuildPax2
+8514,475,100	// F_GuildPax3
+8515,475,100	// F_GuildPaxNoEQ

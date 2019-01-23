@@ -2924,7 +2924,7 @@ IG_Octo_Hstick_Box2,6442,0,1,0,0,4320,0	// 1x Octopus_Hunt_Stick
 
 IG_Octo_Hstick_Box3,6442,0,1,0,0,10080,0	// 1x Octopus_Hunt_Stick
 
-IG_Silvervine_Fruit_Box10,6417,0,10,0,0,0,0	// 10x Silvervine
+IG_Silvervine_Fruit_Box10,6417,0,10,0,0,1,1	// 10x Silvervine
 IG_Silvervine_Fruit_Box10,12636,0,30,0,0,0,0	// 30x Malang_Sp_Can
 
 IG_Silvervine_Fruit_Box40,6417,0,40,0,0,0,0	// 40x Silvervine
@@ -4707,3 +4707,75 @@ IG_MILKY_BG_5_BOX,12210,0,5,0,0,0,0,1,1	// 5x Bubble_Gum
 IG_MILKY_CM_5_BOX,12214,0,5,0,0,0,0,1,1	// 5x Convex_Mirror
 IG_MILKY_BM_5_BOX,12208,0,5,0,0,0,0,1,1	// 5x Battle_Manual
 IG_MILKY_TS_5_BOX,7621,0,5,0,0,0,0,1,1	// 5x Token_Of_Siegfried
+IG_MILKY_YGG_5_BOX,607,0,5,0,0,0,0,1,1	// 5x Yggdrasil Berry
+
+// Guild Invite SET 1
+IG_MILKY_GPS1_BOX,2483,0,1,0,0,0,0		// Siege Greaves	x 1
+IG_MILKY_GPS1_BOX,2586,0,1,0,0,0,0		// Siege Manteau	x 1
+IG_MILKY_GPS1_BOX,15046,0,1,0,0,0,0		// Siege Plate		x 1
+
+// Guild Invite SET 2
+IG_MILKY_GPS2_BOX,2484,0,1,0,0,0,0		// Siege Boots		x 1
+IG_MILKY_GPS2_BOX,2586,0,1,0,0,0,0		// Siege Manteau	x 1
+IG_MILKY_GPS2_BOX,15047,0,1,0,0,0,0		// Siege Suit 		x 1
+
+// Guild Invite SET 3
+IG_MILKY_GPS3_BOX,2485,0,1,0,0,0,0		// Siege Shoe 		x 1
+IG_MILKY_GPS3_BOX,2587,0,1,0,0,0,0		// Siege Muffler 	x 1
+IG_MILKY_GPS3_BOX,15048,0,1,0,0,0,0		// Siege Robe 		x 1
+
+// Guild Invite Pack [Option 1]
+IG_MILKY_GP1_BOX,8500,0,10,0,0,0,0		// Milky Platinum Card				~ 10 x MPC
+IG_MILKY_GP1_BOX,8501,0,25,0,0,0,0		// Milky Special Gift Box			~ 25 x Random Items
+IG_MILKY_GP1_BOX,12582,0,50,0,0,0,0		// WoE Supply Box					~ 50 x Random Items
+IG_MILKY_GP1_BOX,8511,0,5,0,0,0,0		// Blacksmith Blessing Box (20)		~ 100 x B.Blessing
+IG_MILKY_GP1_BOX,14176,0,5,0,0,0,0		// Enriched Elunium Box (10)		~ 50 x E.Elunium
+IG_MILKY_GP1_BOX,14177,0,5,0,0,0,0		// Enriched Oridecon Box (10)		~ 50 x E.Oridecon
+IG_MILKY_GP1_BOX,17246,0,10,0,0,0,0		// HD Elunium Box (5)				~ 50 x HD Elunium
+IG_MILKY_GP1_BOX,17247,0,10,0,0,0,0		// HD Oridecon Box (5)				~ 50 x HD Oridecon
+IG_MILKY_GP1_BOX,16262,0,10,0,0,0,0		// HD Bradium Box (5)				~ 50 x HD Bradium
+IG_MILKY_GP1_BOX,16263,0,10,0,0,0,0		// HD Carnium Box (5)				~ 50 x HD Carnium
+IG_MILKY_GP1_BOX,16979,0,1,0,0,0,0		// Silvervine Box (10)				~ 10 x Silvervine Fruit
+IG_MILKY_GP1_BOX,12535,0,10,0,0,0,0		// Yggdrasil Berry Box (5)			~ 50 x Yggdrasil Berry
+IG_MILKY_GP1_BOX,12679,0,3,0,0,0,0		// Siege White Potion Box (30)		~ 90 x Siege White Potion
+IG_MILKY_GP1_BOX,12680,0,1,0,0,0,0		// Siege Blue Potion Box (30)		~ 30 x Siege Blue Potion
+IG_MILKY_GP1_BOX,14156,0,2,0,0,0,0		// Battle Manual Box (5)			~ 10 x Battle Manual
+IG_MILKY_GP1_BOX,14178,0,2,0,0,0,0		// Token of Siegfried Box (5)		~ 10 x Token of Siegfried
+IG_MILKY_GP1_BOX,8507,0,5,0,0,0,0		// Acid Bomb Box (10)				~ 50 x Acid Bottle
+IG_MILKY_GP1_BOX,8509,0,5,0,0,0,0		// Poison Bottle Box (10)			~ 50 x Poison Bottle
+IG_MILKY_GP1_BOX,8503,0,25,0,0,0,0		// +10 Food Box						~ 25 x Random Food
+
+// Guild Invite Pack [Option 2]
+IG_MILKY_GP2_BOX,8500,0,15,0,0,0,0		// Milky Platinum Card				~ 15 x MPC
+IG_MILKY_GP2_BOX,8501,0,40,0,0,0,0		// Milky Special Gift Box			~ 40 x Random Items
+IG_MILKY_GP2_BOX,12582,0,75,0,0,0,0		// WoE Supply Box					~ 75 x Random Items
+IG_MILKY_GP2_BOX,8511,0,10,0,0,0,0		// Blacksmith Blessing Box (20)		~ 200 x B.Blessing
+IG_MILKY_GP2_BOX,14176,0,8,0,0,0,0		// Enriched Elunium Box (10)		~ 80 x E.Elunium
+IG_MILKY_GP2_BOX,14177,0,8,0,0,0,0		// Enriched Oridecon Box (10)		~ 80 x E.Oridecon
+IG_MILKY_GP2_BOX,17246,0,16,0,0,0,0		// HD Elunium Box (5)				~ 80 x HD Elunium
+IG_MILKY_GP2_BOX,17247,0,16,0,0,0,0		// HD Oridecon Box (5)				~ 80 x HD Oridecon
+IG_MILKY_GP2_BOX,16262,0,16,0,0,0,0		// HD Bradium Box (5)				~ 80 x HD Bradium
+IG_MILKY_GP2_BOX,16263,0,16,0,0,0,0		// HD Carnium Box (5)				~ 80 x HD Carnium
+IG_MILKY_GP2_BOX,16979,0,2,0,0,0,0		// Silvervine Box (10)				~ 20 x Silvervine Fruit
+IG_MILKY_GP2_BOX,12535,0,20,0,0,0,0		// Yggdrasil Berry Box (5)			~ 100 x Yggdrasil Berry
+IG_MILKY_GP2_BOX,12679,0,5,0,0,0,0		// Siege White Potion Box (30)		~ 150 x Siege White Potion
+IG_MILKY_GP2_BOX,12680,0,3,0,0,0,0		// Siege Blue Potion Box (30)		~ 90 x Siege Blue Potion
+IG_MILKY_GP2_BOX,14156,0,4,0,0,0,0		// Battle Manual Box (5)			~ 20 x Battle Manual
+IG_MILKY_GP2_BOX,14178,0,4,0,0,0,0		// Token of Siegfried Box (5)		~ 20 x Token of Siegfried
+IG_MILKY_GP2_BOX,8507,0,8,0,0,0,0		// Acid Bomb Box (10)				~ 80 x Acid Bottle
+IG_MILKY_GP2_BOX,8509,0,8,0,0,0,0		// Poison Bottle Box (10)			~ 80 x Poison Bottle
+IG_MILKY_GP2_BOX,8503,0,40,0,0,0,0		// +10 Food Box						~ 40 x Random Food
+
+// Guild Invite Pack [Shared Consumables]
+IG_MILKY_GPSC_BOX,8504,0,1,0,0,0,0		// Blacksmith Blessing Box (20)		~ 20 x B.Blessing
+IG_MILKY_GPSC_BOX,14176,0,1,0,0,0,0		// Enriched Elunium Box (10)		~ 5 x E.Elunium
+IG_MILKY_GPSC_BOX,14177,0,1,0,0,0,0		// Enriched Oridecon Box (10)		~ 5 x E.Oridecon
+IG_MILKY_GPSC_BOX,17246,0,2,0,0,0,0		// HD Elunium Box (5)				~ 10 x HD Elunium
+IG_MILKY_GPSC_BOX,17247,0,2,0,0,0,0		// HD Oridecon Box (5)				~ 10 x HD Oridecon
+IG_MILKY_GPSC_BOX,16262,0,2,0,0,0,0		// HD Bradium Box (5)				~ 10 x HD Bradium
+IG_MILKY_GPSC_BOX,16263,0,2,0,0,0,0		// HD Carnium Box (5)				~ 10 x HD Carnium
+IG_MILKY_GPSC_BOX,8507,0,2,0,0,0,0		// Acid Bomb Box (10)				~ 20 x Acid Bottle
+IG_MILKY_GPSC_BOX,8509,0,2,0,0,0,0		// Poison Bottle Box (10)			~ 20 x Poison Bottle
+IG_MILKY_GPSC_BOX,12534,0,1,0,0,0,0		// Yggdrasil Seed Box (30)			~ 30 x Yggdrasil Seed
+IG_MILKY_GPSC_BOX,12679,0,2,0,0,0,0		// Siege White Potion Box (30)		~ 60 x Siege White Potion
+IG_MILKY_GPSC_BOX,12680,0,1,0,0,0,0		// Siege Blue Potion Box (30)		~ 30 x Siege Blue Potion

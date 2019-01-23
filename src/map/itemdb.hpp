@@ -747,6 +747,13 @@ enum e_random_item_group {
 	IG_MILKY_CM_5_BOX,
 	IG_MILKY_BG_5_BOX,
 	IG_MILKY_TS_5_BOX,
+	IG_MILKY_YGG_5_BOX,
+	IG_MILKY_GPS1_BOX,
+	IG_MILKY_GPS2_BOX,
+	IG_MILKY_GPS3_BOX,
+	IG_MILKY_GP1_BOX,
+	IG_MILKY_GP2_BOX,
+	IG_MILKY_GPSC_BOX,
 };
 
 /// Enum for bound/sell restricted selling
