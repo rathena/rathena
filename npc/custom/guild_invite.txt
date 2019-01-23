@@ -1,0 +1,489 @@
+//===== rAthena Script =======================================
+//= Give Player VIP on login
+//===== By: ==================================================
+//= Nubs
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= rAthena Project
+//============================================================
+
+function	script	get_guild_name	{
+	if(getarg(0) > 0)
+	{
+		if(query_sql("SELECT `name` FROM `guild` WHERE `guild_id` = "+escape_sql(getarg(0)),.@names$) > 0)
+			return .@names$[0];
+		else
+			return "-Unknown-";
+	}
+	return "-Unknown-";
+}
+
+prontera,148,156,5	script	War of Emperium Promoter	628,5,5,{
+	mes .n$,
+		"Hi. I am in charge of the [War of Emperium Promotions].",
+		"I have been given the task to give a substaintial investment towards ^339933NEW^000000 guilds.";
+	next;
+	mes .n$,
+		"My investment will be very benefitial towards ^339933NEW^000000 guilds. ",
+		"The existing guild could still requests some investment from me.";
+	next;
+	mes .n$,
+		"This investment is done hugely in order to increase competitive nature of the War of Emperium.",
+		"No body likes to watch a dull and boring war.. right ?";
+	.@firstLoop = 1;
+	while(.@firstLoop){
+		next;
+		mes .n$,
+			"Do you have any questions?";
+		next;
+		switch(select("What will my guild receive?", "What are the restrictions?", "Manage my application.", "Not interested.")) {
+			case 1:
+				mes .n$,
+					"The [War of Emperium Commitee] decided to give various equipments and consumables to promote more WoE participants.";
+				.@secondLoop = 1;
+				while(.@secondLoop) { // loop the option
+					next;
+					mes .n$,
+						"The members of the participating guild are free to choose between:",
+						" 1. [Equipments and Consumables]",
+						" 2. [Only Consumables] ",
+						"Selecting option 2, will give you more consumables than option 1.";
+					next;
+					mes .n$,
+						"The guild will also receive a [^6666CCShared Consumables^000000] which increases depending upon the number of members you have.";
+					next;
+					switch(select("What does option 1 gives?", "How about option 2?", "Tell me more about the [^6666CCShared Consumables^000000].", "I'd like to know about something else.")) {
+						case 1:
+							mes .n$,
+								"The [^339933Equipments^000000 and ^6666CCconsumables^000000] gives the choice to choose ^339933ONE^000000 set of equipments:",
+								" [^339933Set 1:^000000]",
+								" <ITEM>"+getitemname(2483)+"<INFO>2483</INFO></ITEM>",			// Siege Greaves	x 1
+								" <ITEM>"+getitemname(2586)+"<INFO>2586</INFO></ITEM>",			// Siege Manteau	x 1
+								" <ITEM>"+getitemname(15046)+"<INFO>15046</INFO></ITEM>",		// Siege Plate		x 1
+								" ",
+								" [^339933Set 2:^000000]",
+								" <ITEM>"+getitemname(2484)+"<INFO>2484</INFO></ITEM>",			// Siege Boots		x 1
+								" <ITEM>"+getitemname(2586)+"<INFO>2586</INFO></ITEM>",			// Siege Manteau	x 1
+								" <ITEM>"+getitemname(15047)+"<INFO>15047</INFO></ITEM>",		// Siege Suit 		x 1
+								" ",
+								" [^339933Set 3:^000000]",
+								" <ITEM>"+getitemname(2485)+"<INFO>2485</INFO></ITEM>",			// Siege Shoe 		x 1
+								" <ITEM>"+getitemname(2587)+"<INFO>2587</INFO></ITEM>",			// Siege Muffler 	x 1
+								" <ITEM>"+getitemname(15048)+"<INFO>15048</INFO></ITEM>";		// Siege Robe 		x 1
+							next;
+							mes .n$,
+								"The [^339933Equipments^000000 and ^6666CCconsumables^000000] also gives you consumables listed below:",
+								" <ITEM>"+getitemname(8500)+"<INFO>8500</INFO></ITEM> x 10",	// Milky Platinum Card			~ 10 x MPC
+								" <ITEM>"+getitemname(8501)+"<INFO>8501</INFO></ITEM> x 25",	// Milky Special Gift Box		~ 25 x Random Items
+								" <ITEM>"+getitemname(12582)+"<INFO>12582</INFO></ITEM> x 50",	// WoE Supply Box				~ 50 x Random Items
+								" <ITEM>"+getitemname(8511)+"<INFO>8511</INFO></ITEM> x 5",		// Blacksmith Blessing Box (20)	~ 100 x B.Blessing
+								" <ITEM>"+getitemname(14176)+"<INFO>14176</INFO></ITEM> x 5",	// Enriched Elunium Box (10)	~ 50 x E.Elunium
+								" <ITEM>"+getitemname(14177)+"<INFO>14177</INFO></ITEM> x 5",	// Enriched Oridecon Box (10)	~ 50 x E.Oridecon
+								" <ITEM>"+getitemname(17246)+"<INFO>17246</INFO></ITEM> x 10",	// HD Elunium Box (5)			~ 50 x HD Elunium
+								" <ITEM>"+getitemname(17247)+"<INFO>17247</INFO></ITEM> x 10",	// HD Oridecon Box (5)			~ 50 x HD Oridecon
+								" <ITEM>"+getitemname(16262)+"<INFO>16262</INFO></ITEM> x 10",	// HD Bradium Box (5)			~ 50 x HD Bradium
+								" <ITEM>"+getitemname(16263)+"<INFO>16263</INFO></ITEM> x 10",	// HD Carnium Box (5)			~ 50 x HD Carnium
+								" <ITEM>"+getitemname(16979)+"<INFO>16979</INFO></ITEM> x 1",	// Silvervine Box (10)			~ 10 x Silvervine Fruit
+								" <ITEM>"+getitemname(12535)+"<INFO>12535</INFO></ITEM> x 10",	// Yggdrasil Berry Box (5)		~ 50 x Yggdrasil Berry
+								" <ITEM>"+getitemname(12679)+"<INFO>12679</INFO></ITEM> x 3",	// Siege White Potion Box (30)	~ 90 x Siege White Potion
+								" <ITEM>"+getitemname(12680)+"<INFO>12680</INFO></ITEM> x 1",	// Siege Blue Potion Box (30)	~ 30 x Siege Blue Potion
+								" <ITEM>"+getitemname(14156)+"<INFO>14156</INFO></ITEM> x 2",	// Battle Manual Box (5)		~ 10 x Battle Manual
+								" <ITEM>"+getitemname(14178)+"<INFO>14178</INFO></ITEM> x 2",	// Token of Siegfried Box (5)	~ 10 x Token of Siegfried
+								" <ITEM>"+getitemname(8507)+"<INFO>8507</INFO></ITEM> x 5",		// Acid Bomb Box (10)			~ 50 x Acid Bottle
+								" <ITEM>"+getitemname(8509)+"<INFO>8509</INFO></ITEM> x 5",		// Poison Bottle Box (10)		~ 50 x Poison Bottle
+								" <ITEM>"+getitemname(8503)+"<INFO>8503</INFO></ITEM> x 25",	// +10 Food Box					~ 25 x Random Food
+								" 25,000,000 Zeny";												// 25m Zeny 					~ 25m Zeny
+							continue;
+						case 2:
+							mes .n$,
+								"The [Only Consumables] will give you the following items listed below:",
+								" <ITEM>"+getitemname(8500)+"<INFO>8500</INFO></ITEM> x 15",	// Milky Platinum Card			~ 15 x MPC
+								" <ITEM>"+getitemname(8501)+"<INFO>8501</INFO></ITEM> x 40",	// Milky Special Gift Box		~ 40 x Random Items
+								" <ITEM>"+getitemname(12582)+"<INFO>12582</INFO></ITEM> x 75",	// WoE Supply Box				~ 75 x Random Items
+								" <ITEM>"+getitemname(8511)+"<INFO>8511</INFO></ITEM> x 10",	// Blacksmith Blessing Box (20)	~ 200 x B.Blessing
+								" <ITEM>"+getitemname(14176)+"<INFO>14176</INFO></ITEM> x 8",	// Enriched Elunium Box (10)	~ 80 x E.Elunium
+								" <ITEM>"+getitemname(14177)+"<INFO>14177</INFO></ITEM> x 8",	// Enriched Oridecon Box (10)	~ 80 x E.Oridecon
+								" <ITEM>"+getitemname(17246)+"<INFO>17246</INFO></ITEM> x 16",	// HD Elunium Box (5)			~ 80 x HD Elunium
+								" <ITEM>"+getitemname(17247)+"<INFO>17247</INFO></ITEM> x 16",	// HD Oridecon Box (5)			~ 80 x HD Oridecon
+								" <ITEM>"+getitemname(16262)+"<INFO>16262</INFO></ITEM> x 16",	// HD Bradium Box (5)			~ 80 x HD Bradium
+								" <ITEM>"+getitemname(16263)+"<INFO>16263</INFO></ITEM> x 16",	// HD Carnium Box (5)			~ 80 x HD Carnium
+								" <ITEM>"+getitemname(16979)+"<INFO>16979</INFO></ITEM> x 2",	// Silvervine Box (10)			~ 20 x Silvervine Fruit
+								" <ITEM>"+getitemname(12535)+"<INFO>12535</INFO></ITEM> x 20",	// Yggdrasil Berry Box (5)		~ 100 x Yggdrasil Berry
+								" <ITEM>"+getitemname(12679)+"<INFO>12679</INFO></ITEM> x 5",	// Siege White Potion Box (30)	~ 150 x Siege White Potion
+								" <ITEM>"+getitemname(12680)+"<INFO>12680</INFO></ITEM> x 3",	// Siege Blue Potion Box (30)	~ 90 x Siege Blue Potion
+								" <ITEM>"+getitemname(14156)+"<INFO>14156</INFO></ITEM> x 4",	// Battle Manual Box (5)		~ 20 x Battle Manual
+								" <ITEM>"+getitemname(14178)+"<INFO>14178</INFO></ITEM> x 4",	// Token of Siegfried Box (5)	~ 20 x Token of Siegfried
+								" <ITEM>"+getitemname(8507)+"<INFO>8507</INFO></ITEM> x 8",		// Acid Bomb Box (10)			~ 80 x Acid Bottle
+								" <ITEM>"+getitemname(8509)+"<INFO>8509</INFO></ITEM> x 8",		// Poison Bottle Box (10)		~ 80 x Poison Bottle
+								" <ITEM>"+getitemname(8503)+"<INFO>8503</INFO></ITEM> x 40",	// +10 Food Box					~ 40 x Random Food
+								" 40,000,000 Zeny";												// 40m Zeny 					~ 40m Zeny
+							continue;
+						case 3:
+							mes .n$,
+								"The guild itself will also receive a certain amount of consumables.",
+								"These items are grouped as [^6666CCShared Consumables^000000] and will be given to the guild leader.";
+							next;
+							mes .n$,
+								"He/She will have to decide how to distribute the items.",
+								"The quantity of such items are dependent on the number 'complete' members of the guild.";
+							next;
+							mes .n$,
+								"These items are listed below:",
+								" <ITEM>"+getitemname(8504)+"<INFO>8504</INFO></ITEM> x 1",		// Blacksmith Blessing Box (20)	~ 20 x B.Blessing
+								" <ITEM>"+getitemname(14176)+"<INFO>14176</INFO></ITEM> x 1",	// Enriched Elunium Box (10)	~ 5 x E.Elunium
+								" <ITEM>"+getitemname(14177)+"<INFO>14177</INFO></ITEM> x 1",	// Enriched Oridecon Box (10)	~ 5 x E.Oridecon
+								" <ITEM>"+getitemname(17246)+"<INFO>17246</INFO></ITEM> x 2",	// HD Elunium Box (5)			~ 10 x HD Elunium
+								" <ITEM>"+getitemname(17247)+"<INFO>17247</INFO></ITEM> x 2",	// HD Oridecon Box (5)			~ 10 x HD Oridecon
+								" <ITEM>"+getitemname(16262)+"<INFO>16262</INFO></ITEM> x 2",	// HD Bradium Box (5)			~ 10 x HD Bradium
+								" <ITEM>"+getitemname(16263)+"<INFO>16263</INFO></ITEM> x 2",	// HD Carnium Box (5)			~ 10 x HD Carnium
+								" <ITEM>"+getitemname(8507)+"<INFO>8507</INFO></ITEM> x 2",		// Acid Bomb Box (10)			~ 20 x Acid Bottle
+								" <ITEM>"+getitemname(8509)+"<INFO>8509</INFO></ITEM> x 2",		// Poison Bottle Box (10)		~ 20 x Poison Bottle
+								" <ITEM>"+getitemname(12534)+"<INFO>12534</INFO></ITEM> x 1",	// Yggdrasil Seed Box (30)		~ 30 x Yggdrasil Seed
+								" <ITEM>"+getitemname(12679)+"<INFO>12679</INFO></ITEM> x 2",	// Siege White Potion Box (30)	~ 60 x Siege White Potion
+								" <ITEM>"+getitemname(12680)+"<INFO>12680</INFO></ITEM> x 1",	// Siege Blue Potion Box (30)	~ 30 x Siege Blue Potion
+							next;
+							mes .n$,
+								"Meaning, if you have the minimum members of 5, the guild leader will receive 5 times the items listed in the [^6666CCShared Consumables^000000].";
+							continue;
+						case 4:
+							.@secondLoop = 0;
+							break;
+					}
+				}
+				continue;
+			case 2:
+				mes .n$,
+					"The system in place will record every investment request.",
+					"This will ensure that there won't be any abuse towards the investment.";
+				mes .n$,
+					"If such abuse was found, the culprit will be caught and strip of all his belongings.",
+					"But if you report a loophole, you will be rewarded instead.";
+				mes .n$,
+					"Most of the consumables received from this system are not tradable or drop, but are allowed to be stored in the Kafra Storage Service.",
+					"Another exception are, the [^6666CCShared Consumables^000000] are also allowed to be traded.";
+				mes .n$,
+					"The minimum number of members must be in the guild are 5.",
+					"The guild MUST at least be lv5, with Official Guild Approval skilled up.",
+					"All members MUST be ^6666CCONLINE^000000 during the process of validation.",
+					"The members MUST be at ^6666CCLEAST^000000 at level 125 or more  during the process of validation.";
+				continue;
+			case 3:
+				.@loopThird = 1;
+				while (.@loopThird) {
+					.@char_id = getcharid(0);
+					.@guild_id = getcharid(2);
+					.@account_id = getcharid(3);
+					.@unique_id = get_unique_id();
+
+					.@unique_list = get_unique_by_aid(.@account_id);
+					deletearray(.@tid);
+					query_sql("SELECT `id` FROM `guild_invite_members` WHERE (`char_id` = "+escape_sql(.@char_id)+" OR `unique_id` IN ("+.@unique_list+") ) AND `claimed` = 1", .@tid);
+					if(getarraysize(.@tid) > 0){
+						mes .n$,
+							"--^CC3333INVESTMENT CLAIMED^000000--",
+							"You are no longer allowed to receive another guild investment pack.";
+						close;
+					}
+
+					setarray .@set_string$[1],
+						"[Set 1 & Consumables]",
+						"[Set 2 & Consumables]",
+						"[Set 3 & Consumables]",
+						"[Only Consumables]";
+
+					deletearray(.@gid); deletearray(.@cid); deletearray(.@uid); deletearray(.@sel);
+					query_sql("SELECT `guild_id`, `char_id`, `unique_id`, `selection` FROM `guild_invite_members` WHERE `guild_id` = "+escape_sql(.@guild_id) + " AND (`char_id` = "+escape_sql(.@char_id)+" OR `unique_id` = "+escape_sql(.@unique_id)+" ) AND `deleted` = 0", .@gid, .@cid, .@uid, .@sel);
+					mes .n$;
+					if(getarraysize(.@cid) > 0) {
+						mes "Currently Registered:";
+						for(.@i=0;.@i<getarraysize(.@cid);.@i++) {
+							mes " Name: ^6666CC"+get_name(.@cid[.@i])+"^000000",
+								" Guild: ^6666CC"+get_guild_name(.@gid[.@i])+"^000000",
+								" Selection: ^6666CC"+.@set_string$[.@sel[.@i]]+"^000000";
+						}
+					} else {
+						mes "^6666CC"+strcharinfo(0)+"^000000 is currently not registered to the [WoE Promotion].";
+					}
+					mes "What would you like to do?";
+					next;
+					switch(select("Register my name.", "Remove my name.", "Validate my application.", "Cancel")){
+						case 1:
+							if(BaseLevel < 125) {
+								mes .n$,
+									"--^CC3333LEVEL TO LOW^000000--",
+									"You need to be at least lv125 to apply for the [WoE Promotion].";
+								next;
+								continue;
+							}
+							if(getcharid(2) == 0) {
+								mes .n$,
+									"--^CC3333NO GUILD^000000--",
+									"Please make sure that you are a member of a guild.";
+								next;
+								continue;
+							}
+							if(getarraysize(.@cid) > 0){
+								mes .n$,
+									"--^CC3333ONLY ONE PER PERSON^000000--",
+									"Please remove your name from another life before trying to add this one.";
+								next;
+								continue;
+							}
+							mes .n$,
+								"Registering your name will ^CC3333BOUND^000000 the items given to this specific account.",
+								"The items that you received will not be transferable to other players.";
+							next;
+							mes .n$,
+								"Are you sure you want to register:",
+								" Name: ^6666CC"+strcharinfo(0)+"^000000",
+								" Guild: ^6666CC"+strcharinfo(2)+"^000000";
+							next;
+							if(select("No", "Yes") == 1) {
+								next;
+								continue;
+							}
+							mes .n$,
+								"Please select which investment type you would like to receive.";
+							.@set = select(
+								"[Set 1] Greaves | Manteau | Plate | Consumables",
+								"[Set 2] Boots | Manteau | Suit | Consumables",
+								"[Set 3] Shoes | Muffler | Robe | Consumables",
+								"[Only Consumables]",
+								"I want to think about this." );
+							if(.@set == 5) close;
+							next;
+
+							.@out = query_sql("INSERT INTO `guild_invite_members` (`guild_id`, `char_id`, `unique_id`, `selection`, `date_registered`) VALUES ("+escape_sql(.@guild_id)+", "+escape_sql(.@char_id)+", "+escape_sql(.@unique_id)+", "+escape_sql(.@set)+", '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"');");
+							if(.@out < 0) {
+								mes .n$,
+									"--^CC3333ERROR^000000--",
+									"Unable to store registration.",
+									"Please contact the GM for support.";
+								close;
+							}
+
+							mes .n$,
+								"Registered:",
+								" Name: ^6666CC"+strcharinfo(0)+"^000000",
+								" Guild: ^6666CC"+strcharinfo(2)+"^000000",
+								" Selection: ^6666CC"+.@set_string$[.@set]+"^000000";
+							next;
+							continue;
+						case 2:
+							mes .n$,
+								"Are you sure you want to remove your name?";
+							next;
+							if(select("No", "Yes") == 1) {
+								next;
+								continue;
+							}
+							.@out = query_sql("UPDATE `guild_invite_members` SET `deleted` = 1, `date_deleted` = '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"' WHERE (`char_id` = "+escape_sql(.@char_id)+" OR `unique_id` = "+escape_sql(.@unique_id)+") AND `deleted` = 0");
+							if(.@out < 0) {
+								mes .n$,
+									"--^CC3333ERROR^000000--",
+									"Unable to delete registration.",
+									"Please contact the GM for support.";
+								close;
+							}
+							mes .n$,
+								"Your name have been removed from the registration.";
+							next;
+							continue;
+
+						case 3:
+							next;
+							if(is_guild_leader()) {
+								// Get all member list registered and filtered the selection to only the unique member.
+								mes .n$,
+									"You will be validating for",
+									"  [^6666CC"+strcharinfo(2)+"^000000]",
+									" ",
+									"Names of registered members:";
+								deletearray(.@gid2); deletearray(.@cid2); deletearray(.@sel2);
+								// debugmes "SELECT `guild_id`, `char_id`, `unique_id`, `selection` FROM `guild_invite_members` WHERE `guild_id` = "+escape_sql(.@guild_id) + " AND `deleted` = 0 AND `claimed` = 0 GROUP BY `unique_id`";
+								.@out = query_sql("SELECT `guild_id`, `char_id`, `unique_id`, `selection` FROM `guild_invite_members` WHERE `guild_id` = "+escape_sql(.@guild_id) + " AND `deleted` = 0 AND `claimed` = 0 GROUP BY `unique_id`", .@gid2, .@cid2, .@uid2, .@sel2);
+								if(.@out < 0) {
+									mes .n$,
+										"--^CC3333ERROR^000000--",
+										"Unable to list registered members.",
+										"Please contact the GM for support.";
+									close;
+								}
+
+								// Get a list of registered members
+								if(getarraysize(.@cid2) > 0) {
+									mes "Currently Registered:";
+									for(.@i=0;.@i<getarraysize(.@cid2);.@i++) {
+										mes " "+(.@i+1)+". ^6666CC"+get_name(.@cid2[.@i])+"^000000 > ^339933"+.@set_string$[.@sel2[.@i]]+"^000000";
+									}
+									next;
+
+									// Check Min Quantity
+									if(getarraysize(.@cid2) < 2) {
+										mes .n$,
+											"--^CC3333NOT ENOUGH MEMBERS^000000--",
+											"I am sorry, but the number of registered members of your application are below the minimum requirement.";
+										close;
+									}
+
+									// Check offline members (all members must be online)
+									deletearray(.@cid3);
+									.@out = query_sql("SELECT `char_id` FROM `char` WHERE `char_id` IN ("+.@cid2+") AND `online` = 0", .@cid3);
+									if(.@out < 0) {
+										mes .n$,
+											"--^CC3333ERROR^000000--",
+											"Unable to list registered members (#2).",
+											"Please contact the GM for support.";
+										close;
+									}
+
+									if(getarraysize(.@cid3) > 0) {
+										mes .n$,
+											"All registered members must be ^339933ONLINE^000000 during this process.";
+										mes "Currently Offline:";
+										for(.@i=0;.@i<getarraysize(.@cid3);.@i++) {
+											mes " "+(.@i+1)+". ^6666CC"+get_name(.@cid3[.@i])+"^000000";
+										}
+										close;
+									}
+
+									// Check member's level
+									deletearray(.@cid3); deletearray(.@lv);
+									.@out = query_sql("SELECT `char_id`, `base_level` FROM `char` WHERE `char_id` IN ("+.@cid2+") AND `base_level` < 125", .@cid3, .@lv);
+									if(.@out < 0) {
+										mes .n$,
+											"--^CC3333ERROR^000000--",
+											"Unable to list registered members (#3).",
+											"Please contact the GM for support.";
+										close;
+									}
+
+									if(getarraysize(.@cid3) > 0) {
+										mes .n$,
+											"The members must be level 125 and above to be accepted.";
+										mes "Currently Under level:";
+										for(.@i=0;.@i<getarraysize(.@cid3);.@i++) {
+											mes " "+(.@i+1)+". ^6666CC"+get_name(.@cid3[.@i])+"^000000 > Lv."+.@lv[.@i];
+										}
+										close;
+									}
+
+									// old guild accept?
+
+									.@title$ = "Guild Invitation";
+									// all clear, start giving items via mail
+									for(.@i=0;.@i < getarraysize(.@cid2); .@i++) {
+										.@unique_list = get_unique_by_uid(.@uid2[.@i]);
+										query_sql("SELECT `id` FROM `guild_invite_members` WHERE (`char_id` = "+escape_sql(.@cid2[.@i])+" OR `unique_id` IN ("+.@unique_list+") ) AND `claimed` = 1", .@tid2);
+										if(.@tid2 > 0) {
+											dispbottom .n$+": "+get_name(.@cid2[.@i])+" have already received his [WoE Promotion].";
+										} else {
+											// dispbottom ""+.@cid2[.@i];
+											// Mark user as claimed
+											.@out = query_sql("UPDATE `guild_invite_members` SET `claimed` = 1, `date_claimed` = '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"' WHERE (`char_id` = "+escape_sql(.@cid2[.@i])+" OR `unique_id` = "+escape_sql(.@uid2[.@i])+") AND `deleted` = 0");
+											if(.@out < 0) {
+												mes .n$,
+													"--^CC3333ERROR^000000--",
+													"Unable to save validation data.",
+													"Please contact the GM for support.";
+												close;
+											}
+											.@zeny = 25000000;
+											.@content$ = "Thank you for registering for the\r\n";
+											.@content$ += " WOE Investment Promotion\r\n\r\n";
+											.@content$ += "You have selected ";
+											if(.@sel2 == 1) {
+												.@items[0] = 8512;
+												.@content$ += "[Set 1]\r\n";
+											} else if (.@sel2 == 2) {
+												.@items[0] = 8513;
+												.@content$ += "[Set 2]\r\n";
+											} else if (.@sel2 == 3) {
+												.@items[0] = 8514;
+												.@content$ += "[Set 3]\r\n";
+											} else if (.@sel2 == 4) {
+												.@items[0] = 8515;
+												.@content$ += "[No EQ]\r\n";
+												.@zeny = 40000000;
+											}
+											.@content$ += "Please see the attachment for your items.\r\n";
+											.@items_count[0] = 1;
+
+											// TESTING PART START
+											.@content$ += "\r\n-Testing Only-\r\n";
+											.@content$ += "No items will be given during this period.\r\n";
+											.@content$ += "Zeny :"+.@zeny+"\r\n";
+											.@content$ += "Items :"+.@items[0]+" x 1";
+											mail .@cid2[.@i], "[WoE Promotion]", .@title$, .@content$;
+											// TESTING PART END
+
+											// mail .@cid[.@i], "[WoE Promotion]", .@title$, .@content$, .@zeny, .@items, .@items_count;
+											.@zeny = 0; deletearray(.@items); deletearray(.@items_count); // clear the variables so it won't cause issue.
+
+											// Guild Leader also receives the [Shared Consumables]
+											if(getguildmasterid(.@gid2[.@i]) == .@cid2[.@i])
+											{
+												.@items[0] = 8516;
+												.@items_count[0] = getarraysize(.@cid2);
+
+												.@content$ = "As the Guild Leader, you will also be responsible to distribute the\r\n";
+												.@content$ += " [Shared Consumables]\r\n\r\n";
+												.@content$ += "Please see the attachments for the items.\r\n";
+
+												// TESTING PART START
+												.@content$ += "-Testing Only-\r\n";
+												.@content$ += "No items will be given during this period.\r\n";
+												.@content$ += "Items :"+.@items[0]+" x "+.@items_count[0];
+												mail .@cid2[.@i], "[WoE Promotion]", .@title$, .@content$;
+												// TESTING PART END
+
+												// mail .@cid[.@i], "[WoE Promotion]", .@title$, .@content$, .@zeny, .@items, .@items_count;
+												.@zeny = 0; deletearray(.@items); deletearray(.@items_count); // clear the variables so it won't cause issue.
+											}
+										}
+									}
+									mes .n$,
+										"I have sent my investment for each members in your guild via RoDEX.",
+										"Have a nice day";
+									close;
+
+								} else {
+									mes " - No registered member found.";
+								}
+
+							} else {
+								mes .n$,
+									"You must be the guild leader to start the validation and verification process.";
+								next;
+								continue;
+							}
+							continue;
+
+						case 4:
+							.@loopThird = 0;
+							break;
+					}
+				}
+				continue;
+			case 4:
+				mes .n$,
+					"I see...",
+					"This is also fine.",
+					"Managing a guild is a huge responsibility.",
+					"I hope you will change your mind in the future.";
+				close;
+		}
+	}
+	close;
+
+end;
+
+OnTouch:
+	npctalk .n$ + ": Inviting guilds to fight for glory in the War of Emperium!";
+end;
+
+OnInit:
+	.n$ = "[WoE Promoter]";
+end;
+}
