@@ -162,7 +162,7 @@ OnAgitEnd3:
 							.@unique_char[.@k] = .@members_cid[.@i];
 
 							// gives reward to the member
-							mail .@members_cid[.@i], .@sender$, .@title$, .@body_good$, 1000000,.@items, .@items_count;
+							mail .@members_cid[.@i], .@sender$, .@title$, .@body_good$, 1500000,.@items, .@items_count;
 							debugmes "Give Reward to "+ .@name$;
 						}
 						else {
