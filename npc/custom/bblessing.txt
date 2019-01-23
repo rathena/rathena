@@ -94,3 +94,97 @@ S_CreateItem:
 	getitem 6635, .@amt;
 	return;
 }
+
+izlude,149,133,5	script	Wondering Swordman#izbb_04	635 ,{
+	disable_items;
+	.@n$ = "[Wondering Swordman]";
+	mes .@n$;
+	mes "Hi. Do you want to trade rare ores for rare materials?";
+	mes "My luck in mining have always been good but I have always dreamt about being an adventurer.";
+	next;
+	mes .@n$,
+		"My luck as an adventurer wasn't great.",
+		"I was ambushed by Gargoyle and took an arrow to the knee.";
+	next;
+	mes .@n$,
+		"I was healed by the [Wondering Priest] and thus feel indebted to him. I want to repay him by gathering the rare materials he wants by exchanging my collection of rare ores";
+	next;
+	mes .@n$,
+		"My rates of exchange are as follows, 1 HD Ore for any of the following:",
+		"  10 x <ITEM>"+getitemname(6471)+"<INFO>6471</INFO></ITEM> or",
+		"  4 x <ITEM>"+getitemname(6719)+"<INFO>6719</INFO></ITEM> or",
+		"  2 x <ITEM>"+getitemname(6960)+"<INFO>6960</INFO></ITEM> or",
+		"  4 x <ITEM>"+getitemname(6750)+"<INFO>6750</INFO></ITEM> or",
+		"  4 x <ITEM>"+getitemname(6752)+"<INFO>6752</INFO></ITEM> or",
+		"  10 x <ITEM>"+getitemname(6961)+"<INFO>6961</INFO></ITEM> or",
+		"  40 x <ITEM>"+getitemname(6962)+"<INFO>6962</INFO></ITEM> or",
+		"  2 x <ITEM>"+getitemname(6607)+"<INFO>6607</INFO></ITEM> or",
+		"  40 x <ITEM>"+getitemname(6608)+"<INFO>6608</INFO></ITEM> or",
+		"  2 x <ITEM>"+getitemname(6941)+"<INFO>6941</INFO></ITEM>";
+	next;
+	switch(select("Maybe later.",
+		"10 x "+getitemname(6471),
+		"4 x "+getitemname(6719),
+		"2 x "+getitemname(6960),
+		"4 x "+getitemname(6750),
+		"4 x "+getitemname(6752),
+		"10 x "+getitemname(6961),
+		"40 x "+getitemname(6962),
+		"2 x "+getitemname(6607),
+		"40 x "+getitemname(6608),
+		"2 x "+getitemname(6941)
+	)){
+		case 1:
+			mes .@n$;
+			mes "I see you later then.";
+			close;
+		case 2: callsub (S_CreateItem, 6471, 10); break;	// 6471 | Chills of death x 10
+		case 3: callsub (S_CreateItem, 6719, 4); break;		// 6719 | Jitterbug's Tooth x 4
+		case 4: callsub (S_CreateItem, 6960, 2); break;		// 6960 | Sky Fortress Key x 2
+		case 5: callsub (S_CreateItem, 6750, 4); break;		// 6750 | Failed Engine x 4
+		case 6: callsub (S_CreateItem, 6752, 4); break;		// 6752 | Failed Engine x 4
+		case 7: callsub (S_CreateItem, 6961, 10); break;	// 6961 | Huge Metal Scrap x 10
+		case 8: callsub (S_CreateItem, 6962, 40); break;	// 6962 | Old Fuel x 40
+		case 9: callsub (S_CreateItem, 6607, 2); break;		// 6607 | Temporal Crystal x 2
+		case 10: callsub (S_CreateItem, 6608, 40); break;	// 6608 | Coagulated Spells x 40
+		case 11: callsub (S_CreateItem, 6941, 2); break;	// 6941 | Fragments Valkyrie Power x 2
+	}
+	close;
+
+S_CreateItem:
+	.@itemID = getarg(0);
+	.@itemCost = getarg(1);
+	.@n$ = "[Wondering Swordman]";
+
+	if(countitem(.@itemID) < .@itemCost) {
+		mes .@n$;
+		mes "Please bring at least "+.@itemCost+" x "+getitemname(.@itemID)+" with you.";
+		close;
+	}
+	.@max = countitem(.@itemID)/.@itemCost;
+
+	mes .@n$,
+		"Which rare ores would you like?";
+	.@sel = select("HD Oridecon", "HD Elunium", "HD Bradium", "HD Carnium");
+	setarray .@ore[1],6240,6241,6226,6225;
+
+	mes .@n$;
+	mes "You can make as many as";
+	mes .@max+" x <ITEM>"+getitemname(.@ore[.@sel])+"<INFO>"+.@ore[.@sel]+"</INFO></ITEM>";
+	mes " - 0 means canceling the request - ";
+	input .@amt, 0, .@max;
+	next;
+
+	mes .@n$;
+	mes "Alright, I will give you ";
+	mes .@amt+" x <ITEM>"+getitemname(.@ore[.@sel])+"<INFO>"+.@ore[.@sel]+"</INFO></ITEM> for ";
+	mes "   "+(.@amt * .@itemCost)+" x <ITEM>"+getitemname(.@itemID)+"<INFO>"+.@itemID+"</INFO></ITEM>";
+	if(select("No:Yes") == 1) close;
+	next;
+
+	mes .@n$;
+	mes "Thank you. Come again if you want to trade.";
+	delitem .@itemID, (.@amt * .@itemCost);
+	getitem .@ore[.@sel], .@amt;
+	return;
+}
