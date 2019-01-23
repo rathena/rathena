@@ -625,7 +625,6 @@ int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_lis
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -749,7 +748,6 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -855,7 +853,6 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 	m = center->m;
 	mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -930,7 +927,6 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -994,7 +990,6 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -1118,7 +1113,6 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x,
 	struct map_data *mapdata = map_getmapdata(m);
 	va_list ap;
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -1245,7 +1239,6 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -1390,7 +1383,6 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -1519,7 +1511,6 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type,
 	struct map_data *mapdata = map_getmapdata(m);
 	va_list ap;
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -1636,7 +1627,6 @@ int map_searchrandfreecell(int16 m,int16 *x,int16 *y,int stack) {
 	int free_cells[9][2];
 	struct map_data *mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -1712,7 +1702,6 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
