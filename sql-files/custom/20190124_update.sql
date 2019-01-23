@@ -54,4 +54,4 @@ CREATE TABLE IF NOT EXISTS `multi_pc` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
-SELECT * FROM `acc_reg_num` WHERE `account_id` > 2000656 AND `key` = '#xlaunch_vipx' AND `account_id` != 2000734;
+DELETE FROM `acc_reg_num` WHERE `account_id` > 2000656 AND `key` = '#xlaunch_vipx' AND `account_id` != 2000734;
