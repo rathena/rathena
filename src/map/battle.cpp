@@ -1632,7 +1632,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		pc_overheat(sd, (element == ELE_FIRE ? 3 : 1));
 	}
 
-	ShowDebug("Before Reduction [PVP]: %d", damage);
+	// ShowDebug("Before Reduction [PVP]: %d", damage);
 	// special reduction for TE
 	if(map_getmapflag(bl->m, MF_PVP_TE)) {
 		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
@@ -1664,7 +1664,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 	}
 	damage = i64max(damage,1);
-	ShowDebug("After Reduction [PVP]: %d\n", damage);
+	// ShowDebug("After Reduction [PVP]: %d\n", damage);
 
 	return damage;
 }
@@ -1763,7 +1763,7 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 	if (md && md->guardian_data)
 		damage -= damage * (md->guardian_data->castle->defense/100) * battle_config.castle_defense_rate/100;
 	*/
-	ShowDebug("Before Reduction [GVG]: %d", damage);
+	// ShowDebug("Before Reduction [GVG]: %d", damage);
 	// special reduction for TE
 	if(map_getmapflag(bl->m, MF_GVG_TE_CASTLE) || map_getmapflag(bl->m, MF_GVG_TE)) {
 		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
@@ -1796,7 +1796,7 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 		}
 	}
 	damage = i64max(damage,1);
-	ShowDebug("After Reduction [GVG]: %d\n", damage);
+	// ShowDebug("After Reduction [GVG]: %d\n", damage);
 	return damage;
 }
 
