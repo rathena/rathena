@@ -18630,6 +18630,13 @@ BUILDIN_FUNC(awake)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	int rid = st->rid;
+
+	// No need to keep the player attached if we are going to run other scripts now, where he might get attached
+	if( rid ){
+		script_detach_rid(st);
+	}
+
 	iter = db_iterator(st_db);
 
 	for (tst = static_cast<script_state *>(dbi_first(iter)); dbi_exists(iter); tst = static_cast<script_state *>(dbi_next(iter))) {
@@ -18645,6 +18652,12 @@ BUILDIN_FUNC(awake)
 		}
 	}
 	dbi_destroy(iter);
+
+	// If a player had been attached, now is the time to restore it
+	if( rid ){
+		st->rid = rid;
+		script_attach_state(st);
+	}
 
 	return SCRIPT_CMD_SUCCESS;
 }
