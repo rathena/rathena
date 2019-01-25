@@ -505,9 +505,7 @@ S_Spawn:
 	.@gid = $@mobid[0];
 	setunitdata .@gid, UMOB_MODE, ( MD_CANMOVE|MD_NORANDOM_WALK );
 	unitignorecellstack .@gid;
-	sleep 1000;	// start moving 1s after spawn
-	if (unitexists(.@gid))
-		mob_setidleevent .@gid, 'npc_name$ + "::OnIdle" + getarg(0);
+	mob_setidleevent .@gid, 'npc_name$ + "::OnIdle" + getarg(0);
 	end;
 
 OnIdle0: callsub( S_Idle, 0 );
@@ -684,13 +682,10 @@ OnStart:
 	.@gid = $@mobid[0];
 	emotion ET_SURPRISE, .@gid;
 	unitignorecellstack .@gid;
-	sleep 1000;
-	if (unitexists(.@gid)) {
-		mob_setidleevent .@gid, 'npc_name_mercenary$ + "::OnIdle";
-		sleep 45000;
-		if (unitexists(.@gid))
-			unitskilluseid .@gid,301,1,.@gid,1,false;	// SA_INSTANTDEATH
-	}
+	mob_setidleevent .@gid, 'npc_name_mercenary$ + "::OnIdle";
+	sleep 45000;
+	if (unitexists(.@gid))
+		unitskilluseid .@gid,301,1,.@gid,1,false;	// SA_INSTANTDEATH
 	end;
 
 OnIdle:
@@ -744,9 +739,7 @@ S_Spawn:
 	.@gid = $@mobid[0];
 	emotion ET_SURPRISE, .@gid;
 	unitignorecellstack .@gid;
-	sleep 1000;
-	if (unitexists(.@gid))
-		mob_setidleevent .@gid, 'npc_name_mob$ + "::OnIdle";
+	mob_setidleevent .@gid, 'npc_name_mob$ + "::OnIdle";
 	end;
 
 OnIdle:
