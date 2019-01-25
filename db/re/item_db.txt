@@ -8735,7 +8735,7 @@
 15111,Upgrade_Part_Plate,Reinforced Parts - Gloves,4,10,,3000,,110,,,0x00000400,56,2,16,,100,1,,{ bonus bUnbreakableArmor; bonus2 bSubSize,0,10; bonus2 bSubSize,1,10; .@r = getrefine(); if(.@r>=7){ bonus2 bSubSize,2,10; }; if(.@r>=9){ bonus2 bSubSize,0,5; bonus2 bSubSize,1,5; } },{},{}
 15116,Airship_Armor,Airship's Armor,4,10,,700,,100,,0,0xFFFFFFFF,63,2,16,,125,0,,{ bonus bMaxHP,1000; bonus bMaxSP,100; bonus bMdef,10; bonus bAllStats,1; },{},{}
 15117,Felock_Armor,Felrock's Armor,4,10,,750,,70,,0,0xFFFFFFFF,63,2,16,,125,1,,{ bonus bMaxHP,500; bonus bMaxSP,50; bonus bMdef,10; bonus bAllStats,1; .@r = getrefine(); if(.@r>=7) { bonus bMaxHP,500; bonus bMaxSP,50; } if(.@r>=9) { bonus bMaxHP,200; bonus bMaxSP,20; } if(.@r>=12) { bonus bMaxHP,300; bonus bMaxSP,30; } },{},{}
-15121,Robe_Of_Sarah,Sarah's Battle Robe,4,10,,800,,35,,1,0xFFFFFFFF,63,2,16,,145,1,,{ autobonus "{ bonus bMatk,getrefine()*8; }",30,10000,BF_MAGIC; },{},{}
+15121,Robe_Of_Sarah,Sarah's Battle Robe,4,10,,800,,35,,1,0xFFFFFFFF,63,2,16,,145,1,,{ autobonus "{ bonus bMatk,getrefine()*8; }",3,10000,BF_MAGIC; },{},{}
 15123,Whikebain_Suit,Whikebain Suit,4,0,,900,,56,,1,0x00001000,56,2,16,,105,1,,{ .@r = getrefine(); bonus bCritAtkRate,(.@r>=7)?(6):((.@r>=5)?(4):(0)); bonus3 bAutoSpell,"DC_WINKCHARM",1,10; /* Confirm: Success rate */ },{},{}
 15126,Female_Poring_Balloon,Private Doram Suits,4,20,,700,,80,,1,0x80000000,7,2,16,,100,1,,{ bonus bMaxHP,500; bonus bMaxSP,100; .@r = getrefine()/3; bonus bDex,.@r; bonus bInt,.@r; },{},{}
 15128,Excelion_Suit,Excelion Suit,4,20,,1000,,100,,0,0xFFFFFFFF,63,2,16,,99,1,,{ bonus bVit,6 + (BaseLevel > 129 ? 4 : 0); bonus bMaxHPrate,(getrefine() / 3) * 4; bonus bUnbreakableArmor; },{},{}
