@@ -107,7 +107,7 @@ OnClock2200:
 	disablenpc "ord11-12"; //from npc/warps/pvp.txt
 	disablenpc "Devil Square Guardian#2";
 	mapannounce "ordeal_1-1","Devil Square is now closed.", bc_map;
-	getmapxy .@map$, .@x, .@y, UNITTYPE_NPC;
+	getmapxy .@map$, .@x, .@y, BL_NPC;
 	mapwarp "ordeal_1-1", .@map$, .@x, .@y;
 	killmonsterall "ordeal_1-1";
 	announce "Devil Square is OPEN. The event will begin in 5 minutes.", bc_all;

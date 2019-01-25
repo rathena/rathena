@@ -737,7 +737,7 @@ OnEnable:
 	areamonster .@map$,.@c[0],.@c[1],.@c[2],.@c[3],"Ancient Kukre",2179,rand(1,3),.@label$;
 	areamonster .@map$,.@c[0],.@c[1],.@c[2],.@c[3],"Abysmal Cornutus",2177,rand(1,3),.@label$;
 	specialeffect EF_MAPPILLAR2,ALL_SAMEMAP; //currently broken
-	getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
+	getmapxy(.@map$,.@x,.@y,BL_NPC);
 	getpartymember 'party_id,2;
 	copyarray .@partymemberaid[0],$@partymemberaid[0],$@partymembercount;
 	for(set .@i,0; .@i<$@partymembercount; set .@i,.@i+1) {

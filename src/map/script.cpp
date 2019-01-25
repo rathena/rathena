@@ -14977,12 +14977,12 @@ BUILDIN_FUNC(getsavepoint)
  * @param x: Integer variable for output coord X
  * @param y: Integer variable for output coord Y
  * @param type: Type of object
- *   UNITTYPE_PC - Character coord
- *   UNITTYPE_NPC - NPC coord
- *   UNITTYPE_PET - Pet coord
- *   UNITTYPE_HOM - Homun coord
- *   UNITTYPE_MER - Mercenary coord
- *   UNITTYPE_ELEM - Elemental coord
+ *   BL_PC - Character coord
+ *   BL_NPC - NPC coord
+ *   BL_PET - Pet coord
+ *   BL_HOM - Homun coord
+ *   BL_MER - Mercenary coord
+ *   BL_ELEM - Elemental coord
  * @param charname: Name object. If empty or "this" use the current object
  * @return 0 - success; -1 - some error, MapName$,MapX,MapY contains unknown value.
  */
@@ -15036,34 +15036,37 @@ BUILDIN_FUNC(getmapxy)
 	type=script_getnum(st,5);
 
 	switch (type) {
-		case UNITTYPE_PC:	//Get Character Position
-			if( script_nick2sd(6,sd) )
+		case BL_PC:	//Get Character Position
+			if ((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd))
 				bl = &sd->bl;
 			break;
-		case UNITTYPE_NPC:	//Get NPC Position
-			if( script_hasdata(st,6) )
-			{
+		case BL_NPC:	//Get NPC Position
+			if (script_hasdata(st,6)) {
 				struct npc_data *nd;
-				nd=npc_name2id(script_getstr(st,6));
+
+				if (script_isstring(st, 6))
+					nd = npc_name2id(script_getstr(st, 6));
+				else
+					nd = map_id2nd(script_getnum(st, 6));
 				if (nd)
 					bl = &nd->bl;
-			} else //In case the origin is not an npc?
-				bl=map_id2bl(st->oid);
+			} else //In case the origin is not an NPC?
+				bl = map_id2bl(st->oid);
 			break;
-		case UNITTYPE_PET:	//Get Pet Position
-			if( script_nick2sd(6, sd) && sd->pd )
+		case BL_PET:	//Get Pet Position
+			if (sd->pd && ((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)))
 				bl = &sd->pd->bl;
 			break;
-		case UNITTYPE_HOM:	//Get Homun Position
-			if( script_nick2sd(6, sd) && sd->hd )
+		case BL_HOM:	//Get Homun Position
+			if (sd->hd && ((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)))
 				bl = &sd->hd->bl;
 			break;
-		case UNITTYPE_MER: //Get Mercenary Position
-			if( script_nick2sd(6, sd) && sd->md )
+		case BL_MER: //Get Mercenary Position
+			if (sd->md && ((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)))
 				bl = &sd->md->bl;
 			break;
-		case UNITTYPE_ELEM: //Get Elemental Position
-			if( script_nick2sd(6, sd) && sd->ed )
+		case BL_ELEM: //Get Elemental Position
+			if (sd->ed && ((script_isstring(st, 6) && script_nick2sd(6, sd)) || script_mapid2sd(6, sd)))
 				bl = &sd->ed->bl;
 			break;
 		default:
@@ -17330,7 +17333,7 @@ BUILDIN_FUNC(unitexists)
 BUILDIN_FUNC(getunittype)
 {
 	struct block_list* bl;
-	uint8 value = 0;
+	int value = 0;
 
 	if(!script_rid2bl(2,bl))
 	{
@@ -17339,14 +17342,18 @@ BUILDIN_FUNC(getunittype)
 	}
 
 	switch (bl->type) {
-		case BL_PC:   value = UNITTYPE_PC; break;
-		case BL_NPC:  value = UNITTYPE_NPC; break;
-		case BL_PET:  value = UNITTYPE_PET; break;
-		case BL_MOB:  value = UNITTYPE_MOB; break;
-		case BL_HOM:  value = UNITTYPE_HOM; break;
-		case BL_MER:  value = UNITTYPE_MER; break;
-		case BL_ELEM: value = UNITTYPE_ELEM; break;
-		default:      value = -1; break;
+		case BL_PC:
+		case BL_NPC:
+		case BL_PET:
+		case BL_MOB:
+		case BL_HOM:
+		case BL_MER:
+		case BL_ELEM:
+			value = bl->type;
+			break;
+		default:
+			value = -1;
+			break;
 	}
 
 	script_pushint(st, value);

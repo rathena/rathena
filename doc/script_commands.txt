@@ -3046,7 +3046,7 @@ If <type> is false the command only returns the count of unidentified items.
 //
 ---------------------------------------
 
-*getmapxy("<variable for map name>",<variable for x>,<variable for y>,<type>{,"<search string>"})
+*getmapxy("<variable for map name>",<variable for x>,<variable for y>,<type>{,"<search value>"})
 
 This function will locate a character object, NPC object or pet's coordinates
 and place their coordinates into the variables specified when calling it. It
@@ -3055,23 +3055,23 @@ not variables or the search was not successful.
 
 Type is the type of object to search for:
 
-	UNITTYPE_PC   - Character object
-	UNITTYPE_NPC  - NPC object
-	UNITTYPE_PET  - Pet object
-	UNITTYPE_HOM  - Homunculus object
-	UNITTYPE_MER  - Mercenary object
-	UNITTYPE_ELEM - Elemental object
+	BL_PC   - Character object
+	BL_NPC  - NPC object
+	BL_PET  - Pet object
+	BL_HOM  - Homunculus object
+	BL_MER  - Mercenary object
+	BL_ELEM - Elemental object
 
-The search string is optional. If it is not specified, the location of the
-invoking character will always be returned for types UNITTYPE_PC and UNITTYPE_PET,
-the location of the NPC running this function for type 1.
+The search value is optional. If it is not specified, the location of the
+invoking character will always be returned for types BL_PC and BL_PET,
+the location of the NPC running this function for type BL_PC.
 
-If a search string is specified, for types UNITTYPE_PC and UNITTYPE_NPC, the
-character or NPC with the specified name will be located.
+If a search value is specified, for types BL_PC and BL_NPC, the
+character or NPC with the specified name or GID will be located.
 
-If type is UNITTYPE_PET/UNITTYPE_HOM/UNITTYPE_MER/UNITTYPE_ELEM, the search
-will locate the current object of the character who's name is given in the
-search string, it will NOT locate the object by name.
+If type is BL_PET/BL_HOM/BL_MER/BL_ELEM, the search
+will locate the current object of the character who's name/GID is given in the
+search value, it will NOT locate the object by name.
 
 Example:
 
@@ -3083,7 +3083,7 @@ Example:
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
-        if (getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_NPC, "Meh") != 0) {
+        if (getmapxy(@mapname$, @mapx, @mapy, BL_NPC, "Meh") != 0) {
                 mes "I can't seem to find Meh anywhere!";
                 close;
         }
@@ -4844,7 +4844,7 @@ Example to get Crimson Weapon with Ghost property:
 	// when Valkyrie Randgris killed
 	OnNPCKillEvent:
 		if (killedrid == 1751 && rand(0,1000) > 950) { // Valkyrie Randgris
-			getmapxy(.@map$,.@x,.@y,UNITTYPE_PC);
+			getmapxy(.@map$,.@x,.@y,BL_PC);
 			setarray .@OptID[0],RDMOPT_ATTR_TOLERACE_NOTHING,RDMOPT_RACE_TOLERACE_HUMAN;
 			setarray .@OptVal[0],10,5;
 			setarray .@OptParam[0],0;
@@ -7815,13 +7815,14 @@ it does.
 Returns the type of object from the given Game ID. Returns -1 if the given GID does not
 exist.
 
-	UNITTYPE_PC     0
-	UNITTYPE_NPC    1
-	UNITTYPE_PET    2
-	UNITTYPE_MOB    3
-	UNITTYPE_HOM    4
-	UNITTYPE_MER    5
-	UNITTYPE_ELEM   6
+Return values:
+	BL_PC   - Character object
+	BL_MOB  - Monster object
+	BL_PET  - Pet object
+	BL_HOM  - Homunculus object
+	BL_MER  - Mercenary object
+	BL_NPC  - NPC object
+	BL_ELEM - Elemental object
 
 ---------------------------------------
 

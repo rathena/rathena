@@ -209,7 +209,7 @@ OnInit:
 OnEnable:
 	emotion ET_SURPRISE;
 	enablenpc strnpcinfo(0);
-	getmapxy(.@m$,.@x,.@y,UNITTYPE_NPC);
+	getmapxy(.@m$,.@x,.@y,BL_NPC);
 	setarray .@mob[1], 1725,1726,1727,1728,1730,1729;
 	.@n = atoi( strnpcinfo(2) );
 	monster "p_track01",58,.@y,"The "+ callfunc("F_GetNumSuffix",.@n) +" Racer",.@mob[.@n],1,strnpcinfo(0)+"::OnMyMobDead";
@@ -1692,7 +1692,7 @@ function	MN	{
 OnEnable:
 	enablenpc strnpcinfo(0);
 	setarray .@n[1], 1725,1726,1727,1728,1730,1729;
-	getmapxy(.@m$,.@x,.@y,UNITTYPE_NPC);
+	getmapxy(.@m$,.@x,.@y,BL_NPC);
 	.@i = MN;
 	monster "p_track02",58,.@y,"Monster "+.@i,.@n[.@i],1,strnpcinfo(0)+"::OnMyMobDead";
 	end;

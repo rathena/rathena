@@ -786,7 +786,7 @@ OnAlert:
 		setarray .@coord[0],209,27;
 		break;
 	default:
-		getmapxy .@map$, .@coord[0], .@coord[1], UNITTYPE_NPC;
+		getmapxy .@map$, .@coord[0], .@coord[1], BL_NPC;
 		break;
 	}
 	areamonster 'xm_d_map$,(.@coord[0]-8),(.@coord[1]-8),(.@coord[0]+8),(.@coord[1]+8), "Guard",2990,21, .@npc_name$ + "::OnMyMobDead";

@@ -1222,7 +1222,7 @@
 
 -	script	RelayDummy2::GuildRelay2	754,{
 	set .@name$,strnpcinfo(1);
-	getmapxy(.@m$,.@x,.@x,UNITTYPE_NPC);
+	getmapxy(.@m$,.@x,.@x,BL_NPC);
 	set .@GID, GetCastleData(.@m$,1);
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! You're";
@@ -1731,7 +1731,7 @@
 
 -	script	RelayDummy3::GuildRelay3	754,{
 	set .@name$,strnpcinfo(1);
-	getmapxy(.@m$,.@x,.@x,UNITTYPE_NPC);
+	getmapxy(.@m$,.@x,.@x,BL_NPC);
 	set .@GID, GetCastleData(.@m$,1);
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! You're";
@@ -2416,7 +2416,7 @@
 
 -	script	GuildDummy4::GuildRelay4	754,{
 	set .@name$,strnpcinfo(1);
-	getmapxy(.@m$,.@x,.@x,UNITTYPE_NPC);
+	getmapxy(.@m$,.@x,.@x,BL_NPC);
 	set .@GID, GetCastleData(.@m$,1);
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! You're";
