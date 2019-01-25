@@ -189,7 +189,7 @@ morocc,168,271,4	duplicate(Zonda Rep#pron)	Zonda Rep#mor	4_F_ZONDAGIRL
 
 
 // Wave mode forest
-1@def01,50,21,0	script	#wave_mode_forest_entrance	HIDDEN_WARP_NPC,2,2,{
+1@def01,50,21,0	script	#wave_mode_forest_entrance	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	initnpctimer;
@@ -523,7 +523,8 @@ S_Idle:
 	end;
 }
 
-1@def01,50,30,0	script	#wave_mode_forest_warp	WARPNPC,2,2,{
+// 1@def01,50,23,0	script	#wave_mode_forest_warp	WARPNPC,2,2,{
+1@def01,50,30,0	script	#wave_mode_forest_warp	WARPNPC,2,2,{// official warp out
 	end;
 OnTouch:
 	if (wave_mode_map$ == "")
