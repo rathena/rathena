@@ -2924,7 +2924,8 @@ IG_Octo_Hstick_Box2,6442,0,1,0,0,4320,0	// 1x Octopus_Hunt_Stick
 
 IG_Octo_Hstick_Box3,6442,0,1,0,0,10080,0	// 1x Octopus_Hunt_Stick
 
-IG_Silvervine_Fruit_Box10,6417,0,10,0,0,1,1	// 10x Silvervine
+// GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,GUID,isBound,isNamed}
+IG_Silvervine_Fruit_Box10,6417,0,10,0,0,0,1,1	// 10x Silvervine
 IG_Silvervine_Fruit_Box10,12636,0,30,0,0,0,0	// 30x Malang_Sp_Can
 
 IG_Silvervine_Fruit_Box40,6417,0,40,0,0,0,0	// 40x Silvervine
