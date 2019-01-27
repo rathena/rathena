@@ -323,6 +323,7 @@ function	script	F_PVP_FSRS	{
 		close;
 	}
 
+	/*
 	.@j = 0;
 	while ( $@victim_unique[.@j] != get_unique_id() && .@j < getarraysize($@victim_unique) ) { .@j++; }
 	// .@j = inarray($@victim_unique, get_unique_id());
@@ -344,6 +345,7 @@ function	script	F_PVP_FSRS	{
 			close;
 		}
 	}
+	*/
 
 	set .@eac, eaclass();
 	setarray .@block[0],9999,4050,4051,4052,4190,4191,4211,4212,4215,4218,4220,4223,4224,4229,4239,4240,4241,4242;

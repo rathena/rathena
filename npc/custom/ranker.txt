@@ -186,18 +186,18 @@ OnSun2359: // one minute before 'next week' start
 	.@end$ = callfunc("date_str", .@date[0], .@date[1], .@date[2]);
 
 	.@map$ = "pvp_y_1-2";
-	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@cn );
+	query_sql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@cn );
 	.@map$ = "pvp_y_2-2";
-	query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer2, .@cn );
+	query_sql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer2, .@cn );
 	query_logsql("SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+(.@start$)+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' GROUP BY (kill_char_id) ORDER BY cn DESC, mvp_date ASC LIMIT 5;", .@killer3, .@cn );
 
 	setarray .@items[0], 8500, 8501;
 	for(.@i = 0; .@i < 5; .@i ++) {
-		setarray .@items_count[0], 10 - (.@i*2), 25 - (.@i*5);
-		if(.@killer[.@i] > 0)
-			mail .@killer[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+get_name(.@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [ALL].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 2500000 - (.@i*500000),.@items, .@items_count;
-		if(.@killer2[.@i] > 0)
-			mail .@killer2[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+get_name(.@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [Trans].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 2500000 - (.@i*500000),.@items, .@items_count;
+		setarray .@items_count[0], 5 - .@i, 25 - (.@i*5);
+		// if(.@killer[.@i] > 0)
+		// 	mail .@killer[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+get_name(.@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [ALL].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 2500000 - (.@i*500000),.@items, .@items_count;
+		// if(.@killer2[.@i] > 0)
+		// 	mail .@killer2[.@i], "PvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+get_name(.@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly PVP Ranking [Trans].\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 2500000 - (.@i*500000),.@items, .@items_count;
 		if(.@killer3[.@i] > 0)
 			mail .@killer3[.@i], "MvP Ranker","Congratulations [Rank "+(.@i+1)+"]","Congratulations ["+(.@killer[.@i])+"]!\r\n\r\nYou were [Rank "+(.@i+1)+"] in the\r\n------------------------------\r\nWeekly MVP Ranking.\r\n------------------------------\r\n\r\nAttached with this mail are your rewards.", 2500000 - (.@i*500000),.@items, .@items_count;
 	}
@@ -324,7 +324,7 @@ OnPvPRank:
 			.@map$ = "pvp_y_2-2";
 			.@mode$ = .@mode$ + " == [Trans Only]";
 		}
-		query_logsql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
+		query_sql("SELECT killer_id, COUNT(killer_id) AS cn FROM pvplog WHERE date_time > '"+.@start$+" 00:00:00' AND date_time < '"+.@end$+" 00:00:00' AND map = '"+.@map$+"' GROUP BY (killer_id) ORDER BY cn DESC LIMIT 5;", .@killer, .@kill_count );
 
 		dispbottom " PVP Ranker: TOP 5 == " + .@mode$ + " ";
 	}
@@ -353,7 +353,7 @@ OnPvPRank:
 		}
 
 		// debugmes "SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+.@start$+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' "+.@sql$+" GROUP BY (kill_char_id) ORDER BY cn DESC, mvp_date ASC LIMIT 5;";
-		query_logsql("SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+(.@start$)+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' "+.@sql$+" GROUP BY (kill_char_id) ORDER BY cn DESC, mvp_date ASC LIMIT 5;", .@killer, .@kill_count );
+		query_sql("SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+(.@start$)+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' "+.@sql$+" GROUP BY (kill_char_id) ORDER BY cn DESC, mvp_date ASC LIMIT 5;", .@killer, .@kill_count );
 
 	}
 	for(@i = 0; @i < 5; @i ++) {

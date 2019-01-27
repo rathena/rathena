@@ -350,12 +350,12 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 
 			debugmes "Unique: "+ $@victim_unique[.@k]+ " | Count: "+$@victim_count[.@k];
 
-			if ($@victim_count[.@k] == 1)
-				$@victim_time[.@k] = gettimetick(2) + 60 * 60 * 4; // PvP Delay
-			if ($@victim_count[.@k] >= 1)
-				donpcevent "pvp_prevent_abuse::OnStart";
-
+			// if ($@victim_count[.@k] == 1)
+			// 	$@victim_time[.@k] = gettimetick(2) + 60 * 60 * 4; // PvP Delay
+			// if ($@victim_count[.@k] >= 1)
+			// 	donpcevent "pvp_prevent_abuse::OnStart";
 			warp "SavePoint",0,0;
+
 			if(killerrid)
 			{
 				pvplog(getcharid(0, rid2name(killerrid)), getcharid(0), .@map$);
@@ -393,12 +393,12 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 	end;
 
 	// give skull with name ==only in PvP==
-	OnPCKillEvent:
-		if ( strcharinfo(3) == "pvp_y_1-2" || strcharinfo(3) == "pvp_y_2-2" ) {
-			.@char_id = getcharid( 0, rid2name( killedrid ) );
-			getitem2 7420,1,1,0,0,254,0, ( .@char_id & 65535 ), ( .@char_id >> 16 );
-		}
-	end;
+	// OnPCKillEvent:
+	// 	if ( strcharinfo(3) == "pvp_y_1-2" || strcharinfo(3) == "pvp_y_2-2" ) {
+	// 		.@char_id = getcharid( 0, rid2name( killedrid ) );
+	// 		getitem2 7420,1,1,0,0,254,0, ( .@char_id & 65535 ), ( .@char_id >> 16 );
+	// 	}
+	// end;
 
 	OnPCLogoutEvent:
 		if(.Event == 1 && strcharinfo(3) == "guild_vs2") {
@@ -911,7 +911,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		.@map$ = getarg(2);
 		query_sql("SELECT lg.last_unique_id FROM `login` AS lg LEFT JOIN `char` AS ch ON (ch.account_id = lg.account_id) WHERE ch.char_id IN ( "+ escape_sql(.@killer) +", "+ escape_sql(.@victim) +" ) LIMIT 2", @unique);
 		if(@unique[0] != @unique[1])
-			query_logsql("INSERT INTO pvplog (killer_id, victim_id, date_time, map) VALUES ("+.@killer+", "+.@victim+", '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"', '"+.@map$+"');");
+			query_sql("INSERT INTO pvplog (killer_id, victim_id, date_time, map) VALUES ("+.@killer+", "+.@victim+", '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"', '"+.@map$+"');");
 		else
 			debugmes "self-kill. not recording.";
 	}
