@@ -9,7 +9,7 @@
 
 // Merchant
 //============================================================
-glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
+glast_01,210,273,5	script	Hugin's Butler#pa0829	1_F_04,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "Your bag is too heavy. Reduce some weight and come back.";
@@ -119,14 +119,14 @@ glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 
 // Enchant and Socket NPC
 //============================================================
-glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
+glast_01,212,273,4	script	Hugin's Magic Master#pa0829	1_F_01,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "Your bag is too heavy. Reduce some weight and come back.";
 		close;
 	}
 	mes "[Hugin's Magic Master]";
-	mes "So you came to enchant the Temporal Boots. Be aware that Boots with sockets cannot be enchanted, and this upgrade is only possible for the boots you are wearing.";
+	mes "So you came to enchant the Temporal Boots. Be aware that this upgrade is only possible for the boots you are wearing.";
 	next;
 	set .@menu, select( "How does the enchanting work?", "Give effect to my Temporal Boots", "Remove effect on my Temporal Boots" );
 	if (.@menu == 1) {
@@ -134,10 +134,7 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 		mes "You can keep obtain ^0000FFCoagulated Spell^000000 through your travel times.";
 		next;
 		mes "[Hugin's Magic Master]";
-		mes "I can enchant your Temporal Boots items depands on the amount of that item. ^0000FFNot normal type boots^000000. Only possible for those 6 expanded version boots.";
-		next;
-		mes "[Hugin's Magic Master]";
-		mes "But, once you put a socket into the item, you cannot enchant it. Make sure to remember that.";
+		mes "I can enchant your Temporal Boots items depands on the amount of that item. ^0000FFNot normal type boots^000000. Only possible for those 6 expanded or modified version boots either with or without sockets.";
 		next;
 		mes "[Hugin's Magic Master]";
 		mes "I don't give out effect randomly. You can pick which effect you want for the item.";
@@ -311,7 +308,7 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 		delequip EQI_SHOES;
 		mes "[Hugin's Magic Master]";
 		mes "Trying for " + .@string$;
-		getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@card[2],.@card[3];
+		getitem2 .@equip_id,1,1,.@equip_refine,0,.@card[0],0,.@card[2],.@card[3];
 		equip .@equip_id;
 		close;
 	default:
@@ -371,7 +368,7 @@ glast_01,210,270,0	script	Hugin's Craftsman#pa0829	4_F_JOB_BLACKSMITH,{
 S_Slot:
 	.@equip_id = getequipid(EQI_SHOES);
 	mes "[Hugin's Craftsman]";
-	mes "And ^FF0000all enchant or refine rates will be lost if you fail this.^000000";
+	mes "It's possible to ^FF0000fail and break the item^000000. Is that ok?";
 	mes "Still want to risk it?";
 	next;
 	if (select( "Cancel", "I am ok with it!" ) == 1) {
@@ -380,7 +377,8 @@ S_Slot:
 		close;
 	}
 	mes "[Hugin's Craftsman]";
-	mes "Once again, ^FF0000That Magic Master won't enchant any item with a slot.^000000";
+	mes "Once again, ^FF0000all enchant or refine rates^000000 will be ^FF0000lost^000000 if I successful in adding the socket.";
+	// mes "Once again, ^FF0000That Magic Master won't enchant any item with a slot.^000000";
 	mes "Still want to proceed?";
 	next;
 	if (select( "Cancel", "I understand. Try to slot it." ) == 1) {
