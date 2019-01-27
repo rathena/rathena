@@ -625,6 +625,10 @@ int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_lis
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
+
 	x0 = i16max(center->x - range, 0);
 	y0 = i16max(center->y - range, 0);
 	x1 = i16min(center->x + range, mapdata->xs - 1);
@@ -744,7 +748,6 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	// Required for delayed monster removal in instances
 	if( mapdata == nullptr || mapdata->block == nullptr ){
 		return 0;
 	}
@@ -849,6 +852,11 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 
 	m = center->m;
 	mapdata = map_getmapdata(m);
+
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
+
 	x0 = i16max(center->x - range, 0);
 	y0 = i16max(center->y - range, 0);
 	x1 = i16min(center->x + range, mapdata->xs - 1);
@@ -919,6 +927,10 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
+
 	x0 = i16max(x0, 0);
 	y0 = i16max(y0, 0);
 	x1 = i16min(x1, mapdata->xs - 1);
@@ -977,6 +989,10 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	m = center->m;
 
 	struct map_data *mapdata = map_getmapdata(m);
+
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
 
 	x0 = center->x - range;
 	x1 = center->x + range;
@@ -1096,6 +1112,10 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x,
 	int blockcount = bl_list_count, i;
 	struct map_data *mapdata = map_getmapdata(m);
 	va_list ap;
+
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
 
 	if ( x < 0 || y < 0 || x >= mapdata->xs || y >= mapdata->ys ) return 0;
 
@@ -1218,6 +1238,10 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 		SWAP(my0, my1);
 
 	struct map_data *mapdata = map_getmapdata(m);
+
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
 
 	mx0 = max(mx0, 0);
 	my0 = max(my0, 0);
@@ -1359,6 +1383,10 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
+
 	//Get area that needs to be checked
 	mx0 = x0 + dx*(offset / ((dir % 2) + 1));
 	my0 = y0 + dy*(offset / ((dir % 2) + 1));
@@ -1483,6 +1511,10 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type,
 	struct map_data *mapdata = map_getmapdata(m);
 	va_list ap;
 
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
+
 	bsize = mapdata->bxs * mapdata->bys;
 
 	if( type&~BL_MOB )
@@ -1595,6 +1627,10 @@ int map_searchrandfreecell(int16 m,int16 *x,int16 *y,int stack) {
 	int free_cells[9][2];
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
+
 	for(free_cell=0,i=-1;i<=1;i++){
 		if(i+*y<0 || i+*y>=mapdata->ys)
 			continue;
@@ -1665,6 +1701,10 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 	}
 
 	struct map_data *mapdata = map_getmapdata(m);
+
+	if( mapdata == nullptr || mapdata->block == nullptr ){
+		return 0;
+	}
 
 	if (rx >= 0 && ry >= 0) {
 		tries = rx2*ry2;

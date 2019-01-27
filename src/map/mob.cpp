@@ -52,7 +52,7 @@ using namespace rathena;
 // Move probability for mobs away from players (rate of 1000 minute)
 // in Aegis, this is 100% for mobs that have been activated by players and none otherwise.
 #define MOB_LAZYMOVEPERC(md) (mob_is_spotted(md)?1000:0)
-#define MOB_MAX_DELAY (24*3600*1000)
+const t_tick MOB_MAX_DELAY = 24 * 3600 * 1000;
 #define MAX_MINCHASE 30	//Max minimum chase value to use for mobs.
 #define RUDE_ATTACKED_COUNT 1	//After how many rude-attacks should the skill be used?
 

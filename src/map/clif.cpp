@@ -11188,7 +11188,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			sd->idletime = last_tick;
 
 		pc_setsit(sd);
-		skill_sit(sd, 1);
+		skill_sit(sd, true);
 		clif_sitting(&sd->bl);
 		break;
 	case 0x03: // standup
@@ -11204,7 +11204,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		if (pc_setstand(sd, false)) {
 			if (battle_config.idletime_option&IDLE_SIT)
 				sd->idletime = last_tick;
-			skill_sit(sd, 0);
+			skill_sit(sd, false);
 			clif_standing(&sd->bl);
 		}
 		break;
@@ -19544,7 +19544,7 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		sd->roulette.prizeStage = sd->roulette.stage;
 		sd->roulette.prizeIdx = rnd()%rd.items[sd->roulette.stage];
 		sd->roulette.claimPrize = true;
-		sd->roulette.tick = gettick() + max( 1, ( MAX_ROULETTE_COLUMNS - sd->roulette.prizeStage - 3 ) ) * 1000;
+		sd->roulette.tick = gettick() + i64max( 1, ( MAX_ROULETTE_COLUMNS - sd->roulette.prizeStage - 3 ) ) * 1000;
 
 		if( rd.flag[sd->roulette.stage][sd->roulette.prizeIdx]&1 ){
 			result = GENERATE_ROULETTE_LOSING;

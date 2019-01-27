@@ -2068,7 +2068,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (ud) {
 				rate = skill_delayfix(src, skill, skill_lv);
 				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0){
-					ud->canact_tick = max(tick + rate, ud->canact_tick);
+					ud->canact_tick = i64max(tick + rate, ud->canact_tick);
 					if ( battle_config.display_status_timers )
 						clif_status_change(src, EFST_POSTDELAY, 1, rate, 0, 0, 0);
 				}
@@ -2161,7 +2161,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			if (ud) {
 				rate = skill_delayfix(src, skill, autospl_skill_lv);
 				if (DIFF_TICK(ud->canact_tick, tick + rate) < 0){
-					ud->canact_tick = max(tick + rate, ud->canact_tick);
+					ud->canact_tick = i64max(tick + rate, ud->canact_tick);
 					if ( battle_config.display_status_timers && sd )
 						clif_status_change(src, EFST_POSTDELAY, 1, rate, 0, 0, 0);
 				}
@@ -2493,7 +2493,7 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			if (ud) {
 				autospl_rate = skill_delayfix(bl, autospl_skill_id, autospl_skill_lv);
 				if (DIFF_TICK(ud->canact_tick, tick + autospl_rate) < 0){
-					ud->canact_tick = max(tick + autospl_rate, ud->canact_tick);
+					ud->canact_tick = i64max(tick + autospl_rate, ud->canact_tick);
 					if ( battle_config.display_status_timers && dstsd )
 						clif_status_change(bl, EFST_POSTDELAY, 1, autospl_rate, 0, 0, 0);
 				}
@@ -4194,7 +4194,7 @@ static TIMER_FUNC(skill_timerskill){
 					// Official behaviour is to hit as long as there is a line of sight, regardless of distance
 					if (skl->type > 0 && !status_isdead(target) && path_search_long(NULL,src->m,src->x,src->y,target->x,target->y,CELL_CHKWALL)) {
 						// Apply canact delay here to prevent hacks (unlimited casting)
-						ud->canact_tick = max(tick + status_get_amotion(src), ud->canact_tick);
+						ud->canact_tick = i64max(tick + status_get_amotion(src), ud->canact_tick);
 						skill_attack(BF_MAGIC, src, src, target, skl->skill_id, skl->skill_lv, tick, skl->flag);
 					}
 					if (unit && !status_isdead(target) && !status_isdead(src)) {
@@ -4270,7 +4270,7 @@ static TIMER_FUNC(skill_timerskill){
 						struct map_session_data *tsd = NULL;
 						if( (tsd = ((TBL_PC*)target)) && !pc_issit(tsd) ) {
 							pc_setsit(tsd);
-							skill_sit(tsd, 1);
+							skill_sit(tsd, true);
 							clif_sitting(&tsd->bl);
 						}
 					}
@@ -5659,7 +5659,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 						break;
 				}
 
-				sd->ud.canact_tick = max(tick + skill_delayfix(src, pres_skill_id, pres_skill_lv), sd->ud.canact_tick);
+				sd->ud.canact_tick = i64max(tick + skill_delayfix(src, pres_skill_id, pres_skill_lv), sd->ud.canact_tick);
 				clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, pres_skill_id, pres_skill_lv), 0, 0, 0);
 
 				cooldown = pc_get_skillcooldown(sd,pres_skill_id, pres_skill_lv);
@@ -6053,18 +6053,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case RL_QD_SHOT:
-		if (sd)
-			status_change_end(&sd->bl, SC_QD_SHOT_READY, INVALID_TIMER);
 	case RL_D_TAIL:
-		if (!sd || (sd && tsc && tsc->data[SC_C_MARKER])) {
-			int sflag = flag;
+		if (!sd || (tsc && tsc->data[SC_C_MARKER])) {
 			if (skill_id == RL_QD_SHOT && skill_area_temp[1] == bl->id )
 				break;
-			if (flag&1)
-				sflag = (skill_area_temp[0]&0xFFF)|(flag&SD_LEVEL ? SD_LEVEL : 0)|(flag&SD_ANIMATION ? SD_ANIMATION : 0);
-			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, sflag);
-			if (sd && skill_id == RL_D_TAIL)
-				status_change_end(bl, SC_C_MARKER, INVALID_TIMER);
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
 		}
 		break;
 
@@ -7680,8 +7673,10 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case ASC_CDP:
 		if(sd) {
-			clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-			skill_produce_mix(sd, skill_id, ITEMID_POISON_BOTTLE, 0, 0, 0, 1, -1); //Produce a Poison Bottle.
+			if(skill_produce_mix(sd, skill_id, ITEMID_POISON_BOTTLE, 0, 0, 0, 1, -1)) //Produce a Poison Bottle.
+				clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
+			else
+				clif_skill_fail(sd,skill_id,USESKILL_FAIL_STUFF_INSUFFICIENT,0);
 		}
 		break;
 
@@ -10845,7 +10840,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case RL_D_TAIL:
-		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|SD_ANIMATION|1, skill_castend_damage_id);
+		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		break;
 	case RL_QD_SHOT:
 		if (sd) {
@@ -11151,9 +11146,9 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 				int count = 0;
 
 				if (battle_config.skill_wall_check)
-					count = map_foreachinshootrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, 0, BCT_ENEMY, skill_area_sub_count);
+					count = map_foreachinshootrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, gettick(), BCT_ENEMY, skill_area_sub_count);
 				else
-					count = map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, 0, BCT_ENEMY, skill_area_sub_count);
+					count = map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, gettick(), BCT_ENEMY, skill_area_sub_count);
 
 				if (!count) {
 					return USESKILL_FAIL_LEVEL;
@@ -11399,7 +11394,7 @@ TIMER_FUNC(skill_castend_id){
 			unit_stop_walking(src,1);
 
 		if (!sd || sd->skillitem != ud->skill_id || skill_get_delay(ud->skill_id, ud->skill_lv))
-			ud->canact_tick = max(tick + skill_delayfix(src, ud->skill_id, ud->skill_lv), ud->canact_tick - SECURITY_CASTTIME);
+			ud->canact_tick = i64max(tick + skill_delayfix(src, ud->skill_id, ud->skill_lv), ud->canact_tick - SECURITY_CASTTIME);
 		if (sd) { //Cooldown application
 			int cooldown = pc_get_skillcooldown(sd,ud->skill_id, ud->skill_lv); // Increases/Decreases cooldown of a skill by item/card bonuses.
 			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
@@ -11625,7 +11620,7 @@ TIMER_FUNC(skill_castend_pos){
 			unit_stop_walking(src,1);
 
 		if (!sd || sd->skillitem != ud->skill_id || skill_get_delay(ud->skill_id, ud->skill_lv))
-			ud->canact_tick = max(tick + skill_delayfix(src, ud->skill_id, ud->skill_lv), ud->canact_tick - SECURITY_CASTTIME);
+			ud->canact_tick = i64max(tick + skill_delayfix(src, ud->skill_id, ud->skill_lv), ud->canact_tick - SECURITY_CASTTIME);
 		if (sd) { //Cooldown application
 			int cooldown = pc_get_skillcooldown(sd,ud->skill_id, ud->skill_lv);
 			if(cooldown) skill_blockpc_start(sd, ud->skill_id, cooldown);
@@ -13413,7 +13408,7 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 					//Overwrite status change with new duration
 					if ((td = get_timer(sc->data[type]->timer))!=NULL)
 						status_change_start(ss, bl, type, 10000, sc->data[type]->val1 + 1, sc->data[type]->val2, sc->data[type]->val3, sc->data[type]->val4,
-							max(DIFF_TICK(td->tick, tick), sec), SCSTART_NORATEDEF);
+							i64max(DIFF_TICK(td->tick, tick), sec), SCSTART_NORATEDEF);
 				}
 				else {
 					if (status_change_start(ss, bl, type, 10000, 1, sg->group_id, 0, 0, sec, SCSTART_NORATEDEF)) {
@@ -17033,41 +17028,47 @@ int skill_autospell(struct map_session_data *sd, uint16 skill_id)
 	return 0;
 }
 
-/*==========================================
- * Sitting skills functions.
- *------------------------------------------*/
+/**
+ * Count the number of players with Gangster Paradise, Peaceful Break, or Happy Break.
+ * @param bl: Player object
+ * @param ap: va_arg list
+ * @return 1 if the player has learned Gangster Paradise, Peaceful Break, or Happy Break otherwise 0
+ */
 static int skill_sit_count(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd;
-	int type =va_arg(ap,int);
-	sd=(struct map_session_data*)bl;
+	struct map_session_data *sd = (struct map_session_data*)bl;
+	int flag = va_arg(ap, int);
 
-	if(!pc_issit(sd))
+	if (!pc_issit(sd))
 		return 0;
 
-	if(type&1 && pc_checkskill(sd,RG_GANGSTER) > 0)
+	if (flag&1 && pc_checkskill(sd, RG_GANGSTER) > 0)
 		return 1;
 
-	if(type&2 && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0))
+	if (flag&2 && (pc_checkskill(sd, TK_HPTIME) > 0 || pc_checkskill(sd, TK_SPTIME) > 0))
 		return 1;
 
 	return 0;
 }
 
-static int skill_sit_in (struct block_list *bl, va_list ap)
+/**
+ * Triggered when a player sits down to activate bonus states.
+ * @param bl: Player object
+ * @param ap: va_arg list
+ * @return 0
+ */
+static int skill_sit_in(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd;
-	int type = va_arg(ap,int);
+	struct map_session_data *sd = (struct map_session_data*)bl;
+	int flag = va_arg(ap, int);
 
-	sd = (struct map_session_data*)bl;
-
-	if(!pc_issit(sd))
+	if (!pc_issit(sd))
 		return 0;
 
-	if(type&1 && pc_checkskill(sd,RG_GANGSTER) > 0)
+	if (flag&1 && pc_checkskill(sd, RG_GANGSTER) > 0)
 		sd->state.gangsterparadise = 1;
 
-	if(type&2 && (pc_checkskill(sd,TK_HPTIME) > 0 || pc_checkskill(sd,TK_SPTIME) > 0 )) {
+	if (flag&2 && (pc_checkskill(sd, TK_HPTIME) > 0 || pc_checkskill(sd, TK_SPTIME) > 0 )) {
 		sd->state.rest = 1;
 		status_calc_regen(bl, &sd->battle_status, &sd->regen);
 		status_calc_regen_rate(bl, &sd->regen, &sd->sc);
@@ -17076,34 +17077,48 @@ static int skill_sit_in (struct block_list *bl, va_list ap)
 	return 0;
 }
 
-static int skill_sit_out (struct block_list *bl, va_list ap)
+/**
+ * Triggered when a player stands up to deactivate bonus states.
+ * @param bl: Player object
+ * @param ap: va_arg list
+ * @return 0
+ */
+static int skill_sit_out(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd;
-	int type = va_arg(ap,int);
+	struct map_session_data *sd = (struct map_session_data*)bl;
+	int flag = va_arg(ap, int), range = va_arg(ap, int);
 
-	sd = (struct map_session_data*)bl;
+	if (map_foreachinallrange(skill_sit_count, &sd->bl, range, BL_PC, flag) > 1)
+		return 0;
 
-	if(sd->state.gangsterparadise && type&1)
+	if (flag&1 && sd->state.gangsterparadise)
 		sd->state.gangsterparadise = 0;
-	if(sd->state.rest && type&2) {
+	if (flag&2 && sd->state.rest) {
 		sd->state.rest = 0;
 		status_calc_regen(bl, &sd->battle_status, &sd->regen);
 		status_calc_regen_rate(bl, &sd->regen, &sd->sc);
 	}
+
 	return 0;
 }
 
-int skill_sit (struct map_session_data *sd, int type)
+/**
+ * Toggle Sit icon and player bonuses when sitting/standing.
+ * @param sd: Player data
+ * @param sitting: True when sitting or false when standing
+ * @return 0
+ */
+int skill_sit(struct map_session_data *sd, bool sitting)
 {
-	int flag = 0;
-	int range = 0, lv;
+	int flag = 0, range = 0, lv;
+
 	nullpo_ret(sd);
 
-	if((lv = pc_checkskill(sd, RG_GANGSTER)) > 0) {
+	if ((lv = pc_checkskill(sd, RG_GANGSTER)) > 0) {
 		flag |= 1;
 		range = skill_get_splash(RG_GANGSTER, lv);
 	}
-	if((lv = pc_checkskill(sd, TK_HPTIME)) > 0) {
+	if ((lv = pc_checkskill(sd, TK_HPTIME)) > 0) {
 		flag |= 2;
 		range = skill_get_splash(TK_HPTIME, lv);
 	} else if ((lv = pc_checkskill(sd, TK_SPTIME)) > 0) {
@@ -17111,20 +17126,20 @@ int skill_sit (struct map_session_data *sd, int type)
 		range = skill_get_splash(TK_SPTIME, lv);
 	}
 
-	if (type)
+	if (sitting)
 		clif_status_load(&sd->bl, EFST_SIT, 1);
 	else
 		clif_status_load(&sd->bl, EFST_SIT, 0);
 
-	if (!flag) return 0;
+	if (!flag) // No need to count area if no skills are learned.
+		return 0;
 
-	if(type) {
-		if (map_foreachinallrange(skill_sit_count,&sd->bl, range, BL_PC, flag) > 1)
-			map_foreachinallrange(skill_sit_in,&sd->bl, range, BL_PC, flag);
-	} else {
-		if (map_foreachinallrange(skill_sit_count,&sd->bl, range, BL_PC, flag) < 2)
-			map_foreachinallrange(skill_sit_out,&sd->bl, range, BL_PC, flag);
-	}
+	if (sitting) {
+		if (map_foreachinallrange(skill_sit_count, &sd->bl, range, BL_PC, flag) > 1)
+			map_foreachinallrange(skill_sit_in, &sd->bl, range, BL_PC, flag);
+	} else
+		map_foreachinallrange(skill_sit_out, &sd->bl, range, BL_PC, flag, range);
+
 	return 0;
 }
 
