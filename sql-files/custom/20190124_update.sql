@@ -29,7 +29,7 @@ REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `pric
 (8513, 'F_GuildPax2', '[F] Guild Investment Pack (Set 2)', 18, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getgroupitem(IG_MILKY_GPS2_BOX); getgroupitem(IG_MILKY_GP1_BOX);', NULL, NULL),
 (8514, 'F_GuildPax3', '[F] Guild Investment Pack (Set 3)', 18, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getgroupitem(IG_MILKY_GPS3_BOX); getgroupitem(IG_MILKY_GP1_BOX);', NULL, NULL),
 (8515, 'F_GuildPaxNoEQ', '[F] Guild Investment Pack (No EQ)', 18, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getgroupitem(IG_MILKY_GP2_BOX);', NULL, NULL),
-(8516, 'F_GuildPaxSC', '[F] Guild Investment Pack (SC)', 18, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getgroupitem(IG_MILKY_GPSC_BOX);', NULL, NULL),
+(8516, 'F_GuildPaxSC', '[F] Guild Investment Pack (SC)', 18, 20, NULL, 10, NULL, NULL, NULL, NULL, 4294967295, 63, 2, NULL, NULL, NULL, NULL, NULL, 'getgroupitem(IG_MILKY_GPSC_BOX);', NULL, NULL);
 
 # Guild Invite
 CREATE TABLE IF NOT EXISTS `guild_invite_members` (
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `guild_invite_members` (
   `char_id` int(11) NOT NULL,
   `unique_id` int(11) NOT NULL COMMENT 'gepard unique_id',
   `selection` tinyint(1) NOT NULL COMMENT '1 to 4',
-  `date_registered` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '0 and 1',
+  `date_registered` datetime NOT NULL COMMENT '0 and 1',
   `claimed` tinyint(1) NOT NULL DEFAULT '0',
   `date_claimed` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `deleted` int(11) NOT NULL DEFAULT '0' COMMENT '0 or 1',
