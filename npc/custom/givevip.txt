@@ -34,8 +34,19 @@ OnPCLoginEvent:
 	if(.@c ==  0) {
 		query_sql("INSERT INTO `multi_pc` (`account_id`, `unique_id`) VALUES ('"+getcharid(3)+"', '"+get_unique_id()+"')");
 	}
+	if(#xlaunch_vipx == 1) {
+		set #xlaunch_vipx,get_unique_id();
+	}
 
 	if(! #xlaunch_vipx) {
+		getinventorylist;
+		if ( @inventorylist_count >= 75 ) {
+			dispbottom "===============================================================", 0x666666;
+			dispbottom "You have too many items in your inventory. Please store some of them and relog.", 0x666666;
+			dispbottom "===============================================================", 0x666666;
+			end;
+		}
+
 		.@c = query_sql("SELECT `value` FROM `acc_reg_num` WHERE `key` = '#xlaunch_vipx' AND `value` = '"+get_unique_id()+"'",.@value);
 		dispbottom "===============================================================", 0x666666;
 		dispbottom "  Welcome to MilkyRO.", 0x76daee;
@@ -82,7 +93,7 @@ OnPCLoginEvent:
 		dispbottom "===============================================================", 0x666666;
 
 		// announce "Welcome to MilkyRO. Here are some things to start you with along with a 1 week VIP (only given by the gm) bonus.", BC_SELF;
-		set #xlaunch_vipx,1;
+		set #xlaunch_vipx,get_unique_id();
 		sleep2 5000;
 	}
 	// if(! #ServCrash20181030 && getcharid(3, strcharinfo(0)) <= 2000346){
