@@ -10365,7 +10365,7 @@
 19843,C_Cat_Hairband,Costume Kitty Band,4,20,,10,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,2,{},{},{}
 19844,C_Turban,Costume Turban,4,20,,10,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,7,{},{},{}
 19845,C_Hair_Protector,Costume Bao Bao,4,20,,10,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,127,{},{},{}
-19846,C_Opera_Ghost_Mask,Costume Opera Masque,4,20,,10,,0,,0,0xFFFFFFFF,63,2,6144,,1,0,128,{},{},{}
+19846,C_Opera_Ghost_Mask,Costume Opera Masque,4,20,,10,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,128,{},{},{}
 19847,C_Big_Sis_Ribbon,Costume Big Ribbon,4,20,,10,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,28,{},{},{}
 19848,C_Angeling_Hat,Costume Angeling Hat,4,20,,10,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,204,{},{},{}
 19849,C_Munak_Turban,Costume Munak Hat,4,20,,10,,0,,0,0xFFFFFFFF,63,2,7168,,1,0,51,{},{},{}
@@ -10479,7 +10479,7 @@
 20012,C_Double_Horn_Helm,Costume Double Horn Helm,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1200,{},{},{}
 20013,C_Chef_Hat,Costume Chef Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,111,{},{},{}
 20014,Lincoln_Hat,Costume Lincoln Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,1204,{},{},{}
-20015,Lincoln_Beard,Costume Lincoln Beard,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,1205,{},{},{}
+20015,Lincoln_Beard,Costume Lincoln Beard,4,10,,0,,,,0,0xFFFFFFFF,63,2,4096,,,1,1205,{},{},{}
 20016,Lobster_Hat,Costume Cool Dinner Hat,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,1206,{},{},{}
 20017,C_Marionette_Doll,Costume Marionette Doll,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,212,{},{},{}
 20018,C_Holo_Ear,Costume Holo Ear,4,10,,0,,,,0,0xFFFFFFFF,63,2,1024,,,1,1208,{},{},{}
@@ -10797,7 +10797,6 @@
 20346,C_Drooping_Permeter,Costume Drooping Permeter,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,694,{},{},{}
 20347,C_Poring_Pirate_Hat,Costume Poring Pirate Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,726,{},{},{}
 20348,C_Sunday_Hat,Costume Sunday Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,117,{},{},{}
-20349,C_Flying_Galapago,Costume Flying Galapago,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1358,{},{},{}
 20350,C_Bouncing_Hair_Yellow,Costume Bouncing Hair Yellow,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,1382,{},{},{}
 20351,C_Bouncing_Hair_Green,Costume Bouncing Hair Green,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,1383,{},{},{}
 20352,C_Bouncing_Hair_Purple,Costume Bouncing Hair Purple,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,1384,{},{},{}
@@ -10838,7 +10837,7 @@
 20393,C_Schmitz_Helm,Costume Schmitz Helm,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,634,{},{},{}
 20394,C_Pumpkin_Toque,Costume Pumpkin Toque,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1411,{},{},{}
 20396,C_Green_Hat,Costume Green Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,939,{},{},{}
-20397,C_Jakk,Jack,4,0,,0,,,,0,0xFFFFFFFF,63,2,6144,,1,1,1415,{},{},{}
+20397,C_Jakk,Jack,4,0,,0,,,,0,0xFFFFFFFF,63,2,6144,,1,1,1415,{ autobonus2 "{}",31,10000,BF_WEAPON|BF_MAGIC,"{ active_transform 1130,10000; specialeffect2 372; /*Confirm Special Effect*/ }"; },{},{}
 20398,C_Niffleheim_Bunny_Hat,Costume Niffleheim Bunny Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1285,{},{},{}
 20399,C_Crow_Tengu_Mask,Costume Crow Tengu Mask,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,1,1287,{},{},{}
 20400,C_Ichthys_Rosario,Costume Ichthys Rosario,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,1028,{},{},{}
@@ -10924,6 +10923,7 @@
 20516,C_Wings_of_Michael,Costume Wings of Michael,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,24,{},{},{}
 20600,Fantastic_Aura,Fantastic Aura,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ /*TODO: View ID*/ bonus bUnbreakableHelm; },{},{}
 20700,Egir_Manteau,Egir Manteau,4,200000,,300,,10,,1,0xFFFFFFFF,63,2,4,,110,1,0,{ bonus bUnbreakableGarment; .@r = getrefine(); if (.@r > 10) .@r = 10; if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte) { bonus bFlee2,5+(.@r*2); } else if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief) { bonus bShortWeaponDamageReturn,5+(.@r*2); } },{},{}
+20701,Sol_Manteau,Sol Manteau,4,0,,700,,20,,1,0xFFFFFFFF,63,2,4,,65,1,0,{ bonus2 bSubEle,Ele_Earth,5; bonus2 bSubRace,RC_Fish,-5; },{},{}
 20702,TE_Woe_Muffler,TE Woe Muffler,4,0,,0,,5,,0,0xFFFFFFFF,63,2,4,,40,1,,{ bonus bMdef,5; bonus2 bAddRace,RC_Player,5; bonus2 bMagicAddRace,RC_Player,5; bonus2 bResEff,Eff_Freeze,25; },{},{}
 20703,TE_Woe_Manteau,TE Woe Manteau,4,0,,0,,10,,0,0x000444A2,63,2,4,,40,1,,{ bonus2 bAddRace,RC_Player,10; bonus2 bResEff,Eff_Freeze,25; },{},{}
 20704,TE_Woe_Magic_Manteau,TE Woe Magic Manteau,4,0,,0,,5,,0,0x00818315,63,2,4,,40,1,,{ bonus2 bMagicAddRace,RC_Player,10; bonus2 bResEff,Eff_Freeze,25; },{},{}
