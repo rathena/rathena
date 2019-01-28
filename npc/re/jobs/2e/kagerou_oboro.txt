@@ -99,7 +99,7 @@ que_ng,21,76,0	script	Wall with a Drawing#ko	844,{
 
 job_ko,25,115,4	script	Old Man#ko	588,{
 	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "You don't need to carry so many things."; //custom translation
 		close;
 	}
@@ -107,7 +107,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		for (set .@i,5131; .@i<=5146; set .@i,.@i+1)
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "You are not in the Family of the Ninja.";
 		close2;
 		warp "amatsu",147,136;
@@ -755,12 +755,12 @@ L_StartTest:
 
 // Test of Knowledge
 //============================================================
-job_ko,81,124,4	script	Cougar#ko	730,{
+job_ko,81,124,4	script	Kuuga#ko	730,{
 	if (BaseJob != Job_Ninja) {
 		for (set .@i,5131; .@i<=5146; set .@i,.@i+1)
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "Sorry, your family is not same as ours, is there something wrong?";
 		close2;
 		warp "amatsu",147,136;
@@ -770,61 +770,61 @@ job_ko,81,124,4	script	Cougar#ko	730,{
 		goto L_Kick;
 	}
 	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "This is a test of knowledge, so why did you bring so many things?"; //custom translation
 		close;
 	}
 	set .@ko_test_01, isbegin_quest(5136);
 	set .@ko_test_01_1, isbegin_quest(5139);
 	if (.@ko_test_01 == 1 && .@ko_test_01_1 == 0) {
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "It's been a while.";
 		next;
 		select("Aren't you...");
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "I remember you from before looking for the way of the ninja.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "You've grown this strong already?";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "Ha ha ha-";
 		mes "A truly determined youth! I like that.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "Good! The test you are about to take is the ^339CCCTest of Knowledge^000000.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "I hope you haven't been lazy with your studies while focusing on getting stronger?";
 		next;
 		switch(select("Yes:No")) {
 		case 1:
 			setquest 5139;
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "That's a relief. Let me know when you are ready to start the test.";
 			close;
 		case 2:
 			setquest 5139;
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "So you were all talk? Well, let me know when you are ready then.";
 			close;
 		}
 	} else if (.@ko_test_01 == 1 && .@ko_test_01_1 == 1) {
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "I'm ready at my end. Are you ready for the test?";
 		next;
 		if(select("Yes:No") == 2) {
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "Well, what can I do but wait for you.";
 			close;
 		}
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "This isn't your first test, is it?";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "You only need to choose the correct answer to my questions.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "Let's start.";
 		next;
 
@@ -844,9 +844,9 @@ job_ko,81,124,4	script	Cougar#ko	730,{
 		deletearray .@n[10],getarraysize(.@n) - .@questions;
 		freeloop(0);
 
-		set @job_ko_cougar,0;
+		set @job_ko_Kuuga,0;
 		for (set .@i,1; .@i<=.@questions; set .@i,.@i+1) {
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes (.@i < .@questions)?"Question number "+.@i+":":"Last question:";
 			switch (.@n[.@i-1]) {
 				case 1: callsub L_Question,"What is the DEX + LUK total for a Job Master?",2,"8:10:12:14"; break;
@@ -900,67 +900,67 @@ job_ko,81,124,4	script	Cougar#ko	730,{
 				case 49: callsub L_Question,"Which of the following blacksmiths do not create ninja items?",2,"Khaibara:Aiku:Tetsu:Toshu"; break;
 				case 50: callsub L_Question,"What is the name of the suspicious man you can meet during the Ninja job change quest?",3,"Red Leopard Jack:Black Leopard Jack:Red Leopard Joe:Black Leopard Joe"; break;
 				default:
-					mes "[Cougar]";
+					mes "[Kuuga]";
 					mes "An unknown error has occurred.";
 					mes "Please contact customer service.";
 					close;
 			}
 		}
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "You're through all 10 questions. Wasn't so bad! The important part starts now.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "... ... ...";
 		next;
-		if (@job_ko_cougar < 90) {
-			mes "[Cougar]";
+		if (@job_ko_Kuuga < 90) {
+			mes "[Kuuga]";
 			mes "You fool!!";
 			mes "You couldn't even solve these?";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "Can't believe someone who is taking a new path can be so pathetic.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "I'll give you another chance.";
 			mes "You will take the test again with new questions. Better pass it this time.";
 		} else {
-			mes "[Cougar]";
-			mes "Hmm. " + (@job_ko_cougar) + "?";
+			mes "[Kuuga]";
+			mes "Hmm. " + (@job_ko_Kuuga) + "?";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "Well, looks like you weren't lazy with your studies.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "What? Proud of yourself for solving these questions?";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "You still have a long way to go and this is only a small fraction of it.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "Well... I'm curious how far your strong will can take you through other tests.";
 			next;
 			completequest 5136;
 			erasequest 5139;
-			mes "[Cougar]";
+			mes "[Kuuga]";
 			mes "I'll let you go now so go report back to Guide Gion with your results.";
 			close2;
 			warp "job_ko",16,113;
 			end;
 		}
-		set @job_ko_cougar,0;
+		set @job_ko_Kuuga,0;
 		close;
 	} else if (.@ko_test_01 == 2 && .@ko_test_01_1 == 0) {
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "I'll let you go now so go report back to Guide Gion with your results.";
 		close2;
 		warp "job_ko",16,113;
 		end;
 	} else {  //custom translation
 	L_Kick:
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "How did you get here?";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "It's my duty to get rid of you.";
 		mes "^000099(He's a short, silent man.)^000000";
 		mes "This will push you back!";
@@ -975,7 +975,7 @@ L_Question:
 	mes getarg(0);
 	next;
 	if(select(getarg(2)) == getarg(1))
-		set @job_ko_cougar, @job_ko_cougar + 10;
+		set @job_ko_Kuuga, @job_ko_Kuuga + 10;
 	return;
 }
 
@@ -1961,7 +1961,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		next;
 		select("Long time indeed, Joe.");
 		mes "[Red Leopard Joe]";
-		mes "You aren't surprised I'm here. Did you meet ^0237FDCougar^000000 before coming here?";
+		mes "You aren't surprised I'm here. Did you meet ^0237FDKuuga^000000 before coming here?";
 		next;
 		mes "[Red Leopard Joe]";
 		mes "Don't like it that I'm not the first one you visited but that is not important.";
@@ -2577,24 +2577,24 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 		mes "[Someone's Voice]";
 		mes "Wait for a while, Gion.";
 		next;
-		donpcevent "Cougar#ko2::OnEnable";
+		donpcevent "Kuuga#ko2::OnEnable";
 		donpcevent "Red Leopard Joe#ko2::OnEnable";
 		cutin "job_ko04",2;
 		mes "[Guide Gion]";
 		mes "I'm sorry I almost forgot about you two. Do you have anything to share with " + strcharinfo(0) + "?";
 		next;
 		cutin "",255;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "Hmm... Embarrassing... to speak so suddenly...";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes strcharinfo(0) + ", you are now a proud member of our family. Always hold your head high and...";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga]";
 		mes "^777777(Gai's voice fades out.)^000000.";
 		mes "I'm sorry I strangled you when we first met.";
 		next;
-		donpcevent "Cougar#ko2::OnDisable";
+		donpcevent "Kuuga#ko2::OnDisable";
 		mes "[Red Leopard Joe]";
 		mes "Puhahaha! Gai is all talk. I know I was know valuable to you than that Gai.";
 		next;
@@ -2656,16 +2656,16 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 	}
 }
 
-job_ko,151,47,4	script	Cougar#ko2	730,{
-	mes "[Cougar]";
+job_ko,151,47,4	script	Kuuga#ko2	730,{
+	mes "[Kuuga]";
 	mes "Congratulation for choosing the road of development!";
 	close;
 OnInit:
 OnDisable:
-	disablenpc "Cougar#ko2";
+	disablenpc "Kuuga#ko2";
 	end;
 OnEnable:
-	enablenpc "Cougar#ko2";
+	enablenpc "Kuuga#ko2";
 	end;
 }
 
