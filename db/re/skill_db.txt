@@ -1318,7 +1318,7 @@
 2584,0,6,4,0,0x1,0,7,1,yes,0,0,0,none,0,0x0,		SJ_FALLINGSTAR,Falling Star
 2585,9,6,1,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,		SJ_GRAVITYCONTROL,Gravity Control
 2586,0,6,4,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,		SJ_BOOKOFDIMENSION,Book of Dimension
-2587,9,6,2,0,0,0,1,1,no,0,0,0,none,0,0x0,		SJ_BOOKOFCREATINGSTAR,Book of Creating Star
+2587,9,6,2,0,0,0,5,1,no,0,0,0,none,0,0x0,		SJ_BOOKOFCREATINGSTAR,Book of Creating Star
 2588,0,6,4,0,0x1,0,3,1,yes,0,0,0,none,0,0x0,	SJ_DOCUMENT,Document
 2589,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SJ_PURIFY,Purify
 2590,0,6,4,4,0x1,0,5,1,yes,0,0,0,none,0,0x0,	SJ_LIGHTOFSUN,Light of Sun
