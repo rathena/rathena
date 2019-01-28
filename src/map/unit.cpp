@@ -1388,6 +1388,7 @@ int unit_can_move(struct block_list *bl) {
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT ||
 				(sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE
 				) )
+			|| sc->data[SC_GRAVITYCONTROL]
 			)
 			return 0;
 
@@ -1914,6 +1915,11 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 
 			if (!src->prev)
 				return 0;
+			
+		} else if (sc->data[SC_NEWMOON] && skill_id != SJ_NEWMOONKICK) {
+			status_change_end(src, SC_NEWMOON, INVALID_TIMER);
+			if (!src->prev)
+				return 0; //Warped away!
 		}
 	}
 
@@ -1998,6 +2004,11 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if( sd ) {
 		if( skill_isNotOk(skill_id, sd) || !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
 			return 0;
+	}
+	
+	if (sc && sc->data[SC_NEWMOON]) {
+		status_change_end(src, SC_NEWMOON, INVALID_TIMER);
+		if (!src->prev) return 0; //Warped away!
 	}
 
 	if( (skill_id >= SC_MANHOLE && skill_id <= SC_FEINTBOMB) && map_getcell(src->m, skill_x, skill_y, CELL_CHKMAELSTROM) ) {
@@ -2910,6 +2921,8 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		status_change_end(bl, SC_VACUUM_EXTREME, INVALID_TIMER);
 		status_change_end(bl, SC_CURSEDCIRCLE_ATKER, INVALID_TIMER); // callme before warp
 		status_change_end(bl, SC_SUHIDE, INVALID_TIMER);
+		status_change_end(bl, SC_NEWMOON, INVALID_TIMER);
+		status_change_end(bl, SC_FLASHKICK, INVALID_TIMER);
 	}
 
 	switch( bl->type ) {

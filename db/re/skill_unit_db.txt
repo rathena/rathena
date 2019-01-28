@@ -169,6 +169,8 @@
 2555,0x104,   ,  0, 1:2:2:3:3,500,enemy,0x6	//RL_B_TRAP
 2567,0x105,   , -1, 0,1000,enemy, 0x98	//RL_FIRE_RAIN
 
+2587,0x109,   ,  2, 0,  -1,enemy,0x1018	//SJ_BOOKOFCREATINGSTAR
+
 3006,0x86,    ,  0, 1,1000,enemy, 0x018	//KO_BAKURETSU
 3008,0x86,    ,  0, 1:1:1:1:1:1:1:1:1:2,1000,enemy, 0x018 //KO_MUCHANAGE
 3009,0x86,    ,  0, 3,1000,enemy, 0x018 //KO_HUUMARANKA

@@ -1524,6 +1524,20 @@
 	export_constant(SC_EXTREMITYFIST2);
 #endif
 
+	/* Star Emperor */
+	export_constant(SC_LUNARSTANCE);
+	export_constant(SC_NEWMOON);
+	export_constant(SC_FLASHKICK);
+	export_constant(SC_UNIVERSESTANCE);
+	export_constant(SC_FALLINGSTAR);
+	export_constant(SC_SUNSTANCE);
+	export_constant(SC_STARSTANCE);
+	export_constant(SC_LIGHTOFSUN);
+	export_constant(SC_LIGHTOFSTAR);
+	export_constant(SC_CREATINGSTAR);
+	export_constant(SC_NOVAEXPLOSING);
+	export_constant(SC_GRAVITYCONTROL);
+
 	/* status icons */
 	export_deprecated_constant2("SI_BLANK",-1);
 	export_deprecated_constant2("SI_PROVOKE",0);
