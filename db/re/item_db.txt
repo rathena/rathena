@@ -10797,6 +10797,7 @@
 20346,C_Drooping_Permeter,Costume Drooping Permeter,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,694,{},{},{}
 20347,C_Poring_Pirate_Hat,Costume Poring Pirate Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,726,{},{},{}
 20348,C_Sunday_Hat,Costume Sunday Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,117,{},{},{}
+20349,C_Flying_Galapago,Costume Flying Galapago,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1358,{},{},{}
 20350,C_Bouncing_Hair_Yellow,Costume Bouncing Hair Yellow,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,1382,{},{},{}
 20351,C_Bouncing_Hair_Green,Costume Bouncing Hair Green,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,1383,{},{},{}
 20352,C_Bouncing_Hair_Purple,Costume Bouncing Hair Purple,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,1,1384,{},{},{}
