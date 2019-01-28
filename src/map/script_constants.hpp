@@ -1525,16 +1525,18 @@
 #endif
 
 	/* Star Emperor */
+	export_constant(SC_LIGHTOFMOON);
 	export_constant(SC_LUNARSTANCE);
 	export_constant(SC_NEWMOON);
 	export_constant(SC_FLASHKICK);
-	export_constant(SC_UNIVERSESTANCE);
-	export_constant(SC_FALLINGSTAR);
+	export_constant(SC_DIMENSION);
+	export_constant(SC_CREATINGSTAR);
 	export_constant(SC_SUNSTANCE);
 	export_constant(SC_STARSTANCE);
+	export_constant(SC_UNIVERSESTANCE);
+	export_constant(SC_FALLINGSTAR);
 	export_constant(SC_LIGHTOFSUN);
 	export_constant(SC_LIGHTOFSTAR);
-	export_constant(SC_CREATINGSTAR);
 	export_constant(SC_NOVAEXPLOSING);
 	export_constant(SC_GRAVITYCONTROL);
 
@@ -2385,6 +2387,23 @@
 	export_deprecated_constant2("SI_CHEERUP",992);
 	export_deprecated_constant2("SI_S_MANAPOTION",995);
 	export_deprecated_constant2("SI_M_DEFSCROLL",996);
+	
+	export_deprecated_constant2("SI_LIGHTOFMOON",1035);
+	export_deprecated_constant2("SI_LIGHTOFSUN",1036);
+	export_deprecated_constant2("SI_LIGHTOFSTAR",1037);
+	export_deprecated_constant2("SI_LUNARSTANCE",1038);
+	export_deprecated_constant2("SI_UNIVERSESTANCE",1039);
+	export_deprecated_constant2("SI_SUNSTANCE",1040);
+	export_deprecated_constant2("SI_FLASHKICK",1041);
+	export_deprecated_constant2("SI_NEWMOON",1042);
+	export_deprecated_constant2("SI_STARSTANCE",1043);
+	export_deprecated_constant2("SI_DIMENSION",1044);
+	export_deprecated_constant2("SI_DIMENSION1",1045);
+	export_deprecated_constant2("SI_DIMENSION2",1046);
+	export_deprecated_constant2("SI_CREATINGSTAR",1047);
+	export_deprecated_constant2("SI_FALLINGSTAR",1048);
+	export_deprecated_constant2("SI_NOVAEXPLOSING",1049);
+	export_deprecated_constant2("SI_GRAVITYCONTROL",1050);
 
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
