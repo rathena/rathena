@@ -41,6 +41,13 @@ prontera,164,195,3	script	Reset Girl	941,{
 	if(.@i&1){
 		sc_end_class;
 		ResetSkill;
+
+		disable_items;
+		setarray .@indices[1], EQI_HEAD_TOP, EQI_ARMOR, EQI_HAND_L, EQI_HAND_R, EQI_GARMENT, EQI_SHOES, EQI_ACC_L, EQI_ACC_R, EQI_HEAD_MID, EQI_HEAD_LOW, EQI_COSTUME_HEAD_TOP, EQI_COSTUME_HEAD_MID, EQI_COSTUME_HEAD_LOW, EQI_COSTUME_GARMENT, EQI_AMMO;
+		for( set .@i,1; .@i <= 15; set .@i,.@i+1 ) {
+			if( getequipisequiped(.@indices[.@i]) )
+				unequip	.@indices[.@i];
+		}
 	}
 	if(.@i&2) ResetStatus;
 	mes "There you go!";
