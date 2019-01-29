@@ -3046,7 +3046,7 @@ If <type> is false the command only returns the count of unidentified items.
 //
 ---------------------------------------
 
-*getmapxy("<variable for map name>",<variable for x>,<variable for y>,<type>{,"<search value>"})
+*getmapxy("<variable for map name>",<variable for x>,<variable for y>{,<type>,"<search value>"})
 
 This function will locate a character object, NPC object or pet's coordinates
 and place their coordinates into the variables specified when calling it. It
@@ -3055,7 +3055,7 @@ not variables or the search was not successful.
 
 Type is the type of object to search for:
 
-	BL_PC   - Character object
+	BL_PC   - Character object (default)
 	BL_NPC  - NPC object
 	BL_PET  - Pet object
 	BL_HOM  - Homunculus object
@@ -3064,7 +3064,7 @@ Type is the type of object to search for:
 
 The search value is optional. If it is not specified, the location of the
 invoking character will always be returned for types BL_PC and BL_PET,
-the location of the NPC running this function for type BL_PC.
+the location of the NPC running this function for type BL_NPC.
 
 If a search value is specified, for types BL_PC and BL_NPC, the
 character or NPC with the specified name or GID will be located.

@@ -14995,7 +14995,7 @@ BUILDIN_FUNC(getmapxy)
 	const char *name;
 	char prefix;
 
-	int x,y,type;
+	int x,y,type = BL_PC;
 	char mapname[MAP_NAME_LENGTH];
 
 	if( !data_isreference(script_getdata(st,2)) ) {
@@ -15033,7 +15033,8 @@ BUILDIN_FUNC(getmapxy)
 	}
 
 	// Possible needly check function parameters on C_STR,C_INT,C_INT
-	type=script_getnum(st,5);
+	if (script_hasdata(st, 5))
+		type = script_getnum(st, 5);
 
 	switch (type) {
 		case BL_PC:	//Get Character Position
@@ -15041,7 +15042,7 @@ BUILDIN_FUNC(getmapxy)
 				bl = &sd->bl;
 			break;
 		case BL_NPC:	//Get NPC Position
-			if (script_hasdata(st,6)) {
+			if (script_hasdata(st, 6)) {
 				struct npc_data *nd;
 
 				if (script_isstring(st, 6))
@@ -24418,7 +24419,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(npcspeed,"i"), // [Valaris]
 	BUILDIN_DEF(npcwalkto,"ii"), // [Valaris]
 	BUILDIN_DEF(npcstop,""), // [Valaris]
-	BUILDIN_DEF(getmapxy,"rrri?"),	//by Lorky [Lupus]
+	BUILDIN_DEF(getmapxy,"rrr??"),	//by Lorky [Lupus]
 	BUILDIN_DEF(mapid2name,"i"),
 	BUILDIN_DEF(checkoption1,"i?"),
 	BUILDIN_DEF(checkoption2,"i?"),

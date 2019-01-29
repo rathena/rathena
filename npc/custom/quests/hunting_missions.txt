@@ -277,7 +277,7 @@ OnNPCKillEvent:
 		}
 	} else if (.Party) {
 		.@mob = killedrid;
-		getmapxy(.@map1$,.@x1,.@y1,BL_PC);
+		getmapxy(.@map1$,.@x1,.@y1);
 		getpartymember getcharid(1),1;
 		getpartymember getcharid(1),2;
 		for (.@i = 0; .@i < $@partymembercount; .@i++) {
