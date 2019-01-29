@@ -146,7 +146,7 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 	}
 	switch( checkquest(12331,PLAYTIME) ) {
 	case -1:
-		if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (is_party_leader() == false) {
 			mes "[Catherine Jet Johnson]";
 			mes "Eh.. Give me a second. I am talking to the person in charge. Please wait a little bit.";
 			close;
@@ -226,7 +226,7 @@ xmas,233,305,4	script	Factory Dimension Telep	PORTAL,{
 		mes "Please wait until the transformation is finished. You cannot move to another area until you become normal.";
 		close;
 	}
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "[Catherine Jet Johnson]";
 		mes "Eh.. Give me a second. I am talking to the person in charge. Please wait.";
 		close;
@@ -367,7 +367,7 @@ OnTimer1000:
 }
 
 1@xm_d,71,129,3	script	#fac1bs	4_M_COOKIE,{
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		.@mob_id_transform = getstatus(SC_MONSTER_TRANSFORM,1);
 		mes "[Coordinator]";
 		if (.@mob_id_transform == 1246) {
@@ -565,7 +565,7 @@ OnMyMobDead:
 
 
 1@xm_d,185,100,6	script	Catherine Jet Johnson#2	4_F_SKULL06GIRL,{
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		mes "[Catherine Jet Johnson]";
 		mes "Lucky you got here safely.";
 		next;

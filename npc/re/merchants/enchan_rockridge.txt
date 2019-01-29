@@ -362,9 +362,9 @@ har_in01,34,81,5	script	Howard#rr	4_M_TATIO,{
 	close;
 }
 
--	shop	shotguns_rockridge	-1,13154:12000,13155:32000,13192:1250000,13193:1350000,13194:1950000
--	shop	revolvers_rockridge	-1,13102:20000,13120:1200000,13122:1450000
--	shop	bullets_rockridge	-1,13200:1,13221:-1,13222:10,13228:10,13229:10,13230:10,13231:10,13232:10
+-	shop	shotguns_rockridge	-1,13154:-1,13155:-1,13192:-1,13193:-1,13194:-1
+-	shop	revolvers_rockridge	-1,13102:-1,13120:-1,13122:-1
+-	shop	bullets_rockridge	-1,13200:-1,13221:-1,13222:-1,13228:-1,13229:-1,13230:-1,13231:-1,13232:-1
 -	shop	armor_rockridge	-1,2247:500000,2248:500000,5018:700000
 
 har_in01,19,86,4	script	Weapon Dealer#rockridge	1_F_02,{
@@ -425,4 +425,4 @@ har_in01,16,86,4	script	Armor Dealer#rockridge0	1_M_04,{
 	end;
 }
 
-har_in01,34,84,3	shop	Tool Dealer#rockridge00	1_F_03,611:40,645:800,656:10500,601:60,602:300,1065:100,610:4000
+har_in01,34,84,3	shop	Tool Dealer#rockridge00	1_F_03,611:-1,645:-1,656:-1,601:-1,602:-1,1065:-1,610:-1

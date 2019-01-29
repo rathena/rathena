@@ -48,7 +48,7 @@ moro_cav,50,64,5	script	Yellow Seed#bios	CLEAR_NPC,{
 			erasequest 15008;// Memorial Dungeon: Isle of Bios
 		break;
 	}
-	if (getpartyleader(.@party_id,2) == getcharid(0))
+	if (is_party_leader() == true)
 		.@create$ = "Create Memorial dungeon.";
 	switch( select( .@create$, "Enter Isle of Bios.", "Cancel." ) ) {
 	case 1:
@@ -61,7 +61,7 @@ moro_cav,50,64,5	script	Yellow Seed#bios	CLEAR_NPC,{
 		case IE_NOMEMBER:
 		case IE_NOINSTANCE:
 		case IE_OTHER:
-			if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+			if (is_party_leader(.@party_id) == false) {
 				mes "^ff0000Please note that This Memorial Dungeon cannot be accessed for 23 hours after your last visit.^000000";
 				next;
 			}
