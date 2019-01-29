@@ -108,7 +108,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
 		mes "[Kuuga Gai]";
-		mes "You are not in the Family of the Ninja.";
+		mes "You are not in the Clan of the Ninja.";
 		close2;
 		warp "amatsu",147,136;
 		end;
@@ -135,28 +135,28 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "^1A95E6He keeps talking and doesn't stop to answer your question.^1A95E6";
 		next;
 		mes "[Old Man]";
-		mes "There once was a quiet family living in ancient Amatsu times that is never mentioned in history books or stories.";
+		mes "There once was a quiet Clan living in ancient Amatsu times that is never mentioned in history books or stories.";
 		next;
 		mes "[Old Man]";
 		mes "They lived beneath shadows but always yearned for the bright sun, like a sunflower.";
 		next;
 		mes "[Old Man]";
-		mes "A family that was loyal to their lord who they served as their bright sun.";
+		mes "A Clan that was loyal to their lord who they served as their bright sun.";
 		next;
 		mes "[Old Man]";
-		mes "...a very trustworthy family...";
+		mes "...a very trustworthy Clan...";
 		next;
 		mes "[Old Man]";
 		mes "....loyal to their core...";
 		next;
 		mes "[Old Man]";
-		mes "...a family of integrity...";
+		mes "...a Clan of integrity...";
 		next;
 		select("What happened to them?");
 		mes "^1A95E6The old man looks at you with a melancholy face.^1A95E6";
 		next;
 		mes "[Old Man]";
-		mes "Why are you interested in a family that was abandoned by their lord and disappeared from history itself?";
+		mes "Why are you interested in a Clan that was abandoned by their lord and disappeared from history itself?";
 		next;
 		if(select("I'm a Ninja.:I'm bored.") == 2) {
 			mes "[Old Man]";
@@ -167,13 +167,13 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		}
 		cutin "job_ko02",2;
 		mes "[Old Man]";
-		mes "Ninja! There was a time when the family was called ninjas, too.";
+		mes "Ninja! There was a time when the Clan was called ninjas, too.";
 		next;
 		erasequest 5131;
 		setquest 5132;
 		set job_kagero,2;
 		mes "[Old Man]";
-		mes "You'll have to lend me your ear for I have so much to tell you about the family story.";
+		mes "You'll have to lend me your ear for I have so much to tell you about the Clan story.";
 		close2;
 		cutin "",255;
 		end;
@@ -185,13 +185,13 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "This goes way back to ancient times and nobody in Amatsu remembers about it.";
 		next;
 		mes "[Old Man]";
-		mes "The family worked behind the scenes and basically lived their lives for their lord.";
+		mes "The Clan worked behind the scenes and basically lived their lives for their lord.";
 		next;
 		mes "[Old Man]";
 		mes "They were very loyal doing whatever deed their lord asked for.";
 		next;
 		mes "[Old Man]";
-		mes "Ninja, the family was known as the dark family but that doesn't mean they wanted to be hidden in the darkness.";
+		mes "Ninja, the Clan was known as the dark Clan but that doesn't mean they wanted to be hidden in the darkness.";
 		next;
 		mes "[Old Man]";
 		mes "They were loyal enough to be satisfied as the lord's servants but their loyalty became the problem.";
@@ -201,13 +201,13 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "They are a secret organization that even the lord didn't know much about.";
 		next;
 		mes "[Old Man]";
-		mes "The few that knew about the family's existence, tried to investigate them but nobody was able to reveal their true identity.";
+		mes "The few that knew about the Clan's existence, tried to investigate them but nobody was able to reveal their true identity.";
 		next;
 		mes "[Old Man]";
-		mes "That is why this family has grown from loyal servants to a group feared for its secrets.";
+		mes "That is why this Clan has grown from loyal servants to a group feared for its secrets.";
 		next;
 		mes "[Old Man]";
-		mes "The lord shunned the family and didn't call them for their service any more but they never betrayed him.";
+		mes "The lord shunned the Clan and didn't call them for their service any more but they never betrayed him.";
 		next;
 		select("They were really loyal people.");
 		cutin "job_ko03",2;
@@ -224,12 +224,12 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 	} else if (job_kagero == 3) {
 		cutin "job_ko03",2;
 		mes "[Old Man]";
-		mes "The family has been living in hiding for so long since the old days. The current lord didn't even know of their existence.";
+		mes "The Clan has been living in hiding for so long since the old days. The current lord didn't even know of their existence.";
 		next;
 		select(".........");
 		cutin "job_ko01",2;
 		mes "[Old Man]";
-		mes "I'm Leader Gion, the last of the dark ninja family.";
+		mes "I'm Leader Gion, the last of the dark ninja Clan.";
 		next;
 		if(select("I think your time has ended.:I need your teaching.") == 1) {
 			cutin "job_ko04",2;
@@ -237,7 +237,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			mes "Are you an assassin to end this old man's life?";
 			next;
 			mes "[Leader Gion]";
-			mes "So that is why you've shown interest in my family. I won't give up easily.";
+			mes "So that is why you've shown interest in my Clan. I won't give up easily.";
 			next;
 			percentheal -99,0;
 			mes "Pow!!";
@@ -334,7 +334,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 				break;
 			case 3:
 				mes "[Leader Gion]";
-				mes "My family was famous for using unique weapons that we created.";
+				mes "My Clan was famous for using unique weapons that we created.";
 				next;
 				mes "[Leader Gion]";
 				mes "You would be considered blessed if you created your own unique weapon.";
@@ -400,11 +400,11 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			mes "Since I felt happy like this. I feel young and energetic seeing young people like you challenge themselves with a new path.";
 			next;
 			mes "[Leader Gion]";
-			mes "We're done with explaining about the tests, now should I tell you my family story?";
+			mes "We're done with explaining about the tests, now should I tell you my Clan story?";
 			next;
 			cutin "job_ko01",2;
 			mes "[Leader Gion]";
-			mes "My family started from two warriors.";
+			mes "My Clan started from two warriors.";
 			next;
 			mes "[Leader Gion]";
 			mes "Kagerou, a warrior like the dancing flames of the sun.";
@@ -420,7 +420,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			mes "There was a time there was an enmity between both warriors.";
 			next;
 			mes "[Leader Gion]";
-			mes "But it didn't take long for them to become one as a family.";
+			mes "But it didn't take long for them to become one as a Clan.";
 			next;
 			select("How did it go afterwards?");
 			cutin "job_ko02",2;
@@ -457,7 +457,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 				mes "I wonder if Joe is satisfied with your performance.";
 				next;
 			}
-			select("Please continue with the family story.");
+			select("Please continue with the Clan story.");
 			cutin "job_ko02",2;
 			mes "[Leader Gion]";
 			mes "Looks like you are pretty eager to hear more. Where did I leave off... Ah! I remember.";
@@ -541,7 +541,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			mes "Maybe current generations like me are the ancestors of the current Amatsu lord? But this is only an assumption.";
 			next;
 			mes "[Leader Gion]";
-			mes "I'm almost at the end of my family story. Come back after you've passed the third test and I will tell you the rest.";
+			mes "I'm almost at the end of my Clan story. Come back after you've passed the third test and I will tell you the rest.";
 			next;
 			callsub L_StartTest,.@last_test,3;
 			end;
@@ -584,7 +584,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			mes "Yes, he was. And his efforts didn't go in vain since the two warriors eventually got acquainted and married.";
 			next;
 			mes "[Leader Gion]";
-			mes "This is how the family started.";
+			mes "This is how the Clan started.";
 			next;
 			select("What happened after?");
 			mes "[Leader Gion]";
@@ -654,7 +654,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "Now! No more small talk. I'll let you know what the target is for the Test of Battle.";
 		next;
 		mes "[Leader Gion]";
-		mes "The target is a monster called the ^FF0000Family Secret^000000.";
+		mes "The target is a monster called the ^FF0000Clan Secret^000000.";
 		next;
 		mes "[Leader Gion]";
 		mes "You will have to be careful because there are many similiar shaped and named monsters in test site.";
@@ -761,7 +761,7 @@ job_ko,81,124,4	script	Kuuga Gai#ko	730,{
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
 		mes "[Kuuga Gai]";
-		mes "Sorry, your family is not same as ours, is there something wrong?";
+		mes "Sorry, your Clan is not same as ours, is there something wrong?";
 		close2;
 		warp "amatsu",147,136;
 		end;
@@ -1936,7 +1936,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
 		mes "[Red Leopard Joe]";
-		mes "Sorry, your family is not the same as ours, is there something wrong?";
+		mes "Sorry, your Clan is not the same as ours, is there something wrong?";
 		close2;
 		warp "amatsu",147,136;
 		end;
@@ -1968,10 +1968,10 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		next;
 		mes "[Red Leopard Joe]";
 		mes "Alright, " + strcharinfo(0) + "!";
-		mes "Welcome to the workshop where weapons are created for the family.";
+		mes "Welcome to the workshop where weapons are created for the Clan.";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "Our family has been creating and using unique weapons to serve our secret missions since ancient times.";
+		mes "Our Clan has been creating and using unique weapons to serve our secret missions since ancient times.";
 		next;
 		select("Really? At Einbroch?");
 		mes "[Red Leopard Joe]";
@@ -1981,7 +1981,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		mes "Yes. Einbroch is known as an industrial city, the city of great blacksmiths create new technology.";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "My mission is to analyze their technology and report back to the family.";
+		mes "My mission is to analyze their technology and report back to the Clan.";
 		next;
 		mes "[Red Leopard Joe]";
 		mes "I spoke more than I intended to.";
@@ -2525,7 +2525,7 @@ job_ko,148,46,4	script	Leader Gion#ko2	588,{
 		mes "Looks like you haven't taken care of the target yet.";
 		next;
 		mes "[Leader Gion]";
-		mes "I'll tell you once more. The target is the ^FF0000Family Secret^000000.";
+		mes "I'll tell you once more. The target is the ^FF0000Clan Secret^000000.";
 		next;
 		mes "[Leader Gion]";
 		mes "Of course the path will be difficult, so continue searching!"; //custom translation
@@ -2588,7 +2588,7 @@ job_ko,148,46,4	script	Leader Gion#ko2	588,{
 		mes "Hmm... Embarrassing... to speak so suddenly...";
 		next;
 		mes "[Kuuga Gai]";
-		mes strcharinfo(0) + ", you are now a proud member of our family. Always hold your head high and...";
+		mes strcharinfo(0) + ", you are now a proud member of our Clan. Always hold your head high and...";
 		next;
 		mes "[Kuuga Gai]";
 		mes "^777777(Gai's voice fades out.)^000000.";
@@ -2699,7 +2699,7 @@ OnEnable:
 		case 6: set .@mob,1049; break;
 		case 7: set .@mob,1050; break;
 	}
-	areamonster "job_ko",120,30,160,70,"Family Secret",.@mob,1,"Summon Target#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan Secret",.@mob,1,"Summon Target#ko::OnMyMobDead";
 	end;
 OnDisable:
 	initnpctimer;
@@ -2721,25 +2721,25 @@ OnInit:
 	donpcevent "Summon Fake#ko::OnEnable";
 	end;
 OnEnable:
-	areamonster "job_ko",120,30,160,70,"Family's Legacy",1002,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Legacy",1002,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Memory",1002,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Memory",1002,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Mistake",1031,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Mistake",1031,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Mistake",1031,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Mistake",1031,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Memory",1113,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Memory",1113,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Past",1113,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Past",1113,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Legacy",1063,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Legacy",1063,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Legacy",1063,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Legacy",1063,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Mistake",1010,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Mistake",1010,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Memory",1010,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Memory",1010,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Past",1049,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Past",1049,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Mistake",1049,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Mistake",1049,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Memory",1050,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Memory",1050,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Past",1050,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Past",1050,5,"Summon Fake#ko::OnMyMobDead";
 	end;
