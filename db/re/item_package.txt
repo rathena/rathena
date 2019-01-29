@@ -988,8 +988,8 @@ IG_Sakura_Scroll,2254,2,1,1,0,0,1	// 1x Angelic_Chain
 IG_Sakura_Scroll,2255,2,1,1,0,0,1	// 1x Satanic_Chain
 IG_Sakura_Scroll,2257,2,1,1,0,0,1	// 1x Snowy_Horn
 IG_Sakura_Scroll,2259,1,1,1,0,0,1	// 1x Mini_Propeller
-IG_Sakura_Scroll,4144,1,1,1,0,0,1	// 1x Osiris_Card
-IG_Sakura_Scroll,4121,1,1,1,0,0,1	// 1x Phreeoni_Card
+// IG_Sakura_Scroll,4144,1,1,1,0,0,1	// 1x Osiris_Card
+// IG_Sakura_Scroll,4121,1,1,1,0,0,1	// 1x Phreeoni_Card
 IG_Sakura_Scroll,2298,130,1,1,0,0,1	// 1x Green_Feeler
 IG_Sakura_Scroll,5094,2,1,1,0,0,1	// 1x Orc_Hero_Helm
 IG_Sakura_Scroll,12208,170,10,1,0,0,1	// 10x Battle_Manual
@@ -3861,13 +3861,13 @@ IG_Spring_Festival_Scroll,1228,100,1,1,1,0,0	// 1x Combat_Knife
 IG_Spring_Festival_Scroll,19677,150,1,1,1,0,0	// 1x C_Soulless_Wing
 IG_Spring_Festival_Scroll,18918,130,1,1,1,0,0	// 1x Long_Octopus_Balloon
 IG_Spring_Festival_Scroll,18865,69,1,1,1,0,0	// 1x Sword_Master_Crown
-IG_Spring_Festival_Scroll,6228,15,1,1,1,0,0	// 1x Guarantee_Weapon_9Up
-IG_Spring_Festival_Scroll,6232,15,1,1,1,0,0	// 1x Guarantee_Armor_9Up
-IG_Spring_Festival_Scroll,6238,5,1,1,1,0,0	// 1x Guarantee_Weapon_11Up
-IG_Spring_Festival_Scroll,6239,5,1,1,1,0,0	// 1x Guarantee_Armor_11Up
-IG_Spring_Festival_Scroll,4539,10,1,1,1,0,0	// 1x Sealed_F_Bishop_Card
-IG_Spring_Festival_Scroll,4487,10,1,1,1,0,0	// 1x Sealed_Ifrit_Card
-IG_Spring_Festival_Scroll,4263,1,1,1,1,0,0	// 1x Incant_Samurai_Card
+//IG_Spring_Festival_Scroll,6228,15,1,1,1,0,0	// 1x Guarantee_Weapon_9Up
+//IG_Spring_Festival_Scroll,6232,15,1,1,1,0,0	// 1x Guarantee_Armor_9Up
+//IG_Spring_Festival_Scroll,6238,5,1,1,1,0,0	// 1x Guarantee_Weapon_11Up
+//IG_Spring_Festival_Scroll,6239,5,1,1,1,0,0	// 1x Guarantee_Armor_11Up
+//IG_Spring_Festival_Scroll,4539,10,1,1,1,0,0	// 1x Sealed_F_Bishop_Card
+//IG_Spring_Festival_Scroll,4487,10,1,1,1,0,0	// 1x Sealed_Ifrit_Card
+//IG_Spring_Festival_Scroll,4263,1,1,1,1,0,0	// 1x Incant_Samurai_Card
 
 // IdRO10th_Scroll
 IG_IdRO10th_Scroll,12350,1300,10,1,0,0,0	// 10x Angeling_Potion

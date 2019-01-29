@@ -177,6 +177,8 @@ sec_in02,11,32,3	script	VIP	90,{
 	close;
 }
 
+*/
+
 prontera,156,285,1	script	Sakura	-1,{
 	end;
 	// We will do a script instead of function for it to call on the exact map and the exact coordinates.
@@ -190,47 +192,107 @@ OnInit:
 
 -	script	candies	-1,{
 OnNPCKillEvent:
-	setarray .items,
-		542, // festival cookie
-		543, // festival rainbow cake
-		663, // korean rice cake
-		554, // mochi
-		5386, // ayam
-		12646, // Fried Octopus Legs
-		539, // Piece_Of_Cake
-		555, // Rice_Cake
-		557, // Hash_Rice_Cake
-		591, // Caviar_Pancake
-		592, // Jam_Pancake
-		5060, // party hat
-		593, // Honey_Pancake
-		594, // Sour_Cream_Pancake
-		595, // Mushroom_Pancake
-		22882, // Choco_Tteokguk
-		5060, // party hat
-		684, // Choco_Tteokguk
-		12122, // Sesame_Pastry
-		12123, // Honey_Pastry
-		12124, // Rainbow_Cake
-		12198, // Lucky_Rice_Cake
-		12247, // Halohalo
-		12320, // Pineapple_Juice
-		12321, // Spicy_Sandwich
-		12414, // Guarana_Candy
-		12417, // Boost500
-		14536, // Abrasive
-		14537, // Regeneration_Potion
-		14538, // Glass_Of_Illusion
-		14607, // Luxurious_Dinner_W
-		5318, // Poring Party Hat
-		14608; // Luxurious_Dinner_E
-
-	set .theitem, getarraysize(.items)-1;
-	set .dasitem, @items[@theitem];
+	if ( rand( 1000 ) < 50 ) { // 5.0% to drop
+		getitem .items_very_high[rand(getarraysize(.items_very_high)-1)],1;
+	}
 	if ( rand( 1000 ) < 20 ) { // 2.0% to drop
-		getitem .items[rand(.theitem)],1;
+		getitem .items_high[rand(getarraysize(.items_high)-1)],1;
+	}
+	if ( rand( 1000 ) < 10 ) { // 1.0% to drop
+		getitem .items_mid[rand(getarraysize(.items_mid)-1)],1;
+	}
+	if ( rand( 10000 ) < 10 ) { // 0.1% to drop
+		getitem .items_low[rand(getarraysize(.items_low)-1)],1;
 	}
 	end;
-}
 
-*/
+OnInit:
+	setarray .items_very_high[0],
+		668; 	// Money Packet
+
+	setarray .items_high[0],
+		543, 	// Festival Rainbow Cake
+		567, 	// Shrimp
+		572, 	// Lucky Cookie
+		551, 	// Sushi
+		6240,	// HD Oridecon
+		6241,	// HD Elunium
+		553, 	// Bao
+		8501, 	// Milky Gift Box
+		6635, 	// Blacksmith Blessing
+		555, 	// Rice Cake
+		7619,	// Enc Elunium
+		7620,	// Enc Oridecon
+		556, 	// Rice Cake Stick
+		557, 	// Neatly Sliced Rice Cake
+		566, 	// Tom Yum Goong
+		590, 	// Pretzel
+		591, 	// Caviar_Pancake
+		6635, 	// Blacksmith Blessing
+		8501, 	// Milky Gift Box
+		592, 	// Jam_Pancake
+		593, 	// Honey_Pancake
+		594, 	// Sour_Cream_Pancake
+		595, 	// Mushroom_Pancake
+		12122, 	// Sesame_Pastry
+		12123, 	// Honey_Pastry
+		12124, 	// Rainbow_Cake
+		12198, 	// Lucky_Rice_Cake
+		8501, 	// Milky Gift Box
+		12247, 	// Halohalo
+		12320, 	// Pineapple_Juice
+		12321, 	// Spicy_Sandwich
+		12414, 	// Guarana_Candy
+		12417, 	// Boost500
+		14536, 	// Abrasive
+		6240,	// HD Oridecon
+		6241,	// HD Elunium
+		7619,	// Enc Elunium
+		6635, 	// Blacksmith Blessing
+		7620,	// Enc Oridecon
+		14537, 	// Regeneration_Potion
+		14538, 	// Glass_Of_Illusion
+		14607, 	// Luxurious_Dinner_W
+		14608, 	// Luxurious_Dinner_E
+		8501, 	// Milky Gift Box
+		668; 	// Money Packet
+
+	setarray .items_mid[0],
+		668, 	// Money Packet
+		7619,	// Enc Elunium
+		7620,	// Enc Oridecon
+		6635, 	// Blacksmith Blessing
+		12221, 	// Megaphone_
+		6225,	// HD Carnium
+		6226,	// HD Bradium
+		6240,	// HD Oridecon
+		6241,	// HD Elunium
+		14617, 	// VIT_Biscuit_Stick
+		14616, 	// STR_Biscuit_Stick
+		12901, 	// Insurance_Package
+		7619,	// Enc Elunium
+		7620,	// Enc Oridecon
+		6635, 	// Blacksmith Blessing
+		14620, 	// DEX_Biscuit_Stick
+		6240,	// HD Oridecon
+		6241,	// HD Elunium
+		12411, 	// HE_Battle_Manual
+		14621, 	// LUK_Biscuit_Stick
+		668; 	// Money Packet
+
+	setarray .items_low[0],
+		15041, 	// Boitata_Armor
+		22042, 	// Talaria_Shoes
+		18856, 	// W_King_Tiger_Doll_Hat
+		1228, 	// Combat_Knife
+		19677, 	// C_Soulless_Wing
+		18918, 	// Long_Octopus_Balloon
+		6225,	// HD Carnium
+		6226,	// HD Bradium
+		18865, 	// Sword_Master_Crown
+		19156, 	// Lunar Rainbow
+		6635, 	// Blacksmith Blessing
+		20450, 	// Costume Gram Peony
+		5457; 	// Moon Rabbit Hat [1]
+	end;
+}
