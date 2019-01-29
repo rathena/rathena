@@ -108,7 +108,7 @@ prontera,129,215,5	script	Questboard	4_BOARD3,{
 		mes "[^FF7700Questboard^000000]";
 		mes "^0000FF"+getd("." + .@selection + "_collectionname$")+"^000000";
 		mes "--------------------------------";
-		set .@size, getarraysize(getd("."+ .@selection + "_collectionitem"))
+		set .@size, getarraysize(getd("."+ .@selection + "_collectionitem"));
 		for( set .@j, 0; .@j < .@size; set .@j,.@j+2){
 			mes "^FF0000"+getitemname(getd("."+.@selection+"_collectionitem["+.@j+"]"))+" - "+getd("."+.@selection+"_collectionitem["+(.@j+1)+"]")+" ea.^000000";
 		}
