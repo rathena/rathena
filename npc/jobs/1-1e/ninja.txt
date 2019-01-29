@@ -112,12 +112,12 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "H-How are you able to";
 			mes "see me? I'm supposed to";
 			mes "be invisible to the naked eye.";
-			mes "Ah, now I get it. Wildcat Joe";
+			mes "Ah, now I get it. Red Leopard Joe";
 			mes "must have sent you to kill me! I won't fall for your tricks! Die!";
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "W-wait! I-I don't even";
-			mes "know who Wildcat Joe is!";
+			mes "know who Red Leopard Joe is!";
 			mes "Calm down, there's no";
 			mes "need to get violent!";
 			next;
@@ -143,7 +143,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "guard down for even a second.";
 			next;
 			mes "[Kuuga Gai]";
-			mes "That Wildcat Joe is";
+			mes "That Red Leopard Joe is";
 			mes "completely ruthless...!";
 			mes "He could strike at any time!";
 			mes "He'll do anything to achieve";
@@ -168,7 +168,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			}
 			mes "[Kuuga Gai]";
 			mes "Great! Now, I wanted to";
-			mes "ask Wildcat Joe if he'd";
+			mes "ask Red Leopard Joe if he'd";
 			mes "agree to a temporary truce.";
 			mes "I'm aware that both of us";
 			mes "are out of weapons, so we";
@@ -183,7 +183,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "for him in a high place.";
 			next;
 			mes "[Kuuga Gai]";
-			mes "Yeah, Wildcat Joe";
+			mes "Yeah, Red Leopard Joe";
 			mes "always did have a thing";
 			mes "for hiding in high places.";
 			mes "Anyway, after you give him";
@@ -199,13 +199,13 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "isn't that urgent,";
 			mes "please hurry over to";
 			mes "Einbroch and deliver";
-			mes "my letter to Wildcat Joe.";
+			mes "my letter to Red Leopard Joe.";
 			close;
 		}
 		else if (NINJ_Q == 2) {
 			mes "[Kuuga Gai]";
 			mes "Did you deliver that";
-			mes "letter to Wildcat Joe?";
+			mes "letter to Red Leopard Joe?";
 			mes "I still need to know his";
 			mes "response to my proposal";
 			mes "for a truce. Anyway, see";
@@ -215,7 +215,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 		else if (NINJ_Q == 3) {
 			mes "[Kuuga Gai]";
 			mes "Ah, you've returned.";
-			mes "So did Wildcat Joe send";
+			mes "So did Red Leopard Joe send";
 			mes "you back here with his";
 			mes "response? Great, great,";
 			mes "please let me read it.";
@@ -232,7 +232,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			mes "Listen, you've got to help";
 			mes "me out again! I need you to";
 			mes "gather some materials so that";
-			mes "I can craft my own Kunai to fight Wildcat Joe. Then, I'll go ahead";
+			mes "I can craft my own Kunai to fight Red Leopard Joe. Then, I'll go ahead";
 			mes "and change your job to a Ninja.";
 			next;
 			mes "[Kuuga Gai]";
@@ -245,7 +245,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 			next;
 			mes "["+strcharinfo(0)+"]";
 			mes "Huh? That's funny,";
-			mes "Wildcat Joe actually";
+			mes "Red Leopard Joe actually";
 			mes "asked me to gather";
 			mes "those same materials.";
 			next;
@@ -268,7 +268,7 @@ que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 				mes "^3355FF1 Phracon^000000 to me,";
 				mes "so that I can craft";
 				mes "my own Kunai to use";
-				mes "against Wildcat Joe!";
+				mes "against Red Leopard Joe!";
 				close;
 			}
 			if (SkillPoint != 0) {
@@ -388,14 +388,14 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		mes "Oh, are you from";
 		mes "Amatsu? I'm looking";
 		mes "for someone named";
-		mes "Wildcat Joe from there.";
+		mes "Red Leopard Joe from there.";
 		next;
 		mes "[Suspicious Man]";
 		mes "...No. No, I'm actually";
 		mes "from Izlude, and I'm only";
 		mes "here in Einbroch for some";
 		mes "minerals. Tell me, why are";
-		mes "you looking for this Wildcat Joe?";
+		mes "you looking for this Red Leopard Joe?";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Well, I need to deliver";
@@ -408,7 +408,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		mes "about it, I do think that I've";
 		mes "run once or twice into him";
 		mes "in this town. Though, he prefers to be called ''Red Leopard Joe,''";
-		mes "instead of ''Wildcat Joe.''";
+		mes "instead of ''Red Leopard Joe.''";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "I really want to help you";
@@ -463,7 +463,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Are you...";
-		mes "Are you Wildcat Joe?";
+		mes "Are you Red Leopard Joe?";
 		next;
 		mes "[Suspicious Man]";
 		mes "...Yes, but I prefer to";
