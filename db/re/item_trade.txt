@@ -426,7 +426,7 @@
 // 5346,507,100	// Gf_Recruiter_Hat
 5357,475,100	// Wings_Of_Victory
 5368,475,100	// White_Wing
-5369,475,100	// Dark_Wing
+// 5369,475,100	// Dark_Wing
 5391,507,100	// Toast_C
 5394,507,100	// Bubblegum_Lower
 5406,467,100	// Academy_Freshman_Hat
@@ -1149,7 +1149,7 @@
 7876,499,100	// Gold_Key
 7877,499,100	// Red_Ring
 7878,499,100	// Lusalka_Hair
-7879,499,100	// Golden_Thread
+// 7879,499,100	// Golden_Thread
 7880,499,100	// Babayaga_Silver_Spoon
 7881,499,100	// Book_Of_Magic
 7882,499,100	// Pointed_Branch
@@ -4024,6 +4024,7 @@
 11549,329,100	// Woe_Blue_Potion
 
 6654,329,100	// Needle_And_Thread
+7879,329,100	// Golden_Thread
 12263,329,100	// Comp_Battle_Manual
 
 6960,329,100	// Key_Air_Fortress
