@@ -9044,6 +9044,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
 		break;
 	case SC_QUAGMIRE:
+		status_change_end(bl, SC_LOUD, INVALID_TIMER);
 		status_change_end(bl, SC_CONCENTRATE, INVALID_TIMER);
 		status_change_end(bl, SC_TRUESIGHT, INVALID_TIMER);
 		status_change_end(bl, SC_WINDWALK, INVALID_TIMER);
