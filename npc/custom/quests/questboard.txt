@@ -278,10 +278,11 @@ OnNPCKillEvent:
 						if(h_run==true && $@partymemberaid[.@j] != .@killerid && .@currentquest$ == getvar(currentquest$, $@partymembercid[.@j]) && readparam(HP, $@partymembercid[.@j]) > 0){
 							getmapxy(.@map2$,.@x2,.@y2,UNITTYPE_PC,rid2name($@partymemberaid[.@j]));
 							if(.@map1$ == .@map2$ && distance(.@x1,.@y1,.@x2,.@y2) < .party_range){
-								if(getd(.@currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount", $@partymembercid[.@j])<getd("."+.@currentquest$+"_huntingmob["+.@i+"]"))
+								set .@kill_amt,getvar(getd(.@currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount"), $@partymembercid[.@j]);
+								if(.@kill_amt<getd("."+.@currentquest$+"_huntingmob["+.@i+"]"))
 								{
-									setd(.@currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount", getd(.@currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount")+1, $@partymembercid[.@j]);
-									dispbottom getd("."+.@currentquest$+"_huntingname$")+": ["+strmobinfo(1,.@currentmob)+"] ("+ getd(.@currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount", $@partymembercid[.@j])+"/"+getd("."+.@currentquest$+"_huntingmob["+.@i+"]")+")", 0xB6FF00, $@partymembercid[.@j];
+									setd(.@currentquest$+"_"+.@currentmob+"_"+.@i+"_killcount", .@kill_amt+1, $@partymembercid[.@j]);
+									dispbottom getd("."+.@currentquest$+"_huntingname$")+": ["+strmobinfo(1,.@currentmob)+"] ("+ (.@kill_amt+1)+"/"+getd("."+.@currentquest$+"_huntingmob["+.@i+"]")+")", 0xB6FF00, $@partymembercid[.@j];
 								}
 							}
 						}
