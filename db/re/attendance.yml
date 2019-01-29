@@ -3,23 +3,23 @@ Header:
   Version: 1
 
 Attendance:
-  - Start: 20190102
-    End: 20190130
+  - Start: 20190131
+    End: 20190227
     Rewards:
       - Day: 1
         ItemId: 14156
         Amount: 1
       - Day: 2
         ItemId: 14178
-        Amount: 1
+        Amount: 2
       - Day: 3
         ItemId: 14219
-        Amount: 1
+        Amount: 3
       - Day: 4
-        ItemId: 14176
-        Amount: 1
+        ItemId: 14220
+        Amount: 3
       - Day: 5
-        ItemId: 5429
+        ItemId: 5214
         Amount: 1
       - Day: 6
         ItemId: 14158
@@ -34,26 +34,26 @@ Attendance:
         ItemId: 7776
         Amount: 2
       - Day: 10
-        ItemId: 14499
+        ItemId: 18613
         Amount: 1
       - Day: 11
         ItemId: 8501
         Amount: 10
       - Day: 12
         ItemId: 16262
-        Amount: 1
+        Amount: 2
       - Day: 13
         ItemId: 16263
-        Amount: 1
+        Amount: 2
       - Day: 14
         ItemId: 8511
         Amount: 1
       - Day: 15
-        ItemId: 20381
+        ItemId: 20212
         Amount: 1
       - Day: 16
         ItemId: 8503
-        Amount: 3
+        Amount: 5
       - Day: 17
         ItemId: 8507
         Amount: 5
@@ -61,8 +61,8 @@ Attendance:
         ItemId: 8509
         Amount: 5
       - Day: 19
-        ItemId: 13636
+        ItemId: 13637
         Amount: 1
       - Day: 20
-        ItemId: 19808
+        ItemId: 5914
         Amount: 1
