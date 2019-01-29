@@ -418,7 +418,7 @@ bonus bBreakArmorRate,n; 		Adds a n/100% chance to break enemy's armor while att
 Monster drops
 -------------
 bonus2 bDropAddRace,r,x;	Adds x% to player's drop rate when killing a monster with race r.
-bonus2 bDropAddClass,c,x;	Adds x% to player's drop rate when killing a monster with race c.
+bonus2 bDropAddClass,c,x;	Adds x% to player's drop rate when killing a monster with class c.
 
 bonus3 bAddMonsterIdDropItem,iid,mid,n;	Adds a n/100% chance of dropping item iid when killing monster mid
 

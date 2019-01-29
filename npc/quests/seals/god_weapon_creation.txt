@@ -72,7 +72,7 @@ gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
 	case 3:
 		set .@GID,getcharid(2);
 		if (($God1 < $@god_check2) || ($God2 < $@god_check2) || ($God3 < $@god_check2) || ($God4 < $@god_check2)){
-			if (($God1 >= $@god_check1) && ($God2 >= $@god_check1) && ($God3 >= $@god_check1) && ($God4 >= $@god_check1) && (strcharinfo(0) == getguildmaster(.@GID))) {
+			if (($God1 >= $@god_check1) && ($God2 >= $@god_check1) && ($God3 >= $@god_check1) && ($God4 >= $@god_check1) && (is_guild_leader() == true)) {
 				mes "[Dwarf Grunburti]";
 				mes "Hmm...";
 				mes "I'll need some things to make a weapon for you. What exactly were you interested in having?";
@@ -148,7 +148,7 @@ gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
 			mes "Stop bothering me and get out of here! Go play with some monsters, you simple minded fool!";
 			close;
 		}
-		if (strcharinfo(0) != getguildmaster(.@GID)) {
+		if (is_guild_leader() == false) {
 			mes "[Dwarf Grunburti]";
 			mes "I'll only present";
 			mes "my magnificent skills";
@@ -394,7 +394,7 @@ que_god01,154,112,4	script	Grunburti#god	826,{
 		close;
 	}
 	set .@GID,getcharid(2);
-	if (strcharinfo(0) != getguildmaster(.@GID)) {
+	if (is_guild_leader() == false) {
 		mes "[Dwarf Grunburti]";
 		mes "How in the...";
 		mes "Get out of here!";

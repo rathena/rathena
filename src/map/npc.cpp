@@ -276,7 +276,7 @@ struct npc_data* npc_name2id(const char* name)
 TIMER_FUNC(npc_secure_timeout_timer){
 	struct map_session_data* sd = NULL;
 	unsigned int timeout = NPC_SECURE_TIMEOUT_NEXT;
-	int cur_tick = gettick(); //ensure we are on last tick
+	t_tick cur_tick = gettick(); //ensure we are on last tick
 
 	if ((sd = map_id2sd(id)) == NULL || !sd->npc_id || sd->state.ignoretimeout) {
 		if (sd)
@@ -581,8 +581,9 @@ struct timer_event_data {
  * triger 'OnTimerXXXX' events
  *------------------------------------------*/
 TIMER_FUNC(npc_timerevent){
-	int old_rid, old_timer;
-	unsigned int old_tick;
+	int old_rid;
+	t_tick old_timer;
+	t_tick old_tick;
 	struct npc_data* nd=(struct npc_data *)map_id2bl(id);
 	struct npc_timerevent_list *te;
 	struct timer_event_data *ted = (struct timer_event_data*)data;
@@ -654,7 +655,7 @@ TIMER_FUNC(npc_timerevent){
 int npc_timerevent_start(struct npc_data* nd, int rid)
 {
 	int j;
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	struct map_session_data *sd = NULL; //Player to whom script is attached.
 
 	nullpo_ret(nd);
@@ -679,7 +680,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 
 	if (j < nd->u.scr.timeramount)
 	{
-		int next;
+		t_tick next;
 		struct timer_event_data *ted;
 		// Arrange for the next event
 		ted = ers_alloc(timer_event_ers, struct timer_event_data);
@@ -784,8 +785,9 @@ void npc_timerevent_quit(struct map_session_data* sd)
 		}
 		if( ev )
 		{
-			int old_rid,old_timer;
-			unsigned int old_tick;
+			int old_rid;
+			t_tick old_timer;
+			t_tick old_tick;
 
 			//Set timer related info.
 			old_rid = (nd->u.scr.rid == sd->bl.id ? 0 : nd->u.scr.rid); // Detach rid if the last attached player logged off.
@@ -812,9 +814,9 @@ void npc_timerevent_quit(struct map_session_data* sd)
  * Get the tick value of an NPC timer
  * If it's stopped, return stopped time
  *------------------------------------------*/
-int npc_gettimerevent_tick(struct npc_data* nd)
+t_tick npc_gettimerevent_tick(struct npc_data* nd)
 {
-	int tick;
+	t_tick tick;
 	nullpo_ret(nd);
 
 	// TODO: Get player attached timer's tick. Now we can just get it by using 'getnpctimer' inside OnTimer event.
@@ -1420,7 +1422,9 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 		case NPCTYPE_CASHSHOP:
 			if (cost[1] < points || cost[0] < (price - points))
 				return ERROR_TYPE_MONEY;
-			pc_paycash(sd, price, points, LOG_TYPE_NPC);
+			if (pc_paycash(sd, price, points, LOG_TYPE_NPC) <= 0) {
+				return ERROR_TYPE_MONEY;
+			}
 			break;
 		case NPCTYPE_ITEMSHOP:
 			{
@@ -2798,7 +2802,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		}
 		if (type == NPCTYPE_MARKETSHOP && (!qty || qty > UINT16_MAX)) {
 			ShowWarning("npc_parse_shop: Item %s [%hu] is stocked with invalid value %d, changed to 1. File '%s', line '%d'.\n",
-				id->name, nameid2, filepath, strline(buffer,start-buffer));
+				id->name, nameid2, qty, filepath, strline(buffer,start-buffer));
 			qty = 1;
 		}
 		//for logs filters, atcommands and iteminfo script command
@@ -3992,7 +3996,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	}
 	m = map_mapname2mapid(mapname);
 	if (m < 0) {
-		ShowWarning("npc_parse_mapflag: Unknown map in file '%s', line '%d' : %s\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", mapname, filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
+		ShowWarning("npc_parse_mapflag: Unknown map '%s' in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", mapname, filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
 	}
 
@@ -4127,7 +4131,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.skill_damage.caster = BL_ALL;
 
 					for (int i = 0; i < SKILLDMG_MAX; i++)
-						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, INT_MAX);
+						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, 100000);
 
 					if (strcmp(skill_name, "all") == 0) // Adjust damage for all skills
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
@@ -4137,6 +4141,28 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.flag_val = 1;
 						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
 						map_skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), args.skill_damage.rate, args.skill_damage.caster);
+					}
+				}
+			}
+			break;
+		}
+
+		case MF_SKILL_DURATION: {
+			union u_mapflag_args args = {};
+
+			if (!state)
+				map_setmapflag_sub(m, MF_SKILL_DURATION, false, &args);
+			else {
+				char skill_name[SKILL_NAME_LENGTH];
+
+				if (sscanf(w4, "%30[^,],%5hu[^\n]", skill_name, &args.skill_duration.per) == 2) {
+					args.skill_duration.skill_id = skill_name2id(skill_name);
+
+					if (!args.skill_duration.skill_id)
+						ShowError("npc_parse_mapflag: skill_duration: Invalid skill name '%s' for Skill Duration mapflag. Skipping (file '%s', line '%d')\n", skill_name, filepath, strline(buffer, start - buffer));
+					else {
+						args.skill_duration.per = cap_value(args.skill_duration.per, 0, UINT16_MAX);
+						map_setmapflag_sub(m, MF_SKILL_DURATION, true, &args);
 					}
 				}
 			}
@@ -4425,7 +4451,7 @@ void npc_read_event_script(void)
 	if (battle_config.etc_log) {
 		//Print summary.
 		for (i = 0; i < NPCE_MAX; i++)
-			ShowInfo("%d '%s' events.\n", script_event[static_cast<enum npce_event>(i)].size(), npc_get_script_event_name(i));
+			ShowInfo("%" PRIuPTR " '%s' events.\n", script_event[static_cast<enum npce_event>(i)].size(), npc_get_script_event_name(i));
 	}
 }
 

@@ -503,7 +503,7 @@ schg_que01,100,81,3	script	Pierrot Pier#sch_gd	715,{
 		mes "- and come back later. -";
 		close;
 	}
-	if (strcharinfo(0) == getguildmaster(getcharid(2))) {
+	if (is_guild_leader() == true) {
 		if ($@gdeventv_s2 == 0) {
 			set .@que_2143,checkquest(2143,PLAYTIME);
 			if (.@que_2143 == -1) {

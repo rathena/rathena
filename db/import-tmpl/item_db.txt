@@ -59,8 +59,8 @@
 
 // Old Tuxedo and Wedding Dress, will display the outfit when worn.
 //==================================================================
-//2338,Wedding_Dress,Wedding Dress,4,43000,,500,,0,,0,0xFFFFFFFE,63,0,16,,0,1,0,{},{ sc_start SC_WEDDING,-1,0; },{ sc_end SC_WEDDING; }
-//7170,Tuxedo,Tuxedo,4,43000,,10,,0,,0,0xFFFFFFFE,63,1,16,,0,1,0,{},{ sc_start SC_WEDDING,-1,0; },{ sc_end SC_WEDDING; }
+//2338,Wedding_Dress,Wedding Dress,4,43000,,500,,0,,0,0xFFFFFFFE,63,0,16,,0,1,0,{},{ sc_start SC_WEDDING,INFINITE_TICK,0; },{ sc_end SC_WEDDING; }
+//7170,Tuxedo,Tuxedo,4,43000,,10,,0,,0,0xFFFFFFFE,63,1,16,,0,1,0,{},{ sc_start SC_WEDDING,INFINITE_TICK,0; },{ sc_end SC_WEDDING; }
 
 // Non-kRO Eden Group Mark effect
 //=============================================================

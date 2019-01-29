@@ -52,7 +52,7 @@ function	script	F_CashStore	{
 // - No arguments.
 function	script	F_CashPartyCall	{
 	warp "Random",0,0;
-	if(getpartyleader(getcharid(1),2) == getcharid(0))
+	if (is_party_leader() == true)
 		warpparty "Leader", 0, 0, getcharid(1), strcharinfo(3), 3, 3;
 	return;
 }
