@@ -8,7 +8,8 @@ REPLACE INTO `item_cash_db` (`tab`, `item_id`, `price`) VALUES (2, 20737, 25);
 
 # still broken
 REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
-(31089, 'C_Exploding_Crimson_Flame', 'Costume Exploding Crimson Flame', 4, 0, NULL, 0, NULL, NULL, NULL, 0, 4294967295, 63, 2, 2048, NULL, '1', 0, 0, '', 'while(isequipped(31089)){ specialeffect2 455; sleep2 24000; }', NULL);
+(31089, 'C_Exploding_Crimson_Flame', 'Costume Exploding Crimson Flame', 4, 0, NULL, 0, NULL, NULL, NULL, 0, 4294967295, 63, 2, 2048, NULL, '1', 0, 0, '', 'while(isequipped(31089)){ specialeffect2 455; sleep2 24000; }', NULL),
+(28101, 'Tornado_Axe', 'Axe Tornado', 5, 10, NULL, 4000, '320', NULL, NULL, 1, 279714, 56, 2, 34, 4, '100', 1, 7, 'bonus bAtkEle,Ele_Wind; bonus2 bSkillCooldown,\"NC_AXETORNADO\",-1000;', NULL, NULL);
 
 # Various items for missions
 REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
