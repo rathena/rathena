@@ -302,7 +302,7 @@ poring_w01,96,97,3	script	Sweet Devi#wop	738,{
 	}
 
 OnPCLogoutEvent:
-	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
+	getmapxy .@map$,.@x,.@y;
 	if (.@map$ == "poring_w02") {
 		if (WoP_SaveMap$ != "") {
 			savepoint WoP_SaveMap$,WoP_SaveMap_X,WoP_SaveMap_Y,1,1;
@@ -316,7 +316,7 @@ OnPCLogoutEvent:
 	end;
 
 OnPCDieEvent:
-	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
+	getmapxy .@map$,.@x,.@y;
 	if (.@map$ == "poring_w02" && wop_team) {
 		if (getsavepoint(0) != "poring_w02" && WoP_SaveMap$ == "") {
 			set WoP_SaveMap$,getsavepoint(0);
@@ -333,7 +333,7 @@ OnPCDieEvent:
 	end;
 
 OnPCKillEvent:
-	getmapxy .@map$,.@x,.@y,UNITTYPE_PC;
+	getmapxy .@map$,.@x,.@y;
 	if (.@map$ == "poring_w02" && wop_team) {
 		getnameditem 7773,rid2name(killedrid);
 	}
