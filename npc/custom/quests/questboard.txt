@@ -68,7 +68,7 @@ prontera,129,215,5	script	Questboard	4_BOARD3,{
 				setd(currentquest$+"_"+.@currentmob+"_"+.@x+"_killcount", 0);
 			}
 			set currentquest$, "";
-			set h_run, true;
+			set h_run, false;
 			close;
 		}
 		goto L_checkmobs;
