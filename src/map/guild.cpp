@@ -131,7 +131,7 @@ static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const 
  */
 bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std::string &source)
 {
-	int skill_id = 0, level = 0;
+	int skill_id, level = 0;
 	std::string name;
 	short idx = -1;
 
@@ -145,7 +145,7 @@ bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std:
 		yaml_invalid_warning("guild_read_guildskill_tree_db_sub: Guild skill definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 		return false;
 	}
-	if (!script_get_constant(name.c_str(), (int *)&skill_id)) {
+	if (!(skill_id = skill_name2id(name.c_str()))) {
 		ShowWarning("guild_read_guildskill_tree_db_sub: Invalid guild skill name %s in \"%s\", skipping.\n", name.c_str(), source.c_str());
 		return false;
 	}
