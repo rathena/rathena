@@ -11329,6 +11329,11 @@ BUILDIN_FUNC(sc_start)
 	tick = script_getnum(st,3);
 	val1 = script_getnum(st,4);
 
+	if (current_equip_combo_pos && tick == INFINITE_TICK) {
+		ShowWarning("%s: Item combo contains an INFINITE_TICK duration. Skipping bonus.\n", command);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	//If from NPC we make default flag 1 to be unavoidable
 	if(nd && nd->bl.id == fake_nd->bl.id)
 		flag = script_hasdata(st,5+start_type)?script_getnum(st,5+start_type):SCSTART_NOTICKDEF;
