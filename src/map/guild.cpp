@@ -184,7 +184,7 @@ bool guild_read_guildskill_tree_db_sub(const YAML::Node &node, int n, const std:
 					std::string req_name = req_skill["ID"].as<std::string>();
 					int req_skill_id;
 
-					if (!script_get_constant(req_name.c_str(), (int *)&req_skill_id)) {
+					if (!(req_skill_id = skill_name2id(req_name.c_str()))) {
 						ShowWarning("guild_read_guildskill_tree_db_sub: Invalid required guild skill name %s in \"%s\", skipping.\n", req_name.c_str(), source.c_str());
 						return false;
 					}
