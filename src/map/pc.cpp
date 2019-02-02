@@ -9839,10 +9839,26 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		clif_notify_bindOnEquip(sd,n);
 	}
 
-	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
+	if(pos == EQP_ACC) { //Accesories should only go in one of the two.
 		pos = req_pos&EQP_ACC;
-		if (pos == EQP_ACC) //User specified both slots..
+		if (pos == EQP_ACC) //User specified both slots.
 			pos = equip_index[EQI_ACC_R] >= 0 ? EQP_ACC_L : EQP_ACC_R;
+
+		for (i = 0; i < sd->inventory_data[n]->slot; i++) { // Accessories that have cards that force equip location
+			if (!sd->inventory.u.items_inventory[n].card[i])
+				continue;
+
+			struct item_data *card_data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]);
+
+			if (card_data) {
+				int card_pos = card_data->equip;
+
+				if (card_pos == EQP_ACC_L || card_pos == EQP_ACC_R) {
+					pos = card_pos; // Use the card's equip position
+					break;
+				}
+			}
+		}
 	}
 
 	if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
