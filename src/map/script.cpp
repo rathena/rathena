@@ -8105,7 +8105,7 @@ BUILDIN_FUNC(readparam)
 	TBL_PC *sd = NULL;
 
 	if( script_hasdata(st, 3) ){
-		if (script_getnum(st, 3))
+		if (script_isint(st, 3))
 			script_charid2sd(3, sd);
 		else
 			script_nick2sd(3, sd);
