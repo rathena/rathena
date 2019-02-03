@@ -12537,10 +12537,12 @@ BUILDIN_FUNC(pvpon)
 
 	m = map_mapname2mapid(str);
 
-	if (m < 0 || map_getmapflag(m, MF_PVP))
+	if (m < 0) {
+		ShowWarning("buildin_pvpon: Unknown map '%s'.\n", str);
 		return SCRIPT_CMD_FAILURE;
-
-	map_setmapflag(m, MF_PVP, true);
+	}
+	if (!map_getmapflag(m, MF_PVP))
+		map_setmapflag(m, MF_PVP, true);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12552,10 +12554,12 @@ BUILDIN_FUNC(pvpoff)
 
 	m = map_mapname2mapid(str);
 
-	if(m < 0 || !map_getmapflag(m, MF_PVP))
+	if (m < 0) {
+		ShowWarning("buildin_pvpoff: Unknown map '%s'.\n", str);
 		return SCRIPT_CMD_FAILURE;
-
-	map_setmapflag(m, MF_PVP, false);
+	}
+	if (map_getmapflag(m, MF_PVP))
+		map_setmapflag(m, MF_PVP, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12567,10 +12571,12 @@ BUILDIN_FUNC(gvgon)
 
 	m = map_mapname2mapid(str);
 
-	if (m < 0 || map_getmapflag(m, MF_GVG))
+	if (m < 0) {
+		ShowWarning("buildin_gvgon: Unknown map '%s'.\n", str);
 		return SCRIPT_CMD_FAILURE;
-
-	map_setmapflag(m, MF_GVG, true);
+	}
+	if (!map_getmapflag(m, MF_GVG))
+		map_setmapflag(m, MF_GVG, true);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12582,8 +12588,11 @@ BUILDIN_FUNC(gvgoff)
 
 	m = map_mapname2mapid(str);
 
-	if (m < 0 || !map_getmapflag(m, MF_GVG))
+	if (m < 0) {
+		ShowWarning("buildin_gvgoff: Unknown map '%s'.\n", str);
 		return SCRIPT_CMD_FAILURE;
+	}
+	if (map_getmapflag(m, MF_GVG))
 		map_setmapflag(m, MF_GVG, false);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -12596,10 +12605,12 @@ BUILDIN_FUNC(gvgon3)
 
 	m = map_mapname2mapid(str);
 
-	if (m < 0 || map_getmapflag(m, MF_GVG_TE))
+	if (m < 0) {
+		ShowWarning("buildin_gvgon3: Unknown map '%s'.\n", str);
 		return SCRIPT_CMD_FAILURE;
-
-	map_setmapflag(m, MF_GVG_TE, true);
+	}
+	if (!map_getmapflag(m, MF_GVG_TE))
+		map_setmapflag(m, MF_GVG, true);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12611,10 +12622,12 @@ BUILDIN_FUNC(gvgoff3)
 
 	m = map_mapname2mapid(str);
 
-	if (m < 0 || !map_getmapflag(m, MF_GVG_TE))
+	if (m < 0) {
+		ShowWarning("buildin_gvgoff3: Unknown map '%s'.\n", str);
 		return SCRIPT_CMD_FAILURE;
-
-	map_setmapflag(m, MF_GVG_TE, false);
+	}
+	if (map_getmapflag(m, MF_GVG_TE))
+		map_setmapflag(m, MF_GVG, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
