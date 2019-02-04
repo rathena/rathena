@@ -1328,11 +1328,10 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 /*==========================================
  *
  *------------------------------------------*/
-int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
-{
+bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 	struct block_list *target = map_id2bl(id);
 
-	nullpo_retr(1, sd);
+	nullpo_retr(true, sd);
 
 	if( id != sd->npc_id ){
 		TBL_NPC* nd_sd = (TBL_NPC*)map_id2bl(sd->npc_id);
@@ -1341,13 +1340,13 @@ int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 		ShowDebug("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n",
 			nd_sd?(char*)nd_sd->name:"'Unknown NPC'", (int)sd->npc_id,
 			nd?(char*)nd->name:"'Unknown NPC'", (int)id);
-		return 1;
+		return true;
 	}
 
 	if(id != fake_nd->bl.id) { // Not item script
 		if ((npc_checknear(sd, target)) == NULL) {
 			ShowWarning("npc_scriptcont: failed npc_checknear test.\n");
-			return 1;
+			return true;
 		}
 	}
 #ifdef SECURE_NPCTIMEOUT
@@ -1358,17 +1357,51 @@ int npc_scriptcont(struct map_session_data* sd, int id, bool closing)
 	 * WPE can get to this point with a progressbar; we deny it.
 	 **/
 	if( sd->progressbar.npc_id && DIFF_TICK(sd->progressbar.timeout,gettick()) > 0 )
-		return 1;
+		return true;
 
-	if (!sd->st)
-		return 1;
+	if( sd->st == nullptr ){
+		return true;
+	}
 
-	if( closing && sd->st && sd->st->state == CLOSE )
-		sd->st->state = END;
+	if( closing ){
+		switch( sd->st->state ){
+			// close
+			case CLOSE:
+				sd->st->state = END;
+				break;
+			// close2
+			case STOP:
+				sd->st->state = RUN;
+				break;
+			default:
+				sd->st->state = END;
+				ShowError( "npc_scriptcont: unexpected state '%d' for closing call. (AID: %u CID: %u)\n", sd->st->state, sd->status.account_id, sd->status.char_id );
+				break;
+		}
+	}else{
+		switch( sd->st->state ){
+			// next
+			// progressbar
+			case STOP:
+				sd->st->state = RUN;
+				break;
+			// input
+			// menu
+			// select
+			case RERUNLINE:
+				// keep state as it is
+				break;
+			default:
+				sd->st->state = END;
+				ShowError( "npc_scriptcont: unexpected state '%d' for continue call. (AID: %u CID: %u)\n", sd->st->state, sd->status.account_id, sd->status.char_id );
+				break;
+		}
+	}
 
+	// Call this even, if it was set to end, because it will free the script state
 	run_script_main(sd->st);
 
-	return 0;
+	return false;
 }
 
 /**
