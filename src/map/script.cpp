@@ -12610,7 +12610,7 @@ BUILDIN_FUNC(gvgon3)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (!map_getmapflag(m, MF_GVG_TE))
-		map_setmapflag(m, MF_GVG, true);
+		map_setmapflag(m, MF_GVG_TE, true);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12627,7 +12627,7 @@ BUILDIN_FUNC(gvgoff3)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (map_getmapflag(m, MF_GVG_TE))
-		map_setmapflag(m, MF_GVG, false);
+		map_setmapflag(m, MF_GVG_TE, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
