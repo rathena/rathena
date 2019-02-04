@@ -6596,7 +6596,23 @@ BUILDIN_FUNC(changelook)
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_SUCCESS;
 
-	clif_changelook(&sd->bl,type,val);
+	switch(type) {
+	case LOOK_HAIR:
+		val = cap_value(val, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+		break;
+	case LOOK_HAIR_COLOR:
+		val = cap_value(val, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+		break;
+	case LOOK_CLOTHES_COLOR:
+		val = cap_value(val, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
+		break;
+	case LOOK_BODY2:
+		val = cap_value(val, MIN_BODY_STYLE, MAX_BODY_STYLE);
+		break;
+	default:
+		break;
+	}
+	clif_changelook(&sd->bl, type, val);
 
 	return SCRIPT_CMD_SUCCESS;
 }
