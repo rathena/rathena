@@ -6721,16 +6721,10 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			break;
 		case SJ_NOVAEXPLOSING:
 		{
-			uint16 hp_skilllv = skill_lv;
-
-			// Prevents dividing the MaxHP by 0 on levels higher then 5.
-			if (hp_skilllv > 5)
-				hp_skilllv = 5;
-
 			// (Base ATK + Weapon ATK) * Ratio
 			md.damage = ((int64)sstatus->batk + (int64)sstatus->rhw.atk) * (200 + 100 * skill_lv) / 100;
 			// Additional Damage
-			md.damage += sstatus->max_hp / (6 - hp_skilllv) + status_get_max_sp(src) * (2 * skill_lv);
+			md.damage += sstatus->max_hp / (6 - cap_value(skill_lv, 1, 5)) + status_get_max_sp(src) * (2 * skill_lv);
 		}
 			break;
 	}
@@ -7565,12 +7559,12 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		
 		if( wd.flag&BF_WEAPON && sc && sc->data[SC_FALLINGSTAR] && rand()%100 < sc->data[SC_FALLINGSTAR]->val2 )
 		{
-			short skillid = SJ_FALLINGSTAR_ATK;
-			short skilllv = sc->data[SC_FALLINGSTAR]->val1;
+			uint16 skill_id = SJ_FALLINGSTAR_ATK;
+			uint16 skill_lv = sc->data[SC_FALLINGSTAR]->val1;
 
 			if (sd) sd->state.autocast = 1;
-			if (status_charge(src, 0, skill_get_sp(skillid,skilllv)))
-				skill_castend_nodamage_id(src, src, skillid, skilllv, tick, flag);
+			if (status_charge(src, 0, skill_get_sp(skill_id,skill_lv)))
+				skill_castend_nodamage_id(src, src, skill_id, skill_lv, tick, flag);
 			if (sd) sd->state.autocast = 0;
 		}
 

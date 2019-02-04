@@ -4661,9 +4661,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		return 1;
 
 	sd = BL_CAST(BL_PC, src);
-	md = BL_CAST(BL_MOB, src);
-	tsd = BL_CAST(BL_PC, bl);
-	tmd = BL_CAST(BL_MOB, bl);
 
 	if (status_isdead(bl))
 		return 1;
@@ -5018,8 +5015,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case SJ_FLASHKICK: 
 	{
 		// Max allowed targets to be tagged with a stellar mark.
-		short count = MAX_STELLAR_MARKS;
-		int i = 0;
+		md = BL_CAST(BL_MOB, src);
+		tsd = BL_CAST(BL_PC, bl);
+		tmd = BL_CAST(BL_MOB, bl);
+		
 		int64 fk_damage = 0;
 
 		// Only players and monsters can be tagged....I think??? [Rytech]
@@ -5042,6 +5041,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		}
 
 		if (sd) {// Tagging the target.
+			short count = MAX_STELLAR_MARKS;
+			int i = 0;
+			
 			ARR_FIND(0, count, i, sd->stellar_mark[i] == bl->id);
 			if (i == count) {
 				ARR_FIND(0, count, i, sd->stellar_mark[i] == 0);
