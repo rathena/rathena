@@ -1375,7 +1375,7 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 				break;
 			default:
 				sd->st->state = END;
-				ShowError( __func__ ": unexpected state '%d' for closing call. (AID: %u CID: %u)\n", sd->st->state, sd->status.account_id, sd->status.char_id );
+				ShowError( "npc_scriptcont: unexpected state '%d' for closing call. (AID: %u CID: %u)\n", sd->st->state, sd->status.account_id, sd->status.char_id );
 				break;
 		}
 	}else{
@@ -1393,7 +1393,7 @@ bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
 				break;
 			default:
 				sd->st->state = END;
-				ShowError( __func__ ": unexpected state '%d' for continue call. (AID: %u CID: %u)\n", sd->st->state, sd->status.account_id, sd->status.char_id );
+				ShowError( "npc_scriptcont: unexpected state '%d' for continue call. (AID: %u CID: %u)\n", sd->st->state, sd->status.account_id, sd->status.char_id );
 				break;
 		}
 	}
