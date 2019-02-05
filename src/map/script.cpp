@@ -9144,10 +9144,10 @@ BUILDIN_FUNC(bonus)
 					return SCRIPT_CMD_FAILURE;
 				}
 			} else {
-				int skill_id = script_getnum(st, 3);
+				val1 = script_getnum(st, 3);
 
-				if (!(val1 = skill_get_index(skill_id))) {
-					ShowError("buildin_bonus: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id);
+				if (!skill_get_index(val1)) {
+					ShowError("buildin_bonus: Invalid skill ID %d passed to item bonus. Skipping.\n", val1);
 					return SCRIPT_CMD_FAILURE;
 				}
 			}
@@ -9310,10 +9310,10 @@ BUILDIN_FUNC(autobonus3)
 			return SCRIPT_CMD_FAILURE;
 		}
 	} else {
-		int skill_id_lookup = script_getnum(st, 5);
+		skill_id = script_getnum(st, 5);
 
-		if (!(skill_id = skill_get_index(skill_id_lookup))) {
-			ShowError("buildin_autobonus3: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id_lookup);
+		if (!skill_get_index(skill_id)) {
+			ShowError("buildin_autobonus3: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -10028,10 +10028,10 @@ BUILDIN_FUNC(itemskill)
 			return SCRIPT_CMD_FAILURE;
 		}
 	} else {
-		int skill_id = script_getnum(st, 2);
+		id = script_getnum(st, 2);
 
-		if (!(id = skill_get_index(skill_id))) {
-			ShowError("buildin_itemskill: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id);
+		if (!skill_get_index(id)) {
+			ShowError("buildin_itemskill: Invalid skill ID %d passed to item bonus. Skipping.\n", id);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -18391,10 +18391,10 @@ BUILDIN_FUNC(unitskilluseid)
 			return SCRIPT_CMD_FAILURE;
 		}
 	} else {
-		int skill_id_lookup = script_getnum(st, 3);
+		skill_id = script_getnum(st, 3);
 
-		if (!(skill_id = skill_get_index(skill_id_lookup))) {
-			ShowError("buildin_unitskilluseid: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id_lookup);
+		if (!skill_get_index(skill_id)) {
+			ShowError("buildin_unitskilluseid: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -18433,10 +18433,10 @@ BUILDIN_FUNC(unitskillusepos)
 			return SCRIPT_CMD_FAILURE;
 		}
 	} else {
-		int skill_id_lookup = script_getnum(st, 3);
+		skill_id = script_getnum(st, 3);
 
-		if (!(skill_id = skill_get_index(skill_id_lookup))) {
-			ShowError("buildin_unitskillusepos: Invalid skill ID %d.\n", skill_id_lookup);
+		if (!skill_get_index(skill_id)) {
+			ShowError("buildin_unitskillusepos: Invalid skill ID %d.\n", skill_id);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -20285,10 +20285,10 @@ BUILDIN_FUNC(areamobuseskill)
 			return SCRIPT_CMD_FAILURE;
 		}
 	} else {
-		int skill_id_lookup = script_getnum(st, 7);
+		skill_id = script_getnum(st, 7);
 
-		if (!(skill_id = skill_get_index(skill_id_lookup))) {
-			ShowError("buildin_areamobuseskill: Invalid skill ID %d.\n", skill_id_lookup);
+		if (!skill_get_index(skill_id)) {
+			ShowError("buildin_areamobuseskill: Invalid skill ID %d.\n", skill_id);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -21027,10 +21027,10 @@ BUILDIN_FUNC(npcskill)
 			return SCRIPT_CMD_FAILURE;
 		}
 	} else {
-		int skill_id_lookup = script_getnum(st, 2);
+		skill_id = script_getnum(st, 2);
 
-		if (!(skill_id = skill_get_index(skill_id_lookup))) {
-			ShowError("buildin_npcskill: Invalid skill ID %d.\n", skill_id_lookup);
+		if (!skill_get_index(skill_id)) {
+			ShowError("buildin_npcskill: Invalid skill ID %d.\n", skill_id);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
