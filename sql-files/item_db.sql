@@ -1141,7 +1141,7 @@ REPLACE INTO `item_db` VALUES (2137,'Valkyrja\'s_Shield_C','Neo Valkyrja\'s Shie
 REPLACE INTO `item_db` VALUES (2138,'Bradium_Shield','Bradium Shield',4,20,NULL,1800,NULL,5,NULL,1,0x00CFFF80,2,2,32,NULL,65,1,3,'bonus2 bSkillAtk,"CR_SHIELDBOOMERANG",60; bonus bAgi,-1; bonus bMaxHP,500;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (2139,'Flame_Thrower','Flame Thrower',4,20000,NULL,2000,NULL,60,NULL,0,0x00000400,63,2,32,NULL,99,0,1,NULL,NULL,NULL);
 # GM Shield
-REPLACE INTO `item_db` VALUES (2199,'Ahura_Mazda','Ahura Mazdah',4,1,NULL,10,NULL,100,NULL,0,0xFFFFFFFF,7,2,32,NULL,1,1,0,'bonus bAllStats,50; bonus bMdef,99; bonus bShortWeaponDamageReturn,100; bonus2 bSubRace,RC_DemiHuman,95; bonus2 bSubRace,RC_Player,95; skill "CR_FULLPROTECTION",5; Skill "WZ_ESTIMATION",1; Skill "ST_FULLSTRIP",5; Skill "HW_MAGICPOWER",10; bonus bMaxHPRate,200; bonus bNoGemStone; bonus bSpeedRate,25;','sc_start4 SC_ENDURE,60000,10,0,0,1;','sc_end SC_ENDURE;');
+REPLACE INTO `item_db` VALUES (2199,'Ahura_Mazda','Ahura Mazdah',4,1,NULL,10,NULL,100,NULL,0,0xFFFFFFFF,7,2,32,NULL,1,1,0,'bonus bAllStats,50; bonus bMdef,99; bonus bShortWeaponDamageReturn,100; bonus2 bSubRace,RC_DemiHuman,95; bonus2 bSubRace,RC_Player,95; skill "CR_FULLPROTECTION",5; Skill "WZ_ESTIMATION",1; Skill "ST_FULLSTRIP",5; Skill "HW_MAGICPOWER",10; bonus bMaxHPRate,200; bonus bNoGemStone; bonus bSpeedRate,25; bonus bNoWalkDelay;',NULL,NULL);
 # Headgears
 #===================================================================
 REPLACE INTO `item_db` VALUES (2201,'Sunglasses','Sunglasses',4,5000,NULL,100,NULL,0,NULL,0,0xFFFFFFFF,7,2,512,NULL,0,0,12,'bonus2 bResEff,Eff_Blind,500;',NULL,NULL);
@@ -1793,7 +1793,7 @@ REPLACE INTO `item_db` VALUES (4119,'Bathory_Card','Bathory Card',6,20,NULL,10,N
 REPLACE INTO `item_db` VALUES (4120,'Petit__Card','Sky Petite Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubRace,RC_Dragon,30;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4121,'Phreeoni_Card','Phreeoni Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus bHit,100;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4122,'Deviruchi_Card','Deviruchi Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bStr,1; bonus2 bResEff,Eff_Blind,10000;',NULL,NULL);
-REPLACE INTO `item_db` VALUES (4123,'Eddga_Card','Eddga Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,-25;','sc_start4 SC_ENDURE,60000,10,0,0,1;','sc_end SC_ENDURE;');
+REPLACE INTO `item_db` VALUES (4123,'Eddga_Card','Eddga Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,64,NULL,NULL,NULL,NULL,'bonus bMaxHPrate,-25; bonus bNoWalkDelay;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4124,'Medusa_Card','Medusa Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,32,NULL,NULL,NULL,NULL,'bonus2 bSubRace,RC_Demon,15; bonus2 bResEff,Eff_Stone,10000;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4125,'Deviace_Card','Deviace Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus2 bAddRace,RC_DemiHuman,7; bonus2 bAddRace,RC_Player,7; bonus2 bAddRace,RC_Brute,7; bonus2 bAddRace,RC_Plant,7; bonus2 bAddRace,RC_Insect,7;',NULL,NULL);
 REPLACE INTO `item_db` VALUES (4126,'Minorous_Card','Minorous Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,2,NULL,NULL,NULL,NULL,'bonus2 bAddSize,Size_Large,15; bonus bBaseAtk,5;',NULL,NULL);
