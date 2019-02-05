@@ -30,9 +30,9 @@ function	script	get_unique_by_aid	{
 	end;
 
 OnPCLoginEvent:
-	.@c = query_sql("SELECT `account_id`, `unique_id` FROM `multi_pc` WHERE `account_id` = '"+getcharid(3)+"' AND `unique_id` = '"+get_unique_id()+"'", .@aid, .@uid);
-	if(.@c ==  0) {
-		query_sql("INSERT INTO `multi_pc` (`account_id`, `unique_id`) VALUES ('"+getcharid(3)+"', '"+get_unique_id()+"')");
+	.@c = query_sql("SELECT `account_id`, `unique_id` FROM `multi_pc` WHERE `account_id` = "+escape_sql(getcharid(3))+" AND `unique_id` = "+escape_sql(get_unique_id())+"", .@aid, .@uid);
+	if(.@c <  1) {
+		query_sql("INSERT INTO `multi_pc` (`account_id`, `unique_id`) VALUES ("+escape_sql(getcharid(3))+", "+escape_sql(get_unique_id())+")");
 	}
 	if(#xlaunch_vipx == 1) {
 		set #xlaunch_vipx,get_unique_id();
@@ -177,8 +177,6 @@ sec_in02,11,32,3	script	VIP	90,{
 	close;
 }
 
-*/
-
 prontera,156,285,1	script	Sakura	-1,{
 	end;
 	// We will do a script instead of function for it to call on the exact map and the exact coordinates.
@@ -296,3 +294,4 @@ OnInit:
 		5457; 	// Moon Rabbit Hat [1]
 	end;
 }
+*/
