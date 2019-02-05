@@ -9136,7 +9136,21 @@ BUILDIN_FUNC(bonus)
 		case SP_SKILL_USE_SP:
 		case SP_SUB_SKILL:
 			// these bonuses support skill names
-			val1 = ( script_isstring(st, 3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
+			if (script_isstring(st, 3)) {
+				const char *name = script_getstr(st, 3);
+
+				if (!(val1 = skill_name2id(name))) {
+					ShowError("buildin_bonus: Invalid skill name %s passed to item bonus. Skipping.\n", name);
+					return SCRIPT_CMD_FAILURE;
+				}
+			} else {
+				int skill_id = script_getnum(st, 3);
+
+				if (!(val1 = skill_get_index(skill_id))) {
+					ShowError("buildin_bonus: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id);
+					return SCRIPT_CMD_FAILURE;
+				}
+			}
 			break;
 		default:
 			if (script_hasdata(st, 3))
@@ -9191,7 +9205,7 @@ BUILDIN_FUNC(autobonus)
 {
 	unsigned int dur, pos;
 	short rate;
-	short atk_type = 0;
+	uint16 atk_type = 0;
 	TBL_PC* sd;
 	const char *bonus_script, *other_script = NULL;
 
@@ -9231,7 +9245,7 @@ BUILDIN_FUNC(autobonus2)
 {
 	unsigned int dur, pos;
 	short rate;
-	short atk_type = 0;
+	uint16 atk_type = 0;
 	TBL_PC* sd;
 	const char *bonus_script, *other_script = NULL;
 
@@ -9270,7 +9284,8 @@ BUILDIN_FUNC(autobonus2)
 BUILDIN_FUNC(autobonus3)
 {
 	unsigned int dur, pos;
-	short rate,atk_type;
+	short rate;
+	uint16 skill_id = 0;
 	TBL_PC* sd;
 	const char *bonus_script, *other_script = NULL;
 
@@ -9287,15 +9302,29 @@ BUILDIN_FUNC(autobonus3)
 
 	rate = script_getnum(st,3);
 	dur = script_getnum(st,4);
-	atk_type = ( script_isstring(st, 5) ? skill_name2id(script_getstr(st,5)) : script_getnum(st,5) );
+	if (script_isstring(st, 5)) {
+		const char *name = script_getstr(st, 5);
+
+		if (!(skill_id = skill_name2id(name))) {
+			ShowError("buildin_autobonus3: Invalid skill name %s passed to item bonus. Skipping.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		int skill_id_lookup = script_getnum(st, 5);
+
+		if (!(skill_id = skill_get_index(skill_id_lookup))) {
+			ShowError("buildin_autobonus3: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id_lookup);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
 	bonus_script = script_getstr(st,2);
-	if( !rate || !dur || !pos || !atk_type || !bonus_script )
+	if( !rate || !dur || !pos || !bonus_script )
 		return SCRIPT_CMD_SUCCESS;
 
 	if( script_hasdata(st,6) )
 		other_script = script_getstr(st,6);
 
-	if( pc_addautobonus(sd->autobonus3, bonus_script, rate, dur, atk_type, other_script, pos, true) )
+	if( pc_addautobonus(sd->autobonus3, bonus_script, rate, dur, skill_id, other_script, pos, true) )
 	{
 		script_add_autobonus(bonus_script);
 		if( other_script )
@@ -9991,7 +10020,21 @@ BUILDIN_FUNC(itemskill)
 	if( !script_rid2sd(sd) || sd->ud.skilltimer != INVALID_TIMER )
 		return SCRIPT_CMD_SUCCESS;
 
-	id = ( script_isstring(st, 2) ? skill_name2id(script_getstr(st,2)) : script_getnum(st,2) );
+	if (script_isstring(st, 2)) {
+		const char *name = script_getstr(st, 2);
+
+		if (!(id = skill_name2id(name))) {
+			ShowError("buildin_itemskill: Invalid skill name %s passed to item bonus. Skipping.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		int skill_id = script_getnum(st, 2);
+
+		if (!(id = skill_get_index(skill_id))) {
+			ShowError("buildin_itemskill: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
 	lv = script_getnum(st,3);
 	if (script_hasdata(st, 4)) {
 		keep_requirement = (script_getnum(st, 4) != 0);
@@ -18340,7 +18383,21 @@ BUILDIN_FUNC(unitskilluseid)
 	struct block_list* bl;
 
 	unit_id  = script_getnum(st,2);
-	skill_id = ( script_isstring(st, 3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
+	if (script_isstring(st, 3)) {
+		const char *name = script_getstr(st, 3);
+
+		if (!(skill_id = skill_name2id(name))) {
+			ShowError("buildin_unitskilluseid: Invalid skill name %s passed to item bonus. Skipping.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		int skill_id_lookup = script_getnum(st, 3);
+
+		if (!(skill_id = skill_get_index(skill_id_lookup))) {
+			ShowError("buildin_unitskilluseid: Invalid skill ID %d passed to item bonus. Skipping.\n", skill_id_lookup);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
 	skill_lv = script_getnum(st,4);
 	target_id = ( script_hasdata(st,5) ? script_getnum(st,5) : unit_id );
 	casttime = ( script_hasdata(st,6) ? script_getnum(st,6) : 0 );
@@ -18368,7 +18425,21 @@ BUILDIN_FUNC(unitskillusepos)
 	uint16 skill_id, skill_lv;
 	struct block_list* bl;
 
-	skill_id = ( script_isstring(st, 3) ? skill_name2id(script_getstr(st,3)) : script_getnum(st,3) );
+	if (script_isstring(st, 3)) {
+		const char *name = script_getstr(st, 3);
+
+		if (!(skill_id = skill_name2id(name))) {
+			ShowError("buildin_unitskillusepos: Invalid skill name %s.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		int skill_id_lookup = script_getnum(st, 3);
+
+		if (!(skill_id = skill_get_index(skill_id_lookup))) {
+			ShowError("buildin_unitskillusepos: Invalid skill ID %d.\n", skill_id_lookup);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
 	skill_lv = script_getnum(st,4);
 	skill_x  = script_getnum(st,5);
 	skill_y  = script_getnum(st,6);
@@ -20206,7 +20277,21 @@ BUILDIN_FUNC(areamobuseskill)
 	center.y = script_getnum(st,4);
 	range = script_getnum(st,5);
 	mobid = script_getnum(st,6);
-	skill_id = ( script_isstring(st, 7) ? skill_name2id(script_getstr(st,7)) : script_getnum(st,7) );
+	if (script_isstring(st, 7)) {
+		const char *name = script_getstr(st, 7);
+
+		if (!(skill_id = skill_name2id(name))) {
+			ShowError("buildin_areamobuseskill: Invalid skill name %s.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		int skill_id_lookup = script_getnum(st, 7);
+
+		if (!(skill_id = skill_get_index(skill_id_lookup))) {
+			ShowError("buildin_areamobuseskill: Invalid skill ID %d.\n", skill_id_lookup);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
 	if( (skill_lv = script_getnum(st,8)) > battle_config.mob_max_skilllvl )
 		skill_lv = battle_config.mob_max_skilllvl;
 
@@ -20574,7 +20659,7 @@ BUILDIN_FUNC(getcharip)
 	{
 		if (script_isstring(st, 2))
 			sd = map_nick2sd(script_getstr(st, 2),false);
-		else if (script_getnum(st, 2))
+		else
 		{
 			int id = script_getnum(st, 2);
 
@@ -20934,7 +21019,21 @@ BUILDIN_FUNC(npcskill)
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 	
-	skill_id	= script_isstring(st, 2) ? skill_name2id(script_getstr(st, 2)) : script_getnum(st, 2);
+	if (script_isstring(st, 2)) {
+		const char *name = script_getstr(st, 2);
+
+		if (!(skill_id = skill_name2id(name))) {
+			ShowError("buildin_npcskill: Invalid skill name %s.\n", name);
+			return SCRIPT_CMD_FAILURE;
+		}
+	} else {
+		int skill_id_lookup = script_getnum(st, 2);
+
+		if (!(skill_id = skill_get_index(skill_id_lookup))) {
+			ShowError("buildin_npcskill: Invalid skill ID %d.\n", skill_id_lookup);
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
 	skill_level	= script_getnum(st, 3);
 	stat_point	= script_getnum(st, 4);
 	npc_level	= script_getnum(st, 5);
@@ -23087,15 +23186,18 @@ BUILDIN_FUNC(channel_kick) {
 	int res = 1;
 
 	if (script_isstring(st, 3)) {
-		if (!(tsd = map_nick2sd(script_getstr(st, 3),false))) {
-			ShowError("buildin_channel_kick: Player with nick '%s' is not online\n", script_getstr(st, 3));
+		const char *name = script_getstr(st, 3);
+
+		if (!(tsd = map_nick2sd(name,false))) {
+			ShowError("buildin_channel_kick: Player with nick '%s' is not online\n", name);
 			script_pushint(st,0);
 			return SCRIPT_CMD_FAILURE;
 		}
-	}
-	else {
-		if (!(tsd = map_charid2sd(script_getnum(st, 3)))) {
-			ShowError("buildin_channel_kick: Player with char_id '%d' is not online\n", script_getnum(st, 3));
+	} else {
+		int char_id = script_getnum(st, 3);
+
+		if (!(tsd = map_charid2sd(char_id))) {
+			ShowError("buildin_channel_kick: Player with char_id '%d' is not online\n", char_id);
 			script_pushint(st,0);
 			return SCRIPT_CMD_FAILURE;
 		}
