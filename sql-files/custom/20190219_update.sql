@@ -10,3 +10,4 @@ ALTER TABLE `guild_invite_members`  ADD `request` TINYINT(1) NOT NULL DEFAULT '0
 
 # clear broken data in multi_pc table
 TRUNCATE TABLE `multi_pc`;
+TRUNCATE TABLE `guild_invite_members`;
