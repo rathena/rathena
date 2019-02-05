@@ -3486,6 +3486,9 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if (sd->special_state.intravision && !sd->sc.data[SC_INTRAVISION]) // Clear intravision as long as nothing else is using it
 		clif_status_load(&sd->bl, EFST_CLAIRVOYANCE, 0);
 
+	if (sd->special_state.no_walk_delay)
+		clif_status_load(&sd->bl, EFST_ENDURE, 0);
+
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 
 	if (pc_isvip(sd)) // Magic Stone requirement avoidance for VIP.
@@ -3904,6 +3907,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	base_status->dex = cap_value(i,0,USHRT_MAX);
 	i = base_status->luk + sd->status.luk + sd->param_bonus[5] + sd->param_equip[5];
 	base_status->luk = cap_value(i,0,USHRT_MAX);
+
+	if (sd->special_state.no_walk_delay) {
+		if (sc->data[SC_ENDURE]) {
+			if (sc->data[SC_ENDURE]->val4)
+				sc->data[SC_ENDURE]->val4 = 0;
+			status_change_end(&sd->bl, SC_ENDURE, INVALID_TIMER);
+		}
+		clif_status_load(&sd->bl, EFST_ENDURE, 1);
+		base_status->mdef++;
+	}
 
 // ------ ATTACK CALCULATION ------
 
@@ -6663,7 +6676,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 
 	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
 		mdef += 50;
-	if(sc->data[SC_ENDURE]) // It has been confirmed that Eddga card grants 1 MDEF, not 0, not 10, but 1.
+	if(sc->data[SC_ENDURE] && !sc->data[SC_ENDURE]->val3) // It has been confirmed that Eddga card grants 1 MDEF, not 0, not 10, but 1.
 		mdef += (sc->data[SC_ENDURE]->val4 == 0) ? sc->data[SC_ENDURE]->val1 : 1;
 	if(sc->data[SC_STONEHARDSKIN])
 		mdef += sc->data[SC_STONEHARDSKIN]->val1;
@@ -7236,9 +7249,11 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 		return cap_value(dmotion,0,USHRT_MAX);
 
 	/// It has been confirmed on official servers that MvP mobs have no dmotion even without endure
-	if( sc->data[SC_ENDURE] || ( bl->type == BL_MOB && status_get_class_(bl) == CLASS_BOSS ) )
+	if( bl->type == BL_MOB && status_get_class_(bl) == CLASS_BOSS )
 		return 0;
-	if( sc->data[SC_RUN] || sc->data[SC_WUGDASH] )
+	if (bl->type == BL_PC && ((TBL_PC *)bl)->special_state.no_walk_delay)
+		return 0;
+	if( sc->data[SC_ENDURE] || sc->data[SC_RUN] || sc->data[SC_WUGDASH] )
 		return 0;
 
 	return (unsigned short)cap_value(dmotion,0,USHRT_MAX);
@@ -9350,6 +9365,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		//These status changes always overwrite themselves even when a lower level is cast
 		status_change_end(bl, type, INVALID_TIMER);
 		break;
+	case SC_ENDURE:
+		if (sd && sd->special_state.no_walk_delay)
+			return 1;
+		break;
 	}
 
 	// Check for overlapping fails
@@ -9546,7 +9565,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag && (tsd = ((TBL_MER*)bl)->master) )
 					status_change_start(src,&tsd->bl, type, 10000, val1, val2, val3, val4, tick, SCSTART_NOAVOID|SCSTART_NOICON);
 			}
-			// val4 signals infinite endure (if val4 == 2 it is infinite endure from Berserk)
 			if( val4 )
 				tick = INFINITE_TICK;
 			break;
@@ -9936,8 +9954,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_BERSERK:
 			if( val3 == SC__BLOODYLUST )
 				sc_start(src,bl,(sc_type)val3,100,val1,tick);
-			if (!val3 && !(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4))
-				sc_start4(src,bl, SC_ENDURE, 100,10,0,0,2, tick);
+			else
+				sc_start4(src,bl, SC_ENDURE, 100,10,0,0,1, tick);
 			// HP healing is performing after the calc_status call.
 			// Val2 holds HP penalty
 			if (!val4) val4 = skill_get_time2(status_sc2skill(type),val1);
@@ -11378,6 +11396,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
+	if (current_equip_combo_pos && tick == INFINITE_TICK) {
+		ShowWarning("sc_start: Item combo contains an INFINITE_TICK duration. Skipping bonus.\n");
+		return 0;
+	}
+
 	/* [Ind] */
 	if (StatusDisplayType[type]&bl->type) {
 		int dval1 = 0, dval2 = 0, dval3 = 0;
@@ -12326,7 +12349,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 
 		case SC_CONCENTRATION:
-			status_change_end(bl, SC_ENDURE, INVALID_TIMER);
+			if (sc->data[SC_ENDURE] && !sc->data[SC_ENDURE]->val4)
+				status_change_end(bl, SC_ENDURE, INVALID_TIMER);
 			break;
 		case SC_BERSERK:
 			if(status->hp > 200 && sc && sc->data[SC__BLOODYLUST]) {
@@ -12334,7 +12358,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				status_change_end(bl, SC__BLOODYLUST, INVALID_TIMER);
 			} else if (status->hp > 100 && sce->val2) // If val2 is removed, no HP penalty (dispelled?) [Skotlex]
 				status_set_hp(bl, 100, 0);
-			if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4 == 2) {
+			if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4) {
 				sc->data[SC_ENDURE]->val4 = 0;
 				status_change_end(bl, SC_ENDURE, INVALID_TIMER);
 			}

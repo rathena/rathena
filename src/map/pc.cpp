@@ -2471,7 +2471,6 @@ TIMER_FUNC(pc_endautobonus){
 static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
 	struct weapon_data *wd = (sd->state.lr_flag ? &sd->left_weapon : &sd->right_weapon);
-	struct s_addele2 entry;
 
 	if (wd->addele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addele: Reached max (%d) number of add element damage bonuses per character!\n", MAX_PC_BONUS);
@@ -2496,6 +2495,8 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 			return;
 		}
 	}
+
+	struct s_addele2 entry = {};
 
 	entry.ele = ele;
 	entry.rate = rate;
@@ -3193,6 +3194,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_NO_MADO_FUEL:
 			if (sd->state.lr_flag != 2)
 				sd->special_state.no_mado_fuel = 1;
+			break;
+		case SP_NO_WALK_DELAY:
+			if (sd->state.lr_flag != 2)
+				sd->special_state.no_walk_delay = 1;
 			break;
 		default:
 			if (running_npc_stat_calc_event) {
@@ -8137,6 +8142,8 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_NO_GEMSTONE:     val = sd->special_state.no_gemstone?1:0; break;
 		case SP_INTRAVISION:     val = sd->special_state.intravision?1:0; break;
 		case SP_NO_KNOCKBACK:    val = sd->special_state.no_knockback?1:0; break;
+		case SP_NO_MADO_FUEL:    val = sd->special_state.no_mado_fuel?1:0; break;
+		case SP_NO_WALK_DELAY:   val = sd->special_state.no_walk_delay?1:0; break;
 		case SP_SPLASH_RANGE:    val = sd->bonus.splash_range; break;
 		case SP_SPLASH_ADD_RANGE:val = sd->bonus.splash_add_range; break;
 		case SP_SHORT_WEAPON_DAMAGE_RETURN: val = sd->bonus.short_weapon_damage_return; break;
