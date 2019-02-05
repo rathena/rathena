@@ -46,8 +46,8 @@
 /// Pushes a copy of the data in the target index
 #define script_pushcopy(st,i) push_copy((st)->stack, (st)->start + (i))
 
-#define script_isstring(st,i) data_isstring(script_getdata(st,i))
-#define script_isint(st,i) data_isint(script_getdata(st,i))
+#define script_isstring(st,i) data_isstring(get_val(st, script_getdata(st,i)))
+#define script_isint(st,i) data_isint(get_val(st, script_getdata(st,i)))
 
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))

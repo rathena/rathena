@@ -2318,13 +2318,13 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
  * @param script: Script to execute
  * @param rate: Success chance
  * @param dur: Duration
- * @param flag: Battle flag
+ * @param flag: Battle flag/skill
  * @param other_script: Secondary script to execute
  * @param pos: Item equip position
  * @param onskill: Skill used to trigger autobonus
  * @return True on success or false otherwise
  */
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short flag, const char *other_script, unsigned int pos, bool onskill)
+bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill)
 {
 	if (bonus.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", MAX_PC_BONUS);

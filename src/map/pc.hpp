@@ -195,7 +195,8 @@ struct s_add_drop {
 
 /// AutoBonus bonus struct
 struct s_autobonus {
-	short rate,atk_type;
+	short rate;
+	uint16 atk_type;
 	unsigned int duration;
 	char *bonus_script, *other_script;
 	int active;
@@ -1070,7 +1071,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 void pc_updateweightstatus(struct map_session_data *sd);
 
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short atk_type, const char *o_script, unsigned int pos, bool onskill);
+bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 atk_type, const char *o_script, unsigned int pos, bool onskill);
 void pc_exeautobonus(struct map_session_data* sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus);
 TIMER_FUNC(pc_endautobonus);
 void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore);
