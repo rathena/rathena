@@ -625,7 +625,7 @@ dali,100,147,3	script	Dimensional Device#gefma	PORTAL,{
 			getpartymember(getcharid(1),0);
 			set .@GPPartySize,$@partymembercount;
 			
-			if( !getcharid(1) || getcharid(3) != getpartyleader( getcharid(1),1 ) || .@GPPartySize > 1) {
+			if( !getcharid(1) || is_party_leader() == false || .@GPPartySize > 1) {
 				mes .@n$;
 				mes "This is a solo instance. Please form a solo party before continuing.";
 				end;
@@ -737,7 +737,7 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 		getpartymember(getcharid(1),0);
 		set .@GPPartySize,$@partymembercount;
 		
-		if( !getcharid(1) || getcharid(3) != getpartyleader( getcharid(1),1 ) || .@GPPartySize > 1) {
+		if( !getcharid(1) || is_party_leader() == false || .@GPPartySize > 1) {
 			mes .@n$;
 			mes "This is a solo instance. Please form a solo party before continuing.";
 			end;
@@ -757,7 +757,7 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 				end;
 			}
 			
-		if (getcharid(0) == getpartyleader(.@party_id,2)){
+		if (is_party_leader() == true){
 			mes .@n$; 
 			mes "Did you know? A long time ago there was a Magic Tournament in Geffen.";
 			next;

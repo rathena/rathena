@@ -66,7 +66,7 @@ int inter_recv_packet_length[] = {
 
 struct WisData {
 	int id, fd, count, len, gmlvl;
-	unsigned long tick;
+	t_tick tick;
 	char src[NAME_LENGTH], dst[NAME_LENGTH], msg[512];
 };
 static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
@@ -803,17 +803,17 @@ int inter_config_read(const char* cfgName)
 			continue;
 
 		if(!strcmpi(w1,"char_server_ip"))
-			strcpy(char_server_ip,w2);
+			safestrncpy(char_server_ip,w2,sizeof(char_server_ip));
 		else if(!strcmpi(w1,"char_server_port"))
 			char_server_port = atoi(w2);
 		else if(!strcmpi(w1,"char_server_id"))
-			strcpy(char_server_id,w2);
+			safestrncpy(char_server_id,w2,sizeof(char_server_id));
 		else if(!strcmpi(w1,"char_server_pw"))
-			strcpy(char_server_pw,w2);
+			safestrncpy(char_server_pw,w2,sizeof(char_server_pw));
 		else if(!strcmpi(w1,"char_server_db"))
-			strcpy(char_server_db,w2);
+			safestrncpy(char_server_db,w2,sizeof(char_server_db));
 		else if(!strcmpi(w1,"default_codepage"))
-			strcpy(default_codepage,w2);
+			safestrncpy(default_codepage,w2,sizeof(default_codepage));
 		else if(!strcmpi(w1,"party_share_level"))
 			party_share_level = (unsigned int)atof(w2);
 		else if(!strcmpi(w1,"log_inter"))
@@ -1100,9 +1100,9 @@ int mapif_disconnectplayer(int fd, uint32 account_id, uint32 char_id, int reason
  */
 int check_ttl_wisdata_sub(DBKey key, DBData *data, va_list ap)
 {
-	unsigned long tick;
+	t_tick tick;
 	struct WisData *wd = (struct WisData *)db_data2ptr(data);
-	tick = va_arg(ap, unsigned long);
+	tick = va_arg(ap, t_tick);
 
 	if (DIFF_TICK(tick, wd->tick) > WISDATA_TTL && wis_delnum < WISDELLIST_MAX)
 		wis_dellist[wis_delnum++] = wd->id;
@@ -1112,7 +1112,7 @@ int check_ttl_wisdata_sub(DBKey key, DBData *data, va_list ap)
 
 int check_ttl_wisdata(void)
 {
-	unsigned long tick = gettick();
+	t_tick tick = gettick();
 	int i;
 
 	do {

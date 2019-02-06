@@ -5,11 +5,12 @@
 #define ELEMENTAL_HPP
 
 #include "../common/mmo.hpp"
+#include "../common/timer.hpp"
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
 
-#define MIN_ELETHINKTIME 100
+const t_tick MIN_ELETHINKTIME = 100;
 #define MIN_ELEDISTANCE 2
 #define MAX_ELEDISTANCE 5
 
@@ -73,7 +74,7 @@ struct elemental_data {
 	int summon_timer;
 	int skill_timer;
 
-	unsigned last_thinktime, last_linktime, last_spdrain_time;
+	t_tick last_thinktime, last_linktime, last_spdrain_time;
 	short min_chase;
 	int target_id, attacked_id;
 };
@@ -94,14 +95,14 @@ int elemental_dead(struct elemental_data *ed);
 int elemental_delete(struct elemental_data *ed);
 void elemental_summon_stop(struct elemental_data *ed);
 
-int elemental_get_lifetime(struct elemental_data *ed);
+t_tick elemental_get_lifetime(struct elemental_data *ed);
 
 int elemental_unlocktarget(struct elemental_data *ed);
 bool elemental_skillnotok(uint16 skill_id, struct elemental_data *ed);
 int elemental_set_target( struct map_session_data *sd, struct block_list *bl );
 int elemental_clean_single_effect(struct elemental_data *ed, uint16 skill_id);
 int elemental_clean_effect(struct elemental_data *ed);
-int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned int tick);
+int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick tick);
 struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv);
 
 #define elemental_stop_walking(ed, type) unit_stop_walking(&(ed)->bl, type)

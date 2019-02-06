@@ -129,9 +129,9 @@
 37,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		MC_DISCOUNT,Discount
 38,0,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		MC_OVERCHARGE,Overcharge
 39,1,0,0,0,0,0,10,0,no,0,0,0,none,0,0x0,		MC_PUSHCART,Pushcart
-40,1,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,		MC_IDENTIFY,Item Appraisal
-41,1,6,4,0,0x1,0,10,1,no,0,0,0,none,0,0x0,		MC_VENDING,Vending
-42,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x0,		MC_MAMMONITE,Mammonite
+40,1,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x4000,		MC_IDENTIFY,Item Appraisal
+41,1,6,4,0,0x1,0,10,1,no,0,0,0,none,0,0x4000,		MC_VENDING,Vending
+42,-1,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0x4000,		MC_MAMMONITE,Mammonite
 
 //****
 // Archer
@@ -215,13 +215,13 @@
 105,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0,0x0,		BS_HILTBINDING,Hilt Binding
 106,0,0,0,0,0,0,1,0,no,0,0,0,weapon,0,0x0,		BS_FINDINGORE,Ore Discovery
 107,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		BS_WEAPONRESEARCH,Weaponry Research
-108,2,6,16,0,0x1,0,1,1,yes,0,0,0,weapon,0,0x0,	BS_REPAIRWEAPON,Weapon Repair
+108,2,6,16,0,0x1,0,1,1,yes,0,0,0,weapon,0,0x4000,	BS_REPAIRWEAPON,Weapon Repair
 109,0,0,0,0,0,0,5,0,no,0,0,0,weapon,0,0x0,		BS_SKINTEMPER,Skin Tempering
-110,1,6,2,0,0x3,2:2:2:2:2:12,5,1,no,0,0,0,weapon,0,0x0,	BS_HAMMERFALL,Hammer Fall
-111,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x0,	BS_ADRENALINE,Adrenaline Rush
-112,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x0,	BS_WEAPONPERFECT,Weapon Perfection
-113,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x0,	BS_OVERTHRUST,Power-Thrust
-114,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		BS_MAXIMIZE,Maximize Power
+110,1,6,2,0,0x3,2:2:2:2:2:12,5,1,no,0,0,0,weapon,0,0x4000,	BS_HAMMERFALL,Hammer Fall
+111,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x4000,	BS_ADRENALINE,Adrenaline Rush
+112,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x4000,	BS_WEAPONPERFECT,Weapon Perfection
+113,0,6,4,0,0x3,-1,5,1,no,0,0,0,weapon,0,0x4000,	BS_OVERTHRUST,Power-Thrust
+114,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x4000,		BS_MAXIMIZE,Maximize Power
 
 //****
 // Hunter
@@ -269,9 +269,9 @@
 150,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,5,0x40,	TF_BACKSLIDING,Back Slide
 151,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,0x0,		TF_PICKSTONE,Find Stone
 152,7,6,1,0,0x40,0,1,1,no,0,0x1,0,misc,0,0x0,	TF_THROWSTONE,Stone Fling
-153,1,6,1,-1,0x2,1,1,1,no,0,0x40001,0,weapon,2,0x0,	MC_CARTREVOLUTION,Cart Revolution
-154,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,0x0,		MC_CHANGECART,Change Cart
-155,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,0,0x0,	MC_LOUD,Crazy Uproar
+153,1,6,1,-1,0x2,1,1,1,no,0,0x40001,0,weapon,2,0x4000,	MC_CARTREVOLUTION,Cart Revolution
+154,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,0x4000,		MC_CHANGECART,Change Cart
+155,0,6,4,0,0x1,0,1,1,no,0,0x1,0,weapon,0,0x4000,	MC_LOUD,Crazy Uproar
 156,9,6,1,6,0,0,1,1,yes,0,0x1,0,magic,0,0x0,		AL_HOLYLIGHT,Holy Light
 157,0,6,4,0,0x1,0,1,1,yes,0,0x1,0,magic,0,0x0,	MG_ENERGYCOAT,Energy Coat
 
@@ -563,10 +563,10 @@
 
 //****
 // Whitesmith
-384,0,0,4,0,0x1,0,10,1,yes,0,0,0,weapon,0,0x0,	WS_MELTDOWN,Shattering Strike
+384,0,0,4,0,0x1,0,10,1,yes,0,0,0,weapon,0,0x4000,	WS_MELTDOWN,Shattering Strike
 385,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,	WS_CREATECOIN,Create Coins
 386,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,	WS_CREATENUGGET,Create Nuggets
-387,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x0,		WS_CARTBOOST,Cart Boost
+387,0,6,4,0,0x1,0,1,1,no,0,0,0,weapon,0,0x4000,		WS_CARTBOOST,Cart Boost
 388,9,6,2,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		WS_SYSTEMCREATE,Auto Attack System
 
 //****
@@ -680,7 +680,7 @@
 
 //****
 // Blacksmith
-459,0,6,4,0,0x3,-1,1,1,no,0,0x8,0,weapon,0,0x0,		BS_ADRENALINE2,Advanced Adrenaline Rush
+459,0,6,4,0,0x3,-1,1,1,no,0,0x8,0,weapon,0,0x4000,		BS_ADRENALINE2,Advanced Adrenaline Rush
 
 //****
 // Soul Linker
@@ -704,7 +704,7 @@
 474,0,0,4,0,0x1,0,10,1,no,0,0x2,0,none,0,0x0,	NPC_EMOTION_ON,Emotion ON
 475,0,0,4,0,0x1,0,1,1,yes,0,0,0,none,0,0x0,		ST_PRESERVE,Preserve
 476,1,6,1,0,0x1,0,5,1,yes,0,0,0,weapon,0,0x0,	ST_FULLSTRIP,Divest All
-477,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,	WS_WEAPONREFINE,Upgrade Weapon
+477,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x4000,	WS_WEAPONREFINE,Upgrade Weapon
 478,3,6,2,0,0x3,3,10,1,no,0,0,0,none,0,0x0,		CR_SLIMPITCHER,Aid Condensed Potion
 479,1,6,16,0,0x1,0,5,1,yes,0,0,0,weapon,0,0x0,	CR_FULLPROTECTION,Full Protection
 480,4,8,1,-1,0,0,5,5,no,0,0,0,weapon,0,0x20000,		PA_SHIELDCHAIN,Shield Chain
@@ -712,8 +712,8 @@
 482,0,6,4,0,0x1,0,5,1,no,0,0,0,magic,0,0x0,		PF_DOUBLECASTING,Double Casting
 483,18,6,2,0,0x1,1:2:3:4:5,1,1,no,0,0,0,none,0,0x0,	HW_GANBANTEIN,Ganbantein
 484,18,6,2,2,0xD1,0,5,1,yes,0,0x18000,0,misc,0,0x11010,		HW_GRAVITATION,Gravitation Field
-485,-2,6,1,-1,0x0,0,10,1,no,0,0,0,weapon,0,0x0,	WS_CARTTERMINATION,Cart Termination
-486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x0,		WS_OVERTHRUSTMAX,Maximum Power Thrust
+485,-2,6,1,-1,0x0,0,10,1,no,0,0,0,weapon,0,0x4000,	WS_CARTTERMINATION,Cart Termination
+486,0,6,4,0,0x1,0,5,1,no,0,0,0,weapon,0,0x4000,		WS_OVERTHRUSTMAX,Maximum Power Thrust
 487,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x8,		CG_LONGINGFREEDOM,Longing for Freedom
 488,0,6,4,0,0x1,1,5,1,no,0,0x20,0,misc,0,0x1,	CG_HERMODE,Wand of Hermode
 489,9,6,1,0,0x41,0,5,1,no,0,0,0,misc,0,0x0,		CG_TAROTCARD,Tarot Card of Fate
@@ -1271,7 +1271,7 @@
 //2541,0,6,4,0,0x1,0,5,1,no,0,0x2,0,none,0,0x0,		NPC_UGLYDANCE,Ugly Dance 2
 //2542,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,	ALL_TETANY,Tetany
 //2543,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	ALL_RAY_OF_PROTECTION,Ray of Protection
-2544,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,0x0,		MC_CARTDECORATE,Decorate Cart
+2544,0,6,4,0,0x1,0,1,1,no,0,0x1,0,none,0,0x4000,		MC_CARTDECORATE,Decorate Cart
 //2545,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	GM_ITEM_ATKMAX,Maximize Attack
 //2546,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	GM_ITEM_ATKMIN,Minimize Attack
 //2547,0,6,4,0,0x1,0,1,1,no,0,0,0,none,0,0x0,	GM_ITEM_MATKMAX,Maximize Magic Attack
@@ -1299,7 +1299,7 @@
 2568,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_HEAT_BARREL,Heat Barrel
 2569,-9,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_AM_BLAST,Anti-Material Blast
 2570,-9,6,1,0,0,0,5,1,no,0,0,0,weapon,6,0x0,	RL_SLUGSHOT,Slug Shot
-2571,-9,6,1,0,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_HAMMER_OF_GOD,Hammer of God
+2571,7:8:9:10:11,6,1,0,0x2,2,5,1,no,0,0,0,weapon,0,0x0,	RL_HAMMER_OF_GOD,Hammer of God
 2572,0,6,1,-1,0x40,0,5,1,no,0,0,0,weapon,0,0,	RL_R_TRIP_PLUSATK,Round Trip Plus Attack
 //2573,0,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0,	RL_B_FLICKER_ATK,Bind Flicker Attack
 //2574,0,6,1,-1,0,0,10,1,no,0,0,0,weapon,0,0,	RL_GLITTERING_GREED_ATK,Flip The Coin Greed Attack
@@ -1434,11 +1434,8 @@
 5039,9,6,16,0,0x1,0,5,1,yes,0,0,0,none,0,0x0,		SU_TUNAPARTY,Tuna Party
 5040,0,6,4,0,0x3,-1,5,1,yes,0,0,0,none,0,0x0,		SU_BUNCHOFSHRIMP,Bunch of Shrimp
 5041,9,6,16,0,0x3,0,5,1,yes,0,0,0,none,0,0x0,		SU_FRESHSHRIMP,Fresh Shrimp
-
-// Unknown Unconfirmed Summoner Skills - Animations Show On These
-//5042,0,0,0,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SU_CN_METEOR_SEC,
-//5043,0,0,0,0,0,0,5,0,yes,0,0,0,none,0,0x0,		SU_LUNATICCARROTBEAT_SEC,
-
+5042,9,8,2,0,0,1:1:2:2:3,5,-5,yes,0,0,0,magic,0,0x0,		SU_CN_METEOR2,Catnip Meteor 2
+5043,9,8,1,-1,0x2,1:1:2:2:3,5,-3,yes,0,0,0,weapon,0,0x0,	SU_LUNATICCARROTBEAT2,Lunatic Carrot Beat 2
 5044,14,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SU_SOULATTACK,Soul Attack
 5045,0,6,4,0,0x3,3:4:5:6:-1,5,0,yes,0,0,0,magic,0,0x0,	SU_POWEROFFLOCK,Power of Flock
 5046,9,8,1,-1,0,1,5,1,yes,0,0,14,weapon,0,0x0,	SU_SVG_SPIRIT,Spirit of Savage
@@ -1457,6 +1454,8 @@
 5063,1,6,4,0,0x1,0,1,1,yes,0,0x4,0,none,0,0,	WE_CALLALLFAMILY,Call All Family
 5064,3,6,16,0,0x1,0,1,1,yes,0,0x4,0,none,0,0,	WE_ONEFOREVER,One Forever
 5065,1,6,4,0,0x3,3,1,1,yes,0,0x4,0,none,0,0,	WE_CHEERUP,Cheer Up
+
+5067,0,0,4,0,0x1,0,1,0,no,0,0,0,none,0,0x0,		ALL_EQSWITCH,Equip Switch
 
 // New Arch Bishop Skills
 5072,9,6,1,0,0x3,1:1:1:2:2,5,0,yes,0,0,0,magic,0,0x0,		AB_VITUPERATUM,Vituperatum
