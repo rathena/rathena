@@ -311,7 +311,7 @@ OnInit:
 //	Config Ends --------------------------------------------------------------
 
 	mapannounce .eventmap$, "An administrator has refreshed the server. Please re-register. We apologize for the inconvenience.", bc_map;
-	getmapxy .map$, .x, .y, UNITTYPE_NPC;
+	getmapxy .map$, .x, .y, BL_NPC;
 	mapwarp .eventmap$, .map$, .x, .y;
 	killmonsterall .eventmap$;
 	.@size = getarraysize( .@mapflag );

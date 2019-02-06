@@ -15886,16 +15886,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd){
 
 	mail_send(sd, RFIFOCP(fd,info->pos[1]), RFIFOCP(fd,info->pos[2]), RFIFOCP(fd,info->pos[4]), RFIFOB(fd,info->pos[3]));
 #else
-	unsigned short length;
-	static char receiver[NAME_LENGTH];
-	static char sender[NAME_LENGTH];
-	char *title;
-	char *text;
-	uint64 zeny;
-	uint16 titleLength;
-	uint16 textLength;
-
-	length = RFIFOW(fd, 2);
+	uint16 length = RFIFOW(fd, 2);
 
 	if( length < 0x3e ){
 		ShowWarning("Too short...\n");
@@ -15908,22 +15899,30 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd){
 		return; // Ignore it
 	}
 
-	safestrncpy(receiver, RFIFOCP(fd, 4), NAME_LENGTH);
-	safestrncpy(sender, RFIFOCP(fd, 28), NAME_LENGTH);
-	zeny = RFIFOQ(fd, 52);
-	titleLength = RFIFOW(fd, 60);
-	textLength = RFIFOW(fd, 62);
+	char receiver[NAME_LENGTH];
 
-	title = (char*)aMalloc(titleLength);
-	text = (char*)aMalloc(textLength);
+	safestrncpy(receiver, RFIFOCP(fd, 4), NAME_LENGTH);
+
+//	char sender[NAME_LENGTH];
+
+//	safestrncpy(sender, RFIFOCP(fd, 28), NAME_LENGTH);
+
+	uint64 zeny = RFIFOQ(fd, 52);
+	uint16 titleLength = RFIFOW(fd, 60);
+	uint16 textLength = RFIFOW(fd, 62);
+	uint16 realTitleLength = min(titleLength, MAIL_TITLE_LENGTH);
+	uint16 realTextLength = min(textLength, MAIL_BODY_LENGTH);
+
+	char title[MAIL_TITLE_LENGTH];
+	char text[MAIL_BODY_LENGTH];
 
 #if PACKETVER <= 20160330
-	safestrncpy(title, RFIFOCP(fd, 64), titleLength);
-	safestrncpy(text, RFIFOCP(fd, 64 + titleLength), textLength);
+	safestrncpy(title, RFIFOCP(fd, 64), realTitleLength);
+	safestrncpy(text, RFIFOCP(fd, 64 + titleLength), realTextLength);
 #else
 	// 64 = <char id>.L
-	safestrncpy(title, RFIFOCP(fd, 68), titleLength);
-	safestrncpy(text, RFIFOCP(fd, 68 + titleLength), textLength);
+	safestrncpy(title, RFIFOCP(fd, 68), realTitleLength);
+	safestrncpy(text, RFIFOCP(fd, 68 + titleLength), realTextLength);
 #endif
 
 	if( zeny > 0 ){
@@ -15933,10 +15932,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd){
 		}
 	}
 
-	mail_send(sd, receiver, title, text, textLength);
-
-	aFree(title);
-	aFree(text);
+	mail_send(sd, receiver, title, text, realTextLength);
 #endif
 }
 
@@ -19734,6 +19730,11 @@ void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
 
 	for (i = 0, j = 0; i < n; i++) {
 		unsigned short idx = RFIFOW(fd, info->pos[1] + i*2) - 2;
+
+		if( idx < 0 || idx >= MAX_INVENTORY ){
+			return;
+		}
+
 		if (!clif_merge_item_check((id = sd->inventory_data[idx]), &sd->inventory.u.items_inventory[idx]))
 			continue;
 		indexes[j] = idx;

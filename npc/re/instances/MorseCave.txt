@@ -885,7 +885,7 @@ OnMobDead:
 OnStart:
 	.@npc_name$ = instance_npcname( strnpcinfo(0) );
 	enablenpc .@npc_name$;
-	getmapxy .@map$,.@x,.@y, UNITTYPE_NPC;
+	getmapxy .@map$,.@x,.@y, BL_NPC;
 	monster 'map_rev$,.@x,.@y,('soul_name$ + "'s Soul"),3007,1, .@npc_name$ + "::OnStop";	// EP14_MORS_DUMMY
 	initnpctimer;
 	specialeffect EF_STORMGUST;
