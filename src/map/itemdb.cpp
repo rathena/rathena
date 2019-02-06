@@ -914,7 +914,7 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 */
 static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	unsigned short nameid = atoi(fields[0]);
-	uint8 flag;
+	uint16 flag;
 	bool set;
 	struct item_data *id;
 
@@ -932,6 +932,20 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	if (flag&8) id->flag.bindOnEquip = true;
 	if (flag&16) id->flag.broadcast = 1;
 	if (flag&32) id->flag.delay_consume = 2;
+
+	if( flag & 64 ){
+		id->flag.dropEffect = 1;
+	}else if( flag & 128 ){
+		id->flag.dropEffect = 2;
+	}else if( flag & 256 ){
+		id->flag.dropEffect = 3;
+	}else if( flag & 512 ){
+		id->flag.dropEffect = 4;
+	}else if( flag & 1024 ){
+		id->flag.dropEffect = 5;
+	}else if( flag & 2048 ){
+		id->flag.dropEffect = 6;
+	}
 
 	return true;
 }
@@ -1960,21 +1974,21 @@ void itemdb_reload(void) {
 	iter = mapit_geteachpc();
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
-		pc_setinventorydata(sd);
-		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
-		/* clear combo bonuses */
-		if( sd->combos.count ) {
+
+		if( sd->combos.count ) { // clear combo bonuses
 			aFree(sd->combos.bonus);
 			aFree(sd->combos.id);
 			aFree(sd->combos.pos);
-			sd->combos.bonus = NULL;
-			sd->combos.id = NULL;
-			sd->combos.pos = NULL;
+			sd->combos.bonus = nullptr;
+			sd->combos.id = nullptr;
+			sd->combos.pos = nullptr;
 			sd->combos.count = 0;
-			if( pc_load_combo(sd) > 0 )
-				status_calc_pc(sd, SCO_FORCE);
 		}
 
+		pc_setinventorydata(sd);
+		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
+		pc_load_combo(sd); // Check to see if new combos are available
+		status_calc_pc(sd, SCO_FORCE); // 
 	}
 	mapit_free(iter);
 }

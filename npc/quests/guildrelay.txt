@@ -69,7 +69,7 @@
 		close;
 	}
 	if (getcharid(2) == .@GID) {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			if (guildrelay_q == 100) {
 				if (guildtime > 22) {
 					if ((gettime(DT_HOUR) > 1) && (gettime(DT_HOUR) < guildtime)) {
@@ -1222,7 +1222,7 @@
 
 -	script	RelayDummy2::GuildRelay2	754,{
 	set .@name$,strnpcinfo(1);
-	getmapxy(.@m$,.@x,.@x,UNITTYPE_NPC);
+	getmapxy(.@m$,.@x,.@x,BL_NPC);
 	set .@GID, GetCastleData(.@m$,1);
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! You're";
@@ -1247,7 +1247,7 @@
 		close;
 	}
 	if (getcharid(2) == .@GID) {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			if (countitem(7234) > 0) {
 				mes "[" + .@name$ + "]";
 				mes "Hm. You can't just keep";
@@ -1710,7 +1710,7 @@
 		}
 	}
 	else {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader(.@GID) == true) {
 			mes "[" + .@name$ + "]";
 			mes "Hm? What brings you";
 			mes "here? Feel free to take";
@@ -1731,7 +1731,7 @@
 
 -	script	RelayDummy3::GuildRelay3	754,{
 	set .@name$,strnpcinfo(1);
-	getmapxy(.@m$,.@x,.@x,UNITTYPE_NPC);
+	getmapxy(.@m$,.@x,.@x,BL_NPC);
 	set .@GID, GetCastleData(.@m$,1);
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! You're";
@@ -1751,7 +1751,7 @@
 		close;
 	}
 	if (getcharid(2) == .@GID) {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			if (countitem(7240) > 0) {
 				mes "[" + .@name$ + "]";
 				mes "Hm? What are you doing?";
@@ -2266,7 +2266,7 @@
 		}
 	}
 	else {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader(.@GID) == true) {
 			mes "[" + .@name$ + "]";
 			mes "Hm. You're the master";
 			mes "of another guild, aren't";
@@ -2416,7 +2416,7 @@
 
 -	script	GuildDummy4::GuildRelay4	754,{
 	set .@name$,strnpcinfo(1);
-	getmapxy(.@m$,.@x,.@x,UNITTYPE_NPC);
+	getmapxy(.@m$,.@x,.@x,BL_NPC);
 	set .@GID, GetCastleData(.@m$,1);
 	if (checkweight(1201,1) == 0) {
 		mes "^3355FFWait a minute! You're";
@@ -2436,7 +2436,7 @@
 		close;
 	}
 	if (getcharid(2) == .@GID) {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			if (countitem(7246) > 0) {
 				mes "[" + .@name$ + "]";
 				mes "Hm? That spirit that";
@@ -2512,7 +2512,6 @@
 			}
 			getpartymember(getcharid(1));
 			set .@partymembercount,$@partymembercount;
-			set .@partyleader,getpartyleader(getcharid(1),2);
 			if (guildrelay_q == 91) {
 				if (.@partymembercount == 6) {
 					mes "[" + .@name$ + "]";
@@ -3059,7 +3058,7 @@
 		}
 	}
 	else {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader(.@GID) == true) {
 			mes "[" + .@name$ + "]";
 			mes "You might be the master";
 			mes "of a guild, but you and I";

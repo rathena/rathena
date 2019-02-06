@@ -108,7 +108,7 @@ nyd_dun02,100,201,3	script	Yggdrasil Gatekeeper	111,8,8,{
 				mes "And only 1 representative of you needs to talk to me, so don't annoy me...";
 				close;
 			}
-			if (getcharid(0) == getpartyleader(.@party_id,2)) {
+			if (is_party_leader(.@party_id) == true) {
 				mes "[Yggdrasil Gatekeeper]";
 				mes "The loyal servants of the Guardian... what can I do for you?";
 				next;
@@ -1034,7 +1034,10 @@ spl_in01,104,56,3	script	Aide Arioss#edq	437,3,3,{
 			next;
 			mes "[Aide Arioss]";
 			mes "It can't compare with the effort you have put in for us... but please accept our token of friendship.";
-			getexp 1500000,350000;
+			if (checkre(3))
+				getexp 1500000,350000;
+			else
+				getexp 150000,35000;
 			getitem 6081,10; //Splendide_Coin
 			set ins_nyd,131;
 			mes "[Aide Arioss]";
@@ -1270,7 +1273,10 @@ man_in01,311,57,3	script	Neat Etorr#edq	453,3,3,{
 			next;
 			mes "[Neat Etorr]";
 			mes "It's not a lot, but please this as a token of our appreciation.";
-			getexp 1500000,350000;
+			if (checkre(3))
+				getexp 1500000,350000;
+			else
+				getexp 150000,35000;
 			getitem 6080,10; //Manuk_Coin
 			set ins_nyd,132;
 			close;
@@ -1591,7 +1597,7 @@ OnTouch_:
 		mes "I thank you deeply for your decision. I will use what is left of my powers to open up the path towards the Guardian's Nest.";
 		next;
 		mes "[World Tree Yggdrasil]";
-		if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+		if (is_party_leader() == true) {
 			mes "The path to the Guardian's Nest is just past the waterfall by the large World Tree Yggdrasil to the North. The defensive mechanisms of the Sanctuary will start immediately.";
 			next;
 			mes "[World Tree Yggdrasil]";
@@ -1844,7 +1850,7 @@ OnTouch:
 
 2@nyd,199,268,0	script	nyd_2f_boss_enter	-1,8,8,{
 OnTouch_:
-	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		donpcevent instance_npcname("nyd_2f_boss_enter_call")+"::OnEnable";
 		disablenpc instance_npcname("nyd_2f_boss_enter");
 		end;

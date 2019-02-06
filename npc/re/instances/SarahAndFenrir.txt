@@ -28,7 +28,7 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 			mes "That is why..I need you..";
 			next;
 			mes "[Professor Bernhard]";
-			if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+			if (is_party_leader() == false) {
 				mes "A longing for accomplishing a powerful weapon as a genuine professor!";
 				mes "In order to accomplish that, we need shards of Gigantes that once appeared in the past battle of Fenrir and Sarah.";
 				next;
@@ -124,7 +124,7 @@ dali02,97,142,3	script	Professor Bernhard#a1	4_LGTSCIENCE,{
 		mes "There, all the preparations are finished.";
 		mes "Can you go back in time again and bring me the shards of Gigantes?";
 		mes "I will make sure to compensate you sufficiently.";
-		if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+		if (is_party_leader() == true) {
 			next;
 			if (select( "No", "Yes" ) == 1) {
 				mes "[Professor Bernhard]";
@@ -664,7 +664,7 @@ OnTimer15500:
 1@glast,199,237,0	script	#glast_move_03	WARPNPC,2,2,{
 	end;
 OnTouch:
-	if (getcharid(0) == getpartyleader(getcharid(1),2))
+	if (is_party_leader() == true)
 		warpparty 'map_glast$,197,263, getcharid(1), 'map_glast$,1,1;
 	end;
 }
@@ -673,7 +673,7 @@ OnTouch:
 1@glast,199,294,0	script	#glast_move_03a	WARPNPC,3,3,{
 	end;
 OnTouch:
-	if (getcharid(0) == getpartyleader(getcharid(1),2))
+	if (is_party_leader() == true)
 		warpparty 'map_glast$,188,334, getcharid(1), 'map_glast$,1,1;
 	end;
 }
@@ -690,7 +690,7 @@ OnTouch:
 1@glast,351,269,0	script	#glast_move_04	WARPNPC,3,3,{
 	end;
 OnTouch:
-	if (getcharid(0) == getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == true) {
 		donpcevent instance_npcname("#sarah_wrath") + "::OnStop";
 		warpparty 'map_glast$,349,282, getcharid(1), 'map_glast$,1,1;
 	}
@@ -750,7 +750,7 @@ OnTouch:
 1@glast,47,270,0	script	#glast_event_7	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
-	if (getcharid(0) != getpartyleader(getcharid(1),2))
+	if (is_party_leader() == false)
 		npctalk "Fenrith Fenrir: I would like your party leader to come and help me!", 'fenrir_3$;
 	else {
 		mes "";
@@ -2021,7 +2021,7 @@ OnMobDead:
 1@glast,277,130,8	script	Stone Gargoyle#glast_01	4_GARGOYLE_STATUE,2,2,{
 	end;
 OnTouch:
-	getmapxy .@map$,.@x,.@y, UNITTYPE_NPC;
+	getmapxy .@map$,.@x,.@y, BL_NPC;
 	monster .@map$,.@x,.@y, "Mutant Gargoyle",3197,1, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";	// MM_M_GARGOYLE
 	disablenpc instance_npcname( strnpcinfo(0) );
 	end;

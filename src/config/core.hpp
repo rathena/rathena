@@ -68,6 +68,12 @@
 /// Comment to disable warnings for deprecated script constants
 #define SCRIPT_CONSTANT_DEPRECATION
 
+// Uncomment to enable deprecated support for Windows XP and lower
+// Note:
+// Windows XP still has 32bit ticks. This means you need to restart your operating system before time
+// overflows, which is approximately every ~49 days.
+//#define DEPRECATED_WINDOWS_SUPPORT
+
 /**
  * No settings past this point
  **/

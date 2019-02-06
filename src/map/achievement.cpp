@@ -28,11 +28,6 @@
 #include "script.hpp"
 #include "status.hpp"
 
-static jmp_buf     av_error_jump;
-static char*       av_error_msg;
-static const char* av_error_pos;
-static int         av_error_report;
-
 std::unordered_map<int, std::shared_ptr<s_achievement_db>> achievements;
 std::vector<int> achievement_mobs; // Avoids checking achievements on every mob killed
 
@@ -502,6 +497,40 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	return info;
 }
 
+static bool achievement_check_condition( struct script_code* condition, struct map_session_data* sd, const int* count ){
+	// Save the old script the player was attached to
+	struct script_state* previous_st = sd->st;
+
+	// Only if there was an old script
+	if( previous_st != nullptr ){
+		// Detach the player from the current script
+		script_detach_rid(previous_st);
+	}
+
+	run_script( condition, 0, sd->bl.id, fake_nd->bl.id );
+
+	struct script_state* st = sd->st;
+
+	int value = 0;
+
+	if( st != nullptr ){
+		value = script_getnum( st, 2 );
+
+		script_free_state(st);
+	}
+
+	// If an old script is present
+	if( previous_st != nullptr ){
+		// Because of detach the RID will be removed, so we need to restore it
+		previous_st->rid = sd->bl.id;
+
+		// Reattach the player to it, so that the limitations of that script kick back in
+		script_attach_state( previous_st );
+	}
+
+	return value != 0;
+}
+
 /**
  * Update achievement objectives.
  * @param sd: Player to update
@@ -657,8 +686,13 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 		count.fill(0); // Clear out array before setting values
 
 		va_start(ap, arg_count);
-		for (i = 0; i < arg_count; i++)
+		for (i = 0; i < arg_count; i++){
+			std::string name = "ARG" + std::to_string(i);
+
 			count[i] = va_arg(ap, int);
+
+			pc_setglobalreg( sd, add_str( name.c_str() ), (int)count[i] );
+		}
 		va_end(ap);
 
 		switch(group) {
@@ -671,309 +705,14 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 					achievement_update_objectives(sd, ach.second, group, count);
 				break;
 		}
-	}
-}
 
-/*==========================================
- * Achievement condition parsing section
- *------------------------------------------*/
-static void disp_error_message2(const char *mes,const char *pos,int report)
-{
-	av_error_msg = aStrdup(mes);
-	av_error_pos = pos;
-	av_error_report = report;
-	longjmp(av_error_jump, 1);
-}
-#define disp_error_message(mes,pos) disp_error_message2(mes,pos,1)
+		// Remove variables that might have been set
+		for (i = 0; i < arg_count; i++){
+			std::string name = "ARG" + std::to_string(i);
 
-/**
- * Checks the condition of an achievement.
- * @param condition: Achievement condition
- * @param sd: Player data
- * @param count: Script arguments
- * @return The result of the condition.
- */
-long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, const int *count)
-{
-	long long left = 0;
-	long long right = 0;
-
-	// Reduce the recursion, almost all calls will be C_PARAM, C_NAME or C_ARG
-	if (condition->left) {
-		if (condition->left->op == C_NAME || condition->left->op == C_INT)
-			left = condition->left->value;
-		else if (condition->left->op == C_PARAM)
-			left = pc_readparam(sd, (int)condition->left->value);
-		else if (condition->left->op == C_ARG && condition->left->value < MAX_ACHIEVEMENT_OBJECTIVES)
-			left = count[condition->left->value];
-		else
-			left = achievement_check_condition(condition->left, sd, count);
-	}
-
-	if (condition->right) {
-		if (condition->right->op == C_NAME || condition->right->op == C_INT)
-			right = condition->right->value;
-		else if (condition->right->op == C_PARAM)
-			right = pc_readparam(sd, (int)condition->right->value);
-		else if (condition->right->op == C_ARG && condition->right->value < MAX_ACHIEVEMENT_OBJECTIVES)
-			right = count[condition->right->value];
-		else
-			right = achievement_check_condition(condition->right, sd, count);
-	}
-
-	switch(condition->op) {
-		case C_NOP:
-			return false;
-		case C_NAME:
-		case C_INT:
-			return condition->value;
-		case C_PARAM:
-			return pc_readparam(sd, (int)condition->value);
-		case C_LOR: 
-			return left || right;
-		case C_LAND:
-			return left && right;
-		case C_LE:
-			return left <= right;
-		case C_LT:
-			return left < right;
-		case C_GE:
-			return left >= right;
-		case C_GT:
-			return left > right;
-		case C_EQ:
-			return left == right;
-		case C_NE:
-			return left != right;
-		case C_XOR:
-			return left ^ right;
-		case C_OR:
-			return left || right;
-		case C_AND:
-			return left & right;
-		case C_ADD:
-			return left + right;
-		case C_SUB:
-			return left - right;
-		case C_MUL:
-			return left * right;
-		case C_DIV:
-			return left / right;
-		case C_MOD:
-			return left % right;
-		case C_NEG:
-			return -left;
-		case C_LNOT:
-			return !left;
-		case C_NOT:
-			return ~left;
-		case C_R_SHIFT:
-			return left >> right;
-		case C_L_SHIFT:
-			return left << right;
-		case C_ARG:
-			if (condition->value < MAX_ACHIEVEMENT_OBJECTIVES)
-				return count[condition->value];
-
-			return false;
-		default:
-			ShowError("achievement_check_condition: unexpected operator: %d\n", condition->op);
-			return false;
-	}
-
-	return false;
-}
-
-/**
- * Skips a word. A word consists of undercores and/or alphanumeric characters, and valid variable prefixes/postfixes.
- * @param p: Word
- * @return Next word
- */
-static const char *skip_word(const char *p)
-{
-	while (ISALNUM(*p) || *p == '_')
-		++p;
-
-	if (*p == '$') // String
-		p++;
-
-	return p;
-}
-
-/**
- * Analyze an achievement's condition script
- * @param p: Word
- * @param parent: Parent node
- * @return Word
- */
-const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_condition> parent)
-{
-	long long i;
-
-	p = skip_space(p);
-
-	if(*p == ';' || *p == ',')
-		disp_error_message("av_parse_simpleexpr: unexpected character.", p);
-	if(*p == '(') {
-		p = av_parse_subexpr(p + 1, -1, parent);
-		p = skip_space(p);
-
-		if (*p != ')')
-			disp_error_message("av_parse_simpleexpr: unmatched ')'", p);
-		++p;
-	} else if(is_number(p)) {
-		char *np;
-
-		while(*p == '0' && ISDIGIT(p[1]))
-			p++;
-		i = strtoll(p, &np, 0);
-
-		if (i < INT_MIN) {
-			i = INT_MIN;
-			disp_error_message("av_parse_simpleexpr: underflow detected, capping value to INT_MIN.", p);
-		} else if (i > INT_MAX) {
-			i = INT_MAX;
-			disp_error_message("av_parse_simpleexpr: underflow detected, capping value to INT_MAX.", p);
+			pc_setglobalreg( sd, add_str( name.c_str() ), 0 );
 		}
-
-		parent->op = C_INT;
-		parent->value = i;
-		p = np;
-	} else {
-		int v, len;
-
-		if (skip_word(p) == p)
-			disp_error_message("av_parse_simpleexpr: unexpected character.", p);
-
-		len = skip_word(p) - p;
-
-		if (len == 0)
-			disp_error_message("av_parse_simpleexpr: invalid word. A word consists of undercores and/or alphanumeric characters.", p);
-
-		std::unique_ptr<char[]> word(new char[len + 1]);
-		memcpy(word.get(), p, len);
-		word[len] = 0;
-
-		if (script_get_parameter((const char*)&word[0], &v))
-			parent->op = C_PARAM;
-		else if (script_get_constant(&word[0], &v)) {
-			if (word[0] == 'b' && ISUPPER(word[1])) // Consider b* variables as parameters (because they... are?)
-				parent->op = C_PARAM;
-			else
-				parent->op = C_NAME;
-		} else {
-			if (word[0] == 'A' && word[1] == 'R' && word[2] == 'G' && ISDIGIT(word[3])) { // Special constants used to set temporary variables
-				parent->op = C_ARG;
-				v = atoi(&word[0] + 3);
-			} else {
-				disp_error_message("av_parse_simpleexpr: invalid constant.", p);
-			}
-		}
-
-		parent->value = v;
-		p = skip_word(p);
 	}
-
-	return p;
-}
-
-/**
- * Analysis of an achievement's expression
- * @param p: Word
- * @param parent: Parent node
- * @return Word
- */
-const char *av_parse_subexpr(const char* p, int limit, std::shared_ptr<struct av_condition> parent)
-{
-	int op, opl, len;
-
-	p = skip_space(p);
-
-	parent->left.reset(new av_condition());
-
-	if ((op = C_NEG, *p == '-') || (op = C_LNOT, *p == '!') || (op = C_NOT, *p == '~')) { // Unary - ! ~ operators
-		p = av_parse_subexpr(p + 1, 11, parent->left);
-		parent->op = op;
-	} else
-		p = av_parse_simpleexpr(p, parent->left);
-
-	p = skip_space(p);
-
-	while((
-			((op=C_ADD,opl=9,len=1,*p=='+') && p[1]!='+') ||
-			((op=C_SUB,opl=9,len=1,*p=='-') && p[1]!='-') ||
-			(op=C_MUL,opl=10,len=1,*p=='*') ||
-			(op=C_DIV,opl=10,len=1,*p=='/') ||
-			(op=C_MOD,opl=10,len=1,*p=='%') ||
-			(op=C_LAND,opl=2,len=2,*p=='&' && p[1]=='&') ||
-			(op=C_AND,opl=5,len=1,*p=='&') ||
-			(op=C_LOR,opl=1,len=2,*p=='|' && p[1]=='|') ||
-			(op=C_OR,opl=3,len=1,*p=='|') ||
-			(op=C_XOR,opl=4,len=1,*p=='^') ||
-			(op=C_EQ,opl=6,len=2,*p=='=' && p[1]=='=') ||
-			(op=C_NE,opl=6,len=2,*p=='!' && p[1]=='=') ||
-			(op=C_R_SHIFT,opl=8,len=2,*p=='>' && p[1]=='>') ||
-			(op=C_GE,opl=7,len=2,*p=='>' && p[1]=='=') ||
-			(op=C_GT,opl=7,len=1,*p=='>') ||
-			(op=C_L_SHIFT,opl=8,len=2,*p=='<' && p[1]=='<') ||
-			(op=C_LE,opl=7,len=2,*p=='<' && p[1]=='=') ||
-			(op=C_LT,opl=7,len=1,*p=='<')) && opl>limit) {
-		p += len;
-
-		if (parent->right) { // Chain conditions
-			std::shared_ptr<struct av_condition> condition(new struct av_condition());
-
-			condition->op = parent->op;
-			condition->left = parent->left;
-			condition->right = parent->right;
-			parent->left = condition;
-			parent->right.reset();
-		}
-
-		parent->right.reset(new av_condition());
-		p = av_parse_subexpr(p, opl, parent->right);
-		parent->op = op;
-		p = skip_space(p);
-	}
-
-	if (parent->op == C_NOP && !parent->right) { // Move the node up
-		parent->right = parent->left->right;
-		parent->op = parent->left->op;
-		parent->value = parent->left->value;
-		parent->left = parent->left->left;
-	}
-
-	return p;
-}
-
-/**
- * Parses a condition from a script.
- * @param p: The script buffer.
- * @param file: The file being parsed.
- * @param line: The current achievement line number.
- * @return The parsed achievement condition.
- */
-std::shared_ptr<struct av_condition> parse_condition(const char *p, const char *file, int line)
-{
-	std::shared_ptr<struct av_condition> condition;
-
-	if (setjmp(av_error_jump) != 0) {
-		if (av_error_report)
-			script_error(p,file,line,av_error_msg,av_error_pos);
-		aFree(av_error_msg);
-		condition.reset();
-		return NULL;
-	}
-
-	switch(*p) {
-		case ')': case ';': case ':': case '[': case ']': case '}':
-			disp_error_message("parse_condition: unexpected character.", p);
-	}
-
-	condition.reset(new av_condition());
-	av_parse_subexpr(p, -1, condition);
-
-	return condition;
 }
 
 static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file) {
@@ -1090,9 +829,14 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid condition field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
 			return false;
 		}
-		entry->condition = parse_condition(condition.c_str(), source.c_str(), n);
-	}
 
+		if( condition.find( "achievement_condition" ) == std::string::npos ){
+			condition = "achievement_condition( " + condition + " );";
+		}
+
+		entry->condition = parse_script( condition.c_str(), source.c_str(), node["Condition"].Mark().line, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+	}
+	
 	if (node["Map"]) {
 		try {
 			mapname = node["Map"].as<std::string>();
@@ -1205,16 +949,6 @@ void achievement_read_db(void)
 }
 
 /**
- * Recursive method to free an achievement condition (probably not needed anymore, but just in case)
- * @param condition: Condition to clear
- */
-void achievement_script_free(std::shared_ptr<struct av_condition> condition) 
-{
-	condition->left.reset();
-	condition->right.reset();
-}
-
-/**
  * Reloads the achievement database
  */
 void achievement_db_reload(void)
@@ -1259,6 +993,15 @@ s_achievement_db::s_achievement_db()
 	, score(0)
 	, has_dependent(0)
 {}
+
+/**
+* Achievement deconstructor
+*/
+s_achievement_db::~s_achievement_db()
+{
+	if (condition)
+		script_free_code(condition);
+}
 
 /**
  * Achievement reward constructor

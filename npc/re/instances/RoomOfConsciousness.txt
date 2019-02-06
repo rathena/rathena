@@ -8,7 +8,7 @@
 //============================================================
 
 1@mir,103,40,3	script	Fenrir#1mir	4_F_FENRIR,{
-	if (getpartyleader(getcharid(1),2) != getcharid(0))	// it shouldn't happen
+	if (is_party_leader() == false)	// it shouldn't happen
 		end;
 	cutin "fenrir_a",2;
 	mes "[Fenrir]";
@@ -79,7 +79,7 @@ OnInstanceInit:
 }
 
 1@mir,100,94,7	script	Iris#2mir	4_F_IRIS,{
-	if (getpartyleader(getcharid(1),2) != getcharid(0))	// it shouldn't happen
+	if (is_party_leader() == false)	// it shouldn't happen
 		end;
 	mes "[Iris]";
 	mes "This...this must be...";
@@ -200,7 +200,7 @@ OnMobDead2:
 }
 
 1@mir,103,85,1	script	Iris#3mir	4_F_IRIS,{
-	if (getpartyleader(getcharid(1),2) != getcharid(0))	// it shouldn't happen
+	if (is_party_leader() == false)	// it shouldn't happen
 		end;
 	mes "[Bijou]";
 	mes "~Chuckles~ I think you're not that bad for a human.";
@@ -392,7 +392,7 @@ OnStop:
 }
 
 1@mir,100,90,7	script	Iris#4mir	4_F_IRIS,{
-	if (getpartyleader(getcharid(1),2) != getcharid(0))	// it shouldn't happen
+	if (is_party_leader() == false)	// it shouldn't happen
 		end;
 	mes "[Iris]";
 	mes "Was that it...? Has it gone now?";
@@ -461,7 +461,7 @@ OnMobDead:
 }
 
 1@mir,103,90,1	script	Fenrir#5mir	4_F_FENRIR,{
-	if (getpartyleader(getcharid(1),2) != getcharid(0))	// it shouldn't happen
+	if (is_party_leader() == false)	// it shouldn't happen
 		end;
 	mes "[Fenrir]";
 	mes "~Groans~ I can't believe nothing seems to work!";
@@ -727,7 +727,7 @@ OnStop:
 }
 
 1@mir,100,95,5	script	Iris#6mir	4_F_IRIS,{
-	if (getpartyleader(getcharid(1),2) != getcharid(0))	// it shouldn't happen
+	if (is_party_leader() == false)	// it shouldn't happen
 		end;
 	mes "[Iris]";
 	mes "~Grunts~";

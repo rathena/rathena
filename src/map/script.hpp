@@ -46,8 +46,8 @@
 /// Pushes a copy of the data in the target index
 #define script_pushcopy(st,i) push_copy((st)->stack, (st)->start + (i))
 
-#define script_isstring(st,i) data_isstring(script_getdata(st,i))
-#define script_isint(st,i) data_isint(script_getdata(st,i))
+#define script_isstring(st,i) data_isstring(get_val(st, script_getdata(st,i)))
+#define script_isint(st,i) data_isint(get_val(st, script_getdata(st,i)))
 
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
@@ -416,16 +416,6 @@ enum questinfo_types {
 	#define FW_EXTRABOLD        800
 	#define FW_HEAVY            900
 #endif
-
-enum getmapxy_types {
-	UNITTYPE_PC = 0,
-	UNITTYPE_NPC,
-	UNITTYPE_PET,
-	UNITTYPE_MOB,
-	UNITTYPE_HOM,
-	UNITTYPE_MER,
-	UNITTYPE_ELEM,
-};
 
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
@@ -1935,6 +1925,7 @@ TIMER_FUNC(run_script_timer);
 void script_stop_sleeptimers(int id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
 void script_attach_state(struct script_state* st);
+void script_detach_rid(struct script_state* st);
 void run_script_main(struct script_state *st);
 
 void script_stop_scriptinstances(struct script_code *code);
