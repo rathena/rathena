@@ -446,7 +446,8 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
  * @return True on skill cast success or false on failure
  */
 bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 skill_id, uint16 skill_lv, enum bl_type type, bool display_failure) {
-	nullpo_retr(src, false);
+	if (!src)
+		return false;
 
 	struct unit_data *ud = unit_bl2ud(src);
 	struct map_session_data *sd = map_id2sd(src->id);
