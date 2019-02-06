@@ -24027,9 +24027,9 @@ BUILDIN_FUNC(achievement_condition){
 }
 
 /*
-  charinfo(<type>,<char_id>)
-  charinfo(<type>,<account_id>)
-  charinfo(<type>,<player_name>)
+  charinfo(<char_id>,<type>)
+  charinfo(<account_id>,<type>)
+  charinfo(<player_name>,<type>)
 */
 BUILDIN_FUNC(charinfo) {
 	TBL_PC *sd;

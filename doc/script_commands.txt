@@ -2337,9 +2337,9 @@ returned when requesting that information.
 
 ---------------------------------------
 
-*charinfo(<type>,<char_id>)
-*charinfo(<type>,<account_id>)
-*charinfo(<type>,<player_name>)
+*charinfo(<char_id>,<type>)
+*charinfo(<account_id>,<type>)
+*charinfo(<player_name>,<type>)
 
 This function will return the information <type> for the
 specified character. Whatever it returns is determined by type.
