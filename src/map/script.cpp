@@ -6824,7 +6824,6 @@ BUILDIN_FUNC(countitem)
 {
 	TBL_PC *sd;
 	struct item_data *id;
-	struct script_data *data;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
 	bool random_option = false;
@@ -6847,13 +6846,10 @@ BUILDIN_FUNC(countitem)
 			return SCRIPT_CMD_FAILURE;
 	}
 
-	data = script_getdata(st, 2);
-	get_val(st, data); // Convert into value in case of a variable
-
-	if (data_isstring(data)) // item name
-		id = itemdb_searchname(conv_str(st, data));
+	if (script_isstring(st, 2)) // item name
+		id = itemdb_searchname(script_getstr(st, 2));
 	else // item id
-		id = itemdb_exists(conv_num(st, data));
+		id = itemdb_exists(script_getnum(st, 2));
 
 	if (id == NULL) {
 		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
@@ -6874,7 +6870,6 @@ BUILDIN_FUNC(cartcountitem)
 {
 	TBL_PC *sd;
 	struct item_data *id;
-	struct script_data *data;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
 
@@ -6898,13 +6893,10 @@ BUILDIN_FUNC(cartcountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	data = script_getdata(st, 2);
-	get_val(st, data); // Convert into value in case of a variable
-
-	if (data_isstring(data)) // item name
-		id = itemdb_searchname(conv_str(st, data));
+	if (script_isstring(st, 2)) // item name
+		id = itemdb_searchname(script_getstr(st, 2));
 	else // item id
-		id = itemdb_exists(conv_num(st, data));
+		id = itemdb_exists(script_getnum(st, 2));
 
 	if (id == NULL) {
 		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
@@ -6925,7 +6917,6 @@ BUILDIN_FUNC(storagecountitem)
 {
 	TBL_PC *sd;
 	struct item_data *id;
-	struct script_data *data;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
 
@@ -6943,13 +6934,10 @@ BUILDIN_FUNC(storagecountitem)
 			return SCRIPT_CMD_FAILURE;
 	}
 
-	data = script_getdata(st, 2);
-	get_val(st, data); // Convert into value in case of a variable
-
-	if (data_isstring(data)) // item name
-		id = itemdb_searchname(conv_str(st, data));
+	if (script_isstring(st, 2)) // item name
+		id = itemdb_searchname(script_getstr(st, 2));
 	else // item id
-		id = itemdb_exists(conv_num(st, data));
+		id = itemdb_exists(script_getnum(st, 2));
 
 	if (id == NULL) {
 		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
@@ -6970,7 +6958,6 @@ BUILDIN_FUNC(guildstoragecountitem)
 {
 	TBL_PC *sd;
 	struct item_data *id;
-	struct script_data *data;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
 
@@ -6990,13 +6977,10 @@ BUILDIN_FUNC(guildstoragecountitem)
 			return SCRIPT_CMD_FAILURE;
 	}
 
-	data = script_getdata(st, 2);
-	get_val(st, data); // Convert into value in case of a variable
-
-	if (data_isstring(data)) // item name
-		id = itemdb_searchname(conv_str(st, data));
+	if (script_isstring(st, 2)) // item name
+		id = itemdb_searchname(script_getstr(st, 2));
 	else // item id
-		id = itemdb_exists(conv_num(st, data));
+		id = itemdb_exists(script_getnum(st, 2));
 
 	if (id == NULL) {
 		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
