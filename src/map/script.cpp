@@ -9162,7 +9162,7 @@ BUILDIN_FUNC(bonus)
 			} else {
 				val1 = script_getnum(st, 3);
 
-				if (!skill_get_index(val1)) {
+				if (strcmpi(script_getfuncname(st), "bonus") && !skill_get_index(val1)) { // Only check skill ID for bonus2, bonus3, bonus4, or bonus5
 					ShowError("buildin_bonus: Invalid skill ID %d passed to item bonus. Skipping.\n", val1);
 					return SCRIPT_CMD_FAILURE;
 				}
