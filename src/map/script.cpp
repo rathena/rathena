@@ -15033,7 +15033,10 @@ BUILDIN_FUNC(getmapxy)
 
 	x= bl->x;
 	y= bl->y;
-	safestrncpy(mapname, map_getmapdata(bl->m)->name, MAP_NAME_LENGTH);
+	if (bl->m >= 0)
+		safestrncpy(mapname, map_getmapdata(bl->m)->name, MAP_NAME_LENGTH);
+	else
+		memset(mapname, '\0', sizeof(mapname));
 
 	//Set MapName$
 	num=st->stack->stack_data[st->start+2].u.num;
