@@ -59,11 +59,11 @@ function	script	F_mobidle	{
 }
 
 prontera,146,75,1	script	Zonda Rep#pron	4_F_ZONDAGIRL,{
-	.@party_id = getcharid(1);
 	.@player_name$ = strcharinfo(0);
-	getmapxy .@map_name$,.@x,.@y, UNITTYPE_PC;
+	getmapxy .@map_name$,.@x,.@y, BL_PC;
 
-	if (.@party_id && getpartyleader(.@party_id,2) == getcharid(0)) {
+	if (is_party_leader() == true) {
+		.@party_id = getcharid(1);
 		getpartymember .@party_id, 1;
 		getpartymember .@party_id, 2;
 		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
@@ -133,7 +133,7 @@ prontera,146,75,1	script	Zonda Rep#pron	4_F_ZONDAGIRL,{
 		mes "[Belka]";
 		mes "" + .@player_name$ + " has requested to enter the ^6B9900<" + .@instance_name$[.@s] + ">^000000. Please come back when it's your turn to enter.";
 		if (instance_create(.@instance_name$[.@s]) < 0) {
-			mes "Party Name: " + getpartyname(.@party_id);
+			mes "Party Name: " + getpartyname( getcharid(1) );
 			mes "Party Leader: " + strcharinfo(0);
 			mes "^0000ff" + .@instance_name$[.@s] + " ^000000 - Reservation Failed.";
 			close;
