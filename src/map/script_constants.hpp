@@ -7186,6 +7186,11 @@
 	/* timer related */
 	export_constant(INFINITE_TICK);
 
+	/* charinfo command */
+	export_constant(PC_NAME);
+	export_constant(PC_CHAR);
+	export_constant(PC_ACCOUNT);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

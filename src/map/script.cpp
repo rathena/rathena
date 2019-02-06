@@ -24026,6 +24026,50 @@ BUILDIN_FUNC(achievement_condition){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*
+  charinfo(<type>,<char_id>)
+  charinfo(<type>,<account_id>)
+  charinfo(<type>,<player_name>)
+*/
+BUILDIN_FUNC(charinfo) {
+	TBL_PC *sd;
+
+	if (script_isstring(st, 2))
+		sd = map_nick2sd(script_getstr(st, 2),false);
+	else {
+		int id = script_getnum(st, 2);
+		sd = map_id2sd(id);
+		if (sd == NULL)
+			sd = map_charid2sd(id);
+	}
+
+	switch( script_getnum(st, 3) ) {
+	case PC_NAME:
+		if (sd)
+			script_pushstrcopy(st,sd->status.name);
+		else
+			script_pushconststr(st,"");
+		break;
+	case PC_CHAR:
+		if (sd)
+			script_pushint(st,sd->status.char_id);
+		else
+			script_pushint(st,0);
+		break;
+	case PC_ACCOUNT:
+		if (sd)
+			script_pushint(st,sd->status.account_id);
+		else
+			script_pushint(st,0);
+		break;
+	default:
+		ShowError("buildin_charinfo: unknown parameter.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.c
@@ -24691,6 +24735,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(camerainfo,"iii?"),
 
 	BUILDIN_DEF(achievement_condition,"i"),
+	BUILDIN_DEF(charinfo,"vi"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

@@ -1898,6 +1898,12 @@ enum e_hat_effects {
 	HAT_EF_MAX
 };
 
+enum bl_pc_type {
+	PC_NAME      = 0,
+	PC_CHAR      = 1,
+	PC_ACCOUNT   = 2
+};
+
 /**
  * used to generate quick script_array entries
  **/

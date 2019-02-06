@@ -2337,6 +2337,22 @@ returned when requesting that information.
 
 ---------------------------------------
 
+*charinfo(<type>,<char_id>)
+*charinfo(<type>,<account_id>)
+*charinfo(<type>,<player_name>)
+
+This function will return the information <type> for the
+specified character. Whatever it returns is determined by type.
+
+ PC_NAME    - Character's name.
+ PC_CHAR    - Character ID.
+ PC_ACCOUNT - Account ID.
+
+If a character is not found (or not online) when requesting that information,
+an empty string will be returned for PC_NAME, 0 for other <type>.
+
+---------------------------------------
+
 *strnpcinfo(<type>)
 
 This function will return the various parts of the name of the calling NPC.
