@@ -2099,7 +2099,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (!status_has_mode(status,MD_CANATTACK))
 			return false;
 		// Dead state is not checked for skills as some skills can be used
-		// on dead characters, said checks are left to skill.c [Skotlex]
+		// on dead characters, said checks are left to skill.cpp [Skotlex]
 		if (target && status_isdead(target))
 			return false;
 	}
@@ -2240,7 +2240,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 
 	if (tsc && tsc->count) {
 		/**
-		* Attacks in invincible are capped to 1 damage and handled in batte.c.
+		* Attacks in invincible are capped to 1 damage and handled in battle.cpp.
 		* Allow spell break and eske for sealed shrine GDB when in INVINCIBLE state.
 		**/
 		if( tsc->data[SC_INVINCIBLE] && !tsc->data[SC_INVINCIBLEOFF] && skill_id && !(skill_id&(SA_SPELLBREAKER|SL_SKE)) )

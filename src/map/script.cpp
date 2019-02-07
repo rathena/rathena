@@ -11311,7 +11311,7 @@ BUILDIN_FUNC(sc_start)
 		tick = skill_get_time(status_sc2skill(type), val1);
 	}
 
-	if(potion_flag == 1 && potion_target) { //skill.c set the flags before running the script, this is a potion-pitched effect.
+	if(potion_flag == 1 && potion_target) { //skill.cpp set the flags before running the script, this is a potion-pitched effect.
 		bl = map_id2bl(potion_target);
 		tick /= 2;// Thrown potions only last half.
 		val4 = 1;// Mark that this was a thrown sc_effect
@@ -15336,7 +15336,7 @@ BUILDIN_FUNC(cardscnt)
 		if (id <= 0)
 			continue;
 
-		index = current_equip_item_index; //we get CURRENT WEAPON inventory index from status.c [Lupus]
+		index = current_equip_item_index; //we get CURRENT WEAPON inventory index from status.cpp [Lupus]
 		if(index < 0) continue;
 
 		if(!sd->inventory_data[index])
@@ -18385,7 +18385,7 @@ BUILDIN_FUNC(unittalk)
 ///
 /// unitemote <unit_id>,<emotion>;
 ///
-/// @see ET_* in script_constants.h
+/// @see ET_* in script_constants.hpp
 BUILDIN_FUNC(unitemote)
 {
 	int emotion;
@@ -24031,7 +24031,7 @@ BUILDIN_FUNC(achievement_condition){
 
 #include "../custom/script.inc"
 
-// declarations that were supposed to be exported from npc_chat.c
+// declarations that were supposed to be exported from npc_chat.cpp
 #ifdef PCRE_SUPPORT
 BUILDIN_FUNC(defpattern);
 BUILDIN_FUNC(activatepset);
