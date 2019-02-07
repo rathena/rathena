@@ -99,7 +99,7 @@ que_ng,21,76,0	script	Wall with a Drawing#ko	844,{
 
 job_ko,25,115,4	script	Old Man#ko	588,{
 	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "You don't need to carry so many things."; //custom translation
 		close;
 	}
@@ -107,8 +107,8 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		for (set .@i,5131; .@i<=5146; set .@i,.@i+1)
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
-		mes "[Cougar]";
-		mes "You are not in the Family of the Ninja.";
+		mes "[Kuuga Gai]";
+		mes "You are not in the clan of the Ninja.";
 		close2;
 		warp "amatsu",147,136;
 		end;
@@ -135,28 +135,28 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "^1A95E6He keeps talking and doesn't stop to answer your question.^1A95E6";
 		next;
 		mes "[Old Man]";
-		mes "There once was a quiet family living in ancient Amatsu times that is never mentioned in history books or stories.";
+		mes "There once was a quiet clan living in ancient Amatsu times that is never mentioned in history books or stories.";
 		next;
 		mes "[Old Man]";
 		mes "They lived beneath shadows but always yearned for the bright sun, like a sunflower.";
 		next;
 		mes "[Old Man]";
-		mes "A family that was loyal to their lord who they served as their bright sun.";
+		mes "A clan that was loyal to their lord who they served as their bright sun.";
 		next;
 		mes "[Old Man]";
-		mes "...a very trustworthy family...";
+		mes "...a very trustworthy clan...";
 		next;
 		mes "[Old Man]";
 		mes "....loyal to their core...";
 		next;
 		mes "[Old Man]";
-		mes "...a family of integrity...";
+		mes "...a clan of integrity...";
 		next;
 		select("What happened to them?");
 		mes "^1A95E6The old man looks at you with a melancholy face.^1A95E6";
 		next;
 		mes "[Old Man]";
-		mes "Why are you interested in a family that was abandoned by their lord and disappeared from history itself?";
+		mes "Why are you interested in a clan that was abandoned by their lord and disappeared from history itself?";
 		next;
 		if(select("I'm a Ninja.:I'm bored.") == 2) {
 			mes "[Old Man]";
@@ -167,13 +167,13 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		}
 		cutin "job_ko02",2;
 		mes "[Old Man]";
-		mes "Ninja! There was a time when the family was called ninjas, too.";
+		mes "Ninja! There was a time when the clan was called ninjas, too.";
 		next;
 		erasequest 5131;
 		setquest 5132;
 		set job_kagero,2;
 		mes "[Old Man]";
-		mes "You'll have to lend me your ear for I have so much to tell you about the family story.";
+		mes "You'll have to lend me your ear for I have so much to tell you about the clan story.";
 		close2;
 		cutin "",255;
 		end;
@@ -185,13 +185,13 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "This goes way back to ancient times and nobody in Amatsu remembers about it.";
 		next;
 		mes "[Old Man]";
-		mes "The family worked behind the scenes and basically lived their lives for their lord.";
+		mes "The clan worked behind the scenes and basically lived their lives for their lord.";
 		next;
 		mes "[Old Man]";
 		mes "They were very loyal doing whatever deed their lord asked for.";
 		next;
 		mes "[Old Man]";
-		mes "Ninja, the family was known as the dark family but that doesn't mean they wanted to be hidden in the darkness.";
+		mes "Ninja, the clan was known as the dark clan but that doesn't mean they wanted to be hidden in the darkness.";
 		next;
 		mes "[Old Man]";
 		mes "They were loyal enough to be satisfied as the lord's servants but their loyalty became the problem.";
@@ -201,13 +201,13 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		mes "They are a secret organization that even the lord didn't know much about.";
 		next;
 		mes "[Old Man]";
-		mes "The few that knew about the family's existence, tried to investigate them but nobody was able to reveal their true identity.";
+		mes "The few that knew about the clan's existence, tried to investigate them but nobody was able to reveal their true identity.";
 		next;
 		mes "[Old Man]";
-		mes "That is why this family has grown from loyal servants to a group feared for its secrets.";
+		mes "That is why this clan has grown from loyal servants to a group feared for its secrets.";
 		next;
 		mes "[Old Man]";
-		mes "The lord shunned the family and didn't call them for their service any more but they never betrayed him.";
+		mes "The lord shunned the clan and didn't call them for their service any more but they never betrayed him.";
 		next;
 		select("They were really loyal people.");
 		cutin "job_ko03",2;
@@ -224,20 +224,20 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 	} else if (job_kagero == 3) {
 		cutin "job_ko03",2;
 		mes "[Old Man]";
-		mes "The family has been living in hiding for so long since the old days. The current lord didn't even know of their existence.";
+		mes "The clan has been living in hiding for so long since the old days. The current lord didn't even know of their existence.";
 		next;
 		select(".........");
 		cutin "job_ko01",2;
 		mes "[Old Man]";
-		mes "I'm Guide Gion, the last of the dark ninja family.";
+		mes "I'm Leader Gion, the last of the dark ninja clan.";
 		next;
 		if(select("I think your time has ended.:I need your teaching.") == 1) {
 			cutin "job_ko04",2;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Are you an assassin to end this old man's life?";
 			next;
-			mes "[Guide Gion]";
-			mes "So that is why you've shown interest in my family. I won't give up easily.";
+			mes "[Leader Gion]";
+			mes "So that is why you've shown interest in my clan. I won't give up easily.";
 			next;
 			percentheal -99,0;
 			mes "Pow!!";
@@ -247,50 +247,50 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			end;
 		}
 		cutin "job_ko02",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Teaching...";
 		mes "Been a long time since I last heard that word.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I guess this little visit was not by coincidence but a start of a connection.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Sorry I am not a teacher. But!";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I can help you on the path you've chosen, the ^33CC71"+((Sex == SEX_MALE)?"Kagerou":"Oboro")+"^000000 path.";
 		next;
-		mes "^1A95E6You hear Guide Gion's voice faintly as you slip away.^1A95E6";
+		mes "^1A95E6You hear Leader Gion's voice faintly as you slip away.^1A95E6";
 		next;
 		erasequest 5133;
 		setquest 5134;
 		set job_kagero,4;
-		mes "[Guide Gion]";
-		mes "If you are prepared to follow me, Guide Gion, on the "+((Sex == SEX_MALE)?"Kagerou":"Oboro")+" path, we will meet again.";
+		mes "[Leader Gion]";
+		mes "If you are prepared to follow me, Leader Gion, on the "+((Sex == SEX_MALE)?"Kagerou":"Oboro")+" path, we will meet again.";
 		close2;
 		warp "amatsu",147,136;
 		end;
 	} else if (job_kagero == 4) {
 		cutin "job_ko02",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I thought you were afraid of the ^33CC71path of the "+((Sex == SEX_MALE)?"Kagerou":"Oboro")+"^33CC71 and wouldn't come back.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "But from the look of your eyes, I guess I misjudged you.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "You will have to train your mind and body to walk steadily in the unknown world and never fall into temptation to stay on the path.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Our ancestors had 4 tests to train our people.";
 		next;
 		select("4 tests?");
 		cutin "job_ko01",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Yes, there are 4 tests.";
 		mes "My ancestors trained my people with 4 tests that involve ^087FF8knowledge^000000, ^087FF8survival^000000, ^087FF8weapons^000000, and ^087FF8battle^000000.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I know you are curious what these tests are. Let me explain one by one.";
 		next;
 		while(1) {
@@ -298,75 +298,75 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			set .@test, .@test | (1<<(.@i-1));
 			switch (.@i) {
 			case 1:
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "We need to be knowledgeable in order to assist the lord. This test is for this purpose.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "You can pass the test if you successfully solve more than 9 out of 10 questions.";
 				next;
 				if (.@test != 15) {
-					mes "[Guide Gion]";
+					mes "[Leader Gion]";
 					mes "The test will be easy to pass if you've been steady in your studies. Now what other test are you curious about?";
 					next;
 				}
 				break;
 			case 2:
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "Missions aren't always easy and safe. That is why survival instincts are vital to us.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "My ancestors call this test the dice test. It is a test to advance forward depending on the dice results.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "Think of it as the simple dice games people play.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "But never let your guard down during the test because it isn't called the survival test for nothing.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "There will be blocks that help you while there are blocks that will interrupt you.";
 				next;
 				if (.@test != 15) {
-					mes "[Guide Gion]";
+					mes "[Leader Gion]";
 					mes "If you deal with various situations wisely, you will be able to pass the test. Now what other test are you curious about?";
 					next;
 				}
 				break;
 			case 3:
-				mes "[Guide Gion]";
-				mes "My family was famous for using unique weapons that we created.";
+				mes "[Leader Gion]";
+				mes "My clan was famous for using unique weapons that we created.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "You would be considered blessed if you created your own unique weapon.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "Creating a weapon for yourself and refining it is the purpose of this test.";
 				next;
 				if (.@test != 15) {
-					mes "[Guide Gion]";
+					mes "[Leader Gion]";
 					mes "I hope you will be blessed and find the best weapon for yourself. Now what other test are you curious about?";
 					next;
 				}
 				break;
 			case 4:
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "Missions are not always done alone. You will often work in teams of 2 or 3 for a common goal.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "The battle test is only for those that pass that knowledge, survival and weapon tests. So! It is the very last test.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "Unlike the other three tests that are done alone, you will have to compete with others in this final test.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "There is only one target!!";
 				mes "And only the first to get to the target passes the test.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "You'll be lucky if you have no competitors during your test.";
 				next;
 				if (.@test != 15) {
-					mes "[Guide Gion]";
+					mes "[Leader Gion]";
 					mes "A challenge is better than explaining it a hundred times. It's the actual experience that makes you better.";
 					next;
 				}
@@ -375,13 +375,13 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			if (.@test == 15) break;
 		}
 		cutin "job_ko02",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Seeing is believing, so go on and take the challenge."; //custom translation
 		next;
 		erasequest 5134;
 		setquest 5135;
 		set job_kagero,5;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Let's start right away after you are done with preparations.";
 		close2;
 		cutin "",255;
@@ -393,110 +393,110 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		set .@ko_test, .@ko_test_01 + .@ko_test_02 + .@ko_test_03;
 		if (.@ko_test == 0) {
 			cutin "job_ko03",2;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "It's been a while.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Since I felt happy like this. I feel young and energetic seeing young people like you challenge themselves with a new path.";
 			next;
-			mes "[Guide Gion]";
-			mes "We're done with explaining about the tests, now should I tell you my family story?";
+			mes "[Leader Gion]";
+			mes "We're done with explaining about the tests, now should I tell you my clan story?";
 			next;
 			cutin "job_ko01",2;
-			mes "[Guide Gion]";
-			mes "My family started from two warriors.";
+			mes "[Leader Gion]";
+			mes "My clan started from two warriors.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Kagerou, a warrior like the dancing flames of the sun.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Oboro, a warrior like the misty moonlight.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "The Sun and the Moon.";
 			mes "The sunlight that lights up the world and the moonlight that lights up the night. Both were very similar but different warriors.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "There was a time there was an enmity between both warriors.";
 			next;
-			mes "[Guide Gion]";
-			mes "But it didn't take long for them to become one as a family.";
+			mes "[Leader Gion]";
+			mes "But it didn't take long for them to become one as a clan.";
 			next;
 			select("How did it go afterwards?");
 			cutin "job_ko02",2;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Ha ha ha. It is never fun to listen to the whole story all at once, no? Come back after passing a test and I'll continue my story.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Which test will you select as your first test?";
 			next;
 			callsub L_StartTest,select("Test of Knowledge:Test of Survival:Test of Weaponry"),1;
 			end;
 		} else if (.@ko_test == 2) {
 			cutin "job_ko01",2;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			if (.@ko_test_01 == 2) {
 				set .@menu$,":Test of Survival:Test of Weaponry";
 				mes "You've passed the Test of Knowledge.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "My friend doesn't approve of others that easily but I guess he liked you.";
 				next;
 			} else if (.@ko_test_02 == 2) {
 				set .@menu$,"Test of Knowledge::Test of Weaponry";
 				mes "You've passed the Test of Survival.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "Looks like you went through hell with this test.";
 				next;
 			} else if (.@ko_test_03 == 2) {
 				set .@menu$,"Test of Knowledge:Test of Survival:";
 				mes "You've passed the Test of Weaponry.";
 				next;
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "I wonder if Joe is satisfied with your performance.";
 				next;
 			}
-			select("Please continue with the family story.");
+			select("Please continue with the clan story.");
 			cutin "job_ko02",2;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Looks like you are pretty eager to hear more. Where did I leave off... Ah! I remember.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Kagerou, a warrior like the dancing flames of the sun.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Oboro, a warrior like the misty moonlight.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Both warriors weren't close at first, because personality and everything else was completely opposite of each other.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "The first place they met was the battlefield. And you know how enemies greet each other on a battlefield.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "They ended up injuring each other badly.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "But what can you do? War is a war.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "The friend you've laughed with yesterday is a foe that you have to fight with in a war today.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "So nobody can get along with anyone during a war.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "I'll continue the story after you pass another test.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Which test will you choose for the second test?";
 			next;
 			callsub L_StartTest,select(.@menu$),2;
 			end;
 		} else if (.@ko_test == 4) {
 			cutin "job_ko04",2;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			if (.@ko_test_01 == 2 && .@ko_test_02 == 2) {
 				set .@last_test,3;
 				mes "You've passed the ^339CCCTests of Knowledge and Survival^000000!";
@@ -508,96 +508,96 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 				mes "You've passed the ^339CCCTests of Survival and Weaponry^000000!";
 			}
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "You are already done with two tests. Hope you've learned a lot from them.";
 			next;
 			cutin "job_ko01",2;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Shall we continue with the story?";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Kagerou, a warrior like the dancing flames of the sun.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Oboro, a warrior like the misty moonlight.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "I think I left off when the two warriors met at the battlefield as enemies.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "The long war ended eventually but the wounds and pain of those that survived had just started.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "So these two warriors started to embrace and heal the war wounds together and became one.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "There is a backstory of a man appearing in front of them and winning the loyalty from both warriors.";
 			next;
 			select("Who is this man?");
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "There isn't much known about this man. Only a short mentioning of the two warriors pledging their allegiance.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Maybe current generations like me are the ancestors of the current Amatsu lord? But this is only an assumption.";
 			next;
-			mes "[Guide Gion]";
-			mes "I'm almost at the end of my family story. Come back after you've passed the third test and I will tell you the rest.";
+			mes "[Leader Gion]";
+			mes "I'm almost at the end of my clan story. Come back after you've passed the third test and I will tell you the rest.";
 			next;
 			callsub L_StartTest,.@last_test,3;
 			end;
 		} else if (.@ko_test == 6) {
 			cutin "job_ko01",2;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "You've gone through three tests leaving only one to pass.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "As I've told you before, the last test is different because you have to compete against others.";
 			next;
 			select("Will you continue the story?");
 			cutin "job_ko02",2;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Ha ha ha. I will finish the story.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Kagerou, a warrior like the dancing flames of the sun.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Oboro, a warrior like the misty moonlight.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "It is told that the man that earned the loyalty of the two warriors was a humorous person.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "He like the jokes and conversations better than quarrels and he liked women over men.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Hmm... I don't know why this part of the story was kept alive all these years but this man wanted to bring these two warriors together.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Both warriors did travel together after the war but kept an awkward distance from each other.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "They must have had their reasons but their lord would send them out to a difficult mission together, put them in a secret room together and all sorts of situations together.";
 			next;
 			select("Sounds like an odd person.");
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Yes, he was. And his efforts didn't go in vain since the two warriors eventually got acquainted and married.";
 			next;
-			mes "[Guide Gion]";
-			mes "This is how the family started.";
+			mes "[Leader Gion]";
+			mes "This is how the clan started.";
 			next;
 			select("What happened after?");
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Sadly, the next part of story was purposely discontinued.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "I think it's because someone wanted us to let go of the past and move forward.";
 			next;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "That's that. Now shouldn't you be preparing for the last test?";
 			next;
 			set job_kagero,6;
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "But you must be tired from all the tests so far. Take a rest.";
 			close2;
 			cutin "",255;
@@ -610,12 +610,12 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 				set .@test_ko$, "Survival";
 			else if (.@ko_test_03 == 1)
 				set .@test_ko$, "Weaponry";
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Weren't you taking the Test of " + .@test_ko$ + " just now?"; //custom translation
 			next;
 			switch(select("I want to go back to test site.:Ah... no.")) {
 			case 1:
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "The Test of " + .@test_ko$ + " site is over here."; //custom translation(?)
 				close2;
 				if (.@ko_test_01 == 1)
@@ -626,7 +626,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 					warp "job_ko",121,129;
 				end;
 			case 2:
-				mes "[Guide Gion]";
+				mes "[Leader Gion]";
 				mes "The village is over here.";
 				close2;
 				warp "amatsu",147,136;
@@ -635,39 +635,39 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		}
 	} else if (job_kagero == 6) {
 		cutin "job_ko01",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "You've come back already? You could have rested more. Is there a reason to hurry?";
 		next;
 		input .@inputstr$;
 		cutin "job_ko03",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Because of ^B24E59" + .@inputstr$ + "^000000?";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I have to admit, I don't understand you now.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "But since you've gone through much, I'm sure you will do good with the final test.";
 		next;
 		cutin "job_ko01",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Now! No more small talk. I'll let you know what the target is for the Test of Battle.";
 		next;
-		mes "[Guide Gion]";
-		mes "The target is a monster called the ^FF0000Family Secret^000000.";
+		mes "[Leader Gion]";
+		mes "The target is a monster called the ^FF0000Clan Secret^000000.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "You will have to be careful because there are many similiar shaped and named monsters in test site.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "And if you are lucky, there will be others targeting the monster.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "May the blessings of '" + ((Sex == SEX_MALE)?"Kagerou, dancing sun":"Oboro, misty moonlight") + "' be with you.";
 		next;
 		setquest 5146;
 		set job_kagero,7;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Then let's go to the battle test field.";
 		close2;
 		switch(rand(3)) {
@@ -678,12 +678,12 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		end;
 	} else if (job_kagero == 7 || job_kagero == 8) {
 		cutin "job_ko03",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I see you are in the middle of the ^339CCCTest of Battle^000000. Will you go back to the test site?";
 		next;
 		switch(select("Go back to the test site.:Visit the village.")) {
 		case 1:
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "The test site is over here."; //custom translation(?)
 			close2;
 			switch(rand(3)) {
@@ -693,7 +693,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 			}
 			end;
 		case 2:
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "The village is over here.";
 			close2;
 			cutin "",255;
@@ -701,7 +701,7 @@ job_ko,25,115,4	script	Old Man#ko	588,{
 		}
 	} else {
 		cutin "job_ko03",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "You should not be here. Leave!";
 		close2;
 		warp "amatsu",147,136;
@@ -716,14 +716,14 @@ L_StartTest:
 		case 2: set .@str$,"You are taking the ^339CCCTest of %s^000000 as the second test? "; break; //custom translation
 		case 3: set .@str$,"Your third test is the ^339CCCTest of %s^000000! "; break;
 	}
-	mes "[Guide Gion]";
+	mes "[Leader Gion]";
 	switch (getarg(0)) {
 	case 1:
 		mes sprintf(.@str$ + "Then I will get to see a familiar face after so long...","Knowledge");
 		next;
 		select("Familiar face?");
 		setquest 5136;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Ha ha ha. You'll know when we get there. The Test of Knowledge is taken over here.";
 		close2;
 		warp "job_ko",72,128;
@@ -732,7 +732,7 @@ L_StartTest:
 		mes sprintf(.@str$ + "It's a lonesome test that you have to face alone.","Survival");
 		next;
 		setquest 5137;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "But I believe you can handle it. The Test of Survival is taken over here.";
 		close2;
 		warp "job_ko",62,16;
@@ -745,7 +745,7 @@ L_StartTest:
 		getitem 1010,1; //Phracon
 		mes "You receive 5 Iron Ore and 1 Phracon.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "You will find these useful. The Test of Weaponry is taken over here.";
 		close2;
 		warp "job_ko",121,129;
@@ -755,13 +755,13 @@ L_StartTest:
 
 // Test of Knowledge
 //============================================================
-job_ko,81,124,4	script	Cougar#ko	730,{
+job_ko,81,124,4	script	Kuuga Gai#ko	730,{
 	if (BaseJob != Job_Ninja) {
 		for (set .@i,5131; .@i<=5146; set .@i,.@i+1)
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
-		mes "[Cougar]";
-		mes "Sorry, your family is not same as ours, is there something wrong?";
+		mes "[Kuuga Gai]";
+		mes "Sorry, your clan is not same as ours, is there something wrong?";
 		close2;
 		warp "amatsu",147,136;
 		end;
@@ -770,61 +770,61 @@ job_ko,81,124,4	script	Cougar#ko	730,{
 		goto L_Kick;
 	}
 	if (MaxWeight - Weight < 1000 || checkweight(1201,1) == 0) {
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "This is a test of knowledge, so why did you bring so many things?"; //custom translation
 		close;
 	}
 	set .@ko_test_01, isbegin_quest(5136);
 	set .@ko_test_01_1, isbegin_quest(5139);
 	if (.@ko_test_01 == 1 && .@ko_test_01_1 == 0) {
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "It's been a while.";
 		next;
 		select("Aren't you...");
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "I remember you from before looking for the way of the ninja.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "You've grown this strong already?";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "Ha ha ha-";
 		mes "A truly determined youth! I like that.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "Good! The test you are about to take is the ^339CCCTest of Knowledge^000000.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "I hope you haven't been lazy with your studies while focusing on getting stronger?";
 		next;
 		switch(select("Yes:No")) {
 		case 1:
 			setquest 5139;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "That's a relief. Let me know when you are ready to start the test.";
 			close;
 		case 2:
 			setquest 5139;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "So you were all talk? Well, let me know when you are ready then.";
 			close;
 		}
 	} else if (.@ko_test_01 == 1 && .@ko_test_01_1 == 1) {
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "I'm ready at my end. Are you ready for the test?";
 		next;
 		if(select("Yes:No") == 2) {
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Well, what can I do but wait for you.";
 			close;
 		}
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "This isn't your first test, is it?";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "You only need to choose the correct answer to my questions.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "Let's start.";
 		next;
 
@@ -844,9 +844,9 @@ job_ko,81,124,4	script	Cougar#ko	730,{
 		deletearray .@n[10],getarraysize(.@n) - .@questions;
 		freeloop(0);
 
-		set @job_ko_cougar,0;
+		set @job_ko_Kuuga,0;
 		for (set .@i,1; .@i<=.@questions; set .@i,.@i+1) {
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes (.@i < .@questions)?"Question number "+.@i+":":"Last question:";
 			switch (.@n[.@i-1]) {
 				case 1: callsub L_Question,"What is the DEX + LUK total for a Job Master?",2,"8:10:12:14"; break;
@@ -900,67 +900,67 @@ job_ko,81,124,4	script	Cougar#ko	730,{
 				case 49: callsub L_Question,"Which of the following blacksmiths do not create ninja items?",2,"Khaibara:Aiku:Tetsu:Toshu"; break;
 				case 50: callsub L_Question,"What is the name of the suspicious man you can meet during the Ninja job change quest?",3,"Red Leopard Jack:Black Leopard Jack:Red Leopard Joe:Black Leopard Joe"; break;
 				default:
-					mes "[Cougar]";
+					mes "[Kuuga Gai]";
 					mes "An unknown error has occurred.";
 					mes "Please contact customer service.";
 					close;
 			}
 		}
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "You're through all 10 questions. Wasn't so bad! The important part starts now.";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "... ... ...";
 		next;
-		if (@job_ko_cougar < 90) {
-			mes "[Cougar]";
+		if (@job_ko_Kuuga < 90) {
+			mes "[Kuuga Gai]";
 			mes "You fool!!";
 			mes "You couldn't even solve these?";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Can't believe someone who is taking a new path can be so pathetic.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "I'll give you another chance.";
 			mes "You will take the test again with new questions. Better pass it this time.";
 		} else {
-			mes "[Cougar]";
-			mes "Hmm. " + (@job_ko_cougar) + "?";
+			mes "[Kuuga Gai]";
+			mes "Hmm. " + (@job_ko_Kuuga) + "?";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Well, looks like you weren't lazy with your studies.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "What? Proud of yourself for solving these questions?";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "You still have a long way to go and this is only a small fraction of it.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Well... I'm curious how far your strong will can take you through other tests.";
 			next;
 			completequest 5136;
 			erasequest 5139;
-			mes "[Cougar]";
-			mes "I'll let you go now so go report back to Guide Gion with your results.";
+			mes "[Kuuga Gai]";
+			mes "I'll let you go now so go report back to Leader Gion with your results.";
 			close2;
 			warp "job_ko",16,113;
 			end;
 		}
-		set @job_ko_cougar,0;
+		set @job_ko_Kuuga,0;
 		close;
 	} else if (.@ko_test_01 == 2 && .@ko_test_01_1 == 0) {
-		mes "[Cougar]";
-		mes "I'll let you go now so go report back to Guide Gion with your results.";
+		mes "[Kuuga Gai]";
+		mes "I'll let you go now so go report back to Leader Gion with your results.";
 		close2;
 		warp "job_ko",16,113;
 		end;
 	} else {  //custom translation
 	L_Kick:
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "How did you get here?";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "It's my duty to get rid of you.";
 		mes "^000099(He's a short, silent man.)^000000";
 		mes "This will push you back!";
@@ -975,7 +975,7 @@ L_Question:
 	mes getarg(0);
 	next;
 	if(select(getarg(2)) == getarg(1))
-		set @job_ko_cougar, @job_ko_cougar + 10;
+		set @job_ko_Kuuga, @job_ko_Kuuga + 10;
 	return;
 }
 
@@ -1936,7 +1936,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 			if (isbegin_quest(.@i)) erasequest .@i;
 		set job_kagero,0;
 		mes "[Red Leopard Joe]";
-		mes "Sorry, your family is not the same as ours, is there something wrong?";
+		mes "Sorry, your clan is not the same as ours, is there something wrong?";
 		close2;
 		warp "amatsu",147,136;
 		end;
@@ -1961,17 +1961,17 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		next;
 		select("Long time indeed, Joe.");
 		mes "[Red Leopard Joe]";
-		mes "You aren't surprised I'm here. Did you meet ^0237FDCougar^000000 before coming here?";
+		mes "You aren't surprised I'm here. Did you meet ^0237FDKuuga Gai^000000 before coming here?";
 		next;
 		mes "[Red Leopard Joe]";
 		mes "Don't like it that I'm not the first one you visited but that is not important.";
 		next;
 		mes "[Red Leopard Joe]";
 		mes "Alright, " + strcharinfo(0) + "!";
-		mes "Welcome to the workshop where weapons are created for the family.";
+		mes "Welcome to the workshop where weapons are created for the clan.";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "Our family has been creating and using unique weapons to serve our secret missions since ancient times.";
+		mes "Our clan has been creating and using unique weapons to serve our secret missions since ancient times.";
 		next;
 		select("Really? At Einbroch?");
 		mes "[Red Leopard Joe]";
@@ -1981,7 +1981,7 @@ job_ko,127,125,4	script	Red Leopard Joe#ko	730,{
 		mes "Yes. Einbroch is known as an industrial city, the city of great blacksmiths create new technology.";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "My mission is to analyze their technology and report back to the family.";
+		mes "My mission is to analyze their technology and report back to the clan.";
 		next;
 		mes "[Red Leopard Joe]";
 		mes "I spoke more than I intended to.";
@@ -2513,48 +2513,48 @@ job_ko,127,121,0	duplicate(Refinement Tools#ko_01)	Refinement Tools#ko_02	844
 
 // Test of Battle
 //============================================================
-job_ko,148,46,4	script	Guide Gion#ko2	588,{
+job_ko,148,46,4	script	Leader Gion#ko2	588,{
 	if (MaxWeight - Weight < 2000 || checkweight(1201,1) == 0) {
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "You don't need so many things now!"; //custom translation
 		close;
 	}
 	if (job_kagero == 7) {
 		cutin "job_ko01",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Looks like you haven't taken care of the target yet.";
 		next;
-		mes "[Guide Gion]";
-		mes "I'll tell you once more. The target is the ^FF0000Family Secret^000000.";
+		mes "[Leader Gion]";
+		mes "I'll tell you once more. The target is the ^FF0000Clan Secret^000000.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Of course the path will be difficult, so continue searching!"; //custom translation
 		close2;
 		cutin "",255;
 		end;
 	} else if (job_kagero == 8) {
 		cutin "job_ko02",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "Looks like you've taken care of the target. Hmm.";
 		next;
 
 		//custom translations
 		if (ismounting()) {
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "But please get down from your frog. Otherwise I can't continue!";
 			close2;
 			cutin "",255;
 			end;
 		}
 		if (BaseLevel < 99 || JobLevel < 70) {
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "How did you get weaker? Come back once you've regained your previous levels.";
 			close2;
 			cutin "",255;
 			end;
 		}
 		if (SkillPoint != 0) {
-			mes "[Guide Gion]";
+			mes "[Leader Gion]";
 			mes "Please come back after using all your Skill Points.";
 			close2;
 			cutin "",255;
@@ -2563,38 +2563,38 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 
 		mapannounce "job_ko","[Gion] Interrupting the Test of Battle.",bc_map;
 		cutin "job_ko04",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "The Test of Battle will be put off for a while. Don't worry because this does not have affect to other tests.";
 		next;
 		mapannounce "job_ko","[Gion] My Friend " + strcharinfo(0) + " made it to " + ((Sex == SEX_MALE)?"Kagerou":"Oboro") + " Path. Congratulations!!",bc_map;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "My friend " + strcharinfo(0) + " made it to " + ((Sex == SEX_MALE)?"Kagerou":"Oboro") + " Path. Congratulations!!";
 		next;
 		cutin "job_ko02",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "It is pleasant to meet a youth that is walking through a new path.";
 		next;
 		mes "[Someone's Voice]";
 		mes "Wait for a while, Gion.";
 		next;
-		donpcevent "Cougar#ko2::OnEnable";
+		donpcevent "Kuuga Gai#ko2::OnEnable";
 		donpcevent "Red Leopard Joe#ko2::OnEnable";
 		cutin "job_ko04",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I'm sorry I almost forgot about you two. Do you have anything to share with " + strcharinfo(0) + "?";
 		next;
 		cutin "",255;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "Hmm... Embarrassing... to speak so suddenly...";
 		next;
-		mes "[Cougar]";
-		mes strcharinfo(0) + ", you are now a proud member of our family. Always hold your head high and...";
+		mes "[Kuuga Gai]";
+		mes strcharinfo(0) + ", you are now a proud member of our clan. Always hold your head high and...";
 		next;
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "^777777(Gai's voice fades out.)^000000.";
 		mes "I'm sorry I strangled you when we first met.";
 		next;
-		donpcevent "Cougar#ko2::OnDisable";
+		donpcevent "Kuuga Gai#ko2::OnDisable";
 		mes "[Red Leopard Joe]";
 		mes "Puhahaha! Gai is all talk. I know I was know valuable to you than that Gai.";
 		next;
@@ -2615,17 +2615,17 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 		mes "I named your weapons on my own but I know you'll like the name.";
 		next;
 		mes "[Red Leopard Joe]";
-		mes "Guide Gion, please continue.";
+		mes "Leader Gion, please continue.";
 		next;
 		cutin "job_ko01",2;
 		donpcevent "Red Leopard Joe#ko2::OnDisable";
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I don't have much to add because Gai and Joe said it all.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I'm just sorry that the environment of all these tests could have been better for our later generation.";
 		next;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "You only need to look forward and never turn back.";
 		next;
 		for (set .@i,5131; .@i<=5146; set .@i,.@i+1)
@@ -2634,21 +2634,21 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 		getnameditem .@item,strcharinfo(0);
 		jobchange (Sex == SEX_MALE)?Job_Kagerou:Job_Oboro;
 		donpcevent "Summon Target#ko::OnEnable";
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I hope the blessings of Kagerou, dancing sun and Oboro, misty moonlight will be with you on your journey ahead.";
 		close2;
 		warp "que_ng",21,71;
 		end;
 	} else if (job_kagero == 9) {
 		cutin "job_ko01",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "I hope the blessings of Kagerou, dancing sun and Oboro, misty moonlight will be with you on your journey ahead.";
 		close2;
 		warp "que_ng",21,71;
 		end;
 	} else {
 		cutin "job_ko01",2;
-		mes "[Guide Gion]";
+		mes "[Leader Gion]";
 		mes "You should not be here. Please leave!"; //custom translation
 		close2;
 		warp "amatsu",147,136;
@@ -2656,16 +2656,16 @@ job_ko,148,46,4	script	Guide Gion#ko2	588,{
 	}
 }
 
-job_ko,151,47,4	script	Cougar#ko2	730,{
-	mes "[Cougar]";
+job_ko,151,47,4	script	Kuuga Gai#ko2	730,{
+	mes "[Kuuga Gai]";
 	mes "Congratulation for choosing the road of development!";
 	close;
 OnInit:
 OnDisable:
-	disablenpc "Cougar#ko2";
+	disablenpc "Kuuga Gai#ko2";
 	end;
 OnEnable:
-	enablenpc "Cougar#ko2";
+	enablenpc "Kuuga Gai#ko2";
 	end;
 }
 
@@ -2699,7 +2699,7 @@ OnEnable:
 		case 6: set .@mob,1049; break;
 		case 7: set .@mob,1050; break;
 	}
-	areamonster "job_ko",120,30,160,70,"Family Secret",.@mob,1,"Summon Target#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan Secret",.@mob,1,"Summon Target#ko::OnMyMobDead";
 	end;
 OnDisable:
 	initnpctimer;
@@ -2721,25 +2721,25 @@ OnInit:
 	donpcevent "Summon Fake#ko::OnEnable";
 	end;
 OnEnable:
-	areamonster "job_ko",120,30,160,70,"Family's Legacy",1002,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Legacy",1002,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Memory",1002,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Memory",1002,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Mistake",1031,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Mistake",1031,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Mistake",1031,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Mistake",1031,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Memory",1113,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Memory",1113,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Past",1113,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Past",1113,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Legacy",1063,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Legacy",1063,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Legacy",1063,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Legacy",1063,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Mistake",1010,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Mistake",1010,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Memory",1010,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Memory",1010,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Past",1049,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Past",1049,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Mistake",1049,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Mistake",1049,5,"Summon Fake#ko::OnMyMobDead";
-	areamonster "job_ko",120,30,160,70,"Family's Memory",1050,5,"Summon Fake#ko::OnMyMobDead";
+	areamonster "job_ko",120,30,160,70,"Clan's Memory",1050,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Oboro's Past",1050,5,"Summon Fake#ko::OnMyMobDead";
 	areamonster "job_ko",120,30,160,70,"Kagerou's Past",1050,5,"Summon Fake#ko::OnMyMobDead";
 	end;
