@@ -640,7 +640,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			if( sd && !(nk&NK_NO_CARDFIX_ATK) ) {
 				cardfix = cardfix * (100 + sd->magic_addrace[tstatus->race] + sd->magic_addrace[RC_ALL] + sd->magic_addrace2[t_race2]) / 100;
 				if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
-					cardfix = cardfix * (100 + sd->magic_addele[tstatus->def_ele] + sd->magic_addele[ELE_ALL] + 
+					cardfix = cardfix * (100 + sd->magic_addele[tstatus->def_ele] + sd->magic_addele[ELE_ALL] +
 						sd->magic_addele_script[tstatus->def_ele] + sd->magic_addele_script[ELE_ALL]) / 100;
 					cardfix = cardfix * (100 + sd->magic_atk_ele[rh_ele] + sd->magic_atk_ele[ELE_ALL]) / 100;
 				}
@@ -1216,6 +1216,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 		}
 
+		if((sce=sc->data[SC_MEIKYOUSISUI]) && rand()%100 < sce->val2)
+		{// Animation is unofficial, but it allows players to know when the nullify chance was successful. [Rytech]
+			clif_specialeffect(bl, 462, AREA);
+			return 0;
+		}
+
 #ifdef RENEWAL // Flat +400% damage from melee
 		if (sc->data[SC_KAITE] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT)
 			damage <<= 2;
@@ -1535,6 +1541,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (sc && sc->count) {
 		if( sc->data[SC_INVINCIBLE] && !sc->data[SC_INVINCIBLEOFF] )
 			damage += damage * 75 / 100;
+
+		if ( sd && (sce = sc->data[SC_SOULREAPER]) && rand()%100 < sce->val2){
+			clif_specialeffect(src, 1208, AREA);
+			pc_addsoulball(sd, skill_get_time2(SP_SOULREAPER, sce->val1), 5+3*pc_checkskill(sd, SP_SOULENERGY));
+		}
 
 		if ((sce = sc->data[SC_BLOODLUST]) && flag&BF_WEAPON && damage > 0 && rnd()%100 < sce->val3)
 			status_heal(src, damage * sce->val4 / 100, 0, 3);
@@ -4253,7 +4264,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case KO_SETSUDAN:
 			skillratio += 100 * (skill_lv - 1);
 			RE_LVL_DMOD(100);
-			if(tsc && tsc->data[SC_SPIRIT])
+			// Bonus damage added when target is soul linked.
+			if(tsc && ( tsc->data[SC_SPIRIT] || tsc->data[SC_SOULGOLEM] || tsc->data[SC_SOULSHADOW] || tsc->data[SC_SOULFALCON] || tsc->data[SC_SOULFAIRY]))
 				skillratio += 200 * tsc->data[SC_SPIRIT]->val1;
 			break;
 		case KO_BAKURETSU:
@@ -5827,6 +5839,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					MATK_ADD(sstatus->matk_min);
 				}
 
+				if (sd)
+				{// Soul energy spheres adds MATK.
+					MATK_ADD(3*sd->soulball);
+				}
+
 				if (nk&NK_SPLASHSPLIT) { // Divide MATK in case of multiple targets skill
 					if (mflag>0)
 						ad.damage /= mflag;
@@ -6161,6 +6178,23 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							RE_LVL_DMOD(100);
 						} else
 							skillratio += 10 + 20 * skill_lv;
+						break;
+					case SP_CURSEEXPLOSION:
+						if ( tsc && tsc->data[SC_CURSE] )
+							skillratio = 1500 + 200 * skill_lv;
+						else
+							skillratio = 400 + 100 * skill_lv;
+						break;
+					case SP_SPA:
+						skillratio = 500 + 250 * skill_lv;
+						skillratio = skillratio * status_get_lv(src) / 100;
+						break;
+					case SP_SHA:
+						skillratio = 5 * skill_lv;
+						break;
+					case SP_SWHOO:
+						skillratio = 1100 + 200 * skill_lv;
+						skillratio = skillratio * status_get_lv(src) / 100;
 						break;
 					case KO_KAIHOU:
 						if(sd && sd->spiritcharm_type != CHARM_TYPE_NONE && sd->spiritcharm > 0) {
@@ -6585,7 +6619,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 				struct Damage matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
 				md.damage = 7 * ((atk.damage/skill_lv + matk.damage/skill_lv) * tstatus->vit / 100 );
-	
+
 				// AD benefits from endow/element but damage is forced back to neutral
 				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			}
@@ -6972,7 +7006,7 @@ bool battle_vanish(struct map_session_data *sd, struct block_list *target, struc
 			wd->isspdamage = true;
 		} else // No damage
 			return false;
-		
+
 		return true;
 	} else {
 		// bHPVanishRate

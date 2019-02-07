@@ -24,7 +24,7 @@
 //       2 - 5x5
 //       3 - 7x7
 // 08 MaxLv
-// 09 Number of hits (when positive, damage is increased by hits, 
+// 09 Number of hits (when positive, damage is increased by hits,
 //    negative values just show number of hits without increasing total damage)
 // 10 Cast interrupted when hit?
 // 11 defense-reduction rate during cast.
@@ -876,7 +876,7 @@
 727,9,6,2,0,0x3,2:5:8:11:14,5,0,yes,0,0x2,0,magic,0,0x0,	NPC_LEX_AETERNA,Lex Aeterna 2
 728,9,8,1,-1,0x2,3:3:3:3:3:4:4:4:4:5,10,-3,yes,0,0x2,0,weapon,0,0x80,		NPC_ARROWSTORM,NPC Arrow Storm
 //729,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_CHEAL,NPC Coluceo Heal
-//730,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_SR_CURSEDCIRCLE,NPC 
+//730,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_SR_CURSEDCIRCLE,NPC
 //731,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_DRAGONBREATH,NPC Dragon Breath
 //732,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_FATALMENACE,NPC Fatal Menace
 //733,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MAGMA_ERUPTION,NPC Magma Eruption
@@ -1329,24 +1329,23 @@
 2595,0,0,1,0,0,0,7,0,yes,0,0x4000,0,none,0,0,	SJ_FALLINGSTAR_ATK2,Falling Star Attack 2
 
 // Soul Reaper
-2596,9,0,16,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULGOLEM,Soul Golem
-2597,9,0,16,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULSHADOW,Soul Shadow
-2598,9,0,16,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULFALCON,Soul Falcon
-2599,9,0,16,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULFAIRY,Soul Fairy
-2600,9,0,1,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_CURSEEXPLOSION,Curse Explosion
-2601,9,0,1,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULCURSE,Soul Curse
-2602,9,0,1,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SPA,Espa
-2603,9,0,1,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SHA,Esha
-2604,9,0,1,0,0,0,7,0,yes,0,0,0,none,0,0,		SP_SWHOO,Eswhoo
-// TODO: Why does this have a range?
-2605,11,0,4,0,0,0,7,0,yes,0,0,0,none,0,0,		SP_SOULUNITY,Soul Unity
-2606,9,0,1,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULDIVISION,Soul Division
-2607,0,0,4,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULREAPER,Soul Reaper
-2608,9,0,16,0,0,0,3,0,yes,0,0,0,none,0,0,		SP_SOULREVOLVE,Soul Revolve
-2609,0,0,4,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULCOLLECT,Soul Collect
-2610,7,0,1,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_SOULEXPLOSION,Soul Explosion
-2611,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0,		SP_SOULENERGY,Soul Energy
-2612,7,0,16,0,0,0,5,0,yes,0,0,0,none,0,0,		SP_KAUTE,Kaute
+2596,9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	SP_SOULGOLEM,Soul Golem
+2597,9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	SP_SOULSHADOW,Soul Shadow
+2598,9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	SP_SOULFALCON,Soul Falcon
+2599,9,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	SP_SOULFAIRY,Soul Fairy
+2600,9,8,1,7,0x2,3,5,-7,yes,0,0,0,magic,0,0x0,	SP_CURSEEXPLOSION,Curse Explosion
+2601,9,6,1,0,0x3,3,5,1,yes,0,0,0,magic,0,0x0,	SP_SOULCURSE,Soul Curse
+2602,9,6,1,-2,0,0,5,1,yes,0,0,0,magic,0,0x0,	SP_SPA,Espa
+2603,9,6,1,-2,0x2,1:1:2:2:2,5,1,yes,0,0,0,magic,0,0x0,	SP_SHA,Esha
+2604,9,8,1,-2,0x2,1:1:1:2:2:2:3,7,-5,yes,0,0,0,magic,0,0x0,	SP_SWHOO,Eswhoo
+2605,11,6,4,0,0x3,1:1:2:2:3:3:4,7,1,yes,0,0,0,magic,0,0x0,	SP_SOULUNITY,Soul Unity
+2606,9,6,1,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	SP_SOULDIVISION,Soul Division
+2607,0,6,4,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	SP_SOULREAPER,Soul Reaper
+2608,9,6,16,0,0x1,0,3,1,yes,0,0x400,0,magic,0,0x0,	SP_SOULREVOLVE,Soul Revolve
+2609,0,6,4,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	SP_SOULCOLLECT,Soul Collect
+2610,7,6,1,0,0xD0,0,5,1,yes,0,0,0,misc,0,0x0,	SP_SOULEXPLOSION,Soul Explosion
+2611,0,0,0,0,0,0,5,0,no,0,0,0,none,0,0x0,	SP_SOULENERGY,Soul Energy
+2612,7,6,16,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,	SP_KAUTE,Kaute
 
 //****
 // Kagerou & Oboro

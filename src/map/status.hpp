@@ -861,6 +861,20 @@ enum sc_type : int16 {
 
 	SC_ANCILLA,
 
+	// Soul Reaper
+	SC_SOULCOLLECT,
+	SC_SOULREAPER,
+	SC_SOULUNITY,
+	SC_SOULSHADOW,
+	SC_SOULFAIRY,
+	SC_SOULFALCON,
+	SC_SOULGOLEM,
+	SC_SOULDIVISION,
+	SC_SOULENERGY,
+	SC_USE_SKILL_SP_SPA,
+	SC_USE_SKILL_SP_SHA,
+	SC_SP_SHA,
+
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
 #endif
