@@ -5391,6 +5391,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		status_change_end(src, SC_SMA, INVALID_TIMER);
 	case SL_STIN:
 	case SL_STUN:
+	case SP_SPA:
 		if (sd && !battle_config.allow_es_magic_pc && bl->type != BL_MOB) {
 			status_change_start(src,src,SC_STUN,10000,skill_lv,0,0,0,500,SCSTART_NOTICKDEF|SCSTART_NORATEDEF);
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
@@ -16140,8 +16141,8 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		return false;
 	}
 
-	if ((require.spiritball > 0 && sd->spiritball < require.spiritball) ||
-		(require.spiritball == -1 && sd->spiritball < 1)) {
+	if ((require.spiritball > 0 && (sd->spiritball < require.spiritball && sd->soulball < require.spiritball)) ||
+		(require.spiritball == -1 && (sd->spiritball < 1 && sd->soulball < 1))) {
 		if ((sd->class_&MAPID_BASEMASK) == MAPID_GUNSLINGER || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL_COINS, (require.spiritball == -1) ? 1 : require.spiritball);
 		else
@@ -16373,21 +16374,6 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 
 	if( type&1 ) {
 		switch( skill_id ) {
-			case SP_SOULGOLEM:
-			case SP_SOULSHADOW:
-			case SP_SOULFALCON:
-			case SP_SOULFAIRY:
-			case SP_SOULCURSE:
-			case SP_SPA:
-			case SP_SHA:
-			case SP_SWHOO:
-			case SP_SOULUNITY:
-			case SP_SOULDIVISION:
-			case SP_SOULREAPER:
-			case SP_SOULEXPLOSION:
-			case SP_KAUTE:
-				pc_delsoulball(sd,require.spiritball,0);
-				break;
 
 			case CG_TAROTCARD: // TarotCard will consume sp in skill_cast_nodamage_id [Inkfish]
 			case MC_IDENTIFY:
@@ -16405,11 +16391,38 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 		if(require.hp || require.sp)
 			status_zap(&sd->bl, require.hp, require.sp);
 
-		if(require.spiritball > 0)
-			pc_delspiritball(sd,require.spiritball,0);
-		else if(require.spiritball == -1) {
-			sd->spiritball_old = sd->spiritball;
-			pc_delspiritball(sd,sd->spiritball,0);
+		switch(skill_id) {
+			case SP_SOULGOLEM:
+			case SP_SOULSHADOW:
+			case SP_SOULFALCON:
+			case SP_SOULFAIRY:
+			case SP_SOULCURSE:
+			case SP_SPA:
+			case SP_SHA:
+			case SP_SWHOO:
+			case SP_SOULUNITY:
+			case SP_SOULDIVISION:
+			case SP_SOULREAPER:
+			case SP_SOULEXPLOSION:
+			case SP_KAUTE:
+				if(require.spiritball > 0) {
+					pc_delsoulball(sd,require.spiritball,0);
+				}
+				else if(require.spiritball == -1) {
+					sd->soulball_old = sd->soulball;
+					pc_delsoulball(sd,sd->soulball,0);
+				}
+				break;
+
+			default:
+				if(require.spiritball > 0) {
+					pc_delspiritball(sd,require.spiritball,0);
+				}
+				else if(require.spiritball == -1) {
+					sd->spiritball_old = sd->spiritball;
+					pc_delspiritball(sd,sd->spiritball,0);
+				}
+				break;
 		}
 
 		if(require.zeny > 0)
