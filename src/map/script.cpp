@@ -8269,6 +8269,10 @@ BUILDIN_FUNC(getpartymember)
 				ShowError("buildin_getpartymember: The array %s is not string type.\n", varname);
 				return SCRIPT_CMD_FAILURE;
 			}
+			if (not_server_variable(*varname)) {
+				ShowError("buildin_getpartymember: Requires a server variable, player variable '%s' is invalid.\n", varname);
+				return SCRIPT_CMD_FAILURE;
+			}
 		}
 
 		for (i = 0; i < MAX_PARTY; i++) {
@@ -11164,6 +11168,12 @@ BUILDIN_FUNC(getunits)
 		id = reference_getid(data);
 		idx = reference_getindex(data);
 		name = reference_getname(data);
+
+		if (not_server_variable(*name)) {
+			st->state = END;
+			ShowError("buildin_%s: Requires a server variable, player variable '%s' is invalid.\n", command, name);
+			return SCRIPT_CMD_FAILURE;
+		}
 	}
 
 	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
@@ -17334,6 +17344,11 @@ BUILDIN_FUNC(getunitdata)
 
 	name = reference_getname(data);
 
+	if (not_server_variable(*name)) {
+		ShowError("buildin_getunitdata: Requires a server variable, player variable '%s' is invalid.\n", name);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 #define getunitdata_sub(idx__,var__) setd_sub(st,sd,name,(idx__),(void *)__64BPRTSIZE((int)(var__)),data->ref)
 
 	switch(bl->type) {
@@ -21699,6 +21714,10 @@ BUILDIN_FUNC(getguildmember)
 				ShowError("buildin_getguildmember: The array %s is not string type.\n", varname);
 				return SCRIPT_CMD_FAILURE;
 			}
+			if (not_server_variable(*varname)) {
+				ShowError("buildin_getguildmember: Requires a server variable, player variable '%s' is invalid.\n", varname);
+				return SCRIPT_CMD_FAILURE;
+			}
 		}
 
 		for (i = 0; i < MAX_GUILD; i++) {
@@ -23010,6 +23029,11 @@ BUILDIN_FUNC(channel_setgroup) {
 		if (varname[strlen(varname)-1] == '$') {
 			ShowError("buildin_channel_setgroup: The array %s is not numeric type.\n", varname);
 			script_pushint(st,0);
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		if (not_server_variable(*varname)) {
+			ShowError("buildin_%s: Requires a server variable, player variable '%s' is invalid.\n", funcname, varname);
 			return SCRIPT_CMD_FAILURE;
 		}
 
