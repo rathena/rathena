@@ -22430,6 +22430,11 @@ BUILDIN_FUNC(minmax){
 			// Get the session data, if a player is attached
 			sd = st->rid ? map_id2sd(st->rid) : NULL;
 
+			if (not_server_variable(*name) && sd == NULL) {
+				ShowError("buildin_%s: No player attached for player variable '%s'\n", functionname, name);
+				return SCRIPT_CMD_FAILURE;
+			}
+
 			// Try to find the array's source pointer
 			if( !script_array_src( st, sd, name, reference_getref( data ) ) ){
 				ShowError( "buildin_%s: not a array!\n", functionname );
