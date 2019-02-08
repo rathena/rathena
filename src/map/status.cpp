@@ -696,7 +696,7 @@ void initChangeTables(void)
 	set_sc( RA_ELECTRICSHOCKER	, SC_ELECTRICSHOCKER	, EFST_ELECTRICSHOCKER	, SCB_NONE );
 	set_sc( RA_WUGDASH			, SC_WUGDASH		, EFST_WUGDASH		, SCB_SPEED|SCB_DSPD );
 	set_sc( RA_WUGBITE          , SC_BITE           , EFST_WUGBITE        , SCB_NONE );
-	set_sc( RA_CAMOUFLAGE		, SC_CAMOUFLAGE		, EFST_CAMOUFLAGE		, SCB_SPEED|SCB_DEF|SCB_DEF2 );
+	set_sc( RA_CAMOUFLAGE		, SC_CAMOUFLAGE		, EFST_CAMOUFLAGE		, SCB_SPEED );
 	set_sc( RA_FIRINGTRAP       , SC_BURNING        , EFST_BURNT          , SCB_MDEF );
 	set_sc_with_vfx( RA_ICEBOUNDTRAP, SC_FREEZING		, EFST_FROSTMISTY		, SCB_SPEED|SCB_ASPD|SCB_DEF );
 	set_sc( RA_UNLIMIT		, SC_UNLIMIT		, EFST_UNLIMIT		, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
@@ -13319,12 +13319,14 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_CAMOUFLAGE:
-		if (!status_charge(bl, 0, 7 - sce->val1))
-			break;
-		if (--sce->val4 >= 0)
+		if (--sce->val4 >= 0) {
+			if (!status_charge(bl, 0, 7 - sce->val1))
+				break;
 			sce->val3++;
-		sc_timer_next(1000 + tick);
-		return 0;
+			sc_timer_next(1000 + tick);
+			return 0;
+		}
+		break;
 
 	case SC__REPRODUCE:
 		if(!status_charge(bl, 0, 1))
