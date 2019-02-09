@@ -5839,8 +5839,8 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					MATK_ADD(sstatus->matk_min);
 				}
 
-				if (sd)
-				{// Soul energy spheres adds MATK.
+				// Soul energy spheres adds MATK.
+				if (sd && ((sd->class_&MAPID_THIRDMASK) == MAPID_SOUL_REAPER || (sd->class_&MAPID_THIRDMASK) == MAPID_BABY_SOUL_REAPER)) {
 					MATK_ADD(3*sd->spiritball);
 				}
 
