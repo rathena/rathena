@@ -8270,8 +8270,12 @@ BUILDIN_FUNC(getpartymember)
 				return SCRIPT_CMD_FAILURE;
 			}
 			if (not_server_variable(*varname)) {
-				ShowError("buildin_getpartymember: Requires a server variable, player variable '%s' is invalid.\n", varname);
-				return SCRIPT_CMD_FAILURE;
+				struct map_session_data *sd;
+
+				if (!script_rid2sd(sd)) {
+					ShowError("buildin_getpartymember: Cannot use a player variable '%s' if no player is attached.\n", varname);
+					return SCRIPT_CMD_FAILURE;
+				}
 			}
 		}
 
@@ -11169,9 +11173,8 @@ BUILDIN_FUNC(getunits)
 		idx = reference_getindex(data);
 		name = reference_getname(data);
 
-		if (not_server_variable(*name)) {
-			st->state = END;
-			ShowError("buildin_%s: Requires a server variable, player variable '%s' is invalid.\n", command, name);
+		if (not_server_variable(*name) && !script_rid2sd(sd)) {
+			ShowError("buildin_%s: Cannot use a player variable '%s' if no player is attached.\n", command, name);
 			return SCRIPT_CMD_FAILURE;
 		}
 	}
@@ -17344,8 +17347,8 @@ BUILDIN_FUNC(getunitdata)
 
 	name = reference_getname(data);
 
-	if (not_server_variable(*name)) {
-		ShowError("buildin_getunitdata: Requires a server variable, player variable '%s' is invalid.\n", name);
+	if (not_server_variable(*name) && !script_rid2sd(sd)) {
+		ShowError("buildin_getunitdata: Cannot use a player variable '%s' if no player is attached.\n", name);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -21715,8 +21718,12 @@ BUILDIN_FUNC(getguildmember)
 				return SCRIPT_CMD_FAILURE;
 			}
 			if (not_server_variable(*varname)) {
-				ShowError("buildin_getguildmember: Requires a server variable, player variable '%s' is invalid.\n", varname);
-				return SCRIPT_CMD_FAILURE;
+				struct map_session_data *sd;
+
+				if (!script_rid2sd(sd)) {
+					ShowError("buildin_getguildmember: Cannot use a player variable '%s' if no player is attached.\n", varname);
+					return SCRIPT_CMD_FAILURE;
+				}
 			}
 		}
 
@@ -22449,8 +22456,8 @@ BUILDIN_FUNC(minmax){
 			// Get the session data, if a player is attached
 			sd = st->rid ? map_id2sd(st->rid) : NULL;
 
-			if (not_server_variable(*name) && sd == NULL) {
-				ShowError("buildin_%s: No player attached for player variable '%s'\n", functionname, name);
+			if (not_server_variable(*name) && !script_rid2sd(sd)) {
+				ShowError("buildin_%s: Cannot use a player variable '%s' if no player is attached.\n", functionname, name);
 				return SCRIPT_CMD_FAILURE;
 			}
 
@@ -23033,8 +23040,12 @@ BUILDIN_FUNC(channel_setgroup) {
 		}
 
 		if (not_server_variable(*varname)) {
-			ShowError("buildin_%s: Requires a server variable, player variable '%s' is invalid.\n", funcname, varname);
-			return SCRIPT_CMD_FAILURE;
+			struct map_session_data *sd;
+
+			if (!script_rid2sd(sd)) {
+				ShowError("buildin_%s: Cannot use a player variable '%s' if no player is attached.\n", funcname, varname);
+				return SCRIPT_CMD_FAILURE;
+			}
 		}
 
 		n = script_array_highest_key(st, NULL, reference_getname(data), reference_getref(data));
