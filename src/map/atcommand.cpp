@@ -3408,29 +3408,6 @@ ACMD_FUNC(spiritball)
 	return 0;
 }
 
-ACMD_FUNC(soulball)
-{
-	int max_soulballs = min(ARRAYLENGTH(sd->soul_timer), 0x7FFF);
-	int number;
-	nullpo_retr(-1, sd);
-
-	if( !message || !*message || (number = atoi(message)) < 0 || number > max_soulballs )
-	{
-		char msg[CHAT_SIZE_MAX];
-		safesnprintf(msg, sizeof(msg), "Usage: @soulball <number: 0-%d>", max_soulballs);
-		clif_displaymessage(fd, msg);
-		return -1;
-	}
-
-	if( sd->soulball > 0 )
-		pc_delsoulball(sd, sd->soulball, 1);
-	sd->soulball = number;
-	clif_soulball(sd);
-	// no message, player can look the difference
-
-	return 0;
-}
-
 /*==========================================
  *
  *------------------------------------------*/
@@ -10160,7 +10137,6 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(questskill),
 		ACMD_DEF(lostskill),
 		ACMD_DEF(spiritball),
-		ACMD_DEF(soulball),
 		ACMD_DEF(party),
 		ACMD_DEF(guild),
 		ACMD_DEF(breakguild),

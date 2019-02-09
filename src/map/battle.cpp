@@ -1544,7 +1544,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if ( sd && (sce = sc->data[SC_SOULREAPER]) && rand()%100 < sce->val2){
 			clif_specialeffect(src, 1208, AREA);
-			pc_addsoulball(sd, skill_get_time2(SP_SOULREAPER, sce->val1), 5+3*pc_checkskill(sd, SP_SOULENERGY));
+			pc_addspiritball(sd, skill_get_time2(SP_SOULREAPER, sce->val1), 5+3*pc_checkskill(sd, SP_SOULENERGY));
 		}
 
 		if ((sce = sc->data[SC_BLOODLUST]) && flag&BF_WEAPON && damage > 0 && rnd()%100 < sce->val3)
@@ -5841,7 +5841,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 
 				if (sd)
 				{// Soul energy spheres adds MATK.
-					MATK_ADD(3*sd->soulball);
+					MATK_ADD(3*sd->spiritball);
 				}
 
 				if (nk&NK_SPLASHSPLIT) { // Divide MATK in case of multiple targets skill

@@ -13737,7 +13737,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_SOULCOLLECT:
-		pc_addsoulball(sd, skill_get_time2(SP_SOULCOLLECT, sce->val1), sce->val2);
+		pc_addspiritball(sd, skill_get_time2(SP_SOULCOLLECT, sce->val1), sce->val2);
 		sc_timer_next(sce->val3+tick);
 		return 0;
 

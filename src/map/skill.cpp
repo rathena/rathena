@@ -15218,7 +15218,6 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 	{	//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
 		sd->state.arrow_atk = skill_get_ammotype(skill_id)?1:0; //Need to do arrow state check.
 		sd->spiritball_old = sd->spiritball; //Need to do Spiritball check.
-		sd->soulball_old = sd->soulball; //Need to do Soulball check.
 		return true;
 	}
 
@@ -16141,8 +16140,8 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 		return false;
 	}
 
-	if ((require.spiritball > 0 && (sd->spiritball < require.spiritball && sd->soulball < require.spiritball)) ||
-		(require.spiritball == -1 && (sd->spiritball < 1 && sd->soulball < 1))) {
+	if ((require.spiritball > 0 && sd->spiritball < require.spiritball) ||
+		(require.spiritball == -1 && sd->spiritball < 1 )) {
 		if ((sd->class_&MAPID_BASEMASK) == MAPID_GUNSLINGER || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL_COINS, (require.spiritball == -1) ? 1 : require.spiritball);
 		else
@@ -16177,7 +16176,6 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 		//GMs don't override the skillItem check, otherwise they can use items without them being consumed! [Skotlex]
 		sd->state.arrow_atk = skill_get_ammotype(skill_id)?1:0; //Need to do arrow state check.
 		sd->spiritball_old = sd->spiritball; //Need to do Spiritball check.
-		sd->soulball_old = sd->soulball; //Need to do Soulball check.
 		return true;
 	}
 
@@ -16390,39 +16388,13 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 		}
 		if(require.hp || require.sp)
 			status_zap(&sd->bl, require.hp, require.sp);
-
-		switch(skill_id) {
-			case SP_SOULGOLEM:
-			case SP_SOULSHADOW:
-			case SP_SOULFALCON:
-			case SP_SOULFAIRY:
-			case SP_SOULCURSE:
-			case SP_SPA:
-			case SP_SHA:
-			case SP_SWHOO:
-			case SP_SOULUNITY:
-			case SP_SOULDIVISION:
-			case SP_SOULREAPER:
-			case SP_SOULEXPLOSION:
-			case SP_KAUTE:
-				if(require.spiritball > 0) {
-					pc_delsoulball(sd,require.spiritball,0);
-				}
-				else if(require.spiritball == -1) {
-					sd->soulball_old = sd->soulball;
-					pc_delsoulball(sd,sd->soulball,0);
-				}
-				break;
-
-			default:
-				if(require.spiritball > 0) {
-					pc_delspiritball(sd,require.spiritball,0);
-				}
-				else if(require.spiritball == -1) {
-					sd->spiritball_old = sd->spiritball;
-					pc_delspiritball(sd,sd->spiritball,0);
-				}
-				break;
+		
+		if(require.spiritball > 0) {
+			pc_delspiritball(sd,require.spiritball,0);
+		}
+		else if(require.spiritball == -1) {
+			sd->spiritball_old = sd->spiritball;
+			pc_delspiritball(sd,sd->spiritball,0);
 		}
 
 		if(require.zeny > 0)
