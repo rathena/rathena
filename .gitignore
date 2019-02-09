@@ -71,7 +71,6 @@ Thumbs.db
 /src/common/Makefile
 /src/common/obj_all
 /src/common/obj_sql
-/src/common/svnversion.h
 
 # /src/custom/
 /src/custom
@@ -83,7 +82,7 @@ Thumbs.db
 # /src/map/
 /src/map/Makefile
 /src/map/obj_sql
-/src/map/pcre.h
+/src/map/pcre.hpp
 
 # /src/tool/
 /src/tool/Makefile

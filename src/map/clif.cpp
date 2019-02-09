@@ -238,7 +238,7 @@ void clif_setbindip(const char* ip)
 
 /*==========================================
  * Sets map port to 'port'
- * is run from map.c upon loading map server configuration
+ * is run from map.cpp upon loading map server configuration
  *------------------------------------------*/
 void clif_setport(uint16 port)
 {

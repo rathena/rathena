@@ -766,7 +766,7 @@ int chmapif_parse_fwlog_changestatus(int fd){
 			//	if( acc != -1 && isGM(acc) < isGM(account_id) )
 			//		result = 2; // 2-gm level too low
 			else {
-				//! NOTE: See src/char/chrif.h::enum chrif_req_op for the number
+				//! NOTE: See src/char/chrif.hpp::enum chrif_req_op for the number
 				switch( operation ) {
 					case CHRIF_OP_LOGIN_BLOCK: // block
 						WFIFOHEAD(login_fd,10);

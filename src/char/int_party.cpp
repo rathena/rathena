@@ -804,7 +804,7 @@ int mapif_parse_PartyShareLevel(int fd,unsigned int share_lvl)
 
 // Communication from the map server
 //-Analysis that only one packet
-// Data packet length is set to inter.c that you
+// Data packet length is set to inter.cpp that you
 // Do NOT go and check the packet length, RFIFOSKIP is done by the caller
 // Return :
 // 	0 : error

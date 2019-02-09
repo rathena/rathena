@@ -36,7 +36,7 @@
 #include "int_party.hpp"
 #include "int_storage.hpp"
 
-//definition of exported var declared in .h
+//definition of exported var declared in header
 int login_fd=-1; //login file descriptor
 int char_fd=-1; //char file descriptor
 struct Schema_Config schema_config;

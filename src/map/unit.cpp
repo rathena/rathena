@@ -41,7 +41,7 @@
 // 1 0 7
 // 2 . 6
 // 3 4 5
-// See also path.c walk_choices
+// See also path.cpp walk_choices
 const short dirx[DIR_MAX]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will move to x according dir
 const short diry[DIR_MAX]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
 
@@ -1350,7 +1350,7 @@ int unit_is_walking(struct block_list *bl)
 
 /** 
  * Checks if a unit is able to move based on status changes
- * View the StatusChangeStateTable in status.c for a list of statuses
+ * View the StatusChangeStateTable in status.cpp for a list of statuses
  * Some statuses are still checked here due too specific variables
  * @author [Skotlex]
  * @param bl: Object to check
