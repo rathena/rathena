@@ -30,7 +30,7 @@ enum sc_type : int16;
 #define MAX_PC_SKILL_REQUIRE 5 /// Max skill tree requirement
 #define MAX_PC_FEELHATE 3 /// Max feel hate info
 #define DAMAGELOG_SIZE_PC 100	/// Damage log
-#define MAX_SPIRITBALL 15 /// Max spirit balls
+#define MAX_SPIRITBALL 20 /// Max spirit balls
 #define MAX_DEVOTION 5 /// Max Devotion slots
 #define MAX_SPIRITCHARM 10 /// Max spirit charms
 #define MAX_UNITED_SOULS 12 // Max souls
