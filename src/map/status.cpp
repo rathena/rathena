@@ -13319,14 +13319,12 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_CAMOUFLAGE:
-		if (--sce->val4 >= 0) {
-			if (!status_charge(bl, 0, 7 - sce->val1))
-				break;
+		if (!status_charge(bl, 0, 7 - sce->val1))
+			break;
+		if (--sce->val4 >= 0)
 			sce->val3++;
-			sc_timer_next(1000 + tick);
-			return 0;
-		}
-		break;
+		sc_timer_next(1000 + tick);
+		return 0;
 
 	case SC__REPRODUCE:
 		if(!status_charge(bl, 0, 1))
