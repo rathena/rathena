@@ -71,6 +71,7 @@ Thumbs.db
 /src/common/Makefile
 /src/common/obj_all
 /src/common/obj_sql
+/src/common/version.hpp
 
 # /src/custom/
 /src/custom
