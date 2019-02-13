@@ -114,7 +114,7 @@ std::vector<std::string> YamlDatabase::getLocations(const std::string &filename,
 		case SPLIT_DB: // Split Database (pre-renewal / renewal)
 			return std::vector<std::string> { std::string(db_path) + "/" + std::string(DBPATH) + filename, std::string(db_path) + "/" + std::string(DBIMPORT) + "/" + filename };
 		case CONF_DB: // Conf Database
-			return std::vector<std::string> { std::string(conf_path) + filename, std::string(conf_path) + "/import/" + filename };
+			return std::vector<std::string> { std::string(conf_path) + "/" + filename, std::string(conf_path) + "/import/" + filename };
 	}
 
 	return {};
