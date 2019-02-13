@@ -7,7 +7,17 @@
 #include <functional>
 #include <yaml-cpp/yaml.h>
 
+#include "../config/core.hpp"
+
 #include "cbasetypes.hpp"
+#include "core.hpp"
+
+/// Types of database locations
+enum e_yamldb_location : uint8 {
+	NORMAL_DB = 0, //< Resides in "db/"
+	SPLIT_DB, //< Resides in "db/pre-re" or "db/re"
+	CONF_DB, //< Resides in "conf/"
+};
 
 class YamlDatabase{
 	std::string type;
@@ -29,7 +39,9 @@ public:
 	}
 
 	bool load( const std::string& path );
-	bool parse(const std::vector<std::string> &location, std::function<bool(const YAML::Node, const std::string)> func);
+	bool parse(const std::string &filename, e_yamldb_location location, std::function<bool(const YAML::Node, const std::string)> func);
+
+	std::vector<std::string> getLocations(const std::string &filename, e_yamldb_location location);
 
 	const YAML::Node& getRootNode();
 

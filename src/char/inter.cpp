@@ -913,10 +913,9 @@ bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
  * Loads storages from the inter-server db.
  */
 void inter_config_readConf(void) {
-	std::vector<std::string> directories = { "conf/" + interserv_config.cfgFile, "conf/import/" + interserv_config.cfgFile };
 	YamlDatabase db("INTER_SERVER_DB", 1);
 
-	if (!db.parse(directories, inter_server_read_db_sub))
+	if (!db.parse(interserv_config.cfgFile, CONF_DB, inter_server_read_db_sub))
 		return;
 }
 

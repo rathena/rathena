@@ -13009,10 +13009,9 @@ bool attendance_read_db_sub(const YAML::Node &node, const std::string &source)
  * Loads achievements from the attendance db.
  */
 void pc_attendance_read_db(){
-	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH) + "attendance.yml", std::string(db_path) + "/" + std::string(DBIMPORT) + "/attendance.yml" };
 	YamlDatabase db("ATTENDANCE_DB", 1);
 
-	if (!db.parse(directories, attendance_read_db_sub))
+	if (!db.parse("attendance.yml", SPLIT_DB, attendance_read_db_sub))
 		return;
 }
 

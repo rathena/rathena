@@ -86,8 +86,10 @@ const YAML::Node& YamlDatabase::getRootNode(){
 	return this->root;
 }
 
-bool YamlDatabase::parse(const std::vector<std::string> &location, std::function<bool(const YAML::Node, const std::string)> func) {
-	for (auto &current_file : location) {
+bool YamlDatabase::parse(const std::string &filename, e_yamldb_location location, std::function<bool(const YAML::Node, const std::string)> func) {
+	std::vector<std::string> db_filename = YamlDatabase::getLocations(filename, location);
+
+	for (auto &current_file : db_filename) {
 		int count = 0;
 
 		if (!this->load(current_file.c_str()))
@@ -104,9 +106,23 @@ bool YamlDatabase::parse(const std::vector<std::string> &location, std::function
 	return true;
 }
 
+std::vector<std::string> YamlDatabase::getLocations(const std::string &filename, e_yamldb_location location)
+{
+	switch (location) {
+		case NORMAL_DB: // Non-split Database
+			return std::vector<std::string> { std::string(db_path) + "/" + filename, std::string(db_path) + "/" + std::string(DBIMPORT) + "/" + filename };
+		case SPLIT_DB: // Split Database (pre-renewal / renewal)
+			return std::vector<std::string> { std::string(db_path) + "/" + std::string(DBPATH) + filename, std::string(db_path) + "/" + std::string(DBIMPORT) + "/" + filename };
+		case CONF_DB: // Conf Database
+			return std::vector<std::string> { std::string(conf_path) + filename, std::string(conf_path) + "/import/" + filename };
+	}
+
+	return {};
+}
+
 template <typename R> bool asType( const YAML::Node& node, const std::string& name, R* out, R* defaultValue ){
 	if( out == nullptr ){
-		ShowFatalError( "asType: No output pointer was given\n" );
+		ShowFatalError( "asType: No output pointer was given.\n" );
 		return false;
 	}else if( YamlDatabase::nodeExists( node, name ) ){
 		const YAML::Node& dataNode = node[name];

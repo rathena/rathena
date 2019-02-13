@@ -907,10 +907,9 @@ bool achievement_read_db_sub(const YAML::Node &node, const std::string &source)
  */
 void achievement_read_db(void)
 {
-	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH) + "achievement_db.yml", std::string(db_path) + "/" + std::string(DBIMPORT) + "/achievement_db.yml" };
 	YamlDatabase db("ACHIEVEMENT_DB", 1);
 		
-	if (!db.parse(directories, achievement_read_db_sub))
+	if (!db.parse("achievement_db.yml", SPLIT_DB, achievement_read_db_sub))
 		return;
 
 	for (auto &achit : achievements) {
