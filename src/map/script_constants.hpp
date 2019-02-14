@@ -2376,6 +2376,7 @@
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_CONST)
 	export_constant(EFST_BLANK);
+	export_constant(EFST_PROVOKE);
 	export_constant(EFST_ENDURE);
 	export_constant(EFST_TWOHANDQUICKEN);
 	export_constant(EFST_CONCENTRATION);

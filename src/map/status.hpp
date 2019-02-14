@@ -872,8 +872,8 @@ enum efst_types : short{
 /// Do not modify code below this, until the end of the API hook, since it will be automatically generated again
 /// @APIHOOK_START(EFST_ENUM)
 	EFST_BLANK = -1,
-
-	EFST_ENDURE = 1,
+	EFST_PROVOKE,
+	EFST_ENDURE,
 	EFST_TWOHANDQUICKEN,
 	EFST_CONCENTRATION,
 	EFST_HIDING,
