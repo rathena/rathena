@@ -5,7 +5,21 @@
 //= Quest NPCs related to Morroc.
 //===== Changelogs: ==========================================
 //= 1.0 Succession of the Prince removed in ep16.1 [Capuche]
+//= 1.1 Moved renewal specific npcs [zackdreaver]
 //============================================================
+
+// Stop Post Quest
+// ============================================================
+moc_ruins,113,181,4	duplicate(William)	William#moc	89
+
+// Binoculars Quest
+// ============================================================
+moc_ruins,118,176,4	duplicate(Alchemist)	Alchemist#moc	64
+
+// Resurrection of Satan Morroc
+// ============================================================
+
+morocc,176,103,3	duplicate(Continental Official)	Continental Official#mor	754
 
 // Succession of the Prince
 // ============================================================

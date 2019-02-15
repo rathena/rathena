@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHAR_CLIF_HPP_
-#define _CHAR_CLIF_HPP_
+#ifndef CHAR_CLIF_HPP
+#define CHAR_CLIF_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/timer.hpp" //time_t
@@ -53,5 +53,4 @@ void chclif_block_character( int fd, struct char_session_data* sd);
 
 int chclif_parse(int fd);
 
-#endif	/* _CHAR_CLIF_HPP_ */
-
+#endif /* CHAR_CLIF_HPP */

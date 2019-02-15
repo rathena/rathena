@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MALLOC_HPP_
-#define _MALLOC_HPP_
+#ifndef MALLOC_HPP
+#define MALLOC_HPP
 
 #include "cbasetypes.hpp"
 
@@ -89,4 +89,4 @@ size_t malloc_usage (void);
 void malloc_init (void);
 void malloc_final (void);
 
-#endif /* _MALLOC_HPP_ */
+#endif /* MALLOC_HPP */

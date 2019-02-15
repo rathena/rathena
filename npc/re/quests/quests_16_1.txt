@@ -30,7 +30,7 @@ function	script	F_Mysterious_box	{
 }
 
 // Main Quest
-prontera,121,72,3	script	Royal Errand Boy#e16_pr	4_M_ZONDAOYAJI,5,5,{
+prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	if (checkweight(501,1) == 0) {
 		mes "- You cannot proceed with the quest since you have too many items. -";
 		close;
@@ -38,48 +38,48 @@ prontera,121,72,3	script	Royal Errand Boy#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	switch( banquet_main_quest ) {
 	case 0:
 		if (BaseLevel < 100 || (ep13_ryu < 100 && ep13_start < 100)) {// Access to the New World pre-req (Onward to the New World Quest or Cat Hand Agent Quest)
-			mes "[Errand Boy]";
+			mes "[Royal Messenger]";
 			mes "Hello!";
 			mes "Now ^4d4dffthe palace is hosting a banquet for the returning heroes from Vacuum^000000.";
 			mes "Please tell me ^4d4dffwhere the heroes who have participated in the expedition are^000000 if you know any.";
 			next;
-			mes "[Errand Boy]";
+			mes "[Royal Messenger]";
 			mes "I wonder where they are. They are so scattered that it is difficult to locate each one of them. Hahaha!";
 			close;
 		}
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "Oh, wait. You are...";
 		mes "" + strcharinfo(0) + ", right?";
 		mes "Let's see.";
 		next;
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "I am right. You look exactly the same as the montage from the guild. Hahahaha!";
 		mes "My eyes are doing what they are supposed to do now, I guess.";
 		next;
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "It is difficult to find the freelance adventurers who don't belong to the military.";
 		mes "It was very difficult to find you since you are not bound to anywhere.";
 		next;
 		select("May I help you?");
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "Help? Sure thing!";
 		mes "You know that there is a banquet taking place in celebration of subjugating Morocc.";
 		mes "An invitation has been issued for you. But it was just impossible to meet you.";
 		next;
-		mes "[Errand Boy]";
-		mes "I am sure that all the errand boys of the city must be looking for with the portrait of you.";
+		mes "[Royal Messenger]";
+		mes "I am sure that all the Royal Messengers of the city must be looking for with the portrait of you.";
 		mes "Hey, since we don't have enough time, please take this invitation for you.";
 		next;
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "You must attend the banquet. Do you understand? ^4d4dffYou've been invited as a special guest^000000.";
 		next;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : A special guest?", bc_self;
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "The people in the palace will fill you up with the details.";
 		mes "I am just a messenger after all.";
 		mes "Although the banquet will be held for quite a while, don't take too much time to get there.";
 		next;
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "Make sure to bring the invitation with you. Don't forget!";
 		mes "Why don't you go right now? ^4d4dffI can teleport you there now if you want^000000.";
 		getitem 6933,1;// Banquet Invitation
@@ -87,55 +87,55 @@ prontera,121,72,3	script	Royal Errand Boy#e16_pr	4_M_ZONDAOYAJI,5,5,{
 		banquet_main_quest = 1;
 		next;
 		if (select( "I'll go on my own.", "I'll go right away." ) == 1) {
-			mes "[Errand Boy]";
+			mes "[Royal Messenger]";
 			mes "You can visit the Prontera Palace.";
 			mes "You may show the invitation to the guard at the gate or";
 			mes "A servant in charge of the banquet.";
 			next;
-			mes "[Errand Boy]";
+			mes "[Royal Messenger]";
 			mes "Since I have delivered the invitation to you, I shall wait for another one.";
 			mes "I hope you have a good time there, dear hero.";
 			close;
 		}
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "Let me teleport you there right away.";
 		mes "When you arrive, there will be a servant for reception. You can show the invitation then.";
 		close2;
 		warp "prontera",156,327;
 		end;
 	case 1:
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "Why are you still here?";
 		mes "What can I do for you?";
 		next;
 		if (select( "Send me to the Banquet Hall.", "I have lost the invitation." ) == 2) {
 			if (countitem(6933) < 1) {
-				mes "[Errand Boy]";
+				mes "[Royal Messenger]";
 				mes "What a shame! What happened?";
 				mes "Well, since the message that you'll be there has already been sent there,";
 				mes "You may not really need the invitation anyways.";
 				next;
-				mes "[Errand Boy]";
+				mes "[Royal Messenger]";
 				mes "When you go to the palace, the servant in charge will recognize you.";
 				mes "Don't worry, and you may go to the palace now.";
 				close;
 			}
-			mes "[Errand Boy]";
+			mes "[Royal Messenger]";
 			mes "Eh? What is that you have in your pocket? It looks like an invitation to me.";
 			mes "I may have a tiny set of eyes, but I wouldn't miss it.";
 			next;
-			mes "[Errand Boy]";
+			mes "[Royal Messenger]";
 			mes "Since you have found your invitation, let's get going! Hahahaha!";
 			close;
 		}
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "Let me teleport you there right away.";
 		mes "When you arrive, there will be a servant for reception. You can show the invitation then.";
 		close2;
 		warp "prontera",156,327;
 		end;
 	default:
-		mes "[Errand Boy]";
+		mes "[Royal Messenger]";
 		mes "I have heard that you have attended the banquet safely.";
 		mes "I need to find the others and send them to the banquet as well.";
 		close2;
@@ -144,21 +144,21 @@ prontera,121,72,3	script	Royal Errand Boy#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	}
 
 OnTouch:
-	if (banquet_main_quest == 0)
+	if (banquet_main_quest == 0 && BaseLevel > 99 && (ep13_ryu > 99 || ep13_start > 99))
 		npctalk "Wait! You must be... " + strcharinfo(0) + ". I have something to tell you!", "", bc_self;
 	else
 		npctalk "I am looking for the hero who returned from the expedition...", "", bc_self;
 	end;
 }
-rachel,119,131,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_ra	4_M_ZONDAOYAJI
-aldebaran,159,113,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_ald	4_M_ZONDAOYAJI
-alberta,119,59,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_alb	4_M_ZONDAOYAJI
-veins,200,108,5	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_ve	4_M_ZONDAOYAJI
-geffen,123,68,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_ge	4_M_ZONDAOYAJI
-payon,168,65,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_pa	4_M_ZONDAOYAJI
-morocc,152,97,5	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_mo	4_M_ZONDAOYAJI
-yuno,162,132,3	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_yu	4_M_ZONDAOYAJI
-lighthalzen,152,100,5	duplicate(Royal Errand Boy#e16_pr)	Royal Errand Boy#e16_lh	4_M_ZONDAOYAJI
+rachel,119,131,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ra	4_M_ZONDAOYAJI,5,5
+aldebaran,159,113,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ald	4_M_ZONDAOYAJI,5,5
+alberta,119,59,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_alb	4_M_ZONDAOYAJI,5,5
+veins,200,108,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ve	4_M_ZONDAOYAJI,5,5
+geffen,123,68,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ge	4_M_ZONDAOYAJI,5,5
+payon,168,65,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_pa	4_M_ZONDAOYAJI,5,5
+morocc,152,97,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_mo	4_M_ZONDAOYAJI,5,5
+yuno,162,132,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_yu	4_M_ZONDAOYAJI,5,5
+lighthalzen,152,100,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_lh	4_M_ZONDAOYAJI,5,5
 
 prontera,150,331,4	script	Royal Guard#ep16_ect01	8W_SOLDIER,4,4,{
 	if (banquet_main_quest == 1) {
@@ -1572,7 +1572,7 @@ prt_lib,76,80,3	script	Lindt the Librarian#ep1	1_M_01,{
 prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 	switch( banquet_main_quest ) {
 	case 8:
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {// solo instance
+		if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
 			mes "^4d4dffIt is an event which proceeds as a memorial.";
 			mes "Only the party leader can proceed with a memorial event. Try again after forming a party.^000000";
 			close;
@@ -1760,7 +1760,7 @@ prt_lib,91,85,3	script	Mage Nillem#ep16_warp	4_M_JOB_WIZARD,{
 
 prt_lib,88,90,1	script	Room of Consciousness#e	HIDDEN_WARP_NPC,{
 	if (banquet_main_quest == 8) {
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffOnly the party leader can enter MD [Ritual of Blessing].^000000";
 			close;
 		}
@@ -1771,7 +1771,7 @@ prt_lib,88,90,1	script	Room of Consciousness#e	HIDDEN_WARP_NPC,{
 			mes "Hum... This gate is only activated temporarily so that it doesn't last long.";
 			close;
 		}
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffOnly the party leader can enter MD [Ritual of Blessing].^000000";
 			close;
 		}
@@ -2257,7 +2257,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 		close;
 	}
 	if (banquet_main_quest == 21) {
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffIt is an event which proceeds as a memorial.";
 			mes "Only the party leader can proceed with a memorial event. Try again after forming a party.^000000";
 			close;
@@ -2449,7 +2449,7 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 				close;
 			case 0:
 			case 1:
-				if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+				if (getcharid(1) == 0 || is_party_leader() == false) {
 					mes "^4d4dffIt is an event which proceeds as a memorial.";
 					mes "Only the party leader can proceed with a memorial event. Try again after forming a party.^000000";
 					close;
@@ -2518,14 +2518,14 @@ prt_lib_q,91,85,3	script	Nillem#ep16_lib_q	4_M_JOB_WIZARD,{
 
 prt_lib_q,88,90,1	script	Swaying Space#evt_gate0	HIDDEN_WARP_NPC,{
 	if (banquet_main_quest == 21) {
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {// solo instance
+		if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
 			mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
 			close;
 		}
 		mes "You can move to the place where the piece of Imir Heart was in the past.";
 		next;
 		if (select( "Enter.", "Do not enter." ) == 1) {
-			if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+			if (getcharid(1) == 0 || is_party_leader() == false) {
 				mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
 				close;
 			}
@@ -2557,7 +2557,7 @@ prt_lib_q,88,90,1	script	Swaying Space#evt_gate0	HIDDEN_WARP_NPC,{
 		close;
 	}
 	if (banquet_main_quest == 26) {
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {// solo instance
+		if (getcharid(1) == 0 || is_party_leader() == false) {// solo instance
 			mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
 			close;
 		}
@@ -2569,7 +2569,7 @@ prt_lib_q,88,90,1	script	Swaying Space#evt_gate0	HIDDEN_WARP_NPC,{
 			mes "Such thing is possible since I am a genius!";
 			close;
 		}
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (getcharid(1) == 0 || is_party_leader() == false) {
 			mes "^4d4dffOnly the party leader can enter MD [Room of Consciousness].^000000";
 			close;
 		}
@@ -14869,7 +14869,7 @@ OnTouch_:
 	unittalk getcharid(3), "" + strcharinfo(0) + " : ?";
 	sleep2 1000;
 	specialeffect EF_POISONSMOKE;
-	getmapxy .@map$, .@x, .@y, UNITTYPE_NPC;
+	getmapxy .@map$, .@x, .@y, BL_NPC;
 	monster "prt_q",.@x,.@y,"Resurrected Corpse",1015,1, strnpcinfo(0) + "::OnMyMobDead";// ZOMBIE
 	monster "prt_q",.@x,.@y,"Maggot",1194,1, strnpcinfo(0) + "::OnMyMobDead";// ARCLOUSE
 	monster "prt_q",.@x,.@y,"Fly",1035,1, strnpcinfo(0) + "::OnMyMobDead";// HUNTER_FLY
@@ -15254,7 +15254,13 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 				124, 4701,	// STR+2
 				126, 4731,	// AGI+2
 				128, 4751,	// LUK+2
-				129, 4741;	// VIT+2
+				129, 4741,	// VIT+2
+				130, 4752,	// LUK+3
+				131, 4702,	// STR+3
+				132, 4732,	// AGI+3
+				133, 4712,	// INT+3
+				134, 4722,	// DEX+3
+				135, 4742;	// VIT+3
 			.@card_index = 3;
 		}
 		else {
@@ -15269,9 +15275,14 @@ prt_pri00,61,136,3	script	Dylan#pa0829	4_CAT_SAILOR5,{
 				120, 4711,	// INT+2
 				122, 4721,	// DEX+2
 				124, 4741,	// VIT+2
-				126, 4742,	// VIT+3
-				128, 4701,	// STR+2
-				129, 4752;	// LUK+3
+				126, 4701,	// STR+2
+				128, 4731,	// AGI+2
+				129, 4742,	// VIT+3
+				130, 4752,	// LUK+3
+				131, 4702,	// STR+3
+				132, 4732,	// AGI+3
+				133, 4712,	// INT+3
+				134, 4722;	// DEX+3
 			.@card_index = 2;
 		}
 		.@size = getarraysize(.@enhance);

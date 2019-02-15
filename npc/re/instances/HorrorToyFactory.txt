@@ -146,7 +146,7 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 	}
 	switch( checkquest(12331,PLAYTIME) ) {
 	case -1:
-		if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (is_party_leader() == false) {
 			mes "[Catherine Jet Johnson]";
 			mes "Eh.. Give me a second. I am talking to the person in charge. Please wait a little bit.";
 			close;
@@ -226,7 +226,7 @@ xmas,233,305,4	script	Factory Dimension Telep	PORTAL,{
 		mes "Please wait until the transformation is finished. You cannot move to another area until you become normal.";
 		close;
 	}
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "[Catherine Jet Johnson]";
 		mes "Eh.. Give me a second. I am talking to the person in charge. Please wait.";
 		close;
@@ -317,26 +317,12 @@ OnStart2:
 	donpcevent instance_npcname("#fac1ct") + "::OnStart";
 	disablenpc instance_npcname("#bgm01");
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	// disable some warps
-	disablenpc instance_npcname("#fac3wp");
-	disablenpc instance_npcname("#fac3wp2");
-	disablenpc instance_npcname("#fac4wp");
-	disablenpc instance_npcname("#fac4wp2");
-	disablenpc instance_npcname("#fac5wp");
-	disablenpc instance_npcname("#fac6wp");
-	end;
 }
 
 1@xm_d,112,20,0	script	#bgm01	-1,9,9,{
 	end;
 OnTouch:
 	playBGM "99";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -352,9 +338,6 @@ OnInstanceInit:
 	mes "^ff0000You are in transformation.";
 	mes "You cannot use the uniform box when already transformed.^000000";
 	close;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 1@xm_d,116,16,6	duplicate(Employees' Uniform Box#1)	Employees' Uniform Box#2	4_NONMYSTCASE
 1@xm_d,10,20,6	duplicate(Employees' Uniform Box#1)	Employees' Uniform Box#3	4_NONMYSTCASE
@@ -381,14 +364,10 @@ OnTimer1000:
 		disablenpc instance_npcname( "alert#"+ .@i );
 	stopnpctimer;
 	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,71,129,3	script	#fac1bs	4_M_COOKIE,{
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		.@mob_id_transform = getstatus(SC_MONSTER_TRANSFORM,1);
 		mes "[Coordinator]";
 		if (.@mob_id_transform == 1246) {
@@ -432,10 +411,6 @@ OnTimer60000:
 	npctalk "Coordinator: This kind of thing happens a lot these days...";
 	stopnpctimer;
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,65,127,6	script	#pck1	4_NONMYSTCASE,{
@@ -450,13 +425,10 @@ OnInstanceInit:
 	else
 		mes "^ff0000You are not in uniform. The Coordinator won't let you pick it up.^000000";
 	close;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,76,129,0	script	#fac1wp	WARPNPC,2,2,{
+	end;
 OnTouch:
 	if (getstatus(SC_MONSTER_TRANSFORM,1) == 1249) {
 		warp 'xm_d_map$,88,129;
@@ -466,6 +438,7 @@ OnTouch:
 }
 
 1@xm_d,179,129,0	script	#fac2wp	WARPNPC,2,2,{
+	end;
 OnTouch:
 	if (getstatus(SC_MONSTER_TRANSFORM,1) == 1249) {
 		warp 'xm_d_map$,183,100;
@@ -499,13 +472,10 @@ OnStart:
 	else
 		mapannounce 'xm_d_map$, "Guard's announcement: Invaders are spotted! They seem human! I will blip them off!", bc_map, "0xffff00";
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,10,24,0	script	alert#61	-1,10,10,{
+	end;
 OnTouch_:
 	if (getstatus(SC_MONSTER_TRANSFORM,1) != 1246) {
 		switch( atoi(strnpcinfo(2)) ) {
@@ -527,7 +497,7 @@ OnTouch_:
 				.@count = 5;
 				break;
 		}
-		getmapxy .@map$, .@x, .@y, 0;
+		getmapxy .@map$, .@x, .@y;
 		.@npc_name$ = instance_npcname( strnpcinfo(0) );
 		.@event$ = .@npc_name$ + "::OnMyMobDead";
 		playBGM "125";
@@ -595,7 +565,7 @@ OnMyMobDead:
 
 
 1@xm_d,185,100,6	script	Catherine Jet Johnson#2	4_F_SKULL06GIRL,{
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		mes "[Catherine Jet Johnson]";
 		mes "Lucky you got here safely.";
 		next;
@@ -658,18 +628,12 @@ S_Skip:
 		enablenpc instance_npcname( "Worker#"+ .@i );
 	disablenpc instance_npcname("#bgm06");
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,185,100,0	script	#bgm06	-1,9,9,{
+	end;
 OnTouch:
 	playBGM "99";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -685,10 +649,6 @@ OnInstanceInit:
 	mes "^ff0000You transformed into a different form.";
 	mes "You can't seem to put on the uniform over your fangs.^000000";
 	close;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,5,3	script	#fac2ct	CLEAR_NPC,{
@@ -707,10 +667,6 @@ OnStart:
 	end;
 OnMyMobDead:
 	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,2,3	script	#fac2wpc	CLEAR_NPC,{
@@ -727,10 +683,6 @@ OnStart:
 	}
 	else
 		mapannounce 'xm_d_map$, "Factory announcement: Now there are " + (10 - .@fac_open) + " people on the packaging line. Take care of yourself.", bc_map, "0x00ff44";
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -834,7 +786,7 @@ OnAlert:
 		setarray .@coord[0],209,27;
 		break;
 	default:
-		getmapxy .@map$, .@coord[0], .@coord[1], UNITTYPE_NPC;
+		getmapxy .@map$, .@coord[0], .@coord[1], BL_NPC;
 		break;
 	}
 	areamonster 'xm_d_map$,(.@coord[0]-8),(.@coord[1]-8),(.@coord[0]+8),(.@coord[1]+8), "Guard",2990,21, .@npc_name$ + "::OnMyMobDead";
@@ -851,10 +803,6 @@ OnTimer60000:
 	end;
 
 OnMyMobDead:
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 1@xm_d,130,72,3	duplicate(Worker#1)	Worker#2	4_M_COOKIE
@@ -883,10 +831,6 @@ OnTouch_:
 	mes "[Captured Santa]";
 	mes "Even if no one owns it, its not right to steal it from everyone.";
 	close;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,131,213,4	script	Antonio#1	4_M_ANTONIO,{
@@ -944,20 +888,16 @@ OnStart:
 }
 
 1@xm_d,131,208,0	script	#bgm04	-1,9,9,{
+	end;
 OnTouch:
 	playBGM "54";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
 1@xm_d,131,208,0	script	#bgm05	-1,9,9,{
+	end;
 OnTouch:
 	playBGM "105";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -976,9 +916,6 @@ OnStart:
 	end;
 OnMyMobDead:
 	end;
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,5,3	script	#fac3ct2	CLEAR_NPC,{
@@ -995,9 +932,6 @@ OnStart:
 	areamonster 'xm_d_map$,159,215,241,247, "Creepy Demon",2992,11, .@event$;			// XM_LUDE
 	end;
 OnMyMobDead:
-	end;
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1025,10 +959,6 @@ OnEnd:
 	mapannounce 'xm_d_map$, "???: I won't harm you if you leave quietly without spoiling it for me.", bc_map, "0xff8800";
 	stopnpctimer;
 	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,5,3	script	#finalbs	CLEAR_NPC,{
@@ -1040,19 +970,14 @@ OnStart:
 	// enablenpc instance_npcname("#fac5wp2");// never enabled
 	enablenpc instance_npcname("#jeton1");
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 /*
 // never enabled
 1@xm_d,160,208,0	script	#fac5wp2	WARPNPC,2,2,{
+	end;
 OnTouch:
 	warp 'xm_d_map$,145,208;
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 */
@@ -1061,28 +986,21 @@ OnInstanceInit:
 	mes "[Celine Kimi]";
 	mes "Did you come here as well? Why are all of the humans so anxious to destroy what we built?";
 	close;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,222,183,0	script	#jeton1	-1,7,7,{
+	end;
 OnTouch_:
 	disablenpc instance_npcname("#jeton1");
 	donpcevent instance_npcname("Catherine Jet Johnson#5") + "::OnStart";
 	enablenpc instance_npcname("#bgm02");
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,222,183,0	script	#bgm02	-1,9,9,{
+	end;
 OnTouch:
 	playBGM "101";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1144,10 +1062,6 @@ OnStart:
 	donpcevent instance_npcname("#finalbs2") + "::OnStart";
 	disablenpc instance_npcname("#bgm02");
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,5,3	script	#finalbs2	CLEAR_NPC,{
@@ -1175,7 +1089,7 @@ OnMyMobDead:
 
 OnEnd:
 	stopnpctimer;
-	killmonster 'xm_d_map$, instance_npcname( strnpcinfo(0) ) + "::OnMyMobDead";
+	killmonster 'xm_d_map$, instance_npcname("#finalbs2") + "::OnMyMobDead";
 	disablenpc instance_npcname("#bgm03");
 	donpcevent instance_npcname("#finalbs_e") + "::OnStart";
 	end;
@@ -1199,10 +1113,12 @@ OnTalk:
 	end;
 
 OnTimer1000:
-	getunitdata 'celene_id, .@data;
-	if ((.@data[UMOB_X] < 211 || .@data[UMOB_X] > 241 || .@data[UMOB_Y] < 166 || .@data[UMOB_Y] > 201) && (.@data[UMOB_X] > 0 || .@data[UMOB_Y] > 0)) {
-		mapannounce 'xm_d_map$, "Celine Kimi: No! I should keep my place!",bc_map,"0xff6666",FW_NORMAL,15;
-		donpcevent instance_npcname("#finalbs2") + "::Onfail";
+	if (unitexists('celene_id) == true) {
+		getunitdata 'celene_id, .@data;
+		if ((.@data[UMOB_X] < 211 || .@data[UMOB_X] > 241 || .@data[UMOB_Y] < 166 || .@data[UMOB_Y] > 201) && (.@data[UMOB_X] > 0 || .@data[UMOB_Y] > 0)) {
+			mapannounce 'xm_d_map$, "Celine Kimi: No! I should keep my place!",bc_map,"0xff6666",FW_NORMAL,15;
+			donpcevent instance_npcname("#finalbs2") + "::Onfail";
+		}
 	}
 	end;
 
@@ -1215,7 +1131,8 @@ Onfail:
 	end;
 
 OnTimer5000:
-	donpcevent instance_npcname("#bssk01") + "::OnStart";
+	if (unitexists('celene_id) == true)
+		donpcevent instance_npcname("#bssk01") + "::OnStart";
 	end;
 
 OnTimer10000:
@@ -1254,10 +1171,6 @@ OnTimer10000:
 		initnpctimer;
 	}
 	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,216,193,3	script	#eff_f01	CLEAR_NPC,{
@@ -1266,15 +1179,9 @@ OnStart:
 	for ( .@i = 1; .@i < 10; .@i++ )
 		specialeffect EF_HEARTCASTING, AREA, instance_npcname( "#eff_f0"+ .@i );
 	end;
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,226,193,3	script	#eff_f02	CLEAR_NPC,{
-	end;
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 1@xm_d,236,193,3	duplicate(#eff_f02)	#eff_f03	CLEAR_NPC
@@ -1294,9 +1201,6 @@ OnStart:
 	else if (.@r == 2)
 		donpcevent instance_npcname("#bssk03") + "::OnStart";
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,1,5,3	script	#bssk02	CLEAR_NPC,{
@@ -1305,9 +1209,6 @@ OnStart:
 	donpcevent instance_npcname("#finalbs2") + "::OnTalk";
 	for ( .@i = 1; .@i < 5; .@i++ )
 		donpcevent instance_npcname( "#crssk"+ .@i ) + "::OnStart";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1331,10 +1232,6 @@ OnStart:
 	end;
 
 OnMyMobDead:
-	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1361,22 +1258,16 @@ OnStart:
 	end;
 OnMyMobDead:
 	end;
-
-OnInstanceInit:
-	hideonnpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 1@xm_d,1,5,3	duplicate(#crssk1)	#crssk2	CLEAR_NPC
 1@xm_d,1,5,3	duplicate(#crssk1)	#crssk3	CLEAR_NPC
 1@xm_d,1,5,3	duplicate(#crssk1)	#crssk4	CLEAR_NPC
 
 1@xm_d,233,183,0	script	#kimion1	-1,7,7,{
+	end;
 OnTouch_:
 	disablenpc instance_npcname("#kimion1");
 	donpcevent instance_npcname("Celine Kimi#2") + "::OnStart";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1392,17 +1283,12 @@ OnStart:
 	disablenpc instance_npcname("Celine Kimi#2");
 	donpcevent instance_npcname("#finalbs2") + "::OnStart";
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,228,183,0	script	#bgm03	-1,25,25,{
+	end;
 OnTouch:
 	playBGM "123";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1415,10 +1301,6 @@ OnStart:
 OnTimer3000:
 	mapannounce 'xm_d_map$, "Celine Kimi and her phantom have shared their strength. They will be stronger than ever!",bc_map,"0xff6666";
 	stopnpctimer;
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1434,19 +1316,13 @@ OnStart:
 	sleep 6000;
 	mapannounce 'xm_d_map$, "Catherine Jet Johnson's yell: Are you okay? Flee to the south emergency exit!",bc_map,"0xffff00";
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,218,145,0	script	#jeton2	-1,4,4,{
+	end;
 OnTouch_:
 	disablenpc instance_npcname("#jeton2");
 	donpcevent instance_npcname("Catherine Jet Johnson#6") + "::OnStart";
-	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1471,9 +1347,6 @@ OnStart:
 	disablenpc instance_npcname("Catherine Jet Johnson#6");
 	enablenpc instance_npcname("#exwp1");
 	end;
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 
 1@xm_d,218,150,5	script	#exwp1	PORTAL,{
@@ -1485,10 +1358,6 @@ OnInstanceInit:
 	}
 	close2;
 	warp "xmas",233,300;
-	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
 	end;
 }
 
@@ -1613,10 +1482,6 @@ OnTimer1000:
 	}
 	stopnpctimer;
 	end;
-
-OnInstanceInit:
-	disablenpc instance_npcname( strnpcinfo(0) );
-	end;
 }
 1@xm_d,214,141,3	duplicate(Packaged Present#1)	Packaged Present#2	4_TREASURE_BOX
 1@xm_d,218,141,3	duplicate(Packaged Present#1)	Packaged Present#3	4_TREASURE_BOX
@@ -1683,5 +1548,73 @@ OnInstanceInit:
 		getunitdata 'Antonio, .@mob;
 		mapannounce 'xm_d_map$, "Factory announcement: Exist in " + .@mob[UMOB_X] + " - " + .@mob[UMOB_Y] + ".",bc_map,"0x00ff44";
 	}
+	end;
+
+OnInstanceInit:
+	// Warps
+	disablenpc instance_npcname("#fac3wp");
+	disablenpc instance_npcname("#fac3wp2");
+	disablenpc instance_npcname("#fac4wp");
+	disablenpc instance_npcname("#fac4wp2");
+	disablenpc instance_npcname("#fac5wp");
+	// disablenpc instance_npcname("#fac5wp2");
+	disablenpc instance_npcname("#fac6wp");
+
+	// Bgm
+	disablenpc instance_npcname("#bgm01");
+	disablenpc instance_npcname("#bgm02");
+	disablenpc instance_npcname("#bgm03");
+	disablenpc instance_npcname("#bgm04");
+	disablenpc instance_npcname("#bgm05");
+	disablenpc instance_npcname("#bgm06");
+
+	// Step 1
+	disablenpc instance_npcname("Catherine Jet Johnson#01");
+	disablenpc instance_npcname("Employees' Uniform Box#1");
+	disablenpc instance_npcname("Employees' Uniform Box#2");
+	disablenpc instance_npcname("Employees' Uniform Box#3");
+	hideonnpc instance_npcname("#fac1ct");
+	disablenpc instance_npcname("#fac1bs");
+	disablenpc instance_npcname("#pck1");
+	disablenpc instance_npcname("#alert1");
+
+	// Step 2
+	disablenpc instance_npcname("Catherine Jet Johnson#21");
+	disablenpc instance_npcname("Employees' Uniform Box#4");
+	hideonnpc instance_npcname("#fac2ct");
+	disablenpc instance_npcname("#fac2wpc");
+	for ( .@i = 1; .@i < 11; ++.@i )
+		disablenpc instance_npcname("Worker#" + .@i);
+
+	// Step 3
+	disablenpc instance_npcname("Captured Santa#3");
+	hideonnpc instance_npcname("#fac3ct");
+	hideonnpc instance_npcname("#fac3ct2");
+	hideonnpc instance_npcname("#fac3ct3");
+
+	// Boss
+	disablenpc instance_npcname("#finalbs");
+	hideonnpc instance_npcname("#finalbs2");
+	disablenpc instance_npcname("Celine Kimi#0");
+	disablenpc instance_npcname("#jeton1");
+	disablenpc instance_npcname("Catherine Jet Johnson#5");
+	for ( .@i = 1; .@i < 10; ++.@i )
+		hideonnpc instance_npcname("#eff_f0" + .@i);
+	disablenpc instance_npcname("#bssk01");
+	disablenpc instance_npcname("#bssk02");
+	hideonnpc instance_npcname("#bssk02");
+	for ( .@i = 1; .@i < 5; ++.@i )
+		hideonnpc instance_npcname("#crssk" + .@i);
+	disablenpc instance_npcname("#kimion1");
+	disablenpc instance_npcname("Celine Kimi#2");
+	disablenpc instance_npcname("#heal_c");
+
+	// Exit
+	disablenpc instance_npcname("#finalbs_e");
+	disablenpc instance_npcname("#jeton2");
+	disablenpc instance_npcname("Catherine Jet Johnson#6");
+	disablenpc instance_npcname("#exwp1");
+	for ( .@i = 1; .@i < 11; ++.@i )
+		disablenpc instance_npcname("Packaged Present#" + .@i);
 	end;
 }

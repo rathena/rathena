@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHAR_HPP_
-#define _CHAR_HPP_
+#ifndef CHAR_HPP
+#define CHAR_HPP
 
 #include <vector>
 
@@ -286,7 +286,7 @@ int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charsta
 int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
 int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);
-int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf);
+int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count = nullptr);
 enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_id);
 int char_rename_char_sql(struct char_session_data *sd, uint32 char_id);
 int char_divorce_char_sql(int partner_id1, int partner_id2);
@@ -330,4 +330,4 @@ const char* char_msg_txt(int msg_number);
 void char_do_final_msg(void);
 bool char_config_read(const char* cfgName, bool normal);
 
-#endif /* _CHAR_HPP_ */
+#endif /* CHAR_HPP */

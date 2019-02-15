@@ -363,7 +363,7 @@ OnTouch:
 		break;
 	case 4: 
 		emotion ET_DELIGHT;
-		emotion ET_DELIGHT, getnpcid(0, "Wandering Minstrel#mal");
+		emotion ET_DELIGHT, getnpcid(0, "Minstrel#mal");
 		break;
 	}
 	end;

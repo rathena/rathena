@@ -333,7 +333,7 @@ dali,80,60,4	script	Magic Scholar	4_M_SAGE_C,{
 	}
 	switch( checkquest(12325,PLAYTIME) ) {
 	case -1:
-		if (getcharid(0) == getpartyleader(.@party_id,2)) {
+		if (is_party_leader() == true) {
 			mes "[Magic Scholar]";
 			mes "What can I do for you?";
 			next;
@@ -440,7 +440,7 @@ dali,72,55,4	script	Interdimensional Device	CLEAR_NPC,{
 //============================================================
 1@face,110,348,6	script	Chaos#0	4_M_CHAOS,{
 	cutin "h_chaos01",2;
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Chaos]";
 		mes "I do not know what this is about, but I'm talking to your leader so please wait for a while ok?";
 		close2;
@@ -680,7 +680,7 @@ OnInstanceInit:
 //============================================================
 1@face,120,97,6	script	Chaos#1	4_M_CHAOS,{
 	cutin "h_chaos01",2;
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Chaos]";
 		mes "I do not know what this is about, but I'm talking to your leader so please wait for a while ok?";
 		close2;
@@ -896,7 +896,7 @@ OnInstanceInit:
 //============================================================
 1@face,153,113,7	script	Chaos#2	4_M_CHAOS,{
 	cutin "h_chaos01",2;
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Chaos]";
 		mes "I do not know what this is about, but I'm talking to your leader so please wait for a while ok?";
 		close2;
@@ -2043,7 +2043,7 @@ OnTouch_:
 	specialeffect EF_VENOMDUST;
 	disablenpc .@npc_name$;
 	killmonster 'map_name$, .@npc_name$ + "::OnMyMobDead";
-	getmapxy 'map_name$, .@x, .@y, UNITTYPE_NPC;
+	getmapxy 'map_name$, .@x, .@y, BL_NPC;
 	.@mon_num = .@num[atoi(strnpcinfo(2))];
 	areamonster 'map_name$,.@x-1,.@y-1,.@x+1,.@y+1,"Faceworm Larva",2541,.@mon_num,.@npc_name$ + "::OnMyMobDead";
 	initnpctimer;
@@ -2215,7 +2215,7 @@ OnInstanceInit:
 		.@time_txt$ = callfunc( "F_InsertPlural", .@time_m, "Minute" ) + " " + callfunc( "F_InsertPlural", .@time_s, "Second" );
 	mapannounce 'map_name$, "The actual time for the battle at this stage remaining is " + .@time_txt$ + ".",bc_map,"0xffff33";
 
-	getmapxy .@map$, .@x, .@y, UNITTYPE_NPC;
+	getmapxy .@map$, .@x, .@y, BL_NPC;
 	stopnpctimer;
 	specialeffect EF_COIN;
 	hideonnpc instance_npcname(strnpcinfo(0));

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLAN_HPP_
-#define _CLAN_HPP_
+#ifndef CLAN_HPP
+#define CLAN_HPP
 
 #include "../common/mmo.hpp"
 
@@ -23,4 +23,4 @@ void clan_recv_message(int clan_id,uint32 account_id,const char *mes,int len);
 struct map_session_data* clan_getavailablesd( struct clan* clan );
 int clan_get_alliance_count( struct clan *clan, int flag );
 
-#endif /* _CLAN_HPP_ */
+#endif /* CLAN_HPP */

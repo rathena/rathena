@@ -1,12 +1,13 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHRIF_HPP_
-#define _CHRIF_HPP_
+#ifndef CHRIF_HPP
+#define CHRIF_HPP
 
 #include <time.h>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/timer.hpp" // t_tick
 #include "../common/socket.hpp" // enum chrif_req_op
 
 //fwd declaration
@@ -30,7 +31,7 @@ struct auth_node {
 	time_t expiration_time; // # of seconds 1/1/1970 (timestamp): Validity limit of the account (0 = unlimited)
 	struct map_session_data *sd;	//Data from logged on char.
 	struct mmo_charstatus *char_dat;	//Data from char server.
-	unsigned int node_created; //timestamp for node timeouts
+	t_tick node_created; //timestamp for node timeouts
 	enum sd_state state; //To track whether player was login in/out or changing maps.
 };
 
@@ -92,4 +93,4 @@ void do_init_chrif(void);
 
 int chrif_flush_fifo(void);
 
-#endif /* _CHRIF_HPP_ */
+#endif /* CHRIF_HPP */

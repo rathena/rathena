@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _LOGINCHRIF_HPP_
-#define _LOGINCHRIF_HPP_
+#ifndef LOGINCHRIF_HPP
+#define LOGINCHRIF_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -40,6 +40,4 @@ void do_shutdown_loginchrif(void);
  */
 void do_final_loginchrif(void);
 
-
-#endif	/* _LOGINCHRIF_HPP_ */
-
+#endif	/* LOGINCHRIF_HPP */

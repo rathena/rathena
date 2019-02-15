@@ -2411,7 +2411,7 @@ lasagna,140,250,3	script	The skittish fourth#wea	4_DR_F_01,{
 	close;
 }
 
-lasagna,140,245,3	script	The sensitive-minded el	4_CAT_SAILOR3,{
+lasagna,140,245,3	script	The sensitive-minded ela	4_CAT_SAILOR3,{
 	if (checkweight(1001,1) == 0) {
 		mes "- Hold on a second here!! -";
 		mes "- You have too many items. -";

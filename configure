@@ -698,6 +698,7 @@ ac_user_opts='
 enable_option_checking
 enable_manager
 enable_packetver
+enable_epoll
 enable_debug
 enable_prere
 enable_vip
@@ -1338,7 +1339,8 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-manager=ARG    memory managers: no, builtin, memwatch, dmalloc,
                           gcollect, bcheck (defaults to builtin)
-  --enable-packetver=ARG  Sets the PACKETVER define. (see src/common/mmo.h)
+  --enable-packetver=ARG  Sets the PACKETVER define. (see src/common/mmo.hpp)
+  --enable-epoll          use epoll(4) on Linux
   --enable-debug[=ARG]    Compiles extra debug code. (disabled by default)
                           (available options: yes, no, gdb)
   --enable-prere[=ARG]    Compiles serv in prere mode. (disabled by default)
@@ -1365,7 +1367,9 @@ Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
   --without-PACKAGE       do not use PACKAGE (same as --with-PACKAGE=no)
   --with-maxconn[=ARG]    optionally set the maximum connections the core can
-                          handle (default: 16384) NOT USED YET - EXPERIMENTAL
+                          handle. By default the system header value will be used.
+                          This will only be the compile time limit, make sure
+                          you set the correct limit with ulimit on your OS.
   --with-outputlogin[=ARG]
                           Specify the login-serv output name (defaults to
                           login-server)
@@ -3237,6 +3241,55 @@ fi
 
 
 #
+# Epoll
+#
+# Check whether --enable-epoll was given.
+if test "${enable_epoll+set}" = set; then :
+  enableval=$enable_epoll; enable_epoll=$enableval
+else
+  enable_epoll=no
+
+fi
+
+if test x$enable_epoll = xno; then
+	have_linux_epoll=no
+else
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for Linux epoll(4)" >&5
+$as_echo_n "checking for Linux epoll(4)... " >&6; }
+	cat confdefs.h - <<_ACEOF >conftest.$ac_ext
+/* end confdefs.h.  */
+
+		#ifndef __linux__
+		#error This is not Linux
+		#endif
+		#include <sys/epoll.h>
+
+int
+main ()
+{
+epoll_create1 (EPOLL_CLOEXEC);
+  ;
+  return 0;
+}
+_ACEOF
+if ac_fn_cxx_try_link "$LINENO"; then :
+  have_linux_epoll=yes
+else
+  have_linux_epoll=no
+
+fi
+rm -f core conftest.err conftest.$ac_objext \
+    conftest$ac_exeext conftest.$ac_ext
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $have_linux_epoll" >&5
+$as_echo "$have_linux_epoll" >&6; }
+fi
+if test x$enable_epoll,$have_linux_epoll = xyes,no; then
+    as_fn_error $? "epoll support explicitly enabled but not available" "$LINENO" 5
+fi
+
+
+
+#
 # debug
 #
 # Check whether --enable-debug was given.
@@ -3418,22 +3471,11 @@ fi
 # Check whether --with-maxconn was given.
 if test "${with_maxconn+set}" = set; then :
   withval=$with_maxconn;
-		if test "$withval" == "no";	 then
-			CPPFLAGS="$CPPFLAGS -DMAXCONN=16384"
-		else
-
-			if ! test "$withval" -ge 0 -o "$withval" -lt 0 2>&- ; then
-				as_fn_error $? "Invalid argument --with-maxconn=$withval ... stopping" "$LINENO" 5
-			else
-				CPPFLAGS="$CPPFLAGS -DMAXCONN=$withval"
-			fi
-		fi
-
-else
-
-		CPPFLAGS="$CPPFLAGS -DMAXCONN=16384"
-
-
+	if ! test "$withval" -ge 0 -o "$withval" -lt 0 2>&- ; then
+		as_fn_error $? "Invalid argument --with-maxconn=$withval ... stopping" "$LINENO" 5
+	else
+		CPPFLAGS="$CPPFLAGS -DMAXCONN=$withval"
+	fi
 fi
 
 
@@ -5918,6 +5960,19 @@ esac
 if test -n "$enable_packetver" ; then
 	CPPFLAGS="$CPPFLAGS -DPACKETVER=$enable_packetver"
 fi
+
+
+#
+# Epoll
+#
+case $have_linux_epoll in
+	"yes")
+		CPPFLAGS="$CPPFLAGS -DSOCKET_EPOLL"
+		;;
+	"no")
+		# default value
+		;;
+esac
 
 
 #

@@ -51,7 +51,7 @@
 
 // Stop Post Quest
 // ============================================================
-moc_ruins,113,181,4	script	William	89,{
+-	script	William	89,{
 	mes "[William]";
 	mes "Welcome to";
 	mes "MacMillan's ^3355FFPost^000000 Workshop.";
@@ -96,7 +96,7 @@ moc_ruins,113,181,4	script	William	89,{
 
 // Binoculars Quest
 // ============================================================
-moc_ruins,118,176,4	script	Alchemist	64,{
+-	script	Alchemist	64,{
 	mes "[Marius]";
 	mes "Howdy, new customer!!";
 	mes "I know what you're gonna talk about. You want the Magic Glasses from me, riiiiight?";
@@ -746,7 +746,7 @@ OnStop:
 	mapannounce "que_job01","The security magic in the Master Zone, Area 1 is deactivated.",bc_map,"0x70DBDB";
 	donpcevent "#room1_warp::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	donpcevent "que_job01#room_1::OnReset";
 	stopnpctimer;
 	end;
@@ -758,7 +758,7 @@ OnTimer240000:
 OnTimer245000:
 	donpcevent "#room1_warp::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	end;
 
 OnTimer250000:
@@ -1205,7 +1205,7 @@ payon,200,113,3	duplicate(ConMessenger)	Continental Messenger#03	997,3,3
 alberta,127,64,3	duplicate(ConMessenger)	Continental Messenger#04	998,3,3
 aldebaran,135,128,3	duplicate(ConMessenger)	Continental Messenger#05	998,3,3
 
-morocc,176,103,3	script	Continental Official	754,{
+-	script	Continental Official	-1,{
 	if (rebirth_moc_edq > 3) {
 		mes "[Continental Guard Official]";
 		mes "On behalf of the Continental Guard, I thank you for your efforts. Now, let me see if I've received any news from Headquarters that you should know...";

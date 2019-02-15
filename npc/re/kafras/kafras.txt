@@ -25,6 +25,8 @@
 //= 1.3a Moved Rune Knight Kafra from job file. [Euphy]
 //= 1.4 Added Izlude duplicates. [Euphy]
 //= 1.5 Added Glastheim Kafra [Ridley8819]
+//= 1.6 Added Lutie [Lemongrass]
+//= 1.7 Added Rock Ridge Kafra. [Capuche]
 //============================================================ 
 
 // Brasilis
@@ -52,6 +54,14 @@ glast_01,200,275,0	script	Kafra Employee::kaf_glast	4_F_KAFRA3,{
 	callfunc "F_Kafra",0,3,2,500,700;
 	savepoint "glast_01",200,272,1,1;
 	callfunc "F_KafEnd",0,1,"in Glast Heim";
+}
+
+// Lutie
+//============================================================
+xmas,148,134,6	script	Kafra Employee::kaf_xmas	4_F_KAFRA3,{
+	cutin "kafra_03",2;
+	callfunc "F_Kafra",0,6,2,50,700;
+	callfunc "F_KafEnd",0,0,"in Lutie";
 }
 
 // Eden Group
@@ -93,4 +103,14 @@ job3_rune01,92,62,3	script	Kafra Employee::kaf_rune	114,{
 	cutin "kafra_04",2;
 	callfunc "F_KafSet";
 	callfunc "F_Kafra",0,9,2,80,700;
+}
+
+// Rockridge
+//============================================================
+harboro1,291,207,5	script	Kafra Employee::kaf_rock	4_F_KAFRA1,{
+	cutin "kafra_01",2;
+	callfunc "F_KafSet";
+	callfunc "F_Kafra",0,8,2,500,0;
+	savepoint "harboro1",286,189,1,1;
+	callfunc "F_KafEnd",0,1,"in the city of Rockridge";
 }

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _PET_HPP_
-#define _PET_HPP_
+#ifndef PET_HPP
+#define PET_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/mmo.hpp"
@@ -114,7 +114,7 @@ struct pet_data {
 		unsigned skillbonus : 1;
 	} state;
 	int move_fail_count;
-	unsigned int next_walktime,last_thinktime;
+	t_tick next_walktime,last_thinktime;
 	unsigned short rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
 
 	struct pet_recovery* recovery;
@@ -164,4 +164,4 @@ void read_petdb(void);
 void do_init_pet(void);
 void do_final_pet(void);
 
-#endif /* _PET_HPP_ */
+#endif /* PET_HPP */

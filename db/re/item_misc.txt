@@ -1400,3 +1400,6 @@ IG_PrizeOfHero,15098,1		// Hero_Taget_Suits
 IG_PrizeOfHero,22035,2		// Vet_Nepen_Heel
 IG_PrizeOfHero,22036,2		// Vet_SliverFox_Boots
 IG_PrizeOfHero,22037,2		// Vet_Ungo_Boots
+// Private Airship items
+IG_PRIVATE_AIRSHIP,6909,1 // Actinidia_Cat_Fruit
+IG_PRIVATE_AIRSHIP,25464,1 // World_Moving_Rights

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INTER_HPP_
-#define _INTER_HPP_
+#ifndef INTER_HPP
+#define INTER_HPP
 
 #include <memory>
 #include <string>
@@ -40,4 +40,4 @@ extern Sql* lsql_handle;
 void inter_savereg(uint32 account_id, uint32 char_id, const char *key, unsigned int index, intptr_t val, bool is_string);
 int inter_accreg_fromsql(uint32 account_id, uint32 char_id, int fd, int type);
 
-#endif /* _INTER_HPP_ */
+#endif /* INTER_HPP */

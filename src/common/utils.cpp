@@ -216,7 +216,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	DIR* dir;					// pointer to the scanned directory.
 	struct dirent* entry;		// pointer to one directory entry.
 	struct stat dir_stat;       // used by stat().
-	char tmppath[MAX_DIR_PATH+1];
+	char tmppath[MAX_DIR_PATH * 2];
 	char path[MAX_DIR_PATH+1]= ".";
 	const char *pattern = (pat==NULL)? "" : pat;
 	if(p!=NULL) strcpy(path,p);

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _NPC_HPP_
-#define _NPC_HPP_
+#ifndef NPC_HPP
+#define NPC_HPP
 
 #include "../common/timer.hpp"
 
@@ -59,7 +59,7 @@ struct npc_data {
 		unsigned short str, agi, vit, int_, dex, luk;
 	} params;
 
-	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
+	void* chatdb; // pointer to a npc_parse struct (see npc_chat.cpp)
 	char* path;/* path dir */
 	enum npc_subtype subtype;
 	bool trigger_on_hidden;
@@ -69,8 +69,9 @@ struct npc_data {
 			struct script_code *script;
 			short xs,ys; // OnTouch area radius
 			int guild_id;
-			int timer,timerid,timeramount,rid;
-			unsigned int timertick;
+			t_tick timer;
+			int timerid,timeramount,rid;
+			t_tick timertick;
 			struct npc_timerevent_list *timer_event;
 			int label_list_num;
 			struct npc_label_list *label_list;
@@ -99,7 +100,7 @@ struct npc_data {
 	unsigned char sc_display_count;
 
 	struct {
-		unsigned int timeout;
+		t_tick timeout;
 		unsigned long color;
 	} progressbar;
 };
@@ -1105,6 +1106,44 @@ enum e_job_types
 	JT_4_EP17_MIGUEL,
 	JT_4_EP17_NIHIL_K,
 	JT_4_EP17_MIGUEL_D,
+	JT_4_ED_SCHMIDT,
+	JT_4_ED_OSCAR,
+	JT_4_ED_ORB,
+	JT_4_ED_FENCE,
+	JT_4_M_ANDREA,
+	JT_4_M_ANDREA_D,
+	JT_4_F_ANES,
+	JT_4_F_ANES_D,
+	JT_4_M_SILVANO,
+	JT_4_M_SILVANO_D,
+	JT_4_F_CECILIA,
+	JT_4_F_CECILIA_D,
+	JT_4_M_MD_SEYREN,
+	JT_4_M_MD_EREMES,
+	JT_4_M_MD_HARWORD,
+	JT_4_F_MD_MAGALETA,
+	JT_4_F_MD_SHECIL,
+	JT_4_F_MD_KATRINN,
+	JT_4_M_MD_SEYREN_H,
+	JT_4_M_MD_EREMES_H,
+	JT_4_M_MD_HARWORD_H,
+	JT_4_F_MD_MAGALETA_H,
+	JT_4_F_MD_SHECIL_H,
+	JT_4_F_MD_KATRINN_H,
+	JT_4_M_MD_SEYREN_D,
+	JT_4_M_MD_EREMES_D,
+	JT_4_M_MD_HARWORD_D,
+	JT_4_F_MD_MAGALETA_D,
+	JT_4_F_MD_SHECIL_D,
+	JT_4_F_MD_KATRINN_D,
+	JT_4_F_MD_YGNIZEM,
+	JT_4_F_ERENE,
+	JT_4_M_EINCPTMINER,
+	JT_4_F_EINRESERCHER,
+	JT_4_F_REINDEER,
+	JT_4_PIGOCTO,
+
+	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1148,7 +1187,7 @@ int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
 int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range);
 int npc_touchnext_areanpc(struct map_session_data* sd,bool leavemap);
 int npc_click(struct map_session_data* sd, struct npc_data* nd);
-int npc_scriptcont(struct map_session_data* sd, int id, bool closing);
+bool npc_scriptcont(struct map_session_data* sd, int id, bool closing);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
 int npc_buysellsel(struct map_session_data* sd, int id, int type);
 uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
@@ -1188,7 +1227,7 @@ int npc_event_doall_id(const char* name, int rid);
 int npc_timerevent_start(struct npc_data* nd, int rid);
 int npc_timerevent_stop(struct npc_data* nd);
 void npc_timerevent_quit(struct map_session_data* sd);
-int npc_gettimerevent_tick(struct npc_data* nd);
+t_tick npc_gettimerevent_tick(struct npc_data* nd);
 int npc_settimerevent_tick(struct npc_data* nd, int newtimer);
 int npc_remove_map(struct npc_data* nd);
 void npc_unload_duplicates (struct npc_data* nd);
@@ -1215,7 +1254,7 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 #endif
 
 #ifdef SECURE_NPCTIMEOUT
-	TIMER_FUNC(npc_rr_secure_timeout_timer);
+	TIMER_FUNC(npc_secure_timeout_timer);
 #endif
 
 // @commands (script-based)
@@ -1223,4 +1262,4 @@ int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const c
 
 bool npc_unloadfile( const char* path );
 
-#endif /* _NPC_HPP_ */
+#endif /* NPC_HPP */

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_MMO_HPP_
-#define	_MMO_HPP_
+#ifndef MMO_HPP
+#define MMO_HPP
 
 #include <time.h>
 
@@ -10,6 +10,7 @@
 
 #include "cbasetypes.hpp"
 #include "db.hpp"
+#include "timer.hpp" // t_tick
 
 #ifndef PACKETVER
 	#error Please define PACKETVER in src/config/packets.hpp
@@ -32,6 +33,7 @@
 	#define MAX_HOTKEYS 38
 #endif
 
+#define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
 #define MAX_INVENTORY 100 ///Maximum items in player inventory
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
 * Max value tested was 265 */
@@ -52,7 +54,7 @@
 #define MAX_BANK_ZENY SINT32_MAX ///Max zeny in Bank
 #define MAX_FAME 1000000000 ///Max fame points
 #define MAX_CART 100 ///Maximum item in cart
-#define MAX_SKILL 1200 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
+#define MAX_SKILL 1250 ///Maximum skill can be hold by Player, Homunculus, & Mercenary (skill list) AND skill_db limit
 #define DEFAULT_WALK_SPEED 150 ///Default walk speed
 #define MIN_WALK_SPEED 20 ///Min walk speed
 #define MAX_WALK_SPEED 1000 ///Max walk speed
@@ -139,7 +141,7 @@
 
 //Mercenary System
 #define MC_SKILLBASE 8201
-#define MAX_MERCSKILL 40
+#define MAX_MERCSKILL 41
 
 //Elemental System
 #define MAX_ELEMENTALSKILL 42
@@ -253,6 +255,7 @@ struct item {
 	unsigned int expire_time;
 	char favorite, bound;
 	uint64 unique_id;
+	unsigned int equipSwitch; // location(s) where item is equipped for equip switching (using enum equip_pos for bitmasking)
 };
 
 //Equip position constants
@@ -331,13 +334,14 @@ struct script_reg_str {
 //For saving status changes across sessions. [Skotlex]
 struct status_change_data {
 	unsigned short type; //SC_type
-	long val1, val2, val3, val4, tick; //Remaining duration.
+	long val1, val2, val3, val4;
+	t_tick tick; //Remaining duration.
 };
 
 #define MAX_BONUS_SCRIPT_LENGTH 512
 struct bonus_script_data {
 	char script_str[MAX_BONUS_SCRIPT_LENGTH]; //< Script string
-	uint32 tick; ///< Tick
+	t_tick tick; ///< Tick
 	uint16 flag; ///< Flags @see enum e_bonus_script_flags
 	int16 icon; ///< Icon SI
 	uint8 type; ///< 0 - None, 1 - Buff, 2 - Debuff
@@ -345,7 +349,7 @@ struct bonus_script_data {
 
 struct skill_cooldown_data {
 	unsigned short skill_id;
-	long tick;
+	t_tick tick;
 };
 
 enum storage_type {
@@ -444,7 +448,7 @@ struct s_mercenary {
 	short class_;
 	int hp, sp;
 	unsigned int kill_count;
-	unsigned int life_time;
+	t_tick life_time;
 };
 
 struct s_elemental {
@@ -454,7 +458,7 @@ struct s_elemental {
 	enum e_mode mode;
 	int hp, sp, max_hp, max_sp, matk, atk, atk2;
 	short hit, flee, amotion, def, mdef;
-	int life_time;
+	t_tick life_time;
 };
 
 struct s_friend {
@@ -700,17 +704,33 @@ struct guild_castle {
 	int temp_guardians_max;
 };
 
+/// Enum for guild castle data script commands
+enum e_castle_data : uint8 {
+	CD_NONE = 0,
+	CD_GUILD_ID, ///< Guild ID
+	CD_CURRENT_ECONOMY, ///< Castle Economy score
+	CD_CURRENT_DEFENSE, ///< Castle Defense score
+	CD_INVESTED_ECONOMY, ///< Number of times the economy was invested in today
+	CD_INVESTED_DEFENSE, ///< Number of times the defense was invested in today
+	CD_NEXT_TIME, ///< unused
+	CD_PAY_TIME, ///< unused
+	CD_CREATE_TIME, ///< unused
+	CD_ENABLED_KAFRA, ///< Is 1 if a Kafra was hired for this castle, 0 otherwise
+	CD_ENABLED_GUARDIAN00, ///< Is 1 if the 1st guardian is present (Soldier Guardian)
+	// The others in between are not needed in src, but are exported for the script engine
+	CD_MAX = CD_ENABLED_GUARDIAN00 + MAX_GUARDIANS
+};
+
 /// Guild Permissions
 enum e_guild_permission {
 	GUILD_PERM_INVITE	= 0x001,
 	GUILD_PERM_EXPEL	= 0x010,
-#if PACKETVER >= 20140205
 	GUILD_PERM_STORAGE	= 0x100,
+#if PACKETVER >= 20140205
 	GUILD_PERM_ALL		= GUILD_PERM_INVITE|GUILD_PERM_EXPEL|GUILD_PERM_STORAGE,
 #else
 	GUILD_PERM_ALL		= GUILD_PERM_INVITE|GUILD_PERM_EXPEL,
 #endif
-	GUILD_PERM_MASK		= GUILD_PERM_ALL,
 	GUILD_PERM_DEFAULT	= GUILD_PERM_ALL,
 };
 
@@ -1007,7 +1027,7 @@ struct clan{
 #error MAX_ZENY is too big
 #endif
 
-// This sanity check is required, because some other places(like skill.c) rely on this
+// This sanity check is required, because some other places(like skill.cpp) rely on this
 #if MAX_PARTY < 2
 #error MAX_PARTY is too small, you need at least 2 players for a party
 #endif
@@ -1048,4 +1068,4 @@ struct clan{
 	#define MAX_CARTS 5
 #endif
 
-#endif /* _MMO_HPP_ */
+#endif /* MMO_HPP */

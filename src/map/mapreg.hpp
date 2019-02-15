@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MAPREG_HPP_
-#define _MAPREG_HPP_
+#ifndef MAPREG_HPP
+#define MAPREG_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
@@ -31,4 +31,4 @@ bool mapreg_setreg(int64 uid, int val);
 bool mapreg_setregstr(int64 uid, const char* str);
 int mapreg_destroyreg(DBKey key, DBData *data, va_list ap);
 
-#endif /* _MAPREG_HPP_ */
+#endif /* MAPREG_HPP */

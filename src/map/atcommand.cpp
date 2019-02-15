@@ -397,8 +397,8 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 	suggestions.reserve( MAX_SUGGESTIONS );
 
 	// check for maps that contain string
-	for( auto& pair : map ){
-		struct map_data *mapdata = &pair.second;
+	for (int i = 0; i < map_num; i++) {
+		struct map_data *mapdata = map_getmapdata(i);
 
 		// Prevent suggestion of instance mapnames
 		if( mapdata->instance_id != 0 ){
@@ -419,16 +419,18 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 		// Levenshtein > 4 is bad
 		const int LEVENSHTEIN_MAX = 4;
 
-		std::map<int, std::vector<const char*>> maps;
+		std::unordered_map<int, std::vector<const char*>> maps;
 
-		for( auto& pair : map ){
+		for (int i = 0; i < map_num; i++) {
+			struct map_data *mapdata = map_getmapdata(i);
+
 			// Prevent suggestion of instance mapnames
-			if( pair.second.instance_id != 0 ){
+			if(mapdata->instance_id != 0 ){
 				continue;
 			}
 
 			// Calculate the levenshtein distance of the two strings
-			int distance = levenshtein( pair.second.name, name );
+			int distance = levenshtein(mapdata->name, name);
 
 			// Check if it is above the maximum defined distance
 			if( distance > LEVENSHTEIN_MAX ){
@@ -442,7 +444,7 @@ static void warp_get_suggestions(struct map_session_data* sd, const char *name) 
 				continue;
 			}
 
-			vector.push_back( pair.second.name );
+			vector.push_back(mapdata->name);
 		}
 
 		for( int distance = 0; distance <= LEVENSHTEIN_MAX; distance++ ){
@@ -1636,33 +1638,9 @@ ACMD_FUNC(help)
 	return 0;
 }
 
-// helper function, used in foreach calls to stop auto-attack timers
-// parameter: '0' - everyone, 'id' - only those attacking someone with that id
-static int atcommand_stopattack(struct block_list *bl,va_list ap)
-{
-	struct unit_data *ud = unit_bl2ud(bl);
-	int id = va_arg(ap, int);
-	if (ud && ud->attacktimer != INVALID_TIMER && (!id || id == ud->target))
-	{
-		unit_stop_attack(bl);
-		return 1;
-	}
-	return 0;
-}
 /*==========================================
  *
  *------------------------------------------*/
-static int atcommand_pvpoff_sub(struct block_list *bl,va_list ap)
-{
-	TBL_PC* sd = (TBL_PC*)bl;
-	clif_pvpset(sd, 0, 0, 2);
-	if (sd->pvp_timer != INVALID_TIMER) {
-		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
-		sd->pvp_timer = INVALID_TIMER;
-	}
-	return 0;
-}
-
 ACMD_FUNC(pvpoff)
 {
 	nullpo_retr(-1, sd);
@@ -1674,11 +1652,6 @@ ACMD_FUNC(pvpoff)
 
 	map_setmapflag(sd->bl.m, MF_PVP, false);
 
-	if (!battle_config.pk_mode){
-		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
-	}
-	map_foreachinmap(atcommand_pvpoff_sub,sd->bl.m, BL_PC);
-	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(sd,31)); // PvP: Off.
 	return 0;
 }
@@ -1686,20 +1659,6 @@ ACMD_FUNC(pvpoff)
 /*==========================================
  *
  *------------------------------------------*/
-static int atcommand_pvpon_sub(struct block_list *bl,va_list ap)
-{
-	TBL_PC* sd = (TBL_PC*)bl;
-	if (sd->pvp_timer == INVALID_TIMER) {
-		sd->pvp_timer = add_timer(gettick() + 200, pc_calc_pvprank_timer, sd->bl.id, 0);
-		sd->pvp_rank = 0;
-		sd->pvp_lastusers = 0;
-		sd->pvp_point = 5;
-		sd->pvp_won = 0;
-		sd->pvp_lost = 0;
-	}
-	return 0;
-}
-
 ACMD_FUNC(pvpon)
 {
 	nullpo_retr(-1, sd);
@@ -1710,11 +1669,6 @@ ACMD_FUNC(pvpon)
 	}
 
 	map_setmapflag(sd->bl.m, MF_PVP, true);
-
-	if (!battle_config.pk_mode) {// display pvp circle and rank
-		clif_map_property_mapall(sd->bl.m, MAPPROPERTY_FREEPVPZONE);
-		map_foreachinmap(atcommand_pvpon_sub,sd->bl.m, BL_PC);
-	}
 
 	clif_displaymessage(fd, msg_txt(sd,32)); // PvP: On.
 
@@ -1734,8 +1688,6 @@ ACMD_FUNC(gvgoff)
 	}
 
 	map_setmapflag(sd->bl.m, MF_GVG, false);
-	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_NOTHING);
-	map_foreachinmap(atcommand_stopattack,sd->bl.m, BL_CHAR, 0);
 	clif_displaymessage(fd, msg_txt(sd,33)); // GvG: Off.
 
 	return 0;
@@ -1754,7 +1706,6 @@ ACMD_FUNC(gvgon)
 	}
 
 	map_setmapflag(sd->bl.m, MF_GVG, true);
-	clif_map_property_mapall(sd->bl.m, MAPPROPERTY_AGITZONE);
 	clif_displaymessage(fd, msg_txt(sd,34)); // GvG: On.
 
 	return 0;
@@ -2659,6 +2610,8 @@ ACMD_FUNC(param)
 		clif_updatestatus(sd, SP_USTR + i);
 		status_calc_pc(sd, SCO_FORCE);
 		clif_displaymessage(fd, msg_txt(sd,42)); // Stat changed.
+
+		achievement_update_objective(sd, AG_GOAL_STATUS, 0);
 	} else {
 		if (value < 0)
 			clif_displaymessage(fd, msg_txt(sd,41)); // Unable to decrease the number/value.
@@ -2730,6 +2683,8 @@ ACMD_FUNC(stat_all)
 	if (count > 0) { // if at least 1 stat modified
 		status_calc_pc(sd, SCO_FORCE);
 		clif_displaymessage(fd, msg_txt(sd,84)); // All stats changed!
+
+		achievement_update_objective(sd, AG_GOAL_STATUS, 0);
 	} else {
 		if (value < 0)
 			clif_displaymessage(fd, msg_txt(sd,177)); // You cannot decrease that stat anymore.
@@ -3959,8 +3914,10 @@ ACMD_FUNC(reload) {
 		//atcommand_broadcast( fd, sd, "@broadcast", "You will feel a bit of lag at this point !" );
 
 		iter = mapit_getallusers();
-		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) )
-			pc_close_npc(pl_sd,2);
+		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ){
+			pc_close_npc(pl_sd,1);
+			clif_cutin(pl_sd, "", 255);
+		}
 		mapit_free(iter);
 
 		flush_fifos();
@@ -4091,31 +4048,35 @@ ACMD_FUNC(mapinfo) {
 	}
 
 	/* Skill damage adjustment info [Cydh] */
-	union u_mapflag_args args = {};
-
-	args.flag_val = SKILLDMG_MAX; // Check if it's enabled first
-	if (map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)) {
-		clif_displaymessage(fd,msg_txt(sd,1052));	// Skill Damage Adjustments:
-		sprintf(atcmd_output," > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d"
-			,(args.flag_val = SKILLDMG_PC && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_MOB && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_BOSS && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_OTHER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args))
-			,(args.flag_val = SKILLDMG_CASTER && map_getmapflag_sub(m_id, MF_SKILL_DAMAGE, &args)));
+	if (mapdata->flag[MF_SKILL_DAMAGE]) {
+		clif_displaymessage(fd,msg_txt(sd,1052)); // Skill Damage Adjustments:
+		sprintf(atcmd_output, msg_txt(sd, 1053), // > [Map] %d%%, %d%%, %d%%, %d%% | Caster:%d
+			mapdata->damage_adjust.rate[SKILLDMG_PC],
+			mapdata->damage_adjust.rate[SKILLDMG_MOB],
+			mapdata->damage_adjust.rate[SKILLDMG_BOSS],
+			mapdata->damage_adjust.rate[SKILLDMG_OTHER],
+			mapdata->damage_adjust.caster);
 		clif_displaymessage(fd, atcmd_output);
-		if (mapdata->skill_damage.size()) {
-			clif_displaymessage(fd," > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster");
-			for (int j = 0; j < mapdata->skill_damage.size(); j++) {
-				sprintf(atcmd_output,"     %d. %s : %d%%, %d%%, %d%%, %d%% | %d"
-					,j+1
-					,skill_get_name(mapdata->skill_damage[j].skill_id)
-					,mapdata->skill_damage[j].rate[SKILLDMG_PC]
-					,mapdata->skill_damage[j].rate[SKILLDMG_MOB]
-					,mapdata->skill_damage[j].rate[SKILLDMG_BOSS]
-					,mapdata->skill_damage[j].rate[SKILLDMG_OTHER]
-					,mapdata->skill_damage[j].caster);
+		if (!mapdata->skill_damage.empty()) {
+			clif_displaymessage(fd, msg_txt(sd, 1054)); // > [Map Skill] Name : Player, Monster, Boss Monster, Other | Caster
+			for (auto skilldmg : mapdata->skill_damage) {
+				sprintf(atcmd_output,"     %s : %d%%, %d%%, %d%%, %d%% | %d",
+					skill_get_name(skilldmg.first),
+					skilldmg.second.rate[SKILLDMG_PC],
+					skilldmg.second.rate[SKILLDMG_MOB],
+					skilldmg.second.rate[SKILLDMG_BOSS],
+					skilldmg.second.rate[SKILLDMG_OTHER],
+					skilldmg.second.caster);
 				clif_displaymessage(fd,atcmd_output);
 			}
+		}
+	}
+
+	if (map_getmapflag(m_id, MF_SKILL_DURATION)) {
+		clif_displaymessage(fd, msg_txt(sd, 1055)); // Skill Duration Adjustments:
+		for (const auto &it : mapdata->skill_duration) {
+			sprintf(atcmd_output, " > %s : %d%%", skill_get_name(it.first), it.second);
+			clif_displaymessage(fd, atcmd_output);
 		}
 	}
 
@@ -4724,7 +4685,7 @@ ACMD_FUNC(reloadnpcfile) {
 /*==========================================
  * time in txt for time command (by [Yor])
  *------------------------------------------*/
-char* txt_time(unsigned int duration)
+char* txt_time(t_tick duration_)
 {
 	int days, hours, minutes, seconds;
 	char temp[CHAT_SIZE_MAX];
@@ -4732,6 +4693,9 @@ char* txt_time(unsigned int duration)
 
 	memset(temp, '\0', sizeof(temp));
 	memset(temp1, '\0', sizeof(temp1));
+
+	// Cap it
+	int duration = (int)duration_;
 
 	days = duration / (60 * 60 * 24);
 	duration = duration - (60 * 60 * 24 * days);
@@ -5392,7 +5356,7 @@ ACMD_FUNC(killable)
 		clif_displaymessage(fd, msg_txt(sd,242)); // You can now be attacked and killed by players.
 	else {
 		clif_displaymessage(fd, msg_txt(sd,288)); // You are no longer killable.
-		map_foreachinallrange(atcommand_stopattack,&sd->bl, AREA_SIZE, BL_CHAR, sd->bl.id);
+		map_foreachinallrange(unit_stopattack,&sd->bl, AREA_SIZE, BL_CHAR, sd->bl.id);
 	}
 	return 0;
 }
@@ -5564,6 +5528,7 @@ ACMD_FUNC(dropall)
 			if( type == -1 || type == (uint8)item_data->type ) {
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
+				pc_equipswitch_remove(sd, i);
 				if(pc_dropitem(sd, i, sd->inventory.u.items_inventory[i].amount))
 					count += sd->inventory.u.items_inventory[i].amount;
 				else count2 += sd->inventory.u.items_inventory[i].amount;
@@ -5596,6 +5561,7 @@ ACMD_FUNC(storeall)
 		if (sd->inventory.u.items_inventory[i].amount) {
 			if(sd->inventory.u.items_inventory[i].equip != 0)
 				pc_unequipitem(sd, i, 3);
+			pc_equipswitch_remove(sd, i);
 			storage_storageadd(sd, &sd->storage, i, sd->inventory.u.items_inventory[i].amount);
 		}
 	}
@@ -5803,7 +5769,7 @@ ACMD_FUNC(useskill)
 ACMD_FUNC(displayskill)
 {
 	struct status_data * status;
-	unsigned int tick;
+	t_tick tick;
 	uint16 skill_id;
 	uint16 skill_lv = 1;
 	nullpo_retr(-1, sd);
@@ -6658,7 +6624,7 @@ ACMD_FUNC(cleanarea)
  *------------------------------------------*/
 ACMD_FUNC(npctalk)
 {
-	char name[NPC_NAME_LENGTH],mes[100],temp[100];
+	char name[NPC_NAME_LENGTH],mes[100],temp[CHAT_SIZE_MAX];
 	struct npc_data *nd;
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
@@ -6695,7 +6661,7 @@ ACMD_FUNC(npctalk)
 
 ACMD_FUNC(pettalk)
 {
-	char mes[100],temp[100];
+	char mes[100],temp[CHAT_SIZE_MAX];
 	struct pet_data *pd;
 
 	nullpo_retr(-1, sd);
@@ -6822,7 +6788,7 @@ ACMD_FUNC(summon)
 	int mob_id = 0;
 	int duration = 0;
 	struct mob_data *md;
-	unsigned int tick=gettick();
+	t_tick tick=gettick();
 
 	nullpo_retr(-1, sd);
 
@@ -7138,14 +7104,8 @@ ACMD_FUNC(identify)
 *-----------------------------------------------*/
 ACMD_FUNC(identifyall)
 {
-	int i;
 	nullpo_retr(-1, sd);
-	for(i=0; i<MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid > 0 && sd->inventory.u.items_inventory[i].identify != 1) {
-			sd->inventory.u.items_inventory[i].identify = 1;
-			clif_item_identified(sd,i,0);
-		}
-	}
+	pc_identifyall(sd, true);
 	return 0;
 }
 
@@ -7283,7 +7243,7 @@ ACMD_FUNC(mobinfo)
 		clif_displaymessage(fd, atcmd_output);
 
 		sprintf(atcmd_output, msg_txt(sd,1244), //  ATK:%d~%d  Range:%d~%d~%d  Size:%s  Race: %s  Element: %s (Lv:%d)
-			mob->status.rhw.atk, mob->status.rhw.atk2, mob->status.rhw.range,
+			mob->status.batk + mob->status.rhw.atk, mob->status.batk + mob->status.rhw.atk2, mob->status.rhw.range,
 			mob->range2 , mob->range3, msize[mob->status.size],
 			mrace[mob->status.race], melement[mob->status.def_ele], mob->status.ele_lv);
 		clif_displaymessage(fd, atcmd_output);
@@ -7592,7 +7552,7 @@ ACMD_FUNC(homhungry)
  *------------------------------------------*/
 ACMD_FUNC(homtalk)
 {
-	char mes[100],temp[100];
+	char mes[100],temp[CHAT_SIZE_MAX];
 
 	nullpo_retr(-1, sd);
 
@@ -8183,7 +8143,7 @@ ACMD_FUNC(fakename)
  * Ragnarok Resources
  *------------------------------------------*/
 ACMD_FUNC(mapflag) {
-	char flag_name[CHAT_SIZE_MAX];
+	char flag_name[50];
 	short flag = 0, i, j;
 	std::string buf;
 
@@ -8191,7 +8151,7 @@ ACMD_FUNC(mapflag) {
 
 	memset(flag_name, '\0', sizeof(flag_name));
 
-	if (!message || !*message || (sscanf(message, "%99s %6hd", flag_name, &flag) < 1)) {
+	if (!message || !*message || (sscanf(message, "%49s %6hd", flag_name, &flag) < 1)) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1311)); // Enabled Mapflags in this map:
 		clif_displaymessage(sd->fd,"----------------------------------");
 		for( i = MF_MIN; i < MF_MAX; i++ ){
@@ -8222,7 +8182,8 @@ ACMD_FUNC(mapflag) {
 												MF_BEXP,
 												MF_JEXP,
 												MF_BATTLEGROUND,
-												MF_SKILL_DAMAGE };
+												MF_SKILL_DAMAGE,
+												MF_SKILL_DURATION };
 
 			if (flag && std::find(disabled_mf.begin(), disabled_mf.end(), mapflag) != disabled_mf.end()) {
 				sprintf(atcmd_output,"[ @mapflag ] %s flag cannot be enabled as it requires unique values.", flag_name);
@@ -8529,6 +8490,8 @@ ACMD_FUNC(cash)
 			}
 			else clif_displaymessage(fd, msg_txt(sd,149)); // Impossible to increase the number/value.
 		} else {
+			if (-value > sd->kafraPoints) //By command, if cash < value, force it to remove all
+				value = -sd->kafraPoints;
 			if( (ret=pc_paycash(sd, 0, -value, LOG_TYPE_COMMAND)) >= 0){
 				sprintf(output, msg_txt(sd,411), ret, sd->kafraPoints); // Removed %d kafra points. Total %d points.
 				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
@@ -9176,7 +9139,7 @@ ACMD_FUNC(mount2) {
 	clif_displaymessage(sd->fd,msg_txt(sd,1362)); // NOTICE: If you crash with mount your LUA is outdated.
 	if (!sd->sc.data[SC_ALL_RIDING]) {
 		clif_displaymessage(sd->fd,msg_txt(sd,1363)); // You have mounted.
-		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INVALID_TIMER);
+		sc_start(NULL, &sd->bl, SC_ALL_RIDING, 10000, 1, INFINITE_TICK);
 	} else {
 		clif_displaymessage(sd->fd,msg_txt(sd,1364)); // You have released your mount.
 		status_change_end(&sd->bl, SC_ALL_RIDING, INVALID_TIMER);
@@ -9770,11 +9733,11 @@ ACMD_FUNC(changedress){
 		if( sd->sc.data[type] ) {
 			status_change_end( &sd->bl, type, INVALID_TIMER );
 			// You should only be able to have one - so we cancel here
-			return 0;
+			break;
 		}
 	}
 
-	return -1;
+	return 0;
 }
 
 ACMD_FUNC(costume) {
@@ -9832,7 +9795,7 @@ ACMD_FUNC(costume) {
 		return -1;
 	}
 
-	sc_start(&sd->bl, &sd->bl, (sc_type)name2id[k], 100, name2id[k] == SC_DRESSUP ? 1 : 0, -1);
+	sc_start(&sd->bl, &sd->bl, (sc_type)name2id[k], 100, name2id[k] == SC_DRESSUP ? 1 : 0, INFINITE_TICK);
 
 	return 0;
 }
@@ -10046,6 +10009,32 @@ ACMD_FUNC(limitedsale){
 	nullpo_retr(-1, sd);
 
 	clif_sale_open(sd);
+
+	return 0;
+}
+
+/**
+ * Displays camera information from the client.
+ * Usage: @camerainfo or client command /viewpointvalue or /setcamera on supported clients
+ */
+ACMD_FUNC(camerainfo){
+	nullpo_retr(-1, sd);
+
+	if( message == nullptr || message[0] == '\0' ){
+		clif_camerainfo( sd, true );
+		return 0;
+	}
+
+	float range = 0;
+	float rotation = 0;
+	float latitude = 0;
+
+	if( sscanf( message, "%f %f %f", &range, &rotation, &latitude ) < 3 ){
+		clif_displaymessage( fd, msg_txt( sd, 793 ) ); // Usage @camerainfo range rotation latitude
+		return -1;
+	}
+
+	clif_camerainfo( sd, false, range, rotation, latitude );
 
 	return 0;
 }
@@ -10349,6 +10338,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEF(agitend3),
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;
@@ -10479,7 +10469,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	char output[CHAT_SIZE_MAX];
 
 	//Reconstructed message
-	char atcmd_msg[CHAT_SIZE_MAX];
+	char atcmd_msg[CHAT_SIZE_MAX * 2];
 
 	TBL_PC * ssd = NULL; //sd for target
 	AtCommandInfo * info;

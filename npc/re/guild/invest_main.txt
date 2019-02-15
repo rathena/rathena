@@ -896,7 +896,7 @@ OnAgitInvest:
 		set .@guild, getcharid(2);
 		for(set .@i,1; .@i<=5; set .@i,.@i+1) {
 			set .@castle_name$[.@i], getcastlename(.@npc$+"g_cas0"+.@i);
-			set .@owner_id[.@i], getcastledata(.@npc$+"g_cas0"+.@i,1);
+			set .@owner_id[.@i], getcastledata(.@npc$+"g_cas0"+.@i,CD_GUILD_ID);
 			set .@owner_name$[.@i], getguildname(.@owner_id[.@i]);
 			if (.@guild == .@owner_id[.@i]) {
 				set .@menu$, .@menu$+.@castle_name$[.@i]+" ["+.@owner_name$[.@i]+"] Guild:";
@@ -1044,7 +1044,7 @@ OnAgitInvest:
 		for(set .@i,1; .@i<=5; set .@i,.@i+1) {
 			set .@map$, .@npc$+"g_cas0"+.@i;
 			set .@fund[.@i], getd("$@vfund_"+.@npc$+"0"+.@i);
-			mes getcastlename(.@map$)+" "+getguildname(getcastledata(.@map$,1))+" Guild: "+.@fund[.@i];
+			mes getcastlename(.@map$)+" "+getguildname(getcastledata(.@map$,CD_GUILD_ID))+" Guild: "+.@fund[.@i];
 		}
 		set .@fund[0], getd("$@vfund_"+.@npc$+"_extra");
 		mes .@realm$+" normal: "+.@fund[0];
@@ -1098,7 +1098,7 @@ OnAgitInvest:
 		set .@realm$,"Valkyrie Realm";
 	}
 
-	set .@GID, getcastledata(strnpcinfo(4),1);
+	set .@GID, getcastledata(strnpcinfo(4),CD_GUILD_ID);
 	if (getcharid(2) != .@GID) {
 		mes "[Gate Manager]";
 		mes "You don't seem to be the member of guild owning this castle.";

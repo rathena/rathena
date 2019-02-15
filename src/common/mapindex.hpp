@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MAPINDEX_HPP_
-#define _MAPINDEX_HPP_
+#ifndef MAPINDEX_HPP
+#define MAPINDEX_HPP
 
 #include "../common/mmo.hpp"
 
@@ -69,4 +69,4 @@ void mapindex_check_mapdefault(const char *mapname);
 void mapindex_init(void);
 void mapindex_final(void);
 
-#endif /* _MAPINDEX_HPP_ */
+#endif /* MAPINDEX_HPP */

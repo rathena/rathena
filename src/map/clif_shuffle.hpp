@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLIF_SHUFFLE_HPP_
-#define _CLIF_SHUFFLE_HPP_
+#ifndef CLIF_SHUFFLE_HPP
+#define CLIF_SHUFFLE_HPP
 
 // 2013-05-15aRagexe
 #if PACKETVER == 20130515
@@ -4752,4 +4752,4 @@
 	parseable_packet(0x083C,12,clif_parse_SearchStoreInfoListItemClick,2,6,10);
 #endif
 
-#endif /* _CLIF_SHUFFLE_HPP_ */
+#endif /* CLIF_SHUFFLE_HPP */

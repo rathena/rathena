@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_PET_HPP_
-#define _INT_PET_HPP_
+#ifndef INT_PET_HPP
+#define INT_PET_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -19,4 +19,4 @@ int inter_pet_sql_init(void);
 
 int inter_pet_tosql(int pet_id, struct s_pet *p);
 
-#endif /* _INT_PET_HPP_ */
+#endif /* INT_PET_HPP */
