@@ -153,7 +153,7 @@ StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func);
 void _StringBuf_Init(const char *file, int line, const char *func, StringBuf* self);
 #define StringBuf_Init(self) _StringBuf_Init(ALC_MARK,self)
 int _StringBuf_Printf(const char *file, int line, const char *func, StringBuf* self, const char* fmt, ...);
-#define StringBuf_Printf(self,fmt,...) _StringBuf_Printf(ALC_MARK,self,fmt,__VA_ARGS__)
+#define StringBuf_Printf(self,fmt,...) _StringBuf_Printf(ALC_MARK,self,fmt, ## __VA_ARGS__)
 int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, va_list args);
 #define StringBuf_Vprintf(self,fmt,args) _StringBuf_Vprintf(ALC_MARK,self,fmt,args)
 int _StringBuf_Append(const char *file, int line, const char *func, StringBuf* self, const StringBuf *sbuf);
