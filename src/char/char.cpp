@@ -512,6 +512,27 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			strcat(save_status, " hotkeys");
 	}
 #endif
+	// item favorites
+	if (SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s` WHERE char_id='%d'",
+		schema_config.favs_db, p->char_id))
+	{
+		Sql_ShowDebug(sql_handle);
+		errors++;
+	}
+	for (i = 0; i < MAX_FAVORITES; i++) {
+		if (p->favs[i]>0) {
+			if (SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`char_id`,`itemid`) VALUES ('%d','%d');",
+				schema_config.favs_db, p->char_id, p->favs[i]))
+			{
+				Sql_ShowDebug(sql_handle);
+				errors++;
+			}
+		}
+	};
+	
+	
+	strcat(save_status, " favorites1");
+
 	StringBuf_Destroy(&buf);
 	if (save_status[0]!='\0' && charserv_config.save_log)
 		ShowInfo("Saved char %d - %s:%s.\n", char_id, p->name, save_status);
@@ -1020,6 +1041,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	struct hotkey tmp_hotkey;
 	int hotkey_num;
 #endif
+	int fav, noffav;
 	StringBuf msg_buf;
 	char sex[2];
 
@@ -1220,6 +1242,19 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	}
 	StringBuf_AppendStr(&msg_buf, " hotkeys");
 #endif
+
+	if (SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `itemid` FROM `%s` WHERE `char_id`=?", schema_config.favs_db)
+		|| SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
+		|| SQL_ERROR == SqlStmt_Execute(stmt)
+		|| SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT, &fav, 0, NULL, NULL)
+		) SqlStmt_ShowDebug(stmt);
+	noffav = 0;
+	while (SQL_SUCCESS == SqlStmt_NextRow(stmt))
+	{
+		if (noffav < MAX_FAVORITES) { p->favs[noffav] = fav; }
+		else ShowWarning("mmo_char_fromsql: Attempt to load more favorites than MAX_FAVORITES!");
+	}
+	StringBuf_AppendStr(&msg_buf, " favorites");
 
 	/* Mercenary Owner DataBase */
 	mercenary_owner_fromsql(char_id, p);
@@ -2616,7 +2651,9 @@ void char_sql_config_read(const char* cfgName) {
 			safestrncpy(schema_config.friend_db, w2, sizeof(schema_config.friend_db));
 		else if(!strcmpi(w1,"hotkey_db"))
 			safestrncpy(schema_config.hotkey_db, w2, sizeof(schema_config.hotkey_db));
-		else if(!strcmpi(w1,"quest_db"))
+		else if (!strcmpi(w1, "favs_db"))
+			safestrncpy(schema_config.favs_db, w2, sizeof(schema_config.favs_db));
+		else if (!strcmpi(w1, "quest_db"))
 			safestrncpy(schema_config.quest_db,w2,sizeof(schema_config.quest_db));
 		else if(!strcmpi(w1,"homunculus_db"))
 			safestrncpy(schema_config.homunculus_db,w2,sizeof(schema_config.homunculus_db));
@@ -2681,7 +2718,8 @@ void char_set_default_sql(){
 	safestrncpy(schema_config.auction_db,"auction",sizeof(schema_config.auction_db)); // Auctions System
 	safestrncpy(schema_config.friend_db,"friends",sizeof(schema_config.friend_db));
 	safestrncpy(schema_config.hotkey_db,"hotkey",sizeof(schema_config.hotkey_db));
-	safestrncpy(schema_config.quest_db,"quest",sizeof(schema_config.quest_db));
+	safestrncpy(schema_config.favs_db, "favorites", sizeof(schema_config.favs_db));
+	safestrncpy(schema_config.quest_db, "quest", sizeof(schema_config.quest_db));
 	safestrncpy(schema_config.homunculus_db,"homunculus",sizeof(schema_config.homunculus_db));
 	safestrncpy(schema_config.skill_homunculus_db,"skill_homunculus",sizeof(schema_config.skill_homunculus_db));
 	safestrncpy(schema_config.mercenary_db,"mercenary",sizeof(schema_config.mercenary_db));

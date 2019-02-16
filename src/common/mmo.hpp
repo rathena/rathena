@@ -75,6 +75,7 @@
 #define DB_NAME_LEN 256 //max len of dbs
 #define MAX_CLAN 500
 #define MAX_CLANALLIANCE 6
+#define MAX_FAVORITES 128 // Maximum number of different items a player can save in their favorites tab. 
 
 // for produce
 #define MIN_ATTRIBUTE 0
@@ -523,6 +524,8 @@ struct mmo_charstatus {
 #endif
 	bool show_equip,allow_party;
 	short rename;
+
+	int favs[MAX_FAVORITES];
 
 	time_t delete_date;
 	time_t unban_time;

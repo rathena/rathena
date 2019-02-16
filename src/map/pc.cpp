@@ -4531,6 +4531,7 @@ short pc_search_inventory(struct map_session_data *sd, unsigned short nameid) {
 char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type) {
 	struct item_data *id;
 	int16 i;
+	int j;
 	unsigned int w;
 
 	nullpo_retr(1, sd);
@@ -4587,6 +4588,10 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 			sd->inventory.u.items_inventory[i].favorite = 0;
 		if( item->equipSwitch )
 			sd->inventory.u.items_inventory[i].equipSwitch = 0;
+
+		for (j = 0; j < MAX_FAVORITES; j++) {
+			if (sd->status.favs[j] == item->nameid) sd->inventory.u.items_inventory[i].favorite = 1;
+		}
 
 		sd->inventory.u.items_inventory[i].amount = amount;
 		sd->inventory_data[i] = id;
