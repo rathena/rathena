@@ -504,7 +504,7 @@
 5819,507,100	// Carnival_Circlet
 5820,467,100	// Black_Elven_Ears
 5821,467,100	// Gold_Tulip_Hairpin
-5822,499,100	// Love_Chick_Hat
+// 5822,499,100	// Love_Chick_Hat
 5823,467,100	// Love_Arrow
 5855,499,100	// Fishing_Rod
 5864,475,100	// Shadow_Booster
@@ -631,7 +631,7 @@
 6184,475,100	// Zherlthsh_Ticket
 6184,475,100	// Zherlthsh_Ticket
 6185,475,100	// Alice_Ticket
-6206,499,100	// I_Love_You
+// 6206,499,100	// I_Love_You
 6207,499,100	// Thank_You
 6208,499,100	// I_Respect_You
 6218,507,100	// Disin_Delivery_Box
@@ -2216,10 +2216,10 @@
 14006,475,100	// F_Drooping_W_Kitty_Box
 14007,475,100	// F_Rabbit_Ear_Hat_Box
 14008,475,100	// F_L_Orc_Hero_Helm_Box
-14009,475,100	// F_Love_Angel_Box
+// 14009,475,100	// F_Love_Angel_Box
 14010,475,100	// F_Squirrel_Box
 14011,475,100	// F_Gogo_Box
-14012,475,100	// F_Love_Angel_Box_1m
+// 14012,475,100	// F_Love_Angel_Box_1m
 14013,475,100	// F_Squirrel_Box_1m
 14014,475,100	// F_Gogo_Box_1m
 14015,475,100	// F_Wasteland_Outlaw_Box
