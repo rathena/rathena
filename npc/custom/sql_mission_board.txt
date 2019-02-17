@@ -1520,4 +1520,4 @@ louyang,208,166,4	duplicate(mission_board)	Louyang Mission#18	888
 gonryun,178,141,4	duplicate(mission_board)	Gontryun Mission#19	888
 
 
-// prontera,153,285,5	duplicate(mission_board)	Special Mission#100	811
+prontera,153,285,5	duplicate(mission_board)	Special Mission#100	811
