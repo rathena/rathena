@@ -11845,7 +11845,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
-	if( opt_flag&2 && sd && sd->touching_id )
+	if( opt_flag&2 && sd && sd->npc_ontouch_.count )
 		npc_touchnext_areanpc(sd,false); // Run OnTouch_ on next char in range
 
 	return 1;

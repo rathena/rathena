@@ -2642,7 +2642,43 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 		return false;
 	}
 
-	mapdata->npc[mapdata->npc_num]=nd;
+	int xs = -1, ys = -1;
+
+	switch (nd->subtype) {
+	case NPCTYPE_WARP:
+		xs = nd->u.warp.xs;
+		ys = nd->u.warp.ys;
+		break;
+	case NPCTYPE_SCRIPT:
+		xs = nd->u.scr.xs;
+		ys = nd->u.scr.ys;
+		break;
+	default:
+		break;
+	}
+	// npcs with trigger area are grouped
+	// 0 < npc_num_warp < npc_num_area < npc_num
+	if (xs < 0 && ys < 0)
+		mapdata->npc[ mapdata->npc_num ] = nd;
+	else {
+		switch (nd->subtype) {
+		case NPCTYPE_WARP:
+			mapdata->npc[ mapdata->npc_num ] = mapdata->npc[ mapdata->npc_num_area ];
+			mapdata->npc[ mapdata->npc_num_area ] = mapdata->npc[ mapdata->npc_num_warp ];
+			mapdata->npc[ mapdata->npc_num_warp ] = nd;
+			mapdata->npc_num_warp++;
+			mapdata->npc_num_area++;
+			break;
+		case NPCTYPE_SCRIPT:
+			mapdata->npc[ mapdata->npc_num ] = mapdata->npc[ mapdata->npc_num_area ];
+			mapdata->npc[ mapdata->npc_num_area ] = nd;
+			mapdata->npc_num_area++;
+			break;
+		default:
+			mapdata->npc[ mapdata->npc_num ] = nd;
+			break;
+		}
+	}
 	mapdata->npc_num++;
 	idb_put(id_db,nd->bl.id,nd);
 	return true;
@@ -2709,6 +2745,8 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 
 	memset(dst_map->npc, 0, sizeof(dst_map->npc));
 	dst_map->npc_num = 0;
+	dst_map->npc_num_area = 0;
+	dst_map->npc_num_warp = 0;
 
 	// Reallocate cells
 	num_cell = dst_map->xs * dst_map->ys;

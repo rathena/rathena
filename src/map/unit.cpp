@@ -444,7 +444,7 @@ static TIMER_FUNC(unit_walktoxy_timer){
 
 	switch(bl->type) {
 		case BL_PC:
-			if( sd->touching_id )
+			if( sd->npc_ontouch_.count )
 				npc_touchnext_areanpc(sd,false);
 			if(map_getcell(bl->m,x,y,CELL_CHKNPC)) {
 				npc_touch_areanpc(sd,bl->m,x,y);
@@ -971,7 +971,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 	ud->walktimer = INVALID_TIMER;
 
 	if(sd) {
-		if( sd->touching_id )
+		if( sd->npc_ontouch_.count )
 			npc_touchnext_areanpc(sd,false);
 
 		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC)) {
@@ -1102,7 +1102,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 				clif_blown(bl);
 
 			if(sd) {
-				if(sd->touching_id)
+				if(sd->npc_ontouch_.count)
 					npc_touchnext_areanpc(sd, false);
 
 				if(map_getcell(bl->m, bl->x, bl->y, CELL_CHKNPC))
@@ -2955,7 +2955,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if(sd->menuskill_id)
 				sd->menuskill_id = sd->menuskill_val = 0;
 
-			if( sd->touching_id )
+			if( sd->npc_ontouch_.count )
 				npc_touchnext_areanpc(sd,true);
 
 			// Check if warping and not changing the map.
@@ -3248,6 +3248,11 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				aFree(sd->areanpc.ids);
 				sd->areanpc.count = 0;
 				sd->areanpc.mem_count = 0;
+			}
+			if (sd->npc_ontouch_.mem_count) {
+				aFree(sd->npc_ontouch_.ids);
+				sd->npc_ontouch_.count = 0;
+				sd->npc_ontouch_.mem_count = 0;
 			}
 
 #if PACKETVER >= 20150513
