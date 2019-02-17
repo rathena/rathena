@@ -10805,9 +10805,15 @@ void clif_parse_progressbar(int fd, struct map_session_data * sd){
 	int npc_id = sd->progressbar.npc_id;
 	bool closing = false;
 
+	// Check if the progress was canceled
 	if( gettick() < sd->progressbar.timeout && sd->st ){
 		closing = true;
 		sd->st->state = CLOSE; // will result in END in npc_scriptcont
+
+		// If a message window was open, offer a close button to the user
+		if( sd->st->mes_active ){
+			clif_scriptclose( sd, npc_id );
+		}
 	}
 
 	sd->progressbar.npc_id = 0;
