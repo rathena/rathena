@@ -339,12 +339,18 @@ int main (int argc, char **argv)
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]
 
-#ifdef MINICORE // minimalist Core
+#if defined(MINICORE) || defined(TESTING)// minimalist Core
 	display_title();
+#ifdef MINICORE
+	ShowInfo("Running minicore!");
+#else
+	ShowInfo("Running tests!");
+#endif
 	usercheck();
 	do_init(argc,argv);
 	do_final();
-#else// not MINICORE
+#else// not MINICORE and not TESTING
+	ShowInfo("Running normal!");
 	set_server_type();
 	display_title();
 	usercheck();
