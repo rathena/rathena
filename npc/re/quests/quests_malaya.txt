@@ -8334,6 +8334,7 @@ ma_fild01,1,1,4	script	Pintados Manager#pin	894,{
 	end;
 
 // Moved to individual NPCs for smoother processing.
+OnWed0300:
 OnInit:
 	$malaya_pintados_00 = 1;
 	if ($malaya_pintados_00 > 0) {
