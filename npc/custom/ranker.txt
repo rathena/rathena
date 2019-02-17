@@ -353,7 +353,7 @@ OnPvPRank:
 		}
 
 		// debugmes "SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+.@start$+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' "+.@sql$+" GROUP BY (kill_char_id) ORDER BY cn DESC, mvp_date ASC LIMIT 5;";
-		query_sql("SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+(.@start$)+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' "+.@sql$+" GROUP BY (kill_char_id) ORDER BY cn DESC, mvp_date ASC LIMIT 5;", .@killer, .@kill_count );
+		query_logsql("SELECT kill_char_id, COUNT(kill_char_id) AS cn FROM mvplog WHERE mvp_date > '"+(.@start$)+" 00:00:00' AND mvp_date < '"+.@end$+" 00:00:00' "+.@sql$+" GROUP BY (kill_char_id) ORDER BY cn DESC, mvp_date ASC LIMIT 5;", .@killer, .@kill_count );
 
 	}
 	for(@i = 0; @i < 5; @i ++) {
