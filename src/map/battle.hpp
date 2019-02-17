@@ -656,6 +656,8 @@ struct Battle_Config
 	int guild_leaderchange_delay;
 	int guild_leaderchange_woe;
 	int guild_alliance_onlygm;
+	int limit_refine;
+	int limit_refine_te;
 	int feature_achievement;
 	int allow_bound_sell;
 	int event_refine_chance;

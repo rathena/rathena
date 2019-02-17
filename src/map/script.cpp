@@ -8809,7 +8809,9 @@ BUILDIN_FUNC(getequiprefinerycnt)
 		i=pc_checkequip(sd,equip_bitmask[num]);
 	if(i >= 0) {
 		cnt = sd->inventory.u.items_inventory[i].refine;
-		if(map_getmapflag(sd->bl.m, MF_GVG) && cnt > 10)
+		if((( battle_config.limit_refine && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			( battle_config.limit_refine_te && map_getmapflag(sd->bl.m, MF_GVG_TE_CASTLE))
+			) && cnt > 10)
 			cnt = 10;
 		script_pushint(st,cnt);
 	}
@@ -15420,7 +15422,9 @@ BUILDIN_FUNC(getrefine)
 		}
 
 		int cnt = sd->inventory.u.items_inventory[current_equip_item_index].refine;
-		if(map_getmapflag(sd->bl.m, MF_GVG) && cnt > 10)
+		if(((battle_config.limit_refine && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			(battle_config.limit_refine_te && map_getmapflag(sd->bl.m, MF_GVG_TE_CASTLE))
+			) && cnt > 10)
 			cnt = 10;
 		script_pushint(st,cnt);
 
