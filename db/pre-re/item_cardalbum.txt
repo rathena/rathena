@@ -376,13 +376,13 @@ IG_MagicCardAlbum,4183,10	// Vagabond Wolf Card
 IG_MagicCardAlbum,4197,10	// Mastering Card
 IG_MagicCardAlbum,4198,1	// Maya Purple Card
 IG_MagicCardAlbum,4203,10	// Mutant Dragonoid Card
-IG_MagicCardAlbum,4207,1	// Mysteltainn Card
-IG_MagicCardAlbum,4211,1	// Vocal card
+IG_MagicCardAlbum,4207,10	// Mysteltainn Card
+IG_MagicCardAlbum,4211,10	// Vocal card
 IG_MagicCardAlbum,4237,5	// Owl Duke Card
 IG_MagicCardAlbum,4238,5	// Owl Baron Card
 IG_MagicCardAlbum,4241,1	// Arc Angeling Card
-IG_MagicCardAlbum,4250,1	// Executioner Card
-IG_MagicCardAlbum,4254,1	// Tirfing Card
+IG_MagicCardAlbum,4250,10	// Executioner Card
+IG_MagicCardAlbum,4254,10	// Tirfing Card
 IG_MagicCardAlbum,4266,10	// Eclipse Card
 IG_MagicCardAlbum,4284,10	// Chepet Card
 IG_MagicCardAlbum,4285,10	// Choco Card
@@ -390,8 +390,8 @@ IG_MagicCardAlbum,4290,5	// Cat O' Nine Tails Card
 IG_MagicCardAlbum,4291,10	// Kobold Leader Card
 IG_MagicCardAlbum,4300,10	// Chimera Card
 IG_MagicCardAlbum,4306,10	// Toad Card
-IG_MagicCardAlbum,4320,1	// Bloody Knight Card
-IG_MagicCardAlbum,4336,1	// Ungoliant Card
+IG_MagicCardAlbum,4320,10	// Bloody Knight Card
+IG_MagicCardAlbum,4336,10	// Ungoliant Card
 IG_MagicCardAlbum,4354,1	// Gemini-S58 Card
 IG_MagicCardAlbum,4384,1	// Hydro Card
 IG_MagicCardAlbum,4395,3	// Thanatos Maero Card
