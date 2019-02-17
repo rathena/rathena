@@ -187,7 +187,6 @@ OnInit:
 	atcommand "@sakura";
 	end;
 }
-*/
 
 -	script	candies	-1,{
 OnNPCKillEvent:
@@ -236,3 +235,5 @@ OnInit:
 		12234;	// Fierce Cacao 99%
 	end;
 }
+
+*/

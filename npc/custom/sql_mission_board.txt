@@ -1486,7 +1486,7 @@ OnDisplayMissionInfo:
 				dispbottom "[Failed] Your Items collecting didnt meet the requirements.";
 				.@check_result |= 4;
 			}
-			if( .@check_progress & 8 && ( !.@branch_progress && !.@class_progress ) ){
+			if( .@check_progress & 8 && ( !.@branch_progress && !.@class_prog`ress ) ){
 				dispbottom "[Failed] Your Class didnt meet the requirements.";
 				.@check_result |= 8;
 			}
@@ -1520,4 +1520,4 @@ louyang,208,166,4	duplicate(mission_board)	Louyang Mission#18	888
 gonryun,178,141,4	duplicate(mission_board)	Gontryun Mission#19	888
 
 
-prontera,153,285,5	duplicate(mission_board)	Special Mission#100	811
+// prontera,153,285,5	duplicate(mission_board)	Special Mission#100	811
