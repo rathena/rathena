@@ -1,0 +1,112 @@
+//===== rAthena Script =======================================
+//= Survey NPC
+//===== By: ==================================================
+//= Nubs
+//===== Current Version: =====================================
+//= 1.0a
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Survey what the player wants
+//============================================================
+
+prontera,145,198,3	script	Survey Staff	831,8,8,{
+	.@count = query_sql("SELECT * FROM `nubs_survey` WHERE `active` = "+escape_sql(1), .@ids, .@questions$, .@date$, .@active) > 0);
+
+	if(.@count <= 0) {
+		mes .n$,
+			"There are no survey questions running currently.";
+		close;
+	} else {
+		.survey_id = .@ids[0];
+		query_sql("SELECT id, options FROM `nubs_survey_options` WHERE `survey_id` = "+escape_sql(.survey_id)+" ORDER BY id ASC", .@option_ids, .@options$);		
+		query_sql("SELECT o.id, IFNULL(COUNT(v.vote_id), 0) FROM `nubs_survey_options` AS o LEFT JOIN `nubs_survey_votes` AS v ON (v.vote_id = o.id) WHERE o.survey_id = "+escape_sql(.survey_id)+" GROUP BY v.vote_id ORDER BY o.id ASC", .@votes, .@vote_count);
+		.@total = 0;
+		for(.@i=0;.@i<getarraysize(.@votes);.@i++)
+			.@total += .@vote_count[.@i];
+	}
+
+	if(callsub(S_CheckVoted) == 1)
+	{
+		deletearray(.@result);
+		deletearray(.@result_bar$);
+		for(.@i=0;.@i<getarraysize(.@votes);.@i++){
+			.@result[.@i] = round(atoi(.@vote_count[.@i]) * 100 /.@total ); // percentage
+			for(.@j=0;.@j<(.@result[.@i]/5);.@j++){
+				if(.@j == 0)
+					.@result_bar$[.@i] = "X";
+				else 
+					.@result_bar$[.@i] += "X";
+			}
+		}
+		query_sql("SELECT v.char_id, o.options, v.date_voted FROM `nubs_survey_votes` AS v LEFT JOIN `nubs_survey_options` AS o ON (v.vote_id = o.id) WHERE o.`survey_id` = "+escape_sql(.survey_id)+" AND (ip_address = '"+escape_sql(getcharip())+"' OR unique_id = '"+escape_sql(get_unique_id())+"' )", .@char_id, .@option$, .@date_voted$);
+		mes .n$,
+			"Hi, I detected that you have already voted under the name of ^33CC33"+get_name(.@char_id[0])+"^000000 on ^3333CC"+.@date_voted$[0]+"^000000.",
+			"You voted for ^CC3333"+.@option$[0]+"^000000 to",
+			"^3333CC"+.@questions$[0]+"^000000";
+		next;
+
+		mes .n$,
+			"The current result for the poll is:";		
+		for(.@i=0;.@i<getarraysize(.@votes);.@i++) {
+			mes "^CC3333"+.@options$[.@i]+"^000000: ["+.@result[.@i]+"%] ^"+.colours$[.@i]+.@result_bar$[.@i]+"^000000";
+		}
+		close;
+	}
+
+	mes .n$,
+		"Hi, I am the Survey Staff for Milky RO. I assist in collecting data for the administrator.",
+		"Please be aware that only 1 vote is allowed per IP.";
+	next;
+	mes .n$,
+		"The current Poll Question is:",
+		"^3333CC"+.@questions$[0]+"^000000",
+		"More infomation is provided in the forum.",
+		"Please vote for your choice.";
+	.@select$ = "";
+	for(.@i=0;.@i<getarraysize(.@options$);.@i++){
+		if(.@i > 0)
+			.@select$ += ":";
+		.@select$ += .@options$[.@i];
+	}
+	next;
+	.@sel = select(.@select$)-1;
+	if(.@sel < 0) {
+		mes .n$, 
+			"Error! Please contact the administrator [option-error]";
+		close;
+	}
+	mes .n$,
+		"Are you sure you want to vote:",
+		"^CC3333"+.@options$[.@sel]+"^000000 to",
+		"^3333CC"+.@questions$[0]+"^000000";
+	next;
+	if(select("No:Yes") == 1) close;
+	
+	query_sql("INSERT INTO `nubs_survey_votes` (ip_address, unique_id, char_id, survey_id, vote_id, date_voted) VALUES ('"+escape_sql(getcharip())+"', '"+escape_sql(get_unique_id())+"', '"+escape_sql(getcharid(0))+"', '"+escape_sql(.survey_id)+"', '"+escape_sql(.@option_ids[.@sel])+"', '"+escape_sql(gettimestr("%Y-%m-%d %H:%M:%S",21))+"'); ");
+	mes .n$,
+		"Thank you for casting your vote.";
+	close;
+
+OnTouch:
+	if(callsub(S_CheckVoted) == 0)
+		npctalk .n$ + ": Please help me with my survey!";
+end;
+
+OnInit:
+	.n$ = "[Survey Staff]";
+	setarray .colours$[0], "EC7063", "AF7AC5", "45B39D", "27AE60", "F39C12", "5499C7", "BA4A00", "2E4053";
+	query_sql("SELECT * FROM `nubs_survey` WHERE `active` = "+escape_sql(1), .@ids, .@questions$, .@date$, .@active);
+	.survey_id = .@ids[0];
+end;
+
+S_CheckVoted:
+	if(.survey_id > 0) {
+		.@out = query_sql("SELECT char_id, vote_id, date_voted FROM `nubs_survey_votes` WHERE `survey_id` = "+escape_sql(.survey_id)+" AND (ip_address = '"+escape_sql(getcharip())+"' OR unique_id = '"+escape_sql(get_unique_id())+"' )", .@char_id, .@vote_id, .@date_voted);
+		if(.@out < 0)
+			dispbottom .n$, "Error! Please contact the administrator [surveycheck]";
+		else if (.@out == 0)
+			return 0;
+	}
+	return 1;
+}
