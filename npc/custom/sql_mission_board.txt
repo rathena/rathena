@@ -1486,7 +1486,7 @@ OnDisplayMissionInfo:
 				dispbottom "[Failed] Your Items collecting didnt meet the requirements.";
 				.@check_result |= 4;
 			}
-			if( .@check_progress & 8 && ( !.@branch_progress && !.@class_prog`ress ) ){
+			if( .@check_progress & 8 && ( !.@branch_progress && !.@class_progress ) ){
 				dispbottom "[Failed] Your Class didnt meet the requirements.";
 				.@check_result |= 8;
 			}
