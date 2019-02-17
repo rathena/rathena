@@ -8795,7 +8795,7 @@ BUILDIN_FUNC(getequipisenableref)
  *------------------------------------------*/
 BUILDIN_FUNC(getequiprefinerycnt)
 {
-	int i = -1,num;
+	int i = -1,num,cnt;
 	TBL_PC *sd;
 
 	num = script_getnum(st,2);
@@ -8807,8 +8807,12 @@ BUILDIN_FUNC(getequiprefinerycnt)
 
 	if (equip_index_check(num))
 		i=pc_checkequip(sd,equip_bitmask[num]);
-	if(i >= 0)
-		script_pushint(st,sd->inventory.u.items_inventory[i].refine);
+	if(i >= 0) {
+		cnt = sd->inventory.u.items_inventory[i].refine;
+		if(map_getmapflag(sd->bl.m, MF_GVG) && cnt > 10)
+			cnt = 10;
+		script_pushint(st,cnt);
+	}
 	else
 		script_pushint(st,0);
 
@@ -15415,8 +15419,12 @@ BUILDIN_FUNC(getrefine)
 			return SCRIPT_CMD_FAILURE;
 		}
 
-		script_pushint(st,sd->inventory.u.items_inventory[current_equip_item_index].refine);
-	}else
+		int cnt = sd->inventory.u.items_inventory[current_equip_item_index].refine;
+		if(map_getmapflag(sd->bl.m, MF_GVG) && cnt > 10)
+			cnt = 10;
+		script_pushint(st,cnt);
+
+	} else
 		script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
 }
