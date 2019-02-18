@@ -730,6 +730,15 @@ struct map_session_data {
 	uint32* hatEffectIDs;
 	uint8 hatEffectCount;
 #endif
+
+	struct {
+		unsigned attack   : 1;
+		unsigned useitem  : 1;
+		unsigned chat     : 1;
+		unsigned sitstand : 1;
+		unsigned commands : 1;
+		unsigned npcclick : 1;
+	} block_action;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table

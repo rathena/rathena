@@ -4989,6 +4989,9 @@ int pc_useitem(struct map_session_data *sd,int n)
 	if (item.nameid == 0 || item.amount <= 0)
 		return 0;
 
+	if (sd->block_action.useitem)
+		return 0;
+
 	if( !pc_isUseitem(sd,n) )
 		return 0;
 
@@ -9107,6 +9110,9 @@ bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 	nullpo_retr(false, sd);
 
 	if( pc_is90overweight(sd) || pc_isridingwug(sd) )
+		return false;
+
+	if (sd->block_action.attack)
 		return false;
 
 	if( sd->sc.data[SC_BASILICA] ||

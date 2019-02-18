@@ -10113,7 +10113,7 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 	if( is_atcommand( fd, sd, out_message, 1 )  )
 		return false;
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || sd->block_action.chat)
 		return false; //no "chatting" while muted.
 
 	if( battle_config.min_chat_delay ) { //[Skotlex]
@@ -11178,6 +11178,9 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			return;
 		}
 
+		if (sd->block_action.sitstand)
+			break;
+
 		if (sd->ud.skilltimer != INVALID_TIMER || (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING))
 			break;
 
@@ -11200,6 +11203,9 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			clif_standing(&sd->bl);
 			return;
 		}
+
+		if (sd->block_action.sitstand)
+			break;
 
 		if (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 			break;

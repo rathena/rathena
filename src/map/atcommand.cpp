@@ -6629,7 +6629,7 @@ ACMD_FUNC(npctalk)
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || sd->block_action.chat)
 		return -1; //no "chatting" while muted.
 
 	if(!ifcolor) {
@@ -6678,7 +6678,7 @@ ACMD_FUNC(pettalk)
 		return -1;
 	}
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || sd->block_action.chat)
 		return -1; //no "chatting" while muted.
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", mes) < 1) {
@@ -7562,7 +7562,7 @@ ACMD_FUNC(homtalk)
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || sd->block_action.chat)
 		return -1; //no "chatting" while muted.
 
 	if ( !hom_is_active(sd->hd) ) {
@@ -7970,7 +7970,7 @@ ACMD_FUNC(me)
 	memset(tempmes, '\0', sizeof(tempmes));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || sd->block_action.chat)
 		return -1; //no "chatting" while muted.
 
 	if (!message || !*message || sscanf(message, "%255[^\n]", tempmes) < 0) {
@@ -10558,6 +10558,12 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	//check to see if any params exist within this command
 	if( sscanf(atcmd_msg, "%255s %255[^\n]", command, params) < 2 )
 		params[0] = '\0';
+
+	if (type == 1 && sd->block_action.commands) {
+		sprintf(output,msg_txt(sd,154), command); // %s failed.
+		clif_displaymessage(fd, output);
+		return true;
+	}
 
 	// @commands (script based)
 	if((type == 1 || type == 3) && atcmd_binding_count > 0) {
