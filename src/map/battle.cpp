@@ -8582,6 +8582,7 @@ static const struct _battle_data {
 	{ "guild_leaderchange_woe",				&battle_config.guild_leaderchange_woe,			0,		0,		1,				},
 	{ "guild_alliance_onlygm",              &battle_config.guild_alliance_onlygm,           0,      0,      1, 				},
 	{ "limit_refine",						&battle_config.limit_refine,					0,		0,		1,				},
+	{ "limit_refine_pvp",					&battle_config.limit_refine_pvp,					0,		0,		1,				},
 	{ "limit_refine_te",					&battle_config.limit_refine_te,					0,		0,		1,				},
 	{ "feature.achievement",                &battle_config.feature_achievement,             1,      0,      1,              },
 	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                0,      0,      0xF,            },

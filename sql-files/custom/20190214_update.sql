@@ -1,3 +1,6 @@
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(32013, 'Metal_Stick', 'Metal Stick', 5, 20, NULL, 2000, '180', NULL, 3, 3, 16514, 63, 2, 2, 4, '150', 1, 4, 'bonus2 bSkillAtk,\"LG_CANNONSPEAR\",10;\r\n.@r = getrefine();\r\nif(.@r>6){ bonus2 bSkillAtk,\"LG_OVERBRAND\",10; }\r\nif(.@r>8){ bonus2 bSkillAtk,\"LG_OVERBRAND\",15; }\r\nif(.@r>11){ bonus bDelayrate,-15; }', NULL, NULL);
+
 # item update/fixes
 REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
 (5675, 'Poring_Letter', 'Poring Letter', 4, 20, NULL, 100, NULL, 0, NULL, 0, 4294967295, 63, 2, 1, NULL, '10', 0, 604, 'bonus2 bAddMonsterDropItem,619,10; bonus2 bAddRace,RC_Plant,5; bonus bUnbreakableHelm;', NULL, NULL),

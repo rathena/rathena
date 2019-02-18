@@ -8810,6 +8810,7 @@ BUILDIN_FUNC(getequiprefinerycnt)
 	if(i >= 0) {
 		cnt = sd->inventory.u.items_inventory[i].refine;
 		if((( battle_config.limit_refine && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			( battle_config.limit_refine_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
 			( battle_config.limit_refine_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
 			) && cnt > 0)
 			cnt = cnt/2;
@@ -15423,6 +15424,7 @@ BUILDIN_FUNC(getrefine)
 
 		int cnt = sd->inventory.u.items_inventory[current_equip_item_index].refine;
 		if(((battle_config.limit_refine && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			(battle_config.limit_refine_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
 			(battle_config.limit_refine_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
 			) && cnt > 0)
 			cnt = cnt/2;
