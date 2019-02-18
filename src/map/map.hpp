@@ -76,7 +76,7 @@ void map_msg_reload(void);
 //Note the oddity of the novice:
 //Super Novices are considered the 2-1 version of the novice! Novices are considered a first class type, too...
 enum e_mapid {
-//Novice And 1-1 Jobs
+	//Novice And 1-1 Jobs
 	MAPID_NOVICE = 0x0,
 	MAPID_SWORDMAN,
 	MAPID_MAGE,
@@ -95,7 +95,7 @@ enum e_mapid {
 	MAPID_OKTOBERFEST,
 	MAPID_SUMMONER,
 	MAPID_SUMMER2,
-//2-1 Jobs
+	//2-1 Jobs
 	MAPID_SUPER_NOVICE = JOBL_2_1|MAPID_NOVICE,
 	MAPID_KNIGHT,
 	MAPID_WIZARD,
@@ -107,7 +107,7 @@ enum e_mapid {
 	MAPID_REBELLION = JOBL_2_1|MAPID_GUNSLINGER,
 	MAPID_KAGEROUOBORO,
 	MAPID_DEATH_KNIGHT = JOBL_2_1|MAPID_GANGSI,
-//2-2 Jobs
+	//2-2 Jobs
 	MAPID_CRUSADER = JOBL_2_2|MAPID_SWORDMAN,
 	MAPID_SAGE,
 	MAPID_BARDDANCER,
@@ -116,7 +116,7 @@ enum e_mapid {
 	MAPID_ROGUE,
 	MAPID_SOUL_LINKER,
 	MAPID_DARK_COLLECTOR = JOBL_2_2|MAPID_GANGSI,
-//Trans Novice And Trans 1-1 Jobs
+	//Trans Novice And Trans 1-1 Jobs
 	MAPID_NOVICE_HIGH = JOBL_UPPER|MAPID_NOVICE,
 	MAPID_SWORDMAN_HIGH,
 	MAPID_MAGE_HIGH,
@@ -124,21 +124,21 @@ enum e_mapid {
 	MAPID_ACOLYTE_HIGH,
 	MAPID_MERCHANT_HIGH,
 	MAPID_THIEF_HIGH,
-//Trans 2-1 Jobs
+	//Trans 2-1 Jobs
 	MAPID_LORD_KNIGHT = JOBL_UPPER|MAPID_KNIGHT,
 	MAPID_HIGH_WIZARD,
 	MAPID_SNIPER,
 	MAPID_HIGH_PRIEST,
 	MAPID_WHITESMITH,
 	MAPID_ASSASSIN_CROSS,
-//Trans 2-2 Jobs
+	//Trans 2-2 Jobs
 	MAPID_PALADIN = JOBL_UPPER|MAPID_CRUSADER,
 	MAPID_PROFESSOR,
 	MAPID_CLOWNGYPSY,
 	MAPID_CHAMPION,
 	MAPID_CREATOR,
 	MAPID_STALKER,
-//Baby Novice And Baby 1-1 Jobs
+	//Baby Novice And Baby 1-1 Jobs
 	MAPID_BABY = JOBL_BABY|MAPID_NOVICE,
 	MAPID_BABY_SWORDMAN,
 	MAPID_BABY_MAGE,
@@ -150,7 +150,7 @@ enum e_mapid {
 	MAPID_BABY_GUNSLINGER = JOBL_BABY|MAPID_GUNSLINGER,
 	MAPID_BABY_NINJA,
 	MAPID_BABY_SUMMONER = JOBL_BABY|MAPID_SUMMONER,
-//Baby 2-1 Jobs
+	//Baby 2-1 Jobs
 	MAPID_SUPER_BABY = JOBL_BABY|MAPID_SUPER_NOVICE,
 	MAPID_BABY_KNIGHT,
 	MAPID_BABY_WIZARD,
@@ -161,7 +161,7 @@ enum e_mapid {
 	MAPID_BABY_STAR_GLADIATOR,
 	MAPID_BABY_REBELLION = JOBL_BABY|MAPID_REBELLION,
 	MAPID_BABY_KAGEROUOBORO,
-//Baby 2-2 Jobs
+	//Baby 2-2 Jobs
 	MAPID_BABY_CRUSADER = JOBL_BABY|MAPID_CRUSADER,
 	MAPID_BABY_SAGE,
 	MAPID_BABY_BARDDANCER,
@@ -169,7 +169,7 @@ enum e_mapid {
 	MAPID_BABY_ALCHEMIST,
 	MAPID_BABY_ROGUE,
 	MAPID_BABY_SOUL_LINKER,
-//3-1 Jobs
+	//3-1 Jobs
 	MAPID_SUPER_NOVICE_E = JOBL_THIRD|MAPID_SUPER_NOVICE,
 	MAPID_RUNE_KNIGHT,
 	MAPID_WARLOCK,
@@ -178,7 +178,7 @@ enum e_mapid {
 	MAPID_MECHANIC,
 	MAPID_GUILLOTINE_CROSS,
 	MAPID_STAR_EMPEROR,
-//3-2 Jobs
+	//3-2 Jobs
 	MAPID_ROYAL_GUARD = JOBL_THIRD|MAPID_CRUSADER,
 	MAPID_SORCERER,
 	MAPID_MINSTRELWANDERER,
@@ -186,21 +186,21 @@ enum e_mapid {
 	MAPID_GENETIC,
 	MAPID_SHADOW_CHASER,
 	MAPID_SOUL_REAPER,
-//Trans 3-1 Jobs
+	//Trans 3-1 Jobs
 	MAPID_RUNE_KNIGHT_T = JOBL_THIRD|MAPID_LORD_KNIGHT,
 	MAPID_WARLOCK_T,
 	MAPID_RANGER_T,
 	MAPID_ARCH_BISHOP_T,
 	MAPID_MECHANIC_T,
 	MAPID_GUILLOTINE_CROSS_T,
-//Trans 3-2 Jobs
+	//Trans 3-2 Jobs
 	MAPID_ROYAL_GUARD_T = JOBL_THIRD|MAPID_PALADIN,
 	MAPID_SORCERER_T,
 	MAPID_MINSTRELWANDERER_T,
 	MAPID_SURA_T,
 	MAPID_GENETIC_T,
 	MAPID_SHADOW_CHASER_T,
-//Baby 3-1 Jobs
+	//Baby 3-1 Jobs
 	MAPID_SUPER_BABY_E = JOBL_THIRD|MAPID_SUPER_BABY,
 	MAPID_BABY_RUNE,
 	MAPID_BABY_WARLOCK,
@@ -209,7 +209,7 @@ enum e_mapid {
 	MAPID_BABY_MECHANIC,
 	MAPID_BABY_CROSS,
 	MAPID_BABY_STAR_EMPEROR,
-//Baby 3-2 Jobs
+	//Baby 3-2 Jobs
 	MAPID_BABY_GUARD = JOBL_THIRD|MAPID_BABY_CRUSADER,
 	MAPID_BABY_SORCERER,
 	MAPID_BABY_MINSTRELWANDERER,
@@ -673,18 +673,18 @@ struct mapcell
 	// terrain flags
 	unsigned char
 		walkable : 1,
-		shootable : 1,
-		water : 1;
+				 shootable : 1,
+				 water : 1;
 
 	// dynamic flags
 	unsigned char
 		npc : 1,
-		basilica : 1,
-		landprotector : 1,
-		novending : 1,
-		nochat : 1,
-		maelstrom : 1,
-		icewall : 1;
+			basilica : 1,
+			landprotector : 1,
+			novending : 1,
+			nochat : 1,
+			maelstrom : 1,
+			icewall : 1;
 
 #ifdef CELL_NOSTACK
 	unsigned char cell_bl; //Holds amount of bls in this cell.
@@ -709,7 +709,7 @@ struct questinfo {
 	unsigned char color;
 	int quest_id;
 	unsigned short min_level,
-		max_level;
+				   max_level;
 	uint8 req_count;
 	uint8 jobid_count;
 	struct questinfo_req *req;
@@ -753,7 +753,7 @@ struct map_data {
 	/* ShowEvent Data Cache */
 	struct questinfo *qi_data;
 	unsigned short qi_count;
-	
+
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
 };
@@ -989,150 +989,161 @@ enum save_settings_type {
 	CHARSAVE_ALL		= 0xFFF, /// Always
 };
 
-// users
-void map_setusers(int);
-int map_getusers(void);
-int map_usercount(void);
+class Map_Obj {
 
-// blocklist lock
-int map_freeblock(struct block_list *bl);
-int map_freeblock_lock(void);
-int map_freeblock_unlock(void);
-// blocklist manipulation
-int map_addblock(struct block_list* bl);
-int map_delblock(struct block_list* bl);
-int map_moveblock(struct block_list *, int, int, t_tick);
-int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
-int map_foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
-int map_foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
-int map_foreachinarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
-int map_foreachinallarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
-int map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
-int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int count, int type, ...);
-int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int count, int type, ...);
-int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int16 dx, int16 dy, int type, ...);
-int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x, int16 y, int type, ...);
-int map_foreachinpath(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int type, ...);
-int map_foreachindir(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int offset, int type, ...);
-int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type, ...);
-//blocklist nb in one cell
-int map_count_oncell(int16 m,int16 x,int16 y,int type,int flag);
-struct skill_unit *map_find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,struct skill_unit *, int flag);
-// search and creation
-int map_get_new_object_id(void);
-int map_search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag);
-bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag);
-//
-int map_quit(struct map_session_data *);
-// npc
-bool map_addnpc(int16 m,struct npc_data *);
+	public:
+		// users
+		void setusers(int);
+		int getusers(void);
+		int usercount(void);
 
-// map item
-TIMER_FUNC(map_clearflooritem_timer);
-TIMER_FUNC(map_removemobs_timer);
-void map_clearflooritem(struct block_list* bl);
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
+		// blocklist lock
+		int freeblock(struct block_list *bl);
+		int freeblock_lock(void);
+		int freeblock_unlock(void);
+		// blocklist manipulation
+		int addblock(struct block_list* bl);
+		int delblock(struct block_list* bl);
+		int moveblock(struct block_list *, int, int, t_tick);
+		int foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
+		int foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
+		int foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
+		int foreachinarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
+		int foreachinallarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
+		int foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...);
+		int forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int count, int type, ...);
+		int forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int count, int type, ...);
+		int foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int16 dx, int16 dy, int type, ...);
+		int foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x, int16 y, int type, ...);
+		int foreachinpath(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int type, ...);
+		int foreachindir(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int offset, int type, ...);
+		int foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type, ...);
+		//blocklist nb in one cell
+		int count_oncell(int16 m,int16 x,int16 y,int type,int flag);
+		struct skill_unit *find_skill_unit_oncell(struct block_list *,int16 x,int16 y,uint16 skill_id,struct skill_unit *, int flag);
+		// search and creation
+		int get_new_object_id(void);
+		int search_freecell(struct block_list *src, int16 m, int16 *x, int16 *y, int16 rx, int16 ry, int flag);
+		bool closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag);
+		//
+		int quit(struct map_session_data *);
+		// npc
+		bool addnpc(int16 m,struct npc_data *);
 
-// instances
-int map_addinstancemap(const char *name, unsigned short instance_id);
-int map_delinstancemap(int m);
-void map_data_copyall(void);
-void map_data_copy(struct map_data *dst_map, struct map_data *src_map);
+		// map item
+		TIMER_FUNC(map_clearflooritem_timer);
+		TIMER_FUNC(map_removemobs_timer);
+		void clearflooritem(struct block_list* bl);
+		int addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
-// player to map session
-void map_addnickdb(int charid, const char* nick);
-void map_delnickdb(int charid, const char* nick);
-void map_reqnickdb(struct map_session_data* sd,int charid);
-const char* map_charid2nick(int charid);
-struct map_session_data* map_charid2sd(int charid);
+		// instances
+		int addinstancemap(const char *name, unsigned short instance_id);
+		int delinstancemap(int m);
+		void data_copyall(void);
+		void data_copy(struct map_data *dst_map, struct map_data *src_map);
 
-struct map_session_data * map_id2sd(int id);
-struct mob_data * map_id2md(int id);
-struct npc_data * map_id2nd(int id);
-struct homun_data* map_id2hd(int id);
-struct mercenary_data* map_id2mc(int id);
-struct pet_data* map_id2pd(int id);
-struct elemental_data* map_id2ed(int id);
-struct chat_data* map_id2cd(int id);
-struct block_list * map_id2bl(int id);
-bool map_blid_exists( int id );
+		// player to map session
+		void addnickdb(int charid, const char* nick);
+		void delnickdb(int charid, const char* nick);
+		void reqnickdb(struct map_session_data* sd,int charid);
+		const char* charid2nick(int charid);
+		struct map_session_data* charid2sd(int charid);
+
+		struct map_session_data * id2sd(int id);
+		struct mob_data * id2md(int id);
+		struct npc_data * id2nd(int id);
+		struct homun_data* id2hd(int id);
+		struct mercenary_data* id2mc(int id);
+		struct pet_data* id2pd(int id);
+		struct elemental_data* id2ed(int id);
+		struct chat_data* id2cd(int id);
+		struct block_list * id2bl(int id);
+		bool blid_exists( int id );
+
+		const char* mapid2mapname(int m);
+		int16 mapindex2mapid(unsigned short mapindex);
+		int16 mapname2mapid(const char* name);
+		int mapname2ipport(unsigned short name, uint32* ip, uint16* port);
+		int setipport(unsigned short map, uint32 ip, uint16 port);
+		int eraseipport(unsigned short map, uint32 ip, uint16 port);
+		int eraseallipport(void);
+		void addiddb(struct block_list *);
+		void deliddb(struct block_list *bl);
+		void foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...);
+		void foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
+		void foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...);
+		void foreachregen(int (*func)(struct block_list* bl, va_list args), ...);
+		void foreachiddb(int (*func)(struct block_list* bl, va_list args), ...);
+		struct map_session_data * nick2sd(const char* nick, bool allow_partial);
+		struct mob_data * getmob_boss(int16 m);
+		struct mob_data * id2boss(int id);
+
+		// reload config file looking only for npcs
+		void reloadnpc(bool clear);
+
+		struct questinfo *add_questinfo(int m, struct questinfo *qi);
+		bool remove_questinfo(int m, struct npc_data *nd);
+		struct questinfo *has_questinfo(int m, struct npc_data *nd, int quest_id);
+
+		int check_dir(int s_dir,int t_dir);
+		uint8 calc_dir(struct block_list *src,int16 x,int16 y);
+		uint8 calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
+		int random_dir(struct block_list *bl, int16 *x, int16 *y); // [Skotlex]
+
+		int cleanup_sub(struct block_list *bl, va_list ap);
+
+		int delmap(char* mapname);
+		void flags_init(void);
+
+		bool iwall_exist(const char* wall_name);
+		bool iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name);
+		void iwall_get(struct map_session_data *sd);
+		bool iwall_remove(const char *wall_name);
+
+		int addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
+		void spawnmobs(int16 m); // [Wizputer]
+		void removemobs(int16 m); // [Wizputer]
+		void addmap2db(struct map_data *m);
+		void removemapdb(struct map_data *m);
+
+		void skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
+		void skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
+
+		enum e_mapflag getmapflag_by_name(char* name);
+		bool getmapflag_name(enum e_mapflag mapflag, char* output);
+		int getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
+		bool setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
+
+		void do_shutdown(void);
+		Map_Obj();
+		virtual ~Map_Obj();
+#define getmapflag(m, mapflag) getmapflag_sub(m, mapflag, NULL)
+#define setmapflag(m, mapflag, status) setmapflag_sub(m, mapflag, status, NULL)
+};
 
 #define map_id2index(id) map[(id)].index
-const char* map_mapid2mapname(int m);
-int16 map_mapindex2mapid(unsigned short mapindex);
-int16 map_mapname2mapid(const char* name);
-int map_mapname2ipport(unsigned short name, uint32* ip, uint16* port);
-int map_setipport(unsigned short map, uint32 ip, uint16 port);
-int map_eraseipport(unsigned short map, uint32 ip, uint16 port);
-int map_eraseallipport(void);
-void map_addiddb(struct block_list *);
-void map_deliddb(struct block_list *bl);
-void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...);
-void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...);
-void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...);
-void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...);
-void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...);
-struct map_session_data * map_nick2sd(const char* nick, bool allow_partial);
-struct mob_data * map_getmob_boss(int16 m);
-struct mob_data * map_id2boss(int id);
-
-// reload config file looking only for npcs
-void map_reloadnpc(bool clear);
-
-struct questinfo *map_add_questinfo(int m, struct questinfo *qi);
-bool map_remove_questinfo(int m, struct npc_data *nd);
-struct questinfo *map_has_questinfo(int m, struct npc_data *nd, int quest_id);
-
 /// Bitfield of flags for the iterator.
 enum e_mapitflags
 {
 	MAPIT_NORMAL = 0,
-//	MAPIT_PCISPLAYING = 1,// Unneeded as pc_db/id_db will only hold auth'ed, active players.
+	//	MAPIT_PCISPLAYING = 1,// Unneeded as pc_db/id_db will only hold auth'ed, active players.
 };
-struct s_mapiterator;
-struct s_mapiterator*   mapit_alloc(enum e_mapitflags flags, enum bl_type types);
-void                    mapit_free(struct s_mapiterator* mapit);
-struct block_list*      mapit_first(struct s_mapiterator* mapit);
-struct block_list*      mapit_last(struct s_mapiterator* mapit);
-struct block_list*      mapit_next(struct s_mapiterator* mapit);
-struct block_list*      mapit_prev(struct s_mapiterator* mapit);
-bool                    mapit_exists(struct s_mapiterator* mapit);
+	
+		struct s_mapiterator;
+		struct s_mapiterator*   mapit_alloc(enum e_mapitflags flags, enum bl_type types);
+		void                    mapit_free(struct s_mapiterator* mapit);
+		struct block_list*      mapit_first(struct s_mapiterator* mapit);
+		struct block_list*      mapit_last(struct s_mapiterator* mapit);
+		struct block_list*      mapit_next(struct s_mapiterator* mapit);
+		struct block_list*      mapit_prev(struct s_mapiterator* mapit);
+		bool                    mapit_exists(struct s_mapiterator* mapit);
+
 #define mapit_getallusers() mapit_alloc(MAPIT_NORMAL,BL_PC)
 #define mapit_geteachpc()   mapit_alloc(MAPIT_NORMAL,BL_PC)
 #define mapit_geteachmob()  mapit_alloc(MAPIT_NORMAL,BL_MOB)
 #define mapit_geteachnpc()  mapit_alloc(MAPIT_NORMAL,BL_NPC)
 #define mapit_geteachiddb() mapit_alloc(MAPIT_NORMAL,BL_ALL)
 
-int map_check_dir(int s_dir,int t_dir);
-uint8 map_calc_dir(struct block_list *src,int16 x,int16 y);
-uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir);
-int map_random_dir(struct block_list *bl, int16 *x, int16 *y); // [Skotlex]
-
-int cleanup_sub(struct block_list *bl, va_list ap);
-
-int map_delmap(char* mapname);
-void map_flags_init(void);
-
-bool map_iwall_exist(const char* wall_name);
-bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name);
-void map_iwall_get(struct map_session_data *sd);
-bool map_iwall_remove(const char *wall_name);
-
-int map_addmobtolist(unsigned short m, struct spawn_data *spawn);	// [Wizputer]
-void map_spawnmobs(int16 m); // [Wizputer]
-void map_removemobs(int16 m); // [Wizputer]
-void map_addmap2db(struct map_data *m);
-void map_removemapdb(struct map_data *m);
-
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster);
-void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per);
-
-enum e_mapflag map_getmapflag_by_name(char* name);
-bool map_getmapflag_name(enum e_mapflag mapflag, char* output);
-int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
-bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
-#define map_getmapflag(m, mapflag) map_getmapflag_sub(m, mapflag, NULL)
-#define map_setmapflag(m, mapflag, status) map_setmapflag_sub(m, mapflag, status, NULL)
 
 #define CHK_ELEMENT(ele) ((ele) > ELE_NONE && (ele) < ELE_MAX) /// Check valid Element
 #define CHK_ELEMENT_LEVEL(lv) ((lv) >= 1 && (lv) <= MAX_ELE_LEVEL) /// Check valid element level
@@ -1187,7 +1198,5 @@ extern char vending_items_table[32];
 extern char market_table[32];
 extern char roulette_table[32];
 extern char guild_storage_log_table[32];
-
-void do_shutdown(void);
 
 #endif /* MAP_HPP */

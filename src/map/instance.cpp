@@ -25,6 +25,8 @@
 
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
+Map_Obj map_obj = Map_Obj();
+
 struct instance_data instance_data[MAX_INSTANCE_DATA];
 struct eri *instance_maps_ers = NULL; ///< Array of maps per instance
 
@@ -81,7 +83,7 @@ void instance_getsd(unsigned short instance_id, struct map_session_data **sd, en
 			(*target) = PARTY;
 			break;
 		case IM_CHAR:
-			(*sd) = map_charid2sd(instance_data[instance_id].owner_id);
+			(*sd) = map_obj.charid2sd(instance_data[instance_id].owner_id);
 			(*target) = SELF;
 			break;
 		case IM_CLAN:
@@ -123,7 +125,7 @@ static TIMER_FUNC(instance_subscription_timer){
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (ret == 0 && (sd = map_charid2sd(instance_data[instance_id].owner_id)) != NULL) // If no maps are created, tell player to wait
+			if (ret == 0 && (sd = map_obj.charid2sd(instance_data[instance_id].owner_id)) != NULL) // If no maps are created, tell player to wait
 				clif_instance_changewait(instance_id, 0xffff);
 			break;
 		case IM_PARTY:
@@ -186,7 +188,7 @@ static int instance_startkeeptimer(struct instance_data *im, unsigned short inst
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_charid2sd(im->owner_id) != NULL) // Notify player of the added instance timer
+			if (map_obj.charid2sd(im->owner_id) != NULL) // Notify player of the added instance timer
 				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_PARTY:
@@ -233,7 +235,7 @@ static int instance_startidletimer(struct instance_data *im, unsigned short inst
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_charid2sd(im->owner_id) != NULL && instance_searchtype_db(im->type) != NULL) // Notify player of added instance timer
+			if (map_obj.charid2sd(im->owner_id) != NULL && instance_searchtype_db(im->type) != NULL) // Notify player of added instance timer
 				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_PARTY:
@@ -275,7 +277,7 @@ static int instance_stopidletimer(struct instance_data *im, unsigned short insta
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_charid2sd(im->owner_id) != NULL) // Notify the player
+			if (map_obj.charid2sd(im->owner_id) != NULL) // Notify the player
 				clif_instance_changestatus(instance_id, 0, im->idle_limit);
 			break;
 		case IM_PARTY:
@@ -348,14 +350,14 @@ void instance_addnpc(struct instance_data *im)
 	for (i = 0; i < im->cnt_map; i++) {
 		struct map_data *mapdata = map_getmapdata(im->map[i]->src_m);
 
-		map_foreachinallarea(instance_addnpc_sub, im->map[i]->src_m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, im->map[i]->m);
+		map_obj.foreachinallarea(instance_addnpc_sub, im->map[i]->src_m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, im->map[i]->m);
 	}
 
 	// Now run their OnInstanceInit
 	for (i = 0; i < im->cnt_map; i++) {
 		struct map_data *mapdata = map_getmapdata(im->map[i]->m);
 
-		map_foreachinallarea(instance_npcinit, im->map[i]->m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, im->map[i]->m);
+		map_obj.foreachinallarea(instance_npcinit, im->map[i]->m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, im->map[i]->m);
 	}
 
 }
@@ -380,7 +382,7 @@ int instance_create(int owner_id, const char *name, enum instance_mode mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if ((sd = map_charid2sd(owner_id)) == NULL) {
+			if ((sd = map_obj.charid2sd(owner_id)) == NULL) {
 				ShowError("instance_create: character %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
@@ -496,13 +498,13 @@ int instance_addmap(unsigned short instance_id) {
 	}
 
 	// Add initial map
-	if ((m = map_addinstancemap(StringBuf_Value(db->enter.mapname), instance_id)) < 0) {
+	if ((m = map_obj.addinstancemap(StringBuf_Value(db->enter.mapname), instance_id)) < 0) {
 		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%hu).\n", StringBuf_Value(db->name), instance_id);
 		return 0;
 	}
 	entry = ers_alloc(instance_maps_ers, struct s_instance_map);
 	entry->m = m;
-	entry->src_m = map_mapname2mapid(StringBuf_Value(db->enter.mapname));
+	entry->src_m = map_obj.mapname2mapid(StringBuf_Value(db->enter.mapname));
 	RECREATE(im->map, struct s_instance_map *, im->cnt_map + 1);
 	im->map[im->cnt_map++] = entry;
 
@@ -510,14 +512,14 @@ int instance_addmap(unsigned short instance_id) {
 	for(i = 0; i < db->maplist_count; i++) {
 		if(strlen(StringBuf_Value(db->maplist[i])) < 1)
 			continue;
-		else if( (m = map_addinstancemap(StringBuf_Value(db->maplist[i]), instance_id)) < 0) {
+		else if( (m = map_obj.addinstancemap(StringBuf_Value(db->maplist[i]), instance_id)) < 0) {
 			// An error occured adding a map
 			ShowError("instance_addmap: No maps added to instance '%s' (%hu).\n", StringBuf_Value(db->name), instance_id);
 			return 0;
 		} else {
 			entry = ers_alloc(instance_maps_ers, struct s_instance_map);
 			entry->m = m;
-			entry->src_m = map_mapname2mapid(StringBuf_Value(db->maplist[i]));
+			entry->src_m = map_obj.mapname2mapid(StringBuf_Value(db->maplist[i]));
 			RECREATE(im->map, struct s_instance_map *, im->cnt_map + 1);
 			im->map[im->cnt_map++] = entry;
 		}
@@ -530,7 +532,7 @@ int instance_addmap(unsigned short instance_id) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_charid2sd(im->owner_id) != NULL) // Inform player of the created instance
+			if (map_obj.charid2sd(im->owner_id) != NULL) // Inform player of the created instance
 				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_PARTY:
@@ -562,7 +564,7 @@ int instance_addmap(unsigned short instance_id) {
 int16 instance_mapname2mapid(const char *name, unsigned short instance_id)
 {
 	struct instance_data *im;
-	int16 m = map_mapname2mapid(name);
+	int16 m = map_obj.mapname2mapid(name);
 	char iname[MAP_NAME_LENGTH];
 	int i;
 
@@ -588,7 +590,7 @@ int16 instance_mapname2mapid(const char *name, unsigned short instance_id)
 				snprintf(alt_name, sizeof(alt_name),"%hu#%s", instance_id, iname);
 			} else
 				snprintf(alt_name, sizeof(alt_name),"%.3hu%s", instance_id, iname);
-			return map_mapname2mapid(alt_name);
+			return map_obj.mapname2mapid(alt_name);
 		}
 
 	return m;
@@ -621,7 +623,7 @@ int instance_destroy(unsigned short instance_id)
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			sd = map_charid2sd(im->owner_id);
+			sd = map_obj.charid2sd(im->owner_id);
 			break;
 		case IM_PARTY:
 			pd = party_search(im->owner_id);
@@ -666,11 +668,11 @@ int instance_destroy(unsigned short instance_id)
 		for(i = 0; i < im->cnt_map; i++){
 			struct map_data *mapdata = map_getmapdata(im->map[i]->m);
 
-			map_foreachinallarea(instance_npcdestroy, im->map[i]->m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, im->map[i]->m);
+			map_obj.foreachinallarea(instance_npcdestroy, im->map[i]->m, 0, 0, mapdata->xs, mapdata->ys, BL_NPC, im->map[i]->m);
 		}
 
 		for(i = 0; i < im->cnt_map; i++) {
-			map_delinstancemap(im->map[i]->m);
+			map_obj.delinstancemap(im->map[i]->m);
 			ers_free(instance_maps_ers, im->map[i]);
 		}
 		im->cnt_map = 0;

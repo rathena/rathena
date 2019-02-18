@@ -28,6 +28,7 @@
 #include "pc.hpp"
 #include "trade.hpp"
 
+Map_Obj map_obj = Map_Obj();
 struct s_elemental_db elemental_db[MAX_ELEMENTAL_CLASS]; // Elemental Database
 static uint16 elemental_count;
 
@@ -161,7 +162,7 @@ static TIMER_FUNC(elemental_summon_end){
 	struct map_session_data *sd;
 	struct elemental_data *ed;
 
-	if( (sd = map_id2sd(id)) == NULL )
+	if( (sd = map_obj.id2sd(id)) == NULL )
 		return 1;
 	if( (ed = sd->ed) == NULL )
 		return 1;
@@ -223,7 +224,7 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 	struct s_elemental_db *db;
 	int i = elemental_search_index(ele->class_);
 
-	if( (sd = map_charid2sd(ele->char_id)) == NULL )
+	if( (sd = map_obj.charid2sd(ele->char_id)) == NULL )
 		return 0;
 
 	if( !flag || i < 0 ) { // Not created - loaded - DB info
@@ -252,7 +253,7 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 		ed->bl.x = ed->ud.to_x;
 		ed->bl.y = ed->ud.to_y;
 
-		map_addiddb(&ed->bl);
+		map_obj.addiddb(&ed->bl);
 		status_calc_elemental(ed,SCO_FIRST);
 		ed->last_spdrain_time = ed->last_thinktime = gettick();
 		ed->summon_timer = INVALID_TIMER;
@@ -266,7 +267,7 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 	sd->status.ele_id = ele->elemental_id;
 
 	if( ed->bl.prev == NULL && sd->bl.prev != NULL ) {
-		if(map_addblock(&ed->bl))
+		if(map_obj.addblock(&ed->bl))
 			return 0;
 		clif_spawn(&ed->bl);
 		clif_elemental_info(sd);
@@ -704,16 +705,16 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 			return 0; //Already walking to him
 		if( DIFF_TICK(tick, ed->ud.canmove_tick) < 0 )
 			return 0; //Can't move yet.
-		if( map_search_freecell(&ed->bl, sd->bl.m, &x, &y, MIN_ELEDISTANCE, MIN_ELEDISTANCE, 1)
+		if( map_obj.search_freecell(&ed->bl, sd->bl.m, &x, &y, MIN_ELEDISTANCE, MIN_ELEDISTANCE, 1)
 		   && unit_walktoxy(&ed->bl, x, y, 0) )
 			return 0;
 	}
 
 	if( mode == EL_MODE_AGGRESSIVE ) {
-		target = map_id2bl(ed->ud.target);
+		target = map_obj.id2bl(ed->ud.target);
 
 		if( !target )
-			map_foreachinallrange(elemental_ai_sub_timer_activesearch, &ed->bl, view_range, BL_CHAR, ed, &target, status_get_mode(&ed->bl));
+			map_obj.foreachinallrange(elemental_ai_sub_timer_activesearch, &ed->bl, view_range, BL_CHAR, ed, &target, status_get_mode(&ed->bl));
 
 		if( !target ) { //No targets available.
 			elemental_unlocktarget(ed);
@@ -752,7 +753,7 @@ static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list a
 }
 
 static TIMER_FUNC(elemental_ai_timer){
-	map_foreachpc(elemental_ai_sub_foreachclient,tick);
+	map_obj.foreachpc(elemental_ai_sub_foreachclient,tick);
 	return 0;
 }
 

@@ -567,7 +567,7 @@ static void quest_read_db(void)
 /**
  * Map iterator to ensures a player has no invalid quest log entries.
  * Any entries that are no longer in the db are removed.
- * @see map_foreachpc
+ * @see map_obj.foreachpc
  * @param sd : Character's data
  * @param ap : Ignored
  */
@@ -668,5 +668,5 @@ void do_reload_quest(void)
 	quest_read_db();
 
 	//Update quest data for players, to ensure no entries about removed quests are left over.
-	map_foreachpc(&quest_reload_check_sub);
+	map_obj.foreachpc(&quest_reload_check_sub);
 }

@@ -327,7 +327,7 @@ void searchstore_click(struct map_session_data* sd, uint32 account_id, int store
 		return;
 	}
 
-	if( ( pl_sd = map_id2sd(account_id) ) == NULL ) { // no longer online
+	if( ( pl_sd = map_obj.id2sd(account_id) ) == NULL ) { // no longer online
 		clif_search_store_info_failed(sd, SSI_FAILED_SSILIST_CLICK_TO_OPEN_STORE);
 		return;
 	}

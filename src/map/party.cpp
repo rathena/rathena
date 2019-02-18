@@ -84,7 +84,7 @@ struct map_session_data* party_getavailablesd(struct party_data *p)
 
 static TBL_PC* party_sd_check(int party_id, uint32 account_id, uint32 char_id)
 {
-	TBL_PC* sd = map_id2sd(account_id);
+	TBL_PC* sd = map_obj.id2sd(account_id);
 
 	if (!(sd && sd->status.char_id == char_id))
 		return NULL;
@@ -167,7 +167,7 @@ void party_created(uint32 account_id,uint32 char_id,int fail,int party_id,char *
 {
 	struct map_session_data *sd;
 
-	sd = map_id2sd(account_id);
+	sd = map_obj.id2sd(account_id);
 
 	if (!sd || sd->status.char_id != char_id || !sd->party_creating ) { // Character logged off before creation ack?
 		if (!fail) // break up party since player could not be added to it.
@@ -218,7 +218,7 @@ int party_recv_noinfo(int party_id, uint32 char_id)
 	if( char_id != 0 ) { // requester
 		struct map_session_data* sd;
 
-		sd = map_charid2sd(char_id);
+		sd = map_obj.charid2sd(char_id);
 
 		if( sd && sd->status.party_id == party_id )
 			sd->status.party_id = 0;
@@ -369,7 +369,7 @@ int party_recv_info(struct party* sp, uint32 char_id)
 	}
 
 	if( char_id != 0 ) { // requester
-		sd = map_charid2sd(char_id);
+		sd = map_obj.charid2sd(char_id);
 		if( sd && sd->status.party_id == sp->party_id && party_getmemberid(p,sd) == -1 )
 			sd->status.party_id = 0;// was not in the party
 	}
@@ -467,7 +467,7 @@ int party_reply_invite(struct map_session_data *sd,int party_id,int flag)
 		return 0;
 	}
 
-	tsd = map_id2sd(sd->party_invite_account);
+	tsd = map_obj.id2sd(sd->party_invite_account);
 
 	if( flag == 1 && !sd->party_creating && !sd->party_joining ) { // accepted and allowed
 		sd->party_joining = true;
@@ -514,7 +514,7 @@ void party_member_joined(struct map_session_data *sd)
 /// flag: 0-success, 1-failure
 int party_member_added(int party_id,uint32 account_id,uint32 char_id, int flag)
 {
-	struct map_session_data *sd = map_id2sd(account_id),*sd2;
+	struct map_session_data *sd = map_obj.id2sd(account_id),*sd2;
 	struct party_data *p = party_search(party_id);
 	int i;
 
@@ -524,7 +524,7 @@ int party_member_added(int party_id,uint32 account_id,uint32 char_id, int flag)
 		return 0;
 	}
 
-	sd2 = map_id2sd(sd->party_invite_account);
+	sd2 = map_obj.id2sd(sd->party_invite_account);
 
 	sd->party_joining = false;
 	sd->party_invite = 0;
@@ -643,7 +643,7 @@ int party_leave(struct map_session_data *sd)
 /// Invoked (from char-server) when a party member leaves the party.
 int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char *name, enum e_party_member_withdraw type)
 {
-	struct map_session_data* sd = map_charid2sd(char_id);
+	struct map_session_data* sd = map_obj.charid2sd(char_id);
 	struct party_data* p = party_search(party_id);
 
 	if( p ) {
@@ -761,7 +761,7 @@ int party_setoption(struct party_data *party, int option, int flag)
 int party_optionchanged(int party_id,uint32 account_id,int exp,int item,int flag)
 {
 	struct party_data *p;
-	struct map_session_data *sd=map_id2sd(account_id);
+	struct map_session_data *sd=map_obj.id2sd(account_id);
 
 	if( (p = party_search(party_id)) == NULL)
 		return 0;
@@ -791,7 +791,7 @@ int party_changeleader(struct map_session_data *sd, struct map_session_data *tsd
 			return -3;
 		}
 
-		if ( map_getmapflag(sd->bl.m, MF_PARTYLOCK) ) {
+		if ( map_obj.getmapflag(sd->bl.m, MF_PARTYLOCK) ) {
 			clif_displaymessage(sd->fd, msg_txt(sd,287));
 			return 0;
 		}
@@ -1315,7 +1315,7 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
 		list[blockcount++]=&psd->bl;
 	}
 
-	map_freeblock_lock();
+	map_obj.freeblock_lock();
 
 	for(i = 0; i < blockcount; i++) {
 		va_list ap;
@@ -1324,7 +1324,7 @@ int party_foreachsamemap(int (*func)(struct block_list*,va_list),struct map_sess
 		va_end(ap);
 	}
 
-	map_freeblock_unlock();
+	map_obj.freeblock_unlock();
 
 	return total;
 }

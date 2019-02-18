@@ -2,7 +2,6 @@
 // For more information, see LICENCE in the main folder
 
 #include "core.hpp"
-
 #ifndef MINICORE
 #include "ers.hpp"
 #include "socket.hpp"
@@ -318,6 +317,7 @@ void usercheck(void)
 /*======================================
  *	CORE : MAINROUTINE
  *--------------------------------------*/
+#ifndef TESTING
 int main (int argc, char **argv)
 {
 	{// initialize program arguments
@@ -339,18 +339,12 @@ int main (int argc, char **argv)
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]
 
-#if defined(MINICORE) || defined(TESTING)// minimalist Core
+#ifdef MINICORE // minimalist Core
 	display_title();
-#ifdef MINICORE
-	ShowInfo("Running minicore!");
-#else
-	ShowInfo("Running tests!");
-#endif
 	usercheck();
 	do_init(argc,argv);
 	do_final();
 #else// not MINICORE and not TESTING
-	ShowInfo("Running normal!");
 	set_server_type();
 	display_title();
 	usercheck();
@@ -367,6 +361,13 @@ int main (int argc, char **argv)
 	socket_init();
 
 	do_init(argc,argv);
+/*
+#ifdef TESTING
+	ShowInfo("Running Tests!");
+	::testing::InitGoogleTest(&argc, argv);
+	RUN_ALL_TESTS();
+#endif
+*/
 
 	// Main runtime cycle
 	while (runflag != CORE_ST_STOP) { 
@@ -392,3 +393,4 @@ int main (int argc, char **argv)
 
 	return 0;
 }
+#endif

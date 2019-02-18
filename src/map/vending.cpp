@@ -82,7 +82,7 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 	struct map_session_data* vsd;
 	nullpo_retv(sd);
 
-	if( (vsd = map_id2sd(id)) == NULL )
+	if( (vsd = map_obj.id2sd(id)) == NULL )
 		return;
 	if( !vsd->state.vending )
 		return; // not vending
@@ -125,7 +125,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 	int i, j, cursor, w, new_ = 0, blank, vend_list[MAX_VENDING];
 	double z;
 	struct s_vending vending[MAX_VENDING]; // against duplicate packets
-	struct map_session_data* vsd = map_id2sd(aid);
+	struct map_session_data* vsd = map_obj.id2sd(aid);
 
 	nullpo_retv(sd);
 	if( vsd == NULL || !vsd->state.vending || vsd->bl.id == sd->bl.id )
@@ -280,7 +280,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		if( i == vsd->vend_num ) {
 			//Close Vending (this was automatically done by the client, we have to do it manually for autovenders) [Skotlex]
 			vending_closevending(vsd);
-			map_quit(vsd);	//They have no reason to stay around anymore, do they?
+			map_obj.quit(vsd);	//They have no reason to stay around anymore, do they?
 		}
 	}
 }
@@ -545,7 +545,7 @@ void vending_reopen( struct map_session_data* sd )
 
 	if (fail != 0) {
 		ShowError("vending_reopen: (Error:%d) Load failed for autotrader '" CL_WHITE "%s" CL_RESET "' (CID=%d/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
-		map_quit(sd);
+		map_obj.quit(sd);
 	}
 }
 
@@ -622,7 +622,7 @@ void do_init_vending_autotrade(void)
 				}
 
 				if (!(at->count = (uint16)Sql_NumRows(mmysql_handle))) {
-					map_quit(at->sd);
+					map_obj.quit(at->sd);
 					vending_autotrader_remove(at, true);
 					continue;
 				}

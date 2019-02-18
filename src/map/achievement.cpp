@@ -31,6 +31,7 @@
 std::unordered_map<int, std::shared_ptr<s_achievement_db>> achievements;
 std::vector<int> achievement_mobs; // Avoids checking achievements on every mob killed
 
+Map_Obj map_obj = Map_Obj();
 /**
  * Searches an achievement by ID
  * @param achievement_id: ID to lookup
@@ -372,7 +373,7 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id)
  */
 void achievement_get_titles(uint32 char_id)
 {
-	struct map_session_data *sd = map_charid2sd(char_id);
+	struct map_session_data *sd = map_obj.charid2sd(char_id);
 
 	if (sd) {
 		sd->titles.clear();
@@ -847,7 +848,7 @@ bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &s
 		if (group != AG_CHAT)
 			ShowWarning("achievement_read_db_sub: The map argument can only be used with the group AG_CHATTING (achievement %d in \"%s\"), skipping.\n", achievement_id, source.c_str());
 		else {
-			entry->mapindex = map_mapname2mapid(mapname.c_str());
+			entry->mapindex = map_obj.mapname2mapid(mapname.c_str());
 
 			if (entry->mapindex == -1)
 				ShowWarning("achievement_read_db_sub: Invalid map name %s for achievement %d in \"%s\".\n", mapname.c_str(), achievement_id, source.c_str());

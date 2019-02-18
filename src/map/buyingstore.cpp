@@ -32,6 +32,8 @@ static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap);
 
 static DBMap *buyingstore_db;
 
+Map_Obj map_obj = Map_Obj();
+
 DBMap *buyingstore_getdb(void) {
 	return buyingstore_db;
 }
@@ -78,7 +80,7 @@ int8 buyingstore_setup(struct map_session_data* sd, unsigned char slots){
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
+	if( map_obj.getmapflag(sd->bl.m, MF_NOVENDING) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
@@ -146,7 +148,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		return 2;
 	}
 
-	if( map_getmapflag(sd->bl.m, MF_NOVENDING) )
+	if( map_obj.getmapflag(sd->bl.m, MF_NOVENDING) )
 	{// custom: no vending maps
 		clif_displaymessage(sd->fd, msg_txt(sd,276)); // "You can't open a shop on this map"
 		return 3;
@@ -301,7 +303,7 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
 		return;
 	}
 
-	if( ( pl_sd = map_id2sd(account_id) ) == NULL || !pl_sd->state.buyingstore )
+	if( ( pl_sd = map_obj.id2sd(account_id) ) == NULL || !pl_sd->state.buyingstore )
 	{// not online or not buying
 		return;
 	}
@@ -348,7 +350,7 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 		return;
 	}
 
-	if( ( pl_sd = map_id2sd(account_id) ) == NULL || !pl_sd->state.buyingstore || pl_sd->buyer_id != buyer_id )
+	if( ( pl_sd = map_obj.id2sd(account_id) ) == NULL || !pl_sd->state.buyingstore || pl_sd->buyer_id != buyer_id )
 	{// not online, not buying or not same store
 		clif_buyingstore_trade_failed_seller(sd, BUYINGSTORE_TRADE_SELLER_FAILED, 0);
 		return;
@@ -505,7 +507,7 @@ void buyingstore_trade(struct map_session_data* sd, uint32 account_id, unsigned 
 	// remove auto-trader
 	if( pl_sd->state.autotrade )
 	{
-		map_quit(pl_sd);
+		map_obj.quit(pl_sd);
 	}
 }
 
@@ -646,7 +648,7 @@ void buyingstore_reopen( struct map_session_data* sd ){
 
 	if (fail != 0) {
 		ShowError("buyingstore_reopen: (Error:%d) Load failed for autotrader '" CL_WHITE "%s" CL_RESET "' (CID=%/AID=%d)\n", fail, sd->status.name, sd->status.char_id, sd->status.account_id);
-		map_quit(sd);
+		map_obj.quit(sd);
 	}
 }
 
@@ -723,7 +725,7 @@ void do_init_buyingstore_autotrade( void ) {
 				}
 
 				if (!(at->count = (uint16)Sql_NumRows(mmysql_handle))) {
-					map_quit(at->sd);
+					map_obj.quit(at->sd);
 					buyingstore_autotrader_remove(at, true);
 					continue;
 				}

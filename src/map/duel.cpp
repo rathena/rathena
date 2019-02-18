@@ -15,6 +15,7 @@
 #include "clif.hpp"
 #include "pc.hpp"
 
+Map_Obj map_obj = Map_Obj();
 //std::recursive_mutex> duel_list_mutex; //preparation for multithread
 std::unordered_map<size_t,struct duel> duel_list;
 
@@ -130,7 +131,7 @@ void duel_showinfo(const size_t did, struct map_session_data* sd)
 			duel_list[did].members_count + duel_list[did].invites_count);
 
 	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
-	map_foreachpc(duel_showinfo_sub, sd, &p);
+	map_obj.foreachpc(duel_showinfo_sub, sd, &p);
 }
 
 /*
@@ -230,7 +231,7 @@ bool duel_leave(const size_t did, struct map_session_data* sd)
 	duel_list[did].members_count--;
 
 	if(duel_list[did].members_count == 0) {
-		map_foreachpc(duel_leave_sub, did);
+		map_obj.foreachpc(duel_leave_sub, did);
 		duel_list.erase( did );
 	}
 	duel_set(0, sd);

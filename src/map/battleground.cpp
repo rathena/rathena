@@ -23,6 +23,8 @@
 static DBMap* bg_team_db; // int bg_id -> struct battleground_data*
 static unsigned int bg_team_counter = 0; // Next bg_id
 
+Map_Obj map_obj = Map_Obj();
+
 struct battleground_data* bg_team_search(int bg_id)
 { // Search a BG Team using bg_id
 	if( !bg_id )
@@ -202,7 +204,7 @@ int bg_team_get_id(struct block_list *bl)
 			struct map_session_data *msd;
 			struct mob_data *md = (TBL_MOB*)bl;
 
-			if( md->special_state.ai && (msd = map_id2sd(md->master_id)) != NULL )
+			if( md->special_state.ai && (msd = map_obj.id2sd(md->master_id)) != NULL )
 				return msd->bg_id;
 
 			return md->bg_id;

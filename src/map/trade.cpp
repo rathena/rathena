@@ -32,7 +32,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 {
 	nullpo_retv(sd);
 
-	if (map_getmapflag(sd->bl.m, MF_NOTRADE)) {
+	if (map_obj.getmapflag(sd->bl.m, MF_NOTRADE)) {
 		clif_displaymessage (sd->fd, msg_txt(sd,272));
 		return; //Can't trade in notrade mapflag maps.
 	}
@@ -55,7 +55,7 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	}
 
 	if ( sd->trade_partner != 0 ) { // If a character tries to trade to another one then cancel the previous one
-		struct map_session_data *previous_sd = map_id2sd(sd->trade_partner);
+		struct map_session_data *previous_sd = map_obj.id2sd(sd->trade_partner);
 
 		if( previous_sd ){
 			previous_sd->trade_partner = 0;
@@ -110,7 +110,7 @@ void trade_tradeack(struct map_session_data *sd, int type)
 	if (sd->state.trading || !sd->trade_partner)
 		return; // Already trading or no partner set.
 
-	if ((tsd = map_id2sd(sd->trade_partner)) == NULL) {
+	if ((tsd = map_obj.id2sd(sd->trade_partner)) == NULL) {
 		clif_tradestart(sd, 1); // Character does not exist
 		sd->trade_partner=0;
 		return;
@@ -356,7 +356,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	if( !sd->state.trading || sd->state.deal_locked > 0 )
 		return; // Can't add stuff.
 
-	if( (target_sd = map_id2sd(sd->trade_partner)) == NULL ) {
+	if( (target_sd = map_obj.id2sd(sd->trade_partner)) == NULL ) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -452,7 +452,7 @@ void trade_tradeaddzeny(struct map_session_data* sd, int amount)
 	if( !sd->state.trading || sd->state.deal_locked > 0 )
 		return; //Can't add stuff.
 
-	if( (target_sd = map_id2sd(sd->trade_partner)) == NULL ) {
+	if( (target_sd = map_obj.id2sd(sd->trade_partner)) == NULL ) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -477,7 +477,7 @@ void trade_tradeok(struct map_session_data *sd)
 	if(sd->state.deal_locked || !sd->state.trading)
 		return;
 
-	if ((target_sd = map_id2sd(sd->trade_partner)) == NULL) {
+	if ((target_sd = map_obj.id2sd(sd->trade_partner)) == NULL) {
 		trade_tradecancel(sd);
 		return;
 	}
@@ -499,7 +499,7 @@ void trade_tradecancel(struct map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	target_sd = map_id2sd(sd->trade_partner);
+	target_sd = map_obj.id2sd(sd->trade_partner);
 	sd->state.isBoundTrading = 0;
 
 	if(!sd->state.trading) { // Not trade accepted
@@ -568,7 +568,7 @@ void trade_tradecommit(struct map_session_data *sd)
 	if (!sd->state.trading || !sd->state.deal_locked) //Locked should be 1 (pressed ok) before you can press trade.
 		return;
 
-	if ((tsd = map_id2sd(sd->trade_partner)) == NULL) {
+	if ((tsd = map_obj.id2sd(sd->trade_partner)) == NULL) {
 		trade_tradecancel(sd);
 		return;
 	}

@@ -1978,4 +1978,15 @@ unsigned int *script_array_cpy_list(struct script_array *sa);
 
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
 
+/**
+ * This is used by the unit tests.
+ * int (*script_func)(struct script_state *st) is the pointer the the buildin_funcion.
+ * See typedef struct script_function in script.cpp as reference.
+ *
+ * This method gets a function from struct script_function buildin_func[] (defined in script.cpp)
+ * by entry number (id).
+ **/
+typedef int (*script_func)(struct script_state *st);
+script_func get_func_ptr(int id);
+
 #endif /* SCRIPT_HPP */

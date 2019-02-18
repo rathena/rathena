@@ -27,6 +27,7 @@
 
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_HOM_SKILL_TREE];
+Map_Obj map_obj = Map_Obj();
 
 static TIMER_FUNC(hom_hungry);
 static uint16 homunculus_count;
@@ -591,7 +592,7 @@ int hom_evolution(struct homun_data *hd)
 	hom->intimacy = battle_config.homunculus_evo_intimacy_reset;
 
 	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
-	if (map_addblock(&hd->bl))
+	if (map_obj.addblock(&hd->bl))
 		return 0;
 
 	clif_spawn(&hd->bl);
@@ -642,7 +643,7 @@ int hom_mutate(struct homun_data *hd, int homun_id)
 	}
 
 	unit_remove_map(&hd->bl, CLR_OUTSIGHT);
-	if(map_addblock(&hd->bl))
+	if(map_obj.addblock(&hd->bl))
 		return 0;
 
 	clif_spawn(&hd->bl);
@@ -868,7 +869,7 @@ static TIMER_FUNC(hom_hungry){
 	struct map_session_data *sd;
 	struct homun_data *hd;
 
-	sd = map_id2sd(id);
+	sd = map_obj.id2sd(id);
 	if (!sd)
 		return 1;
 
@@ -1042,7 +1043,7 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 	hd->bl.x = hd->ud.to_x;
 	hd->bl.y = hd->ud.to_y;
 
-	map_addiddb(&hd->bl);
+	map_obj.addiddb(&hd->bl);
 	status_calc_homunculus(hd, SCO_FIRST);
 
 	hd->hungry_timer = INVALID_TIMER;
@@ -1092,7 +1093,7 @@ bool hom_call(struct map_session_data *sd)
 		hd->bl.x = sd->bl.x;
 		hd->bl.y = sd->bl.y;
 		hd->bl.m = sd->bl.m;
-		if(map_addblock(&hd->bl))
+		if(map_obj.addblock(&hd->bl))
 			return false;
 		clif_spawn(&hd->bl);
 		clif_send_homdata(sd,SP_ACK,0);
@@ -1121,7 +1122,7 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 	struct homun_data *hd;
 	bool created = false;
 
-	sd = map_id2sd(account_id);
+	sd = map_obj.id2sd(account_id);
 	if(!sd)
 		return 0;
 	if (sd->status.char_id != sh->char_id)
@@ -1151,7 +1152,7 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 
 	if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == NULL && sd->bl.prev != NULL)
 	{
-		if(map_addblock(&hd->bl))
+		if(map_obj.addblock(&hd->bl))
 			return 0;
 		clif_spawn(&hd->bl);
 		clif_send_homdata(sd,SP_ACK,0);
@@ -1240,7 +1241,7 @@ int hom_ressurect(struct map_session_data* sd, unsigned char per, short x, short
 		hd->bl.m = sd->bl.m;
 		hd->bl.x = x;
 		hd->bl.y = y;
-		if(map_addblock(&hd->bl))
+		if(map_obj.addblock(&hd->bl))
 			return 0;
 		clif_spawn(&hd->bl);
 	}

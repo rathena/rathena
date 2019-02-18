@@ -278,7 +278,7 @@ static TIMER_FUNC(merc_contract_end){
 	struct map_session_data *sd;
 	struct mercenary_data *md;
 
-	if( (sd = map_id2sd(id)) == NULL )
+	if( (sd = map_obj.id2sd(id)) == NULL )
 		return 1;
 	if( (md = sd->md) == NULL )
 		return 1;
@@ -361,7 +361,7 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 
 	db = mercenary_db(merc->class_);
 
-	if( (sd = map_charid2sd(merc->char_id)) == NULL )
+	if( (sd = map_obj.charid2sd(merc->char_id)) == NULL )
 		return false;
 	if( !flag || !db ){ // Not created - loaded - DB info
 		sd->status.mer_id = 0;
@@ -389,7 +389,7 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 		md->bl.x = md->ud.to_x;
 		md->bl.y = md->ud.to_y;
 
-		map_addiddb(&md->bl);
+		map_obj.addiddb(&md->bl);
 		status_calc_mercenary(md, SCO_FIRST);
 		md->contract_timer = INVALID_TIMER;
 		md->masterteleport_timer = INVALID_TIMER;
@@ -404,7 +404,7 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 	sd->status.mer_id = merc->mercenary_id;
 
 	if( md && md->bl.prev == NULL && sd->bl.prev != NULL ) {
-		if(map_addblock(&md->bl))
+		if(map_obj.addblock(&md->bl))
 			return false;
 		clif_spawn(&md->bl);
 		clif_mercenary_info(sd);

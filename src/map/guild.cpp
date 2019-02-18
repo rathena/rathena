@@ -33,6 +33,8 @@ static DBMap* castle_db; // int castle_id -> struct guild_castle*
 static DBMap* guild_expcache_db; // uint32 char_id -> struct guild_expcache*
 static DBMap* guild_infoevent_db; // int guild_id -> struct eventlist*
 
+Map_Obj map_obj = Map_Obj();
+
 struct eventlist {
 	char name[EVENT_NAME_LENGTH];
 	struct eventlist *next;
@@ -85,7 +87,7 @@ static short guild_skill_get_index(uint16 skill_id) {
  * Retrieves and validates the sd pointer for this guild member [Skotlex]
  *------------------------------------------*/
 static TBL_PC* guild_sd_check(int guild_id, uint32 account_id, uint32 char_id) {
-	TBL_PC* sd = map_id2sd(account_id);
+	TBL_PC* sd = map_obj.id2sd(account_id);
 
 	if (!(sd && sd->status.char_id == char_id))
 		return NULL;
@@ -167,7 +169,7 @@ static bool guild_read_castledb(char* str[], int columns, int current) {// <cast
 	int mapindex = mapindex_name2id(str[1]);
 	const int castle_id = atoi(str[0]);
 	
-	if (map_mapindex2mapid(mapindex) < 0) // Map not found or on another map-server
+	if (map_obj.mapindex2mapid(mapindex) < 0) // Map not found or on another map-server
 		return false;
 
 	if ((gc = static_cast<guild_castle*>(idb_get(castle_db, castle_id))) == nullptr) {
@@ -383,7 +385,7 @@ int guild_create(struct map_session_data *sd, const char *name) {
 
 //Whether or not to create guild
 int guild_created(uint32 account_id,int guild_id) {
-	struct map_session_data *sd=map_id2sd(account_id);
+	struct map_session_data *sd=map_obj.id2sd(account_id);
 
 	if(sd==NULL)
 		return 0;
@@ -502,7 +504,7 @@ int guild_recv_info(struct guild *sg) {
 		before=*sg;
 		//Perform the check on the user because the first load
 		guild_check_member(sg);
-		if ((sd = map_nick2sd(sg->master,false)) != NULL) {
+		if ((sd = map_obj.nick2sd(sg->master,false)) != NULL) {
 			//If the guild master is online the first time the guild_info is received,
 			//that means he was the first to join, so apply guild skill blocking here.
 			if( battle_config.guild_skill_relog_delay )
@@ -649,7 +651,7 @@ int guild_reply_invite(struct map_session_data* sd, int guild_id, int flag) {
 
 	// look up the person who sent the invite
 	//NOTE: this can be NULL because the person might have logged off in the meantime
-	tsd = map_id2sd(sd->guild_invite_account);
+	tsd = map_obj.id2sd(sd->guild_invite_account);
 
 	if ( sd->status.guild_id > 0 ) {
 	// [Paradox924X]
@@ -724,7 +726,7 @@ void guild_member_joined(struct map_session_data *sd) {
  * Add a player to a given guild_id
  *----------------------------------------*/
 int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
-	struct map_session_data *sd= map_id2sd(account_id),*sd2;
+	struct map_session_data *sd= map_obj.id2sd(account_id),*sd2;
 	struct guild *g;
 
 	if( (g=guild_search(guild_id))==NULL )
@@ -738,7 +740,7 @@ int guild_member_added(int guild_id,uint32 account_id,uint32 char_id,int flag) {
 		}
 		return 0;
 	}
-	sd2 = map_id2sd(sd->guild_invite_account);
+	sd2 = map_obj.id2sd(sd->guild_invite_account);
 	sd->guild_invite = 0;
 	sd->guild_invite_account = 0;
 
@@ -815,7 +817,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, uint32 account_id
 		return 0;	//Expulsion permission
 
 	//Can't leave inside guild castles.
-	if ((tsd = map_id2sd(account_id)) &&
+	if ((tsd = map_obj.id2sd(account_id)) &&
 		tsd->status.char_id == char_id &&
 		map_flag_gvg2(tsd->bl.m))
 		return 0;
@@ -843,7 +845,7 @@ int guild_expulsion(struct map_session_data* sd, int guild_id, uint32 account_id
 int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int flag, const char* name, const char* mes) {
 	int i;
 	struct guild* g = guild_search(guild_id);
-	struct map_session_data* sd = map_charid2sd(char_id);
+	struct map_session_data* sd = map_obj.charid2sd(char_id);
 	struct map_session_data* online_member_sd;
 
 	if(g == NULL)
@@ -912,7 +914,7 @@ int guild_member_withdraw(int guild_id, uint32 account_id, uint32 char_id, int f
 * @param guild_id
 */
 void guild_retrieveitembound(uint32 char_id, uint32 account_id, int guild_id) {
-	TBL_PC *sd = map_charid2sd(char_id);
+	TBL_PC *sd = map_obj.charid2sd(char_id);
 	if (sd) { //Character is online
 		int idxlist[MAX_INVENTORY];
 		int j;
@@ -1008,7 +1010,7 @@ int guild_recv_memberinfoshort(int guild_id,uint32 account_id,uint32 char_id,int
 
 	if(idx == -1 || c == 0) {
         //Treat char_id who doesn't match guild_id (not found as member)
-		struct map_session_data *sd = map_id2sd(account_id);
+		struct map_session_data *sd = map_obj.id2sd(account_id);
 		if(sd && sd->status.char_id == char_id) {
 			sd->status.guild_id=0;
 			sd->guild_emblem_id=0;
@@ -1204,7 +1206,7 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data) {
 			// update permanent guardians
 			for( i = 0; i < ARRAYLENGTH(gc->guardian); ++i )
 			{
-				TBL_MOB* md = (gc->guardian[i].id ? map_id2md(gc->guardian[i].id) : NULL);
+				TBL_MOB* md = (gc->guardian[i].id ? map_obj.id2md(gc->guardian[i].id) : NULL);
 				if( md == NULL || md->guardian_data == NULL )
 					continue;
 				md->guardian_data->emblem_id = emblem_id;
@@ -1213,7 +1215,7 @@ int guild_emblem_changed(int len,int guild_id,int emblem_id,const char *data) {
 			// update temporary guardians
 			for( i = 0; i < gc->temp_guardians_max; ++i )
 			{
-				TBL_MOB* md = (gc->temp_guardians[i] ? map_id2md(gc->temp_guardians[i]) : NULL);
+				TBL_MOB* md = (gc->temp_guardians[i] ? map_obj.id2md(gc->temp_guardians[i]) : NULL);
 				if( md == NULL || md->guardian_data == NULL )
 					continue;
 				md->guardian_data->emblem_id = emblem_id;
@@ -1329,7 +1331,7 @@ void guild_skillup(struct map_session_data* sd, uint16 skill_id) {
  * Notification of guildskill skill_id increase request
  *---------------------------------------------------*/
 int guild_skillupack(int guild_id,uint16 skill_id,uint32 account_id) {
-	struct map_session_data *sd = map_id2sd(account_id);
+	struct map_session_data *sd = map_obj.id2sd(account_id);
 	struct guild *g = guild_search(guild_id);
 	int i;
 	short idx = guild_skill_get_index(skill_id);
@@ -1494,7 +1496,7 @@ int guild_reply_reqalliance(struct map_session_data *sd,uint32 account_id,int fl
 	struct map_session_data *tsd;
 
 	nullpo_ret(sd);
-	tsd= map_id2sd( account_id );
+	tsd= map_obj.id2sd( account_id );
 	if (!tsd) { //Character left? Cancel alliance.
 		clif_guild_allianceack(sd,3);
 		return 0;
@@ -1619,8 +1621,8 @@ int guild_allianceack(int guild_id1,int guild_id2,uint32 account_id1,uint32 acco
 	guild_id[1] = guild_id2;
 	guild_name[0] = name1;
 	guild_name[1] = name2;
-	sd[0] = map_id2sd(account_id1);
-	sd[1] = map_id2sd(account_id2);
+	sd[0] = map_obj.id2sd(account_id1);
+	sd[1] = map_obj.id2sd(account_id2);
 
 	g[0]=guild_search(guild_id1);
 	g[1]=guild_search(guild_id2);
@@ -1976,7 +1978,7 @@ int guild_castledatasave(int castle_id, int index, int value) {
 		gc->guild_id = value;
 		for (i = 0; i < MAX_GUARDIANS; i++){
 			struct mob_data *gd;
-			if (gc->guardian[i].visible && (gd = map_id2md(gc->guardian[i].id)) != NULL)
+			if (gc->guardian[i].visible && (gd = map_obj.id2md(gc->guardian[i].id)) != NULL)
 				mob_guardian_guildchange(gd);
 		}
 		break;
@@ -1989,7 +1991,7 @@ int guild_castledatasave(int castle_id, int index, int value) {
 		gc->defense = value;
 		for (i = 0; i < MAX_GUARDIANS; i++){
 			struct mob_data *gd;
-			if (gc->guardian[i].visible && (gd = map_id2md(gc->guardian[i].id)) != NULL)
+			if (gc->guardian[i].visible && (gd = map_obj.id2md(gc->guardian[i].id)) != NULL)
 				status_calc_mob(gd, SCO_NONE);
 		}
 		break;

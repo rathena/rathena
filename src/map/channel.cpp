@@ -25,6 +25,8 @@ static DBMap* channel_db; // channels
 
 struct Channel_Config channel_config;
 
+Map_Obj map_obj = Map_Obj();
+
 DBMap* channel_get_db(void){ return channel_db; }
 
 /**
@@ -392,7 +394,7 @@ int channel_pcquit(struct map_session_data *sd, int type){
 	int i;
 
 	//On closing state we could have clean all chan by sd but pcquit is more used to free unit when
-	//he quit a map_server, not call in map_quit cause we need to cleanup when we switch map-server as well
+	//he quit a map_server, not call in map_obj.quit cause we need to cleanup when we switch map-server as well
 	if(!sd) return -1;
 
 	// Leave all chat channels.
@@ -941,7 +943,7 @@ int channel_pcunbind(struct map_session_data *sd){
 int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int flag){
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
-	struct map_session_data *tsd = map_nick2sd(pname,false);
+	struct map_session_data *tsd = map_obj.nick2sd(pname,false);
 
 	if( channel_chk(chname,NULL,1) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
@@ -1050,7 +1052,7 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 int channel_pckick(struct map_session_data *sd, char *chname, char *pname) {
 	struct Channel *channel;
 	char output[CHAT_SIZE_MAX];
-	struct map_session_data *tsd = map_nick2sd(pname,false);
+	struct map_session_data *tsd = map_obj.nick2sd(pname,false);
 
 	if( channel_chk(chname,NULL,1) ) {
 		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.

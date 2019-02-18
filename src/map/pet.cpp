@@ -136,7 +136,7 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 		int inf;
 		struct block_list *bl;
 
-		bl = map_id2bl(target_id);
+		bl = map_obj.id2bl(target_id);
 
 		if(bl == NULL || pd->bl.m != bl->m || bl->prev == NULL || status_isdead(bl) ||
 			!check_distance_bl(&pd->bl, bl, pd->db->range3))
@@ -252,7 +252,7 @@ static TIMER_FUNC(pet_hungry){
 	s_pet_db *pet_db_ptr;
 	int interval;
 
-	sd = map_id2sd(id);
+	sd = map_obj.id2sd(id);
 
 	if(!sd)
 		return 1;
@@ -391,7 +391,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+		map_obj.addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	pd->pet.incubate = 1;
@@ -465,7 +465,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.x = pd->ud.to_x;
 	pd->bl.y = pd->ud.to_y;
 
-	map_addiddb(&pd->bl);
+	map_obj.addiddb(&pd->bl);
 	status_calc_pet(pd,SCO_FIRST);
 
 	pd->last_thinktime = gettick();
@@ -525,7 +525,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 		chrif_save(sd, CSAVE_INVENTORY); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
 	if(sd->bl.prev != NULL) {
-		if(map_addblock(&sd->pd->bl))
+		if(map_obj.addblock(&sd->pd->bl))
 			return 1;
 
 		clif_spawn(&sd->pd->bl);
@@ -551,7 +551,7 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 {
 	struct map_session_data *sd;
 
-	sd = map_id2sd(account_id);
+	sd = map_obj.id2sd(account_id);
 
 	if(sd == NULL)
 		return 1;
@@ -585,7 +585,7 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 		pet_data_init(sd,p);
 
 		if(sd->pd && sd->bl.prev != NULL) {
-			if(map_addblock(&sd->pd->bl))
+			if(map_obj.addblock(&sd->pd->bl))
 				return 1;
 
 			clif_spawn(&sd->pd->bl);
@@ -650,7 +650,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	nullpo_retr(1, sd);
 
-	md = (struct mob_data*)map_id2bl(target_id);
+	md = (struct mob_data*)map_obj.id2bl(target_id);
 
 	if(!md || md->bl.type != BL_MOB || md->bl.prev == NULL) { // Invalid inputs/state, abort capture.
 		clif_pet_roulette(sd,0);
@@ -722,7 +722,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	if( pet_id == 0 || pet_class == 0 )
 		return false;
 
-	sd = map_id2sd(account_id);
+	sd = map_obj.id2sd(account_id);
 
 	if( sd == NULL )
 		return false;
@@ -751,7 +751,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+		map_obj.addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	return true;
@@ -942,7 +942,7 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
 		clif_additem(sd,0,0,flag);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+		map_obj.addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	if( battle_config.pet_equip_required ) { // Skotlex: halt support timers if needed
@@ -1154,7 +1154,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_t
 	}
 
 	if (pd->target_id) {
-		target = map_id2bl(pd->target_id);
+		target = map_obj.id2bl(pd->target_id);
 
 		if (!target || pd->bl.m != target->m || status_isdead(target) ||
 			!check_distance_bl(&pd->bl, target, pd->db->range3)) {
@@ -1165,7 +1165,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_t
 
 	if(!target && pd->loot && pd->loot->count < pd->loot->max && DIFF_TICK(tick,pd->ud.canact_tick) > 0) {
 		// Use half the pet's range of sight.
-		map_foreachinallrange(pet_ai_sub_hard_lootsearch, &pd->bl, pd->db->range2 / 2, BL_ITEM, pd, &target);
+		map_obj.foreachinallrange(pet_ai_sub_hard_lootsearch, &pd->bl, pd->db->range2 / 2, BL_ITEM, pd, &target);
 	}
 
 	if (!target) { // Just walk around.
@@ -1246,7 +1246,7 @@ static int pet_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
  * @return 0
  */
 static TIMER_FUNC(pet_ai_hard){
-	map_foreachpc(pet_ai_sub_foreachclient,tick);
+	map_obj.foreachpc(pet_ai_sub_foreachclient,tick);
 
 	return 0;
 }
@@ -1303,7 +1303,7 @@ static TIMER_FUNC(pet_delay_item_drop){
 	while (ditem) {
 		struct item_drop *ditem_prev;
 
-		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
+		map_obj.addflooritem(&ditem->item_data,ditem->item_data.amount,
 			list->m,list->x,list->y,
 			list->first_charid,list->second_charid,list->third_charid,4,0);
 		ditem_prev = ditem;
@@ -1385,7 +1385,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
  * @author [Valaris], rewritten by [Skotlex]
  */
 TIMER_FUNC(pet_skill_bonus_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	struct pet_data *pd;
 	int bonus;
 	int timer = 0;
@@ -1433,7 +1433,7 @@ TIMER_FUNC(pet_skill_bonus_timer){
  * @author [Valaris], rewritten by [Skotlex]
  */
 TIMER_FUNC(pet_recovery_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	struct pet_data *pd;
 
 	if(sd == NULL || sd->pd == NULL || sd->pd->recovery == NULL)
@@ -1465,7 +1465,7 @@ TIMER_FUNC(pet_recovery_timer){
  * @param id : ID of pet owner
  */
 TIMER_FUNC(pet_heal_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	struct status_data *status;
 	struct pet_data *pd;
 	unsigned int rate = 100;
@@ -1508,7 +1508,7 @@ TIMER_FUNC(pet_heal_timer){
  * @author [Skotlex]
  */
 TIMER_FUNC(pet_skill_support_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	struct pet_data *pd;
 	struct status_data *status;
 	short rate = 100;

@@ -190,7 +190,7 @@ int pc_get_group_level(struct map_session_data *sd) {
 static TIMER_FUNC(pc_invincible_timer){
 	struct map_session_data *sd;
 
-	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+	if( (sd=(struct map_session_data *)map_obj.id2sd(id)) == NULL || sd->bl.type!=BL_PC )
 		return 1;
 
 	if(sd->invincible_timer != tid){
@@ -227,7 +227,7 @@ static TIMER_FUNC(pc_spiritball_timer){
 	struct map_session_data *sd;
 	int i;
 
-	if( (sd=(struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type!=BL_PC )
+	if( (sd=(struct map_session_data *)map_obj.id2sd(id)) == NULL || sd->bl.type!=BL_PC )
 		return 1;
 
 	if( sd->spiritball <= 0 )
@@ -434,7 +434,7 @@ void pc_setrestartvalue(struct map_session_data *sd, char type) {
  * @return false - failure, true - success
  */
 TIMER_FUNC(pc_inventory_rental_end){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 
 	if( sd == NULL )
 		return 0;
@@ -635,7 +635,7 @@ void pc_makesavestatus(struct map_session_data *sd) {
 		sd->status.last_point.y = sd->bl.y;
 	}
 
-	if(map_getmapflag(sd->bl.m, MF_NOSAVE)) {
+	if(map_obj.getmapflag(sd->bl.m, MF_NOSAVE)) {
 		struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 		if(mapdata->save.map)
@@ -1448,7 +1448,7 @@ void pc_reg_received(struct map_session_data *sd)
 
 		if ((j = pc_readglobalreg(sd, add_str(sg_info[i].feel_var))) != 0) {
 			sd->feel_map[i].index = j;
-			sd->feel_map[i].m = map_mapindex2mapid(j);
+			sd->feel_map[i].m = map_obj.mapindex2mapid(j);
 		} else {
 			sd->feel_map[i].index = 0;
 			sd->feel_map[i].m = -1;
@@ -1507,7 +1507,7 @@ void pc_reg_received(struct map_session_data *sd)
 	if( sd->status.ele_id > 0 )
 		intif_elemental_request(sd->status.ele_id, sd->status.char_id);
 
-	map_addiddb(&sd->bl);
+	map_obj.addiddb(&sd->bl);
 	map_delnickdb(sd->status.char_id, sd->status.name);
 	if (!chrif_auth_finished(sd))
 		ShowError("pc_reg_received: Failed to properly remove player %d:%d from logging db!\n", sd->status.account_id, sd->status.char_id);
@@ -1543,7 +1543,7 @@ void pc_reg_received(struct map_session_data *sd)
 		// decrement the number of pvp players on the map
 		map_getmapdata(sd->bl.m)->users_pvp--;
 
-		if( map_getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) && sd->pvp_timer != INVALID_TIMER ){
+		if( map_obj.getmapflag(sd->bl.m, MF_PVP) && !map_getmapflag(sd->bl.m, MF_PVP_NOCALCRANK) && sd->pvp_timer != INVALID_TIMER ){
 			// unregister the player for ranking
 			delete_timer( sd->pvp_timer, pc_calc_pvprank_timer );
 			sd->pvp_timer = INVALID_TIMER;
@@ -2061,7 +2061,7 @@ int pc_disguise(struct map_session_data *sd, int class_)
 		}
 		if (sd->chatID) {
 			struct chat_data* cd;
-			if ((cd = (struct chat_data*)map_id2bl(sd->chatID)) != NULL)
+			if ((cd = (struct chat_data*)map_obj.id2bl(sd->chatID)) != NULL)
 				clif_dispchat(cd,0);
 		}
 	}
@@ -2443,7 +2443,7 @@ void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonu
  * Remove autobonus timer from player
  */
 TIMER_FUNC(pc_endautobonus){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	std::vector<s_autobonus> *bonus = (std::vector<s_autobonus> *)data;
 
 	nullpo_ret(sd);
@@ -4686,7 +4686,7 @@ bool pc_dropitem(struct map_session_data *sd,int n,int amount)
 	if( sd->inventory.u.items_inventory[n].equipSwitch )
 		return false;
 
-	if( map_getmapflag(sd->bl.m, MF_NODROP) )
+	if( map_obj.getmapflag(sd->bl.m, MF_NODROP) )
 	{
 		clif_displaymessage (sd->fd, msg_txt(sd,271));
 		return false; //Can't drop items in nodrop mapflag maps.
@@ -4698,7 +4698,7 @@ bool pc_dropitem(struct map_session_data *sd,int n,int amount)
 		return false;
 	}
 
-	if (!map_addflooritem(&sd->inventory.u.items_inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2, 0))
+	if (!map_obj.addflooritem(&sd->inventory.u.items_inventory[n], amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 2, 0))
 		return false;
 
 	pc_delitem(sd, n, amount, 1, 0, LOG_TYPE_PICKDROP_PLAYER);
@@ -4731,7 +4731,7 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 		p = party_search(sd->status.party_id);
 
 	if (fitem->first_get_charid > 0 && fitem->first_get_charid != sd->status.char_id) {
-		struct map_session_data *first_sd = map_charid2sd(fitem->first_get_charid);
+		struct map_session_data *first_sd = map_obj.charid2sd(fitem->first_get_charid);
 		if (DIFF_TICK(tick,fitem->first_get_tick) < 0) {
 			if (!(p && p->party.item&1 &&
 				first_sd && first_sd->status.party_id == sd->status.party_id
@@ -4739,7 +4739,7 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 				return false;
 		}
 		else if (fitem->second_get_charid > 0 && fitem->second_get_charid != sd->status.char_id) {
-			struct map_session_data *second_sd = map_charid2sd(fitem->second_get_charid);
+			struct map_session_data *second_sd = map_obj.charid2sd(fitem->second_get_charid);
 			if (DIFF_TICK(tick, fitem->second_get_tick) < 0) {
 				if (!(p && p->party.item&1 &&
 					((first_sd && first_sd->status.party_id == sd->status.party_id) ||
@@ -4748,7 +4748,7 @@ bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 					return false;
 			}
 			else if (fitem->third_get_charid > 0 && fitem->third_get_charid != sd->status.char_id){
-				struct map_session_data *third_sd = map_charid2sd(fitem->third_get_charid);
+				struct map_session_data *third_sd = map_obj.charid2sd(fitem->third_get_charid);
 				if (DIFF_TICK(tick,fitem->third_get_tick) < 0) {
 					if(!(p && p->party.item&1 &&
 						((first_sd && first_sd->status.party_id == sd->status.party_id) ||
@@ -5306,7 +5306,7 @@ bool pc_steal_item(struct map_session_data *sd,struct block_list *bl, uint16 ski
 	md_status= status_get_status_data(bl);
 
 	if (md->master_id || status_has_mode(md_status, MD_STATUS_IMMUNE) || status_get_race2(&md->bl) == RC2_TREASURE ||
-		map_getmapflag(bl->m, MF_NOMOBLOOT) || // check noloot map flag [Lorky]
+		map_obj.getmapflag(bl->m, MF_NOMOBLOOT) || // check noloot map flag [Lorky]
 		(battle_config.skill_steal_max_tries && //Reached limit of steal attempts. [Lupus]
 			md->state.steal_flag++ >= battle_config.skill_steal_max_tries)
   	) { //Can't steal from
@@ -5433,7 +5433,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		pc_setrestartvalue(sd,1);
 	}
 
-	int16 m = map_mapindex2mapid(mapindex);
+	int16 m = map_obj.mapindex2mapid(mapindex);
 	struct map_data *mapdata = map_getmapdata(m);
 
 	sd->state.changemap = (sd->mapindex != mapindex);
@@ -5499,7 +5499,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 		struct script_state *st;
 
 		//if can't find any map-servers, just abort setting position.
-		if(!sd->mapindex || map_mapname2ipport(mapindex,&ip,&port))
+		if(!sd->mapindex || map_obj.mapname2ipport(mapindex,&ip,&port))
 			return SETPOS_NO_MAPSERVER;
 
 		if (sd->npc_id){
@@ -5657,7 +5657,7 @@ bool pc_memo(struct map_session_data* sd, int pos)
 	nullpo_ret(sd);
 
 	// check mapflags
-	if( sd->bl.m >= 0 && (map_getmapflag(sd->bl.m, MF_NOMEMO) || map_getmapflag(sd->bl.m, MF_NOWARPTO)) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) ) {
+	if( sd->bl.m >= 0 && (map_obj.getmapflag(sd->bl.m, MF_NOMEMO) || map_getmapflag(sd->bl.m, MF_NOWARPTO)) && !pc_has_permission(sd, PC_PERM_WARP_ANYWHERE) ) {
 		clif_skill_teleportmessage(sd, 1); // "Saved point cannot be memorized."
 		return false;
 	}
@@ -6437,7 +6437,7 @@ TIMER_FUNC(pc_follow_timer){
 	struct map_session_data *sd;
 	struct block_list *tbl;
 
-	sd = map_id2sd(id);
+	sd = map_obj.id2sd(id);
 	nullpo_ret(sd);
 
 	if (sd->followtimer != tid){
@@ -6447,7 +6447,7 @@ TIMER_FUNC(pc_follow_timer){
 	}
 
 	sd->followtimer = INVALID_TIMER;
-	tbl = map_id2bl(sd->followtarget);
+	tbl = map_obj.id2bl(sd->followtarget);
 
 	if (tbl == NULL || pc_isdead(sd))
 	{
@@ -6490,7 +6490,7 @@ int pc_stop_following (struct map_session_data *sd)
 
 int pc_follow(struct map_session_data *sd,int target_id)
 {
-	struct block_list *bl = map_id2bl(target_id);
+	struct block_list *bl = map_obj.id2bl(target_id);
 	if (bl == NULL /*|| bl->type != BL_PC*/)
 		return 1;
 	if (sd->followtimer != INVALID_TIMER)
@@ -6704,7 +6704,7 @@ void pc_gainexp(struct map_session_data *sd, struct block_list *src, unsigned in
 
 	if (!(exp_flag&2)) {
 
-		if (!battle_config.pvp_exp && map_getmapflag(sd->bl.m, MF_PVP))  // [MouseJstr]
+		if (!battle_config.pvp_exp && map_obj.getmapflag(sd->bl.m, MF_PVP))  // [MouseJstr]
 			return; // no exp on pvp maps
 	
 		if (sd->status.guild_id>0)
@@ -7599,7 +7599,7 @@ void pc_respawn(struct map_session_data* sd, clr_type clrtype)
 }
 
 static TIMER_FUNC(pc_respawn_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	if( sd != NULL )
 	{
 		sd->pvp_point=0;
@@ -7640,7 +7640,7 @@ void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int h
 }
 
 TIMER_FUNC(pc_close_npc_timer){
-	TBL_PC *sd = map_id2sd(id);
+	TBL_PC *sd = map_obj.id2sd(id);
 	if(sd) pc_close_npc(sd,data);
 	return 0;
 }
@@ -7720,14 +7720,14 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 
 	for(k = 0; k < MAX_DEVOTION; k++) {
 		if (sd->devotion[k]){
-			struct map_session_data *devsd = map_id2sd(sd->devotion[k]);
+			struct map_session_data *devsd = map_obj.id2sd(sd->devotion[k]);
 			if (devsd)
 				status_change_end(&devsd->bl, SC_DEVOTION, INVALID_TIMER);
 			sd->devotion[k] = 0;
 		}
 	}
 	if(sd->shadowform_id) { //if we were target of shadowform
-		status_change_end(map_id2bl(sd->shadowform_id), SC__SHADOWFORM, INVALID_TIMER);
+		status_change_end(map_obj.id2bl(sd->shadowform_id), SC__SHADOWFORM, INVALID_TIMER);
 		sd->shadowform_id = 0; //should be remove on status end anyway
 	}
 
@@ -7865,7 +7865,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		item_tmp.card[1]=0;
 		item_tmp.card[2]=GetWord(sd->status.char_id,0); // CharId
 		item_tmp.card[3]=GetWord(sd->status.char_id,1);
-		map_addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+		map_obj.addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	//Remove bonus_script when dead
@@ -9447,7 +9447,7 @@ int pc_readreg2(struct map_session_data *sd, const char *reg) {
  * Exec eventtimer for player sd (retrieved from map_session (id))
  *------------------------------------------*/
 static TIMER_FUNC(pc_eventtimer){
-	struct map_session_data *sd=map_id2sd(id);
+	struct map_session_data *sd=map_obj.id2sd(id);
 	char *p = (char *)data;
 	int i;
 	if(sd==NULL)
@@ -10484,7 +10484,7 @@ static int pc_calc_pvprank_sub(struct block_list *bl,va_list ap)
 	return 0;
 }
 /*==========================================
- * Calculate new rank beetween all present players (map_foreachinallarea)
+ * Calculate new rank beetween all present players (map_obj.foreachinallarea)
  * and display result
  *------------------------------------------*/
 int pc_calc_pvprank(struct map_session_data *sd)
@@ -10504,7 +10504,7 @@ int pc_calc_pvprank(struct map_session_data *sd)
 TIMER_FUNC(pc_calc_pvprank_timer){
 	struct map_session_data *sd;
 
-	sd=map_id2sd(id);
+	sd=map_obj.id2sd(id);
 	if(sd==NULL)
 		return 0;
 	sd->pvp_timer = INVALID_TIMER;
@@ -10572,7 +10572,7 @@ bool pc_divorce(struct map_session_data *sd)
 	if( !sd->status.partner_id )
 		return false; // Char is not married
 
-	if( (p_sd = map_charid2sd(sd->status.partner_id)) == NULL )
+	if( (p_sd = map_obj.charid2sd(sd->status.partner_id)) == NULL )
 	{ // Lets char server do the divorce
 		if( chrif_divorce(sd->status.char_id, sd->status.partner_id) )
 			return false; // No char server connected
@@ -10605,7 +10605,7 @@ bool pc_divorce(struct map_session_data *sd)
 struct map_session_data *pc_get_partner(struct map_session_data *sd){
 	if (!sd || !pc_ismarried(sd))
 		return NULL;
-	return map_charid2sd(sd->status.partner_id);
+	return map_obj.charid2sd(sd->status.partner_id);
 }
 
 /**
@@ -10616,7 +10616,7 @@ struct map_session_data *pc_get_partner(struct map_session_data *sd){
 struct map_session_data *pc_get_father (struct map_session_data *sd){
 	if (!sd || !(sd->class_&JOBL_BABY) || !sd->status.father)
 		return NULL;
-	return map_charid2sd(sd->status.father);
+	return map_obj.charid2sd(sd->status.father);
 }
 
 /**
@@ -10627,7 +10627,7 @@ struct map_session_data *pc_get_father (struct map_session_data *sd){
 struct map_session_data *pc_get_mother (struct map_session_data *sd){
 	if (!sd || !(sd->class_&JOBL_BABY) || !sd->status.mother)
 		return NULL;
-	return map_charid2sd(sd->status.mother);
+	return map_obj.charid2sd(sd->status.mother);
 }
 
 /*==========================================
@@ -10638,7 +10638,7 @@ struct map_session_data *pc_get_child (struct map_session_data *sd)
 	if (!sd || !pc_ismarried(sd) || !sd->status.child)
 		// charid2sd returns NULL if not found
 		return NULL;
-	return map_charid2sd(sd->status.child);
+	return map_obj.charid2sd(sd->status.child);
 }
 
 /*==========================================
@@ -10765,7 +10765,7 @@ static TIMER_FUNC(pc_autosave){
 	}
 	mapit_free(iter);
 
-	interval = autosave_interval/(map_usercount()+1);
+	interval = autosave_interval/(map_obj.usercount()+1);
 	if(interval < minsave_interval)
 		interval = minsave_interval;
 	add_timer(gettick()+interval,pc_autosave,0,0);
@@ -10775,7 +10775,7 @@ static TIMER_FUNC(pc_autosave){
 
 static int pc_daynight_timer_sub(struct map_session_data *sd,va_list ap)
 {
-	if (sd->state.night != night_flag && map_getmapflag(sd->bl.m, MF_NIGHTENABLED))
+	if (sd->state.night != night_flag && map_obj.getmapflag(sd->bl.m, MF_NIGHTENABLED))
 	{	//Night/day state does not match.
 		clif_status_load(&sd->bl, EFST_SKE, night_flag); //New night effect by dynamix [Skotlex]
 		sd->state.night = night_flag;
@@ -10797,7 +10797,7 @@ TIMER_FUNC(map_day_timer){
 		return 0; //Already day.
 
 	night_flag = 0; // 0=day, 1=night [Yor]
-	map_foreachpc(pc_daynight_timer_sub);
+	map_obj.foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(NULL,502) : msg_txt(NULL,60)); // The day has arrived!
 	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
 	return 0;
@@ -10817,7 +10817,7 @@ TIMER_FUNC(map_night_timer){
 		return 0; //Already nigth.
 
 	night_flag = 1; // 0=day, 1=night [Yor]
-	map_foreachpc(pc_daynight_timer_sub);
+	map_obj.foreachpc(pc_daynight_timer_sub);
 	strcpy(tmp_soutput, (data == 0) ? msg_txt(NULL,503) : msg_txt(NULL,59)); // The night has fallen...
 	intif_broadcast(tmp_soutput, strlen(tmp_soutput) + 1, BC_DEFAULT);
 	return 0;
@@ -10923,7 +10923,7 @@ static TIMER_FUNC(pc_spiritcharm_timer){
 	struct map_session_data *sd;
 	int i;
 
-	if ((sd = (struct map_session_data *)map_id2sd(id)) == NULL || sd->bl.type != BL_PC)
+	if ((sd = (struct map_session_data *)map_obj.id2sd(id)) == NULL || sd->bl.type != BL_PC)
 		return 1;
 
 	if (sd->spiritcharm <= 0) {
@@ -11924,13 +11924,13 @@ void pc_damage_log_clear(struct map_session_data *sd, int id)
 			if( !sd->dmglog[i] )	//skip the empty value
 				continue;
 
-			if ((md = map_id2md(sd->dmglog[i])))
+			if ((md = map_obj.id2md(sd->dmglog[i])))
 				pc_clear_log_damage_sub(sd->status.char_id,md);
 			sd->dmglog[i] = 0;
 		}
 	}
 	else {
-		if ((md = map_id2md(id)))
+		if ((md = map_obj.id2md(id)))
 			pc_clear_log_damage_sub(sd->status.char_id,md);
 
 		ARR_FIND(0,DAMAGELOG_SIZE_PC,i,sd->dmglog[i] == id);	// find the id position
@@ -11986,7 +11986,7 @@ void pc_check_expiration(struct map_session_data *sd) {
 }
 
 TIMER_FUNC(pc_expiration_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 
 	if( !sd ) return 0;
 
@@ -11995,13 +11995,13 @@ TIMER_FUNC(pc_expiration_timer){
 	if( sd->fd )
 		clif_authfail_fd(sd->fd,10);
 
-	map_quit(sd);
+	map_obj.quit(sd);
 
 	return 0;
 }
 
 TIMER_FUNC(pc_autotrade_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 
 	if (!sd)
 		return 0;
@@ -12015,7 +12015,7 @@ TIMER_FUNC(pc_autotrade_timer){
 
 	if (!sd->vender_id && !sd->buyer_id) {
 		sd->state.autotrade = 0;
-		map_quit(sd);
+		map_obj.quit(sd);
 	}
 
 	return 0;
@@ -12120,7 +12120,7 @@ void pc_crimson_marker_clear(struct map_session_data *sd) {
 
 	for (i = 0; i < MAX_SKILL_CRIMSON_MARKER; i++) {
 		struct block_list *bl = NULL;
-		if (sd->c_marker[i] && (bl = map_id2bl(sd->c_marker[i])))
+		if (sd->c_marker[i] && (bl = map_obj.id2bl(sd->c_marker[i])))
 			status_change_end(bl,SC_C_MARKER,INVALID_TIMER);
 		sd->c_marker[i] = 0;
 	}
@@ -12291,7 +12291,7 @@ TIMER_FUNC(pc_bonus_script_timer){
 	struct map_session_data *sd;
 	struct s_bonus_script_entry *entry = (struct s_bonus_script_entry *)data;
 
-	sd = map_id2sd(id);
+	sd = map_obj.id2sd(id);
 	if (!sd) {
 		ShowError("pc_bonus_script_timer: Null pointer id: %d tid: %d\n", id, tid);
 		return 0;
@@ -12728,7 +12728,7 @@ void pc_set_costume_view(struct map_session_data *sd) {
 		sd->status.robe = id->look;
 
 	// Costumes check
-	if (!map_getmapflag(sd->bl.m, MF_NOCOSTUME)) {
+	if (!map_obj.getmapflag(sd->bl.m, MF_NOCOSTUME)) {
 		if ((i = sd->equip_index[EQI_COSTUME_HEAD_LOW]) != -1 && (id = sd->inventory_data[i])) {
 			if (!(id->equip&(EQP_COSTUME_HEAD_MID|EQP_COSTUME_HEAD_TOP)))
 				sd->status.head_bottom = id->look;

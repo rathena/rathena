@@ -159,7 +159,7 @@ int npc_isnear_sub(struct block_list* bl, va_list args) {
 bool npc_isnear(struct block_list * bl) {
 
     if( battle_config.min_npc_vendchat_distance > 0 &&
-            map_foreachinallrange(npc_isnear_sub,bl, battle_config.min_npc_vendchat_distance, BL_NPC, 0) )
+            map_obj.foreachinallrange(npc_isnear_sub,bl, battle_config.min_npc_vendchat_distance, BL_NPC, 0) )
         return true;
 
     return false;
@@ -253,7 +253,7 @@ int npc_enable(const char* name, int flag)
 		clif_changeoption(&nd->bl);
 
 	if( flag&3 && (nd->u.scr.xs >= 0 || nd->u.scr.ys >= 0) ) 	//check if player standing on a OnTouchArea
-		map_foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, BL_PC, nd );
+		map_obj.foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, BL_PC, nd );
 
 	return 0;
 }
@@ -278,7 +278,7 @@ TIMER_FUNC(npc_secure_timeout_timer){
 	unsigned int timeout = NPC_SECURE_TIMEOUT_NEXT;
 	t_tick cur_tick = gettick(); //ensure we are on last tick
 
-	if ((sd = map_id2sd(id)) == NULL || !sd->npc_id || sd->state.ignoretimeout) {
+	if ((sd = map_obj.id2sd(id)) == NULL || !sd->npc_id || sd->state.ignoretimeout) {
 		if (sd)
 			sd->npc_idle_timer = INVALID_TIMER;
 		return 0; // Not logged in anymore OR no longer attached to a NPC OR using 'ignoretimeout' script command
@@ -404,7 +404,7 @@ int npc_event_doall_sub(DBKey key, DBData *data, va_list ap)
 	if( p && strcmpi(name, p) == 0 /* && !ev->nd->src_id */ ) // Do not run on duplicates. [Paradox924X]
 	{
 		if(rid) // a player may only have 1 script running at the same time
-			npc_event_sub(map_id2sd(rid),ev,key.str);
+			npc_event_sub(map_obj.id2sd(rid),ev,key.str);
 		else
 			run_script(ev->nd->u.scr.script,ev->pos,rid,ev->nd->bl.id);
 		(*c)++;
@@ -584,7 +584,7 @@ TIMER_FUNC(npc_timerevent){
 	int old_rid;
 	t_tick old_timer;
 	t_tick old_tick;
-	struct npc_data* nd=(struct npc_data *)map_id2bl(id);
+	struct npc_data* nd=(struct npc_data *)map_obj.id2bl(id);
 	struct npc_timerevent_list *te;
 	struct timer_event_data *ted = (struct timer_event_data*)data;
 	struct map_session_data *sd=NULL;
@@ -595,7 +595,7 @@ TIMER_FUNC(npc_timerevent){
 		return 0;
 	}
 
-	if( ted->rid && !(sd = map_id2sd(ted->rid)) )
+	if( ted->rid && !(sd = map_obj.id2sd(ted->rid)) )
 	{
 		ShowError("npc_timerevent: Attached player not found.\n");
 		ers_free(timer_event_ers, ted);
@@ -663,7 +663,7 @@ int npc_timerevent_start(struct npc_data* nd, int rid)
 	// Check if there is an OnTimer Event
 	ARR_FIND( 0, nd->u.scr.timeramount, j, nd->u.scr.timer_event[j].timer > nd->u.scr.timer );
 
-	if( nd->u.scr.rid > 0 && !(sd = map_id2sd(nd->u.scr.rid)) )
+	if( nd->u.scr.rid > 0 && !(sd = map_obj.id2sd(nd->u.scr.rid)) )
 	{ // Failed to attach timer to this player.
 		ShowError("npc_timerevent_start: Attached player not found!\n");
 		return 1;
@@ -716,7 +716,7 @@ int npc_timerevent_stop(struct npc_data* nd)
 
 	nullpo_ret(nd);
 
-	if( nd->u.scr.rid && !(sd = map_id2sd(nd->u.scr.rid)) )
+	if( nd->u.scr.rid && !(sd = map_obj.id2sd(nd->u.scr.rid)) )
 	{
 		ShowError("npc_timerevent_stop: Attached player not found!\n");
 		return 1;
@@ -765,7 +765,7 @@ void npc_timerevent_quit(struct map_session_data* sd)
 	}
 
 	// Delete timer
-	nd = (struct npc_data *)map_id2bl(td->id);
+	nd = (struct npc_data *)map_obj.id2bl(td->id);
 	ted = (struct timer_event_data*)td->data;
 	delete_timer(sd->npc_timer_id, npc_timerevent);
 	sd->npc_timer_id = INVALID_TIMER;
@@ -922,7 +922,7 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
 	char *name;
 
 	nullpo_ret(bl);
-	nullpo_ret((sd = map_id2sd(bl->id)));
+	nullpo_ret((sd = map_obj.id2sd(bl->id)));
 
 	pc_id = va_arg(ap,int);
 	name = va_arg(ap,char*);
@@ -945,7 +945,7 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
  *------------------------------------------*/
 int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 {
-	struct npc_data *nd = map_id2nd(sd->touching_id);
+	struct npc_data *nd = map_obj.id2nd(sd->touching_id);
 	short xs, ys;
 
 	if( !nd || nd->touching_id != sd->bl.id )
@@ -1019,7 +1019,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 		case NPCTYPE_WARP:
 			if ((!mapdata->npc[i]->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
 				break; // hidden or dead chars cannot use warps
-			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(mapdata->npc[i]->u.warp.mapindex), sd->group_level))
+			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_obj.mapindex2mapid(mapdata->npc[i]->u.warp.mapindex), sd->group_level))
 				break;
 			if(sd->count_rewarp > 10){
 				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, mapdata->npc[i]->exname, mapdata->npc[i]->path);
@@ -1100,7 +1100,7 @@ int npc_touch_areanpc2(struct mob_data *md)
 			switch( mapdata->npc[i]->subtype )
 			{
 				case NPCTYPE_WARP:
-					xs = map_mapindex2mapid(mapdata->npc[i]->u.warp.mapindex);
+					xs = map_obj.mapindex2mapid(mapdata->npc[i]->u.warp.mapindex);
 					if( md->bl.m < 0 )
 						break; // Cannot Warp between map servers
 					if( unit_warp(&md->bl, xs, mapdata->npc[i]->u.warp.x, mapdata->npc[i]->u.warp.y, CLR_OUTSIGHT) == 0 )
@@ -1115,7 +1115,7 @@ int npc_touch_areanpc2(struct mob_data *md)
 					md->areanpc_id = mapdata->npc[i]->bl.id;
 					id = md->bl.id; // Stores Unique ID
 					run_script(ev->nd->u.scr.script, ev->pos, md->bl.id, ev->nd->bl.id);
-					if( map_id2md(id) == NULL ) return 1; // Not Warped, but killed
+					if( map_obj.id2md(id) == NULL ) return 1; // Not Warped, but killed
 					break;
 			}
 
@@ -1329,12 +1329,12 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
  *
  *------------------------------------------*/
 bool npc_scriptcont(struct map_session_data* sd, int id, bool closing){
-	struct block_list *target = map_id2bl(id);
+	struct block_list *target = map_obj.id2bl(id);
 
 	nullpo_retr(true, sd);
 
 	if( id != sd->npc_id ){
-		TBL_NPC* nd_sd = (TBL_NPC*)map_id2bl(sd->npc_id);
+		TBL_NPC* nd_sd = (TBL_NPC*)map_obj.id2bl(sd->npc_id);
 		TBL_NPC* nd = BL_CAST(BL_NPC, target);
 
 		ShowDebug("npc_scriptcont: %s (sd->npc_id=%d) is not %s (id=%d).\n",
@@ -1417,7 +1417,7 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 
 	nullpo_retr(1, sd);
 
-	if ((nd = npc_checknear(sd,map_id2bl(id))) == NULL)
+	if ((nd = npc_checknear(sd,map_obj.id2bl(id))) == NULL)
 		return 1;
 
 	if (nd->subtype != NPCTYPE_SHOP) {
@@ -1465,7 +1465,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 				int delete_amount = price, i;
 
 				if (!id) { // Item Data is checked at script parsing but in case of item_db reload, check again.
-					ShowWarning("Failed to find sellitem %hu for itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y);
+					ShowWarning("Failed to find sellitem %hu for itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map_obj.mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 				if (cost[1] < points || cost[0] < (price - points)) {
@@ -1492,13 +1492,13 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 						amount = delete_amount;
 
 					if (pc_delitem(sd, i, amount, 0, 0, LOG_TYPE_NPC)) {
-						ShowWarning("Failed to delete item %hu from '%s' at itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, sd->status.name, nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y);
+						ShowWarning("Failed to delete item %hu from '%s' at itemshop NPC '%s' (%s, %d, %d)!\n", nd->u.shop.itemshop_nameid, sd->status.name, nd->exname, map_obj.mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y);
 						return ERROR_TYPE_PURCHASE_FAIL;
 					}
 					delete_amount -= amount;
 				}
 				if (delete_amount > 0) {
-					ShowError("Item %hu is not enough as payment at itemshop NPC '%s' (%s, %d, %d, AID=%d, CID=%d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.account_id, sd->status.char_id);
+					ShowError("Item %hu is not enough as payment at itemshop NPC '%s' (%s, %d, %d, AID=%d, CID=%d)!\n", nd->u.shop.itemshop_nameid, nd->exname, map_obj.mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.account_id, sd->status.char_id);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 			}
@@ -1535,7 +1535,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 {
 	int i, j, amount, new_, w, vt;
 	unsigned short nameid;
-	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
+	struct npc_data *nd = (struct npc_data *)map_obj.id2bl(sd->npc_shopid);
 	enum e_CASHSHOP_ACK res;
 
 	if( !nd || ( nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
@@ -1685,7 +1685,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
  */
 int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amount, int points)
 {
-	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
+	struct npc_data *nd = (struct npc_data *)map_obj.id2bl(sd->npc_shopid);
 	struct item_data *item;
 	int i, price, w;
 	enum e_CASHSHOP_ACK res;
@@ -1738,7 +1738,7 @@ int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amo
 	{
 		ShowWarning("npc_cashshop_buy: Item '%s' (%hu) price overflow attempt!\n", item->name, nameid);
 		ShowDebug("(NPC:'%s' (%s,%d,%d), player:'%s' (%d/%d), value:%d, amount:%d)\n",
-					nd->exname, map_mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.name, sd->status.account_id, sd->status.char_id, nd->u.shop.shop_item[i].value, amount);
+					nd->exname, map_obj.mapid2mapname(nd->bl.m), nd->bl.x, nd->bl.y, sd->status.name, sd->status.account_id, sd->status.char_id, nd->u.shop.shop_item[i].value, amount);
 		return ERROR_TYPE_ITEM_ID;
 	}
 
@@ -1812,7 +1812,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 	nullpo_retr(3, sd);
 	nullpo_retr(3, item_list);
 
-	nd = npc_checknear(sd,map_id2bl(sd->npc_shopid));
+	nd = npc_checknear(sd,map_obj.id2bl(sd->npc_shopid));
 	if( nd == NULL )
 		return 3;
 	if( nd->subtype != NPCTYPE_SHOP && nd->subtype != NPCTYPE_MARKETSHOP )
@@ -2039,7 +2039,7 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 	nullpo_retr(1, sd);
 	nullpo_retr(1, item_list);
 
-	if( ( nd = npc_checknear(sd, map_id2bl(sd->npc_shopid)) ) == NULL || nd->subtype != NPCTYPE_SHOP )
+	if( ( nd = npc_checknear(sd, map_obj.id2bl(sd->npc_shopid)) ) == NULL || nd->subtype != NPCTYPE_SHOP )
 	{
 		return 1;
 	}
@@ -2150,7 +2150,7 @@ int npc_remove_map(struct npc_data* nd)
 		skill_clear_unitgroup(&nd->bl);
 	clif_clearunit_area(&nd->bl,CLR_RESPAWN);
 	npc_unsetcells(nd);
-	map_delblock(&nd->bl);
+	map_obj.delblock(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]
 	ARR_FIND( 0, mapdata->npc_num, i, mapdata->npc[i] == nd );
 	if( i == mapdata->npc_num ) return 2; //failed to find it?
@@ -2201,7 +2201,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 
 	status_change_clear(&nd->bl, 1);
 	npc_remove_map(nd);
-	map_deliddb(&nd->bl);
+	map_obj.deliddb(&nd->bl);
 	if( single )
 		strdb_remove(npcname_db, nd->exname);
 
@@ -2590,7 +2590,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	nd->subtype = NPCTYPE_WARP;
 	nd->trigger_on_hidden = false;
 	npc_setcells(nd);
-	if(map_addblock(&nd->bl))
+	if(map_obj.addblock(&nd->bl))
 		return NULL;
 	status_set_viewdata(&nd->bl, nd->class_);
 	status_change_init(&nd->bl);
@@ -2631,7 +2631,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 		return strchr(start,'\n');// skip and continue
 	}
 
-	m = map_mapname2mapid(mapname);
+	m = map_obj.mapname2mapid(mapname);
 	i = mapindex_name2id(to_mapname);
 	if( i == 0 )
 	{
@@ -2668,7 +2668,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	else
 		nd->trigger_on_hidden = false;
 	npc_setcells(nd);
-	if(map_addblock(&nd->bl)) //couldn't add on map
+	if(map_obj.addblock(&nd->bl)) //couldn't add on map
 		return strchr(start,'\n');
 	status_set_viewdata(&nd->bl, nd->class_);
 	status_change_init(&nd->bl);
@@ -2722,7 +2722,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 			return strchr(start,'\n');// skip and continue
 		}
 
-		m = map_mapname2mapid(mapname);
+		m = map_obj.mapname2mapid(mapname);
 	}
 
 	struct map_data *mapdata = map_getmapdata(m);
@@ -2903,7 +2903,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 	if( m >= 0 )
 	{// normal shop npc
 		map_addnpc(m,nd);
-		if(map_addblock(&nd->bl))
+		if(map_obj.addblock(&nd->bl))
 			return strchr(start,'\n');
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
@@ -2915,7 +2915,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		}
 	} else
 	{// 'floating' shop?
-		map_addiddb(&nd->bl);
+		map_obj.addiddb(&nd->bl);
 	}
 	strdb_put(npcname_db, nd->exname, nd);
 	return strchr(start,'\n');// continue
@@ -3083,7 +3083,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 			ShowError("npc_parse_script: Invalid placement format for a script in file '%s', line '%d'. Skipping the rest of file...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return NULL;// unknown format, don't continue
 		}
-		m = map_mapname2mapid(mapname);
+		m = map_obj.mapname2mapid(mapname);
 	}
 
 	script_start = strstr(start,",{");
@@ -3140,7 +3140,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		unit_dataset(&nd->bl);
 		nd->ud.dir = (uint8)dir;
 		npc_setcells(nd);
-		if(map_addblock(&nd->bl))
+		if(map_obj.addblock(&nd->bl))
 			return NULL;
 		if( nd->class_ != JT_FAKENPC )
 		{
@@ -3152,7 +3152,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	else
 	{
 		// we skip map_addnpc, but still add it to the list of ID's
-		map_addiddb(&nd->bl);
+		map_obj.addiddb(&nd->bl);
 	}
 	strdb_put(npcname_db, nd->exname, nd);
 
@@ -3235,7 +3235,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 			ShowError("npc_parse_duplicate: Invalid placement format for duplicate in file '%s', line '%d'. Skipping line...\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 			return end;// next line, try to continue
 		}
-		m = map_mapname2mapid(mapname);
+		m = map_obj.mapname2mapid(mapname);
 	}
 
 	struct map_data *mapdata = map_getmapdata(m);
@@ -3300,7 +3300,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		unit_dataset(&nd->bl);
 		nd->ud.dir = (uint8)dir;
 		npc_setcells(nd);
-		if(map_addblock(&nd->bl))
+		if(map_obj.addblock(&nd->bl))
 			return end;
 		if( nd->class_ != JT_FAKENPC ) {
 			status_set_viewdata(&nd->bl, nd->class_);
@@ -3309,7 +3309,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		}
 	} else {
 		// we skip map_addnpc, but still add it to the list of ID's
-		map_addiddb(&nd->bl);
+		map_obj.addiddb(&nd->bl);
 	}
 	strdb_put(npcname_db, nd->exname, nd);
 
@@ -3350,20 +3350,20 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 	if( snd->subtype == NPCTYPE_WARP ) { // Adjust destination, if instanced
 		struct npc_data *wnd = NULL; // New NPC
 		struct instance_data *im = &instance_data[mapdata->instance_id];
-		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0, i;
+		int dm = map_obj.mapindex2mapid(snd->u.warp.mapindex), imap = 0, i;
 		if( dm < 0 ) return 1;
 
 		for(i = 0; i < im->cnt_map; i++)
-			if(im->map[i]->m && map_mapname2mapid(map_getmapdata(im->map[i]->src_m)->name) == dm) {
-				imap = map_mapname2mapid(map_getmapdata(im->map[i]->m)->name);
+			if(im->map[i]->m && map_obj.mapname2mapid(map_getmapdata(im->map[i]->src_m)->name) == dm) {
+				imap = map_obj.mapname2mapid(map_getmapdata(im->map[i]->m)->name);
 				break; // Instance map matches destination, update to instance map
 			}
 
 		if(!imap)
-			imap = map_mapname2mapid(map_getmapdata(dm)->name);
+			imap = map_obj.mapname2mapid(map_getmapdata(dm)->name);
 
 		if( imap == -1 ) {
-			ShowError("npc_duplicate4instance: warp (%s) leading to instanced map (%s), but instance map is not attached to current instance.\n", map_mapid2mapname(dm), snd->exname);
+			ShowError("npc_duplicate4instance: warp (%s) leading to instanced map (%s), but instance map is not attached to current instance.\n", map_obj.mapid2mapname(dm), snd->exname);
 			return 1;
 		}
 
@@ -3383,7 +3383,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		wnd->trigger_on_hidden = snd->trigger_on_hidden;
 		wnd->src_id = snd->src_id ? snd->src_id : snd->bl.id;
 		npc_setcells(wnd);
-		if(map_addblock(&wnd->bl))
+		if(map_obj.addblock(&wnd->bl))
 			return 1;
 		status_set_viewdata(&wnd->bl, wnd->class_);
 		status_change_init(&wnd->bl);
@@ -3678,7 +3678,7 @@ void npc_unsetcells(struct npc_data* nd)
 			map_setcell(m, j, i, CELL_NPC, false);
 
 	//Re-deploy NPC cells for other nearby npcs.
-	map_foreachinallarea( npc_unsetcells_sub, m, x0, y0, x1, y1, BL_NPC, nd->bl.id );
+	map_obj.foreachinallarea( npc_unsetcells_sub, m, x0, y0, x1, y1, BL_NPC, nd->bl.id );
 }
 
 bool npc_movenpc(struct npc_data* nd, int16 x, int16 y)
@@ -3691,9 +3691,9 @@ bool npc_movenpc(struct npc_data* nd, int16 x, int16 y)
 	x = cap_value(x, 0, mapdata->xs-1);
 	y = cap_value(y, 0, mapdata->ys-1);
 
-	map_foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	map_obj.foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	map_moveblock(&nd->bl, x, y, gettick());
-	map_foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
+	map_obj.foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	return true;
 }
 
@@ -3880,7 +3880,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 		ShowError("npc_parse_mob: Unknown map '%s' in file '%s', line '%d'.\n", mapname, filepath, strline(buffer,start-buffer));
 		return strchr(start,'\n');// skip and continue
 	}
-	m =  map_mapname2mapid(mapname);
+	m =  map_obj.mapname2mapid(mapname);
 	if( m < 0 )//Not loaded on this map-server instance.
 		return strchr(start,'\n');// skip and continue
 	mob.m = (unsigned short)m;
@@ -4032,7 +4032,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 		ShowError("npc_parse_mapflag: Invalid mapflag definition in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
 	}
-	m = map_mapname2mapid(mapname);
+	m = map_obj.mapname2mapid(mapname);
 	if (m < 0) {
 		ShowWarning("npc_parse_mapflag: Unknown map '%s' in file '%s', line '%d'.\n * w1=%s\n * w2=%s\n * w3=%s\n * w4=%s\n", mapname, filepath, strline(buffer,start-buffer), w1, w2, w3, w4);
 		return strchr(start,'\n');// skip and continue
@@ -4041,7 +4041,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 	if (w4 && !strcmpi(w4, "off"))
 		state = false;	//Disable mapflag rather than enable it. [Skotlex]
 
-	mapflag = map_getmapflag_by_name(w3);
+	mapflag = map_obj.getmapflag_by_name(w3);
 
 	switch( mapflag ){
 		case MF_INVALID:
@@ -4125,7 +4125,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				if (sscanf(w4, "%11d", &args.flag_val) == 1)
 					map_setmapflag_sub(m, MF_RESTRICTED, true, &args);
 				else // Could not be read, no value defined; don't remove as other restrictions may be set on the map
-					ShowWarning("npc_parse_mapflag: Zone value not set for the restricted mapflag! Skipped flag from %s (file '%s', line '%d').\n", map_mapid2mapname(m), filepath, strline(buffer,start-buffer));
+					ShowWarning("npc_parse_mapflag: Zone value not set for the restricted mapflag! Skipped flag from %s (file '%s', line '%d').\n", map_obj.mapid2mapname(m), filepath, strline(buffer,start-buffer));
 			} else
 				map_setmapflag(m, MF_RESTRICTED, false);
 			break;
@@ -4353,7 +4353,7 @@ int npc_parsesrcfile(const char* filepath, bool runOnInit)
 				p = strchr(p,'\n');// next line
 				continue;
 			}
-			m = map_mapname2mapid(mapname);
+			m = map_obj.mapname2mapid(mapname);
 			if( m < 0 )
 			{// "mapname" is not assigned to this server, we must skip the script info...
 				if( strcasecmp(w2,"script") == 0 && count > 3 )
@@ -4667,7 +4667,7 @@ static void npc_debug_warps_sub(struct npc_data* nd)
 	if (nd->bl.type != BL_NPC || nd->subtype != NPCTYPE_WARP || nd->bl.m < 0)
 		return;
 
-	m = map_mapindex2mapid(nd->u.warp.mapindex);
+	m = map_obj.mapindex2mapid(nd->u.warp.mapindex);
 	if (m < 0) return; //Warps to another map, nothing to do about it.
 	if (nd->u.warp.x == 0 && nd->u.warp.y == 0) return; // random warp
 
@@ -4770,6 +4770,6 @@ void do_init_npc(void){
 
 	strdb_put(npcname_db, fake_nd->exname, fake_nd);
 	fake_nd->u.scr.timerid = INVALID_TIMER;
-	map_addiddb(&fake_nd->bl);
+	map_obj.addiddb(&fake_nd->bl);
 	// End of initialization
 }
