@@ -89,6 +89,7 @@ int party_share_loot(struct party_data* p, struct map_session_data* sd, struct i
 int party_send_dot_remove(struct map_session_data *sd);
 int party_sub_count(struct block_list *bl, va_list ap);
 int party_sub_count_class(struct block_list *bl, va_list ap);
+int party_sub_count_banding(struct block_list *bl, va_list ap);
 int party_foreachsamemap(int (*func)(struct block_list *,va_list),struct map_session_data *sd,int range,...);
 
 /*==========================================

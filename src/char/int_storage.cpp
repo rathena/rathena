@@ -252,7 +252,7 @@ bool mapif_parse_SaveGuildStorage(int fd)
 
 	if( sizeof(struct s_storage) != len - 12 )
 	{
-		ShowError("inter storage: data size error %d != %d\n", sizeof(struct s_storage), len - 12);
+		ShowError("inter storage: data size error %" PRIuPTR " != %d\n", sizeof(struct s_storage), len - 12);
 	}
 	else
 	{
@@ -465,7 +465,7 @@ bool mapif_parse_itembound_retrieve(int fd)
  * @param entries Inventory/cart/storage entries
  * @param result
  */
-void mapif_storage_data_loaded(int fd, uint32 account_id, char type, struct s_storage entries, bool result) {
+void mapif_storage_data_loaded(int fd, uint32 account_id, char type, struct s_storage* entries, bool result) {
 	uint16 size = sizeof(struct s_storage) + 10;
 	
 	WFIFOHEAD(fd, size);
@@ -474,7 +474,7 @@ void mapif_storage_data_loaded(int fd, uint32 account_id, char type, struct s_st
 	WFIFOB(fd, 4) = type;
 	WFIFOL(fd, 5) = account_id;
 	WFIFOB(fd, 9) = result;
-	memcpy(WFIFOP(fd, 10), &entries, sizeof(struct s_storage));
+	memcpy(WFIFOP(fd, 10), entries, sizeof(struct s_storage));
 	WFIFOSET(fd, size);
 }
 
@@ -536,7 +536,7 @@ bool mapif_parse_StorageLoad(int fd) {
 	stor.state.put = (mode&STOR_MODE_PUT) ? 1 : 0;
 	stor.state.get = (mode&STOR_MODE_GET) ? 1 : 0;
 
-	mapif_storage_data_loaded(fd, aid, type, stor, res);
+	mapif_storage_data_loaded(fd, aid, type, &stor, res);
 	return true;
 }
 

@@ -3364,6 +3364,7 @@ ma_fild01,166,214,6	script	Old Man in Dilemma#GA	575,{
 					specialeffect2 EF_CONE;
 					specialeffect EF_FORESTLIGHT2;
 					set Zeny, Zeny-1000;
+					delitem 6497,3; //Lesser_Agimat
 					getitem 12775,1; //Ancient_Spirit_Agimat
 				} else {
 					mes "[Old Man in Dilemma]";
@@ -3532,9 +3533,10 @@ ma_fild01,238,198,4	script	Tikbalang Expert#malaya	582,{
 			mes "[Tikbalang Expert]";
 			mes "The '^F80835Tikbalang Belt^000000' is used to capture Tikbalangs without the hassle. But that doesn't mean it's 100% successful. Interested? Do you want me to make one for you?";
 			next;
-			switch(select("Yes, Im interested.:No, I can capture one myself.")) {
+			switch(select("Yes, I'm interested.:No, I can capture one myself.")) {
 			case 1:
 				delitem 6496,3; //Tikbalang_Thick_Spine
+				delitem 6497,5; //Lesser_Agimat
 				getitem 12699,1; //Tikbalang_Belt
 				mes "[Tikbalang Expert]";
 				mes "Yiiiiiiiiiiii! Yap!";
@@ -4581,7 +4583,7 @@ malaya,290,340,3	script	Guard Leader#buwaya	571,{
 		mes "- Look at you warily while whispering to each other. -";
 		close;
 	}
-	if (malaya_buwaya <= 10) {
+	if (malaya_buwaya < 10) {
 		mes "[Guard Leader]";
 		mes "We are busy as hell because of Bangungots servants attacking the hospital.";
 		next;

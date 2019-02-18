@@ -7,10 +7,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include <string>
+#include <unordered_map>
 
 #include "../common/cli.hpp"
 #include "../common/core.hpp"
-#include "../common/db.hpp"
 #include "../common/malloc.hpp"
 #include "../common/md5calc.hpp"
 #include "../common/mmo.hpp"
@@ -20,6 +20,7 @@
 #include "../common/socket.hpp" //ip2str
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 #include "../config/core.hpp"
 
@@ -30,14 +31,16 @@
 #include "logincnslif.hpp"
 #include "loginlog.hpp"
 
+using namespace rathena;
+
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
 
-//definition of exported var declared in .h
+//definition of exported var declared in header
 struct mmo_char_server ch_server[MAX_SERVERS];	/// char server data
 struct Login_Config login_config;				/// Configuration of login-serv
-DBMap* online_db;
-DBMap* auth_db;
+std::unordered_map<uint32,struct online_login_data> online_db;
+std::unordered_map<uint32,struct auth_node> auth_db;
 
 // account database
 AccountDB* accounts = NULL;
@@ -65,20 +68,8 @@ int parse_console(const char* buf){
 	return cnslif_parse(buf);
 }
 
-/**
- * Sub function to create an online_login_data and save it to db.
- * @param key: Key of the database entry
- * @param ap: args
- * @return : Data identified by the key to be put in the database
- * @see DBCreateData
- */
-DBData login_create_online_user(DBKey key, va_list args) {
-	struct online_login_data* p;
-	CREATE(p, struct online_login_data, 1);
-	p->account_id = key.i;
-	p->char_server = -1;
-	p->waiting_disconnect = INVALID_TIMER;
-	return db_ptr2data(p);
+struct online_login_data* login_get_online_user( uint32 account_id ){
+	return util::umap_find( online_db, account_id );
 }
 
 /**
@@ -89,13 +80,24 @@ DBData login_create_online_user(DBKey key, va_list args) {
  * @return the new online_login_data for that user
  */
 struct online_login_data* login_add_online_user(int char_server, uint32 account_id){
-	struct online_login_data* p;
-	p = (struct online_login_data*)idb_ensure(online_db, account_id, login_create_online_user);
-	p->char_server = char_server;
-	if( p->waiting_disconnect != INVALID_TIMER ) {
-		delete_timer(p->waiting_disconnect, login_waiting_disconnect_timer);
+	struct online_login_data* p = login_get_online_user( account_id );
+
+	if( p == nullptr ){
+		// Allocate the player
+		p = &online_db[account_id];
+
+		p->account_id = account_id;
+		p->char_server = char_server;
 		p->waiting_disconnect = INVALID_TIMER;
+	}else{
+		p->char_server = char_server;
+
+		if( p->waiting_disconnect != INVALID_TIMER ){
+			delete_timer( p->waiting_disconnect, login_waiting_disconnect_timer );
+			p->waiting_disconnect = INVALID_TIMER;
+		}
 	}
+
 	return p;
 }
 
@@ -106,14 +108,38 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
  * @param account_id : aid to remove from db
  */
 void login_remove_online_user(uint32 account_id) {
-	struct online_login_data* p;
-	p = (struct online_login_data*)idb_get(online_db, account_id);
-	if( p == NULL )
-		return;
-	if( p->waiting_disconnect != INVALID_TIMER )
-		delete_timer(p->waiting_disconnect, login_waiting_disconnect_timer);
+	struct online_login_data* p = login_get_online_user( account_id );
 
-	idb_remove(online_db, account_id);
+	if( p == nullptr ){
+		return;
+	}
+
+	if( p->waiting_disconnect != INVALID_TIMER ){
+		delete_timer( p->waiting_disconnect, login_waiting_disconnect_timer );
+	}
+
+	online_db.erase( account_id );
+}
+
+struct auth_node* login_get_auth_node( uint32 account_id ){
+	return util::umap_find( auth_db, account_id );
+}
+
+struct auth_node* login_add_auth_node( struct login_session_data* sd, uint32 ip ){
+	struct auth_node* node = &auth_db[sd->account_id];
+
+	node->account_id = sd->account_id;
+	node->login_id1 = sd->login_id1;
+	node->login_id2 = sd->login_id2;
+	node->sex = sd->sex;
+	node->ip = ip;
+	node->clienttype = sd->clienttype;
+
+	return node;
+}
+
+void login_remove_auth_node( uint32 account_id ){
+	auth_db.erase( account_id );
 }
 
 /**
@@ -128,51 +154,31 @@ void login_remove_online_user(uint32 account_id) {
  * @return :0
  */
 TIMER_FUNC(login_waiting_disconnect_timer){
-	struct online_login_data* p = (struct online_login_data*)idb_get(online_db, id);
-	if( p != NULL && p->waiting_disconnect == tid && p->account_id == id ){
+	struct online_login_data* p = login_get_online_user( id );
+
+	if( p != nullptr && p->waiting_disconnect == tid && p->account_id == id ){
 		p->waiting_disconnect = INVALID_TIMER;
 		login_remove_online_user(id);
-		idb_remove(auth_db, id);
+		login_remove_auth_node(id);
 	}
+
 	return 0;
 }
 
-/**
- * Sub function to apply on online_db.
- * Mark a character as offline.
- * @param data: 1 entry in the db
- * @param ap: args
- * @return : Value to be added up by the function that is applying this
- * @see DBApply
- */
-int login_online_db_setoffline(DBKey key, DBData *data, va_list ap) {
-	struct online_login_data* p = (struct online_login_data*)db_data2ptr(data);
-	int server = va_arg(ap, int);
-	if( server == -1 ) {
-		p->char_server = -1;
-		if( p->waiting_disconnect != INVALID_TIMER ) {
-			delete_timer(p->waiting_disconnect, login_waiting_disconnect_timer);
-			p->waiting_disconnect = INVALID_TIMER;
+void login_online_db_setoffline( int char_server ){
+	for( std::pair<uint32,struct online_login_data> pair : online_db ){
+		if( char_server == -1 ){
+			pair.second.char_server = -1;
+
+			if( pair.second.waiting_disconnect != INVALID_TIMER ){
+				delete_timer( pair.second.waiting_disconnect, login_waiting_disconnect_timer );
+				pair.second.waiting_disconnect = INVALID_TIMER;
+			}
+		}else if( pair.second.char_server == char_server ){
+			// Char server disconnected.
+			pair.second.char_server = -2;
 		}
 	}
-	else if( p->char_server == server )
-		p->char_server = -2; //Char server disconnected.
-	return 0;
-}
-
-/**
- * Sub function of login_online_data_cleanup.
- *  Checking if all users in db are still connected to a char-server, and remove them if they aren't.
- * @param data: 1 entry in the db
- * @param ap: args
- * @return: Value to be added up by the function that is applying this
- * @see DBApply
- */
-static int login_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap) {
-	struct online_login_data *character= (struct online_login_data*)db_data2ptr(data);
-	if (character->char_server == -2) //Unknown server.. set them offline
-		login_remove_online_user(character->account_id);
-	return 0;
 }
 
 /**
@@ -185,7 +191,13 @@ static int login_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap) {
  * @return : 0
  */
 static TIMER_FUNC(login_online_data_cleanup){
-	online_db->foreach(online_db, login_online_data_cleanup_sub);
+	for( std::pair<uint32,struct online_login_data> pair : online_db  ){
+		// Unknown server.. set them offline
+		if( pair.second.char_server == -2 ){
+			login_remove_online_user( pair.first );
+		}
+	}
+
 	return 0;
 }
 
@@ -203,8 +215,8 @@ static TIMER_FUNC(login_online_data_cleanup){
  */
 int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
 	static int num_regs = 0; // registration counter
-	static unsigned int new_reg_tick = 0;
-	unsigned int tick = gettick();
+	static t_tick new_reg_tick = 0;
+	t_tick tick = gettick();
 	struct mmo_account acc;
 
 	//Account Registration Flood Protection by [Kevin]
@@ -365,14 +377,14 @@ int login_mmo_auth(struct login_session_data* sd, bool isServer) {
 			int i;
 
 			if( !sd->has_client_hash ) {
-				ShowNotice("Client didn't send client hash (account: %s, ip: %s)\n", sd->userid, acc.state, ip);
+				ShowNotice("Client didn't send client hash (account: %s, ip: %s)\n", sd->userid, ip);
 				return 5;
 			}
 
 			for( i = 0; i < 16; i++ )
 				sprintf(&smd5[i * 2], "%02x", sd->client_hash[i]);
 
-			ShowNotice("Invalid client hash (account: %s, sent md5: %d, ip: %s)\n", sd->userid, smd5, ip);
+			ShowNotice("Invalid client hash (account: %s, sent md5: %s, ip: %s)\n", sd->userid, smd5, ip);
 			return 5;
 		}
 	}
@@ -437,6 +449,24 @@ bool login_check_password(const char* md5key, int passwdenc, const char* passwd,
 		return ((passwdenc&0x01) && login_check_encrypted(md5key, refpass, passwd)) ||
 		       ((passwdenc&0x02) && login_check_encrypted(refpass, md5key, passwd));
 	}
+}
+
+int login_get_usercount( int users ){
+#if PACKETVER >= 20170726
+	if( login_config.usercount_disable ){
+		return 4; // Removes count and colorization completely
+	}else if( users <= login_config.usercount_low ){
+		return 0; // Green => Smooth
+	}else if( users <= login_config.usercount_medium ){
+		return 1; // Yellow => Normal
+	}else if( users <= login_config.usercount_high ){
+		return 2; // Red => Busy
+	}else{
+		return 3; // Purple => Crowded
+	}
+#else
+	return users;
+#endif
 }
 
 /**
@@ -628,7 +658,15 @@ bool login_config_read(const char* cfgName, bool normal) {
 				nnode->next = login_config.client_hash_nodes;
 				login_config.client_hash_nodes = nnode;
 			}
-		} else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
+		} else if (!strcmpi(w1, "usercount_disable"))
+			login_config.usercount_disable = config_switch(w2);
+		else if (!strcmpi(w1, "usercount_low"))
+			login_config.usercount_low = atoi(w2);
+		else if (!strcmpi(w1, "usercount_medium"))
+			login_config.usercount_medium = atoi(w2);
+		else if (!strcmpi(w1, "usercount_high"))
+			login_config.usercount_high = atoi(w2);
+		else if(strcmpi(w1, "chars_per_account") == 0) { //maxchars per account [Sirius]
 			login_config.char_per_account = atoi(w2);
 			if( login_config.char_per_account <= 0 || login_config.char_per_account > MAX_CHARS ) {
 				if( login_config.char_per_account > MAX_CHARS ) {
@@ -699,6 +737,10 @@ void login_set_defaults() {
 
 	login_config.client_hash_check = 0;
 	login_config.client_hash_nodes = NULL;
+	login_config.usercount_disable = false;
+	login_config.usercount_low = 200;
+	login_config.usercount_medium = 500;
+	login_config.usercount_high = 1000;
 	login_config.char_per_account = MAX_CHARS - MAX_CHAR_VIP - MAX_CHAR_BILLING;
 #ifdef VIP_ENABLE
 	login_config.vip_sys.char_increase = MAX_CHAR_VIP;
@@ -748,8 +790,8 @@ void do_final(void) {
 	}
 
 	accounts = NULL; // destroyed in account_engine
-	online_db->destroy(online_db, NULL);
-	auth_db->destroy(auth_db, NULL);
+	online_db.clear();
+	auth_db.clear();
 
 	do_final_loginchrif();
 
@@ -828,12 +870,7 @@ int do_init(int argc, char** argv) {
 	// initialize static and dynamic ipban system
 	ipban_init();
 
-	// Online user database init
-	online_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	add_timer_func_list(login_waiting_disconnect_timer, "waiting_disconnect_timer");
-
-	// Interserver auth init
-	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
 	// set default parser as parse_login function
 	set_defaultparse(logclif_parse);

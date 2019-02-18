@@ -29,7 +29,7 @@
 
 using namespace rathena;
 
-#define MIN_PETTHINKTIME 100
+const t_tick MIN_PETTHINKTIME = 100;
 
 //Dynamic pet database
 std::map<uint16, struct s_pet_db> pet_db_data;
@@ -706,7 +706,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 /**
  * Is invoked _only_ when a new pet has been created is a product of packet 0x3880
- * see mapif_pet_created@int_pet.c for more information.
+ * see mapif_pet_created@int_pet.cpp for more information.
  * Handles new pet data from inter-server and prepares item information to add pet egg.
  * @param account_id : account ID of owner
  * @param pet_class : class of pet
@@ -901,7 +901,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 	clif_pet_equip_area(pd);
 
 	if (battle_config.pet_equip_required) { // Skotlex: start support timers if need
-		unsigned int tick = gettick();
+		t_tick tick = gettick();
 
 		if (pd->s_skill && pd->s_skill->timer == INVALID_TIMER) {
 			if (pd->s_skill->id)
@@ -1038,7 +1038,7 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
  * @param tick : last walk time
  * @return 1:success, 0:failure
  */
-static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
+static int pet_randomwalk(struct pet_data *pd,t_tick tick)
 {
 	nullpo_ret(pd);
 
@@ -1097,7 +1097,7 @@ static int pet_randomwalk(struct pet_data *pd,unsigned int tick)
  * @param tick : last support time
  * @return 0
  */
-static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, unsigned int tick)
+static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_tick tick)
 {
 	struct block_list *target = NULL;
 
@@ -1229,7 +1229,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, uns
  */
 static int pet_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
 {
-	unsigned int tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 
 	if(sd->status.pet_id && sd->pd)
 		pet_ai_sub_hard(sd->pd,sd,tick);

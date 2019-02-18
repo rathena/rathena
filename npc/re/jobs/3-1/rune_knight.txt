@@ -785,7 +785,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 			mes "Find the sage, Serpeone who's been studying and helping the Rune Knights who are out in the Rune-Midgard's camp at Ash-Vacuum.";
 			next;
 			mes "[Rune Knight, Renoa]";
-			mes "The sage has already been in touch with us for a long time so you don't need to worry about understanding Serpeone's language.c";
+			mes "The sage has already been in touch with us for a long time so you don't need to worry about understanding Serpeone's language.";
 			next;
 			mes "[Rune Knight, Renoa]";
 			mes "If you are ready I'll guide you to the warp that moves you directly to Serpeone. Meet her and get instructions from her.";

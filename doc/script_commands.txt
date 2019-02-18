@@ -3,7 +3,7 @@
 //===== By:==================================================
 //= rAthena Dev Team
 //===== Last Updated:========================================
-//= 20171011
+//= 20180831
 //===== Description:=========================================
 //= A reference manual for the rAthena scripting language.
 //= Commands are sorted depending on their functionality.
@@ -132,7 +132,7 @@ and 'doc/mapflags.txt'.
 
 ** Create a permanent monster spawn:
 
-<map name>,<x>,<y>{,<xs>{,<ys>}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
+<map name>{,<x>{,<y>{,<xs>{,<ys>}}}}%TAB%monster%TAB%<monster name>{,<monster level>}%TAB%<mob id>,<amount>{,<delay1>{,<delay2>{,<event>{,<mob size>{,<mob ai>}}}}}
 
 Map name is the name of the map the monsters will spawn on. x,y are the
 coordinates where the mob should spawn. If xs and ys are non-zero, they
@@ -521,7 +521,7 @@ forever, and no trace remains of it even if it was stored with character or
 account data.
 
 Some variables are special, that is, they are already defined for you by the
-scripting engine. You can see the full list in 'src/map/script_constants.h', which
+scripting engine. You can see the full list in 'src/map/script_constants.hpp', which
 is a file you should read, since it also allows you to replace lots of numbered
 arguments for many commands with easier to read text. The special variables most
 commonly used are all permanent character-based variables:
@@ -565,7 +565,7 @@ setting it will make the character own this number of Zeny.
 If you try to set Zeny to a negative number, the script will be terminated with an error.
 
 Some source-end constants can also be accessed in scripts. This list is located in
-'src/map/script_constants.h', which contains constants such as server defines and status options:
+'src/map/script_constants.hpp', which contains constants such as server defines and status options:
 
 	PACKETVER, MAX_LEVEL, MAX_STORAGE, MAX_INVENTORY, MAX_CART, MAX_ZENY, MAX_PARTY,
 	MAX_GUILD, MAX_GUILDLEVEL, MAX_GUILD_STORAGE, MAX_BG_MEMBERS, MAX_CHAT_USERS,
@@ -1002,7 +1002,7 @@ and called label is in NPC that has trigger area, that label must end with
 "Global" to work globally (i.e. if RID is outside of the trigger area, which
 usually happens since otherwise there would be no point calling the label with
 doevent, because OnTouch would do the job). For further reference look for
-npc_event in npc.c.
+npc_event in npc.cpp.
 
 Scripting commands and functions
 --------------------------------
@@ -2391,7 +2391,7 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 
 This function will return the specified stat of the invoking character, or, if a
 character name or character id is specified, of that player. The stat can either
-be a number or parameter name, defined in 'src/map/script_constants.h'.
+be a number or parameter name, defined in 'src/map/script_constants.hpp'.
 
 Some example parameters:
 
@@ -3046,7 +3046,7 @@ If <type> is false the command only returns the count of unidentified items.
 //
 ---------------------------------------
 
-*getmapxy("<variable for map name>",<variable for x>,<variable for y>,<type>{,"<search string>"})
+*getmapxy("<variable for map name>",<variable for x>,<variable for y>{,<type>,"<search value>"})
 
 This function will locate a character object, NPC object or pet's coordinates
 and place their coordinates into the variables specified when calling it. It
@@ -3055,23 +3055,23 @@ not variables or the search was not successful.
 
 Type is the type of object to search for:
 
-	UNITTYPE_PC   - Character object
-	UNITTYPE_NPC  - NPC object
-	UNITTYPE_PET  - Pet object
-	UNITTYPE_HOM  - Homunculus object
-	UNITTYPE_MER  - Mercenary object
-	UNITTYPE_ELEM - Elemental object
+	BL_PC   - Character object (default)
+	BL_NPC  - NPC object
+	BL_PET  - Pet object
+	BL_HOM  - Homunculus object
+	BL_MER  - Mercenary object
+	BL_ELEM - Elemental object
 
-The search string is optional. If it is not specified, the location of the
-invoking character will always be returned for types UNITTYPE_PC and UNITTYPE_PET,
-the location of the NPC running this function for type 1.
+The search value is optional. If it is not specified, the location of the
+invoking character will always be returned for types BL_PC and BL_PET,
+the location of the NPC running this function for type BL_NPC.
 
-If a search string is specified, for types UNITTYPE_PC and UNITTYPE_NPC, the
-character or NPC with the specified name will be located.
+If a search value is specified, for types BL_PC and BL_NPC, the
+character or NPC with the specified name or GID will be located.
 
-If type is UNITTYPE_PET/UNITTYPE_HOM/UNITTYPE_MER/UNITTYPE_ELEM, the search
-will locate the current object of the character who's name is given in the
-search string, it will NOT locate the object by name.
+If type is BL_PET/BL_HOM/BL_MER/BL_ELEM, the search
+will locate the current object of the character who's name/GID is given in the
+search value, it will NOT locate the object by name.
 
 Example:
 
@@ -3083,7 +3083,7 @@ Example:
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
-        if (getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_NPC, "Meh") != 0) {
+        if (getmapxy(@mapname$, @mapx, @mapy, BL_NPC, "Meh") != 0) {
                 mes "I can't seem to find Meh anywhere!";
                 close;
         }
@@ -3207,6 +3207,70 @@ This is useful for maps that are split into many buildings, such as all the
 "*_in" maps, due to all the shops and houses.
 
 ---------------------------------------
+
+*getunits(<type>{,<array_variable>[<first value>]})
+*getmapunits(<type>,<"map name">{,<array_variable>[<first value>]})
+*getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>[<first value>]})
+
+The 'getunits' command will return the number of <type> objects active on the server.
+
+The 'getmapunits' command will return the number of <type> objects active on the
+specified <"map name">.
+
+The 'getareaunits' command will return the number of <type> objects actively located
+within the specified area where <x1>, <y1>, <x2>, <y2> form the area.
+
+Type is the type of object to search for:
+
+	BL_PC   - Character objects
+	BL_MOB  - Monster objects
+	BL_PET  - Pet objects
+	BL_HOM  - Homunculus objects
+	BL_MER  - Mercenary objects
+	BL_NPC  - NPC objects
+	BL_ELEM - Elemental objects
+
+If <array_variable> is provided:
+	- An int variable will return the list of GID.
+	- A string variable will return the list of names.
+
+Example 1:
+	// getting the players count and building a string array of the names.
+	.@num = getunits(BL_PC,.@array$[0]);
+
+	mes "the number of Users Connected to the server is " + .@num + " .";
+	mes "list of Players names :";
+	freeloop(1);	// for if the list was too big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
+
+Example 2:
+	// getting the npc count in Prontera and building a string array of the names.
+	.@num = getmapunits(BL_NPC,"prontera",.@array$[0]);
+
+	mes "the number of NPCs in Prontera is " + .@num + " .";
+	mes "list of NPCs name :";
+	freeloop(1);	// for if the list was too big.
+	for(.@i=0;.@i<getarraysize(.@array$);.@i++)
+		mes (.@i + 1) + " " + .@array$[.@i];
+	freeloop(0);
+	end;
+
+Example 3:
+	// getting the monster count in Prontera with specific coordinates and building a int array of the GIDs.
+	.@num = getareaunits(BL_MOB,"prontera",154,186,159,182,.@array[0]);
+
+	mes "the number of Monsters in Prontera in that Coordinates is " + .@num + " .";
+	mes "list of Monsters GID :";
+	freeloop(1);	// for if the list was too big.
+	for(.@i=0;.@i<getarraysize(.@array);.@i++)
+		mes (.@i + 1) + " " + .@array[.@i];
+	freeloop(0);
+	end;
+
+---------------------------------------
 \\
 2,2.- Guild-related commands
 \\
@@ -3289,6 +3353,13 @@ guild specified by the ID. 0 if the character is not a guild master of any guild
 
 ---------------------------------------
 
+*is_guild_leader({<guild ID>})
+
+This command will return true if the player attached to the script is the leader
+of his/her guild, or, if a guild ID is specified, of that guild.
+
+---------------------------------------
+
 *getcastlename("<map name>")
 
 This function returns the name of the castle when given the map name for that
@@ -3304,29 +3375,29 @@ to by its map name. Castle information is stored in `guild_castle` SQL table.
 
 Types of data correspond to `guild_castle` table columns:
 
- 1 - `guild_id`   - Guild ID.
- 2 - `economy`    - Castle Economy score.
- 3 - `defense`    - Castle Defense score.
- 4 - `triggerE`   - Number of times the economy was invested in today.
- 5 - `triggerD`   - Number of times the defense was invested in today.
- 6 - `nextTime`   - unused
- 7 - `payTime`    - unused
- 8 - `createTime` - unused
- 9 - `visibleC`   - Is 1 if a Kafra was hired for this castle, 0 otherwise.
-10 - `visibleG0`  - Is 1 if the 1st guardian is present (Soldier Guardian)
-11 - `visibleG1`  - Is 1 if the 2nd guardian is present (Soldier Guardian)
-12 - `visibleG2`  - Is 1 if the 3rd guardian is present (Soldier Guardian)
-13 - `visibleG3`  - Is 1 if the 4th guardian is present (Archer Guardian)
-14 - `visibleG4`  - Is 1 if the 5th guardian is present (Archer Guardian)
-15 - `visibleG5`  - Is 1 if the 6th guardian is present (Knight Guardian)
-16 - `visibleG6`  - Is 1 if the 7th guardian is present (Knight Guardian)
-17 - `visibleG7`  - Is 1 if the 8th guardian is present (Knight Guardian)
+CD_GUILD_ID          - Guild ID.
+CD_CURRENT_ECONOMY   - Castle Economy score.
+CD_CURRENT_DEFENSE   - Castle Defense score.
+CD_INVESTED_ECONOMY  - Number of times the economy was invested in today.
+CD_INVESTED_DEFENSE  - Number of times the defense was invested in today.
+CD_NEXT_TIME         - unused
+CD_PAY_TIME          - unused
+CD_CREATE_TIME       - unused
+CD_ENABLED_KAFRA     - Is 1 if a Kafra was hired for this castle, 0 otherwise.
+CD_ENABLED_GUARDIAN0 - Is 1 if the 1st guardian is present (Soldier Guardian)
+CD_ENABLED_GUARDIAN1 - Is 1 if the 2nd guardian is present (Soldier Guardian)
+CD_ENABLED_GUARDIAN2 - Is 1 if the 3rd guardian is present (Soldier Guardian)
+CD_ENABLED_GUARDIAN3 - Is 1 if the 4th guardian is present (Archer Guardian)
+CD_ENABLED_GUARDIAN4 - Is 1 if the 5th guardian is present (Archer Guardian)
+CD_ENABLED_GUARDIAN5 - Is 1 if the 6th guardian is present (Knight Guardian)
+CD_ENABLED_GUARDIAN6 - Is 1 if the 7th guardian is present (Knight Guardian)
+CD_ENABLED_GUARDIAN7 - Is 1 if the 8th guardian is present (Knight Guardian)
 
 All types of data have their meaning determined by War of Emperium scripts,
 with exception of:
- - `guild_id` that is always considered ID of the guild that owns the castle,
- - `defense` that is used in Guardians & Emperium HP calculations,
- - `visibleG` that is always considered to hold guardian presence bits.
+ - CD_GUILD_ID that is always considered ID of the guild that owns the castle,
+ - CD_CURRENT_DEFENSE that is used in Guardians & Emperium HP calculations,
+ - CD_ENABLED_GUARDIANX that is always considered to hold guardian presence bits.
 
 The 'setcastledata' command will behave identically, but instead of returning
 values for the specified types of accessible data, it will alter them and cause
@@ -3676,7 +3747,7 @@ list (cloak, cart, ruwach, etc). if flag is 1 (default when omitted),
 the option will be added to what the character currently has; if 0, the option is removed.
 
 This is definitely not a complete list of available option flag numbers. Ask a
-core developer (or read the source: src/map/status.h) for the full list.
+core developer (or read the source: src/map/status.hpp) for the full list.
 
 ---------------------------------------
 
@@ -3850,7 +3921,7 @@ more:
 
 *checkre(<type>)
 
-Checks if a renewal feature is enabled or not in renewal.h, and returns 1 if
+Checks if a renewal feature is enabled or not in renewal.hpp, and returns 1 if
 enabled and 0 for disabled.
 
 The renewal feature to check is determined by type.
@@ -4212,7 +4283,7 @@ This command will change the job class of the invoking character.
 
 This command does work with numbers, but you can also use job names. The full
 list of job names and the numbers they correspond to can be found in
-'src/map/script_constants.h'.
+'src/map/script_constants.hpp'.
 
 	// This would change your player into a Swordman
 	jobchange Job_Swordman;
@@ -4438,7 +4509,7 @@ you can look at: 'npc/custom/stylist.txt'
 
 This command will push the currently attached player to given direction by given
 amount of square cells. Direction is the same as used when declaring NPCs, and
-can be specified by using one of the DIR_* constants (src/map/script_constants.h).
+can be specified by using one of the DIR_* constants (src/map/script_constants.hpp).
 
 The knock-back is not restricted by items or map flags, only obstacles are taken
 into account. If there is not enough space to perform the push (e.g. due to a
@@ -4773,7 +4844,7 @@ Example to get Crimson Weapon with Ghost property:
 	// when Valkyrie Randgris killed
 	OnNPCKillEvent:
 		if (killedrid == 1751 && rand(0,1000) > 950) { // Valkyrie Randgris
-			getmapxy(.@map$,.@x,.@y,UNITTYPE_PC);
+			getmapxy(.@map$,.@x,.@y,BL_PC);
 			setarray .@OptID[0],RDMOPT_ATTR_TOLERACE_NOTHING,RDMOPT_RACE_TOLERACE_HUMAN;
 			setarray .@OptVal[0],10,5;
 			setarray .@OptParam[0],0;
@@ -5438,6 +5509,32 @@ Return values:
 
 ---------------------------------------
 
+*guildopenstorage_log({<char id>})
+
+Opens the guild storage log window for the attached character or the given character id.
+
+Possible return values:
+GUILDSTORAGE_LOG_FINAL_SUCCESS	Window was opened successfully.
+GUILDSTORAGE_LOG_EMPTY			Window was not opened, because no entries exist.
+GUILDSTORAGE_LOG_FAILED			Some database error occurred.
+
+---------------------------------------
+
+*guild_has_permission(<permission>{,<char id>})
+
+Checks if the attached player or the player with the given character id has the given permission(s).
+Permission can be a bitmask and allows to use multiple values at the same time.
+Returns true if the player has all of the given permissions or false if the player does at least
+miss one of the given permissions or is not in a guild at all.
+
+Available permissions are:
+GUILD_PERM_INVITE	If a player is allowed to invite other players.
+GUILD_PERM_EXPEL	If a player is allowed to expel other guild members.
+GUILD_PERM_STORAGE	If a player is allowed to access the guild storage.
+GUILD_PERM_ALL		A combination of all permissions above.
+
+---------------------------------------
+
 *guildchangegm(<guild id>,<new master's name>)
 
 This function will change the Guild Master of a guild. The ID is the guild's
@@ -5537,11 +5634,12 @@ Used in reset NPC's (duh!)
 These commands will bestow a status effect on a character.
 
 The <effect type> determines which status is invoked. This can be either a number
-or constant, with the common statuses (mostly negative) found in 'src/map/script_constants.h'
-with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
+or constant, with the common statuses (mostly negative) found in 'src/map/script_constants.hpp'
+with the 'SC_' prefix. A full list is located in 'src/map/status.hpp', though
 they are not currently documented.
 
 The duration of the status is given in <ticks>, or milleseconds.
+Use INFINITE_TICK for infinite duration.
 
 Certain status changes take an additional parameter <value 1>, which typically
 modifies player stats by the given number or percentage. This differs for each
@@ -5754,7 +5852,7 @@ executed on attack (or when attacked in the case of autobonus2).
 
 Rate is the trigger rate of the script (1000 = 100%).
 
-Duration is the time that the bonus will last for since the script has triggered.
+Duration is the time in milliseconds that the bonus will last for since the script has triggered.
 
 Skill ID/skill name the skill which will be used as trigger to start the bonus. (autobonus3)
 
@@ -5822,7 +5920,7 @@ Types:
 	1: Buff
 	2: Debuff
 
-Status_icon: See "Status Icon" section in 'src/map/script_constants.h'. Default is SI_BLANK (-1).
+Status_icon: See "Status Icon" section in 'src/map/script_constants.hpp'. Default is SI_BLANK (-1).
 
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
@@ -6658,7 +6756,7 @@ This command will broadcast a message to all or most players, similar to
 The region the broadcast is heard in (target), source of the broadcast
 and the color the message will come up as is determined by the flags.
 
-The flag values are coded as constants in 'src/map/script_constants.h' to make them easier to use.
+The flag values are coded as constants in 'src/map/script_constants.hpp' to make them easier to use.
 
 Target flags:
 - bc_all: Broadcast message is sent server-wide (default).
@@ -6985,8 +7083,8 @@ This command kicks the given character from the waiting room attached to the giv
 *getwaitingroomusers "<NPC object name>";
 
 This command get all the characters in the waiting room of the given NPC and stores
-their gids in the array .@waitingroom_users[]. Also, stores the the number of characters
-in the variable .@waitingroom_usercount
+their gids in the array .@waitingroom_users[]. Also, stores the number of characters
+in the variable .@waitingroom_usercount.
 
 ---------------------------------------
 
@@ -7031,6 +7129,9 @@ For 'skill_damage' mapflag:
 	- Setting the flag here will adjust the global (all skills) damage on the map.
 	- <zone> is the -100 to 100000 damage adjustment value of the skills.
 	- See 'getmapflag' for the different <type> values.
+For 'skill_duration' mapflag:
+	- <zone> is the skill ID to adjust.
+	- <type> is the percentage of adjustment from 0 to 100000.
 
 ---------------------------------------
 
@@ -7377,11 +7478,12 @@ This command will display a picture, usually an NPC illustration, also called
 cutin, for the currently attached client. The position parameter determines the
 placement of the illustration and takes following values:
 
-	0 - bottom left corner
-	1 - bottom middle
-	2 - bottom right corner
-	3 - middle of screen in a movable window with an empty title bar
-	4 - middle of screen without the window header, but still movable
+	0	bottom left corner
+	1	bottom middle
+	2	bottom right corner
+	3	middle of screen in a movable window with an empty title bar
+	4	middle of screen without the window header, but still movable
+	255	clear all displayed cutins
 
 The picture is read from data\texture\유저인터페이스\illust, from both the GRF archive
 and data folder, and is required to be a bitmap. The file extension .bmp can be
@@ -7412,7 +7514,7 @@ must be used.
 
 This command makes an object display an emotion sprite above their own as
 if they were doing that emotion. For a full list of emotion numbers,
-see 'src/map/script_constants.h' under 'ET_'. The not so obvious ones are 'ET_QUESTION'
+see 'src/map/script_constants.hpp' under 'ET_'. The not so obvious ones are 'ET_QUESTION'
 (a question mark) and 'ET_SURPRISE' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
@@ -7558,6 +7660,28 @@ The three .@atcmd_***** variables will NOT be set when invoking script-bound atc
 in this way.
 
 ---------------------------------------
+
+*camerainfo <range>,<rotation>,<latitude>{,<char id>};
+
+This command will update the client's camera information with the given values where
+the client can be the attached character or the player given by the char id parameter.
+Note: This requires 2016-05-25aRagexeRE or newer.
+
+The values given will be divided by 100 and transmitted as floating-point number.
+
+	range		The zoomfactor of the camera.
+				Default: 230000 (230.0) when fully zoomed in
+				Maximum: 400000 (400.0) when fully zoomed out
+
+	rotation	The rotation of the camera.
+				Default: 0 (0.0) when no rotation is applied
+				Maximum: 360000 (360.0°) when fully rotated
+
+	latitude	The angle of the camera.
+				Default: -50000 (-50.0)
+				Maximum: -75000 (-75.0)
+
+---------------------------------------
 \\
 6,1.- Unit-related commands
 \\
@@ -7691,13 +7815,14 @@ it does.
 Returns the type of object from the given Game ID. Returns -1 if the given GID does not
 exist.
 
-	UNITTYPE_PC     0
-	UNITTYPE_NPC    1
-	UNITTYPE_PET    2
-	UNITTYPE_MOB    3
-	UNITTYPE_HOM    4
-	UNITTYPE_MER    5
-	UNITTYPE_ELEM   6
+Return values:
+	BL_PC   - Character object
+	BL_MOB  - Monster object
+	BL_PET  - Pet object
+	BL_HOM  - Homunculus object
+	BL_MER  - Mercenary object
+	BL_NPC  - NPC object
+	BL_ELEM - Elemental object
 
 ---------------------------------------
 
@@ -7995,7 +8120,7 @@ Parameter (indexes) for NPCs are:
 
 *Notes:
 		- *_SIZE: small (0); medium (1); large (2)
-	    - *_MAPID: this refers to the map_data index (from src/map/map.c), not the mapindex_db index (from src/common/mapindex.c)
+	    - *_MAPID: this refers to the map_data index (from src/map/map.cpp), not the mapindex_db index (from src/common/mapindex.cpp)
 			-- For 'setunitdata', map name can also be passed in as a valid value instead of map ID
 		- *_SPEED: 20 - 1000
 		- *_MODE: see doc/mob_db_mode_list.txt
@@ -8582,7 +8707,7 @@ Each of these can be 'on' or 'off'. Together they define a cell's behavior.
 
 This command lets you alter these flags for all map cells in the specified
 (x1,y1)-(x2,y2) rectangle. The 'flag' can be 0 or 1 (0:clear flag, 1:set flag).
-The 'type' defines which flag to modify. Possible options see 'src/map/script_constants.h'.
+The 'type' defines which flag to modify. Possible options see 'src/map/script_constants.hpp'.
 
 Example:
 
@@ -8616,7 +8741,7 @@ remove a nonwalkable row of cells after the barricade mobs.
 
 This command will return 1 or 0, depending on whether the specified cell has
 the 'type' flag set or not. There are various types to check, all mimicking
-the server's cell_chk enumeration. The types can be found in 'src/map/script_constants.h'.
+the server's cell_chk enumeration. The types can be found in 'src/map/script_constants.hpp'.
 
 The meaning of the individual types can be confusing, so here's an overview:
   - cell_chkwall/water/cliff
@@ -9337,7 +9462,7 @@ NOTE: Currently ONLY supported for bonuses that used by 'bonus' script.
 This command will make the pet cure a specified status condition. The curing
 actions will occur once every Delay seconds. For a full list of status
 conditions that can be cured, see the list of 'SC_' status condition constants
-in 'src/map/script_constants.h'.
+in 'src/map/script_constants.hpp'.
 
 ---------------------------------------
 
@@ -9683,6 +9808,13 @@ returns "null" instead of the character name, and -1 for the other types.
 
 ---------------------------------------
 
+*is_party_leader({<party ID>})
+
+This command will return true if the player attached to the script is the leader
+of his/her party, or, if a party ID is specified, of that party.
+
+---------------------------------------
+
 *party_create("<party name>"{,<character id>{,<item share>,<item share type>}});
 
 Organizes a party with the attached or specified character as leader. If
@@ -9814,7 +9946,7 @@ solution rather than sending the map and the monster_id.
 
 This will set a Hat Effect onto the player. The state field allows you to
 enable (true) or disable (false) the effect on the player.
-The Hat Effect constants can be found in 'src/map/script_constants.h' starting
+The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting
 with HAT_EF_*.
 
 Requires client 2015-05-13aRagEXE or newer.
