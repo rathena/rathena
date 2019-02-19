@@ -7193,7 +7193,6 @@
 	export_constant(INFINITE_TICK);
 
 	/* block action */
-	export_constant(PCBLOCK_NONE);
 	export_constant(PCBLOCK_MOVE);
 	export_constant(PCBLOCK_ATTACK);
 	export_constant(PCBLOCK_SKILL);

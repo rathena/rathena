@@ -6147,7 +6147,6 @@ allows the action again.
 enabled block flags.
 
 The available <type> are:
-	PCBLOCK_NONE	(for checkpcblock only)
 	PCBLOCK_MOVE
 	PCBLOCK_ATTACK
 	PCBLOCK_SKILL
@@ -6175,9 +6174,9 @@ Examples:
 		mes "You are invulnerable!";
 
 	if (checkpcblock() & (PCBLOCK_MOVE|PCBLOCK_SITSTAND))
-		mes "You can't walk and sit.";
+		mes "You can't walk or sit.";
 
-	if ((checkpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL)) == PCBLOCK_NONE)
+	if ((checkpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL)) == 0)
 		mes "You can attack and use skills.";
 
 	if (checkpcblock() & PCBLOCK_CHAT)
