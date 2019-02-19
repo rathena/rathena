@@ -17309,7 +17309,7 @@ BUILDIN_FUNC(checkpcblock)
 	if (sd->block_action.commands)
 		retval |= PCBLOCK_COMMANDS;
 
-	if (sd->block_action.npcclick != 0)
+	if (sd->block_action.npcclick)
 		retval |= PCBLOCK_NPCCLICK;
 
 	script_pushint(st, retval);

@@ -6133,6 +6133,58 @@ Examples:
 
 ---------------------------------------
 
+*pcblock <type>,<state>{,<account ID>};
+*checkpcblock {<account ID>};
+
+'pcblock' command prevents/allows the player from doing the given <type>
+of action according to the <state>.
+The <type> values are bit-masks, multiples <type> can be added to change the player action.
+
+The action is blocked when the <state> is true, while false
+allows the action again.
+
+'checkpcblock' command return the bit-mask value of the currently
+enabled block flags.
+
+The available <type> are:
+	PCBLOCK_NONE	(for checkpcblock only)
+	PCBLOCK_MOVE
+	PCBLOCK_ATTACK
+	PCBLOCK_SKILL
+	PCBLOCK_USEITEM
+	PCBLOCK_CHAT
+	PCBLOCK_IMMUNE
+	PCBLOCK_SITSTAND
+	PCBLOCK_COMMANDS
+	PCBLOCK_NPCCLICK
+	PCBLOCK_ALL
+
+Examples:
+
+// Make the attached player invulnerable to monster (same as @monsterignore)
+	pcblock PCBLOCK_IMMUNE, true;
+
+// Prevents the attached player from attacking and using skills
+	pcblock PCBLOCK_ATTACK|PCBLOCK_SKILL, true;
+
+// Re-enables attack, skills and item use
+	pcblock PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_ITEM, false;
+
+// checkpcblock related checks
+	if (checkpcblock() & PCBLOCK_IMMUNE)
+		mes "You are invulnerable!";
+
+	if (checkpcblock() & (PCBLOCK_MOVE|PCBLOCK_SITSTAND))
+		mes "You can't walk and sit.";
+
+	if ((checkpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL)) == PCBLOCK_NONE)
+		mes "You can attack and use skills.";
+
+	if (checkpcblock() & PCBLOCK_CHAT)
+		mes "You can't chat.";
+
+---------------------------------------
+
 ==================================
 |5.- Mob / NPC -related commands.|
 ==================================
