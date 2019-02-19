@@ -4989,9 +4989,6 @@ int pc_useitem(struct map_session_data *sd,int n)
 	if (item.nameid == 0 || item.amount <= 0)
 		return 0;
 
-	if (sd->block_action.useitem)
-		return 0;
-
 	if( !pc_isUseitem(sd,n) )
 		return 0;
 
@@ -5008,6 +5005,12 @@ int pc_useitem(struct map_session_data *sd,int n)
 		else if( pc_issit(sd) )
 			return 0;
 	}
+
+	if (sd->block_action.useitem) {
+		clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+		return 0;
+	}
+
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.

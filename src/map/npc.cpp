@@ -1288,8 +1288,10 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	if (nd->class_ < 0 || nd->sc.option&(OPTION_INVISIBLE|OPTION_HIDE))
 		return 1;
 	
-	if (sd->block_action.npcclick)
+	if (sd->block_action.npcclick) {
+		clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
 		return 1;
+	}
 
 	switch(nd->subtype) {
 		case NPCTYPE_SHOP:

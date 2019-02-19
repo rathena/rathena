@@ -11178,9 +11178,6 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			return;
 		}
 
-		if (sd->block_action.sitstand)
-			break;
-
 		if (sd->ud.skilltimer != INVALID_TIMER || (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING))
 			break;
 
@@ -11189,6 +11186,11 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			(sd->sc.data[SC_GRAVITATION] && sd->sc.data[SC_GRAVITATION]->val3 == BCT_SELF)
 		)) //No sitting during these states either.
 			break;
+
+		if (sd->block_action.sitstand) {
+			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+			break;
+		}
 
 		if (battle_config.idletime_option&IDLE_SIT)
 			sd->idletime = last_tick;
@@ -11204,11 +11206,13 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			return;
 		}
 
-		if (sd->block_action.sitstand)
-			break;
-
 		if (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 			break;
+
+		if (sd->block_action.sitstand) {
+			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+			break;
+		}
 
 		if (pc_setstand(sd, false)) {
 			if (battle_config.idletime_option&IDLE_SIT)
