@@ -186,7 +186,7 @@ emp_check	mapflag	nobranch
 emp_check	mapflag	noicewall
 emp_check	mapflag	pvp_noparty
 emp_check	mapflag	pvp_noguild
-emp_check	mapflag	pvp
+emp_check	mapflag	gvg
 
 
 prontera,148,152,5	script	Damage Test	734,{

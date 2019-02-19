@@ -659,6 +659,18 @@ struct Battle_Config
 	int limit_refine;
 	int limit_refine_pvp;
 	int limit_refine_te;
+	int half_skill_damage;
+	int half_skill_damage_pvp;
+	int half_skill_damage_te;
+	int half_skill_cast;
+	int half_skill_cast_pvp;
+	int half_skill_cast_te;
+	int half_skill_delay;
+	int half_skill_delay_pvp;
+	int half_skill_delay_te;
+	int half_skill_cd;
+	int half_skill_cd_pvp;
+	int half_skill_cd_te;
 	int feature_achievement;
 	int allow_bound_sell;
 	int event_refine_chance;

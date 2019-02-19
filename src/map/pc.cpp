@@ -3063,8 +3063,15 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 				sd->bonus.add_steal_rate+=val;
 			break;
 		case SP_DELAYRATE:
-			if(sd->state.lr_flag != 2)
+			if(sd->state.lr_flag != 2) {
+				if(((battle_config.half_skill_delay && map_getmapflag(sd->bl.m, MF_GVG)) || 
+					(battle_config.half_skill_delay_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+					(battle_config.half_skill_delay_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+					) && val > 0)
+					val = val/2;
+
 				sd->delayrate+=val;
+			}
 			break;
 		case SP_CRIT_ATK_RATE:
 			if(sd->state.lr_flag != 2)
@@ -3143,21 +3150,49 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			break;
 #ifdef RENEWAL_CAST
 		case SP_FIXCASTRATE:
-			if(sd->state.lr_flag != 2)
+			if(sd->state.lr_flag != 2){
+				if(((battle_config.half_skill_cast && map_getmapflag(sd->bl.m, MF_GVG)) || 
+					(battle_config.half_skill_cast_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+					(battle_config.half_skill_cast_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+					) && val > 0)
+					val = val/2;
+
 				sd->bonus.fixcastrate = min(sd->bonus.fixcastrate,val);
+			}
 			break;
 		case SP_ADD_FIXEDCAST:
-			if(sd->state.lr_flag != 2)
+			if(sd->state.lr_flag != 2){
+				if(((battle_config.half_skill_cast && map_getmapflag(sd->bl.m, MF_GVG)) || 
+					(battle_config.half_skill_cast_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+					(battle_config.half_skill_cast_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+					) && val > 0)
+					val = val/2;
+
 				sd->bonus.add_fixcast += val;
+			}
 			break;
 		case SP_CASTRATE:
 		case SP_VARCASTRATE:
-			if(sd->state.lr_flag != 2)
+			if(sd->state.lr_flag != 2) {
+				if(((battle_config.half_skill_cast && map_getmapflag(sd->bl.m, MF_GVG)) || 
+					(battle_config.half_skill_cast_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+					(battle_config.half_skill_cast_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+					) && val > 0)
+					val = val/2;
+
 				sd->bonus.varcastrate -= val;
+			}
 			break;
 		case SP_ADD_VARIABLECAST:
-			if(sd->state.lr_flag != 2)
+			if(sd->state.lr_flag != 2) {
+				if(((battle_config.half_skill_cast && map_getmapflag(sd->bl.m, MF_GVG)) || 
+					(battle_config.half_skill_cast_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+					(battle_config.half_skill_cast_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+					) && val > 0)
+					val = val/2;
+
 				sd->bonus.add_varcast += val;
+			}
 			break;
 #else
 		case SP_ADD_FIXEDCAST:
@@ -3452,6 +3487,11 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ShowWarning("pc_bonus2: SP_SKILL_ATK: Reached max (%d) number of skills per character, bonus skill %d (+%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
+		if(((battle_config.half_skill_damage && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			(battle_config.half_skill_damage_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+			(battle_config.half_skill_damage_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+			) && val > 0)
+			val = val/2;
 
 		pc_bonus_itembonus(sd->skillatk, type2, val);
 		break;
@@ -3663,6 +3703,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
+		if(((battle_config.half_skill_delay && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			(battle_config.half_skill_delay_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+			(battle_config.half_skill_delay_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+			) && val > 0)
+			val = val/2;
+
 		pc_bonus_itembonus(sd->skilldelay, type2, val);
 		break;
 	case SP_SKILL_COOLDOWN: // bonus2 bSkillCooldown,sk,t;
@@ -3672,6 +3718,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ShowWarning("pc_bonus2: SP_SKILL_COOLDOWN: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
+
+		if(((battle_config.half_skill_cd && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			(battle_config.half_skill_cd_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+			(battle_config.half_skill_cd_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+			) && val > 0)
+			val = val/2;
 
 		pc_bonus_itembonus(sd->skillcooldown, type2, val);
 		break;
@@ -3684,6 +3736,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
+		if(((battle_config.half_skill_cast && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			(battle_config.half_skill_cast_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+			(battle_config.half_skill_cast_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+			) && val > 0)
+			val = val/2;
+
 		pc_bonus_itembonus(sd->skillfixcast, type2, val);
 		break;
 	case SP_SKILL_VARIABLECAST: // bonus2 bSkillVariableCast,sk,t;
@@ -3693,6 +3751,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ShowWarning("pc_bonus2: SP_SKILL_VARIABLECAST: Reached max (%d) number of skills per character, bonus skill %d (%d) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
+
+		if(((battle_config.half_skill_cast && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			(battle_config.half_skill_cast_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+			(battle_config.half_skill_cast_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+			) && val > 0)
+			val = val/2;
 
 		pc_bonus_itembonus(sd->skillvarcast, type2, val);
 		break;
@@ -3705,6 +3769,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
+		if(((battle_config.half_skill_cast && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			(battle_config.half_skill_cast_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+			(battle_config.half_skill_cast_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+			) && val > 0)
+			val = val/2;
+
 		pc_bonus_itembonus(sd->skillcastrate, type2, -val); // Send inversed value here
 		break;
 	case SP_FIXCASTRATE: // bonus2 bFixedCastrate,sk,n;
@@ -3714,6 +3784,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			ShowWarning("pc_bonus2: SP_FIXCASTRATE: Reached max (%d) number of skills per character, bonus skill %d (%d%%) lost.\n", MAX_PC_BONUS, type2, val);
 			break;
 		}
+
+		if(((battle_config.half_skill_cast && map_getmapflag(sd->bl.m, MF_GVG)) || 
+			(battle_config.half_skill_cast_pvp && map_getmapflag(sd->bl.m, MF_PVP)) || 
+			(battle_config.half_skill_cast_te && map_getmapflag(sd->bl.m, MF_GVG_TE))
+			) && val > 0)
+			val = val/2;
 
 		pc_bonus_itembonus(sd->skillfixcastrate, type2, -val); // Send inversed value here
 		break;
