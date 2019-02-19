@@ -12,6 +12,8 @@
 #include "clif.hpp"  // clif_open_search_store_info, clif_search_store_info_*
 #include "pc.hpp"  // struct map_session_data
 
+static Map_Obj map_obj = Map_Obj();
+
 /// Failure constants for clif functions
 enum e_searchstore_failure
 {

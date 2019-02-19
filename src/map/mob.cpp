@@ -41,6 +41,7 @@
 #include "quest.hpp"
 
 using namespace rathena;
+static Map_Obj map_obj = Map_Obj();
 
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
@@ -252,7 +253,7 @@ void mvptomb_create(struct mob_data *md, char *killer, time_t time)
 	else
 		nd->u.tomb.killer_name[0] = '\0';
 
-	map_addnpc(nd->bl.m, nd);
+	map_obj.addnpc(nd->bl.m, nd);
 	if(map_obj.addblock(&nd->bl))
 		return;
 	status_set_viewdata(&nd->bl, nd->class_);
@@ -1891,7 +1892,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 			unit_set_walkdelay(&md->bl, tick, md->status.amotion, 1);
 		}
 		//Clear item.
-		map_clearflooritem(tbl);
+		map_obj.clearflooritem(tbl);
 		mob_unlocktarget(md, tick);
 		return true;
 	}
@@ -2059,7 +2060,7 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
  * Negligent processing for mob outside PC field of view   (interval timer function)
  *------------------------------------------*/
 static TIMER_FUNC(mob_ai_lazy){
-	map_foreachmob(mob_ai_sub_lazy,tick);
+	map_obj.foreachmob(mob_ai_sub_lazy,tick);
 	return 0;
 }
 
@@ -2069,7 +2070,7 @@ static TIMER_FUNC(mob_ai_lazy){
 static TIMER_FUNC(mob_ai_hard){
 
 	if (battle_config.mob_ai&0x20)
-		map_foreachmob(mob_ai_sub_lazy,tick);
+		map_obj.foreachmob(mob_ai_sub_lazy,tick);
 	else
 		map_obj.foreachpc(mob_ai_sub_foreachclient,tick);
 
@@ -2239,7 +2240,7 @@ int mob_deleteslave(struct mob_data *md)
 {
 	nullpo_ret(md);
 
-	map_foreachinmap(mob_deleteslave_sub, md->bl.m, BL_MOB,md->bl.id);
+	map_obj.foreachinmap(mob_deleteslave_sub, md->bl.m, BL_MOB,md->bl.id);
 	return 0;
 }
 // Mob respawning through KAIZEL or NPC_REBIRTH [Skotlex]
@@ -2516,7 +2517,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	if(!(type&2) && //No exp
 		(!map_obj.getmapflag(m, MF_PVP) || battle_config.pvp_exp) && //Pvp no exp rule [MouseJstr]
 		(!md->master_id || !md->special_state.ai) && //Only player-summoned mobs do not give exp. [Skotlex]
-		(!map_obj.getmapflag(m, MF_NOBASEEXP) || !map_getmapflag(m, MF_NOJOBEXP)) //Gives Exp
+		(!map_obj.getmapflag(m, MF_NOBASEEXP) || !map_obj.getmapflag(m, MF_NOJOBEXP)) //Gives Exp
 	) { //Experience calculation.
 		int bonus = 100; //Bonus on top of your share (common to all attackers).
 		int pnum = 0;
@@ -3313,7 +3314,7 @@ int mob_warpslave(struct block_list *bl, int range)
 	if (range < 1)
 		range = 1; //Min range needed to avoid crashes and stuff. [Skotlex]
 
-	return map_foreachinmap(mob_warpslave_sub, bl->m, BL_MOB, bl, range);
+	return map_obj.foreachinmap(mob_warpslave_sub, bl->m, BL_MOB, bl, range);
 }
 
 /*==========================================
@@ -3336,7 +3337,7 @@ int mob_countslave_sub(struct block_list *bl,va_list ap)
  *------------------------------------------*/
 int mob_countslave(struct block_list *bl)
 {
-	return map_foreachinmap(mob_countslave_sub, bl->m, BL_MOB,bl->id);
+	return map_obj.foreachinmap(mob_countslave_sub, bl->m, BL_MOB,bl->id);
 }
 
 /*==========================================
@@ -5400,8 +5401,8 @@ static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
 void mob_reload(void) {
 	do_final_mob(true);
 	mob_db_load(true);
-	map_foreachmob(mob_reload_sub);
-	map_foreachnpc(mob_reload_sub_npc);
+	map_obj.foreachmob(mob_reload_sub);
+	map_obj.foreachnpc(mob_reload_sub_npc);
 }
 
 /**

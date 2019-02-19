@@ -32,7 +32,7 @@
 #include "status.hpp"
 #include "storage.hpp"
 
-Map_Obj map_obj = Map_Obj(); 
+static Map_Obj map_obj = Map_Obj(); 
 
 /// Received packet Lengths from inter-server
 static const int packet_len_table[] = {

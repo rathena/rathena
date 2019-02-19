@@ -30,6 +30,7 @@
 using namespace rathena;
 
 std::map<uint16, struct s_mercenary_db> mercenary_db_data;
+static Map_Obj map_obj = Map_Obj();
 
 /**
  * Search Mercenary by class

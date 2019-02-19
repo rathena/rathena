@@ -23,7 +23,7 @@
 static DBMap* bg_team_db; // int bg_id -> struct battleground_data*
 static unsigned int bg_team_counter = 0; // Next bg_id
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 struct battleground_data* bg_team_search(int bg_id)
 { // Search a BG Team using bg_id

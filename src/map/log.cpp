@@ -22,7 +22,7 @@
 
 static char log_timestamp_format[20];
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 /// filters for item logging
 typedef enum e_log_filter

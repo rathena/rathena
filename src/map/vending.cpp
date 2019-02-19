@@ -27,7 +27,7 @@
 
 static uint32 vending_nextid = 0; ///Vending_id counter
 static DBMap *vending_db; ///DB holder the vender : charid -> map_session_data
-
+static Map_Obj map_obj = Map_Obj();
 //Autotrader
 static DBMap *vending_autotrader_db; /// Holds autotrader info: char_id -> struct s_autotrader
 static void vending_autotrader_remove(struct s_autotrader *at, bool remove);

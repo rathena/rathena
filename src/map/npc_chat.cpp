@@ -62,6 +62,8 @@
  *  deletes a pset
  */
 
+static Map_Obj map_obj = Map_Obj();
+
 /* Structure containing all info associated with a single pattern block */
 struct pcrematch_entry {
 	struct pcrematch_entry* next;

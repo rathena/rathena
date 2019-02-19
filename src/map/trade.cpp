@@ -23,6 +23,8 @@
 
 #define TRADE_DISTANCE 2 ///Max distance from traders to enable a trade to take place.
 
+static Map_Obj map_obj = Map_Obj();
+
 /**
  * Player initiates a trade request.
  * @param sd : player requesting the trade

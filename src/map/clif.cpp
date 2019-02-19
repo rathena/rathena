@@ -57,7 +57,7 @@
 #include "unit.hpp"
 #include "vending.hpp"
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 static inline uint32 client_tick( t_tick tick ){
 	return (uint32)tick;

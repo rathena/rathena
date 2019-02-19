@@ -58,7 +58,7 @@ typedef struct AliasInfo AliasInfo;
 
 int atcmd_binding_count = 0;
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 /// Atcommand restriction usage
 enum e_atcmd_restict {
 	ATCMD_NOCONSOLE    = 0x1, /// Cannot be used via console (is_atcommand type 2)
@@ -3591,7 +3591,7 @@ ACMD_FUNC(mapexit)
 {
 	nullpo_retr(-1, sd);
 
-	map_obj.do_shutdown();
+	do_shutdown();
 	return 0;
 }
 

@@ -31,7 +31,7 @@
 std::unordered_map<int, std::shared_ptr<s_achievement_db>> achievements;
 std::vector<int> achievement_mobs; // Avoids checking achievements on every mob killed
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 /**
  * Searches an achievement by ID
  * @param achievement_id: ID to lookup

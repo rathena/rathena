@@ -25,7 +25,7 @@
 
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 struct instance_data instance_data[MAX_INSTANCE_DATA];
 struct eri *instance_maps_ers = NULL; ///< Array of maps per instance

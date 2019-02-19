@@ -1031,8 +1031,8 @@ class Map_Obj {
 		bool addnpc(int16 m,struct npc_data *);
 
 		// map item
-		TIMER_FUNC(map_clearflooritem_timer);
-		TIMER_FUNC(map_removemobs_timer);
+		//TIMER_FUNC(map_clearflooritem_timer);
+		//TIMER_FUNC(map_removemobs_timer);
 		void clearflooritem(struct block_list* bl);
 		int addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
@@ -1114,12 +1114,15 @@ class Map_Obj {
 		int getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args);
 		bool setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args);
 
-		void do_shutdown(void);
+		//void do_shutdown(void);
 		Map_Obj();
 		virtual ~Map_Obj();
 #define getmapflag(m, mapflag) getmapflag_sub(m, mapflag, NULL)
 #define setmapflag(m, mapflag, status) setmapflag_sub(m, mapflag, status, NULL)
+
 };
+
+void do_shutdown(void);
 
 #define map_id2index(id) map[(id)].index
 /// Bitfield of flags for the iterator.
@@ -1137,7 +1140,9 @@ enum e_mapitflags
 		struct block_list*      mapit_next(struct s_mapiterator* mapit);
 		struct block_list*      mapit_prev(struct s_mapiterator* mapit);
 		bool                    mapit_exists(struct s_mapiterator* mapit);
-
+TIMER_FUNC(map_clearflooritem_timer);
+		TIMER_FUNC(map_removemobs_timer);
+		
 #define mapit_getallusers() mapit_alloc(MAPIT_NORMAL,BL_PC)
 #define mapit_geteachpc()   mapit_alloc(MAPIT_NORMAL,BL_PC)
 #define mapit_geteachmob()  mapit_alloc(MAPIT_NORMAL,BL_MOB)

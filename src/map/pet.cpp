@@ -29,6 +29,7 @@
 
 using namespace rathena;
 
+static Map_Obj map_obj = Map_Obj();
 const t_tick MIN_PETTHINKTIME = 100;
 
 //Dynamic pet database
@@ -1209,7 +1210,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_t
 			if(pd->loot->count < pd->loot->max) {
 				memcpy(&pd->loot->item[pd->loot->count++],&fitem->item,sizeof(pd->loot->item[0]));
 				pd->loot->weight += itemdb_weight(fitem->item.nameid)*fitem->item.amount;
-				map_clearflooritem(target);
+				map_obj.clearflooritem(target);
 			}
 
 			//Target is unlocked regardless of whether it was picked or not.

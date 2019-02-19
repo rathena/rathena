@@ -45,6 +45,8 @@
 const short dirx[DIR_MAX]={0,-1,-1,-1,0,1,1,1}; ///lookup to know where will move to x according dir
 const short diry[DIR_MAX]={1,1,0,-1,-1,-1,0,1}; ///lookup to know where will move to y according dir
 
+static Map_Obj map_obj = Map_Obj();
+
 //early declaration
 static TIMER_FUNC(unit_attack_timer);
 static TIMER_FUNC(unit_walktoxy_timer);
@@ -395,18 +397,18 @@ static TIMER_FUNC(unit_walktoxy_timer){
 	}
 
 	// Refresh view for all those we lose sight
-	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, sd?BL_ALL:BL_PC, bl);
+	map_obj.foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, sd?BL_ALL:BL_PC, bl);
 
 	x += dx;
 	y += dy;
-	map_moveblock(bl, x, y, tick);
+	map_obj.moveblock(bl, x, y, tick);
 	ud->walk_count++; // Walked cell counter, to be used for walk-triggered skills. [Skotlex]
 
 	if (bl->x != x || bl->y != y || ud->walktimer != INVALID_TIMER)
-		return 0; // map_moveblock has altered the object beyond what we expected (moved/warped it)
+		return 0; // map_obj.moveblock has altered the object beyond what we expected (moved/warped it)
 
 	ud->walktimer = CLIF_WALK_TIMER; // Arbitrary non-INVALID_TIMER value to make the clif code send walking packets
-	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
+	map_obj.foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, sd?BL_ALL:BL_PC, bl);
 	ud->walktimer = INVALID_TIMER;
 
 	if (bl->x == ud->to_x && bl->y == ud->to_y) {
@@ -599,7 +601,7 @@ TIMER_FUNC(unit_delay_walktoxy_timer){
  * @return 1: Success 0: Fail (No valid bl or target)
  */
 TIMER_FUNC(unit_delay_walktobl_timer){
-	struct block_list *bl = map_obj.id2bl(id), *tbl = map_id2bl(data);
+	struct block_list *bl = map_obj.id2bl(id), *tbl = map_obj.id2bl(data);
 
 	if(!bl || bl->prev == NULL || tbl == NULL)
 		return 0;
@@ -642,7 +644,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 	if (bl->type == BL_PC)
 		sd = BL_CAST(BL_PC, bl);
 
-	if ((flag&8) && !map_closest_freecell(bl->m, &x, &y, BL_CHAR|BL_NPC, 1)) //This might change x and y
+	if ((flag&8) && !map_obj.closest_freecell(bl->m, &x, &y, BL_CHAR|BL_NPC, 1)) //This might change x and y
 		return 0;
 
 	if (!path_search(&wpd, bl->m, bl->x, bl->y, x, y, flag&1, CELL_CHKNOPASS)) // Count walk path cells
@@ -678,7 +680,7 @@ int unit_walktoxy( struct block_list *bl, short x, short y, unsigned char flag)
 
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
-		map_random_dir(bl, &ud->to_x, &ud->to_y);
+		map_obj.random_dir(bl, &ud->to_x, &ud->to_y);
 
 	if(ud->walktimer != INVALID_TIMER) {
 		// When you come to the center of the grid because the change of destination while you're walking right now
@@ -784,7 +786,7 @@ int unit_walktobl(struct block_list *bl, struct block_list *tbl, int range, unsi
 
 	sc = status_get_sc(bl);
 	if (sc && sc->data[SC_CONFUSION]) // Randomize the target position
-		map_random_dir(bl, &ud->to_x, &ud->to_y);
+		map_obj.random_dir(bl, &ud->to_x, &ud->to_y);
 
 	if(ud->walktimer != INVALID_TIMER) {
 		ud->state.change_walk_target = 1;
@@ -962,12 +964,12 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 	dx = dst_x - bl->x;
 	dy = dst_y - bl->y;
 
-	map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, (sd ? BL_ALL : BL_PC), bl);
+	map_obj.foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, (sd ? BL_ALL : BL_PC), bl);
 
-	map_moveblock(bl, dst_x, dst_y, gettick());
+	map_obj.moveblock(bl, dst_x, dst_y, gettick());
 
 	ud->walktimer = CLIF_WALK_TIMER; // Arbitrary non-INVALID_TIMER value to make the clif code send walking packets
-	map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, (sd ? BL_ALL : BL_PC), bl);
+	map_obj.foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, (sd ? BL_ALL : BL_PC), bl);
 	ud->walktimer = INVALID_TIMER;
 
 	if(sd) {
@@ -1086,7 +1088,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 		dy = ny-bl->y;
 
 		if(dx || dy) {
-			map_foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, bl->type == BL_PC ? BL_ALL : BL_PC, bl);
+			map_obj.foreachinmovearea(clif_outsight, bl, AREA_SIZE, dx, dy, bl->type == BL_PC ? BL_ALL : BL_PC, bl);
 
 			if(su) {
 				if (su->group && skill_get_unit_flag(su->group->skill_id)&UF_KNOCKBACK_GROUP)
@@ -1094,9 +1096,9 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 				else
 					skill_unit_move_unit(bl, nx, ny);
 			} else
-				map_moveblock(bl, nx, ny, gettick());
+				map_obj.moveblock(bl, nx, ny, gettick());
 
-			map_foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, bl->type == BL_PC ? BL_ALL : BL_PC, bl);
+			map_obj.foreachinmovearea(clif_insight, bl, AREA_SIZE, -dx, -dy, bl->type == BL_PC ? BL_ALL : BL_PC, bl);
 
 			if(!(flag&BLOWN_DONT_SEND_PACKET))
 				clif_blown(bl);
@@ -2636,7 +2638,7 @@ static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 			if (status_has_mode(sstatus,MD_ASSIST) && DIFF_TICK(md->last_linktime, tick) < MIN_MOBLINKTIME) { 
 				// Link monsters nearby [Skotlex]
 				md->last_linktime = tick;
-				map_foreachinrange(mob_linksearch, src, md->db->range2, BL_MOB, md->mob_id, target, tick);
+				map_obj.foreachinrange(mob_linksearch, src, md->db->range2, BL_MOB, md->mob_id, target, tick);
 			}
 		}
 
@@ -3003,7 +3005,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 					sd->debug_file, sd->debug_line, sd->debug_func, file, line, func);
 			}
 			else if (--map[bl->m].users == 0 && battle_config.dynamic_mobs)
-				map_removemobs(bl->m);
+				map_obj.removemobs(bl->m);
 
 			if( !pc_isinvisible(sd) ) // Decrement the number of active pvp players on the map
 				--map[bl->m].users_pvp;

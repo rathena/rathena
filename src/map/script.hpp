@@ -1988,5 +1988,6 @@ bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vle
  **/
 typedef int (*script_func)(struct script_state *st);
 script_func get_func_ptr(int id);
+//void script_set_map_obj(Map_Obj map_obj);
 
 #endif /* SCRIPT_HPP */

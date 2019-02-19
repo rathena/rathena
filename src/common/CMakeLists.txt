@@ -140,34 +140,34 @@ set( LIBRARIES ${GLOBAL_LIBRARIES} ${ZLIB_LIBRARIES} yaml-cpp )
 set( INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${YAML_INCLUDE_DIRS} ${ZLIB_INCLUDE_DIRS} ${COMMON_BASE_INCLUDE_DIRS}} )
 set( DEFINITIONS "${GLOBAL_DEFINITIONS} ${COMMON_BASE_DEFINITIONS}" )
 ## Tests
-#if( TESTING )
-#	message( STATUS "Tests enabled" )
-#	set ( DEFINITIONS "${DEFINITIONS} -DTESTING" ) 
-#	# Download and unpack googletest at configure time
-#    	configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
-#    	execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
-#      		RESULT_VARIABLE result
-#			WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
-#    	if(result)
-#      		message(FATAL_ERROR "CMake step for googletest failed: ${result}")
-#    	endif()
-#    	execute_process(COMMAND ${CMAKE_COMMAND} --build .
-#      		RESULT_VARIABLE result
-#      		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
-#    	if(result)
-#      		message(FATAL_ERROR "Build step for googletest failed: ${result}")
-#    	endif()
-#
-#    	# Prevent overriding the parent project's compiler/linker
-#    	# settings on Windows
-#    	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-#
-#    	# Add googletest directly to our build. This defines
-#    	# the gtest and gtest_main targets.
-#    	add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
-#                ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
-#                EXCLUDE_FROM_ALL)
-#endif()
+if( TESTING )
+	message( STATUS "Tests enabled" )
+	set ( DEFINITIONS "${DEFINITIONS} -DTESTING" ) 
+	# Download and unpack googletest at configure time
+    	configure_file(CMakeLists.txt.in googletest-download/CMakeLists.txt)
+    	execute_process(COMMAND ${CMAKE_COMMAND} -G "${CMAKE_GENERATOR}" .
+      		RESULT_VARIABLE result
+			WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
+    	if(result)
+      		message(FATAL_ERROR "CMake step for googletest failed: ${result}")
+    	endif()
+    	execute_process(COMMAND ${CMAKE_COMMAND} --build .
+      		RESULT_VARIABLE result
+      		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/googletest-download )
+    	if(result)
+      		message(FATAL_ERROR "Build step for googletest failed: ${result}")
+    	endif()
+
+    	# Prevent overriding the parent project's compiler/linker
+    	# settings on Windows
+    	set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+    	# Add googletest directly to our build. This defines
+    	# the gtest and gtest_main targets.
+    	add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
+                ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
+                EXCLUDE_FROM_ALL)
+endif()
 if ( TESTING )
 	set( DEFINITIONS "${DEFINITIONS} -DTESTING")
 endif()
@@ -175,7 +175,7 @@ set( SOURCE_FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 source_group( common FILES ${COMMON_BASE_HEADERS} ${COMMON_BASE_SOURCES} )
 add_library( common_base ${SOURCE_FILES} )
 #message( STATUS "common_base LIBRARIES=${LIBRARIES}, DEFINITIONS=${DEFINITIONS}")
-target_link_libraries( common_base ${LIBRARIES} ) #gtest_main )
+target_link_libraries( common_base ${LIBRARIES} gtest_main gmock_main )
 set_target_properties( common_base PROPERTIES COMPILE_FLAGS "${DEFINITIONS}" )
 include_directories( ${INCLUDE_DIRS} )
 

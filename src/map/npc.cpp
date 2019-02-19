@@ -33,6 +33,8 @@
 #include "pet.hpp"
 #include "script.hpp" // script_config
 
+static Map_Obj map_obj = Map_Obj();
+
 struct npc_data* fake_nd;
 
 // linked list of npc source files
@@ -69,14 +71,14 @@ static void npc_market_fromsql(void);
 /// Returns a new npc id that isn't being used in id_db.
 /// Fatal error if nothing is available.
 int npc_get_new_npc_id(void) {
-	if( npc_id >= START_NPC_NUM && !map_blid_exists(npc_id) )
+	if( npc_id >= START_NPC_NUM && !map_obj.blid_exists(npc_id) )
 		return npc_id++;// available
 	else {// find next id
 		int base_id = npc_id;
 		while( base_id != ++npc_id ) {
 			if( npc_id < START_NPC_NUM )
 				npc_id = START_NPC_NUM;
-			if( !map_blid_exists(npc_id) )
+			if( !map_obj.blid_exists(npc_id) )
 				return npc_id++;// available
 		}
 		// full loop, nothing available
@@ -963,7 +965,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 
 		nd->touching_id = sd->touching_id = 0;
 		safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_event_name);
-		map_forcountinarea(npc_touch_areanpc_sub,nd->bl.m,nd->bl.x - xs,nd->bl.y - ys,nd->bl.x + xs,nd->bl.y + ys,1,BL_PC,sd->bl.id,name);
+		map_obj.forcountinarea(npc_touch_areanpc_sub,nd->bl.m,nd->bl.x - xs,nd->bl.y - ys,nd->bl.x + xs,nd->bl.y + ys,1,BL_PC,sd->bl.id,name);
 	}
 	return 0;
 }
@@ -2191,7 +2193,7 @@ static int npc_unload_dup_sub(struct npc_data* nd, va_list args)
 //Removes all npcs that are duplicates of the passed one. [Skotlex]
 void npc_unload_duplicates(struct npc_data* nd)
 {
-	map_foreachnpc(npc_unload_dup_sub,nd->bl.id);
+	map_obj.foreachnpc(npc_unload_dup_sub,nd->bl.id);
 }
 
 //Removes an npc from map and db.
@@ -2231,7 +2233,7 @@ int npc_unload(struct npc_data* nd, bool single) {
 	}
 	
 	if( single && nd->bl.m != -1 )
-		map_remove_questinfo(nd->bl.m, nd);
+		map_obj.remove_questinfo(nd->bl.m, nd);
 
 	if( (nd->subtype == NPCTYPE_SHOP || nd->subtype == NPCTYPE_CASHSHOP || nd->subtype == NPCTYPE_ITEMSHOP || nd->subtype == NPCTYPE_POINTSHOP || nd->subtype == NPCTYPE_MARKETSHOP) && nd->src_id == 0) //src check for duplicate shops [Orcao]
 		aFree(nd->u.shop.shop_item);
@@ -2562,7 +2564,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	struct npc_data *nd;
 
 	nd = npc_create_npc(from_mapid, from_x, from_y);
-	map_addnpc(from_mapid, nd);
+	map_obj.addnpc(from_mapid, nd);
 
 	safestrncpy(nd->exname, name, ARRAYLENGTH(nd->exname));
 	if (npc_name2id(nd->exname) != NULL)
@@ -2646,7 +2648,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	}
 
 	nd = npc_create_npc(m, x, y);
-	map_addnpc(m, nd);
+	map_obj.addnpc(m, nd);
 	npc_parsename(nd, w3, start, buffer, filepath);
 
 	if (!battle_config.warp_point_debug)
@@ -2902,7 +2904,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 #endif
 	if( m >= 0 )
 	{// normal shop npc
-		map_addnpc(m,nd);
+		map_obj.addnpc(m,nd);
 		if(map_obj.addblock(&nd->bl))
 			return strchr(start,'\n');
 		status_change_init(&nd->bl);
@@ -3135,7 +3137,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 
 	if( m >= 0 )
 	{
-		map_addnpc(m, nd);
+		map_obj.addnpc(m, nd);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
 		nd->ud.dir = (uint8)dir;
@@ -3151,7 +3153,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 	}
 	else
 	{
-		// we skip map_addnpc, but still add it to the list of ID's
+		// we skip map_obj.addnpc, but still add it to the list of ID's
 		map_obj.addiddb(&nd->bl);
 	}
 	strdb_put(npcname_db, nd->exname, nd);
@@ -3295,7 +3297,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 
 	//Add the npc to its location
 	if( m >= 0 ) {
-		map_addnpc(m, nd);
+		map_obj.addnpc(m, nd);
 		status_change_init(&nd->bl);
 		unit_dataset(&nd->bl);
 		nd->ud.dir = (uint8)dir;
@@ -3308,7 +3310,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 				clif_spawn(&nd->bl);
 		}
 	} else {
-		// we skip map_addnpc, but still add it to the list of ID's
+		// we skip map_obj.addnpc, but still add it to the list of ID's
 		map_obj.addiddb(&nd->bl);
 	}
 	strdb_put(npcname_db, nd->exname, nd);
@@ -3368,7 +3370,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		}
 
 		wnd = npc_create_npc(m, snd->bl.x, snd->bl.y);
-		map_addnpc(m, wnd);
+		map_obj.addnpc(m, wnd);
 		safestrncpy(wnd->name, "", ARRAYLENGTH(wnd->name));
 		safestrncpy(wnd->exname, newname, ARRAYLENGTH(wnd->exname));
 		wnd->class_ = JT_WARPNPC;
@@ -3692,7 +3694,7 @@ bool npc_movenpc(struct npc_data* nd, int16 x, int16 y)
 	y = cap_value(y, 0, mapdata->ys-1);
 
 	map_obj.foreachinallrange(clif_outsight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
-	map_moveblock(&nd->bl, x, y, gettick());
+	map_obj.moveblock(&nd->bl, x, y, gettick());
 	map_obj.foreachinallrange(clif_insight, &nd->bl, AREA_SIZE, BL_PC, &nd->bl);
 	return true;
 }
@@ -3992,7 +3994,7 @@ static const char* npc_parse_mob(char* w1, char* w2, char* w3, char* w4, const c
 	memcpy(data, &mob, sizeof(struct spawn_data));
 
 	// spawn / cache the new mobs
-	if( battle_config.dynamic_mobs && map_addmobtolist(data->m, data) >= 0 )
+	if( battle_config.dynamic_mobs && map_obj.addmobtolist(data->m, data) >= 0 )
 	{
 		data->state.dynamic = true;
 		npc_cache_mob += data->num;
@@ -4063,7 +4065,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					args.nosave.y = -1;
 				}
 			}
-			map_setmapflag_sub(m, MF_NOSAVE, state, &args);
+			map_obj.setmapflag_sub(m, MF_NOSAVE, state, &args);
 			break;
 		}
 
@@ -4088,9 +4090,9 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 					args.nightmaredrop.drop_type = NMDT_ALL;
 
 				if (args.nightmaredrop.drop_id != 0)
-					map_setmapflag_sub(m, MF_PVP_NIGHTMAREDROP, true, &args);
+					map_obj.setmapflag_sub(m, MF_PVP_NIGHTMAREDROP, true, &args);
 			} else if (!state)
-				map_setmapflag(m, MF_PVP_NIGHTMAREDROP, false);
+				map_obj.setmapflag(m, MF_PVP_NIGHTMAREDROP, false);
 			break;
 		}
 
@@ -4101,9 +4103,9 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				if (sscanf(w4, "%11d", &args.flag_val) < 1)
 					args.flag_val = 1; // Default value
 
-				map_setmapflag_sub(m, MF_BATTLEGROUND, true, &args);
+				map_obj.setmapflag_sub(m, MF_BATTLEGROUND, true, &args);
 			} else
-				map_setmapflag(m, MF_BATTLEGROUND, false);
+				map_obj.setmapflag(m, MF_BATTLEGROUND, false);
 			break;
 
 		case MF_NOCOMMAND:
@@ -4113,9 +4115,9 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				if (sscanf(w4, "%11d", &args.flag_val) < 1)
 					args.flag_val = 100; // No level specified, block everyone.
 
-				map_setmapflag_sub(m, MF_NOCOMMAND, true, &args);
+				map_obj.setmapflag_sub(m, MF_NOCOMMAND, true, &args);
 			} else
-				map_setmapflag(m, MF_NOCOMMAND, false);
+				map_obj.setmapflag(m, MF_NOCOMMAND, false);
 			break;
 
 		case MF_RESTRICTED:
@@ -4123,11 +4125,11 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				union u_mapflag_args args = {};
 
 				if (sscanf(w4, "%11d", &args.flag_val) == 1)
-					map_setmapflag_sub(m, MF_RESTRICTED, true, &args);
+					map_obj.setmapflag_sub(m, MF_RESTRICTED, true, &args);
 				else // Could not be read, no value defined; don't remove as other restrictions may be set on the map
 					ShowWarning("npc_parse_mapflag: Zone value not set for the restricted mapflag! Skipped flag from %s (file '%s', line '%d').\n", map_obj.mapid2mapname(m), filepath, strline(buffer,start-buffer));
 			} else
-				map_setmapflag(m, MF_RESTRICTED, false);
+				map_obj.setmapflag(m, MF_RESTRICTED, false);
 			break;
 
 		case MF_JEXP:
@@ -4137,7 +4139,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 				if (sscanf(w4, "%11d", &args.flag_val) < 1)
 					args.flag_val = 0;
 
-				map_setmapflag_sub(m, mapflag, state, &args);
+				map_obj.setmapflag_sub(m, mapflag, state, &args);
 			}
 			break;
 
@@ -4149,7 +4151,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			memset(skill_name, 0, sizeof(skill_name));
 
 			if (!state)
-				map_setmapflag_sub(m, MF_SKILL_DAMAGE, false, &args);
+				map_obj.setmapflag_sub(m, MF_SKILL_DAMAGE, false, &args);
 			else {
 				if (sscanf(w4, "%30[^,],%23[^,],%11d,%11d,%11d,%11d[^\n]", skill_name, caster_constant, &args.skill_damage.rate[SKILLDMG_PC], &args.skill_damage.rate[SKILLDMG_MOB], &args.skill_damage.rate[SKILLDMG_BOSS], &args.skill_damage.rate[SKILLDMG_OTHER]) >= 3) {
 					if (ISDIGIT(caster_constant[0]))
@@ -4172,13 +4174,13 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						args.skill_damage.rate[i] = cap_value(args.skill_damage.rate[i], -100, 100000);
 
 					if (strcmp(skill_name, "all") == 0) // Adjust damage for all skills
-						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
+						map_obj.setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
 					else if (skill_name2id(skill_name) <= 0)
 						ShowWarning("npc_parse_mapflag: Invalid skill name '%s' for Skill Damage mapflag. Skipping (file '%s', line '%d').\n", skill_name, filepath, strline(buffer, start - buffer));
 					else { // Adjusted damage for specified skill
 						args.flag_val = 1;
-						map_setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
-						map_skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), args.skill_damage.rate, args.skill_damage.caster);
+						map_obj.setmapflag_sub(m, MF_SKILL_DAMAGE, true, &args);
+						map_obj.skill_damage_add(map_getmapdata(m), skill_name2id(skill_name), args.skill_damage.rate, args.skill_damage.caster);
 					}
 				}
 			}
@@ -4189,7 +4191,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 			union u_mapflag_args args = {};
 
 			if (!state)
-				map_setmapflag_sub(m, MF_SKILL_DURATION, false, &args);
+				map_obj.setmapflag_sub(m, MF_SKILL_DURATION, false, &args);
 			else {
 				char skill_name[SKILL_NAME_LENGTH];
 
@@ -4200,7 +4202,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 						ShowError("npc_parse_mapflag: skill_duration: Invalid skill name '%s' for Skill Duration mapflag. Skipping (file '%s', line '%d')\n", skill_name, filepath, strline(buffer, start - buffer));
 					else {
 						args.skill_duration.per = cap_value(args.skill_duration.per, 0, UINT16_MAX);
-						map_setmapflag_sub(m, MF_SKILL_DURATION, true, &args);
+						map_obj.setmapflag_sub(m, MF_SKILL_DURATION, true, &args);
 					}
 				}
 			}
@@ -4209,7 +4211,7 @@ static const char* npc_parse_mapflag(char* w1, char* w2, char* w3, char* w4, con
 
 		// All others do not need special treatment
 		default:
-			map_setmapflag(m, mapflag, state);
+			map_obj.setmapflag(m, mapflag, state);
 			break;
 	}
 
@@ -4573,7 +4575,7 @@ int npc_reload(void) {
 	npc_mob = npc_cache_mob = npc_delay_mob = 0;
 
 	// reset mapflags
-	map_flags_init();
+	map_obj.flags_init();
 
 	//TODO: the following code is copy-pasted from do_init_npc(); clean it up
 	// Reloading npcs now
@@ -4601,7 +4603,7 @@ int npc_reload(void) {
 	//Execute the OnInit event for freshly loaded npcs. [Skotlex]
 	npc_event_runall(script_config.init_event_name);
 
-	map_data_copyall();
+	map_obj.data_copyall();
 	do_reload_instance();
 
 	// Execute rest of the startup events if connected to char-server. [Lance]

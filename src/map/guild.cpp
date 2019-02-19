@@ -33,7 +33,7 @@ static DBMap* castle_db; // int castle_id -> struct guild_castle*
 static DBMap* guild_expcache_db; // uint32 char_id -> struct guild_expcache*
 static DBMap* guild_infoevent_db; // int guild_id -> struct eventlist*
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 struct eventlist {
 	char name[EVENT_NAME_LENGTH];

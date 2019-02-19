@@ -31,6 +31,7 @@
 static DBMap* party_db; // int party_id -> struct party_data* (releases data)
 static DBMap* party_booking_db; // uint32 char_id -> struct party_booking_ad_info* (releases data) // Party Booking [Spiria]
 static unsigned long party_booking_nextid = 1;
+static Map_Obj map_obj = Map_Obj();
 
 TIMER_FUNC(party_send_xy_timer);
 int party_create_byscript;

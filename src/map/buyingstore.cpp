@@ -32,7 +32,7 @@ static int buyingstore_autotrader_free(DBKey key, DBData *data, va_list ap);
 
 static DBMap *buyingstore_db;
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 DBMap *buyingstore_getdb(void) {
 	return buyingstore_db;

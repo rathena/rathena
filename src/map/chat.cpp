@@ -23,7 +23,7 @@
 
 int chat_triggerevent(struct chat_data *cd); // forward declaration
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 /// Initializes a chatroom object (common functionality for both pc and npc chatrooms).
 /// Returns a chatroom object on success, or NULL on failure.

@@ -28,7 +28,7 @@
 #include "pc.hpp"
 #include "trade.hpp"
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 struct s_elemental_db elemental_db[MAX_ELEMENTAL_CLASS]; // Elemental Database
 static uint16 elemental_count;
 

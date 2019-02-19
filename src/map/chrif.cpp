@@ -33,7 +33,7 @@
 #include "script.hpp" // script_config
 #include "storage.hpp"
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 static TIMER_FUNC(check_connect_char_server);
 

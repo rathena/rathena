@@ -25,7 +25,7 @@ static DBMap* channel_db; // channels
 
 struct Channel_Config channel_config;
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 DBMap* channel_get_db(void){ return channel_db; }
 

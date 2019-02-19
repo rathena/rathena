@@ -67,6 +67,7 @@ unsigned int active_scripts;
 unsigned int next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
+Map_Obj map_obj;
 
 static bool script_rid2sd_( struct script_state *st, struct map_session_data** sd, const char *func );
 
@@ -4710,8 +4711,14 @@ void do_init_script(void) {
 
 	active_scripts = 0;
 	next_id = 0;
-
+	
+	map_obj = Map_Obj();
 	mapreg_init();
+}
+
+void script_set_map(Map_Obj map_obj)
+{
+	map_obj = Map_Obj();
 }
 
 void script_reload(void) {
@@ -5668,7 +5675,7 @@ BUILDIN_FUNC(warpparty)
 				} while ((--attempts) > 0 && !map_getcell(m, x, y, CELL_CHKPASS));
 			}
 
-			if(!map_obj.getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
+			if(!map_obj.getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_obj.getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
 				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
@@ -5738,7 +5745,7 @@ BUILDIN_FUNC(warpguild)
 				pc_setpos(pl_sd,sd->status.save_point.map,sd->status.save_point.x,sd->status.save_point.y,CLR_TELEPORT);
 		break;
 		case 3: // m,x,y
-			if(!map_obj.getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
+			if(!map_obj.getmapflag(pl_sd->bl.m, MF_NORETURN) && !map_obj.getmapflag(pl_sd->bl.m, MF_NOWARP) && pc_job_can_entermap((enum e_job)pl_sd->status.class_, m, pl_sd->group_level))
 				pc_setpos(pl_sd,mapindex,x,y,CLR_TELEPORT);
 		break;
 		}
@@ -10421,13 +10428,13 @@ BUILDIN_FUNC(killmonster)
 
 	if( script_hasdata(st,4) ) {
 		if ( script_getnum(st,4) == 1 ) {
-			map_foreachinmap(buildin_killmonster_sub, m, BL_MOB, event ,allflag);
+			map_obj.foreachinmap(buildin_killmonster_sub, m, BL_MOB, event ,allflag);
 			return SCRIPT_CMD_SUCCESS;
 		}
 	}
 
 	map_obj.freeblock_lock();
-	map_foreachinmap(buildin_killmonster_sub_strip, m, BL_MOB, event ,allflag);
+	map_obj.foreachinmap(buildin_killmonster_sub_strip, m, BL_MOB, event ,allflag);
 	map_obj.freeblock_unlock();
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -10459,12 +10466,12 @@ BUILDIN_FUNC(killmonsterall)
 
 	if( script_hasdata(st,3) ) {
 		if ( script_getnum(st,3) == 1 ) {
-			map_foreachinmap(buildin_killmonsterall_sub,m,BL_MOB);
+			map_obj.foreachinmap(buildin_killmonsterall_sub,m,BL_MOB);
 			return SCRIPT_CMD_SUCCESS;
 		}
 	}
 
-	map_foreachinmap(buildin_killmonsterall_sub_strip,m,BL_MOB);
+	map_obj.foreachinmap(buildin_killmonsterall_sub_strip,m,BL_MOB);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -10970,7 +10977,7 @@ BUILDIN_FUNC(mapannounce)
 	if ((m = map_obj.mapname2mapid(mapname)) < 0)
 		return SCRIPT_CMD_SUCCESS;
 
-	map_foreachinmap(buildin_announce_sub, m, BL_PC,
+	map_obj.foreachinmap(buildin_announce_sub, m, BL_PC,
 			mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12289,7 +12296,7 @@ BUILDIN_FUNC(addrid)
 				script_pushint(st, 0);
 				return SCRIPT_CMD_FAILURE;
 			}
-			map_foreachinmap(buildin_addrid_sub, map_obj.mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
+			map_obj.foreachinmap(buildin_addrid_sub, map_obj.mapname2mapid(script_getstr(st, 4)), BL_PC, st, script_getnum(st, 3));
 			break;
 		default:
 			if((map_obj.id2sd(script_getnum(st,2))) == NULL) { // Player not found.
@@ -12383,7 +12390,7 @@ BUILDIN_FUNC(setmapflagnosave)
 	args.nosave.x = x;
 	args.nosave.y = y;
 
-	map_setmapflag_sub(m, MF_NOSAVE, true, &args);
+	map_obj.setmapflag_sub(m, MF_NOSAVE, true, &args);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -12481,7 +12488,7 @@ BUILDIN_FUNC(setmapflag)
 			break;
 	}
 
-	map_setmapflag_sub(m, static_cast<e_mapflag>(mf), true, &args);
+	map_obj.setmapflag_sub(m, static_cast<e_mapflag>(mf), true, &args);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12510,7 +12517,7 @@ BUILDIN_FUNC(removemapflag)
 
 	FETCH(4, args.flag_val);
 
-	map_setmapflag_sub(m, static_cast<e_mapflag>(mf), false, &args);
+	map_obj.setmapflag_sub(m, static_cast<e_mapflag>(mf), false, &args);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12527,7 +12534,7 @@ BUILDIN_FUNC(pvpon)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (!map_obj.getmapflag(m, MF_PVP))
-		map_setmapflag(m, MF_PVP, true);
+		map_obj.setmapflag(m, MF_PVP, true);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12544,7 +12551,7 @@ BUILDIN_FUNC(pvpoff)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (map_obj.getmapflag(m, MF_PVP))
-		map_setmapflag(m, MF_PVP, false);
+		map_obj.setmapflag(m, MF_PVP, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12561,7 +12568,7 @@ BUILDIN_FUNC(gvgon)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (!map_obj.getmapflag(m, MF_GVG))
-		map_setmapflag(m, MF_GVG, true);
+		map_obj.setmapflag(m, MF_GVG, true);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12578,7 +12585,7 @@ BUILDIN_FUNC(gvgoff)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (map_obj.getmapflag(m, MF_GVG))
-		map_setmapflag(m, MF_GVG, false);
+		map_obj.setmapflag(m, MF_GVG, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12595,7 +12602,7 @@ BUILDIN_FUNC(gvgon3)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (!map_obj.getmapflag(m, MF_GVG_TE))
-		map_setmapflag(m, MF_GVG_TE, true);
+		map_obj.setmapflag(m, MF_GVG_TE, true);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12612,7 +12619,7 @@ BUILDIN_FUNC(gvgoff3)
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (map_obj.getmapflag(m, MF_GVG_TE))
-		map_setmapflag(m, MF_GVG_TE, false);
+		map_obj.setmapflag(m, MF_GVG_TE, false);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12692,7 +12699,7 @@ BUILDIN_FUNC(maprespawnguildid)
 	//Catch ALL players (in case some are 'between maps' on execution time)
 	map_obj.foreachpc(buildin_maprespawnguildid_sub_pc,m,g_id,flag);
 	if (flag&4) //Remove script mobs.
-		map_foreachinmap(buildin_maprespawnguildid_sub_mob,m,BL_MOB);
+		map_obj.foreachinmap(buildin_maprespawnguildid_sub_mob,m,BL_MOB);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13157,7 +13164,7 @@ BUILDIN_FUNC(mapwarp)	// Added by RoVeRT
 			}
 			break;
 		default:
-			map_foreachinmap(buildin_areawarp_sub,m,BL_PC,index,x,y,0,0);
+			map_obj.foreachinmap(buildin_areawarp_sub,m,BL_PC,index,x,y,0,0);
 			break;
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -13198,7 +13205,7 @@ BUILDIN_FUNC(mobcount)	// Added by RoVeRT
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	script_pushint(st,map_foreachinmap(buildin_mobcount_sub, m, BL_MOB, event));
+	script_pushint(st,map_obj.foreachinmap(buildin_mobcount_sub, m, BL_MOB, event));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13442,7 +13449,7 @@ BUILDIN_FUNC(setwall)
 	if( (m = map_obj.mapname2mapid(mapname)) < 0 )
 		return SCRIPT_CMD_SUCCESS; // Invalid Map
 
-	map_iwall_set(m, x, y, size, dir, shootable, name);
+	map_obj.iwall_set(m, x, y, size, dir, shootable, name);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13450,7 +13457,7 @@ BUILDIN_FUNC(delwall)
 {
 	const char *name = script_getstr(st,2);
 
-	if( !map_iwall_remove(name) ){
+	if( !map_obj.iwall_remove(name) ){
 		ShowError( "buildin_delwall: wall \"%s\" does not exist.\n", name );
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -13462,7 +13469,7 @@ BUILDIN_FUNC(checkwall)
 {
 	const char *wall_name = script_getstr(st, 2);
 
-	script_pushint(st, map_iwall_exist(wall_name));
+	script_pushint(st, map_obj.iwall_exist(wall_name));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13993,7 +14000,7 @@ BUILDIN_FUNC(playBGMall)
 	else if( script_hasdata(st,3) ) {// entire map
 		const char* mapname = script_getstr(st,3);
 
-		map_foreachinmap(playBGM_sub, map_obj.mapname2mapid(mapname), BL_PC, name);
+		map_obj.foreachinmap(playBGM_sub, map_obj.mapname2mapid(mapname), BL_PC, name);
 	}
 	else {// entire server
 		map_obj.foreachpc(&playBGM_foreachpc_sub, name);
@@ -14059,7 +14066,7 @@ BUILDIN_FUNC(soundeffectall)
 	if(!script_hasdata(st,5))
 	{	// entire map
 		const char* mapname = script_getstr(st,4);
-		map_foreachinmap(soundeffect_sub, map_obj.mapname2mapid(mapname), BL_PC, name, type);
+		map_obj.foreachinmap(soundeffect_sub, map_obj.mapname2mapid(mapname), BL_PC, name, type);
 	}
 	else
 	if(script_hasdata(st,8))
@@ -17343,10 +17350,10 @@ BUILDIN_FUNC(getunitdata)
 
 	switch (bl->type) {
 		case BL_MOB:  md = map_obj.id2md(bl->id); break;
-		case BL_HOM:  hd = map_id2hd(bl->id); break;
-		case BL_PET:  pd = map_id2pd(bl->id); break;
-		case BL_MER:  mc = map_id2mc(bl->id); break;
-		case BL_ELEM: ed = map_id2ed(bl->id); break;
+		case BL_HOM:  hd = map_obj.id2hd(bl->id); break;
+		case BL_PET:  pd = map_obj.id2pd(bl->id); break;
+		case BL_MER:  mc = map_obj.id2mc(bl->id); break;
+		case BL_ELEM: ed = map_obj.id2ed(bl->id); break;
 		case BL_NPC:  nd = map_obj.id2nd(bl->id); break;
 		default:
 			ShowWarning("buildin_getunitdata: Invalid object type!\n");
@@ -17675,10 +17682,10 @@ BUILDIN_FUNC(setunitdata)
 
 	switch (bl->type) {
 		case BL_MOB:  md = map_obj.id2md(bl->id); break;
-		case BL_HOM:  hd = map_id2hd(bl->id); break;
-		case BL_PET:  pd = map_id2pd(bl->id); break;
-		case BL_MER:  mc = map_id2mc(bl->id); break;
-		case BL_ELEM: ed = map_id2ed(bl->id); break;
+		case BL_HOM:  hd = map_obj.id2hd(bl->id); break;
+		case BL_PET:  pd = map_obj.id2pd(bl->id); break;
+		case BL_MER:  mc = map_obj.id2mc(bl->id); break;
+		case BL_ELEM: ed = map_obj.id2ed(bl->id); break;
 		case BL_NPC:
 			nd = map_obj.id2nd(bl->id);
 			if (!nd->status.hp)
@@ -18144,8 +18151,8 @@ BUILDIN_FUNC(setunitname)
 
 	switch (bl->type) {
 		case BL_MOB:  md = map_obj.id2md(bl->id); break;
-		case BL_HOM:  hd = map_id2hd(bl->id); break;
-		case BL_PET:  pd = map_id2pd(bl->id); break;
+		case BL_HOM:  hd = map_obj.id2hd(bl->id); break;
+		case BL_PET:  pd = map_obj.id2pd(bl->id); break;
 		default:
 			ShowWarning("buildin_setunitname: Invalid object type!\n");
 			return SCRIPT_CMD_FAILURE;
@@ -19174,7 +19181,7 @@ BUILDIN_FUNC(questinfo)
 	qi.min_level = 1;
 	qi.max_level = MAX_LEVEL;
 
-	q2 = map_add_questinfo(nd->bl.m, &qi);
+	q2 = map_obj.add_questinfo(nd->bl.m, &qi);
 	q2->req = NULL;
 	q2->req_count = 0;
 	q2->jobid = NULL;
@@ -19960,7 +19967,7 @@ BUILDIN_FUNC(instance_warpall)
 		return SCRIPT_CMD_FAILURE;
 
 	for(i = 0; i < instance_data[instance_id].cnt_map; i++)
-		map_foreachinmap(buildin_instance_warpall_sub, instance_data[instance_id].map[i]->m, BL_PC, map_id2index(m), x, y, instance_id);
+		map_obj.foreachinmap(buildin_instance_warpall_sub, instance_data[instance_id].map[i]->m, BL_PC, map_id2index(m), x, y, instance_id);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19992,7 +19999,7 @@ BUILDIN_FUNC(instance_announce) {
 	}
 
 	for( i = 0; i < instance_data[instance_id].cnt_map; i++ )
-		map_foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i]->m, BL_PC,
+		map_obj.foreachinmap(buildin_announce_sub, instance_data[instance_id].map[i]->m, BL_PC,
 						 mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 
 	return SCRIPT_CMD_SUCCESS;
@@ -20722,7 +20729,7 @@ BUILDIN_FUNC(getcharip)
 		{
 			int id = script_getnum(st, 2);
 
-			sd = (map_obj.id2sd(id) ? map_id2sd(id) : map_obj.charid2sd(id));
+			sd = (map_obj.id2sd(id) ? map_obj.id2sd(id) : map_obj.charid2sd(id));
 		}
 	}
 	else
@@ -21031,7 +21038,7 @@ BUILDIN_FUNC(getgroupitem) {
 static int atcommand_cleanfloor_sub(struct block_list *bl, va_list ap)
 {
 	nullpo_ret(bl);
-	map_clearflooritem(bl);
+	map_obj.clearflooritem(bl);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -21047,7 +21054,7 @@ BUILDIN_FUNC(cleanmap)
 		return SCRIPT_CMD_FAILURE;
 
 	if ((script_lastdata(st) - 2) < 4) {
-		map_foreachinmap(atcommand_cleanfloor_sub, m, BL_ITEM);
+		map_obj.foreachinmap(atcommand_cleanfloor_sub, m, BL_ITEM);
 	} else {
 		int16 x0 = script_getnum(st, 3);
 		int16 y0 = script_getnum(st, 4);
@@ -22106,7 +22113,7 @@ BUILDIN_FUNC(showscript) {
 		bl = map_obj.id2bl(id);
 	}
 	else {
-		bl = st->rid ? map_obj.id2bl(st->rid) : map_id2bl(st->oid);
+		bl = st->rid ? map_obj.id2bl(st->rid) : map_obj.id2bl(st->oid);
 	}
 
 	if (!bl) {
@@ -22194,7 +22201,7 @@ BUILDIN_FUNC(geteleminfo) {
 BUILDIN_FUNC(setquestinfo_level) {
 	TBL_NPC* nd = map_obj.id2nd(st->oid);
 	int quest_id = script_getnum(st, 2);
-	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
+	struct questinfo *qi = map_obj.has_questinfo(nd->bl.m, nd, quest_id);
 
 	if (!qi) {
 		ShowError("buildin_setquestinfo_level: Quest with ID '%d' is not defined yet.\n", quest_id);
@@ -22217,7 +22224,7 @@ BUILDIN_FUNC(setquestinfo_level) {
 BUILDIN_FUNC(setquestinfo_req) {
 	TBL_NPC* nd = map_obj.id2nd(st->oid);
 	int quest_id = script_getnum(st, 2);
-	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
+	struct questinfo *qi = map_obj.has_questinfo(nd->bl.m, nd, quest_id);
 	uint8 i = 0;
 	uint8 num = script_lastdata(st);
 
@@ -22254,7 +22261,7 @@ BUILDIN_FUNC(setquestinfo_req) {
 BUILDIN_FUNC(setquestinfo_job) {
 	TBL_NPC* nd = map_obj.id2nd(st->oid);
 	int quest_id = script_getnum(st, 2);
-	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
+	struct questinfo *qi = map_obj.has_questinfo(nd->bl.m, nd, quest_id);
 	int job_id = 0;
 	uint8 i = 0;
 	uint8 num = script_lastdata(st)+1;

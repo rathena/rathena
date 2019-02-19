@@ -45,6 +45,8 @@ enum e_regen {
 	RGN_SSP  = 0x08,
 };
 
+static Map_Obj map_obj = Map_Obj();
+
 // Bonus values and upgrade chances for refining equipment
 static struct {
 	int chance[REFINE_CHANCE_TYPE_MAX][MAX_REFINE]; /// Success chance
@@ -9841,7 +9843,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_BOSSMAPINFO:
 			if( sd != NULL ) {
-				struct mob_data *boss_md = map_getmob_boss(bl->m); // Search for Boss on this Map
+				struct mob_data *boss_md = map_obj.getmob_boss(bl->m); // Search for Boss on this Map
 
 				if( boss_md == NULL ) { // No MVP on this map
 					clif_bossmapinfo(sd, NULL, BOSS_INFO_NOT);
@@ -11784,7 +11786,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_BOSSMAPINFO:
 			if (sd)
-				clif_bossmapinfo(sd, map_id2boss(sce->val1), BOSS_INFO_ALIVE_WITHMSG); // First Message
+				clif_bossmapinfo(sd, map_obj.id2boss(sce->val1), BOSS_INFO_ALIVE_WITHMSG); // First Message
 			break;
 		case SC_MERC_HPUP:
 			status_percent_heal(bl, 100, 0); // Recover Full HP
@@ -13104,7 +13106,7 @@ TIMER_FUNC(status_change_timer){
 
 	case SC_BOSSMAPINFO:
 		if( sd && --(sce->val4) >= 0 ) {
-			struct mob_data *boss_md = map_id2boss(sce->val1);
+			struct mob_data *boss_md = map_obj.id2boss(sce->val1);
 
 			if (boss_md) {
 				if (sd->bl.m != boss_md->bl.m) // Not on same map anymore
@@ -14422,7 +14424,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
  */
 static TIMER_FUNC(status_natural_heal_timer){
 	natural_heal_diff_tick = DIFF_TICK(tick,natural_heal_prev_tick);
-	map_foreachregen(status_natural_heal);
+	map_obj.foreachregen(status_natural_heal);
 	natural_heal_prev_tick = tick;
 	return 0;
 }

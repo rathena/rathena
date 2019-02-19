@@ -15,7 +15,7 @@
 #include "clif.hpp"
 #include "pc.hpp"
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 //std::recursive_mutex> duel_list_mutex; //preparation for multithread
 std::unordered_map<size_t,struct duel> duel_list;
 

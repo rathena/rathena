@@ -317,7 +317,6 @@ void usercheck(void)
 /*======================================
  *	CORE : MAINROUTINE
  *--------------------------------------*/
-#ifndef TESTING
 int main (int argc, char **argv)
 {
 	{// initialize program arguments
@@ -393,4 +392,3 @@ int main (int argc, char **argv)
 
 	return 0;
 }
-#endif

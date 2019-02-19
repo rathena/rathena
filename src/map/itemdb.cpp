@@ -27,7 +27,7 @@ static DBMap *itemdb_group; /// Item Group DB
 static DBMap *itemdb_randomopt; /// Random option DB
 static DBMap *itemdb_randomopt_group; /// Random option group DB
 
-Map_Obj map_obj = Map_Obj();
+static Map_Obj map_obj = Map_Obj();
 
 struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
 
