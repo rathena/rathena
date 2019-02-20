@@ -22,8 +22,8 @@
 
 static DBMap* bg_team_db; // int bg_id -> struct battleground_data*
 static unsigned int bg_team_counter = 0; // Next bg_id
-
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 struct battleground_data* bg_team_search(int bg_id)
 { // Search a BG Team using bg_id
@@ -83,7 +83,7 @@ int bg_team_warp(int bg_id, unsigned short mapindex, short x, short y)
 int bg_send_dot_remove(struct map_session_data *sd)
 {
 	if( sd && sd->bg_id )
-		clif_bg_xy_remove(sd);
+		clif.bg_xy_remove(sd);
 	return 0;
 }
 
@@ -111,11 +111,11 @@ int bg_team_join(int bg_id, struct map_session_data *sd)
 		struct map_session_data *pl_sd;
 
 		if( (pl_sd = bg->members[i].sd) != NULL && pl_sd != sd )
-			clif_hpmeter_single(sd->fd, pl_sd->bl.id, pl_sd->battle_status.hp, pl_sd->battle_status.max_hp);
+			clif.hpmeter_single(sd->fd, pl_sd->bl.id, pl_sd->battle_status.hp, pl_sd->battle_status.max_hp);
 	}
 
-	clif_bg_hp(sd);
-	clif_bg_xy(sd);
+	clif.bg_hp(sd);
+	clif.bg_xy(sd);
 	return 1;
 }
 
@@ -146,7 +146,7 @@ int bg_team_leave(struct map_session_data *sd, int flag)
 	else
 		sprintf(output, "Server : %s is leaving the battlefield...", sd->status.name);
 
-	clif_bg_message(bg, 0, "Server", output, strlen(output) + 1);
+	clif.bg_message(bg, 0, "Server", output, strlen(output) + 1);
 
 	if( bg->logout_event[0] && flag )
 		npc_event(sd, bg->logout_event, 0);
@@ -233,7 +233,7 @@ int bg_send_message(struct map_session_data *sd, const char *mes, int len)
 	if( sd->bg_id == 0 || (bg = bg_team_search(sd->bg_id)) == NULL )
 		return 0;
 	
-	clif_bg_message(bg, sd->bl.id, sd->status.name, mes, len);
+	clif.bg_message(bg, sd->bl.id, sd->status.name, mes, len);
 
 	return 0;
 }
@@ -256,7 +256,7 @@ int bg_send_xy_timer_sub(DBKey key, DBData *data, va_list ap)
 		if( sd->bl.x != bg->members[i].x || sd->bl.y != bg->members[i].y ) { // xy update
 			bg->members[i].x = sd->bl.x;
 			bg->members[i].y = sd->bl.y;
-			clif_bg_xy(sd);
+			clif.bg_xy(sd);
 		}
 	}
 

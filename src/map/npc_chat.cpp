@@ -63,6 +63,7 @@
  */
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 /* Structure containing all info associated with a single pattern block */
 struct pcrematch_entry {

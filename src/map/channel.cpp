@@ -15,7 +15,7 @@
 #include "../common/timer.hpp"  // DIFF_TICK
 
 #include "battle.hpp"
-#include "clif.hpp" //clif_chsys_msg
+#include "clif.hpp" //clif.chsys_msg
 #include "guild.hpp"
 #include "map.hpp" //msg_conf
 #include "pc.hpp"
@@ -26,6 +26,7 @@ static DBMap* channel_db; // channels
 struct Channel_Config channel_config;
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 DBMap* channel_get_db(void){ return channel_db; }
 
@@ -207,14 +208,14 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 	if(channel_haspcbanned(channel,sd)==1){
 		char output[CHAT_SIZE_MAX];
 		sprintf(output, msg_txt(sd,1438),channel->name); //You're currently banned from the '%s' channel.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -3;
 	}
 
 	if (channel->type == CHAN_TYPE_PRIVATE && db_size(channel->users) >= channel_config.private_channel.max_member) {
 		char output[CHAT_SIZE_MAX];
 		sprintf(output, msg_txt(sd,760), channel->name, channel_config.private_channel.max_member); // You cannot join channel '%s'. Limit of %d has been met.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -4;
 	}
 
@@ -229,7 +230,7 @@ int channel_join(struct Channel *channel, struct map_session_data *sd) {
 	} else if( channel->opt & CHAN_OPT_ANNOUNCE_JOIN ) {
 		char output[CHAT_SIZE_MAX];
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,761), channel->alias, sd->status.name); // %s %s has joined.
-		clif_channel_msg(channel,output,channel->color);
+		clif.channel_msg(channel,output,channel->color);
 	}
 
 	/* someone is cheating, we kindly disconnect the bastard */
@@ -261,7 +262,7 @@ int channel_mjoin(struct map_session_data *sd) {
 
 	if( mapdata->channel->opt & CHAN_OPT_ANNOUNCE_SELF ) {
 		sprintf(mout, msg_txt(sd,1435),mapdata->channel->name,mapdata->name); // You're now in the '#%s' channel for '%s'.
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], mout, false, SELF);
+		clif.messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], mout, false, SELF);
 	}
 
 	return channel_join(mapdata->channel,sd);
@@ -447,7 +448,7 @@ int channel_send(struct Channel *channel, struct map_session_data *sd, const cha
 		return -1;
 
 	if(!pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) && channel->msg_delay != 0 && DIFF_TICK(sd->channel_tick[idx] + channel->msg_delay, gettick()) > 0) {
-		clif_messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1455),false,SELF); //You're talking too fast!
+		clif.messagecolor(&sd->bl,color_table[COLOR_RED],msg_txt(sd,1455),false,SELF); //You're talking too fast!
 		return -2;
 	}
 	else {
@@ -456,7 +457,7 @@ int channel_send(struct Channel *channel, struct map_session_data *sd, const cha
 		if((channel->opt&CHAN_OPT_COLOR_OVERRIDE) && sd->fontcolor && sd->fontcolor < channel_config.colors_count && channel_config.colors[sd->fontcolor])
 			color = channel_config.colors[sd->fontcolor];
 		safesnprintf(output, CHAT_SIZE_MAX, "%s %s : %s", channel->alias, sd->status.name, msg);
-		clif_channel_msg(channel,output,color);
+		clif.channel_msg(channel,output,color);
 		sd->channel_tick[idx] = gettick();
 	}
 	return 0;
@@ -588,18 +589,18 @@ int channel_display_list(struct map_session_data *sd, const char *options){
 	if( options[0] != '\0' && strcmpi(options,"colors") == 0 ) {
 		char msg[40];
 		unsigned char k;
-		clif_displaymessage(sd->fd, msg_txt(sd,1444)); // ---- Available Colors ----
+		clif.displaymessage(sd->fd, msg_txt(sd,1444)); // ---- Available Colors ----
 		for( k = 0; k < channel_config.colors_count; k++ ) {
 			if (channel_config.colors[k]) {
 				sprintf(msg, msg_txt(sd,1445),channel_config.colors_name[k]);// - '%s'
-				clif_messagecolor(&sd->bl,channel_config.colors[k],msg,false,SELF);
+				clif.messagecolor(&sd->bl,channel_config.colors[k],msg,false,SELF);
 			}
 		}
 	}
 	else if( options[0] != '\0' && strcmpi(options,"mine") == 0 ) { //display chan I'm into
-		clif_displaymessage(sd->fd, msg_txt(sd,1475)); // ---- My Channels ----
+		clif.displaymessage(sd->fd, msg_txt(sd,1475)); // ---- My Channels ----
 		if(!sd->channel_count)
-			clif_displaymessage(sd->fd, msg_txt(sd,1476)); // You have not joined any channels.
+			clif.displaymessage(sd->fd, msg_txt(sd,1476)); // You have not joined any channels.
 		else {
 			unsigned char k;
 
@@ -611,7 +612,7 @@ int channel_display_list(struct map_session_data *sd, const char *options){
 					continue;
 
 				sprintf(output, msg_txt(sd,1409), channel->name, db_size(channel->users));// - #%s (%d users)
-				clif_displaymessage(sd->fd, output);
+				clif.displaymessage(sd->fd, output);
 			}
 		}
 	}
@@ -622,16 +623,16 @@ int channel_display_list(struct map_session_data *sd, const char *options){
 		char output[CHAT_SIZE_MAX];
 		struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-		clif_displaymessage(sd->fd, msg_txt(sd,1410)); // ---- Public Channels ----
+		clif.displaymessage(sd->fd, msg_txt(sd,1410)); // ---- Public Channels ----
 		if( channel_config.map_tmpl.name[0] && mapdata->channel ) {
 			sprintf(output, msg_txt(sd,1409), mapdata->channel->name, db_size(mapdata->channel->users));// - #%s (%d users)
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 		}
 		if( channel_config.ally_tmpl.name[0] && sd->status.guild_id ) {
 			struct guild *g = sd->guild;
 			if (g && g->channel) {
 				sprintf(output, msg_txt(sd,1409), g->channel->name, db_size(((struct Channel *)g->channel)->users));// - #%s (%d users)
-				clif_displaymessage(sd->fd, output);
+				clif.displaymessage(sd->fd, output);
 			}
 		}
 		iter = db_iterator(channel_db);
@@ -640,7 +641,7 @@ int channel_display_list(struct map_session_data *sd, const char *options){
 				continue;
 			if( has_perm || channel->type == CHAN_TYPE_PUBLIC ) {
 				sprintf(output, msg_txt(sd,1409), channel->name, db_size(channel->users));// - #%s (%d users)
-				clif_displaymessage(sd->fd, output);
+				clif.displaymessage(sd->fd, output);
 			}
 		}
 		dbi_destroy(iter);
@@ -669,7 +670,7 @@ int channel_pccreate(struct map_session_data *sd, char *chname, char *chpass){
 		channel_join(channel,sd);
 		if( ( channel->opt & CHAN_OPT_ANNOUNCE_SELF ) ) {
 			sprintf(output, msg_txt(sd,1403),chname); // You're now in the '%s' channel.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 		}
 	} else { //failure display cause
 		switch(res){
@@ -678,7 +679,7 @@ int channel_pccreate(struct map_session_data *sd, char *chname, char *chpass){
 		case -3: sprintf(output, msg_txt(sd,1436), CHAN_NAME_LENGTH); break;// Channel password can't be over %d characters.
 		case -4: sprintf(output, msg_txt(sd,1407), chname);// Channel '%s' is not available.
 		}
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 	return 0;
@@ -697,20 +698,20 @@ int channel_pcdelete(struct map_session_data *sd, char *chname){
 	if(!sd || !chname) return 0;
 
 	if( channel_chk(chname,NULL,1) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
+		clif.displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
 		return -1;
 	}
 
 	channel = channel_name2channel(chname,sd,0);
 	if(channel_pc_haschan(sd,channel)<0){
 		sprintf(output, msg_txt(sd,1425),chname);// You're not part of the '%s' channel.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -2; //channel doesn't exist or player don't have it
 	}
 	channel_delete(channel,false);
 
 	sprintf(output, msg_txt(sd,1448),chname); // Channel '%s' deleted.
-	clif_displaymessage(sd->fd, output);
+	clif.displaymessage(sd->fd, output);
 
 	return 0;
 }
@@ -729,26 +730,26 @@ int channel_pcleave(struct map_session_data *sd, char *chname){
 		return 0;
 
 	if( channel_chk(chname,NULL,1) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
+		clif.displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
 		return -1;
 	}
 
 	channel = channel_name2channel(chname,sd,0);
 	if(channel_pc_haschan(sd,channel)<0){
 		sprintf(output, msg_txt(sd,1425),chname);// You're not part of the '%s' channel.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -2; //channel doesn't exist or player don't have it
 	}
 
 	if (!(channel->opt&CHAN_OPT_CAN_LEAVE)) {
 		sprintf(output, msg_txt(sd,762), chname); // You cannot leave channel '%s'.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 
 	if( !channel_config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_LEAVE) ) {
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,763), channel->alias, sd->status.name); // %s %s left.
-		clif_channel_msg(channel,output,channel->color);
+		clif.channel_msg(channel,output,channel->color);
 	}
 	switch(channel->type){
 	case CHAN_TYPE_ALLY: channel_pcquit(sd,3); break;
@@ -758,7 +759,7 @@ int channel_pcleave(struct map_session_data *sd, char *chname){
 	}
 
 	sprintf(output, msg_txt(sd,1426),chname); // You've left the '%s' channel.
-	clif_displaymessage(sd->fd, output);
+	clif.displaymessage(sd->fd, output);
 	return 0;
 }
 
@@ -777,7 +778,7 @@ int channel_pcjoin(struct map_session_data *sd, char *chname, char *pass){
 		return 0;
 
 	if( channel_chk(chname,NULL,1) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
+		clif.displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
 		return -1;
 	}
 
@@ -785,12 +786,12 @@ int channel_pcjoin(struct map_session_data *sd, char *chname, char *pass){
 	if(channel){
 		if (!pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) && !channel_pccheckgroup(channel, sd->group_id)) {
 			sprintf(output, msg_txt(sd,1407), chname); // Channel '%s' is not available.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		}
 		if(channel_haspc(channel,sd)==1) {
 			sprintf(output, msg_txt(sd,1434),chname); // You're already in the '%s' channel.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		}
 		else if( channel->pass[0] != '\0') { //chan has a pass
@@ -799,7 +800,7 @@ int channel_pcjoin(struct map_session_data *sd, char *chname, char *pass){
 					sd->stealth = true;
 				} else {
 					sprintf(output, msg_txt(sd,1401),chname,"@join"); // Channel '%s' is password-protected (usage: %s <#channel_name> <password>).
-					clif_displaymessage(sd->fd, output);
+					clif.displaymessage(sd->fd, output);
 					return -1;
 				}
 			}
@@ -807,7 +808,7 @@ int channel_pcjoin(struct map_session_data *sd, char *chname, char *pass){
 	}
 	else {
 		sprintf(output, msg_txt(sd,1400),chname,"@join"); // Unknown channel '%s' (usage: %s <#channel_name>).
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 
@@ -821,7 +822,7 @@ int channel_pcjoin(struct map_session_data *sd, char *chname, char *pass){
 
 	if( ( channel->opt & CHAN_OPT_ANNOUNCE_SELF ) ) {
 		sprintf(output, msg_txt(sd,1403),chname); // You're now in the '%s' channel.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 	}
 
 	return 0;
@@ -843,7 +844,7 @@ int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
 		return 0;
 
 	if( channel_chk(chname,NULL,1) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
+		clif.displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
 		return -1;
 	}
 
@@ -851,19 +852,19 @@ int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
 	channel = channel_name2channel(chname,sd,0);
 	if( !channel ) {
 		sprintf(output, msg_txt(sd,1407), chname);// Channel '%s' is not available.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 
 	if( !pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) {
 		if (channel->char_id != sd->status.char_id) {
 			sprintf(output, msg_txt(sd,1412), chname);// You're not the owner of channel '%s'.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		}
 		else if (!(channel->opt&CHAN_OPT_COLOR_OVERRIDE)) {
 			sprintf(output, msg_txt(sd,764), chname); // You cannot change the color for channel '%s'.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		}
 	}
@@ -871,12 +872,12 @@ int channel_pccolor(struct map_session_data *sd, char *chname, char *color){
 	ARR_FIND(0,channel_config.colors_count,k,( strcmpi(color,channel_config.colors_name[k]) == 0 ) );
 	if( k >= channel_config.colors_count ) {
 		sprintf(output, msg_txt(sd,1411), color);// Unknown color '%s'.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 	channel->color = channel_config.colors[k];
 	sprintf(output, msg_txt(sd,1413),chname,channel_config.colors_name[k]);// '%s' channel color updated to '%s'.
-	clif_displaymessage(sd->fd, output);
+	clif.displaymessage(sd->fd, output);
 	return 0;
 }
 
@@ -895,19 +896,19 @@ int channel_pcbind(struct map_session_data *sd, char *chname){
 		return 0;
 
 	if( channel_chk(chname,NULL,1) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
+		clif.displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
 		return -1;
 	}
 
 	channel = channel_name2channel(chname,sd,0);
 	if(channel_pc_haschan(sd,channel)<0){
 		sprintf(output, msg_txt(sd,1425),chname);// You're not part of the '%s' channel.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -2; //channel doesn't exist or player don't have it
 	}
 	sd->gcbind = channel;
 	sprintf(output, msg_txt(sd,1431),chname); // Your global chat is now binded to the '%s' channel.
-	clif_displaymessage(sd->fd, output);
+	clif.displaymessage(sd->fd, output);
 	return 0;
 }
 
@@ -923,11 +924,11 @@ int channel_pcunbind(struct map_session_data *sd){
 		return 0;
 
 	if( sd->gcbind == NULL ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1432));// Your global chat is not binded to any channel.
+		clif.displaymessage(sd->fd, msg_txt(sd,1432));// Your global chat is not binded to any channel.
 		return -1;
 	}
 	sprintf(output, msg_txt(sd,1433),sd->gcbind->name); // Your global chat is now unbinded from the '#%s' channel.
-	clif_displaymessage(sd->fd, output);
+	clif.displaymessage(sd->fd, output);
 	sd->gcbind = NULL;
 	return 0;
 }
@@ -946,25 +947,25 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 	struct map_session_data *tsd = map_obj.nick2sd(pname,false);
 
 	if( channel_chk(chname,NULL,1) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
+		clif.displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
 		return -1;
 	}
 
 	channel = channel_name2channel(chname,sd,0);
 	if( !channel ) {
 		sprintf(output, msg_txt(sd,1407), chname);// Channel '%s' is not available.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 
 	if( !pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) {
 		if (channel->char_id != sd->status.char_id) {
 			sprintf(output, msg_txt(sd,1412), chname);// You're not the owner of channel '%s'.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		} else if (!channel_config.private_channel.ban) {
 			sprintf(output, msg_txt(sd,765), chname); // You're not allowed to ban a player.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		}
 	}
@@ -973,26 +974,26 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 		char banned;
 		if(!tsd || pc_has_permission(tsd, PC_PERM_CHANNEL_ADMIN) ) {
 			sprintf(output, msg_txt(sd,1464), pname);// Ban failed for player '%s'.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		}
 
 		banned = channel_haspcbanned(channel,tsd);
 		if(!flag &&  banned==1) {
 			sprintf(output, msg_txt(sd,1465), tsd->status.name);// Player '%s' is already banned from this channel.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		}
 		else if(flag==1 && banned==0) {
 			sprintf(output, msg_txt(sd,1440), tsd->status.name);// Player '%s' is not banned from this channel.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		}
 	}
 	else {
 		if( !db_size(channel->banned) ) {
 			sprintf(output, msg_txt(sd,1439), chname);// Channel '%s' contains no banned players.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return 0;
 		}
 	}
@@ -1025,19 +1026,19 @@ int channel_pcban(struct map_session_data *sd, char *chname, char *pname, int fl
 		DBIterator *iter = db_iterator(channel->banned);
 		struct chan_banentry *cbe;
 		sprintf(output, msg_txt(sd,1443), channel->name);// ---- '#%s' Ban List:
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		for( cbe = (struct chan_banentry *)dbi_first(iter); dbi_exists(iter); cbe = (struct chan_banentry *)dbi_next(iter) ) { //for all users
 			if (cbe->char_name[0])
 				sprintf(output, "%d: %s",cbe->char_id,cbe->char_name);
 			else
 				sprintf(output, "%d: ****",cbe->char_id);
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 		}
 		dbi_destroy(iter);
 		}
 		return 0;
 	}
-	clif_displaymessage(sd->fd, output);
+	clif.displaymessage(sd->fd, output);
 
 	return 0;
 }
@@ -1055,47 +1056,47 @@ int channel_pckick(struct map_session_data *sd, char *chname, char *pname) {
 	struct map_session_data *tsd = map_obj.nick2sd(pname,false);
 
 	if( channel_chk(chname,NULL,1) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
+		clif.displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
 		return -1;
 	}
 
 	channel = channel_name2channel(chname,sd,0);
 	if( !channel ) {
 		sprintf(output, msg_txt(sd,1407), chname);// Channel '%s' is not available.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 
 	if (!tsd) {
-		clif_displaymessage(sd->fd, msg_txt(sd,3));
+		clif.displaymessage(sd->fd, msg_txt(sd,3));
 		return -1;
 	}
 
 	if( !pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) {
 		if (channel->char_id != sd->status.char_id) {
 			sprintf(output, msg_txt(sd,1412), chname);// You're not the owner of channel '%s'.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 		} else if (!channel_config.private_channel.kick) {
 			sprintf(output, msg_txt(sd,766), chname); // You cannot kick a player from channel '%s'.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 		}
 		return -1;
 	}
 
 	if (channel_pc_haschan(sd, channel) < 0) {
 		sprintf(output, msg_txt(sd,1425), chname); // You're not part of the '%s' channel.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 
 	if (channel->char_id == sd->status.char_id) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 767)); // You're not allowed to kick a player.
+		clif.displaymessage(sd->fd, msg_txt(sd, 767)); // You're not allowed to kick a player.
 		return -1;
 	}
 
 	if( !channel_config.closing && (channel->opt & CHAN_OPT_ANNOUNCE_LEAVE) ) {
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(sd,768), channel->alias, tsd->status.name); // %s %s has been kicked.
-		clif_channel_msg(channel,output,channel->color);
+		clif.channel_msg(channel,output,channel->color);
 	}
 
 	switch(channel->type){
@@ -1133,7 +1134,7 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 	};
 
 	if( channel_chk(chname,NULL,1) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
+		clif.displaymessage(sd->fd, msg_txt(sd,1405));// Channel name must start with '#'.
 		return -1;
 	}
 
@@ -1143,13 +1144,13 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 	channel = channel_name2channel(chname,sd,0);
 	if( !channel ) {
 		sprintf(output, msg_txt(sd,1407), chname);// Channel '%s' is not available.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 
 	if( sd && channel->char_id != sd->status.char_id && !pc_has_permission(sd, PC_PERM_CHANNEL_ADMIN) ) {
 		sprintf(output, msg_txt(sd,1412), chname);// You're not the owner of channel '%s'.
-		clif_displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, output);
 		return -1;
 	}
 	
@@ -1157,11 +1158,11 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 	ARR_FIND(1,s,k,( strncmpi(option,opt_str[k],3) == 0 )); //we only cmp 3 letter atm
 	if(!option || option[0] == '\0' || k >= s ) {
 		sprintf(output, msg_txt(sd,1447), option);// Unknown channel option '%s'.
-		clif_displaymessage(sd->fd, output);
-		clif_displaymessage(sd->fd, msg_txt(sd,1414));// ---- Available options:
+		clif.displaymessage(sd->fd, output);
+		clif.displaymessage(sd->fd, msg_txt(sd,1414));// ---- Available options:
 		for( k = 1; k < s; k++ ) {
 			sprintf(output, msg_txt(sd,1445), opt_str[k]);// - '%s'
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 		}
 		return -1;
 	}
@@ -1184,56 +1185,56 @@ int channel_pcsetopt(struct map_session_data *sd, char *chname, const char *opti
 	if( val[0] == '\0' ) {
 		if ( opt == CHAN_OPT_MSG_DELAY ) {
 			sprintf(output, msg_txt(sd,1466), opt_str[k]);// Input the number of seconds (0-10) for the '%s' option.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		} else if( channel->opt & opt ) {
 			sprintf(output, msg_txt(sd,1449), opt_str[k],opt_str[k]); // Option '%s' is already enabled (use '@channel setopt %s 0' to disable).
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 			return -1;
 		} else {
 			channel->opt |= opt;
 			sprintf(output, msg_txt(sd,1450), opt_str[k],channel->name);// Option '%s' is enabled for channel '#%s'.
-			clif_displaymessage(sd->fd, output);
+			clif.displaymessage(sd->fd, output);
 		}
 	} else {
 		int v = atoi(val);
 		if( opt == CHAN_OPT_MSG_DELAY ) {
 			if( v < 0 || v > 10 ) {
 				sprintf(output, msg_txt(sd,1451), v, opt_str[k]);// Value '%d' for option '%s' is out of range (limit 0-10).
-				clif_displaymessage(sd->fd, output);
+				clif.displaymessage(sd->fd, output);
 				return -1;
 			}
 			if( v == 0 ) {
 				channel->opt &=~ opt;
 				channel->msg_delay = 0;
 				sprintf(output, msg_txt(sd,1453), opt_str[k],channel->name,v);// Option '%s' is disabled for channel '#%s'.
-				clif_displaymessage(sd->fd, output);
+				clif.displaymessage(sd->fd, output);
 			} else {
 				channel->opt |= opt;
 				channel->msg_delay = v * 1000;
 				sprintf(output, msg_txt(sd,1452), opt_str[k],channel->name,v);// Option '%s' is enabled for channel '#%s' at %d seconds.
-				clif_displaymessage(sd->fd, output);
+				clif.displaymessage(sd->fd, output);
 			}
 		} else {
 			if( v ) {
 				if( channel->opt & opt ) {
 					sprintf(output, msg_txt(sd,1449), opt_str[k],opt_str[k]); // Option '%s' is already enabled (use '@channel setopt %s 0' to disable).
-					clif_displaymessage(sd->fd, output);
+					clif.displaymessage(sd->fd, output);
 					return -1;
 				} else {
 					channel->opt |= opt;
 					sprintf(output, msg_txt(sd,1450), opt_str[k],channel->name);// Option '%s' is enabled for channel '#%s'.
-					clif_displaymessage(sd->fd, output);
+					clif.displaymessage(sd->fd, output);
 				}
 			} else {
 				if( !(channel->opt & opt) ) {
 					sprintf(output, msg_txt(sd,1450), opt_str[k],channel->name); // Option '%s' is enabled for channel '#%s'.
-					clif_displaymessage(sd->fd, output);
+					clif.displaymessage(sd->fd, output);
 					return -1;
 				} else {
 					channel->opt &=~ opt;
 					sprintf(output, msg_txt(sd,1453), opt_str[k],channel->name);// Option '%s' is disabled for channel '#%s'.
-					clif_displaymessage(sd->fd, output);
+					clif.displaymessage(sd->fd, output);
 				}
 			}
 		}

@@ -29,6 +29,7 @@
 #include "trade.hpp"
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 struct s_elemental_db elemental_db[MAX_ELEMENTAL_CLASS]; // Elemental Database
 static uint16 elemental_count;
 
@@ -269,11 +270,11 @@ int elemental_data_received(struct s_elemental *ele, bool flag) {
 	if( ed->bl.prev == NULL && sd->bl.prev != NULL ) {
 		if(map_obj.addblock(&ed->bl))
 			return 0;
-		clif_spawn(&ed->bl);
-		clif_elemental_info(sd);
-		clif_elemental_updatestatus(sd,SP_HP);
-		clif_hpmeter_single(sd->fd,ed->bl.id,ed->battle_status.hp,ed->battle_status.max_hp);
-		clif_elemental_updatestatus(sd,SP_SP);
+		clif.spawn(&ed->bl);
+		clif.elemental_info(sd);
+		clif.elemental_updatestatus(sd,SP_HP);
+		clif.hpmeter_single(sd->fd,ed->bl.id,ed->battle_status.hp,ed->battle_status.max_hp);
+		clif.elemental_updatestatus(sd,SP_SP);
 	}
 
 	return 1;
@@ -538,9 +539,9 @@ void elemental_heal(struct elemental_data *ed, int hp, int sp) {
 	if (ed->master == NULL)
 		return;
 	if( hp )
-		clif_elemental_updatestatus(ed->master, SP_HP);
+		clif.elemental_updatestatus(ed->master, SP_HP);
 	if( sp )
-		clif_elemental_updatestatus(ed->master, SP_SP);
+		clif.elemental_updatestatus(ed->master, SP_SP);
 }
 
 int elemental_dead(struct elemental_data *ed) {
@@ -694,8 +695,8 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 	if( master_dist > AREA_SIZE ) {	// Master out of vision range.
 		elemental_unlocktarget(ed);
 		unit_warp(&ed->bl,sd->bl.m,sd->bl.x,sd->bl.y,CLR_TELEPORT);
-		clif_elemental_updatestatus(sd,SP_HP);
-		clif_elemental_updatestatus(sd,SP_SP);
+		clif.elemental_updatestatus(sd,SP_HP);
+		clif.elemental_updatestatus(sd,SP_SP);
 		return 0;
 	} else if( master_dist > MAX_ELEDISTANCE ) {	// Master too far, chase.
 		short x = sd->bl.x, y = sd->bl.y;

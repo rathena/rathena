@@ -29,6 +29,7 @@ using namespace rathena;
 
 ///Databases of guild_storage : int guild_id -> struct guild_storage
 std::map<int, struct s_storage> guild_storage_db;
+static Clif clif = Clif();
 
 struct s_storage_table *storage_db;
 int storage_count;
@@ -154,14 +155,14 @@ int storage_storageopen(struct map_session_data *sd)
 		return 1; //Already open?
 
 	if( !pc_can_give_items(sd) ) { // check is this GM level is allowed to put items to storage
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif.displaymessage(sd->fd, msg_txt(sd,246));
 		return 1;
 	}
 
 	sd->state.storage_flag = 1;
 	storage_sortitem(sd->storage.u.items_storage, sd->storage.max_amount);
-	clif_storagelist(sd, sd->storage.u.items_storage, sd->storage.max_amount, storage_getName(0));
-	clif_updatestorageamount(sd, sd->storage.amount, sd->storage.max_amount);
+	clif.storagelist(sd, sd->storage.u.items_storage, sd->storage.max_amount, storage_getName(0));
+	clif.updatestorageamount(sd, sd->storage.amount, sd->storage.max_amount);
 
 	return 0;
 }
@@ -265,12 +266,12 @@ static int storage_additem(struct map_session_data* sd, struct s_storage *stor, 
 		return 2;
 
 	if( !itemdb_canstore(it, pc_get_group_level(sd)) ) { // Check if item is storable. [Skotlex]
-		clif_displaymessage (sd->fd, msg_txt(sd,264));
+		clif.displaymessage (sd->fd, msg_txt(sd,264));
 		return 1;
 	}
 
 	if( (it->bound > BOUND_ACCOUNT) && !pc_can_give_bounded_items(sd) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,294));
+		clif.displaymessage(sd->fd, msg_txt(sd,294));
 		return 1;
 	}
 
@@ -282,7 +283,7 @@ static int storage_additem(struct map_session_data* sd, struct s_storage *stor, 
 
 				stor->u.items_storage[i].amount += amount;
 				stor->dirty = true;
-				clif_storageitemadded(sd,&stor->u.items_storage[i],i,amount);
+				clif.storageitemadded(sd,&stor->u.items_storage[i],i,amount);
 
 				return 0;
 			}
@@ -302,8 +303,8 @@ static int storage_additem(struct map_session_data* sd, struct s_storage *stor, 
 	stor->amount++;
 	stor->u.items_storage[i].amount = amount;
 	stor->dirty = true;
-	clif_storageitemadded(sd,&stor->u.items_storage[i],i,amount);
-	clif_updatestorageamount(sd, stor->amount, stor->max_amount);
+	clif.storageitemadded(sd,&stor->u.items_storage[i],i,amount);
+	clif.updatestorageamount(sd, stor->amount, stor->max_amount);
 
 	return 0;
 }
@@ -327,11 +328,11 @@ int storage_delitem(struct map_session_data* sd, struct s_storage *stor, int ind
 		memset(&stor->u.items_storage[index],0,sizeof(stor->u.items_storage[0]));
 		stor->amount--;
 		if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 )
-			clif_updatestorageamount(sd, stor->amount, stor->max_amount);
+			clif.updatestorageamount(sd, stor->amount, stor->max_amount);
 	}
 
 	if( sd->state.storage_flag == 1 || sd->state.storage_flag == 3 )
-		clif_storageitemremoved(sd,index,amount);
+		clif.storageitemremoved(sd,index,amount);
 
 	return 0;
 }
@@ -366,8 +367,8 @@ void storage_storageadd(struct map_session_data* sd, struct s_storage *stor, int
 		}
 	}
 
-	clif_storageitemremoved(sd,index,0);
-	clif_dropitem(sd,index,0);
+	clif.storageitemremoved(sd,index,0);
+	clif.dropitem(sd,index,0);
 }
 
 /**
@@ -391,8 +392,8 @@ void storage_storageget(struct map_session_data *sd, struct s_storage *stor, int
 	if ((flag = pc_additem(sd,&stor->u.items_storage[index],amount,LOG_TYPE_STORAGE)) == ADDITEM_SUCCESS)
 		storage_delitem(sd,stor,index,amount);
 	else {
-		clif_storageitemremoved(sd,index,0);
-		clif_additem(sd,0,0,flag);
+		clif.storageitemremoved(sd,index,0);
+		clif.additem(sd,0,0,flag);
 	}
 }
 
@@ -425,8 +426,8 @@ void storage_storageaddfromcart(struct map_session_data *sd, struct s_storage *s
 		}
 	}
 
-	clif_storageitemremoved(sd,index,0);
-	clif_dropitem(sd,index,0);
+	clif.storageitemremoved(sd,index,0);
+	clif.dropitem(sd,index,0);
 }
 
 /**
@@ -451,8 +452,8 @@ void storage_storagegettocart(struct map_session_data* sd, struct s_storage *sto
 	if ((flag = pc_cart_additem(sd,&stor->u.items_storage[index],amount,LOG_TYPE_STORAGE)) == 0)
 		storage_delitem(sd,stor,index,amount);
 	else {
-		clif_storageitemremoved(sd,index,0);
-		clif_cart_additem_ack(sd,(flag==1)?ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
+		clif.storageitemremoved(sd,index,0);
+		clif.cart_additem_ack(sd,(flag==1)?ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
 	}
 }
 
@@ -480,7 +481,7 @@ void storage_storagesaved(struct map_session_data *sd)
 
 	if (sd->state.storage_flag == 1) {
 		sd->state.storage_flag = 0;
-		clif_storageclose(sd);
+		clif.storageclose(sd);
 	}
 }
 
@@ -500,7 +501,7 @@ void storage_storageclose(struct map_session_data *sd)
 			storage_storagesave(sd);
 		if (sd->state.storage_flag == 1) {
 			sd->state.storage_flag = 0;
-			clif_storageclose(sd);
+			clif.storageclose(sd);
 		}
 	} else
 		storage_storagesaved(sd);
@@ -599,7 +600,7 @@ char storage_guild_storageopen(struct map_session_data* sd)
 #endif
 
 	if( !pc_can_give_items(sd) ) { //check is this GM level can open guild storage and store items [Lupus]
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif.displaymessage(sd->fd, msg_txt(sd,246));
 		return GSTORAGE_ALREADY_OPEN;
 	}
 
@@ -621,8 +622,8 @@ char storage_guild_storageopen(struct map_session_data* sd)
 	gstor->status = true;
 	sd->state.storage_flag = 2;
 	storage_sortitem(gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild));
-	clif_storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild), "Guild Storage");
-	clif_updatestorageamount(sd, gstor->amount, gstor->max_amount);
+	clif.storagelist(sd, gstor->u.items_guild, ARRAYLENGTH(gstor->u.items_guild), "Guild Storage");
+	clif.updatestorageamount(sd, gstor->amount, gstor->max_amount);
 
 	return GSTORAGE_OPEN;
 }
@@ -733,7 +734,7 @@ enum e_guild_storage_log storage_guild_log_read( struct map_session_data* sd ){
 	// ( 65535(maximum packet size) - 8(header) ) / 83 (entry size) = 789 (-1 for safety)
 	enum e_guild_storage_log ret = storage_guild_log_read_sub( sd, log, 788 );
 
-	clif_guild_storage_log( sd, log, ret );
+	clif.guild_storage_log( sd, log, ret );
 
 	return ret;
 }
@@ -764,12 +765,12 @@ bool storage_guild_additem(struct map_session_data* sd, struct s_storage* stor, 
 		return false;
 
 	if (!itemdb_canguildstore(item_data, pc_get_group_level(sd)) || item_data->expire_time) { // Check if item is storable. [Skotlex]
-		clif_displaymessage (sd->fd, msg_txt(sd,264));
+		clif.displaymessage (sd->fd, msg_txt(sd,264));
 		return false;
 	}
 
 	if ((item_data->bound == BOUND_ACCOUNT || item_data->bound > BOUND_GUILD) && !pc_can_give_bounded_items(sd)) {
-		clif_displaymessage(sd->fd, msg_txt(sd,294));
+		clif.displaymessage(sd->fd, msg_txt(sd,294));
 		return false;
 	}
 
@@ -780,7 +781,7 @@ bool storage_guild_additem(struct map_session_data* sd, struct s_storage* stor, 
 					return false;
 
 				stor->u.items_guild[i].amount += amount;
-				clif_storageitemadded(sd,&stor->u.items_guild[i],i,amount);
+				clif.storageitemadded(sd,&stor->u.items_guild[i],i,amount);
 				stor->dirty = true;
 
 				storage_guild_log( sd, &stor->u.items_guild[i], amount );
@@ -798,8 +799,8 @@ bool storage_guild_additem(struct map_session_data* sd, struct s_storage* stor, 
 	memcpy(&stor->u.items_guild[i],item_data,sizeof(stor->u.items_guild[0]));
 	stor->u.items_guild[i].amount = amount;
 	stor->amount++;
-	clif_storageitemadded(sd,&stor->u.items_guild[i],i,amount);
-	clif_updatestorageamount(sd, stor->amount, stor->max_amount);
+	clif.storageitemadded(sd,&stor->u.items_guild[i],i,amount);
+	clif.updatestorageamount(sd, stor->amount, stor->max_amount);
 	stor->dirty = true;
 
 	storage_guild_log( sd, &stor->u.items_guild[i], amount );
@@ -877,10 +878,10 @@ bool storage_guild_delitem(struct map_session_data* sd, struct s_storage* stor, 
 	if(!stor->u.items_guild[n].amount) {
 		memset(&stor->u.items_guild[n],0,sizeof(stor->u.items_guild[0]));
 		stor->amount--;
-		clif_updatestorageamount(sd, stor->amount, stor->max_amount);
+		clif.updatestorageamount(sd, stor->amount, stor->max_amount);
 	}
 
-	clif_storageitemremoved(sd,n,amount);
+	clif.storageitemremoved(sd,n,amount);
 	stor->dirty = true;
 	return true;
 }
@@ -917,8 +918,8 @@ void storage_guild_storageadd(struct map_session_data* sd, int index, int amount
 	if(storage_guild_additem(sd,stor,&sd->inventory.u.items_inventory[index],amount))
 		pc_delitem(sd,index,amount,0,4,LOG_TYPE_GSTORAGE);
 	else {
-		clif_storageitemremoved(sd,index,0);
-		clif_dropitem(sd,index,0);
+		clif.storageitemremoved(sd,index,0);
+		clif.dropitem(sd,index,0);
 	}
 }
 
@@ -957,8 +958,8 @@ void storage_guild_storageget(struct map_session_data* sd, int index, int amount
 	if((flag = pc_additem(sd,&stor->u.items_guild[index],amount,LOG_TYPE_GSTORAGE)) == 0)
 		storage_guild_delitem(sd,stor,index,amount);
 	else { // inform fail
-		clif_storageitemremoved(sd,index,0);
-		clif_additem(sd,0,0,flag);
+		clif.storageitemremoved(sd,index,0);
+		clif.additem(sd,0,0,flag);
 	}
 }
 
@@ -990,8 +991,8 @@ void storage_guild_storageaddfromcart(struct map_session_data* sd, int index, in
 	if(storage_guild_additem(sd,stor,&sd->cart.u.items_cart[index],amount))
 		pc_cart_delitem(sd,index,amount,0,LOG_TYPE_GSTORAGE);
 	else {
-		clif_storageitemremoved(sd,index,0);
-		clif_dropitem(sd,index,0);
+		clif.storageitemremoved(sd,index,0);
+		clif.dropitem(sd,index,0);
 	}
 }
 
@@ -1025,8 +1026,8 @@ void storage_guild_storagegettocart(struct map_session_data* sd, int index, int 
 	if((flag = pc_cart_additem(sd,&stor->u.items_guild[index],amount,LOG_TYPE_GSTORAGE)) == 0)
 		storage_guild_delitem(sd,stor,index,amount);
 	else {
-		clif_storageitemremoved(sd,index,0);
-		clif_cart_additem_ack(sd,(flag == 1) ? ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
+		clif.storageitemremoved(sd,index,0);
+		clif.cart_additem_ack(sd,(flag == 1) ? ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
 	}
 }
 
@@ -1079,7 +1080,7 @@ void storage_guild_storageclose(struct map_session_data* sd)
 	nullpo_retv(sd);
 	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
 
-	clif_storageclose(sd);
+	clif.storageclose(sd);
 	if (stor->status) {
 		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART); //This one also saves the storage. [Skotlex]
@@ -1105,7 +1106,7 @@ void storage_guild_storage_quit(struct map_session_data* sd, int flag)
 	nullpo_retv(stor = guild2storage2(sd->status.guild_id));
 
 	if (flag) {	//Only during a guild break flag is 1 (don't save storage)
-		clif_storageclose(sd);
+		clif.storageclose(sd);
 
 		if (save_settings&CHARSAVE_STORAGE)
 			chrif_save(sd, CSAVE_INVENTORY|CSAVE_CART);
@@ -1135,8 +1136,8 @@ void storage_premiumStorage_open(struct map_session_data *sd) {
 
 	sd->state.storage_flag = 3;
 	storage_sortitem(sd->premiumStorage.u.items_storage, sd->premiumStorage.max_amount);
-	clif_storagelist(sd, sd->premiumStorage.u.items_storage, sd->premiumStorage.max_amount, storage_getName(sd->premiumStorage.stor_id));
-	clif_updatestorageamount(sd, sd->premiumStorage.amount, sd->premiumStorage.max_amount);
+	clif.storagelist(sd, sd->premiumStorage.u.items_storage, sd->premiumStorage.max_amount, storage_getName(sd->premiumStorage.stor_id));
+	clif.updatestorageamount(sd, sd->premiumStorage.amount, sd->premiumStorage.max_amount);
 }
 
 /**
@@ -1160,7 +1161,7 @@ bool storage_premiumStorage_load(struct map_session_data *sd, uint8 num, uint8 m
 		return 0;
 
 	if (!pc_can_give_items(sd)) { // check is this GM level is allowed to put items to storage
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
+		clif.displaymessage(sd->fd, msg_txt(sd,246));
 		return 0;
 	}
 
@@ -1197,7 +1198,7 @@ void storage_premiumStorage_saved(struct map_session_data *sd) {
 
 	if (sd->state.storage_flag == 3) {
 		sd->state.storage_flag = 0;
-		clif_storageclose(sd);
+		clif.storageclose(sd);
 	}
 }
 
@@ -1216,7 +1217,7 @@ void storage_premiumStorage_close(struct map_session_data *sd) {
 			storage_premiumStorage_save(sd);
 		if (sd->state.storage_flag == 3) {
 			sd->state.storage_flag = 0;
-			clif_storageclose(sd);
+			clif.storageclose(sd);
 		}
 	}
 	else 

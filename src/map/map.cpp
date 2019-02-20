@@ -53,6 +53,7 @@
 using namespace rathena;
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 char default_codepage[32] = "";
 
 int map_server_port = 3306;
@@ -1596,7 +1597,7 @@ TIMER_FUNC(map_clearflooritem_timer){
 	if (pet_db_search(fitem->item.nameid, PET_EGG))
 		intif_delete_petdata(MakeDWord(fitem->item.card[1], fitem->item.card[2]));
 
-	clif_clearflooritem(fitem, 0);
+	clif.clearflooritem(fitem, 0);
 	map_obj.deliddb(&fitem->bl);
 	map_obj.delblock(&fitem->bl);
 	map_obj.freeblock(&fitem->bl);
@@ -1612,7 +1613,7 @@ void Map_Obj::clearflooritem(struct block_list *bl) {
 	if( fitem->cleartimer != INVALID_TIMER )
 		delete_timer(fitem->cleartimer,map_clearflooritem_timer);
 
-	clif_clearflooritem(fitem, 0);
+	clif.clearflooritem(fitem, 0);
 	map_obj.deliddb(&fitem->bl);
 	map_obj.delblock(&fitem->bl);
 	map_obj.freeblock(&fitem->bl);
@@ -1880,7 +1881,7 @@ int Map_Obj::addflooritem(struct item *item, int amount, int16 m, int16 x, int16
 	map_obj.addiddb(&fitem->bl);
 	if (map_obj.addblock(&fitem->bl))
 		return 0;
-	clif_dropflooritem(fitem,canShowEffect);
+	clif.dropflooritem(fitem,canShowEffect);
 
 	return fitem->bl.id;
 }
@@ -1914,7 +1915,7 @@ void Map_Obj::addnickdb(int charid, const char* nick)
 		p->requests = req->next;
 		sd = map_obj.charid2sd(req->charid);
 		if( sd )
-			clif_solved_charname(sd->fd, charid, p->nick);
+			clif.solved_charname(sd->fd, charid, p->nick);
 		aFree(req);
 	}
 }
@@ -1936,7 +1937,7 @@ void Map_Obj::delnickdb(int charid, const char* name)
 		p->requests = req->next;
 		sd = map_obj.charid2sd(req->charid);
 		if( sd )
-			clif_solved_charname(sd->fd, charid, name);
+			clif.solved_charname(sd->fd, charid, name);
 		aFree(req);
 	}
 	aFree(p);
@@ -1956,14 +1957,14 @@ void Map_Obj::reqnickdb(struct map_session_data * sd, int charid)
 	tsd = map_obj.charid2sd(charid);
 	if( tsd )
 	{
-		clif_solved_charname(sd->fd, charid, tsd->status.name);
+		clif.solved_charname(sd->fd, charid, tsd->status.name);
 		return;
 	}
 
 	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
 	if( *p->nick )
 	{
-		clif_solved_charname(sd->fd, charid, p->nick);
+		clif.solved_charname(sd->fd, charid, p->nick);
 		return;
 	}
 	// not in cache, request it
@@ -3339,7 +3340,7 @@ bool Map_Obj::iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shoo
 		map_setcell(m, x1, y1, CELL_WALKABLE, false);
 		map_setcell(m, x1, y1, CELL_SHOOTABLE, shootable);
 
-		clif_changemapcell(0, m, x1, y1, map_getcell(m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+		clif.changemapcell(0, m, x1, y1, map_getcell(m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 	}
 
 	iwall->size = i;
@@ -3366,7 +3367,7 @@ void Map_Obj::iwall_get(struct map_session_data *sd) {
 
 		for( i = 0; i < iwall->size; i++ ) {
 			map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
-			clif_changemapcell(sd->fd, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), SELF);
+			clif.changemapcell(sd->fd, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), SELF);
 		}
 	}
 	dbi_destroy(iter);
@@ -3386,7 +3387,7 @@ bool Map_Obj::iwall_remove(const char *wall_name)
 		map_setcell(iwall->m, x1, y1, CELL_SHOOTABLE, true);
 		map_setcell(iwall->m, x1, y1, CELL_WALKABLE, true);
 
-		clif_changemapcell(0, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+		clif.changemapcell(0, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 	}
 
 	map_getmapdata(iwall->m)->iwall_num--;
@@ -3418,7 +3419,7 @@ int Map_Obj::setipport(unsigned short mapindex, uint32 ip, uint16 port)
 
 	if(mdos->cell) //Local map,Do nothing. Give priority to our own local maps over ones from another server. [Skotlex]
 		return 0;
-	if(ip == clif_getip() && port == clif_getport()) {
+	if(ip == clif.getip() && port == clif.getport()) {
 		//That's odd, we received info that we are the ones with this map, but... we don't have it.
 		ShowFatalError("map_obj.setipport : received info that this map-server SHOULD have map '%s', but it is not loaded.\n",mapindex_id2name(mapindex));
 		exit(EXIT_FAILURE);
@@ -4016,11 +4017,11 @@ int map_config_read(const char *cfgName)
 		else if (strcmpi(w1, "char_port") == 0)
 			chrif_setport(atoi(w2));
 		else if (strcmpi(w1, "map_ip") == 0)
-			map_ip_set = clif_setip(w2);
+			map_ip_set = clif.setip(w2);
 		else if (strcmpi(w1, "bind_ip") == 0)
-			clif_setbindip(w2);
+			clif.setbindip(w2);
 		else if (strcmpi(w1, "map_port") == 0) {
-			clif_setport(atoi(w2));
+			clif.setport(atoi(w2));
 			map_port = (atoi(w2));
 		} else if (strcmpi(w1, "map") == 0)
 			map_addmap(w2);
@@ -4538,7 +4539,7 @@ static int map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
 		sd->pvp_lost = 0;
 	}
 
-	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	clif.map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	return 0;
 }
 
@@ -4552,7 +4553,7 @@ static int map_mapflag_pvp_stop_sub(struct block_list *bl, va_list ap)
 {
 	struct map_session_data* sd = map_obj.id2sd(bl->id);
 
-	clif_pvpset(sd, 0, 0, 2);
+	clif.pvpset(sd, 0, 0, 2);
 
 	if (sd->pvp_timer != INVALID_TIMER) {
 		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
@@ -4691,12 +4692,12 @@ bool Map_Obj::setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union
 		case MF_PVP:
 			mapdata->flag[mapflag] = status; // Must come first to properly set map property
 			if (!status) {
-				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+				clif.map_property_mapall(m, MAPPROPERTY_NOTHING);
 				map_obj.foreachinmap(map_mapflag_pvp_stop_sub, m, BL_PC);
 				map_obj.foreachinmap(unit_stopattack, m, BL_CHAR, 0);
 			} else {
 				if (!battle_config.pk_mode) {
-					clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
+					clif.map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
 					map_obj.foreachinmap(map_mapflag_pvp_start_sub, m, BL_PC);
 				}
 				if (mapdata->flag[MF_GVG]) {
@@ -4729,10 +4730,10 @@ bool Map_Obj::setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union
 		case MF_GVG_TE:
 			mapdata->flag[mapflag] = status; // Must come first to properly set map property
 			if (!status) {
-				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
+				clif.map_property_mapall(m, MAPPROPERTY_NOTHING);
 				map_obj.foreachinmap(unit_stopattack, m, BL_CHAR, 0);
 			} else {
-				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+				clif.map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				if (mapdata->flag[MF_PVP]) {
 					mapdata->flag[MF_PVP] = false;
 					if (!battle_config.pk_mode)
@@ -5171,7 +5172,7 @@ void do_shutdown(void)
 			struct map_session_data* sd;
 			struct s_mapiterator* iter = mapit_getallusers();
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-				clif_GM_kick(NULL, sd);
+				clif.GM_kick(NULL, sd);
 			mapit_free(iter);
 			flush_fifos();
 		}
@@ -5250,7 +5251,7 @@ int do_init(int argc, char *argv[])
 		ShowInfo("Defaulting to %s as our IP address\n", ip_str);
 
 		if (!map_ip_set)
-			clif_setip(ip_str);
+			clif.setip(ip_str);
 		if (!char_ip_set)
 			chrif_setip(ip_str);
 	}

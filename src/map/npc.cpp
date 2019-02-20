@@ -34,6 +34,7 @@
 #include "script.hpp" // script_config
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 struct npc_data* fake_nd;
 
@@ -235,24 +236,24 @@ int npc_enable(const char* name, int flag)
 
 	if (flag&1) {
 		nd->sc.option&=~OPTION_INVISIBLE;
-		clif_spawn(&nd->bl);
+		clif.spawn(&nd->bl);
 	} else if (flag&2)
 		nd->sc.option&=~OPTION_HIDE;
 	else if (flag&4)
 		nd->sc.option|= OPTION_HIDE;
 	else {	//Can't change the view_data to invisible class because the view_data for all npcs is shared! [Skotlex]
 		nd->sc.option|= OPTION_INVISIBLE;
-		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
+		clif.clearunit_area(&nd->bl,CLR_OUTSIGHT);  // Hack to trick maya purple card [Xazax]
 	}
 
 	if (nd->class_ == JT_WARPNPC || nd->class_ == JT_GUILD_FLAG)
 	{	//Client won't display option changes for these classes [Toms]
 		if (nd->sc.option&(OPTION_HIDE|OPTION_INVISIBLE))
-			clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
+			clif.clearunit_area(&nd->bl, CLR_OUTSIGHT);
 		else
-			clif_spawn(&nd->bl);
+			clif.spawn(&nd->bl);
 	} else
-		clif_changeoption(&nd->bl);
+		clif.changeoption(&nd->bl);
 
 	if( flag&3 && (nd->u.scr.xs >= 0 || nd->u.scr.ys >= 0) ) 	//check if player standing on a OnTouchArea
 		map_obj.foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, BL_PC, nd );
@@ -317,7 +318,7 @@ int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack)
 	if(sd->npc_id)
 	{	//Current script is aborted.
 		if(sd->state.using_fake_npc){
-			clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+			clif.clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
 			sd->state.using_fake_npc = 0;
 		}
 		if (free_script_stack&&sd->st) {
@@ -1055,7 +1056,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 				struct unit_data *ud = unit_bl2ud(&sd->bl);
 				if( ud && ud->walkpath.path_pos < ud->walkpath.path_len )
 				{ // Since walktimer always == INVALID_TIMER at this time, we stop walking manually. [Inkfish]
-					clif_fixpos(&sd->bl);
+					clif.fixpos(&sd->bl);
 					ud->walkpath.path_pos = ud->walkpath.path_len;
 				}
 				sd->areanpc_id = mapdata->npc[i]->bl.id;
@@ -1237,7 +1238,7 @@ int npc_globalmessage(const char* name, const char* mes)
 		return 0;
 
 	snprintf(temp, sizeof(temp), "%s", mes);
-	clif_GlobalMessage(&nd->bl,temp,ALL_CLIENT);
+	clif.GlobalMessage(&nd->bl,temp,ALL_CLIENT);
 
 	return 0;
 }
@@ -1252,19 +1253,19 @@ void run_tomb(struct map_session_data* sd, struct npc_data* nd)
 
 	// TODO: Find exact color?
 	snprintf(buffer, sizeof(buffer), msg_txt(sd,657), nd->u.tomb.md->db->name);
-	clif_scriptmes(sd, nd->bl.id, buffer);
+	clif.scriptmes(sd, nd->bl.id, buffer);
 
-	clif_scriptmes(sd, nd->bl.id, msg_txt(sd,658));
+	clif.scriptmes(sd, nd->bl.id, msg_txt(sd,658));
 
 	snprintf(buffer, sizeof(buffer), msg_txt(sd,659), time);
-	clif_scriptmes(sd, nd->bl.id, buffer);
+	clif.scriptmes(sd, nd->bl.id, buffer);
 
-	clif_scriptmes(sd, nd->bl.id, msg_txt(sd,660));
+	clif.scriptmes(sd, nd->bl.id, msg_txt(sd,660));
 
 	snprintf(buffer, sizeof(buffer), msg_txt(sd,661), nd->u.tomb.killer_name[0] ? nd->u.tomb.killer_name : "Unknown");
-	clif_scriptmes(sd, nd->bl.id, buffer);
+	clif.scriptmes(sd, nd->bl.id, buffer);
 
-	clif_scriptclose(sd, nd->bl.id);
+	clif.scriptclose(sd, nd->bl.id);
 }
 
 /*==========================================
@@ -1289,12 +1290,12 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	
 	switch(nd->subtype) {
 		case NPCTYPE_SHOP:
-			clif_npcbuysell(sd,nd->bl.id);
+			clif.npcbuysell(sd,nd->bl.id);
 			break;
 		case NPCTYPE_CASHSHOP:
 		case NPCTYPE_ITEMSHOP:
 		case NPCTYPE_POINTSHOP:
-			clif_cashshop_show(sd,nd);
+			clif.cashshop_show(sd,nd);
 			break;
 		case NPCTYPE_MARKETSHOP:
 #if PACKETVER >= 20131223
@@ -1307,12 +1308,12 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 				}
 
 				if (i == nd->u.shop.count) {
-					clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 534), false, SELF);
+					clif.messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 534), false, SELF);
 					return false;
 				}
 
 				sd->npc_shopid = nd->bl.id;
-				clif_npc_market_open(sd, nd);
+				clif.npc_market_open(sd, nd);
 			}
 #endif
 			break;
@@ -1434,9 +1435,9 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type)
 	sd->npc_shopid = id;
 
 	if (type == 0) {
-		clif_buylist(sd,nd);
+		clif.buylist(sd,nd);
 	} else {
-		clif_selllist(sd);
+		clif.selllist(sd);
 	}
 	return 0;
 }
@@ -1476,7 +1477,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 					memset(output, '\0', sizeof(output));
 
 					sprintf(output, msg_txt(sd, 712), id->jname, id->nameid); // You do not have enough %s (%hu).
-					clif_messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
+					clif.messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 
@@ -1513,12 +1514,12 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
 
 				if (cost[1] < points || cost[0] < (price - points)) {
 					sprintf(output, msg_txt(sd, 713), nd->u.shop.pointshop_str); // You do not have enough '%s'.
-					clif_messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
+					clif.messagecolor(&sd->bl, color_table[COLOR_RED], output, false, SELF);
 					return ERROR_TYPE_PURCHASE_FAIL;
 				}
 				pc_setreg2(sd, nd->u.shop.pointshop_str, cost[0] - (price - points));
 				sprintf(output, msg_txt(sd, 716), nd->u.shop.pointshop_str, cost[0] - (price - points)); // Your '%s' is now: %d
-				clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+				clif.messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 			}
 			break;
 	}
@@ -1531,7 +1532,7 @@ static enum e_CASHSHOP_ACK npc_cashshop_process_payment(struct npc_data *nd, int
  * @param points: Secondary point
  * @param count: Amount of items to purchase
  * @param item_list: List of items to purchase
- * @return clif_cashshop_ack value to display
+ * @return clif.cashshop_ack value to display
  */
 int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, unsigned short* item_list)
 {
@@ -1650,7 +1651,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 					memset(output, '\0', sizeof(output));
 
 					sprintf(output, msg_txt(sd, 714), id->jname, id->nameid); // Item Shop List: %s (%hu)
-					clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
+					clif.broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 				}
 
 				for (i = 0; i < MAX_INVENTORY; i++) {
@@ -1669,7 +1670,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
 				memset(output, '\0', sizeof(output));
 
 				sprintf(output, msg_txt(sd, 715), nd->u.shop.pointshop_str); // Point Shop List: '%s'
-				clif_broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
+				clif.broadcast(&sd->bl, output, strlen(output) + 1, BC_BLUE,SELF);
 			}
 			
 			cost[0] = pc_readreg2(sd, nd->u.shop.pointshop_str);
@@ -1683,7 +1684,7 @@ void npc_shop_currency_type(struct map_session_data *sd, struct npc_data *nd, in
  * @param nameid: Item to purchase
  * @param amount: Amount of items to purchase
  * @param points: Cost of total items
- * @return clif_cashshop_ack value to display
+ * @return clif.cashshop_ack value to display
  */
 int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amount, int points)
 {
@@ -1802,7 +1803,7 @@ static int npc_buylist_sub(struct map_session_data* sd, uint16 n, struct s_npc_b
  * @param sd: Player who attempt to buy
  * @param n: Number of items
  * @param item_list: List of items
- * @return result code for clif_parse_NpcBuyListSend/clif_npc_market_purchase_ack
+ * @return result code for clif.parse_NpcBuyListSend/clif_npc_market_purchase_ack
  */
 uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list) {
 	struct npc_data* nd;
@@ -2031,7 +2032,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 /// Player item selling to npc shop.
 ///
 /// @param item_list 'n' pairs <index,amount>
-/// @return result code for clif_parse_NpcSellListSend
+/// @return result code for clif.parse_NpcSellListSend
 uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list)
 {
 	double z;
@@ -2150,7 +2151,7 @@ int npc_remove_map(struct npc_data* nd)
 
 	if (nd->subtype == NPCTYPE_SCRIPT)
 		skill_clear_unitgroup(&nd->bl);
-	clif_clearunit_area(&nd->bl,CLR_RESPAWN);
+	clif.clearunit_area(&nd->bl,CLR_RESPAWN);
 	npc_unsetcells(nd);
 	map_obj.delblock(&nd->bl);
 	//Remove npc from map[].npc list. [Skotlex]
@@ -2598,7 +2599,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	status_change_init(&nd->bl);
 	unit_dataset(&nd->bl);
 	if( map_getmapdata(nd->bl.m)->users )
-		clif_spawn(&nd->bl);
+		clif.spawn(&nd->bl);
 	strdb_put(npcname_db, nd->exname, nd);
 
 	return nd;
@@ -2676,7 +2677,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	status_change_init(&nd->bl);
 	unit_dataset(&nd->bl);
 	if( map_getmapdata(nd->bl.m)->users )
-		clif_spawn(&nd->bl);
+		clif.spawn(&nd->bl);
 	strdb_put(npcname_db, nd->exname, nd);
 
 	return strchr(start,'\n');// continue
@@ -2913,7 +2914,7 @@ static const char* npc_parse_shop(char* w1, char* w2, char* w3, char* w4, const 
 		if( nd->class_ != JT_FAKENPC ){
 			status_set_viewdata(&nd->bl, nd->class_);
 			if( map_getmapdata(nd->bl.m)->users )
-				clif_spawn(&nd->bl);
+				clif.spawn(&nd->bl);
 		}
 	} else
 	{// 'floating' shop?
@@ -3148,7 +3149,7 @@ static const char* npc_parse_script(char* w1, char* w2, char* w3, char* w4, cons
 		{
 			status_set_viewdata(&nd->bl, nd->class_);
 			if( map_getmapdata(nd->bl.m)->users )
-				clif_spawn(&nd->bl);
+				clif.spawn(&nd->bl);
 		}
 	}
 	else
@@ -3307,7 +3308,7 @@ const char* npc_parse_duplicate(char* w1, char* w2, char* w3, char* w4, const ch
 		if( nd->class_ != JT_FAKENPC ) {
 			status_set_viewdata(&nd->bl, nd->class_);
 			if( map_getmapdata(nd->bl.m)->users )
-				clif_spawn(&nd->bl);
+				clif.spawn(&nd->bl);
 		}
 	} else {
 		// we skip map_obj.addnpc, but still add it to the list of ID's
@@ -3391,7 +3392,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		status_change_init(&wnd->bl);
 		unit_dataset(&wnd->bl);
 		if( map_getmapdata(wnd->bl.m)->users )
-			clif_spawn(&wnd->bl);
+			clif.spawn(&wnd->bl);
 		strdb_put(npcname_db, wnd->exname, wnd);
 	} else {
 		static char w1[128], w2[128], w3[128], w4[128];
@@ -3709,7 +3710,7 @@ void npc_setdisplayname(struct npc_data* nd, const char* newname)
 
 	safestrncpy(nd->name, newname, sizeof(nd->name));
 	if( map_getmapdata(nd->bl.m)->users )
-		clif_name_area(&nd->bl);
+		clif.name_area(&nd->bl);
 }
 
 /// Changes the display class of the npc.
@@ -3726,11 +3727,11 @@ void npc_setclass(struct npc_data* nd, short class_)
 	struct map_data *mapdata = map_getmapdata(nd->bl.m);
 
 	if( mapdata->users )
-		clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);// fade out
+		clif.clearunit_area(&nd->bl, CLR_OUTSIGHT);// fade out
 	nd->class_ = class_;
 	status_set_viewdata(&nd->bl, class_);
 	if( mapdata->users )
-		clif_spawn(&nd->bl);// fade in
+		clif.spawn(&nd->bl);// fade in
 }
 
 // @commands (script based)

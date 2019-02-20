@@ -23,6 +23,7 @@
 static char log_timestamp_format[20];
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 /// filters for item logging
 typedef enum e_log_filter

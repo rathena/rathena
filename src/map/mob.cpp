@@ -42,6 +42,7 @@
 
 using namespace rathena;
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 #define ACTIVE_AI_RANGE 2	//Distance added on top of 'AREA_SIZE' at which mobs enter active AI mode.
 
@@ -209,7 +210,7 @@ TIMER_FUNC(mvptomb_delayspawn){
 			return 0;
 		}
 		nd->u.tomb.spawn_timer = INVALID_TIMER;
-		clif_spawn(&nd->bl);
+		clif.spawn(&nd->bl);
 	}
 	return 0;
 }
@@ -274,7 +275,7 @@ void mvptomb_destroy(struct mob_data *md) {
 		int16 i;
 		struct map_data *mapdata = map_getmapdata(nd->bl.m);
 
-		clif_clearunit_area(&nd->bl,CLR_OUTSIGHT);
+		clif.clearunit_area(&nd->bl,CLR_OUTSIGHT);
 		map_obj.delblock(&nd->bl);
 
 		ARR_FIND( 0, mapdata->npc_num, i, mapdata->npc[i] == nd );
@@ -594,7 +595,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		if( DIFF_TICK(sd->ks_floodprotect_tick, tick) <= 0 )
 		{
 			sprintf(output, "[KS Warning!! - Owner : %s]", pl_sd->status.name);
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+			clif.messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 
 			sd->ks_floodprotect_tick = tick + 2000;
 		}
@@ -603,7 +604,7 @@ bool mob_ksprotected (struct block_list *src, struct block_list *target)
 		if( DIFF_TICK(pl_sd->ks_floodprotect_tick, tick) <= 0 )
 		{
 			sprintf(output, "[Watch out! %s is trying to KS you!]", sd->status.name);
-			clif_messagecolor(&pl_sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+			clif.messagecolor(&pl_sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 
 			pl_sd->ks_floodprotect_tick = tick + 2000;
 		}
@@ -1186,7 +1187,7 @@ int mob_spawn (struct mob_data *md)
 	if(map_obj.addblock(&md->bl))
 		return 2;
 	if( map_getmapdata(md->bl.m)->users )
-		clif_spawn(&md->bl);
+		clif.spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
 	return 0;
@@ -1887,7 +1888,7 @@ static bool mob_ai_sub_hard(struct mob_data *md, t_tick tick)
 
 		if (pcdb_checkid(md->vd->class_))
 		{	//Give them walk act/delay to properly mimic players. [Skotlex]
-			clif_takeitem(&md->bl,tbl);
+			clif.takeitem(&md->bl,tbl);
 			md->ud.canact_tick = tick + md->status.amotion;
 			unit_set_walkdelay(&md->bl, tick, md->status.amotion, 1);
 		}
@@ -2395,7 +2396,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 	}
 
 	if (battle_config.show_mob_info&3)
-		clif_name_area(&md->bl);
+		clif.name_area(&md->bl);
 
 #if PACKETVER >= 20120404
 	if (battle_config.monster_hp_bars_info && !map_obj.getmapflag(md->bl.m, MF_HIDEMOBHPBAR)) {
@@ -2403,7 +2404,7 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
 		for(i = 0; i < DAMAGELOG_SIZE; i++){ // must show hp bar to all char who already hit the mob.
 			struct map_session_data *sd = map_obj.charid2sd(md->dmglog[i].id);
 			if( sd && check_distance_bl(&md->bl, &sd->bl, AREA_SIZE) ) // check if in range
-				clif_monster_hp_bar(md, sd->fd);
+				clif.monster_hp_bar(md, sd->fd);
 		}
 	}
 #endif
@@ -2856,8 +2857,8 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		mexp = (unsigned int)cap_value(exp, 1, UINT_MAX);
 
-		clif_mvp_effect(mvp_sd);
-		clif_mvp_exp(mvp_sd,mexp);
+		clif.mvp_effect(mvp_sd);
+		clif.mvp_exp(mvp_sd,mexp);
 		pc_gainexp(mvp_sd, &md->bl, mexp,0, 0);
 		log_mvp[1] = mexp;
 
@@ -2904,7 +2905,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				memset(&item,0,sizeof(item));
 				item.nameid=mdrop[i].nameid;
 				item.identify= itemdb_isidentified(item.nameid);
-				clif_mvp_item(mvp_sd,item.nameid);
+				clif.mvp_item(mvp_sd,item.nameid);
 				log_mvp[0] = item.nameid;
 
 				//A Rare MVP Drop Global Announce by Lupus
@@ -2918,7 +2919,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 				mob_setdropitem_option(&item, &mdrop[i]);
 
 				if((temp = pc_additem(mvp_sd,&item,1,LOG_TYPE_PICKDROP_PLAYER)) != 0) {
-					clif_additem(mvp_sd,0,0,temp);
+					clif.additem(mvp_sd,0,0,temp);
 					map_obj.addflooritem(&item,1,mvp_sd->bl.m,mvp_sd->bl.x,mvp_sd->bl.y,mvp_sd->status.char_id,(second_sd?second_sd->status.char_id:0),(third_sd?third_sd->status.char_id:0),1,0,true);
 				}
 
@@ -2967,7 +2968,7 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 					sd->mission_mobid = temp;
 					pc_setglobalreg(sd, add_str(TKMISSIONID_VAR), temp);
 					sd->mission_count = 0;
-					clif_mission_info(sd, temp, 0);
+					clif.mission_info(sd, temp, 0);
 				}
 				pc_setglobalreg(sd, add_str(TKMISSIONCOUNT_VAR), sd->mission_count);
 			}
@@ -3020,14 +3021,14 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 
 		if( pcdb_checkid(md->vd->class_) ) {//Player mobs are not removed automatically by the client.
 			/* first we set them dead, then we delay the outsight effect */
-			clif_clearunit_area(&md->bl,CLR_DEAD);
-			clif_clearunit_delayed(&md->bl, CLR_OUTSIGHT,tick+3000);
+			clif.clearunit_area(&md->bl,CLR_DEAD);
+			clif.clearunit_delayed(&md->bl, CLR_OUTSIGHT,tick+3000);
 		} else
 			/**
 			 * We give the client some time to breath and this allows it to display anything it'd like with the dead corpose
 			 * For example, this delay allows it to display soul drain effect
 			 **/
-			clif_clearunit_delayed(&md->bl, CLR_DEAD, tick+250);
+			clif.clearunit_delayed(&md->bl, CLR_DEAD, tick+250);
 
 	}
 
@@ -3066,11 +3067,11 @@ void mob_revive(struct mob_data *md, unsigned int hp)
 		if(map_obj.addblock(&md->bl))
 			return;
 	}
-	clif_spawn(&md->bl);
+	clif.spawn(&md->bl);
 	skill_unit_move(&md->bl,tick,1);
 	mobskill_use(md, tick, MSC_SPAWN);
 	if (battle_config.show_mob_info&3)
-		clif_name_area(&md->bl);
+		clif.name_area(&md->bl);
 }
 
 int mob_guardian_guildchange(struct mob_data *md)
@@ -3261,7 +3262,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 	md->target_id = md->attacked_id = md->norm_attacked_id = 0;
 
 	//Need to update name display.
-	clif_name_area(&md->bl);
+	clif.name_area(&md->bl);
 	return 0;
 }
 
@@ -3271,7 +3272,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 void mob_heal(struct mob_data *md,unsigned int heal)
 {
 	if (battle_config.show_mob_info&3)
-		clif_name_area(&md->bl);
+		clif.name_area(&md->bl);
 #if PACKETVER >= 20120404
 	if (battle_config.monster_hp_bars_info && !map_obj.getmapflag(md->bl.m, MF_HIDEMOBHPBAR)) {
 		int i;
@@ -3279,7 +3280,7 @@ void mob_heal(struct mob_data *md,unsigned int heal)
 			if( md->dmglog[i].id ) {
 				struct map_session_data *sd = map_obj.charid2sd(md->dmglog[i].id);
 				if( sd && check_distance_bl(&md->bl, &sd->bl, AREA_SIZE) ) // check if in range
-					clif_monster_hp_bar(md, sd->fd);
+					clif.monster_hp_bar(md, sd->fd);
 			}
 	}
 #endif
@@ -3417,7 +3418,7 @@ int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id)
 		if (md2->state.copy_master_mode)
 			md->status.mode = md2->status.mode;
 
-		clif_skill_nodamage(&md->bl,&md->bl,skill_id,amount,1);
+		clif.skill_nodamage(&md->bl,&md->bl,skill_id,amount,1);
 	}
 
 	return 0;
@@ -3748,7 +3749,7 @@ int mobskill_use(struct mob_data *md, t_tick tick, int event)
 					name = name.substr(0, unique); // discard extra name identifier if present [Daegaladh]
 				output = name + " : " + mc->msg;
 
-				clif_messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
+				clif.messagecolor(&md->bl, mc->color, output.c_str(), true, AREA_CHAT_WOC);
 			}
 		}
 		if(!(battle_config.mob_ai&0x200)) { //pass on delay to same skill.
@@ -5364,8 +5365,8 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 		// If they are spawned right now
 		if( md->bl.prev != NULL ){
 			// Respawn all mobs on client side so that they are displayed correctly(if their view id changed)
-			clif_clearunit_area(&md->bl, CLR_OUTSIGHT);
-			clif_spawn(&md->bl);
+			clif.clearunit_area(&md->bl, CLR_OUTSIGHT);
+			clif.spawn(&md->bl);
 		}
 	}
 
@@ -5387,8 +5388,8 @@ static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
 		// If they are spawned right now
 		if( nd->bl.prev != NULL ){
 			// Respawn all NPCs on client side so that they are displayed correctly(if their view id changed)
-			clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
-			clif_spawn(&nd->bl);
+			clif.clearunit_area(&nd->bl, CLR_OUTSIGHT);
+			clif.spawn(&nd->bl);
 		}
 	}
 

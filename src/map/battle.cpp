@@ -36,6 +36,7 @@
 int attr_fix_table[MAX_ELE_LEVEL][ELE_MAX][ELE_MAX];
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 struct Battle_Config battle_config;
 static struct eri *delay_damage_ers; //For battle delay damage structures.
@@ -1130,7 +1131,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if( sc->data[SC_WEAPONBLOCKING] && flag&(BF_SHORT|BF_WEAPON) && rnd()%100 < sc->data[SC_WEAPONBLOCKING]->val2 ) {
-			clif_skill_nodamage(bl,src,GC_WEAPONBLOCKING,sc->data[SC_WEAPONBLOCKING]->val1,1);
+			clif.skill_nodamage(bl,src,GC_WEAPONBLOCKING,sc->data[SC_WEAPONBLOCKING]->val1,1);
 			sc_start2(src,bl,SC_COMBO,100,GC_WEAPONBLOCKING,src->id,skill_get_time2(GC_WEAPONBLOCKING,sc->data[SC_WEAPONBLOCKING]->val1));
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
@@ -1155,12 +1156,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == bl->id)) &&
 				check_distance_bl(bl,d_bl,sce_d->val3) )
 			{ //If player is target of devotion, show guard effect on the devotion caster rather than the target
-				clif_skill_nodamage(d_bl,d_bl,CR_AUTOGUARD,sce->val1,1);
+				clif.skill_nodamage(d_bl,d_bl,CR_AUTOGUARD,sce->val1,1);
 				unit_set_walkdelay(d_bl,gettick(),delay,1);
 				d->dmg_lv = ATK_MISS;
 				return 0;
 			} else {
-				clif_skill_nodamage(bl,bl,CR_AUTOGUARD,sce->val1,1);
+				clif.skill_nodamage(bl,bl,CR_AUTOGUARD,sce->val1,1);
 				unit_set_walkdelay(bl,gettick(),delay,1);
 				if( sc->data[SC_SHRINK] && rnd()%100 < 5 * sce->val1 )
 					skill_blown(bl,src,skill_get_blewcount(CR_SHRINK,1),-1,BLOWN_NONE);
@@ -1175,7 +1176,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if( sce->val3 <= 0 ) { // Shield Down
 				sce->val2--;
 				if( sce->val2 >= 0 ) {
-					clif_millenniumshield(bl,sce->val2);
+					clif.millenniumshield(bl,sce->val2);
 					if( !sce->val2 )
 						status_change_end(bl,SC_MILLENNIUMSHIELD,INVALID_TIMER); // All shields down
 					else
@@ -1188,14 +1189,14 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		// attack blocked by Parrying
 		if( (sce = sc->data[SC_PARRYING]) && flag&BF_WEAPON && skill_id != WS_CARTTERMINATION && rnd()%100 < sce->val2 ) {
-			clif_skill_nodamage(bl, bl, LK_PARRYING, sce->val1,1);
+			clif.skill_nodamage(bl, bl, LK_PARRYING, sce->val1,1);
 			return 0;
 		}
 
 		if (sc->data[SC_DODGE] && (flag&BF_LONG || sc->data[SC_SPURT]) && rnd() % 100 < 20) {
 			if (sd && pc_issit(sd))
 				pc_setstand(sd, true); //Stand it to dodge.
-			clif_skill_nodamage(bl, bl, TK_DODGE, 1, 1);
+			clif.skill_nodamage(bl, bl, TK_DODGE, 1, 1);
 			sc_start4(src, bl, SC_COMBO, 100, TK_JUMPKICK, src->id, 1, 0, 2000);
 			return 0;
 		}
@@ -1208,7 +1209,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		//Kaupe blocks damage (skill or otherwise) from players, mobs, homuns, mercenaries.
 		if ((sce = sc->data[SC_KAUPE]) && rnd()%100 < sce->val2) {
-			clif_specialeffect(bl, EF_STORMKICK4, AREA);
+			clif.specialeffect(bl, EF_STORMKICK4, AREA);
 			//Shouldn't end until Breaker's non-weapon part connects.
 #ifndef RENEWAL
 			if (skill_id != ASC_BREAKER || !(flag&BF_WEAPON))
@@ -1224,7 +1225,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 #endif
 
 		if( flag&BF_MAGIC && (sce=sc->data[SC_PRESTIGE]) && rnd()%100 < sce->val2) {
-			clif_specialeffect(bl, EF_STORMKICK4, AREA); // Still need confirm it.
+			clif.specialeffect(bl, EF_STORMKICK4, AREA); // Still need confirm it.
 			return 0;
 		}
 
@@ -1233,7 +1234,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			if (!status_isdead(src))
 				skill_counter_additional_effect( src, bl, skill_id, skill_lv, flag, gettick() );
 			if (sce) {
-				clif_specialeffect(bl, EF_STORMKICK4, AREA);
+				clif.specialeffect(bl, EF_STORMKICK4, AREA);
 				skill_blown(src,bl,sce->val3,-1,BLOWN_NONE);
 			}
 			//Both need to be consumed if they are active.
@@ -1467,7 +1468,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		}
 
 		if ((sce = sc->data[SC_P_ALTER]) && damage > 0) {
-			clif_specialeffect(bl, EF_GUARD, AREA);
+			clif.specialeffect(bl, EF_GUARD, AREA);
 			sce->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 			if (sce->val3 >= 0)
 				damage = 0;
@@ -1499,7 +1500,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			uint8 dir = map_obj.calc_dir(bl, src->x, src->y);
 
 			if( unit_movepos(bl, src->x-dx[dir], src->y-dy[dir], 1, 1) ) {
-				clif_blown(bl);
+				clif.blown(bl);
 				unit_setdir(bl, dir);
 			}
 			d->dmg_lv = ATK_DEF;
@@ -2433,7 +2434,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case 0:
 				if(sc && !sc->data[SC_AUTOCOUNTER])
 					break;
-				clif_specialeffect(src, EF_AUTOCOUNTER, AREA);
+				clif.specialeffect(src, EF_AUTOCOUNTER, AREA);
 				status_change_end(src, SC_AUTOCOUNTER, INVALID_TIMER);
 			case KN_AUTOCOUNTER:
 				if(battle_config.auto_counter_type &&
@@ -5034,7 +5035,7 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 				if( rdamage > 0 ) { //Item reflect gets calculated before any mapflag reducing is applicated
 					struct block_list *d_bl = battle_check_devotion(src);
 
-					rdelay = clif_damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
+					rdelay = clif.damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
 					if( tsd )
 						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 					//Use Reflect Shield to signal this kind of skill trigger [Skotlex]
@@ -5102,8 +5103,8 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 		)
 	{
 		ATK_RATER(wd->damage, 50)
-		status_fix_damage(target,src,wd->damage,clif_damage(target,src,gettick(),0,0,wd->damage,0,DMG_NORMAL,0,false));
-		clif_skill_nodamage(target,target,ST_REJECTSWORD,tsc->data[SC_REJECTSWORD]->val1,1);
+		status_fix_damage(target,src,wd->damage,clif.damage(target,src,gettick(),0,0,wd->damage,0,DMG_NORMAL,0,false));
+		clif.skill_nodamage(target,target,ST_REJECTSWORD,tsc->data[SC_REJECTSWORD]->val1,1);
 		if( --(tsc->data[SC_REJECTSWORD]->val3) <= 0 )
 			status_change_end(target, SC_REJECTSWORD, INVALID_TIMER);
 	}
@@ -5116,9 +5117,9 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 		rdamage = battle_calc_base_damage(target,tstatus,&tstatus->rhw,tsc,sstatus->size,0);
 		rdamage = (int64)rdamage * ratio / 100 + wd->damage * (10 + tsc->data[SC_CRESCENTELBOW]->val1 * 20 / 10) / 10;
 		skill_blown(target, src, skill_get_blewcount(SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1), unit_getdir(src), BLOWN_NONE);
-		clif_skill_damage(target, src, gettick(), status_get_amotion(src), 0, rdamage,
+		clif.skill_damage(target, src, gettick(), status_get_amotion(src), 0, rdamage,
 			1, SR_CRESCENTELBOW_AUTOSPELL, tsc->data[SC_CRESCENTELBOW]->val1, DMG_SKILL); // This is how official does
-		clif_damage(src, target, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, DMG_NORMAL, 0, false);
+		clif.damage(src, target, gettick(), status_get_amotion(src)+1000, 0, rdamage/10, 1, DMG_NORMAL, 0, false);
 		status_damage(target, src, rdamage, 0, 0, 0);
 		status_damage(src, target, rdamage/10, 0, 0, 1);
 		status_change_end(target, SC_CRESCENTELBOW, INVALID_TIMER);
@@ -5314,7 +5315,7 @@ void battle_do_reflect(int attack_type, struct Damage *wd, struct block_list* sr
 			else if( attack_type == BF_WEAPON && tsc->data[SC_REFLECTDAMAGE] ) // Don't reflect your own damage (Grand Cross)
 				map_obj.foreachinshootrange(battle_damage_area,target,skill_get_splash(LG_REFLECTDAMAGE,1),BL_CHAR,tick,target,wd->amotion,sstatus->dmotion,rdamage,wd->flag);
 			else if( attack_type == BF_WEAPON || attack_type == BF_MISC) {
-				rdelay = clif_damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
+				rdelay = clif.damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
 				if( tsd )
 					battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
 				// It appears that official servers give skill reflect damage a longer delay
@@ -6897,7 +6898,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 
 						rd1 = min(damage,status_get_max_hp(bl)) * sc->data[SC_DEATHBOUND]->val2 / 100; // Amplify damage.
 						*dmg = rd1 * 30 / 100; // Received damage = 30% of amplified damage.
-						clif_skill_damage(src, bl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1, DMG_SKILL);
+						clif.skill_damage(src, bl, gettick(), status_get_amotion(src), 0, -30000, 1, RK_DEATHBOUND, sc->data[SC_DEATHBOUND]->val1, DMG_SKILL);
 						skill_blown(bl, src, skill_get_blewcount(RK_DEATHBOUND, 1), unit_getdir(src), BLOWN_NONE);
 						status_change_end(bl, SC_DEATHBOUND, INVALID_TIMER);
 						rdamage += rd1 * 70 / 100; // Target receives 70% of the amplified damage. [Rytech]
@@ -7111,7 +7112,7 @@ int battle_damage_area(struct block_list *bl, va_list ap) {
 			battle_delay_damage(tick, amotion,src,bl,0,CR_REFLECTSHIELD,0,damage,ATK_DEF,0,true,false);
 		else
 			status_fix_damage(src,bl,damage,0);
-		clif_damage(bl,bl,tick,amotion,dmotion,damage,1,DMG_ENDURE,0,false);
+		clif.damage(bl,bl,tick,amotion,dmotion,damage,1,DMG_ENDURE,0,false);
 		skill_additional_effect(src, bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL,ATK_DEF,tick);
 		map_obj.freeblock_unlock();
 	}
@@ -7158,9 +7159,9 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			short index = sd->equip_index[EQI_AMMO];
 			if (index < 0) {
 				if (sd->weapontype1 > W_KATAR && sd->weapontype1 < W_HUUMA)
-					clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
+					clif.skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
 				else
-					clif_arrow_fail(sd,0);
+					clif.arrow_fail(sd,0);
 				return ATK_NONE;
 			}
 			//Ammo check by Ishizu-chan
@@ -7168,7 +7169,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				switch (sd->status.weapon) {
 					case W_BOW:
 						if (sd->inventory_data[index]->look != A_ARROW) {
-							clif_arrow_fail(sd,0);
+							clif.arrow_fail(sd,0);
 							return ATK_NONE;
 						}
 						break;
@@ -7177,13 +7178,13 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					case W_GATLING:
 					case W_SHOTGUN:
 						if (sd->inventory_data[index]->look != A_BULLET) {
-							clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
+							clif.skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
 							return ATK_NONE;
 						}
 						break;
 					case W_GRENADE:
 						if (sd->inventory_data[index]->look != A_GRENADE) {
-							clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
+							clif.skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
 							return ATK_NONE;
 						}
 						break;
@@ -7205,8 +7206,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		if (dist <= 0 || (!map_obj.check_dir(dir,t_dir) && dist <= tstatus->rhw.range+1)) {
 			uint16 skill_lv = tsc->data[SC_AUTOCOUNTER]->val1;
 
-			clif_skillcastcancel(target); //Remove the casting bar. [Skotlex]
-			clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, DMG_NORMAL, 0, false); //Display MISS.
+			clif.skillcastcancel(target); //Remove the casting bar. [Skotlex]
+			clif.damage(src, target, tick, sstatus->amotion, 1, 0, 1, DMG_NORMAL, 0, false); //Display MISS.
 			status_change_end(target, SC_AUTOCOUNTER, INVALID_TIMER);
 			skill_attack(BF_WEAPON,target,target,src,KN_AUTOCOUNTER,skill_lv,tick,0);
 			return ATK_BLOCK;
@@ -7220,8 +7221,8 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		status_change_end(target, SC_BLADESTOP_WAIT, INVALID_TIMER);
 		if(sc_start4(src,src, SC_BLADESTOP, 100, sd?pc_checkskill(sd, MO_BLADESTOP):5, 0, 0, target->id, duration))
 		{	//Target locked.
-			clif_damage(src, target, tick, sstatus->amotion, 1, 0, 1, DMG_NORMAL, 0, false); //Display MISS.
-			clif_bladestop(target, src->id, 1);
+			clif.damage(src, target, tick, sstatus->amotion, 1, 0, 1, DMG_NORMAL, 0, false); //Display MISS.
+			clif.bladestop(target, src->id, 1);
 			sc_start4(src,target, SC_BLADESTOP, 100, skill_lv, 0, 0, src->id, duration);
 			return ATK_BLOCK;
 		}
@@ -7288,7 +7289,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	}
 
 	if (tsc && tsc->data[SC_MTF_MLEATKED] && rnd()%100 < tsc->data[SC_MTF_MLEATKED]->val2)
-		clif_skill_nodamage(target, target, SM_ENDURE, tsc->data[SC_MTF_MLEATKED]->val1, sc_start(src, target, SC_ENDURE, 100, tsc->data[SC_MTF_MLEATKED]->val1, skill_get_time(SM_ENDURE, tsc->data[SC_MTF_MLEATKED]->val1)));
+		clif.skill_nodamage(target, target, SM_ENDURE, tsc->data[SC_MTF_MLEATKED]->val1, sc_start(src, target, SC_ENDURE, 100, tsc->data[SC_MTF_MLEATKED]->val1, skill_get_time(SM_ENDURE, tsc->data[SC_MTF_MLEATKED]->val1)));
 
 	if(tsc && tsc->data[SC_KAAHI] && tstatus->hp < tstatus->max_hp && status_charge(target, 0, tsc->data[SC_KAAHI]->val3)) {
 		int hp_heal = tstatus->max_hp - tstatus->hp;
@@ -7354,7 +7355,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 		}
 	}
 
-	wd.dmotion = clif_damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2, wd.isspdamage);
+	wd.dmotion = clif.damage(src, target, tick, wd.amotion, wd.dmotion, wd.damage, wd.div_ , wd.type, wd.damage2, wd.isspdamage);
 
 	if (sd && sd->bonus.splash_range > 0 && damage > 0)
 		skill_castend_damage_id(src, target, 0, 1, tick, 0);
@@ -7390,7 +7391,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce->val2] == target->id)
 				) && check_distance_bl(target, d_bl, sce->val3) )
 			{
-				clif_damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, DMG_NORMAL, 0, false);
+				clif.damage(d_bl, d_bl, gettick(), 0, 0, damage, 0, DMG_NORMAL, 0, false);
 				status_fix_damage(NULL, d_bl, damage, 0);
 			}
 			else
@@ -7400,7 +7401,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			struct elemental_data *ed = ((TBL_PC*)target)->ed;
 
 			if (ed) {
-				clif_skill_damage(&ed->bl, target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1, DMG_SKILL);
+				clif.skill_damage(&ed->bl, target, tick, status_get_amotion(src), 0, -30000, 1, EL_CIRCLE_OF_FIRE, tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1, DMG_SKILL);
 				skill_attack(BF_WEAPON,&ed->bl,&ed->bl,src,EL_CIRCLE_OF_FIRE,tsc->data[SC_CIRCLE_OF_FIRE_OPTION]->val1,tick,wd.flag);
 			}
 		}
@@ -7408,7 +7409,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			struct block_list *e_bl = map_obj.id2bl(tsc->data[SC_WATER_SCREEN_OPTION]->val1);
 
 			if (e_bl && !status_isdead(e_bl)) {
-				clif_damage(e_bl, e_bl, tick, 0, 0, damage, wd.div_, DMG_NORMAL, 0, false);
+				clif.damage(e_bl, e_bl, tick, 0, 0, damage, wd.div_, DMG_NORMAL, 0, false);
 				status_fix_damage(NULL, e_bl, damage, 0);
 			}
 		}
@@ -7447,7 +7448,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				if (DIFF_TICK(ud->canact_tick, tick + autospell_tick) < 0) {
 					ud->canact_tick = i64max(tick + autospell_tick, ud->canact_tick);
 					if (battle_config.display_status_timers && sd)
-						clif_status_change(src, EFST_POSTDELAY, 1, autospell_tick, 0, 0, 0);
+						clif.status_change(src, EFST_POSTDELAY, 1, autospell_tick, 0, 0, 0);
 				}
 			}
 		}
@@ -7486,7 +7487,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 					}
 
 					if( type != CAST_GROUND ){
-						clif_skill_fail(sd,r_skill,USESKILL_FAIL_LEVEL,0);
+						clif.skill_fail(sd,r_skill,USESKILL_FAIL_LEVEL,0);
 						map_obj.freeblock_unlock();
 						return wd.dmg_lv;
 					}
@@ -7510,7 +7511,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 				sd->state.autocast = 0;
 
 				sd->ud.canact_tick = i64max(tick + skill_delayfix(src, r_skill, r_lv), sd->ud.canact_tick);
-				clif_status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
+				clif.status_change(src, EFST_POSTDELAY, 1, skill_delayfix(src, r_skill, r_lv), 0, 0, 1);
 			}
 		}
 

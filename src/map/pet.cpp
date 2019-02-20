@@ -30,6 +30,7 @@
 using namespace rathena;
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 const t_tick MIN_PETTHINKTIME = 100;
 
 //Dynamic pet database
@@ -391,7 +392,7 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 	tmp_item.card[3] = pd->pet.rename_flag;
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
-		clif_additem(sd,0,0,flag);
+		clif.additem(sd,0,0,flag);
 		map_obj.addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
@@ -529,11 +530,11 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 		if(map_obj.addblock(&sd->pd->bl))
 			return 1;
 
-		clif_spawn(&sd->pd->bl);
+		clif.spawn(&sd->pd->bl);
 		clif_send_petdata(sd,sd->pd, 0,0);
 		clif_send_petdata(sd,sd->pd, 5,battle_config.pet_hair_style);
 		clif_pet_equip_area(sd->pd);
-		clif_send_petstatus(sd);
+		clif.send_petstatus(sd);
 	}
 
 	rA_Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
@@ -589,11 +590,11 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 			if(map_obj.addblock(&sd->pd->bl))
 				return 1;
 
-			clif_spawn(&sd->pd->bl);
+			clif.spawn(&sd->pd->bl);
 			clif_send_petdata(sd,sd->pd,0,0);
 			clif_send_petdata(sd,sd->pd,5,battle_config.pet_hair_style);
 			clif_pet_equip_area(sd->pd);
-			clif_send_petstatus(sd);
+			clif.send_petstatus(sd);
 		}
 	}
 
@@ -632,7 +633,7 @@ int pet_catch_process1(struct map_session_data *sd,int target_class)
 	nullpo_ret(sd);
 
 	sd->catch_target_class = target_class;
-	clif_catch_process(sd);
+	clif.catch_process(sd);
 
 	return 0;
 }
@@ -654,7 +655,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	md = (struct mob_data*)map_obj.id2bl(target_id);
 
 	if(!md || md->bl.type != BL_MOB || md->bl.prev == NULL) { // Invalid inputs/state, abort capture.
-		clif_pet_roulette(sd,0);
+		clif.pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
 		sd->itemid = sd->itemindex = -1;
 		return 1;
@@ -676,8 +677,8 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 	}
 
 	if(sd->catch_target_class != md->mob_id || !pet) {
-		clif_emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
-		clif_pet_roulette(sd,0);
+		clif.emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
+		clif.pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
 
 		return 1;
@@ -695,10 +696,10 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		achievement_update_objective(sd, AG_TAMING, 1, md->mob_id);
 		unit_remove_map(&md->bl,CLR_OUTSIGHT);
 		status_kill(&md->bl);
-		clif_pet_roulette(sd,1);
+		clif.pet_roulette(sd,1);
 		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
 	} else {
-		clif_pet_roulette(sd,0);
+		clif.pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
 	}
 
@@ -751,7 +752,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	tmp_item.card[3] = 0; //New pets are not named.
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
-		clif_additem(sd,0,0,ret);
+		clif.additem(sd,0,0,ret);
 		map_obj.addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
@@ -784,14 +785,14 @@ int pet_menu(struct map_session_data *sd,int menunum)
 
 	if (egg_id) {
 		if ((egg_id->flag.trade_restriction&0x01) && !pc_inventoryblank(sd)) {
-			clif_displaymessage(sd->fd, msg_txt(sd, 451)); // You can't return your pet because your inventory is full.
+			clif.displaymessage(sd->fd, msg_txt(sd, 451)); // You can't return your pet because your inventory is full.
 			return 1;
 		}
 	}
 
 	switch(menunum) {
 		case 0:
-			clif_send_petstatus(sd);
+			clif.send_petstatus(sd);
 			break;
 		case 1:
 			pet_food(sd, sd->pd);
@@ -853,16 +854,16 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 	normalize_name(name," ");//bugreport:3032
 
 	if ( !flag || !strlen(name) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,280)); // You cannot use this name for your pet.
-		clif_send_petstatus(sd); //Send status so client knows pet name change got rejected.
+		clif.displaymessage(sd->fd, msg_txt(sd,280)); // You cannot use this name for your pet.
+		clif.send_petstatus(sd); //Send status so client knows pet name change got rejected.
 		return 0;
 	}
 
 	memcpy(pd->pet.name, name, NAME_LENGTH);
-	clif_name_area(&pd->bl);
+	clif.name_area(&pd->bl);
 	pd->pet.rename_flag = 1;
 	clif_pet_equip_area(pd);
-	clif_send_petstatus(sd);
+	clif.send_petstatus(sd);
 
 	return 1;
 }
@@ -892,7 +893,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 	nameid = sd->inventory.u.items_inventory[index].nameid;
 
 	if(pet_db_ptr->AcceID == 0 || nameid != pet_db_ptr->AcceID || pd->pet.equip != 0) {
-		clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
+		clif.equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
 		return 1;
 	}
 
@@ -942,7 +943,7 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 	tmp_item.identify = 1;
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
-		clif_additem(sd,0,0,flag);
+		clif.additem(sd,0,0,flag);
 		map_obj.addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
@@ -987,7 +988,7 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 	i = pc_search_inventory(sd,k);
 
 	if( i < 0 ) {
-		clif_pet_food(sd,k,0);
+		clif.pet_food(sd,k,0);
 
 		return 1;
 	}
@@ -1028,7 +1029,7 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 
 	clif_send_petdata(sd,pd,2,pd->pet.hungry);
 	clif_send_petdata(sd,pd,1,pd->pet.intimate);
-	clif_pet_food(sd, pet_db_ptr->FoodID,1);
+	clif.pet_food(sd, pet_db_ptr->FoodID,1);
 
 	return 0;
 }
@@ -1350,7 +1351,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 			unsigned char flag = 0;
 
 			if((flag = pc_additem(sd,it,it->amount,LOG_TYPE_PICKDROP_PLAYER))){
-				clif_additem(sd,0,0,flag);
+				clif.additem(sd,0,0,flag);
 				ditem = ers_alloc(item_drop_ers, struct item_drop);
 				memcpy(&ditem->item_data, it, sizeof(struct item));
 				ditem->next = dlist->item;
@@ -1450,9 +1451,9 @@ TIMER_FUNC(pet_recovery_timer){
 	if(sd->sc.data[pd->recovery->type]) {
 		//Display a heal animation?
 		//Detoxify is chosen for now.
-		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
+		clif.skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
 		status_change_end(&sd->bl, pd->recovery->type, INVALID_TIMER);
-		clif_emotion(&pd->bl, ET_OK);
+		clif.emotion(&pd->bl, ET_OK);
 	}
 
 	pd->recovery->timer = INVALID_TIMER;
@@ -1494,7 +1495,7 @@ TIMER_FUNC(pet_heal_timer){
 
 	pet_stop_attack(pd);
 	pet_stop_walking(pd,1);
-	clif_skill_nodamage(&pd->bl,&sd->bl,AL_HEAL,pd->s_skill->lv,1);
+	clif.skill_nodamage(&pd->bl,&sd->bl,AL_HEAL,pd->s_skill->lv,1);
 	status_heal(&sd->bl, pd->s_skill->lv,0, 0);
 	pd->s_skill->timer = add_timer(tick+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
 	return 0;

@@ -19,6 +19,7 @@
 #include "status.hpp"
 
 static DBMap* clan_db; // int clan_id -> struct clan*
+static Clif clif = Clif();
 
 void do_init_clan(){
 	clan_db = idb_alloc(DB_OPT_RELEASE_DATA);
@@ -124,10 +125,10 @@ void clan_member_joined( struct map_session_data* sd ){
 		clan->members[index] = sd;
 		clan->connect_member++;
 
-		clif_clan_basicinfo(sd);
+		clif.clan_basicinfo(sd);
 
 		intif_clan_member_joined(clan->id);
-		clif_clan_onlinecount(clan);
+		clif.clan_onlinecount(clan);
 	}
 }
 
@@ -143,7 +144,7 @@ void clan_member_left( struct map_session_data* sd ){
 		clan->connect_member--;
 
 		intif_clan_member_left(clan->id);
-		clif_clan_onlinecount(clan);
+		clif.clan_onlinecount(clan);
 	}
 }
 
@@ -181,7 +182,7 @@ bool clan_member_leave( struct map_session_data* sd, int clan_id, uint32 account
 	sd->clan = NULL;
 	sd->status.clan_id = 0;
 
-	clif_clan_leave(sd);
+	clif.clan_leave(sd);
 
 	return true;
 }
@@ -191,7 +192,7 @@ void clan_recv_message(int clan_id,uint32 account_id,const char *mes,int len) {
 
 	nullpo_retv( clan = clan_search(clan_id) );
 
-	clif_clan_message(clan,mes,len);
+	clif.clan_message(clan,mes,len);
 }
 
 void clan_send_message( struct map_session_data *sd, const char *mes, int len ){

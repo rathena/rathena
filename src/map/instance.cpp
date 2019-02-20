@@ -26,6 +26,7 @@
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 struct instance_data instance_data[MAX_INSTANCE_DATA];
 struct eri *instance_maps_ers = NULL; ///< Array of maps per instance
@@ -126,19 +127,19 @@ static TIMER_FUNC(instance_subscription_timer){
 			break;
 		case IM_CHAR:
 			if (ret == 0 && (sd = map_obj.charid2sd(instance_data[instance_id].owner_id)) != NULL) // If no maps are created, tell player to wait
-				clif_instance_changewait(instance_id, 0xffff);
+				clif.instance_changewait(instance_id, 0xffff);
 			break;
 		case IM_PARTY:
 			if (ret == 0 && (pd = party_search(instance_data[instance_id].owner_id)) != NULL) // If no maps are created, tell party to wait
-				clif_instance_changewait(instance_id, 0xffff);
+				clif.instance_changewait(instance_id, 0xffff);
 			break;
 		case IM_GUILD:
 			if (ret == 0 && (gd = guild_search(instance_data[instance_id].owner_id)) != NULL) // If no maps are created, tell guild to wait
-				clif_instance_changewait(instance_id, 0xffff);
+				clif.instance_changewait(instance_id, 0xffff);
 			break;
 		case IM_CLAN:
 			if (ret == 0 && (cd = clan_search(instance_data[instance_id].owner_id)) != NULL) // If no maps are created, tell clan to wait
-				clif_instance_changewait(instance_id, 0xffff);
+				clif.instance_changewait(instance_id, 0xffff);
 			break;
 		default:
 			return 0;
@@ -152,7 +153,7 @@ static TIMER_FUNC(instance_subscription_timer){
 		if(	instance_data[instance_wait.id[i]].state == INSTANCE_IDLE &&
 			((mode == IM_CHAR && sd != NULL) || (mode == IM_GUILD && gd != NULL) || (mode == IM_PARTY && pd != NULL) || (mode == IM_CLAN && cd != NULL))
 		){
-			clif_instance_changewait(instance_id, i + 1);
+			clif.instance_changewait(instance_id, i + 1);
 		}
 	}
 
@@ -189,19 +190,19 @@ static int instance_startkeeptimer(struct instance_data *im, unsigned short inst
 			break;
 		case IM_CHAR:
 			if (map_obj.charid2sd(im->owner_id) != NULL) // Notify player of the added instance timer
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_PARTY:
 			if (party_search(im->owner_id) != NULL) // Notify party of the added instance timer
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_GUILD:
 			if (guild_search(im->owner_id) != NULL) // Notify guild of the added instance timer
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_CLAN:
 			if (clan_search(im->owner_id) != NULL) // Notify clan of the added instance timer
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		default:
 			return 1;
@@ -236,19 +237,19 @@ static int instance_startidletimer(struct instance_data *im, unsigned short inst
 			break;
 		case IM_CHAR:
 			if (map_obj.charid2sd(im->owner_id) != NULL && instance_searchtype_db(im->type) != NULL) // Notify player of added instance timer
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_PARTY:
 			if (party_search(im->owner_id) != NULL && instance_searchtype_db(im->type) != NULL) // Notify party of added instance timer
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_GUILD:
 			if (guild_search(im->owner_id) != NULL && instance_searchtype_db(im->type) != NULL) // Notify guild of added instance timer
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_CLAN:
 			if (clan_search(im->owner_id) != NULL && instance_searchtype_db(im->type) != NULL) // Notify clan of added instance timer
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		default:
 			return 1;
@@ -278,19 +279,19 @@ static int instance_stopidletimer(struct instance_data *im, unsigned short insta
 			break;
 		case IM_CHAR:
 			if (map_obj.charid2sd(im->owner_id) != NULL) // Notify the player
-				clif_instance_changestatus(instance_id, 0, im->idle_limit);
+				clif.instance_changestatus(instance_id, 0, im->idle_limit);
 			break;
 		case IM_PARTY:
 			if (party_search(im->owner_id) != NULL) // Notify the party
-				clif_instance_changestatus(instance_id, 0, im->idle_limit);
+				clif.instance_changestatus(instance_id, 0, im->idle_limit);
 			break;
 		case IM_GUILD:
 			if (guild_search(im->owner_id) != NULL) // Notify the guild
-				clif_instance_changestatus(instance_id, 0, im->idle_limit);
+				clif.instance_changestatus(instance_id, 0, im->idle_limit);
 			break;
 		case IM_CLAN:
 			if (clan_search(im->owner_id) != NULL) // Notify the clan
-				clif_instance_changestatus(instance_id, 0, im->idle_limit);
+				clif.instance_changestatus(instance_id, 0, im->idle_limit);
 			break;
 		default:
 			return 1;
@@ -453,7 +454,7 @@ int instance_create(int owner_id, const char *name, enum instance_mode mode) {
 
 	instance_wait.id[instance_wait.count++] = i;
 
-	clif_instance_create(i, instance_wait.count);
+	clif.instance_create(i, instance_wait.count);
 
 	instance_subscription_timer(0,0,0,0);
 
@@ -533,19 +534,19 @@ int instance_addmap(unsigned short instance_id) {
 			break;
 		case IM_CHAR:
 			if (map_obj.charid2sd(im->owner_id) != NULL) // Inform player of the created instance
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_PARTY:
 			if (party_search(im->owner_id) != NULL) // Inform party members of the created instance
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_GUILD:
 			if (guild_search(im->owner_id) != NULL) // Inform guild members of the created instance
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		case IM_CLAN:
 			if (clan_search(im->owner_id) != NULL) // Inform clan members of the created instance
-				clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+				clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 			break;
 		default:
 			return 0;
@@ -646,7 +647,7 @@ int instance_destroy(unsigned short instance_id)
 				for(i = 0; i < instance_wait.count; i++)
 					if(instance_data[instance_wait.id[i]].state == INSTANCE_IDLE)
 						if ((mode == IM_CHAR && sd) || (mode == IM_PARTY && pd) || (mode == IM_GUILD && gd) || (mode == IM_CLAN && cd))
-							clif_instance_changewait(instance_id, i + 1);
+							clif.instance_changewait(instance_id, i + 1);
 
 				if(instance_wait.count)
 					instance_wait.timer = add_timer(gettick()+INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
@@ -700,9 +701,9 @@ int instance_destroy(unsigned short instance_id)
 
 	if (mode != IM_NONE) {
 		if(type)
-			clif_instance_changestatus(instance_id, type, 0);
+			clif.instance_changestatus(instance_id, type, 0);
 		else
-			clif_instance_changewait(instance_id, 0xffff);
+			clif.instance_changewait(instance_id, 0xffff);
 	}
 
 	if( im->regs.vars ) {
@@ -834,12 +835,12 @@ int instance_reqinfo(struct map_session_data *sd, unsigned short instance_id)
 
 		for(i = 0; i < instance_wait.count; i++) {
 			if(instance_wait.id[i] == instance_id) {
-				clif_instance_create(instance_id, i + 1);
+				clif.instance_create(instance_id, i + 1);
 				break;
 			}
 		}
 	} else if(im->state == INSTANCE_BUSY) // Give info on the instance if busy
-		clif_instance_status(instance_id, im->keep_limit, im->idle_limit);
+		clif.instance_status(instance_id, im->keep_limit, im->idle_limit);
 
 	return 0;
 }
@@ -1125,7 +1126,7 @@ void do_reload_instance(void)
 					continue;
 			}
 			if((db = instance_searchtype_db(im->type)) != NULL && !instance_enter(sd, instance_id, StringBuf_Value(db->name), -1, -1)) { // All good
-				clif_displaymessage(sd->fd, msg_txt(sd,515)); // Instance has been reloaded
+				clif.displaymessage(sd->fd, msg_txt(sd,515)); // Instance has been reloaded
 				instance_reqinfo(sd,instance_id);
 			} else // Something went wrong
 				ShowError("do_reload_instance: Error setting character at instance start: character_id=%d instance=%s.\n",sd->status.char_id,StringBuf_Value(db->name));

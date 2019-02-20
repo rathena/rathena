@@ -1979,7 +1979,7 @@
 	ack_packet(ZC_ACK_MERGE_ITEM,0x096F,7,2,4,6); // ZC_ACK_MERGE_ITEM
 	parseable_packet(0x0974,2,clif_parse_merge_item_cancel,0); // CZ_CANCEL_MERGE_ITEM
 	parseable_packet(0x0844,2,clif_parse_cashshop_open_request,0);
-	packet(0x0849,16); //clif_cashshop_result
+	packet(0x0849,16); //clif.cashshop_result
 	parseable_packet(0x0848,-1,clif_parse_cashshop_buy,2,6,4,10);
 	parseable_packet(0x084a,2,clif_parse_cashshop_close,0);
 	parseable_packet(0x08c9,2,clif_parse_cashshop_list_request,0);
@@ -2046,7 +2046,7 @@
 	parseable_packet(0x0447,2,clif_parse_blocking_playcancel,0); // CZ_BLOCKING_PLAY_CANCEL
 	parseable_packet(0x044A,6,clif_parse_client_version,2);
 	parseable_packet(0x0844,2,clif_parse_cashshop_open_request,0);
-	packet(0x0849,16); //clif_cashshop_result
+	packet(0x0849,16); //clif.cashshop_result
 	parseable_packet(0x0848,-1,clif_parse_cashshop_buy,2,6,4,10);
 	parseable_packet(0x084a,2,clif_parse_cashshop_close,0);
 	packet(0x084b,19); //fallitem4

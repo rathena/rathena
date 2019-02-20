@@ -2197,7 +2197,7 @@ enum e_refine_chance_type {
 #define BL_CONSUME (BL_PC|BL_HOM|BL_MER|BL_ELEM)
 ///Define to determine who has regen
 #define BL_REGEN (BL_PC|BL_HOM|BL_MER|BL_ELEM)
-///Define to determine who will receive a clif_status_change packet for effects that require one to display correctly
+///Define to determine who will receive a clif.status_change packet for effects that require one to display correctly
 #define BL_SCEFFECT (BL_PC|BL_HOM|BL_MER|BL_MOB|BL_ELEM)
 
 /** Basic damage info of a weapon

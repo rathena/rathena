@@ -28,6 +28,7 @@ static DBMap *questdb;
 static void questdb_free_sub(struct quest_db *quest, bool free);
 struct quest_db quest_dummy;
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 /**
  * Searches a quest by ID.
@@ -56,14 +57,14 @@ int quest_pc_login(TBL_PC *sd)
 	if( sd->avail_quests == 0 )
 		return 1;
 
-	clif_quest_send_list(sd);
+	clif.quest_send_list(sd);
 
 #if PACKETVER < 20141022
-	clif_quest_send_mission(sd);
+	clif.quest_send_mission(sd);
 
 	//@TODO[Haru]: Is this necessary? Does quest_send_mission not take care of this?
 	for( i = 0; i < sd->avail_quests; i++ )
-		clif_quest_update_objective(sd, &sd->quest_log[i], 0);
+		clif.quest_update_objective(sd, &sd->quest_log[i], 0);
 #endif
 
 	return 0;
@@ -125,8 +126,8 @@ int quest_add(TBL_PC *sd, int quest_id)
 
 	sd->save_quest = true;
 
-	clif_quest_add(sd, &sd->quest_log[n]);
-	clif_quest_update_objective(sd, &sd->quest_log[n], 0);
+	clif.quest_add(sd, &sd->quest_log[n]);
+	clif.quest_update_objective(sd, &sd->quest_log[n], 0);
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
@@ -192,9 +193,9 @@ int quest_change(TBL_PC *sd, int qid1, int qid2)
 
 	sd->save_quest = true;
 
-	clif_quest_delete(sd, qid1);
-	clif_quest_add(sd, &sd->quest_log[i]);
-	clif_quest_update_objective(sd, &sd->quest_log[i], 0);
+	clif.quest_delete(sd, qid1);
+	clif.quest_add(sd, &sd->quest_log[i]);
+	clif.quest_update_objective(sd, &sd->quest_log[i], 0);
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
@@ -233,7 +234,7 @@ int quest_delete(TBL_PC *sd, int quest_id)
 
 	sd->save_quest = true;
 
-	clif_quest_delete(sd, quest_id);
+	clif.quest_delete(sd, quest_id);
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
@@ -290,7 +291,7 @@ void quest_update_objective(TBL_PC *sd, int mob_id)
 			if( qi->objectives[j].mob == mob_id && sd->quest_log[i].count[j] < qi->objectives[j].count )  {
 				sd->quest_log[i].count[j]++;
 				sd->save_quest = true;
-				clif_quest_update_objective(sd, &sd->quest_log[i], mob_id);
+				clif.quest_update_objective(sd, &sd->quest_log[i], mob_id);
 			}
 		}
 
@@ -318,7 +319,7 @@ void quest_update_objective(TBL_PC *sd, int mob_id)
 //			if (dropitem->isGUID)
 //				item.unique_id = pc_generate_unique_id(sd);
 			if ((temp = pc_additem(sd, &item, 1, LOG_TYPE_QUEST)) != 0) // Failed to obtain the item
-				clif_additem(sd, 0, 0, temp);
+				clif.additem(sd, 0, 0, temp);
 //			else if (dropitem->isAnnounced || itemdb_exists(dropitem->nameid)->flag.broadcast)
 //				intif_broadcast_obtain_special_item(sd, dropitem->nameid, dropitem->mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 		}
@@ -348,7 +349,7 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 	sd->save_quest = true;
 
 	if( status < Q_COMPLETE ) {
-		clif_quest_update_status(sd, quest_id, status == Q_ACTIVE ? true : false);
+		clif.quest_update_status(sd, quest_id, status == Q_ACTIVE ? true : false);
 		return 0;
 	}
 
@@ -361,7 +362,7 @@ int quest_update_status(TBL_PC *sd, int quest_id, enum quest_state status)
 		memcpy(&sd->quest_log[sd->avail_quests], &tmp_quest, sizeof(struct quest));
 	}
 
-	clif_quest_delete(sd, quest_id);
+	clif.quest_delete(sd, quest_id);
 
 	if( save_settings&CHARSAVE_QUEST )
 		chrif_save(sd, CSAVE_NORMAL);
@@ -584,7 +585,7 @@ int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
 
 		if( qi == &quest_dummy ) { //Remove no longer existing entries
 			if( sd->quest_log[i].state != Q_COMPLETE ) //And inform the client if necessary
-				clif_quest_delete(sd, sd->quest_log[i].quest_id);
+				clif.quest_delete(sd, sd->quest_log[i].quest_id);
 			continue;
 		}
 

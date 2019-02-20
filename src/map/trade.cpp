@@ -24,6 +24,7 @@
 #define TRADE_DISTANCE 2 ///Max distance from traders to enable a trade to take place.
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 
 /**
  * Player initiates a trade request.
@@ -35,23 +36,23 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 	nullpo_retv(sd);
 
 	if (map_obj.getmapflag(sd->bl.m, MF_NOTRADE)) {
-		clif_displaymessage (sd->fd, msg_txt(sd,272));
+		clif.displaymessage (sd->fd, msg_txt(sd,272));
 		return; //Can't trade in notrade mapflag maps.
 	}
 
 	if (target_sd == NULL || sd == target_sd) {
-		clif_tradestart(sd, 1); // character does not exist
+		clif.tradestart(sd, 1); // character does not exist
 		return;
 	}
 
 	if (target_sd->npc_id) { // Trade fails if you are using an NPC.
-		clif_tradestart(sd, 2);
+		clif.tradestart(sd, 2);
 		return;
 	}
 
 	if (!battle_config.invite_request_check) {
 		if (target_sd->guild_invite > 0 || target_sd->party_invite > 0 || target_sd->adopt_invite) {
-			clif_tradestart(sd, 2);
+			clif.tradestart(sd, 2);
 			return;
 		}
 	}
@@ -61,33 +62,33 @@ void trade_traderequest(struct map_session_data *sd, struct map_session_data *ta
 
 		if( previous_sd ){
 			previous_sd->trade_partner = 0;
-			clif_tradecancelled(previous_sd);
+			clif.tradecancelled(previous_sd);
 		} // Once cancelled then continue to the new one.
 		sd->trade_partner = 0;
-		clif_tradecancelled(sd);
+		clif.tradecancelled(sd);
 	}
 
 	if (target_sd->trade_partner != 0) {
-		clif_tradestart(sd, 2); // person is in another trade
+		clif.tradestart(sd, 2); // person is in another trade
 		return;
 	}
 
 	if (!pc_can_give_items(sd) || !pc_can_give_items(target_sd)) { // check if both GMs are allowed to trade
-		clif_displaymessage(sd->fd, msg_txt(sd,246));
-		clif_tradestart(sd, 2); // GM is not allowed to trade
+		clif.displaymessage(sd->fd, msg_txt(sd,246));
+		clif.tradestart(sd, 2); // GM is not allowed to trade
 		return;
 	}
 
 	// Players can not request trade from far away, unless they are allowed to use @trade.
 	if (!pc_can_use_command(sd, "trade", COMMAND_ATCOMMAND) &&
 	    (sd->bl.m != target_sd->bl.m || !check_distance_bl(&sd->bl, &target_sd->bl, TRADE_DISTANCE))) {
-		clif_tradestart(sd, 0); // too far
+		clif.tradestart(sd, 0); // too far
 		return ;
 	}
 
 	target_sd->trade_partner = sd->status.account_id;
 	sd->trade_partner = target_sd->status.account_id;
-	clif_traderequest(target_sd, sd->status.name);
+	clif.traderequest(target_sd, sd->status.name);
 }
 
 
@@ -113,20 +114,20 @@ void trade_tradeack(struct map_session_data *sd, int type)
 		return; // Already trading or no partner set.
 
 	if ((tsd = map_obj.id2sd(sd->trade_partner)) == NULL) {
-		clif_tradestart(sd, 1); // Character does not exist
+		clif.tradestart(sd, 1); // Character does not exist
 		sd->trade_partner=0;
 		return;
 	}
 
 	if (tsd->state.trading || tsd->trade_partner != sd->bl.id) {
-		clif_tradestart(sd, 2);
+		clif.tradestart(sd, 2);
 		sd->trade_partner=0;
 		return; // Already trading or wrong partner.
 	}
 
 	if (type == 4) { // Cancel
-		clif_tradestart(tsd, type);
-		clif_tradestart(sd, type);
+		clif.tradestart(tsd, type);
+		clif.tradestart(sd, type);
 		sd->state.deal_locked = 0;
 		sd->trade_partner = 0;
 		tsd->state.deal_locked = 0;
@@ -141,7 +142,7 @@ void trade_tradeack(struct map_session_data *sd, int type)
 	// Check here as well since the original character could had warped.
 	if (!pc_can_use_command(sd, "trade", COMMAND_ATCOMMAND) &&
 	    (sd->bl.m != tsd->bl.m || !check_distance_bl(&sd->bl, &tsd->bl, TRADE_DISTANCE))) {
-		clif_tradestart(sd, 0); // too far
+		clif.tradestart(sd, 0); // too far
 		sd->trade_partner=0;
 		tsd->trade_partner = 0;
 		return;
@@ -150,8 +151,8 @@ void trade_tradeack(struct map_session_data *sd, int type)
 	// Check if you can start trade.
 	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.storage_flag ||
 		tsd->npc_id || tsd->state.vending || tsd->state.buyingstore || tsd->state.storage_flag) { // Fail
-		clif_tradestart(sd, 2);
-		clif_tradestart(tsd, 2);
+		clif.tradestart(sd, 2);
+		clif.tradestart(tsd, 2);
 		sd->state.deal_locked = 0;
 		sd->trade_partner = 0;
 		tsd->state.deal_locked = 0;
@@ -164,8 +165,8 @@ void trade_tradeack(struct map_session_data *sd, int type)
 	tsd->state.trading = 1;
 	memset(&sd->deal, 0, sizeof(sd->deal));
 	memset(&tsd->deal, 0, sizeof(tsd->deal));
-	clif_tradestart(tsd, type);
-	clif_tradestart(sd, type);
+	clif.tradestart(tsd, type);
+	clif.tradestart(sd, type);
 }
 
 /**
@@ -364,7 +365,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	}
 
 	if( !amount ) { // Why do this.. ~.~ just send an ack, the item won't display on the trade window.
-		clif_tradeitemok(sd, index, 0);
+		clif.tradeitemok(sd, index, 0);
 		return;
 	}
 
@@ -382,25 +383,25 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 
 	if( !itemdb_cantrade(item, src_lv, dst_lv) && // Can't trade
 		(pc_get_partner(sd) != target_sd || !itemdb_canpartnertrade(item, src_lv, dst_lv)) ) { // Can't partner-trade
-		clif_displaymessage (sd->fd, msg_txt(sd,260));
-		clif_tradeitemok(sd, index+2, 1);
+		clif.displaymessage (sd->fd, msg_txt(sd,260));
+		clif.tradeitemok(sd, index+2, 1);
 		return;
 	}
 
 	if( item->expire_time ) { // Rental System
-		clif_displaymessage (sd->fd, msg_txt(sd,260));
-		clif_tradeitemok(sd, index+2, 1);
+		clif.displaymessage (sd->fd, msg_txt(sd,260));
+		clif.tradeitemok(sd, index+2, 1);
 		return;
 	}
 
 	if( ((item->bound == BOUND_ACCOUNT || item->bound > BOUND_GUILD) || (item->bound == BOUND_GUILD && sd->status.guild_id != target_sd->status.guild_id)) && !pc_can_give_bounded_items(sd) ) { // Item Bound
-		clif_displaymessage(sd->fd, msg_txt(sd,293));
-		clif_tradeitemok(sd, index+2, 1);
+		clif.displaymessage(sd->fd, msg_txt(sd,293));
+		clif.tradeitemok(sd, index+2, 1);
 		return;
 	}
 
 	if( item->equipSwitch ){
-		clif_msg(sd, C_ITEM_EQUIP_SWITCH);
+		clif.msg(sd, C_ITEM_EQUIP_SWITCH);
 		return;
 	}
 
@@ -410,13 +411,13 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 	// Locate a trade position
 	ARR_FIND( 0, 10, trade_i, sd->deal.item[trade_i].index == index || sd->deal.item[trade_i].amount == 0 );
 	if( trade_i == 10 ) { // No space left
-		clif_tradeitemok(sd, index+2, 1);
+		clif.tradeitemok(sd, index+2, 1);
 		return;
 	}
 
 	trade_weight = sd->inventory_data[index]->weight * amount;
 	if( target_sd->weight + sd->deal.weight + trade_weight > target_sd->max_weight ) { // fail to add item -- the player was over weighted.
-		clif_tradeitemok(sd, index+2, 1);
+		clif.tradeitemok(sd, index+2, 1);
 		return;
 	}
 
@@ -434,8 +435,8 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 
 	sd->deal.weight += trade_weight;
 
-	clif_tradeitemok(sd, index+2, 0); // Return the index as it was received
-	clif_tradeadditem(sd, target_sd, index+2, amount);
+	clif.tradeitemok(sd, index+2, 0); // Return the index as it was received
+	clif.tradeadditem(sd, target_sd, index+2, amount);
 }
 
 /**
@@ -465,7 +466,7 @@ void trade_tradeaddzeny(struct map_session_data* sd, int amount)
 	}
 
 	sd->deal.zeny = amount;
-	clif_tradeadditem(sd, target_sd, 0, amount);
+	clif.tradeadditem(sd, target_sd, 0, amount);
 }
 
 /**
@@ -485,9 +486,9 @@ void trade_tradeok(struct map_session_data *sd)
 	}
 
 	sd->state.deal_locked = 1;
-	clif_tradeitemok(sd, 0, 0);
-	clif_tradedeal_lock(sd, 0);
-	clif_tradedeal_lock(target_sd, 1);
+	clif.tradeitemok(sd, 0, 0);
+	clif.tradedeal_lock(sd, 0);
+	clif.tradedeal_lock(target_sd, 1);
 }
 
 /**
@@ -507,10 +508,10 @@ void trade_tradecancel(struct map_session_data *sd)
 	if(!sd->state.trading) { // Not trade accepted
 		if( target_sd ) {
 			target_sd->trade_partner = 0;
-			clif_tradecancelled(target_sd);
+			clif.tradecancelled(target_sd);
 		}
 		sd->trade_partner = 0;
-		clif_tradecancelled(sd);
+		clif.tradecancelled(sd);
 		return;
 	}
 
@@ -518,20 +519,20 @@ void trade_tradecancel(struct map_session_data *sd)
 		if (!sd->deal.item[trade_i].amount)
 			continue;
 
-		clif_additem(sd, sd->deal.item[trade_i].index, sd->deal.item[trade_i].amount, 0);
+		clif.additem(sd, sd->deal.item[trade_i].index, sd->deal.item[trade_i].amount, 0);
 		sd->deal.item[trade_i].index = 0;
 		sd->deal.item[trade_i].amount = 0;
 	}
 
 	if (sd->deal.zeny) {
-		clif_updatestatus(sd, SP_ZENY);
+		clif.updatestatus(sd, SP_ZENY);
 		sd->deal.zeny = 0;
 	}
 
 	sd->state.deal_locked = 0;
 	sd->state.trading = 0;
 	sd->trade_partner = 0;
-	clif_tradecancelled(sd);
+	clif.tradecancelled(sd);
 
 	if (!target_sd)
 		return;
@@ -539,20 +540,20 @@ void trade_tradecancel(struct map_session_data *sd)
 	for(trade_i = 0; trade_i < 10; trade_i++) { // give items back (only virtual)
 		if (!target_sd->deal.item[trade_i].amount)
 			continue;
-		clif_additem(target_sd, target_sd->deal.item[trade_i].index, target_sd->deal.item[trade_i].amount, 0);
+		clif.additem(target_sd, target_sd->deal.item[trade_i].index, target_sd->deal.item[trade_i].amount, 0);
 		target_sd->deal.item[trade_i].index = 0;
 		target_sd->deal.item[trade_i].amount = 0;
 	}
 
 	if (target_sd->deal.zeny) {
-		clif_updatestatus(target_sd, SP_ZENY);
+		clif.updatestatus(target_sd, SP_ZENY);
 		target_sd->deal.zeny = 0;
 	}
 
 	target_sd->state.deal_locked = 0;
 	target_sd->trade_partner = 0;
 	target_sd->state.trading = 0;
-	clif_tradecancelled(target_sd);
+	clif.tradecancelled(target_sd);
 }
 
 /**
@@ -611,7 +612,7 @@ void trade_tradecommit(struct map_session_data *sd)
 			if (flag == 0)
 				pc_delitem(sd, n, sd->deal.item[trade_i].amount, 1, 6, LOG_TYPE_TRADE);
 			else
-				clif_additem(sd, n, sd->deal.item[trade_i].amount, 0);
+				clif.additem(sd, n, sd->deal.item[trade_i].amount, 0);
 			sd->deal.item[trade_i].index = 0;
 			sd->deal.item[trade_i].amount = 0;
 		}
@@ -623,7 +624,7 @@ void trade_tradecommit(struct map_session_data *sd)
 			if (flag == 0)
 				pc_delitem(tsd, n, tsd->deal.item[trade_i].amount, 1, 6, LOG_TYPE_TRADE);
 			else
-				clif_additem(tsd, n, tsd->deal.item[trade_i].amount, 0);
+				clif.additem(tsd, n, tsd->deal.item[trade_i].amount, 0);
 			tsd->deal.item[trade_i].index = 0;
 			tsd->deal.item[trade_i].amount = 0;
 		}
@@ -652,8 +653,8 @@ void trade_tradecommit(struct map_session_data *sd)
 	tsd->state.trading = 0;
 	tsd->state.isBoundTrading = 0;
 
-	clif_tradecompleted(sd, 0);
-	clif_tradecompleted(tsd, 0);
+	clif.tradecompleted(sd, 0);
+	clif.tradecompleted(tsd, 0);
 
 	// save both player to avoid crash: they always have no advantage/disadvantage between the 2 players
 	if (save_settings&CHARSAVE_TRADE) {

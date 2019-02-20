@@ -32,6 +32,7 @@ std::unordered_map<int, std::shared_ptr<s_achievement_db>> achievements;
 std::vector<int> achievement_mobs; // Avoids checking achievements on every mob killed
 
 static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 /**
  * Searches an achievement by ID
  * @param achievement_id: ID to lookup
@@ -108,7 +109,7 @@ struct achievement *achievement_add(struct map_session_data *sd, int achievement
 	sd->achievement_data.achievements[index].score = adb->score;
 	sd->achievement_data.save = true;
 
-	clif_achievement_update(sd, &sd->achievement_data.achievements[index], sd->achievement_data.count - sd->achievement_data.incompleteCount);
+	clif.achievement_update(sd, &sd->achievement_data.achievements[index], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 
 	return &sd->achievement_data.achievements[index];
 }
@@ -155,7 +156,7 @@ bool achievement_remove(struct map_session_data *sd, int achievement_id)
 	// Send a removed fake achievement
 	memset(&dummy, 0, sizeof(struct achievement));
 	dummy.achievement_id = achievement_id;
-	clif_achievement_update(sd, &dummy, sd->achievement_data.count - sd->achievement_data.incompleteCount);
+	clif.achievement_update(sd, &dummy, sd->achievement_data.count - sd->achievement_data.incompleteCount);
 
 	return true;
 }
@@ -285,7 +286,7 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 		ARR_FIND(sd->achievement_data.incompleteCount, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id); // Look for the index again, the position most likely changed
 	}
 
-	clif_achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
+	clif.achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 	sd->achievement_data.save = true; // Flag to save with the autosave interval
 
 	return true;
@@ -310,7 +311,7 @@ void achievement_get_reward(struct map_session_data *sd, int achievement_id, tim
 	auto &adb = achievements[achievement_id];
 
 	if (rewarded == 0) {
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		clif.achievement_reward_ack(sd->fd, 0, achievement_id);
 		return;
 	}
 
@@ -325,10 +326,10 @@ void achievement_get_reward(struct map_session_data *sd, int achievement_id, tim
 	run_script(adb->rewards.script, 0, sd->bl.id, fake_nd->bl.id);
 	if (adb->rewards.title_id) {
 		sd->titles.push_back(adb->rewards.title_id);
-		clif_achievement_list_all(sd);
+		clif.achievement_list_all(sd);
 	}else{
-		clif_achievement_reward_ack(sd->fd, 1, achievement_id);
-		clif_achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
+		clif.achievement_reward_ack(sd->fd, 1, achievement_id);
+		clif.achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 	}
 }
 
@@ -345,7 +346,7 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id)
 
 	if (!achievement_exists(achievement_id)) {
 		ShowError("achievement_reward: Trying to reward achievement %d not found in DB.\n", achievement_id);
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		clif.achievement_reward_ack(sd->fd, 0, achievement_id);
 		return;
 	}
 
@@ -353,17 +354,17 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id)
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 	if (i == sd->achievement_data.count) {
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		clif.achievement_reward_ack(sd->fd, 0, achievement_id);
 		return;
 	}
 
 	if (sd->achievement_data.achievements[i].rewarded > 0 || sd->achievement_data.achievements[i].completed == 0) {
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		clif.achievement_reward_ack(sd->fd, 0, achievement_id);
 		return;
 	}
 
 	if (!intif_achievement_reward(sd, adb.get())) {
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		clif.achievement_reward_ack(sd->fd, 0, achievement_id);
 	}
 }
 

@@ -70,7 +70,7 @@ struct Damage {
 #endif
 	int64 damage, /// Right hand damage
 		damage2; /// Left hand damage
-	enum e_damage_type type; /// Check clif_damage for type
+	enum e_damage_type type; /// Check clif.damage for type
 	short div_; /// Number of hit
 	int amotion,
 		dmotion;
@@ -78,7 +78,7 @@ struct Damage {
 	int flag; /// chk e_battle_flag
 	int miscflag;
 	enum damage_lv dmg_lv; /// ATK_LUCKY,ATK_FLEE,ATK_DEF
-	bool isspdamage; /// Display blue damage numbers in clif_damage
+	bool isspdamage; /// Display blue damage numbers in clif.damage
 };
 
 //(Used in read pc.cpp) attribute table (battle_attr_fix)

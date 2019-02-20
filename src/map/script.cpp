@@ -38,7 +38,7 @@
 #include "chat.hpp"
 #include "chrif.hpp"
 #include "clan.hpp"
-#include "clif.hpp"
+#include "clif_interface.hpp"
 #include "date.hpp" // date type enum, date_get()
 #include "elemental.hpp"
 #include "guild.hpp"
@@ -68,6 +68,7 @@ unsigned int next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
 std::shared_ptr<Map_Interface> map_obj;
+std::shared_ptr<Clif_Interface> clif;
 
 static bool script_rid2sd_( struct script_state *st, struct map_session_data** sd, const char *func );
 
@@ -3574,7 +3575,7 @@ void script_free_state(struct script_state* st)
 
 		if (sd && sd->st == st) { // Current script is aborted.
 			if(sd->state.using_fake_npc) {
-				clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+				clif->clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
 				sd->state.using_fake_npc = 0;
 			}
 			sd->st = NULL;
@@ -4387,7 +4388,7 @@ void run_script_main(struct script_state *st)
 		if ((sd = map_obj->id2sd(st->rid))!=NULL)
 		{	//Restore previous stack and save char.
 			if(sd->state.using_fake_npc){
-				clif_clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
+				clif->clearunit_single(sd->npc_id, CLR_OUTSIGHT, sd->fd);
 				sd->state.using_fake_npc = 0;
 			}
 			//Restore previous script if any.
@@ -4724,6 +4725,11 @@ void script_set_map(std::shared_ptr<Map_Interface> map_obj_)
 	map_obj = map_obj_;
 }
 
+void script_set_clif(std::shared_ptr<Clif_Interface> clif_)
+{
+	clif = clif_;
+}
+
 void script_reload(void) {
 	int i;
 	DBIterator *iter;
@@ -4778,7 +4784,7 @@ BUILDIN_FUNC(mes)
 
 	if( !script_hasdata(st, 3) )
 	{// only a single line detected in the script
-		clif_scriptmes(sd, st->oid, script_getstr(st, 2));
+		clif->scriptmes(sd, st->oid, script_getstr(st, 2));
 	}
 	else
 	{// parse multiple lines as they exist
@@ -4787,7 +4793,7 @@ BUILDIN_FUNC(mes)
 		for( i = 2; script_hasdata(st, i); i++ )
 		{
 			// send the message to the client
-			clif_scriptmes(sd, st->oid, script_getstr(st, i));
+			clif->scriptmes(sd, st->oid, script_getstr(st, i));
 		}
 	}
 
@@ -4809,7 +4815,7 @@ BUILDIN_FUNC(next)
 	sd->npc_idle_type = NPCT_WAIT;
 #endif
 	st->state = STOP;
-	clif_scriptnext(sd, st->oid);
+	clif->scriptnext(sd, st->oid);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -4823,7 +4829,7 @@ BUILDIN_FUNC(clear)
 	if (!script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
 
-	clif_scriptclear(sd, st->oid);
+	clif->scriptclear(sd, st->oid);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -4847,7 +4853,7 @@ BUILDIN_FUNC(close)
 		st->mes_active = 0;
 	}
 
-	clif_scriptclose(sd, st->oid);
+	clif->scriptclose(sd, st->oid);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -4867,7 +4873,7 @@ BUILDIN_FUNC(close2)
 	if( st->mes_active )
 		st->mes_active = 0;
 
-	clif_scriptclose(sd, st->oid);
+	clif->scriptclose(sd, st->oid);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -4987,10 +4993,10 @@ BUILDIN_FUNC(menu)
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
 			ShowWarning("buildin_menu: NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
-			clif_scriptmenu(sd, st->oid, menu);
+			clif->scriptmenu(sd, st->oid, menu);
 			aFree(menu);
 		} else
-			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+			clif->scriptmenu(sd, st->oid, StringBuf_Value(&buf));
 
 		StringBuf_Destroy(&buf);
 
@@ -5091,10 +5097,10 @@ BUILDIN_FUNC(select)
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
 			ShowWarning("buildin_select: NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
-			clif_scriptmenu(sd, st->oid, menu);
+			clif->scriptmenu(sd, st->oid, menu);
 			aFree(menu);
 		} else
-			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+			clif->scriptmenu(sd, st->oid, StringBuf_Value(&buf));
 		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff ) {
@@ -5169,10 +5175,10 @@ BUILDIN_FUNC(prompt)
 			CREATE(menu, char, 2048);
 			safestrncpy(menu, StringBuf_Value(&buf), 2047);
 			ShowWarning("buildin_prompt: NPC Menu too long! (source:%s / length:%d)\n",nd?nd->name:"Unknown",StringBuf_Length(&buf));
-			clif_scriptmenu(sd, st->oid, menu);
+			clif->scriptmenu(sd, st->oid, menu);
 			aFree(menu);
 		} else
-			clif_scriptmenu(sd, st->oid, StringBuf_Value(&buf));
+			clif->scriptmenu(sd, st->oid, StringBuf_Value(&buf));
 		StringBuf_Destroy(&buf);
 
 		if( sd->npc_menu >= 0xff )
@@ -5910,9 +5916,9 @@ BUILDIN_FUNC(input)
 		sd->state.menu_or_input = 1;
 		st->state = RERUNLINE;
 		if( is_string_variable(name) )
-			clif_scriptinputstr(sd,st->oid);
+			clif->scriptinputstr(sd,st->oid);
 		else
-			clif_scriptinput(sd,st->oid);
+			clif->scriptinput(sd,st->oid);
 	}
 	else
 	{	// take received text/value and store it in the designated variable
@@ -6630,7 +6636,7 @@ BUILDIN_FUNC(changelook)
 		default:
 			break;
 	}
-	clif_changelook(&sd->bl, type, val);
+	clif->changelook(&sd->bl, type, val);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -6645,7 +6651,7 @@ BUILDIN_FUNC(cutin)
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
-	clif_cutin(sd,script_getstr(st,2),script_getnum(st,3));
+	clif->cutin(sd,script_getstr(st,2),script_getnum(st,3));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -6666,7 +6672,7 @@ BUILDIN_FUNC(viewpoint)
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 
-	clif_viewpoint(sd,st->oid,type,x,y,id,color);
+	clif->viewpoint(sd,st->oid,type,x,y,id,color);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -7187,7 +7193,7 @@ BUILDIN_FUNC(getitem)
 		{
 			if ((flag = pc_additem(sd, &it, get_count, LOG_TYPE_SCRIPT)))
 			{
-				clif_additem(sd, 0, 0, flag);
+				clif->additem(sd, 0, 0, flag);
 				if( pc_candrop(sd,&it) )
 					map_obj->addflooritem(&it,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 			}
@@ -7322,7 +7328,7 @@ BUILDIN_FUNC(getitem2)
 				unsigned char flag = 0;
 				if ((flag = pc_additem(sd, &item_tmp, get_count, LOG_TYPE_SCRIPT)))
 				{
-					clif_additem(sd, 0, 0, flag);
+					clif->additem(sd, 0, 0, flag);
 					if( pc_candrop(sd,&item_tmp) )
 						map_obj->addflooritem(&item_tmp,get_count,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 				}
@@ -7377,7 +7383,7 @@ BUILDIN_FUNC(rentitem) {
 
 	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) )
 	{
-		clif_additem(sd, 0, 0, flag);
+		clif->additem(sd, 0, 0, flag);
 		return SCRIPT_CMD_FAILURE;
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -7464,7 +7470,7 @@ BUILDIN_FUNC(rentitem2) {
 	}
 
 	if( (flag = pc_additem(sd, &it, 1, LOG_TYPE_SCRIPT)) ) {
-		clif_additem(sd, 0, 0, flag);
+		clif->additem(sd, 0, 0, flag);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -7995,7 +8001,7 @@ BUILDIN_FUNC(delitem)
 	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%hu).\n", command, it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
-	clif_scriptclose(sd, st->oid);
+	clif->scriptclose(sd, st->oid);
 	return SCRIPT_CMD_FAILURE;
 }
 
@@ -8103,7 +8109,7 @@ BUILDIN_FUNC(delitem2)
 	ShowError("buildin_%s: failed to delete %d items (AID=%d item_id=%hu).\n", command, it.amount, sd->status.account_id, it.nameid);
 	st->state = END;
 	st->mes_active = 0;
-	clif_scriptclose(sd, st->oid);
+	clif->scriptclose(sd, st->oid);
 	return SCRIPT_CMD_FAILURE;
 }
 
@@ -8689,9 +8695,9 @@ BUILDIN_FUNC(repair)
 			repaircounter++;
 			if(num == repaircounter) {
 				sd->inventory.u.items_inventory[i].attribute = 0;
-				clif_equiplist(sd);
-				clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
-				clif_misceffect(&sd->bl, 3);
+				clif->equiplist(sd);
+				clif->produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
+				clif->misceffect(&sd->bl, 3);
 				break;
 			}
 		}
@@ -8716,15 +8722,15 @@ BUILDIN_FUNC(repairall)
 		if(sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute)
 		{
 			sd->inventory.u.items_inventory[i].attribute = 0;
-			clif_produceeffect(sd,0,sd->inventory.u.items_inventory[i].nameid);
+			clif->produceeffect(sd,0,sd->inventory.u.items_inventory[i].nameid);
 			repaircounter++;
 		}
 	}
 
 	if(repaircounter)
 	{
-		clif_misceffect(&sd->bl, 3);
-		clif_equiplist(sd);
+		clif->misceffect(&sd->bl, 3);
+		clif->equiplist(sd);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -8922,15 +8928,15 @@ BUILDIN_FUNC(successrefitem) {
 		sd->inventory.u.items_inventory[i].refine = cap_value( sd->inventory.u.items_inventory[i].refine, 0, MAX_REFINE);
 		pc_unequipitem(sd,i,2); // status calc will happen in pc_equipitem() below
 
-		clif_refine(sd->fd,0,i,sd->inventory.u.items_inventory[i].refine);
-		clif_delitem(sd,i,1,3);
+		clif->refine(sd->fd,0,i,sd->inventory.u.items_inventory[i].refine);
+		clif->delitem(sd,i,1,3);
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->inventory.u.items_inventory[i]);
 
-		clif_additem(sd,i,1,0);
+		clif->additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
-		clif_misceffect(&sd->bl,3);
+		clif->misceffect(&sd->bl,3);
 		achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
 		if (sd->inventory.u.items_inventory[i].refine == MAX_REFINE &&
 				sd->inventory.u.items_inventory[i].card[0] == CARD0_FORGE &&
@@ -8978,9 +8984,9 @@ BUILDIN_FUNC(failedrefitem) {
 	if (i >= 0) {
 		sd->inventory.u.items_inventory[i].refine = 0;
 		pc_unequipitem(sd,i,3); //recalculate bonus
-		clif_refine(sd->fd,1,i,sd->inventory.u.items_inventory[i].refine); //notify client of failure
+		clif->refine(sd->fd,1,i,sd->inventory.u.items_inventory[i].refine); //notify client of failure
 		pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
-		clif_misceffect(&sd->bl,2); 	// display failure effect
+		clif->misceffect(&sd->bl,2); 	// display failure effect
 		achievement_update_objective(sd, AG_REFINE_FAIL, 1, 1);
 		script_pushint(st, 1);
 		return SCRIPT_CMD_SUCCESS;
@@ -9021,15 +9027,15 @@ BUILDIN_FUNC(downrefitem) {
 		sd->inventory.u.items_inventory[i].refine -= down;
 		sd->inventory.u.items_inventory[i].refine = cap_value( sd->inventory.u.items_inventory[i].refine, 0, MAX_REFINE);
 
-		clif_refine(sd->fd,2,i,sd->inventory.u.items_inventory[i].refine);
-		clif_delitem(sd,i,1,3);
+		clif->refine(sd->fd,2,i,sd->inventory.u.items_inventory[i].refine);
+		clif->delitem(sd,i,1,3);
 
 		//Logs items, got from (N)PC scripts [Lupus]
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, 1, &sd->inventory.u.items_inventory[i]);
 
-		clif_additem(sd,i,1,0);
+		clif->additem(sd,i,1,0);
 		pc_equipitem(sd,i,ep);
-		clif_misceffect(&sd->bl,2);
+		clif->misceffect(&sd->bl,2);
 		achievement_update_objective(sd, AG_REFINE_FAIL, 1, sd->inventory.u.items_inventory[i].refine);
 		script_pushint(st, sd->inventory.u.items_inventory[i].refine);
 		return SCRIPT_CMD_SUCCESS;
@@ -9090,7 +9096,7 @@ BUILDIN_FUNC(breakequip) {
 	if (i >= 0) {
 		sd->inventory.u.items_inventory[i].attribute = 1;
 		pc_unequipitem(sd,i,3);
-		clif_equiplist(sd);
+		clif->equiplist(sd);
 		script_pushint(st,1);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -9535,7 +9541,7 @@ BUILDIN_FUNC(end)
 
 	if (sd){
 		if (sd->state.callshop == 0)
-			clif_scriptclose(sd, st->oid); // If a menu/select/prompt is active, close it.
+			clif->scriptclose(sd, st->oid); // If a menu/select/prompt is active, close it.
 		else 
 			sd->state.callshop = 0;
 	}
@@ -10087,7 +10093,7 @@ BUILDIN_FUNC(itemskill)
 	sd->skillitem=id;
 	sd->skillitemlv=lv;
 	sd->skillitem_keep_requirement = keep_requirement;
-	clif_item_skill(sd,id,lv);
+	clif->item_skill(sd,id,lv);
 	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
@@ -10102,7 +10108,7 @@ BUILDIN_FUNC(produce)
 		return SCRIPT_CMD_SUCCESS;
 
 	trigger=script_getnum(st,2);
-	clif_skill_produce_mix_list(sd, -1, trigger);
+	clif->skill_produce_mix_list(sd, -1, trigger);
 	return SCRIPT_CMD_SUCCESS;
 }
 /*==========================================
@@ -10117,7 +10123,7 @@ BUILDIN_FUNC(cooking)
 		return SCRIPT_CMD_SUCCESS;
 
 	trigger=script_getnum(st,2);
-	clif_cooking_list(sd, trigger, AM_PHARMACY, 1, 1);
+	clif->cooking_list(sd, trigger, AM_PHARMACY, 1, 1);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -10932,9 +10938,9 @@ BUILDIN_FUNC(announce)
 		}
 
 		if (fontColor)
-			clif_broadcast2(bl, mes, (int)strlen(mes)+1, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, target);
+			clif->broadcast2(bl, mes, (int)strlen(mes)+1, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, target);
 		else
-			clif_broadcast(bl, mes, (int)strlen(mes)+1, flag&BC_COLOR_MASK, target);
+			clif->broadcast(bl, mes, (int)strlen(mes)+1, flag&BC_COLOR_MASK, target);
 	}
 	else
 	{
@@ -10959,9 +10965,9 @@ static int buildin_announce_sub(struct block_list *bl, va_list ap)
 	short fontAlign = (short)va_arg(ap, int);
 	short fontY     = (short)va_arg(ap, int);
 	if (fontColor)
-		clif_broadcast2(bl, mes, len, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, SELF);
+		clif->broadcast2(bl, mes, len, strtol(fontColor, (char **)NULL, 0), fontType, fontSize, fontAlign, fontY, SELF);
 	else
-		clif_broadcast(bl, mes, len, type, SELF);
+		clif->broadcast(bl, mes, len, type, SELF);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -11587,7 +11593,7 @@ BUILDIN_FUNC(homunculus_evolution)
 		if (sd->hd->homunculus.intimacy >= battle_config.homunculus_evo_intimacy_need)
 			hom_evolution(sd->hd);
 		else
-			clif_emotion(&sd->hd->bl, ET_SWEAT);
+			clif->emotion(&sd->hd->bl, ET_SWEAT);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -11622,9 +11628,9 @@ BUILDIN_FUNC(homunculus_mutate)
 			script_pushint(st, 1);
 			return SCRIPT_CMD_SUCCESS;
 		} else
-			clif_emotion(&sd->bl, ET_SWEAT);
+			clif->emotion(&sd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, ET_SWEAT);
+		clif->emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -11653,17 +11659,17 @@ BUILDIN_FUNC(morphembryo)
 			item_tmp.identify = 1;
 
 			if( (i = pc_additem(sd, &item_tmp, 1, LOG_TYPE_SCRIPT)) ) {
-				clif_additem(sd, 0, 0, i);
-				clif_emotion(&sd->bl, ET_SWEAT); // Fail to avoid item drop exploit.
+				clif->additem(sd, 0, 0, i);
+				clif->emotion(&sd->bl, ET_SWEAT); // Fail to avoid item drop exploit.
 			} else {
 				hom_vaporize(sd, HOM_ST_MORPH);
 				script_pushint(st, 1);
 				return SCRIPT_CMD_SUCCESS;
 			}
 		} else
-			clif_emotion(&sd->hd->bl, ET_SWEAT);
+			clif->emotion(&sd->hd->bl, ET_SWEAT);
 	} else
-		clif_emotion(&sd->bl, ET_SWEAT);
+		clif->emotion(&sd->bl, ET_SWEAT);
 
 	script_pushint(st, 0);
 
@@ -11759,7 +11765,7 @@ BUILDIN_FUNC(birthpet)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	clif_sendegg(sd);
+	clif->sendegg(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -11847,13 +11853,13 @@ BUILDIN_FUNC(changebase)
 	if(!sd->disguise && vclass != sd->vd.class_) {
 		status_set_viewdata(&sd->bl, vclass);
 		//Updated client view. Base, Weapon and Cloth Colors.
-		clif_changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
-		clif_changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
+		clif->changelook(&sd->bl,LOOK_BASE,sd->vd.class_);
+		clif->changelook(&sd->bl,LOOK_WEAPON,sd->status.weapon);
 		if (sd->vd.cloth_color)
-			clif_changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
+			clif->changelook(&sd->bl,LOOK_CLOTHES_COLOR,sd->vd.cloth_color);
 		if (sd->vd.body_style)
-			clif_changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
-		clif_skillinfoblock(sd);
+			clif->changelook(&sd->bl,LOOK_BODY2,sd->vd.body_style);
+		clif->skillinfoblock(sd);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -12648,7 +12654,7 @@ BUILDIN_FUNC(emotion)
 	if (!bl)
 		bl = map_obj->id2bl(st->oid);
 
-	clif_emotion(bl, type);
+	clif->emotion(bl, type);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -12823,7 +12829,7 @@ BUILDIN_FUNC(flagemblem)
 	} else {
 		bool changed = ( nd->u.scr.guild_id != g_id )?true:false;
 		nd->u.scr.guild_id = g_id;
-		clif_guild_emblem_area(&nd->bl);
+		clif->guild_emblem_area(&nd->bl);
 		/* guild flag caching */
 		if( g_id ) /* adding a id */
 			guild_flag_add(nd);
@@ -12992,7 +12998,7 @@ BUILDIN_FUNC(successremovecards) {
 			item_tmp.identify = 1;
 
 			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	// get back the cart in inventory
-				clif_additem(sd,0,0,flag);
+				clif->additem(sd,0,0,flag);
 				map_obj->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 			}
 		}
@@ -13021,11 +13027,11 @@ BUILDIN_FUNC(successremovecards) {
 
 		pc_delitem(sd,i,1,0,3,LOG_TYPE_SCRIPT);
 		if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){	//chk if can be spawn in inventory otherwise put on floor
-			clif_additem(sd,0,0,flag);
+			clif->additem(sd,0,0,flag);
 			map_obj->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 		}
 
-		clif_misceffect(&sd->bl,3);
+		clif->misceffect(&sd->bl,3);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13072,7 +13078,7 @@ BUILDIN_FUNC(failedremovecards) {
 				item_tmp.identify = 1;
 
 				if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
-					clif_additem(sd,0,0,flag);
+					clif->additem(sd,0,0,flag);
 					map_obj->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 				}
 			}
@@ -13107,11 +13113,11 @@ BUILDIN_FUNC(failedremovecards) {
 			pc_delitem(sd,i,1,0,2,LOG_TYPE_SCRIPT);
 
 			if((flag=pc_additem(sd,&item_tmp,1,LOG_TYPE_SCRIPT))){
-				clif_additem(sd,0,0,flag);
+				clif->additem(sd,0,0,flag);
 				map_obj->addflooritem(&item_tmp,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 			}
 		}
-		clif_misceffect(&sd->bl,2);
+		clif->misceffect(&sd->bl,2);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13234,7 +13240,7 @@ BUILDIN_FUNC(wedding_effect)
 		bl=map_obj->id2bl(st->oid);
 	} else
 		bl=&sd->bl;
-	clif_wedding_effect(bl);
+	clif->wedding_effect(bl);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -13921,11 +13927,11 @@ BUILDIN_FUNC(classchange)
 		}
 	}
 	if (target != SELF)
-		clif_class_change(&nd->bl,_class,type);
+		class_change(&nd->bl,_class,type);
 	else if (sd == NULL)
 		return SCRIPT_CMD_FAILURE;
 	else
-		clif_class_change_target(&nd->bl,_class,type,target,sd);
+		class_change_target(&nd->bl,_class,type,target,sd);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13948,11 +13954,11 @@ BUILDIN_FUNC(misceffect)
 	if(st->oid && st->oid != fake_nd->bl.id) {
 		struct block_list *bl = map_obj->id2bl(st->oid);
 		if (bl)
-			clif_specialeffect(bl,type,AREA);
+			clif->specialeffect(bl,type,AREA);
 	} else{
 		TBL_PC *sd;
 		if(script_rid2sd(sd))
-			clif_specialeffect(&sd->bl,type,AREA);
+			clif->specialeffect(&sd->bl,type,AREA);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13964,7 +13970,7 @@ BUILDIN_FUNC(playBGM)
 	struct map_session_data* sd;
 
 	if( script_rid2sd(sd) ) {
-		clif_playBGM(sd, script_getstr(st,2));
+		clif->playBGM(sd, script_getstr(st,2));
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -13972,14 +13978,14 @@ BUILDIN_FUNC(playBGM)
 static int playBGM_sub(struct block_list* bl,va_list ap)
 {
 	const char* name = va_arg(ap,const char*);
-	clif_playBGM(BL_CAST(BL_PC, bl), name);
+	clif->playBGM(BL_CAST(BL_PC, bl), name);
 	return 0;
 }
 
 static int playBGM_foreachpc_sub(struct map_session_data* sd, va_list args)
 {
 	const char* name = va_arg(args, const char*);
-	clif_playBGM(sd, name);
+	clif->playBGM(sd, name);
 	return 0;
 }
 
@@ -14022,7 +14028,7 @@ BUILDIN_FUNC(soundeffect)
 		const char* name = script_getstr(st,2);
 		int type = script_getnum(st,3);
 
-		clif_soundeffect(sd,&sd->bl,name,type);
+		clif->soundeffect(sd,&sd->bl,name,type);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14032,7 +14038,7 @@ int soundeffect_sub(struct block_list* bl,va_list ap)
 	char* name = va_arg(ap,char*);
 	int type = va_arg(ap,int);
 
-	clif_soundeffect((TBL_PC *)bl, bl, name, type);
+	clif->soundeffect((TBL_PC *)bl, bl, name, type);
 
 	return 0;
 }
@@ -14063,7 +14069,7 @@ BUILDIN_FUNC(soundeffectall)
 
 	if(!script_hasdata(st,4))
 	{	// area around
-		clif_soundeffectall(bl, name, type, AREA);
+		clif->soundeffectall(bl, name, type, AREA);
 	}
 	else
 		if(!script_hasdata(st,5))
@@ -14253,10 +14259,10 @@ BUILDIN_FUNC(skilleffect)
 	 * which leaves the server thinking it still is sitting. */
 	if( pc_issit(sd) && pc_setstand(sd, false) ) {
 		skill_sit(sd, 0);
-		clif_standing(&sd->bl);
+		clif->standing(&sd->bl);
 	}
 
-	clif_skill_nodamage(&sd->bl,&sd->bl,skill_id,skill_lv,1);
+	clif->skill_nodamage(&sd->bl,&sd->bl,skill_id,skill_lv,1);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14277,7 +14283,7 @@ BUILDIN_FUNC(npcskilleffect)
 	y=script_getnum(st,5);
 
 	if (bl)
-		clif_skill_poseffect(bl,skill_id,skill_lv,x,y,gettick());
+		clif->skill_poseffect(bl,skill_id,skill_lv,x,y,gettick());
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -14302,16 +14308,16 @@ BUILDIN_FUNC(specialeffect)
 	{
 		TBL_NPC *nd = npc_name2id(script_getstr(st,4));
 		if(nd)
-			clif_specialeffect(&nd->bl, type, target);
+			clif->specialeffect(&nd->bl, type, target);
 	}
 	else
 	{
 		if (target == SELF) {
 			TBL_PC *sd;
 			if (script_rid2sd(sd))
-				clif_specialeffect_single(bl,type,sd->fd);
+				clif->specialeffect_single(bl,type,sd->fd);
 		} else {
-			clif_specialeffect(bl, type, target);
+			clif->specialeffect(bl, type, target);
 		}
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -14330,7 +14336,7 @@ BUILDIN_FUNC(specialeffect2)
 			return SCRIPT_CMD_FAILURE;
 		}
 
-		clif_specialeffect(&sd->bl, type, target);
+		clif->specialeffect(&sd->bl, type, target);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14426,9 +14432,9 @@ BUILDIN_FUNC(dispbottom)
 
 	if(sd) {
 		if (script_hasdata(st,3))
-			clif_messagecolor(&sd->bl, color, message, true, SELF);		// [Napster]
+			clif->messagecolor(&sd->bl, color, message, true, SELF);		// [Napster]
 		else
-			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], message, false, SELF);
+			clif->messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], message, false, SELF);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14440,11 +14446,11 @@ int recovery_sub(struct map_session_data* sd, int revive)
 {
 	if(revive&(1|4) && pc_isdead(sd)) {
 		status_revive(&sd->bl, 100, 100);
-		clif_displaymessage(sd->fd,msg_txt(sd,16)); // You've been revived!
-		clif_specialeffect(&sd->bl, EF_RESURRECTION, AREA);
+		clif->displaymessage(sd->fd,msg_txt(sd,16)); // You've been revived!
+		clif->specialeffect(&sd->bl, EF_RESURRECTION, AREA);
 	} else if(revive&(1|2) && !pc_isdead(sd)) {
 		status_percent_heal(&sd->bl, 100, 100);
-		clif_displaymessage(sd->fd,msg_txt(sd,680)); // You have been recovered!
+		clif->displaymessage(sd->fd,msg_txt(sd,680)); // You have been recovered!
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14772,7 +14778,7 @@ BUILDIN_FUNC(message)
 
 	if((pl_sd=map_obj->nick2sd((char *) player,false)) == NULL)
 		return SCRIPT_CMD_SUCCESS;
-	clif_displaymessage(pl_sd->fd, msg);
+	clif->displaymessage(pl_sd->fd, msg);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -14810,12 +14816,12 @@ BUILDIN_FUNC(npctalk)
 		}
 		safesnprintf(message, sizeof(message), "%s", str);
 		if (target != SELF)
-			clif_messagecolor(&nd->bl, color_table[COLOR_WHITE], message, false, target);
+			clif->messagecolor(&nd->bl, color_table[COLOR_WHITE], message, false, target);
 		else {
 			TBL_PC *sd = map_obj->id2sd(st->rid);
 			if (sd == NULL)
 				return SCRIPT_CMD_FAILURE;
-			clif_messagecolor_target(&nd->bl, color_table[COLOR_WHITE], message, false, target, sd);
+			clif->messagecolor_target(&nd->bl, color_table[COLOR_WHITE], message, false, target, sd);
 		}
 	}
 	return SCRIPT_CMD_SUCCESS;
@@ -14839,7 +14845,7 @@ BUILDIN_FUNC(chatmes)
 	if (nd != NULL && nd->chat_id) {
 		char message[256];
 		safesnprintf(message, sizeof(message), "%s", str);
-		clif_GlobalMessage(map_obj->id2bl(nd->chat_id), message, CHAT_WOS);
+		clif->GlobalMessage(map_obj->id2bl(nd->chat_id), message, CHAT_WOS);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -15178,7 +15184,7 @@ BUILDIN_FUNC(summon)
 		check_event(st, event);
 	}
 
-	clif_skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
+	clif->skill_poseffect(&sd->bl,AM_CALLHOMUN,1,sd->bl.x,sd->bl.y,tick);
 
 	md = mob_once_spawn_sub(&sd->bl, sd->bl.m, sd->bl.x, sd->bl.y, str, _class, event, SZ_SMALL, AI_NONE);
 	if (md) {
@@ -15188,7 +15194,7 @@ BUILDIN_FUNC(summon)
 			delete_timer(md->deletetimer, mob_timer_delete);
 		md->deletetimer = add_timer(tick+(timeout>0?timeout:60000),mob_timer_delete,md->bl.id,0);
 		mob_spawn (md); //Now it is ready for spawning.
-		clif_specialeffect(&md->bl,EF_ENTRY2,AREA);
+		clif->specialeffect(&md->bl,EF_ENTRY2,AREA);
 		sc_start4(NULL,&md->bl, SC_MODECHANGE, 100, 1, 0, MD_AGGRESSIVE, 0, 60000);
 	}
 	script_pushint(st, md->bl.id);
@@ -16388,8 +16394,8 @@ BUILDIN_FUNC(setnpcdisplay)
 		npc_setclass(nd, class_);
 	else if( size != -1 )
 	{ // Required to update the visual size
-		clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
-		clif_spawn(&nd->bl);
+		clif->clearunit_area(&nd->bl, CLR_OUTSIGHT);
+		clif->spawn(&nd->bl);
 	}
 
 	script_pushint(st,0);
@@ -16681,7 +16687,7 @@ BUILDIN_FUNC(callshop)
 		switch (flag) {
 			case 1: npc_buysellsel(sd,nd->bl.id,0); break; //Buy window
 			case 2: npc_buysellsel(sd,nd->bl.id,1); break; //Sell window
-			default: clif_npcbuysell(sd,nd->bl.id); break; //Show menu
+			default: clif->npcbuysell(sd,nd->bl.id); break; //Show menu
 		}
 	}
 #if PACKETVER >= 20131223
@@ -16694,18 +16700,18 @@ BUILDIN_FUNC(callshop)
 		}
 
 		if (i == nd->u.shop.count) {
-			clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 534), false, SELF);
+			clif->messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 534), false, SELF);
 			return SCRIPT_CMD_FAILURE;
 		}
 
 		sd->npc_shopid = nd->bl.id;
-		clif_npc_market_open(sd, nd);
+		clif->npc_market_open(sd, nd);
 		script_pushint(st,1);
 		return SCRIPT_CMD_SUCCESS;
 	}
 #endif
 	else
-		clif_cashshop_show(sd, nd);
+		clif->cashshop_show(sd, nd);
 
 	sd->npc_shopid = nd->bl.id;
 	script_pushint(st,1);
@@ -17738,8 +17744,8 @@ BUILDIN_FUNC(setunitdata)
 			switch (type) {
 				case UMOB_SIZE: md->base_status->size = (unsigned char)value; calc_status = true; break;
 				case UMOB_LEVEL: md->level = (unsigned short)value; break;
-				case UMOB_HP: status_set_hp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
-				case UMOB_MAXHP: status_set_hp(bl, (unsigned int)value, 0); status_set_maxhp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
+				case UMOB_HP: status_set_hp(bl, (unsigned int)value, 0); clif->name_area(&md->bl); break;
+				case UMOB_MAXHP: status_set_hp(bl, (unsigned int)value, 0); status_set_maxhp(bl, (unsigned int)value, 0); clif->name_area(&md->bl); break;
 				case UMOB_MASTERAID: md->master_id = value; break;
 				case UMOB_MAPID: if (mapname) value = map_obj->mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 				case UMOB_X: if (!unit_walktoxy(bl, (short)value, md->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
@@ -17748,16 +17754,16 @@ BUILDIN_FUNC(setunitdata)
 				case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
 				case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 				case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
-				case UMOB_SEX: md->vd->sex = (char)value; clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
-				case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
-				case UMOB_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
-				case UMOB_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
-				case UMOB_HEADBOTTOM: clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
-				case UMOB_HEADMIDDLE: clif_changelook(bl, LOOK_HEAD_MID, (unsigned short)value); break;
-				case UMOB_HEADTOP: clif_changelook(bl, LOOK_HEAD_TOP, (unsigned short)value); break;
-				case UMOB_CLOTHCOLOR: clif_changelook(bl, LOOK_CLOTHES_COLOR, (unsigned short)value); break;
-				case UMOB_SHIELD: clif_changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
-				case UMOB_WEAPON: clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
+				case UMOB_SEX: md->vd->sex = (char)value; clif->clearunit_area(bl, CLR_OUTSIGHT); clif->spawn(bl); break;
+				case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); clif->clearunit_area(bl, CLR_OUTSIGHT); clif->spawn(bl); break;
+				case UMOB_HAIRSTYLE: clif->changelook(bl, LOOK_HAIR, (unsigned short)value); break;
+				case UMOB_HAIRCOLOR: clif->changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
+				case UMOB_HEADBOTTOM: clif->changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
+				case UMOB_HEADMIDDLE: clif->changelook(bl, LOOK_HEAD_MID, (unsigned short)value); break;
+				case UMOB_HEADTOP: clif->changelook(bl, LOOK_HEAD_TOP, (unsigned short)value); break;
+				case UMOB_CLOTHCOLOR: clif->changelook(bl, LOOK_CLOTHES_COLOR, (unsigned short)value); break;
+				case UMOB_SHIELD: clif->changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
+				case UMOB_WEAPON: clif->changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
 				case UMOB_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 				case UMOB_CANMOVETICK: md->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
 				case UMOB_STR: md->base_status->str = (unsigned short)value; status_calc_misc(bl, &md->status, md->level); calc_status = true; break;
@@ -17830,8 +17836,8 @@ BUILDIN_FUNC(setunitdata)
 				case UHOM_MAPID: if (mapname) value = map_obj->mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 				case UHOM_X: if (!unit_walktoxy(bl, (short)value, hd->bl.y, 2)) unit_movepos(bl, (short)value, hd->bl.y, 0, 0); break;
 				case UHOM_Y: if (!unit_walktoxy(bl, hd->bl.x, (short)value, 2)) unit_movepos(bl, hd->bl.x, (short)value, 0, 0); break;
-				case UHOM_HUNGER: hd->homunculus.hunger = (short)value; clif_send_homdata(map_obj->charid2sd(hd->homunculus.char_id), SP_HUNGRY, hd->homunculus.hunger); break;
-				case UHOM_INTIMACY: hom_increase_intimacy(hd, (unsigned int)value); clif_send_homdata(map_obj->charid2sd(hd->homunculus.char_id), SP_INTIMATE, hd->homunculus.intimacy / 100); break;
+				case UHOM_HUNGER: hd->homunculus.hunger = (short)value; clif->send_homdata(map_obj->charid2sd(hd->homunculus.char_id), SP_HUNGRY, hd->homunculus.hunger); break;
+				case UHOM_INTIMACY: hom_increase_intimacy(hd, (unsigned int)value); clif->send_homdata(map_obj->charid2sd(hd->homunculus.char_id), SP_INTIMATE, hd->homunculus.intimacy / 100); break;
 				case UHOM_SPEED: hd->base_status.speed = (unsigned short)value; status_calc_misc(bl, &hd->base_status, hd->homunculus.level); calc_status = true; break;
 				case UHOM_LOOKDIR: unit_setdir(bl, (uint8)value); break;
 				case UHOM_CANMOVETICK: hd->ud.canmove_tick = value > 0 ? (unsigned int)value : 0; break;
@@ -18098,17 +18104,17 @@ BUILDIN_FUNC(setunitdata)
 	// Client information updates
 	switch (bl->type) {
 		case BL_HOM:
-			clif_send_homdata(hd->master, SP_ACK, 0);
+			clif->send_homdata(hd->master, SP_ACK, 0);
 			break;
 		case BL_PET:
-			clif_send_petstatus(pd->master);
+			clif->send_petstatus(pd->master);
 			break;
 		case BL_MER:
-			clif_mercenary_info(map_obj->charid2sd(mc->mercenary.char_id));
-			clif_mercenary_skillblock(map_obj->charid2sd(mc->mercenary.char_id));
+			clif->mercenary_info(map_obj->charid2sd(mc->mercenary.char_id));
+			clif->mercenary_skillblock(map_obj->charid2sd(mc->mercenary.char_id));
 			break;
 		case BL_ELEM:
-			clif_elemental_info(ed->master);
+			clif->elemental_info(ed->master);
 			break;
 	}
 
@@ -18187,7 +18193,7 @@ BUILDIN_FUNC(setunitname)
 			ShowWarning("buildin_setunitname: Unknown object type!\n");
 			return SCRIPT_CMD_FAILURE;
 	}
-	clif_name_area(bl); // Send update to client.
+	clif->name_area(bl); // Send update to client.
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18324,7 +18330,7 @@ BUILDIN_FUNC(unitattack)
 		case BL_PC: {
 						struct map_session_data* sd = (struct map_session_data*)unit_bl;
 
-						clif_parse_ActionRequest_sub(sd, actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
+						clif->parse_ActionRequest_sub(sd, actiontype > 0 ? 0x07 : 0x00, target_bl->id, gettick());
 						script_pushint(st, sd->ud.target == target_bl->id);
 						return SCRIPT_CMD_SUCCESS;
 					}
@@ -18410,7 +18416,7 @@ BUILDIN_FUNC(unittalk)
 
 		StringBuf_Init(&sbuf);
 		StringBuf_Printf(&sbuf, "%s", message);
-		clif_disp_overhead_(bl, StringBuf_Value(&sbuf), target);
+		clif->disp_overhead_(bl, StringBuf_Value(&sbuf), target);
 		StringBuf_Destroy(&sbuf);
 	}
 
@@ -18435,7 +18441,7 @@ BUILDIN_FUNC(unitemote)
 	}
 
 	if (script_rid2bl(2,bl))
-		clif_emotion(bl, emotion);
+		clif->emotion(bl, emotion);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -18764,11 +18770,11 @@ BUILDIN_FUNC(openauction)
 		return SCRIPT_CMD_FAILURE;
 
 	if( !battle_config.feature_auction ) {
-		clif_messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 517), false, SELF);
+		clif->messagecolor(&sd->bl, color_table[COLOR_RED], msg_txt(sd, 517), false, SELF);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	clif_Auction_openwindow(sd);
+	clif->Auction_openwindow(sd);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19080,7 +19086,7 @@ BUILDIN_FUNC(mercenary_set_faith)
 	*calls += value;
 	*calls = cap_value(*calls, 0, INT_MAX);
 	if( mercenary_get_guild(sd->md) == guild )
-		clif_mercenary_updatestatus(sd,SP_MERCFAITH);
+		clif->mercenary_updatestatus(sd,SP_MERCFAITH);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19099,7 +19105,7 @@ BUILDIN_FUNC(readbook)
 	book_id = script_getnum(st,2);
 	page = script_getnum(st,3);
 
-	clif_readbook(sd->fd, book_id, page);
+	clif->readbook(sd->fd, book_id, page);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19351,7 +19357,7 @@ BUILDIN_FUNC(showevent)
 		icon = icon + 1;
 #endif
 
-	clif_quest_show_event(sd, &nd->bl, icon, color);
+	clif->quest_show_event(sd, &nd->bl, icon, color);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19595,7 +19601,7 @@ BUILDIN_FUNC(bg_monster_set_team)
 	mob_stop_attack(md);
 	mob_stop_walking(md, 0);
 	md->target_id = md->attacked_id = 0;
-	clif_name_area(&md->bl);
+	clif->name_area(&md->bl);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19667,7 +19673,7 @@ BUILDIN_FUNC(bg_updatescore)
 	mapdata->bgscore_lion = script_getnum(st,3);
 	mapdata->bgscore_eagle = script_getnum(st,4);
 
-	clif_bg_updatescore(m);
+	clif->bg_updatescore(m);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20284,7 +20290,7 @@ BUILDIN_FUNC(setfont)
 	else
 		sd->status.font = 0;
 
-	clif_font(sd);
+	clif->font(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20322,7 +20328,7 @@ static int buildin_mobuseskill_sub(struct block_list *bl,va_list ap)
 	else
 		unit_skilluse_id2(&md->bl, tbl->id, skill_id, skill_lv, casttime, cancel);
 
-	clif_emotion(&md->bl, emotion);
+	clif->emotion(&md->bl, emotion);
 
 	return 1;
 }
@@ -20395,7 +20401,7 @@ BUILDIN_FUNC(progressbar)
 	sd->progressbar.timeout = gettick() + second*1000;
 	sd->state.workinprogress = WIP_DISABLE_ALL;
 
-	clif_progressbar(sd, strtol(color, (char **)NULL, 0), second);
+	clif->progressbar(sd, strtol(color, (char **)NULL, 0), second);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20441,7 +20447,7 @@ BUILDIN_FUNC(progressbar_npc){
 		nd->progressbar.timeout = gettick() + second * 1000;
 		nd->progressbar.color = strtol(color, (char **)NULL, 0);
 
-		clif_progressbar_npc_area(nd);
+		clif->progressbar_npc_area(nd);
 	// Second call(by timer after sleeping time is over)
 	} else {
 		// Continue the script
@@ -20507,7 +20513,7 @@ BUILDIN_FUNC(buyingstore)
 	if( npc_isnear(&sd->bl) ) {
 		char output[150];
 		sprintf(output, msg_txt(sd,662), battle_config.min_npc_vendchat_distance);
-		clif_displaymessage(sd->fd, output);
+		clif->displaymessage(sd->fd, output);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
@@ -20588,7 +20594,7 @@ BUILDIN_FUNC(showdigit)
 			return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_showdigit(sd, (unsigned char)type, value);
+	clif->showdigit(sd, (unsigned char)type, value);
 	return SCRIPT_CMD_SUCCESS;
 }
 /**
@@ -20600,7 +20606,7 @@ BUILDIN_FUNC(makerune) {
 	
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
-	clif_skill_produce_mix_list(sd,RK_RUNEMASTERY,24);
+	clif->skill_produce_mix_list(sd,RK_RUNEMASTERY,24);
 	sd->itemid = script_getnum(st,2);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -20685,7 +20691,7 @@ BUILDIN_FUNC(setmounting) {
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
 	if( sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR) ) {
-		clif_msg(sd, NEED_REINS_OF_MOUNT);
+		clif->msg(sd, NEED_REINS_OF_MOUNT);
 		script_pushint(st,0); //can't mount with one of these
 	} else if (sd->sc.data[SC_CLOAKING] || sd->sc.data[SC_CHASEWALK] || sd->sc.data[SC_CLOAKINGEXCEED] || sd->sc.data[SC_CAMOUFLAGE] || sd->sc.data[SC_STEALTHFIELD] || sd->sc.data[SC__FEINTBOMB]) {
 		// SC_HIDING, SC__INVISIBILITY, SC__SHADOWFORM, SC_SUHIDE already disable item usage
@@ -21008,7 +21014,7 @@ BUILDIN_FUNC(getrandgroupitem) {
 		if (!pet_create_egg(sd, entry->nameid)) {
 			unsigned char flag = 0;
 			if ((flag = pc_additem(sd,&item_tmp,item_tmp.amount,LOG_TYPE_SCRIPT))) {
-				clif_additem(sd,0,0,flag);
+				clif->additem(sd,0,0,flag);
 				if (pc_candrop(sd,&item_tmp))
 					map_obj->addflooritem(&item_tmp,item_tmp.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 			}
@@ -21185,7 +21191,7 @@ BUILDIN_FUNC(sit)
 	if( !pc_issit(sd) ) {
 		pc_setsit(sd);
 		skill_sit(sd, 1);
-		clif_sitting(&sd->bl);
+		clif->sitting(&sd->bl);
 	}
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -21202,7 +21208,7 @@ BUILDIN_FUNC(stand)
 
 	if( pc_issit(sd) && pc_setstand(sd, false)) {
 		skill_sit(sd, 0);
-		clif_standing(&sd->bl);
+		clif->standing(&sd->bl);
 	}
 
 	return SCRIPT_CMD_SUCCESS;
@@ -21585,12 +21591,12 @@ BUILDIN_FUNC(montransform) {
 
 	if (tick != 0) {
 		if (battle_config.mon_trans_disable_in_gvg && map_flag_gvg2(sd->bl.m)) {
-			clif_displaymessage(sd->fd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
+			clif->displaymessage(sd->fd, msg_txt(sd,731)); // Transforming into monster is not allowed in Guild Wars.
 			return SCRIPT_CMD_FAILURE;
 		}
 
 		if (sd->disguise){
-			clif_displaymessage(sd->fd, msg_txt(sd,729)); // Cannot transform into monster while in disguise.
+			clif->displaymessage(sd->fd, msg_txt(sd,729)); // Cannot transform into monster while in disguise.
 			return SCRIPT_CMD_FAILURE;
 		}
 
@@ -21874,7 +21880,7 @@ BUILDIN_FUNC(mergeitem) {
 	if (!script_charid2sd(2, sd))
 		return SCRIPT_CMD_FAILURE;
 
-	clif_merge_item_open(sd);
+	clif->merge_item_open(sd);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -21954,7 +21960,7 @@ BUILDIN_FUNC(mergeitem2) {
 		items[i].id = 0;
 		items[i].unique_id = 0;
 		if ((flag = pc_additem(sd, &items[i], items[i].amount, LOG_TYPE_NPC)))
-			clif_additem(sd, i, items[i].amount, flag);
+			clif->additem(sd, i, items[i].amount, flag);
 	}
 	aFree(items);
 	script_pushint(st, count);
@@ -22133,7 +22139,7 @@ BUILDIN_FUNC(showscript) {
 		}
 	}
 
-	clif_showscript(bl, msg, target);
+	clif->showscript(bl, msg, target);
 
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
@@ -22301,7 +22307,7 @@ BUILDIN_FUNC(opendressroom)
     if (!script_charid2sd(3, sd))
         return SCRIPT_CMD_FAILURE;
 
-    clif_dressing_room(sd, flag);
+    clif->dressing_room(sd, flag);
 
     return SCRIPT_CMD_SUCCESS;
 #else
@@ -22336,7 +22342,7 @@ BUILDIN_FUNC(navigateto){
 	if (!script_charid2sd(8, sd))
         return SCRIPT_CMD_FAILURE;
 
-	clif_navigateTo(sd,mapname,x,y,flag,hideWindow,monster_id);
+	clif->navigateTo(sd,mapname,x,y,flag,hideWindow,monster_id);
 
 	return SCRIPT_CMD_SUCCESS;
 #else
@@ -22396,7 +22402,7 @@ BUILDIN_FUNC(adopt)
 		TBL_PC *p_sd = map_obj->charid2sd(sd->status.partner_id);
 
 		b_sd->adopt_invite = sd->status.account_id;
-		clif_Adopt_request(b_sd, sd, p_sd->status.account_id);
+		clif->Adopt_request(b_sd, sd, p_sd->status.account_id);
 		script_pushint(st, ADOPT_ALLOWED);
 		return SCRIPT_CMD_SUCCESS;
 	}
@@ -22610,7 +22616,7 @@ BUILDIN_FUNC(hateffect){
 	}
 
 	if( !sd->state.connect_new ){
-		clif_hat_effect_single( sd, effectID, enable );
+		clif->hat_effect_single( sd, effectID, enable );
 	}
 
 #endif
@@ -22737,9 +22743,9 @@ BUILDIN_FUNC(setrandomoption) {
 		sd->inventory.u.items_inventory[i].option[index].id = id;
 		sd->inventory.u.items_inventory[i].option[index].value = value;
 		sd->inventory.u.items_inventory[i].option[index].param = param;
-		clif_delitem(sd, i, 1, 3);
+		clif->delitem(sd, i, 1, 3);
 		log_pick_pc(sd, LOG_TYPE_SCRIPT, -1, &sd->inventory.u.items_inventory[i]);
-		clif_additem(sd, i, 1, 0);
+		clif->additem(sd, i, 1, 0);
 		pc_equipitem(sd, i, ep);
 		script_pushint(st, 1);
 		return SCRIPT_CMD_SUCCESS;
@@ -23174,7 +23180,7 @@ BUILDIN_FUNC(channel_chat) {
 	FETCH(4, color);
 
 	safesnprintf(output, CHAT_SIZE_MAX, "%s %s", ch->alias, msg);
-	clif_channel_msg(ch,output,color);
+	clif->channel_msg(ch,output,color);
 	script_pushint(st,1);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -23221,7 +23227,7 @@ BUILDIN_FUNC(channel_ban) {
 		else
 			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,769), ch->alias, "****"); // %s %s has been banned.
 		idb_put(ch->banned, char_id, cbe);
-		clif_channel_msg(ch,output,ch->color);
+		clif->channel_msg(ch,output,ch->color);
 	}
 
 	script_pushint(st,1);
@@ -23257,7 +23263,7 @@ BUILDIN_FUNC(channel_unban) {
 		else
 			safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,770), ch->alias, "****"); // %s %s has been unbanned.
 		idb_remove(ch->banned, char_id);
-		clif_channel_msg(ch,output,ch->color);
+		clif->channel_msg(ch,output,ch->color);
 	}
 
 	script_pushint(st,1);
@@ -23314,7 +23320,7 @@ BUILDIN_FUNC(channel_kick) {
 	if (res == 0) {
 		char output[CHAT_SIZE_MAX+1];
 		safesnprintf(output, CHAT_SIZE_MAX, msg_txt(tsd,889), ch->alias, tsd->status.name); // "%s %s is kicked"
-		clif_channel_msg(ch,output,ch->color);
+		clif->channel_msg(ch,output,ch->color);
 	}
 
 	script_pushint(st,1);
@@ -23975,7 +23981,7 @@ BUILDIN_FUNC(open_roulette){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_roulette_open(sd);
+	clif->roulette_open(sd);
 
 	return SCRIPT_CMD_SUCCESS;
 #endif
@@ -24071,7 +24077,7 @@ BUILDIN_FUNC( camerainfo ){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif_camerainfo( sd, false, script_getnum( st, 2 ) / 100.0f, script_getnum( st, 3 ) / 100.0f, script_getnum( st, 4 ) / 100.0f );
+	clif->camerainfo( sd, false, script_getnum( st, 2 ) / 100.0f, script_getnum( st, 3 ) / 100.0f, script_getnum( st, 4 ) / 100.0f );
 
 	return SCRIPT_CMD_SUCCESS;
 #endif
