@@ -10,50 +10,7 @@ set( MAP_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}  CACHE INTERNAL "" )
 if( BUILD_SERVERS )
 message( STATUS "Creating target map-server" )
 file(GLOB MAP_HEADERS ${MAP_SOURCE_DIR}/*.hpp)
-#file(GLOB MAP_SOURCES ${MAP_SOURCE_DIR}/*.cpp)
-#message( STATUS "${MAP_SOURCES} ")
-set (MAP_SOURCES 
-achievement.cpp
-atcommand.cpp
-battle.cpp
-battleground.cpp
-buyingstore.cpp
-cashshop.cpp
-channel.cpp
-chat.cpp
-chrif.cpp
-clan.cpp
-clif.cpp
-date.cpp
-duel.cpp
-elemental.cpp
-guild.cpp
-homunculus.cpp
-instance.cpp
-intif.cpp
-itemdb.cpp
-log.cpp
-mail.cpp
-map.cpp
-mapreg.cpp
-mercenary.cpp
-mob.cpp
-npc.cpp
-npc_chat.cpp
-party.cpp
-path.cpp
-pc.cpp
-pc_groups.cpp
-pet.cpp
-quest.cpp
-script.cpp
-searchstore.cpp
-skill.cpp
-status.cpp
-storage.cpp
-trade.cpp
-unit.cpp
-vending.cpp)
+file(GLOB MAP_SOURCES ${MAP_SOURCE_DIR}/*.cpp)
 file(GLOB TEST_SOURCES ${CMAKE_SOURCE_DIR}/tests/map/*.cpp)
 set( DEPENDENCIES common yaml-cpp)
 set( LIBRARIES ${GLOBAL_LIBRARIES})
