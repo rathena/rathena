@@ -4716,6 +4716,7 @@ void do_init_script(void) {
 	next_id = 0;
 	
 	map_obj = std::shared_ptr<Map_Obj>(new Map_Obj());
+	clif = std::shared_ptr<Clif>(new Clif());
 	ShowDebug("(norm) map_obj was created in do_init_script\n");
 	mapreg_init();
 }
