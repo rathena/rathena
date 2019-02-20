@@ -36,8 +36,8 @@
 //= - Variable in use: rumour_nd (Max: 22)
 //===== Additional Comments: ================================= 
 //= 1.0 First version. [L0ne_W0lf]
-//= 1.1 Made quest accessable to "Failed" gaebolg quest. [L0ne_W0lf]
-//= 1.1a Touch up to other Gaebolg fail-points. [L0ne_W0lf]
+//= 1.1 Made quest accessable to "Failed" Geoborg quest. [L0ne_W0lf]
+//= 1.1a Touch up to other Geoborg fail-points. [L0ne_W0lf]
 //= 1.2 Some final tuning to Nameless Island quest. [Koca]
 //= 1.3 Should fix any more issues with "Creature" npc. [L0ne_W0lf]
 //= 1.4 Changed the way Out_from_Monastery works slightly. [L0ne_W0lf]
@@ -1003,7 +1003,7 @@ nameless_i,127,207,0	script	Dead Crow#Aru	111,{
 		mes "^3355FFThis grass must be the";
 		mes "main ingredient of the";
 		mes "poison used to kill the";
-		mes "Gaebolg family princes.^000000";
+		mes "Geoborg family princes.^000000";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Looks like I just hit";

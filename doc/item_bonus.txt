@@ -453,3 +453,4 @@ bonus bRestartFullRecover;	When reviving, HP and SP are fully healed
 bonus bClassChange,n;     		Gives a n/100% chance to change the attacked monster's class with normal attack
 bonus bAddStealRate,n;    		Increases success rate of Steal skill by n/100%
 bonus bNoMadoFuel;			Nullify Magic Gear Fuel requirement for skills.
+bonus bNoWalkDelay;				Give infinite Endure.

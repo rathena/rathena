@@ -490,6 +490,7 @@ int chrif_changemapserverack(uint32 account_id, int login_id1, int login_id2, ui
 	if ( !login_id1 ) {
 		ShowError("map server change failed.\n");
 		clif_authfail_fd(node->fd, 0);
+		chrif_char_offline(node->sd);
 	} else
 		clif_changemapserver(node->sd, map_index, x, y, ntohl(ip), ntohs(port));
 

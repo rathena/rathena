@@ -72,7 +72,7 @@ struct WisData {
 static DBMap* wis_db = NULL; // int wis_id -> struct WisData*
 static int wis_dellist[WISDELLIST_MAX], wis_delnum;
 
-/* from pc.c due to @accinfo. any ideas to replace this crap are more than welcome. */
+/* from pc.cpp due to @accinfo. any ideas to replace this crap are more than welcome. */
 const char* job_name(int class_) {
 	switch (class_) {
 		case JOB_NOVICE:

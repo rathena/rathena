@@ -2320,13 +2320,13 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
  * @param script: Script to execute
  * @param rate: Success chance
  * @param dur: Duration
- * @param flag: Battle flag
+ * @param flag: Battle flag/skill
  * @param other_script: Secondary script to execute
  * @param pos: Item equip position
  * @param onskill: Skill used to trigger autobonus
  * @return True on success or false otherwise
  */
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short flag, const char *other_script, unsigned int pos, bool onskill)
+bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill)
 {
 	if (bonus.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", MAX_PC_BONUS);
@@ -2473,7 +2473,6 @@ TIMER_FUNC(pc_endautobonus){
 static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
 	struct weapon_data *wd = (sd->state.lr_flag ? &sd->left_weapon : &sd->right_weapon);
-	struct s_addele2 entry;
 
 	if (wd->addele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addele: Reached max (%d) number of add element damage bonuses per character!\n", MAX_PC_BONUS);
@@ -2498,6 +2497,8 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 			return;
 		}
 	}
+
+	struct s_addele2 entry = {};
 
 	entry.ele = ele;
 	entry.rate = rate;
@@ -3230,6 +3231,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 		case SP_NO_MADO_FUEL:
 			if (sd->state.lr_flag != 2)
 				sd->special_state.no_mado_fuel = 1;
+			break;
+		case SP_NO_WALK_DELAY:
+			if (sd->state.lr_flag != 2)
+				sd->special_state.no_walk_delay = 1;
 			break;
 		default:
 			if (running_npc_stat_calc_event) {
@@ -4471,28 +4476,17 @@ char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type
 /**
  * Attempts to remove Cash Points from player
  * @param sd: Player
- * @param price: Points player has to pay
- * @param points: Points player has
+ * @param price: Total points (cash + kafra) the player has to pay
+ * @param points: Kafra points the player has to pay
  * @param type: Log type
- * @return -2: Paying negative points, -1: Not enough points, otherwise success (cash+points)
+ * @return -1: Not enough points, otherwise success (cash+points)
  */
 int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_type type)
 {
 	int cash;
 	nullpo_retr(-1,sd);
 
-	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
-	if( price < 0 || points < 0 )
-	{
-		ShowError("pc_paycash: Paying negative points (price=%d, points=%d, account_id=%d, char_id=%d).\n", price, points, sd->status.account_id, sd->status.char_id);
-		return -2;
-	}
-
-	if( points > price )
-	{
-		ShowWarning("pc_paycash: More kafra points provided than needed (price=%d, points=%d, account_id=%d, char_id=%d).\n", price, points, sd->status.account_id, sd->status.char_id);
-		points = price;
-	}
+	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
 
 	cash = price-points;
 
@@ -4527,10 +4521,10 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 /**
  * Attempts to give Cash Points to player
  * @param sd: Player
- * @param cash: Cash player gets
- * @param points: Points player has
+ * @param cash: Cash points the player gets
+ * @param points: Kafra points the player gets
  * @param type: Log type
- * @return -2: Error, -1: Giving negative cash/points, otherwise success (cash or points)
+ * @return -1: Error, otherwise success (cash or points)
  */
 int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_type type)
 {
@@ -4538,8 +4532,8 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 
 	nullpo_retr(-1,sd);
 
-	cash = cap_value(cash,-MAX_ZENY,MAX_ZENY); //prevent command UB
-	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
+	cash = cap_value(cash, 0, MAX_ZENY); //prevent command UB
+	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
 	if( cash > 0 )
 	{
 		if( cash > MAX_ZENY-sd->cashPoints )
@@ -4558,11 +4552,6 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 		}
 		return cash;
-	}
-	else if( cash < 0 )
-	{
-		ShowError("pc_getcash: Obtaining negative cash points (cash=%d, account_id=%d, char_id=%d).\n", cash, sd->status.account_id, sd->status.char_id);
-		return -1;
 	}
 
 	if( points > 0 )
@@ -4584,12 +4573,8 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 		}
 		return points;
 	}
-	else if( points < 0 )
-	{
-		ShowError("pc_getcash: Obtaining negative kafra points (points=%d, account_id=%d, char_id=%d).\n", points, sd->status.account_id, sd->status.char_id);
-		return -1;
-	}
-	return -2; //shouldn't happen but just in case
+
+	return -1; //shouldn't happen but just in case
 }
 
 /**
@@ -5101,7 +5086,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
-	//FIXME: Is this really needed here? It'll be checked in unit.c after all and this prevents skill items using when silenced [Inkfish]
+	//FIXME: Is this really needed here? It'll be checked in unit.cpp after all and this prevents skill items using when silenced [Inkfish]
 	if( id->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
@@ -8235,6 +8220,8 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_NO_GEMSTONE:     val = sd->special_state.no_gemstone?1:0; break;
 		case SP_INTRAVISION:     val = sd->special_state.intravision?1:0; break;
 		case SP_NO_KNOCKBACK:    val = sd->special_state.no_knockback?1:0; break;
+		case SP_NO_MADO_FUEL:    val = sd->special_state.no_mado_fuel?1:0; break;
+		case SP_NO_WALK_DELAY:   val = sd->special_state.no_walk_delay?1:0; break;
 		case SP_SPLASH_RANGE:    val = sd->bonus.splash_range; break;
 		case SP_SPLASH_ADD_RANGE:val = sd->bonus.splash_add_range; break;
 		case SP_SHORT_WEAPON_DAMAGE_RETURN: val = sd->bonus.short_weapon_damage_return; break;
@@ -9937,24 +9924,35 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		clif_notify_bindOnEquip(sd,n);
 	}
 
-	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
+	if(pos == EQP_ACC) { //Accessories should only go in one of the two.
 		pos = req_pos&EQP_ACC;
-		if (pos == EQP_ACC) //User specified both slots..
+		if (pos == EQP_ACC) //User specified both slots.
 			pos = equip_index[EQI_ACC_R] >= 0 ? EQP_ACC_L : EQP_ACC_R;
-	}
 
-	if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
+		for (i = 0; i < sd->inventory_data[n]->slot; i++) { // Accessories that have cards that force equip location
+			if (!sd->inventory.u.items_inventory[n].card[i])
+				continue;
+
+			struct item_data *card_data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]);
+
+			if (card_data) {
+				int card_pos = card_data->equip;
+
+				if (card_pos == EQP_ACC_L || card_pos == EQP_ACC_R) {
+					pos = card_pos; // Use the card's equip position
+					break;
+				}
+			}
+		}
+	} else if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
 		pos = (req_pos&EQP_ARMS);
 		if (pos == EQP_ARMS) //User specified both slots, pick one for them.
 			pos = equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
-	}
-
-	if(pos == EQP_SHADOW_ACC) { // Shadow System
+	} else if(pos == EQP_SHADOW_ACC) { // Shadow System
 		pos = req_pos&EQP_SHADOW_ACC;
 		if (pos == EQP_SHADOW_ACC)
 			pos = equip_index[EQI_SHADOW_ACC_L] >= 0 ? EQP_SHADOW_ACC_R : EQP_SHADOW_ACC_L;
-	}
-	if(pos == EQP_SHADOW_ARMS && id->equip == EQP_SHADOW_WEAPON) {
+	} else if(pos == EQP_SHADOW_ARMS && id->equip == EQP_SHADOW_WEAPON) {
 		pos = (req_pos&EQP_SHADOW_ARMS);
 		if( pos == EQP_SHADOW_ARMS )
 			pos = (equip_index[EQI_SHADOW_WEAPON] >= 0 ? EQP_SHADOW_SHIELD : EQP_SHADOW_WEAPON);

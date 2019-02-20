@@ -36,7 +36,7 @@ using namespace rathena;
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
 
-//definition of exported var declared in .h
+//definition of exported var declared in header
 struct mmo_char_server ch_server[MAX_SERVERS];	/// char server data
 struct Login_Config login_config;				/// Configuration of login-serv
 std::unordered_map<uint32,struct online_login_data> online_db;

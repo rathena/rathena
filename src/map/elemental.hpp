@@ -5,11 +5,12 @@
 #define ELEMENTAL_HPP
 
 #include "../common/mmo.hpp"
+#include "../common/timer.hpp"
 
 #include "status.hpp" // struct status_data, struct status_change
 #include "unit.hpp" // struct unit_data
 
-#define MIN_ELETHINKTIME 100
+const t_tick MIN_ELETHINKTIME = 100;
 #define MIN_ELEDISTANCE 2
 #define MAX_ELEDISTANCE 5
 

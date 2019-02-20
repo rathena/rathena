@@ -26,11 +26,11 @@ struct guardian_data;
 #define MAX_RACE2_MOBS 100
 
 //Min time between AI executions
-#define MIN_MOBTHINKTIME 100
+const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
-#define MIN_MOBLINKTIME 1000
+const t_tick MIN_MOBLINKTIME = 1000;
 //Min time between random walks
-#define MIN_RANDOMWALKTIME 4000
+const t_tick MIN_RANDOMWALKTIME = 4000;
 
 //Distance that slaves should keep from their master.
 #define MOB_SLAVEDISTANCE 2
