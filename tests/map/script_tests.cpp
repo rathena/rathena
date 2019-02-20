@@ -1,10 +1,7 @@
 #include "gtest/gtest-spi.h"
 #include "gtest/gtest.h"
 #include "../../src/map/script.hpp"
-#include "../fff.h"
-
-DEFINE_FFF_GLOBALS;
-FAKE_VALUE_FUNC(struct map_session_data*, map_id2sd, int);
+#include "map_mock.hpp"
 
 namespace testing {
 
@@ -15,16 +12,19 @@ protected:
 	virtual ~ScriptTest() {}
 	virtual void SetUp() {}
 	virtual void TearDown() {}
+	std::shared_ptr<map_mock> mmap;
 };
 
-TEST(ScriptTest, Trival)
+TEST_F(ScriptTest, Trival)
 {
 	EXPECT_TRUE(true);
 }
 
-TEST(ScriptTest, Simple)
+TEST_F(ScriptTest, Simple)
 {
-	map_id2sd_fake.return_val = (map_session_data*)0x1;	
+	mmap = std::shared_ptr<map_mock>(new map_mock());
+	script_set_map(mmap);
+	EXPECT_CALL(*mmap, id2sd(_)).Times(1).WillOnce(Return((struct map_session_data*)0x1));//.WillByDefault(Return((struct map_session_data*)0x1));
 	/* prepare script_state */
 	script_data sc_data = {
 		C_FUNC,

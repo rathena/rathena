@@ -127,7 +127,7 @@ void pet_unlocktarget(struct pet_data *pd)
 int pet_attackskill(struct pet_data *pd, int target_id)
 {
 	if (!battle_config.pet_status_support || !pd->a_skill ||
-		(battle_config.pet_equip_required && !pd->pet.equip))
+			(battle_config.pet_equip_required && !pd->pet.equip))
 		return 0;
 
 	if (DIFF_TICK(pd->ud.canact_tick, gettick()) > 0)
@@ -140,7 +140,7 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 		bl = map_obj.id2bl(target_id);
 
 		if(bl == NULL || pd->bl.m != bl->m || bl->prev == NULL || status_isdead(bl) ||
-			!check_distance_bl(&pd->bl, bl, pd->db->range3))
+				!check_distance_bl(&pd->bl, bl, pd->db->range3))
 			return 0;
 
 		inf = skill_get_inf(pd->a_skill->id);
@@ -170,18 +170,18 @@ int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 
 	nullpo_ret(pd);
 
-	Assert((pd->master == 0) || (pd->master->pd == pd));
+	rA_Assert((pd->master == 0) || (pd->master->pd == pd));
 
 	pet_db_ptr = pd->get_pet_db();
 
 	if(bl == NULL || bl->type != BL_MOB || bl->prev == NULL ||
-		pd->pet.intimate < battle_config.pet_support_min_friendly ||
-		pd->pet.hungry < 1 ||
-		pd->pet.class_ == status_get_class(bl))
+			pd->pet.intimate < battle_config.pet_support_min_friendly ||
+			pd->pet.hungry < 1 ||
+			pd->pet.class_ == status_get_class(bl))
 		return 0;
 
 	if(pd->bl.m != bl->m ||
-		!check_distance_bl(&pd->bl, bl, pd->db->range2))
+			!check_distance_bl(&pd->bl, bl, pd->db->range2))
 		return 0;
 
 	if (!battle_config.pet_master_dead && pc_isdead(pd->master)) {
@@ -229,10 +229,10 @@ int pet_sc_check(struct map_session_data *sd, int type)
 	pd = sd->pd;
 
 	if( pd == NULL
-	||  (battle_config.pet_equip_required && pd->pet.equip == 0)
-	||  pd->recovery == NULL
-	||  pd->recovery->timer != INVALID_TIMER
-	||  pd->recovery->type != type )
+			||  (battle_config.pet_equip_required && pd->pet.equip == 0)
+			||  pd->recovery == NULL
+			||  pd->recovery->timer != INVALID_TIMER
+			||  pd->recovery->type != type )
 		return 1;
 
 	pd->recovery->timer = add_timer(gettick()+pd->recovery->delay*1000,pet_recovery_timer,sd->bl.id,0);
@@ -321,8 +321,8 @@ struct s_pet_db* pet_db_search( int key, enum e_pet_itemtype type ){
 			case PET_EQUIP: if(pet->AcceID == key) return pet; break;
 			case PET_FOOD:  if(pet->FoodID == key) return pet; break;
 			default:
-				ShowError( "pet_db_search: Unsupported type %d\n", type );
-				return nullptr;
+								ShowError( "pet_db_search: Unsupported type %d\n", type );
+								return nullptr;
 		}
 	}
 
@@ -418,7 +418,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 
 	nullpo_retr(false, sd);
 
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
+	rA_Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
 	if(sd->status.account_id != pet->account_id || sd->status.char_id != pet->char_id) {
 		sd->status.pet_id = 0;
@@ -503,7 +503,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 {
 	nullpo_retr(1, sd);
 
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
+	rA_Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
 	if(sd->status.pet_id && pet->incubate == 1) {
 		sd->status.pet_id = 0;
@@ -521,7 +521,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 	}
 
 	intif_save_petdata(sd->status.account_id,pet);
-	
+
 	if (save_settings&CHARSAVE_PET)
 		chrif_save(sd, CSAVE_INVENTORY); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
@@ -536,7 +536,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 		clif_send_petstatus(sd);
 	}
 
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
+	rA_Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
 	return 0;
 }
@@ -569,7 +569,7 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 		//Delete egg from inventory. [Skotlex]
 		for (i = 0; i < MAX_INVENTORY; i++) {
 			if(sd->inventory.u.items_inventory[i].card[0] == CARD0_PET &&
-				p->pet_id == MakeDWord(sd->inventory.u.items_inventory[i].card[1], sd->inventory.u.items_inventory[i].card[2]))
+					p->pet_id == MakeDWord(sd->inventory.u.items_inventory[i].card[1], sd->inventory.u.items_inventory[i].card[2]))
 				break;
 		}
 
@@ -669,7 +669,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		//catch_target_class == PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
 		if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE)){
 			sd->catch_target_class = md->mob_id;
-		//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
+			//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
 		}else if (sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet->itemID){
 			sd->catch_target_class = md->mob_id;
 		}
@@ -885,7 +885,7 @@ int pet_equipitem(struct map_session_data *sd,int index)
 
 	if (!pd)
 		return 1;
-	
+
 	if((pet_db_ptr = pd->get_pet_db()) == nullptr)
 		return 1;
 
@@ -1043,7 +1043,7 @@ static int pet_randomwalk(struct pet_data *pd,t_tick tick)
 {
 	nullpo_ret(pd);
 
-	Assert((pd->master == 0) || (pd->master->pd == pd));
+	rA_Assert((pd->master == 0) || (pd->master->pd == pd));
 
 	if(DIFF_TICK(pd->next_walktime,tick) < 0 && unit_can_move(&pd->bl)) {
 		const int retrycount = 20;

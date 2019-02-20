@@ -2207,6 +2207,7 @@ int Map_Obj::quit(struct map_session_data *sd) {
  * Lookup, id to session (player,mob,npc,homon,merc..)
  *------------------------------------------*/
 struct map_session_data * Map_Obj::id2sd(int id){
+	ShowDebug("(norm) in real id2sd");
 	if (id <= 0) return NULL;
 	return (struct map_session_data*)idb_get(pc_db,id);
 }
