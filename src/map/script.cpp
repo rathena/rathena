@@ -2661,17 +2661,12 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 /// Returns the player attached to this script, identified by the rid.
 /// If there is no player attached, the script is terminated.
 static bool script_rid2sd_( struct script_state *st, struct map_session_data** sd, const char *func ){
-	ShowDebug("(norm) in script_rid2sd\n");
 	*sd = map_obj->id2sd(0 );
-	ShowDebug("(norm) past map mock in script_rid2sd :%d \n", st->rid);
 
 	if( *sd ){
 		return true;
 	}else{
 		ShowError("%s: fatal error ! player not attached!\n",func);
-#ifdef TESTING
-		ShowError("TEST");
-#endif
 		script_reportfunc(st);
 		script_reportsrc(st);
 		st->state = END;
@@ -4717,7 +4712,6 @@ void do_init_script(void) {
 	
 	map_obj = std::shared_ptr<Map_Obj>(new Map_Obj());
 	clif = std::shared_ptr<Clif>(new Clif());
-	ShowDebug("(norm) map_obj was created in do_init_script\n");
 	mapreg_init();
 }
 
