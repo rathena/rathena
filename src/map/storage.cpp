@@ -734,7 +734,7 @@ enum e_guild_storage_log storage_guild_log_read( struct map_session_data* sd ){
 	// ( 65535(maximum packet size) - 8(header) ) / 83 (entry size) = 789 (-1 for safety)
 	enum e_guild_storage_log ret = storage_guild_log_read_sub( sd, log, 788 );
 
-	clif.guild_storage_log( sd, log, ret );
+	clif_guild_storage_log( sd, log, ret );
 
 	return ret;
 }

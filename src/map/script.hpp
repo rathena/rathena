@@ -8,7 +8,9 @@
 #include "../common/db.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
+
 #include "map_interface.hpp"
+#include "clif_interface.hpp"
 
 #define NUM_WHISPER_VAR 10
 
@@ -1990,5 +1992,6 @@ bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vle
 typedef int (*script_func)(struct script_state *st);
 script_func get_func_ptr(int id);
 void script_set_map(std::shared_ptr<Map_Interface> map_obj_);
+void script_set_clif(std::shared_ptr<Clif_Interface> clif_);
 
 #endif /* SCRIPT_HPP */

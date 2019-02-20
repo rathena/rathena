@@ -1070,9 +1070,7 @@ virtual void attendence_response( struct map_session_data *sd, int32 data )= 0;
 
 virtual void weight_limit( struct map_session_data* sd )= 0;
 
-virtual void guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result )= 0;
-
-virtual void camerainfo( struct map_session_data* sd, bool show, float range = 0.0f, float rotation = 0.0f, float latitude = 0.0f )= 0;
+virtual void ccamerainfo( struct map_session_data* sd, bool show, float range = 0.0f, float rotation = 0.0f, float latitude = 0.0f )= 0;
 
 /// Equip Switch System= 0;
 virtual void equipswitch_list( struct map_session_data* sd )= 0;
@@ -1095,7 +1093,7 @@ void parse_BankClose (int fd, struct map_session_data *sd);
 void clif_parse_NPCMarketClosed(int fd, struct map_session_data *sd);
 void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd);
 
-
+void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result );
 void clif_parse_roulette_open(int fd, struct map_session_data *sd);
 void clif_parse_roulette_info(int fd, struct map_session_data *sd);
 void clif_parse_roulette_close(int fd, struct map_session_data *sd);

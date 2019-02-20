@@ -1,7 +1,6 @@
 #ifndef MAP_MOCK_HPP
 #define MAP_MOCK_HPP
 
-#include "../../src/map/map_interface.hpp"
 #include "gmock/gmock.h"
 
 class map_mock : public Map_Interface {

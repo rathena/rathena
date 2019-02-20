@@ -20552,7 +20552,7 @@ void clif_parse_private_airship_request( int fd, struct map_session_data* sd ){
 /// Sends out the usage history of the guild storage
 /// 09DA <size>.W <result>.W <count>.W { <id>.L <item id>.W <amount>.L <action>.B <refine>.L <unique id>.Q <identify>.B <item type>.W
 ///      { <card item id>.W }*4 <name>.24B <time>.24B <attribute>.B }*count (ZC_ACK_GUILDSTORAGE_LOG)
-void Clif::guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result ){
+void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result ){
 #if PACKETVER >= 20140205
 	nullpo_retv( sd );
 
@@ -20598,7 +20598,7 @@ void Clif::guild_storage_log( struct map_session_data* sd, std::vector<struct gu
 
 /// Activates the client camera info or updates the client camera with the given values.
 /// 0A78 <type>.B <range>.F <rotation>.F <latitude>.F
-void Clif::camerainfo( struct map_session_data* sd, bool show, float range, float rotation, float latitude ){
+void Clif::ccamerainfo( struct map_session_data* sd, bool show, float range, float rotation, float latitude ){
 #if PACKETVER >= 20160525
 	int fd = sd->fd;
 
@@ -20615,15 +20615,15 @@ void Clif::camerainfo( struct map_session_data* sd, bool show, float range, floa
 /// Activates or deactives the client camera info or updates the camera settings.
 /// This packet is triggered by /viewpointvalue or /setcamera
 /// 0A77 <type>.B <range>.F <rotation>.F <latitude>.F
-void clif_parse_camerainfo( int fd, struct map_session_data* sd ){
+void clif_parse_ccamerainfo( int fd, struct map_session_data* sd ){
 	char command[CHAT_SIZE_MAX];
 
 	// /viewpointvalue
 	if( RFIFOB( fd, 2 ) == 1 ){
-		safesnprintf( command, sizeof( command ), "%ccamerainfo", atcommand_symbol );
+		safesnprintf( command, sizeof( command ), "%cccamerainfo", atcommand_symbol );
 	// /setcamera
 	}else{
-		safesnprintf( command, sizeof( command ), "%ccamerainfo %03.03f %03.03f %03.03f", atcommand_symbol, RFIFOF( fd, 3 ), RFIFOF( fd, 7 ), RFIFOF( fd, 11 ) );
+		safesnprintf( command, sizeof( command ), "%cccamerainfo %03.03f %03.03f %03.03f", atcommand_symbol, RFIFOF( fd, 3 ), RFIFOF( fd, 7 ), RFIFOF( fd, 11 ) );
 	}
 
 	is_atcommand( fd, sd, command, 1 );

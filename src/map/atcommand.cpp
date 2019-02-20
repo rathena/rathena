@@ -10023,7 +10023,7 @@ ACMD_FUNC(camerainfo){
 	nullpo_retr(-1, sd);
 
 	if( message == nullptr || message[0] == '\0' ){
-		clif.camerainfo( sd, true );
+		clif.ccamerainfo( sd, true );
 		return 0;
 	}
 
@@ -10036,7 +10036,7 @@ ACMD_FUNC(camerainfo){
 		return -1;
 	}
 
-	clif.camerainfo( sd, false, range, rotation, latitude );
+	clif.ccamerainfo( sd, false, range, rotation, latitude );
 
 	return 0;
 }

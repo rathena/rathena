@@ -18,7 +18,7 @@
 #include "clan.hpp"
 #include "clif.hpp"
 #include "guild.hpp"
-#include "map.hpp"
+#include "map_interface.hpp"
 #include "npc.hpp"
 #include "party.hpp"
 #include "pc.hpp"

@@ -498,9 +498,7 @@ void attendence_response( struct map_session_data *sd, int32 data );
 
 void weight_limit( struct map_session_data* sd );
 
-void guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result );
-
-void camerainfo( struct map_session_data* sd, bool show, float range = 0.0f, float rotation = 0.0f, float latitude = 0.0f );
+void ccamerainfo( struct map_session_data* sd, bool show, float range = 0.0f, float rotation = 0.0f, float latitude = 0.0f );
 
 /// Equip Switch System
 void equipswitch_list( struct map_session_data* sd );

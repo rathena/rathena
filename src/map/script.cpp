@@ -24078,7 +24078,7 @@ BUILDIN_FUNC( camerainfo ){
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	clif->camerainfo( sd, false, script_getnum( st, 2 ) / 100.0f, script_getnum( st, 3 ) / 100.0f, script_getnum( st, 4 ) / 100.0f );
+	clif->ccamerainfo( sd, false, script_getnum( st, 2 ) / 100.0f, script_getnum( st, 3 ) / 100.0f, script_getnum( st, 4 ) / 100.0f );
 
 	return SCRIPT_CMD_SUCCESS;
 #endif

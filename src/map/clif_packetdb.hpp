@@ -2319,7 +2319,7 @@
 
 // 2016-05-25aRagexeRE
 #if PACKETVER >= 20160525
-	parseable_packet(0x0A77,15,clif_parse_camerainfo,0);
+	parseable_packet(0x0A77,15,clif_parse_ccamerainfo,0);
 	packet(0x0A78, 15);
 #endif
 
