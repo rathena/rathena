@@ -43,7 +43,7 @@
  83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
  85,0x86,    ,  5:5:5:5:5:5:5:5:5:5:7, 1,1250,enemy,0x018	//WZ_VERMILION
  86,0x86,    ,  0:1:1:2:2:2:2:2:2:2, 0,-1,noone, 0x010	//WZ_WATERBALL
- 87,0x8d,    , -1, 0,  -1,all,   0x9010	//WZ_ICEWALL
+ 87,0x8d,    , -1, 0,1000,all,   0x9010	//WZ_ICEWALL
  89,0x86,    ,  4, 1, 450,enemy, 0x018	//WZ_STORMGUST
  91,0x86,    ,  2, 0,1000,enemy, 0x010	//WZ_HEAVENDRIVE
  92,0x8e,    ,  2, 0,  -1,enemy, 0x8010	//WZ_QUAGMIRE

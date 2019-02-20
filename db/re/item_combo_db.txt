@@ -98,7 +98,7 @@
 1775:18114,{ bonus bLongAtkRate,70; }
 1776:18114,{ bonus bLongAtkRate,40; }
 1846:20838,{ bonus bBaseAtk,40; .@eq = getequiprefinerycnt(EQI_GARMENT); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { .@val = 20; } if ((.@eq + .@weapon) >= 18) { bonus2 bSkillCooldown,"SR_FLASHCOMBO",-1000; if ((.@eq + .@weapon) >= 22) { .@val += 15; } } if (.@val) { bonus2 bSkillAtk,"SR_TIGERCANNON",.@val; } }
-1935:2988,{ bonus2 bSkillAtk,"CG_ARROWVULCAN",200; bonus2 bSkillUseSP,"CG_ARROWVULCAN",50; }
+1935:2988,{ bonus2 bSkillAtk,"CG_ARROWVULCAN",200; bonus2 bSkillUseSP,"CG_ARROWVULCAN",-50; }
 1944:15180:28442,{ bonus bBaseAtk,30; bonus bAspd,1; bonus bCritAtkRate,20; }
 1990:2989,{ bonus2 bSkillAtk,"CG_ARROWVULCAN",200; }
 2001:2677,{ bonus bMatkRate,10; bonus bDex,2; bonus2 bSubRace,RC_Demon,10; bonus2 bSubRace,RC_Undead,10; }

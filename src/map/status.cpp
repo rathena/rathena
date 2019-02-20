@@ -696,7 +696,7 @@ void initChangeTables(void)
 	set_sc( RA_ELECTRICSHOCKER	, SC_ELECTRICSHOCKER	, EFST_ELECTRICSHOCKER	, SCB_NONE );
 	set_sc( RA_WUGDASH			, SC_WUGDASH		, EFST_WUGDASH		, SCB_SPEED|SCB_DSPD );
 	set_sc( RA_WUGBITE          , SC_BITE           , EFST_WUGBITE        , SCB_NONE );
-	set_sc( RA_CAMOUFLAGE		, SC_CAMOUFLAGE		, EFST_CAMOUFLAGE		, SCB_SPEED|SCB_DEF|SCB_DEF2 );
+	set_sc( RA_CAMOUFLAGE		, SC_CAMOUFLAGE		, EFST_CAMOUFLAGE		, SCB_SPEED );
 	set_sc( RA_FIRINGTRAP       , SC_BURNING        , EFST_BURNT          , SCB_MDEF );
 	set_sc_with_vfx( RA_ICEBOUNDTRAP, SC_FREEZING		, EFST_FROSTMISTY		, SCB_SPEED|SCB_ASPD|SCB_DEF );
 	set_sc( RA_UNLIMIT		, SC_UNLIMIT		, EFST_UNLIMIT		, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
@@ -2113,7 +2113,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (!status_has_mode(status,MD_CANATTACK))
 			return false;
 		// Dead state is not checked for skills as some skills can be used
-		// on dead characters, said checks are left to skill.c [Skotlex]
+		// on dead characters, said checks are left to skill.cpp [Skotlex]
 		if (target && status_isdead(target))
 			return false;
 	}
@@ -2254,7 +2254,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 
 	if (tsc && tsc->count) {
 		/**
-		* Attacks in invincible are capped to 1 damage and handled in batte.c.
+		* Attacks in invincible are capped to 1 damage and handled in battle.cpp.
 		* Allow spell break and eske for sealed shrine GDB when in INVINCIBLE state.
 		**/
 		if( tsc->data[SC_INVINCIBLE] && !tsc->data[SC_INVINCIBLEOFF] && skill_id && !(skill_id&(SA_SPELLBREAKER|SL_SKE)) )
