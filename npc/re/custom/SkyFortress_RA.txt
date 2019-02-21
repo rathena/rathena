@@ -884,7 +884,7 @@ OnInit:
 }
 
 1@sthb,34,85,3	script	Locked Door#7::alasfld	4_ENERGY_RED,{
-	getmapxy(.@map$, .@x, .@y, UNITTYPE_NPC);
+	getmapxy(.@map$, .@x, .@y, BL_NPC);
 
 	//debugmes "entry: [" + .@x + "," + .@y + "] / [" + 'ldEntryX + "," + 'ldEntryY + "]";
 	sleep2 200;

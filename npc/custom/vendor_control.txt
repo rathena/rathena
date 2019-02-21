@@ -26,7 +26,7 @@ vendzone,47,51,5	script	Vending Helper	73,{
 		.@menu$ = .@currentpage ? "Previous Page:" : ":";
 		.@pageindex = .@currentpage * .slotperpage;
 		for ( .@i = 0; .@i < .slotperpage && .@pageindex + .@i < .count; ++.@i ) {
-			if ( !getmapxy( .@map$, .@x, .@y, UNITTYPE_NPC, "#vend_slot"+( .@pageindex + .@i ) ) && getareausers( .map$, .@x, .@y, .@x, .@y ) )
+			if ( !getmapxy( .@map$, .@x, .@y, BL_NPC, "#vend_slot"+( .@pageindex + .@i ) ) && getareausers( .map$, .@x, .@y, .@x, .@y ) )
 				.@menu$ += "Slot No."+( .@pageindex + .@i +1 )+" - ^FF0000[Unavailable]^000000:";
 			else
 				.@menu$ += "Slot No."+( .@pageindex + .@i +1 )+" - ^00CC00[Available]^000000:";
@@ -42,7 +42,7 @@ vendzone,47,51,5	script	Vending Helper	73,{
 			break;
 	}
 	.@s =  .@currentpage * .slotperpage + .@pick -1 ;
-	if ( !getmapxy( .@map$, .@x, .@y, UNITTYPE_NPC, "#vend_slot"+ .@s ) && getareausers( .map$, .@x, .@y, .@x, .@y ) ) {
+	if ( !getmapxy( .@map$, .@x, .@y, BL_NPC, "#vend_slot"+ .@s ) && getareausers( .map$, .@x, .@y, .@x, .@y ) ) {
 		mes " ";
 		mes "This slot is ^FF0000[UnAvailable]^000000.";
 		close;
@@ -86,7 +86,7 @@ OnInit:
 		mes "You dont have ^0055FFVending Skill^000000.";
 		close;
 	}
-	getmapxy .@map$, .@x, .@y, UNITTYPE_NPC;
+	getmapxy .@map$, .@x, .@y, BL_NPC;
 	if ( getareausers( .@map$, .@x, .@y, .@x, .@y ) ) {
 		mes "Someone already using this slot";
 		close;
@@ -101,7 +101,7 @@ OnInit:
 	close;
 OnCheckAvailable:
 	sleep 10000;
-	getmapxy .@map$, .@x, .@y, UNITTYPE_NPC;
+	getmapxy .@map$, .@x, .@y, BL_NPC;
 	while ( getareausers( .@map$, .@x, .@y, .@x, .@y ) )
 		sleep 10000;
 	hideoffnpc strnpcinfo(0);
