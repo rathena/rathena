@@ -11618,7 +11618,7 @@ void pc_readdb(void) {
 	memset(job_info,0,sizeof(job_info)); // job_info table
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
+	sv_readdb(db_path, DBPATH "level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
 	sv_readdb(db_path, DBIMPORT"/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 1);
 	for( k=1; k < 3; k++ ){ // fill in the blanks
 		int j;
