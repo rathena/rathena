@@ -458,7 +458,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		}
 		// none for find the mushroom
 		else if (.Event == 3) {
-			getmapxy( .@map$,.@x,.@y,0 );
+			getmapxy( .@map$,.@x,.@y, BL_PC );
 			if ( .EventON == 0 ) {
 				dispbottom "<Poring Counting> Event isnt running.";
 			}
@@ -498,7 +498,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 			}
 		}
 		else if (.Event == 4) {
-			getmapxy( .@map$,.@x,.@y,0 );
+			getmapxy( .@map$,.@x,.@y, BL_PC );
 			if ( .EventON == 0 ) {
 				dispbottom "<Disguise Event> Event isnt running.";
 			}
@@ -763,7 +763,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 		.EventON = 0;
 
 		// last man standing
-		getmapxy .map$, .x, .y, 1;
+		getmapxy .map$, .x, .y, BL_NPC;
 		.register_min = 2; 			// minimum amount of players to start this event, or else it auto-abort
 		.register_limit = 100; 		// maximum amount of players able to participate in this event
 		.total_participants = 0;
@@ -805,7 +805,7 @@ prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
 
 		.monster_size = getarraysize( .monster );
 		.npc_name$ = strnpcinfo(0);
-		getmapxy( .map$,.npc_x,.npc_y,1 );
+		getmapxy( .map$,.npc_x,.npc_y, BL_NPC);
 		setmapflag .map$, mf_monster_noteleport;
 
 		setarray .BlackList[0], 1003,1006,1017,1021,1022,1027,1043,1075,1136,1137,1168,1171,1172,1173,1181;
