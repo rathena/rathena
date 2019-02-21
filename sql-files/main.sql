@@ -781,7 +781,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `dest_name` varchar(30) NOT NULL default '',
   `dest_id` int(11) unsigned NOT NULL default '0',
   `title` varchar(45) NOT NULL default '',
-  `message` varchar(255) NOT NULL default '',
+  `message` varchar(500) NOT NULL default '',
   `time` int(11) unsigned NOT NULL default '0',
   `status` tinyint(2) NOT NULL default '0',
   `zeny` int(11) unsigned NOT NULL default '0',
