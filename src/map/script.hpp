@@ -368,7 +368,8 @@ enum monsterinfo_types {
 	MOB_RACE,
 	MOB_ELEMENT,
 	MOB_MODE,
-	MOB_MVPEXP
+	MOB_MVPEXP,
+	MOB_MATK
 };
 
 enum petinfo_types {
@@ -468,6 +469,7 @@ enum unitdata_mobtypes {
 	UMOB_ADELAY,
 	UMOB_DMOTION,
 	UMOB_TARGETID,
+	UMOB_MATK,
 };
 
 enum unitdata_homuntypes {

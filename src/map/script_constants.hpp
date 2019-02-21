@@ -3815,6 +3815,7 @@
 	export_constant(MOB_ELEMENT);
 	export_constant(MOB_MODE);
 	export_constant(MOB_MVPEXP);
+	export_constant(MOB_MATK);
 
 	/* petinfo types */
 	export_constant(PETINFO_ID);
@@ -3997,6 +3998,7 @@
 	export_constant(UMOB_ADELAY);
 	export_constant(UMOB_DMOTION);
 	export_constant(UMOB_TARGETID);
+	export_constant(UMOB_MATK);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
