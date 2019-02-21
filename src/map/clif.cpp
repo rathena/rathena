@@ -21041,6 +21041,14 @@ void do_init_clif(void) {
 	delay_clearunit_ers = ers_new(sizeof(struct block_list),"clif.cpp::delay_clearunit_ers",ERS_OPT_CLEAR);
 }
 
+Clif::Clif()
+{
+}
+
+Clif::~Clif()
+{
+}
+
 void do_final_clif(void) {
 	ers_destroy(delay_clearunit_ers);
 }

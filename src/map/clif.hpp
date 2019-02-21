@@ -8,6 +8,8 @@
 
 class Clif : public Clif_Interface {
 	public:
+		virtual ~Clif();
+		Clif();
 int setip(const char* ip);
 void setbindip(const char* ip);
 void setport(uint16 port);

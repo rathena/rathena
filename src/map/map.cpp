@@ -5181,7 +5181,8 @@ void do_shutdown(void)
 }
 
 Map_Obj::Map_Obj() {}
-Map_Obj::~Map_Obj() {}
+Map_Obj::~Map_Obj() {
+}
 
 int do_init(int argc, char *argv[])
 {

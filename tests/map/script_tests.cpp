@@ -12,10 +12,12 @@ class ScriptTest : public ::testing::Test
 protected:
 	ScriptTest() {}
 	virtual ~ScriptTest() {}
-	virtual void SetUp() {}
-	virtual void TearDown() {}
-	std::shared_ptr<map_mock> mmap;
-	std::shared_ptr<clif_mock> mclif;
+	virtual void SetUp() {
+		//do_init_script();  requires more mocks
+	}
+	virtual void TearDown() {
+		script_free_mock();
+	}
 };
 
 TEST_F(ScriptTest, Trival)
@@ -25,12 +27,15 @@ TEST_F(ScriptTest, Trival)
 
 TEST_F(ScriptTest, Simple)
 {
-	mmap = std::shared_ptr<map_mock>(new map_mock());
-	mclif = std::shared_ptr<clif_mock>(new clif_mock());
+	std::unique_ptr<map_mock> mmap(new map_mock());
+	std::unique_ptr<clif_mock> mclif(new clif_mock());
 
-	script_set_map(mmap);
-	script_set_clif(mclif);
-	EXPECT_CALL(*mmap, id2sd(_)).Times(1).WillOnce(Return((struct map_session_data*)0x1));//.WillByDefault(Return((struct map_session_data*)0x1));
+	EXPECT_CALL(*mmap, id2sd(_)).Times(1).WillOnce(Return((struct map_session_data*)0x1));
+	EXPECT_CALL(*mclif, scriptmes(_, _, _));
+	
+	script_set_clif(std::move(mclif));
+	script_set_map(std::move(mmap));
+
 	/* prepare script_state */
 	script_data sc_data = {
 		C_FUNC,

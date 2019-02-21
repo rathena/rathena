@@ -1989,9 +1989,12 @@ bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vle
  * This method gets a function from struct script_function buildin_func[] (defined in script.cpp)
  * by entry number (id).
  **/
+#if TESTING
 typedef int (*script_func)(struct script_state *st);
 script_func get_func_ptr(int id);
-void script_set_map(std::shared_ptr<Map_Interface> map_obj_);
-void script_set_clif(std::shared_ptr<Clif_Interface> clif_);
+void script_set_map(std::unique_ptr<Map_Interface> map_obj_);
+void script_set_clif(std::unique_ptr<Clif_Interface> clif_);
+void script_free_mock();
+#endif
 
 #endif /* SCRIPT_HPP */

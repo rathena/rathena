@@ -1,10 +1,13 @@
 #ifndef MAP_MOCK_HPP
 #define MAP_MOCK_HPP
 
+#include <iostream>
 #include "gmock/gmock.h"
 
 class map_mock : public Map_Interface {
  public:
+	map_mock(){};
+	 ~map_mock() {std::cout << "Destructor call!" << std::endl;};
   MOCK_METHOD1(setusers,
       void(int));
   MOCK_METHOD0(getusers,

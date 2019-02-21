@@ -992,6 +992,7 @@ enum save_settings_type {
 class Map_Interface {
 
 	public:
+		virtual ~Map_Interface() = default;
 		// users
 		virtual void setusers(int) = 0;
 		virtual int getusers(void) = 0;

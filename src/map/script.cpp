@@ -67,8 +67,8 @@ unsigned int active_scripts;
 unsigned int next_id;
 struct eri *st_ers;
 struct eri *stack_ers;
-std::shared_ptr<Map_Interface> map_obj;
-std::shared_ptr<Clif_Interface> clif;
+std::unique_ptr<Map_Interface> map_obj;
+std::unique_ptr<Clif_Interface> clif;
 
 static bool script_rid2sd_( struct script_state *st, struct map_session_data** sd, const char *func );
 
@@ -4710,20 +4710,28 @@ void do_init_script(void) {
 	active_scripts = 0;
 	next_id = 0;
 	
-	map_obj = std::shared_ptr<Map_Obj>(new Map_Obj());
-	clif = std::shared_ptr<Clif>(new Clif());
+	map_obj = std::unique_ptr<Map_Obj>(new Map_Obj());
+	clif = std::unique_ptr<Clif>(new Clif());
 	mapreg_init();
 }
 
-void script_set_map(std::shared_ptr<Map_Interface> map_obj_)
+#if TESTING
+void script_set_map(std::unique_ptr<Map_Interface> map_obj_)
 {
-	map_obj = map_obj_;
+	map_obj = std::move(map_obj_);
 }
 
-void script_set_clif(std::shared_ptr<Clif_Interface> clif_)
+void script_set_clif(std::unique_ptr<Clif_Interface> clif_)
 {
-	clif = clif_;
+	clif = std::move(clif_);
 }
+
+void script_free_mock()
+{
+	clif.reset();
+	map_obj.reset();
+}
+#endif
 
 void script_reload(void) {
 	int i;

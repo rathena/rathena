@@ -590,6 +590,7 @@ extern unsigned long color_table[COLOR_MAX];
 
 class Clif_Interface {
 	public:
+		virtual ~Clif_Interface() = default;
 		virtual int setip(const char* ip) = 0;
 		virtual void setbindip(const char* ip)= 0;
 		virtual void setport(uint16 port)= 0;
