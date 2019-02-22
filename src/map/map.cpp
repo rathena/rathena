@@ -3772,7 +3772,7 @@ int map_readallmaps (void)
 	else {
 		const char* mapcachefilepath[] = {
 			"db/" DBPATH "map_cache.dat",
-			"db/import/map_cache.dat"
+			"db/" DBIMPORT "/map_cache.dat"
 		};
 
 		for( int i = 0; i < 2; i++ ){
