@@ -1901,7 +1901,7 @@ enum e_hat_effects {
 /**
  * Player blocking actions related flags.
  */
-enum pcblock_action_flag {
+enum e_pcblock_action_flag {
 	PCBLOCK_NONE     = 0x000,
 	PCBLOCK_MOVE     = 0x001,
 	PCBLOCK_ATTACK   = 0x002,

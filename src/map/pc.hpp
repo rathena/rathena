@@ -731,7 +731,9 @@ struct map_session_data {
 	uint8 hatEffectCount;
 #endif
 
+
 	struct {
+		// move and skill are defined in unit.hpp::unit_data as it can be applicable to all objects.
 		unsigned attack   : 1;
 		unsigned useitem  : 1;
 		unsigned chat     : 1;

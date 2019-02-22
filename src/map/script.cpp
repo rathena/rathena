@@ -17241,8 +17241,8 @@ BUILDIN_FUNC(pcblock)
 	if (!script_mapid2sd(4, sd))
 		return SCRIPT_CMD_SUCCESS;
 
-	enum pcblock_action_flag type = (pcblock_action_flag)script_getnum(st, 2);
-	int state = (script_getnum(st, 3) > 0) ? 1 : 0;
+	enum e_pcblock_action_flag type = (e_pcblock_action_flag)script_getnum(st, 2);
+	bool state = (script_getnum(st, 3) > 0) ? true : false;
 
 	if (type & PCBLOCK_MOVE)
 		sd->ud.state.blockedmove = state;
