@@ -919,7 +919,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	struct item_data *id;
 
 	if (!(id = itemdb_exists(nameid))) {
-		ShowError("itemdb_read_flag: Invalid item item with id %hu\n", nameid);
+		ShowError("itemdb_read_flag: Invalid item id %hu\n", nameid);
 		return true;
 	}
 	
