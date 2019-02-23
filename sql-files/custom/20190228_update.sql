@@ -67,3 +67,7 @@ REPLACE INTO `mob_db2_re` (`ID`, `Sprite`, `kName`, `iName`, `LV`, `HP`, `SP`, `
 # unequip shotgun and revolver cards
 UPDATE `inventory` SET `equip` = '0' WHERE `card0` = 27170 AND equip = 8;
 UPDATE `inventory` SET `equip` = '0' WHERE `card0` = 27171 AND equip = 128;
+
+# GTB nerf
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(4128, 'Golden_Bug_Card', 'Golden Thief Bug Card', 6, 20, NULL, 10, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 32, NULL, NULL, NULL, NULL, 'bonus bNoMagicDamage,70; bonus bUseSPrate,100;', NULL, NULL);
