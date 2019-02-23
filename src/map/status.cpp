@@ -9912,7 +9912,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_DEFENDER:
 			if (!(flag&SCSTART_NOAVOID)) {
-				val2 = 5 + 15*val1; // Damage reduction
+				// val2 = 5 + 15*val1; // Damage reduction
+				val2 = 5 + 10*val1; // Damage reduction - reduce from 80% to 55%
 				val3 = 0; // Unused, previously speed adjustment
 				val4 = 250 - 50*val1; // Aspd adjustment
 

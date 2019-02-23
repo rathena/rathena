@@ -4582,6 +4582,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 				case ASC_BREAKER:
 				case GC_COUNTERSLASH:
 				case GC_CROSSIMPACT:
+				case GC_ROLLINGCUTTER:
+				case GC_CROSSRIPPERSLASHER:
 					ATK_RATE(wd->weaponAtk, wd->weaponAtk2, 50);
 					ATK_RATE(wd->equipAtk, wd->equipAtk2, 50);
 				default: // fall through to apply EDP bonuses
