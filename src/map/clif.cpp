@@ -6184,7 +6184,7 @@ void Clif::displaymessage(const int fd, const char* mes)
 #if PACKETVER == 20141022
 		/** for some reason game client crashes depending on message pattern (only for this packet) **/
 		/** so we redirect to ZC_NPC_CHAT **/
-		//clif.messagecolor(&sd->bl, color_table[COLOR_DEFAULT], mes, false, SELF);
+		//clif_messagecolor(&sd->bl, color_table[COLOR_DEFAULT], mes, false, SELF);
 			unsigned long color = (color_table[COLOR_DEFAULT] & 0x0000FF) << 16 | (color_table[COLOR_DEFAULT] & 0x00FF00) | (color_table[COLOR_DEFAULT] & 0xFF0000) >> 16; // RGB to BGR
 			unsigned short len = strnlen(line, CHAT_SIZE_MAX);
 
@@ -6198,16 +6198,16 @@ void Clif::displaymessage(const int fd, const char* mes)
 				WFIFOSET(fd, WFIFOW(fd, 2));
 			}
 #else
-				// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
-				int len = strnlen(line, CHAT_SIZE_MAX);
+			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
+			int len = strnlen(line, CHAT_SIZE_MAX);
 
-				if (len > 0) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
-					WFIFOHEAD(fd, 5 + len);
-					WFIFOW(fd,0) = 0x8e;
-					WFIFOW(fd,2) = 5 + len; // 4 + len + NULL teminate
-					safestrncpy(WFIFOCP(fd,4), line, len + 1);
-					WFIFOSET(fd, 5 + len);
-				}
+			if (len > 0) { // don't send a void message (it's not displaying on the client chat). @help can send void line.
+				WFIFOHEAD(fd, 5 + len);
+				WFIFOW(fd,0) = 0x8e;
+				WFIFOW(fd,2) = 5 + len; // 4 + len + NULL teminate
+				safestrncpy(WFIFOCP(fd,4), line, len + 1);
+				WFIFOSET(fd, 5 + len);
+			}
 #endif
 				line = strtok(NULL, "\n");
 			}
