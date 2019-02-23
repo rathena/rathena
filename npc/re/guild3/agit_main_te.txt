@@ -222,6 +222,7 @@ OnAgitBreak:
 	sleep 7000;
 	announce "The [" + getcastlename(.@map$) + "] castle has been conquered by the [" + getguildName(.@guild_id) + "] guild.",bc_all|bc_woe;
 	donpcevent "flag_te::OnAgitBreak";
+	donpcevent "simple_info_TE::OnAgitBreak";
 	end;
 
 OnGuildBreak:
@@ -1179,20 +1180,26 @@ function	script	F_flag_woe_TE	{
 
 -	script	simple_info_TE	-1,{
 	callfunc( "F_flag_woe_TE",0,strnpcinfo(4) );
+	end;
+
 OnInit:
+OnAgitBreak:
 	if (strnpcinfo(4) != "")
-		flagemblem getcastledata( strnpcinfo(4),CD_GUILD_ID );
+		FlagEmblem getcastledata( strnpcinfo(4),CD_GUILD_ID );
 	end;
 }
 
 -	script	flag_te	GUILD_FLAG,{
+	callfunc( "F_flag_woe_TE",0,strnpcinfo(4) );
 	end;
+
 OnInit:
 OnAgitBreak:
+	sleep(1000);
 	if (strnpcinfo(2) != "")
 	{
 		explode(.@castle_name$, strnpcinfo(2),"-");
-		flagemblem getcastledata( .@castle_name$[0],CD_GUILD_ID );
+		FlagEmblem getcastledata( .@castle_name$[0],CD_GUILD_ID );
 	}
 	end;
 }

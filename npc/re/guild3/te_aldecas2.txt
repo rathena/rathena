@@ -28,12 +28,14 @@ te_aldecas2,197,40,2	duplicate(simple_info_TE)	Defolty#12	GUILD_FLAG
 te_aldecas2,32,213,2	duplicate(simple_info_TE)	Defolty#13	GUILD_FLAG
 te_aldecas2,121,29,2	duplicate(simple_info_TE)	Defolty#14	GUILD_FLAG
 
+prontera,164,169,3	duplicate(flag_te)	[TE]Defolty#te_aldecas2-2	GUILD_FLAG
+
 // Infos flags + warp guildmaster inside
 //============================================================
 te_alde_gld,99,251,4	script	Defolty#15	GUILD_FLAG,{
 	callfunc( "F_flag_woe_TE", 1, "te_aldecas2" ,84,74 );
 OnFlagTEDefolty:
-	flagemblem getcastledata( "te_aldecas2",1 );
+	FlagEmblem getcastledata( "te_aldecas2",1 );
 	end;
 }
 te_alde_gld,99,244,4	duplicate(Defolty#15)	Defolty#16	GUILD_FLAG

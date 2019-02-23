@@ -91,6 +91,7 @@ gefg_cas01,64,16,4	duplicate(InsideFlagsG1)	Repherion#10	722
 // Guild Flag (Town)
 //============================================================
 geffen,109,123,2	duplicate(InsideFlagsG1)	Repherion#11	722
+prontera,164,173,3	duplicate(InsideFlagsG1)	Repherion#12	722
 
 // Kafra Employee
 //============================================================
