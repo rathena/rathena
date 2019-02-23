@@ -413,18 +413,20 @@ D44: Restrict("RE");
 	 Pick("","un_bunker", "ver_eju");
 
 // --------------------------------------------------
-	Castles:
+//	Castles:
 // --------------------------------------------------
-menu	"[FE] Aldebaran Castles",C1,"[TE] Prontera Castles",C8;
+Castles:
+	setarray @c[2],214,75,95,249;	
+	Disp("[FE] Geffen - Repherion:[TE] Aldebaran - Kafra Garden 2");
+	Pick("","gef_fild13","te_alde_gld");
+
 // menu	"[FE] Aldebaran Castles",C1, "[FE] Geffen Castles",C2, "[FE] Payon Castles",C3,
 //     	"[FE] Prontera Castles",C4, "[SE] Arunafeltz Castles",C5, "[SE] Schwaltzvalt Castles",C6,
 // 		"[TE] Aldebaran Castles",C7, "[TE] Prontera Castles",C8;
 
 C1: setarray @c[2],48,83,95,249,142,85,239,242,264,90;
-	Disp("Neuschwanstein");
-	Pick("","alde_gld");
-	// Disp("Neuschwanstein:Hohenschwangau:Nuenberg:Wuerzburg:Rothenburg");
-	// Pick("","alde_gld","alde_gld","alde_gld","alde_gld","alde_gld");
+	Disp("Neuschwanstein:Hohenschwangau:Nuenberg:Wuerzburg:Rothenburg");
+	Pick("","alde_gld","alde_gld","alde_gld","alde_gld","alde_gld");
 C2: setarray @c[2],214,75,308,240,143,240,193,278,305,87;
 	Disp("Repherion:Eeyolbriggar:Yesnelph:Bergel:Mersetzdeitz");
 	Pick("","gef_fild13","gef_fild13","gef_fild13","gef_fild13","gef_fild13");
@@ -444,14 +446,10 @@ C7: Restrict("RE");
 	setarray @c[2],48,83,95,249,142,85,239,242,264,90;
 	Disp("Kafragarten 1:Kafragarten 2:Kafragarten 3:Kafragarten 4:Kafragarten 5");
 	Pick("","te_alde_gld","te_alde_gld","te_alde_gld","te_alde_gld","te_alde_gld");
-C8: Restrict("RE");
+C8: Restrict("RE");	
 	setarray @c[2],134,65,240,128,153,137,111,240,208,240;
-
-	Disp("Gaebolg");
-	Pick("","te_prt_gld");
-
-	// Disp("Gloria 1:Gloria 2:Gloria 3:Gloria 4:Gloria 5");
-	// Pick("","te_prt_gld","te_prt_gld","te_prt_gld","te_prt_gld","te_prt_gld");
+	Disp("Gloria 1:Gloria 2:Gloria 3:Gloria 4:Gloria 5");
+	Pick("","te_prt_gld","te_prt_gld","te_prt_gld","te_prt_gld","te_prt_gld");
 
 // --------------------------------------------------
 	Guild_Dungeons:
