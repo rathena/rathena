@@ -1105,23 +1105,23 @@ Achievements:
   - ID: 128011
     Group: "AG_BATTLE"
     Name: "Ordinary Tourist"
-    #Target:
-    #  - MobID: 3029
-    #    Count: 1
+    Target:
+      - MobID: 3029
+        Count: 1
     Score: 10
   - ID: 128012
     Group: "AG_BATTLE"
     Name: "Backcountry Expert"
-    #Target:
-    #  - MobID: 3029
-    #    Count: 10
+    Target:
+      - MobID: 3029
+        Count: 10
     Score: 20
   - ID: 128013
     Group: "AG_BATTLE"
     Name: "Able to eat more like this"
-    #Target:
-    #  - MobID: 3029
-    #    Count: 50
+    Target:
+      - MobID: 3029
+        Count: 50
     Score: 50
   - ID: 128014
     Group: "AG_BATTLE"
@@ -1147,86 +1147,86 @@ Achievements:
   - ID: 128017
     Group: "AG_BATTLE"
     Name: "Stood up and overcame despair"
-    #Target:
-    #  - MobID: 3097
-    #    Count: 1
+    Target:
+      - MobID: 3097
+        Count: 1
     Score: 10
   - ID: 128018
     Group: "AG_BATTLE"
     Name: "Ember of Hope"
-    #Target:
-    #  - MobID: 3097
-    #    Count: 10
+    Target:
+      - MobID: 3097
+        Count: 10
     Score: 10
   - ID: 128019
     Group: "AG_BATTLE"
     Name: "Pouring Aurora"
-    #Target:
-    #  - MobID: 3097
-    #    Count: 25
+    Target:
+      - MobID: 3097
+        Count: 25
     Score: 20
   - ID: 128020
     Group: "AG_BATTLE"
     Name: "Who is desperate? I am hopeless!"
-    #Target:
-    #  - MobID: 3097
-    #    Count: 50
+    Target:
+      - MobID: 3097
+        Count: 50
     Score: 30
   - ID: 128021
     Group: "AG_BATTLE"
     Name: "I know god will save the world"
-    #Target:
-    #  - MobID: 3097
-    #    Count: 100
+    Target:
+      - MobID: 3097
+        Count: 100
     Score: 50
   - ID: 128022
     Group: "AG_BATTLE"
     Name: "There was mercy in Morocc army"
-    #Target:
-    #  - MobID: 3000
-    #  Count: 1
+    Target:
+      - MobID: 3000
+        Count: 1
     Score: 10
   - ID: 128023
     Group: "AG_BATTLE"
     Name: "There was fear in Morocc army"
-    #Target:
-    #  - MobID: 3000
-    #    Count: 10
+    Target:
+      - MobID: 3000
+        Count: 10
     Score: 20
   - ID: 128024
     Group: "AG_BATTLE"
     Name: "Guard of weak army"
-    #Target:
-    #  - MobID: 3000
-    #    Count: 50
+    Target:
+      - MobID: 3000
+        Count: 50
     Score: 50
   - ID: 128025
     Group: "AG_BATTLE"
     Name: "Audience with the queen"
-    #Target:
-    #  - MobID: 2529
-    #    Count: 1
+    Target:
+      - MobID: 2529
+        Count: 1
     Score: 10
   - ID: 128026
     Group: "AG_BATTLE"
     Name: "Warm earth"
-    #Target:
-    #  - MobID: 2533
-    #    Count: 1
+    Target:
+      - MobID: 2533
+        Count: 1
     Score: 10
   - ID: 128027
     Group: "AG_BATTLE"
     Name: "Water is very good exactly"
-    #Target:
-    #  - MobID: 2534
-    #    Count: 1
+    Target:
+      - MobID: 2534
+        Count: 1
     Score: 10
   - ID: 128028
     Group: "AG_BATTLE"
     Name: "Pleasant breeze"
-    #Target:
-    #  - MobID: 2535
-    #    Count: 1
+    Target:
+      - MobID: 2535
+        Count: 1
     Score: 10
   - ID: 128029
     Group: "AG_BATTLE"
@@ -1273,30 +1273,30 @@ Achievements:
   - ID: 128035
     Group: "AG_BATTLE"
     Name: "Time Traveler"
-    #Target:
-    #  - MobID: 3190
-    #    Count: 1
+    Target:
+      - MobID: 3190
+        Count: 1
     Score: 10
   - ID: 128036
     Group: "AG_BATTLE"
     Name: "Restore ancient relic"
-    #Target:
-    #  - MobID: 3190
-    #    Count: 10
+    Target:
+      - MobID: 3190
+        Count: 10
     Score: 20
   - ID: 128037
     Group: "AG_BATTLE"
     Name: "Master of relic transport"
-    #Target:
-    #  - MobID: 3190
-    #    Count: 50
+    Target:
+      - MobID: 3190
+        Count: 50
     Score: 50
   - ID: 128038
     Group: "AG_BATTLE"
     Name: "Show Jailbreak to the captain"
-    #Target:
-    #  - MobID: 3181
-    #    Count: 1
+    Target:
+      - MobID: 3181
+        Count: 1
     Score: 10
   - ID: 128039
     Group: "AG_BATTLE"
@@ -1308,23 +1308,23 @@ Achievements:
   - ID: 128040
     Group: "AG_BATTLE"
     Name: "Riot on board"
-    #Target:
-    #  - MobID: 3181
-    #    Count: 1
+    Target:
+      - MobID: 3181
+        Count: 1
     Score: 20
   - ID: 128041
     Group: "AG_BATTLE"
     Name: "Turmoil on board"
-    #Target:
-    #  - MobID: 3181
-    #    Count: 10
+    Target:
+      - MobID: 3181
+        Count: 10
     Score: 20
   - ID: 128042
     Group: "AG_BATTLE"
     Name: "Rebellion on board"
-    #Target:
-    #  - MobID: 3181
-    #    Count: 50
+    Target:
+      - MobID: 3181
+        Count: 50
     Score: 50
   - ID: 128043
     Group: "AG_BATTLE"
