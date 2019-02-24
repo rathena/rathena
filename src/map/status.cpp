@@ -4878,11 +4878,6 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			ud->state.change_walk_target = ud->state.speed_changed = 1;
 	}
 
-	if((!(bl->type&BL_REGEN)) && (!sc || !sc->count)) { // No difference.
-		status_cpy(status, b_status);
-		return;
-	}
-
 	if(flag&SCB_STR) {
 		status->str = status_calc_str(bl, sc, b_status->str);
 		flag|=SCB_BATK;
@@ -5105,6 +5100,13 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 
 	if(flag&SCB_MODE) {
 		status->mode = status_calc_mode(bl, sc, b_status->mode);
+
+		// Only switch between Normal and Boss classes as the others are determined by the race value
+		if (status->class_ == CLASS_NORMAL && status_has_mode(status, MD_STATUS_IMMUNE|MD_KNOCKBACK_IMMUNE|MD_DETECTOR))
+			status->class_ = CLASS_BOSS;
+		else if (status->class_ == CLASS_BOSS && !status_has_mode(status, MD_STATUS_IMMUNE|MD_KNOCKBACK_IMMUNE|MD_DETECTOR))
+			status->class_ = CLASS_NORMAL;
+
 		// Since mode changed, reset their state.
 		if (!status_has_mode(status,MD_CANATTACK))
 			unit_stop_attack(bl);
