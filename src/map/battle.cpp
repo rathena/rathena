@@ -1176,8 +1176,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 					clif_millenniumshield(bl,sce->val2);
 					if( !sce->val2 )
 						status_change_end(bl,SC_MILLENNIUMSHIELD,INVALID_TIMER); // All shields down
-					else
-						sce->val3 = 1000; // Next shield
+					else{
+						if (sd && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || (sd->class_&MAPID_THIRDMASK) == MAPID_BABY_STAR_EMPEROR)) {
+							sce->val3 = status_get_max_sp(bl);
+						} else {
+							sce->val3 = 1000; // Next shield
+						}
+					}
 				}
 				status_change_start(src,bl,SC_STUN,10000,0,0,0,0,1000,SCSTART_NOTICKDEF);
 			}

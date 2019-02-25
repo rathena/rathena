@@ -8146,11 +8146,7 @@ void clif_spiritball(struct block_list *bl) {
 
     nullpo_retv(bl);
 
-	int cmd = 0x1e1;
-	if (sd && ((sd->class_&MAPID_THIRDMASK) == MAPID_SOUL_REAPER || (sd->class_&MAPID_THIRDMASK) == MAPID_BABY_SOUL_REAPER))
-		cmd = 0x1d0;
-
-    WBUFW(buf, 0) = cmd;
+    WBUFW(buf, 0) = 0x1d0;
     WBUFL(buf, 2) = bl->id;
 	WBUFW(buf, 6) = 0; //init to 0
     switch(bl->type){
