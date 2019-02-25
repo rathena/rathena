@@ -1,18 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Renters
-//===== By: ================================================== 
+//===== By: ==================================================
 //= rAthena Dev Team
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 2.2
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Renewal-specific breeder NPCs.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 2.1 Moved some renters to a separate renewal file. [Daegaladh]
 //= 2.2 Updated to match the official scripts. [Euphy]
-//============================================================ 
+//============================================================
 
 // Dragon Breeder :: dragon
 //============================================================
@@ -54,7 +54,7 @@ job3_rune01,88,62,5	script	Dragon Breeder	105,{
 
 // Dragon/Gryphon Master :: dragon
 //============================================================
-prontera,130,213,5	script	Riding Creature Master	105,{
+prontera,119,208,5	script	Riding Creature Master	666,{
 	mes "[Riding Creature Master]";
 	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
 		mes "Welcome. Would you like to rent a Dragon?";
@@ -118,13 +118,13 @@ prontera,130,213,5	script	Riding Creature Master	105,{
 }
 geffen,100,55,3	duplicate(Riding Creature Master)	Riding Creature Master#2	105
 payon,166,102,5	duplicate(Riding Creature Master)	Riding Creature Master#3	105
-aldebaran,133,109,5	duplicate(Riding Creature Master)	Riding Creature Master#4	105
-yuno,171,187,3	duplicate(Riding Creature Master)	Riding Creature Master#5	105
+aldebaran,133,110,5	duplicate(Riding Creature Master)	Riding Creature Master#4	105
+yuno,179,180,3	duplicate(Riding Creature Master)	Riding Creature Master#5	105
 rachel,106,130,5	duplicate(Riding Creature Master)	Riding Creature Master#6	105
 
 // Peco removing NPC :: dragon
 //============================================================
-prontera,125,208,5	script	Peco Peco Remover	105,{
+prontera,123,208,5	script	Peco Peco Remover	652,{
 	mes "[Soldier]";
 	mes "If you're unable to dismount from a Peco Peco";
 	mes "for some unknown reason,";
@@ -267,13 +267,13 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 	mes "Mado Gears are only available for Mechanics.";
 	close;
 }
-prontera,163,178,3	duplicate(mgm)	Mado Gear Armorer#prt	105
-geffen,103,55,5	duplicate(mgm)	Mado Gear Armorer#gef	105
-payon,166,106,5	duplicate(mgm)	Mado Gear Armorer#pay	105
-aldebaran,133,112,5	duplicate(mgm)	Mado Gear Armorer#alde	105
-yuno,167,187,3	duplicate(mgm)	Mado Gear Armorer#yuno	105
-rachel,106,134,5	duplicate(mgm)	Mado Gear Armorer#ra	105
-dicastes01,187,207,3	duplicate(mgm)	Mado Gear Armorer#dic	105
-manuk,273,212,5	duplicate(mgm)	Mado Gear Armorer#man	105
-splendide,180,174,5	duplicate(mgm)	Mado Gear Armorer#spl	105
-mid_camp,242,243,3	duplicate(mgm)	Mado Gear Armorer#mid	105
+prontera,181,191,3	duplicate(mgm)	Mado Gear Armourer#prt	105
+geffen,103,55,5	duplicate(mgm)	Mado Gear Armourer#gef	105
+payon,166,106,5	duplicate(mgm)	Mado Gear Armourer#pay	105
+aldebaran,133,122,5	duplicate(mgm)	Mado Gear Armourer#alde	105
+yuno,179,186,3	duplicate(mgm)	Mado Gear Armourer#yuno	105
+rachel,106,134,5	duplicate(mgm)	Mado Gear Armourer#ra	105
+dicastes01,187,207,3	duplicate(mgm)	Mado Gear Armourer#dic	105
+manuk,273,212,5	duplicate(mgm)	Mado Gear Armourer#man	105
+splendide,180,174,5	duplicate(mgm)	Mado Gear Armourer#spl	105
+mid_camp,242,243,3	duplicate(mgm)	Mado Gear Armourer#mid	105

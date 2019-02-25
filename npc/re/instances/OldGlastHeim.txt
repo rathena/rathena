@@ -1125,7 +1125,7 @@ OnStart:
 	end;
 
 OnMyMobDead:
-	if (rand(50) == 0) {// can re-spawn
+	if (rand(100) < 5) {// can re-spawn 5%
 		mapannounce 'map_name$[1], "Evil Forces are appearing in this area.", bc_map,0xFFFF44,FW_NORMAL,15;
 		killmonster 'map_name$[1], instance_npcname("#ghmemorialmob05") + "::OnBossDead";
 
@@ -1193,18 +1193,18 @@ OnStart:
 	monster 'map_name$[1],259,138, "Suffered Khalitzburg",2471,1, .@label$;
 	monster 'map_name$[1],187,121, "Suffered Khalitzburg",2471,1, .@label$;
 	monster 'map_name$[1],265, 52, "Bloody Knight",2472,1, .@label$;
-	monster 'map_name$[1],265, 55, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],264, 79, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],225, 92, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],237, 92, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],249, 92, "Bloody Knight",2472,1, .@label$; 
-	monster 'map_name$[1],256, 93, "Bloody Knight",2472,1, .@label$; 
+	monster 'map_name$[1],265, 55, "Bloody Knight",2472,1, .@label$;
+	monster 'map_name$[1],264, 79, "Bloody Knight",2472,1, .@label$;
+	monster 'map_name$[1],225, 92, "Bloody Knight",2472,1, .@label$;
+	monster 'map_name$[1],237, 92, "Bloody Knight",2472,1, .@label$;
+	monster 'map_name$[1],249, 92, "Bloody Knight",2472,1, .@label$;
+	monster 'map_name$[1],256, 93, "Bloody Knight",2472,1, .@label$;
 	monster 'map_name$[1],264,100, "Bloody Knight",2472,1, .@label$;
 	monster 'map_name$[1],181,120, "Bloody Knight",2472,1, .@label$;
 	end;
 
 OnMyMobDead:
-	if (rand(50) == 0) {// can re-spawn
+	if (rand(100) < 5) {// can re-spawn 5%
 		mapannounce 'map_name$[1], "An evil presence has teleported into this area.", bc_map,0xFFFF44,FW_NORMAL,15;
 		killmonster 'map_name$[1], instance_npcname("#ghmemorialmob06") + "::OnBossDead";
 

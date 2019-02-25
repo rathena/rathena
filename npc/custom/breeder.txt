@@ -10,7 +10,7 @@
 //= One-click automatic mount rentals.
 //============================================================
 
-prontera,124,201,1	script	Universal Rental NPC	726,{
+prontera,140,181,7	script	Universal Rental NPC	10192,{
 	if (ismounting()) {
 		message strcharinfo(0),"You must first remove your mount.";
 		end;

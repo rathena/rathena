@@ -1,19 +1,19 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Episode 12 Socket Enchant NPC
-//===== By: ================================================== 
+//===== By: ==================================================
 //= Gepard
-//===== Current Version: ===================================== 
+//===== Current Version: =====================================
 //= 1.1a
-//===== Compatible With: ===================================== 
+//===== Compatible With: =====================================
 //= rAthena Project
-//===== Description: ========================================= 
+//===== Description: =========================================
 //= [Official Conversion]
 //= Adds slots to selected weapons and armor.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 1.0 First version.
 //= 1.1 Duplicates now spawn from floating NPCs. [L0ne_W0lf]
 //= 1.1a Added 'disable_items' command. [Euphy]
-//============================================================ 
+//============================================================
 
 -	script	Leablem#dummy::SocketEnchant2	-1,{
 	if (checkweight(1201,1) == 0)
@@ -182,13 +182,14 @@
 					mes "Huh, S Class?! Oh my god, are you serious?*Tremble*";
 					mes "So...which S class armor would you like to make a slot?!";
 					next;
-					switch(select("Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie"))
+					switch(select("Mage Coat:Holy Robe:Sacred Mission:Undershirt:Pantie:Cursed Mad Bunny"))
 					{
 						case 1: callfunc "Func_Socket2",2334,2372,40,51,1000,985,1; // Mage Coat has 10% success chance
 						case 2: callfunc "Func_Socket2",2327,2373,45,51,1000,985,1; // the rest has 5%
 						case 3: callfunc "Func_Socket2",2111,2128,45,51,1000,985,1;
 						case 4: callfunc "Func_Socket2",2522,2523,45,51,1000,985,1;
 						case 5: callfunc "Func_Socket2",2339,2371,45,51,1000,985,1;
+						case 6: callfunc "Func_Socket2",28901,28902,40,51,1000,985,1;
 					}
 			}
 		case 3:
@@ -383,6 +384,7 @@
 payon,236,199,3	duplicate(SocketEnchant2)	Leablem#pay	86
 lighthalzen,96,137,3	duplicate(SocketEnchant2)	Leablem#lhz	86
 prt_in,22,60,6	duplicate(SocketEnchant2)	Leablem#prt	86
+prontera,143,229,5	duplicate(SocketEnchant2)	Leablem#prt2	10129
 
 function	script	Func_Socket2	{
 	.@item_id = getarg(0);

@@ -122,3 +122,8 @@ Thumbs.db
 /libmysql.dll
 /pcre8.dll
 /zlib.dll
+
+# Nubs
+/conf/inter_athena.conf
+/milky-server.*
+/ServerScript.zip

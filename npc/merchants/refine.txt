@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Refining NPCs
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
@@ -550,6 +550,10 @@ lhz_in02,282,20,7	script	Fulerr	869,{
 	callfunc "refinemain","Fulerr",0;
 	end;
 }
+izlude,156,123,4	script	Ramone	98,{
+	callfunc "refinemain","Ramone",0;
+	end;
+}
 
 //============================================================
 //= Main Refiner Function
@@ -560,9 +564,20 @@ lhz_in02,282,20,7	script	Fulerr	869,{
 //= .@safe to the max safe refine in refine_db.txt as well.
 //============================================================
 function	script	refinemain	{
-	disable_items;
 	.@npc_name$ = getarg(0);
 	.@features = getarg(1);
+
+	if( getbattleflag( "feature.refineui" ) == 3 ){
+		mes "["+ .@npc_name$ +"]";
+		mes "I've spent a long time refining powerful weapons.";
+		// mes "You are in the presence of 장춰탕넨 [Zhang Zhuangtan]"; // TODO: find a valid translation
+		mes "Do you want to strengthen your equipment?";
+		close2;
+		refineui();
+		end;
+	}
+
+	disable_items;
 	mes "["+ .@npc_name$ +"]";
 	mes "I'm the Armsmith.";
 	mes "I can refine all kinds of weapons, armor and equipment, so let me";
@@ -754,7 +769,7 @@ function	script	refinemain	{
 	} else
 		.@menu2 = 2;
 	switch(.@menu2){
-	case 1: 
+	case 1:
 		.@refinecnt = .@safe - .@refinerycnt;
 		break;
 	case 2:
@@ -817,7 +832,7 @@ function	script	refinemain	{
 			mes "You changed it...";
 			mes "Get out before I stun you with my Hammer!!";
 			close;
-		} 
+		}
 		mes "Clang, clang!!!";
 		if(.@menu2 == 2 && getequippercentrefinery(.@part) <= rand(100)) {
 			failedrefitem .@part;
@@ -1007,7 +1022,7 @@ function	script	orimain	{
 	mes "5 Rough Stones to make";
 	mes "1 pure one for you.";
 	next;
-	switch(select("Make Oridecon:Make Elunium:Ask about Enchanted Stones")) {
+	switch(select("Make Oridecon:Make 5 x Oridecon:Make 10 x Oridecon:Make Elunium:Make 5 x Elunium:Make 10 x Elunium:Ask about Enchanted Stones")) {
 	case 1:
 		if (countitem(756) > 4) {
 			delitem 756,5;  //Oridecon_Stone
@@ -1025,6 +1040,38 @@ function	script	orimain	{
 			close;
 		}
 	case 2:
+		if (countitem(756) > 24) {
+			delitem 756,25;  //Oridecon_Stone
+			getitem 984,5; // Oridecon
+			mes "["+ .@npc_name$ +"]";
+			mes "Here's your Oridecon.";
+			mes "You're welcome to come";
+			mes "back whenever you want.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "You're kidding me, right?";
+			mes "I just told you that I need 25 Rough Oridecons to make a pure Oridecon.";
+			close;
+		}
+	case 3:
+		if (countitem(756) > 49) {
+			delitem 756,50;  //Oridecon_Stone
+			getitem 984,10; // Oridecon
+			mes "["+ .@npc_name$ +"]";
+			mes "Here's your Oridecon.";
+			mes "You're welcome to come";
+			mes "back whenever you want.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "You're kidding me, right?";
+			mes "I just told you that I need 50 Rough Oridecons to make a pure Oridecon.";
+			close;
+		}
+	case 4:
 		if (countitem(757) > 4) {
 			delitem 757,5;  //Elunium_Stone
 			getitem 985,1; // Elunium
@@ -1040,7 +1087,39 @@ function	script	orimain	{
 			mes "I just told you that I need 5 Rough Eluniums to make a pure Elunium.";
 			close;
 		}
-	case 3:
+	case 5:
+		if (countitem(757) > 24) {
+			delitem 757,25;  //Elunium_Stone
+			getitem 985,5; // Elunium
+			mes "["+ .@npc_name$ +"]";
+			mes "Here's your Elunium.";
+			mes "You're welcome to come";
+			mes "back whenever you want.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "You're kidding me, right?";
+			mes "I just told you that I need 25 Rough Eluniums to make a pure Elunium.";
+			close;
+		}
+	case 6:
+		if (countitem(757) > 49) {
+			delitem 757,50;  //Elunium_Stone
+			getitem 985,10; // Elunium
+			mes "["+ .@npc_name$ +"]";
+			mes "Here's your Elunium.";
+			mes "You're welcome to come";
+			mes "back whenever you want.";
+			close;
+		}
+		else {
+			mes "["+ .@npc_name$ +"]";
+			mes "You're kidding me, right?";
+			mes "I just told you that I need 50 Rough Eluniums to make a pure Elunium.";
+			close;
+		}
+	case 7:
 		mes "["+ .@npc_name$ +"]";
 		mes "Enchanted Stones...?";
 		mes "I've been a stonesmith for 20 years, so I've heard a lot about them. Supposedly, there are";
@@ -1126,6 +1205,11 @@ aru_gld,189,336,4	script	Repairman#aru_gld	86,{
 }
 
 sch_gld,340,80,7	script	Repairman#sch_gld	86,{
+	callfunc "repairmain","Repairman";
+	end;
+}
+
+prontera,170,180,1	script	Repairman#prontera2	813,{
 	callfunc "repairmain","Repairman";
 	end;
 }
@@ -1219,9 +1303,9 @@ function	script	repairmain	{
 	}
 }
 
-//============================================================ 
+//============================================================
 // Old changelog
-//============================================================ 
+//============================================================
 //= 1.0 by A bunch of people!
 //=     Syrus22 - Completely redid the script using functions... also
 //=     added the option for auto safe refining and multiple refining.
@@ -1239,9 +1323,9 @@ function	script	repairmain	{
 //=     hacker that can change item [dafide18]
 //= 1.5 Fixed crashing due to badly used callfunc's [Skotlex]
 //=     Lupus, don't rollback this important fix again! >.<
-//= 1.5a Corrected an unneeded callfunc, fixed the anti-bot 
+//= 1.5a Corrected an unneeded callfunc, fixed the anti-bot
 //=     exploit ruining the safe refine loop. [Skotlex]
-//= 1.5b Fixed Spelling mistakes. [Nexon] 
+//= 1.5b Fixed Spelling mistakes. [Nexon]
 //= 1.6 Replaced all breaks for ends as per the new script engine [Skotlex]
 //= 1.7 Added Einbroch Refiners (Custom names ^^;) and a duplicated BS Shop. [Poki#3]
 //= 1.8 Added Lighthalzen Refiners (Custom names again ^^;) [Poki#3]

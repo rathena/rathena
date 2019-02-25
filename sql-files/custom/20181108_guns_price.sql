@@ -1,0 +1,11 @@
+REPLACE INTO `item_db2_re` (`id`, `name_english`, `name_japanese`, `type`, `price_buy`, `price_sell`, `weight`, `atk:matk`, `defence`, `range`, `slots`, `equip_jobs`, `equip_upper`, `equip_genders`, `equip_locations`, `weapon_level`, `equip_level`, `refineable`, `view`, `script`, `equip_script`, `unequip_script`) VALUES
+(13198, 'TEMPEST', 'Tempest', 5, 22000, NULL, 2500, '250', NULL, 9, 0, 1090519040, 63, 2, 34, 4, '140', 1, 19, 'bonus bHit,-25; bonus bCritical,10; bonus bLongAtkRate,20;', NULL, NULL),
+(13194, 'P_BREAKER', 'Peace Breaker', 5, 19500, NULL, 1400, '250', NULL, 9, 0, 1090519040, 63, 2, 34, 3, '140', 1, 20, 'bonus bHit,-25; bonus bAspdRate,25;', NULL, NULL),
+(13190, 'RAG203_', 'RAG203', 5, 18000, NULL, 1300, '260', NULL, 9, 1, 1073741824, 63, 2, 34, 3, '140', 1, 18, 'bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,\"AL_DECAGI\",1,500,1;', NULL, NULL),
+(13195, 'RAG203', 'RAG203', 5, 18000, NULL, 1300, '260', NULL, 9, 0, 1073741824, 63, 2, 34, 3, '140', 1, 18, 'bonus bHit,10; bonus bCriticalRate,15; bonus4 bAutoSpell,\"AL_DECAGI\",1,10,1;', NULL, NULL),
+(13197, 'MINIMAY', 'Mini Mei', 5, 16000, NULL, 2500, '220', NULL, 9, 2, 1090519040, 63, 2, 34, 2, '106', 1, 19, NULL, NULL, NULL),
+(13122, 'Altea_and_Ares', 'Altea & Ares', 5, 14500, NULL, 1000, '200', NULL, 9, 0, 1073741824, 63, 2, 34, 3, '140', 1, 17, 'bonus bHit,5; bonus bDelayrate,10; bonus bLongAtkRate,30;', NULL, NULL),
+(13189, 'COLORSCOPE', 'Color Scope', 5, 13500, NULL, 1200, '240', NULL, 9, 2, 1073741824, 63, 2, 34, 3, '105', 1, 18, 'bonus bHit,20; bonus bCriticalRate,30;', NULL, NULL),
+(13193, 'R_THUNDER', 'Rolling Thunder', 5, 13500, NULL, 1800, '280', NULL, 9, 1, 1073741824, 63, 2, 34, 3, '120', 1, 20, 'bonus bHit,-10; bonus bDelayrate,-10; bonus3 bAutoSpell,\"MG_THUNDERSTORM\",5,500;', NULL, NULL),
+(13120, 'Heaven\'s_Feather_and_Hell\'s_Fire', 'Heaven\'s Feather & Hell\'s Fire', 5, 1250000, NULL, 800, '150', NULL, 9, 1, 1090519040, 63, 2, 34, 3, '99', 1, 17, 'bonus2 bSkillAtk,\"GS_DESPERADO\",20; bonus2 bSkillAtk,\"RL_FALLEN_ANGEL\",20;', NULL, NULL),
+(13192, 'DEATHFIRE', 'Death Fire', 5, 12500, NULL, 2000, '400', NULL, 9, 1, 1073741824, 63, 2, 34, 3, '108', 1, 20, 'bonus bLongAtkRate,5; bonus bHit,-50; bonus bDelayrate,-10;', NULL, NULL);

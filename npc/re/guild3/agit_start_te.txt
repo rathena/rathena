@@ -7,37 +7,42 @@
 //============================================================
 
 -	script	woe_TE_contoller	-1,{
-function WoeTimer;
+	end;
 
-OnSun2000:// date woe start
-	if (agitcheck3() == 0)
-		agitstart3;
-	end;
-OnSun2100:// date woe end
-	if (agitcheck3() == 1)
-		agitend3;
-	end;
+OnSun2130: // start
+OnSun2230: // end
 
 OnAgitInit3:
-	WoeTimer( SUNDAY,20,21 );// <day>, <hour start>, <hour end>
+	// ----------------- WoE Start Time
+	if(	gettime(DT_DAYOFWEEK)==SUNDAY && ( (gettime(DT_HOUR)*100)+gettime(DT_MINUTE) >= 2130 ) &&	( (gettime(DT_HOUR)*100)+gettime(DT_MINUTE) < 2230 ) ){
+		if (!agitcheck3()) {
+			AgitStart3;
+			Announce "WoE:First Edition has Started!",bc_all|bc_woe;
+			callsub S_DisplayOwners;
+		}
+		end;
+	}
+
+	// ----------------- WoE End Time
+	if(	gettime(DT_DAYOFWEEK)==SUNDAY && ( (gettime(DT_HOUR)*100)+gettime(DT_MINUTE) == 2230 )){
+		if (agitcheck3()) {
+			AgitEnd3;
+			Announce "WoE:First Edition has Ended!",bc_all|bc_woe;
+			callsub S_DisplayOwners;
+		}
+		end;
+	}
 	end;
 
-function WoeTimer {
-	.@day = getarg(0);
-	.@hour_start = getarg(1);
-	.@hour_end   = getarg(2);
-	.@woe_status = agitcheck3();
-	.@hour_today = gettime(DT_HOUR);
-	.@day_today  = gettime(DT_DAYOFWEEK);
-	setd ".day_"+ .@day, 1;
-	setd ".hour_start_"+ .@hour_start, 1;
-
-	if (.@day_today == .@day) {
-		if (.@hour_today >= .@hour_start && .@hour_today < .@hour_end && .@woe_status == 0)
-			agitstart3;
-		else if (.@hour_today == .@hour_end && .@woe_status)
-			agitend3;
+S_DisplayOwners:
+	setarray .@maps$[0],"te_aldecas2";
+	for( set .@i, 0; .@i < getarraysize(.@maps$); set .@i, .@i+1 ) {
+		if (GetCastleData(.@maps$[.@i],1)) {
+			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle has been conquered by the [" + GetGuildName(GetCastleData(.@maps$[.@i],1)) + "] guild.",bc_all|bc_woe;
+		}
+		else {
+			Announce "The [" + GetCastleName(.@maps$[.@i]) + "] castle is currently unoccupied.",bc_all|bc_woe;
+		}
 	}
-	return;
-}
+	end;
 }

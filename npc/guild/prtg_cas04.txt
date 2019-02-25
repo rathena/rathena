@@ -96,7 +96,7 @@ prtg_cas04,263,27,4	duplicate(InsideFlagsPR4)	Skoegul#14	722
 
 // Guild Flag (Town)
 //============================================================
-prontera,167,203,6	duplicate(InsideFlagsPR4)	Skoegul#15	722
+prontera,164,161,3	duplicate(InsideFlagsPR4)	Skoegul#15	722
 
 // Kafra Employee
 //============================================================

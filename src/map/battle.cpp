@@ -640,7 +640,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			if( sd && !(nk&NK_NO_CARDFIX_ATK) ) {
 				cardfix = cardfix * (100 + sd->magic_addrace[tstatus->race] + sd->magic_addrace[RC_ALL] + sd->magic_addrace2[t_race2]) / 100;
 				if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
-					cardfix = cardfix * (100 + sd->magic_addele[tstatus->def_ele] + sd->magic_addele[ELE_ALL] + 
+					cardfix = cardfix * (100 + sd->magic_addele[tstatus->def_ele] + sd->magic_addele[ELE_ALL] +
 						sd->magic_addele_script[tstatus->def_ele] + sd->magic_addele_script[ELE_ALL]) / 100;
 					cardfix = cardfix * (100 + sd->magic_atk_ele[rh_ele] + sd->magic_atk_ele[ELE_ALL]) / 100;
 				}
@@ -1643,6 +1643,40 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		pc_overheat(sd, (element == ELE_FIRE ? 3 : 1));
 	}
 
+	// ShowDebug("Before Reduction [PVP]: %d", damage);
+	// special reduction for TE
+	if(map_getmapflag(bl->m, MF_PVP_TE)) {
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag&BF_WEAPON)
+				damage = damage * battle_config.pvp_te_weapon_damage_rate / 100;
+			if (flag&BF_MAGIC)
+				damage = damage * battle_config.pvp_te_magic_damage_rate / 100;
+			if (flag&BF_MISC)
+				damage = damage * battle_config.pvp_te_misc_damage_rate / 100;
+		} else { //Normal attacks get reductions based on range.
+			if (flag & BF_SHORT)
+				damage = damage * battle_config.pvp_te_short_damage_rate / 100;
+			if (flag & BF_LONG)
+				damage = damage * battle_config.pvp_te_long_damage_rate / 100;
+		}
+	} else if(map_getmapflag(bl->m, MF_PVP)) {
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag&BF_WEAPON)
+				damage = damage * battle_config.pvp_weapon_damage_rate / 100;
+			if (flag&BF_MAGIC)
+				damage = damage * battle_config.pvp_magic_damage_rate / 100;
+			if (flag&BF_MISC)
+				damage = damage * battle_config.pvp_misc_damage_rate / 100;
+		} else { //Normal attacks get reductions based on range.
+			if (flag & BF_SHORT)
+				damage = damage * battle_config.pvp_short_damage_rate / 100;
+			if (flag & BF_LONG)
+				damage = damage * battle_config.pvp_long_damage_rate / 100;
+		}
+	}
+	damage = i64max(damage,1);
+	// ShowDebug("After Reduction [PVP]: %d\n", damage);
+
 	return damage;
 }
 
@@ -1740,20 +1774,40 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 	if (md && md->guardian_data)
 		damage -= damage * (md->guardian_data->castle->defense/100) * battle_config.castle_defense_rate/100;
 	*/
-	if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
-		if (flag&BF_WEAPON)
-			damage = damage * battle_config.gvg_weapon_damage_rate / 100;
-		if (flag&BF_MAGIC)
-			damage = damage * battle_config.gvg_magic_damage_rate / 100;
-		if (flag&BF_MISC)
-			damage = damage * battle_config.gvg_misc_damage_rate / 100;
-	} else { //Normal attacks get reductions based on range.
-		if (flag & BF_SHORT)
-			damage = damage * battle_config.gvg_short_damage_rate / 100;
-		if (flag & BF_LONG)
-			damage = damage * battle_config.gvg_long_damage_rate / 100;
+	// ShowDebug("Before Reduction [GVG]: %d", damage);
+	// special reduction for TE
+	if(map_getmapflag(bl->m, MF_GVG_TE_CASTLE) || map_getmapflag(bl->m, MF_GVG_TE)) {
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag&BF_WEAPON)
+				damage = damage * battle_config.gvg_te_weapon_damage_rate / 100;
+			if (flag&BF_MAGIC)
+				damage = damage * battle_config.gvg_te_magic_damage_rate / 100;
+			if (flag&BF_MISC)
+				damage = damage * battle_config.gvg_te_misc_damage_rate / 100;
+		} else { //Normal attacks get reductions based on range.
+			if (flag & BF_SHORT)
+				damage = damage * battle_config.gvg_te_short_damage_rate / 100;
+			if (flag & BF_LONG)
+				damage = damage * battle_config.gvg_te_long_damage_rate / 100;
+		}
+	}
+	else {
+		if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
+			if (flag&BF_WEAPON)
+				damage = damage * battle_config.gvg_weapon_damage_rate / 100;
+			if (flag&BF_MAGIC)
+				damage = damage * battle_config.gvg_magic_damage_rate / 100;
+			if (flag&BF_MISC)
+				damage = damage * battle_config.gvg_misc_damage_rate / 100;
+		} else { //Normal attacks get reductions based on range.
+			if (flag & BF_SHORT)
+				damage = damage * battle_config.gvg_short_damage_rate / 100;
+			if (flag & BF_LONG)
+				damage = damage * battle_config.gvg_long_damage_rate / 100;
+		}
 	}
 	damage = i64max(damage,1);
+	// ShowDebug("After Reduction [GVG]: %d\n", damage);
 	return damage;
 }
 
@@ -2409,14 +2463,12 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 
 	if (!first_call)
-		return (wd->type == DMG_CRITICAL);
+		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
 
-	if( !(wd->type&DMG_MULTI_HIT) && sstatus->cri && (!skill_id ||
-		skill_id == KN_AUTOCOUNTER || skill_id == SN_SHARPSHOOTING ||
-		skill_id == MA_SHARPSHOOTING || skill_id == NJ_KIRIKAGE))
+	if( sstatus->cri && ( !skill_id || skill_get_nk(skill_id)&NK_CRITICAL ) )
 	{
 		short cri = sstatus->cri;
 
@@ -4542,6 +4594,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 				case ASC_BREAKER:
 				case GC_COUNTERSLASH:
 				case GC_CROSSIMPACT:
+				case GC_ROLLINGCUTTER:
+				case GC_CROSSRIPPERSLASHER:
 					ATK_RATE(wd->weaponAtk, wd->weaponAtk2, 50);
 					ATK_RATE(wd->equipAtk, wd->equipAtk2, 50);
 				default: // fall through to apply EDP bonuses
@@ -5181,6 +5235,12 @@ static void battle_calc_weapon_final_atk_modifiers(struct Damage* wd, struct blo
 #endif
 	}
 
+	// add any miscellaneous player ATK bonuses
+	if (sd && (skill_damage = pc_skillatk_bonus(sd, skill_id)))
+		ATK_ADDRATE(wd->damage, wd->damage2, skill_damage);
+	if (tsd && (skill_damage = pc_sub_skillatk_bonus(tsd, skill_id)))
+		ATK_ADDRATE(wd->damage, wd->damage2, -skill_damage);
+
 	// Skill damage adjustment
 	if ((skill_damage = battle_skill_damage(src, target, skill_id)) != 0)
 		ATK_ADDRATE(wd->damage, wd->damage2, skill_damage);
@@ -5386,8 +5446,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	battle_calc_multi_attack(&wd, src, target, skill_id, skill_lv);
 
 	// crit check is next since crits always hit on official [helvetica]
-	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, true))
+	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, true)) {
+#if PACKETVER >= 20161207
+		if (wd.type&DMG_MULTI_HIT)
+			wd.type = DMG_MULTI_HIT_CRITICAL;
+		else
+			wd.type = DMG_CRITICAL;
+#else
 		wd.type = DMG_CRITICAL;
+#endif
+	}
 
 	// check if we're landing a hit
 	if(!is_attack_hitting(&wd, src, target, skill_id, skill_lv, true))
@@ -5417,15 +5485,6 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 				ATK_ADD(wd.weaponAtk, wd.weaponAtk2, sstatus->matk_min);
 		}
 #endif
-		// add any miscellaneous player ATK bonuses
-		if( sd && skill_id && (i = pc_skillatk_bonus(sd, skill_id))) {
-			ATK_ADDRATE(wd.damage, wd.damage2, i);
-			RE_ALLATK_ADDRATE(&wd, i);
-		}
-		if (tsd && (i = pc_sub_skillatk_bonus(tsd, skill_id))) {
-			ATK_ADDRATE(wd.damage, wd.damage2, -i);
-			RE_ALLATK_ADDRATE(&wd, -i);
-		}
 
 #ifdef RENEWAL
 		// In Renewal we only cardfix to the weapon and equip ATK
@@ -6619,7 +6678,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 				struct Damage matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
 				md.damage = 7 * ((atk.damage/skill_lv + matk.damage/skill_lv) * tstatus->vit / 100 );
-	
+
 				// AD benefits from endow/element but damage is forced back to neutral
 				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			}
@@ -7006,7 +7065,7 @@ bool battle_vanish(struct map_session_data *sd, struct block_list *target, struc
 			wd->isspdamage = true;
 		} else // No damage
 			return false;
-		
+
 		return true;
 	} else {
 		// bHPVanishRate
@@ -8209,6 +8268,21 @@ static const struct _battle_data {
 	{ "gvg_weapon_attack_damage_rate",      &battle_config.gvg_weapon_damage_rate,          60,     0,      INT_MAX,        },
 	{ "gvg_magic_attack_damage_rate",       &battle_config.gvg_magic_damage_rate,           60,     0,      INT_MAX,        },
 	{ "gvg_misc_attack_damage_rate",        &battle_config.gvg_misc_damage_rate,            60,     0,      INT_MAX,        },
+	{ "gvg_te_short_attack_damage_rate",    &battle_config.gvg_te_short_damage_rate,        80,     0,      INT_MAX,        },
+	{ "gvg_te_long_attack_damage_rate",     &battle_config.gvg_te_long_damage_rate,         80,     0,      INT_MAX,        },
+	{ "gvg_te_weapon_attack_damage_rate",   &battle_config.gvg_te_weapon_damage_rate,       60,     0,      INT_MAX,        },
+	{ "gvg_te_magic_attack_damage_rate",    &battle_config.gvg_te_magic_damage_rate,        60,     0,      INT_MAX,        },
+	{ "gvg_te_misc_attack_damage_rate",     &battle_config.gvg_te_misc_damage_rate,         60,     0,      INT_MAX,        },
+	{ "pvp_short_attack_damage_rate",       &battle_config.pvp_short_damage_rate,           80,     0,      INT_MAX,        },
+	{ "pvp_long_attack_damage_rate",        &battle_config.pvp_long_damage_rate,            80,     0,      INT_MAX,        },
+	{ "pvp_weapon_attack_damage_rate",      &battle_config.pvp_weapon_damage_rate,          60,     0,      INT_MAX,        },
+	{ "pvp_magic_attack_damage_rate",       &battle_config.pvp_magic_damage_rate,           60,     0,      INT_MAX,        },
+	{ "pvp_misc_attack_damage_rate",        &battle_config.pvp_misc_damage_rate,            60,     0,      INT_MAX,        },
+	{ "pvp_te_short_attack_damage_rate",    &battle_config.pvp_te_short_damage_rate,        80,     0,      INT_MAX,        },
+	{ "pvp_te_long_attack_damage_rate",     &battle_config.pvp_te_long_damage_rate,         80,     0,      INT_MAX,        },
+	{ "pvp_te_weapon_attack_damage_rate",   &battle_config.pvp_te_weapon_damage_rate,       60,     0,      INT_MAX,        },
+	{ "pvp_te_magic_attack_damage_rate",    &battle_config.pvp_te_magic_damage_rate,        60,     0,      INT_MAX,        },
+	{ "pvp_te_misc_attack_damage_rate",     &battle_config.pvp_te_misc_damage_rate,         60,     0,      INT_MAX,        },
 	{ "gvg_flee_penalty",                   &battle_config.gvg_flee_penalty,                20,     0,      INT_MAX,        },
 	{ "pk_short_attack_damage_rate",        &battle_config.pk_short_damage_rate,            80,     0,      INT_MAX,        },
 	{ "pk_long_attack_damage_rate",         &battle_config.pk_long_damage_rate,             70,     0,      INT_MAX,        },
@@ -8241,6 +8315,7 @@ static const struct _battle_data {
 	{ "skill_removetrap_type",              &battle_config.skill_removetrap_type,           0,      0,      1,              },
 	{ "disp_experience",                    &battle_config.disp_experience,                 0,      0,      1,              },
 	{ "disp_zeny",                          &battle_config.disp_zeny,                       0,      0,      1,              },
+	{ "disp_casttime",                      &battle_config.disp_casttime,                   0,      0,      1,              },
 	{ "castle_defense_rate",                &battle_config.castle_defense_rate,             100,    0,      100,            },
 	{ "bone_drop",                          &battle_config.bone_drop,                       0,      0,      2,              },
 	{ "buyer_name",                         &battle_config.buyer_name,                      1,      0,      1,              },
@@ -8541,7 +8616,22 @@ static const struct _battle_data {
 	{ "banana_bomb_duration",				&battle_config.banana_bomb_duration,			0,		0,		UINT16_MAX,		},
 	{ "guild_leaderchange_delay",			&battle_config.guild_leaderchange_delay,		1440,	0,		INT32_MAX,		},
 	{ "guild_leaderchange_woe",				&battle_config.guild_leaderchange_woe,			0,		0,		1,				},
-	{ "guild_alliance_onlygm",              &battle_config.guild_alliance_onlygm,           0,      0,      1, },
+	{ "guild_alliance_onlygm",              &battle_config.guild_alliance_onlygm,           0,      0,      1, 				},
+	{ "limit_refine",						&battle_config.limit_refine,					0,		0,		1,				},
+	{ "limit_refine_pvp",					&battle_config.limit_refine_pvp,				0,		0,		1,				},
+	{ "limit_refine_te",					&battle_config.limit_refine_te,					0,		0,		1,				},
+	{ "half_skill_damage",					&battle_config.half_skill_damage,				0,		0,		1,				},
+	{ "half_skill_damage_pvp",				&battle_config.half_skill_damage_pvp,			0,		0,		1,				},
+	{ "half_skill_damage_te",				&battle_config.half_skill_damage_te,			0,		0,		1,				},
+	{ "half_skill_cast",					&battle_config.half_skill_cast,					0,		0,		1,				},
+	{ "half_skill_cast_pvp",				&battle_config.half_skill_cast_pvp,				0,		0,		1,				},
+	{ "half_skill_cast_te",					&battle_config.half_skill_cast_te,				0,		0,		1,				},
+	{ "half_skill_delay",					&battle_config.half_skill_delay,				0,		0,		1,				},
+	{ "half_skill_delay_pvp",				&battle_config.half_skill_delay_pvp,			0,		0,		1,				},
+	{ "half_skill_delay_te",				&battle_config.half_skill_delay_te,				0,		0,		1,				},
+	{ "half_skill_cd",						&battle_config.half_skill_cd,					0,		0,		1,				},
+	{ "half_skill_cd_pvp",					&battle_config.half_skill_cd_pvp,				0,		0,		1,				},
+	{ "half_skill_cd_te",					&battle_config.half_skill_cd_te,				0,		0,		1,				},
 	{ "feature.achievement",                &battle_config.feature_achievement,             1,      0,      1,              },
 	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                0,      0,      0xF,            },
 	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
@@ -8553,6 +8643,7 @@ static const struct _battle_data {
 	{ "feature.homunculus_autofeed_rate",   &battle_config.feature_homunculus_autofeed_rate,30,     0,    100,              },
 	{ "summoner_trait",                     &battle_config.summoner_trait,                  3,      0,      3,              },
 	{ "homunculus_autofeed_always",         &battle_config.homunculus_autofeed_always,      1,      0,      1,              },
+	{ "feature.refineui",                   &battle_config.feature_refineui,                0,      0,      3,              },
 	{ "feature.attendance",                 &battle_config.feature_attendance,              1,      0,      1,              },
 	{ "feature.privateairship",             &battle_config.feature_privateairship,          1,      0,      1,              },
 	{ "rental_transaction",                 &battle_config.rental_transaction,              1,      0,      1,              },
@@ -8700,6 +8791,19 @@ void battle_adjust_conf()
 	if( battle_config.feature_homunculus_autofeed ){
 		ShowWarning("conf/battle/feature.conf homunculus autofeeding is enabled but it requires PACKETVER 2017-09-20 or newer, disabling...\n");
 		battle_config.feature_homunculus_autofeed = 0;
+	}
+#endif
+
+#if PACKETVER < 20161012
+	if (battle_config.feature_refineui) {
+		ShowWarning("conf/battle/feature.conf refine UI is enabled but it requires PACKETVER 2016-10-12 or newer, disabling...\n");
+		battle_config.feature_refineui = 0;
+	}
+#else
+	// Check if Refine UI is only enabled in scripts
+	if( battle_config.feature_refineui == 2 ){
+		ShowWarning("conf/battle/feature.conf refine UI is enabled in scripts but disabled in general, enabling...\n");
+		battle_config.feature_refineui = 3;
 	}
 #endif
 

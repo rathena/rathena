@@ -1369,7 +1369,7 @@ rockrdg1,153,303,5	script	Wyatt Warp#revt03	HIDDEN_WARP_NPC,{
 	}
 }
 
-harboro1,288,193,5	script	Shawn McCurdy#harboro1	10215,{
+harboro1,298,193,3	script	Shawn McCurdy#harboro1	10215,{
 	if (rock_main_quest < 10) {
 		mes "[Shawn McCurdy]";
 		mes "I'm worried we miners might not be able to work for a long time,";
@@ -6144,7 +6144,7 @@ OnTouch:
 	end;
 }
 
-harboro1,278,195,5	script	Carola Firth#rockn17	4_F_CAPEGIRL,{
+harboro1,273,201,5	script	Carola Firth#rockn17	4_F_CAPEGIRL,{
 	mes "[Carola Firth]";
 	mes "Did you hear that? The basement is haunted!";
 	next;
@@ -6165,7 +6165,7 @@ harboro1,278,195,5	script	Carola Firth#rockn17	4_F_CAPEGIRL,{
 	close;
 }
 
-harboro1,280,195,3	script	Lucas Richie#rockn08	4_M_ROGUE,{
+harboro1,275,201,3	script	Lucas Richie#rockn08	4_M_ROGUE,{
 	mes "[Lucas Richie]";
 	mes "The basement is haunted. You don't really believe that, do you?";
 	mes "I think there are treasures down there.";
@@ -6191,7 +6191,7 @@ harboro1,314,211,4	script	Bakery Owner#dy	4_COOK,3,3,{
 
 OnTouch:
 	.@r = rand(4);
-	if (.@r == 0) 
+	if (.@r == 0)
 		npctalk "I sell bread, and nothing else.", "", bc_self;
 	else if (.@r == 1)
 		npctalk "I've got bread that's so delicious, it's to die for.", "", bc_self;

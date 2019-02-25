@@ -63,25 +63,35 @@ $@vfund_*_extra
 // Note: The times in this section are almost entirely custom.
 
 -	script	#invest_timer	-1,{
-OnClock0000:	// Open investments on Wednesday (1 hour after WoE)
-	if (gettime(DT_DAYOFWEEK) == WEDNESDAY && !agitcheck()) {
+// OnClock0600:	// Open investments on Wednesday (1 hour after WoE)
+OnThu0600:
+	// if (gettime(DT_DAYOFWEEK) == THURSDAY && !agitcheck()) {
+	if (!agitcheck()) {
 		set $2011_agit_invest,1;
 		donpcevent "#fund_master::OnInvest_start";
 	}
 	end;
-OnClock1200:	// Close investments on Friday (60 hours after investments open)
-	if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck()) {
+
+// OnClock1800:	// Close investments on Friday (60 hours after investments open)
+OnFri1800:
+	// if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck()) {
+	if (!agitcheck()) {
 		set $2011_agit_invest,2;
 		donpcevent "#fund_master::OnInvest_stop";
 	}
 	end;
-OnClock1235:	// Open dungeons on Friday (at least 31 minutes after investments close)
-	if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck())
+
+// OnClock1835:	// Open dungeons on Friday (at least 31 minutes after investments close)
+OnFri1835:
+	// if (gettime(DT_DAYOFWEEK) == FRIDAY && !agitcheck())
+	if (!agitcheck())
 		donpcevent "#fund_master::OnResult";
 	end;
-OnClock2000:	// Close dungeons on Tuesday (1 hour before WoE)
-	if (gettime(DT_DAYOFWEEK) == TUESDAY)
-		donpcevent "#fund_master::OnReset";
+
+// OnClock1900:	// Close dungeons on Tuesday (1 hour before WoE)
+OnWed1900:
+	// if (gettime(DT_DAYOFWEEK) == WEDNESDAY)
+	donpcevent "#fund_master::OnReset";
 	end;
 }
 
@@ -94,17 +104,18 @@ function	script	F_Invest_Status	{
 	if (agitcheck())
 		return 0;
 
+	// debugmes .@day + " | " + .@hour +" : " +.@minute;
+
 	// Open for investments.
-	if (.@day >= WEDNESDAY && (.@day < FRIDAY || (.@day == FRIDAY && .@hour <= 12)))
+	if ((.@day > THURSDAY || .@day == THURSDAY && .@hour >= 6) && (.@day < FRIDAY || (.@day == FRIDAY && .@hour <= 18)))
 		return 1;
 
 	// Investments closed, calculating results.
-	if (.@day == FRIDAY && .@hour == 12 && .@minute < 35)
+	if (.@day == FRIDAY && .@hour == 18 && .@minute < 35)
 		return 2;
 
 	// Calculations complete, dungeons open.
-	if ((.@day == FRIDAY && (.@hour > 12 || (.@hour == 12 && .@minute >= 35))) || .@day > FRIDAY ||
-	    .@day < TUESDAY || (.@day == TUESDAY && .@hour < 20))
+	if ((.@day == FRIDAY && (.@hour > 18 || (.@hour == 18 && .@minute >= 35))) || .@day > FRIDAY || .@day < WEDNESDAY || (.@day == WEDNESDAY && .@hour < 19))
 		return 3;
 
 	// Dungeons closed.
@@ -137,11 +148,11 @@ function	script	F_Invest_Abyss	{
 		case 4:
 			mes .@npc_name$;
 			mes "Please enter the amount you want to invest.";
-			mes "Please choose between 1 to 200.";
+			mes "Please choose between 1 to 1000.";
 			mes "Please enter 0 to cancel.";
 			next;
 			input .@units;
-			if (.@units < 0 || .@units > 200) {
+			if (.@units < 0 || .@units > 1000) {
 				mes .@npc_name$;
 				mes "You've exceeded the amount per investment.";
 				mes "Please try again.";
@@ -969,11 +980,13 @@ OnAgitInvest:
 		close;
 	}
 	set .@status, getd("$"+.@npc$+"_invest_result");
-	if (.@status == 3) {
-		mes .@n$;
-		mes "We've successfully connected the Abyss Gate ["+.@gate$+"] with the help from your investment.";
-		mes "The Agit dungeon will be open to everyone with a small entrance fee in "+.@realm$+".";
-		next;
+	if (.@status == 3 || .@status == 2) {
+		if(.@status == 3) {
+			mes .@n$;
+			mes "We've successfully connected the Abyss Gate ["+.@gate$+"] with the help from your investment.";
+			mes "The Agit dungeon will be open to everyone with a small entrance fee in "+.@realm$+".";
+			next;
+		}
 		mes .@n$;
 		mes "Please visit as often as possible since the entrance fee is saved as an investment for the region.";
 		mes "Do you want to enter the Agit dungeon?";
@@ -1005,11 +1018,11 @@ OnAgitInvest:
 		else if (compare(strnpcinfo(2),"prt"))
 			warp "gld_dun03"+((.@i == 2)?"_2":""),164,268;
 		end;
-	} else if (.@status == 2) {
-		mes .@n$;
-		mes "The "+.@realm$+" Agit Dungeon 2F is now available but since it is not connected with the Abyss Gate,";
-		mes "the Agit dungeon is only accessible to the Agit guild.";
-		close;
+	// } else if (.@status == 2) {
+	// 	mes .@n$;
+	// 	mes "The "+.@realm$+" Agit Dungeon 2F is now available but since it is not connected with the Abyss Gate,";
+	// 	mes "the Agit dungeon is only accessible to the Agit guild.";
+	// 	close;
 	} else {
 		mes .@n$;
 		mes .@realm$+" was not chosen to be connected with a gate this time.";
@@ -1060,6 +1073,7 @@ OnAgitInvest:
 		setarray .@invest_region$[0],  "Valkyrie Realm",  "Greenwood Lake",       "Britoniah",            "Luina";
 		mes "!- Investment Results of All Agit Regions -!";
 		for(set .@i,0; .@i<4; set .@i,.@i+1) {
+			// dispbottom .@invest_region$[.@i] + " "+.@invest_result[.@i];
 			if (.@invest_result[.@i] == 1)
 				mes "^aaaaaa["+.@invest_region$[.@i]+"] below minimum^000000";
 			else if (.@invest_result[.@i] == 2) {

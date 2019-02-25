@@ -971,8 +971,9 @@ IG_Br_ThiefPackage,2607,0,1,0,0,0,1	// 1x Clip
 IG_Br_ThiefPackage,2607,0,1,0,0,0,1	// 1x Clip
 IG_Br_ThiefPackage,2274,0,1,0,0,0,1	// 1x Ghost_Bandana
 
-IG_Acidbomb_10_Box,7135,0,10,0,0,0,1	// 10x Fire_Bottle
-IG_Acidbomb_10_Box,7136,0,10,0,0,0,1	// 10x Acid_Bottle
+// GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,GUID,isBound,isNamed}
+IG_Acidbomb_10_Box,7135,0,10,0,0,0,0	// 10x Fire_Bottle
+IG_Acidbomb_10_Box,7136,0,10,0,0,0,0	// 10x Acid_Bottle
 
 IG_Basic_Siege_Supply_Box,11503,0,25,0,0,0,1	// 25x Siege_White_Potion
 IG_Basic_Siege_Supply_Box,11504,0,10,0,0,0,1	// 10x Siege_Blue_Potion
@@ -987,8 +988,8 @@ IG_Sakura_Scroll,2254,2,1,1,0,0,1	// 1x Angelic_Chain
 IG_Sakura_Scroll,2255,2,1,1,0,0,1	// 1x Satanic_Chain
 IG_Sakura_Scroll,2257,2,1,1,0,0,1	// 1x Snowy_Horn
 IG_Sakura_Scroll,2259,1,1,1,0,0,1	// 1x Mini_Propeller
-IG_Sakura_Scroll,4144,1,1,1,0,0,1	// 1x Osiris_Card
-IG_Sakura_Scroll,4121,1,1,1,0,0,1	// 1x Phreeoni_Card
+// IG_Sakura_Scroll,4144,1,1,1,0,0,1	// 1x Osiris_Card
+// IG_Sakura_Scroll,4121,1,1,1,0,0,1	// 1x Phreeoni_Card
 IG_Sakura_Scroll,2298,130,1,1,0,0,1	// 1x Green_Feeler
 IG_Sakura_Scroll,5094,2,1,1,0,0,1	// 1x Orc_Hero_Helm
 IG_Sakura_Scroll,12208,170,10,1,0,0,1	// 10x Battle_Manual
@@ -2923,7 +2924,8 @@ IG_Octo_Hstick_Box2,6442,0,1,0,0,4320,0	// 1x Octopus_Hunt_Stick
 
 IG_Octo_Hstick_Box3,6442,0,1,0,0,10080,0	// 1x Octopus_Hunt_Stick
 
-IG_Silvervine_Fruit_Box10,6417,0,10,0,0,0,0	// 10x Silvervine
+// GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,GUID,isBound,isNamed}
+IG_Silvervine_Fruit_Box10,6417,0,10,0,0,0,1,1	// 10x Silvervine
 IG_Silvervine_Fruit_Box10,12636,0,30,0,0,0,0	// 30x Malang_Sp_Can
 
 IG_Silvervine_Fruit_Box40,6417,0,40,0,0,0,0	// 40x Silvervine
@@ -3859,13 +3861,13 @@ IG_Spring_Festival_Scroll,1228,100,1,1,1,0,0	// 1x Combat_Knife
 IG_Spring_Festival_Scroll,19677,150,1,1,1,0,0	// 1x C_Soulless_Wing
 IG_Spring_Festival_Scroll,18918,130,1,1,1,0,0	// 1x Long_Octopus_Balloon
 IG_Spring_Festival_Scroll,18865,69,1,1,1,0,0	// 1x Sword_Master_Crown
-IG_Spring_Festival_Scroll,6228,15,1,1,1,0,0	// 1x Guarantee_Weapon_9Up
-IG_Spring_Festival_Scroll,6232,15,1,1,1,0,0	// 1x Guarantee_Armor_9Up
-IG_Spring_Festival_Scroll,6238,5,1,1,1,0,0	// 1x Guarantee_Weapon_11Up
-IG_Spring_Festival_Scroll,6239,5,1,1,1,0,0	// 1x Guarantee_Armor_11Up
-IG_Spring_Festival_Scroll,4539,10,1,1,1,0,0	// 1x Sealed_F_Bishop_Card
-IG_Spring_Festival_Scroll,4487,10,1,1,1,0,0	// 1x Sealed_Ifrit_Card
-IG_Spring_Festival_Scroll,4263,1,1,1,1,0,0	// 1x Incant_Samurai_Card
+//IG_Spring_Festival_Scroll,6228,15,1,1,1,0,0	// 1x Guarantee_Weapon_9Up
+//IG_Spring_Festival_Scroll,6232,15,1,1,1,0,0	// 1x Guarantee_Armor_9Up
+//IG_Spring_Festival_Scroll,6238,5,1,1,1,0,0	// 1x Guarantee_Weapon_11Up
+//IG_Spring_Festival_Scroll,6239,5,1,1,1,0,0	// 1x Guarantee_Armor_11Up
+//IG_Spring_Festival_Scroll,4539,10,1,1,1,0,0	// 1x Sealed_F_Bishop_Card
+//IG_Spring_Festival_Scroll,4487,10,1,1,1,0,0	// 1x Sealed_Ifrit_Card
+//IG_Spring_Festival_Scroll,4263,1,1,1,1,0,0	// 1x Incant_Samurai_Card
 
 // IdRO10th_Scroll
 IG_IdRO10th_Scroll,12350,1300,10,1,0,0,0	// 10x Angeling_Potion
@@ -4675,3 +4677,106 @@ IG_Santa_Gift,14586,500,5,1,0,0,0	// 5x Spark_Candy
 IG_Santa_Gift,12350,500,5,1,0,0,0	// 5x Angeling_Potion
 IG_Santa_Gift,12710,500,5,1,0,0,0	// 5x Guyak_Pudding
 IG_Santa_Gift,12259,500,2,1,0,0,0	// 2x Miracle_Medicine
+
+// GroupID,ItemID,Rate{,Amount,Random,isAnnounced,Duration,GUID,isBound,isNamed}
+IG_MILKY_CASH_FOOD,12202,1,1,1,0,0,0,1,1 // Str_Dish10_
+IG_MILKY_CASH_FOOD,12203,1,1,1,0,0,0,1,1 // Agi_Dish10_
+IG_MILKY_CASH_FOOD,12204,1,1,1,0,0,0,1,1 // Int_Dish10_
+IG_MILKY_CASH_FOOD,12205,1,1,1,0,0,0,1,1 // Dex_Dish10_
+IG_MILKY_CASH_FOOD,12206,1,1,1,0,0,0,1,1 // Luk_Dish10_
+IG_MILKY_CASH_FOOD,12207,1,1,1,0,0,0,1,1 // Vit_Dish10_
+
+IG_MILKY_ACIDBOMB_10_BOX,7135,0,10,0,0,0,0,1,1	// 10x Fire_Bottle
+IG_MILKY_ACIDBOMB_10_BOX,7136,0,10,0,0,0,0,1,1	// 10x Acid_Bottle
+IG_MILKY_ACIDBOMB_50_BOX,7135,0,50,0,0,0,0,1,1	// 50x Fire_Bottle
+IG_MILKY_ACIDBOMB_50_BOX,7136,0,50,0,0,0,0,1,1	// 50x Acid_Bottle
+
+IG_MILKY_POISON_10_BOX,678,0,50,0,0,0,0,1,1	// 10x Poison_bottle
+IG_MILKY_POISON_50_BOX,678,0,50,0,0,0,0,1,1	// 50x Poison_bottle
+
+IG_MILKY_BLESSING_20_BOX,6635,0,20,0,0,0,0,1,1	// 20x Blacksmith_blessing
+IG_MILKY_ENELU_5_BOX,7619,0,5,0,0,0,0,1,1	// 5x Enriched_Elunium
+IG_MILKY_ENELU_10_BOX,7619,0,10,0,0,0,0,1,1	// 10x Enriched_Elunium
+IG_MILKY_ENORI_5_BOX,7620,0,5,0,0,0,0,1,1	// 5x Enriched_Oridecon
+IG_MILKY_ENORI_10_BOX,7620,0,10,0,0,0,0,1,1	// 10x Enriched_Oridecon
+IG_MILKY_HDELU_5_BOX,6241,0,5,0,0,0,0,1,1	// 5x HD_Elunium
+IG_MILKY_HDORI_5_BOX,6240,0,5,0,0,0,0,1,1	// 5x HD_Oridecon
+IG_MILKY_HDBRA_5_BOX,6226,0,5,0,0,0,0,1,1	// 5x HD_Bradium
+IG_MILKY_HDCAR_5_BOX,6225,0,5,0,0,0,0,1,1	// 5x HD_Carnium
+
+IG_MILKY_BG_5_BOX,12210,0,5,0,0,0,0,1,1	// 5x Bubble_Gum
+IG_MILKY_CM_5_BOX,12214,0,5,0,0,0,0,1,1	// 5x Convex_Mirror
+IG_MILKY_BM_5_BOX,12208,0,5,0,0,0,0,1,1	// 5x Battle_Manual
+IG_MILKY_TS_5_BOX,7621,0,5,0,0,0,0,1,1	// 5x Token_Of_Siegfried
+IG_MILKY_YGG_5_BOX,607,0,5,0,0,0,0,1,1	// 5x Yggdrasil Berry
+
+// Guild Invite SET 1
+IG_MILKY_GPS1_BOX,2483,0,1,0,0,0,0		// Siege Greaves	x 1
+IG_MILKY_GPS1_BOX,2586,0,1,0,0,0,0		// Siege Manteau	x 1
+IG_MILKY_GPS1_BOX,15046,0,1,0,0,0,0		// Siege Plate		x 1
+
+// Guild Invite SET 2
+IG_MILKY_GPS2_BOX,2484,0,1,0,0,0,0		// Siege Boots		x 1
+IG_MILKY_GPS2_BOX,2586,0,1,0,0,0,0		// Siege Manteau	x 1
+IG_MILKY_GPS2_BOX,15047,0,1,0,0,0,0		// Siege Suit 		x 1
+
+// Guild Invite SET 3
+IG_MILKY_GPS3_BOX,2485,0,1,0,0,0,0		// Siege Shoe 		x 1
+IG_MILKY_GPS3_BOX,2587,0,1,0,0,0,0		// Siege Muffler 	x 1
+IG_MILKY_GPS3_BOX,15048,0,1,0,0,0,0		// Siege Robe 		x 1
+
+// Guild Invite Pack [Option 1]
+IG_MILKY_GP1_BOX,8500,0,10,0,0,0,0		// Milky Platinum Card				~ 10 x MPC
+IG_MILKY_GP1_BOX,8501,0,25,0,0,0,0		// Milky Special Gift Box			~ 25 x Random Items
+IG_MILKY_GP1_BOX,12582,0,50,0,0,0,0		// WoE Supply Box					~ 50 x Random Items
+IG_MILKY_GP1_BOX,8511,0,5,0,0,0,0		// Blacksmith Blessing Box (20)		~ 100 x B.Blessing
+IG_MILKY_GP1_BOX,14176,0,5,0,0,0,0		// Enriched Elunium Box (10)		~ 50 x E.Elunium
+IG_MILKY_GP1_BOX,14177,0,5,0,0,0,0		// Enriched Oridecon Box (10)		~ 50 x E.Oridecon
+IG_MILKY_GP1_BOX,17246,0,10,0,0,0,0		// HD Elunium Box (5)				~ 50 x HD Elunium
+IG_MILKY_GP1_BOX,17247,0,10,0,0,0,0		// HD Oridecon Box (5)				~ 50 x HD Oridecon
+IG_MILKY_GP1_BOX,16262,0,10,0,0,0,0		// HD Bradium Box (5)				~ 50 x HD Bradium
+IG_MILKY_GP1_BOX,16263,0,10,0,0,0,0		// HD Carnium Box (5)				~ 50 x HD Carnium
+IG_MILKY_GP1_BOX,16979,0,1,0,0,0,0		// Silvervine Box (10)				~ 10 x Silvervine Fruit
+IG_MILKY_GP1_BOX,12535,0,10,0,0,0,0		// Yggdrasil Berry Box (5)			~ 50 x Yggdrasil Berry
+IG_MILKY_GP1_BOX,12679,0,3,0,0,0,0		// Siege White Potion Box (30)		~ 90 x Siege White Potion
+IG_MILKY_GP1_BOX,12680,0,1,0,0,0,0		// Siege Blue Potion Box (30)		~ 30 x Siege Blue Potion
+IG_MILKY_GP1_BOX,14156,0,2,0,0,0,0		// Battle Manual Box (5)			~ 10 x Battle Manual
+IG_MILKY_GP1_BOX,14178,0,2,0,0,0,0		// Token of Siegfried Box (5)		~ 10 x Token of Siegfried
+IG_MILKY_GP1_BOX,8507,0,5,0,0,0,0		// Acid Bomb Box (10)				~ 50 x Acid Bottle
+IG_MILKY_GP1_BOX,8509,0,5,0,0,0,0		// Poison Bottle Box (10)			~ 50 x Poison Bottle
+IG_MILKY_GP1_BOX,8503,0,25,0,0,0,0		// +10 Food Box						~ 25 x Random Food
+
+// Guild Invite Pack [Option 2]
+IG_MILKY_GP2_BOX,8500,0,15,0,0,0,0		// Milky Platinum Card				~ 15 x MPC
+IG_MILKY_GP2_BOX,8501,0,40,0,0,0,0		// Milky Special Gift Box			~ 40 x Random Items
+IG_MILKY_GP2_BOX,12582,0,75,0,0,0,0		// WoE Supply Box					~ 75 x Random Items
+IG_MILKY_GP2_BOX,8511,0,10,0,0,0,0		// Blacksmith Blessing Box (20)		~ 200 x B.Blessing
+IG_MILKY_GP2_BOX,14176,0,8,0,0,0,0		// Enriched Elunium Box (10)		~ 80 x E.Elunium
+IG_MILKY_GP2_BOX,14177,0,8,0,0,0,0		// Enriched Oridecon Box (10)		~ 80 x E.Oridecon
+IG_MILKY_GP2_BOX,17246,0,16,0,0,0,0		// HD Elunium Box (5)				~ 80 x HD Elunium
+IG_MILKY_GP2_BOX,17247,0,16,0,0,0,0		// HD Oridecon Box (5)				~ 80 x HD Oridecon
+IG_MILKY_GP2_BOX,16262,0,16,0,0,0,0		// HD Bradium Box (5)				~ 80 x HD Bradium
+IG_MILKY_GP2_BOX,16263,0,16,0,0,0,0		// HD Carnium Box (5)				~ 80 x HD Carnium
+IG_MILKY_GP2_BOX,16979,0,2,0,0,0,0		// Silvervine Box (10)				~ 20 x Silvervine Fruit
+IG_MILKY_GP2_BOX,12535,0,20,0,0,0,0		// Yggdrasil Berry Box (5)			~ 100 x Yggdrasil Berry
+IG_MILKY_GP2_BOX,12679,0,5,0,0,0,0		// Siege White Potion Box (30)		~ 150 x Siege White Potion
+IG_MILKY_GP2_BOX,12680,0,3,0,0,0,0		// Siege Blue Potion Box (30)		~ 90 x Siege Blue Potion
+IG_MILKY_GP2_BOX,14156,0,4,0,0,0,0		// Battle Manual Box (5)			~ 20 x Battle Manual
+IG_MILKY_GP2_BOX,14178,0,4,0,0,0,0		// Token of Siegfried Box (5)		~ 20 x Token of Siegfried
+IG_MILKY_GP2_BOX,8507,0,8,0,0,0,0		// Acid Bomb Box (10)				~ 80 x Acid Bottle
+IG_MILKY_GP2_BOX,8509,0,8,0,0,0,0		// Poison Bottle Box (10)			~ 80 x Poison Bottle
+IG_MILKY_GP2_BOX,8503,0,40,0,0,0,0		// +10 Food Box						~ 40 x Random Food
+
+// Guild Invite Pack [Shared Consumables]
+IG_MILKY_GPSC_BOX,8504,0,1,0,0,0,0		// Blacksmith Blessing Box (20)		~ 20 x B.Blessing
+IG_MILKY_GPSC_BOX,14176,0,1,0,0,0,0		// Enriched Elunium Box (10)		~ 5 x E.Elunium
+IG_MILKY_GPSC_BOX,14177,0,1,0,0,0,0		// Enriched Oridecon Box (10)		~ 5 x E.Oridecon
+IG_MILKY_GPSC_BOX,17246,0,2,0,0,0,0		// HD Elunium Box (5)				~ 10 x HD Elunium
+IG_MILKY_GPSC_BOX,17247,0,2,0,0,0,0		// HD Oridecon Box (5)				~ 10 x HD Oridecon
+IG_MILKY_GPSC_BOX,16262,0,2,0,0,0,0		// HD Bradium Box (5)				~ 10 x HD Bradium
+IG_MILKY_GPSC_BOX,16263,0,2,0,0,0,0		// HD Carnium Box (5)				~ 10 x HD Carnium
+IG_MILKY_GPSC_BOX,8507,0,2,0,0,0,0		// Acid Bomb Box (10)				~ 20 x Acid Bottle
+IG_MILKY_GPSC_BOX,8509,0,2,0,0,0,0		// Poison Bottle Box (10)			~ 20 x Poison Bottle
+IG_MILKY_GPSC_BOX,12534,0,1,0,0,0,0		// Yggdrasil Seed Box (30)			~ 30 x Yggdrasil Seed
+IG_MILKY_GPSC_BOX,12679,0,2,0,0,0,0		// Siege White Potion Box (30)		~ 60 x Siege White Potion
+IG_MILKY_GPSC_BOX,12680,0,1,0,0,0,0		// Siege Blue Potion Box (30)		~ 30 x Siege Blue Potion

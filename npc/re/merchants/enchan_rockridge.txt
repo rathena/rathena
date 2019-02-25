@@ -362,8 +362,8 @@ har_in01,34,81,5	script	Howard#rr	4_M_TATIO,{
 	close;
 }
 
--	shop	shotguns_rockridge	-1,13154:-1,13155:-1,13192:-1,13193:-1,13194:-1
--	shop	revolvers_rockridge	-1,13102:-1,13120:-1,13122:-1
+-	shop	shotguns_rockridge	-1,13154:-1,13155:-1,13192:1250000,13193:1350000,13194:1950000
+-	shop	revolvers_rockridge	-1,13102:-1,13120:1250000,13122:1450000
 -	shop	bullets_rockridge	-1,13200:-1,13221:-1,13222:-1,13228:-1,13229:-1,13230:-1,13231:-1,13232:-1
 -	shop	armor_rockridge	-1,2247:500000,2248:500000,5018:700000
 

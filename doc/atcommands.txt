@@ -1186,6 +1186,14 @@ Adopts the specified player with the attached character as one of the parents.
 
 ---------------------------------------
 
+@refineui
+
+Opens the refine user interface.
+
+Note: This command requires packet version 2016-10-12 or newer.
+
+---------------------------------------
+
 @request <message>
 
 Sends a message to all connected GMs (via the GM whisper system).

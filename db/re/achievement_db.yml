@@ -1594,7 +1594,7 @@ Achievements:
     Condition: " JobLevel >= 70 "
     Dependent: [200003]
     Reward:
-      ItemID: 12817
+      ItemID: 616
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
       TitleID: 1004
     Score: 50

@@ -2267,14 +2267,14 @@ This command returns the index of the first matching value found in the array.
 It will return -1 if the value is not found.
 
 	setarray .@array[0], 100, 200, 300, 400, 500, 600, 100;
-	
+
 	inarray(.@array[0], 200);
 	//return 1 because 200 is in index 1
 	//another way to say it that .@array[1] == 200
-	
+
 	.@index = inarray(.@array[0], 600);
 	//.@index is now 5 because .@array[5] == 600
-	
+
 	inarray(.@array[0], 100);
 	//while index 6 is also 100, the command will return the first instance it finds
 	//return 0 because .@array[0] == 100
@@ -2292,18 +2292,18 @@ This command will check for matches between the array values and return the numb
 While being optional, if [<start index>] is supplied, the search will begin from the given index value.
 
 	setarray .@array[0], 100, 200, 300, 400, 500, 600;
-	
+
 	.@variable = 100;
 	if(countinarray(.@array[0], .@variable))
 		mes "The number 100 was found in the array @array";
-	
+
 	countinarray(.@array[0], .@variable);
 	//return 1 because the number 100 is an element of the array .@array
-	
+
 	setarray .@array2[0],100,500;
 	countinarray(.@array[0], .@array2[0]);
 	//return 2 because the numbers 100 and 500 are elements of the array .@array
-	
+
 	setarray .@array3[0],100,700;
 	countinarray(.@array[0], .@array3[0]);
 	//return 1 because the number 100 is an element of the array .@array
@@ -2834,9 +2834,19 @@ Valid information types are:
 
 REFINE_ZENY_COST       - Zeny
 REFINE_MATERIAL_ID     - Material Item ID
+REFINE_BREAKABLE       - If the equipment will be broken by using this material
+                         on a failed atempt
 
 This function will return -1 on failure. The function fails if the cost type
-is invalid or if there is no item in the equipment slot. 
+is invalid or if there is no item in the equipment slot.
+
+---------------------------------------
+
+*refineui({<char id>})
+
+Opens the refine UI for the attached player or the given character id.
+
+This feature requires 2016-10-12aRagexeRE or newer.
 
 ---------------------------------------
 
@@ -3208,6 +3218,61 @@ This is useful for maps that are split into many buildings, such as all the
 
 ---------------------------------------
 
+*getobjects(<type>,<data>{,"<map name>"{,<x1>,<y1>,<x2>,<y2>}})
+
+Get object GIDs on specified location based on specified 'type'. The returned
+value is number of all objects found. The GIDs is stored in temporary NPC
+variables.
+
+<type> can be combined value as bitwise of
+	BL_PC   - Character object
+	BL_MOB  - Monster object
+	BL_PET  - Pet object
+	BL_HOM  - Homunculus object
+	BL_NPC  - NPC object
+	BL_MER  - Mercenary object
+	BL_ELEM - Elemental object
+
+'data' values are bitmask of
+	0x1 - GID (default)
+	0x2 - Name
+	0x4 - Char ID (only for BL_PC)
+	0x8 - Class (Job ID for BL_PC, Sprite ID for BL_NPC, and Class
+		  for other types)
+
+Default 'map name' for look up is invoker location or NPC if no invoker found.
+
+Object GID found will be saved in these arrays, while 'type' is value of
+UNITTYPE_*. Use getd for good practice.
+
+	.@obj_type_id[]
+	.@obj_type_name$[]
+	.@obj_type_cid[]
+	.@obj_type_class[]
+
+Example 1:
+
+	getobjects(BL_PC,0x1);
+	.@n = getarraysize(getd(".@obj_"+BL_PC+"_id"));
+	for (.@i = 0; .@i < .@n; .@i++) {
+		getitem 607,1,getd(".@obj_"+BL_PC+"_id["+.@i+"]");
+	}
+
+Example 2:
+
+	getobjects(BL_PC|BL_NPC,0x1|0x2);
+	// For players
+	.@pc = getarraysize(getd(".@obj_"+BL_PC+"_id"));
+	for (.@i = 0; .@i < .@pc; .@i++) {
+		getitem 501,1,getd(".@obj_"+BL_PC+"_id["+.@i+"]");
+	}
+	// For NPCs
+	.@npc = getarraysize(getd(".@obj_"+BL_NPC+"_id"));
+	for (.@i = 0; .@i < .@npc; .@i++) {
+		npctalk "My number is "+(.@i+1)+"",getd(".@obj_"+BL_NPC+"_name$["+.@i+"]");
+	}
+
+---------------------------------------
 *getunits(<type>{,<array_variable>[<first value>]})
 *getmapunits(<type>,<"map name">{,<array_variable>[<first value>]})
 *getareaunits(<type>,<"map name">,<x1>,<y1>,<x2>,<y2>{,<array_variable>[<first value>]})
@@ -3998,7 +4063,7 @@ or does not exist), and true upon success.
 
 By default the command is executed with force, which causes to attach the player
 even if he is currently attached to another script. Since this is not always the
-desired behavior you can also specify false to the command and it will only return 
+desired behavior you can also specify false to the command and it will only return
 true if the player is online and was not attached to another script.
 
 -------------------------
@@ -5458,7 +5523,7 @@ Example of sending mail with items:
 	setarray .@mailcard1[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
 	setarray .@mailcard2[0], 0, 0, 0, 4092; // Attach Skeleton Worker Card to Dagger
 	mail .@charid, .@sender$, .@title$, .@body$, .@zeny, .@mailitem, .@mailamount, .@mailcard0, .@mailcard1, .@mailcard2;
-	
+
 Example of sending mail with items and random options:
 	.@charid = getcharid(0);
 	.@sender$ = "Angeling";
@@ -5687,14 +5752,14 @@ Examples:
 
 	// This will end the Freezing status for the invoking character.
 	sc_end SC_FREEZE;
-	
+
 	// This will end the effect of any learned skill for the invoking character.
 	sc_end_class;
-	
+
 	// This will end the effect of any learned skill for the character with the <char_id> 150000.
 	// val1: <char_id>
 	sc_end_class(150000);
-	
+
 	// This will end the effect of any Arch Bishop skill for the invoking character.
 	// val1: <char_id>
 	// val2: <job_id> of Arch Bishop
@@ -6140,6 +6205,8 @@ Examples:
 
 *monster     "<map name>",<x>,<y>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
 *areamonster "<map name>",<x1>,<y1>,<x2>,<y2>,"<name to show>",<mob id>,<amount>{,"<event label>",<size>,<ai>};
+
+^([\s]+)?(area)?monster
 
 This command will spawn a monster on the specified coordinates on the specified
 map. If the script is invoked by a character, a special map name, "this", will

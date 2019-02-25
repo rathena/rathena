@@ -301,11 +301,41 @@ payg_cas05,14,14,0	warp	payg-5-31_payg-5-21	1,1,payg_cas05,246,41
 //Al De Baran Castle Map
 aldebaran,35,140,0	warp	alde-a_aldeg01	1,1,alde_gld,280,160
 alde_gld,284,160,0	warp	aldeg01_alde-a	1,1,aldebaran,39,140
-alde_gld,48,79,0	warp	aldeg-1_aldeg-1-1	1,1,aldeg_cas01,34,248
-alde_gld,95,253,0	warp	aldeg-2_aldeg-2-1	1,1,aldeg_cas02,88,163
-alde_gld,142,81,0	warp	aldeg-3_aldeg-3-1	1,1,aldeg_cas03,114,286
-alde_gld,243,242,0	warp	aldeg-4_aldeg-4-1	1,1,aldeg_cas04,149,17
-alde_gld,259,90,0	warp	aldeg-5_aldeg-5-1	1,1,aldeg_cas05,216,103
+
+-	script	warp_aldeg_castle	-1,{
+
+OnTouch_:
+	.@num = atoi( replacestr(strnpcinfo(2), "aldeg", "") );
+	switch(.@num) {
+		case 1: callsub( S_Warp, "aldeg_cas01",34,248 );
+		case 2: callsub( S_Warp, "aldeg_cas02",88,163 );
+		case 3: callsub( S_Warp, "aldeg_cas03",114,286 );
+		case 4: callsub( S_Warp, "aldeg_cas04",149,17 );
+		case 5: callsub( S_Warp, "aldeg_cas05",216,103 );
+	}
+	end;
+
+S_Warp:
+	.@castle$ = getarg(0);
+	if (jobcanentermap(.@castle$) == 0) {
+		mes "-- ^AA0000Warning^000000 --";
+		mes "Star Emperor and Soul Reaper is currently ^AA0000NOT^000000 allowed to join WoE:First Edition.";
+		close;
+	}
+	warp .@castle$,getarg(1),getarg(2);
+	end;
+}
+alde_gld,48,79,0	duplicate(warp_aldeg_castle)	aldeg-1_aldeg-1-1#aldeg1	WARPNPC,1,1
+alde_gld,95,253,0	duplicate(warp_aldeg_castle)	aldeg-2_aldeg-2-1#aldeg2	WARPNPC,1,1
+alde_gld,142,81,0	duplicate(warp_aldeg_castle)	aldeg-3_aldeg-3-1#aldeg3	WARPNPC,1,1
+alde_gld,243,242,0	duplicate(warp_aldeg_castle)	aldeg-4_aldeg-4-1#aldeg4	WARPNPC,1,1
+alde_gld,259,90,0	duplicate(warp_aldeg_castle)	aldeg-5_aldeg-5-1#aldeg5	WARPNPC,1,1
+
+// alde_gld,48,79,0	warp	aldeg-1_aldeg-1-1	1,1,aldeg_cas01,34,248
+// alde_gld,95,253,0	warp	aldeg-2_aldeg-2-1	1,1,aldeg_cas02,88,163
+// alde_gld,142,81,0	warp	aldeg-3_aldeg-3-1	1,1,aldeg_cas03,114,286
+// alde_gld,243,242,0	warp	aldeg-4_aldeg-4-1	1,1,aldeg_cas04,149,17
+// alde_gld,259,90,0	warp	aldeg-5_aldeg-5-1	1,1,aldeg_cas05,216,103
 
 //Inside Al De Baran Guild Castles
 aldeg_cas01,34,252,0	warp	aldeg-1-1_aldeg-1	1,1,alde_gld,48,83

@@ -1,0 +1,975 @@
+//===== rAthena Script =======================================
+//= Automated Event Manager
+//===== By: ==================================================
+//= Mysterious
+//===== Current Version: =====================================
+//= 0.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Last Man Standing - PvP event where the Winner takes all
+//= Find the Mushroom - random amount of Mushrooms spawns in random maps.
+//= 					Players need to find these mushrooms and kill them to gain prizes!
+//= Poring Counting   - Rename version of Monster Counting by Emistry
+//= Disguise Event    - Guess the name of the monster to win
+//===== Additional Comments: =================================
+//= Trying to combine all the NPC to reduce the number of Event triggers
+//============================================================
+
+
+prontera,148,163,5	script	Event Manager	4_M_MAYOR,{
+		function remove_player;
+		function smack_talk;
+		function xy_wall;
+		function set_zone;
+		function pvplog;
+
+		set .@n$,"[^0000FFEvent Manager^000000]";
+		if (getgmlevel()>=.GMLevel) {
+			mes .@n$;
+			if (.EventON || .aTimer) {
+				set .EventName$, "";
+				switch(.Event)
+				{
+					case 1: set .EventName$, "<Last Man Standing (PvP)>"; break;
+					case 2: set .EventName$, "<Find the Mushroom>"; break;
+					case 3: set .EventName$, "<Poring Counting>"; break;
+					case 4: set .EventName$, "<Disguise Event>"; break;
+				}
+				mes "The event "+ .EventName$ +" is currently: [^0000FFON^000000]";
+				if(.Event == 2){
+					mes "Location of the Mushrooms: ";
+					setarray .@mushroom_data[0], 0;
+					for( .@i = 0; .@i < getarraysize(.MobIDs); .@i++ )
+					{
+						if(unitexists (.MobIDs[.@i]))
+						{
+							getunitdata(.MobIDs[.@i], .@mushroom_data);
+							mes "<NAVI>Mushroom "+(.@i+1)+"<INFO>"+.event_map$+","+ .@mushroom_data[6] +","+ .@mushroom_data[7] +",0000,0</INFO></NAVI> :"+ .@mushroom_data[6] +" "+ .@mushroom_data[7];
+						}
+					}
+				}
+				else if (.Event == 3 && .RoundsON == 1) {
+					mes getmonsterinfo( .mob,MOB_NAME ) +" x "+.amount;
+				}
+				else if (.Event == 4 && .RoundsON == 1) {
+					mes ""+$MonsterName$;
+				}
+
+				mes "Would you like to turn it OFF?";
+				if( select("No:Yes") == 1) close; // cancel on top.
+
+				// stop the event
+				announce "[Event Manager] A GM has decided to turn the "+ .EventName$ +" off. As a result no further prizes will be given.",bc_map | bc_blue;
+				close2;
+				goto Reset_Game;
+			} else {
+				mes "No event is currently running.";
+				mes "Would you like to start the following event?";
+				.@menu = select("Last Man Standing (PvP):Find the Mushroom:Poring Counting:Disguise Event:Cancel");
+				if(.@menu == 5) close;
+				.Event = .@menu;
+				switch(.Event)
+				{
+					case 1: setnpcdisplay "Event Manager",512; break;
+					case 2: setnpcdisplay "Event Manager",748; break;
+					case 3: setnpcdisplay "Event Manager",975; break;
+					case 4: setnpcdisplay "Event Manager",795; break;
+				}
+
+				close2;
+				goto Start_Broadcast;
+			}
+		}
+		else {
+			mes .@n$;
+			if (! (.EventON || .aTimer)) {
+				mes "I am sorry, but the ^FF0000no^000000 events are being held at the moment.";
+				close;
+			}
+			if(.Event == 0){
+				// give info for each events
+				mes "Welcome.";
+				mes "How may I be of assistance?";
+				if(select("What is Disguise Event?:Nothing, just passing through.")==2) close;
+				next;
+				mes .@n$;
+				mes "This event is quite simple.";
+				mes "At the start of the event, I will";
+				mes "disguise myself as a random";
+				mes "monster. You have to shout";
+				mes "that monster's name out loud.";
+				next;
+				mes "If you are correct, you will receive";
+				mes "a prize. If not, keep trying!";
+				mes "That's all that there is to this event.";
+			}
+			else if(.Event == 1) {
+				// debugmes " unique "+.unique_id[.@j];
+				.@j = 0;
+				while ( .unique_id[.@j] != get_unique_id() && .@j < .register_count )
+				{
+					// dispbottom "unique"+get_unique_id;
+					.@j++;
+				}
+				if(.unique_id[.@j])
+				{
+					mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 does ^FF0000NOT^000000 allow dual client.";
+					close;
+				}
+				if ( .EventON == 1 ) {
+					mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 is currently ^00FF00RUNNING^000000 and we are not taking any more participants. Please come earlier next time.";
+					close;
+				}
+				if ( .register_count >= .register_limit ) {
+					mes "I am sorry, but the ^FF0000<Last Man Standing (PvP)>^000000 has reached the ^FF0000MAXIMUM^000000 player participation.";
+					close;
+				}
+				mes "Do you want to register to LMS?";
+				mes "- Any buffs you have will be ^FF0000REMOVE^000000. You can buff yourself in the waiting room.";
+				mes "- The last person standing will win "+.prize_amt+"x <ITEM>"+getitemname(.prize)+"<INFO>"+.prize+"</INFO></ITEM>";
+				mes "- Minimum participants is "+.register_min;
+				mes "- Maximum participants is "+.register_limit;
+				if(select("Yes:No")==2) close; // Join confirmation
+				percentheal 100,100;
+				sc_end SC_ALL;
+				// sc_end_class SC_ALL;
+
+				.register_aid[ .register_count ] = getcharid(3);
+				.unique_id[ .register_count ] = get_unique_id;
+
+				delwaitingroom; // remove the old waiting room to add more participants
+				.register_count++;
+				waitingroom "LMS Register ["+.register_count+"/"+.register_limit+"]",0;
+				warp "guild_vs2", 0,0;
+			}
+			else if (.Event == 2) {
+				.@count = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
+				if (.@count > 0 ) {
+					mes "There are " + .@count + " Mushrooms left in " + .event_map$ + "!";
+					mes "Find and kill the mushrooms to gain " + getitemname(.prize) + "!";
+				}
+				close;
+			}
+			else if (.Event == 3 || .Event == 4) {
+				mes "You have to say the answer directly in chat.";
+				close;
+			}
+		}
+	end;
+
+
+	Start_Event:
+		if ( .EventON == 1 )
+		{
+			if(.Event == 1) {
+				if ( .register_count < .register_min ) {
+					announce "[Event Manager] Sorry, There is not enough participant for the <Last Man Standing (PvP)> to run the event.",bc_all | bc_blue;
+					mapwarp "guild_vs2", .map$, .x, .y; // remove all players who are in the map to Prontera
+					goto Reset_Game;
+				}
+				else
+				{
+					.total_participants = .register_count;
+					delwaitingroom;
+					waitingroom "LMS Event ["+.register_count+"/"+.total_participants+"]",0;
+					mapannounce "guild_vs2", "The GAME will start in 10 second!",bc_map | bc_blue;
+					sleep 5000;
+					mapannounce "guild_vs2", "5...!",bc_map | bc_blue;
+					sleep 1000;
+					mapannounce "guild_vs2", "4...!",bc_map | bc_blue;
+					sleep 1000;
+					mapannounce "guild_vs2", "3...!",bc_map | bc_blue;
+					sleep 1000;
+					mapannounce "guild_vs2", "2...!",bc_map | bc_blue;
+					sleep 1000;
+					mapannounce "guild_vs2", "1...!",bc_map | bc_blue;
+					sleep 1000;
+					mapannounce "guild_vs2", "Let see who survive!!",bc_map | bc_blue;
+
+					pvpon "guild_vs2"; // start PVP
+					mapwarp "guild_vs2", "guild_vs2", 0, 0; // randomize position
+				}
+			}
+			else if (.Event == 2) {
+				.@spawn = rand(4,12);	// How many Mushrooms should spawn?
+				.event_map$ = .maps_list$[ rand(getarraysize(.maps_list$)) ];
+				.@label$ = strnpcinfo(0) + "::OnMobKilled";
+
+				killmonsterall .event_map$; // wipe monster from the map
+				monster .event_map$,0,0,"Please don't kill me!",1085, .@spawn, .@label$;
+				for( .@i = 0; .@i < getarraysize($@mobid); .@i++ )
+					setarray .MobIDs[.@i], $@mobid[.@i];
+
+
+				if(.event_map$ == "izlude")	set .@map$, "Izlude";
+				announce "<Find the Mushroom> Total of " + .@spawn + " Mushrooms have been spawned in " + .@map$ + "!",0;
+				sleep 2500;
+				announce "<Find the Mushroom> Every Mushroom you kill will give you " + getitemname(.prize) + "!",0;
+
+				while (.@spawn > 0) {
+					for( .@i = 0; .@i < getarraysize(.MobIDs); .@i++ )
+					{
+						set .@mtalk, "";
+						switch(rand(25)){
+							case 1: set .@mtalk, "Noo.. Don't kill me..."; break;
+							case 2: set .@mtalk, "I am just a mushroom..."; break;
+							case 3: set .@mtalk, "..."; break;
+							case 4: set .@mtalk, "You don't see me."; break;
+							case 5: set .@mtalk, "Go away!"; break;
+							case 6: set .@mtalk, "No.. I don't have legs to run!"; break;
+							case 7: set .@mtalk, "Take my alcohol but don't take my life!"; break;
+							case 8: set .@mtalk, "Why are you doing this!"; break;
+							case 9: set .@mtalk, "Why is Nubs making me talk?!"; break;
+							case 10: set .@mtalk, "Why are you killing me?"; break;
+							case 11: set .@mtalk, "If you kill me.. I'll ... "; break;
+							case 12: set .@mtalk, "Sob.. "; break;
+							case 13: set .@mtalk, "Noo.. "; break;
+							default: set .@mtalk, ""; break;
+						}
+
+						if(unitexists (.MobIDs[.@i])){
+							if(.@mtalk)
+								unittalk .MobIDs[.@i], .@mtalk, bc_area;
+							else
+								emotion rand(1,30), .MobIDs[.@i];
+						}
+						sleep 250;
+					}
+					sleep 3000;
+					.@spawn = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
+				}
+			}
+			else if (.Event == 3) {
+				npctalk "<Poring Counting> Round # "+(.RoundCount+1);
+				.RoundsON = 1; // Start Rounds
+
+				.mob = .monster[ rand( .monster_size ) ];
+				.@size = getmonsterinfo(.mob, MOB_SIZE);
+
+				// add-on size influence ?
+				if(.@size == 0)
+					.amount = rand( 25,55 );
+				else if (.@size == 1)
+					.amount = rand( 20,45 );
+				else if (.@size == 2)
+					.amount = rand( 15,35 );
+				else
+					.amount = rand( 15,55 ); // fallback
+
+				set .Winner,0; // stop from having duplicate winners
+				// spawned monster in the bounding box
+				areamonster .map$,.xy_area[0],.xy_area[1],.xy_area[2],.xy_area[3],"",.mob,.amount,.npc_name$+"::OnDied";
+
+				deletepset 1; // delete previous answer regardless if there is any
+				// Execute Interrupt_Event when someone answer correctly
+				defpattern 1,"([^:]+):.\\s*"+.amount+"$", "Interrupt_Event";
+				activatepset 1;
+
+				// Chatroom to display the question
+				waitingroom "How many is there?", 0;
+				npctalk "<Poring Counting> Tell me the correct amount of " + getmonsterinfo(.mob,MOB_NAME) + " in there.";
+				setnpctimer 0; // re-start 30s timer
+			}
+			else if (.Event == 4) {
+				npctalk "<Disguise Event> Round # "+(.RoundCount+1);
+				set .RoundsON,1;
+				set .Winner,0;
+				set .DMonster,1000+rand(1,995);
+				set $MonsterName$, getmonsterinfo(.DMonster,0);
+				if ( $MonsterName$ == "null" ) goto Start_Event; 				// skips monster that doesn't exists
+				if ( inarray(.BlackList, .DMonster) > 0) goto Start_Event;		// skips monster in the blacklist
+				// if (compare(","+.BlackList$+"," , ","+.DMonster+",")) goto Start_Event;
+				if (.DMonster==.LastMonster) goto Start_Event;
+				set .LastMonster, .DMonster;
+				setnpcdisplay "Event Manager", .DMonster;
+
+				deletepset 1;
+				defpattern 1,"([^:]+):.\\s*"+$MonsterName$+".*", "Interrupt_Event";
+				activatepset 1;
+
+				npctalk "<Disguise Event> Tell me the correct name of the Monster that I disguised as.";
+
+				setnpctimer 0;
+			}
+		}
+		end;
+
+	OnPCLoadMapEvent:
+		if(strcharinfo(3) == "pvp_y_1-2" || strcharinfo(3) == "pvp_y_2-2") {
+			donpcevent "PVP Warper#pvp_warper_npc::OnCountChange";
+			announce "[" + strcharinfo(0) + "] has entered the PvP Room. KILL !! ", bc_all, "0xff3232";
+		}
+	end;
+
+	OnPCDieEvent:
+		.@map$ = strcharinfo(3);
+		if(.Event == 1 && strcharinfo(3) == "guild_vs2") {
+			remove_player( getcharid(3) );
+			if ( .aTimer )
+			{
+				waitingroom "LMS Event ["+.register_count+"/"+.total_participants+"]",0;
+				warp "SavePoint", 0,0;
+				end;
+			}
+			if ( .EventON != 1 || strcharinfo(3) != "guild_vs2" ) end;
+			if(killerrid)
+			{
+				pvplog(getcharid(0, rid2name(killerrid)), getcharid(0), .@map$);
+				set .@mtalk$, "";
+				switch(rand(1,9)){
+					case 1: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] has killed ["+strcharinfo(0)+"] without mercy!!"; break;
+					case 2: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] smack-down ["+strcharinfo(0)+"] to his knees!!"; break;
+					case 3: set .@mtalk$, "<Last Man Standing> ["+strcharinfo(0)+"] was killed by ["+rid2name(killerrid)+"]!!"; break;
+					case 4: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] spits on ["+strcharinfo(0)+"]'s grave!!"; break;
+					case 5: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] gives no chance to ["+strcharinfo(0)+"] to survive!!"; break;
+					case 6: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] bitch-slapped ["+strcharinfo(0)+"] to his grave!!"; break;
+					case 7: set .@mtalk$, "<Last Man Standing> ["+rid2name(killerrid)+"] slapped ["+strcharinfo(0)+"] around with a large trout!!"; break;
+					case 8: set .@mtalk$, "<Last Man Standing> ["+strcharinfo(0)+"] don't stand a chance againts ["+rid2name(killerrid)+"]!!"; break;
+					case 9: set .@mtalk$, "<Last Man Standing> ["+strcharinfo(0)+"] was killed by ["+rid2name(killerrid)+"]!!"; break;
+				}
+				announce .@mtalk$, bc_all | bc_blue;
+			}
+			else
+			{
+				announce ""+smack_talk( strcharinfo(0) ), bc_all | bc_blue;
+			}
+			goto Interrupt_Event;
+		}
+		// none for Find the Mushroom (.Event == 2)
+		// none for Poring Counting (.Event == 3)
+		// none for Disguise Event (.Event == 4)
+		// debugmes .@map$;
+		if ( .@map$ == "pvp_y_1-2" || .@map$ == "pvp_y_2-2" ) { // announce PvP
+			@unique = get_unique_id();
+
+			.@k = 0;
+			while ( $@victim_unique[.@k] != get_unique_id() && .@k < getarraysize($@victim_unique) ) { .@k++; }
+			$@victim_unique[.@k] = @unique;
+			$@victim_count[.@k] = $@victim_count[.@k] + 1;
+
+			debugmes "Unique: "+ $@victim_unique[.@k]+ " | Count: "+$@victim_count[.@k];
+
+			// if ($@victim_count[.@k] == 1)
+			// 	$@victim_time[.@k] = gettimetick(2) + 60 * 60 * 4; // PvP Delay
+			// if ($@victim_count[.@k] >= 1)
+			// 	donpcevent "pvp_prevent_abuse::OnStart";
+			warp "SavePoint",0,0;
+
+			if(killerrid)
+			{
+				pvplog(getcharid(0, rid2name(killerrid)), getcharid(0), .@map$);
+				announce "[" + strcharinfo(0) + "] was killed by ["+ rid2name(killerrid) +"] !!", bc_all, "0xff3232";
+			}
+			else
+				announce "[" + strcharinfo(0) + "] has left the PvP Zone.", bc_all, "0xff3232";
+			donpcevent "PVP Warper#pvp_warper_npc::OnCountChange";
+		}
+		else if ((agitcheck() && .@map$ == "aldeg_cas01" ) || (agitcheck3() && .@map$ == "te_prtcas01")) {
+			set .@mtalk$, "";
+			set .@victim$, strcharinfo(0);
+			if(killerrid)
+			{
+				pvplog(getcharid(0, rid2name(killerrid)), getcharid(0), .@map$);
+				set .@killer$, rid2name(killerrid);
+				switch(rand(1,9)){
+					case 1: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] has killed ["+.@victim$+"] without mercy!!"; break;
+					case 2: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] smack-down ["+.@victim$+"] to his knees!!"; break;
+					case 3: set .@mtalk$, "<War of Emperium> ["+.@victim$+"] was killed by ["+.@killer$+"]!!"; break;
+					case 4: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] spits on ["+.@victim$+"]'s grave!!"; break;
+					case 5: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] gives no chance to ["+.@victim$+"] to survive!!"; break;
+					case 6: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] bitch-slapped ["+.@victim$+"] to his grave!!"; break;
+					case 7: set .@mtalk$, "<War of Emperium> ["+.@killer$+"] slapped ["+.@victim$+"] around with a large trout!!"; break;
+					case 8: set .@mtalk$, "<War of Emperium> ["+.@victim$+"] don't stand a chance againts ["+.@killer$+"]!!"; break;
+					case 9: set .@mtalk$, "<War of Emperium> ["+.@victim$+"] was killed by ["+.@killer$+"]!!"; break;
+				}
+				announce ""+.@mtalk$, bc_all|bc_woe;
+			}
+			else
+			{
+				announce smack_talk( .@victim$ ), bc_all | bc_woe;
+			}
+		}
+	end;
+
+	// give skull with name ==only in PvP==
+	// OnPCKillEvent:
+	// 	if ( strcharinfo(3) == "pvp_y_1-2" || strcharinfo(3) == "pvp_y_2-2" ) {
+	// 		.@char_id = getcharid( 0, rid2name( killedrid ) );
+	// 		getitem2 7420,1,1,0,0,254,0, ( .@char_id & 65535 ), ( .@char_id >> 16 );
+	// 	}
+	// end;
+
+	OnPCLogoutEvent:
+		if(.Event == 1 && strcharinfo(3) == "guild_vs2") {
+			remove_player( getcharid(3) );
+			if ( .aTimer )
+			{
+				waitingroom "LMS Event ["+.register_count+"/"+.total_participants+"]",0;
+				end;
+			}
+			if ( .EventON != 1 || strcharinfo(3) != "guild_vs2" ) end;
+			announce ""+smack_talk( strcharinfo(0) ), bc_all | bc_blue;
+
+			// strcharinfo(0) - leaver
+			goto Interrupt_Event;
+		}
+		// none for Find the Mushroom (.Event == 2)
+		// none for Poring Counting (.Event == 3)
+		// none for Disguise Event (.Event == 4)
+
+		.@map$ = strcharinfo(3);
+		if ( .@map$ == "pvp_y_1-2" || .@map$ == "pvp_y_2-2" ) { // announce PvP
+			warp "SavePoint",0,0;
+			announce "[" + strcharinfo(0) + "] has left the PvP Zone.", bc_all, "0xff3232";
+			donpcevent "PVP Warper#pvp_warper_npc::OnCountChange";
+		}
+		else if ( .@map$ == "te_aldecas1" ||  .@map$ == "prtg_cas01" ) {
+			announce smack_talk( strcharinfo(0) ), bc_all | bc_woe;
+		}
+		end;
+
+	OnMobKilled:
+		if (.Event == 2) {
+			if (playerattached() == 0) end;
+			getitem .prize, 1;
+			.@spawn = mobcount( .event_map$, strnpcinfo(0) + "::OnMobKilled" );
+			if (.@spawn > 0)
+				announce "<Find the Mushroom> " + strcharinfo(0) + " has killed a Mushroom. There are now " + .@spawn + " Mushroom(s) left.",bc_all | bc_blue;
+			else {
+				announce "<Find the Mushroom> All the Mushrooms have been killed. Thank you for playing.",bc_all | bc_blue;
+				goto Reset_Game;
+			}
+		}
+		end;
+
+	Interrupt_Event:
+		if(.Event == 1) {
+			//remove_player( getcharid(3) );
+			//waitingroom "LMS Event ["+.register_count+"/"+.total_participants+"]",0;
+
+			warp "SavePoint", 0,0; // warp defeated players
+
+			if ( .register_count > 1 ) end;
+			announce "[Event Manager] Congratulations ~ ! The Winner of this round of <Last Man Standing (PvP)> is "+rid2name(.register_aid),bc_all | bc_blue;
+			getitem .prize, 15, .register_aid; // winner prize
+			warp "SavePoint", 0,0, getcharid( 0, rid2name( .register_aid ) );
+			goto Reset_Game;
+		}
+		// none for find the mushroom
+		else if (.Event == 3) {
+			getmapxy( .@map$,.@x,.@y, BL_PC );
+			if ( .EventON == 0 ) {
+				dispbottom "<Poring Counting> Event isnt running.";
+			}
+			else if ( .RoundsON == 0 ) {
+				dispbottom "<Poring Counting> Please wait for the round to start.";
+			}
+			else if ( distance( .npc_x,.npc_y,.@x,.@y ) > 12 ) {
+				dispbottom "<Poring Counting> You're too far away.";
+			}
+			else if (.Winner) {
+				dispbottom "<Poring Counting> Someone has already won this round.";
+			}
+			else {
+				announce "<Poring Counting> Bravo!! " + strcharinfo(0) + " is correct! The correct count was "+.amount+".",bc_map | bc_blue;
+				.Winner = 1; // stop from having duplicate winners, incase the event executed twice
+
+				getitem .prize, 1; // reward
+				killmonster .map$,.npc_name$+"::OnDied"; // kill any surving monster
+				delwaitingroom;
+				deletepset 1; // disable answer
+
+				.RoundCount = .RoundCount+1;
+				.RoundsON = 0; // Rounds Ended
+				if (.RoundCount < .Rounds) {
+					sleep 5000;
+					npctalk "<Poring Counting> Starting a new round...";
+					setnpctimer 0;  // start 5s timer
+				}
+				else
+				{ // completed all rounds
+					npctalk "<Poring Counting> The event is now over.";
+					emotion ET_THANKS;
+					sleep 2000;
+					npctalk "<Poring Counting> Thank you for playing and please come and play again later.";
+					goto Reset_Game;
+				}
+			}
+		}
+		else if (.Event == 4) {
+			getmapxy( .@map$,.@x,.@y, BL_PC );
+			if ( .EventON == 0 ) {
+				dispbottom "<Disguise Event> Event isnt running.";
+			}
+			else if ( .RoundsON == 0 ) {
+				dispbottom "<Disguise Event> Please wait for the round to start.";
+			}
+			else if ( distance( .npc_x,.npc_y,.@x,.@y ) > 12 ) {
+				dispbottom "<Disguise Event> You're too far away.";
+			}
+			else if (.Winner) {
+				dispbottom "<Disguise Event> Someone has already won this round.";
+			}
+			else {
+				announce "<Disguise Event> "+strcharinfo(0)+" is correct! I was disguised as "+$MonsterName$+".",bc_map | bc_blue;
+				set .Winner,1;
+				getitem .prize, 1; // reward
+				setnpcdisplay "Event Manager",795;
+
+				deletepset 1;
+
+				set .RoundCount,.RoundCount+1;
+				.RoundsON = 0; // Rounds Ended
+				if (.RoundCount < .Rounds) {
+					sleep 5000;
+					npctalk "<Disguise Event> Starting a new round...";
+					setnpctimer 0;
+				}
+				else {
+					npctalk "<Disguise Event> The event is now over.";
+					emotion ET_THANKS;
+					sleep 2000;
+					npctalk "<Disguise Event> Thank you for playing and please come and play again later.";
+					goto Reset_Game;
+				}
+			}
+		}
+		end;
+
+	// Round Start Timer
+	OnTimer5000:
+		// skip this if the announcement or event is running
+		if (.aTimer || .RoundsON ) end;
+		if(.Event == 3 || .Event == 4)
+			goto Start_Event;
+		end;
+
+	OnTimer59000: // Round Timer Ends
+		// skip this if the announcement is running
+		if (.aTimer) end;
+
+		if(.Event == 3) {
+			npctalk "<Poring Counting> You took too long to guess the number of "+ getmonsterinfo(.mob,MOB_NAME) +" The correct number is "+.amount+".";
+			// kill any surving monster
+			killmonster .map$,.npc_name$+"::OnDied";
+
+			delwaitingroom;
+			deletepset 1; // disable answer
+			setnpctimer 0; // re-start 5s timer
+
+			.RoundCount = .RoundCount+1;
+			if (.RoundCount < .Rounds) {
+				npctalk "<Poring Counting> Please wait 5 seconds while I start the next round.";
+				.RoundsON = 0;
+			}
+			else {
+				npctalk "<Poring Counting> The event is now over.";
+				sleep 2000;
+				npctalk "<Poring Counting> Thank you for playing and please come and play again later.";
+				sleep 2000;
+				emotion ET_THANKS;
+				goto Reset_Game;
+			}
+		}
+		else if (.Event == 4){
+			npctalk "<Disguise Event> You took too long to guess what I was. I was disgused as "+$MonsterName$+". Please wait 5 seconds while I disguise again.";
+			setnpcdisplay "Event Manager",795;
+
+			set $MonsterName$,"";
+			deletepset 1;
+			setnpctimer 0; // re-start 5s timer
+
+			set .RoundCount,.RoundCount+1;
+			if (.RoundCount < .Rounds) {
+				npctalk "<Disguise Event> Please wait 5 seconds while I start the next round.";
+				specialeffect EF_DETECT2;
+				.RoundsON = 0;
+			}
+			else {
+				npctalk "<Disguise Event> The event is now over.";
+				sleep 2000;
+				npctalk "<Disguise Event> Thank you for playing and please come and play again later.";
+				sleep 2000;
+				emotion ET_THANKS;
+				goto Reset_Game;
+			}
+			end;
+		}
+		end;
+
+	OnDied:
+	OnWallDied:
+		end;
+
+	// clean up previous rounds data
+	Reset_Game:
+		.EventON = 0; .aTimer = 0;
+		setnpctimer 0; stopnpctimer;
+		delwaitingroom;
+		setnpcdisplay "Event Manager",4_M_MAYOR;
+		if(.Event == 1) {
+			killmonsterall "guild_vs2";
+			deletearray .register_aid;
+			deletearray .unique_id;
+			.register_count = 0;
+			.total_participants = 0;
+			pvpoff "guild_vs2";
+			mapwarp "guild_vs2", .map$, .x, .y; // remove all players who are in the map to Prontera
+		}
+		else if (.Event == 2) {
+			killmonsterall .event_map$; // wipe monster from the map
+			// .event_map$ = "";
+			deletearray .MobIDs;
+		}
+		else if (.Event == 3) {
+			.RoundCount = 0; .RoundsON = 0;
+			// kill any surving monster
+			killmonster .map$,.npc_name$+"::OnDied";
+			killmonster .map$,.npc_name$+"::OnWallDied";
+
+			deletepset 1; // disable answer
+
+			setcell .map$,.xy_area[0]-15,.xy_area[1]-15,.xy_area[2]+15,.xy_area[3]+15,CELL_LANDPROTECTOR,0;
+			setcell .map$,.xy_area[0]-15,.xy_area[1]-15,.xy_area[2]+15,.xy_area[3]+15,CELL_BASILICA,0;
+			setcell .map$,.xy_area[0]-1,.xy_area[1]-1,.xy_area[2]+1,.xy_area[3]+1,cell_walkable,1;
+		}
+		else if (.Event == 4) {
+			.RoundCount = 0; .RoundsON = 0; // very minor reset ?
+		}
+		.Event = 0;
+		end;
+
+	//--Announcement Timers ------------------------------------
+	OnClock0100:
+	OnClock1300:
+	OnClock2000:
+		setnpcdisplay "Event Manager",512;
+		.Event = 1; // Last Man Standing
+		goto Start_Broadcast;
+	end;
+
+	OnClock0000:
+	OnClock0700:
+	OnClock1200:
+	OnClock1800:
+		setnpcdisplay "Event Manager",748;
+		.Event = 2; // Mushroom Events
+		goto Start_Broadcast;
+	end;
+
+	OnClock0200:
+	OnClock0800:
+	OnClock1400:
+	OnClock1900:
+		setnpcdisplay "Event Manager",975;
+		.Event = 3; // Poring Counting
+		goto Start_Broadcast;
+	end;
+
+	OnClock0300:
+	OnClock0900:
+	OnClock1500:
+	OnClock2300:
+		setnpcdisplay "Event Manager",795;
+		.Event = 4; // Disguise
+		goto Start_Broadcast;
+	end;
+
+	Start_Broadcast:
+		// debugmes "Event " +.Event;
+		if(.Event == 1){
+			announce "The <Last Man Standing (PvP)> is being held in Prontera and will begin in 3 minutes.",bc_all | bc_blue;
+			npctalk "[Event Manager] Come and talk to me to register for "+ .EventName$ +".";
+			delwaitingroom;
+			waitingroom "LMS Register [0/"+.register_limit+"]",0;
+		}
+		else if (.Event == 2) {
+			announce "The <Find the Mushroom> is being held in Izlude and will begin in 3 minutes.",bc_all | bc_blue;
+		}
+		else if (.Event == 3) {
+			announce "The <Poring Counting> is being held in Prontera and will begin in 3 minutes.",bc_all | bc_blue;
+			set_zone();
+		}
+		else if (.Event == 4) {
+			announce "The <Disguise Event> is being held in Prontera and will begin in 3 minutes.",bc_all | bc_blue;
+			// set .Wait,1;
+		}
+		else {
+			end; // stop all other events that shouldn't exits
+		}
+		set .aTimer, 1; // Announcement Timer
+		setnpctimer 0; initnpctimer;
+	end;
+
+	OnTimer60000:
+		if (.aTimer!=1) end;
+		if(.Event == 1){
+			announce "The <Last Man Standing (PvP)> is being held in Prontera and will begin in 2 minutes.",bc_all | bc_blue;
+			npctalk "[Event Manager] Come and talk to me to register.";
+		}
+		else if (.Event == 2) {
+			announce "The <Find the Mushroom> is being held in Izlude and will begin in 2 minutes.",bc_all | bc_blue;
+		}
+		else if (.Event == 3) {
+			announce "The <Poring Counting> is being held in Prontera and will begin in 2 minutes.",bc_all | bc_blue;
+		}
+		else if (.Event == 4) {
+			announce "The <Disguise Event> is being held in Prontera and will begin in 2 minutes.",bc_all | bc_blue;
+		}
+	end;
+
+	OnTimer120000:
+		if (.aTimer!=1) end;
+		if(.Event == 1){
+			announce "The <Last Man Standing (PvP)> is being held in Prontera and will begin in 1 minutes.",bc_all | bc_blue;
+			npctalk "[Event Manager] Come and talk to me to register.";
+		}
+		else if (.Event == 2) {
+			announce "The <Find the Mushroom> is being held in Izlude and will begin in 1 minutes.",bc_all | bc_blue;
+		}
+		else if (.Event == 3) {
+			announce "The <Poring Counting> is being held in Prontera and will begin in 1 minutes.",bc_all | bc_blue;
+		}
+		else if (.Event == 4) {
+			announce "The <Disguise Event> is being held in Prontera and will begin in 1 minutes.",bc_all | bc_blue;
+		}
+	end;
+
+	OnTimer180000:
+		if (.aTimer!=1) end;
+		set .aTimer,0; set .EventON, 1;
+		stopnpctimer; setnpctimer 0; initnpctimer;
+		if(.Event == 1){
+			announce "The <Last Man Standing (PvP)> has begun!",bc_all | bc_blue;
+		}
+		else if (.Event == 2) {
+			announce "The <Find the Mushroom> has begun!",bc_all | bc_blue;
+		}
+		else if (.Event == 3) {
+			announce "The <Poring Counting> has begun!",bc_all | bc_blue;
+		}
+		else if (.Event == 4) {
+			announce "The <Disguise Event> has begun!",bc_all | bc_blue;
+		}
+		goto Start_Event; // start the event
+	end;
+
+
+	// ---- Initiate the NPC ----------------------------------
+	OnInit:
+		set .GMLevel,60;	// GM level required to access NPC.
+		.Event = 0;
+		.EventON = 0;
+
+		// last man standing
+		getmapxy .map$, .x, .y, BL_NPC;
+		.register_min = 2; 			// minimum amount of players to start this event, or else it auto-abort
+		.register_limit = 100; 		// maximum amount of players able to participate in this event
+		.total_participants = 0;
+		.prize = 8501;
+		.prize_amt = 5; 			// only LMS gives 5 boxes
+		mapwarp "guild_vs2", .map$, .x, .y; // remove all players who are in the map to Prontera
+
+		// find the mushroom
+		setarray .maps_list$[0],"izlude"; // Possible maps
+		.event_map$ = .maps_list$[ rand(getarraysize(.maps_list$)) ]; // to prevent error
+		deletearray .MobIDs;
+
+		// Poring Countings
+		.Rounds = 10;
+		.wall_mob_id = 1085; // Red Mushroom
+		setarray .xy_area,
+			154,157,
+			163,167;
+		setarray .monster,
+			1002, // poring
+			1894, // pouring
+			1852, // angeling
+			2933, // deviling
+			1613, // metaling
+			1977, // heavy metaling
+			2934, // arc angeling
+			1062, // santa poring
+			2398, // little poring
+			1836, // magmaring
+			1113, // drops
+			2316, // jejeling
+			1857, // marin,
+			2936, // ghostring
+			2248, // golden poring
+			3508, // eggring
+			// 3505, // big eggring
+			1031; // poporing;
+		.mob = 0;
+
+		.monster_size = getarraysize( .monster );
+		.npc_name$ = strnpcinfo(0);
+		getmapxy( .map$,.npc_x,.npc_y, BL_NPC);
+		setmapflag .map$, mf_monster_noteleport;
+
+		setarray .BlackList[0], 1003,1006,1017,1021,1022,1027,1043,1075,1136,1137,1168,1171,1172,1173,1181;
+		setarray .BlackList[15], 1187,1210,1217,1218,1222,1223,1224,1225,1226,1227,1228,1233,1284,1407,1411;
+		setarray .BlackList[30], 1414,1495,1501,1900,1996,2000,2001,2002,2003,2004,2005,2006,2007,2011,2012;
+		setarray .BlackList[45], 2025,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041;
+		setarray .BlackList[60], 2042,2043,2044,2045,2046,2047,2048,2049,2050,2051,2052,2053,2054,2055,2056;
+		setarray .BlackList[75], 2057,2058,2059,2060,2061,2062,2063,2064,2065,2066,2067,2075,2076,2077,2078;
+		setarray .BlackList[90], 2079,2080,2081,2083,2084,2085,2086,2087,2088,2089,2090,2091,2092,2093,2094;
+		setarray .BlackList[105], 2095,2096,2097,2098,2099,2100,2101,2012,2103,2104,2105,2106,2107,2108,2109;
+		setarray .BlackList[120], 2110,2111,2112,2113,2114,2115,2116,2117,2118,2119,2120,2121,2123,2124,2125,1496,1912,1890;
+		goto Reset_Game;
+		
+		// getarraysize(.BlackList);
+
+		// set .BlackList$, "1003,1006,1017,1021,1022,1027,1043,1075,1136,1137,1168," +
+		//     "1171,1172,1173,1181,1187,1210,1217,1218,1222,1223,1224,1225,1226,1227,1228," +
+		//     "1233,1284,1407,1411,1414,1495,1501,1900,1996,2000,2001,2002,2003,2004," +
+		//     "2005,2006,2007,2011,2012,2025,2028,2029,2030,2031,2032,2033,2034,2035," +
+		//     "2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049," +
+		//     "2050,2051,2052,2053,2054,2055,2056,2057,2058,2059,2060,2061,2062,2063," +
+		//     "2064,2065,2066,2067,2075,2076,2077,2078,2079,2080,2081,2083,2084,2085," +
+		//     "2086,2087,2088,2089,2090,2091,2092,2093,2094,2095,2096,2097,2098,2099," +
+		//     "2100,2101,2012,2103,2104,2105,2106,2107,2108,2109,2110,2111,2112,2113," +
+		//     "2114,2115,2116,2117,2118,2119,2120,2121,2123,2124,2125,1496,";
+
+	end;
+
+	// -- Last Man Standing specific functions ----------------
+	function	remove_player	{
+		.@aid = getarg(0);
+		.@i = 0;
+		while ( .register_aid[.@i] != .@aid && .@i < .register_count )
+		{
+			// debugmes .register_aid[.@i]+" | "+rid2name(.register_aid[.@i]);
+			.@i++;
+		}
+		deletearray .register_aid[.@i], 1;
+		.register_count--;	// reduce the player count
+		delwaitingroom;
+		return;
+	}
+
+	function	smack_talk	{
+		.@name$ = getarg(0);
+		if(.Event == 1)
+			set .@eventName$, "<Last Man Standing>";
+		if (strcharinfo(3) == "pvp_y_1-2" || strcharinfo(3) == "pvp_y_2-2")
+			set .@eventName$, "<PvP Announcer>";
+		else if ( .@map$ == "te_aldecas1" ||  .@map$ == "prtg_cas01" )
+			set .@eventName$, "<War of Emperium>";
+
+		switch(rand(1,9)){
+			case 1: set .@mtalk$, .@eventName$ +" ["+.@name$+"] just simply quit from the game!"; break;
+			case 2: set .@mtalk$, .@eventName$ +" ["+.@name$+"] chicken out from the game!"; break;
+			case 3: set .@mtalk$, .@eventName$ +" ["+.@name$+"] isn't MAN enough to be in the game!"; break;
+			case 4: set .@mtalk$, .@eventName$ +" ["+.@name$+"] is scared!"; break;
+			case 5: set .@mtalk$, .@eventName$ +" ["+.@name$+"] is being a wuss!"; break;
+			case 6: set .@mtalk$, .@eventName$ +" ["+.@name$+"] admits his weakness!"; break;
+			case 7: set .@mtalk$, .@eventName$ +" ["+.@name$+"] taps out of the game!"; break;
+			case 8: set .@mtalk$, .@eventName$ +" ["+.@name$+"] is overcome with fear!"; break;
+			case 9: set .@mtalk$, .@eventName$ +" ["+.@name$+"] doesn't have what it takes to be the MAN!"; break;
+		}
+		return .@mtalk$;
+	}
+
+	// -- Poring Counting specific functions ----------------
+	function set_zone {
+		areawarp .map$,.xy_area[0],.xy_area[1],.xy_area[2],.xy_area[3],.map$,.npc_x,.npc_y;
+		killmonster .map$,.npc_name$+"::OnDied";
+		killmonster .map$,.npc_name$+"::OnWallDied";
+
+		setcell .map$,.xy_area[0]-15,.xy_area[1]-15,.xy_area[2]+15,.xy_area[3]+15,CELL_LANDPROTECTOR,1;
+		setcell .map$,.xy_area[0]-15,.xy_area[1]-15,.xy_area[2]+15,.xy_area[3]+15,CELL_BASILICA,1;
+		setcell .map$,.xy_area[0],.xy_area[1],.xy_area[2],.xy_area[3],cell_walkable,1;
+
+		for( .@i = .xy_area[0]; .@i <= .xy_area[2]; .@i++ ){
+			xy_wall( .@i,.xy_area[1] );
+			xy_wall( .@i,.xy_area[3] );
+		}
+		for( .@i = .xy_area[1]; .@i <= .xy_area[3]; .@i++ ){
+			xy_wall( .xy_area[0],.@i,0 );
+			xy_wall( .xy_area[2],.@i );
+		}
+
+		.EventON = 1; // event "boundaries" flag
+		return;
+	}
+
+	function	xy_wall	{
+		.@x = getarg(0);
+		.@y = getarg(1);
+		monster .map$,.@x,.@y,"",.wall_mob_id,1,.npc_name$+"::OnWallDied";
+		setcell .map$,.@x,.@y,.@x,.@y,cell_walkable,0;
+
+		// setcell .map$,.@x,.@y,.@x,.@y,cell_basilica,1;
+		// setcell .map$,.@x,.@y,.@x,.@y,CELL_LANDPROTECTOR,1;
+		return;
+	}
+
+	function pvplog {
+		.@killer = getarg(0);
+		.@victim = getarg(1);
+		.@map$ = getarg(2);
+		query_sql("SELECT lg.last_unique_id FROM `login` AS lg LEFT JOIN `char` AS ch ON (ch.account_id = lg.account_id) WHERE ch.char_id IN ( "+ escape_sql(.@killer) +", "+ escape_sql(.@victim) +" ) LIMIT 2", @unique);
+		if(@unique[0] != @unique[1])
+			query_sql("INSERT INTO pvplog (killer_id, victim_id, date_time, map) VALUES ("+.@killer+", "+.@victim+", '"+gettimestr("%Y-%m-%d %H:%M:%S",21)+"', '"+.@map$+"');");
+		else
+			debugmes "self-kill. not recording.";
+	}
+}
+
+-	script	pvp_prevent_abuse	-1,{
+	end;
+
+OnInit:
+	initnpctimer;
+	setnpctimer 0; stopnpctimer;
+	end;
+
+OnStart:
+	startnpctimer;
+	end;
+
+OnAgain:
+OnTimer180005: // every minute
+	for(.@i = 0; .@i < getarraysize($@victim_time); .@i++){
+		.@ticks = ($@victim_time[.@i] - gettimetick(2));
+		// debugmes "Unique: "+ $@victim_unique[.@i] +" | Ticks: "+ .@ticks +" | Count: "+ $@victim_count[.@i];
+
+		if($@victim_time[.@i] <= gettimetick(2)) { // reset
+			debugmes $@victim_unique[.@i]+" removed";
+			deletearray $@victim_time[.@i],1;
+			deletearray $@victim_unique[.@i],1;
+			deletearray $@victim_count[.@i],1;
+			goto OnAgain;
+		}
+	}
+	setnpctimer 0; startnpctimer;
+	if(getarraysize($@victim_time) == 0)
+		stopnpctimer;
+	end;
+}
+
+
+// -- Last Man Standing specific Map Flags and warp points -----
+guild_vs2	mapflag	nosave	SavePoint
+guild_vs2	mapflag	nowarp
+guild_vs2	mapflag	nowarpto
+guild_vs2	mapflag	noteleport
+guild_vs2	mapflag	nomemo
+guild_vs2	mapflag	nopenalty
+guild_vs2	mapflag	nobranch
+guild_vs2	mapflag	noicewall
+guild_vs2	mapflag	pvp_noparty
+guild_vs2	mapflag	pvp_noguild
+
+guild_vs2,49,91,0	warp	NtoS	4,1,guild_vs2,49,11
+guild_vs2,49,8,0	warp	StoN	4,1,guild_vs2,49,88
+guild_vs2,8,50,0	warp	EtoW	1,4,guild_vs2,87,50
+guild_vs2,90,50,0	warp	WtoE	1,4,guild_vs2,12,50
+
+// -- PvP Announcer
+pvp_y_1-2	mapflag	loadevent
+pvp_y_2-2	mapflag	loadevent
+pvp_y_1-2	mapflag	noreturn
+pvp_y_2-2	mapflag	noreturn

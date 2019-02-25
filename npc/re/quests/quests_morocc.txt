@@ -98,8 +98,9 @@ moc_prydb1,103,54,3	script	Suspicious Cat#night	547,{
 	mes "^FF0000But come to think of it, a weakling like you won't survive there. Maybe for a second if you're lucky?^000000";
 	mes "Well, it's none of my business. But I warned you anyway!";
 	next;
-	switch(select("Pay 5,000 zeny and set out.:Forget it.")) {
-	case 1:
+	.@sel = select("Pay 5,000 zeny for Underground 1F:Pay 5,000 zeny for Underground 2F:Forget it.");
+	switch(.@sel) {
+	case 1: case 2:
 		if (Zeny < 5000) {
 			mes "[Suspicious Cat]";
 			mes "Where do you think you're going! You're so broke!";
@@ -110,9 +111,13 @@ moc_prydb1,103,54,3	script	Suspicious Cat#night	547,{
 		mes "Bah, what's up with this old money... you don't have anything sparkly or shiny?!";
 		mes "Ahh, just follow me!";
 		close2;
-		warp "moc_prydn1",93,96;
+
+		if(.@sel == 1)
+			warp "moc_prydn1",93,96;
+		if(.@sel == 2)
+			warp "moc_prydn2",192,8;
 		end;
-	case 2:
+	case 3:
 		mes "[Suspicious Cat]";
 		mes "Gosh, you don't even have 5000 Zeny, do you?";
 		close;

@@ -1,5 +1,8 @@
 //===== rAthena Script =======================================
 //= Prontera Guides
+//===== By: ==================================================
+//===== Current Version: =====================================
+//===== Compatible With: =====================================
 //===== Description: =========================================
 //= Guides for the city of Prontera.
 //===== Changelogs: ==========================================
@@ -7,7 +10,7 @@
 //= 1.1 Navigation system update. [Euphy]
 //============================================================
 
-prontera,154,187,4	script	Guide#01prontera::GuideProntera	105,{
+prontera,148,171,5	script	Guide#01prontera::GuideProntera	105,{
 	cutin "prt_soldier",2;
 	mes "[Prontera Guide]";
 	mes "Welcome to ^8B4513Prontera^000000,";

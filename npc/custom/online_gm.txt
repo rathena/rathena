@@ -1,0 +1,64 @@
+
+prontera,155,171,5	script	GM List	861,{
+	function get_GM_Title;
+	function get_GM_State;
+	
+	cutin "kafra_09",2;
+	
+	.@size = query_sql( "SELECT `char`.`account_id`,`char`.`char_id`,`char`.`name`,`login`.`lastlogin`,TIMEDIFF( NOW(),`login`.`lastlogin` ),`login`.`group_id` FROM `char` INNER JOIN `login` ON `char`.`account_id` = `login`.`account_id` WHERE `group_id` > "+.min_group_id+" ORDER BY `char`.`online` DESC, `login`.`group_id` DESC LIMIT 10",.@aid,.@cid,.@name$,.@lastlogin$,.@lastlogin_duration$,.@group_id );
+
+	mes "There are total ^FF0000"+.@size+"^000000 GM(s)";
+	while ( .@i < .@size ) {
+		mes get_GM_Title( .@name$[.@i],.@group_id[.@i] )+" - "+get_GM_State( .@aid[.@i],.@cid[.@i],.@name$[.@i] );
+		mes "Last Seen: ^777777"+.@lastlogin_duration$[.@i]+" hours ago^000000";
+		mes "Last Login: ^777777"+.@lastlogin$[.@i]+"^000000";
+		mes " ";
+		.@i++;
+	}
+	close2;
+	cutin "",255;
+	end;
+	
+	OnInit:
+		.min_group_id = 1;
+		.afk_second = 300;
+		end;
+
+	function	get_GM_Title	{
+		switch ( getarg( 1,0 ) ) {
+			default: .@title$ = "";
+			case 1: .@title$ = "(Super Player)";
+			case 2: .@title$ = "(Support)";
+			case 3: .@title$ = "(Script Manager)";
+			case 4: .@title$ = "(Event Manager)";
+			case 10: .@title$ = "(Law Enforcement)";
+			case 99: .@title$ = "(Admin)";
+		}
+		
+		return .@title$ + " " +  getarg( 0,"NULL" );
+	}
+	
+	function	get_GM_State	{
+		.@aid = getarg( 0,0 );
+		.@cid = getarg( 1,0 );
+		.@name$ = getarg( 2,"NULL" );
+		
+		if ( isloggedin( .@aid,.@cid ) ) {
+		
+			.@idle = checkidle( .@name$ );
+			
+			if ( .@idle >= .afk_second && .afk_second ) {
+				.@state$ = "AFK/Away";
+			}
+			else {
+				.@state$ = "Online";
+			}
+		}
+		else {
+			.@state$ = "Offline";
+		}
+		
+		return .@state$;
+	}
+
+}

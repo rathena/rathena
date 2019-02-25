@@ -24,9 +24,9 @@ gefenia01,0,0	monster	Abysmal Knight	1219,10,5000
 gefenia01,0,0	monster	Incubus	1374,10,5000
 gefenia01,0,0	monster	Succubus	1370,10,5000
 gefenia01,0,0	monster	Bloody Knight	1268,1,3600000,3000000
-gefenia01,0,0	monster	Mysteltainn	1203,1,10800000,7200000
-gefenia01,0,0	monster	Executioner	1205,1,18000000,14400000
-gefenia01,0,0	monster	Ogretooth	1204,1,18000000,14400000
+gefenia01,0,0	monster	Mysteltainn	1203,2,10800000,7200000
+gefenia01,0,0	monster	Executioner	1205,2,18000000,14400000
+gefenia01,0,0	monster	Ogretooth	1204,2,18000000,14400000
 
 //==================================================
 // gefenia02 - Geffenia
@@ -38,9 +38,9 @@ gefenia02,0,0	monster	Succubus	1370,20,5000
 gefenia02,0,0	monster	Abysmal Knight	1219,10,5000
 gefenia02,0,0	monster	Incubus	1374,10,5000
 gefenia02,0,0	monster	Bloody Knight	1268,1,3600000,3000000
-gefenia02,0,0	monster	Ogretooth	1204,1,10800000,7200000
-gefenia02,0,0	monster	Mysteltainn	1203,1,18000000,14400000
-gefenia02,0,0	monster	Executioner	1205,1,18000000,14400000
+gefenia02,0,0	monster	Ogretooth	1204,2,10800000,7200000
+gefenia02,0,0	monster	Mysteltainn	1203,2,18000000,14400000
+gefenia02,0,0	monster	Executioner	1205,2,18000000,14400000
 
 //==================================================
 // gefenia03 - Geffenia
@@ -52,9 +52,9 @@ gefenia03,0,0	monster	Incubus	1374,20,5000
 gefenia03,0,0	monster	Abysmal Knight	1219,10,5000
 gefenia03,0,0	monster	Succubus	1370,10,5000
 gefenia03,0,0	monster	Bloody Knight	1268,1,3600000,3000000
-gefenia03,0,0	monster	Executioner	1205,1,10800000,7200000
-gefenia03,0,0	monster	Mysteltainn	1203,1,18000000,14400000
-gefenia03,0,0	monster	Ogretooth	1204,1,18000000,14400000
+gefenia03,0,0	monster	Executioner	1205,2,10800000,7200000
+gefenia03,0,0	monster	Mysteltainn	1203,2,18000000,14400000
+gefenia03,0,0	monster	Ogretooth	1204,2,18000000,14400000
 
 //==================================================
 // gefenia04 - Geffenia
@@ -66,6 +66,6 @@ gefenia04,0,0	monster	Abysmal Knight	1219,10,5000
 gefenia04,0,0	monster	Incubus	1374,10,5000
 gefenia04,0,0	monster	Succubus	1370,10,5000
 gefenia04,0,0	monster	Bloody Knight	1268,1,3600000,3000000
-gefenia04,0,0	monster	Mysteltainn	1203,1,18000000,14400000
-gefenia04,0,0	monster	Executioner	1205,1,18000000,14400000
-gefenia04,0,0	monster	Ogretooth	1204,1,18000000,14400000
+gefenia04,0,0	monster	Mysteltainn	1203,2,18000000,14400000
+gefenia04,0,0	monster	Executioner	1205,2,18000000,14400000
+gefenia04,0,0	monster	Ogretooth	1204,2,18000000,14400000

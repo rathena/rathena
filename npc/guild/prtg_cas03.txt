@@ -96,7 +96,7 @@ prtg_cas03,165,201,4	duplicate(InsideFlagsPR3)	Fadhgridh#14	722
 
 // Guild Flag (Town)
 //============================================================
-prontera,143,203,2	duplicate(InsideFlagsPR3)	Fadhgridh#15	722
+prontera,164,165,3	duplicate(InsideFlagsPR3)	Fadhgridh#15	722
 
 // Kafra Employee
 //============================================================

@@ -1420,7 +1420,7 @@ comodo,327,177,0	script	Signposts#Comodo East	2_BULLETIN_BOARD,{
 			1068,"Hydra","Anemone monster. Despite the appearance, it is rooted deep within the area, and uses the rooted tentacles to attack nearby creatures.",
 			1034,"Thara Frog","Frog monster that loves dark and wet places. It may be too hard of an opponent for a beginner adventurer.",
 			1064,"Megalodon","Fish skeleton monster revived with magic. It still acts like a fish as an Undead.",
-			1255,"Nereid","Worm monster that lives inside the cave. Its eye sight is horrible, relying solely on sense of smell to detect nearby prey." );		
+			1255,"Nereid","Worm monster that lives inside the cave. Its eye sight is horrible, relying solely on sense of smell to detect nearby prey." );
 		if (.@mo_board == 1) {
 			mes "[Comodo East Cave, Mao]";
 			mes "East Cave, Mao is a tunnel that leads to Papuchicha Forest. This place is popular for highly sought after cards, Thara Frog and Hydra. Visit this place if you are in dire need of zeny.";
@@ -1528,7 +1528,7 @@ pay_arche,39,134,0	script	Signposts#Payon Cave	2_BULLETIN_BOARD,{
 			1186,"GiantWhisper","Adventurer's tips are needed.",
 			1170,"Sohee","Virgin woman who've died a sad death. It can only be found near Payon area and it's passive.",
 			1307,"Cat O'Nine Tails","9 tailed Demon. It uses the bell to lure and attack humans.",
-			1150,"Moonlight Flower","Medium rank Demon, queen of foxes. Underestimating its cute appearance will result in death." );		
+			1150,"Moonlight Flower","Medium rank Demon, queen of foxes. Underestimating its cute appearance will result in death." );
 		if (.@mo_board == 1) {
 			mes "[Payon Cave]";
 			mes "Payon Cave is comprised of 5 floors. Most monsters are Undead or Demon. Holy property weapons will prove to be useful in this dungeon.";
@@ -2177,7 +2177,7 @@ gefenia02,120,108,0	duplicate(Signpost#Geffenia1)	Signpost#Geffenia2	2_BULLETIN_
 gefenia03,131,201,0	duplicate(Signpost#Geffenia1)	Signpost#Geffenia3	2_BULLETIN_BOARD
 gefenia04,130,95,0	duplicate(Signpost#Geffenia1)	Signpost#Geffenia4	2_BULLETIN_BOARD
 
-nameless_n,259,213,0	script	Signpost#Nameless Island	2_BULLETIN_BOARD,{
+nameless_n,251,218,5	script	Signpost#Nameless Island	2_BULLETIN_BOARD,{
 	while(1) {
 		mes "[Nameless Island St. Abbey]";
 		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";

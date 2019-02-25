@@ -9,7 +9,7 @@
 
 // Simple flags (no message)
 //============================================================
-prt_gld,116,155,4	duplicate(flag_te)	Richard#te_prtcas02	GUILD_FLAG
+prt_gld,116,155,4	duplicate(flag_te)	Richard#te_prtcas02-1	GUILD_FLAG
 
 // Simple infos flags
 //============================================================

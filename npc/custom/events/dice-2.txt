@@ -1,0 +1,290 @@
+//=================================
+// Credits to the Original Creator
+// Modified by [Gerome]
+//===================================
+prontera,146,175,5	script	Dice Event		874,{
+cutin "zonda_01",2;
+if (getgmlevel() < 99)
+{
+	goto L_Player_View;
+}
+
+mes "^3399FF[Dice Event]^000000";
+mes "Hello GameMaster!";
+mes "What do you want to do?";
+switch(select("Start Event:Set prize^E50000 ["+getitemname($diceprize)+"]^000000 ^E50000 ["+ $diceprizecount + "]^000000:Test Player View:Nothing"))
+{
+	case 1:
+	{
+		next;
+		mes "^3399FF[Dice Event]^000000";
+		mes "Please confirm by typing START.";
+		input .@confirm$;
+		if (.@confirm$ == "START")
+		{
+			donpcevent "Dannouncer::OnMinute30";
+			close2;
+			cutin "",255;
+			end;
+		}
+		mes "Confirmation failed";
+		close2;
+		cutin "",255;
+		end;
+		break;
+	}
+
+	case 2:
+	{
+		next; mes "^3399FF[Dice Event]^000000";
+		mes "Please type in the new prize id.";
+		input .@guessprizeid;
+		if (getitemname(.@guessprizeid) == "null" || getitemname(.@guessprizeid) == "") {next; mes "^3399FF[Dice Event]^000000"; mes "Error"; mes "This item does not exist in the database..."; close;}
+		set $diceprize, .@guessprizeid;
+		next; mes "^3399FF[Dice Event]^000000";
+		mes "Please type in the amount.";
+		input .@guessprizeamount;
+		if (!.@guessprizeamount) set .@guessprizeamount,1 ;
+		set $diceprizecount,.@guessprizeamount;
+		next; mes "^3399FF[Dice Event]^000000";
+		mes "Prize has been set to ^E50000 "+ getitemname($diceprize)+ "^000000 and the amount to ^E50000 " +$diceprizecount+"^000000";
+		close2;
+		cutin "",255;
+		end;
+	}
+	case 3:
+	{
+		goto L_Player_View;
+
+	}
+
+	case 4:
+	{
+		next; mes "^3399FF[Dice Event]^000000";
+		mes "Good bye";
+		close2;
+		cutin "",255;
+		end;
+	}
+
+}
+
+L_Player_View:
+	next;
+	mes "^3399FF[Dice Event]^000000";
+	mes "-=Starts Every 30 Minutes=-";
+	mes "Current Prize is ^000099"+$diceprizecount+" "+getitemname($diceprize)+"^000000.";
+	close2;
+	cutin "",255;
+	end;
+
+
+}
+
+
+
+
+-	script	Dannouncer	-1,{
+
+OnInit:
+	disablenpc "prtevent";
+	disablenpc "Mr Dice";
+	//setarray $kroitem[0],5316,5336,5337,5338,5346,5401,5297,5393,5423,5381,5417,5467,5495,5450,5506,5507,5508,5499,5500,5474,5472,5471,5738,5537,5538,5528,5527,5526,5554,5535,7179;
+	end;
+
+
+OnMinute30:
+
+	announce "Dice: We are going to have a Dice event.",0;
+	sleep2 10000;
+	announce "Dice: For those who wants to join, Please proceed to the center of Prontera and enter the Warp Portal.",0;
+	sleep2 10000;
+	announce "Dice: After 1 Minute the Portal will close.",0;
+	sleep2 10000;
+	announce "Dice: So please go to the middle of Prontera and enter the Warp Portal now if you want to join.",0;
+	enablenpc "prtevent";
+	initnpctimer;
+	end;
+
+OnTimer30000:
+	announce "Dice: Last 30 seconds.",0;
+	sleep2 5000;
+	announce "Dice: If you want to join please enter the Warp Portal here in Prontera.",0;
+	end;
+
+OnTimer50000:
+	announce "Dice: Last 10 seconds.",0;
+	end;
+
+OnTimer55000:
+	announce "Dice: 5.",0;
+	end;
+
+OnTimer56000:
+	announce "Dice: 4.",0;
+	end;
+
+OnTimer57000:
+	announce "Dice: 3.",0;
+	end;
+
+OnTimer58000:
+	announce "Dice: 2.",0;
+	end;
+
+OnTimer59000:
+	announce "Dice: 1.",0;
+	end;
+
+OnTimer60000:
+	announce "Dice: Time's up.",0;
+	end;
+
+OnTimer61000:
+	disablenpc "prtevent";
+	donpcevent "Mr Dice::OnStart";
+	stopnpctimer;
+	end;
+
+OnTimer62000:
+	announce "Dice: The next Dice event will begin after 30 minutes.",0;
+	end;
+	}
+
+//--------------------------------------------------
+
+prontera,156,159,0	warp	prtevent	2,2,quiz_01,204,90
+
+//--------------------------------------------------
+
+quiz_01,204,93,6	script	Mr Dice	874,{
+
+//--------------------------------------------------
+	cutin "zonda_01",2;
+	mes "[Dice]";
+	mes "Congrats. You've won.";
+	close2;
+	announce "Dice: We have a winner, "+strcharinfo(0)+".",0;
+	//Random KRO items.
+	//set $@rannumber, rand(1,31);
+	//getitem $kroitem[$@rannumber],1;
+	getitem $diceprize,$diceprizecount;
+	warp "prontera",150,173;
+	disablenpc "Mr Dice";
+	end;
+
+OnStart:
+	if(getmapusers("quiz_01") == 1) goto _WIN;
+	mapannounce "quiz_01","Dice: We are about to start the Dice event.",0;
+	sleep2 10000;
+	mapannounce "quiz_01","Dice: But before we start the event here's how to play the game. . .",0;
+	sleep2 10000;
+	mapannounce "quiz_01","Dice: I'm only gonna say this once so read carefully.",0;
+	sleep2 10000;
+	mapannounce "quiz_01","Dice: I'm going to pick a number, 1 to 4. Then I'll do a count down from 5 to 0.",0;
+	sleep2 10000;
+	mapannounce "quiz_01","Dice: All you have to do is go to the box of the number you want.",0;
+	sleep2 10000;
+	mapannounce "quiz_01","Dice: Example, If I get the number of 4, All the players standing on numbers 1 to 3 will be warped back to town.",0;
+	sleep2 10000;
+	mapannounce "quiz_01","Dice: We will do it again and again until we only have 1 player left on the map.",0;
+	sleep2 10000;
+	mapannounce "quiz_01","Dice: Oh yeah! Before I forget you MUST GO INSIDE THE BOX, because if you're caught standing on the stairs you'll be automatically disqualified.",0;
+	sleep2 10000;
+	mapannounce "quiz_01","Dice: That's that.. Now let's play...",0;
+	sleep2 10000;
+	goto L_Start;
+	end;
+
+L_Start:
+	if(getmapusers("quiz_01") == 1) goto L_Champ;
+	if(getmapusers("quiz_01") == 0) goto L_None;
+	if(getmapusers("quiz_01") > 1) {
+	announce "Dice: . . . . .",0;
+	set $@number, rand(1,4);
+	sleep2 10000;
+	announce "Dice: I have a number now. Please go to the box of the number you want.... GO!",0;
+	sleep2 10000;
+	announce "Dice: 5",0;
+	sleep2 5000;
+	announce "Dice: 4",0;
+	sleep2 4000;
+	announce "Dice: 3",0;
+	sleep2 3000;
+	announce "Dice: 2",0;
+	sleep2 2000;
+	announce "Dice: 1",0;
+	sleep2 1000;
+	announce "Dice: Time's up.",0;
+	donpcevent "devent::OnEnable";
+	announce "Dice: Winning number "+$@number+".",0;
+	if(($@number != 1) && ($@number != 2) && ($@number != 3)) goto L_Lose1;
+	if(($@number != 1) && ($@number != 2) && ($@number != 4)) goto L_Lose2;
+	if(($@number != 1) && ($@number != 3) && ($@number != 4)) goto L_Lose3;
+	if(($@number != 2) && ($@number != 3) && ($@number != 4)) goto L_Lose4;
+	end;
+	}
+
+L_Lose1:
+	areawarp "quiz_01",183,81,191,60,"prontera",155,182;
+	areawarp "quiz_01",195,81,203,60,"prontera",155,182;
+	areawarp "quiz_01",207,81,215,60,"prontera",155,182;
+	goto L_Start;
+	end;
+
+L_Lose2:
+	areawarp "quiz_01",183,81,191,60,"prontera",155,182;
+	areawarp "quiz_01",195,81,203,60,"prontera",155,182;
+	areawarp "quiz_01",219,81,227,60,"prontera",155,182;;
+	goto L_Start;
+	end;
+
+L_Lose3:
+	areawarp "quiz_01",183,81,191,60,"prontera",155,182;
+	areawarp "quiz_01",207,81,215,60,"prontera",155,182;
+	areawarp "quiz_01",219,81,227,60,"prontera",155,182;
+	goto L_Start;
+	end;
+
+L_Lose4:
+	areawarp "quiz_01",195,81,203,60,"prontera",155,182;
+	areawarp "quiz_01",207,81,215,60,"prontera",155,182;
+	areawarp "quiz_01",219,81,227,60,"prontera",155,182;
+	goto L_Start;
+	end;
+
+L_Champ:
+	mapannounce "quiz_01","Dice: Come to me and tell me your name.",0;
+	enablenpc "Mr Dice";
+	end;
+_WIN:
+	mapannounce "quiz_01","Dice: Come to me and tell me your name.",0;
+	enablenpc "Mr Dice";
+	end;
+
+L_None:
+	disablenpc "Mr Dice";
+	end;
+
+
+
+}
+
+-	script	devent	-1,{
+
+OnEnable:
+	areawarp "quiz_01",182,94,228,88,"prontera",155,182;
+	areawarp "quiz_01",185,87,188,82,"prontera",155,182;
+	areawarp "quiz_01",197,87,200,82,"prontera",155,182;
+	areawarp "quiz_01",209,87,212,82,"prontera",155,182;
+	areawarp "quiz_01",221,87,224,82,"prontera",155,182;
+	end;
+	}
+//------------------Map Flags--------------------------------------------------------
+quiz_01	mapflag	nowarpto
+quiz_01	mapflag	nowarp
+quiz_01	mapflag	noskill
+quiz_01	mapflag	nosave
+quiz_01	mapflag	nomemo
+quiz_01	mapflag	noteleport
+//-----------------------------------------------------------------------------------

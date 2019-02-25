@@ -9959,7 +9959,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_DEFENDER:
 			if (!(flag&SCSTART_NOAVOID)) {
-				val2 = 5 + 15*val1; // Damage reduction
+				// val2 = 5 + 15*val1; // Damage reduction
+				val2 = 5 + 10*val1; // Damage reduction - reduce from 80% to 55%
 				val3 = 0; // Unused, previously speed adjustment
 				val4 = 250 - 50*val1; // Aspd adjustment
 
@@ -14556,12 +14557,24 @@ static TIMER_FUNC(status_natural_heal_timer){
  */
 int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched)
 {
+	enum e_refine_chance_type type;
+
 	if ( refine < 0 || refine >= MAX_REFINE)
 		return 0;
 	
-	int type = enriched ? 1 : 0;
-	if (battle_config.event_refine_chance)
-		type |= 2;
+	if( battle_config.event_refine_chance ){
+		if( enriched ){
+			type = REFINE_CHANCE_EVENT_ENRICHED;
+		}else{
+			type = REFINE_CHANCE_EVENT_NORMAL;
+		}
+	}else{
+		if( enriched ){
+			type = REFINE_CHANCE_ENRICHED;
+		}else{
+			type = REFINE_CHANCE_NORMAL;
+		}
+	}
 
 	return refine_info[wlv].chance[type][refine];
 }
@@ -14711,6 +14724,10 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 
 		refine_info[refine_info_index].cost[idx].nameid = material;
 		refine_info[refine_info_index].cost[idx].zeny = price;
+		if (type["Breakable"].IsDefined())
+			refine_info[refine_info_index].cost[idx].breakable = type["Breakable"].as<bool>();
+		else
+			refine_info[refine_info_index].cost[idx].breakable = true;
 	}
 
 	const YAML::Node &rates = node["Rates"];
@@ -14777,8 +14794,17 @@ static void status_yaml_readdb_refine(const std::string &directory, const std::s
  * @param what true = returns zeny, false = returns item id
  * @return Refine cost for a weapon level
  */
-int status_get_refine_cost(int weapon_lv, int type, bool what) {
-	return what ? refine_info[weapon_lv].cost[type].zeny : refine_info[weapon_lv].cost[type].nameid;
+int status_get_refine_cost(int weapon_lv, int type, enum refine_info_type what) {
+	switch( what ){
+		case REFINE_MATERIAL_ID:
+			return refine_info[weapon_lv].cost[type].nameid;
+		case REFINE_ZENY_COST:
+			return refine_info[weapon_lv].cost[type].zeny;
+		case REFINE_BREAKABLE:
+			return refine_info[weapon_lv].cost[type].breakable;
+	}
+
+	return 0;
 }
 
 /**

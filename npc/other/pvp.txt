@@ -1,4 +1,4 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= PvP NPCs
 //===== By: ==================================================
 //= kobra_k88; L0ne_W0lf, Elias (og2)
@@ -9,7 +9,7 @@
 //===== Description: =========================================
 //= PvP NPCs that are found in the Inns in major cities.
 //= Includes Yoyo Mode, Nightmare Mode, and Event Mode.
-//===== Additional Comments: ================================= 
+//===== Additional Comments: =================================
 //= 2.0 Narrators/GateKeepers,etc. Translated from the Official 2011 [Elias]
 //= 2.1 Changed PVP Narrator and GateKeeper to Floating NPC [Elias]
 //= 2.2 Some cleaning. [Euphy]
@@ -19,7 +19,7 @@
 //============================================================
 
 // Information
-//============================================================ 
+//============================================================
 -	script	PVP Narrator::pvpe	-1,{
 	mes "[PVP Narrator]";
 	mes "Hello and welcome!";
@@ -174,7 +174,7 @@ payon_in01,142,50,4	duplicate(pvpe)	PVP Narrator#pe5	84
 geffen_in,67,63,4	duplicate(pvpe)	PVP Narrator#pe6	84
 
 // Mode Select
-//============================================================ 
+//============================================================
 -	script	Gate Keeper::gkut	-1,{
 	mes "[Gate Keeper]";
 	mes "Glad to be of service.";
@@ -280,7 +280,7 @@ geffen_in,63,63,4	duplicate(gkut)	Gate Keeper#gke4	83
 payon_in01,140,53,4	duplicate(gkut)	Gate Keeper#gke5	83
 
 // PVP Warper Function
-//============================================================ 
+//============================================================
 // Note: The warper NPCs are in the pre-re/re paths.
 
 //callfunc "F_PVP_FSRS"{,<min_lvl>,<max_lvl>};
@@ -288,31 +288,77 @@ function	script	F_PVP_FSRS	{
 	if (getargcount()) {
 		setarray .@lvl[0], getarg(0), getarg(1);
 		if (BaseLevel < .@lvl[0] || BaseLevel > .@lvl[1]) {
-			mes "[PVP Fight Square Reception Staff]";
+			mes "[PVP Reception Staff]";
 			mes "Sorry, but you base level has to be between LV "+ .@lvl[0] +" and LV "+ .@lvl[1] +".";
 			close;
 		}
 	}
-	if (strnpcinfo(4) == "pvp_y_room") {
-		set .@base$, "pvp_y_"+strnpcinfo(2);
-		setarray .@Maps$[0],	.@base$+"-1",	.@base$+"-2",	.@base$+"-3",	.@base$+"-4",	.@base$+"-5";
-		setarray .@Name$[0],	"Prontera",		"Izlude",		"Payon",		"Alberta",		"Morroc";
-		setarray .@Limit[0],	128,			128,			128,			128,			128;
-	} else {
-		setarray .@Maps$[0],	"pvp_n_8-1",	"pvp_n_8-2",	"pvp_n_8-3",	"pvp_n_8-4",	"pvp_n_8-5";
-		setarray .@Name$[0],	"Sandwich",		"Lock on",		"Four Room",	"Under cross",	"Compass Room";
-		setarray .@Limit[0],	64,				32,				32,				32,				32;
+	setarray .@Maps$[0],	"pvp_y_1-2", "pvp_y_2-2";
+	setarray .@Name$[0],	"Izlude [ALL]", "Izlude [Trans]";
+	setarray .@Limit[0],	32, 32;
+
+	// if (strnpcinfo(4) == "pvp_y_room") {
+	// 	set .@base$, "pvp_y_"+strnpcinfo(2);
+	// 	setarray .@Maps$[0],	.@base$+"-1",	.@base$+"-2",	.@base$+"-3",	.@base$+"-4",	.@base$+"-5";
+	// 	setarray .@Name$[0],	"Prontera",		"Izlude",		"Payon",		"Alberta",		"Morroc";
+	// 	setarray .@Limit[0],	128,			128,			128,			128,			128;
+	// } else {
+	// 	setarray .@Maps$[0],	"pvp_n_8-1",	"pvp_n_8-2",	"pvp_n_8-3",	"pvp_n_8-4",	"pvp_n_8-5";
+	// 	setarray .@Name$[0],	"Sandwich",		"Lock on",		"Four Room",	"Under cross",	"Compass Room";
+	// 	setarray .@Limit[0],	64,				32,				32,				32,				32;
+	// }
+	// for(set .@i,0; .@i<5; set .@i,.@i+1)
+
+	for(.@i = 0; .@i<2; .@i++){
+		set .@menu$, .@menu$+":"+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]";
 	}
-	for(set .@i,0; .@i<5; set .@i,.@i+1)
-		set .@menu$, .@menu$+.@Name$[.@i]+" ["+getmapusers(.@Maps$[.@i])+" / "+.@Limit[.@i]+"]:";
-	set .@menu$, .@menu$+"Cancel.";
+	set .@menu$, "Cancel"+.@menu$;
 	set .@i, select(.@menu$)-1;
-	if (.@i == 5) close;
+	if (.@i == 0) close;
+	.@i--;
 	if (getmapusers(.@Maps$[.@i]) >= .@Limit[.@i]) {
-		mes "[PVP Fight Square Reception Staff]";
+		next;
+		mes "[PVP Warper]";
 		mes "This map is currently full.";
 		close;
 	}
+
+	/*
+	.@j = 0;
+	while ( $@victim_unique[.@j] != get_unique_id() && .@j < getarraysize($@victim_unique) ) { .@j++; }
+	// .@j = inarray($@victim_unique, get_unique_id());
+	if (.@j >= 0 ) {
+		if ($@victim_count[.@j] >= 10){ // Died x times already. Start delaying PvP
+			next;
+			mes "[PVP Warper]";
+			mes "You were killed too ^CC0000many^000000 times.";
+			mes "You should get stronger by getting better equipment and leveling up!";
+			mes "^FFFFFF_^000000";
+
+			@ticks = ($@victim_time[.@j] - gettimetick(2));
+			// debugmes "Unique: "+get_unique_id()+" | ticks: "+@ticks;
+			@hour = @ticks / (60 * 60);
+			@ticks = @ticks % (60 * 60);
+			@min = @ticks / 60;
+			@sec = @ticks % 60;
+			mes "^CC0000Blocked^000000 from PVP for "+@hour+" hours "+ @min +" minutes "+ @sec +" seconds.";
+			close;
+		}
+	}
+	*/
+
+	set .@eac, eaclass();
+	setarray .@block[0],9999,4050,4051,4052,4190,4191,4211,4212,4215,4218,4220,4223,4224,4229,4239,4240,4241,4242;
+	// dispbottom "third: "+(.@eac & EAJL_THIRD);
+	// dispbottom "inarray: "+(inarray(.@block, Class) > 0);
+	// dispbottom "map: "+.@menu$;
+	if (.@i == 1 && (.@eac & EAJL_THIRD | (inarray(.@block, Class) > 0) )) { // trans only
+		next;
+		mes "[PVP Warper]";
+		mes "Third Class are not allowed to join this PVP room.";
+		close;
+	}
+	set Zeny, Zeny - 1200;
 	warp .@Maps$[.@i],0,0;
 	end;
 }
@@ -320,7 +366,7 @@ function	script	F_PVP_FSRS	{
 
 
 // Event Contestant Entrance
-//============================================================ 
+//============================================================
 pvp_room,54,85,4	script	Registration Staff#1	105,{
 	if (countitem(7028) == 0) {
 		mes "[PVP Combat Square Register Staff]";
@@ -363,7 +409,7 @@ OnInit:
 }
 
 // Spectator Entrance
-//============================================================ 
+//============================================================
 -	script	Spectator's Entrance#dum::PVPSpectator	-1,{
 	if (countitem(7029) == 0) {
 		mes "[PVP Compete Square Register Staff]";
@@ -395,7 +441,7 @@ pvp_room,78,85,4	duplicate(PVPSpectator)	Spectator's Entrance#3	105
 pvp_room,86,85,4	duplicate(PVPSpectator)	Spectator's Entrance#4	105
 
 // Spectator Warps
-//============================================================ 
+//============================================================
 -	script	Combat Square Staff#dum::PVPSpecWarp	-1,{
 OnTouch_:
 	mes "[Combat Square Staff]";
@@ -430,7 +476,7 @@ pvp_2vs2,40,40,0	script	Combat Square Staff#5	45,1,1,{
 }
 
 // PVP Area Exit warp
-//============================================================ 
+//============================================================
 pvp_room,51,19,0	script	out#eventpvp	45,4,2,{
 OnTouch_:
 	mes "[Combat Square Staff]";

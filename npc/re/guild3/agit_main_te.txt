@@ -124,8 +124,65 @@ OnAgitEnd3:
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "") end;
 	gvgoff3 .@map$;
-	if (getcastledata(.@map$,CD_GUILD_ID))
+	if (getcastledata(.@map$,CD_GUILD_ID)) {
+		// -- Reward Guild Members after WoE Ends ----------------------------------------- [start]
+		// define variables
+		.@guild_id = GetCastleData(.@map$,1);
+		setarray .@unique_ids[0],0;
+		setarray .@unique_char[0],0;
+		setarray .@block[0],9999,4050,4051,4052,4190,4191,4211,4212,4215,4218,4220,4223,4224,4229,4239,4240,4241,4242,4054,4055,4056,4057,4058,4059,4066,4067,4068,4069,4070,4071,4072,4060,4061,4062,4063,4064,4065,4073,4074,4075,4076,4077,4078,4079,4096,4097,4098,4099,4100,4101,4102,4103,4104,4105,4106,4107,4108;
+
+		setarray .@items[0], 8500, 8501;
+		setarray .@items_count[0], 1, 10;
+		.@sender$ = "WoE:FE Manager";
+		.@title$ = "Congrats for WoE:FE Win!";
+		.@body_good$ = "Congratulations for Winning\r\n--------------------------------\r\n[WoE: Training Edition - Gaebolg Castle]\r\n--------------------------------\r\n\r\nWe from the [WoE Managers] will also give you\r\nsome extra insentives.\r\n\r\nHave a nice day.";
+		.@body_bad$ = "Congratulations for Winning\r\n--------------------------------\r\n[WoE: Training Edition - Gaebolg Castle]\r\n--------------------------------\r\n\r\n";
+
+
+		// get member lists
+		getguildmember .@guild_id, 1, .@members_cid;
+
+		// loop each members
+		for(.@i = 0; .@i < $@guildmembercount; .@i++) {
+			// reset query result every loop
+			deletearray .@unique; deletearray .@name$; deletearray .@aid;
+			if(query_sql("SELECT lg.last_unique_id, `ch`.`name`, `ch`.`account_id` FROM `login` AS lg LEFT JOIN `char` AS ch ON (ch.account_id = lg.account_id) WHERE ch.char_id = "+ escape_sql(.@members_cid[.@i]) +" LIMIT 1;", .@unique, .@name$, .@aid) > 0) {
+				// only online members get rewarded
+				if (isloggedin(.@aid[0], .@members_cid[.@i])) {
+					if (inarray(.@block, readparam(Class, .@members_cid[.@i])) == -1) { // trans only
+						// move index of unique array if it exists, otherwise to the end of the array
+						.@k = 0; while ( .@unique_ids[.@k] != .@unique[0] && .@k < getarraysize(.@unique_ids) ) { .@k++; }
+
+						// check if member unique id exists in the unique id list
+						if(inarray(.@unique_ids[0], .@unique[0]) == -1) {
+
+							// stores data of the member
+							.@unique_ids[.@k] = .@unique[0];
+							.@unique_char[.@k] = .@members_cid[.@i];
+
+							// gives reward to the member
+							mail .@members_cid[.@i], .@sender$, .@title$, .@body_good$, 1500000,.@items, .@items_count;
+							debugmes "Give Reward to "+ .@name$;
+						}
+						else {
+							.@body_bad$ = .@body_bad$ + "We from the [WoE Managers] have ALREADY\r\nmailed your extra insentives to ["+strcharinfo(0, .@unique_char[.@k])+"].\r\n\r\nHave a nice day.";
+							mail .@members_cid[.@i], .@sender$, .@title$, .@body_bad$;
+							debugmes "Duplicate account found: "+ .@name$+" | Reward already given to: "+strcharinfo(0, .@unique_char[.@k]);
+						}
+					}
+					else {
+						debugmes "Non-Trans account found: "+ .@name$;
+					}
+				}
+				else {
+					debugmes "Off-Line account found: "+ .@name$;
+				}
+			}
+		}
+		// -- ----------------------------------- ----------------------------------------- [end]
 		killmonster .@map$, strnpcinfo(0) +"::OnAgitBreak";
+	}
 	callsub S_Message,"OnReset";
 	end;
 
@@ -156,7 +213,7 @@ OnAgitBreak:
 			setcastledata .@map$,.@i,0;
 	}
 
-	mapannounce .@map$,"Emperium has been destroyed.",bc_map,"0x00FF00",FW_BOLD,20,0,40;
+	mapannounce .@map$,"Emperium has been destroyed by ["+strcharinfo(0)+"] from ["+strcharinfo(2)+"]!",bc_map,"0x00FF00",FW_BOLD,20,0,40;
 	maprespawnguildid .@map$,.@guild_id,2;// Respawn all but new castle-occupants, don't remove monsters.
 
 	sleep 500;
@@ -164,6 +221,8 @@ OnAgitBreak:
 		donpcevent strnpcinfo(0) +"::OnEmpSpawn";
 	sleep 7000;
 	announce "The [" + getcastlename(.@map$) + "] castle has been conquered by the [" + getguildName(.@guild_id) + "] guild.",bc_all|bc_woe;
+	donpcevent "flag_te::OnAgitBreak";
+	donpcevent "simple_info_TE::OnAgitBreak";
 	end;
 
 OnGuildBreak:
@@ -181,7 +240,7 @@ OnGuildBreak:
 S_Message:
 	.@map$ = strnpcinfo(4);
 	.@guild_id = getcastledata(.@map$,CD_GUILD_ID);
-	
+
 	if (.@guild_id)
 		announce "The [" + getcastlename(.@map$) + "] castle is occupied by the [" + getguildname(.@guild_id) + "] guild.",bc_all,"0xFF0000",FW_NORMAL,10;
 	else
@@ -1061,7 +1120,10 @@ OnClock0001:// Spawn Treasure Chests based on castle economy.
 	}
 	.@treasure_num = ( 4 + ( .@economy /5 ) ) *3;// x3 <-> data[] size
 	for ( .@i = 0; .@i < getarraysize(.@data) && .@treasure_num > .@i; .@i += 3 )// nb. [4;24] chests
+	{
+		// debugmes "Prt-boxIDs: " +.@data[.@i] +" | "+.@data[.@i+2] +" | "+ .@data[.@i];
 		monster .@map$, .@data[.@i+1], .@data[.@i+2],"Treasure Chest", .@data[.@i],1, strnpcinfo(0)+"::OnTreasureDied";
+	}
 
 OnTreasureDied:
 	end;
@@ -1118,17 +1180,27 @@ function	script	F_flag_woe_TE	{
 
 -	script	simple_info_TE	-1,{
 	callfunc( "F_flag_woe_TE",0,strnpcinfo(4) );
+	end;
+
 OnInit:
+OnAgitBreak:
 	if (strnpcinfo(4) != "")
-		flagemblem getcastledata( strnpcinfo(4),CD_GUILD_ID );
+		FlagEmblem getcastledata( strnpcinfo(4),CD_GUILD_ID );
 	end;
 }
 
 -	script	flag_te	GUILD_FLAG,{
+	callfunc( "F_flag_woe_TE",0,strnpcinfo(4) );
 	end;
+
 OnInit:
+OnAgitBreak:
+	sleep(1000);
 	if (strnpcinfo(2) != "")
-		flagemblem getcastledata( strnpcinfo(2),CD_GUILD_ID );
+	{
+		explode(.@castle_name$, strnpcinfo(2),"-");
+		FlagEmblem getcastledata( .@castle_name$[0],CD_GUILD_ID );
+	}
 	end;
 }
 

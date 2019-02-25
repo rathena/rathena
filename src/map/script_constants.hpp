@@ -4212,7 +4212,7 @@
 	export_constant(ADOPT_MORE_CHILDREN);
 	export_constant(ADOPT_LEVEL_70);
 	export_constant(ADOPT_MARRIED);
-	
+
 	/* directions */
 	export_constant(DIR_NORTH);
 	export_constant(DIR_NORTHWEST);
@@ -4270,13 +4270,13 @@
 	export_constant(STOR_MODE_NONE);
 	export_constant(STOR_MODE_GET);
 	export_constant(STOR_MODE_PUT);
-	
+
 	/* instance enter */
 	export_constant(IE_OK);
 	export_constant(IE_NOMEMBER);
 	export_constant(IE_NOINSTANCE);
 	export_constant(IE_OTHER);
-	
+
 	/* months */
 	export_constant(JANUARY);
 	export_constant(FEBRUARY);
@@ -4290,7 +4290,7 @@
 	export_constant(OCTOBER);
 	export_constant(NOVEMBER);
 	export_constant(DECEMBER);
-	
+
 	/* days of the week */
 	export_constant(SUNDAY);
 	export_constant(MONDAY);
@@ -4299,7 +4299,7 @@
 	export_constant(THURSDAY);
 	export_constant(FRIDAY);
 	export_constant(SATURDAY);
-	
+
 	/* date types */
 	export_constant(DT_SECOND);
 	export_constant(DT_MINUTE);
@@ -4818,6 +4818,34 @@
 	export_constant(IG_SANTA_GIFT);
 	export_constant(IG_PRIZEOFHERO);
 	export_constant(IG_PRIVATE_AIRSHIP);
+	export_constant(IG_MILKY_SGB);
+	export_constant(IG_MILKY_SIEGE_SB);
+	export_constant(IG_MILKY_GLOVEB);
+	export_constant(IG_MILKY_CASH_FOOD);
+	export_constant(IG_MILKY_ACIDBOMB_10_BOX);
+	export_constant(IG_MILKY_ACIDBOMB_50_BOX);
+	export_constant(IG_MILKY_POISON_10_BOX);
+	export_constant(IG_MILKY_POISON_50_BOX);
+	export_constant(IG_MILKY_BLESSING_20_BOX);
+	export_constant(IG_MILKY_ENELU_5_BOX);
+	export_constant(IG_MILKY_ENELU_10_BOX);
+	export_constant(IG_MILKY_ENORI_5_BOX);
+	export_constant(IG_MILKY_ENORI_10_BOX);
+	export_constant(IG_MILKY_HDBRA_5_BOX);
+	export_constant(IG_MILKY_HDCAR_5_BOX);
+	export_constant(IG_MILKY_HDELU_5_BOX);
+	export_constant(IG_MILKY_HDORI_5_BOX);
+	export_constant(IG_MILKY_BM_5_BOX);
+	export_constant(IG_MILKY_CM_5_BOX);
+	export_constant(IG_MILKY_BG_5_BOX);
+	export_constant(IG_MILKY_TS_5_BOX);
+	export_constant(IG_MILKY_YGG_5_BOX);
+	export_constant(IG_MILKY_GPS1_BOX);
+	export_constant(IG_MILKY_GPS2_BOX);
+	export_constant(IG_MILKY_GPS3_BOX);
+	export_constant(IG_MILKY_GP1_BOX);
+	export_constant(IG_MILKY_GP2_BOX);
+	export_constant(IG_MILKY_GPSC_BOX);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -4881,8 +4909,9 @@
 	export_constant(REFINE_COST_MAX);
 
 	/* refine information types */
-	script_set_constant("REFINE_MATERIAL_ID", 0, false, false);
-	script_set_constant("REFINE_ZENY_COST", 1, false, false);
+	export_constant(REFINE_MATERIAL_ID);
+	export_constant(REFINE_ZENY_COST);
+	export_constant(REFINE_BREAKABLE);
 
 	/* NPC view ids */
 	// Special macro to strip the prefix 'JT_'

@@ -5860,7 +5860,7 @@ izlude_d,93,143,3	duplicate(Manufacturing Maniac#0)	Manufacturing Maniac#d	2_M_A
 
 // - Repairing Blacksmith
 // -----------------------------------------------------------------------------
-izlude,147,131,5	script	Repairing Blacksmith#0	4_F_JOB_BLACKSMITH,5,7,{
+izlude,151,127,5	script	Repairing Blacksmith#0	4_F_JOB_BLACKSMITH,5,7,{
 	mes "[Working Blacksmith]";
 	mes "The guy sitting over there has been staring at Wagzak. I was told that only one knife is left after losing all weapons?";
 	next;
@@ -5873,14 +5873,14 @@ OnTouch:
 	end;
 }
 
-izlude_a,147,131,5	duplicate(Repairing Blacksmith#0)	Repairing Blacksmith#a	4_F_JOB_BLACKSMITH,5,7
-izlude_b,147,131,5	duplicate(Repairing Blacksmith#0)	Repairing Blacksmith#b	4_F_JOB_BLACKSMITH,5,7
-izlude_c,147,131,5	duplicate(Repairing Blacksmith#0)	Repairing Blacksmith#c	4_F_JOB_BLACKSMITH,5,7
-izlude_d,147,131,5	duplicate(Repairing Blacksmith#0)	Repairing Blacksmith#d	4_F_JOB_BLACKSMITH,5,7
+izlude_a,151,127,5	duplicate(Repairing Blacksmith#0)	Repairing Blacksmith#a	4_F_JOB_BLACKSMITH,5,7
+izlude_b,151,127,5	duplicate(Repairing Blacksmith#0)	Repairing Blacksmith#b	4_F_JOB_BLACKSMITH,5,7
+izlude_c,151,127,5	duplicate(Repairing Blacksmith#0)	Repairing Blacksmith#c	4_F_JOB_BLACKSMITH,5,7
+izlude_d,151,127,5	duplicate(Repairing Blacksmith#0)	Repairing Blacksmith#d	4_F_JOB_BLACKSMITH,5,7
 
 // - Refining Maniac
 // -----------------------------------------------------------------------------
-izlude,148,122,5	script	Refining Maniac#iz	4_M_SITDOWN,{
+izlude,154,143,5	script	Refining Maniac#iz	4_M_SITDOWN,{
 	mes "[Refining Maniac]";
 	mes "Shh...! Be quiet.";
 	mes "I am focusing on ^3131FFrefining^000000.";
@@ -5908,10 +5908,10 @@ izlude,148,122,5	script	Refining Maniac#iz	4_M_SITDOWN,{
 	close;
 }
 
-izlude_a,148,122,5	duplicate(Refining Maniac#iz)	Refining Maniac#iz_a	4_M_SITDOWN
-izlude_b,148,122,5	duplicate(Refining Maniac#iz)	Refining Maniac#iz_b	4_M_SITDOWN
-izlude_c,148,122,5	duplicate(Refining Maniac#iz)	Refining Maniac#iz_c	4_M_SITDOWN
-izlude_d,148,122,5	duplicate(Refining Maniac#iz)	Refining Maniac#iz_d	4_M_SITDOWN
+izlude_a,154,143,5	duplicate(Refining Maniac#iz)	Refining Maniac#iz_a	4_M_SITDOWN
+izlude_b,154,143,5	duplicate(Refining Maniac#iz)	Refining Maniac#iz_b	4_M_SITDOWN
+izlude_c,154,143,5	duplicate(Refining Maniac#iz)	Refining Maniac#iz_c	4_M_SITDOWN
+izlude_d,154,143,5	duplicate(Refining Maniac#iz)	Refining Maniac#iz_d	4_M_SITDOWN
 
 // - Otter Samssoon
 // - Allows the player to change their hair style and color once.
@@ -12567,7 +12567,7 @@ iz_ac02_d,140,139,5	duplicate(Ninja Guide#ac)	Ninja Guide#ac_d	4_M_NINJA_BLUE
 
 // - Refinery Owner Han
 // -----------------------------------------------------------------------------
-izlude,153,126,1	script	Refinery Owner Han#iz	4_M_02,{
+izlude,161,125,2	script	Refinery Owner Han#iz	4_M_02,{
 	if (!checkweight(1301,1)) {
 		mes "- Cannot progress with the dialogue because you have too many items. -";
 		close;
@@ -12815,10 +12815,10 @@ OnInit:
 	end;
 }
 
-izlude_a,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_a	4_M_02
-izlude_b,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_b	4_M_02
-izlude_c,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_c	4_M_02
-izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_02
+izlude_a,161,125,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_a	4_M_02
+izlude_b,161,125,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_b	4_M_02
+izlude_c,161,125,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_c	4_M_02
+izlude_d,161,125,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_02
 
 // - Refining Machine Wagjak
 // -----------------------------------------------------------------------------
@@ -12849,7 +12849,7 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 		mes "This item cannot be refined.";
 		close;
 	}
-	// if (!getequipisidentify(.@part)) {// getequipisidentify command removed 
+	// if (!getequipisidentify(.@part)) {// getequipisidentify command removed
 		// mes "[Refining Machine Wagjak]";
 		// mes "^FF0000- error number 5555 -^000000";
 		// mes "This item has not yet been identified.";
@@ -12977,11 +12977,11 @@ izlude_d,153,126,1	duplicate(Refinery Owner Han#iz)	Refinery Owner Han#iz_d	4_M_
 	close;
 }
 
-izlude,153,121,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz	2_MONEMUS
-izlude_a,153,121,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz_a	2_MONEMUS
-izlude_b,153,121,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz_b	2_MONEMUS
-izlude_c,153,121,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz_c	2_MONEMUS
-izlude_d,153,121,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz_d	2_MONEMUS
+izlude,158,138,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz	2_MONEMUS
+izlude_a,158,138,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz_a	2_MONEMUS
+izlude_b,158,138,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz_b	2_MONEMUS
+izlude_c,158,138,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz_c	2_MONEMUS
+izlude_d,158,138,3	duplicate(izludeWagjak)	Refining Machine Wagjak::iz_d	2_MONEMUS
 
 // - Tadde
 // -----------------------------------------------------------------------------
@@ -14169,7 +14169,7 @@ izlude_d,108,139,7	duplicate(Enchanter Almond J#iz)	Enchanter Almond J#iz_d	4_CA
 
 // = Repair Man
 // =============================================================================
-izlude,158,130,4	script	Repair Man#iz	4_M_04,{
+izlude,159,129,4	script	Repair Man#iz	4_M_04,{
 	mes "[Repair Man]";
 	mes "Repairing broken equipment!! If you have broken equipment, bring it to me anytime.";
 	next;

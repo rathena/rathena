@@ -8,6 +8,16 @@
 #include "../common/mmo.hpp" // ACCOUNT_REG2_NUM
 #include "../config/core.hpp"
 
+// (^~_~^) Gepard Shield Start
+
+#include "../common/socket.hpp"
+
+void account_gepard_update_last_unique_id(int account_id, unsigned int unique_id);
+bool account_gepard_check_unique_id(int fd, struct socket_data* s);
+int account_gepard_check_license_version(struct socket_data* s, int fd, int group_id);
+
+// (^~_~^) Gepard Shield End
+
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;
 
