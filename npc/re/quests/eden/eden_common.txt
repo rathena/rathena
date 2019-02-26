@@ -343,7 +343,7 @@ moc_para01,47,39,3	script	#warp_2_pass	111,{
 
 moc_para01,16,22,7	script	Old Adventurer#eden	900,{
 	mes "[Old Adventurer]";
-	mes "Harsh, I am strong enough even if I look old! What is his name? Laime Evenor? He just ignores me like I am a some kind of old senile bastard.";
+	mes "Harsh, I am strong enough even if I look old! What is her name? Laime Evenor? She just ignores me like I am a some kind of old senile bastard.";
 	next;
 	mes "[Old Adventurer]";
 	mes "I came here to join the Eden group! I don't deserve this!";
@@ -421,11 +421,11 @@ moc_para01,20,35,5	script	Office Assistant Neede	814,{
 	next;
 	mes "[Neede]";
 	emotion ET_OHNO;
-	mes "I don't trust Evenor. He never shows his feelings... he's going to snitch on me to my boss.";
+	mes "I don't trust Evenor. She never shows her feelings... she's going to snitch on me to my boss.";
 	next;
 	emotion ET_HNG, getnpcid(0, "Secretary Laime Evenor");
 	mes "[Laime Evenor]";
-	mes "I am not that kind of guy.";
+	mes "I am not that kind of girl.";
 	next;
 	emotion ET_KEK;
 	mes "[Neede]";
