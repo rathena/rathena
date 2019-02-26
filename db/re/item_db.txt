@@ -877,7 +877,7 @@
 1525,Long_Mace,Long Mace,5,20,,800,135,,3,0,0x00008110,63,2,2,4,40,1,8,{ bonus bLongAtkDef,10; },{},{}
 1526,Slash,Slash,5,20,,1000,145,,1,0,0x00008110,63,2,2,4,40,1,8,{ bonus2 bAddRace,RC_Undead,15; bonus2 bComaRace,RC_Undead,10; bonus2 bExpAddRace,RC_Undead,5; },{},{}
 1527,Quadrille,Quadrille,5,20,,900,165,,1,0,0x00008110,63,2,2,4,40,1,8,{ bonus2 bAddRace,RC_Undead,10; bonus2 bAddRace,RC_DemiHuman,10; bonus2 bAddRace,RC_Player,10; bonus2 bAddEle,Ele_Earth,10; },{},{}
-1528,Grand_Cross,Grand Cross,5,20,,1500,140,,1,0,0x00008110,63,2,2,4,40,1,8,{ bonus bAtkEle,Ele_Holy; skill "PR_TURNUNDEAD",3; bonus3 bAutoSpell,"PR_TURNUNDEAD",3,100; bonus2 bSPDrainValueRace,RC_Undead,1; bonus2 bSPGainRace,RC_Undead,3; },{},{}
+1528,Grand_Cross,Grand Cross,5,20,,1500,140,,1,0,0x00008110,63,2,2,4,40,1,8,{ bonus bAtkEle,Ele_Holy; bonus3 bAutoSpell,"PR_TURNUNDEAD",3,100; bonus2 bSPDrainValueRace,RC_Undead,1; bonus2 bSPGainRace,RC_Undead,3; },{},{}
 1529,Iron_Driver,Iron Driver,5,20,,3000,155,,2,0,0x00008100,63,2,2,3,78,1,8,{},{},{}
 1530,Mjolnir,Mjolnir,5,20,,6000,350,,1,0,0x000444A2,63,2,2,4,95,0,8,{ bonus bAtkEle,Ele_Wind; bonus bDex,50; bonus bStr,20; bonus bAspdRate,10; bonus3 bAutoSpell,"MG_THUNDERSTORM",10,100; autobonus "{ bonus bSplashRange,1; }",50,10000; },{},{}
 1531,Spanner,Wrench,5,20,,2500,115,,1,0,0x00008110,63,2,2,3,55,1,8,{ bonus2 bAddEff,Eff_Blind,100; bonus2 bAddEff,Eff_Stun,100; bonus2 bAddEff,Eff_Poison,100; bonus2 bAddEff,Eff_Freeze,100; },{},{}
@@ -889,7 +889,7 @@
 1537,Quadrille_C,Refined Quadrille,5,1,,0,193,,1,0,0x00008110,63,2,2,4,0,0,8,{ bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bAddRace,RC_Demon,40; bonus2 bAddRace,RC_Undead,40; },{},{}
 1538,Spike_,Spike,5,20,,700,85,,1,2,0x00008110,63,2,2,4,40,1,8,{ bonus bCritical,40; bonus bDefRate,-67; bonus bDef2Rate,-67; },{},{}
 1539,Golden_Mace_,Golden Mace,5,20,,800,110,,1,2,0x00008110,63,2,2,4,40,1,8,{ bonus2 bAddRace,RC_Undead,10; bonus bUnbreakableWeapon; },{},{}
-1540,Grand_Cross_,Grand Cross,5,20,,1500,140,,1,1,0x00008110,63,2,2,4,40,1,8,{ bonus bAtkEle,Ele_Holy; skill "PR_TURNUNDEAD",3; bonus3 bAutoSpell,"PR_TURNUNDEAD",3,100; bonus2 bSPDrainValueRace,RC_Undead,1; bonus2 bSPGainRace,RC_Undead,3; },{},{}
+1540,Grand_Cross_,Grand Cross,5,20,,1500,140,,1,1,0x00008110,63,2,2,4,40,1,8,{ bonus bAtkEle,Ele_Holy; bonus3 bAutoSpell,"PR_TURNUNDEAD",3,100; bonus2 bSPDrainValueRace,RC_Undead,1; bonus2 bSPGainRace,RC_Undead,3; },{},{}
 1541,Nemesis,Nemesis,5,20,,900,120,,1,0,0x00008110,63,2,2,4,60,1,8,{ bonus bAtkEle,Ele_Holy; bonus2 bAddRace,RC_Undead,10; bonus2 bAddRace,RC_Demon,10; bonus3 bAutoSpell,"AL_CRUCIS",1+getrefine(),100; autobonus "{ bonus bBaseAtk,50; }",10,20000,BF_WEAPON,"{ specialeffect2 EF_BLOODDRAIN; }"; },{},{}
 1542,BF_Morning_Star1,Valorous Battlefield Morning Star,5,20,,0,105,,1,0,0x0004C5B3,63,2,2,3,80,1,8,{ bonus bStr,1; bonus bDex,1; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bAddRace,RC_Player,75; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player,20; bonus bUnbreakableWeapon; },{},{}
 1543,BF_Morning_Star2,Brave Battlefield Morning Star,5,20,,0,105,,1,0,0x0004C5B3,63,2,2,3,80,1,8,{ bonus bStr,1; bonus bDex,1; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bAddRace,RC_Player,75; bonus bUnbreakableWeapon; autobonus "{ bonus2 bAddEff,Eff_Stun,5000; }",10,6000,BF_WEAPON,"{ specialeffect2 EF_POTION_BERSERK; }"; },{},{}
