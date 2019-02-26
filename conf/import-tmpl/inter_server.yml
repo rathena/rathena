@@ -10,12 +10,12 @@
 #	  Table: "<storage_table>"  // (string) Name of table where storage is saved. The table stucture is the same as the default storage table.
 #	  Max: <max_amount>         // (int) *optional* Maximum number of items in storage. MAX_STORAGE will be used if no value is defined.
 ###############################################################################################################################################
-#Storages:
+Header:
+  Type: INTER_SERVER_DB
+  Version: 1
+
+#Body:
 #   - ID: 1
 #     Name: "VIP Storage"
 #     Table: "vip_storage"
 #     Max: 300
-
-Header:
-  Type: INTER_SERVER_DB
-  Version: 1

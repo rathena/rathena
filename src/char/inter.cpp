@@ -35,6 +35,9 @@
 #include "int_quest.hpp"
 #include "int_storage.hpp"
 
+std::string cfgFile = "inter_athena.yml"; ///< Inter-Config file
+InterServerDatabase interServerDb;
+
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
 #define WISDELLIST_MAX 256		// Number of elements in the list Delete data Wis
 
@@ -47,7 +50,6 @@ char char_server_id[32] = "ragnarok";
 char char_server_pw[32] = ""; // Allow user to send empty password (bugreport:7787)
 char char_server_db[32] = "ragnarok";
 char default_codepage[32] = ""; //Feature by irmin.
-struct Inter_Config interserv_config;
 unsigned int party_share_level = 10;
 
 /// Received packet Lengths from map-server
@@ -820,7 +822,7 @@ int inter_config_read(const char* cfgName)
 		else if(!strcmpi(w1,"log_inter"))
 			charserv_config.log_inter = atoi(w2);
 		else if(!strcmpi(w1,"inter_server_conf"))
-			interserv_config.cfgFile = w2;
+			cfgFile = w2;
 		else if(!strcmpi(w1,"import"))
 			inter_config_read(w2);
 	}
@@ -849,88 +851,85 @@ int inter_log(const char* fmt, ...)
 	return 0;
 }
 
+const std::string InterServerDatabase::getDefaultLocation(){
+	return std::string(conf_path) + "/" + cfgFile;
+}
+
 /**
  * Reads and parses an entry from the inter_server.
  * @param node: YAML node containing the entry.
- * @param n: The sequential index of the current entry.
- * @param source: The source YAML file.
- * @return True on successful parse or false otherwise
+ * @return count of successfully parsed rows
  */
-bool inter_server_read_db_sub(const YAML::Node &node, const std::string &source)
-{
-	unsigned int id;
+uint64 InterServerDatabase::parseBodyNode( const YAML::Node& node ){
+	uint32 id;
 
-	if (!node["ID"]) {
-		YamlDatabase::invalidWarning("inter_server_read_db_sub: Storage definition with no ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
+	if( !this->asUInt32( node, "ID", id ) ){
+		return 0;
 	}
 
-	try {
-		id = node["ID"].as<unsigned int>();
-	}
-	catch (const std::exception&) {
-		YamlDatabase::invalidWarning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
+	auto storage_table = this->find( id );
+	bool existing = storage_table != nullptr;
 
-	if (id > UINT8_MAX) {
-		YamlDatabase::invalidWarning("inter_server_read_db_sub: Storage definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-
-	bool existing = inter_premiumStorage_exists(id);
-	auto storage_table = existing ? interserv_config.storages[id] : std::make_shared<s_storage_table>();
-
-	if (!existing && (!node["Name"] || !node["Table"])) {
-		YamlDatabase::invalidWarning("inter_server_read_db_sub: Invalid storage definition in '" CL_WHITE "%s" CL_RESET "'.\n", node, source);
-		return false;
-	}
-
-	if (node["Name"])
-		safestrncpy(storage_table->name, node["Name"].as<std::string>().c_str(), NAME_LENGTH);
-	if (node["Table"])
-		safestrncpy(storage_table->table, node["Table"].as<std::string>().c_str(), DB_NAME_LEN);
-	if (node["Max"]) {
-		try {
-			storage_table->max_num = node["Max"].as<uint16>();
+	if( !existing ){
+		if( !this->nodeExists( node, "Name" ) ){
+			this->invalidWarning( node, "Node \"Name\" is missing.\n" );
+			return 0;
 		}
-		catch (const std::exception&) {
-			YamlDatabase::invalidWarning("inter_server_read_db_sub: Storage definition with invalid Max field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	} else if (!existing)
-		storage_table->max_num = MAX_STORAGE;
 
-	if (!existing) {
+		if( !this->nodeExists( node, "Table" ) ){
+			this->invalidWarning( node, "Node \"Table\" is missing.\n" );
+			return 0;
+		}
+
+		storage_table = std::make_shared<s_storage_table>();
+
 		storage_table->id = (uint8)id;
-		interserv_config.storages[id] = storage_table;
 	}
 
-	return true;
-}
+	if( this->nodeExists( node, "Name" ) ){
+		std::string name;
 
-/**
- * Loads storages from the inter-server db.
- */
-void inter_config_readConf(void) {
-	YamlDatabase db("INTER_SERVER_DB", 1);
+		if( !this->asString( node, "Name", name ) ){
+			return 0;
+		}
 
-	if (!db.parse(interserv_config.cfgFile, CONF_DB, inter_server_read_db_sub))
-		return;
-}
+		safestrncpy( storage_table->name, name.c_str(), NAME_LENGTH );
+	}
 
-void inter_config_finalConf(void) {
+	if( this->nodeExists( node, "Table" ) ){
+		std::string table;
 
-}
+		if( !this->asString( node, "Table", table ) ){
+			return 0;
+		}
 
-void inter_config_defaults(void) {
-	interserv_config.cfgFile = "inter_server.yml";
+		safestrncpy( storage_table->table, table.c_str(), DB_NAME_LEN );
+	}
+
+	if( this->nodeExists( node, "Max" ) ){
+		uint16 max;
+
+		if( !this->asUInt16( node, "Max", max ) ){
+			return 0;
+		}
+
+		storage_table->max_num = max;
+	}else{
+		if( !existing ){
+			storage_table->max_num = MAX_STORAGE;
+		}
+	}
+
+	if( !existing ){
+		this->put( storage_table->id, storage_table );
+	}
+
+	return 1;
 }
 
 // initialize
 int inter_init_sql(const char *file)
 {
-	inter_config_defaults();
 	inter_config_read(file);
 
 	//DB connection initialized
@@ -951,7 +950,7 @@ int inter_init_sql(const char *file)
 	}
 
 	wis_db = idb_alloc(DB_OPT_RELEASE_DATA);
-	inter_config_readConf();
+	interServerDb.load();
 	inter_guild_sql_init();
 	inter_storage_sql_init();
 	inter_party_sql_init();
@@ -972,7 +971,6 @@ void inter_final(void)
 {
 	wis_db->destroy(wis_db, NULL);
 
-	inter_config_finalConf();
 	inter_guild_sql_final();
 	inter_storage_sql_final();
 	inter_party_sql_final();
@@ -995,13 +993,13 @@ void inter_final(void)
  * @param fd
  **/
 void inter_Storage_sendInfo(int fd) {
-	int size = sizeof(struct s_storage_table), len = 4 + interserv_config.storages.size() * size, offset;
+	int size = sizeof(struct s_storage_table), len = 4 + interServerDb.size() * size, offset;
 	// Send storage table information
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = 0x388c;
 	WFIFOW(fd, 2) = len;
 	offset = 4;
-	for (auto storage : interserv_config.storages) {
+	for( auto storage : interServerDb ){
 		memcpy(WFIFOP(fd, offset), storage.second.get(), size);
 		offset += size;
 	}

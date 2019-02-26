@@ -36,3 +36,7 @@ Body:
   - ID: 0
     Name: "Storage"
     Table: "storage"
+
+Footer:
+  Imports:
+    - Path: conf/import/inter_server.yml

@@ -12,21 +12,24 @@ bool YamlDatabase::nodeExists( const YAML::Node& node, const std::string& name )
 		}else{
 			return false;
 		}
+	// TODO: catch( ... ) instead?
 	}catch( const YAML::InvalidNode& ){
+		return false;
+	}catch( const YAML::BadSubscript& ){
 		return false;
 	}
 }
 
 bool YamlDatabase::verifyCompatibility( const YAML::Node& rootNode ){
-	if( !nodeExists( rootNode, "Header" ) ){
-		ShowError( "No database header was found.\n" );
+	if( !this->nodeExists( rootNode, "Header" ) ){
+		ShowError( "No database \"Header\" was found.\n" );
 		return false;
 	}
 
 	const YAML::Node& headerNode = rootNode["Header"];
 
-	if( !nodeExists( headerNode, "Type" ) ){
-		ShowError( "No database type was found.\n" );
+	if( !this->nodeExists( headerNode, "Type" ) ){
+		ShowError( "No database \"Type\" was found.\n" );
 		return false;
 	}
 
@@ -40,24 +43,28 @@ bool YamlDatabase::verifyCompatibility( const YAML::Node& rootNode ){
 
 	uint16 tmpVersion;
 
-	if( !this->asUInt16( headerNode, "Version", &tmpVersion ) ){
-		ShowError("Invalid header version type for %s database.\n", this->type.c_str());
+	if( !this->asUInt16( headerNode, "Version", tmpVersion ) ){
+		ShowError("Invalid header \"Version\" type for %s database.\n", this->type.c_str());
 		return false;
 	}
 
 	if( tmpVersion != this->version ){
 		if( tmpVersion > this->version ){
-			ShowError( "Your database version %hu is not supported by your server. Maximum version is: %hu\n", tmpVersion, this->version );
+			ShowError( "Database version %hu is not supported. Maximum version is: %hu\n", tmpVersion, this->version );
 			return false;
 		}else if( tmpVersion >= this->minimumVersion ){
-			ShowWarning( "Your database version %hu is outdated and should be updated. Current version is: %hu\n", tmpVersion, this->minimumVersion );
+			ShowWarning( "Database version %hu is outdated and should be updated. Current version is: %hu\n", tmpVersion, this->minimumVersion );
 		}else{
-			ShowError( "Your database version %hu is not supported anymore by your server. Minimum version is: %hu\n", tmpVersion, this->minimumVersion );
+			ShowError( "Database version %hu is not supported anymore. Minimum version is: %hu\n", tmpVersion, this->minimumVersion );
 			return false;
 		}
 	}
 
 	return true;
+}
+
+bool YamlDatabase::load(){
+	return this->load( this->getDefaultLocation() );
 }
 
 bool YamlDatabase::load(const std::string& path) {
@@ -72,172 +79,152 @@ bool YamlDatabase::load(const std::string& path) {
 		return false;
 	}
 
+	// Required here already for header error reporting
+	this->currentFile = path;
+
 	if (!this->verifyCompatibility(rootNode)){
-		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), path.c_str());
+		ShowError("Failed to verify compatibility with %s database file from '" CL_WHITE "%s" CL_RESET "'.\n", this->type.c_str(), this->currentFile.c_str());
 		return false;
 	}
 
-	this->root = rootNode;
+	this->parse( rootNode );
+
+	this->parseImports( rootNode );
 
 	return true;
 }
 
-const YAML::Node& YamlDatabase::getRootNode(){
-	return this->root;
-}
+void YamlDatabase::parse( const YAML::Node& rootNode ){
+	uint64 count = 0;
 
-bool YamlDatabase::parse(const std::string &filename, e_yamldb_location location, std::function<bool(const YAML::Node, const std::string)> func) {
-	std::vector<std::string> db_filename = YamlDatabase::getLocations(filename, location);
-
-	for (auto &current_file : db_filename) {
-		int count = 0;
-
-		if (!this->load(current_file.c_str()))
-			return false;
-
-		for (const auto &node : this->getRootNode()["Body"]) {
-			if (node.IsDefined() && func(node, current_file))
-				count++;
+	if( this->nodeExists( rootNode, "Body" ) ){
+		for( const auto &node : rootNode["Body"] ){
+			if( node.IsDefined() ){
+				count += this->parseBodyNode( node );
+			}
 		}
 
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, current_file.c_str());
+		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, this->currentFile.c_str());
 	}
-
-	return true;
 }
 
-std::vector<std::string> YamlDatabase::getLocations(const std::string &filename, e_yamldb_location location)
-{
-	switch (location) {
-		case NORMAL_DB: // Non-split Database
-			return std::vector<std::string> { std::string(db_path) + "/" + filename, std::string(db_path) + "/" + std::string(DBIMPORT) + "/" + filename };
-		case SPLIT_DB: // Split Database (pre-renewal / renewal)
-			return std::vector<std::string> { std::string(db_path) + "/" + std::string(DBPATH) + filename, std::string(db_path) + "/" + std::string(DBIMPORT) + "/" + filename };
-		case CONF_DB: // Conf Database
-			return std::vector<std::string> { std::string(conf_path) + "/" + filename, std::string(conf_path) + "/import/" + filename };
-	}
+void YamlDatabase::parseImports( const YAML::Node& rootNode ){
+	if( this->nodeExists( rootNode, "Footer" ) ){
+		const YAML::Node& footerNode = rootNode["Footer"];
 
-	return {};
+		if( this->nodeExists( footerNode, "Imports") ){
+			for( const YAML::Node& node : footerNode["Imports"] ){
+				std::string importFile;
+
+				if( !this->asString( node, "Path", importFile ) ){
+					continue;
+				}
+
+				if( this->nodeExists( node, "Mode" ) ){
+					std::string mode;
+
+					if( !this->asString( node, "Mode", mode ) ){
+						continue;
+					}
+
+#ifdef RENEWAL
+					std::string compiledMode = "Renewal";
+#else
+					std::string compiledMode = "Prerenewal";
+#endif
+
+					if( compiledMode != mode ){
+						// Skip this import
+						continue;
+					}
+				}				
+
+				this->load( importFile );
+			}
+		}
+	}
 }
 
-template <typename R> bool asType( const YAML::Node& node, const std::string& name, R* out, R* defaultValue ){
-	if( out == nullptr ){
-		ShowFatalError( "asType: No output pointer was given.\n" );
-		return false;
-	}else if( YamlDatabase::nodeExists( node, name ) ){
+template <typename R> bool YamlDatabase::asType( const YAML::Node& node, const std::string& name, R& out ){
+	if( this->nodeExists( node, name ) ){
 		const YAML::Node& dataNode = node[name];
 
 		try {
 			R value = dataNode.as<R>();
 
-			*out = value;
+			out = value;
 
 			return true;
 		}catch( const YAML::BadConversion& ){
-			if( defaultValue != nullptr ){
-				ShowWarning( "Unable to parse \"%s\" in line %d. Using default value...\n", name.c_str(), dataNode.Mark().line + 1 );
-
-				*out = *defaultValue;
-
-				return true;
-			}else{
-				ShowError( "Unable to parse \"%s\" in line %d.\n", name.c_str(), dataNode.Mark().line + 1 );
-				return false;
-			}
+			this->invalidWarning( dataNode, "Unable to parse \"%s\".\n", name.c_str() );
+			return false;
 		}
-	// If the field was optional and a default value was provided
-	}else if( defaultValue != nullptr ){
-		*out = *defaultValue;
-		return true;
 	}else{
-		ShowError( "Missing node \"%s\" in line %d.\n", name.c_str(), node.Mark().line + 1 );
+		this->invalidWarning( node, "Missing node \"%s\".\n", name.c_str() );
 		return false;
 	}
 }
 
-bool YamlDatabase::asBool(const YAML::Node &node, const std::string &name, bool *out) {
-	return asType<bool>(node, name, out, nullptr);
+bool YamlDatabase::asBool(const YAML::Node &node, const std::string &name, bool &out) {
+	return asType<bool>(node, name, out);
 }
 
-bool YamlDatabase::asBool(const YAML::Node &node, const std::string &name, bool *out, bool defaultValue) {
-	return asType<bool>(node, name, out, &defaultValue);
+bool YamlDatabase::asInt16( const YAML::Node& node, const std::string& name, int16& out ){
+	return asType<int16>( node, name, out);
 }
 
-bool YamlDatabase::asInt16( const YAML::Node& node, const std::string& name, int16* out ){
-	return asType<int16>( node, name, out, nullptr );
+bool YamlDatabase::asUInt16(const YAML::Node& node, const std::string& name, uint16& out) {
+	return asType<uint16>(node, name, out);
 }
 
-bool YamlDatabase::asInt16( const YAML::Node& node, const std::string& name, int16* out, int16 defaultValue ){
-	return asType<int16>( node, name, out, &defaultValue );
+bool YamlDatabase::asInt32(const YAML::Node &node, const std::string &name, int32 &out) {
+	return asType<int32>(node, name, out);
 }
 
-bool YamlDatabase::asUInt16(const YAML::Node& node, const std::string& name, uint16* out) {
-	return asType<uint16>(node, name, out, nullptr);
+bool YamlDatabase::asUInt32(const YAML::Node &node, const std::string &name, uint32 &out) {
+	return asType<uint32>(node, name, out);
 }
 
-bool YamlDatabase::asUInt16(const YAML::Node& node, const std::string& name, uint16* out, uint16 defaultValue) {
-	return asType<uint16>(node, name, out, &defaultValue);
+bool YamlDatabase::asInt64(const YAML::Node &node, const std::string &name, int64 &out) {
+	return asType<int64>(node, name, out);
 }
 
-bool YamlDatabase::asInt32(const YAML::Node &node, const std::string &name, int32 *out) {
-	return asType<int32>(node, name, out, nullptr);
+bool YamlDatabase::asUInt64(const YAML::Node &node, const std::string &name, uint64 &out) {
+	return asType<uint64>(node, name, out);
 }
 
-bool YamlDatabase::asInt32(const YAML::Node &node, const std::string &name, int32 *out, int32 defaultValue) {
-	return asType<int32>(node, name, out, &defaultValue);
+bool YamlDatabase::asFloat(const YAML::Node &node, const std::string &name, float &out) {
+	return asType<float>(node, name, out);
 }
 
-bool YamlDatabase::asUInt32(const YAML::Node &node, const std::string &name, uint32 *out) {
-	return asType<uint32>(node, name, out, nullptr);
+bool YamlDatabase::asDouble(const YAML::Node &node, const std::string &name, double &out) {
+	return asType<double>(node, name, out);
 }
 
-bool YamlDatabase::asUInt32(const YAML::Node &node, const std::string &name, uint32 *out, uint32 defaultValue) {
-	return asType<uint32>(node, name, out, &defaultValue);
+bool YamlDatabase::asString(const YAML::Node &node, const std::string &name, std::string &out) {
+	return asType<std::string>(node, name, out);
 }
 
-bool YamlDatabase::asInt64(const YAML::Node &node, const std::string &name, int64 *out) {
-	return asType<int64>(node, name, out, nullptr);
-}
+void YamlDatabase::invalidWarning( const YAML::Node &node, const char* fmt, ... ){
+	va_list ap;
 
-bool YamlDatabase::asInt64(const YAML::Node &node, const std::string &name, int64 *out, int64 defaultValue) {
-	return asType<int64>(node, name, out, &defaultValue);
-}
+	va_start(ap, fmt);
 
-bool YamlDatabase::asUInt64(const YAML::Node &node, const std::string &name, uint64 *out) {
-	return asType<uint64>(node, name, out, nullptr);
-}
+	_vShowMessage( MSG_ERROR, fmt, ap );
 
-bool YamlDatabase::asUInt64(const YAML::Node &node, const std::string &name, uint64 *out, uint64 defaultValue) {
-	return asType<uint64>(node, name, out, &defaultValue);
-}
+	va_end(ap);
 
-bool YamlDatabase::asFloat(const YAML::Node &node, const std::string &name, float *out) {
-	return asType<float>(node, name, out, nullptr);
-}
+	ShowError( "Occurred in file '" CL_WHITE "%s" CL_RESET "' on line %d and column %d.\n", this->currentFile.c_str(), node.Mark().line + 1, node.Mark().column );
 
-bool YamlDatabase::asFloat(const YAML::Node &node, const std::string &name, float *out, float defaultValue) {
-	return asType<float>(node, name, out, &defaultValue);
-}
-
-bool YamlDatabase::asDouble(const YAML::Node &node, const std::string &name, double *out) {
-	return asType<double>(node, name, out, nullptr);
-}
-
-bool YamlDatabase::asDouble(const YAML::Node &node, const std::string &name, double *out, double defaultValue) {
-	return asType<double>(node, name, out, &defaultValue);
-}
-
-bool YamlDatabase::asString(const YAML::Node &node, const std::string &name, std::string *out) {
-	return asType<std::string>(node, name, out, nullptr);
-}
-
-bool YamlDatabase::asString(const YAML::Node &node, const std::string &name, std::string *out, std::string defaultValue) {
-	return asType<std::string>(node, name, out, &defaultValue);
-}
-
-void YamlDatabase::invalidWarning(const char* fmt, const YAML::Node &node, const std::string &file) {
+#ifdef DEBUG
 	YAML::Emitter out;
+
 	out << node;
-	ShowWarning(fmt, file.c_str());
-	ShowMessage("%s\n", out.c_str());
+
+	ShowMessage( "%s\n", out.c_str() );
+#endif
+}
+
+std::string YamlDatabase::getCurrentFile(){
+	return this->currentFile;
 }
