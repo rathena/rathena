@@ -984,7 +984,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 	//if(sd->npc_id)
 	//	return 1;
 
-	if (sd->block_action.npcclick)
+	if (sd->state.block_action & PCBLOCK_NPCCLICK)
 		return 0;
 
 	struct map_data *mapdata = map_getmapdata(m);
@@ -1287,9 +1287,9 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	//Hidden/Disabled npc.
 	if (nd->class_ < 0 || nd->sc.option&(OPTION_INVISIBLE|OPTION_HIDE))
 		return 1;
-	
-	if (sd->block_action.npcclick) {
-		clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+
+	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
+		clif_msg(sd, WORK_IN_PROGRESS);
 		return 1;
 	}
 

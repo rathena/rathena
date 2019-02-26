@@ -251,7 +251,6 @@ struct map_session_data {
 		unsigned int noask :1; // [LuzZza]
 		unsigned int trading :1; //[Skotlex] is 1 only after a trade has started.
 		unsigned int deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
-		unsigned int monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
 		unsigned int size :2; // for tiny/large types
 		unsigned int night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
 		unsigned int using_fake_npc :1;
@@ -289,6 +288,7 @@ struct map_session_data {
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 		bool cashshop_open;
 		bool sale_open;
+		unsigned int block_action;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -731,16 +731,6 @@ struct map_session_data {
 	uint8 hatEffectCount;
 #endif
 
-
-	struct {
-		// move and skill are defined in unit.hpp::unit_data as it can be applicable to all objects.
-		unsigned attack   : 1;
-		unsigned useitem  : 1;
-		unsigned chat     : 1;
-		unsigned sitstand : 1;
-		unsigned commands : 1;
-		unsigned npcclick : 1;
-	} block_action;
 };
 
 extern struct eri *pc_sc_display_ers; /// Player's SC display table

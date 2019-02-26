@@ -5972,7 +5972,7 @@ ACMD_FUNC(autotrade) {
 
 	sd->state.autotrade = 1;
 	if (battle_config.autotrade_monsterignore)
-		sd->state.monster_ignore = 1;
+		sd->state.block_action |= PCBLOCK_IMMUNE;
 
 	if( sd->state.vending ){
 		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_table, sd->vender_id ) != SQL_SUCCESS ){
@@ -6629,7 +6629,7 @@ ACMD_FUNC(npctalk)
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
 
-	if (sd->sc.cant.chat || sd->block_action.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return -1; //no "chatting" while muted.
 
 	if(!ifcolor) {
@@ -6678,7 +6678,7 @@ ACMD_FUNC(pettalk)
 		return -1;
 	}
 
-	if (sd->sc.cant.chat || sd->block_action.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return -1; //no "chatting" while muted.
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", mes) < 1) {
@@ -7562,7 +7562,7 @@ ACMD_FUNC(homtalk)
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
 
-	if (sd->sc.cant.chat || sd->block_action.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return -1; //no "chatting" while muted.
 
 	if ( !hom_is_active(sd->hd) ) {
@@ -7970,7 +7970,7 @@ ACMD_FUNC(me)
 	memset(tempmes, '\0', sizeof(tempmes));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (sd->sc.cant.chat || sd->block_action.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return -1; //no "chatting" while muted.
 
 	if (!message || !*message || sscanf(message, "%255[^\n]", tempmes) < 0) {
@@ -8090,12 +8090,12 @@ ACMD_FUNC(monsterignore)
 {
 	nullpo_retr(-1, sd);
 
-	if (!sd->state.monster_ignore) {
-		sd->state.monster_ignore = 1;
-		clif_displaymessage(sd->fd, msg_txt(sd,1305)); // You are now immune to attacks.
-	} else {
-		sd->state.monster_ignore = 0;
+	if (sd->state.block_action & PCBLOCK_IMMUNE) {
+		sd->state.block_action &= ~PCBLOCK_IMMUNE;
 		clif_displaymessage(sd->fd, msg_txt(sd,1306)); // Returned to normal state.
+	} else {
+		sd->state.block_action |= PCBLOCK_IMMUNE;
+		clif_displaymessage(sd->fd, msg_txt(sd,1305)); // You are now immune to attacks.
 	}
 
 	return 0;
@@ -10559,7 +10559,7 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	if( sscanf(atcmd_msg, "%255s %255[^\n]", command, params) < 2 )
 		params[0] = '\0';
 
-	if (type == 1 && sd->block_action.commands) {
+	if (type == 1 && (sd->state.block_action & PCBLOCK_COMMANDS)) {
 		sprintf(output,msg_txt(sd,154), command); // %s failed.
 		clif_displaymessage(fd, output);
 		return true;

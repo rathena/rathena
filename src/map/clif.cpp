@@ -10113,7 +10113,7 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 	if( is_atcommand( fd, sd, out_message, 1 )  )
 		return false;
 
-	if (sd->sc.cant.chat || sd->block_action.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return false; //no "chatting" while muted.
 
 	if( battle_config.min_chat_delay ) { //[Skotlex]
@@ -11187,7 +11187,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		)) //No sitting during these states either.
 			break;
 
-		if (sd->block_action.sitstand) {
+		if (sd->state.block_action & PCBLOCK_SITSTAND) {
 			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
 			break;
 		}
@@ -11209,7 +11209,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		if (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 			break;
 
-		if (sd->block_action.sitstand) {
+		if (sd->state.block_action & PCBLOCK_SITSTAND) {
 			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
 			break;
 		}
@@ -11496,7 +11496,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID )
+	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || (sd->state.block_action & PCBLOCK_USEITEM) )
 		return;
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]
@@ -12210,6 +12210,9 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 	if (inf&INF_GROUND_SKILL || !inf)
 		return; //Using a ground/passive skill on a target? WRONG.
 
+	if (sd->state.block_action & PCBLOCK_SKILL)
+		return;
+
 	if( SKILL_CHK_HOMUN(skill_id) ) {
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skill_id, skill_lv, target_id);
 		return;
@@ -12322,6 +12325,9 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 
 	if( !(skill_get_inf(skill_id)&INF_GROUND_SKILL) )
 		return; //Using a target skill on the ground? WRONG.
+
+	if (sd->state.block_action & PCBLOCK_SKILL)
+		return;
 
 	if( SKILL_CHK_HOMUN(skill_id) ) {
 		clif_parse_UseSkillToPos_homun(sd->hd, sd, tick, skill_id, skill_lv, x, y, skillmoreinfo);

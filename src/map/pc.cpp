@@ -5006,11 +5006,6 @@ int pc_useitem(struct map_session_data *sd,int n)
 			return 0;
 	}
 
-	if (sd->block_action.useitem) {
-		clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
-		return 0;
-	}
-
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
@@ -9115,7 +9110,7 @@ bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 	if( pc_is90overweight(sd) || pc_isridingwug(sd) )
 		return false;
 
-	if (sd->block_action.attack)
+	if (sd->state.block_action & PCBLOCK_ATTACK)
 		return false;
 
 	if( sd->sc.data[SC_BASILICA] ||

@@ -17242,34 +17242,11 @@ BUILDIN_FUNC(pcblock)
 		return SCRIPT_CMD_SUCCESS;
 
 	enum e_pcblock_action_flag type = (e_pcblock_action_flag)script_getnum(st, 2);
-	bool state = (script_getnum(st, 3) > 0) ? true : false;
 
-	if (type & PCBLOCK_MOVE)
-		sd->ud.state.blockedmove = state;
-
-	if (type & PCBLOCK_ATTACK)
-		sd->block_action.attack = state;
-
-	if (type & PCBLOCK_SKILL)
-		sd->ud.state.blockedskill = state;
-
-	if (type & PCBLOCK_USEITEM)
-		sd->block_action.useitem = state;
-
-	if (type & PCBLOCK_CHAT)
-		sd->block_action.chat = state;
-
-	if (type & PCBLOCK_IMMUNE)
-		sd->state.monster_ignore = state;
-
-	if (type & PCBLOCK_SITSTAND) 
-		sd->block_action.sitstand = state;
-
-	if (type & PCBLOCK_COMMANDS)
-		sd->block_action.commands = state;
-
-	if (type & PCBLOCK_NPCCLICK)
-		sd->block_action.npcclick = state;
+	if (script_getnum(st, 3) > 0)
+		sd->state.block_action |= type;
+	else
+		sd->state.block_action &= ~type;
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -17278,41 +17255,10 @@ BUILDIN_FUNC(checkpcblock)
 {
 	TBL_PC *sd;
 
-	if (!script_mapid2sd(2, sd)) {
-		script_pushint(st, PCBLOCK_NONE);
-		return SCRIPT_CMD_SUCCESS;
-	}
-
-	int retval = PCBLOCK_NONE;
-
-	if (sd->ud.state.blockedmove)
-		retval |= PCBLOCK_MOVE;
-
-	if (sd->block_action.attack)
-		retval |= PCBLOCK_ATTACK;
-
-	if (sd->ud.state.blockedskill)
-		retval |= PCBLOCK_SKILL;
-
-	if (sd->block_action.useitem)
-		retval |= PCBLOCK_USEITEM;
-
-	if (sd->block_action.chat)
-		retval |= PCBLOCK_CHAT;
-
-	if (sd->state.monster_ignore)
-		retval |= PCBLOCK_IMMUNE;
-
-	if (sd->block_action.sitstand)
-		retval |= PCBLOCK_SITSTAND;
-
-	if (sd->block_action.commands)
-		retval |= PCBLOCK_COMMANDS;
-
-	if (sd->block_action.npcclick)
-		retval |= PCBLOCK_NPCCLICK;
-
-	script_pushint(st, retval);
+	if (!script_mapid2sd(2, sd))
+		script_pushint(st, 0);
+	else
+		script_pushint(st, sd->state.block_action);
 	return SCRIPT_CMD_SUCCESS;
 }
 
