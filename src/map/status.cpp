@@ -11323,7 +11323,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_SOULGOLEM:
-			val2 = 60 * val1 / 10;// DEF Increase
+			#ifdef RENEWAL
+				val2 = 60 * val1;// DEF Increase
+			#else
+				val2 = 60 * val1/10;// DEF Increase
+			#endif
 			val3 = 15 + 5 * val1;// MDEF Increase
 			break;
 		case SC_SOULSHADOW:
