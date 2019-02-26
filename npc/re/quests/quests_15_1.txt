@@ -1457,7 +1457,7 @@ verus04,172,149,3	script	Commander Arquien#e152v0	4_F_EDEN_MASTER,{
 			mes "[Nile]";
 			if (VER_MAIN >= 37) {
 				cutin "Arquien_n_atnad02.bmp",2;
-				mes "The truth is I didn't really have hard feelings torward my father.";
+				mes "The truth is I didn't really have hard feelings torwards my father.";
 				mes "I just wanted to hear one apology...";
 				close3;
 			}
@@ -7309,11 +7309,11 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		emotion ET_HUK, getnpcid(0, "Tamarin#ep15_1elb");
 		cutin "ep143_taang.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "You guys,";
 		mes "stop fighting.";
 		mes "The floor feels dangerously unstable.";
-		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Alp#ep15_1elb");
+		emotion ET_PROFUSELY_SWEAT, getnpcid(0, "Alph#ep15_1elb");
 		cutin "bu_alp2.bmp",2;
 		next;
 		mes "[Scarlet]";
@@ -7325,7 +7325,7 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		emotion ET_HUK, getnpcid(0, "Du#ep15_1elb");
 		emotion ET_HUK, getnpcid(0, "Mark#ep15_1elb");
 		emotion ET_HUK, getnpcid(0, "Tamarin#ep15_1elb");
-		emotion ET_HUK, getnpcid(0, "Alp#ep15_1elb");
+		emotion ET_HUK, getnpcid(0, "Alph#ep15_1elb");
 		emotion ET_HUK, getnpcid(0, "Maggi#ep15_1elb");
 		next;
 		mes "[Maggi]";
@@ -7463,10 +7463,10 @@ verus04,119,220,3	script	Guide Scarlet#ep15_1bs	4_M_TELEPORTER,{
 		emotion ET_THANKS, getnpcid(0, "Tamarin#ep15_1elb");
 		cutin "ep143_tasmi.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "...Thank you.";
 		cutin "bu_alp1.bmp",2;
-		emotion ET_THANKS, getnpcid(0, "Alp#ep15_1elb");
+		emotion ET_THANKS, getnpcid(0, "Alph#ep15_1elb");
 		next;
 		mes "[Tamarin]";
 		mes "By the way, don't you think it's strange";
@@ -7544,12 +7544,12 @@ function	script	excavator_part2	{
 	mes "It it were, other people probably beat us to it.";
 	cutin "bu_mark2.bmp",0;
 	next;
-	mes "[Alp]";
+	mes "[Alph]";
 	mes "Um...";
 	mes "The place may not look like much, but the building styles and materials are not like what I've seen in Midgard.";
 	cutin "bu_alp1.bmp",2;
 	next;
-	mes "[Alp]";
+	mes "[Alph]";
 	mes "Or in Juperos.";
 	next;
 	mes "[Du]";
@@ -7562,18 +7562,18 @@ function	script	excavator_part2	{
 	return;
 }
 
-verus04,117,219,0	script	Alp#ep15_1elb	4_M_BLACKMAN,{
+verus04,117,219,0	script	Alph#ep15_1elb	4_M_BLACKMAN,{
 	switch(VER_ELEVATOR) {
 	case 0:
 	case 1:
 	case 2:
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Excavation, that's a good subject.";
 		emotion ET_THINK;
 		cutin "bu_alp4.bmp",2;
 		break;
 	case 3:
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "...";
 		mes "S-stop moving.";
 		emotion ET_PROFUSELY_SWEAT;
@@ -7591,7 +7591,7 @@ verus04,117,219,0	script	Alp#ep15_1elb	4_M_BLACKMAN,{
 		cutin "",255;
 		close;
 	case 4:
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "S-stop moving.";
 		mes "Th-the f-floor...";
 		emotion ET_PROFUSELY_SWEAT;
@@ -7601,13 +7601,13 @@ verus04,117,219,0	script	Alp#ep15_1elb	4_M_BLACKMAN,{
 		excavator_part2();
 		break;
 	case 100:
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "What about the fountain?";
 		emotion ET_HUK, getnpcid(0, "Fountain#ep15_1elb");
 		cutin "bu_alp1.bmp",2;
 		break;
 	default:
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "...Thank you.";
 		cutin "bu_alp1.bmp",2;
 		break;
@@ -7838,7 +7838,7 @@ verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
 		mes "Look, I wiped it, and it sparkles!";
 		cutin "bu_du2.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Why can't you just listen to us?";
 		cutin "bu_alp1.bmp",2;
 		next;
@@ -7846,12 +7846,12 @@ verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
 		mes "Stop wasting your time on something so stupid!";
 		cutin "ep143_taang.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Um...";
 		mes "Wait.";
 		cutin "bu_alp3.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Look, it doesn't look like it's been buried deep underground for centuries.";
 		cutin "bu_alp1.bmp",2;
 		next;
@@ -7859,23 +7859,23 @@ verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
 		mes "You're right. It looks too clean underneath all the dirt and grime.";
 		cutin "ep143_tasta.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Let's see...";
 		cutin "bu_alp1.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Um...";
 		mes "It's too clean. I can't tell anything about it.";
 		cutin "bu_alp2.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "If this fountain was ever used, it should have some sort of deposit left on the bottom, but there's none at all. It's almost as if the water was drained out of it at once.";
 		cutin "bu_alp1.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "The deposit could have been wiped off naturally after a long time.";
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Let's look around for something else.";
 		next;
 		mes "[Tamarin]";
@@ -7886,7 +7886,7 @@ verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
 		VER_ELEVATOR = 101;
 	}
 	else if (VER_ELEVATOR == 101) {
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Let's look around for something else.";
 		cutin "bu_alp1.bmp",2;
 		next;
@@ -7904,23 +7904,23 @@ verus04,116,226,0	script	Fountain#ep15_1elb	4_ENERGY_BLUE,{
 
 verus04,95,238,0	script	Sundries#ep15_1elb	4_ENERGY_BLUE,{
 	if (VER_ELEVATOR == 101) {
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Hm...";
 		mes "Everything looks too clean.";
 		mes "This site doesn't look like it's as old as we thought it was.";
 		cutin "bu_alp1.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Aside from those piles of broken machines, nothing looks too special.";
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "And look at the tree on the left side.";
 		emotion ET_HUK, getnpcid(0, "Tree#ep15_1elb");
 		changequest 11368,11369;// Looking for the Traces
 		VER_ELEVATOR = 102;
 	}
 	else if (VER_ELEVATOR == 102) {
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Look at the tree on the left side.";
 		cutin "bu_alp1.bmp",2;
 		emotion ET_HUK, getnpcid(0, "Tree#ep15_1elb");
@@ -8005,13 +8005,13 @@ verus04,62,255,0	script	Signboard#ep15_1elb	4_ENERGY_BLUE,{
 			mes "You're delusional.";
 			cutin "bu_mark4.bmp",0;
 			next;
-			mes "[Alp]";
+			mes "[Alph]";
 			mes "Oh,";
 			mes "wait.";
 			cutin "bu_alp1.bmp",2;
 			next;
 		}
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Look behind the building.";
 		mes "There's a path that leads upward.";
 		cutin "bu_alp3.bmp",2;
@@ -8090,7 +8090,7 @@ verus03,46,23,3	script	Du#ep15_1elb03	4_M_REDMAN,{
 
 verus03,44,65,0	script	Fountain#ep15_1elb03	4_ENERGY_BLUE,{
 	if (VER_ELEVATOR == 105) {
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Hm...";
 		mes "This place is disturbingly clean.";
 		cutin "bu_alp1.bmp",2;
@@ -8099,7 +8099,7 @@ verus03,44,65,0	script	Fountain#ep15_1elb03	4_ENERGY_BLUE,{
 		mes "All the buildings are well preserved. What do you think happened to the owners?";
 		cutin "ep143_tasta.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "If they're dead, they're not buried or left to rot in here. If they left... well, I don't think they did.";
 		cutin "bu_alp3.bmp",2;
 		next;
@@ -8243,13 +8243,13 @@ verus03,35,254,3	script	Maggi#ep15_1elb03	612,{
 		mes "[Du]";
 		mes "I've got cooler nicknames! Call me those!";
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Du.";
 		mes "Don't insult boars.";
 		mes "All their parts, from head to toe, are useful.";
 		cutin "bu_alp1.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Delicious, too.";
 		cutin "bu_alp4.bmp",2;
 		next;
@@ -8268,7 +8268,7 @@ verus03,35,254,3	script	Maggi#ep15_1elb03	612,{
 		mes "don't call me that!";
 		cutin "bu_du5.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "The path is blocked, and if the Phantasmagorika Excavation Team hasn't cleared it, then there must be a reason. Let's steer clear of it until we find out more about it.";
 		cutin "bu_alp1.bmp",2;
 		next;
@@ -8285,7 +8285,7 @@ verus03,35,254,3	script	Maggi#ep15_1elb03	612,{
 		VER_ELEVATOR = 109;
 	}
 	else {
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "The path is blocked, and if the Phantasmagorika Excavation Team hasn't cleared it, then there must be a reason. Let's steer clear of it until we find out more about it.";
 		cutin "bu_alp1.bmp",2;
 		next;
@@ -8325,7 +8325,7 @@ verus01,221,65,5	script	Du#Verus	4_M_REDMAN,{
 			mes "Didn't you just say that?";
 			cutin "bu_mark3.bmp",0;
 			next;
-			mes "[Alp]";
+			mes "[Alph]";
 			mes "Hey.";
 			mes "Forget about that and let's start on the investigation instead.";
 			cutin "bu_alp1.bmp",2;
@@ -8350,7 +8350,7 @@ verus01,221,65,5	script	Du#Verus	4_M_REDMAN,{
 		mes "Our job is to investigate that!";
 		cutin "bu_du2.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Come to think of it the people passing by earlier did say there is an incredible device in the center...";
 		cutin "bu_alp3.bmp",2;
 		next;
@@ -8531,7 +8531,7 @@ un_bunker,100,96,3	script	Mark#Bunker Entrance	4_M_BLUEMAN,{
 		mes "Thi...thi...this stuff..... is...is nothing...";
 		cutin "bu_du5.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Then let's look around individually and send a signal when something of value is found.";
 		cutin "bu_alp1.bmp",2;
 		next;
@@ -8559,8 +8559,8 @@ un_bunker,100,96,3	script	Mark#Bunker Entrance	4_M_BLUEMAN,{
 	close3;
 }
 
-un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
-	mes "[Alp]";
+un_bunker,363,171,3	script	Alph#Entrance	4_M_BLACKMAN,{
+	mes "[Alph]";
 	if (VER_ELEVATOR < 1002) {
 		mes "There are too many suspicious places...";
 		cutin "bu_alp3.bmp",2;
@@ -8571,28 +8571,28 @@ un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
 		mes "You're here...";
 		cutin "bu_alp3.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "I didn't send the signal yet but did you come here because you also got a strange feeling?";
 		cutin "bu_alp1.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "A long time ago...";
 		mes "...";
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "No...no.";
 		mes "Let's call the others and start the investigation.";
 		cutin "bu_alp2.bmp",2;
 		next;
 		switch( select( "Quit.", "Investigate." ) ) {
 		case 1:
-			mes "[Alp]";
+			mes "[Alph]";
 			mes "...";
 			mes "Don't forget our goal is to investigate...";
 			cutin "bu_alp1.bmp",2;
 			break;
 		case 2:
-			mes "[Alp]";
+			mes "[Alph]";
 			mes "I just sent out the signal so the others will arrive soon.";
 			cutin "bu_alp1.bmp",2;
 			next;
@@ -8624,7 +8624,7 @@ un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
 			mes "Come to think of it that girl did say there would probably be a guide.";
 			cutin "ep143_tasmi.bmp",2;
 			next;
-			mes "[Alp]";
+			mes "[Alph]";
 			mes "....Um...";
 			mes "Was there...";
 			cutin "bu_alp1.bmp",2;
@@ -8633,7 +8633,7 @@ un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
 			mes "Anyway it seems everybody is here so let's go in.";
 			cutin "bu_mark1.bmp",0;
 			next;
-			mes "[Alp]";
+			mes "[Alph]";
 			mes "Right...";
 			mes "There's a bad energy so be careful...";
 			cutin "bu_alp1.bmp",2;
@@ -8649,12 +8649,12 @@ un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
 	cutin "bu_alp1.bmp",2;
 	next;
 	if (select( "Quit.", "Go in." ) == 1) {
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "...";
 		mes "Don't forget our goal is to investigate...";
 		close3;
 	}
-	mes "[Alp]";
+	mes "[Alph]";
 	mes "Right...";
 	mes "There's a bad energy so be careful...";
 	close2;
@@ -8662,11 +8662,11 @@ un_bunker,363,171,3	script	Alp#Entrance	4_M_BLACKMAN,{
 	end;
 }
 
-un_bunker,388,86,3	script	Alp#Entrance2	4_M_BLACKMAN,{
+un_bunker,388,86,3	script	Alph#Entrance2	4_M_BLACKMAN,{
 	if (VER_ELEVATOR < 1003)// inaccurate
 		end;
 	if (VER_ELEVATOR == 1003) {
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "As expected..";
 		mes "Only this room has a different lay out than the rest...";
 		cutin "bu_alp3.bmp",2;
@@ -8690,16 +8690,16 @@ un_bunker,388,86,3	script	Alp#Entrance2	4_M_BLACKMAN,{
 		warp "un_myst",11,206;
 		end;
 	}
-	mes "[Alp]";
+	mes "[Alph]";
 	mes "Unnatural room... Unnatural door...";
 	cutin "bu_alp1.bmp",2;
 	next;
 	if (select( "Quit.", "Go in." ) == 1) {
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "...";
 		close3;
 	}
-	mes "[Alp]";
+	mes "[Alph]";
 	mes "Haa...";
 	close2;
 	warp "un_myst",11,206;
@@ -8718,7 +8718,7 @@ un_myst,27,208,5	script	Verity#Myst	4_F_BERRYTEA,{
 		mes "It seems to be poorly built for it to be used as a bunker...";
 		cutin "ep143_tasta.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "The disgusting smell has gotten worse...";
 		cutin "bu_alp5.bmp",2;
 		next;
@@ -8803,7 +8803,7 @@ un_myst,100,190,3	script	Du#Hall	4_M_REDMAN,{
 			mes "The...door....";
 			cutin "bu_maggi3.bmp",2;
 			next;
-			mes "[Alp]";
+			mes "[Alph]";
 			mes "There is a kind of subtlety for it be a secret space...";
 			cutin "bu_alp3.bmp",2;
 			next;
@@ -8844,7 +8844,7 @@ un_myst,100,190,3	script	Du#Hall	4_M_REDMAN,{
 		mes "Oh no what do we do...";
 		cutin "EP15_2_brt_5.bmp",2;
 		next;
-		mes "[Alp]";
+		mes "[Alph]";
 		mes "Ah...";
 		cutin "bu_alp2.bmp",2;
 		next;

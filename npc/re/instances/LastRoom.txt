@@ -79,8 +79,8 @@ un_myst,163,38,5	script	Mark	4_M_BLUEMAN,{
 	close3;
 }
 
-1@uns,145,32,5	script	Alp#room1	4_M_BLACKMAN,{
-	mes "[Alp]";
+1@uns,145,32,5	script	Alph#room1	4_M_BLACKMAN,{
+	mes "[Alph]";
 	mes "There are suspicious traces everywhere.";
 	mes "Some kind of heavy machine seems to have passed...";
 	cutin "bu_alp1.bmp",2;
@@ -184,7 +184,7 @@ OnTouch:
 		disablenpc instance_npcname("Tamarin#room1");
 		disablenpc instance_npcname("Verity#room1");
 		disablenpc instance_npcname("Maggi#room1");
-		disablenpc instance_npcname("Alp#room1");
+		disablenpc instance_npcname("Alph#room1");
 		mapannounce 'map_name$, "-----------------Creak---------------------",bc_map,"0xFF0000";
 		sleep 2000;
 		mapannounce 'map_name$, "-----Creak---Wrr--------------------------",bc_map,"0xFF0000";
@@ -400,7 +400,7 @@ OnMyMobDead:
 	stopnpctimer;
 	killmonster 'map_name$, instance_npcname("protocole3") + "::OnMyMobDead2";
 	mapannounce 'map_name$, "System message : All protocols failed. Locking down area excluding threat element.",bc_map,"0xFF0000";
-	enablenpc instance_npcname("Alp#room4");
+	enablenpc instance_npcname("Alph#room4");
 	enablenpc instance_npcname("Tamarin#room4");
 	enablenpc instance_npcname("Maggi#room4");
 	enablenpc instance_npcname("Du#room4");
@@ -412,8 +412,8 @@ OnMyMobDead2:
 	end;
 }
 	
-1@uns,236,258,1	script	Alp#room4	4_M_BLACKMAN,{
-	mes "[Alp]";
+1@uns,236,258,1	script	Alph#room4	4_M_BLACKMAN,{
+	mes "[Alph]";
 	mes "It's too early to relax...";
 	cutin "bu_alp1.bmp",2;
 	close3;
@@ -521,10 +521,10 @@ OnMyMobDead2:
 	cutin "bu_du4.bmp",2;
 	npctalk "Du: Just now something tremendous...", instance_npcname("Du#room4");
 	next;
-	mes "[Alp]";
+	mes "[Alph]";
 	mes "Hey... I don't think this is a situation where we should be chatting right now.";
 	cutin "bu_alp3.bmp",2;
-	npctalk "Alp: Hey... I don't think this is a situation where we should be chatting right now.", instance_npcname("Alp#room4");
+	npctalk "Alph: Hey... I don't think this is a situation where we should be chatting right now.", instance_npcname("Alph#room4");
 	next;
 	mes "[Du]";
 	mes "You call this chatting?";
@@ -532,11 +532,11 @@ OnMyMobDead2:
 	cutin "bu_du4.bmp",2;
 	npctalk "Du: You call this chatting? It was tremendous before okay?", instance_npcname("Du#room4");
 	next;
-	mes "[Alp]";
+	mes "[Alph]";
 	mes "Do you hear this?";
 	mes "Something is coming...";
 	cutin "bu_alp1.bmp",2;
-	npctalk "Alp: Do you hear this? Something is coming...", instance_npcname("Alp#room4");
+	npctalk "Alph: Do you hear this? Something is coming...", instance_npcname("Alph#room4");
 	next;
 	mes "[Tamarin]";
 	mes "Now...now that I look the ground is..., shaking a little, right?";
@@ -548,11 +548,11 @@ OnMyMobDead2:
 	cutin "bu_du4.bmp",2;
 	npctalk "Du: What...what's this?", instance_npcname("Du#room4");
 	next;
-	mes "[Alp]";
+	mes "[Alph]";
 	mes "This is...dangerous.";
 	mes "This is not a level we can handle...";
 	cutin "bu_alp2.bmp",2;
-	npctalk "Alp: This is...dangerous. This is not a level we can handle...", instance_npcname("Alp#room4");
+	npctalk "Alph: This is...dangerous. This is not a level we can handle...", instance_npcname("Alph#room4");
 	next;
 	mes "[Mark]";
 	mes "Qui...quickly outside!!!!!";
@@ -580,7 +580,7 @@ OnInstanceInit:
 	// Last step
 	disablenpc instance_npcname("Verity#room3");
 	disablenpc instance_npcname("protocole3");
-	disablenpc instance_npcname("Alp#room4");
+	disablenpc instance_npcname("Alph#room4");
 	disablenpc instance_npcname("Tamarin#room4");
 	disablenpc instance_npcname("Maggi#room4");
 	disablenpc instance_npcname("Du#room4");
