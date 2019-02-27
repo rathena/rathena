@@ -48,7 +48,7 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 /// Comparator for binary heap of path nodes (minimum cost at top)
 #define NODE_MINTOPCMP(i,j) ((i)->f_cost - (j)->f_cost)
 
-#define calc_index(x,y) (((MAX_WALKPATH+x)+(MAX_WALKPATH+y)*(MAX_WALKPATH*2+1)) % ((MAX_WALKPATH*2+1)*(MAX_WALKPATH*2+1)))
+#define calc_index(x,y) ((((MAX_WALKPATH)+(x))+((MAX_WALKPATH)+(y))*((MAX_WALKPATH)*2+1)) % (((MAX_WALKPATH)*2+1)*((MAX_WALKPATH)*2+1)))
 
 /// Estimates the cost from (x0,y0) to (x1,y1).
 /// This is inadmissible (overestimating) heuristic used by game client.
