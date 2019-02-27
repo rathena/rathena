@@ -296,6 +296,7 @@ TIMER_FUNC(npc_secure_timeout_timer){
 
 	if( DIFF_TICK(cur_tick,sd->npc_idle_tick) > (timeout*1000) ) {
 		pc_close_npc(sd,1);
+		npc_event_dequeue(sd);
 	} else if(sd->st && (sd->st->state == END || sd->st->state == CLOSE)){
 		sd->npc_idle_timer = INVALID_TIMER; //stop timer the script is already ending
 	} else { //Create a new instance of ourselves to continue
