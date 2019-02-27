@@ -370,6 +370,8 @@ void mob_add_spawn(uint16 mob_id, const struct spawn_info& new_spawn);
 const std::vector<spawn_info> mob_get_spawns(uint16 mob_id);
 bool mob_has_spawn(uint16 mob_id);
 
+int getdroprate(int base_rate, int size, int level, int class_, int race, struct block_list *src, map_session_data * sd);
+
 // MvP Tomb System
 int mvptomb_setdelayspawn(struct npc_data *nd);
 TIMER_FUNC(mvptomb_delayspawn);
