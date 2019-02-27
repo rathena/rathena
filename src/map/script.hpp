@@ -1902,7 +1902,6 @@ enum e_hat_effects {
  * Player blocking actions related flags.
  */
 enum e_pcblock_action_flag {
-	PCBLOCK_NONE     = 0x000,
 	PCBLOCK_MOVE     = 0x001,
 	PCBLOCK_ATTACK   = 0x002,
 	PCBLOCK_SKILL    = 0x004,
@@ -1912,7 +1911,8 @@ enum e_pcblock_action_flag {
 	PCBLOCK_SITSTAND = 0x040,
 	PCBLOCK_COMMANDS = 0x080,
 	PCBLOCK_NPCCLICK = 0x100,
-	PCBLOCK_ALL      = 0x1FF,
+	PCBLOCK_EMOTION  = 0x200,
+	PCBLOCK_ALL      = 0x3FF,
 };
 
 /**

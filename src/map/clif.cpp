@@ -11087,6 +11087,11 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd)
 		if (battle_config.idletime_option&IDLE_EMOTION)
 			sd->idletime = last_tick;
 
+		if (sd->state.block_action & PCBLOCK_EMOTION) {
+			clif_skill_fail(sd, 1, USESKILL_FAIL_LEVEL, 1);
+			return;
+		}
+
 		if(battle_config.client_reshuffle_dice && emoticon>=ET_DICE1 && emoticon<=ET_DICE6) {// re-roll dice
 			emoticon = rnd()%6+ET_DICE1;
 		}
