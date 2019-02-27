@@ -3244,17 +3244,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			}
 			sd->qi_count = 0;
 
-			if (sd->areanpc.mem_count) {
-				aFree(sd->areanpc.ids);
-				sd->areanpc.count = 0;
-				sd->areanpc.mem_count = 0;
-			}
-			if (sd->npc_ontouch_.mem_count) {
-				aFree(sd->npc_ontouch_.ids);
-				sd->npc_ontouch_.count = 0;
-				sd->npc_ontouch_.mem_count = 0;
-			}
-
 #if PACKETVER >= 20150513
 			if( sd->hatEffectCount > 0 ){
 				aFree(sd->hatEffectIDs);

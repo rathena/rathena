@@ -923,28 +923,16 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
 
 		ARR_FIND(0, sd->npc_ontouch_.count, k, sd->npc_ontouch_.ids[k] == nd->bl.id);
 		if (k == sd->npc_ontouch_.count) {
-			if (k >= sd->npc_ontouch_.mem_count) {
-				sd->npc_ontouch_.mem_count++;
-				RECREATE(sd->npc_ontouch_.ids, int, sd->npc_ontouch_.mem_count);
-			}
-
-			sd->npc_ontouch_.ids[sd->npc_ontouch_.count] = nd->bl.id;
+			sd->npc_ontouch_.ids.push_back(nd->bl.id);
 			sd->npc_ontouch_.count++;
 		}
 		break;
 	case 2:
 		ARR_FIND(0, sd->areanpc.count, k, sd->areanpc.ids[k] == nd->bl.id);
-
 		if (k == sd->areanpc.count) {
-			if (k >= sd->areanpc.mem_count) {
-				sd->areanpc.mem_count++;
-				RECREATE(sd->areanpc.ids, int, sd->areanpc.mem_count);
-			}
-
-			sd->areanpc.ids[sd->areanpc.count] = nd->bl.id;
+			sd->areanpc.ids.push_back(nd->bl.id);
 			sd->areanpc.count++;
 		}
-
 		break;
 	}
 	npc_event_sub(sd,ev,eventname);
@@ -997,7 +985,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 		nd = map_id2nd(sd->npc_ontouch_.ids[k]);
 		if (!nd) {
 			sd->npc_ontouch_.count--;
-			memmove(&sd->npc_ontouch_.ids[k], &sd->npc_ontouch_.ids[k + 1], sizeof(int) * (sd->npc_ontouch_.count - k));
+			sd->npc_ontouch_.ids.erase(sd->npc_ontouch_.ids.begin() + k);
 			k--;
 		}
 		else {
@@ -1014,7 +1002,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 				char name[EVENT_NAME_LENGTH];
 
 				sd->npc_ontouch_.count--;
-				memmove(&sd->npc_ontouch_.ids[k], &sd->npc_ontouch_.ids[k + 1], sizeof(int) * (sd->npc_ontouch_.count - k));
+				sd->npc_ontouch_.ids.erase(sd->npc_ontouch_.ids.begin() + k);
 				k--;
 
 				if (nd->touching_id && nd->touching_id == sd->bl.id) {// empty when reload script
@@ -1049,7 +1037,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 		if (!nd || nd->subtype != NPCTYPE_SCRIPT ||
 			!(x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys)) {
 			sd->areanpc.count--;
-			memmove(&sd->areanpc.ids[i], &sd->areanpc.ids[i + 1], sizeof(int) * (sd->areanpc.count - i));
+			sd->areanpc.ids.erase(sd->areanpc.ids.begin() + i);
 			i--;
 		}
 	}
@@ -1098,14 +1086,8 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 					int k;
 
 					ARR_FIND(0, sd->areanpc.count, k, sd->areanpc.ids[k] == mapdata->npc[i]->bl.id);
-
 					if (k == sd->areanpc.count) {
-						if (k >= sd->areanpc.mem_count) {
-							sd->areanpc.mem_count++;
-							RECREATE(sd->areanpc.ids, int, sd->areanpc.mem_count);
-						}
-
-						sd->areanpc.ids[sd->areanpc.count] = mapdata->npc[i]->bl.id;
+						sd->areanpc.ids.push_back(mapdata->npc[i]->bl.id);
 						sd->areanpc.count++;
 					}
 
