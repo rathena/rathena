@@ -180,12 +180,10 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 	// if( pc_ishiding(sd) )
 		// return 1; // Can't trigger 'OnTouch_'.
 
-	if (!sd->npc_ontouch_.empty()) {
-		auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
+	auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
 
-		if (it != sd->npc_ontouch_.end())
-			return 0;
-	}
+	if (it != sd->npc_ontouch_.end())
+		return 0;
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_event_name);
 	return npc_event(sd,name,1);
@@ -194,13 +192,10 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
 {
 	char name[EVENT_NAME_LENGTH];
+	auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
 
-	if (!sd->areanpc.empty()) {
-		auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
-
-		if (it != sd->areanpc.end())
-			return 0;
-	}
+	if (it != sd->areanpc.end())
+		return 0;
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch2_event_name);
 	return npc_event(sd,name,2);
