@@ -108,10 +108,8 @@ void YamlDatabase::parse( const YAML::Node& rootNode ){
 	uint64 count = 0;
 
 	if( this->nodeExists( rootNode, "Body" ) ){
-		for( const auto &node : rootNode["Body"] ){
-			if( node.IsDefined() ){
-				count += this->parseBodyNode( node );
-			}
+		for( const YAML::Node &node : rootNode["Body"] ){
+			count += this->parseBodyNode( node );
 		}
 
 		ShowStatus("Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, this->currentFile.c_str());
