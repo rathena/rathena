@@ -328,14 +328,7 @@ struct map_session_data {
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
 	int npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
-	struct {
-		int count;				///< Number of OnTouch NPC the player is standing in
-		std::vector<int> ids;	///< Array of OnTouch NPC ID
-	} areanpc;
-	struct {
-		int count;				///< Number of OnTouch_ NPC the player is standing in
-		std::vector<int> ids;	///< Array of OnTouch_ NPC ID
-	} npc_ontouch_;
+	std::vector<int> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_menu; // internal variable, used in npc menu handling
 	int npc_amount;

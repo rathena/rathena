@@ -180,10 +180,12 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 	// if( pc_ishiding(sd) )
 		// return 1; // Can't trigger 'OnTouch_'.
 
-	int k;
-	ARR_FIND(0, sd->npc_ontouch_.count, k, sd->npc_ontouch_.ids[k] == nd->bl.id);
-	if (k < sd->npc_ontouch_.count)
-		return 0;
+	if (!sd->npc_ontouch_.empty()) {
+		auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
+
+		if (it != sd->npc_ontouch_.end())
+			return 0;
+	}
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_event_name);
 	return npc_event(sd,name,1);
@@ -192,12 +194,13 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
 {
 	char name[EVENT_NAME_LENGTH];
-	int k;
 
-	ARR_FIND(0, sd->areanpc.count, k, sd->areanpc.ids[k] == nd->bl.id);
+	if (!sd->areanpc.empty()) {
+		auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
 
-	if (k < sd->areanpc.count)
-		return 0;
+		if (it != sd->areanpc.end())
+			return 0;
+	}
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch2_event_name);
 	return npc_event(sd,name,2);
@@ -915,25 +918,25 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
 
 	switch(ontouch)
 	{
-	case 1:
-		if (pc_ishiding(sd))
-			return 0;
+	case 1: {
+			if (pc_ishiding(sd))
+				return 0;
 
-		nd->touching_id = sd->bl.id;
+			nd->touching_id = sd->bl.id;
 
-		ARR_FIND(0, sd->npc_ontouch_.count, k, sd->npc_ontouch_.ids[k] == nd->bl.id);
-		if (k == sd->npc_ontouch_.count) {
-			sd->npc_ontouch_.ids.push_back(nd->bl.id);
-			sd->npc_ontouch_.count++;
+			auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
+
+			if (it == sd->npc_ontouch_.end())
+				sd->npc_ontouch_.push_back(nd->bl.id);
+			break;
 		}
-		break;
-	case 2:
-		ARR_FIND(0, sd->areanpc.count, k, sd->areanpc.ids[k] == nd->bl.id);
-		if (k == sd->areanpc.count) {
-			sd->areanpc.ids.push_back(nd->bl.id);
-			sd->areanpc.count++;
+	case 2: {
+			auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
+
+			if (it == sd->areanpc.end())
+				sd->areanpc.push_back(nd->bl.id);
+			break;
 		}
-		break;
 	}
 	npc_event_sub(sd,ev,eventname);
 	return 0;
@@ -978,14 +981,13 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 	int k, found = 0;
 	short xs, ys;
 
-	if (!sd->npc_ontouch_.count)
+	if (sd->npc_ontouch_.empty())
 		return 1;
 
-	for ( k = 0; sd->npc_ontouch_.count && k < sd->npc_ontouch_.count; k++ ) {
-		nd = map_id2nd(sd->npc_ontouch_.ids[k]);
+	for ( k = 0; k < sd->npc_ontouch_.size(); k++ ) {
+		nd = map_id2nd(sd->npc_ontouch_[k]);
 		if (!nd) {
-			sd->npc_ontouch_.count--;
-			sd->npc_ontouch_.ids.erase(sd->npc_ontouch_.ids.begin() + k);
+			sd->npc_ontouch_.erase(sd->npc_ontouch_.begin() + k);
 			k--;
 		}
 		else {
@@ -1001,8 +1003,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 			{
 				char name[EVENT_NAME_LENGTH];
 
-				sd->npc_ontouch_.count--;
-				sd->npc_ontouch_.ids.erase(sd->npc_ontouch_.ids.begin() + k);
+				sd->npc_ontouch_.erase(sd->npc_ontouch_.begin() + k);
 				k--;
 
 				if (nd->touching_id && nd->touching_id == sd->bl.id) {// empty when reload script
@@ -1022,7 +1023,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
  *------------------------------------------*/
 int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 {
-	int xs, ys, f = 1, i = 0, j = 0;
+	int xs, ys, f = 1;
 
 	nullpo_retr(1, sd);
 
@@ -1031,20 +1032,17 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 	//	return 1;
 
 	// Remove NPCs that are no longer within the OnTouch area
-	for (i = 0; i < sd->areanpc.count; i++) {
-		struct npc_data *nd = map_id2nd(sd->areanpc.ids[i]);
+	for (const auto &it : sd->areanpc) {
+		struct npc_data *nd = map_id2nd(it);
 
 		if (!nd || nd->subtype != NPCTYPE_SCRIPT ||
-			!(x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys)) {
-			sd->areanpc.count--;
-			sd->areanpc.ids.erase(sd->areanpc.ids.begin() + i);
-			i--;
-		}
+			!(x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
+			sd->areanpc.erase(sd->areanpc.begin() + it);
 	}
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	for (i = 0; i < mapdata->npc_num_area; i++) {
+	for (int i = 0; i < mapdata->npc_num_area; i++) {
 		if (mapdata->npc[i]->sc.option&OPTION_INVISIBLE) {
 			f = 0; // a npc was found, but it is disabled; don't print warning
 			continue;
@@ -1083,13 +1081,10 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 				// warp type sorted first, no need to check if they override any other OnTouch areas.
 
 				if (npc_ontouch_event(sd, mapdata->npc[i]) > 0 && npc_ontouch2_event(sd, mapdata->npc[i]) > 0) { // failed to run OnTouch event, so just click the npc
-					int k;
+					auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), mapdata->npc[i]->bl.id);
 
-					ARR_FIND(0, sd->areanpc.count, k, sd->areanpc.ids[k] == mapdata->npc[i]->bl.id);
-					if (k == sd->areanpc.count) {
-						sd->areanpc.ids.push_back(mapdata->npc[i]->bl.id);
-						sd->areanpc.count++;
-					}
+					if (it == sd->areanpc.end())
+						sd->areanpc.push_back(mapdata->npc[i]->bl.id);
 
 					npc_click(sd, mapdata->npc[i]);
 				}
