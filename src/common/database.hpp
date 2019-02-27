@@ -60,6 +60,7 @@ public:
 	bool load();
 
 	// Functions that need to be implemented for each type
+	virtual void clear() = 0;
 	virtual const std::string getDefaultLocation() = 0;
 	virtual uint64 parseBodyNode( const YAML::Node& node ) = 0;
 };

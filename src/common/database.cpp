@@ -87,6 +87,16 @@ bool YamlDatabase::load(const std::string& path) {
 		return false;
 	}
 
+	const YAML::Node& header = rootNode["Header"];
+
+	if( this->nodeExists( header, "Clear" ) ){
+		bool clear;
+
+		if( this->asBool( header, "Clear", clear ) && clear ){
+			this->clear();
+		}
+	}
+
 	this->parse( rootNode );
 
 	this->parseImports( rootNode );
