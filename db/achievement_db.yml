@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Custom Achievement Database
+# Renewal Achievement Database
 ###########################################################################
 #
 # Achievement Settings
@@ -80,3 +80,11 @@
 Header:
   Type: ACHIEVEMENT_DB
   Version: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/achievement_db.yml
+    Mode: Prerenewal
+  - Path: db/re/achievement_db.yml
+    Mode: Renewal
+  - Path: db/import/achievement_db.yml

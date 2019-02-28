@@ -2150,13 +2150,13 @@ void intif_parse_achievements(int fd)
 			CREATE(sd->achievement_data.achievements, struct achievement, num_received);
 
 		for (i = 0; i < num_received; i++) {
+			std::shared_ptr<s_achievement_db> adb = achievement_db.find( received[i].achievement_id );
 
-			if (!achievement_exists(received[i].achievement_id)) {
+
+			if( adb == nullptr ){
 				ShowError("intif_parse_achievementlog: Achievement %d not found in DB.\n", received[i].achievement_id);
 				continue;
 			}
-
-			auto &adb = achievement_get(received[i].achievement_id);
 
 			received[i].score = adb->score;
 
