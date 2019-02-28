@@ -86,27 +86,27 @@ moc_para01,31,14,0	script	#atnevt01	HIDDEN_WARP_NPC,2,2,{
 OnTouch:
 	if (VER_MAIN == 0 && BaseLevel >= 140) {
 		cutin "laime_evenor01.bmp",2;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "Welcome back,";
 		mes "" + strcharinfo(0) + ". I don't know how we can survive without you.";
 		next;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "Have you heard?";
 		mes "An ancient site was just discovered in Juperos.";
 		mes "Rekenber is recruiting adventurers for the excavation of the place,";
 		next;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "and we've decided to join it.";
 		mes "The Captain wants to see you about that.";
 		next;
 		select("I didn't know you had a captain.");
 		cutin "laime_evenor02.bmp",2;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "What, did you think I was running this gig alone?";
 		mes "The Mistre--I mean, the Captain is rarely excited about anything, and this is one of those rare occasions. You should meet her.";
 		next;
 		cutin "laime_evenor01.bmp",2;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "Her office is to the far left on the second floor.";
 		VER_MAIN = 1;
 		setquest 7607;// Eden Group Leader
@@ -116,12 +116,12 @@ OnTouch:
 	end;
 }
 
-moc_para01,38,175,5	script	Laime Evenor#evtat01	4_F_EDEN_OFFICER,{
+moc_para01,38,175,5	script	Lime Evenor#evtat01	4_F_EDEN_OFFICER,{
 	if (checkweight(1301,1) == 0) {
 		mes "- You are carrying too many items to proceed with the quest. -";
 		close;
 	}
-	mes "[Secretary Laime Evenor]";
+	mes "[Secretary Lime Evenor]";
 	if (BaseLevel < 140) {
 		cutin "laime_evenor01.bmp",2;
 		mes "I also come up here sometimes to attend some business.";
@@ -134,23 +134,23 @@ moc_para01,38,175,5	script	Laime Evenor#evtat01	4_F_EDEN_OFFICER,{
 		mes "Welcome back,";
 		mes "" + strcharinfo(0) + ". I don't know how we can survive without you.";
 		next;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "Have you heard?";
 		mes "An ancient site was just discovered in Juperos.";
 		mes "Rekenber is recruiting adventurers for the excavation of the place,";
 		next;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "and we've decided to join it.";
 		mes "The Captain wants to see you about that.";
 		next;
 		select("I didn't know you had a captain.");
 		cutin "laime_evenor02.bmp",2;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "What, did you think I was running this gig alone?";
 		mes "The Mistre--I mean, the Captain is rarely excited about anything, and this is one of those rare occasions. You should meet her.";
 		next;
 		cutin "laime_evenor01.bmp",2;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "Her office is to the far left on the second floor.";
 		VER_MAIN = 1;
 		setquest 7607;// Eden Group Leader
@@ -180,7 +180,7 @@ moc_para01,38,175,5	script	Laime Evenor#evtat01	4_F_EDEN_OFFICER,{
 		mes "The excavation seems to be going well so far.";
 		mes "The item Dr. Atnad was interested in is also on Rekenber's radar; it should be appraised highly.";
 		next;
-		mes "[Secretary Laime Evenor]";
+		mes "[Secretary Lime Evenor]";
 		mes "Thank you for helping the doctors focus on their work.";
 		mes "Keep up the good work.";
 		close3;
@@ -192,12 +192,12 @@ OnInit:
 	end;
 }
 
-moc_para01,174,165,3	script	Laime Evenor#atnd02	4_F_EDEN_OFFICER,{
+moc_para01,174,165,3	script	Lime Evenor#atnd02	4_F_EDEN_OFFICER,{
 	if (checkweight(1301,1) == 0) {
 		mes "- You are carrying too many items to proceed with the quest. -";
 		close;
 	}
-	mes "[Laime]";
+	mes "[Lime]";
 	switch(VER_MAIN) {
 	case 0:
 		cutin "laime_evenor01.bmp",2;
@@ -217,7 +217,7 @@ moc_para01,174,165,3	script	Laime Evenor#atnd02	4_F_EDEN_OFFICER,{
 		mes "Let me introduce you to";
 		mes "Archaeologist Aures of the Atnad Excavation Team.";
 		next;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "Dr. Aures, this is " + strcharinfo(0) + ", who will assist you in Phantasmagorika.";
 		next;
 		cutin "verus_aures.bmp",0;
@@ -227,12 +227,12 @@ moc_para01,174,165,3	script	Laime Evenor#atnd02	4_F_EDEN_OFFICER,{
 		mes "Welcome to the team.";
 		next;
 		cutin "laime_evenor01.bmp",2;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "It seems everything went smoothly with the Captain.";
 		mes "Your job is simple:";
 		mes "just help Dr. Aures and his Atnad Excavation Team.";
 		next;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "I expect you'll spend most of your time running errands";
 		mes "and doing things that require physical stamina since all the members of the team are past their prime.";
 		next;
@@ -242,10 +242,10 @@ moc_para01,174,165,3	script	Laime Evenor#atnd02	4_F_EDEN_OFFICER,{
 		mes "This excavation will probably be the last excavation we do before we die.";
 		next;
 		mes "[Aures]";
-		mes "If Laime didn't help us, we would have changed our minds at the entrance to that place.";
+		mes "If Lime didn't help us, we would have changed our minds at the entrance to that place.";
 		next;
 		cutin "laime_evenor01.bmp",2;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "Please don't say that.";
 		mes "You're the most experienced archaeologists I've met.";
 		mes "By the way, how's Dr. Atnad?";
@@ -262,34 +262,34 @@ moc_para01,174,165,3	script	Laime Evenor#atnd02	4_F_EDEN_OFFICER,{
 		mes "and he's still angry at her.";
 		next;
 		cutin "laime_evenor01.bmp",2;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "And we're stuck in the middle of their mind game.";
 		next;
 		switch( select( "Who are they?", "Cut to the chase, please." ) ) {
 		case 1:
 			cutin "verus_aures.bmp",0;
 			mes "[Aures]";
-			mes "Let me tell you. When Laime came to us,";
+			mes "Let me tell you. When Lime came to us,";
 			mes "we all wondered why a famous company like Eden Group would support a ragtag bunch of old men like us.";
 			mes "Then we found out they're father and daughter.";
 			next;
 			select("Father and daughter? Who?");
 			cutin "laime_evenor03.bmp",2;
-			mes "[Laime]";
+			mes "[Lime]";
 			mes "Oh, didn't the Captain tell you?";
 			mes "Her father is the leader of the Atnad Excavation Team.";
 			next;
-			mes "[Laime]";
+			mes "[Lime]";
 			mes "When I first suggested we should join the project,";
 			mes "she wanted to support the Atnad Excavation Team.";
 			mes "At first I was thinking more along the lines of merging the team.";
 			next;
-			mes "[Laime]";
+			mes "[Lime]";
 			mes "Rekenber takes care of the financial aspects of the project, while we handle the manpower.";
 			mes "Then I realized the leader of the team is the father of my boss's.";
 			next;
 			cutin "laime_evenor04.bmp",2;
-			mes "[Laime]";
+			mes "[Lime]";
 			mes "I want to support the team to the best of my ability,";
 			mes "but their rocky relationship is getting in the way.";
 			next;
@@ -304,23 +304,23 @@ moc_para01,174,165,3	script	Laime Evenor#atnd02	4_F_EDEN_OFFICER,{
 			mes "I think you should mediate between the two.";
 			next;
 			cutin "laime_evenor01.bmp",2;
-			mes "[Laime]";
+			mes "[Lime]";
 			mes "I hope this collaboration will be a chance for them to reconcile with each other.";
 			mes "Well, we should move to the site now.";
 			break;
 		case 2:
 			cutin "laime_evenor03.bmp",2;
-			mes "[Laime]";
+			mes "[Lime]";
 			mes "Indeed. Before we go, let's talk about what we can expect at the site.";
 			break;
 		}
 		next;
 		cutin "laime_evenor03.bmp",2;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "Aures, Luke will come with you.";
 		mes "" + strcharinfo(0) + ", you can go to Phantasmagorika whenever you're ready.";
 		next;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "It's accessible through Juperos,";
 		mes "so move to Juno first, then get to the entrance to Juperos from there.";
 		next;
@@ -331,12 +331,12 @@ moc_para01,174,165,3	script	Laime Evenor#atnd02	4_F_EDEN_OFFICER,{
 		mes "Just look for a big crowd, and you won't miss the place. See you when you get there.";
 		next;
 		cutin "laime_evenor01.bmp",2;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "Everything should be easy enough for you,";
 		mes "though you'll have to register with Rekenber for the excavation.";
 		mes "You can register as an individual excavator, but I'd prefer if you do it as a member of the Atnad Excavation Team instead.";
 		next;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "Once your registration goes through, you can start working for the Atnad Excavation Team,";
 		mes "and everything else will take care of itself.";
 		mes "Thank you for doing this.";
@@ -362,7 +362,7 @@ moc_para01,174,165,3	script	Laime Evenor#atnd02	4_F_EDEN_OFFICER,{
 moc_para01,172,164,5	script	Archaeologist Aures#atnd02	4_M_OLDSCHOLAR,{
 	if (VER_MAIN < 4) {
 		cutin "laime_evenor01.bmp",2;
-		mes "[Laime]";
+		mes "[Lime]";
 		mes "I'm sorry, but he's our guest.";
 		mes "And this office is for Eden Group employees only.";
 		mes "The dormitory is the next room.";;
@@ -393,7 +393,7 @@ moc_para01,178,167,3	script	Luke Lapez#atnd03	4_M_EDEN_GUARDER,{
 	mes "[Luke]";
 	if (VER_MAIN < 4) {
 		cutin "looke_rapez02.bmp",0;
-		mes "Hey, Laime.";
+		mes "Hey, Lime.";
 		mes "We have a guest.";
 		mes "...";
 	}
