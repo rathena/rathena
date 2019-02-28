@@ -31,9 +31,9 @@ mapcache: obj_all $(MAPCACHE_OBJ) $(COMMON_DIR_OBJ) $(LIBCONFIG_OBJ)
 	@echo "	LD	$@"
 	@@CXX@ @LDFLAGS@ -o ../../mapcache@EXEEXT@ $(MAPCACHE_OBJ) $(COMMON_DIR_OBJ) $(LIBCONFIG_AR) @LIBS@
 
-csv2yaml: obj_all $(CSV2YAML_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_OBJ)
+csv2yaml: obj_all $(CSV2YAML_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_AR)
 	@echo "	LD	$@"
-	@@CXX@ @LDFLAGS@ -o ../../csv2yaml@EXEEXT@ $(CSV2YAML_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_OBJ) @LIBS@
+	@@CXX@ @LDFLAGS@ -o ../../csv2yaml@EXEEXT@ $(CSV2YAML_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_AR) @LIBS@
 
 clean:
 	@echo "	CLEAN	tool"
