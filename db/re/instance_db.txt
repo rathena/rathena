@@ -38,3 +38,8 @@
 31,Ritual of Blessing,3600,300,2@mir,101,12
 32,Room of Consciousness,3600,300,1@mir,101,10
 // 33,Sky Fortress Invasion,3600,300,1@sthb,54,67,1@sthc,1@sthd
+34,Heart Hunter War Base 1,3600,300,1@swat,35,65
+35,Heart Hunter War Base 2,3600,300,1@swat,73,118
+// There is officially only one (buggy) instance 'Werner Laboratory central room'
+36,Werner Laboratory central room#1,3600,300,1@slw,187,24
+37,Werner Laboratory central room#2,3600,300,1@slw,187,24

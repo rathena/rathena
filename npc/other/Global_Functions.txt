@@ -767,3 +767,6 @@ function	script	F_IsCharm	{
 	.@id = getarg(0);
 	return ((.@id >= 4700 && .@id < 5000) || (.@id >= 29000 && .@id <= 29162));
 }
+
+// temporary here
+-	script	dummy_npc	-1,{ end; }
