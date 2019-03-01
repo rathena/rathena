@@ -2763,6 +2763,47 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 }
 
 /**
+* Reduce element bonus to player when attacking
+* @param sd: Player data
+* @param ele: Race to adjust
+* @param rate: Success chance
+* @param flag: Battle flag
+*/
+static void pc_bonus_subrace(struct map_session_data* sd, unsigned char race, short rate, short flag)
+{
+	if (sd->subrace3.size() == MAX_PC_BONUS) {
+		ShowWarning("pc_bonus_subrace: Reached max (%d) number of resist race damage bonuses per character!\n", MAX_PC_BONUS);
+		return;
+	}
+
+	if (!(flag&BF_RANGEMASK))
+		flag |= BF_SHORT | BF_LONG;
+	if (!(flag&BF_WEAPONMASK))
+		flag |= BF_WEAPON;
+	if (!(flag&BF_SKILLMASK)) {
+		if (flag&(BF_MAGIC | BF_MISC))
+			flag |= BF_SKILL;
+		if (flag&BF_WEAPON)
+			flag |= BF_NORMAL | BF_SKILL;
+	}
+
+	for (auto &it : sd->subrace3) {
+		if (it.race == race) {
+			it.rate += rate;
+			it.flag = flag;
+			return;
+		}
+	}
+
+	struct s_addrace2 entry = {};
+
+	entry.race = race;
+	entry.rate = rate;
+	entry.flag = flag;
+
+	sd->subrace3.push_back(entry);
+}
+/**
  * General item bonus for player
  * @param bonus: Bonus array
  * @param id: Key
@@ -3337,6 +3378,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if(sd->state.lr_flag != 2)
 				sd->bonus.crit_atk_rate += val;
 			break;
+		case SP_CRIT_DEF_RATE:
+			if(sd->state.lr_flag != 2)
+				sd->bonus.crit_def_rate += val;
+			break;
 		case SP_NO_REGEN:
 			if(sd->state.lr_flag != 2)
 				sd->regen.state.block|=val;
@@ -3796,6 +3841,11 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2)
 			sd->subsize[type2]+=val;
 		break;
+	case SP_MAGIC_SUBSIZE: // bonus2 bMagicSubSize,s,x;
+		PC_BONUS_CHK_SIZE(type2,SP_MAGIC_SUBSIZE);
+		if(sd->state.lr_flag != 2)
+			sd->magic_subsize[type2]+=val;
+		break;
 	case SP_SUBRACE2: // bonus2 bSubRace2,mr,x;
 		PC_BONUS_CHK_RACE2(type2,SP_SUBRACE2);
 		if(sd->state.lr_flag != 2)
@@ -4157,7 +4207,13 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		if (sd->state.lr_flag != 2)
 			pc_bonus_subele(sd, (unsigned char)type2, type3, val);
 		break;
-		
+
+	case SP_SUBRACE: // bonus3 bSubRace,r,x,bf;
+		PC_BONUS_CHK_ELEMENT(type2, SP_SUBRACE);
+		if (sd->state.lr_flag != 2)
+			pc_bonus_subrace(sd, (unsigned char)type2, type3, val);
+		break;
+
 	case SP_SP_VANISH_RACE_RATE: // bonus3 bSPVanishRaceRate,r,x,n;
 		PC_BONUS_CHK_RACE(type2,SP_SP_VANISH_RACE_RATE);
 		if(sd->state.lr_flag != 2) {
@@ -8519,6 +8575,7 @@ int pc_readparam(struct map_session_data* sd,int type)
 #else
 			val = sd->castrate; break;
 #endif
+		case SP_CRIT_DEF_RATE: val = sd->bonus.crit_def_rate; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%d'.\n", type);
 			return -1;

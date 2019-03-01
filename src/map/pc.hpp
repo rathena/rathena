@@ -144,6 +144,12 @@ struct s_addele2 {
 	unsigned char ele;
 };
 
+/// AddRace bonus struct
+struct s_addrace2 {
+	short flag, rate;
+	unsigned char race;
+};
+
 struct weapon_data {
 	int atkmods[3];
 	// all the variables except atkmods get zero'ed in each call of status_calc_pc
@@ -174,6 +180,7 @@ struct weapon_data {
 
 	std::vector<s_item_bonus> add_dmg;
 	std::vector<s_addele2> addele2;
+	std::vector<s_addrace2> addrace3;
 };
 
 /// AutoSpell bonus struct
@@ -432,6 +439,7 @@ struct map_session_data {
 	int magic_addclass[CLASS_MAX];
 	int magic_addsize[SZ_MAX];
 	int magic_atk_ele[ELE_MAX];
+	int magic_subsize[SZ_MAX];
 	int critaddrace[RC_MAX];
 	int expaddrace[RC_MAX];
 	int expaddclass[CLASS_MAX];
@@ -454,6 +462,7 @@ struct map_session_data {
 	std::vector<s_add_drop> add_drop;
 	std::vector<s_addele2> subele2;
 	std::vector<s_vanish_bonus> sp_vanish, hp_vanish;
+	std::vector<s_addrace2> subrace3;
 	std::vector<s_autobonus> autobonus, autobonus2, autobonus3; //Auto script on attack, when attacked, on skill usage
 
 	// zeroed structures start here
@@ -493,6 +502,7 @@ struct map_session_data {
 		int magic_damage_return; // AppleGirl Was Here
 		int break_weapon_rate,break_armor_rate;
 		int crit_atk_rate;
+		int crit_def_rate;
 		int classchange; // [Valaris]
 		int speed_rate, speed_add_rate, aspd_add;
 		int itemhealrate2; // [Epoque] Increase heal rate of all healing items.
