@@ -209,161 +209,161 @@ ein_fild04,281,337,3	script	Julian#ep16.2	4_M_REBELLION2,{
 
 
 // Hunter Instance 1
-1@swat,36,71,6	script	#ext1	4_M_REBELLION,{ end; }
-1@swat,36,68,6	duplicate(#ext1)	#ext2	4_F_REBELLION
-1@swat,36,65,6	duplicate(#ext1)	#ext3	4_M_REBELLION
-1@swat,36,62,6	duplicate(#ext1)	#ext4	4_F_REBELLION
-1@swat,36,59,6	duplicate(#ext1)	#ext5	4_M_REBELLION
-1@swat,33,71,6	duplicate(#ext1)	#ext6	4_F_REBELLION
-1@swat,33,68,6	duplicate(#ext1)	#ext7	4_M_REBELLION
-1@swat,33,65,6	duplicate(#ext1)	#ext8	4_F_REBELLION
-1@swat,33,62,6	duplicate(#ext1)	#ext9	4_M_REBELLION
-1@swat,33,59,6	duplicate(#ext1)	#ext10	4_F_REBELLION
-1@swat,30,71,6	duplicate(#ext1)	#ext11	4_M_REBELLION
-1@swat,30,68,6	duplicate(#ext1)	#ext12	4_F_REBELLION
-1@swat,30,65,6	duplicate(#ext1)	#ext13	4_M_REBELLION
-1@swat,30,62,6	duplicate(#ext1)	#ext14	4_F_REBELLION
-1@swat,30,59,6	duplicate(#ext1)	#ext15	4_M_REBELLION
+1@swat,36,71,6	duplicate(dummy_npc)	#ext1	4_M_REBELLION
+1@swat,36,68,6	duplicate(dummy_npc)	#ext2	4_F_REBELLION
+1@swat,36,65,6	duplicate(dummy_npc)	#ext3	4_M_REBELLION
+1@swat,36,62,6	duplicate(dummy_npc)	#ext4	4_F_REBELLION
+1@swat,36,59,6	duplicate(dummy_npc)	#ext5	4_M_REBELLION
+1@swat,33,71,6	duplicate(dummy_npc)	#ext6	4_F_REBELLION
+1@swat,33,68,6	duplicate(dummy_npc)	#ext7	4_M_REBELLION
+1@swat,33,65,6	duplicate(dummy_npc)	#ext8	4_F_REBELLION
+1@swat,33,62,6	duplicate(dummy_npc)	#ext9	4_M_REBELLION
+1@swat,33,59,6	duplicate(dummy_npc)	#ext10	4_F_REBELLION
+1@swat,30,71,6	duplicate(dummy_npc)	#ext11	4_M_REBELLION
+1@swat,30,68,6	duplicate(dummy_npc)	#ext12	4_F_REBELLION
+1@swat,30,65,6	duplicate(dummy_npc)	#ext13	4_M_REBELLION
+1@swat,30,62,6	duplicate(dummy_npc)	#ext14	4_F_REBELLION
+1@swat,30,59,6	duplicate(dummy_npc)	#ext15	4_M_REBELLION
 
 
 // Hunter Instance 1 - Step 1 Piles
-1@swat,116,30,6	script	#wl1	4_ROPEPILE,{ end; }
-1@swat,116,31,6	duplicate(#ext1)	#wl2	4_ROPEPILE
-1@swat,116,32,6	duplicate(#ext1)	#wl3	4_ROPEPILE
-1@swat,116,33,6	duplicate(#ext1)	#wl4	4_ROPEPILE
-1@swat,116,34,6	duplicate(#ext1)	#wl5	4_ROPEPILE
-1@swat,116,35,6	duplicate(#ext1)	#wl6	4_ROPEPILE
-1@swat,116,36,6	duplicate(#ext1)	#wl7	4_ROPEPILE
-1@swat,116,37,6	duplicate(#ext1)	#wl8	4_ROPEPILE
-1@swat,116,38,6	duplicate(#ext1)	#wl9	4_ROPEPILE
-1@swat,116,39,6	duplicate(#ext1)	#wl10	4_ROPEPILE
-1@swat,116,40,6	duplicate(#ext1)	#wl11	4_ROPEPILE
-1@swat,116,41,6	duplicate(#ext1)	#wl12	4_ROPEPILE
-1@swat,116,42,6	duplicate(#ext1)	#wl13	4_ROPEPILE
-1@swat,116,43,6	duplicate(#ext1)	#wl14	4_ROPEPILE
-1@swat,116,44,6	duplicate(#ext1)	#wl15	4_ROPEPILE
-1@swat,116,45,6	duplicate(#ext1)	#wl16	4_ROPEPILE
-1@swat,116,46,6	duplicate(#ext1)	#wl17	4_ROPEPILE
-1@swat,116,47,6	duplicate(#ext1)	#wl18	4_ROPEPILE
-1@swat,116,48,6	duplicate(#ext1)	#wl19	4_ROPEPILE
-1@swat,116,49,6	duplicate(#ext1)	#wl20	4_ROPEPILE
-1@swat,116,50,6	duplicate(#ext1)	#wl21	4_ROPEPILE
-1@swat,116,51,6	duplicate(#ext1)	#wl22	4_ROPEPILE
-1@swat,116,52,6	duplicate(#ext1)	#wl23	4_ROPEPILE
-1@swat,116,53,6	duplicate(#ext1)	#wl24	4_ROPEPILE
-1@swat,116,54,6	duplicate(#ext1)	#wl25	4_ROPEPILE
-1@swat,116,55,6	duplicate(#ext1)	#wl26	4_ROPEPILE
-1@swat,116,56,6	duplicate(#ext1)	#wl27	4_ROPEPILE
-1@swat,116,57,6	duplicate(#ext1)	#wl28	4_ROPEPILE
-1@swat,116,58,6	duplicate(#ext1)	#wl29	4_ROPEPILE
-1@swat,116,59,6	duplicate(#ext1)	#wl30	4_ROPEPILE
-1@swat,116,60,6	duplicate(#ext1)	#wl31	4_ROPEPILE
-1@swat,116,61,6	duplicate(#ext1)	#wl32	4_ROPEPILE
-1@swat,116,62,6	duplicate(#ext1)	#wl33	4_ROPEPILE
-1@swat,116,63,6	duplicate(#ext1)	#wl34	4_ROPEPILE
-1@swat,116,64,6	duplicate(#ext1)	#wl35	4_ROPEPILE
-1@swat,116,65,6	duplicate(#ext1)	#wl36	4_ROPEPILE
+1@swat,116,30,6	duplicate(dummy_npc)	#wl1	4_ROPEPILE
+1@swat,116,31,6	duplicate(dummy_npc)	#wl2	4_ROPEPILE
+1@swat,116,32,6	duplicate(dummy_npc)	#wl3	4_ROPEPILE
+1@swat,116,33,6	duplicate(dummy_npc)	#wl4	4_ROPEPILE
+1@swat,116,34,6	duplicate(dummy_npc)	#wl5	4_ROPEPILE
+1@swat,116,35,6	duplicate(dummy_npc)	#wl6	4_ROPEPILE
+1@swat,116,36,6	duplicate(dummy_npc)	#wl7	4_ROPEPILE
+1@swat,116,37,6	duplicate(dummy_npc)	#wl8	4_ROPEPILE
+1@swat,116,38,6	duplicate(dummy_npc)	#wl9	4_ROPEPILE
+1@swat,116,39,6	duplicate(dummy_npc)	#wl10	4_ROPEPILE
+1@swat,116,40,6	duplicate(dummy_npc)	#wl11	4_ROPEPILE
+1@swat,116,41,6	duplicate(dummy_npc)	#wl12	4_ROPEPILE
+1@swat,116,42,6	duplicate(dummy_npc)	#wl13	4_ROPEPILE
+1@swat,116,43,6	duplicate(dummy_npc)	#wl14	4_ROPEPILE
+1@swat,116,44,6	duplicate(dummy_npc)	#wl15	4_ROPEPILE
+1@swat,116,45,6	duplicate(dummy_npc)	#wl16	4_ROPEPILE
+1@swat,116,46,6	duplicate(dummy_npc)	#wl17	4_ROPEPILE
+1@swat,116,47,6	duplicate(dummy_npc)	#wl18	4_ROPEPILE
+1@swat,116,48,6	duplicate(dummy_npc)	#wl19	4_ROPEPILE
+1@swat,116,49,6	duplicate(dummy_npc)	#wl20	4_ROPEPILE
+1@swat,116,50,6	duplicate(dummy_npc)	#wl21	4_ROPEPILE
+1@swat,116,51,6	duplicate(dummy_npc)	#wl22	4_ROPEPILE
+1@swat,116,52,6	duplicate(dummy_npc)	#wl23	4_ROPEPILE
+1@swat,116,53,6	duplicate(dummy_npc)	#wl24	4_ROPEPILE
+1@swat,116,54,6	duplicate(dummy_npc)	#wl25	4_ROPEPILE
+1@swat,116,55,6	duplicate(dummy_npc)	#wl26	4_ROPEPILE
+1@swat,116,56,6	duplicate(dummy_npc)	#wl27	4_ROPEPILE
+1@swat,116,57,6	duplicate(dummy_npc)	#wl28	4_ROPEPILE
+1@swat,116,58,6	duplicate(dummy_npc)	#wl29	4_ROPEPILE
+1@swat,116,59,6	duplicate(dummy_npc)	#wl30	4_ROPEPILE
+1@swat,116,60,6	duplicate(dummy_npc)	#wl31	4_ROPEPILE
+1@swat,116,61,6	duplicate(dummy_npc)	#wl32	4_ROPEPILE
+1@swat,116,62,6	duplicate(dummy_npc)	#wl33	4_ROPEPILE
+1@swat,116,63,6	duplicate(dummy_npc)	#wl34	4_ROPEPILE
+1@swat,116,64,6	duplicate(dummy_npc)	#wl35	4_ROPEPILE
+1@swat,116,65,6	duplicate(dummy_npc)	#wl36	4_ROPEPILE
 
 // Hunter Instance 1 - Step 2 Piles
-1@swat,151,30,6	duplicate(#ext1)	#wl37	4_ROPEPILE
-1@swat,151,31,6	duplicate(#ext1)	#wl38	4_ROPEPILE
-1@swat,151,32,6	duplicate(#ext1)	#wl39	4_ROPEPILE
-1@swat,151,33,6	duplicate(#ext1)	#wl40	4_ROPEPILE
-1@swat,151,34,6	duplicate(#ext1)	#wl41	4_ROPEPILE
-1@swat,151,35,6	duplicate(#ext1)	#wl42	4_ROPEPILE
-1@swat,151,36,6	duplicate(#ext1)	#wl43	4_ROPEPILE
-1@swat,151,37,6	duplicate(#ext1)	#wl44	4_ROPEPILE
-1@swat,151,38,6	duplicate(#ext1)	#wl45	4_ROPEPILE
-1@swat,151,39,6	duplicate(#ext1)	#wl46	4_ROPEPILE
-1@swat,151,40,6	duplicate(#ext1)	#wl47	4_ROPEPILE
-1@swat,151,41,6	duplicate(#ext1)	#wl48	4_ROPEPILE
-1@swat,151,42,6	duplicate(#ext1)	#wl49	4_ROPEPILE
-1@swat,151,43,6	duplicate(#ext1)	#wl50	4_ROPEPILE
-1@swat,151,44,6	duplicate(#ext1)	#wl51	4_ROPEPILE
-1@swat,151,45,6	duplicate(#ext1)	#wl52	4_ROPEPILE
-1@swat,151,46,6	duplicate(#ext1)	#wl53	4_ROPEPILE
-1@swat,151,47,6	duplicate(#ext1)	#wl54	4_ROPEPILE
-1@swat,151,48,6	duplicate(#ext1)	#wl55	4_ROPEPILE
-1@swat,151,49,6	duplicate(#ext1)	#wl56	4_ROPEPILE
-1@swat,151,50,6	duplicate(#ext1)	#wl57	4_ROPEPILE
-1@swat,151,51,6	duplicate(#ext1)	#wl58	4_ROPEPILE
-1@swat,151,52,6	duplicate(#ext1)	#wl59	4_ROPEPILE
-1@swat,151,53,6	duplicate(#ext1)	#wl60	4_ROPEPILE
-1@swat,151,54,6	duplicate(#ext1)	#wl61	4_ROPEPILE
-1@swat,151,55,6	duplicate(#ext1)	#wl62	4_ROPEPILE
-1@swat,151,56,6	duplicate(#ext1)	#wl63	4_ROPEPILE
-1@swat,151,57,6	duplicate(#ext1)	#wl64	4_ROPEPILE
-1@swat,151,58,6	duplicate(#ext1)	#wl65	4_ROPEPILE
-1@swat,151,59,6	duplicate(#ext1)	#wl66	4_ROPEPILE
+1@swat,151,30,6	duplicate(dummy_npc)	#wl37	4_ROPEPILE
+1@swat,151,31,6	duplicate(dummy_npc)	#wl38	4_ROPEPILE
+1@swat,151,32,6	duplicate(dummy_npc)	#wl39	4_ROPEPILE
+1@swat,151,33,6	duplicate(dummy_npc)	#wl40	4_ROPEPILE
+1@swat,151,34,6	duplicate(dummy_npc)	#wl41	4_ROPEPILE
+1@swat,151,35,6	duplicate(dummy_npc)	#wl42	4_ROPEPILE
+1@swat,151,36,6	duplicate(dummy_npc)	#wl43	4_ROPEPILE
+1@swat,151,37,6	duplicate(dummy_npc)	#wl44	4_ROPEPILE
+1@swat,151,38,6	duplicate(dummy_npc)	#wl45	4_ROPEPILE
+1@swat,151,39,6	duplicate(dummy_npc)	#wl46	4_ROPEPILE
+1@swat,151,40,6	duplicate(dummy_npc)	#wl47	4_ROPEPILE
+1@swat,151,41,6	duplicate(dummy_npc)	#wl48	4_ROPEPILE
+1@swat,151,42,6	duplicate(dummy_npc)	#wl49	4_ROPEPILE
+1@swat,151,43,6	duplicate(dummy_npc)	#wl50	4_ROPEPILE
+1@swat,151,44,6	duplicate(dummy_npc)	#wl51	4_ROPEPILE
+1@swat,151,45,6	duplicate(dummy_npc)	#wl52	4_ROPEPILE
+1@swat,151,46,6	duplicate(dummy_npc)	#wl53	4_ROPEPILE
+1@swat,151,47,6	duplicate(dummy_npc)	#wl54	4_ROPEPILE
+1@swat,151,48,6	duplicate(dummy_npc)	#wl55	4_ROPEPILE
+1@swat,151,49,6	duplicate(dummy_npc)	#wl56	4_ROPEPILE
+1@swat,151,50,6	duplicate(dummy_npc)	#wl57	4_ROPEPILE
+1@swat,151,51,6	duplicate(dummy_npc)	#wl58	4_ROPEPILE
+1@swat,151,52,6	duplicate(dummy_npc)	#wl59	4_ROPEPILE
+1@swat,151,53,6	duplicate(dummy_npc)	#wl60	4_ROPEPILE
+1@swat,151,54,6	duplicate(dummy_npc)	#wl61	4_ROPEPILE
+1@swat,151,55,6	duplicate(dummy_npc)	#wl62	4_ROPEPILE
+1@swat,151,56,6	duplicate(dummy_npc)	#wl63	4_ROPEPILE
+1@swat,151,57,6	duplicate(dummy_npc)	#wl64	4_ROPEPILE
+1@swat,151,58,6	duplicate(dummy_npc)	#wl65	4_ROPEPILE
+1@swat,151,59,6	duplicate(dummy_npc)	#wl66	4_ROPEPILE
 
 // Hunter Instance 1 - Step 3 Piles
-1@swat,250,30,6	duplicate(#ext1)	#wl67	4_ROPEPILE
-1@swat,250,31,6	duplicate(#ext1)	#wl68	4_ROPEPILE
-1@swat,250,32,6	duplicate(#ext1)	#wl69	4_ROPEPILE
-1@swat,250,33,6	duplicate(#ext1)	#wl70	4_ROPEPILE
-1@swat,250,34,6	duplicate(#ext1)	#wl71	4_ROPEPILE
-1@swat,250,35,6	duplicate(#ext1)	#wl72	4_ROPEPILE
-1@swat,250,36,6	duplicate(#ext1)	#wl73	4_ROPEPILE
-1@swat,250,37,6	duplicate(#ext1)	#wl74	4_ROPEPILE
-1@swat,250,38,6	duplicate(#ext1)	#wl75	4_ROPEPILE
-1@swat,250,39,6	duplicate(#ext1)	#wl76	4_ROPEPILE
-1@swat,250,40,6	duplicate(#ext1)	#wl77	4_ROPEPILE
-1@swat,250,41,6	duplicate(#ext1)	#wl78	4_ROPEPILE
-1@swat,250,42,6	duplicate(#ext1)	#wl79	4_ROPEPILE
-1@swat,250,43,6	duplicate(#ext1)	#wl80	4_ROPEPILE
-1@swat,250,44,6	duplicate(#ext1)	#wl81	4_ROPEPILE
+1@swat,250,30,6	duplicate(dummy_npc)	#wl67	4_ROPEPILE
+1@swat,250,31,6	duplicate(dummy_npc)	#wl68	4_ROPEPILE
+1@swat,250,32,6	duplicate(dummy_npc)	#wl69	4_ROPEPILE
+1@swat,250,33,6	duplicate(dummy_npc)	#wl70	4_ROPEPILE
+1@swat,250,34,6	duplicate(dummy_npc)	#wl71	4_ROPEPILE
+1@swat,250,35,6	duplicate(dummy_npc)	#wl72	4_ROPEPILE
+1@swat,250,36,6	duplicate(dummy_npc)	#wl73	4_ROPEPILE
+1@swat,250,37,6	duplicate(dummy_npc)	#wl74	4_ROPEPILE
+1@swat,250,38,6	duplicate(dummy_npc)	#wl75	4_ROPEPILE
+1@swat,250,39,6	duplicate(dummy_npc)	#wl76	4_ROPEPILE
+1@swat,250,40,6	duplicate(dummy_npc)	#wl77	4_ROPEPILE
+1@swat,250,41,6	duplicate(dummy_npc)	#wl78	4_ROPEPILE
+1@swat,250,42,6	duplicate(dummy_npc)	#wl79	4_ROPEPILE
+1@swat,250,43,6	duplicate(dummy_npc)	#wl80	4_ROPEPILE
+1@swat,250,44,6	duplicate(dummy_npc)	#wl81	4_ROPEPILE
 
 // Hunter Instance 2 - Step 1 Piles
-1@swat,23,222,6	duplicate(#ext1)	#wl82	4_ROPEPILE
-1@swat,24,222,6	duplicate(#ext1)	#wl83	4_ROPEPILE
-1@swat,25,222,6	duplicate(#ext1)	#wl84	4_ROPEPILE
-1@swat,26,222,6	duplicate(#ext1)	#wl85	4_ROPEPILE
-1@swat,27,222,6	duplicate(#ext1)	#wl86	4_ROPEPILE
-1@swat,28,222,6	duplicate(#ext1)	#wl87	4_ROPEPILE
-1@swat,29,222,6	duplicate(#ext1)	#wl88	4_ROPEPILE
-1@swat,30,222,6	duplicate(#ext1)	#wl89	4_ROPEPILE
-1@swat,31,222,6	duplicate(#ext1)	#wl90	4_ROPEPILE
-1@swat,32,222,6	duplicate(#ext1)	#wl91	4_ROPEPILE
-1@swat,33,222,6	duplicate(#ext1)	#wl92	4_ROPEPILE
-1@swat,34,222,6	duplicate(#ext1)	#wl93	4_ROPEPILE
-1@swat,35,222,6	duplicate(#ext1)	#wl94	4_ROPEPILE
-1@swat,36,222,6	duplicate(#ext1)	#wl95	4_ROPEPILE
-1@swat,37,222,6	duplicate(#ext1)	#wl96	4_ROPEPILE
-1@swat,38,222,6	duplicate(#ext1)	#wl97	4_ROPEPILE
-1@swat,39,222,6	duplicate(#ext1)	#wl98	4_ROPEPILE
+1@swat,23,222,6	duplicate(dummy_npc)	#wl82	4_ROPEPILE
+1@swat,24,222,6	duplicate(dummy_npc)	#wl83	4_ROPEPILE
+1@swat,25,222,6	duplicate(dummy_npc)	#wl84	4_ROPEPILE
+1@swat,26,222,6	duplicate(dummy_npc)	#wl85	4_ROPEPILE
+1@swat,27,222,6	duplicate(dummy_npc)	#wl86	4_ROPEPILE
+1@swat,28,222,6	duplicate(dummy_npc)	#wl87	4_ROPEPILE
+1@swat,29,222,6	duplicate(dummy_npc)	#wl88	4_ROPEPILE
+1@swat,30,222,6	duplicate(dummy_npc)	#wl89	4_ROPEPILE
+1@swat,31,222,6	duplicate(dummy_npc)	#wl90	4_ROPEPILE
+1@swat,32,222,6	duplicate(dummy_npc)	#wl91	4_ROPEPILE
+1@swat,33,222,6	duplicate(dummy_npc)	#wl92	4_ROPEPILE
+1@swat,34,222,6	duplicate(dummy_npc)	#wl93	4_ROPEPILE
+1@swat,35,222,6	duplicate(dummy_npc)	#wl94	4_ROPEPILE
+1@swat,36,222,6	duplicate(dummy_npc)	#wl95	4_ROPEPILE
+1@swat,37,222,6	duplicate(dummy_npc)	#wl96	4_ROPEPILE
+1@swat,38,222,6	duplicate(dummy_npc)	#wl97	4_ROPEPILE
+1@swat,39,222,6	duplicate(dummy_npc)	#wl98	4_ROPEPILE
 
 // Hunter Instance 2 - Step 2 Piles
-1@swat,22,272,6	duplicate(#ext1)	#wl99	4_ROPEPILE
-1@swat,23,272,6	duplicate(#ext1)	#wl100	4_ROPEPILE
-1@swat,24,272,6	duplicate(#ext1)	#wl101	4_ROPEPILE
-1@swat,25,272,6	duplicate(#ext1)	#wl102	4_ROPEPILE
-1@swat,26,272,6	duplicate(#ext1)	#wl103	4_ROPEPILE
-1@swat,27,272,6	duplicate(#ext1)	#wl104	4_ROPEPILE
-1@swat,28,272,6	duplicate(#ext1)	#wl105	4_ROPEPILE
-1@swat,29,272,6	duplicate(#ext1)	#wl106	4_ROPEPILE
-1@swat,30,272,6	duplicate(#ext1)	#wl107	4_ROPEPILE
-1@swat,31,272,6	duplicate(#ext1)	#wl108	4_ROPEPILE
-1@swat,32,272,6	duplicate(#ext1)	#wl109	4_ROPEPILE
-1@swat,33,272,6	duplicate(#ext1)	#wl110	4_ROPEPILE
-1@swat,34,272,6	duplicate(#ext1)	#wl111	4_ROPEPILE
-1@swat,35,272,6	duplicate(#ext1)	#wl112	4_ROPEPILE
-1@swat,36,272,6	duplicate(#ext1)	#wl113	4_ROPEPILE
-1@swat,37,272,6	duplicate(#ext1)	#wl114	4_ROPEPILE
-1@swat,38,272,6	duplicate(#ext1)	#wl115	4_ROPEPILE
-1@swat,39,272,6	duplicate(#ext1)	#wl116	4_ROPEPILE
-1@swat,40,272,6	duplicate(#ext1)	#wl117	4_ROPEPILE
-1@swat,41,272,6	duplicate(#ext1)	#wl118	4_ROPEPILE
-1@swat,42,272,6	duplicate(#ext1)	#wl119	4_ROPEPILE
-1@swat,43,272,6	duplicate(#ext1)	#wl120	4_ROPEPILE
-1@swat,44,272,6	duplicate(#ext1)	#wl121	4_ROPEPILE
-1@swat,45,272,6	duplicate(#ext1)	#wl122	4_ROPEPILE
-1@swat,46,272,6	duplicate(#ext1)	#wl123	4_ROPEPILE
-1@swat,47,272,6	duplicate(#ext1)	#wl124	4_ROPEPILE
-1@swat,48,272,6	duplicate(#ext1)	#wl125	4_ROPEPILE
-1@swat,49,272,6	duplicate(#ext1)	#wl126	4_ROPEPILE
-1@swat,50,272,6	duplicate(#ext1)	#wl127	4_ROPEPILE
-1@swat,51,272,6	duplicate(#ext1)	#wl128	4_ROPEPILE
-1@swat,52,272,6	duplicate(#ext1)	#wl129	4_ROPEPILE
+1@swat,22,272,6	duplicate(dummy_npc)	#wl99	4_ROPEPILE
+1@swat,23,272,6	duplicate(dummy_npc)	#wl100	4_ROPEPILE
+1@swat,24,272,6	duplicate(dummy_npc)	#wl101	4_ROPEPILE
+1@swat,25,272,6	duplicate(dummy_npc)	#wl102	4_ROPEPILE
+1@swat,26,272,6	duplicate(dummy_npc)	#wl103	4_ROPEPILE
+1@swat,27,272,6	duplicate(dummy_npc)	#wl104	4_ROPEPILE
+1@swat,28,272,6	duplicate(dummy_npc)	#wl105	4_ROPEPILE
+1@swat,29,272,6	duplicate(dummy_npc)	#wl106	4_ROPEPILE
+1@swat,30,272,6	duplicate(dummy_npc)	#wl107	4_ROPEPILE
+1@swat,31,272,6	duplicate(dummy_npc)	#wl108	4_ROPEPILE
+1@swat,32,272,6	duplicate(dummy_npc)	#wl109	4_ROPEPILE
+1@swat,33,272,6	duplicate(dummy_npc)	#wl110	4_ROPEPILE
+1@swat,34,272,6	duplicate(dummy_npc)	#wl111	4_ROPEPILE
+1@swat,35,272,6	duplicate(dummy_npc)	#wl112	4_ROPEPILE
+1@swat,36,272,6	duplicate(dummy_npc)	#wl113	4_ROPEPILE
+1@swat,37,272,6	duplicate(dummy_npc)	#wl114	4_ROPEPILE
+1@swat,38,272,6	duplicate(dummy_npc)	#wl115	4_ROPEPILE
+1@swat,39,272,6	duplicate(dummy_npc)	#wl116	4_ROPEPILE
+1@swat,40,272,6	duplicate(dummy_npc)	#wl117	4_ROPEPILE
+1@swat,41,272,6	duplicate(dummy_npc)	#wl118	4_ROPEPILE
+1@swat,42,272,6	duplicate(dummy_npc)	#wl119	4_ROPEPILE
+1@swat,43,272,6	duplicate(dummy_npc)	#wl120	4_ROPEPILE
+1@swat,44,272,6	duplicate(dummy_npc)	#wl121	4_ROPEPILE
+1@swat,45,272,6	duplicate(dummy_npc)	#wl122	4_ROPEPILE
+1@swat,46,272,6	duplicate(dummy_npc)	#wl123	4_ROPEPILE
+1@swat,47,272,6	duplicate(dummy_npc)	#wl124	4_ROPEPILE
+1@swat,48,272,6	duplicate(dummy_npc)	#wl125	4_ROPEPILE
+1@swat,49,272,6	duplicate(dummy_npc)	#wl126	4_ROPEPILE
+1@swat,50,272,6	duplicate(dummy_npc)	#wl127	4_ROPEPILE
+1@swat,51,272,6	duplicate(dummy_npc)	#wl128	4_ROPEPILE
+1@swat,52,272,6	duplicate(dummy_npc)	#wl129	4_ROPEPILE
 
 
 // Hunter Instance 1 - Step 1 Robots
@@ -693,15 +693,15 @@ OnTimer12000:
 	disablenpc instance_npcname("#tr117");
 	disablenpc instance_npcname("#tr118");
 	disablenpc instance_npcname("#tr119");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl17");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl17");
 	hideonnpc instance_npcname("#wl17");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl18");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl18");
 	hideonnpc instance_npcname("#wl18");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl19");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl19");
 	hideonnpc instance_npcname("#wl19");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl20");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl20");
 	hideonnpc instance_npcname("#wl20");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl21");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl21");
 	hideonnpc instance_npcname("#wl21");
 	delwall "swat_1_wall_step_1_" + 'instance_id;
 	end;
@@ -780,15 +780,15 @@ OnTimer7000:
 	disablenpc instance_npcname("#tr124");
 	disablenpc instance_npcname("#tr125");
 	disablenpc instance_npcname("#tr126");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl51");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl51");
 	hideonnpc instance_npcname("#wl51");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl52");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl52");
 	hideonnpc instance_npcname("#wl52");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl53");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl53");
 	hideonnpc instance_npcname("#wl53");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl54");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl54");
 	hideonnpc instance_npcname("#wl54");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl55");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl55");
 	hideonnpc instance_npcname("#wl55");
 	delwall "swat_1_wall_step_2_" + 'instance_id;
 	end;
@@ -947,15 +947,15 @@ OnTimer9000:
 	disablenpc instance_npcname("#tr129");
 	disablenpc instance_npcname("#tr130");
 	disablenpc instance_npcname("#tr131");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl72");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl72");
 	hideonnpc instance_npcname("#wl72");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl73");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl73");
 	hideonnpc instance_npcname("#wl73");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl74");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl74");
 	hideonnpc instance_npcname("#wl74");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl75");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl75");
 	hideonnpc instance_npcname("#wl75");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl76");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl76");
 	hideonnpc instance_npcname("#wl76");
 	delwall "swat_1_wall_step_3_" + 'instance_id;
 	end;
@@ -1021,7 +1021,7 @@ OnTimer24000:
 	npctalk "Julian: Something is coming!! Evade!!";
 	end;
 OnTimer28000:
-	specialeffect EF_LORD,AREA, "Julian#3";
+	specialeffect EF_LORD, AREA, "Julian#3";
 	hideonnpc instance_npcname("Julian#3");	// hideonnpc to display EF_LORD properly
 	enablenpc instance_npcname("Ebel#1_1");
 	npctalk "Ebel: Did I miss...", instance_npcname("Ebel#1_1");
@@ -1064,16 +1064,16 @@ OnTimer80000:
 	end;
 OnTimer82000:
 	donpcevent instance_npcname("#hunter_instance_ebel") + "::OnStop";
-	specialeffect EF_LORD,AREA, instance_npcname("#expl1");
+	specialeffect EF_LORD, AREA, instance_npcname("#expl1");
 	end;
 OnTimer83000:
-	specialeffect EF_LORD,AREA, instance_npcname("#expl2");
+	specialeffect EF_LORD, AREA, instance_npcname("#expl2");
 	end;
 OnTimer84000:
-	specialeffect EF_LORD,AREA, instance_npcname("#expl3");
+	specialeffect EF_LORD, AREA, instance_npcname("#expl3");
 	end;
 OnTimer85000:
-	specialeffect EF_LORD,AREA, instance_npcname("#expl4");
+	specialeffect EF_LORD, AREA, instance_npcname("#expl4");
 	stopnpctimer;
 	donpcevent instance_npcname("Julian#3_1") + "::OnStart";
 	end;
@@ -1357,15 +1357,15 @@ OnTouch:
 	disablenpc instance_npcname("#tr132");
 	disablenpc instance_npcname("#tr133");
 	disablenpc instance_npcname("#tr134");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl88");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl88");
 	hideonnpc instance_npcname("#wl88");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl89");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl89");
 	hideonnpc instance_npcname("#wl89");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl90");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl90");
 	hideonnpc instance_npcname("#wl90");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl91");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl91");
 	hideonnpc instance_npcname("#wl91");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl92");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl92");
 	hideonnpc instance_npcname("#wl92");
 	enablenpc instance_npcname("#start2_2_1");
 	enablenpc instance_npcname("Julian#5");
@@ -1431,15 +1431,15 @@ OnTimer1000:
 	disablenpc instance_npcname("#tr136");
 	disablenpc instance_npcname("#tr137");
 	disablenpc instance_npcname("#tr138");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl110");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl110");
 	hideonnpc instance_npcname("#wl110");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl111");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl111");
 	hideonnpc instance_npcname("#wl111");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl112");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl112");
 	hideonnpc instance_npcname("#wl112");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl113");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl113");
 	hideonnpc instance_npcname("#wl113");
-	specialeffect EF_LORD,AREA, instance_npcname("#wl114");
+	specialeffect EF_LORD, AREA, instance_npcname("#wl114");
 	hideonnpc instance_npcname("#wl114");
 	delwall "swat_2_wall_step_2_" + 'instance_id;
 
@@ -1675,11 +1675,11 @@ OnTimer3000:
 	npctalk "Julian: Well... Sort of.", instance_npcname("Julian#8");
 	end;
 OnTimer5000:
-	specialeffect EF_INCAGILITY,AREA, instance_npcname("Ebel#3");
+	specialeffect EF_INCAGILITY, AREA, instance_npcname("Ebel#3");
 	npctalk "Ebel: Then...", instance_npcname("Ebel#3");
 	end;
 OnTimer7000:
-	specialeffect EF_SIGNUM,AREA, instance_npcname("Ebel#3");
+	specialeffect EF_SIGNUM, AREA, instance_npcname("Ebel#3");
 	npctalk "Ebel: I will stop him.", instance_npcname("Ebel#3");
 	end;
 OnTimer8000:

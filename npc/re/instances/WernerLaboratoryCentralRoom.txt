@@ -986,7 +986,7 @@ OnTouch:
 		terra_gloria_main = 22;
 		// close2;	// fix me
 		cutin "",255;
-		specialeffect EF_ICECRASH,AREA, .@seyren$;
+		specialeffect EF_ICECRASH, AREA, .@seyren$;
 		disablenpc .@seyren$;
 		// monster 'map_slw$,56,171, "Seyren", SEYREN, 1;
 		sleep2 1000;
@@ -1003,7 +1003,7 @@ OnTouch:
 	mes "Thank you... Bye.";
 	// close2;	// fix me
 	cutin "",255;
-	specialeffect EF_ICECRASH,AREA, .@seyren$;
+	specialeffect EF_ICECRASH, AREA, .@seyren$;
 	hideonnpc .@seyren$;
 	// monster 'map_slw$,56,171, "Seyren", SEYREN, 1;
 	sleep2 1000;
@@ -1041,8 +1041,8 @@ OnTouch:
 	sleep2 3000;
 	disablenpc instance_npcname("#boss_master_dummy");
 	npctalk "Beeee prepared!!!", .@npc_name$;
-	specialeffect 1029,AREA, instance_npcname("Pet child#boss_master");
-	specialeffect 1042,AREA, instance_npcname("Pet child#boss_master");
+	specialeffect EF_DANCE_BLADE_ATK, AREA, instance_npcname("Pet child#boss_master");
+	specialeffect EF_ALL_FULL_THROTTLE, AREA, instance_npcname("Pet child#boss_master");
 	donpcevent instance_npcname("#boss_master_lab") + "::OnStart";
 	mapannounce 'map_slw$, "The Magic field has been activated.", bc_map,0xFF99;
 	hideonnpc instance_npcname("Pet child#boss_master");
