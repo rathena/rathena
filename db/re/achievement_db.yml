@@ -1129,26 +1129,26 @@ Body:
   - ID: 128011
     Group: "AG_BATTLE"
     Name: "Ordinary Tourist"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3029
-    #    Count: 1
+    Target:
+      - Id: 0
+        MobID: 3029
+        Count: 1
     Score: 10
   - ID: 128012
     Group: "AG_BATTLE"
     Name: "Backcountry Expert"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3029
-    #    Count: 10
+    Target:
+      - Id: 0
+        MobID: 3029
+        Count: 10
     Score: 20
   - ID: 128013
     Group: "AG_BATTLE"
     Name: "Able to eat more like this"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3029
-    #    Count: 50
+    Target:
+      - Id: 0
+        MobID: 3029
+        Count: 50
     Score: 50
   - ID: 128014
     Group: "AG_BATTLE"
@@ -1217,58 +1217,58 @@ Body:
   - ID: 128022
     Group: "AG_BATTLE"
     Name: "There was mercy in Morocc army"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3000
-    #  Count: 1
+    Target:
+      - Id: 0
+        MobID: 3000
+        Count: 1
     Score: 10
   - ID: 128023
     Group: "AG_BATTLE"
     Name: "There was fear in Morocc army"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3000
-    #    Count: 10
+    Target:
+      - Id: 0
+        MobID: 3000
+        Count: 10
     Score: 20
   - ID: 128024
     Group: "AG_BATTLE"
     Name: "Guard of weak army"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3000
-    #    Count: 50
+    Target:
+      - Id: 0
+        MobID: 3000
+        Count: 50
     Score: 50
   - ID: 128025
     Group: "AG_BATTLE"
     Name: "Audience with the queen"
-    #Target:
-    #  - Id: 0
-    #    MobID: 2529
-    #    Count: 1
+    Target:
+      - Id: 0
+        MobID: 2529
+        Count: 1
     Score: 10
   - ID: 128026
     Group: "AG_BATTLE"
     Name: "Warm earth"
-    #Target:
-    #  - Id: 0
-    #    MobID: 2533
-    #    Count: 1
+    Target:
+      - Id: 0
+        MobID: 2533
+        Count: 1
     Score: 10
   - ID: 128027
     Group: "AG_BATTLE"
     Name: "Water is very good exactly"
-    #Target:
-    #  - Id: 0
-    #    MobID: 2534
-    #    Count: 1
+    Target:
+      - Id: 0
+        MobID: 2534
+        Count: 1
     Score: 10
   - ID: 128028
     Group: "AG_BATTLE"
     Name: "Pleasant breeze"
-    #Target:
-    #  - Id: 0
-    #    MobID: 2535
-    #    Count: 1
+    Target:
+      - Id: 0
+        MobID: 2535
+        Count: 1
     Score: 10
   - ID: 128029
     Group: "AG_BATTLE"
@@ -1321,34 +1321,34 @@ Body:
   - ID: 128035
     Group: "AG_BATTLE"
     Name: "Time Traveler"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3190
-    #    Count: 1
+    Target:
+      - Id: 0
+        MobID: 3190
+        Count: 1
     Score: 10
   - ID: 128036
     Group: "AG_BATTLE"
     Name: "Restore ancient relic"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3190
-    #    Count: 10
+    Target:
+      - Id: 0
+        MobID: 3190
+        Count: 10
     Score: 20
   - ID: 128037
     Group: "AG_BATTLE"
     Name: "Master of relic transport"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3190
-    #    Count: 50
+    Target:
+      - Id: 0
+        MobID: 3190
+        Count: 50
     Score: 50
   - ID: 128038
     Group: "AG_BATTLE"
     Name: "Show Jailbreak to the captain"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3181
-    #    Count: 1
+    Target:
+      - Id: 0
+        MobID: 3181
+        Count: 1
     Score: 10
   - ID: 128039
     Group: "AG_BATTLE"
@@ -1361,26 +1361,26 @@ Body:
   - ID: 128040
     Group: "AG_BATTLE"
     Name: "Riot on board"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3181
-    #    Count: 1
+    Target:
+      - Id: 0
+        MobID: 3181
+        Count: 1
     Score: 20
   - ID: 128041
     Group: "AG_BATTLE"
     Name: "Turmoil on board"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3181
-    #    Count: 10
+    Target:
+      - Id: 0
+        MobID: 3181
+        Count: 10
     Score: 20
   - ID: 128042
     Group: "AG_BATTLE"
     Name: "Rebellion on board"
-    #Target:
-    #  - Id: 0
-    #    MobID: 3181
-    #    Count: 50
+    Target:
+      - Id: 0
+        MobID: 3181
+        Count: 50
     Score: 50
   - ID: 128043
     Group: "AG_BATTLE"
