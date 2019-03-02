@@ -900,7 +900,6 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
 {
 	struct event_data* ev = (struct event_data*)strdb_get(ev_db, eventname);
 	struct npc_data *nd;
-	int k;
 
 	nullpo_ret(sd);
 
@@ -1018,26 +1017,22 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
  *------------------------------------------*/
 int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 {
-	int xs, ys, f = 1;
+	int xs, ys, i, f = 1;
 
 	nullpo_retr(1, sd);
 
-	// Why not enqueue it? [Inkfish]
-	//if(sd->npc_id)
-	//	return 1;
-
 	// Remove NPCs that are no longer within the OnTouch area
-	for (const auto &it : sd->areanpc) {
-		struct npc_data *nd = map_id2nd(it);
+	for (i = 0; i < sd->areanpc.size(); i++) {
+		struct npc_data *nd = map_id2nd(sd->areanpc[i]);
 
 		if (!nd || nd->subtype != NPCTYPE_SCRIPT ||
 			!(x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
-			sd->areanpc.erase(sd->areanpc.begin() + it);
+			sd->areanpc.erase(sd->areanpc.begin() + i);
 	}
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	for (int i = 0; i < mapdata->npc_num_area; i++) {
+	for (i = 0; i < mapdata->npc_num_area; i++) {
 		if (mapdata->npc[i]->sc.option&OPTION_INVISIBLE) {
 			f = 0; // a npc was found, but it is disabled; don't print warning
 			continue;
