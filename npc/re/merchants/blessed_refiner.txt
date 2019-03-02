@@ -21,7 +21,7 @@
 	mes "I only refine equipment at the +6 ~ 12 levels.";
 	next;
 	mes "[Blacksmith Dister]";
-	mes "I will need ^ff9999Blessed Weapon Ore^000000 for weapons, and ^ff9999Blessed Armor Ore^000000 for armors.";
+	mes "I will need ^ff9999Blessed Oridecon^000000 for weapons, and ^ff9999Blessed Elunium^000000 for armors.";
 	mes "Failed refines ^FF0000will not break or reduce the refine level^000000.";
 	next;
 	mes "[Blacksmith Dister]";
