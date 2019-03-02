@@ -9246,6 +9246,28 @@ Example:
 
 ---------------------------------------
 
+*bg_reserve("<battleground_name>");
+
+Reserves a slot for the given Battleground for the Battleground UI System.
+
+Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+
+---------------------------------------
+
+*bg_unbook("<battleground_name>");
+
+Removes a spot for the given Battleground for the Battleground UI System.
+
+Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining players in an active Battleground.
+
+---------------------------------------
+
+*bg_desert({<char_id>});
+
+Same as 'bg_leave' but slaps the player with a deserter status so they can't enter another queue for Battlegrounds for 10 minutes due leaving in the middle of a Battleground.
+
+---------------------------------------
+
 *bg_warp <Battle Group>,"<map name>",<x>,<y>;
 
 Similar to the 'warp' command.

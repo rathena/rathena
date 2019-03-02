@@ -1,0 +1,64 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2019 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Battleground Queue Database
+###########################################################################
+#
+# Battleground Queue Settings
+#
+###########################################################################
+# ID - Unique ID for the battlegrounds type.
+###########################################################################
+# Name - Name of the battlegrounds type. Must be the exact same as in the
+# client for players to be able to join.
+###########################################################################
+# Players - Number of players required on each team.
+#    Min - minimum number of players in each team
+#    Max - maximum number of players in each team
+###########################################################################
+# Level - Level required to join the battleground.
+#    Min - minimum level
+#    Max - maximum level
+###########################################################################
+# Deserter - Amount of time a player is marked deserter (seconds). If no
+# value is given, defaults to 600 seconds.
+###########################################################################
+# Locations - Different battlegrounds locations and values for each.
+#   - Map - The map on which the battlegrounds will be played.
+#     StartEvent - Event triggered when the battlegrounds starts.
+#     TeamA - A list of values for TeamA.
+#       Respawn - coordinate for warping on death.
+#         X - X coordinate for respawn
+#         Y - Y coordinate for respawn
+#       DeathEvent -  Event triggered when a player dies.
+#       QuitEvent - Event triggered when a player quits.
+#       Variable - Name of BG ID variable used in the battlegrounds script.
+#     TeamB - A list of values for TeamB.
+#       Respawn - coordinate for warping on death.
+#         X - X coordinate for respawn
+#         Y - Y coordinate for respawn
+#       DeathEvent -  Event triggered when a player dies.
+#       QuitEvent - Event triggered when a player quits.
+#       Variable - Name of BG ID variable used in the battlegrounds script.
+###########################################################################
+
+Header:
+  Type: BATTLEGROUND_DB
+  Version: 1
+
+Body:

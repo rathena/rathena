@@ -12,6 +12,7 @@
 //=     Changed how the scoreboard works slightly.
 //=     Removed the areapercentheals, and minor things.
 //= 1.3 Fixed wrong names for disablenpc/enablenpc. [Ai4rei]
+//= 1.4 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
 //============================================================
 
 // Waiting Room NPCs
@@ -81,7 +82,8 @@ OnDisable:
 	end;
 OnTouch:
 	set Bat_Team,1;
-	setquest 6025;
+	if (!getbattleflag("feature.bgqueue"))
+		setquest 6025;
 	end;
 }
 
@@ -98,7 +100,8 @@ OnDisable:
 	end;
 OnTouch:
 	set Bat_Team,2;
-	setquest 6025;
+	if (!getbattleflag("feature.bgqueue"))
+		setquest 6025;
 	end;
 }
 
@@ -117,7 +120,10 @@ OnInit:
 	end;
 
 OnGuillaumeQuit:
-	//set BG_Delay_Tick, gettimetick(2) + 1200;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+//	else
+//		set BG_Delay_Tick, gettimetick(2) + 1200;
 OnGuillaumeDie:
 	if( $@KvM03BG == 2 ) {
 		set .Guillaume_Count, .Guillaume_Count - 1;
@@ -132,7 +138,10 @@ OnGuillaumeDie:
 	end;
 
 OnCroixQuit:
-	//set BG_Delay_Tick, gettimetick(2) + 1200;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+//	else
+//	set BG_Delay_Tick, gettimetick(2) + 1200;
 OnCroixDie:
 	if( $@KvM03BG == 2 ) {
 		set .Croix_Count, .Croix_Count - 1;
@@ -316,6 +325,8 @@ OnTimer60000:
 	set $@KvM03BG_Victory, 0;
 	if( $@KvM03BG_id1 ) { bg_destroy $@KvM03BG_id1; set $@KvM03BG_id1, 0; }
 	if( $@KvM03BG_id2 ) { bg_destroy $@KvM03BG_id2; set $@KvM03BG_id2, 0; }
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_c03";
 	disablenpc "KVM Officer#KVM03A";
 	disablenpc "KVM Officer#KVM03B";
 	mapwarp "bat_c03","bat_room",154,150;
@@ -361,8 +372,23 @@ bat_c03,51,130,5	script	KVM Officer#KVM03A	419,{
 		}
 		bg_leave;
 		set Bat_Team,0;
+	if (!getbattleflag("feature.bgqueue"))
 		warp "bat_room",154,150;
 	}
 	end;
 }
 bat_c03,148,53,1	duplicate(KVM Officer#KVM03A)	KVM Officer#KVM03B	415
+
+// BG Queue makes these scripts useless
+-	script	BGQueueInit#kvm03	-1,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue")) {
+		unloadnpc "KvM03R_Guillaume";
+		unloadnpc "KvM03R_Croix";
+		unloadnpc "#kvm701";
+		unloadnpc "#kvm702";
+	}
+	end;
+}

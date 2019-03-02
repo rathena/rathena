@@ -11,7 +11,8 @@
 //= 1.2 Upated some announces and dialogs from iRO.
 //=     Changed how the scoreboard works slightly.
 //=     Removed the areapercentheals, and minor things.
-//============================================================s
+//= 1.3 Added battle_config checks to allow this script to use the new queue interface or the previous method. [Aleos]
+//============================================================
 
 // Waiting Room NPCs
 //============================================================
@@ -81,7 +82,8 @@ OnDisable:
 	end;
 OnTouch:
 	set Bat_Team,1;
-	setquest 6025;
+	if (!getbattleflag("feature.bgqueue"))
+		setquest 6025;
 	end;
 }
 
@@ -98,7 +100,8 @@ OnDisable:
 	end;
 OnTouch:
 	set Bat_Team,2;
-	setquest 6025;
+	if (!getbattleflag("feature.bgqueue"))
+		setquest 6025;
 	end;
 }
 
@@ -117,7 +120,10 @@ OnInit:
 	end;
 
 OnGuillaumeQuit:
-	//set BG_Delay_Tick, gettimetick(2) + 1200;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+//	else
+//		set BG_Delay_Tick, gettimetick(2) + 1200;
 OnGuillaumeDie:
 	if( $@KvM01BG == 2 )
 	{
@@ -132,7 +138,10 @@ OnGuillaumeDie:
 	end;
 
 OnCroixQuit:
-	//set BG_Delay_Tick, gettimetick(2) + 1200;
+	if (getbattleflag("feature.bgqueue"))
+		bg_desert;
+//	else
+//		set BG_Delay_Tick, gettimetick(2) + 1200;
 OnCroixDie:
 	if( $@KvM01BG == 2 )
 	{
@@ -316,6 +325,8 @@ OnTimer60000:
 	set $@KvM01BG_Victory, 0;
 	if( $@KvM01BG_id1 ) { bg_destroy $@KvM01BG_id1; set $@KvM01BG_id1, 0; }
 	if( $@KvM01BG_id2 ) { bg_destroy $@KvM01BG_id2; set $@KvM01BG_id2, 0; }
+	if (getbattleflag("feature.bgqueue"))
+		bg_unbook "bat_c01";
 	disablenpc "KVM Officer#KVM01A";
 	disablenpc "KVM Officer#KVM01B";
 	mapwarp "bat_c01","bat_room",154,150;
@@ -361,8 +372,23 @@ bat_c01,51,130,5	script	KVM Officer#KVM01A	419,{
 		}
 		bg_leave;
 		set Bat_Team,0;
-		warp "bat_room",154,150;
+		if (!getbattleflag("feature.bgqueue"))
+			warp "bat_room",154,150;
 	}
 	end;
 }
 bat_c01,148,53,1	duplicate(KVM Officer#KVM01A)	KVM Officer#KVM01B	415
+
+// BG Queue makes these scripts useless
+-	script	BGQueueInit#kvm01	-1,{
+	end;
+
+OnInit:
+	if (getbattleflag("feature.bgqueue")) {
+		unloadnpc "KvM01R_Guillaume";
+		unloadnpc "KvM01R_Croix";
+		unloadnpc "#kvm801";
+		unloadnpc "#kvm802";
+	}
+	end;
+}
