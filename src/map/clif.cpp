@@ -1356,15 +1356,11 @@ void clif_class_change_target(struct block_list *bl,int class_,int type, enum se
 /// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
 static void clif_spiritball_single(int fd, struct map_session_data *sd)
 {	
-	int cmd = 0x1e1;
-	if (sd && ((sd->class_&MAPID_THIRDMASK) == MAPID_SOUL_REAPER || (sd->class_&MAPID_THIRDMASK) == MAPID_BABY_SOUL_REAPER))
-		cmd = 0x1d0;
-
-	WFIFOHEAD(fd, packet_len(cmd));
-	WFIFOW(fd,0)=cmd;
+	WFIFOHEAD(fd, packet_len(0x1d0));
+	WFIFOW(fd,0)=0x1d0;
 	WFIFOL(fd,2)=sd->bl.id;
 	WFIFOW(fd,6)=sd->spiritball;
-	WFIFOSET(fd, packet_len(cmd));
+	WFIFOSET(fd, packet_len(0x1d0));
 }
 
 /*==========================================
