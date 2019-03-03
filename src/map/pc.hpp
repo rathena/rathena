@@ -195,7 +195,8 @@ struct s_add_drop {
 
 /// AutoBonus bonus struct
 struct s_autobonus {
-	short rate,atk_type;
+	short rate;
+	uint16 atk_type;
 	unsigned int duration;
 	char *bonus_script, *other_script;
 	int active;
@@ -301,6 +302,7 @@ struct map_session_data {
 		unsigned int no_knockback : 1;
 		unsigned int bonus_coma : 1;
 		unsigned int no_mado_fuel : 1; // Disable Magic_Gear_Fuel consumption [Secret]
+		unsigned int no_walk_delay : 1;
 	} special_state;
 	uint32 login_id1, login_id2;
 	unsigned short class_;	//This is the internal job ID used by the map server to simplify comparisons/queries/etc. [Skotlex]
@@ -1069,7 +1071,7 @@ bool pc_adoption(struct map_session_data *p1_sd, struct map_session_data *p2_sd,
 
 void pc_updateweightstatus(struct map_session_data *sd);
 
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short atk_type, const char *o_script, unsigned int pos, bool onskill);
+bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 atk_type, const char *o_script, unsigned int pos, bool onskill);
 void pc_exeautobonus(struct map_session_data* sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus);
 TIMER_FUNC(pc_endautobonus);
 void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore);

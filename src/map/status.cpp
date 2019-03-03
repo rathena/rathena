@@ -696,7 +696,7 @@ void initChangeTables(void)
 	set_sc( RA_ELECTRICSHOCKER	, SC_ELECTRICSHOCKER	, EFST_ELECTRICSHOCKER	, SCB_NONE );
 	set_sc( RA_WUGDASH			, SC_WUGDASH		, EFST_WUGDASH		, SCB_SPEED|SCB_DSPD );
 	set_sc( RA_WUGBITE          , SC_BITE           , EFST_WUGBITE        , SCB_NONE );
-	set_sc( RA_CAMOUFLAGE		, SC_CAMOUFLAGE		, EFST_CAMOUFLAGE		, SCB_SPEED|SCB_DEF|SCB_DEF2 );
+	set_sc( RA_CAMOUFLAGE		, SC_CAMOUFLAGE		, EFST_CAMOUFLAGE		, SCB_SPEED );
 	set_sc( RA_FIRINGTRAP       , SC_BURNING        , EFST_BURNT          , SCB_MDEF );
 	set_sc_with_vfx( RA_ICEBOUNDTRAP, SC_FREEZING		, EFST_FROSTMISTY		, SCB_SPEED|SCB_ASPD|SCB_DEF );
 	set_sc( RA_UNLIMIT		, SC_UNLIMIT		, EFST_UNLIMIT		, SCB_DEF|SCB_DEF2|SCB_MDEF|SCB_MDEF2 );
@@ -2099,7 +2099,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 		if (!status_has_mode(status,MD_CANATTACK))
 			return false;
 		// Dead state is not checked for skills as some skills can be used
-		// on dead characters, said checks are left to skill.c [Skotlex]
+		// on dead characters, said checks are left to skill.cpp [Skotlex]
 		if (target && status_isdead(target))
 			return false;
 	}
@@ -2240,7 +2240,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 
 	if (tsc && tsc->count) {
 		/**
-		* Attacks in invincible are capped to 1 damage and handled in batte.c.
+		* Attacks in invincible are capped to 1 damage and handled in battle.cpp.
 		* Allow spell break and eske for sealed shrine GDB when in INVINCIBLE state.
 		**/
 		if( tsc->data[SC_INVINCIBLE] && !tsc->data[SC_INVINCIBLEOFF] && skill_id && !(skill_id&(SA_SPELLBREAKER|SL_SKE)) )
@@ -3068,7 +3068,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			if(sc->data[SC_LERADSDEW])
 				bonus += sc->data[SC_LERADSDEW]->val3;
 			if (sc->data[SC_PROMOTE_HEALTH_RESERCH])
-				bonus += sc->data[SC_PROMOTE_HEALTH_RESERCH]->val4;
+				bonus += sc->data[SC_PROMOTE_HEALTH_RESERCH]->val3;
 			if(sc->data[SC_INSPIRATION])
 				bonus += (600 * sc->data[SC_INSPIRATION]->val1);
 			if(sc->data[SC_SOLID_SKIN_OPTION])
@@ -3245,7 +3245,7 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 			if(sc->data[SC_VITATA_500])
 				bonus += sc->data[SC_VITATA_500]->val2;
 			if (sc->data[SC_ENERGY_DRINK_RESERCH])
-				bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val4;
+				bonus += sc->data[SC_ENERGY_DRINK_RESERCH]->val3;
 		}
 		// Max rate reduce is -100%
 		bonus = cap_value(bonus,-100,INT_MAX);
@@ -3485,6 +3485,9 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 	if (sd->special_state.intravision && !sd->sc.data[SC_INTRAVISION]) // Clear intravision as long as nothing else is using it
 		clif_status_load(&sd->bl, EFST_CLAIRVOYANCE, 0);
+
+	if (sd->special_state.no_walk_delay)
+		clif_status_load(&sd->bl, EFST_ENDURE, 0);
 
 	memset(&sd->special_state,0,sizeof(sd->special_state));
 
@@ -3904,6 +3907,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	base_status->dex = cap_value(i,0,USHRT_MAX);
 	i = base_status->luk + sd->status.luk + sd->param_bonus[5] + sd->param_equip[5];
 	base_status->luk = cap_value(i,0,USHRT_MAX);
+
+	if (sd->special_state.no_walk_delay) {
+		if (sc->data[SC_ENDURE]) {
+			if (sc->data[SC_ENDURE]->val4)
+				sc->data[SC_ENDURE]->val4 = 0;
+			status_change_end(&sd->bl, SC_ENDURE, INVALID_TIMER);
+		}
+		clif_status_load(&sd->bl, EFST_ENDURE, 1);
+		base_status->mdef++;
+	}
 
 // ------ ATTACK CALCULATION ------
 
@@ -4727,6 +4740,10 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 		regen->hp += cap_value(regen->hp * sc->data[SC_GT_REVITALIZE]->val3/100, 1, SHRT_MAX);
 		regen->state.walk = 1;
 	}
+	if (sc->data[SC_EXTRACT_WHITE_POTION_Z])
+		regen->hp += cap_value(regen->hp * sc->data[SC_EXTRACT_WHITE_POTION_Z]->val1 / 100, 1, SHRT_MAX);
+	if (sc->data[SC_VITATA_500])
+		regen->sp += cap_value(regen->sp * sc->data[SC_VITATA_500]->val1 / 100, 1, SHRT_MAX);
 	if (bl->type == BL_ELEM) { // Recovery bonus only applies to the Elementals.
 		int ele_class = status_get_class(bl);
 
@@ -4757,10 +4774,7 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 			break;
 		}
 	}
-	if (sc->data[SC_EXTRACT_WHITE_POTION_Z])
-		regen->rate.hp += (unsigned short)(regen->rate.hp * sc->data[SC_EXTRACT_WHITE_POTION_Z]->val1 / 100.);
-	if (sc->data[SC_VITATA_500])
-		regen->rate.sp += (unsigned short)(regen->rate.sp * sc->data[SC_VITATA_500]->val1 / 100.);
+
 	if (sc->data[SC_CATNIPPOWDER]) {
 		regen->rate.hp *= 2;
 		regen->rate.sp *= 2;
@@ -6662,7 +6676,7 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 
 	if(sc->data[SC_EARTH_INSIGNIA] && sc->data[SC_EARTH_INSIGNIA]->val1 == 3)
 		mdef += 50;
-	if(sc->data[SC_ENDURE]) // It has been confirmed that Eddga card grants 1 MDEF, not 0, not 10, but 1.
+	if(sc->data[SC_ENDURE] && !sc->data[SC_ENDURE]->val3) // It has been confirmed that Eddga card grants 1 MDEF, not 0, not 10, but 1.
 		mdef += (sc->data[SC_ENDURE]->val4 == 0) ? sc->data[SC_ENDURE]->val1 : 1;
 	if(sc->data[SC_STONEHARDSKIN])
 		mdef += sc->data[SC_STONEHARDSKIN]->val1;
@@ -7235,9 +7249,11 @@ static unsigned short status_calc_dmotion(struct block_list *bl, struct status_c
 		return cap_value(dmotion,0,USHRT_MAX);
 
 	/// It has been confirmed on official servers that MvP mobs have no dmotion even without endure
-	if( sc->data[SC_ENDURE] || ( bl->type == BL_MOB && status_get_class_(bl) == CLASS_BOSS ) )
+	if( bl->type == BL_MOB && status_get_class_(bl) == CLASS_BOSS )
 		return 0;
-	if( sc->data[SC_RUN] || sc->data[SC_WUGDASH] )
+	if (bl->type == BL_PC && ((TBL_PC *)bl)->special_state.no_walk_delay)
+		return 0;
+	if( sc->data[SC_ENDURE] || sc->data[SC_RUN] || sc->data[SC_WUGDASH] )
 		return 0;
 
 	return (unsigned short)cap_value(dmotion,0,USHRT_MAX);
@@ -9044,6 +9060,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			status_change_end(bl, SC_SPIRIT, INVALID_TIMER);
 		break;
 	case SC_QUAGMIRE:
+		status_change_end(bl, SC_LOUD, INVALID_TIMER);
 		status_change_end(bl, SC_CONCENTRATE, INVALID_TIMER);
 		status_change_end(bl, SC_TRUESIGHT, INVALID_TIMER);
 		status_change_end(bl, SC_WINDWALK, INVALID_TIMER);
@@ -9348,6 +9365,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		//These status changes always overwrite themselves even when a lower level is cast
 		status_change_end(bl, type, INVALID_TIMER);
 		break;
+	case SC_ENDURE:
+		if (sd && sd->special_state.no_walk_delay)
+			return 1;
+		break;
 	}
 
 	// Check for overlapping fails
@@ -9544,7 +9565,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				else if( bl->type == BL_MER && ((TBL_MER*)bl)->devotion_flag && (tsd = ((TBL_MER*)bl)->master) )
 					status_change_start(src,&tsd->bl, type, 10000, val1, val2, val3, val4, tick, SCSTART_NOAVOID|SCSTART_NOICON);
 			}
-			// val4 signals infinite endure (if val4 == 2 it is infinite endure from Berserk)
 			if( val4 )
 				tick = INFINITE_TICK;
 			break;
@@ -9910,7 +9930,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_TENSIONRELAX:
 			if (sd) {
 				pc_setsit(sd);
-				skill_sit(sd, 1);
+				skill_sit(sd, true);
 				clif_sitting(&sd->bl);
 			}
 			val2 = 12; // SP cost
@@ -9934,8 +9954,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_BERSERK:
 			if( val3 == SC__BLOODYLUST )
 				sc_start(src,bl,(sc_type)val3,100,val1,tick);
-			if (!val3 && !(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4))
-				sc_start4(src,bl, SC_ENDURE, 100,10,0,0,2, tick);
+			else
+				sc_start4(src,bl, SC_ENDURE, 100,10,0,0,1, tick);
 			// HP healing is performing after the calc_status call.
 			// Val2 holds HP penalty
 			if (!val4) val4 = skill_get_time2(status_sc2skill(type),val1);
@@ -10655,7 +10675,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_BANANA_BOMB_SITDOWN:
 			if( sd && !pc_issit(sd) ) {
 				pc_setsit(sd);
-				skill_sit(sd, 1);
+				skill_sit(sd, true);
 				clif_sitting(bl);
 			}
 			break;
@@ -10874,26 +10894,24 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_PROMOTE_HEALTH_RESERCH:
 			//val1: 1 = Regular Potion, 2 = Thrown Potion
 			//val2: 1 = Small Potion, 2 = Medium Potion, 3 = Large Potion
-			//val3: BaseLV of Thrower For Thrown Potions
-			//val4: MaxHP Increase By Fixed Amount
+			//val3: MaxHP Increase By Fixed Amount
 			if (val1 == 1) // If potion was normally used, take the user's BaseLv
-				val4 = 1000 * val2 - 500 + status_get_lv(bl) * 10 / 3;
+				val3 = 1000 * val2 - 500 + status_get_lv(bl) * 10 / 3;
 			else if (val1 == 2) // If potion was thrown at someone, take the thrower's BaseLv
-				val4 = 1000 * val2 - 500 + val3 * 10 / 3;
-			if (val4 <= 0) // Prevents a negeative value from happening
-				val4 = 0;
+				val3 = 1000 * val2 - 500 + status_get_lv(src) * 10 / 3;
+			if (val3 <= 0) // Prevents a negeative value from happening
+				val3 = 0;
 			break;
 		case SC_ENERGY_DRINK_RESERCH:
 			//val1: 1 = Regular Potion, 2 = Thrown Potion
 			//val2: 1 = Small Potion, 2 = Medium Potion, 3 = Large Potion
-			//val3: BaseLV of Thrower For Thrown Potions
-			//val4: MaxSP Increase By Percentage Amount
+			//val3: MaxSP Increase By Percentage Amount
 			if (val1 == 1) // If potion was normally used, take the user's BaseLv
-				val4 = status_get_lv(bl) / 10 + 5 * val2 - 10;
+				val3 = status_get_lv(bl) / 10 + 5 * val2 - 10;
 			else if (val1 == 2) // If potion was thrown at someone, take the thrower's BaseLv
-				val4 = val3 / 10 + 5 * val2 - 10;
-			if (val4 <= 0) // Prevents a negeative value from happening
-				val4 = 0;
+				val3 = status_get_lv(src) / 10 + 5 * val2 - 10;
+			if (val3 <= 0) // Prevents a negeative value from happening
+				val3 = 0;
 			break;
 		case SC_KYOUGAKU:
 			val2 = 2*val1 + rnd()%val1;
@@ -11376,6 +11394,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_WATER_BARRIER:
 			val_flag |= 1|2|4;
 			break;
+	}
+
+	if (current_equip_combo_pos && tick == INFINITE_TICK) {
+		ShowWarning("sc_start: Item combo contains an INFINITE_TICK duration. Skipping bonus.\n");
+		return 0;
 	}
 
 	/* [Ind] */
@@ -12326,7 +12349,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 
 		case SC_CONCENTRATION:
-			status_change_end(bl, SC_ENDURE, INVALID_TIMER);
+			if (sc->data[SC_ENDURE] && !sc->data[SC_ENDURE]->val4)
+				status_change_end(bl, SC_ENDURE, INVALID_TIMER);
 			break;
 		case SC_BERSERK:
 			if(status->hp > 200 && sc && sc->data[SC__BLOODYLUST]) {
@@ -12334,7 +12358,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				status_change_end(bl, SC__BLOODYLUST, INVALID_TIMER);
 			} else if (status->hp > 100 && sce->val2) // If val2 is removed, no HP penalty (dispelled?) [Skotlex]
 				status_set_hp(bl, 100, 0);
-			if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4 == 2) {
+			if(sc->data[SC_ENDURE] && sc->data[SC_ENDURE]->val4) {
 				sc->data[SC_ENDURE]->val4 = 0;
 				status_change_end(bl, SC_ENDURE, INVALID_TIMER);
 			}
@@ -12507,7 +12531,7 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_SITDOWN_FORCE:
 		case SC_BANANA_BOMB_SITDOWN:
 			if( sd && pc_issit(sd) && pc_setstand(sd, false) )
-				skill_sit(sd,0);
+				skill_sit(sd, false);
 			break;
 		case SC_KYOUGAKU:
 			clif_status_load(bl, EFST_KYOUGAKU, 0); // Avoid client crash
@@ -13582,7 +13606,7 @@ TIMER_FUNC(status_change_timer){
 			status_charge(bl,0,sce->val2);	// Reduce 8 every 10 seconds.
 			if( sd && !pc_issit(sd) ) { // Force to sit every 10 seconds.
 				pc_setsit(sd);
-				skill_sit(sd, 1);
+				skill_sit(sd, true);
 				clif_sitting(bl);
 			}
 			sc_timer_next(10000 + tick);

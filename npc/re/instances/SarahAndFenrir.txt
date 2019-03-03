@@ -2021,7 +2021,7 @@ OnMobDead:
 1@glast,277,130,8	script	Stone Gargoyle#glast_01	4_GARGOYLE_STATUE,2,2,{
 	end;
 OnTouch:
-	getmapxy .@map$,.@x,.@y, UNITTYPE_NPC;
+	getmapxy .@map$,.@x,.@y, BL_NPC;
 	monster .@map$,.@x,.@y, "Mutant Gargoyle",3197,1, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";	// MM_M_GARGOYLE
 	disablenpc instance_npcname( strnpcinfo(0) );
 	end;

@@ -13,7 +13,7 @@ Preface:
 -------------------------------------------------------------------------------
 
 	Most scripters are aware of the class values used in RO and their constants
-	specified in src/map/script_constants.h. Each class has a number associated
+	specified in src/map/script_constants.hpp. Each class has a number associated
 	to it for referencing, so when someone's class is 9 that means they are a
 	wizard. However, this list of job numbers has no real order behind it, and
 	no logic behind it's assignation.

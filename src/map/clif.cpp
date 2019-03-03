@@ -238,7 +238,7 @@ void clif_setbindip(const char* ip)
 
 /*==========================================
  * Sets map port to 'port'
- * is run from map.c upon loading map server configuration
+ * is run from map.cpp upon loading map server configuration
  *------------------------------------------*/
 void clif_setport(uint16 port)
 {
@@ -3974,8 +3974,11 @@ void clif_changeoption(struct block_list* bl)
 
 	//Whenever we send "changeoption" to the client, the provoke icon is lost
 	//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
-	if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
-		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, INFINITE_TICK, 0, 0, 0);
+	if (sc->data[SC_PROVOKE]) {
+		const struct TimerData *td = get_timer(sc->data[SC_PROVOKE]->timer);
+
+		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, (!td ? INFINITE_TICK : DIFF_TICK(td->tick, gettick())), 0, 0, 0);
+	}
 }
 
 
@@ -6174,11 +6177,11 @@ void clif_displaymessage(const int fd, const char* mes)
 		message = aStrdup(mes);
 		line = strtok(message, "\n");
 
+		while(line != NULL) {
 #if PACKETVER == 20141022
 		/** for some reason game client crashes depending on message pattern (only for this packet) **/
 		/** so we redirect to ZC_NPC_CHAT **/
 		//clif_messagecolor(&sd->bl, color_table[COLOR_DEFAULT], mes, false, SELF);
-		while(line != NULL) {
 			unsigned long color = (color_table[COLOR_DEFAULT] & 0x0000FF) << 16 | (color_table[COLOR_DEFAULT] & 0x00FF00) | (color_table[COLOR_DEFAULT] & 0xFF0000) >> 16; // RGB to BGR
 			unsigned short len = strnlen(line, CHAT_SIZE_MAX);
 
@@ -6192,7 +6195,6 @@ void clif_displaymessage(const int fd, const char* mes)
 				WFIFOSET(fd, WFIFOW(fd, 2));
 			}
 #else
-		while(line != NULL) {
 			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
 			int len = strnlen(line, CHAT_SIZE_MAX);
 
@@ -10791,19 +10793,32 @@ void clif_progressbar_abort(struct map_session_data * sd)
 }
 
 
-/// Notification from the client, that the progress bar has reached 100% (CZ_PROGRESS).
-/// 02f1
-void clif_parse_progressbar(int fd, struct map_session_data * sd)
-{
-	int npc_id = sd->progressbar.npc_id;
+/// Notification from the client, that the progress bar has reached 100%.
+/// 02f1 (CZ_PROGRESS)
+void clif_parse_progressbar(int fd, struct map_session_data * sd){
+	// No progressbar active, ignore it
+	if( !sd->progressbar.npc_id ){
+		return;
+	}
 
-	if( gettick() < sd->progressbar.timeout && sd->st )
-		sd->st->state = END;
+	int npc_id = sd->progressbar.npc_id;
+	bool closing = false;
+
+	// Check if the progress was canceled
+	if( gettick() < sd->progressbar.timeout && sd->st ){
+		closing = true;
+		sd->st->state = CLOSE; // will result in END in npc_scriptcont
+
+		// If a message window was open, offer a close button to the user
+		if( sd->st->mes_active ){
+			clif_scriptclose( sd, npc_id );
+		}
+	}
 
 	sd->progressbar.npc_id = 0;
 	sd->progressbar.timeout = 0;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
-	npc_scriptcont(sd, npc_id, false);
+	npc_scriptcont(sd, npc_id, closing);
 }
 
 /// Displays cast-like progress bar on a NPC
@@ -11188,7 +11203,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 			sd->idletime = last_tick;
 
 		pc_setsit(sd);
-		skill_sit(sd, 1);
+		skill_sit(sd, true);
 		clif_sitting(&sd->bl);
 		break;
 	case 0x03: // standup
@@ -11204,7 +11219,7 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		if (pc_setstand(sd, false)) {
 			if (battle_config.idletime_option&IDLE_SIT)
 				sd->idletime = last_tick;
-			skill_sit(sd, 0);
+			skill_sit(sd, false);
 			clif_standing(&sd->bl);
 		}
 		break;
@@ -15886,16 +15901,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd){
 
 	mail_send(sd, RFIFOCP(fd,info->pos[1]), RFIFOCP(fd,info->pos[2]), RFIFOCP(fd,info->pos[4]), RFIFOB(fd,info->pos[3]));
 #else
-	unsigned short length;
-	static char receiver[NAME_LENGTH];
-	static char sender[NAME_LENGTH];
-	char *title;
-	char *text;
-	uint64 zeny;
-	uint16 titleLength;
-	uint16 textLength;
-
-	length = RFIFOW(fd, 2);
+	uint16 length = RFIFOW(fd, 2);
 
 	if( length < 0x3e ){
 		ShowWarning("Too short...\n");
@@ -15908,22 +15914,30 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd){
 		return; // Ignore it
 	}
 
-	safestrncpy(receiver, RFIFOCP(fd, 4), NAME_LENGTH);
-	safestrncpy(sender, RFIFOCP(fd, 28), NAME_LENGTH);
-	zeny = RFIFOQ(fd, 52);
-	titleLength = RFIFOW(fd, 60);
-	textLength = RFIFOW(fd, 62);
+	char receiver[NAME_LENGTH];
 
-	title = (char*)aMalloc(titleLength);
-	text = (char*)aMalloc(textLength);
+	safestrncpy(receiver, RFIFOCP(fd, 4), NAME_LENGTH);
+
+//	char sender[NAME_LENGTH];
+
+//	safestrncpy(sender, RFIFOCP(fd, 28), NAME_LENGTH);
+
+	uint64 zeny = RFIFOQ(fd, 52);
+	uint16 titleLength = RFIFOW(fd, 60);
+	uint16 textLength = RFIFOW(fd, 62);
+	uint16 realTitleLength = min(titleLength, MAIL_TITLE_LENGTH);
+	uint16 realTextLength = min(textLength, MAIL_BODY_LENGTH);
+
+	char title[MAIL_TITLE_LENGTH];
+	char text[MAIL_BODY_LENGTH];
 
 #if PACKETVER <= 20160330
-	safestrncpy(title, RFIFOCP(fd, 64), titleLength);
-	safestrncpy(text, RFIFOCP(fd, 64 + titleLength), textLength);
+	safestrncpy(title, RFIFOCP(fd, 64), realTitleLength);
+	safestrncpy(text, RFIFOCP(fd, 64 + titleLength), realTextLength);
 #else
 	// 64 = <char id>.L
-	safestrncpy(title, RFIFOCP(fd, 68), titleLength);
-	safestrncpy(text, RFIFOCP(fd, 68 + titleLength), textLength);
+	safestrncpy(title, RFIFOCP(fd, 68), realTitleLength);
+	safestrncpy(text, RFIFOCP(fd, 68 + titleLength), realTextLength);
 #endif
 
 	if( zeny > 0 ){
@@ -15933,10 +15947,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd){
 		}
 	}
 
-	mail_send(sd, receiver, title, text, textLength);
-
-	aFree(title);
-	aFree(text);
+	mail_send(sd, receiver, title, text, realTextLength);
 #endif
 }
 
@@ -19544,7 +19555,7 @@ void clif_parse_roulette_generate( int fd, struct map_session_data* sd ){
 		sd->roulette.prizeStage = sd->roulette.stage;
 		sd->roulette.prizeIdx = rnd()%rd.items[sd->roulette.stage];
 		sd->roulette.claimPrize = true;
-		sd->roulette.tick = gettick() + max( 1, ( MAX_ROULETTE_COLUMNS - sd->roulette.prizeStage - 3 ) ) * 1000;
+		sd->roulette.tick = gettick() + i64max( 1, ( MAX_ROULETTE_COLUMNS - sd->roulette.prizeStage - 3 ) ) * 1000;
 
 		if( rd.flag[sd->roulette.stage][sd->roulette.prizeIdx]&1 ){
 			result = GENERATE_ROULETTE_LOSING;
@@ -19734,6 +19745,11 @@ void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
 
 	for (i = 0, j = 0; i < n; i++) {
 		unsigned short idx = RFIFOW(fd, info->pos[1] + i*2) - 2;
+
+		if( idx < 0 || idx >= MAX_INVENTORY ){
+			return;
+		}
+
 		if (!clif_merge_item_check((id = sd->inventory_data[idx]), &sd->inventory.u.items_inventory[idx]))
 			continue;
 		indexes[j] = idx;

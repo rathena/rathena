@@ -86,6 +86,7 @@ enum msg_type {
 };
 
 extern void ClearScreen(void);
+extern int _vShowMessage(enum msg_type flag, const char *string, va_list ap);
 extern void ShowMessage(const char *, ...);
 extern void ShowStatus(const char *, ...);
 extern void ShowSQL(const char *, ...);
