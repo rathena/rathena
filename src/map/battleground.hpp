@@ -72,7 +72,7 @@ struct s_battleground_type {
 };
 
 /// Enum of responses when applying for a Battleground
-enum e_bg_queue_apply_ack {
+enum e_bg_queue_apply_ack : uint16 {
 	BG_APPLY_NONE = 0,
 	BG_APPLY_ACCEPT, ///< Accept
 	BG_APPLY_QUEUE_FINISHED, ///< Queuing has finished
