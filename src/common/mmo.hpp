@@ -1027,7 +1027,7 @@ struct clan{
 #error MAX_ZENY is too big
 #endif
 
-// This sanity check is required, because some other places(like skill.c) rely on this
+// This sanity check is required, because some other places(like skill.cpp) rely on this
 #if MAX_PARTY < 2
 #error MAX_PARTY is too small, you need at least 2 players for a party
 #endif

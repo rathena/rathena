@@ -1,0 +1,11 @@
+Header:
+  Type: ATTENDANCE_DB
+  Version: 1
+  
+Footer:
+  Imports:
+  - Path: db/pre-re/attendance.yml
+    Mode: Prerenewal
+  - Path: db/re/attendance.yml
+    Mode: Renewal
+  - Path: db/import/attendance.yml

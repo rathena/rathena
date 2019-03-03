@@ -12,6 +12,7 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
+#include "../common/database.hpp"
 #include "../common/ers.hpp"  // ers_destroy
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp" //NAME_LENGTH
@@ -97,10 +98,197 @@ struct s_attendance_reward{
 struct s_attendance_period{
 	uint32 start;
 	uint32 end;
-	std::map<int,struct s_attendance_reward> rewards;
+	std::map<uint32,std::shared_ptr<struct s_attendance_reward>> rewards;
 };
 
-std::vector<struct s_attendance_period> attendance_periods;
+class AttendanceDatabase : public TypesafeYamlDatabase<uint32,s_attendance_period>{
+public:
+	AttendanceDatabase() : TypesafeYamlDatabase( "ATTENDANCE_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+};
+
+const std::string AttendanceDatabase::getDefaultLocation(){
+	return std::string(db_path) + "/attendance.yml";
+}
+
+/**
+ * Reads and parses an entry from the attendance_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 AttendanceDatabase::parseBodyNode(const YAML::Node &node){
+	uint32 start;
+
+	if( !this->asUInt32( node, "Start", start ) ){
+		return 0;
+	}
+
+	std::shared_ptr<s_attendance_period> attendance_period = this->find( start );
+	bool exists = attendance_period != nullptr;
+
+	if( !exists ){
+		if( !this->nodeExists( node, "End" ) ){
+			this->invalidWarning( node, "Node \"End\" is missing.\n" );
+			return 0;
+		}
+
+		if( !this->nodeExists( node, "Rewards" ) ){
+			this->invalidWarning( node, "Node \"Rewards\" is missing.\n" );
+			return 0;
+		}
+
+		attendance_period = std::make_shared<s_attendance_period>();
+
+		attendance_period->start = start;
+	}
+
+	// If it does not exist yet, we need to check it for sure
+	bool requiresCollisionDetection = !exists;
+
+	if( this->nodeExists( node, "End" ) ){
+		uint32 end;
+
+		if( !this->asUInt32( node, "End", end ) ){
+			return 0;
+		}
+
+		// If the period is outdated already, we do not even bother parsing
+		if( end < date_get( DT_YYYYMMDD ) ){
+			this->invalidWarning( node, "Node \"End\" date %u has already passed, skipping.\n", end );
+			return 0;
+		}
+
+		if( !exists || attendance_period->end != end ){
+			requiresCollisionDetection = true;
+			attendance_period->end = end;
+		}
+	}
+
+	// Collision detection
+	if( requiresCollisionDetection ){
+		bool collision = false;
+
+		for( std::pair<const uint32,std::shared_ptr<s_attendance_period>>& pair : *this ){
+			std::shared_ptr<s_attendance_period> period = pair.second;
+
+			if( exists && period->start == attendance_period->start ){
+				// Dont compare to yourself
+				continue;
+			}
+
+			// Check if start is inside another period
+			if( period->start <= attendance_period->start && start <= period->end ){
+				this->invalidWarning( node, "Node \"Start\" period %u intersects with period %u-%u, skipping.\n", attendance_period->start, period->start, period->end );
+				collision = true;
+				break;
+			}
+
+			// Check if end is inside another period
+			if( period->start <= attendance_period->end && attendance_period->end <= period->end ){
+				this->invalidWarning( node, "Node \"End\" period %u intersects with period %u-%u.\n", attendance_period->start, period->start, period->end );
+				collision = true;
+				break;
+			}
+		}
+
+		if( collision ){
+			return 0;
+		}
+	}
+
+	if( this->nodeExists( node, "Rewards" ) ){
+		const YAML::Node& rewardsNode = node["Rewards"];
+
+		for( const YAML::Node& rewardNode : rewardsNode ){
+			uint32 day;
+
+			if( !this->asUInt32( rewardNode, "Day", day ) ){
+				continue;
+			}
+
+			day -= 1;
+
+			std::shared_ptr<s_attendance_reward> reward = util::map_find( attendance_period->rewards, day );
+			bool reward_exists = reward != nullptr;
+
+			if( !reward_exists ){
+				if( !this->nodeExists( rewardNode, "ItemId" ) ){
+					this->invalidWarning( rewardNode, "Node \"ItemId\" is missing.\n" );
+					return 0;
+				}
+
+				reward = std::make_shared<s_attendance_reward>();
+			}
+
+			if( this->nodeExists( rewardNode, "ItemId" ) ){
+				uint16 item_id;
+
+				if( !this->asUInt16( rewardNode, "ItemId", item_id ) ){
+					continue;
+				}
+
+				if( item_id == 0 || !itemdb_exists( item_id ) ){
+					ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day + 1 );
+					continue;
+				}
+
+				reward->item_id = item_id;
+			}
+
+			if( this->nodeExists( rewardNode, "Amount" ) ){
+				uint16 amount;
+
+				if( !this->asUInt16( rewardNode, "Amount", amount ) ){
+					continue;
+				}
+
+				if( amount == 0 ){
+					ShowWarning( "pc_attendance_load: Invalid reward count %hu for day %d. Defaulting to 1...\n", amount, day + 1 );
+					amount = 1;
+				}else if( amount > MAX_AMOUNT ){
+					ShowError( "pc_attendance_load: Reward count %hu above maximum %hu for day %d. Defaulting to %hu...\n", amount, MAX_AMOUNT, day + 1, MAX_AMOUNT );
+					amount = MAX_AMOUNT;
+				}
+
+				reward->amount = amount;
+			}else{
+				if( !reward_exists ){
+					reward->amount = 1;
+				}
+			}
+
+			if( !reward_exists ){
+				attendance_period->rewards[day] = reward;
+			}
+		}
+
+		bool missing_day = false;
+
+		for( int day = 0; day < attendance_period->rewards.size(); day++ ){
+			if( attendance_period->rewards.find( day ) == attendance_period->rewards.end() ){
+				ShowError( "pc_attendance_load: Reward for day %d is missing.\n", day + 1 );
+				missing_day = true;
+				break;
+			}
+		}
+
+		if( missing_day ){
+			return 0;
+		}
+	}
+
+	if( !exists ){
+		this->put( start, attendance_period );
+	}
+
+	return 1;
+}
+
+AttendanceDatabase attendance_db;
 
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
@@ -2318,13 +2506,13 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
  * @param script: Script to execute
  * @param rate: Success chance
  * @param dur: Duration
- * @param flag: Battle flag
+ * @param flag: Battle flag/skill
  * @param other_script: Secondary script to execute
  * @param pos: Item equip position
  * @param onskill: Skill used to trigger autobonus
  * @return True on success or false otherwise
  */
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short flag, const char *other_script, unsigned int pos, bool onskill)
+bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill)
 {
 	if (bonus.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", MAX_PC_BONUS);
@@ -2471,7 +2659,6 @@ TIMER_FUNC(pc_endautobonus){
 static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
 	struct weapon_data *wd = (sd->state.lr_flag ? &sd->left_weapon : &sd->right_weapon);
-	struct s_addele2 entry;
 
 	if (wd->addele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addele: Reached max (%d) number of add element damage bonuses per character!\n", MAX_PC_BONUS);
@@ -2496,6 +2683,8 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 			return;
 		}
 	}
+
+	struct s_addele2 entry = {};
 
 	entry.ele = ele;
 	entry.rate = rate;
@@ -3194,6 +3383,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if (sd->state.lr_flag != 2)
 				sd->special_state.no_mado_fuel = 1;
 			break;
+		case SP_NO_WALK_DELAY:
+			if (sd->state.lr_flag != 2)
+				sd->special_state.no_walk_delay = 1;
+			break;
 		default:
 			if (running_npc_stat_calc_event) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in OnPCStatCalcEvent!\n", type, val);
@@ -3713,7 +3906,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillcastrate, type2, -val); // Send inversed value here
+		pc_bonus_itembonus(sd->skillfixcastrate, type2, -val); // Send inversed value here
 		break;
 #else
 	case SP_SKILL_FIXEDCAST: // bonus2 bSkillFixedCast,sk,t;
@@ -4393,28 +4586,17 @@ char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type
 /**
  * Attempts to remove Cash Points from player
  * @param sd: Player
- * @param price: Points player has to pay
- * @param points: Points player has
+ * @param price: Total points (cash + kafra) the player has to pay
+ * @param points: Kafra points the player has to pay
  * @param type: Log type
- * @return -2: Paying negative points, -1: Not enough points, otherwise success (cash+points)
+ * @return -1: Not enough points, otherwise success (cash+points)
  */
 int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_type type)
 {
 	int cash;
 	nullpo_retr(-1,sd);
 
-	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
-	if( price < 0 || points < 0 )
-	{
-		ShowError("pc_paycash: Paying negative points (price=%d, points=%d, account_id=%d, char_id=%d).\n", price, points, sd->status.account_id, sd->status.char_id);
-		return -2;
-	}
-
-	if( points > price )
-	{
-		ShowWarning("pc_paycash: More kafra points provided than needed (price=%d, points=%d, account_id=%d, char_id=%d).\n", price, points, sd->status.account_id, sd->status.char_id);
-		points = price;
-	}
+	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
 
 	cash = price-points;
 
@@ -4449,10 +4631,10 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 /**
  * Attempts to give Cash Points to player
  * @param sd: Player
- * @param cash: Cash player gets
- * @param points: Points player has
+ * @param cash: Cash points the player gets
+ * @param points: Kafra points the player gets
  * @param type: Log type
- * @return -2: Error, -1: Giving negative cash/points, otherwise success (cash or points)
+ * @return -1: Error, otherwise success (cash or points)
  */
 int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_type type)
 {
@@ -4460,8 +4642,8 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 
 	nullpo_retr(-1,sd);
 
-	cash = cap_value(cash,-MAX_ZENY,MAX_ZENY); //prevent command UB
-	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
+	cash = cap_value(cash, 0, MAX_ZENY); //prevent command UB
+	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
 	if( cash > 0 )
 	{
 		if( cash > MAX_ZENY-sd->cashPoints )
@@ -4480,11 +4662,6 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 		}
 		return cash;
-	}
-	else if( cash < 0 )
-	{
-		ShowError("pc_getcash: Obtaining negative cash points (cash=%d, account_id=%d, char_id=%d).\n", cash, sd->status.account_id, sd->status.char_id);
-		return -1;
 	}
 
 	if( points > 0 )
@@ -4506,12 +4683,8 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 		}
 		return points;
 	}
-	else if( points < 0 )
-	{
-		ShowError("pc_getcash: Obtaining negative kafra points (points=%d, account_id=%d, char_id=%d).\n", points, sd->status.account_id, sd->status.char_id);
-		return -1;
-	}
-	return -2; //shouldn't happen but just in case
+
+	return -1; //shouldn't happen but just in case
 }
 
 /**
@@ -5023,7 +5196,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
-	//FIXME: Is this really needed here? It'll be checked in unit.c after all and this prevents skill items using when silenced [Inkfish]
+	//FIXME: Is this really needed here? It'll be checked in unit.cpp after all and this prevents skill items using when silenced [Inkfish]
 	if( id->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
@@ -8157,6 +8330,8 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_NO_GEMSTONE:     val = sd->special_state.no_gemstone?1:0; break;
 		case SP_INTRAVISION:     val = sd->special_state.intravision?1:0; break;
 		case SP_NO_KNOCKBACK:    val = sd->special_state.no_knockback?1:0; break;
+		case SP_NO_MADO_FUEL:    val = sd->special_state.no_mado_fuel?1:0; break;
+		case SP_NO_WALK_DELAY:   val = sd->special_state.no_walk_delay?1:0; break;
 		case SP_SPLASH_RANGE:    val = sd->bonus.splash_range; break;
 		case SP_SPLASH_ADD_RANGE:val = sd->bonus.splash_add_range; break;
 		case SP_SHORT_WEAPON_DAMAGE_RETURN: val = sd->bonus.short_weapon_damage_return; break;
@@ -9771,7 +9946,7 @@ int pc_load_combo(struct map_session_data *sd) {
 		if(!itemdb_isspecial(sd->inventory.u.items_inventory[idx].card[0])) {
 			struct item_data *data;
 			int j;
-			for( j = 0; j < id->slot; j++ ) {
+			for( j = 0; j < MAX_SLOTS; j++ ) {
 				if (!sd->inventory.u.items_inventory[idx].card[j])
 					continue;
 				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[idx].card[j]) ) != NULL ) {
@@ -9859,24 +10034,35 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswit
 		clif_notify_bindOnEquip(sd,n);
 	}
 
-	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
+	if(pos == EQP_ACC) { //Accessories should only go in one of the two.
 		pos = req_pos&EQP_ACC;
-		if (pos == EQP_ACC) //User specified both slots..
+		if (pos == EQP_ACC) //User specified both slots.
 			pos = equip_index[EQI_ACC_R] >= 0 ? EQP_ACC_L : EQP_ACC_R;
-	}
 
-	if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
+		for (i = 0; i < sd->inventory_data[n]->slot; i++) { // Accessories that have cards that force equip location
+			if (!sd->inventory.u.items_inventory[n].card[i])
+				continue;
+
+			struct item_data *card_data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]);
+
+			if (card_data) {
+				int card_pos = card_data->equip;
+
+				if (card_pos == EQP_ACC_L || card_pos == EQP_ACC_R) {
+					pos = card_pos; // Use the card's equip position
+					break;
+				}
+			}
+		}
+	} else if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
 		pos = (req_pos&EQP_ARMS);
 		if (pos == EQP_ARMS) //User specified both slots, pick one for them.
 			pos = equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
-	}
-
-	if(pos == EQP_SHADOW_ACC) { // Shadow System
+	} else if(pos == EQP_SHADOW_ACC) { // Shadow System
 		pos = req_pos&EQP_SHADOW_ACC;
 		if (pos == EQP_SHADOW_ACC)
 			pos = equip_index[EQI_SHADOW_ACC_L] >= 0 ? EQP_SHADOW_ACC_R : EQP_SHADOW_ACC_L;
-	}
-	if(pos == EQP_SHADOW_ARMS && id->equip == EQP_SHADOW_WEAPON) {
+	} else if(pos == EQP_SHADOW_ARMS && id->equip == EQP_SHADOW_WEAPON) {
 		pos = (req_pos&EQP_SHADOW_ARMS);
 		if( pos == EQP_SHADOW_ARMS )
 			pos = (equip_index[EQI_SHADOW_WEAPON] >= 0 ? EQP_SHADOW_SHIELD : EQP_SHADOW_WEAPON);
@@ -11620,7 +11806,7 @@ void pc_readdb(void) {
 	memset(job_info,0,sizeof(job_info)); // job_info table
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
+	sv_readdb(db_path, DBPATH "level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
 	sv_readdb(db_path, DBIMPORT"/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 1);
 	for( k=1; k < 3; k++ ){ // fill in the blanks
 		int j;
@@ -11658,9 +11844,9 @@ void pc_readdb(void) {
 		s = pc_read_statsdb(dbsubpath2,s,i > 0);
 		if (i == 0)
 #ifdef RENEWAL_ASPD
-			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
+			sv_readdb(dbsubpath1, DBPATH "job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
 #else
-			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
+			sv_readdb(dbsubpath1, DBPATH "job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
 #endif
 		else
 			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, true);
@@ -12768,12 +12954,14 @@ void pc_set_costume_view(struct map_session_data *sd) {
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 }
 
-struct s_attendance_period* pc_attendance_period(){
+std::shared_ptr<s_attendance_period> pc_attendance_period(){
 	uint32 date = date_get(DT_YYYYMMDD);
 
-	for( struct s_attendance_period& period : attendance_periods ){
-		if( period.start <= date && period.end >= date ){
-			return &period;
+	for( std::pair<const uint32,std::shared_ptr<s_attendance_period>>& pair : attendance_db ){
+		std::shared_ptr<s_attendance_period> period = pair.second;
+
+		if( period->start <= date && period->end >= date ){
+			return period;
 		}
 	}
 
@@ -12795,7 +12983,7 @@ static inline bool pc_attendance_rewarded_today( struct map_session_data* sd ){
 }
 
 int32 pc_attendance_counter( struct map_session_data* sd ){
-	struct s_attendance_period* period = pc_attendance_period();
+	std::shared_ptr<s_attendance_period> period = pc_attendance_period();
 
 	// No running attendance period
 	if( period == nullptr ){
@@ -12836,7 +13024,7 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 
 	attendance_counter += 1;
 
-	struct s_attendance_period* period = pc_attendance_period();
+	std::shared_ptr<s_attendance_period> period = pc_attendance_period();
 
 	if( period == nullptr ){
 		return;
@@ -12852,7 +13040,7 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	if( save_settings&CHARSAVE_ATTENDANCE )
 		chrif_save(sd, CSAVE_NORMAL);
 
-	struct s_attendance_reward& reward = period->rewards.at( attendance_counter - 1 );
+	std::shared_ptr<s_attendance_reward> reward = period->rewards[attendance_counter - 1];
 
 	struct mail_message msg;
 
@@ -12863,8 +13051,8 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	safesnprintf( msg.title, MAIL_TITLE_LENGTH, msg_txt( sd, 789 ), attendance_counter );
 	safesnprintf( msg.body, MAIL_BODY_LENGTH, msg_txt( sd, 790 ), attendance_counter );
 
-	msg.item[0].nameid = reward.item_id;
-	msg.item[0].amount = reward.amount;
+	msg.item[0].nameid = reward->item_id;
+	msg.item[0].amount = reward->amount;
 	msg.item[0].identify = 1;
 
 	msg.status = MAIL_NEW;
@@ -12874,152 +13062,6 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	intif_Mail_send(0, &msg);
 
 	clif_attendence_response( sd, attendance_counter );
-}
-
-void pc_attendance_load( std::string path ){
-	YAML::Node root;
-
-	try{
-		root = YAML::LoadFile( path );
-	}catch( ... ){
-		ShowError( "pc_attendance_load: Failed to read attendance configuration file \"%s\".\n", path.c_str() );
-		return;
-	}
-
-	if( root["Attendance"] ){
-		YAML::Node attendance = root["Attendance"];
-
-		for( const auto &periodNode : attendance ){
-			if( !periodNode["Start"].IsDefined() ){
-				ShowError( "pc_attendance_load: Missing \"Start\" for period in line %d.\n", periodNode.Mark().line );
-				continue;
-			}
-
-			YAML::Node startNode = periodNode["Start"];
-
-			if( !periodNode["End"].IsDefined() ){
-				ShowError( "pc_attendance_load: Missing \"End\" for period in line %d.\n", periodNode.Mark().line );
-				continue;
-			}
-
-			YAML::Node endNode = periodNode["End"];
-
-			if( !periodNode["Rewards"].IsDefined() ){
-				ShowError( "pc_attendance_load: Missing \"Rewards\" for period in line %d.\n", periodNode.Mark().line );
-				continue;
-			}
-
-			YAML::Node rewardsNode = periodNode["Rewards"];
-
-			uint32 start = startNode.as<uint32>();
-			uint32 end = endNode.as<uint32>();
-
-			// If the period is outdated already, we do not even bother parsing
-			if( end < date_get( DT_YYYYMMDD ) ){
-				continue;
-			}
-
-			// Collision detection
-			bool collision = false;
-
-			for( struct s_attendance_period& period : attendance_periods ){
-				// Check if start is inside another period
-				if( period.start <= start && start <= period.end ){
-					ShowError( "pc_attendance_load: period start %u intersects with period %u-%u.\n", start, period.start, period.end );
-					collision = true;
-					break;
-				}
-
-				// Check if end is inside another period
-				if( period.start <= end && end <= period.end ){
-					ShowError( "pc_attendance_load: period end %u intersects with period %u-%u.\n", start, period.start, period.end );
-					collision = true;
-					break;
-				}
-			}
-
-			if( collision ){
-				continue;
-			}
-
-			struct s_attendance_period period;
-
-			period.start = start;
-			period.end = end;
-
-			for( const auto& rewardNode : rewardsNode ){
-				if( !rewardNode["Day"].IsDefined() ){
-					ShowError( "pc_attendance_load: No day defined for node in line %d.\n", rewardNode.Mark().line );
-					continue;
-				}
-
-				uint32 day = rewardNode["Day"].as<uint32>();
-
-				if( !rewardNode["ItemId"].IsDefined() ){
-					ShowError( "pc_attendance_load: No reward defined for day %d.\n", day );
-					continue;
-				}
-
-				YAML::Node itemNode = rewardNode["ItemId"];
-
-				uint16 item_id = itemNode.as<uint16>();
-
-				if( item_id == 0 || !itemdb_exists( item_id ) ){
-					ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day );
-					continue;
-				}
-
-				uint16 amount;
-
-				if( rewardNode["Amount"] ){
-					amount = rewardNode["Amount"].as<uint16>();
-
-					if( amount == 0 ){
-						ShowError( "pc_attendance_load: Invalid reward count %hu for day %d. Defaulting to 1...\n", amount, day );
-						amount = 1;
-					}else if( amount > MAX_AMOUNT ){
-						ShowError( "pc_attendance_load: Reward count %hu above maximum %hu for day %d. Defaulting to %hu...\n", amount, MAX_AMOUNT, day, MAX_AMOUNT );
-						amount = MAX_AMOUNT;
-					}
-				}else{
-					amount = 1;
-				}
-
-				struct s_attendance_reward* reward = &period.rewards[day - 1];
-
-				reward->item_id = item_id;
-				reward->amount = amount;
-			}
-
-			bool missing_day = false;
-
-			for( int day = 0; day < period.rewards.size(); day++ ){
-				if( !util::map_exists( period.rewards, day ) ){
-					ShowError( "pc_attendance_load: Reward for day %d is missing.\n", day + 1 );
-					missing_day = true;
-					break;
-				}
-			}
-
-			if( missing_day ){
-				continue;
-			}
-
-			attendance_periods.push_back( period );
-		}
-	}
-}
-
-void pc_read_attendance(){
-	char path[1024];
-
-	sprintf( path, "%s/%sattendance.yml", db_path, DBPATH );
-
-	pc_attendance_load( path );
-
-	sprintf( path, "%s/%s/attendance.yml", db_path, DBIMPORT );
-
-	pc_attendance_load( path );
 }
 
 /*==========================================
@@ -13033,7 +13075,7 @@ void do_final_pc(void) {
 	ers_destroy(num_reg_ers);
 	ers_destroy(str_reg_ers);
 
-	attendance_periods.clear();
+	attendance_db.clear();
 }
 
 void do_init_pc(void) {
@@ -13042,7 +13084,7 @@ void do_init_pc(void) {
 
 	pc_readdb();
 	pc_read_motd(); // Read MOTD [Valaris]
-	pc_read_attendance();
+	attendance_db.load();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");

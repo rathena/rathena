@@ -675,7 +675,7 @@ int _vShowMessage(enum msg_type flag, const char *string, va_list ap)
 		return 1;
 	}
 	/**
-	 * For the buildbot, these result in a EXIT_FAILURE from core.c when done reading the params.
+	 * For the buildbot, these result in a EXIT_FAILURE from core.cpp when done reading the params.
 	 **/
 #if defined(BUILDBOT)
 	if( flag == MSG_WARNING ||

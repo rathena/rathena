@@ -59,7 +59,7 @@ struct npc_data {
 		unsigned short str, agi, vit, int_, dex, luk;
 	} params;
 
-	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
+	void* chatdb; // pointer to a npc_parse struct (see npc_chat.cpp)
 	char* path;/* path dir */
 	enum npc_subtype subtype;
 	bool trigger_on_hidden;
@@ -1140,8 +1140,10 @@ enum e_job_types
 	JT_4_F_ERENE,
 	JT_4_M_EINCPTMINER,
 	JT_4_F_EINRESERCHER,
+	JT_4_F_REINDEER,
+	JT_4_PIGOCTO,
 
-	JT_4_PIGOCTO = 10341,
+	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1185,7 +1187,7 @@ int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
 int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range);
 int npc_touchnext_areanpc(struct map_session_data* sd,bool leavemap);
 int npc_click(struct map_session_data* sd, struct npc_data* nd);
-int npc_scriptcont(struct map_session_data* sd, int id, bool closing);
+bool npc_scriptcont(struct map_session_data* sd, int id, bool closing);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
 int npc_buysellsel(struct map_session_data* sd, int id, int type);
 uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);

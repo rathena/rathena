@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "../common/mmo.hpp"
+#include "../common/database.hpp"
 #include "../common/db.hpp"
 
 struct map_session_data;
@@ -68,27 +69,18 @@ struct achievement_target {
 	int count;
 };
 
-struct av_condition {
-	int op;
-	std::shared_ptr<struct av_condition> left;
-	std::shared_ptr<struct av_condition> right;
-	long long value;
-
-	av_condition() : op(0), left(nullptr), right(nullptr), value(0) {}
-};
-
 struct s_achievement_db {
-	int achievement_id;
+	uint32 achievement_id;
 	std::string name;
 	enum e_achievement_group group;
-	std::vector <achievement_target> targets;
-	std::vector <int> dependent_ids;
-	std::shared_ptr<struct av_condition> condition;
+	std::unordered_map<uint16, std::shared_ptr<achievement_target>> targets;
+	std::vector<uint32> dependent_ids;
+	struct script_code* condition;
 	int16 mapindex;
 	struct ach_reward {
 		unsigned short nameid, amount;
 		struct script_code *script;
-		int title_id;
+		uint32 title_id;
 		ach_reward();
 		~ach_reward();
 	} rewards;
@@ -96,11 +88,29 @@ struct s_achievement_db {
 	int has_dependent; // Used for quick updating of achievements that depend on others - this is their ID
 
 	s_achievement_db();
+	~s_achievement_db();
 };
 
-bool achievement_exists(int achievement_id);
-std::shared_ptr<s_achievement_db>& achievement_get(int achievement_id);
-bool achievement_mobexists(int mob_id);
+class AchievementDatabase : public TypesafeYamlDatabase<uint32, s_achievement_db>{
+private:
+	// Avoids checking achievements on every mob killed
+	std::vector<uint32> achievement_mobs;
+
+public:
+	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 1 ){
+
+	}
+
+	void clear();
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+
+	// Additional
+	bool mobexists(uint32 mob_id);
+};
+
+extern AchievementDatabase achievement_db;
+
 void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
 struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
 bool achievement_remove(struct map_session_data *sd, int achievement_id);
@@ -116,11 +126,5 @@ void achievement_db_reload(void);
 
 void do_init_achievement(void);
 void do_final_achievement(void);
-
-// Parser
-const char *av_parse_subexpr(const char *p,int limit, std::shared_ptr<struct av_condition> parent);
-const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_condition> parent);
-long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, const int *count);
-void achievement_script_free(std::shared_ptr<struct av_condition> condition);
 
 #endif /* ACHIEVEMENT_HPP */

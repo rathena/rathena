@@ -521,7 +521,7 @@ forever, and no trace remains of it even if it was stored with character or
 account data.
 
 Some variables are special, that is, they are already defined for you by the
-scripting engine. You can see the full list in 'src/map/script_constants.h', which
+scripting engine. You can see the full list in 'src/map/script_constants.hpp', which
 is a file you should read, since it also allows you to replace lots of numbered
 arguments for many commands with easier to read text. The special variables most
 commonly used are all permanent character-based variables:
@@ -565,7 +565,7 @@ setting it will make the character own this number of Zeny.
 If you try to set Zeny to a negative number, the script will be terminated with an error.
 
 Some source-end constants can also be accessed in scripts. This list is located in
-'src/map/script_constants.h', which contains constants such as server defines and status options:
+'src/map/script_constants.hpp', which contains constants such as server defines and status options:
 
 	PACKETVER, MAX_LEVEL, MAX_STORAGE, MAX_INVENTORY, MAX_CART, MAX_ZENY, MAX_PARTY,
 	MAX_GUILD, MAX_GUILDLEVEL, MAX_GUILD_STORAGE, MAX_BG_MEMBERS, MAX_CHAT_USERS,
@@ -1002,7 +1002,7 @@ and called label is in NPC that has trigger area, that label must end with
 "Global" to work globally (i.e. if RID is outside of the trigger area, which
 usually happens since otherwise there would be no point calling the label with
 doevent, because OnTouch would do the job). For further reference look for
-npc_event in npc.c.
+npc_event in npc.cpp.
 
 Scripting commands and functions
 --------------------------------
@@ -2391,7 +2391,7 @@ Also useful when passing arrays to functions or accessing another npc's arrays:
 
 This function will return the specified stat of the invoking character, or, if a
 character name or character id is specified, of that player. The stat can either
-be a number or parameter name, defined in 'src/map/script_constants.h'.
+be a number or parameter name, defined in 'src/map/script_constants.hpp'.
 
 Some example parameters:
 
@@ -3046,7 +3046,7 @@ If <type> is false the command only returns the count of unidentified items.
 //
 ---------------------------------------
 
-*getmapxy("<variable for map name>",<variable for x>,<variable for y>,<type>{,"<search string>"})
+*getmapxy("<variable for map name>",<variable for x>,<variable for y>{,<type>,"<search value>"})
 
 This function will locate a character object, NPC object or pet's coordinates
 and place their coordinates into the variables specified when calling it. It
@@ -3055,23 +3055,23 @@ not variables or the search was not successful.
 
 Type is the type of object to search for:
 
-	UNITTYPE_PC   - Character object
-	UNITTYPE_NPC  - NPC object
-	UNITTYPE_PET  - Pet object
-	UNITTYPE_HOM  - Homunculus object
-	UNITTYPE_MER  - Mercenary object
-	UNITTYPE_ELEM - Elemental object
+	BL_PC   - Character object (default)
+	BL_NPC  - NPC object
+	BL_PET  - Pet object
+	BL_HOM  - Homunculus object
+	BL_MER  - Mercenary object
+	BL_ELEM - Elemental object
 
-The search string is optional. If it is not specified, the location of the
-invoking character will always be returned for types UNITTYPE_PC and UNITTYPE_PET,
-the location of the NPC running this function for type 1.
+The search value is optional. If it is not specified, the location of the
+invoking character will always be returned for types BL_PC and BL_PET,
+the location of the NPC running this function for type BL_NPC.
 
-If a search string is specified, for types UNITTYPE_PC and UNITTYPE_NPC, the
-character or NPC with the specified name will be located.
+If a search value is specified, for types BL_PC and BL_NPC, the
+character or NPC with the specified name or GID will be located.
 
-If type is UNITTYPE_PET/UNITTYPE_HOM/UNITTYPE_MER/UNITTYPE_ELEM, the search
-will locate the current object of the character who's name is given in the
-search string, it will NOT locate the object by name.
+If type is BL_PET/BL_HOM/BL_MER/BL_ELEM, the search
+will locate the current object of the character who's name/GID is given in the
+search value, it will NOT locate the object by name.
 
 Example:
 
@@ -3083,7 +3083,7 @@ Example:
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
-        if (getmapxy(@mapname$, @mapx, @mapy, UNITTYPE_NPC, "Meh") != 0) {
+        if (getmapxy(@mapname$, @mapx, @mapy, BL_NPC, "Meh") != 0) {
                 mes "I can't seem to find Meh anywhere!";
                 close;
         }
@@ -3747,7 +3747,7 @@ list (cloak, cart, ruwach, etc). if flag is 1 (default when omitted),
 the option will be added to what the character currently has; if 0, the option is removed.
 
 This is definitely not a complete list of available option flag numbers. Ask a
-core developer (or read the source: src/map/status.h) for the full list.
+core developer (or read the source: src/map/status.hpp) for the full list.
 
 ---------------------------------------
 
@@ -3921,7 +3921,7 @@ more:
 
 *checkre(<type>)
 
-Checks if a renewal feature is enabled or not in renewal.h, and returns 1 if
+Checks if a renewal feature is enabled or not in renewal.hpp, and returns 1 if
 enabled and 0 for disabled.
 
 The renewal feature to check is determined by type.
@@ -4283,7 +4283,7 @@ This command will change the job class of the invoking character.
 
 This command does work with numbers, but you can also use job names. The full
 list of job names and the numbers they correspond to can be found in
-'src/map/script_constants.h'.
+'src/map/script_constants.hpp'.
 
 	// This would change your player into a Swordman
 	jobchange Job_Swordman;
@@ -4509,7 +4509,7 @@ you can look at: 'npc/custom/stylist.txt'
 
 This command will push the currently attached player to given direction by given
 amount of square cells. Direction is the same as used when declaring NPCs, and
-can be specified by using one of the DIR_* constants (src/map/script_constants.h).
+can be specified by using one of the DIR_* constants (src/map/script_constants.hpp).
 
 The knock-back is not restricted by items or map flags, only obstacles are taken
 into account. If there is not enough space to perform the push (e.g. due to a
@@ -4844,7 +4844,7 @@ Example to get Crimson Weapon with Ghost property:
 	// when Valkyrie Randgris killed
 	OnNPCKillEvent:
 		if (killedrid == 1751 && rand(0,1000) > 950) { // Valkyrie Randgris
-			getmapxy(.@map$,.@x,.@y,UNITTYPE_PC);
+			getmapxy(.@map$,.@x,.@y,BL_PC);
 			setarray .@OptID[0],RDMOPT_ATTR_TOLERACE_NOTHING,RDMOPT_RACE_TOLERACE_HUMAN;
 			setarray .@OptVal[0],10,5;
 			setarray .@OptParam[0],0;
@@ -5634,8 +5634,8 @@ Used in reset NPC's (duh!)
 These commands will bestow a status effect on a character.
 
 The <effect type> determines which status is invoked. This can be either a number
-or constant, with the common statuses (mostly negative) found in 'src/map/script_constants.h'
-with the 'SC_' prefix. A full list is located in 'src/map/status.h', though
+or constant, with the common statuses (mostly negative) found in 'src/map/script_constants.hpp'
+with the 'SC_' prefix. A full list is located in 'src/map/status.hpp', though
 they are not currently documented.
 
 The duration of the status is given in <ticks>, or milleseconds.
@@ -5920,7 +5920,7 @@ Types:
 	1: Buff
 	2: Debuff
 
-Status_icon: See "Status Icon" section in 'src/map/script_constants.h'. Default is SI_BLANK (-1).
+Status_icon: See "Status Icon" section in 'src/map/script_constants.hpp'. Default is SI_BLANK (-1).
 
 Example:
 	// Apple gives you +5 Str bonus for 1 minute when it's consumed.
@@ -6756,7 +6756,7 @@ This command will broadcast a message to all or most players, similar to
 The region the broadcast is heard in (target), source of the broadcast
 and the color the message will come up as is determined by the flags.
 
-The flag values are coded as constants in 'src/map/script_constants.h' to make them easier to use.
+The flag values are coded as constants in 'src/map/script_constants.hpp' to make them easier to use.
 
 Target flags:
 - bc_all: Broadcast message is sent server-wide (default).
@@ -7514,7 +7514,7 @@ must be used.
 
 This command makes an object display an emotion sprite above their own as
 if they were doing that emotion. For a full list of emotion numbers,
-see 'src/map/script_constants.h' under 'ET_'. The not so obvious ones are 'ET_QUESTION'
+see 'src/map/script_constants.hpp' under 'ET_'. The not so obvious ones are 'ET_QUESTION'
 (a question mark) and 'ET_SURPRISE' (the exclamation mark).
 
 The optional target parameter specifies who will get the emotion on top of
@@ -7815,13 +7815,14 @@ it does.
 Returns the type of object from the given Game ID. Returns -1 if the given GID does not
 exist.
 
-	UNITTYPE_PC     0
-	UNITTYPE_NPC    1
-	UNITTYPE_PET    2
-	UNITTYPE_MOB    3
-	UNITTYPE_HOM    4
-	UNITTYPE_MER    5
-	UNITTYPE_ELEM   6
+Return values:
+	BL_PC   - Character object
+	BL_MOB  - Monster object
+	BL_PET  - Pet object
+	BL_HOM  - Homunculus object
+	BL_MER  - Mercenary object
+	BL_NPC  - NPC object
+	BL_ELEM - Elemental object
 
 ---------------------------------------
 
@@ -8119,7 +8120,7 @@ Parameter (indexes) for NPCs are:
 
 *Notes:
 		- *_SIZE: small (0); medium (1); large (2)
-	    - *_MAPID: this refers to the map_data index (from src/map/map.c), not the mapindex_db index (from src/common/mapindex.c)
+	    - *_MAPID: this refers to the map_data index (from src/map/map.cpp), not the mapindex_db index (from src/common/mapindex.cpp)
 			-- For 'setunitdata', map name can also be passed in as a valid value instead of map ID
 		- *_SPEED: 20 - 1000
 		- *_MODE: see doc/mob_db_mode_list.txt
@@ -8706,7 +8707,7 @@ Each of these can be 'on' or 'off'. Together they define a cell's behavior.
 
 This command lets you alter these flags for all map cells in the specified
 (x1,y1)-(x2,y2) rectangle. The 'flag' can be 0 or 1 (0:clear flag, 1:set flag).
-The 'type' defines which flag to modify. Possible options see 'src/map/script_constants.h'.
+The 'type' defines which flag to modify. Possible options see 'src/map/script_constants.hpp'.
 
 Example:
 
@@ -8740,7 +8741,7 @@ remove a nonwalkable row of cells after the barricade mobs.
 
 This command will return 1 or 0, depending on whether the specified cell has
 the 'type' flag set or not. There are various types to check, all mimicking
-the server's cell_chk enumeration. The types can be found in 'src/map/script_constants.h'.
+the server's cell_chk enumeration. The types can be found in 'src/map/script_constants.hpp'.
 
 The meaning of the individual types can be confusing, so here's an overview:
   - cell_chkwall/water/cliff
@@ -9194,6 +9195,10 @@ The player will also be warped to the default spawn point of the battle group or
 <On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
 <On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
 
+If "-" is supplied for <map name> then the player will not automatically respawn after the 1 second delay.
+This allows for better manipulation of <On Death Event>. The player will have to be warped to desired location
+at the end of <On Death Event>.
+
 Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and
 sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
 
@@ -9213,6 +9218,10 @@ Creates an instance of battleground battle group that can be used with other bat
 <map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
 <On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
 <On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
+
+If "-" is supplied for <map name> then the player will not automatically respawn after the 1 second delay.
+This allows for better manipulation of <On Death Event>. The player will have to be warped to desired location
+at the end of <On Death Event>.
 
 Returns battle group ID on success. Returns 0 on failure.
 
@@ -9461,7 +9470,7 @@ NOTE: Currently ONLY supported for bonuses that used by 'bonus' script.
 This command will make the pet cure a specified status condition. The curing
 actions will occur once every Delay seconds. For a full list of status
 conditions that can be cured, see the list of 'SC_' status condition constants
-in 'src/map/script_constants.h'.
+in 'src/map/script_constants.hpp'.
 
 ---------------------------------------
 
@@ -9945,7 +9954,7 @@ solution rather than sending the map and the monster_id.
 
 This will set a Hat Effect onto the player. The state field allows you to
 enable (true) or disable (false) the effect on the player.
-The Hat Effect constants can be found in 'src/map/script_constants.h' starting
+The Hat Effect constants can be found in 'src/map/script_constants.hpp' starting
 with HAT_EF_*.
 
 Requires client 2015-05-13aRagEXE or newer.
