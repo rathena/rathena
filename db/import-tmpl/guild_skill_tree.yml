@@ -22,15 +22,13 @@
 # Guild Skill Settings
 #
 ###########################################################################
-# ID - Skill ID of the guild skill.
+# Id - Skill ID of the guild skill.
 ###########################################################################
-# MaxLvl - Maximum level of the guild skill.
+# MaxLevel - Maximum level of the guild skill.
 ###########################################################################
 # Required - A list of required skills for the skill to become available.
-#   ID: Skill ID of the required guild skill.
+#   Id: Skill ID of the required guild skill.
 #   Level: Level of the required guild skill.
-###########################################################################
-# NOTE: MAX_GUILD_SKILL_REQUIRE (typically 5) ID/Lv pairs must be specified.
 ###########################################################################
 
 Header:
