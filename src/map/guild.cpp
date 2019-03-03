@@ -28,7 +28,6 @@
 #include "mob.hpp"
 #include "npc.hpp"
 #include "pc.hpp"
-#include "script.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
 
