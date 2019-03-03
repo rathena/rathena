@@ -723,7 +723,7 @@ static TIMER_FUNC(bg_on_ready_loopback)
 
 		bg_queue_on_ready(bg->name.c_str(), std::shared_ptr<s_battleground_queue>(queue));
 		return 0;
-	} catch (std::out_of_range e) {
+	} catch (std::out_of_range &e) {
 		ShowError("bg_on_ready_loopback: Fatal error. Can't find battleground %d in the battlegrounds database.\n", queue->bg_type);
 		return 1;
 	}
@@ -908,7 +908,7 @@ enum e_bg_queue_apply_ack bg_queue_join(char *name, struct map_session_data *sd)
 		for (const auto &it : bg_queues) {
 			try {
 				queue = it;
-			} catch (std::out_of_range) {
+			} catch (std::out_of_range &e) {
 				continue;
 			}
 
@@ -1164,7 +1164,7 @@ enum e_bg_queue_apply_ack bg_queue_join_multi(char *name, struct map_session_dat
 		for (const auto &it : bg_queues) {
 			try {
 				queue = it;
-			} catch (std::out_of_range) {
+			} catch (std::out_of_range &e) {
 				continue;
 			}
 
@@ -1342,7 +1342,7 @@ bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> q
 
 	try {
 		bg = bg_search(queue->bg_type).lock();
-	} catch (std::out_of_range) {
+	} catch (std::out_of_range &e) {
 		ShowError("bg_queue_on_ready: Fatal error. Couldn't find BG type with %d in battlegrounds database.\n", queue->bg_type);
 		return false;
 	}
@@ -1411,7 +1411,7 @@ int bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 
 	try {
 		auto bg = bg_search(queue->bg_type).lock();
-	} catch (std::out_of_range) {
+	} catch (std::out_of_range &e) {
 		struct s_battleground_map *bgmap = nullptr;
 
 		queue->map.isReserved = false;
