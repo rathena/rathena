@@ -5286,7 +5286,6 @@ int do_init(int argc, char *argv[])
 	do_init_instance();
 	do_init_chrif();
 	do_init_clan();
-	//do_init_battleground();
 	do_init_clif();
 	do_init_script();
 	do_init_itemdb();
@@ -5305,9 +5304,9 @@ int do_init(int argc, char *argv[])
 	do_init_elemental();
 	do_init_quest();
 	do_init_achievement();
+	do_init_battleground();
 	do_init_npc();
 	do_init_unit();
-	do_init_battleground();
 	do_init_duel();
 	do_init_vending();
 	do_init_buyingstore();
