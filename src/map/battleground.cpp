@@ -170,7 +170,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 		const YAML::Node &locations = node["Locations"];
 		int count = 0;
 
-		for (const auto locationit : locations) {
+		for (const auto &locationit : locations) {
 			const YAML::Node &location = locationit;
 			struct s_battleground_map map_entry;
 
@@ -343,7 +343,7 @@ struct map_session_data* bg_getavailablesd(struct s_battleground_data *bg)
 bool bg_team_delete(int bg_id)
 {
 	if (auto bgteam = bg_team_search(bg_id).lock()) {
-		for (auto &pl_sd : bgteam->members) {
+		for (const auto &pl_sd : bgteam->members) {
 			bg_send_dot_remove(pl_sd.sd);
 			pl_sd.sd->bg_id = 0;
 		}
@@ -568,7 +568,7 @@ int bg_create(uint16 mapindex, struct s_battleground_team* team)
 
 	bg_team_db[bg_team_counter] = std::make_shared<s_battleground_data>();
 
-	auto &bg = bg_team_search(bg_team_counter).lock();
+	auto bg = bg_team_search(bg_team_counter).lock();
 
 	bg->bg_id = bg_team_counter;
 	bg->cemetery.map = mapindex;
@@ -693,12 +693,12 @@ static TIMER_FUNC(bg_on_ready_expire)
 	queue->map = *bgmap;
 	queue->accepted_players = 0; // Reset the queue count
 
-	for (auto &sd : queue->teama_members) {
+	for (const auto &sd : queue->teama_members) {
 		sd->bg_queue_accept_state = false;
 		clif_displaymessage(sd->fd, msg_txt(sd, 341)); // Someone declined or didn't accept the invitation to enter. You have been returned to the battleground queue.
 	}
 
-	for (auto &sd : queue->teamb_members) {
+	for (const auto &sd : queue->teamb_members) {
 		sd->bg_queue_accept_state = false;
 		clif_displaymessage(sd->fd, msg_txt(sd, 341)); // Someone declined or didn't accept the invitation to enter. You have been returned to the battleground queue.
 	}
@@ -788,11 +788,8 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 	}
 
 	if (bg_player_is_in_bg_map(sd)) { // Is the player currently in a battleground map? Reject them.
-		char buf[CHAT_SIZE_MAX];
-
-		sprintf(buf, msg_txt(sd, 337)); // You may not join a battleground queue when you're in a battleground map.
 		clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
-		clif_displaymessage(sd->fd, buf);
+		clif_displaymessage(sd->fd, msg_txt(sd, 337)); // You may not join a battleground queue when you're in a battleground map.
 		return false;
 	}
 
@@ -829,7 +826,7 @@ bool bg_queue_reservation(const char *name, bool state)
  */
 std::shared_ptr<s_battleground_queue> bg_queue_create(std::shared_ptr<s_battleground_type> bg)
 {
-	auto &queue = std::make_shared<s_battleground_queue>();
+	auto queue = std::make_shared<s_battleground_queue>();
 
 	queue->bg_type = bg->id;
 	queue->required_players = bg->required_players;
