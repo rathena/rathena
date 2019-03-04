@@ -161,6 +161,10 @@
   <ItemGroup>
     <ClCompile Include="csv2yaml.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="homunculus2yml.hpp" />
+    <ClInclude Include="nodemapper.hpp" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -22,6 +22,11 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 
+#include "nodemapper.hpp"
+
+// Node mappers
+#include "homunculus2yml.hpp"
+
 #ifndef WIN32
 int getch( void ){
     struct termios oldattr, newattr;
@@ -41,14 +46,11 @@ bool writeToFile( const YAML::Node& node, const std::string& path );
 void prepareHeader( YAML::Node& node, const std::string& type, uint32 version );
 bool askConfirmation( const char* fmt, ... );
 
-YAML::Node body;
-
-template<typename Func>
-bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
-	for( const std::string& path : paths ){
-		const std::string name_ext = name + ".txt";
+bool process(const rathena::node_mapper& mapper){
+	for( const std::string& path : mapper.file_paths() ){
+		const std::string name_ext = mapper.file_name() + ".txt";
 		const std::string from = path + "/" + name_ext;
-		const std::string to = path + "/" + name + ".yml";
+		const std::string to = path + "/" + mapper.file_name() + ".yml";
 
 		if( fileExists( from ) ){
 			if( !askConfirmation( "Found the file \"%s\", which requires migration to yml.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
@@ -57,11 +59,11 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			YAML::Node root;
 
-			prepareHeader( root, type, version );
+			prepareHeader( root, mapper.database_type(), mapper.version() );
 			body.reset();
 
 			
-			if( !lambda( path, name_ext ) ){
+			if( !mapper.process_file( path, name_ext ) ){
 				return false;
 			}
 
@@ -92,6 +94,7 @@ int do_init( int argc, char** argv ){
 	const std::string path_db_import = path_db + "/" + DBIMPORT;
 
 	// TODO: add implementations ;-)
+	process(rathena::homunclus_mapper());
 
 	return 0;
 }
