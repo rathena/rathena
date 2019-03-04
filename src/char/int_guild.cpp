@@ -750,7 +750,7 @@ int inter_guild_CharOffline(uint32 char_id, int guild_id)
 // Initialize guild sql
 int inter_guild_sql_init(void)
 {
-	const char *filename[]={ DBPATH"exp_guild.txt","import/exp_guild.txt"};
+	const char *filename[]={ DBPATH"exp_guild.txt", DBIMPORT"/exp_guild.txt"};
 	int i;
 	//Initialize the guild cache
 	guild_db_= idb_alloc(DB_OPT_RELEASE_DATA);

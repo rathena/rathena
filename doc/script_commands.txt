@@ -9195,6 +9195,10 @@ The player will also be warped to the default spawn point of the battle group or
 <On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
 <On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
 
+If "-" is supplied for <map name> then the player will not automatically respawn after the 1 second delay.
+This allows for better manipulation of <On Death Event>. The player will have to be warped to desired location
+at the end of <On Death Event>.
+
 Unlike the prior command, the latter will attach a GROUP in a waiting room to the battleground, and
 sets the array $@arenamembers[0] where 0 holds the IDs of the first group, and 1 holds the IDs of the second.
 
@@ -9214,6 +9218,10 @@ Creates an instance of battleground battle group that can be used with other bat
 <map name>,<x>,<y> refer to where the "respawn" base is, where the player group will respawn when they die.
 <On Quit Event> refers to an NPC label that attaches to the character and is run when they relog. (Optional)
 <On Death Event> refers to an NPC label that attaches to the character and is run when they die. (Optional)
+
+If "-" is supplied for <map name> then the player will not automatically respawn after the 1 second delay.
+This allows for better manipulation of <On Death Event>. The player will have to be warped to desired location
+at the end of <On Death Event>.
 
 Returns battle group ID on success. Returns 0 on failure.
 

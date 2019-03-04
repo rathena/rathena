@@ -119,7 +119,7 @@ REPLACE INTO `item_db_re` VALUES (581,'Mushroom','Edible Mushroom',0,40,NULL,20,
 REPLACE INTO `item_db_re` VALUES (582,'Orange','Orange',0,300,NULL,20,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(10,20),rand(10,20);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (583,'KETUPAT_','Ketupat Sayur',0,7000,NULL,150,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(325,405),rand(40,60); sc_end SC_POISON; sc_end SC_SILENCE; sc_end SC_BLIND; sc_end SC_CONFUSION; sc_end SC_CURSE; sc_end SC_Hallucination;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (584,'Fish_Ball_Soup','Fish Cake Soup',0,100,NULL,60,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(40,70),0;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (585,'Wurst','Brusti',0,2,NULL,40,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(15,20),0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (585,'Wurst','Brusti',11,2,NULL,40,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(15,20),0; itemskill "PR_MAGNIFICAT",3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (586,'Mother\'s_Cake','Mother\'s Cake',0,20,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(325,405),0;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (587,'Prickly_Fruit_','Red Prickly Fruit',0,880,NULL,60,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(270,330),rand(20,30);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (588,'Spaghetti','Spaghetti',0,100,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'itemheal rand(40,70),0;',NULL,NULL);
@@ -1246,7 +1246,7 @@ REPLACE INTO `item_db_re` VALUES (1931,'P_String_Inst1','Eden Guitar I',5,0,NULL
 REPLACE INTO `item_db_re` VALUES (1932,'TE_Woe_Guitar','TE Woe Guitar',5,0,NULL,0,'100',NULL,1,0,0x00080000,63,1,2,3,'40',1,13,'bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Poison,3000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1933,'Thanos_Violin','Thanos Violin',5,10,NULL,2000,'200:130',NULL,1,1,0x00080000,56,1,2,4,'120',1,13,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,5; bonus bLongAtkRate,20; bonus2 bHPLossRate,100,10000;',NULL,'heal -1000,0;');
 REPLACE INTO `item_db_re` VALUES (1934,'Contabass','Contrabass',5,20,NULL,250,'180:120',NULL,1,2,0x00080000,63,1,2,3,'130',1,13,'bonus2 bSkillCooldown,"WM_RANDOMIZESPELL",-20;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1935,'Ukulele_Of_Newoz','Oz\'s New Ukulele',5,20,NULL,2000,'160',NULL,1,2,0x00080000,63,1,2,4,'130',1,13,'bonus2 bSkillUseSP,"MI_RUSH_WINDMILL",-20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1935,'Ukulele_Of_Newoz','Oz\'s New Ukulele',5,20,NULL,2000,'160',NULL,1,2,0x00080000,63,1,2,4,'130',1,13,'bonus2 bSkillUseSP,"MI_RUSH_WINDMILL",20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1936,'Ru_Blue_Violin','Blue Violin',5,10,NULL,1500,'180',NULL,2,1,0x00080000,63,1,2,3,'100',1,13,'bonus bDex,5; bonus bVit,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1937,'Ru_Gold_Violin','Ru Gold Violin',5,0,NULL,1500,'180',NULL,1,2,0x00080000,56,2,2,3,'120',1,13,'bonus bDex,8; bonus bVit,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1938,'Infinity_Violin','Infinity Violin',5,10,NULL,500,'150',NULL,2,1,0x00080000,56,1,2,4,'100',1,13,NULL,NULL,NULL);
@@ -1298,7 +1298,7 @@ REPLACE INTO `item_db_re` VALUES (1986,'P_Tail1','Eden Tail I',5,0,NULL,0,'125',
 REPLACE INTO `item_db_re` VALUES (1987,'TE_Woe_Rope','TE Woe Rope',5,0,NULL,0,'100',NULL,2,0,0x00080000,63,0,2,3,'40',1,14,'bonus2 bAddRace,RC_Player,40; bonus2 bAddEff,Eff_Blind,3000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1988,'Thanos_Whip','Thanos Whip',5,10,NULL,2200,'200:130',NULL,2,1,0x00080000,56,0,2,4,'120',1,14,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,5; bonus bLongAtkRate,20; bonus2 bHPLossRate,100,10000;',NULL,'heal -1000,0;');
 REPLACE INTO `item_db_re` VALUES (1989,'Gymnastics_Ribbon','Rhythmic Gymnastics Ribbon',5,20,NULL,300,'150:120',NULL,2,2,0x00080000,63,0,2,3,'130',1,14,'bonus bAspdRate,20;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (1990,'Floral_Mic_Of_Igu','Bloody Floral Decoration Microphone',5,20,NULL,1000,'160',NULL,2,2,0x00080000,63,0,2,4,'130',1,14,'bonus2 bSkillUseSP,"CG_MOONLIT",-20;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (1990,'Floral_Mic_Of_Igu','Bloody Floral Decoration Microphone',5,20,NULL,1000,'160',NULL,2,2,0x00080000,63,0,2,4,'130',1,14,'bonus2 bSkillUseSP,"CG_MOONLIT",20;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1991,'Ru_Blue_Whip','Blue Whip',5,10,NULL,1500,'180',NULL,2,1,0x00080000,63,0,2,3,'100',1,14,'bonus bDex,5; bonus bVit,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1992,'Ru_Gold_Whip','Ru Gold Whip',5,0,NULL,1500,'180',NULL,2,2,0x00080000,56,2,2,3,'120',1,14,'bonus bDex,8; bonus bVit,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (1994,'Infinity_Whip','Infinity Whip',5,10,NULL,500,'150',NULL,2,1,0x00080000,56,0,2,4,'100',1,14,NULL,NULL,NULL);
@@ -9582,7 +9582,7 @@ REPLACE INTO `item_db_re` VALUES (18122,'Gigantic_Bow','Giant Bow',5,20,NULL,300
 REPLACE INTO `item_db_re` VALUES (18123,'Bow_Of_Storm','Bow of Storms',5,20,NULL,1500,'160',NULL,5,1,0x00080800,63,2,34,4,'130',1,11,'bonus bLongAtkRate,30; bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-2000; bonus2 bSkillUseSP,"WM_SEVERE_RAINSTORM",15;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18124,'Half_BF_Bow1','Half BF Bow1',5,20,NULL,0,'100',NULL,5,0,0x000A0848,63,2,34,3,'80',1,11,'bonus bDex,2; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18125,'Arcus_Daemonicus','Arcus Daemonicus',5,20,NULL,1000,'130',NULL,5,2,0x00020008,63,2,34,4,'80',1,11,'/*Fix me: bonus2 bAddClass,Class_All,50; when equipped with shadow arrows*/ if(getrefine()>9){ bonus bAspd,1; bonus bUseSPrate,-20; }',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (18126,'Ru_Blue_Bow','Blue Bow',5,10,NULL,1200,'150',NULL,5,1,0x00000800,56,2,2,3,'100',1,11,'bonus bAgi,5; bonus bDex,5;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (18126,'Ru_Blue_Bow','Blue Bow',5,10,NULL,1200,'150',NULL,5,1,0x00000800,56,2,34,3,'100',1,11,'bonus bAgi,5; bonus bDex,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18127,'Ru_Gold_Bow','Ru Gold Bow',5,0,NULL,1200,'150',NULL,5,2,0x00000800,56,2,34,3,'120',1,11,'bonus bAgi,8; bonus bDex,8;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18128,'Infinity_Bow','Infinity Bow',5,20,NULL,500,'160',NULL,5,1,0x00020800,56,2,34,4,'100',1,11,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (18130,'Crimson_Bow','Crimson Bow',5,20,NULL,1200,'120',NULL,5,2,0x000A0848,63,2,34,3,'70',1,11,'.@r = getrefine(); bonus bBaseAtk,((BaseLevel/10)*5)+(.@r<=15?pow(.@r,2):225);',NULL,NULL);
