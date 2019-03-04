@@ -839,7 +839,7 @@
   RetaliateRate: 100
   ChangeTargetRate: 500
   Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bAddRace,RC_Demihuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; } }'
+    bAddRace,RC_Demihuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; bonus2 bAddRace,RC_Player,2; bonus2 bMagicAddRace,RC_Player,2; } }'
   SupportScript: '{ petskillattack "AS_SONICBLOW",1,0,3; }'
 - MobID: 1275
   Name: ALICE
@@ -863,7 +863,7 @@
   RetaliateRate: 1000
   ChangeTargetRate: 200
   Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; } }'
+    bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
   SupportScript: '{ petskillsupport "AL_HEAL",5,60,25,100; }'
 - MobID: 1815
   Name: EVENT_RICECAKE
@@ -934,7 +934,7 @@
   RetaliateRate: 300
   ChangeTargetRate: 800
   Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bDef,1; bonus2 bSubRace,RC_DemiHuman,1; } }'
+    bDef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
   SupportScript: '{ petskillattack "CR_SHIELDCHARGE",5,5,5; }'
 - MobID: 1879
   Name: ECLIPSE_P
@@ -1242,7 +1242,7 @@
   RetaliateRate: 300
   ChangeTargetRate: 800
   Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bAddRace,RC_DemiHuman,3; } }'
+    bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3; } }'
   SupportScript: '{}'
 - MobID: 1370
   Name: SUCCUBUS
