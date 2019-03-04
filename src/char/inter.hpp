@@ -14,14 +14,13 @@
 
 struct s_storage_table;
 
-class InterServerDatabase : public TypesafeYamlDatabase<uint32, s_storage_table>{
+class InterServerDatabase : public TypesafeYamlDatabase<uint32, s_storage_table> {
 public:
-	InterServerDatabase() : TypesafeYamlDatabase( "INTER_SERVER_DB", 1 ){
-
+	InterServerDatabase() : TypesafeYamlDatabase("INTER_SERVER_DB", 1) {
 	}
 
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode(const YAML::Node& node);
 };
 
 extern InterServerDatabase interServerDb;
@@ -35,7 +34,7 @@ void mapif_accinfo_ack(bool success, int map_fd, int u_fd, int u_aid, int accoun
 	int group_id, int logincount, int state, const char *email, const char *last_ip, const char *lastlogin,
 	const char *birthdate, const char *userid);
 
-int inter_log(const char *fmt,...);
+int inter_log(const char *fmt, ...);
 
 extern unsigned int party_share_level;
 

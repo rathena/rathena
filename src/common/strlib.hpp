@@ -19,13 +19,13 @@
 #undef __USED_GNU
 #endif
 
-char* jstrescape (char* pt);
-char* jstrescapecpy (char* pt, const char* spt);
-int jmemescapecpy (char* pt, const char* spt, int size);
+char* jstrescape(char* pt);
+char* jstrescapecpy(char* pt, const char* spt);
+int jmemescapecpy(char* pt, const char* spt, int size);
 
 int remove_control_chars(char* str);
 char* trim(char* str);
-char* normalize_name(char* str,const char* delims);
+char* normalize_name(char* str, const char* delims);
 const char *stristr(const char *haystack, const char *needle);
 
 #ifdef WIN32
@@ -35,7 +35,7 @@ char* _strtok_r(char* s1, const char* s2, char** lasts);
 #endif
 
 #if !(defined(WIN32) && defined(_MSC_VER) && _MSC_VER >= 1400) && !defined(HAVE_STRNLEN)
-size_t strnlen (const char* string, size_t maxlen);
+size_t strnlen(const char* string, size_t maxlen);
 #endif
 
 #if defined(WIN32) && defined(_MSC_VER) && _MSC_VER <= 1200
@@ -64,7 +64,6 @@ int strline(const char* str, size_t pos);
 /// The output buffer must be at least count*2+1 in size.
 /// Returns true on success, false on failure.
 bool bin2hex(char* output, unsigned char* input, size_t count);
-
 
 /// Bitfield determining the behaviour of sv_parse and sv_split.
 typedef enum e_svopt
@@ -136,8 +135,7 @@ const char* skip_escaped_c(const char* p);
 /// Opens and parses a file containing delim-separated columns, feeding them to the specified callback function row by row.
 /// Tracks the progress of the operation (current line number, number of successfully processed rows).
 /// Returns 'true' if it was able to process the specified file, or 'false' if it could not be read.
-bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool (*parseproc)(char* fields[], int columns, int current), bool silent);
-
+bool sv_readdb(const char* directory, const char* filename, char delim, int mincols, int maxcols, int maxrows, bool(*parseproc)(char* fields[], int columns, int current), bool silent);
 
 /// StringBuf - dynamic string
 struct StringBuf
@@ -154,7 +152,7 @@ void _StringBuf_Init(const char *file, int line, const char *func, StringBuf* se
 #define StringBuf_Init(self) _StringBuf_Init(ALC_MARK,self)
 int _StringBuf_Printf(const char *file, int line, const char *func, StringBuf* self, const char* fmt, ...);
 #define StringBuf_Printf(self,fmt,...) _StringBuf_Printf(ALC_MARK,self,fmt, ## __VA_ARGS__)
-int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, va_list args);
+int _StringBuf_Vprintf(const char *file, int line, const char *func, StringBuf* self, const char* fmt, va_list args);
 #define StringBuf_Vprintf(self,fmt,args) _StringBuf_Vprintf(ALC_MARK,self,fmt,args)
 int _StringBuf_Append(const char *file, int line, const char *func, StringBuf* self, const StringBuf *sbuf);
 #define StringBuf_Append(self,sbuf) _StringBuf_Append(ALC_MARK,self,sbuf)

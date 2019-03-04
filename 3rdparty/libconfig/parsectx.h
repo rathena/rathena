@@ -30,11 +30,11 @@
 
 struct parse_context
 {
-  config_t *config;
-  config_setting_t *parent;
-  config_setting_t *setting;
-  char *name;
-  strbuf_t string;
+	config_t *config;
+	config_setting_t *parent;
+	config_setting_t *setting;
+	char *name;
+	strbuf_t string;
 };
 
 #define parsectx_init(C)                        \

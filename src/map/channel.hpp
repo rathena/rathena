@@ -8,7 +8,6 @@
 #include "../common/mmo.hpp"
 
 //namespace rA {
-
 struct map_session_data;
 struct guild;
 struct DBMap;
@@ -17,24 +16,24 @@ struct DBMap;
 #define CHAN_MSG_LENGTH 150
 
 enum Channel_Opt {
-	CHAN_OPT_NONE		    = 0,	///< None
-	CHAN_OPT_ANNOUNCE_SELF  = 0x01,	///< Shows info when player joined/left channel to self
-	CHAN_OPT_ANNOUNCE_JOIN  = 0x02,	///< Shows info if player joined the channel
+	CHAN_OPT_NONE = 0,	///< None
+	CHAN_OPT_ANNOUNCE_SELF = 0x01,	///< Shows info when player joined/left channel to self
+	CHAN_OPT_ANNOUNCE_JOIN = 0x02,	///< Shows info if player joined the channel
 	CHAN_OPT_ANNOUNCE_LEAVE = 0x04,	///< Shows info if player left the channel
-	CHAN_OPT_MSG_DELAY	    = 0x08,	///< Enables chat delay
+	CHAN_OPT_MSG_DELAY = 0x08,	///< Enables chat delay
 	CHAN_OPT_COLOR_OVERRIDE = 0x10,	///< Enables color channel be override by player's font color
-	CHAN_OPT_CAN_CHAT		= 0x20,	///< Allows player to chat in the channel
-	CHAN_OPT_CAN_LEAVE		= 0x40,	///< Allows player to leave the channel
-	CHAN_OPT_AUTOJOIN		= 0x80,	///< Player will be autojoined to the channel
+	CHAN_OPT_CAN_CHAT = 0x20,	///< Allows player to chat in the channel
+	CHAN_OPT_CAN_LEAVE = 0x40,	///< Allows player to leave the channel
+	CHAN_OPT_AUTOJOIN = 0x80,	///< Player will be autojoined to the channel
 
-	CHAN_OPT_BASE = CHAN_OPT_ANNOUNCE_SELF|CHAN_OPT_MSG_DELAY|CHAN_OPT_CAN_CHAT|CHAN_OPT_CAN_LEAVE,
+	CHAN_OPT_BASE = CHAN_OPT_ANNOUNCE_SELF | CHAN_OPT_MSG_DELAY | CHAN_OPT_CAN_CHAT | CHAN_OPT_CAN_LEAVE,
 };
 
 enum Channel_Type {
-	CHAN_TYPE_PUBLIC  = 0, ///< Config file made
+	CHAN_TYPE_PUBLIC = 0, ///< Config file made
 	CHAN_TYPE_PRIVATE = 1, ///< User's channel
-	CHAN_TYPE_MAP	  = 2, ///< Local map
-	CHAN_TYPE_ALLY	  = 3, ///< Guild + its alliance
+	CHAN_TYPE_MAP = 2, ///< Local map
+	CHAN_TYPE_ALLY = 3, ///< Guild + its alliance
 };
 
 struct Channel {
@@ -106,8 +105,8 @@ void channel_read_config(void);
 
 int channel_chk(char *name, char *pass, int type);
 struct Channel* channel_name2channel(char *chname, struct map_session_data *sd, int flag);
-int channel_haspc(struct Channel *channel,struct map_session_data *sd);
-int channel_haspcbanned(struct Channel *channel,struct map_session_data *sd);
+int channel_haspc(struct Channel *channel, struct map_session_data *sd);
+int channel_haspcbanned(struct Channel *channel, struct map_session_data *sd);
 int channel_pc_haschan(struct map_session_data *sd, struct Channel *channel);
 int channel_display_list(struct map_session_data *sd, const char *option);
 

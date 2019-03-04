@@ -57,31 +57,31 @@
  * All code except the typedef of ERInterface will be disabled.
  * To allow a smooth transition,
  */
-//#define DISABLE_ERS
+ //#define DISABLE_ERS
 
-/**
- * Entries are aligned to ERS_ALIGNED bytes in the blocks of entries.
- * By default it aligns to one byte, using the "natural order" of the entries.
- * This should NEVER be set to zero or less.
- * If greater than one, some memory can be wasted. This should never be needed
- * but is here just in case some alignment issues arise.
- */
+ /**
+  * Entries are aligned to ERS_ALIGNED bytes in the blocks of entries.
+  * By default it aligns to one byte, using the "natural order" of the entries.
+  * This should NEVER be set to zero or less.
+  * If greater than one, some memory can be wasted. This should never be needed
+  * but is here just in case some alignment issues arise.
+  */
 #ifndef ERS_ALIGNED
 #	define ERS_ALIGNED 1
 #endif /* not ERS_ALIGN_ENTRY */
 
 enum ERSOptions {
-	ERS_OPT_NONE        = 0x00,
-	ERS_OPT_CLEAR       = 0x01,/* silently clears any entries left in the manager upon destruction */
-	ERS_OPT_WAIT        = 0x02,/* wait for entries to come in order to list! */
-	ERS_OPT_FREE_NAME   = 0x04,/* name is dynamic memory, and should be freed */
-	ERS_OPT_CLEAN       = 0x08,/* clears used memory upon ers_free so that its all new to be reused on the next alloc */
-	ERS_OPT_FLEX_CHUNK  = 0x10,/* signs that it should look for its own cache given it'll have a dynamic chunk size, so that it doesn't affect the other ERS it'd otherwise be sharing */
+	ERS_OPT_NONE = 0x00,
+	ERS_OPT_CLEAR = 0x01,/* silently clears any entries left in the manager upon destruction */
+	ERS_OPT_WAIT = 0x02,/* wait for entries to come in order to list! */
+	ERS_OPT_FREE_NAME = 0x04,/* name is dynamic memory, and should be freed */
+	ERS_OPT_CLEAN = 0x08,/* clears used memory upon ers_free so that its all new to be reused on the next alloc */
+	ERS_OPT_FLEX_CHUNK = 0x10,/* signs that it should look for its own cache given it'll have a dynamic chunk size, so that it doesn't affect the other ERS it'd otherwise be sharing */
 
 	/* Compound, is used to determine whether it should be looking for a cache of matching options */
-	ERS_CACHE_OPTIONS   = ERS_OPT_CLEAN|ERS_OPT_FLEX_CHUNK,
-	ERS_CLEAN_OPTIONS   = ERS_OPT_CLEAN|ERS_OPT_CLEAR,
-	ERS_DBN_OPTIONS     = ERS_OPT_CLEAN|ERS_OPT_WAIT|ERS_OPT_FREE_NAME,
+	ERS_CACHE_OPTIONS = ERS_OPT_CLEAN | ERS_OPT_FLEX_CHUNK,
+	ERS_CLEAN_OPTIONS = ERS_OPT_CLEAN | ERS_OPT_CLEAR,
+	ERS_DBN_OPTIONS = ERS_OPT_CLEAN | ERS_OPT_WAIT | ERS_OPT_FREE_NAME,
 };
 
 /**
@@ -92,7 +92,6 @@ enum ERSOptions {
  * @param destroy Destroy this instance of the manager
  */
 typedef struct eri {
-
 	/**
 	 * Allocate an entry from this entry manager.
 	 * If there are reusable entries available, it reuses one instead.
@@ -108,14 +107,14 @@ typedef struct eri {
 	 * @param self Interface of the entry manager
 	 * @param entry Entry to be freed
 	 */
-	void (*free)(struct eri *self, void *entry);
+	void(*free)(struct eri *self, void *entry);
 
 	/**
 	 * Return the size of the entries allocated from this manager.
 	 * @param self Interface of the entry manager
 	 * @return Size of the entries of this manager in bytes
 	 */
-	size_t (*entry_size)(struct eri *self);
+	size_t(*entry_size)(struct eri *self);
 
 	/**
 	 * Destroy this instance of the manager.
@@ -124,10 +123,10 @@ typedef struct eri {
 	 * missing/extra entries.
 	 * @param self Interface of the entry manager
 	 */
-	void (*destroy)(struct eri *self);
+	void(*destroy)(struct eri *self);
 
 	/* */
-	void (*chunk_size) (struct eri *self, unsigned int new_size);
+	void(*chunk_size) (struct eri *self, unsigned int new_size);
 } ERS;
 
 #ifdef DISABLE_ERS

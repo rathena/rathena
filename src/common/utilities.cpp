@@ -10,22 +10,22 @@
 #include <string>
 
 struct cScopeTimer::sPimpl {
-    std::chrono::steady_clock::time_point start;
-    std::chrono::steady_clock::time_point end;
-    
-    sPimpl()
-    {
-        start = std::chrono::steady_clock::now();
-    }
-    
-    ~sPimpl(){
-        end = std::chrono::steady_clock::now();
-        std::chrono::microseconds diff = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-        std::cout << " took=" << diff.count() << "ms !\n";
-    }
+	std::chrono::steady_clock::time_point start;
+	std::chrono::steady_clock::time_point end;
+
+	sPimpl()
+	{
+		start = std::chrono::steady_clock::now();
+	}
+
+	~sPimpl() {
+		end = std::chrono::steady_clock::now();
+		std::chrono::microseconds diff = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+		std::cout << " took=" << diff.count() << "ms !\n";
+	}
 };
 
-cScopeTimer::cScopeTimer() 
+cScopeTimer::cScopeTimer()
 	: aPimpl(new sPimpl())
 {}
 
@@ -40,12 +40,12 @@ int levenshtein(const std::string &s1, const std::string &s2)
 	// the return type and the types of the two variables below.
 	int s1len = static_cast<int>(s1.size());
 	int s2len = static_cast<int>(s2.size());
-	
+
 	auto column_start = (decltype(s1len))1;
-	
+
 	auto column = new decltype(s1len)[s1len + 1];
 	std::iota(column + column_start, column + s1len + 1, column_start);
-	
+
 	for (auto x = column_start; x <= s2len; x++) {
 		column[0] = x;
 		auto last_diagonal = x - column_start;
@@ -54,7 +54,7 @@ int levenshtein(const std::string &s1, const std::string &s2)
 			auto possibilities = {
 				column[y] + 1,
 				column[y - 1] + 1,
-				last_diagonal + (s1[y - 1] == s2[x - 1]? 0 : 1)
+				last_diagonal + (s1[y - 1] == s2[x - 1] ? 0 : 1)
 			};
 			column[y] = std::min(possibilities);
 			last_diagonal = old_diagonal;

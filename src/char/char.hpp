@@ -95,22 +95,22 @@ extern struct Schema_Config schema_config;
 #if PACKETVER_SUPPORTS_PINCODE
 /// Pincode system
 enum pincode_state : uint8 {
-	PINCODE_OK		= 0,
-	PINCODE_ASK		= 1,
-	PINCODE_NOTSET	= 2,
-	PINCODE_EXPIRED	= 3,
-	PINCODE_NEW		= 4,
+	PINCODE_OK = 0,
+	PINCODE_ASK = 1,
+	PINCODE_NOTSET = 2,
+	PINCODE_EXPIRED = 3,
+	PINCODE_NEW = 4,
 	PINCODE_ILLEGAL = 5,
 #if 0
-	PINCODE_KSSN	= 6, // Not supported since we do not store KSSN
+	PINCODE_KSSN = 6, // Not supported since we do not store KSSN
 #endif
 #if PACKETVER >= 20180124
 	// The button for pin code access was removed
-	PINCODE_PASSED  = PINCODE_OK,
+	PINCODE_PASSED = PINCODE_OK,
 #else
-	PINCODE_PASSED	= 7,
+	PINCODE_PASSED = 7,
 #endif
-	PINCODE_WRONG	= 8,
+	PINCODE_WRONG = 8,
 	PINCODE_MAXSTATE
 };
 struct Pincode_Config {
@@ -240,9 +240,9 @@ struct char_session_data {
 	uint8 chars_billing;
 	uint8 clienttype;
 	char new_name[NAME_LENGTH];
-	char birthdate[10+1];  // YYYY-MM-DD
+	char birthdate[10 + 1];  // YYYY-MM-DD
 	// Pincode system
-	char pincode[PINCODE_LENGTH+1];
+	char pincode[PINCODE_LENGTH + 1];
 	uint32 pincode_seed;
 	time_t pincode_change;
 	uint16 pincode_try;
@@ -253,7 +253,6 @@ struct char_session_data {
 	int charblock_timer;
 	uint8 flag; // &1 - Retrieving guild bound items
 };
-
 
 struct mmo_charstatus;
 DBMap* char_get_chardb(); // uint32 char_id -> struct mmo_charstatus*
@@ -293,16 +292,16 @@ int char_divorce_char_sql(int partner_id1, int partner_id2);
 int char_memitemdata_to_sql(const struct item items[], int max, int id, enum storage_type tableswitch, uint8 stor_id);
 bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id);
 
-int char_married(int pl1,int pl2);
+int char_married(int pl1, int pl2);
 int char_child(int parent_id, int child_id);
-int char_family(int pl1,int pl2,int pl3);
+int char_family(int pl1, int pl2, int pl3);
 
 //extern bool char_gm_read;
 int char_loadName(uint32 char_id, char* name);
 int char_check_char_name(char * name, char * esc_name);
 
-void char_pincode_decrypt( uint32 userSeed, char* pin );
-int char_pincode_compare( int fd, struct char_session_data* sd, char* pin );
+void char_pincode_decrypt(uint32 userSeed, char* pin);
+int char_pincode_compare(int fd, struct char_session_data* sd, char* pin);
 void char_auth_ok(int fd, struct char_session_data *sd);
 void char_set_charselect(uint32 account_id);
 void char_read_fame_list(void);

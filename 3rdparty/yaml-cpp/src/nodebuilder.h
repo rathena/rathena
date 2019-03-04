@@ -15,56 +15,56 @@
 #include "yaml-cpp/node/ptr.h"
 
 namespace YAML {
-namespace detail {
-class node;
-}  // namespace detail
-struct Mark;
+	namespace detail {
+		class node;
+	}  // namespace detail
+	struct Mark;
 }  // namespace YAML
 
 namespace YAML {
-class Node;
+	class Node;
 
-class NodeBuilder : public EventHandler {
- public:
-  NodeBuilder();
-  virtual ~NodeBuilder();
+	class NodeBuilder : public EventHandler {
+	public:
+		NodeBuilder();
+		virtual ~NodeBuilder();
 
-  Node Root();
+		Node Root();
 
-  virtual void OnDocumentStart(const Mark& mark);
-  virtual void OnDocumentEnd();
+		virtual void OnDocumentStart(const Mark& mark);
+		virtual void OnDocumentEnd();
 
-  virtual void OnNull(const Mark& mark, anchor_t anchor);
-  virtual void OnAlias(const Mark& mark, anchor_t anchor);
-  virtual void OnScalar(const Mark& mark, const std::string& tag,
-                        anchor_t anchor, const std::string& value);
+		virtual void OnNull(const Mark& mark, anchor_t anchor);
+		virtual void OnAlias(const Mark& mark, anchor_t anchor);
+		virtual void OnScalar(const Mark& mark, const std::string& tag,
+			anchor_t anchor, const std::string& value);
 
-  virtual void OnSequenceStart(const Mark& mark, const std::string& tag,
-                               anchor_t anchor, EmitterStyle::value style);
-  virtual void OnSequenceEnd();
+		virtual void OnSequenceStart(const Mark& mark, const std::string& tag,
+			anchor_t anchor, EmitterStyle::value style);
+		virtual void OnSequenceEnd();
 
-  virtual void OnMapStart(const Mark& mark, const std::string& tag,
-                          anchor_t anchor, EmitterStyle::value style);
-  virtual void OnMapEnd();
+		virtual void OnMapStart(const Mark& mark, const std::string& tag,
+			anchor_t anchor, EmitterStyle::value style);
+		virtual void OnMapEnd();
 
- private:
-  detail::node& Push(const Mark& mark, anchor_t anchor);
-  void Push(detail::node& node);
-  void Pop();
-  void RegisterAnchor(anchor_t anchor, detail::node& node);
+	private:
+		detail::node& Push(const Mark& mark, anchor_t anchor);
+		void Push(detail::node& node);
+		void Pop();
+		void RegisterAnchor(anchor_t anchor, detail::node& node);
 
- private:
-  detail::shared_memory_holder m_pMemory;
-  detail::node* m_pRoot;
+	private:
+		detail::shared_memory_holder m_pMemory;
+		detail::node* m_pRoot;
 
-  typedef std::vector<detail::node*> Nodes;
-  Nodes m_stack;
-  Nodes m_anchors;
+		typedef std::vector<detail::node*> Nodes;
+		Nodes m_stack;
+		Nodes m_anchors;
 
-  typedef std::pair<detail::node*, bool> PushedKey;
-  std::vector<PushedKey> m_keys;
-  std::size_t m_mapDepth;
-};
+		typedef std::pair<detail::node*, bool> PushedKey;
+		std::vector<PushedKey> m_keys;
+		std::size_t m_mapDepth;
+	};
 }
 
 #endif  // NODE_NODEBUILDER_H_62B23520_7C8E_11DE_8A39_0800200C9A66

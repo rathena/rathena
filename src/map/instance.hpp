@@ -97,7 +97,7 @@ void do_init_instance(void);
 void do_final_instance(void);
 
 #if MAX_MAP_PER_INSTANCE > 255
-	#error Too many maps per instance defined! Please adjust MAX_MAP_PER_INSTANCE to a lower value.
+#error Too many maps per instance defined! Please adjust MAX_MAP_PER_INSTANCE to a lower value.
 #endif
 
 #endif /* INSTANCE_HPP */

@@ -91,19 +91,18 @@ struct s_achievement_db {
 	~s_achievement_db();
 };
 
-class AchievementDatabase : public TypesafeYamlDatabase<uint32, s_achievement_db>{
+class AchievementDatabase : public TypesafeYamlDatabase<uint32, s_achievement_db> {
 private:
 	// Avoids checking achievements on every mob killed
 	std::vector<uint32> achievement_mobs;
 
 public:
-	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 1 ){
-
+	AchievementDatabase() : TypesafeYamlDatabase("ACHIEVEMENT_DB", 1) {
 	}
 
 	void clear();
 	const std::string getDefaultLocation();
-	uint64 parseBodyNode( const YAML::Node& node );
+	uint64 parseBodyNode(const YAML::Node& node);
 
 	// Additional
 	bool mobexists(uint32 mob_id);

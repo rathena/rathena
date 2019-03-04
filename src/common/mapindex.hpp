@@ -34,9 +34,9 @@
 #define MAP_VEINS "veins"
 #define MAP_JAIL "sec_pri"
 #ifdef RENEWAL
-	#define MAP_NOVICE "iz_int"
+#define MAP_NOVICE "iz_int"
 #else
-	#define MAP_NOVICE "new_1-1"
+#define MAP_NOVICE "new_1-1"
 #endif
 #define MAP_MOSCOVIA "moscovia"
 #define MAP_MIDCAMP "mid_camp"

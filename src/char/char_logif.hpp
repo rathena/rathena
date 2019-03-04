@@ -10,8 +10,8 @@
 struct char_session_data;
 
 #if PACKETVER_SUPPORTS_PINCODE
-void chlogif_pincode_notifyLoginPinError( uint32 account_id );
-void chlogif_pincode_notifyLoginPinUpdate( uint32 account_id, char* pin );
+void chlogif_pincode_notifyLoginPinError(uint32 account_id);
+void chlogif_pincode_notifyLoginPinUpdate(uint32 account_id, char* pin);
 void chlogif_pincode_start(int fd, struct char_session_data* sd);
 #endif
 TIMER_FUNC(chlogif_send_acc_tologin);

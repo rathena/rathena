@@ -11,38 +11,38 @@
 #include <cstddef>
 
 namespace YAML {
-class StreamCharSource {
- public:
-  StreamCharSource(const Stream& stream) : m_offset(0), m_stream(stream) {}
-  StreamCharSource(const StreamCharSource& source)
-      : m_offset(source.m_offset), m_stream(source.m_stream) {}
-  ~StreamCharSource() {}
+	class StreamCharSource {
+	public:
+		StreamCharSource(const Stream& stream) : m_offset(0), m_stream(stream) {}
+		StreamCharSource(const StreamCharSource& source)
+			: m_offset(source.m_offset), m_stream(source.m_stream) {}
+		~StreamCharSource() {}
 
-  operator bool() const;
-  char operator[](std::size_t i) const { return m_stream.CharAt(m_offset + i); }
-  bool operator!() const { return !static_cast<bool>(*this); }
+		operator bool() const;
+		char operator[](std::size_t i) const { return m_stream.CharAt(m_offset + i); }
+		bool operator!() const { return !static_cast<bool>(*this); }
 
-  const StreamCharSource operator+(int i) const;
+		const StreamCharSource operator+(int i) const;
 
- private:
-  std::size_t m_offset;
-  const Stream& m_stream;
+	private:
+		std::size_t m_offset;
+		const Stream& m_stream;
 
-  StreamCharSource& operator=(const StreamCharSource&);  // non-assignable
-};
+		StreamCharSource& operator=(const StreamCharSource&);  // non-assignable
+	};
 
-inline StreamCharSource::operator bool() const {
-  return m_stream.ReadAheadTo(m_offset);
-}
+	inline StreamCharSource::operator bool() const {
+		return m_stream.ReadAheadTo(m_offset);
+	}
 
-inline const StreamCharSource StreamCharSource::operator+(int i) const {
-  StreamCharSource source(*this);
-  if (static_cast<int>(source.m_offset) + i >= 0)
-    source.m_offset += i;
-  else
-    source.m_offset = 0;
-  return source;
-}
+	inline const StreamCharSource StreamCharSource::operator+(int i) const {
+		StreamCharSource source(*this);
+		if (static_cast<int>(source.m_offset) + i >= 0)
+			source.m_offset += i;
+		else
+			source.m_offset = 0;
+		return source;
+	}
 }
 
 #endif  // STREAMCHARSOURCE_H_62B23520_7C8E_11DE_8A39_0800200C9A66

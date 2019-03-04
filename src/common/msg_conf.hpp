@@ -20,16 +20,16 @@ enum lang_types {
 };
 
 #ifndef LANG_ENABLE
-	// Multilanguage System.
-	// Define which languages to enable (bitmask).
-	// 0xFFF will enable all, while 0x000 will enable English only.
-	#define LANG_ENABLE 0x000
+// Multilanguage System.
+// Define which languages to enable (bitmask).
+// 0xFFF will enable all, while 0x000 will enable English only.
+#define LANG_ENABLE 0x000
 #endif
 
 //read msg in table
-const char* _msg_txt(int msg_number,int size, char ** msg_table);
+const char* _msg_txt(int msg_number, int size, char ** msg_table);
 //store msg from txtfile into msg_table
-int _msg_config_read(const char* cfgName,int size, char ** msg_table);
+int _msg_config_read(const char* cfgName, int size, char ** msg_table);
 //clear msg_table
 void _do_final_msg(int size, char ** msg_table);
 //Lookups

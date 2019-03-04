@@ -33,7 +33,6 @@ void login_log(uint32 ip, const char* username, int rcode, const char* message);
  */
 bool loginlog_config_read(const char* w1, const char* w2);
 
-
 /**
  * Initialize the module.
  * Launched at login-serv start, create db or other long scope variable here.

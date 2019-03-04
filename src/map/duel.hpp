@@ -12,8 +12,8 @@ struct duel {
 	int max_players_limit;
 };
 
-duel& duel_get_duelid( size_t did );
-bool duel_exist( size_t did );
+duel& duel_get_duelid(size_t did);
+bool duel_exist(size_t did);
 size_t duel_counttotal();
 size_t duel_countactives();
 
@@ -25,7 +25,7 @@ bool duel_reject(const size_t did, struct map_session_data* sd);
 bool duel_leave(const size_t did, struct map_session_data* sd);
 void duel_showinfo(const size_t did, struct map_session_data* sd);
 bool duel_checktime(struct map_session_data* sd);
-bool duel_check_player_limit( struct duel& pDuel );
+bool duel_check_player_limit(struct duel& pDuel);
 
 void do_init_duel(void);
 void do_final_duel(void);

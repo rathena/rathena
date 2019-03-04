@@ -25,10 +25,10 @@
 #include "strlib.hpp"
 
 /// Called when a terminate signal is received.
-void (*shutdown_callback)(void) = NULL;
+void(*shutdown_callback)(void) = NULL;
 
 #if defined(BUILDBOT)
-	int buildbotflag = 0;
+int buildbotflag = 0;
 #endif
 
 int runflag = CORE_ST_RUN;
@@ -74,24 +74,24 @@ sigfunc *compat_signal(int signo, sigfunc *func) {
  *--------------------------------------*/
 #ifdef _WIN32
 static BOOL WINAPI console_handler(DWORD c_event) {
-    switch(c_event) {
-    case CTRL_CLOSE_EVENT:
-    case CTRL_LOGOFF_EVENT:
-    case CTRL_SHUTDOWN_EVENT:
-		if( shutdown_callback != NULL )
+	switch (c_event) {
+	case CTRL_CLOSE_EVENT:
+	case CTRL_LOGOFF_EVENT:
+	case CTRL_SHUTDOWN_EVENT:
+		if (shutdown_callback != NULL)
 			shutdown_callback();
 		else
 			runflag = CORE_ST_STOP;// auto-shutdown
-        break;
+		break;
 	default:
 		return FALSE;
-    }
-    return TRUE;
+	}
+	return TRUE;
 }
 
 static void cevents_init() {
-	if (SetConsoleCtrlHandler(console_handler,TRUE)==FALSE)
-		ShowWarning ("Unable to install the console handler!\n");
+	if (SetConsoleCtrlHandler(console_handler, TRUE) == FALSE)
+		ShowWarning("Unable to install the console handler!\n");
 }
 #endif
 
@@ -106,7 +106,7 @@ static void sig_proc(int sn) {
 	case SIGTERM:
 		if (++is_called > 3)
 			exit(EXIT_SUCCESS);
-		if( shutdown_callback != NULL )
+		if (shutdown_callback != NULL)
 			shutdown_callback();
 		else
 			runflag = CORE_ST_STOP;// auto-shutdown
@@ -121,7 +121,7 @@ static void sig_proc(int sn) {
 #ifndef _WIN32
 	case SIGXFSZ:
 		// ignore and allow it to set errno to EFBIG
-		ShowWarning ("Max file size reached!\n");
+		ShowWarning("Max file size reached!\n");
 		//run_flag = 0;	// should we quit?
 		break;
 	case SIGPIPE:
@@ -131,7 +131,7 @@ static void sig_proc(int sn) {
 	}
 }
 
-void signals_init (void) {
+void signals_init(void) {
 	compat_signal(SIGTERM, sig_proc);
 	compat_signal(SIGINT, sig_proc);
 #ifndef _DEBUG // need unhandled exceptions to debug on Windows
@@ -155,7 +155,7 @@ const char* get_svn_revision(void) {
 	static char svn_version_buffer[16] = "";
 	FILE *fp;
 
-	if( svn_version_buffer[0] != '\0' )
+	if (svn_version_buffer[0] != '\0')
 		return svn_version_buffer;
 
 	// subversion 1.7 uses a sqlite3 database
@@ -163,17 +163,17 @@ const char* get_svn_revision(void) {
 	// - ignores database file structure
 	// - assumes the data in NODES.dav_cache column ends with "!svn/ver/<revision>/<path>)"
 	// - since it's a cache column, the data might not even exist
-	if( (fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL )
+	if ((fp = fopen(".svn" PATHSEP_STR "wc.db", "rb")) != NULL || (fp = fopen(".." PATHSEP_STR ".svn" PATHSEP_STR "wc.db", "rb")) != NULL)
 	{
-	#ifndef SVNNODEPATH
+#ifndef SVNNODEPATH
 		//not sure how to handle branches, so i'll leave this overridable define until a better solution comes up
-		#define SVNNODEPATH trunk
-	#endif
+#define SVNNODEPATH trunk
+#endif
 		const char* prefix = "!svn/ver/";
 		const char* postfix = "/" EXPAND_AND_QUOTE(SVNNODEPATH) ")"; // there should exist only 1 entry like this
 		size_t prefix_len = strlen(prefix);
 		size_t postfix_len = strlen(postfix);
-		size_t i,j,len;
+		size_t i, j, len;
 		char* buffer;
 
 		// read file to buffer
@@ -186,14 +186,14 @@ const char* get_svn_revision(void) {
 		fclose(fp);
 
 		// parse buffer
-		for( i = prefix_len + 1; i + postfix_len <= len; ++i ) {
-			if( buffer[i] != postfix[0] || memcmp(buffer + i, postfix, postfix_len) != 0 )
+		for (i = prefix_len + 1; i + postfix_len <= len; ++i) {
+			if (buffer[i] != postfix[0] || memcmp(buffer + i, postfix, postfix_len) != 0)
 				continue; // postfix missmatch
-			for( j = i; j > 0; --j ) {// skip digits
-				if( !ISDIGIT(buffer[j - 1]) )
+			for (j = i; j > 0; --j) {// skip digits
+				if (!ISDIGIT(buffer[j - 1]))
 					break;
 			}
-			if( memcmp(buffer + j - prefix_len, prefix, prefix_len) != 0 )
+			if (memcmp(buffer + j - prefix_len, prefix, prefix_len) != 0)
 				continue; // prefix missmatch
 			// done
 			snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", atoi(buffer + j));
@@ -201,7 +201,7 @@ const char* get_svn_revision(void) {
 		}
 		aFree(buffer);
 
-		if( svn_version_buffer[0] != '\0' )
+		if (svn_version_buffer[0] != '\0')
 			return svn_version_buffer;
 	}
 
@@ -213,21 +213,21 @@ const char* get_svn_revision(void) {
 		// Check the version
 		if (fgets(line, sizeof(line), fp))
 		{
-			if(!ISDIGIT(line[0]))
+			if (!ISDIGIT(line[0]))
 			{
 				// XML File format
-				while (fgets(line,sizeof(line),fp))
-					if (strstr(line,"revision=")) break;
-				if (sscanf(line," %*[^\"]\"%11d%*[^\n]", &rev) == 1) {
+				while (fgets(line, sizeof(line), fp))
+					if (strstr(line, "revision=")) break;
+				if (sscanf(line, " %*[^\"]\"%11d%*[^\n]", &rev) == 1) {
 					snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", rev);
 				}
 			}
 			else
 			{
 				// Bin File format
-				if ( fgets(line, sizeof(line), fp) == NULL ) { printf("Can't get bin name\n"); } // Get the name
-				if ( fgets(line, sizeof(line), fp) == NULL ) { printf("Can't get entries kind\n"); } // Get the entries kind
-				if(fgets(line, sizeof(line), fp)) // Get the rev numver
+				if (fgets(line, sizeof(line), fp) == NULL) { printf("Can't get bin name\n"); } // Get the name
+				if (fgets(line, sizeof(line), fp) == NULL) { printf("Can't get entries kind\n"); } // Get the entries kind
+				if (fgets(line, sizeof(line), fp)) // Get the rev numver
 				{
 					snprintf(svn_version_buffer, sizeof(svn_version_buffer), "%d", atoi(line));
 				}
@@ -235,7 +235,7 @@ const char* get_svn_revision(void) {
 		}
 		fclose(fp);
 
-		if( svn_version_buffer[0] != '\0' )
+		if (svn_version_buffer[0] != '\0')
 			return svn_version_buffer;
 	}
 
@@ -246,28 +246,29 @@ const char* get_svn_revision(void) {
 }
 
 // Grabs the hash from the last time the user updated their working copy (last pull)
-const char *get_git_hash (void) {
+const char *get_git_hash(void) {
 	static char GitHash[41] = ""; //Sha(40) + 1
 	FILE *fp;
 
-	if( GitHash[0] != '\0' )
+	if (GitHash[0] != '\0')
 		return GitHash;
 
-	if( (fp = fopen(".git/refs/remotes/origin/master", "r")) != NULL || // Already pulled once
-		(fp = fopen(".git/refs/heads/master", "r")) != NULL ) { // Cloned only
+	if ((fp = fopen(".git/refs/remotes/origin/master", "r")) != NULL || // Already pulled once
+		(fp = fopen(".git/refs/heads/master", "r")) != NULL) { // Cloned only
 		char line[64];
 		char *rev = (char*)malloc(sizeof(char) * 50);
 
-		if( fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev) )
+		if (fgets(line, sizeof(line), fp) && sscanf(line, "%40s", rev))
 			snprintf(GitHash, sizeof(GitHash), "%s", rev);
 
 		free(rev);
 		fclose(fp);
-	} else {
+	}
+	else {
 		GitHash[0] = UNKNOWN_VERSION;
 	}
 
-	if ( !(*GitHash) ) {
+	if (!(*GitHash)) {
 		GitHash[0] = UNKNOWN_VERSION;
 	}
 
@@ -294,9 +295,9 @@ static void display_title(void) {
 	ShowMessage("" CL_PASS "       " CL_GREEN "              http://rathena.org/board/                        " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 	ShowMessage("" CL_PASS "     " CL_BOLD "                                                                 " CL_PASS "" CL_CLL "" CL_NORMAL "\n");
 
-	if( svn[0] != UNKNOWN_VERSION )
+	if (svn[0] != UNKNOWN_VERSION)
 		ShowInfo("SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn);
-	else if( git[0] != UNKNOWN_VERSION )
+	else if (git[0] != UNKNOWN_VERSION)
 		ShowInfo("Git Hash: '" CL_WHITE "%s" CL_RESET "'\n", git);
 }
 
@@ -310,7 +311,7 @@ void usercheck(void)
 	}
 #else
 	if (geteuid() == 0) {
-		ShowWarning ("You are running rAthena with root privileges, it is not necessary.\n");
+		ShowWarning("You are running rAthena with root privileges, it is not necessary.\n");
 	}
 #endif
 #endif
@@ -319,20 +320,21 @@ void usercheck(void)
 /*======================================
  *	CORE : MAINROUTINE
  *--------------------------------------*/
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {
 	{// initialize program arguments
 		char *p1;
-		if((p1 = strrchr(argv[0], '/')) != NULL ||  (p1 = strrchr(argv[0], '\\')) != NULL ){
+		if ((p1 = strrchr(argv[0], '/')) != NULL || (p1 = strrchr(argv[0], '\\')) != NULL) {
 			char *pwd = NULL; //path working directory
-			int n=0;
+			int n = 0;
 			SERVER_NAME = ++p1;
-			n = p1-argv[0]; //calc dir name len
+			n = p1 - argv[0]; //calc dir name len
 			pwd = safestrncpy((char*)malloc(n + 1), argv[0], n);
-			if(chdir(pwd) != 0)
-				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail",pwd,SERVER_NAME);
+			if (chdir(pwd) != 0)
+				ShowError("Couldn't change working directory to %s for %s, runtime will probably fail", pwd, SERVER_NAME);
 			free(pwd);
-		}else{
+		}
+		else {
 			// On Windows the .bat files have the executeable names as parameters without any path seperator [Lemongrass]
 			SERVER_NAME = argv[0];
 		}
@@ -343,7 +345,7 @@ int main (int argc, char **argv)
 #ifdef MINICORE // minimalist Core
 	display_title();
 	usercheck();
-	do_init(argc,argv);
+	do_init(argc, argv);
 	do_final();
 #else// not MINICORE
 	set_server_type();
@@ -361,10 +363,10 @@ int main (int argc, char **argv)
 	timer_init();
 	socket_init();
 
-	do_init(argc,argv);
+	do_init(argc, argv);
 
 	// Main runtime cycle
-	while (runflag != CORE_ST_STOP) { 
+	while (runflag != CORE_ST_STOP) {
 		t_tick next = do_timer(gettick_nocache());
 		do_sockets(next);
 	}
@@ -380,7 +382,7 @@ int main (int argc, char **argv)
 	malloc_final();
 
 #if defined(BUILDBOT)
-	if( buildbotflag ){
+	if (buildbotflag) {
 		exit(EXIT_FAILURE);
 	}
 #endif

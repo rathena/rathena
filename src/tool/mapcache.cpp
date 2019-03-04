@@ -49,7 +49,6 @@ struct map_info {
 	int32 len;
 };
 
-
 // Reads a map from GRF's GAT and RSW files
 int read_map(char *name, struct map_data *m)
 {
@@ -59,25 +58,26 @@ int read_map(char *name, struct map_data *m)
 	size_t xy, off, num_cells;
 
 	// Open map GAT
-	sprintf(filename,"data\\%s.gat", name);
+	sprintf(filename, "data\\%s.gat", name);
 	gat = (unsigned char *)grfio_read(filename);
 	if (gat == NULL)
 		return 0;
 
 	// Open map RSW
-	sprintf(filename,"data\\%s.rsw", name);
+	sprintf(filename, "data\\%s.rsw", name);
 	rsw = (unsigned char *)grfio_read(filename);
 
 	// Read water height
 	if (rsw) {
-		water_height = (int)GetFloat(rsw+166);
+		water_height = (int)GetFloat(rsw + 166);
 		aFree(rsw);
-	} else
+	}
+	else
 		water_height = NO_WATER;
 
 	// Read map size and allocate needed memory
-	m->xs = (int16)GetULong(gat+6);
-	m->ys = (int16)GetULong(gat+10);
+	m->xs = (int16)GetULong(gat + 6);
+	m->ys = (int16)GetULong(gat + 10);
 	if (m->xs <= 0 || m->ys <= 0) {
 		aFree(gat);
 		return 0;
@@ -90,9 +90,9 @@ int read_map(char *name, struct map_data *m)
 	for (xy = 0; xy < num_cells; xy++)
 	{
 		// Height of the bottom-left corner
-		float height = GetFloat( gat + off      );
+		float height = GetFloat(gat + off);
 		// Type of cell
-		uint32 type   = GetULong( gat + off + 16 );
+		uint32 type = GetULong(gat + off + 16);
 		off += 20;
 
 		if (type == 0 && water_height != NO_WATER && height > water_height)
@@ -114,14 +114,14 @@ void cache_map(char *name, struct map_data *m)
 	unsigned char *write_buf;
 
 	// Create an output buffer twice as big as the uncompressed map... this way we're sure it fits
-	len = (unsigned long)m->xs*(unsigned long)m->ys*2;
+	len = (unsigned long)m->xs*(unsigned long)m->ys * 2;
 	write_buf = (unsigned char *)aMalloc(len);
 	// Compress the cells and get the compressed length
 	encode_zip(write_buf, &len, m->cells, m->xs*m->ys);
 
 	// Fill the map header
 	if (strlen(name) > MAP_NAME_LENGTH) // It does not hurt to warn that there are maps with name longer than allowed.
-		ShowWarning ("Map name '%s' size '%" PRIuPTR "' is too long. Truncating to '%d'.\n", name, strlen(name), MAP_NAME_LENGTH);
+		ShowWarning("Map name '%s' size '%" PRIuPTR "' is too long. Truncating to '%d'.\n", name, strlen(name), MAP_NAME_LENGTH);
 	strncpy(info.name, name, MAP_NAME_LENGTH);
 	info.xs = MakeShortLE(m->xs);
 	info.ys = MakeShortLE(m->ys);
@@ -148,9 +148,9 @@ int find_map(char *name)
 
 	fseek(map_cache_fp, sizeof(struct main_header), SEEK_SET);
 
-	for(i = 0; i < header.map_count; i++) {
-		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1) printf("An error as occured in fread while reading map_cache\n");
-		if(strcmp(name, info.name) == 0) // Map found
+	for (i = 0; i < header.map_count; i++) {
+		if (fread(&info, sizeof(info), 1, map_cache_fp) != 1) printf("An error as occured in fread while reading map_cache\n");
+		if (strcmp(name, info.name) == 0) // Map found
 			return 1;
 		else // Map not found, jump to the beginning of the next map info header
 			fseek(map_cache_fp, GetLong((unsigned char *)&(info.len)), SEEK_CUR);
@@ -165,9 +165,9 @@ char *remove_extension(char *mapname)
 	char *ptr, *ptr2;
 	ptr = strchr(mapname, '.');
 	if (ptr) { //Check and remove extension.
-		while (ptr[1] && (ptr2 = strchr(ptr+1, '.')))
+		while (ptr[1] && (ptr2 = strchr(ptr + 1, '.')))
 			ptr = ptr2; //Skip to the last dot.
-		if (strcmp(ptr,".gat") == 0)
+		if (strcmp(ptr, ".gat") == 0)
 			*ptr = '\0'; //Remove extension.
 	}
 	return mapname;
@@ -176,20 +176,22 @@ char *remove_extension(char *mapname)
 // Processes command-line arguments
 void process_args(int argc, char *argv[])
 {
-	for(int i = 0; i < argc; i++) {
-		if(strcmp(argv[i], "-grf") == 0) {
-			if(++i < argc)
+	for (int i = 0; i < argc; i++) {
+		if (strcmp(argv[i], "-grf") == 0) {
+			if (++i < argc)
 				grf_list_file = argv[i];
-		} else if(strcmp(argv[i], "-list") == 0) {
-			if(++i < argc)
+		}
+		else if (strcmp(argv[i], "-list") == 0) {
+			if (++i < argc)
 				map_list_file = argv[i];
-		} else if(strcmp(argv[i], "-cache") == 0) {
-			if(++i < argc)
+		}
+		else if (strcmp(argv[i], "-cache") == 0) {
+			if (++i < argc)
 				map_cache_file = argv[i];
-		} else if(strcmp(argv[i], "-rebuild") == 0)
+		}
+		else if (strcmp(argv[i], "-rebuild") == 0)
 			rebuild = 1;
 	}
-
 }
 
 int do_init(int argc, char** argv)
@@ -205,19 +207,20 @@ int do_init(int argc, char** argv)
 
 	// Attempt to open the map cache file and force rebuild if not found
 	ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
-	if(!rebuild) {
+	if (!rebuild) {
 		map_cache_fp = fopen(map_cache_file.c_str(), "rb");
-		if(map_cache_fp == NULL) {
+		if (map_cache_fp == NULL) {
 			ShowNotice("Existing map cache not found, forcing rebuild mode\n");
 			rebuild = 1;
-		} else
+		}
+		else
 			fclose(map_cache_fp);
 	}
-	if(rebuild)
+	if (rebuild)
 		map_cache_fp = fopen(map_cache_file.c_str(), "w+b");
 	else
 		map_cache_fp = fopen(map_cache_file.c_str(), "r+b");
-	if(map_cache_fp == NULL) {
+	if (map_cache_fp == NULL) {
 		ShowError("Failure when opening map cache file %s\n", map_cache_file.c_str());
 		exit(EXIT_FAILURE);
 	}
@@ -240,7 +243,8 @@ int do_init(int argc, char** argv)
 		if (rebuild) {
 			header.file_size = sizeof(struct main_header);
 			header.map_count = 0;
-		} else {
+		}
+		else {
 			if (fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1) { printf("An error as occured while reading map_cache_fp \n"); }
 			header.file_size = GetULong((unsigned char *)&(header.file_size));
 			header.map_count = GetUShort((unsigned char *)&(header.map_count));
@@ -274,7 +278,6 @@ int do_init(int argc, char** argv)
 			}
 			else
 				ShowError("Map '" CL_WHITE "%s" CL_RESET "' not found!\n", name);
-
 		}
 
 		ShowStatus("Closing map list: %s\n", filename.c_str());

@@ -31,20 +31,20 @@
 #ifdef	__cplusplus
 extern "C" {
 #endif
-    
-typedef struct
-{
-  char *string;
-  size_t length;
-  size_t capacity;
-} strbuf_t;
 
-char *strbuf_release(strbuf_t *buf);
+	typedef struct
+	{
+		char *string;
+		size_t length;
+		size_t capacity;
+	} strbuf_t;
 
-void strbuf_append(strbuf_t *buf, const char *text);
+	char *strbuf_release(strbuf_t *buf);
+
+	void strbuf_append(strbuf_t *buf, const char *text);
 
 #ifdef	__cplusplus
 }
 #endif
-    
+
 #endif /* __libconfig_strbuf_h */

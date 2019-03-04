@@ -14,41 +14,41 @@
 #include "yaml-cpp/ostream_wrapper.h"
 
 namespace YAML {
-class ostream_wrapper;
+	class ostream_wrapper;
 }  // namespace YAML
 
 namespace YAML {
-class Binary;
+	class Binary;
 
-struct StringFormat {
-  enum value { Plain, SingleQuoted, DoubleQuoted, Literal };
-};
+	struct StringFormat {
+		enum value { Plain, SingleQuoted, DoubleQuoted, Literal };
+	};
 
-struct StringEscaping {
-  enum value { None, NonAscii, JSON };
-};
+	struct StringEscaping {
+		enum value { None, NonAscii, JSON };
+	};
 
-namespace Utils {
-StringFormat::value ComputeStringFormat(const std::string& str,
-                                        EMITTER_MANIP strFormat,
-                                        FlowType::value flowType,
-                                        bool escapeNonAscii);
+	namespace Utils {
+		StringFormat::value ComputeStringFormat(const std::string& str,
+			EMITTER_MANIP strFormat,
+			FlowType::value flowType,
+			bool escapeNonAscii);
 
-bool WriteSingleQuotedString(ostream_wrapper& out, const std::string& str);
-bool WriteDoubleQuotedString(ostream_wrapper& out, const std::string& str,
-                             StringEscaping::value stringEscaping);
-bool WriteLiteralString(ostream_wrapper& out, const std::string& str,
-                        std::size_t indent);
-bool WriteChar(ostream_wrapper& out, char ch, bool escapeAsJson);
-bool WriteComment(ostream_wrapper& out, const std::string& str,
-                  std::size_t postCommentIndent);
-bool WriteAlias(ostream_wrapper& out, const std::string& str);
-bool WriteAnchor(ostream_wrapper& out, const std::string& str);
-bool WriteTag(ostream_wrapper& out, const std::string& str, bool verbatim);
-bool WriteTagWithPrefix(ostream_wrapper& out, const std::string& prefix,
-                        const std::string& tag);
-bool WriteBinary(ostream_wrapper& out, const Binary& binary);
-}
+		bool WriteSingleQuotedString(ostream_wrapper& out, const std::string& str);
+		bool WriteDoubleQuotedString(ostream_wrapper& out, const std::string& str,
+			StringEscaping::value stringEscaping);
+		bool WriteLiteralString(ostream_wrapper& out, const std::string& str,
+			std::size_t indent);
+		bool WriteChar(ostream_wrapper& out, char ch, bool escapeAsJson);
+		bool WriteComment(ostream_wrapper& out, const std::string& str,
+			std::size_t postCommentIndent);
+		bool WriteAlias(ostream_wrapper& out, const std::string& str);
+		bool WriteAnchor(ostream_wrapper& out, const std::string& str);
+		bool WriteTag(ostream_wrapper& out, const std::string& str, bool verbatim);
+		bool WriteTagWithPrefix(ostream_wrapper& out, const std::string& prefix,
+			const std::string& tag);
+		bool WriteBinary(ostream_wrapper& out, const Binary& binary);
+	}
 }
 
 #endif  // EMITTERUTILS_H_62B23520_7C8E_11DE_8A39_0800200C9A66

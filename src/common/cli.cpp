@@ -8,9 +8,9 @@
 #include <string.h>
 
 #ifdef WIN32
-	#include <conio.h>
+#include <conio.h>
 #else
-	#include <sys/poll.h>
+#include <sys/poll.h>
 #endif
 
 #include "cbasetypes.hpp"
@@ -44,7 +44,7 @@ const char* MSG_CONF_NAME_EN; //all
  *   false : no other args found, and throw a warning
  *   true : something following us
  */
-bool opt_has_next_value(const char* option, int i, int argc){
+bool opt_has_next_value(const char* option, int i, int argc) {
 	if (i >= argc - 1) {
 		ShowWarning("Missing value for option '%s'.\n", option);
 		return false;
@@ -63,11 +63,11 @@ bool opt_has_next_value(const char* option, int i, int argc){
 void display_versionscreen(bool do_exit)
 {
 	const char* svn = get_svn_revision();
-	if( svn[0] != UNKNOWN_VERSION )
+	if (svn[0] != UNKNOWN_VERSION)
 		ShowInfo("rAthena SVN Revision: '" CL_WHITE "%s" CL_RESET "'\n", svn);
 	else {
 		const char* git = get_git_hash();
-		if( git[0] != UNKNOWN_VERSION )
+		if (git[0] != UNKNOWN_VERSION)
 			ShowInfo("rAthena Git Hash: '" CL_WHITE "%s" CL_RESET "'\n", git);
 	}
 	ShowInfo(CL_GREEN "Website/Forum:" CL_RESET "\thttp://rathena.org/\n");
@@ -176,17 +176,17 @@ int cli_get_options(int argc, char ** argv) {
 		}
 		else {
 			switch (arg[0]) {// short option
-				case '?':
-				case 'h':
-					display_helpscreen(true);
-					break;
-				case 'v':
-					display_versionscreen(true);
-					break;
-				default:
-					ShowError("Unknown option '%s'.\n", argv[i]);
-					exit(EXIT_FAILURE);
-				}
+			case '?':
+			case 'h':
+				display_helpscreen(true);
+				break;
+			case 'v':
+				display_versionscreen(true);
+				break;
+			default:
+				ShowError("Unknown option '%s'.\n", argv[i]);
+				exit(EXIT_FAILURE);
+			}
 		}
 	}
 	return 1;
@@ -196,14 +196,14 @@ int cli_get_options(int argc, char ** argv) {
  * Detect if the console has some input to be read.
  * @return true if event, else false
  */
-bool cli_hasevent(){
+bool cli_hasevent() {
 #ifdef WIN32
-	return (_kbhit()!=0);
+	return (_kbhit() != 0);
 #else
 	struct pollfd fds;
 	fds.fd = 0; /* this is STDIN */
 	fds.events = POLLIN;
-	return (poll(&fds, 1, 0)>0);
+	return (poll(&fds, 1, 0) > 0);
 #endif
 }
 
@@ -215,17 +215,16 @@ bool cli_hasevent(){
  * @param data: unused
  * @return 0
  */
-TIMER_FUNC(parse_console_timer){
+TIMER_FUNC(parse_console_timer) {
 	char buf[MAX_CONSOLE_IN]; //max cmd atm is 63+63+63+3+3
 
-	memset(buf,0,MAX_CONSOLE_IN); //clear out buf
+	memset(buf, 0, MAX_CONSOLE_IN); //clear out buf
 
-	if(cli_hasevent()){
-		if(fgets(buf, MAX_CONSOLE_IN, stdin)==NULL)
+	if (cli_hasevent()) {
+		if (fgets(buf, MAX_CONSOLE_IN, stdin) == NULL)
 			return -1;
-		else if(strlen(buf)>MIN_CONSOLE_IN)
+		else if (strlen(buf) > MIN_CONSOLE_IN)
 			parse_console(buf);
 	}
 	return 0;
 }
-

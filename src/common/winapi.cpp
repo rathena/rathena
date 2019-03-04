@@ -4,7 +4,7 @@
 #include "winapi.hpp"
 
 // Taken from https://support.microsoft.com/de-de/help/118626/how-to-determine-whether-a-thread-is-running-in-user-context-of-local
-bool IsCurrentUserLocalAdministrator(void){
+bool IsCurrentUserLocalAdministrator(void) {
 #ifdef WIN32
 	BOOL   fReturn = FALSE;
 	DWORD  dwStatus;
@@ -24,7 +24,6 @@ bool IsCurrentUserLocalAdministrator(void){
 	PSECURITY_DESCRIPTOR     psdAdmin = NULL;
 	SID_IDENTIFIER_AUTHORITY SystemSidAuthority = SECURITY_NT_AUTHORITY;
 
-
 	/*
 	Determine if the current thread is running as a user that is a member
 	of the local admins group.
@@ -33,17 +32,15 @@ bool IsCurrentUserLocalAdministrator(void){
 	Then, call AccessCheck with the current thread's token and the security
 	descriptor. It will say whether the user could access an object if it
 	had that security descriptor.
-	
+
 	Note: you do not need to actually create the object. Just checking access
 	against the security descriptor alone will be sufficient.
 	*/
 	const DWORD ACCESS_READ = 1;
 	const DWORD ACCESS_WRITE = 2;
 
-
 	__try
 	{
-
 		/*
 		AccessCheck() requires an impersonation token.  We first get a
 		primary	token and then create a duplicate impersonation token.  The
@@ -70,7 +67,6 @@ bool IsCurrentUserLocalAdministrator(void){
 
 			&hImpersonationToken))
 			__leave;
-
 
 		/*
 		Create the binary representation of the well-known SID that

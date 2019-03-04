@@ -7,12 +7,12 @@
 #include "../config/core.hpp"
 
 #ifdef WIN32
-	#include "winapi.hpp"
-	typedef long in_addr_t;
+#include "winapi.hpp"
+typedef long in_addr_t;
 #else
-	#include <sys/types.h>
-	#include <sys/socket.h>
-	#include <netinet/in.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
 #endif
 #include <time.h>
 
@@ -20,7 +20,7 @@
 #include "timer.hpp" // t_tick
 
 #ifndef MAXCONN
-	#define MAXCONN FD_SETSIZE
+#define MAXCONN FD_SETSIZE
 #endif
 
 #define FIFOSIZE_SERVERLINK 256*1024
@@ -77,11 +77,10 @@
 #define TOW(n) ((uint16)((n)&UINT16_MAX))
 #define TOL(n) ((uint32)((n)&UINT32_MAX))
 
-
 // Struct declaration
-typedef int (*RecvFunc)(int fd);
-typedef int (*SendFunc)(int fd);
-typedef int (*ParseFunc)(int fd);
+typedef int(*RecvFunc)(int fd);
+typedef int(*SendFunc)(int fd);
+typedef int(*ParseFunc)(int fd);
 
 struct socket_data
 {
@@ -105,7 +104,6 @@ struct socket_data
 
 	void* session_data; // stores application-specific data related to the session
 };
-
 
 // Data prototype declaration
 
@@ -142,7 +140,6 @@ extern void set_nonblocking(int fd, unsigned long yes);
 
 void set_defaultparse(ParseFunc defaultparse);
 
-
 /// Server operation request
 enum chrif_req_op {
 	// Char-server <-> login-server oepration
@@ -158,7 +155,6 @@ enum chrif_req_op {
 	CHRIF_OP_UNBAN,
 	CHRIF_OP_CHANGECHARSEX,
 };
-
 
 // hostname/ip conversion functions
 uint32 host2ip(const char* hostname);

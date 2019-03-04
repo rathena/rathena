@@ -42,17 +42,17 @@ struct s_pet_db {
 
 	~s_pet_db()
 	{
-		if( this->pet_script ){
+		if (this->pet_script) {
 			script_free_code(this->pet_script);
 		}
 
-		if( this->pet_loyal_script ){
+		if (this->pet_loyal_script) {
 			script_free_code(this->pet_loyal_script);
 		}
 	}
 };
 
-enum e_pet_itemtype : uint8 { PET_CATCH,PET_EGG,PET_EQUIP,PET_FOOD };
+enum e_pet_itemtype : uint8 { PET_CATCH, PET_EGG, PET_EQUIP, PET_FOOD };
 
 enum e_pet_catch : uint16 {
 	PET_CATCH_FAIL = 0, ///< A catch attempt failed
@@ -114,7 +114,7 @@ struct pet_data {
 		unsigned skillbonus : 1;
 	} state;
 	int move_fail_count;
-	t_tick next_walktime,last_thinktime;
+	t_tick next_walktime, last_thinktime;
 	unsigned short rate_fix;	//Support rate as modified by intimacy (1000 = 100%) [Skotlex]
 
 	struct pet_recovery* recovery;
@@ -134,23 +134,23 @@ struct pet_data {
 bool pet_create_egg(struct map_session_data *sd, unsigned short item_id);
 int pet_hungry_val(struct pet_data *pd);
 void pet_set_intimate(struct pet_data *pd, int value);
-int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);
+int pet_target_check(struct pet_data *pd, struct block_list *bl, int type);
 void pet_unlocktarget(struct pet_data *pd);
 int pet_sc_check(struct map_session_data *sd, int type); //Skotlex
 struct s_pet_db* pet_db_search(int key, enum e_pet_itemtype type);
 int pet_hungry_timer_delete(struct pet_data *pd);
 bool pet_data_init(struct map_session_data *sd, struct s_pet *pet);
 int pet_birth_process(struct map_session_data *sd, struct s_pet *pet);
-int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag);
-int pet_select_egg(struct map_session_data *sd,short egg_index);
-int pet_catch_process1(struct map_session_data *sd,int target_class);
-int pet_catch_process2(struct map_session_data *sd,int target_id);
+int pet_recv_petdata(uint32 account_id, struct s_pet *p, int flag);
+int pet_select_egg(struct map_session_data *sd, short egg_index);
+int pet_catch_process1(struct map_session_data *sd, int target_class);
+int pet_catch_process2(struct map_session_data *sd, int target_id);
 bool pet_get_egg(uint32 account_id, short pet_class, int pet_id);
-int pet_menu(struct map_session_data *sd,int menunum);
-int pet_change_name(struct map_session_data *sd,char *name);
+int pet_menu(struct map_session_data *sd, int menunum);
+int pet_change_name(struct map_session_data *sd, char *name);
 int pet_change_name_ack(struct map_session_data *sd, char* name, int flag);
-int pet_equipitem(struct map_session_data *sd,int index);
-int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd);
+int pet_equipitem(struct map_session_data *sd, int index);
+int pet_lootitem_drop(struct pet_data *pd, struct map_session_data *sd);
 int pet_attackskill(struct pet_data *pd, int target_id);
 TIMER_FUNC(pet_skill_support_timer); // [Skotlex]
 TIMER_FUNC(pet_skill_bonus_timer); // [Valaris]

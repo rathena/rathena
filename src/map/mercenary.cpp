@@ -36,8 +36,8 @@ std::map<uint16, struct s_mercenary_db> mercenary_db_data;
  * @param class_ Class ID of Mercenary
  * @return A pointer to the mercenary db entry or nullptr if not found
  **/
-struct s_mercenary_db *mercenary_db( uint16 class_ ){
-	return util::map_find( mercenary_db_data, class_ );
+struct s_mercenary_db *mercenary_db(uint16 class_) {
+	return util::map_find(mercenary_db_data, class_);
 }
 
 /**
@@ -45,12 +45,13 @@ struct s_mercenary_db *mercenary_db( uint16 class_ ){
 * @param class_ The Class ID
 * @return View Data of Mercenary
 **/
-struct view_data *mercenary_get_viewdata( uint16 class_ ){
+struct view_data *mercenary_get_viewdata(uint16 class_) {
 	struct s_mercenary_db *db = mercenary_db(class_);
 
-	if( db ){
+	if (db) {
 		return &db->vd;
-	}else{
+	}
+	else {
 		return nullptr;
 	}
 }
@@ -79,15 +80,15 @@ short mercenary_skill_get_index(uint16 skill_id) {
 bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int lifetime) {
 	struct s_mercenary merc;
 	struct s_mercenary_db *db;
-	nullpo_retr(false,sd);
+	nullpo_retr(false, sd);
 
 	db = mercenary_db(class_);
 
-	if( !db ){
+	if (!db) {
 		return false;
 	}
 
-	memset(&merc,0,sizeof(struct s_mercenary));
+	memset(&merc, 0, sizeof(struct s_mercenary));
 
 	merc.char_id = sd->status.char_id;
 	merc.class_ = class_;
@@ -108,7 +109,7 @@ bool mercenary_create(struct map_session_data *sd, uint16 class_, unsigned int l
 **/
 t_tick mercenary_get_lifetime(struct mercenary_data *md) {
 	const struct TimerData * td;
-	if( md == NULL || md->contract_timer == INVALID_TIMER )
+	if (md == NULL || md->contract_timer == INVALID_TIMER)
 		return 0;
 
 	td = get_timer(md->contract_timer);
@@ -120,19 +121,19 @@ t_tick mercenary_get_lifetime(struct mercenary_data *md) {
 * @param md Mercenary
 * @return enum e_MercGuildType
 **/
-enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md){
+enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md) {
 	uint16 class_;
 
-	if( md == NULL || md->db == NULL )
+	if (md == NULL || md->db == NULL)
 		return NONE_MERC_GUILD;
 
 	class_ = md->db->class_;
 
-	if( class_ >= MERID_MER_ARCHER01 && class_ <= MERID_MER_ARCHER10 )
+	if (class_ >= MERID_MER_ARCHER01 && class_ <= MERID_MER_ARCHER10)
 		return ARCH_MERC_GUILD;
-	if( class_ >= MERID_MER_LANCER01 && class_ <= MERID_MER_LANCER10 )
+	if (class_ >= MERID_MER_LANCER01 && class_ <= MERID_MER_LANCER10)
 		return SPEAR_MERC_GUILD;
-	if( class_ >= MERID_MER_SWORDMAN01 && class_ <= MERID_MER_SWORDMAN10 )
+	if (class_ >= MERID_MER_SWORDMAN01 && class_ <= MERID_MER_SWORDMAN10)
 		return SWORD_MERC_GUILD;
 
 	return NONE_MERC_GUILD;
@@ -147,21 +148,21 @@ int mercenary_get_faith(struct mercenary_data *md) {
 	struct map_session_data *sd;
 	enum e_MercGuildType guild;
 
-	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+	if (md == NULL || md->db == NULL || (sd = md->master) == NULL)
 		return 0;
 
 	guild = mercenary_get_guild(md);
 
-	switch( guild ){
-		case ARCH_MERC_GUILD:
-			return sd->status.arch_faith;
-		case SPEAR_MERC_GUILD:
-			return sd->status.spear_faith;
-		case SWORD_MERC_GUILD:
-			return sd->status.sword_faith;
-		case NONE_MERC_GUILD:
-		default:
-			return 0;
+	switch (guild) {
+	case ARCH_MERC_GUILD:
+		return sd->status.arch_faith;
+	case SPEAR_MERC_GUILD:
+		return sd->status.spear_faith;
+	case SWORD_MERC_GUILD:
+		return sd->status.sword_faith;
+	case NONE_MERC_GUILD:
+	default:
+		return 0;
 	}
 }
 
@@ -175,23 +176,23 @@ void mercenary_set_faith(struct mercenary_data *md, int value) {
 	enum e_MercGuildType guild;
 	int *faith;
 
-	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+	if (md == NULL || md->db == NULL || (sd = md->master) == NULL)
 		return;
 
 	guild = mercenary_get_guild(md);
 
-	switch( guild ){
-		case ARCH_MERC_GUILD:
-			faith = &sd->status.arch_faith;
-			break;
-		case SPEAR_MERC_GUILD:
-			faith = &sd->status.spear_faith;
-			break;
-		case SWORD_MERC_GUILD:
-			faith = &sd->status.sword_faith;
-			break;
-		case NONE_MERC_GUILD:
-			return;
+	switch (guild) {
+	case ARCH_MERC_GUILD:
+		faith = &sd->status.arch_faith;
+		break;
+	case SPEAR_MERC_GUILD:
+		faith = &sd->status.spear_faith;
+		break;
+	case SWORD_MERC_GUILD:
+		faith = &sd->status.sword_faith;
+		break;
+	case NONE_MERC_GUILD:
+		return;
 	}
 
 	*faith += value;
@@ -208,21 +209,21 @@ int mercenary_get_calls(struct mercenary_data *md) {
 	struct map_session_data *sd;
 	enum e_MercGuildType guild;
 
-	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+	if (md == NULL || md->db == NULL || (sd = md->master) == NULL)
 		return 0;
 
 	guild = mercenary_get_guild(md);
 
-	switch( guild ){
-		case ARCH_MERC_GUILD:
-			return sd->status.arch_calls;
-		case SPEAR_MERC_GUILD:
-			return sd->status.spear_calls;
-		case SWORD_MERC_GUILD:
-			return sd->status.sword_calls;
-		case NONE_MERC_GUILD:
-		default:
-			return 0;
+	switch (guild) {
+	case ARCH_MERC_GUILD:
+		return sd->status.arch_calls;
+	case SPEAR_MERC_GUILD:
+		return sd->status.spear_calls;
+	case SWORD_MERC_GUILD:
+		return sd->status.sword_calls;
+	case NONE_MERC_GUILD:
+	default:
+		return 0;
 	}
 }
 
@@ -236,23 +237,23 @@ void mercenary_set_calls(struct mercenary_data *md, int value) {
 	enum e_MercGuildType guild;
 	int *calls;
 
-	if( md == NULL || md->db == NULL || (sd = md->master) == NULL )
+	if (md == NULL || md->db == NULL || (sd = md->master) == NULL)
 		return;
 
 	guild = mercenary_get_guild(md);
 
-	switch( guild ){
-		case ARCH_MERC_GUILD:
-			calls = &sd->status.arch_calls;
-			break;
-		case SPEAR_MERC_GUILD:
-			calls = &sd->status.spear_calls;
-			break;
-		case SWORD_MERC_GUILD:
-			calls = &sd->status.sword_calls;
-			break;
-		case NONE_MERC_GUILD:
-			return;
+	switch (guild) {
+	case ARCH_MERC_GUILD:
+		calls = &sd->status.arch_calls;
+		break;
+	case SPEAR_MERC_GUILD:
+		calls = &sd->status.spear_calls;
+		break;
+	case SWORD_MERC_GUILD:
+		calls = &sd->status.sword_calls;
+		break;
+	case NONE_MERC_GUILD:
+		return;
 	}
 
 	*calls += value;
@@ -274,16 +275,16 @@ void mercenary_save(struct mercenary_data *md) {
 /**
 * Ends contract of Mercenary
 **/
-static TIMER_FUNC(merc_contract_end){
+static TIMER_FUNC(merc_contract_end) {
 	struct map_session_data *sd;
 	struct mercenary_data *md;
 
-	if( (sd = map_id2sd(id)) == NULL )
+	if ((sd = map_id2sd(id)) == NULL)
 		return 1;
-	if( (md = sd->md) == NULL )
+	if ((md = sd->md) == NULL)
 		return 1;
 
-	if( md->contract_timer != tid )
+	if (md->contract_timer != tid)
 	{
 		ShowError("merc_contract_end %d != %d.\n", md->contract_timer, tid);
 		return 0;
@@ -306,19 +307,19 @@ int mercenary_delete(struct mercenary_data *md, int reply) {
 
 	mercenary_contract_stop(md);
 
-	if( !sd )
+	if (!sd)
 		return unit_free(&md->bl, CLR_OUTSIGHT);
 
-	if( md->devotion_flag )
+	if (md->devotion_flag)
 	{
 		md->devotion_flag = 0;
 		status_change_end(&sd->bl, SC_DEVOTION, INVALID_TIMER);
 	}
 
-	switch( reply )
+	switch (reply)
 	{
-		case 0: mercenary_set_faith(md, 1); break; // +1 Loyalty on Contract ends.
-		case 1: mercenary_set_faith(md, -1); break; // -1 Loyalty on Mercenary killed
+	case 0: mercenary_set_faith(md, 1); break; // +1 Loyalty on Contract ends.
+	case 1: mercenary_set_faith(md, -1); break; // -1 Loyalty on Mercenary killed
 	}
 
 	clif_mercenary_message(sd, reply);
@@ -331,7 +332,7 @@ int mercenary_delete(struct mercenary_data *md, int reply) {
 **/
 void mercenary_contract_stop(struct mercenary_data *md) {
 	nullpo_retv(md);
-	if( md->contract_timer != INVALID_TIMER )
+	if (md->contract_timer != INVALID_TIMER)
 		delete_timer(md->contract_timer, merc_contract_end);
 	md->contract_timer = INVALID_TIMER;
 }
@@ -341,7 +342,7 @@ void mercenary_contract_stop(struct mercenary_data *md) {
 * @param md Mercenary
 **/
 void merc_contract_init(struct mercenary_data *md) {
-	if( md->contract_timer == INVALID_TIMER )
+	if (md->contract_timer == INVALID_TIMER)
 		md->contract_timer = add_timer(gettick() + md->mercenary.life_time, merc_contract_end, md->master->bl.id, 0);
 
 	md->regen.state.block = 0;
@@ -361,15 +362,15 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 
 	db = mercenary_db(merc->class_);
 
-	if( (sd = map_charid2sd(merc->char_id)) == NULL )
+	if ((sd = map_charid2sd(merc->char_id)) == NULL)
 		return false;
-	if( !flag || !db ){ // Not created - loaded - DB info
+	if (!flag || !db) { // Not created - loaded - DB info
 		sd->status.mer_id = 0;
 		return false;
 	}
 
-	if( !sd->md ) {
-		sd->md = md = (struct mercenary_data*)aCalloc(1,sizeof(struct mercenary_data));
+	if (!sd->md) {
+		sd->md = md = (struct mercenary_data*)aCalloc(1, sizeof(struct mercenary_data));
 		md->bl.type = BL_MER;
 		md->bl.id = npc_get_new_npc_id();
 		md->devotion_flag = 0;
@@ -394,17 +395,18 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 		md->contract_timer = INVALID_TIMER;
 		md->masterteleport_timer = INVALID_TIMER;
 		merc_contract_init(md);
-	} else {
+	}
+	else {
 		memcpy(&sd->md->mercenary, merc, sizeof(struct s_mercenary));
 		md = sd->md;
 	}
 
-	if( sd->status.mer_id == 0 )
+	if (sd->status.mer_id == 0)
 		mercenary_set_calls(md, 1);
 	sd->status.mer_id = merc->mercenary_id;
 
-	if( md && md->bl.prev == NULL && sd->bl.prev != NULL ) {
-		if(map_addblock(&md->bl))
+	if (md && md->bl.prev == NULL && sd->bl.prev != NULL) {
+		if (map_addblock(&md->bl))
 			return false;
 		clif_spawn(&md->bl);
 		clif_mercenary_info(sd);
@@ -423,9 +425,9 @@ bool mercenary_recv_data(struct s_mercenary *merc, bool flag)
 void mercenary_heal(struct mercenary_data *md, int hp, int sp) {
 	if (md->master == NULL)
 		return;
-	if( hp )
+	if (hp)
 		clif_mercenary_updatestatus(md->master, SP_HP);
-	if( sp )
+	if (sp)
 		clif_mercenary_updatestatus(md->master, SP_SP);
 }
 
@@ -447,24 +449,24 @@ void mercenary_killbonus(struct mercenary_data *md) {
 	const enum sc_type scs[] = { SC_MERC_FLEEUP, SC_MERC_ATKUP, SC_MERC_HPUP, SC_MERC_SPUP, SC_MERC_HITUP };
 	uint8 index = rnd() % ARRAYLENGTH(scs);
 
-	sc_start(&md->bl,&md->bl, scs[index], 100, rnd() % 5, 600000);
+	sc_start(&md->bl, &md->bl, scs[index], 100, rnd() % 5, 600000);
 }
 
 /**
 * Mercenary does kill
 * @param md Mercenary
 **/
-void mercenary_kills(struct mercenary_data *md){
-	if(md->mercenary.kill_count <= (INT_MAX-1)) //safe cap to INT_MAX
+void mercenary_kills(struct mercenary_data *md) {
+	if (md->mercenary.kill_count <= (INT_MAX - 1)) //safe cap to INT_MAX
 		md->mercenary.kill_count++;
 
-	if( (md->mercenary.kill_count % 50) == 0 )
+	if ((md->mercenary.kill_count % 50) == 0)
 	{
 		mercenary_set_faith(md, 1);
 		mercenary_killbonus(md);
 	}
 
-	if( md->master )
+	if (md->master)
 		clif_mercenary_updatestatus(md->master, SP_MERCKILLS);
 }
 
@@ -477,7 +479,7 @@ void mercenary_kills(struct mercenary_data *md){
 int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id) {
 	short idx = mercenary_skill_get_index(skill_id);
 
-	if( !md || !md->db || idx == -1)
+	if (!md || !md->db || idx == -1)
 		return 0;
 	return md->db->skill[idx].lv;
 }
@@ -521,14 +523,14 @@ static bool mercenary_readdb_sub(char* str[], int columns, int current)
 	status->race = atoi(str[20]);
 
 	ele = atoi(str[21]);
-	status->def_ele = ele%20;
-	status->ele_lv = (unsigned char)floor(ele/20.);
-	if( !CHK_ELEMENT(status->def_ele) )
+	status->def_ele = ele % 20;
+	status->ele_lv = (unsigned char)floor(ele / 20.);
+	if (!CHK_ELEMENT(status->def_ele))
 	{
 		ShowWarning("Mercenary %d has invalid element type %d (max element is %d)\n", db->class_, status->def_ele, ELE_ALL - 1);
 		status->def_ele = ELE_NEUTRAL;
 	}
-	if( !CHK_ELEMENT_LEVEL(status->ele_lv) )
+	if (!CHK_ELEMENT_LEVEL(status->ele_lv))
 	{
 		ShowWarning("Mercenary %d has invalid element level %d (max is %d)\n", db->class_, status->ele_lv, MAX_ELE_LEVEL);
 		status->ele_lv = 1;
@@ -539,7 +541,7 @@ static bool mercenary_readdb_sub(char* str[], int columns, int current)
 	status->adelay = atoi(str[23]);
 	status->amotion = atoi(str[24]);
 	status->dmotion = atoi(str[25]);
-	
+
 	return true;
 }
 
@@ -547,12 +549,12 @@ static bool mercenary_readdb_sub(char* str[], int columns, int current)
 * Load Mercenary's database
 **/
 void mercenary_readdb(void) {
-	const char *filename[]={ "mercenary_db.txt",DBIMPORT"/mercenary_db.txt"};
+	const char *filename[] = { "mercenary_db.txt",DBIMPORT"/mercenary_db.txt" };
 	uint8 i;
 
 	mercenary_db_data.clear();
 
-	for(i = 0; i<ARRAYLENGTH(filename); i++){
+	for (i = 0; i < ARRAYLENGTH(filename); i++) {
 		sv_readdb(db_path, filename[i], ',', 26, 26, -1, &mercenary_readdb_sub, i > 0);
 	}
 }
@@ -568,13 +570,13 @@ static bool mercenary_read_skilldb_sub(char* str[], int columns, int current)
 
 	class_ = atoi(str[0]);
 	db = mercenary_db(class_);
-	if( !db ){
+	if (!db) {
 		ShowError("read_mercenary_skilldb : Class %d not found in mercenary_db for skill entry.\n", class_);
 		return false;
 	}
 
 	skill_id = atoi(str[1]);
-	if( (idx = mercenary_skill_get_index(skill_id)) == -1 ) {
+	if ((idx = mercenary_skill_get_index(skill_id)) == -1) {
 		ShowError("read_mercenary_skilldb: Invalid Mercenary skill '%s'.\n", str[1]);
 		return false;
 	}
@@ -590,11 +592,11 @@ static bool mercenary_read_skilldb_sub(char* str[], int columns, int current)
 /**
 * Load Mercenary's skill database
 **/
-void mercenary_read_skilldb(void){
-	const char *filename[]={ "mercenary_skill_db.txt",DBIMPORT"/mercenary_skill_db.txt"};
+void mercenary_read_skilldb(void) {
+	const char *filename[] = { "mercenary_skill_db.txt",DBIMPORT"/mercenary_skill_db.txt" };
 	uint8 i;
 
-	for(i = 0; i<ARRAYLENGTH(filename); i++){
+	for (i = 0; i < ARRAYLENGTH(filename); i++) {
 		sv_readdb(db_path, filename[i], ',', 3, 3, -1, &mercenary_read_skilldb_sub, i > 0);
 	}
 }
@@ -602,7 +604,7 @@ void mercenary_read_skilldb(void){
 /**
 * Init Mercenary datas
 **/
-void do_init_mercenary(void){
+void do_init_mercenary(void) {
 	mercenary_readdb();
 	mercenary_read_skilldb();
 
@@ -612,6 +614,6 @@ void do_init_mercenary(void){
 /**
 * Do Final Mercenary datas
 **/
-void do_final_mercenary(void){
+void do_final_mercenary(void) {
 	mercenary_db_data.clear();
 }

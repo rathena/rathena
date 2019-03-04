@@ -10,14 +10,14 @@
 #include "unit.hpp" // struct unit_data
 
 #ifdef RENEWAL
-	#define	HOMUN_LEVEL_STATWEIGHT_VALUE 0
-	#define APPLY_HOMUN_LEVEL_STATWEIGHT()( \
+#define	HOMUN_LEVEL_STATWEIGHT_VALUE 0
+#define APPLY_HOMUN_LEVEL_STATWEIGHT()( \
 		hom->str_value = hom->agi_value = \
 		hom->vit_value = hom->int_value = \
 		hom->dex_value = hom->luk_value = hom->level / 10 - HOMUN_LEVEL_STATWEIGHT_VALUE \
 		)
 #else
-	#define APPLY_HOMUN_LEVEL_STATWEIGHT()
+#define APPLY_HOMUN_LEVEL_STATWEIGHT()
 #endif
 
 struct h_stats {
@@ -36,20 +36,20 @@ struct s_homunculus_db {
 };
 extern struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];
 
-enum e_hom_search_type : uint8  { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
+enum e_hom_search_type : uint8 { HOMUNCULUS_CLASS, HOMUNCULUS_FOOD };
 
-enum e_hom_mode : uint8  { MH_MD_FIGHTING = 1, MH_MD_GRAPPLING };
+enum e_hom_mode : uint8 { MH_MD_FIGHTING = 1, MH_MD_GRAPPLING };
 
 enum e_hom_state : uint8 {
-	HOM_ST_ACTIVE	= 0,
-	HOM_ST_REST		= 1,
-	HOM_ST_MORPH	= 2,
+	HOM_ST_ACTIVE = 0,
+	HOM_ST_REST = 1,
+	HOM_ST_MORPH = 2,
 };
 
 enum e_hom_state2 : uint8 {
-	SP_ACK      = 0x0,
+	SP_ACK = 0x0,
 	SP_INTIMATE = 0x1,
-	SP_HUNGRY   = 0x2,
+	SP_HUNGRY = 0x2,
 };
 
 struct homun_data {
@@ -90,18 +90,18 @@ struct homun_skill_tree_entry {
 
 /// Houmunculus ID
 enum homun_mapid {
-// Normal Homunculus
-	MAPID_LIF = HOM_REG|0x0,
+	// Normal Homunculus
+	MAPID_LIF = HOM_REG | 0x0,
 	MAPID_AMISTR,
 	MAPID_FILIR,
 	MAPID_VANILMIRTH,
-// Evolved Homunulus
-	MAPID_LIF_E = HOM_REG|HOM_EVO|0x0,
+	// Evolved Homunulus
+	MAPID_LIF_E = HOM_REG | HOM_EVO | 0x0,
 	MAPID_AMISTR_E,
 	MAPID_FILIR_E,
 	MAPID_VANILMIRTH_E,
-// Homunculus S
-	MAPID_EIRA = HOM_S|0x0,
+	// Homunculus S
+	MAPID_EIRA = HOM_S | 0x0,
 	MAPID_BAYERI,
 	MAPID_SERA,
 	MAPID_DIETER,
@@ -110,22 +110,22 @@ enum homun_mapid {
 
 /// Homunculus type
 enum homun_type : int8 {
-	HT_REG		= 0x1,
-	HT_EVO		= 0x2,
-	HT_S		= 0x4,
-	HT_INVALID	= -1,
+	HT_REG = 0x1,
+	HT_EVO = 0x2,
+	HT_S = 0x4,
+	HT_INVALID = -1,
 };
 
 /// Homunculus battle_config setting
 enum homun_setting : uint8 {
-	HOMSET_NO_SUPPORT_SKILL				= 0x01, /// Cannot be targetted by support skills, except for their master
-	HOMSET_NO_INSTANT_LAND_SKILL		= 0x02, /// Unit/land skill doesn't applied immediately
-	HOMSET_FIRST_TARGET					= 0x04, /// Mobs will always go after them instead of players until attacked
-	HOMSET_COPY_SPEED					= 0x08, /// Copy their master's speed on spawn/map-change
-	HOMSET_DISPLAY_LUK					= 0x10, /// They display luk/3+1 instead of their actual critical in the stat window, by default they don't crit
-	HOMSET_SAME_MATK					= 0x20, /// Their Min-Matk is always the same as their max
-	HOMSET_RESET_REUSESKILL_VAPORIZED	= 0x40, /// Skill re-use delay is reset when they are vaporized.
-	HOMSET_RESET_REUSESKILL_TELEPORTED	= 0x80, /// Skill re-use delay is reset when they are warped (by skill or item) with player.
+	HOMSET_NO_SUPPORT_SKILL = 0x01, /// Cannot be targetted by support skills, except for their master
+	HOMSET_NO_INSTANT_LAND_SKILL = 0x02, /// Unit/land skill doesn't applied immediately
+	HOMSET_FIRST_TARGET = 0x04, /// Mobs will always go after them instead of players until attacked
+	HOMSET_COPY_SPEED = 0x08, /// Copy their master's speed on spawn/map-change
+	HOMSET_DISPLAY_LUK = 0x10, /// They display luk/3+1 instead of their actual critical in the stat window, by default they don't crit
+	HOMSET_SAME_MATK = 0x20, /// Their Min-Matk is always the same as their max
+	HOMSET_RESET_REUSESKILL_VAPORIZED = 0x40, /// Skill re-use delay is reset when they are vaporized.
+	HOMSET_RESET_REUSESKILL_TELEPORTED = 0x80, /// Skill re-use delay is reset when they are warped (by skill or item) with player.
 };
 
 enum e_homun_grade : uint8 {
@@ -149,14 +149,14 @@ int hom_class2mapid(int hom_class);
 enum homun_type hom_class2type(int class_);
 void hom_damage(struct homun_data *hd);
 int hom_dead(struct homun_data *hd);
-void hom_skillup(struct homun_data *hd,uint16 skill_id);
+void hom_skillup(struct homun_data *hd, uint16 skill_id);
 void hom_calc_skilltree(struct homun_data *hd, bool flag_evolve);
-short hom_checkskill(struct homun_data *hd,uint16 skill_id);
+short hom_checkskill(struct homun_data *hd, uint16 skill_id);
 uint8 hom_skill_get_min_level(int class_, uint16 skill_id);
-void hom_gainexp(struct homun_data *hd,int exp);
+void hom_gainexp(struct homun_data *hd, int exp);
 int hom_levelup(struct homun_data *hd);
 int hom_evolution(struct homun_data *hd);
-int hom_mutate(struct homun_data *hd,int homun_id);
+int hom_mutate(struct homun_data *hd, int homun_id);
 void hom_heal(struct homun_data *hd);
 int hom_vaporize(struct map_session_data *sd, int flag);
 int hom_ressurect(struct map_session_data *sd, unsigned char per, short x, short y);
@@ -166,11 +166,11 @@ int hom_shuffle(struct homun_data *hd); // [Zephyrus]
 void hom_save(struct homun_data *hd);
 bool hom_call(struct map_session_data *sd);
 bool hom_create_request(struct map_session_data *sd, int class_);
-int hom_search(int key,int type);
-void hom_menu(struct map_session_data *sd,int type);
+int hom_search(int key, int type);
+void hom_menu(struct map_session_data *sd, int type);
 int hom_food(struct map_session_data *sd, struct homun_data *hd);
 int hom_hungry_timer_delete(struct homun_data *hd);
-int hom_change_name(struct map_session_data *sd,char *name);
+int hom_change_name(struct map_session_data *sd, char *name);
 void hom_change_name_ack(struct map_session_data *sd, char* name, int flag);
 #define hom_stop_walking(hd, type) unit_stop_walking(&(hd)->bl, type)
 #define hom_stop_attack(hd) unit_stop_attack(&(hd)->bl)

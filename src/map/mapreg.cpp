@@ -27,7 +27,6 @@ struct reg_db regs;
 
 #define MAPREG_AUTOSAVE_INTERVAL (300*1000)
 
-
 /**
  * Looks up the value of an integer variable using its uid.
  *
@@ -73,7 +72,8 @@ bool mapreg_setreg(int64 uid, int val)
 				m->save = true;
 				mapreg_dirty = true;
 			}
-		} else {
+		}
+		else {
 			if (i)
 				script_array_update(&regs, uid, false);
 
@@ -92,7 +92,8 @@ bool mapreg_setreg(int64 uid, int val)
 			}
 			i64db_put(regs.vars, uid, m);
 		}
-	} else { // val == 0
+	}
+	else { // val == 0
 		if (i)
 			script_array_update(&regs, uid, true);
 		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
@@ -140,7 +141,8 @@ bool mapreg_setregstr(int64 uid, const char* str)
 			ers_free(mapreg_ers, m);
 		}
 		i64db_remove(regs.vars, uid);
-	} else {
+	}
+	else {
 		if ((m = static_cast<mapreg_save *>(i64db_get(regs.vars, uid)))) {
 			if (m->u.str != NULL)
 				aFree(m->u.str);
@@ -149,7 +151,8 @@ bool mapreg_setregstr(int64 uid, const char* str)
 				mapreg_dirty = true;
 				m->save = true;
 			}
-		} else {
+		}
+		else {
 			if (i)
 				script_array_update(&regs, uid, false);
 
@@ -181,20 +184,20 @@ bool mapreg_setregstr(int64 uid, const char* str)
 static void script_load_mapreg(void)
 {
 	/*
-	        0        1       2
+			0        1       2
 	   +-------------------------+
 	   | varname | index | value |
 	   +-------------------------+
-	                                */
+									*/
 	SqlStmt* stmt = SqlStmt_Malloc(mmysql_handle);
-	char varname[32+1];
+	char varname[32 + 1];
 	int index;
-	char value[255+1];
+	char value[255 + 1];
 	uint32 length;
 
-	if ( SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `varname`, `index`, `value` FROM `%s`", mapreg_table)
-	  || SQL_ERROR == SqlStmt_Execute(stmt)
-	  ) {
+	if (SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `varname`, `index`, `value` FROM `%s`", mapreg_table)
+		|| SQL_ERROR == SqlStmt_Execute(stmt)
+		) {
 		SqlStmt_ShowDebug(stmt);
 		SqlStmt_Free(stmt);
 		return;
@@ -206,17 +209,18 @@ static void script_load_mapreg(void)
 	SqlStmt_BindColumn(stmt, 1, SQLDT_INT, &index, 0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 2, SQLDT_STRING, &value[0], sizeof(value), NULL, NULL);
 
-	while ( SQL_SUCCESS == SqlStmt_NextRow(stmt) ) {
+	while (SQL_SUCCESS == SqlStmt_NextRow(stmt)) {
 		int s = add_str(varname);
 		int i = index;
 
-		if( i64db_exists(regs.vars, reference_uid(s, i)) ) {
-			ShowWarning("load_mapreg: duplicate! '%s' => '%s' skipping...\n",varname,value);
+		if (i64db_exists(regs.vars, reference_uid(s, i))) {
+			ShowWarning("load_mapreg: duplicate! '%s' => '%s' skipping...\n", varname, value);
 			continue;
 		}
-		if( varname[length-1] == '$' ) {
+		if (varname[length - 1] == '$') {
 			mapreg_setregstr(reference_uid(s, i), value);
-		} else {
+		}
+		else {
 			mapreg_setreg(reference_uid(s, i), atoi(value));
 		}
 	}
@@ -245,7 +249,8 @@ static void script_save_mapreg(void)
 					Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
 					if (SQL_ERROR == Sql_Query(mmysql_handle, "UPDATE `%s` SET `value`='%d' WHERE `varname`='%s' AND `index`='%d' LIMIT 1", mapreg_table, m->u.i, esc_name, i))
 						Sql_ShowDebug(mmysql_handle);
-				} else {
+				}
+				else {
 					char esc_str[2 * 255 + 1];
 					char esc_name[32 * 2 + 1];
 					Sql_EscapeStringLen(mmysql_handle, esc_name, name, strnlen(name, 32));
@@ -264,7 +269,7 @@ static void script_save_mapreg(void)
 /**
  * Timer event to auto-save permanent variables.
  */
-static TIMER_FUNC(script_autosave_mapreg){
+static TIMER_FUNC(script_autosave_mapreg) {
 	script_save_mapreg();
 	return 0;
 }
@@ -349,7 +354,7 @@ void mapreg_init(void)
  */
 bool mapreg_config_read(const char* w1, const char* w2)
 {
-	if(!strcmpi(w1, "mapreg_table"))
+	if (!strcmpi(w1, "mapreg_table"))
 		safestrncpy(mapreg_table, w2, sizeof(mapreg_table));
 	else
 		return false;

@@ -35,7 +35,6 @@ static int* free_timer_list = NULL;
 static int free_timer_list_max = 0;
 static int free_timer_list_pos = 0;
 
-
 /// Comparator for the timer heap. (minimum tick at top)
 /// Returns negative if tid1's tick is smaller, positive if tid2's tick is smaller, 0 if equal.
 ///
@@ -47,10 +46,8 @@ static int free_timer_list_pos = 0;
 // timer heap (binary heap of tid's)
 static BHEAP_VAR(int, timer_heap);
 
-
 // server startup time
 time_t start_time;
-
 
 /*----------------------------
  * 	Timer debugging
@@ -67,14 +64,14 @@ int add_timer_func_list(TimerFunc func, const char* name)
 	struct timer_func_list* tfl;
 
 	if (name) {
-		for( tfl=tfl_root; tfl != NULL; tfl=tfl->next )
+		for (tfl = tfl_root; tfl != NULL; tfl = tfl->next)
 		{// check suspicious cases
-			if( func == tfl->func )
-				ShowWarning("add_timer_func_list: duplicating function %p(%s) as %s.\n",tfl->func,tfl->name,name);
-			else if( strcmp(name,tfl->name) == 0 )
-				ShowWarning("add_timer_func_list: function %p has the same name as %p(%s)\n",func,tfl->func,tfl->name);
+			if (func == tfl->func)
+				ShowWarning("add_timer_func_list: duplicating function %p(%s) as %s.\n", tfl->func, tfl->name, name);
+			else if (strcmp(name, tfl->name) == 0)
+				ShowWarning("add_timer_func_list: function %p has the same name as %p(%s)\n", func, tfl->func, tfl->name);
 		}
-		CREATE(tfl,struct timer_func_list,1);
+		CREATE(tfl, struct timer_func_list, 1);
 		tfl->next = tfl_root;
 		tfl->func = func;
 		tfl->name = aStrdup(name);
@@ -88,7 +85,7 @@ const char* search_timer_func_list(TimerFunc func)
 {
 	struct timer_func_list* tfl;
 
-	for( tfl=tfl_root; tfl != NULL; tfl=tfl->next )
+	for (tfl = tfl_root; tfl != NULL; tfl = tfl->next)
 		if (func == tfl->func)
 			return tfl->name;
 
@@ -100,20 +97,20 @@ const char* search_timer_func_list(TimerFunc func)
  *----------------------------*/
 
 #if defined(ENABLE_RDTSC)
-static uint64 RDTSC_BEGINTICK = 0,   RDTSC_CLOCK = 0;
+static uint64 RDTSC_BEGINTICK = 0, RDTSC_CLOCK = 0;
 
-static __inline uint64 _rdtsc(){
-	register union{
+static __inline uint64 _rdtsc() {
+	register union {
 		uint64	qw;
 		uint32 	dw[2];
 	} t;
 
-	asm volatile("rdtsc":"=a"(t.dw[0]), "=d"(t.dw[1]) );
+	asm volatile("rdtsc":"=a"(t.dw[0]), "=d"(t.dw[1]));
 
 	return t.qw;
 }
 
-static void rdtsc_calibrate(){
+static void rdtsc_calibrate() {
 	uint64 t1, t2;
 	int32 i;
 
@@ -121,7 +118,7 @@ static void rdtsc_calibrate(){
 
 	RDTSC_CLOCK = 0;
 
-	for(i = 0; i < 5; i++){
+	for (i = 0; i < 5; i++) {
 		t1 = _rdtsc();
 		usleep(1000000); //1000 MS
 		t2 = _rdtsc();
@@ -131,7 +128,7 @@ static void rdtsc_calibrate(){
 
 	RDTSC_BEGINTICK = _rdtsc();
 
-	ShowMessage(" done. (Frequency: %u Mhz)\n", (uint32)(RDTSC_CLOCK/1000) );
+	ShowMessage(" done. (Frequency: %u Mhz)\n", (uint32)(RDTSC_CLOCK / 1000));
 }
 
 #endif
@@ -147,7 +144,7 @@ static t_tick tick(void)
 #endif
 #elif defined(ENABLE_RDTSC)
 	//
-		return (unsigned int)((_rdtsc() - RDTSC_BEGINTICK) / RDTSC_CLOCK);
+	return (unsigned int)((_rdtsc() - RDTSC_BEGINTICK) / RDTSC_CLOCK);
 	//
 #elif defined(HAVE_MONOTONIC_CLOCK)
 	struct timespec tval;
@@ -176,7 +173,7 @@ unsigned int gettick_nocache(void)
 
 t_tick gettick(void)
 {
-	return ( --gettick_count == 0 ) ? gettick_nocache() : gettick_cache;
+	return (--gettick_count == 0) ? gettick_nocache() : gettick_cache;
 }
 //////////////////////////////
 #else
@@ -199,7 +196,7 @@ t_tick gettick(void)
  * 	CORE : Timer Heap
  *--------------------------------------*/
 
-/// Adds a timer to the timer_heap
+ /// Adds a timer to the timer_heap
 static void push_timer_heap(int tid)
 {
 	BHEAP_ENSURE(timer_heap, 1, 256);
@@ -210,7 +207,7 @@ static void push_timer_heap(int tid)
  * 	Timer Management
  *--------------------------*/
 
-/// Returns a free timer id.
+ /// Returns a free timer id.
 static int acquire_timer(void)
 {
 	int tid;
@@ -219,24 +216,25 @@ static int acquire_timer(void)
 	if (free_timer_list_pos) {
 		do {
 			tid = free_timer_list[--free_timer_list_pos];
-		} while(tid >= timer_data_num && free_timer_list_pos > 0);
-	} else
+		} while (tid >= timer_data_num && free_timer_list_pos > 0);
+	}
+	else
 		tid = timer_data_num;
 
 	// check available space
-	if( tid >= timer_data_num )
+	if (tid >= timer_data_num)
 		for (tid = timer_data_num; tid < timer_data_max && timer_data[tid].type; tid++);
 	if (tid >= timer_data_num && tid >= timer_data_max)
 	{// expand timer array
 		timer_data_max += 256;
-		if( timer_data )
+		if (timer_data)
 			RECREATE(timer_data, struct TimerData, timer_data_max);
 		else
 			CREATE(timer_data, struct TimerData, timer_data_max);
-		memset(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData)*256);
+		memset(timer_data + (timer_data_max - 256), 0, sizeof(struct TimerData) * 256);
 	}
 
-	if( tid >= timer_data_num )
+	if (tid >= timer_data_num)
 		timer_data_num = tid + 1;
 
 	return tid;
@@ -249,11 +247,11 @@ int add_timer(t_tick tick, TimerFunc func, int id, intptr_t data)
 	int tid;
 
 	tid = acquire_timer();
-	timer_data[tid].tick     = tick;
-	timer_data[tid].func     = func;
-	timer_data[tid].id       = id;
-	timer_data[tid].data     = data;
-	timer_data[tid].type     = TIMER_ONCE_AUTODEL;
+	timer_data[tid].tick = tick;
+	timer_data[tid].func = func;
+	timer_data[tid].id = id;
+	timer_data[tid].data = data;
+	timer_data[tid].type = TIMER_ONCE_AUTODEL;
 	timer_data[tid].interval = 1000;
 	push_timer_heap(tid);
 
@@ -266,18 +264,18 @@ int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int i
 {
 	int tid;
 
-	if( interval < 1 )
+	if (interval < 1)
 	{
 		ShowError("add_timer_interval: invalid interval (tick=%" PRtf " %p[%s] id=%d data=%d diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
 		return INVALID_TIMER;
 	}
 
 	tid = acquire_timer();
-	timer_data[tid].tick     = tick;
-	timer_data[tid].func     = func;
-	timer_data[tid].id       = id;
-	timer_data[tid].data     = data;
-	timer_data[tid].type     = TIMER_INTERVAL;
+	timer_data[tid].tick = tick;
+	timer_data[tid].func = func;
+	timer_data[tid].id = id;
+	timer_data[tid].data = data;
+	timer_data[tid].type = TIMER_INTERVAL;
 	timer_data[tid].interval = interval;
 	push_timer_heap(tid);
 
@@ -287,7 +285,7 @@ int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int i
 /// Retrieves internal timer data
 const struct TimerData* get_timer(int tid)
 {
-	return ( tid >= 0 && tid < timer_data_num ) ? &timer_data[tid] : NULL;
+	return (tid >= 0 && tid < timer_data_num) ? &timer_data[tid] : NULL;
 }
 
 /// Marks a timer specified by 'id' for immediate deletion once it expires.
@@ -295,12 +293,12 @@ const struct TimerData* get_timer(int tid)
 /// Returns 0 on success, < 0 on failure.
 int delete_timer(int tid, TimerFunc func)
 {
-	if( tid < 0 || tid >= timer_data_num )
+	if (tid < 0 || tid >= timer_data_num)
 	{
 		ShowError("delete_timer error : no such timer %d (%p(%s))\n", tid, func, search_timer_func_list(func));
 		return -1;
 	}
-	if( timer_data[tid].func != func )
+	if (timer_data[tid].func != func)
 	{
 		ShowError("delete_timer error : function mismatch %p(%s) != %p(%s)\n", timer_data[tid].func, search_timer_func_list(timer_data[tid].func), func, search_timer_func_list(func));
 		return -2;
@@ -316,7 +314,7 @@ int delete_timer(int tid, TimerFunc func)
 /// Returns the new tick value, or -1 if it fails.
 t_tick addt_tickimer(int tid, t_tick tick)
 {
-	return sett_tickimer(tid, timer_data[tid].tick+tick);
+	return sett_tickimer(tid, timer_data[tid].tick + tick);
 }
 
 /// Modifies a timer's expiration time (an alternative to deleting a timer and starting a new one).
@@ -327,16 +325,16 @@ t_tick sett_tickimer(int tid, t_tick tick)
 
 	// search timer position
 	ARR_FIND(0, BHEAP_LENGTH(timer_heap), i, BHEAP_DATA(timer_heap)[i] == tid);
-	if( i == BHEAP_LENGTH(timer_heap) )
+	if (i == BHEAP_LENGTH(timer_heap))
 	{
 		ShowError("sett_tickimer: no such timer %d (%p(%s))\n", tid, timer_data[tid].func, search_timer_func_list(timer_data[tid].func));
 		return -1;
 	}
 
-	if( tick == -1 )
+	if (tick == -1)
 		tick = 0;// add 1ms to avoid the error value -1
 
-	if( timer_data[tid].tick == tick )
+	if (timer_data[tid].tick == tick)
 		return tick;// nothing to do, already in propper position
 
 	// pop and push adjusted timer
@@ -353,21 +351,21 @@ t_tick do_timer(t_tick tick)
 	t_tick diff = TIMER_MAX_INTERVAL; // return value
 
 	// process all timers one by one
-	while( BHEAP_LENGTH(timer_heap) )
+	while (BHEAP_LENGTH(timer_heap))
 	{
 		int tid = BHEAP_PEEK(timer_heap);// top element in heap (smallest tick)
 
 		diff = DIFF_TICK(timer_data[tid].tick, tick);
-		if( diff > 0 )
+		if (diff > 0)
 			break; // no more expired timers to process
 
 		// remove timer
 		BHEAP_POP(timer_heap, DIFFTICK_MINTOPCMP, SWAP);
 		timer_data[tid].type |= TIMER_REMOVE_HEAP;
 
-		if( timer_data[tid].func )
+		if (timer_data[tid].func)
 		{
-			if( diff < -1000 )
+			if (diff < -1000)
 				// timer was delayed for more than 1 second, use current tick instead
 				timer_data[tid].func(tid, tick, timer_data[tid].id, timer_data[tid].data);
 			else
@@ -375,29 +373,29 @@ t_tick do_timer(t_tick tick)
 		}
 
 		// in the case the function didn't change anything...
-		if( timer_data[tid].type & TIMER_REMOVE_HEAP )
+		if (timer_data[tid].type & TIMER_REMOVE_HEAP)
 		{
 			timer_data[tid].type &= ~TIMER_REMOVE_HEAP;
 
-			switch( timer_data[tid].type )
+			switch (timer_data[tid].type)
 			{
 			default:
 			case TIMER_ONCE_AUTODEL:
 				timer_data[tid].type = 0;
 				if (free_timer_list_pos >= free_timer_list_max) {
 					free_timer_list_max += 256;
-					RECREATE(free_timer_list,int,free_timer_list_max);
+					RECREATE(free_timer_list, int, free_timer_list_max);
 					memset(free_timer_list + (free_timer_list_max - 256), 0, 256 * sizeof(int));
 				}
 				free_timer_list[free_timer_list_pos++] = tid;
-			break;
+				break;
 			case TIMER_INTERVAL:
-				if( DIFF_TICK(timer_data[tid].tick, tick) < -1000 )
+				if (DIFF_TICK(timer_data[tid].tick, tick) < -1000)
 					timer_data[tid].tick = tick + timer_data[tid].interval;
 				else
 					timer_data[tid].tick += timer_data[tid].interval;
 				push_timer_heap(tid);
-			break;
+				break;
 			}
 		}
 	}
@@ -419,7 +417,7 @@ unsigned long get_uptime(void)
  * @param format, format to convert timestamp on, see strftime format
  * @return the string of timestamp
  */
-const char* timestamp2string(char* str, size_t size, time_t timestamp, const char* format){
+const char* timestamp2string(char* str, size_t size, time_t timestamp, const char* format) {
 	size_t len = strftime(str, size, format, localtime(&timestamp));
 	memset(str + len, '\0', size - len);
 	return str;
@@ -430,29 +428,29 @@ const char* timestamp2string(char* str, size_t size, time_t timestamp, const cha
  */
 void split_time(int timein, int* year, int* month, int* day, int* hour, int* minute, int *second) {
 	const int factor_min = 60;
-	const int factor_hour = factor_min*60;
-	const int factor_day = factor_hour*24;
-	const int factor_month = 2629743; // Approx  (30.44 days) 
+	const int factor_hour = factor_min * 60;
+	const int factor_day = factor_hour * 24;
+	const int factor_month = 2629743; // Approx  (30.44 days)
 	const int factor_year = 31556926; // Approx (365.24 days)
 
-	*year = timein/factor_year;
+	*year = timein / factor_year;
 	timein -= *year*factor_year;
-	*month = timein/factor_month;
+	*month = timein / factor_month;
 	timein -= *month*factor_month;
-	*day = timein/factor_day;
+	*day = timein / factor_day;
 	timein -= *day*factor_day;
-	*hour = timein/factor_hour;
+	*hour = timein / factor_hour;
 	timein -= *hour*factor_hour;
-	*minute = timein/factor_min;
+	*minute = timein / factor_min;
 	timein -= *minute*factor_min;
 	*second = timein;
 
-	*year = max(0,*year);
-	*month = max(0,*month);
-	*day = max(0,*day);
-	*hour = max(0,*hour);
-	*minute = max(0,*minute);
-	*second = max(0,*second);
+	*year = max(0, *year);
+	*month = max(0, *month);
+	*day = max(0, *day);
+	*hour = max(0, *hour);
+	*minute = max(0, *minute);
+	*second = max(0, *second);
 }
 
 /*
@@ -464,8 +462,8 @@ double solve_time(char* modif_p) {
 	time_t now = time(NULL);
 	time_t then = now;
 	then_tm = *localtime(&then);
-	
-	nullpo_retr(0,modif_p);
+
+	nullpo_retr(0, modif_p);
 
 	while (modif_p[0] != '\0') {
 		int value = atoi(modif_p);
@@ -479,31 +477,38 @@ double solve_time(char* modif_p) {
 			if (modif_p[0] == 's') {
 				then_tm.tm_sec += value;
 				modif_p++;
-			} else if (modif_p[0] == 'n') {
+			}
+			else if (modif_p[0] == 'n') {
 				then_tm.tm_min += value;
 				modif_p++;
-			} else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
+			}
+			else if (modif_p[0] == 'm' && modif_p[1] == 'n') {
 				then_tm.tm_min += value;
 				modif_p = modif_p + 2;
-			} else if (modif_p[0] == 'h') {
+			}
+			else if (modif_p[0] == 'h') {
 				then_tm.tm_hour += value;
 				modif_p++;
-			} else if (modif_p[0] == 'd' || modif_p[0] == 'j') {
+			}
+			else if (modif_p[0] == 'd' || modif_p[0] == 'j') {
 				then_tm.tm_mday += value;
 				modif_p++;
-			} else if (modif_p[0] == 'm') {
+			}
+			else if (modif_p[0] == 'm') {
 				then_tm.tm_mon += value;
 				modif_p++;
-			} else if (modif_p[0] == 'y' || modif_p[0] == 'a') {
+			}
+			else if (modif_p[0] == 'y' || modif_p[0] == 'a') {
 				then_tm.tm_year += value;
 				modif_p++;
-			} else if (modif_p[0] != '\0') {
+			}
+			else if (modif_p[0] != '\0') {
 				modif_p++;
 			}
 		}
 	}
 	then = mktime(&then_tm);
-	totaltime = difftime(then,now);
+	totaltime = difftime(then, now);
 
 	return totaltime;
 }
@@ -522,7 +527,7 @@ void timer_final(void)
 	struct timer_func_list *tfl;
 	struct timer_func_list *next;
 
-	for( tfl=tfl_root; tfl != NULL; tfl = next ) {
+	for (tfl = tfl_root; tfl != NULL; tfl = next) {
 		next = tfl->next;	// copy next pointer
 		aFree(tfl->name);	// free structures
 		aFree(tfl);

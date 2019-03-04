@@ -42,12 +42,12 @@ struct guild_log_entry;
 enum e_guild_storage_log : uint16;
 
 enum e_PacketDBVersion { // packet DB
-	MIN_PACKET_DB  = 0x064,
-	MAX_PACKET_DB  = 0xAFF,
+	MIN_PACKET_DB = 0x064,
+	MAX_PACKET_DB = 0xAFF,
 	MAX_PACKET_POS = 20,
 };
 
-enum e_packet_ack : uint8_t{
+enum e_packet_ack : uint8_t {
 	ZC_ACK_OPEN_BANKING = 0,
 	ZC_ACK_CLOSE_BANKING,
 	ZC_ACK_BANKING_DEPOSIT,
@@ -68,7 +68,7 @@ enum e_packet_ack : uint8_t{
 
 struct s_packet_db {
 	short len;
-	void (*func)(int, struct map_session_data *);
+	void(*func)(int, struct map_session_data *);
 	short pos[MAX_PACKET_POS];
 };
 
@@ -79,58 +79,58 @@ struct s_packet_keys {
 };
 #endif
 
-enum e_CASHSHOP_ACK : uint8_t{
-	ERROR_TYPE_NONE             = 0, ///< The deal has successfully completed.
-	ERROR_TYPE_NPC              = 1, ///< The Purchase has failed because the NPC does not exist.
-	ERROR_TYPE_SYSTEM           = 2, ///< The Purchase has failed because the Kafra Shop System is not working correctly.
+enum e_CASHSHOP_ACK : uint8_t {
+	ERROR_TYPE_NONE = 0, ///< The deal has successfully completed.
+	ERROR_TYPE_NPC = 1, ///< The Purchase has failed because the NPC does not exist.
+	ERROR_TYPE_SYSTEM = 2, ///< The Purchase has failed because the Kafra Shop System is not working correctly.
 	ERROR_TYPE_INVENTORY_WEIGHT = 3, ///< You are over your Weight Limit.
-	ERROR_TYPE_EXCHANGE         = 4, ///< You cannot purchase items while you are in a trade.
-	ERROR_TYPE_ITEM_ID          = 5, ///< The Purchase has failed because the Item Information was incorrect.
-	ERROR_TYPE_MONEY            = 6, ///< You do not have enough Kafra Credit Points.
-	ERROR_TYPE_AMOUNT           = 7, ///< You can purchase up to 10 items.
-	ERROR_TYPE_PURCHASE_FAIL    = 8, ///< Some items could not be purchased.
+	ERROR_TYPE_EXCHANGE = 4, ///< You cannot purchase items while you are in a trade.
+	ERROR_TYPE_ITEM_ID = 5, ///< The Purchase has failed because the Item Information was incorrect.
+	ERROR_TYPE_MONEY = 6, ///< You do not have enough Kafra Credit Points.
+	ERROR_TYPE_AMOUNT = 7, ///< You can purchase up to 10 items.
+	ERROR_TYPE_PURCHASE_FAIL = 8, ///< Some items could not be purchased.
 };
 
 enum e_BANKING_DEPOSIT_ACK : uint8_t {
-	BDA_SUCCESS  = 0x0,
-	BDA_ERROR    = 0x1,
+	BDA_SUCCESS = 0x0,
+	BDA_ERROR = 0x1,
 	BDA_NO_MONEY = 0x2,
 	BDA_OVERFLOW = 0x3,
 };
 
 enum e_BANKING_WITHDRAW_ACK : uint8_t {
-	BWA_SUCCESS       = 0x0,
-	BWA_NO_MONEY      = 0x1,
+	BWA_SUCCESS = 0x0,
+	BWA_NO_MONEY = 0x1,
 	BWA_UNKNOWN_ERROR = 0x2,
 };
 
 enum RECV_ROULETTE_ITEM_REQ : uint8_t {
-	RECV_ITEM_SUCCESS    = 0x0,
-	RECV_ITEM_FAILED     = 0x1,
-	RECV_ITEM_OVERCOUNT  = 0x2,
+	RECV_ITEM_SUCCESS = 0x0,
+	RECV_ITEM_FAILED = 0x1,
+	RECV_ITEM_OVERCOUNT = 0x2,
 	RECV_ITEM_OVERWEIGHT = 0x3,
 };
 
 enum RECV_ROULETTE_ITEM_ACK : uint8_t {
-	RECV_ITEM_NORMAL =  0x0,
-	RECV_ITEM_LOSING =  0x1,
+	RECV_ITEM_NORMAL = 0x0,
+	RECV_ITEM_LOSING = 0x1,
 };
 
 enum GENERATE_ROULETTE_ACK : uint8_t {
-	GENERATE_ROULETTE_SUCCESS         = 0x0,
-	GENERATE_ROULETTE_FAILED          = 0x1,
+	GENERATE_ROULETTE_SUCCESS = 0x0,
+	GENERATE_ROULETTE_FAILED = 0x1,
 	GENERATE_ROULETTE_NO_ENOUGH_POINT = 0x2,
-	GENERATE_ROULETTE_LOSING          = 0x3,
+	GENERATE_ROULETTE_LOSING = 0x3,
 };
 
 enum OPEN_ROULETTE_ACK : uint8_t {
 	OPEN_ROULETTE_SUCCESS = 0x0,
-	OPEN_ROULETTE_FAILED  = 0x1,
+	OPEN_ROULETTE_FAILED = 0x1,
 };
 
 enum CLOSE_ROULETTE_ACK : uint8_t {
 	CLOSE_ROULETTE_SUCCESS = 0x0,
-	CLOSE_ROULETTE_FAILED  = 0x1,
+	CLOSE_ROULETTE_FAILED = 0x1,
 };
 
 enum MERGE_ITEM_ACK : uint8_t {
@@ -140,9 +140,9 @@ enum MERGE_ITEM_ACK : uint8_t {
 };
 
 enum BROADCASTING_SPECIAL_ITEM_OBTAIN : uint8_t {
-	ITEMOBTAIN_TYPE_BOXITEM =  0x0,
-	ITEMOBTAIN_TYPE_MONSTER_ITEM =  0x1,
-	ITEMOBTAIN_TYPE_NPC =  0x2,
+	ITEMOBTAIN_TYPE_BOXITEM = 0x0,
+	ITEMOBTAIN_TYPE_MONSTER_ITEM = 0x1,
+	ITEMOBTAIN_TYPE_NPC = 0x2,
 };
 
 enum e_adopt_reply : uint8_t {
@@ -180,7 +180,7 @@ enum e_bossmap_info {
 };
 
 #define packet_len(cmd) packet_db[cmd].len
-extern struct s_packet_db packet_db[MAX_PACKET_DB+1];
+extern struct s_packet_db packet_db[MAX_PACKET_DB + 1];
 extern int packet_db_ack[MAX_ACK_FUNC + 1];
 
 // local define
@@ -222,22 +222,22 @@ enum send_target : uint8_t {
 };
 
 enum broadcast_flags : uint8_t {
-	BC_ALL			= 0,
-	BC_MAP			= 1,
-	BC_AREA			= 2,
-	BC_SELF			= 3,
-	BC_TARGET_MASK	= 0x07,
+	BC_ALL = 0,
+	BC_MAP = 1,
+	BC_AREA = 2,
+	BC_SELF = 3,
+	BC_TARGET_MASK = 0x07,
 
-	BC_PC			= 0x00,
-	BC_NPC			= 0x08,
-	BC_SOURCE_MASK	= 0x08, // BC_PC|BC_NPC
+	BC_PC = 0x00,
+	BC_NPC = 0x08,
+	BC_SOURCE_MASK = 0x08, // BC_PC|BC_NPC
 
-	BC_YELLOW		= 0x00,
-	BC_BLUE			= 0x10,
-	BC_WOE			= 0x20,
-	BC_COLOR_MASK	= 0x30, // BC_YELLOW|BC_BLUE|BC_WOE
+	BC_YELLOW = 0x00,
+	BC_BLUE = 0x10,
+	BC_WOE = 0x20,
+	BC_COLOR_MASK = 0x30, // BC_YELLOW|BC_BLUE|BC_WOE
 
-	BC_DEFAULT		= BC_ALL|BC_PC|BC_YELLOW
+	BC_DEFAULT = BC_ALL | BC_PC | BC_YELLOW
 };
 
 enum emotion_type {
@@ -333,7 +333,7 @@ enum emotion_type {
 	ET_MAX
 };
 
-enum clr_type : uint8_t 
+enum clr_type : uint8_t
 {
 	CLR_OUTSIGHT = 0,
 	CLR_DEAD,
@@ -342,47 +342,47 @@ enum clr_type : uint8_t
 	CLR_TRICKDEAD,
 };
 
-enum map_property : uint8_t 
+enum map_property : uint8_t
 {// clif_map_property
-	MAPPROPERTY_NOTHING       = 0,
-	MAPPROPERTY_FREEPVPZONE   = 1,
-	MAPPROPERTY_EVENTPVPZONE  = 2,
-	MAPPROPERTY_AGITZONE      = 3,
-	MAPPROPERTY_PKSERVERZONE  = 4, // message "You are in a PK area. Please beware of sudden attacks." in color 0x9B9BFF (light red)
+	MAPPROPERTY_NOTHING = 0,
+	MAPPROPERTY_FREEPVPZONE = 1,
+	MAPPROPERTY_EVENTPVPZONE = 2,
+	MAPPROPERTY_AGITZONE = 3,
+	MAPPROPERTY_PKSERVERZONE = 4, // message "You are in a PK area. Please beware of sudden attacks." in color 0x9B9BFF (light red)
 	MAPPROPERTY_PVPSERVERZONE = 5,
 	MAPPROPERTY_DENYSKILLZONE = 6,
 };
 
-enum map_type : uint8_t 
+enum map_type : uint8_t
 {// clif_map_type
-	MAPTYPE_VILLAGE              = 0,
-	MAPTYPE_VILLAGE_IN           = 1,
-	MAPTYPE_FIELD                = 2,
-	MAPTYPE_DUNGEON              = 3,
-	MAPTYPE_ARENA                = 4,
-	MAPTYPE_PENALTY_FREEPKZONE   = 5,
+	MAPTYPE_VILLAGE = 0,
+	MAPTYPE_VILLAGE_IN = 1,
+	MAPTYPE_FIELD = 2,
+	MAPTYPE_DUNGEON = 3,
+	MAPTYPE_ARENA = 4,
+	MAPTYPE_PENALTY_FREEPKZONE = 5,
 	MAPTYPE_NOPENALTY_FREEPKZONE = 6,
-	MAPTYPE_EVENT_GUILDWAR       = 7,
-	MAPTYPE_AGIT                 = 8,
-	MAPTYPE_DUNGEON2             = 9,
-	MAPTYPE_DUNGEON3             = 10,
-	MAPTYPE_PKSERVER             = 11,
-	MAPTYPE_PVPSERVER            = 12,
-	MAPTYPE_DENYSKILL            = 13,
-	MAPTYPE_TURBOTRACK           = 14,
-	MAPTYPE_JAIL                 = 15,
-	MAPTYPE_MONSTERTRACK         = 16,
-	MAPTYPE_PORINGBATTLE         = 17,
-	MAPTYPE_AGIT_SIEGEV15        = 18,
-	MAPTYPE_BATTLEFIELD          = 19,
-	MAPTYPE_PVP_TOURNAMENT       = 20,
+	MAPTYPE_EVENT_GUILDWAR = 7,
+	MAPTYPE_AGIT = 8,
+	MAPTYPE_DUNGEON2 = 9,
+	MAPTYPE_DUNGEON3 = 10,
+	MAPTYPE_PKSERVER = 11,
+	MAPTYPE_PVPSERVER = 12,
+	MAPTYPE_DENYSKILL = 13,
+	MAPTYPE_TURBOTRACK = 14,
+	MAPTYPE_JAIL = 15,
+	MAPTYPE_MONSTERTRACK = 16,
+	MAPTYPE_PORINGBATTLE = 17,
+	MAPTYPE_AGIT_SIEGEV15 = 18,
+	MAPTYPE_BATTLEFIELD = 19,
+	MAPTYPE_PVP_TOURNAMENT = 20,
 	//Map types 21 - 24 not used.
-	MAPTYPE_SIEGE_LOWLEVEL       = 25,
+	MAPTYPE_SIEGE_LOWLEVEL = 25,
 	//Map types 26 - 28 remains opens for future types.
-	MAPTYPE_UNUSED               = 29,
+	MAPTYPE_UNUSED = 29,
 };
 
-enum useskill_fail_cause : uint8_t 
+enum useskill_fail_cause : uint8_t
 {// clif_skill_fail
 	USESKILL_FAIL_LEVEL = 0,
 	USESKILL_FAIL_SP_INSUFFICIENT = 1,
@@ -522,7 +522,7 @@ enum clif_messages : uint16_t {
 	MSG_ATTENDANCE_DISABLED = 0xd92,
 
 	// Unofficial names
-	C_ITEM_EQUIP_SWITCH = 0xbc7, 
+	C_ITEM_EQUIP_SWITCH = 0xbc7,
 };
 
 enum e_personalinfo : uint8_t {
@@ -589,7 +589,7 @@ void clif_npc_market_open(struct map_session_data *sd, struct npc_data *nd);
 void clif_parse_NPCMarketClosed(int fd, struct map_session_data *sd);
 void clif_parse_NPCMarketPurchase(int fd, struct map_session_data *sd);
 void clif_scriptmes(struct map_session_data *sd, int npcid, const char *mes);	//self
-void clif_scriptnext(struct map_session_data *sd,int npcid);	//self
+void clif_scriptnext(struct map_session_data *sd, int npcid);	//self
 void clif_scriptclose(struct map_session_data *sd, int npcid);	//self
 void clif_scriptclear(struct map_session_data *sd, int npcid);	//self
 void clif_scriptmenu(struct map_session_data* sd, int npcid, const char* mes);	//self
@@ -598,42 +598,42 @@ void clif_scriptinputstr(struct map_session_data *sd, int npcid);	// self
 void clif_cutin(struct map_session_data* sd, const char* image, int type);	//self
 void clif_viewpoint(struct map_session_data *sd, int npc_id, int type, int x, int y, int id, int color);	//self
 void clif_additem(struct map_session_data *sd, int n, int amount, unsigned char fail); // self
-void clif_dropitem(struct map_session_data *sd,int n,int amount);	//self
-void clif_delitem(struct map_session_data *sd,int n,int amount, short reason); //self
-void clif_updatestatus(struct map_session_data *sd,int type);	//self
-void clif_changestatus(struct map_session_data* sd,int type,int val);	//area
+void clif_dropitem(struct map_session_data *sd, int n, int amount);	//self
+void clif_delitem(struct map_session_data *sd, int n, int amount, short reason); //self
+void clif_updatestatus(struct map_session_data *sd, int type);	//self
+void clif_changestatus(struct map_session_data* sd, int type, int val);	//area
 int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage);	// area
 void clif_takeitem(struct block_list* src, struct block_list* dst);
 void clif_sitting(struct block_list* bl);
 void clif_standing(struct block_list* bl);
 void clif_sprite_change(struct block_list *bl, int id, int type, int val, int val2, enum send_target target);
-void clif_changelook(struct block_list *bl,int type,int val);	// area
-void clif_changetraplook(struct block_list *bl,int val); // area
-void clif_refreshlook(struct block_list *bl,int id,int type,int val,enum send_target target); //area specified in 'target'
-void clif_arrowequip(struct map_session_data *sd,int val); //self
-void clif_arrow_fail(struct map_session_data *sd,int type); //self
+void clif_changelook(struct block_list *bl, int type, int val);	// area
+void clif_changetraplook(struct block_list *bl, int val); // area
+void clif_refreshlook(struct block_list *bl, int id, int type, int val, enum send_target target); //area specified in 'target'
+void clif_arrowequip(struct map_session_data *sd, int val); //self
+void clif_arrow_fail(struct map_session_data *sd, int type); //self
 void clif_arrow_create_list(struct map_session_data *sd);	//self
-void clif_statusupack(struct map_session_data *sd,int type,int ok,int val);	// self
-void clif_equipitemack(struct map_session_data *sd,int n,int pos,uint8 flag);	// self
-void clif_unequipitemack(struct map_session_data *sd,int n,int pos,int ok);	// self
-void clif_misceffect(struct block_list* bl,int type);	// area
+void clif_statusupack(struct map_session_data *sd, int type, int ok, int val);	// self
+void clif_equipitemack(struct map_session_data *sd, int n, int pos, uint8 flag);	// self
+void clif_unequipitemack(struct map_session_data *sd, int n, int pos, int ok);	// self
+void clif_misceffect(struct block_list* bl, int type);	// area
 void clif_changeoption(struct block_list* bl);	// area
 void clif_changeoption2(struct block_list* bl);	// area
-void clif_useitemack(struct map_session_data *sd,int index,int amount,bool ok);	// self
-void clif_GlobalMessage(struct block_list* bl, const char* message,enum send_target target);
+void clif_useitemack(struct map_session_data *sd, int index, int amount, bool ok);	// self
+void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_target target);
 void clif_createchat(struct map_session_data* sd, int flag);	// self
 void clif_dispchat(struct chat_data* cd, int fd);	// area or fd
-void clif_joinchatfail(struct map_session_data *sd,int flag);	// self
-void clif_joinchatok(struct map_session_data *sd,struct chat_data* cd);	// self
-void clif_addchat(struct chat_data* cd,struct map_session_data *sd);	// chat
+void clif_joinchatfail(struct map_session_data *sd, int flag);	// self
+void clif_joinchatok(struct map_session_data *sd, struct chat_data* cd);	// self
+void clif_addchat(struct chat_data* cd, struct map_session_data *sd);	// chat
 void clif_changechatowner(struct chat_data* cd, struct map_session_data* sd);	// chat
-void clif_clearchat(struct chat_data *cd,int fd);	// area or fd
+void clif_clearchat(struct chat_data *cd, int fd);	// area or fd
 void clif_leavechat(struct chat_data* cd, struct map_session_data* sd, bool flag);	// chat
 void clif_changechatstatus(struct chat_data* cd);	// chat
 void clif_refresh_storagewindow(struct map_session_data *sd);
 void clif_refresh(struct map_session_data *sd);	// self
 
-void clif_emotion(struct block_list *bl,int type);
+void clif_emotion(struct block_list *bl, int type);
 void clif_talkiebox(struct block_list* bl, const char* talkie);
 void clif_wedding_effect(struct block_list *bl);
 void clif_divorced(struct map_session_data* sd, const char* name);
@@ -642,7 +642,7 @@ void clif_playBGM(struct map_session_data* sd, const char* name);
 void clif_soundeffect(struct map_session_data* sd, struct block_list* bl, const char* name, int type);
 void clif_soundeffectall(struct block_list* bl, const char* name, int type, enum send_target coverage);
 void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, int target_id, t_tick tick);
-void clif_parse_LoadEndAck(int fd,struct map_session_data *sd);
+void clif_parse_LoadEndAck(int fd, struct map_session_data *sd);
 void clif_hotkeys_send(struct map_session_data *sd);
 
 // trade
@@ -662,44 +662,44 @@ void clif_storageitemadded(struct map_session_data* sd, struct item* i, int inde
 void clif_storageitemremoved(struct map_session_data* sd, int index, int amount);
 void clif_storageclose(struct map_session_data* sd);
 
-int clif_insight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
-int clif_outsight(struct block_list *bl,va_list ap);	// map_forallinmovearea callback
+int clif_insight(struct block_list *bl, va_list ap);	// map_forallinmovearea callback
+int clif_outsight(struct block_list *bl, va_list ap);	// map_forallinmovearea callback
 
-void clif_class_change_target(struct block_list *bl,int class_, int type, enum send_target target, struct map_session_data *sd);
+void clif_class_change_target(struct block_list *bl, int class_, int type, enum send_target target, struct map_session_data *sd);
 #define clif_class_change(bl, class_, type) clif_class_change_target(bl, class_, type, AREA, NULL)
 #define clif_mob_class_change(md, class_) clif_class_change(&md->bl, class_, 1)
 
 void clif_skillinfoblock(struct map_session_data *sd);
 void clif_skillup(struct map_session_data *sd, uint16 skill_id, int lv, int range, int upgradable);
-void clif_skillinfo(struct map_session_data *sd,int skill_id, int inf);
+void clif_skillinfo(struct map_session_data *sd, int skill_id, int inf);
 void clif_addskill(struct map_session_data *sd, int skill_id);
 void clif_deleteskill(struct map_session_data *sd, int skill_id);
 
 void clif_skillcasting(struct block_list* bl, int src_id, int dst_id, int dst_x, int dst_y, uint16 skill_id, int property, int casttime);
 void clif_skillcastcancel(struct block_list* bl);
-void clif_skill_fail(struct map_session_data *sd,uint16 skill_id,enum useskill_fail_cause cause,int btype);
+void clif_skill_fail(struct map_session_data *sd, uint16 skill_id, enum useskill_fail_cause cause, int btype);
 void clif_skill_cooldown(struct map_session_data *sd, uint16 skill_id, t_tick tick);
-int clif_skill_damage(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int64 sdamage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
+int clif_skill_damage(struct block_list *src, struct block_list *dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, uint16 skill_id, uint16 skill_lv, enum e_damage_type type);
 //int clif_skill_damage2(struct block_list *src,struct block_list *dst,t_tick tick,int sdelay,int ddelay,int damage,int div,uint16 skill_id,uint16 skill_lv,enum e_damage_type type);
-bool clif_skill_nodamage(struct block_list *src,struct block_list *dst,uint16 skill_id,int heal,t_tick tick);
-void clif_skill_poseffect(struct block_list *src,uint16 skill_id,int val,int x,int y,t_tick tick);
-void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst);
+bool clif_skill_nodamage(struct block_list *src, struct block_list *dst, uint16 skill_id, int heal, t_tick tick);
+void clif_skill_poseffect(struct block_list *src, uint16 skill_id, int val, int x, int y, t_tick tick);
+void clif_skill_estimation(struct map_session_data *sd, struct block_list *dst);
 void clif_skill_warppoint(struct map_session_data* sd, uint16 skill_id, uint16 skill_lv, unsigned short map1, unsigned short map2, unsigned short map3, unsigned short map4);
 void clif_skill_memomessage(struct map_session_data* sd, int type);
 void clif_skill_teleportmessage(struct map_session_data *sd, int type);
 void clif_skill_produce_mix_list(struct map_session_data *sd, int skill_id, int trigger);
 void clif_cooking_list(struct map_session_data *sd, int trigger, uint16 skill_id, int qty, int list_type);
 
-void clif_produceeffect(struct map_session_data* sd,int flag, unsigned short nameid);
+void clif_produceeffect(struct map_session_data* sd, int flag, unsigned short nameid);
 
 void clif_getareachar_skillunit(struct block_list *bl, struct skill_unit *unit, enum send_target target, bool visible);
 void clif_skill_delunit(struct skill_unit *unit);
 void clif_skillunit_update(struct block_list* bl);
 
-void clif_autospell(struct map_session_data *sd,uint16 skill_lv);
+void clif_autospell(struct map_session_data *sd, uint16 skill_lv);
 void clif_devotion(struct block_list *src, struct map_session_data *tsd);
 void clif_spiritball(struct block_list *bl);
-void clif_combo_delay(struct block_list *bl,t_tick wait);
+void clif_combo_delay(struct block_list *bl, t_tick wait);
 void clif_bladestop(struct block_list *src, int dst_id, int active);
 void clif_changemapcell(int fd, int16 m, int x, int y, int type, enum send_target target);
 
@@ -712,32 +712,32 @@ void clif_wis_message(struct map_session_data* sd, const char* nick, const char*
 void clif_wis_end(int fd, int result);
 
 void clif_solved_charname(int fd, int charid, const char* name);
-void clif_name( struct block_list* src, struct block_list *bl, send_target target );
+void clif_name(struct block_list* src, struct block_list *bl, send_target target);
 #define clif_name_self(bl) clif_name( (bl), (bl), SELF )
 #define clif_name_area(bl) clif_name( (bl), (bl), AREA )
 
-void clif_use_card(struct map_session_data *sd,int idx);
-void clif_insert_card(struct map_session_data *sd,int idx_equip,int idx_card,int flag);
+void clif_use_card(struct map_session_data *sd, int idx);
+void clif_insert_card(struct map_session_data *sd, int idx_equip, int idx_card, int flag);
 
 void clif_inventorylist(struct map_session_data *sd);
 void clif_equiplist(struct map_session_data *sd);
 
-void clif_cart_additem(struct map_session_data *sd,int n,int amount,int fail);
+void clif_cart_additem(struct map_session_data *sd, int n, int amount, int fail);
 void clif_cart_additem_ack(struct map_session_data *sd, uint8 flag);
-void clif_cart_delitem(struct map_session_data *sd,int n,int amount);
+void clif_cart_delitem(struct map_session_data *sd, int n, int amount);
 void clif_cartlist(struct map_session_data *sd);
 void clif_clearcart(int fd);
 
 void clif_item_identify_list(struct map_session_data *sd);
-void clif_item_identified(struct map_session_data *sd,int idx,int flag);
+void clif_item_identified(struct map_session_data *sd, int idx, int flag);
 void clif_item_repair_list(struct map_session_data *sd, struct map_session_data *dstsd, int lv);
 void clif_item_repaireffect(struct map_session_data *sd, int idx, int flag);
 void clif_item_damaged(struct map_session_data* sd, unsigned short position);
 void clif_item_refine_list(struct map_session_data *sd);
-void clif_hat_effects( struct map_session_data* sd, struct block_list* bl, enum send_target target );
-void clif_hat_effect_single( struct map_session_data* sd, uint16 effectId, bool enable );
+void clif_hat_effects(struct map_session_data* sd, struct block_list* bl, enum send_target target);
+void clif_hat_effect_single(struct map_session_data* sd, uint16 effectId, bool enable);
 
-void clif_item_skill(struct map_session_data *sd,uint16 skill_id,uint16 skill_lv);
+void clif_item_skill(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 
 void clif_mvp_effect(struct map_session_data *sd);
 void clif_mvp_item(struct map_session_data *sd, unsigned short nameid);
@@ -754,15 +754,15 @@ void clif_buyvending(struct map_session_data* sd, int index, int amount, int fai
 void clif_openvending(struct map_session_data* sd, int id, struct s_vending* vending);
 void clif_vendingreport(struct map_session_data* sd, int index, int amount, uint32 char_id, int zeny);
 
-void clif_movetoattack(struct map_session_data *sd,struct block_list *bl);
+void clif_movetoattack(struct map_session_data *sd, struct block_list *bl);
 
 // party
-void clif_party_created(struct map_session_data *sd,int result);
+void clif_party_created(struct map_session_data *sd, int result);
 void clif_party_member_info(struct party_data *p, struct map_session_data *sd);
 void clif_party_info(struct party_data* p, struct map_session_data *sd);
-void clif_party_invite(struct map_session_data *sd,struct map_session_data *tsd);
+void clif_party_invite(struct map_session_data *sd, struct map_session_data *tsd);
 void clif_party_invite_reply(struct map_session_data* sd, const char* nick, enum e_party_invite_reply reply);
-void clif_party_option(struct party_data *p,struct map_session_data *sd,int flag);
+void clif_party_option(struct party_data *p, struct map_session_data *sd, int flag);
 void clif_party_withdraw(struct map_session_data *sd, uint32 account_id, const char* name, enum e_party_member_withdraw result, enum send_target target);
 void clif_party_message(struct party_data* p, uint32 account_id, const char* mes, int len);
 void clif_party_xy(struct map_session_data *sd);
@@ -770,10 +770,10 @@ void clif_party_xy_single(int fd, struct map_session_data *sd);
 void clif_party_hp(struct map_session_data *sd);
 void clif_hpmeter_single(int fd, int id, unsigned int hp, unsigned int maxhp);
 void clif_party_job_and_level(struct map_session_data *sd);
-void clif_party_dead( struct map_session_data *sd );
+void clif_party_dead(struct map_session_data *sd);
 
 // guild
-void clif_guild_created(struct map_session_data *sd,int flag);
+void clif_guild_created(struct map_session_data *sd, int flag);
 void clif_guild_belonginfo(struct map_session_data *sd);
 void clif_guild_masterormember(struct map_session_data *sd);
 void clif_guild_basicinfo(struct map_session_data *sd);
@@ -781,22 +781,22 @@ void clif_guild_allianceinfo(struct map_session_data *sd);
 void clif_guild_memberlist(struct map_session_data *sd);
 void clif_guild_skillinfo(struct map_session_data* sd);
 void clif_guild_send_onlineinfo(struct map_session_data *sd); //[LuzZza]
-void clif_guild_memberlogin_notice(struct guild *g,int idx,int flag);
-void clif_guild_invite(struct map_session_data *sd,struct guild *g);
-void clif_guild_inviteack(struct map_session_data *sd,int flag);
-void clif_guild_leave(struct map_session_data *sd,const char *name,const char *mes);
+void clif_guild_memberlogin_notice(struct guild *g, int idx, int flag);
+void clif_guild_invite(struct map_session_data *sd, struct guild *g);
+void clif_guild_inviteack(struct map_session_data *sd, int flag);
+void clif_guild_leave(struct map_session_data *sd, const char *name, const char *mes);
 void clif_guild_expulsion(struct map_session_data* sd, const char* name, const char* mes, uint32 account_id);
-void clif_guild_positionchanged(struct guild *g,int idx);
-void clif_guild_memberpositionchanged(struct guild *g,int idx);
-void clif_guild_emblem(struct map_session_data *sd,struct guild *g);
+void clif_guild_positionchanged(struct guild *g, int idx);
+void clif_guild_memberpositionchanged(struct guild *g, int idx);
+void clif_guild_emblem(struct map_session_data *sd, struct guild *g);
 void clif_guild_emblem_area(struct block_list* bl);
 void clif_guild_notice(struct map_session_data* sd);
-void clif_guild_message(struct guild *g,uint32 account_id,const char *mes,int len);
-void clif_guild_reqalliance(struct map_session_data *sd,uint32 account_id,const char *name);
-void clif_guild_allianceack(struct map_session_data *sd,int flag);
-void clif_guild_delalliance(struct map_session_data *sd,int guild_id,int flag);
-void clif_guild_oppositionack(struct map_session_data *sd,int flag);
-void clif_guild_broken(struct map_session_data *sd,int flag);
+void clif_guild_message(struct guild *g, uint32 account_id, const char *mes, int len);
+void clif_guild_reqalliance(struct map_session_data *sd, uint32 account_id, const char *name);
+void clif_guild_allianceack(struct map_session_data *sd, int flag);
+void clif_guild_delalliance(struct map_session_data *sd, int guild_id, int flag);
+void clif_guild_oppositionack(struct map_session_data *sd, int flag);
+void clif_guild_broken(struct map_session_data *sd, int flag);
 void clif_guild_xy(struct map_session_data *sd);
 void clif_guild_xy_single(int fd, struct map_session_data *sd);
 void clif_guild_xy_remove(struct map_session_data *sd);
@@ -825,28 +825,28 @@ void clif_displaymessage(const int fd, const char* mes);
 void clif_disp_message(struct block_list* src, const char* mes, int len, enum send_target target);
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target);
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target);
-void clif_heal(int fd,int type,int val);
-void clif_resurrection(struct block_list *bl,int type);
+void clif_heal(int fd, int type, int val);
+void clif_resurrection(struct block_list *bl, int type);
 void clif_map_property(struct block_list *bl, enum map_property property, enum send_target t);
-void clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum,int type);
+void clif_pvpset(struct map_session_data *sd, int pvprank, int pvpnum, int type);
 void clif_map_property_mapall(int map, enum map_property property);
 void clif_refine(int fd, int fail, int index, int val);
 void clif_upgrademessage(int fd, int result, unsigned short item_id);
 
 //petsystem
 void clif_catch_process(struct map_session_data *sd);
-void clif_pet_roulette(struct map_session_data *sd,int data);
+void clif_pet_roulette(struct map_session_data *sd, int data);
 void clif_sendegg(struct map_session_data *sd);
 void clif_send_petstatus(struct map_session_data *sd);
 void clif_send_petdata(struct map_session_data* sd, struct pet_data* pd, int type, int param);
 #define clif_pet_equip(sd, pd) clif_send_petdata(sd, pd, 3, (pd)->vd.head_bottom)
 #define clif_pet_equip_area(pd) clif_send_petdata(NULL, pd, 3, (pd)->vd.head_bottom)
 #define clif_pet_performance(pd, param) clif_send_petdata(NULL, pd, 4, param)
-void clif_pet_emotion(struct pet_data *pd,int param);
-void clif_pet_food(struct map_session_data *sd,int foodid,int fail);
+void clif_pet_emotion(struct pet_data *pd, int param);
+void clif_pet_food(struct map_session_data *sd, int foodid, int fail);
 
 //friends list
-int clif_friendslist_toggle_sub(struct map_session_data *sd,va_list ap);
+int clif_friendslist_toggle_sub(struct map_session_data *sd, va_list ap);
 void clif_friendslist_send(struct map_session_data *sd);
 void clif_friendslist_reqack(struct map_session_data *sd, struct map_session_data *f_sd, int type);
 
@@ -858,7 +858,7 @@ void clif_messagecolor_target(struct block_list *bl, unsigned long color, const 
 void clif_specialeffect_value(struct block_list* bl, int effect_id, int num, send_target target);
 
 void clif_GM_kickack(struct map_session_data *sd, int id);
-void clif_GM_kick(struct map_session_data *sd,struct map_session_data *tsd);
+void clif_GM_kick(struct map_session_data *sd, struct map_session_data *tsd);
 void clif_manner_message(struct map_session_data* sd, uint32 type);
 void clif_GM_silence(struct map_session_data* sd, struct map_session_data* tsd, uint8 type);
 
@@ -872,7 +872,7 @@ void clif_gospel_info(struct map_session_data *sd, int type);
 void clif_feel_req(int fd, struct map_session_data *sd, uint16 skill_lv);
 void clif_starskill(struct map_session_data* sd, const char* mapname, int monster_id, unsigned char star, unsigned char result);
 void clif_feel_info(struct map_session_data* sd, unsigned char feel_level, unsigned char type);
-void clif_hate_info(struct map_session_data *sd, unsigned char hate_level,int class_, unsigned char type);
+void clif_hate_info(struct map_session_data *sd, unsigned char hate_level, int class_, unsigned char type);
 void clif_mission_info(struct map_session_data *sd, int mob_id, unsigned char progress);
 void clif_feel_hate_reset(struct map_session_data *sd);
 
@@ -880,10 +880,10 @@ void clif_feel_hate_reset(struct map_session_data *sd);
 void clif_hominfo(struct map_session_data *sd, struct homun_data *hd, int flag);
 int clif_homskillinfoblock(struct map_session_data *sd);
 void clif_homskillup(struct map_session_data *sd, uint16 skill_id);	//[orn]
-int clif_hom_food(struct map_session_data *sd,int foodid,int fail);	//[orn]
+int clif_hom_food(struct map_session_data *sd, int foodid, int fail);	//[orn]
 void clif_send_homdata(struct map_session_data *sd, int state, int param);	//[orn]
 
-void clif_configuration( struct map_session_data* sd, enum e_config_type type, bool enabled );
+void clif_configuration(struct map_session_data* sd, enum e_config_type type, bool enabled);
 void clif_partytickack(struct map_session_data* sd, bool flag);
 void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* tsd);
 void clif_equipcheckbox(struct map_session_data* sd);
@@ -922,7 +922,7 @@ void clif_mail_delete(struct map_session_data* sd, struct mail_message *msg, boo
 void clif_Mail_return(int fd, int mail_id, short fail);
 void clif_Mail_send(struct map_session_data* sd, enum mail_send_result result);
 void clif_Mail_new(struct map_session_data* sd, int mail_id, const char *sender, const char *title);
-void clif_Mail_refreshinbox(struct map_session_data *sd,enum mail_inbox_type type,int64 mailID);
+void clif_Mail_refreshinbox(struct map_session_data *sd, enum mail_inbox_type type, int64 mailID);
 void clif_mail_getattachment(struct map_session_data* sd, struct mail_message *msg, uint8 result, enum mail_attachment_type type);
 void clif_Mail_Receiver_Ack(struct map_session_data* sd, uint32 char_id, short class_, uint32 level, const char* name);
 void clif_mail_removeitem(struct map_session_data* sd, bool success, int index, int amount);
@@ -970,13 +970,13 @@ void clif_PartyBookingDeleteNotify(struct map_session_data* sd, int index);
 void clif_PartyBookingInsertNotify(struct map_session_data* sd, struct party_booking_ad_info* pb_ad);
 
 /* Bank System [Yommy/Hercules] */
-void clif_bank_deposit (struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK reason);
-void clif_bank_withdraw (struct map_session_data *sd,enum e_BANKING_WITHDRAW_ACK reason);
-void clif_parse_BankDeposit (int fd, struct map_session_data *sd);
-void clif_parse_BankWithdraw (int fd, struct map_session_data *sd);
-void clif_parse_BankCheck (int fd, struct map_session_data *sd);
-void clif_parse_BankOpen (int fd, struct map_session_data *sd);
-void clif_parse_BankClose (int fd, struct map_session_data *sd);
+void clif_bank_deposit(struct map_session_data *sd, enum e_BANKING_DEPOSIT_ACK reason);
+void clif_bank_withdraw(struct map_session_data *sd, enum e_BANKING_WITHDRAW_ACK reason);
+void clif_parse_BankDeposit(int fd, struct map_session_data *sd);
+void clif_parse_BankWithdraw(int fd, struct map_session_data *sd);
+void clif_parse_BankCheck(int fd, struct map_session_data *sd);
+void clif_parse_BankOpen(int fd, struct map_session_data *sd);
+void clif_parse_BankClose(int fd, struct map_session_data *sd);
 
 void clif_showdigit(struct map_session_data* sd, unsigned char type, int value);
 
@@ -1001,8 +1001,8 @@ void clif_open_search_store_info(struct map_session_data* sd);
 void clif_search_store_info_click_ack(struct map_session_data* sd, short x, short y);
 
 /// Cash Shop
-void clif_cashshop_result( struct map_session_data* sd, unsigned short item_id, uint16 result );
-void clif_cashshop_open( struct map_session_data* sd );
+void clif_cashshop_result(struct map_session_data* sd, unsigned short item_id, uint16 result);
+void clif_cashshop_open(struct map_session_data* sd);
 
 void clif_display_pinfo(struct map_session_data *sd, int type);
 
@@ -1026,20 +1026,20 @@ int clif_poison_list(struct map_session_data *sd, uint16 skill_lv);
 
 int clif_autoshadowspell_list(struct map_session_data *sd);
 
-int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uint16 skill_lv );
+int clif_skill_itemlistwindow(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 void clif_elemental_info(struct map_session_data *sd);
 void clif_elemental_updatestatus(struct map_session_data *sd, int type);
 
 void clif_spiritcharm(struct map_session_data *sd);
 
-void clif_snap( struct block_list *bl, short x, short y );
-void clif_monster_hp_bar( struct mob_data* md, int fd );
+void clif_snap(struct block_list *bl, short x, short y);
+void clif_monster_hp_bar(struct mob_data* md, int fd);
 
 // Clan System
-void clif_clan_basicinfo( struct map_session_data *sd );
-void clif_clan_message(struct clan *clan,const char *mes,int len);
-void clif_clan_onlinecount( struct clan* clan );
-void clif_clan_leave( struct map_session_data* sd );
+void clif_clan_basicinfo(struct map_session_data *sd);
+void clif_clan_message(struct clan *clan, const char *mes, int len);
+void clif_clan_onlinecount(struct clan* clan);
+void clif_clan_leave(struct map_session_data* sd);
 
 // Bargain Tool
 void clif_sale_start(struct sale_item_data* sale_item, struct block_list* bl, enum send_target target);
@@ -1081,7 +1081,7 @@ void clif_merge_item_open(struct map_session_data *sd);
 void clif_broadcast_obtain_special_item(const char *char_name, unsigned short nameid, unsigned short container, enum BROADCASTING_SPECIAL_ITEM_OBTAIN type);
 
 void clif_dressing_room(struct map_session_data *sd, int flag);
-void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id );
+void clif_navigateTo(struct map_session_data *sd, const char* mapname, uint16 x, uint16 y, uint8 flag, bool hideWindow, uint16 mob_id);
 void clif_SelectCart(struct map_session_data *sd);
 
 /// Achievement System
@@ -1098,19 +1098,19 @@ enum out_ui_type : int8 {
 	OUT_UI_ATTENDANCE = 7
 };
 
-void clif_ui_open( struct map_session_data *sd, enum out_ui_type ui_type, int32 data );
-void clif_attendence_response( struct map_session_data *sd, int32 data );
+void clif_ui_open(struct map_session_data *sd, enum out_ui_type ui_type, int32 data);
+void clif_attendence_response(struct map_session_data *sd, int32 data);
 
-void clif_weight_limit( struct map_session_data* sd );
+void clif_weight_limit(struct map_session_data* sd);
 
-void clif_guild_storage_log( struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result );
+void clif_guild_storage_log(struct map_session_data* sd, std::vector<struct guild_log_entry>& log, enum e_guild_storage_log result);
 
-void clif_camerainfo( struct map_session_data* sd, bool show, float range = 0.0f, float rotation = 0.0f, float latitude = 0.0f );
+void clif_camerainfo(struct map_session_data* sd, bool show, float range = 0.0f, float rotation = 0.0f, float latitude = 0.0f);
 
 /// Equip Switch System
-void clif_equipswitch_list( struct map_session_data* sd );
-void clif_equipswitch_add( struct map_session_data* sd,uint16 index, uint32 pos, bool failed );
-void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 pos, bool failed );
-void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
+void clif_equipswitch_list(struct map_session_data* sd);
+void clif_equipswitch_add(struct map_session_data* sd, uint16 index, uint32 pos, bool failed);
+void clif_equipswitch_remove(struct map_session_data* sd, uint16 index, uint32 pos, bool failed);
+void clif_equipswitch_reply(struct map_session_data* sd, bool failed);
 
 #endif /* CLIF_HPP */

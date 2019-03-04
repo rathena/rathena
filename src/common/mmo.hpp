@@ -13,7 +13,7 @@
 #include "timer.hpp" // t_tick
 
 #ifndef PACKETVER
-	#error Please define PACKETVER in src/config/packets.hpp
+#error Please define PACKETVER in src/config/packets.hpp
 #endif
 
 ///Remove/Comment this line to disable sc_data saving. [Skotlex]
@@ -23,14 +23,14 @@
 #define HOTKEY_SAVING
 
 #if PACKETVER < 20090603
-	// (27 = 9 skills x 3 bars)               (0x02b9,191)
-	#define MAX_HOTKEYS 27
+// (27 = 9 skills x 3 bars)               (0x02b9,191)
+#define MAX_HOTKEYS 27
 #elif PACKETVER < 20090617
-	// (36 = 9 skills x 4 bars)               (0x07d9,254)
-	#define MAX_HOTKEYS 36
+// (36 = 9 skills x 4 bars)               (0x07d9,254)
+#define MAX_HOTKEYS 36
 #else
-	// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
-	#define MAX_HOTKEYS 38
+// (38 = 9 skills x 4 bars & 2 Quickslots)(0x07d9,268)
+#define MAX_HOTKEYS 38
 #endif
 
 #define MAX_MAP_PER_SERVER 1500 /// Maximum amount of maps available on a server
@@ -38,13 +38,13 @@
 /** Max number of characters per account. Note that changing this setting alone is not enough if the client is not hexed to support more characters as well.
 * Max value tested was 265 */
 #ifndef MAX_CHARS
-	#if PACKETVER >= 20180124
-		#define MAX_CHARS 15
-	#elif PACKETVER >= 20100413
-		#define MAX_CHARS 12
-	#else
-		#define MAX_CHARS 9
-	#endif
+#if PACKETVER >= 20180124
+#define MAX_CHARS 15
+#elif PACKETVER >= 20100413
+#define MAX_CHARS 12
+#else
+#define MAX_CHARS 9
+#endif
 #endif
 /** Number of slots carded equipment can have. Never set to less than 4 as they are also used to keep the data of forged items/equipment. [Skotlex]
 * Note: The client seems unable to receive data for more than 4 slots due to all related packets having a fixed size. */
@@ -177,35 +177,35 @@ enum item_types {
 
 /// Monster mode definitions to clear up code reading. [Skotlex]
 enum e_mode {
-	MD_NONE					= 0x0000000,
-	MD_CANMOVE				= 0x0000001,
-	MD_LOOTER				= 0x0000002,
-	MD_AGGRESSIVE			= 0x0000004,
-	MD_ASSIST				= 0x0000008,
-	MD_CASTSENSOR_IDLE		= 0x0000010,
-	MD_NORANDOM_WALK		= 0x0000020,
-	MD_NOCAST_SKILL			= 0x0000040,
-	MD_CANATTACK			= 0x0000080,
+	MD_NONE = 0x0000000,
+	MD_CANMOVE = 0x0000001,
+	MD_LOOTER = 0x0000002,
+	MD_AGGRESSIVE = 0x0000004,
+	MD_ASSIST = 0x0000008,
+	MD_CASTSENSOR_IDLE = 0x0000010,
+	MD_NORANDOM_WALK = 0x0000020,
+	MD_NOCAST_SKILL = 0x0000040,
+	MD_CANATTACK = 0x0000080,
 	//FREE					= 0x0000100,
-	MD_CASTSENSOR_CHASE		= 0x0000200,
-	MD_CHANGECHASE			= 0x0000400,
-	MD_ANGRY				= 0x0000800,
-	MD_CHANGETARGET_MELEE	= 0x0001000,
-	MD_CHANGETARGET_CHASE	= 0x0002000,
-	MD_TARGETWEAK			= 0x0004000,
-	MD_RANDOMTARGET			= 0x0008000,
-	MD_IGNOREMELEE			= 0x0010000,
-	MD_IGNOREMAGIC			= 0x0020000,
-	MD_IGNORERANGED			= 0x0040000,
-	MD_MVP					= 0x0080000,
-	MD_IGNOREMISC			= 0x0100000,
-	MD_KNOCKBACK_IMMUNE		= 0x0200000,
-	MD_TELEPORT_BLOCK		= 0x0400000,
+	MD_CASTSENSOR_CHASE = 0x0000200,
+	MD_CHANGECHASE = 0x0000400,
+	MD_ANGRY = 0x0000800,
+	MD_CHANGETARGET_MELEE = 0x0001000,
+	MD_CHANGETARGET_CHASE = 0x0002000,
+	MD_TARGETWEAK = 0x0004000,
+	MD_RANDOMTARGET = 0x0008000,
+	MD_IGNOREMELEE = 0x0010000,
+	MD_IGNOREMAGIC = 0x0020000,
+	MD_IGNORERANGED = 0x0040000,
+	MD_MVP = 0x0080000,
+	MD_IGNOREMISC = 0x0100000,
+	MD_KNOCKBACK_IMMUNE = 0x0200000,
+	MD_TELEPORT_BLOCK = 0x0400000,
 	//FREE					= 0x0800000,
-	MD_FIXED_ITEMDROP		= 0x1000000,
-	MD_DETECTOR				= 0x2000000,
-	MD_STATUS_IMMUNE		= 0x4000000,
-	MD_SKILL_IMMUNE			= 0x8000000,
+	MD_FIXED_ITEMDROP = 0x1000000,
+	MD_DETECTOR = 0x2000000,
+	MD_STATUS_IMMUNE = 0x4000000,
+	MD_SKILL_IMMUNE = 0x8000000,
 };
 
 #define MD_MASK 0x000FFFF
@@ -260,37 +260,37 @@ struct item {
 
 //Equip position constants
 enum equip_pos {
-	EQP_HEAD_LOW         = 0x000001,
-	EQP_HEAD_MID         = 0x000200, // 512
-	EQP_HEAD_TOP         = 0x000100, // 256
-	EQP_HAND_R           = 0x000002, // 2
-	EQP_HAND_L           = 0x000020, // 32
-	EQP_ARMOR            = 0x000010, // 16
-	EQP_SHOES            = 0x000040, // 64
-	EQP_GARMENT          = 0x000004, // 4
-	EQP_ACC_R            = 0x000008, // 8
-	EQP_ACC_L            = 0x000080, // 128
+	EQP_HEAD_LOW = 0x000001,
+	EQP_HEAD_MID = 0x000200, // 512
+	EQP_HEAD_TOP = 0x000100, // 256
+	EQP_HAND_R = 0x000002, // 2
+	EQP_HAND_L = 0x000020, // 32
+	EQP_ARMOR = 0x000010, // 16
+	EQP_SHOES = 0x000040, // 64
+	EQP_GARMENT = 0x000004, // 4
+	EQP_ACC_R = 0x000008, // 8
+	EQP_ACC_L = 0x000080, // 128
 	EQP_COSTUME_HEAD_TOP = 0x000400, // 1024
 	EQP_COSTUME_HEAD_MID = 0x000800, // 2048
 	EQP_COSTUME_HEAD_LOW = 0x001000, // 4096
-	EQP_COSTUME_GARMENT  = 0x002000, // 8192
+	EQP_COSTUME_GARMENT = 0x002000, // 8192
 	//EQP_COSTUME_FLOOR  = 0x004000, // 16384
-	EQP_AMMO             = 0x008000, // 32768
-	EQP_SHADOW_ARMOR     = 0x010000, // 65536
-	EQP_SHADOW_WEAPON    = 0x020000, // 131072
-	EQP_SHADOW_SHIELD    = 0x040000, // 262144
-	EQP_SHADOW_SHOES     = 0x080000, // 524288
-	EQP_SHADOW_ACC_R     = 0x100000, // 1048576
-	EQP_SHADOW_ACC_L     = 0x200000, // 2097152
+	EQP_AMMO = 0x008000, // 32768
+	EQP_SHADOW_ARMOR = 0x010000, // 65536
+	EQP_SHADOW_WEAPON = 0x020000, // 131072
+	EQP_SHADOW_SHIELD = 0x040000, // 262144
+	EQP_SHADOW_SHOES = 0x080000, // 524288
+	EQP_SHADOW_ACC_R = 0x100000, // 1048576
+	EQP_SHADOW_ACC_L = 0x200000, // 2097152
 
 	// Combined
-	EQP_ACC_RL			= EQP_ACC_R|EQP_ACC_L,
-	EQP_SHADOW_ACC_RL	= EQP_SHADOW_ACC_R|EQP_SHADOW_ACC_L,
+	EQP_ACC_RL = EQP_ACC_R | EQP_ACC_L,
+	EQP_SHADOW_ACC_RL = EQP_SHADOW_ACC_R | EQP_SHADOW_ACC_L,
 };
 
 struct point {
 	unsigned short map;
-	short x,y;
+	short x, y;
 };
 
 struct startitem {
@@ -415,7 +415,7 @@ struct s_homunculus {	//[orn]
 	uint32 char_id;
 	short class_;
 	short prev_class;
-	int hp,max_hp,sp,max_sp;
+	int hp, max_hp, sp, max_sp;
 	unsigned int intimacy;	//[orn]
 	short hunger;
 	struct s_skill hskill[MAX_HOMUNSKILL]; //albator
@@ -483,17 +483,17 @@ struct mmo_charstatus {
 	uint32 mother;
 	uint32 child;
 
-	unsigned int base_exp,job_exp;
+	unsigned int base_exp, job_exp;
 	int zeny;
 
 	short class_; ///< Player's JobID
-	unsigned int status_point,skill_point;
-	int hp,max_hp,sp,max_sp;
+	unsigned int status_point, skill_point;
+	int hp, max_hp, sp, max_sp;
 	unsigned int option;
 	short manner; // Defines how many minutes a char will be muted, each negative point is equivalent to a minute.
 	unsigned char karma;
-	short hair,hair_color,clothes_color,body;
-	int party_id,guild_id,pet_id,hom_id,mer_id,ele_id,clan_id;
+	short hair, hair_color, clothes_color, body;
+	int party_id, guild_id, pet_id, hom_id, mer_id, ele_id, clan_id;
 	int fame;
 
 	// Mercenary Guilds Rank
@@ -503,25 +503,25 @@ struct mmo_charstatus {
 
 	short weapon; // enum weapon_type
 	short shield; // view-id
-	short head_top,head_mid,head_bottom;
+	short head_top, head_mid, head_bottom;
 	short robe;
 
 	char name[NAME_LENGTH];
-	unsigned int base_level,job_level;
-	unsigned short str,agi,vit,int_,dex,luk;
-	unsigned char slot,sex;
+	unsigned int base_level, job_level;
+	unsigned short str, agi, vit, int_, dex, luk;
+	unsigned char slot, sex;
 
 	uint32 mapip;
 	uint16 mapport;
 
-	struct point last_point,save_point,memo_point[MAX_MEMOPOINTS];
+	struct point last_point, save_point, memo_point[MAX_MEMOPOINTS];
 	struct s_skill skill[MAX_SKILL];
 
 	struct s_friend friends[MAX_FRIENDS]; //New friend system [Skotlex]
 #ifdef HOTKEY_SAVING
 	struct hotkey hotkeys[MAX_HOTKEYS];
 #endif
-	bool show_equip,allow_party;
+	bool show_equip, allow_party;
 	short rename;
 
 	time_t delete_date;
@@ -610,7 +610,7 @@ struct party_member {
 	unsigned short map;
 	unsigned short lv;
 	unsigned leader : 1,
-	         online : 1;
+		online : 1;
 };
 
 struct party {
@@ -618,17 +618,17 @@ struct party {
 	char name[NAME_LENGTH];
 	unsigned char count; //Count of online characters.
 	unsigned exp : 1,
-				item : 2; //&1: Party-Share (round-robin), &2: pickup style: shared.
+		item : 2; //&1: Party-Share (round-robin), &2: pickup style: shared.
 	struct party_member member[MAX_PARTY];
 };
 
 struct map_session_data;
 struct guild_member {
 	uint32 account_id, char_id;
-	short hair,hair_color,gender,class_,lv;
+	short hair, hair_color, gender, class_, lv;
 	uint64 exp;
 	int exp_payper;
-	short online,position;
+	short online, position;
 	char name[NAME_LENGTH];
 	struct map_session_data *sd;
 	unsigned char modified;
@@ -655,7 +655,7 @@ struct guild_expulsion {
 };
 
 struct guild_skill {
-	int id,lv;
+	int id, lv;
 };
 
 struct Channel;
@@ -665,11 +665,11 @@ struct guild {
 	uint64 exp;
 	unsigned int next_exp;
 	int skill_point;
-	char name[NAME_LENGTH],master[NAME_LENGTH];
+	char name[NAME_LENGTH], master[NAME_LENGTH];
 	struct guild_member member[MAX_GUILD];
 	struct guild_position position[MAX_GUILDPOSITION];
-	char mes1[MAX_GUILDMES1],mes2[MAX_GUILDMES2];
-	int emblem_len,emblem_id;
+	char mes1[MAX_GUILDMES1], mes2[MAX_GUILDMES2];
+	int emblem_len, emblem_id;
 	char emblem_data[2048];
 	struct guild_alliance alliance[MAX_GUILDALLIANCE];
 	struct guild_expulsion expulsion[MAX_GUILDEXPULSION];
@@ -723,15 +723,15 @@ enum e_castle_data : uint8 {
 
 /// Guild Permissions
 enum e_guild_permission {
-	GUILD_PERM_INVITE	= 0x001,
-	GUILD_PERM_EXPEL	= 0x010,
-	GUILD_PERM_STORAGE	= 0x100,
+	GUILD_PERM_INVITE = 0x001,
+	GUILD_PERM_EXPEL = 0x010,
+	GUILD_PERM_STORAGE = 0x100,
 #if PACKETVER >= 20140205
-	GUILD_PERM_ALL		= GUILD_PERM_INVITE|GUILD_PERM_EXPEL|GUILD_PERM_STORAGE,
+	GUILD_PERM_ALL = GUILD_PERM_INVITE | GUILD_PERM_EXPEL | GUILD_PERM_STORAGE,
 #else
-	GUILD_PERM_ALL		= GUILD_PERM_INVITE|GUILD_PERM_EXPEL,
+	GUILD_PERM_ALL = GUILD_PERM_INVITE | GUILD_PERM_EXPEL,
 #endif
-	GUILD_PERM_DEFAULT	= GUILD_PERM_ALL,
+	GUILD_PERM_DEFAULT = GUILD_PERM_ALL,
 };
 
 struct fame_list {
@@ -741,14 +741,14 @@ struct fame_list {
 };
 
 enum e_guild_info { //Change Guild Infos
-	GBI_EXP	=1,		// Guild Experience (EXP)
+	GBI_EXP = 1,		// Guild Experience (EXP)
 	GBI_GUILDLV,		// Guild level
 	GBI_SKILLPOINT,		// Guild skillpoints
 	GBI_SKILLLV,		// Guild skill_lv ?? seem unused
 };
 
 enum e_guild_member_info { //Change Member Infos
-	GMI_POSITION	=0,
+	GMI_POSITION = 0,
 	GMI_EXP,
 	GMI_HAIR,
 	GMI_HAIR_COLOR,
@@ -758,24 +758,24 @@ enum e_guild_member_info { //Change Member Infos
 };
 
 enum e_guild_skill {
-	GD_SKILLBASE=10000,
-	GD_APPROVAL=10000,
-	GD_KAFRACONTRACT=10001,
-	GD_GUARDRESEARCH=10002,
-	GD_GUARDUP=10003,
-	GD_EXTENSION=10004,
-	GD_GLORYGUILD=10005,
-	GD_LEADERSHIP=10006,
-	GD_GLORYWOUNDS=10007,
-	GD_SOULCOLD=10008,
-	GD_HAWKEYES=10009,
-	GD_BATTLEORDER=10010,
-	GD_REGENERATION=10011,
-	GD_RESTORE=10012,
-	GD_EMERGENCYCALL=10013,
-	GD_DEVELOPMENT=10014,
-	GD_ITEMEMERGENCYCALL=10015,
-	GD_GUILD_STORAGE=10016,
+	GD_SKILLBASE = 10000,
+	GD_APPROVAL = 10000,
+	GD_KAFRACONTRACT = 10001,
+	GD_GUARDRESEARCH = 10002,
+	GD_GUARDUP = 10003,
+	GD_EXTENSION = 10004,
+	GD_GLORYGUILD = 10005,
+	GD_LEADERSHIP = 10006,
+	GD_GLORYWOUNDS = 10007,
+	GD_SOULCOLD = 10008,
+	GD_HAWKEYES = 10009,
+	GD_BATTLEORDER = 10010,
+	GD_REGENERATION = 10011,
+	GD_RESTORE = 10012,
+	GD_EMERGENCYCALL = 10013,
+	GD_DEVELOPMENT = 10014,
+	GD_ITEMEMERGENCYCALL = 10015,
+	GD_GUILD_STORAGE = 10016,
 	GD_MAX,
 };
 
@@ -1011,7 +1011,7 @@ struct clan_alliance {
 	char name[NAME_LENGTH];
 };
 
-struct clan{
+struct clan {
 	int id;
 	char name[NAME_LENGTH];
 	char master[NAME_LENGTH];
@@ -1033,10 +1033,10 @@ struct clan{
 #endif
 
 #ifndef VIP_ENABLE
-	#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
-	#define MIN_CHARS MAX_CHARS // Default number of characters per account.
-	#define MAX_CHAR_BILLING 0
-	#define MAX_CHAR_VIP 0
+#define MIN_STORAGE MAX_STORAGE // If the VIP system is disabled the min = max.
+#define MIN_CHARS MAX_CHARS // Default number of characters per account.
+#define MAX_CHAR_BILLING 0
+#define MAX_CHAR_VIP 0
 #endif
 
 #if (MIN_CHARS + MAX_CHAR_VIP + MAX_CHAR_BILLING) > MAX_CHARS
@@ -1048,24 +1048,24 @@ struct clan{
 #endif
 
 #ifdef PACKET_OBFUSCATION
-	#if PACKETVER < 20110817
-		#undef PACKET_OBFUSCATION
-	#endif
+#if PACKETVER < 20110817
+#undef PACKET_OBFUSCATION
+#endif
 #endif
 
 /* Feb 1st 2012 */
 #if PACKETVER >= 20120201
-	#define NEW_CARTS
-	#ifndef ENABLE_SC_SAVING
-	#warning "Cart won't be able to be saved for relog"
-	#endif
+#define NEW_CARTS
+#ifndef ENABLE_SC_SAVING
+#warning "Cart won't be able to be saved for relog"
+#endif
 #if PACKETVER >= 20150826
-	#define MAX_CARTS 12		// used for 3 new cart design
+#define MAX_CARTS 12		// used for 3 new cart design
 #else
-	#define MAX_CARTS 9
+#define MAX_CARTS 9
 #endif
 #else
-	#define MAX_CARTS 5
+#define MAX_CARTS 5
 #endif
 
 #endif /* MMO_HPP */

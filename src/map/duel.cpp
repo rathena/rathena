@@ -16,10 +16,10 @@
 #include "pc.hpp"
 
 //std::recursive_mutex> duel_list_mutex; //preparation for multithread
-std::unordered_map<size_t,struct duel> duel_list;
+std::unordered_map<size_t, struct duel> duel_list;
 
-std::unordered_map<size_t,struct duel> duel_get_list() { return duel_list; } //this could be exposed but not really necessarly, (hiden impl)
-bool duel_exist( size_t did ) { return duel_list.find( did ) != duel_list.end(); }
+std::unordered_map<size_t, struct duel> duel_get_list() { return duel_list; } //this could be exposed but not really necessarly, (hiden impl)
+bool duel_exist(size_t did) { return duel_list.find(did) != duel_list.end(); }
 duel& duel_get_duelid(size_t did) { return duel_list.at(did); }
 
 /**
@@ -27,20 +27,20 @@ duel& duel_get_duelid(size_t did) { return duel_list.at(did); }
  * @return duel_list size
  */
 size_t duel_counttotal() {
-	return duel_list.size();  
+	return duel_list.size();
 }
 
 /**
  * Number of active duels (player has accepted the duel)
  * @return active duels
  */
-size_t duel_countactives() 
-{ 
+size_t duel_countactives()
+{
 	size_t count = 0;
-	for ( const auto& lcur : duel_list )
-		if ( lcur.second.members_count > 1 ) ++count;
-	return count; 
-} 
+	for (const auto& lcur : duel_list)
+		if (lcur.second.members_count > 1) ++count;
+	return count;
+}
 
 static void duel_set(const size_t did, struct map_session_data* sd);
 
@@ -55,7 +55,7 @@ void duel_savetime(struct map_session_data* sd)
 	time(&timer);
 	t = localtime(&timer);
 
-	pc_setglobalreg(sd, add_str("PC_LAST_DUEL_TIME"), t->tm_mday*24*60 + t->tm_hour*60 + t->tm_min);
+	pc_setglobalreg(sd, add_str("PC_LAST_DUEL_TIME"), t->tm_mday * 24 * 60 + t->tm_hour * 60 + t->tm_min);
 }
 
 /*
@@ -70,7 +70,7 @@ bool duel_checktime(struct map_session_data* sd)
 	time(&timer);
 	t = localtime(&timer);
 
-	diff = t->tm_mday*24*60 + t->tm_hour*60 + t->tm_min - pc_readglobalreg(sd, add_str("PC_LAST_DUEL_TIME"));
+	diff = t->tm_mday * 24 * 60 + t->tm_hour * 60 + t->tm_min - pc_readglobalreg(sd, add_str("PC_LAST_DUEL_TIME"));
 
 	return !(diff >= 0 && diff < battle_config.duel_time_interval);
 }
@@ -80,7 +80,7 @@ bool duel_checktime(struct map_session_data* sd)
  */
 bool duel_check_player_limit(struct duel& pDuel)
 {
-	if(pDuel.max_players_limit > 0 &&
+	if (pDuel.max_players_limit > 0 &&
 		pDuel.members_count >= pDuel.max_players_limit) {
 		return false;
 	}
@@ -95,7 +95,7 @@ static int duel_showinfo_sub(struct map_session_data* sd, va_list va)
 	struct map_session_data *ssd = va_arg(va, struct map_session_data*);
 	int *p = va_arg(va, int*);
 
-	if (sd->duel_group != ssd->duel_group) 
+	if (sd->duel_group != ssd->duel_group)
 		return 0;
 
 	char output[256];
@@ -110,21 +110,21 @@ static int duel_showinfo_sub(struct map_session_data* sd, va_list va)
  */
 void duel_showinfo(const size_t did, struct map_session_data* sd)
 {
-	//std::lock_guard<std::recursive_mutex> _(duel_list_mutex); //or shared_ptr	
-	if ( !duel_exist( did ) )
+	//std::lock_guard<std::recursive_mutex> _(duel_list_mutex); //or shared_ptr
+	if (!duel_exist(did))
 		return;
 
-	int p=0;
+	int p = 0;
 	char output[256];
 
-	if(duel_list[did].max_players_limit > 0)
-		sprintf(output, msg_txt(sd,370), //" -- Duels: %d/%d, Members: %d/%d, Max players: %d --"
+	if (duel_list[did].max_players_limit > 0)
+		sprintf(output, msg_txt(sd, 370), //" -- Duels: %d/%d, Members: %d/%d, Max players: %d --"
 			did, duel_counttotal(),
 			duel_list[did].members_count,
 			duel_list[did].members_count + duel_list[did].invites_count,
 			duel_list[did].max_players_limit);
 	else
-		sprintf(output, msg_txt(sd,371), //" -- Duels: %d/%d, Members: %d/%d --"
+		sprintf(output, msg_txt(sd, 371), //" -- Duels: %d/%d, Members: %d/%d --"
 			did, duel_counttotal(),
 			duel_list[did].members_count,
 			duel_list[did].members_count + duel_list[did].invites_count);
@@ -159,7 +159,7 @@ static void duel_set(const size_t did, struct map_session_data* sd) {
  */
 size_t duel_create(struct map_session_data* sd, const unsigned int maxpl)
 {
-	static size_t lastID=0;
+	static size_t lastID = 0;
 	lastID++;
 
 	{ //mutex scope
@@ -171,7 +171,7 @@ size_t duel_create(struct map_session_data* sd, const unsigned int maxpl)
 	duel_set(lastID, sd);
 
 	char output[256];
-	strcpy(output, msg_txt(sd,372)); // " -- Duel has been created (@invite/@leave) --"
+	strcpy(output, msg_txt(sd, 372)); // " -- Duel has been created (@invite/@leave) --"
 	clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	//clif_misceffect2(&sd->bl, 159);
@@ -187,7 +187,7 @@ size_t duel_create(struct map_session_data* sd, const unsigned int maxpl)
 bool duel_invite(const size_t did, struct map_session_data* sd, struct map_session_data* target_sd)
 {
 	//std::lock_guard<std::recursive_mutex> _(duel_list_mutex);
-	if ( !duel_exist( did ) )
+	if (!duel_exist(did))
 		return false;
 
 	target_sd->duel_invite = did;
@@ -195,11 +195,11 @@ bool duel_invite(const size_t did, struct map_session_data* sd, struct map_sessi
 
 	char output[256];
 	// " -- Player %s invites %s to duel --"
-	sprintf(output, msg_txt(sd,373), sd->status.name, target_sd->status.name);
+	sprintf(output, msg_txt(sd, 373), sd->status.name, target_sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 	// "Blue -- Player %s invites you to PVP duel (@accept/@reject) --"
-	sprintf(output, msg_txt(sd,374), sd->status.name);
-	clif_broadcast((struct block_list *)target_sd, output, strlen(output)+1, BC_BLUE, SELF);
+	sprintf(output, msg_txt(sd, 374), sd->status.name);
+	clif_broadcast((struct block_list *)target_sd, output, strlen(output) + 1, BC_BLUE, SELF);
 	return true;
 }
 
@@ -224,21 +224,21 @@ static int duel_leave_sub(struct map_session_data* sd, va_list va)
 bool duel_leave(const size_t did, struct map_session_data* sd)
 {
 	//std::lock_guard<std::recursive_mutex> _(duel_list_mutex);
-	if ( !duel_exist( did ) )
+	if (!duel_exist(did))
 		return false;
 
 	duel_list[did].members_count--;
 
-	if(duel_list[did].members_count == 0) {
+	if (duel_list[did].members_count == 0) {
 		map_foreachpc(duel_leave_sub, did);
-		duel_list.erase( did );
+		duel_list.erase(did);
 	}
 	duel_set(0, sd);
 	duel_savetime(sd);
 
 	char output[256];
 	// " <- Player %s has left duel --"
-	sprintf(output, msg_txt(sd,375), sd->status.name);
+	sprintf(output, msg_txt(sd, 375), sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 	clif_map_property(&sd->bl, MAPPROPERTY_NOTHING, SELF);
 	return true;
@@ -253,18 +253,18 @@ bool duel_accept(const size_t did, struct map_session_data* sd)
 {
 	{ //mutex scope
 		//std::lock_guard<std::recursive_mutex> _(duel_list_mutex);
-		if ( !duel_exist( did ) )
+		if (!duel_exist(did))
 			return false;
 
 		duel_list[did].members_count++;
 		duel_list[did].invites_count--;
 	}
-	duel_set( sd->duel_invite, sd );
+	duel_set(sd->duel_invite, sd);
 	sd->duel_invite = 0;
 
 	char output[256];
 	// " -> Player %s has accepted duel --"
-	sprintf(output, msg_txt(sd,376), sd->status.name);
+	sprintf(output, msg_txt(sd, 376), sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	//clif_misceffect2(&sd->bl, 159);
@@ -280,7 +280,7 @@ bool duel_reject(const size_t did, struct map_session_data* sd)
 {
 	{
 		//std::lock_guard<std::recursive_mutex> _(duel_list_mutex);
-		if ( !duel_exist( did ) )
+		if (!duel_exist(did))
 			return false;
 
 		duel_list[did].invites_count--;
@@ -289,7 +289,7 @@ bool duel_reject(const size_t did, struct map_session_data* sd)
 
 	char output[256];
 	// " -- Player %s has rejected duel --"
-	sprintf(output, msg_txt(sd,377), sd->status.name);
+	sprintf(output, msg_txt(sd, 377), sd->status.name);
 	clif_disp_message(&sd->bl, output, strlen(output), DUEL_WOS);
 	return true;
 }

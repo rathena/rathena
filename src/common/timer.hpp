@@ -11,7 +11,7 @@
 typedef int64 t_tick;
 #define PRtf PRId64
 
-static inline t_tick tick_diff( t_tick a, t_tick b ){
+static inline t_tick tick_diff(t_tick a, t_tick b) {
 	return a - b;
 }
 

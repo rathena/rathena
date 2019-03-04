@@ -15,16 +15,16 @@
 class cScopeTimer {
 	struct sPimpl; //this is to avoid long compilation time
 	std::unique_ptr<sPimpl> aPimpl;
-    
+
 	cScopeTimer();
 };
 
-int levenshtein( const std::string &s1, const std::string &s2 );
+int levenshtein(const std::string &s1, const std::string &s2);
 
 namespace rathena {
 	namespace util {
-		template <typename K, typename V> bool map_exists( std::map<K,V>& map, K key ){
-			return map.find( key ) != map.end();
+		template <typename K, typename V> bool map_exists(std::map<K, V>& map, K key) {
+			return map.find(key) != map.end();
 		}
 
 		/**
@@ -33,12 +33,13 @@ namespace rathena {
 		 * @param key: Key wanted
 		 * @return Key value on success or nullptr on failure
 		 */
-		template <typename K, typename V> V* map_find( std::map<K,V>& map, K key ){
-			auto it = map.find( key );
+		template <typename K, typename V> V* map_find(std::map<K, V>& map, K key) {
+			auto it = map.find(key);
 
-			if( it != map.end() ){
+			if (it != map.end()) {
 				return &it->second;
-			}else{
+			}
+			else {
 				return nullptr;
 			}
 		}
@@ -49,12 +50,13 @@ namespace rathena {
 		 * @param key: Key wanted
 		 * @return Key value on success or nullptr on failure
 		 */
-		template <typename K, typename V> std::shared_ptr<V> map_find( std::map<K,std::shared_ptr<V>>& map, K key ){
-			auto it = map.find( key );
+		template <typename K, typename V> std::shared_ptr<V> map_find(std::map<K, std::shared_ptr<V>>& map, K key) {
+			auto it = map.find(key);
 
-			if( it != map.end() ){
+			if (it != map.end()) {
 				return it->second;
-			}else{
+			}
+			else {
 				return nullptr;
 			}
 		}

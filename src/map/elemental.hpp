@@ -20,13 +20,13 @@ const t_tick MIN_ELETHINKTIME = 100;
 
 ///Enum of Elemental Skill Mode
 enum elemental_skillmode : uint8 {
-	EL_SKILLMODE_PASSIVE    = 0x1,
-	EL_SKILLMODE_ASSIST     = 0x2,
+	EL_SKILLMODE_PASSIVE = 0x1,
+	EL_SKILLMODE_ASSIST = 0x2,
 	EL_SKILLMODE_AGGRESSIVE = 0x4,
 };
 
 ///Enum of Elemental ID
-enum elemental_elementalid  : uint16 {
+enum elemental_elementalid : uint16 {
 	ELEMENTALID_AGNI_S = 2114,
 	ELEMENTALID_AGNI_M,
 	ELEMENTALID_AGNI_L,
@@ -99,7 +99,7 @@ t_tick elemental_get_lifetime(struct elemental_data *ed);
 
 int elemental_unlocktarget(struct elemental_data *ed);
 bool elemental_skillnotok(uint16 skill_id, struct elemental_data *ed);
-int elemental_set_target( struct map_session_data *sd, struct block_list *bl );
+int elemental_set_target(struct map_session_data *sd, struct block_list *bl);
 int elemental_clean_single_effect(struct elemental_data *ed, uint16 skill_id);
 int elemental_clean_effect(struct elemental_data *ed);
 int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick tick);

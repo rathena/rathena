@@ -79,9 +79,9 @@ static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
 {
 	struct item_data *item = (struct item_data *)db_data2ptr(data), **dst, **dst2;
 	char *str;
-	str = va_arg(ap,char *);
-	dst = va_arg(ap,struct item_data **);
-	dst2 = va_arg(ap,struct item_data **);
+	str = va_arg(ap, char *);
+	dst = va_arg(ap, struct item_data **);
+	dst2 = va_arg(ap, struct item_data **);
 
 	//Absolute priority to Aegis code name.
 	if (dst != NULL && strcmpi(item->name, str) == 0)
@@ -101,9 +101,9 @@ static int itemdb_searchname_sub(DBKey key, DBData *data, va_list ap)
  *------------------------------------------*/
 static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
 {
-	struct item_data *item = NULL, * item2 = NULL;
+	struct item_data *item = NULL, *item2 = NULL;
 
-	if( !aegis_only )
+	if (!aegis_only)
 		itemdb->foreach(itemdb, itemdb_searchname_sub, str, &item, &item2);
 	else
 		itemdb->foreach(itemdb, itemdb_searchname_sub, str, &item, NULL);
@@ -122,13 +122,13 @@ struct item_data* itemdb_searchname(const char *str)
 static int itemdb_searchname_array_sub(DBKey key, DBData data, va_list ap)
 {
 	struct item_data *item = (struct item_data *)db_data2ptr(&data);
-	char *str = va_arg(ap,char *);
+	char *str = va_arg(ap, char *);
 
-	if (stristr(item->jname,str))
+	if (stristr(item->jname, str))
 		return 0;
-	if (stristr(item->name,str))
+	if (stristr(item->name, str))
 		return 0;
-	return strcmpi(item->jname,str);
+	return strcmpi(item->jname, str);
 }
 
 /*==========================================
@@ -165,7 +165,7 @@ struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_g
 		ShowError("itemdb_get_randgroupitem: Invalid group id %d\n", group_id);
 		return NULL;
 	}
-	if (sub_group > MAX_ITEMGROUP_RANDGROUP+1) {
+	if (sub_group > MAX_ITEMGROUP_RANDGROUP + 1) {
 		ShowError("itemdb_get_randgroupitem: Invalid sub_group %d\n", sub_group);
 		return NULL;
 	}
@@ -174,14 +174,14 @@ struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_g
 		qty = group->must_qty;
 	}
 	else {
-		list = group->random[sub_group-1].data;
-		qty = group->random[sub_group-1].data_qty;
+		list = group->random[sub_group - 1].data;
+		qty = group->random[sub_group - 1].data_qty;
 	}
 	if (!qty) {
 		ShowError("itemdb_get_randgroupitem: No item entries for group id %d and sub group %d\n", group_id, sub_group);
 		return NULL;
 	}
-	return &list[rnd()%qty];
+	return &list[rnd() % qty];
 }
 
 /**
@@ -212,7 +212,7 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, bool identi
 	tmp.nameid = data->nameid;
 	tmp.bound = data->bound;
 	tmp.identify = identify ? identify : itemdb_isidentified(data->nameid);
-	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration*60) : 0;
+	tmp.expire_time = (data->duration) ? (unsigned int)(time(NULL) + data->duration * 60) : 0;
 	if (data->isNamed) {
 		tmp.card[0] = itemdb_isequip(data->nameid) ? CARD0_FORGE : CARD0_CREATE;
 		tmp.card[1] = 0;
@@ -232,7 +232,7 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, bool identi
 		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
 			clif_additem(sd, 0, 0, flag);
 			if (pc_candrop(sd, &tmp))
-				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
+				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0, 0);
 		}
 		else if (!flag && data->isAnnounced)
 			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
@@ -249,13 +249,13 @@ char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_
 	uint16 i = 0;
 	struct s_item_group_db *group;
 
-	nullpo_retr(1,sd);
-	
+	nullpo_retr(1, sd);
+
 	if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
-		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.\n",group_id);
+		ShowError("itemdb_pc_get_itemgroup: Invalid group id '%d' specified.\n", group_id);
 		return 2;
 	}
-	
+
 	// Get the 'must' item(s)
 	if (group->must_qty) {
 		for (i = 0; i < group->must_qty; i++)
@@ -268,7 +268,7 @@ char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_
 		uint16 rand;
 		if (!(&group->random[i]) || !group->random[i].data_qty) //Skip empty random group
 			continue;
-		rand = rnd()%group->random[i].data_qty;
+		rand = rnd() % group->random[i].data_qty;
 		if (!(&group->random[i].data[rand]) || !group->random[i].data[rand].nameid)
 			continue;
 		itemdb_pc_get_itemgroup_sub(sd, identify, &group->random[i].data[rand]);
@@ -282,21 +282,21 @@ char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_
 * @return *item_data if item is exist, or NULL if not
 */
 struct item_data* itemdb_exists(unsigned short nameid) {
-	return ((struct item_data*)uidb_get(itemdb,nameid));
+	return ((struct item_data*)uidb_get(itemdb, nameid));
 }
 
 /// Returns name type of ammunition [Cydh]
-const char *itemdb_typename_ammo (enum e_item_ammo ammo) {
+const char *itemdb_typename_ammo(enum e_item_ammo ammo) {
 	switch (ammo) {
-		case AMMO_ARROW:			return "Arrow";
-		case AMMO_THROWABLE_DAGGER:	return "Throwable Dagger";
-		case AMMO_BULLET:			return "Bullet";
-		case AMMO_SHELL:			return "Shell";
-		case AMMO_GRENADE:			return "Grenade";
-		case AMMO_SHURIKEN:			return "Shuriken";
-		case AMMO_KUNAI:			return "Kunai";
-		case AMMO_CANNONBALL:		return "Cannonball";
-		case AMMO_THROWABLE_ITEM:	return "Throwable Item/Sling Item";
+	case AMMO_ARROW:			return "Arrow";
+	case AMMO_THROWABLE_DAGGER:	return "Throwable Dagger";
+	case AMMO_BULLET:			return "Bullet";
+	case AMMO_SHELL:			return "Shell";
+	case AMMO_GRENADE:			return "Grenade";
+	case AMMO_SHURIKEN:			return "Shuriken";
+	case AMMO_KUNAI:			return "Kunai";
+	case AMMO_CANNONBALL:		return "Cannonball";
+	case AMMO_THROWABLE_ITEM:	return "Throwable Item/Sling Item";
 	}
 	return "Ammunition";
 }
@@ -305,20 +305,20 @@ const char *itemdb_typename_ammo (enum e_item_ammo ammo) {
 /// @param type Type id to retrieve name for ( IT_* ).
 const char* itemdb_typename(enum item_types type)
 {
-	switch(type)
+	switch (type)
 	{
-		case IT_HEALING:        return "Potion/Food";
-		case IT_USABLE:         return "Usable";
-		case IT_ETC:            return "Etc.";
-		case IT_WEAPON:         return "Weapon";
-		case IT_ARMOR:          return "Armor";
-		case IT_CARD:           return "Card";
-		case IT_PETEGG:         return "Pet Egg";
-		case IT_PETARMOR:       return "Pet Accessory";
-		case IT_AMMO:           return "Arrow/Ammunition";
-		case IT_DELAYCONSUME:   return "Delay-Consume Usable";
-		case IT_SHADOWGEAR:     return "Shadow Equipment";
-		case IT_CASH:           return "Cash Usable";
+	case IT_HEALING:        return "Potion/Food";
+	case IT_USABLE:         return "Usable";
+	case IT_ETC:            return "Etc.";
+	case IT_WEAPON:         return "Weapon";
+	case IT_ARMOR:          return "Armor";
+	case IT_CARD:           return "Card";
+	case IT_PETEGG:         return "Pet Egg";
+	case IT_PETARMOR:       return "Pet Accessory";
+	case IT_AMMO:           return "Arrow/Ammunition";
+	case IT_DELAYCONSUME:   return "Delay-Consume Usable";
+	case IT_SHADOWGEAR:     return "Shadow Equipment";
+	case IT_CASH:           return "Cash Usable";
 	}
 	return "Unknown Type";
 }
@@ -336,71 +336,71 @@ static void itemdb_jobid2mapid(uint64 *bclass, uint64 jobmask)
 	bclass[0] = bclass[1] = bclass[2] = 0;
 
 	//Base classes
-	if (jobmask & 1ULL<<JOB_NOVICE) {
+	if (jobmask & 1ULL << JOB_NOVICE) {
 		//Both Novice/Super-Novice are counted with the same ID
-		bclass[0] |= 1ULL<<MAPID_NOVICE;
-		bclass[1] |= 1ULL<<MAPID_NOVICE;
+		bclass[0] |= 1ULL << MAPID_NOVICE;
+		bclass[1] |= 1ULL << MAPID_NOVICE;
 	}
 	for (i = JOB_NOVICE + 1; i <= JOB_THIEF; i++) {
-		if (jobmask & 1ULL <<i)
-			bclass[0] |= 1ULL<<(MAPID_NOVICE + i);
+		if (jobmask & 1ULL << i)
+			bclass[0] |= 1ULL << (MAPID_NOVICE + i);
 	}
 	//2-1 classes
-	if (jobmask & 1ULL<<JOB_KNIGHT)
-		bclass[1] |= 1ULL<<MAPID_SWORDMAN;
-	if (jobmask & 1ULL<<JOB_PRIEST)
-		bclass[1] |= 1ULL<<MAPID_ACOLYTE;
-	if (jobmask & 1ULL<<JOB_WIZARD)
-		bclass[1] |= 1ULL<<MAPID_MAGE;
-	if (jobmask & 1ULL<<JOB_BLACKSMITH)
-		bclass[1] |= 1ULL<<MAPID_MERCHANT;
-	if (jobmask & 1ULL<<JOB_HUNTER)
-		bclass[1] |= 1ULL<<MAPID_ARCHER;
-	if (jobmask & 1ULL<<JOB_ASSASSIN)
-		bclass[1] |= 1ULL<<MAPID_THIEF;
+	if (jobmask & 1ULL << JOB_KNIGHT)
+		bclass[1] |= 1ULL << MAPID_SWORDMAN;
+	if (jobmask & 1ULL << JOB_PRIEST)
+		bclass[1] |= 1ULL << MAPID_ACOLYTE;
+	if (jobmask & 1ULL << JOB_WIZARD)
+		bclass[1] |= 1ULL << MAPID_MAGE;
+	if (jobmask & 1ULL << JOB_BLACKSMITH)
+		bclass[1] |= 1ULL << MAPID_MERCHANT;
+	if (jobmask & 1ULL << JOB_HUNTER)
+		bclass[1] |= 1ULL << MAPID_ARCHER;
+	if (jobmask & 1ULL << JOB_ASSASSIN)
+		bclass[1] |= 1ULL << MAPID_THIEF;
 	//2-2 classes
-	if (jobmask & 1ULL<<JOB_CRUSADER)
-		bclass[2] |= 1ULL<<MAPID_SWORDMAN;
-	if (jobmask & 1ULL<<JOB_MONK)
-		bclass[2] |= 1ULL<<MAPID_ACOLYTE;
-	if (jobmask & 1ULL<<JOB_SAGE)
-		bclass[2] |= 1ULL<<MAPID_MAGE;
-	if (jobmask & 1ULL<<JOB_ALCHEMIST)
-		bclass[2] |= 1ULL<<MAPID_MERCHANT;
-	if (jobmask & 1ULL<<JOB_BARD)
-		bclass[2] |= 1ULL<<MAPID_ARCHER;
-//	Bard/Dancer share the same slot now.
-//	if (jobmask & 1ULL<<JOB_DANCER)
-//		bclass[2] |= 1ULL<<MAPID_ARCHER;
-	if (jobmask & 1ULL<<JOB_ROGUE)
-		bclass[2] |= 1ULL<<MAPID_THIEF;
+	if (jobmask & 1ULL << JOB_CRUSADER)
+		bclass[2] |= 1ULL << MAPID_SWORDMAN;
+	if (jobmask & 1ULL << JOB_MONK)
+		bclass[2] |= 1ULL << MAPID_ACOLYTE;
+	if (jobmask & 1ULL << JOB_SAGE)
+		bclass[2] |= 1ULL << MAPID_MAGE;
+	if (jobmask & 1ULL << JOB_ALCHEMIST)
+		bclass[2] |= 1ULL << MAPID_MERCHANT;
+	if (jobmask & 1ULL << JOB_BARD)
+		bclass[2] |= 1ULL << MAPID_ARCHER;
+	//	Bard/Dancer share the same slot now.
+	//	if (jobmask & 1ULL<<JOB_DANCER)
+	//		bclass[2] |= 1ULL<<MAPID_ARCHER;
+	if (jobmask & 1ULL << JOB_ROGUE)
+		bclass[2] |= 1ULL << MAPID_THIEF;
 	//Special classes that don't fit above.
-	if (jobmask & 1ULL<<21) //Taekwon
-		bclass[0] |= 1ULL<<MAPID_TAEKWON;
-	if (jobmask & 1ULL<<22) //Star Gladiator
-		bclass[1] |= 1ULL<<MAPID_TAEKWON;
-	if (jobmask & 1ULL<<23) //Soul Linker
-		bclass[2] |= 1ULL<<MAPID_TAEKWON;
-	if (jobmask & 1ULL<<JOB_GUNSLINGER) { // Rebellion job can equip Gunslinger equips.
-		bclass[0] |= 1ULL<<MAPID_GUNSLINGER;
-		bclass[1] |= 1ULL<<MAPID_GUNSLINGER;
+	if (jobmask & 1ULL << 21) //Taekwon
+		bclass[0] |= 1ULL << MAPID_TAEKWON;
+	if (jobmask & 1ULL << 22) //Star Gladiator
+		bclass[1] |= 1ULL << MAPID_TAEKWON;
+	if (jobmask & 1ULL << 23) //Soul Linker
+		bclass[2] |= 1ULL << MAPID_TAEKWON;
+	if (jobmask & 1ULL << JOB_GUNSLINGER) { // Rebellion job can equip Gunslinger equips.
+		bclass[0] |= 1ULL << MAPID_GUNSLINGER;
+		bclass[1] |= 1ULL << MAPID_GUNSLINGER;
 	}
-	if (jobmask & 1ULL<<JOB_NINJA) { //Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
-		bclass[0] |= 1ULL<<MAPID_NINJA;
-		bclass[1] |= 1ULL<<MAPID_NINJA;
+	if (jobmask & 1ULL << JOB_NINJA) { //Kagerou/Oboro jobs can equip Ninja equips. [Rytech]
+		bclass[0] |= 1ULL << MAPID_NINJA;
+		bclass[1] |= 1ULL << MAPID_NINJA;
 	}
-	if (jobmask & 1ULL<<26) //Bongun/Munak
-		bclass[0] |= 1ULL<<MAPID_GANGSI;
-	if (jobmask & 1ULL<<27) //Death Knight
-		bclass[1] |= 1ULL<<MAPID_GANGSI;
-	if (jobmask & 1ULL<<28) //Dark Collector
-		bclass[2] |= 1ULL<<MAPID_GANGSI;
-	if (jobmask & 1ULL<<29) //Kagerou / Oboro
-		bclass[1] |= 1ULL<<MAPID_NINJA;
-	if (jobmask & 1ULL<<30) //Rebellion
-		bclass[1] |= 1ULL<<MAPID_GUNSLINGER;
-	if (jobmask & 1ULL<<31) //Summoner
-		bclass[0] |= 1ULL<<MAPID_SUMMONER;
+	if (jobmask & 1ULL << 26) //Bongun/Munak
+		bclass[0] |= 1ULL << MAPID_GANGSI;
+	if (jobmask & 1ULL << 27) //Death Knight
+		bclass[1] |= 1ULL << MAPID_GANGSI;
+	if (jobmask & 1ULL << 28) //Dark Collector
+		bclass[2] |= 1ULL << MAPID_GANGSI;
+	if (jobmask & 1ULL << 29) //Kagerou / Oboro
+		bclass[1] |= 1ULL << MAPID_NINJA;
+	if (jobmask & 1ULL << 30) //Rebellion
+		bclass[1] |= 1ULL << MAPID_GUNSLINGER;
+	if (jobmask & 1ULL << 31) //Summoner
+		bclass[0] |= 1ULL << MAPID_SUMMONER;
 }
 
 /**
@@ -456,13 +456,13 @@ struct item_data* itemdb_search(unsigned short nameid) {
 bool itemdb_isequip2(struct item_data *id) {
 	nullpo_ret(id);
 	switch (id->type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_AMMO:
-		case IT_SHADOWGEAR:
-			return true;
-		default:
-			return false;
+	case IT_WEAPON:
+	case IT_ARMOR:
+	case IT_AMMO:
+	case IT_SHADOWGEAR:
+		return true;
+	default:
+		return false;
 	}
 }
 
@@ -473,59 +473,58 @@ bool itemdb_isequip2(struct item_data *id) {
 bool itemdb_isstackable2(struct item_data *id)
 {
 	nullpo_ret(id);
-	switch(id->type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_PETEGG:
-		case IT_PETARMOR:
-		case IT_SHADOWGEAR:
-			return false;
-		default:
-			return true;
+	switch (id->type) {
+	case IT_WEAPON:
+	case IT_ARMOR:
+	case IT_PETEGG:
+	case IT_PETARMOR:
+	case IT_SHADOWGEAR:
+		return false;
+	default:
+		return true;
 	}
 }
-
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
  *------------------------------------------*/
 bool itemdb_isdropable_sub(struct item_data *item, int gmlv, int unused) {
-	return (item && (!(item->flag.trade_restriction&1) || gmlv >= item->gm_lv_trade_override));
+	return (item && (!(item->flag.trade_restriction & 1) || gmlv >= item->gm_lv_trade_override));
 }
 
 bool itemdb_cantrade_sub(struct item_data* item, int gmlv, int gmlv2) {
-	return (item && (!(item->flag.trade_restriction&2) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
+	return (item && (!(item->flag.trade_restriction & 2) || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
 bool itemdb_canpartnertrade_sub(struct item_data* item, int gmlv, int gmlv2) {
-	return (item && (item->flag.trade_restriction&4 || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
+	return (item && (item->flag.trade_restriction & 4 || gmlv >= item->gm_lv_trade_override || gmlv2 >= item->gm_lv_trade_override));
 }
 
 bool itemdb_cansell_sub(struct item_data* item, int gmlv, int unused) {
-	return (item && (!(item->flag.trade_restriction&8) || gmlv >= item->gm_lv_trade_override));
+	return (item && (!(item->flag.trade_restriction & 8) || gmlv >= item->gm_lv_trade_override));
 }
 
 bool itemdb_cancartstore_sub(struct item_data* item, int gmlv, int unused) {
-	return (item && (!(item->flag.trade_restriction&16) || gmlv >= item->gm_lv_trade_override));
+	return (item && (!(item->flag.trade_restriction & 16) || gmlv >= item->gm_lv_trade_override));
 }
 
 bool itemdb_canstore_sub(struct item_data* item, int gmlv, int unused) {
-	return (item && (!(item->flag.trade_restriction&32) || gmlv >= item->gm_lv_trade_override));
+	return (item && (!(item->flag.trade_restriction & 32) || gmlv >= item->gm_lv_trade_override));
 }
 
 bool itemdb_canguildstore_sub(struct item_data* item, int gmlv, int unused) {
-	return (item && (!(item->flag.trade_restriction&64) || gmlv >= item->gm_lv_trade_override));
+	return (item && (!(item->flag.trade_restriction & 64) || gmlv >= item->gm_lv_trade_override));
 }
 
 bool itemdb_canmail_sub(struct item_data* item, int gmlv, int unused) {
-	return (item && (!(item->flag.trade_restriction&128) || gmlv >= item->gm_lv_trade_override));
+	return (item && (!(item->flag.trade_restriction & 128) || gmlv >= item->gm_lv_trade_override));
 }
 
 bool itemdb_canauction_sub(struct item_data* item, int gmlv, int unused) {
-	return (item && (!(item->flag.trade_restriction&256) || gmlv >= item->gm_lv_trade_override));
+	return (item && (!(item->flag.trade_restriction & 256) || gmlv >= item->gm_lv_trade_override));
 }
 
-bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(struct item_data*, int, int))
+bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool(*func)(struct item_data*, int, int))
 {
 	struct item_data* item_data = itemdb_search(item->nameid);
 	int i;
@@ -533,10 +532,10 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 	if (!func(item_data, gmlv, gmlv2))
 		return false;
 
-	if(item_data->slot == 0 || itemdb_isspecial(item->card[0]))
+	if (item_data->slot == 0 || itemdb_isspecial(item->card[0]))
 		return true;
 
-	for(i = 0; i < item_data->slot; i++) {
+	for (i = 0; i < item_data->slot; i++) {
 		if (!item->card[i]) continue;
 		if (!func(itemdb_search(item->card[i]), gmlv, gmlv2))
 			return false;
@@ -548,15 +547,15 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 * @param nameid ID of item
 */
 char itemdb_isidentified(unsigned short nameid) {
-	int type=itemdb_type(nameid);
+	int type = itemdb_type(nameid);
 	switch (type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_PETARMOR:
-		case IT_SHADOWGEAR:
-			return 0;
-		default:
-			return 1;
+	case IT_WEAPON:
+	case IT_ARMOR:
+	case IT_PETARMOR:
+	case IT_SHADOWGEAR:
+		return 0;
+	default:
+		return 1;
 	}
 }
 
@@ -569,7 +568,7 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 
 	nameid = atoi(str[0]);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	if ((id = itemdb_exists(nameid)) == NULL)
 	{
 		ShowWarning("itemdb_read_itemavail: Invalid item id %hu.\n", nameid);
 		return false;
@@ -577,7 +576,7 @@ static bool itemdb_read_itemavail(char* str[], int columns, int current) {
 
 	sprite = atoi(str[1]);
 
-	if( sprite > 0 )
+	if (sprite > 0)
 	{
 		id->flag.available = 1;
 		id->view_id = sprite;
@@ -604,36 +603,38 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	memset(&entry, 0, sizeof(entry));
 	entry.amount = 1;
 	entry.bound = BOUND_NONE;
-	
+
 	str[0] = trim(str[0]);
-	if( ISDIGIT(str[0][0]) ){
+	if (ISDIGIT(str[0][0])) {
 		group_id = atoi(str[0]);
-	}else{
+	}
+	else {
 		// Try to parse group id as constant
 		script_get_constant(str[0], &group_id);
 	}
 
 	// Check the group id
-	if( group_id < 0 ){
-		ShowWarning( "itemdb_read_group: Invalid group ID '%s'\n", str[0] );
+	if (group_id < 0) {
+		ShowWarning("itemdb_read_group: Invalid group ID '%s'\n", str[0]);
 		return false;
 	}
 
 	// Remove from DB
-	if( strcmpi( str[1], "clear" ) == 0 ){
+	if (strcmpi(str[1], "clear") == 0) {
 		DBData data;
 
-		if( itemdb_group->remove( itemdb_group, db_ui2key(group_id), &data ) ){
+		if (itemdb_group->remove(itemdb_group, db_ui2key(group_id), &data)) {
 			itemdb_group_free2(db_ui2key(group_id), &data);
-			ShowNotice( "itemdb_read_group: Item Group '%s' has been cleared.\n", str[0] );
+			ShowNotice("itemdb_read_group: Item Group '%s' has been cleared.\n", str[0]);
 			return true;
-		}else{
-			ShowWarning( "itemdb_read_group: Item Group '%s' has not been cleared, because it did not exist.\n", str[0] );
+		}
+		else {
+			ShowWarning("itemdb_read_group: Item Group '%s' has not been cleared, because it did not exist.\n", str[0]);
 			return false;
 		}
 	}
 
-	if( columns < 3 ){
+	if (columns < 3) {
 		ShowError("itemdb_read_group: Insufficient columns (found %d, need at least 3).\n", columns);
 		return false;
 	}
@@ -641,19 +642,20 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	// Checking sub group
 	prob = atoi(str[2]);
 
-	if( columns > 4 ){
+	if (columns > 4) {
 		rand_group = atoi(str[4]);
 
-		if( rand_group < 0 || rand_group > MAX_ITEMGROUP_RANDGROUP ){
-			ShowWarning( "itemdb_read_group: Invalid sub group '%d' for group '%s'\n", rand_group, str[0] );
+		if (rand_group < 0 || rand_group > MAX_ITEMGROUP_RANDGROUP) {
+			ShowWarning("itemdb_read_group: Invalid sub group '%d' for group '%s'\n", rand_group, str[0]);
 			return false;
 		}
-	}else{
+	}
+	else {
 		rand_group = 1;
 	}
 
-	if( rand_group != 0 && prob < 1 ){
-		ShowWarning( "itemdb_read_group: Random item must have a probability. Group '%s'\n", str[0] );
+	if (rand_group != 0 && prob < 1) {
+		ShowWarning("itemdb_read_group: Random item must have a probability. Group '%s'\n", str[0]);
 		return false;
 	}
 
@@ -661,26 +663,27 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 	str[1] = trim(str[1]);
 
 	// Check if the item can be found by id
-	if( ( entry.nameid = atoi(str[1]) ) <= 0 || !itemdb_exists( entry.nameid ) ){
+	if ((entry.nameid = atoi(str[1])) <= 0 || !itemdb_exists(entry.nameid)) {
 		// Otherwise look it up by name
 		struct item_data *id = itemdb_searchname(str[1]);
 
-		if( id ){
+		if (id) {
 			// Found the item with a name lookup
 			entry.nameid = id->nameid;
-		}else{
-			ShowWarning( "itemdb_read_group: Non-existant item '%s'\n", str[1] );
+		}
+		else {
+			ShowWarning("itemdb_read_group: Non-existant item '%s'\n", str[1]);
 			return false;
 		}
 	}
 
-	if( columns > 3 ) entry.amount = cap_value(atoi(str[3]),1,MAX_AMOUNT);
-	if( columns > 5 ) entry.isAnnounced= atoi(str[5]) > 0;
-	if( columns > 6 ) entry.duration = cap_value(atoi(str[6]),0,UINT16_MAX);
-	if( columns > 7 ) entry.GUID = atoi(str[7]) > 0;
-	if( columns > 8 ) entry.bound = cap_value(atoi(str[8]),BOUND_NONE,BOUND_MAX-1);
-	if( columns > 9 ) entry.isNamed = atoi(str[9]) > 0;
-	
+	if (columns > 3) entry.amount = cap_value(atoi(str[3]), 1, MAX_AMOUNT);
+	if (columns > 5) entry.isAnnounced = atoi(str[5]) > 0;
+	if (columns > 6) entry.duration = cap_value(atoi(str[6]), 0, UINT16_MAX);
+	if (columns > 7) entry.GUID = atoi(str[7]) > 0;
+	if (columns > 8) entry.bound = cap_value(atoi(str[8]), BOUND_NONE, BOUND_MAX - 1);
+	if (columns > 9) entry.isNamed = atoi(str[9]) > 0;
+
 	if (!(group = (struct s_item_group_db *) uidb_get(itemdb_group, group_id))) {
 		CREATE(group, struct s_item_group_db, 1);
 		group->id = group_id;
@@ -689,9 +692,9 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 
 	// Must item (rand_group == 0), place it here
 	if (!rand_group) {
-		RECREATE(group->must, struct s_item_group_entry, group->must_qty+1);
+		RECREATE(group->must, struct s_item_group_entry, group->must_qty + 1);
 		group->must[group->must_qty++] = entry;
-		
+
 		// If 'must' item isn't set as random item, skip the next process
 		if (!prob) {
 			return true;
@@ -702,13 +705,13 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		rand_group -= 1;
 
 	random = &group->random[rand_group];
-	
-	RECREATE(random->data, struct s_item_group_entry, random->data_qty+prob);
+
+	RECREATE(random->data, struct s_item_group_entry, random->data_qty + prob);
 
 	// Put the entry to its rand_group
-	for (j = random->data_qty; j < random->data_qty+prob; j++)
+	for (j = random->data_qty; j < random->data_qty + prob; j++)
 		random->data[j] = entry;
-	
+
 	random->data_qty += prob;
 	return true;
 }
@@ -724,7 +727,7 @@ static bool itemdb_read_noequip(char* str[], int columns, int current) {
 	nameid = atoi(str[0]);
 	flag = atoi(str[1]);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	if ((id = itemdb_exists(nameid)) == NULL)
 	{
 		ShowWarning("itemdb_read_noequip: Invalid item id %hu.\n", nameid);
 		return false;
@@ -747,7 +750,7 @@ static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
 
 	nameid = atoi(str[0]);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	if ((id = itemdb_exists(nameid)) == NULL)
 	{
 		//ShowWarning("itemdb_read_itemtrade: Invalid item id %d.\n", nameid);
 		//return false;
@@ -758,11 +761,11 @@ static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
 	flag = atoi(str[1]);
 	gmlv = atoi(str[2]);
 
-	if( flag > 511 ) {//Check range
+	if (flag > 511) {//Check range
 		ShowWarning("itemdb_read_itemtrade: Invalid trading mask %hu for item id %hu.\n", flag, nameid);
 		return false;
 	}
-	if( gmlv < 1 )
+	if (gmlv < 1)
 	{
 		ShowWarning("itemdb_read_itemtrade: Invalid override GM level %hu for item id %hu.\n", gmlv, nameid);
 		return false;
@@ -784,7 +787,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 
 	nameid = atoi(str[0]);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	if ((id = itemdb_exists(nameid)) == NULL)
 	{
 		ShowWarning("itemdb_read_itemdelay: Invalid item id %hu.\n", nameid);
 		return false;
@@ -792,7 +795,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 
 	delay = atoi(str[1]);
 
-	if( delay < 0 )
+	if (delay < 0)
 	{
 		ShowWarning("itemdb_read_itemdelay: Invalid delay %d for item id %hu.\n", delay, nameid);
 		return false;
@@ -802,12 +805,12 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 
 	if (columns == 2)
 		id->delay_sc = SC_NONE;
-	else if( ISDIGIT(str[2][0]) )
+	else if (ISDIGIT(str[2][0]))
 		id->delay_sc = atoi(str[2]);
-	else{ // Try read sc group id from const db
+	else { // Try read sc group id from const db
 		int constant;
 
-		if( !script_get_constant(trim(str[2]), &constant) ){
+		if (!script_get_constant(trim(str[2]), &constant)) {
 			ShowWarning("itemdb_read_itemdelay: Invalid sc group \"%s\" for item id %hu.\n", str[2], nameid);
 			return false;
 		}
@@ -828,13 +831,13 @@ static bool itemdb_read_stack(char* fields[], int columns, int current) {
 
 	nameid = (unsigned short)strtoul(fields[0], NULL, 10);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	if ((id = itemdb_exists(nameid)) == NULL)
 	{
 		ShowWarning("itemdb_read_stack: Unknown item id '%hu'.\n", nameid);
 		return false;
 	}
 
-	if( !itemdb_isstackable2(id) )
+	if (!itemdb_isstackable2(id))
 	{
 		ShowWarning("itemdb_read_stack: Item id '%hu' is not stackable.\n", nameid);
 		return false;
@@ -843,16 +846,16 @@ static bool itemdb_read_stack(char* fields[], int columns, int current) {
 	amount = (unsigned short)strtoul(fields[1], NULL, 10);
 	type = strtoul(fields[2], NULL, 10);
 
-	if( !amount )
+	if (!amount)
 	{// ignore
 		return true;
 	}
 
-	id->stack.amount       = amount;
-	id->stack.inventory    = (type&1)!=0;
-	id->stack.cart         = (type&2)!=0;
-	id->stack.storage      = (type&4)!=0;
-	id->stack.guildstorage = (type&8)!=0;
+	id->stack.amount = amount;
+	id->stack.inventory = (type & 1) != 0;
+	id->stack.cart = (type & 2) != 0;
+	id->stack.storage = (type & 4) != 0;
+	id->stack.guildstorage = (type & 8) != 0;
 
 	return true;
 }
@@ -866,13 +869,13 @@ static bool itemdb_read_buyingstore(char* fields[], int columns, int current) {
 
 	nameid = atoi(fields[0]);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL )
+	if ((id = itemdb_exists(nameid)) == NULL)
 	{
 		ShowWarning("itemdb_read_buyingstore: Invalid item id %hu.\n", nameid);
 		return false;
 	}
 
-	if( !itemdb_isstackable2(id) )
+	if (!itemdb_isstackable2(id))
 	{
 		ShowWarning("itemdb_read_buyingstore: Non-stackable item id %hu cannot be enabled for buying store.\n", nameid);
 		return false;
@@ -892,7 +895,7 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 
 	nameid = atoi(fields[0]);
 
-	if( ( id = itemdb_exists(nameid) ) == NULL ) {
+	if ((id = itemdb_exists(nameid)) == NULL) {
 		ShowWarning("itemdb_read_nouse: Invalid item id %hu.\n", nameid);
 		return false;
 	}
@@ -922,28 +925,33 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 		ShowError("itemdb_read_flag: Invalid item id %hu\n", nameid);
 		return true;
 	}
-	
+
 	flag = abs(atoi(fields[1]));
 	set = atoi(fields[1]) > 0;
 
-	if (flag&1) id->flag.dead_branch = set ? 1 : 0;
-	if (flag&2) id->flag.group = set ? 1 : 0;
-	if (flag&4 && itemdb_isstackable2(id)) id->flag.guid = set ? 1 : 0;
-	if (flag&8) id->flag.bindOnEquip = true;
-	if (flag&16) id->flag.broadcast = 1;
-	if (flag&32) id->flag.delay_consume = 2;
+	if (flag & 1) id->flag.dead_branch = set ? 1 : 0;
+	if (flag & 2) id->flag.group = set ? 1 : 0;
+	if (flag & 4 && itemdb_isstackable2(id)) id->flag.guid = set ? 1 : 0;
+	if (flag & 8) id->flag.bindOnEquip = true;
+	if (flag & 16) id->flag.broadcast = 1;
+	if (flag & 32) id->flag.delay_consume = 2;
 
-	if( flag & 64 ){
+	if (flag & 64) {
 		id->flag.dropEffect = 1;
-	}else if( flag & 128 ){
+	}
+	else if (flag & 128) {
 		id->flag.dropEffect = 2;
-	}else if( flag & 256 ){
+	}
+	else if (flag & 256) {
 		id->flag.dropEffect = 3;
-	}else if( flag & 512 ){
+	}
+	else if (flag & 512) {
 		id->flag.dropEffect = 4;
-	}else if( flag & 1024 ){
+	}
+	else if (flag & 1024) {
 		id->flag.dropEffect = 5;
-	}else if( flag & 2048 ){
+	}
+	else if (flag & 2048) {
 		id->flag.dropEffect = 6;
 	}
 
@@ -953,21 +961,21 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 /**
  * @return: amount of retrieved entries.
  **/
-static int itemdb_combo_split_atoi (char *str, int *val) {
+static int itemdb_combo_split_atoi(char *str, int *val) {
 	int i;
 
-	for (i=0; i<MAX_ITEMS_PER_COMBO; i++) {
+	for (i = 0; i < MAX_ITEMS_PER_COMBO; i++) {
 		if (!str) break;
 
 		val[i] = atoi(str);
 
-		str = strchr(str,':');
+		str = strchr(str, ':');
 
 		if (str)
-			*str++=0;
+			*str++ = 0;
 	}
 
-	if( i == 0 ) //No data found.
+	if (i == 0) //No data found.
 		return 0;
 
 	return i;
@@ -986,12 +994,12 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 	sprintf(path, "%s/%s", basedir, "item_combo_db.txt");
 
 	if ((fp = fopen(path, "r")) == NULL) {
-		if(silent==0) ShowError("itemdb_read_combos: File not found \"%s\".\n", path);
+		if (silent == 0) ShowError("itemdb_read_combos: File not found \"%s\".\n", path);
 		return;
 	}
 
 	// process rows one by one
-	while(fgets(line, sizeof(line), fp)) {
+	while (fgets(line, sizeof(line), fp)) {
 		char *str[2], *p;
 
 		lines++;
@@ -1008,7 +1016,7 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 		if (*p == '\0')
 			continue;// empty line
 
-		if (!strchr(p,','))
+		if (!strchr(p, ','))
 		{
 			/* is there even a single column? */
 			ShowError("itemdb_read_combos: Insufficient columns in line %d of \"%s\", skipping.\n", lines, path);
@@ -1016,12 +1024,12 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 		}
 
 		str[0] = p;
-		p = strchr(p,',');
+		p = strchr(p, ',');
 		*p = '\0';
 		p++;
 
 		str[1] = p;
-		p = strchr(p,',');
+		p = strchr(p, ',');
 		p++;
 
 		if (str[1][0] != '{') {
@@ -1029,73 +1037,76 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 			continue;
 		}
 		/* no ending key anywhere (missing \}\) */
-		if ( str[1][strlen(str[1])-1] != '}' ) {
+		if (str[1][strlen(str[1]) - 1] != '}') {
 			ShowError("itemdb_read_combos(#2): Invalid format (Script column) in line %d of \"%s\", skipping.\n", lines, path);
 			continue;
-		} else {
+		}
+		else {
 			int items[MAX_ITEMS_PER_COMBO];
 			int v = 0, retcount = 0;
 			struct item_data * id = NULL;
 			int idx = 0;
-			if((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
+			if ((retcount = itemdb_combo_split_atoi(str[0], items)) < 2) {
 				ShowError("itemdb_read_combos: line %d of \"%s\" doesn't have enough items to make for a combo (min:2), skipping.\n", lines, path);
 				continue;
 			}
 			/* validate */
-			for(v = 0; v < retcount; v++) {
-				if( !itemdb_exists(items[v]) ) {
-					ShowError("itemdb_read_combos: line %d of \"%s\" contains unknown item ID %d, skipping.\n", lines, path,items[v]);
+			for (v = 0; v < retcount; v++) {
+				if (!itemdb_exists(items[v])) {
+					ShowError("itemdb_read_combos: line %d of \"%s\" contains unknown item ID %d, skipping.\n", lines, path, items[v]);
 					break;
 				}
 			}
 			/* failed at some item */
-			if( v < retcount )
+			if (v < retcount)
 				continue;
 			id = itemdb_exists(items[0]);
 			idx = id->combos_count;
 			/* first entry, create */
-			if( id->combos == NULL ) {
+			if (id->combos == NULL) {
 				CREATE(id->combos, struct item_combo*, 1);
 				id->combos_count = 1;
-			} else {
+			}
+			else {
 				RECREATE(id->combos, struct item_combo*, ++id->combos_count);
 			}
-			CREATE(id->combos[idx],struct item_combo,1);
-			id->combos[idx]->nameid = (unsigned short*)aMalloc( retcount * sizeof(unsigned short) );
+			CREATE(id->combos[idx], struct item_combo, 1);
+			id->combos[idx]->nameid = (unsigned short*)aMalloc(retcount * sizeof(unsigned short));
 			id->combos[idx]->count = retcount;
 			id->combos[idx]->script = parse_script(str[1], path, lines, 0);
 			id->combos[idx]->id = count;
 			id->combos[idx]->isRef = false;
 			/* populate ->nameid field */
-			for( v = 0; v < retcount; v++ ) {
+			for (v = 0; v < retcount; v++) {
 				id->combos[idx]->nameid[v] = items[v];
 			}
 
 			/* populate the children to refer to this combo */
-			for( v = 1; v < retcount; v++ ) {
+			for (v = 1; v < retcount; v++) {
 				struct item_data * it;
 				int index;
 				it = itemdb_exists(items[v]);
 				index = it->combos_count;
-				if( it->combos == NULL ) {
+				if (it->combos == NULL) {
 					CREATE(it->combos, struct item_combo*, 1);
 					it->combos_count = 1;
-				} else {
+				}
+				else {
 					RECREATE(it->combos, struct item_combo*, ++it->combos_count);
 				}
-				CREATE(it->combos[index],struct item_combo,1);
+				CREATE(it->combos[index], struct item_combo, 1);
 				/* we copy previously alloc'd pointers and just set it to reference */
-				memcpy(it->combos[index],id->combos[idx],sizeof(struct item_combo));
+				memcpy(it->combos[index], id->combos[idx], sizeof(struct item_combo));
 				/* we flag this way to ensure we don't double-dealloc same data */
 				it->combos[index]->isRef = true;
 			}
-			uidb_put(itemdb_combo,id->combos[idx]->id,id->combos[idx]);
+			uidb_put(itemdb_combo, id->combos[idx]->id, id->combos[idx]);
 		}
 		count++;
 	}
 	fclose(fp);
 
-	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n",count,path);
+	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, path);
 
 	return;
 }
@@ -1134,7 +1145,7 @@ bool itemdb_parse_roulette_db(void)
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%hu' in level '%d'\n", item_id, level);
 				continue;
 			}
-			if (amount < 1 || amount > MAX_AMOUNT){
+			if (amount < 1 || amount > MAX_AMOUNT) {
 				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item ID '%hu' in level '%d'\n", amount, item_id, level);
 				continue;
 			}
@@ -1239,18 +1250,18 @@ static char itemdb_gendercheck(struct item_data *id)
 static void itemdb_re_split_atoi(char *str, int *val1, int *val2) {
 	int i, val[2];
 
-	for (i=0; i<2; i++) {
+	for (i = 0; i < 2; i++) {
 		if (!str) break;
 		val[i] = atoi(str);
-		str = strchr(str,':');
+		str = strchr(str, ':');
 		if (str)
-			*str++=0;
+			*str++ = 0;
 	}
-	if( i == 0 ) {
+	if (i == 0) {
 		*val1 = *val2 = 0;
 		return;//no data found
 	}
-	if( i == 1 ) {//Single Value
+	if (i == 1) {//Single Value
 		*val1 = val[0];
 		*val2 = 0;
 		return;
@@ -1275,7 +1286,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	unsigned short nameid;
 	struct item_data* id;
 
-	if( atoi(str[0]) <= 0 || atoi(str[0]) >= MAX_ITEMID || atoi(str[0]) == dummy_item->nameid )
+	if (atoi(str[0]) <= 0 || atoi(str[0]) >= MAX_ITEMID || atoi(str[0]) == dummy_item->nameid)
 	{
 		ShowWarning("itemdb_parse_dbrow: Invalid id %d in line %d of \"%s\", skipping.\n", atoi(str[0]), line, source);
 		return false;
@@ -1285,7 +1296,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	//ID,Name,Jname,Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Job Upper,Gender,Loc,wLV,eLV,refineable,View
 	if (!(id = itemdb_exists(nameid))) {
 		// Checks if the Itemname is already taken by another id
-		if( itemdb_searchname1(str[1], true) != NULL )
+		if (itemdb_searchname1(str[1], true) != NULL)
 			ShowWarning("itemdb_parse_dbrow: Duplicate item name for \"%s\"\n", str[1]);
 
 		// Adds a new Item ID
@@ -1297,7 +1308,7 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 
 	id->type = atoi(str[3]);
 
-	if( id->type < 0 || id->type == IT_UNKNOWN || id->type == IT_UNKNOWN2 || ( id->type > IT_SHADOWGEAR && id->type < IT_CASH ) || id->type >= IT_MAX )
+	if (id->type < 0 || id->type == IT_UNKNOWN || id->type == IT_UNKNOWN2 || (id->type > IT_SHADOWGEAR && id->type < IT_CASH) || id->type >= IT_MAX)
 	{// catch invalid item types
 		ShowWarning("itemdb_parse_dbrow: Invalid item type %d for item %hu. IT_ETC will be used.\n", id->type, nameid);
 		id->type = IT_ETC;
@@ -1307,17 +1318,18 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	{	//Items that are consumed only after target confirmation
 		id->type = IT_USABLE;
 		id->flag.delay_consume = 1;
-	} else //In case of an itemdb reload and the item type changed.
+	}
+	else //In case of an itemdb reload and the item type changed.
 		id->flag.delay_consume = 0;
 
 	//When a particular price is not given, we should base it off the other one
 	//(it is important to make a distinction between 'no price' and 0z)
-	if ( str[4][0] )
+	if (str[4][0])
 		id->value_buy = atoi(str[4]);
 	else
 		id->value_buy = atoi(str[5]) * 2;
 
-	if ( str[5][0] )
+	if (str[5][0])
 		id->value_sell = atoi(str[5]);
 	else
 		id->value_sell = id->value_buy / 2;
@@ -1329,13 +1341,13 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 		id->value_sell = 10;
 	} else
 	*/
-	if (id->value_buy/124. < id->value_sell/75.)
+	if (id->value_buy / 124. < id->value_sell / 75.)
 		ShowWarning("itemdb_parse_dbrow: Buying/Selling [%d/%d] price of item %hu (%s) allows Zeny making exploit  through buying/selling at discounted/overcharged prices!\n",
 			id->value_buy, id->value_sell, nameid, id->jname);
 
 	id->weight = atoi(str[6]);
 #ifdef RENEWAL
-	itemdb_re_split_atoi(str[7],&id->atk,&id->matk);
+	itemdb_re_split_atoi(str[7], &id->atk, &id->matk);
 #else
 	id->atk = atoi(str[7]);
 #endif
@@ -1349,9 +1361,9 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 		id->slot = MAX_SLOTS;
 	}
 
-	itemdb_jobid2mapid(id->class_base, (uint64)strtoull(str[11],NULL,0));
+	itemdb_jobid2mapid(id->class_base, (uint64)strtoull(str[11], NULL, 0));
 	id->class_upper = atoi(str[12]);
-	id->sex	= atoi(str[13]);
+	id->sex = atoi(str[13]);
 	id->equip = atoi(str[14]);
 
 	if (!id->equip && itemdb_isequip2(id))
@@ -1360,14 +1372,14 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 		id->type = IT_ETC;
 	}
 
-	if( id->type != IT_SHADOWGEAR && id->equip&EQP_SHADOW_GEAR )
+	if (id->type != IT_SHADOWGEAR && id->equip&EQP_SHADOW_GEAR)
 	{
 		ShowWarning("Item %hu (%s) have invalid equipment slot! Making it an etc item.\n", nameid, id->jname);
 		id->type = IT_ETC;
 	}
 
 	id->wlv = cap_value(atoi(str[15]), REFINE_TYPE_ARMOR, REFINE_TYPE_MAX);
-	itemdb_re_split_atoi(str[16],&id->elv,&id->elvmax);
+	itemdb_re_split_atoi(str[16], &id->elv, &id->elvmax);
 	id->flag.no_refine = atoi(str[17]) ? 0 : 1; //FIXME: verify this
 	id->look = atoi(str[18]);
 
@@ -1406,15 +1418,15 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 * Read item from item db
 * item_db2 overwriting item_db
 */
-static int itemdb_readdb(void){
+static int itemdb_readdb(void) {
 	const char* filename[] = {
 		DBPATH"item_db.txt",
-		DBIMPORT"/item_db.txt" 
+		DBIMPORT"/item_db.txt"
 	};
 
 	int fi;
 
-	for( fi = 0; fi < ARRAYLENGTH(filename); ++fi ) {
+	for (fi = 0; fi < ARRAYLENGTH(filename); ++fi) {
 		uint32 lines = 0, count = 0;
 		char line[1024];
 
@@ -1423,57 +1435,57 @@ static int itemdb_readdb(void){
 
 		sprintf(path, "%s/%s", db_path, filename[fi]);
 		fp = fopen(path, "r");
-		if( fp == NULL ) {
+		if (fp == NULL) {
 			ShowWarning("itemdb_readdb: File not found \"%s\", skipping.\n", path);
 			continue;
 		}
 
 		// process rows one by one
-		while(fgets(line, sizeof(line), fp))
+		while (fgets(line, sizeof(line), fp))
 		{
 			char *str[32], *p;
 			int i;
 			lines++;
-			if(line[0] == '/' && line[1] == '/')
+			if (line[0] == '/' && line[1] == '/')
 				continue;
 			memset(str, 0, sizeof(str));
 
-			p = strstr(line,"//");
+			p = strstr(line, "//");
 
-			if( p != nullptr ){
+			if (p != nullptr) {
 				*p = '\0';
 			}
 
 			p = line;
-			while( ISSPACE(*p) )
+			while (ISSPACE(*p))
 				++p;
-			if( *p == '\0' )
+			if (*p == '\0')
 				continue;// empty line
-			for( i = 0; i < 19; ++i )
+			for (i = 0; i < 19; ++i)
 			{
 				str[i] = p;
-				p = strchr(p,',');
-				if( p == NULL )
+				p = strchr(p, ',');
+				if (p == NULL)
 					break;// comma not found
 				*p = '\0';
 				++p;
 			}
 
-			if( p == NULL )
+			if (p == NULL)
 			{
 				ShowError("itemdb_readdb: Insufficient columns in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
 
 			// Script
-			if( *p != '{' )
+			if (*p != '{')
 			{
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
 			str[19] = p + 1;
-			p = strstr(p+1,"},");
-			if( p == NULL )
+			p = strstr(p + 1, "},");
+			if (p == NULL)
 			{
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
@@ -1482,14 +1494,14 @@ static int itemdb_readdb(void){
 			p += 2;
 
 			// OnEquip_Script
-			if( *p != '{' )
+			if (*p != '{')
 			{
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
 			str[20] = p + 1;
-			p = strstr(p+1,"},");
-			if( p == NULL )
+			p = strstr(p + 1, "},");
+			if (p == NULL)
 			{
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
@@ -1498,7 +1510,7 @@ static int itemdb_readdb(void){
 			p += 2;
 
 			// OnUnequip_Script (last column)
-			if( *p != '{' )
+			if (*p != '{')
 			{
 				ShowError("itemdb_readdb: Invalid format (OnUnequip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
@@ -1506,12 +1518,12 @@ static int itemdb_readdb(void){
 			str[21] = p;
 			p = &str[21][strlen(str[21]) - 2];
 
-			if ( *p != '}' ) {
+			if (*p != '}') {
 				/* lets count to ensure it's not something silly e.g. a extra space at line ending */
 				int v, lcurly = 0, rcurly = 0;
 
-				for( v = 0; v < strlen(str[21]); v++ ) {
-					if( str[21][v] == '{' )
+				for (v = 0; v < strlen(str[21]); v++) {
+					if (str[21][v] == '{')
 						lcurly++;
 					else if (str[21][v] == '}') {
 						rcurly++;
@@ -1519,7 +1531,7 @@ static int itemdb_readdb(void){
 					}
 				}
 
-				if( lcurly != rcurly ) {
+				if (lcurly != rcurly) {
 					ShowError("itemdb_readdb: Mismatching curly braces in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 					continue;
 				}
@@ -1545,31 +1557,30 @@ static int itemdb_readdb(void){
 * Read item_db table
 */
 static int itemdb_read_sqldb(void) {
-
 	const char* item_db_name[] = {
 		item_table,
 		item2_table
 	};
 	int fi;
 
-	for( fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi ) {
+	for (fi = 0; fi < ARRAYLENGTH(item_db_name); ++fi) {
 		uint32 lines = 0, count = 0;
 
 		// retrieve all rows from the item database
-		if( SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", item_db_name[fi]) ) {
+		if (SQL_ERROR == Sql_Query(mmysql_handle, "SELECT * FROM `%s`", item_db_name[fi])) {
 			Sql_ShowDebug(mmysql_handle);
 			continue;
 		}
 
 		// process rows one by one
-		while( SQL_SUCCESS == Sql_NextRow(mmysql_handle) ) {// wrap the result into a TXT-compatible format
+		while (SQL_SUCCESS == Sql_NextRow(mmysql_handle)) {// wrap the result into a TXT-compatible format
 			char* str[22];
 			char dummy[256] = "";
 			int i;
 			++lines;
-			for( i = 0; i < 22; ++i ) {
+			for (i = 0; i < 22; ++i) {
 				Sql_GetData(mmysql_handle, i, &str[i], NULL);
-				if( str[i] == NULL )
+				if (str[i] == NULL)
 					str[i] = dummy; // get rid of NULL columns
 			}
 
@@ -1595,15 +1606,15 @@ static int itemdb_read_sqldb(void) {
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
-	
+
 	struct map_data *mapdata = map_getmapdata(m);
 
-	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
-		(id->flag.no_equip&2 && mapdata->flag[MF_PVP]) || // PVP
-		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
-		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
-		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+	if ((id->flag.no_equip & 1 && !mapdata_flag_vs2(mapdata)) || // Normal
+		(id->flag.no_equip & 2 && mapdata->flag[MF_PVP]) || // PVP
+		(id->flag.no_equip & 4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
+		(id->flag.no_equip & 8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(id->flag.no_equip & 16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
+		(id->flag.no_equip&(8 * mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return true;
 	return false;
@@ -1766,7 +1777,7 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 		return false;
 	}
 
-	if ((columns-2)%3 != 0) {
+	if ((columns - 2) % 3 != 0) {
 		ShowError("itemdb_read_randomopt_group: Invalid column entries '%d'.\n", columns);
 		return false;
 	}
@@ -1784,15 +1795,15 @@ static bool itemdb_read_randomopt_group(char* str[], int columns, int current) {
 	for (i = g->total; i < (g->total + rate); i++) {
 		int j, k;
 		memset(&g->entries[i].option, 0, sizeof(g->entries[i].option));
-		for (j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k+=3) {
+		for (j = 0, k = 2; k < columns && j < MAX_ITEM_RDM_OPT; k += 3) {
 			int randid = 0;
 			if (!script_get_constant(str[k], &randid) || !itemdb_randomopt_exists(randid)) {
-				ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k+1);
+				ShowError("itemdb_read_randomopt_group: Invalid random group id '%s' in column %d!\n", str[k], k + 1);
 				continue;
 			}
 			g->entries[i].option[j].id = randid;
-			g->entries[i].option[j].value = (short)strtoul(str[k+1], NULL, 10);
-			g->entries[i].option[j].param = (char)strtoul(str[k+2], NULL, 10);
+			g->entries[i].option[j].value = (short)strtoul(str[k + 1], NULL, 10);
+			g->entries[i].option[j].param = (char)strtoul(str[k + 2], NULL, 10);
 			j++;
 		}
 	}
@@ -1809,49 +1820,48 @@ static void itemdb_read(void) {
 		"",
 		"/" DBIMPORT,
 	};
-	
+
 	if (db_use_sqldbs)
 		itemdb_read_sqldb();
 	else
 		itemdb_readdb();
-	
-	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
-		uint8 n1 = (uint8)(strlen(db_path)+strlen(dbsubpath[i])+1);
-		uint8 n2 = (uint8)(strlen(db_path)+strlen(DBPATH)+strlen(dbsubpath[i])+1);
-		char* dbsubpath1 = (char*)aMalloc(n1+1);
-		char* dbsubpath2 = (char*)aMalloc(n2+1);
-		
 
-		if(i==0) {
-			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
-			safesnprintf(dbsubpath2,n2,"%s/%s%s",db_path,DBPATH,dbsubpath[i]);
+	for (i = 0; i < ARRAYLENGTH(dbsubpath); i++) {
+		uint8 n1 = (uint8)(strlen(db_path) + strlen(dbsubpath[i]) + 1);
+		uint8 n2 = (uint8)(strlen(db_path) + strlen(DBPATH) + strlen(dbsubpath[i]) + 1);
+		char* dbsubpath1 = (char*)aMalloc(n1 + 1);
+		char* dbsubpath2 = (char*)aMalloc(n2 + 1);
+
+		if (i == 0) {
+			safesnprintf(dbsubpath1, n1, "%s%s", db_path, dbsubpath[i]);
+			safesnprintf(dbsubpath2, n2, "%s/%s%s", db_path, DBPATH, dbsubpath[i]);
 		}
 		else {
-			safesnprintf(dbsubpath1,n1,"%s%s",db_path,dbsubpath[i]);
-			safesnprintf(dbsubpath2,n1,"%s%s",db_path,dbsubpath[i]);
+			safesnprintf(dbsubpath1, n1, "%s%s", db_path, dbsubpath[i]);
+			safesnprintf(dbsubpath2, n1, "%s%s", db_path, dbsubpath[i]);
 		}
-		
-		sv_readdb(dbsubpath1, "item_avail.txt",         ',', 2, 2, -1, &itemdb_read_itemavail, i > 0);
-		sv_readdb(dbsubpath2, "item_stack.txt",         ',', 3, 3, -1, &itemdb_read_stack, i > 0);
-		sv_readdb(dbsubpath1, "item_nouse.txt",         ',', 3, 3, -1, &itemdb_read_nouse, i > 0);
-		sv_readdb(dbsubpath2, "item_group_db.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_bluebox.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_violetbox.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_cardalbum.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath1, "item_findingore.txt",	',', 2, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_giftbox.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
-		sv_readdb(dbsubpath2, "item_misc.txt",			',', 2, 10, -1, &itemdb_read_group, i > 0);
+
+		sv_readdb(dbsubpath1, "item_avail.txt", ',', 2, 2, -1, &itemdb_read_itemavail, i > 0);
+		sv_readdb(dbsubpath2, "item_stack.txt", ',', 3, 3, -1, &itemdb_read_stack, i > 0);
+		sv_readdb(dbsubpath1, "item_nouse.txt", ',', 3, 3, -1, &itemdb_read_nouse, i > 0);
+		sv_readdb(dbsubpath2, "item_group_db.txt", ',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_bluebox.txt", ',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_violetbox.txt", ',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_cardalbum.txt", ',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath1, "item_findingore.txt", ',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_giftbox.txt", ',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_misc.txt", ',', 2, 10, -1, &itemdb_read_group, i > 0);
 #ifdef RENEWAL
-		sv_readdb(dbsubpath2, "item_package.txt",		',', 2, 10, -1, &itemdb_read_group, i > 0);
+		sv_readdb(dbsubpath2, "item_package.txt", ',', 2, 10, -1, &itemdb_read_group, i > 0);
 #endif
-		itemdb_read_combos(dbsubpath2,i > 0); //TODO change this to sv_read ? id#script ?
+		itemdb_read_combos(dbsubpath2, i > 0); //TODO change this to sv_read ? id#script ?
 		itemdb_read_randomopt(dbsubpath2, i > 0);
-		sv_readdb(dbsubpath2, "item_noequip.txt",       ',', 2, 2, -1, &itemdb_read_noequip, i > 0);
-		sv_readdb(dbsubpath2, "item_trade.txt",         ',', 3, 3, -1, &itemdb_read_itemtrade, i > 0);
-		sv_readdb(dbsubpath2, "item_delay.txt",         ',', 2, 3, -1, &itemdb_read_itemdelay, i > 0);
-		sv_readdb(dbsubpath2, "item_buyingstore.txt",   ',', 1, 1, -1, &itemdb_read_buyingstore, i > 0);
-		sv_readdb(dbsubpath2, "item_flag.txt",          ',', 2, 2, -1, &itemdb_read_flag, i > 0);
-		sv_readdb(dbsubpath2, "item_randomopt_group.txt", ',', 5, 2+5*MAX_ITEM_RDM_OPT, -1, &itemdb_read_randomopt_group, i > 0);
+		sv_readdb(dbsubpath2, "item_noequip.txt", ',', 2, 2, -1, &itemdb_read_noequip, i > 0);
+		sv_readdb(dbsubpath2, "item_trade.txt", ',', 3, 3, -1, &itemdb_read_itemtrade, i > 0);
+		sv_readdb(dbsubpath2, "item_delay.txt", ',', 2, 3, -1, &itemdb_read_itemdelay, i > 0);
+		sv_readdb(dbsubpath2, "item_buyingstore.txt", ',', 1, 1, -1, &itemdb_read_buyingstore, i > 0);
+		sv_readdb(dbsubpath2, "item_flag.txt", ',', 2, 2, -1, &itemdb_read_flag, i > 0);
+		sv_readdb(dbsubpath2, "item_randomopt_group.txt", ',', 5, 2 + 5 * MAX_ITEM_RDM_OPT, -1, &itemdb_read_randomopt_group, i > 0);
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
@@ -1861,23 +1871,23 @@ static void itemdb_read(void) {
  * Initialize / Finalize
  *------------------------------------------*/
 
-/**
-* Destroys the item_data.
-*/
+ /**
+ * Destroys the item_data.
+ */
 static void destroy_item_data(struct item_data* self) {
-	if( self == NULL )
+	if (self == NULL)
 		return;
 	// free scripts
-	if( self->script )
+	if (self->script)
 		script_free_code(self->script);
-	if( self->equip_script )
+	if (self->equip_script)
 		script_free_code(self->equip_script);
-	if( self->unequip_script )
+	if (self->unequip_script)
 		script_free_code(self->unequip_script);
-	if( self->combos_count ) {
+	if (self->combos_count) {
 		int i;
-		for( i = 0; i < self->combos_count; i++ ) {
-			if( !self->combos[i]->isRef ) {
+		for (i = 0; i < self->combos_count; i++) {
+			if (!self->combos[i]->isRef) {
 				aFree(self->combos[i]->nameid);
 				if (self->combos[i]->script)
 					script_free_code(self->combos[i]->script);
@@ -1911,7 +1921,7 @@ static int itemdb_final_sub(DBKey key, DBData *data, va_list ap)
 * NB : We keeping that funciton cause that signature is needed for some iterator..
 */
 static int itemdb_group_free(DBKey key, DBData *data, va_list ap) {
-	return itemdb_group_free2(key,data);
+	return itemdb_group_free2(key, data);
 }
 
 /** (ARM)
@@ -1972,10 +1982,10 @@ void itemdb_reload(void) {
 
 	// readjust itemdb pointer cache for each player
 	iter = mapit_geteachpc();
-	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
+	for (sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter)) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
 
-		if( sd->combos.count ) { // clear combo bonuses
+		if (sd->combos.count) { // clear combo bonuses
 			aFree(sd->combos.bonus);
 			aFree(sd->combos.id);
 			aFree(sd->combos.pos);
@@ -1988,7 +1998,7 @@ void itemdb_reload(void) {
 		pc_setinventorydata(sd);
 		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
 		pc_load_combo(sd); // Check to see if new combos are available
-		status_calc_pc(sd, SCO_FORCE); // 
+		status_calc_pc(sd, SCO_FORCE); //
 	}
 	mapit_free(iter);
 }

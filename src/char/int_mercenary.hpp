@@ -17,5 +17,4 @@ bool mercenary_owner_delete(uint32 char_id);
 
 bool mapif_mercenary_delete(int merc_id);
 
-
 #endif /* INT_MERCENARY_HPP */

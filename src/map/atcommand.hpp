@@ -23,9 +23,9 @@ extern int atcmd_binding_count;
 enum AtCommandType : uint8 {
 	COMMAND_ATCOMMAND = 1,
 	COMMAND_CHARCOMMAND = 2,
-} ;
+};
 
-typedef int (*AtCommandFunc)(const int fd, struct map_session_data* sd, const char* command, const char* message);
+typedef int(*AtCommandFunc)(const int fd, struct map_session_data* sd, const char* command, const char* message);
 
 bool is_atcommand(const int fd, struct map_session_data* sd, const char* message, int type);
 

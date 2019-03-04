@@ -19,15 +19,14 @@
  * Taken from http://developer.apple.com/macosx/64bit.html
  */
 
-//////////////////////////////////////////////////////////////////////////
-// basic include for all basics
-// introduces types and global functions
-//////////////////////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////
+ // basic include for all basics
+ // introduces types and global functions
+ //////////////////////////////////////////////////////////////////////////
 
-
-//////////////////////////////////////////////////////////////////////////
-// setting some defines on platforms
-//////////////////////////////////////////////////////////////////////////
+ //////////////////////////////////////////////////////////////////////////
+ // setting some defines on platforms
+ //////////////////////////////////////////////////////////////////////////
 #if (defined(__WIN32__) || defined(__WIN32) || defined(_WIN32) || defined(_WIN64) || defined(_MSC_VER) || defined(__BORLANDC__)) && !defined(WIN32)
 #define WIN32
 #endif
@@ -70,7 +69,6 @@
 #	endif
 #endif
 #endif
-
 
 // disable attributed stuff on non-GNU
 #if !defined(__GNUC__) && !defined(MINGW)
@@ -174,7 +172,6 @@ typedef unsigned long int   ppuint8;
 typedef unsigned long int   ppuint16;
 typedef unsigned long int   ppuint32;
 
-
 //////////////////////////////////////////////////////////////////////////
 // integer with exact processor width (and best speed)
 //////////////////////////////
@@ -192,37 +189,34 @@ typedef int				ssize_t;
 #endif
 //////////////////////////////
 
-
 //////////////////////////////////////////////////////////////////////////
 // pointer sized integers
 //////////////////////////////////////////////////////////////////////////
 typedef intptr_t intptr;
 typedef uintptr_t uintptr;
 
-
 //////////////////////////////////////////////////////////////////////////
 // Add a 'sysint' Type which has the width of the platform we're compiled for.
 //////////////////////////////////////////////////////////////////////////
 #if defined(__GNUC__)
-	#if defined(__x86_64__)
-		typedef int64 sysint;
-		typedef uint64 usysint;
-	#else
-		typedef int32 sysint;
-		typedef uint32 usysint;
-	#endif
-#elif defined(_MSC_VER)
-	#if defined(_M_X64)
-		typedef int64 sysint;
-		typedef uint64 usysint;
-	#else
-		typedef int32 sysint;
-		typedef uint32 usysint;
-	#endif
+#if defined(__x86_64__)
+typedef int64 sysint;
+typedef uint64 usysint;
 #else
-	#error Compiler / Platform is unsupported.
+typedef int32 sysint;
+typedef uint32 usysint;
 #endif
-
+#elif defined(_MSC_VER)
+#if defined(_M_X64)
+typedef int64 sysint;
+typedef uint64 usysint;
+#else
+typedef int32 sysint;
+typedef uint32 usysint;
+#endif
+#else
+#error Compiler / Platform is unsupported.
+#endif
 
 //////////////////////////////////////////////////////////////////////////
 // some redefine of function redefines for some Compilers
@@ -262,7 +256,6 @@ typedef uintptr_t uintptr;
 #define forceinline __attribute__((always_inline)) inline
 #define ra_align(n) __attribute__(( aligned(n) ))
 #endif
-
 
 /////////////////////////////
 // for those still not building c++
@@ -371,7 +364,6 @@ typedef char bool;
 #endif
 #endif
 
-
 //////////////////////////////////////////////////////////////////////////
 // Use the preprocessor to 'stringify' stuff (concert to a string).
 // example:
@@ -380,7 +372,6 @@ typedef char bool;
 //   EXPAND_AND_QUOTE(TESTE) -> "blabla"
 #define QUOTE(x) #x
 #define EXPAND_AND_QUOTE(x) QUOTE(x)
-
 
 //////////////////////////////////////////////////////////////////////////
 // Set a pointer variable to a pointer value.
@@ -408,35 +399,35 @@ void SET_FUNCPOINTER(T1& var, T2 p)
 #endif
 
 #ifndef max
-static inline int max(int a, int b){ return (a > b) ? a : b; } //default is int
+static inline int max(int a, int b) { return (a > b) ? a : b; } //default is int
 #endif
-static inline int8 i8max(int8 a, int8 b){ return (a > b) ? a : b; }
-static inline int16 i16max(int16 a, int16 b){ return (a > b) ? a : b; }
-static inline int32 i32max(int32 a, int32 b){ return (a > b) ? a : b; }
-static inline int64 i64max(int64 a, int64 b){ return (a > b) ? a : b; }
-static inline uint32 umax(uint32 a, uint32 b){ return (a > b) ? a : b; }
-static inline uint8 u8max(uint8 a, uint8 b){ return (a > b) ? a : b; }
-static inline uint16 u16max(uint16 a, uint16 b){ return (a > b) ? a : b; }
-static inline uint32 u32max(uint32 a, uint32 b){ return (a > b) ? a : b; }
-static inline uint64 u64max(uint64 a, uint64 b){ return (a > b) ? a : b; }
-static inline size_t zmax(size_t a, size_t b){ return (a > b) ? a : b; } //cause those varie
+static inline int8 i8max(int8 a, int8 b) { return (a > b) ? a : b; }
+static inline int16 i16max(int16 a, int16 b) { return (a > b) ? a : b; }
+static inline int32 i32max(int32 a, int32 b) { return (a > b) ? a : b; }
+static inline int64 i64max(int64 a, int64 b) { return (a > b) ? a : b; }
+static inline uint32 umax(uint32 a, uint32 b) { return (a > b) ? a : b; }
+static inline uint8 u8max(uint8 a, uint8 b) { return (a > b) ? a : b; }
+static inline uint16 u16max(uint16 a, uint16 b) { return (a > b) ? a : b; }
+static inline uint32 u32max(uint32 a, uint32 b) { return (a > b) ? a : b; }
+static inline uint64 u64max(uint64 a, uint64 b) { return (a > b) ? a : b; }
+static inline size_t zmax(size_t a, size_t b) { return (a > b) ? a : b; } //cause those varie
 
 #ifdef min
 #undef min
 #endif
 
 #ifndef min
-static inline int min(int a, int b){ return (a < b) ? a : b; } //default is int
+static inline int min(int a, int b) { return (a < b) ? a : b; } //default is int
 #endif
-static inline int8 i8min(int8 a, int8 b){ return (a < b) ? a : b; }
-static inline int16 i16min(int16 a, int16 b){ return (a < b) ? a : b; }
-static inline int32 i32min(int32 a, int32 b){ return (a < b) ? a : b; }
-static inline int64 i64min(int64 a, int64 b){ return (a < b) ? a : b; }
-static inline uint32 umin(uint32 a, uint32 b){ return (a < b) ? a : b; }
-static inline uint8 u8min(uint8 a, uint8 b){ return (a < b) ? a : b; }
-static inline uint16 u16min(uint16 a, uint16 b){ return (a < b) ? a : b; }
-static inline uint32 u32min(uint32 a, uint32 b){ return (a < b) ? a : b; }
-static inline uint64 u64min(uint64 a, uint64 b){ return (a < b) ? a : b; }
-static inline size_t zmin(size_t a, size_t b){ return (a < b) ? a : b; }
+static inline int8 i8min(int8 a, int8 b) { return (a < b) ? a : b; }
+static inline int16 i16min(int16 a, int16 b) { return (a < b) ? a : b; }
+static inline int32 i32min(int32 a, int32 b) { return (a < b) ? a : b; }
+static inline int64 i64min(int64 a, int64 b) { return (a < b) ? a : b; }
+static inline uint32 umin(uint32 a, uint32 b) { return (a < b) ? a : b; }
+static inline uint8 u8min(uint8 a, uint8 b) { return (a < b) ? a : b; }
+static inline uint16 u16min(uint16 a, uint16 b) { return (a < b) ? a : b; }
+static inline uint32 u32min(uint32 a, uint32 b) { return (a < b) ? a : b; }
+static inline uint64 u64min(uint64 a, uint64 b) { return (a < b) ? a : b; }
+static inline size_t zmin(size_t a, size_t b) { return (a < b) ? a : b; }
 
 #endif /* CBASETYPES_HPP */

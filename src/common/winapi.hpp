@@ -8,19 +8,19 @@
 
 #ifdef DEPRECATED_WINDOWS_SUPPORT
 #ifndef NTDDI_VERSION
-	#define NTDDI_VERSION 	0x05000000 // Windows 2000
+#define NTDDI_VERSION 	0x05000000 // Windows 2000
 #endif
 #ifndef _WIN32_WINNT
-	#define _WIN32_WINNT  0x0500 // Windows 2000
+#define _WIN32_WINNT  0x0500 // Windows 2000
 #endif
 #ifndef WINVER
-	#define WINVER 0x0500 // Windows 2000
+#define WINVER 0x0500 // Windows 2000
 #endif
 #ifndef _WIN32_IE
-	#define _WIN32_IE 	0x0600 // Internet Explorer 6.0
+#define _WIN32_IE 	0x0600 // Internet Explorer 6.0
 #endif
 #ifndef _WIN32_WINNT_VISTA
-	#define _WIN32_WINNT_VISTA 0x0600 // Windows Vista
+#define _WIN32_WINNT_VISTA 0x0600 // Windows Vista
 #endif
 #else
 #include <sdkddkver.h>
@@ -28,7 +28,7 @@
 
 #define STRICT
 #define WIN32_LEAN_AND_MEAN
-#define NOCOMM 
+#define NOCOMM
 #define NOKANJI
 #define NOHELP
 #define NOMCX

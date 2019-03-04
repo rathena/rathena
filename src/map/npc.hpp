@@ -15,11 +15,11 @@ struct npc_data;
 struct view_data;
 
 struct npc_timerevent_list {
-	int timer,pos;
+	int timer, pos;
 };
 
 struct npc_label_list {
-	char name[NAME_LENGTH+1];
+	char name[NAME_LENGTH + 1];
 	int pos;
 };
 
@@ -45,16 +45,16 @@ struct npc_data {
 	struct view_data *vd;
 	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	struct npc_data *master_nd;
-	short class_,speed,instance_id;
-	char name[NPC_NAME_LENGTH+1];// display name
-	char exname[NPC_NAME_LENGTH+1];// unique npc name
-	int chat_id,touching_id;
+	short class_, speed, instance_id;
+	char name[NPC_NAME_LENGTH + 1];// display name
+	char exname[NPC_NAME_LENGTH + 1];// unique npc name
+	int chat_id, touching_id;
 	unsigned int next_walktime;
 
 	unsigned size : 2;
 
 	struct status_data status;
-	unsigned int level,stat_point;
+	unsigned int level, stat_point;
 	struct s_npc_params {
 		unsigned short str, agi, vit, int_, dex, luk;
 	} params;
@@ -67,10 +67,10 @@ struct npc_data {
 	union {
 		struct {
 			struct script_code *script;
-			short xs,ys; // OnTouch area radius
+			short xs, ys; // OnTouch area radius
 			int guild_id;
 			t_tick timer;
-			int timerid,timeramount,rid;
+			int timerid, timeramount, rid;
 			t_tick timertick;
 			struct npc_timerevent_list *timer_event;
 			int label_list_num;
@@ -84,8 +84,8 @@ struct npc_data {
 			bool discount;
 		} shop;
 		struct {
-			short xs,ys; // OnTouch area radius
-			short x,y; // destination coords
+			short xs, ys; // OnTouch area radius
+			short x, y; // destination coords
 			unsigned short mapindex; // destination map
 		} warp;
 		struct {
@@ -1180,12 +1180,12 @@ enum npce_event : uint8 {
 };
 struct view_data* npc_get_viewdata(int class_);
 int npc_chat_sub(struct block_list* bl, va_list ap);
-int npc_event_dequeue(struct map_session_data* sd,bool free_script_stack=true);
+int npc_event_dequeue(struct map_session_data* sd, bool free_script_stack = true);
 int npc_event(struct map_session_data* sd, const char* eventname, int ontouch);
 int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y);
 int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
 int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range);
-int npc_touchnext_areanpc(struct map_session_data* sd,bool leavemap);
+int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap);
 int npc_click(struct map_session_data* sd, struct npc_data* nd);
 bool npc_scriptcont(struct map_session_data* sd, int id, bool closing);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
@@ -1195,7 +1195,7 @@ uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list
 void npc_parse_mob2(struct spawn_data* mob);
 bool npc_viewisid(const char * viewid);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
-int npc_globalmessage(const char* name,const char* mes);
+int npc_globalmessage(const char* name, const char* mes);
 const char *npc_get_script_event_name(int npce_index);
 
 void npc_setcells(struct npc_data* nd);
@@ -1221,7 +1221,7 @@ void npc_event_do_oninit(void);
 int npc_event_do(const char* name);
 int npc_event_do_id(const char* name, int rid);
 int npc_event_doall(const char* name);
-void npc_event_runall( const char* eventname );
+void npc_event_runall(const char* eventname);
 int npc_event_doall_id(const char* name, int rid);
 
 int npc_timerevent_start(struct npc_data* nd, int rid);
@@ -1230,7 +1230,7 @@ void npc_timerevent_quit(struct map_session_data* sd);
 t_tick npc_gettimerevent_tick(struct npc_data* nd);
 int npc_settimerevent_tick(struct npc_data* nd, int newtimer);
 int npc_remove_map(struct npc_data* nd);
-void npc_unload_duplicates (struct npc_data* nd);
+void npc_unload_duplicates(struct npc_data* nd);
 int npc_unload(struct npc_data* nd, bool single);
 int npc_reload(void);
 void npc_read_event_script(void);
@@ -1254,12 +1254,12 @@ void npc_market_delfromsql_(const char *exname, unsigned short nameid, bool clea
 #endif
 
 #ifdef SECURE_NPCTIMEOUT
-	TIMER_FUNC(npc_secure_timeout_timer);
+TIMER_FUNC(npc_secure_timeout_timer);
 #endif
 
 // @commands (script-based)
 int npc_do_atcmd_event(struct map_session_data* sd, const char* command, const char* message, const char* eventname);
 
-bool npc_unloadfile( const char* path );
+bool npc_unloadfile(const char* path);
 
 #endif /* NPC_HPP */

@@ -66,7 +66,7 @@ DBMap *buyingstore_getdb(void);
 void do_final_buyingstore(void);
 void do_init_buyingstore(void);
 
-void do_init_buyingstore_autotrade( void );
-void buyingstore_reopen( struct map_session_data* sd );
+void do_init_buyingstore_autotrade(void);
+void buyingstore_reopen(struct map_session_data* sd);
 
 #endif /* BUYINGSTORE_HPP */

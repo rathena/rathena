@@ -74,7 +74,7 @@ struct Login_Config {
 	bool log_login;                                 /// whether to log login server actions or not
 	char date_format[32];                           /// date format used in messages
 	bool console;                                   /// console input system enabled?
-	bool new_account_flag,new_acc_length_limit;     /// autoregistration via _M/_F ? / if yes minimum length is 4?
+	bool new_account_flag, new_acc_length_limit;     /// autoregistration via _M/_F ? / if yes minimum length is 4?
 	int start_limited_time;                         /// new account expiration time (-1: unlimited)
 	bool use_md5_passwds;                           /// work with password hashes instead of plaintext passwords?
 	int group_id_to_connect;                        /// required group id to connect
@@ -144,7 +144,7 @@ struct auth_node {
 ///Accessors
 AccountDB* login_get_accounts_db(void);
 
-struct online_login_data* login_get_online_user( uint32 account_id );
+struct online_login_data* login_get_online_user(uint32 account_id);
 
 /**
  * Function to add a user in online_db.
@@ -163,11 +163,11 @@ struct online_login_data* login_add_online_user(int char_server, uint32 account_
  */
 void login_remove_online_user(uint32 account_id);
 
-struct auth_node* login_get_auth_node( uint32 account_id );
+struct auth_node* login_get_auth_node(uint32 account_id);
 
-struct auth_node* login_add_auth_node( struct login_session_data* sd, uint32 ip );
+struct auth_node* login_add_auth_node(struct login_session_data* sd, uint32 ip);
 
-void login_remove_auth_node( uint32 account_id );
+void login_remove_auth_node(uint32 account_id);
 
 /**
  * Timered function to disconnect a user from login.
@@ -182,7 +182,7 @@ void login_remove_auth_node( uint32 account_id );
  */
 TIMER_FUNC(login_waiting_disconnect_timer);
 
-void login_online_db_setoffline( int char_server );
+void login_online_db_setoffline(int char_server);
 
 /**
  * Test to determine if an IP come from LAN or WAN.
@@ -190,7 +190,6 @@ void login_online_db_setoffline( int char_server );
  * @return 0 if from wan, or subnet_char_ip if lan
  */
 int lan_subnetcheck(uint32 ip);
-
 
 /**
  * Create a new account and save it in db/sql.
@@ -222,6 +221,6 @@ int login_mmo_auth_new(const char* userid, const char* pass, const char sex, con
  */
 int login_mmo_auth(struct login_session_data* sd, bool isServer);
 
-int login_get_usercount( int users );
+int login_get_usercount(int users);
 
 #endif /* LOGIN_HPP */

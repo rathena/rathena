@@ -296,21 +296,20 @@ struct script_stack {
 	struct reg_db scope;            ///< scope variables
 };
 
-
 //
 // Script state
 //
-enum e_script_state { RUN,STOP,END,RERUNLINE,GOTO,RETFUNC,CLOSE };
+enum e_script_state { RUN, STOP, END, RERUNLINE, GOTO, RETFUNC, CLOSE };
 
 struct script_state {
 	struct script_stack* stack;
-	int start,end;
+	int start, end;
 	int pos;
 	enum e_script_state state;
-	int rid,oid;
+	int rid, oid;
 	struct script_code *script;
 	struct sleep_data {
-		int tick,timer,charid;
+		int tick, timer, charid;
 	} sleep;
 	//For backing up purposes
 	struct script_state *bk_st;
@@ -403,18 +402,18 @@ enum questinfo_types {
 };
 
 #ifndef WIN32
-	// These are declared in wingdi.h
-	/* Font Weights */
-	#define FW_DONTCARE         0
-	#define FW_THIN             100
-	#define FW_EXTRALIGHT       200
-	#define FW_LIGHT            300
-	#define FW_NORMAL           400
-	#define FW_MEDIUM           500
-	#define FW_SEMIBOLD         600
-	#define FW_BOLD             700
-	#define FW_EXTRABOLD        800
-	#define FW_HEAVY            900
+// These are declared in wingdi.h
+/* Font Weights */
+#define FW_DONTCARE         0
+#define FW_THIN             100
+#define FW_EXTRALIGHT       200
+#define FW_LIGHT            300
+#define FW_NORMAL           400
+#define FW_MEDIUM           500
+#define FW_SEMIBOLD         600
+#define FW_BOLD             700
+#define FW_EXTRABOLD        800
+#define FW_HEAVY            900
 #endif
 
 enum unitdata_mobtypes {
@@ -1913,13 +1912,13 @@ void script_error(const char* src, const char* file, int start_line, const char*
 void script_warning(const char* src, const char* file, int start_line, const char* error_msg, const char* error_pos);
 
 bool is_number(const char *p);
-struct script_code* parse_script(const char* src,const char* file,int line,int options);
-void run_script(struct script_code *rootscript,int pos,int rid,int oid);
+struct script_code* parse_script(const char* src, const char* file, int line, int options);
+void run_script(struct script_code *rootscript, int pos, int rid, int oid);
 
 int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, const char* name, const void* value, struct reg_db *ref);
 int set_var(struct map_session_data *sd, char *name, void *val);
-int conv_num(struct script_state *st,struct script_data *data);
-const char* conv_str(struct script_state *st,struct script_data *data);
+int conv_num(struct script_state *st, struct script_data *data);
+const char* conv_str(struct script_state *st, struct script_data *data);
 void pop_stack(struct script_state* st, int start, int end);
 TIMER_FUNC(run_script_timer);
 void script_stop_sleeptimers(int id);
