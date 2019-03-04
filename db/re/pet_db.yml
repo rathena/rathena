@@ -5,13 +5,13 @@
 # Pet Settings
 #
 ###########################################################################
-# - MobID                    Monster ID of the pet
+# - MobId                    Monster ID of the pet
 #   Name                     the monster as defined in the database.
 #   JName                    The display name of the monster when hatched.
-#   TameWithID               Pet Tame Item ID.
-#   EggItemID                Pet Egg ID.
-#   EquipItemID              Pet Accessory ID.
-#   FoodItemID               Pet Food ID.
+#   TameWithId               Pet Tame Item ID.
+#   EggItemId                Pet Egg ID.
+#   EquipItemId              Pet Accessory ID.
+#   FoodItemId               Pet Food ID.
 #   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
 #   HungryDelay              The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
@@ -21,7 +21,7 @@
 #     Hungry                 Amount of Intimacy that is increased when the pet is hungry.
 #     Start                  Amount of Intimacy the pet starts with.
 #     OwnerDie               Amount of Intimacy that is increased when the pet owner dies.
-#   CaptureRate              Capture succes rate (10000 = 100%)
+#   CaptureRate              Capture success rate (10000 = 100%)
 #   Speed                    Pet's walk speed. (Default: 150)
 #   SpecialPerformance       Special Performance. (true/false)
 #   TalkConvertClass         Disables pet talk (instead of talking they emote  with /!.)
@@ -32,2561 +32,2567 @@
 #   Script                   Bonus script to execute when the pet is alive.
 #   SupportScript            Legacy pet script for pet* script commands.
 #   Evolution:               Pet evolution settings
-#     - TargetID               Mob ID this pet evolves to	
+#     - TargetId               Mob ID this pet evolves to	
 #       ItemsRequirement:      Item requirements for evolving this pet
-#         - ItemID             Self-explanatory
+#         - ItemId             Self-explanatory
 #           Amount
 ###########################################################################
-- MobID: 1002
-  Name: PORING
-  JName: Poring
-  TameWithID: 619
-  EggItemID: 9001
-  EquipItemID: 10013
-  FoodItemID: 531
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 350
-  RetaliateRate: 400
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bLuk,2; bonus bCritical,1; } }'
-  SupportScript: '{ petloot 10; }'
-  Evolution:
-    - TargetID: 1090
-      ItemsRequirement:
-        - ItemID: 610
-          Amount: 10
-        - ItemID: 619
-          Amount: 3
 
-- MobID: 1113
-  Name: DROPS
-  JName: Drops
-  TameWithID: 620
-  EggItemID: 9002
-  EquipItemID: 10013
-  FoodItemID: 508
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 40
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1500
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 400
-  ChangeTargetRate: 500
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bHit,3; bonus bAtk,3; } }'
-  SupportScript: '{ petloot 10; }'
-  Evolution:
-    - TargetID: 3495
-      ItemsRequirement:
-        - ItemID: 7032
-          Amount: 20
-        - ItemID: 7031
-          Amount: 10
-        - ItemID: 531
-          Amount: 3
-        - ItemID: 4659
-          Amount: 1
-    - TargetID: 3790
-      ItemsRequirement:
-        - ItemID: 25290
-          Amount: 500
-        - ItemID: 529
-          Amount: 50
-        - ItemID: 530
-          Amount: 50
-        - ItemID: 4004
-          Amount: 1
-- MobID: 1031
-  Name: POPORING
-  JName: Poporing
-  TameWithID: 621
-  EggItemID: 9003
-  EquipItemID: 10013
-  FoodItemID: 511
-  Fullness: 5
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 30
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 500
-  ChangeTargetRate: 400
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bLuk,2; bonus2 bSubEle,Ele_Poison,10; } }'
-  SupportScript: '{ petloot 15; }'
-- MobID: 1063
-  Name: LUNATIC
-  JName: Lunatic
-  TameWithID: 622
-  EggItemID: 9004
-  EquipItemID: 10007
-  FoodItemID: 534
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 40
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 1000
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bCritical,2; bonus bAtk,2; } }'
-  SupportScript: '{ petskillbonus bLuk,3,10,50; }'
-  Evolution:
-    - TargetID: 3496
-      ItemsRequirement: 
-        - ItemID: 7198
-          Amount: 100
-        - ItemID: 705
-          Amount: 250
-        - ItemID: 706
-          Amount: 30
-        - ItemID: 4663
-          Amount: 1
+Header:
+  Type: PET_DB
+  Version: 1
 
-- MobID: 1049
-  Name: PICKY
-  JName: Picky
-  TameWithID: 623
-  EggItemID: 9005
-  EquipItemID: 10012
-  FoodItemID: 507
-  Fullness: 4   
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 40
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 500
-  RetaliateRate: 600
-  ChangeTargetRate: 50
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bStr,1; bonus bAtk,5; } }'
-  SupportScript: '{ petskillbonus bStr,3,10,50; }'
-- MobID: 1011
-  Name: CHONCHON
-  JName: ChonChon
-  TameWithID: 624
-  EggItemID: 9006
-  EquipItemID: 10002
-  FoodItemID: 537
-  Fullness: 6
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 30
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1500
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 500
-  RetaliateRate: 500
-  ChangeTargetRate: 250
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bAgi,1; bonus bFlee,2; } }'
-  SupportScript: '{ petskillbonus bAgi,4,10,50; }'
-- MobID: 1042
-  Name: STEEL_CHONCHON
-  JName: Steel ChonChon
-  TameWithID: 625
-  EggItemID: 9007
-  EquipItemID: 10002
-  FoodItemID: 1002
-  Fullness: 5
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 500
-  RetaliateRate: 500
-  ChangeTargetRate: 200
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bFlee,6; bonus bAgi,-1; } }'
-  SupportScript: '{ petskillbonus bAgiVit,4,20,40; }'
-- MobID: 1035
-  Name: HUNTER_FLY
-  JName: Hunter Fly
-  TameWithID: 626
-  EggItemID: 9008
-  EquipItemID: 10002
-  FoodItemID: 716
-  Fullness: 5
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 500
-  RetaliateRate: 500
-  ChangeTargetRate: 200
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bFlee,-5; bonus bFlee2,2; } }'
-  SupportScript: '{ petskillattack2 "NPC_WINDATTACK",888,2,0,10; }'
-- MobID: 1167
-  Name: SAVAGE_BABE
-  JName: Savage Babe
-  TameWithID: 627
-  EggItemID: 9009
-  EquipItemID: 10015
-  FoodItemID: 537
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 40
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 500
-  RetaliateRate: 500
-  ChangeTargetRate: 200
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bVit,1; bonus bMaxHP,50; } }'
-  SupportScript: '{ petskillbonus bVit,4,10,50; }'
-  Evolution:
-    - TargetID: 1166
-      ItemsRequirement:
-        - ItemID: 537
-          Amount: 10
-        - ItemID: 627
-          Amount: 3
-        - ItemID: 517
-          Amount: 100
-        - ItemID: 949
-          Amount: 50
-- MobID: 1107
-  Name: DESERT_WOLF_B
-  JName: Baby Desert Wolf
-  TameWithID: 628
-  EggItemID: 9010
-  EquipItemID: 10003
-  FoodItemID: 537
-  Fullness: 6
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 40
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1000
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 400
-  RetaliateRate: 400
-  ChangeTargetRate: 400
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bInt,1; bonus bMaxSP,50; } }'
-  SupportScript: '{ petskillattack "SM_PROVOKE",1,0,5; }'
-- MobID: 1052
-  Name: ROCKER
-  JName: Rocker
-  TameWithID: 629
-  EggItemID: 9011
-  EquipItemID: 10014
-  FoodItemID: 537
-  Fullness: 1
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 30
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 350
-  RetaliateRate: 350
-  ChangeTargetRate: 600
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bHPrecovRate,5; bonus bMaxHP,25; } }'
-  SupportScript: '{ petskillbonus bAllStats,1,10,50; }'
-  Evolution:
-    - TargetID: 1058
-      ItemsRequirement:
-        - ItemID: 707
-          Amount: 3
-        - ItemID: 940
-          Amount: 777
-        - ItemID: 508
-          Amount: 200
-        - ItemID: 4057
-          Amount: 1
-- MobID: 1014
-  Name: SPORE
-  JName: Spore
-  TameWithID: 630
-  EggItemID: 9012
-  EquipItemID: 10017
-  FoodItemID: 537
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 30
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 350
-  RetaliateRate: 500
-  ChangeTargetRate: 500
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bHit,5; bonus bAtk,-2; } }'
-  SupportScript: '{ petrecovery SC_POISON,60; }'
-- MobID: 1077
-  Name: POISON_SPORE
-  JName: Poison Spore
-  TameWithID: 631
-  EggItemID: 9013
-  EquipItemID: 10017
-  FoodItemID: 537
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1000
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 600
-  RetaliateRate: 200
-  ChangeTargetRate: 400
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bStr,1; bonus bInt,1; } }'
-  SupportScript: '{ petskillattack "NPC_POISON",20,0,10; }'
-- MobID: 1019
-  Name: PECOPECO
-  JName: PecoPeco
-  TameWithID: 632
-  EggItemID: 9014
-  EquipItemID: 10010
-  FoodItemID: 537
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 30
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 400
-  RetaliateRate: 500
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMaxHP,150; bonus bMaxSP,-10; } }'
-  SupportScript: '{ petskillbonus bSpeedRate,25,20,20; }'
-  Evolution:
-    - TargetID: 1369
-      ItemsRequirement:
-        - ItemID: 537
-          Amount: 10
-        - ItemID: 632
-          Amount: 3
-        - ItemID: 7101
-          Amount: 300
-        - ItemID: 4031
-          Amount: 1
-        - ItemID: 522
-          Amount: 10
-- MobID: 1056
-  Name: SMOKIE
-  JName: Smokie
-  TameWithID: 633
-  EggItemID: 9015
-  EquipItemID: 10019
-  FoodItemID: 537
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 30
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 600
-  RetaliateRate: 600
-  ChangeTargetRate: 100
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bAgi,1; bonus bFlee2,1; } }'
-  SupportScript: '{ petskillbonus bPerfectHide,1,3600,0; }'
-- MobID: 1057
-  Name: YOYO
-  JName: Yoyo
-  TameWithID: 634
-  EggItemID: 9016
-  EquipItemID: 10018
-  FoodItemID: 532
-  Fullness: 5
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 800
-  ChangeTargetRate: 400
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bCritical,3; bonus bLuk,-1; } }'
-  SupportScript: '{ petloot 20; }'
-  Evolution:
-    - TargetID: 1214
-      ItemsRequirement:
-        - ItemID: 634
-          Amount: 3
-        - ItemID: 753
-          Amount: 2
-        - ItemID: 7182
-          Amount: 300
-        - ItemID: 4051
-          Amount: 1
-- MobID: 1023
-  Name: ORK_WARRIOR
-  JName: Orc Warrior
-  TameWithID: 635
-  EggItemID: 9017
-  EquipItemID: 10009
-  FoodItemID: 537
-  Fullness: 5
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 600
-  RetaliateRate: 200
-  ChangeTargetRate: 300
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bAtk,10; bonus bDef,-3; } }'
-  SupportScript: '{ petskillattack2 "NPC_PIERCINGATT",100,1,0,10; }'
-  Evolution:
-    - TargetID: 1213
-      ItemsRequirement:
-        - ItemID: 635
-          Amount: 3
-        - ItemID: 1124
-          Amount: 1
-        - ItemID: 931
-          Amount: 500
-        - ItemID: 2267
-          Amount: 1
-        - ItemID: 4066
-          Amount: 1
-- MobID: 1026
-  Name: MUNAK
-  JName: Munak
-  TameWithID: 636
-  EggItemID: 9018
-  EquipItemID: 10008
-  FoodItemID: 537
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 750
-  ChangeTargetRate: 300
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bInt,1; bonus bDef,1; } }'
-  SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10; }'
-- MobID: 1110
-  Name: DOKEBI
-  JName: Dokebi
-  TameWithID: 637
-  EggItemID: 9019
-  EquipItemID: 10005
-  FoodItemID: 537
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMatkRate,1; bonus bAtkRate,-1; } }'
-  SupportScript: '{ petskillattack "BS_HAMMERFALL",1,0,10; }'
-  Evolution:
-    - TargetID: 1301
-      ItemsRequirement:
-        - ItemID: 637
-          Amount: 3
-        - ItemID: 981
-          Amount: 3
-        - ItemID: 1021
-          Amount: 300
-        - ItemID: 969
-          Amount: 3
-- MobID: 1170
-  Name: SOHEE
-  JName: Sohee
-  TameWithID: 638
-  EggItemID: 9020
-  EquipItemID: 10016
-  FoodItemID: 537
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 100
-  RetaliateRate: 1000
-  ChangeTargetRate: 200
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bStr,1; bonus bDex,1; } }'
-  SupportScript: '{ petskillsupport "AL_HEAL",5,60,33,100; }'
-- MobID: 1029
-  Name: ISIS
-  JName: Isis
-  TameWithID: 639
-  EggItemID: 9021
-  EquipItemID: 10006
-  FoodItemID: 537
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 650
-  RetaliateRate: 450
-  ChangeTargetRate: 150
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMatkRate,-1; bonus bAtkRate,1; } }'
-  SupportScript: '{ petskillsupport "PR_MAGNIFICAT",2,60,50,50; }'
-  Evolution:
-    - TargetID: 3636
-      ItemsRequirement:
-        - ItemID: 639
-          Amount: 3
-        - ItemID: 732
-          Amount: 6
-        - ItemID: 10006
-          Amount: 1
-        - ItemID: 954
-          Amount: 300
-- MobID: 1155
-  Name: PETIT
-  JName: Petite
-  TameWithID: 640
-  EggItemID: 9022
-  EquipItemID: 10011
-  FoodItemID: 537
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 800
-  RetaliateRate: 400
-  ChangeTargetRate: 100
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bDef,-2; bonus bMdef,-2; bonus bAspdRate,1; } }'
-  SupportScript: '{ petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10; }'
-  Evolution:
-    - TargetID: 3670
-      ItemsRequirement:
-        - ItemID: 640
-          Amount: 3
-        - ItemID: 6260
-          Amount: 100
-        - ItemID: 606
-          Amount: 150
-        - ItemID: 4279
-          Amount: 1
-- MobID: 1109
-  Name: DEVIRUCHI
-  JName: Deviruchi
-  TameWithID: 641
-  EggItemID: 9023
-  EquipItemID: 10004
-  FoodItemID: 711
-  Fullness: 2
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 800
-  RetaliateRate: 200
-  ChangeTargetRate: 100
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMatkRate,1; bonus bAtkRate,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; } }'
-  SupportScript: '{ petskillbonus bAgiDexStr,6,20,40; }'
-  Evolution:
-    - TargetID: 3669
-      ItemsRequirement:
-        - ItemID: 641
-          Amount: 3
-        - ItemID: 1039
-          Amount: 250
-        - ItemID: 1009
-          Amount: 30
-        - ItemID: 4122
-          Amount: 1
-- MobID: 1101
-  Name: BAPHOMET_
-  JName: Baphomet Jr.
-  TameWithID: 642
-  EggItemID: 9024
-  EquipItemID: 10001
-  FoodItemID: 518
-  Fullness: 2
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 200
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 1000
-  RetaliateRate: 100
-  ChangeTargetRate: 200
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bDef,1; bonus bMdef,1; bonus2 bResEff,Eff_Stun,-100; } }'
-  SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5; }'
-- MobID: 1188
-  Name: BON_GUN
-  JName: Bon Gun
-  TameWithID: 659
-  EggItemID: 9025
-  EquipItemID: 10020
-  FoodItemID: 537
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 30
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 600
-  RetaliateRate: 200
-  ChangeTargetRate: 400
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bVit,1; bonus2 bResEff,Eff_Stun,100; } }'
-  SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1; }'
-  Evolution:
-    - TargetID: 1512
-      ItemsRequirement:
-        - ItemID: 5367
-          Amount: 1
-        - ItemID: 7277
-          Amount: 100
-        - ItemID: 7014
-          Amount: 50
-        - ItemID: 4328
-          Amount: 1
-- MobID: 1200
-  Name: ZHERLTHSH
-  JName: Zealotus
-  TameWithID: 660
-  EggItemID: 9026
-  FoodItemID: 929
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 300
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 1000
-  RetaliateRate: 100
-  ChangeTargetRate: 500
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bAddRace,RC_Demihuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; bonus2 bAddRace,RC_Player,2; bonus2 bMagicAddRace,RC_Player,2; } }'
-  SupportScript: '{ petskillattack "AS_SONICBLOW",1,0,3; }'
-- MobID: 1275
-  Name: ALICE
-  JName: Alice
-  TameWithID: 661
-  EggItemID: 9027
-  FoodItemID: 504
-  Fullness: 2
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 800
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 100
-  RetaliateRate: 1000
-  ChangeTargetRate: 200
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
-  SupportScript: '{ petskillsupport "AL_HEAL",5,60,25,100; }'
-- MobID: 1815
-  Name: EVENT_RICECAKE
-  JName: Rice Cake
-  EggItemID: 9028
-  FoodItemID: 511
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 500
-  RetaliateRate: 500
-  ChangeTargetRate: 200
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bSubEle,Ele_Neutral,1; bonus bMaxHPrate,-1; } }'
-  SupportScript: '{ petskillsupport "CR_DEFENDER",3,240,50,100; }'
-- MobID: 1245
-  Name: GOBLINE_XMAS
-  JName: Christmas Goblin
-  TameWithID: 12225
-  EggItemID: 9029
-  FoodItemID: 911
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMaxHP,30; bonus2 bSubEle,Ele_Water,1; } }'
-  SupportScript: '{ petskillattack "MG_SIGHT",5,5,5; }'
-- MobID: 1519
-  Name: CHUNG_E
-  JName: Green Maiden
-  TameWithID: 12395
-  EggItemID: 9030
-  FoodItemID: 6115
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bDef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
-  SupportScript: '{ petskillattack "CR_SHIELDCHARGE",5,5,5; }'
-- MobID: 1879
-  Name: ECLIPSE_P
-  JName: Spring Rabbit
-  EggItemID: 9031
-  FoodItemID: 7766
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{ petskillattack "TF_THROWSTONE",1,5,5; }'
-- MobID: 1122
-  Name: GOBLIN_1
-  JName: Goblin
-  TameWithID: 14569
-  EggItemID: 9032
-  FoodItemID: 7821
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 800
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{ petskillattack "NPC_WINDATTACK",5,5,5; }'
-- MobID: 1123
-  Name: GOBLIN_2
-  JName: Goblin
-  TameWithID: 14570
-  EggItemID: 9033
-  FoodItemID: 7821
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 800
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{ petskillattack "NPC_FIREATTACK",5,5,5; }'
-- MobID: 1125
-  Name: GOBLIN_4
-  JName: Goblin
-  TameWithID: 14571
-  EggItemID: 9034
-  FoodItemID: 7821
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 800
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{ petskillattack "NPC_GROUNDATTACK",5,5,5; }'
-- MobID: 1385
-  Name: DELETER_
-  JName: Deleter
-  TameWithID: 14572
-  EggItemID: 9035
-  FoodItemID: 7822
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 800
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{ petskillattack "SM_MAGNUM",5,5,5; }'
-- MobID: 1382
-  Name: DIABOLIC
-  JName: Diabolic
-  TameWithID: 14573
-  EggItemID: 9036
-  FoodItemID: 7823
-  Fullness: 2
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 800
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{ petskillattack "WZ_METEOR",2,5,5; }'
-- MobID: 1208
-  Name: WANDER_MAN
-  JName: Wanderer
-  TameWithID: 14574
-  EggItemID: 9037
-  FoodItemID: 7824
-  Fullness: 2
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 800
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bAgi,3; bonus bDex,1; } }'
-  SupportScript: '{ petskillattack "NPC_UNDEADATTACK",5,5,5; }'
-- MobID: 1963
-  Name: P_CHUNG_E
-  JName: New Year Doll
-  EggItemID: 9038
-  FoodItemID: 554
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 30
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 800
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{ petskillattack "CR_SHIELDCHARGE",5,5,5; }'
-- MobID: 1040
-  Name: GOLEM
-  JName: Golem
-  TameWithID: 12371
-  EggItemID: 9053
-  EquipItemID: 10035
-  FoodItemID: 6111
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMaxHP,100; bonus bFlee,-5; } }'
-  SupportScript: '{}'
-- MobID: 1143
-  Name: MARIONETTE
-  JName: Marionette
-  TameWithID: 12361
-  EggItemID: 9043
-  EquipItemID: 10025
-  FoodItemID: 6098
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bSPrecovRate,3; } }'
-  SupportScript: '{}'
-- MobID: 1148
-  Name: MEDUSA
-  JName: Medusa
-  TameWithID: 12368
-  EggItemID: 9050
-  EquipItemID: 10032
-  FoodItemID: 6108
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 200
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bVit,1; bonus2 bResEff,Eff_Stone,500; } }'
-  SupportScript: '{}'
-- MobID: 1179
-  Name: WHISPER
-  JName: Whisper
-  TameWithID: 12363
-  EggItemID: 9045
-  EquipItemID: 10027
-  FoodItemID: 6100
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bFlee,7; bonus bDef,-3; } }'
-  SupportScript: '{}'
-- MobID: 1299
-  Name: GOBLIN_LEADER
-  JName: Goblin Leader
-  TameWithID: 12364
-  EggItemID: 9046
-  EquipItemID: 10028
-  FoodItemID: 6104
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 50
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3; } }'
-  SupportScript: '{}'
-- MobID: 1370
-  Name: SUCCUBUS
-  JName: Succubus
-  TameWithID: 12373
-  EggItemID: 9055
-  EquipItemID: 10037
-  FoodItemID: 6113
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 200
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bHPDrainRate,30,5; bonus bMaxHPrate,1; } }'
-  SupportScript: '{ bonus2 bHPDrainRate,10,5; }'
-- MobID: 1374
-  Name: INCUBUS
-  JName: Incubus
-  TameWithID: 12370
-  EggItemID: 9052
-  EquipItemID: 10034
-  FoodItemID: 6110
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 50
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMaxSPRate,5; bonus2 bSPDrainRate,30,1; } }'
-  SupportScript: '{ bonus bMaxSPRate,3; bonus2 bSPDrainRate,10,1; }'
-- MobID: 1379
-  Name: NIGHTMARE_TERROR
-  JName: Nightmare Terror
-  TameWithID: 12372
-  EggItemID: 9054
-  EquipItemID: 10036
-  FoodItemID: 6112
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 200
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bResEff,Eff_Sleep,10000; } }'
-  SupportScript: '{}'
-- MobID: 1401
-  Name: SHINOBI
-  JName: Shinobi
-  TameWithID: 12362
-  EggItemID: 9044
-  EquipItemID: 10026
-  FoodItemID: 6099
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bAgi,2; } }'
-  SupportScript: '{}'
-- MobID: 1404
-  Name: MIYABI_NINGYO
-  JName: Miyabi Doll
-  TameWithID: 12366
-  EggItemID: 9048
-  EquipItemID: 10030
-  FoodItemID: 6106
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 200
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bInt,1; bonus bCastrate,-3; } }'
-  SupportScript: '{}'
-- MobID: 1416
-  Name: WICKED_NYMPH
-  JName: Evil Nymph
-  TameWithID: 12365
-  EggItemID: 9047
-  EquipItemID: 10029
-  FoodItemID: 6105
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMaxSP,30; bonus bSPrecovRate,5; } }'
-  SupportScript: '{}'
-- MobID: 1495
-  Name: STONE_SHOOTER
-  JName: Stone Shooter
-  TameWithID: 12369
-  EggItemID: 9051
-  EquipItemID: 10033
-  FoodItemID: 6109
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bSubEle,Ele_Fire,3; } }'
-  SupportScript: '{}'
-- MobID: 1504
-  Name: DULLAHAN
-  JName: Dullahan
-  TameWithID: 12367
-  EggItemID: 9049
-  EquipItemID: 10031
-  FoodItemID: 6107
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 200
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bCritAtkRate,5; } }'
-  SupportScript: '{}'
-- MobID: 1505
-  Name: LOLI_RURI
-  JName: Loli Ruri
-  TameWithID: 12360
-  EggItemID: 9042
-  EquipItemID: 10024
-  FoodItemID: 6097
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 200
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMaxHPRate,3; bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10; } }'
-  SupportScript: '{}'
-- MobID: 1513
-  Name: CIVIL_SERVANT
-  JName: Mao Guai
-  TameWithID: 12358
-  EggItemID: 9040
-  EquipItemID: 10022
-  FoodItemID: 6095
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 500
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bMaxSP,10; } }'
-  SupportScript: '{}'
-- MobID: 1586
-  Name: LEAF_CAT
-  JName: Leaf Cat
-  TameWithID: 12359
-  EggItemID: 9041
-  EquipItemID: 10023
-  FoodItemID: 6096
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 20
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 200
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bSubRace,RC_Brute,3; } }'
-  SupportScript: '{}'
-- MobID: 1630
-  Name: BACSOJIN_
-  JName: White Lady
-  TameWithID: 12357
-  EggItemID: 9039
-  EquipItemID: 10021
-  FoodItemID: 6094
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{}'
-- MobID: 1837
-  Name: IMP
-  JName: Fire Imp
-  TameWithID: 12374
-  EggItemID: 9056
-  EquipItemID: 10038
-  FoodItemID: 6114
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 200
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bSubEle,Ele_Fire,2; bonus2 bAddEle,Ele_Fire,2; } }'
-  SupportScript: '{}'
-- MobID: 2057
-  Name: E_CRAMP
-  JName: Strange Cramp
-  TameWithID: 12408
-  EggItemID: 6221
-  FoodItemID: 0
-  Fullness: 0
-  HungryDelay: 0
-  Intimacy:
-    Start: 0
-    Fed: 0
-    Overfed: 0
-    Hungry: -20
-    OwnerDie: 0
-  CaptureRate: 50
-  Speed: 0
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 350
-  RetaliateRate: 400
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{}'
-- MobID: 2081
-  Name: E_HYDRA
-  JName: Strange Hydra
-  TameWithID: 12408
-  EggItemID: 6221
-  FoodItemID: 0
-  Fullness: 0
-  HungryDelay: 0
-  Intimacy:
-    Start: 0
-    Fed: 0
-    Overfed: 0
-    Hungry: -20
-    OwnerDie: 0
-  CaptureRate: 50
-  Speed: 0
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 350
-  RetaliateRate: 400
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{}'
-- MobID: 2200
-  Name: J_TAINI
-  JName: Tiny
-  EggItemID: 9057
-  FoodItemID: 512
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{}'
-- MobID: 2210
-  Name: XMAS_LUNATIC
-  JName: Christmas Snow Rabbit
-  EggItemID: 9058
-  FoodItemID: 529
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bExpAddRace,RC_All,5; } }'
-  SupportScript: '{}'
-- MobID: 2313
-  Name: TIKBALANG
-  JName: Tikbalang
-  TameWithID: 12699
-  EggItemID: 9059
-  FoodItemID: 528
-  Fullness: 8
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 10
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 1000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-    bAddDamageClass,2320,10; bonus2 bAddDamageClass,2321,10; bonus2 bAddDamageClass,2322,10;
-    bonus2 bAddDamageClass,2317,10; bonus2 bAddDamageClass,2318,10; bonus2 bAddDamageClass,2327,10;
-    bonus2 bAddDamageClass,2319,10; bonus2 bAddDamageClass,2333,10; bonus2 bAddDamageClass,2332,10;
-    } }'
-  SupportScript: '{}'
-- MobID: 1242
-  Name: MARIN
-  JName: Marin
-  TameWithID: 12789
-  EggItemID: 9061
-  EquipItemID: 10039
-  FoodItemID: 6534
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{}'
-  SupportScript: '{}'
-- MobID: 2398
-  Name: LITTLE_PORING
-  JName: Novice Poring
-  TameWithID: 12846
-  EggItemID: 9062
-  FoodItemID: 531
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 1000
-    Overfed: 0
-    Hungry: -20
-    OwnerDie: 0
-  CaptureRate: 5000
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-    bHPrecovRate,50; } }'
-  SupportScript: '{}'
-- MobID: 1180
-  Name: NINE_TAIL
-  JName: Nine Tail
-  TameWithID: 23187
-  EggItemID: 9095
-  FoodItemID: 25231
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{.@i = getpetinfo(PETINFO_INTIMATE);
-      if(.@i >= PET_INTIMATE_LOYAL) {
+Body:
+  - MobId: 1002
+    Name: PORING
+    JName: Poring
+    TameWithId: 619
+    EggItemId: 9001
+    EquipItemId: 10013
+    FoodItemId: 531
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 350
+    RetaliateRate: 400
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bLuk,2; bonus bCritical,1; } }'
+    SupportScript: '{ petloot 10; }'
+    Evolution:
+      - TargetId: 1090
+        ItemsRequirement:
+          - ItemId: 610
+            Amount: 10
+          - ItemId: 619
+            Amount: 3
+
+  - MobId: 1113
+    Name: DROPS
+    JName: Drops
+    TameWithId: 620
+    EggItemId: 9002
+    EquipItemId: 10013
+    FoodItemId: 508
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 40
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1500
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 400
+    ChangeTargetRate: 500
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bHit,3; bonus bAtk,3; } }'
+    SupportScript: '{ petloot 10; }'
+    Evolution:
+      - TargetId: 3495
+        ItemsRequirement:
+          - ItemId: 7032
+            Amount: 20
+          - ItemId: 7031
+            Amount: 10
+          - ItemId: 531
+            Amount: 3
+          - ItemId: 4659
+            Amount: 1
+      - TargetId: 3790
+        ItemsRequirement:
+          - ItemId: 25290
+            Amount: 500
+          - ItemId: 529
+            Amount: 50
+          - ItemId: 530
+            Amount: 50
+          - ItemId: 4004
+            Amount: 1
+  - MobId: 1031
+    Name: POPORING
+    JName: Poporing
+    TameWithId: 621
+    EggItemId: 9003
+    EquipItemId: 10013
+    FoodItemId: 511
+    Fullness: 5
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 30
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 500
+    ChangeTargetRate: 400
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bLuk,2; bonus2 bSubEle,Ele_Poison,10; } }'
+    SupportScript: '{ petloot 15; }'
+  - MobId: 1063
+    Name: LUNATIC
+    JName: Lunatic
+    TameWithId: 622
+    EggItemId: 9004
+    EquipItemId: 10007
+    FoodItemId: 534
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 40
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 1000
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bCritical,2; bonus bAtk,2; } }'
+    SupportScript: '{ petskillbonus bLuk,3,10,50; }'
+    Evolution:
+      - TargetId: 3496
+        ItemsRequirement: 
+          - ItemId: 7198
+            Amount: 100
+          - ItemId: 705
+            Amount: 250
+          - ItemId: 706
+            Amount: 30
+          - ItemId: 4663
+            Amount: 1
+
+  - MobId: 1049
+    Name: PICKY
+    JName: Picky
+    TameWithId: 623
+    EggItemId: 9005
+    EquipItemId: 10012
+    FoodItemId: 507
+    Fullness: 4   
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 40
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 500
+    RetaliateRate: 600
+    ChangeTargetRate: 50
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bStr,1; bonus bAtk,5; } }'
+    SupportScript: '{ petskillbonus bStr,3,10,50; }'
+  - MobId: 1011
+    Name: CHONCHON
+    JName: ChonChon
+    TameWithId: 624
+    EggItemId: 9006
+    EquipItemId: 10002
+    FoodItemId: 537
+    Fullness: 6
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 30
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1500
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 500
+    RetaliateRate: 500
+    ChangeTargetRate: 250
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAgi,1; bonus bFlee,2; } }'
+    SupportScript: '{ petskillbonus bAgi,4,10,50; }'
+  - MobId: 1042
+    Name: STEEL_CHONCHON
+    JName: Steel ChonChon
+    TameWithId: 625
+    EggItemId: 9007
+    EquipItemId: 10002
+    FoodItemId: 1002
+    Fullness: 5
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 500
+    RetaliateRate: 500
+    ChangeTargetRate: 200
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bFlee,6; bonus bAgi,-1; } }'
+    SupportScript: '{ petskillbonus bAgiVit,4,20,40; }'
+  - MobId: 1035
+    Name: HUNTER_FLY
+    JName: Hunter Fly
+    TameWithId: 626
+    EggItemId: 9008
+    EquipItemId: 10002
+    FoodItemId: 716
+    Fullness: 5
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 500
+    RetaliateRate: 500
+    ChangeTargetRate: 200
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bFlee,-5; bonus bFlee2,2; } }'
+    SupportScript: '{ petskillattack2 "NPC_WINDATTACK",888,2,0,10; }'
+  - MobId: 1167
+    Name: SAVAGE_BABE
+    JName: Savage Babe
+    TameWithId: 627
+    EggItemId: 9009
+    EquipItemId: 10015
+    FoodItemId: 537
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 40
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 500
+    RetaliateRate: 500
+    ChangeTargetRate: 200
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bVit,1; bonus bMaxHP,50; } }'
+    SupportScript: '{ petskillbonus bVit,4,10,50; }'
+    Evolution:
+      - TargetId: 1166
+        ItemsRequirement:
+          - ItemId: 537
+            Amount: 10
+          - ItemId: 627
+            Amount: 3
+          - ItemId: 517
+            Amount: 100
+          - ItemId: 949
+            Amount: 50
+  - MobId: 1107
+    Name: DESERT_WOLF_B
+    JName: Baby Desert Wolf
+    TameWithId: 628
+    EggItemId: 9010
+    EquipItemId: 10003
+    FoodItemId: 537
+    Fullness: 6
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 40
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1000
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 400
+    RetaliateRate: 400
+    ChangeTargetRate: 400
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bInt,1; bonus bMaxSP,50; } }'
+    SupportScript: '{ petskillattack "SM_PROVOKE",1,0,5; }'
+  - MobId: 1052
+    Name: ROCKER
+    JName: Rocker
+    TameWithId: 629
+    EggItemId: 9011
+    EquipItemId: 10014
+    FoodItemId: 537
+    Fullness: 1
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 30
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 350
+    RetaliateRate: 350
+    ChangeTargetRate: 600
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bHPrecovRate,5; bonus bMaxHP,25; } }'
+    SupportScript: '{ petskillbonus bAllStats,1,10,50; }'
+    Evolution:
+      - TargetId: 1058
+        ItemsRequirement:
+          - ItemId: 707
+            Amount: 3
+          - ItemId: 940
+            Amount: 777
+          - ItemId: 508
+            Amount: 200
+          - ItemId: 4057
+            Amount: 1
+  - MobId: 1014
+    Name: SPORE
+    JName: Spore
+    TameWithId: 630
+    EggItemId: 9012
+    EquipItemId: 10017
+    FoodItemId: 537
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 30
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 350
+    RetaliateRate: 500
+    ChangeTargetRate: 500
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bHit,5; bonus bAtk,-2; } }'
+    SupportScript: '{ petrecovery SC_POISON,60; }'
+  - MobId: 1077
+    Name: POISON_SPORE
+    JName: Poison Spore
+    TameWithId: 631
+    EggItemId: 9013
+    EquipItemId: 10017
+    FoodItemId: 537
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1000
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 600
+    RetaliateRate: 200
+    ChangeTargetRate: 400
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bStr,1; bonus bInt,1; } }'
+    SupportScript: '{ petskillattack "NPC_POISON",20,0,10; }'
+  - MobId: 1019
+    Name: PECOPECO
+    JName: PecoPeco
+    TameWithId: 632
+    EggItemId: 9014
+    EquipItemId: 10010
+    FoodItemId: 537
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 30
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 400
+    RetaliateRate: 500
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxHP,150; bonus bMaxSP,-10; } }'
+    SupportScript: '{ petskillbonus bSpeedRate,25,20,20; }'
+    Evolution:
+      - TargetId: 1369
+        ItemsRequirement:
+          - ItemId: 537
+            Amount: 10
+          - ItemId: 632
+            Amount: 3
+          - ItemId: 7101
+            Amount: 300
+          - ItemId: 4031
+            Amount: 1
+          - ItemId: 522
+            Amount: 10
+  - MobId: 1056
+    Name: SMOKIE
+    JName: Smokie
+    TameWithId: 633
+    EggItemId: 9015
+    EquipItemId: 10019
+    FoodItemId: 537
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 30
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 600
+    RetaliateRate: 600
+    ChangeTargetRate: 100
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAgi,1; bonus bFlee2,1; } }'
+    SupportScript: '{ petskillbonus bPerfectHide,1,3600,0; }'
+  - MobId: 1057
+    Name: YOYO
+    JName: Yoyo
+    TameWithId: 634
+    EggItemId: 9016
+    EquipItemId: 10018
+    FoodItemId: 532
+    Fullness: 5
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 800
+    ChangeTargetRate: 400
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bCritical,3; bonus bLuk,-1; } }'
+    SupportScript: '{ petloot 20; }'
+    Evolution:
+      - TargetId: 1214
+        ItemsRequirement:
+          - ItemId: 634
+            Amount: 3
+          - ItemId: 753
+            Amount: 2
+          - ItemId: 7182
+            Amount: 300
+          - ItemId: 4051
+            Amount: 1
+  - MobId: 1023
+    Name: ORK_WARRIOR
+    JName: Orc Warrior
+    TameWithId: 635
+    EggItemId: 9017
+    EquipItemId: 10009
+    FoodItemId: 537
+    Fullness: 5
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 600
+    RetaliateRate: 200
+    ChangeTargetRate: 300
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAtk,10; bonus bDef,-3; } }'
+    SupportScript: '{ petskillattack2 "NPC_PIERCINGATT",100,1,0,10; }'
+    Evolution:
+      - TargetId: 1213
+        ItemsRequirement:
+          - ItemId: 635
+            Amount: 3
+          - ItemId: 1124
+            Amount: 1
+          - ItemId: 931
+            Amount: 500
+          - ItemId: 2267
+            Amount: 1
+          - ItemId: 4066
+            Amount: 1
+  - MobId: 1026
+    Name: MUNAK
+    JName: Munak
+    TameWithId: 636
+    EggItemId: 9018
+    EquipItemId: 10008
+    FoodItemId: 537
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 750
+    ChangeTargetRate: 300
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bInt,1; bonus bDef,1; } }'
+    SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10; }'
+  - MobId: 1110
+    Name: DOKEBI
+    JName: Dokebi
+    TameWithId: 637
+    EggItemId: 9019
+    EquipItemId: 10005
+    FoodItemId: 537
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMatkRate,1; bonus bAtkRate,-1; } }'
+    SupportScript: '{ petskillattack "BS_HAMMERFALL",1,0,10; }'
+    Evolution:
+      - TargetId: 1301
+        ItemsRequirement:
+          - ItemId: 637
+            Amount: 3
+          - ItemId: 981
+            Amount: 3
+          - ItemId: 1021
+            Amount: 300
+          - ItemId: 969
+            Amount: 3
+  - MobId: 1170
+    Name: SOHEE
+    JName: Sohee
+    TameWithId: 638
+    EggItemId: 9020
+    EquipItemId: 10016
+    FoodItemId: 537
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 100
+    RetaliateRate: 1000
+    ChangeTargetRate: 200
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bStr,1; bonus bDex,1; } }'
+    SupportScript: '{ petskillsupport "AL_HEAL",5,60,33,100; }'
+  - MobId: 1029
+    Name: ISIS
+    JName: Isis
+    TameWithId: 639
+    EggItemId: 9021
+    EquipItemId: 10006
+    FoodItemId: 537
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 650
+    RetaliateRate: 450
+    ChangeTargetRate: 150
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMatkRate,-1; bonus bAtkRate,1; } }'
+    SupportScript: '{ petskillsupport "PR_MAGNIFICAT",2,60,50,50; }'
+    Evolution:
+      - TargetId: 3636
+        ItemsRequirement:
+          - ItemId: 639
+            Amount: 3
+          - ItemId: 732
+            Amount: 6
+          - ItemId: 10006
+            Amount: 1
+          - ItemId: 954
+            Amount: 300
+  - MobId: 1155
+    Name: PETIT
+    JName: Petite
+    TameWithId: 640
+    EggItemId: 9022
+    EquipItemId: 10011
+    FoodItemId: 537
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 800
+    RetaliateRate: 400
+    ChangeTargetRate: 100
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bDef,-2; bonus bMdef,-2; bonus bAspdRate,1; } }'
+    SupportScript: '{ petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10; }'
+    Evolution:
+      - TargetId: 3670
+        ItemsRequirement:
+          - ItemId: 640
+            Amount: 3
+          - ItemId: 6260
+            Amount: 100
+          - ItemId: 606
+            Amount: 150
+          - ItemId: 4279
+            Amount: 1
+  - MobId: 1109
+    Name: DEVIRUCHI
+    JName: Deviruchi
+    TameWithId: 641
+    EggItemId: 9023
+    EquipItemId: 10004
+    FoodItemId: 711
+    Fullness: 2
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 800
+    RetaliateRate: 200
+    ChangeTargetRate: 100
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMatkRate,1; bonus bAtkRate,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; } }'
+    SupportScript: '{ petskillbonus bAgiDexStr,6,20,40; }'
+    Evolution:
+      - TargetId: 3669
+        ItemsRequirement:
+          - ItemId: 641
+            Amount: 3
+          - ItemId: 1039
+            Amount: 250
+          - ItemId: 1009
+            Amount: 30
+          - ItemId: 4122
+            Amount: 1
+  - MobId: 1101
+    Name: BAPHOMET_
+    JName: Baphomet Jr.
+    TameWithId: 642
+    EggItemId: 9024
+    EquipItemId: 10001
+    FoodItemId: 518
+    Fullness: 2
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 200
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 1000
+    RetaliateRate: 100
+    ChangeTargetRate: 200
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bDef,1; bonus bMdef,1; bonus2 bResEff,Eff_Stun,-100; } }'
+    SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5; }'
+  - MobId: 1188
+    Name: BON_GUN
+    JName: Bon Gun
+    TameWithId: 659
+    EggItemId: 9025
+    EquipItemId: 10020
+    FoodItemId: 537
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 30
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 600
+    RetaliateRate: 200
+    ChangeTargetRate: 400
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bVit,1; bonus2 bResEff,Eff_Stun,100; } }'
+    SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1; }'
+    Evolution:
+      - TargetId: 1512
+        ItemsRequirement:
+          - ItemId: 5367
+            Amount: 1
+          - ItemId: 7277
+            Amount: 100
+          - ItemId: 7014
+            Amount: 50
+          - ItemId: 4328
+            Amount: 1
+  - MobId: 1200
+    Name: ZHERLTHSH
+    JName: Zealotus
+    TameWithId: 660
+    EggItemId: 9026
+    FoodItemId: 929
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 300
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 1000
+    RetaliateRate: 100
+    ChangeTargetRate: 500
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bAddRace,RC_Demihuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; bonus2 bAddRace,RC_Player,2; bonus2 bMagicAddRace,RC_Player,2; } }'
+    SupportScript: '{ petskillattack "AS_SONICBLOW",1,0,3; }'
+  - MobId: 1275
+    Name: ALICE
+    JName: Alice
+    TameWithId: 661
+    EggItemId: 9027
+    FoodItemId: 504
+    Fullness: 2
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 800
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 100
+    RetaliateRate: 1000
+    ChangeTargetRate: 200
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
+    SupportScript: '{ petskillsupport "AL_HEAL",5,60,25,100; }'
+  - MobId: 1815
+    Name: EVENT_RICECAKE
+    JName: Rice Cake
+    EggItemId: 9028
+    FoodItemId: 511
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 500
+    RetaliateRate: 500
+    ChangeTargetRate: 200
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bSubEle,Ele_Neutral,1; bonus bMaxHPrate,-1; } }'
+    SupportScript: '{ petskillsupport "CR_DEFENDER",3,240,50,100; }'
+  - MobId: 1245
+    Name: GOBLINE_XMAS
+    JName: Christmas Goblin
+    TameWithId: 12225
+    EggItemId: 9029
+    FoodItemId: 911
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxHP,30; bonus2 bSubEle,Ele_Water,1; } }'
+    SupportScript: '{ petskillattack "MG_SIGHT",5,5,5; }'
+  - MobId: 1519
+    Name: CHUNG_E
+    JName: Green Maiden
+    TameWithId: 12395
+    EggItemId: 9030
+    FoodItemId: 6115
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bDef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
+    SupportScript: '{ petskillattack "CR_SHIELDCHARGE",5,5,5; }'
+  - MobId: 1879
+    Name: ECLIPSE_P
+    JName: Spring Rabbit
+    EggItemId: 9031
+    FoodItemId: 7766
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{ petskillattack "TF_THROWSTONE",1,5,5; }'
+  - MobId: 1122
+    Name: GOBLIN_1
+    JName: Goblin
+    TameWithId: 14569
+    EggItemId: 9032
+    FoodItemId: 7821
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 800
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{ petskillattack "NPC_WINDATTACK",5,5,5; }'
+  - MobId: 1123
+    Name: GOBLIN_2
+    JName: Goblin
+    TameWithId: 14570
+    EggItemId: 9033
+    FoodItemId: 7821
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 800
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{ petskillattack "NPC_FIREATTACK",5,5,5; }'
+  - MobId: 1125
+    Name: GOBLIN_4
+    JName: Goblin
+    TameWithId: 14571
+    EggItemId: 9034
+    FoodItemId: 7821
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 800
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{ petskillattack "NPC_GROUNDATTACK",5,5,5; }'
+  - MobId: 1385
+    Name: DELETER_
+    JName: Deleter
+    TameWithId: 14572
+    EggItemId: 9035
+    FoodItemId: 7822
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 800
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{ petskillattack "SM_MAGNUM",5,5,5; }'
+  - MobId: 1382
+    Name: DIABOLIC
+    JName: Diabolic
+    TameWithId: 14573
+    EggItemId: 9036
+    FoodItemId: 7823
+    Fullness: 2
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 800
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{ petskillattack "WZ_METEOR",2,5,5; }'
+  - MobId: 1208
+    Name: WANDER_MAN
+    JName: Wanderer
+    TameWithId: 14574
+    EggItemId: 9037
+    FoodItemId: 7824
+    Fullness: 2
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 800
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAgi,3; bonus bDex,1; } }'
+    SupportScript: '{ petskillattack "NPC_UNDEADATTACK",5,5,5; }'
+  - MobId: 1963
+    Name: P_CHUNG_E
+    JName: New Year Doll
+    EggItemId: 9038
+    FoodItemId: 554
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 30
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 800
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{ petskillattack "CR_SHIELDCHARGE",5,5,5; }'
+  - MobId: 1040
+    Name: GOLEM
+    JName: Golem
+    TameWithId: 12371
+    EggItemId: 9053
+    EquipItemId: 10035
+    FoodItemId: 6111
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxHP,100; bonus bFlee,-5; } }'
+    SupportScript: '{}'
+  - MobId: 1143
+    Name: MARIONETTE
+    JName: Marionette
+    TameWithId: 12361
+    EggItemId: 9043
+    EquipItemId: 10025
+    FoodItemId: 6098
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bSPrecovRate,3; } }'
+    SupportScript: '{}'
+  - MobId: 1148
+    Name: MEDUSA
+    JName: Medusa
+    TameWithId: 12368
+    EggItemId: 9050
+    EquipItemId: 10032
+    FoodItemId: 6108
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 200
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bVit,1; bonus2 bResEff,Eff_Stone,500; } }'
+    SupportScript: '{}'
+  - MobId: 1179
+    Name: WHISPER
+    JName: Whisper
+    TameWithId: 12363
+    EggItemId: 9045
+    EquipItemId: 10027
+    FoodItemId: 6100
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bFlee,7; bonus bDef,-3; } }'
+    SupportScript: '{}'
+  - MobId: 1299
+    Name: GOBLIN_LEADER
+    JName: Goblin Leader
+    TameWithId: 12364
+    EggItemId: 9046
+    EquipItemId: 10028
+    FoodItemId: 6104
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 50
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3; } }'
+    SupportScript: '{}'
+  - MobId: 1370
+    Name: SUCCUBUS
+    JName: Succubus
+    TameWithId: 12373
+    EggItemId: 9055
+    EquipItemId: 10037
+    FoodItemId: 6113
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 200
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bHPDrainRate,30,5; bonus bMaxHPrate,1; } }'
+    SupportScript: '{ bonus2 bHPDrainRate,10,5; }'
+  - MobId: 1374
+    Name: INCUBUS
+    JName: Incubus
+    TameWithId: 12370
+    EggItemId: 9052
+    EquipItemId: 10034
+    FoodItemId: 6110
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 50
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxSPRate,5; bonus2 bSPDrainRate,30,1; } }'
+    SupportScript: '{ bonus bMaxSPRate,3; bonus2 bSPDrainRate,10,1; }'
+  - MobId: 1379
+    Name: NIGHTMARE_TERROR
+    JName: Nightmare Terror
+    TameWithId: 12372
+    EggItemId: 9054
+    EquipItemId: 10036
+    FoodItemId: 6112
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 200
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bResEff,Eff_Sleep,10000; } }'
+    SupportScript: '{}'
+  - MobId: 1401
+    Name: SHINOBI
+    JName: Shinobi
+    TameWithId: 12362
+    EggItemId: 9044
+    EquipItemId: 10026
+    FoodItemId: 6099
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAgi,2; } }'
+    SupportScript: '{}'
+  - MobId: 1404
+    Name: MIYABI_NINGYO
+    JName: Miyabi Doll
+    TameWithId: 12366
+    EggItemId: 9048
+    EquipItemId: 10030
+    FoodItemId: 6106
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 200
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bInt,1; bonus bCastrate,-3; } }'
+    SupportScript: '{}'
+  - MobId: 1416
+    Name: WICKED_NYMPH
+    JName: Evil Nymph
+    TameWithId: 12365
+    EggItemId: 9047
+    EquipItemId: 10029
+    FoodItemId: 6105
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxSP,30; bonus bSPrecovRate,5; } }'
+    SupportScript: '{}'
+  - MobId: 1495
+    Name: STONE_SHOOTER
+    JName: Stone Shooter
+    TameWithId: 12369
+    EggItemId: 9051
+    EquipItemId: 10033
+    FoodItemId: 6109
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bSubEle,Ele_Fire,3; } }'
+    SupportScript: '{}'
+  - MobId: 1504
+    Name: DULLAHAN
+    JName: Dullahan
+    TameWithId: 12367
+    EggItemId: 9049
+    EquipItemId: 10031
+    FoodItemId: 6107
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 200
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bCritAtkRate,5; } }'
+    SupportScript: '{}'
+  - MobId: 1505
+    Name: LOLI_RURI
+    JName: Loli Ruri
+    TameWithId: 12360
+    EggItemId: 9042
+    EquipItemId: 10024
+    FoodItemId: 6097
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 200
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxHPRate,3; bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10; } }'
+    SupportScript: '{}'
+  - MobId: 1513
+    Name: CIVIL_SERVANT
+    JName: Mao Guai
+    TameWithId: 12358
+    EggItemId: 9040
+    EquipItemId: 10022
+    FoodItemId: 6095
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 500
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxSP,10; } }'
+    SupportScript: '{}'
+  - MobId: 1586
+    Name: LEAF_CAT
+    JName: Leaf Cat
+    TameWithId: 12359
+    EggItemId: 9041
+    EquipItemId: 10023
+    FoodItemId: 6096
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 20
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 200
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bSubRace,RC_Brute,3; } }'
+    SupportScript: '{}'
+  - MobId: 1630
+    Name: BACSOJIN_
+    JName: White Lady
+    TameWithId: 12357
+    EggItemId: 9039
+    EquipItemId: 10021
+    FoodItemId: 6094
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{}'
+  - MobId: 1837
+    Name: IMP
+    JName: Fire Imp
+    TameWithId: 12374
+    EggItemId: 9056
+    EquipItemId: 10038
+    FoodItemId: 6114
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 200
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bSubEle,Ele_Fire,2; bonus2 bAddEle,Ele_Fire,2; } }'
+    SupportScript: '{}'
+  - MobId: 2057
+    Name: E_CRAMP
+    JName: Strange Cramp
+    TameWithId: 12408
+    EggItemId: 6221
+    FoodItemId: 0
+    Fullness: 0
+    HungryDelay: 0
+    Intimacy:
+      Start: 0
+      Fed: 0
+      Overfed: 0
+      Hungry: -20
+      OwnerDie: 0
+    CaptureRate: 50
+    Speed: 0
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 350
+    RetaliateRate: 400
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{}'
+  - MobId: 2081
+    Name: E_HYDRA
+    JName: Strange Hydra
+    TameWithId: 12408
+    EggItemId: 6221
+    FoodItemId: 0
+    Fullness: 0
+    HungryDelay: 0
+    Intimacy:
+      Start: 0
+      Fed: 0
+      Overfed: 0
+      Hungry: -20
+      OwnerDie: 0
+    CaptureRate: 50
+    Speed: 0
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 350
+    RetaliateRate: 400
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{}'
+  - MobId: 2200
+    Name: J_TAINI
+    JName: Tiny
+    EggItemId: 9057
+    FoodItemId: 512
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{}'
+  - MobId: 2210
+    Name: XMAS_LUNATIC
+    JName: Christmas Snow Rabbit
+    EggItemId: 9058
+    FoodItemId: 529
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bExpAddRace,RC_All,5; } }'
+    SupportScript: '{}'
+  - MobId: 2313
+    Name: TIKBALANG
+    JName: Tikbalang
+    TameWithId: 12699
+    EggItemId: 9059
+    FoodItemId: 528
+    Fullness: 8
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 10
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 1000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bAddDamageClass,2320,10; bonus2 bAddDamageClass,2321,10; bonus2 bAddDamageClass,2322,10;
+      bonus2 bAddDamageClass,2317,10; bonus2 bAddDamageClass,2318,10; bonus2 bAddDamageClass,2327,10;
+      bonus2 bAddDamageClass,2319,10; bonus2 bAddDamageClass,2333,10; bonus2 bAddDamageClass,2332,10;
+      } }'
+    SupportScript: '{}'
+  - MobId: 1242
+    Name: MARIN
+    JName: Marin
+    TameWithId: 12789
+    EggItemId: 9061
+    EquipItemId: 10039
+    FoodItemId: 6534
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{}'
+    SupportScript: '{}'
+  - MobId: 2398
+    Name: LITTLE_PORING
+    JName: Novice Poring
+    TameWithId: 12846
+    EggItemId: 9062
+    FoodItemId: 531
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 1000
+      Overfed: 0
+      Hungry: -20
+      OwnerDie: 0
+    CaptureRate: 5000
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bHPrecovRate,50; } }'
+    SupportScript: '{}'
+  - MobId: 1180
+    Name: NINE_TAIL
+    JName: Nine Tail
+    TameWithId: 23187
+    EggItemId: 9095
+    FoodItemId: 25231
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{.@i = getpetinfo(PETINFO_INTIMATE);
+        if(.@i >= PET_INTIMATE_LOYAL) {
+          bonus bCritical,3;
+          bonus bHit,2;
+        } else if(.@i >= PET_INTIMATE_CORDIAL) {
+          bonus bCritical,2;
+          bonus bHit,2;
+        }
+      }'
+    SupportScript: '{}'
+    Evolution:
+      - TargetId: 1307
+        ItemsRequirement:
+          - ItemId: 23187
+            Amount: 3
+          - ItemId: 1022
+            Amount: 999
+          - ItemId: 10008
+            Amount: 1
+          - ItemId: 4159
+            Amount: 1
+  - MobId: 1632
+    Name: GREMLIN
+    JName: Gremlin
+    TameWithId: 23188
+    EggItemId: 9100
+    FoodItemId: 25232
+    Fullness: 4
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{.@i = getpetinfo(PETINFO_INTIMATE);
+        if(.@i >= PET_INTIMATE_LOYAL) {
+          bonus Dex,2;
+          bonus bHit,1;
+        } else if(.@i >= PET_INTIMATE_CORDIAL) {
+          bonus bDex,1;
+          bonus bHit,1;
+        }
+      }'
+    SupportScript: '{}'
+    Evolution:
+      - TargetId: 1773
+        ItemsRequirement:
+          - ItemId: 23188
+            Amount: 3
+          - ItemId: 6100
+            Amount: 50
+          - ItemId: 7340
+            Amount: 200
+          - ItemId: 4413
+            Amount: 1
+  - MobId: 1041
+    Name: MUMMY
+    JName: Mummy
+    TameWithId: 23256
+    EggItemId: 9102
+    FoodItemId: 934
+    Fullness: 7
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{.@i = getpetinfo(PETINFO_INTIMATE);
+        if(.@i >= PET_INTIMATE_LOYAL) {
+          bonus bHit,5;
+        } else if(.@i >= PET_INTIMATE_CORDIAL) {
+          bonus bHit,4;
+        }
+      }'
+    SupportScript: '{}'
+    Evolution:
+      - TargetId: 1297
+        ItemsRequirement:
+          - ItemId: 23256
+            Amount: 3
+          - ItemId: 7511
+            Amount: 200
+          - ItemId: 969
+            Amount: 30
+          - ItemId: 4248
+            Amount: 1
+  - MobId: 1622
+    Name: TEDDY_BEAR
+    JName: Teddy Bear
+    TameWithId: 23189
+    EggItemId: 9099
+    FoodItemId: 25233
+    Fullness: 3
+    HungryDelay: 60
+    Intimacy:
+      Start: 250
+      Fed: 50
+      Overfed: -100
+      Hungry: -20
+      OwnerDie: -20
+    CaptureRate: 2000
+    Speed: 150
+    SpecialPerformance: true
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ if(getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_CORDIAL) bonus bMaxSP,150; }'
+    SupportScript: '{}'
+    Evolution:
+      - TargetId: 2995
+        ItemsRequirement:
+          - ItemId: 23189
+            Amount: 3
+          - ItemId: 7442
+            Amount: 300
+          - ItemId: 724
+            Amount: 50
+          - ItemId: 4340
+            Amount: 1
+
+  # Pet Evolution, most are dummy values
+  - MobId: 1090
+    Name: MASTERING
+    JName: Mastering
+    EggItemId: 9069
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bLuk,3;
         bonus bCritical,3;
-        bonus bHit,2;
       } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bLuk,3;
+        bonus bCritical,2;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bLuk,3;
+        bonus bCritical,1;
+      } else {
+        bonus bLuk,2;
+        bonus bCritical,1;
+      }}'
+    SupportScript: '{}'
+    Evolution:
+      - TargetId: 1096
+        ItemsRequirement:
+          - ItemId: 503
+            Amount: 20
+          - ItemId: 2282
+            Amount: 1
+          - ItemId: 509
+            Amount: 50
+          - ItemId: 909
+            Amount: 200
+  - MobId: 1058
+    Name: METALLER
+    JName: Metaller
+    EggItemId: 9106
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bHPrecovRate,20;
+        bonus bMaxHP,70;
+        bonus2 bAddRace,RC_Plant,6;
+        bonus2 bMagicAddRace,RC_Plant,6;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bHPrecovRate,15;
+        bonus bMaxHP,55;
+        bonus2 bAddRace,RC_Plant,3;
+        bonus2 bMagicAddRace,RC_Plant,3;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bHPrecovRate,10;
+        bonus bMaxHP,38;
+      } else {
+        bonus bHPrecovRate,5;
+        bonus bMaxHP,25;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1096
+    Name: ANGELING
+    JName: Angeling
+    EggItemId: 9088
+    FoodItemId: 537
+    Fullness: 1
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxHPrate,2;
+        bonus bHealPower,8;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bMaxHPrate,2;
+        bonus bHealPower,6;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bMaxHPrate,1;
+        bonus bHealPower,4;
+      } else {
+        bonus bMaxHPrate,1;
+        bonus bHealPower,2;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1150
+    Name: MOONLIGHT
+    JName: Moonlight Flower
+    EggItemId: 9112
+    FoodItemId: 25377
+    Fullness: 1
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bCritical,6;
+        bonus bHit,6;
+        autobonus "{ bonus bHPRegenRate,500,1000; bonus bSPRegenRate,20,1000; }",30,5000,BF_WEAPON|BF_SHORT;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bCritical,5;
+        bonus bHit,5;
+        autobonus "{ bonus bHPRegenRate,400,1000; bonus bSPRegenRate,10,1000; }",30,5000,BF_WEAPON|BF_SHORT;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bCritical,4;
+        bonus bHit,4;
+        autobonus "{ bonus bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+      } else {
+        bonus bCritical,3;
+        bonus bHit,3;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1166
+    Name: SAVAGE
+    JName: Savage
+    EggItemId: 9070
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxHP,200;
+        bonus bVit,2;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bMaxHP,100;
+        bonus bVit,2;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bMaxHP,50;
+        bonus bVit,2;
+      } else {
+        bonus bMaxHP,50;
+        bonus bVit,1;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1213
+    Name: HIGH_ORC
+    JName: High Orc
+    EggItemId: 9087
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxHP,200;
+        bonus bVit,2;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bMaxHP,100;
+        bonus bVit,2;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bMaxHP,50;
+        bonus bVit,2;
+      } else {
+        bonus bMaxHP,50;
+        bonus bVit,1;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1214
+    Name: CHOCO
+    JName: Choco
+    EggItemId: 9091
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bCritical,9;
+        bonus bLongAtkRate,3;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bCritical,7;
+        bonus bLongAtkRate,2;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bCritical,5;
+        bonus bLongAtkRate,1;
+      } else {
+        bonus bCritical,3;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1297
+    Name: ANCIENT_MUMMY
+    JName: Ancient Mummy
+    EggItemId: 9107
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bHit,6;
+        bonus2 bAddClass,Class_All,6;
+        bonus2 bMagicAddClass,Class_All,6;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bHit,6;
+        bonus2 bAddClass,Class_All,3;
+        bonus2 bMagicAddClass,Class_All,3;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bHit,5;
+      } else {
+        bonus bHit,4;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1301
+    Name: AM_MUT
+    JName: Am Mut
+    EggItemId: 9089
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMatkRate,4;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bMatkRate,3;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bMatkRate,2;
+      } else {
+        bonus bMatkRate,1;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1307
+    Name: CAT_O_NINE_TAIL
+    JName: Cat o' Nine Tail
+    EggItemId: 9096
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bCritical,5;
+        bonus bHit,5;
+        autobonus "{ bonus bHPRegenRate,400,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bCritical,4;
+        bonus bHit,4;
+        autobonus "{ bonus bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bCritical,3;
+        bonus bHit,3;
+      } else {
         bonus bCritical,2;
         bonus bHit,2;
-      }
-    }'
-  SupportScript: '{}'
-  Evolution:
-    - TargetID: 1307
-      ItemsRequirement:
-        - ItemID: 23187
-          Amount: 3
-        - ItemID: 1022
-          Amount: 999
-        - ItemID: 10008
-          Amount: 1
-        - ItemID: 4159
-          Amount: 1
-- MobID: 1632
-  Name: GREMLIN
-  JName: Gremlin
-  TameWithID: 23188
-  EggItemID: 9100
-  FoodItemID: 25232
-  Fullness: 4
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{.@i = getpetinfo(PETINFO_INTIMATE);
-      if(.@i >= PET_INTIMATE_LOYAL) {
-        bonus Dex,2;
-        bonus bHit,1;
+      }}'
+    SupportScript: '{}'
+    Evolution:
+      - TargetId: 1150
+        ItemsRequirement:
+          - ItemId: 25375
+            Amount: 30
+          - ItemId: 4159
+            Amount: 10
+          - ItemId: 4100
+            Amount: 10
+          - ItemId: 4090
+            Amount: 10
+  - MobId: 1369
+    Name: GRAND_PECO
+    JName: Grand Peco
+    EggItemId: 9071
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxHP,400;
       } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bMaxHP,300;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bMaxHP,200;
+      } else {
+        bonus bMaxHP,150;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1512
+    Name: HYEGUN
+    JName: Yao Jun
+    EggItemId: 9093
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bVit,4;
+        bonus2 bResEff,Eff_Stun,400;
+        bonus2 bSPDrainRate,20,1;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bVit,3;
+        bonus2 bResEff,Eff_Stun,300;
+        bonus2 bSPDrainRate,10,1;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bVit,2;
+        bonus2 bResEff,Eff_Stun,200;
+      } else {
+        bonus bVit,1;
+        bonus2 bResEff,Eff_Stun,100;
+      }}'
+    SupportScript: '{}'
+  - MobId: 1773
+    Name: HODREMLIN
+    JName: Hodremlin
+    EggItemId: 9105
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bDex,2;
+        bonus bHit,2;
+        bonus bCritAtkRate,9;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bDex,2;
+        bonus bHit,2;
+        bonus bCritAtkRate,7;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bDex,2;
+        bonus bHit,1;
+      } else {
         bonus bDex,1;
         bonus bHit,1;
-      }
-    }'
-  SupportScript: '{}'
-  Evolution:
-    - TargetID: 1773
-      ItemsRequirement:
-        - ItemID: 23188
-          Amount: 3
-        - ItemID: 6100
-          Amount: 50
-        - ItemID: 7340
-          Amount: 200
-        - ItemID: 4413
-          Amount: 1
-- MobID: 1041
-  Name: MUMMY
-  JName: Mummy
-  TameWithID: 23256
-  EggItemID: 9102
-  FoodItemID: 934
-  Fullness: 7
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{.@i = getpetinfo(PETINFO_INTIMATE);
-      if(.@i >= PET_INTIMATE_LOYAL) {
-        bonus bHit,5;
+      }}'
+    SupportScript: '{}'
+  - MobId: 2995
+    Name: XM_TEDDY_BEAR
+    JName: Abandoned Bear Doll
+    EggItemId: 9108
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bMaxSP,150;
+        autobonus "{ bonus bSPRegenRate,40,1000; }",30,5000,BF_MAGIC;
       } else if(.@i >= PET_INTIMATE_CORDIAL) {
-        bonus bHit,4;
-      }
-    }'
-  SupportScript: '{}'
-  Evolution:
-    - TargetID: 1297
-      ItemsRequirement:
-        - ItemID: 23256
-          Amount: 3
-        - ItemID: 7511
-          Amount: 200
-        - ItemID: 969
-          Amount: 30
-        - ItemID: 4248
-          Amount: 1
-- MobID: 1622
-  Name: TEDDY_BEAR
-  JName: Teddy Bear
-  TameWithID: 23189
-  EggItemID: 9099
-  FoodItemID: 25233
-  Fullness: 3
-  HungryDelay: 60
-  Intimacy:
-    Start: 250
-    Fed: 50
-    Overfed: -100
-    Hungry: -20
-    OwnerDie: -20
-  CaptureRate: 2000
-  Speed: 150
-  SpecialPerformance: true
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ if(getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_CORDIAL) bonus bMaxSP,150; }'
-  SupportScript: '{}'
-  Evolution:
-    - TargetID: 2995
-      ItemsRequirement:
-        - ItemID: 23189
-          Amount: 3
-        - ItemID: 7442
-          Amount: 300
-        - ItemID: 724
-          Amount: 50
-        - ItemID: 4340
-          Amount: 1
-
-# Pet Evolution, most are dummy values
-- MobID: 1090
-  Name: MASTERING
-  JName: Mastering
-  EggItemID: 9069
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bLuk,3;
-      bonus bCritical,3;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bLuk,3;
-      bonus bCritical,2;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bLuk,3;
-      bonus bCritical,1;
-    } else {
-      bonus bLuk,2;
-      bonus bCritical,1;
-    }}'
-  SupportScript: '{}'
-  Evolution:
-    - TargetID: 1096
-      ItemsRequirement:
-        - ItemID: 503
-          Amount: 20
-        - ItemID: 2282
-          Amount: 1
-        - ItemID: 509
-          Amount: 50
-        - ItemID: 909
-          Amount: 200
-- MobID: 1058
-  Name: METALLER
-  JName: Metaller
-  EggItemID: 9106
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bHPrecovRate,20;
-      bonus bMaxHP,70;
-      bonus2 bAddRace,RC_Plant,6;
-      bonus2 bMagicAddRace,RC_Plant,6;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bHPrecovRate,15;
-      bonus bMaxHP,55;
-      bonus2 bAddRace,RC_Plant,3;
-      bonus2 bMagicAddRace,RC_Plant,3;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bHPrecovRate,10;
-      bonus bMaxHP,38;
-    } else {
-      bonus bHPrecovRate,5;
-      bonus bMaxHP,25;
-    }}'
-  SupportScript: '{}'
-- MobID: 1096
-  Name: ANGELING
-  JName: Angeling
-  EggItemID: 9088
-  FoodItemID: 537
-  Fullness: 1
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bMaxHPrate,2;
-      bonus bHealPower,8;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bMaxHPrate,2;
-      bonus bHealPower,6;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bMaxHPrate,1;
-      bonus bHealPower,4;
-    } else {
-      bonus bMaxHPrate,1;
-      bonus bHealPower,2;
-    }}'
-  SupportScript: '{}'
-- MobID: 1150
-  Name: MOONLIGHT
-  JName: Moonlight Flower
-  EggItemID: 9112
-  FoodItemID: 25377
-  Fullness: 1
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bCritical,6;
-      bonus bHit,6;
-      autobonus "{ bonus bHPRegenRate,500,1000; bonus bSPRegenRate,20,1000; }",30,5000,BF_WEAPON|BF_SHORT;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bCritical,5;
-      bonus bHit,5;
-      autobonus "{ bonus bHPRegenRate,400,1000; bonus bSPRegenRate,10,1000; }",30,5000,BF_WEAPON|BF_SHORT;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bCritical,4;
-      bonus bHit,4;
-      autobonus "{ bonus bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
-    } else {
-      bonus bCritical,3;
-      bonus bHit,3;
-    }}'
-  SupportScript: '{}'
-- MobID: 1166
-  Name: SAVAGE
-  JName: Savage
-  EggItemID: 9070
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bMaxHP,200;
-      bonus bVit,2;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bMaxHP,100;
-      bonus bVit,2;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bMaxHP,50;
-      bonus bVit,2;
-    } else {
-      bonus bMaxHP,50;
-      bonus bVit,1;
-    }}'
-  SupportScript: '{}'
-- MobID: 1213
-  Name: HIGH_ORC
-  JName: High Orc
-  EggItemID: 9087
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bMaxHP,200;
-      bonus bVit,2;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bMaxHP,100;
-      bonus bVit,2;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bMaxHP,50;
-      bonus bVit,2;
-    } else {
-      bonus bMaxHP,50;
-      bonus bVit,1;
-    }}'
-  SupportScript: '{}'
-- MobID: 1214
-  Name: CHOCO
-  JName: Choco
-  EggItemID: 9091
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bCritical,9;
-      bonus bLongAtkRate,3;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bCritical,7;
-      bonus bLongAtkRate,2;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bCritical,5;
-      bonus bLongAtkRate,1;
-    } else {
-      bonus bCritical,3;
-    }}'
-  SupportScript: '{}'
-- MobID: 1297
-  Name: ANCIENT_MUMMY
-  JName: Ancient Mummy
-  EggItemID: 9107
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bHit,6;
-      bonus2 bAddClass,Class_All,6;
-      bonus2 bMagicAddClass,Class_All,6;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bHit,6;
-      bonus2 bAddClass,Class_All,3;
-      bonus2 bMagicAddClass,Class_All,3;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bHit,5;
-    } else {
-      bonus bHit,4;
-    }}'
-  SupportScript: '{}'
-- MobID: 1301
-  Name: AM_MUT
-  JName: Am Mut
-  EggItemID: 9089
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bMatkRate,4;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bMatkRate,3;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bMatkRate,2;
-    } else {
-      bonus bMatkRate,1;
-    }}'
-  SupportScript: '{}'
-- MobID: 1307
-  Name: CAT_O_NINE_TAIL
-  JName: Cat o' Nine Tail
-  EggItemID: 9096
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bCritical,5;
-      bonus bHit,5;
-      autobonus "{ bonus bHPRegenRate,400,1000; }",20,5000,BF_WEAPON|BF_SHORT;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bCritical,4;
-      bonus bHit,4;
-      autobonus "{ bonus bHPRegenRate,300,1000; }",20,5000,BF_WEAPON|BF_SHORT;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bCritical,3;
-      bonus bHit,3;
-    } else {
-      bonus bCritical,2;
-      bonus bHit,2;
-    }}'
-  SupportScript: '{}'
-  Evolution:
-    - TargetID: 1150
-      ItemsRequirement:
-        - ItemID: 25375
-          Amount: 30
-        - ItemID: 4159
-          Amount: 10
-        - ItemID: 4100
-          Amount: 10
-        - ItemID: 4090
-          Amount: 10
-- MobID: 1369
-  Name: GRAND_PECO
-  JName: Grand Peco
-  EggItemID: 9071
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bMaxHP,400;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bMaxHP,300;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bMaxHP,200;
-    } else {
-      bonus bMaxHP,150;
-    }}'
-  SupportScript: '{}'
-- MobID: 1512
-  Name: HYEGUN
-  JName: Yao Jun
-  EggItemID: 9093
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bVit,4;
-      bonus2 bResEff,Eff_Stun,400;
-      bonus2 bSPDrainRate,20,1;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bVit,3;
-      bonus2 bResEff,Eff_Stun,300;
-      bonus2 bSPDrainRate,10,1;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bVit,2;
-      bonus2 bResEff,Eff_Stun,200;
-    } else {
-      bonus bVit,1;
-      bonus2 bResEff,Eff_Stun,100;
-    }}'
-  SupportScript: '{}'
-- MobID: 1773
-  Name: HODREMLIN
-  JName: Hodremlin
-  EggItemID: 9105
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bDex,2;
-      bonus bHit,2;
-      bonus bCritAtkRate,9;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bDex,2;
-      bonus bHit,2;
-      bonus bCritAtkRate,7;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bDex,2;
-      bonus bHit,1;
-    } else {
-      bonus bDex,1;
-      bonus bHit,1;
-    }}'
-  SupportScript: '{}'
-- MobID: 2995
-  Name: XM_TEDDY_BEAR
-  JName: Abandoned Bear Doll
-  EggItemID: 9108
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bMaxSP,150;
-      autobonus "{ bonus bSPRegenRate,40,1000; }",30,5000,BF_MAGIC;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bMaxSP,150;
-      autobonus "{ bonus bSPRegenRate,30,1000; }",30,5000,BF_MAGIC;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bMaxSP,100;
-    } else {
-      bonus bMaxSP,50;
-    }}'
-  SupportScript: '{}'
-- MobID: 3495
-  Name: DR_EGGRING
-  JName: Eggring
-  EggItemID: 9092
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bHit,9;
-      bonus bAtk,9;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bHit,7;
-      bonus bAtk,7;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bHit,5;
-      bonus bAtk,5;
-    } else {
-      bonus bHit,3;
-      bonus bAtk,3;
-    }}'
-  SupportScript: '{}'
-- MobID: 3496
-  Name: DR_LUNATIC
-  JName: Leaf Lunatic
-  EggItemID: 9094
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bCritical,5;
-      bonus bAtk,5;
-      bonus2 bAddRace,RC_Formless,6;
-      bonus2 bMagicAddRace,RC_Formless,6;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bCritical,4;
-      bonus bAtk,4;
-      bonus2 bAddRace,RC_Formless,3;
-      bonus2 bMagicAddRace,RC_Formless,3;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bCritical,3;
-      bonus bAtk,3;
-    } else {
-      bonus bCritical,2;
-      bonus bAtk,2;
-    }}'
-  SupportScript: '{}'
-- MobID: 3636
-  Name: LITTLE_ISIS
-  JName: Little Isis
-  EggItemID: 9090
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bAtkRate,4;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bAtkRate,3;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bAtkRate,2;
-    } else {
-      bonus bAtkRate,1;
-    }}'
-  SupportScript: '{}'
-- MobID: 3669
-  Name: DIABOLIC2
-  JName: Diabolic2
-  EggItemID: 9097
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bAtkRate,2;
-      bonus bMatkRate,2;
-      bonus bMaxHPrate,1;
-      bonus bMaxSPrate,1;
-      bonus5 bAutoSpell,"MG_FIREBOLT",3,50,BF_WEAPON|BF_SHORT,1;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bAtkRate,1;
-      bonus bMatkRate,1;
-      bonus bMaxHPrate,1;
-      bonus bMaxSPrate,1;
-    } else {
-      bonus bAtkRate,1;
-      bonus bMatkRate,1;
-    }}'
-  SupportScript: '{}'
-- MobID: 3670
-  Name: DELETER_2
-  JName: Deleter 2
-  EggItemID: 9098
-  FoodItemID: 537
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
-      bonus bAspdRate,3;
-      bonus bAgi,3;
-    } else if(.@i >= PET_INTIMATE_CORDIAL) {
-      bonus bAspdRate,2;
-      bonus bAgi,2;
-    } else if(.@i >= PET_INTIMATE_NEUTRAL) {
-      bonus bAspdRate,2;
-      bonus bAgi,1;
-    } else {
-      bonus bAspdRate,1;
-    }}'
-  SupportScript: '{}'
-- MobID: 3790
-  Name: SWEETS_DROPS
-  JName: Sweets Drops
-  EggItemID: 9109
-  FoodItemID: 529
-  Fullness: 2
-  HungryDelay: 120
-  Intimacy:
-    Start: 250
-    Fed: 15
-    Overfed: -100
-    Hungry: -5
-    OwnerDie: -20
-  CaptureRate: 0
-  Speed: 150
-  SpecialPerformance: false
-  TalkConvertClass: 0
-  AttackRate: 300
-  RetaliateRate: 300
-  ChangeTargetRate: 800
-  Script: '{ if(getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_CORDIAL) {
-      /* bonus2 bExpAddClass,Class_All,3; */
-      bonus2 bExpAddClass,Class_All,1;
-    }}'
-  SupportScript: '{}'
+        bonus bMaxSP,150;
+        autobonus "{ bonus bSPRegenRate,30,1000; }",30,5000,BF_MAGIC;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bMaxSP,100;
+      } else {
+        bonus bMaxSP,50;
+      }}'
+    SupportScript: '{}'
+  - MobId: 3495
+    Name: DR_EGGRING
+    JName: Eggring
+    EggItemId: 9092
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bHit,9;
+        bonus bAtk,9;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bHit,7;
+        bonus bAtk,7;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bHit,5;
+        bonus bAtk,5;
+      } else {
+        bonus bHit,3;
+        bonus bAtk,3;
+      }}'
+    SupportScript: '{}'
+  - MobId: 3496
+    Name: DR_LUNATIC
+    JName: Leaf Lunatic
+    EggItemId: 9094
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bCritical,5;
+        bonus bAtk,5;
+        bonus2 bAddRace,RC_Formless,6;
+        bonus2 bMagicAddRace,RC_Formless,6;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bCritical,4;
+        bonus bAtk,4;
+        bonus2 bAddRace,RC_Formless,3;
+        bonus2 bMagicAddRace,RC_Formless,3;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bCritical,3;
+        bonus bAtk,3;
+      } else {
+        bonus bCritical,2;
+        bonus bAtk,2;
+      }}'
+    SupportScript: '{}'
+  - MobId: 3636
+    Name: LITTLE_ISIS
+    JName: Little Isis
+    EggItemId: 9090
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAtkRate,4;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bAtkRate,3;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bAtkRate,2;
+      } else {
+        bonus bAtkRate,1;
+      }}'
+    SupportScript: '{}'
+  - MobId: 3669
+    Name: DIABOLIC2
+    JName: Diabolic2
+    EggItemId: 9097
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bAtkRate,2;
+        bonus bMatkRate,2;
+        bonus bMaxHPrate,1;
+        bonus bMaxSPrate,1;
+        bonus5 bAutoSpell,"MG_FIREBOLT",3,50,BF_WEAPON|BF_SHORT,1;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bAtkRate,1;
+        bonus bMatkRate,1;
+        bonus bMaxHPrate,1;
+        bonus bMaxSPrate,1;
+      } else {
+        bonus bAtkRate,1;
+        bonus bMatkRate,1;
+      }}'
+    SupportScript: '{}'
+  - MobId: 3670
+    Name: DELETER_2
+    JName: Deleter 2
+    EggItemId: 9098
+    FoodItemId: 537
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL) {
+        bonus bAspdRate,3;
+        bonus bAgi,3;
+      } else if(.@i >= PET_INTIMATE_CORDIAL) {
+        bonus bAspdRate,2;
+        bonus bAgi,2;
+      } else if(.@i >= PET_INTIMATE_NEUTRAL) {
+        bonus bAspdRate,2;
+        bonus bAgi,1;
+      } else {
+        bonus bAspdRate,1;
+      }}'
+    SupportScript: '{}'
+  - MobId: 3790
+    Name: SWEETS_DROPS
+    JName: Sweets Drops
+    EggItemId: 9109
+    FoodItemId: 529
+    Fullness: 2
+    HungryDelay: 120
+    Intimacy:
+      Start: 250
+      Fed: 15
+      Overfed: -100
+      Hungry: -5
+      OwnerDie: -20
+    CaptureRate: 0
+    Speed: 150
+    SpecialPerformance: false
+    TalkConvertClass: 0
+    AttackRate: 300
+    RetaliateRate: 300
+    ChangeTargetRate: 800
+    Script: '{ if(getpetinfo(PETINFO_INTIMATE) >= PET_INTIMATE_CORDIAL) {
+        /* bonus2 bExpAddClass,Class_All,3; */
+        bonus2 bExpAddClass,Class_All,1;
+      }}'
+    SupportScript: '{}'

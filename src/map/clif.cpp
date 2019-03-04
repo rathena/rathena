@@ -7982,11 +7982,10 @@ void clif_send_petstatus(struct map_session_data *sd)
 void clif_pet_emotion(struct pet_data *pd,int param)
 {
 	unsigned char buf[16];
-	s_pet_db *pet_db_ptr;
 
 	nullpo_retv(pd);
 
-	pet_db_ptr = pd->get_pet_db();
+	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 	memset(buf,0,packet_len(0x1aa));
 

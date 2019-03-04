@@ -35,11 +35,420 @@ using namespace rathena;
 
 const t_tick MIN_PETTHINKTIME = 100;
 
-//Dynamic pet database
-std::map<uint16, struct s_pet_db> pet_db_data;
-struct s_pet_db *pet_db( uint16 pet_id ){
-	return util::map_find( pet_db_data, pet_id );
+const std::string PetDatabase::getDefaultLocation(){
+	return std::string(db_path) + "/pet_db.yml";
 }
+
+uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
+	uint16 mob_id;
+
+	if( !this->asUInt16( node, "MobId", mob_id ) ){
+		return 0;
+	}
+
+	if( mob_db( mob_id ) == nullptr ){
+		this->invalidWarning( node["MobId"], "Mob Id %hu does not exist and cannot be used as a pet.\n", mob_id );
+		return 0;
+	}
+
+	std::shared_ptr<s_pet_db> pet = this->find( mob_id );
+	bool exists = pet != nullptr;
+
+	if( !exists ){
+		// TODO: Name, JName, EggItemId, FoodItemId, Fullness, HungryDelay, CaptureRate, Speed, SpecialPerformance, AttackRate, RetaliateRate, ChangeTargetRate
+
+		pet = std::make_shared<s_pet_db>();
+		pet->class_ = mob_id;
+	}
+
+	if( this->nodeExists( node, "Name" ) ){
+		std::string name;
+
+		if( !this->asString( node, "Name", name ) ){
+			return 0;
+		}
+
+		safestrncpy( pet->name, name.c_str(), NAME_LENGTH );
+	}
+
+	if( this->nodeExists( node, "JName" ) ){
+		std::string jname;
+
+		if( !this->asString( node, "JName", jname ) ){
+			return 0;
+		}
+
+		safestrncpy( pet->jname, jname.c_str(), NAME_LENGTH );
+	}
+
+	if( this->nodeExists( node, "TameWithId" ) ){
+		uint16 item_id;
+
+		if( !this->asUInt16( node, "TameWithId", item_id ) ){
+			return 0;
+		}
+
+		if( item_id > 0 && itemdb_exists( item_id ) == nullptr ){
+			this->invalidWarning( node["TameWithId"], "Taming item %hu does not exist.\n", item_id );
+			return 0;
+		}
+
+		pet->itemID = item_id;
+	}else{
+		if( !exists ){
+			pet->itemID = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "EggItemId" ) ){
+		uint16 item_id;
+
+		if( !this->asUInt16( node, "EggItemId", item_id ) ){
+			return 0;
+		}
+
+		if( itemdb_exists( item_id ) == nullptr ){
+			this->invalidWarning( node["EggItemId"], "Egg item %hu does not exist.\n", item_id );
+			return 0;
+		}
+
+		pet->EggID = item_id;
+	}
+
+	if( this->nodeExists( node, "EquipItemId" ) ){
+		uint16 item_id;
+
+		if( !this->asUInt16( node, "EquipItemId", item_id ) ){
+			return 0;
+		}
+
+		if( item_id > 0 && itemdb_exists( item_id ) == nullptr ){
+			this->invalidWarning( node["EquipItemId"], "Equip item %hu does not exist.\n", item_id );
+			return 0;
+		}
+
+		pet->AcceID = item_id;
+	}else{
+		if( !exists ){
+			pet->AcceID = 0;
+		}
+	}
+
+	if( this->nodeExists( node, "FoodItemId" ) ){
+		uint16 item_id;
+
+		if( !this->asUInt16( node, "FoodItemId", item_id ) ){
+			return 0;
+		}
+
+		if( itemdb_exists( item_id ) == nullptr ){
+			this->invalidWarning( node["FoodItemId"], "Food item %hu does not exist.\n", item_id );
+			return 0;
+		}
+
+		pet->FoodID = item_id;
+	}
+
+	if( this->nodeExists( node, "Fullness" ) ){
+		int32 fullness;
+
+		if( !this->asInt32( node, "Fullness", fullness ) ){
+			return 0;
+		}
+
+		// TODO: range validation?
+
+		pet->fullness = fullness;
+	}
+
+	if( this->nodeExists( node, "HungryDelay" ) ){
+		// TODO: why not unsigned?
+		int32 delay;
+
+		if( !this->asInt32( node, "HungryDelay", delay ) ){
+			return 0;
+		}
+
+		pet->hungry_delay = delay * 1000;
+	}
+
+	if( this->nodeExists( node, "HungerIncrease" ) ){
+		int32 increase;
+
+		if( !this->asInt32( node, "HungerIncrease", increase ) ){
+			return 0;
+		}
+
+		pet->hunger_increase = increase;
+	}else{
+		if( !exists ){
+			pet->hunger_increase = 20;
+		}
+	}
+
+	// TODO: Remove this additional level for Intimacy
+	if( this->nodeExists( node, "Intimacy" ) ){
+		const YAML::Node& intimacyNode = node["Intimacy"];
+
+		if( this->nodeExists( intimacyNode, "Fed" ) ){
+			int32 fed;
+
+			if( !this->asInt32( intimacyNode, "Fed", fed ) ){
+				return 0;
+			}
+
+			pet->r_hungry = fed;
+		}else{
+			if( !exists ){
+				pet->r_hungry = 50;
+			}
+		}
+
+		if( this->nodeExists( intimacyNode, "Overfed" ) ){
+			int32 overfed;
+
+			if( !this->asInt32( intimacyNode, "Overfed", overfed ) ){
+				return 0;
+			}
+
+			pet->r_full = overfed;
+		}else{
+			if( !exists ){
+				pet->r_full = -100;
+			}
+		}
+
+		if( this->nodeExists( intimacyNode, "Hungry" ) ){
+			int32 hungry;
+
+			if( !this->asInt32( intimacyNode, "Hungry", hungry ) ){
+				return 0;
+			}
+
+			pet->hungry_intimacy_dec = hungry;
+		}else{
+			if( !exists ){
+				pet->hungry_intimacy_dec = -5;
+			}
+		}
+
+		if( this->nodeExists( intimacyNode, "Start" ) ){
+			int32 start;
+
+			if( !this->asInt32( intimacyNode, "Start", start ) ){
+				return 0;
+			}
+
+			pet->intimate = start;
+		}else{
+			if( !exists ){
+				pet->intimate = 250;
+			}
+		}
+
+		if( this->nodeExists( intimacyNode, "OwnerDie" ) ){
+			int32 die;
+
+			if( !this->asInt32( intimacyNode, "OwnerDie", die ) ){
+				return 0;
+			}
+
+			pet->die = die;
+		}else{
+			if( !exists ){
+				pet->die = -20;
+			}
+		}
+	}else{
+		if( !exists ){
+			// Not defined, use default "Poring" value
+			pet->r_hungry = 50;
+			pet->r_full = -100;
+			pet->intimate = 250;
+			pet->die = -20;
+			pet->hungry_intimacy_dec = -5;
+		}
+	}
+
+	if( this->nodeExists( node, "CaptureRate" ) ){
+		// TODO: why not unsigned?
+		int32 rate;
+
+		if( !this->asInt32( node, "CaptureRate", rate ) ){
+			return 0;
+		}
+
+		// TODO: range validation?
+
+		pet->capture = rate;
+	}
+
+	if( this->nodeExists( node, "Speed" ) ){
+		// TODO: why not unsigned?
+		int32 speed;
+
+		if( !this->asInt32( node, "Speed", speed) ){
+			return 0;
+		}
+
+		// TODO: range validation?
+
+		pet->speed = speed;
+	}
+
+	if( this->nodeExists( node, "SpecialPerformance" ) ){
+		bool performance;
+
+		if( !this->asBool( node, "SpecialPerformance", performance ) ){
+			return 0;
+		}
+
+		pet->s_perfor = performance;
+	}
+
+	if( this->nodeExists( node, "TalkConvertClass" ) ){
+		// TODO: unsigned? why int32?
+		int32 cls;
+
+		if( !this->asInt32( node, "TalkConvertClass", cls ) ){
+			return 0;
+		}
+
+		pet->talk_convert_class = cls;
+	}
+
+	if( this->nodeExists( node, "AttackRate" ) ){
+		// TODO: unsigned? why int32?
+		int32 rate;
+
+		if( !this->asInt32( node, "AttackRate", rate ) ){
+			return 0;
+		}
+
+		// TODO: range validation?
+
+		pet->attack_rate = rate;
+	}
+
+	if( this->nodeExists( node, "RetaliateRate" ) ){
+		// TODO: unsigned? why int32?
+		int32 rate;
+
+		if( !this->asInt32( node, "RetaliateRate", rate ) ){
+			return 0;
+		}
+
+		// TODO: range validation?
+
+		pet->defence_attack_rate = rate;
+	}
+
+	if( this->nodeExists( node, "ChangeTargetRate" ) ){
+		// TODO: unsigned? why int32?
+		int32 rate;
+
+		if( !this->asInt32( node, "ChangeTargetRate", rate ) ){
+			return 0;
+		}
+
+		// TODO: range validation?
+
+		pet->change_target_rate = rate;
+	}
+
+	if( this->nodeExists( node, "AllowAutoFeed" ) ){
+		bool allow;
+
+		if( !this->asBool( node, "AllowAutoFeed", allow ) ){
+			return 0;
+		}
+
+		pet->allow_autofeed = allow;
+	}else{
+		if( !exists ){
+			pet->allow_autofeed = false;
+		}
+	}
+
+	if( this->nodeExists( node, "Script" ) ){
+		std::string script;
+
+		if( !this->asString( node, "Script", script ) ){
+			return 0;
+		}
+
+		pet->pet_bonus_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), node["Script"].Mark().line + 1, 0 );
+	}else{
+		if( !exists ){
+			pet->pet_bonus_script = nullptr;
+		}
+	}
+
+	if( this->nodeExists( node, "SupportScript" ) ){
+		std::string script;
+
+		if( !this->asString( node, "SupportScript", script ) ){
+			return 0;
+		}
+
+		pet->pet_support_script = parse_script( script.c_str(), this->getCurrentFile().c_str(), node["SupportScript"].Mark().line + 1, 0 );
+	}else{
+		if( !exists ){
+			pet->pet_support_script = nullptr;
+		}
+	}
+
+	if( this->nodeExists( node, "Evolution" ) ){
+		for( const YAML::Node& evolutionNode : node["Evolution"] ){
+			uint16 targetId;
+
+			if( !this->asUInt16( evolutionNode, "TargetId", targetId ) ){
+				return 0;
+			}
+
+			if( !this->nodeExists( evolutionNode, "ItemsRequirement" ) ){
+				this->invalidWarning( evolutionNode, "Missing required node \"ItemsRequirement\".\n" );
+				return 0;
+			}
+
+			// TODO: Change to usual processing
+			s_pet_evo_data evo_data;
+
+			for( const YAML::Node& requirementNode : evolutionNode["ItemsRequirement"] ){
+				uint16 item_id;
+
+				if( !this->asUInt16( requirementNode, "ItemId", item_id ) ){
+					return 0;
+				}
+
+				if( itemdb_exists( item_id ) == nullptr ){
+					this->invalidWarning( requirementNode["ItemId"], "Evolution requirement item %hu does not exist.\n", item_id );
+					return 0;
+				}
+
+				uint16 amount;
+
+				if( !this->asUInt16( requirementNode, "Amount", amount ) ){
+					return 0;
+				}
+
+				// TODO: range validation
+
+				evo_data.requirements[item_id] = amount;
+			}
+
+			pet->evolution_data[evo_data.target_mob_id] = evo_data;
+		}
+	}
+
+	if( !exists ){
+		this->put( mob_id, pet );
+	}
+
+	return 1;
+}
+
+PetDatabase pet_db;
 
 static struct eri *item_drop_ers; //For loot drops delay structures.
 static struct eri *item_drop_list_ers;
@@ -94,7 +503,7 @@ void pet_set_intimate(struct pet_data *pd, int value)
  */
 bool pet_create_egg(struct map_session_data *sd, unsigned short item_id)
 {
-	struct s_pet_db* pet = pet_db_search(item_id, PET_EGG);
+	std::shared_ptr<s_pet_db> pet = pet_db_search(item_id, PET_EGG);
 
 	if (!pet)
 		return false; //No pet egg here.
@@ -169,13 +578,12 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 {
 	int rate;
-	s_pet_db* pet_db_ptr;
 
 	nullpo_ret(pd);
 
 	Assert((pd->master == 0) || (pd->master->pd == pd));
 
-	pet_db_ptr = pd->get_pet_db();
+	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 	if(bl == NULL || bl->type != BL_MOB || bl->prev == NULL ||
 		pd->pet.intimate < battle_config.pet_support_min_friendly ||
@@ -253,7 +661,6 @@ int pet_sc_check(struct map_session_data *sd, int type)
 static TIMER_FUNC(pet_hungry){
 	struct map_session_data *sd;
 	struct pet_data *pd;
-	s_pet_db *pet_db_ptr;
 	int interval;
 
 	sd = map_id2sd(id);
@@ -265,7 +672,7 @@ static TIMER_FUNC(pet_hungry){
 		return 1;
 
 	pd = sd->pd;
-	pet_db_ptr = pd->get_pet_db();
+	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 	if(pd->pet_hungry_timer != tid) {
 		ShowError("pet_hungry_timer %d != %d\n",pd->pet_hungry_timer,tid);
@@ -319,9 +726,9 @@ static TIMER_FUNC(pet_hungry){
  * @param type : pet type to search for (Catch, Egg, Equip, Food)
  * @return Pet DB pointer on success, NULL on failure
  */
-struct s_pet_db* pet_db_search( int key, enum e_pet_itemtype type ){
-	for( auto &pair : pet_db_data ){
-		struct s_pet_db* pet = &pair.second;
+std::shared_ptr<s_pet_db> pet_db_search( int key, enum e_pet_itemtype type ){
+	for( auto &pair : pet_db ){
+		std::shared_ptr<s_pet_db> pet = pair.second;
 
 		switch(type) {
 			case PET_CATCH: if(pet->itemID == key) return pet; break;
@@ -434,7 +841,6 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 {
 	struct pet_data *pd;
-	struct s_pet_db *pet_db_ptr;
 	int interval = 0;
 
 	nullpo_retr(false, sd);
@@ -461,9 +867,9 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 		sd->status.pet_id = pet->pet_id;
 	}
 
-	pet_db_ptr = pet_db(pet->class_);
+	std::shared_ptr<s_pet_db> pet_db_ptr = pet_db.find(pet->class_);
 
-	if( !pet_db_ptr ){
+	if( pet_db_ptr == nullptr ){
 		sd->status.pet_id = 0;
 
 		return false;
@@ -669,7 +1075,6 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 {
 	struct mob_data* md;
 	int pet_catch_rate = 0;
-	struct s_pet_db* pet;
 
 	nullpo_retr(1, sd);
 
@@ -684,7 +1089,7 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	//FIXME: delete taming item here, if this was an item-invoked capture and the item was flagged as delay-consume [ultramage]
 
-	pet = pet_db(md->mob_id);
+	std::shared_ptr<s_pet_db> pet = pet_db.find(md->mob_id);
 
 	// If the target is a valid pet, we have a few exceptions
 	if( pet ){
@@ -740,7 +1145,6 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	struct map_session_data *sd;
 	struct item tmp_item;
 	int ret = 0;
-	struct s_pet_db* pet;
 
 	if( pet_id == 0 || pet_class == 0 )
 		return false;
@@ -755,7 +1159,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	// Before this change in cases where more than one pet egg were requested in a short
 	// period of time it wasn't possible to know which kind of egg was being requested after
 	// the first request. [Panikon]
-	pet = pet_db(pet_class);
+	std::shared_ptr<s_pet_db> pet = pet_db.find(pet_class);
 	sd->catch_target_class = PET_CATCH_FAIL;
 
 	if(!pet) {
@@ -897,7 +1301,6 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 int pet_equipitem(struct map_session_data *sd,int index)
 {
 	struct pet_data *pd;
-	s_pet_db *pet_db_ptr;
 	unsigned short nameid;
 
 	nullpo_retr(1, sd);
@@ -906,11 +1309,13 @@ int pet_equipitem(struct map_session_data *sd,int index)
 
 	if (!pd)
 		return 1;
-	
-	if((pet_db_ptr = pd->get_pet_db()) == nullptr)
-		return 1;
 
-	pet_db_ptr = pd->get_pet_db();
+	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
+
+	if( pet_db_ptr == nullptr ){
+		return 1;
+	}
+
 	nameid = sd->inventory.u.items_inventory[index].nameid;
 
 	if(pet_db_ptr->AcceID == 0 || nameid != pet_db_ptr->AcceID || pd->pet.equip != 0) {
@@ -1002,7 +1407,7 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd)
 	nullpo_retr(1, sd);
 	nullpo_retr(1, pd);
 
-	s_pet_db *pet_db_ptr = pd->get_pet_db();
+	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 	int i,k;
 
 	k = pet_db_ptr->FoodID;
@@ -1666,13 +2071,18 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 		}
 	}
 	
-	s_pet_db& new_data = pet_db_data[pet_id];
+	std::shared_ptr<s_pet_db> new_data = pet_db.find(pet_id);
+
+	if( new_data == nullptr ){
+		return;
+	}
+
 	int idx = pet_egg_search(sd, sd->pd->pet.pet_id);
 
 	if (idx != -1) {
 		item tmp_item{};
 		uint8 flag = 0;
-		tmp_item.nameid = new_data.EggID;
+		tmp_item.nameid = new_data->EggID;
 		tmp_item.identify = 1;
 		tmp_item.card[0] = CARD0_PET;
 		tmp_item.card[1] = GetWord(sd->pd->pet.pet_id,0);
@@ -1687,10 +2097,10 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	}
 
 	sd->pd->pet.class_ = pet_id;
-	sd->pd->pet.egg_id = new_data.EggID;
-	sd->pd->pet.intimate = new_data.intimate;
+	sd->pd->pet.egg_id = new_data->EggID;
+	sd->pd->pet.intimate = new_data->intimate;
 	if (!sd->pd->pet.rename_flag)
-		safestrncpy(sd->pd->pet.name, new_data.jname, NAME_LENGTH);
+		safestrncpy(sd->pd->pet.name, new_data->jname, NAME_LENGTH);
 	status_set_viewdata(&sd->pd->bl, pet_id);
 	unit_remove_map(&sd->pd->bl, CLR_OUTSIGHT);
 
@@ -1732,136 +2142,11 @@ bool pet_autofeed(struct map_session_data *sd, bool flag) {
 }
 
 /**
- * Parse pet database from a YAML configuration
- */
-void pet_parse_yaml_db(const std::string& file_name) {
-	int count = 0;
-	YAML::Node root;
-
-	try {
-		root = YAML::LoadFile(file_name);
-	}
-	catch (const std::exception& e) {
-		ShowError("pet_parse_yaml_db: Cannot read '" CL_WHITE "%s" CL_RESET "' because '" CL_WHITE "%s" CL_RESET "'.\n", file_name.c_str(), e.what());
-		return;
-	}
-
-	if (root.IsDefined()) {
-		for (auto node : root) {
-			try {
-				uint16 nameid = 0;
-				nameid = node["MobID"].as<uint16>();
-				s_pet_db& pet = pet_db_data[nameid];
-				
-				pet.class_ = nameid;
-				safestrncpy(pet.name, node["Name"].as<std::string>().c_str(), NAME_LENGTH);
-				safestrncpy(pet.jname, node["JName"].as<std::string>().c_str(), NAME_LENGTH);
-				if (node["TameWithID"])
-					pet.itemID = node["TameWithID"].as<unsigned short>();
-				else
-					pet.itemID = 0;
-				pet.EggID = node["EggItemID"].as<unsigned short>();
-				if (node["EquipItemID"])
-					pet.AcceID = node["EquipItemID"].as<unsigned short>();
-				else
-					pet.AcceID = 0;
-				pet.FoodID = node["FoodItemID"].as<unsigned short>();
-				pet.fullness = node["Fullness"].as<int>();
-				pet.hungry_delay = node["HungryDelay"].as<int>() * 1000;
-				if (node["HungerIncrease"])
-					pet.hunger_increase = node["HungerIncrease"].as<int>();
-				else
-					pet.hunger_increase = 20;
-				if (node["Intimacy"]) {
-					YAML::Node intimacy = node["Intimacy"];
-					pet.r_hungry = intimacy["Fed"].as<int>();
-					pet.r_full = intimacy["Overfed"].as<int>();
-					pet.hungry_intimacy_dec = intimacy["Hungry"].as<int>();
-					pet.intimate = intimacy["Start"].as<int>();
-					pet.die = intimacy["OwnerDie"].as<int>();
-				}
-				else {
-					// Not defined, use default "Poring" value
-					pet.r_hungry = 50;
-					pet.r_full = -100;
-					pet.intimate = 250;
-					pet.die = -20;
-					pet.hungry_intimacy_dec = -5;
-				}
-				pet.capture = node["CaptureRate"].as<int>();
-				pet.speed = node["Speed"].as<int>();
-				pet.s_perfor = node["SpecialPerformance"].as<bool>();
-				pet.talk_convert_class = node["TalkConvertClass"].as<int>();
-				pet.attack_rate = node["AttackRate"].as<int>();
-				pet.defence_attack_rate = node["RetaliateRate"].as<int>();
-				pet.change_target_rate = node["ChangeTargetRate"].as<int>();
-				if (node["AllowAutoFeed"])
-					pet.allow_autofeed = node["AllowAutoFeed"].as<bool>();
-				else
-					pet.allow_autofeed = false;
-				// TODO : line number for YAML script parsing?
-				if (node["Script"])
-					pet.pet_bonus_script = parse_script(node["Script"].as<std::string>().c_str(), file_name.c_str(), 0, 0);
-				else
-					pet.pet_bonus_script = nullptr;
-				if (node["SupportScript"])
-					pet.pet_support_script = parse_script(node["SupportScript"].as<std::string>().c_str(), file_name.c_str(), 0, 0);
-				else
-					pet.pet_support_script = nullptr;
-
-				if (node["Evolution"]) {
-					for (auto evo_config : node["Evolution"]) {
-						s_pet_evo_data evo_data;
-						evo_data.target_mob_id = evo_config["TargetID"].as<short>();
-						if (evo_config["ItemsRequirement"]) {
-							for (auto requirement : evo_config["ItemsRequirement"]) {
-								auto itemid = requirement["ItemID"].as<unsigned short>();
-								auto amount = requirement["Amount"].as<int>();
-								evo_data.requirements[itemid] = amount;
-							}
-						}
-						pet.evolution_data[evo_data.target_mob_id] = evo_data;
-					}
-				}
-
-				count++;
-			}
-			catch (const std::exception& e) {
-				YAML::Emitter out;
-				out << node;
-				ShowWarning("pet_parse_yaml_db: Error parsing pet (" CL_WHITE "%s" CL_RESET ").\n", e.what());
-				ShowWarning("%s\n", out.c_str());
-			}
-		}
-	}
-
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, file_name.c_str());
-}
-
-/**
- * Read pet databases. (pet_db.txt and pet_db2.txt)
- */
-void read_petdb()
-{
-	const char* filename[] = {
-		DBPATH"pet_db.yml",
-		DBIMPORT"/pet_db.yml"
-	};
-
-	// clear database
-	pet_db_data.clear();
-
-	for (auto file : filename) {
-		pet_parse_yaml_db("db/" + std::string(file));
-	}
-}
-
-/**
  * Initialization process of skill relationship.
  */
 void do_init_pet(void)
 {
-	read_petdb();
+	pet_db.load();
 
 	item_drop_ers = ers_new(sizeof(struct item_drop),"pet.cpp::item_drop_ers",ERS_OPT_NONE);
 	item_drop_list_ers = ers_new(sizeof(struct item_drop_list),"pet.cpp::item_drop_list_ers",ERS_OPT_NONE);
@@ -1881,8 +2166,6 @@ void do_init_pet(void)
  */
 void do_final_pet(void)
 {
-	pet_db_data.clear();
-
 	ers_destroy(item_drop_ers);
 	ers_destroy(item_drop_list_ers);
 }

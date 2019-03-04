@@ -2742,7 +2742,6 @@ ACMD_FUNC(guildlevelup) {
 ACMD_FUNC(makeegg) {
 	struct item_data *item_data;
 	int id;
-	struct s_pet_db* pet;
 
 	nullpo_retr(-1, sd);
 
@@ -2759,9 +2758,12 @@ ACMD_FUNC(makeegg) {
 	else
 		id = atoi(message);
 
-	pet = pet_db(id);
-	if (!pet)
+	std::shared_ptr<s_pet_db> pet = pet_db.find(id);
+
+	if( pet == nullptr ){
 		pet = pet_db_search(id, PET_EGG);
+	}
+
 	if (pet != nullptr) {
 		sd->catch_target_class = pet->class_;
 		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
@@ -3819,7 +3821,8 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
 	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
 		mob_reload();
-		read_petdb();
+		pet_db.clear();
+		pet_db.load();
 		hom_reload();
 		mercenary_readdb();
 		mercenary_read_skilldb();

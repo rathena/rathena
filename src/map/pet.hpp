@@ -5,6 +5,7 @@
 #define PET_HPP
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
@@ -24,7 +25,7 @@ struct s_pet_evo_data {
 
 /// Pet DB
 struct s_pet_db {
-	short class_; ///< Monster ID
+	uint16 class_; ///< Monster ID
 	char name[NAME_LENGTH], ///< AEGIS name
 		jname[NAME_LENGTH]; ///< English name
 	unsigned short itemID; ///< Lure ID
@@ -130,7 +131,17 @@ struct pet_loot {
 	unsigned short max;
 };
 
-struct s_pet_db *pet_db(uint16 pet_id);
+class PetDatabase : public TypesafeYamlDatabase<uint16,s_pet_db>{
+public:
+	PetDatabase() : TypesafeYamlDatabase( "PET_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+};
+
+extern PetDatabase pet_db;
 
 struct pet_data {
 	struct block_list bl;
@@ -157,8 +168,8 @@ struct pet_data {
 	int masterteleport_timer;
 	struct map_session_data *master;
 
-	s_pet_db* get_pet_db() {
-		return pet_db(this->pet.class_);
+	std::shared_ptr<s_pet_db> get_pet_db() {
+		return pet_db.find(this->pet.class_);
 	}
 };
 
@@ -168,7 +179,7 @@ void pet_set_intimate(struct pet_data *pd, int value);
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);
 void pet_unlocktarget(struct pet_data *pd);
 int pet_sc_check(struct map_session_data *sd, int type); //Skotlex
-struct s_pet_db* pet_db_search(int key, enum e_pet_itemtype type);
+std::shared_ptr<s_pet_db> pet_db_search(int key, enum e_pet_itemtype type);
 int pet_hungry_timer_delete(struct pet_data *pd);
 bool pet_data_init(struct map_session_data *sd, struct s_pet *pet);
 int pet_birth_process(struct map_session_data *sd, struct s_pet *pet);
@@ -195,7 +206,6 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd);
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
 
-void read_petdb(void);
 void do_init_pet(void);
 void do_final_pet(void);
 
