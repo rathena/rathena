@@ -2423,7 +2423,8 @@ int getdroprate(int base_rate, int size, int level, int class_, int race, struct
 
 	// change drops depending on monsters size [Valaris]
 	if ((battle_config.mob_size_influence) && (size>-1)) {
-		if (size == SZ_SMALL && drop_rate >= 2)
+		// SZ_MEDIUM actually is small size modification...this is not a bug!
+		if (size == SZ_MEDIUM && drop_rate >= 2)
 			drop_rate /= 2;
 		else if (size == SZ_BIG)
 			drop_rate *= 2;
