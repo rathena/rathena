@@ -203,7 +203,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			return 0;
 		}
 
-		achievement->mapindex = map_mapname2mapid( mapname.c_str() );
+		achievement->mapindex = map_obj.mapname2mapid( mapname.c_str() );
 
 		if( achievement->mapindex == -1 ){
 			this->invalidWarning( node["Map"], "Unknown map name '%s'.\n", mapname.c_str() );
@@ -601,7 +601,7 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id)
 
 	if( adb == nullptr ){
 		ShowError( "achievement_reward: Trying to reward achievement %d not found in DB.\n", achievement_id );
-		clif_achievement_reward_ack( sd->fd, 0, achievement_id );
+		clif.achievement_reward_ack( sd->fd, 0, achievement_id );
 		return;
 	}
 
@@ -969,202 +969,7 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 	}
 }
 
-<<<<<<< HEAD
-static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file) {
-	YAML::Emitter out;
-	out << node;
-	ShowWarning(fmt, file.c_str());
-	ShowMessage("%s\n", out.c_str());
-}
 
-/**
- * Reads and parses an entry from the achievement_db.
- * @param node: YAML node containing the entry.
- * @param n: The sequential index of the current entry.
- * @param source: The source YAML file.
- * @return True on successful parse or false otherwise
- */
-bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &source)
-{
-	enum e_achievement_group group = AG_NONE;
-	int achievement_id = 0;
-	std::string group_char, name, condition, mapname;
-	bool existing = false;
-
-	if (!node["ID"]) {
-		yaml_invalid_warning("achievement_read_db_sub: Missing ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	try {
-		achievement_id = node["ID"].as<unsigned int>();
-	} catch (...) {
-		yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	if (achievement_id < 1 || achievement_id > INT_MAX) {
-		ShowWarning("achievement_read_db_sub: Invalid achievement ID %d in \"%s\", entry #%d (min: 1, max: %d), skipping.\n", achievement_id, source.c_str(), n, INT_MAX);
-		return false;
-	}
-
-	if (achievement_exists(achievement_id)) {
-		if (source.find("import") != std::string::npos) // Import file read-in, free previous value and store new value
-			existing = true;
-		else { // Normal file read-in
-			ShowWarning("achievement_read_db: Duplicate achievement %d.\n", achievement_id);
-			return false;
-		}
-	}
-
-	if(!existing)
-		achievements[achievement_id] = std::make_shared<s_achievement_db>();
-	auto &entry = achievements[achievement_id];
-	entry->achievement_id = achievement_id;
-
-	if (!node["Group"]) {
-		yaml_invalid_warning("achievement_read_db_sub: Missing group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	try {
-		group_char = node["Group"].as<std::string>();
-	} catch (...) {
-		yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	if (!script_get_constant(group_char.c_str(), (int *)&group)) {
-		ShowWarning("achievement_read_db_sub: Invalid group %s for achievement %d in \"%s\", skipping.\n", group_char.c_str(), achievement_id, source.c_str());
-		return false;
-	}
-
-	if (!node["Name"]) {
-		ShowWarning("achievement_read_db_sub: Missing achievement name for achievement %d in \"%s\", skipping.\n", achievement_id, source.c_str());
-		return false;
-	}
-	try {
-		name = node["Name"].as<std::string>();
-	} catch (...) {
-		yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid name field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	
-	entry->group = group;
-	entry->name = name;
-	entry->mapindex = -1;
-
-	if (node["Target"]) {
-		try {
-			const YAML::Node &target_list = node["Target"];
-
-			for (auto targetit = target_list.begin(); targetit != target_list.end() && target_list.size() < MAX_ACHIEVEMENT_OBJECTIVES; ++targetit) {
-				const YAML::Node &target = *targetit;
-				int mobid = 0, count = 0;
-
-				if (target["MobID"] && (mobid = target["MobID"].as<int>()) && mob_db(mobid) == NULL) { // The mob ID field is not required
-					ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mobid, achievement_id, source.c_str());
-					continue;
-				}
-				if (target["Count"] && (!(count = target["Count"].as<int>()) || count <= 0)) {
-					ShowError("achievement_read_db_sub: Invalid count %d for achievement %d in \"%s\", skipping.\n", count, achievement_id, source.c_str());
-					continue;
-				}
-				if (mobid && group == AG_BATTLE && !achievement_mobexists(mobid))
-					achievement_mobs.push_back(mobid);
-
-				entry->targets.push_back({ mobid, count });
-			}
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid target field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Condition"]) {
-		try {
-			condition = node["Condition"].as<std::string>();
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid condition field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-
-		if( condition.find( "achievement_condition" ) == std::string::npos ){
-			condition = "achievement_condition( " + condition + " );";
-		}
-
-		entry->condition = parse_script( condition.c_str(), source.c_str(), node["Condition"].Mark().line, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
-	}
-	
-	if (node["Map"]) {
-		try {
-			mapname = node["Map"].as<std::string>();
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid map field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-		if (group != AG_CHAT)
-			ShowWarning("achievement_read_db_sub: The map argument can only be used with the group AG_CHATTING (achievement %d in \"%s\"), skipping.\n", achievement_id, source.c_str());
-		else {
-			entry->mapindex = map_obj.mapname2mapid(mapname.c_str());
-
-			if (entry->mapindex == -1)
-				ShowWarning("achievement_read_db_sub: Invalid map name %s for achievement %d in \"%s\".\n", mapname.c_str(), achievement_id, source.c_str());
-		}
-	}
-
-	if (node["Dependent"]) {
-		try {
-			const YAML::Node dependent_list = node["Dependent"];
-
-			if (dependent_list.IsSequence()) {
-				for (uint8 i = 0; i < dependent_list.size() && dependent_list.size() < MAX_ACHIEVEMENT_DEPENDENTS; i++)
-					entry->dependent_ids.push_back(dependent_list[i].as<int>());
-			} else
-				ShowWarning("achievement_read_db_sub: Invalid dependent format for achievement %d in \"%s\".\n", achievement_id, source.c_str());
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid dependent field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Reward"]) {
-		try {
-			const YAML::Node reward_list = node["Reward"];
-			int nameid = 0, amount = 0, titleid = 0;
-
-			if (reward_list["ItemID"] && (nameid = reward_list["ItemID"].as<unsigned short>())) {
-				if (itemdb_exists(nameid)) {
-					entry->rewards.nameid = nameid;
-					entry->rewards.amount = 1; // Default the amount to 1
-				} else if (nameid && !itemdb_exists(nameid)) {
-					ShowWarning("achievement_read_db_sub: Invalid reward item ID %hu for achievement %d in \"%s\". Setting to 0.\n", nameid, achievement_id, source.c_str());
-					entry->rewards.nameid = nameid = 0;
-				}
-
-				if (reward_list["Amount"] && (amount = reward_list["Amount"].as<unsigned short>()) && amount > 0 && nameid > 0)
-					entry->rewards.amount = amount;
-			}
-			if (reward_list["Script"])
-				entry->rewards.script = parse_script(reward_list["Script"].as<std::string>().c_str(), source.c_str(), achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
-			if (reward_list["TitleID"] && (titleid = reward_list["TitleID"].as<int>()) && titleid > 0)
-				entry->rewards.title_id = titleid;
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid target field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Score"]) {
-		try {
-			entry->score = node["Score"].as<int>();
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid score field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	return true;
-}
-
-=======
->>>>>>> a4bbb932de816285de57fc7cd1c096220dd44719
 /**
  * Loads achievements from the achievement db.
  */
