@@ -43,7 +43,7 @@
  83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
  85,0x86,    ,  5:5:5:5:5:5:5:5:5:5:7, 1,1250,enemy,0x018	//WZ_VERMILION
  86,0x86,    ,  0:1:1:2:2:2:2:2:2:2, 0,-1,noone, 0x010	//WZ_WATERBALL
- 87,0x8d,    , -1, 0,  -1,all,   0x9010	//WZ_ICEWALL
+ 87,0x8d,    , -1, 0,1000,all,   0x9010	//WZ_ICEWALL
  89,0x86,    ,  4, 1, 450,enemy, 0x018	//WZ_STORMGUST
  91,0x86,    ,  2, 0,1000,enemy, 0x010	//WZ_HEAVENDRIVE
  92,0x8e,    ,  2, 0,  -1,enemy, 0x8010	//WZ_QUAGMIRE
@@ -181,6 +181,7 @@
 
 5027,0x106,   ,  1:1:2:2:3, 0,  -1,enemy, 0x2010 // SU_CN_POWDERING
 5028,0x86,    ,  0, 3, 500,enemy, 0x10 // SU_CN_METEOR
+5042,0x86,    ,  0, 3, 500,enemy, 0x10 // SU_CN_METEOR2
 5048,0x107,   ,  2:2:3:3:4, 0, -1, enemy, 0x2010 // SU_NYANGGRASS
 
 8020,0xf5,    ,  3, 0,2300:2100:1900:1700:1500,enemy,   0x018	//MH_POISON_MIST

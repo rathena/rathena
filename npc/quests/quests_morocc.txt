@@ -746,7 +746,7 @@ OnStop:
 	mapannounce "que_job01","The security magic in the Master Zone, Area 1 is deactivated.",bc_map,"0x70DBDB";
 	donpcevent "#room1_warp::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	donpcevent "que_job01#room_1::OnReset";
 	stopnpctimer;
 	end;
@@ -758,7 +758,7 @@ OnTimer240000:
 OnTimer245000:
 	donpcevent "#room1_warp::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	end;
 
 OnTimer250000:

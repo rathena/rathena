@@ -36,7 +36,7 @@
 #include "int_party.hpp"
 #include "int_storage.hpp"
 
-//definition of exported var declared in .h
+//definition of exported var declared in header
 int login_fd=-1; //login file descriptor
 int char_fd=-1; //char file descriptor
 struct Schema_Config schema_config;
@@ -66,8 +66,6 @@ struct s_subnet {
 	uint32 map_ip;
 } subnet[16];
 int subnet_count = 0;
-
-TIMER_FUNC(char_chardb_waiting_disconnect);
 
 DBMap* auth_db; // uint32 account_id -> struct auth_node*
 DBMap* online_char_db; // uint32 account_id -> struct online_char_data*
@@ -566,8 +564,8 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `bound`, `unique_id`");
 	if (tableswitch == TABLE_INVENTORY) {
-		StringBuf_Printf(&buf, ", `favorite`");
-		offset = 1;
+		StringBuf_Printf(&buf, ", `favorite`, `equip_switch`");
+		offset = 2;
 	}
 
 	for( i = 0; i < MAX_SLOTS; ++i )
@@ -599,8 +597,10 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	SqlStmt_BindColumn(stmt, 7, SQLDT_UINT,      &item.expire_time, 0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 8, SQLDT_UINT,      &item.bound,       0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 9, SQLDT_UINT64,    &item.unique_id,   0, NULL, NULL);
-	if (tableswitch == TABLE_INVENTORY)
+	if (tableswitch == TABLE_INVENTORY){
 		SqlStmt_BindColumn(stmt, 10, SQLDT_CHAR, &item.favorite,    0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 11, SQLDT_UINT, &item.equipSwitch, 0, NULL, NULL);
+	}
 	for( i = 0; i < MAX_SLOTS; ++i )
 		SqlStmt_BindColumn(stmt, 10+offset+i, SQLDT_USHORT, &item.card[i], 0, NULL, NULL);
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
@@ -634,23 +634,23 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 				
 				if( j == MAX_SLOTS &&
 					k == MAX_ITEM_RDM_OPT &&
-				    items[i].amount == item.amount &&
-				    items[i].equip == item.equip &&
-				    items[i].identify == item.identify &&
-				    items[i].refine == item.refine &&
-				    items[i].attribute == item.attribute &&
-				    items[i].expire_time == item.expire_time &&
-				    items[i].bound == item.bound &&
-					(tableswitch != TABLE_INVENTORY || items[i].favorite == item.favorite) )
+					items[i].amount == item.amount &&
+					items[i].equip == item.equip &&
+					items[i].identify == item.identify &&
+					items[i].refine == item.refine &&
+					items[i].attribute == item.attribute &&
+					items[i].expire_time == item.expire_time &&
+					items[i].bound == item.bound &&
+					(tableswitch != TABLE_INVENTORY || (items[i].favorite == item.favorite && items[i].equipSwitch == item.equipSwitch)) )
 				;	//Do nothing.
 				else
 				{
 					// update all fields.
 					StringBuf_Clear(&buf);
-					StringBuf_Printf(&buf, "UPDATE `%s` SET `amount`='%d', `equip`='%d', `identify`='%d', `refine`='%d',`attribute`='%d', `expire_time`='%u', `bound`='%d', `unique_id`='%" PRIu64 "'",
+					StringBuf_Printf(&buf, "UPDATE `%s` SET `amount`='%d', `equip`='%u', `identify`='%d', `refine`='%d',`attribute`='%d', `expire_time`='%u', `bound`='%d', `unique_id`='%" PRIu64 "'",
 						tablename, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].bound, items[i].unique_id);
 					if (tableswitch == TABLE_INVENTORY)
-						StringBuf_Printf(&buf, ", `favorite`='%d'", items[i].favorite);
+						StringBuf_Printf(&buf, ", `favorite`='%d', `equip_switch`='%u'", items[i].favorite, items[i].equipSwitch);
 					for( j = 0; j < MAX_SLOTS; ++j )
 						StringBuf_Printf(&buf, ", `card%d`=%hu", j, items[i].card[j]);
 					for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
@@ -685,7 +685,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	StringBuf_Clear(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s`(`%s`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `bound`, `unique_id`", tablename, selectoption);
 	if (tableswitch == TABLE_INVENTORY)
-		StringBuf_Printf(&buf, ", `favorite`");
+		StringBuf_Printf(&buf, ", `favorite`, `equip_switch`");
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ", `card%d`", j);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
@@ -708,10 +708,10 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 		else
 			found = true;
 
-		StringBuf_Printf(&buf, "('%d', '%hu', '%d', '%d', '%d', '%d', '%d', '%u', '%d', '%" PRIu64 "'",
+		StringBuf_Printf(&buf, "('%d', '%hu', '%d', '%u', '%d', '%d', '%d', '%u', '%d', '%" PRIu64 "'",
 			id, items[i].nameid, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].bound, items[i].unique_id);
 		if (tableswitch == TABLE_INVENTORY)
-			StringBuf_Printf(&buf, ", '%d'", items[i].favorite);
+			StringBuf_Printf(&buf, ", '%d', '%u'", items[i].favorite, items[i].equipSwitch);
 		for( j = 0; j < MAX_SLOTS; ++j )
 			StringBuf_Printf(&buf, ", '%hu'", items[i].card[j]);
 		for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
@@ -791,8 +791,8 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`expire_time`,`bound`,`unique_id`");
 	if (tableswitch == TABLE_INVENTORY) {
-		StringBuf_Printf(&buf, ", `favorite`");
-		offset = 1;
+		StringBuf_Printf(&buf, ", `favorite`, `equip_switch`");
+		offset = 2;
 	}
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ",`card%d`", j);
@@ -823,8 +823,10 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	SqlStmt_BindColumn(stmt, 7, SQLDT_UINT,         &item.expire_time, 0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 8, SQLDT_CHAR,         &item.bound,     0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 9, SQLDT_ULONGLONG,    &item.unique_id, 0, NULL, NULL);
-	if (tableswitch == TABLE_INVENTORY)
+	if (tableswitch == TABLE_INVENTORY){
 		SqlStmt_BindColumn(stmt, 10, SQLDT_CHAR, &item.favorite,    0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 11, SQLDT_UINT, &item.equipSwitch, 0, NULL, NULL);
+	}
 	for( i = 0; i < MAX_SLOTS; ++i )
 		SqlStmt_BindColumn(stmt, 10+offset+i, SQLDT_USHORT, &item.card[i],   0, NULL, NULL);
  	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
@@ -899,7 +901,7 @@ int char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
 
 //=====================================================================================================
 // Loads the basic character rooster for the given account. Returns total buffer used.
-int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
+int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count ) {
 	SqlStmt* stmt;
 	struct mmo_charstatus p;
 	int j = 0, i;
@@ -990,6 +992,10 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 		// Addon System
 		// store the required info into the session
 		sd->char_moves[p.slot] = p.character_moves;
+	}
+
+	if( count != nullptr ){
+		*count = i;
 	}
 
 	memset(sd->new_name,0,sizeof(sd->new_name));
@@ -2512,7 +2518,8 @@ bool char_checkdb(void){
 	}
 	//checking inventory_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`char_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
-		"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`expire_time`,`favorite`,`bound`,`unique_id`"
+		"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`expire_time`,`bound`,`unique_id`"
+		",`favorite`,`equip_switch`"
 		" FROM `%s` LIMIT 1;", schema_config.inventory_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2951,7 +2958,7 @@ bool char_config_read(const char* cfgName, bool normal){
 		} else if (strcmpi(w1, "char_maintenance") == 0) {
 			charserv_config.char_maintenance = atoi(w2);
 		} else if (strcmpi(w1, "char_new") == 0) {
-			charserv_config.char_new = (bool)atoi(w2);
+			charserv_config.char_new = (bool)config_switch(w2);
 		} else if (strcmpi(w1, "char_new_display") == 0) {
 			charserv_config.char_new_display = atoi(w2);
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
@@ -2987,7 +2994,7 @@ bool char_config_read(const char* cfgName, bool normal){
 			char_config_split_startitem(w1, w2, charserv_config.start_items_doram);
 #endif
 		} else if(strcmpi(w1,"log_char")==0) {		//log char or not [devil]
-			charserv_config.log_char = atoi(w2);
+			charserv_config.log_char = config_switch(w2);
 		} else if (strcmpi(w1, "unknown_char_name") == 0) {
 			safestrncpy(charserv_config.char_config.unknown_char_name, w2, sizeof(charserv_config.char_config.unknown_char_name));
 			charserv_config.char_config.unknown_char_name[NAME_LENGTH-1] = '\0';
@@ -3201,7 +3208,7 @@ int do_init(int argc, char **argv)
 		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");
 	}
 
-	inter_init_sql((argc > 2) ? argv[2] : inter_cfgName); // inter server configuration
+	inter_init_sql((argc > 2) ? argv[2] : SQL_CONF_NAME); // inter server configuration
 
 	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	online_char_db = idb_alloc(DB_OPT_RELEASE_DATA);

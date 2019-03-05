@@ -1067,36 +1067,36 @@ bool sv_readdb(const char* directory, const char* filename, char delim, int minc
 // @author MouseJstr (original)
 
 /// Allocates a StringBuf
-StringBuf* StringBuf_Malloc()
+StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func)
 {
 	StringBuf* self;
-	CREATE(self, StringBuf, 1);
-	StringBuf_Init(self);
+	self = (StringBuf *)_mcalloc(1, sizeof(StringBuf), file, line, func);
+	_StringBuf_Init(file, line, func, self);
 	return self;
 }
 
 /// Initializes a previously allocated StringBuf
-void StringBuf_Init(StringBuf* self)
+void _StringBuf_Init(const char *file, int line, const char *func,StringBuf* self)
 {
 	self->max_ = 1024;
-	self->ptr_ = self->buf_ = (char*)aMalloc(self->max_ + 1);
+	self->ptr_ = self->buf_ = (char*)_mmalloc(self->max_ + 1, file, line, func);
 }
 
 /// Appends the result of printf to the StringBuf
-int StringBuf_Printf(StringBuf* self, const char* fmt, ...)
+int _StringBuf_Printf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, ...)
 {
 	int len;
 	va_list ap;
 
 	va_start(ap, fmt);
-	len = StringBuf_Vprintf(self, fmt, ap);
+	len = _StringBuf_Vprintf(file,line,func,self, fmt, ap);
 	va_end(ap);
 
 	return len;
 }
 
 /// Appends the result of vprintf to the StringBuf
-int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list ap)
+int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, va_list ap)
 {
 	for(;;)
 	{
@@ -1116,13 +1116,13 @@ int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list ap)
 		/* Else try again with more space. */
 		self->max_ *= 2; // twice the old size
 		off = (int)(self->ptr_ - self->buf_);
-		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
+		self->buf_ = (char*)_mrealloc(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 }
 
 /// Appends the contents of another StringBuf to the StringBuf
-int StringBuf_Append(StringBuf* self, const StringBuf* sbuf)
+int _StringBuf_Append(const char *file, int line, const char *func,StringBuf* self, const StringBuf* sbuf)
 {
 	int available = self->max_ - (self->ptr_ - self->buf_);
 	int needed = (int)(sbuf->ptr_ - sbuf->buf_);
@@ -1131,7 +1131,7 @@ int StringBuf_Append(StringBuf* self, const StringBuf* sbuf)
 	{
 		int off = (int)(self->ptr_ - self->buf_);
 		self->max_ += needed;
-		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
+		self->buf_ = (char*)_mrealloc(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 
@@ -1141,7 +1141,7 @@ int StringBuf_Append(StringBuf* self, const StringBuf* sbuf)
 }
 
 // Appends str to the StringBuf
-int StringBuf_AppendStr(StringBuf* self, const char* str)
+int _StringBuf_AppendStr(const char *file, int line, const char *func,StringBuf* self, const char* str)
 {
 	int available = self->max_ - (self->ptr_ - self->buf_);
 	int needed = (int)strlen(str);
@@ -1150,7 +1150,7 @@ int StringBuf_AppendStr(StringBuf* self, const char* str)
 	{// not enough space, expand the buffer (minimum expansion = 1024)
 		int off = (int)(self->ptr_ - self->buf_);
 		self->max_ += max(needed, 1024);
-		self->buf_ = (char*)aRealloc(self->buf_, self->max_ + 1);
+		self->buf_ = (char*)_mrealloc(self->buf_, self->max_ + 1, file, line, func);
 		self->ptr_ = self->buf_ + off;
 	}
 

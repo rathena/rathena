@@ -26,11 +26,11 @@
 // 'RequiredStatuses'
 //	Fill the value only with SC_STATUS (see db/const.txt for more details)
 //	Usage for multiple status requirements: SC_STATUS1:SC_STATUS2:SC_STATUS3
-//	Max. multiple value is 3 (skill.h: MAX_SKILL_STATUS_REQUIRE)
+//	Max. multiple value is 3 (skill.hpp: MAX_SKILL_STATUS_REQUIRE)
 //	Use any number or SC_ALL will disable status requirements
 // 'RequiredEquipment'
 //	Specified equipment to be equipped. For multiple values, use : as delimiter.
-//	Max. multiple value is 10 (skill.h: MAX_SKILL_EQUIP_REQUIRE)
+//	Max. multiple value is 10 (skill.hpp: MAX_SKILL_EQUIP_REQUIRE)
 
 //****
 // SM Swordman
@@ -1032,11 +1032,8 @@
 5039,0,0,20:30:40:50:60,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0						//SU_TUNAPARTY
 5040,0,0,44:48:52:56:60,0,0,0,99,0,0,none,0,0,567,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0					//SU_BUNCHOFSHRIMP
 5041,0,0,22:24:26:28:30,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0						//SU_FRESHSHRIMP
-
-// Unknown Summoner Skills
-//5042,0,0,1,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0								//
-//5043,0,0,1,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0								//
-
+5042,0,0,0,0,0,0,99,0,0,none,0,0,11602,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0								//SU_CN_METEOR2
+5043,0,0,0,0,0,0,99,0,0,none,0,0,515,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0								//SU_LUNATICCARROTBEAT2
 5045,0,0,50,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0									//SU_POWEROFFLOCK
 5046,0,0,60,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0									//SU_SVG_SPIRIT
 5047,0,0,50:46:42:38:34,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0						//SU_HISS
@@ -1051,6 +1048,8 @@
 5063,0,0,100,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0							//WE_CALLALLFAMILY
 5064,0,0,100,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0							//WE_ONEFOREVER
 5065,0,0,50,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0								//WE_CHEERUP
+
+5067,0,0,0,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0								//ALL_EQSWITCH
 
 // New Arch Bishop Skills
 5072,0,0,144:120:106:92:78,0,0,0,99,0,0,none,0,0,717,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0			//AB_VITUPERATUM##
