@@ -1003,10 +1003,10 @@ const char* parse_callfunc(const char* p, int require_paren, int is_custom)
 		syntax.curly[syntax.curly_count].flag = ARGLIST_PAREN;
 		p = p2;
 		/*
-		   } else if( 0 && require_paren && *p != '(' )
-		   {// <func name>
-		   syntax.curly[syntax.curly_count].flag = ARGLIST_NO_PAREN;
-		   */
+			 } else if( 0 && require_paren && *p != '(' )
+			 {// <func name>
+			 syntax.curly[syntax.curly_count].flag = ARGLIST_NO_PAREN;
+			 */
 	} else
 	{// <func name> <arg list>
 		if( require_paren ){
@@ -1173,19 +1173,19 @@ const char* parse_variable(const char* p) {
 			break;
 
 		case C_EQ: {// incremental modifier
-					   p = skip_space( &p[1] );
-				   }
-				   break;
+								 p = skip_space( &p[1] );
+							 }
+							 break;
 
 		case C_L_SHIFT:
 		case C_R_SHIFT: {// left or right shift modifier
-							p = skip_space( &p[3] );
-						}
-						break;
+											p = skip_space( &p[3] );
+										}
+										break;
 
 		default: {// normal incremental command
-					 p = skip_space( &p[2] );
-				 }
+							 p = skip_space( &p[2] );
+						 }
 	}
 
 	if( p == NULL ) {// end of line or invalid buffer
@@ -1295,7 +1295,7 @@ const char* parse_simpleexpr(const char *p)
 		p=skip_space(p);
 		if( (i=syntax.curly_count-1) >= 0 && syntax.curly[i].type == TYPE_ARGLIST &&
 				syntax.curly[i].flag == ARGLIST_UNDEFINED && --syntax.curly[i].count == 0
-		  ){
+			){
 			if( *p == ',' ){
 				syntax.curly[i].flag = ARGLIST_PAREN;
 				return p;
@@ -2550,7 +2550,7 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 		if(
 				str_data[i].type==C_POS || str_data[i].type==C_NAME ||
 				str_data[i].type==C_USERFUNC || str_data[i].type == C_USERFUNC_POS
-		  ){
+			){
 			str_data[i].type=C_NOP;
 			str_data[i].backpatch=-1;
 			str_data[i].label=-1;
@@ -3297,7 +3297,7 @@ int conv_num_(struct script_state* st, struct script_data* data, struct map_sess
 #if LONG_MAX > INT_MAX
 				|| num < INT_MIN || num > INT_MAX
 #endif
-		  )
+			)
 		{
 			if( num <= INT_MIN )
 			{
@@ -3691,19 +3691,19 @@ void op_2str(struct script_state* st, int op, const char* s1, const char* s2)
 		case C_LT: a = (strcmp(s1,s2) <  0); break;
 		case C_LE: a = (strcmp(s1,s2) <= 0); break;
 		case C_ADD:
-				   {
-					   char* buf = (char *)aMalloc((strlen(s1)+strlen(s2)+1)*sizeof(char));
-					   strcpy(buf, s1);
-					   strcat(buf, s2);
-					   script_pushstr(st, buf);
-					   return;
-				   }
+							 {
+								 char* buf = (char *)aMalloc((strlen(s1)+strlen(s2)+1)*sizeof(char));
+								 strcpy(buf, s1);
+								 strcat(buf, s2);
+								 script_pushstr(st, buf);
+								 return;
+							 }
 		default:
-				   ShowError("script:op2_str: unexpected string operator %s\n", script_op2name(op));
-				   script_reportsrc(st);
-				   script_pushnil(st);
-				   st->state = END;
-				   return;
+							 ShowError("script:op2_str: unexpected string operator %s\n", script_op2name(op));
+							 script_reportsrc(st);
+							 script_pushnil(st);
+							 st->state = END;
+							 return;
 	}
 
 	script_pushint(st,a);
@@ -3732,40 +3732,40 @@ void op_2num(struct script_state* st, int op, int i1, int i2)
 		case C_L_SHIFT: ret = i1<<i2;	break;
 		case C_DIV:
 		case C_MOD:
-						if( i2 == 0 )
-						{
-							ShowError("script:op_2num: division by zero detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
-							script_reportsrc(st);
-							script_pushnil(st);
-							st->state = END;
-							return;
-						}
-						else if( op == C_DIV )
-							ret = i1 / i2;
-						else//if( op == C_MOD )
-							ret = i1 % i2;
-						break;
+										if( i2 == 0 )
+										{
+											ShowError("script:op_2num: division by zero detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+											script_reportsrc(st);
+											script_pushnil(st);
+											st->state = END;
+											return;
+										}
+										else if( op == C_DIV )
+											ret = i1 / i2;
+										else//if( op == C_MOD )
+											ret = i1 % i2;
+										break;
 		default:
-						switch( op ) {// operators that can overflow/underflow
-							case C_ADD: ret = i1 + i2; ret_double = (double)i1 + (double)i2; break;
-							case C_SUB: ret = i1 - i2; ret_double = (double)i1 - (double)i2; break;
-							case C_MUL: ret = i1 * i2; ret_double = (double)i1 * (double)i2; break;
-							default:
-										ShowError("script:op_2num: unexpected number operator %s i1=%d i2=%d\n", script_op2name(op), i1, i2);
-										script_reportsrc(st);
-										script_pushnil(st);
-										return;
-						}
-						if( ret_double < (double)INT_MIN ) {
-							ShowWarning("script:op_2num: underflow detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
-							script_reportsrc(st);
-							ret = INT_MIN;
-						}
-						else if( ret_double > (double)INT_MAX ) {
-							ShowWarning("script:op_2num: overflow detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
-							script_reportsrc(st);
-							ret = INT_MAX;
-						}
+										switch( op ) {// operators that can overflow/underflow
+											case C_ADD: ret = i1 + i2; ret_double = (double)i1 + (double)i2; break;
+											case C_SUB: ret = i1 - i2; ret_double = (double)i1 - (double)i2; break;
+											case C_MUL: ret = i1 * i2; ret_double = (double)i1 * (double)i2; break;
+											default:
+																	ShowError("script:op_2num: unexpected number operator %s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+																	script_reportsrc(st);
+																	script_pushnil(st);
+																	return;
+										}
+										if( ret_double < (double)INT_MIN ) {
+											ShowWarning("script:op_2num: underflow detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+											script_reportsrc(st);
+											ret = INT_MIN;
+										}
+										else if( ret_double > (double)INT_MAX ) {
+											ShowWarning("script:op_2num: overflow detected op=%s i1=%d i2=%d\n", script_op2name(op), i1, i2);
+											script_reportsrc(st);
+											ret = INT_MAX;
+										}
 	}
 	script_pushint(st, ret);
 }
@@ -3872,11 +3872,11 @@ void op_1(struct script_state* st, int op)
 		case C_NOT: i1 = ~i1; break;
 		case C_LNOT: i1 = !i1; break;
 		default:
-					 ShowError("script:op_1: unexpected operator %s i1=%d\n", script_op2name(op), i1);
-					 script_reportsrc(st);
-					 script_pushnil(st);
-					 st->state = END;
-					 return;
+								 ShowError("script:op_1: unexpected operator %s i1=%d\n", script_op2name(op), i1);
+								 script_reportsrc(st);
+								 script_pushnil(st);
+								 st->state = END;
+								 return;
 	}
 	script_pushint(st, i1);
 }
@@ -3968,11 +3968,13 @@ static void script_check_buildin_argtype(struct script_state* st, int func)
 	}
 }
 
+#if TESTING
 /// Entry point for script tests
 script_func get_func_ptr(int id)
 {
 	return buildin_func[id].func;
 }
+#endif
 
 /// Executes a buildin command.
 /// Stack: C_NAME(<command>) C_ARG <arg0> <arg1> ... <argN>
