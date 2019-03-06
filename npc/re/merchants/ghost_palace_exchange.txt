@@ -1,0 +1,119 @@
+//===== rAthena Script =======================================
+//= Ghost Palace Exchange NPC.
+//===== Description: =========================================
+//= Walkthrough Conversion.
+//  Note: Gray Charcoal items are disabled
+//		(currently not implemented).
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+dali02,51,130,4	script	A traveler of dimension	4_F_SHABBY,{
+	mes "[A traveler of dimension]";
+	mes "Adventurer friend <ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> is what I need. How about exchange it with something I have?";
+	next;
+	.@type = select( "Show me your weapon.", "Show me your armor.", "Anything special?", "I do not need." ) - 1;
+	mes "[A traveler of dimension]";
+	switch(.@type) {
+	case 0:
+		mes "Oh! Are you interested in weapons? We have all the weapons we can get from the Ghost Palace. Why don't you choose one?";
+		break;
+	case 1:
+		mes "Armor? We have all the weapons we can get from the Ghost Palace. Why don't you choose one?";
+		break;
+	case 2:
+		mes "Huhh! It seems like many of them already heard that I have the best stuff. Feel free to check out my collections.";
+		break;
+	case 3:
+		mes "Good by friend~ Come again!";
+		close;
+	}
+	next;
+	mes "[A traveler of dimension]";
+	mes "Ah! The number that is written beside will be needed";
+	mes "<ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> Please keep that in mind.";
+
+	switch(.@type) {
+	case 0:
+		setarray .@items[0],
+			13441, 200,		// Thanos Sword
+			21009, 200, 	// Thanos Great Sword
+			1438,  200,		// Thanos Spear
+			1496,  200,		// Thanos Long Spear
+			1669,  200,		// Thanos Staff
+			2023,  200,		// Thanos Rod
+			18119, 200,		// Thanos Bow
+			13093, 200,		// Thanos Dagger
+			28000, 200,		// Thanos Katar
+			1836,  200,		// Thanos Knuckle
+			16028, 200,		// Thanos Hammer
+			28100, 200,		// Thanos Axe
+			1933,  200,		// Thanos Violin
+			1988,  200;		// Thanos Whip
+		break;
+	case 1:
+		setarray .@items[0],
+			2187,  100,		// Shield Of Gray
+			15090, 100, 	// Armor Of Gray
+			15091, 100,		// Gray Robe
+			20721, 100,		// Cloak Of Gray
+			22033, 100,		// Boots Of Gray
+			18820, 100;		// Gray Helmet
+		break;
+	case 2:
+		//setarray .@items[0],
+		//	27184, 10000,		// Knight Sakray Card
+		//	23676, 50, 			// Gray Charcoal Melee (Melee)
+		//	23677, 50,			// Gray Charcoal Magic (Magic)
+		//	23678, 50;			// Gray Charcoal Range (Range)
+		setarray .@items[0],
+			27184, 10000;		// Knight Sakray Card
+		break;
+	}
+	.@size = getarraysize(.@items);
+	for ( .@i = 0; .@i < .@size; .@i += 2 )
+		.@menu$ += getitemname(.@item[.@i]) + " - " + .@item[.@i+1] + ":";
+
+	while(true) {
+		next;
+		.@s = (select(.@menu$) - 1) * 2;
+		mes "[A traveler of dimension]";
+		if (.@type != 1)	// armor type doesn't display item info
+			mes "Do you mean <ITEM>[" + getitemname(.@item[.@s]) + "]<INFO>" + .@item[.@s] + "</INFO></ITEM>?";
+		mes "" + .@item[.@s+1] + " ^006400Gray Shard^000000 is required for exchange.";
+		next;
+		switch( select( "Let's exchange.", "Let me see other stuffs.", "I will come back later" ) ) {
+		case 1:
+			break;
+		case 2:
+			mes "[A traveler of dimension]";
+			switch(.@type) {
+			case 0:
+				mes "I have more than enough weapons.";
+				break;
+			case 1:
+				mes "We have many armors for you. Why don't you pic one?";
+				break;
+			case 2:
+				mes "If you bring me Gray Shard, I will any you anything that you want.";
+				break;
+			}
+			continue;
+		case 3:
+			mes "[A traveler of dimension]";
+			mes "Take care friend~ See you next time!";
+			close;
+		}
+		if (countitem(6672) < .@item[.@s+1]) {
+			mes "[A traveler of dimension]";
+			mes "You put me in difficult situation, friend.";
+			mes "I am in need of Gray Shard. I will exchange it for ^006400" + .@item[.@s+1] + " Gray Shard^000000.";
+			close;
+		}
+		mes "[A traveler of dimension]";
+		mes "Thank you. Come back if you need anything else.";
+		delitem 6672, .@item[.@s+1];
+		getitem .@item[.@s], 1;
+		close;
+	}
+}
