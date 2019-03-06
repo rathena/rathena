@@ -26,11 +26,11 @@
 // 'RequiredStatuses'
 //	Fill the value only with SC_STATUS (see db/const.txt for more details)
 //	Usage for multiple status requirements: SC_STATUS1:SC_STATUS2:SC_STATUS3
-//	Max. multiple value is 3 (skill.h: MAX_SKILL_STATUS_REQUIRE)
+//	Max. multiple value is 3 (skill.hpp: MAX_SKILL_STATUS_REQUIRE)
 //	Use any number or SC_ALL will disable status requirements
 // 'RequiredEquipment'
 //	Specified equipment to be equipped. For multiple values, use : as delimiter.
-//	Max. multiple value is 10 (skill.h: MAX_SKILL_EQUIP_REQUIRE)
+//	Max. multiple value is 10 (skill.hpp: MAX_SKILL_EQUIP_REQUIRE)
 
 //****
 // SM Swordman
@@ -960,6 +960,8 @@
 // Copied Bard / Dancer Skills
 //3036,0,0,1,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0							//BA_POEMBRAGI2
 //3037,0,0,1,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0							//DC_FORTUNEKISS2
+
+5067,0,0,0,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0								//ALL_EQSWITCH
 
 8001,0,0,13:16:19:22:25,0,0,0,99,0,0,none,0,0,545,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0				//HLIF_HEAL
 8002,0,0,20:25:30:35:40,0,0,0,99,0,0,none,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0					//HLIF_AVOID

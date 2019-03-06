@@ -4803,7 +4803,7 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 				delitem 6078,.@stoneelse_chk; //Stone_Fragments
 				delitem 6076,1; //Portable_Toolbox
 				getitem 6080,3; //Manuk_Coin
-				getexp 0,(checkre(3))?50000:700000; //unconfirmed (RE)
+				//getexp 0,(checkre(3))?70000:700000; //iRO only
 				changequest 2179+(ep13_2_tre-2),2182;
 				set ep13_2_tre,100;
 				close;
@@ -5671,8 +5671,7 @@ spl_in01,30,324,3	script	High Laphine#grenouille	446,{
 					set ep13_2_tre1,6;
 					changequest 2185,2186;
 					getitem 6081,3; //Splendide_Coin
-					if (checkre(3) == 0)
-						getexp 0,(checkre(3))?50000:700000; //unconfirmed (RE)
+					//getexp 0,(checkre(3))?70000:700000; //iRO only
 					close;
 				}
 				else {

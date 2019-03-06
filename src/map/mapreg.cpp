@@ -333,7 +333,7 @@ void mapreg_final(void)
 void mapreg_init(void)
 {
 	regs.vars = i64db_alloc(DB_OPT_BASE);
-	mapreg_ers = ers_new(sizeof(struct mapreg_save), "mapreg.c:mapreg_ers", ERS_OPT_CLEAN);
+	mapreg_ers = ers_new(sizeof(struct mapreg_save), "mapreg.cpp:mapreg_ers", ERS_OPT_CLEAN);
 
 	skip_insert = false;
 	regs.arrays = NULL;

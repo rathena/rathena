@@ -8,20 +8,32 @@ LIBCONFIG_H = $(shell ls ../../3rdparty/libconfig/*.h)
 LIBCONFIG_AR = ../../3rdparty/libconfig/obj/libconfig.a
 LIBCONFIG_INCLUDE = -I../../3rdparty/libconfig
 
+YAML_CPP_OBJ = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.cpp" | sed -e "s/\.cpp/\.o/g" )
+YAML_CPP_DIR_OBJ = $(YAML_CPP_OBJ:%=obj/%)
+YAML_CPP_AR = ../../3rdparty/yaml-cpp/obj/yaml-cpp.a
+YAML_CPP_H = $(shell find ../../3rdparty/yaml-cpp/ -type f -name "*.h")
+YAML_CPP_INCLUDE = -I../../3rdparty/yaml-cpp/include
+
 OTHER_H = ../config/renewal.hpp
 
 MAPCACHE_OBJ = obj_all/mapcache.o
 
+CSV2YAML_OBJ = obj_all/csv2yaml.o
+
 @SET_MAKE@
 
 #####################################################################
-.PHONY : all mapcache clean help
+.PHONY : all mapcache csv2yaml clean help
 
-all: mapcache
+all: mapcache csv2yaml
 
 mapcache: obj_all $(MAPCACHE_OBJ) $(COMMON_DIR_OBJ) $(LIBCONFIG_OBJ)
 	@echo "	LD	$@"
 	@@CXX@ @LDFLAGS@ -o ../../mapcache@EXEEXT@ $(MAPCACHE_OBJ) $(COMMON_DIR_OBJ) $(LIBCONFIG_AR) @LIBS@
+
+csv2yaml: obj_all $(CSV2YAML_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_AR)
+	@echo "	LD	$@"
+	@@CXX@ @LDFLAGS@ -o ../../csv2yaml@EXEEXT@ $(CSV2YAML_OBJ) $(COMMON_DIR_OBJ) $(YAML_CPP_AR) @LIBS@
 
 clean:
 	@echo "	CLEAN	tool"
@@ -30,6 +42,7 @@ clean:
 help:
 	@echo "possible targets are 'mapcache' 'all' 'clean' 'help'"
 	@echo "'mapcache'  - mapcache generator"
+	@echo "'csv2yaml'  - csv2yaml converter"
 	@echo "'all'       - builds all above targets"
 	@echo "'clean'     - cleans builds and objects"
 	@echo "'help'      - outputs this message"
@@ -39,9 +52,9 @@ help:
 obj_all:
 	-mkdir obj_all
 
-obj_all/%.o: %.cpp $(COMMON_H) $(OTHER_H) $(LIBCONFIG_H)
+obj_all/%.o: %.cpp $(COMMON_H) $(OTHER_H) $(LIBCONFIG_H) $(YAML_CPP_H)
 	@echo "	CXX	$<"
-	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
+	@@CXX@ @CXXFLAGS@ $(COMMON_INCLUDE) $(LIBCONFIG_INCLUDE) $(YAML_CPP_INCLUDE) @CPPFLAGS@ -c $(OUTPUT_OPTION) $<
 
 # missing common object files
 $(COMMON_DIR_OBJ):
@@ -49,3 +62,6 @@ $(COMMON_DIR_OBJ):
 
 $(LIBCONFIG_AR):
 	@$(MAKE) -C ../../3rdparty/libconfig
+
+$(YAML_CPP_AR):
+	@$(MAKE) -C ../../3rdparty/yaml-cpp

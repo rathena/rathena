@@ -12,6 +12,7 @@
 
 #include "../common/cbasetypes.hpp"
 #include "../common/core.hpp" // get_svn_revision()
+#include "../common/database.hpp"
 #include "../common/ers.hpp"  // ers_destroy
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp" //NAME_LENGTH
@@ -97,10 +98,197 @@ struct s_attendance_reward{
 struct s_attendance_period{
 	uint32 start;
 	uint32 end;
-	std::map<int,struct s_attendance_reward> rewards;
+	std::map<uint32,std::shared_ptr<struct s_attendance_reward>> rewards;
 };
 
-std::vector<struct s_attendance_period> attendance_periods;
+class AttendanceDatabase : public TypesafeYamlDatabase<uint32,s_attendance_period>{
+public:
+	AttendanceDatabase() : TypesafeYamlDatabase( "ATTENDANCE_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+};
+
+const std::string AttendanceDatabase::getDefaultLocation(){
+	return std::string(db_path) + "/attendance.yml";
+}
+
+/**
+ * Reads and parses an entry from the attendance_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 AttendanceDatabase::parseBodyNode(const YAML::Node &node){
+	uint32 start;
+
+	if( !this->asUInt32( node, "Start", start ) ){
+		return 0;
+	}
+
+	std::shared_ptr<s_attendance_period> attendance_period = this->find( start );
+	bool exists = attendance_period != nullptr;
+
+	if( !exists ){
+		if( !this->nodeExists( node, "End" ) ){
+			this->invalidWarning( node, "Node \"End\" is missing.\n" );
+			return 0;
+		}
+
+		if( !this->nodeExists( node, "Rewards" ) ){
+			this->invalidWarning( node, "Node \"Rewards\" is missing.\n" );
+			return 0;
+		}
+
+		attendance_period = std::make_shared<s_attendance_period>();
+
+		attendance_period->start = start;
+	}
+
+	// If it does not exist yet, we need to check it for sure
+	bool requiresCollisionDetection = !exists;
+
+	if( this->nodeExists( node, "End" ) ){
+		uint32 end;
+
+		if( !this->asUInt32( node, "End", end ) ){
+			return 0;
+		}
+
+		// If the period is outdated already, we do not even bother parsing
+		if( end < date_get( DT_YYYYMMDD ) ){
+			this->invalidWarning( node, "Node \"End\" date %u has already passed, skipping.\n", end );
+			return 0;
+		}
+
+		if( !exists || attendance_period->end != end ){
+			requiresCollisionDetection = true;
+			attendance_period->end = end;
+		}
+	}
+
+	// Collision detection
+	if( requiresCollisionDetection ){
+		bool collision = false;
+
+		for( std::pair<const uint32,std::shared_ptr<s_attendance_period>>& pair : *this ){
+			std::shared_ptr<s_attendance_period> period = pair.second;
+
+			if( exists && period->start == attendance_period->start ){
+				// Dont compare to yourself
+				continue;
+			}
+
+			// Check if start is inside another period
+			if( period->start <= attendance_period->start && start <= period->end ){
+				this->invalidWarning( node, "Node \"Start\" period %u intersects with period %u-%u, skipping.\n", attendance_period->start, period->start, period->end );
+				collision = true;
+				break;
+			}
+
+			// Check if end is inside another period
+			if( period->start <= attendance_period->end && attendance_period->end <= period->end ){
+				this->invalidWarning( node, "Node \"End\" period %u intersects with period %u-%u.\n", attendance_period->start, period->start, period->end );
+				collision = true;
+				break;
+			}
+		}
+
+		if( collision ){
+			return 0;
+		}
+	}
+
+	if( this->nodeExists( node, "Rewards" ) ){
+		const YAML::Node& rewardsNode = node["Rewards"];
+
+		for( const YAML::Node& rewardNode : rewardsNode ){
+			uint32 day;
+
+			if( !this->asUInt32( rewardNode, "Day", day ) ){
+				continue;
+			}
+
+			day -= 1;
+
+			std::shared_ptr<s_attendance_reward> reward = util::map_find( attendance_period->rewards, day );
+			bool reward_exists = reward != nullptr;
+
+			if( !reward_exists ){
+				if( !this->nodeExists( rewardNode, "ItemId" ) ){
+					this->invalidWarning( rewardNode, "Node \"ItemId\" is missing.\n" );
+					return 0;
+				}
+
+				reward = std::make_shared<s_attendance_reward>();
+			}
+
+			if( this->nodeExists( rewardNode, "ItemId" ) ){
+				uint16 item_id;
+
+				if( !this->asUInt16( rewardNode, "ItemId", item_id ) ){
+					continue;
+				}
+
+				if( item_id == 0 || !itemdb_exists( item_id ) ){
+					ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day + 1 );
+					continue;
+				}
+
+				reward->item_id = item_id;
+			}
+
+			if( this->nodeExists( rewardNode, "Amount" ) ){
+				uint16 amount;
+
+				if( !this->asUInt16( rewardNode, "Amount", amount ) ){
+					continue;
+				}
+
+				if( amount == 0 ){
+					ShowWarning( "pc_attendance_load: Invalid reward count %hu for day %d. Defaulting to 1...\n", amount, day + 1 );
+					amount = 1;
+				}else if( amount > MAX_AMOUNT ){
+					ShowError( "pc_attendance_load: Reward count %hu above maximum %hu for day %d. Defaulting to %hu...\n", amount, MAX_AMOUNT, day + 1, MAX_AMOUNT );
+					amount = MAX_AMOUNT;
+				}
+
+				reward->amount = amount;
+			}else{
+				if( !reward_exists ){
+					reward->amount = 1;
+				}
+			}
+
+			if( !reward_exists ){
+				attendance_period->rewards[day] = reward;
+			}
+		}
+
+		bool missing_day = false;
+
+		for( int day = 0; day < attendance_period->rewards.size(); day++ ){
+			if( attendance_period->rewards.find( day ) == attendance_period->rewards.end() ){
+				ShowError( "pc_attendance_load: Reward for day %d is missing.\n", day + 1 );
+				missing_day = true;
+				break;
+			}
+		}
+
+		if( missing_day ){
+			return 0;
+		}
+	}
+
+	if( !exists ){
+		this->put( start, attendance_period );
+	}
+
+	return 1;
+}
+
+AttendanceDatabase attendance_db;
 
 #define MOTD_LINE_SIZE 128
 static char motd_text[MOTD_LINE_SIZE][CHAT_SIZE_MAX]; // Message of the day buffer [Valaris]
@@ -153,7 +341,7 @@ void pc_set_reg_load( bool val ){
  **/
 DBMap* itemcd_db = NULL; // char_id -> struct item_cd
 struct item_cd {
-	unsigned int tick[MAX_ITEMDELAYS]; //tick
+	t_tick tick[MAX_ITEMDELAYS]; //tick
 	unsigned short nameid[MAX_ITEMDELAYS]; //item id
 };
 
@@ -500,7 +688,7 @@ void pc_inventory_rentals(struct map_session_data *sd)
  */
 void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 {
-	unsigned int tick = seconds * 1000;
+	t_tick tick = seconds * 1000;
 
 	if( sd == NULL )
 		return;
@@ -514,7 +702,7 @@ void pc_inventory_rental_add(struct map_session_data *sd, unsigned int seconds)
 			sd->rental_timer = add_timer(gettick() + tick, pc_inventory_rental_end, sd->bl.id, 0);
 		}
 	} else
-		sd->rental_timer = add_timer(gettick() + umin(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
+		sd->rental_timer = add_timer(gettick() + i64min(tick,3600000), pc_inventory_rental_end, sd->bl.id, 0);
 }
 
 /**
@@ -536,6 +724,10 @@ bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_s
 
 	if (!battle_config.rental_transaction && item->expire_time)
 		return false; // Cannot Sell Rental Items
+
+	if( item->equipSwitch ){
+		return false;
+	}
 
 	switch (shoptype) {
 		case NPCTYPE_SHOP:
@@ -644,7 +836,7 @@ void pc_makesavestatus(struct map_session_data *sd) {
 /*==========================================
  * Off init ? Connection?
  *------------------------------------------*/
-void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, unsigned int client_tick, int sex, int fd) {
+void pc_setnewpc(struct map_session_data *sd, uint32 account_id, uint32 char_id, int login_id1, t_tick client_tick, int sex, int fd) {
 	nullpo_retv(sd);
 
 	sd->bl.id = account_id;
@@ -771,8 +963,10 @@ void pc_setequipindex(struct map_session_data *sd)
 
 	nullpo_retv(sd);
 
-	for (i = 0; i < EQI_MAX; i++)
+	for (i = 0; i < EQI_MAX; i++){
 		sd->equip_index[i] = -1;
+		sd->equip_switch_index[i] = -1;
+	}
 
 	for (i = 0; i < MAX_INVENTORY; i++) {
 		if (sd->inventory.u.items_inventory[i].nameid <= 0)
@@ -795,6 +989,13 @@ void pc_setequipindex(struct map_session_data *sd)
 					sd->weapontype2 = sd->inventory_data[i]->look;
 				else
 					sd->weapontype2 = 0;
+			}
+		}
+		if (sd->inventory.u.items_inventory[i].equipSwitch) {
+			for (uint8 j = 0; j < EQI_MAX; j++) {
+				if (sd->inventory.u.items_inventory[i].equipSwitch & equip_bitmask[j]) {
+					sd->equip_switch_index[j] = i;
+				}
 			}
 		}
 	}
@@ -1138,7 +1339,7 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_time, int group_id, struct mmo_charstatus *st, bool changing_mapservers)
 {
 	int i;
-	unsigned long tick = gettick();
+	t_tick tick = gettick();
 	uint32 ip = session[sd->fd]->client_addr;
 
 	sd->login_id2 = login_id2;
@@ -1220,6 +1421,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	memset(&sd->storage, 0, sizeof(struct s_storage));
 	memset(&sd->premiumStorage, 0, sizeof(struct s_storage));
 	memset(&sd->equip_index, -1, sizeof(sd->equip_index));
+	memset(&sd->equip_switch_index, -1, sizeof(sd->equip_switch_index));
 
 	if( pc_isinvisible(sd) && !pc_can_use_command( sd, "hide", COMMAND_ATCOMMAND ) ){
 		sd->status.option &= ~OPTION_INVISIBLE;
@@ -2110,7 +2312,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 		}
 	}
 
-	struct s_autospell entry;
+	struct s_autospell entry = {};
 
 	entry.id = id;
 	entry.lv = lv;
@@ -2130,7 +2332,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
  * @param rate: Success chance
  * @param card_id: Used to prevent card stacking
  */
-static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
+static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, short src_skill, short id, short lv, short rate, unsigned short card_id)
 {
 	if (spell.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_autospell_onskill: Reached max (%d) number of autospells per character!\n", MAX_PC_BONUS);
@@ -2140,7 +2342,7 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> spell, short src
 	if (!rate)
 		return;
 
-	struct s_autospell entry;
+	struct s_autospell entry = {};
 
 	entry.flag = src_skill;
 	entry.id = id;
@@ -2186,7 +2388,7 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 		}
 	}
 
-	struct s_addeffect entry;
+	struct s_addeffect entry = {};
 
 	entry.sc = sc;
 	entry.rate = rate;
@@ -2224,7 +2426,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 		}
 	}
 
-	struct s_addeffectonskill entry;
+	struct s_addeffectonskill entry = {};
 
 	entry.sc = sc;
 	entry.rate = rate;
@@ -2287,7 +2489,7 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 		}
 	}
 
-	struct s_add_drop entry;
+	struct s_add_drop entry = {};
 
 	entry.nameid = nameid;
 	entry.group = group;
@@ -2304,13 +2506,13 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
  * @param script: Script to execute
  * @param rate: Success chance
  * @param dur: Duration
- * @param flag: Battle flag
+ * @param flag: Battle flag/skill
  * @param other_script: Secondary script to execute
  * @param pos: Item equip position
  * @param onskill: Skill used to trigger autobonus
  * @return True on success or false otherwise
  */
-bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, short flag, const char *other_script, unsigned int pos, bool onskill)
+bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short rate, unsigned int dur, uint16 flag, const char *other_script, unsigned int pos, bool onskill)
 {
 	if (bonus.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_addautobonus: Reached max (%d) number of autobonus per character!\n", MAX_PC_BONUS);
@@ -2330,7 +2532,7 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 		}
 	}
 
-	struct s_autobonus entry;
+	struct s_autobonus entry = {};
 
 	entry.rate = rate;
 	entry.duration = dur;
@@ -2356,10 +2558,14 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
 	if (!sd)
 		return;
 
-	for (uint8 i = 0; i < bonus.size(); i++) {
-		if (bonus[i].active != INVALID_TIMER) {
-			if (restore && (sd->state.autobonus&bonus[i].pos) == bonus[i].pos) {
-				if (bonus[i].bonus_script) {
+	std::vector<s_autobonus>::iterator it = bonus.begin();
+
+	while( it != bonus.end() ){
+		s_autobonus b = *it;
+
+		if (b.active != INVALID_TIMER) {
+			if (restore && (sd->state.autobonus&b.pos) == b.pos) {
+				if (b.bonus_script) {
 					unsigned int equip_pos_idx = 0;
 
 					// Create a list of all equipped positions to see if all items needed for the autobonus are still present [Playtester]
@@ -2368,22 +2574,26 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
 							equip_pos_idx |= sd->inventory.u.items_inventory[sd->equip_index[j]].equip;
 					}
 
-					if ((equip_pos_idx&bonus[i].pos) == bonus[i].pos)
-						script_run_autobonus(bonus[i].bonus_script, sd, bonus[i].pos);
+					if ((equip_pos_idx&b.pos) == b.pos)
+						script_run_autobonus(b.bonus_script, sd, b.pos);
 				}
+
+				it++;
+
 				continue;
 			} else { // Logout / Unequipped an item with an activated bonus
-				delete_timer(bonus[i].active, pc_endautobonus);
-				bonus[i].active = INVALID_TIMER;
+				delete_timer(b.active, pc_endautobonus);
+				b.active = INVALID_TIMER;
 			}
 		}
 
-		if (bonus[i].bonus_script)
-			aFree(bonus[i].bonus_script);
-		if (bonus[i].other_script)
-			aFree(bonus[i].other_script);
+		if (b.bonus_script)
+			aFree(b.bonus_script);
+		if (b.other_script)
+			aFree(b.other_script);
+
+		it = bonus.erase(it);
 	}
-	bonus.clear();
 }
 
 /**
@@ -2391,7 +2601,7 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
  * @param sd: Player data
  * @param autobonus: Autobonus to run
  */
-void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
+void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus)
 {
 	if (!sd || !autobonus)
 		return;
@@ -2412,7 +2622,7 @@ void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
 			script_run_autobonus(autobonus->other_script,sd,autobonus->pos);
 	}
 
-	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)autobonus);
+	autobonus->active = add_timer(gettick()+autobonus->duration, pc_endautobonus, sd->bl.id, (intptr_t)bonus);
 	sd->state.autobonus |= autobonus->pos;
 	status_calc_pc(sd,SCO_FORCE);
 }
@@ -2422,13 +2632,19 @@ void pc_exeautobonus(struct map_session_data *sd, struct s_autobonus *autobonus)
  */
 TIMER_FUNC(pc_endautobonus){
 	struct map_session_data *sd = map_id2sd(id);
-	struct s_autobonus *autobonus = (struct s_autobonus *)data;
+	std::vector<s_autobonus> *bonus = (std::vector<s_autobonus> *)data;
 
 	nullpo_ret(sd);
-	nullpo_ret(autobonus);
+	nullpo_ret(bonus);
 
-	autobonus->active = INVALID_TIMER;
-	sd->state.autobonus &= ~autobonus->pos;
+	for( struct s_autobonus& autobonus : *bonus ){
+		if( autobonus.active == tid ){
+			autobonus.active = INVALID_TIMER;
+			sd->state.autobonus &= ~autobonus.pos;
+			break;
+		}
+	}
+	
 	status_calc_pc(sd,SCO_FORCE);
 	return 0;
 }
@@ -2443,7 +2659,6 @@ TIMER_FUNC(pc_endautobonus){
 static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
 	struct weapon_data *wd = (sd->state.lr_flag ? &sd->left_weapon : &sd->right_weapon);
-	struct s_addele2 entry;
 
 	if (wd->addele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_addele: Reached max (%d) number of add element damage bonuses per character!\n", MAX_PC_BONUS);
@@ -2469,6 +2684,8 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 		}
 	}
 
+	struct s_addele2 entry = {};
+
 	entry.ele = ele;
 	entry.rate = rate;
 	entry.flag = flag;
@@ -2485,8 +2702,6 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
-	struct s_addele2 entry;
-
 	if (sd->subele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_subele: Reached max (%d) number of resist element damage bonuses per character!\n", MAX_PC_BONUS);
 		return;
@@ -2511,6 +2726,8 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 		}
 	}
 
+	struct s_addele2 entry = {};
+
 	entry.ele = ele;
 	entry.rate = rate;
 	entry.flag = flag;
@@ -2526,14 +2743,14 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int val)
 {
-	struct s_item_bonus entry;
-
 	for (auto &it : bonus) {
 		if (it.id == id) {
 			it.val += val;
 			return;
 		}
 	}
+
+	struct s_item_bonus entry = {};
 
 	entry.id = id;
 	entry.val = val;
@@ -3166,6 +3383,10 @@ void pc_bonus(struct map_session_data *sd,int type,int val)
 			if (sd->state.lr_flag != 2)
 				sd->special_state.no_mado_fuel = 1;
 			break;
+		case SP_NO_WALK_DELAY:
+			if (sd->state.lr_flag != 2)
+				sd->special_state.no_walk_delay = 1;
+			break;
 		default:
 			if (running_npc_stat_calc_event) {
 				ShowWarning("pc_bonus: unknown bonus type %d %d in OnPCStatCalcEvent!\n", type, val);
@@ -3685,7 +3906,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillcastrate, type2, -val); // Send inversed value here
+		pc_bonus_itembonus(sd->skillfixcastrate, type2, -val); // Send inversed value here
 		break;
 #else
 	case SP_SKILL_FIXEDCAST: // bonus2 bSkillFixedCast,sk,t;
@@ -4365,28 +4586,17 @@ char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type
 /**
  * Attempts to remove Cash Points from player
  * @param sd: Player
- * @param price: Points player has to pay
- * @param points: Points player has
+ * @param price: Total points (cash + kafra) the player has to pay
+ * @param points: Kafra points the player has to pay
  * @param type: Log type
- * @return -2: Paying negative points, -1: Not enough points, otherwise success (cash+points)
+ * @return -1: Not enough points, otherwise success (cash+points)
  */
 int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_type type)
 {
 	int cash;
 	nullpo_retr(-1,sd);
 
-	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
-	if( price < 0 || points < 0 )
-	{
-		ShowError("pc_paycash: Paying negative points (price=%d, points=%d, account_id=%d, char_id=%d).\n", price, points, sd->status.account_id, sd->status.char_id);
-		return -2;
-	}
-
-	if( points > price )
-	{
-		ShowWarning("pc_paycash: More kafra points provided than needed (price=%d, points=%d, account_id=%d, char_id=%d).\n", price, points, sd->status.account_id, sd->status.char_id);
-		points = price;
-	}
+	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
 
 	cash = price-points;
 
@@ -4421,10 +4631,10 @@ int pc_paycash(struct map_session_data *sd, int price, int points, e_log_pick_ty
 /**
  * Attempts to give Cash Points to player
  * @param sd: Player
- * @param cash: Cash player gets
- * @param points: Points player has
+ * @param cash: Cash points the player gets
+ * @param points: Kafra points the player gets
  * @param type: Log type
- * @return -2: Error, -1: Giving negative cash/points, otherwise success (cash or points)
+ * @return -1: Error, otherwise success (cash or points)
  */
 int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_type type)
 {
@@ -4432,8 +4642,8 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 
 	nullpo_retr(-1,sd);
 
-	cash = cap_value(cash,-MAX_ZENY,MAX_ZENY); //prevent command UB
-	points = cap_value(points,-MAX_ZENY,MAX_ZENY); //prevent command UB
+	cash = cap_value(cash, 0, MAX_ZENY); //prevent command UB
+	points = cap_value(points, 0, MAX_ZENY); //prevent command UB
 	if( cash > 0 )
 	{
 		if( cash > MAX_ZENY-sd->cashPoints )
@@ -4452,11 +4662,6 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 		}
 		return cash;
-	}
-	else if( cash < 0 )
-	{
-		ShowError("pc_getcash: Obtaining negative cash points (cash=%d, account_id=%d, char_id=%d).\n", cash, sd->status.account_id, sd->status.char_id);
-		return -1;
 	}
 
 	if( points > 0 )
@@ -4478,12 +4683,8 @@ int pc_getcash(struct map_session_data *sd, int cash, int points, e_log_pick_typ
 		}
 		return points;
 	}
-	else if( points < 0 )
-	{
-		ShowError("pc_getcash: Obtaining negative kafra points (points=%d, account_id=%d, char_id=%d).\n", points, sd->status.account_id, sd->status.char_id);
-		return -1;
-	}
-	return -2; //shouldn't happen but just in case
+
+	return -1; //shouldn't happen but just in case
 }
 
 /**
@@ -4572,6 +4773,8 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 			sd->inventory.u.items_inventory[i].equip = 0;
 		if( item->favorite )
 			sd->inventory.u.items_inventory[i].favorite = 0;
+		if( item->equipSwitch )
+			sd->inventory.u.items_inventory[i].equipSwitch = 0;
 
 		sd->inventory.u.items_inventory[i].amount = amount;
 		sd->inventory_data[i] = id;
@@ -4668,6 +4871,9 @@ bool pc_dropitem(struct map_session_data *sd,int n,int amount)
 		)
 		return false;
 
+	if( sd->inventory.u.items_inventory[n].equipSwitch )
+		return false;
+
 	if( map_getmapflag(sd->bl.m, MF_NODROP) )
 	{
 		clif_displaymessage (sd->fd, msg_txt(sd,271));
@@ -4697,7 +4903,7 @@ bool pc_dropitem(struct map_session_data *sd,int n,int amount)
 bool pc_takeitem(struct map_session_data *sd,struct flooritem_data *fitem)
 {
 	int flag = 0;
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	struct party_data *p = NULL;
 
 	nullpo_ret(sd);
@@ -4943,7 +5149,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
  *------------------------------------------*/
 int pc_useitem(struct map_session_data *sd,int n)
 {
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	int amount;
 	unsigned short nameid;
 	struct script_code *script;
@@ -4990,7 +5196,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	//Since most delay-consume items involve using a "skill-type" target cursor,
 	//perform a skill-use check before going through. [Skotlex]
 	//resurrection was picked as testing skill, as a non-offensive, generic skill, it will do.
-	//FIXME: Is this really needed here? It'll be checked in unit.c after all and this prevents skill items using when silenced [Inkfish]
+	//FIXME: Is this really needed here? It'll be checked in unit.cpp after all and this prevents skill items using when silenced [Inkfish]
 	if( id->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
@@ -5108,6 +5314,7 @@ unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item,int 
 		clif_cart_additem(sd,i,amount,0);
 	}
 	sd->cart.u.items_cart[i].favorite = 0; // clear
+	sd->cart.u.items_cart[i].equipSwitch = 0;
 	log_pick_pc(sd, log_type, amount, &sd->cart.u.items_cart[i]);
 
 	sd->cart_weight += w;
@@ -5158,6 +5365,11 @@ void pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 
 	if( item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->state.vending )
 		return;
+
+	if( item_data->equipSwitch ){
+		clif_msg( sd, C_ITEM_EQUIP_SWITCH );
+		return;
+	}
 
 	if( (flag = pc_cart_additem(sd,item_data,amount,LOG_TYPE_NONE)) == 0 )
 		pc_delitem(sd,idx,amount,0,5,LOG_TYPE_NONE);
@@ -5787,15 +5999,21 @@ static void pc_checkallowskill(struct map_session_data *sd)
  * -1 : Nothing equipped
  * idx : (this index could be used in inventory to found item_data)
  *------------------------------------------*/
-short pc_checkequip(struct map_session_data *sd,int pos)
+short pc_checkequip(struct map_session_data *sd,int pos, bool checkall)
 {
 	uint8 i;
 
 	nullpo_retr(-1, sd);
 
 	for(i=0;i<EQI_MAX;i++){
-		if(pos & equip_bitmask[i])
+		if(pos & equip_bitmask[i]){
+			if( checkall && ( pos&~equip_bitmask[i] ) != 0 && sd->equip_index[i] == -1 ){
+				// Check all if any match is found
+				continue;
+			}
+
 			return sd->equip_index[i];
+		}
 	}
 
 	return -1;
@@ -7666,7 +7884,7 @@ void pc_close_npc(struct map_session_data *sd,int flag)
 int pc_dead(struct map_session_data *sd,struct block_list *src)
 {
 	int i=0,k=0;
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 	// Activate Steel body if a super novice dies at 99+% exp [celest]
@@ -8112,6 +8330,8 @@ int pc_readparam(struct map_session_data* sd,int type)
 		case SP_NO_GEMSTONE:     val = sd->special_state.no_gemstone?1:0; break;
 		case SP_INTRAVISION:     val = sd->special_state.intravision?1:0; break;
 		case SP_NO_KNOCKBACK:    val = sd->special_state.no_knockback?1:0; break;
+		case SP_NO_MADO_FUEL:    val = sd->special_state.no_mado_fuel?1:0; break;
+		case SP_NO_WALK_DELAY:   val = sd->special_state.no_walk_delay?1:0; break;
 		case SP_SPLASH_RANGE:    val = sd->bonus.splash_range; break;
 		case SP_SPLASH_ADD_RANGE:val = sd->bonus.splash_add_range; break;
 		case SP_SHORT_WEAPON_DAMAGE_RETURN: val = sd->bonus.short_weapon_damage_return; break;
@@ -8913,14 +9133,15 @@ void pc_setoption(struct map_session_data *sd,int type)
 	}
 	if( (sd->class_&MAPID_THIRDMASK) == MAPID_MECHANIC ) {
 		if( type&OPTION_MADOGEAR && !(p_type&OPTION_MADOGEAR) ) {
+			static const sc_type statuses [] = { SC_MAXIMIZEPOWER, SC_OVERTHRUST, SC_WEAPONPERFECTION, SC_ADRENALINE, SC_CARTBOOST, SC_MELTDOWN, SC_MAXOVERTHRUST };
+
 			status_calc_pc(sd,SCO_NONE);
-			status_change_end(&sd->bl,SC_MAXIMIZEPOWER,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_OVERTHRUST,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_WEAPONPERFECTION,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_ADRENALINE,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_CARTBOOST,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MELTDOWN,INVALID_TIMER);
-			status_change_end(&sd->bl,SC_MAXOVERTHRUST,INVALID_TIMER);
+			for (uint8 i = 0; i < ARRAYLENGTH(statuses); i++) {
+				int skill_id = status_sc2skill(statuses[i]);
+
+				if (skill_id >= 0 && !(skill_get_inf3(skill_id)&INF3_USABLE_MADO))
+					status_change_end(&sd->bl,statuses[i],INVALID_TIMER);
+			}
 			pc_bonus_script_clear(sd,BSF_REM_ON_MADOGEAR);
 		} else if( !(type&OPTION_MADOGEAR) && p_type&OPTION_MADOGEAR ) {
 			status_calc_pc(sd,SCO_NONE);
@@ -9494,7 +9715,7 @@ void pc_addeventtimercount(struct map_session_data *sd,const char *name,int tick
 	for(i=0;i<MAX_EVENTTIMER;i++)
 		if( sd->eventtimer[i] != INVALID_TIMER && strcmp(
 			(char *)(get_timer(sd->eventtimer[i])->data), name)==0 ){
-				addtick_timer(sd->eventtimer[i],tick);
+				addt_tickimer(sd->eventtimer[i],tick);
 				break;
 		}
 }
@@ -9725,7 +9946,7 @@ int pc_load_combo(struct map_session_data *sd) {
 		if(!itemdb_isspecial(sd->inventory.u.items_inventory[idx].card[0])) {
 			struct item_data *data;
 			int j;
-			for( j = 0; j < id->slot; j++ ) {
+			for( j = 0; j < MAX_SLOTS; j++ ) {
 				if (!sd->inventory.u.items_inventory[idx].card[j])
 					continue;
 				if ( ( data = itemdb_exists(sd->inventory.u.items_inventory[idx].card[j]) ) != NULL ) {
@@ -9741,20 +9962,29 @@ int pc_load_combo(struct map_session_data *sd) {
  * Equip item on player sd at req_pos from inventory index n
  * return: false - fail; true - success
  *------------------------------------------*/
-bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
+bool pc_equipitem(struct map_session_data *sd,short n,int req_pos,bool equipswitch)
 {
 	int i, pos, flag = 0, iflag;
 	struct item_data *id;
 	uint8 res = ITEM_EQUIP_ACK_OK;
+	short* equip_index;
 
 	nullpo_retr(false,sd);
 
 	if( n < 0 || n >= MAX_INVENTORY ) {
-		clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
+		if( equipswitch ){
+			clif_equipswitch_add( sd, n, req_pos, true );
+		}else{
+			clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
+		}
 		return false;
 	}
 	if( DIFF_TICK(sd->canequip_tick,gettick()) > 0 ) {
-		clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);
+		if( equipswitch ){
+			clif_equipswitch_add( sd, n, req_pos, true );
+		}else{
+			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);
+		}
 		return false;
 	}
 
@@ -9762,78 +9992,128 @@ bool pc_equipitem(struct map_session_data *sd,short n,int req_pos)
 		return false;
 	pos = pc_equippoint(sd,n); //With a few exceptions, item should go in all specified slots.
 
-	if(battle_config.battle_log)
+	if(battle_config.battle_log && !equipswitch)
 		ShowInfo("equip %hu (%d) %x:%x\n",sd->inventory.u.items_inventory[n].nameid,n,id?id->equip:0,req_pos);
 
 	if((res = pc_isequip(sd,n))) {
-		clif_equipitemack(sd,n,0,res);	// fail
+		if( equipswitch ){
+			clif_equipswitch_add( sd, n, req_pos, true );
+		}else{
+			clif_equipitemack(sd,n,0,res);	// fail
+		}
+		return false;
+	}
+
+	if( equipswitch && id->type == IT_AMMO ){
+		clif_equipswitch_add( sd, n, req_pos, true );
 		return false;
 	}
 
 	if (!(pos&req_pos) || sd->inventory.u.items_inventory[n].equip != 0 || sd->inventory.u.items_inventory[n].attribute==1 ) { // [Valaris]
-		clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);	// fail
+		if( equipswitch ){
+			clif_equipswitch_add( sd, n, req_pos, true );
+		}else{
+			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL);	// fail
+		}
 		return false;
 	}
 	if( sd->sc.count && (sd->sc.data[SC_BERSERK] || sd->sc.data[SC_SATURDAYNIGHTFEVER] ||
 		sd->sc.data[SC_KYOUGAKU] || (sd->sc.data[SC_PYROCLASTIC] && sd->inventory_data[n]->type == IT_WEAPON)) ) {
-		clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL); //Fail
+		if( equipswitch ){
+			clif_equipswitch_add( sd, n, req_pos, true );
+		}else{
+			clif_equipitemack(sd,n,0,ITEM_EQUIP_ACK_FAIL); //Fail
+		}
 		return false;
 	}
 
-	if (id->flag.bindOnEquip && !sd->inventory.u.items_inventory[n].bound) {
+	equip_index = equipswitch ? sd->equip_switch_index : sd->equip_index;
+
+	if ( !equipswitch && id->flag.bindOnEquip && !sd->inventory.u.items_inventory[n].bound) {
 		sd->inventory.u.items_inventory[n].bound = (char)battle_config.default_bind_on_equip;
 		clif_notify_bindOnEquip(sd,n);
 	}
 
-	if(pos == EQP_ACC) { //Accesories should only go in one of the two,
+	if(pos == EQP_ACC) { //Accessories should only go in one of the two.
 		pos = req_pos&EQP_ACC;
-		if (pos == EQP_ACC) //User specified both slots..
-			pos = sd->equip_index[EQI_ACC_R] >= 0 ? EQP_ACC_L : EQP_ACC_R;
-	}
+		if (pos == EQP_ACC) //User specified both slots.
+			pos = equip_index[EQI_ACC_R] >= 0 ? EQP_ACC_L : EQP_ACC_R;
 
-	if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
+		for (i = 0; i < sd->inventory_data[n]->slot; i++) { // Accessories that have cards that force equip location
+			if (!sd->inventory.u.items_inventory[n].card[i])
+				continue;
+
+			struct item_data *card_data = itemdb_exists(sd->inventory.u.items_inventory[n].card[i]);
+
+			if (card_data) {
+				int card_pos = card_data->equip;
+
+				if (card_pos == EQP_ACC_L || card_pos == EQP_ACC_R) {
+					pos = card_pos; // Use the card's equip position
+					break;
+				}
+			}
+		}
+	} else if(pos == EQP_ARMS && id->equip == EQP_HAND_R) { //Dual wield capable weapon.
 		pos = (req_pos&EQP_ARMS);
 		if (pos == EQP_ARMS) //User specified both slots, pick one for them.
-			pos = sd->equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
-	}
-
-	if(pos == EQP_SHADOW_ACC) { // Shadow System
+			pos = equip_index[EQI_HAND_R] >= 0 ? EQP_HAND_L : EQP_HAND_R;
+	} else if(pos == EQP_SHADOW_ACC) { // Shadow System
 		pos = req_pos&EQP_SHADOW_ACC;
 		if (pos == EQP_SHADOW_ACC)
-			pos = sd->equip_index[EQI_SHADOW_ACC_L] >= 0 ? EQP_SHADOW_ACC_R : EQP_SHADOW_ACC_L;
-	}
-	if(pos == EQP_SHADOW_ARMS && id->equip == EQP_SHADOW_WEAPON) {
+			pos = equip_index[EQI_SHADOW_ACC_L] >= 0 ? EQP_SHADOW_ACC_R : EQP_SHADOW_ACC_L;
+	} else if(pos == EQP_SHADOW_ARMS && id->equip == EQP_SHADOW_WEAPON) {
 		pos = (req_pos&EQP_SHADOW_ARMS);
 		if( pos == EQP_SHADOW_ARMS )
-			pos = (sd->equip_index[EQI_SHADOW_WEAPON] >= 0 ? EQP_SHADOW_SHIELD : EQP_SHADOW_WEAPON);
+			pos = (equip_index[EQI_SHADOW_WEAPON] >= 0 ? EQP_SHADOW_SHIELD : EQP_SHADOW_WEAPON);
 	}
 
 	if (pos&EQP_HAND_R && battle_config.use_weapon_skill_range&BL_PC) {
 		//Update skill-block range database when weapon range changes. [Skotlex]
-		i = sd->equip_index[EQI_HAND_R];
+		i = equip_index[EQI_HAND_R];
 		if (i < 0 || !sd->inventory_data[i]) //No data, or no weapon equipped
 			flag = 1;
 		else
 			flag = id->range != sd->inventory_data[i]->range;
 	}
 
-	for(i=0;i<EQI_MAX;i++) {
-		if(pos & equip_bitmask[i]) {
-			if(sd->equip_index[i] >= 0) //Slot taken, remove item from there.
-				pc_unequipitem(sd,sd->equip_index[i],2 | 4);
+	if( equipswitch ){
+		for( i = 0; i < EQI_MAX; i++ ){
+			if( pos&equip_bitmask[i] ){
+				// If there was already an item assigned to this slot
+				if( sd->equip_switch_index[i] >= 0 ){
+					pc_equipswitch_remove( sd, sd->equip_switch_index[i] );
+				}
 
-			sd->equip_index[i] = n;
+				// Assign the new index to it
+				sd->equip_switch_index[i] = n;
+			}
 		}
-	}
 
-	if(pos==EQP_AMMO) {
-		clif_arrowequip(sd,n);
-		clif_arrow_fail(sd,3);
-	}
-	else
-		clif_equipitemack(sd,n,pos,ITEM_EQUIP_ACK_OK);
+		sd->inventory.u.items_inventory[n].equipSwitch = pos;
+		clif_equipswitch_add( sd, n, pos, false );
+		return true;
+	}else{
+		for(i=0;i<EQI_MAX;i++) {
+			if(pos & equip_bitmask[i]) {
+				if(sd->equip_index[i] >= 0) //Slot taken, remove item from there.
+					pc_unequipitem(sd,sd->equip_index[i],2 | 4);
 
-	sd->inventory.u.items_inventory[n].equip = pos;
+				sd->equip_index[i] = n;
+			}
+		}
+
+		pc_equipswitch_remove(sd, n);
+
+		if(pos==EQP_AMMO) {
+			clif_arrowequip(sd,n);
+			clif_arrow_fail(sd,3);
+		}
+		else
+			clif_equipitemack(sd,n,pos,ITEM_EQUIP_ACK_OK);
+
+		sd->inventory.u.items_inventory[n].equip = pos;
+	}
 
 	if(pos & EQP_HAND_R) {
 		if(id)
@@ -10137,13 +10417,114 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 	return true;
 }
 
+int pc_equipswitch( struct map_session_data* sd, int index ){
+	// Get the target equip mask
+	int position = sd->inventory.u.items_inventory[index].equipSwitch;
+
+	// Get the currently equipped item
+	short equippedItem = pc_checkequip( sd, position, true );
+
+	// No item equipped at the target
+	if( equippedItem == -1 ){
+		// Remove it from the equip switch
+		pc_equipswitch_remove( sd, index );
+
+		pc_equipitem( sd, index, position );
+
+		return position;
+	}else{
+		std::map<int, int> unequipped;
+		int unequipped_position = 0;
+
+		// Unequip all items that interfere
+		for( int i = 0; i < EQI_MAX; i++ ){
+			int unequip_index = sd->equip_index[i];
+
+			if( unequip_index >= 0 && position & equip_bitmask[i] ){
+				struct item* unequip_item = &sd->inventory.u.items_inventory[unequip_index];
+
+				// Store the unequipped index and position mask for later
+				unequipped[unequip_index] = unequip_item->equip;
+
+				// Keep the position for later
+				unequipped_position |= unequip_item->equip;
+
+				// Unequip the item
+				pc_unequipitem( sd, unequip_index, 0 );
+			}
+		}
+
+		int all_position = position | unequipped_position;
+
+		// Equip everything that is hit by the mask
+		for( int i = 0; i < EQI_MAX; i++ ){
+			int exchange_index = sd->equip_switch_index[i];
+
+			if( exchange_index >= 0 && all_position & equip_bitmask[i] ){
+				struct item* exchange_item = &sd->inventory.u.items_inventory[exchange_index];
+
+				// Store the target position
+				int exchange_position = exchange_item->equipSwitch;
+
+				// Remove the item from equip switch
+				pc_equipswitch_remove( sd, exchange_index );
+
+				// Equip the item at the destinated position
+				pc_equipitem( sd, exchange_index, exchange_position );
+			}
+		}
+
+		// Place all unequipped items into the equip switch window
+		for( std::pair<int, int> pair : unequipped ){
+			int unequipped_index = pair.first;
+			int unequipped_position = pair.second;
+
+			// Rebuild the index cache
+			for( int i = 0; i < EQI_MAX; i++ ){
+				if( unequipped_position & equip_bitmask[i] ){
+					sd->equip_switch_index[i] = unequipped_index;
+				}
+			}
+
+			// Set the correct position mask
+			sd->inventory.u.items_inventory[unequipped_index].equipSwitch = unequipped_position;
+
+			// Notify the client
+			clif_equipswitch_add( sd, unequipped_index, unequipped_position, false );
+		}
+
+		return all_position;
+	}
+}
+
+void pc_equipswitch_remove( struct map_session_data* sd, int index ){
+	struct item* item = &sd->inventory.u.items_inventory[index];
+
+	if( !item->equipSwitch ){
+		return;
+	}
+
+	for( int i = 0; i < EQI_MAX; i++ ){
+		// If a match is found
+		if( sd->equip_switch_index[i] == index ){
+			// Remove it from the slot
+			sd->equip_switch_index[i] = -1;
+		}
+	}
+
+	// Send out one packet for all slots using the current item's mask
+	clif_equipswitch_remove( sd, index, item->equipSwitch, false );
+
+	item->equipSwitch = 0;
+}
+
 /*==========================================
  * Checking if player (sd) has an invalid item
  * and is unequiped on map load (item_noequip)
  *------------------------------------------*/
 void pc_checkitem(struct map_session_data *sd) {
 	int i, calc_flag = 0;
-	struct item it;
+	struct item* it;
 
 	nullpo_retv(sd);
 
@@ -10153,13 +10534,13 @@ void pc_checkitem(struct map_session_data *sd) {
 	pc_check_available_item(sd, ITMCHK_NONE); // Check for invalid(ated) items.
 
 	for( i = 0; i < MAX_INVENTORY; i++ ) {
-		it = sd->inventory.u.items_inventory[i];
+		it = &sd->inventory.u.items_inventory[i];
 
-		if( it.nameid == 0 )
+		if( it->nameid == 0 )
 			continue;
-		if( !it.equip )
+		if( !it->equip )
 			continue;
-		if( it.equip&~pc_equippoint(sd,i) ) {
+		if( it->equip&~pc_equippoint(sd,i) ) {
 			pc_unequipitem(sd, i, 2);
 			calc_flag = 1;
 			continue;
@@ -10168,6 +10549,28 @@ void pc_checkitem(struct map_session_data *sd) {
 		if( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->bl.m) ) {
 			pc_unequipitem(sd, i, 2);
 			calc_flag = 1;
+			continue;
+		}
+	}
+
+	for( i = 0; i < MAX_INVENTORY; i++ ) {
+		it = &sd->inventory.u.items_inventory[i];
+
+		if( it->nameid == 0 )
+			continue;
+		if( !it->equipSwitch )
+			continue;
+		if( it->equipSwitch&~pc_equippoint(sd,i) ||
+			( !pc_has_permission(sd, PC_PERM_USE_ALL_EQUIPMENT) && !battle_config.allow_equip_restricted_item && itemdb_isNoEquip(sd->inventory_data[i], sd->bl.m) ) ){
+			
+			for( int j = 0; j < EQI_MAX; j++ ){
+				if( sd->equip_switch_index[j] == i ){
+					sd->equip_switch_index[j] = -1;
+				}
+			}
+
+			sd->inventory.u.items_inventory[i].equipSwitch = 0;
+
 			continue;
 		}
 	}
@@ -10429,7 +10832,7 @@ struct map_session_data *pc_get_child (struct map_session_data *sd)
 /*==========================================
  * Set player sd to bleed. (losing hp and/or sp each diff_tick)
  *------------------------------------------*/
-void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
+void pc_bleeding (struct map_session_data *sd, t_tick diff_tick)
 {
 	int hp = 0, sp = 0;
 
@@ -10461,7 +10864,7 @@ void pc_bleeding (struct map_session_data *sd, unsigned int diff_tick)
 //Character regen. Flag is used to know which types of regen can take place.
 //&1: HP regen
 //&2: SP regen
-void pc_regen (struct map_session_data *sd, unsigned int diff_tick)
+void pc_regen (struct map_session_data *sd, t_tick diff_tick)
 {
 	int hp = 0, sp = 0;
 
@@ -11403,7 +11806,7 @@ void pc_readdb(void) {
 	memset(job_info,0,sizeof(job_info)); // job_info table
 
 #if defined(RENEWAL_DROP) || defined(RENEWAL_EXP)
-	sv_readdb(db_path, "re/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
+	sv_readdb(db_path, DBPATH "level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 0);
 	sv_readdb(db_path, DBIMPORT"/level_penalty.txt", ',', 4, 4, -1, &pc_readdb_levelpenalty, 1);
 	for( k=1; k < 3; k++ ){ // fill in the blanks
 		int j;
@@ -11441,9 +11844,9 @@ void pc_readdb(void) {
 		s = pc_read_statsdb(dbsubpath2,s,i > 0);
 		if (i == 0)
 #ifdef RENEWAL_ASPD
-			sv_readdb(dbsubpath1, "re/job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
+			sv_readdb(dbsubpath1, DBPATH "job_db1.txt",',',6+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
 #else
-			sv_readdb(dbsubpath1, "pre-re/job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
+			sv_readdb(dbsubpath1, DBPATH "job_db1.txt",',',5+MAX_WEAPON_TYPE,5+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, false);
 #endif
 		else
 			sv_readdb(dbsubpath1, "job_db1.txt",',',5+MAX_WEAPON_TYPE,6+MAX_WEAPON_TYPE,CLASS_COUNT,&pc_readdb_job1, true);
@@ -11583,7 +11986,7 @@ void pc_itemcd_do(struct map_session_data *sd, bool load) {
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n) {
+uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
 	int i;
 	ARR_FIND(0, MAX_ITEMDELAYS, i, sd->item_delay[i].nameid == id->nameid );
 	if( i == MAX_ITEMDELAYS ) /* item not found. try first empty now */
@@ -11591,7 +11994,7 @@ uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, unsigned 
 	if( i < MAX_ITEMDELAYS ) {
 		if( sd->item_delay[i].nameid ) {// found
 			if( DIFF_TICK(sd->item_delay[i].tick, tick) > 0 ) {
-				int e_tick = DIFF_TICK(sd->item_delay[i].tick, tick)/1000;
+				t_tick e_tick = DIFF_TICK(sd->item_delay[i].tick, tick)/1000;
 				char e_msg[CHAT_SIZE_MAX];
 				if( e_tick > 99 )
 					sprintf(e_msg,msg_txt(sd,379), // Item Failed. [%s] is cooling down. Wait %.1f minutes.
@@ -11629,7 +12032,7 @@ uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, unsigned 
  * @return 0: No delay, can consume item.
  *         1: Has delay, cancel consumption.
  **/
-uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, unsigned int tick, unsigned short n) {
+uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, t_tick tick, unsigned short n) {
 	struct status_change *sc = NULL;
 
 	nullpo_retr(0, sd);
@@ -11642,7 +12045,7 @@ uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, unsigne
 	// Send reply of delay remains
 	if (sc->data[id->delay_sc]) {
 		const struct TimerData *timer = get_timer(sc->data[id->delay_sc]->timer);
-		clif_msg_value(sd, ITEM_REUSE_LIMIT, timer ? DIFF_TICK(timer->tick, tick) / 1000 : 99);
+		clif_msg_value(sd, ITEM_REUSE_LIMIT, (int)(timer ? DIFF_TICK(timer->tick, tick) / 1000 : 99));
 		return 1;
 	}
 
@@ -11937,7 +12340,7 @@ void pc_show_version(struct map_session_data *sd) {
  * @author [Cydh]
  **/
 void pc_bonus_script(struct map_session_data *sd) {
-	int now = gettick();
+	t_tick now = gettick();
 	struct linkdb_node *node = NULL, *next = NULL;
 
 	if (!sd || !(node = sd->bonus_script.head))
@@ -11978,7 +12381,7 @@ void pc_bonus_script(struct map_session_data *sd) {
  * @return New created entry pointer or NULL if failed or NULL if duplicate fail
  * @author [Cydh]
  **/
-struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, uint32 dur, enum efst_types icon, uint16 flag, uint8 type) {
+struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, const char *script_str, t_tick dur, enum efst_types icon, uint16 flag, uint8 type) {
 	struct script_code *script = NULL;
 	struct linkdb_node *node = NULL;
 	struct s_bonus_script_entry *entry = NULL;
@@ -11996,9 +12399,9 @@ struct s_bonus_script_entry *pc_bonus_script_add(struct map_session_data *sd, co
 		while (node) {
 			entry = (struct s_bonus_script_entry *)node->data;
 			if (strcmpi(script_str, StringBuf_Value(entry->script_buf)) == 0) {
-				int newdur = gettick() + dur;
+				t_tick newdur = gettick() + dur;
 				if (flag&BSF_FORCE_REPLACE && entry->tick < newdur) { // Change duration
-					settick_timer(entry->tid, newdur);
+					sett_tickimer(entry->tid, newdur);
 					script_free_code(script);
 					return NULL;
 				}
@@ -12149,7 +12552,7 @@ void pc_cell_basilica(struct map_session_data *sd) {
 			status_change_end(&sd->bl,SC_BASILICA,INVALID_TIMER);
 	}
 	else if (!sd->sc.data[SC_BASILICA])
-		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,-1);
+		sc_start(&sd->bl,&sd->bl,SC_BASILICA,100,0,INFINITE_TICK);
 }
 
 /** [Cydh]
@@ -12551,12 +12954,14 @@ void pc_set_costume_view(struct map_session_data *sd) {
 		clif_changelook(&sd->bl, LOOK_ROBE, sd->status.robe);
 }
 
-struct s_attendance_period* pc_attendance_period(){
+std::shared_ptr<s_attendance_period> pc_attendance_period(){
 	uint32 date = date_get(DT_YYYYMMDD);
 
-	for( struct s_attendance_period& period : attendance_periods ){
-		if( period.start <= date && period.end >= date ){
-			return &period;
+	for( std::pair<const uint32,std::shared_ptr<s_attendance_period>>& pair : attendance_db ){
+		std::shared_ptr<s_attendance_period> period = pair.second;
+
+		if( period->start <= date && period->end >= date ){
+			return period;
 		}
 	}
 
@@ -12578,7 +12983,7 @@ static inline bool pc_attendance_rewarded_today( struct map_session_data* sd ){
 }
 
 int32 pc_attendance_counter( struct map_session_data* sd ){
-	struct s_attendance_period* period = pc_attendance_period();
+	std::shared_ptr<s_attendance_period> period = pc_attendance_period();
 
 	// No running attendance period
 	if( period == nullptr ){
@@ -12619,7 +13024,7 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 
 	attendance_counter += 1;
 
-	struct s_attendance_period* period = pc_attendance_period();
+	std::shared_ptr<s_attendance_period> period = pc_attendance_period();
 
 	if( period == nullptr ){
 		return;
@@ -12635,7 +13040,7 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	if( save_settings&CHARSAVE_ATTENDANCE )
 		chrif_save(sd, CSAVE_NORMAL);
 
-	struct s_attendance_reward& reward = period->rewards.at( attendance_counter - 1 );
+	std::shared_ptr<s_attendance_reward> reward = period->rewards[attendance_counter - 1];
 
 	struct mail_message msg;
 
@@ -12646,8 +13051,8 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	safesnprintf( msg.title, MAIL_TITLE_LENGTH, msg_txt( sd, 789 ), attendance_counter );
 	safesnprintf( msg.body, MAIL_BODY_LENGTH, msg_txt( sd, 790 ), attendance_counter );
 
-	msg.item[0].nameid = reward.item_id;
-	msg.item[0].amount = reward.amount;
+	msg.item[0].nameid = reward->item_id;
+	msg.item[0].amount = reward->amount;
 	msg.item[0].identify = 1;
 
 	msg.status = MAIL_NEW;
@@ -12657,152 +13062,6 @@ void pc_attendance_claim_reward( struct map_session_data* sd ){
 	intif_Mail_send(0, &msg);
 
 	clif_attendence_response( sd, attendance_counter );
-}
-
-void pc_attendance_load( std::string path ){
-	YAML::Node root;
-
-	try{
-		root = YAML::LoadFile( path );
-	}catch( ... ){
-		ShowError( "pc_attendance_load: Failed to read attendance configuration file \"%s\".\n", path.c_str() );
-		return;
-	}
-
-	if( root["Attendance"] ){
-		YAML::Node attendance = root["Attendance"];
-
-		for( const auto &periodNode : attendance ){
-			if( !periodNode["Start"].IsDefined() ){
-				ShowError( "pc_attendance_load: Missing \"Start\" for period in line %d.\n", periodNode.Mark().line );
-				continue;
-			}
-
-			YAML::Node startNode = periodNode["Start"];
-
-			if( !periodNode["End"].IsDefined() ){
-				ShowError( "pc_attendance_load: Missing \"End\" for period in line %d.\n", periodNode.Mark().line );
-				continue;
-			}
-
-			YAML::Node endNode = periodNode["End"];
-
-			if( !periodNode["Rewards"].IsDefined() ){
-				ShowError( "pc_attendance_load: Missing \"Rewards\" for period in line %d.\n", periodNode.Mark().line );
-				continue;
-			}
-
-			YAML::Node rewardsNode = periodNode["Rewards"];
-
-			uint32 start = startNode.as<uint32>();
-			uint32 end = endNode.as<uint32>();
-
-			// If the period is outdated already, we do not even bother parsing
-			if( end < date_get( DT_YYYYMMDD ) ){
-				continue;
-			}
-
-			// Collision detection
-			bool collision = false;
-
-			for( struct s_attendance_period& period : attendance_periods ){
-				// Check if start is inside another period
-				if( period.start <= start && start <= period.end ){
-					ShowError( "pc_attendance_load: period start %u intersects with period %u-%u.\n", start, period.start, period.end );
-					collision = true;
-					break;
-				}
-
-				// Check if end is inside another period
-				if( period.start <= end && end <= period.end ){
-					ShowError( "pc_attendance_load: period end %u intersects with period %u-%u.\n", start, period.start, period.end );
-					collision = true;
-					break;
-				}
-			}
-
-			if( collision ){
-				continue;
-			}
-
-			struct s_attendance_period period;
-
-			period.start = start;
-			period.end = end;
-
-			for( const auto& rewardNode : rewardsNode ){
-				if( !rewardNode["Day"].IsDefined() ){
-					ShowError( "pc_attendance_load: No day defined for node in line %d.\n", rewardNode.Mark().line );
-					continue;
-				}
-
-				uint32 day = rewardNode["Day"].as<uint32>();
-
-				if( !rewardNode["ItemId"].IsDefined() ){
-					ShowError( "pc_attendance_load: No reward defined for day %d.\n", day );
-					continue;
-				}
-
-				YAML::Node itemNode = rewardNode["ItemId"];
-
-				uint16 item_id = itemNode.as<uint16>();
-
-				if( item_id == 0 || !itemdb_exists( item_id ) ){
-					ShowError( "pc_attendance_load: Unknown item ID %hu for day %d.\n", item_id, day );
-					continue;
-				}
-
-				uint16 amount;
-
-				if( rewardNode["Amount"] ){
-					amount = rewardNode["Amount"].as<uint16>();
-
-					if( amount == 0 ){
-						ShowError( "pc_attendance_load: Invalid reward count %hu for day %d. Defaulting to 1...\n", amount, day );
-						amount = 1;
-					}else if( amount > MAX_AMOUNT ){
-						ShowError( "pc_attendance_load: Reward count %hu above maximum %hu for day %d. Defaulting to %hu...\n", amount, MAX_AMOUNT, day, MAX_AMOUNT );
-						amount = MAX_AMOUNT;
-					}
-				}else{
-					amount = 1;
-				}
-
-				struct s_attendance_reward* reward = &period.rewards[day - 1];
-
-				reward->item_id = item_id;
-				reward->amount = amount;
-			}
-
-			bool missing_day = false;
-
-			for( int day = 0; day < period.rewards.size(); day++ ){
-				if( !util::map_exists( period.rewards, day ) ){
-					ShowError( "pc_attendance_load: Reward for day %d is missing.\n", day + 1 );
-					missing_day = true;
-					break;
-				}
-			}
-
-			if( missing_day ){
-				continue;
-			}
-
-			attendance_periods.push_back( period );
-		}
-	}
-}
-
-void pc_read_attendance(){
-	char path[1024];
-
-	sprintf( path, "%s/%sattendance.yml", db_path, DBPATH );
-
-	pc_attendance_load( path );
-
-	sprintf( path, "%s/%s/attendance.yml", db_path, DBIMPORT );
-
-	pc_attendance_load( path );
 }
 
 /*==========================================
@@ -12816,7 +13075,7 @@ void do_final_pc(void) {
 	ers_destroy(num_reg_ers);
 	ers_destroy(str_reg_ers);
 
-	attendance_periods.clear();
+	attendance_db.clear();
 }
 
 void do_init_pc(void) {
@@ -12825,7 +13084,7 @@ void do_init_pc(void) {
 
 	pc_readdb();
 	pc_read_motd(); // Read MOTD [Valaris]
-	pc_read_attendance();
+	attendance_db.load();
 
 	add_timer_func_list(pc_invincible_timer, "pc_invincible_timer");
 	add_timer_func_list(pc_eventtimer, "pc_eventtimer");

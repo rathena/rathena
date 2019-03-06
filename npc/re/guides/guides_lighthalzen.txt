@@ -1,19 +1,12 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Lighthalzen Guides
-//===== By: ================================================== 
-//= L0ne_W0lf
-//===== Current Version: ===================================== 
-//= 1.2
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
-//= [Official Conversion]
+//===== Description: =========================================
 //= Guides for the city of Lighthalzen.
-//===== Additional Comments: ================================= 
-//= 1.0 First version, Renewal guide.
+//===== Changelogs: ==========================================
+//= 1.0 Initial release for Renewal [L0ne_W0lf]
 //= 1.1 Optimized. [Euphy]
 //= 1.2 Navigation system update. [Euphy]
-//============================================================ 
+//============================================================
 
 lighthalzen,207,310,5	script	Lighthalzen Guide#lhz01::GuideLighthazlen	852,{
 	cutin "ein_soldier",2;
@@ -185,3 +178,4 @@ L_Mark:
 lighthalzen,220,310,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz02	852
 lighthalzen,154,100,5	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz03	852
 lighthalzen,307,224,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz04	852
+lighthalzen,247,82,3	duplicate(GuideLighthazlen)	Lighthalzen Guide#lhz05	852
