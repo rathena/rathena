@@ -2944,9 +2944,9 @@ const char* map_mapid2mapname(int m)
 		if (idata == nullptr) // This shouldn't happen but if it does give them the map we intended to give
 			return mapdata->name;
 		else {
-			for (uint16 i = 0; i < idata->map.size(); i++) { // Loop to find the src map we want
-				if (idata->map[i].m == m)
-					return map_getmapdata(idata->map[i].src_m)->name;
+			for (const auto &it : idata->map) { // Loop to find the src map we want
+				if (it.m == m)
+					return map_getmapdata(it.src_m)->name;
 			}
 		}
 	}

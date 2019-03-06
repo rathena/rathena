@@ -17441,7 +17441,7 @@ void clif_instance_create(unsigned short instance_id, int num)
 	enum send_target target = PARTY;
 	unsigned char buf[65];
 
-	instance_getsd(instance_id, &sd, &target);
+	instance_getsd(instance_id, sd, &target);
 
 	if (!sd)
 		return;
@@ -17469,7 +17469,7 @@ void clif_instance_changewait(unsigned short instance_id, int num)
 	enum send_target target = PARTY;
 	unsigned char buf[4];
 
-	instance_getsd(instance_id, &sd, &target);
+	instance_getsd(instance_id, sd, &target);
 
 	if (!sd)
 		return;
@@ -17491,7 +17491,7 @@ void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsig
 	enum send_target target = PARTY;
 	unsigned char buf[71];
 
-	instance_getsd(instance_id, &sd, &target);
+	instance_getsd(instance_id, sd, &target);
 
 	if (!sd)
 		return;
@@ -17525,7 +17525,7 @@ void clif_instance_changestatus(unsigned int instance_id, int type, unsigned int
 	enum send_target target = PARTY;
 	unsigned char buf[10];
 
-	instance_getsd(instance_id, &sd, &target);
+	instance_getsd(instance_id, sd, &target);
 
 	if (!sd)
 		return;

@@ -1,5 +1,5 @@
 # This file is a part of rAthena.
-#   Copyright(C) 2018 rAthena Development Team
+#   Copyright(C) 2019 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
 # This program is free software: you can redistribute it and/or modify
@@ -22,7 +22,7 @@
 # Instance Settings
 #
 ###########################################################################
-# ID - Unique Instance ID.
+# Id - Unique Instance ID.
 ###########################################################################
 # Name - Unique Instance Name.
 ###########################################################################
@@ -40,39 +40,47 @@
 ###########################################################################
 
 Header:
+  Type: INSTANCE_DB
   Version: 1
-  Type: INSTANCE_CONFIG
 
 Instances:
-  - ID: 1
+  - Id: 1
     Name: "Endless Tower"
     LimitTime: 14400
     EnterAt:
       Map: "1@tower"
       X: 50
       Y: 355
-    AdditionalMaps: ["2@tower", "3@tower", "4@tower", "5@tower", "6@tower"]
-  - ID: 2
+    AdditionalMaps:
+      - Map: "2@tower"
+      - Map: "3@tower"
+      - Map: "4@tower"
+      - Map: "5@tower"
+      - Map: "6@tower"
+  - Id: 2
     Name: "Sealed Catacomb"
     LimitTime: 7200
     EnterAt:
       Map: "1@cata"
       X: 100
       Y: 224
-    AdditionalMaps: ["2@cata"]
-  - ID: 3
+    AdditionalMaps:
+      - Map: "2@cata"
+  - Id: 3
     Name: "Orc's Memory"
     LimitTime: 3600
     EnterAt:
       Map: "1@orcs" 
       X: 179
       Y: 15
-    AdditionalMaps: ["2@orcs"]
-  - ID: 4
+    AdditionalMaps:
+      - Map: "2@orcs"
+  - Id: 4
     Name: "Nidhoggur's Nest"
     LimitTime: 14400
     EnterAt:
       Map: "1@nyd"
       X: 32
       Y: 36
-    AdditionalMaps: ["2@nyd"]
+    AdditionalMaps:
+      - Map: "2@nyd"

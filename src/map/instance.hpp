@@ -11,9 +11,10 @@
 #include <vector>
 
 #include "../common/cbasetypes.hpp"
-#include "../common/mmo.hpp" // struct point
+#include "../common/database.hpp"
+#include "../common/mmo.hpp"
 
-#include "script.hpp" // struct reg_db
+#include "script.hpp"
 
 enum send_target : uint8;
 struct block_list;
@@ -52,7 +53,7 @@ struct s_instance_map {
 
 /// Instance data
 struct s_instance_data {
-	uint16 id; ///< Instance DB ID
+	int id; ///< Instance DB ID
 	enum e_instance_state state; ///< State of instance
 	enum e_instance_mode mode; ///< Mode of instance
 	int owner_id; ///< Owner ID of instance
@@ -66,13 +67,13 @@ struct s_instance_data {
 
 /// Instance Idle Queue data
 static struct s_instance_wait {
-	std::deque<uint16> id;
+	std::deque<int> id;
 	int timer;
 } instance_wait;
 
 /// Instance DB entry
 struct s_instance_db {
-	uint16 id; ///< Instance ID
+	int id; ///< Instance ID
 	std::string name; ///< Instance name
 	unsigned int limit, ///< Duration limit
 		timeout; ///< Timeout limit
@@ -81,22 +82,33 @@ struct s_instance_db {
 	std::vector<int16> maplist; ///< Maps in instance
 };
 
-extern std::unordered_map<uint16, std::shared_ptr<s_instance_data>> instances;
-extern std::unordered_map<uint16, std::shared_ptr<s_instance_db>> instance_db;
+class InstanceDatabase : public TypesafeYamlDatabase<uint32, s_instance_db> {
+public:
+	InstanceDatabase() : TypesafeYamlDatabase("INSTANCE_DB", 1) {
 
-std::shared_ptr<s_instance_data> instance_search(uint16 instance_id);
-std::shared_ptr<s_instance_db> instance_search_db(uint16 instance_id);
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+extern InstanceDatabase instance_db;
+
+extern std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
+
+std::shared_ptr<s_instance_data> instance_search(int instance_id);
+std::shared_ptr<s_instance_db> instance_search_db(int instance_id);
 std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
-void instance_getsd(uint16 instance_id, struct map_session_data **sd, enum send_target *target);
+void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_target *target);
 
-uint16 instance_create(int owner_id, const char *name, enum e_instance_mode mode);
-bool instance_destroy(uint16 instance_id);
-enum e_instance_enter instance_enter(struct map_session_data *sd, uint16 instance_id, const char *name, short x, short y);
-bool instance_reqinfo(struct map_session_data *sd, uint16 instance_id);
-bool instance_addusers(uint16 instance_id);
-bool instance_delusers(uint16 instance_id);
-int16 instance_mapid(int16 m, uint16 instance_id);
-int instance_addmap(uint16 instance_id);
+int instance_create(int owner_id, const char *name, enum e_instance_mode mode);
+bool instance_destroy(int instance_id);
+enum e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, const char *name, short x, short y);
+bool instance_reqinfo(struct map_session_data *sd, int instance_id);
+bool instance_addusers(int instance_id);
+bool instance_delusers(int instance_id);
+int16 instance_mapid(int16 m, int instance_id);
+int instance_addmap(int instance_id);
 
 void instance_addnpc(std::shared_ptr<s_instance_data> idata);
 
