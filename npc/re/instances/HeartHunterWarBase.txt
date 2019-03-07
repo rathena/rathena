@@ -28,7 +28,7 @@ ein_fild04,275,342,5	script	Striker Unit Commander#	4_M_REBELLION3,{
 		close;
 	case 2:
 		mes "^0000ffSeems like the base has been arranged inside. ^000000";
-		erasequest 12375;
+		erasequest 12375;// Base maintenance
 		break;
 	}
 	if (isbegin_quest(12374) == 0) {
@@ -65,7 +65,7 @@ ein_fild04,275,342,5	script	Striker Unit Commander#	4_M_REBELLION3,{
 		close;
 	case IE_OK:
 		mapannounce "ein_fild04", "" + strcharinfo(0) + " of the party, " + getpartyname( getcharid(1) ) + ", is entering the " + .@md_name$ + ".", bc_map, 0xFF99;
-		setquest 12375;
+		setquest 12375;// Base maintenance
 		// if (terra_gloria_main == 20)
 		// 	warp "1@swat",35,65;
 		// else
@@ -105,7 +105,7 @@ ein_fild04,281,337,3	script	Julian#ep16.2	4_M_REBELLION2,{
 		close;
 	case 2:
 		mes "^0000ffSeems like the base has been arranged inside. ^000000";
-		erasequest 12375;
+		erasequest 12375;// Base maintenance
 		next;
 		break;
 	}
@@ -145,7 +145,7 @@ ein_fild04,281,337,3	script	Julian#ep16.2	4_M_REBELLION2,{
 			mes "You are like a foreign legion, so stay beside me during the operation. Any more question? Of course, I won't take any, even though you have one.";
 		}
 		next;
-		setquest 12374;
+		setquest 12374;// Heart Hunter Base occupation
 		mes "[Julian]";
 		mes "After that, follow the instruction of the chief of your unit. Once the gate to the base is opened, talk to the Striker Unit Commander over there and start.";
 		if (getcharid(0) == getpartyleader(getcharid(1),2)) {
@@ -1179,7 +1179,7 @@ OnTimer40000:
 	mes "Hmm. The engineers need to repair the occupied base. It's time for battle force step outside.";
 	if (isbegin_quest(12374) == 1) {
 		getitem 25155,10;
-		completequest 12374;
+		completequest 12374;// Heart Hunter Base occupation
 		terra_gloria_main = 20;
 	}
 	close2;

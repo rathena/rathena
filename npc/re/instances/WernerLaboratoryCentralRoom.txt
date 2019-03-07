@@ -981,8 +981,8 @@ OnTouch:
 		mes "Please give them to our families.";
 		getitem 25179,1;
 		getitem 23087,1;
-		erasequest 7739;
-		setquest 7740;
+		erasequest 7739;// Find Star of Blessing!
+		setquest 7740;// Star of Blessing obtained
 		terra_gloria_main = 22;
 		// close2;	// fix me
 		cutin "",255;

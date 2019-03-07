@@ -135,7 +135,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		mes "[Nihil]";
 		mes "I am counting on you.";
 		mes "You go separately and ^4d4dffmeet Crux and Skia at Lighthalzen Airport^000000.";
-		setquest 7731;
+		setquest 7731;// Secret Action
 		terra_gloria_main = 3;
 		next;
 	}
@@ -326,8 +326,8 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		mes "For that issue, please trust the next leader of the Nerius family.";
 		mes "Then " + strcharinfo(0) + ", you come to ^4d4dffYuno Airport^000000.";
 		mes "We will continue our conversation there.";
-		erasequest 7734;
-		setquest 7735;
+		erasequest 7734;// Arrest
+		setquest 7735;// Secret Action 2
 		terra_gloria_main = 7;
 		// close2;// fix me
 		npctalk "See you later.", "Spica Nerius#ep162_01", bc_self;
@@ -621,7 +621,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SKIA
 		mes "As you always have shown us honest faith.";
 		getitem 6919,10;
 		getexp 500000,500000;
-		completequest 7741;
+		completequest 7741;// Let's return
 		terra_gloria_main = 24;
 		next;
 		mes "[Kronecker]";
@@ -745,8 +745,8 @@ lhz_airport,189,39,3	script	Crux#ep162_01	4_EP16_CRUX,{
 		mes "Crux ... You are a great actor.";
 		mes "See you later.";
 		mes "You too, hero!";
-		erasequest 7731;
-		setquest 7732;
+		erasequest 7731;// Secret Action
+		setquest 7732;// Searching the suspect
 		terra_gloria_main = 4;
 		close2;
 		classchange( HIDDEN_WARP_NPC, "Skia#ep162_03", bc_self );
@@ -894,8 +894,8 @@ OnTouch:
 		unittalk getcharid(3), "" + strcharinfo(0) + " : (Who was that person? I only heard a voice.)", bc_self;
 		sleep2 2000;
 		npctalk "... He should have stayed in line. Too much is as bad as too little.", "Scientist#ep162_01", bc_self;
-		erasequest 7732;
-		setquest 7733;
+		erasequest 7732;// Searching the suspect
+		setquest 7733;// Pursuit!
 		terra_gloria_main = 5;
 		sleep2 3000;
 		classchange( HIDDEN_WARP_NPC, "Scientist#ep162_01", bc_self );
@@ -1000,8 +1000,8 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		sleep2 2000;
 		classchange( HIDDEN_WARP_NPC, "Crux#ep162_02", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Man#ep162_02", bc_self );
-		erasequest 7733;
-		setquest 7734;
+		erasequest 7733;// Pursuit!
+		setquest 7734;// Arrest
 		terra_gloria_main = 6;
 		npctalk "Hero, shall we go back to the palace too?", "Skia#ep162_04", bc_self;
 	}
@@ -1068,8 +1068,8 @@ y_airport,168,41,3	script	Crux#ep162_04	4_EP16_CRUX,{
 		}
 		mes "[Crux]";
 		mes "This way ...";
-		erasequest 7735;
-		setquest 7736;
+		erasequest 7735;// Secret Action 2
+		setquest 7736;// Small differences between sightseeing and secret bussiness
 		terra_gloria_main = 8;
 		close2;
 		warp "lhz_airport",185,37;
@@ -1365,8 +1365,8 @@ lhz_in02,239,148,4	script	Philopontess#ep162_01	HIDDEN_WARP_NPC,{		// 4_M_PHILOF
 		mes "Then, " + strcharinfo(0) + ".";
 		mes "I wish you fortune in war.";
 		mes "Crux, let's go back.";
-		erasequest 7736;
-		setquest 7737;
+		erasequest 7736;// Small differences between sightseeing and secret bussiness
+		setquest 7737;// Together with Rebel
 		terra_gloria_main = 9;
 		// close2;// fix me
 		npctalk "I will see you later.", "Crux#ep162_05", bc_self;
@@ -1633,7 +1633,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 		cutin "16lei_03.bmp",2;
 		mes "[Lazy]";
 		mes "Do you really thing I'm just trying to save 200 Zeny? I know what I'm doing. You just follow me without nagging. We are in a hurry.";
-		setquest 14595;
+		setquest 14595;// To Einbech train station
 		terra_gloria_main = 10;
 		close2;
 		navigateto( "einbroch",267,268,NAV_NONE,1 );
@@ -1864,8 +1864,8 @@ einbech,46,208,3	script	Lazy#16nego01	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		mes "[Lazy]";
 		mes "We have go somewhere deep inside the village. From here on, just trust me and follow me. Since the path is a little complicated, I will leave ^0000cdtraces^000000. Make sure you catch them up.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I can smell something from the traces.", bc_self;
-		erasequest 14595;
-		setquest 14596;
+		erasequest 14595;// To Einbech train station
+		setquest 14596;// Follow the trails
 		terra_gloria_main = 12;
 		close2;
 		cutin "",255;
@@ -2030,8 +2030,8 @@ einbech,76,131,3	script	Lazy#16nego02	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		mes "[Lazy]";
 		mes "Good question. But since we don't have enough time, let me explain later. We must deliver him before he dies.";
 		unittalk getcharid(3), "" + strcharinfo(0) + " : So you just kept him barely alive?", bc_self;
-		erasequest 14596;
-		setquest 14597;
+		erasequest 14596;// Follow the trails
+		setquest 14597;// Corner of Einbech
 		terra_gloria_main = 13;
 		viewpoint 1,217,82,1,0x4D4DFF00;
 		close2;
@@ -2153,8 +2153,8 @@ einbech,217,82,3	script	Lazy#16nego03	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		cutin "16lei_01.bmp",2;
 		mes "[Lazy]";
 		mes "Look at this. There's an entrance here. This is ^0000cdan entrance hidden in the wall of the beach^000000. It is so fishy. Let's get inside and check what's there.";
-		erasequest 14597;
-		setquest 14598;
+		erasequest 14597;// Corner of Einbech
+		setquest 14598;// Invisible entrance
 		terra_gloria_main = 14;
 		close2;
 		classchange( HIDDEN_WARP_NPC, "Lazy#16nego03", bc_self );
@@ -2706,8 +2706,8 @@ rebel_in,21,45,5	script	Lazy#16nego04	HIDDEN_WARP_NPC,{		// 4_M_LAZY
 		mes "Follow me. It's this way.";
 		classchange( HIDDEN_WARP_NPC, "Lucky#16nego01", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Lazy#16nego04", bc_self );
-		erasequest 14598;
-		setquest 14599;
+		erasequest 14598;// Invisible entrance
+		setquest 14599;// A glass of tea gratitude
 		terra_gloria_main = 15;
 		close2;
 		cutin "",255;
@@ -2808,9 +2808,9 @@ rebel_in,65,46,5	script	Rebellion Squadder#ep16	4_M_GUNSLINGER2,3,3,{
 		mes "[Squadder]";
 		mes "Well, let me escort you to the train station.";
 		mes "Shall we depart now?";
-		erasequest 7737;
-		setquest 7738;
-		completequest 14615;
+		erasequest 7737;// Together with Rebel
+		setquest 7738;// Next operation plan
+		completequest 14615;// Between negotiation and deception
 		terra_gloria_main = 18;
 		next;
 		.@s = select( "Yes!", "We will go on our own." );
@@ -2997,8 +2997,8 @@ function	script	F_Terra_Gloria_Inn	{
 	mes "Yes~";
 	mes "Mr. Philopontess, so long!";
 	delitem 25179,1;
-	erasequest 7740;
-	setquest 7741;
+	erasequest 7740;// Star of Blessing obtained
+	setquest 7741;// Let's return
 	terra_gloria_main = 23;
 	close2;
 	warp "prontera",155,280;
@@ -3203,8 +3203,8 @@ ein_in01,269,285,5	script	Nihil#ep162_02	HIDDEN_WARP_NPC,{				// 4_EP16_NIHIL
 		mes "[Skia]";
 		mes "I will take a chance and participate.";
 		mes "Take care of yourself!";
-		erasequest 7738;
-		setquest 7739;
+		erasequest 7738;// Next operation plan
+		setquest 7739;// Find Star of Blessing!
 		terra_gloria_main = 19;
 		close3;
 	}
@@ -3487,7 +3487,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Let's reveal its secret!";
 			mes "Let's find out why it keeps showing up!";
-			setquest 7742;
+			setquest 7742;// Sweeping the remnants
 			close3;
 		case 0:
 		case 1:
@@ -3504,8 +3504,8 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 			mes "[Rookie]";
 			mes "Anyhow, thank you for your support.";
 			mes "We will count on you again next time.";
-			erasequest 7742;
-			setquest 7743;
+			erasequest 7742;// Sweeping the remnants
+			setquest 7743;// Sweeping the remnants (Standby)
 			getitem 25155,3;
 			getexp 200000,200000;
 			close3;
@@ -3526,7 +3526,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 		mes "It's so~ interesting.";
 		close3;
 	case 2:
-		erasequest 7743;
+		erasequest 7743;// Sweeping the remnants (Standby)
 		mes "[Rookie]";
 		mes "Did you call it a pet child?";
 		mes "Seems like they are completely leaving that guy to the adventurer";
@@ -3632,7 +3632,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 			mes "[Tess]";
 			mes "After finding researchers, please hand them over to a Rebellion squad member near you.";
 			mes "Thank you for your support in advance.";
-			setquest 7744;
+			setquest 7744;// Hiding Researcher
 			close3;
 		case 1:
 		case 2:
@@ -3653,9 +3653,9 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 			mes "[Tess]";
 			mes "We already heard of your performance from the Rebellion.";
 			mes "Thank you for cooperating with the republic.";
-			setquest 7745;
+			setquest 7745;// Hiding Researcher (Standby)
 			erasequest 7760;
-			erasequest 7744;
+			erasequest 7744;// Hiding Researcher
 			getitem 25155,3;
 			getexp 200000,200000;
 			next;
@@ -3674,7 +3674,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 		cutin "",255;
 		end;
 	case 2:
-		erasequest 7745;
+		erasequest 7745;// Hiding Researcher (Standby)
 		cutin "ep16_tes01.bmp",2;
 		mes "[Tess]";
 		mes "If possible, I would ask you to investigate again.";
@@ -3693,7 +3693,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 		next;
 		mes "[Tess]";
 		mes "As usual, please find the researchers who are hiding and hand them over to a Rebellion squad member.";
-		setquest 7744;
+		setquest 7744;// Hiding Researcher
 		close3;
 	}
 	end;
@@ -3753,7 +3753,7 @@ que_swat,161,53,3	script	Yuslan#ep162_1	4_M_GUNSLINGER3,{
 			mes "[Yuslan]";
 			mes "Thanks to your support, we can pause for breath!";
 			mes "Cheer up, Adventurer!";
-			setquest 7761;
+			setquest 7761;// Make Chimeras rest in peace
 			close;
 		case 0:
 		case 1:
@@ -3772,8 +3772,8 @@ que_swat,161,53,3	script	Yuslan#ep162_1	4_M_GUNSLINGER3,{
 			next;
 			mes "[Yuslan]";
 			mes "Please be with us next time!";
-			erasequest 7761;
-			setquest 7762;
+			erasequest 7761;// Make Chimeras rest in peace
+			setquest 7762;// Make Chimeras rest in peace (Standby)
 			getitem 25155,3;
 			getexp 300000,300000;
 			close;
@@ -3789,7 +3789,7 @@ que_swat,161,53,3	script	Yuslan#ep162_1	4_M_GUNSLINGER3,{
 		mes "Where do all of these experimental subjects come from?";
 		close;
 	case 2:
-		erasequest 7762;
+		erasequest 7762;// Make Chimeras rest in peace (Standby)
 		mes "[Yuslan]";
 		mes "They come out continuously. I can't imagine how many experiments they conducted.";
 		mes "I mean, Chimeras.";
@@ -3839,7 +3839,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		mes "[USU commander Elena]";
 		mes "It smells good.";
 		mes "Seems like they gave a great effort. Tell them thanks.";
-		completequest 16031;
+		completequest 16031;// Service: Cookies delivery
 		delitem 25161,1;// Delicious Handmade Cookie
 		close;
 	}
@@ -3958,7 +3958,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 					mes "[USU commander Elena]";
 					mes "If you want to surrender during the fight, tell ^0000CDSorita^000000 beside Ivan.";
 					mes "Then you're going to be told off.";
-					setquest 16011;
+					setquest 16011;// Arena entrance
 					close2;
 					warp "rebel_in",184,28;
 					end;
@@ -4024,7 +4024,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 					mes "[USU commander Elena]";
 					mes "A coward who's scared at me won't be helpful for the Rebellion at all.";
 					mes "Get lost.";
-					erasequest 16011;
+					erasequest 16011;// Arena entrance
 					erasequest 16061;
 					close3;
 				}
@@ -4085,11 +4085,11 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				mes "[USU commander Elena]";
 				mes "Just like the one I'm giving you now.";
 				mes "If you want to know what this is for, ask the stubborn guy named 'Strasse' below the stairs.";
-				erasequest 16011;
+				erasequest 16011;// Arena entrance
 				erasequest 16060;
 				erasequest 16061;
-				setquest 16010;
-				completequest 14602;
+				setquest 16010;// Battle in great condition
+				completequest 14602;// Hunter on second floor
 				getexp 200000,200000;
 				getitem 25155,10;
 				close3;
@@ -4142,7 +4142,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "I would like to fight you when you are in the top condition. Come back tomorrow.";
 			close3;
 		case 2:
-			erasequest 16010;
+			erasequest 16010;// Battle in great condition
 			break;
 		}
 		switch( isbegin_quest(16009) ) {
@@ -4151,7 +4151,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "Oh, great!";
 			mes "Tell me when you are fully ready. I will go to the waiting room.";
-			setquest 16009;
+			setquest 16009;// Fighting is the language of warmonger
 			setquest 16061;
 			close3;
 		case 1:
@@ -4175,7 +4175,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				mes "[USU commander Elena]";
 				mes "If you want to surrender during the fight, tell ^0000CDSorita^000000 beside Ivan.";
 				mes "Then you're going to be told off.";
-				setquest 16011;
+				setquest 16011;// Arena entrance
 				close2;
 				warp "rebel_in",184,28;
 				end;
@@ -4195,7 +4195,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			}
 			mes "[USU commander Elena]";
 			mes "...You made me expect it. And what are you doing now?";
-			erasequest 16009;
+			erasequest 16009;// Fighting is the language of warmonger
 			erasequest 16061;
 			close3;
 		case 1:
@@ -4230,8 +4230,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				}
 				mes "[USU commander Elena]";
 				mes "...We have no choice. Come back later.";
-				erasequest 16009;
-				erasequest 16011;
+				erasequest 16009;// Fighting is the language of warmonger
+				erasequest 16011;// Arena entrance
 				erasequest 16061;
 				close3;
 			}
@@ -4247,10 +4247,10 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			next;
 			mes "[USU commander Elena]";
 			mes "Come back. I can fight you everyday.";
-			erasequest 16009;
-			erasequest 16011;
+			erasequest 16009;// Fighting is the language of warmonger// Fighting is the language of warmonger
+			erasequest 16011;// Arena entrance
 			erasequest 16061;
-			setquest 16010;
+			setquest 16010;// Battle in great condition
 			getexp 400000,400000;
 			getitem 25155,3;// Schwartz's Honor Token
 			close3;
@@ -4362,7 +4362,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "In case you don't get any outcome after talking to them, talk to other fellows.";
 			mes "The mess personnel... and another fellow in the outside store seems to want to say something.";
 			npctalk "Elena Bolkova: Are they it Mason and Milo in Clana Nemieri..?", "", bc_self;
-			setquest 16012;
+			setquest 16012;// Troublesome twin
 			lebedev_quest_16_2 = 1;
 			close3;
 		}
@@ -4406,8 +4406,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "Since the guys have been assigned to my unit, I wanted to take care of them here. But they're not helping us.";
 			mes "If I ask Adler about the guys, it won't look so good. That's why I am requesting you. Please.";
-			erasequest 16015;
-			setquest 16016;
+			erasequest 16015;// The cause of failure is a careless attempt
+			setquest 16016;// Borrowing wisdom of the experts
 			lebedev_quest_16_2 = 6;
 			close3;
 		}
@@ -4450,8 +4450,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "I guess I have to tell them something anyway.";
 			mes "Will you help me once again? Tell them that I'm looking for them. And you come with them please.";
-			erasequest 16017;
-			setquest 16018;
+			erasequest 16017;// Twin's sincere confession
+			setquest 16018;// Encourage instead of punishment
 			lebedev_quest_16_2 = 9;
 			close3;
 		}
@@ -4582,7 +4582,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "......Thanks.";
 			mes "I will count on you in the future.";
-			completequest 16019;
+			completequest 16019;// Elena Volkova's Solution
 			getexp 200000,200000;
 			getitem 25155,10;// Schwartz's Honor Token
 			lebedev_quest_16_2 = 11;
@@ -4885,7 +4885,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "[Rebellion leader]";
 		mes "He must know his position better than anyone else.";
 		mes "The man called Lazy, too.";
-		setquest 11454;
+		setquest 11454;// Doubt
 		terra_gloria_lady_part = 1;
 		close;
 	}
@@ -4966,8 +4966,8 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "Yeah?";
 		mes "Yes! Sir!";
 		emotion ET_PROFUSELY_SWAT, getnpcid(0, "Rebellion Guard leader#4");
-		erasequest 11458;
-		setquest 11459;
+		erasequest 11458;// Doubt
+		setquest 11459;// Doubt
 		terra_gloria_lady_part = 6;
 		close;
 	}
@@ -5027,8 +5027,8 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		mes "It was so noisy outside, so I came out. It was you.";
 		emotion ET_HNG, getnpcid(0, "Dien#162gmbs2");
 		classchange( 4_F_DIENE, "Dien#162gmbs2", bc_self );
-		erasequest 11460;
-		setquest 11461;
+		erasequest 11460;// Doubt
+		setquest 11461;// Doubt
 		terra_gloria_lady_part = 8;
 		close;
 	}
@@ -5223,8 +5223,8 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		if (terra_gloria_lady_part == 9) {
 			getitem 25155,10;
 			getexp 200000,200000;
-			completequest 14600;
-			completequest 11462;
+			completequest 14600;// Gentleman on second floor
+			completequest 11462;// Doubt
 			terra_gloria_lady_part = 10;
 		}
 		close3;
@@ -5251,8 +5251,8 @@ rebel_in,119,68,7	script	Rebellion Guard leader#4	HIDDEN_WARP_NPC,{		// 4_M_REBE
 		mes "[Rebellion Guard leader Larcis]";
 		mes "The same thing was written in the letter that I handed to Erst.";
 		if (terra_gloria_lady_part == 6) {
-			erasequest 11459;
-			setquest 11460;
+			erasequest 11459;// Doubt
+			setquest 11460;// Doubt
 			terra_gloria_lady_part = 7;
 		}
 		close;
@@ -5351,8 +5351,8 @@ rebel_in,121,69,8	script	Dien#162gmbs2	HIDDEN_WARP_NPC,{		// 4_F_DIENE
 		mes "I can't ignore what you've just said.";
 		mes "Are you trying to neglect my opinion, and myself as well?";
 		cutin "ep162_dn03.bmp",2;
-		erasequest 11461;
-		setquest 11462;
+		erasequest 11461;// Doubt
+		setquest 11462;// Doubt
 		terra_gloria_lady_part = 9;
 		close3;
 	}
@@ -6116,12 +6116,12 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		mes "[Lazy]";
 		mes "Adventurer, good luck! I will be talking to Rookie. Cheer up.";
 		npctalk "Come back alive!", "", bc_self;
-		erasequest 14599;
-		setquest 14600;
-		setquest 14601;
-		setquest 14602;
-		setquest 14613;
-		setquest 14614;
+		erasequest 14599;// A glass of tea gratitude
+		setquest 14600;// Gentleman on second floor
+		setquest 14601;// Ladies on second floor
+		setquest 14602;// Hunter on second floor
+		setquest 14613;// Erst on second floor
+		setquest 14614;// Convince the leaders
 		terra_gloria_main = 16;
 		close3;
 	}
@@ -6548,8 +6548,8 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Tell his excellency to wait for a while even if his excellency misses me.", "", bc_self;
 		sleep2 300;
 		npctalk "Please visit us again, adventurer.", "Rookie#16nego02", bc_self;
-		erasequest 14614;
-		setquest 14615;
+		erasequest 14614;// Convince the leaders
+		setquest 14615;// Between negotiation and deception
 		getitem 25155,10;
 		getexp 1000000,500000;
 		terra_gloria_main = 17;
@@ -6698,8 +6698,8 @@ function	script	F_TerraGloria_Lady	{
 		mes "If you behave rudely, you won't go back alive.";
 		npctalk "Rebellion Guard leader : If anything goes wrong, we will die together!", "Rebellion Guard leader#1", bc_self;
 		classchange( HIDDEN_WARP_NPC, "Rebellion Guard leader#1", bc_self );
-		erasequest 11454;
-		setquest 11455;
+		erasequest 11454;// Doubt
+		setquest 11455;// Doubt
 		terra_gloria_lady_part = 2;
 		close2;
 		warp "rebel_in",158,83;
@@ -6869,7 +6869,7 @@ OnTouch:
 		mes "Then I'll fix the party accessories in advance.";
 		mes "Hohohoho.";
 		cutin "ep162_ctn02.bmp",2;
-		setquest 11463;
+		setquest 11463;// You said the party is ready?
 		terra_gloria_lady_part = 11;
 		close3;
 	}
@@ -7017,9 +7017,9 @@ rebel_in,164,88,5	script	Dien#162gmbs	4_F_DIENE,4,4,{
 		mes "Follow me. We are going to commander Erst first.";
 		emotion ET_GO, getnpcid(0, "Rebellion Guard leader#2");
 		npctalk "Rebellion Guard leader : To find commander Erst's room, go out of this room and walk through the left corridor.", "Rebellion Guard leader#2", bc_self;
-		erasequest 11456;
-		setquest 11457;
-		completequest 14601;
+		erasequest 11456;// Doubt
+		setquest 11457;// Doubt
+		completequest 14601;// Ladies on second floor
 		terra_gloria_lady_part = 4;
 		close;
 	}
@@ -7086,8 +7086,8 @@ rebel_in,164,88,5	script	Dien#162gmbs	4_F_DIENE,4,4,{
 		next;
 		mes "[Rebellion senior Dien]";
 		mes "Since Larcis is in charge of our business, please ask him. He will tell you what we need.";
-		erasequest 11463;
-		setquest 11464;
+		erasequest 11463;// You said the party is ready?
+		setquest 11464;// You said the party is ready?
 		terra_gloria_lady_part = 12;
 		getexp 200000,200000;
 		close3;
@@ -7348,8 +7348,8 @@ OnTouch:
 		mes "Can you give us some time to think about it?";
 		mes "It's not an easy decision.";
 		cutin "ep162_dn03.bmp",2;
-		erasequest 11455;
-		setquest 11456;
+		erasequest 11455;// Doubt
+		setquest 11456;// Doubt
 		terra_gloria_lady_part = 3;
 		close3;
 	}
@@ -7393,7 +7393,7 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 		mes "[Rebellion Guard leader Larcis]";
 		mes "If you're willing to go, tell me!";
 		mes "Of course, we will compensate you.";
-		completequest 11464;
+		completequest 11464;// You said the party is ready?
 		terra_gloria_lady_part = 13;
 		close;
 	}
@@ -7488,8 +7488,8 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				mes "[Rebellion Guard leader Larcis]";
 				mes "If you bring this token to Strasse at the stairs at 10 o'clock in the corridor of the 2nd floor, you will receive something useful in return.";
 				delitem 25165,1;// High Class Tea
-				erasequest 11465;
-				setquest 11466;
+				erasequest 11465;// Dien's High Class Tea
+				setquest 11466;// Dien's High Class Tea
 				getitem 25155,3;// Schwartz's Honor Token
 				getexp 150000,150000;
 				break;
@@ -7502,8 +7502,8 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				mes "[Rebellion Guard leader Larcis]";
 				mes "If you bring this token to Strasse at the stairs at 10 o'clock in the corridor of the 2nd floor, you will receive something useful in return.";
 				delitem 25167,1;// Old Letter
-				erasequest 11467;
-				setquest 11468;
+				erasequest 11467;// Ridsh's Old Letter
+				setquest 11468;// Ridsh's Old Letter
 				getitem 25155,3;// Schwartz's Honor Token
 				getexp 150000,150000;
 				break;
@@ -7517,8 +7517,8 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				mes "If you bring this token to Strasse at the stairs at 10 o'clock in the corridor of the 2nd floor, you will receive something useful in return.";
 				delitem 25166,4;
 				getitem 25155,3;
-				erasequest 11469;
-				setquest 11470;
+				erasequest 11469;// Cotness's Shiny Ring
+				setquest 11470;// Cotness's Shiny Ring
 				getexp 150000,150000;
 				break;
 			}
@@ -7655,9 +7655,9 @@ rebel_in,210,89,5	script	Special Force commander	4_F_ESTLOVELOY,{
 		mes "Let's agree with it.";
 		mes "For now.";
 		classchange( HIDDEN_WARP_NPC, "Rebellion Guard leader#3", bc_self );
-		erasequest 11457;
-		setquest 11458;
-		completequest 14613;
+		erasequest 11457;// Doubt
+		setquest 11458;// Doubt
+		completequest 14613;// Erst on second floor
 		terra_gloria_lady_part = 5;
 		close3;
 	}
@@ -8823,8 +8823,8 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "(......Cookies...?)";
-		erasequest 16016;
-		setquest 16033;
+		erasequest 16016;// Borrowing wisdom of the experts
+		setquest 16033;// Bring dessert and listen the story
 		getitem 25161,1;// Delicious Handmade Cookie
 		lebedev_quest_16_2 = 7;
 		close;
@@ -8854,7 +8854,7 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		next;
 		mes "[Detached Force commander Ericsson]";
 		mes "Hmm, good! Tell them thanks.";
-		completequest 16030;
+		completequest 16030;// Service: Cookies delivery
 		delitem 25161,1;// Delicious Handmade Cookie
 		close;
 	}
@@ -8896,7 +8896,7 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		next;
 		mes "[Detached Force commander Ericsson]";
 		mes "I will count on you. Come back and report, I mean... tell me.";
-		setquest 16045;
+		setquest 16045;// Veteran's small memorial service
 		close;
 	case 1:
 		// todo
@@ -8971,7 +8971,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			next;
 			mes "[Mason Bender]";
 			mes "People were just excited about small kids shooting guns.";
-			completequest 16014;
+			completequest 16014;// Testimony: Sniper's story
 			lebedev_quest_16_2++;
 			close;
 		}
@@ -9006,7 +9006,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 		next;
 		mes "[Mason Bender]";
 		mes "I can see how much effort they gave to make them. It's delicious.";
-		completequest 16028;
+		completequest 16028;// Service: Cookies delivery
 		delitem 25161,1;// Delicious Handmade Cookie
 		close;
 	}
@@ -9455,7 +9455,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			next;
 			mes "[Milo River]";
 			mes "This is all I can tell you.";
-			completequest 16013;
+			completequest 16013;// Testimony: Chef's story
 			lebedev_quest_16_2++;
 			next;
 			mes "[" + strcharinfo(0) + "]";
@@ -9488,7 +9488,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 		mes "[Milo River]";
 		mes "So don't look at me like that!!";
 		mes "Just give me the cookies!";
-		completequest 16027;
+		completequest 16027;// Service: Cookies delivery
 		delitem 25161,1;// Delicious Handmade Cookie
 		close;
 	}
@@ -9515,7 +9515,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			mes "But thank you for your kindness. Haha!";
 			close;
 		case 2:
-			erasequest 16034;
+			erasequest 16034;// Sweet cookies once a day
 			mes "[Milo River]";
 			mes "Wow! You came again! may I ask you to get the snacks for our seniors?";
 			next;
@@ -9579,7 +9579,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			next;
 			mes "[Milo River]";
 			mes "It doesn't matter whether you make it on your own or not. I count on you~";
-			setquest 16032;
+			setquest 16032;// Hospitality to senior
 			close;
 		}
 		// todo
@@ -9626,7 +9626,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			mes "Maybe she will come back after enjoying her stroll. If she doesn't come back, please find her again!";
 			close;
 		case 2:
-			erasequest 16042;
+			erasequest 16042;// Charity temporarily stays
 			break;
 		}
 		switch( isbegin_quest(16044) ) {
@@ -9678,7 +9678,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 				mes "Thank you! I will give you enough Anchovy cookies.";
 				mes "They are for cats. Give them to Charity and bring back the rest of them. Make sure you don't eat them.";
 				getitem 25162,1;
-				setquest 16041;
+				setquest 16041;// Investigation: Capture strolling cat operation
 				close;
 			case 1:
 				if (countitem(25162) < 1) {
@@ -9734,7 +9734,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 					mes "Use the Anchovy cookies to find Charity and bring the rest of them!";
 					mes "Make sure you don't eat them. Got it?";
 					getitem 25162,1;// Crispy Anchovy
-					setquest 16043;
+					setquest 16043;// Investigation: Capture someone's craving operation
 					close;
 				case 1:
 					if (countitem(25162) < 1) {
@@ -9801,7 +9801,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 				sleep2 1000;
 				npctalk "Charity forever! Oh, please take my soul to Cat Heaven!!!", "Nice Looking Gun#16.2rm", bc_self;
 				sleep2 1000;
-				completequest 16041;
+				completequest 16041;// Investigation: Capture strolling cat operation
 			}
 			else {
 				npctalk "Ho, Miss Charity, you are beautiful as usual! Look at that!";
@@ -9843,8 +9843,8 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			classchange( HIDDEN_WARP_NPC, "Nice Looking Gun#16.2rm", bc_self );
 			if (countitem(25162) > 0)
 				delitem 25162,1;
-			erasequest 16044;
-			setquest 16042;
+			erasequest 16044;// In charge of Charity
+			setquest 16042;// Charity temporarily stays
 			getexp 100000,100000;
 			getitem 25155,10;
 			next;
@@ -9888,8 +9888,8 @@ S_Item:
 	mes "I have to prepare for the tea time tomorrow as well... If you don't mind, could you bring it again tomorrow?";
 	delitem getarg(0),1;
 	if (isbegin_quest(16032) == 1)
-		completequest 16032;
-	setquest 16034;
+		completequest 16032;// Hospitality to senior
+	setquest 16034;// Sweet cookies once a day
 	getexp 200000,200000;
 	getitem 25155,3;// Schwartz's Honor Token
 	close;
@@ -9953,10 +9953,10 @@ einbech,34,209,3	script	Empty bench#16.2rm2	HIDDEN_NPC,{
 		mes "Charity is here!";
 		mes "You lured her with the Anchovy cookie and held her.";
 		if (isbegin_quest(16041) == 1)
-			completequest 16041;
+			completequest 16041;// Investigation: Capture strolling cat operation
 		else
-			erasequest 16043;
-		setquest 16044;
+			erasequest 16043;// Investigation: Capture someone's craving operation
+		setquest 16044;// In charge of Charity
 		close2;
 	}
 	if (strnpcinfo(0) == "Empty bench#16.2rm2")
@@ -9998,7 +9998,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		emotion ET_DELIGHT;
 		mes "[Rachel Smith]";
 		mes "Smells nice... I will ask them the recipe later.";
-		completequest 16029;
+		completequest 16029;// Service: Cookies delivery
 		delitem 25161,1;// Delicious Handmade Cookie
 		close;
 	}
@@ -10055,7 +10055,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		next;
 		mes "[Rachel Smith]";
 		mes "Bring this revolver to Einbroch Blacksmith guild and show it to them. Since I am a member of that guild, they will recognize it when they see the revolver repaired by me. I am counting on you.";
-		setquest 16035;
+		setquest 16035;// Delivery: Explosive revolver materials
 		getitem 25151,1;
 		rachel_quest_16_2 = 1;
 		close;
@@ -10106,8 +10106,8 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 			mes "Hmm... The most important item is.. Let me see. Today.. I need some Iron.";
 			mes "Five Iron. Could you please bring them to me?";
 			next;
-			completequest 16036;
-			setquest 16040;
+			completequest 16036;// Expert's keen eye
+			setquest 16040;// Collect 5 Irons
 			getitem 25155,7;// Schwartz's Honor Token
 			rachel_quest_16_2 = 3;
 			close;
@@ -10115,7 +10115,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		mes "[Rachel Smith]";
 		mes "Yes. I will.";
 		mes "I have no other choice.";
-		completequest 16036;
+		completequest 16036;// Expert's keen eye
 		getitem 25155,7;// Schwartz's Honor Token
 		rachel_quest_16_2 = 3;
 		close;
@@ -10132,7 +10132,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		mes "If you can help me again... Could you come back tomorrow? I might need other Ore.";
 		close;
 	case 2:
-		erasequest 16037;
+		erasequest 16037;// Material collection once a day
 		break;
 	}
 	if (isbegin_quest(16038) == 1)		callsub( S_Quest, 16038, 984,2, "two" );	// Oridecon
@@ -10158,19 +10158,19 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 			mes "[Rachel Smith]";
 			mes "To enhance the gun barrel, I need Oridecon.";
 			mes "Please bring me two Oridecon.";
-			setquest 16038;
+			setquest 16038;// Collect 2 Oridecons
 			close;
 		case 16039:
 			mes "[Rachel Smith]";
 			mes "Today I don't have enough Elunium. Could you please bring me two Elunium?";
 			mes "I will count on you, adventurer.";
-			setquest 16039;
+			setquest 16039;// Collect 2 Eluniums
 			close;
 		case 16040:
 			mes "[Rachel Smith]";
 			mes "Iron is the most basic material for every weapon. Without it, I cannot do anything only with other enhancing materials.";
 			mes "So please bring me five Iron";
-			setquest 16040;
+			setquest 16040;// Collect 5 Irons
 			close;
 		}
 	}
@@ -10223,7 +10223,7 @@ S_Quest:
 	mes "If possible, I would like to ask you for a favor tomorrow too.";
 	erasequest .@quest_id;
 	delitem .@item_req, .@count_req;
-	setquest 16037;
+	setquest 16037;// Material collection once a day
 	getexp 200000,200000;
 	getitem 25155,3;// Schwartz's Honor Token
 	close;
@@ -10285,8 +10285,8 @@ ein_in01,38,21,3	script	Blacksmith Jack#16.2rm	4_M_MIDDLE1,{
 		mes "[Blacksmith Jack]";
 		mes "Go back and tell her. It might be exploded in the meantime...";
 		delitem 25151,1;// Rachel's Revolver
-		erasequest 16035;
-		setquest 16036;
+		erasequest 16035;// Delivery: Explosive revolver materials
+		setquest 16036;// Expert's keen eye
 		rachel_quest_16_2 = 2;
 		close;
 	}
@@ -10451,8 +10451,8 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 		next;
 		mes "[Hogar]";
 		mes "Well, I don't have to continue nagging like this. Just bring me the tokens when there is gear that you would like to upgrade. Then we can talk about the trade in detail.";
-		setquest 12376;
-		completequest 12376;
+		setquest 12376;// First transaction
+		completequest 12376;// First transaction
 		close;
 	}
 	mes "[Hogar]";
@@ -10841,8 +10841,8 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		next;
 		mes "[Master]";
 		mes "Anyway, I will count on you. ^0000cdGo down from Einbech and find Suspicious Heap of Earth^000000 and investigate it. Then ^0000cdbring about three broken guns^000000 please.";
-		erasequest 14612;
-		setquest 14611;
+		erasequest 14612;// Time for repair
+		setquest 14611;// Gun recycling
 		close;
 	}
 
@@ -10894,9 +10894,9 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		next;
 		mes "[Master]";
 		mes "Thank you so much.";
-		erasequest 14611;
+		erasequest 14611;// Gun recycling
 		delitem 25153,3;// Broken Gun Wreck
-		setquest 14612;
+		setquest 14612;// Time for repair
 		getitem 25155,3;// Schwartz's Honor Token
 		getexp 200000,200000;
 		close;
@@ -11025,7 +11025,7 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		next;
 		mes "[Master]";
 		mes "Let me see from the newest one... Bring ^0000cdabout three of them^000000 please. If you bring too many of them, it will be hard to repair.";
-		setquest 14610;
+		setquest 14610;// Gun recycling
 		close;
 	case 1:
 		mes "[Master]";
@@ -11167,8 +11167,8 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 		next;
 		mes "[Master]";
 		mes "Thank you so much.";
-		erasequest 14610;
-		setquest 14612;
+		erasequest 14610;// Gun recycling
+		setquest 14612;// Time for repair
 		delitem 25153,3;// Broken Gun Wreck
 		getitem 25155,3;// Schwartz's Honor Token
 		getexp 200000,200000;
@@ -11604,7 +11604,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			cutin "16loo_01.bmp",2;
 			mes "[Rookie]";
 			mes "Be careful!";
-			setquest 14603;
+			setquest 14603;// Pipe repair materials
 			close3;
 		case 1:
 			cutin "16loo_02.bmp",2;
@@ -11675,10 +11675,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			cutin "16loo_01.bmp",2;
 			mes "[Rookie]";
 			mes "Please take a good rest today. We will count on you again tomorrow. You must be exhausted.";
-			erasequest 14606;
+			erasequest 14606;// Pipe repair materials
 			delitem 999,5;// Steel
 			delitem 7319,15;// Used Iron Plate
-			setquest 14609;
+			setquest 14609;// Quiet time
 			getitem 25155,3;// Schwartz's Honor Token
 			getexp 200000,200000;
 			close3;
@@ -11960,10 +11960,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			classchange( HIDDEN_WARP_NPC, "Cyan#16nego02", bc_self );
 			mes "[Rookie]";
 			mes "Phew, I am exhausted as well. Please take a good rest now and come back after the ^0000cddawn^000000.";
-			erasequest 14604;
+			erasequest 14604;// National Fuel Solar Fuel
 			delitem 7068,10;// Burnt Tree
 			delitem 1003,3;// Coal
-			setquest 14609;
+			setquest 14609;// Quiet time
 			getitem 25155,3;// Schwartz's Honor Token
 			getexp 200000,200000;
 			close3;
@@ -12142,7 +12142,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			classchange( HIDDEN_WARP_NPC, "Magenta#16nego01", bc_self );
 			mes "[Rookie]";
 			mes "Phew. He's so loud. I will count on you, adventurer.";
-			setquest 14605;
+			setquest 14605;// Sparkling things
 			close3;
 		case 1:
 		case 2:
@@ -12235,10 +12235,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "That fellow is really loud, isn't he? I apologize on behalf of him. Please take a good rest and come back ^0000cdafter the dawn^000000.";
-			erasequest 14605;
+			erasequest 14605;// Sparkling things
 			delitem 7321,10;// Crystal Fragment
 			delitem 7315,10;// Dark Crystal Fragment
-			setquest 14609;
+			setquest 14609;// Quiet time
 			getitem 25155,3;// Schwartz's Honor Token
 			getexp 200000,200000;
 			close3;
@@ -12282,8 +12282,8 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			classchange( HIDDEN_WARP_NPC, "Denny#16nego03", bc_self );
 			mes "[Rookie]";
 			mes "Ouch, I'm so busy. Sorry to request you again. Go, adventurer!";
-			erasequest 14609;
-			setquest 14606;
+			erasequest 14609;// Quiet time
+			setquest 14606;// Pipe repair materials
 			close3;
 		case 1:
 		case 2:
@@ -12358,10 +12358,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			cutin "16loo_01.bmp",2;
 			mes "[Rookie]";
 			mes "Please take a good rest today. We will count on you again tomorrow. You must be exhausted.";
-			erasequest 14606;
+			erasequest 14606;// Pipe repair materials
 			delitem 999,5;// Steel
 			delitem 7319,15;// Used Iron Plate
-			setquest 14609;
+			setquest 14609;// Quiet time
 			getitem 25155,3;// Schwartz's Honor Token
 			getexp 200000,200000;
 			close3;
@@ -12525,8 +12525,8 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			emotion ET_SWEAT, playerattached();
 			mes "[Rookie]";
 			mes "Phew... We will count on you anyway. Regardless of what that fellow told you, everyone will get a cold once the fire goes out.";
-			erasequest 14609;
-			setquest 14607;
+			erasequest 14609;// Quiet time
+			setquest 14607;// National Fuel Solar Fuel
 			close3;
 		case 1:
 		case 2:
@@ -12601,10 +12601,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			cutin "16loo_01.bmp",2;
 			mes "[Rookie]";
 			mes "Please take a good rest today. We will count on you again tomorrow.";
-			erasequest 14607;
+			erasequest 14607;// National Fuel Solar Fuel
 			delitem 7068,10;// Burnt Tree
 			delitem 1003,3;// Coal
-			setquest 14609;
+			setquest 14609;// Quiet time
 			getitem 25155,3;// Schwartz's Honor Token
 			getexp 200000,200000;
 			close3;
@@ -12643,8 +12643,8 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			cutin "16loo_03.bmp",2;
 			mes "[Rookie]";
 			mes "Ouch, Sorry to request you again. It must be tough for you now.";
-			erasequest 14609;
-			setquest 14608;
+			erasequest 14609;// Quiet time
+			setquest 14608;// Sparkling things
 			close3;
 		case 1:
 		case 2:
@@ -12701,10 +12701,10 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			next;
 			mes "[Rookie]";
 			mes "Please take a good rest today. We will count on you again tomorrow.";
-			erasequest 14608;
+			erasequest 14608;// Sparkling things
 			delitem 7321,10;// Crystal Fragment
 			delitem 7315,10;// Dark Crystal Fragment
-			setquest 14609;
+			setquest 14609;// Quiet time
 			getitem 25155,3;// Schwartz's Honor Token
 			getexp 0,300000;
 			close3;
@@ -12726,7 +12726,7 @@ slabw01,235,137,3	script	Suspicious cabinet#hide01	4_ENERGY_WHITE,{
 		end;
 	}
 	.@num = atoi( replacestr(strnpcinfo(2), "hide", "") );
-	.@quest_id = 7752 - 1 + .@num;
+	.@quest_id = 7752 - 1 + .@num;// Well hidden
 	if (isbegin_quest(.@quest_id) > 0) {
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I have already searched here.", bc_self;
 		end;
@@ -13021,9 +13021,9 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "(So they started to hate me pretty early... What should I do?";
 		mes "Maybe I have to listen to ^0000CDRebellions around them^000000.)";
-		erasequest 16012;
-		setquest 16013;
-		setquest 16014;
+		erasequest 16012;// Troublesome twin
+		setquest 16013;// Testimony: Chef's story
+		setquest 16014;// Testimony: Sniper's story
 		lebedev_quest_16_2 = 2;
 		close;
 	}
@@ -13087,7 +13087,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			mes "[" + strcharinfo(0) + "]";
 			mes "(......This is getting difficult. Let's go back to ^0000CDElena Bolkova^000000.)";
 		}
-		setquest 16015;
+		setquest 16015;// The cause of failure is a careless attempt
 		lebedev_quest_16_2 = 5;
 		close;
 	}
@@ -13225,8 +13225,8 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "(You heard their story. Let's go to ^0000CDElena Bolkova^000000 and tell her.)";
 		delitem 25161,1;// Delicious Handmade Cookie
-		erasequest 16033;
-		setquest 16017;
+		erasequest 16033;// Bring dessert and listen the story
+		setquest 16017;// Twin's sincere confession
 		lebedev_quest_16_2 = 8;
 		close;
 	}
@@ -13253,8 +13253,8 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "[Ilya Lebedev]";
 		mes "Thank you...";
 		mes "...I hope Jana cheers up.";
-		erasequest 16018;
-		setquest 16019;
+		erasequest 16018;// Encourage instead of punishment
+		setquest 16019;// Elena Volkova's Solution
 		lebedev_quest_16_2 = 10;
 		close;
 	}
@@ -13279,7 +13279,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "I wonder it's already time for us to be sleepy. Let's play together tomorrow...Zzz";
 		close;
 	case 2:
-		erasequest 16020;
+		erasequest 16020;// Daily babysitting
 		break;
 	}
 	setarray .@quest_id[0], 16021, 16023, 16025, 16026, 16027;
@@ -13316,7 +13316,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			mes "Please borrow a book for us from the juvenile section of Prontera library.";
 			mes "The book's name is... ^0000CDIt's dizzy after being shaken 1,000 times^000000. Please borrow this for me.";
 			npctalk "Ilya Lebedev: They say it's such a famous book.", "Ilya Lebedev#16.2rm", bc_self;
-			setquest 16021;
+			setquest 16021;// Service: Book lending agent
 			next;
 			mes "[Jana Levedeva]";
 			mes "The juvenile corner of the Prontera library has designated rental system. You can ask the ^0000CDlibrarian in charge of juveniles^000000.";
@@ -13331,7 +13331,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			mes "I would be glad if borrow a book for me from the juvenile section of Prontera library.";
 			mes "The book's name is... ^0000CDNorgroad Horizon^000000.";
 			npctalk "Ilya Lebedev: It's about the great adventurer who explores Norgroad.", "Ilya Lebedev#16.2rm", bc_self;
-			setquest 16023;
+			setquest 16023;// Service: Book lending agent
 			next;
 			mes "[Jana Levedeva]";
 			mes "The juvenile corner of the Prontera library has designated rental system. You can ask the ^0000CDlibrarian in charge of juveniles^000000.";
@@ -13352,7 +13352,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			mes "Please defeat 30 Pitman in Einbech mine and bring us a Gun Powder.";
 			mes "Older " + .@genre$ + " I'm sure this is a piece of cake for you. We will count on you!";
 			npctalk "Ilya Lebedev: We will count on you!", "Ilya Lebedev#16.2rm", bc_self;
-			setquest 16026;
+			setquest 16026;// Service: Exploring the Mine Dungeon
 			close;
 		case 16026:
 			mes "[Jana Levedeva]";
@@ -13370,7 +13370,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 			mes "Please defeat 20 Venomous and 20 Noxious in Einbech mine and bring us one Explosive Powder.";
 			mes "I know this will be cumbersome. But we will count on you.";
 			npctalk "Jana Levedeva: Please!";
-			setquest 16026;
+			setquest 16026;// Service: Exploring the Mine Dungeon
 			close;
 		case 16027:
 			emotion ET_DELIGHT;
@@ -13396,11 +13396,11 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 				mes "Please make some space. We don't want the cookies to get broken.";
 				close;
 			}
-			setquest 16027;
-			setquest 16028;
-			setquest 16029;
-			setquest 16030;
-			setquest 16031;
+			setquest 16027;// Service: Cookies delivery
+			setquest 16028;// Service: Cookies delivery
+			setquest 16029;// Service: Cookies delivery
+			setquest 16030;// Service: Cookies delivery
+			setquest 16031;// Service: Cookies delivery
 			getitem 25161,5;// Delicious Handmade Cookie
 			close;
 		}
@@ -13437,8 +13437,8 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "(Hmm, she's not mentioning about returning it.)";
-		erasequest 16024;
-		setquest 16020;
+		erasequest 16024;// Service: Loaned book delivery
+		setquest 16020;// Daily babysitting
 		delitem 25160,1;// Borrowed Book
 		getexp 200000,200000;
 		getitem 25155,3;// Schwartz's Honor Token
@@ -13457,8 +13457,8 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "Thank you for doing us a favor!";
 		mes "About the result, I will inform you later!";
 		delitem 6244,1;// Gun Powder
-		erasequest 16025;
-		setquest 16020;
+		erasequest 16025;// Service: Exploring the Mine Dungeon
+		setquest 16020;// Daily babysitting
 		getexp 200000,200000;
 		getitem 25155,3;// Schwartz's Honor Token
 		close;
@@ -13476,8 +13476,8 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "Thank you for doing us a favor!";
 		mes "Jana says she will inform you about the result after the experiment!!";
 		delitem 6213,1;// Explosive Powder
-		erasequest 16026;
-		setquest 16020;
+		erasequest 16026;// Service: Exploring the Mine Dungeon
+		setquest 16020;// Daily babysitting
 		getexp 200000,200000;
 		getitem 25155,3;// Schwartz's Honor Token
 		close;
@@ -13508,12 +13508,12 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		mes "What did they say?";
 		mes "Did they like them? Huhu.";
 		mes "Don't you think I'm good at cooking?";
-		erasequest 16027;
-		erasequest 16028;
-		erasequest 16029;
-		erasequest 16030;
-		erasequest 16031;
-		setquest 16020;
+		erasequest 16027;// Service: Cookies delivery
+		erasequest 16028;// Service: Cookies delivery
+		erasequest 16029;// Service: Cookies delivery
+		erasequest 16030;// Service: Cookies delivery
+		erasequest 16031;// Service: Cookies delivery
+		setquest 16020;// Daily babysitting
 		getexp 200000,200000;
 		getitem 25155,3;// Schwartz's Honor Token
 		close;
@@ -13558,8 +13558,8 @@ prt_in,165,89,1	script	Librarian in charge of juveniles 	1_F_LIBRARYGIRL,{
 		mes "[Librarian in charge of juveniles]";
 		mes "Please be careful next time.";
 		mes "If you lose the book more than once or damage it, we may forbidthe lending to you.";
-		erasequest 16024;
-		setquest 16020;
+		erasequest 16024;// Service: Loaned book delivery
+		setquest 16020;// Daily babysitting
 		close;
 	}
 	mes "[Librarian in charge of juveniles]";
@@ -13605,7 +13605,7 @@ prt_in,165,89,1	script	Librarian in charge of juveniles 	1_F_LIBRARYGIRL,{
 	mes "[Librarian in charge of juveniles]";
 	mes "Yes. Here it is. Please abide by the deadline.";
 	erasequest .@quest_id[.@i];
-	setquest 16024;
+	setquest 16024;// Service: Loaned book delivery
 	getitem 25160,1;// Borrowed Book
 	close;
 }
@@ -13683,8 +13683,8 @@ prt_in,177,26,6	script	Knight Windsor#ep162	4_M_JOB_KNIGHT1,{
 		mes "... Thanks.";
 		mes "...";
 		delitem 25180,1;// Old Rings
-		setquest 7746;
-		completequest 7746;
+		setquest 7746;// A pair of old rings
+		completequest 7746;// A pair of old rings
 		getexp 100000,100000;
 		close;
 	case 1:
@@ -13712,8 +13712,8 @@ prt_in,177,26,6	script	Knight Windsor#ep162	4_M_JOB_KNIGHT1,{
 		mes "You ...";
 		mes "......";
 		delitem 25185,1;// Locket Pendant
-		setquest 7747;
-		completequest 7747;
+		setquest 7747;// Locket Pendant
+		completequest 7747;// Locket Pendant
 		getexp 100000,100000;
 		close2;
 		npctalk "... Please be alive.", "", bc_self;
@@ -13758,8 +13758,8 @@ prt_monk,93,254,3	script	Sister Margaret#ep162	1_F_PRIEST,{
 		mes "... Thank you very much for giving this to me.";
 		mes "May the blessing of Jooshin be with you forever.";
 		delitem 25181,1;// Wood Rosary
-		setquest 7748;
-		completequest 7748;
+		setquest 7748;// Wooden Rosary
+		completequest 7748;// Wooden Rosary
 		getexp 100000,100000;
 		close;
 	case 1:
@@ -13841,8 +13841,8 @@ yuno_in01,163,31,3	script	Blacksmith Cleaver#ep16	4_TOWER_17,{
 		mes "I have to delay my work for a while.";
 		mes "....";
 		delitem 25183,1;// Decorated Archer's Thimble
-		setquest 7749;
-		completequest 7749;
+		setquest 7749;// Bow Thimble Decoration
+		completequest 7749;// Bow Thimble Decoration
 		getexp 100000,100000;
 		close;
 	case 1:
@@ -13891,8 +13891,8 @@ que_job01,89,91,1	script	Guile Marovitz#ep162	1_M_JOBTESTER,{
 		mes "I will take him ... well.";
 		mes "Thank you.";
 		delitem 25182,1;// Assassin's Mark Dagger
-		setquest 7750;
-		erasequest 7750;
+		setquest 7750;// Assassin Dagger with Glyph
+		erasequest 7750;// Assassin Dagger with Glyph
 		getexp 100000,100000;
 		close;
 	case 1:
@@ -13965,8 +13965,8 @@ payon_in03,194,39,3	script	Hunter Sherine#ep162	4_F_JOB_HUNTER,{
 		mes "[Sherine]";
 		mes "... Thank ... you ...";
 		delitem 25184,1;// Portable Sewingbox
-		setquest 7751;
-		erasequest 7751;
+		setquest 7751;// Portable Sewing Kit
+		erasequest 7751;// Portable Sewing Kit
 		getexp 100000,100000;
 		close;
 	case 1:
