@@ -55,7 +55,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	bool exists = pet != nullptr;
 
 	if( !exists ){
-		// TODO: EggItemId, FoodItemId, Fullness, HungryDelay, CaptureRate, Speed, SpecialPerformance, AttackRate, RetaliateRate, ChangeTargetRate
+		// TODO: EggItemId, Fullness, HungryDelay, CaptureRate, Speed, SpecialPerformance, AttackRate, RetaliateRate, ChangeTargetRate
 
 		pet = std::make_shared<s_pet_db>();
 		pet->class_ = mob_id;
@@ -121,12 +121,16 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			return 0;
 		}
 
-		if( itemdb_exists( item_id ) == nullptr ){
+		if( item_id > 0 && itemdb_exists( item_id ) == nullptr ){
 			this->invalidWarning( node["FoodItemId"], "Food item %hu does not exist.\n", item_id );
 			return 0;
 		}
 
 		pet->FoodID = item_id;
+	}else{
+		if( !exists ){
+			pet->FoodID = 0;
+		}
 	}
 
 	if( this->nodeExists( node, "Fullness" ) ){
