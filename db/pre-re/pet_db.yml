@@ -61,9 +61,9 @@ Body:
     AttackRate: 350
     RetaliateRate: 400
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bLuk,2; bonus bCritical,1; } }'
-    SupportScript: '{ petloot 10; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bLuk,2; bonus bCritical,1; }'
+    SupportScript: 'petloot 10;'
   - MobId: 1113
     TameWithId: 620
     EggItemId: 9002
@@ -84,9 +84,9 @@ Body:
     AttackRate: 300
     RetaliateRate: 400
     ChangeTargetRate: 500
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bHit,3; bonus bAtk,3; } }'
-    SupportScript: '{ petloot 10; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bHit,3; bonus bAtk,3; }'
+    SupportScript: 'petloot 10;'
   - MobId: 1031
     TameWithId: 621
     EggItemId: 9003
@@ -107,9 +107,9 @@ Body:
     AttackRate: 300
     RetaliateRate: 500
     ChangeTargetRate: 400
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bLuk,2; bonus2 bSubEle,Ele_Poison,10; } }'
-    SupportScript: '{ petloot 15; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bLuk,2; bonus2 bSubEle,Ele_Poison,10; }'
+    SupportScript: 'petloot 15;'
   - MobId: 1063
     TameWithId: 622
     EggItemId: 9004
@@ -130,9 +130,9 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 1000
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bCritical,2; bonus bAtk,2; } }'
-    SupportScript: '{ petskillbonus bLuk,3,10,50; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bCritical,2; bonus bAtk,2; }'
+    SupportScript: 'petskillbonus bLuk,3,10,50;'
   - MobId: 1049
     TameWithId: 623
     EggItemId: 9005
@@ -153,9 +153,9 @@ Body:
     AttackRate: 500
     RetaliateRate: 600
     ChangeTargetRate: 50
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bStr,1; bonus bAtk,5; } }'
-    SupportScript: '{ petskillbonus bStr,3,10,50; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bStr,1; bonus bAtk,5; }'
+    SupportScript: 'petskillbonus bStr,3,10,50;'
   - MobId: 1011
     TameWithId: 624
     EggItemId: 9006
@@ -176,9 +176,9 @@ Body:
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 250
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bAgi,1; bonus bFlee,2; } }'
-    SupportScript: '{ petskillbonus bAgi,4,10,50; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAgi,1; bonus bFlee,2; }'
+    SupportScript: 'petskillbonus bAgi,4,10,50;'
   - MobId: 1042
     TameWithId: 625
     EggItemId: 9007
@@ -199,9 +199,9 @@ Body:
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bFlee,6; bonus bAgi,-1; } }'
-    SupportScript: '{ petskillbonus bAgiVit,4,20,40; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bFlee,6; bonus bAgi,-1; }'
+    SupportScript: 'petskillbonus bAgiVit,4,20,40;'
   - MobId: 1035
     TameWithId: 626
     EggItemId: 9008
@@ -222,9 +222,9 @@ Body:
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bFlee,-5; bonus bFlee2,2; } }'
-    SupportScript: '{ petskillattack2 "NPC_WINDATTACK",888,2,0,10; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bFlee,-5; bonus bFlee2,2; }'
+    SupportScript: 'petskillattack2 "NPC_WINDATTACK",888,2,0,10;'
   - MobId: 1167
     TameWithId: 627
     EggItemId: 9009
@@ -245,9 +245,9 @@ Body:
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bVit,1; bonus bMaxHP,50; } }'
-    SupportScript: '{ petskillbonus bVit,4,10,50; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bVit,1; bonus bMaxHP,50; }'
+    SupportScript: 'petskillbonus bVit,4,10,50;'
   - MobId: 1107
     TameWithId: 628
     EggItemId: 9010
@@ -268,9 +268,9 @@ Body:
     AttackRate: 400
     RetaliateRate: 400
     ChangeTargetRate: 400
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bInt,1; bonus bMaxSP,50; } }'
-    SupportScript: '{ petskillattack "SM_PROVOKE",1,0,5; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bInt,1; bonus bMaxSP,50; }'
+    SupportScript: 'petskillattack "SM_PROVOKE",1,0,5;'
   - MobId: 1052
     TameWithId: 629
     EggItemId: 9011
@@ -291,9 +291,9 @@ Body:
     AttackRate: 350
     RetaliateRate: 350
     ChangeTargetRate: 600
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bHPrecovRate,5; bonus bMaxHP,25; } }'
-    SupportScript: '{ petskillbonus bAllStats,1,10,50; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bHPrecovRate,5; bonus bMaxHP,25; }'
+    SupportScript: 'petskillbonus bAllStats,1,10,50;'
   - MobId: 1014
     TameWithId: 630
     EggItemId: 9012
@@ -314,9 +314,9 @@ Body:
     AttackRate: 350
     RetaliateRate: 500
     ChangeTargetRate: 500
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bHit,5; bonus bAtk,-2; } }'
-    SupportScript: '{ petrecovery SC_POISON,60; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bHit,5; bonus bAtk,-2; }'
+    SupportScript: 'petrecovery SC_POISON,60;'
   - MobId: 1077
     TameWithId: 631
     EggItemId: 9013
@@ -337,9 +337,9 @@ Body:
     AttackRate: 600
     RetaliateRate: 200
     ChangeTargetRate: 400
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bStr,1; bonus bInt,1; } }'
-    SupportScript: '{ petskillattack "NPC_POISON",20,0,10; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bStr,1; bonus bInt,1; }'
+    SupportScript: 'petskillattack "NPC_POISON",20,0,10;'
   - MobId: 1019
     TameWithId: 632
     EggItemId: 9014
@@ -360,9 +360,9 @@ Body:
     AttackRate: 400
     RetaliateRate: 500
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMaxHP,150; bonus bMaxSP,-10; } }'
-    SupportScript: '{ petskillbonus bSpeedRate,25,20,20; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxHP,150; bonus bMaxSP,-10; }'
+    SupportScript: 'petskillbonus bSpeedRate,25,20,20;'
   - MobId: 1056
     TameWithId: 633
     EggItemId: 9015
@@ -383,9 +383,9 @@ Body:
     AttackRate: 600
     RetaliateRate: 600
     ChangeTargetRate: 100
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bAgi,1; bonus bFlee2,1; } }'
-    SupportScript: '{ petskillbonus bPerfectHide,1,3600,0; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAgi,1; bonus bFlee2,1; }'
+    SupportScript: 'petskillbonus bPerfectHide,1,3600,0;'
   - MobId: 1057
     TameWithId: 634
     EggItemId: 9016
@@ -406,9 +406,9 @@ Body:
     AttackRate: 300
     RetaliateRate: 800
     ChangeTargetRate: 400
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bCritical,3; bonus bLuk,-1; } }'
-    SupportScript: '{ petloot 20; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bCritical,3; bonus bLuk,-1; }'
+    SupportScript: 'petloot 20;'
   - MobId: 1023
     TameWithId: 635
     EggItemId: 9017
@@ -429,9 +429,9 @@ Body:
     AttackRate: 600
     RetaliateRate: 200
     ChangeTargetRate: 300
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bAtk,10; bonus bDef,-3; } }'
-    SupportScript: '{ petskillattack2 "NPC_PIERCINGATT",100,1,0,10; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAtk,10; bonus bDef,-3; }'
+    SupportScript: 'petskillattack2 "NPC_PIERCINGATT",100,1,0,10;'
   - MobId: 1026
     TameWithId: 636
     EggItemId: 9018
@@ -452,9 +452,9 @@ Body:
     AttackRate: 300
     RetaliateRate: 750
     ChangeTargetRate: 300
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bInt,1; bonus bDef,1; } }'
-    SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bInt,1; bonus bDef,1; }'
+    SupportScript: 'petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10;'
   - MobId: 1110
     TameWithId: 637
     EggItemId: 9019
@@ -475,9 +475,9 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMatkRate,1; bonus bAtkRate,-1; } }'
-    SupportScript: '{ petskillattack "BS_HAMMERFALL",1,0,10; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMatkRate,1; bonus bAtkRate,-1; }'
+    SupportScript: 'petskillattack "BS_HAMMERFALL",1,0,10;'
   - MobId: 1170
     TameWithId: 638
     EggItemId: 9020
@@ -498,9 +498,9 @@ Body:
     AttackRate: 100
     RetaliateRate: 1000
     ChangeTargetRate: 200
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bStr,1; bonus bDex,1; } }'
-    SupportScript: '{ petskillsupport "AL_HEAL",5,60,33,100; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bStr,1; bonus bDex,1; }'
+    SupportScript: 'petskillsupport "AL_HEAL",5,60,33,100;'
   - MobId: 1029
     TameWithId: 639
     EggItemId: 9021
@@ -521,9 +521,9 @@ Body:
     AttackRate: 650
     RetaliateRate: 450
     ChangeTargetRate: 150
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMatkRate,-1; bonus bAtkRate,1; } }'
-    SupportScript: '{ petskillsupport "PR_MAGNIFICAT",2,60,50,50; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMatkRate,-1; bonus bAtkRate,1; }'
+    SupportScript: 'petskillsupport "PR_MAGNIFICAT",2,60,50,50;'
   - MobId: 1155
     TameWithId: 640
     EggItemId: 9022
@@ -544,9 +544,9 @@ Body:
     AttackRate: 800
     RetaliateRate: 400
     ChangeTargetRate: 100
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bDef,-2; bonus bMdef,-2; bonus bAspdRate,1; } }'
-    SupportScript: '{ petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bDef,-2; bonus bMdef,-2; bonus bAspdRate,1; }'
+    SupportScript: 'petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10;'
   - MobId: 1109
     TameWithId: 641
     EggItemId: 9023
@@ -567,9 +567,9 @@ Body:
     AttackRate: 800
     RetaliateRate: 200
     ChangeTargetRate: 100
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMatkRate,1; bonus bAtkRate,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; } }'
-    SupportScript: '{ petskillbonus bAgiDexStr,6,20,40; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMatkRate,1; bonus bAtkRate,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; }'
+    SupportScript: 'petskillbonus bAgiDexStr,6,20,40;'
   - MobId: 1101
     TameWithId: 642
     EggItemId: 9024
@@ -590,9 +590,9 @@ Body:
     AttackRate: 1000
     RetaliateRate: 100
     ChangeTargetRate: 200
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bDef,1; bonus bMdef,1; bonus2 bResEff,Eff_Stun,-100; } }'
-    SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bDef,1; bonus bMdef,1; bonus2 bResEff,Eff_Stun,-100; }'
+    SupportScript: 'petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5;'
   - MobId: 1188
     TameWithId: 659
     EggItemId: 9025
@@ -613,9 +613,9 @@ Body:
     AttackRate: 600
     RetaliateRate: 200
     ChangeTargetRate: 400
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bVit,1; bonus2 bResEff,Eff_Stun,100; } }'
-    SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bVit,1; bonus2 bResEff,Eff_Stun,100; }'
+    SupportScript: 'petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1;'
   - MobId: 1200
     TameWithId: 660
     EggItemId: 9026
@@ -635,9 +635,9 @@ Body:
     AttackRate: 1000
     RetaliateRate: 100
     ChangeTargetRate: 500
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-      bAddRace,RC_Demihuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; bonus2 bAddRace,RC_Player,2; bonus2 bMagicAddRace,RC_Player,2; } }'
-    SupportScript: '{ petskillattack "AS_SONICBLOW",1,0,3; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bAddRace,RC_Demihuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; bonus2 bAddRace,RC_Player,2; bonus2 bMagicAddRace,RC_Player,2; }'
+    SupportScript: 'petskillattack "AS_SONICBLOW",1,0,3;'
   - MobId: 1275
     TameWithId: 661
     EggItemId: 9027
@@ -657,9 +657,9 @@ Body:
     AttackRate: 100
     RetaliateRate: 1000
     ChangeTargetRate: 200
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
-    SupportScript: '{ petskillsupport "AL_HEAL",5,60,25,100; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; }'
+    SupportScript: 'petskillsupport "AL_HEAL",5,60,25,100;'
   - MobId: 1815
     EggItemId: 9028
     FoodItemId: 511
@@ -678,9 +678,9 @@ Body:
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-      bSubEle,Ele_Neutral,1; bonus bMaxHPrate,-1; } }'
-    SupportScript: '{ petskillsupport "CR_DEFENDER",3,240,50,100; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bSubEle,Ele_Neutral,1; bonus bMaxHPrate,-1; }'
+    SupportScript: 'petskillsupport "CR_DEFENDER",3,240,50,100;'
   - MobId: 1245
     TameWithId: 12225
     EggItemId: 9029
@@ -700,9 +700,9 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMaxHP,30; bonus2 bSubEle,Ele_Water,1; } }'
-    SupportScript: '{ petskillattack "MG_SIGHT",5,5,5; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxHP,30; bonus2 bSubEle,Ele_Water,1; }'
+    SupportScript: 'petskillattack "MG_SIGHT",5,5,5;'
   - MobId: 1519
     TameWithId: 12395
     EggItemId: 9030
@@ -722,9 +722,9 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bDef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
-    SupportScript: '{ petskillattack "CR_SHIELDCHARGE",5,5,5; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bDef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; }'
+    SupportScript: 'petskillattack "CR_SHIELDCHARGE",5,5,5;'
   - MobId: 1879
     EggItemId: 9031
     FoodItemId: 7766
@@ -743,7 +743,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    SupportScript: '{ petskillattack "TF_THROWSTONE",1,5,5; }'
+    SupportScript: 'petskillattack "TF_THROWSTONE",1,5,5;'
   - MobId: 1122
     TameWithId: 14569
     EggItemId: 9032
@@ -763,7 +763,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    SupportScript: '{ petskillattack "NPC_WINDATTACK",5,5,5; }'
+    SupportScript: 'petskillattack "NPC_WINDATTACK",5,5,5;'
   - MobId: 1123
     TameWithId: 14570
     EggItemId: 9033
@@ -783,7 +783,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    SupportScript: '{ petskillattack "NPC_FIREATTACK",5,5,5; }'
+    SupportScript: 'petskillattack "NPC_FIREATTACK",5,5,5;'
   - MobId: 1125
     TameWithId: 14571
     EggItemId: 9034
@@ -803,7 +803,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    SupportScript: '{ petskillattack "NPC_GROUNDATTACK",5,5,5; }'
+    SupportScript: 'petskillattack "NPC_GROUNDATTACK",5,5,5;'
   - MobId: 1385
     TameWithId: 14572
     EggItemId: 9035
@@ -823,7 +823,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    SupportScript: '{ petskillattack "SM_MAGNUM",5,5,5; }'
+    SupportScript: 'petskillattack "SM_MAGNUM",5,5,5;'
   - MobId: 1382
     TameWithId: 14573
     EggItemId: 9036
@@ -843,7 +843,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    SupportScript: '{ petskillattack "WZ_METEOR",2,5,5; }'
+    SupportScript: 'petskillattack "WZ_METEOR",2,5,5;'
   - MobId: 1208
     TameWithId: 14574
     EggItemId: 9037
@@ -863,9 +863,9 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bAgi,3; bonus bDex,1; } }'
-    SupportScript: '{ petskillattack "NPC_UNDEADATTACK",5,5,5; }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAgi,3; bonus bDex,1; }'
+    SupportScript: 'petskillattack "NPC_UNDEADATTACK",5,5,5;'
   - MobId: 1963
     EggItemId: 9038
     FoodItemId: 554
@@ -884,7 +884,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    SupportScript: '{ petskillattack "CR_SHIELDCHARGE",5,5,5; }'
+    SupportScript: 'petskillattack "CR_SHIELDCHARGE",5,5,5;'
   - MobId: 1040
     TameWithId: 12371
     EggItemId: 9053
@@ -905,8 +905,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMaxHP,100; bonus bFlee,-5; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxHP,100; bonus bFlee,-5; }'
   - MobId: 1143
     TameWithId: 12361
     EggItemId: 9043
@@ -927,8 +927,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bSPrecovRate,3; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bSPrecovRate,3; }'
   - MobId: 1148
     TameWithId: 12368
     EggItemId: 9050
@@ -949,8 +949,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bVit,1; bonus2 bResEff,Eff_Stone,500; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bVit,1; bonus2 bResEff,Eff_Stone,500; }'
   - MobId: 1179
     TameWithId: 12363
     EggItemId: 9045
@@ -971,8 +971,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bFlee,7; bonus bDef,-3; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bFlee,7; bonus bDef,-3; }'
   - MobId: 1299
     TameWithId: 12364
     EggItemId: 9046
@@ -993,8 +993,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-      bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3; }'
   - MobId: 1370
     TameWithId: 12373
     EggItemId: 9055
@@ -1015,8 +1015,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-      bHpDrainRate,50,5; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bHpDrainRate,50,5; }'
   - MobId: 1374
     TameWithId: 12370
     EggItemId: 9052
@@ -1037,8 +1037,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMaxSPRate,3; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxSPRate,3; }'
   - MobId: 1379
     TameWithId: 12372
     EggItemId: 9054
@@ -1059,8 +1059,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-      bResEff,Eff_Sleep,10000; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bResEff,Eff_Sleep,10000; }'
   - MobId: 1401
     TameWithId: 12362
     EggItemId: 9044
@@ -1081,8 +1081,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bAgi,2; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bAgi,2; }'
   - MobId: 1404
     TameWithId: 12366
     EggItemId: 9048
@@ -1103,8 +1103,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bInt,1; bonus bCastrate,-3; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bInt,1; bonus bCastrate,-3; }'
   - MobId: 1416
     TameWithId: 12365
     EggItemId: 9047
@@ -1125,8 +1125,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMaxSP,30; bonus bSPrecovRate,5; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxSP,30; bonus bSPrecovRate,5; }'
   - MobId: 1495
     TameWithId: 12369
     EggItemId: 9051
@@ -1147,8 +1147,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-      bSubEle,Ele_Fire,3; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bSubEle,Ele_Fire,3; }'
   - MobId: 1504
     TameWithId: 12367
     EggItemId: 9049
@@ -1169,8 +1169,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bCritAtkRate,5; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bCritAtkRate,5; }'
   - MobId: 1505
     TameWithId: 12360
     EggItemId: 9042
@@ -1191,8 +1191,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMaxHPRate,3; bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxHPRate,3; bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10; }'
   - MobId: 1513
     TameWithId: 12358
     EggItemId: 9040
@@ -1213,8 +1213,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
-      bMaxSP,10; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus
+      bMaxSP,10; }'
   - MobId: 1586
     TameWithId: 12359
     EggItemId: 9041
@@ -1235,8 +1235,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-      bSubRace,RC_Brute,3; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bSubRace,RC_Brute,3; }'
   - MobId: 1630
     TameWithId: 12357
     EggItemId: 9039
@@ -1277,8 +1277,8 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-    Script: '{ .@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
-      bSubEle,Ele_Fire,2; bonus2 bAddEle,Ele_Fire,2; } }'
+    Script: '.@i = getpetinfo(PETINFO_INTIMATE); if(.@i >= PET_INTIMATE_LOYAL){ bonus2
+      bSubEle,Ele_Fire,2; bonus2 bAddEle,Ele_Fire,2; }'
   - MobId: 2057
     TameWithId: 12408
     EggItemId: 6221
