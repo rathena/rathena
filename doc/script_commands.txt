@@ -6168,7 +6168,7 @@ Examples:
 	pcblock PCBLOCK_ATTACK|PCBLOCK_SKILL, true;
 
 // Re-enables attack, skills and item use
-	pcblock PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_ITEM, false;
+	pcblock PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM, false;
 
 // checkpcblock related checks
 	if (checkpcblock() & PCBLOCK_IMMUNE)
