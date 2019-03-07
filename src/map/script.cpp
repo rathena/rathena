@@ -2741,7 +2741,11 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 					if (instance_id) {
 						auto idata = instance_search(instance_id);
 
-						data->u.str = (char*)i64db_get(idata->regs.vars, reference_getuid(data));
+						if (!idata) {
+							ShowWarning("script:get_val: Failed to find instance %d with instance variable '%s', defaulting to \"\"\n", instance_id, name);
+							data->u.str = NULL;
+						} else
+							data->u.str = (char*)i64db_get(idata->regs.vars, reference_getuid(data));
 					} else {
 						ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to \"\"\n", name);
 						data->u.str = NULL;
@@ -2802,7 +2806,11 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 						if (instance_id) {
 							auto idata = instance_search(instance_id);
 
-							data->u.num = (int)i64db_iget(idata->regs.vars, reference_getuid(data));
+							if (!idata) {
+								ShowWarning("script:get_val: Failed to find instance %d with instance variable '%s', defaulting to 0\n", instance_id, name);
+								data->u.num = 0;
+							} else
+								data->u.num = (int)i64db_iget(idata->regs.vars, reference_getuid(data));
 						} else {
 							ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
 							data->u.num = 0;
@@ -3021,7 +3029,8 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 				if (instance_id) {
 					auto idata = instance_search(instance_id);
 
-					src = &idata->regs;
+					if (idata)
+						src = &idata->regs;
 				}
 				break;
 			}
@@ -3143,6 +3152,11 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 					if (instance_id) {
 						auto idata = instance_search(instance_id);
 
+						if (!idata) {
+							ShowWarning("script_set_reg: Failed to find instance %d and write instance variable '%s', NPC is not in an instance!\n", instance_id, name);
+							script_reportsrc(st);
+							return 1;
+						}
 						if (str[0]) {
 							i64db_put(idata->regs.vars, num, aStrdup(str));
 							if( script_getvaridx(num) )
@@ -3209,6 +3223,11 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 					if (instance_id) {
 						auto idata = instance_search(instance_id);
 
+						if (!idata) {
+							ShowWarning("script_set_reg: Failed to find instance %d and write instance variable '%s', NPC is not in an instance!\n", instance_id, name);
+							script_reportsrc(st);
+							return 1;
+						}
 						if (val != 0) {
 							i64db_iput(idata->regs.vars, num, val);
 							if( script_getvaridx(num) )
@@ -19913,8 +19932,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	int x = va_arg(ap,int);
 	int y = va_arg(ap,int);
 	unsigned short instance_id = va_arg(ap,unsigned int);
-	struct map_session_data *sd = NULL;
-	int owner_id = 0;
+	struct map_session_data *sd;
 
 	nullpo_retr(0, bl);
 
@@ -19925,7 +19943,10 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 
 	auto idata = instance_search(instance_id);
 
-	owner_id = idata->owner_id;
+	if (!idata)
+		return 0;
+
+	int owner_id = idata->owner_id;
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -19970,6 +19991,11 @@ BUILDIN_FUNC(instance_warpall)
 		return SCRIPT_CMD_FAILURE;
 
 	auto idata = instance_search(instance_id);
+
+	if (!idata) {
+		ShowError("buildin_instance_warpall: Instance is not found.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	for(const auto &it : idata->map)
 		map_foreachinmap(buildin_instance_warpall_sub, it.m, BL_PC, map_id2index(m), x, y, instance_id);
@@ -20022,7 +20048,7 @@ BUILDIN_FUNC(instance_announce) {
 BUILDIN_FUNC(instance_check_party)
 {
 	int amount, min, max, i, party_id, c = 0;
-	struct party_data *p = NULL;
+	struct party_data *p;
 
 	amount = script_hasdata(st,3) ? script_getnum(st,3) : 1; // Amount of needed Partymembers for the Instance.
 	min = script_hasdata(st,4) ? script_getnum(st,4) : 1; // Minimum Level needed to join the Instance.

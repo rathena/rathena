@@ -65,12 +65,6 @@ struct s_instance_data {
 	std::vector<s_instance_map> map; ///< Array of maps in instance
 };
 
-/// Instance Idle Queue data
-static struct s_instance_wait {
-	std::deque<int> id;
-	int timer;
-} instance_wait;
-
 /// Instance DB entry
 struct s_instance_db {
 	int id; ///< Instance ID

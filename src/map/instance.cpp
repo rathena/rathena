@@ -24,6 +24,12 @@
 #include "party.hpp"
 #include "pc.hpp"
 
+/// Instance Idle Queue data
+struct s_instance_wait {
+	std::deque<int> id;
+	int timer;
+} instance_wait;
+
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
 int16 instance_start = 0;
@@ -60,8 +66,18 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 		}
 
-		if (!this->nodeExists(node, "EnterAt")) {
-			this->invalidWarning(node, "Node \"EnterAt\" is missing.\n");
+		if (!this->nodeExists(node, "EnterMap")) {
+			this->invalidWarning(node, "Node \"EnterMap\" is missing.\n");
+			return 0;
+		}
+
+		if (!this->nodeExists(node, "EnterX")) {
+			this->invalidWarning(node, "Node \"EnterX\" is missing.\n");
+			return 0;
+		}
+
+		if (!this->nodeExists(node, "EnterY")) {
+			this->invalidWarning(node, "Node \"EnterY\" is missing.\n");
 			return 0;
 		}
 
@@ -110,43 +126,39 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 	*/
 
-	if (!this->nodeExists(node, "EnterAt")) {
-		const YAML::Node &enter_list = node["EnterAt"];
+	if (this->nodeExists(node, "EnterMap")) {
+		std::string map;
+		int16 m;
 
-		if (this->nodeExists(enter_list, "Map")) {
-			std::string map;
-			int16 m;
+		if (!this->asString(node, "EnterMap", map))
+			return 0;
 
-			if (!this->asString(enter_list, "Map", map))
-				return 0;
+		m = map_mapname2mapid(map.c_str());
 
-			m = map_mapname2mapid(map.c_str());
-
-			if (!m) {
-				this->invalidWarning(enter_list["Map"], "Unknown Enter Map %s, skipping.\n", map.c_str());
-				return 0;
-			}
-
-			instance->enter.map = m;
+		if (!m) {
+			this->invalidWarning(node, "Unknown Enter Map %s, skipping.\n", map.c_str());
+			return 0;
 		}
 
-		if (this->nodeExists(enter_list, "X")) {
-			int16 x;
+		instance->enter.map = m;
+	}
 
-			if (!this->asInt16(enter_list, "X", x))
-				return 0;
+	if (this->nodeExists(node, "EnterX")) {
+		int16 x;
 
-			instance->enter.x = x;
-		}
+		if (!this->asInt16(node, "EnterX", x))
+			return 0;
 
-		if (this->nodeExists(enter_list, "Y")) {
-			int16 y;
+		instance->enter.x = x;
+	}
 
-			if (!this->asInt16(enter_list, "Y", y))
-				return 0;
+	if (this->nodeExists(node, "EnterY")) {
+		int16 y;
 
-			instance->enter.y = y;
-		}
+		if (!this->asInt16(node, "EnterY", y))
+			return 0;
+
+		instance->enter.y = y;
 	}
 
 	if (this->nodeExists(node, "AdditionalMaps")) {
@@ -1092,9 +1104,6 @@ void do_reload_instance(void)
 	// Reset player to instance beginning
 	iter = mapit_getallusers();
 	for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-		if (!sd)
-			continue;
-
 		struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 		if (sd && mapdata->instance_id) {

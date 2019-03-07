@@ -47,10 +47,9 @@ Instances:
   - Id: 1
     Name: "Endless Tower"
     LimitTime: 14400
-    EnterAt:
-      Map: "1@tower"
-      X: 50
-      Y: 355
+    EnterMap: "1@tower"
+    EnterX: 50
+    EnterY: 355
     AdditionalMaps:
       - Map: "2@tower"
       - Map: "3@tower"
@@ -60,248 +59,216 @@ Instances:
   - Id: 2
     Name: "Sealed Catacomb"
     LimitTime: 7200
-    EnterAt:
-      Map: "1@cata"
-      X: 100
-      Y: 224
+    EnterMap: "1@cata"
+    EnterX: 100
+    EnterY: 224
     AdditionalMaps:
       - Map: "2@cata"
   - Id: 3
     Name: "Orc's Memory"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@orcs" 
-      X: 179
-      Y: 15
+    EnterMap: "1@orcs" 
+    EnterX: 179
+    EnterY: 15
     AdditionalMaps:
       - Map: "2@orcs"
   - Id: 4
     Name: "Nidhoggur's Nest"
     LimitTime: 14400
-    EnterAt:
-      Map: "1@nyd"
-      X: 32
-      Y: 36
+    EnterMap: "1@nyd"
+    EnterX: 32
+    EnterY: 36
     AdditionalMaps:
       - Map: "2@nyd"
   - Id: 5
     Name: "Mistwood Maze"
     LimitTime: 7200
-    EnterAt:
-      Map: "1@mist"
-      X: 89
-      Y: 29
+    EnterMap: "1@mist"
+    EnterX: 89
+    EnterY: 29
   - Id: 6
     Name: "Culvert"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@pump"
-      X: 63
-      Y: 98
+    EnterMap: "1@pump"
+    EnterX: 63
+    EnterY: 98
     AdditionalMaps:
       - Map: "2@pump"
   - Id: 7
     Name: "Octopus Cave"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@cash"
-      X: 199
-      Y: 99
+    EnterMap: "1@cash"
+    EnterX: 199
+    EnterY: 99
   - Id: 8
     Name: "Bangungot Hospital 2F"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@ma_h"
-      X: 40
-      Y: 157
+    EnterMap: "1@ma_h"
+    EnterX: 40
+    EnterY: 157
   - Id: 9
     Name: "Buwaya Cave"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@ma_c"
-      X: 35
-      Y: 57
+    EnterMap: "1@ma_c"
+    EnterX: 35
+    EnterY: 57
   - Id: 10
     Name: "Bakonawa Lake"
     LimitTime: 7200
-    EnterAt:
-      Map: "1@ma_b"
-      X: 64
-      Y: 51
+    EnterMap: "1@ma_b"
+    EnterX: 64
+    EnterY: 51
   - Id: 11
     Name: "Wolfchev's Laboratory"
     LimitTime: 14400
-    EnterAt:
-      Map: "1@lhz"
-      X: 45
-      Y: 148
+    EnterMap: "1@lhz"
+    EnterX: 45
+    EnterY: 148
   - Id: 12
     Name: "Old Glast Heim"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@gl_k"
-      X: 150
-      Y: 20
+    EnterMap: "1@gl_k"
+    EnterX: 150
+    EnterY: 20
     AdditionalMaps:
       - Map: "2@gl_k"
   - Id: 13
     Name: "Eclage Interior"
     LimitTime: 1200
-    EnterAt:
-      Map: "1@ecl"
-      X: 60
-      Y: 50
+    EnterMap: "1@ecl"
+    EnterX: 60
+    EnterY: 50
   - Id: 14
     Name: "Sara's Memories"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@sara"
-      X: 250
-      Y: 155
+    EnterMap: "1@sara"
+    EnterX: 250
+    EnterY: 155
   - Id: 15
     Name: "Geffen Magic Tournament"
     LimitTime: 7200
-    EnterAt:
-      Map: "1@gef"
-      X: 119
-      Y: 209
+    EnterMap: "1@gef"
+    EnterX: 119
+    EnterY: 209
     AdditionalMaps:
       - Map: "1@gef_in"
       - Map: "1@ge_st"
   - Id: 16
     Name: "Horror Toy Factory"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@xm_d"
-      X: 111
-      Y: 22
+    EnterMap: "1@xm_d"
+    EnterX: 111
+    EnterY: 22
   - Id: 17
     Name: "Faceworm's Nest"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@face"
-      X: 112
-      Y: 370
+    EnterMap: "1@face"
+    EnterX: 112
+    EnterY: 370
   - Id: 18
     Name: "Ghost Palace"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@spa"
-      X: 42
-      Y: 196
+    EnterMap: "1@spa"
+    EnterX: 42
+    EnterY: 196
   - Id: 19
     Name: "Devil's Tower"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@tnm1"
-      X: 50
-      Y: 104
+    EnterMap: "1@tnm1"
+    EnterX: 50
+    EnterY: 104
     AdditionalMaps:
       - Map: "1@tnm2"
       - Map: "1@tnm3"
   - Id: 20
     Name: "Assault on the Airship"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@air1"
-      X: 244
-      Y: 73
+    EnterMap: "1@air1"
+    EnterX: 244
+    EnterY: 73
     AdditionalMaps:
       - Map: "1@air2"
   - Id: 21
     Name: "Fenrir and Sarah"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@glast"
-      X: 367
-      Y: 304
+    EnterMap: "1@glast"
+    EnterX: 367
+    EnterY: 304
 #  - Id: 22
 #    Name: "Wave Mode - Forest"
 #    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@def01"
-#      X: 50
-#      Y: 21
+#    EnterMap: "1@def01"
+#    EnterX: 50
+#    EnterY: 21
 #  - Id: 23
 #    Name: "Wave Mode - Sky"
 #    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@def02"
-#      X: 29
-#      Y: 35
+#    EnterMap: "1@def02"
+#    EnterX: 29
+#    EnterY: 35
 #  - Id: 24
 #    Name: "Nightmarish Jitterbug"
 #    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@jtb"
-#      X: 16
-#      Y: 17
+#    EnterMap: "1@jtb"
+#    EnterX: 16
+#    EnterY: 17
   - Id: 25
     Name: "Isle of Bios"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@dth1"
-      X: 17
-      Y: 93
+    EnterMap: "1@dth1"
+    EnterX: 17
+    EnterY: 93
     AdditionalMaps:
       - Map: "1@dth2"
       - Map: "1@dth3"
   - Id: 26
     Name: "Morse's Cave"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@rev"
-      X: 26
-      Y: 181
+    EnterMap: "1@rev"
+    EnterX: 26
+    EnterY: 181
 #  - Id: 27
 #    Name: "Temple of the Demon God"
 #    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@eom"
-#      X: 101
-#      Y: 16
+#    EnterMap: "1@eom"
+#    EnterX: 101
+#    EnterY: 16
   - Id: 28
     Name: "Central Laboratory"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@lab"
-      X: 120
-      Y: 30
+    EnterMap: "1@lab"
+    EnterX: 120
+    EnterY: 30
   - Id: 29
     Name: "Last room"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@uns"
-      X: 145
-      Y: 35
+    EnterMap: "1@uns"
+    EnterX: 145
+    EnterY: 35
 #  - Id: 30
 #    Name: "Charleston in Distress"
 #    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@mcd"
-#      X: 127
-#      Y: 282
+#    EnterMap: "1@mcd"
+#    EnterX: 127
+#    EnterY: 282
   - Id: 31
     Name: "Ritual of Blessing"
     LimitTime: 3600
-    EnterAt:
-      Map: "2@mir"
-      X: 101
-      Y: 12
+    EnterMap: "2@mir"
+    EnterX: 101
+    EnterY: 12
   - Id: 32
     Name: "Room of Consciousness"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@mir"
-      X: 101
-      Y: 10
+    EnterMap: "1@mir"
+    EnterX: 101
+    EnterY: 10
 #  - Id: 33
 #    Name: "Sky Fortress Invasion"
 #    LimitTime: 3600
-#    EnterAt:
-#      Map: "1@sthb"
-#      X: 54
-#      Y: 67
+#    EnterMap: "1@sthb"
+#    EnterX: 54
+#    EnterY: 67
 #    AdditionalMaps:
 #      - Map: "1@sthc"
 #      - Map: "1@sthd"

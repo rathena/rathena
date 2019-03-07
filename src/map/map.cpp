@@ -2653,13 +2653,11 @@ bool map_addnpc(int16 m,struct npc_data *nd)
  *------------------------------------------*/
 int map_addinstancemap(int src_m, unsigned short instance_id)
 {
-	const char *iname;
-	size_t num_cell, size;
-
 	if(src_m < 0)
 		return -1;
 
-	iname = map_mapid2mapname(src_m);
+	const char *iname = map_mapid2mapname(src_m);
+
 	if(strlen(iname) > 20) {
 		// against buffer overflow
 		ShowError("map_addinstancemap: can't add long map name \"%s\"\n", iname);
@@ -2709,11 +2707,13 @@ int map_addinstancemap(int src_m, unsigned short instance_id)
 	dst_map->npc_num = 0;
 
 	// Reallocate cells
-	num_cell = dst_map->xs * dst_map->ys;
+	size_t num_cell = dst_map->xs * dst_map->ys;
+
 	CREATE( dst_map->cell, struct mapcell, num_cell );
 	memcpy( dst_map->cell, src_map->cell, num_cell * sizeof(struct mapcell) );
 
-	size = dst_map->bxs * dst_map->bys * sizeof(struct block_list*);
+	size_t size = dst_map->bxs * dst_map->bys * sizeof(struct block_list*);
+
 	dst_map->block = (struct block_list **)aCalloc(1,size);
 	dst_map->block_mob = (struct block_list **)aCalloc(1,size);
 
@@ -2936,7 +2936,7 @@ void map_removemobs(int16 m)
  *------------------------------------------*/
 const char* map_mapid2mapname(int m)
 {
-		struct map_data *mapdata = map_getmapdata(m);
+	struct map_data *mapdata = map_getmapdata(m);
 
 	if (mapdata->instance_id) { // Instance map check
 		auto idata = instance_search(map[m].instance_id);

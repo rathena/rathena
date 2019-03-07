@@ -47,10 +47,9 @@ Instances:
   - Id: 1
     Name: "Endless Tower"
     LimitTime: 14400
-    EnterAt:
-      Map: "1@tower"
-      X: 50
-      Y: 355
+    EnterMap: "1@tower"
+    EnterX: 50
+    EnterY: 355
     AdditionalMaps:
       - Map: "2@tower"
       - Map: "3@tower"
@@ -60,27 +59,24 @@ Instances:
   - Id: 2
     Name: "Sealed Catacomb"
     LimitTime: 7200
-    EnterAt:
-      Map: "1@cata"
-      X: 100
-      Y: 224
+    EnterMap: "1@cata"
+    EnterX: 100
+    EnterY: 224
     AdditionalMaps:
       - Map: "2@cata"
   - Id: 3
     Name: "Orc's Memory"
     LimitTime: 3600
-    EnterAt:
-      Map: "1@orcs" 
-      X: 179
-      Y: 15
+    EnterMap: "1@orcs" 
+    EnterX: 179
+    EnterY: 15
     AdditionalMaps:
       - Map: "2@orcs"
   - Id: 4
     Name: "Nidhoggur's Nest"
     LimitTime: 14400
-    EnterAt:
-      Map: "1@nyd"
-      X: 32
-      Y: 36
+    EnterMap: "1@nyd"
+    EnterX: 32
+    EnterY: 36
     AdditionalMaps:
       - Map: "2@nyd"
