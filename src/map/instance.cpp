@@ -51,17 +51,17 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (!exists) {
 		if (!this->nodeExists(node, "Name")) {
-			this->invalidWarning(node, "");
+			this->invalidWarning(node, "Node \"Name\" is missing.\n");
 			return 0;
 		}
 
 		if (!this->nodeExists(node, "LimitTime")) {
-			this->invalidWarning(node, "");
+			this->invalidWarning(node, "Node \"LimitTime\" is missing.\n");
 			return 0;
 		}
 
 		if (!this->nodeExists(node, "EnterAt")) {
-			this->invalidWarning(node, "");
+			this->invalidWarning(node, "Node \"EnterAt\" is missing.\n");
 			return 0;
 		}
 
@@ -158,6 +158,11 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			m = map_mapname2mapid(map.c_str());
+
+			if (m == instance->enter.map) {
+				this->invalidWarning(map_list["Map"], "Additional Map %s is already listed as the Enter Map, skipping.\n", map.c_str());
+				continue;
+			}
 
 			if (!m) {
 				this->invalidWarning(map_list["Map"], "Unknown Additional Map %s, skipping.\n", map.c_str());
