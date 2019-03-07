@@ -31,10 +31,11 @@
 # IdleTimeOut - Time before an idle instance is destroyed in seconds.
 # 300 seconds by default.
 ###########################################################################
-# EnterAt - Location where players start.
-#   Map: Map Name
-#   X: X Coordinate
-#   Y: Y Coordinate
+# EnterMap: Map Name where players start.
+###########################################################################
+# EnterX: X Coordinate where players start.
+###########################################################################
+# EnterY: Y Coordinate where players start.
 ###########################################################################
 # AdditionalMaps - List of maps that are part of an instance.
 ###########################################################################
