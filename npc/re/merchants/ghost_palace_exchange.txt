@@ -8,18 +8,18 @@
 //= 1.0 First Version. [Capuche]
 //============================================================
 
-dali02,51,130,4	script	A traveler of dimension	4_F_SHABBY,{
-	mes "[A traveler of dimension]";
+dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
+	mes "[Dimension Traveler]";
 	mes "Adventurer friend <ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> is what I need. How about exchange it with something I have?";
 	next;
 	.@type = select( "Show me your weapon.", "Show me your armor.", "Anything special?", "I do not need." ) - 1;
-	mes "[A traveler of dimension]";
+	mes "[Dimension Traveler]";
 	switch(.@type) {
 	case 0:
 		mes "Oh! Are you interested in weapons? We have all the weapons we can get from the Ghost Palace. Why don't you choose one?";
 		break;
 	case 1:
-		mes "Armor? We have all the weapons we can get from the Ghost Palace. Why don't you choose one?";
+		mes "Armor? We have all the armors we can get from the Ghost Palace. Why don't you choose one?";
 		break;
 	case 2:
 		mes "Huhh! It seems like many of them already heard that I have the best stuff. Feel free to check out my collections.";
@@ -29,7 +29,7 @@ dali02,51,130,4	script	A traveler of dimension	4_F_SHABBY,{
 		close;
 	}
 	next;
-	mes "[A traveler of dimension]";
+	mes "[Dimension Traveler]";
 	mes "Ah! The number that is written beside will be needed";
 	mes "<ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> Please keep that in mind.";
 
@@ -77,7 +77,7 @@ dali02,51,130,4	script	A traveler of dimension	4_F_SHABBY,{
 	while(true) {
 		next;
 		.@s = (select(.@menu$) - 1) * 2;
-		mes "[A traveler of dimension]";
+		mes "[Dimension Traveler]";
 		if (.@type != 1)	// armor type doesn't display item info
 			mes "Do you mean <ITEM>[" + getitemname(.@item[.@s]) + "]<INFO>" + .@item[.@s] + "</INFO></ITEM>?";
 		mes "" + .@item[.@s+1] + " ^006400Gray Shard^000000 is required for exchange.";
@@ -86,31 +86,31 @@ dali02,51,130,4	script	A traveler of dimension	4_F_SHABBY,{
 		case 1:
 			break;
 		case 2:
-			mes "[A traveler of dimension]";
+			mes "[Dimension Traveler]";
 			switch(.@type) {
 			case 0:
 				mes "I have more than enough weapons.";
 				break;
 			case 1:
-				mes "We have many armors for you. Why don't you pic one?";
+				mes "We have many armors for you. Why don't you pick one?";
 				break;
 			case 2:
-				mes "If you bring me Gray Shard, I will any you anything that you want.";
+				mes "If you bring me Gray Shard, I will trade it with anything you want.";
 				break;
 			}
 			continue;
 		case 3:
-			mes "[A traveler of dimension]";
+			mes "[Dimension Traveler]";
 			mes "Take care friend~ See you next time!";
 			close;
 		}
 		if (countitem(6672) < .@item[.@s+1]) {
-			mes "[A traveler of dimension]";
+			mes "[Dimension Traveler]";
 			mes "You put me in difficult situation, friend.";
 			mes "I am in need of Gray Shard. I will exchange it for ^006400" + .@item[.@s+1] + " Gray Shard^000000.";
 			close;
 		}
-		mes "[A traveler of dimension]";
+		mes "[Dimension Traveler]";
 		mes "Thank you. Come back if you need anything else.";
 		delitem 6672, .@item[.@s+1];
 		getitem .@item[.@s], 1;
