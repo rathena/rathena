@@ -2165,4 +2165,6 @@ void do_final_pet(void)
 {
 	ers_destroy(item_drop_ers);
 	ers_destroy(item_drop_list_ers);
+
+	pet_db.clear();
 }
