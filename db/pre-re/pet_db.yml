@@ -6,8 +6,6 @@
 #
 ###########################################################################
 # - MobId                    Monster ID of the pet
-#   Name                     the monster as defined in the database.
-#   JName                    The display name of the monster when hatched.
 #   TameWithId               Pet Tame Item ID.
 #   EggItemId                Pet Egg ID.
 #   EquipItemId              Pet Accessory ID.
@@ -44,8 +42,6 @@ Header:
 
 Body:
   - MobId: 1002
-    Name: PORING
-    JName: Poring
     TameWithId: 619
     EggItemId: 9001
     EquipItemId: 10013
@@ -69,8 +65,6 @@ Body:
       bLuk,2; bonus bCritical,1; } }'
     SupportScript: '{ petloot 10; }'
   - MobId: 1113
-    Name: DROPS
-    JName: Drops
     TameWithId: 620
     EggItemId: 9002
     EquipItemId: 10013
@@ -94,8 +88,6 @@ Body:
       bHit,3; bonus bAtk,3; } }'
     SupportScript: '{ petloot 10; }'
   - MobId: 1031
-    Name: POPORING
-    JName: Poporing
     TameWithId: 621
     EggItemId: 9003
     EquipItemId: 10013
@@ -119,8 +111,6 @@ Body:
       bLuk,2; bonus2 bSubEle,Ele_Poison,10; } }'
     SupportScript: '{ petloot 15; }'
   - MobId: 1063
-    Name: LUNATIC
-    JName: Lunatic
     TameWithId: 622
     EggItemId: 9004
     EquipItemId: 10007
@@ -144,8 +134,6 @@ Body:
       bCritical,2; bonus bAtk,2; } }'
     SupportScript: '{ petskillbonus bLuk,3,10,50; }'
   - MobId: 1049
-    Name: PICKY
-    JName: Picky
     TameWithId: 623
     EggItemId: 9005
     EquipItemId: 10012
@@ -169,8 +157,6 @@ Body:
       bStr,1; bonus bAtk,5; } }'
     SupportScript: '{ petskillbonus bStr,3,10,50; }'
   - MobId: 1011
-    Name: CHONCHON
-    JName: ChonChon
     TameWithId: 624
     EggItemId: 9006
     EquipItemId: 10002
@@ -194,8 +180,6 @@ Body:
       bAgi,1; bonus bFlee,2; } }'
     SupportScript: '{ petskillbonus bAgi,4,10,50; }'
   - MobId: 1042
-    Name: STEEL_CHONCHON
-    JName: Steel ChonChon
     TameWithId: 625
     EggItemId: 9007
     EquipItemId: 10002
@@ -219,8 +203,6 @@ Body:
       bFlee,6; bonus bAgi,-1; } }'
     SupportScript: '{ petskillbonus bAgiVit,4,20,40; }'
   - MobId: 1035
-    Name: HUNTER_FLY
-    JName: Hunter Fly
     TameWithId: 626
     EggItemId: 9008
     EquipItemId: 10002
@@ -244,8 +226,6 @@ Body:
       bFlee,-5; bonus bFlee2,2; } }'
     SupportScript: '{ petskillattack2 "NPC_WINDATTACK",888,2,0,10; }'
   - MobId: 1167
-    Name: SAVAGE_BABE
-    JName: Savage Babe
     TameWithId: 627
     EggItemId: 9009
     EquipItemId: 10015
@@ -269,8 +249,6 @@ Body:
       bVit,1; bonus bMaxHP,50; } }'
     SupportScript: '{ petskillbonus bVit,4,10,50; }'
   - MobId: 1107
-    Name: DESERT_WOLF_B
-    JName: Baby Desert Wolf
     TameWithId: 628
     EggItemId: 9010
     EquipItemId: 10003
@@ -294,8 +272,6 @@ Body:
       bInt,1; bonus bMaxSP,50; } }'
     SupportScript: '{ petskillattack "SM_PROVOKE",1,0,5; }'
   - MobId: 1052
-    Name: ROCKER
-    JName: Rocker
     TameWithId: 629
     EggItemId: 9011
     EquipItemId: 10014
@@ -319,8 +295,6 @@ Body:
       bHPrecovRate,5; bonus bMaxHP,25; } }'
     SupportScript: '{ petskillbonus bAllStats,1,10,50; }'
   - MobId: 1014
-    Name: SPORE
-    JName: Spore
     TameWithId: 630
     EggItemId: 9012
     EquipItemId: 10017
@@ -344,8 +318,6 @@ Body:
       bHit,5; bonus bAtk,-2; } }'
     SupportScript: '{ petrecovery SC_POISON,60; }'
   - MobId: 1077
-    Name: POISON_SPORE
-    JName: Poison Spore
     TameWithId: 631
     EggItemId: 9013
     EquipItemId: 10017
@@ -369,8 +341,6 @@ Body:
       bStr,1; bonus bInt,1; } }'
     SupportScript: '{ petskillattack "NPC_POISON",20,0,10; }'
   - MobId: 1019
-    Name: PECOPECO
-    JName: PecoPeco
     TameWithId: 632
     EggItemId: 9014
     EquipItemId: 10010
@@ -394,8 +364,6 @@ Body:
       bMaxHP,150; bonus bMaxSP,-10; } }'
     SupportScript: '{ petskillbonus bSpeedRate,25,20,20; }'
   - MobId: 1056
-    Name: SMOKIE
-    JName: Smokie
     TameWithId: 633
     EggItemId: 9015
     EquipItemId: 10019
@@ -419,8 +387,6 @@ Body:
       bAgi,1; bonus bFlee2,1; } }'
     SupportScript: '{ petskillbonus bPerfectHide,1,3600,0; }'
   - MobId: 1057
-    Name: YOYO
-    JName: Yoyo
     TameWithId: 634
     EggItemId: 9016
     EquipItemId: 10018
@@ -444,8 +410,6 @@ Body:
       bCritical,3; bonus bLuk,-1; } }'
     SupportScript: '{ petloot 20; }'
   - MobId: 1023
-    Name: ORK_WARRIOR
-    JName: Orc Warrior
     TameWithId: 635
     EggItemId: 9017
     EquipItemId: 10009
@@ -469,8 +433,6 @@ Body:
       bAtk,10; bonus bDef,-3; } }'
     SupportScript: '{ petskillattack2 "NPC_PIERCINGATT",100,1,0,10; }'
   - MobId: 1026
-    Name: MUNAK
-    JName: Munak
     TameWithId: 636
     EggItemId: 9018
     EquipItemId: 10008
@@ -494,8 +456,6 @@ Body:
       bInt,1; bonus bDef,1; } }'
     SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10; }'
   - MobId: 1110
-    Name: DOKEBI
-    JName: Dokebi
     TameWithId: 637
     EggItemId: 9019
     EquipItemId: 10005
@@ -519,8 +479,6 @@ Body:
       bMatkRate,1; bonus bAtkRate,-1; } }'
     SupportScript: '{ petskillattack "BS_HAMMERFALL",1,0,10; }'
   - MobId: 1170
-    Name: SOHEE
-    JName: Sohee
     TameWithId: 638
     EggItemId: 9020
     EquipItemId: 10016
@@ -544,8 +502,6 @@ Body:
       bStr,1; bonus bDex,1; } }'
     SupportScript: '{ petskillsupport "AL_HEAL",5,60,33,100; }'
   - MobId: 1029
-    Name: ISIS
-    JName: Isis
     TameWithId: 639
     EggItemId: 9021
     EquipItemId: 10006
@@ -569,8 +525,6 @@ Body:
       bMatkRate,-1; bonus bAtkRate,1; } }'
     SupportScript: '{ petskillsupport "PR_MAGNIFICAT",2,60,50,50; }'
   - MobId: 1155
-    Name: PETIT
-    JName: Petite
     TameWithId: 640
     EggItemId: 9022
     EquipItemId: 10011
@@ -594,8 +548,6 @@ Body:
       bDef,-2; bonus bMdef,-2; bonus bAspdRate,1; } }'
     SupportScript: '{ petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10; }'
   - MobId: 1109
-    Name: DEVIRUCHI
-    JName: Deviruchi
     TameWithId: 641
     EggItemId: 9023
     EquipItemId: 10004
@@ -619,8 +571,6 @@ Body:
       bMatkRate,1; bonus bAtkRate,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; } }'
     SupportScript: '{ petskillbonus bAgiDexStr,6,20,40; }'
   - MobId: 1101
-    Name: BAPHOMET_
-    JName: Baphomet Jr.
     TameWithId: 642
     EggItemId: 9024
     EquipItemId: 10001
@@ -644,8 +594,6 @@ Body:
       bDef,1; bonus bMdef,1; bonus2 bResEff,Eff_Stun,-100; } }'
     SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5; }'
   - MobId: 1188
-    Name: BON_GUN
-    JName: Bon Gun
     TameWithId: 659
     EggItemId: 9025
     EquipItemId: 10020
@@ -669,8 +617,6 @@ Body:
       bVit,1; bonus2 bResEff,Eff_Stun,100; } }'
     SupportScript: '{ petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1; }'
   - MobId: 1200
-    Name: ZHERLTHSH
-    JName: Zealotus
     TameWithId: 660
     EggItemId: 9026
     FoodItemId: 929
@@ -693,8 +639,6 @@ Body:
       bAddRace,RC_Demihuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; bonus2 bAddRace,RC_Player,2; bonus2 bMagicAddRace,RC_Player,2; } }'
     SupportScript: '{ petskillattack "AS_SONICBLOW",1,0,3; }'
   - MobId: 1275
-    Name: ALICE
-    JName: Alice
     TameWithId: 661
     EggItemId: 9027
     FoodItemId: 504
@@ -717,8 +661,6 @@ Body:
       bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
     SupportScript: '{ petskillsupport "AL_HEAL",5,60,25,100; }'
   - MobId: 1815
-    Name: EVENT_RICECAKE
-    JName: Rice Cake
     EggItemId: 9028
     FoodItemId: 511
     Fullness: 3
@@ -740,8 +682,6 @@ Body:
       bSubEle,Ele_Neutral,1; bonus bMaxHPrate,-1; } }'
     SupportScript: '{ petskillsupport "CR_DEFENDER",3,240,50,100; }'
   - MobId: 1245
-    Name: GOBLINE_XMAS
-    JName: Christmas Goblin
     TameWithId: 12225
     EggItemId: 9029
     FoodItemId: 911
@@ -764,8 +704,6 @@ Body:
       bMaxHP,30; bonus2 bSubEle,Ele_Water,1; } }'
     SupportScript: '{ petskillattack "MG_SIGHT",5,5,5; }'
   - MobId: 1519
-    Name: CHUNG_E
-    JName: Green Maiden
     TameWithId: 12395
     EggItemId: 9030
     FoodItemId: 6115
@@ -788,8 +726,6 @@ Body:
       bDef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; } }'
     SupportScript: '{ petskillattack "CR_SHIELDCHARGE",5,5,5; }'
   - MobId: 1879
-    Name: ECLIPSE_P
-    JName: Spring Rabbit
     EggItemId: 9031
     FoodItemId: 7766
     Fullness: 3
@@ -810,8 +746,6 @@ Body:
     Script: '{}'
     SupportScript: '{ petskillattack "TF_THROWSTONE",1,5,5; }'
   - MobId: 1122
-    Name: GOBLIN_1
-    JName: Goblin
     TameWithId: 14569
     EggItemId: 9032
     FoodItemId: 7821
@@ -833,8 +767,6 @@ Body:
     Script: '{}'
     SupportScript: '{ petskillattack "NPC_WINDATTACK",5,5,5; }'
   - MobId: 1123
-    Name: GOBLIN_2
-    JName: Goblin
     TameWithId: 14570
     EggItemId: 9033
     FoodItemId: 7821
@@ -856,8 +788,6 @@ Body:
     Script: '{}'
     SupportScript: '{ petskillattack "NPC_FIREATTACK",5,5,5; }'
   - MobId: 1125
-    Name: GOBLIN_4
-    JName: Goblin
     TameWithId: 14571
     EggItemId: 9034
     FoodItemId: 7821
@@ -879,8 +809,6 @@ Body:
     Script: '{}'
     SupportScript: '{ petskillattack "NPC_GROUNDATTACK",5,5,5; }'
   - MobId: 1385
-    Name: DELETER_
-    JName: Deleter
     TameWithId: 14572
     EggItemId: 9035
     FoodItemId: 7822
@@ -902,8 +830,6 @@ Body:
     Script: '{}'
     SupportScript: '{ petskillattack "SM_MAGNUM",5,5,5; }'
   - MobId: 1382
-    Name: DIABOLIC
-    JName: Diabolic
     TameWithId: 14573
     EggItemId: 9036
     FoodItemId: 7823
@@ -925,8 +851,6 @@ Body:
     Script: '{}'
     SupportScript: '{ petskillattack "WZ_METEOR",2,5,5; }'
   - MobId: 1208
-    Name: WANDER_MAN
-    JName: Wanderer
     TameWithId: 14574
     EggItemId: 9037
     FoodItemId: 7824
@@ -949,8 +873,6 @@ Body:
       bAgi,3; bonus bDex,1; } }'
     SupportScript: '{ petskillattack "NPC_UNDEADATTACK",5,5,5; }'
   - MobId: 1963
-    Name: P_CHUNG_E
-    JName: New Year Doll
     EggItemId: 9038
     FoodItemId: 554
     Fullness: 3
@@ -971,8 +893,6 @@ Body:
     Script: '{}'
     SupportScript: '{ petskillattack "CR_SHIELDCHARGE",5,5,5; }'
   - MobId: 1040
-    Name: GOLEM
-    JName: Golem
     TameWithId: 12371
     EggItemId: 9053
     EquipItemId: 10035
@@ -996,8 +916,6 @@ Body:
       bMaxHP,100; bonus bFlee,-5; } }'
     SupportScript: '{}'
   - MobId: 1143
-    Name: MARIONETTE
-    JName: Marionette
     TameWithId: 12361
     EggItemId: 9043
     EquipItemId: 10025
@@ -1021,8 +939,6 @@ Body:
       bSPrecovRate,3; } }'
     SupportScript: '{}'
   - MobId: 1148
-    Name: MEDUSA
-    JName: Medusa
     TameWithId: 12368
     EggItemId: 9050
     EquipItemId: 10032
@@ -1046,8 +962,6 @@ Body:
       bVit,1; bonus2 bResEff,Eff_Stone,500; } }'
     SupportScript: '{}'
   - MobId: 1179
-    Name: WHISPER
-    JName: Whisper
     TameWithId: 12363
     EggItemId: 9045
     EquipItemId: 10027
@@ -1071,8 +985,6 @@ Body:
       bFlee,7; bonus bDef,-3; } }'
     SupportScript: '{}'
   - MobId: 1299
-    Name: GOBLIN_LEADER
-    JName: Goblin Leader
     TameWithId: 12364
     EggItemId: 9046
     EquipItemId: 10028
@@ -1096,8 +1008,6 @@ Body:
       bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3; } }'
     SupportScript: '{}'
   - MobId: 1370
-    Name: SUCCUBUS
-    JName: Succubus
     TameWithId: 12373
     EggItemId: 9055
     EquipItemId: 10037
@@ -1121,8 +1031,6 @@ Body:
       bHpDrainRate,50,5; } }'
     SupportScript: '{}'
   - MobId: 1374
-    Name: INCUBUS
-    JName: Incubus
     TameWithId: 12370
     EggItemId: 9052
     EquipItemId: 10034
@@ -1146,8 +1054,6 @@ Body:
       bMaxSPRate,3; } }'
     SupportScript: '{}'
   - MobId: 1379
-    Name: NIGHTMARE_TERROR
-    JName: Nightmare Terror
     TameWithId: 12372
     EggItemId: 9054
     EquipItemId: 10036
@@ -1171,8 +1077,6 @@ Body:
       bResEff,Eff_Sleep,10000; } }'
     SupportScript: '{}'
   - MobId: 1401
-    Name: SHINOBI
-    JName: Shinobi
     TameWithId: 12362
     EggItemId: 9044
     EquipItemId: 10026
@@ -1196,8 +1100,6 @@ Body:
       bAgi,2; } }'
     SupportScript: '{}'
   - MobId: 1404
-    Name: MIYABI_NINGYO
-    JName: Miyabi Doll
     TameWithId: 12366
     EggItemId: 9048
     EquipItemId: 10030
@@ -1221,8 +1123,6 @@ Body:
       bInt,1; bonus bCastrate,-3; } }'
     SupportScript: '{}'
   - MobId: 1416
-    Name: WICKED_NYMPH
-    JName: Evil Nymph
     TameWithId: 12365
     EggItemId: 9047
     EquipItemId: 10029
@@ -1246,8 +1146,6 @@ Body:
       bMaxSP,30; bonus bSPrecovRate,5; } }'
     SupportScript: '{}'
   - MobId: 1495
-    Name: STONE_SHOOTER
-    JName: Stone Shooter
     TameWithId: 12369
     EggItemId: 9051
     EquipItemId: 10033
@@ -1271,8 +1169,6 @@ Body:
       bSubEle,Ele_Fire,3; } }'
     SupportScript: '{}'
   - MobId: 1504
-    Name: DULLAHAN
-    JName: Dullahan
     TameWithId: 12367
     EggItemId: 9049
     EquipItemId: 10031
@@ -1296,8 +1192,6 @@ Body:
       bCritAtkRate,5; } }'
     SupportScript: '{}'
   - MobId: 1505
-    Name: LOLI_RURI
-    JName: Loli Ruri
     TameWithId: 12360
     EggItemId: 9042
     EquipItemId: 10024
@@ -1321,8 +1215,6 @@ Body:
       bMaxHPRate,3; bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10; } }'
     SupportScript: '{}'
   - MobId: 1513
-    Name: CIVIL_SERVANT
-    JName: Mao Guai
     TameWithId: 12358
     EggItemId: 9040
     EquipItemId: 10022
@@ -1346,8 +1238,6 @@ Body:
       bMaxSP,10; } }'
     SupportScript: '{}'
   - MobId: 1586
-    Name: LEAF_CAT
-    JName: Leaf Cat
     TameWithId: 12359
     EggItemId: 9041
     EquipItemId: 10023
@@ -1371,8 +1261,6 @@ Body:
       bSubRace,RC_Brute,3; } }'
     SupportScript: '{}'
   - MobId: 1630
-    Name: BACSOJIN_
-    JName: White Lady
     TameWithId: 12357
     EggItemId: 9039
     EquipItemId: 10021
@@ -1395,8 +1283,6 @@ Body:
     Script: '{}'
     SupportScript: '{}'
   - MobId: 1837
-    Name: IMP
-    JName: Fire Imp
     TameWithId: 12374
     EggItemId: 9056
     EquipItemId: 10038
@@ -1420,8 +1306,6 @@ Body:
       bSubEle,Ele_Fire,2; bonus2 bAddEle,Ele_Fire,2; } }'
     SupportScript: '{}'
   - MobId: 2057
-    Name: E_CRAMP
-    JName: Strange Cramp
     TameWithId: 12408
     EggItemId: 6221
     FoodItemId: 0
@@ -1443,8 +1327,6 @@ Body:
     Script: '{}'
     SupportScript: '{}'
   - MobId: 2081
-    Name: E_HYDRA
-    JName: Strange Hydra
     TameWithId: 12408
     EggItemId: 6221
     FoodItemId: 0
@@ -1466,8 +1348,6 @@ Body:
     Script: '{}'
     SupportScript: '{}'
   - MobId: 1242
-    Name: MARIN
-    JName: Marin
     TameWithId: 12789
     EggItemId: 9061
     EquipItemId: 10039

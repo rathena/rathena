@@ -6,8 +6,6 @@
 #
 ###########################################################################
 # - MobId                    Monster ID of the pet
-#   Name                     the monster as defined in the database.
-#   JName                    The display name of the monster when hatched.
 #   TameWithId               Pet Tame Item ID.
 #   EggItemId                Pet Egg ID.
 #   EquipItemId              Pet Accessory ID.

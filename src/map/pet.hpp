@@ -26,8 +26,6 @@ struct s_pet_evo_data {
 /// Pet DB
 struct s_pet_db {
 	uint16 class_; ///< Monster ID
-	char name[NAME_LENGTH], ///< AEGIS name
-		jname[NAME_LENGTH]; ///< English name
 	unsigned short itemID; ///< Lure ID
 	unsigned short EggID; ///< Egg ID
 	unsigned short AcceID; ///< Accessory ID

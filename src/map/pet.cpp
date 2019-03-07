@@ -55,30 +55,10 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	bool exists = pet != nullptr;
 
 	if( !exists ){
-		// TODO: Name, JName, EggItemId, FoodItemId, Fullness, HungryDelay, CaptureRate, Speed, SpecialPerformance, AttackRate, RetaliateRate, ChangeTargetRate
+		// TODO: EggItemId, FoodItemId, Fullness, HungryDelay, CaptureRate, Speed, SpecialPerformance, AttackRate, RetaliateRate, ChangeTargetRate
 
 		pet = std::make_shared<s_pet_db>();
 		pet->class_ = mob_id;
-	}
-
-	if( this->nodeExists( node, "Name" ) ){
-		std::string name;
-
-		if( !this->asString( node, "Name", name ) ){
-			return 0;
-		}
-
-		safestrncpy( pet->name, name.c_str(), NAME_LENGTH );
-	}
-
-	if( this->nodeExists( node, "JName" ) ){
-		std::string jname;
-
-		if( !this->asString( node, "JName", jname ) ){
-			return 0;
-		}
-
-		safestrncpy( pet->jname, jname.c_str(), NAME_LENGTH );
 	}
 
 	if( this->nodeExists( node, "TameWithId" ) ){
@@ -508,11 +488,17 @@ bool pet_create_egg(struct map_session_data *sd, unsigned short item_id)
 	if (!pet)
 		return false; //No pet egg here.
 
+	struct mob_db* mdb = mob_db(pet->class_);
+
+	if( mdb == nullptr ){
+		return false;
+	}
+
 	if (!pc_inventoryblank(sd))
 		return false; // Inventory full
 
 	sd->catch_target_class = pet->class_;
-	intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
+	intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
 
 	return true;
 }
@@ -919,6 +905,10 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->pet_hungry_timer = add_timer(gettick() + interval, pet_hungry, sd->bl.id, 0);
 	pd->masterteleport_timer = INVALID_TIMER;
 
+	if( !pet->rename_flag ){
+		safestrncpy( sd->pd->pet.name, pd->db->jname, NAME_LENGTH );
+	}
+
 	return true;
 }
 
@@ -948,9 +938,6 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 	if(!pet_data_init(sd, pet)) {
 		return 1;
 	}
-
-	if (!pet->rename_flag)
-		safestrncpy(sd->pd->pet.name, sd->pd->get_pet_db()->jname, NAME_LENGTH);
 
 	intif_save_petdata(sd->status.account_id,pet);
 	
@@ -1123,7 +1110,10 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		unit_remove_map(&md->bl,CLR_OUTSIGHT);
 		status_kill(&md->bl);
 		clif_pet_roulette(sd,1);
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
+
+		struct mob_db *mdb = mob_db(pet->class_);
+
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
 	} else {
 		clif_pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
@@ -2099,8 +2089,11 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	sd->pd->pet.class_ = pet_id;
 	sd->pd->pet.egg_id = new_data->EggID;
 	sd->pd->pet.intimate = new_data->intimate;
-	if (!sd->pd->pet.rename_flag)
-		safestrncpy(sd->pd->pet.name, new_data->jname, NAME_LENGTH);
+	if( !sd->pd->pet.rename_flag ){
+		struct mob_db* mdb = mob_db( pet_id );
+
+		safestrncpy(sd->pd->pet.name, mdb->jname, NAME_LENGTH);
+	}
 	status_set_viewdata(&sd->pd->bl, pet_id);
 	unit_remove_map(&sd->pd->bl, CLR_OUTSIGHT);
 

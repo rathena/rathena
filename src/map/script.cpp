@@ -10123,7 +10123,10 @@ BUILDIN_FUNC(makepet)
 	}
 
 	sd->catch_target_class = mob_id;
-	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname );
+
+	struct mob_db* mdb = mob_db(pet->class_);
+
+	intif_create_pet( sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname );
 
 	return SCRIPT_CMD_SUCCESS;
 }
