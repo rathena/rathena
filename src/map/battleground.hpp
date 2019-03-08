@@ -117,7 +117,7 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter);
 bool bg_team_warp(int bg_id, unsigned short mapindex, short x, short y);
 bool bg_player_is_in_bg_map(struct map_session_data *sd);
 bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map_session_data *sd, char *name);
-std::shared_ptr<s_battleground_queue> bg_queue_create(std::shared_ptr<s_battleground_type> bg);
+std::shared_ptr<s_battleground_queue> bg_queue_create(int bg_id, int req_players);
 enum e_bg_queue_apply_ack bg_queue_join(char *name, struct map_session_data *sd);
 enum e_bg_queue_apply_ack bg_queue_join_party(char *name, struct map_session_data *sd);
 enum e_bg_queue_apply_ack bg_queue_join_guild(char *name, struct map_session_data *sd);

@@ -821,15 +821,16 @@ bool bg_queue_reservation(const char *name, bool state)
 
 /**
  * Initialize a Battleground queue
- * @param bg: Battleground data
+ * @param bg_id: Battleground ID
+ * @param req_players: Required amount of players
  * @return s_battleground_queue*
  */
-std::shared_ptr<s_battleground_queue> bg_queue_create(std::shared_ptr<s_battleground_type> bg)
+std::shared_ptr<s_battleground_queue> bg_queue_create(int bg_id, int req_players)
 {
 	auto queue = std::make_shared<s_battleground_queue>();
 
-	queue->bg_type = bg->id;
-	queue->required_players = bg->required_players;
+	queue->bg_type = bg_id;
+	queue->required_players = req_players;
 	queue->accepted_players = 0;
 	queue->tid_expire = 0;
 	queue->tid_requeue = 0;
@@ -892,7 +893,7 @@ enum e_bg_queue_apply_ack bg_queue_join(char *name, struct map_session_data *sd)
 	if (bg_queues.empty()) {
 		r = rnd() % 2 != 0;
 
-		queue = bg_queue_create(bg);
+		queue = bg_queue_create(bg->id, bg->required_players);
 
 		if (!r)
 			queue->teama_members.push_back(sd);
@@ -950,7 +951,7 @@ enum e_bg_queue_apply_ack bg_queue_join(char *name, struct map_session_data *sd)
 		}
 	}
 
-	queue = bg_queue_create(bg);
+	queue = bg_queue_create(bg->id, bg->required_players);
 	r = rnd() % 2 != 0;
 
 	if (!r)
@@ -976,46 +977,40 @@ enum e_bg_queue_apply_ack bg_queue_join_party(char *name, struct map_session_dat
 	if (!p)
 		return BG_APPLY_INVALID_APP; // Someone has bypassed the client check for being in a party
 
-	uint32 pl_cid = 0;
-
 	for (const auto &it : p->party.member) {
-		if (it.leader) {
-			pl_cid = it.char_id;
-			break;
-		}
+		if (it.leader && sd->status.char_id != it.char_id)
+			return BG_APPLY_PARTYGUILD_LEADER; // Not the party leader
 	}
 
-	if (sd->status.char_id != pl_cid)
-		return BG_APPLY_PARTYGUILD_LEADER; // Not the party leader
-	else {
+	if (auto bg = bg_search_name(name).lock()) {
 		int p_online = 0;
 
-		if (auto bg = bg_search_name(name).lock()) {
-			for (const auto &it : p->party.member) {
-				if (it.online)
-					p_online++;
-			}
-
-			if (p_online > bg->required_players)
-				return BG_APPLY_PLAYER_COUNT; // Too many party members
-			else {
-				std::vector<struct map_session_data *> list;
-
-				for (const auto &it : p->party.member) {
-					if (it.online) {
-						struct map_session_data *pl_sd = map_charid2sd(it.char_id);
-
-						if (pl_sd && list.size() < bg->required_players)
-							list.push_back(pl_sd);
-					}
-				}
-
-				return bg_queue_join_multi(name, sd, list); // Join as party, all on the same side of the BG
-			}
-		} else {
-			ShowWarning("clif_parse_bg_queue_apply_request: Could not find Battleground: \"%s\" requested by player: %s (AID:%d CID:%d)\n", name, sd->status.name, sd->status.account_id, sd->status.char_id);
-			return BG_APPLY_INVALID_NAME; // Invalid BG name
+		for (const auto &it : p->party.member) {
+			if (it.online)
+				p_online++;
 		}
+
+		if (p_online > bg->max_players)
+			return BG_APPLY_PLAYER_COUNT; // Too many party members online
+		
+		std::vector<struct map_session_data *> list;
+
+		for (const auto &it : p->party.member) {
+			if (list.size() == bg->max_players)
+				break;
+
+			if (it.online) {
+				struct map_session_data *pl_sd = map_charid2sd(it.char_id);
+
+				if (pl_sd && list.size() < bg->required_players)
+					list.push_back(pl_sd);
+			}
+		}
+
+		return bg_queue_join_multi(name, sd, list); // Join as party, all on the same side of the BG
+	} else {
+		ShowWarning("clif_parse_bg_queue_apply_request: Could not find Battleground: \"%s\" requested by player: %s (AID:%d CID:%d)\n", name, sd->status.name, sd->status.account_id, sd->status.char_id);
+		return BG_APPLY_INVALID_NAME; // Invalid BG name
 	}
 }
 
@@ -1032,35 +1027,37 @@ enum e_bg_queue_apply_ack bg_queue_join_guild(char *name, struct map_session_dat
 	
 	if (strcmp(sd->status.name, sd->guild->master) != 0)
 		return BG_APPLY_PARTYGUILD_LEADER; // Not the guild leader
-	else {
+
+	if (auto bg = bg_search_name(name).lock()) {
 		struct guild *g = guild_search(sd->status.guild_id);
+		int g_online = 0;
+
+		for (const auto &it : g->member) {
+			if (it.online)
+				g_online++;
+		}
+
+		if (g_online > bg->max_players)
+			return BG_APPLY_PLAYER_COUNT; // Too many guild members online
+
 		std::vector<struct map_session_data *> list;
 
-		if (auto bg = bg_search_name(name).lock()) {
-			int g_online = 0;
+		for (const auto &it : g->member) {
+			if (list.size() == bg->max_players)
+				break;
 
-			for (const auto &it : g->member) {
-				if (it.online)
-					g_online++;
+			if (it.online) {
+				struct map_session_data *pl_sd = map_charid2sd(it.char_id);
+
+				if (pl_sd && list.size() < bg->required_players)
+					list.push_back(pl_sd);
 			}
-
-			if (g_online > bg->required_players)
-				return BG_APPLY_PLAYER_COUNT; // Too many guild members online
-
-			for (const auto &it : g->member) {
-				if (it.online) {
-					struct map_session_data *pl_sd = map_charid2sd(it.char_id);
-
-					if (pl_sd && list.size() < bg->required_players)
-						list.push_back(pl_sd);
-				}
-			}
-
-			return bg_queue_join_multi(name, sd, list); // Join as guild, all on the same side of the BG
-		} else {
-			ShowWarning("clif_parse_bg_queue_apply_request: Could not find Battleground: \"%s\" requested by player: %s (AID:%d CID:%d)\n", name, sd->status.name, sd->status.account_id, sd->status.char_id);
-			return BG_APPLY_INVALID_NAME; // Invalid BG name
 		}
+
+		return bg_queue_join_multi(name, sd, list); // Join as guild, all on the same side of the BG
+	} else {
+		ShowWarning("clif_parse_bg_queue_apply_request: Could not find Battleground: \"%s\" requested by player: %s (AID:%d CID:%d)\n", name, sd->status.name, sd->status.account_id, sd->status.char_id);
+		return BG_APPLY_INVALID_NAME; // Invalid BG name
 	}
 }
 
@@ -1115,7 +1112,7 @@ enum e_bg_queue_apply_ack bg_queue_join_multi(char *name, struct map_session_dat
 		return BG_APPLY_PLAYER_LEVEL; // Level too high
 
 	if (bg_queues.empty()) {
-		std::shared_ptr<s_battleground_queue> queue = bg_queue_create(bg);
+		std::shared_ptr<s_battleground_queue> queue = bg_queue_create(bg->id, bg->required_players);
 		bool r = rnd() % 2 != 0;
 
 		if (!r) {
@@ -1219,7 +1216,7 @@ enum e_bg_queue_apply_ack bg_queue_join_multi(char *name, struct map_session_dat
 
 		// Create a new queue if none of the existing ones are joinable for this party/guild
 		queue = nullptr;
-		queue = bg_queue_create(bg);
+		queue = bg_queue_create(bg->id, bg->required_players);
 		r = rnd() % 2 != 0;
 
 		if (!r) {
@@ -1269,13 +1266,14 @@ enum e_bg_queue_apply_ack bg_queue_join_multi(char *name, struct map_session_dat
 /**
  * Sub function for leaving a Battleground queue
  * @param sd: Player leaving
- * @param list: List of players in queue data
+ * @param lista: List of players in queue data
+ * @param listb: List of players in second queue data
  * @return True on success or false otherwise
  */
-static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_session_data *> list, std::vector<map_session_data *> listb)
+static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_session_data *> lista, std::vector<map_session_data *> listb)
 {
-	for (int i = 0; i < list.size(); i++) {
-		struct map_session_data *player = list.at(i);
+	for (int i = 0; i < lista.size(); i++) {
+		struct map_session_data *player = lista.at(i);
 
 		if (player == sd) {
 			if (sd->bg_queue->in_ready_state) {
@@ -1284,10 +1282,10 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 				sd->bg_queue_accept_state = false;
 			}
 
-			util::erase_at(list, i);
+			util::erase_at(lista, i);
 
-			if (list.empty() && listb.empty()) { // If there are no players left in the queue, discard it
-				std::vector<std::shared_ptr<s_battleground_queue>>::iterator it = bg_queues.begin();
+			if (lista.empty() && listb.empty()) { // If there are no players left in the queue, discard it
+				auto it = bg_queues.begin();
 
 				while (it != bg_queues.end()) {
 					std::shared_ptr<s_battleground_queue> q = *it;
