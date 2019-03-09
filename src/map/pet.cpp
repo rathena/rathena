@@ -779,15 +779,15 @@ static int pet_performance(struct map_session_data *sd, struct pet_data *pd)
  * Return a pet to it's egg.
  * @param sd : player requesting
  * @param pd : pet requesting
- * @return 1
+ * @return true if everything went well, false if the egg is not found in the inventory.
  */
-static int pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
+bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	pet_lootitem_drop(pd,sd);
 
 	int i = pet_egg_search( sd, pd->pet.pet_id );
 
 	if( i == -1 ){
-		return 0;
+		return false;
  	}
  
 	sd->inventory.u.items_inventory[i].attribute = 0;
@@ -799,7 +799,7 @@ static int pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	sd->status.pet_id = 0;
 	sd->pet_auto_feed = false;
 
-	return 1;
+	return true;
 }
 
 /**

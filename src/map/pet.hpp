@@ -180,6 +180,7 @@ int pet_sc_check(struct map_session_data *sd, int type); //Skotlex
 std::shared_ptr<s_pet_db> pet_db_search(int key, enum e_pet_itemtype type);
 int pet_hungry_timer_delete(struct pet_data *pd);
 bool pet_data_init(struct map_session_data *sd, struct s_pet *pet);
+bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd );
 int pet_birth_process(struct map_session_data *sd, struct s_pet *pet);
 int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag);
 int pet_select_egg(struct map_session_data *sd,short egg_index);

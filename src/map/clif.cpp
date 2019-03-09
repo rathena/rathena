@@ -10408,7 +10408,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if( sd->pd ) {
 		if( battle_config.pet_no_gvg && mapdata_flag_gvg(mapdata) ) { //Return the pet to egg. [Skotlex]
 			clif_displaymessage(sd->fd, msg_txt(sd,666));
-			pet_menu(sd, 3); //Option 3 is return to egg.
+			pet_return_egg( sd, sd->pd );
 		} else {
 			if(map_addblock(&sd->pd->bl))
 				return;
