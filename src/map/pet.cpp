@@ -2033,6 +2033,7 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 
 	if (!pet_evolution_requirements_check(sd, pet_id)) {
 		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_MATERIAL);
+		return;
 	}
 
 	for (const auto &requirement : pet_db_ptr->evolution_data[pet_id]->requirements) {
