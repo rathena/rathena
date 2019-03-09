@@ -2062,6 +2062,7 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 		item tmp_item{};
 		uint8 flag = 0;
 		tmp_item.nameid = new_data->EggID;
+		tmp_item.attribute = 1;
 		tmp_item.identify = 1;
 		tmp_item.card[0] = CARD0_PET;
 		tmp_item.card[1] = GetWord(sd->pd->pet.pet_id,0);
@@ -2102,7 +2103,6 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	clif_specialeffect(&sd->pd->bl, EF_HO_UP, AREA);
 
 	clif_pet_evolution_result(sd, e_pet_evolution_result::SUCCESS);
-	clif_inventorylist(sd);
 }
 
 /**
