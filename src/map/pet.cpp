@@ -395,8 +395,13 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 				return 0;
 			}
 
-			// TODO: Change to usual processing
-			s_pet_evo_data evo_data;
+			std::shared_ptr<s_pet_evo_data> evolution = util::umap_find( pet->evolution_data, targetId );
+			bool evolution_exists = evolution != nullptr;
+
+			if( !evolution_exists ){
+				evolution = std::make_shared<s_pet_evo_data>();
+				evolution->target_mob_id = targetId;
+			}
 
 			for( const YAML::Node& requirementNode : evolutionNode["ItemsRequirement"] ){
 				uint16 item_id;
@@ -410,18 +415,20 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 					return 0;
 				}
 
-				uint16 amount;
+				uint32 amount;
 
-				if( !this->asUInt16( requirementNode, "Amount", amount ) ){
+				if( !this->asUInt32( requirementNode, "Amount", amount ) ){
 					return 0;
 				}
 
 				// TODO: range validation
 
-				evo_data.requirements[item_id] = amount;
+				evolution->requirements[item_id] = amount;
 			}
 
-			pet->evolution_data[evo_data.target_mob_id] = evo_data;
+			if( !evolution_exists ){
+				pet->evolution_data[targetId] = evolution;
+			}
 		}
 	}
 
@@ -1980,7 +1987,7 @@ bool pet_evolution_requirements_check(struct map_session_data *sd, short pet_id)
 		return false;
 	}
 
-	for (const auto &requirement : evo_data->second.requirements) {
+	for (const auto &requirement : evo_data->second->requirements) {
 		int count = 0;
 		for (int i = 0; i < MAX_INVENTORY; i++) {
 			if (sd->inventory.u.items_inventory[i].nameid == requirement.first) {
@@ -2032,7 +2039,7 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_MATERIAL);
 	}
 
-	for (const auto &requirement : pet_db_ptr->evolution_data[pet_id].requirements) {
+	for (const auto &requirement : pet_db_ptr->evolution_data[pet_id]->requirements) {
 		int count = requirement.second;
 		for (int i = 0; i < MAX_INVENTORY; i++) {
 			item *slot = &sd->inventory.u.items_inventory[i];

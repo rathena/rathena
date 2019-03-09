@@ -13,14 +13,13 @@
 #include "status.hpp"
 #include "unit.hpp"
 
-#include <map>
-#include <vector>
+#include <unordered_map>
 
 #define MAX_PETLOOT_SIZE	30
 
 struct s_pet_evo_data {
-	short target_mob_id;
-	std::map<unsigned short, int> requirements;
+	uint16 target_mob_id;
+	std::unordered_map<uint16, uint32> requirements;
 };
 
 /// Pet DB
@@ -46,7 +45,7 @@ struct s_pet_db {
 	int defence_attack_rate; ///< Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
 	int change_target_rate; ///< Rate of which the pet will change its attack target.
 	bool allow_autofeed; ///< Can this pet use auto feeding mechanic.
-	std::map<short, s_pet_evo_data> evolution_data; ///< Data for evolving the pet.
+	std::unordered_map<uint16, std::shared_ptr<s_pet_evo_data>> evolution_data; ///< Data for evolving the pet.
 	struct script_code
 		*pet_support_script, ///< Script since pet hatched. For pet* script commands only.
 		*pet_bonus_script; ///< Bonus script for this pet.
