@@ -705,14 +705,12 @@ static TIMER_FUNC(pet_hungry){
 
 	clif_send_petdata(sd,pd,2,pd->pet.hungry);
 
+	if( battle_config.feature_pet_autofeed && pd->pet.autofeed && pd->pet.hungry <= battle_config.feature_pet_autofeed_rate ){
+		pet_food( sd, pd );
+	}
+
 	interval = max(interval, 1);
 	pd->pet_hungry_timer = add_timer(tick+interval,pet_hungry,sd->bl.id,0);
-	
-	short idx;
-	if (sd->pet_auto_feed && pd->pet.hungry < PETHUNGRY_SATISFIED &&
-		(idx = pc_search_inventory(sd, sd->pd->get_pet_db()->FoodID)) != -1) {
-		pet_food(sd, sd->pd);
-	}
 
 	return 0;
 }
@@ -804,7 +802,6 @@ bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 
 	status_calc_pc(sd,SCO_NONE);
 	sd->status.pet_id = 0;
-	sd->pet_auto_feed = false;
 
 	return true;
 }
@@ -924,7 +921,6 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 	pet->account_id = sd->status.account_id;
 	pet->char_id = sd->status.char_id;
 	sd->status.pet_id = pet->pet_id;
-	sd->pet_auto_feed = false;
 
 	if(!pet_data_init(sd, pet)) {
 		return 1;
@@ -2106,24 +2102,6 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 
 	clif_pet_evolution_result(sd, e_pet_evolution_result::SUCCESS);
 	clif_inventorylist(sd);
-}
-
-/**
- * Turns automatic pet feeding on or off
- * @param sd : The player
- * @param flag : on/off flag
- * @return Status of automatic pet feeding of this player after execution of this function
- */
-bool pet_autofeed(struct map_session_data *sd, bool flag) {
-	nullpo_retr(false, sd);
-
-	bool allowed = battle_config.feature_pet_auto_feed && sd->pd && sd->pd->get_pet_db()->allow_autofeed;
-
-	if (allowed) {
-		sd->pet_auto_feed = flag;
-	}
-
-	return sd->pet_auto_feed;
 }
 
 /**

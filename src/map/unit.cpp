@@ -3314,10 +3314,8 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			else { // Remove pet.
 				intif_delete_petdata(pd->pet.pet_id);
 
-				if (sd) {
+				if (sd)
 					sd->status.pet_id = 0;
-					sd->pet_auto_feed = false;
-				}
 			}
 
 			if( sd )

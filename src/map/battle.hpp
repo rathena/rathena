@@ -643,7 +643,9 @@ struct Battle_Config
 	int event_refine_chance;
 	int autoloot_adjust;
 	int feature_petevolution;
-	int feature_pet_auto_feed;
+	int feature_pet_autofeed;
+	int feature_pet_autofeed_rate;
+	int pet_autofeed_always;
 	int broadcast_hide_name;
 	int skill_drop_items_full;
 	int switch_remove_edp;

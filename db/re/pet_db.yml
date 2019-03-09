@@ -2050,6 +2050,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2095,6 +2096,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2133,6 +2135,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2167,6 +2170,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2204,6 +2208,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2238,6 +2243,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2272,6 +2278,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2305,6 +2312,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2339,6 +2347,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2369,6 +2378,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2416,6 +2426,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2446,6 +2457,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2482,6 +2494,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2518,6 +2531,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2550,6 +2564,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2584,6 +2599,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2622,6 +2638,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2652,6 +2669,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2688,6 +2706,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -2721,6 +2740,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
+    AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       

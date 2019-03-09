@@ -10527,6 +10527,21 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
 #endif
+#if PACKETVER >= 20141008
+		if( battle_config.pet_autofeed_always ){
+			// Always send ON or OFF
+			if( sd->pd && battle_config.feature_pet_autofeed ){
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, sd->pd->pet.autofeed );
+			}else{
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, false );
+			}
+		}else{
+			// Only send when enabled
+			if( sd->pd && battle_config.feature_pet_autofeed && sd->pd->pet.autofeed ){
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, true );
+			}
+		}
+#endif
 #if PACKETVER >= 20170920
 		if( battle_config.homunculus_autofeed_always ){
 			// Always send ON or OFF
@@ -16687,7 +16702,12 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 			sd->status.show_equip = flag;
 			break;
 		case CONFIG_PET_AUTOFEED:
-			pet_autofeed(sd, flag);
+			// Player can not click this if he does not have a pet
+			if( sd->pd == nullptr || !battle_config.feature_pet_autofeed || !sd->pd->get_pet_db()->allow_autofeed ){
+				return;
+			}
+
+			sd->pd->pet.autofeed = flag;
 			break;
 		case CONFIG_HOMUNCULUS_AUTOFEED:
 			// Player can not click this if he does not have a homunculus or it is vaporized
