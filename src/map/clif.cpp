@@ -20369,18 +20369,14 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 	WFIFOSET(fd, packet_len(0xa26));
 }
 
-/**
- * Process the pet evolution request (CZ_PET_EVOLUTION)
- * 09fb <packetType>.W <packetLength>.W <evolutionPetEggITID>.W
- */
-void clif_parse_pet_evolution(int fd, struct map_session_data *sd)
-{
+/// Process the pet evolution request
+/// 09fb <packetType>.W <packetLength>.W <evolutionPetEggITID>.W (CZ_PET_EVOLUTION)
+void clif_parse_pet_evolution( int fd, struct map_session_data *sd ){
 #if PACKETVER > 20141008
-	uint16 egg_id = RFIFOW(fd, packet_db[0x9fb].pos[1]);
-	auto pet = pet_db_search(egg_id, PET_EGG);
+	auto pet = pet_db_search(RFIFOW(fd, 4), PET_EGG);
 
 	if (!pet) {
-		clif_pet_evolution_result(fd, e_pet_evolution_result::FAIL_NOT_PETEGG);
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_NOT_PETEGG);
 		return;
 	}
 
@@ -20388,8 +20384,12 @@ void clif_parse_pet_evolution(int fd, struct map_session_data *sd)
 #endif
 }
 
-void clif_pet_evolution_result(int fd, e_pet_evolution_result result) {
+/// Sends the result of the evolution to the client.
+/// 09fc <result>.L (ZC_PET_EVOLUTION_RESULT)
+void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result ){
 #if PACKETVER >= 20141008
+	int fd = sd->fd;
+
 	WFIFOHEAD(fd, packet_len(0x9fc));
 	WFIFOW(fd, 0) = 0x9fc;
 	WFIFOL(fd, 2) = static_cast<uint32>(result);

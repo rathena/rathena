@@ -1124,7 +1124,6 @@ void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 
 void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 
 /// Pet evolution
-void clif_parse_pet_evolution(int fd, struct map_session_data *sd);
-void clif_pet_evolution_result(int fd, e_pet_evolution_result result);
+void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result );
 
 #endif /* CLIF_HPP */

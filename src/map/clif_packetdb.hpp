@@ -2195,7 +2195,7 @@
 
 // 2014-10-08Ragexe
 #if PACKETVER >= 20141008
-	parseable_packet(0x9FB, -1, clif_parse_pet_evolution, 2, 4, 6); // CZ_PET_EVOLUTION
+	parseable_packet(0x9FB, -1, clif_parse_pet_evolution, 2, 4); // CZ_PET_EVOLUTION
 	packet(0x09FC, 6); // ZC_PET_EVOLUTION_RESULT
 #endif
 

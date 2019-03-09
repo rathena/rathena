@@ -2002,34 +2002,34 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	nullpo_retv(sd);
 
 	if (sd->pd == nullptr) {
-		clif_pet_evolution_result(sd->fd, e_pet_evolution_result::FAIL_UNKNOWN);
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_UNKNOWN);
 		return;
 	}
 
 	if (!battle_config.feature_petevolution) {
-		clif_pet_evolution_result(sd->fd, e_pet_evolution_result::FAIL_UNKNOWN);
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_UNKNOWN);
 		return;
 	}
 
 	if (sd->pd->pet.intimate < PET_INTIMATE_LOYAL) {
-		clif_pet_evolution_result(sd->fd, e_pet_evolution_result::FAIL_RG_FAMILIAR);
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_RG_FAMILIAR);
 		return;
 	}
 
 	if (sd->pd->pet.equip) {
-		clif_pet_evolution_result(sd->fd, e_pet_evolution_result::FAIL_RG_FAMILIAR);
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_RG_FAMILIAR);
 		return;
 	}
 
 	auto pet_db_ptr = sd->pd->get_pet_db();
 
 	if (pet_db_ptr->evolution_data.find(pet_id) == pet_db_ptr->evolution_data.end()) {
-		clif_pet_evolution_result(sd->fd, e_pet_evolution_result::FAIL_NOTEXIST_CALLPET);
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_NOTEXIST_CALLPET);
 		return;
 	}
 
 	if (!pet_evolution_requirements_check(sd, pet_id)) {
-		clif_pet_evolution_result(sd->fd, e_pet_evolution_result::FAIL_MATERIAL);
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_MATERIAL);
 	}
 
 	for (const auto &requirement : pet_db_ptr->evolution_data[pet_id].requirements) {
@@ -2097,7 +2097,7 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	clif_emotion(&sd->bl, ET_BEST);
 	clif_specialeffect(&sd->pd->bl, EF_HO_UP, AREA);
 
-	clif_pet_evolution_result(sd->fd, e_pet_evolution_result::SUCCESS);
+	clif_pet_evolution_result(sd, e_pet_evolution_result::SUCCESS);
 	clif_inventorylist(sd);
 }
 
