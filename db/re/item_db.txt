@@ -6008,6 +6008,16 @@
 9069,Mastering_Egg,Mastering Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9070,Savage_Egg,Savage Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9071,Grand_Peco_Peco_Egg,Grand Peco Peco Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9072,Orc_Hero_Egg,Orc Hero Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9073,Orc_Lord_Egg,Orc Lord Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9074,Rubylit_Egg,Rubylit Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9075,Sapphilit_Egg,Sapphilit Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9076,Emelit_Egg,Emelit Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9077,Topalit_Egg,Topalit Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9078,Amelit_Egg,Amelit Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9079,Mythlit_Egg,Mythlit Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9080,Tamadora_Egg,Tamadora Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+
 9087,High_Orc_Egg,High Orc Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9088,Angeling_Egg,Angeling Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9089,Am_Mut_Egg,Am Mut Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
@@ -6031,9 +6041,12 @@
 9107,Ancient_Mummy_Egg,Ancient Mummy Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9108,Xm_Teddy_Bear_Egg,Xmas Teddy Bear Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9109,Sweet_Drops_Egg,Sweet Drops Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+
 9111,Phreeoni_Egg,Phreeoni Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9112,Moonlight_Egg,Moonlight Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9113,Skelion_Egg,Skelion Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9114,Pouring_Egg,Pouring Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9115,Bacsojin2_Egg_,Bacsojin Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 //===================================================================
 // Pet Accessories
 //===================================================================
@@ -6076,6 +6089,9 @@
 10037,Black_Butterfly_Mask,Black Butterfly Mask,8,20,,0,,,,,,,,,,,,,{},{},{}
 10038,Horn_Protector,Horn Barrier,8,20,,0,,,,,,,,,,,,,{},{},{}
 10039,Tw_Backpack,Tw Backpack,8,20,,0,,,,,,,,,,,,,{},{},{}
+10040,Red_Bell_Necklace,Red Bell Necklace,8,20,,0,,,,,,,,,,,,,{},{},{}
+10041,Shiny_Star_Button,Shiny Star Button,8,20,,0,,,,,,,,,,,,,{},{},{}
+10042,Dark_Mane,Dark Mane,8,20,,0,,,,,,,,,,,,,{},{},{}
 //===================================================================
 // Misc "Etc" Books
 //===================================================================
