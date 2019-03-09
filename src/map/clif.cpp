@@ -2784,17 +2784,6 @@ void clif_inventorylist(struct map_session_data *sd) {
 		}
 	}
 
-	// Send fake egg data
-	if (battle_config.feature_petevolution && sd->pd) {
-		int pos = ne * se + 4;
-		memset(bufe + pos, 0, se);
-		WBUFW(bufe, pos) = pet_egg_search(sd, sd->pd->pet.pet_id) + 2; //index
-		WBUFW(bufe, pos+ 2) = sd->pd->pet.egg_id;
-		WBUFB(bufe, pos + 4) = IT_WEAPON;
-		WBUFB(bufe, pos + 56) = 3;
-		ne++;
-	}
-
 	if( n )
 	{
 #if PACKETVER < 5

@@ -781,43 +781,23 @@ static int pet_performance(struct map_session_data *sd, struct pet_data *pd)
  * @param pd : pet requesting
  * @return 1
  */
-static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
-{
-	struct item tmp_item;
-	unsigned char flag = 0;
-
+static int pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	pet_lootitem_drop(pd,sd);
-	memset(&tmp_item,0,sizeof(tmp_item));
-	tmp_item.nameid = pd->get_pet_db()->EggID;
-	tmp_item.identify = 1;
-	tmp_item.card[0] = CARD0_PET;
-	tmp_item.card[1] = GetWord(pd->pet.pet_id,0);
-	tmp_item.card[2] = GetWord(pd->pet.pet_id,1);
-	tmp_item.card[3] = pd->pet.rename_flag;
 
-	if (battle_config.feature_petevolution) {
-		int idx = pet_egg_search(sd, pd->pet.pet_id);
+	int i = pet_egg_search( sd, pd->pet.pet_id );
 
-		// The pet's egg is still in inventory, delete it
-		if (idx != -1)
-			pc_delitem(sd, idx, 1, 0, 0, LOG_TYPE_OTHER);
-	}
-
-	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
-		clif_additem(sd,0,0,flag);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
-	}
-
+	if( i == -1 ){
+		return 0;
+ 	}
+ 
+	sd->inventory.u.items_inventory[i].attribute = 0;
+	sd->inventory.dirty = true;
 	pd->pet.incubate = 1;
 	unit_free(&pd->bl,CLR_OUTSIGHT);
 
 	status_calc_pc(sd,SCO_NONE);
 	sd->status.pet_id = 0;
 	sd->pet_auto_feed = false;
-
-
-	if (battle_config.feature_petevolution)
-		clif_inventorylist(sd);
 
 	return 1;
 }
@@ -987,20 +967,21 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 	}
 
 	if(p->incubate == 1) {
-		//Delete egg from inventory. [Skotlex]
 		int i = pet_egg_search(sd, p->pet_id);
 
 		if(i == -1) {
-			ShowError("pet_recv_petdata: Hatching pet (%d:%s) aborted, couldn't find egg in inventory for removal!\n",p->pet_id, p->name);
+			ShowError("pet_recv_petdata: Hatching pet (%d:%s) aborted, couldn't find egg in inventory!\n",p->pet_id, p->name);
 			sd->status.pet_id = 0;
 
 			return 1;
 		}
 
-		if (!pet_birth_process(sd, p)) {
-			pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
-			clif_inventorylist(sd);
-		}
+		// Hide egg from inventory.
+		// Set pet egg to broken, before the inventory gets saved
+		sd->inventory.u.items_inventory[i].attribute = 1;
+
+		// Hatch the pet
+		pet_birth_process( sd, p );
 	} else {
 		pet_data_init(sd,p);
 
