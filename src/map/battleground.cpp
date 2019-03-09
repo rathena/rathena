@@ -999,12 +999,8 @@ enum e_bg_queue_apply_ack bg_queue_join_party(char *name, struct map_session_dat
 			if (list.size() == bg->max_players)
 				break;
 
-			if (it.online) {
-				struct map_session_data *pl_sd = map_charid2sd(it.char_id);
-
-				if (pl_sd && list.size() < bg->required_players)
-					list.push_back(pl_sd);
-			}
+			if (it.online && map_charid2sd(it.char_id))
+				list.push_back(pl_sd);
 		}
 
 		return bg_queue_join_multi(name, sd, list); // Join as party, all on the same side of the BG
@@ -1046,12 +1042,8 @@ enum e_bg_queue_apply_ack bg_queue_join_guild(char *name, struct map_session_dat
 			if (list.size() == bg->max_players)
 				break;
 
-			if (it.online) {
-				struct map_session_data *pl_sd = map_charid2sd(it.char_id);
-
-				if (pl_sd && list.size() < bg->required_players)
-					list.push_back(pl_sd);
-			}
+			if (it.online && map_charid2sd(it.char_id))
+				list.push_back(pl_sd);
 		}
 
 		return bg_queue_join_multi(name, sd, list); // Join as guild, all on the same side of the BG
