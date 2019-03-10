@@ -48,6 +48,7 @@ void prepareHeader( YAML::Node& node, const std::string& type, uint32 version );
 bool askConfirmation( const char* fmt, ... );
 
 YAML::Node body;
+size_t counter;
 
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
@@ -65,7 +66,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			prepareHeader( root, type, version );
 			body.reset();
-
+			counter = 0;
 			
 			if( !lambda( path, name_ext ) ){
 				return false;
@@ -191,7 +192,7 @@ static bool guild_read_guildskill_tree_db( char* split[], int columns, int curre
 	node["Id"] = (uint16)atoi(split[0]);
 	node["MaxLevel"] = (uint16)atoi(split[1]);
 
-	for( int i = 0; i < MAX_GUILD_SKILL_REQUIRE; i++ ){
+	for( int i = 0, j = 0; i < MAX_GUILD_SKILL_REQUIRE; i++ ){
 		uint16 skill_id = atoi( split[i * 2 + 2] );
 		uint16 skill_level = atoi( split[i * 2 + 3] );
 
@@ -204,10 +205,10 @@ static bool guild_read_guildskill_tree_db( char* split[], int columns, int curre
 		req["Id"] = skill_id;
 		req["Level"] = skill_level;
 
-		node["Required"][i] = req;
+		node["Required"][j++] = req;
 	}
 
-	body[current] = node;
+	body[counter++] = node;
 
 	return true;
 }
