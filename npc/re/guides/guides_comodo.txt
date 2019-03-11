@@ -120,7 +120,7 @@ comodo,322,178,4	script	Comodo Guide#01comodo::GuideComodo	700,{
 					mes "The "+F_Navi("Roaming Bard","comodo,226,123","^DB7093");
 					mes "helps adventurers to become ^DB7093Bards^000000.";
 					mes "Would you like to check any other locations?";
-					viewpoint 1,211,155,14,0xDB7093;
+					viewpoint 1,226,123,14,0xDB7093;
 					next;
 					break;
 				case 5:
