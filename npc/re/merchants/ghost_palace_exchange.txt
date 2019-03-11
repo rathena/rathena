@@ -25,7 +25,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 		mes "Huhh! It seems like many of them already heard that I have the best stuff. Feel free to check out my collections.";
 		break;
 	case 3:
-		mes "Good by friend~ Come again!";
+		mes "Goodbye friend~ Come again!";
 		close;
 	}
 	next;
