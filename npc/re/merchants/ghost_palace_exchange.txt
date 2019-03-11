@@ -80,7 +80,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 		mes "[Dimension Traveler]";
 		if (.@type != 1)	// armor type doesn't display item info
 			mes "Do you mean <ITEM>[" + getitemname(.@item[.@s]) + "]<INFO>" + .@item[.@s] + "</INFO></ITEM>?";
-		mes "" + .@item[.@s+1] + " ^006400Gray Shard^000000 is required for exchange.";
+		mes "" + .@item[.@s+1] + " ^006400Gray Shard^000000 are required in exchange.";
 		next;
 		switch( select( "Let's exchange.", "Let me see other stuff.", "I will come back later." ) ) {
 		case 1:
