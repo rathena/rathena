@@ -36,12 +36,19 @@ int getch( void ){
 }
 #endif
 
+// Required constant and structure definitions
+#define MAX_GUILD_SKILL_REQUIRE 5
+
+// Forward declaration of conversion functions
+static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
+
 bool fileExists( const std::string& path );
 bool writeToFile( const YAML::Node& node, const std::string& path );
 void prepareHeader( YAML::Node& node, const std::string& type, uint32 version );
 bool askConfirmation( const char* fmt, ... );
 
 YAML::Node body;
+size_t counter;
 
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
@@ -59,7 +66,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			prepareHeader( root, type, version );
 			body.reset();
-
+			counter = 0;
 			
 			if( !lambda( path, name_ext ) ){
 				return false;
@@ -90,6 +97,17 @@ int do_init( int argc, char** argv ){
 	const std::string path_db = std::string( db_path );
 	const std::string path_db_mode = path_db + "/" + DBPATH;
 	const std::string path_db_import = path_db + "/" + DBIMPORT;
+
+	std::vector<std::string> guild_skill_tree_paths = {
+		path_db,
+		path_db_import
+	};
+
+	if( process( "GUILD_SKILL_TREE_DB", 1, guild_skill_tree_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
+		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 2 + MAX_GUILD_SKILL_REQUIRE * 2, 2 + MAX_GUILD_SKILL_REQUIRE * 2, -1, &guild_read_guildskill_tree_db, false );
+	} ) ){
+		return 0;
+	}
 
 	// TODO: add implementations ;-)
 
@@ -162,4 +180,35 @@ bool askConfirmation( const char* fmt, ... ){
 	}else{
 		return false;
 	}
+}
+
+// Implementation of the conversion functions
+
+// Copied and adjusted from guild.cpp
+// <skill id>,<max lv>,<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
+static bool guild_read_guildskill_tree_db( char* split[], int columns, int current ){
+	YAML::Node node;
+
+	node["Id"] = (uint16)atoi(split[0]);
+	node["MaxLevel"] = (uint16)atoi(split[1]);
+
+	for( int i = 0, j = 0; i < MAX_GUILD_SKILL_REQUIRE; i++ ){
+		uint16 skill_id = atoi( split[i * 2 + 2] );
+		uint16 skill_level = atoi( split[i * 2 + 3] );
+
+		if( skill_id == 0 || skill_level == 0 ){
+			continue;
+		}
+
+		YAML::Node req;
+
+		req["Id"] = skill_id;
+		req["Level"] = skill_level;
+
+		node["Required"][j++] = req;
+	}
+
+	body[counter++] = node;
+
+	return true;
 }
