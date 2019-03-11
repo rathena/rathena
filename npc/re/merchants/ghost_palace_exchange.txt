@@ -82,7 +82,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 			mes "Do you mean <ITEM>[" + getitemname(.@item[.@s]) + "]<INFO>" + .@item[.@s] + "</INFO></ITEM>?";
 		mes "" + .@item[.@s+1] + " ^006400Gray Shard^000000 is required for exchange.";
 		next;
-		switch( select( "Let's exchange.", "Let me see other stuffs.", "I will come back later" ) ) {
+		switch( select( "Let's exchange.", "Let me see other stuff.", "I will come back later." ) ) {
 		case 1:
 			break;
 		case 2:
