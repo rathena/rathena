@@ -10,7 +10,7 @@
 
 dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 	mes "[Dimension Traveler]";
-	mes "Adventurer friend <ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> is what I need. How about exchange it with something I have?";
+	mes "Adventurer friend, <ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> is what I need. How about exchanging it with something I have?";
 	next;
 	.@type = select( "Show me your weapon.", "Show me your armor.", "Anything special?", "I do not need." ) - 1;
 	mes "[Dimension Traveler]";
