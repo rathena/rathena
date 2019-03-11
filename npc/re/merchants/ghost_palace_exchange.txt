@@ -30,7 +30,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 	}
 	next;
 	mes "[Dimension Traveler]";
-	mes "Ah! The number that is written beside will be needed";
+	mes "Ah! The number that is written beside <ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> will be needed.";
 	mes "<ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> Please keep that in mind.";
 
 	switch(.@type) {
