@@ -106,7 +106,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 		}
 		if (countitem(6672) < .@item[.@s+1]) {
 			mes "[Dimension Traveler]";
-			mes "You put me in difficult situation, friend.";
+			mes "You put me in a difficult situation, friend.";
 			mes "I am in need of Gray Shard. I will exchange it for ^006400" + .@item[.@s+1] + " Gray Shard^000000.";
 			close;
 		}
