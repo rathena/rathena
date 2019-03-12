@@ -55,7 +55,10 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	bool exists = pet != nullptr;
 
 	if( !exists ){
-		// TODO: EggItemId, Fullness, HungryDelay, CaptureRate, Speed, SpecialPerformance, AttackRate, RetaliateRate, ChangeTargetRate
+		// Check mandatory nodes
+		if( !this->nodesExist( node, { "EggItemId", "Fullness", "HungryDelay", "CaptureRate", "Speed", "SpecialPerformance", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
+			return 0;
+		}
 
 		pet = std::make_shared<s_pet_db>();
 		pet->class_ = mob_id;
