@@ -1731,7 +1731,7 @@ Body:
       Hungry: -20
       OwnerDie: 0
     CaptureRate: 50
-    Speed: 0
+    Speed: 20
     SpecialPerformance: false
     TalkConvertClass: 0
     AttackRate: 350
@@ -1750,7 +1750,7 @@ Body:
       Hungry: -20
       OwnerDie: 0
     CaptureRate: 50
-    Speed: 0
+    Speed: 20
     SpecialPerformance: false
     TalkConvertClass: 0
     AttackRate: 350

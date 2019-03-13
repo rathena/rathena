@@ -137,22 +137,24 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	}
 
 	if( this->nodeExists( node, "Fullness" ) ){
-		int32 fullness;
+		uint16 fullness;
 
-		if( !this->asInt32( node, "Fullness", fullness ) ){
+		if( !this->asUInt16( node, "Fullness", fullness ) ){
 			return 0;
 		}
 
-		// TODO: range validation?
+		if( fullness > 100 ){
+			this->invalidWarning( node["Fullness"], "Fullness %hu exceeds maximum of 100. Capping...\n", fullness );
+			fullness = 100;
+		}
 
 		pet->fullness = fullness;
 	}
 
 	if( this->nodeExists( node, "HungryDelay" ) ){
-		// TODO: why not unsigned?
-		int32 delay;
+		uint32 delay;
 
-		if( !this->asInt32( node, "HungryDelay", delay ) ){
+		if( !this->asUInt32( node, "HungryDelay", delay ) ){
 			return 0;
 		}
 
@@ -220,10 +222,15 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		if( this->nodeExists( intimacyNode, "Start" ) ){
-			int32 start;
+			uint32 start;
 
-			if( !this->asInt32( intimacyNode, "Start", start ) ){
+			if( !this->asUInt32( intimacyNode, "Start", start ) ){
 				return 0;
+			}
+
+			if( start > 10000 ){
+				this->invalidWarning( intimacyNode["Start"], "Start %hu exceeds maximum of 10000. Capping...\n", start );
+				start = 10000;
 			}
 
 			pet->intimate = start;
@@ -258,27 +265,34 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	}
 
 	if( this->nodeExists( node, "CaptureRate" ) ){
-		// TODO: why not unsigned?
-		int32 rate;
+		uint16 rate;
 
-		if( !this->asInt32( node, "CaptureRate", rate ) ){
+		if( !this->asUInt16( node, "CaptureRate", rate ) ){
 			return 0;
 		}
 
-		// TODO: range validation?
+		if( rate > 10000 ){
+			this->invalidWarning( node["CaptureRate"], "CaptureRate %hu exceeds maximum of 10000. Capping...\n", rate );
+			rate = 10000;
+		}
 
 		pet->capture = rate;
 	}
 
 	if( this->nodeExists( node, "Speed" ) ){
-		// TODO: why not unsigned?
-		int32 speed;
+		uint16 speed;
 
-		if( !this->asInt32( node, "Speed", speed) ){
+		if( !this->asUInt16( node, "Speed", speed) ){
 			return 0;
 		}
 
-		// TODO: range validation?
+		if( speed < MIN_WALK_SPEED ){
+			this->invalidWarning( node["Speed"], "Speed %hu is below minimum of %hu. Increasing...\n", speed, MIN_WALK_SPEED );
+			speed = MIN_WALK_SPEED;
+		}else if( speed > MAX_WALK_SPEED ){
+			this->invalidWarning( node["Speed"], "Speed %hu exceeds maximum of %hu. Capping...\n", speed, MAX_WALK_SPEED );
+			speed = MAX_WALK_SPEED;
+		}
 
 		pet->speed = speed;
 	}
@@ -305,40 +319,46 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	}
 
 	if( this->nodeExists( node, "AttackRate" ) ){
-		// TODO: unsigned? why int32?
-		int32 rate;
+		uint16 rate;
 
-		if( !this->asInt32( node, "AttackRate", rate ) ){
+		if( !this->asUInt16( node, "AttackRate", rate ) ){
 			return 0;
 		}
 
-		// TODO: range validation?
+		if( rate > 10000 ){
+			this->invalidWarning( node["AttackRate"], "AttackRate %hu exceeds maximum of 10000. Capping...\n", rate );
+			rate = 10000;
+		}
 
 		pet->attack_rate = rate;
 	}
 
 	if( this->nodeExists( node, "RetaliateRate" ) ){
-		// TODO: unsigned? why int32?
-		int32 rate;
+		uint16 rate;
 
-		if( !this->asInt32( node, "RetaliateRate", rate ) ){
+		if( !this->asUInt16( node, "RetaliateRate", rate ) ){
 			return 0;
 		}
 
-		// TODO: range validation?
+		if( rate > 10000 ){
+			this->invalidWarning( node["RetaliateRate"], "RetaliateRate %hu exceeds maximum of 10000. Capping...\n", rate );
+			rate = 10000;
+		}
 
 		pet->defence_attack_rate = rate;
 	}
 
 	if( this->nodeExists( node, "ChangeTargetRate" ) ){
-		// TODO: unsigned? why int32?
-		int32 rate;
+		uint16 rate;
 
-		if( !this->asInt32( node, "ChangeTargetRate", rate ) ){
+		if( !this->asUInt16( node, "ChangeTargetRate", rate ) ){
 			return 0;
 		}
 
-		// TODO: range validation?
+		if( rate > 10000 ){
+			this->invalidWarning( node["ChangeTargetRate"], "ChangeTargetRate %hu exceeds maximum of 10000. Capping...\n", rate );
+			rate = 10000;
+		}
 
 		pet->change_target_rate = rate;
 	}
@@ -424,7 +444,10 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 					return 0;
 				}
 
-				// TODO: range validation
+				if( amount > MAX_AMOUNT ){
+					this->invalidWarning( requirementNode["Amount"], "Amount %u exceeds the maximum of %d.\n", amount, MAX_AMOUNT );
+					return 0;
+				}
 
 				evolution->requirements[item_id] = amount;
 			}

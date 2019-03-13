@@ -25,25 +25,25 @@ struct s_pet_evo_data {
 /// Pet DB
 struct s_pet_db {
 	uint16 class_; ///< Monster ID
-	unsigned short itemID; ///< Lure ID
-	unsigned short EggID; ///< Egg ID
-	unsigned short AcceID; ///< Accessory ID
-	unsigned short FoodID; ///< Food ID
-	int fullness; ///< Amount of hunger decresed each hungry_delay interval
-	int hungry_delay; ///< Hunger value decrease each x seconds
-	int hunger_increase; ///< Hunger increased every time the pet is fed.
-	int r_hungry; ///< Intimacy increased after feeding
-	int r_full; ///< Intimacy increased when over-fed
-	int intimate; ///< Initial intimacy value
-	int die; ///< Intimacy increased when die
-	int hungry_intimacy_dec; ///< Intimacy increased when hungry
-	int capture; ///< Capture success rate 10000 = 100%
-	int speed; ///< Walk speed
+	uint16 itemID; ///< Lure ID
+	uint16 EggID; ///< Egg ID
+	uint16 AcceID; ///< Accessory ID
+	uint16 FoodID; ///< Food ID
+	uint16 fullness; ///< Amount of hunger decresed each hungry_delay interval
+	uint32 hungry_delay; ///< Hunger value decrease each x seconds
+	int32 hunger_increase; ///< Hunger increased every time the pet is fed.
+	int32 r_hungry; ///< Intimacy increased after feeding
+	int32 r_full; ///< Intimacy increased when over-fed
+	uint32 intimate; ///< Initial intimacy value
+	int32 die; ///< Intimacy increased when die
+	int32 hungry_intimacy_dec; ///< Intimacy increased when hungry
+	uint16 capture; ///< Capture success rate 10000 = 100%
+	uint16 speed; ///< Walk speed
 	bool s_perfor; ///< Special performance
 	int talk_convert_class; ///< Disables pet talk (instead of talking they emote  with /!.) (?)
-	int attack_rate; ///< Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
-	int defence_attack_rate; ///< Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
-	int change_target_rate; ///< Rate of which the pet will change its attack target.
+	uint16 attack_rate; ///< Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
+	uint16 defence_attack_rate; ///< Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
+	uint16 change_target_rate; ///< Rate of which the pet will change its attack target.
 	bool allow_autofeed; ///< Can this pet use auto feeding mechanic.
 	std::unordered_map<uint16, std::shared_ptr<s_pet_evo_data>> evolution_data; ///< Data for evolving the pet.
 	struct script_code
