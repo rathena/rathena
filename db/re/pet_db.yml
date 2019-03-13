@@ -1607,7 +1607,6 @@ Body:
   - MobId: 2057
     TameWithId: 12408
     EggItemId: 6221
-    FoodItemId: 0
     Fullness: 0
     HungryDelay: 0
     IntimacyStart: 0
@@ -1624,7 +1623,6 @@ Body:
   - MobId: 2081
     TameWithId: 12408
     EggItemId: 6221
-    FoodItemId: 0
     Fullness: 0
     HungryDelay: 0
     IntimacyStart: 0
