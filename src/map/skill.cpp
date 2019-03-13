@@ -16367,7 +16367,6 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 
 	if( type&1 ) {
 		switch( skill_id ) {
-
 			case CG_TAROTCARD: // TarotCard will consume sp in skill_cast_nodamage_id [Inkfish]
 			case MC_IDENTIFY:
 				require.sp = 0;
@@ -16384,9 +16383,8 @@ void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uin
 		if(require.hp || require.sp)
 			status_zap(&sd->bl, require.hp, require.sp);
 		
-		if(require.spiritball > 0) {
+		if(require.spiritball > 0)
 			pc_delspiritball(sd,require.spiritball,0);
-		}
 		else if(require.spiritball == -1) {
 			sd->spiritball_old = sd->spiritball;
 			pc_delspiritball(sd,sd->spiritball,0);

@@ -11322,11 +11322,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 
 		case SC_SOULGOLEM: 
-			#ifdef RENEWAL
+#ifdef RENEWAL
 				val2 = 60 * val1;// DEF Increase
-			#else
+#else
 				val2 = 60 * val1/10;// DEF Increase
-			#endif
+#endif
 			val3 = 15 + 5 * val1;// MDEF Increase
 			break;
 		case SC_SOULSHADOW:
@@ -12344,9 +12344,8 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 		case SC_SOULUNITY:
 			{
 				struct block_list *d_bl = map_id2bl(sce->val1);
-				if( d_bl ) {
-					if( d_bl->type == BL_PC )
-						((TBL_PC*)d_bl)->united_soul[sce->val2] = 0;
+				if( d_bl && d_bl->type == BL_PC )
+					((TBL_PC*)d_bl)->united_soul[sce->val2] = 0;
 				}
 			}
 			break;
