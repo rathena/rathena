@@ -7387,17 +7387,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 		if ( skill_id == SP_KAUTE )
 		{
-			int hp, sp;
-			hp = sstatus->max_hp * (10 + 2 * skill_lv) / 100;
-			sp = tstatus->max_sp * (10 + 2 * skill_lv) / 100;
-			if (!status_charge(src,hp,0))
+			if (!status_charge(src,(sstatus->max_hp * (10 + 2 * skill_lv) / 100),0))
 			{
 				if (sd)
 					clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
 				break;
 			}
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-			status_heal(bl,0,sp,2);
+			status_heal(bl,0,(tstatus->max_sp * (10 + 2 * skill_lv) / 100),2);
 		}
 		else {
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,
@@ -8865,21 +8862,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case SL_STAR:
 	case SL_SUPERNOVICE:
 	case SL_WIZARD:
-	case SL_DEATHKNIGHT: // ?
-	case SL_COLLECTOR:
-	case SL_NINJA:
-	case SL_GUNNER:
 		if ( tsc && (tsc->data[SC_SOULGOLEM] || tsc->data[SC_SOULSHADOW] || tsc->data[SC_SOULFALCON] || tsc->data[SC_SOULFAIRY]))
 		{// Soul links from Soul Linker and Soul Reaper skills don't stack.
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL,0);
-			break;
-		}
-		// [nubs] check the soul stacking, coz this part is weird.
-		//NOTE: here, 'type' has the value of the associated MAPID, not of the SC_SPIRIT constant.
-		if (sd && dstsd && !((dstsd->class_&MAPID_UPPERMASK) == type || // Can below code be optomized??? [Rytech]
-			(skill_id == SL_NINJA && (dstsd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) ||
-			(skill_id == SL_GUNNER && (dstsd->class_&MAPID_UPPERMASK) == MAPID_REBELLION ))) {
-			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 			break;
 		}
 		if (skill_id == SL_SUPERNOVICE && dstsd && dstsd->die_counter && !(rnd()%100))
@@ -16136,7 +16121,7 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 	}
 
 	if ((require.spiritball > 0 && sd->spiritball < require.spiritball) ||
-		(require.spiritball == -1 && sd->spiritball < 1 )) {
+		(require.spiritball == -1 && sd->spiritball < 1)) {
 		if ((sd->class_&MAPID_BASEMASK) == MAPID_GUNSLINGER || (sd->class_&MAPID_UPPERMASK) == MAPID_REBELLION)
 			clif_skill_fail(sd, skill_id, USESKILL_FAIL_COINS, (require.spiritball == -1) ? 1 : require.spiritball);
 		else
