@@ -56,7 +56,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 
 	if( !exists ){
 		// Check mandatory nodes
-		if( !this->nodesExist( node, { "EggItemId", "Fullness", "HungryDelay", "CaptureRate", "Speed", "SpecialPerformance", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
+		if( !this->nodesExist( node, { "EggItemId", "Fullness", "HungryDelay", "CaptureRate", "SpecialPerformance", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
 			return 0;
 		}
 
@@ -281,6 +281,10 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		pet->speed = speed;
+	}else{
+		if( !exists ){
+			pet->speed = DEFAULT_WALK_SPEED;
+		}
 	}
 
 	if( this->nodeExists( node, "SpecialPerformance" ) ){
