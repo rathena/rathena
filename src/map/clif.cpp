@@ -1355,12 +1355,12 @@ void clif_class_change_target(struct block_list *bl,int class_,int type, enum se
 /// 01d0 <id>.L <amount>.W (ZC_SPIRITS)
 /// 01e1 <id>.L <amount>.W (ZC_SPIRITS2)
 static void clif_spiritball_single(int fd, struct map_session_data *sd)
-{	
-	WFIFOHEAD(fd, packet_len(0x1d0));
-	WFIFOW(fd,0)=0x1d0;
+{
+	WFIFOHEAD(fd, packet_len(0x1e1));
+	WFIFOW(fd,0)=0x1e1;
 	WFIFOL(fd,2)=sd->bl.id;
 	WFIFOW(fd,6)=sd->spiritball;
-	WFIFOSET(fd, packet_len(0x1d0));
+	WFIFOSET(fd, packet_len(0x1e1));
 }
 
 /*==========================================
@@ -8112,18 +8112,14 @@ void clif_spiritball(struct block_list *bl) {
 
     nullpo_retv(bl);
 
-	int cmd = 0x1e1;
-	if (sd && ((sd->class_&MAPID_THIRDMASK) == MAPID_SOUL_REAPER || (sd->class_&MAPID_THIRDMASK) == MAPID_BABY_SOUL_REAPER))
-		cmd = 0x1d0;
-
-    WBUFW(buf, 0) = cmd;
+    WBUFW(buf, 0) = 0x1d0;
     WBUFL(buf, 2) = bl->id;
 	WBUFW(buf, 6) = 0; //init to 0
     switch(bl->type){
         case BL_PC: WBUFW(buf, 6) = sd->spiritball; break;
         case BL_HOM: WBUFW(buf, 6) = hd->homunculus.spiritball; break;
     }
-    clif_send(buf, packet_len(cmd), bl, AREA);
+    clif_send(buf, packet_len(0x1d0), bl, AREA);
 }
 
 
