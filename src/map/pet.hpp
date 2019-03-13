@@ -40,7 +40,6 @@ struct s_pet_db {
 	uint16 capture; ///< Capture success rate 10000 = 100%
 	uint16 speed; ///< Walk speed
 	bool s_perfor; ///< Special performance
-	int talk_convert_class; ///< Disables pet talk (instead of talking they emote  with /!.) (?)
 	uint16 attack_rate; ///< Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
 	uint16 defence_attack_rate; ///< Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
 	uint16 change_target_rate; ///< Rate of which the pet will change its attack target.

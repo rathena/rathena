@@ -21,7 +21,6 @@
 #   CaptureRate              Capture success rate (10000 = 100%)
 #   Speed                    Pet's walk speed. (Default: DEFAULT_WALK_SPEED)
 #   SpecialPerformance       Special Performance. (true/false)
-#   TalkConvertClass         Disables pet talk (instead of talking they emote  with /!.)
 #   AttackRate               Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
 #   RetaliateRate            Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
 #   ChangeTargetRate         Rate of which the pet will change its attack target.

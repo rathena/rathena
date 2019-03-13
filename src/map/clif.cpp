@@ -7980,15 +7980,6 @@ void clif_pet_emotion(struct pet_data *pd,int param)
 
 	WBUFW(buf,0)=0x1aa;
 	WBUFL(buf,2)=pd->bl.id;
-	if(param >= 100 && pet_db_ptr->talk_convert_class) {
-		if(pet_db_ptr->talk_convert_class < 0)
-			return;
-		else if(pet_db_ptr->talk_convert_class > 0) {
-			// replace mob_id component of talk/act data
-			param -= (pd->pet.class_ - 100)*100;
-			param += (pet_db_ptr->talk_convert_class - 100)*100;
-		}
-	}
 	WBUFL(buf,6)=param;
 
 	clif_send(buf,packet_len(0x1aa),&pd->bl,AREA);

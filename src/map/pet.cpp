@@ -297,17 +297,6 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		pet->s_perfor = performance;
 	}
 
-	if( this->nodeExists( node, "TalkConvertClass" ) ){
-		// TODO: unsigned? why int32?
-		int32 cls;
-
-		if( !this->asInt32( node, "TalkConvertClass", cls ) ){
-			return 0;
-		}
-
-		pet->talk_convert_class = cls;
-	}
-
 	if( this->nodeExists( node, "AttackRate" ) ){
 		uint16 rate;
 

@@ -21,7 +21,6 @@
 #   CaptureRate              Capture success rate (10000 = 100%)
 #   Speed                    Pet's walk speed. (Default: DEFAULT_WALK_SPEED)
 #   SpecialPerformance       Special Performance. (true/false)
-#   TalkConvertClass         Disables pet talk (instead of talking they emote  with /!.)
 #   AttackRate               Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
 #   RetaliateRate            Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
 #   ChangeTargetRate         Rate of which the pet will change its attack target.
@@ -55,7 +54,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 350
     RetaliateRate: 400
     ChangeTargetRate: 800
@@ -83,7 +81,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 400
     ChangeTargetRate: 500
@@ -111,7 +108,6 @@ Body:
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 500
     ChangeTargetRate: 400
@@ -139,7 +135,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 1000
@@ -167,7 +162,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 500
     RetaliateRate: 600
     ChangeTargetRate: 50
@@ -195,7 +189,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 250
@@ -223,7 +216,6 @@ Body:
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
@@ -251,7 +243,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
@@ -279,7 +270,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
@@ -307,7 +297,6 @@ Body:
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 400
     RetaliateRate: 400
     ChangeTargetRate: 400
@@ -335,7 +324,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 350
     RetaliateRate: 350
     ChangeTargetRate: 600
@@ -363,7 +351,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 350
     RetaliateRate: 500
     ChangeTargetRate: 500
@@ -391,7 +378,6 @@ Body:
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 600
     RetaliateRate: 200
     ChangeTargetRate: 400
@@ -419,7 +405,6 @@ Body:
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 400
     RetaliateRate: 500
     ChangeTargetRate: 800
@@ -447,7 +432,6 @@ Body:
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 600
     RetaliateRate: 600
     ChangeTargetRate: 100
@@ -475,7 +459,6 @@ Body:
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 800
     ChangeTargetRate: 400
@@ -503,7 +486,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 600
     RetaliateRate: 200
     ChangeTargetRate: 300
@@ -531,7 +513,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 750
     ChangeTargetRate: 300
@@ -559,7 +540,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -587,7 +567,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 100
     RetaliateRate: 1000
     ChangeTargetRate: 200
@@ -615,7 +594,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 650
     RetaliateRate: 450
     ChangeTargetRate: 150
@@ -643,7 +621,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 800
     RetaliateRate: 400
     ChangeTargetRate: 100
@@ -672,7 +649,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 800
     RetaliateRate: 200
     ChangeTargetRate: 100
@@ -702,7 +678,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 1000
     RetaliateRate: 100
     ChangeTargetRate: 200
@@ -731,7 +706,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 600
     RetaliateRate: 200
     ChangeTargetRate: 400
@@ -758,7 +732,6 @@ Body:
     CaptureRate: 300
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 1000
     RetaliateRate: 100
     ChangeTargetRate: 500
@@ -787,7 +760,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 100
     RetaliateRate: 1000
     ChangeTargetRate: 200
@@ -814,7 +786,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: true
-    TalkConvertClass: 0
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
@@ -841,7 +812,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -868,7 +838,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -895,7 +864,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -915,7 +883,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -935,7 +902,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -955,7 +921,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -975,7 +940,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -995,7 +959,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1015,7 +978,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1041,7 +1003,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1062,7 +1023,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1088,7 +1048,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1113,7 +1072,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1139,7 +1097,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1165,7 +1122,6 @@ Body:
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1191,7 +1147,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1216,7 +1171,6 @@ Body:
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1241,7 +1195,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1266,7 +1219,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1291,7 +1243,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1317,7 +1268,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1343,7 +1293,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1368,7 +1317,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1393,7 +1341,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1419,7 +1366,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1444,7 +1390,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1469,7 +1414,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1488,7 +1432,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    TalkConvertClass: 0
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
