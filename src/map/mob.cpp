@@ -2956,9 +2956,9 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 		if (sd) {
 			struct mob_db *mission_mdb = mob_db(sd->mission_mobid);
 
-			if ((sd->mission_mobid == md->mob_id) ||
-				(battle_config.taekwon_mission_mobname == 1 && mission_mdb && status_get_race2(&md->bl) == RC2_GOBLIN && mission_mdb->race2 == RC2_GOBLIN) ||
-				(battle_config.taekwon_mission_mobname == 2 && mob_is_samename(md, sd->mission_mobid)))
+			if ((sd->mission_mobid == md->mob_id) || (mission_mdb != nullptr &&
+				((battle_config.taekwon_mission_mobname == 1 && status_get_race2(&md->bl) == RC2_GOBLIN && mission_mdb->race2 == RC2_GOBLIN) ||
+				(battle_config.taekwon_mission_mobname == 2 && strcmp(mob_db(md->mob_id)->jname, mission_mdb->jname) == 0))))
 			{ //TK_MISSION [Skotlex]
 				if (++(sd->mission_count) >= 100 && (temp = mob_get_random_id(MOBG_Branch_Of_Dead_Tree, static_cast<e_random_monster_flags>(RMF_CHECK_MOB_LV|RMF_MOB_NOT_BOSS|RMF_MOB_NOT_SPAWN), sd->status.base_level)))
 				{
