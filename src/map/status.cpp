@@ -12346,7 +12346,6 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 				struct block_list *d_bl = map_id2bl(sce->val1);
 				if( d_bl && d_bl->type == BL_PC )
 					((TBL_PC*)d_bl)->united_soul[sce->val2] = 0;
-				}
 			}
 			break;
 
