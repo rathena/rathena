@@ -13,12 +13,11 @@
 #   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
 #   HungryDelay              The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
-#   Intimacy:                Intimacy settings
-#     Fed                    Amount of Intimacy that is increased when fed.
-#     Overfed                Amount of Intimacy that is increased when over-fed.
-#     Hungry                 Amount of Intimacy that is increased when the pet is hungry.
-#     Start                  Amount of Intimacy the pet starts with.
-#     OwnerDie               Amount of Intimacy that is increased when the pet owner dies.
+#   IntimacyStart            Amount of Intimacy the pet starts with.
+#   IntimacyFed              Amount of Intimacy that is increased when fed.
+#   IntimacyOverfed          Amount of Intimacy that is increased when over-fed.
+#   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry.
+#   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies.
 #   CaptureRate              Capture success rate (10000 = 100%)
 #   Speed                    Pet's walk speed. (Default: 150)
 #   SpecialPerformance       Special Performance. (true/false)

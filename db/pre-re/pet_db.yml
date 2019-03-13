@@ -13,12 +13,11 @@
 #   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
 #   HungryDelay              The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
-#   Intimacy:                Intimacy settings
-#     Fed                    Amount of Intimacy that is increased when fed.
-#     Overfed                Amount of Intimacy that is increased when over-fed.
-#     Hungry                 Amount of Intimacy that is increased when the pet is hungry.
-#     Start                  Amount of Intimacy the pet starts with.
-#     OwnerDie               Amount of Intimacy that is increased when the pet owner dies.
+#   IntimacyStart            Amount of Intimacy the pet starts with.
+#   IntimacyFed              Amount of Intimacy that is increased when fed.
+#   IntimacyOverfed          Amount of Intimacy that is increased when over-fed.
+#   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry.
+#   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies.
 #   CaptureRate              Capture success rate (10000 = 100%)
 #   Speed                    Pet's walk speed. (Default: 150)
 #   SpecialPerformance       Special Performance. (true/false)
@@ -48,12 +47,11 @@ Body:
     FoodItemId: 531
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 50
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 50
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: true
@@ -77,12 +75,11 @@ Body:
     FoodItemId: 508
     Fullness: 4
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 40
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 40
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: true
@@ -106,12 +103,11 @@ Body:
     FoodItemId: 511
     Fullness: 5
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 30
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 30
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
@@ -135,12 +131,11 @@ Body:
     FoodItemId: 534
     Fullness: 4
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 40
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 40
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -164,12 +159,11 @@ Body:
     FoodItemId: 507
     Fullness: 4
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 40
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 40
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: true
@@ -193,12 +187,11 @@ Body:
     FoodItemId: 537
     Fullness: 6
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 30
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 30
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: true
@@ -222,12 +215,11 @@ Body:
     FoodItemId: 1002
     Fullness: 5
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
@@ -251,12 +243,11 @@ Body:
     FoodItemId: 716
     Fullness: 5
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: true
@@ -280,12 +271,11 @@ Body:
     FoodItemId: 537
     Fullness: 7
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 40
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 40
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -309,12 +299,11 @@ Body:
     FoodItemId: 537
     Fullness: 6
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 40
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 40
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
@@ -338,12 +327,11 @@ Body:
     FoodItemId: 537
     Fullness: 1
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 30
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 30
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -367,12 +355,11 @@ Body:
     FoodItemId: 537
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 30
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 30
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -396,12 +383,11 @@ Body:
     FoodItemId: 537
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
@@ -425,12 +411,11 @@ Body:
     FoodItemId: 537
     Fullness: 4
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 30
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 30
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
@@ -454,12 +439,11 @@ Body:
     FoodItemId: 537
     Fullness: 4
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 30
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 30
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
@@ -483,12 +467,11 @@ Body:
     FoodItemId: 532
     Fullness: 5
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: true
@@ -512,12 +495,11 @@ Body:
     FoodItemId: 537
     Fullness: 5
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: true
@@ -541,12 +523,11 @@ Body:
     FoodItemId: 537
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -570,12 +551,11 @@ Body:
     FoodItemId: 537
     Fullness: 4
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -599,12 +579,11 @@ Body:
     FoodItemId: 537
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -628,12 +607,11 @@ Body:
     FoodItemId: 537
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -657,12 +635,11 @@ Body:
     FoodItemId: 537
     Fullness: 4
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -687,12 +664,11 @@ Body:
     FoodItemId: 711
     Fullness: 2
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -718,12 +694,11 @@ Body:
     FoodItemId: 518
     Fullness: 2
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -748,12 +723,11 @@ Body:
     FoodItemId: 537
     Fullness: 4
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 30
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 30
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: true
@@ -776,12 +750,11 @@ Body:
     FoodItemId: 929
     Fullness: 7
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 300
     Speed: 150
     SpecialPerformance: false
@@ -806,12 +779,11 @@ Body:
     FoodItemId: 504
     Fullness: 2
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -834,12 +806,11 @@ Body:
     FoodItemId: 511
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 50
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 50
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: true
@@ -862,12 +833,11 @@ Body:
     FoodItemId: 911
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 50
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 50
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -890,12 +860,11 @@ Body:
     FoodItemId: 6115
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 50
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 50
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -918,12 +887,11 @@ Body:
     FoodItemId: 7766
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 50
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 50
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -939,12 +907,11 @@ Body:
     FoodItemId: 7821
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 50
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 50
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -960,12 +927,11 @@ Body:
     FoodItemId: 7821
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 50
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 50
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -981,12 +947,11 @@ Body:
     FoodItemId: 7821
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 50
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 50
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -1002,12 +967,11 @@ Body:
     FoodItemId: 7822
     Fullness: 4
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -1023,12 +987,11 @@ Body:
     FoodItemId: 7823
     Fullness: 2
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -1044,12 +1007,11 @@ Body:
     FoodItemId: 7824
     Fullness: 2
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -1071,12 +1033,11 @@ Body:
     FoodItemId: 554
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 30
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 30
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -1093,12 +1054,11 @@ Body:
     FoodItemId: 6111
     Fullness: 7
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -1120,12 +1080,11 @@ Body:
     FoodItemId: 6098
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -1146,12 +1105,11 @@ Body:
     FoodItemId: 6108
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -1173,12 +1131,11 @@ Body:
     FoodItemId: 6100
     Fullness: 7
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -1200,12 +1157,11 @@ Body:
     FoodItemId: 6104
     Fullness: 7
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
@@ -1227,12 +1183,11 @@ Body:
     FoodItemId: 6113
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -1253,12 +1208,11 @@ Body:
     FoodItemId: 6110
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
@@ -1279,12 +1233,11 @@ Body:
     FoodItemId: 6112
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -1305,12 +1258,11 @@ Body:
     FoodItemId: 6099
     Fullness: 7
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -1331,12 +1283,11 @@ Body:
     FoodItemId: 6106
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 15
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 15
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -1358,12 +1309,11 @@ Body:
     FoodItemId: 6105
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 15
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 15
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -1385,12 +1335,11 @@ Body:
     FoodItemId: 6109
     Fullness: 7
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -1411,12 +1360,11 @@ Body:
     FoodItemId: 6107
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -1437,12 +1385,11 @@ Body:
     FoodItemId: 6097
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 15
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 15
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -1464,12 +1411,11 @@ Body:
     FoodItemId: 6095
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -1490,12 +1436,11 @@ Body:
     FoodItemId: 6096
     Fullness: 7
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 20
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 20
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -1516,12 +1461,11 @@ Body:
     FoodItemId: 6094
     Fullness: 7
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -1536,12 +1480,11 @@ Body:
     FoodItemId: 6114
     Fullness: 3
     HungryDelay: 60
-    Intimacy:
-      Start: 250
-      Fed: 10
-      Overfed: -100
-      Hungry: -5
-      OwnerDie: -20
+    IntimacyStart: 250
+    IntimacyFed: 10
+    IntimacyOverfed: -100
+    IntimacyHungry: -5
+    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false

@@ -175,92 +175,78 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 	}
 
-	// TODO: Remove this additional level for Intimacy
-	if( this->nodeExists( node, "Intimacy" ) ){
-		const YAML::Node& intimacyNode = node["Intimacy"];
+	if( this->nodeExists( node, "IntimacyStart" ) ){
+		uint32 start;
 
-		if( this->nodeExists( intimacyNode, "Fed" ) ){
-			int32 fed;
-
-			if( !this->asInt32( intimacyNode, "Fed", fed ) ){
-				return 0;
-			}
-
-			pet->r_hungry = fed;
-		}else{
-			if( !exists ){
-				pet->r_hungry = 50;
-			}
+		if( !this->asUInt32( node, "IntimacyStart", start ) ){
+			return 0;
 		}
 
-		if( this->nodeExists( intimacyNode, "Overfed" ) ){
-			int32 overfed;
-
-			if( !this->asInt32( intimacyNode, "Overfed", overfed ) ){
-				return 0;
-			}
-
-			pet->r_full = overfed;
-		}else{
-			if( !exists ){
-				pet->r_full = -100;
-			}
+		if( start > 10000 ){
+			this->invalidWarning( node["IntimacyStart"], "IntimacyStart %hu exceeds maximum of 10000. Capping...\n", start );
+			start = 10000;
 		}
 
-		if( this->nodeExists( intimacyNode, "Hungry" ) ){
-			int32 hungry;
-
-			if( !this->asInt32( intimacyNode, "Hungry", hungry ) ){
-				return 0;
-			}
-
-			pet->hungry_intimacy_dec = hungry;
-		}else{
-			if( !exists ){
-				pet->hungry_intimacy_dec = -5;
-			}
-		}
-
-		if( this->nodeExists( intimacyNode, "Start" ) ){
-			uint32 start;
-
-			if( !this->asUInt32( intimacyNode, "Start", start ) ){
-				return 0;
-			}
-
-			if( start > 10000 ){
-				this->invalidWarning( intimacyNode["Start"], "Start %hu exceeds maximum of 10000. Capping...\n", start );
-				start = 10000;
-			}
-
-			pet->intimate = start;
-		}else{
-			if( !exists ){
-				pet->intimate = 250;
-			}
-		}
-
-		if( this->nodeExists( intimacyNode, "OwnerDie" ) ){
-			int32 die;
-
-			if( !this->asInt32( intimacyNode, "OwnerDie", die ) ){
-				return 0;
-			}
-
-			pet->die = die;
-		}else{
-			if( !exists ){
-				pet->die = -20;
-			}
-		}
+		pet->intimate = start;
 	}else{
 		if( !exists ){
-			// Not defined, use default "Poring" value
-			pet->r_hungry = 50;
-			pet->r_full = -100;
 			pet->intimate = 250;
-			pet->die = -20;
+		}
+	}
+
+	if( this->nodeExists( node, "IntimacyFed" ) ){
+		int32 fed;
+
+		if( !this->asInt32( node, "IntimacyFed", fed ) ){
+			return 0;
+		}
+
+		pet->r_hungry = fed;
+	}else{
+		if( !exists ){
+			pet->r_hungry = 50;
+		}
+	}
+
+	if( this->nodeExists( node, "IntimacyOverfed" ) ){
+		int32 overfed;
+
+		if( !this->asInt32( node, "IntimacyOverfed", overfed ) ){
+			return 0;
+		}
+
+		pet->r_full = overfed;
+	}else{
+		if( !exists ){
+			pet->r_full = -100;
+		}
+	}
+
+	if( this->nodeExists( node, "IntimacyHungry" ) ){
+		int32 hungry;
+
+		if( !this->asInt32( node, "IntimacyHungry", hungry ) ){
+			return 0;
+		}
+
+		pet->hungry_intimacy_dec = hungry;
+	}else{
+		if( !exists ){
 			pet->hungry_intimacy_dec = -5;
+		}
+	}
+
+	if( this->nodeExists( node, "IntimacyOwnerDie" ) ){
+		int32 die;
+
+		if( !this->asInt32( node, "IntimacyOwnerDie", die ) ){
+			return 0;
+		}
+
+		pet->die = die;
+	}else{
+		if( !exists ){
+			pet->die = -20;
 		}
 	}
 
