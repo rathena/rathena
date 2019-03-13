@@ -1216,12 +1216,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 		}
 
-		if((sce=sc->data[SC_MEIKYOUSISUI]) && rand()%100 < sce->val2)
-		{// Animation is unofficial, but it allows players to know when the nullify chance was successful. [Rytech]
-			clif_specialeffect(bl, 462, AREA);
-			return 0;
-		}
-
 #ifdef RENEWAL // Flat +400% damage from melee
 		if (sc->data[SC_KAITE] && (flag&(BF_SHORT|BF_MAGIC)) == BF_SHORT)
 			damage <<= 2;
