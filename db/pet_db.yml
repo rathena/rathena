@@ -5,11 +5,11 @@
 # Pet Settings
 #
 ###########################################################################
-# - MobId                    Monster ID of the pet
-#   TameItem                 Pet Tame Item ID.
-#   EggItem                  Pet Egg ID.
-#   EquipItem                Pet Accessory ID.
-#   FoodItem                 Pet Food ID.
+# - Mob                      Monster that can be used as pet
+#   TameItem                 Pet Tame Item.
+#   EggItem                  Pet Egg Item.
+#   EquipItem                Pet Accessory Item.
+#   FoodItem                 Pet Food Item.
 #   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
 #   HungryDelay              The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
@@ -28,9 +28,9 @@
 #   Script                   Bonus script to execute when the pet is alive.
 #   SupportScript            Legacy pet script for pet* script commands.
 #   Evolution:               Pet evolution settings
-#     - TargetId               Mob ID this pet evolves to
+#     - Target               Mob this pet can evolve to
 #       ItemRequirements:      Item requirements for evolving this pet
-#         - ItemId             Self-explanatory
+#         - Item               Self-explanatory
 #           Amount
 ###########################################################################
 
