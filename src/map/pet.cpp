@@ -40,16 +40,20 @@ const std::string PetDatabase::getDefaultLocation(){
 }
 
 uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
-	uint16 mob_id;
+	std::string mob_name;
 
-	if( !this->asUInt16( node, "MobId", mob_id ) ){
+	if( !this->asString( node, "Mob", mob_name ) ){
 		return 0;
 	}
 
-	if( mob_db( mob_id ) == nullptr ){
-		this->invalidWarning( node["MobId"], "Mob Id %hu does not exist and cannot be used as a pet.\n", mob_id );
+	struct mob_db* mob = mobdb_search_aegisname( mob_name.c_str() );
+
+	if( mob == nullptr ){
+		this->invalidWarning( node["Target"], "Mob %s does not exist and cannot be used as a pet.\n", mob_name.c_str() );
 		return 0;
 	}
+
+	uint16 mob_id = mob->vd.class_;
 
 	std::shared_ptr<s_pet_db> pet = this->find( mob_id );
 	bool exists = pet != nullptr;
@@ -394,11 +398,20 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 
 	if( this->nodeExists( node, "Evolution" ) ){
 		for( const YAML::Node& evolutionNode : node["Evolution"] ){
-			uint16 targetId;
+			std::string target_name;
 
-			if( !this->asUInt16( evolutionNode, "TargetId", targetId ) ){
+			if( !this->asString( evolutionNode, "Target", target_name ) ){
 				return 0;
 			}
+
+			struct mob_db* mob = mobdb_search_aegisname( target_name.c_str() );
+
+			if( mob == nullptr ){
+				this->invalidWarning( evolutionNode["Target"], "Evolution target %s does not exist.\n", target_name.c_str() );
+				return 0;
+			}
+
+			uint16 targetId = mob->vd.class_;
 
 			if( !this->nodeExists( evolutionNode, "ItemRequirements" ) ){
 				this->invalidWarning( evolutionNode, "Missing required node \"ItemRequirements\".\n" );

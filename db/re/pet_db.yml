@@ -39,7 +39,7 @@ Header:
   Version: 1
 
 Body:
-  - MobId: 1002
+  - Mob: PORING
     TameItem: Unripe_Apple
     EggItem: Poring_Egg
     EquipItem: Backpack
@@ -67,14 +67,14 @@ Body:
     SupportScript: >
       petloot 10;
     Evolution:
-      - TargetId: 1090
+      - Target: MASTERING
         ItemRequirements:
           - Item: Leaf_Of_Yggdrasil
             Amount: 10
           - Item: Unripe_Apple
             Amount: 3
 
-  - MobId: 1113
+  - Mob: DROPS
     TameItem: Orange_Juice
     EggItem: Drops_Egg
     EquipItem: Backpack
@@ -102,7 +102,7 @@ Body:
     SupportScript: >
       petloot 10;
     Evolution:
-      - TargetId: 3495
+      - Target: DR_EGGRING
         ItemRequirements:
           - Item: Piece_Of_Egg_Shell
             Amount: 20
@@ -112,7 +112,7 @@ Body:
             Amount: 3
           - Item: Eggring_Card
             Amount: 1
-      - TargetId: 3790
+      - Target: SWEETS_DROPS
         ItemRequirements:
           - Item: Sweets_Festival_Coin
             Amount: 500
@@ -122,7 +122,7 @@ Body:
             Amount: 50
           - Item: Drops_Card
             Amount: 1
-  - MobId: 1031
+  - Mob: POPORING
     TameItem: Bitter_Herb
     EggItem: Poporing_Egg
     EquipItem: Backpack
@@ -149,7 +149,7 @@ Body:
       }
     SupportScript: >
       petloot 15;
-  - MobId: 1063
+  - Mob: LUNATIC
     TameItem: Rainbow_Carrot
     EggItem: Lunatic_Egg
     EquipItem: Silk_Ribbon
@@ -177,7 +177,7 @@ Body:
     SupportScript: >
       petskillbonus bLuk,3,10,50;
     Evolution:
-      - TargetId: 3496
+      - Target: DR_LUNATIC
         ItemRequirements: 
           - Item: Great_Leaf
             Amount: 100
@@ -188,7 +188,7 @@ Body:
           - Item: Leaf_Lunatic_Card
             Amount: 1
 
-  - MobId: 1049
+  - Mob: PICKY
     TameItem: Earthworm_The_Dude
     EggItem: Picky_Egg
     EquipItem: Tiny_Egg_Shell
@@ -215,7 +215,7 @@ Body:
       }
     SupportScript: >
       petskillbonus bStr,3,10,50;
-  - MobId: 1011
+  - Mob: CHONCHON
     TameItem: Rotten_Fish
     EggItem: Chonchon_Egg
     EquipItem: Monster_Oxygen_Mask
@@ -242,7 +242,7 @@ Body:
       }
     SupportScript: >
       petskillbonus bAgi,4,10,50;
-  - MobId: 1042
+  - Mob: STEEL_CHONCHON
     TameItem: Lusty_Iron
     EggItem: Steel_Chonchon_Egg
     EquipItem: Monster_Oxygen_Mask
@@ -269,7 +269,7 @@ Body:
       }
     SupportScript: >
       petskillbonus bAgiVit,4,20,40;
-  - MobId: 1035
+  - Mob: HUNTER_FLY
     TameItem: Monster_Juice
     EggItem: Hunter_Fly_Egg
     EquipItem: Monster_Oxygen_Mask
@@ -296,7 +296,7 @@ Body:
       }
     SupportScript: >
       petskillattack2 "NPC_WINDATTACK",888,2,0,10;
-  - MobId: 1167
+  - Mob: SAVAGE_BABE
     TameItem: Sweet_Milk
     EggItem: Savage_Bebe_Egg
     EquipItem: Green_Lace
@@ -324,7 +324,7 @@ Body:
     SupportScript: >
       petskillbonus bVit,4,10,50;
     Evolution:
-      - TargetId: 1166
+      - Target: SAVAGE
         ItemRequirements:
           - Item: Pet_Food
             Amount: 10
@@ -334,7 +334,7 @@ Body:
             Amount: 100
           - Item: Feather
             Amount: 50
-  - MobId: 1107
+  - Mob: DESERT_WOLF_B
     TameItem: Well_Dried_Bone
     EggItem: Baby_Desert_Wolf_Egg
     EquipItem: Transparent_Headgear
@@ -361,7 +361,7 @@ Body:
       }
     SupportScript: >
       petskillattack "SM_PROVOKE",1,0,5;
-  - MobId: 1052
+  - Mob: ROCKER
     TameItem: Singing_Flower
     EggItem: Rocker_Egg
     EquipItem: Rocker_Glasses
@@ -389,7 +389,7 @@ Body:
     SupportScript: >
       petskillbonus bAllStats,1,10,50;
     Evolution:
-      - TargetId: 1058
+      - Target: METALLER
         ItemRequirements:
           - Item: Singing_Plant
             Amount: 3
@@ -399,7 +399,7 @@ Body:
             Amount: 200
           - Item: Metaller_Card
             Amount: 1
-  - MobId: 1014
+  - Mob: SPORE
     TameItem: Dew_Laden_Moss
     EggItem: Spore_Egg
     EquipItem: Bark_Shorts
@@ -426,7 +426,7 @@ Body:
       }
     SupportScript: >
       petrecovery SC_POISON,60;
-  - MobId: 1077
+  - Mob: POISON_SPORE
     TameItem: Deadly_Noxious_Herb
     EggItem: Poison_Spore_Egg
     EquipItem: Bark_Shorts
@@ -453,7 +453,7 @@ Body:
       }
     SupportScript: >
       petskillattack "NPC_POISON",20,0,10;
-  - MobId: 1019
+  - Mob: PECOPECO
     TameItem: Fatty_Chubby_Earthworm
     EggItem: PecoPeco_Egg
     EquipItem: Battered_Pot
@@ -481,7 +481,7 @@ Body:
     SupportScript: >
       petskillbonus bSpeedRate,25,20,20;
     Evolution:
-      - TargetId: 1369
+      - Target: GRAND_PECO
         ItemRequirements:
           - Item: Pet_Food
             Amount: 10
@@ -493,7 +493,7 @@ Body:
             Amount: 1
           - Item: Fruit_Of_Mastela
             Amount: 10
-  - MobId: 1056
+  - Mob: SMOKIE
     TameItem: Baked_Yam
     EggItem: Smokie_Egg
     EquipItem: Red_Muffler
@@ -520,7 +520,7 @@ Body:
       }
     SupportScript: >
       petskillbonus bPerfectHide,1,3600,0;
-  - MobId: 1057
+  - Mob: YOYO
     TameItem: Tropical_Banana
     EggItem: Yoyo_Egg
     EquipItem: Monkey_Circlet
@@ -548,7 +548,7 @@ Body:
     SupportScript: >
       petloot 20;
     Evolution:
-      - TargetId: 1214
+      - Target: CHOCO
         ItemRequirements:
           - Item: Tropical_Banana
             Amount: 3
@@ -558,7 +558,7 @@ Body:
             Amount: 300
           - Item: Yoyo_Card
             Amount: 1
-  - MobId: 1023
+  - Mob: ORK_WARRIOR
     TameItem: Horror_Of_Tribe
     EggItem: Orc_Warrior_Egg
     EquipItem: Wild_Flower
@@ -586,7 +586,7 @@ Body:
     SupportScript: >
       petskillattack2 "NPC_PIERCINGATT",100,1,0,10;
     Evolution:
-      - TargetId: 1213
+      - Target: HIGH_ORC
         ItemRequirements:
           - Item: Horror_Of_Tribe
             Amount: 3
@@ -598,7 +598,7 @@ Body:
             Amount: 1
           - Item: Orc_Warrior_Card
             Amount: 1
-  - MobId: 1026
+  - Mob: MUNAK
     TameItem: No_Recipient
     EggItem: Munak_Egg
     EquipItem: Punisher
@@ -625,7 +625,7 @@ Body:
       }
     SupportScript: >
       petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10;
-  - MobId: 1110
+  - Mob: DOKEBI
     TameItem: Old_Broom
     EggItem: Dokkaebi_Egg
     EquipItem: Wig
@@ -653,7 +653,7 @@ Body:
     SupportScript: >
       petskillattack "BS_HAMMERFALL",1,0,10;
     Evolution:
-      - TargetId: 1301
+      - Target: AM_MUT
         ItemRequirements:
           - Item: Old_Broom
             Amount: 3
@@ -663,7 +663,7 @@ Body:
             Amount: 300
           - Item: Gold
             Amount: 3
-  - MobId: 1170
+  - Mob: SOHEE
     TameItem: Silver_Knife_Of_Chaste
     EggItem: Sohee_Egg
     EquipItem: Golden_Bell
@@ -690,7 +690,7 @@ Body:
       }
     SupportScript: >
       petskillsupport "AL_HEAL",5,60,33,100;
-  - MobId: 1029
+  - Mob: ISIS
     TameItem: Armlet_Of_Obedience
     EggItem: Isis_Egg
     EquipItem: Queen's_Hair_Ornament
@@ -718,7 +718,7 @@ Body:
     SupportScript: >
       petskillsupport "PR_MAGNIFICAT",2,60,50,50;
     Evolution:
-      - TargetId: 3636
+      - Target: LITTLE_ISIS
         ItemRequirements:
           - Item: Armlet_Of_Obedience
             Amount: 3
@@ -728,7 +728,7 @@ Body:
             Amount: 1
           - Item: Shining_Scales
             Amount: 300
-  - MobId: 1155
+  - Mob: PETIT
     TameItem: Shining_Stone
     EggItem: Green_Petite_Egg
     EquipItem: Stellar_Hairpin
@@ -757,7 +757,7 @@ Body:
     SupportScript: >
       petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10;
     Evolution:
-      - TargetId: 3670
+      - Target: DELETER_2
         ItemRequirements:
           - Item: Shining_Stone
             Amount: 3
@@ -767,7 +767,7 @@ Body:
             Amount: 150
           - Item: Deleter_Card
             Amount: 1
-  - MobId: 1109
+  - Mob: DEVIRUCHI
     TameItem: Contracts_In_Shadow
     EggItem: Deviruchi_Egg
     EquipItem: Pacifier
@@ -797,7 +797,7 @@ Body:
     SupportScript: >
       petskillbonus bAgiDexStr,6,20,40;
     Evolution:
-      - TargetId: 3669
+      - Target: DIABOLIC2
         ItemRequirements:
           - Item: Contracts_In_Shadow
             Amount: 3
@@ -807,7 +807,7 @@ Body:
             Amount: 30
           - Item: Deviruchi_Card
             Amount: 1
-  - MobId: 1101
+  - Mob: BAPHOMET_
     TameItem: Book_Of_Devil
     EggItem: Bapho_Jr._Egg
     EquipItem: Skull_Helm
@@ -835,7 +835,7 @@ Body:
       }
     SupportScript: >
       petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5;
-  - MobId: 1188
+  - Mob: BON_GUN
     TameItem: Heart_Of_Her
     EggItem: Bongun_Egg
     EquipItem: Sword_Of_Grave_Keeper
@@ -863,7 +863,7 @@ Body:
     SupportScript: >
       petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1;
     Evolution:
-      - TargetId: 1512
+      - Target: HYEGUN
         ItemRequirements:
           - Item: Hyegun_Hat
             Amount: 1
@@ -873,7 +873,7 @@ Body:
             Amount: 50
           - Item: Hyegun_Card
             Amount: 1
-  - MobId: 1200
+  - Mob: ZHERLTHSH
     TameItem: Prohibition_Red_Candle
     EggItem: Zherlthsh_Egg
     FoodItem: Immortal_Heart
@@ -901,7 +901,7 @@ Body:
       }
     SupportScript: >
       petskillattack "AS_SONICBLOW",1,0,3;
-  - MobId: 1275
+  - Mob: ALICE
     TameItem: Sway_Apron
     EggItem: Alice_Egg
     FoodItem: White_Potion
@@ -928,7 +928,7 @@ Body:
       }
     SupportScript: >
       petskillsupport "AL_HEAL",5,60,25,100;
-  - MobId: 1815
+  - Mob: EVENT_RICECAKE
     EggItem: Rice_Cake_Egg
     FoodItem: Green_Herb
     Fullness: 3
@@ -953,7 +953,7 @@ Body:
       }
     SupportScript: >
       petskillsupport "CR_DEFENDER",3,240,50,100;
-  - MobId: 1245
+  - Mob: GOBLINE_XMAS
     TameItem: Sweet_Candy_Striper
     EggItem: Santa_Goblin_Egg
     FoodItem: Scell
@@ -979,7 +979,7 @@ Body:
       }
     SupportScript: >
       petskillattack "MG_SIGHT",5,5,5;
-  - MobId: 1519
+  - Mob: CHUNG_E
     TameItem: Tantanmen
     EggItem: Chung_E_Egg
     FoodItem: Bun_
@@ -1006,7 +1006,7 @@ Body:
       }
     SupportScript: >
       petskillattack "CR_SHIELDCHARGE",5,5,5;
-  - MobId: 1879
+  - Mob: ECLIPSE_P
     EggItem: Spring_Rabbit_Egg
     FoodItem: Bok_Choy
     Fullness: 3
@@ -1024,7 +1024,7 @@ Body:
     ChangeTargetRate: 800
     SupportScript: >
       petskillattack "TF_THROWSTONE",1,5,5;
-  - MobId: 1122
+  - Mob: GOBLIN_1
     TameItem: Knife_Goblin_Ring
     EggItem: Knife_Goblin_Egg
     FoodItem: Green_Apple
@@ -1043,7 +1043,7 @@ Body:
     ChangeTargetRate: 800
     SupportScript: >
       petskillattack "NPC_WINDATTACK",5,5,5;
-  - MobId: 1123
+  - Mob: GOBLIN_2
     TameItem: Flail_Goblin_Ring
     EggItem: Flail_Goblin_Egg
     FoodItem: Green_Apple
@@ -1062,7 +1062,7 @@ Body:
     ChangeTargetRate: 800
     SupportScript: >
       petskillattack "NPC_FIREATTACK",5,5,5;
-  - MobId: 1125
+  - Mob: GOBLIN_4
     TameItem: Hammer_Goblin_Ring
     EggItem: Hammer_Goblin_Egg
     FoodItem: Green_Apple
@@ -1081,7 +1081,7 @@ Body:
     ChangeTargetRate: 800
     SupportScript: >
       petskillattack "NPC_GROUNDATTACK",5,5,5;
-  - MobId: 1385
+  - Mob: DELETER_
     TameItem: Holy_Marble
     EggItem: Red_Deleter_Egg
     FoodItem: Whole_Barbecue
@@ -1100,7 +1100,7 @@ Body:
     ChangeTargetRate: 800
     SupportScript: >
       petskillattack "SM_MAGNUM",5,5,5;
-  - MobId: 1382
+  - Mob: DIABOLIC
     TameItem: Red_Burning_Stone
     EggItem: Diabolic_Egg
     FoodItem: Meat_Veg_Skewer
@@ -1119,7 +1119,7 @@ Body:
     ChangeTargetRate: 800
     SupportScript: >
       petskillattack "WZ_METEOR",2,5,5;
-  - MobId: 1208
+  - Mob: WANDER_MAN
     TameItem: Skull_Of_Vagabond
     EggItem: Wanderer_Egg
     FoodItem: Spirit_Liquor
@@ -1145,7 +1145,7 @@ Body:
       }
     SupportScript: >
       petskillattack "NPC_UNDEADATTACK",5,5,5;
-  - MobId: 1963
+  - Mob: P_CHUNG_E
     EggItem: New_Year_Doll_Egg
     FoodItem: Mojji
     Fullness: 3
@@ -1163,7 +1163,7 @@ Body:
     ChangeTargetRate: 800
     SupportScript: >
       petskillattack "CR_SHIELDCHARGE",5,5,5;
-  - MobId: 1040
+  - Mob: GOLEM
     TameItem: Magical_Lithography
     EggItem: Golem_Egg
     EquipItem: Windup_Spring
@@ -1188,7 +1188,7 @@ Body:
         bonus bMaxHP,100;
         bonus bFlee,-5;
       }
-  - MobId: 1143
+  - Mob: MARIONETTE
     TameItem: Delicious_Shaved_Ice
     EggItem: Marionette_Egg
     EquipItem: Star_Hairband
@@ -1212,7 +1212,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bSPrecovRate,3;
       }
-  - MobId: 1148
+  - Mob: MEDUSA
     TameItem: Splendid_Mirror
     EggItem: Medusa_Egg
     EquipItem: Queen's_Coronet
@@ -1237,7 +1237,7 @@ Body:
         bonus bVit,1;
         bonus2 bResEff,Eff_Stone,500;
       }
-  - MobId: 1179
+  - Mob: WHISPER
     TameItem: Fit_Pipe
     EggItem: Whisper_Egg
     EquipItem: Spirit_Chain_
@@ -1262,7 +1262,7 @@ Body:
         bonus bFlee,7;
         bonus bDef,-3;
       }
-  - MobId: 1299
+  - Mob: GOBLIN_LEADER
     TameItem: Staff_Of_Leader
     EggItem: Goblin_Leader_Egg
     EquipItem: Nice_Badge
@@ -1287,7 +1287,7 @@ Body:
         bonus2 bAddRace,RC_DemiHuman,3;
         bonus2 bAddRace,RC_Player,3;
       }
-  - MobId: 1370
+  - Mob: SUCCUBUS
     TameItem: Boy's_Naivety
     EggItem: Succubus_Egg
     EquipItem: Black_Butterfly_Mask
@@ -1314,7 +1314,7 @@ Body:
       }
     SupportScript: >
       bonus2 bHPDrainRate,10,5;
-  - MobId: 1374
+  - Mob: INCUBUS
     TameItem: Gril's_Naivety
     EggItem: Incubus_Egg
     EquipItem: Ball_Mask
@@ -1342,7 +1342,7 @@ Body:
     SupportScript: >
       bonus bMaxSPRate,3;
       bonus2 bSPDrainRate,10,1;
-  - MobId: 1379
+  - Mob: NIGHTMARE_TERROR
     TameItem: Hell_Contract
     EggItem: Nightmare_Terror_Egg
     EquipItem: Hell_Horn
@@ -1366,7 +1366,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bResEff,Eff_Sleep,10000;
       }
-  - MobId: 1401
+  - Mob: SHINOBI
     TameItem: Kuloren
     EggItem: Shinobi_Egg
     EquipItem: Wine_On_Sleeve
@@ -1390,7 +1390,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bAgi,2;
       }
-  - MobId: 1404
+  - Mob: MIYABI_NINGYO
     TameItem: Gril_Doll
     EggItem: Miyabi_Ningyo_Egg
     EquipItem: Summer_Fan
@@ -1415,7 +1415,7 @@ Body:
         bonus bInt,1;
         bonus bCastrate,-3;
       }
-  - MobId: 1416
+  - Mob: WICKED_NYMPH
     TameItem: Charming_Lotus
     EggItem: Wicked_Nymph_Egg
     EquipItem: Jade_Trinket
@@ -1440,7 +1440,7 @@ Body:
         bonus bMaxSP,30;
         bonus bSPrecovRate,5;
       }
-  - MobId: 1495
+  - Mob: STONE_SHOOTER
     TameItem: Oilpalm_Coconut
     EggItem: Stone_Shooter_Egg
     EquipItem: Apro_Hair
@@ -1464,7 +1464,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bSubEle,Ele_Fire,3;
       }
-  - MobId: 1504
+  - Mob: DULLAHAN
     TameItem: Luxury_Whisky_Bottle
     EggItem: Dullahan_Egg
     EquipItem: Death_Coil
@@ -1488,7 +1488,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bCritAtkRate,5;
       }
-  - MobId: 1505
+  - Mob: LOLI_RURI
     TameItem: Very_Red_Juice
     EggItem: Loli_Ruri_Egg
     EquipItem: Fashionable_Glasses
@@ -1513,7 +1513,7 @@ Body:
         bonus bMaxHPRate,3;
         bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10;
       }
-  - MobId: 1513
+  - Mob: CIVIL_SERVANT
     TameItem: Fan_Of_Wind
     EggItem: Civil_Servant_Egg
     EquipItem: Golden_Earing
@@ -1537,7 +1537,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bMaxSP,10;
       }
-  - MobId: 1586
+  - Mob: LEAF_CAT
     TameItem: Very_Soft_Plant
     EggItem: Leaf_Cat_Egg
     EquipItem: Green_Lucky_Bag
@@ -1561,7 +1561,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bSubRace,RC_Brute,3;
       }
-  - MobId: 1630
+  - Mob: BACSOJIN_
     TameItem: Shiny_Wing_Gown
     EggItem: Bacsojin_Egg
     EquipItem: Round_Hair_Ornament
@@ -1579,7 +1579,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-  - MobId: 1837
+  - Mob: IMP
     TameItem: Flaming_Ice
     EggItem: Imp_Egg
     EquipItem: Horn_Protector
@@ -1604,7 +1604,7 @@ Body:
         bonus2 bSubEle,Ele_Fire,2;
         bonus2 bAddEle,Ele_Fire,2;
       }
-  - MobId: 2057
+  - Mob: E_CRAMP
     TameItem: Leaf_Cat_Ball
     EggItem: Mystic_Leaf_Cat_Ball
     Fullness: 0
@@ -1620,7 +1620,7 @@ Body:
     AttackRate: 350
     RetaliateRate: 400
     ChangeTargetRate: 800
-  - MobId: 2081
+  - Mob: E_HYDRA
     TameItem: Leaf_Cat_Ball
     EggItem: Mystic_Leaf_Cat_Ball
     Fullness: 0
@@ -1636,7 +1636,7 @@ Body:
     AttackRate: 350
     RetaliateRate: 400
     ChangeTargetRate: 800
-  - MobId: 2200
+  - Mob: J_TAINI
     EggItem: Egg_Of_Tiny
     FoodItem: Apple
     Fullness: 3
@@ -1652,7 +1652,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-  - MobId: 2210
+  - Mob: XMAS_LUNATIC
     EggItem: Snow_Rabbit_Egg
     FoodItem: Candy
     Fullness: 3
@@ -1674,7 +1674,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus2 bExpAddRace,RC_All,5;
       }
-  - MobId: 2313
+  - Mob: TIKBALANG
     TameItem: Tikbalang_Belt
     EggItem: Tikbalang_Pet
     FoodItem: Monster's_Feed
@@ -1705,7 +1705,7 @@ Body:
         bonus2 bAddDamageClass,2332,10;
         bonus2 bAddDamageClass,2333,10;
       }
-  - MobId: 1242
+  - Mob: MARIN
     TameItem: Juicy_Fruit
     EggItem: Marin_Egg
     EquipItem: Tw_Backpack
@@ -1723,7 +1723,7 @@ Body:
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
-  - MobId: 2398
+  - Mob: LITTLE_PORING
     TameItem: Unripe_Apple2
     EggItem: Novice_Poring_Egg
     FoodItem: Apple_Juice
@@ -1746,7 +1746,7 @@ Body:
       if( .@i >= PET_INTIMATE_LOYAL ){
         bonus bHPrecovRate,50;
       }
-  - MobId: 1180
+  - Mob: NINE_TAIL
     TameItem: Sap_Liquid
     EggItem: Nine_Tail_Egg
     FoodItem: Suspicious_Bottle
@@ -1774,7 +1774,7 @@ Body:
         bonus bHit,2;
       }
     Evolution:
-      - TargetId: 1307
+      - Target: CAT_O_NINE_TAIL
         ItemRequirements:
           - Item: Sap_Liquid
             Amount: 3
@@ -1784,7 +1784,7 @@ Body:
             Amount: 1
           - Item: Nine_Tail_Card
             Amount: 1
-  - MobId: 1632
+  - Mob: GREMLIN
     TameItem: Unprocessed_Parts
     EggItem: Gremlin_Egg
     FoodItem: Cheap_Lubricant
@@ -1812,7 +1812,7 @@ Body:
         bonus bHit,1;
       }
     Evolution:
-      - TargetId: 1773
+      - Target: HODREMLIN
         ItemRequirements:
           - Item: Unprocessed_Parts
             Amount: 3
@@ -1822,7 +1822,7 @@ Body:
             Amount: 200
           - Item: Hodremlin_Card
             Amount: 1
-  - MobId: 1041
+  - Mob: MUMMY
     TameItem: Elixir_Bandages
     EggItem: Mummy_Egg
     FoodItem: Mementos
@@ -1848,7 +1848,7 @@ Body:
         bonus bHit,4;
       }
     Evolution:
-      - TargetId: 1297
+      - Target: ANCIENT_MUMMY
         ItemRequirements:
           - Item: Elixir_Bandages
             Amount: 3
@@ -1858,7 +1858,7 @@ Body:
             Amount: 30
           - Item: Ancient_Mummy_Card
             Amount: 1
-  - MobId: 1622
+  - Mob: TEDDY_BEAR
     TameItem: Small_Needle_Kit
     EggItem: Teddy_Bear_Egg
     FoodItem: Cotton_Tufts
@@ -1882,7 +1882,7 @@ Body:
         bonus bMaxSP,150;
       }
     Evolution:
-      - TargetId: 2995
+      - Target: XM_TEDDY_BEAR
         ItemRequirements:
           - Item: Small_Needle_Kit
             Amount: 3
@@ -1894,7 +1894,7 @@ Body:
             Amount: 1
 
   # Pet Evolution, most are dummy values
-  - MobId: 1090
+  - Mob: MASTERING
     EggItem: Mastering_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -1928,7 +1928,7 @@ Body:
         bonus bCritical,1;
       }
     Evolution:
-      - TargetId: 1096
+      - Target: ANGELING
         ItemRequirements:
           - Item: Yellow_Potion
             Amount: 20
@@ -1938,7 +1938,7 @@ Body:
             Amount: 50
           - Item: Jellopy
             Amount: 200
-  - MobId: 1058
+  - Mob: METALLER
     EggItem: Metaller_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -1975,7 +1975,7 @@ Body:
         bonus bHPrecovRate,5;
         bonus bMaxHP,25;
       }
-  - MobId: 1096
+  - Mob: ANGELING
     EggItem: Angeling_Egg
     FoodItem: Pet_Food
     Fullness: 1
@@ -2008,7 +2008,7 @@ Body:
         bonus bMaxHPrate,1;
         bonus bHealPower,2;
       }
-  - MobId: 1150
+  - Mob: MOONLIGHT
     EggItem: Moonlight_Egg
     FoodItem: Luxurious_Pet_Food
     Fullness: 1
@@ -2044,7 +2044,7 @@ Body:
         bonus bCritical,3;
         bonus bHit,3;
       }
-  - MobId: 1166
+  - Mob: SAVAGE
     EggItem: Savage_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2077,7 +2077,7 @@ Body:
         bonus bMaxHP,50;
         bonus bVit,1;
       }
-  - MobId: 1213
+  - Mob: HIGH_ORC
     EggItem: High_Orc_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2110,7 +2110,7 @@ Body:
         bonus bMaxHP,50;
         bonus bVit,1;
       }
-  - MobId: 1214
+  - Mob: CHOCO
     EggItem: Choco_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2142,7 +2142,7 @@ Body:
       }else{
         bonus bCritical,3;
       }
-  - MobId: 1297
+  - Mob: ANCIENT_MUMMY
     EggItem: Ancient_Mummy_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2175,7 +2175,7 @@ Body:
       }else{
         bonus bHit,4;
       }
-  - MobId: 1301
+  - Mob: AM_MUT
     EggItem: Am_Mut_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2204,7 +2204,7 @@ Body:
       }else{
         bonus bMatkRate,1;
       }
-  - MobId: 1307
+  - Mob: CAT_O_NINE_TAIL
     EggItem: Cat_o_Nine_Tail_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2240,7 +2240,7 @@ Body:
         bonus bHit,2;
       }
     Evolution:
-      - TargetId: 1150
+      - Target: MOONLIGHT
         ItemRequirements:
           - Item: Powerful_Soul_Essence
             Amount: 30
@@ -2250,7 +2250,7 @@ Body:
             Amount: 10
           - Item: Munak_Card
             Amount: 10
-  - MobId: 1369
+  - Mob: GRAND_PECO
     EggItem: Grand_Peco_Peco_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2279,7 +2279,7 @@ Body:
       }else{
         bonus bMaxHP,150;
       }
-  - MobId: 1512
+  - Mob: HYEGUN
     EggItem: Hyegun_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2314,7 +2314,7 @@ Body:
         bonus bVit,1;
         bonus2 bResEff,Eff_Stun,100;
       }
-  - MobId: 1773
+  - Mob: HODREMLIN
     EggItem: Hodremlin_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2349,7 +2349,7 @@ Body:
         bonus bDex,1;
         bonus bHit,1;
       }
-  - MobId: 2995
+  - Mob: XM_TEDDY_BEAR
     EggItem: Xm_Teddy_Bear_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2380,7 +2380,7 @@ Body:
       }else{
         bonus bMaxSP,50;
       }
-  - MobId: 3495
+  - Mob: DR_EGGRING
     EggItem: Eggring_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2413,7 +2413,7 @@ Body:
         bonus bHit,3;
         bonus bAtk,3;
       }
-  - MobId: 3496
+  - Mob: DR_LUNATIC
     EggItem: Dr_Lunatic_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2450,7 +2450,7 @@ Body:
         bonus bCritical,2;
         bonus bAtk,2;
       }
-  - MobId: 3636
+  - Mob: LITTLE_ISIS
     EggItem: Little_Isis_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2479,7 +2479,7 @@ Body:
       }else{
         bonus bAtkRate,1;
       }
-  - MobId: 3669
+  - Mob: DIABOLIC2
     EggItem: Diabolic_2_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2514,7 +2514,7 @@ Body:
         bonus bAtkRate,1;
         bonus bMatkRate,1;
       }
-  - MobId: 3670
+  - Mob: DELETER_2
     EggItem: Fire_Deleter_Egg
     FoodItem: Pet_Food
     Fullness: 2
@@ -2546,7 +2546,7 @@ Body:
       }else{
         bonus bAspdRate,1;
       }
-  - MobId: 3790
+  - Mob: SWEETS_DROPS
     EggItem: Sweet_Drops_Egg
     FoodItem: Candy
     Fullness: 2
