@@ -56,7 +56,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 
 	if( !exists ){
 		// Check mandatory nodes
-		if( !this->nodesExist( node, { "EggItemId", "Fullness", "HungryDelay", "CaptureRate", "SpecialPerformance", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
+		if( !this->nodesExist( node, { "EggItem", "Fullness", "HungryDelay", "CaptureRate", "SpecialPerformance", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
 			return 0;
 		}
 
@@ -64,72 +64,80 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		pet->class_ = mob_id;
 	}
 
-	if( this->nodeExists( node, "TameWithId" ) ){
-		uint16 item_id;
+	if( this->nodeExists( node, "TameItem" ) ){
+		std::string item_name;
 
-		if( !this->asUInt16( node, "TameWithId", item_id ) ){
+		if( !this->asString( node, "TameItem", item_name ) ){
 			return 0;
 		}
 
-		if( item_id > 0 && itemdb_exists( item_id ) == nullptr ){
-			this->invalidWarning( node["TameWithId"], "Taming item %hu does not exist.\n", item_id );
+		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+
+		if( item == nullptr ){
+			this->invalidWarning( node["TameItem"], "Taming item %s does not exist.\n", item_name.c_str() );
 			return 0;
 		}
 
-		pet->itemID = item_id;
+		pet->itemID = item->nameid;
 	}else{
 		if( !exists ){
 			pet->itemID = 0;
 		}
 	}
 
-	if( this->nodeExists( node, "EggItemId" ) ){
-		uint16 item_id;
+	if( this->nodeExists( node, "EggItem" ) ){
+		std::string item_name;
 
-		if( !this->asUInt16( node, "EggItemId", item_id ) ){
+		if( !this->asString( node, "EggItem", item_name ) ){
 			return 0;
 		}
 
-		if( itemdb_exists( item_id ) == nullptr ){
-			this->invalidWarning( node["EggItemId"], "Egg item %hu does not exist.\n", item_id );
+		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+
+		if( item == nullptr ){
+			this->invalidWarning( node["EggItem"], "Egg item %s does not exist.\n", item_name.c_str() );
 			return 0;
 		}
 
-		pet->EggID = item_id;
+		pet->EggID = item->nameid;
 	}
 
-	if( this->nodeExists( node, "EquipItemId" ) ){
-		uint16 item_id;
+	if( this->nodeExists( node, "EquipItem" ) ){
+		std::string item_name;
 
-		if( !this->asUInt16( node, "EquipItemId", item_id ) ){
+		if( !this->asString( node, "EquipItem", item_name ) ){
 			return 0;
 		}
 
-		if( item_id > 0 && itemdb_exists( item_id ) == nullptr ){
-			this->invalidWarning( node["EquipItemId"], "Equip item %hu does not exist.\n", item_id );
+		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+
+		if( item == nullptr ){
+			this->invalidWarning( node["EquipItem"], "Equip item %s does not exist.\n", item_name.c_str() );
 			return 0;
 		}
 
-		pet->AcceID = item_id;
+		pet->AcceID = item->nameid;
 	}else{
 		if( !exists ){
 			pet->AcceID = 0;
 		}
 	}
 
-	if( this->nodeExists( node, "FoodItemId" ) ){
-		uint16 item_id;
+	if( this->nodeExists( node, "FoodItem" ) ){
+		std::string item_name;
 
-		if( !this->asUInt16( node, "FoodItemId", item_id ) ){
+		if( !this->asString( node, "FoodItem", item_name ) ){
 			return 0;
 		}
 
-		if( item_id > 0 && itemdb_exists( item_id ) == nullptr ){
-			this->invalidWarning( node["FoodItemId"], "Food item %hu does not exist.\n", item_id );
+		struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+
+		if( item == nullptr ){
+			this->invalidWarning( node["FoodItem"], "Food item %s does not exist.\n", item_name.c_str() );
 			return 0;
 		}
 
-		pet->FoodID = item_id;
+		pet->FoodID = item->nameid;
 	}else{
 		if( !exists ){
 			pet->FoodID = 0;
@@ -406,14 +414,16 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 			}
 
 			for( const YAML::Node& requirementNode : evolutionNode["ItemRequirements"] ){
-				uint16 item_id;
+				std::string item_name;
 
-				if( !this->asUInt16( requirementNode, "ItemId", item_id ) ){
+				if( !this->asString( requirementNode, "Item", item_name ) ){
 					return 0;
 				}
 
-				if( itemdb_exists( item_id ) == nullptr ){
-					this->invalidWarning( requirementNode["ItemId"], "Evolution requirement item %hu does not exist.\n", item_id );
+				struct item_data* item = itemdb_search_aegisname( item_name.c_str() );
+
+				if( item == nullptr ){
+					this->invalidWarning( requirementNode["Item"], "Evolution requirement item %s does not exist.\n", item_name.c_str() );
 					return 0;
 				}
 
@@ -428,7 +438,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 					return 0;
 				}
 
-				evolution->requirements[item_id] = amount;
+				evolution->requirements[item->nameid] = amount;
 			}
 
 			if( !evolution_exists ){

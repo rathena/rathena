@@ -6,10 +6,10 @@
 #
 ###########################################################################
 # - MobId                    Monster ID of the pet
-#   TameWithId               Pet Tame Item ID.
-#   EggItemId                Pet Egg ID.
-#   EquipItemId              Pet Accessory ID.
-#   FoodItemId               Pet Food ID.
+#   TameItem                 Pet Tame Item ID.
+#   EggItem                  Pet Egg ID.
+#   EquipItem                Pet Accessory ID.
+#   FoodItem                 Pet Food ID.
 #   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
 #   HungryDelay              The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)

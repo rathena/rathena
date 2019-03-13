@@ -6,10 +6,10 @@
 #
 ###########################################################################
 # - MobId                    Monster ID of the pet
-#   TameWithId               Pet Tame Item ID.
-#   EggItemId                Pet Egg ID.
-#   EquipItemId              Pet Accessory ID.
-#   FoodItemId               Pet Food ID.
+#   TameItem                 Pet Tame Item ID.
+#   EggItem                  Pet Egg ID.
+#   EquipItem                Pet Accessory ID.
+#   FoodItem                 Pet Food ID.
 #   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
 #   HungryDelay              The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
@@ -30,7 +30,7 @@
 #   Evolution:               Pet evolution settings
 #     - TargetId               Mob ID this pet evolves to
 #       ItemRequirements:      Item requirements for evolving this pet
-#         - ItemId             Self-explanatory
+#         - Item               Self-explanatory
 #           Amount
 ###########################################################################
 
@@ -40,10 +40,10 @@ Header:
 
 Body:
   - MobId: 1002
-    TameWithId: 619
-    EggItemId: 9001
-    EquipItemId: 10013
-    FoodItemId: 531
+    TameItem: Unripe_Apple
+    EggItem: Poring_Egg
+    EquipItem: Backpack
+    FoodItem: Apple_Juice
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -69,16 +69,16 @@ Body:
     Evolution:
       - TargetId: 1090
         ItemRequirements:
-          - ItemId: 610
+          - Item: Leaf_Of_Yggdrasil
             Amount: 10
-          - ItemId: 619
+          - Item: Unripe_Apple
             Amount: 3
 
   - MobId: 1113
-    TameWithId: 620
-    EggItemId: 9002
-    EquipItemId: 10013
-    FoodItemId: 508
+    TameItem: Orange_Juice
+    EggItem: Drops_Egg
+    EquipItem: Backpack
+    FoodItem: Yellow_Herb
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -104,29 +104,29 @@ Body:
     Evolution:
       - TargetId: 3495
         ItemRequirements:
-          - ItemId: 7032
+          - Item: Piece_Of_Egg_Shell
             Amount: 20
-          - ItemId: 7031
+          - Item: Old_Frying_Pan
             Amount: 10
-          - ItemId: 531
+          - Item: Apple_Juice
             Amount: 3
-          - ItemId: 4659
+          - Item: Eggring_Card
             Amount: 1
       - TargetId: 3790
         ItemRequirements:
-          - ItemId: 25290
+          - Item: Sweets_Festival_Coin
             Amount: 500
-          - ItemId: 529
+          - Item: Candy
             Amount: 50
-          - ItemId: 530
+          - Item: Candy_Striper
             Amount: 50
-          - ItemId: 4004
+          - Item: Drops_Card
             Amount: 1
   - MobId: 1031
-    TameWithId: 621
-    EggItemId: 9003
-    EquipItemId: 10013
-    FoodItemId: 511
+    TameItem: Bitter_Herb
+    EggItem: Poporing_Egg
+    EquipItem: Backpack
+    FoodItem: Green_Herb
     Fullness: 5
     HungryDelay: 60
     IntimacyStart: 250
@@ -150,10 +150,10 @@ Body:
     SupportScript: >
       petloot 15;
   - MobId: 1063
-    TameWithId: 622
-    EggItemId: 9004
-    EquipItemId: 10007
-    FoodItemId: 534
+    TameItem: Rainbow_Carrot
+    EggItem: Lunatic_Egg
+    EquipItem: Silk_Ribbon
+    FoodItem: Carrot_Juice
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -179,20 +179,20 @@ Body:
     Evolution:
       - TargetId: 3496
         ItemRequirements: 
-          - ItemId: 7198
+          - Item: Great_Leaf
             Amount: 100
-          - ItemId: 705
+          - Item: Clover
             Amount: 250
-          - ItemId: 706
+          - Item: Four_Leaf_Clover
             Amount: 30
-          - ItemId: 4663
+          - Item: Leaf_Lunatic_Card
             Amount: 1
 
   - MobId: 1049
-    TameWithId: 623
-    EggItemId: 9005
-    EquipItemId: 10012
-    FoodItemId: 507
+    TameItem: Earthworm_The_Dude
+    EggItem: Picky_Egg
+    EquipItem: Tiny_Egg_Shell
+    FoodItem: Red_Herb
     Fullness: 4   
     HungryDelay: 60
     IntimacyStart: 250
@@ -216,10 +216,10 @@ Body:
     SupportScript: >
       petskillbonus bStr,3,10,50;
   - MobId: 1011
-    TameWithId: 624
-    EggItemId: 9006
-    EquipItemId: 10002
-    FoodItemId: 537
+    TameItem: Rotten_Fish
+    EggItem: Chonchon_Egg
+    EquipItem: Monster_Oxygen_Mask
+    FoodItem: Pet_Food
     Fullness: 6
     HungryDelay: 60
     IntimacyStart: 250
@@ -243,10 +243,10 @@ Body:
     SupportScript: >
       petskillbonus bAgi,4,10,50;
   - MobId: 1042
-    TameWithId: 625
-    EggItemId: 9007
-    EquipItemId: 10002
-    FoodItemId: 1002
+    TameItem: Lusty_Iron
+    EggItem: Steel_Chonchon_Egg
+    EquipItem: Monster_Oxygen_Mask
+    FoodItem: Iron_Ore
     Fullness: 5
     HungryDelay: 60
     IntimacyStart: 250
@@ -270,10 +270,10 @@ Body:
     SupportScript: >
       petskillbonus bAgiVit,4,20,40;
   - MobId: 1035
-    TameWithId: 626
-    EggItemId: 9008
-    EquipItemId: 10002
-    FoodItemId: 716
+    TameItem: Monster_Juice
+    EggItem: Hunter_Fly_Egg
+    EquipItem: Monster_Oxygen_Mask
+    FoodItem: Red_Gemstone
     Fullness: 5
     HungryDelay: 60
     IntimacyStart: 250
@@ -297,10 +297,10 @@ Body:
     SupportScript: >
       petskillattack2 "NPC_WINDATTACK",888,2,0,10;
   - MobId: 1167
-    TameWithId: 627
-    EggItemId: 9009
-    EquipItemId: 10015
-    FoodItemId: 537
+    TameItem: Sweet_Milk
+    EggItem: Savage_Bebe_Egg
+    EquipItem: Green_Lace
+    FoodItem: Pet_Food
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -326,19 +326,19 @@ Body:
     Evolution:
       - TargetId: 1166
         ItemRequirements:
-          - ItemId: 537
+          - Item: Pet_Food
             Amount: 10
-          - ItemId: 627
+          - Item: Sweet_Milk
             Amount: 3
-          - ItemId: 517
+          - Item: Meat
             Amount: 100
-          - ItemId: 949
+          - Item: Feather
             Amount: 50
   - MobId: 1107
-    TameWithId: 628
-    EggItemId: 9010
-    EquipItemId: 10003
-    FoodItemId: 537
+    TameItem: Well_Dried_Bone
+    EggItem: Baby_Desert_Wolf_Egg
+    EquipItem: Transparent_Headgear
+    FoodItem: Pet_Food
     Fullness: 6
     HungryDelay: 60
     IntimacyStart: 250
@@ -362,10 +362,10 @@ Body:
     SupportScript: >
       petskillattack "SM_PROVOKE",1,0,5;
   - MobId: 1052
-    TameWithId: 629
-    EggItemId: 9011
-    EquipItemId: 10014
-    FoodItemId: 537
+    TameItem: Singing_Flower
+    EggItem: Rocker_Egg
+    EquipItem: Rocker_Glasses
+    FoodItem: Pet_Food
     Fullness: 1
     HungryDelay: 60
     IntimacyStart: 250
@@ -391,19 +391,19 @@ Body:
     Evolution:
       - TargetId: 1058
         ItemRequirements:
-          - ItemId: 707
+          - Item: Singing_Plant
             Amount: 3
-          - ItemId: 940
+          - Item: Grasshopper's_Leg
             Amount: 777
-          - ItemId: 508
+          - Item: Yellow_Herb
             Amount: 200
-          - ItemId: 4057
+          - Item: Metaller_Card
             Amount: 1
   - MobId: 1014
-    TameWithId: 630
-    EggItemId: 9012
-    EquipItemId: 10017
-    FoodItemId: 537
+    TameItem: Dew_Laden_Moss
+    EggItem: Spore_Egg
+    EquipItem: Bark_Shorts
+    FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -427,10 +427,10 @@ Body:
     SupportScript: >
       petrecovery SC_POISON,60;
   - MobId: 1077
-    TameWithId: 631
-    EggItemId: 9013
-    EquipItemId: 10017
-    FoodItemId: 537
+    TameItem: Deadly_Noxious_Herb
+    EggItem: Poison_Spore_Egg
+    EquipItem: Bark_Shorts
+    FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -454,10 +454,10 @@ Body:
     SupportScript: >
       petskillattack "NPC_POISON",20,0,10;
   - MobId: 1019
-    TameWithId: 632
-    EggItemId: 9014
-    EquipItemId: 10010
-    FoodItemId: 537
+    TameItem: Fatty_Chubby_Earthworm
+    EggItem: PecoPeco_Egg
+    EquipItem: Battered_Pot
+    FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -483,21 +483,21 @@ Body:
     Evolution:
       - TargetId: 1369
         ItemRequirements:
-          - ItemId: 537
+          - Item: Pet_Food
             Amount: 10
-          - ItemId: 632
+          - Item: Fatty_Chubby_Earthworm
             Amount: 3
-          - ItemId: 7101
+          - Item: Peco_Wing_Feather
             Amount: 300
-          - ItemId: 4031
+          - Item: Pecopeco_Card
             Amount: 1
-          - ItemId: 522
+          - Item: Fruit_Of_Mastela
             Amount: 10
   - MobId: 1056
-    TameWithId: 633
-    EggItemId: 9015
-    EquipItemId: 10019
-    FoodItemId: 537
+    TameItem: Baked_Yam
+    EggItem: Smokie_Egg
+    EquipItem: Red_Muffler
+    FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -521,10 +521,10 @@ Body:
     SupportScript: >
       petskillbonus bPerfectHide,1,3600,0;
   - MobId: 1057
-    TameWithId: 634
-    EggItemId: 9016
-    EquipItemId: 10018
-    FoodItemId: 532
+    TameItem: Tropical_Banana
+    EggItem: Yoyo_Egg
+    EquipItem: Monkey_Circlet
+    FoodItem: Banana_Juice
     Fullness: 5
     HungryDelay: 60
     IntimacyStart: 250
@@ -550,19 +550,19 @@ Body:
     Evolution:
       - TargetId: 1214
         ItemRequirements:
-          - ItemId: 634
+          - Item: Tropical_Banana
             Amount: 3
-          - ItemId: 753
+          - Item: Monkey_Doll
             Amount: 2
-          - ItemId: 7182
+          - Item: Cacao
             Amount: 300
-          - ItemId: 4051
+          - Item: Yoyo_Card
             Amount: 1
   - MobId: 1023
-    TameWithId: 635
-    EggItemId: 9017
-    EquipItemId: 10009
-    FoodItemId: 537
+    TameItem: Horror_Of_Tribe
+    EggItem: Orc_Warrior_Egg
+    EquipItem: Wild_Flower
+    FoodItem: Pet_Food
     Fullness: 5
     HungryDelay: 60
     IntimacyStart: 250
@@ -588,21 +588,21 @@ Body:
     Evolution:
       - TargetId: 1213
         ItemRequirements:
-          - ItemId: 635
+          - Item: Horror_Of_Tribe
             Amount: 3
-          - ItemId: 1124
+          - Item: Orcish_Sword
             Amount: 1
-          - ItemId: 931
+          - Item: Orcish_Voucher
             Amount: 500
-          - ItemId: 2267
+          - Item: Cigar
             Amount: 1
-          - ItemId: 4066
+          - Item: Orc_Warrior_Card
             Amount: 1
   - MobId: 1026
-    TameWithId: 636
-    EggItemId: 9018
-    EquipItemId: 10008
-    FoodItemId: 537
+    TameItem: No_Recipient
+    EggItem: Munak_Egg
+    EquipItem: Punisher
+    FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -626,10 +626,10 @@ Body:
     SupportScript: >
       petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10;
   - MobId: 1110
-    TameWithId: 637
-    EggItemId: 9019
-    EquipItemId: 10005
-    FoodItemId: 537
+    TameItem: Old_Broom
+    EggItem: Dokkaebi_Egg
+    EquipItem: Wig
+    FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -655,19 +655,19 @@ Body:
     Evolution:
       - TargetId: 1301
         ItemRequirements:
-          - ItemId: 637
+          - Item: Old_Broom
             Amount: 3
-          - ItemId: 981
+          - Item: Violet_Dyestuffs
             Amount: 3
-          - ItemId: 1021
+          - Item: Dokkaebi_Horn
             Amount: 300
-          - ItemId: 969
+          - Item: Gold
             Amount: 3
   - MobId: 1170
-    TameWithId: 638
-    EggItemId: 9020
-    EquipItemId: 10016
-    FoodItemId: 537
+    TameItem: Silver_Knife_Of_Chaste
+    EggItem: Sohee_Egg
+    EquipItem: Golden_Bell
+    FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -691,10 +691,10 @@ Body:
     SupportScript: >
       petskillsupport "AL_HEAL",5,60,33,100;
   - MobId: 1029
-    TameWithId: 639
-    EggItemId: 9021
-    EquipItemId: 10006
-    FoodItemId: 537
+    TameItem: Armlet_Of_Obedience
+    EggItem: Isis_Egg
+    EquipItem: Queen's_Hair_Ornament
+    FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -720,19 +720,19 @@ Body:
     Evolution:
       - TargetId: 3636
         ItemRequirements:
-          - ItemId: 639
+          - Item: Armlet_Of_Obedience
             Amount: 3
-          - ItemId: 732
+          - Item: Crystal_Jewel__
             Amount: 6
-          - ItemId: 10006
+          - Item: Queen's_Hair_Ornament
             Amount: 1
-          - ItemId: 954
+          - Item: Shining_Scales
             Amount: 300
   - MobId: 1155
-    TameWithId: 640
-    EggItemId: 9022
-    EquipItemId: 10011
-    FoodItemId: 537
+    TameItem: Shining_Stone
+    EggItem: Green_Petite_Egg
+    EquipItem: Stellar_Hairpin
+    FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -759,19 +759,19 @@ Body:
     Evolution:
       - TargetId: 3670
         ItemRequirements:
-          - ItemId: 640
+          - Item: Shining_Stone
             Amount: 3
-          - ItemId: 6260
+          - Item: Petti_Tail
             Amount: 100
-          - ItemId: 606
+          - Item: Aloebera
             Amount: 150
-          - ItemId: 4279
+          - Item: Deleter_Card
             Amount: 1
   - MobId: 1109
-    TameWithId: 641
-    EggItemId: 9023
-    EquipItemId: 10004
-    FoodItemId: 711
+    TameItem: Contracts_In_Shadow
+    EggItem: Deviruchi_Egg
+    EquipItem: Pacifier
+    FoodItem: Shoot
     Fullness: 2
     HungryDelay: 60
     IntimacyStart: 250
@@ -799,19 +799,19 @@ Body:
     Evolution:
       - TargetId: 3669
         ItemRequirements:
-          - ItemId: 641
+          - Item: Contracts_In_Shadow
             Amount: 3
-          - ItemId: 1039
+          - Item: Petite_DiablOfs_Wing
             Amount: 250
-          - ItemId: 1009
+          - Item: Sacred_Marks
             Amount: 30
-          - ItemId: 4122
+          - Item: Deviruchi_Card
             Amount: 1
   - MobId: 1101
-    TameWithId: 642
-    EggItemId: 9024
-    EquipItemId: 10001
-    FoodItemId: 518
+    TameItem: Book_Of_Devil
+    EggItem: Bapho_Jr._Egg
+    EquipItem: Skull_Helm
+    FoodItem: Honey
     Fullness: 2
     HungryDelay: 60
     IntimacyStart: 250
@@ -836,10 +836,10 @@ Body:
     SupportScript: >
       petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5;
   - MobId: 1188
-    TameWithId: 659
-    EggItemId: 9025
-    EquipItemId: 10020
-    FoodItemId: 537
+    TameItem: Heart_Of_Her
+    EggItem: Bongun_Egg
+    EquipItem: Sword_Of_Grave_Keeper
+    FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -865,18 +865,18 @@ Body:
     Evolution:
       - TargetId: 1512
         ItemRequirements:
-          - ItemId: 5367
+          - Item: Hyegun_Hat
             Amount: 1
-          - ItemId: 7277
+          - Item: Munak_Doll
             Amount: 100
-          - ItemId: 7014
+          - Item: Old_Portrait
             Amount: 50
-          - ItemId: 4328
+          - Item: Hyegun_Card
             Amount: 1
   - MobId: 1200
-    TameWithId: 660
-    EggItemId: 9026
-    FoodItemId: 929
+    TameItem: Prohibition_Red_Candle
+    EggItem: Zherlthsh_Egg
+    FoodItem: Immortal_Heart
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -902,9 +902,9 @@ Body:
     SupportScript: >
       petskillattack "AS_SONICBLOW",1,0,3;
   - MobId: 1275
-    TameWithId: 661
-    EggItemId: 9027
-    FoodItemId: 504
+    TameItem: Sway_Apron
+    EggItem: Alice_Egg
+    FoodItem: White_Potion
     Fullness: 2
     HungryDelay: 60
     IntimacyStart: 250
@@ -929,8 +929,8 @@ Body:
     SupportScript: >
       petskillsupport "AL_HEAL",5,60,25,100;
   - MobId: 1815
-    EggItemId: 9028
-    FoodItemId: 511
+    EggItem: Rice_Cake_Egg
+    FoodItem: Green_Herb
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -954,9 +954,9 @@ Body:
     SupportScript: >
       petskillsupport "CR_DEFENDER",3,240,50,100;
   - MobId: 1245
-    TameWithId: 12225
-    EggItemId: 9029
-    FoodItemId: 911
+    TameItem: Sweet_Candy_Striper
+    EggItem: Santa_Goblin_Egg
+    FoodItem: Scell
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -980,9 +980,9 @@ Body:
     SupportScript: >
       petskillattack "MG_SIGHT",5,5,5;
   - MobId: 1519
-    TameWithId: 12395
-    EggItemId: 9030
-    FoodItemId: 6115
+    TameItem: Tantanmen
+    EggItem: Chung_E_Egg
+    FoodItem: Bun_
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1007,8 +1007,8 @@ Body:
     SupportScript: >
       petskillattack "CR_SHIELDCHARGE",5,5,5;
   - MobId: 1879
-    EggItemId: 9031
-    FoodItemId: 7766
+    EggItem: Spring_Rabbit_Egg
+    FoodItem: Bok_Choy
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1025,9 +1025,9 @@ Body:
     SupportScript: >
       petskillattack "TF_THROWSTONE",1,5,5;
   - MobId: 1122
-    TameWithId: 14569
-    EggItemId: 9032
-    FoodItemId: 7821
+    TameItem: Knife_Goblin_Ring
+    EggItem: Knife_Goblin_Egg
+    FoodItem: Green_Apple
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1044,9 +1044,9 @@ Body:
     SupportScript: >
       petskillattack "NPC_WINDATTACK",5,5,5;
   - MobId: 1123
-    TameWithId: 14570
-    EggItemId: 9033
-    FoodItemId: 7821
+    TameItem: Flail_Goblin_Ring
+    EggItem: Flail_Goblin_Egg
+    FoodItem: Green_Apple
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1063,9 +1063,9 @@ Body:
     SupportScript: >
       petskillattack "NPC_FIREATTACK",5,5,5;
   - MobId: 1125
-    TameWithId: 14571
-    EggItemId: 9034
-    FoodItemId: 7821
+    TameItem: Hammer_Goblin_Ring
+    EggItem: Hammer_Goblin_Egg
+    FoodItem: Green_Apple
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1082,9 +1082,9 @@ Body:
     SupportScript: >
       petskillattack "NPC_GROUNDATTACK",5,5,5;
   - MobId: 1385
-    TameWithId: 14572
-    EggItemId: 9035
-    FoodItemId: 7822
+    TameItem: Holy_Marble
+    EggItem: Red_Deleter_Egg
+    FoodItem: Whole_Barbecue
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -1101,9 +1101,9 @@ Body:
     SupportScript: >
       petskillattack "SM_MAGNUM",5,5,5;
   - MobId: 1382
-    TameWithId: 14573
-    EggItemId: 9036
-    FoodItemId: 7823
+    TameItem: Red_Burning_Stone
+    EggItem: Diabolic_Egg
+    FoodItem: Meat_Veg_Skewer
     Fullness: 2
     HungryDelay: 60
     IntimacyStart: 250
@@ -1120,9 +1120,9 @@ Body:
     SupportScript: >
       petskillattack "WZ_METEOR",2,5,5;
   - MobId: 1208
-    TameWithId: 14574
-    EggItemId: 9037
-    FoodItemId: 7824
+    TameItem: Skull_Of_Vagabond
+    EggItem: Wanderer_Egg
+    FoodItem: Spirit_Liquor
     Fullness: 2
     HungryDelay: 60
     IntimacyStart: 250
@@ -1146,8 +1146,8 @@ Body:
     SupportScript: >
       petskillattack "NPC_UNDEADATTACK",5,5,5;
   - MobId: 1963
-    EggItemId: 9038
-    FoodItemId: 554
+    EggItem: New_Year_Doll_Egg
+    FoodItem: Mojji
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1164,10 +1164,10 @@ Body:
     SupportScript: >
       petskillattack "CR_SHIELDCHARGE",5,5,5;
   - MobId: 1040
-    TameWithId: 12371
-    EggItemId: 9053
-    EquipItemId: 10035
-    FoodItemId: 6111
+    TameItem: Magical_Lithography
+    EggItem: Golem_Egg
+    EquipItem: Windup_Spring
+    FoodItem: Mystic_Stone
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -1189,10 +1189,10 @@ Body:
         bonus bFlee,-5;
       }
   - MobId: 1143
-    TameWithId: 12361
-    EggItemId: 9043
-    EquipItemId: 10025
-    FoodItemId: 6098
+    TameItem: Delicious_Shaved_Ice
+    EggItem: Marionette_Egg
+    EquipItem: Star_Hairband
+    FoodItem: Small_Snow_Flower
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1213,10 +1213,10 @@ Body:
         bonus bSPrecovRate,3;
       }
   - MobId: 1148
-    TameWithId: 12368
-    EggItemId: 9050
-    EquipItemId: 10032
-    FoodItemId: 6108
+    TameItem: Splendid_Mirror
+    EggItem: Medusa_Egg
+    EquipItem: Queen's_Coronet
+    FoodItem: Apple_Pudding
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1238,10 +1238,10 @@ Body:
         bonus2 bResEff,Eff_Stone,500;
       }
   - MobId: 1179
-    TameWithId: 12363
-    EggItemId: 9045
-    EquipItemId: 10027
-    FoodItemId: 6100
+    TameItem: Fit_Pipe
+    EggItem: Whisper_Egg
+    EquipItem: Spirit_Chain_
+    FoodItem: Damp_Darkness
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -1263,10 +1263,10 @@ Body:
         bonus bDef,-3;
       }
   - MobId: 1299
-    TameWithId: 12364
-    EggItemId: 9046
-    EquipItemId: 10028
-    FoodItemId: 6104
+    TameItem: Staff_Of_Leader
+    EggItem: Goblin_Leader_Egg
+    EquipItem: Nice_Badge
+    FoodItem: Big_Cell
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -1288,10 +1288,10 @@ Body:
         bonus2 bAddRace,RC_Player,3;
       }
   - MobId: 1370
-    TameWithId: 12373
-    EggItemId: 9055
-    EquipItemId: 10037
-    FoodItemId: 6113
+    TameItem: Boy's_Naivety
+    EggItem: Succubus_Egg
+    EquipItem: Black_Butterfly_Mask
+    FoodItem: Vital_Flower_
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1315,10 +1315,10 @@ Body:
     SupportScript: >
       bonus2 bHPDrainRate,10,5;
   - MobId: 1374
-    TameWithId: 12370
-    EggItemId: 9052
-    EquipItemId: 10034
-    FoodItemId: 6110
+    TameItem: Gril's_Naivety
+    EggItem: Incubus_Egg
+    EquipItem: Ball_Mask
+    FoodItem: Vital_Flower
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1343,10 +1343,10 @@ Body:
       bonus bMaxSPRate,3;
       bonus2 bSPDrainRate,10,1;
   - MobId: 1379
-    TameWithId: 12372
-    EggItemId: 9054
-    EquipItemId: 10036
-    FoodItemId: 6112
+    TameItem: Hell_Contract
+    EggItem: Nightmare_Terror_Egg
+    EquipItem: Hell_Horn
+    FoodItem: Fresh_Plant
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1367,10 +1367,10 @@ Body:
         bonus2 bResEff,Eff_Sleep,10000;
       }
   - MobId: 1401
-    TameWithId: 12362
-    EggItemId: 9044
-    EquipItemId: 10026
-    FoodItemId: 6099
+    TameItem: Kuloren
+    EggItem: Shinobi_Egg
+    EquipItem: Wine_On_Sleeve
+    FoodItem: Grilled_Rice_Cake
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -1391,10 +1391,10 @@ Body:
         bonus bAgi,2;
       }
   - MobId: 1404
-    TameWithId: 12366
-    EggItemId: 9048
-    EquipItemId: 10030
-    FoodItemId: 6106
+    TameItem: Gril_Doll
+    EggItem: Miyabi_Ningyo_Egg
+    EquipItem: Summer_Fan
+    FoodItem: Well_Ripened_Berry
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1416,10 +1416,10 @@ Body:
         bonus bCastrate,-3;
       }
   - MobId: 1416
-    TameWithId: 12365
-    EggItemId: 9047
-    EquipItemId: 10029
-    FoodItemId: 6105
+    TameItem: Charming_Lotus
+    EggItem: Wicked_Nymph_Egg
+    EquipItem: Jade_Trinket
+    FoodItem: Morning_Dew
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1441,10 +1441,10 @@ Body:
         bonus bSPrecovRate,5;
       }
   - MobId: 1495
-    TameWithId: 12369
-    EggItemId: 9051
-    EquipItemId: 10033
-    FoodItemId: 6109
+    TameItem: Oilpalm_Coconut
+    EggItem: Stone_Shooter_Egg
+    EquipItem: Apro_Hair
+    FoodItem: Plant_Neutrient
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -1465,10 +1465,10 @@ Body:
         bonus2 bSubEle,Ele_Fire,3;
       }
   - MobId: 1504
-    TameWithId: 12367
-    EggItemId: 9049
-    EquipItemId: 10031
-    FoodItemId: 6107
+    TameItem: Luxury_Whisky_Bottle
+    EggItem: Dullahan_Egg
+    EquipItem: Death_Coil
+    FoodItem: Sunset_On_The_Rock
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1489,10 +1489,10 @@ Body:
         bonus bCritAtkRate,5;
       }
   - MobId: 1505
-    TameWithId: 12360
-    EggItemId: 9042
-    EquipItemId: 10024
-    FoodItemId: 6097
+    TameItem: Very_Red_Juice
+    EggItem: Loli_Ruri_Egg
+    EquipItem: Fashionable_Glasses
+    FoodItem: Pumpkin_Pie_
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1514,10 +1514,10 @@ Body:
         bonus3 bAutoSpellWhenHit,"AL_HEAL",1,10;
       }
   - MobId: 1513
-    TameWithId: 12358
-    EggItemId: 9040
-    EquipItemId: 10022
-    FoodItemId: 6095
+    TameItem: Fan_Of_Wind
+    EggItem: Civil_Servant_Egg
+    EquipItem: Golden_Earing
+    FoodItem: Flavored_Alcohol
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1538,10 +1538,10 @@ Body:
         bonus bMaxSP,10;
       }
   - MobId: 1586
-    TameWithId: 12359
-    EggItemId: 9041
-    EquipItemId: 10023
-    FoodItemId: 6096
+    TameItem: Very_Soft_Plant
+    EggItem: Leaf_Cat_Egg
+    EquipItem: Green_Lucky_Bag
+    FoodItem: Fish_With_Blue_Back
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -1562,10 +1562,10 @@ Body:
         bonus2 bSubRace,RC_Brute,3;
       }
   - MobId: 1630
-    TameWithId: 12357
-    EggItemId: 9039
-    EquipItemId: 10021
-    FoodItemId: 6094
+    TameItem: Shiny_Wing_Gown
+    EggItem: Bacsojin_Egg
+    EquipItem: Round_Hair_Ornament
+    FoodItem: Traditional_Cookie
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -1580,10 +1580,10 @@ Body:
     RetaliateRate: 300
     ChangeTargetRate: 800
   - MobId: 1837
-    TameWithId: 12374
-    EggItemId: 9056
-    EquipItemId: 10038
-    FoodItemId: 6114
+    TameItem: Flaming_Ice
+    EggItem: Imp_Egg
+    EquipItem: Horn_Protector
+    FoodItem: Flame_Gemstone
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1605,8 +1605,8 @@ Body:
         bonus2 bAddEle,Ele_Fire,2;
       }
   - MobId: 2057
-    TameWithId: 12408
-    EggItemId: 6221
+    TameItem: Leaf_Cat_Ball
+    EggItem: Mystic_Leaf_Cat_Ball
     Fullness: 0
     HungryDelay: 0
     IntimacyStart: 0
@@ -1621,8 +1621,8 @@ Body:
     RetaliateRate: 400
     ChangeTargetRate: 800
   - MobId: 2081
-    TameWithId: 12408
-    EggItemId: 6221
+    TameItem: Leaf_Cat_Ball
+    EggItem: Mystic_Leaf_Cat_Ball
     Fullness: 0
     HungryDelay: 0
     IntimacyStart: 0
@@ -1637,8 +1637,8 @@ Body:
     RetaliateRate: 400
     ChangeTargetRate: 800
   - MobId: 2200
-    EggItemId: 9057
-    FoodItemId: 512
+    EggItem: Egg_Of_Tiny
+    FoodItem: Apple
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1653,8 +1653,8 @@ Body:
     RetaliateRate: 300
     ChangeTargetRate: 800
   - MobId: 2210
-    EggItemId: 9058
-    FoodItemId: 529
+    EggItem: Snow_Rabbit_Egg
+    FoodItem: Candy
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1675,9 +1675,9 @@ Body:
         bonus2 bExpAddRace,RC_All,5;
       }
   - MobId: 2313
-    TameWithId: 12699
-    EggItemId: 9059
-    FoodItemId: 528
+    TameItem: Tikbalang_Belt
+    EggItem: Tikbalang_Pet
+    FoodItem: Monster's_Feed
     Fullness: 8
     HungryDelay: 60
     IntimacyStart: 250
@@ -1706,10 +1706,10 @@ Body:
         bonus2 bAddDamageClass,2333,10;
       }
   - MobId: 1242
-    TameWithId: 12789
-    EggItemId: 9061
-    EquipItemId: 10039
-    FoodItemId: 6534
+    TameItem: Juicy_Fruit
+    EggItem: Marin_Egg
+    EquipItem: Tw_Backpack
+    FoodItem: Fruit_Sundae
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1724,9 +1724,9 @@ Body:
     RetaliateRate: 300
     ChangeTargetRate: 800
   - MobId: 2398
-    TameWithId: 12846
-    EggItemId: 9062
-    FoodItemId: 531
+    TameItem: Unripe_Apple2
+    EggItem: Novice_Poring_Egg
+    FoodItem: Apple_Juice
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1747,9 +1747,9 @@ Body:
         bonus bHPrecovRate,50;
       }
   - MobId: 1180
-    TameWithId: 23187
-    EggItemId: 9095
-    FoodItemId: 25231
+    TameItem: Sap_Liquid
+    EggItem: Nine_Tail_Egg
+    FoodItem: Suspicious_Bottle
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -1776,18 +1776,18 @@ Body:
     Evolution:
       - TargetId: 1307
         ItemRequirements:
-          - ItemId: 23187
+          - Item: Sap_Liquid
             Amount: 3
-          - ItemId: 1022
+          - Item: Fox_Tail
             Amount: 999
-          - ItemId: 10008
+          - Item: Punisher
             Amount: 1
-          - ItemId: 4159
+          - Item: Nine_Tail_Card
             Amount: 1
   - MobId: 1632
-    TameWithId: 23188
-    EggItemId: 9100
-    FoodItemId: 25232
+    TameItem: Unprocessed_Parts
+    EggItem: Gremlin_Egg
+    FoodItem: Cheap_Lubricant
     Fullness: 4
     HungryDelay: 60
     IntimacyStart: 250
@@ -1814,18 +1814,18 @@ Body:
     Evolution:
       - TargetId: 1773
         ItemRequirements:
-          - ItemId: 23188
+          - Item: Unprocessed_Parts
             Amount: 3
-          - ItemId: 6100
+          - Item: Damp_Darkness
             Amount: 50
-          - ItemId: 7340
+          - Item: Will_Of_Darkness
             Amount: 200
-          - ItemId: 4413
+          - Item: Hodremlin_Card
             Amount: 1
   - MobId: 1041
-    TameWithId: 23256
-    EggItemId: 9102
-    FoodItemId: 934
+    TameItem: Elixir_Bandages
+    EggItem: Mummy_Egg
+    FoodItem: Mementos
     Fullness: 7
     HungryDelay: 60
     IntimacyStart: 250
@@ -1850,18 +1850,18 @@ Body:
     Evolution:
       - TargetId: 1297
         ItemRequirements:
-          - ItemId: 23256
+          - Item: Elixir_Bandages
             Amount: 3
-          - ItemId: 7511
+          - Item: Rune_Of_Darkness
             Amount: 200
-          - ItemId: 969
+          - Item: Gold
             Amount: 30
-          - ItemId: 4248
+          - Item: Ancient_Mummy_Card
             Amount: 1
   - MobId: 1622
-    TameWithId: 23189
-    EggItemId: 9099
-    FoodItemId: 25233
+    TameItem: Small_Needle_Kit
+    EggItem: Teddy_Bear_Egg
+    FoodItem: Cotton_Tufts
     Fullness: 3
     HungryDelay: 60
     IntimacyStart: 250
@@ -1884,19 +1884,19 @@ Body:
     Evolution:
       - TargetId: 2995
         ItemRequirements:
-          - ItemId: 23189
+          - Item: Small_Needle_Kit
             Amount: 3
-          - ItemId: 7442
+          - Item: Cursed_Seal
             Amount: 300
-          - ItemId: 724
+          - Item: Cardinal_Jewel_
             Amount: 50
-          - ItemId: 4340
+          - Item: Teddy_Bear_Card
             Amount: 1
 
   # Pet Evolution, most are dummy values
   - MobId: 1090
-    EggItemId: 9069
-    FoodItemId: 537
+    EggItem: Mastering_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -1930,17 +1930,17 @@ Body:
     Evolution:
       - TargetId: 1096
         ItemRequirements:
-          - ItemId: 503
+          - Item: Yellow_Potion
             Amount: 20
-          - ItemId: 2282
+          - Item: Spirit_Chain
             Amount: 1
-          - ItemId: 509
+          - Item: White_Herb
             Amount: 50
-          - ItemId: 909
+          - Item: Jellopy
             Amount: 200
   - MobId: 1058
-    EggItemId: 9106
-    FoodItemId: 537
+    EggItem: Metaller_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -1976,8 +1976,8 @@ Body:
         bonus bMaxHP,25;
       }
   - MobId: 1096
-    EggItemId: 9088
-    FoodItemId: 537
+    EggItem: Angeling_Egg
+    FoodItem: Pet_Food
     Fullness: 1
     HungryDelay: 120
     IntimacyStart: 250
@@ -2009,8 +2009,8 @@ Body:
         bonus bHealPower,2;
       }
   - MobId: 1150
-    EggItemId: 9112
-    FoodItemId: 25377
+    EggItem: Moonlight_Egg
+    FoodItem: Luxurious_Pet_Food
     Fullness: 1
     HungryDelay: 120
     IntimacyStart: 250
@@ -2045,8 +2045,8 @@ Body:
         bonus bHit,3;
       }
   - MobId: 1166
-    EggItemId: 9070
-    FoodItemId: 537
+    EggItem: Savage_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2078,8 +2078,8 @@ Body:
         bonus bVit,1;
       }
   - MobId: 1213
-    EggItemId: 9087
-    FoodItemId: 537
+    EggItem: High_Orc_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2111,8 +2111,8 @@ Body:
         bonus bVit,1;
       }
   - MobId: 1214
-    EggItemId: 9091
-    FoodItemId: 537
+    EggItem: Choco_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2143,8 +2143,8 @@ Body:
         bonus bCritical,3;
       }
   - MobId: 1297
-    EggItemId: 9107
-    FoodItemId: 537
+    EggItem: Ancient_Mummy_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2176,8 +2176,8 @@ Body:
         bonus bHit,4;
       }
   - MobId: 1301
-    EggItemId: 9089
-    FoodItemId: 537
+    EggItem: Am_Mut_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2205,8 +2205,8 @@ Body:
         bonus bMatkRate,1;
       }
   - MobId: 1307
-    EggItemId: 9096
-    FoodItemId: 537
+    EggItem: Cat_o_Nine_Tail_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2242,17 +2242,17 @@ Body:
     Evolution:
       - TargetId: 1150
         ItemRequirements:
-          - ItemId: 25375
+          - Item: Powerful_Soul_Essence
             Amount: 30
-          - ItemId: 4159
+          - Item: Nine_Tail_Card
             Amount: 10
-          - ItemId: 4100
+          - Item: Sohee_Card
             Amount: 10
-          - ItemId: 4090
+          - Item: Munak_Card
             Amount: 10
   - MobId: 1369
-    EggItemId: 9071
-    FoodItemId: 537
+    EggItem: Grand_Peco_Peco_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2280,8 +2280,8 @@ Body:
         bonus bMaxHP,150;
       }
   - MobId: 1512
-    EggItemId: 9093
-    FoodItemId: 537
+    EggItem: Hyegun_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2315,8 +2315,8 @@ Body:
         bonus2 bResEff,Eff_Stun,100;
       }
   - MobId: 1773
-    EggItemId: 9105
-    FoodItemId: 537
+    EggItem: Hodremlin_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2350,8 +2350,8 @@ Body:
         bonus bHit,1;
       }
   - MobId: 2995
-    EggItemId: 9108
-    FoodItemId: 537
+    EggItem: Xm_Teddy_Bear_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2381,8 +2381,8 @@ Body:
         bonus bMaxSP,50;
       }
   - MobId: 3495
-    EggItemId: 9092
-    FoodItemId: 537
+    EggItem: Eggring_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2414,8 +2414,8 @@ Body:
         bonus bAtk,3;
       }
   - MobId: 3496
-    EggItemId: 9094
-    FoodItemId: 537
+    EggItem: Dr_Lunatic_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2451,8 +2451,8 @@ Body:
         bonus bAtk,2;
       }
   - MobId: 3636
-    EggItemId: 9090
-    FoodItemId: 537
+    EggItem: Little_Isis_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2480,8 +2480,8 @@ Body:
         bonus bAtkRate,1;
       }
   - MobId: 3669
-    EggItemId: 9097
-    FoodItemId: 537
+    EggItem: Diabolic_2_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2515,8 +2515,8 @@ Body:
         bonus bMatkRate,1;
       }
   - MobId: 3670
-    EggItemId: 9098
-    FoodItemId: 537
+    EggItem: Fire_Deleter_Egg
+    FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
@@ -2547,8 +2547,8 @@ Body:
         bonus bAspdRate,1;
       }
   - MobId: 3790
-    EggItemId: 9109
-    FoodItemId: 529
+    EggItem: Sweet_Drops_Egg
+    FoodItem: Candy
     Fullness: 2
     HungryDelay: 120
     IntimacyStart: 250
