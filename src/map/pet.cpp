@@ -399,8 +399,8 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 				return 0;
 			}
 
-			if( !this->nodeExists( evolutionNode, "ItemsRequirement" ) ){
-				this->invalidWarning( evolutionNode, "Missing required node \"ItemsRequirement\".\n" );
+			if( !this->nodeExists( evolutionNode, "ItemRequirements" ) ){
+				this->invalidWarning( evolutionNode, "Missing required node \"ItemRequirements\".\n" );
 				return 0;
 			}
 
@@ -412,7 +412,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 				evolution->target_mob_id = targetId;
 			}
 
-			for( const YAML::Node& requirementNode : evolutionNode["ItemsRequirement"] ){
+			for( const YAML::Node& requirementNode : evolutionNode["ItemRequirements"] ){
 				uint16 item_id;
 
 				if( !this->asUInt16( requirementNode, "ItemId", item_id ) ){

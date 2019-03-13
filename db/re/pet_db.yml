@@ -29,8 +29,8 @@
 #   Script                   Bonus script to execute when the pet is alive.
 #   SupportScript            Legacy pet script for pet* script commands.
 #   Evolution:               Pet evolution settings
-#     - TargetId               Mob ID this pet evolves to	
-#       ItemsRequirement:      Item requirements for evolving this pet
+#     - TargetId               Mob ID this pet evolves to
+#       ItemRequirements:      Item requirements for evolving this pet
 #         - ItemId             Self-explanatory
 #           Amount
 ###########################################################################
@@ -70,7 +70,7 @@ Body:
       petloot 10;
     Evolution:
       - TargetId: 1090
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 610
             Amount: 10
           - ItemId: 619
@@ -106,7 +106,7 @@ Body:
       petloot 10;
     Evolution:
       - TargetId: 3495
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 7032
             Amount: 20
           - ItemId: 7031
@@ -116,7 +116,7 @@ Body:
           - ItemId: 4659
             Amount: 1
       - TargetId: 3790
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 25290
             Amount: 500
           - ItemId: 529
@@ -183,7 +183,7 @@ Body:
       petskillbonus bLuk,3,10,50;
     Evolution:
       - TargetId: 3496
-        ItemsRequirement: 
+        ItemRequirements: 
           - ItemId: 7198
             Amount: 100
           - ItemId: 705
@@ -335,7 +335,7 @@ Body:
       petskillbonus bVit,4,10,50;
     Evolution:
       - TargetId: 1166
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 537
             Amount: 10
           - ItemId: 627
@@ -402,7 +402,7 @@ Body:
       petskillbonus bAllStats,1,10,50;
     Evolution:
       - TargetId: 1058
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 707
             Amount: 3
           - ItemId: 940
@@ -497,7 +497,7 @@ Body:
       petskillbonus bSpeedRate,25,20,20;
     Evolution:
       - TargetId: 1369
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 537
             Amount: 10
           - ItemId: 632
@@ -566,7 +566,7 @@ Body:
       petloot 20;
     Evolution:
       - TargetId: 1214
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 634
             Amount: 3
           - ItemId: 753
@@ -605,7 +605,7 @@ Body:
       petskillattack2 "NPC_PIERCINGATT",100,1,0,10;
     Evolution:
       - TargetId: 1213
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 635
             Amount: 3
           - ItemId: 1124
@@ -674,7 +674,7 @@ Body:
       petskillattack "BS_HAMMERFALL",1,0,10;
     Evolution:
       - TargetId: 1301
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 637
             Amount: 3
           - ItemId: 981
@@ -741,7 +741,7 @@ Body:
       petskillsupport "PR_MAGNIFICAT",2,60,50,50;
     Evolution:
       - TargetId: 3636
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 639
             Amount: 3
           - ItemId: 732
@@ -781,7 +781,7 @@ Body:
       petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10;
     Evolution:
       - TargetId: 3670
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 640
             Amount: 3
           - ItemId: 6260
@@ -822,7 +822,7 @@ Body:
       petskillbonus bAgiDexStr,6,20,40;
     Evolution:
       - TargetId: 3669
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 641
             Amount: 3
           - ItemId: 1039
@@ -890,7 +890,7 @@ Body:
       petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1;
     Evolution:
       - TargetId: 1512
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 5367
             Amount: 1
           - ItemId: 7277
@@ -1842,7 +1842,7 @@ Body:
       }
     Evolution:
       - TargetId: 1307
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 23187
             Amount: 3
           - ItemId: 1022
@@ -1881,7 +1881,7 @@ Body:
       }
     Evolution:
       - TargetId: 1773
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 23188
             Amount: 3
           - ItemId: 6100
@@ -1918,7 +1918,7 @@ Body:
       }
     Evolution:
       - TargetId: 1297
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 23256
             Amount: 3
           - ItemId: 7511
@@ -1953,7 +1953,7 @@ Body:
       }
     Evolution:
       - TargetId: 2995
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 23189
             Amount: 3
           - ItemId: 7442
@@ -2000,7 +2000,7 @@ Body:
       }
     Evolution:
       - TargetId: 1096
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 503
             Amount: 20
           - ItemId: 2282
@@ -2321,7 +2321,7 @@ Body:
       }
     Evolution:
       - TargetId: 1150
-        ItemsRequirement:
+        ItemRequirements:
           - ItemId: 25375
             Amount: 30
           - ItemId: 4159

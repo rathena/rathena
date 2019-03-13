@@ -29,8 +29,8 @@
 #   Script                   Bonus script to execute when the pet is alive.
 #   SupportScript            Legacy pet script for pet* script commands.
 #   Evolution:               Pet evolution settings
-#     - TargetId               Mob ID this pet evolves to	
-#       ItemsRequirement:      Item requirements for evolving this pet
+#     - TargetId               Mob ID this pet evolves to
+#       ItemRequirements:      Item requirements for evolving this pet
 #         - ItemId             Self-explanatory
 #           Amount
 ###########################################################################
