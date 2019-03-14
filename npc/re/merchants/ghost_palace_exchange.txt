@@ -9,8 +9,9 @@
 //============================================================
 
 dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
+	.@item_name_req$ = getitemname(6672);// Shard_of_Gray
 	mes "[Dimension Traveler]";
-	mes "Adventurer friend, <ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> is what I need. How about exchanging it with something I have?";
+	mes "Adventurer friend, <ITEM>[" + .@item_name_req$ + "]<INFO>6672</INFO></ITEM> is what I need. How about exchanging it with something I have?";
 	next;
 	.@type = select( "Show me your weapon.", "Show me your armor.", "Anything special?", "I do not need." ) - 1;
 	mes "[Dimension Traveler]";
@@ -30,7 +31,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 	}
 	next;
 	mes "[Dimension Traveler]";
-	mes "Ah! The number that is written beside <ITEM>[Gray Shard]<INFO>6672</INFO></ITEM> will be needed.";
+	mes "Ah! The number that is written beside <ITEM>[" + .@item_name_req$ + "]<INFO>6672</INFO></ITEM> will be needed.";
 	mes "Please keep that in mind.";
 
 	switch(.@type) {
@@ -80,7 +81,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 		mes "[Dimension Traveler]";
 		if (.@type != 1)	// armor type doesn't display item info
 			mes "Do you mean <ITEM>[" + getitemname(.@item[.@s]) + "]<INFO>" + .@item[.@s] + "</INFO></ITEM>?";
-		mes "" + .@item[.@s+1] + " ^006400Gray Shard^000000 are required in exchange.";
+		mes "" + .@item[.@s+1] + " ^006400" + .@item_name_req$ + "^000000 are required in exchange.";
 		next;
 		switch( select( "Let's exchange.", "Let me see other stuff.", "I will come back later." ) ) {
 		case 1:
@@ -95,7 +96,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 				mes "We have many armors for you. Why don't you pick one?";
 				break;
 			case 2:
-				mes "If you bring me Gray Shard, I will trade it with anything you want.";
+				mes "If you bring me " + .@item_name_req$ + ", I will trade it with anything you want.";
 				break;
 			}
 			continue;
@@ -107,7 +108,7 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 		if (countitem(6672) < .@item[.@s+1]) {
 			mes "[Dimension Traveler]";
 			mes "You put me in a difficult situation, friend.";
-			mes "I am in need of Gray Shard. I will exchange it for ^006400" + .@item[.@s+1] + " Gray Shard^000000.";
+			mes "I am in need of " + .@item_name_req$ + ". I will exchange it for ^006400" + .@item[.@s+1] + " " + .@item_name_req$ + "^000000.";
 			close;
 		}
 		mes "[Dimension Traveler]";
