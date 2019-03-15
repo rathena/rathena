@@ -2882,7 +2882,6 @@ int skill_is_combo(uint16 skill_id) {
 		case TK_COUNTER:
 		case TK_JUMPKICK:
 		case HT_POWER:
-		case GC_COUNTERSLASH:
 		case GC_WEAPONCRUSH:
 		case SR_DRAGONCOMBO:
 			return 1;
@@ -14907,7 +14906,7 @@ static bool skill_check_condition_sc_required(struct map_session_data *sd, unsig
 				}
 				break;
 			case GC_COUNTERSLASH:
-				if (!sc->data[SC_WEAPONBLOCKING]) {
+				if (!sc->data[SC_WEAPONBLOCK_ON]) {
 					clif_skill_fail(sd, skill_id, USESKILL_FAIL_GC_WEAPONBLOCKING, 0);
 					return false;
 				}
