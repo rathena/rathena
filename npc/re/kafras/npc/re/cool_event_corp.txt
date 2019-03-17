@@ -8,7 +8,7 @@
 //= Cool Event Corp. Staff (Save, Storage & Pushcart Service)
 //============================================================ 
 
-lighthalzen,94,248,4	script	Cool Event Corp Staff::CoolEventCorpStaffLighthalzen	874,{
+lighthalzen,94,248,3	script	Cool Event Corp Staff::CoolEventCorpStaffLighthalzen	874,{
 	callfunc "F_CoolEventCorp",
 		"Save:Use Storage::Rent a Pushcart::Cancel",
 		"in the city of Lighthalzen","lighthalzen",95,240;
