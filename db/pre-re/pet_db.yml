@@ -34,7 +34,7 @@
 #   IntimacyFed              Amount of Intimacy that is increased when fed.
 #   IntimacyOverfed          Amount of Intimacy that is increased when over-fed. (Default: -100)
 #   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry.
-#   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies.
+#   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies. (Default: -20)
 #   CaptureRate              Capture success rate (10000 = 100%)
 #   Speed                    Pet's walk speed. (Default: DEFAULT_WALK_SPEED)
 #   SpecialPerformance       If a pet has a Special Performance. (Default: true)
@@ -64,7 +64,6 @@ Body:
     Fullness: 3
     IntimacyFed: 50
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     Script: >
@@ -82,7 +81,6 @@ Body:
     Fullness: 4
     IntimacyFed: 40
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     Script: >
@@ -100,7 +98,6 @@ Body:
     Fullness: 5
     IntimacyFed: 30
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -118,7 +115,6 @@ Body:
     Fullness: 4
     IntimacyFed: 40
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -137,7 +133,6 @@ Body:
     Fullness: 4
     IntimacyFed: 40
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     Script: >
@@ -155,7 +150,6 @@ Body:
     Fullness: 6
     IntimacyFed: 30
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     Script: >
@@ -173,7 +167,6 @@ Body:
     Fullness: 5
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -191,7 +184,6 @@ Body:
     Fullness: 5
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     Script: >
@@ -209,7 +201,6 @@ Body:
     Fullness: 7
     IntimacyFed: 40
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -228,7 +219,6 @@ Body:
     Fullness: 6
     IntimacyFed: 40
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
@@ -247,7 +237,6 @@ Body:
     Fullness: 1
     IntimacyFed: 30
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -266,7 +255,6 @@ Body:
     Fullness: 3
     IntimacyFed: 30
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -285,7 +273,6 @@ Body:
     Fullness: 3
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
@@ -304,7 +291,6 @@ Body:
     Fullness: 4
     IntimacyFed: 30
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -322,7 +308,6 @@ Body:
     Fullness: 4
     IntimacyFed: 30
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -340,7 +325,6 @@ Body:
     Fullness: 5
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -358,7 +342,6 @@ Body:
     Fullness: 5
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     Script: >
@@ -376,7 +359,6 @@ Body:
     Fullness: 3
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -395,7 +377,6 @@ Body:
     Fullness: 4
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -414,7 +395,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -433,7 +413,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -452,7 +431,6 @@ Body:
     Fullness: 4
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -472,7 +450,6 @@ Body:
     Fullness: 2
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -493,7 +470,6 @@ Body:
     Fullness: 2
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -513,7 +489,6 @@ Body:
     Fullness: 4
     IntimacyFed: 30
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     Script: >
@@ -530,7 +505,6 @@ Body:
     Fullness: 7
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 300
     Speed: 150
     SpecialPerformance: false
@@ -550,7 +524,6 @@ Body:
     Fullness: 2
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -568,7 +541,6 @@ Body:
     Fullness: 3
     IntimacyFed: 50
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     Script: >
@@ -585,7 +557,6 @@ Body:
     Fullness: 3
     IntimacyFed: 50
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -603,7 +574,6 @@ Body:
     Fullness: 3
     IntimacyFed: 50
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -621,7 +591,6 @@ Body:
     Fullness: 3
     IntimacyFed: 50
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -632,7 +601,6 @@ Body:
     Fullness: 3
     IntimacyFed: 50
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -643,7 +611,6 @@ Body:
     Fullness: 3
     IntimacyFed: 50
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -654,7 +621,6 @@ Body:
     Fullness: 3
     IntimacyFed: 50
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -665,7 +631,6 @@ Body:
     Fullness: 4
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -676,7 +641,6 @@ Body:
     Fullness: 2
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -687,7 +651,6 @@ Body:
     Fullness: 2
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -704,7 +667,6 @@ Body:
     Fullness: 3
     IntimacyFed: 30
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -716,7 +678,6 @@ Body:
     Fullness: 7
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -735,7 +696,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -753,7 +713,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -772,7 +731,6 @@ Body:
     Fullness: 7
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -791,7 +749,6 @@ Body:
     Fullness: 7
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
@@ -810,7 +767,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -828,7 +784,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
@@ -846,7 +801,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -864,7 +818,6 @@ Body:
     Fullness: 7
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -882,7 +835,6 @@ Body:
     Fullness: 3
     IntimacyFed: 15
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -901,7 +853,6 @@ Body:
     Fullness: 3
     IntimacyFed: 15
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -920,7 +871,6 @@ Body:
     Fullness: 7
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -938,7 +888,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -956,7 +905,6 @@ Body:
     Fullness: 3
     IntimacyFed: 15
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -975,7 +923,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -993,7 +940,6 @@ Body:
     Fullness: 7
     IntimacyFed: 20
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -1011,7 +957,6 @@ Body:
     Fullness: 7
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -1023,7 +968,6 @@ Body:
     Fullness: 3
     IntimacyFed: 10
     IntimacyHungry: -5
-    IntimacyOwnerDie: -20
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false

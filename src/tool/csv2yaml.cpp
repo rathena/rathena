@@ -560,7 +560,10 @@ static size_t pet_read_db( const char* file ){
 			node["IntimacyOverfed"] = -atoi( str[10] );
 		}
 		node["IntimacyHungry"] = -20;
-		node["IntimacyOwnerDie"] = -atoi( str[12] );
+		// Default: -20
+		if( atoi( str[12] ) != 20 ){
+			node["IntimacyOwnerDie"] = -atoi( str[12] );
+		}
 		node["CaptureRate"] = atoi( str[13] );
 		node["Speed"] = atoi( str[14] );
 		// Default: true
