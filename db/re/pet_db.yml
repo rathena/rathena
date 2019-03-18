@@ -30,7 +30,7 @@
 #   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
 #   HungryDelay              The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
-#   IntimacyStart            Amount of Intimacy the pet starts with.
+#   IntimacyStart            Amount of Intimacy the pet starts with. (Default: 250)
 #   IntimacyFed              Amount of Intimacy that is increased when fed.
 #   IntimacyOverfed          Amount of Intimacy that is increased when over-fed.
 #   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry.
@@ -63,7 +63,6 @@ Body:
     FoodItem: Apple_Juice
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -97,7 +96,6 @@ Body:
     FoodItem: Yellow_Herb
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 40
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -144,7 +142,6 @@ Body:
     FoodItem: Green_Herb
     Fullness: 5
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 30
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -170,7 +167,6 @@ Body:
     FoodItem: Carrot_Juice
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 40
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -209,7 +205,6 @@ Body:
     FoodItem: Red_Herb
     Fullness: 4   
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 40
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -235,7 +230,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 6
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 30
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -261,7 +255,6 @@ Body:
     FoodItem: Iron_Ore
     Fullness: 5
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -287,7 +280,6 @@ Body:
     FoodItem: Red_Gemstone
     Fullness: 5
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -313,7 +305,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 40
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -351,7 +342,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 6
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 40
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -378,7 +368,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 1
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 30
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -416,7 +405,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 30
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -443,7 +431,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -470,7 +457,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 30
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -509,7 +495,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 30
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -535,7 +520,6 @@ Body:
     FoodItem: Banana_Juice
     Fullness: 5
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -572,7 +556,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 5
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -611,7 +594,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -638,7 +620,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -676,7 +657,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -703,7 +683,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -741,7 +720,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -780,7 +758,6 @@ Body:
     FoodItem: Shoot
     Fullness: 2
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -820,7 +797,6 @@ Body:
     FoodItem: Honey
     Fullness: 2
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -848,7 +824,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 30
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -884,7 +859,6 @@ Body:
     FoodItem: Immortal_Heart
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -912,7 +886,6 @@ Body:
     FoodItem: White_Potion
     Fullness: 2
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -938,7 +911,6 @@ Body:
     FoodItem: Green_Herb
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -963,7 +935,6 @@ Body:
     FoodItem: Scell
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -989,7 +960,6 @@ Body:
     FoodItem: Bun_
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1015,7 +985,6 @@ Body:
     FoodItem: Bok_Choy
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1034,7 +1003,6 @@ Body:
     FoodItem: Green_Apple
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1053,7 +1021,6 @@ Body:
     FoodItem: Green_Apple
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1072,7 +1039,6 @@ Body:
     FoodItem: Green_Apple
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1091,7 +1057,6 @@ Body:
     FoodItem: Whole_Barbecue
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1110,7 +1075,6 @@ Body:
     FoodItem: Meat_Veg_Skewer
     Fullness: 2
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1129,7 +1093,6 @@ Body:
     FoodItem: Spirit_Liquor
     Fullness: 2
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1154,7 +1117,6 @@ Body:
     FoodItem: Mojji
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 30
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1174,7 +1136,6 @@ Body:
     FoodItem: Mystic_Stone
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1199,7 +1160,6 @@ Body:
     FoodItem: Small_Snow_Flower
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1223,7 +1183,6 @@ Body:
     FoodItem: Apple_Pudding
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1248,7 +1207,6 @@ Body:
     FoodItem: Damp_Darkness
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1273,7 +1231,6 @@ Body:
     FoodItem: Big_Cell
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1298,7 +1255,6 @@ Body:
     FoodItem: Vital_Flower_
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1325,7 +1281,6 @@ Body:
     FoodItem: Vital_Flower
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1353,7 +1308,6 @@ Body:
     FoodItem: Fresh_Plant
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1377,7 +1331,6 @@ Body:
     FoodItem: Grilled_Rice_Cake
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1401,7 +1354,6 @@ Body:
     FoodItem: Well_Ripened_Berry
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1426,7 +1378,6 @@ Body:
     FoodItem: Morning_Dew
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1451,7 +1402,6 @@ Body:
     FoodItem: Plant_Neutrient
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1475,7 +1425,6 @@ Body:
     FoodItem: Sunset_On_The_Rock
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1499,7 +1448,6 @@ Body:
     FoodItem: Pumpkin_Pie_
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1524,7 +1472,6 @@ Body:
     FoodItem: Flavored_Alcohol
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1548,7 +1495,6 @@ Body:
     FoodItem: Fish_With_Blue_Back
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 20
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1572,7 +1518,6 @@ Body:
     FoodItem: Traditional_Cookie
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1590,7 +1535,6 @@ Body:
     FoodItem: Flame_Gemstone
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1645,7 +1589,6 @@ Body:
     FoodItem: Apple
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1660,7 +1603,6 @@ Body:
     FoodItem: Candy
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1682,7 +1624,6 @@ Body:
     FoodItem: Monster's_Feed
     Fullness: 8
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 10
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1713,7 +1654,6 @@ Body:
     FoodItem: Fruit_Sundae
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1729,7 +1669,6 @@ Body:
     FoodItem: Apple_Juice
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 1000
     IntimacyOverfed: 0
     IntimacyHungry: -20
@@ -1752,7 +1691,6 @@ Body:
     FoodItem: Suspicious_Bottle
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1789,7 +1727,6 @@ Body:
     FoodItem: Cheap_Lubricant
     Fullness: 4
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1826,7 +1763,6 @@ Body:
     FoodItem: Mementos
     Fullness: 7
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1861,7 +1797,6 @@ Body:
     FoodItem: Cotton_Tufts
     Fullness: 3
     HungryDelay: 60
-    IntimacyStart: 250
     IntimacyFed: 50
     IntimacyOverfed: -100
     IntimacyHungry: -20
@@ -1895,7 +1830,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -1939,7 +1873,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -1976,7 +1909,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 1
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2009,7 +1941,6 @@ Body:
     FoodItem: Luxurious_Pet_Food
     Fullness: 1
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2045,7 +1976,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2078,7 +2008,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2111,7 +2040,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2143,7 +2071,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2176,7 +2103,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2205,7 +2131,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2251,7 +2176,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2280,7 +2204,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2315,7 +2238,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2350,7 +2272,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2381,7 +2302,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2414,7 +2334,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2451,7 +2370,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2480,7 +2398,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2515,7 +2432,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
@@ -2547,7 +2463,6 @@ Body:
     FoodItem: Candy
     Fullness: 2
     HungryDelay: 120
-    IntimacyStart: 250
     IntimacyFed: 15
     IntimacyOverfed: -100
     IntimacyHungry: -5
