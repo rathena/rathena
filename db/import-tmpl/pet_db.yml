@@ -41,9 +41,9 @@
 #   AttackRate               Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
 #   RetaliateRate            Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
 #   ChangeTargetRate         Rate of which the pet will change its attack target.
-#   AllowAutoFeed            Allows turning automatic pet feeding on.
-#   Script                   Bonus script to execute when the pet is alive.
-#   SupportScript            Legacy pet script for pet* script commands.
+#   AllowAutoFeed            Allows turning automatic pet feeding on. (Default: false)
+#   Script                   Bonus script to execute when the pet is alive. (Default: null)
+#   SupportScript            Legacy pet script for pet* script commands. (Default: null)
 #   Evolution:               Pet evolution settings
 #     - Target               Mob this pet can evolve to
 #       ItemRequirements:      Item requirements for evolving this pet
