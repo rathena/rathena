@@ -60,7 +60,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 
 	if( !exists ){
 		// Check mandatory nodes
-		if( !this->nodesExist( node, { "EggItem", "Fullness", "CaptureRate", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
+		if( !this->nodesExist( node, { "EggItem", "Fullness", "CaptureRate" } ) ){
 			return 0;
 		}
 
@@ -326,6 +326,10 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		pet->attack_rate = rate;
+	}else{
+		if( !exists ){
+			pet->attack_rate = 10001; // unreachable
+		}
 	}
 
 	if( this->nodeExists( node, "RetaliateRate" ) ){
@@ -341,6 +345,10 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		pet->defence_attack_rate = rate;
+	}else{
+		if( !exists ){
+			pet->defence_attack_rate = 10001; // unreachable
+		}
 	}
 
 	if( this->nodeExists( node, "ChangeTargetRate" ) ){
@@ -356,6 +364,10 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		pet->change_target_rate = rate;
+	}else{
+		if( !exists ){
+			pet->change_target_rate = 10001; // unreachable
+		}
 	}
 
 	if( this->nodeExists( node, "AllowAutoFeed" ) ){

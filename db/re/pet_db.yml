@@ -67,9 +67,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    AttackRate: 350
-    RetaliateRate: 400
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -77,8 +74,6 @@ Body:
         bonus bLuk,2;
         bonus bCritical,1;
       }
-    SupportScript: >
-      petloot 10;
     Evolution:
       - Target: MASTERING
         ItemRequirements:
@@ -98,9 +93,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 400
-    ChangeTargetRate: 500
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -108,8 +100,6 @@ Body:
         bonus bHit,3;
         bonus bAtk,3;
       }
-    SupportScript: >
-      petloot 10;
     Evolution:
       - Target: DR_EGGRING
         ItemRequirements:
@@ -142,9 +132,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 500
-    ChangeTargetRate: 400
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -152,8 +139,6 @@ Body:
         bonus bLuk,2;
         bonus2 bSubEle,Ele_Poison,10;
       }
-    SupportScript: >
-      petloot 15;
   - Mob: LUNATIC
     TameItem: Rainbow_Carrot
     EggItem: Lunatic_Egg
@@ -166,9 +151,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 1000
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -176,8 +158,6 @@ Body:
         bonus bCritical,2;
         bonus bAtk,2;
       }
-    SupportScript: >
-      petskillbonus bLuk,3,10,50;
     Evolution:
       - Target: DR_LUNATIC
         ItemRequirements: 
@@ -201,9 +181,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    AttackRate: 500
-    RetaliateRate: 600
-    ChangeTargetRate: 50
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -211,8 +188,6 @@ Body:
         bonus bStr,1;
         bonus bAtk,5;
       }
-    SupportScript: >
-      petskillbonus bStr,3,10,50;
   - Mob: CHONCHON
     TameItem: Rotten_Fish
     EggItem: Chonchon_Egg
@@ -224,9 +199,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
-    AttackRate: 500
-    RetaliateRate: 500
-    ChangeTargetRate: 250
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -234,8 +206,6 @@ Body:
         bonus bAgi,1;
         bonus bFlee,2;
       }
-    SupportScript: >
-      petskillbonus bAgi,4,10,50;
   - Mob: STEEL_CHONCHON
     TameItem: Lusty_Iron
     EggItem: Steel_Chonchon_Egg
@@ -247,9 +217,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    AttackRate: 500
-    RetaliateRate: 500
-    ChangeTargetRate: 200
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -257,8 +224,6 @@ Body:
         bonus bFlee,6;
         bonus bAgi,-1;
       }
-    SupportScript: >
-      petskillbonus bAgiVit,4,20,40;
   - Mob: HUNTER_FLY
     TameItem: Monster_Juice
     EggItem: Hunter_Fly_Egg
@@ -270,9 +235,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
-    AttackRate: 500
-    RetaliateRate: 500
-    ChangeTargetRate: 200
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -280,8 +242,6 @@ Body:
         bonus bFlee,-5;
         bonus bFlee2,2;
       }
-    SupportScript: >
-      petskillattack2 "NPC_WINDATTACK",888,2,0,10;
   - Mob: SAVAGE_BABE
     TameItem: Sweet_Milk
     EggItem: Savage_Bebe_Egg
@@ -294,9 +254,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 500
-    RetaliateRate: 500
-    ChangeTargetRate: 200
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -304,8 +261,6 @@ Body:
         bonus bVit,1;
         bonus bMaxHP,50;
       }
-    SupportScript: >
-      petskillbonus bVit,4,10,50;
     Evolution:
       - Target: SAVAGE
         ItemRequirements:
@@ -329,9 +284,6 @@ Body:
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 400
-    RetaliateRate: 400
-    ChangeTargetRate: 400
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -339,8 +291,6 @@ Body:
         bonus bInt,1;
         bonus bMaxSP,50;
       }
-    SupportScript: >
-      petskillattack "SM_PROVOKE",1,0,5;
   - Mob: ROCKER
     TameItem: Singing_Flower
     EggItem: Rocker_Egg
@@ -353,9 +303,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 350
-    RetaliateRate: 350
-    ChangeTargetRate: 600
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -363,8 +310,6 @@ Body:
         bonus bHPrecovRate,5;
         bonus bMaxHP,25;
       }
-    SupportScript: >
-      petskillbonus bAllStats,1,10,50;
     Evolution:
       - Target: METALLER
         ItemRequirements:
@@ -388,9 +333,6 @@ Body:
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 350
-    RetaliateRate: 500
-    ChangeTargetRate: 500
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -398,8 +340,6 @@ Body:
         bonus bHit,5;
         bonus bAtk,-2;
       }
-    SupportScript: >
-      petrecovery SC_POISON,60;
   - Mob: POISON_SPORE
     TameItem: Deadly_Noxious_Herb
     EggItem: Poison_Spore_Egg
@@ -412,9 +352,6 @@ Body:
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 600
-    RetaliateRate: 200
-    ChangeTargetRate: 400
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -422,8 +359,6 @@ Body:
         bonus bStr,1;
         bonus bInt,1;
       }
-    SupportScript: >
-      petskillattack "NPC_POISON",20,0,10;
   - Mob: PECOPECO
     TameItem: Fatty_Chubby_Earthworm
     EggItem: PecoPeco_Egg
@@ -435,9 +370,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    AttackRate: 400
-    RetaliateRate: 500
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -445,8 +377,6 @@ Body:
         bonus bMaxHP,150;
         bonus bMaxSP,-10;
       }
-    SupportScript: >
-      petskillbonus bSpeedRate,25,20,20;
     Evolution:
       - Target: GRAND_PECO
         ItemRequirements:
@@ -471,9 +401,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    AttackRate: 600
-    RetaliateRate: 600
-    ChangeTargetRate: 100
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -481,8 +408,6 @@ Body:
         bonus bAgi,1;
         bonus bFlee2,1;
       }
-    SupportScript: >
-      petskillbonus bPerfectHide,1,3600,0;
   - Mob: YOYO
     TameItem: Tropical_Banana
     EggItem: Yoyo_Egg
@@ -494,9 +419,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 800
-    ChangeTargetRate: 400
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -504,8 +426,6 @@ Body:
         bonus bCritical,3;
         bonus bLuk,-1;
       }
-    SupportScript: >
-      petloot 20;
     Evolution:
       - Target: CHOCO
         ItemRequirements:
@@ -528,9 +448,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
-    AttackRate: 600
-    RetaliateRate: 200
-    ChangeTargetRate: 300
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -538,8 +455,6 @@ Body:
         bonus bAtk,10;
         bonus bDef,-3;
       }
-    SupportScript: >
-      petskillattack2 "NPC_PIERCINGATT",100,1,0,10;
     Evolution:
       - Target: HIGH_ORC
         ItemRequirements:
@@ -565,9 +480,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 750
-    ChangeTargetRate: 300
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -575,8 +487,6 @@ Body:
         bonus bInt,1;
         bonus bDef,1;
       }
-    SupportScript: >
-      petskillattack2 "NPC_DARKNESSATTACK",444,1,0,10;
   - Mob: DOKEBI
     TameItem: Old_Broom
     EggItem: Dokkaebi_Egg
@@ -589,9 +499,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -599,8 +506,6 @@ Body:
         bonus bMatkRate,1;
         bonus bAtkRate,-1;
       }
-    SupportScript: >
-      petskillattack "BS_HAMMERFALL",1,0,10;
     Evolution:
       - Target: AM_MUT
         ItemRequirements:
@@ -624,9 +529,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 100
-    RetaliateRate: 1000
-    ChangeTargetRate: 200
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -634,8 +536,6 @@ Body:
         bonus bStr,1;
         bonus bDex,1;
       }
-    SupportScript: >
-      petskillsupport "AL_HEAL",5,60,33,100;
   - Mob: ISIS
     TameItem: Armlet_Of_Obedience
     EggItem: Isis_Egg
@@ -648,9 +548,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 650
-    RetaliateRate: 450
-    ChangeTargetRate: 150
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -658,8 +555,6 @@ Body:
         bonus bMatkRate,-1;
         bonus bAtkRate,1;
       }
-    SupportScript: >
-      petskillsupport "PR_MAGNIFICAT",2,60,50,50;
     Evolution:
       - Target: LITTLE_ISIS
         ItemRequirements:
@@ -683,9 +578,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 800
-    RetaliateRate: 400
-    ChangeTargetRate: 100
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -694,8 +586,6 @@ Body:
         bonus bMdef,-2;
         bonus bAspdRate,1;
       }
-    SupportScript: >
-      petskillattack2 "WZ_HEAVENDRIVE",500,1,0,10;
     Evolution:
       - Target: DELETER_2
         ItemRequirements:
@@ -719,9 +609,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 800
-    RetaliateRate: 200
-    ChangeTargetRate: 100
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -731,8 +618,6 @@ Body:
         bonus bMaxHPrate,-3;
         bonus bMaxSPrate,-3;
       }
-    SupportScript: >
-      petskillbonus bAgiDexStr,6,20,40;
     Evolution:
       - Target: DIABOLIC2
         ItemRequirements:
@@ -756,9 +641,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 1000
-    RetaliateRate: 100
-    ChangeTargetRate: 200
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -767,8 +649,6 @@ Body:
         bonus bMdef,1;
         bonus2 bResEff,Eff_Stun,-100;
       }
-    SupportScript: >
-      petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5;
   - Mob: BON_GUN
     TameItem: Heart_Of_Her
     EggItem: Bongun_Egg
@@ -780,9 +660,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
-    AttackRate: 600
-    RetaliateRate: 200
-    ChangeTargetRate: 400
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -790,8 +667,6 @@ Body:
         bonus bVit,1;
         bonus2 bResEff,Eff_Stun,100;
       }
-    SupportScript: >
-      petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1;
     Evolution:
       - Target: HYEGUN
         ItemRequirements:
@@ -814,9 +689,6 @@ Body:
     CaptureRate: 300
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 1000
-    RetaliateRate: 100
-    ChangeTargetRate: 500
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -826,8 +698,6 @@ Body:
         bonus2 bAddRace,RC_Player,2;
         bonus2 bMagicAddRace,RC_Player,2;
       }
-    SupportScript: >
-      petskillattack "AS_SONICBLOW",1,0,3;
   - Mob: ALICE
     TameItem: Sway_Apron
     EggItem: Alice_Egg
@@ -839,9 +709,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 100
-    RetaliateRate: 1000
-    ChangeTargetRate: 200
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -850,8 +717,6 @@ Body:
         bonus2 bSubRace,RC_DemiHuman,1;
         bonus2 bSubRace,RC_Player,1;
       }
-    SupportScript: >
-      petskillsupport "AL_HEAL",5,60,25,100;
   - Mob: EVENT_RICECAKE
     EggItem: Rice_Cake_Egg
     FoodItem: Green_Herb
@@ -861,9 +726,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    AttackRate: 500
-    RetaliateRate: 500
-    ChangeTargetRate: 200
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -871,8 +733,6 @@ Body:
         bonus2 bSubEle,Ele_Neutral,1;
         bonus bMaxHPrate,-1;
       }
-    SupportScript: >
-      petskillsupport "CR_DEFENDER",3,240,50,100;
   - Mob: GOBLINE_XMAS
     TameItem: Sweet_Candy_Striper
     EggItem: Santa_Goblin_Egg
@@ -884,9 +744,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -894,8 +751,6 @@ Body:
         bonus bMaxHP,30;
         bonus2 bSubEle,Ele_Water,1;
       }
-    SupportScript: >
-      petskillattack "MG_SIGHT",5,5,5;
   - Mob: CHUNG_E
     TameItem: Tantanmen
     EggItem: Chung_E_Egg
@@ -907,9 +762,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -918,8 +770,6 @@ Body:
         bonus2 bSubRace,RC_DemiHuman,1;
         bonus2 bSubRace,RC_Player,1;
       }
-    SupportScript: >
-      petskillattack "CR_SHIELDCHARGE",5,5,5;
   - Mob: ECLIPSE_P
     EggItem: Spring_Rabbit_Egg
     FoodItem: Bok_Choy
@@ -930,11 +780,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
-    SupportScript: >
-      petskillattack "TF_THROWSTONE",1,5,5;
   - Mob: GOBLIN_1
     TameItem: Knife_Goblin_Ring
     EggItem: Knife_Goblin_Egg
@@ -946,11 +791,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
-    SupportScript: >
-      petskillattack "NPC_WINDATTACK",5,5,5;
   - Mob: GOBLIN_2
     TameItem: Flail_Goblin_Ring
     EggItem: Flail_Goblin_Egg
@@ -962,11 +802,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
-    SupportScript: >
-      petskillattack "NPC_FIREATTACK",5,5,5;
   - Mob: GOBLIN_4
     TameItem: Hammer_Goblin_Ring
     EggItem: Hammer_Goblin_Egg
@@ -978,11 +813,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
-    SupportScript: >
-      petskillattack "NPC_GROUNDATTACK",5,5,5;
   - Mob: DELETER_
     TameItem: Holy_Marble
     EggItem: Red_Deleter_Egg
@@ -994,11 +824,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
-    SupportScript: >
-      petskillattack "SM_MAGNUM",5,5,5;
   - Mob: DIABOLIC
     TameItem: Red_Burning_Stone
     EggItem: Diabolic_Egg
@@ -1010,11 +835,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
-    SupportScript: >
-      petskillattack "WZ_METEOR",2,5,5;
   - Mob: WANDER_MAN
     TameItem: Skull_Of_Vagabond
     EggItem: Wanderer_Egg
@@ -1026,9 +846,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1036,8 +853,6 @@ Body:
         bonus bAgi,3;
         bonus bDex,1;
       }
-    SupportScript: >
-      petskillattack "NPC_UNDEADATTACK",5,5,5;
   - Mob: P_CHUNG_E
     EggItem: New_Year_Doll_Egg
     FoodItem: Mojji
@@ -1048,11 +863,6 @@ Body:
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
-    SupportScript: >
-      petskillattack "CR_SHIELDCHARGE",5,5,5;
   - Mob: GOLEM
     TameItem: Magical_Lithography
     EggItem: Golem_Egg
@@ -1065,9 +875,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1087,9 +894,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1108,9 +912,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1130,9 +931,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1152,9 +950,6 @@ Body:
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1174,9 +969,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1184,8 +976,6 @@ Body:
         bonus2 bHPDrainRate,30,5;
         bonus bMaxHPrate,1;
       }
-    SupportScript: >
-      bonus2 bHPDrainRate,10,5;
   - Mob: INCUBUS
     TameItem: Gril's_Naivety
     EggItem: Incubus_Egg
@@ -1198,9 +988,6 @@ Body:
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1208,9 +995,6 @@ Body:
         bonus bMaxSPRate,5;
         bonus2 bSPDrainRate,30,1;
       }
-    SupportScript: >
-      bonus bMaxSPRate,3;
-      bonus2 bSPDrainRate,10,1;
   - Mob: NIGHTMARE_TERROR
     TameItem: Hell_Contract
     EggItem: Nightmare_Terror_Egg
@@ -1223,9 +1007,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1244,9 +1025,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1265,9 +1043,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1287,9 +1062,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1309,9 +1081,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1330,9 +1099,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1351,9 +1117,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1373,9 +1136,6 @@ Body:
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1394,9 +1154,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1415,9 +1172,6 @@ Body:
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
   - Mob: IMP
     TameItem: Flaming_Ice
     EggItem: Imp_Egg
@@ -1430,9 +1184,6 @@ Body:
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1453,9 +1204,6 @@ Body:
     CaptureRate: 50
     Speed: 20
     SpecialPerformance: false
-    AttackRate: 350
-    RetaliateRate: 400
-    ChangeTargetRate: 800
   - Mob: E_HYDRA
     TameItem: Leaf_Cat_Ball
     EggItem: Mystic_Leaf_Cat_Ball
@@ -1469,9 +1217,6 @@ Body:
     CaptureRate: 50
     Speed: 20
     SpecialPerformance: false
-    AttackRate: 350
-    RetaliateRate: 400
-    ChangeTargetRate: 800
   - Mob: J_TAINI
     EggItem: Egg_Of_Tiny
     FoodItem: Apple
@@ -1481,9 +1226,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 0
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
   - Mob: XMAS_LUNATIC
     EggItem: Snow_Rabbit_Egg
     FoodItem: Candy
@@ -1493,9 +1235,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 0
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1512,9 +1251,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1540,9 +1276,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
   - Mob: LITTLE_PORING
     TameItem: Unripe_Apple2
     EggItem: Novice_Poring_Egg
@@ -1555,9 +1288,6 @@ Body:
     CaptureRate: 5000
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1574,9 +1304,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1608,9 +1335,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1642,9 +1366,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1674,9 +1395,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
@@ -1707,9 +1425,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -1749,9 +1464,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -1784,9 +1496,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -1815,9 +1524,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -1849,9 +1555,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -1880,9 +1583,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -1911,9 +1611,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -1941,9 +1638,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -1972,9 +1666,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -1999,9 +1690,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2043,9 +1731,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2070,9 +1755,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2103,9 +1785,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2136,9 +1815,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2165,9 +1841,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2196,9 +1869,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2231,9 +1901,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2258,9 +1925,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2291,9 +1955,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
@@ -2321,9 +1982,6 @@ Body:
     CaptureRate: 0
     Speed: 150
     SpecialPerformance: false
-    AttackRate: 300
-    RetaliateRate: 300
-    ChangeTargetRate: 800
     AllowAutoFeed: true
     Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
