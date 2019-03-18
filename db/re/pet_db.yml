@@ -62,7 +62,6 @@ Body:
     EquipItem: Backpack
     FoodItem: Apple_Juice
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -94,7 +93,6 @@ Body:
     EquipItem: Backpack
     FoodItem: Yellow_Herb
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 40
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -139,7 +137,6 @@ Body:
     EquipItem: Backpack
     FoodItem: Green_Herb
     Fullness: 5
-    HungryDelay: 60
     IntimacyFed: 30
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -163,7 +160,6 @@ Body:
     EquipItem: Silk_Ribbon
     FoodItem: Carrot_Juice
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 40
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -200,7 +196,6 @@ Body:
     EquipItem: Tiny_Egg_Shell
     FoodItem: Red_Herb
     Fullness: 4   
-    HungryDelay: 60
     IntimacyFed: 40
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -224,7 +219,6 @@ Body:
     EquipItem: Monster_Oxygen_Mask
     FoodItem: Pet_Food
     Fullness: 6
-    HungryDelay: 60
     IntimacyFed: 30
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -248,7 +242,6 @@ Body:
     EquipItem: Monster_Oxygen_Mask
     FoodItem: Iron_Ore
     Fullness: 5
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -272,7 +265,6 @@ Body:
     EquipItem: Monster_Oxygen_Mask
     FoodItem: Red_Gemstone
     Fullness: 5
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -296,7 +288,6 @@ Body:
     EquipItem: Green_Lace
     FoodItem: Pet_Food
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 40
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -332,7 +323,6 @@ Body:
     EquipItem: Transparent_Headgear
     FoodItem: Pet_Food
     Fullness: 6
-    HungryDelay: 60
     IntimacyFed: 40
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -357,7 +347,6 @@ Body:
     EquipItem: Rocker_Glasses
     FoodItem: Pet_Food
     Fullness: 1
-    HungryDelay: 60
     IntimacyFed: 30
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -393,7 +382,6 @@ Body:
     EquipItem: Bark_Shorts
     FoodItem: Pet_Food
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 30
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -418,7 +406,6 @@ Body:
     EquipItem: Bark_Shorts
     FoodItem: Pet_Food
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -443,7 +430,6 @@ Body:
     EquipItem: Battered_Pot
     FoodItem: Pet_Food
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 30
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -480,7 +466,6 @@ Body:
     EquipItem: Red_Muffler
     FoodItem: Pet_Food
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 30
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -504,7 +489,6 @@ Body:
     EquipItem: Monkey_Circlet
     FoodItem: Banana_Juice
     Fullness: 5
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -539,7 +523,6 @@ Body:
     EquipItem: Wild_Flower
     FoodItem: Pet_Food
     Fullness: 5
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -576,7 +559,6 @@ Body:
     EquipItem: Punisher
     FoodItem: Pet_Food
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -601,7 +583,6 @@ Body:
     EquipItem: Wig
     FoodItem: Pet_Food
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -637,7 +618,6 @@ Body:
     EquipItem: Golden_Bell
     FoodItem: Pet_Food
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -662,7 +642,6 @@ Body:
     EquipItem: Queen's_Hair_Ornament
     FoodItem: Pet_Food
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -698,7 +677,6 @@ Body:
     EquipItem: Stellar_Hairpin
     FoodItem: Pet_Food
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -735,7 +713,6 @@ Body:
     EquipItem: Pacifier
     FoodItem: Shoot
     Fullness: 2
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -773,7 +750,6 @@ Body:
     EquipItem: Skull_Helm
     FoodItem: Honey
     Fullness: 2
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -799,7 +775,6 @@ Body:
     EquipItem: Sword_Of_Grave_Keeper
     FoodItem: Pet_Food
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 30
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -833,7 +808,6 @@ Body:
     EggItem: Zherlthsh_Egg
     FoodItem: Immortal_Heart
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -859,7 +833,6 @@ Body:
     EggItem: Alice_Egg
     FoodItem: White_Potion
     Fullness: 2
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -883,7 +856,6 @@ Body:
     EggItem: Rice_Cake_Egg
     FoodItem: Green_Herb
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -906,7 +878,6 @@ Body:
     EggItem: Santa_Goblin_Egg
     FoodItem: Scell
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -930,7 +901,6 @@ Body:
     EggItem: Chung_E_Egg
     FoodItem: Bun_
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -954,7 +924,6 @@ Body:
     EggItem: Spring_Rabbit_Egg
     FoodItem: Bok_Choy
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -971,7 +940,6 @@ Body:
     EggItem: Knife_Goblin_Egg
     FoodItem: Green_Apple
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -988,7 +956,6 @@ Body:
     EggItem: Flail_Goblin_Egg
     FoodItem: Green_Apple
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1005,7 +972,6 @@ Body:
     EggItem: Hammer_Goblin_Egg
     FoodItem: Green_Apple
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1022,7 +988,6 @@ Body:
     EggItem: Red_Deleter_Egg
     FoodItem: Whole_Barbecue
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1039,7 +1004,6 @@ Body:
     EggItem: Diabolic_Egg
     FoodItem: Meat_Veg_Skewer
     Fullness: 2
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1056,7 +1020,6 @@ Body:
     EggItem: Wanderer_Egg
     FoodItem: Spirit_Liquor
     Fullness: 2
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1079,7 +1042,6 @@ Body:
     EggItem: New_Year_Doll_Egg
     FoodItem: Mojji
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 30
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1097,7 +1059,6 @@ Body:
     EquipItem: Windup_Spring
     FoodItem: Mystic_Stone
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1120,7 +1081,6 @@ Body:
     EquipItem: Star_Hairband
     FoodItem: Small_Snow_Flower
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1142,7 +1102,6 @@ Body:
     EquipItem: Queen's_Coronet
     FoodItem: Apple_Pudding
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1165,7 +1124,6 @@ Body:
     EquipItem: Spirit_Chain_
     FoodItem: Damp_Darkness
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1188,7 +1146,6 @@ Body:
     EquipItem: Nice_Badge
     FoodItem: Big_Cell
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1211,7 +1168,6 @@ Body:
     EquipItem: Black_Butterfly_Mask
     FoodItem: Vital_Flower_
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1236,7 +1192,6 @@ Body:
     EquipItem: Ball_Mask
     FoodItem: Vital_Flower
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1262,7 +1217,6 @@ Body:
     EquipItem: Hell_Horn
     FoodItem: Fresh_Plant
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1284,7 +1238,6 @@ Body:
     EquipItem: Wine_On_Sleeve
     FoodItem: Grilled_Rice_Cake
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1306,7 +1259,6 @@ Body:
     EquipItem: Summer_Fan
     FoodItem: Well_Ripened_Berry
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 15
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1329,7 +1281,6 @@ Body:
     EquipItem: Jade_Trinket
     FoodItem: Morning_Dew
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 15
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1352,7 +1303,6 @@ Body:
     EquipItem: Apro_Hair
     FoodItem: Plant_Neutrient
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1374,7 +1324,6 @@ Body:
     EquipItem: Death_Coil
     FoodItem: Sunset_On_The_Rock
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1396,7 +1345,6 @@ Body:
     EquipItem: Fashionable_Glasses
     FoodItem: Pumpkin_Pie_
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 15
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1419,7 +1367,6 @@ Body:
     EquipItem: Golden_Earing
     FoodItem: Flavored_Alcohol
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1441,7 +1388,6 @@ Body:
     EquipItem: Green_Lucky_Bag
     FoodItem: Fish_With_Blue_Back
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 20
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1463,7 +1409,6 @@ Body:
     EquipItem: Round_Hair_Ornament
     FoodItem: Traditional_Cookie
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1479,7 +1424,6 @@ Body:
     EquipItem: Horn_Protector
     FoodItem: Flame_Gemstone
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1532,7 +1476,6 @@ Body:
     EggItem: Egg_Of_Tiny
     FoodItem: Apple
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1545,7 +1488,6 @@ Body:
     EggItem: Snow_Rabbit_Egg
     FoodItem: Candy
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1565,7 +1507,6 @@ Body:
     EggItem: Tikbalang_Pet
     FoodItem: Monster's_Feed
     Fullness: 8
-    HungryDelay: 60
     IntimacyFed: 10
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1594,7 +1535,6 @@ Body:
     EquipItem: Tw_Backpack
     FoodItem: Fruit_Sundae
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1608,7 +1548,6 @@ Body:
     EggItem: Novice_Poring_Egg
     FoodItem: Apple_Juice
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 1000
     IntimacyOverfed: 0
     IntimacyHungry: -20
@@ -1630,7 +1569,6 @@ Body:
     EggItem: Nine_Tail_Egg
     FoodItem: Suspicious_Bottle
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1665,7 +1603,6 @@ Body:
     EggItem: Gremlin_Egg
     FoodItem: Cheap_Lubricant
     Fullness: 4
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1700,7 +1637,6 @@ Body:
     EggItem: Mummy_Egg
     FoodItem: Mementos
     Fullness: 7
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
@@ -1733,7 +1669,6 @@ Body:
     EggItem: Teddy_Bear_Egg
     FoodItem: Cotton_Tufts
     Fullness: 3
-    HungryDelay: 60
     IntimacyFed: 50
     IntimacyHungry: -20
     IntimacyOwnerDie: -20

@@ -60,7 +60,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 
 	if( !exists ){
 		// Check mandatory nodes
-		if( !this->nodesExist( node, { "EggItem", "Fullness", "HungryDelay", "CaptureRate", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
+		if( !this->nodesExist( node, { "EggItem", "Fullness", "CaptureRate", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
 			return 0;
 		}
 
