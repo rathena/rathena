@@ -9,6 +9,10 @@
 //============================================================
 
 dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
+	if (checkweight(28100,1) == 0) {// Thanos Axe
+		mes "- You cannot proceed because you have too many items with you. -";
+		close;
+	}
 	.@item_name_req$ = getitemname(6672);// Shard_of_Gray
 	mes "[Dimension Traveler]";
 	mes "Adventurer friend, <ITEM>[" + .@item_name_req$ + "]<INFO>6672</INFO></ITEM> is what I need. How about exchanging it with something I have?";
