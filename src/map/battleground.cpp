@@ -1451,21 +1451,12 @@ int bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 }
 
 /**
- * Loads refine values from the battleground_db
- * @param file: File name
- */
-void bg_read_db(void)
-{
-	battleground_db.load();
-}
-
-/**
  * Initialize the Battleground data
  */
 void do_init_battleground(void)
 {
 	if (battle_config.feature_bgqueue)
-		bg_read_db();
+		battleground_db.load();
 
 	add_timer_func_list(bg_send_xy_timer, "bg_send_xy_timer");
 	add_timer_func_list(bg_on_ready_loopback, "bg_on_ready_loopback");
