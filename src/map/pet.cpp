@@ -60,7 +60,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 
 	if( !exists ){
 		// Check mandatory nodes
-		if( !this->nodesExist( node, { "EggItem", "Fullness", "HungryDelay", "CaptureRate", "SpecialPerformance", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
+		if( !this->nodesExist( node, { "EggItem", "Fullness", "HungryDelay", "CaptureRate", "AttackRate", "RetaliateRate", "ChangeTargetRate" } ) ){
 			return 0;
 		}
 
@@ -307,6 +307,10 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		pet->s_perfor = performance;
+	}else{
+		if( !exists ){
+			pet->s_perfor = true;
+		}
 	}
 
 	if( this->nodeExists( node, "AttackRate" ) ){

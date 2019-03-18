@@ -37,7 +37,7 @@
 #   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies.
 #   CaptureRate              Capture success rate (10000 = 100%)
 #   Speed                    Pet's walk speed. (Default: DEFAULT_WALK_SPEED)
-#   SpecialPerformance       Special Performance. (true/false)
+#   SpecialPerformance       If a pet has a Special Performance. (Default: true)
 #   AttackRate               Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
 #   RetaliateRate            Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
 #   ChangeTargetRate         Rate of which the pet will change its attack target.
@@ -70,7 +70,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 350
     RetaliateRate: 400
     ChangeTargetRate: 800
@@ -105,7 +104,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 400
     ChangeTargetRate: 500
@@ -153,7 +151,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 500
     ChangeTargetRate: 400
@@ -219,7 +216,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 500
     RetaliateRate: 600
     ChangeTargetRate: 50
@@ -246,7 +242,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1500
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 250
@@ -273,7 +268,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
@@ -300,7 +294,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
@@ -484,7 +477,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 400
     RetaliateRate: 500
     ChangeTargetRate: 800
@@ -524,7 +516,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 600
     RetaliateRate: 600
     ChangeTargetRate: 100
@@ -551,7 +542,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 800
     ChangeTargetRate: 400
@@ -589,7 +579,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 600
     RetaliateRate: 200
     ChangeTargetRate: 300
@@ -866,7 +855,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 500
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 600
     RetaliateRate: 200
     ChangeTargetRate: 400
@@ -957,7 +945,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 500
     RetaliateRate: 500
     ChangeTargetRate: 200
@@ -1665,7 +1652,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 0
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1681,7 +1667,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 0
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1704,7 +1689,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 1000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1736,7 +1720,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1776,7 +1759,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1814,7 +1796,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1852,7 +1833,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800
@@ -1888,7 +1868,6 @@ Body:
     IntimacyOwnerDie: -20
     CaptureRate: 2000
     Speed: 150
-    SpecialPerformance: true
     AttackRate: 300
     RetaliateRate: 300
     ChangeTargetRate: 800

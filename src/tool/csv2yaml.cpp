@@ -554,7 +554,10 @@ static size_t pet_read_db( const char* file ){
 		node["IntimacyOwnerDie"] = -atoi( str[12] );
 		node["CaptureRate"] = atoi( str[13] );
 		node["Speed"] = atoi( str[14] );
-		node["SpecialPerformance"] = atoi( str[15] ) != 0;
+		// Default: true
+		if( atoi( str[15] ) == 0 ){
+			node["SpecialPerformance"] = false;
+		}
 		node["AttackRate"] = atoi( str[17] );
 		node["RetaliateRate"] = atoi( str[18] );
 		node["ChangeTargetRate"] = atoi( str[19] );
