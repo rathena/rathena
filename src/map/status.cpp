@@ -12874,20 +12874,20 @@ TIMER_FUNC(status_change_timer){
 
 	bl = map_id2bl(id);
 	if(!bl) {
-		ShowDebug("status_change_timer: Null pointer id: %d data: %d\n", id, data);
+		ShowDebug("status_change_timer: Null pointer id: %d data: %" PRIdPTR "\n", id, data);
 		return 0;
 	}
 
 	struct status_change * const sc = status_get_sc(bl);
 	struct status_data * const status = status_get_status_data(bl);
 	if(!sc) {
-		ShowDebug("status_change_timer: Null pointer id: %d data: %d bl-type: %d\n", id, data, bl->type);
+		ShowDebug("status_change_timer: Null pointer id: %d data: %" PRIdPTR " bl-type: %d\n", id, data, bl->type);
 		return 0;
 	}
 	
 	struct status_change_entry * const sce = sc->data[type];
 	if(!sce) {
-		ShowDebug("status_change_timer: Null pointer id: %d data: %d bl-type: %d\n", id, data, bl->type);
+		ShowDebug("status_change_timer: Null pointer id: %d data: %" PRIdPTR " bl-type: %d\n", id, data, bl->type);
 		return 0;
 	}
 	if( sce->timer != tid ) {

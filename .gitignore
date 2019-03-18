@@ -29,6 +29,7 @@ Thumbs.db
 *.a
 *.vcxproj.user
 /char-server
+/csv2yaml
 /config.log
 /config.status
 /core
@@ -112,6 +113,7 @@ Thumbs.db
 
 # bat tools
 /charserv.bat
+/csv2yaml.bat
 /logserv.bat
 /mapcache.bat
 /mapserv.bat

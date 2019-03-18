@@ -164,6 +164,8 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				if( !this->mobexists( mob_id ) ){
 					this->achievement_mobs.push_back( mob_id );
 				}
+
+				target->mob = mob_id;
 			}else{
 				if( !targetExists ){
 					target->mob = 0;
