@@ -649,7 +649,7 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 		switch(select("Etc Items:Cancel")) {
 		case 1:
 			while(1) {
-				switch(select("5x Old Purple Box:Nothing")) {
+				switch(select("5x Old Purple Box:1x Giant Faceworm Snake Skin:1x Giant Faceworm Snake Skin[1]:Nothing")) {
 				case 1:
 					mes "[Merry Badger]";
 					if (countitem(617) < 5)
@@ -661,6 +661,26 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 					}
 					break;
 				case 2:
+					mes "[Merry Badger]";
+					if (countitem(20717) < 1)
+						mes "You don't have enough of that to get 5 Eden Merit Badge. Lets start over!";
+					else {
+						mes "Wonderful, what else do you want?"; //custom dialogue
+						delitem 20717,1; //FaceWorm_Skin
+						getitem 6495,5; //Para_Logro_Badge
+					}
+					break;
+				case 3:
+					mes "[Merry Badger]";
+					if (countitem(20718) < 1)
+						mes "You don't have enough of that to get 7 Eden Merit Badge. Lets start over!";
+					else {
+						mes "Wonderful, what else do you want?"; //custom dialogue
+						delitem 20718,1; //FaceWorm_Skin_
+						getitem 6495,7; //Para_Logro_Badge
+					}
+					break;
+				case 4:
 					mes "[Merry Badger]";
 					mes "Wonderful!";
 					mes "I'll be here if you ever want to exchange for Eden Merit Badges!";
