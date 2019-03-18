@@ -552,7 +552,10 @@ static size_t pet_read_db( const char* file ){
 			node["IntimacyStart"] = atoi( str[11] );
 		}
 		node["IntimacyFed"] = atoi( str[9] );
-		node["IntimacyOverfed"] = -atoi( str[10] );
+		// Default: -100
+		if( atoi( str[10] ) != 100 ){
+			node["IntimacyOverfed"] = -atoi( str[10] );
+		}
 		node["IntimacyHungry"] = -20;
 		node["IntimacyOwnerDie"] = -atoi( str[12] );
 		node["CaptureRate"] = atoi( str[13] );

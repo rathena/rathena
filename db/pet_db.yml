@@ -32,7 +32,7 @@
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
 #   IntimacyStart            Amount of Intimacy the pet starts with. (Default: 250)
 #   IntimacyFed              Amount of Intimacy that is increased when fed.
-#   IntimacyOverfed          Amount of Intimacy that is increased when over-fed.
+#   IntimacyOverfed          Amount of Intimacy that is increased when over-fed. (Default: -100)
 #   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry.
 #   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies.
 #   CaptureRate              Capture success rate (10000 = 100%)

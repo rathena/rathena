@@ -32,7 +32,7 @@
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
 #   IntimacyStart            Amount of Intimacy the pet starts with. (Default: 250)
 #   IntimacyFed              Amount of Intimacy that is increased when fed.
-#   IntimacyOverfed          Amount of Intimacy that is increased when over-fed.
+#   IntimacyOverfed          Amount of Intimacy that is increased when over-fed. (Default: -100)
 #   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry.
 #   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies.
 #   CaptureRate              Capture success rate (10000 = 100%)
@@ -64,7 +64,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -97,7 +96,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 40
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1500
@@ -143,7 +141,6 @@ Body:
     Fullness: 5
     HungryDelay: 60
     IntimacyFed: 30
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1000
@@ -168,7 +165,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 40
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1500
@@ -206,7 +202,6 @@ Body:
     Fullness: 4   
     HungryDelay: 60
     IntimacyFed: 40
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -231,7 +226,6 @@ Body:
     Fullness: 6
     HungryDelay: 60
     IntimacyFed: 30
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1500
@@ -256,7 +250,6 @@ Body:
     Fullness: 5
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1000
@@ -281,7 +274,6 @@ Body:
     Fullness: 5
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -306,7 +298,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 40
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1500
@@ -343,7 +334,6 @@ Body:
     Fullness: 6
     HungryDelay: 60
     IntimacyFed: 40
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1000
@@ -369,7 +359,6 @@ Body:
     Fullness: 1
     HungryDelay: 60
     IntimacyFed: 30
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1500
@@ -406,7 +395,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 30
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1500
@@ -432,7 +420,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1000
@@ -458,7 +445,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 30
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1000
@@ -496,7 +482,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 30
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1000
@@ -521,7 +506,6 @@ Body:
     Fullness: 5
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1000
@@ -557,7 +541,6 @@ Body:
     Fullness: 5
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -595,7 +578,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -621,7 +603,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -658,7 +639,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -684,7 +664,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -721,7 +700,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -759,7 +737,6 @@ Body:
     Fullness: 2
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -798,7 +775,6 @@ Body:
     Fullness: 2
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 200
@@ -825,7 +801,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 30
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -860,7 +835,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 300
@@ -887,7 +861,6 @@ Body:
     Fullness: 2
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 800
@@ -912,7 +885,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -936,7 +908,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -961,7 +932,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -986,7 +956,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -1004,7 +973,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 800
@@ -1022,7 +990,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 800
@@ -1040,7 +1007,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 800
@@ -1058,7 +1024,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 800
@@ -1076,7 +1041,6 @@ Body:
     Fullness: 2
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 800
@@ -1094,7 +1058,6 @@ Body:
     Fullness: 2
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 800
@@ -1118,7 +1081,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 30
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 800
@@ -1137,7 +1099,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -1161,7 +1122,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -1184,7 +1144,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 200
@@ -1208,7 +1167,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -1232,7 +1190,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 50
@@ -1256,7 +1213,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 200
@@ -1282,7 +1238,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 50
@@ -1309,7 +1264,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 200
@@ -1332,7 +1286,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -1355,7 +1308,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 200
@@ -1379,7 +1331,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -1403,7 +1354,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -1426,7 +1376,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 200
@@ -1449,7 +1398,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 200
@@ -1473,7 +1421,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 500
@@ -1496,7 +1443,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 20
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 200
@@ -1519,7 +1465,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -1536,7 +1481,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 200
@@ -1590,7 +1534,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -1604,7 +1547,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -1625,7 +1567,6 @@ Body:
     Fullness: 8
     HungryDelay: 60
     IntimacyFed: 10
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 1000
@@ -1655,7 +1596,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -1692,7 +1632,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -1728,7 +1667,6 @@ Body:
     Fullness: 4
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -1764,7 +1702,6 @@ Body:
     Fullness: 7
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -1798,7 +1735,6 @@ Body:
     Fullness: 3
     HungryDelay: 60
     IntimacyFed: 50
-    IntimacyOverfed: -100
     IntimacyHungry: -20
     IntimacyOwnerDie: -20
     CaptureRate: 2000
@@ -1831,7 +1767,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -1874,7 +1809,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -1910,7 +1844,6 @@ Body:
     Fullness: 1
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -1942,7 +1875,6 @@ Body:
     Fullness: 1
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -1977,7 +1909,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2009,7 +1940,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2041,7 +1971,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2072,7 +2001,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2104,7 +2032,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2132,7 +2059,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2177,7 +2103,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2205,7 +2130,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2239,7 +2163,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2273,7 +2196,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2303,7 +2225,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2335,7 +2256,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2371,7 +2291,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2399,7 +2318,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2433,7 +2351,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
@@ -2464,7 +2381,6 @@ Body:
     Fullness: 2
     HungryDelay: 120
     IntimacyFed: 15
-    IntimacyOverfed: -100
     IntimacyHungry: -5
     IntimacyOwnerDie: -20
     CaptureRate: 0
