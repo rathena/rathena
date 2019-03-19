@@ -32,6 +32,9 @@
 #include "status.hpp"
 #include "storage.hpp"
 
+static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif(); 
+
 /// Received packet Lengths from inter-server
 static const int packet_len_table[] = {
 	-1,-1,27,-1, -1, 0,37,-1, 10+NAME_LENGTH,-1, 0, 0,  0, 0,  0, 0, //0x3800-0x380f
@@ -75,7 +78,7 @@ struct map_session_data *inter_search_sd(uint32 account_id, uint32 char_id)
 	if (node)
 		sd = node->sd;
 	else
-		sd = map_id2sd(account_id);
+		sd = map_obj.id2sd(account_id);
 	return sd;
 }
 
@@ -208,7 +211,7 @@ int intif_broadcast(const char* mes, int len, int type)
 	int lp = (type|BC_COLOR_MASK) ? 4 : 0;
 
 	// Send to the local players
-	clif_broadcast(NULL, mes, len, type, ALL_CLIENT);
+	clif.broadcast(NULL, mes, len, type, ALL_CLIENT);
 
 	if (CheckForCharServer())
 		return 0;
@@ -247,7 +250,7 @@ int intif_broadcast(const char* mes, int len, int type)
 int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY)
 {
 	// Send to the local players
-	clif_broadcast2(NULL, mes, len, fontColor, fontType, fontSize, fontAlign, fontY, ALL_CLIENT);
+	clif.broadcast2(NULL, mes, len, fontColor, fontType, fontSize, fontAlign, fontY, ALL_CLIENT);
 
 	if (CheckForCharServer())
 		return 0;
@@ -311,7 +314,7 @@ int intif_wis_message(struct map_session_data *sd, char *nick, char *mes, int me
 
 	if (other_mapserver_count < 1)
 	{	//Character not found.
-		clif_wis_end(sd->fd, 1);
+		clif.wis_end(sd->fd, 1);
 		return 0;
 	}
 
@@ -690,7 +693,7 @@ int intif_party_changemap(struct map_session_data *sd,int online)
 	if(!sd)
 		return 0;
 
-	if ((m = map_mapindex2mapid(sd->mapindex)) >= 0) {
+	if ((m = map_obj.mapindex2mapid(sd->mapindex)) >= 0) {
 		struct map_data *mapdata = map_getmapdata(m);
 
 		if (mapdata->instance_id)
@@ -1259,7 +1262,7 @@ int intif_parse_WisMessage(int fd)
 	gmlvl=RFIFOL(fd,8);
 
 	safestrncpy(name, RFIFOCP(fd,12+NAME_LENGTH), NAME_LENGTH);
-	sd = map_nick2sd(name,false);
+	sd = map_obj.nick2sd(name,false);
 	if(sd == NULL || strcmp(sd->status.name, name) != 0)
 	{	//Not found
 		intif_wis_reply(id,1);
@@ -1281,7 +1284,7 @@ int intif_parse_WisMessage(int fd)
 		return 0;
 	}
 	//Success to send whisper.
-	clif_wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-12+2*NAME_LENGTH, gmlvl);
+	clif.wis_message(sd, wisp_source, RFIFOCP(fd,12+2*NAME_LENGTH),RFIFOW(fd,2)-12+2*NAME_LENGTH, gmlvl);
 	intif_wis_reply(id,0);   // success
 	return 1;
 }
@@ -1297,9 +1300,9 @@ int intif_parse_WisEnd(int fd)
 
 	if (battle_config.etc_log)
 		ShowInfo("intif_parse_wisend: player: %s, flag: %d\n", RFIFOP(fd,2), RFIFOB(fd,26)); // flag: 0: success to send wisper, 1: target character is not loged in?, 2: ignored by target
-	sd = (struct map_session_data *)map_nick2sd(RFIFOCP(fd,2),false);
+	sd = (struct map_session_data *)map_obj.nick2sd(RFIFOCP(fd,2),false);
 	if (sd != NULL)
-		clif_wis_end(sd->fd, RFIFOB(fd,26));
+		clif.wis_end(sd->fd, RFIFOB(fd,26));
 
 	return 1;
 }
@@ -1322,7 +1325,7 @@ static int mapif_parse_WisToGM_sub(struct map_session_data* sd,va_list va)
 	wisp_name = va_arg(va, char*);
 	message = va_arg(va, char*);
 	len = va_arg(va, int);
-	clif_wis_message(sd, wisp_name, message, len,0);
+	clif.wis_message(sd, wisp_name, message, len,0);
 	return 1;
 }
 
@@ -1347,7 +1350,7 @@ int mapif_parse_WisToGM(int fd)
 	permission = RFIFOL(fd, 4 + NAME_LENGTH);
 	safestrncpy(message, RFIFOCP(fd,8+NAME_LENGTH), mes_len+1);
 	// information is sent to all online GM
-	map_foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
+	map_obj.foreachpc(mapif_parse_WisToGM_sub, permission, Wisp_name, message, mes_len);
 	aFree(message);
 	return 1;
 }
@@ -1368,7 +1371,7 @@ void intif_parse_Registers(int fd)
 	if (node)
 		sd = node->sd;
 	else { //Normally registries should arrive for in log-in chars.
-		sd = map_id2sd(account_id);
+		sd = map_obj.id2sd(account_id);
 	}
 
 	if (!sd || sd->status.char_id != char_id) {
@@ -1467,7 +1470,7 @@ int intif_parse_LoadGuildStorage(int fd)
 	if (guild_id <= 0)
 		return 0;
 
-	sd = map_id2sd( RFIFOL(fd,4) );
+	sd = map_obj.id2sd( RFIFOL(fd,4) );
 	if (flag){ //If flag != 0, we attach a player and open the storage
 		if(sd == NULL){
 			ShowError("intif_parse_LoadGuildStorage: user not found (AID: %d)\n",RFIFOL(fd,4));
@@ -1907,7 +1910,7 @@ int intif_parse_DeletePetOk(int fd)
 int intif_parse_ChangeNameOk(int fd)
 {
 	struct map_session_data *sd = NULL;
-	if((sd=map_id2sd(RFIFOL(fd,2)))==NULL ||
+	if((sd=map_obj.id2sd(RFIFOL(fd,2)))==NULL ||
 		sd->status.char_id != RFIFOL(fd,6))
 		return 0;
 
@@ -2019,7 +2022,7 @@ void intif_request_questlog(struct map_session_data *sd)
 void intif_parse_questlog(int fd)
 {
 	uint32 char_id = RFIFOL(fd,4), num_received = (RFIFOW(fd,2) - 8) / sizeof(struct quest);
-	TBL_PC *sd = map_charid2sd(char_id);
+	TBL_PC *sd = map_obj.charid2sd(char_id);
 
 	if(!sd) // User not online anymore
 		return;
@@ -2071,7 +2074,7 @@ void intif_parse_questlog(int fd)
 void intif_parse_questsave(int fd)
 {
 	int cid = RFIFOL(fd, 2);
-	TBL_PC *sd = map_id2sd(cid);
+	TBL_PC *sd = map_obj.id2sd(cid);
 
 	if( !RFIFOB(fd, 6) )
 		ShowError("intif_parse_questsave: Failed to save quest(s) for character %d!\n", cid);
@@ -2128,7 +2131,7 @@ void intif_request_achievements(uint32 char_id)
 void intif_parse_achievements(int fd)
 {
 	uint32 char_id = RFIFOL(fd, 4), num_received = (RFIFOW(fd, 2) - 8) / sizeof(struct achievement);
-	struct map_session_data *sd = map_charid2sd(char_id);
+	struct map_session_data *sd = map_obj.charid2sd(char_id);
 
 	if (!sd) // User not online anymore
 		return;
@@ -2174,8 +2177,8 @@ void intif_parse_achievements(int fd)
 		}
 		achievement_level(sd, false); // Calculate level info but don't give any AG_GOAL_ACHIEVE achievements
 		achievement_get_titles(sd->status.char_id); // Populate the title list for completed achievements
-		clif_achievement_update(sd, NULL, 0);
-		clif_achievement_list_all(sd);
+		clif.achievement_update(sd, NULL, 0);
+		clif.achievement_list_all(sd);
 	}
 }
 
@@ -2188,7 +2191,7 @@ void intif_parse_achievements(int fd)
 void intif_parse_achievementsave(int fd)
 {
 	int cid = RFIFOL(fd, 2);
-	struct map_session_data *sd = map_charid2sd(cid);
+	struct map_session_data *sd = map_obj.charid2sd(cid);
 
 	if (!sd) // User not online anymore
 		return;
@@ -2228,7 +2231,7 @@ int intif_achievement_save(struct map_session_data *sd)
  * @param fd : char-serv link
  */
 void intif_parse_achievementreward(int fd){
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	struct map_session_data *sd = map_obj.charid2sd(RFIFOL(fd,2));
 
 	// User not online anymore
 	if( !sd ){
@@ -2296,7 +2299,7 @@ int intif_parse_Mail_inboxreceived(int fd)
 	struct map_session_data *sd;
 	unsigned char flag = RFIFOB(fd,8);
 
-	sd = map_charid2sd(RFIFOL(fd,4));
+	sd = map_obj.charid2sd(RFIFOL(fd,4));
 
 	if (sd == NULL)
 	{
@@ -2316,16 +2319,16 @@ int intif_parse_Mail_inboxreceived(int fd)
 
 #if PACKETVER >= 20150513
 	// Refresh top right icon
-	clif_Mail_new(sd, 0, NULL, NULL);
+	clif.Mail_new(sd, 0, NULL, NULL);
 #endif
 
 	if (flag){
-		clif_Mail_refreshinbox(sd,static_cast<mail_inbox_type>(RFIFOB(fd,9)),0);
+		clif.Mail_refreshinbox(sd,static_cast<mail_inbox_type>(RFIFOB(fd,9)),0);
 	}else if( battle_config.mail_show_status && ( battle_config.mail_show_status == 1 || sd->mail.inbox.unread ) )
 	{
 		char output[128];
 		sprintf(output, msg_txt(sd,510), sd->mail.inbox.unchecked, sd->mail.inbox.unread + sd->mail.inbox.unchecked);
-		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
+		clif.messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], output, false, SELF);
 	}
 
 	return 1;
@@ -2386,7 +2389,7 @@ int intif_parse_Mail_getattach(int fd)
 		return 0;
 	}
 
-	sd = map_charid2sd( RFIFOL(fd,4) );
+	sd = map_obj.charid2sd( RFIFOL(fd,4) );
 
 	if (sd == NULL)
 	{
@@ -2439,7 +2442,7 @@ int intif_parse_Mail_delete(int fd)
 	int mail_id = RFIFOL(fd,6);
 	bool failed = RFIFOB(fd,10) > 0;
 
-	struct map_session_data *sd = map_charid2sd(char_id);
+	struct map_session_data *sd = map_obj.charid2sd(char_id);
 	if (sd == NULL)
 	{
 		ShowError("intif_parse_Mail_delete: char not found %d\n", char_id);
@@ -2453,7 +2456,7 @@ int intif_parse_Mail_delete(int fd)
 		if( i < MAIL_MAX_INBOX )
 		{
 			enum mail_inbox_type type = sd->mail.inbox.msg[i].type;
-			clif_mail_delete(sd, &sd->mail.inbox.msg[i], !failed);
+			clif.mail_delete(sd, &sd->mail.inbox.msg[i], !failed);
 			memset(&sd->mail.inbox.msg[i], 0, sizeof(struct mail_message));
 			sd->mail.inbox.amount--;
 
@@ -2496,7 +2499,7 @@ int intif_Mail_return(uint32 char_id, int mail_id)
  */
 int intif_parse_Mail_return(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	struct map_session_data *sd = map_obj.charid2sd(RFIFOL(fd,2));
 	int mail_id = RFIFOL(fd,6);
 	short fail = RFIFOB(fd,10);
 
@@ -2521,7 +2524,7 @@ int intif_parse_Mail_return(int fd)
 		}
 	}
 
-	clif_Mail_return(sd->fd, mail_id, fail);
+	clif.Mail_return(sd->fd, mail_id, fail);
 	return 1;
 }
 
@@ -2572,14 +2575,14 @@ static void intif_parse_Mail_send(int fd)
 	fail = (msg.id == 0);
 
 	// notify sender
-	sd = map_charid2sd(msg.send_id);
+	sd = map_obj.charid2sd(msg.send_id);
 	if( sd != NULL )
 	{
 		if( fail )
 			mail_deliveryfail(sd, &msg);
 		else
 		{
-			clif_Mail_send(sd, WRITE_MAIL_SUCCESS);
+			clif.Mail_send(sd, WRITE_MAIL_SUCCESS);
 			if( save_settings&CHARSAVE_MAIL )
 				chrif_save(sd, CSAVE_INVENTORY);
 		}
@@ -2592,7 +2595,7 @@ static void intif_parse_Mail_send(int fd)
  */
 static void intif_parse_Mail_new(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	struct map_session_data *sd = map_obj.charid2sd(RFIFOL(fd,2));
 	int mail_id = RFIFOL(fd,6);
 	const char* sender_name = RFIFOCP(fd,10);
 	const char* title = RFIFOCP(fd,34);
@@ -2601,7 +2604,7 @@ static void intif_parse_Mail_new(int fd)
 		return;
 	sd->mail.changed = true;
 	sd->mail.inbox.unread++;
-	clif_Mail_new(sd, mail_id, sender_name, title);
+	clif.Mail_new(sd, mail_id, sender_name, title);
 #if PACKETVER >= 20150513
 	// Make sure the window gets refreshed when its open
 	intif_Mail_requestinbox(sd->status.char_id, 1, static_cast<mail_inbox_type>(RFIFOB(fd,74)));
@@ -2611,22 +2614,22 @@ static void intif_parse_Mail_new(int fd)
 static void intif_parse_Mail_receiver( int fd ){
 	struct map_session_data *sd;
 
-	sd = map_charid2sd( RFIFOL( fd, 2 ) );
+	sd = map_obj.charid2sd( RFIFOL( fd, 2 ) );
 
 	// Only f the player is online
 	if( sd ){
-		clif_Mail_Receiver_Ack( sd, RFIFOL( fd, 6 ), RFIFOW( fd, 10 ), RFIFOW( fd, 12 ), RFIFOCP( fd, 14 ) );
+		clif.Mail_Receiver_Ack( sd, RFIFOL( fd, 6 ), RFIFOW( fd, 10 ), RFIFOW( fd, 12 ), RFIFOCP( fd, 14 ) );
 	}
 }
 
 bool intif_mail_checkreceiver( struct map_session_data* sd, char* name ){
 	struct map_session_data *tsd;
 
-	tsd = map_nick2sd( name, false );
+	tsd = map_obj.nick2sd( name, false );
 
 	// If the target player is online on this map-server
 	if( tsd != NULL ){
-		clif_Mail_Receiver_Ack( sd, tsd->status.char_id, tsd->status.class_, tsd->status.base_level, name );
+		clif.Mail_Receiver_Ack( sd, tsd->status.char_id, tsd->status.class_, tsd->status.base_level, name );
 		return true;
 	}
 
@@ -2650,7 +2653,7 @@ bool intif_mail_checkreceiver( struct map_session_data* sd, char* name ){
 /**
  * Request a list of auction matching criteria
  * @param char_id : player searching auction
- * @param type : see clif_parse_Auction_search type
+ * @param type : see clif.parse_Auction_search type
  * @param price : min price for search
  * @param searchtext : contain item name
  * @param page : in case of huge result list display 5 entry per page, (kinda suck that we redo the request atm)
@@ -2682,7 +2685,7 @@ int intif_Auction_requestlist(uint32 char_id, short type, int price, const char*
  */
 static void intif_parse_Auction_results(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,4));
+	struct map_session_data *sd = map_obj.charid2sd(RFIFOL(fd,4));
 	short count = RFIFOW(fd,8);
 	short pages = RFIFOW(fd,10);
 	uint8* data = RFIFOP(fd,12);
@@ -2690,7 +2693,7 @@ static void intif_parse_Auction_results(int fd)
 	if( sd == NULL )
 		return;
 
-	clif_Auction_results(sd, count, pages, data);
+	clif.Auction_results(sd, count, pages, data);
 }
 
 /**
@@ -2730,12 +2733,12 @@ static void intif_parse_Auction_register(int fd)
 	}
 
 	memcpy(&auction, RFIFOP(fd,4), sizeof(struct auction_data));
-	if( (sd = map_charid2sd(auction.seller_id)) == NULL )
+	if( (sd = map_obj.charid2sd(auction.seller_id)) == NULL )
 		return;
 
 	if( auction.auction_id > 0 )
 	{
-		clif_Auction_message(sd->fd, 1); // Confirmation Packet ??
+		clif.Auction_message(sd->fd, 1); // Confirmation Packet ??
 		if( save_settings&CHARSAVE_AUCTION )
 			chrif_save(sd, CSAVE_INVENTORY);
 	}
@@ -2743,7 +2746,7 @@ static void intif_parse_Auction_register(int fd)
 	{
 		int zeny = auction.hours*battle_config.auction_feeperhour;
 
-		clif_Auction_message(sd->fd, 4);
+		clif.Auction_message(sd->fd, 4);
 		pc_additem(sd, &auction.item, auction.item.amount, LOG_TYPE_AUCTION);
 
 		pc_getzeny(sd, zeny, LOG_TYPE_AUCTION, NULL);
@@ -2776,7 +2779,7 @@ int intif_Auction_cancel(uint32 char_id, unsigned int auction_id)
  */
 static void intif_parse_Auction_cancel(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	struct map_session_data *sd = map_obj.charid2sd(RFIFOL(fd,2));
 	int result = RFIFOB(fd,6);
 
 	if( sd == NULL )
@@ -2784,10 +2787,10 @@ static void intif_parse_Auction_cancel(int fd)
 
 	switch( result )
 	{
-	case 0: clif_Auction_message(sd->fd, 2); break;
-	case 1: clif_Auction_close(sd->fd, 2); break;
-	case 2: clif_Auction_close(sd->fd, 1); break;
-	case 3: clif_Auction_message(sd->fd, 3); break;
+	case 0: clif.Auction_message(sd->fd, 2); break;
+	case 1: clif.Auction_close(sd->fd, 2); break;
+	case 2: clif.Auction_close(sd->fd, 1); break;
+	case 3: clif.Auction_message(sd->fd, 3); break;
 	}
 }
 
@@ -2817,13 +2820,13 @@ int intif_Auction_close(uint32 char_id, unsigned int auction_id)
  */
 static void intif_parse_Auction_close(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	struct map_session_data *sd = map_obj.charid2sd(RFIFOL(fd,2));
 	unsigned char result = RFIFOB(fd,6);
 
 	if( sd == NULL )
 		return;
 
-	clif_Auction_close(sd->fd, result);
+	clif.Auction_close(sd->fd, result);
 	if( result == 0 )
 	{
 		// FIXME: Leeching off a parse function
@@ -2866,14 +2869,14 @@ int intif_Auction_bid(uint32 char_id, const char* name, unsigned int auction_id,
  */
 static void intif_parse_Auction_bid(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	struct map_session_data *sd = map_obj.charid2sd(RFIFOL(fd,2));
 	int bid = RFIFOL(fd,6);
 	unsigned char result = RFIFOB(fd,10);
 
 	if( sd == NULL )
 		return;
 
-	clif_Auction_message(sd->fd, result);
+	clif.Auction_message(sd->fd, result);
 	if( bid > 0 )
 	{
 		pc_getzeny(sd, bid, LOG_TYPE_AUCTION,NULL);
@@ -2891,13 +2894,13 @@ static void intif_parse_Auction_bid(int fd)
  */
 static void intif_parse_Auction_message(int fd)
 {
-	struct map_session_data *sd = map_charid2sd(RFIFOL(fd,2));
+	struct map_session_data *sd = map_obj.charid2sd(RFIFOL(fd,2));
 	unsigned char result = RFIFOB(fd,6);
 
 	if( sd == NULL )
 		return;
 
-	clif_Auction_message(sd->fd, result);
+	clif.Auction_message(sd->fd, result);
 }
 
 /*==========================================
@@ -3186,7 +3189,7 @@ void intif_parse_accinfo_ack( int fd ) {
 	int u_fd = RFIFOL(fd,2);
 	int acc_id = RFIFOL(fd,6);
 	safestrncpy(acc_name, RFIFOCP(fd,10), NAME_LENGTH);
-	clif_account_name(u_fd, acc_id, acc_name);
+	clif.account_name(u_fd, acc_id, acc_name);
 }
 
 /**
@@ -3203,7 +3206,7 @@ void intif_parse_MessageToFD(int fd) {
 		if( sd->bl.id == aid ) {
 			char msg[512];
 			safestrncpy(msg, RFIFOCP(fd,12), RFIFOW(fd,2) - 12);
-			clif_displaymessage(u_fd,msg);
+			clif.displaymessage(u_fd,msg);
 		}
 
 	}
@@ -3232,7 +3235,7 @@ int intif_broadcast_obtain_special_item(struct map_session_data *sd, unsigned sh
 	}
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
+	clif.broadcast_obtain_special_item(sd->status.name, nameid, sourceid, (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3265,7 +3268,7 @@ int intif_broadcast_obtain_special_item_npc(struct map_session_data *sd, unsigne
 	nullpo_retr(0, sd);
 
 	// Send local
-	clif_broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC);
+	clif.broadcast_obtain_special_item(sd->status.name, nameid, 0, ITEMOBTAIN_TYPE_NPC);
 
 	if (CheckForCharServer())
 		return 0;
@@ -3298,7 +3301,7 @@ void intif_parse_broadcast_obtain_special_item(int fd) {
 	if (type == ITEMOBTAIN_TYPE_NPC)
 		safestrncpy(name, RFIFOCP(fd, 9 + NAME_LENGTH), NAME_LENGTH);
 
-	clif_broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
+	clif.broadcast_obtain_special_item(name, RFIFOW(fd, 4), RFIFOW(fd, 6), (enum BROADCASTING_SPECIAL_ITEM_OBTAIN)type);
 }
 
 /*==========================================
@@ -3383,7 +3386,7 @@ static bool intif_parse_StorageReceived(int fd)
 {
 	char type =  RFIFOB(fd,4);
 	uint32 account_id = RFIFOL(fd, 5);
-	struct map_session_data *sd = map_id2sd(account_id);
+	struct map_session_data *sd = map_obj.id2sd(account_id);
 	struct s_storage *stor, *p; //storage
 	size_t sz_stor = sizeof(struct s_storage);
 
@@ -3467,9 +3470,9 @@ static bool intif_parse_StorageReceived(int fd)
 				clif_parse_LoadEndAck(sd->fd, sd);
 				sd->autotrade_tid = add_timer(gettick() + battle_config.feature_autotrade_open_delay, pc_autotrade_timer, sd->bl.id, 0);
 			}else if( sd->state.prevend ){
-				clif_clearcart(sd->fd);
-				clif_cartlist(sd);
-				clif_openvendingreq(sd, sd->vend_skill_lv+2);
+				clif.clearcart(sd->fd);
+				clif.cartlist(sd);
+				clif.openvendingreq(sd, sd->vend_skill_lv+2);
 			}
 			break;
 
@@ -3503,12 +3506,12 @@ static void intif_parse_StorageSaved(int fd)
 			case TABLE_STORAGE: //storage
 				//ShowInfo("Storage has been saved (AID: %d).\n", RFIFOL(fd, 2));
 				if (RFIFOB(fd, 8))
-					storage_premiumStorage_saved(map_id2sd(RFIFOL(fd, 2)));
+					storage_premiumStorage_saved(map_obj.id2sd(RFIFOL(fd, 2)));
 				break;
 			case TABLE_CART: // cart
 				//ShowInfo("Cart has been saved (AID: %d).\n", RFIFOL(fd, 2));
 				{
-					struct map_session_data *sd = map_id2sd(RFIFOL(fd, 2));
+					struct map_session_data *sd = map_obj.id2sd(RFIFOL(fd, 2));
 
 					if( sd && sd->state.prevend ){
 						intif_storage_request(sd,TABLE_CART,0,STOR_MODE_ALL);
@@ -3673,7 +3676,7 @@ int intif_parse_clan_onlinecount( int fd ){
 
 	clan->connect_member = RFIFOW(fd,6);
 
-	clif_clan_onlinecount(clan);
+	clif.clan_onlinecount(clan);
 
 	return 1;
 }
@@ -3711,9 +3714,9 @@ int intif_parse(int fd)
 	switch(cmd){
 	case 0x3800:
 		if (RFIFOL(fd,4) == 0xFF000000) //Normal announce.
-			clif_broadcast(NULL, RFIFOCP(fd,16), packet_len-16, BC_DEFAULT, ALL_CLIENT);
+			clif.broadcast(NULL, RFIFOCP(fd,16), packet_len-16, BC_DEFAULT, ALL_CLIENT);
 		else //Color announce.
-			clif_broadcast2(NULL, RFIFOCP(fd,16), packet_len-16, RFIFOL(fd,4), RFIFOW(fd,8), RFIFOW(fd,10), RFIFOW(fd,12), RFIFOW(fd,14), ALL_CLIENT);
+			clif.broadcast2(NULL, RFIFOCP(fd,16), packet_len-16, RFIFOL(fd,4), RFIFOW(fd,8), RFIFOW(fd,10), RFIFOW(fd,12), RFIFOW(fd,14), ALL_CLIENT);
 		break;
 	case 0x3801:	intif_parse_WisMessage(fd); break;
 	case 0x3802:	intif_parse_WisEnd(fd); break;

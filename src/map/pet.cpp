@@ -29,6 +29,8 @@
 
 using namespace rathena;
 
+static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 const t_tick MIN_PETTHINKTIME = 100;
 
 //Dynamic pet database
@@ -126,7 +128,7 @@ void pet_unlocktarget(struct pet_data *pd)
 int pet_attackskill(struct pet_data *pd, int target_id)
 {
 	if (!battle_config.pet_status_support || !pd->a_skill ||
-		(battle_config.pet_equip_required && !pd->pet.equip))
+			(battle_config.pet_equip_required && !pd->pet.equip))
 		return 0;
 
 	if (DIFF_TICK(pd->ud.canact_tick, gettick()) > 0)
@@ -136,10 +138,10 @@ int pet_attackskill(struct pet_data *pd, int target_id)
 		int inf;
 		struct block_list *bl;
 
-		bl = map_id2bl(target_id);
+		bl = map_obj.id2bl(target_id);
 
 		if(bl == NULL || pd->bl.m != bl->m || bl->prev == NULL || status_isdead(bl) ||
-			!check_distance_bl(&pd->bl, bl, pd->db->range3))
+				!check_distance_bl(&pd->bl, bl, pd->db->range3))
 			return 0;
 
 		inf = skill_get_inf(pd->a_skill->id);
@@ -169,18 +171,18 @@ int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 
 	nullpo_ret(pd);
 
-	Assert((pd->master == 0) || (pd->master->pd == pd));
+	rA_Assert((pd->master == 0) || (pd->master->pd == pd));
 
 	pet_db_ptr = pd->get_pet_db();
 
 	if(bl == NULL || bl->type != BL_MOB || bl->prev == NULL ||
-		pd->pet.intimate < battle_config.pet_support_min_friendly ||
-		pd->pet.hungry < 1 ||
-		pd->pet.class_ == status_get_class(bl))
+			pd->pet.intimate < battle_config.pet_support_min_friendly ||
+			pd->pet.hungry < 1 ||
+			pd->pet.class_ == status_get_class(bl))
 		return 0;
 
 	if(pd->bl.m != bl->m ||
-		!check_distance_bl(&pd->bl, bl, pd->db->range2))
+			!check_distance_bl(&pd->bl, bl, pd->db->range2))
 		return 0;
 
 	if (!battle_config.pet_master_dead && pc_isdead(pd->master)) {
@@ -228,10 +230,10 @@ int pet_sc_check(struct map_session_data *sd, int type)
 	pd = sd->pd;
 
 	if( pd == NULL
-	||  (battle_config.pet_equip_required && pd->pet.equip == 0)
-	||  pd->recovery == NULL
-	||  pd->recovery->timer != INVALID_TIMER
-	||  pd->recovery->type != type )
+			||  (battle_config.pet_equip_required && pd->pet.equip == 0)
+			||  pd->recovery == NULL
+			||  pd->recovery->timer != INVALID_TIMER
+			||  pd->recovery->type != type )
 		return 1;
 
 	pd->recovery->timer = add_timer(gettick()+pd->recovery->delay*1000,pet_recovery_timer,sd->bl.id,0);
@@ -252,7 +254,7 @@ static TIMER_FUNC(pet_hungry){
 	s_pet_db *pet_db_ptr;
 	int interval;
 
-	sd = map_id2sd(id);
+	sd = map_obj.id2sd(id);
 
 	if(!sd)
 		return 1;
@@ -320,8 +322,8 @@ struct s_pet_db* pet_db_search( int key, enum e_pet_itemtype type ){
 			case PET_EQUIP: if(pet->AcceID == key) return pet; break;
 			case PET_FOOD:  if(pet->FoodID == key) return pet; break;
 			default:
-				ShowError( "pet_db_search: Unsupported type %d\n", type );
-				return nullptr;
+								ShowError( "pet_db_search: Unsupported type %d\n", type );
+								return nullptr;
 		}
 	}
 
@@ -390,8 +392,8 @@ static int pet_return_egg(struct map_session_data *sd, struct pet_data *pd)
 	tmp_item.card[3] = pd->pet.rename_flag;
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
-		clif_additem(sd,0,0,flag);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+		clif.additem(sd,0,0,flag);
+		map_obj.addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	pd->pet.incubate = 1;
@@ -417,7 +419,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 
 	nullpo_retr(false, sd);
 
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
+	rA_Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
 	if(sd->status.account_id != pet->account_id || sd->status.char_id != pet->char_id) {
 		sd->status.pet_id = 0;
@@ -465,7 +467,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->bl.x = pd->ud.to_x;
 	pd->bl.y = pd->ud.to_y;
 
-	map_addiddb(&pd->bl);
+	map_obj.addiddb(&pd->bl);
 	status_calc_pet(pd,SCO_FIRST);
 
 	pd->last_thinktime = gettick();
@@ -502,7 +504,7 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 {
 	nullpo_retr(1, sd);
 
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
+	rA_Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
 	if(sd->status.pet_id && pet->incubate == 1) {
 		sd->status.pet_id = 0;
@@ -520,22 +522,22 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 	}
 
 	intif_save_petdata(sd->status.account_id,pet);
-	
+
 	if (save_settings&CHARSAVE_PET)
 		chrif_save(sd, CSAVE_INVENTORY); //is it REALLY Needed to save the char for hatching a pet? [Skotlex]
 
 	if(sd->bl.prev != NULL) {
-		if(map_addblock(&sd->pd->bl))
+		if(map_obj.addblock(&sd->pd->bl))
 			return 1;
 
-		clif_spawn(&sd->pd->bl);
+		clif.spawn(&sd->pd->bl);
 		clif_send_petdata(sd,sd->pd, 0,0);
 		clif_send_petdata(sd,sd->pd, 5,battle_config.pet_hair_style);
 		clif_pet_equip_area(sd->pd);
-		clif_send_petstatus(sd);
+		clif.send_petstatus(sd);
 	}
 
-	Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
+	rA_Assert((sd->status.pet_id == 0 || sd->pd == 0) || sd->pd->master == sd);
 
 	return 0;
 }
@@ -551,7 +553,7 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 {
 	struct map_session_data *sd;
 
-	sd = map_id2sd(account_id);
+	sd = map_obj.id2sd(account_id);
 
 	if(sd == NULL)
 		return 1;
@@ -568,7 +570,7 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 		//Delete egg from inventory. [Skotlex]
 		for (i = 0; i < MAX_INVENTORY; i++) {
 			if(sd->inventory.u.items_inventory[i].card[0] == CARD0_PET &&
-				p->pet_id == MakeDWord(sd->inventory.u.items_inventory[i].card[1], sd->inventory.u.items_inventory[i].card[2]))
+					p->pet_id == MakeDWord(sd->inventory.u.items_inventory[i].card[1], sd->inventory.u.items_inventory[i].card[2]))
 				break;
 		}
 
@@ -585,14 +587,14 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 		pet_data_init(sd,p);
 
 		if(sd->pd && sd->bl.prev != NULL) {
-			if(map_addblock(&sd->pd->bl))
+			if(map_obj.addblock(&sd->pd->bl))
 				return 1;
 
-			clif_spawn(&sd->pd->bl);
+			clif.spawn(&sd->pd->bl);
 			clif_send_petdata(sd,sd->pd,0,0);
 			clif_send_petdata(sd,sd->pd,5,battle_config.pet_hair_style);
 			clif_pet_equip_area(sd->pd);
-			clif_send_petstatus(sd);
+			clif.send_petstatus(sd);
 		}
 	}
 
@@ -631,7 +633,7 @@ int pet_catch_process1(struct map_session_data *sd,int target_class)
 	nullpo_ret(sd);
 
 	sd->catch_target_class = target_class;
-	clif_catch_process(sd);
+	clif.catch_process(sd);
 
 	return 0;
 }
@@ -650,10 +652,10 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 
 	nullpo_retr(1, sd);
 
-	md = (struct mob_data*)map_id2bl(target_id);
+	md = (struct mob_data*)map_obj.id2bl(target_id);
 
 	if(!md || md->bl.type != BL_MOB || md->bl.prev == NULL) { // Invalid inputs/state, abort capture.
-		clif_pet_roulette(sd,0);
+		clif.pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
 		sd->itemid = sd->itemindex = -1;
 		return 1;
@@ -668,15 +670,15 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		//catch_target_class == PET_CATCH_UNIVERSAL is used for universal lures (except bosses for now). [Skotlex]
 		if (sd->catch_target_class == PET_CATCH_UNIVERSAL && !status_has_mode(&md->status,MD_STATUS_IMMUNE)){
 			sd->catch_target_class = md->mob_id;
-		//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
+			//catch_target_class == PET_CATCH_UNIVERSAL_ITEM is used for catching any monster required the lure item used
 		}else if (sd->catch_target_class == PET_CATCH_UNIVERSAL_ITEM && sd->itemid == pet->itemID){
 			sd->catch_target_class = md->mob_id;
 		}
 	}
 
 	if(sd->catch_target_class != md->mob_id || !pet) {
-		clif_emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
-		clif_pet_roulette(sd,0);
+		clif.emotion(&md->bl, ET_ANGER);	//mob will do /ag if wrong lure is used on them.
+		clif.pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
 
 		return 1;
@@ -694,10 +696,10 @@ int pet_catch_process2(struct map_session_data* sd, int target_id)
 		achievement_update_objective(sd, AG_TAMING, 1, md->mob_id);
 		unit_remove_map(&md->bl,CLR_OUTSIGHT);
 		status_kill(&md->bl);
-		clif_pet_roulette(sd,1);
+		clif.pet_roulette(sd,1);
 		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
 	} else {
-		clif_pet_roulette(sd,0);
+		clif.pet_roulette(sd,0);
 		sd->catch_target_class = PET_CATCH_FAIL;
 	}
 
@@ -722,7 +724,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	if( pet_id == 0 || pet_class == 0 )
 		return false;
 
-	sd = map_id2sd(account_id);
+	sd = map_obj.id2sd(account_id);
 
 	if( sd == NULL )
 		return false;
@@ -750,8 +752,8 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	tmp_item.card[3] = 0; //New pets are not named.
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
-		clif_additem(sd,0,0,ret);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+		clif.additem(sd,0,0,ret);
+		map_obj.addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	return true;
@@ -783,14 +785,14 @@ int pet_menu(struct map_session_data *sd,int menunum)
 
 	if (egg_id) {
 		if ((egg_id->flag.trade_restriction&0x01) && !pc_inventoryblank(sd)) {
-			clif_displaymessage(sd->fd, msg_txt(sd, 451)); // You can't return your pet because your inventory is full.
+			clif.displaymessage(sd->fd, msg_txt(sd, 451)); // You can't return your pet because your inventory is full.
 			return 1;
 		}
 	}
 
 	switch(menunum) {
 		case 0:
-			clif_send_petstatus(sd);
+			clif.send_petstatus(sd);
 			break;
 		case 1:
 			pet_food(sd, sd->pd);
@@ -852,16 +854,16 @@ int pet_change_name_ack(struct map_session_data *sd, char* name, int flag)
 	normalize_name(name," ");//bugreport:3032
 
 	if ( !flag || !strlen(name) ) {
-		clif_displaymessage(sd->fd, msg_txt(sd,280)); // You cannot use this name for your pet.
-		clif_send_petstatus(sd); //Send status so client knows pet name change got rejected.
+		clif.displaymessage(sd->fd, msg_txt(sd,280)); // You cannot use this name for your pet.
+		clif.send_petstatus(sd); //Send status so client knows pet name change got rejected.
 		return 0;
 	}
 
 	memcpy(pd->pet.name, name, NAME_LENGTH);
-	clif_name_area(&pd->bl);
+	clif.name_area(&pd->bl);
 	pd->pet.rename_flag = 1;
 	clif_pet_equip_area(pd);
-	clif_send_petstatus(sd);
+	clif.send_petstatus(sd);
 
 	return 1;
 }
@@ -884,14 +886,14 @@ int pet_equipitem(struct map_session_data *sd,int index)
 
 	if (!pd)
 		return 1;
-	
+
 	if((pet_db_ptr = pd->get_pet_db()) == nullptr)
 		return 1;
 
 	nameid = sd->inventory.u.items_inventory[index].nameid;
 
 	if(pet_db_ptr->AcceID == 0 || nameid != pet_db_ptr->AcceID || pd->pet.equip != 0) {
-		clif_equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
+		clif.equipitemack(sd,0,0,ITEM_EQUIP_ACK_FAIL);
 		return 1;
 	}
 
@@ -941,8 +943,8 @@ static int pet_unequipitem(struct map_session_data *sd, struct pet_data *pd)
 	tmp_item.identify = 1;
 
 	if((flag = pc_additem(sd,&tmp_item,1,LOG_TYPE_OTHER))) {
-		clif_additem(sd,0,0,flag);
-		map_addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
+		clif.additem(sd,0,0,flag);
+		map_obj.addflooritem(&tmp_item,1,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
 	}
 
 	if( battle_config.pet_equip_required ) { // Skotlex: halt support timers if needed
@@ -986,7 +988,7 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 	i = pc_search_inventory(sd,k);
 
 	if( i < 0 ) {
-		clif_pet_food(sd,k,0);
+		clif.pet_food(sd,k,0);
 
 		return 1;
 	}
@@ -1027,7 +1029,7 @@ static int pet_food(struct map_session_data *sd, struct pet_data *pd)
 
 	clif_send_petdata(sd,pd,2,pd->pet.hungry);
 	clif_send_petdata(sd,pd,1,pd->pet.intimate);
-	clif_pet_food(sd, pet_db_ptr->FoodID,1);
+	clif.pet_food(sd, pet_db_ptr->FoodID,1);
 
 	return 0;
 }
@@ -1042,7 +1044,7 @@ static int pet_randomwalk(struct pet_data *pd,t_tick tick)
 {
 	nullpo_ret(pd);
 
-	Assert((pd->master == 0) || (pd->master->pd == pd));
+	rA_Assert((pd->master == 0) || (pd->master->pd == pd));
 
 	if(DIFF_TICK(pd->next_walktime,tick) < 0 && unit_can_move(&pd->bl)) {
 		const int retrycount = 20;
@@ -1154,7 +1156,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_t
 	}
 
 	if (pd->target_id) {
-		target = map_id2bl(pd->target_id);
+		target = map_obj.id2bl(pd->target_id);
 
 		if (!target || pd->bl.m != target->m || status_isdead(target) ||
 			!check_distance_bl(&pd->bl, target, pd->db->range3)) {
@@ -1165,7 +1167,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_t
 
 	if(!target && pd->loot && pd->loot->count < pd->loot->max && DIFF_TICK(tick,pd->ud.canact_tick) > 0) {
 		// Use half the pet's range of sight.
-		map_foreachinallrange(pet_ai_sub_hard_lootsearch, &pd->bl, pd->db->range2 / 2, BL_ITEM, pd, &target);
+		map_obj.foreachinallrange(pet_ai_sub_hard_lootsearch, &pd->bl, pd->db->range2 / 2, BL_ITEM, pd, &target);
 	}
 
 	if (!target) { // Just walk around.
@@ -1209,7 +1211,7 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_t
 			if(pd->loot->count < pd->loot->max) {
 				memcpy(&pd->loot->item[pd->loot->count++],&fitem->item,sizeof(pd->loot->item[0]));
 				pd->loot->weight += itemdb_weight(fitem->item.nameid)*fitem->item.amount;
-				map_clearflooritem(target);
+				map_obj.clearflooritem(target);
 			}
 
 			//Target is unlocked regardless of whether it was picked or not.
@@ -1246,7 +1248,7 @@ static int pet_ai_sub_foreachclient(struct map_session_data *sd,va_list ap)
  * @return 0
  */
 static TIMER_FUNC(pet_ai_hard){
-	map_foreachpc(pet_ai_sub_foreachclient,tick);
+	map_obj.foreachpc(pet_ai_sub_foreachclient,tick);
 
 	return 0;
 }
@@ -1303,7 +1305,7 @@ static TIMER_FUNC(pet_delay_item_drop){
 	while (ditem) {
 		struct item_drop *ditem_prev;
 
-		map_addflooritem(&ditem->item_data,ditem->item_data.amount,
+		map_obj.addflooritem(&ditem->item_data,ditem->item_data.amount,
 			list->m,list->x,list->y,
 			list->first_charid,list->second_charid,list->third_charid,4,0);
 		ditem_prev = ditem;
@@ -1349,7 +1351,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
 			unsigned char flag = 0;
 
 			if((flag = pc_additem(sd,it,it->amount,LOG_TYPE_PICKDROP_PLAYER))){
-				clif_additem(sd,0,0,flag);
+				clif.additem(sd,0,0,flag);
 				ditem = ers_alloc(item_drop_ers, struct item_drop);
 				memcpy(&ditem->item_data, it, sizeof(struct item));
 				ditem->next = dlist->item;
@@ -1385,7 +1387,7 @@ int pet_lootitem_drop(struct pet_data *pd,struct map_session_data *sd)
  * @author [Valaris], rewritten by [Skotlex]
  */
 TIMER_FUNC(pet_skill_bonus_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	struct pet_data *pd;
 	int bonus;
 	int timer = 0;
@@ -1433,7 +1435,7 @@ TIMER_FUNC(pet_skill_bonus_timer){
  * @author [Valaris], rewritten by [Skotlex]
  */
 TIMER_FUNC(pet_recovery_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	struct pet_data *pd;
 
 	if(sd == NULL || sd->pd == NULL || sd->pd->recovery == NULL)
@@ -1449,9 +1451,9 @@ TIMER_FUNC(pet_recovery_timer){
 	if(sd->sc.data[pd->recovery->type]) {
 		//Display a heal animation?
 		//Detoxify is chosen for now.
-		clif_skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
+		clif.skill_nodamage(&pd->bl,&sd->bl,TF_DETOXIFY,1,1);
 		status_change_end(&sd->bl, pd->recovery->type, INVALID_TIMER);
-		clif_emotion(&pd->bl, ET_OK);
+		clif.emotion(&pd->bl, ET_OK);
 	}
 
 	pd->recovery->timer = INVALID_TIMER;
@@ -1465,7 +1467,7 @@ TIMER_FUNC(pet_recovery_timer){
  * @param id : ID of pet owner
  */
 TIMER_FUNC(pet_heal_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	struct status_data *status;
 	struct pet_data *pd;
 	unsigned int rate = 100;
@@ -1493,7 +1495,7 @@ TIMER_FUNC(pet_heal_timer){
 
 	pet_stop_attack(pd);
 	pet_stop_walking(pd,1);
-	clif_skill_nodamage(&pd->bl,&sd->bl,AL_HEAL,pd->s_skill->lv,1);
+	clif.skill_nodamage(&pd->bl,&sd->bl,AL_HEAL,pd->s_skill->lv,1);
 	status_heal(&sd->bl, pd->s_skill->lv,0, 0);
 	pd->s_skill->timer = add_timer(tick+pd->s_skill->delay*1000,pet_heal_timer,sd->bl.id,0);
 	return 0;
@@ -1508,7 +1510,7 @@ TIMER_FUNC(pet_heal_timer){
  * @author [Skotlex]
  */
 TIMER_FUNC(pet_skill_support_timer){
-	struct map_session_data *sd = map_id2sd(id);
+	struct map_session_data *sd = map_obj.id2sd(id);
 	struct pet_data *pd;
 	struct status_data *status;
 	short rate = 100;

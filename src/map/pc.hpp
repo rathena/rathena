@@ -101,7 +101,7 @@ struct skill_cooldown_entry {
 struct vip_info {
 	unsigned int enabled : 1;
 	time_t time;
-	bool disableshowrate; //State to disable clif_display_pinfo(). [Cydh]
+	bool disableshowrate; //State to disable clif.display_pinfo(). [Cydh]
 };
 #endif
 

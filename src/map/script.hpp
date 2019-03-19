@@ -3,11 +3,14 @@
 
 #ifndef SCRIPT_HPP
 #define SCRIPT_HPP
-
+#include <memory>
 #include "../common/cbasetypes.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
+
+#include "map_interface.hpp"
+#include "clif_interface.hpp"
 
 #define NUM_WHISPER_VAR 10
 
@@ -1977,5 +1980,21 @@ void script_generic_ui_array_expand(unsigned int plus);
 unsigned int *script_array_cpy_list(struct script_array *sa);
 
 bool script_check_RegistryVariableLength(int pType, const char *val, size_t* vlen);
+
+/**
+ * This is used by the unit tests.
+ * int (*script_func)(struct script_state *st) is the pointer the the buildin_funcion.
+ * See typedef struct script_function in script.cpp as reference.
+ *
+ * This method gets a function from struct script_function buildin_func[] (defined in script.cpp)
+ * by entry number (id).
+ **/
+#if TESTING
+typedef int (*script_func)(struct script_state *st);
+script_func get_func_ptr(int id);
+void script_set_map(std::unique_ptr<Map_Interface> map_obj_);
+void script_set_clif(std::unique_ptr<Clif_Interface> clif_);
+void script_free_mock();
+#endif
 
 #endif /* SCRIPT_HPP */

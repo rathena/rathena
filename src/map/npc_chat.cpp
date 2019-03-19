@@ -62,6 +62,9 @@
  *  deletes a pset
  */
 
+static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
+
 /* Structure containing all info associated with a single pattern block */
 struct pcrematch_entry {
 	struct pcrematch_entry* next;
@@ -403,7 +406,7 @@ int buildin_defpattern(struct script_state* st)
 	int setid = conv_num(st,& (st->stack->stack_data[st->start+2]));
 	const char* pattern = conv_str(st,& (st->stack->stack_data[st->start+3]));
 	const char* label = conv_str(st,& (st->stack->stack_data[st->start+4]));
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	struct npc_data* nd = (struct npc_data *)map_obj.id2bl(st->oid);
 	
 	npc_chat_def_pattern(nd, setid, pattern, label);
 	
@@ -413,7 +416,7 @@ int buildin_defpattern(struct script_state* st)
 int buildin_activatepset(struct script_state* st)
 {
 	int setid = conv_num(st,& (st->stack->stack_data[st->start+2]));
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	struct npc_data* nd = (struct npc_data *)map_obj.id2bl(st->oid);
 	
 	activate_pcreset(nd, setid);
 	
@@ -423,7 +426,7 @@ int buildin_activatepset(struct script_state* st)
 int buildin_deactivatepset(struct script_state* st)
 {
 	int setid = conv_num(st,& (st->stack->stack_data[st->start+2]));
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	struct npc_data* nd = (struct npc_data *)map_obj.id2bl(st->oid);
 	
 	deactivate_pcreset(nd, setid);
 	
@@ -433,7 +436,7 @@ int buildin_deactivatepset(struct script_state* st)
 int buildin_deletepset(struct script_state* st)
 {
 	int setid = conv_num(st,& (st->stack->stack_data[st->start+2]));
-	struct npc_data* nd = (struct npc_data *)map_id2bl(st->oid);
+	struct npc_data* nd = (struct npc_data *)map_obj.id2bl(st->oid);
 	
 	delete_pcreset(nd, setid);
 	

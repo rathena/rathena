@@ -325,7 +325,7 @@ typedef char bool;
 
 #if ! defined(Assert)
 #if defined(RELEASE)
-#define Assert(EX)
+#define rA_Assert(EX)
 #else
 // extern "C" {
 #include <assert.h>
@@ -333,7 +333,7 @@ typedef char bool;
 #if !defined(DEFCPP) && defined(WIN32) && !defined(MINGW)
 #include <crtdbg.h>
 #endif
-#define Assert(EX) assert(EX)
+#define rA_Assert(EX) assert(EX)
 #endif
 #endif /* ! defined(Assert) */
 

@@ -52,6 +52,8 @@
 
 using namespace rathena;
 
+static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
 char default_codepage[32] = "";
 
 int map_server_port = 3306;
@@ -120,7 +122,7 @@ static struct block_list *bl_list[BL_LIST_MAX];
 static int bl_list_count = 0;
 
 #ifndef MAP_MAX_MSG
-	#define MAP_MAX_MSG 1550
+#define MAP_MAX_MSG 1550
 #endif
 
 struct map_data map[MAX_MAP_PER_SERVER];
@@ -199,12 +201,12 @@ struct map_data *map_getmapdata(int16 mapid)
 /*==========================================
  * server player count (of all mapservers)
  *------------------------------------------*/
-void map_setusers(int users)
+void Map_Obj::setusers(int users)
 {
 	map_users = users;
 }
 
-int map_getusers(void)
+int Map_Obj::getusers(void)
 {
 	return map_users;
 }
@@ -212,7 +214,7 @@ int map_getusers(void)
 /*==========================================
  * server player count (this mapserver only)
  *------------------------------------------*/
-int map_usercount(void)
+int Map_Obj::usercount(void)
 {
 	return pc_db->size(pc_db);
 }
@@ -221,7 +223,7 @@ int map_usercount(void)
 /*==========================================
  * Attempt to free a map blocklist
  *------------------------------------------*/
-int map_freeblock (struct block_list *bl)
+int Map_Obj::freeblock (struct block_list *bl)
 {
 	nullpo_retr(block_free_lock, bl);
 	if (block_free_lock == 0 || block_free_count >= block_free_max)
@@ -229,16 +231,16 @@ int map_freeblock (struct block_list *bl)
 		aFree(bl);
 		bl = NULL;
 		if (block_free_count >= block_free_max)
-			ShowWarning("map_freeblock: too many free block! %d %d\n", block_free_count, block_free_lock);
+			ShowWarning("map_obj.freeblock: too many free block! %d %d\n", block_free_count, block_free_lock);
 	} else
 		block_free[block_free_count++] = bl;
 
 	return block_free_lock;
 }
 /*==========================================
- * Lock blocklist, (prevent map_freeblock usage)
+ * Lock blocklist, (prevent map_obj.freeblock usage)
  *------------------------------------------*/
-int map_freeblock_lock (void)
+int Map_Obj::freeblock_lock (void)
 {
 	return ++block_free_lock;
 }
@@ -246,7 +248,7 @@ int map_freeblock_lock (void)
 /*==========================================
  * Remove the lock on map_bl
  *------------------------------------------*/
-int map_freeblock_unlock (void)
+int Map_Obj::freeblock_unlock (void)
 {
 	if ((--block_free_lock) == 0) {
 		int i;
@@ -257,7 +259,7 @@ int map_freeblock_unlock (void)
 		}
 		block_free_count = 0;
 	} else if (block_free_lock < 0) {
-		ShowError("map_freeblock_unlock: lock count < 0 !\n");
+		ShowError("map_obj.freeblock_unlock: lock count < 0 !\n");
 		block_free_lock = 0;
 	}
 
@@ -268,9 +270,9 @@ int map_freeblock_unlock (void)
 // Called each 1s
 TIMER_FUNC(map_freeblock_timer){
 	if (block_free_lock > 0) {
-		ShowError("map_freeblock_timer: block_free_lock(%d) is invalid.\n", block_free_lock);
+		ShowError("map_obj.freeblock_timer: block_free_lock(%d) is invalid.\n", block_free_lock);
 		block_free_lock = 1;
-		map_freeblock_unlock();
+		map_obj.freeblock_unlock();
 	}
 
 	return 0;
@@ -290,7 +292,7 @@ static struct block_list bl_head;
  * These pair of functions update the counter of how many objects
  * lie on a tile.
  *------------------------------------------*/
-static void map_addblcell(struct block_list *bl)
+static void Map_Obj::addblcell(struct block_list *bl)
 {
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
@@ -300,7 +302,7 @@ static void map_addblcell(struct block_list *bl)
 	return;
 }
 
-static void map_delblcell(struct block_list *bl)
+static void Map_Obj::delblcell(struct block_list *bl)
 {
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
@@ -314,7 +316,7 @@ static void map_delblcell(struct block_list *bl)
  * Adds a block to the map.
  * Returns 0 on success, 1 on failure (illegal coordinates).
  *------------------------------------------*/
-int map_addblock(struct block_list* bl)
+int Map_Obj::addblock(struct block_list* bl)
 {
 	int16 m, x, y;
 	int pos;
@@ -322,7 +324,7 @@ int map_addblock(struct block_list* bl)
 	nullpo_ret(bl);
 
 	if (bl->prev != NULL) {
-		ShowError("map_addblock: bl->prev != NULL\n");
+		ShowError("map_obj.addblock: bl->prev != NULL\n");
 		return 1;
 	}
 
@@ -332,7 +334,7 @@ int map_addblock(struct block_list* bl)
 
 	if( m < 0 )
 	{
-		ShowError("map_addblock: invalid map id (%d), only %d are loaded.\n", m, map_num);
+		ShowError("map_obj.addblock: invalid map id (%d), only %d are loaded.\n", m, map_num);
 		return 1;
 	}
 
@@ -340,7 +342,7 @@ int map_addblock(struct block_list* bl)
 
 	if( x < 0 || x >= mapdata->xs || y < 0 || y >= mapdata->ys )
 	{
-		ShowError("map_addblock: out-of-bounds coordinates (\"%s\",%d,%d), map is %dx%d\n", mapdata->name, x, y, mapdata->xs, mapdata->ys);
+		ShowError("map_obj.addblock: out-of-bounds coordinates (\"%s\",%d,%d), map is %dx%d\n", mapdata->name, x, y, mapdata->xs, mapdata->ys);
 		return 1;
 	}
 
@@ -368,7 +370,7 @@ int map_addblock(struct block_list* bl)
 /*==========================================
  * Removes a block from the map.
  *------------------------------------------*/
-int map_delblock(struct block_list* bl)
+int Map_Obj::delblock(struct block_list* bl)
 {
 	int pos;
 	nullpo_ret(bl);
@@ -377,7 +379,7 @@ int map_delblock(struct block_list* bl)
 	if (bl->prev == NULL) {
 		if (bl->next != NULL) {
 			// can't delete block (already at the beginning of the chain)
-			ShowError("map_delblock error : bl->next!=NULL\n");
+			ShowError("map_obj.delblock error : bl->next!=NULL\n");
 		}
 		return 0;
 	}
@@ -393,7 +395,7 @@ int map_delblock(struct block_list* bl)
 	if (bl->next)
 		bl->next->prev = bl->prev;
 	if (bl->prev == &bl_head) {
-	//Since the head of the list, update the block_list map of []
+		//Since the head of the list, update the block_list map of []
 		if (bl->type == BL_MOB) {
 			mapdata->block_mob[pos] = bl->next;
 		} else {
@@ -418,7 +420,7 @@ int map_delblock(struct block_list* bl)
  * @param tick : when this was scheduled
  * @return 0:success, 1:fail
  */
-int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
+int Map_Obj::moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 {
 	int x0 = bl->x, y0 = bl->y;
 	struct status_change *sc = NULL;
@@ -442,26 +444,26 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 			status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 			status_change_end(bl, SC_TINDER_BREAKER, INVALID_TIMER);
 			status_change_end(bl, SC_TINDER_BREAKER2, INVALID_TIMER);
-	//		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER); //Won't stop when you are knocked away, go figure...
+			//		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER); //Won't stop when you are knocked away, go figure...
 			status_change_end(bl, SC_TATAMIGAESHI, INVALID_TIMER);
 			status_change_end(bl, SC_MAGICROD, INVALID_TIMER);
 			status_change_end(bl, SC_SU_STOOP, INVALID_TIMER);
 			if (sc->data[SC_PROPERTYWALK] &&
-				sc->data[SC_PROPERTYWALK]->val3 >= skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2) )
+					sc->data[SC_PROPERTYWALK]->val3 >= skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2) )
 				status_change_end(bl,SC_PROPERTYWALK,INVALID_TIMER);
 		}
 	} else
-	if (bl->type == BL_NPC)
-		npc_unsetcells((TBL_NPC*)bl);
+		if (bl->type == BL_NPC)
+			npc_unsetcells((TBL_NPC*)bl);
 
-	if (moveblock) map_delblock(bl);
+	if (moveblock) map_obj.delblock(bl);
 #ifdef CELL_NOSTACK
 	else map_delblcell(bl);
 #endif
 	bl->x = x1;
 	bl->y = y1;
 	if (moveblock) {
-		if(map_addblock(bl))
+		if(map_obj.addblock(bl))
 			return 1;
 	}
 #ifdef CELL_NOSTACK
@@ -474,7 +476,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 
 		if( bl->type == BL_PC && ((TBL_PC*)bl)->shadowform_id ) {//Shadow Form Target Moving
 			struct block_list *d_bl;
-			if( (d_bl = map_id2bl(((TBL_PC*)bl)->shadowform_id)) == NULL || !check_distance_bl(bl,d_bl,10) ) {
+			if( (d_bl = map_obj.id2bl(((TBL_PC*)bl)->shadowform_id)) == NULL || !check_distance_bl(bl,d_bl,10) ) {
 				if( d_bl )
 					status_change_end(d_bl,SC__SHADOWFORM,INVALID_TIMER);
 				((TBL_PC*)bl)->shadowform_id = 0;
@@ -499,16 +501,16 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 
 				if( sc->data[SC__SHADOWFORM] ) {//Shadow Form Caster Moving
 					struct block_list *d_bl;
-					if( (d_bl = map_id2bl(sc->data[SC__SHADOWFORM]->val2)) == NULL || !check_distance_bl(bl,d_bl,10) )
+					if( (d_bl = map_obj.id2bl(sc->data[SC__SHADOWFORM]->val2)) == NULL || !check_distance_bl(bl,d_bl,10) )
 						status_change_end(bl,SC__SHADOWFORM,INVALID_TIMER);
 				}
 
 				if (sc->data[SC_PROPERTYWALK]
-					&& sc->data[SC_PROPERTYWALK]->val3 < skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2)
-					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_ELECTRICWALK,NULL,0) == NULL
-					&& map_find_skill_unit_oncell(bl,bl->x,bl->y,SO_FIREWALK,NULL,0) == NULL
-					&& skill_unitsetting(bl,sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2,x0, y0,0)) {
-						sc->data[SC_PROPERTYWALK]->val3++;
+						&& sc->data[SC_PROPERTYWALK]->val3 < skill_get_maxcount(sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2)
+						&& map_obj.find_skill_unit_oncell(bl,bl->x,bl->y,SO_ELECTRICWALK,NULL,0) == NULL
+						&& map_obj.find_skill_unit_oncell(bl,bl->x,bl->y,SO_FIREWALK,NULL,0) == NULL
+						&& skill_unitsetting(bl,sc->data[SC_PROPERTYWALK]->val1,sc->data[SC_PROPERTYWALK]->val2,x0, y0,0)) {
+					sc->data[SC_PROPERTYWALK]->val3++;
 				}
 
 
@@ -526,8 +528,8 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
 			}
 		}
 	} else
-	if (bl->type == BL_NPC)
-		npc_setcells((TBL_NPC*)bl);
+		if (bl->type == BL_NPC)
+			npc_setcells((TBL_NPC*)bl);
 
 	return 0;
 }
@@ -537,7 +539,7 @@ int map_moveblock(struct block_list *bl, int x1, int y1, t_tick tick)
  * flag:
  *		0x1 - only count standing units
  *------------------------------------------*/
-int map_count_oncell(int16 m, int16 x, int16 y, int type, int flag)
+int Map_Obj::count_oncell(int16 m, int16 x, int16 y, int type, int flag)
 {
 	int bx,by;
 	struct block_list *bl;
@@ -581,7 +583,7 @@ int map_count_oncell(int16 m, int16 x, int16 y, int type, int flag)
  * Looks for a skill unit on a given cell
  * flag&1: runs battle_check_target check based on unit->group->target_flag
  */
-struct skill_unit* map_find_skill_unit_oncell(struct block_list* target,int16 x,int16 y,uint16 skill_id,struct skill_unit* out_unit, int flag) {
+struct skill_unit* Map_Obj::find_skill_unit_oncell(struct block_list* target,int16 x,int16 y,uint16 skill_id,struct skill_unit* out_unit, int flag) {
 	int16 bx,by;
 	struct block_list *bl;
 	struct skill_unit *unit;
@@ -639,12 +641,12 @@ int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_lis
 			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
 				for(bl = mapdata->block[ bx + by * mapdata->bxs ]; bl != NULL; bl = bl->next ) {
 					if( bl->type&type
-						&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+							&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
 #ifdef CIRCULAR_AREA
-						&& check_distance_bl(center, bl, range)
+							&& check_distance_bl(center, bl, range)
 #endif
-						&& ( !wall_check || path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL) )
-					  	&& bl_list_count < BL_LIST_MAX )
+							&& ( !wall_check || path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL) )
+							&& bl_list_count < BL_LIST_MAX )
 						bl_list[ bl_list_count++ ] = bl;
 				}
 			}
@@ -657,10 +659,10 @@ int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_lis
 				for(bl = mapdata->block_mob[ bx + by * mapdata->bxs ]; bl != NULL; bl = bl->next ) {
 					if( bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
 #ifdef CIRCULAR_AREA
-						&& check_distance_bl(center, bl, range)
+							&& check_distance_bl(center, bl, range)
 #endif
-						&& ( !wall_check || path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL) )
-					  	&& bl_list_count < BL_LIST_MAX )
+							&& ( !wall_check || path_search_long(NULL, center->m, center->x, center->y, bl->x, bl->y, CELL_CHKWALL) )
+							&& bl_list_count < BL_LIST_MAX )
 						bl_list[ bl_list_count++ ] = bl;
 				}
 			}
@@ -670,7 +672,7 @@ int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_lis
 	if( bl_list_count >= BL_LIST_MAX )
 		ShowWarning("map_foreachinrange: block count too many!\n");
 
-	map_freeblock_lock();
+	map_obj.freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ ) {
 		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
@@ -680,42 +682,42 @@ int map_foreachinrangeV(int (*func)(struct block_list*,va_list),struct block_lis
 		}
 	}
 
-	map_freeblock_unlock();
+	map_obj.freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
 
-int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...)
+int Map_Obj::foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...)
 {
 	int returnCount = 0;
 	va_list ap;
- 	va_start(ap,type);
+	va_start(ap,type);
 	returnCount = map_foreachinrangeV(func,center,range,type,ap,battle_config.skill_wall_check>0);
- 	va_end(ap);
+	va_end(ap);
 	return returnCount;
 }
 
-int map_foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...)
+int Map_Obj::foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...)
 {
 	int returnCount = 0;
 	va_list ap;
- 	va_start(ap,type);
+	va_start(ap,type);
 	returnCount = map_foreachinrangeV(func,center,range,type,ap,false);
- 	va_end(ap);
+	va_end(ap);
 	return returnCount;
 }
 
 /*==========================================
  * Same as foreachinrange, but there must be a shoot-able range between center and target to be counted in. [Skotlex]
  *------------------------------------------*/
-int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block_list* center, int16 range, int type,...)
+int Map_Obj::foreachinshootrange(int (*func)(struct block_list*,va_list),struct block_list* center, int16 range, int type,...)
 {
 	int returnCount = 0;
 	va_list ap;
- 	va_start(ap,type);
+	va_start(ap,type);
 	returnCount = map_foreachinrangeV(func,center,range,type,ap,true);
- 	va_end(ap);
+	va_end(ap);
 	return returnCount;
 }
 
@@ -729,7 +731,7 @@ int map_foreachinshootrange(int (*func)(struct block_list*,va_list),struct block
  * @param x1: East end of area
  * @param y1: North end of area
  * @param type: Type of bl to search for
-*------------------------------------------*/
+ *------------------------------------------*/
 int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, va_list ap, bool wall_check)
 {
 	int bx, by, cx, cy;
@@ -767,9 +769,9 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 			for (bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++) {
 				for(bl = mapdata->block[bx + by * mapdata->bxs]; bl != NULL; bl = bl->next) {
 					if ( bl->type&type
-						&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
-						&& ( !wall_check || path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL) )
-						&& bl_list_count < BL_LIST_MAX )
+							&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+							&& ( !wall_check || path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL) )
+							&& bl_list_count < BL_LIST_MAX )
 						bl_list[bl_list_count++] = bl;
 				}
 			}
@@ -781,8 +783,8 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 			for (bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++) {
 				for(bl = mapdata->block_mob[bx + by * mapdata->bxs]; bl != NULL; bl = bl->next) {
 					if ( bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
-						&& ( !wall_check || path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL) )
-						&& bl_list_count < BL_LIST_MAX )
+							&& ( !wall_check || path_search_long(NULL, m, cx, cy, bl->x, bl->y, CELL_CHKWALL) )
+							&& bl_list_count < BL_LIST_MAX )
 						bl_list[bl_list_count++] = bl;
 				}
 			}
@@ -792,7 +794,7 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 	if (bl_list_count >= BL_LIST_MAX)
 		ShowWarning("map_foreachinarea: block count too many!\n");
 
-	map_freeblock_lock();
+	map_obj.freeblock_lock();
 
 	for (i = blockcount; i < bl_list_count; i++) {
 		if (bl_list[i]->prev) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
@@ -802,45 +804,45 @@ int map_foreachinareaV(int(*func)(struct block_list*, va_list), int16 m, int16 x
 		}
 	}
 
-	map_freeblock_unlock();
+	map_obj.freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;
 }
 
-int map_foreachinallarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...)
+int Map_Obj::foreachinallarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...)
 {
 	int returnCount = 0;
 	va_list ap;
- 	va_start(ap,type);
+	va_start(ap,type);
 	returnCount = map_foreachinareaV(func,m,x0,y0,x1,y1,type,ap,false);
- 	va_end(ap);
+	va_end(ap);
 	return returnCount;
 }
 
-int map_foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...)
+int Map_Obj::foreachinshootarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...)
 {
 	int returnCount = 0;
 	va_list ap;
- 	va_start(ap,type);
+	va_start(ap,type);
 	returnCount = map_foreachinareaV(func,m,x0,y0,x1,y1,type,ap,true);
- 	va_end(ap);
+	va_end(ap);
 	return returnCount;
 }
-int map_foreachinarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...)
+int Map_Obj::foreachinarea(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int type, ...)
 {
 	int returnCount = 0;
 	va_list ap;
- 	va_start(ap,type);
+	va_start(ap,type);
 	returnCount = map_foreachinareaV(func,m,x0,y0,x1,y1,type,ap,battle_config.skill_wall_check>0);
- 	va_end(ap);
+	va_end(ap);
 	return returnCount;
 }
 
 /*==========================================
  * Adapted from forcountinarea for an easier invocation. [pakpil]
  *------------------------------------------*/
-int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int count, int type, ...)
+int Map_Obj::forcountinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int count, int type, ...)
 {
 	int bx, by, m;
 	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
@@ -867,11 +869,11 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 			for( bx = x0 / BLOCK_SIZE; bx <= x1 / BLOCK_SIZE; bx++ ) {
 				for( bl = mapdata->block[ bx + by * mapdata->bxs ]; bl != NULL; bl = bl->next ) {
 					if( bl->type&type
-						&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
+							&& bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
 #ifdef CIRCULAR_AREA
-						&& check_distance_bl(center, bl, range)
+							&& check_distance_bl(center, bl, range)
 #endif
-					  	&& bl_list_count < BL_LIST_MAX )
+							&& bl_list_count < BL_LIST_MAX )
 						bl_list[ bl_list_count++ ] = bl;
 				}
 			}
@@ -882,9 +884,9 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 				for( bl = mapdata->block_mob[ bx + by * mapdata->bxs ]; bl != NULL; bl = bl->next ) {
 					if( bl->x >= x0 && bl->x <= x1 && bl->y >= y0 && bl->y <= y1
 #ifdef CIRCULAR_AREA
-						&& check_distance_bl(center, bl, range)
+							&& check_distance_bl(center, bl, range)
 #endif
-						&& bl_list_count < BL_LIST_MAX )
+							&& bl_list_count < BL_LIST_MAX )
 						bl_list[ bl_list_count++ ] = bl;
 				}
 			}
@@ -893,7 +895,7 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 	if( bl_list_count >= BL_LIST_MAX )
 		ShowWarning("map_forcountinrange: block count too many!\n");
 
-	map_freeblock_lock();
+	map_obj.freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
 		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
@@ -904,12 +906,12 @@ int map_forcountinrange(int (*func)(struct block_list*,va_list), struct block_li
 				break;
 		}
 
-	map_freeblock_unlock();
+	map_obj.freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
 }
-int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int count, int type, ...)
+int Map_Obj::forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int count, int type, ...)
 {
 	int bx, by;
 	int returnCount = 0;	//total sum of returned values of func() [Skotlex]
@@ -953,7 +955,7 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 	if( bl_list_count >= BL_LIST_MAX )
 		ShowWarning("map_forcountinarea: block count too many!\n");
 
-	map_freeblock_lock();
+	map_obj.freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
 		if(bl_list[ i ]->prev) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
@@ -964,7 +966,7 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
 				break;
 		}
 
-	map_freeblock_unlock();
+	map_obj.freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
@@ -974,7 +976,7 @@ int map_forcountinarea(int (*func)(struct block_list*,va_list), int16 m, int16 x
  * Move bl and do func* with va_list while moving.
  * Movement is set by dx dy which are distance in x and y
  *------------------------------------------*/
-int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int16 dx, int16 dy, int type, ...)
+int Map_Obj::foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int16 dx, int16 dy, int type, ...)
 {
 	int bx, by, m;
 	int returnCount = 0;  //total sum of returned values of func() [Skotlex]
@@ -1028,17 +1030,17 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 				if ( type&~BL_MOB ) {
 					for( bl = mapdata->block[ bx + by * mapdata->bxs ]; bl != NULL; bl = bl->next ) {
 						if( bl->type&type &&
-							bl->x >= x0 && bl->x <= x1 &&
-							bl->y >= y0 && bl->y <= y1 &&
-							bl_list_count < BL_LIST_MAX )
+								bl->x >= x0 && bl->x <= x1 &&
+								bl->y >= y0 && bl->y <= y1 &&
+								bl_list_count < BL_LIST_MAX )
 							bl_list[ bl_list_count++ ] = bl;
 					}
 				}
 				if ( type&BL_MOB ) {
 					for( bl = mapdata->block_mob[ bx + by * mapdata->bxs ]; bl != NULL; bl = bl->next ) {
 						if( bl->x >= x0 && bl->x <= x1 &&
-							bl->y >= y0 && bl->y <= y1 &&
-							bl_list_count < BL_LIST_MAX )
+								bl->y >= y0 && bl->y <= y1 &&
+								bl_list_count < BL_LIST_MAX )
 							bl_list[ bl_list_count++ ] = bl;
 					}
 				}
@@ -1055,26 +1057,26 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 				if ( type & ~BL_MOB ) {
 					for( bl = mapdata->block[ bx + by * mapdata->bxs ]; bl != NULL; bl = bl->next ) {
 						if( bl->type&type &&
-							bl->x >= x0 && bl->x <= x1 &&
-							bl->y >= y0 && bl->y <= y1 &&
-							bl_list_count < BL_LIST_MAX )
-						if( ( dx > 0 && bl->x < x0 + dx) ||
-							( dx < 0 && bl->x > x1 + dx) ||
-							( dy > 0 && bl->y < y0 + dy) ||
-							( dy < 0 && bl->y > y1 + dy) )
-							bl_list[ bl_list_count++ ] = bl;
+								bl->x >= x0 && bl->x <= x1 &&
+								bl->y >= y0 && bl->y <= y1 &&
+								bl_list_count < BL_LIST_MAX )
+							if( ( dx > 0 && bl->x < x0 + dx) ||
+									( dx < 0 && bl->x > x1 + dx) ||
+									( dy > 0 && bl->y < y0 + dy) ||
+									( dy < 0 && bl->y > y1 + dy) )
+								bl_list[ bl_list_count++ ] = bl;
 					}
 				}
 				if ( type&BL_MOB ) {
 					for( bl = mapdata->block_mob[ bx + by * mapdata->bxs ]; bl != NULL; bl = bl->next ) {
 						if( bl->x >= x0 && bl->x <= x1 &&
-							bl->y >= y0 && bl->y <= y1 &&
-							bl_list_count < BL_LIST_MAX)
-						if( ( dx > 0 && bl->x < x0 + dx) ||
-							( dx < 0 && bl->x > x1 + dx) ||
-							( dy > 0 && bl->y < y0 + dy) ||
-							( dy < 0 && bl->y > y1 + dy) )
-							bl_list[ bl_list_count++ ] = bl;
+								bl->y >= y0 && bl->y <= y1 &&
+								bl_list_count < BL_LIST_MAX)
+							if( ( dx > 0 && bl->x < x0 + dx) ||
+									( dx < 0 && bl->x > x1 + dx) ||
+									( dy > 0 && bl->y < y0 + dy) ||
+									( dy < 0 && bl->y > y1 + dy) )
+								bl_list[ bl_list_count++ ] = bl;
 					}
 				}
 			}
@@ -1085,7 +1087,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 	if( bl_list_count >= BL_LIST_MAX )
 		ShowWarning("map_foreachinmovearea: block count too many!\n");
 
-	map_freeblock_lock();	// Prohibit the release from memory
+	map_obj.freeblock_lock();	// Prohibit the release from memory
 
 	for( i = blockcount; i < bl_list_count; i++ )
 		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
@@ -1094,7 +1096,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();	// Allow Free
+	map_obj.freeblock_unlock();	// Allow Free
 
 	bl_list_count = blockcount;
 	return returnCount;
@@ -1104,7 +1106,7 @@ int map_foreachinmovearea(int (*func)(struct block_list*,va_list), struct block_
 //			 which only checks the exact single x/y passed to it rather than an
 //			 area radius - may be more useful in some instances)
 //
-int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x, int16 y, int type, ...)
+int Map_Obj::foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x, int16 y, int type, ...)
 {
 	int bx, by;
 	int returnCount = 0;  //total sum of returned values of func() [Skotlex]
@@ -1134,7 +1136,7 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x,
 	if( bl_list_count >= BL_LIST_MAX )
 		ShowWarning("map_foreachincell: block count too many!\n");
 
-	map_freeblock_lock();
+	map_obj.freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
 		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
@@ -1143,50 +1145,50 @@ int map_foreachincell(int (*func)(struct block_list*,va_list), int16 m, int16 x,
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();
+	map_obj.freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;
 }
 
 /*============================================================
-* For checking a path between two points (x0, y0) and (x1, y1)
-*------------------------------------------------------------*/
-int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,int16 y0,int16 x1,int16 y1,int16 range,int length, int type,...)
+ * For checking a path between two points (x0, y0) and (x1, y1)
+ *------------------------------------------------------------*/
+int Map_Obj::foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,int16 y0,int16 x1,int16 y1,int16 range,int length, int type,...)
 {
 	int returnCount = 0;  //total sum of returned values of func() [Skotlex]
-//////////////////////////////////////////////////////////////
-//
-// sharp shooting 3 [Skotlex]
-//
-//////////////////////////////////////////////////////////////
-// problem:
-// Same as Sharp Shooting 1. Hits all targets within range of
-// the line.
-// (t1,t2 t3 and t4 get hit)
-//
-//     target 1
-//      x t4
-//     t2
-// t3 x
-//   x
-//  S
-//////////////////////////////////////////////////////////////
-// Methodology:
-// My trigonometrics and math are a little rusty... so the approach I am writing
-// here is basically do a double for to check for all targets in the square that
-// contains the initial and final positions (area range increased to match the
-// radius given), then for each object to test, calculate the distance to the
-// path and include it if the range fits and the target is in the line (0<k<1,
-// as they call it).
-// The implementation I took as reference is found at
-// http://astronomy.swin.edu.au/~pbourke/geometry/pointline/
-// (they have a link to a C implementation, too)
-// This approach is a lot like #2 commented on this function, which I have no
-// idea why it was commented. I won't use doubles/floats, but pure int math for
-// speed purposes. The range considered is always the same no matter how
-// close/far the target is because that's how SharpShooting works currently in
-// kRO.
+	//////////////////////////////////////////////////////////////
+	//
+	// sharp shooting 3 [Skotlex]
+	//
+	//////////////////////////////////////////////////////////////
+	// problem:
+	// Same as Sharp Shooting 1. Hits all targets within range of
+	// the line.
+	// (t1,t2 t3 and t4 get hit)
+	//
+	//     target 1
+	//      x t4
+	//     t2
+	// t3 x
+	//   x
+	//  S
+	//////////////////////////////////////////////////////////////
+	// Methodology:
+	// My trigonometrics and math are a little rusty... so the approach I am writing
+	// here is basically do a double for to check for all targets in the square that
+	// contains the initial and final positions (area range increased to match the
+	// radius given), then for each object to test, calculate the distance to the
+	// path and include it if the range fits and the target is in the line (0<k<1,
+	// as they call it).
+	// The implementation I took as reference is found at
+	// http://astronomy.swin.edu.au/~pbourke/geometry/pointline/
+	// (they have a link to a C implementation, too)
+	// This approach is a lot like #2 commented on this function, which I have no
+	// idea why it was commented. I won't use doubles/floats, but pure int math for
+	// speed purposes. The range considered is always the same no matter how
+	// close/far the target is because that's how SharpShooting works currently in
+	// kRO.
 
 	//Generic map_foreach* variables.
 	int i, blockcount = bl_list_count;
@@ -1199,7 +1201,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 	va_list ap;
 
 	//Avoid needless calculations by not getting the sqrt right away.
-	#define MAGNITUDE2(x0, y0, x1, y1) ( ( ( x1 ) - ( x0 ) ) * ( ( x1 ) - ( x0 ) ) + ( ( y1 ) - ( y0 ) ) * ( ( y1 ) - ( y0 ) ) )
+#define MAGNITUDE2(x0, y0, x1, y1) ( ( ( x1 ) - ( x0 ) ) * ( ( x1 ) - ( x0 ) ) + ( ( y1 ) - ( y0 ) ) * ( ( y1 ) - ( y0 ) ) )
 
 	if ( m < 0 )
 		return 0;
@@ -1284,7 +1286,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 				}
 			}
 		}
-	 if( type&BL_MOB )
+	if( type&BL_MOB )
 		for( by = my0 / BLOCK_SIZE; by <= my1 / BLOCK_SIZE; by++ ) {
 			for( bx = mx0 / BLOCK_SIZE; bx <= mx1 / BLOCK_SIZE; bx++ ) {
 				for( bl = mapdata->block_mob[ bx + by * mapdata->bxs ]; bl != NULL; bl = bl->next ) {
@@ -1319,7 +1321,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 	if( bl_list_count >= BL_LIST_MAX )
 		ShowWarning("map_foreachinpath: block count too many!\n");
 
-	map_freeblock_lock();
+	map_obj.freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
 		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
@@ -1328,7 +1330,7 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();
+	map_obj.freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;	//[Skotlex]
@@ -1336,21 +1338,21 @@ int map_foreachinpath(int (*func)(struct block_list*,va_list),int16 m,int16 x0,i
 }
 
 /*========================================== [Playtester]
-* Calls the given function for every object of a type that is on a path.
-* The path goes into one of the eight directions and the direction is determined by the given coordinates.
-* The path has a length, a width and an offset.
-* The cost for diagonal movement is the same as for horizontal/vertical movement.
-* @param m: ID of map
-* @param x0: Start X
-* @param y0: Start Y
-* @param x1: X to calculate direction against
-* @param y1: Y to calculate direction against
-* @param range: Determines width of the path (width = range*2+1 cells)
-* @param length: Length of the path
-* @param offset: Moves the whole path, half-length for diagonal paths
-* @param type: Type of bl to search for
-*------------------------------------------*/
-int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int offset, int type, ...)
+ * Calls the given function for every object of a type that is on a path.
+ * The path goes into one of the eight directions and the direction is determined by the given coordinates.
+ * The path has a length, a width and an offset.
+ * The cost for diagonal movement is the same as for horizontal/vertical movement.
+ * @param m: ID of map
+ * @param x0: Start X
+ * @param y0: Start Y
+ * @param x1: X to calculate direction against
+ * @param y1: Y to calculate direction against
+ * @param range: Determines width of the path (width = range*2+1 cells)
+ * @param length: Length of the path
+ * @param offset: Moves the whole path, half-length for diagonal paths
+ * @param type: Type of bl to search for
+ *------------------------------------------*/
+int Map_Obj::foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0, int16 y0, int16 x1, int16 y1, int16 range, int length, int offset, int type, ...)
 {
 	int returnCount = 0;  //Total sum of returned values of func()
 
@@ -1358,7 +1360,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 	struct block_list *bl;
 	int bx, by;
 	int mx0, mx1, my0, my1, rx, ry;
-	uint8 dir = map_calc_dir_xy(x0, y0, x1, y1, 6);
+	uint8 dir = map_obj.calc_dir_xy(x0, y0, x1, y1, 6);
 	short dx = dirx[dir];
 	short dy = diry[dir];
 	va_list ap;
@@ -1486,7 +1488,7 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 	if( bl_list_count >= BL_LIST_MAX )
 		ShowWarning("map_foreachindir: block count too many!\n");
 
-	map_freeblock_lock();
+	map_obj.freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count; i++ )
 		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
@@ -1495,14 +1497,14 @@ int map_foreachindir(int(*func)(struct block_list*, va_list), int16 m, int16 x0,
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();
+	map_obj.freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;
 }
 
 // Copy of map_foreachincell, but applied to the whole map. [Skotlex]
-int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type,...)
+int Map_Obj::foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type,...)
 {
 	int b, bsize;
 	int returnCount = 0;  //total sum of returned values of func() [Skotlex]
@@ -1532,7 +1534,7 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type,
 	if( bl_list_count >= BL_LIST_MAX )
 		ShowWarning("map_foreachinmap: block count too many!\n");
 
-	map_freeblock_lock();
+	map_obj.freeblock_lock();
 
 	for( i = blockcount; i < bl_list_count ; i++ )
 		if( bl_list[ i ]->prev ) { //func() may delete this bl_list[] slot, checking for prev ensures it wasn't queued for deletion.
@@ -1541,7 +1543,7 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type,
 			va_end(ap);
 		}
 
-	map_freeblock_unlock();
+	map_obj.freeblock_unlock();
 
 	bl_list_count = blockcount;
 	return returnCount;
@@ -1551,7 +1553,7 @@ int map_foreachinmap(int (*func)(struct block_list*,va_list), int16 m, int type,
 /// Generates a new flooritem object id from the interval [MIN_FLOORITEM, MAX_FLOORITEM).
 /// Used for floor items, skill units and chatroom objects.
 /// @return The new object id
-int map_get_new_object_id(void)
+int Map_Obj::get_new_object_id(void)
 {
 	static int last_object_id = MIN_FLOORITEM - 1;
 	int i;
@@ -1595,26 +1597,26 @@ TIMER_FUNC(map_clearflooritem_timer){
 	if (pet_db_search(fitem->item.nameid, PET_EGG))
 		intif_delete_petdata(MakeDWord(fitem->item.card[1], fitem->item.card[2]));
 
-	clif_clearflooritem(fitem, 0);
-	map_deliddb(&fitem->bl);
-	map_delblock(&fitem->bl);
-	map_freeblock(&fitem->bl);
+	clif.clearflooritem(fitem, 0);
+	map_obj.deliddb(&fitem->bl);
+	map_obj.delblock(&fitem->bl);
+	map_obj.freeblock(&fitem->bl);
 	return 0;
 }
 
 /*
  * clears a single bl item out of the map.
  */
-void map_clearflooritem(struct block_list *bl) {
+void Map_Obj::clearflooritem(struct block_list *bl) {
 	struct flooritem_data* fitem = (struct flooritem_data*)bl;
 
 	if( fitem->cleartimer != INVALID_TIMER )
 		delete_timer(fitem->cleartimer,map_clearflooritem_timer);
 
-	clif_clearflooritem(fitem, 0);
-	map_deliddb(&fitem->bl);
-	map_delblock(&fitem->bl);
-	map_freeblock(&fitem->bl);
+	clif.clearflooritem(fitem, 0);
+	map_obj.deliddb(&fitem->bl);
+	map_obj.delblock(&fitem->bl);
+	map_obj.freeblock(&fitem->bl);
 }
 
 /*==========================================
@@ -1640,7 +1642,7 @@ int map_searchrandfreecell(int16 m,int16 *x,int16 *y,int stack) {
 			if(map_getcell(m,j+*x,i+*y,CELL_CHKNOPASS) && !map_getcell(m,j+*x,i+*y,CELL_CHKICEWALL))
 				continue;
 			//Avoid item stacking to prevent against exploits. [Skotlex]
-			if(stack && map_count_oncell(m,j+*x,i+*y, BL_ITEM, 0) > stack)
+			if(stack && map_obj.count_oncell(m,j+*x,i+*y, BL_ITEM, 0) > stack)
 				continue;
 			free_cells[free_cell][0] = j+*x;
 			free_cells[free_cell++][1] = i+*y;
@@ -1672,7 +1674,7 @@ static int map_count_sub(struct block_list *bl,va_list ap)
  * &2 = the target should be able to walk to the target tile.
  * &4 = there shouldn't be any players around the target tile (use the no_spawn_on_player setting)
  *------------------------------------------*/
-int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int16 rx, int16 ry, int flag)
+int Map_Obj::search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int16 rx, int16 ry, int flag)
 {
 	int tries, spawn=0;
 	int bx, by;
@@ -1681,7 +1683,7 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 
 	if( !src && (!(flag&1) || flag&2) )
 	{
-		ShowDebug("map_search_freecell: Incorrect usage! When src is NULL, flag has to be &1 and can't have &2\n");
+		ShowDebug("map_obj.search_freecell: Incorrect usage! When src is NULL, flag has to be &1 and can't have &2\n");
 		return 0;
 	}
 
@@ -1728,11 +1730,11 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
 			if(flag&4) {
 				if (spawn >= 100) return 0; //Limit of retries reached.
 				if (spawn++ < battle_config.no_spawn_on_player &&
-					map_foreachinallarea(map_count_sub, m,
-						*x-AREA_SIZE, *y-AREA_SIZE,
-					  	*x+AREA_SIZE, *y+AREA_SIZE, BL_PC)
-				)
-				continue;
+						map_obj.foreachinallarea(map_count_sub, m,
+							*x-AREA_SIZE, *y-AREA_SIZE,
+							*x+AREA_SIZE, *y+AREA_SIZE, BL_PC)
+				   )
+					continue;
 			}
 			return 1;
 		}
@@ -1750,14 +1752,14 @@ int map_search_freecell(struct block_list *src, int16 m, int16 *x,int16 *y, int1
  * flag: 
  *		0x1 - only count standing units
  *------------------------------------------*/
-bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
+bool Map_Obj::closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
 {
 	uint8 dir = 6;
 	int16 tx = *x;
 	int16 ty = *y;
 	int costrange = 10;
 
-	if(!map_count_oncell(m, tx, ty, type, flag))
+	if(!map_obj.count_oncell(m, tx, ty, type, flag))
 		return true; //Current cell is free
 
 	//Algorithm only works up to costrange of 34
@@ -1769,7 +1771,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
 		if(dir%2 == 0 && costrange%MOVE_COST == 0) {
 			tx = *x+dx*(costrange/MOVE_COST);
 			ty = *y+dy*(costrange/MOVE_COST);
-			if(!map_count_oncell(m, tx, ty, type, flag) && map_getcell(m,tx,ty,CELL_CHKPASS)) {
+			if(!map_obj.count_oncell(m, tx, ty, type, flag) && map_getcell(m,tx,ty,CELL_CHKPASS)) {
 				*x = tx;
 				*y = ty;
 				return true;
@@ -1779,7 +1781,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
 		else if(dir%2 == 1 && costrange%MOVE_DIAGONAL_COST == 0) {
 			tx = *x+dx*(costrange/MOVE_DIAGONAL_COST);
 			ty = *y+dy*(costrange/MOVE_DIAGONAL_COST);
-			if(!map_count_oncell(m, tx, ty, type, flag) && map_getcell(m,tx,ty,CELL_CHKPASS)) {
+			if(!map_obj.count_oncell(m, tx, ty, type, flag) && map_getcell(m,tx,ty,CELL_CHKPASS)) {
 				*x = tx;
 				*y = ty;
 				return true;
@@ -1789,14 +1791,14 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
 		else if(dir%2 == 1 && costrange%MOVE_COST == 4) {
 			tx = *x+dx*((dir%4==3)?(costrange/MOVE_COST):1);
 			ty = *y+dy*((dir%4==1)?(costrange/MOVE_COST):1);
-			if(!map_count_oncell(m, tx, ty, type, flag) && map_getcell(m,tx,ty,CELL_CHKPASS)) {
+			if(!map_obj.count_oncell(m, tx, ty, type, flag) && map_getcell(m,tx,ty,CELL_CHKPASS)) {
 				*x = tx;
 				*y = ty;
 				return true;
 			}
 			tx = *x+dx*((dir%4==1)?(costrange/MOVE_COST):1);
 			ty = *y+dy*((dir%4==3)?(costrange/MOVE_COST):1);
-			if(!map_count_oncell(m, tx, ty, type, flag) && map_getcell(m,tx,ty,CELL_CHKPASS)) {
+			if(!map_obj.count_oncell(m, tx, ty, type, flag) && map_getcell(m,tx,ty,CELL_CHKPASS)) {
 				*x = tx;
 				*y = ty;
 				return true;
@@ -1836,7 +1838,7 @@ bool map_closest_freecell(int16 m, int16 *x, int16 *y, int type, int flag)
  * @param mob_id: Monster ID if dropped by monster
  * @return 0:failure, x:item_gid [MIN_FLOORITEM;MAX_FLOORITEM]==[2;START_ACCOUNT_NUM]
  *------------------------------------------*/
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect)
+int Map_Obj::addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect)
 {
 	int r;
 	struct flooritem_data *fitem = NULL;
@@ -1856,7 +1858,7 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 	fitem->bl.m=m;
 	fitem->bl.x=x;
 	fitem->bl.y=y;
-	fitem->bl.id = map_get_new_object_id();
+	fitem->bl.id = map_obj.get_new_object_id();
 	if (fitem->bl.id==0) {
 		aFree(fitem);
 		return 0;
@@ -1876,10 +1878,10 @@ int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, i
 	fitem->suby = ((r>>2)&3)*3+3;
 	fitem->cleartimer = add_timer(gettick()+battle_config.flooritem_lifetime,map_clearflooritem_timer,fitem->bl.id,0);
 
-	map_addiddb(&fitem->bl);
-	if (map_addblock(&fitem->bl))
+	map_obj.addiddb(&fitem->bl);
+	if (map_obj.addblock(&fitem->bl))
 		return 0;
-	clif_dropflooritem(fitem,canShowEffect);
+	clif.dropflooritem(fitem,canShowEffect);
 
 	return fitem->bl.id;
 }
@@ -1896,11 +1898,11 @@ static DBData create_charid2nick(DBKey key, va_list args)
 
 /// Adds(or replaces) the nick of charid to nick_db and fulfils pending requests.
 /// Does nothing if the character is online.
-void map_addnickdb(int charid, const char* nick)
+void Map_Obj::addnickdb(int charid, const char* nick)
 {
 	struct charid2nick* p;
-	
-	if( map_charid2sd(charid) )
+
+	if( map_obj.charid2sd(charid) )
 		return;// already online
 
 	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
@@ -1911,16 +1913,16 @@ void map_addnickdb(int charid, const char* nick)
 		struct charid_request* req;
 		req = p->requests;
 		p->requests = req->next;
-		sd = map_charid2sd(req->charid);
+		sd = map_obj.charid2sd(req->charid);
 		if( sd )
-			clif_solved_charname(sd->fd, charid, p->nick);
+			clif.solved_charname(sd->fd, charid, p->nick);
 		aFree(req);
 	}
 }
 
 /// Removes the nick of charid from nick_db.
 /// Sends name to all pending requests on charid.
-void map_delnickdb(int charid, const char* name)
+void Map_Obj::delnickdb(int charid, const char* name)
 {
 	struct charid2nick* p;
 	DBData data;
@@ -1933,9 +1935,9 @@ void map_delnickdb(int charid, const char* name)
 		struct map_session_data* sd;
 		req = p->requests;
 		p->requests = req->next;
-		sd = map_charid2sd(req->charid);
+		sd = map_obj.charid2sd(req->charid);
 		if( sd )
-			clif_solved_charname(sd->fd, charid, name);
+			clif.solved_charname(sd->fd, charid, name);
 		aFree(req);
 	}
 	aFree(p);
@@ -1944,7 +1946,7 @@ void map_delnickdb(int charid, const char* name)
 /// Notifies sd of the nick of charid.
 /// Uses the name in the character if online.
 /// Uses the name in nick_db if offline.
-void map_reqnickdb(struct map_session_data * sd, int charid)
+void Map_Obj::reqnickdb(struct map_session_data * sd, int charid)
 {
 	struct charid2nick* p;
 	struct charid_request* req;
@@ -1952,17 +1954,17 @@ void map_reqnickdb(struct map_session_data * sd, int charid)
 
 	nullpo_retv(sd);
 
-	tsd = map_charid2sd(charid);
+	tsd = map_obj.charid2sd(charid);
 	if( tsd )
 	{
-		clif_solved_charname(sd->fd, charid, tsd->status.name);
+		clif.solved_charname(sd->fd, charid, tsd->status.name);
 		return;
 	}
 
 	p = (struct charid2nick*)idb_ensure(nick_db, charid, create_charid2nick);
 	if( *p->nick )
 	{
-		clif_solved_charname(sd->fd, charid, p->nick);
+		clif.solved_charname(sd->fd, charid, p->nick);
 		return;
 	}
 	// not in cache, request it
@@ -1975,7 +1977,7 @@ void map_reqnickdb(struct map_session_data * sd, int charid)
 /*==========================================
  * add bl to id_db
  *------------------------------------------*/
-void map_addiddb(struct block_list *bl)
+void Map_Obj::addiddb(struct block_list *bl)
 {
 	nullpo_retv(bl);
 
@@ -2003,7 +2005,7 @@ void map_addiddb(struct block_list *bl)
 /*==========================================
  * remove bl from id_db
  *------------------------------------------*/
-void map_deliddb(struct block_list *bl)
+void Map_Obj::deliddb(struct block_list *bl)
 {
 	nullpo_retv(bl);
 
@@ -2028,7 +2030,7 @@ void map_deliddb(struct block_list *bl)
 /*==========================================
  * Standard call when a player connection is closed.
  *------------------------------------------*/
-int map_quit(struct map_session_data *sd) {
+int Map_Obj::quit(struct map_session_data *sd) {
 	int i;
 
 	if (sd->state.keepshop == false) { // Close vending/buyingstore
@@ -2041,7 +2043,7 @@ int map_quit(struct map_session_data *sd) {
 	if(!sd->state.active) { //Removing a player that is not active.
 		struct auth_node *node = chrif_search(sd->status.account_id);
 		if (node && node->char_id == sd->status.char_id &&
-			node->state != ST_LOGOUT)
+				node->state != ST_LOGOUT)
 			//Except when logging out, clear the auth-connect data immediately.
 			chrif_auth_delete(node->account_id, node->char_id, node->state);
 		//Non-active players should not have loaded any data yet (or it was cleared already) so no additional cleanups are needed.
@@ -2071,8 +2073,8 @@ int map_quit(struct map_session_data *sd) {
 	npc_script_event(sd, NPCE_LOGOUT);
 
 	//Unit_free handles clearing the player related data,
-	//map_quit handles extra specific data which is related to quitting normally
-	//(changing map-servers invokes unit_free but bypasses map_quit)
+	//map_obj.quit handles extra specific data which is related to quitting normally
+	//(changing map-servers invokes unit_free but bypasses map_obj.quit)
 	if( sd->sc.count ) {
 		//Status that are not saved...
 		status_change_end(&sd->bl, SC_BOSSMAPINFO, INVALID_TIMER);
@@ -2177,7 +2179,7 @@ int map_quit(struct map_session_data *sd) {
 		else
 			pt = &sd->status.save_point;
 
-		if( (m=map_mapindex2mapid(pt->map)) >= 0 )
+		if( (m=map_obj.mapindex2mapid(pt->map)) >= 0 )
 		{
 			sd->bl.m = m;
 			sd->bl.x = pt->x;
@@ -2205,53 +2207,54 @@ int map_quit(struct map_session_data *sd) {
 /*==========================================
  * Lookup, id to session (player,mob,npc,homon,merc..)
  *------------------------------------------*/
-struct map_session_data * map_id2sd(int id){
+struct map_session_data * Map_Obj::id2sd(int id){
+	ShowDebug("(norm) in real id2sd");
 	if (id <= 0) return NULL;
 	return (struct map_session_data*)idb_get(pc_db,id);
 }
 
-struct mob_data * map_id2md(int id){
+struct mob_data * Map_Obj::id2md(int id){
 	if (id <= 0) return NULL;
 	return (struct mob_data*)idb_get(mobid_db,id);
 }
 
-struct npc_data * map_id2nd(int id){
-	struct block_list* bl = map_id2bl(id);
+struct npc_data * Map_Obj::id2nd(int id){
+	struct block_list* bl = map_obj.id2bl(id);
 	return BL_CAST(BL_NPC, bl);
 }
 
-struct homun_data* map_id2hd(int id){
-	struct block_list* bl = map_id2bl(id);
+struct homun_data* Map_Obj::id2hd(int id){
+	struct block_list* bl = map_obj.id2bl(id);
 	return BL_CAST(BL_HOM, bl);
 }
 
-struct mercenary_data* map_id2mc(int id){
-	struct block_list* bl = map_id2bl(id);
+struct mercenary_data* Map_Obj::id2mc(int id){
+	struct block_list* bl = map_obj.id2bl(id);
 	return BL_CAST(BL_MER, bl);
 }
 
-struct pet_data* map_id2pd(int id){
-	struct block_list* bl = map_id2bl(id);
+struct pet_data* Map_Obj::id2pd(int id){
+	struct block_list* bl = map_obj.id2bl(id);
 	return BL_CAST(BL_PET, bl);
 }
 
-struct elemental_data* map_id2ed(int id) {
-	struct block_list* bl = map_id2bl(id);
+struct elemental_data* Map_Obj::id2ed(int id) {
+	struct block_list* bl = map_obj.id2bl(id);
 	return BL_CAST(BL_ELEM, bl);
 }
 
-struct chat_data* map_id2cd(int id){
-	struct block_list* bl = map_id2bl(id);
+struct chat_data* Map_Obj::id2cd(int id){
+	struct block_list* bl = map_obj.id2bl(id);
 	return BL_CAST(BL_CHAT, bl);
 }
 
 /// Returns the nick of the target charid or NULL if unknown (requests the nick to the char server).
-const char* map_charid2nick(int charid)
+const char* Map_Obj::charid2nick(int charid)
 {
 	struct charid2nick *p;
 	struct map_session_data* sd;
 
-	sd = map_charid2sd(charid);
+	sd = map_obj.charid2sd(charid);
 	if( sd )
 		return sd->status.name;// character is online, return it's name
 
@@ -2264,7 +2267,7 @@ const char* map_charid2nick(int charid)
 }
 
 /// Returns the struct map_session_data of the charid or NULL if the char is not online.
-struct map_session_data* map_charid2sd(int charid)
+struct map_session_data* Map_Obj::charid2sd(int charid)
 {
 	return (struct map_session_data*)uidb_get(charid_db, charid);
 }
@@ -2274,7 +2277,7 @@ struct map_session_data* map_charid2sd(int charid)
  * (without sensitive case if necessary)
  * return map_session_data pointer or NULL
  *------------------------------------------*/
-struct map_session_data * map_nick2sd(const char *nick, bool allow_partial)
+struct map_session_data * Map_Obj::nick2sd(const char *nick, bool allow_partial)
 {
 	struct map_session_data* sd;
 	struct map_session_data* found_sd;
@@ -2324,21 +2327,21 @@ struct map_session_data * map_nick2sd(const char *nick, bool allow_partial)
 /*==========================================
  * Looksup id_db DBMap and returns BL pointer of 'id' or NULL if not found
  *------------------------------------------*/
-struct block_list * map_id2bl(int id) {
+struct block_list * Map_Obj::id2bl(int id) {
 	return (struct block_list*)idb_get(id_db,id);
 }
 
 /**
- * Same as map_id2bl except it only checks for its existence
+ * Same as map_obj.id2bl except it only checks for its existence
  **/
-bool map_blid_exists( int id ) {
+bool Map_Obj::blid_exists( int id ) {
 	return (idb_exists(id_db,id));
 }
 
 /*==========================================
  * Convex Mirror
  *------------------------------------------*/
-struct mob_data * map_getmob_boss(int16 m)
+struct mob_data * Map_Obj::getmob_boss(int16 m)
 {
 	DBIterator* iter;
 	struct mob_data *md = NULL;
@@ -2358,7 +2361,7 @@ struct mob_data * map_getmob_boss(int16 m)
 	return (found)? md : NULL;
 }
 
-struct mob_data * map_id2boss(int id)
+struct mob_data * Map_Obj::id2boss(int id)
 {
 	if (id <= 0) return NULL;
 	return (struct mob_data*)idb_get(bossid_db,id);
@@ -2366,7 +2369,7 @@ struct mob_data * map_id2boss(int id)
 
 /// Applies func to all the players in the db.
 /// Stops iterating if func returns -1.
-void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
+void Map_Obj::foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
 {
 	DBIterator* iter;
 	struct map_session_data* sd;
@@ -2388,7 +2391,7 @@ void map_foreachpc(int (*func)(struct map_session_data* sd, va_list args), ...)
 
 /// Applies func to all the mobs in the db.
 /// Stops iterating if func returns -1.
-void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...)
+void Map_Obj::foreachmob(int (*func)(struct mob_data* md, va_list args), ...)
 {
 	DBIterator* iter;
 	struct mob_data* md;
@@ -2410,7 +2413,7 @@ void map_foreachmob(int (*func)(struct mob_data* md, va_list args), ...)
 
 /// Applies func to all the npcs in the db.
 /// Stops iterating if func returns -1.
-void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...)
+void Map_Obj::foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...)
 {
 	DBIterator* iter;
 	struct block_list* bl;
@@ -2436,7 +2439,7 @@ void map_foreachnpc(int (*func)(struct npc_data* nd, va_list args), ...)
 
 /// Applies func to everything in the db.
 /// Stops iterating if func returns -1.
-void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...)
+void Map_Obj::foreachregen(int (*func)(struct block_list* bl, va_list args), ...)
 {
 	DBIterator* iter;
 	struct block_list* bl;
@@ -2458,7 +2461,7 @@ void map_foreachregen(int (*func)(struct block_list* bl, va_list args), ...)
 
 /// Applies func to everything in the db.
 /// Stops iterating if func returns -1.
-void map_foreachiddb(int (*func)(struct block_list* bl, va_list args), ...)
+void Map_Obj::foreachiddb(int (*func)(struct block_list* bl, va_list args), ...)
 {
 	DBIterator* iter;
 	struct block_list* bl;
@@ -2494,8 +2497,8 @@ struct s_mapiterator
 /// @return true if it matches
 #define MAPIT_MATCHES(_mapit_,_bl_) \
 	( \
-		( (_bl_)->type & (_mapit_)->types /* type matches */ ) \
-	)
+	  ( (_bl_)->type & (_mapit_)->types /* type matches */ ) \
+	  )
 
 /// Allocates a new iterator.
 /// Returns the new iterator.
@@ -2627,7 +2630,7 @@ bool mapit_exists(struct s_mapiterator* mapit)
 /*==========================================
  * Add npc-bl to id_db, basically register npc to map
  *------------------------------------------*/
-bool map_addnpc(int16 m,struct npc_data *nd)
+bool Map_Obj::addnpc(int16 m,struct npc_data *nd)
 {
 	nullpo_ret(nd);
 
@@ -2651,9 +2654,9 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 /*==========================================
  * Add an instance map
  *------------------------------------------*/
-int map_addinstancemap(const char *name, unsigned short instance_id)
+int Map_Obj::addinstancemap(const char *name, unsigned short instance_id)
 {
-	int16 src_m = map_mapname2mapid(name);
+	int16 src_m = map_obj.mapname2mapid(name);
 	char iname[MAP_NAME_LENGTH];
 	size_t num_cell, size;
 
@@ -2678,7 +2681,7 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 		dst_m = map_num++;
 	else {
 		// Out of bounds
-		ShowError("map_addinstancemap failed. map_num(%d) > map_max(%d)\n", map_num, MAX_MAP_PER_SERVER);
+		ShowError("map_obj.addinstancemap failed. map_num(%d) > map_max(%d)\n", map_num, MAX_MAP_PER_SERVER);
 		return -3;
 	}
 
@@ -2723,11 +2726,11 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 	dst_map->channel = NULL;
 	dst_map->mob_delete_timer = INVALID_TIMER;
 
-	map_data_copy(dst_map, src_map);
+	map_obj.data_copy(dst_map, src_map);
 
 	ShowInfo("[Instance] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, name, src_map->m);
 
-	map_addmap2db(dst_map);
+	map_obj.addmap2db(dst_map);
 
 	return dst_m;
 }
@@ -2756,8 +2759,8 @@ static int map_instancemap_clean(struct block_list *bl, va_list ap)
 	switch(bl->type) {
 		/*case BL_PC:
 		// BL_PET, BL_HOM, BL_MER, and BL_ELEM are moved when BL_PC warped out in map_instancemap_leave
-			map_quit((struct map_session_data *) bl);
-			break;*/
+		map_obj.quit((struct map_session_data *) bl);
+		break;*/
 		case BL_NPC:
 			npc_unload((struct npc_data *)bl,true);
 			break;
@@ -2765,7 +2768,7 @@ static int map_instancemap_clean(struct block_list *bl, va_list ap)
 			unit_free(bl,CLR_OUTSIGHT);
 			break;
 		case BL_ITEM:
-			map_clearflooritem(bl);
+			map_obj.clearflooritem(bl);
 			break;
 		case BL_SKILL:
 			skill_delunit((struct skill_unit *) bl);
@@ -2780,7 +2783,7 @@ static void map_free_questinfo(struct map_data *mapdata);
 /*==========================================
  * Deleting an instance map
  *------------------------------------------*/
-int map_delinstancemap(int m)
+int Map_Obj::delinstancemap(int m)
 {
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -2788,10 +2791,10 @@ int map_delinstancemap(int m)
 		return 0;
 
 	// Kick everyone out
-	map_foreachinmap(map_instancemap_leave, m, BL_PC);
+	map_obj.foreachinmap(map_instancemap_leave, m, BL_PC);
 
 	// Do the unit cleanup
-	map_foreachinmap(map_instancemap_clean, m, BL_ALL);
+	map_obj.foreachinmap(map_instancemap_clean, m, BL_ALL);
 
 	if( mapdata->mob_delete_timer != INVALID_TIMER )
 		delete_timer(mapdata->mob_delete_timer, map_removemobs_timer);
@@ -2814,7 +2817,7 @@ int map_delinstancemap(int m)
 	mapdata->skill_damage.clear();
 
 	mapindex_removemap(mapdata->index);
-	map_removemapdb(mapdata);
+	map_obj.removemapdb(mapdata);
 
 	memset(&mapdata->name, '\0', sizeof(map[0].name)); // just remove the name
 	return 1;
@@ -2825,7 +2828,7 @@ int map_delinstancemap(int m)
  *-----------------------------------------*/
 // Stores the spawn data entry in the mob list.
 // Returns the index of successful, or -1 if the list was full.
-int map_addmobtolist(unsigned short m, struct spawn_data *spawn)
+int Map_Obj::addmobtolist(unsigned short m, struct spawn_data *spawn)
 {
 	size_t i;
 	struct map_data *mapdata = map_getmapdata(m);
@@ -2839,7 +2842,7 @@ int map_addmobtolist(unsigned short m, struct spawn_data *spawn)
 	return -1;
 }
 
-void map_spawnmobs(int16 m)
+void Map_Obj::spawnmobs(int16 m)
 {
 	int i, k=0;
 	struct map_data *mapdata = map_getmapdata(m);
@@ -2911,7 +2914,7 @@ TIMER_FUNC(map_removemobs_timer){
 	if (mapdata->users > 0) //Map not empty!
 		return 1;
 
-	count = map_foreachinmap(map_removemobs_sub, m, BL_MOB);
+	count = map_obj.foreachinmap(map_removemobs_sub, m, BL_MOB);
 
 	if (battle_config.etc_log && count > 0)
 		ShowStatus("Map %s: Removed '" CL_WHITE "%d" CL_RESET "' mobs.\n",mapdata->name, count);
@@ -2919,7 +2922,7 @@ TIMER_FUNC(map_removemobs_timer){
 	return 1;
 }
 
-void map_removemobs(int16 m)
+void Map_Obj::removemobs(int16 m)
 {
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -2936,7 +2939,7 @@ void map_removemobs(int16 m)
 /*==========================================
  * Check for map_name from map_id
  *------------------------------------------*/
-const char* map_mapid2mapname(int m)
+const char* Map_Obj::mapid2mapname(int m)
 {
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -2961,19 +2964,19 @@ const char* map_mapid2mapname(int m)
 /*==========================================
  * Hookup, get map_id from map_name
  *------------------------------------------*/
-int16 map_mapname2mapid(const char* name)
+int16 Map_Obj::mapname2mapid(const char* name)
 {
 	unsigned short map_index;
 	map_index = mapindex_name2id(name);
 	if (!map_index)
 		return -1;
-	return map_mapindex2mapid(map_index);
+	return map_obj.mapindex2mapid(map_index);
 }
 
 /*==========================================
  * Returns the map of the given mapindex. [Skotlex]
  *------------------------------------------*/
-int16 map_mapindex2mapid(unsigned short mapindex)
+int16 Map_Obj::mapindex2mapid(unsigned short mapindex)
 {
 	struct map_data *md=NULL;
 
@@ -2989,7 +2992,7 @@ int16 map_mapindex2mapid(unsigned short mapindex)
 /*==========================================
  * Switching Ip, port ? (like changing map_server) get ip/port from map_name
  *------------------------------------------*/
-int map_mapname2ipport(unsigned short name, uint32* ip, uint16* port)
+int Map_Obj::mapname2ipport(unsigned short name, uint32* ip, uint16* port)
 {
 	struct map_data_other_server *mdos;
 
@@ -3004,7 +3007,7 @@ int map_mapname2ipport(unsigned short name, uint32* ip, uint16* port)
 /*==========================================
  * Checks if both dirs point in the same direction.
  *------------------------------------------*/
-int map_check_dir(int s_dir,int t_dir)
+int Map_Obj::check_dir(int s_dir,int t_dir)
 {
 	if(s_dir == t_dir)
 		return 0;
@@ -3024,13 +3027,13 @@ int map_check_dir(int s_dir,int t_dir)
 /*==========================================
  * Returns the direction of the given cell, relative to 'src'
  *------------------------------------------*/
-uint8 map_calc_dir(struct block_list* src, int16 x, int16 y)
+uint8 Map_Obj::calc_dir(struct block_list* src, int16 x, int16 y)
 {
 	uint8 dir = 0;
 
 	nullpo_ret(src);
 
-	dir = map_calc_dir_xy(src->x, src->y, x, y, unit_getdir(src));
+	dir = map_obj.calc_dir_xy(src->x, src->y, x, y, unit_getdir(src));
 
 	return dir;
 }
@@ -3039,7 +3042,7 @@ uint8 map_calc_dir(struct block_list* src, int16 x, int16 y)
  * Returns the direction of the given cell, relative to source cell
  * Use this if you don't have a block list available to check against
  *------------------------------------------*/
-uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir) {
+uint8 Map_Obj::calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir) {
 	uint8 dir = 0;
 	int dx, dy;
 
@@ -3082,7 +3085,7 @@ uint8 map_calc_dir_xy(int16 srcx, int16 srcy, int16 x, int16 y, uint8 srcdir) {
  * Randomizes target cell x,y to a random walkable cell that
  * has the same distance from object as given coordinates do. [Skotlex]
  *------------------------------------------*/
-int map_random_dir(struct block_list *bl, int16 *x, int16 *y)
+int Map_Obj::random_dir(struct block_list *bl, int16 *x, int16 *y)
 {
 	short xi = *x-bl->x;
 	short yi = *y-bl->y;
@@ -3099,8 +3102,8 @@ int map_random_dir(struct block_list *bl, int16 *x, int16 *y)
 		segment = (short)sqrt((float)(dist2 - segment*segment)); //The complement of the previously picked segment
 		yi = bl->y + segment*diry[j];
 	} while (
-		(map_getcell(bl->m,xi,yi,CELL_CHKNOPASS) || !path_search(NULL,bl->m,bl->x,bl->y,xi,yi,1,CELL_CHKNOREACH))
-		&& (++i)<100 );
+			(map_getcell(bl->m,xi,yi,CELL_CHKNOPASS) || !path_search(NULL,bl->m,bl->x,bl->y,xi,yi,1,CELL_CHKNOREACH))
+			&& (++i)<100 );
 
 	if (i < 100) {
 		*x = xi;
@@ -3125,14 +3128,14 @@ inline static struct mapcell map_gat2cell(int gat) {
 		case 5: cell.walkable = 0; cell.shootable = 1; cell.water = 0; break; // gap (snipable)
 		case 6: cell.walkable = 1; cell.shootable = 1; cell.water = 0; break; // ???
 		default:
-			ShowWarning("map_gat2cell: unrecognized gat type '%d'\n", gat);
-			break;
+				ShowWarning("map_gat2cell: unrecognized gat type '%d'\n", gat);
+				break;
 	}
 
 	return cell;
 }
 
-static int map_cell2gat(struct mapcell cell)
+int map_cell2gat(struct mapcell cell)
 {
 	if( cell.walkable == 1 && cell.shootable == 1 && cell.water == 0 ) return 0;
 	if( cell.walkable == 0 && cell.shootable == 0 && cell.water == 0 ) return 1;
@@ -3172,7 +3175,7 @@ int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk)
 		case CELL_GETTYPE:
 			return map_cell2gat(cell);
 
-		// base gat type checks
+			// base gat type checks
 		case CELL_CHKWALL:
 			return (!cell.walkable && !cell.shootable);
 
@@ -3183,7 +3186,7 @@ int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk)
 			return (!cell.walkable && cell.shootable);
 
 
-		// base cell type checks
+			// base cell type checks
 		case CELL_CHKNPC:
 			return (cell.npc);
 		case CELL_CHKBASILICA:
@@ -3199,7 +3202,7 @@ int map_getcellp(struct map_data* m,int16 x,int16 y,cell_chk cellchk)
 		case CELL_CHKICEWALL:
 			return (cell.icewall);
 
-		// special checks
+			// special checks
 		case CELL_CHKPASS:
 #ifdef CELL_NOSTACK
 			if (cell.cell_bl >= battle_config.custom_cell_stack_limit) return 0;
@@ -3254,8 +3257,8 @@ void map_setcell(int16 m, int16 x, int16 y, cell_t cell, bool flag)
 		case CELL_MAELSTROM:	 mapdata->cell[j].maelstrom = flag;	  break;
 		case CELL_ICEWALL:		 mapdata->cell[j].icewall = flag;		  break;
 		default:
-			ShowWarning("map_setcell: invalid cell type '%d'\n", (int)cell);
-			break;
+								 ShowWarning("map_setcell: invalid cell type '%d'\n", (int)cell);
+								 break;
 	}
 }
 
@@ -3281,7 +3284,7 @@ void map_setgatcell(int16 m, int16 x, int16 y, int gat)
  *------------------------------------------*/
 static DBMap* iwall_db;
 
-bool map_iwall_exist(const char* wall_name)
+bool Map_Obj::iwall_exist(const char* wall_name)
 {
 	return strdb_exists(iwall_db, wall_name);
 }
@@ -3303,7 +3306,7 @@ void map_iwall_nextxy(int16 x, int16 y, int8 dir, int pos, int16 *x1, int16 *y1)
 		*y1 = y + pos;
 }
 
-bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name)
+bool Map_Obj::iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable, const char* wall_name)
 {
 	struct iwall_data *iwall;
 	int i;
@@ -3337,7 +3340,7 @@ bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable
 		map_setcell(m, x1, y1, CELL_WALKABLE, false);
 		map_setcell(m, x1, y1, CELL_SHOOTABLE, shootable);
 
-		clif_changemapcell(0, m, x1, y1, map_getcell(m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+		clif.changemapcell(0, m, x1, y1, map_getcell(m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 	}
 
 	iwall->size = i;
@@ -3348,7 +3351,7 @@ bool map_iwall_set(int16 m, int16 x, int16 y, int size, int8 dir, bool shootable
 	return true;
 }
 
-void map_iwall_get(struct map_session_data *sd) {
+void Map_Obj::iwall_get(struct map_session_data *sd) {
 	struct iwall_data *iwall;
 	DBIterator* iter;
 	int16 x1, y1;
@@ -3364,13 +3367,13 @@ void map_iwall_get(struct map_session_data *sd) {
 
 		for( i = 0; i < iwall->size; i++ ) {
 			map_iwall_nextxy(iwall->x, iwall->y, iwall->dir, i, &x1, &y1);
-			clif_changemapcell(sd->fd, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), SELF);
+			clif.changemapcell(sd->fd, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), SELF);
 		}
 	}
 	dbi_destroy(iter);
 }
 
-bool map_iwall_remove(const char *wall_name)
+bool Map_Obj::iwall_remove(const char *wall_name)
 {
 	struct iwall_data *iwall;
 	int16 i, x1, y1;
@@ -3384,7 +3387,7 @@ bool map_iwall_remove(const char *wall_name)
 		map_setcell(iwall->m, x1, y1, CELL_SHOOTABLE, true);
 		map_setcell(iwall->m, x1, y1, CELL_WALKABLE, true);
 
-		clif_changemapcell(0, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
+		clif.changemapcell(0, iwall->m, x1, y1, map_getcell(iwall->m, x1, y1, CELL_GETTYPE), ALL_SAMEMAP);
 	}
 
 	map_getmapdata(iwall->m)->iwall_num--;
@@ -3408,7 +3411,7 @@ static DBData create_map_data_other_server(DBKey key, va_list args)
 /*==========================================
  * Add mapindex to db of another map server
  *------------------------------------------*/
-int map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
+int Map_Obj::setipport(unsigned short mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
 
@@ -3416,9 +3419,9 @@ int map_setipport(unsigned short mapindex, uint32 ip, uint16 port)
 
 	if(mdos->cell) //Local map,Do nothing. Give priority to our own local maps over ones from another server. [Skotlex]
 		return 0;
-	if(ip == clif_getip() && port == clif_getport()) {
+	if(ip == clif.getip() && port == clif.getport()) {
 		//That's odd, we received info that we are the ones with this map, but... we don't have it.
-		ShowFatalError("map_setipport : received info that this map-server SHOULD have map '%s', but it is not loaded.\n",mapindex_id2name(mapindex));
+		ShowFatalError("map_obj.setipport : received info that this map-server SHOULD have map '%s', but it is not loaded.\n",mapindex_id2name(mapindex));
 		exit(EXIT_FAILURE);
 	}
 	mdos->ip   = ip;
@@ -3440,7 +3443,7 @@ int map_eraseallipport_sub(DBKey key, DBData *data, va_list va)
 	return 0;
 }
 
-int map_eraseallipport(void)
+int Map_Obj::eraseallipport(void)
 {
 	map_db->foreach(map_db,map_eraseallipport_sub);
 	return 1;
@@ -3449,7 +3452,7 @@ int map_eraseallipport(void)
 /*==========================================
  * Delete mapindex from db of another map server
  *------------------------------------------*/
-int map_eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
+int Map_Obj::eraseipport(unsigned short mapindex, uint32 ip, uint16 port)
 {
 	struct map_data_other_server *mdos;
 
@@ -3574,7 +3577,7 @@ static void map_delmapid(int id)
 	map_num--;
 }
 
-int map_delmap(char* mapname){
+int Map_Obj::delmap(char* mapname){
 	char map_name[MAP_NAME_LENGTH];
 
 	if (strcmpi(mapname, "all") == 0) {
@@ -3594,7 +3597,7 @@ int map_delmap(char* mapname){
 }
 
 /// Initializes map flags and adjusts them depending on configuration.
-void map_flags_init(void){
+void Map_Obj::flags_init(void){
 	for (int i = 0; i < map_num; i++) {
 		struct map_data *mapdata = &map[i];
 		union u_mapflag_args args = {};
@@ -3606,8 +3609,8 @@ void map_flags_init(void){
 		// additional mapflag data
 		mapdata->zone = 0; // restricted mapflag zone
 		mapdata->flag[MF_NOCOMMAND] = false; // nocommand mapflag level
-		map_setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
-		map_setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
+		map_obj.setmapflag_sub(i, MF_BEXP, true, &args); // per map base exp multiplicator
+		map_obj.setmapflag_sub(i, MF_JEXP, true, &args); // per map job exp multiplicator
 
 		// Clear adjustment data, will be reset after loading NPC
 		mapdata->damage_adjust = {};
@@ -3625,11 +3628,11 @@ void map_flags_init(void){
 }
 
 /**
-* Copying map data from parent map for instance map
-* @param dst_map Mapdata will be copied to
-* @param src_map Copying data from
-*/
-void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
+ * Copying map data from parent map for instance map
+ * @param dst_map Mapdata will be copied to
+ * @param src_map Copying data from
+ */
+void Map_Obj::data_copy(struct map_data *dst_map, struct map_data *src_map) {
 	nullpo_retv(dst_map);
 	nullpo_retv(src_map);
 
@@ -3653,17 +3656,17 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 }
 
 /**
-* Copy map data for instance maps from its parents
-* that were cleared in map_flags_init() after reloadscript
-*/
-void map_data_copyall (void) {
+ * Copy map data for instance maps from its parents
+ * that were cleared in map_flags_init() after reloadscript
+ */
+void Map_Obj::data_copyall (void) {
 	if (!instance_start)
 		return;
 	for (int i = instance_start; i < map_num; i++) {
 		struct map_data *mapdata = &map[i];
 		if (!mapdata || mapdata->name[0] == '\0' || !mapdata->instance_src_map)
 			continue;
-		map_data_copy(mapdata, &map[mapdata->instance_src_map]);
+		map_obj.data_copy(mapdata, &map[mapdata->instance_src_map]);
 	}
 }
 
@@ -3678,7 +3681,7 @@ void map_data_copyall (void) {
 int map_waterheight(char* mapname)
 {
 	char fn[256];
- 	char *rsw, *found;
+	char *rsw, *found;
 
 	//Look up for the rsw
 	sprintf(fn, "data\\%s.rsw", mapname);
@@ -3744,12 +3747,12 @@ int map_readgat (struct map_data* m)
 /*======================================
  * Add/Remove map to the map_db
  *--------------------------------------*/
-void map_addmap2db(struct map_data *m)
+void Map_Obj::addmap2db(struct map_data *m)
 {
 	uidb_put(map_db, (unsigned int)m->index, m);
 }
 
-void map_removemapdb(struct map_data *m)
+void Map_Obj::removemapdb(struct map_data *m)
 {
 	uidb_remove(map_db, (unsigned int)m->index);
 }
@@ -3849,7 +3852,7 @@ int map_readallmaps (void)
 			continue;
 		}
 
-		map_addmap2db(mapdata);
+		map_obj.addmap2db(mapdata);
 
 		mapdata->m = i;
 		memset(mapdata->moblist, 0, sizeof(mapdata->moblist));	//Initialize moblist [Skotlex]
@@ -3870,7 +3873,7 @@ int map_readallmaps (void)
 	}
 
 	// intialization and configuration-dependent adjustments of mapflags
-	map_flags_init();
+	map_obj.flags_init();
 
 	if( !enable_grf ) {
 		// The cache isn't needed anymore, so free it. [Shinryo]
@@ -3930,13 +3933,13 @@ int parse_console(const char* buf){
 
 	if(strcmpi("admin",type) == 0 ) {
 		if(strcmpi("map",command) == 0){
-			int16 m = map_mapname2mapid(mapname);
+			int16 m = map_obj.mapname2mapid(mapname);
 			if( m < 0 ){
 				ShowWarning("Console: Unknown map.\n");
 				return 0;
 			}
 			sd.bl.m = m;
-			map_search_freecell(&sd.bl, m, &sd.bl.x, &sd.bl.y, -1, -1, 0);
+			map_obj.search_freecell(&sd.bl, m, &sd.bl.x, &sd.bl.y, -1, -1, 0);
 			if( x > 0 )
 				sd.bl.x = x;
 			if( y > 0 )
@@ -4014,16 +4017,16 @@ int map_config_read(const char *cfgName)
 		else if (strcmpi(w1, "char_port") == 0)
 			chrif_setport(atoi(w2));
 		else if (strcmpi(w1, "map_ip") == 0)
-			map_ip_set = clif_setip(w2);
+			map_ip_set = clif.setip(w2);
 		else if (strcmpi(w1, "bind_ip") == 0)
-			clif_setbindip(w2);
+			clif.setbindip(w2);
 		else if (strcmpi(w1, "map_port") == 0) {
-			clif_setport(atoi(w2));
+			clif.setport(atoi(w2));
 			map_port = (atoi(w2));
 		} else if (strcmpi(w1, "map") == 0)
 			map_addmap(w2);
 		else if (strcmpi(w1, "delmap") == 0)
-			map_delmap(w2);
+			map_obj.delmap(w2);
 		else if (strcmpi(w1, "npc") == 0)
 			npc_addsrcfile(w2, false);
 		else if (strcmpi(w1, "delnpc") == 0)
@@ -4116,7 +4119,7 @@ void map_reloadnpc_sub(const char *cfgName)
 	fclose(fp);
 }
 
-void map_reloadnpc(bool clear)
+void Map_Obj::reloadnpc(bool clear)
 {
 	if (clear)
 		npc_addsrcfile("clear", false); // this will clear the current script list
@@ -4190,50 +4193,50 @@ int inter_config_read(const char *cfgName)
 		else if (strcmpi(w1, "guild_storage_log") == 0)
 			safestrncpy(guild_storage_log_table, w2, sizeof(guild_storage_log_table));
 		else
-		//Map Server SQL DB
-		if(strcmpi(w1,"map_server_ip")==0)
-			safestrncpy(map_server_ip, w2, sizeof(map_server_ip));
-		else
-		if(strcmpi(w1,"map_server_port")==0)
-			map_server_port=atoi(w2);
-		else
-		if(strcmpi(w1,"map_server_id")==0)
-			safestrncpy(map_server_id, w2, sizeof(map_server_id));
-		else
-		if(strcmpi(w1,"map_server_pw")==0)
-			safestrncpy(map_server_pw, w2, sizeof(map_server_pw));
-		else
-		if(strcmpi(w1,"map_server_db")==0)
-			safestrncpy(map_server_db, w2, sizeof(map_server_db));
-		else
-		if(strcmpi(w1,"default_codepage")==0)
-			safestrncpy(default_codepage, w2, sizeof(default_codepage));
-		else
-		if(strcmpi(w1,"use_sql_db")==0) {
-			db_use_sqldbs = config_switch(w2);
-			ShowStatus ("Using SQL dbs: %s\n",w2);
-		} else
-		if(strcmpi(w1,"log_db_ip")==0)
-			safestrncpy(log_db_ip, w2, sizeof(log_db_ip));
-		else
-		if(strcmpi(w1,"log_db_id")==0)
-			safestrncpy(log_db_id, w2, sizeof(log_db_id));
-		else
-		if(strcmpi(w1,"log_db_pw")==0)
-			safestrncpy(log_db_pw, w2, sizeof(log_db_pw));
-		else
-		if(strcmpi(w1,"log_db_port")==0)
-			log_db_port = atoi(w2);
-		else
-		if(strcmpi(w1,"log_db_db")==0)
-			safestrncpy(log_db_db, w2, sizeof(log_db_db));
-		else
-		if( mapreg_config_read(w1,w2) )
-			continue;
+			//Map Server SQL DB
+			if(strcmpi(w1,"map_server_ip")==0)
+				safestrncpy(map_server_ip, w2, sizeof(map_server_ip));
+			else
+				if(strcmpi(w1,"map_server_port")==0)
+					map_server_port=atoi(w2);
+				else
+					if(strcmpi(w1,"map_server_id")==0)
+						safestrncpy(map_server_id, w2, sizeof(map_server_id));
+					else
+						if(strcmpi(w1,"map_server_pw")==0)
+							safestrncpy(map_server_pw, w2, sizeof(map_server_pw));
+						else
+							if(strcmpi(w1,"map_server_db")==0)
+								safestrncpy(map_server_db, w2, sizeof(map_server_db));
+							else
+								if(strcmpi(w1,"default_codepage")==0)
+									safestrncpy(default_codepage, w2, sizeof(default_codepage));
+								else
+									if(strcmpi(w1,"use_sql_db")==0) {
+										db_use_sqldbs = config_switch(w2);
+										ShowStatus ("Using SQL dbs: %s\n",w2);
+									} else
+										if(strcmpi(w1,"log_db_ip")==0)
+											safestrncpy(log_db_ip, w2, sizeof(log_db_ip));
+										else
+											if(strcmpi(w1,"log_db_id")==0)
+												safestrncpy(log_db_id, w2, sizeof(log_db_id));
+											else
+												if(strcmpi(w1,"log_db_pw")==0)
+													safestrncpy(log_db_pw, w2, sizeof(log_db_pw));
+												else
+													if(strcmpi(w1,"log_db_port")==0)
+														log_db_port = atoi(w2);
+													else
+														if(strcmpi(w1,"log_db_db")==0)
+															safestrncpy(log_db_db, w2, sizeof(log_db_db));
+														else
+															if( mapreg_config_read(w1,w2) )
+																continue;
 		//support the import command, just like any other config
-		else
-		if(strcmpi(w1,"import")==0)
-			inter_config_read(w2);
+															else
+																if(strcmpi(w1,"import")==0)
+																	inter_config_read(w2);
 	}
 	fclose(fp);
 
@@ -4251,10 +4254,10 @@ int map_sql_init(void)
 
 	ShowInfo("Connecting to the Map DB Server....\n");
 	if( SQL_ERROR == Sql_Connect(mmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) ||
-		SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
+			SQL_ERROR == Sql_Connect(qsmysql_handle, map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db) )
 	{
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
+				map_server_id, map_server_pw, map_server_ip, map_server_port, map_server_db);
 		Sql_ShowDebug(mmysql_handle);
 		Sql_Free(mmysql_handle);
 		Sql_ShowDebug(qsmysql_handle);
@@ -4298,7 +4301,7 @@ int log_sql_init(void)
 	ShowInfo("" CL_WHITE "[SQL]" CL_RESET ": Connecting to the Log Database " CL_WHITE "%s" CL_RESET " At " CL_WHITE "%s" CL_RESET "...\n",log_db_db,log_db_ip);
 	if ( SQL_ERROR == Sql_Connect(logmysql_handle, log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db) ){
 		ShowError("Couldn't connect with uname='%s',passwd='%s',host='%s',port='%d',database='%s'\n",
-			log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db);
+				log_db_id, log_db_pw, log_db_ip, log_db_port, log_db_db);
 		Sql_ShowDebug(logmysql_handle);
 		Sql_Free(logmysql_handle);
 		exit(EXIT_FAILURE);
@@ -4312,7 +4315,7 @@ int log_sql_init(void)
 	return 0;
 }
 
-struct questinfo *map_add_questinfo(int m, struct questinfo *qi) {
+struct questinfo *Map_Obj::add_questinfo(int m, struct questinfo *qi) {
 	unsigned short i;
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -4339,7 +4342,7 @@ struct questinfo *map_add_questinfo(int m, struct questinfo *qi) {
 	return &mapdata->qi_data[i];
 }
 
-bool map_remove_questinfo(int m, struct npc_data *nd) {
+bool Map_Obj::remove_questinfo(int m, struct npc_data *nd) {
 	unsigned short i, c;
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -4404,7 +4407,7 @@ static void map_free_questinfo(struct map_data *mapdata) {
 	mapdata->qi_count = 0;
 }
 
-struct questinfo *map_has_questinfo(int m, struct npc_data *nd, int quest_id) {
+struct questinfo *Map_Obj::has_questinfo(int m, struct npc_data *nd, int quest_id) {
 	unsigned short i;
 	struct map_data *mapdata = map_getmapdata(m);
 
@@ -4455,7 +4458,7 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 
 	switch(bl->type) {
 		case BL_PC:
-			map_quit((struct map_session_data *) bl);
+			map_obj.quit((struct map_session_data *) bl);
 			break;
 		case BL_NPC:
 			npc_unload((struct npc_data *)bl,false);
@@ -4464,10 +4467,10 @@ int cleanup_sub(struct block_list *bl, va_list ap)
 			unit_free(bl,CLR_OUTSIGHT);
 			break;
 		case BL_PET:
-		//There is no need for this, the pet is removed together with the player. [Skotlex]
+			//There is no need for this, the pet is removed together with the player. [Skotlex]
 			break;
 		case BL_ITEM:
-			map_clearflooritem(bl);
+			map_obj.clearflooritem(bl);
 			break;
 		case BL_SKILL:
 			skill_delunit((struct skill_unit *) bl);
@@ -4487,7 +4490,7 @@ int cleanup_sub(struct block_list *bl, va_list ap)
  * @param other: Rate to Other target
  * @param caster: Caster type
  */
-void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
+void Map_Obj::skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG_MAX], uint16 caster) {
 	struct s_skill_damage entry = {};
 
 	for (int i = 0; i < SKILLDMG_MAX; i++)
@@ -4508,7 +4511,7 @@ void map_skill_damage_add(struct map_data *m, uint16 skill_id, int rate[SKILLDMG
  * @param skill_id: Skill ID to adjust
  * @param per: Skill duration adjustment value in percent
  */
-void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
+void Map_Obj::skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) {
 	if (mapd->skill_duration.find(skill_id) != mapd->skill_duration.end()) // Entry exists
 		mapd->skill_duration[skill_id] += per;
 	else // Update previous entry
@@ -4523,7 +4526,7 @@ void map_skill_duration_add(struct map_data *mapd, uint16 skill_id, uint16 per) 
  */
 static int map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
 {
-	struct map_session_data *sd = map_id2sd(bl->id);
+	struct map_session_data *sd = map_obj.id2sd(bl->id);
 
 	nullpo_retr(0, sd);
 
@@ -4536,7 +4539,7 @@ static int map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
 		sd->pvp_lost = 0;
 	}
 
-	clif_map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
+	clif.map_property(&sd->bl, MAPPROPERTY_FREEPVPZONE, SELF);
 	return 0;
 }
 
@@ -4548,9 +4551,9 @@ static int map_mapflag_pvp_start_sub(struct block_list *bl, va_list ap)
  */
 static int map_mapflag_pvp_stop_sub(struct block_list *bl, va_list ap)
 {
-	struct map_session_data* sd = map_id2sd(bl->id);
+	struct map_session_data* sd = map_obj.id2sd(bl->id);
 
-	clif_pvpset(sd, 0, 0, 2);
+	clif.pvpset(sd, 0, 0, 2);
 
 	if (sd->pvp_timer != INVALID_TIMER) {
 		delete_timer(sd->pvp_timer, pc_calc_pvprank_timer);
@@ -4565,7 +4568,7 @@ static int map_mapflag_pvp_stop_sub(struct block_list *bl, va_list ap)
  * @param name: Mapflag name
  * @return Mapflag enum value
  */
-enum e_mapflag map_getmapflag_by_name(char* name)
+enum e_mapflag Map_Obj::getmapflag_by_name(char* name)
 {
 	char flag_constant[255];
 	int mapflag;
@@ -4584,7 +4587,7 @@ enum e_mapflag map_getmapflag_by_name(char* name)
  * @param output: Stores the mapflag name
  * @return True on success otherwise false
  */
-bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
+bool Map_Obj::getmapflag_name( enum e_mapflag mapflag, char* output ){
 	const char* constant;
 	const char* prefix = "mf_";
 	int i, len = strlen(prefix);
@@ -4611,17 +4614,17 @@ bool map_getmapflag_name( enum e_mapflag mapflag, char* output ){
  * @param args: Arguments for special flags
  * @return Mapflag value on success or -1 on failure
  */
-int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args)
+int Map_Obj::getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *args)
 {
 	if (m < 0 || m >= MAX_MAP_PER_SERVER) {
-		ShowWarning("map_getmapflag: Invalid map ID %d.\n", m);
+		ShowWarning("map_obj.getmapflag: Invalid map ID %d.\n", m);
 		return -1;
 	}
 
 	struct map_data *mapdata = &map[m];
 
 	if (mapflag < MF_MIN || mapflag >= MF_MAX) {
-		ShowWarning("map_getmapflag: Invalid mapflag %d on map %s.\n", mapflag, mapdata->name);
+		ShowWarning("map_obj.getmapflag: Invalid mapflag %d on map %s.\n", mapflag, mapdata->name);
 		return -1;
 	}
 
@@ -4661,7 +4664,7 @@ int map_getmapflag_sub(int16 m, enum e_mapflag mapflag, union u_mapflag_args *ar
  * @param args: Arguments for special flags
  * @return True on success or false on failure
  */
-bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args)
+bool Map_Obj::setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_mapflag_args *args)
 {
 	if (m < 0 || m >= MAX_MAP_PER_SERVER) {
 		ShowWarning("map_setmapflag: Invalid map ID %d.\n", m);
@@ -4689,13 +4692,13 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 		case MF_PVP:
 			mapdata->flag[mapflag] = status; // Must come first to properly set map property
 			if (!status) {
-				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-				map_foreachinmap(map_mapflag_pvp_stop_sub, m, BL_PC);
-				map_foreachinmap(unit_stopattack, m, BL_CHAR, 0);
+				clif.map_property_mapall(m, MAPPROPERTY_NOTHING);
+				map_obj.foreachinmap(map_mapflag_pvp_stop_sub, m, BL_PC);
+				map_obj.foreachinmap(unit_stopattack, m, BL_CHAR, 0);
 			} else {
 				if (!battle_config.pk_mode) {
-					clif_map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
-					map_foreachinmap(map_mapflag_pvp_start_sub, m, BL_PC);
+					clif.map_property_mapall(m, MAPPROPERTY_FREEPVPZONE);
+					map_obj.foreachinmap(map_mapflag_pvp_start_sub, m, BL_PC);
 				}
 				if (mapdata->flag[MF_GVG]) {
 					mapdata->flag[MF_GVG] = false;
@@ -4727,10 +4730,10 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 		case MF_GVG_TE:
 			mapdata->flag[mapflag] = status; // Must come first to properly set map property
 			if (!status) {
-				clif_map_property_mapall(m, MAPPROPERTY_NOTHING);
-				map_foreachinmap(unit_stopattack, m, BL_CHAR, 0);
+				clif.map_property_mapall(m, MAPPROPERTY_NOTHING);
+				map_obj.foreachinmap(unit_stopattack, m, BL_CHAR, 0);
 			} else {
-				clif_map_property_mapall(m, MAPPROPERTY_AGITZONE);
+				clif.map_property_mapall(m, MAPPROPERTY_AGITZONE);
 				if (mapdata->flag[MF_PVP]) {
 					mapdata->flag[MF_PVP] = false;
 					if (!battle_config.pk_mode)
@@ -4897,7 +4900,7 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 			else {
 				nullpo_retr(false, args);
 
-				map_skill_duration_add(mapdata, args->skill_duration.skill_id, args->skill_duration.per);
+				map_obj.skill_duration_add(mapdata, args->skill_duration.skill_id, args->skill_duration.per);
 			}
 			mapdata->flag[mapflag] = status;
 			break;
@@ -4927,7 +4930,7 @@ void do_final(void){
 	//Ladies and babies first.
 	struct s_mapiterator* iter = mapit_getallusers();
 	for( struct map_session_data* sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-		map_quit(sd);
+		map_obj.quit(sd);
 	mapit_free(iter);
 
 	/* prepares npcs for a faster shutdown process */
@@ -4938,7 +4941,7 @@ void do_final(void){
 		struct map_data *mapdata = map_getmapdata(i);
 
 		ShowStatus("Cleaning up maps [%d/%d]: %s..." CL_CLL "\r", i++, map_num, mapdata->name);
-		map_foreachinmap(cleanup_sub, i, BL_ALL);
+		map_obj.foreachinmap(cleanup_sub, i, BL_ALL);
 		channel_delete(mapdata->channel,false);
 	}
 	ShowStatus("Cleaned up %d maps." CL_CLL "\n", map_num);
@@ -5042,7 +5045,7 @@ void do_abort(void)
 		return;
 	}
 	ShowError("Server received crash signal! Attempting to save all online characters!\n");
-	map_foreachpc(map_abort_sub);
+	map_obj.foreachpc(map_abort_sub);
 	chrif_flush_fifo();
 }
 
@@ -5169,7 +5172,7 @@ void do_shutdown(void)
 			struct map_session_data* sd;
 			struct s_mapiterator* iter = mapit_getallusers();
 			for( sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter) )
-				clif_GM_kick(NULL, sd);
+				clif.GM_kick(NULL, sd);
 			mapit_free(iter);
 			flush_fifos();
 		}
@@ -5177,8 +5180,16 @@ void do_shutdown(void)
 	}
 }
 
+Map_Obj::Map_Obj() {}
+Map_Obj::~Map_Obj() {
+}
+
 int do_init(int argc, char *argv[])
 {
+#ifdef TESTING
+	runflag = CORE_ST_STOP;
+	ShowMessage("Running tests!\n");
+#endif
 	runflag = MAPSERVER_ST_STARTING;
 #ifdef GCOLLECT
 	GC_enable_incremental();
@@ -5220,7 +5231,7 @@ int do_init(int argc, char *argv[])
 		ShowWarning("Value of 'save_settings' is not set, player's data only will be saved every 'autosave_time' (%d seconds).\n", autosave_interval/1000);
 
 	// loads npcs
-	map_reloadnpc(false);
+	map_obj.reloadnpc(false);
 
 	chrif_checkdefaultlogin();
 
@@ -5241,7 +5252,7 @@ int do_init(int argc, char *argv[])
 		ShowInfo("Defaulting to %s as our IP address\n", ip_str);
 
 		if (!map_ip_set)
-			clif_setip(ip_str);
+			clif.setip(ip_str);
 		if (!char_ip_set)
 			chrif_setip(ip_str);
 	}
@@ -5252,7 +5263,7 @@ int do_init(int argc, char *argv[])
 	log_config_read(LOG_CONF_NAME);
 
 	id_db = idb_alloc(DB_OPT_BASE);
-	pc_db = idb_alloc(DB_OPT_BASE);	//Added for reliable map_id2sd() use. [Skotlex]
+	pc_db = idb_alloc(DB_OPT_BASE);	//Added for reliable map_obj.id2sd() use. [Skotlex]
 	mobid_db = idb_alloc(DB_OPT_BASE);	//Added to lower the load of the lazy mob ai. [Skotlex]
 	bossid_db = idb_alloc(DB_OPT_BASE); // Used for Convex Mirror quick MVP search
 	map_db = uidb_alloc(DB_OPT_BASE);

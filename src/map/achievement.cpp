@@ -32,6 +32,9 @@
 
 using namespace rathena;
 
+static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
+
 void AchievementDatabase::clear(){
 	TypesafeYamlDatabase::clear();
 	this->achievement_mobs.clear();
@@ -202,7 +205,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			return 0;
 		}
 
-		achievement->mapindex = map_mapname2mapid( mapname.c_str() );
+		achievement->mapindex = map_obj.mapname2mapid( mapname.c_str() );
 
 		if( achievement->mapindex == -1 ){
 			this->invalidWarning( node["Map"], "Unknown map name '%s'.\n", mapname.c_str() );
@@ -359,7 +362,7 @@ struct achievement *achievement_add(struct map_session_data *sd, int achievement
 	sd->achievement_data.achievements[index].score = adb->score;
 	sd->achievement_data.save = true;
 
-	clif_achievement_update(sd, &sd->achievement_data.achievements[index], sd->achievement_data.count - sd->achievement_data.incompleteCount);
+	clif.achievement_update(sd, &sd->achievement_data.achievements[index], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 
 	return &sd->achievement_data.achievements[index];
 }
@@ -406,7 +409,7 @@ bool achievement_remove(struct map_session_data *sd, int achievement_id)
 	// Send a removed fake achievement
 	memset(&dummy, 0, sizeof(struct achievement));
 	dummy.achievement_id = achievement_id;
-	clif_achievement_update(sd, &dummy, sd->achievement_data.count - sd->achievement_data.incompleteCount);
+	clif.achievement_update(sd, &dummy, sd->achievement_data.count - sd->achievement_data.incompleteCount);
 
 	return true;
 }
@@ -538,7 +541,7 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 		ARR_FIND(sd->achievement_data.incompleteCount, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id); // Look for the index again, the position most likely changed
 	}
 
-	clif_achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
+	clif.achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 	sd->achievement_data.save = true; // Flag to save with the autosave interval
 
 	return true;
@@ -563,7 +566,7 @@ void achievement_get_reward(struct map_session_data *sd, int achievement_id, tim
 	}
 
 	if (rewarded == 0) {
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		clif.achievement_reward_ack(sd->fd, 0, achievement_id);
 		return;
 	}
 
@@ -578,10 +581,10 @@ void achievement_get_reward(struct map_session_data *sd, int achievement_id, tim
 	run_script(adb->rewards.script, 0, sd->bl.id, fake_nd->bl.id);
 	if (adb->rewards.title_id) {
 		sd->titles.push_back(adb->rewards.title_id);
-		clif_achievement_list_all(sd);
+		clif.achievement_list_all(sd);
 	}else{
-		clif_achievement_reward_ack(sd->fd, 1, achievement_id);
-		clif_achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
+		clif.achievement_reward_ack(sd->fd, 1, achievement_id);
+		clif.achievement_update(sd, &sd->achievement_data.achievements[i], sd->achievement_data.count - sd->achievement_data.incompleteCount);
 	}
 }
 
@@ -600,23 +603,23 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id)
 
 	if( adb == nullptr ){
 		ShowError( "achievement_reward: Trying to reward achievement %d not found in DB.\n", achievement_id );
-		clif_achievement_reward_ack( sd->fd, 0, achievement_id );
+		clif.achievement_reward_ack( sd->fd, 0, achievement_id );
 		return;
 	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 	if (i == sd->achievement_data.count) {
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		clif.achievement_reward_ack(sd->fd, 0, achievement_id);
 		return;
 	}
 
 	if (sd->achievement_data.achievements[i].rewarded > 0 || sd->achievement_data.achievements[i].completed == 0) {
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		clif.achievement_reward_ack(sd->fd, 0, achievement_id);
 		return;
 	}
 
 	if (!intif_achievement_reward(sd, adb.get())) {
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+		clif.achievement_reward_ack(sd->fd, 0, achievement_id);
 	}
 }
 
@@ -626,7 +629,7 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id)
  */
 void achievement_get_titles(uint32 char_id)
 {
-	struct map_session_data *sd = map_charid2sd(char_id);
+	struct map_session_data *sd = map_obj.charid2sd(char_id);
 
 	if (sd) {
 		sd->titles.clear();
@@ -967,6 +970,7 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 		}
 	}
 }
+
 
 /**
  * Loads achievements from the achievement db.

@@ -174,9 +174,9 @@
     <ClInclude Include="chrif.hpp" />
     <ClInclude Include="clan.hpp" />
     <ClInclude Include="clif.hpp" />
-    <ClInclude Include="clif_obfuscation.hpp" />
-    <ClInclude Include="clif_packetdb.hpp" />
-    <ClInclude Include="clif_shuffle.hpp" />
+    <ClInclude Include="clif.obfuscation.hpp" />
+    <ClInclude Include="clif.packetdb.hpp" />
+    <ClInclude Include="clif.shuffle.hpp" />
     <ClInclude Include="date.hpp" />
     <ClInclude Include="duel.hpp" />
     <ClInclude Include="elemental.hpp" />

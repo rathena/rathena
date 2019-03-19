@@ -17,6 +17,8 @@
 #include "log.hpp"
 #include "pc.hpp"
 
+static Clif clif = Clif();
+
 void mail_clear(struct map_session_data *sd)
 {
 	int i;
@@ -80,9 +82,9 @@ int mail_removeitem(struct map_session_data *sd, short flag, int idx, int amount
 		}
 
 #if PACKETVER < 20150513
-		clif_additem(sd, idx, amount, 0);
+		clif.additem(sd, idx, amount, 0);
 #else
-		clif_mail_removeitem(sd, true, idx + 2, amount);
+		clif.mail_removeitem(sd, true, idx + 2, amount);
 #endif
 	}
 
@@ -100,7 +102,7 @@ bool mail_removezeny( struct map_session_data *sd, bool flag ){
 			}
 		}else{
 			// Update is called by pc_payzeny, so only call it in the else condition
-			clif_updatestatus(sd, SP_ZENY);
+			clif.updatestatus(sd, SP_ZENY);
 		}
 	}
 
@@ -133,7 +135,7 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 #endif
 
 		sd->mail.zeny = amount;
-		// clif_updatestatus(sd, SP_ZENY);
+		// clif.updatestatus(sd, SP_ZENY);
 		return MAIL_ATTACH_SUCCESS;
 	} else { // Item Transfer
 		int i;
@@ -283,13 +285,13 @@ void mail_getattachment(struct map_session_data* sd, struct mail_message* msg, i
 	}
 
 	if( item_received ){
-		clif_mail_getattachment( sd, msg, 0, MAIL_ATT_ITEM );
+		clif.mail_getattachment( sd, msg, 0, MAIL_ATT_ITEM );
 	}
 
 	// Zeny receive
 	if( zeny > 0 ){
 		pc_getzeny(sd, zeny,LOG_TYPE_MAIL, NULL);
-		clif_mail_getattachment( sd, msg, 0, MAIL_ATT_ZENY );
+		clif.mail_getattachment( sd, msg, 0, MAIL_ATT_ZENY );
 	}
 }
 
@@ -300,7 +302,7 @@ int mail_openmail(struct map_session_data *sd)
 	if( sd->state.storage_flag || sd->state.vending || sd->state.buyingstore || sd->state.trading )
 		return 0;
 
-	clif_Mail_window(sd->fd, 0);
+	clif.Mail_window(sd->fd, 0);
 
 	return 1;
 }
@@ -323,16 +325,16 @@ void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg){
 		pc_getzeny(sd,msg->zeny + msg->zeny*battle_config.mail_zeny_fee/100 + zeny,LOG_TYPE_MAIL, NULL); //Zeny receive (due to failure)
 	}
 
-	clif_Mail_send(sd, WRITE_MAIL_FAILED);
+	clif.Mail_send(sd, WRITE_MAIL_FAILED);
 }
 
 // This function only check if the mail operations are valid
 bool mail_invalid_operation(struct map_session_data *sd)
 {
 #if PACKETVER < 20150513
-	if( !map_getmapflag(sd->bl.m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
+	if( !map_obj.getmapflag(sd->bl.m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
 	{
-		ShowWarning("clif_parse_Mail: char '%s' trying to do invalid mail operations.\n", sd->status.name);
+		ShowWarning("clif.parse_Mail: char '%s' trying to do invalid mail operations.\n", sd->status.name);
 		return true;
 	}
 #endif
@@ -357,8 +359,8 @@ void mail_send(struct map_session_data *sd, const char *dest_name, const char *t
 		return;
 
 	if( DIFF_TICK(sd->cansendmail_tick, gettick()) > 0 ) {
-		clif_displaymessage(sd->fd,msg_txt(sd,675)); //"Cannot send mails too fast!!."
-		clif_Mail_send(sd, WRITE_MAIL_FAILED); // fail
+		clif.displaymessage(sd->fd,msg_txt(sd,675)); //"Cannot send mails too fast!!."
+		clif.Mail_send(sd, WRITE_MAIL_FAILED); // fail
 		return;
 	}
 
@@ -367,7 +369,7 @@ void mail_send(struct map_session_data *sd, const char *dest_name, const char *t
 
 		// After calling mail_refresh_remaining_amount the status should always be there
 		if( sd->sc.data[SC_DAILYSENDMAILCNT] == NULL || sd->sc.data[SC_DAILYSENDMAILCNT]->val2 >= battle_config.mail_daily_count ){
-			clif_Mail_send(sd, WRITE_MAIL_FAILED_CNT);
+			clif.Mail_send(sd, WRITE_MAIL_FAILED_CNT);
 			return;
 		}else{
 			sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.data[SC_DAILYSENDMAILCNT]->val2 + 1, INFINITE_TICK );
@@ -380,7 +382,7 @@ void mail_send(struct map_session_data *sd, const char *dest_name, const char *t
 	if( !mail_setattachment(sd, &msg) ) { // Invalid Append condition
 		int i;
 
-		clif_Mail_send(sd, WRITE_MAIL_FAILED); // fail
+		clif.Mail_send(sd, WRITE_MAIL_FAILED); // fail
 		for( i = 0; i < MAIL_MAX_ITEM; i++ ){
 			mail_removeitem(sd,0,sd->mail.item[i].index + 2, sd->mail.item[i].amount);
 		}

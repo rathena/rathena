@@ -27,6 +27,9 @@ static DBMap *itemdb_group; /// Item Group DB
 static DBMap *itemdb_randomopt; /// Random option DB
 static DBMap *itemdb_randomopt_group; /// Random option group DB
 
+static Map_Obj map_obj = Map_Obj();
+static Clif clif = Clif();
+
 struct item_data *dummy_item; /// This is the default dummy item used for non-existant items. [Skotlex]
 
 struct s_roulette_db rd;
@@ -230,9 +233,9 @@ static void itemdb_pc_get_itemgroup_sub(struct map_session_data *sd, bool identi
 		char flag = 0;
 		tmp.unique_id = data->GUID ? pc_generate_unique_id(sd) : 0; // Generate GUID
 		if ((flag = pc_additem(sd, &tmp, get_amt, LOG_TYPE_SCRIPT))) {
-			clif_additem(sd, 0, 0, flag);
+			clif.additem(sd, 0, 0, flag);
 			if (pc_candrop(sd, &tmp))
-				map_addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
+				map_obj.addflooritem(&tmp, tmp.amount, sd->bl.m, sd->bl.x,sd->bl.y, 0, 0, 0, 0, 0);
 		}
 		else if (!flag && data->isAnnounced)
 			intif_broadcast_obtain_special_item(sd, data->nameid, sd->itemid, ITEMOBTAIN_TYPE_BOXITEM);
