@@ -33,7 +33,7 @@
 #   IntimacyStart            Amount of Intimacy the pet starts with. (Default: 250)
 #   IntimacyFed              Amount of Intimacy that is increased when fed.
 #   IntimacyOverfed          Amount of Intimacy that is increased when over-fed. (Default: -100)
-#   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry.
+#   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry. (Default: -5)
 #   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies. (Default: -20)
 #   CaptureRate              Capture success rate (10000 = 100%)
 #   Speed                    Pet's walk speed. (Default: DEFAULT_WALK_SPEED)

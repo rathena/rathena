@@ -33,7 +33,7 @@
 #   IntimacyStart            Amount of Intimacy the pet starts with. (Default: 250)
 #   IntimacyFed              Amount of Intimacy that is increased when fed.
 #   IntimacyOverfed          Amount of Intimacy that is increased when over-fed. (Default: -100)
-#   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry.
+#   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry. (Default: -5)
 #   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies. (Default: -20)
 #   CaptureRate              Capture success rate (10000 = 100%)
 #   Speed                    Pet's walk speed. (Default: DEFAULT_WALK_SPEED)
@@ -63,7 +63,6 @@ Body:
     FoodItem: Apple_Juice
     Fullness: 3
     IntimacyFed: 50
-    IntimacyHungry: -5
     CaptureRate: 2000
     Speed: 150
     Script: >
@@ -80,7 +79,6 @@ Body:
     FoodItem: Yellow_Herb
     Fullness: 4
     IntimacyFed: 40
-    IntimacyHungry: -5
     CaptureRate: 1500
     Speed: 150
     Script: >
@@ -97,7 +95,6 @@ Body:
     FoodItem: Green_Herb
     Fullness: 5
     IntimacyFed: 30
-    IntimacyHungry: -5
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -114,7 +111,6 @@ Body:
     FoodItem: Carrot_Juice
     Fullness: 4
     IntimacyFed: 40
-    IntimacyHungry: -5
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -132,7 +128,6 @@ Body:
     FoodItem: Red_Herb
     Fullness: 4
     IntimacyFed: 40
-    IntimacyHungry: -5
     CaptureRate: 2000
     Speed: 150
     Script: >
@@ -149,7 +144,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 6
     IntimacyFed: 30
-    IntimacyHungry: -5
     CaptureRate: 1500
     Speed: 150
     Script: >
@@ -166,7 +160,6 @@ Body:
     FoodItem: Iron_Ore
     Fullness: 5
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -183,7 +176,6 @@ Body:
     FoodItem: Red_Gemstone
     Fullness: 5
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     Script: >
@@ -200,7 +192,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 7
     IntimacyFed: 40
-    IntimacyHungry: -5
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -218,7 +209,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 6
     IntimacyFed: 40
-    IntimacyHungry: -5
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
@@ -236,7 +226,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 1
     IntimacyFed: 30
-    IntimacyHungry: -5
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -254,7 +243,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 30
-    IntimacyHungry: -5
     CaptureRate: 1500
     Speed: 150
     SpecialPerformance: false
@@ -272,7 +260,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 1000
     Speed: 150
     SpecialPerformance: false
@@ -290,7 +277,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     IntimacyFed: 30
-    IntimacyHungry: -5
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -307,7 +293,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     IntimacyFed: 30
-    IntimacyHungry: -5
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -324,7 +309,6 @@ Body:
     FoodItem: Banana_Juice
     Fullness: 5
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 1000
     Speed: 150
     Script: >
@@ -341,7 +325,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 5
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     Script: >
@@ -358,7 +341,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -376,7 +358,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -394,7 +375,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -412,7 +392,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -430,7 +409,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -449,7 +427,6 @@ Body:
     FoodItem: Shoot
     Fullness: 2
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -469,7 +446,6 @@ Body:
     FoodItem: Honey
     Fullness: 2
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -488,7 +464,6 @@ Body:
     FoodItem: Pet_Food
     Fullness: 4
     IntimacyFed: 30
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     Script: >
@@ -504,7 +479,6 @@ Body:
     FoodItem: Immortal_Heart
     Fullness: 7
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 300
     Speed: 150
     SpecialPerformance: false
@@ -523,7 +497,6 @@ Body:
     FoodItem: White_Potion
     Fullness: 2
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -540,7 +513,6 @@ Body:
     FoodItem: Green_Herb
     Fullness: 3
     IntimacyFed: 50
-    IntimacyHungry: -5
     CaptureRate: 2000
     Speed: 150
     Script: >
@@ -556,7 +528,6 @@ Body:
     FoodItem: Scell
     Fullness: 3
     IntimacyFed: 50
-    IntimacyHungry: -5
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -573,7 +544,6 @@ Body:
     FoodItem: Bun_
     Fullness: 3
     IntimacyFed: 50
-    IntimacyHungry: -5
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -590,7 +560,6 @@ Body:
     FoodItem: Bok_Choy
     Fullness: 3
     IntimacyFed: 50
-    IntimacyHungry: -5
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -600,7 +569,6 @@ Body:
     FoodItem: Green_Apple
     Fullness: 3
     IntimacyFed: 50
-    IntimacyHungry: -5
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -610,7 +578,6 @@ Body:
     FoodItem: Green_Apple
     Fullness: 3
     IntimacyFed: 50
-    IntimacyHungry: -5
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -620,7 +587,6 @@ Body:
     FoodItem: Green_Apple
     Fullness: 3
     IntimacyFed: 50
-    IntimacyHungry: -5
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -630,7 +596,6 @@ Body:
     FoodItem: Whole_Barbecue
     Fullness: 4
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -640,7 +605,6 @@ Body:
     FoodItem: Meat_Veg_Skewer
     Fullness: 2
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -650,7 +614,6 @@ Body:
     FoodItem: Spirit_Liquor
     Fullness: 2
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -666,7 +629,6 @@ Body:
     FoodItem: Mojji
     Fullness: 3
     IntimacyFed: 30
-    IntimacyHungry: -5
     CaptureRate: 800
     Speed: 150
     SpecialPerformance: false
@@ -677,7 +639,6 @@ Body:
     FoodItem: Mystic_Stone
     Fullness: 7
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -695,7 +656,6 @@ Body:
     FoodItem: Small_Snow_Flower
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -712,7 +672,6 @@ Body:
     FoodItem: Apple_Pudding
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -730,7 +689,6 @@ Body:
     FoodItem: Damp_Darkness
     Fullness: 7
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -748,7 +706,6 @@ Body:
     FoodItem: Big_Cell
     Fullness: 7
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
@@ -766,7 +723,6 @@ Body:
     FoodItem: Vital_Flower_
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -783,7 +739,6 @@ Body:
     FoodItem: Vital_Flower
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 50
     Speed: 150
     SpecialPerformance: false
@@ -800,7 +755,6 @@ Body:
     FoodItem: Fresh_Plant
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -817,7 +771,6 @@ Body:
     FoodItem: Grilled_Rice_Cake
     Fullness: 7
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -834,7 +787,6 @@ Body:
     FoodItem: Well_Ripened_Berry
     Fullness: 3
     IntimacyFed: 15
-    IntimacyHungry: -5
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -852,7 +804,6 @@ Body:
     FoodItem: Morning_Dew
     Fullness: 3
     IntimacyFed: 15
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -870,7 +821,6 @@ Body:
     FoodItem: Plant_Neutrient
     Fullness: 7
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -887,7 +837,6 @@ Body:
     FoodItem: Sunset_On_The_Rock
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -904,7 +853,6 @@ Body:
     FoodItem: Pumpkin_Pie_
     Fullness: 3
     IntimacyFed: 15
-    IntimacyHungry: -5
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -922,7 +870,6 @@ Body:
     FoodItem: Flavored_Alcohol
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 500
     Speed: 150
     SpecialPerformance: false
@@ -939,7 +886,6 @@ Body:
     FoodItem: Fish_With_Blue_Back
     Fullness: 7
     IntimacyFed: 20
-    IntimacyHungry: -5
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false
@@ -956,7 +902,6 @@ Body:
     FoodItem: Traditional_Cookie
     Fullness: 7
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 2000
     Speed: 150
     SpecialPerformance: false
@@ -967,7 +912,6 @@ Body:
     FoodItem: Flame_Gemstone
     Fullness: 3
     IntimacyFed: 10
-    IntimacyHungry: -5
     CaptureRate: 200
     Speed: 150
     SpecialPerformance: false

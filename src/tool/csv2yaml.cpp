@@ -143,7 +143,6 @@ int do_init( int argc, char** argv ){
 	if( !process( "PET_DB", 1, pet_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
-		getch();
 		return 0;
 	}
 
@@ -559,7 +558,8 @@ static size_t pet_read_db( const char* file ){
 		if( atoi( str[10] ) != 100 ){
 			node["IntimacyOverfed"] = -atoi( str[10] );
 		}
-		node["IntimacyHungry"] = -20;
+		// pet_hungry_friendly_decrease battle_conf
+		//node["IntimacyHungry"] = -5;
 		// Default: -20
 		if( atoi( str[12] ) != 20 ){
 			node["IntimacyOwnerDie"] = -atoi( str[12] );
