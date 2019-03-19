@@ -341,7 +341,7 @@ int main (int argc, char **argv)
 	}
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]
-#ifdef TESTING
+#ifdef TESTING // enable unit test framework
 	::testing::InitGoogleTest(&argc, argv);
 	return RUN_ALL_TESTS();
 #endif
@@ -350,7 +350,7 @@ int main (int argc, char **argv)
 	usercheck();
 	do_init(argc,argv);
 	do_final();
-#else// not MINICORE and not TESTING
+#else// not MINICORE
 	set_server_type();
 	display_title();
 	usercheck();
@@ -367,13 +367,6 @@ int main (int argc, char **argv)
 	socket_init();
 
 	do_init(argc,argv);
-/*
-#ifdef TESTING
-	ShowInfo("Running Tests!");
-	::testing::InitGoogleTest(&argc, argv);
-	RUN_ALL_TESTS();
-#endif
-*/
 
 	// Main runtime cycle
 	while (runflag != CORE_ST_STOP) { 
