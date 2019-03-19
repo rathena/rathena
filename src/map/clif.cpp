@@ -2783,7 +2783,6 @@ void clif_inventorylist(struct map_session_data *sd) {
 			n++;
 		}
 	}
-
 	if( n )
 	{
 #if PACKETVER < 5

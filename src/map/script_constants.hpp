@@ -7113,13 +7113,14 @@
 	export_constant(PET_INTIMATE_LOYAL);
 	export_constant(PET_INTIMATE_MAX);
 
-	/* pet hunger level */
-	export_constant(PETHUNGRY_NONE);
-	export_constant(PETHUNGRY_VERY_HUNGRY);
-	export_constant(PETHUNGRY_HUNGRY);
-	export_constant(PETHUNGRY_NEUTRAL);
-	export_constant(PETHUNGRY_SATISFIED);
-	export_constant(PETHUNGRY_STUFFED);
+	/* pet hunger levels */
+	export_constant(PET_HUNGRY_NONE);
+	export_constant(PET_HUNGRY_VERY_HUNGRY);
+	export_constant(PET_HUNGRY_HUNGRY);
+	export_constant(PET_HUNGRY_NEUTRAL);
+	export_constant(PET_HUNGRY_SATISFIED);
+	export_constant(PET_HUNGRY_STUFFED);
+
 	/* monster modes */
 	export_constant(MD_NONE);
 	export_constant(MD_CANMOVE);

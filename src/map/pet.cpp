@@ -497,13 +497,13 @@ int pet_hungry_val(struct pet_data *pd)
 {
 	nullpo_ret(pd);
 
-	if(pd->pet.hungry > PETHUNGRY_SATISFIED)
+	if(pd->pet.hungry > PET_HUNGRY_SATISFIED)
 		return 4;
-	else if(pd->pet.hungry > PETHUNGRY_NEUTRAL)
+	else if(pd->pet.hungry > PET_HUNGRY_NEUTRAL)
 		return 3;
-	else if(pd->pet.hungry > PETHUNGRY_HUNGRY)
+	else if(pd->pet.hungry > PET_HUNGRY_HUNGRY)
 		return 2;
-	else if(pd->pet.hungry > PETHUNGRY_VERY_HUNGRY)
+	else if(pd->pet.hungry > PET_HUNGRY_VERY_HUNGRY)
 		return 1;
 	else
 		return 0;
@@ -628,7 +628,7 @@ int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 
 	if(bl == NULL || bl->type != BL_MOB || bl->prev == NULL ||
 		pd->pet.intimate < battle_config.pet_support_min_friendly ||
-		pd->pet.hungry <= PETHUNGRY_NONE ||
+		pd->pet.hungry <= PET_HUNGRY_NONE ||
 		pd->pet.class_ == status_get_class(bl))
 		return 0;
 
@@ -732,9 +732,9 @@ static TIMER_FUNC(pet_hungry){
 
 	pd->pet.hungry -= pet_db_ptr->fullness;
 
-	if( pd->pet.hungry < PETHUNGRY_NONE ) {
+	if( pd->pet.hungry < PET_HUNGRY_NONE ) {
 		pet_stop_attack(pd);
-		pd->pet.hungry = PETHUNGRY_NONE;
+		pd->pet.hungry = PET_HUNGRY_NONE;
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->hungry_intimacy_dec);
 
 		if( pd->pet.intimate <= PET_INTIMATE_NONE ) {
@@ -928,7 +928,7 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 			interval = pet_db_ptr->hungry_delay * battle_config.pet_hungry_delay_rate / 100;
 		else
 			interval = pet_db_ptr->hungry_delay;
-		if (pd->pet.hungry <= PETHUNGRY_NONE)
+		if (pd->pet.hungry <= PET_HUNGRY_NONE)
 			interval = 20000; // While starving, it's every 20 seconds
 	}
 
@@ -1443,7 +1443,7 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd)
 
 	pc_delitem(sd,i,1,0,0,LOG_TYPE_CONSUME);
 
-	if (pd->pet.hungry > PETHUNGRY_SATISFIED) {
+	if (pd->pet.hungry > PET_HUNGRY_SATISFIED) {
 		pet_set_intimate(pd, pd->pet.intimate + pet_db_ptr->r_full);
 		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
 			pd->pet.intimate = PET_INTIMATE_NONE;
@@ -1457,7 +1457,7 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd)
 		else
 			k = pet_db_ptr->r_hungry;
 
-		if( pd->pet.hungry > PETHUNGRY_NEUTRAL) {
+		if( pd->pet.hungry > PET_HUNGRY_NEUTRAL) {
 			k >>= 1;
 			k = max(k, 1);
 		}
@@ -1466,7 +1466,7 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd)
 	}
 
 	status_calc_pet(pd,SCO_NONE);
-	pd->pet.hungry = min(pd->pet.hungry + pet_db_ptr->hunger_increase, PETHUNGRY_STUFFED);
+	pd->pet.hungry = min(pd->pet.hungry + pet_db_ptr->hunger_increase, PET_HUNGRY_STUFFED);
 
 	if( pd->pet.hungry > 100 )
 		pd->pet.hungry = 100;

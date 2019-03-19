@@ -48,7 +48,7 @@ struct s_pet_db {
 	struct script_code
 		*pet_support_script, ///< Script since pet hatched. For pet* script commands only.
 		*pet_bonus_script; ///< Bonus script for this pet.
-	
+
 	~s_pet_db()
 	{
 		if( this->pet_support_script ){
@@ -69,7 +69,7 @@ enum e_pet_catch : uint16 {
 	PET_CATCH_UNIVERSAL_ITEM = 2,
 };
 
-enum e_pet_intimate_level : int16 {
+enum e_pet_intimate_level : uint16 {
 	PET_INTIMATE_NONE = 0,
 	PET_INTIMATE_AWKWARD = 1,
 	PET_INTIMATE_SHY = 100,
@@ -79,13 +79,13 @@ enum e_pet_intimate_level : int16 {
 	PET_INTIMATE_MAX = 1000
 };
 
-enum e_pet_hungry {
-	PETHUNGRY_NONE = 0,
-	PETHUNGRY_VERY_HUNGRY = 10,
-	PETHUNGRY_HUNGRY = 25,
-	PETHUNGRY_NEUTRAL = 75,
-	PETHUNGRY_SATISFIED = 90,
-	PETHUNGRY_STUFFED = 100
+enum e_pet_hungry : uint16 {
+	PET_HUNGRY_NONE = 0,
+	PET_HUNGRY_VERY_HUNGRY = 10,
+	PET_HUNGRY_HUNGRY = 25,
+	PET_HUNGRY_NEUTRAL = 75,
+	PET_HUNGRY_SATISFIED = 90,
+	PET_HUNGRY_STUFFED = 100
 };
 
 struct pet_recovery { //Stat recovery
