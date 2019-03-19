@@ -2,7 +2,6 @@
 // For more information, see LICENCE in the main folder
 
 #include "core.hpp"
-
 #ifndef MINICORE
 #include "ers.hpp"
 #include "socket.hpp"
@@ -16,6 +15,9 @@
 #else
 #include "winapi.hpp" // Console close event handling
 #include <direct.h> // _chdir
+#endif
+#ifdef TESTING
+#include "gtest/gtest.h"
 #endif
 
 #include "cbasetypes.hpp"
@@ -339,13 +341,16 @@ int main (int argc, char **argv)
 	}
 
 	malloc_init();// needed for Show* in display_title() [FlavioJS]
-
+#ifdef TESTING
+	::testing::InitGoogleTest(&argc, argv);
+	return RUN_ALL_TESTS();
+#endif
 #ifdef MINICORE // minimalist Core
 	display_title();
 	usercheck();
 	do_init(argc,argv);
 	do_final();
-#else// not MINICORE
+#else// not MINICORE and not TESTING
 	set_server_type();
 	display_title();
 	usercheck();
@@ -362,6 +367,13 @@ int main (int argc, char **argv)
 	socket_init();
 
 	do_init(argc,argv);
+/*
+#ifdef TESTING
+	ShowInfo("Running Tests!");
+	::testing::InitGoogleTest(&argc, argv);
+	RUN_ALL_TESTS();
+#endif
+*/
 
 	// Main runtime cycle
 	while (runflag != CORE_ST_STOP) { 
