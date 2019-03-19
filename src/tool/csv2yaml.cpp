@@ -565,7 +565,6 @@ static size_t pet_read_db( const char* file ){
 			node["IntimacyOwnerDie"] = -atoi( str[12] );
 		}
 		node["CaptureRate"] = atoi( str[13] );
-		node["Speed"] = atoi( str[14] );
 		// Default: true
 		if( atoi( str[15] ) == 0 ){
 			node["SpecialPerformance"] = false;

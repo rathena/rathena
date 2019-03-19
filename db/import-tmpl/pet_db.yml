@@ -36,7 +36,6 @@
 #   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry. (Default: -5)
 #   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies. (Default: -20)
 #   CaptureRate              Capture success rate (10000 = 100%)
-#   Speed                    Pet's walk speed. (Default: DEFAULT_WALK_SPEED)
 #   SpecialPerformance       If a pet has a Special Performance. (Default: true)
 #   AttackRate               Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
 #   RetaliateRate            Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).

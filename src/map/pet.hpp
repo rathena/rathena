@@ -38,7 +38,6 @@ struct s_pet_db {
 	int32 die; ///< Intimacy increased when die
 	int32 hungry_intimacy_dec; ///< Intimacy increased when hungry
 	uint16 capture; ///< Capture success rate 10000 = 100%
-	uint16 speed; ///< Walk speed
 	bool s_perfor; ///< Special performance
 	uint16 attack_rate; ///< Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
 	uint16 defence_attack_rate; ///< Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).

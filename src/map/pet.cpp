@@ -277,28 +277,6 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		pet->capture = rate;
 	}
 
-	if( this->nodeExists( node, "Speed" ) ){
-		uint16 speed;
-
-		if( !this->asUInt16( node, "Speed", speed) ){
-			return 0;
-		}
-
-		if( speed < MIN_WALK_SPEED ){
-			this->invalidWarning( node["Speed"], "Speed %hu is below minimum of %hu. Increasing...\n", speed, MIN_WALK_SPEED );
-			speed = MIN_WALK_SPEED;
-		}else if( speed > MAX_WALK_SPEED ){
-			this->invalidWarning( node["Speed"], "Speed %hu exceeds maximum of %hu. Capping...\n", speed, MAX_WALK_SPEED );
-			speed = MAX_WALK_SPEED;
-		}
-
-		pet->speed = speed;
-	}else{
-		if( !exists ){
-			pet->speed = DEFAULT_WALK_SPEED;
-		}
-	}
-
 	if( this->nodeExists( node, "SpecialPerformance" ) ){
 		bool performance;
 
@@ -1593,11 +1571,11 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_t
 	}
 
 	// Return speed to normal.
-	if (pd->status.speed != pd->get_pet_db()->speed) {
+	if (pd->status.speed != pd->db->status.speed) {
 		if (pd->ud.walktimer != INVALID_TIMER)
 			return 0; // Wait until the pet finishes walking back to master.
 
-		pd->status.speed = pd->get_pet_db()->speed;
+		pd->status.speed = pd->db->status.speed;
 		pd->ud.state.change_walk_target = pd->ud.state.speed_changed = 1;
 	}
 
