@@ -9,3 +9,5 @@
  **/
 
 //BUILDIN_DEF(example,""),
+BUILDIN_DEF(itemlink, "i?????"),
+BUILDIN_DEF2(itemlink, "itemlink2", "iiiiiirrr"),

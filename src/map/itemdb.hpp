@@ -4,6 +4,8 @@
 #ifndef ITEMDB_HPP
 #define ITEMDB_HPP
 
+#include <string>
+
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
@@ -960,6 +962,17 @@ struct s_random_opt_data *itemdb_randomopt_exists(short id);
 struct s_random_opt_group *itemdb_randomopt_group_exists(int id);
 
 void itemdb_reload(void);
+
+// Additional data for itemlink
+struct s_item_link {
+	unsigned int cards[MAX_SLOTS];
+	struct s_item_randomoption options[MAX_ITEM_RDM_OPT];
+	struct {
+		uint8 cards;
+		uint8 options;
+	} flag;
+};
+std::string createItemLink(unsigned int nameid, unsigned char refine, struct s_item_link *data);
 
 void do_final_itemdb(void);
 void do_init_itemdb(void);
