@@ -5909,6 +5909,7 @@
 	export_constant_npc(JT_4_F_EINRESERCHER);
 	export_constant_npc(JT_4_F_REINDEER);
 	export_constant_npc(JT_4_PIGOCTO);
+	export_constant_npc(JT_4_JP_16TH);
 	export_constant_npc(JT_NEW_NPC_3RD_END);
 	#undef export_constant_npc
 
