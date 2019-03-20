@@ -57,16 +57,6 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 		}
 
-		if (!this->nodeExists(node, "MinPlayers")) {
-			this->invalidWarning(node, "Node \"MinPlayers\" is missing.\n");
-			return 0;
-		}
-
-		if (!this->nodeExists(node, "MinLevel")) {
-			this->invalidWarning(node, "Node \"Level\" is missing.\n");
-			return 0;
-		}
-
 		if (!this->nodeExists(node, "Locations")) {
 			this->invalidWarning(node, "Node \"Locations\" is missing.\n");
 			return 0;

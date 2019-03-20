@@ -24,11 +24,11 @@
 ###########################################################################
 # - Id                Unique ID for the battleground type.
 #   Name              Name of the battleground. Must be the exact same as in the client for players to be able to join.
-#   MinPlayers        Minimum number of players required on each team.
-#   MaxPlayers        Maximum number of players on each team.
-#   MinLevel          Minimum level required to join the battleground.
-#   MaxLevel          Maximum level to join the battleground.
-#   Deserter          Amount of time a player is marked deserter (seconds). (Default: 600)
+#   MinPlayers        Minimum number of players required on each team. (Default: 1)
+#   MaxPlayers        Maximum number of players on each team. (Default: MAX_BG_MEMBERS / 2)
+#   MinLevel          Minimum level required to join the battleground. (Default: 1)
+#   MaxLevel          Maximum level to join the battleground. (Default: MAX_LEVEL)
+#   Deserter          Amount of time in seconds a player is marked deserter. (Default: 600)
 #   Locations:        Battleground location settings.
 #     - Map           The map on which the battleground will be played.
 #       StartEvent    NPC event triggered when the battleground starts.
