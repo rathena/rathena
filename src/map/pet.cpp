@@ -1992,6 +1992,12 @@ int pet_egg_search(struct map_session_data* sd, int pet_id) {
 	return -1;
 }
 
+/**
+ * Check if the pet owner has the required evolution items
+ * @param sd: Player requesting the evolution item check
+ * @param pet_id: Pet's database ID
+ * @return True on success or false otherwise
+ */
 bool pet_evolution_requirements_check(struct map_session_data *sd, short pet_id) {
 	nullpo_retr(false, sd);
 
@@ -2021,7 +2027,8 @@ bool pet_evolution_requirements_check(struct map_session_data *sd, short pet_id)
 
 /**
  * Process a pet evolution request
- * @param sd : Player requesting the evolution
+ * @param sd: Player requesting the evolution
+ * @param pet_id: Pet's database ID
  */
 void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	nullpo_retv(sd);
@@ -2128,7 +2135,7 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 }
 
 /**
- * Initialization process of skill relationship.
+ * Initialize pet data.
  */
 void do_init_pet(void)
 {
@@ -2148,7 +2155,7 @@ void do_init_pet(void)
 }
 
 /**
- * Pet destructor.
+ * Destroy pet data.
  */
 void do_final_pet(void)
 {

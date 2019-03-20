@@ -20382,7 +20382,7 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 /// Process the pet evolution request
 /// 09fb <packetType>.W <packetLength>.W <evolutionPetEggITID>.W (CZ_PET_EVOLUTION)
 void clif_parse_pet_evolution( int fd, struct map_session_data *sd ){
-#if PACKETVER > 20141008
+#if PACKETVER >= 20141008
 	auto pet = pet_db_search(RFIFOW(fd, 4), PET_EGG);
 
 	if (!pet) {

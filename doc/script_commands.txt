@@ -9418,7 +9418,7 @@ currently has active. Valid types are:
 
 PETINFO_INTIMATE can be used with the following constants for checking values:
  PET_INTIMATE_NONE = 0
- PET_INTIMATE_AWKWARD = 0 ~ 99
+ PET_INTIMATE_AWKWARD = 1 ~ 99
  PET_INTIMATE_SHY = 100 ~ 249
  PET_INTIMATE_NEUTRAL = 250 ~ 749
  PET_INTIMATE_CORDIAL = 750 ~ 909
@@ -9426,7 +9426,7 @@ PETINFO_INTIMATE can be used with the following constants for checking values:
 
 PETINFO_HUNGRY can be used with the following constants for checking values:
  PET_HUNGRY_NONE = 0
- PET_HUNGRY_VERY_HUNGRY = 0 ~ 10
+ PET_HUNGRY_VERY_HUNGRY = 1 ~ 10
  PET_HUNGRY_HUNGRY = 11 ~ 25
  PET_HUNGRY_NEUTRAL = 26 ~ 75
  PET_HUNGRY_SATISFIED = 76 ~ 90
