@@ -60,18 +60,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 
 	if( !exists ){
 		// Check mandatory nodes
-		if( !this->nodesExist( node, "EggItem" ) ){
-			this->invalidWarning(node, "Node \"EggItem\" is missing.\n");
-			return 0;
-		}
-
-		if( !this->nodesExist( node, "Fullness" ) ){
-			this->invalidWarning(node, "Node \"Fullness\" is missing.\n");
-			return 0;
-		}
-
-		if( !this->nodesExist( node, "CaptureRate" ) ){
-			this->invalidWarning(node, "Node \"CaptureRate\" is missing.\n");
+		if( !this->nodesExist( node, { "EggItem", "Fullness", "CaptureRate" } ) ){
 			return 0;
 		}
 
