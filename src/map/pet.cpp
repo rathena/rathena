@@ -60,7 +60,18 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 
 	if( !exists ){
 		// Check mandatory nodes
-		if( !this->nodesExist( node, { "EggItem", "Fullness", "CaptureRate" } ) ){
+		if( !this->nodesExist( node, "EggItem" ) ){
+			this->invalidWarning(node, "Node \"EggItem\" is missing.\n");
+			return 0;
+		}
+
+		if( !this->nodesExist( node, "Fullness" ) ){
+			this->invalidWarning(node, "Node \"Fullness\" is missing.\n");
+			return 0;
+		}
+
+		if( !this->nodesExist( node, "CaptureRate" ) ){
+			this->invalidWarning(node, "Node \"CaptureRate\" is missing.\n");
 			return 0;
 		}
 
@@ -171,6 +182,10 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		}
 
 		pet->hungry_delay = delay * 1000;
+	}else{
+		if( !exists ){
+			pet->hunger_delay = 60000;
+		}
 	}
 
 	if( this->nodeExists( node, "HungerIncrease" ) ){

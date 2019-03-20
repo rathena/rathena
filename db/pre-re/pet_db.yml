@@ -857,7 +857,8 @@ Body:
     Fullness: 80
     IntimacyFed: 10
     CaptureRate: 200
-    SpecialPerformance: false    Script: >
+    SpecialPerformance: false
+    Script: >
       .@i = getpetinfo(PETINFO_INTIMATE);
       
       if( .@i >= PET_INTIMATE_LOYAL ){
