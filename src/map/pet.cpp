@@ -600,13 +600,10 @@ int pet_attackskill(struct pet_data *pd, int target_id)
  */
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 {
-	int rate;
-
 	nullpo_ret(pd);
 
 	Assert((pd->master == 0) || (pd->master->pd == pd));
 
-	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 	if(bl == NULL || bl->type != BL_MOB || bl->prev == NULL ||
 		pd->pet.intimate < battle_config.pet_support_min_friendly ||
@@ -625,6 +622,9 @@ int pet_target_check(struct pet_data *pd,struct block_list *bl,int type)
 
 	if (!status_check_skilluse(&pd->bl, bl, 0, 0))
 		return 0;
+
+	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
+	int rate;
 
 	if(!type) {
 		rate = pet_db_ptr->attack_rate;
@@ -695,7 +695,6 @@ static TIMER_FUNC(pet_hungry){
 		return 1;
 
 	pd = sd->pd;
-	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 	if(pd->pet_hungry_timer != tid) {
 		ShowError("pet_hungry_timer %d != %d\n",pd->pet_hungry_timer,tid);
@@ -706,6 +705,8 @@ static TIMER_FUNC(pet_hungry){
 
 	if (pd->pet.intimate <= PET_INTIMATE_NONE)
 		return 1; //You lost the pet already, the rest is irrelevant.
+
+	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
 
 	if (battle_config.pet_hungry_delay_rate != 100)
 		interval = (pet_db_ptr->hungry_delay*battle_config.pet_hungry_delay_rate) / 100;
