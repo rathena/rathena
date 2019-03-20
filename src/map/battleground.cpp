@@ -57,12 +57,12 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 		}
 
-		if (!this->nodeExists(node, "Players")) {
-			this->invalidWarning(node, "Node \"Players\" is missing.\n");
+		if (!this->nodeExists(node, "MinPlayers")) {
+			this->invalidWarning(node, "Node \"MinPlayers\" is missing.\n");
 			return 0;
 		}
 
-		if (!this->nodeExists(node, "Level")) {
+		if (!this->nodeExists(node, "MinLevel")) {
 			this->invalidWarning(node, "Node \"Level\" is missing.\n");
 			return 0;
 		}
@@ -86,72 +86,73 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 		bg->name = name;
 	}
 
-	if (this->nodeExists(node, "Players")) {
-		const YAML::Node &players = node["Players"];
-		int min, max;
+	if (this->nodeExists(node, "MinPlayers")) {
+		int min;
 
-		if (this->nodeExists(players, "Min")) {
-			if (!this->asInt32(players, "Min", min))
-				return 0;
+		if (!this->asInt32(node, "MinPlayers", min))
+			return 0;
 
-			if (min * 2 > MAX_BG_MEMBERS) {
-				this->invalidWarning(players["Min"], "Minimum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", min, MAX_BG_MEMBERS / 2);
-				min = MAX_BG_MEMBERS / 2;
-			}
-		} else {
-			if (!exists)
-				min = 1;
-		}
-
-		if (this->nodeExists(players, "Max")) {
-			if (!this->asInt32(players, "Max", max))
-				return 0;
-
-			if (max * 2 > MAX_BG_MEMBERS) {
-				this->invalidWarning(players["Max"], "Maximum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", max, MAX_BG_MEMBERS / 2);
-				max = MAX_BG_MEMBERS / 2;
-			}
-		} else {
-			if (!exists)
-				max = MAX_BG_MEMBERS / 2;
+		if (min * 2 > MAX_BG_MEMBERS) {
+			this->invalidWarning(node, "Minimum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", min, MAX_BG_MEMBERS / 2);
+			min = MAX_BG_MEMBERS / 2;
 		}
 
 		bg->required_players = min;
-		bg->max_players = max;
+	} else {
+		if (!exists)
+			bg->required_players = 1;
 	}
 
-	if (this->nodeExists(node, "Level")) {
-		const YAML::Node &level = node["Level"];
-		int min, max;
 
-		if (this->nodeExists(level, "Min")) {
-			if (!this->asInt32(level, "Min", min))
-				return 0;
+	if (this->nodeExists(node, "MaxPlayers")) {
+		int max;
 
-			if (min > MAX_LEVEL) {
-				this->invalidWarning(level["Min"], "Minimum level %d exceeds MAX_LEVEL, capping to %d.\n", min, MAX_LEVEL);
-				min = MAX_LEVEL;
-			}
-		} else {
-			if (!exists)
-				min = 1;
+		if (!this->asInt32(node, "MaxPlayers", max))
+			return 0;
+
+		if (max * 2 > MAX_BG_MEMBERS) {
+			this->invalidWarning(node, "Maximum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", max, MAX_BG_MEMBERS / 2);
+			max = MAX_BG_MEMBERS / 2;
 		}
 
-		if (this->nodeExists(level, "Max")) {
-			if (!this->asInt32(level, "Max", max))
-				return 0;
+		bg->max_players = max;
+	} else {
+		if (!exists)
+			bg->max_players = MAX_BG_MEMBERS / 2;
+	}
 
-			if (max > MAX_LEVEL) {
-				this->invalidWarning(level["Max"], "Maximum players %d exceeds MAX_LEVEL, capping to %d.\n", max, MAX_LEVEL);
-				max = MAX_LEVEL;
-			}
-		} else {
-			if (!exists)
-				max = MAX_LEVEL;
+	if (this->nodeExists(node, "MinLevel")) {
+		int min;
+
+		if (!this->asInt32(node, "MinLevel", min))
+			return 0;
+
+		if (min > MAX_LEVEL) {
+			this->invalidWarning(node, "Minimum level %d exceeds MAX_LEVEL, capping to %d.\n", min, MAX_LEVEL);
+			min = MAX_LEVEL;
 		}
 
 		bg->min_lvl = min;
+	} else {
+		if (!exists)
+			bg->min_lvl = 1;
+	}
+
+	if (this->nodeExists(node, "MaxLevel")) {
+		int max;
+
+		if (!this->asInt32(node, "MaxLevel", max))
+			return 0;
+
+		if (max > MAX_LEVEL) {
+			this->invalidWarning(node, "Maximum level %d exceeds MAX_LEVEL, capping to %d.\n", max, MAX_LEVEL);
+			max = MAX_LEVEL;
+		}
+
 		bg->max_lvl = max;
+	} else {
+		if (!exists)
+			bg->max_lvl = MAX_LEVEL;
 	}
 
 	if (this->nodeExists(node, "Deserter")) {
@@ -206,7 +207,6 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 				const YAML::Node &team = location[it];
 
 				if (this->nodeExists(team, it)) {
-					const YAML::Node &respawn = team["Respawn"];
 					struct s_battleground_team *team_ptr; // TODO: might be better to use a map than this construct
 
 					if (it.find("TeamA"))
@@ -214,13 +214,13 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 					else
 						team_ptr = &map_entry.team2;
 
-					if (this->nodeExists(respawn, "X")) {
-						if (!this->asInt16(respawn, "X", team_ptr->warp_x))
+					if (this->nodeExists(team, "RespawnX")) {
+						if (!this->asInt16(team, "RespawnX", team_ptr->warp_x))
 							return 0;
 					}
 
-					if (this->nodeExists(respawn, "Y")) {
-						if (!this->asInt16(respawn, "Y", team_ptr->warp_y))
+					if (this->nodeExists(team, "RespawnY")) {
+						if (!this->asInt16(team, "RespawnY", team_ptr->warp_y))
 							return 0;
 					}
 

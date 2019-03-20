@@ -22,39 +22,28 @@
 # Battleground Queue Settings
 #
 ###########################################################################
-# Id - Unique ID for the battlegrounds type.
-###########################################################################
-# Name - Name of the battlegrounds type. Must be the exact same as in the
-# client for players to be able to join.
-###########################################################################
-# Players - Number of players required on each team.
-#    Min - minimum number of players in each team
-#    Max - maximum number of players in each team
-###########################################################################
-# Level - Level required to join the battleground.
-#    Min - minimum level
-#    Max - maximum level
-###########################################################################
-# Deserter - Amount of time a player is marked deserter (seconds). If no
-# value is given, defaults to 600 seconds.
-###########################################################################
-# Locations - Different battlegrounds locations and values for each.
-#   - Map - The map on which the battlegrounds will be played.
-#     StartEvent - Event triggered when the battlegrounds starts.
-#     TeamA - A list of values for TeamA.
-#       Respawn - coordinate for warping on death.
-#         X - X coordinate for respawn
-#         Y - Y coordinate for respawn
-#       DeathEvent -  Event triggered when a player dies.
-#       QuitEvent - Event triggered when a player quits.
-#       Variable - Name of BG ID variable used in the battlegrounds script.
-#     TeamB - A list of values for TeamB.
-#       Respawn - coordinate for warping on death.
-#         X - X coordinate for respawn
-#         Y - Y coordinate for respawn
-#       DeathEvent -  Event triggered when a player dies.
-#       QuitEvent - Event triggered when a player quits.
-#       Variable - Name of BG ID variable used in the battlegrounds script.
+# - Id                Unique ID for the battleground type.
+#   Name              Name of the battleground. Must be the exact same as in the client for players to be able to join.
+#   MinPlayers        Minimum number of players required on each team.
+#   MaxPlayers        Maximum number of players on each team.
+#   MinLevel          Minimum level required to join the battleground.
+#   MaxLevel          Maximum level to join the battleground.
+#   Deserter          Amount of time a player is marked deserter (seconds). (Default: 600)
+#   Locations:        Battleground location settings.
+#     - Map           The map on which the battleground will be played.
+#       StartEvent    NPC event triggered when the battleground starts.
+#       TeamA:        TeamA settings.
+#         RespawnX    X coordinate for warping on death.
+#         RespawnY    Y coordinate for warping on death.
+#         DeathEvent  NPC event triggered when a player dies.
+#         QuitEvent   NPC event triggered when a player quits.
+#         Variable    Name of BG ID variable used in the battleground script.
+#       TeamB:        TeamB settings.
+#         RespawnX    X coordinate for warping on death.
+#         RespawnY    Y coordinate for warping on death.
+#         DeathEvent  NPC event triggered when a player dies.
+#         QuitEvent   NPC event triggered when a player quits.
+#         Variable    Name of BG ID variable used in the battleground script.
 ###########################################################################
 
 Header:

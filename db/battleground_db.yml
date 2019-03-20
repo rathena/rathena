@@ -16,6 +16,35 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
+# Battleground Queue Database
+###########################################################################
+#
+# Battleground Queue Settings
+#
+###########################################################################
+# - Id                Unique ID for the battleground type.
+#   Name              Name of the battleground. Must be the exact same as in the client for players to be able to join.
+#   MinPlayers        Minimum number of players required on each team.
+#   MaxPlayers        Maximum number of players on each team.
+#   MinLevel          Minimum level required to join the battleground.
+#   MaxLevel          Maximum level to join the battleground.
+#   Deserter          Amount of time a player is marked deserter (seconds). (Default: 600)
+#   Locations:        Battleground location settings.
+#     - Map           The map on which the battleground will be played.
+#       StartEvent    NPC event triggered when the battleground starts.
+#       TeamA:        TeamA settings.
+#         RespawnX    X coordinate for warping on death.
+#         RespawnY    Y coordinate for warping on death.
+#         DeathEvent  NPC event triggered when a player dies.
+#         QuitEvent   NPC event triggered when a player quits.
+#         Variable    Name of BG ID variable used in the battleground script.
+#       TeamB:        TeamB settings.
+#         RespawnX    X coordinate for warping on death.
+#         RespawnY    Y coordinate for warping on death.
+#         DeathEvent  NPC event triggered when a player dies.
+#         QuitEvent   NPC event triggered when a player quits.
+#         Variable    Name of BG ID variable used in the battleground script.
+###########################################################################
 
 Header:
   Type: BATTLEGROUND_DB
