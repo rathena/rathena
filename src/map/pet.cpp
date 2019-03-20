@@ -173,7 +173,7 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 		pet->hungry_delay = delay * 1000;
 	}else{
 		if( !exists ){
-			pet->hunger_delay = 60000;
+			pet->hungry_delay = 60000;
 		}
 	}
 
