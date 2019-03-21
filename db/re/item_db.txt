@@ -3069,7 +3069,7 @@
 4890,Mdef1,MDEF+1,6,10,,,,,,,,,,,,,,,{ bonus bMdef,1; },{},{}
 4891,Mdef3,MDEF+3,6,10,,,,,,,,,,,,,,,{ bonus bMdef,3; },{},{}
 4892,Mdef5,MDEF+5,6,10,,,,,,,,,,,,,,,{ bonus bMdef,5; },{},{}
-4893,Def15,DEF+15,6,10,,,,,,,,,,,,,,,{ bonus bMdef,15; },{},{}
+4893,Def15,DEF+15,6,10,,,,,,,,,,,,,,,{ bonus bDef,15; },{},{}
 4894,Atk4p,ATK + 4%,6,10,,,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,4; },{},{}
 4895,Atk5p,ATK + 5%,6,10,,,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,5; },{},{}
 4896,Matk2p,MATK + 2%,6,10,,,,,,,,,,,,,,,{ bonus bMatkRate,2; },{},{}
@@ -12101,6 +12101,7 @@
 29009,Rune_of_Vitality_Lv_1,Rune of Vitality Lv 1,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bVit,5; } if (.@r>=10) { bonus bMaxHPrate,5; } },{},{}
 29010,Rune_of_Vitality_Lv_2,Rune of Vitality Lv 2,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bVit,6; } if (.@r>=11) { bonus bVit,1; bonus bMaxHPrate,7; } },{},{}
 29011,Rune_of_Vitality_Lv_3,Rune of Vitality Lv 3,6,20,,,,,,,,,,,,,,,{ .@r = getrefine(); if (.@r>=7) { bonus bVit,7; } if (.@r>=12) { bonus bVit,1; bonus bMaxHPrate,8; } if (.@r>=13) { bonus bVit,1; bonus bMaxHPrate,2; } },{},{}
+29026,Def20,DEF+20,6,10,,,,,,,,,,,,,,,{ bonus bDef,20; },{},{}
 29061,Ambition1Lv,Mettle Lv. 1,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,3; bonus bHit,3; },{},{}
 29062,Ambition2Lv,Mettle Lv. 2,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,6; bonus bHit,6; },{},{}
 29063,Ambition3Lv,Mettle Lv. 3,6,10,,0,,,,,,,,,,,,,{ bonus2 bAddClass,Class_All,9; bonus bHit,9; },{},{}
