@@ -2555,8 +2555,7 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
  */
 void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonus, bool restore)
 {
-	if (!sd)
-		return;
+	nullpo_retv(sd);
 
 	std::vector<s_autobonus>::iterator it = bonus.begin();
 
@@ -2603,8 +2602,8 @@ void pc_delautobonus(struct map_session_data* sd, std::vector<s_autobonus> &bonu
  */
 void pc_exeautobonus(struct map_session_data *sd, std::vector<s_autobonus> *bonus, struct s_autobonus *autobonus)
 {
-	if (!sd || !autobonus)
-		return;
+	nullpo_retv(sd);
+	nullpo_retv(autobonus);
 
 	if (autobonus->active != INVALID_TIMER)
 		delete_timer(autobonus->active, pc_endautobonus);
@@ -2658,8 +2657,7 @@ TIMER_FUNC(pc_endautobonus){
  */
 static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
-	if (!sd)
-		return;
+	nullpo_retv(sd);
 
 	struct weapon_data *wd = (sd->state.lr_flag ? &sd->left_weapon : &sd->right_weapon);
 
@@ -2705,8 +2703,7 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
-	if (!sd)
-		return;
+	nullpo_retv(sd);
 
 	if (sd->subele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_subele: Reached max (%d) number of resist element damage bonuses per character!\n", MAX_PC_BONUS);

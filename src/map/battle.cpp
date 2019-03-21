@@ -6806,6 +6806,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
  */
 void battle_vanish_damage(struct map_session_data *sd, struct block_list *target, int flag)
 {
+	nullpo_retv(sd);
+	nullpo_retv(target);
+
 	// bHPVanishRate
 	int16 vanish_rate_hp = cap_value(sd->bonus.hp_vanish_rate, 0, INT16_MAX);
 	int8 vanish_hp = cap_value(sd->bonus.hp_vanish_per, INT8_MIN, INT8_MAX);
@@ -6974,6 +6977,10 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
  */
 bool battle_vellum_damage(struct map_session_data *sd, struct block_list *target, struct Damage *wd)
 {
+	nullpo_retv(sd);
+	nullpo_retv(target);
+	nullpo_retv(wd);
+
 	struct status_data *tstatus = status_get_status_data(target);
 	// bHPVanishRaceRate
 	int16 vellum_rate_hp = cap_value(sd->hp_vanish_race[tstatus->race].rate + sd->hp_vanish_race[RC_ALL].rate, 0, INT16_MAX);
