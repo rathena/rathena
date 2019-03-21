@@ -6977,9 +6977,9 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
  */
 bool battle_vellum_damage(struct map_session_data *sd, struct block_list *target, struct Damage *wd)
 {
-	nullpo_retv(sd);
-	nullpo_retv(target);
-	nullpo_retv(wd);
+	nullpo_retr(false, sd);
+	nullpo_retr(false, target);
+	nullpo_retr(false, wd);
 
 	struct status_data *tstatus = status_get_status_data(target);
 	// bHPVanishRaceRate
