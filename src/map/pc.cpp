@@ -2658,6 +2658,9 @@ TIMER_FUNC(pc_endautobonus){
  */
 static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
+	if (!sd)
+		return;
+
 	struct weapon_data *wd = (sd->state.lr_flag ? &sd->left_weapon : &sd->right_weapon);
 
 	if (wd->addele2.size() == MAX_PC_BONUS) {
@@ -2702,6 +2705,9 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
  */
 static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, short rate, short flag)
 {
+	if (!sd)
+		return;
+
 	if (sd->subele2.size() == MAX_PC_BONUS) {
 		ShowWarning("pc_bonus_subele: Reached max (%d) number of resist element damage bonuses per character!\n", MAX_PC_BONUS);
 		return;
@@ -3577,12 +3583,14 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		if(sd->state.lr_flag != 2) {
 			sd->bonus.sp_vanish_rate += type2;
 			sd->bonus.sp_vanish_per += val;
+			sd->bonus.sp_vanish_flag = BF_WEAPON;
 		}
 		break;
 	case SP_HP_VANISH_RATE: // bonus2 bHPVanishRate,x,n;
 		if(sd->state.lr_flag != 2) {
 			sd->bonus.hp_vanish_rate += type2;
 			sd->bonus.hp_vanish_per += val;
+			sd->bonus.hp_vanish_flag = BF_WEAPON;
 		}
 		break;
 	case SP_GET_ZENY_NUM: // bonus2 bGetZenyNum,x,n;
@@ -3996,12 +4004,13 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 }
 
 /**
-* Gives item bonus to player for format: bonus3 bBonusName,type2,val;
-* @param sd
-* @param type Bonus type used by bBonusName
-* @param type2
-* @param val Value that usually for rate or fixed value
-*/
+ * Gives item bonus to player for format: bonus3 bBonusName,type2,val;
+ * @param sd
+ * @param type Bonus type used by bBonusName
+ * @param type2
+ * @param type3
+ * @param val Value that usually for rate or fixed value
+ */
 void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 {
 	nullpo_retv(sd);
@@ -4088,6 +4097,23 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 			sd->hp_vanish_race[type2].per += val;
 		}
 		break;
+
+	case SP_SP_VANISH_RATE: // bonus3 bSPVanishRate,x,n,bf;
+		if(sd->state.lr_flag != 2) {
+			sd->bonus.sp_vanish_rate += type2;
+			sd->bonus.sp_vanish_per += type3;
+			sd->bonus.sp_vanish_flag |= val;
+		}
+		break;
+
+	case SP_HP_VANISH_RATE: // bonus3 bHPVanishRate,x,n,bf;
+		if(sd->state.lr_flag != 2) {
+			sd->bonus.hp_vanish_rate += type2;
+			sd->bonus.hp_vanish_per += type3;
+			sd->bonus.hp_vanish_flag |= val;
+		}
+		break;
+
 	case SP_STATE_NORECOVER_RACE: // bonus3 bStateNoRecoverRace,r,x,t;
 		PC_BONUS_CHK_RACE(type2, SP_STATE_NORECOVER_RACE);
 		if (sd->state.lr_flag == 2)
@@ -4119,13 +4145,14 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 }
 
 /**
-* Gives item bonus to player for format: bonus4 bBonusName,type2,type3,val;
-* @param sd
-* @param type Bonus type used by bBonusName
-* @param type2
-* @param type3
-* @param val Value that usually for rate or fixed value
-*/
+ * Gives item bonus to player for format: bonus4 bBonusName,type2,type3,type4,val;
+ * @param sd
+ * @param type Bonus type used by bBonusName
+ * @param type2
+ * @param type3
+ * @param type4
+ * @param val Value that usually for rate or fixed value
+ */
 void pc_bonus4(struct map_session_data *sd,int type,int type2,int type3,int type4,int val)
 {
 	nullpo_retv(sd);
