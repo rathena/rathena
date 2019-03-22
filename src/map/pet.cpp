@@ -1200,7 +1200,6 @@ static int pet_ai_sub_hard_lootsearch(struct block_list *bl,va_list ap);
  */
 int pet_menu(struct map_session_data *sd,int menunum)
 {
-	struct item_data *egg_id;
 	nullpo_ret(sd);
 
 	if (sd->pd == NULL)
@@ -1209,15 +1208,6 @@ int pet_menu(struct map_session_data *sd,int menunum)
 	//You lost the pet already.
 	if(!sd->status.pet_id || sd->pd->pet.intimate <= PET_INTIMATE_NONE || sd->pd->pet.incubate)
 		return 1;
-
-	egg_id = itemdb_exists(sd->pd->get_pet_db()->EggID);
-
-	if (egg_id) {
-		if ((egg_id->flag.trade_restriction&0x01) && !pc_inventoryblank(sd)) {
-			clif_displaymessage(sd->fd, msg_txt(sd, 451)); // You can't return your pet because your inventory is full.
-			return 1;
-		}
-	}
 
 	switch(menunum) {
 		case 0:

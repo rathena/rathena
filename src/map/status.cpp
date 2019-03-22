@@ -10563,7 +10563,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				if( pc_iswug(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_WUG);
 				if( pc_isridingwug(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_WUGRIDER);
 				if( pc_isfalcon(sd) ) pc_setoption(sd, sd->sc.option&~OPTION_FALCON);
-				if( sd->status.pet_id > 0 ) pet_menu(sd, 3);
+				if( sd->status.pet_id > 0 ) pet_return_egg(sd, sd->pd);
 				if( hom_is_active(sd->hd) ) hom_vaporize(sd, HOM_ST_ACTIVE);
 				//if( sd->md ) mercenary_delete(sd->md,3); // Are Mercenaries removed? [aleos]
 			}
