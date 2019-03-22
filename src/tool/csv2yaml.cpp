@@ -312,9 +312,9 @@ static bool parse_item_constants( const char* path ){
 
 		if (*p != '}') {
 			/* lets count to ensure it's not something silly e.g. a extra space at line ending */
-			int v, lcurly = 0, rcurly = 0;
+			int lcurly = 0, rcurly = 0;
 
-			for (v = 0; v < strlen(str[21]); v++) {
+			for (size_t v = 0; v < strlen(str[21]); v++) {
 				if (str[21][v] == '{')
 					lcurly++;
 				else if (str[21][v] == '}') {
