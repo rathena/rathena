@@ -2082,24 +2082,27 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 
 	int idx = pet_egg_search(sd, sd->pd->pet.pet_id);
 
-	if (idx != -1) {
-		item tmp_item{};
-		uint8 flag = 0;
-		tmp_item.nameid = new_data->EggID;
-		tmp_item.attribute = 1;
-		tmp_item.identify = 1;
-		tmp_item.card[0] = CARD0_PET;
-		tmp_item.card[1] = GetWord(sd->pd->pet.pet_id,0);
-		tmp_item.card[2] = GetWord(sd->pd->pet.pet_id,1);
-		tmp_item.card[3] = sd->pd->pet.rename_flag;
-
-		pc_delitem(sd, idx, 1, 0, 0, LOG_TYPE_OTHER);
-		if ((flag = pc_additem(sd, &tmp_item, 1, LOG_TYPE_OTHER))) {
-			clif_additem(sd, 0, 0, flag);
-			map_addflooritem(&tmp_item, 1, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0, 0);
-		}
+	if( idx == -1 ){
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_NOTEXIST_CALLPET);
+		return;
 	}
 
+	// Virtually delete the old egg
+	log_pick_pc(sd, LOG_TYPE_OTHER, -1, &sd->inventory.u.items_inventory[idx]);
+	clif_delitem(sd, idx, 1, 0);
+
+	// Change the old egg to the new one
+	sd->inventory.u.items_inventory[idx].nameid = new_data->EggID;
+	sd->inventory_data[idx] = itemdb_search(new_data->EggID);
+
+	// Virtually add it to the inventory
+	log_pick_pc(sd, LOG_TYPE_OTHER, 1, &sd->inventory.u.items_inventory[idx]);
+	clif_additem(sd, idx, 1, 0);
+
+	// Remove the old pet from sight
+	unit_remove_map(&sd->pd->bl, CLR_OUTSIGHT);
+
+	// Prepare the new pet
 	sd->pd->pet.class_ = pet_id;
 	sd->pd->pet.egg_id = new_data->EggID;
 	sd->pd->pet.intimate = new_data->intimate;
@@ -2109,12 +2112,13 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 		safestrncpy(sd->pd->pet.name, mdb->jname, NAME_LENGTH);
 	}
 	status_set_viewdata(&sd->pd->bl, pet_id);
-	unit_remove_map(&sd->pd->bl, CLR_OUTSIGHT);
 
+	// Save the pet and inventory data
 	intif_save_petdata(sd->status.account_id, &sd->pd->pet);
 	if (save_settings&CHARSAVE_PET)
 		chrif_save(sd, CSAVE_INVENTORY);
 
+	// Spawn it
 	if (map_addblock(&sd->pd->bl))
 		return;
 
@@ -2127,6 +2131,7 @@ void pet_evolution(struct map_session_data *sd, int16 pet_id) {
 	clif_specialeffect(&sd->pd->bl, EF_HO_UP, AREA);
 
 	clif_pet_evolution_result(sd, e_pet_evolution_result::SUCCESS);
+	clif_inventorylist(sd);
 }
 
 /**
