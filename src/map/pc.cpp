@@ -4001,7 +4001,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 }
 
 /**
- * Gives item bonus to player for format: bonus3 bBonusName,type2,val;
+ * Gives item bonus to player for format: bonus3 bBonusName,type2,type3,val;
  * @param sd
  * @param type Bonus type used by bBonusName
  * @param type2
