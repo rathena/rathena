@@ -2677,9 +2677,8 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 	}
 
 	for (auto &it : wd->addele2) {
-		if (it.ele == ele) {
+		if (it.ele == ele && it.flag == flag) {
 			it.rate += rate;
-			it.flag = flag;
 			return;
 		}
 	}
@@ -2719,9 +2718,8 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 	}
 
 	for (auto &it : sd->subele2) {
-		if (it.ele == ele) {
+		if (it.ele == ele && it.flag == flag) {
 			it.rate += rate;
-			it.flag = flag;
 			return;
 		}
 	}
