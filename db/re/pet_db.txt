@@ -56,12 +56,12 @@
 1109,DEVIRUCHI,Deviruchi,641,9023,10004,711,80,60,10,100,250,20,500,150,0,0,800,200,100,{ petskillbonus bAgiDexStr,6,20,40; },{ bonus bMatkRate,1; bonus2 bAddClass,Class_All,1; bonus bMaxHPrate,-3; bonus bMaxSPrate,-3; }
 1101,BAPHOMET_,Baphomet Jr.,642,9024,10001,518,80,60,10,100,250,20,200,150,0,0,1000,100,200,{ petskillattack2 "NPC_DARKNESSATTACK",1776,4,0,5; },{ bonus bDef,1; bonus bMdef,1; bonus2 bResEff,Eff_Stun,-100; }
 1188,BON_GUN,Bon Gun,659,9025,10020,537,80,60,30,100,250,20,500,150,1,0,600,200,400,{ petskillattack2 "NPC_DARKNESSATTACK",555,1,1,1; },{ bonus bVit,1; bonus2 bResEff,Eff_Stun,100; }
-1200,ZHERLTHSH,Zealotus,660,9026,0,929,80,60,10,100,250,20,300,150,0,0,1000,100,500,{ petskillattack "AS_SONICBLOW",1,0,3; },{ bonus2 bAddRace,RC_Demihuman,2; bonus2 bMagicAddRace,RC_DemiHuman,2; }
-1275,ALICE,Alice,661,9027,0,504,80,60,20,100,250,20,800,150,0,0,100,1000,200,{ petskillsupport "AL_HEAL",5,60,25,100; },{ bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; }
+1200,ZHERLTHSH,Zealotus,660,9026,0,929,80,60,10,100,250,20,300,150,0,0,1000,100,500,{ petskillattack "AS_SONICBLOW",1,0,3; },{ bonus2 bAddRace,RC_Demihuman,2; bonus2 bAddRace,RC_Player,2; bonus2 bMagicAddRace,RC_DemiHuman,2; bonus2 bMagicAddRace, RC_Player,2; }
+1275,ALICE,Alice,661,9027,0,504,80,60,20,100,250,20,800,150,0,0,100,1000,200,{ petskillsupport "AL_HEAL",5,60,25,100; },{ bonus bMdef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; }
 1815,EVENT_RICECAKE,Rice Cake,0,9028,0,511,80,60,50,100,250,20,2000,150,1,0,500,500,200,{ petskillsupport "CR_DEFENDER",3,240,50,100; },{ bonus2 bSubEle,Ele_Neutral,1; bonus bMaxHPrate,-1; }
 1245,GOBLINE_XMAS,Christmas Goblin,12225,9029,0,911,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "MG_SIGHT",5,5,5; },{ bonus bMaxHP,30; bonus2 bSubEle,Ele_Water,1; }
 
-1519,CHUNG_E,Green Maiden,12395,9030,0,6115,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "CR_SHIELDCHARGE",5,5,5; },{ bonus bDef,1; bonus2 bSubRace,RC_DemiHuman,1; }
+1519,CHUNG_E,Green Maiden,12395,9030,0,6115,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "CR_SHIELDCHARGE",5,5,5; },{ bonus bDef,1; bonus2 bSubRace,RC_DemiHuman,1; bonus2 bSubRace,RC_Player,1; }
 1879,ECLIPSE_P,Spring Rabbit,0,9031,0,7766,80,60,50,100,250,20,2000,150,0,0,300,300,800,{ petskillattack "TF_THROWSTONE",1,5,5; },{}
 1122,GOBLIN_1,Goblin,14569,9032,0,7821,80,60,50,100,250,20,800,150,0,0,300,300,800,{ petskillattack "NPC_WINDATTACK",5,5,5; },{}
 1123,GOBLIN_2,Goblin,14570,9033,0,7821,80,60,50,100,250,20,800,150,0,0,300,300,800,{ petskillattack "NPC_FIREATTACK",5,5,5; },{}
@@ -77,7 +77,7 @@
 1143,MARIONETTE,Marionette,12361,9043,10025,6098,80,60,10,100,250,20,500,150,0,0,300,300,800,{},{ bonus bSPrecovRate,3; }
 1148,MEDUSA,Medusa,12368,9050,10032,6108,80,60,10,100,250,20,200,150,0,0,300,300,800,{},{ bonus bVit,1; bonus2 bResEff,Eff_Stone,500; }
 1179,WHISPER,Whisper,12363,9045,10027,6100,80,60,20,100,250,20,500,150,0,0,300,300,800,{},{ bonus bFlee,7; bonus bDef,-3; }
-1299,GOBLIN_LEADER,Goblin Leader,12364,9046,10028,6104,80,60,10,100,250,20,50,150,0,0,300,300,800,{},{ bonus2 bAddRace,RC_DemiHuman,3; }
+1299,GOBLIN_LEADER,Goblin Leader,12364,9046,10028,6104,80,60,10,100,250,20,50,150,0,0,300,300,800,{},{ bonus2 bAddRace,RC_DemiHuman,3; bonus2 bAddRace,RC_Player,3; }
 1370,SUCCUBUS,Succubus,12373,9055,10037,6113,80,60,10,100,250,20,200,150,0,0,300,300,800,{ bonus2 bHPDrainRate,10,5; },{ bonus2 bHPDrainRate,30,5; bonus bMaxHPrate,1; }
 1374,INCUBUS,Incubus,12370,9052,10034,6110,80,60,10,100,250,20,50,150,0,0,300,300,800,{ bonus bMaxSPRate,3; bonus2 bSPDrainRate,10,1; },{ bonus bMaxSPRate,5; bonus2 bSPDrainRate,30,1; }
 1379,NIGHTMARE_TERROR,Nightmare Terror,12372,9054,10036,6112,80,60,10,100,250,20,200,150,0,0,300,300,800,{},{ bonus2 bResEff,Eff_Sleep,10000; }

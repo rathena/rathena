@@ -36,7 +36,7 @@ using namespace rathena;
 #define LOGIN_MAX_MSG 30				/// Max number predefined in msg_conf
 static char* msg_table[LOGIN_MAX_MSG];	/// Login Server messages_conf
 
-//definition of exported var declared in .h
+//definition of exported var declared in header
 struct mmo_char_server ch_server[MAX_SERVERS];	/// char server data
 struct Login_Config login_config;				/// Configuration of login-serv
 std::unordered_map<uint32,struct online_login_data> online_db;
@@ -215,8 +215,8 @@ static TIMER_FUNC(login_online_data_cleanup){
  */
 int login_mmo_auth_new(const char* userid, const char* pass, const char sex, const char* last_ip) {
 	static int num_regs = 0; // registration counter
-	static unsigned int new_reg_tick = 0;
-	unsigned int tick = gettick();
+	static t_tick new_reg_tick = 0;
+	t_tick tick = gettick();
 	struct mmo_account acc;
 
 	//Account Registration Flood Protection by [Kevin]

@@ -59,7 +59,7 @@ struct npc_data {
 		unsigned short str, agi, vit, int_, dex, luk;
 	} params;
 
-	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
+	void* chatdb; // pointer to a npc_parse struct (see npc_chat.cpp)
 	char* path;/* path dir */
 	enum npc_subtype subtype;
 	bool trigger_on_hidden;
@@ -69,8 +69,9 @@ struct npc_data {
 			struct script_code *script;
 			short xs,ys; // OnTouch area radius
 			int guild_id;
-			int timer,timerid,timeramount,rid;
-			unsigned int timertick;
+			t_tick timer;
+			int timerid,timeramount,rid;
+			t_tick timertick;
 			struct npc_timerevent_list *timer_event;
 			int label_list_num;
 			struct npc_label_list *label_list;
@@ -99,7 +100,7 @@ struct npc_data {
 	unsigned char sc_display_count;
 
 	struct {
-		unsigned int timeout;
+		t_tick timeout;
 		unsigned long color;
 	} progressbar;
 };
@@ -1137,6 +1138,14 @@ enum e_job_types
 	JT_4_F_MD_KATRINN_D,
 	JT_4_F_MD_YGNIZEM,
 	JT_4_F_ERENE,
+	JT_4_M_EINCPTMINER,
+	JT_4_F_EINRESERCHER,
+	JT_4_F_REINDEER,
+	JT_4_PIGOCTO,
+
+	JT_4_JP_16TH = 10343,
+
+	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
 
 	// Unofficial
@@ -1180,7 +1189,7 @@ int npc_touch_areanpc2(struct mob_data *md); // [Skotlex]
 int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range);
 int npc_touchnext_areanpc(struct map_session_data* sd,bool leavemap);
 int npc_click(struct map_session_data* sd, struct npc_data* nd);
-int npc_scriptcont(struct map_session_data* sd, int id, bool closing);
+bool npc_scriptcont(struct map_session_data* sd, int id, bool closing);
 struct npc_data* npc_checknear(struct map_session_data* sd, struct block_list* bl);
 int npc_buysellsel(struct map_session_data* sd, int id, int type);
 uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
@@ -1220,7 +1229,7 @@ int npc_event_doall_id(const char* name, int rid);
 int npc_timerevent_start(struct npc_data* nd, int rid);
 int npc_timerevent_stop(struct npc_data* nd);
 void npc_timerevent_quit(struct map_session_data* sd);
-int npc_gettimerevent_tick(struct npc_data* nd);
+t_tick npc_gettimerevent_tick(struct npc_data* nd);
 int npc_settimerevent_tick(struct npc_data* nd, int newtimer);
 int npc_remove_map(struct npc_data* nd);
 void npc_unload_duplicates (struct npc_data* nd);

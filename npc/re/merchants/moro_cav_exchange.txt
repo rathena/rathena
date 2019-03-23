@@ -17,7 +17,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 		close;
 	}
 	mes "[Hero Token Exchanger]";
-	mes "If you fought Morroc";
+	mes "If you fought Morocc";
 	mes "and collected";
 	mes "Hero Tokens,";
 	mes "I can exchange them with a special ring for you.";
@@ -44,16 +44,16 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 			mes "Hero Ring";
 			mes "can aid you";
 			mes "in subjugating";
-			mes "Morroc.";
+			mes "Morocc.";
 			mes "Any more questions?";
 			continue;
 		case 2:
 			mes "- Hero Ring -";
 			mes "^006400A ring made for warriors^000000";
-			mes "^006400on the quest to defeat Morroc..^000000";
+			mes "^006400on the quest to defeat Morocc..^000000";
 			mes "^006400When Enchanted,^000000";
 			mes "^006400it lends its owner^000000";
-			mes "^006400the power to confront Morroc.^000000";
+			mes "^006400the power to confront Morocc.^000000";
 			mes "^006400Clas: Accessory/DEF: 0^000000";
 			mes "^006400Weight: 20/Required Level: 160^000000";
 			mes "^006400Slot: 0/Equip To: All Jobs^000000";
@@ -74,7 +74,7 @@ moro_cav,32,73,5	script	Hero Token Exchanger#1	4_F_SHADOWCHASER,{
 				mes "[Hero Token Exchanger]";
 				mes "^006400Hero Token^000000";
 				mes "is given to";
-				mes "those who bravely fought Morroc.";
+				mes "those who bravely fought Morocc.";
 				mes "You don't have";
 				mes "30 ^006400Hero Tokens^000000,";
 				mes "and therefore I can't assist you.";

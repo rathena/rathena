@@ -397,6 +397,11 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 		return;
 	}
 
+	if( item->equipSwitch ){
+		clif_msg(sd, C_ITEM_EQUIP_SWITCH);
+		return;
+	}
+
 	if (item->bound)
 		sd->state.isBoundTrading |= (1<<item->bound);
 

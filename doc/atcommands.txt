@@ -14,7 +14,7 @@ This file describes the usage of in-game commands and assumes that
 	charcommand_symbol: "#"
 
 Some commands cannot be used from console or script command to prevent map-server crashed.
-See atcommand.c::atcommand_basecommands for restricted commands. Please tell us if any
+See atcommand.cpp::atcommand_basecommands for restricted commands. Please tell us if any
 other atcommand that causes map-server crashed executed by console or script commands.
 
 To search for a command, write "@" before the command name (ex. @commands).
@@ -811,7 +811,7 @@ If no coordinates are entered, a random location will be chosen.
 
 Warps to predefined locations in major cities.
 If no ID is given, all available maps will be displayed in the chat window.
-Locations and coordinates are stored in '/src/map/atcommand.c'.
+Locations and coordinates are stored in '/src/map/atcommand.cpp'.
 
 Restriction:
 	- Used from console
@@ -1143,7 +1143,7 @@ Give or remove a cart to a player and also change the cart skin based on ID:
 
 Changes the language attached to the player's account (#langtype).
 If no parameter is given, a list of available languages is displayed.
-All languages are defined in '/src/common/msg_conf.h'.
+All languages are defined in '/src/common/msg_conf.hpp'.
 
 ---------------------------------------
 

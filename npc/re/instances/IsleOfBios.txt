@@ -471,7 +471,7 @@ OnTimer52700:
 	getpartymember 'party_id, 2, .@account_id;
 	for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
 		if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == true) {
-			getmapxy .@map$,.@x,.@y, UNITTYPE_PC, .@player_name$[.@i];
+			getmapxy .@map$,.@x,.@y, BL_PC, .@player_name$[.@i];
 			if (.@map$ == 'map_dth3$ && distance(.@x,.@y,69,67) < 30)
 				sc_start SC_FREEZE,17500,0,10000, (SCSTART_NOAVOID|SCSTART_NOTICKDEF|SCSTART_NORATEDEF), .@account_id[.@i];
 		}
