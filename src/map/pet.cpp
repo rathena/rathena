@@ -465,6 +465,48 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 	return 1;
 }
 
+/**
+ * Apply the proper data on pet owners and pets during pet_db reload.
+ * @param sd: Pet owner
+ * @param args: va_list of arguments
+ * @return 0
+ */
+static int pet_reload_sub( struct map_session_data *sd, va_list args ){
+	if( sd->pd == nullptr ){
+		return 0;
+	}
+
+	struct pet_data *pd = sd->pd;
+	std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
+
+	if( pet_db_ptr == nullptr ){
+		return 0;
+	}
+
+	// Relink the pet to the new database entry
+	pd->db = mob_db( pet_db_ptr->class_ );
+
+	if( battle_config.pet_status_support ){
+		run_script( pet_db_ptr->pet_support_script, 0, sd->bl.id, 0 );
+	}
+
+	// Recalculate the player status based on the new data
+	status_calc_pc( sd, SCO_NONE );
+
+	// Recalculate the pet status based on the new data
+	status_calc_pet( pd, SCO_NONE );
+
+	return 0;
+}
+
+bool PetDatabase::reload(){
+	if( !TypesafeYamlDatabase::reload() ){
+		return false;
+	}
+
+	map_foreachpc( pet_reload_sub );
+}
+
 PetDatabase pet_db;
 
 static struct eri *item_drop_ers; //For loot drops delay structures.
@@ -900,10 +942,10 @@ bool pet_data_init(struct map_session_data *sd, struct s_pet *pet)
 	pd->last_thinktime = gettick();
 	pd->state.skillbonus = 0;
 
-	if( battle_config.pet_status_support )
-		run_script(pet_db_ptr->pet_support_script,0,sd->bl.id,0);
-
 	if( pet_db_ptr != nullptr ) {
+		if( battle_config.pet_status_support )
+			run_script(pet_db_ptr->pet_support_script,0,sd->bl.id,0);
+
 		if( pet_db_ptr->pet_bonus_script )
 			status_calc_pc(sd,SCO_NONE);
 

@@ -134,6 +134,7 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode( const YAML::Node& node );
+	bool reload();
 };
 
 extern PetDatabase pet_db;

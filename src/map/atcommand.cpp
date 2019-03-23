@@ -3824,8 +3824,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
 	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
 		mob_reload();
-		pet_db.clear();
-		pet_db.load();
+		pet_db.reload();
 		hom_reload();
 		mercenary_readdb();
 		mercenary_read_skilldb();
