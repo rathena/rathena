@@ -5201,7 +5201,7 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 	wd.miscflag = wflag;
 	wd.flag = BF_WEAPON; //Initial Flag
 	wd.flag |= (skill_id||wd.miscflag)?BF_SKILL:BF_NORMAL; // Baphomet card's splash damage is counted as a skill. [Inkfish]
-
+	wd.isspdamage = false;
 	wd.damage = wd.damage2 =
 #ifdef RENEWAL
 	wd.statusAtk = wd.statusAtk2 = wd.equipAtk = wd.equipAtk2 = wd.weaponAtk = wd.weaponAtk2 = wd.masteryAtk = wd.masteryAtk2 =
@@ -6798,6 +6798,34 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	return md;
 }
 
+/**
+ * Calculate vanish damage on a target
+ * @param sd: Player with vanish item
+ * @param target: Target to vanish HP/SP
+ * @param flag: Damage struct battle flag
+ */
+void battle_vanish_damage(struct map_session_data *sd, struct block_list *target, int flag)
+{
+	nullpo_retv(sd);
+	nullpo_retv(target);
+
+	// bHPVanishRate
+	int16 vanish_rate_hp = cap_value(sd->bonus.hp_vanish_rate, 0, INT16_MAX);
+	int8 vanish_hp = cap_value(sd->bonus.hp_vanish_per, INT8_MIN, INT8_MAX);
+	// bSPVanishRate
+	int16 vanish_rate_sp = cap_value(sd->bonus.sp_vanish_rate, 0, INT16_MAX);
+	int8 vanish_sp = cap_value(sd->bonus.sp_vanish_per, INT8_MIN, INT8_MAX);
+
+	if (vanish_hp && !(vanish_rate_hp && sd->bonus.hp_vanish_flag & flag && (vanish_rate_hp >= 1000 || rnd() % 1000 < vanish_rate_hp)))
+		vanish_hp = 0;
+
+	if (vanish_sp && !(vanish_rate_sp && sd->bonus.sp_vanish_flag & flag && (vanish_rate_sp >= 1000 || rnd() % 1000 < vanish_rate_sp)))
+		vanish_sp = 0;
+
+	if (vanish_hp > 0 || vanish_sp > 0)
+		status_percent_damage(&sd->bl, target, -vanish_hp, -vanish_sp, false); // Damage HP/SP applied once
+}
+
 /*==========================================
  * Battle main entry, from skill_attack
  *------------------------------------------
@@ -6828,6 +6856,12 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 	}
 	else // Some skills like Weaponry Research will cause damage even if attack is dodged
 		d.dmg_lv = ATK_DEF;
+
+	struct map_session_data *sd = BL_CAST(BL_PC, bl);
+
+	if (sd && d.damage + d.damage2 > 1)
+		battle_vanish_damage(sd, target, d.flag);
+
 	return d;
 }
 
@@ -6935,69 +6969,39 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 }
 
 /**
- * Calculate vanish from target
+ * Calculate Vellum damage on a target
  * @param sd: Player with vanish item
  * @param target: Target to vanish HP/SP
- * @param wd: Reference to Damage struct
+ * @param wd: Damage struct reference
+ * @return True on damage done or false if not
  */
-bool battle_vanish(struct map_session_data *sd, struct block_list *target, struct Damage *wd)
+bool battle_vellum_damage(struct map_session_data *sd, struct block_list *target, struct Damage *wd)
 {
-	struct status_data *tstatus;
-	int race;
-
 	nullpo_retr(false, sd);
 	nullpo_retr(false, target);
 	nullpo_retr(false, wd);
 
-	tstatus = status_get_status_data(target);
-	race = status_get_race(target);
-	wd->isspdamage = false;
+	struct status_data *tstatus = status_get_status_data(target);
+	// bHPVanishRaceRate
+	int16 vellum_rate_hp = cap_value(sd->hp_vanish_race[tstatus->race].rate + sd->hp_vanish_race[RC_ALL].rate, 0, INT16_MAX);
+	int8 vellum_hp = cap_value(sd->hp_vanish_race[tstatus->race].per + sd->hp_vanish_race[RC_ALL].per, INT8_MIN, INT8_MAX);
+	// bSPVanishRaceRate
+	int16 vellum_rate_sp = cap_value(sd->sp_vanish_race[tstatus->race].rate + sd->sp_vanish_race[RC_ALL].rate, 0, INT16_MAX);
+	int8 vellum_sp = cap_value(sd->sp_vanish_race[tstatus->race].per + sd->sp_vanish_race[RC_ALL].per, INT8_MIN, INT8_MAX);
 
-	if (wd->flag) {
-		// bHPVanishRaceRate
-		short vellum_rate_hp = cap_value(sd->hp_vanish_race[race].rate + sd->hp_vanish_race[RC_ALL].rate, 0, SHRT_MAX);
-		short vellum_hp = cap_value(sd->hp_vanish_race[race].per + sd->hp_vanish_race[RC_ALL].per, SHRT_MIN, SHRT_MAX);
-
-		// bSPVanishRaceRate
-		short vellum_rate_sp = cap_value(sd->sp_vanish_race[race].rate + sd->sp_vanish_race[RC_ALL].rate, 0, SHRT_MAX);
-		short vellum_sp = cap_value(sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per, SHRT_MIN, SHRT_MAX);
-
-		// The HP and SP vanish bonus from these items can't stack because of the special damage display.
-		if (vellum_hp && vellum_rate_hp && (vellum_rate_hp >= 10000 || rnd()%10000 < vellum_rate_hp)) {
-			wd->damage = apply_rate(tstatus->max_hp, vellum_hp);
-			wd->damage2 = 0;
-		} else if (vellum_sp && vellum_rate_sp && (vellum_rate_sp >= 10000 || rnd()%10000 < vellum_rate_sp)) {
-			wd->damage = apply_rate(tstatus->max_sp, vellum_sp);
-			wd->damage2 = 0;
-			wd->isspdamage = true;
-		} else // No damage
-			return false;
-		
-		return true;
-	} else {
-		// bHPVanishRate
-		short vrate_hp = cap_value(sd->bonus.hp_vanish_rate * 10, 0, SHRT_MAX);
-		short v_hp = cap_value(sd->bonus.hp_vanish_per, SHRT_MIN, SHRT_MAX);
-
-		// bSPVanishRate
-		short vrate_sp = cap_value(sd->bonus.sp_vanish_rate * 10, 0, SHRT_MAX);
-		short v_sp = cap_value(sd->bonus.sp_vanish_per + sd->sp_vanish_race[race].per + sd->sp_vanish_race[RC_ALL].per, SHRT_MIN, SHRT_MAX);
-
-		if (v_hp && vrate_hp && (vrate_hp >= 10000 || rnd()%10000 < vrate_hp))
-			v_hp = -v_hp;
-		else
-			v_hp = 0;
-
-		if (v_sp && vrate_sp && (vrate_sp >= 10000 || rnd()%10000 < vrate_sp))
-			v_sp = -v_sp;
-		else
-			v_sp = 0;
-
-		if ( v_hp < 0 || v_sp < 0 )
-			status_percent_damage(&sd->bl, target, (int8)v_hp, (int8)v_sp, false);
-
+	// The HP and SP damage bonus from these items don't stack because of the special damage display for SP.
+	// Vellum damage overrides any other damage done as well.
+	if (vellum_hp && vellum_rate_hp && (vellum_rate_hp >= 1000 || rnd() % 1000 < vellum_rate_hp)) {
+		wd->damage = apply_rate(tstatus->max_hp, vellum_hp);
+		wd->damage2 = 0;
+	} else if (vellum_sp && vellum_rate_sp && (vellum_rate_sp >= 1000 || rnd() % 1000 < vellum_rate_sp)) {
+		wd->damage = apply_rate(tstatus->max_sp, vellum_sp);
+		wd->damage2 = 0;
+		wd->isspdamage = true;
+	} else
 		return false;
-	}
+
+	return true;
 }
 
 /*===========================================
@@ -7006,32 +7010,22 @@ bool battle_vanish(struct map_session_data *sd, struct block_list *target, struc
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_)
 {
 	struct weapon_data *wd;
-	struct Damage d;
 	int64 *damage;
 	int thp = 0, // HP gained
 		tsp = 0, // SP gained
 		//rhp = 0, // HP reduced from target
 		//rsp = 0, // SP reduced from target
 		hp = 0, sp = 0;
-	uint8 i = 0;
 
 	if (!CHK_RACE(race) && !CHK_CLASS(class_))
 		return;
 
-	memset(&d, 0, sizeof(d));
-
-	// Check for vanish HP/SP. !CHECKME: Which first, drain or vanish?
-	battle_vanish(sd, tbl, &d);
-
-	// Check for drain HP/SP
-	hp = sp = i = 0;
-	for (i = 0; i < 4; i++) {
+	for (int i = 0; i < 4; i++) {
 		//First two iterations: Right hand
 		if (i < 2) {
 			wd = &sd->right_weapon;
 			damage = &rdamage;
-		}
-		else {
+		} else {
 			wd = &sd->left_weapon;
 			damage = &ldamage;
 		}
@@ -7039,7 +7033,7 @@ void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rda
 		if (*damage <= 0)
 			continue;
 
-		if( i == 1 || i == 3 ) {
+		if (i == 1 || i == 3) {
 			hp = wd->hp_drain_class[class_] + wd->hp_drain_class[CLASS_ALL];
 			hp += battle_calc_drain(*damage, wd->hp_drain_rate.rate, wd->hp_drain_rate.per);
 
@@ -7126,7 +7120,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	int64 damage;
 	int skillv;
 	struct Damage wd;
-	bool vanish_damage = false;
+	bool vellum_damage = false;
 
 	nullpo_retr(ATK_NONE, src);
 	nullpo_retr(ATK_NONE, target);
@@ -7297,19 +7291,18 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 	}
 
 	wd = battle_calc_attack(BF_WEAPON, src, target, 0, 0, flag);
-	wd.isspdamage = false; // Default normal attacks to non-SP Damage attack until battle_vanish is determined
 
-	if (sd && wd.damage + wd.damage2 > 0)
-		vanish_damage = battle_vanish(sd, target, &wd);
+	if (sd && wd.damage + wd.damage2 > 0 && battle_vellum_damage(sd, target, &wd))
+		vellum_damage = true;
 
 	if( sc && sc->count ) {
 		if (sc->data[SC_EXEEDBREAK]) {
-			if (!is_infinite_defense(target, wd.flag) && !vanish_damage)
+			if (!is_infinite_defense(target, wd.flag) && !vellum_damage)
 				wd.damage *= sc->data[SC_EXEEDBREAK]->val2 / 100;
 			status_change_end(src, SC_EXEEDBREAK, INVALID_TIMER);
 		}
 		if( sc->data[SC_SPELLFIST] ) {
-			if( --(sc->data[SC_SPELLFIST]->val1) >= 0 && !vanish_damage ){
+			if( --(sc->data[SC_SPELLFIST]->val1) >= 0 && !vellum_damage ){
 				if (!is_infinite_defense(target, wd.flag)) {
 					struct Damage ad = battle_calc_attack(BF_MAGIC, src, target, sc->data[SC_SPELLFIST]->val3, sc->data[SC_SPELLFIST]->val4, flag | BF_SHORT);
 
@@ -7322,7 +7315,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 			} else
 				status_change_end(src,SC_SPELLFIST,INVALID_TIMER);
 		}
-		if (sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 && !is_infinite_defense(target, wd.flag) && !vanish_damage) {
+		if (sc->data[SC_GIANTGROWTH] && (wd.flag&BF_SHORT) && rnd()%100 < sc->data[SC_GIANTGROWTH]->val2 && !is_infinite_defense(target, wd.flag) && !vellum_damage) {
 			wd.damage <<= 1; // Double Damage
 			skill_break_equip(src, src, EQP_WEAPON, 10, BCT_SELF); // Break chance happens on successful damage increase
 		}
@@ -7371,7 +7364,7 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 
 	map_freeblock_lock();
 
-	if( !(tsc && tsc->data[SC_DEVOTION]) && !vanish_damage && skill_check_shadowform(target, damage, wd.div_) ) {
+	if( !(tsc && tsc->data[SC_DEVOTION]) && !vellum_damage && skill_check_shadowform(target, damage, wd.div_) ) {
 		if( !status_isdead(target) )
 			skill_additional_effect(src, target, 0, 0, wd.flag, wd.dmg_lv, tick);
 		if( wd.dmg_lv > ATK_BLOCK )
