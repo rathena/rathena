@@ -25,13 +25,13 @@
 # - Mob                      Monster that can be used as pet
 #   TameItem                 Pet Tame Item.
 #   EggItem                  Pet Egg Item.
-#   EquipItem                Pet Accessory Item.
-#   FoodItem                 Pet Food Item.
+#   EquipItem                Pet Accessory Item. (Default: 0)
+#   FoodItem                 Pet Food Item. (Default: 0)
 #   Fullness                 The amount of hunger is decreased every [HungryDelay] seconds.
-#   HungryDelay              The amount of time it takes for hunger to decrease after feeding. (Default: 60 seconds)
+#   HungryDelay              The amount of time in seconds it takes for hunger to decrease after feeding. (Default: 60)
 #   HungerIncrease           The amount of hunger that is increased every time the pet is fed (Default: 20)
 #   IntimacyStart            Amount of Intimacy the pet starts with. (Default: 250)
-#   IntimacyFed              Amount of Intimacy that is increased when fed.
+#   IntimacyFed              Amount of Intimacy that is increased when fed. (Default: 50)
 #   IntimacyOverfed          Amount of Intimacy that is increased when over-fed. (Default: -100)
 #   IntimacyHungry           Amount of Intimacy that is increased when the pet is hungry. (Default: -5)
 #   IntimacyOwnerDie         Amount of Intimacy that is increased when the pet owner dies. (Default: -20)
@@ -43,7 +43,7 @@
 #   AllowAutoFeed            Allows turning automatic pet feeding on. (Default: false)
 #   Script                   Bonus script to execute when the pet is alive. (Default: null)
 #   SupportScript            Bonus script to execute when pet_status_support is enabled. (Default: null)
-#   Evolution:               Pet evolution settings.
+#   Evolution:               Pet evolution settings. (Optional) (Default: null)
 #     - Target               Mob this pet can evolve to.
 #       ItemRequirements:      Item requirements for evolving this pet.
 #         - Item               Self-explanatory
