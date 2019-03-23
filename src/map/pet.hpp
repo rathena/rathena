@@ -198,6 +198,7 @@ TIMER_FUNC(pet_heal_timer); // [Valaris]
 int pet_egg_search(struct map_session_data *sd, int pet_id);
 void pet_evolution(struct map_session_data *sd, int16 pet_id);
 int pet_food(struct map_session_data *sd, struct pet_data *pd);
+void pet_clear_support_bonuses(struct map_session_data *sd);
 
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)

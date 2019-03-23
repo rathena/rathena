@@ -466,6 +466,62 @@ uint64 PetDatabase::parseBodyNode( const YAML::Node &node ){
 }
 
 /**
+ * Clear pet support bonuses from memory
+ * @param sd: Pet owner
+ */
+void pet_clear_support_bonuses(struct map_session_data *sd) {
+	nullpo_retv(sd);
+
+	if (!sd->pd)
+		return;
+
+	struct pet_data *pd = sd->pd;
+
+	if (pd->a_skill) {
+		aFree(pd->a_skill);
+		pd->a_skill = NULL;
+	}
+
+	if (pd->s_skill) {
+		if (pd->s_skill->timer != INVALID_TIMER) {
+			if (pd->s_skill->id)
+				delete_timer(pd->s_skill->timer, pet_skill_support_timer);
+			else
+				delete_timer(pd->s_skill->timer, pet_heal_timer);
+		}
+
+		aFree(pd->s_skill);
+		pd->s_skill = NULL;
+	}
+
+	if (pd->recovery) {
+		if (pd->recovery->timer != INVALID_TIMER)
+			delete_timer(pd->recovery->timer, pet_recovery_timer);
+
+		aFree(pd->recovery);
+		pd->recovery = NULL;
+	}
+
+	if (pd->bonus) {
+		if (pd->bonus->timer != INVALID_TIMER)
+			delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
+
+		aFree(pd->bonus);
+		pd->bonus = NULL;
+	}
+
+	if (pd->loot) {
+		pet_lootitem_drop(pd, sd);
+
+		if (pd->loot->item)
+			aFree(pd->loot->item);
+
+		aFree(pd->loot);
+		pd->loot = NULL;
+	}
+}
+
+/**
  * Apply the proper data on pet owners and pets during pet_db reload.
  * @param sd: Pet owner
  * @param args: va_list of arguments
@@ -482,6 +538,9 @@ static int pet_reload_sub( struct map_session_data *sd, va_list args ){
 	if( pet_db_ptr == nullptr ){
 		return 0;
 	}
+
+	// Clear pet bonuses
+	pet_clear_support_bonuses(sd);
 
 	// Relink the pet to the new database entry
 	pd->db = mob_db( pet_db_ptr->class_ );
