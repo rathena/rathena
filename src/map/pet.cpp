@@ -505,6 +505,7 @@ bool PetDatabase::reload(){
 	}
 
 	map_foreachpc( pet_reload_sub );
+	return true;
 }
 
 PetDatabase pet_db;
