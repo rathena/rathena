@@ -10043,6 +10043,18 @@ specified if PACKETVER is not supported, use dummy arrays to avoid errors!
 
 ---------------------------------------
 
+*base62_encode(<number>);
+
+Encode the input number by base62.
+
+---------------------------------------
+
+*base62_decode("<string>");
+
+Decode the base62 string into number.
+
+---------------------------------------
+
 ========================
 |14.- Channel commands.|
 ========================

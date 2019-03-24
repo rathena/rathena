@@ -54,3 +54,32 @@ BUILDIN_FUNC(itemlink) {
 	script_pushstr(st, str);
 	return SCRIPT_CMD_SUCCESS;
 }
+
+/**
+* Encode number into base62
+* base62_encode(<number>);
+* @author [Cydh]
+**/
+BUILDIN_FUNC(base62_encode) {
+	int num = script_getnum(st, 2);
+	if (num < 0) {
+		script_pushconststr(st,"");
+		ShowError("buildin_base62_encode: Cannot process negative number '%d'!\n", num);
+		return SCRIPT_CMD_FAILURE;
+	}
+	std::string b62 = base62_encode(num);
+	char *str = (char *)aMalloc((b62.size() + 1) * sizeof(char));
+	safestrncpy(str, b62.c_str(), b62.size() + 1);
+	script_pushstr(st, str);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+* Decode base62 string into number
+* base62_decode("<string>");
+* @author [Cydh]
+**/
+BUILDIN_FUNC(base62_decode) {
+	script_pushint(st, base62_decode(script_getstr(st, 2)));
+	return SCRIPT_CMD_SUCCESS;
+}

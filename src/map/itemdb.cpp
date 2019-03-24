@@ -1398,6 +1398,10 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	if (*str[21])
 		id->unequip_script = parse_script(str[21], source, line, scriptopt);
 
+	id->base62.nameid = base62_encode(nameid);
+	id->base62.equip = base62_encode(id->equip);
+	id->base62.look = base62_encode(id->look);
+
 	if (!id->nameid) {
 		id->nameid = nameid;
 		uidb_put(itemdb, nameid, id);
@@ -2062,22 +2066,23 @@ unsigned int base62_decode(std::string str)
 * @param refine Refine level (optional)
 * @param s_item_link Additional info itemlink, cards and random options (optional)
 * @return <ITEML> string for the item
+* @author [Cydh]
 **/
 std::string createItemLink(unsigned int nameid, unsigned char refine = 0, struct s_item_link *data = nullptr)
 {
-	std::string nameid63 = base62_encode(nameid);
 	struct item_data *id = itemdb_exists(nameid);
-	char showslot = (id && itemdb_isequip2(id)) ? '1' : '0';
-	std::string itemstr = "";
-	itemstr += "<ITEML>";
-	itemstr += "00000";
-	itemstr += showslot;
-	itemstr += nameid63;
+	std::string itemstr = "<ITEML>";
+	std::string locdef = "00000";
+	std::string locval = (id && itemdb_isequip2(id)) ? id->base62.equip : "";
+	itemstr += (std::string(locdef, 0, locdef.size() - locval.size())) + locval;
+	itemstr += (id && itemdb_isequip2(id)) ? "1" : "0";
+	itemstr += (id) ? id->base62.nameid : base62_encode(nameid);
 	if (refine > 0) {
-		std::string refine62 = base62_encode(refine);
-		itemstr += "%0" + refine62;
+		itemstr += "%0" + base62_encode(refine);
 	}
-	//itemstr += "&" + class62;
+	if (id && itemdb_isequip2(id)) {
+		itemstr += "&" + id->base62.look;
+	}
 	if (data != nullptr) {
 		if (data->flag.cards) {
 			for (uint8 i = 0; i < MAX_SLOTS; ++i) {
