@@ -9,9 +9,6 @@
  * For detailed guidance on these check http://rathena.org/wiki/SRC/config/
  **/
 
-#ifdef PACKET_OBFUSCATION
-#undef PACKET_OBFUSCATION
-#endif
 
 
 #endif /* CONFIG_CUSTOM_DEFINES_POST_HPP */
