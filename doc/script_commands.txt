@@ -6133,13 +6133,13 @@ Examples:
 
 ---------------------------------------
 
-*pcblock <type>{,<account ID>};
-*checkpcblock {<account ID>};
+*setpcblock <type>{,<account ID>};
+*getpcblock {<account ID>};
 
-'pcblock' command prevents/allows the player from doing the given <type> of action.
+'setpcblock' command prevents/allows the player from doing the given <type> of action.
 The <type> values are bit-masks, multiples of <type> can be added to change the player action.
 
-'checkpcblock' command return the bit-mask value of the currently
+'getpcblock' command return the bit-mask value of the currently
 enabled block flags.
 
 The available <type> are:
@@ -6158,25 +6158,25 @@ The available <type> are:
 Examples:
 
 // Make the attached player invulnerable to monster (same as @monsterignore)
-	pcblock (getpcblock() & PCBLOCK_IMMUNE);
+	setpcblock (getpcblock() & PCBLOCK_IMMUNE);
 
 // Prevents the attached player from attacking and using skills
-	pcblock (getpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL));
+	setpcblock (getpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL));
 
 // Re-enables attack, skills and item use
-	pcblock (getpcblock() & ~(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM);
+	setpcblock (getpcblock() & ~(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM);
 
-// checkpcblock related checks
-	if (checkpcblock() & PCBLOCK_IMMUNE)
+// getpcblock related checks
+	if (getpcblock() & PCBLOCK_IMMUNE)
 		mes "You are invulnerable!";
 
-	if (checkpcblock() & (PCBLOCK_MOVE|PCBLOCK_SITSTAND))
+	if (getpcblock() & (PCBLOCK_MOVE|PCBLOCK_SITSTAND))
 		mes "You can't walk or sit.";
 
-	if ((checkpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL)) == 0)
+	if ((getpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL)) == 0)
 		mes "You can attack and use skills.";
 
-	if (checkpcblock() & PCBLOCK_CHAT)
+	if (getpcblock() & PCBLOCK_CHAT)
 		mes "You can't chat.";
 
 ---------------------------------------
