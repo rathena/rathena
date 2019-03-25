@@ -7202,6 +7202,7 @@
 	export_constant(PCBLOCK_SITSTAND);
 	export_constant(PCBLOCK_COMMANDS);
 	export_constant(PCBLOCK_NPCCLICK);
+	export_constant(PCBLOCK_EMOTION);
 	export_constant(PCBLOCK_ALL);
 
 	#undef export_constant

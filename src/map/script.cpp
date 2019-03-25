@@ -17241,12 +17241,7 @@ BUILDIN_FUNC(pcblock)
 	if (!script_mapid2sd(4, sd))
 		return SCRIPT_CMD_SUCCESS;
 
-	enum e_pcblock_action_flag type = (e_pcblock_action_flag)script_getnum(st, 2);
-
-	if (script_getnum(st, 3) > 0)
-		sd->state.block_action |= type;
-	else
-		sd->state.block_action &= ~type;
+	sd->state.block_action |= (e_pcblock_action_flag)script_getnum(st, 2);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -24522,7 +24517,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(pcblockmove,"unitblockmove","ii"),
 	BUILDIN_DEF(pcblockskill,"ii"),
 	BUILDIN_DEF2(pcblockskill,"unitblockskill","ii"),
-	BUILDIN_DEF(pcblock, "ii?"),
+	BUILDIN_DEF(pcblock, "i?"),
 	BUILDIN_DEF(checkpcblock, "?"),
 	// <--- [zBuffer] List of player cont commands
 	// [zBuffer] List of unit control commands --->

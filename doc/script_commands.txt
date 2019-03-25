@@ -6133,15 +6133,11 @@ Examples:
 
 ---------------------------------------
 
-*pcblock <type>,<state>{,<account ID>};
+*pcblock <type>{,<account ID>};
 *checkpcblock {<account ID>};
 
-'pcblock' command prevents/allows the player from doing the given <type>
-of action according to the <state>.
-The <type> values are bit-masks, multiples <type> can be added to change the player action.
-
-The action is blocked when the <state> is true, while false
-allows the action again.
+'pcblock' command prevents/allows the player from doing the given <type> of action.
+The <type> values are bit-masks, multiples of <type> can be added to change the player action.
 
 'checkpcblock' command return the bit-mask value of the currently
 enabled block flags.
@@ -6162,13 +6158,13 @@ The available <type> are:
 Examples:
 
 // Make the attached player invulnerable to monster (same as @monsterignore)
-	pcblock PCBLOCK_IMMUNE, true;
+	pcblock (getpcblock() & PCBLOCK_IMMUNE);
 
 // Prevents the attached player from attacking and using skills
-	pcblock PCBLOCK_ATTACK|PCBLOCK_SKILL, true;
+	pcblock (getpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL));
 
 // Re-enables attack, skills and item use
-	pcblock PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM, false;
+	pcblock (getpcblock() & ~(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM);
 
 // checkpcblock related checks
 	if (checkpcblock() & PCBLOCK_IMMUNE)
