@@ -17238,7 +17238,7 @@ BUILDIN_FUNC(pcblock)
 {
 	TBL_PC *sd;
 
-	if (!script_mapid2sd(4, sd))
+	if (!script_mapid2sd(3, sd))
 		return SCRIPT_CMD_SUCCESS;
 
 	sd->state.block_action |= (e_pcblock_action_flag)script_getnum(st, 2);
