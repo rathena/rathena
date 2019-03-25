@@ -2874,6 +2874,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 				case SR_GATEOFHELL:
 				case SR_TIGERCANNON:
 				case KO_BAKURETSU:
+				//case NC_MAGMA_ERUPTION:
 					//Forced to neutral element
 					wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 					break;
@@ -3946,8 +3947,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 300 + 100 * skill_lv;
 			break;
 		case NC_MAGMA_ERUPTION: // 'Slam' damage
-			skillratio += 450 + 50 * skill_lv;
-			RE_LVL_DMOD(100);
+			skillratio += 350 + 50 * skill_lv;
 			break;
 		case NC_AXETORNADO:
 			skillratio += 100 + 100 * skill_lv + status_get_vit(src);
@@ -5576,6 +5576,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case SR_GATEOFHELL:
 		case GN_FIRE_EXPANSION_ACID:
 		case KO_BAKURETSU:
+		//case NC_MAGMA_ERUPTION:
 			// Forced to neutral element
 			wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			break;
@@ -6457,9 +6458,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
 
 	switch (skill_id) {
-		case NC_MAGMA_ERUPTION: // 'Eruption' damage
-			md.damage = 800 + 200 * skill_lv;
-			break;
 		case TF_THROWSTONE:
 			md.damage = 50;
 			md.flag |= BF_WEAPON;
@@ -6654,6 +6652,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			} else
 				md.damage = md.damage * 200 / (skill_id == RA_CLUSTERBOMB ? 50 : 100);
 			nk |= NK_NO_ELEFIX|NK_IGNORE_FLEE|NK_NO_CARDFIX_DEF;
+			break;
+		case NC_MAGMA_ERUPTION_DOTDAMAGE: // 'Eruption' damage
+			md.damage = 800 + 200 * skill_lv;
 			break;
 		case WM_SOUND_OF_DESTRUCTION:
 			md.damage = 1000 * skill_lv + sstatus->int_ * ((sd) ? pc_checkskill(sd,WM_LESSON) : 1);
