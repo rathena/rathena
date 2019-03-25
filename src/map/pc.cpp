@@ -2759,6 +2759,35 @@ static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int 
 	bonus.push_back(entry);
 }
 
+static void pc_bonus_addvanish(std::vector<s_vanish_bonus> &bonus, int16 rate, int16 per, int flag) {
+	if (!(flag&BF_RANGEMASK))
+		flag |= BF_SHORT | BF_LONG;
+	if (!(flag&BF_WEAPONMASK))
+		flag |= BF_WEAPON;
+	if (!(flag&BF_SKILLMASK)) {
+		if (flag&(BF_MAGIC | BF_MISC))
+			flag |= BF_SKILL;
+		if (flag&BF_WEAPON)
+			flag |= BF_NORMAL | BF_SKILL;
+	}
+
+	for (auto &it : bonus) {
+		if (it.flag == flag) {
+			it.rate += rate;
+			it.per += per;
+			return;
+		}
+	}
+
+	struct s_vanish_bonus entry = {};
+
+	entry.rate = rate;
+	entry.per = per;
+	entry.flag = flag;
+
+	bonus.push_back(entry);
+}
+
 /*==========================================
  * Add a bonus(type) to player sd
  * format: bonus bBonusName,val;
@@ -3576,16 +3605,12 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 		break;
 	case SP_SP_VANISH_RATE: // bonus2 bSPVanishRate,x,n;
 		if(sd->state.lr_flag != 2) {
-			sd->bonus.sp_vanish_rate += type2;
-			sd->bonus.sp_vanish_per += val;
-			sd->bonus.sp_vanish_flag = BF_WEAPON;
+			pc_bonus_addvanish(sd->sp_vanish, type2, val, BF_NORMAL);
 		}
 		break;
 	case SP_HP_VANISH_RATE: // bonus2 bHPVanishRate,x,n;
 		if(sd->state.lr_flag != 2) {
-			sd->bonus.hp_vanish_rate += type2;
-			sd->bonus.hp_vanish_per += val;
-			sd->bonus.hp_vanish_flag = BF_WEAPON;
+			pc_bonus_addvanish(sd->hp_vanish, type2, val, BF_NORMAL);
 		}
 		break;
 	case SP_GET_ZENY_NUM: // bonus2 bGetZenyNum,x,n;
@@ -4095,17 +4120,13 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 
 	case SP_SP_VANISH_RATE: // bonus3 bSPVanishRate,x,n,bf;
 		if(sd->state.lr_flag != 2) {
-			sd->bonus.sp_vanish_rate += type2;
-			sd->bonus.sp_vanish_per += type3;
-			sd->bonus.sp_vanish_flag |= val;
+			pc_bonus_addvanish(sd->sp_vanish, type2, type3, val);
 		}
 		break;
 
 	case SP_HP_VANISH_RATE: // bonus3 bHPVanishRate,x,n,bf;
 		if(sd->state.lr_flag != 2) {
-			sd->bonus.hp_vanish_rate += type2;
-			sd->bonus.hp_vanish_per += type3;
-			sd->bonus.hp_vanish_flag |= val;
+			pc_bonus_addvanish(sd->hp_vanish, type2, type3, val);
 		}
 		break;
 

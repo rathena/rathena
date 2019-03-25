@@ -193,6 +193,12 @@ struct s_add_drop {
 	unsigned short class_; ///Target Class, bitwise value of 1<<x
 };
 
+struct s_vanish_bonus {
+	int16 rate; // 1000 = 100%
+	int16 per; // 100 = 100%
+	int flag;
+};
+
 /// AutoBonus bonus struct
 struct s_autobonus {
 	short rate;
@@ -429,6 +435,7 @@ struct map_session_data {
 		skillvarcast, skilldelay, itemhealrate, add_def, add_mdef, add_mdmg, reseff, itemgrouphealrate;
 	std::vector<s_add_drop> add_drop;
 	std::vector<s_addele2> subele2;
+	std::vector<s_vanish_bonus> sp_vanish, hp_vanish;
 	std::vector<s_autobonus> autobonus, autobonus2, autobonus3; //Auto script on attack, when attacked, on skill usage
 
 	// zeroed structures start here
@@ -478,9 +485,6 @@ struct map_session_data {
 		short add_steal_rate;
 		int add_heal_rate, add_heal2_rate;
 		int sp_gain_value, hp_gain_value, magic_sp_gain_value, magic_hp_gain_value;
-		int sp_vanish_rate, hp_vanish_rate;
-		int sp_vanish_per, hp_vanish_per;
-		int sp_vanish_flag, hp_vanish_flag;
 		unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
 		unsigned short unbreakable_equip; //100% break resistance on certain equipment
 		unsigned short unstripable_equip;
