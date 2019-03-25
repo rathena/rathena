@@ -84,6 +84,7 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node &node);
+	//bool reload();
 };
 
 extern InstanceDatabase instance_db;
@@ -91,7 +92,6 @@ extern InstanceDatabase instance_db;
 extern std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
 
 std::shared_ptr<s_instance_data> instance_search(int instance_id);
-std::shared_ptr<s_instance_db> instance_search_db(int instance_id);
 std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
 void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_target *target);
 
@@ -106,7 +106,6 @@ int instance_addmap(int instance_id);
 
 void instance_addnpc(std::shared_ptr<s_instance_data> idata);
 
-void instance_readdb(void);
 void instance_db_reload(void);
 void do_reload_instance(void);
 void do_init_instance(void);

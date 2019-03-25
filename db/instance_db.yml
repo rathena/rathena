@@ -16,6 +16,21 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
+# Instance Database
+###########################################################################
+#
+# Instance Settings
+#
+###########################################################################
+# - Id              Unique Instance ID.
+#   Name            Unique Instance Name.
+#   LimitTime       Total lifetime of instance in seconds.
+#   IdleTimeOut     Time before an idle instance is destroyed in seconds. (Default: 300)
+#   EnterMap        Map Name where players start.
+#   EnterX          X Coordinate where players start.
+#   EnterY          Y Coordinate where players start.
+#   AdditionalMaps  List of maps that are part of an instance.
+###########################################################################
 
 Header:
   Type: INSTANCE_DB

@@ -123,6 +123,9 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		instance->destroyable = destroy;
+	} else {
+		if (!exists)
+			instance->destroyable = true;
 	}
 	*/
 
@@ -185,8 +188,21 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	}
 
+	if (!exists)
+		this->put(instance_id, instance);
+
 	return 1;
 }
+
+/*
+bool InstanceDatabase::reload() {
+	if (!TypesafeYamlDatabase::reload()) {
+		return false;
+	}
+
+	return true;
+}
+*/
 
 InstanceDatabase instance_db;
 
@@ -197,28 +213,15 @@ InstanceDatabase instance_db;
  */
 std::shared_ptr<s_instance_data> instance_search(int instance_id)
 {
-	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
+	if (!instance_id || instance_id > MAX_INSTANCE_DATA)
 		return nullptr;
 
 	std::shared_ptr<s_instance_data> ret = instances[instance_id];
 
 	if (!ret)
 		return nullptr;
-	else
-		return ret;
-}
 
-/**
- * Searches for an instance ID in the database
- * @param instance_id: Instance to search for
- * @return shared_ptr of instance on success or nullptr on failure
- */
-std::shared_ptr<s_instance_db> instance_search_db(int instance_id)
-{
-	if (!instance_db.exists(instance_id))
-		return nullptr;
-
-	return instance_db.find(instance_id);
+	return ret;
 }
 
 /**
@@ -289,7 +292,7 @@ static TIMER_FUNC(instance_delete_timer){
 static TIMER_FUNC(instance_subscription_timer){
 	int instance_id = instance_wait.id[0];
 
-	if (instance_id == 0 || instance_wait.id.empty())
+	if (!instance_id || instance_wait.id.empty())
 		return 0;
 
 	struct map_session_data *sd;
@@ -309,19 +312,19 @@ static TIMER_FUNC(instance_subscription_timer){
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (ret == 0 && (sd = map_charid2sd(idata->owner_id)) != NULL) // If no maps are created, tell player to wait
+			if (!ret && (sd = map_charid2sd(idata->owner_id))) // If no maps are created, tell player to wait
 				clif_instance_changewait(instance_id, 0xffff);
 			break;
 		case IM_PARTY:
-			if (ret == 0 && (pd = party_search(idata->owner_id)) != NULL) // If no maps are created, tell party to wait
+			if (!ret && (pd = party_search(idata->owner_id))) // If no maps are created, tell party to wait
 				clif_instance_changewait(instance_id, 0xffff);
 			break;
 		case IM_GUILD:
-			if (ret == 0 && (gd = guild_search(idata->owner_id)) != NULL) // If no maps are created, tell guild to wait
+			if (!ret && (gd = guild_search(idata->owner_id))) // If no maps are created, tell guild to wait
 				clif_instance_changewait(instance_id, 0xffff);
 			break;
 		case IM_CLAN:
-			if (ret == 0 && (cd = clan_search(idata->owner_id)) != NULL) // If no maps are created, tell clan to wait
+			if (!ret && (cd = clan_search(idata->owner_id))) // If no maps are created, tell clan to wait
 				clif_instance_changewait(instance_id, 0xffff);
 			break;
 		default:
@@ -331,7 +334,7 @@ static TIMER_FUNC(instance_subscription_timer){
 	instance_wait.id.pop_front();
 
 	for(int i = 0; i < instance_wait.id.size(); i++) {
-		if (idata->state == INSTANCE_IDLE && ((mode == IM_CHAR && sd != NULL) || (mode == IM_GUILD && gd != NULL) || (mode == IM_PARTY && pd != NULL) || (mode == IM_CLAN && cd != NULL)))
+		if (idata->state == INSTANCE_IDLE && ((mode == IM_CHAR && sd) || (mode == IM_GUILD && gd) || (mode == IM_PARTY && pd) || (mode == IM_CLAN && cd)))
 			clif_instance_changewait(instance_id, i + 1);
 	}
 
@@ -351,16 +354,13 @@ static TIMER_FUNC(instance_subscription_timer){
  */
 bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instance_id)
 {
-	if (idata == nullptr)
-		return false;
-
 	// No timer
-	if(idata->keep_timer != INVALID_TIMER)
+	if (!idata || idata->keep_timer != INVALID_TIMER)
 		return false;
 
-	auto db = instance_search_db(idata->id);
+	auto db = instance_db.find(idata->id);
 
-	if(db == nullptr)
+	if (!db)
 		return false;
 
 	// Add timer
@@ -371,19 +371,19 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_charid2sd(idata->owner_id) != NULL) // Notify player of the added instance timer
+			if (map_charid2sd(idata->owner_id)) // Notify player of the added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_PARTY:
-			if (party_search(idata->owner_id) != NULL) // Notify party of the added instance timer
+			if (party_search(idata->owner_id)) // Notify party of the added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_GUILD:
-			if (guild_search(idata->owner_id) != NULL) // Notify guild of the added instance timer
+			if (guild_search(idata->owner_id)) // Notify guild of the added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_CLAN:
-			if (clan_search(idata->owner_id) != NULL) // Notify clan of the added instance timer
+			if (clan_search(idata->owner_id)) // Notify clan of the added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		default:
@@ -401,16 +401,13 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
  */
 bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instance_id)
 {
-	if (idata == nullptr)
-		return false;
-
 	// No current timer
-	if(idata->idle_timer != INVALID_TIMER)
+	if (!idata || idata->idle_timer != INVALID_TIMER)
 		return false;
 
-	auto db = instance_search_db(idata->id);
+	auto db = instance_db.find(idata->id);
 
-	if (db == nullptr)
+	if (!db)
 		return false;
 
 	// Add the timer
@@ -421,19 +418,19 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_charid2sd(idata->owner_id) != NULL && instance_search_db(idata->id) != NULL) // Notify player of added instance timer
+			if (map_charid2sd(idata->owner_id)) // Notify player of added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_PARTY:
-			if (party_search(idata->owner_id) != NULL && instance_search_db(idata->id) != NULL) // Notify party of added instance timer
+			if (party_search(idata->owner_id)) // Notify party of added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_GUILD:
-			if (guild_search(idata->owner_id) != NULL && instance_search_db(idata->id) != NULL) // Notify guild of added instance timer
+			if (guild_search(idata->owner_id)) // Notify guild of added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_CLAN:
-			if (clan_search(idata->owner_id) != NULL && instance_search_db(idata->id) != NULL) // Notify clan of added instance timer
+			if (clan_search(idata->owner_id)) // Notify clan of added instance timer
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		default:
@@ -451,11 +448,8 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
  */
 bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance_id)
 {
-	if (idata == nullptr)
-		return false;
-	
 	// No timer
-	if(idata->idle_timer == INVALID_TIMER)
+	if (!idata || idata->idle_timer == INVALID_TIMER)
 		return false;
 
 	// Delete the timer - Party has returned or instance is destroyed
@@ -467,19 +461,19 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_charid2sd(idata->owner_id) != NULL) // Notify the player
+			if (map_charid2sd(idata->owner_id)) // Notify the player
 				clif_instance_changestatus(instance_id, 0, idata->idle_limit);
 			break;
 		case IM_PARTY:
-			if (party_search(idata->owner_id) != NULL) // Notify the party
+			if (party_search(idata->owner_id)) // Notify the party
 				clif_instance_changestatus(instance_id, 0, idata->idle_limit);
 			break;
 		case IM_GUILD:
-			if (guild_search(idata->owner_id) != NULL) // Notify the guild
+			if (guild_search(idata->owner_id)) // Notify the guild
 				clif_instance_changestatus(instance_id, 0, idata->idle_limit);
 			break;
 		case IM_CLAN:
-			if (clan_search(idata->owner_id) != NULL) // Notify the clan
+			if (clan_search(idata->owner_id)) // Notify the clan
 				clif_instance_changestatus(instance_id, 0, idata->idle_limit);
 			break;
 		default:
@@ -562,7 +556,7 @@ void instance_addnpc(std::shared_ptr<s_instance_data> idata)
 int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
 	auto db = instance_search_db_name(name);
 
-	if (db == nullptr) {
+	if (!db) {
 		ShowError("instance_create: Unknown instance %s creation was attempted.\n", name);
 		return -1;
 	}
@@ -577,7 +571,7 @@ int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if ((sd = map_charid2sd(owner_id)) == NULL) {
+			if (!(sd = map_charid2sd(owner_id))) {
 				ShowError("instance_create: Character %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
@@ -585,7 +579,7 @@ int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
 				return -3; // Player already instancing
 			break;
 		case IM_PARTY:
-			if ((pd = party_search(owner_id)) == NULL) {
+			if (!(pd = party_search(owner_id))) {
 				ShowError("instance_create: Party %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
@@ -593,7 +587,7 @@ int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
 				return -3; // Party already instancing
 			break;
 		case IM_GUILD:
-			if ((gd = guild_search(owner_id)) == NULL) {
+			if (!(gd = guild_search(owner_id))) {
 				ShowError("instance_create: Guild %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
@@ -601,7 +595,7 @@ int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
 				return -3; // Guild already instancing
 			break;
 		case IM_CLAN:
-			if ((cd = clan_search(owner_id)) == NULL) {
+			if (!(cd = clan_search(owner_id))) {
 				ShowError("instance_create: Clan %d not found for instance '%s'.\n", owner_id, name);
 				return -2;
 			}
@@ -665,7 +659,7 @@ int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
  * @return 0 on failure or map count on success
  */
 int instance_addmap(int instance_id) {
-	if (instance_id == 0)
+	if (!instance_id)
 		return 0;
 
 	auto idata = instance_search(instance_id);
@@ -674,9 +668,9 @@ int instance_addmap(int instance_id) {
 	if (idata->state != INSTANCE_IDLE)
 		return 0;
 
-	auto db = instance_search_db(idata->id);
+	auto db = instance_db.find(idata->id);
 
-	if (db == nullptr)
+	if (!db)
 		return 0;
 
 	// Set to busy, update timers
@@ -717,19 +711,19 @@ int instance_addmap(int instance_id) {
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (map_charid2sd(idata->owner_id) != NULL) // Inform player of the created instance
+			if (map_charid2sd(idata->owner_id)) // Inform player of the created instance
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_PARTY:
-			if (party_search(idata->owner_id) != NULL) // Inform party members of the created instance
+			if (party_search(idata->owner_id)) // Inform party members of the created instance
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_GUILD:
-			if (guild_search(idata->owner_id) != NULL) // Inform guild members of the created instance
+			if (guild_search(idata->owner_id)) // Inform guild members of the created instance
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		case IM_CLAN:
-			if (clan_search(idata->owner_id) != NULL) // Inform clan members of the created instance
+			if (clan_search(idata->owner_id)) // Inform clan members of the created instance
 				clif_instance_status(instance_id, idata->keep_limit, idata->idle_limit);
 			break;
 		default:
@@ -763,7 +757,7 @@ int16 instance_mapid(int16 m, int instance_id)
 		if (it.src_m == m) {
 			char alt_name[MAP_NAME_LENGTH];
 
-			if ((strchr(iname, '@') == NULL) && strlen(iname) > 8) {
+			if (!(strchr(iname, '@')) && strlen(iname) > 8) {
 				memmove((void*)iname, iname + (strlen(iname) - 9), strlen(iname));
 				snprintf(alt_name, sizeof(alt_name), "%hu#%s", instance_id, iname);
 			}
@@ -904,7 +898,7 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, int instance_i
 	
 	auto db = instance_search_db_name(name);
 
-	if (db == nullptr) {
+	if (!db) {
 		ShowError("instance_enter: Unknown instance \"%s\".\n", name);
 		return IE_OTHER;
 	}
@@ -931,37 +925,37 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, int instance_i
 		case IM_NONE:
 			break;
 		case IM_CHAR:
-			if (sd->instance_id == 0) // Player must have an instance
+			if (!sd->instance_id) // Player must have an instance
 				return IE_NOINSTANCE;
 			if (idata->owner_id != sd->status.char_id)
 				return IE_OTHER;
 			break;
 		case IM_PARTY:
-			if (sd->status.party_id == 0) // Character must be in instance party
+			if (!sd->status.party_id) // Character must be in instance party
 				return IE_NOMEMBER;
-			if ((pd = party_search(sd->status.party_id)) == NULL)
+			if (!(pd = party_search(sd->status.party_id)))
 				return IE_NOMEMBER;
-			if (pd->instance_id == 0) // Party must have an instance
+			if (!pd->instance_id) // Party must have an instance
 				return IE_NOINSTANCE;
 			if (idata->owner_id != pd->party.party_id)
 				return IE_OTHER;
 			break;
 		case IM_GUILD:
-			if (sd->status.guild_id == 0) // Character must be in instance guild
+			if (!sd->status.guild_id) // Character must be in instance guild
 				return IE_NOMEMBER;
-			if ((gd = guild_search(sd->status.guild_id)) == NULL)
+			if (!(gd = guild_search(sd->status.guild_id)))
 				return IE_NOMEMBER;
-			if (gd->instance_id == 0) // Guild must have an instance
+			if (!gd->instance_id) // Guild must have an instance
 				return IE_NOINSTANCE;
 			if (idata->owner_id != gd->guild_id)
 				return IE_OTHER;
 			break;
 		case IM_CLAN:
-			if (sd->status.clan_id == 0) // Character must be in instance clan
+			if (!sd->status.clan_id) // Character must be in instance clan
 				return IE_NOMEMBER;
-			if ((cd = clan_search(sd->status.clan_id)) == NULL)
+			if (!(cd = clan_search(sd->status.clan_id)))
 				return IE_NOMEMBER;
-			if (cd->instance_id == 0) // Clan must have an instance
+			if (!cd->instance_id) // Clan must have an instance
 				return IE_NOINSTANCE;
 			if (idata->owner_id != cd->id)
 				return IE_OTHER;
@@ -997,7 +991,7 @@ bool instance_reqinfo(struct map_session_data *sd, int instance_id)
 
 	auto idata = instance_search(instance_id);
 
-	if(!idata || instance_search_db(idata->id) == nullptr)
+	if (!idata || !instance_db.find(idata->id))
 		return false;
 
 	// Say it's created if instance is not busy
@@ -1062,18 +1056,11 @@ bool instance_delusers(int instance_id)
 }
 
 /**
- * Loads instances from the instance database
- */
-void instance_readdb(void) {
-	instance_db.load();
-}
-
-/**
  * Reload the instance database
  */
 void instance_db_reload(void) {
 	instance_db.clear();
-	instance_readdb();
+	instance_db.load();
 }
 
 /**
@@ -1081,9 +1068,6 @@ void instance_db_reload(void) {
  */
 void do_reload_instance(void)
 {
-	struct s_mapiterator* iter;
-	struct map_session_data *sd;
-
 	for (const auto &it : instances) {
 		auto idata = instance_search(it.first);
 
@@ -1094,16 +1078,18 @@ void do_reload_instance(void)
 			instance_addnpc(idata);
 
 			// Create new keep timer
-			auto db = instance_search_db(idata->id);
+			auto db = instance_db.find(idata->id);
 
-			if (db != nullptr)
+			if (db)
 				idata->keep_limit = (unsigned int)time(NULL) + db->limit;
 		}
 	}
 
 	// Reset player to instance beginning
-	iter = mapit_getallusers();
-	for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
+	struct s_mapiterator *iter = mapit_getallusers();
+	struct map_session_data *sd;
+
+	for (sd = (TBL_PC *)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC *)mapit_next(iter)) {
 		struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
 		if (sd && mapdata->instance_id) {
@@ -1111,38 +1097,37 @@ void do_reload_instance(void)
 			struct guild *gd;
 			struct clan *cd;
 			int instance_id;
-
 			auto idata = instance_search(map[sd->bl.m].instance_id);
-			auto db = instance_search_db(idata->id);
+			auto db = instance_db.find(idata->id);
 
 			switch (idata->mode) {
-			case IM_NONE:
-				continue;
-			case IM_CHAR:
-				if (sd->instance_id != mapdata->instance_id) // Someone who is not instance owner is on instance map
+				case IM_NONE:
 					continue;
-				instance_id = sd->instance_id;
-				break;
-			case IM_PARTY:
-				if ((!(pd = party_search(sd->status.party_id)) || pd->instance_id != mapdata->instance_id)) // Someone not in party is on instance map
+				case IM_CHAR:
+					if (sd->instance_id != mapdata->instance_id) // Someone who is not instance owner is on instance map
+						continue;
+					instance_id = sd->instance_id;
+					break;
+				case IM_PARTY:
+					if ((!(pd = party_search(sd->status.party_id)) || pd->instance_id != mapdata->instance_id)) // Someone not in party is on instance map
+						continue;
+					instance_id = pd->instance_id;
+					break;
+				case IM_GUILD:
+					if (!(gd = guild_search(sd->status.guild_id)) || gd->instance_id != mapdata->instance_id) // Someone not in guild is on instance map
+						continue;
+					instance_id = gd->instance_id;
+					break;
+				case IM_CLAN:
+					if (!(cd = clan_search(sd->status.clan_id)) || cd->instance_id != mapdata->instance_id) // Someone not in clan is on instance map
+						continue;
+					instance_id = cd->instance_id;
+					break;
+				default:
+					ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? db->name.c_str() : "Unknown", mapdata->instance_id, (uint8)idata->mode);
 					continue;
-				instance_id = pd->instance_id;
-				break;
-			case IM_GUILD:
-				if (!(gd = guild_search(sd->status.guild_id)) || gd->instance_id != mapdata->instance_id) // Someone not in guild is on instance map
-					continue;
-				instance_id = gd->instance_id;
-				break;
-			case IM_CLAN:
-				if (!(cd = clan_search(sd->status.clan_id)) || cd->instance_id != mapdata->instance_id) // Someone not in clan is on instance map
-					continue;
-				instance_id = cd->instance_id;
-				break;
-			default:
-				ShowError("do_reload_instance: Unexpected instance mode for instance %s (id=%u, mode=%u).\n", (db) ? db->name.c_str() : "Unknown", mapdata->instance_id, (uint8)idata->mode);
-				continue;
 			}
-			if (db != nullptr && !instance_enter(sd, instance_id, db->name.c_str(), -1, -1)) { // All good
+			if (db && !instance_enter(sd, instance_id, db->name.c_str(), -1, -1)) { // All good
 				clif_displaymessage(sd->fd, msg_txt(sd, 515)); // Instance has been reloaded
 				instance_reqinfo(sd, instance_id);
 			} else // Something went wrong
@@ -1157,7 +1142,7 @@ void do_reload_instance(void)
  */
 void do_init_instance(void) {
 	instance_start = map_num;
-	instance_readdb();
+	instance_db.load();
 	instance_wait.timer = -1;
 
 	add_timer_func_list(instance_delete_timer,"instance_delete_timer");
