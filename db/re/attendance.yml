@@ -1,61 +1,61 @@
 Header:
-  Type: ATTENDANCE_CONF
+  Type: ATTENDANCE_DB
   Version: 1
-  
-Attendance:
-  - Start: 20180502
-    End: 20180529
-    Rewards:
-      - Day: 1
-        ItemId: 22979
-      - Day: 2
-        ItemId: 6316
-      - Day: 3
-        ItemId: 12265
-        Amount: 5
-      - Day: 4
-        ItemId: 23047
-        Amount: 5
-      - Day: 5
-        ItemId: 23038
-      - Day: 6
-        ItemId: 23043
-      - Day: 7
-        ItemId: 23340
-        Amount: 3
-      - Day: 8
-        ItemId: 12516
-        Amount: 5
-      - Day: 9
-        ItemId: 23307
-        Amount: 5
-      - Day: 10
-        ItemId: 12610
-      - Day: 11
-        ItemId: 14533
-        Amount: 2
-      - Day: 12
-        ItemId: 23012
-        Amount: 3
-      - Day: 13
-        ItemId: 23048
-        Amount: 5
-      - Day: 14
-        ItemId: 12264
-        Amount: 5
-      - Day: 15
-        ItemId: 23046
-        Amount: 5
-      - Day: 16
-        ItemId: 12515
-        Amount: 5
-      - Day: 17
-        ItemId: 12522
-        Amount: 5
-      - Day: 18
-        ItemId: 12523
-        Amount: 5
-      - Day: 19
-        ItemId: 6234
-      - Day: 20
-        ItemId: 22845
+
+Body:
+#  - Start: 20180502
+#    End: 20180529
+#    Rewards:
+#      - Day: 1
+#        ItemId: 22979
+#      - Day: 2
+#        ItemId: 6316
+#      - Day: 3
+#        ItemId: 12265
+#        Amount: 5
+#      - Day: 4
+#        ItemId: 23047
+#        Amount: 5
+#      - Day: 5
+#        ItemId: 23038
+#      - Day: 6
+#        ItemId: 23043
+#      - Day: 7
+#        ItemId: 23340
+#        Amount: 3
+#      - Day: 8
+#        ItemId: 12516
+#        Amount: 5
+#      - Day: 9
+#        ItemId: 23307
+#        Amount: 5
+#      - Day: 10
+#        ItemId: 12610
+#      - Day: 11
+#        ItemId: 14533
+#        Amount: 2
+#      - Day: 12
+#        ItemId: 23012
+#        Amount: 3
+#      - Day: 13
+#        ItemId: 23048
+#        Amount: 5
+#      - Day: 14
+#        ItemId: 12264
+#        Amount: 5
+#      - Day: 15
+#        ItemId: 23046
+#        Amount: 5
+#      - Day: 16
+#        ItemId: 12515
+#        Amount: 5
+#      - Day: 17
+#        ItemId: 12522
+#        Amount: 5
+#      - Day: 18
+#        ItemId: 12523
+#        Amount: 5
+#      - Day: 19
+#        ItemId: 6234
+#      - Day: 20
+#        ItemId: 22845

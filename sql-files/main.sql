@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS `db_roulette` (
 CREATE TABLE IF NOT EXISTS `bonus_script` (
   `char_id` INT(11) UNSIGNED NOT NULL,
   `script` TEXT NOT NULL,
-  `tick` INT(11) UNSIGNED NOT NULL DEFAULT '0',
+  `tick` BIGINT(20) NOT NULL DEFAULT '0',
   `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
   `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
   `icon` SMALLINT(3) NOT NULL DEFAULT '-1'
@@ -375,7 +375,7 @@ CREATE TABLE IF NOT EXISTS `elemental` (
   `mdef` smallint(4) unsigned NOT NULL default '0',
   `flee` smallint(4) unsigned NOT NULL default '0',
   `hit` smallint(4) unsigned NOT NULL default '0',
-  `life_time` int(11) NOT NULL default '0',
+  `life_time` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`ele_id`)
 ) ENGINE=MyISAM;
 
@@ -581,6 +581,47 @@ CREATE TABLE IF NOT EXISTS `guild_storage` (
 ) ENGINE=MyISAM;
 
 --
+-- Table structure for table `guild_storage_log`
+--
+
+CREATE TABLE IF NOT EXISTS `guild_storage_log` (
+  `id` int(11) NOT NULL auto_increment,
+  `guild_id` int(11) unsigned NOT NULL default '0',
+  `time` datetime NOT NULL,
+  `char_id` int(11) NOT NULL default '0',
+  `name` varchar(24) NOT NULL default '',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
+  `amount` int(11) NOT NULL default '1',
+  `identify` smallint(6) NOT NULL default '0',
+  `refine` tinyint(3) unsigned NOT NULL default '0',
+  `attribute` tinyint(4) unsigned NOT NULL default '0',
+  `card0` smallint(5) unsigned NOT NULL default '0',
+  `card1` smallint(5) unsigned NOT NULL default '0',
+  `card2` smallint(5) unsigned NOT NULL default '0',
+  `card3` smallint(5) unsigned NOT NULL default '0',
+  `option_id0` smallint(5) NOT NULL default '0',
+  `option_val0` smallint(5) NOT NULL default '0',
+  `option_parm0` tinyint(3) NOT NULL default '0',
+  `option_id1` smallint(5) NOT NULL default '0',
+  `option_val1` smallint(5) NOT NULL default '0',
+  `option_parm1` tinyint(3) NOT NULL default '0',
+  `option_id2` smallint(5) NOT NULL default '0',
+  `option_val2` smallint(5) NOT NULL default '0',
+  `option_parm2` tinyint(3) NOT NULL default '0',
+  `option_id3` smallint(5) NOT NULL default '0',
+  `option_val3` smallint(5) NOT NULL default '0',
+  `option_parm3` tinyint(3) NOT NULL default '0',
+  `option_id4` smallint(5) NOT NULL default '0',
+  `option_val4` smallint(5) NOT NULL default '0',
+  `option_parm4` tinyint(3) NOT NULL default '0',
+  `expire_time` int(11) unsigned NOT NULL default '0',
+  `unique_id` bigint(20) unsigned NOT NULL default '0',
+  `bound` tinyint(1) unsigned NOT NULL default '0',
+  PRIMARY KEY  (`id`),
+  INDEX (`guild_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1;
+
+--
 -- Table structure for table `homunculus`
 --
 
@@ -680,6 +721,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
   `favorite` tinyint(3) unsigned NOT NULL default '0',
   `bound` tinyint(3) unsigned NOT NULL default '0',
   `unique_id` bigint(20) unsigned NOT NULL default '0',
+  `equip_switch` int(11) unsigned NOT NULL default '0',
   PRIMARY KEY  (`id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;
@@ -739,7 +781,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `dest_name` varchar(30) NOT NULL default '',
   `dest_id` int(11) unsigned NOT NULL default '0',
   `title` varchar(45) NOT NULL default '',
-  `message` varchar(255) NOT NULL default '',
+  `message` varchar(500) NOT NULL default '',
   `time` int(11) unsigned NOT NULL default '0',
   `status` tinyint(2) NOT NULL default '0',
   `zeny` int(11) unsigned NOT NULL default '0',
@@ -832,7 +874,7 @@ CREATE TABLE IF NOT EXISTS `mercenary` (
   `hp` int(11) unsigned NOT NULL default '0',
   `sp` int(11) unsigned NOT NULL default '0',
   `kill_counter` int(11) NOT NULL,
-  `life_time` int(11) NOT NULL default '0',
+  `life_time` bigint(20) NOT NULL default '0',
   PRIMARY KEY  (`mer_id`)
 ) ENGINE=MyISAM;
 
@@ -872,7 +914,7 @@ CREATE TABLE IF NOT EXISTS `sc_data` (
   `account_id` int(11) unsigned NOT NULL,
   `char_id` int(11) unsigned NOT NULL,
   `type` smallint(11) unsigned NOT NULL,
-  `tick` int(11) NOT NULL,
+  `tick` bigint(20) NOT NULL,
   `val1` int(11) NOT NULL default '0',
   `val2` int(11) NOT NULL default '0',
   `val3` int(11) NOT NULL default '0',
@@ -889,7 +931,7 @@ CREATE TABLE IF NOT EXISTS `skillcooldown` (
   `account_id` int(11) unsigned NOT NULL,
   `char_id` int(11) unsigned NOT NULL,
   `skill` smallint(11) unsigned NOT NULL DEFAULT '0',
-  `tick` int(11) NOT NULL,
+  `tick` bigint(20) NOT NULL,
   KEY `account_id` (`account_id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;

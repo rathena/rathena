@@ -891,6 +891,10 @@ static TIMER_FUNC(hom_hungry){
 		clif_emotion(&hd->bl, ET_OK);
 	}
 
+	if( battle_config.feature_homunculus_autofeed && hd->homunculus.autofeed && hd->homunculus.hunger <= battle_config.feature_homunculus_autofeed_rate ){
+		hom_food( sd, hd );
+	}
+
 	if (hd->homunculus.hunger < 0) {
 		hd->homunculus.hunger = 0;
 		// Delete the homunculus if intimacy <= 100
@@ -1260,7 +1264,7 @@ void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	clif_hominfo(sd,hd,0);
 	clif_homskillinfoblock(sd);
 	if (hd->homunculus.class_ == 6052) //eleanor
-		sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
+		sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
 }
 
 /**
@@ -1591,11 +1595,12 @@ void read_homunculus_expdb(void)
 	memset(hexptbl,0,sizeof(hexptbl));
 	for (i = 0; i < ARRAYLENGTH(filename); i++) {
 		FILE *fp;
+		char path[1024];
 		char line[1024];
 		int j=0;
 		
-		sprintf(line, "%s/%s", db_path, filename[i]);
-		fp = fopen(line,"r");
+		sprintf(path, "%s/%s", db_path, filename[i]);
+		fp = fopen(path,"r");
 		if (fp == NULL) {
 			if (i != 0)
 				continue;
@@ -1611,11 +1616,11 @@ void read_homunculus_expdb(void)
 				break;
 		}
 		if (hexptbl[MAX_LEVEL - 1]) { // Last permitted level have to be 0!
-			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",filename,MAX_LEVEL);
+			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",path,MAX_LEVEL);
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s/%s" CL_RESET "'.\n", j, db_path, filename[i]);
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s" CL_RESET "'.\n", j, path);
 	}
 }
 

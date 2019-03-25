@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_TRADE_HPP_
-#define	_TRADE_HPP_
+#ifndef TRADE_HPP
+#define TRADE_HPP
 
 struct map_session_data;
 
@@ -14,4 +14,4 @@ void trade_tradeok(struct map_session_data *sd);
 void trade_tradecancel(struct map_session_data *sd);
 void trade_tradecommit(struct map_session_data *sd);
 
-#endif /* _TRADE_HPP_ */
+#endif /* TRADE_HPP */

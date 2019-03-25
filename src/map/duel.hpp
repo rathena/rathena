@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
-#pragma once
-#ifndef _DUEL_HPP_
-#define _DUEL_HPP_
+
+#ifndef DUEL_HPP
+#define DUEL_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -30,5 +30,4 @@ bool duel_check_player_limit( struct duel& pDuel );
 void do_init_duel(void);
 void do_final_duel(void);
 
-
-#endif /* _DUEL_HPP_ */
+#endif /* DUEL_HPP */

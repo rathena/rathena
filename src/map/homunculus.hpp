@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _HOMUNCULUS_HPP_
-#define _HOMUNCULUS_HPP_
+#ifndef HOMUNCULUS_HPP
+#define HOMUNCULUS_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -193,4 +193,4 @@ short hom_skill_get_index(uint16 skill_id);
 void do_final_homunculus(void);
 void do_init_homunculus(void);
 
-#endif /* _HOMUNCULUS_HPP_ */
+#endif /* HOMUNCULUS_HPP */

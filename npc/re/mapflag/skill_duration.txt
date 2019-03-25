@@ -1,0 +1,121 @@
+//===== rAthena Mapflag ======================================
+//= Sets skill time limit on specified map.
+//===== Structure ============================================
+//= mapname	skill_duration	skill_name,percentage
+//============================================================
+
+//============================================================
+// Gloria Castles
+//============================================================
+te_prtcas01	mapflag	skill_duration	HT_SKIDTRAP,400
+te_prtcas01	mapflag	skill_duration	HT_LANDMINE,400
+te_prtcas01	mapflag	skill_duration	HT_ANKLESNARE,400
+te_prtcas01	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_prtcas01	mapflag	skill_duration	HT_SANDMAN,400
+te_prtcas01	mapflag	skill_duration	HT_FLASHER,400
+te_prtcas01	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_prtcas01	mapflag	skill_duration	HT_BLASTMINE,400
+te_prtcas01	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_prtcas01	mapflag	skill_duration	HT_TALKIEBOX,400
+
+te_prtcas02	mapflag	skill_duration	HT_SKIDTRAP,400
+te_prtcas02	mapflag	skill_duration	HT_LANDMINE,400
+te_prtcas02	mapflag	skill_duration	HT_ANKLESNARE,400
+te_prtcas02	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_prtcas02	mapflag	skill_duration	HT_SANDMAN,400
+te_prtcas02	mapflag	skill_duration	HT_FLASHER,400
+te_prtcas02	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_prtcas02	mapflag	skill_duration	HT_BLASTMINE,400
+te_prtcas02	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_prtcas02	mapflag	skill_duration	HT_TALKIEBOX,400
+
+te_prtcas03	mapflag	skill_duration	HT_SKIDTRAP,400
+te_prtcas03	mapflag	skill_duration	HT_LANDMINE,400
+te_prtcas03	mapflag	skill_duration	HT_ANKLESNARE,400
+te_prtcas03	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_prtcas03	mapflag	skill_duration	HT_SANDMAN,400
+te_prtcas03	mapflag	skill_duration	HT_FLASHER,400
+te_prtcas03	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_prtcas03	mapflag	skill_duration	HT_BLASTMINE,400
+te_prtcas03	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_prtcas03	mapflag	skill_duration	HT_TALKIEBOX,400
+
+te_prtcas04	mapflag	skill_duration	HT_SKIDTRAP,400
+te_prtcas04	mapflag	skill_duration	HT_LANDMINE,400
+te_prtcas04	mapflag	skill_duration	HT_ANKLESNARE,400
+te_prtcas04	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_prtcas04	mapflag	skill_duration	HT_SANDMAN,400
+te_prtcas04	mapflag	skill_duration	HT_FLASHER,400
+te_prtcas04	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_prtcas04	mapflag	skill_duration	HT_BLASTMINE,400
+te_prtcas04	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_prtcas04	mapflag	skill_duration	HT_TALKIEBOX,400
+
+te_prtcas05	mapflag	skill_duration	HT_SKIDTRAP,400
+te_prtcas05	mapflag	skill_duration	HT_LANDMINE,400
+te_prtcas05	mapflag	skill_duration	HT_ANKLESNARE,400
+te_prtcas05	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_prtcas05	mapflag	skill_duration	HT_SANDMAN,400
+te_prtcas05	mapflag	skill_duration	HT_FLASHER,400
+te_prtcas05	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_prtcas05	mapflag	skill_duration	HT_BLASTMINE,400
+te_prtcas05	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_prtcas05	mapflag	skill_duration	HT_TALKIEBOX,400
+
+//============================================================
+// Kafragaten Castles
+//============================================================
+te_aldecas1	mapflag	skill_duration	HT_SKIDTRAP,400
+te_aldecas1	mapflag	skill_duration	HT_LANDMINE,400
+te_aldecas1	mapflag	skill_duration	HT_ANKLESNARE,400
+te_aldecas1	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_aldecas1	mapflag	skill_duration	HT_SANDMAN,400
+te_aldecas1	mapflag	skill_duration	HT_FLASHER,400
+te_aldecas1	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_aldecas1	mapflag	skill_duration	HT_BLASTMINE,400
+te_aldecas1	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_aldecas1	mapflag	skill_duration	HT_TALKIEBOX,400
+
+te_aldecas2	mapflag	skill_duration	HT_SKIDTRAP,400
+te_aldecas2	mapflag	skill_duration	HT_LANDMINE,400
+te_aldecas2	mapflag	skill_duration	HT_ANKLESNARE,400
+te_aldecas2	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_aldecas2	mapflag	skill_duration	HT_SANDMAN,400
+te_aldecas2	mapflag	skill_duration	HT_FLASHER,400
+te_aldecas2	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_aldecas2	mapflag	skill_duration	HT_BLASTMINE,400
+te_aldecas2	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_aldecas2	mapflag	skill_duration	HT_TALKIEBOX,400
+
+te_aldecas3	mapflag	skill_duration	HT_SKIDTRAP,400
+te_aldecas3	mapflag	skill_duration	HT_LANDMINE,400
+te_aldecas3	mapflag	skill_duration	HT_ANKLESNARE,400
+te_aldecas3	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_aldecas3	mapflag	skill_duration	HT_SANDMAN,400
+te_aldecas3	mapflag	skill_duration	HT_FLASHER,400
+te_aldecas3	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_aldecas3	mapflag	skill_duration	HT_BLASTMINE,400
+te_aldecas3	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_aldecas3	mapflag	skill_duration	HT_TALKIEBOX,400
+
+te_aldecas4	mapflag	skill_duration	HT_SKIDTRAP,400
+te_aldecas4	mapflag	skill_duration	HT_LANDMINE,400
+te_aldecas4	mapflag	skill_duration	HT_ANKLESNARE,400
+te_aldecas4	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_aldecas4	mapflag	skill_duration	HT_SANDMAN,400
+te_aldecas4	mapflag	skill_duration	HT_FLASHER,400
+te_aldecas4	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_aldecas4	mapflag	skill_duration	HT_BLASTMINE,400
+te_aldecas4	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_aldecas4	mapflag	skill_duration	HT_TALKIEBOX,400
+
+te_aldecas5	mapflag	skill_duration	HT_SKIDTRAP,400
+te_aldecas5	mapflag	skill_duration	HT_LANDMINE,400
+te_aldecas5	mapflag	skill_duration	HT_ANKLESNARE,400
+te_aldecas5	mapflag	skill_duration	HT_SHOCKWAVE,400
+te_aldecas5	mapflag	skill_duration	HT_SANDMAN,400
+te_aldecas5	mapflag	skill_duration	HT_FLASHER,400
+te_aldecas5	mapflag	skill_duration	HT_FREEZINGTRAP,400
+te_aldecas5	mapflag	skill_duration	HT_BLASTMINE,400
+te_aldecas5	mapflag	skill_duration	HT_CLAYMORETRAP,400
+te_aldecas5	mapflag	skill_duration	HT_TALKIEBOX,400

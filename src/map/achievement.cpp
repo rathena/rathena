@@ -11,10 +11,12 @@
 #include <yaml-cpp/yaml.h>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "battle.hpp"
@@ -28,47 +30,292 @@
 #include "script.hpp"
 #include "status.hpp"
 
-static jmp_buf     av_error_jump;
-static char*       av_error_msg;
-static const char* av_error_pos;
-static int         av_error_report;
+using namespace rathena;
 
-std::unordered_map<int, std::shared_ptr<s_achievement_db>> achievements;
-std::vector<int> achievement_mobs; // Avoids checking achievements on every mob killed
+void AchievementDatabase::clear(){
+	TypesafeYamlDatabase::clear();
+	this->achievement_mobs.clear();
+}
 
-/**
- * Searches an achievement by ID
- * @param achievement_id: ID to lookup
- * @return True if achievement exists or false if it doesn't
- */
-bool achievement_exists(int achievement_id)
-{
-	return achievements.find(achievement_id) != achievements.end();
+const std::string AchievementDatabase::getDefaultLocation(){
+	return std::string(db_path) + "/achievement_db.yml";
 }
 
 /**
- * Return an achievement by ID
- * @param achievement_id: ID to lookup
- * @return shared_ptr of achievement
+ * Reads and parses an entry from the achievement_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
  */
-std::shared_ptr<s_achievement_db> &achievement_get(int achievement_id) 
-{
-	return achievements[achievement_id];
+uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
+	uint32 achievement_id;
+
+	// TODO: doesnt match camel case
+	if( !this->asUInt32( node, "ID", achievement_id ) ){
+		return 0;
+	}
+
+	std::shared_ptr<s_achievement_db> achievement = this->find( achievement_id );
+	bool exists = achievement != nullptr;
+
+	if( !exists ){
+		if( !this->nodeExists( node, "Group" ) ){
+			return 0;
+		}
+
+		if( !this->nodeExists( node, "Name" ) ){
+			return 0;
+		}
+
+		achievement = std::make_shared<s_achievement_db>();
+		achievement->achievement_id = achievement_id;
+	}
+
+	if( this->nodeExists( node, "Group" ) ){
+		std::string group_name;
+
+		if( !this->asString( node, "Group", group_name ) ){
+			return 0;
+		}
+
+		int constant;
+
+		if( !script_get_constant( group_name.c_str(), &constant ) ){
+			this->invalidWarning( node, "achievement_read_db_sub: Invalid group %s for achievement %d, skipping.\n", group_name.c_str(), achievement_id );
+			return 0;
+		}
+
+		achievement->group = (e_achievement_group)constant;
+	}
+
+	if( this->nodeExists( node, "Name" ) ){
+		std::string name;
+
+		if( !this->asString( node, "Name", name ) ){
+			return 0;
+		}
+
+		achievement->name = name;
+	}
+
+	if( this->nodeExists( node, "Target" ) ){
+		const YAML::Node& targets = node["Target"];
+
+		for( const YAML::Node& targetNode : targets ){
+			if( achievement->targets.size() >= MAX_ACHIEVEMENT_OBJECTIVES ){
+				this->invalidWarning( targetNode, "Node \"Target\" list exceeds the maximum of %d, skipping.\n", MAX_ACHIEVEMENT_OBJECTIVES );
+				return 0;
+			}
+
+			uint16 targetId;
+
+			if( !this->asUInt16( targetNode, "Id", targetId ) ){
+				continue;
+			}
+
+			if( targetId >= MAX_ACHIEVEMENT_OBJECTIVES ){
+				this->invalidWarning( targetNode["Id"], "Node \"Id\" is out of valid range [0,%d], skipping.\n", MAX_ACHIEVEMENT_OBJECTIVES );
+				return 0;
+			}
+
+			std::shared_ptr<achievement_target> target = rathena::util::umap_find( achievement->targets, targetId );
+			bool targetExists = target != nullptr;
+
+			if( !targetExists ){
+				if( !this->nodeExists( targetNode, "Count" ) && !this->nodeExists( targetNode, "MobID" ) ){
+					this->invalidWarning( targetNode, "Node \"Target\" has no data specified, skipping.\n" );
+					return 0;
+				}
+
+				target = std::make_shared<achievement_target>();
+			}
+			
+			if( this->nodeExists( targetNode, "Count" ) ){
+				uint32 count;
+
+				if( !this->asUInt32( targetNode, "Count", count ) ){
+					return 0;
+				}
+
+				target->count = count;
+			}else{
+				if( !targetExists ){
+					target->count = 0;
+				}
+			}
+
+			if( this->nodeExists( targetNode, "MobID" ) ){
+				if( achievement->group != AG_BATTLE && achievement->group != AG_TAMING ){
+					this->invalidWarning( targets, "Node \"MobID\" is only supported for targets in group AG_BATTLE or AG_TAMING, skipping.\n" );
+					return 0;
+				}
+
+				uint32 mob_id;
+
+				// TODO: not camel case
+				if( !this->asUInt32( targetNode, "MobID", mob_id ) ){
+					return 0;
+				}
+
+				if( mob_db( mob_id ) == nullptr ){
+					this->invalidWarning( targetNode["MobID"], "Unknown monster ID %d, skipping.\n", mob_id );
+					return 0;
+				}
+
+				if( !this->mobexists( mob_id ) ){
+					this->achievement_mobs.push_back( mob_id );
+				}
+
+				target->mob = mob_id;
+			}else{
+				if( !targetExists ){
+					target->mob = 0;
+				}
+			}
+
+			achievement->targets[targetId] = target;
+		}
+	}
+
+	if( this->nodeExists( node, "Condition" ) ){
+		std::string condition;
+
+		if( !this->asString( node, "Condition", condition ) ){
+			return 0;
+		}
+
+		if( condition.find( "achievement_condition" ) == std::string::npos ){
+			condition = "achievement_condition( " + condition + " );";
+		}
+
+		achievement->condition = parse_script( condition.c_str(), this->getCurrentFile().c_str(), node["Condition"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+	}
+
+	if( this->nodeExists( node, "Map" ) ){
+		if( achievement->group != AG_CHAT ){
+			this->invalidWarning( node, "Node \"Map\" can only be used with the group AG_CHATTING, skipping.\n" );
+			return 0;
+		}
+
+		std::string mapname;
+
+		if( !this->asString( node, "Map", mapname ) ){
+			return 0;
+		}
+
+		achievement->mapindex = map_mapname2mapid( mapname.c_str() );
+
+		if( achievement->mapindex == -1 ){
+			this->invalidWarning( node["Map"], "Unknown map name '%s'.\n", mapname.c_str() );
+			return 0;
+		}
+	}else{
+		if( !exists ){
+			achievement->mapindex = -1;
+		}
+	}
+
+	if( this->nodeExists( node, "Dependent" ) ){
+		for( const YAML::Node& subNode : node["Dependent"] ){
+			uint32 dependent_achievement_id;
+
+			if( !this->asUInt32( subNode, "Id", dependent_achievement_id ) ){
+				return 0;
+			}
+
+			// TODO: import logic for clearing => continue
+			// TODO: change to set to prevent multiple entries with the same id?
+			achievement->dependent_ids.push_back( dependent_achievement_id );
+		}
+	}
+
+	// TODO: not plural
+	if( this->nodeExists( node, "Reward" ) ){
+		const YAML::Node& rewardNode = node["Reward"];
+
+		// TODO: not camel case
+		if( this->nodeExists( rewardNode, "ItemID" ) ){
+			uint16 itemId;
+
+			if( !this->asUInt16( rewardNode, "ItemID", itemId ) ){
+				return 0;
+			}
+
+			if( !itemdb_exists( itemId ) ){
+				this->invalidWarning( rewardNode["ItemID"], "Unknown item with ID %hu.\n", itemId );
+				return 0;
+			}
+
+			achievement->rewards.nameid = itemId;
+
+			if( achievement->rewards.amount == 0 ){
+				// Default the amount to 1
+				achievement->rewards.amount = 1;
+			}
+		}
+
+		if( this->nodeExists( rewardNode, "Amount" ) ){
+			uint16 amount;
+
+			if( !this->asUInt16( rewardNode, "Amount", amount ) ){
+				return 0;
+			}
+
+			achievement->rewards.nameid = amount;
+		}
+
+		if( this->nodeExists( rewardNode, "Script" ) ){
+			std::string script;
+
+			if( !this->asString( rewardNode, "Script", script ) ){
+				return 0;
+			}
+
+			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		}
+
+		// TODO: not camel case
+		if( this->nodeExists( rewardNode, "TitleID" ) ){
+			uint32 title;
+
+			if( !this->asUInt32( rewardNode, "TitleID", title ) ){
+				return 0;
+			}
+
+			achievement->rewards.title_id = title;
+		}
+	}
+
+	if( this->nodeExists( node, "Score" ) ){
+		uint32 score;
+
+		if( !this->asUInt32( node, "Score", score ) ){
+			return 0;
+		}
+
+		achievement->score = score;
+	}
+
+	if( !exists ){
+		this->put( achievement_id, achievement );
+	}
+
+	return 1;
 }
+
+AchievementDatabase achievement_db;
 
 /**
  * Searches for an achievement by monster ID
  * @param mob_id: Monster ID to lookup
  * @return True on success, false on failure
  */
-bool achievement_mobexists(int mob_id)
-{
+bool AchievementDatabase::mobexists( uint32 mob_id ){
 	if (!battle_config.feature_achievement)
 		return false;
 
-	auto it = std::find(achievement_mobs.begin(), achievement_mobs.end(), mob_id);
+	auto it = std::find(this->achievement_mobs.begin(), this->achievement_mobs.end(), mob_id);
 
-	return (it != achievement_mobs.end()) ? true : false;
+	return (it != this->achievement_mobs.end()) ? true : false;
 }
 
 /**
@@ -83,12 +330,12 @@ struct achievement *achievement_add(struct map_session_data *sd, int achievement
 
 	nullpo_retr(NULL, sd);
 
-	if (!achievement_exists(achievement_id)) {
-		ShowError("achievement_add: Achievement %d not found in DB.\n", achievement_id);
-		return NULL;
-	}
+	std::shared_ptr<s_achievement_db> adb = achievement_db.find( achievement_id );
 
-	auto &adb = achievements[achievement_id];
+	if( adb == nullptr ){
+		ShowError( "achievement_add: Achievement %d not found in DB.\n", achievement_id );
+		return nullptr;
+	}
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 	if (i < sd->achievement_data.count) {
@@ -130,7 +377,7 @@ bool achievement_remove(struct map_session_data *sd, int achievement_id)
 
 	nullpo_retr(false, sd);
 
-	if (!achievement_exists(achievement_id)) {
+	if (!achievement_db.exists(achievement_id)) {
 		ShowError("achievement_delete: Achievement %d not found in DB.\n", achievement_id);
 		return false;
 	}
@@ -189,10 +436,11 @@ bool achievement_check_dependent(struct map_session_data *sd, int achievement_id
 {
 	nullpo_retr(false, sd);
 
-	if (!achievement_exists(achievement_id))
-		return false;
+	std::shared_ptr<s_achievement_db> adb = achievement_db.find( achievement_id );
 
-	auto &adb = achievements[achievement_id];
+	if( adb == nullptr ){
+		return false;
+	}
 
 	// Check if the achievement has a dependent
 	// If so, then do a check on all dependents to see if they're complete
@@ -247,10 +495,11 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 
 	nullpo_retr(false, sd);
 
-	if (!achievement_exists(achievement_id))
-		return false;
+	std::shared_ptr<s_achievement_db> adb = achievement_db.find( achievement_id );
 
-	auto &adb = achievements[achievement_id];
+	if( adb == nullptr ){
+		return false;
+	}
 
 	ARR_FIND(0, sd->achievement_data.incompleteCount, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 	if (i == sd->achievement_data.incompleteCount)
@@ -265,7 +514,7 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 			int k;
 
 			for (k = 0; k < adb->targets.size(); k++)
-				sd->achievement_data.achievements[i].count[k] = adb->targets[k].count;
+				sd->achievement_data.achievements[i].count[k] = adb->targets[k]->count;
 
 			for (k = 1; k < adb->dependent_ids.size(); k++) {
 				sd->achievement_data.achievements[i].count[k] = max(1, sd->achievement_data.achievements[i].count[k]);
@@ -284,7 +533,7 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 
 		achievement_level(sd, true); // Re-calculate achievement level
 		// Check dependents
-		for (auto &ach : achievements)
+		for (auto &ach : achievement_db)
 			achievement_check_groups(sd, ach.second.get());
 		ARR_FIND(sd->achievement_data.incompleteCount, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id); // Look for the index again, the position most likely changed
 	}
@@ -306,12 +555,12 @@ void achievement_get_reward(struct map_session_data *sd, int achievement_id, tim
 
 	nullpo_retv(sd);
 
-	if (!achievement_exists(achievement_id)) {
-		ShowError("achievement_reward: Inter server sent a reward claim for achievement %d not found in DB.\n", achievement_id);
+	std::shared_ptr<s_achievement_db> adb = achievement_db.find( achievement_id );
+
+	if( adb == nullptr ){
+		ShowError( "achievement_reward: Inter server sent a reward claim for achievement %d not found in DB.\n", achievement_id );
 		return;
 	}
-
-	auto &adb = achievements[achievement_id];
 
 	if (rewarded == 0) {
 		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
@@ -347,13 +596,13 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id)
 
 	nullpo_retv(sd);
 
-	if (!achievement_exists(achievement_id)) {
-		ShowError("achievement_reward: Trying to reward achievement %d not found in DB.\n", achievement_id);
-		clif_achievement_reward_ack(sd->fd, 0, achievement_id);
+	std::shared_ptr<s_achievement_db> adb = achievement_db.find( achievement_id );
+
+	if( adb == nullptr ){
+		ShowError( "achievement_reward: Trying to reward achievement %d not found in DB.\n", achievement_id );
+		clif_achievement_reward_ack( sd->fd, 0, achievement_id );
 		return;
 	}
-
-	auto &adb = achievements[achievement_id];
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 	if (i == sd->achievement_data.count) {
@@ -384,13 +633,12 @@ void achievement_get_titles(uint32 char_id)
 
 		if (sd->achievement_data.count) {
 			for (int i = 0; i < sd->achievement_data.count; i++) {
-				if (!achievement_exists(sd->achievement_data.achievements[i].achievement_id))
-					continue;
+				std::shared_ptr<s_achievement_db> adb = achievement_db.find( sd->achievement_data.achievements[i].achievement_id );
 
-				auto &adb = achievements[sd->achievement_data.achievements[i].achievement_id];
-
-				if (adb && adb->rewards.title_id && sd->achievement_data.achievements[i].completed > 0) // If the achievement has a title and is complete, give it to the player
-					sd->titles.push_back(adb->rewards.title_id);
+				// If the achievement has a title and is complete, give it to the player
+				if( adb != nullptr && adb->rewards.title_id && sd->achievement_data.achievements[i].completed > 0 ){
+					sd->titles.push_back( adb->rewards.title_id );
+				}
 			}
 		}
 	}
@@ -502,6 +750,40 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	return info;
 }
 
+static bool achievement_check_condition( struct script_code* condition, struct map_session_data* sd, const int* count ){
+	// Save the old script the player was attached to
+	struct script_state* previous_st = sd->st;
+
+	// Only if there was an old script
+	if( previous_st != nullptr ){
+		// Detach the player from the current script
+		script_detach_rid(previous_st);
+	}
+
+	run_script( condition, 0, sd->bl.id, fake_nd->bl.id );
+
+	struct script_state* st = sd->st;
+
+	int value = 0;
+
+	if( st != nullptr ){
+		value = script_getnum( st, 2 );
+
+		script_free_state(st);
+	}
+
+	// If an old script is present
+	if( previous_st != nullptr ){
+		// Because of detach the RID will be removed, so we need to restore it
+		previous_st->rid = sd->bl.id;
+
+		// Reattach the player to it, so that the limitations of that script kick back in
+		script_attach_state( previous_st );
+	}
+
+	return value != 0;
+}
+
 /**
  * Update achievement objectives.
  * @param sd: Player to update
@@ -587,13 +869,13 @@ static int achievement_update_objectives(struct map_session_data *sd, std::share
 				break;
 
 			for (i = 0; i < ad->targets.size(); i++) {
-				if (objective_count[i] < ad->targets[i].count)
+				if (objective_count[i] < ad->targets[i]->count)
 					objective_count[i] += update_count[0];
 			}
 
 			changed = true;
 
-			ARR_FIND(0, ad->targets.size(), k, objective_count[k] < ad->targets[k].count);
+			ARR_FIND(0, ad->targets.size(), k, objective_count[k] < ad->targets[k]->count);
 			if (k == ad->targets.size())
 				complete = true;
 
@@ -605,20 +887,20 @@ static int achievement_update_objectives(struct map_session_data *sd, std::share
 		case AG_BATTLE:
 		case AG_TAMING:
 			auto it = std::find_if(ad->targets.begin(), ad->targets.end(), [&update_count]
-			(const achievement_target &curTarget) {
-				return curTarget.mob == update_count[0];
+			(std::pair<const uint16, std::shared_ptr<achievement_target>> &curTarget) {
+				return curTarget.second->mob == update_count[0];
 			});
 			if (it == ad->targets.end())
 				break; // Mob wasn't found
 
 			for (k = 0; k < ad->targets.size(); k++) {
-				if (ad->targets[k].mob == update_count[0] && objective_count[k] < ad->targets[k].count) {
+				if (ad->targets[k]->mob == update_count[0] && objective_count[k] < ad->targets[k]->count) {
 					objective_count[k]++;
 					changed = true;
 				}
 			}
 
-			ARR_FIND(0, ad->targets.size(), k, objective_count[k] < ad->targets[k].count);
+			ARR_FIND(0, ad->targets.size(), k, objective_count[k] < ad->targets[k]->count);
 			if (k == ad->targets.size())
 				complete = true;
 
@@ -657,8 +939,13 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 		count.fill(0); // Clear out array before setting values
 
 		va_start(ap, arg_count);
-		for (i = 0; i < arg_count; i++)
+		for (i = 0; i < arg_count; i++){
+			std::string name = "ARG" + std::to_string(i);
+
 			count[i] = va_arg(ap, int);
+
+			pc_setglobalreg( sd, add_str( name.c_str() ), (int)count[i] );
+		}
 		va_end(ap);
 
 		switch(group) {
@@ -667,551 +954,37 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 				// These have no objective use right now.
 				break;
 			default:
-				for (auto &ach : achievements)
+				for (auto &ach : achievement_db)
 					achievement_update_objectives(sd, ach.second, group, count);
 				break;
 		}
-	}
-}
 
-/*==========================================
- * Achievement condition parsing section
- *------------------------------------------*/
-static void disp_error_message2(const char *mes,const char *pos,int report)
-{
-	av_error_msg = aStrdup(mes);
-	av_error_pos = pos;
-	av_error_report = report;
-	longjmp(av_error_jump, 1);
-}
-#define disp_error_message(mes,pos) disp_error_message2(mes,pos,1)
+		// Remove variables that might have been set
+		for (i = 0; i < arg_count; i++){
+			std::string name = "ARG" + std::to_string(i);
 
-/**
- * Checks the condition of an achievement.
- * @param condition: Achievement condition
- * @param sd: Player data
- * @param count: Script arguments
- * @return The result of the condition.
- */
-long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, const int *count)
-{
-	long long left = 0;
-	long long right = 0;
-
-	// Reduce the recursion, almost all calls will be C_PARAM, C_NAME or C_ARG
-	if (condition->left) {
-		if (condition->left->op == C_NAME || condition->left->op == C_INT)
-			left = condition->left->value;
-		else if (condition->left->op == C_PARAM)
-			left = pc_readparam(sd, (int)condition->left->value);
-		else if (condition->left->op == C_ARG && condition->left->value < MAX_ACHIEVEMENT_OBJECTIVES)
-			left = count[condition->left->value];
-		else
-			left = achievement_check_condition(condition->left, sd, count);
-	}
-
-	if (condition->right) {
-		if (condition->right->op == C_NAME || condition->right->op == C_INT)
-			right = condition->right->value;
-		else if (condition->right->op == C_PARAM)
-			right = pc_readparam(sd, (int)condition->right->value);
-		else if (condition->right->op == C_ARG && condition->right->value < MAX_ACHIEVEMENT_OBJECTIVES)
-			right = count[condition->right->value];
-		else
-			right = achievement_check_condition(condition->right, sd, count);
-	}
-
-	switch(condition->op) {
-		case C_NOP:
-			return false;
-		case C_NAME:
-		case C_INT:
-			return condition->value;
-		case C_PARAM:
-			return pc_readparam(sd, (int)condition->value);
-		case C_LOR: 
-			return left || right;
-		case C_LAND:
-			return left && right;
-		case C_LE:
-			return left <= right;
-		case C_LT:
-			return left < right;
-		case C_GE:
-			return left >= right;
-		case C_GT:
-			return left > right;
-		case C_EQ:
-			return left == right;
-		case C_NE:
-			return left != right;
-		case C_XOR:
-			return left ^ right;
-		case C_OR:
-			return left || right;
-		case C_AND:
-			return left & right;
-		case C_ADD:
-			return left + right;
-		case C_SUB:
-			return left - right;
-		case C_MUL:
-			return left * right;
-		case C_DIV:
-			return left / right;
-		case C_MOD:
-			return left % right;
-		case C_NEG:
-			return -left;
-		case C_LNOT:
-			return !left;
-		case C_NOT:
-			return ~left;
-		case C_R_SHIFT:
-			return left >> right;
-		case C_L_SHIFT:
-			return left << right;
-		case C_ARG:
-			if (condition->value < MAX_ACHIEVEMENT_OBJECTIVES)
-				return count[condition->value];
-
-			return false;
-		default:
-			ShowError("achievement_check_condition: unexpected operator: %d\n", condition->op);
-			return false;
-	}
-
-	return false;
-}
-
-/**
- * Skips a word. A word consists of undercores and/or alphanumeric characters, and valid variable prefixes/postfixes.
- * @param p: Word
- * @return Next word
- */
-static const char *skip_word(const char *p)
-{
-	while (ISALNUM(*p) || *p == '_')
-		++p;
-
-	if (*p == '$') // String
-		p++;
-
-	return p;
-}
-
-/**
- * Analyze an achievement's condition script
- * @param p: Word
- * @param parent: Parent node
- * @return Word
- */
-const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_condition> parent)
-{
-	long long i;
-
-	p = skip_space(p);
-
-	if(*p == ';' || *p == ',')
-		disp_error_message("av_parse_simpleexpr: unexpected character.", p);
-	if(*p == '(') {
-		p = av_parse_subexpr(p + 1, -1, parent);
-		p = skip_space(p);
-
-		if (*p != ')')
-			disp_error_message("av_parse_simpleexpr: unmatched ')'", p);
-		++p;
-	} else if(is_number(p)) {
-		char *np;
-
-		while(*p == '0' && ISDIGIT(p[1]))
-			p++;
-		i = strtoll(p, &np, 0);
-
-		if (i < INT_MIN) {
-			i = INT_MIN;
-			disp_error_message("av_parse_simpleexpr: underflow detected, capping value to INT_MIN.", p);
-		} else if (i > INT_MAX) {
-			i = INT_MAX;
-			disp_error_message("av_parse_simpleexpr: underflow detected, capping value to INT_MAX.", p);
-		}
-
-		parent->op = C_INT;
-		parent->value = i;
-		p = np;
-	} else {
-		int v, len;
-
-		if (skip_word(p) == p)
-			disp_error_message("av_parse_simpleexpr: unexpected character.", p);
-
-		len = skip_word(p) - p;
-
-		if (len == 0)
-			disp_error_message("av_parse_simpleexpr: invalid word. A word consists of undercores and/or alphanumeric characters.", p);
-
-		std::unique_ptr<char[]> word(new char[len + 1]);
-		memcpy(word.get(), p, len);
-		word[len] = 0;
-
-		if (script_get_parameter((const char*)&word[0], &v))
-			parent->op = C_PARAM;
-		else if (script_get_constant(&word[0], &v)) {
-			if (word[0] == 'b' && ISUPPER(word[1])) // Consider b* variables as parameters (because they... are?)
-				parent->op = C_PARAM;
-			else
-				parent->op = C_NAME;
-		} else {
-			if (word[0] == 'A' && word[1] == 'R' && word[2] == 'G' && ISDIGIT(word[3])) { // Special constants used to set temporary variables
-				parent->op = C_ARG;
-				v = atoi(&word[0] + 3);
-			} else {
-				disp_error_message("av_parse_simpleexpr: invalid constant.", p);
-			}
-		}
-
-		parent->value = v;
-		p = skip_word(p);
-	}
-
-	return p;
-}
-
-/**
- * Analysis of an achievement's expression
- * @param p: Word
- * @param parent: Parent node
- * @return Word
- */
-const char *av_parse_subexpr(const char* p, int limit, std::shared_ptr<struct av_condition> parent)
-{
-	int op, opl, len;
-
-	p = skip_space(p);
-
-	parent->left.reset(new av_condition());
-
-	if ((op = C_NEG, *p == '-') || (op = C_LNOT, *p == '!') || (op = C_NOT, *p == '~')) { // Unary - ! ~ operators
-		p = av_parse_subexpr(p + 1, 11, parent->left);
-		parent->op = op;
-	} else
-		p = av_parse_simpleexpr(p, parent->left);
-
-	p = skip_space(p);
-
-	while((
-			((op=C_ADD,opl=9,len=1,*p=='+') && p[1]!='+') ||
-			((op=C_SUB,opl=9,len=1,*p=='-') && p[1]!='-') ||
-			(op=C_MUL,opl=10,len=1,*p=='*') ||
-			(op=C_DIV,opl=10,len=1,*p=='/') ||
-			(op=C_MOD,opl=10,len=1,*p=='%') ||
-			(op=C_LAND,opl=2,len=2,*p=='&' && p[1]=='&') ||
-			(op=C_AND,opl=5,len=1,*p=='&') ||
-			(op=C_LOR,opl=1,len=2,*p=='|' && p[1]=='|') ||
-			(op=C_OR,opl=3,len=1,*p=='|') ||
-			(op=C_XOR,opl=4,len=1,*p=='^') ||
-			(op=C_EQ,opl=6,len=2,*p=='=' && p[1]=='=') ||
-			(op=C_NE,opl=6,len=2,*p=='!' && p[1]=='=') ||
-			(op=C_R_SHIFT,opl=8,len=2,*p=='>' && p[1]=='>') ||
-			(op=C_GE,opl=7,len=2,*p=='>' && p[1]=='=') ||
-			(op=C_GT,opl=7,len=1,*p=='>') ||
-			(op=C_L_SHIFT,opl=8,len=2,*p=='<' && p[1]=='<') ||
-			(op=C_LE,opl=7,len=2,*p=='<' && p[1]=='=') ||
-			(op=C_LT,opl=7,len=1,*p=='<')) && opl>limit) {
-		p += len;
-
-		if (parent->right) { // Chain conditions
-			std::shared_ptr<struct av_condition> condition(new struct av_condition());
-
-			condition->op = parent->op;
-			condition->left = parent->left;
-			condition->right = parent->right;
-			parent->left = condition;
-			parent->right.reset();
-		}
-
-		parent->right.reset(new av_condition());
-		p = av_parse_subexpr(p, opl, parent->right);
-		parent->op = op;
-		p = skip_space(p);
-	}
-
-	if (parent->op == C_NOP && !parent->right) { // Move the node up
-		parent->right = parent->left->right;
-		parent->op = parent->left->op;
-		parent->value = parent->left->value;
-		parent->left = parent->left->left;
-	}
-
-	return p;
-}
-
-/**
- * Parses a condition from a script.
- * @param p: The script buffer.
- * @param file: The file being parsed.
- * @param line: The current achievement line number.
- * @return The parsed achievement condition.
- */
-std::shared_ptr<struct av_condition> parse_condition(const char *p, const char *file, int line)
-{
-	std::shared_ptr<struct av_condition> condition;
-
-	if (setjmp(av_error_jump) != 0) {
-		if (av_error_report)
-			script_error(p,file,line,av_error_msg,av_error_pos);
-		aFree(av_error_msg);
-		condition.reset();
-		return NULL;
-	}
-
-	switch(*p) {
-		case ')': case ';': case ':': case '[': case ']': case '}':
-			disp_error_message("parse_condition: unexpected character.", p);
-	}
-
-	condition.reset(new av_condition());
-	av_parse_subexpr(p, -1, condition);
-
-	return condition;
-}
-
-static void yaml_invalid_warning(const char* fmt, const YAML::Node &node, const std::string &file) {
-	YAML::Emitter out;
-	out << node;
-	ShowWarning(fmt, file.c_str());
-	ShowMessage("%s\n", out.c_str());
-}
-
-/**
- * Reads and parses an entry from the achievement_db.
- * @param node: YAML node containing the entry.
- * @param n: The sequential index of the current entry.
- * @param source: The source YAML file.
- * @return True on successful parse or false otherwise
- */
-bool achievement_read_db_sub(const YAML::Node &node, int n, const std::string &source)
-{
-	enum e_achievement_group group = AG_NONE;
-	int achievement_id = 0;
-	std::string group_char, name, condition, mapname;
-	bool existing = false;
-
-	if (!node["ID"]) {
-		yaml_invalid_warning("achievement_read_db_sub: Missing ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	try {
-		achievement_id = node["ID"].as<unsigned int>();
-	} catch (...) {
-		yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid ID field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	if (achievement_id < 1 || achievement_id > INT_MAX) {
-		ShowWarning("achievement_read_db_sub: Invalid achievement ID %d in \"%s\", entry #%d (min: 1, max: %d), skipping.\n", achievement_id, source.c_str(), n, INT_MAX);
-		return false;
-	}
-
-	if (achievement_exists(achievement_id)) {
-		if (source.find("import") != std::string::npos) // Import file read-in, free previous value and store new value
-			existing = true;
-		else { // Normal file read-in
-			ShowWarning("achievement_read_db: Duplicate achievement %d.\n", achievement_id);
-			return false;
+			pc_setglobalreg( sd, add_str( name.c_str() ), 0 );
 		}
 	}
-
-	if(!existing)
-		achievements[achievement_id] = std::make_shared<s_achievement_db>();
-	auto &entry = achievements[achievement_id];
-	entry->achievement_id = achievement_id;
-
-	if (!node["Group"]) {
-		yaml_invalid_warning("achievement_read_db_sub: Missing group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	try {
-		group_char = node["Group"].as<std::string>();
-	} catch (...) {
-		yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid group field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	if (!script_get_constant(group_char.c_str(), (int *)&group)) {
-		ShowWarning("achievement_read_db_sub: Invalid group %s for achievement %d in \"%s\", skipping.\n", group_char.c_str(), achievement_id, source.c_str());
-		return false;
-	}
-
-	if (!node["Name"]) {
-		ShowWarning("achievement_read_db_sub: Missing achievement name for achievement %d in \"%s\", skipping.\n", achievement_id, source.c_str());
-		return false;
-	}
-	try {
-		name = node["Name"].as<std::string>();
-	} catch (...) {
-		yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid name field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-		return false;
-	}
-	
-	entry->group = group;
-	entry->name = name;
-	entry->mapindex = -1;
-
-	if (node["Target"]) {
-		try {
-			const YAML::Node &target_list = node["Target"];
-
-			for (auto targetit = target_list.begin(); targetit != target_list.end() && target_list.size() < MAX_ACHIEVEMENT_OBJECTIVES; ++targetit) {
-				const YAML::Node &target = *targetit;
-				int mobid = 0, count = 0;
-
-				if (target["MobID"] && (mobid = target["MobID"].as<int>()) && mob_db(mobid) == NULL) { // The mob ID field is not required
-					ShowError("achievement_read_db_sub: Invalid mob ID %d for achievement %d in \"%s\", skipping.\n", mobid, achievement_id, source.c_str());
-					continue;
-				}
-				if (target["Count"] && (!(count = target["Count"].as<int>()) || count <= 0)) {
-					ShowError("achievement_read_db_sub: Invalid count %d for achievement %d in \"%s\", skipping.\n", count, achievement_id, source.c_str());
-					continue;
-				}
-				if (mobid && group == AG_BATTLE && !achievement_mobexists(mobid))
-					achievement_mobs.push_back(mobid);
-
-				entry->targets.push_back({ mobid, count });
-			}
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid target field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Condition"]) {
-		try {
-			condition = node["Condition"].as<std::string>();
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid condition field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-		entry->condition = parse_condition(condition.c_str(), source.c_str(), n);
-	}
-
-	if (node["Map"]) {
-		try {
-			mapname = node["Map"].as<std::string>();
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid map field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-		if (group != AG_CHAT)
-			ShowWarning("achievement_read_db_sub: The map argument can only be used with the group AG_CHATTING (achievement %d in \"%s\"), skipping.\n", achievement_id, source.c_str());
-		else {
-			entry->mapindex = map_mapname2mapid(mapname.c_str());
-
-			if (entry->mapindex == -1)
-				ShowWarning("achievement_read_db_sub: Invalid map name %s for achievement %d in \"%s\".\n", mapname.c_str(), achievement_id, source.c_str());
-		}
-	}
-
-	if (node["Dependent"]) {
-		try {
-			const YAML::Node dependent_list = node["Dependent"];
-
-			if (dependent_list.IsSequence()) {
-				for (uint8 i = 0; i < dependent_list.size() && dependent_list.size() < MAX_ACHIEVEMENT_DEPENDENTS; i++)
-					entry->dependent_ids.push_back(dependent_list[i].as<int>());
-			} else
-				ShowWarning("achievement_read_db_sub: Invalid dependent format for achievement %d in \"%s\".\n", achievement_id, source.c_str());
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid dependent field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Reward"]) {
-		try {
-			const YAML::Node reward_list = node["Reward"];
-			int nameid = 0, amount = 0, titleid = 0;
-
-			if (reward_list["ItemID"] && (nameid = reward_list["ItemID"].as<unsigned short>())) {
-				if (itemdb_exists(nameid)) {
-					entry->rewards.nameid = nameid;
-					entry->rewards.amount = 1; // Default the amount to 1
-				} else if (nameid && !itemdb_exists(nameid)) {
-					ShowWarning("achievement_read_db_sub: Invalid reward item ID %hu for achievement %d in \"%s\". Setting to 0.\n", nameid, achievement_id, source.c_str());
-					entry->rewards.nameid = nameid = 0;
-				}
-
-				if (reward_list["Amount"] && (amount = reward_list["Amount"].as<unsigned short>()) && amount > 0 && nameid > 0)
-					entry->rewards.amount = amount;
-			}
-			if (reward_list["Script"])
-				entry->rewards.script = parse_script(reward_list["Script"].as<std::string>().c_str(), source.c_str(), achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
-			if (reward_list["TitleID"] && (titleid = reward_list["TitleID"].as<int>()) && titleid > 0)
-				entry->rewards.title_id = titleid;
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid target field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	if (node["Score"]) {
-		try {
-			entry->score = node["Score"].as<int>();
-		} catch (...) {
-			yaml_invalid_warning("achievement_read_db_sub: Achievement definition with invalid score field in '" CL_WHITE "%s" CL_RESET "', skipping.\n", node, source);
-			return false;
-		}
-	}
-
-	return true;
 }
 
 /**
  * Loads achievements from the achievement db.
  */
 void achievement_read_db(void)
-{
-	std::vector<std::string> directories = { std::string(db_path) + "/" + std::string(DBPATH),  std::string(db_path) + "/" + std::string(DBIMPORT) + "/" };
-	static const std::string file_name("achievement_db.yml");
+{	
+	achievement_db.load();
 
-	for (auto &directory : directories) {
-		std::string current_file = directory + file_name;
-		YAML::Node config;
-		int count = 0;
+	for (auto &achit : achievement_db) {
+		const auto ach = achit.second;
 
-		try {
-			config = YAML::LoadFile(current_file);
-		} catch (...) {
-			ShowError("Cannot read '" CL_WHITE "%s" CL_RESET "'.\n", current_file.c_str());
-			return;
-		}
-
-		for (const auto &node : config["Achievements"]) {
-			if (node.IsDefined() && achievement_read_db_sub(node, count, current_file))
-				count++;
-		}
-		for (auto &achit : achievements) {
-			const auto ach = achit.second;
-
-			for (int i = 0; i < ach->dependent_ids.size(); i++) {
-				if (!achievement_exists(ach->dependent_ids[i])) {
-					ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", ach->dependent_ids[i], ach->achievement_id);
-					ach->dependent_ids.erase(ach->dependent_ids.begin() + i);
-				}
+		for (int i = 0; i < ach->dependent_ids.size(); i++) {
+			if (!achievement_db.exists(ach->dependent_ids[i])) {
+				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", ach->dependent_ids[i], ach->achievement_id);
+				ach->dependent_ids.erase(ach->dependent_ids.begin() + i);
 			}
 		}
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, current_file.c_str());
 	}
-
-	return;
-}
-
-/**
- * Recursive method to free an achievement condition (probably not needed anymore, but just in case)
- * @param condition: Condition to clear
- */
-void achievement_script_free(std::shared_ptr<struct av_condition> condition) 
-{
-	condition->left.reset();
-	condition->right.reset();
 }
 
 /**
@@ -1238,10 +1011,8 @@ void do_init_achievement(void)
 /**
  * Finalizes the achievement database
  */
-void do_final_achievement(void)
-{
-	achievement_mobs.clear();
-	achievements.clear();
+void do_final_achievement(void){
+	achievement_db.clear();
 }
 
 /**
@@ -1259,6 +1030,15 @@ s_achievement_db::s_achievement_db()
 	, score(0)
 	, has_dependent(0)
 {}
+
+/**
+* Achievement deconstructor
+*/
+s_achievement_db::~s_achievement_db()
+{
+	if (condition)
+		script_free_code(condition);
+}
 
 /**
  * Achievement reward constructor

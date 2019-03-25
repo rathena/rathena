@@ -675,11 +675,11 @@ int party_member_withdraw(int party_id, uint32 account_id, uint32 char_id, char 
 		//TODO: hp bars should be cleared too
 
 		if( p->instance_id ) {
-			int16 m = sd->bl.m;
+			struct map_data *mapdata = map_getmapdata(sd->bl.m);
 
-			if( map[m].instance_id ) { // User was on the instance map
-				if( map[m].save.map )
-					pc_setpos(sd, map[m].save.map, map[m].save.x, map[m].save.y, CLR_TELEPORT);
+			if( mapdata->instance_id ) { // User was on the instance map
+				if( mapdata->save.map )
+					pc_setpos(sd, mapdata->save.map, mapdata->save.x, mapdata->save.y, CLR_TELEPORT);
 				else
 					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT);
 			}
@@ -1245,6 +1245,35 @@ int party_sub_count_class(struct block_list *bl, va_list ap)
 
 	if( (sd->class_&mask) != mapid_class )
 		return 0;
+
+	return 1;
+}
+
+/**
+ * Special check for Royal Guard's Banding skill.
+ * @param bl: Object invoking the counter
+ * @param ap: List of parameters: Check Type
+ * @return 1 or total HP on success or 0 otherwise
+ */
+int party_sub_count_banding(struct block_list *bl, va_list ap)
+{
+	struct map_session_data *sd = (TBL_PC *)bl;
+	int type = va_arg(ap, int); // 0 = Banding Count, 1 = HP Check
+
+	if (sd->state.autotrade)
+		return 0;
+
+	if (battle_config.idle_no_share && pc_isidle(sd))
+		return 0;
+
+	if ((sd->class_&MAPID_THIRDMASK) != MAPID_ROYAL_GUARD)
+		return 0;
+
+	if (!sd->sc.data[SC_BANDING])
+		return 0;
+
+	if (type == 1)
+		return status_get_hp(bl);
 
 	return 1;
 }

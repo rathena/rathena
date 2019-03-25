@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CONFIG_CORE_HPP_
-#define _CONFIG_CORE_HPP_
+#ifndef CONFIG_CORE_HPP
+#define CONFIG_CORE_HPP
 
 /**
  * rAthena configuration file (http://rathena.org)
@@ -43,11 +43,6 @@
 /// Uncomment to enable real-time server stats (in and out data and ram usage).
 //#define SHOW_SERVER_STATS
 
-/// Uncomment to enable skills damage adjustments
-/// By enabling this, db/skill_damage_db.txt and the skill_damage mapflag will adjust the
-/// damage rate of specified skills.
-//#define ADJUST_SKILL_DAMAGE
-
 /// Uncomment to enable the job base HP/SP table (job_basehpsp_db.txt)
 #define HP_SP_TABLES
 
@@ -73,6 +68,12 @@
 /// Comment to disable warnings for deprecated script constants
 #define SCRIPT_CONSTANT_DEPRECATION
 
+// Uncomment to enable deprecated support for Windows XP and lower
+// Note:
+// Windows XP still has 32bit ticks. This means you need to restart your operating system before time
+// overflows, which is approximately every ~49 days.
+//#define DEPRECATED_WINDOWS_SUPPORT
+
 /**
  * No settings past this point
  **/
@@ -88,4 +89,4 @@
 
 #include "../custom/defines_post.hpp"
 
-#endif // _CONFIG_CORE_HPP_
+#endif /* CONFIG_CORE_HPP */

@@ -15,6 +15,14 @@
 //= 1.1 Added new warpers for Satan Morroc maps. [Euphy]
 //============================================================
 
+// Stop Post Quest
+// ============================================================
+morocc,152,167,4	duplicate(William)	William#moc	89
+
+// Binoculars Quest
+// ============================================================
+morocc,169,168,4	duplicate(Alchemist)	Alchemist#moc	64
+
 // Resurrection of Satan Morroc
 // ============================================================
 -	script	Continental Guard#man	-1,{
@@ -48,6 +56,8 @@ moc_fild13,32,171,6	duplicate(Continental Guard#man)	Continental Guard#man6	852
 moc_fild16,124,381,4	duplicate(Continental Guard#man)	Continental Guard#man7	852
 moc_fild16,333,380,4	duplicate(Continental Guard#man)	Continental Guard#man8	852
 moc_fild01,84,19,1	duplicate(Continental Guard#man)	Continental Guard#man9	852
+
+morocc,176,101,3	duplicate(Continental Official)	Continental Official#mor	754
 
 // Pyramids Nightmare Mode :: nightmare_pry
 //============================================================

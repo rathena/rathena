@@ -319,9 +319,15 @@ This mapflag can also be used to adjust the damage of one skill by a percentage:
 	SKILLDMG_BOSS = against boss monster
 	SKILLDMG_OTHER = against other (homunculus, mercenary, pet, elemental)
 
-Notes:
- - You MUST enable ADJUST_SKILL_DAMAGE in 'src/config/core.hpp' for this mapflag to take effect.
- - Each map can contain up to UINT16_MAX adjustments.
+---------------------------------------
+
+*skill_duration	skill_name,percentage
+
+Sets skill (trap-type) time limit to n% of original duration.
+
+// Example:
+// Makes HT_ANKLESNARE's lifetime in the castle 4x longer than other maps.
+prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
 
 ---------------------------------------
 

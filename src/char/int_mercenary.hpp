@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_MERCENARY_HPP_
-#define _INT_MERCENARY_HPP_
+#ifndef INT_MERCENARY_HPP
+#define INT_MERCENARY_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -18,4 +18,4 @@ bool mercenary_owner_delete(uint32 char_id);
 bool mapif_mercenary_delete(int merc_id);
 
 
-#endif /* _INT_MERCENARY_HPP_ */
+#endif /* INT_MERCENARY_HPP */

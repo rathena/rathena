@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _LOGINCNSLIF_HPP_
-#define _LOGINCNSLIF_HPP_
+#ifndef LOGINCNSLIF_HPP
+#define LOGINCNSLIF_HPP
 
 /**
  * Console Command Parser
@@ -33,6 +33,4 @@ void do_init_logincnslif(void);
  */
 void do_final_logincnslif(void);
 
-
-#endif	/* _LOGINCNSLIF_HPP_ */
-
+#endif	/* LOGINCNSLIF_HPP */

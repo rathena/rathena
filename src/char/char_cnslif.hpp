@@ -1,12 +1,11 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHAR_CNSLIF_HPP_
-#define _CHAR_CNSLIF_HPP_
+#ifndef CHAR_CNSLIF_HPP
+#define CHAR_CNSLIF_HPP
 
 int cnslif_parse(const char* buf);
 void do_init_chcnslif(void);
 
 
-#endif	/* _CHAR_CNSLIF_HPP_ */
-
+#endif /* CHAR_CNSLIF_HPP */

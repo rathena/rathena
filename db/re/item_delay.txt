@@ -16,7 +16,7 @@
 //        12659 cannot be used when this delay is active.
 //     Since this is optional, default is -1 will ignores the
 //     delay group and the delay will be stored in character's
-//     data that has limit set in src/map/itemdb.h as MAX_ITEMDELAYS.
+//     data that has limit set in src/map/itemdb.hpp as MAX_ITEMDELAYS.
 
 // SC_REUSE_REFRESH
 12725,120000,SC_REUSE_REFRESH	//Runstone_Nosiege
@@ -45,6 +45,7 @@
 // SC_REUSE_LIMIT_G
 608,3000,SC_REUSE_LIMIT_G	//Yggdrasil_Seed
 22559,3000,SC_REUSE_LIMIT_G	//Mock_Strawberry
+23042,3000,SC_REUSE_LIMIT_G	//S_Seed_Of_Yggdrasil
 
 // SC_REUSE_LIMIT_H
 11525,5000,SC_REUSE_LIMIT_H	//Mora_Hip_Tea
@@ -93,4 +94,9 @@
 //12206,60000	//Luk_Dish10_
 //12207,60000	//Vit_Dish10_
 22508,1200000	//Para_Team_Mark_
+
+// Bed of Honor
+22687,5000,SC_REUSE_LIMIT_F	// Pieces_Of_Sentiment
+
 23277,180000	//Mado_Box
+

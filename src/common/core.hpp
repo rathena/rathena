@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef	_CORE_HPP_
-#define	_CORE_HPP_
+#ifndef CORE_HPP
+#define CORE_HPP
 
 /* so that developers with --enable-debug can raise signals from any section of the code they'd like */
 #ifdef DEBUG
@@ -22,6 +22,7 @@ extern char **arg_v;
 extern int runflag;
 extern char *SERVER_NAME;
 extern char db_path[12]; /// relative path for db from servers
+extern char conf_path[12]; /// relative path for conf from servers
 
 enum {
 	ATHENA_SERVER_NONE = 0,	// not defined
@@ -53,4 +54,4 @@ enum E_CORE_ST
 /// If NULL, runflag is set to CORE_ST_STOP instead.
 extern void (*shutdown_callback)(void);
 
-#endif /* _CORE_HPP_ */
+#endif /* CORE_HPP */

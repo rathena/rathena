@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _MOB_HPP_
-#define _MOB_HPP_
+#ifndef MOB_HPP
+#define MOB_HPP
 
 #include <vector>
 
@@ -26,11 +26,11 @@ struct guardian_data;
 #define MAX_RACE2_MOBS 100
 
 //Min time between AI executions
-#define MIN_MOBTHINKTIME 100
+const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
-#define MIN_MOBLINKTIME 1000
+const t_tick MIN_MOBLINKTIME = 1000;
 //Min time between random walks
-#define MIN_RANDOMWALKTIME 4000
+const t_tick MIN_RANDOMWALKTIME = 4000;
 
 //Distance that slaves should keep from their master.
 #define MOB_SLAVEDISTANCE 2
@@ -101,13 +101,25 @@ enum size {
 	SZ_MAX
 };
 
-/// Used hardcoded Random Monster group in src
-enum e_Random_Monster {
-	MOBG_Branch_Of_Dead_Tree	= 0,
-	MOBG_Poring_Box				= 1,
-	MOBG_Bloody_Dead_Branch		= 2,
-	MOBG_Red_Pouch_Of_Surprise	= 3,
-	MOBG_ClassChange			= 4,
+/// Random Monster Groups
+enum e_random_monster : uint16 {
+	MOBG_Branch_Of_Dead_Tree = 0,
+	MOBG_Poring_Box,
+	MOBG_Bloody_Dead_Branch,
+	MOBG_Red_Pouch_Of_Surprise,
+	MOBG_ClassChange,
+	MOBG_Taekwon_Mission,
+};
+
+/// Random Monster Group Flags
+enum e_random_monster_flags {
+	RMF_NONE			= 0x00, ///< Apply no flags
+	RMF_DB_RATE			= 0x01, ///< Apply the summon success chance found in the list (otherwise get any monster from the db)
+	RMF_CHECK_MOB_LV	= 0x02, ///< Apply a monster level check
+	RMF_MOB_NOT_BOSS	= 0x04, ///< Selected monster should not be a Boss type (except those from MOBG_Bloody_Dead_Branch)
+	RMF_MOB_NOT_SPAWN	= 0x08, ///< Selected monster must have normal spawn
+	RMF_MOB_NOT_PLANT	= 0x10, ///< Selected monster should not be a Plant type
+	RMF_ALL				= 0xFF, ///< Apply all flags
 };
 
 struct mob_skill {
@@ -208,7 +220,7 @@ struct mob_data {
 	int areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	unsigned int bg_id; // BattleGround System
 
-	unsigned int next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick;
+	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick;
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;
@@ -218,7 +230,7 @@ struct mob_data {
 	int master_id,master_dist;
 
 	int8 skill_idx; // Index of last used skill from db->skill[]
-	unsigned int skilldelay[MAX_MOBSKILL];
+	t_tick skilldelay[MAX_MOBSKILL];
 	char npc_event[EVENT_NAME_LENGTH];
 	/**
 	 * Did this monster summon something?
@@ -309,10 +321,10 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 int mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, unsigned int bg_id);
 int mob_guardian_guildchange(struct mob_data *md); //Change Guardian's ownership. [Skotlex]
 
-int mob_randomwalk(struct mob_data *md,unsigned int tick);
+int mob_randomwalk(struct mob_data *md,t_tick tick);
 int mob_warpchase(struct mob_data *md, struct block_list *target);
 int mob_target(struct mob_data *md,struct block_list *bl,int dist);
-int mob_unlocktarget(struct mob_data *md, unsigned int tick);
+int mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int mob_spawn(struct mob_data *md);
 TIMER_FUNC(mob_delayspawn);
@@ -326,7 +338,6 @@ void mob_heal(struct mob_data *md,unsigned int heal);
 
 #define mob_stop_walking(md, type) unit_stop_walking(&(md)->bl, type)
 #define mob_stop_attack(md) unit_stop_attack(&(md)->bl)
-#define mob_is_samename(md, mid) (strcmp(mob_db((md)->mob_id)->jname, mob_db(mid)->jname) == 0)
 
 void mob_clear_spawninfo();
 void do_init_mob(void);
@@ -336,13 +347,13 @@ TIMER_FUNC(mob_timer_delete);
 int mob_deleteslave(struct mob_data *md);
 
 int mob_random_class (int *value, size_t count);
-int mob_get_random_id(int type, int flag, int lv);
+int mob_get_random_id(int type, enum e_random_monster_flags flag, int lv);
 int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);
 
-int mobskill_use(struct mob_data *md,unsigned int tick,int event);
-int mobskill_event(struct mob_data *md,struct block_list *src,unsigned int tick, int flag);
+int mobskill_use(struct mob_data *md,t_tick tick,int event);
+int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int flag);
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);
@@ -368,4 +379,4 @@ void mob_setdropitem_option(struct item *itm, struct s_mob_drop *mobdrop);
 
 #define CHK_MOBSIZE(size) ((size) >= SZ_SMALL && (size) < SZ_MAX) /// Check valid Monster Size
 
-#endif /* _MOB_HPP_ */
+#endif /* MOB_HPP */

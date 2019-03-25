@@ -47,7 +47,7 @@ gef_fild10,242,202,0	script	Dimensional Gorge Piece	406,{
 
 	set .@orctime,checkquest(12059,PLAYTIME);
 	if (.@orctime == -1) {
-		if (getcharid(0) == getpartyleader(.@party_id,2)) {
+		if (is_party_leader() == true) {
 			mes "Party status confirmed. Would you like to book entrance to the "+.@md_name$+"?";
 			next;
 			switch(select("Reserve the "+.@md_name$+":Enter the Dungeon:Cancel")) {
@@ -677,7 +677,7 @@ OnTimer23910:
 }
 
 2@orcs,26,164,0	script	Torch#1-1	844,{
-	if(getpartyleader(getcharid(1),2) != getcharid(0)) end;
+	if (is_party_leader() == false) end;
 	progressbar "ffff00",5;
 	setarray .@id[0], atoi(charat(strnpcinfo(2),0)), atoi(charat(strnpcinfo(2),2));
 	if (.@id[1] == 4)

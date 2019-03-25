@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _LOGINLOG_HPP_
-#define _LOGINLOG_HPP_
+#ifndef LOGINLOG_HPP
+#define LOGINLOG_HPP
 
 #include <memory>
 
@@ -48,5 +48,4 @@ bool loginlog_init(void);
  */
 bool loginlog_final(void);
 
-
-#endif /* _LOGINLOG_HPP_ */
+#endif /* LOGINLOG_HPP */
