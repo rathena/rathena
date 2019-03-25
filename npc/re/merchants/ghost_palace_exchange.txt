@@ -77,15 +77,15 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 	}
 	.@size = getarraysize(.@items);
 	for ( .@i = 0; .@i < .@size; .@i += 2 )
-		.@menu$ += getitemname(.@item[.@i]) + " - " + .@item[.@i+1] + ":";
+		.@menu$ += getitemname(.@items[.@i]) + " - " + .@items[.@i+1] + ":";
 
 	while(true) {
 		next;
 		.@s = (select(.@menu$) - 1) * 2;
 		mes "[Dimension Traveler]";
 		if (.@type != 1)	// armor type doesn't display item info
-			mes "Do you mean <ITEM>[" + getitemname(.@item[.@s]) + "]<INFO>" + .@item[.@s] + "</INFO></ITEM>?";
-		mes "" + .@item[.@s+1] + " ^006400" + .@item_name_req$ + "^000000 are required in exchange.";
+			mes "Do you mean <ITEM>[" + getitemname(.@items[.@s]) + "]<INFO>" + .@items[.@s] + "</INFO></ITEM>?";
+		mes "" + .@items[.@s+1] + " ^006400" + .@item_name_req$ + "^000000 are required in exchange.";
 		next;
 		switch( select( "Let's exchange.", "Let me see other stuff.", "I will come back later." ) ) {
 		case 1:
@@ -109,16 +109,16 @@ dali02,51,130,4	script	Dimension Traveler	4_F_SHABBY,{
 			mes "Take care friend~ See you next time!";
 			close;
 		}
-		if (countitem(6672) < .@item[.@s+1]) {
+		if (countitem(6672) < .@items[.@s+1]) {
 			mes "[Dimension Traveler]";
 			mes "You put me in a difficult situation, friend.";
-			mes "I am in need of " + .@item_name_req$ + ". I will exchange it for ^006400" + .@item[.@s+1] + " " + .@item_name_req$ + "^000000.";
+			mes "I am in need of " + .@item_name_req$ + ". I will exchange it for ^006400" + .@items[.@s+1] + " " + .@item_name_req$ + "^000000.";
 			close;
 		}
 		mes "[Dimension Traveler]";
 		mes "Thank you. Come back if you need anything else.";
-		delitem 6672, .@item[.@s+1];
-		getitem .@item[.@s], 1;
+		delitem 6672, .@items[.@s+1];
+		getitem .@items[.@s], 1;
 		close;
 	}
 }
