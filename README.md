@@ -15,27 +15,32 @@ Build Status: [![Build Status](https://travis-ci.org/rathena/rathena.png?branch=
 5. [How to Contribute](#5-how-to-contribute)
 
 ## 1. Prerequisites
-Before installing rAthena there are certain tools and applications you will need.
-This differs between the varying operating systems available, so the following
-is broken down into Windows and Linux prerequisites.
+Before installing rAthena there are certain tools and applications you will need which
+differs between the varying operating systems available.
 
-### Windows
-  * [MySQL](http://www.mysql.com/downloads/mysql/) or [MariaDB](https://downloads.mariadb.org/) as database to store data
-  * [git for Windows](https://gitforwindows.org/) for keep in touch with rAthena's updates!
-  * [MS Visual Studio](https://www.visualstudio.com/downloads/) as compiler
-  * [MySQL Workbench](http://www.mysql.com/downloads/workbench/) as MySQL GUI
+### Hardware
+Hardware Type | Minimum | Recommended
+------|------|------
+CPU | 1 Core | 2 Cores
+RAM | 1 GB | 2 GB
+Disk Space | 300 MB | 500 MB
 
-### Linux
-Names of packages may require specific version numbers on certain distributions
-  * gcc
-  * g++
-  * make
-  * mysql
-  * mysql-devel
-  * mysql-server
-  * pcre-devel
-  * zlib-devel
-  * git
+### Operating System & Preferred Compiler
+Operating System | Compiler
+------|------
+Linux  | [gcc-5 or newer](https://www.gnu.org/software/gcc/gcc-5/) / [Make](https://www.gnu.org/software/make/)
+Windows | [MS Visual Studio 2013, 2015, 2017](https://www.visualstudio.com/downloads/)
+
+### Required Applications
+Application | Name
+------|------
+Database | [MySQL 5 or newer](https://www.mysql.com/downloads/) / [MariaDB 5 or newer](https://downloads.mariadb.org/)
+Git | [Windows](https://gitforwindows.org/) / [Linux](https://git-scm.com/download/linux)
+
+### Optional Applications
+Application | Name
+------|------
+Database | [MySQL Workbench 5 or newer](http://www.mysql.com/downloads/workbench/)
 
 ## 2. Installation 
 
