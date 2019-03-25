@@ -6137,7 +6137,7 @@ Examples:
 *getpcblock {<account ID>};
 
 'setpcblock' command prevents/allows the player from doing the given <type> of action
-during the player session (note: @reloadscript also removed all <type>).
+during the player session (note: @reloadscript also removes all <type>).
 The <type> values are bit-masks, multiples of <type> can be added to change the player action.
 
 'getpcblock' command return the bit-mask value of the currently
@@ -6165,7 +6165,7 @@ Examples:
 	setpcblock (getpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL));
 
 // Re-enables attack, skills and item use
-	setpcblock (getpcblock() & ~(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM);
+	setpcblock (getpcblock() & ~(PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM));
 
 // getpcblock related checks
 	if (getpcblock() & PCBLOCK_IMMUNE)
