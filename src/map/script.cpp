@@ -4785,6 +4785,12 @@ BUILDIN_FUNC(next)
 {
 	TBL_PC* sd;
 
+	if (!st->mes_active) {
+		TBL_NPC* nd = map_id2nd(st->oid);
+		ShowWarning("Incorrect use of 'next' command! (source:%s / path:%s)\n", nd ? nd->name : "Unknown", nd ? nd->path : "Unknown");
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 #ifdef SECURE_NPCTIMEOUT
@@ -4801,6 +4807,12 @@ BUILDIN_FUNC(next)
 BUILDIN_FUNC(clear)
 {
 	TBL_PC* sd;
+
+	if (!st->mes_active) {
+		TBL_NPC* nd = map_id2nd(st->oid);
+		ShowWarning("Incorrect use of 'clear' command! (source:%s / path:%s)\n", nd ? nd->name : "Unknown", nd ? nd->path : "Unknown");
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	if (!script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
