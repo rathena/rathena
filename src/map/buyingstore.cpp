@@ -700,7 +700,10 @@ void do_init_buyingstore_autotrade( void ) {
 				CREATE(at->sd, struct map_session_data, 1);
 				pc_setnewpc(at->sd, at->account_id, at->char_id, 0, gettick(), at->sex, 0);
 				at->sd->state.autotrade = 1|4;
-				at->sd->state.monster_ignore = (battle_config.autotrade_monsterignore);
+				if (battle_config.autotrade_monsterignore)
+					at->sd->state.block_action |= PCBLOCK_IMMUNE;
+				else
+					at->sd->state.block_action &= ~PCBLOCK_IMMUNE;
 				chrif_authreq(at->sd, true);
 				uidb_put(buyingstore_autotrader_db, at->char_id, at);
 			}
