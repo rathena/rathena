@@ -17446,9 +17446,9 @@ void clif_instance_create(unsigned short instance_id, int num)
 	if (!sd)
 		return;
 
-	auto db = instance_search_db(instance_search(instance_id)->id);
+	auto db = instance_db.find(instance_search(instance_id)->id);
 
-	if (db == nullptr)
+	if (!db)
 		return;
 
 	WBUFW(buf,0) = 0x2cb;
@@ -17496,9 +17496,9 @@ void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsig
 	if (!sd)
 		return;
 
-	auto db = instance_search_db(instance_search(instance_id)->id);
+	auto db = instance_db.find(instance_search(instance_id)->id);
 
-	if (db == nullptr)
+	if (!db)
 		return;
 
 	WBUFW(buf,0) = 0x2cd;
