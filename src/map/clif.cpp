@@ -14905,7 +14905,21 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd)
 /// 0292
 void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 {
-	short item_position = pc_search_inventory(sd, ITEMID_TOKEN_OF_SIEGFRIED);
+	if (sd->sc.data[SC_HELLPOWER]) //Cannot res while under the effect of SC_HELLPOWER.
+		return;
+
+	struct s_item_group_db *group = itemdb_group_exists(IG_TOKEN_OF_SIEGFRIED);
+
+	if (!group)
+		return;
+
+	short item_position;
+
+	for (int i = 0; i < group->random[0].data_qty; i++) {
+		if (item_position = (pc_search_inventory(sd, group->random[0].data[i].nameid) != -1))
+			break;
+	}
+
 	uint8 hp = 100, sp = 100;
 
 	if (item_position < 0) {
@@ -14917,9 +14931,6 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 		else
 			return;
 	}
-
-	if (sd->sc.data[SC_HELLPOWER]) //Cannot res while under the effect of SC_HELLPOWER.
-		return;
 
 	if (!status_revive(&sd->bl, hp, sp))
 		return;
