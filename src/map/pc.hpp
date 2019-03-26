@@ -288,7 +288,7 @@ struct map_session_data {
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 		bool cashshop_open;
 		bool sale_open;
-		unsigned int block_action : 1;
+		unsigned int block_action : 10;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
