@@ -889,6 +889,7 @@ struct s_random_opt_group {
 };
 
 struct item_data* itemdb_searchname(const char *name);
+struct item_data* itemdb_search_aegisname( const char *str );
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(unsigned short nameid);
 struct item_data* itemdb_exists(unsigned short nameid);

@@ -2742,7 +2742,6 @@ ACMD_FUNC(guildlevelup) {
 ACMD_FUNC(makeegg) {
 	struct item_data *item_data;
 	int id;
-	struct s_pet_db* pet;
 
 	nullpo_retr(-1, sd);
 
@@ -2759,12 +2758,18 @@ ACMD_FUNC(makeegg) {
 	else
 		id = atoi(message);
 
-	pet = pet_db(id);
-	if (!pet)
+	std::shared_ptr<s_pet_db> pet = pet_db.find(id);
+
+	if( pet == nullptr ){
 		pet = pet_db_search(id, PET_EGG);
+	}
+
 	if (pet != nullptr) {
 		sd->catch_target_class = pet->class_;
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
+
+		struct mob_db* mdb = mob_db(pet->class_);
+
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,180)); // The monster/egg name/id doesn't exist.
 		return -1;
@@ -3819,7 +3824,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
 	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
 		mob_reload();
-		read_petdb();
+		pet_db.reload();
 		hom_reload();
 		mercenary_readdb();
 		mercenary_read_skilldb();
@@ -4488,7 +4493,7 @@ ACMD_FUNC(repairall)
 
 	count = 0;
 	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute == 1) {
+		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].card[0] != CARD0_PET && sd->inventory.u.items_inventory[i].attribute == 1) {
 			sd->inventory.u.items_inventory[i].attribute = 0;
 			clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
 			count++;

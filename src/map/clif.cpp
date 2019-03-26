@@ -7970,25 +7970,13 @@ void clif_send_petstatus(struct map_session_data *sd)
 void clif_pet_emotion(struct pet_data *pd,int param)
 {
 	unsigned char buf[16];
-	s_pet_db *pet_db_ptr;
 
 	nullpo_retv(pd);
-
-	pet_db_ptr = pd->get_pet_db();
 
 	memset(buf,0,packet_len(0x1aa));
 
 	WBUFW(buf,0)=0x1aa;
 	WBUFL(buf,2)=pd->bl.id;
-	if(param >= 100 && pet_db_ptr->talk_convert_class) {
-		if(pet_db_ptr->talk_convert_class < 0)
-			return;
-		else if(pet_db_ptr->talk_convert_class > 0) {
-			// replace mob_id component of talk/act data
-			param -= (pd->pet.class_ - 100)*100;
-			param += (pet_db_ptr->talk_convert_class - 100)*100;
-		}
-	}
 	WBUFL(buf,6)=param;
 
 	clif_send(buf,packet_len(0x1aa),&pd->bl,AREA);
@@ -10408,7 +10396,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if( sd->pd ) {
 		if( battle_config.pet_no_gvg && mapdata_flag_gvg(mapdata) ) { //Return the pet to egg. [Skotlex]
 			clif_displaymessage(sd->fd, msg_txt(sd,666));
-			pet_menu(sd, 3); //Option 3 is return to egg.
+			pet_return_egg( sd, sd->pd );
 		} else {
 			if(map_addblock(&sd->pd->bl))
 				return;
@@ -10526,6 +10514,21 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #if PACKETVER >= 20070918
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
+#endif
+#if PACKETVER >= 20141008
+		if( battle_config.pet_autofeed_always ){
+			// Always send ON or OFF
+			if( sd->pd && battle_config.feature_pet_autofeed ){
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, sd->pd->pet.autofeed );
+			}else{
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, false );
+			}
+		}else{
+			// Only send when enabled
+			if( sd->pd && battle_config.feature_pet_autofeed && sd->pd->pet.autofeed ){
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, true );
+			}
+		}
 #endif
 #if PACKETVER >= 20170920
 		if( battle_config.homunculus_autofeed_always ){
@@ -16687,7 +16690,12 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 			sd->status.show_equip = flag;
 			break;
 		case CONFIG_PET_AUTOFEED:
-			// TODO: Implement with pet evolution system
+			// Player can not click this if he does not have a pet
+			if( sd->pd == nullptr || !battle_config.feature_pet_autofeed || !sd->pd->get_pet_db()->allow_autofeed ){
+				return;
+			}
+
+			sd->pd->pet.autofeed = flag;
 			break;
 		case CONFIG_HOMUNCULUS_AUTOFEED:
 			// Player can not click this if he does not have a homunculus or it is vaporized
@@ -20367,6 +20375,34 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 	WFIFOB(fd, 2) = result;
 	WFIFOL(fd, 3) = achievement_id;
 	WFIFOSET(fd, packet_len(0xa26));
+}
+
+/// Process the pet evolution request
+/// 09fb <packetType>.W <packetLength>.W <evolutionPetEggITID>.W (CZ_PET_EVOLUTION)
+void clif_parse_pet_evolution( int fd, struct map_session_data *sd ){
+#if PACKETVER >= 20141008
+	auto pet = pet_db_search(RFIFOW(fd, 4), PET_EGG);
+
+	if (!pet) {
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_NOT_PETEGG);
+		return;
+	}
+
+	pet_evolution(sd, pet->class_);
+#endif
+}
+
+/// Sends the result of the evolution to the client.
+/// 09fc <result>.L (ZC_PET_EVOLUTION_RESULT)
+void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result ){
+#if PACKETVER >= 20141008
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x9fc));
+	WFIFOW(fd, 0) = 0x9fc;
+	WFIFOL(fd, 2) = static_cast<uint32>(result);
+	WFIFOSET(fd, packet_len(0x9fc));
+#endif
 }
 
 /*

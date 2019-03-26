@@ -982,7 +982,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 		} else
 			sd->areanpc_id=0;
 
-		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 ) {
+		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > PET_INTIMATE_NONE ) {
 			// Check if pet needs to be teleported. [Skotlex]
 			int flag = 0;
 			struct block_list* pbl = &sd->pd->bl;
@@ -3033,7 +3033,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		case BL_PET: {
 			struct pet_data *pd = (struct pet_data*)bl;
 
-			if( pd->pet.intimate <= 0 && !(pd->master && !pd->master->state.active) ) {
+			if( pd->pet.intimate <= PET_INTIMATE_NONE && !(pd->master && !pd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
 				clif_clearunit_area(bl,clrtype);
 				map_delblock(bl);
@@ -3265,51 +3265,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			struct map_session_data *sd = pd->master;
 
 			pet_hungry_timer_delete(pd);
+			pet_clear_support_bonuses(sd);
 
-			if( pd->a_skill ) {
-				aFree(pd->a_skill);
-				pd->a_skill = NULL;
-			}
-
-			if( pd->s_skill ) {
-				if (pd->s_skill->timer != INVALID_TIMER) {
-					if (pd->s_skill->id)
-						delete_timer(pd->s_skill->timer, pet_skill_support_timer);
-					else
-						delete_timer(pd->s_skill->timer, pet_heal_timer);
-				}
-
-				aFree(pd->s_skill);
-				pd->s_skill = NULL;
-			}
-
-			if( pd->recovery ) {
-				if(pd->recovery->timer != INVALID_TIMER)
-					delete_timer(pd->recovery->timer, pet_recovery_timer);
-
-				aFree(pd->recovery);
-				pd->recovery = NULL;
-			}
-
-			if( pd->bonus ) {
-				if (pd->bonus->timer != INVALID_TIMER)
-					delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
-
-				aFree(pd->bonus);
-				pd->bonus = NULL;
-			}
-
-			if( pd->loot ) {
-				pet_lootitem_drop(pd,sd);
-
-				if (pd->loot->item)
-					aFree(pd->loot->item);
-
-				aFree (pd->loot);
-				pd->loot = NULL;
-			}
-
-			if( pd->pet.intimate > 0 )
+			if( pd->pet.intimate > PET_INTIMATE_NONE )
 				intif_save_petdata(pd->pet.account_id,&pd->pet);
 			else { // Remove pet.
 				intif_delete_petdata(pd->pet.pet_id);

@@ -7105,6 +7105,23 @@
 	export_constant(PET_CATCH_UNIVERSAL);
 	export_constant(PET_CATCH_UNIVERSAL_ITEM);
 
+	/* pet intimacy levels */
+	export_constant(PET_INTIMATE_NONE);
+	export_constant(PET_INTIMATE_AWKWARD);
+	export_constant(PET_INTIMATE_SHY);
+	export_constant(PET_INTIMATE_NEUTRAL);
+	export_constant(PET_INTIMATE_CORDIAL);
+	export_constant(PET_INTIMATE_LOYAL);
+	export_constant(PET_INTIMATE_MAX);
+
+	/* pet hunger levels */
+	export_constant(PET_HUNGRY_NONE);
+	export_constant(PET_HUNGRY_VERY_HUNGRY);
+	export_constant(PET_HUNGRY_HUNGRY);
+	export_constant(PET_HUNGRY_NEUTRAL);
+	export_constant(PET_HUNGRY_SATISFIED);
+	export_constant(PET_HUNGRY_STUFFED);
+
 	/* monster modes */
 	export_constant(MD_NONE);
 	export_constant(MD_CANMOVE);

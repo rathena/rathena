@@ -20,6 +20,24 @@ bool YamlDatabase::nodeExists( const YAML::Node& node, const std::string& name )
 	}
 }
 
+bool YamlDatabase::nodesExist( const YAML::Node& node, std::initializer_list<const std::string> names ){
+	bool missing = false;
+
+	for( const std::string& name : names ){
+		if( !this->nodeExists( node, name ) ){
+			ShowError( "Missing mandatory node \"%s\".\n", name.c_str() );
+			missing = true;
+		}
+	}
+
+	if( missing ){
+		this->invalidWarning( node, "At least one mandatory node did not exist.\n" );
+		return false;
+	}
+
+	return true;
+}
+
 bool YamlDatabase::verifyCompatibility( const YAML::Node& rootNode ){
 	if( !this->nodeExists( rootNode, "Header" ) ){
 		ShowError( "No database \"Header\" was found.\n" );
@@ -65,6 +83,12 @@ bool YamlDatabase::verifyCompatibility( const YAML::Node& rootNode ){
 
 bool YamlDatabase::load(){
 	return this->load( this->getDefaultLocation() );
+}
+
+bool YamlDatabase::reload(){
+	this->clear();
+
+	return this->load();
 }
 
 bool YamlDatabase::load(const std::string& path) {
