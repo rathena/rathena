@@ -8021,7 +8021,7 @@ static int status_get_sc_interval(enum sc_type type)
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
  * @param bl: Target of the status change
  * @param type: Status change (SC_*)
- * @param rate: Initial percentage rate of affecting bl
+ * @param rate: Initial percentage rate of affecting bl (0~10000)
  * @param tick: Initial duration that the status change affects bl
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
  * @return adjusted duration based on flag values
@@ -8079,6 +8079,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		}
 	}
 
+	rate = cap_value(rate, 0, 10000);
 	sd = BL_CAST(BL_PC,bl);
 	status = status_get_status_data(bl);
 	status_src = status_get_status_data(src);
