@@ -14916,7 +14916,7 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 	short item_position;
 
 	for (int i = 0; i < group->random[0].data_qty; i++) {
-		if (item_position = (pc_search_inventory(sd, group->random[0].data[i].nameid) != -1))
+		if ((item_position = pc_search_inventory(sd, group->random[0].data[i].nameid)) != -1)
 			break;
 	}
 
