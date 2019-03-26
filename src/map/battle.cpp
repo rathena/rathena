@@ -2874,6 +2874,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 				case SR_GATEOFHELL:
 				case SR_TIGERCANNON:
 				case KO_BAKURETSU:
+				//case NC_MAGMA_ERUPTION:
 					//Forced to neutral element
 					wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 					break;
@@ -3946,8 +3947,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 300 + 100 * skill_lv;
 			break;
 		case NC_MAGMA_ERUPTION: // 'Slam' damage
-			skillratio += 450 + 50 * skill_lv;
-			RE_LVL_DMOD(100);
+			skillratio += 350 + 50 * skill_lv;
 			break;
 		case NC_AXETORNADO:
 			skillratio += 100 + 100 * skill_lv + status_get_vit(src);
@@ -5576,6 +5576,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case SR_GATEOFHELL:
 		case GN_FIRE_EXPANSION_ACID:
 		case KO_BAKURETSU:
+		//case NC_MAGMA_ERUPTION:
 			// Forced to neutral element
 			wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			break;
@@ -6457,9 +6458,6 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 	md.flag |= battle_range_type(src, target, skill_id, skill_lv);
 
 	switch (skill_id) {
-		case NC_MAGMA_ERUPTION: // 'Eruption' damage
-			md.damage = 800 + 200 * skill_lv;
-			break;
 		case TF_THROWSTONE:
 			md.damage = 50;
 			md.flag |= BF_WEAPON;
@@ -6654,6 +6652,9 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 			} else
 				md.damage = md.damage * 200 / (skill_id == RA_CLUSTERBOMB ? 50 : 100);
 			nk |= NK_NO_ELEFIX|NK_IGNORE_FLEE|NK_NO_CARDFIX_DEF;
+			break;
+		case NC_MAGMA_ERUPTION_DOTDAMAGE: // 'Eruption' damage
+			md.damage = 800 + 200 * skill_lv;
 			break;
 		case WM_SOUND_OF_DESTRUCTION:
 			md.damage = 1000 * skill_lv + sstatus->int_ * ((sd) ? pc_checkskill(sd,WM_LESSON) : 1);
@@ -8505,6 +8506,10 @@ static const struct _battle_data {
 	{ "allow_bound_sell",                   &battle_config.allow_bound_sell,                0,      0,      0xF,            },
 	{ "event_refine_chance",                &battle_config.event_refine_chance,             0,      0,      1,              },
 	{ "autoloot_adjust",                    &battle_config.autoloot_adjust,                 0,      0,      1,              },
+	{ "feature.petevolution",               &battle_config.feature_petevolution,            1,      0,      1,              },
+	{ "feature.petautofeed",                &battle_config.feature_pet_autofeed,            1,      0,      1,              },
+	{ "feature.pet_autofeed_rate",          &battle_config.feature_pet_autofeed_rate,      89,      0,    100,              },
+	{ "pet_autofeed_always",                &battle_config.pet_autofeed_always,             1,      0,      1,              },
 	{ "broadcast_hide_name",                &battle_config.broadcast_hide_name,             2,      0,      NAME_LENGTH,    },
 	{ "skill_drop_items_full",              &battle_config.skill_drop_items_full,           0,      0,      1,              },
 	{ "switch_remove_edp",                  &battle_config.switch_remove_edp,               2,      0,      3,              },
@@ -8646,6 +8651,17 @@ void battle_adjust_conf()
 	if (battle_config.feature_achievement) {
 		ShowWarning("conf/battle/feature.conf achievement is enabled but it requires PACKETVER 2015-05-13 or newer, disabling...\n");
 		battle_config.feature_achievement = 0;
+	}
+#endif
+
+#if PACKETVER < 20141008
+	if (battle_config.feature_petevolution) {
+		ShowWarning("conf/battle/feature.conf petevolution is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
+		battle_config.feature_petevolution = 0;
+	}
+	if (battle_config.feature_pet_auto_feed) {
+		ShowWarning("conf/battle/feature.conf pet auto feed is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
+		battle_config.feature_pet_auto_feed = 0;
 	}
 #endif
 

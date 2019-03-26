@@ -1822,11 +1822,11 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case MH_XENO_SLASHER:
 		sc_start4(src, bl, SC_BLEEDING, skill_lv, skill_lv, src->id, 0, 0, skill_get_time2(skill_id, skill_lv));
 		break;
-	case NC_MAGMA_ERUPTION:
-		if (attack_type&BF_WEAPON) // Stun effect from 'slam'
-			sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time(skill_id, skill_lv));
-		if (attack_type&BF_MISC) // Burning effect from 'eruption'
-			sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
+	case NC_MAGMA_ERUPTION: // Stun effect from 'slam'
+		sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time2(skill_id, skill_lv));
+		break;
+	case NC_MAGMA_ERUPTION_DOTDAMAGE: // Burning effect from 'eruption'
+		sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 	case GN_ILLUSIONDOPING:
 		if( sc_start(src,bl,SC_ILLUSIONDOPING,100 - skill_lv * 10,skill_lv,skill_get_time(skill_id,skill_lv)) )
@@ -1834,7 +1834,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case RL_MASS_SPIRAL:
-		sc_start2(src,bl,SC_BLEEDING,30 + 10 * skill_lv,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
+		sc_start2(src,bl,SC_BLEEDING,30 + 10 * skill_lv,skill_lv,src->id,skill_get_time(skill_id,skill_lv));
 		break;
 	case RL_SLUGSHOT:
 		sc_start(src,bl,SC_STUN,100,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -3515,7 +3515,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case EL_HURRICANE_ATK:
 		case KO_BAKURETSU:
 		case GN_CRAZYWEED_ATK:
-		case NC_MAGMA_ERUPTION:
 		case SU_SV_ROOTTWIST_ATK:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,skill_id,-1,DMG_SPLASH);
 			break;
@@ -6515,7 +6514,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_TAMINGMONSTER:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		if (sd && dstmd && pet_db(dstmd->mob_id)) {
+		if (sd && dstmd && pet_db.find(dstmd->mob_id)) {
 			pet_catch_process1(sd, dstmd->mob_id);
 		}
 		break;
@@ -12511,11 +12510,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		// 1st, AoE 'slam' damage
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-		if (skill_get_unit_id(NC_MAGMA_ERUPTION,0)) {
-			// 2nd, AoE 'eruption' unit
-			skill_addtimerskill(src,gettick()+500,0,x,y,skill_id,skill_lv,BF_MISC,flag);
-		}
+			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_ANIMATION|1, skill_castend_damage_id);
+		// 2nd, AoE 'eruption' unit
+		skill_addtimerskill(src,tick + status_get_amotion(src) * 2,0,x,y,skill_id,skill_lv,0,flag);
 		break;
 	case SU_LOPE:
 		{
@@ -13167,11 +13164,6 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		val2 = y;
 		val3 = 0; // Suck target at n seconds.
 		break;
-	case NC_MAGMA_ERUPTION:
-		// Since we have no 'place' anymore. time1 for Stun duration, time2 for burning duration
-		// Officially, duration (limit) is 5secs, interval 0.5secs damage interval.
-		limit = interval * 10;
-		break;
 	case MH_VOLCANIC_ASH:
 		if (!map_flag_vs(src->m))
 			target = BCT_ENEMY;
@@ -13772,7 +13764,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_FIREWALK:
 		case UNT_ELECTRICWALK:
 		case UNT_PSYCHIC_WAVE:
-		case UNT_MAGMA_ERUPTION:
 		case UNT_MAKIBISHI:
 		case UNT_VENOMFOG:
 		case UNT_ICEMINE:
@@ -14394,6 +14385,10 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			clif_skill_damage(ss,bl,tick,status_get_amotion(ss),0,
 				skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,SD_ANIMATION|SD_SPLASH),
 				1,sg->skill_id,sg->skill_lv,DMG_SKILL);
+			break;
+
+		case UNT_MAGMA_ERUPTION:
+			skill_attack(skill_get_type(NC_MAGMA_ERUPTION_DOTDAMAGE), ss, &unit->bl, bl, NC_MAGMA_ERUPTION_DOTDAMAGE, sg->skill_lv, tick, 0);
 			break;
 	}
 

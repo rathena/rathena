@@ -1369,7 +1369,7 @@ Affected files:
 -- battleconf: battle_athena.conf, battle_conf.txt
 -- instancedb: instance_db.txt
 -- itemdb: item_db.txt, item_group_db.txt, item_trade.txt, item_noequip.txt, item_nouse.txt, item_combo_db.txt, item_avail.txt, item_stack.txt, item_delay.txt, item_buyingstore.txt, item_flag.txt
--- mobdb: mob_db.txt, mob_item_ratio.txt, mob_chat_db.txt, mob_avail.txt, mob_race2_db.txt, mob_branch.txt, mob_poring.txt, mob_boss.txt, mob_pouch.txt, mob_classchange.txt, pet_db.txt, homunculus_db.txt, homun_skill_tree.txt, exp_homun.txt, mercenary_db.txt, mercenary_skill_db.txt, elemental_db.txt, elemental_skill_db.txt
+-- mobdb: mob_db.txt, mob_item_ratio.txt, mob_chat_db.txt, mob_avail.txt, mob_race2_db.txt, mob_branch.txt, mob_poring.txt, mob_boss.txt, mob_pouch.txt, mob_classchange.txt, pet_db.yml, homunculus_db.txt, homun_skill_tree.txt, exp_homun.txt, mercenary_db.txt, mercenary_skill_db.txt, elemental_db.txt, elemental_skill_db.txt
 -- motd: motd.txt
 -- msgconf: atcommand_athena.conf
 -- pcdb: statpoint.txt, job_exp.txt, skill_tree.txt, attr_fix.txt, job_db1.txt, job_db2.txt, job_basehpsp_db.txt, job_maxhpsp_db.txt, job_param_db.txt, level_penalty.txt
