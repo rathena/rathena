@@ -8319,6 +8319,8 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
 		}
 
+		rate = cap_value(rate, 0, 10000);
+
 		// Aegis accuracy
 		if(rate > 0 && rate%10 != 0) rate += (10 - rate%10);
 	}
