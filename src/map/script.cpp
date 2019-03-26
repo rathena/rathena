@@ -17234,27 +17234,6 @@ BUILDIN_FUNC(pcblockskill)
 	return SCRIPT_CMD_SUCCESS;
 }
 
-BUILDIN_FUNC(setpcblock)
-{
-	TBL_PC *sd;
-
-	if (script_mapid2sd(3, sd))
-		sd->state.block_action |= (e_pcblock_action_flag)script_getnum(st, 2);
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
-BUILDIN_FUNC(getpcblock)
-{
-	TBL_PC *sd;
-
-	if (script_mapid2sd(2, sd))
-		script_pushint(st, sd->state.block_action);
-	else
-		script_pushint(st, 0);
-	return SCRIPT_CMD_SUCCESS;
-}
-
 BUILDIN_FUNC(pcfollow)
 {
 	TBL_PC *sd;
@@ -24515,8 +24494,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(pcblockmove,"unitblockmove","ii"),
 	BUILDIN_DEF(pcblockskill,"ii"),
 	BUILDIN_DEF2(pcblockskill,"unitblockskill","ii"),
-	BUILDIN_DEF(setpcblock, "i?"),
-	BUILDIN_DEF(getpcblock, "?"),
 	// <--- [zBuffer] List of player cont commands
 	// [zBuffer] List of unit control commands --->
 	BUILDIN_DEF(unitexists,"i"),
