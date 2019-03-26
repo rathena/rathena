@@ -10482,6 +10482,10 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	if ( !message || !*message )
 		return false;
 
+	//ignore atcommand if the player with gruop id is attached to npc
+	if (sd->npc_id && battle_config.atcommand_while_npc_attach > sd->group_id)
+		return false;
+
 	//If cannot use atcomamnd while talking with NPC [Kichi]
 	if (type == 1 && sd->npc_id && sd->state.disable_atcommand_on_npc)
 		return false;
