@@ -1161,3 +1161,159 @@ auction_03,152,42,4	script	Kafra Employee#annex	117,{
 auction_03,145,47,2	shop	Tool Dealer#annex	83,611:-1,501:-1,502:-1,503:-1,506:-1,504:-1,645:-1,656:-1,657:-1,601:-1,602:-1,1065:-1,911:-1,910:-1,717:-1,1092:-1,1093:-1,713:400
 
 */
+
+// Fallen_Angel_Wing Enchant
+//============================================================
+moc_para01,179,27,3	script	Dark Luhir#new10	4_F_VALKYRIE2,{
+	disable_items;
+	mes "[Dark Luhir]";
+	mes "Hello~ I am giving away extra stats to those who have a Fallen Angel Wing item.";
+	next;
+	if (getequipid(EQI_GARMENT) != 2589) {// Fallen_Angel_Wing
+		mes "[Dark Luhir]";
+		mes "Please ^0000ffwear your Fallen Angel Wing item first^000000, and then I will give you extra stats.";
+		close;
+	}
+	switch( select( "Cancel", "Enchant Fallen Angel Wing", "Reset Fallen Angel Wing Stats" ) ) {
+	case 1:
+		mes "[Dark Luhir]";
+		mes "Later then...";
+		close;
+	case 2:
+		.@refine = getequiprefinerycnt(EQI_GARMENT);
+		setarray .@card[0],
+			getequipcardid(EQI_GARMENT,0),
+			getequipcardid(EQI_GARMENT,1),
+			getequipcardid(EQI_GARMENT,2),
+			getequipcardid(EQI_GARMENT,3);
+		mes "[Dark Luhir]";
+		mes "Only 1 socket can get an extra stat when refine level is between 1~6.";
+		mes "If refine level is 7~8, it can receive stats for 2 sockets.";
+		mes "+9 can receive stats to all 3 sockets.";
+		next;
+		mes "[Dark Luhir]";
+		if (.@refine < 7)
+			mes "This item's refine level is lower than 7. Only ^ff0000socket slot 4^000000 can receive extra stats.";
+		else if (.@refine < 9)
+			mes "This item's refine level is between 7~8. ^ff0000Socket slot 3 and 4^000000 can receive extra stats.";
+		else
+			mes "This item's refine level is more than 9. All 3 of ^ff0000Socket slot 2, 3 and 4^000000 can receive extra stats.";
+		mes "What kind of extra stats do you want?";
+		next;
+		switch( select( "Let me get my gear on", "1.Fighting spirit", "2.Magic Attack", "3.Archery", "4.Critical", "5.MaxHP", "6.MaxSP", "7.Atk speed", "8.STR", "9.AGI", "10.VIT", "11.INT", "12.DEX", "13.LUK" ) ) {
+		case 1:
+			mes "[Dark Luhir]";
+			mes "Please come back after equipping your item.";
+			close;
+		case 2:
+			setarray .@enchants[0],4809,4808,4820,4821;		// Fighting Spirit 3~5 / Fighting Spirit 6
+			.@string$ = "Fighting Spirit stats will be given randomly by 3~5 (ATK+HIT) range.";
+			break;
+		case 3:
+			setarray .@enchants[0],4812,4826,4827,4828;		// Spell 4~6 / Spell 7
+			.@string$ = "Magic spell stats will be given randomly by 4~6 (MATK + Reduce change casting time).";
+			break;
+		case 4:
+			setarray .@enchants[0],4832,4833,4834,4835;		// Expert Archer 1~3 / Expert Archer 4
+			.@string$ = "Archery stats will be given randomly by 1~3 (Range atack rate).";
+			break;
+		case 5:
+			setarray .@enchants[0],4863,4864,4865,4866;		// Fatal 1~3 / Fatal 4
+			.@string$ = "Critical stats will be given randomly by 1~4 (Critical damage + CRI).";
+			break;
+		case 6:
+			setarray .@enchants[0],4861,4862,4867,4868;		// MaxHP +1~3% / MaxHP +4%
+			.@string$ = "MHP stats will be given randomly by 1~3 (Increase MHP %).";
+			break;
+		case 7:
+			setarray .@enchants[0],4870,4800,4871,4801;		// +25,50 or 75 sp / +100 sp
+			.@string$ = "SP stats will be given randomly by 25~75.";
+			break;
+		case 8:
+			setarray .@enchants[0],4869,4872,4873,4807;		// Delayafterattack 1~3 / +1 ASPD
+			.@string$ = "Atack delay stats will be given randomly by 1~3 (Reduce attack delay %).";
+			break;
+		case 9:
+			setarray .@enchants[0],4702,4703,4704,4853;		// Str +3~5 / Special Str
+			.@string$ = "STR stats will be given randomly by 3~5.";
+			break;
+		case 10:
+			setarray .@enchants[0],4731,4732,4733,4854;		// Agi +2~4 / Special Agi
+			.@string$ = "AGI stats will be given randomly by 2~4.";
+			break;
+		case 11:
+			setarray .@enchants[0],4742,4743,4744,4855;		// Vit +3~5 / Special Vit
+			.@string$ = "VIT stats will be given randomly by 3~5.";
+			break;
+		case 12:
+			setarray .@enchants[0],4712,4713,4714,4856;		// Int +3~5 / Special Int
+			.@string$ = "INT stats will be given randomly by 3~5.";
+			break;
+		case 13:
+			setarray .@enchants[0],4722,4723,4724,4857;		// Dex +3~5 / Special Dex
+			.@string$ = "DEX stats will be given randomly by 3~5.";
+			break;
+		case 14:
+			setarray .@enchants[0],4752,4753,4754,4858;		// Luk +3~5 / Special Luk
+			.@string$ = "LUK stats will be given randomly by 3~5.";
+			break;
+		}
+		mes "[Dark Luhir]";
+		mes .@string$ + " ^ff0000Given stats cannot be turned back.^000000 Do you want to proceed?";
+		next;
+		if (select( "1.Quit", "2.Yes, I want to try this." ) == 1) {
+			mes "[Dark Luhir]";
+			mes "Later then...";
+			close;
+		}
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", EQI_GARMENT, 2589) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine))
+			close;
+
+		if (.@card[3] == 0) {
+			.@card[3] = .@enchants[ rand(3) ];
+			.@slot = 4;
+		}
+		else if (.@card[2] == 0 && .@refine >= 7) {
+			.@card[2] = .@enchants[ rand(3) ];
+			.@slot = 3;
+		}
+		else if (.@card[1] == 0 && .@refine >= 9) {
+			.@card[1] = .@enchants[ rand(4) ];
+			.@slot = 2;
+		}
+		else {
+			mes "[Dark Luhir]";
+			mes "It seems this item is already has max enchanting. Please bring another one for extra stats.";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[Dark Luhir]";
+		mes "Giving ability to item's ^990000" + .@slot + " socket^000000.";
+		delequip EQI_GARMENT;
+		getitem2 2589,1,1, .@refine,0, .@card[0], .@card[1], .@card[2], .@card[3];
+		close;
+	case 3:
+		mes "[Dark Luhir]";
+		mes "Stat reset of the Fallen Angel Wing will cost you 1,000,000 zeny?";
+		mes "Do you wish to proceed?";
+		next;
+		if (select( "Yes", "No thanks!" ) == 1)
+			close;
+		if (Zeny < 1000000) {
+			mes "[Dark Luhir]";
+			mes "You liar you don't have enough zeny!";
+			close;
+		}
+		if (getequipid(EQI_GARMENT) == 2589) {
+			mes "[Dark Luhir]";
+			specialeffect2 EF_REPAIRWEAPON;
+			mes "Reseting item stats.";
+			delequip EQI_GARMENT;
+			getitem 2589,1;// Fallen_Angel_Wing
+			Zeny = Zeny - 1000000;
+		}
+		close;
+	}
+}
