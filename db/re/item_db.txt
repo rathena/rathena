@@ -9350,7 +9350,7 @@
 17158,Flame_Gemstone_Box,Flame Gemstone Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 6114,10; },{},{}
 17159,Change_Name_Card_Box,Name Change Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 17160,Character_Name_Change_Card_Box,Character Name Change Card Box,18,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-17162,Boarding_Halter_Box7,Boarding Halter Box7,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+17162,Boarding_Halter_Box7,Boarding Halter Box7,18,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ rentitem 12622,604800; },{},{}
 17165,Challenge_Kit,Challenge Kit,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Challenge_Kit); /*getitem Blessing_10_Scroll,20; getitem Inc_Agi_10_Scroll,20;*/ },{},{}
 17176,Boarding_Halter_Box3,Halter Lead Box[Trial],18,20,,0,,,,,0xFFFFFFFF,63,2,,,,,0,{},{},{}
 17181,Jan_Groove_Box,Jan Groove Box,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
