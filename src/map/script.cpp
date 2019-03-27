@@ -4786,8 +4786,8 @@ BUILDIN_FUNC(next)
 	TBL_PC* sd;
 
 	if (!st->mes_active) {
-		TBL_NPC* nd = map_id2nd(st->oid);
-		ShowWarning("Incorrect use of 'next' command! (source:%s / path:%s)\n", nd ? nd->name : "Unknown", nd ? nd->path : "Unknown");
+		ShowWarning("buildin_next: There is no mes active.\n");
+		script_reportsrc(st);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -4809,8 +4809,8 @@ BUILDIN_FUNC(clear)
 	TBL_PC* sd;
 
 	if (!st->mes_active) {
-		TBL_NPC* nd = map_id2nd(st->oid);
-		ShowWarning("Incorrect use of 'clear' command! (source:%s / path:%s)\n", nd ? nd->name : "Unknown", nd ? nd->path : "Unknown");
+		ShowWarning("buildin_clear: There is no mes active.\n");
+		script_reportsrc(st);
 		return SCRIPT_CMD_FAILURE;
 	}
 
