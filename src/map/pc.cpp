@@ -2758,7 +2758,13 @@ static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int 
 
 	bonus.push_back(entry);
 }
-
+/**
+ * Remove HP/SP to player when attacking
+ * @param bonus: Bonus array
+ * @param rate: Success chance
+ * @param per: Percentage of HP/SP to vanish
+ * @param flag: Battle flag
+ */
 static void pc_bonus_addvanish(std::vector<s_vanish_bonus> &bonus, int16 rate, int16 per, int flag) {
 	if (!(flag&BF_RANGEMASK))
 		flag |= BF_SHORT | BF_LONG;

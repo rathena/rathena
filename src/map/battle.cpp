@@ -6811,7 +6811,7 @@ void battle_vanish_damage(struct map_session_data *sd, struct block_list *target
 
 	// bHPVanishRate
 	int16 vanish_hp = 0;
-	if (sd->hp_vanish.size()) {
+	if (!sd->hp_vanish.empty()) {
 		for (auto &it : sd->hp_vanish) {
 			if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 				((it.flag)&flag)&BF_RANGEMASK &&
@@ -6824,7 +6824,7 @@ void battle_vanish_damage(struct map_session_data *sd, struct block_list *target
 
 	// bSPVanishRate
 	int16 vanish_sp = 0;
-	if (sd->sp_vanish.size()) {
+	if (!sd->sp_vanish.empty()) {
 		for (auto &it : sd->sp_vanish) {
 			if (!(((it.flag)&flag)&BF_WEAPONMASK &&
 				((it.flag)&flag)&BF_RANGEMASK &&
