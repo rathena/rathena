@@ -677,7 +677,7 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 				mes "[Merry Badger]";
 				mes "There you go! What else would you like?";
 				delitem 6495, 5;// Para_Logro_Badge
-				rentitem .@item_id, 604800;
+				rentitem .@item_id, 604800;	// 7 days
 				break;
 			case 14:// "5 EMB for Rental Halter Lead"
 				callsub L_Exchange,5,17162,1;// Boarding_Halter_Box7
@@ -741,8 +741,8 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 					else {
 						mes "[Merry Badger]";
 						mes "There you go!  What else would you like?";
-						delitem 617,5; //Old_Violet_Box
-						getitem 6495,1; //Para_Logro_Badge
+						delitem 617,5;// Old_Violet_Box
+						getitem 6495,1;// Para_Logro_Badge
 						next;
 					}
 				}
@@ -813,13 +813,14 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 		mes "^00CC007 Eden Merit Badges^000000 = ^0000CC1x Job Battle Manual^000000";
 		mes "^00CC008 Eden Merit Badges^000000 = ^0000CC1x Reset Stone^000000";
 		next;
+		mes "[Merry Badger]";
 		mes "This is what you can give me to get ^00CC001 Eden Merit Badge^000000!";
 		mes "^0000CC5x Old Purple Box^000000";
 		close;
 	case 4:
 		mes "[Merry Badger]";
-		mes "I was strong armed into giving this, but you're worth it!";
-		mes "do you want to exchange 15 Job Manuals to get 1 Tradable box of 10 Job Manuals?";
+		mes "I was strong armed into giving this, but you are worth it!";
+		mes "Do you want to exchange 15 Job Manuals to get 1 Tradable box of 10 Job Manuals?";
 		mes "I know 15 does not equal 10, but boxes are expensive you know.";
 		next;
 		if (countitem(14592) < 15) {
@@ -1299,7 +1300,7 @@ moc_para01,179,27,3	script	Dark Luhir#new10	4_F_VALKYRIE2,{
 		mes "Stat reset of the Fallen Angel Wing will cost you 1,000,000 zeny?";
 		mes "Do you wish to proceed?";
 		next;
-		if (select( "Yes", "No thanks!" ) == 1)
+		if (select( "Yes", "No thanks!" ) == 2)
 			close;
 		if (Zeny < 1000000) {
 			mes "[Dark Luhir]";
@@ -1307,12 +1308,15 @@ moc_para01,179,27,3	script	Dark Luhir#new10	4_F_VALKYRIE2,{
 			close;
 		}
 		if (getequipid(EQI_GARMENT) == 2589) {
+			.@refine = getequiprefinerycnt(EQI_GARMENT);
+			.@card[0] = getequipcardid(EQI_GARMENT,0);
+
 			mes "[Dark Luhir]";
 			specialeffect2 EF_REPAIRWEAPON;
 			mes "Reseting item stats.";
 			delequip EQI_GARMENT;
-			getitem 2589,1;// Fallen_Angel_Wing
-			Zeny = Zeny - 1000000;
+			Zeny -= 1000000;
+			getitem2 2589,1,1, .@refine,0, .@card[0],0,0,0;// Fallen_Angel_Wing
 		}
 		close;
 	}
