@@ -36,7 +36,7 @@ Header:
   Type: INSTANCE_DB
   Version: 1
 
-Instances:
+Body:
   - Id: 1
     Name: "Endless Tower"
     LimitTime: 14400
