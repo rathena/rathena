@@ -4787,7 +4787,6 @@ BUILDIN_FUNC(next)
 
 	if (!st->mes_active) {
 		ShowWarning("buildin_next: There is no mes active.\n");
-		script_reportsrc(st);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -4810,7 +4809,6 @@ BUILDIN_FUNC(clear)
 
 	if (!st->mes_active) {
 		ShowWarning("buildin_clear: There is no mes active.\n");
-		script_reportsrc(st);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -4833,9 +4831,9 @@ BUILDIN_FUNC(close)
 		return SCRIPT_CMD_SUCCESS;
 
 	if( !st->mes_active ) {
-		TBL_NPC* nd = map_id2nd(st->oid);
 		st->state = END; // Keep backwards compatibility.
-		ShowWarning("Incorrect use of 'close' command! (source:%s / path:%s)\n",nd?nd->name:"Unknown",nd?nd->path:"Unknown");
+		ShowWarning("Incorrect use of 'close' command!\n");
+		script_reportsrc(st);
 	} else {
 		st->state = CLOSE;
 		st->mes_active = 0;
