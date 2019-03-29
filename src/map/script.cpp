@@ -11273,7 +11273,7 @@ BUILDIN_FUNC(disablenpc)
 BUILDIN_FUNC(hideoffnpc)
 {
 	const char *str = script_getstr(st,2);
-	if (npc_enable(str,0))
+	if (npc_enable(str,2))
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
