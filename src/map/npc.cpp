@@ -971,8 +971,8 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 	if (sd->npc_ontouch_.empty())
 		return 0;
 
-	std::remove_if(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), [&sd, &found, &leavemap] (const int &npc_id) {
-		struct npc_data *nd = map_id2nd(npc_id);
+	std::remove_if(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), [&sd, &found, &leavemap] (const int &current_npc_id) {
+		struct npc_data *nd = map_id2nd(current_npc_id);
 
 		if (!nd) {
 			return true;
