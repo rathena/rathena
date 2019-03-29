@@ -910,29 +910,24 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
 		return ontouch;
 	}
 
-	switch(ontouch)
-	{
-	case 1: {
-			if (pc_ishiding(sd))
-				return 0;
+	if (ontouch == 1) { // OnTouch_
+		if (pc_ishiding(sd))
+			return 0;
 
-			nd->touching_id = sd->bl.id;
+		nd->touching_id = sd->bl.id;
 
-			auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
+		auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
 
-			if (it == sd->npc_ontouch_.end())
-				sd->npc_ontouch_.push_back(nd->bl.id);
-			break;
-		}
-	case 2: {
-			auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
+		if (it == sd->npc_ontouch_.end())
+			sd->npc_ontouch_.push_back(nd->bl.id);
+	} else if (ontouch == 2) { // OnTouch
+		auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
 
-			if (it == sd->areanpc.end())
-				sd->areanpc.push_back(nd->bl.id);
-			break;
-		}
+		if (it == sd->areanpc.end())
+			sd->areanpc.push_back(nd->bl.id);
 	}
-	npc_event_sub(sd,ev,eventname);
+
+	npc_event_sub(sd,ev,eventname); // Don't return this value so npc_enable_sub doesn't attempt to "click" the NPC if OnTouch fails.
 	return 0;
 }
 
@@ -971,44 +966,39 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
  *------------------------------------------*/
 int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 {
-	struct npc_data *nd;
-	int k, found = 0;
-	short xs, ys;
+	bool found = false;
 
 	if (sd->npc_ontouch_.empty())
-		return 1;
+		return 0;
 
-	for ( k = 0; k < sd->npc_ontouch_.size(); k++ ) {
-		nd = map_id2nd(sd->npc_ontouch_[k]);
+	std::remove_if(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), [&sd, &found, &leavemap] (const int &npc_id) {
+		struct npc_data *nd = map_id2nd(npc_id);
+
 		if (!nd) {
-			sd->npc_ontouch_.erase(sd->npc_ontouch_.begin() + k);
-			k--;
-		}
-		else {
-			xs = nd->u.scr.xs;
-			ys = nd->u.scr.ys;
+			return true;
+		} else {
+			int16 xs = nd->u.scr.xs;
+			int16 ys = nd->u.scr.ys;
 
 			// note : hiding doesn't reset the previous trigger status
 			// player must leave the area to reset nd->touching_id on official
-			if (sd->bl.m != nd->bl.m ||
-				sd->bl.x < nd->bl.x - xs || sd->bl.x > nd->bl.x + xs ||
-				sd->bl.y < nd->bl.y - ys || sd->bl.y > nd->bl.y + ys ||
-				leavemap)
-			{
+			if (sd->bl.m != nd->bl.m || sd->bl.x < nd->bl.x - xs || sd->bl.x > nd->bl.x + xs || sd->bl.y < nd->bl.y - ys || sd->bl.y > nd->bl.y + ys || leavemap) {
 				char name[EVENT_NAME_LENGTH];
 
-				sd->npc_ontouch_.erase(sd->npc_ontouch_.begin() + k);
-				k--;
-
 				if (nd->touching_id && nd->touching_id == sd->bl.id) {// empty when reload script
-					found = 1;
+					found = true;
 					nd->touching_id = 0;
 					safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_event_name);
 					map_forcountinarea(npc_touch_areanpc_sub,nd->bl.m,nd->bl.x - xs,nd->bl.y - ys,nd->bl.x + xs,nd->bl.y + ys,1,BL_PC,sd->bl.id,name);
 				}
+
+				return true;
 			}
 		}
-	}
+
+		return false;
+	});
+
 	return found;
 }
 
