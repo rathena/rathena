@@ -966,12 +966,12 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
  *------------------------------------------*/
 int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 {
-	bool found = false;
-
 	if (sd->npc_ontouch_.empty())
 		return 0;
 
-	std::remove_if(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), [&sd, &found, &leavemap] (const int &current_npc_id) {
+	bool found = false;
+
+	sd->npc_ontouch_.erase(std::remove_if(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), [&] (const int &current_npc_id) {
 		struct npc_data *nd = map_id2nd(current_npc_id);
 
 		if (!nd) {
@@ -997,7 +997,7 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 		}
 
 		return false;
-	});
+	}), sd->npc_ontouch_.end());
 
 	return found;
 }
