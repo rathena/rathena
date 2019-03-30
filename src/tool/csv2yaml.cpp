@@ -45,10 +45,12 @@ int getch( void ){
 
 // Required constant and structure definitions
 #define MAX_GUILD_SKILL_REQUIRE 5
+#define MAX_QUEST_DROPS 3
 
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
-static size_t pet_read_db( const char* file );
+static bool pet_read_db( const char* file );
+static bool quest_read_db(char *split[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -124,25 +126,31 @@ int do_init( int argc, char** argv ){
 	sv_readdb( path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
 	sv_readdb( path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
 
-	std::vector<std::string> guild_skill_tree_paths = {
+	std::vector<std::string> main_paths = {
 		path_db,
 		path_db_import
 	};
 
-	if( !process( "GUILD_SKILL_TREE_DB", 1, guild_skill_tree_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "GUILD_SKILL_TREE_DB", 1, main_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 2 + MAX_GUILD_SKILL_REQUIRE * 2, 2 + MAX_GUILD_SKILL_REQUIRE * 2, -1, &guild_read_guildskill_tree_db, false );
 	} ) ){
 		return 0;
 	}
 
-	std::vector<std::string> pet_paths = {
+	std::vector<std::string> mode_paths = {
 		path_db_mode,
 		path_db_import
 	};
 
-	if( !process( "PET_DB", 1, pet_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "PET_DB", 1, mode_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
+		return 0;
+	}
+
+	if (!process("QUEST_DB", 1, mode_paths, "quest_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3 + MAX_QUEST_OBJECTIVES * 2 + MAX_QUEST_DROPS * 3, 100, -1, &quest_read_db, false);
+	})) {
 		return 0;
 	}
 
@@ -412,12 +420,12 @@ static bool guild_read_guildskill_tree_db( char* split[], int columns, int curre
 }
 
 // Copied and adjusted from pet.cpp
-static size_t pet_read_db( const char* file ){
+static bool pet_read_db( const char* file ){
 	FILE* fp = fopen( file, "r" );
 
 	if( fp == nullptr ){
 		ShowError( "can't read %s\n", file );
-		return 0;
+		return false;
 	}
 
 	int lines = 0;
@@ -589,5 +597,110 @@ static size_t pet_read_db( const char* file ){
 	fclose(fp);
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
 
-	return entries;
+	return true;
+}
+
+// Copied and adjusted from quest.cpp
+static bool quest_read_db(char *split[], int columns, int current) {
+	int quest_id = atoi(split[0]);
+
+	if (quest_id < 0 || quest_id >= INT_MAX) {
+		ShowError("quest_read_db: Invalid quest ID '%d'.\n", quest_id);
+		return false;
+	}
+
+	YAML::Node node;
+
+	node["Id"] = quest_id;
+
+	std::string title = split[17];
+	
+	if (columns > 18) { // If the title has a comma in it, concatenate
+		int col = 18;
+
+		while (col < columns) {
+			title += ',' + std::string(split[col]);
+			col++;
+		}
+	}
+
+	title.erase(std::remove(title.begin(), title.end(), '"'), title.end()); // Strip double quotes out
+
+	node["Title"] = title;
+
+	if (strchr(split[1], ':') == NULL) {
+		if (atoi(split[1]))
+			node["TimeLimit"] = split[1];
+	} else {
+		if (*split[1]) {
+			std::string time_str(split[1]), hour;
+
+			hour = time_str.substr(0, time_str.find(':'));
+
+			time_str.erase(0, 3); // Remove "HH:"
+
+			if (std::stoi(hour) > 0)
+				node["TimeAtHour"] = std::stoi(hour);
+
+			if (std::stoi(time_str) > 0)
+				node["TimeAtMinute"] = std::stoi(time_str);
+		}
+	}
+
+	int j = 0;
+
+	for (int i = 0, j = 0; i < MAX_QUEST_OBJECTIVES; i++) {
+		uint16 mob_id = (uint16)atoi(split[i * 2 + 2]), count = atoi(split[i * 2 + 3]);
+
+		if (!mob_id || !count)
+			continue;
+
+		std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
+
+		if (!mob_name) {
+			ShowError("quest_read_db: Invalid mob-class %hu, target not read.\n", mob_id);
+			continue;
+		}
+
+		YAML::Node obj;
+
+		obj["Mob"] = *mob_name;
+		obj["Count"] = count;
+
+		node["Target"][j++] = obj;
+	}
+
+	for (int i = 0; i < MAX_QUEST_DROPS; i++) {
+		uint16 mob_id = (uint16)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]), nameid = (uint16)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 3)]);
+
+		if (!mob_id || !nameid)
+			continue;
+
+		std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
+
+		if (!mob_name) {
+			ShowError("quest_read_db: Invalid mob-class %hu, drop not read.\n", mob_id);
+			continue;
+		}
+
+		std::string *item_name = util::umap_find(aegis_itemnames, nameid);
+
+		if (!item_name) {
+			ShowError("quest_read_db: Invalid item name %hu, drop not read.\n", nameid);
+			return false;
+		}
+
+		YAML::Node drop;
+
+		drop["Mob"] = *mob_name;
+		drop["Item"] = *item_name;
+		//drop["Count"] = 1;
+		drop["Rate"] = atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
+
+		node["Drop"][j++] = drop;
+	}
+
+	body[counter++] = node;
+
+	return true;
 }

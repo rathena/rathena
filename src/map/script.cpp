@@ -19269,10 +19269,10 @@ BUILDIN_FUNC(changequest)
 BUILDIN_FUNC(checkquest)
 {
 	struct map_session_data *sd;
-	enum quest_check_type type = HAVEQUEST;
+	enum e_quest_check_type type = HAVEQUEST;
 
 	if( script_hasdata(st, 3) )
-		type = (enum quest_check_type)script_getnum(st, 3);
+		type = (enum e_quest_check_type)script_getnum(st, 3);
 
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
@@ -19288,12 +19288,11 @@ BUILDIN_FUNC(checkquest)
 BUILDIN_FUNC(isbegin_quest)
 {
 	struct map_session_data *sd;
-	int i;
 
 	if (!script_charid2sd(3,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	i = quest_check(sd, script_getnum(st, 2), (enum quest_check_type) HAVEQUEST);
+	int i = quest_check(sd, script_getnum(st, 2), (enum e_quest_check_type) HAVEQUEST);
 	script_pushint(st, i + (i < 1));
 
 	return SCRIPT_CMD_SUCCESS;
@@ -22219,7 +22218,7 @@ BUILDIN_FUNC(setquestinfo_req) {
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (quest_search(quest_id) == &quest_dummy) {
+	if (!quest_search(quest_id)) {
 		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not found in Quest DB.\n", quest_id);
 		return SCRIPT_CMD_FAILURE;
 	}
