@@ -6133,6 +6133,57 @@ Examples:
 
 ---------------------------------------
 
+*setpcblock <type>,<state>{,<account ID>};
+*getpcblock {<account ID>};
+
+'setpcblock' command prevents/allows the player from doing the given <type> of action according
+to the <state> during the player session (note: @reloadscript also removes all <type>).
+The <type> values are bit-masks, multiples of <type> can be added to change the player action.
+
+The action is blocked when the <state> is true, while false allows the action again.
+
+'getpcblock' command return the bit-mask value of the currently
+enabled block flags.
+
+The available <type> are:
+	PCBLOCK_MOVE
+	PCBLOCK_ATTACK
+	PCBLOCK_SKILL
+	PCBLOCK_USEITEM
+	PCBLOCK_CHAT
+	PCBLOCK_IMMUNE
+	PCBLOCK_SITSTAND
+	PCBLOCK_COMMANDS
+	PCBLOCK_NPCCLICK
+	PCBLOCK_EMOTION
+	PCBLOCK_ALL
+
+Examples:
+
+// Make the attached player invulnerable to monster (same as @monsterignore)
+	setpcblock PCBLOCK_IMMUNE, true;
+
+// Prevents the attached player from attacking and using skills
+	setpcblock PCBLOCK_ATTACK|PCBLOCK_SKILL, true;
+
+// Re-enables attack, skills and item use
+	setpcblock PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM, false;
+
+// getpcblock related checks
+	if (getpcblock() & PCBLOCK_IMMUNE)
+		mes "You are invulnerable!";
+
+	if (getpcblock() & (PCBLOCK_MOVE|PCBLOCK_SITSTAND))
+		mes "You can't walk or sit.";
+
+	if ((getpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL)) == 0)
+		mes "You can attack and use skills.";
+
+	if (getpcblock() & PCBLOCK_CHAT)
+		mes "You can't chat.";
+
+---------------------------------------
+
 ==================================
 |5.- Mob / NPC -related commands.|
 ==================================

@@ -7769,7 +7769,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			sd = BL_CAST(BL_PC, t_bl);
 			sc = status_get_sc(t_bl);
 
-			if( (sd->state.monster_ignore || (sc->data[SC_KINGS_GRACE] && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
+			if( ((sd->state.block_action & PCBLOCK_IMMUNE) || (sc->data[SC_KINGS_GRACE] && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
 				return 0; // Global immunity only to Attacks
 			if( sd->status.karma && s_bl->type == BL_PC && ((TBL_PC*)s_bl)->status.karma )
 				state |= BCT_ENEMY; // Characters with bad karma may fight amongst them

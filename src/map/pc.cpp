@@ -9346,6 +9346,9 @@ bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 	if( pc_is90overweight(sd) || pc_isridingwug(sd) )
 		return false;
 
+	if (sd->state.block_action & PCBLOCK_ATTACK)
+		return false;
+
 	if( sd->sc.data[SC_BASILICA] ||
 		sd->sc.data[SC__SHADOWFORM] ||
 		sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
