@@ -16779,7 +16779,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 		offset += 4;
 		WFIFOL(fd, offset) = sd->quest_log[i].time;
 		offset += 4;
-		WFIFOW(fd, offset) = qi->objectives.size();
+		WFIFOW(fd, offset) = static_cast<uint16>(qi->objectives.size());
 		offset += 2;
 		
 		if (!qi->objectives.empty()) {
@@ -16853,7 +16853,7 @@ void clif_quest_send_mission(struct map_session_data *sd)
 		WFIFOL(fd, i*104+8) = sd->quest_log[i].quest_id;
 		WFIFOL(fd, i*104+12) = sd->quest_log[i].time - qi->time;
 		WFIFOL(fd, i*104+16) = sd->quest_log[i].time;
-		WFIFOW(fd, i*104+20) = qi->objectives.size();
+		WFIFOW(fd, i*104+20) = static_cast<uint16>(qi->objectives.size());
 
 		for (int j = 0 ; j < qi->objectives.size(); j++) {
 			WFIFOL(fd, i*104+22+j*30) = qi->objectives[j]->mob_id;
@@ -16874,7 +16874,6 @@ void clif_quest_send_mission(struct map_session_data *sd)
 void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 {
 	int fd = sd->fd;
-	int offset;
 	auto qi = quest_search(qd->quest_id);
 #if PACKETVER >= 20150513
 	int cmd = 0x9f9;
@@ -16888,7 +16887,7 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 	WFIFOB(fd, 6) = qd->state;
 	WFIFOB(fd, 7) = qd->time - qi->time;
 	WFIFOL(fd, 11) = qd->time;
-	WFIFOW(fd, 15) = qi->objectives.size();
+	WFIFOW(fd, 15) = static_cast<uint16>(qi->objectives.size());
 
 	for (int i = 0, offset = 17; i < qi->objectives.size(); i++) {
 		struct mob_db *mob;
@@ -16954,7 +16953,7 @@ void clif_quest_delete(struct map_session_data *sd, int quest_id)
 void clif_quest_update_objective(struct map_session_data *sd, struct quest *qd, int mobid)
 {
 	int fd = sd->fd;
-	int offset;
+	int offset = 6;
 	auto qi = quest_search(qd->quest_id);
 	int len = qi->objectives.size() * 12 + 6;
 #if PACKETVER >= 20150513
@@ -16965,9 +16964,9 @@ void clif_quest_update_objective(struct map_session_data *sd, struct quest *qd, 
 
 	WFIFOHEAD(fd, len);
 	WFIFOW(fd, 0) = cmd;
-	WFIFOW(fd, 4) = qi->objectives.size();
+	WFIFOW(fd, 4) = static_cast<uint16>(qi->objectives.size());
 
-	for (int i = 0, offset = 6; i < qi->objectives.size(); i++) {
+	for (int i = 0; i < qi->objectives.size(); i++) {
 		if (mobid == 0 || mobid == qi->objectives[i]->mob_id) {
 			WFIFOL(fd, offset) = qd->quest_id;
 			offset += 4;
