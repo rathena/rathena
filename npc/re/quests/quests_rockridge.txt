@@ -174,11 +174,12 @@ harboro1,80,218,5	script	Costello#harboro1	10210,{
 		end;
 	}
 	if (rock_main_quest == 1) {
-		mes "";// todo fix me
+		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Mr. Costello?", bc_self;
 		sleep2 1000;
 		npctalk "*Gasp*", "", bc_self;;
 		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
 		mes "[Costello]";
 		mes "*Ahem* Yes, this is him.";
 		mes "I'm Costello, mayor of Rock Ridge.";
@@ -550,7 +551,7 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		close;
 	}
 	if (rock_main_quest == 6) {
-		mes "";// todo fix me
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "I say we turn him against the rest of his gang.", "Ivoka Skudi#rr03", bc_self;
 		sleep2 2000;
 		npctalk "Don't you think regular torture or threats would work?", "", bc_self;
@@ -559,6 +560,7 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		sleep2 1000;
 		npctalk "I know. There's Albert.", "", bc_self;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		mes "[Wyatt Warp]";
 		mes "Welcome.";
 		mes "*Chuckle* You're so useful. Just having you standing next to us works like a charm.";
@@ -974,15 +976,16 @@ OnTouch:
 
 // Prison
 har_in01,100,14,3	script	Vigilante#srdg01	10220,{
-	mes "";// todo fix me
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "You'd better not do anything stupid.", "", bc_self;
 	sleep2 1000;
 	npctalk "I'm watching you like a hawk.", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
 har_in01,81,30,3	script	Harold#srdg01	4_TOWER_09,{
-	mes "";// todo fix me
+	setpcblock PCBLOCK_NPC, true;
 	emotion ET_OHNO;
 	npctalk "I can't believe you. Ugh!", "", bc_self;
 	sleep2 1000;
@@ -995,15 +998,17 @@ har_in01,81,30,3	script	Harold#srdg01	4_TOWER_09,{
 	npctalk "I can't help it when the food is so delicious.", "Egring#srdg01", bc_self;
 	sleep2 1000;
 	npctalk "Well, that I agree.", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
 har_in01,78,25,5	script	Egring#srdg01	4_DR_TORTEL,{
-	mes "";// todo fix me
+	setpcblock PCBLOCK_NPC, true;
 	emotion ET_THROB;
 	npctalk "When are we eating today? What are we having? Beans?", "", bc_self;
 	sleep2 1000;
 	npctalk "It hasn't been even thirty minutes since our last meal!", "Harold#srdg01", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -1018,10 +1023,11 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 	if (rock_main_quest == 8) {
 		.@player_name$ = strcharinfo(0);
 
-		mes "";// todo fix me
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "You sneaky bastards, how dare you show up again? Go to hell!", "", bc_self;
 		sleep2 2000;
 		classchange( 10212, "Ivoka Skudi#har02", bc_self );
+		setpcblock PCBLOCK_NPC, false;
 		npctalk "Ah, you'd better show some respect to our future mayor.", "Ivoka Skudi#har02", bc_self;
 		mes "[Ivoka Skudi]";
 		mes "I told you I can take care of him.";
@@ -1224,7 +1230,7 @@ rockrdg1,164,306,3	duplicate(Johnny James#revt04)	Cactus Gunslinger#revt03	HIDDE
 
 rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 	if (rock_main_quest == 5) {
-		mes "";// todo fix me
+		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I think this is the place, but maybe I came too early.", bc_self;
 		sleep2 3000;
 		classchange( 10213, "Johnny James#revt04", bc_self );
@@ -1336,6 +1342,7 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 		erasequest 7795;
 		setquest 7796;// Unexpected Arrest
 		rock_main_quest = 6;
+		setpcblock PCBLOCK_NPC, false;
 		close;
 	}
 	mes "It's worthless and abandoned.";
@@ -3928,9 +3935,10 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 		.@account_id = getcharid(3);
 		.@player_name$ = strcharinfo(0);
 
-		mes "";// todo fix me
+		setpcblock PCBLOCK_NPC, true;
 		donpcevent "Traces of Fire#srdg01::OnEffect";
 		sleep2 1500;
+		setpcblock PCBLOCK_NPC, false;
 		mes "[Demon]";
 		mes "Alright, this should do. You know what I need, right? Are you sure you could sneak in? Maybe I should go.";
 		next;
@@ -5758,9 +5766,11 @@ harboro1,235,255,6	script	Wealthy Merchant's Came#6	4_DST_CAMEL,{
 }
 
 harboro1,210,219,5	script	Priest#srdg01	4_M_MINISTER,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Are you anguished or sad? Let me help you.", "", bc_self;
 	sleep2 1500;
 	npctalk "Every one of us is born to be loved.", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 

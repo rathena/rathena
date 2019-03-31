@@ -6145,18 +6145,19 @@ The action is blocked when the <state> is true, while false allows the action ag
 'getpcblock' command return the bit-mask value of the currently
 enabled block flags.
 
-The available <type> are:
-	PCBLOCK_MOVE
-	PCBLOCK_ATTACK
-	PCBLOCK_SKILL
-	PCBLOCK_USEITEM
-	PCBLOCK_CHAT
-	PCBLOCK_IMMUNE
-	PCBLOCK_SITSTAND
-	PCBLOCK_COMMANDS
-	PCBLOCK_NPCCLICK
-	PCBLOCK_EMOTION
-	PCBLOCK_ALL
+Available <type>:			Additionnal description:
+	PCBLOCK_MOVE				Prevent the player to move.
+	PCBLOCK_ATTACK				Prevent the player to attack.
+	PCBLOCK_SKILL				Prevent the player to use skill/itemskill.
+	PCBLOCK_USEITEM				Prevent the player to use usable items.
+	PCBLOCK_CHAT				Prevent the player to send global/guild/party/whisper message.
+	PCBLOCK_IMMUNE				Prevent the player to being hit by monster.
+	PCBLOCK_SITSTAND			Prevent the player to sit/stand.
+	PCBLOCK_COMMANDS			Prevent the player to use atcommand/charcommand.
+	PCBLOCK_NPCCLICK			Prevent the player to click/touch any npc/shop/warp.
+	PCBLOCK_EMOTION				Prevent the player to use emotion.
+	PCBLOCK_NPC					Simulate npc interaction, sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK
+	PCBLOCK_ALL					Sum of all the flags.
 
 Examples:
 
