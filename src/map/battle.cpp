@@ -6811,17 +6811,30 @@ void battle_vanish_damage(struct map_session_data *sd, struct block_list *target
 	nullpo_retv(target);
 
 	// bHPVanishRate
-	int16 vanish_rate_hp = cap_value(sd->bonus.hp_vanish_rate, 0, INT16_MAX);
-	int8 vanish_hp = cap_value(sd->bonus.hp_vanish_per, INT8_MIN, INT8_MAX);
+	int16 vanish_hp = 0;
+	if (!sd->hp_vanish.empty()) {
+		for (auto &it : sd->hp_vanish) {
+			if (!(((it.flag)&flag)&BF_WEAPONMASK &&
+				((it.flag)&flag)&BF_RANGEMASK &&
+				((it.flag)&flag)&BF_SKILLMASK))
+				continue;
+			if (it.rate && (it.rate >= 1000 || rnd() % 1000 < it.rate))
+				vanish_hp += it.per;
+		}
+	}
+
 	// bSPVanishRate
-	int16 vanish_rate_sp = cap_value(sd->bonus.sp_vanish_rate, 0, INT16_MAX);
-	int8 vanish_sp = cap_value(sd->bonus.sp_vanish_per, INT8_MIN, INT8_MAX);
-
-	if (vanish_hp && !(vanish_rate_hp && sd->bonus.hp_vanish_flag & flag && (vanish_rate_hp >= 1000 || rnd() % 1000 < vanish_rate_hp)))
-		vanish_hp = 0;
-
-	if (vanish_sp && !(vanish_rate_sp && sd->bonus.sp_vanish_flag & flag && (vanish_rate_sp >= 1000 || rnd() % 1000 < vanish_rate_sp)))
-		vanish_sp = 0;
+	int16 vanish_sp = 0;
+	if (!sd->sp_vanish.empty()) {
+		for (auto &it : sd->sp_vanish) {
+			if (!(((it.flag)&flag)&BF_WEAPONMASK &&
+				((it.flag)&flag)&BF_RANGEMASK &&
+				((it.flag)&flag)&BF_SKILLMASK))
+				continue;
+			if (it.rate && (it.rate >= 1000 || rnd() % 1000 < it.rate))
+				vanish_sp += it.per;
+		}
+	}
 
 	if (vanish_hp > 0 || vanish_sp > 0)
 		status_percent_damage(&sd->bl, target, -vanish_hp, -vanish_sp, false); // Damage HP/SP applied once
@@ -7756,7 +7769,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			sd = BL_CAST(BL_PC, t_bl);
 			sc = status_get_sc(t_bl);
 
-			if( (sd->state.monster_ignore || (sc->data[SC_KINGS_GRACE] && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
+			if( ((sd->state.block_action & PCBLOCK_IMMUNE) || (sc->data[SC_KINGS_GRACE] && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
 				return 0; // Global immunity only to Attacks
 			if( sd->status.karma && s_bl->type == BL_PC && ((TBL_PC*)s_bl)->status.karma )
 				state |= BCT_ENEMY; // Characters with bad karma may fight amongst them
@@ -8488,6 +8501,7 @@ static const struct _battle_data {
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
 	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
+	{ "atcommand_disable_npc",				&battle_config.atcommand_disable_npc,			1,		0,		1,				},
 	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
 	{ "tarotcard_equal_chance",             &battle_config.tarotcard_equal_chance,          0,      0,      1,              },
 	{ "change_party_leader_samemap",        &battle_config.change_party_leader_samemap,     1,      0,      1,              },

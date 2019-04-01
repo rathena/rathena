@@ -494,7 +494,7 @@
 1138,Mysteltainn_,Mysteltainn,5,20,,1000,170,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Dark; bonus2 bAddEle,Ele_Ghost,15; bonus3 bAutoSpell,"MG_STONECURSE",3,100; bonus2 bAddEff,Eff_Stone,10; bonus bDex,3; },{},{}
 1139,Tale_Fing_,Tirfing,5,20,,1000,200,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Dark; bonus2 bHPLossRate,35,10000; },{},{}
 1140,Byeorrun_Gum,Byeollungum,5,20,,900,150,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus2 bSubClass,Class_Normal,-10; bonus2 bAddClass,Class_Boss,50; bonus bAllStats,2; },{},{}
-1141,Immaterial_Sword,Immaterial Sword,5,20,,900,140,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Ghost; bonus2 bSPVanishRate,30,30; bonus bSPDrainValue,-1; bonus bUnbreakableWeapon; },{},{}
+1141,Immaterial_Sword,Immaterial Sword,5,20,,900,140,,1,0,0x000654E2,63,2,2,4,40,1,2,{ bonus bAtkEle,Ele_Ghost; bonus3 bSPVanishRate,30,30,BF_WEAPON|BF_MAGIC|BF_MISC; bonus bSPDrainValue,-1; bonus bUnbreakableWeapon; },{},{}
 1142,Jewel_Sword,Jeweled Sword,5,20,,2200,104,,1,0,0x000654E2,63,2,2,3,68,1,2,{ bonus2 bAddMonsterDropItemGroup,IG_Jewel,100; },{},{}
 1143,Gaia_Sword,Gaia Sword,5,20,,2500,140,,1,0,0x000654E2,63,2,2,3,74,1,2,{ bonus2 bAddMonsterDropItemGroup,IG_Ore,30; },{},{}
 1144,Sasimi,Sashimi,5,20,,1400,75,,1,0,0x000654E2,63,2,2,3,48,1,2,{ bonus bAtkEle,Ele_Wind; bonus3 bAddMonsterDropItem,544,RC_Fish,4000; },{},{}
@@ -1012,7 +1012,7 @@
 1658,P_Staff3,Eden Staff III,5,0,,0,60:170,,1,0,0x00818314,63,2,2,3,60,0,10,{ bonus bInt,4; },{},{}
 1659,Recovery_Light,Light of Recovery,5,56000,,400,30:160,,1,1,0x00000100,63,2,2,4,110,1,10,{ bonus bAtkEle,Ele_Holy; bonus bUnbreakableWeapon; .@r = getrefine(); bonus bHealPower,(.@r*6); bonus2 bSkillUseSP,"AL_HEAL",-(.@r*10); bonus2 bSkillUseSP,"AB_CHEAL",-(.@r*12); bonus2 bSkillUseSP,"AB_HIGHNESSHEAL",-(.@r*14); },{},{}
 1660,Wand_Of_Affection2,Empowered Wand Of Affection,5,20,,500,30:180,,1,1,0x00000100,63,2,2,3,130,1,10,{ bonus bAtkEle,Ele_Holy; bonus bInt,4; bonus bHealPower,20; },{},{}
-1661,Mental_Destroyer,Mental Destroyer,5,20,,1400,100:50,,1,0,0x00000200,63,2,2,4,95,1,10,{ .@r = getrefine(); bonus bInt,10; bonus bUnbreakableWeapon; bonus bUseSPrate,100; bonus bMdef,20; bonus3 bSPVanishRate,1000,5+(.@r>5?3:0),BF_NORMAL|BF_SKILL; },{},{}
+1661,Mental_Destroyer,Mental Destroyer,5,20,,1400,100:50,,1,0,0x00000200,63,2,2,4,95,1,10,{ .@r = getrefine(); bonus bInt,10; bonus bUnbreakableWeapon; bonus bUseSPrate,100; bonus bMdef,20; bonus3 bSPVanishRate,1000,5+(.@r>5?3:0),BF_WEAPON|BF_MAGIC|BF_MISC; },{},{}
 1662,Bone_Wand_,Evil Bone Wand,5,20,,700,40:110,,1,2,0x00818314,63,2,2,3,24,1,10,{ bonus bInt,4; bonus bAtkEle,Ele_Undead; },{},{}
 1663,Staff_Of_Bordeaux_,Staff Of Bordeaux,5,20,,500,30:180,,1,2,0x00010200,18,2,2,4,50,1,10,{ bonus bInt,2; bonus bDex,1; if(getskilllv("SA_DRAGONOLOGY") == 5) { bonus bUseSPrate,-15; bonus bInt,3; } },{},{}
 1664,Thorn_Staff_,Thorn Staff of Darkness,5,10,,700,60:160,,,1,0x14,50,2,2,4,75,1,8,{ bonus bInt,3; bonus bDex,3; bonus bVariableCastrate,-getrefine(); bonus bAtkEle,Ele_Dark; },{},{}
@@ -2361,7 +2361,7 @@
 4168,Dark_Lord_Card,Dark Lord Card,6,20,,10,,,,,,,,64,,,,,{ bonus3 bAutoSpellWhenHit,"WZ_METEOR",5,100; },{},{}
 4169,Dark_Illusion_Card,Dark Illusion Card,6,20,,10,,,,,,,,769,,,,,{ bonus bMaxHPrate,-10; bonus bMaxSPrate,-10; bonus bVariableCastrate,-10; },{},{}
 4170,Dark_Frame_Card,Dark Frame Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Stone,600; },{},{}
-4171,Dark_Priest_Card,Dark Priest Card,6,20,,10,,,,,,,,2,,,,,{ bonus2 bSPVanishRate,50,10; if(BaseJob==Job_Sage) bonus bSPDrainValue,1; },{},{}
+4171,Dark_Priest_Card,Dark Priest Card,6,20,,10,,,,,,,,2,,,,,{ bonus3 bSPVanishRate,50,10,BF_WEAPON|BF_MAGIC|BF_MISC; if(BaseJob==Job_Sage) bonus bSPDrainValue,1; },{},{}
 4172,The_Paper_Card,The Paper Card,6,20,,10,,,,,,,,2,,,,,{ bonus bCritAtkRate,20; bonus bSPDrainValue,-1; },{},{}
 4173,Demon_Pungus_Card,Demon Pungus Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bAddEffWhenHit,Eff_Sleep,600; },{},{}
 4174,Deviling_Card,Deviling Card,6,20,,10,,,,,,,,4,,,,,{ bonus2 bSubEle,Ele_Neutral,50; bonus2 bSubEle,Ele_Water,-50; bonus2 bSubEle,Ele_Earth,-50; bonus2 bSubEle,Ele_Fire,-50; bonus2 bSubEle,Ele_Wind,-50; bonus2 bSubEle,Ele_Poison,-50; bonus2 bSubEle,Ele_Holy,-50; bonus2 bSubEle,Ele_Dark,-50; bonus2 bSubEle,Ele_Ghost,-50; bonus2 bSubEle,Ele_Undead,-50; },{},{}
@@ -7571,7 +7571,7 @@
 13406,Edger,Edger,5,20,,0,120,,1,0,0x000654E2,63,2,2,1,0,0,2,{ bonus2 bAddClass,Class_All,50; },{},{}
 13407,Nagan_C,Refined Nagan,5,1,,0,148,,1,0,0x000654E2,63,2,2,4,0,0,2,{ skill "TF_DOUBLE",5; bonus bDoubleRate,25; bonus2 bAddRace,RC_DemiHuman,40; bonus2 bAddRace,RC_Player,40; },{},{}
 13408,Fire_Brand_C,Refined Fireblend,5,1,,0,120,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Fire; bonus bInt,2; skill "MG_FIREBOLT",5; bonus3 bAutoSpell,"MG_FIREBOLT",5,100; },{},{}
-13409,Immaterial_Sword_C,Refined Immaterial Sword,5,1,,0,160,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Ghost; bonus2 bSPVanishRate,80,45; bonus bUnbreakableWeapon; },{},{}
+13409,Immaterial_Sword_C,Refined Immaterial Sword,5,1,,0,160,,1,0,0x000654E2,63,2,2,4,0,0,2,{ bonus bAtkEle,Ele_Ghost; bonus3 bSPVanishRate,80,45,BF_WEAPON|BF_MAGIC|BF_MISC; bonus bUnbreakableWeapon; },{},{}
 13410,BF_Sword1,Valorous Gladiator Blade,5,20,,0,115,,1,0,0x000654E3,63,2,2,3,80,1,2,{ bonus bStr,1; bonus bDex,1; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bAddRace,RC_Player,75; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,20; bonus2 bIgnoreDefRaceRate,RC_Player,20; bonus bUnbreakableWeapon; },{},{}
 13411,BF_Sword2,Brave Gladiator Blade,5,20,,0,115:74,,1,0,0x000654E3,63,2,2,3,80,1,2,{ bonus bStr,1; bonus bDex,1; bonus2 bAddRace,RC_DemiHuman,75; bonus2 bAddRace,RC_Player,75; bonus bMatkRate,10; bonus bUnbreakableWeapon; },{},{}
 13412,Twin_Edge_B,Twin Edge of Naght Sieger,5,20,,1500,150,,1,3,0x000654E2,18,2,2,4,75,1,2,{ bonus bAtkEle,Ele_Water; skill "MG_FROSTDIVER",5; autobonus "{ bonus bIgnoreDefClass,Class_Normal; }",50,5000; },{},{}

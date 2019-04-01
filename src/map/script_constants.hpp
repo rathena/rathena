@@ -7210,6 +7210,19 @@
 	/* timer related */
 	export_constant(INFINITE_TICK);
 
+	/* block action */
+	export_constant(PCBLOCK_MOVE);
+	export_constant(PCBLOCK_ATTACK);
+	export_constant(PCBLOCK_SKILL);
+	export_constant(PCBLOCK_USEITEM);
+	export_constant(PCBLOCK_CHAT);
+	export_constant(PCBLOCK_IMMUNE);
+	export_constant(PCBLOCK_SITSTAND);
+	export_constant(PCBLOCK_COMMANDS);
+	export_constant(PCBLOCK_NPCCLICK);
+	export_constant(PCBLOCK_EMOTION);
+	export_constant(PCBLOCK_ALL);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter

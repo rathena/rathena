@@ -4235,7 +4235,7 @@ void script_attach_state(struct script_state* st){
 		sd->st = st;
 		sd->npc_id = st->oid;
 		sd->npc_item_flag = st->npc_item_flag; // load default.
-		sd->state.disable_atcommand_on_npc = (!pc_has_permission(sd, PC_PERM_ENABLE_COMMAND));
+		sd->state.disable_atcommand_on_npc = battle_config.atcommand_disable_npc && (!pc_has_permission(sd, PC_PERM_ENABLE_COMMAND));
 #ifdef SECURE_NPCTIMEOUT
 		if( sd->npc_idle_timer == INVALID_TIMER )
 			sd->npc_idle_timer = add_timer(gettick() + (SECURE_NPCTIMEOUT_INTERVAL*1000),npc_secure_timeout_timer,sd->bl.id,0);
@@ -4785,6 +4785,11 @@ BUILDIN_FUNC(next)
 {
 	TBL_PC* sd;
 
+	if (!st->mes_active) {
+		ShowWarning("buildin_next: There is no mes active.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	if( !script_rid2sd(sd) )
 		return SCRIPT_CMD_SUCCESS;
 #ifdef SECURE_NPCTIMEOUT
@@ -4801,6 +4806,11 @@ BUILDIN_FUNC(next)
 BUILDIN_FUNC(clear)
 {
 	TBL_PC* sd;
+
+	if (!st->mes_active) {
+		ShowWarning("buildin_clear: There is no mes active.\n");
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	if (!script_rid2sd(sd))
 		return SCRIPT_CMD_FAILURE;
@@ -4821,9 +4831,9 @@ BUILDIN_FUNC(close)
 		return SCRIPT_CMD_SUCCESS;
 
 	if( !st->mes_active ) {
-		TBL_NPC* nd = map_id2nd(st->oid);
 		st->state = END; // Keep backwards compatibility.
-		ShowWarning("Incorrect use of 'close' command! (source:%s / path:%s)\n",nd?nd->name:"Unknown",nd?nd->path:"Unknown");
+		ShowWarning("Incorrect use of 'close' command!\n");
+		script_reportsrc(st);
 	} else {
 		st->state = CLOSE;
 		st->mes_active = 0;
@@ -17244,6 +17254,32 @@ BUILDIN_FUNC(pcblockskill)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+BUILDIN_FUNC(setpcblock)
+{
+	TBL_PC *sd;
+
+	if (script_mapid2sd(4, sd)) {
+		enum e_pcblock_action_flag type = (e_pcblock_action_flag)script_getnum(st, 2);
+
+		if (script_getnum(st, 3) > 0)
+			sd->state.block_action |= type;
+		else
+			sd->state.block_action &= ~type;
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
+BUILDIN_FUNC(getpcblock)
+{
+	TBL_PC *sd;
+
+	if (script_mapid2sd(2, sd))
+		script_pushint(st, sd->state.block_action);
+	else
+		script_pushint(st, 0);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 BUILDIN_FUNC(pcfollow)
 {
 	TBL_PC *sd;
@@ -24504,6 +24540,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(pcblockmove,"unitblockmove","ii"),
 	BUILDIN_DEF(pcblockskill,"ii"),
 	BUILDIN_DEF2(pcblockskill,"unitblockskill","ii"),
+	BUILDIN_DEF(setpcblock, "ii?"),
+	BUILDIN_DEF(getpcblock, "?"),
 	// <--- [zBuffer] List of player cont commands
 	// [zBuffer] List of unit control commands --->
 	BUILDIN_DEF(unitexists,"i"),
