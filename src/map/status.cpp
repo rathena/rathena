@@ -7923,8 +7923,14 @@ void status_set_viewdata(struct block_list *bl, int class_)
 			TBL_NPC* nd = (TBL_NPC*)bl;
 			if (vd)
 				nd->vd = vd;
-			else
+			else {
 				ShowError("status_set_viewdata (NPC): No view data for class %d\n", class_);
+				if (bl->m >= 0)
+					ShowDebug("Source (NPC): %s at %s (%d,%d)\n", nd->name, map_mapid2mapname(bl->m), bl->x, bl->y);
+				else
+					ShowDebug("Source (NPC): %s (invisible/not on a map)\n", nd->name);
+				break;
+			}
 		}
 	break;
 	case BL_HOM:
