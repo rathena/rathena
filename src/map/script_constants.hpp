@@ -421,7 +421,7 @@
 	export_constant(MF_NORETURN);
 	export_constant(MF_NOWARPTO);
 	export_constant(MF_PVP_NIGHTMAREDROP);
-	script_set_constant_("mf_nightmaredrop",MF_PVP_NIGHTMAREDROP,"MF_PVP_NIGHTMAREDROP",false,true);
+	export_deprecated_constant3("mf_nightmaredrop", MF_PVP_NIGHTMAREDROP, "MF_PVP_NIGHTMAREDROP");
 	export_constant(MF_RESTRICTED);
 	export_constant(MF_NOCOMMAND);
 	export_constant(MF_NODROP);
@@ -443,7 +443,7 @@
 	export_constant(MF_NOUSECART);
 	export_constant(MF_NOITEMCONSUMPTION);
 	export_constant(MF_NOSUNMOONSTARMIRACLE);
-	script_set_constant_("mf_sumstarmiracle",MF_NOSUNMOONSTARMIRACLE,"MF_NOSUNMOONSTARMIRACLE",false,true);
+	export_deprecated_constant3("mf_sumstarmiracle", MF_NOSUNMOONSTARMIRACLE, "MF_NOSUNMOONSTARMIRACLE");
 	export_constant(MF_NOMINEEFFECT);
 	export_constant(MF_NOLOCKON);
 	export_constant(MF_NOTOMB);
