@@ -3942,7 +3942,7 @@
 	export_deprecated_constant3("UNITTYPE_PC", BL_PC, "BL_PC");
 	export_deprecated_constant3("UNITTYPE_NPC", BL_NPC, "BL_NPC");
 	export_deprecated_constant3("UNITTYPE_PET", BL_PET, "BL_PET");
-	export_deprecated_constant3("UNITTYPE_MOB", BL_MOB, "BL_HOM");
+	export_deprecated_constant3("UNITTYPE_MOB", BL_MOB, "BL_MOB");
 	export_deprecated_constant3("UNITTYPE_HOM", BL_HOM, "BL_HOM");
 	export_deprecated_constant3("UNITTYPE_MER", BL_MER, "BL_MER");
 	export_deprecated_constant3("UNITTYPE_ELEM", BL_ELEM, "BL_ELEM");
