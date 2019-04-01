@@ -11516,8 +11516,10 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || (sd->state.block_action & PCBLOCK_USEITEM) )
+	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || (sd->state.block_action & PCBLOCK_USEITEM) ) {
+		clif_msg(sd, WORK_IN_PROGRESS);
 		return;
+	}
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]
 	if (battle_config.idletime_option&IDLE_USEITEM)
@@ -12230,8 +12232,10 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 	if (inf&INF_GROUND_SKILL || !inf)
 		return; //Using a ground/passive skill on a target? WRONG.
 
-	if (sd->state.block_action & PCBLOCK_SKILL)
+	if (sd->state.block_action & PCBLOCK_SKILL) {
+		clif_msg(sd, WORK_IN_PROGRESS);
 		return;
+	}
 
 	if( SKILL_CHK_HOMUN(skill_id) ) {
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skill_id, skill_lv, target_id);
@@ -12346,8 +12350,10 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 	if( !(skill_get_inf(skill_id)&INF_GROUND_SKILL) )
 		return; //Using a target skill on the ground? WRONG.
 
-	if (sd->state.block_action & PCBLOCK_SKILL)
+	if (sd->state.block_action & PCBLOCK_SKILL) {
+		clif_msg(sd, WORK_IN_PROGRESS);
 		return;
+	}
 
 	if( SKILL_CHK_HOMUN(skill_id) ) {
 		clif_parse_UseSkillToPos_homun(sd->hd, sd, tick, skill_id, skill_lv, x, y, skillmoreinfo);
