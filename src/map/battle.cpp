@@ -1301,22 +1301,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				status_change_end(bl,SC_VOICEOFSIREN,INVALID_TIMER);
 		}
 
-		if( sc->data[SC_DEVOTION] ) {
-			struct status_change_entry *sce_d = sc->data[SC_DEVOTION];
-			struct block_list *d_bl = map_id2bl(sce_d->val1);
-
-			if( d_bl &&
-				((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
-				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == bl->id)) &&
-				check_distance_bl(bl,d_bl,sce_d->val3) )
-			{
-				struct status_change *d_sc = status_get_sc(d_bl);
-
-				if( d_sc && d_sc->data[SC_DEFENDER] && (flag&(BF_LONG|BF_MAGIC)) == BF_LONG && skill_id != ASC_BREAKER && skill_id != CR_ACIDDEMONSTRATION && skill_id != NJ_ZENYNAGE && skill_id != GN_FIRE_EXPANSION_ACID && skill_id != KO_MUCHANAGE )
-					damage -= damage * d_sc->data[SC_DEFENDER]->val2 / 100;
-			}
-		}
-
 		// Damage reductions
 		// Assumptio doubles the def & mdef on RE mode, otherwise gives a reduction on the final damage. [Igniz]
 #ifndef RENEWAL
