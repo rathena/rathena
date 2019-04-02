@@ -6137,7 +6137,7 @@ Examples:
 *getpcblock {<account ID>};
 
 'setpcblock' command prevents/allows the player from doing the given <type> of action according
-to the <state> during the player session (note: @reloadscript also removes all <type>).
+to the <state> during the player session (note: @reloadscript removes all <type> except PCBLOCK_IMMUNE).
 The <type> values are bit-masks, multiples of <type> can be added to change the player action.
 
 The action is blocked when the <state> is true, while false allows the action again.
