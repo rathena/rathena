@@ -302,7 +302,7 @@ OnTouch:	// note : party member can also trigger this event
 	unittalk getcharid(3), "" + strcharinfo(0) + " : but it doesn't matter; you'll die today!";
 	sleep2 3000;
 	specialeffect2 EF_LOCKON;
-	donpcevent instance_npcname("Weakened Morroc#RZ1") + "::OnTalk1";
+	donpcevent instance_npcname("Weakened Morocc#RZ1") + "::OnTalk1";
 	setpcblock PCBLOCK_NPC, false;
 	end;
 }
@@ -400,7 +400,7 @@ OnTouch:
 		'status_battle[0] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 1") + "::OnStart";
 		setpcblock PCBLOCK_NPC, true;
-		mapannounce 'map_rev$, "Morroc: How do you like to be separated from each other and have your bodies and minds bound?", bc_map,0xEBFF;
+		mapannounce 'map_rev$, "Morocc: How do you like to be separated from each other and have your bodies and minds bound?", bc_map,0xEBFF;
 		sleep2 3000;
 		mapannounce 'map_rev$, "Morocc: You're trespassing! Riff-raff like you have no business in here!", bc_map,0xEBFF;
 		sleep2 3000;
@@ -929,7 +929,7 @@ OnStop:
 OnTouch:
 	disablenpc instance_npcname("#Battle_3RZ1");
 	setpcblock PCBLOCK_NPC, true;
-	mapannounce 'map_rev$, "Morroc: I can't let you go unscathed!", bc_map,0xEBFF;
+	mapannounce 'map_rev$, "Morocc: I can't let you go unscathed!", bc_map,0xEBFF;
 	sleep2 3000;
 	mapannounce 'map_rev$, "Morocc: Hah hah, my Necromancer. I'll leave them to you.", bc_map,0xEBFF;
 	sleep2 3000;
