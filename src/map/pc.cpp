@@ -10460,6 +10460,12 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		status_change_end(&sd->bl, SC_ARMOR_RESIST, INVALID_TIMER);
 	}
 
+	// On equipment change
+#ifndef RENEWAL
+	if (!(flag&4))
+		status_change_end(&sd->bl, SC_CONCENTRATION, INVALID_TIMER);
+#endif
+
 	// On ammo change
 	if (sd->inventory_data[n]->type == IT_AMMO && (sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET || sd->inventory_data[n]->nameid != ITEMID_PURIFICATION_BULLET || sd->inventory_data[n]->nameid != ITEMID_SILVER_BULLET_))
 		status_change_end(&sd->bl, SC_P_ALTER, INVALID_TIMER);

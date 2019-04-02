@@ -4,6 +4,7 @@
 #ifndef STATUS_HPP
 #define STATUS_HPP
 
+#include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
@@ -58,6 +59,23 @@ struct refine_cost {
 /// Get refine chance
 int status_get_refine_chance(enum refine_type wlv, int refine, bool enriched);
 int status_get_refine_cost(int weapon_lv, int type, bool what);
+
+/// Weapon attack modification for size (size_fix.yml)
+struct s_sizefix_db {
+	uint16 small, medium, large;
+};
+
+class SizeFixDatabase : public TypesafeYamlDatabase<int32, s_sizefix_db> {
+public:
+	SizeFixDatabase() : TypesafeYamlDatabase("SIZE_FIX_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node &node);
+};
+
+extern SizeFixDatabase size_fix_db;
 
 /// Status changes listing. These code are for use by the server.
 enum sc_type : int16 {

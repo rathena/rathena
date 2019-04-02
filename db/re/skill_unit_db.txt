@@ -41,7 +41,7 @@
  79,0x84,    , -1, 1,3000,enemy, 0x8018	//PR_MAGNUS
  80,0x87,0x88,  0, 1,2000,enemy, 0x006	//WZ_FIREPILLAR
  83,0x86,    ,  0, 3,1000,enemy, 0x010	//WZ_METEOR
- 85,0x86,    ,  5:5:5:5:5:5:5:5:5:5:7, 1,1250,enemy,0x018	//WZ_VERMILION
+ 85,0x86,    ,  6:6:6:6:6:6:6:6:6:6:7, 1,1250,enemy,0x018	//WZ_VERMILION
  86,0x86,    ,  0:1:1:2:2:2:2:2:2:2, 0,-1,noone, 0x010	//WZ_WATERBALL
  87,0x8d,    , -1, 0,1000,all,   0x9010	//WZ_ICEWALL
  89,0x86,    ,  4, 1, 450,enemy, 0x018	//WZ_STORMGUST
@@ -66,26 +66,25 @@
 287,0x9c,    ,  3, 0,  -1,all,   0x8010	//SA_VIOLENTGALE
 288,0x9d,    ,  3:3:4:4:5,0, -1,all,   0x8010	//SA_LANDPROTECTOR
 306,0x9e,    ,  4, 0,6000,enemy,   0x200	//BD_LULLABY
-307,0x9f,    ,  4, 0,  -1,enemy, 0x220	//BD_RICHMANKIM
+307,0x9f,    , 15, 0,  -1,party, 0x220	//BD_RICHMANKIM
 308,0xa0,    ,  4, 0,  -1,enemy, 0x8200	//BD_ETERNALCHAOS
-309,0xa1,    ,  4, 0,  -1,party, 0x200	//BD_DRUMBATTLEFIELD
-310,0xa2,    ,  4, 0,  -1,party, 0x200	//BD_RINGNIBELUNGEN
+309,0xa1,    , 15, 0,  -1,party, 0x200	//BD_DRUMBATTLEFIELD
+310,0xa2,    , 15, 0,  -1,party, 0x200	//BD_RINGNIBELUNGEN
 311,0xa3,    ,  4, 0,  -1,all,   0x8200	//BD_ROKISWEIL
-312,0xa4,    ,  4, 0,  -1,party, 0x240	//BD_INTOABYSS
-313,0xa5,    ,  4, 0,  -1,party, 0x200	//BD_SIEGFRIED
-317,0xa6,    ,  3, 0,3000,enemy, 0x8400	//BA_DISSONANCE
-319,0xa7,    ,  3, 0,  -1,all,   0x440	//BA_WHISTLE
-320,0xa8,    ,  3, 0,  -1,all,   0x440	//BA_ASSASSINCROSS
-321,0xa9,    ,  3, 0,  -1,all,   0x440	//BA_POEMBRAGI
-322,0xaa,    ,  3, 0,6000,all,   0xC40	//BA_APPLEIDUN
-325,0xab,    ,  3, 0,3000,enemy, 0x100	//DC_UGLYDANCE
-327,0xac,    ,  3, 0,  -1,all,   0x140	//DC_HUMMING
-328,0xad,    ,  3, 0,  -1,enemy, 0x100	//DC_DONTFORGETME
-329,0xae,    ,  3, 0,  -1,all,   0x140	//DC_FORTUNEKISS
-330,0xaf,    ,  3, 0,  -1,all,   0x140	//DC_SERVICEFORYOU
+312,0xa4,    , 15, 0,  -1,party, 0x240	//BD_INTOABYSS
+313,0xa5,    , 15, 0,  -1,party, 0x200	//BD_SIEGFRIED
+317,0xa6,    ,  4, 0,3000,enemy, 0x8400	//BA_DISSONANCE
+319,0xa7,    , 15, 0,  -1,party, 0x440	//BA_WHISTLE
+320,0xa8,    , 15, 0,  -1,party, 0x440	//BA_ASSASSINCROSS
+321,0xa9,    , 15, 0,  -1,party, 0x440	//BA_POEMBRAGI
+322,0xaa,    , 15, 0,6000,party, 0xC40	//BA_APPLEIDUN
+325,0xab,    ,  4, 0,3000,enemy, 0x100	//DC_UGLYDANCE
+327,0xac,    , 15, 0,  -1,party, 0x140	//DC_HUMMING
+328,0xad,    ,  4, 0,  -1,enemy, 0x100	//DC_DONTFORGETME
+329,0xae,    , 15, 0,  -1,party, 0x140	//DC_FORTUNEKISS
+330,0xaf,    , 15, 0,  -1,party, 0x140	//DC_SERVICEFORYOU
 336,0xb2,    ,  0,-1,  -1,noone, 0x000	//WE_CALLPARTNER
 339,0x86,    , -1, 0, 300,enemy, 0x000	//NPC_GRANDDARKNESS
-362,0xb4,    ,  2, 0, 300,all,   0x2000	//HP_BASILICA
 369,0xb3,    , -1, 0,10000,all,  0x008	//PA_GOSPEL
 395,0xb5,    ,  4, 0,  -1,all,   0x200	//CG_MOONLIT
 404,0xb6,    , -1, 0,  -1,all,   0x8000	//PF_FOGWALL
