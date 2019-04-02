@@ -598,7 +598,7 @@ int clif_send(const uint8* buf, int len, struct block_list* bl, enum send_target
 	case BG_SAMEMAP_WOS:
 	case BG:
 	case BG_WOS:
-		if( sd && sd->bg_id && (bg = bg_team_search(sd->bg_id).lock()))
+		if( sd && sd->bg_id && (bg = bg_team_search(sd->bg_id)))
 		{
 			for( i = 0; i < bg->members.size(); i++ )
 			{

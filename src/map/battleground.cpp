@@ -264,10 +264,10 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
  * @param bg_id: ID to lookup
  * @return s_battleground_type on success or nullptr on failure
  */
-std::weak_ptr<s_battleground_type> bg_search(int bg_id)
+std::shared_ptr<s_battleground_type> bg_search(int bg_id)
 {
 	if (!battleground_db.exists(bg_id))
-		return std::weak_ptr<s_battleground_type>();
+		return std::shared_ptr<s_battleground_type>();
 
 	return battleground_db.find(bg_id);
 }
@@ -277,17 +277,17 @@ std::weak_ptr<s_battleground_type> bg_search(int bg_id)
  * @param name: Battleground name
  * @return s_battleground_type on success or nullptr on failure
  */
-std::weak_ptr<s_battleground_type> bg_search_name(const char *name)
+std::shared_ptr<s_battleground_type> bg_search_name(const char *name)
 {
 	for (const auto &entry : battleground_db) {
-		std::shared_ptr<s_battleground_type> bg = entry.second;
+		auto bg = entry.second;
 
 		if (!stricmp(bg->name.c_str(), name))
 			return bg;
 	}
 
 	ShowError("bg_search_name: Fatal error. Can't find battleground %s in the battlegrounds database.\n", name);
-	return std::weak_ptr<s_battleground_type>();
+	return nullptr;
 }
 
 /**
@@ -305,10 +305,10 @@ bool battleground_team_exists(int bg_id)
  * @param bg_id: Battleground ID
  * @return s_battleground_data or nullptr if not found
  */
-std::weak_ptr<s_battleground_data> bg_team_search(int bg_id)
+std::shared_ptr<s_battleground_data> bg_team_search(int bg_id)
 {
 	if (!battleground_team_exists(bg_id))
-		return std::weak_ptr<s_battleground_data>();
+		return std::shared_ptr<s_battleground_data>();
 
 	return bg_team_db[bg_id];
 }
@@ -332,7 +332,9 @@ struct map_session_data* bg_getavailablesd(struct s_battleground_data *bg)
  */
 bool bg_team_delete(int bg_id)
 {
-	if (std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id).lock()) {
+	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id);
+
+	if (bgteam) {
 		for (const auto &pl_sd : bgteam->members) {
 			bg_send_dot_remove(pl_sd.sd);
 			pl_sd.sd->bg_id = 0;
@@ -356,7 +358,9 @@ bool bg_team_delete(int bg_id)
  */
 bool bg_team_warp(int bg_id, unsigned short mapindex, short x, short y)
 {
-	if (std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id).lock()) {
+	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id);
+
+	if (bgteam) {
 		for (const auto &pl_sd : bgteam->members)
 			pc_setpos(pl_sd.sd, mapindex, x, y, CLR_TELEPORT);
 
@@ -390,7 +394,9 @@ bool bg_team_join(int bg_id, struct map_session_data *sd)
 	if (!sd || sd->bg_id)
 		return false;
 
-	if (std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id).lock()) {
+	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id);
+
+	if (bgteam) {
 		if (bgteam->members.size() == MAX_BG_MEMBERS)
 			return false; // No free slots
 
@@ -431,7 +437,9 @@ bool bg_team_join_from_queue(int bg_id, struct map_session_data *sd)
 	if (!sd || sd->bg_id)
 		return false;
 
-	if (std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id).lock()) {
+	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id);
+
+	if (bgteam) {
 		if (bgteam->members.size() == MAX_BG_MEMBERS)
 			return false; // No free slots
 
@@ -476,10 +484,11 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter)
 	bg_send_dot_remove(sd);
 
 	int bg_id = sd->bg_id;
+	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id);
 
 	sd->bg_id = 0;
 
-	if (std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id).lock()) {
+	if (bgteam) {
 		char output[CHAT_SIZE_MAX];
 		int i;
 
@@ -507,7 +516,9 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter)
 			npc_event(sd, bgteam->logout_event.c_str(), 0);
 
 		if (deserter) {
-			if (std::shared_ptr<s_battleground_type> bg = bg_search(bg_id).lock())
+			std::shared_ptr<s_battleground_type> bg = bg_search(bg_id);
+
+			if (bg)
 				sc_start(NULL, &sd->bl, SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT, 100, 1, bg->deserter_time * 1000); // Deserter timer
 		}
 
@@ -527,7 +538,9 @@ bool bg_member_respawn(struct map_session_data *sd)
 	if (!sd || !sd->bg_id || !pc_isdead(sd))
 		return false;
 
-	if (std::shared_ptr<s_battleground_data> bgteam = bg_team_search(sd->bg_id).lock()) {
+	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(sd->bg_id);
+
+	if (bgteam) {
 		if (bgteam->cemetery.map == 0)
 			return false; // Respawn not handled by Core
 
@@ -558,7 +571,7 @@ int bg_create(uint16 mapindex, struct s_battleground_team* team)
 
 	bg_team_db[bg_team_counter] = std::make_shared<s_battleground_data>();
 
-	std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_team_counter).lock();
+	std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_team_counter);
 
 	bg->bg_id = bg_team_counter;
 	bg->cemetery.map = mapindex;
@@ -621,10 +634,12 @@ void bg_send_message(struct map_session_data *sd, const char *mes, int len)
 {
 	nullpo_retv(sd);
 
-	if (sd->bg_id == 0)
+	if (!sd->bg_id)
 		return;
 	
-	if (std::shared_ptr<s_battleground_data> bgteam = bg_team_search(sd->bg_id).lock())
+	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(sd->bg_id);
+
+	if (bgteam)
 		clif_bg_message(bgteam.get(), sd->bl.id, sd->status.name, mes, len);
 
 	return;
@@ -709,7 +724,7 @@ static TIMER_FUNC(bg_on_ready_loopback)
 	nullpo_ret(queue);
 
 	try {
-		std::shared_ptr<s_battleground_type> bg = bg_search(queue->bg_type).lock();
+		std::shared_ptr<s_battleground_type> bg = bg_search(queue->bg_type);
 
 		bg_queue_on_ready(bg->name.c_str(), std::shared_ptr<s_battleground_queue>(queue));
 		return 0;
@@ -817,7 +832,7 @@ bool bg_queue_reservation(const char *name, bool state)
  */
 std::shared_ptr<s_battleground_queue> bg_queue_create(int bg_id, int req_players)
 {
-	std::shared_ptr<s_battleground_queue> queue = std::make_shared<s_battleground_queue>();
+	auto queue = std::make_shared<s_battleground_queue>();
 
 	queue->bg_type = bg_id;
 	queue->required_players = req_players;
@@ -863,16 +878,15 @@ enum e_bg_queue_apply_ack bg_queue_join(char *name, struct map_session_data *sd)
 		return BG_APPLY_NONE;
 	}
 
-	std::weak_ptr<s_battleground_type> weakptr = bg_search_name(name);
-	std::shared_ptr<s_battleground_type> bg;
-	std::shared_ptr<s_battleground_queue> queue;
-	bool r;
+	std::shared_ptr<s_battleground_type> bg = bg_search_name(name);
 
-	if (weakptr.expired()) {
+	if (!bg) {
 		ShowWarning("bq_queue_join: Could not find battleground \"%s\" requested by %s (AID: %d / CID: %d)\n", name, sd->status.name, sd->status.account_id, sd->status.char_id);
 		return BG_APPLY_INVALID_NAME;
-	} else
-		bg = weakptr.lock();
+	}
+
+	std::shared_ptr<s_battleground_queue> queue;
+	bool r;
 
 	if (bg->min_lvl && sd->status.base_level < bg->min_lvl)
 		return BG_APPLY_PLAYER_LEVEL; // Level too low
@@ -972,7 +986,9 @@ enum e_bg_queue_apply_ack bg_queue_join_party(char *name, struct map_session_dat
 			return BG_APPLY_PARTYGUILD_LEADER; // Not the party leader
 	}
 
-	if (std::shared_ptr<s_battleground_type> bg = bg_search_name(name).lock()) {
+	std::shared_ptr<s_battleground_type> bg = bg_search_name(name);
+
+	if (bg) {
 		int p_online = 0;
 
 		for (const auto &it : p->party.member) {
@@ -1018,7 +1034,9 @@ enum e_bg_queue_apply_ack bg_queue_join_guild(char *name, struct map_session_dat
 	if (strcmp(sd->status.name, sd->guild->master) != 0)
 		return BG_APPLY_PARTYGUILD_LEADER; // Not the guild leader
 
-	if (std::shared_ptr<s_battleground_type> bg = bg_search_name(name).lock()) {
+	std::shared_ptr<s_battleground_type> bg = bg_search_name(name);
+
+	if (bg) {
 		struct guild *g = guild_search(sd->status.guild_id);
 		int g_online = 0;
 
@@ -1086,14 +1104,12 @@ enum e_bg_queue_apply_ack bg_queue_join_multi(char *name, struct map_session_dat
 		return BG_APPLY_NONE;
 	}
 
-	std::weak_ptr<s_battleground_type> weakptr = bg_search_name(name);
-	std::shared_ptr<s_battleground_type> bg;
+	std::shared_ptr<s_battleground_type> bg = bg_search_name(name);
 
-	if (weakptr.expired()) {
-		ShowWarning("bg_queue_join_multi: Could not find battleground \"%s\" requested by %s (AID: %d / CID: %d)\n", name, sd->status.name, sd->status.account_id, sd->status.char_id);
+	if (!bg) {
+		ShowWarning("bq_queue_join_multi: Could not find battleground \"%s\" requested by %s (AID: %d / CID: %d)\n", name, sd->status.name, sd->status.account_id, sd->status.char_id);
 		return BG_APPLY_INVALID_NAME;
-	} else
-		bg = weakptr.lock();
+	}
 
 	if (bg->min_lvl && sd->status.base_level < bg->min_lvl)
 		return BG_APPLY_PLAYER_LEVEL; // Level too low
@@ -1326,11 +1342,9 @@ bool bg_queue_leave(struct map_session_data *sd)
  */
 bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> queue)
 {
-	std::shared_ptr<s_battleground_type> bg;
+	std::shared_ptr<s_battleground_type> bg = bg_search(queue->bg_type);
 
-	try {
-		bg = bg_search(queue->bg_type).lock();
-	} catch (std::out_of_range &) {
+	if (!bg) {
 		ShowError("bg_queue_on_ready: Fatal error. Couldn't find BG type with %d in battlegrounds database.\n", queue->bg_type);
 		return false;
 	}
@@ -1397,9 +1411,9 @@ int bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 		queue->tid_expire = 0;
 	}
 
-	try {
-		std::shared_ptr<s_battleground_type> bg = bg_search(queue->bg_type).lock();
-	} catch (std::out_of_range &) {
+	std::shared_ptr<s_battleground_type> bg = bg_search(queue->bg_type);
+
+	if (!bg) {
 		struct s_battleground_map *bgmap = nullptr;
 
 		queue->map.isReserved = false;
