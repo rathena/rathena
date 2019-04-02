@@ -19409,7 +19409,8 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	int x, y, mapindex, bg_id;
 
 	bg_id = script_getnum(st,2);
-	auto weak_bg = bg_team_search(bg_id);
+
+	std::weak_ptr<s_battleground_data> weak_bg = bg_team_search(bg_id);
 
 	if (!(bg = weak_bg.lock())) {
 		script_pushint(st, false);
@@ -19494,7 +19495,7 @@ BUILDIN_FUNC(bg_join) {
 
 	bg_id = script_getnum(st, 2);
 
-	auto weak_bg = bg_team_search(bg_id);
+	std::weak_ptr<s_battleground_data> weak_bg = bg_team_search(bg_id);
 
 	if (!(bg = weak_bg.lock())) {
 		script_pushint(st, false);
@@ -19534,7 +19535,7 @@ BUILDIN_FUNC(bg_team_setxy)
 	int bg_id;
 
 	bg_id = script_getnum(st,2);
-	if (auto bg = bg_team_search(bg_id).lock()) {
+	if (std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_id).lock()) {
 		bg->cemetery.x = script_getnum(st, 3);
 		bg->cemetery.y = script_getnum(st, 4);
 	}
@@ -19627,7 +19628,7 @@ BUILDIN_FUNC(bg_getareausers)
 	bg_id = script_getnum(st,2);
 	str = script_getstr(st,3);
 
-	auto weak_bg = bg_team_search(bg_id);
+	std::weak_ptr<s_battleground_data> weak_bg = bg_team_search(bg_id);
 
 	if( !(bg = weak_bg.lock()) || (m = map_mapname2mapid(str)) < 0 )
 	{
@@ -19676,7 +19677,7 @@ BUILDIN_FUNC(bg_get_data)
 {
 	int bg_id = script_getnum(st,2), type = script_getnum(st,3), i;
 
-	if (auto bg = bg_team_search(bg_id).lock()) {
+	if (std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_id).lock()) {
 		switch (type) {
 		case 0:
 			script_pushint(st, bg->members.size());

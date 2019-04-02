@@ -17475,9 +17475,9 @@ void clif_bg_queue_apply_notify(char *name, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
-	auto q = sd->bg_queue;
+	std::shared_ptr<s_battleground_queue> queue = sd->bg_queue;
 
-	if (!q) {
+	if (!queue) {
 		ShowError("clif_bg_queue_apply_notify: Fatal error. Player is not in a battleground queue.\n");
 		return;
 	}
@@ -17487,7 +17487,7 @@ void clif_bg_queue_apply_notify(char *name, struct map_session_data *sd)
 	WFIFOHEAD(fd, packet_len(0x8d9));
 	WFIFOW(fd,0) = 0x8d9;
 	safestrncpy(WFIFOCP(fd,2), name, NAME_LENGTH);
-	WFIFOL(fd,2+NAME_LENGTH) = q->teama_members.size() + q->teamb_members.size();
+	WFIFOL(fd,2+NAME_LENGTH) = queue->teama_members.size() + queue->teamb_members.size();
 	WFIFOSET(fd, packet_len(0x8d9));
 }
 
@@ -17522,7 +17522,7 @@ void clif_parse_bg_queue_cancel_request(int fd, struct map_session_data *sd)
 			return; // Make the cancel button do nothing if the entry window is open. Otherwise it'll crash the game when you click on both the queue status and entry status window.
 		else
 			success = bg_queue_leave(sd);
-	} else{
+	} else {
 		ShowWarning("clif_parse_bg_queue_cancel_request: Player trying to request leaving non-existent queue with name: %s (AID:%d CID:%d).\n", sd->status.name, sd->status.account_id, sd->status.char_id);
 		success = false;
 	}

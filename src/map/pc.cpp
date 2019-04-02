@@ -8193,7 +8193,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		return 1|8;
 	}
 	else if( sd->bg_id ) {
-		if (auto bg = bg_team_search(sd->bg_id).lock()) {
+		if (std::shared_ptr<s_battleground_data> bg = bg_team_search(sd->bg_id).lock()) {
 			if (bg->cemetery.map > 0) { // Respawn by BG
 				add_timer(tick + 1000, pc_respawn_timer, sd->bl.id, 0);
 				return 1|8;
