@@ -185,6 +185,12 @@ enum genetic_item_list
 	ITEMID_BLACK_HARD_LUMP,
 	ITEMID_VERY_HARD_LUMP,
 	ITEMID_MYSTERIOUS_POWDER,
+	ITEMID_HP_INC_POTS_TO_THROW			= 13275,
+	ITEMID_HP_INC_POTM_TO_THROW,
+	ITEMID_HP_INC_POTL_TO_THROW,
+	ITEMID_SP_INC_POTS_TO_THROW,
+	ITEMID_SP_INC_POTM_TO_THROW,
+	ITEMID_SP_INC_POTL_TO_THROW,
 };
 
 ///Guillotine Cross
@@ -883,6 +889,7 @@ struct s_random_opt_group {
 };
 
 struct item_data* itemdb_searchname(const char *name);
+struct item_data* itemdb_search_aegisname( const char *str );
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
 struct item_data* itemdb_search(unsigned short nameid);
 struct item_data* itemdb_exists(unsigned short nameid);

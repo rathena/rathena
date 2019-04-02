@@ -244,7 +244,7 @@ prontera,220,72,5	duplicate(09Treats)	Trick or Treater#iRO8	706,2,2
 				mes "[Halloween Wizard]";
 				mes "Which town do you want to play a trick on?";
 				next;
-				getmapxy(.@mapname$,.@mapx,.@mapy,UNITTYPE_PC,""+strcharinfo(0)+"");
+				getmapxy(.@mapname$,.@mapx,.@mapy,BL_PC,""+strcharinfo(0)+"");
 				if (.@mapname$ == "prontera") {
 					switch(select("Geffen:Payon:Alberta:Aldebaran")) {
 						case 1:

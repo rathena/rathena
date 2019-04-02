@@ -24,7 +24,7 @@ The format of this file is as follows:
 ============
 | 1. Notes |
 ============
-Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.c').
+Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.cpp').
 
 =========================
 | 2. Login-Char Packets |
@@ -520,7 +520,7 @@ Currently the max packet size is 0xFFFF (see 'WFIFOSET()' in 'src/common/socket.
 	len: 7
 	parameter:
 		- cmd : packet identification (0x3002)
-		- id: whisper id, identifier to match current whisper session that store in inter.c::wis_db
+		- id: whisper id, identifier to match current whisper session that store in inter.cpp::wis_db
 		- flag: 0=success, 1=target not found, 2=ignored by target
 	desc:
 		- Inform the char-server of the result of the whisper
