@@ -173,8 +173,6 @@ lighthalzen,321,218,4	script	Ohno Tohiro#1	4_M_RASWORD,{
 			if (countitem(7347) < 10) {
 				mes "[Ohno Tohiro]";
 				mes "It seems 10 research charts are missing now.";
-				mes "";
-				mes "";
 				mes "Maybe you didn't pick them up from the warehouse.";
 				next;
 				mes "[Ohno Tohiro]";

@@ -1911,6 +1911,7 @@ enum e_pcblock_action_flag : uint16 {
 	PCBLOCK_SITSTAND = 0x040,
 	PCBLOCK_COMMANDS = 0x080,
 	PCBLOCK_NPCCLICK = 0x100,
+	PCBLOCK_NPC      = 0x18D,
 	PCBLOCK_EMOTION  = 0x200,
 	PCBLOCK_ALL      = 0x3FF,
 };

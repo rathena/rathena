@@ -3922,7 +3922,7 @@ ACMD_FUNC(reload) {
 		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ){
 			pc_close_npc(pl_sd,1);
 			clif_cutin(pl_sd, "", 255);
-			pl_sd->state.block_action = 0;
+			pl_sd->state.block_action &= ~(PCBLOCK_ALL ^ PCBLOCK_IMMUNE);
 		}
 		mapit_free(iter);
 
