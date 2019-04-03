@@ -267,7 +267,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 std::shared_ptr<s_battleground_type> bg_search(int bg_id)
 {
 	if (!battleground_db.exists(bg_id))
-		return std::shared_ptr<s_battleground_type>();
+		return nullptr;
 
 	return battleground_db.find(bg_id);
 }
@@ -308,7 +308,7 @@ bool battleground_team_exists(int bg_id)
 std::shared_ptr<s_battleground_data> bg_team_search(int bg_id)
 {
 	if (!battleground_team_exists(bg_id))
-		return std::shared_ptr<s_battleground_data>();
+		return nullptr;
 
 	return bg_team_db[bg_id];
 }
@@ -723,12 +723,12 @@ static TIMER_FUNC(bg_on_ready_loopback)
 
 	nullpo_ret(queue);
 
-	try {
-		std::shared_ptr<s_battleground_type> bg = bg_search(queue->bg_type);
+	std::shared_ptr<s_battleground_type> bg = bg_search(queue->bg_type);
 
+	if (bg) {
 		bg_queue_on_ready(bg->name.c_str(), std::shared_ptr<s_battleground_queue>(queue));
 		return 0;
-	} catch (std::out_of_range &) {
+	} else {
 		ShowError("bg_on_ready_loopback: Fatal error. Can't find battleground %d in the battlegrounds database.\n", queue->bg_type);
 		return 1;
 	}
