@@ -863,11 +863,6 @@ struct item_data
 	struct item_combo **combos;
 	unsigned char combos_count;
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
-	struct {
-		std::string nameid, // base62 encoded of nameid
-			equip,          // base62 encoded of item location
-			look;           // base62 encoded of 'view'
-	} base62;
 };
 
 // Struct for item random option [Secret]

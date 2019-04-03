@@ -6,7 +6,6 @@
 #include <math.h>
 #include <stdlib.h>
 #include <unordered_map>
-#include <vector>
 
 #include "../common/malloc.hpp"
 #include "../common/nullpo.hpp"
@@ -1398,10 +1397,6 @@ static bool itemdb_parse_dbrow(char** str, const char* source, int line, int scr
 	if (*str[21])
 		id->unequip_script = parse_script(str[21], source, line, scriptopt);
 
-	id->base62.nameid = base62_encode(nameid);
-	id->base62.equip = base62_encode(id->equip);
-	id->base62.look = base62_encode(id->look);
-
 	if (!id->nameid) {
 		id->nameid = nameid;
 		uidb_put(itemdb, nameid, id);
@@ -2052,10 +2047,8 @@ unsigned int base62_decode(std::string str)
 	}
 	unsigned int base10 = 0, i = 0;
 	size_t n = str.size();
-	while (str[i] != NULL) {
-		char v = str[i];
-		base10 += base62_map[v] * ((unsigned int)pow(62, (n - i - 1)));
-		++i;
+	for (std::string::iterator it = str.begin(); it != str.end(); ++it, ++i) {
+		base10 += base62_map[(*it)] * ((unsigned int)pow(62, (n - i - 1)));
 	}
 	return base10;
 }
@@ -2073,30 +2066,31 @@ std::string createItemLink(unsigned int nameid, unsigned char refine = 0, struct
 	struct item_data *id = itemdb_exists(nameid);
 	std::string itemstr = "<ITEML>";
 	std::string locdef = "00000";
-	std::string locval = (id && itemdb_isequip2(id)) ? id->base62.equip : "";
+	std::string locval = (id && itemdb_isequip2(id)) ? base62_encode(id->equip) : "";
 	itemstr += (std::string(locdef, 0, locdef.size() - locval.size())) + locval;
 	itemstr += (id && itemdb_isequip2(id)) ? "1" : "0";
-	itemstr += (id) ? id->base62.nameid : base62_encode(nameid);
+	itemstr += base62_encode(nameid);
 	if (refine > 0) {
 		itemstr += "%0" + base62_encode(refine);
 	}
 	if (id && itemdb_isequip2(id)) {
-		itemstr += "&" + id->base62.look;
+		itemstr += "&" + base62_encode(id->look);
 	}
 	if (data != nullptr) {
 		if (data->flag.cards) {
 			for (uint8 i = 0; i < MAX_SLOTS; ++i) {
-				std::string card62 = (data->cards[i] != 0) ? base62_encode(data->cards[i]) : "0";
-				itemstr += "(0" + card62;
+				itemstr += "(0" + ((data->cards[i] != 0) ? base62_encode(data->cards[i]) : "0");
 			}
 		}
 #if PACKETVER >= 20150225
 		if (data->flag.options) {
 			for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
-				std::string type62 = (data->options[1].id != 0) ? base62_encode(data->options[i].id) : "0";
-				std::string param62 = (data->options[i].param != 0) ? base62_encode(data->options[i].param) : "0";
-				std::string value62 = (data->options[i].value != 0) ? base62_encode(data->options[i].value) : "0";
-				itemstr += "*0" + type62 + "+0" + param62 + ",0" + value62;
+				// Option ID
+				itemstr += "*0" + ((data->options[1].id != 0) ? base62_encode(data->options[i].id) : "0");
+				// Param
+				itemstr += "+0" + ((data->options[i].param != 0) ? base62_encode(data->options[i].param) : "0");
+				// Value
+				itemstr += ",0" + ((data->options[i].value != 0) ? base62_encode(data->options[i].value) : "0");
 			}
 		}
 #endif
