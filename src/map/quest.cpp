@@ -361,7 +361,7 @@ int quest_pc_login(struct map_session_data *sd)
  */
 int quest_add(struct map_session_data *sd, int quest_id)
 {
-	auto qi = quest_search(quest_id);
+	std::shared_ptr<s_quest_db> qi = quest_search(quest_id);
 
 	if (!qi) {
 		ShowError("quest_add: quest %d not found in DB.\n", quest_id);
@@ -420,7 +420,7 @@ int quest_add(struct map_session_data *sd, int quest_id)
  */
 int quest_change(struct map_session_data *sd, int qid1, int qid2)
 {
-	auto qi = quest_search(qid2);
+	std::shared_ptr<s_quest_db> qi = quest_search(qid2);
 
 	if (!qi) {
 		ShowError("quest_change: quest %d not found in DB.\n", qid2);
@@ -552,7 +552,7 @@ void quest_update_objective(struct map_session_data *sd, int mob_id)
 		if (sd->quest_log[i].state == Q_COMPLETE) // Skip complete quests
 			continue;
 
-		auto qi = quest_search(sd->quest_log[i].quest_id);
+		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
 
 		// Process quest objectives
 		for (int j = 0; j < qi->objectives.size(); j++) {
@@ -669,7 +669,7 @@ int quest_check(struct map_session_data *sd, int quest_id, enum e_quest_check_ty
 		case HUNTING:
 			if (sd->quest_log[i].state == Q_INACTIVE || sd->quest_log[i].state == Q_ACTIVE) {
 				int j;
-				auto qi = quest_search(sd->quest_log[i].quest_id);
+				std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
 
 				ARR_FIND(0, qi->objectives.size(), j, sd->quest_log[i].count[j] < qi->objectives[j]->count);
 				if (j == qi->objectives.size())
@@ -700,7 +700,7 @@ static int quest_reload_check_sub(struct map_session_data *sd, va_list ap)
 	int i, j = 0;
 
 	for (i = 0; i < sd->num_quests; i++) {
-		auto qi = quest_search(sd->quest_log[i].quest_id);
+		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
 
 		if (!qi) { //Remove no longer existing entries
 			if (sd->quest_log[i].state != Q_COMPLETE) //And inform the client if necessary

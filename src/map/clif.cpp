@@ -16769,7 +16769,7 @@ void clif_quest_send_list(struct map_session_data *sd)
 	WFIFOL(fd, 4) = limit;
 
 	for (i = 0; i < limit; i++) {
-		auto qi = quest_search(sd->quest_log[i].quest_id);
+		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
 
 		WFIFOL(fd, offset) = sd->quest_log[i].quest_id;
 		offset += 4;
@@ -16848,7 +16848,7 @@ void clif_quest_send_mission(struct map_session_data *sd)
 	WFIFOL(fd, 4) = limit;
 
 	for (int i = 0; i < limit; i++) {
-		auto qi = quest_search(sd->quest_log[i].quest_id);
+		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
 
 		WFIFOL(fd, i*104+8) = sd->quest_log[i].quest_id;
 		WFIFOL(fd, i*104+12) = sd->quest_log[i].time - qi->time;
@@ -16874,7 +16874,7 @@ void clif_quest_send_mission(struct map_session_data *sd)
 void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 {
 	int fd = sd->fd;
-	auto qi = quest_search(qd->quest_id);
+	std::shared_ptr<s_quest_db> qi = quest_search(qd->quest_id);
 #if PACKETVER >= 20150513
 	int cmd = 0x9f9;
 #else
@@ -16954,7 +16954,7 @@ void clif_quest_update_objective(struct map_session_data *sd, struct quest *qd, 
 {
 	int fd = sd->fd;
 	int offset = 6;
-	auto qi = quest_search(qd->quest_id);
+	std::shared_ptr<s_quest_db> qi = quest_search(qd->quest_id);
 	int len = qi->objectives.size() * 12 + 6;
 #if PACKETVER >= 20150513
 	int cmd = 0x9fa;
