@@ -3413,6 +3413,7 @@
 	export_constant(EFST_BASILICA_BUFF);
 	export_constant(EFST_OVERLAPEXPUP2);
 	export_constant(EFST_SOULCURSE);
+	export_constant(EFST_SOUND_OF_DESTRUCTION);
 	export_constant(EFST_NV_BREAKTHROUGH);
 	export_constant(EFST_HELPANGEL);
 	export_constant(EFST_NV_TRANSCENDENCE);
