@@ -978,24 +978,57 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
 
 /**
  * Check for active statuses that block damage
- * @param src Attacker
- * @param target Target of attack
- * @param sc STatus Change
- * @param d Damage data
- * @param damage Damage received
- * @param skill_id
- * @param skill_lv
+ * @param src: Attacker
+ * @param target: Target of attack
+ * @param sc: STatus Change
+ * @param d: Damage data
+ * @param damage: Damage received
+ * @param skill_id: Skill ID
+ * @param skill_lv: Skill level
  * @return True: Damage inflicted, False: Missed
  **/
 bool battle_check_sc(struct block_list *src, struct block_list *target, struct status_change *sc, struct Damage *d, int64 damage, uint16 skill_id, uint16 skill_lv) {
 	if (!sc)
 		return true;
 
-	struct map_session_data *sd = nullptr;
+	struct status_change_entry *sce;
 	int flag = d->flag;
 
-	if (target->type == BL_PC)
-		sd = (struct map_session_data *)target;
+	// ATK_BLOCK Type
+	if ((sce = sc->data[SC_SAFETYWALL]) && (flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
+		struct skill_unit_group *group = skill_id2group(sce->val3);
+
+		if (group) {
+			d->dmg_lv = ATK_BLOCK;
+
+			switch (sce->val2) {
+			case MG_SAFETYWALL:
+				if (--group->val2 <= 0) {
+					skill_delunitgroup(group);
+					break;
+				}
+#ifdef RENEWAL
+				if ((group->val3 - damage) > 0)
+					group->val3 -= cap_value(damage, INT_MIN, INT_MAX);
+				else
+					skill_delunitgroup(group);
+#endif
+				break;
+			case MH_STEINWAND:
+				if (--group->val2 <= 0) {
+					skill_delunitgroup(group);
+					break;
+				}
+				if ((group->val3 - damage) > 0)
+					group->val3 -= cap_value(damage, INT_MIN, INT_MAX);
+				else
+					skill_delunitgroup(group);
+				break;
+			}
+			return false;
+		}
+		status_change_end(target, SC_SAFETYWALL, INVALID_TIMER);
+	}
 
 	if ((sc->data[SC_PNEUMA] && (flag&(BF_MAGIC | BF_LONG)) == BF_LONG) ||
 		(sc->data[SC_BASILICA] && !status_bl_has_mode(src, MD_STATUS_IMMUNE)) ||
@@ -1004,15 +1037,6 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		sc->data[SC_KINGS_GRACE]
 		)
 	{
-		d->dmg_lv = ATK_BLOCK;
-		return false;
-	}
-
-	struct status_change_entry *sce = nullptr;
-
-	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag&(BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
-		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
-		sc_start2(src, target, SC_COMBO, 100, GC_WEAPONBLOCKING, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
 		d->dmg_lv = ATK_BLOCK;
 		return false;
 	}
@@ -1033,43 +1057,15 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		}
 	}
 
-	if ((sce = sc->data[SC_SAFETYWALL]) && (flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
-		struct skill_unit_group* group = skill_id2group(sce->val3);
-
-		if (group) {
-			d->dmg_lv = ATK_BLOCK;
-
-			switch (sce->val2) {
-				case MG_SAFETYWALL:
-					if (--group->val2 <= 0) {
-						skill_delunitgroup(group);
-						break;
-					}
-#ifdef RENEWAL
-					if ((group->val3 - damage) > 0)
-						group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
-					else
-						skill_delunitgroup(group);
-#endif
-					break;
-				case MH_STEINWAND:
-					if (--group->val2 <= 0) {
-						skill_delunitgroup(group);
-						break;
-					}
-					if ((group->val3 - damage) > 0)
-						group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
-					else
-						skill_delunitgroup(group);
-					break;
-			}
-			return false;
-		}
-		status_change_end(target, SC_SAFETYWALL, INVALID_TIMER);
+	if ((sce = sc->data[SC_WEAPONBLOCKING]) && flag&(BF_SHORT | BF_WEAPON) && rnd() % 100 < sce->val2) {
+		clif_skill_nodamage(target, src, GC_WEAPONBLOCKING, sce->val1, 1);
+		sc_start2(src, target, SC_COMBO, 100, GC_WEAPONBLOCKING, src->id, skill_get_time2(GC_WEAPONBLOCKING, sce->val1));
+		d->dmg_lv = ATK_BLOCK;
+		return false;
 	}
 
 	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && damage > 0) {
-		sce->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX); // absorb damage
+		sce->val3 -= cap_value(damage, INT_MIN, INT_MAX); // absorb damage
 		d->dmg_lv = ATK_BLOCK;
 		if (sce->val3 <= 0) { // Shield Down
 			sce->val2--;
@@ -1085,9 +1081,12 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		return false;
 	}
 
+	struct map_session_data *sd = map_id2sd(target->id);
+
+	// ATK_MISS Type
 	if ((sce = sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_inf3(skill_id)&INF3_NO_EFF_AUTOGUARD) && rnd() % 100 < sce->val2) {
 		struct status_change_entry *sce_d = sc->data[SC_DEVOTION];
-		struct block_list *d_bl = nullptr;
+		struct block_list *d_bl;
 		int delay;
 
 		// different delay depending on skill level [celest]
@@ -1123,6 +1122,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		return false;
 	}
 
+	// ATK_DEF Type
 	if ((sce = sc->data[SC_LIGHTNINGWALK]) && flag&BF_LONG && rnd() % 100 < sce->val1) {
 		int dx[8] = { 0,-1,-1,-1,0,1,1,1 };
 		int dy[8] = { 1,1,0,-1,-1,-1,0,1 };
@@ -1134,14 +1134,13 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		}
 		d->dmg_lv = ATK_DEF;
 		status_change_end(target, SC_LIGHTNINGWALK, INVALID_TIMER);
-		return 0;
+		return false;
 	}
 
-	if (sc->data[SC_HERMODE] && flag&BF_MAGIC ||
-		sc->data[SC_TATAMIGAESHI] && (flag&(BF_MAGIC | BF_LONG)) == BF_LONG)
+	// Other
+	if (sc->data[SC_HERMODE] && flag&BF_MAGIC || sc->data[SC_TATAMIGAESHI] && (flag&(BF_MAGIC | BF_LONG)) == BF_LONG)
 		return false;
 
-	// attack blocked by Parrying
 	if ((sce = sc->data[SC_PARRYING]) && flag&BF_WEAPON && skill_id != WS_CARTTERMINATION && rnd() % 100 < sce->val2) {
 		clif_skill_nodamage(target, target, LK_PARRYING, sce->val1, 1);
 		return false;
@@ -1155,8 +1154,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		return false;
 	}
 
-	//Kaupe blocks damage (skill or otherwise) from players, mobs, homuns, mercenaries.
-	if ((sce = sc->data[SC_KAUPE]) && rnd() % 100 < sce->val2) {
+	if ((sce = sc->data[SC_KAUPE]) && rnd() % 100 < sce->val2) { //Kaupe blocks damage (skill or otherwise) from players, mobs, homuns, mercenaries.
 		clif_specialeffect(target, EF_STORMKICK4, AREA);
 		//Shouldn't end until Breaker's non-weapon part connects.
 #ifndef RENEWAL
@@ -1251,8 +1249,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (skill_id == PA_PRESSURE || skill_id == HW_GRAVITATION)
 		return damage; //These skills bypass everything else.
 
-	if( sc && sc->count ) { // SC_* that reduce damage to 0.
-		if (!battle_check_sc(src, bl, sc, d, damage, skill_id, skill_lv))
+	if( sc && sc->count ) {
+		if (!battle_check_sc(src, bl, sc, d, damage, skill_id, skill_lv)) // Statuses that reduce damage to 0.
 			return 0;
 
 		// Damage increasing effects
@@ -4617,7 +4615,7 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 
 		if (!skill_id) {
 			if (sc->data[SC_EXEEDBREAK]) {
-				ATK_ADDRATE(wd.damage, wd.damage2, sc->data[SC_EXEEDBREAK]->val2);
+				ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_EXEEDBREAK]->val2);
 				RE_ALLATK_ADDRATE(wd, sc->data[SC_EXEEDBREAK]->val2);
 			}
 		}
@@ -4891,9 +4889,6 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_data *tstatus = status_get_status_data(target);
 	bool attack_hits = is_attack_hitting(wd, src, target, skill_id, skill_lv, false);
-	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
-	int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
-	short class_ = status_get_class(target);
 
 	if (skill_id != SN_SHARPSHOOTING && skill_id != RA_ARROWSTORM)
 		status_change_end(src, SC_CAMOUFLAGE, INVALID_TIMER);
@@ -4912,17 +4907,21 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 	if (attack_hits && target->type == BL_MOB) {
 		struct status_change *sc = status_get_sc(target);
 
-		if (sc && !battle_check_sc(src, target, sc, wd, 1, skill_id, skill_lv)) {
+		if (sc && !battle_check_sc(src, target, sc, wd, 1, skill_id, skill_lv)) { // Statuses that reduce damage to 0.
 			wd->damage = wd->damage2 = 0;
 			return;
 		}
 	}
 
-	if( attack_hits && class_ == MOBID_EMPERIUM ) {
+	if( attack_hits && status_get_class(target) == MOBID_EMPERIUM ) {
 		if(target && !battle_can_hit_gvg_target(src,target,skill_id,(skill_id)?BF_SKILL:0) && map_flag_gvg2(target->m)) {
 			wd->damage = wd->damage2 = 0;
 			return;
 		}
+
+		int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
+		int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
+
 		if (wd->damage > 0) {
 			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv);
 			wd->damage = battle_calc_gvg_damage(src, target, wd->damage, skill_id, wd->flag);
