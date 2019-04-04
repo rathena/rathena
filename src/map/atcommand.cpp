@@ -2714,7 +2714,8 @@ ACMD_FUNC(guildlevelup) {
 		clif_displaymessage(fd, msg_txt(sd,43)); // You're not in a guild.
 		return -1;
 	}
-	//if (strcmp(sd->status.name, guild_info->master) != 0) {
+	//if (strcmp(sd->status.name, guild_info->master) != 0)
+	//{
 	//	clif_displaymessage(fd, msg_txt(sd,44)); // You're not the master of your guild.
 	//	return -1;
 	//}
