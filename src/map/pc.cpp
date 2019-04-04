@@ -4141,7 +4141,8 @@ void pc_bonus3(struct map_session_data *sd,int type,int type2,int type3,int val)
 		if (sd->state.lr_flag == 2)
 			break;
 		//! CONFIRM: Is it not stackable? Does not check max or min value?
-		//if (type3 > sd->norecover_state_race[type2].rate) {
+		//if (type3 > sd->norecover_state_race[type2].rate)
+		//{
 		//	sd->norecover_state_race[type2].rate = type3;
 		//	sd->norecover_state_race[type2].tick = val;
 		//	break;
@@ -10400,12 +10401,12 @@ bool pc_unequipitem(struct map_session_data *sd, int n, int flag) {
 		if( !battle_config.dancing_weaponswitch_fix )
 			status_change_end(&sd->bl, SC_DANCING, INVALID_TIMER); // Unequipping => stop dancing.
 #ifdef RENEWAL
-		if (battle_config.switch_remove_edp&2) {
-#else
-		if (battle_config.switch_remove_edp&1) {
-#endif
+		if (battle_config.switch_remove_edp&2)
 			status_change_end(&sd->bl, SC_EDP, INVALID_TIMER);
-		}
+#else
+		if (battle_config.switch_remove_edp&1)
+			status_change_end(&sd->bl, SC_EDP, INVALID_TIMER);
+#endif
 	}
 	if(pos & EQP_HAND_L) {
 		if (sd->status.shield && battle_getcurrentskill(&sd->bl) == LG_SHIELDSPELL)
