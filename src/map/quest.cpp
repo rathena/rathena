@@ -43,14 +43,14 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	std::shared_ptr<s_quest_db> quest = this->find(quest_id);
 	bool exists = quest != nullptr;
 
+	if (this->nodeExists(node, "TimeLimit") && (this->nodeExists(node, "TimeInDay") || this->nodeExists(node, "TimeAtHour") || this->nodeExists(node, "TimeAtMinute"))) {
+		this->invalidWarning(node, "Node \"TimeLimit\" cannot be defined with \"TimeInDay\", \"TimeAtHour\", or \"TimeAtMinute\".\n");
+		return 0;
+	}
+
 	if (!exists) {
 		if (!this->nodeExists(node, "Title")) {
 			this->invalidWarning(node, "Node \"Title\" is missing.\n");
-			return 0;
-		}
-
-		if (this->nodeExists(node, "TimeLimit") && (this->nodeExists(node, "TimeInDay") || this->nodeExists(node, "TimeAtHour") || this->nodeExists(node, "TimeAtMinute"))) {
-			this->invalidWarning(node, "Node \"TimeLimit\" cannot be defined with \"TimeInDay\", \"TimeAtHour\", or \"TimeAtMinute\".\n");
 			return 0;
 		}
 
@@ -75,70 +75,78 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		quest->time = time;
-		quest->time_type = false;
+
+		quest->timeday = 0;
+		quest->timehour = -1;
+		quest->timeminute = -1;
+	} else if (this->nodeExists(node, "TimeInDay") || this->nodeExists(node, "TimeAtHour") || this->nodeExists(node, "TimeAtMinute")) {
+
+		if (!exists) {
+			if (!this->nodeExists(node, "TimeAtMinute")) {
+				this->invalidWarning(node, "Node \"TimeAtMinute\" is missing.\n");
+				return 0;
+			}
+		} else {
+			if (quest->timeminute < 0 && !this->nodeExists(node, "TimeAtMinute")) {
+				this->invalidWarning(node, "Node \"TimeAtMinute\" is missing.\n");
+				return 0;
+			}
+		}
+
+		if (this->nodeExists(node, "TimeInDay")) {
+			uint16 time;
+
+			if (!this->asUInt16(node, "TimeInDay", time))
+				return 0;
+
+			quest->timeday = time;
+		} else {
+			if (!exists)
+				quest->timeday = 0;
+		}
+
+		if (this->nodeExists(node, "TimeAtHour")) {
+			int16 time;
+
+			if (!this->asInt16(node, "TimeAtHour", time))
+				return 0;
+
+			if (time > 23) {
+				this->invalidWarning(node, "TimeAtHour %hu exceeds 23 hours. Capping to 23.\n", time);
+				time = 23;
+			}
+
+			quest->timehour = time;
+		} else {
+			if (!exists) 
+				quest->timehour = -1;
+		}
+		
+		if (this->nodeExists(node, "TimeAtMinute")) {
+			int16 time;
+
+			if (!this->asInt16(node, "TimeAtMinute", time))
+				return 0;
+
+			if (time > 59) {
+				this->invalidWarning(node, "TimeAtMinute %hu exceeds 59 minutes. Capping to 59.\n", time);
+				time = 59;
+			}
+			else if (time < 0)
+				time = 0;
+
+			quest->timeminute = time;
+		}
+
+		quest->time = 0;
 	} else {
 		if (!exists) {
 			quest->time = 0;
-			quest->time_type = false;
+
+			quest->timeday = 0;
+			quest->timehour = -1;
+			quest->timeminute = -1;
 		}
-	}
-
-	uint32 timeday = 0, timehour = 0, timeminute = 0;
-
-	if (this->nodeExists(node, "TimeInDay")) {
-		uint32 time;
-
-		if (!this->asUInt32(node, "TimeInDay", time))
-			return 0;
-
-		timeday = time;
-		quest->time_type = true;
-	} else {
-		if (!exists)
-			quest->time_type = false;
-	}
-
-	if (this->nodeExists(node, "TimeAtHour")) {
-		uint32 time;
-
-		if (!this->asUInt32(node, "TimeAtHour", time))
-			return 0;
-
-		if (time > 24) {
-			this->invalidWarning(node, "TimeAtHour %hu exceeds 24 hours. Capping to 24.\n", time);
-			time = 24;
-		}
-
-		timehour = time;
-		quest->time_type = true;
-	} else {
-		if (!exists)
-			quest->time_type = false;
-	}
-	
-	if (this->nodeExists(node, "TimeAtMinute")) {
-		uint32 time;
-
-		if (!this->asUInt32(node, "TimeAtMinute", time))
-			return 0;
-
-		if (time > 59) {
-			this->invalidWarning(node, "TimeAtMinute %hu exceeds 59 minutes. Capping to 59.\n", time);
-			time = 59;
-		}
-
-		timeminute = time;
-		quest->time_type = true;
-	} else {
-		if (!exists)
-			quest->time_type = false;
-	}
-
-	if (quest->time_type)
-		quest->time = timeday * 86400 + timehour * 3600 + timeminute * 60;
-	else {
-		if (!exists)
-			quest->time = 0;
 	}
 
 	if (this->nodeExists(node, "Target")) {
@@ -386,17 +394,32 @@ int quest_add(struct map_session_data *sd, int quest_id)
 	sd->quest_log[n] = {};
 	sd->quest_log[n].quest_id = qi->id;
 
-	if (qi->time && !qi->time_type)
+	if (qi->time)
 		sd->quest_log[n].time = (uint32)(time(NULL) + qi->time);
-	else if (qi->time && qi->time_type) { // quest time limit at DD:HH:MM
+	else if (qi->timeminute >= 0) { // quest time limit at DD:HH:MM
 		time_t t = time(NULL);
 		struct tm *lt = localtime(&t);
-		uint32 time_today = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+		uint32 q_hour = 0, q_minute = 0;
 
-		if (time_today < qi->time)
-			sd->quest_log[n].time = (uint32)(time(NULL) + qi->time - time_today);
-		else // next day
-			sd->quest_log[n].time = (uint32)(time(NULL) + 86400 + qi->time - time_today);
+		if (qi->timehour >= 0) {
+			uint32 my_hour = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+			q_hour = qi->timehour * 3600 + qi->timeminute * 60;
+
+			if (my_hour < q_hour)
+				q_hour -= my_hour;
+			else
+				q_hour += 86400 - my_hour;
+		}
+		else {
+			uint32 my_minute = (lt->tm_min) * 60 + (lt->tm_sec);
+			q_minute = qi->timeminute * 60;
+
+			if (my_minute < q_minute)
+				q_minute -= my_minute;
+			else
+				q_minute += 3600 - my_minute;
+		}
+		sd->quest_log[n].time = (uint32)(t + (qi->timeday * 86400) + q_hour + q_minute);
 	}
 
 	sd->quest_log[n].state = Q_ACTIVE;
@@ -448,17 +471,32 @@ int quest_change(struct map_session_data *sd, int qid1, int qid2)
 	sd->quest_log[i] = {};
 	sd->quest_log[i].quest_id = qi->id;
 
-	if (qi->time && !qi->time_type)
+	if (qi->time)
 		sd->quest_log[i].time = (uint32)(time(NULL) + qi->time);
-	else if (qi->time && qi->time_type) { // quest time limit at DD:HH:MM
+	else if (qi->timeminute >= 0) { // quest time limit at DD:HH:MM
 		time_t t = time(NULL);
 		struct tm *lt = localtime(&t);
-		uint32 time_today = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+		uint32 q_hour = 0, q_minute = 0;
 
-		if (time_today < qi->time)
-			sd->quest_log[i].time = (uint32)(time(NULL) + qi->time - time_today);
-		else // next day
-			sd->quest_log[i].time = (uint32)(time(NULL) + 86400 + qi->time - time_today);
+		if (qi->timehour >= 0) {
+			uint32 my_hour = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
+			q_hour = qi->timehour * 3600 + qi->timeminute * 60;
+
+			if (my_hour < q_hour)
+				q_hour -= my_hour;
+			else
+				q_hour += 86400 - my_hour;
+		}
+		else {
+			uint32 my_minute = (lt->tm_min) * 60 + (lt->tm_sec);
+			q_minute = qi->timeminute * 60;
+
+			if (my_minute < q_minute)
+				q_minute -= my_minute;
+			else
+				q_minute += 3600 - my_minute;
+		}
+		sd->quest_log[i].time = (uint32)(t + (qi->timeday * 86400) + q_hour + q_minute);
 	}
 
 	sd->quest_log[i].state = Q_ACTIVE;

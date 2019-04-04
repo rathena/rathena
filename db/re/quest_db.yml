@@ -24,10 +24,10 @@
 ###########################################################################
 # - Id              Unique quest ID.
 #   Title           Quest title.
-#   TimeLimit       Amount of time in seconds before the quest expires. Not applicable with other time settings. (Default: 0)
+#   TimeLimit       Amount of time in seconds before the quest expires. Not applicable with other time settings. (0: no timer) (Default: 0)
 #   TimeInDay       Amount of days before quest expires. Stackable with TimeAtHour and TimeAtMinute. (Default: 0)
-#   TimeAtHour      Hour at which quest expires. Stackable with TimeInDay and TimeAtMinute. [0-24] (Default: 0)
-#   TimeAtMinute    Minute at which quest expires. Stackable with TimeInDay and TimeAtHour. [0-59] (Default: 0)
+#   TimeAtHour      Hour at which quest expires. Stackable with TimeInDay and TimeAtMinute. [0-23] (-1: undefined hour) (Default: -1)
+#   TimeAtMinute    Minute at which quest expires. Required for TimeInDay and TimeAtHour. [0-59]
 #   Target:         Quest objective target. (Optional) (Default: null)
 #     - Mob         Monster to kill.
 #       Count       Amount of monsters to kill.
@@ -344,6 +344,7 @@ Body:
   - Id: 1299
     Title: Patrol Once a Day
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 1321
     Title: Spotty and Her Ring
   - Id: 1322
@@ -363,6 +364,7 @@ Body:
   - Id: 1329
     Title: Spotty in the Dreamland
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 1330
     Title: Spotty's Holes
   - Id: 1331
@@ -377,6 +379,7 @@ Body:
   - Id: 1332
     Title: Blood for Blood
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 2000
     Title: Job Change to Blacksmith
   - Id: 2001
@@ -2229,6 +2232,7 @@ Body:
   - Id: 5414
     Title: "[Stand by]Warrior Discipline"
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 5415
     Title: Restricted Sector
   - Id: 5416
@@ -2254,6 +2258,7 @@ Body:
   - Id: 5426
     Title: "[Stand by]To My Beloved Fellow"
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 5427
     Title: "[Repeat]To My Beloved Fellow"
   - Id: 5428
@@ -2265,6 +2270,7 @@ Body:
   - Id: 5429
     Title: "[Stand by]Lowly Standards"
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 5430
     Title: "[Repeat]Lowly Standards"
     Drop:
@@ -2278,6 +2284,7 @@ Body:
   - Id: 5433
     Title: "[Stand by]Clean Life"
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 5434
     Title: "[Repeat]Clean Life"
   - Id: 5435
@@ -2287,6 +2294,7 @@ Body:
   - Id: 5437
     Title: "[Stand by]Finding Lights"
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 5438
     Title: "[Repeat]Finding Lights"
   - Id: 5439
@@ -2298,6 +2306,7 @@ Body:
   - Id: 5440
     Title: "[Stand by]Refreshing Prison Life"
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 5441
     Title: "[Repeat]Refreshing Prison Life"
     Drop:
@@ -2309,6 +2318,7 @@ Body:
   - Id: 5443
     Title: "[Stand by]Suppressing Darkness"
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 5444
     Title: "[Repeat]Suppressing Darkness"
   - Id: 5445
@@ -2320,6 +2330,7 @@ Body:
   - Id: 5446
     Title: "[Stand by]Bothersome Little Thing"
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 5447
     Title: "[Repeat]Bothersome Little Thing"
     Drop:
@@ -2337,6 +2348,7 @@ Body:
   - Id: 5452
     Title: "[Stand by]Request from Chief Guard"
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 5453
     Title: Ungrateful(1)
   - Id: 5454
@@ -4116,6 +4128,7 @@ Body:
   - Id: 7706
     Title: Nillem Is Not Almighty
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 7711
     Title: Beginning
   - Id: 7712
@@ -5082,6 +5095,7 @@ Body:
   - Id: 9459
     Title: Too Early for Pipe Cleaning
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 9460
     Title: Collecting Ore Fragments
     Drop:
@@ -5097,6 +5111,7 @@ Body:
   - Id: 9461
     Title: Enough Ores
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 10000
     Title: To the Prontera Royal Court
   - Id: 10001
@@ -6201,6 +6216,7 @@ Body:
   - Id: 11422
     Title: Complete Today's Sauce
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 11423
     Title: "Banquet: Griffin Barbecue"
   - Id: 11424
@@ -6208,6 +6224,7 @@ Body:
   - Id: 11425
     Title: Complete Today's Grilled Griffin
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 11426
     Title: "Banquet: Washing 15 Dishes"
     Drop:
@@ -6217,6 +6234,7 @@ Body:
   - Id: 11427
     Title: Complete Today's Dish Collecting
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 11428
     Title: Ingredient for the Sauce
   - Id: 11429
@@ -7103,6 +7121,7 @@ Body:
   - Id: 12382
     Title: Distributing Food
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 12383
     Title: Sweet Potato Delivery
   - Id: 12384
@@ -7120,6 +7139,7 @@ Body:
   - Id: 12390
     Title: Relieved for Now
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 12391
     Title: Buffaloes with Rifles
     Target:
@@ -7153,6 +7173,7 @@ Body:
   - Id: 12398
     Title: You're Good
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 12399
     Title: Hunt Heinous Criminals
     Target:
@@ -7178,6 +7199,7 @@ Body:
   - Id: 12404
     Title: Are You Not Tired?
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 12405
     Title: Maintain the Red Pipe
   - Id: 12406
@@ -7193,6 +7215,7 @@ Body:
   - Id: 12411
     Title: Come Back Tomorrow
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 13000
     Title: RWC2011Card Gathering
   - Id: 13001
@@ -7961,6 +7984,7 @@ Body:
   - Id: 14492
     Title: There Is a Silver Lining
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 14493
     Title: Today I Feel
     Drop:
@@ -8003,6 +8027,7 @@ Body:
   - Id: 14509
     Title: Still Making It
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 14510
     Title: Pink Petal-like Dress
   - Id: 14511
@@ -8095,6 +8120,7 @@ Body:
   - Id: 14559
     Title: Charm Effect Duration
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 14560
     Title: New Ingredient
     Drop:
@@ -8116,6 +8142,7 @@ Body:
   - Id: 14563
     Title: Free time
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 14565
     Title: Emergency food supplies
   - Id: 14566
@@ -8141,6 +8168,7 @@ Body:
   - Id: 14576
     Title: Meal Box Delivery Time
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 14579
     Title: Interview with Captain
   - Id: 14580
@@ -8176,6 +8204,7 @@ Body:
   - Id: 14592
     Title: Resting Time
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 14672
     Title: Preparing for the Firework Festival
     Target:
@@ -8184,6 +8213,7 @@ Body:
   - Id: 14673
     Title: Time to Make Bombs
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 14683
     Title: Mysterious Device
   - Id: 14684
@@ -8408,6 +8438,7 @@ Body:
   - Id: 16079
     Title: Back for More Coyotes Tomorrow
     TimeAtHour: 4
+    TimeAtMinute: 0
   - Id: 16080
     Title: Hunting Coyotes Again
     Target:
