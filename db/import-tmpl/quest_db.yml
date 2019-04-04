@@ -24,10 +24,10 @@
 ###########################################################################
 # - Id              Unique quest ID.
 #   Title           Quest title.
-#   TimeLimit       Amount of time in seconds before the quest expires. Not applicable with other time settings. (Default: 0)
+#   TimeLimit       Amount of time in seconds before the quest expires. Not applicable with other time settings. (0: no timer) (Default: 0)
 #   TimeInDay       Amount of days before quest expires. Stackable with TimeAtHour and TimeAtMinute. (Default: 0)
-#   TimeAtHour      Hour at which quest expires. Stackable with TimeInDay and TimeAtMinute. [0-24] (Default: 0)
-#   TimeAtMinute    Minute at which quest expires. Stackable with TimeInDay and TimeAtHour. [0-59] (Default: 0)
+#   TimeAtHour      Hour at which quest expires. Stackable with TimeInDay and TimeAtMinute. [0-23] (-1: undefined hour) (Default: -1)
+#   TimeAtMinute    Minute at which quest expires. Required for TimeInDay and TimeAtHour. [0-59]
 #   Target:         Quest objective target. (Optional) (Default: null)
 #     - Mob         Monster to kill.
 #       Count       Amount of monsters to kill.
