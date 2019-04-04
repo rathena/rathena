@@ -8007,11 +8007,34 @@ void clif_pet_food(struct map_session_data *sd,int foodid,int fail)
 /// 01cd { <skill id>.L }*7
 void clif_autospell(struct map_session_data *sd,uint16 skill_lv)
 {
-	int fd;
-
 	nullpo_retv(sd);
 
-	fd=sd->fd;
+	int fd = sd->fd;
+
+#ifdef RENEWAL
+	uint16 autospell_skill[][] = { 
+		{ MG_FIREBOLT, 0 }, { MG_COLDBOLT, 0 }, { MG_LIGHTNINGBOLT, 0 },
+		{ MG_SOULSTRIKE, 3 }, { MG_FIREBALL, 3 },
+		{ WZ_EARTHSPIKE, 6 }, { MG_FROSTDIVER, 6 },
+		{ MG_THUNDERSTORM, 9 }, { WZ_HEAVENDRIVE, 9 }
+	};
+	int count = 0;
+
+	WFIFOHEAD(fd, 2 * 6 + 4);
+	WFIFOW(fd, 0) = 0x442;
+
+	for (int i = 0; i <= ARRAYLENGTH(autospell_skill); ++i) {
+		if (skill_lv > autospell_skill[i][1] && pc_checkskill(sd, autospell_skill[i][0])) {
+			WFIFOW(fd, 8 + count * 2) = autospell_skill[i][0];
+			count++;
+		}
+	}
+
+	WFIFOW(fd, 2) = 8 + count * 2;
+	WFIFOL(fd, 4) = count;
+
+	WFIFOSET(fd, WFIFOW(fd, 2));
+#else
 	WFIFOHEAD(fd,packet_len(0x1cd));
 	WFIFOW(fd, 0)=0x1cd;
 
@@ -8045,6 +8068,8 @@ void clif_autospell(struct map_session_data *sd,uint16 skill_lv)
 		WFIFOL(fd,26)= 0x00000000;
 
 	WFIFOSET(fd,packet_len(0x1cd));
+#endif
+
 	sd->menuskill_id = SA_AUTOSPELL;
 	sd->menuskill_val = skill_lv;
 }
