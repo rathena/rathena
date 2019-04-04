@@ -778,7 +778,8 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 					// Calculates right & left hand weapon as unity
 					else {
 						//! CHECKME: If 'left_cardfix_to_right' is yes, doesn't need to check NK_NO_ELEFIX?
-						//if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
+						//if( !(nk&NK_NO_ELEFIX) ) // Affected by Element modifier bonuses
+						//{
 							int ele_fix = sd->right_weapon.addele[tstatus->def_ele] + sd->left_weapon.addele[tstatus->def_ele]
 										+ sd->right_weapon.addele[ELE_ALL] + sd->left_weapon.addele[ELE_ALL];
 
