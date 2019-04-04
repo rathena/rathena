@@ -3326,12 +3326,13 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 			// Official Magic Reflection Behavior : damage reflected depends on gears caster wears, not target
 #if MAGIC_REFLECTION_TYPE
 #ifdef RENEWAL
-			if( dmg.dmg_lv != ATK_MISS ) { //Wiz SL cancelled and consumed fragment
+			if( dmg.dmg_lv != ATK_MISS ) //Wiz SL cancelled and consumed fragment
 #else
 			// issue:6415 in pre-renewal Kaite reflected the entire damage received
 			// regardless of caster's equipment (Aegis 11.1)
-			if( dmg.dmg_lv != ATK_MISS && type == 1 ) { //Wiz SL cancelled and consumed fragment
+			if( dmg.dmg_lv != ATK_MISS && type == 1 ) //Wiz SL cancelled and consumed fragment
 #endif
+			{
 				short s_ele = skill_get_ele(skill_id, skill_lv);
 
 				if (s_ele == -1) // the skill takes the weapon's element
@@ -10787,7 +10788,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			if((sce=hd->sc.data[SC_STYLE_CHANGE])!=NULL){ //in preparation for other bl usage
 				if(sce->val1 == MH_MD_FIGHTING) sce->val1 = MH_MD_GRAPPLING;
 				else sce->val1 = MH_MD_FIGHTING;
-				//if(hd->master && hd->sc.data[SC_STYLE_CHANGE]) { // Aegis does not show any message when switching fighting style
+				//if(hd->master && hd->sc.data[SC_STYLE_CHANGE]) // Aegis does not show any message when switching fighting style
+				//{
 				//	char output[128];
 				//	safesnprintf(output,sizeof(output),msg_txt(sd,378),(sce->val1==MH_MD_FIGHTING?"fighthing":"grappling"));
 				//	clif_messagecolor(&hd->master->bl, color_table[COLOR_RED], output, false, SELF);
@@ -15196,10 +15198,11 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break;
 		case ASC_EDP:
 #ifdef RENEWAL
-			if (sd->weapontype1 == W_FIST && battle_config.switch_remove_edp&2) {
+			if (sd->weapontype1 == W_FIST && battle_config.switch_remove_edp&2)
 #else
-			if (sd->weapontype1 == W_FIST && battle_config.switch_remove_edp&1) {
+			if (sd->weapontype1 == W_FIST && battle_config.switch_remove_edp&1)
 #endif
+			{
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_THIS_WEAPON,0);
 				return false;
 			}
@@ -15390,10 +15393,11 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break;
 		case NJ_ISSEN:
 #ifdef RENEWAL
-			if (status->hp < (status->hp/100)) {
+			if (status->hp < (status->hp/100))
 #else
-			if (status->hp < 2) {
+			if (status->hp < 2)
 #endif
+			{
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
@@ -15706,10 +15710,11 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 			break;
 		case ST_RECOV_WEIGHT_RATE:
 #ifdef RENEWAL
-			if(pc_is70overweight(sd)) {
+			if(pc_is70overweight(sd))
 #else
-			if(pc_is50overweight(sd)) {
+			if(pc_is50overweight(sd))
 #endif
+			{
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
