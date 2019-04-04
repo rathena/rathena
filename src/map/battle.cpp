@@ -1009,7 +1009,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 				}
 #ifdef RENEWAL
 				if ((group->val3 - damage) > 0)
-					group->val3 -= cap_value(damage, INT_MIN, INT_MAX);
+					group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 				else
 					skill_delunitgroup(group);
 #endif
@@ -1020,7 +1020,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 					break;
 				}
 				if ((group->val3 - damage) > 0)
-					group->val3 -= cap_value(damage, INT_MIN, INT_MAX);
+					group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
 				else
 					skill_delunitgroup(group);
 				break;
@@ -1065,7 +1065,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 	}
 
 	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && damage > 0) {
-		sce->val3 -= cap_value(damage, INT_MIN, INT_MAX); // absorb damage
+		sce->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX); // absorb damage
 		d->dmg_lv = ATK_BLOCK;
 		if (sce->val3 <= 0) { // Shield Down
 			sce->val2--;
