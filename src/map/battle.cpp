@@ -3627,7 +3627,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			else
 				skillratio += 200 + 40 * skill_lv;
 #ifdef RENEWAL
-			if (sd->status.weapon == W_DAGGER)
+			if (sd && sd->status.weapon == W_DAGGER)
 				skillratio *= 2;
 #endif
 			break;
