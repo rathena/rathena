@@ -2939,9 +2939,9 @@ const char* map_mapid2mapname(int m)
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if (mapdata->instance_id) { // Instance map check
-		auto idata = instance_search(map[m].instance_id);
+		std::shared_ptr<s_instance_data> idata = instance_search(map[m].instance_id);
 
-		if (idata == nullptr) // This shouldn't happen but if it does give them the map we intended to give
+		if (!idata) // This shouldn't happen but if it does give them the map we intended to give
 			return mapdata->name;
 		else {
 			for (const auto &it : idata->map) { // Loop to find the src map we want

@@ -2739,7 +2739,7 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 					unsigned short instance_id = script_instancegetid(st);
 
 					if (instance_id) {
-						auto idata = instance_search(instance_id);
+						std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 						if (!idata) {
 							ShowWarning("script:get_val: Failed to find instance %d with instance variable '%s', defaulting to \"\"\n", instance_id, name);
@@ -2804,7 +2804,7 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 						unsigned short instance_id = script_instancegetid(st);
 
 						if (instance_id) {
-							auto idata = instance_search(instance_id);
+							std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 							if (!idata) {
 								ShowWarning("script:get_val: Failed to find instance %d with instance variable '%s', defaulting to 0\n", instance_id, name);
@@ -3027,7 +3027,7 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 				unsigned short instance_id = script_instancegetid(st);
 
 				if (instance_id) {
-					auto idata = instance_search(instance_id);
+					std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 					if (idata)
 						src = &idata->regs;
@@ -3150,7 +3150,7 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 					unsigned short instance_id = script_instancegetid(st);
 
 					if (instance_id) {
-						auto idata = instance_search(instance_id);
+						std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 						if (!idata) {
 							ShowWarning("script_set_reg: Failed to find instance %d and write instance variable '%s', NPC is not in an instance!\n", instance_id, name);
@@ -3221,7 +3221,7 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 					unsigned short instance_id = script_instancegetid(st);
 
 					if (instance_id) {
-						auto idata = instance_search(instance_id);
+						std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 						if (!idata) {
 							ShowWarning("script_set_reg: Failed to find instance %d and write instance variable '%s', NPC is not in an instance!\n", instance_id, name);
@@ -19941,7 +19941,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 
 	sd = (TBL_PC *)bl;
 
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if (!idata)
 		return 0;
@@ -19990,7 +19990,7 @@ BUILDIN_FUNC(instance_warpall)
 	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if (!idata) {
 		ShowError("buildin_instance_warpall: Instance is not found.\n");
@@ -20022,9 +20022,9 @@ BUILDIN_FUNC(instance_announce) {
 	if (instance_id == 0)
 		instance_id = script_instancegetid(st);
 
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
-	if (!instance_id && idata != nullptr) {
+	if (!instance_id && idata) {
 		ShowError("buildin_instance_announce: Intance is not found.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -20230,9 +20230,9 @@ BUILDIN_FUNC(instance_info)
 	const char* name = script_getstr(st, 2);
 	int type = script_getnum(st, 3);
 	int index = 0;
-	auto db = instance_search_db_name(name);
+	std::shared_ptr<s_instance_db> db = instance_search_db_name(name);
 
-	if (db == nullptr) {
+	if (!db) {
 		ShowError( "buildin_instance_info: Unknown instance name \"%s\".\n", name );
 		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;

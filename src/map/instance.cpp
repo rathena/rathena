@@ -216,18 +216,26 @@ std::shared_ptr<s_instance_data> instance_search(int instance_id)
 	if (!instance_id || instance_id > MAX_INSTANCE_DATA)
 		return nullptr;
 
-	std::shared_ptr<s_instance_data> ret = instances[instance_id];
+	return instances[instance_id];
+}
 
-	if (!ret)
+/**
+ * Searches for an instance in the database
+ * @param instance_id: ID to search for
+ * @return shared_ptr of instance or nullptr on failure
+ */
+std::shared_ptr<s_instance_db> instance_search_db(int instance_id)
+{
+	if (!instance_id || instance_id > MAX_INSTANCE_DATA)
 		return nullptr;
 
-	return ret;
+	return instance_db.find(instance_id);
 }
 
 /**
  * Searches for an instance name in the database
  * @param instance_name: Instance to search for
- * @return shared_ptr of instance
+ * @return shared_ptr of instance or nullptr on failure
  */
 std::shared_ptr<s_instance_db> instance_search_db_name(const char *instance_name)
 {
@@ -246,7 +254,7 @@ std::shared_ptr<s_instance_db> instance_search_db_name(const char *instance_name
  * @param target: Target display type
  */
 void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_target *target) {
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if (!idata) {
 		sd = NULL;
@@ -301,7 +309,7 @@ static TIMER_FUNC(instance_subscription_timer){
 	struct clan *cd;
 	enum e_instance_mode mode;
 	int ret = instance_addmap(instance_id); // Check that maps have been added
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if (!idata)
 		return 0;
@@ -358,7 +366,7 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 	if (!idata || idata->keep_timer != INVALID_TIMER)
 		return false;
 
-	auto db = instance_db.find(idata->id);
+	std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
 
 	if (!db)
 		return false;
@@ -405,7 +413,7 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 	if (!idata || idata->idle_timer != INVALID_TIMER)
 		return false;
 
-	auto db = instance_db.find(idata->id);
+	std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
 
 	if (!db)
 		return false;
@@ -554,7 +562,7 @@ void instance_addnpc(std::shared_ptr<s_instance_data> idata)
  * @return -4 = no free instances | -3 = already exists | -2 = character/party/guild not found | -1 = invalid type | On success return instance_id
  */
 int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
-	auto db = instance_search_db_name(name);
+	std::shared_ptr<s_instance_db> db = instance_search_db_name(name);
 
 	if (!db) {
 		ShowError("instance_create: Unknown instance %s creation was attempted.\n", name);
@@ -613,7 +621,7 @@ int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
 	instance_id = static_cast<int>(instances.size()) + 1;
 	instances[instance_id] = std::make_shared<s_instance_data>();
 
-	auto entry = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> entry = instance_search(instance_id);
 
 	entry->id = db->id;
 	entry->state = INSTANCE_IDLE;
@@ -662,13 +670,13 @@ int instance_addmap(int instance_id) {
 	if (!instance_id)
 		return 0;
 
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	// If the instance isn't idle, we can't do anything
 	if (idata->state != INSTANCE_IDLE)
 		return 0;
 
-	auto db = instance_db.find(idata->id);
+	std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
 
 	if (!db)
 		return 0;
@@ -746,7 +754,7 @@ int16 instance_mapid(int16 m, int instance_id)
 		return -1;
 	}
 
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if(!idata || idata->state != INSTANCE_BUSY)
 		return -1;
@@ -777,7 +785,7 @@ int16 instance_mapid(int16 m, int instance_id)
  */
 bool instance_destroy(int instance_id)
 {
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if (!idata || idata->state == INSTANCE_FREE)
 		return false;
@@ -896,14 +904,14 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, int instance_i
 {
 	nullpo_retr(IE_OTHER, sd);
 	
-	auto db = instance_search_db_name(name);
+	std::shared_ptr<s_instance_db> db = instance_search_db_name(name);
 
 	if (!db) {
 		ShowError("instance_enter: Unknown instance \"%s\".\n", name);
 		return IE_OTHER;
 	}
 
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if (!idata) {
 		ShowError("instance_enter: Unknown instance \"%s\" (%d).\n", name, instance_id);
@@ -989,9 +997,9 @@ bool instance_reqinfo(struct map_session_data *sd, int instance_id)
 {
 	nullpo_retr(false, sd);
 
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
-	if (!idata || !instance_db.find(idata->id))
+	if (!idata || !instance_search_db(idata->id))
 		return false;
 
 	// Say it's created if instance is not busy
@@ -1015,7 +1023,7 @@ bool instance_reqinfo(struct map_session_data *sd, int instance_id)
  */
 bool instance_addusers(int instance_id)
 {
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if(!idata || idata->state != INSTANCE_BUSY)
 		return false;
@@ -1036,7 +1044,7 @@ bool instance_addusers(int instance_id)
  */
 bool instance_delusers(int instance_id)
 {
-	auto idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if(!idata || idata->state != INSTANCE_BUSY)
 		return false;
@@ -1069,7 +1077,7 @@ void instance_db_reload(void) {
 void do_reload_instance(void)
 {
 	for (const auto &it : instances) {
-		auto idata = instance_search(it.first);
+		std::shared_ptr<s_instance_data> idata = instance_search(it.first);
 
 		if (idata->map.empty())
 			continue;
@@ -1078,7 +1086,7 @@ void do_reload_instance(void)
 			instance_addnpc(idata);
 
 			// Create new keep timer
-			auto db = instance_db.find(idata->id);
+			std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
 
 			if (db)
 				idata->keep_limit = (unsigned int)time(NULL) + db->limit;
@@ -1097,8 +1105,8 @@ void do_reload_instance(void)
 			struct guild *gd;
 			struct clan *cd;
 			int instance_id;
-			auto idata = instance_search(map[sd->bl.m].instance_id);
-			auto db = instance_db.find(idata->id);
+			std::shared_ptr<s_instance_data> idata = instance_search(map[sd->bl.m].instance_id);
+			std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
 
 			switch (idata->mode) {
 				case IM_NONE:
