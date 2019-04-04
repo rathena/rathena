@@ -112,7 +112,7 @@ prt_in,33,114,5	script	Raffam Oranpere	10058,{
 					}else{
 						cutin "laperm02.bmp", 2;
 						if (clan_join(SWORDCLAN)) {
-							sc_start2 SC_SWORDCLAN, -1, 0, SWORDCLAN;
+							sc_start2 SC_SWORDCLAN, INFINITE_TICK, 0, SWORDCLAN;
 							mes "[Raffam Oranpere]";
 							mes "Welcome to the ^3131FFSword Clan^000000!";
 							mes "You can review Clan info with ^3131FFCtrl+G^000000.";
@@ -163,7 +163,7 @@ prt_in,33,114,5	script	Raffam Oranpere	10058,{
 	end;
 
 OnInit:
-	sc_start2 SC_SWORDCLAN, -1, 0, SWORDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	sc_start2 SC_SWORDCLAN, INFINITE_TICK, 0, SWORDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
 	end;
 }
 
@@ -276,7 +276,7 @@ prt_in,35,114,5	script	Devon Aire	10059,{
 						mes "Oh, I can be funny, too--FIRE PILLAR!";
 					}else{
 						if (clan_join(ARCWANDCLAN)) {
-							sc_start2 SC_ARCWANDCLAN, -1, 0, ARCWANDCLAN;
+							sc_start2 SC_ARCWANDCLAN, INFINITE_TICK, 0, ARCWANDCLAN;
 							mes "[Devon Aire]";
 							mes "You have joined the ^3131FFArc Wand Clan^000000.";
 							next;
@@ -330,7 +330,7 @@ prt_in,35,114,5	script	Devon Aire	10059,{
 	end;
 
 OnInit:
-	sc_start2 SC_ARCWANDCLAN, -1, 0, ARCWANDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	sc_start2 SC_ARCWANDCLAN, INFINITE_TICK, 0, ARCWANDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
 	end;
 }
 
@@ -428,7 +428,7 @@ prt_in,37,114,5	script	Berman Aire	10060,{
 						mes "You're just confused, right?";
 					}else{
 						if (clan_join(GOLDENMACECLAN)) {
-							sc_start2 SC_GOLDENMACECLAN, -1, 0, GOLDENMACECLAN;
+							sc_start2 SC_GOLDENMACECLAN, INFINITE_TICK, 0, GOLDENMACECLAN;
 							cutin "birman02.bmp", 2;
 							mes "[Berman Aire]";
 							mes "Welcome to the ^3131FFGolden Mace Clan^000000!";
@@ -474,7 +474,7 @@ prt_in,37,114,5	script	Berman Aire	10060,{
 	end;
 
 OnInit:
-	sc_start2 SC_GOLDENMACECLAN, -1, 0, GOLDENMACECLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	sc_start2 SC_GOLDENMACECLAN, INFINITE_TICK, 0, GOLDENMACECLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
 	end;
 }
 
@@ -573,7 +573,7 @@ prt_in,39,114,5	script	Shaam Rumi	10027,{
 						mes "Eh, you're already in a Clan. Hey, this isn't funny.";
 					}else{
 						if (clan_join(CROSSBOWCLAN)) {
-							sc_start2 SC_CROSSBOWCLAN, -1, 0, CROSSBOWCLAN;
+							sc_start2 SC_CROSSBOWCLAN, INFINITE_TICK, 0, CROSSBOWCLAN;
 							cutin "sham02.bmp", 2;
 							mes "[Shaam Rumi]";
 							mes "Welcome to the ^3131FFCrossbow Clan^000000!";
@@ -627,6 +627,6 @@ prt_in,39,114,5	script	Shaam Rumi	10027,{
 	end;
 
 OnInit:
-	sc_start2 SC_CROSSBOWCLAN, -1, 0, CROSSBOWCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	sc_start2 SC_CROSSBOWCLAN, INFINITE_TICK, 0, CROSSBOWCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
 	end;
 }

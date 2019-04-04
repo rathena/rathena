@@ -146,7 +146,7 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 	}
 	switch( checkquest(12331,PLAYTIME) ) {
 	case -1:
-		if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (is_party_leader() == false) {
 			mes "[Catherine Jet Johnson]";
 			mes "Eh.. Give me a second. I am talking to the person in charge. Please wait a little bit.";
 			close;
@@ -226,7 +226,7 @@ xmas,233,305,4	script	Factory Dimension Telep	PORTAL,{
 		mes "Please wait until the transformation is finished. You cannot move to another area until you become normal.";
 		close;
 	}
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "[Catherine Jet Johnson]";
 		mes "Eh.. Give me a second. I am talking to the person in charge. Please wait.";
 		close;
@@ -367,7 +367,7 @@ OnTimer1000:
 }
 
 1@xm_d,71,129,3	script	#fac1bs	4_M_COOKIE,{
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		.@mob_id_transform = getstatus(SC_MONSTER_TRANSFORM,1);
 		mes "[Coordinator]";
 		if (.@mob_id_transform == 1246) {
@@ -497,7 +497,7 @@ OnTouch_:
 				.@count = 5;
 				break;
 		}
-		getmapxy .@map$, .@x, .@y, 0;
+		getmapxy .@map$, .@x, .@y;
 		.@npc_name$ = instance_npcname( strnpcinfo(0) );
 		.@event$ = .@npc_name$ + "::OnMyMobDead";
 		playBGM "125";
@@ -565,7 +565,7 @@ OnMyMobDead:
 
 
 1@xm_d,185,100,6	script	Catherine Jet Johnson#2	4_F_SKULL06GIRL,{
-	if (getpartyleader(getcharid(1),2) == getcharid(0)) {
+	if (is_party_leader() == true) {
 		mes "[Catherine Jet Johnson]";
 		mes "Lucky you got here safely.";
 		next;
@@ -701,8 +701,7 @@ OnStart:
 			close;
 		}
 		close2;
-		pcblockmove getcharid(3),1;// todo : not able to talk to npc
-		pcblockskill getcharid(3),1;
+		setpcblock PCBLOCK_NPC, true;
 		switch(.@num) {
 		case 1:
 			npctalk "Worker: Ah! Grandpa? He's a real good man. He oiled us everyday and cleaned the dust very often.";
@@ -760,8 +759,7 @@ OnStart:
 			'worker[.@num] = 1;
 			donpcevent instance_npcname("#fac2wpc") + "::OnStart";
 		}
-		pcblockmove getcharid(3),0;
-		pcblockskill getcharid(3),0;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
 	mes "[Worker]";
@@ -786,7 +784,7 @@ OnAlert:
 		setarray .@coord[0],209,27;
 		break;
 	default:
-		getmapxy .@map$, .@coord[0], .@coord[1], UNITTYPE_NPC;
+		getmapxy .@map$, .@coord[0], .@coord[1], BL_NPC;
 		break;
 	}
 	areamonster 'xm_d_map$,(.@coord[0]-8),(.@coord[1]-8),(.@coord[0]+8),(.@coord[1]+8), "Guard",2990,21, .@npc_name$ + "::OnMyMobDead";

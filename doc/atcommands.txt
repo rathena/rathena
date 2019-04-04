@@ -14,7 +14,7 @@ This file describes the usage of in-game commands and assumes that
 	charcommand_symbol: "#"
 
 Some commands cannot be used from console or script command to prevent map-server crashed.
-See atcommand.c::atcommand_basecommands for restricted commands. Please tell us if any
+See atcommand.cpp::atcommand_basecommands for restricted commands. Please tell us if any
 other atcommand that causes map-server crashed executed by console or script commands.
 
 To search for a command, write "@" before the command name (ex. @commands).
@@ -811,7 +811,7 @@ If no coordinates are entered, a random location will be chosen.
 
 Warps to predefined locations in major cities.
 If no ID is given, all available maps will be displayed in the chat window.
-Locations and coordinates are stored in '/src/map/atcommand.c'.
+Locations and coordinates are stored in '/src/map/atcommand.cpp'.
 
 Restriction:
 	- Used from console
@@ -1143,7 +1143,7 @@ Give or remove a cart to a player and also change the cart skin based on ID:
 
 Changes the language attached to the player's account (#langtype).
 If no parameter is given, a list of available languages is displayed.
-All languages are defined in '/src/common/msg_conf.h'.
+All languages are defined in '/src/common/msg_conf.hpp'.
 
 ---------------------------------------
 
@@ -1361,7 +1361,7 @@ Affected files:
 -- battleconf: battle_athena.conf, battle_conf.txt
 -- instancedb: instance_db.txt
 -- itemdb: item_db.txt, item_group_db.txt, item_trade.txt, item_noequip.txt, item_nouse.txt, item_combo_db.txt, item_avail.txt, item_stack.txt, item_delay.txt, item_buyingstore.txt, item_flag.txt
--- mobdb: mob_db.txt, mob_item_ratio.txt, mob_chat_db.txt, mob_avail.txt, mob_race2_db.txt, mob_branch.txt, mob_poring.txt, mob_boss.txt, mob_pouch.txt, mob_classchange.txt, pet_db.txt, homunculus_db.txt, homun_skill_tree.txt, exp_homun.txt, mercenary_db.txt, mercenary_skill_db.txt, elemental_db.txt, elemental_skill_db.txt
+-- mobdb: mob_db.txt, mob_item_ratio.txt, mob_chat_db.txt, mob_avail.txt, mob_race2_db.txt, mob_branch.txt, mob_poring.txt, mob_boss.txt, mob_pouch.txt, mob_classchange.txt, pet_db.yml, homunculus_db.txt, homun_skill_tree.txt, exp_homun.txt, mercenary_db.txt, mercenary_skill_db.txt, elemental_db.txt, elemental_skill_db.txt
 -- motd: motd.txt
 -- msgconf: atcommand_athena.conf
 -- pcdb: statpoint.txt, job_exp.txt, skill_tree.txt, attr_fix.txt, job_db1.txt, job_db2.txt, job_basehpsp_db.txt, job_maxhpsp_db.txt, job_param_db.txt, level_penalty.txt

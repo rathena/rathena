@@ -26,11 +26,11 @@ struct guardian_data;
 #define MAX_RACE2_MOBS 100
 
 //Min time between AI executions
-#define MIN_MOBTHINKTIME 100
+const t_tick MIN_MOBTHINKTIME = 100;
 //Min time before mobs do a check to call nearby friends for help (or for slaves to support their master)
-#define MIN_MOBLINKTIME 1000
+const t_tick MIN_MOBLINKTIME = 1000;
 //Min time between random walks
-#define MIN_RANDOMWALKTIME 4000
+const t_tick MIN_RANDOMWALKTIME = 4000;
 
 //Distance that slaves should keep from their master.
 #define MOB_SLAVEDISTANCE 2
@@ -220,7 +220,7 @@ struct mob_data {
 	int areanpc_id; //Required in OnTouchNPC (to avoid multiple area touchs)
 	unsigned int bg_id; // BattleGround System
 
-	unsigned int next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick;
+	t_tick next_walktime,last_thinktime,last_linktime,last_pcneartime,dmgtick;
 	short move_fail_count;
 	short lootitem_count;
 	short min_chase;
@@ -230,7 +230,7 @@ struct mob_data {
 	int master_id,master_dist;
 
 	int8 skill_idx; // Index of last used skill from db->skill[]
-	unsigned int skilldelay[MAX_MOBSKILL];
+	t_tick skilldelay[MAX_MOBSKILL];
 	char npc_event[EVENT_NAME_LENGTH];
 	/**
 	 * Did this monster summon something?
@@ -301,6 +301,7 @@ struct item_drop_list {
 
 struct mob_db *mob_db(int mob_id);
 uint16 mobdb_searchname(const char * const str);
+struct mob_db* mobdb_search_aegisname( const char* str );
 int mobdb_searchname_array(const char *str, uint16 * out, int size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
@@ -321,10 +322,10 @@ int mob_spawn_guardian(const char* mapname, int16 x, int16 y, const char* mobnam
 int mob_spawn_bg(const char* mapname, int16 x, int16 y, const char* mobname, int mob_id, const char* event, unsigned int bg_id);
 int mob_guardian_guildchange(struct mob_data *md); //Change Guardian's ownership. [Skotlex]
 
-int mob_randomwalk(struct mob_data *md,unsigned int tick);
+int mob_randomwalk(struct mob_data *md,t_tick tick);
 int mob_warpchase(struct mob_data *md, struct block_list *target);
 int mob_target(struct mob_data *md,struct block_list *bl,int dist);
-int mob_unlocktarget(struct mob_data *md, unsigned int tick);
+int mob_unlocktarget(struct mob_data *md, t_tick tick);
 struct mob_data* mob_spawn_dataset(struct spawn_data *data);
 int mob_spawn(struct mob_data *md);
 TIMER_FUNC(mob_delayspawn);
@@ -338,7 +339,6 @@ void mob_heal(struct mob_data *md,unsigned int heal);
 
 #define mob_stop_walking(md, type) unit_stop_walking(&(md)->bl, type)
 #define mob_stop_attack(md) unit_stop_attack(&(md)->bl)
-#define mob_is_samename(md, mid) (strcmp(mob_db((md)->mob_id)->jname, mob_db(mid)->jname) == 0)
 
 void mob_clear_spawninfo();
 void do_init_mob(void);
@@ -353,8 +353,8 @@ int mob_class_change(struct mob_data *md,int mob_id);
 int mob_warpslave(struct block_list *bl, int range);
 int mob_linksearch(struct block_list *bl,va_list ap);
 
-int mobskill_use(struct mob_data *md,unsigned int tick,int event);
-int mobskill_event(struct mob_data *md,struct block_list *src,unsigned int tick, int flag);
+int mobskill_use(struct mob_data *md,t_tick tick,int event);
+int mobskill_event(struct mob_data *md,struct block_list *src,t_tick tick, int flag);
 int mob_summonslave(struct mob_data *md2,int *value,int amount,uint16 skill_id);
 int mob_countslave(struct block_list *bl);
 int mob_count_sub(struct block_list *bl, va_list ap);

@@ -72,7 +72,7 @@ bool mercenary_dead(struct mercenary_data *md);
 int mercenary_delete(struct mercenary_data *md, int reply);
 void mercenary_contract_stop(struct mercenary_data *md);
 
-int mercenary_get_lifetime(struct mercenary_data *md);
+t_tick mercenary_get_lifetime(struct mercenary_data *md);
 enum e_MercGuildType mercenary_get_guild(struct mercenary_data *md);
 int mercenary_get_faith(struct mercenary_data *md);
 void mercenary_set_faith(struct mercenary_data *md, int value);
@@ -84,7 +84,7 @@ int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
 short mercenary_skill_get_index(uint16 skill_id);
 
 /**
- * atcommand.c required
+ * atcommand.cpp required
  **/
 void mercenary_readdb(void);
 void mercenary_read_skilldb(void);

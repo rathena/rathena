@@ -474,7 +474,7 @@ void quest_read_txtdb(void)
 			quest_id = atoi(str[0]);
 
 			if (quest_id < 0 || quest_id >= INT_MAX) {
-				ShowError("quest_read_txtdb: Invalid quest ID '%d' in '%s' line '%s' (min: 0, max: %d.)\n", quest_id, filename,ln, INT_MAX);
+				ShowError("quest_read_txtdb: Invalid quest ID '%d' in '%s' line '%d' (min: 0, max: %d.)\n", quest_id, filename, ln, INT_MAX);
 				continue;
 			}
 

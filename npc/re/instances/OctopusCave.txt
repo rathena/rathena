@@ -28,7 +28,7 @@ mal_dun01,151,235,5	script	Starfish	551,{
 		mes "Make a party, and come back later.";
 		close;
 	}
-	if (getcharid(0) != getpartyleader(.@party_id,2)) {
+	if (is_party_leader() == false) {
 		mes "[Starfish]";
 		mes "Where is your leader, hehe.";
 		mes "I don't talk to some random people.";

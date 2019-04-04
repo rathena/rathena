@@ -18,7 +18,7 @@ ecl_hub01,132,12,3	script	Chief of Staff#tl02	435,{
 	.@party_id = getcharid(1);
 	.@md_name$ = "Eclage Interior";
 
-	if (.@party_id == 0 || getpartyleader(.@party_id,2) != getcharid(0)){
+	if (.@party_id == 0 || is_party_leader() == false){
 		mes "-! Warning !-";
 		mes "This current quest will be held at Memorial dungeon.";
 		mes "Only the party leader will enter. Please create your party.";
@@ -62,7 +62,7 @@ ecl_hub01,130,15,0	script	It is closed shut.	844,{
 		if (select("Enter it.:Forget it.") == 1) {
 			.@party_id = getcharid(1);
 			.@md_name$ = "Eclage Interior";
-			if (.@party_id == 0 || getpartyleader(.@party_id,2) != getcharid(0)) {
+			if (.@party_id == 0 || is_party_leader() == false) {
 				mes "-! Warning !-";
 				mes "This current quest will be held at Memorial dungeon.";
 				mes "Only the party leader will enter. Please create your party.";

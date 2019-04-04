@@ -250,7 +250,7 @@ bat_room,148,150,5	script	Teleporter#Battlefield	124,{
 		mes "[Maroll Battle Recruiter]";
 		mes "May the war god bless you.";
 		close2;
-		getmapxy(.@mapname$,.@x,.@y,UNITTYPE_NPC);
+		getmapxy(.@mapname$,.@x,.@y,BL_NPC);
 		if (.@mapname$ == "prontera")
 			set bat_return,1;
 		else if (.@mapname$ == "moc_ruins")

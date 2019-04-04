@@ -372,10 +372,21 @@ void chclif_mmo_send082d(int fd, struct char_session_data* sd) {
 }
 
 void chclif_mmo_send099d(int fd, struct char_session_data *sd) {
+	uint8 count = 0;
+
 	WFIFOHEAD(fd,4 + (MAX_CHARS*MAX_CHAR_BUF));
 	WFIFOW(fd,0) = 0x99d;
-	WFIFOW(fd,2) = char_mmo_chars_fromsql(sd, WFIFOP(fd,4)) + 4;
+	WFIFOW(fd,2) = char_mmo_chars_fromsql(sd, WFIFOP(fd,4), &count) + 4;
 	WFIFOSET(fd,WFIFOW(fd,2));
+
+	// This is something special Gravity came up with.
+	// The client triggers some finalization code only if count is != 3.
+	if( count == 3 ){
+		WFIFOHEAD(fd,4);
+		WFIFOW(fd,0) = 0x99d;
+		WFIFOW(fd,2) = 4;
+		WFIFOSET(fd,4);
+	}
 }
 
 
