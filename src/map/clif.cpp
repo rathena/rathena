@@ -8012,7 +8012,7 @@ void clif_autospell(struct map_session_data *sd,uint16 skill_lv)
 	int fd = sd->fd;
 
 #ifdef RENEWAL
-	uint16 autospell_skill[][] = { 
+	uint16 autospell_skill[][2] = { 
 		{ MG_FIREBOLT, 0 }, { MG_COLDBOLT, 0 }, { MG_LIGHTNINGBOLT, 0 },
 		{ MG_SOULSTRIKE, 3 }, { MG_FIREBALL, 3 },
 		{ WZ_EARTHSPIKE, 6 }, { MG_FROSTDIVER, 6 },
