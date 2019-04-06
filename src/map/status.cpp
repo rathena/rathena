@@ -8314,8 +8314,10 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		// Item resistance (only applies to rate%)
 		if (sd) {
 			for (const auto &it : sd->reseff) {
-				if (it.id == type)
+				if (it.id == type) {
+					it.val = cap_value(it.val, -10000, 10000);
 					rate -= rate * it.val / 10000;
+				}
 			}
 			if (sd->sc.data[SC_COMMONSC_RESIST] && SC_COMMON_MIN <= type && type <= SC_COMMON_MAX)
 				rate -= rate*sd->sc.data[SC_COMMONSC_RESIST]->val1/100;
