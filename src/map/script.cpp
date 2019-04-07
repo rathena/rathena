@@ -378,7 +378,7 @@ static struct linkdb_node *sleep_db; // int oid -> struct script_state *
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
 int run_func(struct script_state *st);
-unsigned short script_instancegetid(struct script_state *st, enum instance_mode mode);
+unsigned short script_instancegetid(struct script_state *st, enum instance_mode mode = IM_NONE);
 
 const char* script_op2name(int op)
 {
@@ -2736,7 +2736,7 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 				break;
 			case '\'':
 				{
-					unsigned short instance_id = script_instancegetid(st, IM_NONE);
+					unsigned short instance_id = script_instancegetid(st);
 					if( instance_id )
 						data->u.str = (char*)i64db_get(instance_data[instance_id].regs.vars,reference_getuid(data));
 					else {
@@ -2794,7 +2794,7 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 					break;
 				case '\'':
 					{
-						unsigned short instance_id = script_instancegetid(st, IM_NONE);
+						unsigned short instance_id = script_instancegetid(st);
 						if( instance_id )
 							data->u.num = (int)i64db_iget(instance_data[instance_id].regs.vars,reference_getuid(data));
 						else {
@@ -3010,7 +3010,7 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 			break;
 		case '\'': // instance
 			{
-				unsigned short instance_id = script_instancegetid(st, IM_NONE);
+				unsigned short instance_id = script_instancegetid(st);
 
 				if( instance_id ) {
 					src = &instance_data[instance_id].regs;
@@ -3130,7 +3130,7 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 				return 1;
 			case '\'':
 				{
-					unsigned short instance_id = script_instancegetid(st, IM_NONE);
+					unsigned short instance_id = script_instancegetid(st);
 					if( instance_id ) {
 						if( str[0] ) {
 							i64db_put(instance_data[instance_id].regs.vars, num, aStrdup(str));
@@ -3193,7 +3193,7 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 				return 1;
 			case '\'':
 				{
-					unsigned short instance_id = script_instancegetid(st, IM_NONE);
+					unsigned short instance_id = script_instancegetid(st);
 					if( instance_id ) {
 						if( val != 0 ) {
 							i64db_iput(instance_data[instance_id].regs.vars, num, val);
@@ -19843,7 +19843,7 @@ BUILDIN_FUNC(instance_destroy)
 	if( script_hasdata(st,2) )
 		instance_id = script_getnum(st,2);
 	else
-		instance_id = script_instancegetid(st, IM_NONE);
+		instance_id = script_instancegetid(st);
 
 	if( instance_id == 0 ) {
 		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %hu.\n", instance_id);
@@ -19898,7 +19898,7 @@ BUILDIN_FUNC(instance_npcname)
 	if( script_hasdata(st,3) )
 		instance_id = script_getnum(st,3);
 	else
-		instance_id = script_instancegetid(st, IM_NONE);
+		instance_id = script_instancegetid(st);
 
 	if( instance_id && (nd = npc_name2id(str)) != NULL ) {
 		static char npcname[NAME_LENGTH];
@@ -19929,7 +19929,7 @@ BUILDIN_FUNC(instance_mapname)
 	if( script_hasdata(st,3) )
 		instance_id = script_getnum(st,3);
 	else
-		instance_id = script_instancegetid(st, IM_NONE);
+		instance_id = script_instancegetid(st);
 
 	// Check that instance mapname is a valid map
 	if(!instance_id || (m = instance_mapname2mapid(str,instance_id)) < 0)
@@ -19945,10 +19945,10 @@ BUILDIN_FUNC(instance_mapname)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_id)
 {
-	enum instance_mode mode = IM_NONE; // Default to the attached NPC
+	int mode = IM_NONE; // Default to the attached NPC
 
 	if (script_hasdata(st, 2)) {
-		mode = static_cast<instance_mode>(script_getnum(st, 2));
+		mode = script_getnum(st, 2);
 
 		if (mode <= IM_NONE || mode >= IM_MAX) {
 			ShowError("buildin_instance_id: Unknown instance mode %d.\n", mode);
@@ -19957,7 +19957,7 @@ BUILDIN_FUNC(instance_id)
 		}
 	}
 
-	script_pushint(st, script_instancegetid(st, mode));
+	script_pushint(st, script_instancegetid(st, static_cast<instance_mode>(mode)));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20048,7 +20048,7 @@ BUILDIN_FUNC(instance_announce) {
 	int i;
 
 	if( instance_id == 0 ) {
-		instance_id = script_instancegetid(st, IM_NONE);
+		instance_id = script_instancegetid(st);
 	}
 
 	if( !instance_id && &instance_data[instance_id] != NULL) {
