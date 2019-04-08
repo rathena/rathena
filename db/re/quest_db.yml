@@ -1,4 +1,4 @@
-# This file is a part of rAthena.
+tar# This file is a part of rAthena.
 #   Copyright(C) 2019 rAthena Development Team
 #   https://rathena.org - https://github.com/rathena
 #
@@ -25,9 +25,9 @@
 # - Id              Unique quest ID.
 #   Title           Quest title.
 #   TimeLimit       Amount of time in seconds before the quest expires. Not applicable with other time settings. (0: no timer) (Default: 0)
-#   TimeInDay       Amount of days before quest expires. Stackable with TimeAtHour and TimeAtMinute. (Default: 0)
-#   TimeAtHour      Hour at which quest expires. Stackable with TimeInDay and TimeAtMinute. [0-23] (-1: undefined hour) (Default: -1)
-#   TimeAtMinute    Minute at which quest expires. Required for TimeInDay and TimeAtHour. [0-59]
+#   TimeInDay       Amount of days before quest expires. Stackable with TimeAtHour. TimeAtMinute required. (Default: 0)
+#   TimeAtHour      Hour at which quest expires. Stackable with TimeInDay. TimeAtMinute required. [0-23] (-1: undefined hour) (Default: -1)
+#   TimeAtMinute    Minute at which quest expires. [0-59] (no timer by default)
 #   Target:         Quest objective target. (Optional) (Default: null)
 #     - Mob         Monster to kill.
 #       Count       Amount of monsters to kill.
