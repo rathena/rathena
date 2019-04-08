@@ -829,7 +829,7 @@ unsigned int guild_nextexp(int level)
 {
 	if (!level)
 		return 1;
-	if (level <= 0 || level > MAX_GUILDLEVEL)
+	if (level < 0 || level > MAX_GUILDLEVEL)
 		return 0;
 
 	return guild_exp[level-1];
