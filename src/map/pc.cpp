@@ -2306,7 +2306,7 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 	else {
 		for (auto &it : spell) {
 			if ((it.card_id == card_id || it.rate < 0 || rate < 0) && it.id == id && it.lv == lv && it.flag == flag) {
-				it.rate += rate;
+				it.rate = cap_value(it.rate + rate, -10000, 10000);
 				return;
 			}
 		}
@@ -2314,9 +2314,12 @@ static void pc_bonus_autospell(std::vector<s_autospell> &spell, short id, short 
 
 	struct s_autospell entry = {};
 
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_autospell: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
 	entry.id = id;
 	entry.lv = lv;
-	entry.rate = rate;
+	entry.rate = cap_value(rate, -10000, 10000);
 	entry.flag = flag;
 	entry.card_id = card_id;
 
@@ -2344,10 +2347,13 @@ static void pc_bonus_autospell_onskill(std::vector<s_autospell> &spell, short sr
 
 	struct s_autospell entry = {};
 
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_onskill: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
 	entry.flag = src_skill;
 	entry.id = id;
 	entry.lv = lv;
-	entry.rate = rate;
+	entry.rate = cap_value(rate, -10000, 10000);
 	entry.card_id = card_id;
 
 	spell.push_back(entry);
@@ -2381,7 +2387,7 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.flag == flag) {
-			it.rate += rate;
+			it.rate = cap_value(it.rate + rate, -10000, 10000);
 			it.arrow_rate += arrow_rate;
 			it.duration = umax(it.duration, duration);
 			return;
@@ -2390,8 +2396,11 @@ static void pc_bonus_addeff(std::vector<s_addeffect> &effect, enum sc_type sc, s
 
 	struct s_addeffect entry = {};
 
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_addeff: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
 	entry.sc = sc;
-	entry.rate = rate;
+	entry.rate = cap_value(rate, -10000, 10000);
 	entry.arrow_rate = arrow_rate;
 	entry.flag = flag;
 	entry.duration = duration;
@@ -2420,7 +2429,7 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 
 	for (auto &it : effect) {
 		if (it.sc == sc && it.skill_id == skill_id && it.target == target) {
-			it.rate += rate;
+			it.rate = cap_value(it.rate + rate, -10000, 10000);
 			it.duration = umax(it.duration, duration);
 			return;
 		}
@@ -2428,8 +2437,11 @@ static void pc_bonus_addeff_onskill(std::vector<s_addeffectonskill> &effect, enu
 
 	struct s_addeffectonskill entry = {};
 
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_addeff_onskill: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
 	entry.sc = sc;
-	entry.rate = rate;
+	entry.rate = cap_value(rate, -10000, 10000);
 	entry.skill_id = skill_id;
 	entry.target = target;
 	entry.duration = duration;
@@ -2484,18 +2496,21 @@ static void pc_bonus_item_drop(std::vector<s_add_drop> &drop, unsigned short nam
 	for (auto &it : drop) {
 		if (it.nameid == nameid && it.group == group && it.race == race && it.class_ == class_) {
 			if ((rate < 0 && it.rate < 0) || (rate > 0 && it.rate > 0)) //Adjust the rate if it has same classification
-				it.rate += rate;
+				it.rate = cap_value(it.rate + rate, -10000, 10000);
 			return;
 		}
 	}
 
 	struct s_add_drop entry = {};
 
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_item_drop: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
 	entry.nameid = nameid;
 	entry.group = group;
 	entry.race = race;
 	entry.class_ = class_;
-	entry.rate = rate;
+	entry.rate = cap_value(rate, -10000, 10000);
 
 	drop.push_back(entry);
 }
@@ -2534,7 +2549,10 @@ bool pc_addautobonus(std::vector<s_autobonus> &bonus, const char *script, short 
 
 	struct s_autobonus entry = {};
 
-	entry.rate = rate;
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_addautobonus: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
+	entry.rate = cap_value(rate, -10000, 10000);
 	entry.duration = dur;
 	entry.active = INVALID_TIMER;
 	entry.atk_type = flag;
@@ -2679,15 +2697,18 @@ static void pc_bonus_addele(struct map_session_data* sd, unsigned char ele, shor
 
 	for (auto &it : wd->addele2) {
 		if (it.ele == ele && it.flag == flag) {
-			it.rate += rate;
+			it.rate = cap_value(it.rate + rate, -10000, 10000);
 			return;
 		}
 	}
 
 	struct s_addele2 entry = {};
 
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_addele: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
 	entry.ele = ele;
-	entry.rate = rate;
+	entry.rate = cap_value(rate, -10000, 10000);
 	entry.flag = flag;
 
 	wd->addele2.push_back(entry);
@@ -2722,15 +2743,18 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
 
 	for (auto &it : sd->subele2) {
 		if (it.ele == ele && it.flag == flag) {
-			it.rate += rate;
+			it.rate = cap_value(it.rate + rate, -10000, 10000);
 			return;
 		}
 	}
 
 	struct s_addele2 entry = {};
 
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_subele: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
 	entry.ele = ele;
-	entry.rate = rate;
+	entry.rate = cap_value(rate, -10000, 10000);
 	entry.flag = flag;
 
 	sd->subele2.push_back(entry);
@@ -2746,18 +2770,22 @@ static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int 
 {
 	for (auto &it : bonus) {
 		if (it.id == id) {
-			it.val += val;
+			it.val = cap_value(it.val + val, -10000, 10000);
 			return;
 		}
 	}
 
 	struct s_item_bonus entry = {};
 
+	if (val < -10000 || val > 10000)
+		ShowWarning("pc_bonus_itembonus: Item bonus val %d exceeds -10000~10000 range, capping.\n", val);
+
 	entry.id = id;
-	entry.val = val;
+	entry.val = cap_value(val, -10000, 10000);
 
 	bonus.push_back(entry);
 }
+
 /**
  * Remove HP/SP to player when attacking
  * @param bonus: Bonus array
@@ -2766,6 +2794,11 @@ static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int 
  * @param flag: Battle flag
  */
 static void pc_bonus_addvanish(std::vector<s_vanish_bonus> &bonus, int16 rate, int16 per, int flag) {
+	if (bonus.size() == MAX_PC_BONUS) {
+		ShowWarning("pc_bonus_addvanish: Reached max (%d) number of vanish damage bonuses per character!\n", MAX_PC_BONUS);
+		return;
+	}
+
 	if (!(flag&BF_RANGEMASK))
 		flag |= BF_SHORT | BF_LONG;
 	if (!(flag&BF_WEAPONMASK))
@@ -2779,7 +2812,7 @@ static void pc_bonus_addvanish(std::vector<s_vanish_bonus> &bonus, int16 rate, i
 
 	for (auto &it : bonus) {
 		if (it.flag == flag) {
-			it.rate += rate;
+			it.rate = cap_value(it.rate + rate, -10000, 10000);
 			it.per += per;
 			return;
 		}
@@ -2787,7 +2820,10 @@ static void pc_bonus_addvanish(std::vector<s_vanish_bonus> &bonus, int16 rate, i
 
 	struct s_vanish_bonus entry = {};
 
-	entry.rate = rate;
+	if (rate < -10000 || rate > 10000)
+		ShowWarning("pc_bonus_addvanish: Item bonus rate %d exceeds -10000~10000 range, capping.\n", rate);
+
+	entry.rate = cap_value(rate, -10000, 10000);
 	entry.per = per;
 	entry.flag = flag;
 
@@ -3520,7 +3556,6 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		val = cap_value(val, -10000, 10000);
 		pc_bonus_itembonus(sd->reseff, type2, val);
 		break;
 	case SP_MAGIC_ADDELE: // bonus2 bMagicAddEle,e,x;
