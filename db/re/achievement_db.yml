@@ -1965,7 +1965,7 @@ Body:
     Name: "I really love it!"
     Condition: " BaseLevel == 99 && (Class >= JOB_SWORDMAN && Class <= JOB_THIEF) "
     Reward:
-      ItemID: 16504
+      ItemID: 16483
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
     Score: 30
   - ID: 200031
