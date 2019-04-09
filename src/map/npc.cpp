@@ -221,7 +221,7 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 /*==========================================
  * Disable / Enable NPC
  *------------------------------------------*/
-int npc_enable(const char* name, int flag)
+bool npc_enable(const char* name, int flag)
 {
 	struct npc_data* nd = npc_name2id(name);
 

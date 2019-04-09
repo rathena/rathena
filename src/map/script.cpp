@@ -210,9 +210,9 @@ static struct str_data_struct {
 	int (*func)(struct script_state *st);
 	int val;
 	int next;
-	const char *deprecated_name;
+	const char *name;
 	bool deprecated;
-} *str_data = NULL;
+} *str_data = nullptr;
 static int str_data_size = 0; // size of the data
 static int str_num = LABEL_START; // next id to be assigned
 
@@ -487,7 +487,7 @@ static void script_reportsrc(struct script_state *st)
 
 	struct block_list* bl = map_id2bl(st->oid);
 
-	if( bl == NULL )
+	if (!bl)
 		return;
 
 	switch( bl->type ) {
@@ -1366,8 +1366,8 @@ const char* parse_simpleexpr(const char *p)
 		if( str_data[l].type == C_INT && str_data[l].deprecated ){
 			ShowWarning( "Usage of deprecated constant '%s'.\n", get_str(l) );
 			ShowWarning( "This constant was deprecated and could become unavailable anytime soon.\n" );
-			if (str_data[l].deprecated_name)
-				ShowWarning( "Please use '%s' instead!\n", str_data[l].deprecated_name );
+			if (str_data[l].name)
+				ShowWarning( "Please use '%s' instead!\n", str_data[l].name );
 		}
 #endif
 
@@ -2305,8 +2305,8 @@ bool script_get_constant(const char* name, int* value)
 	if( str_data[n].deprecated ){
 		ShowWarning( "Usage of deprecated constant '%s'.\n", name );
 		ShowWarning( "This constant was deprecated and could become unavailable anytime soon.\n" );
-		if (str_data[n].deprecated_name)
-			ShowWarning( "Please use '%s' instead!\n", str_data[n].deprecated_name );
+		if (str_data[n].name)
+			ShowWarning( "Please use '%s' instead!\n", str_data[n].name );
 	}
 #endif
 
@@ -2314,7 +2314,7 @@ bool script_get_constant(const char* name, int* value)
 }
 
 /// Creates new constant or parameter with given value.
-void script_set_constant_(const char* name, int value, const char* deprecated_name, bool isparameter, bool deprecated)
+void script_set_constant_(const char* name, int value, const char* constant_name, bool isparameter, bool deprecated)
 {
 	int n = add_str(name);
 
@@ -2323,7 +2323,7 @@ void script_set_constant_(const char* name, int value, const char* deprecated_na
 		str_data[n].type = isparameter ? C_PARAM : C_INT;
 		str_data[n].val  = value;
 		str_data[n].deprecated = deprecated;
-		str_data[n].deprecated_name = deprecated_name;
+		str_data[n].name = constant_name;
 	}
 	else if( str_data[n].type == C_PARAM || str_data[n].type == C_INT )
 	{// existing parameter or constant
@@ -11266,7 +11266,7 @@ BUILDIN_FUNC(getareadropitem)
 BUILDIN_FUNC(enablenpc)
 {
 	const char *str = script_getstr(st,2);
-	if (npc_enable(str,1) != 0)
+	if (npc_enable(str,1))
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
@@ -11277,7 +11277,7 @@ BUILDIN_FUNC(enablenpc)
 BUILDIN_FUNC(disablenpc)
 {
 	const char *str = script_getstr(st,2);
-	if (npc_enable(str,0) != 0)
+	if (npc_enable(str,0))
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
@@ -11288,7 +11288,7 @@ BUILDIN_FUNC(disablenpc)
 BUILDIN_FUNC(hideoffnpc)
 {
 	const char *str = script_getstr(st,2);
-	if (npc_enable(str,2) != 0)
+	if (npc_enable(str,2))
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
@@ -11298,7 +11298,7 @@ BUILDIN_FUNC(hideoffnpc)
 BUILDIN_FUNC(hideonnpc)
 {
 	const char *str = script_getstr(st,2);
-	if (npc_enable(str,4) != 0)
+	if (npc_enable(str,4))
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
