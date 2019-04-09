@@ -477,7 +477,8 @@ nothing  - A permanent variable attached to the character, the default variable
            ('return .@var;' returns a value, not a reference).
 "'"      - An instance variable.
            These are used with the instancing system and are unique to each
-           instance type.
+           instance type. Can be accessed from inside the instance or by calling
+           'getvariableofinstance'.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -9053,6 +9054,20 @@ Example:
 .@name$ = "Endless Tower";
 mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(.@name$,IIT_IDLETIMEOUT) + " seconds.";
 // Endless Tower will be destroyed if no one is in the instance for 300 seconds.
+
+---------------------------------------
+
+*getvariableofinstance(<variable>,<instance id>);
+
+Returns a reference to an instance variable (' prefix) of the specific instance ID.
+This can only be used to get ' variables.
+
+Examples:
+	// This will set the .@s variable to the value of 'var variable of the specific instance ID.
+	set .@s, getvariableofinstance('var, instance_id(IM_PARTY));
+
+	// This will set the 'var variable of the specific instance ID to 1.
+	set getvariableofinstance('var, instance_id(IM_GUILD)), 1;
 
 ---------------------------------------
 

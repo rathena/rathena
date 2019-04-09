@@ -2736,15 +2736,22 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 				break;
 			case '\'':
 				{
-					unsigned short instance_id = script_instancegetid(st);
-					if( instance_id )
-						data->u.str = (char*)i64db_get(instance_data[instance_id].regs.vars,reference_getuid(data));
+					struct DBMap* n = nullptr;
+					if (data->ref)
+						n = data->ref->vars;
+					else {
+						unsigned short instance_id = script_instancegetid(st);
+						if (instance_id != 0)
+							n = instance_data[instance_id].regs.vars;
+					}
+					if (n)
+						data->u.str = (char*)i64db_get(n,reference_getuid(data));
 					else {
 						ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to \"\"\n", name);
 						data->u.str = NULL;
 					}
+					break;
 				}
-				break;
 			default:
 				data->u.str = pc_readglobalreg_str(sd, data->u.num);
 				break;
@@ -2794,15 +2801,22 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 					break;
 				case '\'':
 					{
-						unsigned short instance_id = script_instancegetid(st);
-						if( instance_id )
-							data->u.num = (int)i64db_iget(instance_data[instance_id].regs.vars,reference_getuid(data));
+						struct DBMap* n = nullptr;
+						if (data->ref)
+							n = data->ref->vars;
+						else {
+							unsigned short instance_id = script_instancegetid(st);
+							if (instance_id != 0)
+								n = instance_data[instance_id].regs.vars;
+						}
+						if (n)
+							data->u.num = (int)i64db_iget(n,reference_getuid(data));
 						else {
 							ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
 							data->u.num = 0;
 						}
+						break;
 					}
-					break;
 				default:
 					data->u.num = pc_readglobalreg(sd, data->u.num);
 					break;
@@ -3010,10 +3024,13 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 			break;
 		case '\'': // instance
 			{
-				unsigned short instance_id = script_instancegetid(st);
+				if (ref)
+					src = ref;
+				else {
+					unsigned short instance_id = script_instancegetid(st);
 
-				if( instance_id ) {
-					src = &instance_data[instance_id].regs;
+					if (instance_id != 0)
+						src = &instance_data[instance_id].regs;
 				}
 				break;
 			}
@@ -3130,22 +3147,30 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 				return 1;
 			case '\'':
 				{
-					unsigned short instance_id = script_instancegetid(st);
-					if( instance_id ) {
-						if( str[0] ) {
-							i64db_put(instance_data[instance_id].regs.vars, num, aStrdup(str));
-							if( script_getvaridx(num) )
-								script_array_update(&instance_data[instance_id].regs, num, false);
+					struct reg_db *src = nullptr;
+					if (ref)
+						src = ref;
+					else {
+						unsigned short instance_id = script_instancegetid(st);
+						if (instance_id != 0)
+							src = &instance_data[instance_id].regs;
+					}
+					if (src) {
+						bool empty;
+						if (str[0]) {
+							i64db_put(src->vars, num, aStrdup(str));
+							empty = false;
 						} else {
-							i64db_remove(instance_data[instance_id].regs.vars, num);
-							if (script_getvaridx(num))
-								script_array_update(&instance_data[instance_id].regs, num, true);
+							i64db_remove(src->vars, num);
+							empty = true;
 						}
+						if (script_getvaridx(num) != 0)
+							script_array_update(src, num, empty);
 					} else {
 						ShowError("script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name);
 						script_reportsrc(st);
 					}
-				return 1;
+					return 1;
 				}
 			default:
 				return pc_setglobalreg_str(sd, num, str);
@@ -3193,22 +3218,30 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 				return 1;
 			case '\'':
 				{
-					unsigned short instance_id = script_instancegetid(st);
-					if( instance_id ) {
-						if( val != 0 ) {
-							i64db_iput(instance_data[instance_id].regs.vars, num, val);
-							if( script_getvaridx(num) )
-								script_array_update(&instance_data[instance_id].regs, num, false);
+					struct reg_db *src = nullptr;
+					if (ref)
+						src = ref;
+					else {
+						unsigned short instance_id = script_instancegetid(st);
+						if (instance_id != 0)
+							src = &instance_data[instance_id].regs;
+					}
+					if (src) {
+						bool empty;
+						if (val != 0) {
+							i64db_iput(src->vars, num, val);
+							empty = false;
 						} else {
-							i64db_remove(instance_data[instance_id].regs.vars, num);
-							if (script_getvaridx(num))
-								script_array_update(&instance_data[instance_id].regs, num, true);
+							i64db_remove(src->vars, num);
+							empty = true;
 						}
+						if (script_getvaridx(num) != 0)
+							script_array_update(src, num, empty);
 					} else {
 						ShowError("script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name);
 						script_reportsrc(st);
 					}
-				return 1;
+					return 1;
 				}
 			default:
 				return pc_setglobalreg(sd, num, val);
@@ -24143,6 +24176,55 @@ BUILDIN_FUNC(achievement_condition){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Returns a reference to a variable of the specific instance ID.
+/// Returns 0 if an error occurs.
+///
+/// getvariableofinstance(<variable>, <instance ID>) -> <reference>
+BUILDIN_FUNC(getvariableofinstance)
+{
+	struct script_data* data = script_getdata(st, 2);
+
+	if (!data_isreference(data)) {
+		ShowError("buildin_getvariableofinstance: not a variable.\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	const char* name = reference_getname(data);
+
+	if (*name != '\'') {
+		ShowError("buildin_getvariableofinstance: invalid scope (not instance variable).\n");
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	unsigned short instance_id = script_getnum(st, 3);
+	if (instance_id <= 0 || instance_id > MAX_INSTANCE_DATA) {
+		ShowError("buildin_getvariableofinstance: invalid instance ID %d.\n", instance_id);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct instance_data *im = &instance_data[instance_id];
+	if (im->state != INSTANCE_BUSY) {
+		ShowError("buildin_getvariableofinstance: unknown instance ID %d.\n", instance_id);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!im->regs.vars)
+		im->regs.vars = i64db_alloc(DB_OPT_RELEASE_DATA);
+
+	push_val2(st->stack, C_NAME, reference_getuid(data), &im->regs);
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -24810,6 +24892,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(camerainfo,"iii?"),
 
 	BUILDIN_DEF(achievement_condition,"i"),
+	BUILDIN_DEF(getvariableofinstance,"ri"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},
