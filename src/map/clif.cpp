@@ -238,7 +238,7 @@ void clif_setbindip(const char* ip)
 
 /*==========================================
  * Sets map port to 'port'
- * is run from map.c upon loading map server configuration
+ * is run from map.cpp upon loading map server configuration
  *------------------------------------------*/
 void clif_setport(uint16 port)
 {
@@ -3974,8 +3974,11 @@ void clif_changeoption(struct block_list* bl)
 
 	//Whenever we send "changeoption" to the client, the provoke icon is lost
 	//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
-	if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
-		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, INFINITE_TICK, 0, 0, 0);
+	if (sc->data[SC_PROVOKE]) {
+		const struct TimerData *td = get_timer(sc->data[SC_PROVOKE]->timer);
+
+		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, (!td ? INFINITE_TICK : DIFF_TICK(td->tick, gettick())), 0, 0, 0);
+	}
 }
 
 
@@ -6174,11 +6177,11 @@ void clif_displaymessage(const int fd, const char* mes)
 		message = aStrdup(mes);
 		line = strtok(message, "\n");
 
+		while(line != NULL) {
 #if PACKETVER == 20141022
 		/** for some reason game client crashes depending on message pattern (only for this packet) **/
 		/** so we redirect to ZC_NPC_CHAT **/
 		//clif_messagecolor(&sd->bl, color_table[COLOR_DEFAULT], mes, false, SELF);
-		while(line != NULL) {
 			unsigned long color = (color_table[COLOR_DEFAULT] & 0x0000FF) << 16 | (color_table[COLOR_DEFAULT] & 0x00FF00) | (color_table[COLOR_DEFAULT] & 0xFF0000) >> 16; // RGB to BGR
 			unsigned short len = strnlen(line, CHAT_SIZE_MAX);
 
@@ -6192,7 +6195,6 @@ void clif_displaymessage(const int fd, const char* mes)
 				WFIFOSET(fd, WFIFOW(fd, 2));
 			}
 #else
-		while(line != NULL) {
 			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
 			int len = strnlen(line, CHAT_SIZE_MAX);
 
@@ -7968,25 +7970,13 @@ void clif_send_petstatus(struct map_session_data *sd)
 void clif_pet_emotion(struct pet_data *pd,int param)
 {
 	unsigned char buf[16];
-	s_pet_db *pet_db_ptr;
 
 	nullpo_retv(pd);
-
-	pet_db_ptr = pd->get_pet_db();
 
 	memset(buf,0,packet_len(0x1aa));
 
 	WBUFW(buf,0)=0x1aa;
 	WBUFL(buf,2)=pd->bl.id;
-	if(param >= 100 && pet_db_ptr->talk_convert_class) {
-		if(pet_db_ptr->talk_convert_class < 0)
-			return;
-		else if(pet_db_ptr->talk_convert_class > 0) {
-			// replace mob_id component of talk/act data
-			param -= (pd->pet.class_ - 100)*100;
-			param += (pet_db_ptr->talk_convert_class - 100)*100;
-		}
-	}
 	WBUFL(buf,6)=param;
 
 	clif_send(buf,packet_len(0x1aa),&pd->bl,AREA);
@@ -10110,7 +10100,7 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 	if( is_atcommand( fd, sd, out_message, 1 )  )
 		return false;
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return false; //no "chatting" while muted.
 
 	if( battle_config.min_chat_delay ) { //[Skotlex]
@@ -10406,7 +10396,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if( sd->pd ) {
 		if( battle_config.pet_no_gvg && mapdata_flag_gvg(mapdata) ) { //Return the pet to egg. [Skotlex]
 			clif_displaymessage(sd->fd, msg_txt(sd,666));
-			pet_menu(sd, 3); //Option 3 is return to egg.
+			pet_return_egg( sd, sd->pd );
 		} else {
 			if(map_addblock(&sd->pd->bl))
 				return;
@@ -10524,6 +10514,21 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #if PACKETVER >= 20070918
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
+#endif
+#if PACKETVER >= 20141008
+		if( battle_config.pet_autofeed_always ){
+			// Always send ON or OFF
+			if( sd->pd && battle_config.feature_pet_autofeed ){
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, sd->pd->pet.autofeed );
+			}else{
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, false );
+			}
+		}else{
+			// Only send when enabled
+			if( sd->pd && battle_config.feature_pet_autofeed && sd->pd->pet.autofeed ){
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, true );
+			}
+		}
 #endif
 #if PACKETVER >= 20170920
 		if( battle_config.homunculus_autofeed_always ){
@@ -10650,7 +10655,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNPC))
 		npc_touch_areanpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	else
-		sd->areanpc_id = 0;
+		sd->areanpc.clear();
 
 	/* it broke at some point (e.g. during a crash), so we make it visibly dead again. */
 	if( !sd->status.hp && !pc_isdead(sd) && status_isdead(&sd->bl) )
@@ -10791,19 +10796,32 @@ void clif_progressbar_abort(struct map_session_data * sd)
 }
 
 
-/// Notification from the client, that the progress bar has reached 100% (CZ_PROGRESS).
-/// 02f1
-void clif_parse_progressbar(int fd, struct map_session_data * sd)
-{
-	int npc_id = sd->progressbar.npc_id;
+/// Notification from the client, that the progress bar has reached 100%.
+/// 02f1 (CZ_PROGRESS)
+void clif_parse_progressbar(int fd, struct map_session_data * sd){
+	// No progressbar active, ignore it
+	if( !sd->progressbar.npc_id ){
+		return;
+	}
 
-	if( gettick() < sd->progressbar.timeout && sd->st )
-		sd->st->state = END;
+	int npc_id = sd->progressbar.npc_id;
+	bool closing = false;
+
+	// Check if the progress was canceled
+	if( gettick() < sd->progressbar.timeout && sd->st ){
+		closing = true;
+		sd->st->state = CLOSE; // will result in END in npc_scriptcont
+
+		// If a message window was open, offer a close button to the user
+		if( sd->st->mes_active ){
+			clif_scriptclose( sd, npc_id );
+		}
+	}
 
 	sd->progressbar.npc_id = 0;
 	sd->progressbar.timeout = 0;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
-	npc_scriptcont(sd, npc_id, false);
+	npc_scriptcont(sd, npc_id, closing);
 }
 
 /// Displays cast-like progress bar on a NPC
@@ -11084,6 +11102,11 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd)
 		if (battle_config.idletime_option&IDLE_EMOTION)
 			sd->idletime = last_tick;
 
+		if (sd->state.block_action & PCBLOCK_EMOTION) {
+			clif_skill_fail(sd, 1, USESKILL_FAIL_LEVEL, 1);
+			return;
+		}
+
 		if(battle_config.client_reshuffle_dice && emoticon>=ET_DICE1 && emoticon<=ET_DICE6) {// re-roll dice
 			emoticon = rnd()%6+ET_DICE1;
 		}
@@ -11184,6 +11207,11 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		)) //No sitting during these states either.
 			break;
 
+		if (sd->state.block_action & PCBLOCK_SITSTAND) {
+			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+			break;
+		}
+
 		if (battle_config.idletime_option&IDLE_SIT)
 			sd->idletime = last_tick;
 
@@ -11200,6 +11228,11 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 
 		if (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 			break;
+
+		if (sd->state.block_action & PCBLOCK_SITSTAND) {
+			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+			break;
+		}
 
 		if (pc_setstand(sd, false)) {
 			if (battle_config.idletime_option&IDLE_SIT)
@@ -11483,8 +11516,10 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID )
+	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || (sd->state.block_action & PCBLOCK_USEITEM) ) {
+		clif_msg(sd, WORK_IN_PROGRESS);
 		return;
+	}
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]
 	if (battle_config.idletime_option&IDLE_USEITEM)
@@ -12197,6 +12232,11 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 	if (inf&INF_GROUND_SKILL || !inf)
 		return; //Using a ground/passive skill on a target? WRONG.
 
+	if (sd->state.block_action & PCBLOCK_SKILL) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
+
 	if( SKILL_CHK_HOMUN(skill_id) ) {
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skill_id, skill_lv, target_id);
 		return;
@@ -12309,6 +12349,11 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 
 	if( !(skill_get_inf(skill_id)&INF_GROUND_SKILL) )
 		return; //Using a target skill on the ground? WRONG.
+
+	if (sd->state.block_action & PCBLOCK_SKILL) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
 
 	if( SKILL_CHK_HOMUN(skill_id) ) {
 		clif_parse_UseSkillToPos_homun(sd->hd, sd, tick, skill_id, skill_lv, x, y, skillmoreinfo);
@@ -16672,7 +16717,12 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 			sd->status.show_equip = flag;
 			break;
 		case CONFIG_PET_AUTOFEED:
-			// TODO: Implement with pet evolution system
+			// Player can not click this if he does not have a pet
+			if( sd->pd == nullptr || !battle_config.feature_pet_autofeed || !sd->pd->get_pet_db()->allow_autofeed ){
+				return;
+			}
+
+			sd->pd->pet.autofeed = flag;
 			break;
 		case CONFIG_HOMUNCULUS_AUTOFEED:
 			// Player can not click this if he does not have a homunculus or it is vaporized
@@ -20352,6 +20402,34 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 	WFIFOB(fd, 2) = result;
 	WFIFOL(fd, 3) = achievement_id;
 	WFIFOSET(fd, packet_len(0xa26));
+}
+
+/// Process the pet evolution request
+/// 09fb <packetType>.W <packetLength>.W <evolutionPetEggITID>.W (CZ_PET_EVOLUTION)
+void clif_parse_pet_evolution( int fd, struct map_session_data *sd ){
+#if PACKETVER >= 20141008
+	auto pet = pet_db_search(RFIFOW(fd, 4), PET_EGG);
+
+	if (!pet) {
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_NOT_PETEGG);
+		return;
+	}
+
+	pet_evolution(sd, pet->class_);
+#endif
+}
+
+/// Sends the result of the evolution to the client.
+/// 09fc <result>.L (ZC_PET_EVOLUTION_RESULT)
+void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result ){
+#if PACKETVER >= 20141008
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x9fc));
+	WFIFOW(fd, 0) = 0x9fc;
+	WFIFOL(fd, 2) = static_cast<uint32>(result);
+	WFIFOSET(fd, packet_len(0x9fc));
+#endif
 }
 
 /*

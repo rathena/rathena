@@ -2742,7 +2742,6 @@ ACMD_FUNC(guildlevelup) {
 ACMD_FUNC(makeegg) {
 	struct item_data *item_data;
 	int id;
-	struct s_pet_db* pet;
 
 	nullpo_retr(-1, sd);
 
@@ -2759,12 +2758,18 @@ ACMD_FUNC(makeegg) {
 	else
 		id = atoi(message);
 
-	pet = pet_db(id);
-	if (!pet)
+	std::shared_ptr<s_pet_db> pet = pet_db.find(id);
+
+	if( pet == nullptr ){
 		pet = pet_db_search(id, PET_EGG);
+	}
+
 	if (pet != nullptr) {
 		sd->catch_target_class = pet->class_;
-		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mob_db(pet->class_)->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, pet->jname);
+
+		struct mob_db* mdb = mob_db(pet->class_);
+
+		intif_create_pet(sd->status.account_id, sd->status.char_id, pet->class_, mdb->lv, pet->EggID, 0, pet->intimate, 100, 0, 1, mdb->jname);
 	} else {
 		clif_displaymessage(fd, msg_txt(sd,180)); // The monster/egg name/id doesn't exist.
 		return -1;
@@ -3819,7 +3824,7 @@ ACMD_FUNC(reload) {
 		clif_displaymessage(fd, msg_txt(sd,97)); // Item database has been reloaded.
 	} else if (strstr(command, "mobdb") || strncmp(message, "mobdb", 3) == 0) {
 		mob_reload();
-		read_petdb();
+		pet_db.reload();
 		hom_reload();
 		mercenary_readdb();
 		mercenary_read_skilldb();
@@ -3917,6 +3922,7 @@ ACMD_FUNC(reload) {
 		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ){
 			pc_close_npc(pl_sd,1);
 			clif_cutin(pl_sd, "", 255);
+			pl_sd->state.block_action &= ~(PCBLOCK_ALL ^ PCBLOCK_IMMUNE);
 		}
 		mapit_free(iter);
 
@@ -4488,7 +4494,7 @@ ACMD_FUNC(repairall)
 
 	count = 0;
 	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute == 1) {
+		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].card[0] != CARD0_PET && sd->inventory.u.items_inventory[i].attribute == 1) {
 			sd->inventory.u.items_inventory[i].attribute = 0;
 			clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
 			count++;
@@ -5972,7 +5978,7 @@ ACMD_FUNC(autotrade) {
 
 	sd->state.autotrade = 1;
 	if (battle_config.autotrade_monsterignore)
-		sd->state.monster_ignore = 1;
+		sd->state.block_action |= PCBLOCK_IMMUNE;
 
 	if( sd->state.vending ){
 		if( Sql_Query( mmysql_handle, "UPDATE `%s` SET `autotrade` = 1 WHERE `id` = %d;", vendings_table, sd->vender_id ) != SQL_SUCCESS ){
@@ -6629,7 +6635,7 @@ ACMD_FUNC(npctalk)
 	bool ifcolor=(*(command + 8) != 'c' && *(command + 8) != 'C')?0:1;
 	unsigned long color=0;
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return -1; //no "chatting" while muted.
 
 	if(!ifcolor) {
@@ -6678,7 +6684,7 @@ ACMD_FUNC(pettalk)
 		return -1;
 	}
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return -1; //no "chatting" while muted.
 
 	if (!message || !*message || sscanf(message, "%99[^\n]", mes) < 1) {
@@ -7562,7 +7568,7 @@ ACMD_FUNC(homtalk)
 		sd->cantalk_tick = gettick() + battle_config.min_chat_delay;
 	}
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return -1; //no "chatting" while muted.
 
 	if ( !hom_is_active(sd->hd) ) {
@@ -7970,7 +7976,7 @@ ACMD_FUNC(me)
 	memset(tempmes, '\0', sizeof(tempmes));
 	memset(atcmd_output, '\0', sizeof(atcmd_output));
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return -1; //no "chatting" while muted.
 
 	if (!message || !*message || sscanf(message, "%255[^\n]", tempmes) < 0) {
@@ -8090,12 +8096,12 @@ ACMD_FUNC(monsterignore)
 {
 	nullpo_retr(-1, sd);
 
-	if (!sd->state.monster_ignore) {
-		sd->state.monster_ignore = 1;
-		clif_displaymessage(sd->fd, msg_txt(sd,1305)); // You are now immune to attacks.
-	} else {
-		sd->state.monster_ignore = 0;
+	if (sd->state.block_action & PCBLOCK_IMMUNE) {
+		sd->state.block_action &= ~PCBLOCK_IMMUNE;
 		clif_displaymessage(sd->fd, msg_txt(sd,1306)); // Returned to normal state.
+	} else {
+		sd->state.block_action |= PCBLOCK_IMMUNE;
+		clif_displaymessage(sd->fd, msg_txt(sd,1305)); // You are now immune to attacks.
 	}
 
 	return 0;
@@ -10558,6 +10564,12 @@ bool is_atcommand(const int fd, struct map_session_data* sd, const char* message
 	//check to see if any params exist within this command
 	if( sscanf(atcmd_msg, "%255s %255[^\n]", command, params) < 2 )
 		params[0] = '\0';
+
+	if (type == 1 && (sd->state.block_action & PCBLOCK_COMMANDS)) {
+		sprintf(output,msg_txt(sd,154), command); // %s failed.
+		clif_displaymessage(fd, output);
+		return true;
+	}
 
 	// @commands (script based)
 	if((type == 1 || type == 3) && atcmd_binding_count > 0) {

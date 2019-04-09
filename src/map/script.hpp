@@ -1905,6 +1905,24 @@ enum e_charinfo_type : uint8 {
 };
 
 /**
+ * Player blocking actions related flags.
+ */
+enum e_pcblock_action_flag : uint16 {
+	PCBLOCK_MOVE     = 0x001,
+	PCBLOCK_ATTACK   = 0x002,
+	PCBLOCK_SKILL    = 0x004,
+	PCBLOCK_USEITEM  = 0x008,
+	PCBLOCK_CHAT     = 0x010,
+	PCBLOCK_IMMUNE   = 0x020,
+	PCBLOCK_SITSTAND = 0x040,
+	PCBLOCK_COMMANDS = 0x080,
+	PCBLOCK_NPCCLICK = 0x100,
+	PCBLOCK_NPC      = 0x18D,
+	PCBLOCK_EMOTION  = 0x200,
+	PCBLOCK_ALL      = 0x3FF,
+};
+
+/**
  * used to generate quick script_array entries
  **/
 extern struct eri *array_ers;

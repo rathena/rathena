@@ -13,7 +13,7 @@
 #include "../common/sql.hpp"
 #include "../common/strlib.hpp"
 
-// global sql settings (in ipban_sql.c)
+// global sql settings (in ipban_sql.cpp)
 static char   global_db_hostname[64] = "127.0.0.1"; // Doubled to reflect the change on commit #0f2dd7f
 static uint16 global_db_port = 3306;
 static char   global_db_username[32] = "ragnarok";

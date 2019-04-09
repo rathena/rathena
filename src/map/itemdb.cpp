@@ -116,6 +116,10 @@ struct item_data* itemdb_searchname(const char *str)
 	return itemdb_searchname1(str, false);
 }
 
+struct item_data* itemdb_search_aegisname( const char *str ){
+	return itemdb_searchname1( str, true );
+}
+
 /**
  * @see DBMatcher
  */
@@ -919,7 +923,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	struct item_data *id;
 
 	if (!(id = itemdb_exists(nameid))) {
-		ShowError("itemdb_read_flag: Invalid item item with id %hu\n", nameid);
+		ShowError("itemdb_read_flag: Invalid item id %hu\n", nameid);
 		return true;
 	}
 	

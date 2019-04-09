@@ -5,6 +5,7 @@
 #define PET_HPP
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
@@ -12,42 +13,49 @@
 #include "status.hpp"
 #include "unit.hpp"
 
+#include <unordered_map>
+
 #define MAX_PETLOOT_SIZE	30
+
+struct s_pet_evo_data {
+	uint16 target_mob_id;
+	std::unordered_map<uint16, uint32> requirements;
+};
 
 /// Pet DB
 struct s_pet_db {
-	short class_; ///< Monster ID
-	char name[NAME_LENGTH], ///< AEGIS name
-		jname[NAME_LENGTH]; ///< English name
-	unsigned short itemID; ///< Lure ID
-	unsigned short EggID; ///< Egg ID
-	unsigned short AcceID; ///< Accessory ID
-	unsigned short FoodID; ///< Food ID
-	int fullness; ///< Amount of hunger decresed each hungry_delay interval
-	int hungry_delay; ///< Hunger value decrease each x seconds
-	int r_hungry; ///< Intimacy increased after feeding
-	int r_full; ///< Intimacy reduced when over-fed
-	int intimate; ///< Initial intimacy value
-	int die; ///< Intimacy decreased when die
-	int capture; ///< Capture success rate 1000 = 100%
-	int speed; ///< Walk speed
-	char s_perfor; ///< Special performance
-	int talk_convert_class; ///< Disables pet talk (instead of talking they emote  with /!.) (?)
-	int attack_rate; ///< Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
-	int defence_attack_rate; ///< Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
-	int change_target_rate; ///< Rate of which the pet will change its attack target.
+	uint16 class_; ///< Monster ID
+	uint16 itemID; ///< Lure ID
+	uint16 EggID; ///< Egg ID
+	uint16 AcceID; ///< Accessory ID
+	uint16 FoodID; ///< Food ID
+	uint16 fullness; ///< Amount of hunger decresed each hungry_delay interval
+	uint32 hungry_delay; ///< Hunger value decrease each x seconds
+	int32 hunger_increase; ///< Hunger increased every time the pet is fed.
+	int32 r_hungry; ///< Intimacy increased after feeding
+	int32 r_full; ///< Intimacy increased when over-fed
+	uint32 intimate; ///< Initial intimacy value
+	int32 die; ///< Intimacy increased when die
+	int32 hungry_intimacy_dec; ///< Intimacy increased when hungry
+	uint16 capture; ///< Capture success rate 10000 = 100%
+	bool s_perfor; ///< Special performance
+	uint16 attack_rate; ///< Rate of which the pet will attack (requires at least pet_support_min_friendly intimacy).
+	uint16 defence_attack_rate; ///< Rate of which the pet will retaliate when master is being attacked (requires at least pet_support_min_friendly intimacy).
+	uint16 change_target_rate; ///< Rate of which the pet will change its attack target.
+	bool allow_autofeed; ///< Can this pet use auto feeding mechanic.
+	std::unordered_map<uint16, std::shared_ptr<s_pet_evo_data>> evolution_data; ///< Data for evolving the pet.
 	struct script_code
-		*pet_script, ///< Script since pet hatched
-		*pet_loyal_script; ///< Script when pet is loyal
+		*pet_support_script, ///< Script since pet hatched. For pet* script commands only.
+		*pet_bonus_script; ///< Bonus script for this pet.
 
 	~s_pet_db()
 	{
-		if( this->pet_script ){
-			script_free_code(this->pet_script);
+		if( this->pet_support_script ){
+			script_free_code(this->pet_support_script);
 		}
 
-		if( this->pet_loyal_script ){
-			script_free_code(this->pet_loyal_script);
+		if( this->pet_bonus_script ){
+			script_free_code(this->pet_bonus_script);
 		}
 	}
 };
@@ -58,6 +66,25 @@ enum e_pet_catch : uint16 {
 	PET_CATCH_FAIL = 0, ///< A catch attempt failed
 	PET_CATCH_UNIVERSAL = 1, ///< The catch attempt is universal (ignoring MD_STATUS_IMMUNE/Boss)
 	PET_CATCH_UNIVERSAL_ITEM = 2,
+};
+
+enum e_pet_intimate_level : uint16 {
+	PET_INTIMATE_NONE = 0,
+	PET_INTIMATE_AWKWARD = 1,
+	PET_INTIMATE_SHY = 100,
+	PET_INTIMATE_NEUTRAL = 250,
+	PET_INTIMATE_CORDIAL = 750,
+	PET_INTIMATE_LOYAL = 910,
+	PET_INTIMATE_MAX = 1000
+};
+
+enum e_pet_hungry : uint16 {
+	PET_HUNGRY_NONE = 0,
+	PET_HUNGRY_VERY_HUNGRY = 10,
+	PET_HUNGRY_HUNGRY = 25,
+	PET_HUNGRY_NEUTRAL = 75,
+	PET_HUNGRY_SATISFIED = 90,
+	PET_HUNGRY_STUFFED = 100
 };
 
 struct pet_recovery { //Stat recovery
@@ -99,7 +126,18 @@ struct pet_loot {
 	unsigned short max;
 };
 
-struct s_pet_db *pet_db(uint16 pet_id);
+class PetDatabase : public TypesafeYamlDatabase<uint16,s_pet_db>{
+public:
+	PetDatabase() : TypesafeYamlDatabase( "PET_DB", 1 ){
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode( const YAML::Node& node );
+	bool reload();
+};
+
+extern PetDatabase pet_db;
 
 struct pet_data {
 	struct block_list bl;
@@ -126,8 +164,8 @@ struct pet_data {
 	int masterteleport_timer;
 	struct map_session_data *master;
 
-	s_pet_db* get_pet_db() {
-		return pet_db(this->pet.class_);
+	std::shared_ptr<s_pet_db> get_pet_db() {
+		return pet_db.find(this->pet.class_);
 	}
 };
 
@@ -137,9 +175,10 @@ void pet_set_intimate(struct pet_data *pd, int value);
 int pet_target_check(struct pet_data *pd,struct block_list *bl,int type);
 void pet_unlocktarget(struct pet_data *pd);
 int pet_sc_check(struct map_session_data *sd, int type); //Skotlex
-struct s_pet_db* pet_db_search(int key, enum e_pet_itemtype type);
+std::shared_ptr<s_pet_db> pet_db_search(int key, enum e_pet_itemtype type);
 int pet_hungry_timer_delete(struct pet_data *pd);
 bool pet_data_init(struct map_session_data *sd, struct s_pet *pet);
+bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd );
 int pet_birth_process(struct map_session_data *sd, struct s_pet *pet);
 int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag);
 int pet_select_egg(struct map_session_data *sd,short egg_index);
@@ -156,11 +195,14 @@ TIMER_FUNC(pet_skill_support_timer); // [Skotlex]
 TIMER_FUNC(pet_skill_bonus_timer); // [Valaris]
 TIMER_FUNC(pet_recovery_timer); // [Valaris]
 TIMER_FUNC(pet_heal_timer); // [Valaris]
+int pet_egg_search(struct map_session_data *sd, int pet_id);
+void pet_evolution(struct map_session_data *sd, int16 pet_id);
+int pet_food(struct map_session_data *sd, struct pet_data *pd);
+void pet_clear_support_bonuses(struct map_session_data *sd);
 
 #define pet_stop_walking(pd, type) unit_stop_walking(&(pd)->bl, type)
 #define pet_stop_attack(pd) unit_stop_attack(&(pd)->bl)
 
-void read_petdb(void);
 void do_init_pet(void);
 void do_final_pet(void);
 

@@ -435,6 +435,50 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 }
 
 /**
+ * Check skill unit maxcount
+ * @param src: Caster to check against
+ * @param x: X location of skill
+ * @param y: Y location of skill
+ * @param skill_id: Skill used
+ * @param skill_lv: Skill level used
+ * @param type: Type of unit to check against for battle_config checks
+ * @param display_failure: Display skill failure message
+ * @return True on skill cast success or false on failure
+ */
+bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 skill_id, uint16 skill_lv, enum bl_type type, bool display_failure) {
+	if (!src)
+		return false;
+
+	struct unit_data *ud = unit_bl2ud(src);
+	struct map_session_data *sd = map_id2sd(src->id);
+	int maxcount = 0;
+
+	if (!(type&battle_config.skill_reiteration) && skill_get_unit_flag(skill_id)&UF_NOREITERATION && skill_check_unit_range(src, x, y, skill_id, skill_lv)) {
+		if (sd && display_failure)
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+		return false;
+	}
+	if (type&battle_config.skill_nofootset && skill_get_unit_flag(skill_id)&UF_NOFOOTSET && skill_check_unit_range2(src, x, y, skill_id, skill_lv, false)) {
+		if (sd && display_failure)
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+		return false;
+	}
+	if (type&battle_config.land_skill_limit && (maxcount = skill_get_maxcount(skill_id, skill_lv)) > 0) {
+		for (int i = 0; i < MAX_SKILLUNITGROUP && ud->skillunit[i] && maxcount; i++) {
+			if (ud->skillunit[i]->skill_id == skill_id)
+				maxcount--;
+		}
+		if (maxcount == 0) {
+			if (sd && display_failure)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
  * Calculates heal value of skill's effect
  * @param src: Unit casting heal
  * @param target: Target of src
@@ -649,7 +693,7 @@ static int8 skill_isCopyable(struct map_session_data *sd, uint16 skill_idx) {
 
 /**
  * Check if the skill is ok to cast and when.
- * Done before check_condition_begin, requirement
+ * Done before skill_check_condition_castbegin, requirement
  * @param skill_id: Skill ID that casted
  * @param sd: Player who casted
  * @return true: Skill cannot be used, false: otherwise
@@ -1822,11 +1866,11 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case MH_XENO_SLASHER:
 		sc_start4(src, bl, SC_BLEEDING, skill_lv, skill_lv, src->id, 0, 0, skill_get_time2(skill_id, skill_lv));
 		break;
-	case NC_MAGMA_ERUPTION:
-		if (attack_type&BF_WEAPON) // Stun effect from 'slam'
-			sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time(skill_id, skill_lv));
-		if (attack_type&BF_MISC) // Burning effect from 'eruption'
-			sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
+	case NC_MAGMA_ERUPTION: // Stun effect from 'slam'
+		sc_start(src, bl, SC_STUN, 90, skill_lv, skill_get_time2(skill_id, skill_lv));
+		break;
+	case NC_MAGMA_ERUPTION_DOTDAMAGE: // Burning effect from 'eruption'
+		sc_start4(src, bl, SC_BURNING, 10 * skill_lv, skill_lv, 1000, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 	case GN_ILLUSIONDOPING:
 		if( sc_start(src,bl,SC_ILLUSIONDOPING,100 - skill_lv * 10,skill_lv,skill_get_time(skill_id,skill_lv)) )
@@ -1834,7 +1878,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 		break;
 
 	case RL_MASS_SPIRAL:
-		sc_start2(src,bl,SC_BLEEDING,30 + 10 * skill_lv,skill_lv,src->id,skill_get_time2(skill_id,skill_lv));
+		sc_start2(src,bl,SC_BLEEDING,30 + 10 * skill_lv,skill_lv,src->id,skill_get_time(skill_id,skill_lv));
 		break;
 	case RL_SLUGSHOT:
 		sc_start(src,bl,SC_STUN,100,skill_lv,skill_get_time2(skill_id,skill_lv));
@@ -2106,29 +2150,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 			tbl = (it.id < 0) ? src : bl;
 
-			if( (type = skill_get_casttype(skill)) == CAST_GROUND ) {
-				int maxcount = 0;
-				if( !(BL_PC&battle_config.skill_reiteration) &&
-					skill_get_unit_flag(skill)&UF_NOREITERATION &&
-					skill_check_unit_range(src,tbl->x,tbl->y,skill,autospl_skill_lv)
-				  )
+			if ((type = skill_get_casttype(skill)) == CAST_GROUND) {
+				if (!skill_pos_maxcount_check(src, tbl->x, tbl->y, skill, autospl_skill_lv, BL_PC, false))
 					continue;
-				if( BL_PC&battle_config.skill_nofootset &&
-					skill_get_unit_flag(skill)&UF_NOFOOTSET &&
-					skill_check_unit_range2(src,tbl->x,tbl->y,skill,autospl_skill_lv,false)
-				  )
-					continue;
-				if( BL_PC&battle_config.land_skill_limit &&
-					(maxcount = skill_get_maxcount(skill, autospl_skill_lv)) > 0
-				  ) {
-					int v;
-					for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;v++) {
-						if(sd->ud.skillunit[v]->skill_id == skill)
-							maxcount--;
-					}
-					if( maxcount == 0 )
-						continue;
-				}
 			}
 			if (battle_config.autospell_check_range &&
 				!battle_check_range(bl, tbl, skill_get_range2(src, skill, autospl_skill_lv, true)))
@@ -2233,27 +2257,9 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		else
 			tbl = bl;
 
-		if( (type = skill_get_casttype(skill)) == CAST_GROUND ) {
-			int maxcount = 0;
-			if( !(BL_PC&battle_config.skill_reiteration) &&
-				skill_get_unit_flag(skill)&UF_NOREITERATION &&
-				skill_check_unit_range(&sd->bl,tbl->x,tbl->y,skill,skill_lv) )
+		if ((type = skill_get_casttype(skill)) == CAST_GROUND) {
+			if (!skill_pos_maxcount_check(&sd->bl, tbl->x, tbl->y, skill_id, skill_lv, BL_PC, false))
 				continue;
-			if( BL_PC&battle_config.skill_nofootset &&
-				skill_get_unit_flag(skill)&UF_NOFOOTSET &&
-				skill_check_unit_range2(&sd->bl,tbl->x,tbl->y,skill,skill_lv,false) )
-				continue;
-			if( BL_PC&battle_config.land_skill_limit &&
-				(maxcount = skill_get_maxcount(skill, skill_lv)) > 0 )
-			{
-				int v;
-				for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;v++) {
-					if(sd->ud.skillunit[v]->skill_id == skill)
-						maxcount--;
-				}
-				if( maxcount == 0 )
-					continue;
-			}
 		}
 		if (battle_config.autospell_check_range &&
 			!battle_check_range(bl, tbl, skill_get_range2(&sd->bl, skill, skill_lv, true)))
@@ -2443,30 +2449,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				continue;
 
 			tbl = (it.id < 0) ? bl : src;
-			if( (type = skill_get_casttype(autospl_skill_id)) == CAST_GROUND ) {
-				int maxcount = 0;
-				if( !(BL_PC&battle_config.skill_reiteration) &&
-					skill_get_unit_flag(autospl_skill_id)&UF_NOREITERATION &&
-					skill_check_unit_range(bl,tbl->x,tbl->y,autospl_skill_id,autospl_skill_lv)
-				  )
+			if ((type = skill_get_casttype(autospl_skill_id)) == CAST_GROUND) {
+				if (!skill_pos_maxcount_check(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, BL_PC, false))
 					continue;
-				if( BL_PC&battle_config.skill_nofootset &&
-					skill_get_unit_flag(autospl_skill_id)&UF_NOFOOTSET &&
-					skill_check_unit_range2(bl,tbl->x,tbl->y,autospl_skill_id,autospl_skill_lv,false)
-				  )
-					continue;
-				if( BL_PC&battle_config.land_skill_limit &&
-					(maxcount = skill_get_maxcount(autospl_skill_id, autospl_skill_lv)) > 0
-				  ) {
-					int v;
-					for(v=0;v<MAX_SKILLUNITGROUP && dstsd->ud.skillunit[v] && maxcount;v++) {
-						if(dstsd->ud.skillunit[v]->skill_id == autospl_skill_id)
-							maxcount--;
-					}
-					if( maxcount == 0 ) {
-						continue;
-					}
-				}
 			}
 
 			if (!battle_check_range(bl, tbl, skill_get_range2(src, autospl_skill_id, autospl_skill_lv, true)) && battle_config.autospell_check_range)
@@ -3515,7 +3500,6 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case EL_HURRICANE_ATK:
 		case KO_BAKURETSU:
 		case GN_CRAZYWEED_ATK:
-		case NC_MAGMA_ERUPTION:
 		case SU_SV_ROOTTWIST_ATK:
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,skill_id,-1,DMG_SPLASH);
 			break;
@@ -6515,7 +6499,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SA_TAMINGMONSTER:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
-		if (sd && dstmd && pet_db(dstmd->mob_id)) {
+		if (sd && dstmd && pet_db.find(dstmd->mob_id)) {
 			pet_catch_process1(sd, dstmd->mob_id);
 		}
 		break;
@@ -11577,39 +11561,11 @@ TIMER_FUNC(skill_castend_pos){
 		ud->skilltimer = INVALID_TIMER;
 
 	do {
-		int maxcount=0;
 		if( status_isdead(src) )
 			break;
 
-		if( !(src->type&battle_config.skill_reiteration) &&
-			skill_get_unit_flag(ud->skill_id)&UF_NOREITERATION &&
-			skill_check_unit_range(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv)
-		  )
-		{
-			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
+		if (!skill_pos_maxcount_check(src, ud->skillx, ud->skilly, ud->skill_id, ud->skill_lv, src->type, true))
 			break;
-		}
-		if( skill_get_unit_flag(ud->skill_id)&UF_NOFOOTSET &&
-			skill_check_unit_range2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,false)
-		  )
-		{
-			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
-			break;
-		}
-		if( src->type&battle_config.land_skill_limit &&
-			(maxcount = skill_get_maxcount(ud->skill_id, ud->skill_lv)) > 0
-		  ) {
-			int i;
-			for(i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i] && maxcount;i++) {
-				if(ud->skillunit[i]->skill_id == ud->skill_id)
-					maxcount--;
-			}
-			if( maxcount == 0 )
-			{
-				if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
-				break;
-			}
-		}
 
 		if(tid != INVALID_TIMER)
 		{	//Avoid double checks on instant cast skills. [Skotlex]
@@ -12511,11 +12467,9 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		// 1st, AoE 'slam' damage
 		i = skill_get_splash(skill_id, skill_lv);
 		map_foreachinarea(skill_area_sub, src->m, x-i, y-i, x+i, y+i, BL_CHAR,
-			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|1, skill_castend_damage_id);
-		if (skill_get_unit_id(NC_MAGMA_ERUPTION,0)) {
-			// 2nd, AoE 'eruption' unit
-			skill_addtimerskill(src,gettick()+500,0,x,y,skill_id,skill_lv,BF_MISC,flag);
-		}
+			src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_ANIMATION|1, skill_castend_damage_id);
+		// 2nd, AoE 'eruption' unit
+		skill_addtimerskill(src,tick + status_get_amotion(src) * 2,0,x,y,skill_id,skill_lv,0,flag);
 		break;
 	case SU_LOPE:
 		{
@@ -13167,11 +13121,6 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 		val2 = y;
 		val3 = 0; // Suck target at n seconds.
 		break;
-	case NC_MAGMA_ERUPTION:
-		// Since we have no 'place' anymore. time1 for Stun duration, time2 for burning duration
-		// Officially, duration (limit) is 5secs, interval 0.5secs damage interval.
-		limit = interval * 10;
-		break;
 	case MH_VOLCANIC_ASH:
 		if (!map_flag_vs(src->m))
 			target = BCT_ENEMY;
@@ -13261,7 +13210,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 				unit_val2 = group->val2;
 				break;
 			case WZ_ICEWALL:
-				unit_val1 = (skill_lv <= 1) ? 500 : 200 + 200*skill_lv;
+				unit_val1 = 200 + 200*skill_lv;
 				unit_val2 = map_getcell(src->m, ux, uy, CELL_GETTYPE);
 				break;
 			case WZ_WATERBALL:
@@ -13604,13 +13553,6 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 			}
 			break;
 
-		// officially, icewall has no problems existing on occupied cells [ultramage]
-		//	case UNT_ICEWALL: //Destroy the cell. [Skotlex]
-		//		unit->val1 = 0;
-		//		if(unit->limit + sg->tick > tick + 700)
-		//			unit->limit = DIFF_TICK(tick+700,sg->tick);
-		//		break;
-
 		case UNT_MOONLIT:
 			//Knockback out of area if affected char isn't in Moonlit effect
 			if (sc && sc->data[SC_DANCING] && (sc->data[SC_DANCING]->val1&0xFFFF) == CG_MOONLIT)
@@ -13779,7 +13721,6 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 		case UNT_FIREWALK:
 		case UNT_ELECTRICWALK:
 		case UNT_PSYCHIC_WAVE:
-		case UNT_MAGMA_ERUPTION:
 		case UNT_MAKIBISHI:
 		case UNT_VENOMFOG:
 		case UNT_ICEMINE:
@@ -14401,6 +14342,10 @@ int skill_unit_onplace_timer(struct skill_unit *unit, struct block_list *bl, t_t
 			clif_skill_damage(ss,bl,tick,status_get_amotion(ss),0,
 				skill_attack(skill_get_type(sg->skill_id),ss,&unit->bl,bl,sg->skill_id,sg->skill_lv,tick,SD_ANIMATION|SD_SPLASH),
 				1,sg->skill_id,sg->skill_lv,DMG_SKILL);
+			break;
+
+		case UNT_MAGMA_ERUPTION:
+			skill_attack(skill_get_type(NC_MAGMA_ERUPTION_DOTDAMAGE), ss, &unit->bl, bl, NC_MAGMA_ERUPTION_DOTDAMAGE, sg->skill_lv, tick, 0);
 			break;
 	}
 
@@ -18526,6 +18471,13 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 	if( !group->state.guildaura && (DIFF_TICK(tick,group->tick) >= group->limit || DIFF_TICK(tick,group->tick) >= unit->limit) )
 	{// skill unit expired (inlined from skill_unit_onlimit())
 		switch( group->unit_id ) {
+			case UNT_ICEWALL:
+				unit->val1 -= 50; // icewall loses 50 hp every second
+				group->limit = DIFF_TICK(tick + group->interval,group->tick);
+				unit->limit = DIFF_TICK(tick + group->interval,group->tick);
+				if( unit->val1 <= 0 )
+					skill_delunit(unit);
+			break;
 			case UNT_BLASTMINE:
 #ifdef RENEWAL
 			case UNT_CLAYMORETRAP:
@@ -18669,12 +18621,6 @@ static int skill_unit_timer_sub(DBKey key, DBData *data, va_list ap)
 		}
 	} else {// skill unit is still active
 		switch( group->unit_id ) {
-			case UNT_ICEWALL:
-				// icewall loses 50 hp every second
-				unit->val1 -= SKILLUNITTIMER_INTERVAL/20; // trap's hp
-				if( unit->val1 <= 0 && unit->limit + group->tick > tick + 700 )
-					unit->limit = DIFF_TICK(tick+700,group->tick);
-				break;
 			case UNT_BLASTMINE:
 			case UNT_SKIDTRAP:
 			case UNT_LANDMINE:

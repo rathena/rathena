@@ -16,7 +16,7 @@
 //        12659 cannot be used when this delay is active.
 //     Since this is optional, default is -1 will ignores the
 //     delay group and the delay will be stored in character's
-//     data that has limit set in src/map/itemdb.h as MAX_ITEMDELAYS.
+//     data that has limit set in src/map/itemdb.hpp as MAX_ITEMDELAYS.
 
 // SC_REUSE_LIMIT_A
 14538,300000,SC_REUSE_LIMIT_A	//Glass_Of_Illusion

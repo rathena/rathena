@@ -59,7 +59,7 @@ struct npc_data {
 		unsigned short str, agi, vit, int_, dex, luk;
 	} params;
 
-	void* chatdb; // pointer to a npc_parse struct (see npc_chat.c)
+	void* chatdb; // pointer to a npc_parse struct (see npc_chat.cpp)
 	char* path;/* path dir */
 	enum npc_subtype subtype;
 	bool trigger_on_hidden;
@@ -1142,6 +1142,8 @@ enum e_job_types
 	JT_4_F_EINRESERCHER,
 	JT_4_F_REINDEER,
 	JT_4_PIGOCTO,
+
+	JT_4_JP_16TH = 10343,
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
