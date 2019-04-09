@@ -24039,34 +24039,37 @@ BUILDIN_FUNC(charinfo) {
 	else {
 		int id = script_getnum(st, 2);
 		sd = map_id2sd(id);
-		if (sd == NULL)
+		if (!sd)
 			sd = map_charid2sd(id);
 	}
 
-	switch( script_getnum(st, 3) ) {
-	case PC_NAME:
-		if (sd)
-			script_pushstrcopy(st,sd->status.name);
-		else
-			script_pushconststr(st,"");
-		break;
-	case PC_CHAR:
-		if (sd)
-			script_pushint(st,sd->status.char_id);
-		else
-			script_pushint(st,0);
-		break;
-	case PC_ACCOUNT:
-		if (sd)
-			script_pushint(st,sd->status.account_id);
-		else
-			script_pushint(st,0);
-		break;
-	default:
-		ShowError("buildin_charinfo: unknown parameter.\n");
+	int type = script_getnum(st, 3);
+	if (type < PC_NAME || type > PC_ACCOUNT) {
+		ShowError("buildin_charinfo: unknown type %d.\n", type);
+		script_pushnil(st);
+		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	if (!sd) {
+		if (type == PC_NAME)
+			script_pushstrcopy(st, "");
+		else
+			script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch (type) {
+	case PC_NAME:
+		script_pushstrcopy(st, sd->status.name);
+		break;
+	case PC_CHAR:
+		script_pushint(st, sd->status.char_id);
+		break;
+	case PC_ACCOUNT:
+		script_pushint(st, sd->status.account_id);
+		break;
+	}
 	return SCRIPT_CMD_SUCCESS;
 }
 
