@@ -1898,7 +1898,7 @@ enum e_hat_effects {
 	HAT_EF_MAX
 };
 
-enum bl_pc_type : uint8 {
+enum e_charinfo_type : uint8 {
 	PC_NAME      = 0,
 	PC_CHAR      = 1,
 	PC_ACCOUNT   = 2
