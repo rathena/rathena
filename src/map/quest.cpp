@@ -203,9 +203,6 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 
 				target->count = count;
-			} else {
-				if (!targetExists)
-					target->count = 0;
 			}
 
 			quest->objectives.push_back(target);
@@ -253,7 +250,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 			bool targetExists = target != nullptr;
 
 			if (!targetExists) {
-				if (!this->nodeExists(dropNode, "Item") && !this->nodeExists(dropNode, "Count") && !this->nodeExists(dropNode, "Rate")) {
+				if (!this->nodeExists(dropNode, "Item") || !this->nodeExists(dropNode, "Rate")) {
 					this->invalidWarning(dropNode, "Node \"Drop\" has no data specified, skipping.\n");
 					return 0;
 				}
@@ -276,9 +273,6 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 				}
 
 				target->nameid = item->nameid;
-			} else {
-				if (!targetExists)
-					target->nameid = 0;
 			}
 
 			if (this->nodeExists(dropNode, "Count")) {
@@ -294,10 +288,8 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 
 				target->count = count;
 			} else {
-				if (!targetExists && target->nameid)
+				if (!targetExists)
 					target->count = 1;
-				else if (!targetExists)
-					target->count = 0;
 			}
 
 			if (this->nodeExists(dropNode, "Rate")) {
@@ -307,9 +299,6 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 
 				target->rate = rate;
-			} else {
-				if (!targetExists)
-					target->rate = 0;
 			}
 
 			quest->dropitem.push_back(target);
