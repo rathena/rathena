@@ -827,7 +827,7 @@ bool guild_check_empty(struct guild *g)
 
 unsigned int guild_nextexp(int level)
 {
-	if (!level)
+	if (level == 0)
 		return 1;
 	if (level < 0 || level > MAX_GUILDLEVEL)
 		return 0;
