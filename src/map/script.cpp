@@ -11266,7 +11266,7 @@ BUILDIN_FUNC(getareadropitem)
 BUILDIN_FUNC(enablenpc)
 {
 	const char *str = script_getstr(st,2);
-	if (npc_enable(str,1))
+	if (npc_enable(str,1) != 0)
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
@@ -11277,7 +11277,7 @@ BUILDIN_FUNC(enablenpc)
 BUILDIN_FUNC(disablenpc)
 {
 	const char *str = script_getstr(st,2);
-	if (npc_enable(str,0))
+	if (npc_enable(str,0) != 0)
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
@@ -11288,7 +11288,7 @@ BUILDIN_FUNC(disablenpc)
 BUILDIN_FUNC(hideoffnpc)
 {
 	const char *str = script_getstr(st,2);
-	if (npc_enable(str,2))
+	if (npc_enable(str,2) != 0)
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
@@ -11298,7 +11298,7 @@ BUILDIN_FUNC(hideoffnpc)
 BUILDIN_FUNC(hideonnpc)
 {
 	const char *str = script_getstr(st,2);
-	if (npc_enable(str,4))
+	if (npc_enable(str,4) != 0)
 		return SCRIPT_CMD_SUCCESS;
 
 	return SCRIPT_CMD_FAILURE;
