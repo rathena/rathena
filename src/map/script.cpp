@@ -19904,7 +19904,7 @@ BUILDIN_FUNC(instance_mapname)
 		instance_id = script_instancegetid(st);
 
 	// Check that instance mapname is a valid map
-	if(!instance_id || (m = instance_mapid(map_mapname2mapid(str), instance_id)) < 0)
+	if(instance_id == 0 || (m = instance_mapid(map_mapname2mapid(str), instance_id)) < 0)
 		script_pushconststr(st, "");
 	else
 		script_pushconststr(st, map_getmapdata(m)->name);
@@ -19987,7 +19987,7 @@ BUILDIN_FUNC(instance_warpall)
 	else
 		instance_id = script_instancegetid(st);
 
-	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
+	if( instance_id == 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
 	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
@@ -20024,7 +20024,7 @@ BUILDIN_FUNC(instance_announce) {
 
 	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
-	if (!instance_id && idata) {
+	if (instance_id == 0 && idata) {
 		ShowError("buildin_instance_announce: Intance is not found.\n");
 		return SCRIPT_CMD_FAILURE;
 	}

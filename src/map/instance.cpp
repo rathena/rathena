@@ -213,7 +213,7 @@ InstanceDatabase instance_db;
  */
 std::shared_ptr<s_instance_data> instance_search(int instance_id)
 {
-	if (!instance_id || instance_id > MAX_INSTANCE_DATA)
+	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
 		return nullptr;
 
 	return instances[instance_id];
@@ -226,7 +226,7 @@ std::shared_ptr<s_instance_data> instance_search(int instance_id)
  */
 std::shared_ptr<s_instance_db> instance_search_db(int instance_id)
 {
-	if (!instance_id || instance_id > MAX_INSTANCE_DATA)
+	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
 		return nullptr;
 
 	return instance_db.find(instance_id);
@@ -300,7 +300,7 @@ static TIMER_FUNC(instance_delete_timer){
 static TIMER_FUNC(instance_subscription_timer){
 	int instance_id = instance_wait.id[0];
 
-	if (!instance_id || instance_wait.id.empty())
+	if (instance_id == 0 || instance_wait.id.empty())
 		return 0;
 
 	struct map_session_data *sd;
@@ -667,7 +667,7 @@ int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
  * @return 0 on failure or map count on success
  */
 int instance_addmap(int instance_id) {
-	if (!instance_id)
+	if (instance_id == 0)
 		return 0;
 
 	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
