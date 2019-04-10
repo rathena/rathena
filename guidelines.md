@@ -18,11 +18,11 @@ Commits should be on point, documented and as small as possible.
 
 Check for removed or added blank lines on each commit.
 
-### 2. Use std::remove_if, std::remove & ... within std::vector::earse
+### 2. Use std::remove_if, std::remove & ... within std::vector::erase
 
 ##### Reason
 
-`std::vector` requires to be shrinked after using `std::remove`. To avoid forgetting about proper shrinking after removing an element the removing should always be bound to a call to `earse`.
+`std::vector` requires to be shrinked after using `std::remove`. To avoid forgetting about proper shrinking after removing an element the removing should always be bound to a call to `erase`.
 
 ##### Note
 
