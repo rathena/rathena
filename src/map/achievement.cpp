@@ -877,12 +877,12 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 				}
 			}
 
+			if (!changed)
+				return false;
+
 			ARR_FIND(0, ad->targets.size(), i, current_count[i] < ad->targets[i]->count);
 			if (i == ad->targets.size())
 				complete = true;
-
-			if (!changed)
-				return false;
 			break;
 	}
 
