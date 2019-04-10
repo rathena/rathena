@@ -511,12 +511,8 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 	// Finally we send the updated achievement to the client
 	if (complete) {
 		if (!adb->targets.empty()) { // Make sure all the objective targets are at their respective total requirement
-			for (int k = 0; k < adb->targets.size(); k++)
-				sd->achievement_data.achievements[i].count[k] = adb->targets[k]->count;
-
-			for (int k = 1; k < adb->dependent_ids.size(); k++) {
-				sd->achievement_data.achievements[i].count[k] = max(1, sd->achievement_data.achievements[i].count[k]);
-			}
+			for (const auto &it : adb->targets)
+				sd->achievement_data.achievements[i].count[it.first] = it.second->count;
 		}
 
 		sd->achievement_data.achievements[i].completed = time(NULL);
@@ -787,7 +783,7 @@ static bool achievement_check_condition( struct script_code* condition, struct m
  * @param sd: Player to update
  * @param ad: Achievement data to compare for completion
  * @param group: Achievement group to update
- * @param update_count: Objective values
+ * @param update_count: Objective values from event
  * @return 1 on success and false on failure
  */
 static bool achievement_update_objectives(struct map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> &update_count)
@@ -803,7 +799,7 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 
 	struct achievement *entry = NULL;
 	bool isNew = false, changed = false, complete = false;
-	std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count = {};
+	std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count = {}; // Player's current objective values
 	int i;
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == ad->achievement_id);
@@ -846,18 +842,18 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			complete = true;
 			break;
 		case AG_SPEND_ZENY:
-		case AG_CHAT:
+		//case AG_CHAT: // No information on trigger events
 			if (ad->targets.empty() || !ad->condition)
 				return false;
 
-			if (group == AG_CHAT) {
-				if (ad->mapindex > -1 && sd->bl.m != ad->mapindex)
-					return false;
-			}
+			//if (group == AG_CHAT) {
+			//	if (ad->mapindex > -1 && sd->bl.m != ad->mapindex)
+			//		return false;
+			//}
 
-			for (i = 0; i < ad->targets.size(); i++) {
-				if (current_count[i] < ad->targets[i]->count)
-					current_count[i] += update_count[i];
+			for (const auto &it : ad->targets) {
+				if (current_count[it.first] < it.second->count)
+					current_count[it.first] += update_count[it.first];
 			}
 
 			if (!achievement_check_condition(ad->condition, sd, current_count)) // Parameters weren't met
@@ -874,9 +870,9 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			if (ad->targets.empty())
 				return false;
 
-			for (i = 0; i < ad->targets.size(); i++) {
-				if (ad->targets[i]->mob == update_count[0] && current_count[i] < ad->targets[i]->count) { // Here update_count[0] contains the killed/tamed monster ID
-					current_count[i]++;
+			for (const auto &it : ad->targets) {
+				if (it.second->mob == update_count[0] && current_count[it.first] < it.second->count) { // Here update_count[0] contains the killed/tamed monster ID
+					current_count[it.first]++;
 					changed = true;
 				}
 			}
