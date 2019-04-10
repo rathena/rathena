@@ -6839,7 +6839,6 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
 BUILDIN_FUNC(countitem)
 {
 	TBL_PC *sd;
-	struct item_data *id;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
 	bool random_option = false;
@@ -6862,12 +6861,14 @@ BUILDIN_FUNC(countitem)
 			return SCRIPT_CMD_FAILURE;
 	}
 
+	struct item_data *id;
+
 	if (script_isstring(st, 2)) // item name
 		id = itemdb_searchname(script_getstr(st, 2));
 	else // item id
 		id = itemdb_exists(script_getnum(st, 2));
 
-	if (id == NULL) {
+	if (!id) {
 		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
@@ -6885,7 +6886,6 @@ BUILDIN_FUNC(countitem)
 BUILDIN_FUNC(cartcountitem)
 {
 	TBL_PC *sd;
-	struct item_data *id;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
 
@@ -6909,18 +6909,20 @@ BUILDIN_FUNC(cartcountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	struct item_data *id;
+
 	if (script_isstring(st, 2)) // item name
 		id = itemdb_searchname(script_getstr(st, 2));
 	else // item id
 		id = itemdb_exists(script_getnum(st, 2));
 
-	if (id == NULL) {
+	if (!id) {
 		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint(st, script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, NULL, NULL));
+	script_pushint(st, script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, nullptr, nullptr));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -6932,7 +6934,6 @@ BUILDIN_FUNC(cartcountitem)
 BUILDIN_FUNC(storagecountitem)
 {
 	TBL_PC *sd;
-	struct item_data *id;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
 
@@ -6950,18 +6951,20 @@ BUILDIN_FUNC(storagecountitem)
 			return SCRIPT_CMD_FAILURE;
 	}
 
+	struct item_data *id;
+
 	if (script_isstring(st, 2)) // item name
 		id = itemdb_searchname(script_getstr(st, 2));
 	else // item id
 		id = itemdb_exists(script_getnum(st, 2));
 
-	if (id == NULL) {
+	if (!id) {
 		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint(st, script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, NULL, NULL));
+	script_pushint(st, script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, nullptr, nullptr));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -6973,7 +6976,6 @@ BUILDIN_FUNC(storagecountitem)
 BUILDIN_FUNC(guildstoragecountitem)
 {
 	TBL_PC *sd;
-	struct item_data *id;
 	char *command = (char *)script_getfuncname(st);
 	int aid = 3;
 
@@ -6993,12 +6995,14 @@ BUILDIN_FUNC(guildstoragecountitem)
 			return SCRIPT_CMD_FAILURE;
 	}
 
+	struct item_data *id;
+
 	if (script_isstring(st, 2)) // item name
 		id = itemdb_searchname(script_getstr(st, 2));
 	else // item id
 		id = itemdb_exists(script_getnum(st, 2));
 
-	if (id == NULL) {
+	if (!id) {
 		ShowError("buildin_%s: Invalid item '%s'.\n", command, script_getstr(st, 2)); // returns string, regardless of what it was
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
@@ -7013,7 +7017,7 @@ BUILDIN_FUNC(guildstoragecountitem)
 
 	gstor->lock = true;
 
-	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, (aid > 3) ? true : false, false, NULL, NULL);
+	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, (aid > 3) ? true : false, false, nullptr, nullptr);
 
 	storage_guild_storageclose(sd);
 	gstor->lock = false;
