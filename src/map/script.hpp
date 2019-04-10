@@ -1959,7 +1959,8 @@ void script_run_autobonus(const char *autobonus, struct map_session_data *sd, un
 const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
-void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
+void script_set_constant_(const char* name, int value, const char* constant_name, bool isparameter, bool deprecated);
+#define script_set_constant(name, value, isparameter, deprecated) script_set_constant_(name, value, NULL, isparameter, deprecated)
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);

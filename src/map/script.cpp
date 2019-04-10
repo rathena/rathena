@@ -210,8 +210,9 @@ static struct str_data_struct {
 	int (*func)(struct script_state *st);
 	int val;
 	int next;
+	const char *name;
 	bool deprecated;
-} *str_data = NULL;
+} *str_data = nullptr;
 static int str_data_size = 0; // size of the data
 static int str_num = LABEL_START; // next id to be assigned
 
@@ -481,13 +482,12 @@ static void script_dump_stack(struct script_state* st)
 /// Reports on the console the src of a script error.
 static void script_reportsrc(struct script_state *st)
 {
-	struct block_list* bl;
-
 	if( st->oid == 0 )
 		return; //Can't report source.
 
-	bl = map_id2bl(st->oid);
-	if( bl == NULL )
+	struct block_list* bl = map_id2bl(st->oid);
+
+	if (!bl)
 		return;
 
 	switch( bl->type ) {
@@ -1366,6 +1366,8 @@ const char* parse_simpleexpr(const char *p)
 		if( str_data[l].type == C_INT && str_data[l].deprecated ){
 			ShowWarning( "Usage of deprecated constant '%s'.\n", get_str(l) );
 			ShowWarning( "This constant was deprecated and could become unavailable anytime soon.\n" );
+			if (str_data[l].name)
+				ShowWarning( "Please use '%s' instead!\n", str_data[l].name );
 		}
 #endif
 
@@ -2303,6 +2305,8 @@ bool script_get_constant(const char* name, int* value)
 	if( str_data[n].deprecated ){
 		ShowWarning( "Usage of deprecated constant '%s'.\n", name );
 		ShowWarning( "This constant was deprecated and could become unavailable anytime soon.\n" );
+		if (str_data[n].name)
+			ShowWarning( "Please use '%s' instead!\n", str_data[n].name );
 	}
 #endif
 
@@ -2310,7 +2314,7 @@ bool script_get_constant(const char* name, int* value)
 }
 
 /// Creates new constant or parameter with given value.
-void script_set_constant(const char* name, int value, bool isparameter, bool deprecated)
+void script_set_constant_(const char* name, int value, const char* constant_name, bool isparameter, bool deprecated)
 {
 	int n = add_str(name);
 
@@ -2319,6 +2323,7 @@ void script_set_constant(const char* name, int value, bool isparameter, bool dep
 		str_data[n].type = isparameter ? C_PARAM : C_INT;
 		str_data[n].val  = value;
 		str_data[n].deprecated = deprecated;
+		str_data[n].name = constant_name;
 	}
 	else if( str_data[n].type == C_PARAM || str_data[n].type == C_INT )
 	{// existing parameter or constant
@@ -10353,6 +10358,11 @@ BUILDIN_FUNC(areamonster)
 		}
 	}
 
+	if (class_ >= 0 && !mobdb_checkid(class_)) {
+		ShowWarning("buildin_monster: Attempted to spawn non-existing monster class %d\n", class_);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	sd = map_id2sd(st->rid);
 
 	if (sd && strcmp(mapn, "this") == 0)
@@ -11255,39 +11265,43 @@ BUILDIN_FUNC(getareadropitem)
  *------------------------------------------*/
 BUILDIN_FUNC(enablenpc)
 {
-	const char *str;
-	str=script_getstr(st,2);
-	npc_enable(str,1);
-	return SCRIPT_CMD_SUCCESS;
+	const char *str = script_getstr(st,2);
+	if (npc_enable(str,1))
+		return SCRIPT_CMD_SUCCESS;
+
+	return SCRIPT_CMD_FAILURE;
 }
 
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(disablenpc)
 {
-	const char *str;
-	str=script_getstr(st,2);
-	npc_enable(str,0);
-	return SCRIPT_CMD_SUCCESS;
+	const char *str = script_getstr(st,2);
+	if (npc_enable(str,0))
+		return SCRIPT_CMD_SUCCESS;
+
+	return SCRIPT_CMD_FAILURE;
 }
 
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(hideoffnpc)
 {
-	const char *str;
-	str=script_getstr(st,2);
-	npc_enable(str,2);
-	return SCRIPT_CMD_SUCCESS;
+	const char *str = script_getstr(st,2);
+	if (npc_enable(str,2))
+		return SCRIPT_CMD_SUCCESS;
+
+	return SCRIPT_CMD_FAILURE;
 }
 /*==========================================
  *------------------------------------------*/
 BUILDIN_FUNC(hideonnpc)
 {
-	const char *str;
-	str=script_getstr(st,2);
-	npc_enable(str,4);
-	return SCRIPT_CMD_SUCCESS;
+	const char *str = script_getstr(st,2);
+	if (npc_enable(str,4))
+		return SCRIPT_CMD_SUCCESS;
+
+	return SCRIPT_CMD_FAILURE;
 }
 
 /* Starts a status effect on the target unit or on the attached player.
@@ -17756,7 +17770,7 @@ BUILDIN_FUNC(setunitdata)
 
 		switch (type) {
 			case UMOB_SIZE: md->status.size = md->base_status->size = (unsigned char)value; break;
-			case UMOB_LEVEL: md->level = (unsigned short)value; break;
+			case UMOB_LEVEL: md->level = (unsigned short)value; clif_name_area(&md->bl); break;
 			case UMOB_HP: md->base_status->hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
 			case UMOB_MAXHP: md->base_status->hp = md->base_status->max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); clif_name_area(&md->bl); break;
 			case UMOB_MASTERAID: md->master_id = value; break;
@@ -17909,7 +17923,7 @@ BUILDIN_FUNC(setunitdata)
 			case UPET_MAPID: if (mapname) value = map_mapname2mapid(mapname); unit_warp(bl, (short)value, 0, 0, CLR_TELEPORT); break;
 			case UPET_X: if (!unit_walktoxy(bl, (short)value, pd->bl.y, 2)) unit_movepos(bl, (short)value, md->bl.y, 0, 0); break;
 			case UPET_Y: if (!unit_walktoxy(bl, pd->bl.x, (short)value, 2)) unit_movepos(bl, pd->bl.x, (short)value, 0, 0); break;
-			case UPET_HUNGER: pd->pet.hungry = (short)value; clif_send_petdata(map_id2sd(pd->pet.account_id), pd, 2, pd->pet.hungry); break;
+			case UPET_HUNGER: pd->pet.hungry = cap_value((short)value, 0, 100); clif_send_petdata(map_id2sd(pd->pet.account_id), pd, 2, pd->pet.hungry); break;
 			case UPET_INTIMACY: pet_set_intimate(pd, (unsigned int)value); clif_send_petdata(map_id2sd(pd->pet.account_id), pd, 1, pd->pet.intimate); break;
 			case UPET_SPEED: pd->status.speed = (unsigned short)value; status_calc_misc(bl, &pd->status, pd->pet.level); break;
 			case UPET_LOOKDIR: unit_setdir(bl, (uint8)value); break;

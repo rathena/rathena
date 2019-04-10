@@ -504,11 +504,11 @@ ACMD_FUNC(mapmove)
 			return -1;
 	}
 
-	mapindex = mapindex_name2id(map_name);
+	mapindex = mapindex_name2idx(map_name, nullptr);
 	if (mapindex)
 		m = map_mapindex2mapid(mapindex);
 
-	if (!mapindex) { // m < 0 means on different server! [Kevin]
+	if (m < 0) { // m < 0 means on different server! [Kevin]
 		clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
 
 		if (battle_config.warp_suggestions_enabled)

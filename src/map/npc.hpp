@@ -1203,7 +1203,7 @@ const char *npc_get_script_event_name(int npce_index);
 void npc_setcells(struct npc_data* nd);
 void npc_unsetcells(struct npc_data* nd);
 bool npc_movenpc(struct npc_data* nd, int16 x, int16 y);
-int npc_enable(const char* name, int flag);
+bool npc_enable(const char* name, int flag);
 void npc_setdisplayname(struct npc_data* nd, const char* newname);
 void npc_setclass(struct npc_data* nd, short class_);
 struct npc_data* npc_name2id(const char* name);
