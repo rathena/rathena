@@ -861,8 +861,12 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 
 			changed = true;
 
-			ARR_FIND(0, ad->targets.size(), i, current_count[i] < ad->targets[i]->count);
-			if (i == ad->targets.size())
+			auto it = std::find_if(ad->targets.begin(), ad->targets.end(),
+				[current_count](const std::pair<uint16, achievement_target> &t) -> bool {
+					return current_count[t.first] < t.second.count;
+				}
+			);
+			if (it == ad->targets.end())
 				complete = true;
 			break;
 		case AG_BATTLE:
@@ -880,8 +884,12 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			if (!changed)
 				return false;
 
-			ARR_FIND(0, ad->targets.size(), i, current_count[i] < ad->targets[i]->count);
-			if (i == ad->targets.size())
+			auto it = std::find_if(ad->targets.begin(), ad->targets.end(),
+				[current_count](const std::pair<uint16, achievement_target> &t) -> bool {
+					return current_count[t.first] < t.second.count;
+				}
+			);
+			if (it == ad->targets.end())
 				complete = true;
 			break;
 	}
