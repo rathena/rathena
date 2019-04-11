@@ -862,7 +862,7 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			changed = true;
 
 			if (std::find_if(ad->targets.begin(), ad->targets.end(),
-				[current_count](const auto &target) -> bool {
+				[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
 					return current_count[target.first] < target.second->count;
 				}
 			) == ad->targets.end())
@@ -884,7 +884,7 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 				return false;
 
 			if (std::find_if(ad->targets.begin(), ad->targets.end(),
-				[current_count](const auto &target) -> bool {
+				[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
 					return current_count[target.first] < target.second->count;
 				}
 			) == ad->targets.end())
