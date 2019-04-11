@@ -12740,13 +12740,13 @@
 31601,C_Under_Rim_Glasses_Blue,C Under Rim Glasses Blue,,0,,,,0,,0,0xFFFFFFFF,63,2,2048,,1,,1805,{},{},{}
 31602,C_Midgarts_Glory,C Rune Midgarts Glory,,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,,1807,{},{},{}
 31606,C_Autumn_Headband,C Autumn Headband,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1119,{},{},{}
-//
 31607,C_Cat_Ear_Witch_Hat,C Cat Ear Witch Hat,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1808,{},{},{}
 31608,C_Magicstone_of_Grace,C Magic Stone of Grace,4,0,,,,0,,0,0xFFFFFFFF,63,2,7168,,1,0,1420,{},{},{}
 31609,C_Noble_Mask,C Noble Mask,,0,,,,0,,0,0xFFFFFFFF,63,2,2048,,1,,1409,{},{},{}
 31610,C_Yellow_Wizardry_Hat,C Yellow Wizardry Hat,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,286,{},{},{}
 31611,C_Snake_Lord_Stole,C Snake Lord Stole,4,0,,,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1810,{},{},{}
 31612,C_Large_Sorcerer_Crown,C Large Sorcerer Crown,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1811,{},{},{}
+//
 32005,Illusion_Pole_Axe,Illusion Pole Axe,5,0,,1500,190,,3,2,0x00004082,63,2,2,4,120,1,4,{ .@r = getrefine(); bonus bStr,3; bonus bInt,2; bonus bDex,2; if (.@r >= 13) { .@val = -2000; } else if (.@r >= 9) { .@val = -1000; } bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",.@val; },{},{}
 32013,Metal_Stick,Metal Stick,5,0,0,2000,180,,3,3,0x00004000,63,2,2,4,150,1,4,{ .@r = getrefine(); bonus2 bSkillAtk,"LG_CANNONSPEAR",10; bonus2 bSkillAtk,"LG_OVERBRAND",(.@r > 8 ? 15 : (.@r > 6 ? 10 : 0)); if(.@r >= 12){ bonus bDelayrate,-15; } },{},{}
 32014,Brute_Spear,Brute Spear,5,0,0,,150,,3,0,0x00004080,63,2,2,4,100,1,4,{ .@r = getrefine(); bonus bUnbreakableWeapon; bonus2 bIgnoreDefRaceRate,RC_All,5*.@r; bonus2 bAddRace,RC_Player,80+(.@r > 8 ? 20 : (.@r > 7 ? 35 : 0)); if(.@r > 9){ bonus bMaxHPrate,15; bonus bMaxSPrate,15; } },{},{}
