@@ -110,10 +110,7 @@ job3_rune01,92,62,3	script	Kafra Employee::kaf_rune	114,{
 harboro1,291,207,5	script	Kafra Employee::kaf_rock	4_F_KAFRA1,{
 	cutin "kafra_01",2;
 	callfunc "F_KafSet";
-	mes "[Kafra Employee]";
-	mes "Welcome to Kafra. We're always by your side.";
-	mes "How may I help you?";
-	callfunc "F_Kafra",5,8,2,500,0;
+	callfunc "F_Kafra",0,8,2,500,0;
 	savepoint "harboro1",355,207,1,1;
 	callfunc "F_KafEnd",2,0,0;
 }
