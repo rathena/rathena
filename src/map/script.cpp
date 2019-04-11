@@ -6772,6 +6772,9 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
  * @return Total count of item being searched
  */
 int script_countitem_sub(struct item *items, struct item_data *id, int size, bool expanded, bool random_option, struct script_state *st, struct map_session_data *sd) {
+	nullpo_retr(SCRIPT_CMD_FAILURE, items);
+	nullpo_retr(SCRIPT_CMD_FAILURE, st);
+
 	int count = 0;
 
 	if (!expanded) { // For non-expanded functions
@@ -6796,6 +6799,9 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
 		it.card[3] = script_getnum(st,9);
 
 		if (random_option) {
+			if (!sd)
+				return SCRIPT_CMD_FAILURE;
+
 			int res = script_getitem_randomoption(st, sd, &it, "countitem3", 10);
 
 			if (res != SCRIPT_CMD_SUCCESS)
@@ -6831,8 +6837,8 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
 
 /**
  * Returns number of items in inventory
- * countitem <nameID>{,<accountID>});
- * countitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>}) [Lupus]
+ * countitem(<nameID>{,<accountID>})
+ * countitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>}) [Lupus]
  * countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
  * countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
  */
@@ -6851,7 +6857,7 @@ BUILDIN_FUNC(countitem)
 	}
 
 	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd((aid = script_getnum(st, aid))))) {
+		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
 			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
@@ -6880,8 +6886,8 @@ BUILDIN_FUNC(countitem)
 
 /**
  * Returns number of items in cart
- * cartcountitem <nameID>{,<accountID>});
- * cartcountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+ * cartcountitem(<nameID>{,<accountID>})
+ * cartcountitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
  */
 BUILDIN_FUNC(cartcountitem)
 {
@@ -6893,7 +6899,7 @@ BUILDIN_FUNC(cartcountitem)
 		aid = 10;
 
 	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd((aid = script_getnum(st, aid))))) {
+		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
 			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
@@ -6922,14 +6928,14 @@ BUILDIN_FUNC(cartcountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint(st, script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, nullptr, nullptr));
+	script_pushint(st, script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, st, nullptr));
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
  * Returns number of items in storage
- * storagecountitem <nameID>{,<accountID>});
- * storagecountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+ * storagecountitem(<nameID>{,<accountID>})
+ * storagecountitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
  */
 BUILDIN_FUNC(storagecountitem)
 {
@@ -6941,7 +6947,7 @@ BUILDIN_FUNC(storagecountitem)
 		aid = 10;
 
 	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd((aid = script_getnum(st, aid))))) {
+		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
 			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
@@ -6964,14 +6970,19 @@ BUILDIN_FUNC(storagecountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint(st, script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, nullptr, nullptr));
+	if (sd->state.storage_flag != 0) {
+		script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	script_pushint(st, script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, st, nullptr));
 	return SCRIPT_CMD_SUCCESS;
 }
 
 /**
  * Returns number of items in guild storage
- * guildstoragecountitem <nameID>{,<accountID>});
- * guildstoragecountitem2 <nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
+ * guildstoragecountitem(<nameID>{,<accountID>})
+ * guildstoragecountitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>})
  */
 BUILDIN_FUNC(guildstoragecountitem)
 {
@@ -6981,11 +6992,9 @@ BUILDIN_FUNC(guildstoragecountitem)
 
 	if (command[strlen(command) - 1] == '2')
 		aid = 10;
-	else if (command[strlen(command) - 1] == '3')
-		aid = 13;
 
 	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd((aid = script_getnum(st, aid))))) {
+		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
 			ShowError("buildin_%s: player not found (AID=%d).\n", command, aid);
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
@@ -7008,16 +7017,16 @@ BUILDIN_FUNC(guildstoragecountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct s_storage *gstor = guild2storage2(sd->status.guild_id);
+	struct s_storage *gstor = guild2storage(sd->status.guild_id);
 
-	if (!gstor || (gstor && sd->state.storage_flag)) {
+	if (!gstor || (gstor && sd->state.storage_flag != 0)) {
 		script_pushint(st, -1);
-		return SCRIPT_CMD_FAILURE;
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	gstor->lock = true;
 
-	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, (aid > 3) ? true : false, false, nullptr, nullptr);
+	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, (aid > 3) ? true : false, false, st, nullptr);
 
 	storage_guild_storageclose(sd);
 	gstor->lock = false;
