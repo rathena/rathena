@@ -8023,7 +8023,7 @@ void clif_autospell(struct map_session_data *sd,uint16 skill_lv)
 	WFIFOHEAD(fd, 2 * 6 + 4);
 	WFIFOW(fd, 0) = 0x442;
 
-	for (int i = 0; i <= ARRAYLENGTH(autospell_skill); ++i) {
+	for (int i = 0; i < ARRAYLENGTH(autospell_skill); i++) {
 		if (skill_lv > autospell_skill[i][1] && pc_checkskill(sd, autospell_skill[i][0])) {
 			WFIFOW(fd, 8 + count * 2) = autospell_skill[i][0];
 			count++;
