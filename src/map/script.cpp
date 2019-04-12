@@ -6858,7 +6858,7 @@ BUILDIN_FUNC(countitem)
 
 	if (script_hasdata(st, aid)) {
 		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid)));
+			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -6900,7 +6900,7 @@ BUILDIN_FUNC(cartcountitem)
 
 	if (script_hasdata(st, aid)) {
 		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid)));
+			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -6948,7 +6948,7 @@ BUILDIN_FUNC(storagecountitem)
 
 	if (script_hasdata(st, aid)) {
 		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid)));
+			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
@@ -6995,7 +6995,7 @@ BUILDIN_FUNC(guildstoragecountitem)
 
 	if (script_hasdata(st, aid)) {
 		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid)));
+			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
