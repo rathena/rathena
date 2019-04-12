@@ -24185,7 +24185,7 @@ BUILDIN_FUNC(getvariableofinstance)
 	struct script_data* data = script_getdata(st, 2);
 
 	if (!data_isreference(data)) {
-		ShowError("buildin_getvariableofinstance: not a variable.\n");
+		ShowError("buildin_getvariableofinstance: %s is not a variable.\n", script_getstr(st, 2));
 		script_reportdata(data);
 		script_pushnil(st);
 		st->state = END;
@@ -24195,7 +24195,7 @@ BUILDIN_FUNC(getvariableofinstance)
 	const char* name = reference_getname(data);
 
 	if (*name != '\'') {
-		ShowError("buildin_getvariableofinstance: invalid scope (not instance variable).\n");
+		ShowError("buildin_getvariableofinstance: Invalid scope. %s is not an instance variable.\n", name);
 		script_reportdata(data);
 		script_pushnil(st);
 		st->state = END;
@@ -24203,16 +24203,18 @@ BUILDIN_FUNC(getvariableofinstance)
 	}
 
 	unsigned short instance_id = script_getnum(st, 3);
-	if (instance_id <= 0 || instance_id > MAX_INSTANCE_DATA) {
-		ShowError("buildin_getvariableofinstance: invalid instance ID %d.\n", instance_id);
+
+	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA) {
+		ShowError("buildin_getvariableofinstance: Invalid instance ID %d.\n", instance_id);
 		script_pushnil(st);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	struct instance_data *im = &instance_data[instance_id];
+
 	if (im->state != INSTANCE_BUSY) {
-		ShowError("buildin_getvariableofinstance: unknown instance ID %d.\n", instance_id);
+		ShowError("buildin_getvariableofinstance: Unknown instance ID %d.\n", instance_id);
 		script_pushnil(st);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
