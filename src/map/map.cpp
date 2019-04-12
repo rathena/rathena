@@ -2976,6 +2976,9 @@ void map_removemobs(int16 m)
  *------------------------------------------*/
 const char* map_mapid2mapname(int m)
 {
+	if (m == -1)
+		return "Floating";
+
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if (mapdata->instance_id) { // Instance map check
