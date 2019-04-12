@@ -1400,6 +1400,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 	case BD_LULLABY:
 		sc_start(src,bl,SC_SLEEP,15+sstatus->int_/3,skill_lv,skill_get_time2(skill_id,skill_lv)); //(custom chance) "Chance is increased with INT", iRO Wiki
+#ifdef RENEWAL
 	case BD_RICHMANKIM:
 	case BD_ETERNALCHAOS:
 	case BD_DRUMBATTLEFIELD:
@@ -1409,6 +1410,7 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case BD_SIEGFRIED:
 	case CG_MOONLIT:
 		sc_start(src, bl, SC_LONGING, 100, skill_lv, skill_get_time(CG_SPECIALSINGER, skill_lv));
+#endif
 		break;
 
 	case DC_UGLYDANCE:
@@ -5295,7 +5297,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					(max(min_y,ty-1) <= min(max_y,ty+1)) &&
 					(map_foreachinallarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, flag|BCT_ENEMY, skill_area_sub_count))) {
 					// Recursive call
-					int count = map_foreachinallarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, (flag|BCT_ENEMY)+1, skill_castend_damage_id);
+					int count = 0;
+
+#ifdef RENEWAL
+					count = // Get area count
+#endif
+						map_foreachinallarea(skill_area_sub, bl->m, max(min_x,tx-1), max(min_y,ty-1), min(max_x,tx+1), min(max_y,ty+1), splash_target(src), src, skill_id, skill_lv, tick, (flag|BCT_ENEMY)+1, skill_castend_damage_id);
 					// Self-collision
 					if(bl->x >= min_x && bl->x <= max_x && bl->y >= min_y && bl->y <= max_y)
 						skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,(flag&0xFFF)>0?SD_ANIMATION|count:count);
@@ -6644,10 +6651,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 
-	case CG_SPECIALSINGER:
-		status_change_end(bl, SC_LONGING, INVALID_TIMER);
-		break;
-
 	case RG_CLOSECONFINE:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,
 			sc_start4(src,bl,type,100,skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv)));
@@ -7441,6 +7444,13 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src,bl,skill_id,( skill_id == LG_FORCEOFVANGUARD || skill_id == RA_CAMOUFLAGE ) ? skill_lv : -1,i);
 		else if( sd )
 			clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
+		break;
+
+	case CG_SPECIALSINGER:
+		if (tsc && tsc->data[SC_LONGING]) {
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			status_change_end(bl, SC_LONGING, INVALID_TIMER);
+		}
 		break;
 
 	case BD_ADAPTATION:

@@ -623,8 +623,6 @@ void initChangeTables(void)
 	set_sc( WS_OVERTHRUSTMAX	, SC_MAXOVERTHRUST	, EFST_OVERTHRUSTMAX, SCB_NONE );
 #ifndef RENEWAL
 	set_sc( CG_LONGINGFREEDOM	, SC_LONGING		, EFST_LONGING		, SCB_SPEED|SCB_ASPD );
-#else
-	set_sc( CG_SPECIALSINGER	, SC_LONGING		, EFST_BLANK		, SCB_NONE ); // !TODO: Re-use status or make a new one?
 #endif
 	set_sc( CG_HERMODE		, SC_HERMODE	, EFST_HERMODE	, SCB_NONE		);
 	set_sc( CG_TAROTCARD		, SC_TAROTCARD	, EFST_TAROTCARD, SCB_NONE	);
@@ -1309,6 +1307,9 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_LHZ_DUN_N4] = EFST_LHZ_DUN_N4;
 
 	StatusIconChangeTable[SC_ANCILLA] = EFST_ANCILLA;
+#ifdef RENEWAL
+	StatusIconChangeTable[SC_LONGING] = EFST_ENSEMBLEFATIGUE;
+#endif
 
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
