@@ -7,6 +7,7 @@
 #include <stdarg.h>
 
 #include "cbasetypes.hpp"
+#include "malloc.hpp"
 
 #if !defined(__USE_GNU)
 #define __USE_GNU  // required to enable strnlen on some platforms
@@ -147,12 +148,18 @@ struct StringBuf
 };
 typedef struct StringBuf StringBuf;
 
-StringBuf* StringBuf_Malloc(void);
-void StringBuf_Init(StringBuf* self);
-int StringBuf_Printf(StringBuf* self, const char* fmt, ...);
-int StringBuf_Vprintf(StringBuf* self, const char* fmt, va_list args);
-int StringBuf_Append(StringBuf* self, const StringBuf *sbuf);
-int StringBuf_AppendStr(StringBuf* self, const char* str);
+StringBuf* _StringBuf_Malloc(const char *file, int line, const char *func);
+#define StringBuf_Malloc() _StringBuf_Malloc(ALC_MARK)
+void _StringBuf_Init(const char *file, int line, const char *func, StringBuf* self);
+#define StringBuf_Init(self) _StringBuf_Init(ALC_MARK,self)
+int _StringBuf_Printf(const char *file, int line, const char *func, StringBuf* self, const char* fmt, ...);
+#define StringBuf_Printf(self,fmt,...) _StringBuf_Printf(ALC_MARK,self,fmt, ## __VA_ARGS__)
+int _StringBuf_Vprintf(const char *file, int line, const char *func,StringBuf* self, const char* fmt, va_list args);
+#define StringBuf_Vprintf(self,fmt,args) _StringBuf_Vprintf(ALC_MARK,self,fmt,args)
+int _StringBuf_Append(const char *file, int line, const char *func, StringBuf* self, const StringBuf *sbuf);
+#define StringBuf_Append(self,sbuf) _StringBuf_Append(ALC_MARK,self,sbuf)
+int _StringBuf_AppendStr(const char *file, int line, const char *func, StringBuf* self, const char* str);
+#define StringBuf_AppendStr(self,str) _StringBuf_AppendStr(ALC_MARK,self,str)
 int StringBuf_Length(StringBuf* self);
 char* StringBuf_Value(StringBuf* self);
 void StringBuf_Clear(StringBuf* self);

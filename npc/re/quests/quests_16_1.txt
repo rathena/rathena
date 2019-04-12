@@ -144,21 +144,21 @@ prontera,121,72,3	script	Royal Messenger#e16_pr	4_M_ZONDAOYAJI,5,5,{
 	}
 
 OnTouch:
-	if (banquet_main_quest == 0)
+	if (banquet_main_quest == 0 && BaseLevel > 99 && (ep13_ryu > 99 || ep13_start > 99))
 		npctalk "Wait! You must be... " + strcharinfo(0) + ". I have something to tell you!", "", bc_self;
 	else
 		npctalk "I am looking for the hero who returned from the expedition...", "", bc_self;
 	end;
 }
-rachel,119,131,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ra	4_M_ZONDAOYAJI
-aldebaran,159,113,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ald	4_M_ZONDAOYAJI
-alberta,119,59,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_alb	4_M_ZONDAOYAJI
-veins,200,108,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ve	4_M_ZONDAOYAJI
-geffen,123,68,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ge	4_M_ZONDAOYAJI
-payon,168,65,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_pa	4_M_ZONDAOYAJI
-morocc,152,97,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_mo	4_M_ZONDAOYAJI
-yuno,162,132,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_yu	4_M_ZONDAOYAJI
-lighthalzen,152,100,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_lh	4_M_ZONDAOYAJI
+rachel,119,131,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ra	4_M_ZONDAOYAJI,5,5
+aldebaran,159,113,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ald	4_M_ZONDAOYAJI,5,5
+alberta,119,59,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_alb	4_M_ZONDAOYAJI,5,5
+veins,200,108,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ve	4_M_ZONDAOYAJI,5,5
+geffen,123,68,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_ge	4_M_ZONDAOYAJI,5,5
+payon,168,65,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_pa	4_M_ZONDAOYAJI,5,5
+morocc,152,97,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_mo	4_M_ZONDAOYAJI,5,5
+yuno,162,132,3	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_yu	4_M_ZONDAOYAJI,5,5
+lighthalzen,152,100,5	duplicate(Royal Messenger#e16_pr)	Royal Messenger#e16_lh	4_M_ZONDAOYAJI,5,5
 
 prontera,150,331,4	script	Royal Guard#ep16_ect01	8W_SOLDIER,4,4,{
 	if (banquet_main_quest == 1) {
@@ -184,9 +184,11 @@ prt_cas,215,146,0	script	#ep16_evt_01_on	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (banquet_main_quest == 1) {
+		setpcblock PCBLOCK_NPC, true;
 		classchange( 4_M_RUSMAN1, "Chamberlain Bell#ep16_0_0", bc_self );
 		sleep2 2000;
 		npctalk "I've been waiting for you. Sir " + strcharinfo(0) + "...", "Chamberlain Bell#ep16_0_0", bc_self;
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -471,7 +473,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 	case 11:
 	case 12:
 	case 13:
-		mes "";
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "You are back already?", "", bc_self;
 		sleep2 1000;
 		classchange( 4_M_JOB_WIZARD, "Court Mage Nillem#ep16_1", bc_self );
@@ -494,6 +496,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		sleep2 1000;
 		npctalk "One!", "Court Mage Nillem#ep16_1", bc_self;
 		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
 		warp "prt_lib",89,44;
 		end;
 	case 14:
@@ -580,11 +583,13 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "Court Mage Nillem opened the door and left right away.";
 		mes "Saying, 'Where are you?' " + strcharinfo(0) + " The magician must be looking for you.";
 		close2;
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 50;
 		classchange( 4_M_JOB_WIZARD, "Court Mage Nillem#ep16_1", bc_self );
 		npctalk "There you are!", "Court Mage Nillem#ep16_1", bc_self;
 		sleep2 50;
 		npctalk "What an impeccable timing...", bc_self;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	case 19:
 	case 20:
@@ -604,6 +609,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 			mes "Wait a second.";
 			mes "I have just sent a message. The magician will arrive here soon.";
 			close2;
+			setpcblock PCBLOCK_NPC, true;
 			sleep2 1000;
 			classchange( 4_M_JOB_WIZARD, "Court Mage Nillem#ep16_1", bc_self );
 			if (banquet_main_quest < 25) {
@@ -633,6 +639,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 					break;
 				}
 			}
+			setpcblock PCBLOCK_NPC, false;
 			end;
 		case 2:
 			mes "[Belle]";
@@ -1371,7 +1378,7 @@ prt_cas,183,164,0	script	#ep16_evt_7689	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (banquet_main_quest == 5) {
-		mes "";
+		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : ...Hum? Who's coming?", bc_self;
 		sleep2 2000;
 		classchange( 4_LGTSCIENCE, "#ep16_7689_01", bc_self );
@@ -1415,6 +1422,7 @@ OnTouch:
 		}
 		sleep2 2000;
 		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep16_7689", bc_self );
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -1501,10 +1509,12 @@ prt_cas,27,43,0	script	#ep16_evt_7690	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (banquet_main_quest == 6) {
+		setpcblock PCBLOCK_NPC, true;
 		classchange( 4_EP16_NIHIL, "Unstable Nyhill#ep16_76", bc_self );
 		classchange( 4_EP16_SKIA, "Skia Nerius#ep16_7690", bc_self );
 		sleep2 1000;
 		npctalk "Are you OK?", "Skia Nerius#ep16_7690", bc_self;
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -1826,10 +1836,12 @@ OnTouch:
 		classchange( 4_EP16_GRANZ, "Kronecker G. Heine#ep16_1", bc_self );
 		classchange( 4_EP16_NIHIL, "Nyhill M. Heine#ep16_li", bc_self );
 		classchange( 1_M_JOBTESTER, "Ian Walther#ep16_lib01", bc_self );
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 2000;
 		npctalk "You are here at last.", "Ian Walther#ep16_lib01", bc_self;
 		sleep2 3000;
 		npctalk "I have something to tell you, special guest.", "Ian Walther#ep16_lib01", bc_self;
+		setpcblock PCBLOCK_NPC, false;
 	}
 	if (banquet_main_quest == 24)
 		classchange( 4_EP16_GRANZ, "Kronecker G. Heine#ep16_1", bc_self );
@@ -2176,6 +2188,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		erasequest 7693;// Surprise Attack
 		banquet_main_quest = 10;
 		close2;
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "Magician! Activate the gate.", "Ian Walther#ep16_lib01", bc_self;
 		sleep2 2000;
 		npctalk "Oh, yes. The gate has been activated since others used it earlier.", "Mage Nillem#ep16_warp", bc_self;
@@ -2189,6 +2202,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		sleep2 2000;
 		classchange( HIDDEN_WARP_NPC, "Kronecker G. Heine#ep16_2", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Nyhill M. Heine#ep16_li", bc_self );
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -3917,7 +3931,8 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01_a	4_EP16_SPICA,{
 		cutin "ep16_crux_findel02",2;
 		mes "[Crux]";
 		mes "See you later.";
-		// close2;// player still talking
+		close2;
+		setpcblock PCBLOCK_NPC, true;
 		cutin "",255;
 		npctalk "Why are you letting the guest out?", "", bc_self;
 		sleep2 1000;
@@ -3930,6 +3945,7 @@ prt_cas_q,20,139,3	script	Spica Nerius#ep16_room01_a	4_EP16_SPICA,{
 		npctalk "I don't mean that!", "", bc_self;
 		sleep2 3000;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : (Oh my, I'd better get out now.)", bc_self;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
 
@@ -5679,7 +5695,7 @@ OnTouch:
 	if (banquet_main_quest < 17)
 		classchange( HIDDEN_WARP_NPC, "Peter Heine#ep16_02", bc_self );	// custom - officially hidden from #ep16_heine_evt01. However the npc is not hidden when the player is not in npc visual range
 	if (banquet_heine_quest == 0 && banquet_main_quest == 2) {
-		mes "";
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "You are in no place to say such a thing!", "Kronecker G. Heine#ep16", bc_self;
 		sleep2 3000;
 		npctalk "I'll go back to the head house. Please give me your permission.", "Nyhill M. Heine#ep16_01", bc_self;
@@ -5707,6 +5723,7 @@ OnTouch:
 			banquet_heine_quest = 1;
 			setquest 7683;// Visit the Heines
 		}
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -5718,7 +5735,7 @@ prt_cas_q,141,36,0	script	#ep16_evt_7686	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (banquet_heine_quest >= 1 && isbegin_quest(7686) == 0) {
-		mes "";
+		setpcblock PCBLOCK_NPC, true;
 		classchange( 4_EP16_NIHIL, "Nyhill#ep16_7686", bc_self );
 		classchange( 4_EP16_SKIA, "Skia#ep16_7686", bc_self );
 		npctalk "Are you the shadow princess whom people talk about?", "Nyhill#ep16_7686", bc_self;
@@ -5774,6 +5791,7 @@ OnTouch:
 			setquest 7686;// Nyhill and Skia
 			completequest 7686;// Nyhill and Skia
 		}
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -12715,10 +12733,11 @@ prt_cas,89,244,7	script	Banquet Hall Guest#6	4_M_NOV_HUNT,{
 }
 
 prt_cas,91,237,3	script	Ekinasia#ep16_etc01	1_F_SIGNZISK,{
-	// pcblocknpc
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "It's been a while since the last time a royal banquet like this was held.", "Ekinasia#ep16_etc01", bc_self;
 	sleep2 3000;
 	npctalk "We need to blow off some steam like this from time to time.", "Ekinasia#ep16_etc01", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -12741,12 +12760,13 @@ prt_cas,78,255,3	script	Mayssel#ep16_etc05	4_F_MAYSEL,{
 }
 
 prt_cas,78,252,2	script	Verkhasel#ep_etc06	4_M_GUILLOTINE,{
-	// pcblocknpc
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "I want to go back now.", "Verkhasel#ep_etc06", bc_self;
 	sleep2 3000;
 	npctalk "...You can't.", "Mayssel#ep16_etc05", bc_self;
 	sleep2 3000;
 	npctalk "You made that very clear, hahahaha!", "Vicente#ep16_etc07", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -13370,7 +13390,7 @@ prt_cas,379,124,3	script	Glamorous Girl#pop	4_F_ARUNA_POP,{
 }
 
 prt_cas,368,125,3	script	Dumk#ep16_etc03	4_M_SHADOWCHASER,{
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Where is he?", "Dumk#ep16_etc03", bc_self;
 	sleep2 3000;
 	npctalk "I don't know.", "Kid#ep16_etc04", bc_self;
@@ -13387,6 +13407,7 @@ prt_cas,368,125,3	script	Dumk#ep16_etc03	4_M_SHADOWCHASER,{
 	sleep2 1000;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : (Shaking the head from side to side)", bc_self;
 	emotion ET_STARE_ABOUT, playerattached();
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 prt_cas,367,123,7	duplicate(Dumk#ep16_etc03)	Kid#ep16_etc04	4_M_ACROSS
@@ -13418,9 +13439,11 @@ prt_cas,161,168,5	script	Royal Guardian Knight#0_left	4_M_CRU,{
 prt_cas,152,163,0	script	prt_cas_1#0_left	WARPNPC,1,1,{
 OnTouch:
 	if (banquet_main_quest == 0) {
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#0_left", bc_self;
 		sleep2 3000;
 		npctalk "If you are invited, a servant should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_left", bc_self;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
 	warp "prt_cas_q",150,8;
@@ -13434,9 +13457,11 @@ prt_cas,270,168,3	duplicate(Royal Guardian Knight#0_left)	Royal Guardian Knight#
 prt_cas,278,163,0	script	prt_cas_2#0_right	WARPNPC,1,1,{
 OnTouch:
 	if (banquet_main_quest == 0) {
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "That way is a royal villa for VIPs. Outsiders cannot access the place.", "Royal Guardian Knight#0_right", bc_self;
 		sleep2 3000;
 		npctalk "If you are invited, a servant should be there to greet you. Please be guided officially.", "Royal Guardian Knight#0_right", bc_self;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
 	warp "prt_cas_q",135,119;
@@ -13554,10 +13579,11 @@ prt_cas,180,264,3	script	Guardian Knight#ep16_pr_1	4_M_CRU,{
 }
 
 prt_cas,180,251,3	script	Guardian Knight#ep16_pr_2	4_M_CRU,{
-	// pcblocknpctalk
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "...On duty. No problem...", "Guardian Knight#ep16_pr_2", bc_self;
 	sleep2 2000;
 	npctalk "I want to go home now.", "Guardian Knight#ep16_pr_2", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -13566,9 +13592,10 @@ OnTouch_:
 	if (banquet_main_quest >= 2)
 		warp "prt_pri00",54,134;
 	else {
-		// pcblocknpctalk
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "You shouldn't enter the place like that.", "Guardian Knight#ep16_pr_1", bc_self;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		warp "prt_cas",182,258;
 	}
 	end;
@@ -14867,14 +14894,16 @@ OnTouch_:
 		break;
 	}
 	unittalk getcharid(3), "" + strcharinfo(0) + " : ?";
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 1000;
 	specialeffect EF_POISONSMOKE;
-	getmapxy .@map$, .@x, .@y, UNITTYPE_NPC;
+	getmapxy .@map$, .@x, .@y, BL_NPC;
 	monster "prt_q",.@x,.@y,"Resurrected Corpse",1015,1, strnpcinfo(0) + "::OnMyMobDead";// ZOMBIE
 	monster "prt_q",.@x,.@y,"Maggot",1194,1, strnpcinfo(0) + "::OnMyMobDead";// ARCLOUSE
 	monster "prt_q",.@x,.@y,"Fly",1035,1, strnpcinfo(0) + "::OnMyMobDead";// HUNTER_FLY
 	setd ".mob_count_" + strnpcinfo(2), 1;
 	hideonnpc strnpcinfo(0);
+	setpcblock PCBLOCK_NPC, false;
 	end;
 OnMyMobDead:
 	.@hidden_name$ = strnpcinfo(2);
@@ -15766,15 +15795,19 @@ prt_pri00,58,128,4	script	Overwatcher Terketh#ep1	4_M_JOB_HUNTER,{
 	mes "What do you want?";
 	next;
 	if (select( "To the Past Memories of the Royal Family", "To the oudside" ) == 2) {
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 2000;
 		npctalk "Well, sure.", "", bc_self;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		warp "prt_pri00",53,128;
 		end;
 	}
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 2000;
 	npctalk "Take care. Do not snoop around too much!", "", bc_self;
 	sleep2 2000;
+	setpcblock PCBLOCK_NPC, false;
 	warp "prt_lib",9,28;
 	end;
 }
@@ -15934,7 +15967,8 @@ prt_prison,243,265,6	script	Prisoner 243AD265#EP161	4_M_DRAKE,{
 			mes "Now that the fellow has become freer from death, I wonder what he's up to. I wonder what kind of memory he would write in his next letter.";
 			next;
 			mes "The prisoner started singing as if he was reminiscing about something.";
-			// close2;// still talk to npc
+			close2;
+			setpcblock PCBLOCK_NPC, true;
 			sleep2 30;
 			npctalk "Prisoner 243AD265: We're coming home~~ We're coming home~~", "", bc_self;
 			sleep2 2000;
@@ -15968,6 +16002,7 @@ prt_prison,243,265,6	script	Prisoner 243AD265#EP161	4_M_DRAKE,{
 			sleep2 2000;
 			emotion ET_HNG;
 			npctalk "Prisoner 243AD265: It is far from amusing when there is no fellow sailor around.", "", bc_self;
+			setpcblock PCBLOCK_NPC, false;
 			end;
 		case 2:
 			erasequest 5426;// [Stand by]To My Beloved Fellow

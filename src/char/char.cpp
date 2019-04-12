@@ -36,7 +36,7 @@
 #include "int_party.hpp"
 #include "int_storage.hpp"
 
-//definition of exported var declared in .h
+//definition of exported var declared in header
 int login_fd=-1; //login file descriptor
 int char_fd=-1; //char file descriptor
 struct Schema_Config schema_config;
@@ -3208,7 +3208,7 @@ int do_init(int argc, char **argv)
 		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");
 	}
 
-	inter_init_sql((argc > 2) ? argv[2] : inter_cfgName); // inter server configuration
+	inter_init_sql((argc > 2) ? argv[2] : SQL_CONF_NAME); // inter server configuration
 
 	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	online_char_db = idb_alloc(DB_OPT_RELEASE_DATA);

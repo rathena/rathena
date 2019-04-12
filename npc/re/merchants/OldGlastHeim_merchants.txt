@@ -9,29 +9,29 @@
 
 // Merchant
 //============================================================
-glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
+glast_01,210,273,5	script	Hugin's Butler#pa0829	1_F_04,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "Your bag is too heavy. Reduce some weight and come back.";
 		close;
 	}
-	mes "[Hugin's Buttler]";
+	mes "[Hugin's Butler]";
 	mes "Bring Temporal Crystal items for various Temporal boots items. Pick something you want.";
 	next;
-	switch( select( "Cancel", "Buy Temporal Boots (Need 1 Temporal Crystal)", "Upgrade Temporal Boots (Need 5 Temporal Crystals)", "Upgrade Modified Boots (Need 5 Time Crystals)" ) ) {
+	switch( select( "Cancel", "Buy Temporal Boots (Need 1 Temporal Crystal)", "Upgrade Temporal Boots (Need 5 Temporal Crystals)", "Upgrade Modified Boots (Need 5 Temporal Crystals)" ) ) {
 	case 1:
-		mes "[Hugin's Buttler]";
+		mes "[Hugin's Butler]";
 		mes "Come back whenever you want.";
 		close;
 	case 2:
 		if (countitem(6607) > 0) {
-			mes "[Hugin's Buttler]";
+			mes "[Hugin's Butler]";
 			mes "Take these Temporal Boots. We can upgrade your Temporal Boots with 5 Temporal Crystals.";
 			delitem 6607,1;// Temporal_Crystal
 			getitem 2499,1;// Temporal_Boots
 			close;
 		}
-		mes "[Hugin's Buttler]";
+		mes "[Hugin's Butler]";
 		mes "You need more Temporal Crystals. Come back when you get some more Temporal Crystals during your travel through Old Glast Heim.";
 		close;
 	case 3:
@@ -54,40 +54,40 @@ glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 		break;
 	}
 	if (!getequipisequiped(EQI_SHOES)) {
-		mes "[Hugin's Buttler]";
+		mes "[Hugin's Butler]";
 		mes "Only the item you are wearing can be upgraded.";
 		mes "Wear the ^0000FFTemporal Boots^000000 you want to upgrade, and then talk to me once again.";
 		close;
 	}
 	if (getequipid(EQI_SHOES) != 2499) {
-		mes "[Hugin's Buttler]";
+		mes "[Hugin's Butler]";
 		mes "You are not wearing the Temporal Boots. Talk to me once you're wearing them.";
 		close;
 	}
 	if (countitem(6607) < 5) {
-		mes "[Hugin's Buttler]";
+		mes "[Hugin's Butler]";
 		mes "Not enough Temporal Crystals. You need 5 Temporal Crystals to upgrade your item.";
 		close;
 	}
-	mes "[Hugin's Buttler]";
+	mes "[Hugin's Butler]";
 	mes "You can trade ^0000FF1 Temporal Boots and 5 Temporal Crystals^000000 for 1 of the following items. ^FF0000Previous refine rate will not be retained with these new ones^000000.";
 	next;
 	.@s = select( "Cancel", "Str Boots", "Int Boots", "Agi Boots", "Vit Boots", "Dex Boots", "Luk Boots" ) - 2;
 	if (.@s == -1) {
-		mes "[Hugin's Buttler]";
+		mes "[Hugin's Butler]";
 		mes "Come back anytime you want.";
 		close;
 	}
 	setarray .@type$[0], "Strength", "Intelligence", "Agility", "Vitality", "Dexterity", "Lucky";
-	mes "[Hugin's Buttler]";
+	mes "[Hugin's Butler]";
 	mes "Are you sure about buying Temporal ^FF0000" + .@type$[.@s] + "^000000 Boots? There's no refunds.";
 	next;
 	if (select( "Think again", "Yes, I am sure." ) == 1) {
-		mes "[Hugin's Buttler]";
+		mes "[Hugin's Butler]";
 		mes "Ok, come back again when you are sure.";
 		close;
 	}
-	mes "[Hugin's Buttler]";
+	mes "[Hugin's Butler]";
 	mes "The boots have been upgraded as you want.";
 	if (getequipid(EQI_SHOES) == 2499) {
 		delequip EQI_SHOES;
@@ -99,47 +99,47 @@ glast_01,210,273,5	script	Hugin's butler#pa0829	1_F_04,{
 
 // Enchant and Socket NPC
 //============================================================
-glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
+glast_01,212,273,4	script	Hugin's Magician#pa0829	1_F_01,{
 	disable_items;
 	if (MaxWeight - Weight < 1000) {
 		mes "Your bag is too heavy. Reduce some weight and come back.";
 		close;
 	}
-	mes "[Hugin's Magic Master]";
+	mes "[Hugin's Magician]";
 	mes "So you came to enchant the Temporal Boots. Be aware that Boots with sockets cannot be enchanted, and this upgrade is only possible for the boots you are wearing.";
 	next;
 	if (select( "How does the enchanting work?", "Give effect to my Temporal Boots" ) == 1) {
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "You can keep obtain ^0000FFCoagulated Spell^000000 through your travel times.";
 		next;
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "I can enchant your Temporal Boots items depands on the amount of that item. ^0000FFNot normal type boots^000000. Only possible for those 6 expanded version boots.";
 		next;
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "But, once you put a socket into the item, you cannot enchant it. Make sure to remember that.";
 		next;
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "I don't give out effect randomly. You can pick which effect you want for the item.";
 		next;
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "Of course it is for 4th slot only. You can have small effect at the start, and then the effect gets stronger.";
 		next;
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "To get to the final option upgrade, it will require way more Coagulated Spell items. Don't forget that.";
 		next;
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "Once the 4th slot completes the best option, you get to have a random bonus effect to the 3rd slot. With.. certain payment~";
 		next;
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "Also, you don't lose the item even if the enchant fails, we also guarantee keeping card and refine rate. But we can't initialize enchanting.";
 		next;
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "Phew...";
 		mes "Anyways, that's all for basic enchant information. Now you should see for yourself.";
 		close;
 	}
 	if (!getequipisequiped(EQI_SHOES)) {
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "Are you wearing the item?";
 		close;
 	}
@@ -175,19 +175,19 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 		.@equip_refine = getequiprefinerycnt(EQI_SHOES);
 
 		if (.@card[2] > 0) {
-			mes "[Hugin's Magic master]";
+			mes "[Hugin's Magician]";
 			mes "These boots have already passed the enchanting limit. We can't enchant them any more.";
 			close;
 		}
 		if (.@card[3] == 0) {// 4th slot 1st try enchanting
 			.@cost = .@enchant_cost[0];
-			mes "[Hugin's Magic Master]";
+			mes "[Hugin's Magician]";
 			mes "Want to enchant ^0000FF" + .@equip_name$ + "^000000?";
 			mes "For the 1st enchanting, you need ^0000FF" + .@cost + "^000000 Coagulated Spell items.";
 			next;
 			.@s = select( "Quit", "Fighting Spirit", "Archery", "Spell", "Vitality", "Attack Speed", "Lucky" ) - 2;
 			if (.@s == -1) {
-				mes "[Hugin's Magic Master]";
+				mes "[Hugin's Magician]";
 				mes "Ok, come back when you are ready.";
 				close;
 			}
@@ -202,13 +202,13 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 					break;
 			}
 			if (.@enchant_num == 5) {
-				mes "[Hugin's Magic Master]";
+				mes "[Hugin's Magician]";
 				mes "Something wrong happened.";
 				close;
 			}
 			.@cost = .@enchant_cost[.@enchant_num];
 
-			mes "[Hugin's Magic Master]";
+			mes "[Hugin's Magician]";
 			if (.@enchant_num == 4) {
 				.@card[2] = callfunc("F_Rand",4875,4876,4877,4878,4879,4880);// Bear's_Power, Runaway_Magic, Speed_Of_Light, Muscle_Fool, Hawkeye, Lucky_Day
 				.@string$ = "^990000Bonus effect ^000000 upgrade.";
@@ -222,13 +222,13 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 			}
 			next;
 			if (select("Quit","Effect Upgrade!") == 1) {
-				mes "[Hugin's Magic Master]";
+				mes "[Hugin's Magician]";
 				mes "Ok, come back when you are ready.";
 				close;
 			}
 		}
 		if (countitem(6608) < .@cost) {
-			mes "[Hugin's Magic Master]";
+			mes "[Hugin's Magician]";
 			mes "Hmm, you are missing " + (.@cost - countitem(6608)) + " Coagulated Spell items. Go get more, and then we can talk about more enchants.";
 			close;
 		}
@@ -240,12 +240,12 @@ glast_01,212,273,4	script	Hugin's magic master#pa0829	1_F_01,{
 			close;
 
 		delequip EQI_SHOES;
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "Trying for " + .@string$;
 		getitem2 .@equip_id,1,1,.@equip_refine,0,0,0,.@card[2],.@card[3];
 		close;
 	default:
-		mes "[Hugin's Magic Master]";
+		mes "[Hugin's Magician]";
 		mes "This is not the right item for this enchant.";
 		mes "Remember, only those 6 types of Temporal Boots are available for enchanting.";
 		close;
@@ -259,7 +259,7 @@ glast_01,210,270,0	script	Hugin's Craftsman#pa0829	4_F_JOB_BLACKSMITH,{
 		close;
 	}
 	mes "[Hugin's Craftsman]";
-	mes "That Magic Master always says that enchanting Temporal Boots is the best. But, I think quite different.";
+	mes "That Magician always says that enchanting Temporal Boots is the best. But, I think quite different.";
 	next;
 	mes "[Hugin's Craftsman]";
 	mes "I think putting a slot into the item would be the best. Even with some risk of failing.";
@@ -310,7 +310,7 @@ S_Slot:
 		close;
 	}
 	mes "[Hugin's Craftsman]";
-	mes "Once again, ^FF0000That Magic Master won't enchant any item with a slot.^000000";
+	mes "Once again, ^FF0000That Magician won't enchant any item with a slot.^000000";
 	mes "Still want to proceed?";
 	next;
 	if (select( "Cancel", "I understand. Try to slot it." ) == 1) {

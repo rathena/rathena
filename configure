@@ -1339,7 +1339,7 @@ Optional Features:
   --enable-FEATURE[=ARG]  include FEATURE [ARG=yes]
   --enable-manager=ARG    memory managers: no, builtin, memwatch, dmalloc,
                           gcollect, bcheck (defaults to builtin)
-  --enable-packetver=ARG  Sets the PACKETVER define. (see src/common/mmo.h)
+  --enable-packetver=ARG  Sets the PACKETVER define. (see src/common/mmo.hpp)
   --enable-epoll          use epoll(4) on Linux
   --enable-debug[=ARG]    Compiles extra debug code. (disabled by default)
                           (available options: yes, no, gdb)

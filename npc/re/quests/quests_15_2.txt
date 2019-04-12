@@ -20,9 +20,7 @@ function	script	F_time_limit_recorder	{
 function	script	F_erase_datas_recorder	{
 	if (callfunc("F_time_limit_recorder") == 1)
 		return;
-	mes "";
 	mes "Your whole body suddenly becomes heavy and time seems to be passing faster around you.";
-	mes "";
 	for ( .@quest_id = 5341; .@quest_id < 5371; .@quest_id++ ) {
 		if (isbegin_quest(.@quest_id) > 0)
 			erasequest .@quest_id;
@@ -1902,7 +1900,7 @@ un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
 
 S_Random:
 	.rand_npc = getarg(0);
-	getmapxy .@map$,.@x,.@y, UNITTYPE_NPC, "Patient#EP15.2MR_0" + .rand_npc;
+	getmapxy .@map$,.@x,.@y, BL_NPC, "Patient#EP15.2MR_0" + .rand_npc;
 	disablenpc "Patient#EP15.2MR_0" + .rand_npc;
 	monster .@map$,.@x,.@y, "Convulsing Patient",1015,1,"Nurse Lapplad#EP15.2MR::OnMobDead";
 	.mob_id = $@mobid[0];

@@ -1,20 +1,13 @@
 //===== rAthena Script =======================================
 //= Prontera Town
-//===== By: ==================================================
-//= kobra_k88
-//===== Current Version: =====================================
-//= 2.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
-//= [Official Conversion]
 //= NPCs in Prontera
-//===== Additional Comments: =================================
-//= Fully working
-//= +AntiNovice exploit fix [Lupus] 1.2 added baby novice check
-//= Spellchecked [massdriller]
+//===== Changelogs: ==========================================
+//= 1.0 Initial release [kobra_k88]
+//= 1.2 added baby novice check [Lupus]
+//= 1.3 Spellchecked [massdriller]
 //= 1.4 Optimized. Novices > 20 BaseJob can go to Culvert, too [Lupus]
-//= 1.5a Added a Jawaii related npc [MasterOfMuppets]
+//= 1.5 Added a Jawaii related npc [MasterOfMuppets]
 //= 1.6 Replaced sewer_prt with (MISC_QUEST & 8) [Lupus]
 //= 1.7 Removed Duplicates [Silent]
 //= 1.8 Moved Culvert to quests/quests_prontera.txt
@@ -25,7 +18,7 @@
 
 // Prontera
 //============================================================
-prontera,160,330,0	script	Guard#pront::prtguard	105,{
+-	script	Guard#pront::prtguard	105,{
 	mes "[Prontera Guard]";
 	mes "Welcome to Prontera.";
 	close;
