@@ -224,7 +224,7 @@ OnTouch:
 	// note : party member can also trigger this event
 	disablenpc instance_npcname("#RZ Memorial Start");
 	'soul_name$ = strcharinfo(0);	// name displayed on soul is defined at entrance
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 500;
 	mapannounce 'map_rev$, "Morocc: Who dares to disrupt my sleep?!", bc_map,0xEBFF;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : We came to the right place!";
@@ -234,6 +234,7 @@ OnTouch:
 	specialeffect2 EF_LOCKON;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : Are these hideous monsters Morocc's lackeys?";
 	donpcevent instance_npcname("#RZ Event_1") + "::OnStart";
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -291,7 +292,7 @@ OnStart:
 1@rev,104,176,0	script	#RZ Event_3	HIDDEN_WARP_NPC,4,4,{
 	end;
 OnTouch:	// note : party member can also trigger this event
-	mes "";	// fix me
+	setpcblock PCBLOCK_NPC, true;
 	disablenpc instance_npcname("#RZ Event_3");
 	enablenpc instance_npcname("Weakened Morocc#RZ1");
 	unittalk getcharid(3), "" + strcharinfo(0) + " : Finally, here we are, Morocc.";
@@ -302,6 +303,7 @@ OnTouch:	// note : party member can also trigger this event
 	sleep2 3000;
 	specialeffect2 EF_LOCKON;
 	donpcevent instance_npcname("Weakened Morocc#RZ1") + "::OnTalk1";
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -392,10 +394,12 @@ OnMobDead:
 1@rev,35,119,0	script	#Battle_1RZ1	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	pcblockmove 0, true;
-	if ('status_battle[0] == 0) {
+	if ('status_battle[0] != 0)
+		setpcblock PCBLOCK_MOVE, true;
+	else {
 		'status_battle[0] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 1") + "::OnStart";
+		setpcblock PCBLOCK_NPC, true;
 		mapannounce 'map_rev$, "Morocc: How do you like to be separated from each other and have your bodies and minds bound?", bc_map,0xEBFF;
 		sleep2 3000;
 		mapannounce 'map_rev$, "Morocc: You're trespassing! Riff-raff like you have no business in here!", bc_map,0xEBFF;
@@ -406,6 +410,7 @@ OnTouch:
 		sleep2 3000;
 		mapannounce 'map_rev$, "Morocc: My soldiers, tear their bodies asunder and bring their souls to me!", bc_map,0xEBFF;
 		donpcevent instance_npcname("#morse_cave_wave_1") + "::OnStart";
+		setpcblock (PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK), false;
 	}
 	end;
 }
@@ -415,7 +420,7 @@ OnTouch:
 1@rev,112,116,0	script	#Battle_1RZ2	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
-	pcblockmove 0, true;
+	setpcblock PCBLOCK_MOVE, true;
 	if ('status_battle[1] == 0) {
 		'status_battle[1] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 2") + "::OnStart";
@@ -497,7 +502,7 @@ OnStart:
 			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
 				continue;
 			if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
-				pcblockmove .@account_id[.@i], false;
+				setpcblock PCBLOCK_MOVE, false, .@account_id[.@i];
 		}
 		mapwarp 'map_rev$,"prontera",97,167;
 	}
@@ -573,9 +578,9 @@ OnTouch:
 		specialeffect EF_ICEWALL;
 		initnpctimer;
 	}
-	pcblockmove 0, true;
+	setpcblock PCBLOCK_MOVE, true;
 	if (.@num < 7 && 'status_battle[0] == 0) {
-		mes "";	// fix me
+		setpcblock PCBLOCK_NPC, true;
 		'status_battle[0] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 1") + "::OnStart";
 		mapannounce 'map_rev$, "Morocc: How do you like to be separated from each other and have your bodies and minds bound?", bc_map,0xEBFF;
@@ -588,13 +593,14 @@ OnTouch:
 		sleep2 3000;
 		mapannounce 'map_rev$, "Morocc: My soldiers, tear their bodies asunder and bring their souls to me!", bc_map,0xEBFF;
 		donpcevent instance_npcname("#morse_cave_wave_1") + "::OnStart";
+		setpcblock (PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK), false;
 	}
 	else if (.@num >= 7 && .@num < 13 && 'status_battle[1] == 0) {
 		'status_battle[1] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 2") + "::OnStart";
 	}
 	else if (.@num >= 21 && .@num < 33 && 'status_battle[2] == 0) {
-		mes "";	// fix me
+		setpcblock PCBLOCK_NPC, true;
 		'status_battle[2] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 3") + "::OnStart";
 		mapannounce 'map_rev$, "Morocc: This world of mine is evolving.", bc_map,0xEBFF;
@@ -605,6 +611,7 @@ OnTouch:
 		sleep2 3000;
 		mapannounce 'map_rev$, "Morocc: My soldiers, tear their bodies asunder and bring their souls to me!", bc_map,0xEBFF;
 		donpcevent instance_npcname("#morse_cave_wave_2") + "::OnStart";
+		setpcblock (PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK), false;
 	}
 	end;
 OnTimer30000:
@@ -648,10 +655,10 @@ OnStop:
 1@rev,33,111,0	script	#RZ Debuff_1	HIDDEN_WARP_NPC,12,4,{
 	end;
 OnTouch:
-	pcblockmove 0, true;
 	.@num = atoi( replacestr( strnpcinfo(2), "RZ Debuff_", "" ) );
+	setpcblock PCBLOCK_MOVE, true;
 	if (.@num < 5 && 'status_battle[0] == 0) {
-		mes "";	// fix me
+		setpcblock PCBLOCK_NPC, true;
 		'status_battle[0] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 1") + "::OnStart";
 		mapannounce 'map_rev$, "Morocc: How do you like to be separated from each other and have your bodies and minds bound?", bc_map,0xEBFF;
@@ -664,13 +671,14 @@ OnTouch:
 		sleep2 3000;
 		mapannounce 'map_rev$, "Morocc: My soldiers, tear their bodies asunder and bring their souls to me!", bc_map,0xEBFF;
 		donpcevent instance_npcname("#morse_cave_wave_1") + "::OnStart";
+		setpcblock (PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK), false;
 	}
 	else if (.@num >= 5 && .@num < 9 && 'status_battle[1] == 0) {
 		'status_battle[1] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 2") + "::OnStart";
 	}
 	else if (.@num >= 9 && .@num < 16 && 'status_battle[2] == 0) {
-		mes "";	// fix me
+		setpcblock PCBLOCK_NPC, true;
 		'status_battle[2] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 3") + "::OnStart";
 		mapannounce 'map_rev$, "Morocc: This world of mine is evolving.", bc_map,0xEBFF;
@@ -681,6 +689,7 @@ OnTouch:
 		sleep2 3000;
 		mapannounce 'map_rev$, "Morocc: My soldiers, tear their bodies asunder and bring their souls to me!", bc_map,0xEBFF;
 		donpcevent instance_npcname("#morse_cave_wave_2") + "::OnStart";
+		setpcblock (PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK), false;
 	}
 	end;
 }
@@ -732,7 +741,7 @@ OnTouch:
 1@rev,34,47,0	script	#Battle_2RZ1	HIDDEN_WARP_NPC,3,3,{
 	end;
 OnTouch:
-	pcblockmove 0, true;
+	setpcblock PCBLOCK_MOVE, true;
 	if ('status_battle[2] == 0) {
 		'status_battle[2] = 1;
 		donpcevent instance_npcname("#RZ Memorial Effect 3") + "::OnStart";
@@ -832,7 +841,7 @@ OnStart:
 			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
 				continue;
 			if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
-				pcblockmove .@account_id[.@i], false;
+				setpcblock PCBLOCK_MOVE, false, .@account_id[.@i];
 		}
 		mapwarp 'map_rev$,"prontera",97,167;
 	}
@@ -849,7 +858,7 @@ OnStart:
 			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
 				continue;
 			if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
-				pcblockmove .@account_id[.@i], false;
+				setpcblock PCBLOCK_MOVE, false, .@account_id[.@i];
 		}
 		// enablenpc instance_npcname("#RZ Debuff Recovery_1");
 		// enablenpc instance_npcname("#RZ Debuff Recovery_2");
@@ -919,6 +928,7 @@ OnStop:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#Battle_3RZ1");
+	setpcblock PCBLOCK_NPC, true;
 	mapannounce 'map_rev$, "Morocc: I can't let you go unscathed!", bc_map,0xEBFF;
 	sleep2 3000;
 	mapannounce 'map_rev$, "Morocc: Hah hah, my Necromancer. I'll leave them to you.", bc_map,0xEBFF;
@@ -942,6 +952,7 @@ OnTouch:
 	sleep2 3000;
 	disablenpc .@necromancer$;
 	donpcevent instance_npcname("#morse_cave_3") + "::OnStart";
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -1162,7 +1173,7 @@ OnInstanceInit:
 			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
 				continue;
 			if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
-				pcblockmove .@account_id[.@i], false;
+				setpcblock PCBLOCK_MOVE, false, .@account_id[.@i];
 		}
 	}
 	end;

@@ -301,6 +301,7 @@ struct item_drop_list {
 
 struct mob_db *mob_db(int mob_id);
 uint16 mobdb_searchname(const char * const str);
+struct mob_db* mobdb_search_aegisname( const char* str );
 int mobdb_searchname_array(const char *str, uint16 * out, int size);
 int mobdb_checkid(const int id);
 struct view_data* mob_get_viewdata(int mob_id);
