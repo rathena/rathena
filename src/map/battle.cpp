@@ -3818,7 +3818,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case PA_SHIELDCHAIN:
 #ifdef RENEWAL
-			skillratio += 200 + 200 * skill_lv;
+			skillratio = 60 + 40 * skill_lv;
 			RE_LVL_DMOD(100);
 #else
 			skillratio += 30 * skill_lv;
