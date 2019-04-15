@@ -11304,10 +11304,21 @@ static int skill_castend_song(struct block_list *src, uint16 skill_id, uint16 sk
 	uint8 ba_lesson = pc_checkskill(sd, BA_MUSICALLESSON), dc_lesson = pc_checkskill(sd, DC_DANCINGLESSON);
 	struct status_data *status = status_get_status_data(src);
 	struct status_change *sc = status_get_sc(src);
-	int val1 = 0, val2 = 0;
-	int flag = BCT_PARTY; // Flag for buff/debuffs
+	int val1 = 0, val2 = 0, flag = BCT_PARTY;
 
 	switch (skill_id) {
+		case BD_LULLABY:
+		case BD_ETERNALCHAOS:
+		case BD_ROKISWEIL:
+		case BA_DISSONANCE:
+		case DC_UGLYDANCE:
+			flag = BCT_ENEMY;
+			break;
+		case DC_DONTFORGETME:
+			val1 = 10 * (3 * skill_lv); // ASPD decrease
+			val2 = 2 * skill_lv; // Movement speed adjustment.
+			flag = BCT_ENEMY;
+			break;
 		case BA_WHISTLE:
 			val1 = 18 + 2 * skill_lv + status->agi / 15 + ba_lesson / 2; // Flee increase
 			val2 = (skill_lv + 1) / 2 + status->luk / 30 + ba_lesson / 5; // Perfect dodge increase
@@ -11318,10 +11329,6 @@ static int skill_castend_song(struct block_list *src, uint16 skill_id, uint16 sk
 		case BA_POEMBRAGI:
 			val1 = 2 * skill_lv + status->dex / 10 + ba_lesson; // Cast time reduction
 			val2 = 3 * skill_lv + status->int_ / 5 + 2 * ba_lesson; // After-cast delay reduction
-			break;
-		case DC_DONTFORGETME:
-			val1 = 10 * (3 * skill_lv); // ASPD decrease
-			val2 = 2 * skill_lv; // Movement speed adjustment.
 			break;
 		case DC_SERVICEFORYOU:
 			val1 = (skill_lv < 10 ? 9 + skill_lv : 20) + (status->int_ / 10) + dc_lesson / 2; // MaxSP percent increase
@@ -11344,7 +11351,6 @@ static int skill_castend_song(struct block_list *src, uint16 skill_id, uint16 sk
 			break;
 		case BD_RICHMANKIM:
 			val1 = 10 + 10 * skill_lv; // Exp increase bonus
-			val2 = sd->status.party_id;
 			break;
 		case BD_SIEGFRIED:
 			val1 = skill_lv * 3; // Elemental Resistance
@@ -11366,10 +11372,7 @@ static int skill_castend_song(struct block_list *src, uint16 skill_id, uint16 sk
 		// or maybe we do that in skill_check_pc_partner or something ??
 	}
 
-	if (skill_get_splash(skill_id, skill_lv) != AREA_SIZE) // Offensive skills
-		return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), BCT_ENEMY, src, skill_id, skill_lv, val1, val2, tick);
-	else // val1 in our calculation is sent as val2 for the sc, since val1 is set to skill_id!
-		return party_foreachsamemap(skill_apply_songs, sd, skill_get_splash(skill_id, skill_lv), flag, src, skill_id, skill_lv, val1, val2, tick);
+	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, val1, val2, tick);
 }
 
 /**
