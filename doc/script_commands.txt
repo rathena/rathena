@@ -9237,7 +9237,8 @@ Mark Color:
 *waitingroom2bg_single(<battle group>,{"<map name>",<x>,<y>{,"<npc name>"}});
 
 Adds the first waiting player from the chat room of the given NPC to an existing battleground group.
-The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+The player will also be warped to the default spawn point of the battle group or to the specified coordinates
+<x> and <y> on the given <map>.
 
 ---------------------------------------
 
@@ -9281,7 +9282,8 @@ Returns battle group ID on success. Returns 0 on failure.
 
 *bg_join(<battle group>,{"<map name>",{<x>,<y>{,<char id>}});
 
-Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
+Adds an attached player or <char id> if specified to an existing battleground group. The player will also be warped
+to the default spawn point of the battle group or to the specified coordinates <x> and <y> on the given <map>.
 
 Returns true on success. Returns false on failure.
 
@@ -9289,7 +9291,8 @@ Returns true on success. Returns false on failure.
 
 *bg_team_setxy <Battle Group ID>,<x>,<y>;
 
-Updates the respawn point of the given Battle Group to x,y on the same map. <Battle Group ID> can be retrieved using getcharid(4).
+Updates the respawn point of the given Battle Group to x,y on the same map. <Battle Group ID> can be retrieved
+using getcharid(4).
 
 Example:
 	bg_team_setxy getcharid(4),56,212;
@@ -9316,7 +9319,8 @@ Note: 'bg_reserve' and 'bg_unbook' prevent the Battlegrounds queue from joining 
 
 *bg_desert({<char_id>});
 
-Same as 'bg_leave' but slaps the player with a deserter status so they can't enter another queue for Battlegrounds for 10 minutes due leaving in the middle of a Battleground.
+Same as 'bg_leave' but slaps the player with a deserter status so they can't enter another queue for the time
+defined in battleground_db (10 minutes by default).
 
 ---------------------------------------
 

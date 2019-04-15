@@ -110,8 +110,7 @@ bool bg_queue_reservation(const char *name, bool state);
 #define bg_queue_unbook(name) (bg_queue_reservation(name, false))
 
 int bg_create(uint16 mapindex, struct s_battleground_team* team);
-bool bg_team_join(int bg_id, struct map_session_data *sd);
-bool bg_team_join_from_queue(int bg_id, struct map_session_data *sd);
+bool bg_team_join(int bg_id, struct map_session_data *sd, bool is_queue);
 bool bg_team_delete(int bg_id);
 int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter);
 bool bg_team_warp(int bg_id, unsigned short mapindex, short x, short y);
