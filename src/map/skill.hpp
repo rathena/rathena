@@ -237,7 +237,7 @@ struct s_skill_db {
 };
 extern struct s_skill_db **skill_db;
 
-#define MAX_SQUARE_LAYOUT		15	// 31*31 unit placement maximum
+#define MAX_SQUARE_LAYOUT		7	// 15*15 unit placement maximum
 #define MAX_SKILL_UNIT_LAYOUT	(48+MAX_SQUARE_LAYOUT)	// 47 special ones + the square ones
 #define MAX_SKILL_UNIT_LAYOUT2	17
 #define MAX_SKILL_UNIT_COUNT	((MAX_SQUARE_LAYOUT*2+1)*(MAX_SQUARE_LAYOUT*2+1))
@@ -313,6 +313,21 @@ struct skill_unit_group_tickset {
 	int id;
 };
 
+/// Ring of Nibelungen bonuses
+enum e_nibelungen_status : uint8 {
+	RINGNBL_ASPDRATE = 1,		///< ASPD + 20%
+	RINGNBL_ATKRATE,		///< Physical damage + 20%
+	RINGNBL_MATKRATE,		///< MATK + 20%
+	RINGNBL_HPRATE,			///< Maximum HP + 30%
+	RINGNBL_SPRATE,			///< Maximum SP + 30%
+	RINGNBL_ALLSTAT,		///< All stats + 15
+	RINGNBL_HIT,			///< HIT + 50
+	RINGNBL_FLEE,			///< FLEE + 50
+	RINGNBL_SPCONSUM,		///< SP consumption - 30%
+	RINGNBL_HPREGEN,		///< HP recovery + 100%
+	RINGNBL_SPREGEN,		///< SP recovery + 100%
+	RINGNBL_MAX,
+};
 
 enum e_skill_unit_flag {
 	UF_DEFNOTENEMY      = 0x00001,	// If 'defunit_not_enemy' is set, the target is changed to 'friend'

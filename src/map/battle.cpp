@@ -2294,6 +2294,10 @@ static int battle_skill_damage(struct block_list *src, struct block_list *target
  * @return Bonus value based on party count
  */
 int battle_calc_chorusbonus(struct map_session_data *sd) {
+#ifdef RENEWAL // No bonus in renewal
+	return 0;
+#endif
+
 	int members = 0;
 
 	if (!sd || !sd->status.party_id)

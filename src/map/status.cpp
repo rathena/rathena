@@ -502,6 +502,9 @@ void initChangeTables(void)
 	set_sc( SA_VIOLENTGALE		, SC_VIOLENTGALE	, EFST_GROUNDMAGIC, SCB_FLEE );
 	add_sc( SA_REVERSEORCISH	, SC_ORCISH		);
 	add_sc( SA_COMA			, SC_COMA		);
+#ifdef RENEWAL
+	set_sc( BD_ADAPTATION	, SC_ADAPTATION	, EFST_ADAPTATION, SCB_NONE );
+#endif
 	set_sc( BD_ENCORE		, SC_DANCING		, EFST_BDPLAYING		, SCB_SPEED|SCB_REGEN );
 	set_sc( BD_RICHMANKIM		, SC_RICHMANKIM		, EFST_RICHMANKIM	, SCB_NONE	);
 	set_sc( BD_ETERNALCHAOS		, SC_ETERNALCHAOS	, EFST_ETERNALCHAOS	, SCB_DEF2 );
@@ -2337,8 +2340,10 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 #endif
 			} else if(!(skill_get_inf3(skill_id)&INF3_USABLE_DANCE)) // Skills that can be used in dancing state
 				return false;
+#ifndef RENEWAL
 			if ((sc->data[SC_DANCING]->val1&0xFFFF) == CG_HERMODE && skill_id == BD_ADAPTATION)
 				return false; // Can't amp out of Wand of Hermode :/ [Skotlex]
+#endif
 		}
 
 		if (skill_id && // Do not block item-casted skills.
@@ -2361,7 +2366,9 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 			// Skill blocking.
 			if (
 				(sc->data[SC_VOLCANO] && skill_id == WZ_ICEWALL) ||
+#ifndef RENEWAL
 				(sc->data[SC_ROKISWEIL] && skill_id != BD_ADAPTATION) ||
+#endif
 				(sc->data[SC_HERMODE] && skill_get_inf(skill_id) & INF_SUPPORT_SKILL) ||
 				(sc->data[SC_NOCHAT] && sc->data[SC_NOCHAT]->val1&MANNER_NOSKILL)
 			)
@@ -3291,7 +3298,7 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 			if(sc->data[SC_LAUDAAGNUS])
 				bonus += 2 + (sc->data[SC_LAUDAAGNUS]->val1 * 2);
 #ifdef RENEWAL
-			if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 4)
+			if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_HPRATE)
 				bonus += 30;
 #endif
 
@@ -3388,7 +3395,7 @@ static int status_get_spbonus(struct block_list *bl, enum e_status_bonus type) {
 #ifdef RENEWAL
 			if ((i = pc_checkskill(sd, (sd->status.sex ? BA_MUSICALLESSON : DC_DANCINGLESSON))) > 0)
 				bonus += i;
-			if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 5)
+			if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_SPRATE)
 				bonus += 30;
 #endif
 		}
@@ -4963,9 +4970,9 @@ void status_calc_regen_rate(struct block_list *bl, struct regen_data *regen, str
 	}
 #ifdef RENEWAL
 	if (sc->data[SC_NIBELUNGEN]) {
-		if (sc->data[SC_NIBELUNGEN]->val2 == 10)
+		if (sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_HPREGEN)
 			regen->rate.hp += 100;
-		else if (sc->data[SC_NIBELUNGEN]->val2 == 11)
+		else if (sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_SPREGEN)
 			regen->rate.sp += 100;
 	}
 #endif
@@ -5796,7 +5803,7 @@ static unsigned short status_calc_str(struct block_list *bl, struct status_chang
 	if(sc->data[SC_GLASTHEIM_STATE])
 		str += sc->data[SC_GLASTHEIM_STATE]->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 6)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
 		str += 15;
 #endif
 
@@ -5876,7 +5883,7 @@ static unsigned short status_calc_agi(struct block_list *bl, struct status_chang
 	if(sc->data[SC_GLASTHEIM_STATE])
 		agi += sc->data[SC_GLASTHEIM_STATE]->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 6)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
 		agi += 15;
 #endif
 
@@ -5946,7 +5953,7 @@ static unsigned short status_calc_vit(struct block_list *bl, struct status_chang
 	if(sc->data[SC_GLASTHEIM_STATE])
 		vit += sc->data[SC_GLASTHEIM_STATE]->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 6)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
 		vit += 15;
 #endif
 
@@ -6031,7 +6038,7 @@ static unsigned short status_calc_int(struct block_list *bl, struct status_chang
 			int_ -= int_ * sc->data[SC__STRIPACCESSORY]->val2 / 100;
 	}
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 6)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
 		int_ += 15;
 #endif
 
@@ -6113,7 +6120,7 @@ static unsigned short status_calc_dex(struct block_list *bl, struct status_chang
 	if(sc->data[SC_GLASTHEIM_STATE])
 		dex += sc->data[SC_GLASTHEIM_STATE]->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 6)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
 		dex += 15;
 #endif
 
@@ -6181,7 +6188,7 @@ static unsigned short status_calc_luk(struct block_list *bl, struct status_chang
 	if(sc->data[SC_GLASTHEIM_STATE])
 		luk += sc->data[SC_GLASTHEIM_STATE]->val1;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 6)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ALLSTAT)
 		luk += 15;
 #endif
 
@@ -6258,7 +6265,7 @@ static unsigned short status_calc_batk(struct block_list *bl, struct status_chan
 #ifdef RENEWAL
 	if (sc->data[SC_LOUD])
 		batk += 30;
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 2)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ATKRATE)
 		batk += batk * 20 / 100;
 #endif
 
@@ -6484,7 +6491,7 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 	if (sc->data[SC_VOLCANO])
 		matk += sc->data[SC_VOLCANO]->val2;
 #ifdef RENEWAL
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 3)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_MATKRATE)
 		matk += matk * 20 / 100;
 #endif
 
@@ -6590,7 +6597,7 @@ static signed short status_calc_hit(struct block_list *bl, struct status_change 
 		hit += sc->data[SC_TWOHANDQUICKEN]->val1 * 2;
 	if (sc->data[SC_ADRENALINE])
 		hit += sc->data[SC_ADRENALINE]->val1 * 3 + 5;
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 7)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_HIT)
 		hit += 50;
 #endif
 
@@ -6660,7 +6667,7 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 #ifdef RENEWAL
 	if( sc->data[SC_SPEARQUICKEN] )
 		flee += 2 * sc->data[SC_SPEARQUICKEN]->val1;
-	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 8)
+	if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_FLEE)
 		flee += 50;
 #endif
 
@@ -7318,7 +7325,7 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus += 10;
 		if (sc->data[SC_INCREASEAGI])
 			bonus += sc->data[SC_INCREASEAGI]->val1;
-		if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == 1)
+		if (sc->data[SC_NIBELUNGEN] && sc->data[SC_NIBELUNGEN]->val2 == RINGNBL_ASPDRATE)
 			bonus += 20;
 
 		struct map_session_data* sd = BL_CAST(BL_PC, bl);
@@ -12680,11 +12687,11 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					skill_delunitgroup(group);
 			}
 			break;
+#ifndef RENEWAL
 		case SC_HERMODE:
 			if(sce->val3 == BCT_SELF)
 				skill_clear_unitgroup(bl);
 			break;
-#ifndef RENEWAL
 		case SC_BASILICA: // Clear the skill area. [Skotlex]
 				if (sce->val3 && sce->val4 == bl->id) {
 					struct skill_unit_group* group = skill_id2group(sce->val3);
@@ -13439,6 +13446,7 @@ TIMER_FUNC(status_change_timer){
 			if (--sce->val3 <= 0)
 				break;
 			switch(sce->val1&0xFFFF) {
+#ifndef RENEWAL
 				case BD_RICHMANKIM:
 				case BD_DRUMBATTLEFIELD:
 				case BD_RINGNIBELUNGEN:
@@ -13463,17 +13471,16 @@ TIMER_FUNC(status_change_timer){
 					s=5;
 					break;
 				case BA_APPLEIDUN:
-					#ifdef RENEWAL
-						s=5;
-					#else
-						s=6;
-					#endif
+					s=6;
 					break;
+#endif
 				case CG_MOONLIT:
 					// Moonlit's cost is 4sp*skill_lv [Skotlex]
 					sp= 4*(sce->val1>>16);
 					// Upkeep is also every 10 secs.
+#ifndef RENEWAL
 				case DC_DONTFORGETME:
+#endif
 					s=10;
 					break;
 			}
