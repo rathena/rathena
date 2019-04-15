@@ -8660,9 +8660,9 @@ void battle_adjust_conf()
 		ShowWarning("conf/battle/feature.conf petevolution is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
 		battle_config.feature_petevolution = 0;
 	}
-	if (battle_config.feature_pet_auto_feed) {
+	if (battle_config.feature_pet_autofeed) {
 		ShowWarning("conf/battle/feature.conf pet auto feed is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
-		battle_config.feature_pet_auto_feed = 0;
+		battle_config.feature_pet_autofeed = 0;
 	}
 #endif
 
