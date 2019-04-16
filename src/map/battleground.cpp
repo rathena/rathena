@@ -111,15 +111,9 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "MinLevel")) {
-		std::string min_str;
 		int min;
 
-		if (this->asString(node, "MinLevel", min_str)) {
-			if (!script_get_constant(min_str.c_str(), &min)) {
-				this->invalidWarning(node, "Invalid minimum level value %s for battleground %d, skipping.\n", min_str.c_str(), id);
-				return 0;
-			}
-		} else if (!this->asInt32(node, "MinLevel", min))
+		if (!this->asInt32(node, "MinLevel", min))
 			return 0;
 
 		if (min > MAX_LEVEL) {
@@ -134,16 +128,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "MaxLevel")) {
-		std::string max_str;
 		int max;
-
-		if (this->asString(node, "MaxLevel", max_str)) {
-			if (!script_get_constant(max_str.c_str(), &max)) {
-				this->invalidWarning(node, "Invalid maximum level value %s for battleground %d, skipping.\n", max_str.c_str(), id);
-				return 0;
-			}
-		} else if (!this->asInt32(node, "MaxLevel", max))
-			return 0;
 
 		if (!this->asInt32(node, "MaxLevel", max))
 			return 0;

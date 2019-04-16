@@ -27,7 +27,7 @@
 #   MinPlayers        Minimum number of players required on each team. (Default: 1)
 #   MaxPlayers        Maximum number of players on each team. (Default: MAX_BG_MEMBERS / 2)
 #   MinLevel          Minimum level required to join the battleground. (Default: 1)
-#   MaxLevel          Maximum level to join the battleground. (Default: MAX_LEVEL)
+#   MaxLevel          Maximum level to join the battleground. (Default: MAX_LEVEL value)
 #   Deserter          Amount of time in seconds a player is marked deserter. (Default: 600)
 #   Locations:        Battleground location settings.
 #     - Map           The map on which the battleground will be played.
