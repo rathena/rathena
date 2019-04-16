@@ -753,7 +753,7 @@
 20799:1756:1732,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus2 bSkillAtk,"RA_ARROWSTORM",(5*.@r); bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",(5*.@r); if(getequiprefinerycnt(EQI_HAND_R)>=10) { bonus bAspd,1; } }
 20800:4045,{ bonus bLongAtkDef,-35; }
 20813:22170,{ .@r = getequiprefinerycnt(EQI_GARMENT); bonus bMatkRate,10; if (.@r>=7) { bonus2 bSubEle,Ele_Earth,15; bonus2 bSubEle,Ele_Wind,15; } if (.@r>=9) { bonus2 bSubEle,Ele_Earth,15; bonus2 bSubEle,Ele_Wind,15; } }
-20814:4588,{ bonus bBaseAtk,-5*readparam(bStr)/10); }
+20814:4588,{ bonus bBaseAtk,-5*readparam(bStr)/10; }
 20819:5397,{ bonus bAspd,1; bonus bNoCastCancel; }
 20831:4596,{ bonus bMatk,-5*(readparam(bInt)/10); }
 20838:26109,{ bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10; .@eq = getequiprefinerycnt(EQI_GARMENT); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { bonus2 bSkillAtk,"SO_EARTHGRAVE",40; } if ((.@eq + .@weapon) >= 18) { bonus2 bMagicAtkEle,Ele_Neutral,10; bonus2 bMagicAtkEle,Ele_Earth,10; if ((.@eq + .@weapon) >= 22) { bonus2 bMagicAtkEle,Ele_Water,10; } } }

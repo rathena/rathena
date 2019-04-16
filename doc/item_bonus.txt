@@ -394,7 +394,6 @@ bonus bLongSPGainValue,n;     		Heals +n SP when killing an enemy with a range-p
 bonus bMagicHPGainValue,n;		Heals +n HP when killing an enemy with a magical attack
 bonus bMagicSPGainValue,n;		Heals +n SP when killing an enemy with a magical attack
 
-
 Damage return
 -------------
 bonus bShortWeaponDamageReturn,n;	Reflects n% of received melee damage back to the enemy that caused it
