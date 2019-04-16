@@ -3476,6 +3476,12 @@
 	export_constant(RC2_BIO5_ACOLYTE_MERCHANT);
 	export_constant(RC2_BIO5_MAGE_ARCHER);
 	export_constant(RC2_BIO5_MVP);
+	export_constant(RC2_CLOCKTOWER);
+	export_constant(RC2_THANATOS);
+	export_constant(RC2_FACEWORM);
+	export_constant(RC2_HEARTHUNTER);
+	export_constant(RC2_ROCKRIDGE);
+	export_constant(RC2_WERNER_LAB);
 	export_constant(RC2_MAX);
 
 	/* classes */
