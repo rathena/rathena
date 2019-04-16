@@ -734,6 +734,8 @@
 	export_constant2("bRegenPercentSP", SP_REGEN_PERCENT_SP);
 	export_constant2("bSkillDelay",SP_SKILL_DELAY);
 	export_constant2("bNoWalkDelay",SP_NO_WALK_DELAY);
+	export_constant2("bLongSPGainValue",SP_LONG_SP_GAIN_VALUE);
+	export_constant2("bLongHPGainValue",SP_LONG_HP_GAIN_VALUE);
 
 	/* equip indices */
 	export_constant(EQI_COMPOUND_ON);
