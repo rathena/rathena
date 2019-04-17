@@ -7060,13 +7060,13 @@ BUILDIN_FUNC(guildstoragecountitem)
 
 	int count = script_countitem_sub(gstor->u.items_guild, id, MAX_GUILD_STORAGE, (aid > 3) ? true : false, false, st, nullptr);
 
+	storage_guild_storageclose(sd);
+	gstor->lock = false;
+
 	if (count < 0) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
-
-	storage_guild_storageclose(sd);
-	gstor->lock = false;
 
 	script_pushint(st, count);
 	return SCRIPT_CMD_SUCCESS;
