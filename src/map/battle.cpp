@@ -2477,7 +2477,11 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 				break;
 			case SN_SHARPSHOOTING:
 			case MA_SHARPSHOOTING:
+#ifdef RENEWAL
+				cri += 300; // !TODO: Confirm new bonus
+#else
 				cri += 200;
+#endif
 				break;
 			case NJ_KIRIKAGE:
 				cri += 250 + 50*skill_lv;
