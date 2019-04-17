@@ -1380,9 +1380,8 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case RG_RAID:
 		sc_start(src,bl,SC_STUN,(10+3*skill_lv),skill_lv,skill_get_time(skill_id,skill_lv));
 		sc_start(src,bl,SC_BLIND,(10+3*skill_lv),skill_lv,skill_get_time2(skill_id,skill_lv));
-
 #ifdef RENEWAL
-		sc_start(src,bl,SC_RAID,100,7,5000);
+		sc_start(src, bl, SC_RAID, 100, 7, 10000); // Hardcoded to 10 seconds since skill_cast_db is full
 		break;
 
 	case RG_BACKSTAP:
