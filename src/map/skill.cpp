@@ -454,13 +454,13 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 	tsc = status_get_sc(target);
 
 	switch( skill_id ) {
-		case BA_APPLEIDUN:
 #ifndef RENEWAL
+	case BA_APPLEIDUN:
 			hp = 30 + 5 * skill_lv + (status_get_vit(src) / 2); // HP recovery
-#endif
 			if (sd)
 				hp += 5 * pc_checkskill(sd, BA_MUSICALLESSON);
 			break;
+#endif
 		case PR_SANCTUARY:
 			hp = (skill_lv > 6) ? 777 : skill_lv * 100;
 			break;
@@ -502,11 +502,6 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 
 	if( (!heal || (target && target->type == BL_MER)) && skill_id != NPC_EVILLAND )
 		hp >>= 1;
-
-#ifdef RENEWAL
-	if (skill_id == BA_APPLEIDUN)
-		hp_bonus += skill_lv * 2;
-#endif
 
 	if (sd && ((skill = pc_checkskill(sd, SU_POWEROFSEA)) > 0)) {
 		hp_bonus += 10;
@@ -6188,6 +6183,147 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 }
 
 /**
+ * Give a song's buff/debuff or damage to all targets around
+ * @param target: Target
+ * @param ap: Argument list
+ * @return 1 on success or 0 otherwise
+ */
+static int skill_apply_songs(struct block_list* target, va_list ap)
+{
+	int flag = va_arg(ap, int);
+	struct block_list* src = va_arg(ap, struct block_list*);
+	uint16 skill_id = static_cast<uint16>(va_arg(ap, int));
+	uint16 skill_lv = static_cast<uint16>(va_arg(ap, int));
+	int val1 = va_arg(ap, int);
+	int val2 = va_arg(ap, int);
+	int tick = va_arg(ap, int);
+
+	if (flag & BCT_WOS && src == target)
+		return 0;
+
+	if (battle_check_target(src, target, flag) > 0) {
+		switch (skill_id) {
+			// Attack type songs
+		case BA_DISSONANCE:
+			skill_attack(BF_MAGIC, src, src, target, skill_id, skill_lv, tick, 0);
+			return 1;
+		case DC_UGLYDANCE:
+		case BD_LULLABY:
+			return skill_additional_effect(src, target, skill_id, skill_lv, BF_LONG | BF_SKILL | BF_MISC, ATK_DEF, tick);
+		default: // Buff/Debuff type songs
+			if (skill_id == CG_HERMODE) {
+				if (src->id != target->id)
+					status_change_clear_buffs(target, SCCB_BUFFS); // Should dispell only allies.
+			}
+			return sc_start4(src, target, status_skill2sc(skill_id), 100, skill_id, val1, val2, 0, skill_get_time(skill_id, skill_lv));
+		}
+	}
+
+	return 0;
+}
+
+/**
+ * Calculate a song's bonus values
+ * @param src: Caster
+ * @param skill_id: Song skill ID
+ * @param skill_lv: Song skill level
+ * @param tick: Timer tick
+ * @return Number of targets or 0 otherwise
+ */
+static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 skill_lv, t_tick tick)
+{
+	nullpo_ret(src);
+
+	if (src->type != BL_PC) {
+		ShowWarning("skill_castend_song: Expected player type for src!\n");
+		return 0;
+	}
+
+	if (!(skill_get_inf2(skill_id) & (INF2_SONG_DANCE | INF2_ENSEMBLE_SKILL))) {
+		ShowWarning("skill_castend_song: Unknown song skill ID: %u\n", skill_id);
+		return 0;
+	}
+
+	struct map_session_data* sd = BL_CAST(BL_PC, src);
+	uint8 ba_lesson = pc_checkskill(sd, BA_MUSICALLESSON), dc_lesson = pc_checkskill(sd, DC_DANCINGLESSON);
+	struct status_data* status = status_get_status_data(src);
+	struct status_change* sc = status_get_sc(src);
+	int val1 = 0, val2 = 0, flag = BCT_PARTY;
+
+	switch (skill_id) {
+	case BD_LULLABY:
+	case BD_ETERNALCHAOS:
+	case BD_ROKISWEIL:
+	case BA_DISSONANCE:
+	case DC_UGLYDANCE:
+		flag = BCT_ENEMY;
+		break;
+	case DC_DONTFORGETME:
+		val1 = 10 * (3 * skill_lv); // ASPD decrease
+		val2 = 2 * skill_lv; // Movement speed adjustment.
+		flag = BCT_ENEMY;
+		break;
+	case BA_WHISTLE:
+		val1 = 18 + 2 * skill_lv + status->agi / 15 + ba_lesson / 2; // Flee increase
+		val2 = (skill_lv + 1) / 2 + status->luk / 30 + ba_lesson / 5; // Perfect dodge increase
+		break;
+	case DC_HUMMING:
+		val1 = 4 * skill_lv + status->dex / 15 + dc_lesson; // Hit increase
+		break;
+	case BA_POEMBRAGI:
+		val1 = 2 * skill_lv + status->dex / 10 + ba_lesson; // Cast time reduction
+		val2 = 3 * skill_lv + status->int_ / 5 + 2 * ba_lesson; // After-cast delay reduction
+		break;
+	case BA_APPLEIDUN:
+		val1 = (skill_lv < 10 ? 9 + skill_lv : 20); // HP rate increase
+		val2 = 2 * skill_lv; // Potion recovery rate
+		break;
+	case DC_SERVICEFORYOU:
+		val1 = (skill_lv < 10 ? 9 + skill_lv : 20) + (status->int_ / 10) + dc_lesson / 2; // MaxSP percent increase
+		val2 = 5 + skill_lv + (status->int_ / 10) + dc_lesson / 2; // SP cost reduction
+		break;
+	case BA_ASSASSINCROSS:
+		val1 = ba_lesson / 2 + (skill_lv < 10 ? (skill_lv * 2 - 1) : 20) + (status->agi / 20); // ASPD increase
+		break;
+	case DC_FORTUNEKISS:
+		val1 = skill_lv + (status->luk / 10); // Critical increase
+		val1 *= 10;
+		val1 += 5 * dc_lesson;
+		break;
+	case BD_DRUMBATTLEFIELD:
+		val1 = 15 + skill_lv * 5; // Atk increase
+		val2 = skill_lv * 15; // Def increase
+		break;
+	case BD_RINGNIBELUNGEN:
+		val1 = rnd() % RINGNBL_MAX; // See e_nibelungen_status
+		break;
+	case BD_RICHMANKIM:
+		val1 = 10 + 10 * skill_lv; // Exp increase bonus
+		break;
+	case BD_SIEGFRIED:
+		val1 = skill_lv * 3; // Elemental Resistance
+		val2 = skill_lv * 5; // Status ailment resistance
+		break;
+	case CG_HERMODE:
+		flag |= BCT_GUILD;
+		break;
+	}
+
+	clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
+	sd->skill_id_dance = skill_id;
+	sd->skill_lv_dance = skill_lv;
+
+	if (skill_get_inf2(skill_id) & INF2_ENSEMBLE_SKILL) {
+		sc_start(src, src, status_skill2sc(CG_SPECIALSINGER), 100, 1, skill_get_time(CG_SPECIALSINGER, 1));
+		skill_check_pc_partner(sd, skill_id, &skill_lv, 3, 1);
+		// todo, apply ensemble fatigue if it hits you + ensemble partner.. ??
+		// or maybe we do that in skill_check_pc_partner or something ??
+	}
+
+	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, val1, val2, tick);
+}
+
+/**
  * Use no-damage skill from 'src' to 'bl
  * @param src Caster
  * @param bl Target of the skill, bl maybe same with src for self skill
@@ -7488,6 +7624,29 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			}
 		}
 		break;
+
+#ifdef RENEWAL
+	case BD_LULLABY:
+	case BD_RICHMANKIM:
+	case BD_ETERNALCHAOS:
+	case BD_DRUMBATTLEFIELD:
+	case BD_RINGNIBELUNGEN:
+	case BD_ROKISWEIL:
+	case BD_INTOABYSS:
+	case BD_SIEGFRIED:
+	case BA_DISSONANCE:
+	case BA_POEMBRAGI:
+	case BA_WHISTLE:
+	case BA_ASSASSINCROSS:
+	case BA_APPLEIDUN:
+	case DC_UGLYDANCE:
+	case DC_HUMMING:
+	case DC_DONTFORGETME:
+	case DC_FORTUNEKISS:
+	case DC_SERVICEFORYOU:
+		skill_castend_song(src, skill_id, skill_lv, tick);
+		break;
+#endif
 
 	case TF_STEAL:
 		if(sd) {
@@ -11229,155 +11388,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 }
 
 /**
- * Give a song's buff/debuff or damage to all targets around
- * @param target: Target
- * @param ap: Argument list
- * @return 1 on success or 0 otherwise
- */
-int skill_apply_songs(struct block_list *target, va_list ap)
-{
-	int flag = va_arg(ap, int);
-	struct block_list *src = va_arg(ap, struct block_list *);
-	uint16 skill_id = static_cast<uint16>(va_arg(ap, int));
-	uint16 skill_lv = static_cast<uint16>(va_arg(ap, int));
-	int val1 = va_arg(ap, int);
-	int val2 = va_arg(ap, int);
-	int tick = va_arg(ap, int);
-
-	if (flag & BCT_WOS && src == target)
-		return 0;
-
-	if (battle_check_target(src, target, flag) > 0) {
-		switch (skill_id) {
-			// Attack type songs
-			case BA_DISSONANCE:
-				skill_attack(BF_MAGIC, src, src, target, skill_id, skill_lv, tick, 0);
-				return 1;
-			case DC_UGLYDANCE:
-			case BD_LULLABY:
-				return skill_additional_effect(src, target, skill_id, skill_lv, BF_LONG | BF_SKILL | BF_MISC, ATK_DEF, tick);
-			case BA_APPLEIDUN: {
-				if (target->type != BL_PC)
-					return 0;
-
-				int heal = skill_calc_heal(src, target, skill_id, skill_lv, true);
-
-				if (status_get_sc(target)->data[SC_AKAITSUKI] && heal)
-					heal = ~heal + 1;
-				clif_skill_nodamage(target, target, AL_HEAL, heal, 1);
-				status_heal(target, heal, 0, 0);
-				return 1;
-			}
-			default: // Buff/Debuff type songs
-				if (skill_id == CG_HERMODE) {
-					if (src->id != target->id)
-						status_change_clear_buffs(target, SCCB_BUFFS); // Should dispell only allies.
-				}
-				return sc_start4(src, target, status_skill2sc(skill_id), 100, skill_id, val1, val2, 0, skill_get_time(skill_id, skill_lv));
-		}
-	}
-
-	return 0;
-}
-
-/**
- * Calculate a song's bonus values
- * @param src: Caster
- * @param skill_id: Song skill ID
- * @param skill_lv: Song skill level
- * @param tick: Timer tick
- * @return Number of targets or 0 otherwise
- */
-static int skill_castend_song(struct block_list *src, uint16 skill_id, uint16 skill_lv, t_tick tick)
-{
-	nullpo_ret(src);
-
-	if (src->type != BL_PC) {
-		ShowWarning("skill_castend_song: Expected player type for src!\n");
-		return 0;
-	}
-
-	if (!(skill_get_inf2(skill_id) & (INF2_SONG_DANCE | INF2_ENSEMBLE_SKILL))) {
-		ShowWarning("skill_castend_song: Unknown song skill ID: %u\n", skill_id);
-		return 0;
-	}
-
-	struct map_session_data* sd = BL_CAST(BL_PC, src);
-	uint8 ba_lesson = pc_checkskill(sd, BA_MUSICALLESSON), dc_lesson = pc_checkskill(sd, DC_DANCINGLESSON);
-	struct status_data *status = status_get_status_data(src);
-	struct status_change *sc = status_get_sc(src);
-	int val1 = 0, val2 = 0, flag = BCT_PARTY;
-
-	switch (skill_id) {
-		case BD_LULLABY:
-		case BD_ETERNALCHAOS:
-		case BD_ROKISWEIL:
-		case BA_DISSONANCE:
-		case DC_UGLYDANCE:
-			flag = BCT_ENEMY;
-			break;
-		case DC_DONTFORGETME:
-			val1 = 10 * (3 * skill_lv); // ASPD decrease
-			val2 = 2 * skill_lv; // Movement speed adjustment.
-			flag = BCT_ENEMY;
-			break;
-		case BA_WHISTLE:
-			val1 = 18 + 2 * skill_lv + status->agi / 15 + ba_lesson / 2; // Flee increase
-			val2 = (skill_lv + 1) / 2 + status->luk / 30 + ba_lesson / 5; // Perfect dodge increase
-			break;
-		case DC_HUMMING:
-			val1 = 4 * skill_lv + status->dex / 15 + dc_lesson; // Hit increase
-			break;
-		case BA_POEMBRAGI:
-			val1 = 2 * skill_lv + status->dex / 10 + ba_lesson; // Cast time reduction
-			val2 = 3 * skill_lv + status->int_ / 5 + 2 * ba_lesson; // After-cast delay reduction
-			break;
-		case DC_SERVICEFORYOU:
-			val1 = (skill_lv < 10 ? 9 + skill_lv : 20) + (status->int_ / 10) + dc_lesson / 2; // MaxSP percent increase
-			val2 = 5 + skill_lv + (status->int_ / 10) + dc_lesson / 2; // SP cost reduction
-			break;
-		case BA_ASSASSINCROSS:
-			val1 = ba_lesson / 2 + (skill_lv < 10 ? (skill_lv * 2 - 1) : 20) + (status->agi / 20); // ASPD increase
-			break;
-		case DC_FORTUNEKISS:
-			val1 = skill_lv + (status->luk / 10); // Critical increase
-			val1 *= 10;
-			val1 += 5 * dc_lesson;
-			break;
-		case BD_DRUMBATTLEFIELD:
-			val1 = 15 + skill_lv * 5; // Atk increase
-			val2 = skill_lv * 15; // Def increase
-			break;
-		case BD_RINGNIBELUNGEN:
-			val1 = rnd() % RINGNBL_MAX; // See e_nibelungen_status
-			break;
-		case BD_RICHMANKIM:
-			val1 = 10 + 10 * skill_lv; // Exp increase bonus
-			break;
-		case BD_SIEGFRIED:
-			val1 = skill_lv * 3; // Elemental Resistance
-			val2 = skill_lv * 5; // Status ailment resistance
-			break;
-		case CG_HERMODE:
-			flag |= BCT_GUILD;
-			break;
-	}
-
-	clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
-	sd->skill_id_dance = skill_id;
-	sd->skill_lv_dance = skill_lv;
-
-	if (skill_get_inf2(skill_id) & INF2_ENSEMBLE_SKILL) {
-		sc_start(src, src, status_skill2sc(CG_SPECIALSINGER), 100, 1, skill_get_time(CG_SPECIALSINGER, 1));
-		skill_check_pc_partner(sd, skill_id, &skill_lv, 3, 1);
-		// todo, apply ensemble fatigue if it hits you + ensemble partner.. ??
-		// or maybe we do that in skill_check_pc_partner or something ??
-	}
-
-	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, val1, val2, tick);
-}
-
-/**
  * Checking that causing skill failed
  * @param src Caster
  * @param target Target
@@ -12089,32 +12099,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 		break;
 	}
 
-	case BD_LULLABY:
-	case BD_RICHMANKIM:
-	case BD_ETERNALCHAOS:
-	case BD_DRUMBATTLEFIELD:
-	case BD_RINGNIBELUNGEN:
-	case BD_ROKISWEIL:
-	case BD_INTOABYSS:
-	case BD_SIEGFRIED:
-	case BA_DISSONANCE:
-	case BA_POEMBRAGI:
-	case BA_WHISTLE:
-	case BA_ASSASSINCROSS:
-	case BA_APPLEIDUN:
-	case DC_UGLYDANCE:
-	case DC_HUMMING:
-	case DC_DONTFORGETME:
-	case DC_FORTUNEKISS:
-	case DC_SERVICEFORYOU:
-#ifdef RENEWAL
-		skill_castend_song(src, skill_id, skill_lv, tick);
-#else
-		flag |= 1; // Set flag to 1 to prevent deleting ammo (it will be deleted on group-delete).
-		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-#endif
-		break;
-
 	// Skill Unit Setting
 	case MG_SAFETYWALL:
 	case MG_FIREWALL:
@@ -12151,6 +12135,26 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case WE_CALLPARENT:
 	case WE_CALLBABY:
 	case SA_LANDPROTECTOR:
+#ifndef RENEWAL
+	case BD_LULLABY:
+	case BD_RICHMANKIM:
+	case BD_ETERNALCHAOS:
+	case BD_DRUMBATTLEFIELD:
+	case BD_RINGNIBELUNGEN:
+	case BD_ROKISWEIL:
+	case BD_INTOABYSS:
+	case BD_SIEGFRIED:
+	case BA_DISSONANCE:
+	case BA_POEMBRAGI:
+	case BA_WHISTLE:
+	case BA_ASSASSINCROSS:
+	case BA_APPLEIDUN:
+	case DC_UGLYDANCE:
+	case DC_HUMMING:
+	case DC_DONTFORGETME:
+	case DC_FORTUNEKISS:
+	case DC_SERVICEFORYOU:
+#endif
 	case CG_MOONLIT:
 	case GS_DESPERADO:
 	case NJ_KAENSIN:

@@ -11374,18 +11374,17 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			if( !mobdb_checkid(val1) )
 				val1 = MOBID_PORING; // Default poring
 			break;
+#ifndef RENEWAL
 		case SC_APPLEIDUN:
 		{
 			struct map_session_data * s_sd = BL_CAST(BL_PC, src);
-#ifdef RENEWAL
-			val2 = (10 + val1) + (status_get_vit(src) / 10); //HP Rate: (10 + skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
-#else
+
 			val2 = (5 + 2 * val1) + (status_get_vit(src) / 10); //HP Rate: (5 + 2 * skill_lv) + (vit/10) + (BA_MUSICALLESSON level)
-#endif
-	if (s_sd)
+			if (s_sd)
 				val2 += pc_checkskill(s_sd, BA_MUSICALLESSON) / 2;
 			break;
 		}
+#endif
 		case SC_EPICLESIS:
 			val2 = 5 * val1; //HP rate bonus
 			break;

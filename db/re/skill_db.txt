@@ -457,23 +457,23 @@
 // Bard
 315,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		BA_MUSICALLESSON,Music Lessons
 316,9,6,1,-1,0,0,5,2,no,0,0,0,weapon,0,0x8,		BA_MUSICALSTRIKE,Melody Strike
-317,0,8,4,0,0x41,4,5,1,no,0,0x20,0,magic,0,0x1,	BA_DISSONANCE,Unchained Serenade
+317,0,8,4,0,0x41,4,5,1,no,0,0x20,0,magic,0,0x0,	BA_DISSONANCE,Unchained Serenade
 318,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0,0x0,		BA_FROSTJOKER,Unbarring Octave
-319,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x1,	BA_WHISTLE,Perfect Tablature
-320,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x1,	BA_ASSASSINCROSS,Impressive Riff
-321,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x1,	BA_POEMBRAGI,Magic Strings
-322,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x1,	BA_APPLEIDUN,Song of Lutie
+319,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x0,	BA_WHISTLE,Perfect Tablature
+320,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x0,	BA_ASSASSINCROSS,Impressive Riff
+321,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x0,	BA_POEMBRAGI,Magic Strings
+322,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x0,	BA_APPLEIDUN,Song of Lutie
 
 //****
 // Dancer
 323,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		DC_DANCINGLESSON,Dance Lessons
 324,9,6,1,-1,0,0,5,2,no,0,0,0,weapon,0,0x8,		DC_THROWARROW,Slinging Arrow
-325,0,8,4,0,0x1,4,5,1,no,0,0x20,0,misc,0,0x1,	DC_UGLYDANCE,Hip Shaker
+325,0,8,4,0,0x1,4,5,1,no,0,0x20,0,misc,0,0x0,	DC_UGLYDANCE,Hip Shaker
 326,0,6,4,0,0x3,-1,5,1,no,0,0,0,misc,0,0x0,		DC_SCREAM,Dazzler
-327,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x1,	DC_HUMMING,Focus Ballet
-328,0,6,4,0,0x1,4,10,1,no,0,0x20,0,misc,0,0x1,	DC_DONTFORGETME,Slow Grace
-329,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x1,	DC_FORTUNEKISS,Lady Luck
-330,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x1,	DC_SERVICEFORYOU,Gypsy's Kiss
+327,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x0,	DC_HUMMING,Focus Ballet
+328,0,6,4,0,0x1,4,10,1,no,0,0x20,0,misc,0,0x0,	DC_DONTFORGETME,Slow Grace
+329,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x0,	DC_FORTUNEKISS,Lady Luck
+330,0,6,4,0,0x1,-1,10,1,no,0,0x20,0,misc,0,0x0,	DC_SERVICEFORYOU,Gypsy's Kiss
 
 //****
 // NPC Skills
