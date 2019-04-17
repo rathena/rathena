@@ -6750,9 +6750,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			break;
 		}
 	case PR_SLOWPOISON:
-	case PR_IMPOSITIO:
 	case PR_LEXAETERNA:
 #ifndef RENEWAL
+	case PR_IMPOSITIO:
 	case PR_SUFFRAGIUM:
 #endif
 	case LK_BERSERK:
@@ -9394,6 +9394,9 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case AB_PRAEFATIO:
 	case AB_RENOVATIO:
+#ifdef RENEWAL
+	case PR_IMPOSITIO:
+#endif
 		if( !sd || sd->status.party_id == 0 || flag&1 ) {
 			if (skill_id == AB_PRAEFATIO)
 				clif_skill_nodamage(bl, bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, skill_lv, 0, 0, (sd && sd->status.party_id ? party_foreachsamemap(party_sub_count, sd, 0) : 1 ), skill_get_time(skill_id, skill_lv)));

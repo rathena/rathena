@@ -380,7 +380,7 @@ void initChangeTables(void)
 #ifndef RENEWAL
 		SCB_WATK );
 #else
-		SCB_MATK );
+		SCB_WATK|SCB_MATK );
 #endif
 	set_sc( PR_SUFFRAGIUM		, SC_SUFFRAGIUM		, EFST_SUFFRAGIUM		, SCB_NONE );
 	set_sc( PR_ASPERSIO		, SC_ASPERSIO		, EFST_ASPERSIO		, SCB_ATK_ELE );
@@ -6285,11 +6285,11 @@ static unsigned short status_calc_watk(struct block_list *bl, struct status_chan
 		return cap_value(watk,0,USHRT_MAX);
 
 #ifndef RENEWAL
-	if(sc->data[SC_IMPOSITIO])
-		watk += sc->data[SC_IMPOSITIO]->val2;
 	if(sc->data[SC_DRUMBATTLE])
 		watk += sc->data[SC_DRUMBATTLE]->val2;
 #endif
+	if (sc->data[SC_IMPOSITIO])
+		watk += sc->data[SC_IMPOSITIO]->val2;
 	if(sc->data[SC_WATKFOOD])
 		watk += sc->data[SC_WATKFOOD]->val1;
 	if(sc->data[SC_VOLCANO])
@@ -6487,7 +6487,7 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 	if (sc->data[SC_SHRIMP])
 		matk += matk * sc->data[SC_SHRIMP]->val2 / 100;
 	if (sc->data[SC_IMPOSITIO])
-		matk += sc->data[SC_IMPOSITIO]->val1 * 5;
+		matk += sc->data[SC_IMPOSITIO]->val2;
 	if (sc->data[SC_VOLCANO])
 		matk += sc->data[SC_VOLCANO]->val2;
 #ifdef RENEWAL
@@ -10504,7 +10504,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 5*val1; // def increase
 			break;
 		case SC_IMPOSITIO:
-			val2 = 5*val1; // Watk increase
+			val2 = 5*val1; // WATK/MATK increase
 			break;
 		case SC_MELTDOWN:
 			val2 = 100*val1; // Chance to break weapon
