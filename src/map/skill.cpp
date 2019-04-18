@@ -455,7 +455,7 @@ int skill_calc_heal(struct block_list *src, struct block_list *target, uint16 sk
 
 	switch( skill_id ) {
 #ifndef RENEWAL
-	case BA_APPLEIDUN:
+		case BA_APPLEIDUN:
 			hp = 30 + 5 * skill_lv + (status_get_vit(src) / 2); // HP recovery
 			if (sd)
 				hp += 5 * pc_checkskill(sd, BA_MUSICALLESSON);
@@ -6194,8 +6194,8 @@ static int skill_apply_songs(struct block_list* target, va_list ap)
 	struct block_list* src = va_arg(ap, struct block_list*);
 	uint16 skill_id = static_cast<uint16>(va_arg(ap, int));
 	uint16 skill_lv = static_cast<uint16>(va_arg(ap, int));
-	int val1 = va_arg(ap, int);
 	int val2 = va_arg(ap, int);
+	int val3 = va_arg(ap, int);
 	int tick = va_arg(ap, int);
 
 	if (flag & BCT_WOS && src == target)
@@ -6215,7 +6215,7 @@ static int skill_apply_songs(struct block_list* target, va_list ap)
 				if (src->id != target->id)
 					status_change_clear_buffs(target, SCCB_BUFFS); // Should dispell only allies.
 			}
-			return sc_start4(src, target, status_skill2sc(skill_id), 100, skill_id, val1, val2, 0, skill_get_time(skill_id, skill_lv));
+			return sc_start4(src, target, status_skill2sc(skill_id), 100, skill_id, val2, val3, 0, skill_get_time(skill_id, skill_lv));
 		}
 	}
 
@@ -6248,7 +6248,7 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 	uint8 ba_lesson = pc_checkskill(sd, BA_MUSICALLESSON), dc_lesson = pc_checkskill(sd, DC_DANCINGLESSON);
 	struct status_data* status = status_get_status_data(src);
 	struct status_change* sc = status_get_sc(src);
-	int val1 = 0, val2 = 0, flag = BCT_PARTY;
+	int val2 = 0, val3 = 0,flag = BCT_PARTY;
 
 	switch (skill_id) {
 	case BD_LULLABY:
@@ -6259,50 +6259,50 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 		flag = BCT_ENEMY;
 		break;
 	case DC_DONTFORGETME:
-		val1 = 10 * (3 * skill_lv); // ASPD decrease
-		val2 = 2 * skill_lv; // Movement speed adjustment.
+		val2 = 10 * (3 * skill_lv); // ASPD decrease
+		val3 = 2 * skill_lv; // Movement speed adjustment.
 		flag = BCT_ENEMY;
 		break;
 	case BA_WHISTLE:
-		val1 = 18 + 2 * skill_lv + status->agi / 15 + ba_lesson / 2; // Flee increase
-		val2 = (skill_lv + 1) / 2 + status->luk / 30 + ba_lesson / 5; // Perfect dodge increase
+		val2 = 18 + 2 * skill_lv + status->agi / 15 + ba_lesson / 2; // Flee increase
+		val3 = (skill_lv + 1) / 2 + status->luk / 30 + ba_lesson / 5; // Perfect dodge increase
 		break;
 	case DC_HUMMING:
-		val1 = 4 * skill_lv + status->dex / 15 + dc_lesson; // Hit increase
+		val2 = 4 * skill_lv + status->dex / 15 + dc_lesson; // Hit increase
 		break;
 	case BA_POEMBRAGI:
-		val1 = 2 * skill_lv + status->dex / 10 + ba_lesson; // Cast time reduction
-		val2 = 3 * skill_lv + status->int_ / 5 + 2 * ba_lesson; // After-cast delay reduction
+		val2 = 2 * skill_lv + status->dex / 10 + ba_lesson; // Cast time reduction
+		val3 = 3 * skill_lv + status->int_ / 5 + 2 * ba_lesson; // After-cast delay reduction
 		break;
 	case BA_APPLEIDUN:
-		val1 = (skill_lv < 10 ? 9 + skill_lv : 20); // HP rate increase
-		val2 = 2 * skill_lv; // Potion recovery rate
+		val2 = (skill_lv < 10 ? 9 + skill_lv : 20); // HP rate increase
+		val3 = 2 * skill_lv; // Potion recovery rate
 		break;
 	case DC_SERVICEFORYOU:
-		val1 = (skill_lv < 10 ? 9 + skill_lv : 20) + (status->int_ / 10) + dc_lesson / 2; // MaxSP percent increase
-		val2 = 5 + skill_lv + (status->int_ / 10) + dc_lesson / 2; // SP cost reduction
+		val2 = (skill_lv < 10 ? 9 + skill_lv : 20) + (status->int_ / 10) + dc_lesson / 2; // MaxSP percent increase
+		val3 = 5 + skill_lv + (status->int_ / 10) + dc_lesson / 2; // SP cost reduction
 		break;
 	case BA_ASSASSINCROSS:
-		val1 = ba_lesson / 2 + (skill_lv < 10 ? (skill_lv * 2 - 1) : 20) + (status->agi / 20); // ASPD increase
+		val2 = ba_lesson / 2 + (skill_lv < 10 ? (skill_lv * 2 - 1) : 20) + (status->agi / 20); // ASPD increase
 		break;
 	case DC_FORTUNEKISS:
-		val1 = skill_lv + (status->luk / 10); // Critical increase
-		val1 *= 10;
-		val1 += 5 * dc_lesson;
+		val2 = skill_lv + (status->luk / 10); // Critical increase
+		val2 *= 10;
+		val2 += 5 * dc_lesson;
 		break;
 	case BD_DRUMBATTLEFIELD:
-		val1 = 15 + skill_lv * 5; // Atk increase
-		val2 = skill_lv * 15; // Def increase
+		val2 = 15 + skill_lv * 5; // Atk increase
+		val3 = skill_lv * 15; // Def increase
 		break;
 	case BD_RINGNIBELUNGEN:
-		val1 = rnd() % RINGNBL_MAX; // See e_nibelungen_status
+		val2 = rnd() % RINGNBL_MAX; // See e_nibelungen_status
 		break;
 	case BD_RICHMANKIM:
-		val1 = 10 + 10 * skill_lv; // Exp increase bonus
+		val2 = 10 + 10 * skill_lv; // Exp increase bonus
 		break;
 	case BD_SIEGFRIED:
-		val1 = skill_lv * 3; // Elemental Resistance
-		val2 = skill_lv * 5; // Status ailment resistance
+		val2 = skill_lv * 3; // Elemental Resistance
+		val3 = skill_lv * 5; // Status ailment resistance
 		break;
 	case CG_HERMODE:
 		flag |= BCT_GUILD;
@@ -6320,7 +6320,7 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 		// or maybe we do that in skill_check_pc_partner or something ??
 	}
 
-	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, val1, val2, tick);
+	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, val2, val3, tick);
 }
 
 /**
