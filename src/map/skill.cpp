@@ -11428,8 +11428,14 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 			break;
 		case RG_BACKSTAP:
 			{
-				uint8 dir = map_calc_dir(src,target->x,target->y),t_dir = unit_getdir(target);
-				if (check_distance_bl(src, target, 0) || map_check_dir(dir,t_dir))
+#ifndef RENEWAL
+				uint8 dir = map_calc_dir(src,target->x,target->y), t_dir = unit_getdir(target);
+
+				if (map_check_dir(dir, t_dir))
+					return USESKILL_FAIL_MAX;
+#endif
+
+				if (check_distance_bl(src, target, 0))
 					return USESKILL_FAIL_MAX;
 			}
 			break;
