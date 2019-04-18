@@ -641,7 +641,9 @@ void initChangeTables(void)
 	set_sc( SM_SELFPROVOKE		, SC_PROVOKE		, EFST_PROVOKE		, SCB_DEF|SCB_DEF2|SCB_BATK|SCB_WATK );
 	set_sc( ST_PRESERVE		, SC_PRESERVE		, EFST_PRESERVE		, SCB_NONE );
 	set_sc( PF_DOUBLECASTING	, SC_DOUBLECAST		, EFST_DOUBLECASTING, SCB_NONE );
+#ifndef RENEWAL
 	set_sc( HW_GRAVITATION		, SC_GRAVITATION	, EFST_GRAVITATION	, SCB_ASPD );
+#endif
 	add_sc( WS_CARTTERMINATION	, SC_STUN		);
 	set_sc( WS_OVERTHRUSTMAX	, SC_MAXOVERTHRUST	, EFST_OVERTHRUSTMAX, SCB_NONE );
 #ifndef RENEWAL
@@ -1575,7 +1577,9 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_TINDER_BREAKER]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_TINDER_BREAKER2]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_MADNESSCANCEL]		|= SCS_NOMOVE;
+#ifndef RENEWAL
 	StatusChangeStateTable[SC_GRAVITATION]			|= SCS_NOMOVE|SCS_NOMOVECOND;
+#endif
 	StatusChangeStateTable[SC_WHITEIMPRISON]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_DEEPSLEEP]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_ELECTRICSHOCKER]		|= SCS_NOMOVE;
@@ -1891,6 +1895,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 				if (src && src->type != BL_PC && !map_flag_gvg2(target->m) && !map_getmapflag(target->m, MF_BATTLEGROUND) && --(sce->val2) <= 0)
 					status_change_end(target, SC_ENDURE, INVALID_TIMER);
 			}
+#ifndef RENEWAL
 			if ((sce=sc->data[SC_GRAVITATION]) && sce->val3 == BCT_SELF) {
 				struct skill_unit_group* sg = skill_id2group(sce->val4);
 				if (sg) {
@@ -1899,6 +1904,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 					status_change_end(target, SC_GRAVITATION, INVALID_TIMER);
 				}
 			}
+#endif
 			if(sc->data[SC_DANCING] && (unsigned int)hp > status->max_hp>>2)
 				status_change_end(target, SC_DANCING, INVALID_TIMER);
 			if(sc->data[SC_CLOAKINGEXCEED] && --(sc->data[SC_CLOAKINGEXCEED]->val2) <= 0)
@@ -5033,8 +5039,8 @@ void status_calc_state( struct block_list *bl, struct status_change *sc, enum sc
 				     (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_SELF)	// cannot move while gospel is in effect
 #ifndef RENEWAL
 				  || (sc->data[SC_BASILICA] && sc->data[SC_BASILICA]->val4 == bl->id) // Basilica caster cannot move
+			|| (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
 #endif
-				  || (sc->data[SC_GRAVITATION] && sc->data[SC_GRAVITATION]->val3 == BCT_SELF)
 				  || (sc->data[SC_CAMOUFLAGE] && sc->data[SC_CAMOUFLAGE]->val1 < 3)
 				)
 			sc->cant.move += ( start ? 1 : ((sc->cant.move)? -1:0) );
@@ -7306,8 +7312,10 @@ static short status_calc_aspd(struct block_list *bl, struct status_change *sc, b
 			bonus -= sc->data[SC_DEFENDER]->val4 / 10;
 		if (sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY)
 			bonus -= 75;
+#ifndef RENEWAL
 		if (sc->data[SC_GRAVITATION])
 			bonus -= sc->data[SC_GRAVITATION]->val2 / 10; // Needs more info
+#endif
 		if (sc->data[SC_JOINTBEAT]) { // Needs more info
 			if (sc->data[SC_JOINTBEAT]->val2&BREAK_WRIST)
 				bonus -= 25;
@@ -7498,8 +7506,10 @@ static short status_calc_aspd_rate(struct block_list *bl, struct status_change *
 		aspd_rate += sc->data[SC_DEFENDER]->val4;
 	if(sc->data[SC_GOSPEL] && sc->data[SC_GOSPEL]->val4 == BCT_ENEMY)
 		aspd_rate += 250;
+#ifndef RENEWAL
 	if(sc->data[SC_GRAVITATION])
 		aspd_rate += sc->data[SC_GRAVITATION]->val2;
+#endif
 	if(sc->data[SC_JOINTBEAT]) {
 		if( sc->data[SC_JOINTBEAT]->val2&BREAK_WRIST )
 			aspd_rate += 250;
@@ -9299,7 +9309,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			case SC_DECREASEAGI:
 			case SC_PROVOKE:
 			case SC_COMA:
+#ifndef RENEWAL
 			case SC_GRAVITATION:
+#endif
 			case SC_SUITON:
 			case SC_STRIPWEAPON:
 			case SC_STRIPARMOR:
@@ -10368,9 +10380,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 
+#ifndef RENEWAL
 		case SC_GRAVITATION:
 			val2 = 50*val1; // aspd reduction
 			break;
+#endif
 
 		case SC_REGENERATION:
 			if (val1 == 1)
