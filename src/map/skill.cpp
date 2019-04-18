@@ -3301,7 +3301,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				/*if (skill_id == -1) Does it ever worked?
 					element = sstatus->rhw.ele;*/
 				if (element != ELE_NEUTRAL || !(battle_config.attack_attr_none&BL_PET))
-					dmg.damage = battle_attr_fix(src, bl, pd->a_skill->damage, element, tstatus->def_ele, tstatus->ele_lv, dmg.flag);
+					dmg.damage = battle_attr_fix(src, bl, pd->a_skill->damage, element, tstatus->def_ele, tstatus->ele_lv);
 				else
 					dmg.damage = pd->a_skill->damage; // Fixed damage
 				
@@ -3364,7 +3364,7 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 				else if( s_ele == -3 ) //Use random element
 					s_ele = rnd()%ELE_ALL;
 
-				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl), dmg.flag);
+				dmg.damage = battle_attr_fix(bl, bl, dmg.damage, s_ele, status_get_element(bl), status_get_element_level(bl));
 
 				if( tsc && tsc->data[SC_ENERGYCOAT] ) {
 					struct status_data *status = status_get_status_data(bl);
@@ -6430,7 +6430,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	if (src!=bl && type > -1 &&
 		(i = skill_get_ele(skill_id, skill_lv)) > ELE_NEUTRAL &&
 		skill_get_inf(skill_id) != INF_SUPPORT_SKILL &&
-		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv, 0) <= 0)
+		battle_attr_fix(NULL, NULL, 100, i, tstatus->def_ele, tstatus->ele_lv) <= 0)
 		return 1; //Skills that cause an status should be blocked if the target element blocks its element.
 
 	map_freeblock_lock();

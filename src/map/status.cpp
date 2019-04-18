@@ -488,10 +488,30 @@ void initChangeTables(void)
 #endif
 	set_sc( SA_MAGICROD		, SC_MAGICROD	, EFST_MAGICROD	, SCB_NONE );
 	set_sc( SA_AUTOSPELL		, SC_AUTOSPELL		, EFST_AUTOSPELL		, SCB_NONE );
-	set_sc( SA_FLAMELAUNCHER	, SC_FIREWEAPON		, EFST_PROPERTYFIRE, SCB_ATK_ELE );
-	set_sc( SA_FROSTWEAPON		, SC_WATERWEAPON	, EFST_PROPERTYWATER, SCB_ATK_ELE );
-	set_sc( SA_LIGHTNINGLOADER	, SC_WINDWEAPON		, EFST_PROPERTYWIND, SCB_ATK_ELE );
-	set_sc( SA_SEISMICWEAPON	, SC_EARTHWEAPON	, EFST_PROPERTYGROUND, SCB_ATK_ELE );
+	set_sc( SA_FLAMELAUNCHER	, SC_FIREWEAPON		, EFST_PROPERTYFIRE,
+#ifndef RENEWAL
+		SCB_ATK_ELE );
+#else
+		SCB_ALL );
+#endif
+	set_sc( SA_FROSTWEAPON		, SC_WATERWEAPON	, EFST_PROPERTYWATER,
+#ifndef RENEWAL
+		SCB_ATK_ELE);
+#else
+		SCB_ALL);
+#endif
+	set_sc( SA_LIGHTNINGLOADER	, SC_WINDWEAPON		, EFST_PROPERTYWIND,
+#ifndef RENEWAL
+		SCB_ATK_ELE);
+#else
+		SCB_ALL);
+#endif
+	set_sc( SA_SEISMICWEAPON	, SC_EARTHWEAPON	, EFST_PROPERTYGROUND,
+#ifndef RENEWAL
+		SCB_ATK_ELE);
+#else
+		SCB_ALL );
+#endif
 	set_sc( SA_VOLCANO		, SC_VOLCANO		, EFST_GROUNDMAGIC, SCB_WATK
 #ifdef RENEWAL
 		|SCB_MATK );
@@ -4392,6 +4412,14 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->left_weapon.addele[ELE_UNDEAD] += i;
 			sd->magic_addele[ELE_HOLY] += sc->data[SC_BASILICA]->val1 * 3;
 		}
+		if (sc->data[SC_FIREWEAPON])
+			sd->magic_addele[ELE_FIRE] += sc->data[SC_FIREWEAPON]->val1;
+		if (sc->data[SC_WINDWEAPON])
+			sd->magic_addele[ELE_WIND] += sc->data[SC_WINDWEAPON]->val1;
+		if (sc->data[SC_WATERWEAPON])
+			sd->magic_addele[ELE_WATER] += sc->data[SC_WATERWEAPON]->val1;
+		if (sc->data[SC_EARTHWEAPON])
+			sd->magic_addele[ELE_EARTH] += sc->data[SC_EARTHWEAPON]->val1;
 #endif
 		if(sc->data[SC_PROVIDENCE]) {
 			sd->subele[ELE_HOLY] += sc->data[SC_PROVIDENCE]->val2;

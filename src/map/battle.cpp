@@ -418,7 +418,7 @@ int battle_attr_ratio(int atk_elem, int def_type, int def_lv)
  * @param flag
  * @return damage
  */
-int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv, int flag)
+int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv)
 {
 	struct status_change *sc = NULL, *tsc = NULL;
 	int ratio;
@@ -444,10 +444,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)((damage*sc->data[SC_VOLCANO]->val3) / 100);
 #endif
-#ifdef RENEWAL
-				if (flag&BF_MAGIC && sc->data[SC_FIREWEAPON])
-					ratio += sc->data[SC_FIREWEAPON]->val1;
-#endif
 				break;
 			case ELE_WIND:
 				if (sc->data[SC_VIOLENTGALE])
@@ -456,10 +452,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)((damage*sc->data[SC_VIOLENTGALE]->val3) / 100);
 #endif
-#ifdef RENEWAL
-				if (flag&BF_MAGIC && sc->data[SC_WINDWEAPON])
-					ratio += sc->data[SC_WINDWEAPON]->val1;
-#endif
 				break;
 			case ELE_WATER:
 				if (sc->data[SC_DELUGE])
@@ -467,16 +459,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					ratio += sc->data[SC_DELUGE]->val3;
 #else
 					damage += (int64)((damage*sc->data[SC_DELUGE]->val3) / 100);
-#endif
-#ifdef RENEWAL
-				if (flag&BF_MAGIC && sc->data[SC_WATERWEAPON])
-					ratio += sc->data[SC_WATERWEAPON]->val1;
-#endif
-				break;
-			case ELE_EARTH:
-#ifdef RENEWAL
-				if (flag&BF_MAGIC && sc->data[SC_EARTHWEAPON])
-					ratio += sc->data[SC_EARTHWEAPON]->val1;
 #endif
 				break;
 			case ELE_GHOST:
@@ -2911,7 +2893,7 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 				return;
 		if(wd->damage > 0) {
 			//Forced to its element
-			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv);
 
 			switch( skill_id ) {
 				case MC_CARTREVOLUTION:
@@ -2920,25 +2902,25 @@ static void battle_calc_element_damage(struct Damage* wd, struct block_list *src
 				case KO_BAKURETSU:
 				//case NC_MAGMA_ERUPTION:
 					//Forced to neutral element
-					wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+					wd->damage = battle_attr_fix(src, target, wd->damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 					break;
 				case GN_CARTCANNON:
 				case KO_HAPPOKUNAI:
 					//Forced to ammo's element
-					wd->damage = battle_attr_fix(src, target, wd->damage, (sd && sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+					wd->damage = battle_attr_fix(src, target, wd->damage, (sd && sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 					break;
 			}
 		}
 		if (is_attack_left_handed(src, skill_id) && wd->damage2 > 0)
-			wd->damage2 = battle_attr_fix(src, target, wd->damage2, left_element ,tstatus->def_ele, tstatus->ele_lv, wd->flag);
+			wd->damage2 = battle_attr_fix(src, target, wd->damage2, left_element ,tstatus->def_ele, tstatus->ele_lv);
 		if (sc && sc->data[SC_WATK_ELEMENT] && (wd->damage || wd->damage2)) {
 			// Descriptions indicate this means adding a percent of a normal attack in another element. [Skotlex]
 			int64 damage = battle_calc_base_damage(src, sstatus, &sstatus->rhw, sc, tstatus->size, (is_skill_using_arrow(src, skill_id)?2:0)) * sc->data[SC_WATK_ELEMENT]->val2 / 100;
 
-			wd->damage += battle_attr_fix(src, target, damage, sc->data[SC_WATK_ELEMENT]->val1, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+			wd->damage += battle_attr_fix(src, target, damage, sc->data[SC_WATK_ELEMENT]->val1, tstatus->def_ele, tstatus->ele_lv);
 			if (is_attack_left_handed(src, skill_id)) {
 				damage = battle_calc_base_damage(src, sstatus, &sstatus->lhw, sc, tstatus->size, (is_skill_using_arrow(src, skill_id)?2:0)) * sc->data[SC_WATK_ELEMENT]->val2 / 100;
-				wd->damage2 += battle_attr_fix(src, target, damage, sc->data[SC_WATK_ELEMENT]->val1, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+				wd->damage2 += battle_attr_fix(src, target, damage, sc->data[SC_WATK_ELEMENT]->val1, tstatus->def_ele, tstatus->ele_lv);
 			}
 		}
 	}
@@ -3084,24 +3066,24 @@ static void battle_calc_damage_parts(struct Damage* wd, struct block_list *src,s
 	wd->statusAtk2 += battle_calc_status_attack(sstatus, EQI_HAND_L);
 
 	if (sd && sd->sc.data[SC_SEVENWIND]) { // Mild Wind applies element to status ATK as well as weapon ATK [helvetica]
-		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, right_element, tstatus->def_ele, tstatus->ele_lv, wd->flag);
-		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk, left_element, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
+		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk, left_element, tstatus->def_ele, tstatus->ele_lv);
 	} else { // status atk is considered neutral on normal attacks [helvetica]
-		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd->flag);
-		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+		wd->statusAtk = battle_attr_fix(src, target, wd->statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
+		wd->statusAtk2 = battle_attr_fix(src, target, wd->statusAtk, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 	}
 
 	wd->weaponAtk += battle_calc_base_weapon_attack(src, tstatus, &sstatus->rhw, sd);
-	wd->weaponAtk = battle_attr_fix(src, target, wd->weaponAtk, right_element, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+	wd->weaponAtk = battle_attr_fix(src, target, wd->weaponAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
 
 	wd->weaponAtk2 += battle_calc_base_weapon_attack(src, tstatus, &sstatus->lhw, sd);
-	wd->weaponAtk2 = battle_attr_fix(src, target, wd->weaponAtk2, left_element, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+	wd->weaponAtk2 = battle_attr_fix(src, target, wd->weaponAtk2, left_element, tstatus->def_ele, tstatus->ele_lv);
 
 	wd->equipAtk += battle_calc_equip_attack(src, skill_id);
-	wd->equipAtk = battle_attr_fix(src, target, wd->equipAtk, right_element, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+	wd->equipAtk = battle_attr_fix(src, target, wd->equipAtk, right_element, tstatus->def_ele, tstatus->ele_lv);
 
 	wd->equipAtk2 += battle_calc_equip_attack(src, skill_id);
-	wd->equipAtk2 = battle_attr_fix(src, target, wd->equipAtk2, left_element, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+	wd->equipAtk2 = battle_attr_fix(src, target, wd->equipAtk2, left_element, tstatus->def_ele, tstatus->ele_lv);
 
 	//Mastery ATK is a special kind of ATK that has no elemental properties
 	//Because masteries are not elemental, they are unaffected by Ghost armors or Raydric Card
@@ -5036,10 +5018,10 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 			return;
 		}
 		if (wd->damage > 0) {
-			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv);
 			wd->damage = battle_calc_gvg_damage(src, target, wd->damage, skill_id, wd->flag);
 		} else if (wd->damage2 > 0) {
-			wd->damage2 = battle_attr_fix(src, target, wd->damage2, left_element, tstatus->def_ele, tstatus->ele_lv, wd->flag);
+			wd->damage2 = battle_attr_fix(src, target, wd->damage2, left_element, tstatus->def_ele, tstatus->ele_lv);
 			wd->damage2 = battle_calc_gvg_damage(src, target, wd->damage2, skill_id, wd->flag);
 		}
 		return;
@@ -5696,7 +5678,7 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 		case KO_BAKURETSU:
 		//case NC_MAGMA_ERUPTION:
 			// Forced to neutral element
-			wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd.flag);
+			wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			break;
 		case CR_SHIELDBOOMERANG:
 		case LK_SPIRALPIERCE:
@@ -5711,26 +5693,26 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 
 				if (sd) {
 					if (skill_id == PA_SHIELDCHAIN) {
-						wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd.flag);
+						wd.damage = battle_attr_fix(src, target, wd.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 						if (wd.damage > 0) {
-							wd.damage = battle_attr_fix(src, target, tmp, right_element, tstatus->def_ele, tstatus->ele_lv, wd.flag);
+							wd.damage = battle_attr_fix(src, target, tmp, right_element, tstatus->def_ele, tstatus->ele_lv);
 							if (!wd.damage)
-								wd.damage = battle_attr_fix(src, target, tmp, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd.flag);
+								wd.damage = battle_attr_fix(src, target, tmp, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 						}
 					} else if (skill_id == KO_HAPPOKUNAI) {
-						wd.damage = battle_attr_fix(src, target, wd.damage, (sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd.flag);
+						wd.damage = battle_attr_fix(src, target, wd.damage, (sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 						if (wd.damage > 0) {
-							wd.damage = battle_attr_fix(src, target, tmp, right_element, tstatus->def_ele, tstatus->ele_lv, wd.flag);
+							wd.damage = battle_attr_fix(src, target, tmp, right_element, tstatus->def_ele, tstatus->ele_lv);
 							if (!wd.damage)
-								wd.damage = battle_attr_fix(src, target, tmp, (sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd.flag);
+								wd.damage = battle_attr_fix(src, target, tmp, (sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 						}
 					} else
-						wd.damage = battle_attr_fix(src, target, wd.damage, right_element, tstatus->def_ele, tstatus->ele_lv, wd.flag);
+						wd.damage = battle_attr_fix(src, target, wd.damage, right_element, tstatus->def_ele, tstatus->ele_lv);
 				}
 			}
 			break;
 		case GN_CARTCANNON: // Cart Cannon gets forced to element of cannon ball (neutral or holy/shadow/ghost)
-			wd.damage = battle_attr_fix(src, target, wd.damage, (sd && sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, wd.flag);
+			wd.damage = battle_attr_fix(src, target, wd.damage, (sd && sd->bonus.arrow_ele) ? sd->bonus.arrow_ele : ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			break;
 	}
 
@@ -6494,7 +6476,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 		}
 
 		if (!(nk&NK_NO_ELEFIX) && skill_id != ASC_BREAKER) // Soul Breaker's magic portion is non-elemental. [Secret]
-			ad.damage = battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv, ad.flag);
+			ad.damage = battle_attr_fix(src, target, ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 		//Apply the physical part of the skill's damage. [Skotlex]
 		switch(skill_id) {
@@ -6502,7 +6484,7 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			case NPC_GRANDDARKNESS: {
 					struct Damage wd = battle_calc_weapon_attack(src,target,skill_id,skill_lv,mflag);
 
-					ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv, wd.flag) * (100 + 40 * skill_lv) / 100;
+					ad.damage = battle_attr_fix(src, target, wd.damage + ad.damage, s_ele, tstatus->def_ele, tstatus->ele_lv) * (100 + 40 * skill_lv) / 100;
 #ifndef RENEWAL
 					if(src == target) {
 						if(src->type == BL_PC)
@@ -6741,7 +6723,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				md.damage = 7 * ((atk.damage/skill_lv + matk.damage/skill_lv) * tstatus->vit / 100 );
 	
 				// AD benefits from endow/element but damage is forced back to neutral
-				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv, md.flag);
+				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			}
 #else
 			if(tstatus->vit+sstatus->int_) //crash fix
@@ -6903,7 +6885,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 		md.damage -= (int64)md.damage*i/100;
 
 	if(!(nk&NK_NO_ELEFIX))
-		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv, md.flag);
+		md.damage=battle_attr_fix(src, target, md.damage, s_ele, tstatus->def_ele, tstatus->ele_lv);
 
 	//Plant damage
 	if(md.damage < 0)
