@@ -10975,7 +10975,7 @@
 20519,C_Full_Bloom_Cherry_Tree,Costume Full Bloom Cherry Tree,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ hateffect(HAT_EF_FULL_BLOOMCHERRY_TREE,true); },{},{ hateffect(HAT_EF_FULL_BLOOMCHERRY_TREE,false); }
 20522,C_Blessings_Of_Soul,Costume Blessings Of Soul,4,0,,0,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,0,{ hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,true); },{},{ hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,false); }
 20524,C_Shining_Angel_Wings,Costume Shining Angel Wings,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ hateffect(HAT_EF_C_SHINING_ANGEL_WING,true); },{},{ hateffect(HAT_EF_C_SHINING_ANGEL_WING,false); }
-20535,C_Digital_Space,Costume Digital Space,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ hateffect(HAT_DIGITAL_SPACE,true); },{},{ hateffect(HAT_DIGITAL_SPACE,false); }
+20535,C_Digital_Space,Costume Digital Space,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ hateffect(HAT_EF_DIGITAL_SPACE,true); },{},{ hateffect(HAT_EF_DIGITAL_SPACE,false); }
 20537,C_Falling_Red_Foliage,Costume Falling Red Foliage,4,0,,0,,,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ hateffect(HAT_EF_C_MAPLE_WHICH_FALLS_RD,true); },{},{ hateffect(HAT_EF_C_MAPLE_WHICH_FALLS_RD,false); }
 20538,Costume_Magic_Circle_Rainbow,Costume Magic Circle Rainbow,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,0,{ hateffect(HAT_EF_MAGICCIRCLERAINBOW,true); },{},{ hateffect(HAT_EF_MAGICCIRCLERAINBOW,false); }
 20546,C_Giant_Ribbon_Bell,Costume Giant Ribbon Bell,4,0,,0,,0,,0,0xFFFFFFFF,63,2,8192,,1,0,46,{},{},{}

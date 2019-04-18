@@ -7106,7 +7106,7 @@
 	export_constant(HAT_EF_SUBJECT_AURA_RED);
 	export_constant(HAT_EF_C_SHINING_ANGEL_WING);
 	export_constant(HAT_EF_MAGIC_STAR_TW);
-	export_constant(HAT_DIGITAL_SPACE);
+	export_constant(HAT_EF_DIGITAL_SPACE);
 	export_constant(HAT_EF_SLEIPNIR);
 	export_constant(HAT_EF_C_MAPLE_WHICH_FALLS_RD);
 	export_constant(HAT_EF_MAGICCIRCLERAINBOW);
