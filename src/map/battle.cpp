@@ -449,12 +449,6 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					ratio += sc->data[SC_FIREWEAPON]->val1;
 #endif
 				break;
-			case ELE_HOLY:
-#ifdef RENEWAL
-				if (sc->data[SC_BASILICA])
-					ratio += sc->data[SC_BASILICA]->val1 * 3;
-#endif
-				break;
 			case ELE_WIND:
 				if (sc->data[SC_VIOLENTGALE])
 #ifdef RENEWAL

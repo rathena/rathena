@@ -559,7 +559,7 @@ void initChangeTables(void)
 			EFST_ASSUMPTIO_BUFF	, SCB_DEF2 );
 #endif
 #ifdef RENEWAL
-	set_sc( HP_BASILICA			, SC_BASILICA	, EFST_BASILICA_BUFF	, SCB_NONE );
+	set_sc( HP_BASILICA			, SC_BASILICA	, EFST_BASILICA_BUFF	, SCB_ALL );
 #else
 	add_sc( HP_BASILICA		, SC_BASILICA		);
 #endif
@@ -4390,6 +4390,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->right_weapon.addele[ELE_UNDEAD] += i;
 			sd->left_weapon.addele[ELE_DARK] += i;
 			sd->left_weapon.addele[ELE_UNDEAD] += i;
+			sd->magic_addele[ELE_HOLY] += sc->data[SC_BASILICA]->val1 * 3;
 		}
 #endif
 		if(sc->data[SC_PROVIDENCE]) {
