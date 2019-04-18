@@ -5,6 +5,7 @@
 //= Nightmarish Jitterbug Instance
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
+//= 1.0.1 Fix Cutin Aigu. [mazvi]
 //============================================================
 
 moc_para01,26,95,5	script	Roel#sara	4_M_ROEL,{
@@ -289,7 +290,7 @@ OnTouch_:
 	mes "I'll explain everything. And enough with the poisonous mushrooms. I can't eat mushrooms at all.";
 	npctalk "Newoz: I'll explain everything. And enough with the poisonous mushrooms. I can't eat mushrooms at all.";
 	next;
-	cutin "Aigu05",2;
+	cutin "igu05",2;
 	mes "[Aigu]";
 	mes "Newoz, you can't eat anything but meat. Sigh, I'm glad you're safe.";
 	npctalk "Aigu: Newoz, you can't eat anything but meat. Sigh, I'm glad you're safe.", .@aigu$;
@@ -418,7 +419,7 @@ OnTouch_:
 	mes "I've joined this guild to meet you, Newoz. Do you have a girlfriend?";
 	npctalk "Runane: I've joined this guild to meet you, Newoz. Do you have a girlfriend?", .@runane$;
 	next;
-	cutin "Aigu05",2;
+	cutin "igu05",2;
 	mes "[Aigu]";
 	mes "Don't you dare--I called dibs on him first!";
 	npctalk "Aigu: Don't you dare--I called dibs on him first!", .@aigu$;
@@ -428,7 +429,7 @@ OnTouch_:
 	mes "I don't think he knows that. Do you, Newoz?";
 	npctalk "Runane: I don't think he knows that. Do you, Newoz?", .@runane$;
 	next;
-	cutin "Aigu04",2;
+	cutin "igu04",2;
 	mes "[Aigu]";
 	mes "Well, I didn't...";
 	npctalk "Aigu: Well, I didn't...", .@aigu$;
@@ -468,7 +469,7 @@ OnTouch_:
 	mes "You stay here, kiddo. I'll go.";
 	npctalk "Runane: You stay here, kiddo. I'll go.", .@runane$;
 	next;
-	cutin "Aigu05",2;
+	cutin "igu05",2;
 	mes "[Aigu]";
 	mes "Wait, we're not finished here!";
 	npctalk "Aigu: Wait, we're not finished here!", .@aigu$;
@@ -623,7 +624,7 @@ OnTouch_:
 }
 
 1@jtb,31,28,4	script	Aigu#01	4_F_IU,{
-	cutin "Aigu04",2;
+	cutin "igu04",2;
 	mes "[Aigu]";
 	mes "You look new around here. Nice to meet ya!";
 	close3;
@@ -698,7 +699,7 @@ OnTouch_:
 	npctalk "Runane: *Shriek*";
 	emotion ET_HUK;
 	next;
-	cutin "Aigu03",0;
+	cutin "igu03",0;
 	mes "[Aigu]";
 	mes "MONSTER-! ...Um, it's just a woman.";
 	npctalk "Aigu: MONSTER-! ...Um, it's just a woman.", .@aigu$;
@@ -709,7 +710,7 @@ OnTouch_:
 	mes "There's something! SOMETHING!";
 	npctalk "Runane: There's something! SOMETHING!";
 	next;
-	cutin "Aigu01",0;
+	cutin "igu01",0;
 	mes "[Aigu]";
 	mes "Calm down. It's just a woman.";
 	npctalk "Aigu: Calm down. It's just a woman.", .@aigu$;
@@ -720,7 +721,7 @@ OnTouch_:
 	npctalk "???: Voice of a man...", .@shaloshi$;
 	emotion ET_QUESTION, getnpcid(0,.@shaloshi$);
 	next;
-	cutin "Aigu01",0;
+	cutin "igu01",0;
 	mes "[Aigu]";
 	mes "How did we get in, you asked?";
 	npctalk "Aigu: How did we get in, you asked?", .@aigu$;
@@ -735,7 +736,7 @@ OnTouch_:
 	mes "We got lost and now we're in a rift in spacetime. How did this happen?";
 	npctalk "Runane: We got lost and now we're in a rift in spacetime. How did this happen?";
 	next;
-	cutin "Aigu04",0;
+	cutin "igu04",0;
 	mes "[Aigu]";
 	mes "We didn't have to be here if it weren't for someone.";
 	npctalk "Aigu: We didn't have to be here if it weren't for someone.", .@aigu$;
@@ -751,7 +752,7 @@ OnTouch_:
 	mes "Do you know Newoz? Let's take him out of here.";
 	npctalk "Runane: Do you know Newoz? Let's take him out of here.";
 	next;
-	cutin "Aigu03",0;
+	cutin "igu03",0;
 	mes "[Aigu]";
 	mes "Okay. Take my hand.";
 	npctalk "Aigu: Okay. Take my hand.", .@aigu$;
@@ -761,7 +762,7 @@ OnTouch_:
 	mes "Your hand is ... warm.";
 	npctalk "???: Your hand is... warm.", .@shaloshi$;
 	next;
-	cutin "Aigu02",0;
+	cutin "igu02",0;
 	mes "[Aigu]";
 	mes "It's calloused because I dance. Heh heh.";
 	npctalk "Aigu: It's calloused because I dance. Heh heh.", .@aigu$;
@@ -786,7 +787,7 @@ OnTouch_:
 1@jtb,121,47,4	script	???#02	4_F_SHALOSH,{ end; }
 
 1@jtb,118,45,5	script	Aigu#02	4_F_IU,{
-	cutin "Aigu03",0;
+	cutin "igu03",0;
 	mes "[Aigu]";
 	mes "A place full of mysteries.";
 	close3;
@@ -1002,7 +1003,7 @@ OnTouch_:
 		.@arang$ = instance_npcname("Arang#06");
 		.@shaloshi$ = instance_npcname("Shaloshi#06");
 
-		cutin "Aigu05",2;
+		cutin "igu05",2;
 		mes "[Aigu]";
 		mes "Newoz! Where did you go this time?";
 		npctalk "Aigu: Newoz! Where did you go this time?", .@aigu$;
@@ -1018,7 +1019,7 @@ OnTouch_:
 		mes "*Snort* You said the same thing about the Prontera Culvert.";
 		npctalk "Arang: *Snort* You said the same thing about the Prontera Culvert.", .@arang$;
 		next;
-		cutin "Aigu04",2;
+		cutin "igu04",2;
 		mes "[Aigu]";
 		mes "What are you talking about? Why can't you just follow us? Where's Runane? I saw her next to me a moment ago.";
 		npctalk "Aigu: What are you talking about? Why can't you just follow us? Where's Runane? I saw her next to me a moment ago.", .@aigu$;
@@ -1048,7 +1049,7 @@ OnTouch_:
 		mes "You promised. You're kind.";
 		npctalk "Shaloshi: You promised. You're kind.", .@shaloshi$;
 		next;
-		cutin "Aigu03",2;
+		cutin "igu03",2;
 		mes "[Aigu]";
 		mes "Monsters started appearing, and their number is growing quickly.";
 		npctalk "Aigu: Monsters started appearing, and their number is growing quickly.", .@aigu$;
@@ -1073,7 +1074,7 @@ OnTouch_:
 		mes "You protect me. You're kind.";
 		npctalk "Shaloshi: You protect me. You're kind.", .@shaloshi$;
 		next;
-		cutin "Aigu05",2;
+		cutin "igu05",2;
 		mes "[Aigu]";
 		mes "You'd run before everyone else in here. Well, we can't stay here. Let's move on.";
 		npctalk "Aigu: You'd run before everyone else in here. Well, we can't stay here. Let's move on.", .@aigu$;
@@ -1084,7 +1085,7 @@ OnTouch_:
 }
 
 1@jtb,25,110,4	script	Aigu#06	4_F_IU,{
-	cutin "Aigu01",0;
+	cutin "igu01",0;
 	mes "[Aigu]";
 	mes "Monsters started appearing, and their number is growing quickly.";
 	close3;
@@ -1129,7 +1130,7 @@ OnTouch_:
 		mes "But it stayed long enough for us to lose each other.";
 		npctalk "Roel: But it stayed long enough for us to lose each other.";
 		next;
-		cutin "Aigu05",2;
+		cutin "igu05",2;
 		mes "[Aigu]";
 		mes "One moment, I had Shaloshi's hand in my hand, and the next, she's gone.";
 		npctalk "Aigu: One moment, I had Shaloshi's hand in my hand, and the next, she's gone.", .@aigu$;
@@ -1139,7 +1140,7 @@ OnTouch_:
 		mes "Her name is Shaloshi? I asked her several times, and she didn't tell me.";
 		npctalk "Runane: Her name is Shaloshi? I asked her several times, and she didn't tell me.", .@runane$;
 		next;
-		cutin "Aigu01",2;
+		cutin "igu01",2;
 		mes "[Aigu]";
 		mes "That's strange. She told Newoz straight from the start.";
 		npctalk "Aigu: That's strange. She told Newoz straight from the start.", .@aigu$;
@@ -1154,7 +1155,7 @@ OnTouch_:
 		mes "Worry not--I'll protect you!";
 		npctalk "Roel: Worry not--I'll protect you!";
 		next;
-		cutin "Aigu04",2;
+		cutin "igu04",2;
 		mes "[Aigu]";
 		mes "You'd better be more reliable than someone I know.";
 		npctalk "Aigu: You'd better be more reliable than someone I know.", .@aigu$;
@@ -1187,7 +1188,7 @@ OnTouch_:
 }
 
 1@jtb,115,113,4	script	Aigu#07	4_F_IU,{
-	cutin "Aigu01",0;
+	cutin "igu01",0;
 	mes "[Aigu]";
 	mes "I feel great--this is my first adventure in a long time since I was charged with caring for other adventurers. Plus I've met my hero Newoz!";
 	close3;
@@ -1597,7 +1598,7 @@ OnTouch_:
 		mes "Push, push~";
 		npctalk "Mingmin: Push, push~", .@mingmin$;
 		next;
-		cutin "Aigu02",0;
+		cutin "igu02",0;
 		emotion ET_DELIGHT, getnpcid(0,.@aigu$);
 		mes "[Aigu]";
 		mes "How long do I have to shimmy my shoulders~";
@@ -1613,7 +1614,7 @@ OnTouch_:
 		mes "Chica, chica~";
 		npctalk "Mingmin: Chica, chica~", .@mingmin$;
 		next;
-		cutin "Aigu02",0;
+		cutin "igu02",0;
 		mes "[Aigu]";
 		mes "Pam, pam, pam, pam~";
 		npctalk "Aigu: Pam, pam, pam, pam~", .@aigu$;
@@ -1649,7 +1650,7 @@ OnTouch_:
 		mes "Green Potion is such a bitter... Um, Green Potion you said?";
 		npctalk "Roel: Green Potion is such a bitter... Um, Green Potion you said?", .@roel$;
 		next;
-		cutin "Aigu03",0;
+		cutin "igu03",0;
 		mes "[Aigu]";
 		mes "Green Potion!";
 		npctalk "Aigu: Green Potion!", .@aigu$;
@@ -1669,7 +1670,7 @@ OnTouch_:
 		mes "But you're singing a strange song, and... Green Potion?";
 		npctalk "Roel: But you're singing a strange song, and... Green Potion?", .@roel$;
 		next;
-		cutin "Aigu03",0;
+		cutin "igu03",0;
 		mes "[Aigu]";
 		mes "I had an almost expired Green Potion, so we decided to play Rock-paper-scissors and feed it to the loser.";
 		npctalk "Aigu: I had an almost expired Green Potion, so we decided to play Rock-paper-scissors and feed it to the loser.", .@aigu$;
@@ -1689,7 +1690,7 @@ OnTouch_:
 		mes "Are you drinking it yet?";
 		npctalk "Runane: Are you drinking it yet?";
 		next;
-		cutin "Aigu02",0;
+		cutin "igu02",0;
 		mes "[Aigu]";
 		mes "DRINK! DRINK!";
 		npctalk "Aigu: DRINK! DRINK!", .@aigu$;
@@ -1730,7 +1731,7 @@ OnTouch_:
 }
 
 1@jtb,25,196,5	script	Aigu#11	4_F_IU,{
-	cutin "Aigu01",0;
+	cutin "igu01",0;
 	mes "[Aigu]";
 	mes "How long do I have to shimmy my shoulders~";
 	close3;
@@ -1984,7 +1985,7 @@ OnTouch_:
 	mes "I remembered a few things.";
 	npctalk "Shaloshi: I remembered a few things.", .@shaloshi$;
 	next;
-	cutin "Aigu04",2;
+	cutin "igu04",2;
 	mes "[Aigu]";
 	mes "Did you?";
 	npctalk "Aigu: Did you?", .@aigu$;
@@ -2026,7 +2027,7 @@ OnTouch_:
 	specialeffect EF_HIT5,AREA, .@lagi$;
 	mes "- Before the two give each other a high five, Aigu and Mingmin slap them on their backs. -";
 	next;
-	cutin "Aigu03",2;
+	cutin "igu03",2;
 	mes "[Aigu]";
 	mes "Stop goofing around. Shaloshi, talk to us.";
 	npctalk "Aigu: Stop goofing around. Shaloshi, talk to us.", .@aigu$;
@@ -2105,7 +2106,7 @@ OnTouch_:
 	mes "...";
 	npctalk "Shaloshi: ... ", .@shaloshi$;
 	next;
-	cutin "Aigu04",0;
+	cutin "igu04",0;
 	mes "[Aigu]";
 	mes "She may have not remembered everything, but this is an improvement. Let's wait until she's ready to talk more.";
 	npctalk "Aigu: She may have not remembered everything, but this is an improvement. Let's wait until she's ready to talk more.", .@aigu$;
@@ -2137,7 +2138,7 @@ OnTouch_:
 }
 
 1@jtb,287,194,4	script	Aigu#14	4_F_IU,{
-	cutin "Aigu04",0;
+	cutin "igu04",0;
 	mes "[Aigu]";
 	mes "Don't listen to him. He doesn't need encouragement for his bad jokes.";
 	close3;
@@ -2446,7 +2447,7 @@ OnTouch_:
 	mes "Maybe Newoz is not interested in dating.";
 	npctalk "Runane: Maybe Newoz is not interested in dating.", .@runane$;
 	next;
-	cutin "Aigu05",0;
+	cutin "igu05",0;
 	mes "[Aigu]";
 	mes "Tell me something I don't know.";
 	npctalk "Aigu: Tell me something I don't know.", .@aigu$;
@@ -2456,7 +2457,7 @@ OnTouch_:
 	mes "But you haven't tried to talk to him. I mean seriously, have you?";
 	npctalk "Runane: But you haven't tried to talk to him. I mean seriously, have you?", .@runane$;
 	next;
-	cutin "Aigu04",0;
+	cutin "igu04",0;
 	mes "[Aigu]";
 	mes "You've met him today, but you should know unless you're stupid.";
 	npctalk "Aigu: You've met him today, but you should know unless you're stupid.", .@aigu$;
@@ -2466,7 +2467,7 @@ OnTouch_:
 	mes "I know--he'll say no if I ask him out.";
 	npctalk "Runane: I know--he'll say no if I ask him out.", .@runane$;
 	next;
-	cutin "Aigu05",0;
+	cutin "igu05",0;
 	mes "[Aigu]";
 	mes "That dimwit is only interested in adventuring.";
 	npctalk "Aigu: That dimwit is only interested in adventuring.", .@aigu$;
@@ -2476,7 +2477,7 @@ OnTouch_:
 	mes "Don't call my hero that! ...But I agree with you.";
 	npctalk "Runane: Don't call my hero that! ...But I agree with you.", .@runane$;
 	next;
-	cutin "Aigu03",0;
+	cutin "igu03",0;
 	mes "[Aigu]";
 	mes "You seem to be fond of Roel.";
 	npctalk "Aigu: You seem to be fond of Roel.", .@aigu$;
@@ -2488,7 +2489,7 @@ OnTouch_:
 	next;
 	if ('room == 17 && is_party_leader() == true)
 		donpcevent 'jitterbug_main$ + "::OnNextIs18";
-	cutin "Aigu03",0;
+	cutin "igu03",0;
 	mes "[Aigu]";
 	mes "How about you, Adventurer? How are things with your significant other?";
 	npctalk "Aigu: How about you, Adventurer? How are things with your significant other?", .@aigu$;
@@ -2497,7 +2498,7 @@ OnTouch_:
 	case 1:
 		jitterbug_options &= ~4;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : You don't even know if I have one.";
-		cutin "Aigu05",0;
+		cutin "igu05",0;
 		mes "[Aigu]";
 		mes "Oh, I'm sorry, but I'm on the verge of bursting into tears.";
 		npctalk "Aigu: Oh, I'm sorry, but I'm on the verge of bursting into tears.", .@aigu$;
@@ -2505,7 +2506,7 @@ OnTouch_:
 	case 2:
 		jitterbug_options &= ~4;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : My love is unrequited.";
-		cutin "Aigu01",0;
+		cutin "igu01",0;
 		mes "[Aigu]";
 		mes "Unrequited love is painful. You'd better let it go before it breaks you.";
 		npctalk "Aigu: Unrequited love is painful. You'd better let it go before it breaks you.", .@aigu$;
@@ -2520,7 +2521,7 @@ OnTouch_:
 		break;
 	}
 	next;
-	cutin "Aigu01",0;
+	cutin "igu01",0;
 	mes "[Aigu]";
 	mes "I don't mind healthy rivalry, but I prefer friendship, however long it lasts.";
 	npctalk "Aigu: I don't mind healthy rivalry, but I prefer friendship, however long it lasts.", .@aigu$;
@@ -2535,7 +2536,7 @@ OnTouch_:
 	mes "(Friends... Rivalry...)";
 	npctalk "Shaloshi: (Friends... Rivalry...)";
 	next;
-	cutin "Aigu01",0;
+	cutin "igu01",0;
 	mes "[Aigu]";
 	mes "Over my dead body!";
 	npctalk "Aigu: Over my dead body!", .@aigu$;
@@ -2550,7 +2551,7 @@ OnTouch_:
 }
 
 1@jtb,108,285,5	script	Aigu#17	4_F_IU,{
-	cutin "Aigu03",0;
+	cutin "igu03",0;
 	mes "[Aigu]";
 	mes "I don't mind healthy rivalry, but I prefer friendship, however long it lasts.";
 	close3;
@@ -2774,7 +2775,7 @@ OnTouch_:
 		npctalk "Arang: I hope it's a formidable monster!", .@arang$;
 		next;
 		emotion ET_X, getnpcid(0,.@aigu$);
-		cutin "Aigu01",0;
+		cutin "igu01",0;
 		mes "[Aigu]";
 		mes "I hope you're wrong.";
 		npctalk "Aigu: I hope you're wrong.", .@aigu$;
@@ -2804,7 +2805,7 @@ OnTouch_:
 		mes "Have you seen Shaloshi? Where is she?";
 		npctalk "Arang: Have you seen Shaloshi? Where is she?", .@arang$;
 		next;
-		cutin "Aigu04",0;
+		cutin "igu04",0;
 		mes "[Aigu]";
 		mes "Oh, you're right!";
 		npctalk "Aigu: Oh, you're right!", .@aigu$;
@@ -2851,7 +2852,7 @@ OnTouch_:
 }
 
 1@jtb,24,376,5	script	Aigu#19	4_F_IU,{
-	cutin "Aigu05",0;
+	cutin "igu05",0;
 	mes "[Aigu]";
 	mes "Newoz's enthusiasm for adventure went overboard. Again. I can't say I hate that about him, though.";
 	close3;
@@ -3158,7 +3159,7 @@ OnTouch_:
 	npctalk "Runane: !!!", .@runane$;
 	next;
 	disablenpc instance_npcname("Newoz#21");
-	cutin "Aigu05",0;
+	cutin "igu05",0;
 	mes "[Aigu]";
 	mes "Newoz, I'm coming with you!";
 	npctalk "Aigu: Newoz, I'm coming with you!", .@aigu$;
@@ -3265,7 +3266,7 @@ OnTouch_:
 }
 
 1@jtb,195,368,5	script	Aigu#21	4_F_IU,{
-	cutin "Aigu05",0;
+	cutin "igu05",0;
 	mes "[Aigu]";
 	mes "I'm following Newoz.";
 	close3;
@@ -3508,7 +3509,7 @@ OnStop:
 	next;
 	enablenpc .@aigu$;
 	enablenpc instance_npcname("Lagi#24");
-	cutin "Aigu05",0;
+	cutin "igu05",0;
 	mes "[Aigu]";
 	mes "Newoz, are you all right?";
 	npctalk "Aigu: Newoz, are you all right?", .@aigu$;
@@ -3654,7 +3655,7 @@ OnStop:
 	mes "You just thought, 'take me, too!'";
 	npctalk "Shaloshi: You just thought, 'take me, too!'", .@shaloshi$;
 	next;
-	cutin "Aigu03",0;
+	cutin "igu03",0;
 	mes "[Aigu]";
 	mes "Aww, Runane. You're cute!";
 	npctalk "Aigu: Aww, Runane. You're cute!", .@aigu$;
@@ -3669,7 +3670,7 @@ OnStop:
 	mes "Thank you. If only I knew how to express my feelings...";
 	npctalk "Shaloshi: Thank you. If only I knew how to express my feelings...", .@shaloshi$;
 	next;
-	cutin "Aigu05",0;
+	cutin "igu05",0;
 	mes "[Aigu]";
 	mes "It's easy. Just smile.";
 	npctalk "Aigu: It's easy. Just smile.", .@aigu$;
@@ -3767,7 +3768,7 @@ OnStop:
 	emotion ET_SHY, getnpcid(0,.@roter$);
 	next;
 	emotion ET_OTL, getnpcid(0,.@aigu$);
-	cutin "Aigu05",2;
+	cutin "igu05",2;
 	mes "[Aigu]";
 	mes "...";
 	npctalk "Aigu: ...", .@aigu$;
@@ -3820,7 +3821,7 @@ OnStop:
 	mes "I'll never be able to speak that name. Aigu, are you sure you want to stick with these guys?";
 	npctalk "Lagi: I'll never be able to speak that name. Aigu, are you sure you want to stick with these guys?", instance_npcname("Lagi#05");
 	next;
-	cutin "Aigu02",2;
+	cutin "igu02",2;
 	mes "[Aigu]";
 	mes "I don't care. I'm staying with Newoz.";
 	npctalk "Aigu: I don't care. I'm staying with Newoz.", .@aigu$;
@@ -3871,7 +3872,7 @@ OnStop:
 }
 
 1@jtb,380,28,4	script	Aigu#05	4_F_IU,{
-	cutin "Aigu03",2;
+	cutin "igu03",2;
 	mes "[Aigu]";
 	mes "I'll never again let you go, Newoz!";
 	close3;

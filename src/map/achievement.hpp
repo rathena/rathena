@@ -5,6 +5,7 @@
 #define ACHIEVEMENT_HPP
 
 #include <algorithm>
+#include <map>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -73,7 +74,7 @@ struct s_achievement_db {
 	uint32 achievement_id;
 	std::string name;
 	enum e_achievement_group group;
-	std::unordered_map<uint16, std::shared_ptr<achievement_target>> targets;
+	std::map<uint16, std::shared_ptr<achievement_target>> targets;
 	std::vector<uint32> dependent_ids;
 	struct script_code* condition;
 	int16 mapindex;
