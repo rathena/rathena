@@ -3684,7 +3684,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case MO_EXTREMITYFIST:
 #ifdef RENEWAL
-			if (wd->miscflag)
+			if (wd->miscflag&1)
 				skillratio += 100; // More than 5 spirit balls active
 #endif
 			skillratio += 100 * (7 + sstatus->sp / 10);

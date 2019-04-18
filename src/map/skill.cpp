@@ -4993,7 +4993,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 			short dir = map_calc_dir(src,bl->x,bl->y);
 
 #ifdef RENEWAL
-			if (skill_id == MO_EXTREMITYFIST && sd && sd->spiritball > 5)
+			if (skill_id == MO_EXTREMITYFIST && sd && sd->spiritball_old > 5)
 				flag |= 1; // Give +100% damage increase
 #endif
 			skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
@@ -15503,6 +15503,9 @@ bool skill_check_condition_castbegin(struct map_session_data* sd, uint16 skill_i
 				clif_skill_fail(sd,skill_id,USESKILL_FAIL_LEVEL,0);
 				return false;
 			}
+#ifdef RENEWAL
+			sd->spiritball_old = sd->spiritball;
+#endif
 			break;
 		case TK_MISSION:
 			if( (sd->class_&MAPID_UPPERMASK) != MAPID_TAEKWON ) { // Cannot be used by Non-Taekwon classes
