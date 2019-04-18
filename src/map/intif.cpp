@@ -2152,9 +2152,8 @@ void intif_parse_achievements(int fd)
 		for (i = 0; i < num_received; i++) {
 			std::shared_ptr<s_achievement_db> adb = achievement_db.find( received[i].achievement_id );
 
-
-			if( adb == nullptr ){
-				ShowError("intif_parse_achievementlog: Achievement %d not found in DB.\n", received[i].achievement_id);
+			if (!adb) {
+				ShowError("intif_parse_achievements: Achievement %d not found in achievement_db.\n", received[i].achievement_id);
 				continue;
 			}
 

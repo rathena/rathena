@@ -117,7 +117,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				return 0;
 			}
 
-			std::shared_ptr<achievement_target> target = rathena::util::umap_find( achievement->targets, targetId );
+			std::shared_ptr<achievement_target> target = rathena::util::map_find( achievement->targets, targetId );
 			bool targetExists = target != nullptr;
 
 			if( !targetExists ){
@@ -468,7 +468,7 @@ static int achievement_check_groups(struct map_session_data *sd, struct s_achiev
 	if (ad->group != AG_BATTLE && ad->group != AG_TAMING && ad->group != AG_ADVENTURE)
 		return 0;
 
-	if (ad->dependent_ids.size() == 0 || ad->condition)
+	if (ad->dependent_ids.empty() || ad->condition)
 		return 0;
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == ad->achievement_id);
@@ -510,15 +510,9 @@ bool achievement_update_achievement(struct map_session_data *sd, int achievement
 
 	// Finally we send the updated achievement to the client
 	if (complete) {
-		if (adb->targets.size()) { // Make sure all the objective targets are at their respective total requirement
-			int k;
-
-			for (k = 0; k < adb->targets.size(); k++)
-				sd->achievement_data.achievements[i].count[k] = adb->targets[k]->count;
-
-			for (k = 1; k < adb->dependent_ids.size(); k++) {
-				sd->achievement_data.achievements[i].count[k] = max(1, sd->achievement_data.achievements[i].count[k]);
-			}
+		if (!adb->targets.empty()) { // Make sure all the objective targets are at their respective total requirement
+			for (const auto &it : adb->targets)
+				sd->achievement_data.achievements[i].count[it.first] = it.second->count;
 		}
 
 		sd->achievement_data.achievements[i].completed = time(NULL);
@@ -750,7 +744,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	return info;
 }
 
-static bool achievement_check_condition( struct script_code* condition, struct map_session_data* sd, const int* count ){
+static bool achievement_check_condition( struct script_code* condition, struct map_session_data* sd, const std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> count ){
 	// Save the old script the player was attached to
 	struct script_state* previous_st = sd->st;
 
@@ -789,39 +783,38 @@ static bool achievement_check_condition( struct script_code* condition, struct m
  * @param sd: Player to update
  * @param ad: Achievement data to compare for completion
  * @param group: Achievement group to update
- * @param update_count: Objective values player has
+ * @param update_count: Objective values from event
  * @return 1 on success and false on failure
  */
-static int achievement_update_objectives(struct map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int,MAX_ACHIEVEMENT_OBJECTIVES> &update_count)
+static bool achievement_update_objectives(struct map_session_data *sd, std::shared_ptr<struct s_achievement_db> ad, enum e_achievement_group group, const std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> &update_count)
 {
-	struct achievement *entry = NULL;
-	bool isNew = false, changed = false, complete = false;
-	int i, k = 0;
-	std::array<int,MAX_ACHIEVEMENT_OBJECTIVES> objective_count;
-
-	if (ad == NULL || sd == NULL)
-		return 0;
+	if (!ad || !sd)
+		return false;
 
 	if (group <= AG_NONE || group >= AG_MAX)
-		return 0;
+		return false;
 
 	if (group != ad->group)
-		return 0;
+		return false;
 
-	objective_count.fill(0); // Current objectives count
+	struct achievement *entry = NULL;
+	bool isNew = false, changed = false, complete = false;
+	std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count = {}; // Player's current objective values
+	int i;
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == ad->achievement_id);
 	if (i == sd->achievement_data.count) { // Achievement isn't in player's log
-		if (achievement_check_dependent(sd, ad->achievement_id) == false) // Check to see if dependents are complete before adding to player's log
-			return 0;
+		if (!achievement_check_dependent(sd, ad->achievement_id)) // Check to see if dependents are complete before adding to player's log
+			return false;
+
 		isNew = true;
 	} else {
 		entry = &sd->achievement_data.achievements[i];
 
 		if (entry->completed > 0) // Player has completed the achievement
-			return 0;
+			return false;
 
-		memcpy(objective_count.data(), entry->count, sizeof(objective_count));
+		memcpy(current_count.data(), entry->count, sizeof(current_count));
 	}
 
 	switch (group) {
@@ -839,84 +832,77 @@ static int achievement_update_objectives(struct map_session_data *sd, std::share
 		case AG_PARTY:
 		case AG_REFINE_FAIL:
 		case AG_REFINE_SUCCESS:
-		case AG_SPEND_ZENY:
-			if (group == AG_SPEND_ZENY) { // Achievement type is cummulative
-				objective_count[0] += update_count[0];
-				changed = true;
-			}
+			if (!ad->condition)
+				return false;
 
-			if (!ad->condition || achievement_check_condition(ad->condition, sd, update_count.data())) {
-				changed = true;
-				complete = true;
-			}
+			if (!achievement_check_condition(ad->condition, sd, current_count)) // Parameters weren't met
+				return false;
 
-			if (changed == false)
-				break;
-
-			if (isNew) {
-				if ((entry = achievement_add(sd, ad->achievement_id)) == NULL)
-					return 0; // Failed to add achievement, fall out
-			}
+			changed = true;
+			complete = true;
 			break;
-		case AG_CHAT:
-			if (!ad->targets.size())
-				break;
+		case AG_SPEND_ZENY:
+		//case AG_CHAT: // No information on trigger events
+			if (ad->targets.empty() || !ad->condition)
+				return false;
 
-			if (ad->condition && !achievement_check_condition(ad->condition, sd, update_count.data())) // Parameters weren't met
-				break;
+			//if (group == AG_CHAT) {
+			//	if (ad->mapindex > -1 && sd->bl.m != ad->mapindex)
+			//		return false;
+			//}
 
-			if (ad->mapindex > -1 && sd->bl.m != ad->mapindex)
-				break;
-
-			for (i = 0; i < ad->targets.size(); i++) {
-				if (objective_count[i] < ad->targets[i]->count)
-					objective_count[i] += update_count[0];
+			for (const auto &it : ad->targets) {
+				if (current_count[it.first] < it.second->count)
+					current_count[it.first] += update_count[it.first];
 			}
+
+			if (!achievement_check_condition(ad->condition, sd, current_count)) // Parameters weren't met
+				return false;
 
 			changed = true;
 
-			ARR_FIND(0, ad->targets.size(), k, objective_count[k] < ad->targets[k]->count);
-			if (k == ad->targets.size())
+			if (std::find_if(ad->targets.begin(), ad->targets.end(),
+				[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
+					return current_count[target.first] < target.second->count;
+				}
+			) == ad->targets.end())
 				complete = true;
-
-			if (isNew) {
-				if ((entry = achievement_add(sd, ad->achievement_id)) == NULL)
-					return 0; // Failed to add achievement, fall out
-			}
 			break;
 		case AG_BATTLE:
 		case AG_TAMING:
-			auto it = std::find_if(ad->targets.begin(), ad->targets.end(), [&update_count]
-			(std::pair<const uint16, std::shared_ptr<achievement_target>> &curTarget) {
-				return curTarget.second->mob == update_count[0];
-			});
-			if (it == ad->targets.end())
-				break; // Mob wasn't found
+			if (ad->targets.empty())
+				return false;
 
-			for (k = 0; k < ad->targets.size(); k++) {
-				if (ad->targets[k]->mob == update_count[0] && objective_count[k] < ad->targets[k]->count) {
-					objective_count[k]++;
+			for (const auto &it : ad->targets) {
+				if (it.second->mob == update_count[0] && current_count[it.first] < it.second->count) { // Here update_count[0] contains the killed/tamed monster ID
+					current_count[it.first]++;
 					changed = true;
 				}
 			}
 
-			ARR_FIND(0, ad->targets.size(), k, objective_count[k] < ad->targets[k]->count);
-			if (k == ad->targets.size())
-				complete = true;
+			if (!changed)
+				return false;
 
-			if (isNew) {
-				if ((entry = achievement_add(sd, ad->achievement_id)) == NULL)
-					return 0; // Failed to add achievement, fall out
-			}
+			if (std::find_if(ad->targets.begin(), ad->targets.end(),
+				[current_count](const std::pair<uint16, std::shared_ptr<achievement_target>> &target) -> bool {
+					return current_count[target.first] < target.second->count;
+				}
+			) == ad->targets.end())
+				complete = true;
 			break;
 	}
 
+	if (isNew) {
+		if (!(entry = achievement_add(sd, ad->achievement_id)))
+			return false; // Failed to add achievement
+	}
+
 	if (changed) {
-		memcpy(entry->count, objective_count.data(), sizeof(objective_count));
+		memcpy(entry->count, current_count.data(), sizeof(current_count));
 		achievement_update_achievement(sd, ad->achievement_id, complete);
 	}
 
-	return 1;
+	return true;
 }
 
 /**
@@ -928,18 +914,15 @@ static int achievement_update_objectives(struct map_session_data *sd, std::share
  */
 void achievement_update_objective(struct map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...)
 {
+	if (!battle_config.feature_achievement)
+		return;
+
 	if (sd) {
 		va_list ap;
-		int i;
-		std::array<int,MAX_ACHIEVEMENT_OBJECTIVES> count;
-
-		if (!battle_config.feature_achievement)
-			return;
-
-		count.fill(0); // Clear out array before setting values
+		std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> count = {};
 
 		va_start(ap, arg_count);
-		for (i = 0; i < arg_count; i++){
+		for (int i = 0; i < arg_count; i++){
 			std::string name = "ARG" + std::to_string(i);
 
 			count[i] = va_arg(ap, int);
@@ -951,7 +934,7 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 		switch(group) {
 			case AG_CHAT: //! TODO: Not sure how this works officially
 			case AG_GOAL_ACHIEVE:
-				// These have no objective use right now.
+				// These have no objective use.
 				break;
 			default:
 				for (auto &ach : achievement_db)
@@ -960,7 +943,7 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 		}
 
 		// Remove variables that might have been set
-		for (i = 0; i < arg_count; i++){
+		for (int i = 0; i < arg_count; i++){
 			std::string name = "ARG" + std::to_string(i);
 
 			pc_setglobalreg( sd, add_str( name.c_str() ), 0 );
