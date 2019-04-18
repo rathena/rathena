@@ -2269,6 +2269,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 	}
 
 	switch( skill_id ) {
+#ifndef RENEWAL
 		case PA_PRESSURE:
 			if( flag && target ) {
 				// Gloria Avoids pretty much everything....
@@ -2277,6 +2278,7 @@ bool status_check_skilluse(struct block_list *src, struct block_list *target, ui
 					return false;
 			}
 			break;
+#endif
 		case GN_WALLOFTHORN:
 			if( target && status_isdead(target) )
 				return false;

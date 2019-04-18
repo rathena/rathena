@@ -359,7 +359,11 @@ int battle_delay_damage(t_tick tick, int amotion, struct block_list *src, struct
 	}
 
 	if( ((d_tbl && check_distance_bl(target, d_tbl, sc->data[SC_DEVOTION]->val3)) || e_tbl) &&
-		damage > 0 && skill_id != PA_PRESSURE && skill_id != CR_REFLECTSHIELD )
+		damage > 0 && skill_id != CR_REFLECTSHIELD
+#ifndef RENEWAL
+		&& skill_id != PA_PRESSURE
+#endif
+		)
 		damage = 0;
 
 	if ( !battle_config.delay_battle_damage || amotion <= 1 ) {
@@ -1091,12 +1095,12 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	if (sc && sc->data[SC_MAXPAIN])
 		return 0;
 
-	if (skill_id == PA_PRESSURE
 #ifndef RENEWAL
+	if (skill_id == PA_PRESSURE
 		|| skill_id == HW_GRAVITATION
-#endif
 		)
 		return damage; //These skills bypass everything else.
+#endif
 
 	if( sc && sc->count ) { // SC_* that reduce damage to 0.
 #ifndef RENEWAL
@@ -1105,7 +1109,7 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			return 0;
 		}
 #endif
-		if( sc->data[SC_WHITEIMPRISON] ) { // Gravitation and Pressure do damage without removing the effect
+		if( sc->data[SC_WHITEIMPRISON] ) { // Pre-Renewal: Gravitation and Pressure do damage without removing the effect
 			if( skill_id == MG_NAPALMBEAT ||
 				skill_id == MG_SOULSTRIKE ||
 				skill_id == WL_SOULEXPANSION ||
