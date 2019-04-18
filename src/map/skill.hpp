@@ -115,7 +115,7 @@ enum e_skill_inf3 {
 
 /// Time that's added to canact delay on castbegin and substracted on castend
 /// This is to prevent hackers from sending a skill packet after cast but before a timer triggers castend
-#define SECURITY_CASTTIME 100
+const t_tick SECURITY_CASTTIME = 100;
 
 /// Flags passed to skill_attack/skill_area_sub
 enum e_skill_display {
@@ -487,13 +487,14 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap);
 void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
 struct skill_condition skill_get_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int skill_disable_check(struct status_change *sc, uint16 skill_id);
+bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 skill_id, uint16 skill_lv, enum bl_type type, bool display_failure);
 
 int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag);
 int skill_unit_move(struct block_list *bl,t_tick tick,int flag);
 void skill_unit_move_unit_group( struct skill_unit_group *group, int16 m,int16 dx,int16 dy);
 void skill_unit_move_unit(struct block_list *bl, int dx, int dy);
 
-int skill_sit (struct map_session_data *sd, int type);
+int skill_sit(struct map_session_data *sd, bool sitting);
 void skill_repairweapon(struct map_session_data *sd, int idx);
 void skill_identify(struct map_session_data *sd,int idx);
 void skill_weaponrefine(struct map_session_data *sd,int idx); // [Celest]
@@ -1813,6 +1814,7 @@ enum e_skill {
 	WL_TELEKINESIS_INTENSE,
 	LG_KINGS_GRACE,
 	ALL_FULL_THROTTLE,
+	NC_MAGMA_ERUPTION_DOTDAMAGE,
 
 	SU_BASIC_SKILL = 5018,
 	SU_BITE,

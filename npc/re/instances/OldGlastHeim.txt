@@ -774,7 +774,7 @@ OnTouch_:
 	else if (.@i == 3) .@mobs = 5;
 	else if (.@i < 7) .@mobs = 6;
 	else .@mobs = 7;
-	getmapxy .@map$,.@x,.@y, UNITTYPE_NPC;
+	getmapxy .@map$,.@x,.@y, BL_NPC;
 	specialeffect EF_VENOMDUST;
 	monster .@map$,.@x,.@y,"Maggot",2467,.@mobs;
 	disablenpc instance_npcname( strnpcinfo(0) );
@@ -1083,7 +1083,7 @@ OnTouch_:
 		.@label$ = instance_npcname("#ghmemorialmob05") + "::OnMyMobDead";
 	else
 		.@label$ = instance_npcname("#ghmemorialmob06") + "::OnMyMobDead";
-	getmapxy .@map$,.@x,.@y, UNITTYPE_NPC;
+	getmapxy .@map$,.@x,.@y, BL_NPC;
 	monster .@map$,.@x,.@y, "Corrupted Palace Guard", 2468,1, .@label$;
 	monster .@map$,.@x,.@y, "Archer of Death", 2469,1, .@label$;
 	monster .@map$,.@x,.@y, "Corrupted Abysmal Knight", 2470,1, .@label$;
@@ -1260,7 +1260,7 @@ OnTouch_:
 	else if (.@i == 3) .@mobs = 5;
 	else if (.@i < 7) .@mobs = 6;
 	else .@mobs = 7;
-	getmapxy .@map$,.@x,.@y, UNITTYPE_NPC;
+	getmapxy .@map$,.@x,.@y, BL_NPC;
 	specialeffect EF_VENOMDUST;
 	monster .@map$,.@x,.@y,"Maggot",2467,.@mobs;
 	initnpctimer;

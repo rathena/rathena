@@ -44,6 +44,22 @@ namespace rathena {
 		}
 
 		/**
+		 * Find a key-value pair and return the key value as a reference
+		 * @param map: Map to search through
+		 * @param key: Key wanted
+		 * @return Key value on success or nullptr on failure
+		 */
+		template <typename K, typename V> std::shared_ptr<V> map_find( std::map<K,std::shared_ptr<V>>& map, K key ){
+			auto it = map.find( key );
+
+			if( it != map.end() ){
+				return it->second;
+			}else{
+				return nullptr;
+			}
+		}
+
+		/**
 		 * Get a key-value pair and return the key value
 		 * @param map: Map to search through
 		 * @param key: Key wanted
@@ -70,6 +86,21 @@ namespace rathena {
 
 			if (it != map.end())
 				return &it->second;
+			else
+				return nullptr;
+		}
+
+		/**
+		 * Find a key-value pair and return the key value as a reference
+		 * @param map: Unordered Map to search through
+		 * @param key: Key wanted
+		 * @return Key value on success or nullptr on failure
+		 */
+		template <typename K, typename V> std::shared_ptr<V> umap_find(std::unordered_map<K, std::shared_ptr<V>>& map, K key) {
+			auto it = map.find(key);
+
+			if (it != map.end())
+				return it->second;
 			else
 				return nullptr;
 		}

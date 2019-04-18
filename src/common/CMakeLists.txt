@@ -1,9 +1,8 @@
 
 #
-# Create svnversion.h
-# tbd, could be rename version.h
+# Create version.hpp
 #
-message( STATUS "Creating svnversion.h" )
+message( STATUS "Creating version.hpp" )
 if(GIT_VERSION)
 	# those 2 was done in parent to produce this
 	#include(GetGitVersion)
@@ -12,23 +11,23 @@ if(GIT_VERSION)
 	string(SUBSTRING ${GIT_HEAD_VERSION} 0 10 SHORT_GIT_HEAD_VERSION)
 	string(CONCAT GIT_STR_VERSIONS ${SHORT_GIT_VERSION} "_" ${SHORT_GIT_HEAD_VERSION})
 	#message( STATUS "git version=${GIT_STR_VERSIONS}" )
-	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
+	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
 		"#ifndef SVNVERSION\n#define SVNVERSION ${GIT_STR_VERSIONS}\n#endif\n" )
 elseif( SVNVERSION )
-	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
+	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
 		"#ifndef SVNVERSION\n#define SVNVERSION ${SVNVERSION}\n#endif\n" )
 else()
-	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h "" )
+	file( WRITE ${CMAKE_CURRENT_BINARY_DIR}/version.hpp "" )
 endif()
 set( GLOBAL_INCLUDE_DIRS ${GLOBAL_INCLUDE_DIRS} ${CMAKE_CURRENT_BINARY_DIR} CACHE INTERNAL "" )
 set( SVNVERSION ${SVNVERSION}
 	CACHE STRING "SVN version of the source code" )
 if( INSTALL_COMPONENT_DEVELOPMENT )
-	install( FILES ${CMAKE_CURRENT_BINARY_DIR}/svnversion.h
+	install( FILES ${CMAKE_CURRENT_BINARY_DIR}/version.hpp
 		DESTINATION "src/common"
 		COMPONENT Development_base )
 endif( INSTALL_COMPONENT_DEVELOPMENT )
-message( STATUS "Creating svnversion.h - done" )
+message( STATUS "Creating version.hpp - done" )
 
 
 #####################################################################
@@ -52,7 +51,7 @@ set( COMMON_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}"
 mark_as_advanced( COMMON_SOURCE_DIR )
 
 set( COMMON_ALL_HEADERS
-	"${CMAKE_CURRENT_BINARY_DIR}/svnversion.h"
+	"${CMAKE_CURRENT_BINARY_DIR}/version.hpp"
 	"${COMMON_SOURCE_DIR}/cbasetypes.hpp"
 	"${COMMON_SOURCE_DIR}/mmo.hpp"
 	)
@@ -87,6 +86,7 @@ set( COMMON_BASE_HEADERS
 	${COMMON_ALL_HEADERS}
 	"${COMMON_SOURCE_DIR}/conf.hpp"
 	"${COMMON_SOURCE_DIR}/core.hpp"
+	"${COMMON_SOURCE_DIR}/database.hpp"
 	"${COMMON_SOURCE_DIR}/db.hpp"
 	"${COMMON_SOURCE_DIR}/des.hpp"
 	"${COMMON_SOURCE_DIR}/ers.hpp"
@@ -110,6 +110,7 @@ set( COMMON_BASE_HEADERS
 set( COMMON_BASE_SOURCES
 	"${COMMON_SOURCE_DIR}/conf.cpp"
 	"${COMMON_SOURCE_DIR}/core.cpp"
+	"${COMMON_SOURCE_DIR}/database.cpp"
 	"${COMMON_SOURCE_DIR}/db.cpp"
 	"${COMMON_SOURCE_DIR}/des.cpp"
 	"${COMMON_SOURCE_DIR}/ers.cpp"
@@ -188,6 +189,5 @@ set( HAVE_common ON  CACHE INTERNAL "" )
 set( TARGET_LIST ${TARGET_LIST} common  CACHE INTERNAL "" )
 message( STATUS "Creating target common - done" )
 else()
-message( STATUS "Skipping target common (requires common_base and MYSQL)" )
-unset( HAVE_common CACHE )
+message( FATAL_ERROR "Stopping target common (requires common_base and MYSQL)" )
 endif()

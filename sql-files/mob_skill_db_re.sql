@@ -11215,6 +11215,27 @@ REPLACE INTO `mob_skill_db_re` VALUES (3038,'Hidden Mob 7@NPC_INVISIBLE','attack
 #REPLACE INTO `mob_skill_db_re` VALUES ( 3038,'Hidden Mob 7@NPC_HELLBURNING','idle',719,1,10000,0,3000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 #REPLACE INTO `mob_skill_db_re` VALUES ( 3038,'Hidden Mob 7@NPC_HELLBURNING','attack',719,1,10000,0,3000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
+# Jitterbug instance
+REPLACE INTO `mob_skill_db_re` VALUES (3069,'Ferre@NPC_GROUNDATTACK','attack',185,5,1000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3069,'Ferre@NPC_EMOTION','idle',197,1,2000,0,5000,'no','self','always','0',44,0x3885,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3070,'Ferre@NPC_MAGICALATTACK','attack',192,1,500,0,10000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3070,'Ferre@NPC_REVERBERATION','idle',725,3,2000,1000,4000,'yes','around1','always','0',NULL,NULL,NULL,NULL,NULL,'9',NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3070,'Ferre@NPC_REVERBERATION','attack',725,3,2000,1000,4000,'yes','around1','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3070,'Ferre@NPC_EMOTION','idle',197,1,2000,0,5000,'no','self','always','0',44,0x3885,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3071,'Ferre@SM_BASH','attack',5,5,1000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3071,'Ferre@BS_HAMMERFALL','chase',110,5,1000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3071,'Ferre@BS_HAMMERFALL','attack',110,5,2000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3071,'Ferre@SM_ENDURE','attack',8,1,2000,0,10000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3071,'Ferre@SM_ENDURE','chase',8,1,2000,0,10000,'no','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3071,'Ferre@NPC_EMOTION','idle',197,1,2000,0,5000,'no','self','always','0',44,0x3885,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3072,'Ferre@NPC_WATERATTACK','attack',184,5,1000,0,5000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3072,'Ferre@NPC_ENERGYDRAIN','attack',200,1,1000,100,10000,'no','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3072,'Ferre@NPC_EMOTION','idle',197,1,2000,0,5000,'no','self','always','0',44,0x3885,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3073,'Grand Pere@NPC_LEX_AETERNA','attack',727,5,5000,2000,10000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3073,'Grand Pere@NPC_DARKNESSBREATH','attack',658,10,2000,2000,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3073,'Grand Pere@NPC_WIDESILENCE','attack',663,5,2000,1000,10000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3073,'Grand Pere@NPC_WIDECONFUSE','attack',667,5,3000,2000,10000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+
 REPLACE INTO `mob_skill_db_re` VALUES (3074,'Time Holder@AL_TELEPORT','idle',26,1,10000,0,0,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3074,'Time Holder@AL_TELEPORT','idle',26,1,5000,0,5000,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3074,'Time Holder@AL_TELEPORT','walk',26,1,5000,0,5000,'yes','self','rudeattacked',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL);
@@ -11226,6 +11247,14 @@ REPLACE INTO `mob_skill_db_re` VALUES (3074,'Time Holder@NPC_HELLJUDGEMENT','att
 REPLACE INTO `mob_skill_db_re` VALUES (3074,'Time Holder@NPC_PULSESTRIKE','attack',661,5,2000,0,30000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3074,'Time Holder@NPC_SUMMONSLAVE','attack',196,5,1000,700,10000,'no','self','slavele','0',2917,NULL,NULL,NULL,NULL,NULL,NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3074,'Time Holder@NPC_SUMMONSLAVE','idle',196,5,1000,700,10000,'no','self','slavele','0',2917,NULL,NULL,NULL,NULL,NULL,NULL);
+
+# Jitterbug instance
+REPLACE INTO `mob_skill_db_re` VALUES (3108,'Jitterbug@NPC_WIDESILENCE','attack',663,5,3000,1000,10000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3108,'Jitterbug@NPC_LEX_AETERNA','attack',727,3,2000,2000,10000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3108,'Jitterbug@NPC_DARKNESSBREATH','attack',658,5,1000,2000,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3109,'Jitterbug@NPC_WIDECONFUSE','attack',667,5,3000,2000,10000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3109,'Jitterbug@NPC_REVERBERATION','attack',725,3,2000,1000,4000,'yes','around1','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+REPLACE INTO `mob_skill_db_re` VALUES (3109,'Jitterbug@NPC_LEX_AETERNA','attack',727,3,2000,2000,10000,'yes','self','always','0',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 
 REPLACE INTO `mob_skill_db_re` VALUES (3200,'Wicked Chimera@WZ_HEAVENDRIVE','attack',91,5,500,1200,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);
 REPLACE INTO `mob_skill_db_re` VALUES (3200,'Wicked Chimera@WZ_HEAVENDRIVE','chase',91,5,500,1200,5000,'yes','target','always','0',NULL,NULL,NULL,NULL,NULL,'6',NULL);

@@ -497,7 +497,7 @@ OnTouch_:
 				.@count = 5;
 				break;
 		}
-		getmapxy .@map$, .@x, .@y, 0;
+		getmapxy .@map$, .@x, .@y;
 		.@npc_name$ = instance_npcname( strnpcinfo(0) );
 		.@event$ = .@npc_name$ + "::OnMyMobDead";
 		playBGM "125";
@@ -701,8 +701,7 @@ OnStart:
 			close;
 		}
 		close2;
-		pcblockmove getcharid(3),1;// todo : not able to talk to npc
-		pcblockskill getcharid(3),1;
+		setpcblock PCBLOCK_NPC, true;
 		switch(.@num) {
 		case 1:
 			npctalk "Worker: Ah! Grandpa? He's a real good man. He oiled us everyday and cleaned the dust very often.";
@@ -760,8 +759,7 @@ OnStart:
 			'worker[.@num] = 1;
 			donpcevent instance_npcname("#fac2wpc") + "::OnStart";
 		}
-		pcblockmove getcharid(3),0;
-		pcblockskill getcharid(3),0;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
 	mes "[Worker]";
@@ -786,7 +784,7 @@ OnAlert:
 		setarray .@coord[0],209,27;
 		break;
 	default:
-		getmapxy .@map$, .@coord[0], .@coord[1], UNITTYPE_NPC;
+		getmapxy .@map$, .@coord[0], .@coord[1], BL_NPC;
 		break;
 	}
 	areamonster 'xm_d_map$,(.@coord[0]-8),(.@coord[1]-8),(.@coord[0]+8),(.@coord[1]+8), "Guard",2990,21, .@npc_name$ + "::OnMyMobDead";
