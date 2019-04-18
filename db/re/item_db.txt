@@ -8804,7 +8804,7 @@
 15164,Consultative_Robe,Consultation Robe,4,20,,100,,0,,1,0xFFFFFFFF,63,2,16,,100,1,,{ .@r = getrefine(); bonus bVit,5; skill "PA_SACRIFICE",1; bonus2 bSubEle,Ele_Dark,.@r*3; bonus2 bSubEle,Ele_Fire,.@r*3; },{},{}
 15174,Surfer_Swimsuit,Surfer Swimsuit,4,20,,100,,1,,1,0xFFFFFFFF,63,2,16,,40,1,,{ bonus bMaxHPrate,(getrefine()/3)+5; bonus bMaxSPrate,(getrefine()/3)+5; },{},{}
 15176,Vigilante_Suit,Vigilante Suit,4,0,,500,,50,,0,0x00020000,56,2,16,,100,1,0,{ .@r = getrefine(); bonus bDex,5; bonus bLongAtkRate,3*(.@r/2); if (.@r>=9) bonus2 bSkillAtk,"SC_TRIANGLESHOT",20; },{},{}
-15177,Elemental_Robe,Elemental Robe,4,0,,500,,40,,0,0x00000200,56,2,16,,100,1,0,{ .@r = getrefine(); bonus bAspdRate,10; bonus bMatk,5*(.@r/2); if (.@r>=9) bonus3 bAutoSpell,"MG_THUNDERSTORM",max(5,getskilllv("MG_THUNDERSTORM")),50; },{},{}
+15177,Elemental_Robe,Elemental Robe,4,0,,500,,40,,0,0x00010000,56,2,16,,100,1,0,{ .@r = getrefine(); bonus bAspdRate,10; bonus bMatk,5*(.@r/2); if (.@r>=9) bonus3 bAutoSpell,"MG_THUNDERSTORM",max(5,getskilllv("MG_THUNDERSTORM")),50; },{},{}
 15178,Golden_Ninja_Suit,Golden Ninja Suit,4,0,,500,,50,,0,0x20000000,63,2,16,,100,1,0,{ .@r = getrefine(); bonus bflee,5*(.@r/2); if (.@r>=9) bonus2 bSkillAtk,"KO_HAPPOKUNAI",20; },{},{}
 15179,Mine_Worker's_Vest,Mine Worker's Vest,4,0,,1500,,80,,0,0x00000400,56,2,16,,100,1,0,{ .@r = getrefine(); bonus bFlee,(10+4*(.@r/2)); if (.@r>=9) bonus bCritical,5; },{},{}
 15180,Hippie_Clothes,Hippie Clothes,4,0,,50,,50,,0,0x00080000,56,2,16,,100,1,0,{ bonus bBaseAtk,20; if (.@r >= getrefine()) bonus3 bAutoSpell,"AC_DOUBLE",max(3,getskilllv("AC_DOUBLE")),10; },{},{}
@@ -11017,7 +11017,7 @@
 20798,GrimReaper_Protection,Costume Grim Reaper Protection,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1450,{},{},{}
 20815,SeraphimRobe,Seraphim Robe,4,0,,300,,18,,1,0xFFFFFFFF,63,2,4,,1,1,,{ bonus bMaxHPrate,10; bonus2 bMagicAtkEle,Ele_Neutral,5; .@r = getrefine(); if (.@r > 6) { bonus2 bSubEle,Ele_Dark,20; bonus2 bSubEle,Ele_Holy,20; bonus bMatkRate,10; } if (.@r > 8) { bonus2 bSubEle,Ele_Dark,10; bonus2 bSubEle,Ele_Holy,10; bonus bVariableCastrate,-5; } if (getskilllv("CR_TRUST") > 0) { bonus2 bSubEle,Ele_Holy,.@r*3; } },{},{}
 20819,Oxygen_Bottle,Oxygen Bottle,4,0,,500,,0,,1,0xFFFFFFFF,63,2,4,,40,1,0,{ bonus bFlee,12+getrefine(); bonus bHit,getrefine(); },{},{}
-20820,Elemental_Cape,Elemental Cape,4,0,,500,,12,,0,0x00000200,56,2,4,,100,1,0,{ .@r = getrefine(); bonus bFlee,(10+5*(.@r/3)); bonus2 bSubEle,Ele_Neutral,10; if (.@r>=9) bonus bAspdRate,5; },{},{}
+20820,Elemental_Cape,Elemental Cape,4,0,,500,,12,,0,0x00010000,56,2,4,,100,1,0,{ .@r = getrefine(); bonus bFlee,(10+5*(.@r/3)); bonus2 bSubEle,Ele_Neutral,10; if (.@r>=9) bonus bAspdRate,5; },{},{}
 20821,Golden_Scarf,Golden Scarf,4,0,,500,,12,,0,0x20000000,63,2,4,,100,1,0,{ .@r = getrefine(); bonus bFlee,20; if (.@r>=9) { bonus bLongAtkRate,10; } else if (.@r>=7) { bonus bLongAtkRate,5; } },{},{}
 20822,Mine_Worker's_Backpack,Mine Worker's Backpack,4,0,,600,,16,,0,0x00000400,56,2,4,,100,1,0,{ .@r = getrefine(); bonus bAspdRate,(5+(.@r/2)); if (.@r>=9) bonus bBaseAtk,20; },{},{}
 20823,Para_Team_Manteau100,Awakened Eden Group Manteau I,4,0,,0,,20,,0,0xFFFFFFFF,63,2,4,,100,1,0,{ bonus2 bSubEle,Ele_Neutral,10; bonus bFlee,12; .@r = getrefine(); if(.@r >= 7){ bonus bMaxHP,500; bonus bFlee2,2; if(.@r >= 9){ bonus bMaxHP,500; bonus2 bSubEle,Ele_All,10; bonus2 bSubEle,Ele_Neutral,-10; } } },{},{}
