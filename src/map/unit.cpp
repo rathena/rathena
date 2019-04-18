@@ -1243,8 +1243,11 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 	bl->y = ud->to_y = y;
 	bl->m = m;
 
-	if (bl->type == BL_NPC)
-		map_addnpc(m, (TBL_NPC*)bl);
+	if (bl->type == BL_NPC) {
+		TBL_NPC *nd = (TBL_NPC*)bl;
+		map_addnpc(m, nd);
+		npc_setcells(nd);
+	}
 
 	if(map_addblock(bl))
 		return 4; //error on adding bl to map
@@ -3096,11 +3099,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			}
 			break;
 		}
-		case BL_NPC: {
+		case BL_NPC:
 			if (npc_remove_map( (TBL_NPC*)bl ) != 0)
 				return 0;
 			break;
-		}
 		default:
 			break;// do nothing
 	}
