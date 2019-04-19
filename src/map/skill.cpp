@@ -8390,29 +8390,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_autospell(sd,skill_lv);
 		} else {
 			int maxlv=1,spellid=0;
-
-#ifdef RENEWAL
-			if (skill_lv >= 10) {
-				static const int spellarray[2] = { MG_THUNDERSTORM, WZ_HEAVENDRIVE };
-
-				spellid = spellarray[rnd() % 2];
-			} else if (skill_lv > 6) {
-				static const int spellarray[2] = { WZ_EARTHSPIKE, MG_FROSTDIVER };
-
-				spellid = spellarray[rnd() % 2];
-			} else if (skill_lv > 3) {
-				static const int spellarray[2] = { MG_SOULSTRIKE, MG_FIREBALL };
-
-				spellid = spellarray[rnd() % 2];
-			} else if (skill_lv > 0) {
-				static const int spellarray[3] = { MG_COLDBOLT, MG_FIREBOLT, MG_LIGHTNINGBOLT };
-
-				spellid = spellarray[rnd() % 3];
-			}
-			maxlv = skill_id / 2; // Half of Autospell's level unless player learned a higher level
-			if (sd && pc_checkskill(sd, spellid) > maxlv)
-				maxlv = pc_checkskill(sd, spellid);
-#else
 			static const int spellarray[3] = { MG_COLDBOLT,MG_FIREBOLT,MG_LIGHTNINGBOLT };
 
 			if(skill_lv >= 10) {
@@ -8439,7 +8416,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				spellid = MG_NAPALMBEAT;
 				maxlv = 3;
 			}
-#endif
+
 			if(spellid > 0)
 				sc_start4(src,src,SC_AUTOSPELL,100,skill_lv,spellid,maxlv,0,
 					skill_get_time(SA_AUTOSPELL,skill_lv));

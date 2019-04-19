@@ -18549,23 +18549,27 @@ int clif_skill_itemlistwindow( struct map_session_data *sd, uint16 skill_id, uin
 }
 
 /*==========================================
- * Select a skill into a given list (used by SC_AUTOSHADOWSPELL)
+ * Select a skill into a given list (used by SA_AUTOSPELL/SC_AUTOSHADOWSPELL)
  * 0443 <type>.L <skill_id>.W (CZ_SKILL_SELECT_RESPONSE)
  * RFIFOL(fd,2) - type (currently not used)
  *------------------------------------------*/
 void clif_parse_SkillSelectMenu(int fd, struct map_session_data *sd) {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	//int type = RFIFOL(fd,info->pos[0]); //WHY_LOWERVER_COMPATIBILITY =  0x0, WHY_SC_AUTOSHADOWSPELL =  0x1,
-	if( sd->menuskill_id != SC_AUTOSHADOWSPELL )
-		return;
 
-	if( pc_istrading(sd) ) {
-		clif_skill_fail(sd,sd->ud.skill_id,USESKILL_FAIL_LEVEL,0);
-		clif_menuskill_clear(sd);
-		return;
-	}
+	if (sd->menuskill_id == SA_AUTOSPELL) {
+		sd->state.workinprogress = WIP_DISABLE_NONE;
+		skill_autospell(sd, RFIFOW(fd, info->pos[1]));
+	} else if (sd->menuskill_id == SC_AUTOSHADOWSPELL) {
+		if (pc_istrading(sd)) {
+			clif_skill_fail(sd, sd->ud.skill_id, USESKILL_FAIL_LEVEL, 0);
+			clif_menuskill_clear(sd);
+			return;
+		}
 
-	skill_select_menu(sd,RFIFOW(fd,info->pos[1]));
+		skill_select_menu(sd, RFIFOW(fd, info->pos[1]));
+	} else
+		return;
 
 	clif_menuskill_clear(sd);
 }
