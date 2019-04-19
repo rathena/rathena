@@ -14908,16 +14908,8 @@ void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 	if (sd->sc.data[SC_HELLPOWER]) // Cannot resurrect while under the effect of SC_HELLPOWER.
 		return;
 
-	struct s_item_group_db *group = itemdb_group_exists(IG_TOKEN_OF_SIEGFRIED);
-	short item_position = -1;
+	int16 item_position = itemdb_group_item_exists_pc(sd, IG_TOKEN_OF_SIEGFRIED);
 	uint8 hp = 100, sp = 100;
-
-	if (group) {
-		for (int i = 0; i < group->random[0].data_qty; i++) {
-			if ((item_position = pc_search_inventory(sd, group->random[0].data[i].nameid)) != -1)
-				break;
-		}
-	}
 
 	if (item_position < 0) {
 		if (sd->sc.data[SC_LIGHT_OF_REGENE]) {

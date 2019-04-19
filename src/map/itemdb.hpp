@@ -952,6 +952,7 @@ struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
 bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid);
+int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id);
 char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd);
 
 bool itemdb_parse_roulette_db(void);
