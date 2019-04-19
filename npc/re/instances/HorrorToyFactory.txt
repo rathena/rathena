@@ -153,8 +153,7 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 		}
 		if (select( "Unlock Horror Toy Factory", "Cancel" ) == 1) {
 			mes "Door will be.. opened soon.. Would you wait for a moment?";
-			if (instance_create("Horror Toy Factory") >= 0)
-				'xm_d_map$ = instance_mapname("1@xm_d");
+			instance_create("Horror Toy Factory");
 		}
 		close;
 	case 0:
@@ -1549,6 +1548,8 @@ OnTimer1000:
 	end;
 
 OnInstanceInit:
+	'xm_d_map$ = instance_mapname("1@xm_d");
+
 	// Warps
 	disablenpc instance_npcname("#fac3wp");
 	disablenpc instance_npcname("#fac3wp2");
