@@ -156,7 +156,7 @@
 // Knight
 55,0,0,0,0,0,0,10,0,no,0,0,0,weapon,0,0x0,		KN_SPEARMASTERY,Spear Mastery
 56,-2,8,1,-1,0,0,10,3,no,0,0,0,weapon,0,0x0,		KN_PIERCE,Pierce
-57,-5,6,1,-1,0x1,2,10,1,no,0,0,5,weapon,2,0x20000,	KN_BRANDISHSPEAR,Brandish Spear
+57,-2,6,1,-1,0x1,2,10,1,no,0,0,5,weapon,2,0x20000,	KN_BRANDISHSPEAR,Brandish Spear
 58,-4,6,1,-1,0x2,0,10,1,no,0,0x40000,0,weapon,6,0x0,	KN_SPEARSTAB,Spear Stab
 59,3:5:7:9:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	KN_SPEARBOOMERANG,Spear Boomerang
 60,0,6,4,0,0x1,0,10,1,no,0,0,0,weapon,0,0x0,		KN_TWOHANDQUICKEN,Twohand Quicken

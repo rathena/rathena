@@ -11719,16 +11719,26 @@ TIMER_FUNC(skill_castend_id){
 			case RL_FIREDANCE:
 				sd->canequip_tick = tick + skill_get_time(ud->skill_id, ud->skill_lv);
 				break;
+			case KN_BRANDISHSPEAR:
+			case KN_BOWLINGBASH:
 			case CR_GRANDCROSS:
-			case NPC_GRANDDARKNESS:
-				if( (sc = status_get_sc(src)) && sc->data[SC_STRIPSHIELD] )
-				{
-					const struct TimerData *timer = get_timer(sc->data[SC_STRIPSHIELD]->timer);
-					if( timer && timer->func == status_change_timer && DIFF_TICK(timer->tick,gettick()+skill_get_time(ud->skill_id, ud->skill_lv)) > 0 )
+			case NPC_GRANDDARKNESS: {
+				sc_type type;
+
+				if (ud->skill_id == KN_BRANDISHSPEAR || ud->skill_id == KN_BOWLINGBASH)
+					type = SC_STRIPWEAPON;
+				else
+					type = SC_STRIPSHIELD;
+
+				if ((sc = status_get_sc(src)) && sc->data[type]) {
+					const struct TimerData* timer = get_timer(sc->data[type]->timer);
+
+					if (timer && timer->func == status_change_timer && DIFF_TICK(timer->tick, gettick() + skill_get_time(ud->skill_id, ud->skill_lv)) > 0)
 						break;
 				}
-				sc_start2(src,src, SC_STRIPSHIELD, 100, 0, 1, skill_get_time(ud->skill_id, ud->skill_lv));
+				sc_start2(src, src, type, 100, 0, 1, skill_get_time(ud->skill_id, ud->skill_lv));
 				break;
+			}
 			}
 		}
 		if (skill_get_state(ud->skill_id) != ST_MOVE_ENABLE)
