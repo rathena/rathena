@@ -76,7 +76,7 @@
 428,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_SUN_WARM
 429,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_MOON_WARM
 430,0x86,    ,  0, 1, 100,enemy, 0x000	//SG_STAR_WARM
-484,0xb8,    ,  2, 0,1000,enemy, 0x8010	//HW_GRAVITATION
+484,0xb8,    ,  2, 0, 500,enemy, 0x8010	//HW_GRAVITATION
 516,0x86,    ,  3, 0, 100,enemy, 0x000	//GS_DESPERADO
 521,0xbe,    ,  0, 1,1000,enemy, 0x000	//GS_GROUNDDRIFT
 525,0x86,    ,  0, 2,1000,enemy, 0x018	//NJ_HUUMA
