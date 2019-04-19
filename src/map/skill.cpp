@@ -6261,7 +6261,7 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 	uint8 ba_lesson = pc_checkskill(sd, BA_MUSICALLESSON), dc_lesson = pc_checkskill(sd, DC_DANCINGLESSON);
 	struct status_data* status = status_get_status_data(src);
 	struct status_change* sc = status_get_sc(src);
-	int val2 = 0, val3 = 0,flag = BCT_PARTY;
+	int val2 = 0, val3 = 0, flag = BCT_PARTY;
 
 	switch (skill_id) {
 	case BD_LULLABY:
@@ -6327,7 +6327,7 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 	sd->skill_lv_dance = skill_lv;
 
 	if (skill_get_inf2(skill_id) & INF2_ENSEMBLE_SKILL) {
-		sc_start(src, src, status_skill2sc(CG_SPECIALSINGER), 100, 1, skill_get_time(CG_SPECIALSINGER, 1));
+		sc_start(src, src, status_skill2sc(CG_SPECIALSINGER), 100, 1, skill_get_time(CG_SPECIALSINGER, skill_lv));
 		skill_check_pc_partner(sd, skill_id, &skill_lv, 3, 1);
 		// todo, apply ensemble fatigue if it hits you + ensemble partner.. ??
 		// or maybe we do that in skill_check_pc_partner or something ??

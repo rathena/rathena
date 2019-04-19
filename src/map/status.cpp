@@ -646,7 +646,9 @@ void initChangeTables(void)
 #endif
 	add_sc( WS_CARTTERMINATION	, SC_STUN		);
 	set_sc( WS_OVERTHRUSTMAX	, SC_MAXOVERTHRUST	, EFST_OVERTHRUSTMAX, SCB_NONE );
-#ifndef RENEWAL
+#ifdef RENEWAL
+	set_sc( CG_SPECIALSINGER	, SC_LONGING		, EFST_ENSEMBLEFATIGUE	, SCB_NONE );
+#else
 	set_sc( CG_LONGINGFREEDOM	, SC_LONGING		, EFST_LONGING		, SCB_SPEED|SCB_ASPD );
 #endif
 	set_sc( CG_HERMODE		, SC_HERMODE	, EFST_HERMODE	, SCB_NONE		);
@@ -1332,9 +1334,6 @@ void initChangeTables(void)
 	StatusIconChangeTable[SC_LHZ_DUN_N4] = EFST_LHZ_DUN_N4;
 
 	StatusIconChangeTable[SC_ANCILLA] = EFST_ANCILLA;
-#ifdef RENEWAL
-	StatusIconChangeTable[SC_LONGING] = EFST_ENSEMBLEFATIGUE;
-#endif
 
 	/* Other SC which are not necessarily associated to skills */
 	StatusChangeFlagTable[SC_ASPDPOTION0] |= SCB_ASPD;
@@ -9403,7 +9402,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl, SC_CARTBOOST, INVALID_TIMER);
 		status_change_end(bl, SC_GN_CARTBOOST, INVALID_TIMER);
 		// Also blocks the ones below...
+#ifndef RENEWAL
 	case SC_DONTFORGETME:
+#endif
 		status_change_end(bl, SC_INCREASEAGI, INVALID_TIMER);
 		status_change_end(bl, SC_ADRENALINE, INVALID_TIMER);
 		status_change_end(bl, SC_ADRENALINE2, INVALID_TIMER);
@@ -9413,6 +9414,49 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl, SC_MERC_QUICKEN, INVALID_TIMER);
 		status_change_end(bl, SC_ACCELERATION, INVALID_TIMER);
 		break;
+#ifdef RENEWAL
+	case SC_RICHMANKIM:
+	case SC_ETERNALCHAOS:
+	case SC_DRUMBATTLE:
+	case SC_NIBELUNGEN:
+	case SC_ROKISWEIL:
+	case SC_INTOABYSS:
+	case SC_SIEGFRIED:
+		status_change_end(bl, SC_RICHMANKIM, INVALID_TIMER);
+		status_change_end(bl, SC_ETERNALCHAOS, INVALID_TIMER);
+		status_change_end(bl, SC_DRUMBATTLE, INVALID_TIMER);
+		status_change_end(bl, SC_NIBELUNGEN, INVALID_TIMER);
+		status_change_end(bl, SC_ROKISWEIL, INVALID_TIMER);
+		status_change_end(bl, SC_INTOABYSS, INVALID_TIMER);
+		status_change_end(bl, SC_SIEGFRIED, INVALID_TIMER);
+		break;
+	case SC_WHISTLE:
+	case SC_ASSNCROS:
+	case SC_POEMBRAGI:
+	case SC_APPLEIDUN:
+		status_change_end(bl, SC_WHISTLE, INVALID_TIMER);
+		status_change_end(bl, SC_ASSNCROS, INVALID_TIMER);
+		status_change_end(bl, SC_POEMBRAGI, INVALID_TIMER);
+		status_change_end(bl, SC_APPLEIDUN, INVALID_TIMER);
+		break;
+	case SC_DONTFORGETME:
+		status_change_end(bl, SC_INCREASEAGI, INVALID_TIMER);
+		status_change_end(bl, SC_ADRENALINE, INVALID_TIMER);
+		status_change_end(bl, SC_ADRENALINE2, INVALID_TIMER);
+		status_change_end(bl, SC_SPEARQUICKEN, INVALID_TIMER);
+		status_change_end(bl, SC_TWOHANDQUICKEN, INVALID_TIMER);
+		status_change_end(bl, SC_ONEHAND, INVALID_TIMER);
+		status_change_end(bl, SC_MERC_QUICKEN, INVALID_TIMER);
+		status_change_end(bl, SC_ACCELERATION, INVALID_TIMER);
+	case SC_HUMMING:
+	case SC_FORTUNE:
+	case SC_SERVICE4U:
+		status_change_end(bl, SC_DONTFORGETME, INVALID_TIMER);
+		status_change_end(bl, SC_HUMMING, INVALID_TIMER);
+		status_change_end(bl, SC_FORTUNE, INVALID_TIMER);
+		status_change_end(bl, SC_SERVICE4U, INVALID_TIMER);
+		break;
+#endif
 	case SC_ADORAMUS:
 		status_change_end(bl, SC_DECREASEAGI, INVALID_TIMER);
 		break;
