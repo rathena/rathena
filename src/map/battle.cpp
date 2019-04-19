@@ -3556,10 +3556,6 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case KN_BOWLINGBASH:
 		case MS_BOWLINGBASH:
 			skillratio += 40 * skill_lv;
-#ifdef RENEWAL
-			if (sd && sd->status.weapon == W_2HSWORD && wd->miscflag > 0)
-				skillratio *= 4; // !TODO: Incorporate wd->miscflag (contains count); deals up to 4x damage depending on count
-#endif
 			break;
 		case AS_GRIMTOOTH:
 			skillratio += 20 * skill_lv;
@@ -5350,6 +5346,10 @@ static struct Damage initialize_weapon_data(struct block_list *src, struct block
 				//Fall through
 			case KN_SPEARSTAB:
 			case KN_BOWLINGBASH:
+#ifdef RENEWAL
+				if (skill_id == KN_BOWLINGBASH && sd && sd->status.weapon == W_2HSWORD)
+					wd.div_ = cap_value(wd.miscflag, 2, 4);
+#endif
 			case MS_BOWLINGBASH:
 			case MO_BALKYOUNG:
 			case TK_TURNKICK:
