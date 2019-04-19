@@ -380,6 +380,7 @@
 2995:15110,{ bonus2 bSkillAtk,"NC_AXEBOOMERANG",100; }
 2997:2999,{ bonus2 bAddClass,Class_All,10; bonus bMatkRate,10; }
 32242:18971,{ bonus2 bFixedCastrate,"RK_STORMBLAST",-100; }
+32242:18972,{ bonus bMaxHPRate,50; }
 32242:18973,{ bonus2 bSkillAtk,"NC_FLAMELAUNCHER",70; bonus2 bSkillAtk,"NC_COLDSLOWER",70; }
 32242:18974,{ bonus2 bSkillAtk,"NC_FLAMELAUNCHER",70; bonus2 bSkillAtk,"NC_COLDSLOWER",70; }
 32242:18975,{ bonus2 bSkillAtk,"SC_TRIANGLESHOT",70; }
