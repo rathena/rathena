@@ -4823,6 +4823,7 @@
 	export_constant(IG_SANTA_GIFT);
 	export_constant(IG_PRIZEOFHERO);
 	export_constant(IG_PRIVATE_AIRSHIP);
+	export_constant(IG_TOKEN_OF_SIEGFRIED);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
