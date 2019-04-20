@@ -19,15 +19,15 @@
 //============================================================
 
 bat_room,151,144,3	script	KVM Logistic Officer#a	734,{
-	if (countitem(7773)) {
-		set .@pointstoadd,countitem(7773);
-		delitem 7773,.@pointstoadd;
+	if (countitem(6376)) {// KVM_Badge
+		set .@pointstoadd,countitem(6376);
+		delitem 6376,.@pointstoadd;
 		set kvm_point,kvm_point+.@pointstoadd;
 		mes "[Logistics]";
-		mes "Are those "+getitemname(7773)+"s I see?";
+		mes "Are those "+getitemname(6376)+"s I see?";
 		mes "We no longer accept that currency,";
 		mes "but I can exchange those for you,";
-		mes "So you have "+.@pointstoadd+" "+getitemname(7773)+"s?";
+		mes "So you have "+.@pointstoadd+" "+getitemname(6376)+"s?";
 		mes "Alright, all set, you now have ^580080"+ kvm_point +"^000000 KVM Points.";
 		next;
 	}

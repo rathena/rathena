@@ -4589,9 +4589,9 @@ malaya,290,340,3	script	Guard Leader#buwaya	571,{
 		next;
 		mes "[Guard Leader]";
 		mes "We are doing our best in securing the safety of our village so please enjoy your stay in Port Malaya.";
+		next;
 	}
 	if (malaya_buwaya == 10) {
-		next;
 		if (select("Tell him about Buwaya.:Done with conversation.") == 2) {
 			close;
 		}

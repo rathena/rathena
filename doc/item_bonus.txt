@@ -374,11 +374,13 @@ bonus2 bSPDrainRate,x,n;		Adds a x/10% chance to drain n% SP from inflicted dama
 
 HP/SP vanish
 ------------
-bonus2 bHPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's HP amount by n% when attacking
-bonus2 bSPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's SP amount by n% when attacking
+bonus2 bHPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's HP amount by n% with a normal attack
+bonus3 bHPVanishRaceRate,r,x,n;		Add a x/10% chance of decreasing enemy's HP amount by n% when attacking, depends on enemy race r
+bonus3 bHPVanishRate,x,n,bf;	Add a x/10% chance of decreasing enemy's HP amount by n% when attacking with trigger criteria bf
 
-bonus3 bHPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's HP amount by n% when attacking, depends on enemy race r
-bonus3 bSPVanishRaceRate,r,x,n;		Add a x/100% chance of decreasing enemy's SP amount by n% when attacking, depends on enemy race r
+bonus2 bSPVanishRate,x,n;		Add a x/10% chance of decreasing enemy's SP amount by n% with a normal attack
+bonus3 bSPVanishRaceRate,r,x,n;		Add a x/10% chance of decreasing enemy's SP amount by n% when attacking, depends on enemy race r
+bonus3 bSPVanishRate,x,n,bf;	Add a x/10% chance of decreasing enemy's SP amount by n% when attacking with trigger criteria bf
 
 bonus3 bStateNoRecoverRace,r,x,t;	Set a no recovery state of an enemy of race r at x/100% for t milliseconds with normal attack.
 

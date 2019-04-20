@@ -444,14 +444,14 @@ static TIMER_FUNC(unit_walktoxy_timer){
 
 	switch(bl->type) {
 		case BL_PC:
-			if( sd->touching_id )
+			if( !sd->npc_ontouch_.empty() )
 				npc_touchnext_areanpc(sd,false);
 			if(map_getcell(bl->m,x,y,CELL_CHKNPC)) {
 				npc_touch_areanpc(sd,bl->m,x,y);
 				if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 					return 0;
 			} else
-				sd->areanpc_id=0;
+				sd->areanpc.clear();
 			pc_cell_basilica(sd);
 			break;
 		case BL_MOB:
@@ -971,7 +971,7 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 	ud->walktimer = INVALID_TIMER;
 
 	if(sd) {
-		if( sd->touching_id )
+		if( !sd->npc_ontouch_.empty() )
 			npc_touchnext_areanpc(sd,false);
 
 		if(map_getcell(bl->m,bl->x,bl->y,CELL_CHKNPC)) {
@@ -980,9 +980,9 @@ bool unit_movepos(struct block_list *bl, short dst_x, short dst_y, int easy, boo
 			if (bl->prev == NULL) // Script could have warped char, abort remaining of the function.
 				return false;
 		} else
-			sd->areanpc_id=0;
+			sd->areanpc.clear();
 
-		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > 0 ) {
+		if( sd->status.pet_id > 0 && sd->pd && sd->pd->pet.intimate > PET_INTIMATE_NONE ) {
 			// Check if pet needs to be teleported. [Skotlex]
 			int flag = 0;
 			struct block_list* pbl = &sd->pd->bl;
@@ -1102,13 +1102,13 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
 				clif_blown(bl);
 
 			if(sd) {
-				if(sd->touching_id)
+				if(!sd->npc_ontouch_.empty())
 					npc_touchnext_areanpc(sd, false);
 
 				if(map_getcell(bl->m, bl->x, bl->y, CELL_CHKNPC))
 					npc_touch_areanpc(sd, bl->m, bl->x, bl->y);
 				else
-					sd->areanpc_id = 0;
+					sd->areanpc.clear();
 			}
 		}
 
@@ -1376,7 +1376,7 @@ int unit_can_move(struct block_list *bl) {
 	if (DIFF_TICK(ud->canmove_tick, gettick()) > 0)
 		return 0;
 
-	if ((sd && (pc_issit(sd) || sd->state.vending || sd->state.buyingstore)) || ud->state.blockedmove)
+	if ((sd && (pc_issit(sd) || sd->state.vending || sd->state.buyingstore || (sd->state.block_action & PCBLOCK_MOVE))) || ud->state.blockedmove)
 		return 0; // Can't move
 
 	// Status changes that block movement
@@ -1998,6 +1998,8 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if( sd ) {
 		if( skill_isNotOk(skill_id, sd) || !skill_check_condition_castbegin(sd, skill_id, skill_lv) )
 			return 0;
+		if (skill_id == MG_FIREWALL && !skill_pos_maxcount_check(src, skill_x, skill_y, skill_id, skill_lv, BL_PC, true))
+			return 0; // Special check for Firewall only
 	}
 
 	if( (skill_id >= SC_MANHOLE && skill_id <= SC_FEINTBOMB) && map_getcell(src->m, skill_x, skill_y, CELL_CHKMAELSTROM) ) {
@@ -2955,7 +2957,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			if(sd->menuskill_id)
 				sd->menuskill_id = sd->menuskill_val = 0;
 
-			if( sd->touching_id )
+			if( !sd->npc_ontouch_.empty() )
 				npc_touchnext_areanpc(sd,true);
 
 			// Check if warping and not changing the map.
@@ -3033,7 +3035,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		case BL_PET: {
 			struct pet_data *pd = (struct pet_data*)bl;
 
-			if( pd->pet.intimate <= 0 && !(pd->master && !pd->master->state.active) ) {
+			if( pd->pet.intimate <= PET_INTIMATE_NONE && !(pd->master && !pd->master->state.active) ) {
 				// If logging out, this is deleted on unit_free
 				clif_clearunit_area(bl,clrtype);
 				map_delblock(bl);
@@ -3265,51 +3267,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			struct map_session_data *sd = pd->master;
 
 			pet_hungry_timer_delete(pd);
+			pet_clear_support_bonuses(sd);
 
-			if( pd->a_skill ) {
-				aFree(pd->a_skill);
-				pd->a_skill = NULL;
-			}
-
-			if( pd->s_skill ) {
-				if (pd->s_skill->timer != INVALID_TIMER) {
-					if (pd->s_skill->id)
-						delete_timer(pd->s_skill->timer, pet_skill_support_timer);
-					else
-						delete_timer(pd->s_skill->timer, pet_heal_timer);
-				}
-
-				aFree(pd->s_skill);
-				pd->s_skill = NULL;
-			}
-
-			if( pd->recovery ) {
-				if(pd->recovery->timer != INVALID_TIMER)
-					delete_timer(pd->recovery->timer, pet_recovery_timer);
-
-				aFree(pd->recovery);
-				pd->recovery = NULL;
-			}
-
-			if( pd->bonus ) {
-				if (pd->bonus->timer != INVALID_TIMER)
-					delete_timer(pd->bonus->timer, pet_skill_bonus_timer);
-
-				aFree(pd->bonus);
-				pd->bonus = NULL;
-			}
-
-			if( pd->loot ) {
-				pet_lootitem_drop(pd,sd);
-
-				if (pd->loot->item)
-					aFree(pd->loot->item);
-
-				aFree (pd->loot);
-				pd->loot = NULL;
-			}
-
-			if( pd->pet.intimate > 0 )
+			if( pd->pet.intimate > PET_INTIMATE_NONE )
 				intif_save_petdata(pd->pet.account_id,&pd->pet);
 			else { // Remove pet.
 				intif_delete_petdata(pd->pet.pet_id);
