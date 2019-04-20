@@ -157,11 +157,11 @@ payon,249,156,1	script	Woman#payon	66,{
 	case 1:
 		mes "[Woman]";
 		mes "Oh come on, don't be a coward.";
-		mes "It's just a simple cave filled with normal monsters. It's quite safe. We've even established an Archer Village near that cave to prevent misfortunate incidents. Hohoohoho~ ";
+		mes "It's just a simple cave filled with normal monsters. It's quite safe. We've even established an Archer Village near that cave to prevent misfortune incidents. Hohoohoho~ ";
 		break;
 	case 2:
 		mes "[Woman]";
-		mes "Oh don't worry about any preparations. There's a Tool Dealer right in front of the cave, so you can purchase anything you need from my husban, er, that guy~";
+		mes "Oh don't worry about any preparations. There's a Tool Dealer right in front of the cave, so you can purchase anything you need from my husband, er, that guy~";
 		break;
 	case 3:
 		mes "[Woman]";
@@ -947,7 +947,7 @@ OnTouch_:
 			next;
 			mes "[Chief]";
 			mes "However, we welcome people";
-			mes "who have proven to be capable to take the challange of the Hunter class.";
+			mes "who have proven to be capable to take the challenge of the Hunter class.";
 			break;
 		}
 		next;

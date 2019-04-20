@@ -17,7 +17,7 @@ lighthalzen,108,229,2	script	La Fenn	766,{
 	mes "[La Fenn]";
 	if(BaseLevel<99) {
 		if(Q_99LVL) {
-			mes "You... You got younger!!! But you are defenitely YOU!";
+			mes "You... You got younger!!! But you are definitely YOU!";
 			mes "I couldn't think you were able to meet my condition...";
 			emotion ET_SCRATCH;
 			next;

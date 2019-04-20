@@ -1,28 +1,36 @@
 //===== rAthena Script =======================================
 //= Card Seller A-Z
-//===== By: ==================================================
-//= AnnieRuru
-//===== Current Version: =====================================
-//= 1.0
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= Sells all cards dropped by mobs, grouped alphabetically.
 //= MVP cards are excluded from the list.
 //=
 //= NOTE: Requires SQL item and mob databases.
-//===== Additional Comments: =================================
-//= 1.0 First version, edited. [Euphy]
+//===== Changelogs: ==========================================
+//= 1.0 First version [AnnieRuru]
+//= 1.1 Minor edits [Euphy]
+//= 1.2 Update for monster mode and enchants [Lemongrass]
 //============================================================
 
 prontera,155,177,5	script	Card Seller	100,{
+	.@menu$ = getvariableofnpc( .alphabet_menu$, "card_seller_creation" );
+	if (.@menu$ == "") {
+		mes "[Card Seller]";
+		mes "I am sorry, it seems like something went wrong.";
+		mes "I cannot find any cards in our database at the moment.";
+		mes "Please contact a game master.";
+		close;
+	}
 	mes "[Card Seller]";
 	mes "Welcome!";
 	mes "I can sell you any normal monster card in the game. Would you like to have a look?";
 	next;
-	.@s = select( .alphabet_menu$ ) -1;
+	.@s = select(.@menu$) -1;
 	close2;
-	callshop "card_mob#"+ .alphabet$[.@s], 1;
+	callshop "card_mob#"+ getvariableofnpc( .alphabet$[.@s], "card_seller_creation" ), 1;
+	end;
+}
+
+-	script	card_seller_creation	-1,{
 	end;
 OnInit:
 	if (checkre(0)) {
@@ -32,14 +40,20 @@ OnInit:
 		.@mob_db$  = "mob_db";
 		.@item_db$ = "item_db";
 	}
-	freeloop 1;
-	.@total = query_sql( "SELECT DISTINCT LEFT( `name_japanese`, 1 ) AS alphabets FROM `"+ .@item_db$ +"` RIGHT JOIN `"+ .@mob_db$ +"` ON `"+ .@item_db$ +"`.`id` = `"+ .@mob_db$ +"`.`dropcardid` WHERE ~(`MODE`) & 32 AND `type` = 6 GROUP BY `name_japanese` ORDER BY alphabets;", .alphabet$ );
+	freeloop 1;	
+	.@total = query_sql( "SELECT DISTINCT LEFT( `name_japanese`, 1 ) AS alphabets FROM `"+ .@item_db$ +"` WHERE `type` = " + IT_CARD + " AND `id` IN ( SELECT DISTINCT `dropcardid` FROM `"+ .@mob_db$ +"` WHERE ~(`MODE`) & " + MD_MVP + " ) ORDER BY alphabets;", .@alphabet$ );
 	for ( .@i = 0; .@i < .@total; .@i++ ) {
-		.alphabet_menu$ = .alphabet_menu$ + .alphabet$[.@i] +" Cards:";
-		.@nb = query_sql( "SELECT `"+ .@item_db$ +"`.`id` FROM `"+ .@item_db$ +"` RIGHT JOIN `"+ .@mob_db$ +"` ON `"+ .@item_db$ +"`.`id` = `"+ .@mob_db$ +"`.`dropcardid` WHERE ~(`MODE`) & 32 AND `type` = 6 AND LEFT( `name_japanese`, 1 ) = '"+ .alphabet$[.@i] +"' GROUP BY `name_japanese` ORDER BY `name_japanese` LIMIT 128;", .@id );
-		npcshopdelitem "card_mob#"+ .alphabet$[.@i], 501;
-		for ( .@j = 0; .@j < .@nb; .@j++ )
-			npcshopadditem "card_mob#"+ .alphabet$[.@i], .@id[.@j], 1000000;
+		.@nb = query_sql( "SELECT `"+ .@item_db$ +"`.`id` FROM `"+ .@item_db$ +"` WHERE `type` = " + IT_CARD + " AND LEFT( `name_japanese`, 1 ) = '"+ .@alphabet$[.@i] +"' AND `id` IN ( SELECT DISTINCT `dropcardid` FROM `"+ .@mob_db$ +"` WHERE ~(`MODE`) & " + MD_MVP + " ) ORDER BY `name_japanese` LIMIT 128;", .@id );
+		if (.@nb > 0) {
+			.alphabet$[.@size_alphabet++] = .@alphabet$[.@i];
+			.alphabet_menu$ = .alphabet_menu$ + .@alphabet$[.@i] +" Cards:";
+			npcshopdelitem "card_mob#"+ .@alphabet$[.@i], 501;
+			for ( .@j = 0; .@j < .@nb; .@j++ ) {
+				if (callfunc( "F_IsCharm", .@id[.@j] ) == true)// Skip enchants in case someone added them as card drop
+					continue;
+				npcshopadditem "card_mob#"+ .@alphabet$[.@i], .@id[.@j], 1000000;
+			}
+		}
 	}
 	freeloop 0;
 	end;

@@ -427,7 +427,7 @@ ein_in01,279,92,3	script	Tavern Lady#ein	854,{
 	mes "that women want gentle,";
 	mes "sensitive men with whom";
 	mes "they can share their feelings";
-	mes "and drink chamoille tea over";
+	mes "and drink chamomile tea over";
 	mes "freshly knit doilies?";
 	close;
 }
@@ -750,7 +750,7 @@ einbech,148,242,5	script	Jung#ein	855,{
 	mes "I'm one of the few";
 	mes "people who's lived";
 	mes "in both Einbech and";
-	mes "Einbrock for a long time.";
+	mes "Einbroch for a long time.";
 	mes "So I guess I'm one of the";
 	mes "best guides of this area.";
 	next;
@@ -954,7 +954,7 @@ einbech,148,246,5	script	Franz#ein	851,{
 			mes "a short lived teddy bear";
 			mes "fad. However, a series of";
 			mes "mysterious accidents and";
-			mes "murders where entire familes";
+			mes "murders where entire families";
 			mes "were killed also occurred.";
 			next;
 			mes "[Franz]";

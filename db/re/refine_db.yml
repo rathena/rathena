@@ -38,6 +38,12 @@ Armor:
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6225
+    - Type: REFINE_COST_HOLINK
+      Price: 15000
+      Material: 7619
+    - Type: REFINE_COST_WAGJAK
+      Price: 20000
+      Material: 985
   Rates:
     - Level: 1
       Bonus: 100
@@ -163,6 +169,12 @@ WeaponLv1:
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6226
+    - Type: REFINE_COST_HOLINK
+      Price: 500
+      Material: 7620
+    - Type: REFINE_COST_WAGJAK
+      Price: 1000
+      Material: 1010
   Rates:
     - Level: 8
       NormalChance: 60
@@ -254,6 +266,12 @@ WeaponLv2:
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6226
+    - Type: REFINE_COST_HOLINK
+      Price: 2000
+      Material: 7620
+    - Type: REFINE_COST_WAGJAK
+      Price: 2000
+      Material: 1011
   Rates:
     - Level: 7
       NormalChance: 60
@@ -350,6 +368,12 @@ WeaponLv3:
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6226
+    - Type: REFINE_COST_HOLINK
+      Price: 20000
+      Material: 7620
+    - Type: REFINE_COST_WAGJAK
+      Price: 10000
+      Material: 984
   Rates:
     - Level: 6
       NormalChance: 60
@@ -451,6 +475,12 @@ WeaponLv4:
     - Type: REFINE_COST_OVER10_HD
       Price: 100000
       Material: 6226
+    - Type: REFINE_COST_HOLINK
+      Price: 50000
+      Material: 7620
+    - Type: REFINE_COST_WAGJAK
+      Price: 20000
+      Material: 984
   Rates:
     - Level: 5
       NormalChance: 60

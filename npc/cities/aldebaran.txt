@@ -542,7 +542,7 @@ aldebaran,143,136,4	script	Bell Keeper#A	89,{
 //============================================================
 aldeba_in,232,241,4	script	RS125#alde	48,{
 	mes "[RS125]";
-	mes "I may sound unhuman rather robotic";
+	mes "I may sound inhuman rather robotic";
 	mes "however, I hope you will not be afraid of me. I am as humane as you are.";
 	next;
 	mes "[RS125]";
@@ -558,7 +558,7 @@ aldeba_in,232,241,4	script	RS125#alde	48,{
 		next;
 		mes "[RS125]";
 		mes "He became so popular for his exciting play,";
-		mes "so everytime when the 'Al De Baran Turbo Track' was held once every 4 years,";
+		mes "so every time when the 'Al De Baran Turbo Track' was held once every 4 years,";
 		mes "many people from all over the continent came to this city only to see my brother.";
 		mes "I was his manager at the time and I was so stressed out because of his fans.";
 		next;
@@ -577,7 +577,7 @@ aldeba_in,232,241,4	script	RS125#alde	48,{
 		close;
 	}
 	mes "[RS125]";
-	mes "I want to travel around the world one of thesedays.";
+	mes "I want to travel around the world one of these days.";
 	mes "If I can see the ocean from the port of Alberta, it must be so wonderful.";
 	mes "After the next year's athletic competition, I will go on a round-the-world tour with my brother.";
 	close;
@@ -624,7 +624,7 @@ aldeba_in,223,121,4	script	Threatening-Looking Man	63,{
 	}
 	mes "[Threatening-Looking Man]";
 	mes "Get out, now!";
-	mes "If you a cop, show me a warrent,";
+	mes "If you a cop, show me a warrant,";
 	mes "if you are a member of my family, prove it with your birth mark!";
 	close;
 }
@@ -1303,7 +1303,7 @@ aldeba_in,88,161,3	script	Kafra Employee#reserve2	4_F_KAFRA3,{
 			mes "[Kafra Employee]";
 			mes "I'm sorry~ but~";
 			mes "Please, visit Kafra warehouse and store your items until you have free space of ^0000FF1100^000000 and come back.";
-			mes "I appolize for inconvinence~";
+			mes "I apologize for inconvenience~";
 			close;
 		}
 		mes "Your special reserve points are ^FF0000"+ RESRVPTS +"^000000~";
@@ -1548,11 +1548,11 @@ function	script	F_ClockTowerGate	{
 		mes "The Key is the Intensiveness of Ancient Alchemy,";
 		mes "By hearsay When used once,";
 		mes "It will be released from being spelled";
-		mes "And be disapeared.";
+		mes "And be disappeared.";
 		next;
 		mes "[Gatekeeper Boy]";
 		mes "If that key";
-		mes "Comes into your porssession,";
+		mes "Comes into your possession,";
 		mes "Please show me.";
 		mes "The one who possesses the Key";
 		mes "Will have access to go through";

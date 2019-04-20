@@ -59,7 +59,7 @@ L_Info:
 	mes "Talk to the Monster Trainer, he will ask you to heal your pet.";
 	next;
 	mes "[Monster Arena]";
-	mes "To do this, click the Nurse repearedly until it says your pet is healed.";
+	mes "To do this, click the Nurse repeatedly until it says your pet is healed.";
 	next;
 	mes "[Monster Arena]";
 	mes "The more monsters you kill, the more exp you get and the quicker you can upgrade.";

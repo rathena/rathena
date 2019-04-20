@@ -48,7 +48,7 @@ OnTouch_:
 
 morocc,202,244,0	script	Volunteer - Morroc#01	745,{
 	mes "[Morroc Volunteer]";
-	mes "After that terrible incident wiped out the entire Morroc, Rune-Midgard Kingdom has gathered us valunteers to help restorations.";
+	mes "After that terrible incident wiped out the entire Morroc, Rune-Midgard Kingdom has gathered us volunteers to help restorations.";
 	next;
 	mes "[Morroc Volunteer]";
 	mes "As important as it seems, everyone's being careful but there are always some that really don't realize the situation, don't you think?";
@@ -303,7 +303,7 @@ moc_ruins,121,116,4	script	Picky Lady#moc	66,{
 	mes "Or, how little Picky wears that tiny egg shell sometimes?..";
 	next;
 	mes "[Syvia]";
-	mes "I can't believe what just has happened.. Our town used to be the one with those cute little monsters, not that kinda of visious dreadful Evil sleeping in! Whew...";
+	mes "I can't believe what just has happened.. Our town used to be the one with those cute little monsters, not that kinda of vicious dreadful Evil sleeping in! Whew...";
 	next;
 	mes "[Syvia]";
 	mes "I'm so scared... I just wanna ease my mind watching over those cute little Porings...";
@@ -375,7 +375,7 @@ moc_ruins,155,107,4	script	Ant Man#moc	47,{
 		next;
 		mes "[Akira]";
 		mes "Andre is colored in Ivory, Yellowish Green is Piere, and the Red one is Deniro.";
-		mes "It's really easy to distinguish those from Bitata, the commen ants because they look very different.";
+		mes "It's really easy to distinguish those from Bitata, the common ants because they look very different.";
 		next;
 		mes "[Akira]";
 		mes "Oh, and those ants are greedy as Porings and will try to steal your items, so keep that in mind.";
@@ -388,7 +388,7 @@ moc_ruins,155,107,4	script	Ant Man#moc	47,{
 		mes "There's also an old man called Guias, the spirit of the earth. He's pretty hard to deal with.";
 		next;
 		mes "[Akira]";
-		mes "Sharp teeth and strong jaws of the ants would be something that you should be careful of, but the shovelling skills of that old granpa is very strong that you should watch out.";
+		mes "Sharp teeth and strong jaws of the ants would be something that you should be careful of, but the shovelling skills of that old grandpa is very strong that you should watch out.";
 		next;
 		mes "[Akira]";
 		mes "...Well, what am I talking about? What is left to be afraid when the Satan of Morroc is revived? Huh..huhhuh...";
@@ -414,7 +414,7 @@ moc_ruins,143,43,4	script	Assassin Boy#moc	118,{
 		next;
 		mes "[Slayer Kid]";
 		mes "Well.. Maybe it'd too late now..";
-		mes "Now that the whole town's destroyed... I don't even care what happenes next...";
+		mes "Now that the whole town's destroyed... I don't even care what happens next...";
 		close;
 	case 2:
 		mes "[Slayer Kid]";
@@ -566,9 +566,9 @@ moc_ruins,173,70,4	script	Uncle Morroc#moc	48,{
 moc_fild16,199,212,4	script	 Uncle Assassin#moc	55,{
 	mes "[Hashisid]";
 	mes "...Assassins are trained";
-	mes "to approach their enemies steathily,";
+	mes "to approach their enemies stealthily,";
 	mes " as well as";
-	mes "to shroad their intent.";
+	mes "to shroud their intent.";
 	mes "For this purpose,";
 	mes "we never";
 	mes "look our targets in the eye.";
@@ -612,7 +612,7 @@ moc_fild16,199,212,4	script	 Uncle Assassin#moc	55,{
 		mes "strong smell...";
 		mes "If you ever,";
 		mes "try eating those";
-		mes "smelly garlic bread with spicies,";
+		mes "smelly garlic bread with spices,";
 		next;
 		mes "[Hashisid]";
 		mes "and try hiding against";
@@ -666,7 +666,7 @@ moc_fild16,211,254,4	script	Assassin#07rhea_30	118,{
 		next;
 		mes "[La Conte]";
 		mes "Sonic Blow is the skill";
-		mes "that inflicts 8 contineous hits of";
+		mes "that inflicts 8 continuous hits of";
 		mes "Neutral damage.";
 		close;
 	case 2:
@@ -721,7 +721,7 @@ morocc_in,166,76,3	script	Bartender#02	46,{
 	mes "[Bartender]";
 	mes "What are you going to order?";
 	next;
-	switch(select("Tropical Sograt:Vemillion the Beach:Nothing.")) {
+	switch(select("Tropical Sograt:Vermilion on the Beach:Nothing.")) {
 	case 1:
 		if (Zeny >= 1000 ) {
 			set Zeny, Zeny-1000;

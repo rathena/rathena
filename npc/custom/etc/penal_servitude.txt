@@ -138,7 +138,7 @@ sec_in02,137,57,1	script	Overseer	708,{
 	mes "I want you to gather ^FF0000"+PRISON_Q+" Orange Net Mushroom^000000.";
 	if ( countitem(1069)<PRISON_Q ) close;//Items: Orange_Net_Mushroom,
 	mes "OK... hand me all the shrooms...";
-	mes "Let me see... "+countitem(1069)+" of almost eadible ones...";//Items: Orange_Net_Mushroom,
+	mes "Let me see... "+countitem(1069)+" of almost edible ones...";//Items: Orange_Net_Mushroom,
 	mes "And "+countitem(1070)+" useless deadly ones.";//Items: Orange_Gooey_Mushroom_,
 	next;
 	mes "[Oliver]";

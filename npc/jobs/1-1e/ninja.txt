@@ -74,9 +74,9 @@ alberta,30,65,3	script	Akagi	730,{
 	}
 }
 
-que_ng,30,65,3	script	Cougar#nq	730,{
+que_ng,30,65,3	script	Kuuga Gai#nq	730,{
 	if (Upper == 2) {
-		mes "[Cougar]";
+		mes "[Kuuga Gai]";
 		mes "I... I've never";
 		mes "seen a baby as";
 		mes "powerful as you!";
@@ -86,7 +86,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 	}
 	if (Class == Job_Novice) {
 		if (JobLevel < 10) {
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Hm? Have you come to";
 			mes "learn how to be a Ninja?";
 			mes "You're not quite experienced";
@@ -100,7 +100,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "Excuse me.";
 			mes "H-hello?";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "...............................";
 			mes "How did you do that?";
 			next;
@@ -108,7 +108,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "Do what? I didn't";
 			mes "do anything, I don't think...";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "H-How are you able to";
 			mes "see me? I'm supposed to";
 			mes "be invisible to the naked eye.";
@@ -121,7 +121,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "Calm down, there's no";
 			mes "need to get violent!";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "What...?";
 			mes "How did you dodge";
 			mes "all of my attacks?";
@@ -134,7 +134,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "to change my job";
 			mes "to a Ninja.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "...Oh. Is that all?";
 			mes "Hmm, you've got great";
 			mes "potential, but I can't help";
@@ -142,14 +142,14 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "enemies, and I can't let my";
 			mes "guard down for even a second.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "That Wildcat Joe is";
 			mes "completely ruthless...!";
 			mes "He could strike at any time!";
 			mes "He'll do anything to achieve";
 			mes "victory over his enemies!";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Wait, wait, I just";
 			mes "thought of something.";
 			mes "Maybe you can help me out.";
@@ -158,7 +158,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "really want to be a Ninja.";
 			next;
 			if(select("Sure.:No, thanks.") == 2) {
-				mes "[Cougar]";
+				mes "[Kuuga Gai]";
 				mes "Hm? Well, alright.";
 				mes "Still, I don't see";
 				mes "why we can't help";
@@ -166,7 +166,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 				mes "little predicament...";
 				close;
 			}
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Great! Now, I wanted to";
 			mes "ask Wildcat Joe if he'd";
 			mes "agree to a temporary truce.";
@@ -174,7 +174,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "are out of weapons, so we";
 			mes "should get well equipped first.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Please take this letter,";
 			mes "and deliver it to Wildcat";
 			mes "Joe in Einbroch. He's a master";
@@ -182,7 +182,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "eye out for him. Ah, and look";
 			mes "for him in a high place.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Yeah, Wildcat Joe";
 			mes "always did have a thing";
 			mes "for hiding in high places.";
@@ -194,7 +194,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			close;
 		}
 		else if (NINJ_Q == 1) {
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Even if this task";
 			mes "isn't that urgent,";
 			mes "please hurry over to";
@@ -203,7 +203,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			close;
 		}
 		else if (NINJ_Q == 2) {
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Did you deliver that";
 			mes "letter to Wildcat Joe?";
 			mes "I still need to know his";
@@ -213,14 +213,14 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			close;
 		}
 		else if (NINJ_Q == 3) {
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Ah, you've returned.";
 			mes "So did Wildcat Joe send";
 			mes "you back here with his";
 			mes "response? Great, great,";
 			mes "please let me read it.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "What...?! How could he";
 			mes "reject my proposal for";
 			mes "a truce?! This can only";
@@ -228,14 +228,14 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "Kunai. Nuts! I have to catch";
 			mes "up to him, or I'm a goner!";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Listen, you've got to help";
 			mes "me out again! I need you to";
 			mes "gather some materials so that";
 			mes "I can craft my own Kunai to fight Wildcat Joe. Then, I'll go ahead";
 			mes "and change your job to a Ninja.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "All you need";
 			mes "to bring me is";
 			mes "^3355FF5 Cyfars^000000 and";
@@ -249,7 +249,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "asked me to gather";
 			mes "those same materials.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Curses! Then that means...";
 			mes "You actually helped Joe";
 			mes "in crafting his Kunai! No!";
@@ -262,7 +262,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 		}
 		else if (NINJ_Q == 4) {
 			if (countitem(7053) < 5 || countitem(1010) < 1) {
-				mes "[Cougar]";
+				mes "[Kuuga Gai]";
 				mes "Hurry and bring";
 				mes "^3355FF5 Cyfars^000000 and";
 				mes "^3355FF1 Phracon^000000 to me,";
@@ -272,7 +272,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 				close;
 			}
 			if (SkillPoint != 0) {
-				mes "[Cougar]";
+				mes "[Kuuga Gai]";
 				mes "Whoa, whoa...";
 				mes "You still have some";
 				mes "leftover Skill Points.";
@@ -281,7 +281,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 				mes "change jobs, right?";
 				close;
 			}
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Ah, you're back with";
 			mes "everything that I need.";
 			mes "You've come earlier than";
@@ -289,14 +289,14 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "as promised, I'll turn";
 			mes "you into a Ninja.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Let me formally introduce";
-			mes "myself. I am High Ninja Cougar";
+			mes "myself. I am High Ninja Kuuga Gai";
 			mes "in the Touga Ninja Corps, and";
 			mes "I'm in charge of the search";
 			mes "party to find Sir Kazma.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "Sir Kazma is the chief";
 			mes "of my village, but he's";
 			mes "run away. This has resulted";
@@ -304,7 +304,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "the Ninja Corps. Things are";
 			mes "pretty unstable right now...";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "I initially didn't want to";
 			mes "accept you as a Ninja because";
 			mes "of this complicated situation.";
@@ -312,14 +312,14 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "you're truly worthy of joining";
 			mes "the Ninja ranks.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "According to his letter, even";
 			mes "Joe thinks highly of you. Just";
 			mes "remember that, as a Ninja, your";
 			mes "mission is your highest priority. But don't let mission objectives";
 			mes "supercede your conscience.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "''Secrecy above all else.''";
 			mes "To keep our secrets in the";
 			mes "shadows, you can only buy";
@@ -327,7 +327,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "authorized dealers. Please";
 			mes "keep that in mind.";
 			next;
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "As of today, you are";
 			mes "now a proud member of the";
 			mes "Touga Ninja Corps. Be as";
@@ -342,7 +342,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			close;
 		}
 		else {
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "How have you been?";
 			mes "Train hard: you want";
 			mes "to be able to vanish";
@@ -353,7 +353,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 		}
 	} else {
 		if (BaseClass == Job_Ninja) {
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "How have you been?";
 			mes "Train hard: you want";
 			mes "to be able to vanish";
@@ -362,7 +362,7 @@ que_ng,30,65,3	script	Cougar#nq	730,{
 			mes "the respect of any Ninja~";
 			close;
 		} else {
-			mes "[Cougar]";
+			mes "[Kuuga Gai]";
 			mes "What...?";
 			mes "How were you able";
 			mes "to find me hidden";
@@ -459,7 +459,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		mes "?????!!";
 		next;
 		mes "[Suspicious Man]";
-		mes "Why? Didn't you bring Cougar's letter for me?";
+		mes "Why? Didn't you bring Kuuga Gai's letter for me?";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Are you...";
@@ -468,7 +468,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		mes "[Suspicious Man]";
 		mes "...Yes, but I prefer to";
 		mes "be called Red Leopard Joe.";
-		mes "Cougar sent you to me, right?";
+		mes "Kuuga Gai sent you to me, right?";
 		mes "He's the only one who calls";
 		mes "me that. So you want to be";
 		mes "a Ninja, eh? Hmm, alright.";
@@ -494,7 +494,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		mes "[Red Leopard Joe]";
 		mes "For now, let me read";
 		mes "this letter. Let's see...";
-		mes "Hm. I thought that Cougar";
+		mes "Hm. I thought that Kuuga Gai";
 		mes "would want to challenge me";
 		mes "again, but he actually wants";
 		mes "a temporary truce? Hah!";
@@ -521,7 +521,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		mes "[Red Leopard Joe]";
 		mes "Here you go.";
 		mes "Please bring this";
-		mes "letter to Cougar.";
+		mes "letter to Kuuga Gai.";
 		mes "It'll take a while to";
 		mes "return to Amatsu, so let";
 		mes "me send you there directly...";
@@ -538,7 +538,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 		mes "Eh? I'm not sure what";
 		mes "happened, but it seems";
 		mes "that you haven't delivered";
-		mes "my response to Cougar yet.";
+		mes "my response to Kuuga Gai yet.";
 		mes "Shall I directly send you";
 		mes "to Amatsu right now?";
 		next;
@@ -558,7 +558,7 @@ einbroch,184,194,3	script	Suspicious Man#nq	 	881,{
 	}
 	else if (NINJ_Q == 4) {
 		mes "[Red Leopard Joe]";
-		mes "Cougar asked you to";
+		mes "Kuuga Gai asked you to";
 		mes "gather some materials";
 		mes "too? Oh well, I suppose";
 		mes "that I can't blame him.";

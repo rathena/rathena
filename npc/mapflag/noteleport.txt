@@ -409,4 +409,23 @@ nyd_dun02	mapflag	noteleport
 2@nyd	mapflag	noteleport
 2@nyd	mapflag	monster_noteleport
 
+// RWC Maps ===============
+2009rwc_01	mapflag	noteleport
+2009rwc_02	mapflag	noteleport
+2009rwc_03	mapflag	noteleport
+2009rwc_04	mapflag	noteleport
+2009rwc_05	mapflag	noteleport
+2009rwc_06	mapflag	noteleport
+2009rwc_07	mapflag	noteleport
+2009rwc_08	mapflag	noteleport
+2009rwc_f01	mapflag	noteleport
+2012rwc_01	mapflag	noteleport
+2012rwc_02	mapflag	noteleport
+2012rwc_03	mapflag	noteleport
+2012rwc_04	mapflag	noteleport
+2012rwc_05	mapflag	noteleport
+2012rwc_06	mapflag	noteleport
+2012rwc_07	mapflag	noteleport
+2012rwc_08	mapflag	noteleport
+
 //evt_zombie	mapflag	noteleport

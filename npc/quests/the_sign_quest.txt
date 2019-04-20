@@ -27,6 +27,7 @@
 //= 3.7 Massive cleaning/optimization (more can still be done). [Euphy]
 //= 3.8 Corrected an invalid map name. [Joseph]
 //= 3.9 Updated RE/Pre-RE EXP. [Euphy]
+//= 4.0 Renewal script update for ep16.1 [Capuche]
 //============================================================ 
 
 // The Sign (Part 1)
@@ -6000,7 +6001,7 @@ alberta_in,154,171,5	script	Maid#s10	758,{
 	}
 }
 
-prt_castle,107,58,5	script	Soldier#s11	105,{
+-	script	Soldier#s11_	-1,{
 	callfunc "F_UpdateSignVars";
 	mes "[Maruin]";
 	if (sign_q < 49) {

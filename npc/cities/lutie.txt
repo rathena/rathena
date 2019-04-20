@@ -1,11 +1,5 @@
 //===== rAthena Script =======================================
 //= Lutie Town
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.7
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= Lutie - City NPCs
 //===== Additional Comments: =================================
@@ -17,11 +11,12 @@
 //= 1.5 Fixed a bug that could reset Lutie quest state [Lupus]
 //= 1.6 Heavy optimization to all the NPCs [DZeroX]
 //= 1.7 Updated to match AEGIS script. [Kisuka]
+//= 1.8 Split Mr. Claus to pre-re and re [Lemongrass]
 //============================================================
 
 // Teleport to Lutie
 //============================================================
-aldebaran,223,222,4	script	Mr. Claus	718,{
+-	script	Mr. Claus	718,{
 	mes "[Mr. Claus]";
 	mes "Ho Ho Ho~";
 	mes "Merry Christmas!!";
@@ -291,7 +286,7 @@ xmas,117,304,4	script	Poze	713,{
 		mes "Oh, there is someone who knows how Snowysnow came to be able to speak. That person would be ^3355FFUncle Hairy Cantata^000000...";
 		next;
 		mes "[Poze]";
-		mes "One day when apprentice of the great alchemist visted Lutie, I came to listen in on a conversation between him and Uncle Hairy.";
+		mes "One day when apprentice of the great alchemist visited Lutie, I came to listen in on a conversation between him and Uncle Hairy.";
 		next;
 		mes "[Poze]";
 		mes "Long ago, a great alchemist came by Snowysnow's hometown and happened to meet Snowysnow dying, melting down into water. However, Snowysnow was miraculously revived by that Alchemist.";

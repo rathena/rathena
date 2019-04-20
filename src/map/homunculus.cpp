@@ -1,34 +1,34 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "homunculus.hpp"
 
 #include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/mmo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
-#include "log.hpp"
+#include "battle.hpp"
 #include "clif.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp"
-#include "pc.hpp"
-#include "party.hpp"
-#include "trade.hpp"
+#include "log.hpp"
 #include "npc.hpp"
-#include "battle.hpp"
+#include "party.hpp"
+#include "pc.hpp"
+#include "trade.hpp"
 
 struct s_homunculus_db homunculus_db[MAX_HOMUNCULUS_CLASS];	//[orn]
 struct homun_skill_tree_entry hskill_tree[MAX_HOMUNCULUS_CLASS][MAX_HOM_SKILL_TREE];
 
-static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data);
+static TIMER_FUNC(hom_hungry);
 static uint16 homunculus_count;
 static unsigned int hexptbl[MAX_LEVEL];
 
@@ -360,7 +360,7 @@ short hom_checkskill(struct homun_data *hd,uint16 skill_id)
 	if (idx < 0) // Invalid skill
 		return 0;
 
-	if (!hd || !&hd->homunculus)
+	if (!hd)
 		return 0;
 
 	if (hd->homunculus.hskill[idx].id == skill_id)
@@ -864,8 +864,7 @@ int hom_food(struct map_session_data *sd, struct homun_data *hd)
 /**
 * Timer to reduce hunger level
 */
-static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data)
-{
+static TIMER_FUNC(hom_hungry){
 	struct map_session_data *sd;
 	struct homun_data *hd;
 
@@ -890,6 +889,10 @@ static int hom_hungry(int tid, unsigned int tick, int id, intptr_t data)
 		clif_emotion(&hd->bl, ET_SCRATCH);
 	} else if(hd->homunculus.hunger == 75) {
 		clif_emotion(&hd->bl, ET_OK);
+	}
+
+	if( battle_config.feature_homunculus_autofeed && hd->homunculus.autofeed && hd->homunculus.hunger <= battle_config.feature_homunculus_autofeed_rate ){
+		hom_food( sd, hd );
 	}
 
 	if (hd->homunculus.hunger < 0) {
@@ -1041,7 +1044,6 @@ void hom_alloc(struct map_session_data *sd, struct s_homunculus *hom)
 
 	map_addiddb(&hd->bl);
 	status_calc_homunculus(hd, SCO_FIRST);
-	status_percent_heal(&hd->bl, 100, 100);
 
 	hd->hungry_timer = INVALID_TIMER;
 	hd->masterteleport_timer = INVALID_TIMER;
@@ -1097,7 +1099,7 @@ bool hom_call(struct map_session_data *sd)
 		clif_hominfo(sd,hd,1);
 		clif_hominfo(sd,hd,0); // send this x2. dunno why, but kRO does that [blackhole89]
 		clif_homskillinfoblock(sd);
-		if (battle_config.slaves_inherit_speed&1)
+		if (battle_config.hom_setting&HOMSET_COPY_SPEED)
 			status_calc_bl(&hd->bl, SCB_SPEED);
 		hom_save(hd);
 	} else
@@ -1117,6 +1119,7 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 {
 	struct map_session_data *sd;
 	struct homun_data *hd;
+	bool created = false;
 
 	sd = map_id2sd(account_id);
 	if(!sd)
@@ -1133,14 +1136,19 @@ int hom_recv_data(uint32 account_id, struct s_homunculus *sh, int flag)
 		return 0;
 	}
 
-	if (!sd->status.hom_id) //Hom just created.
+	if (!sd->status.hom_id) { //Hom just created.
 		sd->status.hom_id = sh->hom_id;
+		created = true;
+	}
 	if (sd->hd) //uh? Overwrite the data.
 		memcpy(&sd->hd->homunculus, sh, sizeof(struct s_homunculus));
 	else
 		hom_alloc(sd, sh);
 
 	hd = sd->hd;
+	if (created)
+		status_percent_heal(&hd->bl, 100, 100);
+
 	if(hd && hd->homunculus.hp && !hd->homunculus.vaporize && hd->bl.prev == NULL && sd->bl.prev != NULL)
 	{
 		if(map_addblock(&hd->bl))
@@ -1256,7 +1264,7 @@ void hom_revive(struct homun_data *hd, unsigned int hp, unsigned int sp)
 	clif_hominfo(sd,hd,0);
 	clif_homskillinfoblock(sd);
 	if (hd->homunculus.class_ == 6052) //eleanor
-		sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, -1);
+		sc_start(&hd->bl,&hd->bl, SC_STYLE_CHANGE, 100, MH_MD_FIGHTING, INFINITE_TICK);
 }
 
 /**
@@ -1587,11 +1595,12 @@ void read_homunculus_expdb(void)
 	memset(hexptbl,0,sizeof(hexptbl));
 	for (i = 0; i < ARRAYLENGTH(filename); i++) {
 		FILE *fp;
+		char path[1024];
 		char line[1024];
 		int j=0;
 		
-		sprintf(line, "%s/%s", db_path, filename[i]);
-		fp = fopen(line,"r");
+		sprintf(path, "%s/%s", db_path, filename[i]);
+		fp = fopen(path,"r");
 		if (fp == NULL) {
 			if (i != 0)
 				continue;
@@ -1607,11 +1616,11 @@ void read_homunculus_expdb(void)
 				break;
 		}
 		if (hexptbl[MAX_LEVEL - 1]) { // Last permitted level have to be 0!
-			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",filename,MAX_LEVEL);
+			ShowWarning("read_hexptbl: Reached max level in %s [%d]. Remaining lines were not read.\n ",path,MAX_LEVEL);
 			hexptbl[MAX_LEVEL - 1] = 0;
 		}
 		fclose(fp);
-		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s/%s" CL_RESET "'.\n", j, db_path, filename[i]);
+		ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' levels in '" CL_WHITE "%s" CL_RESET "'.\n", j, path);
 	}
 }
 

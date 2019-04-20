@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= AnnieRuru
 //===== Current Version: =====================================
-//= 1.0
+//= 1.1
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -11,6 +11,7 @@
 //= Kill players from the other team.
 //===== Additional Comments: =================================
 //= 1.0 First version, edited. [Euphy]
+//= 1.1 Use up to date battleground script commands [AnnieRuru]
 //============================================================
 
 -	script	bg_pvp#control	-1,{
@@ -26,29 +27,25 @@ OnStart:
 
 	// create Battleground and teams
 	.red = waitingroom2bg( "guild_vs3", 13,50, strnpcinfo(0)+"::OnRedQuit", strnpcinfo(0)+"::OnRedDead", .rednpcname$ );
-	copyarray .team1aid, $@arenamembers, $@arenamembersnum;
-	.team1count = .minplayer2start;
 	.blue = waitingroom2bg( "guild_vs3", 86,50, strnpcinfo(0)+"::OnBlueQuit", strnpcinfo(0)+"::OnBlueDead", .bluenpcname$ );
-	copyarray .team2aid, $@arenamembers, $@arenamembersnum;
-	.team2count = .minplayer2start;
 	delwaitingroom .rednpcname$;
 	delwaitingroom .bluenpcname$;
 	bg_warp .red, "guild_vs3", 13,50;
 	bg_warp .blue, "guild_vs3", 86,50;
-	.score[1] = .score[2] = .minplayer2start;
-	bg_updatescore "guild_vs3", .score[1], .score[2];
+	.red_score = .blue_score = .minplayer2start;
+	bg_updatescore "guild_vs3", .red_score, .blue_score;
 
 	// match duration
 	sleep .eventlasting * 1000;
 
 	// end match, destroy Battleground, reset NPCs
-	if ( .score[1] > .score[2] ) {
+	if ( .red_score > .blue_score ) {
 		mapannounce "guild_vs3", "- Red Team is victorious! -", bc_map;
-		callsub L_Reward, 1;
+		callsub L_Reward, .red;
 	}
-	else if ( .score[1] < .score[2] ) {
+	else if ( .blue_score > .red_score ) {
 		mapannounce "guild_vs3", "- Blue Team is victorious! -", bc_map;
-		callsub L_Reward, 2;
+		callsub L_Reward, .blue;
 	}
 	else
 		mapannounce "guild_vs3", "- The match has ended in a draw! -", bc_map;
@@ -61,37 +58,32 @@ OnStart:
 	end;
 
 L_Reward:
-	for ( .@i = 0; .@i < getd(".team"+ getarg(0) +"count"); .@i++ )
-		getitem .rewarditem[0], .rewarditem[1], getd(".team"+ getarg(0) +"aid["+ .@i +"]" );
+	bg_get_data getarg(0), 1;
+	for ( .@i = 0; .@i < $@arenamemberscount; ++.@i )
+		getitem .rewarditem[0], .rewarditem[1], $@arenamembers[.@i];
 	return;
 
 // "OnDeath" event
-OnRedDead:  callsub L_Dead, 1;
-OnBlueDead: callsub L_Dead, 2;
+OnRedDead:  callsub L_Dead, .red_score;
+OnBlueDead: callsub L_Dead, .blue_score;
 L_Dead:
-	.score[ getarg(0) ]--;
-	bg_updatescore "guild_vs3", .score[1], .score[2];
-	while ( getd( ".team"+ getarg(0) +"aid["+ .@i +"]" ) != getcharid(3) && .@i < getd(".team"+ getarg(0) +"count") ) .@i++;
-	deletearray getd( ".team"+ getarg(0) +"aid["+ .@i +"]" ), 1;
-	setd ".team"+ getarg(0) +"count", getd(".team"+ getarg(0) +"count") -1;
+	set getarg(0), getarg(0) -1;
+	bg_updatescore "guild_vs3", .red_score, .blue_score;
 	bg_leave;
-	if ( !.score[ getarg(0) ] )
+	if ( !getarg(0) )
 		awake strnpcinfo(0);
 	sleep2 1250;
 	percentheal 100,100;
 	end;
 
 // "OnQuit" event
-OnRedQuit:  callsub L_Quit, 1;
-OnBlueQuit: callsub L_Quit, 2;
+OnRedQuit:  callsub L_Quit, .red_score;
+OnBlueQuit: callsub L_Quit, .blue_score;
 L_Quit:
-	.score[ getarg(0) ]--;
-	bg_updatescore "guild_vs3", .score[1], .score[2];
+	set getarg(0), getarg(0) -1;
+	bg_updatescore "guild_vs3", .red_score, .blue_score;
 	percentheal 100, 100;
-	while ( getd( ".team"+ getarg(0) +"aid["+ .@i +"]" ) != getcharid(3) && .@i < getd(".team"+ getarg(0) +"count") ) .@i++;
-	deletearray getd( ".team"+ getarg(0) +"aid["+ .@i +"]" ), 1;
-	setd ".team"+ getarg(0) +"count", getd(".team"+ getarg(0) +"count") -1;
-	if ( !.score[ getarg(0) ] )
+	if ( !getarg(0) )
 		awake strnpcinfo(0);
 	end;
 }
@@ -116,6 +108,7 @@ OnStart:
 	end;
 }
 
+guild_vs3	mapflag	gvg	off
 guild_vs3	mapflag	battleground	2
 guild_vs3	mapflag	nosave	SavePoint
 guild_vs3	mapflag	nowarp

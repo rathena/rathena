@@ -427,7 +427,7 @@ moscovia,223,191,3	script	Kafra Employee::kaf_mosk	114,{
 	cutin "kafra_04",2;
 	callfunc "F_Kafra",0,3,0,80,700;
 	savepoint "moscovia",221,194,1,1;
-	callfunc "F_KafEnd",0,3,"in the city of Moscovia";
+	callfunc "F_KafEnd",0,1,"in the city of Moscovia";
 }
 
 // Amatsu
@@ -628,7 +628,7 @@ prt_fild05,290,224,3	script	Kafra Employee::prt_fild05	114,{
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,1,1,40,0;
 	savepoint "prt_fild05",274,243,1,1;
-	callfunc "F_KafEnd",0,1, "at the Prontera Culverts";
+	callfunc "F_KafEnd",0,1,"at the Prontera Culverts";
 }
 
 // - Coal Mine (Dead Pitt)
@@ -657,7 +657,7 @@ moc_ruins,59,157,5	script	Kafra Employee::moc_ruins	114,{
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,2,1,90,1200;
 	savepoint "moc_ruins",41,141,1,1;
-	callfunc "F_KafEnd",0,1," at the Pyramids";
+	callfunc "F_KafEnd",0,1,"at the Pyramids";
 }
 
 // - Orc Dungeon
@@ -685,5 +685,5 @@ alb2trea,59,69,5	script	Kafra Employee::kaf_alb2trea	117,{
 	mes "How may I assist you?";
 	callfunc "F_Kafra",5,2,1,50,0;
 	savepoint "alb2trea",92,64,1,1;
-	callfunc "F_KafEnd",0,1,0,"at Sunken Ship";
+	callfunc "F_KafEnd",0,1,"at Sunken Ship";
 }

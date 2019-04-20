@@ -1,25 +1,25 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "itemdb.hpp"
 
 #include <stdlib.h>
 
-#include "../common/nullpo.h"
-#include "../common/malloc.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/malloc.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp" // struct battle_config
 #include "cashshop.hpp"
-#include "intif.hpp"
-#include "pc.hpp"
-#include "status.hpp"
 #include "clif.hpp"
+#include "intif.hpp"
 #include "log.hpp"
 #include "mob.hpp"
+#include "pc.hpp"
+#include "status.hpp"
 
 static DBMap *itemdb; /// Item DB
 static DBMap *itemdb_combo; /// Item Combo DB
@@ -51,6 +51,7 @@ struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
 
 /**
  * Check if an item exists in a group
+ * @param group_id: Item Group ID
  * @param nameid: Item to check for in group
  * @return True if item is in group, else false
  */
@@ -68,6 +69,30 @@ bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid)
 				return true;
 	}
 	return false;
+}
+
+/**
+ * Check if an item exists from a group in a player's inventory
+ * @param group_id: Item Group ID
+ * @return Item's index if found or -1 otherwise
+ */
+int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id)
+{
+	struct s_item_group_db *group = (struct s_item_group_db *)uidb_get(itemdb_group, group_id);
+
+	if (!group)
+		return -1;
+
+	for (int i = 0; i < MAX_ITEMGROUP_RANDGROUP; i++) {
+		for (int j = 0; j < group->random[i].data_qty; j++) {
+			int16 item_position = pc_search_inventory(sd, group->random[i].data[j].nameid);
+
+			if (item_position != -1)
+				return item_position;
+		}
+	}
+
+	return -1;
 }
 
 /**
@@ -114,6 +139,10 @@ static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
 struct item_data* itemdb_searchname(const char *str)
 {
 	return itemdb_searchname1(str, false);
+}
+
+struct item_data* itemdb_search_aegisname( const char *str ){
+	return itemdb_searchname1( str, true );
 }
 
 /**
@@ -633,6 +662,11 @@ static bool itemdb_read_group(char* str[], int columns, int current) {
 		}
 	}
 
+	if( columns < 3 ){
+		ShowError("itemdb_read_group: Insufficient columns (found %d, need at least 3).\n", columns);
+		return false;
+	}
+
 	// Checking sub group
 	prob = atoi(str[2]);
 
@@ -909,12 +943,12 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 */
 static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	unsigned short nameid = atoi(fields[0]);
-	uint8 flag;
+	uint16 flag;
 	bool set;
 	struct item_data *id;
 
 	if (!(id = itemdb_exists(nameid))) {
-		ShowError("itemdb_read_flag: Invalid item item with id %hu\n", nameid);
+		ShowError("itemdb_read_flag: Invalid item id %hu\n", nameid);
 		return true;
 	}
 	
@@ -927,6 +961,20 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 	if (flag&8) id->flag.bindOnEquip = true;
 	if (flag&16) id->flag.broadcast = 1;
 	if (flag&32) id->flag.delay_consume = 2;
+
+	if( flag & 64 ){
+		id->flag.dropEffect = 1;
+	}else if( flag & 128 ){
+		id->flag.dropEffect = 2;
+	}else if( flag & 256 ){
+		id->flag.dropEffect = 3;
+	}else if( flag & 512 ){
+		id->flag.dropEffect = 4;
+	}else if( flag & 1024 ){
+		id->flag.dropEffect = 5;
+	}else if( flag & 2048 ){
+		id->flag.dropEffect = 6;
+	}
 
 	return true;
 }
@@ -1076,7 +1124,7 @@ static void itemdb_read_combos(const char* basedir, bool silent) {
 	}
 	fclose(fp);
 
-	ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n",count,path);
+	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n",count,path);
 
 	return;
 }
@@ -1115,7 +1163,7 @@ bool itemdb_parse_roulette_db(void)
 				ShowWarning("itemdb_parse_roulette_db: Unknown item ID '%hu' in level '%d'\n", item_id, level);
 				continue;
 			}
-			if (amount < 1) {
+			if (amount < 1 || amount > MAX_AMOUNT){
 				ShowWarning("itemdb_parse_roulette_db: Unsupported amount '%hu' for item ID '%hu' in level '%d'\n", amount, item_id, level);
 				continue;
 			}
@@ -1170,7 +1218,7 @@ bool itemdb_parse_roulette_db(void)
 		}
 	}
 
-	ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, roulette_table);
+	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, roulette_table);
 
 	return true;
 }
@@ -1419,6 +1467,12 @@ static int itemdb_readdb(void){
 				continue;
 			memset(str, 0, sizeof(str));
 
+			p = strstr(line,"//");
+
+			if( p != nullptr ){
+				*p = '\0';
+			}
+
 			p = line;
 			while( ISSPACE(*p) )
 				++p;
@@ -1446,14 +1500,14 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[19] = p;
+			str[19] = p + 1;
 			p = strstr(p+1,"},");
 			if( p == NULL )
 			{
 				ShowError("itemdb_readdb: Invalid format (Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			p[1] = '\0';
+			*p = '\0';
 			p += 2;
 
 			// OnEquip_Script
@@ -1462,14 +1516,14 @@ static int itemdb_readdb(void){
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			str[20] = p;
+			str[20] = p + 1;
 			p = strstr(p+1,"},");
 			if( p == NULL )
 			{
 				ShowError("itemdb_readdb: Invalid format (OnEquip_Script column) in line %d of \"%s\" (item with id %d), skipping.\n", lines, path, atoi(str[0]));
 				continue;
 			}
-			p[1] = '\0';
+			*p = '\0';
 			p += 2;
 
 			// OnUnequip_Script (last column)
@@ -1479,16 +1533,19 @@ static int itemdb_readdb(void){
 				continue;
 			}
 			str[21] = p;
+			p = &str[21][strlen(str[21]) - 2];
 
-			if ( str[21][strlen(str[21])-2] != '}' ) {
+			if ( *p != '}' ) {
 				/* lets count to ensure it's not something silly e.g. a extra space at line ending */
 				int v, lcurly = 0, rcurly = 0;
 
 				for( v = 0; v < strlen(str[21]); v++ ) {
 					if( str[21][v] == '{' )
 						lcurly++;
-					else if ( str[21][v] == '}' )
+					else if (str[21][v] == '}') {
 						rcurly++;
+						p = &str[21][v];
+					}
 				}
 
 				if( lcurly != rcurly ) {
@@ -1496,8 +1553,10 @@ static int itemdb_readdb(void){
 					continue;
 				}
 			}
+			str[21] = str[21] + 1;  //skip the first left curly
+			*p = '\0';              //null the last right curly
 
-			if (!itemdb_parse_dbrow(str, path, lines, 0))
+			if (!itemdb_parse_dbrow(str, path, lines, SCRIPT_IGNORE_EXTERNAL_BRACKETS))
 				continue;
 
 			count++;
@@ -1505,7 +1564,7 @@ static int itemdb_readdb(void){
 
 		fclose(fp);
 
-		ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, path);
+		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, path);
 	}
 
 	return 0;
@@ -1551,7 +1610,7 @@ static int itemdb_read_sqldb(void) {
 		// free the query result
 		Sql_FreeResult(mmysql_handle);
 
-		ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, item_db_name[fi]);
+		ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, item_db_name[fi]);
 	}
 
 	return 0;
@@ -1565,12 +1624,15 @@ static int itemdb_read_sqldb(void) {
 bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 	if (!id->flag.no_equip)
 		return false;
-	if ((!map_flag_vs2(m) && id->flag.no_equip&1) || // Normal
-		(map[m].flag.pvp && id->flag.no_equip&2) || // PVP
-		(map_flag_gvg2_no_te(m) && id->flag.no_equip&4) || // GVG
-		(map[m].flag.battleground && id->flag.no_equip&8) || // Battleground
-		(map_flag_gvg2_te(m) && id->flag.no_equip&16) || // WOE:TE
-		(map[m].flag.restricted && id->flag.no_equip&(8*map[m].zone)) // Zone restriction
+	
+	struct map_data *mapdata = map_getmapdata(m);
+
+	if ((id->flag.no_equip&1 && !mapdata_flag_vs2(mapdata)) || // Normal
+		(id->flag.no_equip&2 && mapdata->flag[MF_PVP]) || // PVP
+		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
+		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
+		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
+		(id->flag.no_equip&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return true;
 	return false;
@@ -1689,7 +1751,7 @@ static bool itemdb_read_randomopt(const char* basedir, bool silent) {
 	}
 	fclose(fp);
 
-	ShowStatus("Done reading '" CL_WHITE "%lu" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, path);
+	ShowStatus("Done reading '" CL_WHITE "%u" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'.\n", count, path);
 
 	return true;
 }
@@ -1941,21 +2003,21 @@ void itemdb_reload(void) {
 	iter = mapit_geteachpc();
 	for( sd = (struct map_session_data*)mapit_first(iter); mapit_exists(iter); sd = (struct map_session_data*)mapit_next(iter) ) {
 		memset(sd->item_delay, 0, sizeof(sd->item_delay));  // reset item delays
-		pc_setinventorydata(sd);
-		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
-		/* clear combo bonuses */
-		if( sd->combos.count ) {
+
+		if( sd->combos.count ) { // clear combo bonuses
 			aFree(sd->combos.bonus);
 			aFree(sd->combos.id);
 			aFree(sd->combos.pos);
-			sd->combos.bonus = NULL;
-			sd->combos.id = NULL;
-			sd->combos.pos = NULL;
+			sd->combos.bonus = nullptr;
+			sd->combos.id = nullptr;
+			sd->combos.pos = nullptr;
 			sd->combos.count = 0;
-			if( pc_load_combo(sd) > 0 )
-				status_calc_pc(sd, SCO_FORCE);
 		}
 
+		pc_setinventorydata(sd);
+		pc_check_available_item(sd, ITMCHK_ALL); // Check for invalid(ated) items.
+		pc_load_combo(sd); // Check to see if new combos are available
+		status_calc_pc(sd, SCO_FORCE); // 
 	}
 	mapit_free(iter);
 }

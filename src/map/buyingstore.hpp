@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _BUYINGSTORE_HPP_
-#define _BUYINGSTORE_HPP_
+#ifndef BUYINGSTORE_HPP
+#define BUYINGSTORE_HPP
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 #include "map.hpp" //MESSAGE_SIZE
 
@@ -69,4 +69,4 @@ void do_init_buyingstore(void);
 void do_init_buyingstore_autotrade( void );
 void buyingstore_reopen( struct map_session_data* sd );
 
-#endif  // _BUYINGSTORE_HPP_
+#endif /* BUYINGSTORE_HPP */

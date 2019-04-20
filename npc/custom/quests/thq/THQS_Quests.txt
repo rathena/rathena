@@ -50,7 +50,7 @@ N_QuestStart:
 		mes "Weren't you supposed to deliver me a box? Where is it?";
 		close;
 	}
-	mes "Ahh, you must be from the Treasure Hunter Agensy. Do you have my bow??";
+	mes "Ahh, you must be from the Treasure Hunter Agency. Do you have my bow??";
 	mes " ";
 	mes "Ahh, good,thank you for your time. Take this Treasure Token.";
 	delitem 1072,1;
@@ -64,7 +64,7 @@ prt_fild06,37,192,6	script	Farmer	125,{
 	if (one_qset == 3 && countitem(909) > 19 && countitem(955) > 19 && countitem(914) > 19 && countitem(705) > 19) goto N_QuestComp;
 	if (one_qset==3) goto N_QuestStart;
 	mes "[Billy-Bob]";
-	mes "Arrrg!... Those Bastard Bugs have eaten everything, this place donest even look like my farm anymore!!";
+	mes "Arrrg!... Those Bastard Bugs have eaten everything, this place doesn't even look like my farm anymore!!";
 	close;
 N_QuestComp:
 	mes "[Billy-Bob]";
@@ -82,8 +82,8 @@ N_QuestComp:
 	close;
 N_QuestStart:
 	mes "[Billy-Bob]";
-	mes "Those Bastard Bugs are Everywere!!!";
-	mes "You must be from the guild! OK, bring me 20 Worm Peelings, 20 Jellopys, 20 fluff and 20 Clovers.";
+	mes "Those Bastard Bugs are Everywhere!!!";
+	mes "You must be from the guild! OK, bring me 20 Worm Peelings, 20 Jellopies, 20 fluff and 20 Clovers.";
 	close;
 }
 //1-4
@@ -108,7 +108,7 @@ N_QuestStart:
 	mes "[Old Lady]";
 	mes "So your the one that has come to help me?";
 	mes " ";
-	mes "Ok well this is what I wanted you to do,this greave beside me is my husbands grave and I promised him that I would bury some Mementos with him, The problem is that I have no Mementos...";
+	mes "Ok well this is what I wanted you to do, this greave beside me is my husbands grave and I promised him that I would bury some Mementos with him, The problem is that I have no Mementos...";
 	next;
 	mes "[Old Lady]";
 	mes "Bring me 15 Mementos, please.";
@@ -132,7 +132,7 @@ N_QuestComp:
 	mes " ";
 	mes "Sorry to inform you but you have been evicted, please move out within 3-5 days.";
 	mes " ";
-	mes "-Managment";
+	mes "-Management";
 	next;
 	mes "[Erika]";
 	mes "Oh... um... Well fuck, that bastard thinks he can kick me out!!!!! He's got another thing coming!";
@@ -193,7 +193,7 @@ N_QuestComp:
 N_QuestStart:
 	mes "[Lenith]";
 	mes "Hello, my name is Lenith and I have a quest for you.";
-	mes "Well resently a bunch of stupid bears stole the supers off all my bee's nests...Stupid bears.";
+	mes "Well recently a bunch of stupid bears stole the supers off all my bee's nests...Stupid bears.";
 	mes " ";
 	mes "What I need you to do is find me some more honey so these bee's can get through the winter. I will need about 20 Honey.";
 	close;
@@ -219,7 +219,7 @@ N_QuestComp:
 N_QuestStart:
 	mes "[Molly]";
 	mes "Wow you must be the brave man from the treasure hunter guild!";
-	mes "Ok here is whats happening, I don't know what started it but there is a strange Ronan Skeleton running aroung the woods 2 East from here.";
+	mes "Ok here is whats happening, I don't know what started it but there is a strange Ronan Skeleton running around the woods 2 East from here.";
 	next;
 	mes "[Molly]";
 	mes "We have try to kill him in the past but it was not...ummm...It was a bad idea. What I want you to do is go there and bring me back his Skull as proof of you killing him.";
@@ -266,7 +266,7 @@ yuno_fild01,186,162,6	script	Flank	73,{
 	close;
 N_QuestComp:
 	mes "[Flank]";
-	mes "Perfect right on time, now I must be going to plant this bomb.... Err I meen give this package to my mother for her birthday.";
+	mes "Perfect right on time, now I must be going to plant this bomb.... Err I mean give this package to my mother for her birthday.";
 	next;
 	mes "[Flank]";
 	mes "Thanks";
@@ -283,24 +283,24 @@ N_QuestStart:
 	close;
 }
 //3-3 Goes to 7-3 using callfunc
-prt_sewb1,120,245,6	script	Sewer Managment Knight	705,{
+prt_sewb1,120,245,6	script	Sewer Management Knight	705,{
 	if (three_qset == 3 && countitem(955) > 149) goto N_QuestComp;
 	if (three_qset == 3) goto N_QuestStart;
 	if (seven_qset == 3) goto N_QuestStart2;
-	mes "[Sewer Managmant]";
+	mes "[Sewer Management]";
 	mes "Live dosent get any worse for me,working in the bug filled Culvert every day...";
 	close;
 N_QuestComp:
-	mes "[Sewer Managment]";
+	mes "[Sewer Management]";
 	mes "Well that looked like it was no trouble for you.";
-	mes "Thanks have these 4 Treause Tokens.";
+	mes "Thanks have these 4 Treasure Tokens.";
 	delitem 955,150;
 	set #Treasure_Token,#Treasure_Token+4;
 	set three_qset,0;
 	set On_Quest,0;
 	close;
 N_QuestStart:
-	mes "[Sewer Managmant]";
+	mes "[Sewer Management]";
 	mes "For a while now we have had monster, mostly bugs infesting the culvert...";
 	mes " ";
 	mes "What I want you to do is kinda clean some of it out, every little bit counts.";
@@ -320,7 +320,7 @@ mjolnir_02,87,357,6	script	Man#01	51,{
 N_QuestComp:
 	mes "[Rudolfo]";
 	mes "Well its good to see that you have come back alive.";
-	mes "I had my doughts but thank you for your help.";
+	mes "I had my doubts but thank you for your help.";
 	mes " ";
 	mes "Here have these 4 Treasure Tokens.";
 	delitem 1041,50;
@@ -332,7 +332,7 @@ N_QuestStart:
 	mes "[Rudolfo]";
 	mes "Hello, you must be from the Treasure Hunter Guild.";
 	mes " ";
-	mes "They must have filled you in on what is happening on the lower levels of this Coal Mine, I know its desturbing and we are still trying to figure out why and how 2 Evil Druids got down there.";
+	mes "They must have filled you in on what is happening on the lower levels of this Coal Mine, I know its disturbing and we are still trying to figure out why and how 2 Evil Druids got down there.";
 	mes " ";
 	mes "Well what I want you to do is bring me 50 Lantern's as proof that you have cleaned some of them out, any loot you find down there you may keep other then what I have asked you to get for me.";
 	close;
@@ -343,7 +343,7 @@ pay_arche,45,138,6	script	Flora	724,{
 	if (four_qset == 1 && countitem(957) > 49) goto N_QuestComp;
 	if (four_qset == 1) goto N_QuestStart;
 	mes "[Flora]";
-	mes "Well hello be carfull in the cave, we have heard reports of Undead monster funning around.";
+	mes "Well hello be careful in the cave, we have heard reports of Undead monster funning around.";
 	close;
 N_QuestComp:
 	mes "[Flora]";
@@ -359,9 +359,9 @@ N_QuestStart:
 	mes "[Flora]";
 	mes "Well hello there.";
 	mes " ";
-	mes "Well this is what I need you to do, bring me 50 Decayed Nails - awile back Payon Cave used to be a safe place to go...But now things have gone out of controll and Zombies have invaded the first floor...";
+	mes "Well this is what I need you to do, bring me 50 Decayed Nails - a while back Payon Cave used to be a safe place to go...But now things have gone out of control and Zombies have invaded the first floor...";
 	mes " ";
-	mes "There is also these new monsters that have just poped out of no were, we call them Flaming Bastards...Be carfull if you arn't powerfull yet because they are very strong.";
+	mes "There is also these new monsters that have just popped out of no were, we call them Flaming Bastards...Be careful if you aren't powerful yet because they are very strong.";
 	next;
 	mes "[Flora]";
 	mes "Good Luck";
@@ -383,10 +383,10 @@ N_QuestComp:
 	mes "[Zed]";
 	mes "Dear god took you long enough you bastard!";
 	mes "You know how much my time is worth!!!!";
-	mes "Your slow and I'm never gona recomend a job for you, Gimmie my staff and get out of me face!";
+	mes "Your slow and I'm never gonna recommend a job for you, Gimmie my staff and get out of me face!";
 	next;
 	mes "[Zed]";
-	mes "Well you can take this crapy Treausre Token.";
+	mes "Well you can take this crappy Treasure Token.";
 	delitem 1999,1;
 	set On_Quest,0;
 	set four_qset,0;
@@ -479,7 +479,7 @@ N_QuestStart:
 	mes "Well hello.";
 	mes "Welcome to the Forest Maze, I have a task for you.";
 	mes " ";
-	mes "Ever heard of a moster called a Savage? It looks like a boar but it makes very annoying noices.";
+	mes "Ever heard of a monster called a Savage? It looks like a boar but it makes very annoying noises.";
 	mes "What I want you to do is bring me 15 Manes from the savages.";
 	close;
 }
@@ -512,26 +512,26 @@ N_QuestStart2:
 	callfunc "six_qset2";
 }
 //5-3;
-geffen,57,130,6	script	Blonde Girl	724,{
+geffen,57,130,6	script	Blond Girl	724,{
 	if (five_qset == 3 && countitem(744) > 0) goto N_QuestComp;
 	if (five_qset == 3) goto N_QuestStart;
-	mes "[Blonde Girl]";
+	mes "[Blond Girl]";
 	mes "I wonder what happened to my flowers";
 	close;
 N_QuestComp:
-	mes "[Blonde Girl]";
+	mes "[Blond Girl]";
 	mes "Oh are these my flower! To bad I don't want them anymore...";
 	mes " ";
 	mes "You can keep them is you want.";
 	next;
-	mes "[Blonde Girl]";
+	mes "[Blond Girl]";
 	mes "Here take this Treasure Token as a reward.";
 	set five_qset,0;
 	set On_Quest,0;
 	set #Treasure_Token,#Treasure_Token+1;
 	close;
 N_QuestStart:
-	mes "[Blonde Girl]";
+	mes "[Blond Girl]";
 	mes "Hello, did you bring me flowers!?!";
 	close;
 }
@@ -555,9 +555,9 @@ N_QuestComp:
 	close;
 N_QuestStart:
 	mes "[Wizard]";
-	mes "Hello, the reason why I brought you here was because of a long time ago I made a friend, which happened to be a Whipser.";
+	mes "Hello, the reason why I brought you here was because of a long time ago I made a friend, which happened to be a Whisper.";
 	mes "He told me that he was always bullied by the other ghosts down there and I haven't seen him in a while.";
-	mes "Thinking of the worse case here, I want vengance!";
+	mes "Thinking of the worse case here, I want vengeance!";
 	mes " ";
 	mes "Bring me 50 Fabrics!";
 	close;
@@ -568,7 +568,7 @@ moc_prydb1,47,132,6	script	Thief	48,{
 	if (six_qset == 1 && countitem(1083) > 0) goto N_QuestComp;
 	if (six_qset == 1) goto N_QuestStart;
 	mes "[Thief]";
-	mes "Welcome to the Thiefs Guild.";
+	mes "Welcome to the Thieves Guild.";
 	close;
 N_QuestComp:
 	mes "[Thief]";
@@ -591,8 +591,8 @@ function	script	six_qset2	{
 	if (six_qset == 2 && countitem(930) > 29) goto N_QuestComp2;
 	mes "[Strange Man]";
 	mes "Another quest for you I have.";
-	mes "Futher into the pyramid you must go.";
-	mes "Fighting Mummys is future for you.";
+	mes "Further into the pyramid you must go.";
+	mes "Fighting Mummies is future for you.";
 	mes " ";
 	mes "Bring back for me their wrappings you must.";
 	mes "It is 30 Rotten bandages I desire.";
@@ -637,7 +637,7 @@ gef_tower,52,87,6	script	Wizard#02	735,{
 	if (six_qset == 4 && countitem(944) > 19) goto N_QuestComp;
 	if (six_qset == 4) goto N_QuestStart;
 	mes "[Zuuzuu]";
-	mes "Hello, welcome to geffen tower.";
+	mes "Hello, welcome to Geffen tower.";
 	close;
 N_QuestComp:
 	mes "[Wizard]";
@@ -651,14 +651,14 @@ N_QuestComp:
 	next;
 	mes "[Zuuzuu]";
 	mes "Oh dear god!!!";
-	mes "One of those evil mosters has followed you up here, Kill it, Kill it!!!";
+	mes "One of those evil monsters has followed you up here, Kill it, Kill it!!!";
 	next;
 	monster "gef_tower",42,89,"Evil Nightmare",1061,1;
 	close;
 N_QuestStart:
 	mes "[Zuuzuu]";
 	mes "Hello, the reason I sent for a young adventurer was because of the problems we are having under the tower.";
-	mes "There seem to be more ghosts day after day down there. What I need you to do is go down there and find these mosters we call Nightmares.";
+	mes "There seem to be more ghosts day after day down there. What I need you to do is go down there and find these monsters we call Nightmares.";
 	mes " ";
 	mes "You must slay them and bring me 20 of there horse shoes.";
 	close;
@@ -717,16 +717,16 @@ N_QuestStart:
 //7-3
 function	script	seven_qset-3	{
 	if (seven_qset == 3 && countitem(969) > 0) goto N_QuestComp2;
-	mes "[Sewer Managment]";
-	mes "Well there have been reports of a Golden Thief Bug running around the bottem on the Culvert";
+	mes "[Sewer Management]";
+	mes "Well there have been reports of a Golden Thief Bug running around the bottom on the Culvert";
 	mes " ";
 	mes "Bring me 1 Gold Bar from him.";
 	close;
 N_QuestComp2:
-	mes "[Sewer Managment]";
+	mes "[Sewer Management]";
 	mes "Thank you for helping me.";
 	next;
-	mes "[Sewer Managment]";
+	mes "[Sewer Management]";
 	mes "Here take these 4 Treasure Tokens.";
 	delitem 969,1;
 	set seven_qset,0;
@@ -754,7 +754,7 @@ N_QuestComp:
 	close;
 N_QuestStart:
 	mes "[Scarlet]";
-	mes "Good your here. Ok there are reports of an old captain named Drake abored this ship. Kill Him!";
+	mes "Good your here. Ok there are reports of an old captain named Drake aborted this ship. Kill Him!";
 	mes " ";
 	mes "Bring me his Saber as proof!";
 	close;
@@ -824,7 +824,7 @@ N_QuestComp:
 N_QuestStart:
 	mes "[Zack]";
 	mes "Hello,the reason why I brought you here was because of a very strange monster known as Baphomet.";
-	mes "People say that Baphomet guilds the gate to the under-world but I don't belive them, Kill Baphomet!";
+	mes "People say that Baphomet guilds the gate to the under-world but I don't believe them, Kill Baphomet!";
 	mes " ";
 	mes "Bring me his Evil Horn!";
 	close;
@@ -864,7 +864,7 @@ geffen_in,168,124,6	script	Mage	48,{
 	close;
 N_QuestComp:
 	mes "[Mage]";
-	mes "Thank you for this delivery. Sorry about the smell, Its a box of Toad Tounges";
+	mes "Thank you for this delivery. Sorry about the smell, Its a box of Toad Tongues";
 	next;
 	mes "[Mage]";
 	mes "Here take this Treasure Token as a reward.";
@@ -875,7 +875,7 @@ N_QuestComp:
 	close;
 N_QuestStart:
 	mes "[Mage]";
-	mes "Hello "+strcharinfo(0)+", Where is my box of Toad Tounges?.";
+	mes "Hello "+strcharinfo(0)+", Where is my box of Toad Tongues?.";
 	close;
 }
 //9-2;
@@ -927,7 +927,7 @@ N_QuestComp:
 	close;
 N_QuestStart:
 	mes "[Jack]";
-	mes "Well I don't know much about this, it has to do with the deepest reagions of Payon Cave. We don't know much because no one ever seems to make it back alive. We suspect a monster we call the Moonlight Flower";
+	mes "Well I don't know much about this, it has to do with the deepest regions of Payon Cave. We don't know much because no one ever seems to make it back alive. We suspect a monster we call the Moonlight Flower";
 	mes " ";
 	mes "Bring me back 1 Nine Tales!";
 	close;
@@ -935,7 +935,7 @@ N_QuestStart2:
 //9-4
 	if (nine_qset == 4 && countitem(901) > 39) goto N_QuestComp2;
 	mes "[Jack]";
-	mes "Hello, we need you to investigate some crap in the 3rd level of payon.";
+	mes "Hello, we need you to investigate some crap in the 3rd level of Payon.";
 	mes " ";
 	mes "Bring me back 40 Daenggie's.";
 	close;
@@ -995,7 +995,7 @@ N_QuestComp:
 	close;
 N_QuestStart:
 	mes "[Man]";
-	mes "Tony the Tiger is on Crack! He must be stoped, KILL HIM!";
+	mes "Tony the Tiger is on Crack! He must be stopped, KILL HIM!";
 	mes " ";
 	mes "Bring me back 1 Tiger's_Skin!";
 	close;
@@ -1020,9 +1020,9 @@ N_QuestComp:
 	close;
 N_QuestStart:
 	mes "[Caral]";
-	mes "Phreeoni the Pink Fluff is terrorizing little novices! He must be stoped, KILL HIM!";
+	mes "Phreeoni the Pink Fluff is terrorizing little novices! He must be stopped, KILL HIM!";
 	mes " ";
-	mes "Bring me back 1 Tounge!";
+	mes "Bring me back 1 Tongue!";
 	close;
 }
 //10-4

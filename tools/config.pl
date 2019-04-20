@@ -342,11 +342,17 @@ sub ApplyLoginConf { my ($rhUserConf,$sCurfile) = @_;
 sub ApplyInterConf { my ($rhUserConf,$sCurfile) = @_;
     open FILE, "> $sCurfile" || die "Couldn't open file '$sCurfile'.\n";
 
-    print FILE "sql.db_hostname: " . $$rhUserConf{SQL_HOST}."\n";
-    print FILE "sql.db_port: " . $$rhUserConf{SQL_PORT}."\n";
-    print FILE "sql.db_username: " . $$rhUserConf{SQL_UID}."\n";
-    print FILE "sql.db_password: " . $$rhUserConf{SQL_PW}."\n";
-    print FILE "sql.db_database: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
+    print FILE "login_server_ip: " . $$rhUserConf{SQL_HOST}."\n";
+    print FILE "login_server_port: " . $$rhUserConf{SQL_PORT}."\n";
+    print FILE "login_server_id: " . $$rhUserConf{SQL_UID}."\n";
+    print FILE "login_server_pw: " . $$rhUserConf{SQL_PW}."\n";
+    print FILE "login_server_db: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
+
+    print FILE "ipban_db_ip: " . $$rhUserConf{SQL_HOST}."\n";
+    print FILE "ipban_db_port: " . $$rhUserConf{SQL_PORT}."\n";
+    print FILE "ipban_db_id: " . $$rhUserConf{SQL_UID}."\n";
+    print FILE "ipban_db_pw: " . $$rhUserConf{SQL_PW}."\n";
+    print FILE "ipban_db_db: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
 
     print FILE "char_server_ip: " . $$rhUserConf{SQL_HOST}."\n";
     print FILE "char_server_port: " . $$rhUserConf{SQL_PORT}."\n";
@@ -354,13 +360,12 @@ sub ApplyInterConf { my ($rhUserConf,$sCurfile) = @_;
     print FILE "char_server_pw: " . $$rhUserConf{SQL_PW}."\n";
     print FILE "char_server_db: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
 
-    print FILE "sql.map_server_ip: " . $$rhUserConf{SQL_HOST}."\n";
-    print FILE "sql.map_server_port: " . $$rhUserConf{SQL_PORT}."\n";
+    print FILE "map_server_ip: " . $$rhUserConf{SQL_HOST}."\n";
+    print FILE "map_server_port: " . $$rhUserConf{SQL_PORT}."\n";
     print FILE "map_server_id: " . $$rhUserConf{SQL_UID}."\n";
     print FILE "map_server_pw: " . $$rhUserConf{SQL_PW}."\n";
     print FILE "map_server_db: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
 
-    #todo may we want 2 schema ??
     print FILE "log_db_ip: " . $$rhUserConf{SQL_HOST} ."\n";
     print FILE "log_db_port: " . $$rhUserConf{SQL_PORT}."\n";
     print FILE "log_db_id: " . $$rhUserConf{SQL_UID}."\n";

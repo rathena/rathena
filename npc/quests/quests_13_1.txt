@@ -28,6 +28,7 @@
 //= 3.3a Added Izlude RE coordinates. [Euphy]
 //= 3.4 Added GM management function and NPC. [Euphy]
 //= 3.5 Updated turn-in requirements for Tripatriate Union's Feud. [Euphy]
+//= 3.6 Renewal script update for ep16.1 [Capuche]
 //============================================================ 
 
 // Onward to the New World :: ep13_gogo
@@ -87,7 +88,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 	end;
 }
 
-prt_castle,121,51,3	script	Alliance Manager#prt	752,{
+-	script	Alliance Manager#prt_	-1,{
 	if (ep13_ryu == 13) {
 		mes "[Alliance Manager]";
 		mes "If we'd had the initiative over Schwartzvald, we could take advantage over them! But we lost the opportunity.";
@@ -173,7 +174,7 @@ prt_castle,121,51,3	script	Alliance Manager#prt	752,{
 	close;
 }
 
-prt_castle,117,51,5	script	Member of Alliance#prt	754,{
+-	script	Member of Alliance#prt_	-1,{
 	if ((ep13_ryu == 12) || (ep13_ryu == 13)) {
 		mes "[Member of Alliance]";
 		mes "If we have absolute power, we wouldn't have to get along with Schwartzvald and Arunafeltz.";
@@ -195,7 +196,7 @@ prt_castle,117,51,5	script	Member of Alliance#prt	754,{
 	close;
 }
 
-prt_castle,83,67,5	script	Recruiter for the Brave	109,{
+-	script	Recruiter for the Brave_	-1,{
 	if (ep13_ryu == 12) {
 		mes "[Recruiter]";
 		mes "Why have you come again?";
@@ -2921,7 +2922,7 @@ mid_campin,106,122,4	script	Receptionist Brink#ep13b	89,{
 	}
 }
 
-mid_camp,264,263,4	script	Diego#ep13bs	931,{
+-	script	Diego#ep13bs_	-1,{
 	if (ep13_newbs < 5) {
 		mes "[Diego]";
 		mes "I'm busy right now!";
@@ -3162,7 +3163,7 @@ mid_campin,295,128,4	script	Lucas#ep13bs	884,{
 			mes "No, just ignore what I said.";
 			mes "......";
 			set ep13_newbs,12;
-			//getitem 12322,1; //Chocolate_Pie
+			getitem 12322,1; //Chocolate_Pie
 			close;
 		case 2:
 			mes "[Lucas]";
@@ -4212,7 +4213,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "I hope you'll make yourself known in Ash Vacuum with your great accomplishments.";
 				set ep13_animal,15;
 				completequest 2157;
-				getexp (checkre(3))?100000:1500000,0;
+				getexp (checkre(3))?100000:150000,0;
 				close;
 			}
 			else {
@@ -4309,7 +4310,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "- You really hope that Rumis will be able to go back home. -";
 				set ep13_animal,100;
 				delitem 6033,1; //Horn_Of_Tendrilion
-				getexp (checkre(3))?50000:1000000,0;
+				getexp (checkre(3))?50000:100000,0;
 				close;
 			}
 			else {
@@ -4945,7 +4946,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 			mes "I'll discuss this more with the expedition management.";
 			mes "Thank you for your valuable information.";
 			completequest 2158;
-			getexp (checkre(3))?90000:900000,0;
+			getexp (checkre(3))?90000:70000,0;
 			close;
 		}
 		else if (checkquest(2158) == -1) {
@@ -4966,7 +4967,7 @@ mid_camp,212,237,5	script	Camp Guard Captain#man1	852,{
 				mes "I'll discuss this more with the expedition management.";
 				mes "Thank you for your valuable information.";
 				completequest 2159;
-				getexp (checkre(3))?90000:900000,0;
+				getexp (checkre(3))?90000:70000,0;
 				close;
 			}
 			else {
@@ -5394,7 +5395,7 @@ OnTouch_:
 			if (checkre(3))
 				getexp 80000,3000;
 			else
-				getexp 300000,10000;
+				getexp 300000,100000;
 			completequest 8210;
 			next;
 			mes "[United Research Official]";
@@ -8887,10 +8888,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "And please take this small reward.";
 		mes "Thank you for your help so far.";
 		next;
-		if (checkre(3))
-			getexp 300000,0;
-		else
-			getexp 2500000,0;
+		getexp (checkre(3))?300000:250000,0;
 		getitem 12110,3; //First_Aid_Kit
 		set ep13_1_edq,14;
 		completequest 3094;
@@ -10134,7 +10132,7 @@ man_fild03,202,251,3	duplicate(Expedition Scout#1)	Expedition Scout#2	707
 spl_fild02,295,368,3	duplicate(Expedition Scout#1)	Expedition Scout#3	707
 spl_fild03,172,71,3	duplicate(Expedition Scout#1)	Expedition Scout#4	707
 
-prt_castle,88,165,3	script	Laur	57,{
+-	script	Laur_	-1,{
 	mes "[Laur]";
 	if (ep13_1_edq == 9 || ep13_1_edq == 111 || ep13_1_edq == 121 || ep13_1_edq == 113 || ep13_1_edq == 123) {
 		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";
@@ -12478,7 +12476,7 @@ OnStop:
 	mapannounce "que_job01", "The security magic in the Master Zone, Area 1 is deactivated.",bc_map,"0x70DBDB";
 	donpcevent "#room1_warp13::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	donpcevent "que_job01#room_1::OnReset";
 	stopnpctimer;
 	end;
@@ -12490,7 +12488,7 @@ OnTimer240000:
 OnTimer245000:
 	donpcevent "#room1_warp13::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	end;
 
 OnTimer250000:

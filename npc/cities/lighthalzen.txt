@@ -202,7 +202,7 @@ lighthalzen,89,73,3	script	Sameer#zen15	854,{
 	mes "of morality. In fact, I have";
 	mes "no need for a woman. All";
 	mes "I need are my ship models,";
-	mes "teen novels and dominos.";
+	mes "teen novels and dominoes.";
 	next;
 	mes "[Sameer]";
 	mes "I'm a completely well";
@@ -450,7 +450,7 @@ lighthalzen,138,50,7	script	Mauro#zen3	847,{
 	mes "[Mauro]";
 	mes "Bah! If it weren't for";
 	mes "us, Lighthalzen wouldn't";
-	mes "be as properous as it is";
+	mes "be as prosperous as it is";
 	mes "today! Those kids don't";
 	mes "know that they owe their";
 	mes "lives of luxury to us...";
@@ -462,7 +462,7 @@ lighthalzen,132,103,5	script	Sefith#li_01	734,{
 	mes "Good looks. Intelligence.";
 	mes "Excellent manners. A strong,";
 	mes "manly chin and overpowering,";
-	mes "piercing eyes. Perfectly balanced passion and charimsma. All the";
+	mes "piercing eyes. Perfectly balanced passion and charisma. All the";
 	mes "good things that ladies want.";
 	next;
 	mes "[Sefith]";
@@ -525,7 +525,7 @@ lhz_in02,34,212,4	script	Maggie#05	91,{
 	mes "amount for the lease and the";
 	mes "laws here won't let me raise";
 	mes "the price of my flowers. Why";
-	mes "are the city officals so greedy?";
+	mes "are the city officials so greedy?";
 	close;
 }
 
@@ -633,7 +633,7 @@ lighthalzen,182,102,3	script	Lucius#zen5	866,{
 	mes "You seem to be fairly";
 	mes "well-off. Money is good";
 	mes "to have, but be careful not";
-	mes "to become obssessed with it.";
+	mes "to become obsessed with it.";
 	next;
 	mes "[Lucius]";
 	mes "When you have the chance,";
@@ -877,7 +877,7 @@ lhz_in02,287,273,3	script	Customer#amano11	50,{
 	mes "[Terry]";
 	mes "Yeah, this is a real cozy";
 	mes "joint. I recommend it to";
-	mes "all you tourists, acutally.";
+	mes "all you tourists, actually.";
 	mes "Now why don't you kick";
 	mes "back and chill with me?";
 	close;
@@ -1499,7 +1499,7 @@ lhz_in01,116,45,7	script	Joshua#aya	704,{
 	mes "complexion and smooth";
 	mes "skin. That's right. Come";
 	mes "right to Joshua, babes.";
-	mes "I got my pheremone spray";
+	mes "I got my pheromone spray";
 	mes "on and I'm ready to cruise~";
 	close;
 }
@@ -1949,7 +1949,7 @@ OnTouch_:
 
 lhz_in01,24,140,3	script	Regenschirm Guard#40	4_M_LGTGUARD,{
 	mes "[Regenschirm Guard]";
-	if (lhz_sincube > 10 && countitem(2657) > 0) {// Lab_Passport
+	if ((MISC_QUEST&512) && countitem(2657) > 0) {// Lab_Passport
 		mes "Do you wish to";
 		mes "go underground?";
 		next;
@@ -2612,7 +2612,7 @@ lighthalzen,176,65,5	script	Kimmy#zen3	862,{
 	mes "beautiful clothing and";
 	mes "accessory shops. This";
 	mes "place is heaven to a";
-	mes "trendsetter like me~!";
+	mes "trend-setter like me~!";
 	next;
 	mes "[Kimmy]";
 	mes "I don't know if you";
@@ -2812,7 +2812,7 @@ lighthalzen,77,203,3	script	Victor Perfecto#zen9	869,{
 	mes "Still, it's pretty";
 	mes "depressing to think";
 	mes "that the beauty of nature";
-	mes "can be manmade and";
+	mes "can be man-made and";
 	mes "equated to zeny, you know?";
 	close;
 }

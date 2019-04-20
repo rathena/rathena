@@ -4,7 +4,7 @@
 //= Collection of Prontera-based quests.
 //= * Culvert Access
 //= * Ph.D Hat Quest
-//= * Gaebolg Family Curse
+//= * Geoborg Family Curse
 //===== Comments: ============================================
 //= Culvert Access:
 //= - [Official Conversion]
@@ -12,7 +12,7 @@
 //= Ph.D Hat Quest:
 //= - [Official Conversion]
 //= - n/a
-//= Gaebolg Family Curse:
+//= Geoborg Family Curse:
 //= - [Official Conversion]
 //= - Variable in use: prt_curse (max 61)
 //===== Changelogs: ==========================================
@@ -22,7 +22,7 @@
 //= 1.3 Removed Duplicates [Silent]
 //= 1.4 Moved Culvert from cities/prontera.txt [Evera]
 //= 1.5 Culvert has been rescripted from the ground up. [L0ne_W0lf]
-//= 1.6 Added Gaebolg Family Curse quest. [L0ne_W0lf]
+//= 1.6 Added Geoborg Family Curse quest. [L0ne_W0lf]
 //= 1.6a Fixed a couple spelling mistakes. [L0ne_W0lf]
 //= 1.7 Updated "Ph.D Quest" Dialogs. [Samuray22]
 //= 1.7b Fixed some minor typos. [SinSloth]
@@ -34,7 +34,7 @@
 //= 2.0b Corrected a Typo error. (bugreport:950) [Samuray22]
 //= 2.1 Added missing checkweights. [L0ne_W0lf]
 //= 2.2 Added Nameless Island quest addition. [L0ne_W0lf]
-//= 2.3 Bamph will now talk to those who failed the Gaebolg quest. [L0ne_W0lf]
+//= 2.3 Bamph will now talk to those who failed the Geoborg quest. [L0ne_W0lf]
 //= 2.3a Touch up to Bamph fo other fail-points. [L0ne_W0lf]
 //= 2.3b Hopefully the last change needed for Nameless quest. [L0ne_W0lf]
 //= 2.4 Updated Headgear Quest. [L0ne_W0lf]
@@ -245,7 +245,7 @@ prt_in,38,108,4	script	Teacher	53,{
 	}
 }
 
-// Gaebolg Family Curse :: prt_curse
+// Geoborg Family Curse :: prt_curse
 //============================================================
 prontera,248,212,3	script	Busy Boy#prt	706,3,3,{
 	callsub S_CheckWeight; //Check Player's weight
@@ -800,7 +800,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "With the return of peace,";
 		mes "the 7 warriors established";
 		mes "the Rune-Midgarts Kingdom,";
-		mes "choosing Tristram Gaebolg III";
+		mes "choosing Tristram Geoborg III";
 		mes "as the kingdom's first ruler. ";
 		next;
 		mes "[Historian]";
@@ -1197,7 +1197,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 		mes "^333333(As a historian, Rodafrian";
 		mes "might be able to help me in";
 		mes "investigating the curse of the";
-		mes "Gaebolgs. The priests told me";
+		mes "Geoborgs. The priests told me";
 		mes "not to tell anybody, though.";
 		mes "Should I take this risk?)^000000";
 		next;
@@ -1230,7 +1230,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 			next;
 			mes "[Historian Rodafrian]";
 			mes "Anyway, your report about";
-			mes "the Gaebolg family will be";
+			mes "the Geoborg family will be";
 			mes "greatly appreciated by the";
 			mes "Rekenber Historical Research";
 			mes "Group. But first, I need to";
@@ -1239,7 +1239,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 			mes "[Historian Rodafrian]";
 			mes "Anyway, keep this information";
 			mes "a secret between me and you";
-			mes "for now. Then, when I reveal the secret curse of the Gaebolg royal";
+			mes "for now. Then, when I reveal the secret curse of the Geoborg royal";
 			mes "family, I'll finally outshine that Karlomoff! Bwahahahahaha!";
 			next;
 			mes "["+strcharinfo(0)+"]";
@@ -2293,7 +2293,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		next;
 		mes "[Father Bamph]";
 		mes "Finally, the first Tristram of";
-		mes "the Gaebolg family defeated";
+		mes "the Geoborg family defeated";
 		mes "Jormungand together with 6";
 		mes "other warriors, but only after";
 		mes "it killed his beloved father.";
@@ -2308,7 +2308,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "[Father Bamph]";
 		mes "To this day...";
 		mes "^FF0000Every first prince of";
-		mes "the Gaebolg family dies";
+		mes "the Geoborg family dies";
 		mes "at a young age^000000. That is";
 		mes "Jormungand's curse and";
 		mes "the royal family's secret.";
@@ -2431,7 +2431,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "Oh, my. I learned the song";
 		mes "when I was a young boy from";
 		mes "my father. However, your version seems to reveal the secret curse";
-		mes "of the Gaebolgs. Please tell me, where did you hear that song?";
+		mes "of the Geoborgs. Please tell me, where did you hear that song?";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Well, I first heard this";
@@ -3010,7 +3010,8 @@ prt_church,184,110,3	script	Father Biscuss	60,{
 		mes "Church, I want to thank";
 		mes "you for all of your help.";
 		set prt_curse,36;
-		completequest 18048;
+		// completequest 18048;
+		completequest 18050;
 		getexp (checkre(3))?90000:1600000,0;
 		close;
 	}
@@ -3071,7 +3072,7 @@ prt_church,16,114,4	script	Father Bamph#tomb	60,{
 	if (prt_curse == 18) {
 		mes "[Father Bamph]";
 		mes "There are the bodies";
-		mes "of the Gaebolg princes";
+		mes "of the Geoborg princes";
 		mes "that were killed during";
 		mes "the exorcism. Please take";
 		mes "a look at the body to the left.";
@@ -3549,13 +3550,13 @@ OnTouch:
 		mes "["+strcharinfo(0)+"]";
 		mes "Long ago, the giant serpent";
 		mes "Jormungand threatened mankind.";
-		mes "7 warriors defeated Jormungand, led by Tristram III of the Gaebolg";
-		mes "family, but Jormungand cursed the Gaebolg bloodline in its defeat.";
+		mes "7 warriors defeated Jormungand, led by Tristram III of the Geoborg";
+		mes "family, but Jormungand cursed the Geoborg bloodline in its defeat.";
 		next;
 		mes "["+strcharinfo(0)+"]";
 		mes "Ever since, the curse kills";
 		mes "the first born prince of the";
-		mes "Gaebolg family at an early age.";
+		mes "Geoborg family at an early age.";
 		mes "However, all of the princes of";
 		mes "this generation were killed.";
 		next;
