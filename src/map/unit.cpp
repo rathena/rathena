@@ -3112,11 +3112,21 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		skill_cleartimerskill(bl);
 	}
 
-	if (bl->type != BL_NPC) {// already handled by npc_remove_map
-		// /BL_MOB is handled by mob_dead unless the monster is not dead.
-		if( bl->type != BL_MOB || !status_isdead(bl) )
-			clif_clearunit_area(bl,clrtype);
-		map_delblock(bl);
+	switch (bl->type) {
+		case BL_NPC:
+			// already handled by npc_remove_map
+			break;
+		case BL_MOB:
+			// /BL_MOB is handled by mob_dead unless the monster is not dead.
+			if (status_isdead(bl) {
+				map_delblock(bl);
+				break;
+			}
+			// Fall through
+		default:
+			clif_clearunit_area(bl, clrtype);
+			map_delblock(bl);
+			break;
 	}
 
 	map_freeblock_unlock();
