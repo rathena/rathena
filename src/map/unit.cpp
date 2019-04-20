@@ -3118,7 +3118,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			break;
 		case BL_MOB:
 			// /BL_MOB is handled by mob_dead unless the monster is not dead.
-			if (status_isdead(bl) {
+			if (status_isdead(bl)) {
 				map_delblock(bl);
 				break;
 			}
