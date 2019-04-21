@@ -11103,11 +11103,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_VACUUM_EXTREME:
 			// Suck target at n second, only if the n second is lower than the duration
 			// Does not suck targets on no-knockback maps
-			if (val4 < tick && unit_blown_immune(bl, 0x1) != UB_NO_KNOCKBACK_MAP) {
+			if (val4 < tick && unit_blown_immune(bl, 0x9) == UB_KNOCKABLE) {
 				t_tickime = val4;
 				val4 = tick - t_tickime;
-			}
-			else
+			} else
 				val4 = 0;
 			break;
 		case SC_FIRE_INSIGNIA:
