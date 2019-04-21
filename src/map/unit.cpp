@@ -1125,6 +1125,7 @@ int unit_blown(struct block_list* bl, int dx, int dy, int count, enum e_skill_bl
  *		0x1 - Offensive (not set: self skill, e.g. Backslide)
  *		0x2 - Knockback type (not set: Stop type, e.g. Ankle Snare)
  *		0x4 - Boss attack
+ *		0x8 - Ignore target player 'special_state.no_knockback'
  * @return reason for immunity
  *		UB_KNOCKABLE - can be knocked back / stopped
  *		UB_NO_KNOCKBACK_MAP - at WOE/BG map
@@ -1153,7 +1154,7 @@ enum e_unit_blown unit_blown_immune(struct block_list* bl, uint8 flag)
 				if( !(flag&0x4) && sd->sc.data[SC_BASILICA] && sd->sc.data[SC_BASILICA]->val4 == sd->bl.id)
 					return UB_TARGET_BASILICA;
 				// Target has special_state.no_knockback (equip)
-				if( (flag&(0x1|0x2)) && sd->special_state.no_knockback )
+				if( (flag&(0x1|0x2)) && !(flag&0x8) && sd->special_state.no_knockback )
 					return UB_TARGET_NO_KNOCKBACK;
 			}
 			break;
