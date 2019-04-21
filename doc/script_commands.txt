@@ -477,7 +477,8 @@ nothing  - A permanent variable attached to the character, the default variable
            ('return .@var;' returns a value, not a reference).
 "'"      - An instance variable.
            These are used with the instancing system and are unique to each
-           instance type.
+           instance type. Can be accessed from inside the instance or by calling
+           'getvariableofinstance'.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -582,8 +583,8 @@ Assigning variables
 
 Variables can be accessed and modified much like in other programming languages.
 
-	@x = 100;
-	@x = @y = 100;
+	.@x = 100;
+	.@x = .@y = 100;
 
 Support for modifying variable values using 'set' is still supported (and required
 to exist for this new method to work) so previous scripts will continue to work.
@@ -591,13 +592,13 @@ to exist for this new method to work) so previous scripts will continue to work.
 When assigning values, all operator methods are supported which exist in the below
 'Operators' section. For instance:
 
-	@x += 100;
-	@x -= 100;
-	@x *= 2;
-	@x /= 2;
-	@x %= 5;
-	@x >>= 2;
-	@x <<= 2;
+	.@x += 100;
+	.@x -= 100;
+	.@x *= 2;
+	.@x /= 2;
+	.@x %= 5;
+	.@x >>= 2;
+	.@x <<= 2;
 
 Will all work. For more information on available operators, see the Operators section
 described below. All operators listed there may be placed in-front of the '=' sign
@@ -631,15 +632,15 @@ Arrays are specifically useful for storing a set of similar data (like several
 item IDs for example) and then looping through it. You can address any array
 variable as if it was a normal variable:
 
-	set @arrayofnumbers[0],1;
+	set .@arrayofnumbers[0],1;
 
 You can also do things like using a variable (or an expression, or even a
 value from another array) to get at an array value:
 
-	set @x,100;
-	set @arrayofnumbers[@x],10;
+	set .@x,100;
+	set .@arrayofnumbers[.@x],10;
 
-This will make @arrayofnumbers[100] equal to 10.
+This will make .@arrayofnumbers[100] equal to 10.
 
 Index numbering always starts with 0 and arrays can hold over 2 billion
 variables. As such, the (guaranteed) allowed values for indices are in the
@@ -651,7 +652,7 @@ to be pretty.
 
 Arrays can naturally store strings:
 
-@menulines$[0] is the 0th element of the @menulines$ array of strings. Notice
+.@menulines$[0] is the 0th element of the .@menulines$ array of strings. Notice
 the '$', normally denoting a string variable, before the square brackets that
 denotes an array index.
 
@@ -697,7 +698,7 @@ Examples:
 
  1 == 1 is True.
  1<2 is True while 1>2 is False.
- @x>2 is True if @x is equal to 3. But it isn't true if @x is 2.
+ .@x>2 is True if .@x is equal to 3. But it isn't true if .@x is 2.
 
 Only ' == ' and '!=' have been tested for comparing strings. Since there's no way
 to code a seriously complex data structure in this language, trying to sort
@@ -754,14 +755,14 @@ Logical bitwise operators work only on numbers, and they are the following:
 		2 = 2^1 (2), so in bits (same size) it would be 0010
 		The & (AND) operator sets bits which are active (1) in both arguments, so in the
 		example 1010 & 0010, only the 2^1 bit is active (1) in both. Resulting in the bit
-		0010, which is 2.
+		0010, which is 2. 
 	- Basic example of creating and using a bit-mask:
-		set @options,2|4|16; //(note: this is the same as 2+4+16, or 22)
-		if (@options & 1)	mes "Option 1 is activated";
-		if (@options & 2) mes "Option 2 is activated";
-		if (@options & 4) mes "Option 3 is activated";
-		if (@options & 8) mes "Option 4 is activated";
-		if (@options & 16) mes "Options 5 is activated";
+		set .@options,2|4|16; //(note: this is the same as 2+4+16, or 22)
+		if (.@options & 1)	mes "Option 1 is activated";
+		if (.@options & 2)	mes "Option 2 is activated";
+		if (.@options & 4)	mes "Option 3 is activated";
+		if (.@options & 8)	mes "Option 4 is activated";
+		if (.@options & 16)	mes "Options 5 is activated";
 	This would return the messages about option 2, 3 and 5 being shown (since we've set
 	the 2,4 and 16 bit to 1).
  ^  - Xor.
@@ -1232,14 +1233,14 @@ other programming language (refer to the "Assigning variables" section).
 This is the most basic script command and is used a lot whenever you try to do
 anything more advanced than just printing text into a message box.
 
-	set @x,100;
+	set .@x,100;
 
-will make @x equal 100.
+will make .@x equal 100.
 
-	set @x,1+5/8+9;
+	set .@x,1+5/8+9;
 
 will compute 1+5/8+9 (which is, surprisingly, 10 - remember, all numbers are
-integer in this language) and make @x equal it.
+integer in this language) and make .@x equal it.
 
 Returns the variable reference (since trunk r12870).
 
@@ -1278,7 +1279,7 @@ This can also be used to set an array dynamically:
 Examples:
 
 	set getd("$varRefence"), 1;
-	set @i, getd("$" + "pikachu");
+	set .@i, getd("$" + "pikachu");
 
 ---------------------------------------
 
@@ -1387,46 +1388,46 @@ with the strings that should go into the menu at this execution, making sure not
 to leave any gaps. Normally, you do it with a loop and an extra counter, like
 this:
 
-	setarray @possiblemenuitems$[0],<list of potential menu items>;
-	@j = 0; // That's the menu lines counter.
+	setarray .@possiblemenuitems$[0],<list of potential menu items>;
+	.@j = 0; // That's the menu lines counter.
 
 	// We loop through the list of possible menu items.
-	// @i is our loop counter.
-	for( @i = 0; @i < getarraysize(@possiblemenuitems$); @i++ )
+	// .@i is our loop counter.
+	for( .@i = 0; .@i < getarraysize(.@possiblemenuitems$); .@i++ )
 	{
 		// That 'condition' is whatever condition that determines whether
-		// a menu item number @i actually goes into the menu or not.
+		// a menu item number .@i actually goes into the menu or not.
 
 		if (<condition>)
 		{
 			// We record the option into the list of options actually available.
 
-			@menulist$[@j] = @possiblemenuitems$[@i];
+			.@menulist$[@j] = .@possiblemenuitems$[@i];
 
 			// We just copied the string, we do need its number for later
 			// though, so we record it as well.
 
-			@menureference[@j] = @i;
+			.@menureference[@j] = .@i;
 
 			// Since we've just added a menu item into the list, we increment
 			// the menu lines counter.
 
-			@j++;
+			.@j++;
 		}
 
 		// We go on to the next possible menu item.
 	}
 
-This will create you an array @menulist$ which contains the text of all items
+This will create you an array .@menulist$ which contains the text of all items
 that should actually go into the menu based on your condition, and an array
-@menureference, which contains their numbers in the list of possible menu items.
+.@menureference, which contains their numbers in the list of possible menu items.
 (Remember, arrays start with 0.) There's less of them than the possible menu
 items you've defined, but the menu command can handle the empty lines - only if
 they are last in the list, and if it's made this way, they are. Now comes a
 dirty trick:
 
 	// X is whatever the most menu items you expect to handle.
-	menu @menulist$[0],-,@menulist$[1],-,....@menulist$[<X>],-;
+	menu .@menulist$[0],-,.@menulist$[1],-,...,.@menulist$[<X>],-;
 
 This calls up a menu of all your items. Since you didn't copy some of the
 possible menu items into the list, its end is empty and so no menu items will
@@ -1441,18 +1442,18 @@ But how do you figure out which option the user picked? Enter the @menu.
 starting with 1 for the first option. You know now which option the user picked
 and which number in your real list of possible menu items it translated to:
 
-    mes "You selected " + @possiblemenuitems$[@menureference[@menu-1]] + "!";
+    mes "You selected " + .@possiblemenuitems$[.@menureference[@menu-1]] + "!";
 
 @menu is the number of option the user picked.
 @menu-1 is the array index for the list of actually used menu items that we
 made.
-@menureference[@menu-1] is the number of the item in the array of possible menu
+.@menureference[@menu-1] is the number of the item in the array of possible menu
 items that we've saved just for this purpose.
 
-And @possiblemenuitems$[@menureference[@menu-1]] is the string that we used to
+And .@possiblemenuitems$[.@menureference[@menu-1]] is the string that we used to
 display the menu line the user picked. (Yes, it's a handful, but it works.)
 
-You can set up a bunch of 'if (@menureference[@menu-1] == X) goto Y' statements to
+You can set up a bunch of 'if (.@menureference[@menu-1] == X) goto Y' statements to
 route your execution based on the line selected and still generate a different
 menu every time, which is handy when you want to, for example, make users select
 items in any specific order before proceeding, or make a randomly shuffled menu.
@@ -1464,7 +1465,7 @@ probably since that wasn't documented anywhere.
 See also 'select', which is probably better in this particular case. Instead of
 menu, you could use 'select' like this:
 
-    @dummy = select(@menulist$[0],@menulist$[1],....@menulist$[<X>]);
+    .@dummy = select(.@menulist$[0],.@menulist$[1],...,.@menulist$[<X>]);
 
 For the purposes of the technique described above these two statements are
 perfectly equivalent.
@@ -1580,8 +1581,8 @@ generally cleaner:
 		mes "[Man]"
 		mes "Gimme a number!";
 		next;
-		input @number;
-		if (callfunc("OddFunc",@number)) mes "It's Odd!";
+		input .@number;
+		if (callfunc("OddFunc",.@number)) mes "It's Odd!";
 		close;
 	}
 	function%TAB%script%TAB%OddFunc%TAB%{
@@ -1890,15 +1891,15 @@ Notice that examples 1 and 2 have the same effect.
 
 Example 3:
 
-	@count++;
+	.@count++;
 	mes "[Forgetful Man]";
-	if (@count == 1) mes "This is the first time you have talked to me.";
-	if (@count == 2) mes "This is the second time you have talked to me.";
-	if (@count == 3) mes "This is the third time you have talked to me.";
-	if (@count == 4) {
+	if (.@count == 1) mes "This is the first time you have talked to me.";
+	if (.@count == 2) mes "This is the second time you have talked to me.";
+	if (.@count == 3) mes "This is the third time you have talked to me.";
+	if (.@count == 4) {
 		mes "This is the fourth time you have talked to me.";
 		mes "I think I am getting amnesia, I have forgotten about you...";
-		@count = 0;
+		.@count = 0;
 	}
 	close;
 
@@ -2182,19 +2183,19 @@ Example:
 This command will allow you to quickly fill up an array in one go. Check the
 Kafra scripts in the distribution to see this used a lot.
 
-    setarray @array[0], 100, 200, 300, 400, 500, 600;
+    setarray .@array[0], 100, 200, 300, 400, 500, 600;
 
 First value is the index of the first element of the array to alter. For
 example:
 
-    setarray @array[0],200,200,200;
-    setarray @array[1],300,150;
+    setarray .@array[0],200,200,200;
+    setarray .@array[1],300,150;
 
 will produce:
 
- @array[0]=200
- @array[1]=300
- @array[2]=150
+ .@array[0]=200
+ .@array[1]=300
+ .@array[2]=150
 
 ---------------------------------------
 
@@ -2202,13 +2203,13 @@ will produce:
 
 This command will change many array values at the same time to the same value.
 
-    setarray @array[0], 100, 200, 300, 400, 500, 600;
+    setarray .@array[0], 100, 200, 300, 400, 500, 600;
     // This will make all 6 values 0
-    cleararray @array[0],0,6;
+    cleararray .@array[0],0,6;
     // This will make array element 0 change to 245
-    cleararray @array[0],245,1;
+    cleararray .@array[0],245,1;
     // This will make elements 1 and 2 change to 345
-    cleararray @array[1],345,2;
+    cleararray .@array[1],345,2;
 
 See 'setarray'.
 
@@ -2219,28 +2220,28 @@ See 'setarray'.
 This command lets you quickly shuffle a lot of data between arrays, which is in
 some cases invaluable.
 
-    setarray @array[0], 100, 200, 300, 400, 500, 600;
-    // So we have made @array[]
-    copyarray @array2[0],@array[2],2;
+    setarray .@array[0], 100, 200, 300, 400, 500, 600;
+    // So we have made .@array[]
+    copyarray .@array2[0],@array[2],2;
 
-    // Now, @array2[0] will be equal to @array[2] (300) and
-    // @array2[1] will be equal to @array[3].
+    // Now, .@array2[0] will be equal to .@array[2] (300) and
+    // .@array2[1] will be equal to .@array[3].
 
 So using the examples above:
- @array[0] = 100
- @array[1] = 200
- @array[2] = 300
- @array[3] = 400
- @array[4] = 500
- @array[5] = 600
+ .@array[0] = 100
+ .@array[1] = 200
+ .@array[2] = 300
+ .@array[3] = 400
+ .@array[4] = 500
+ .@array[5] = 600
 
 New Array:
- @array2[0] = 300
- @array2[1] = 400
- @array2[2] = 0
- @array2[3] = 0
+ .@array2[0] = 300
+ .@array2[1] = 400
+ .@array2[2] = 0
+ .@array2[3] = 0
 
-Notice that @array[4] and @array[5] won't be copied to the second array, and it will return a
+Notice that .@array[4] and .@array[5] won't be copied to the second array, and it will return a
 0.
 
 ---------------------------------------
@@ -2252,12 +2253,12 @@ array, shifting all the elements beyond this towards the beginning.
 
     // This will delete array element 0, and move all the other array elements
     // up one place.
-    deletearray @array[0],1
+    deletearray .@array[0],1
 
 // This would delete array elements numbered 1, 2 and 3, leave element 0 in its
 // place, and move the other elements ups, so there are no gaps.
 
-    deletearray @array[1],3
+    deletearray .@array[1],3
 
 ---------------------------------------
 
@@ -2295,7 +2296,7 @@ While being optional, if [<start index>] is supplied, the search will begin from
 	
 	.@variable = 100;
 	if(countinarray(.@array[0], .@variable))
-		mes "The number 100 was found in the array @array";
+		mes "The number 100 was found in the array .@array";
 	
 	countinarray(.@array[0], .@variable);
 	//return 1 because the number 100 is an element of the array .@array
@@ -2358,15 +2359,15 @@ counted towards this number.
 
 For example:
 
-    setarray @array[0], 100, 200, 300, 400, 500, 600;
-    set @arraysize,getarraysize(@array);
+    setarray .@array[0], 100, 200, 300, 400, 500, 600;
+    set .@arraysize,getarraysize(.@array);
 
-This will make @arraysize == 6. But if you try this:
+This will make .@arraysize == 6. But if you try this:
 
-    setarray @array[0], 100, 200, 300, 400, 500, 600, 0;
-    set @arraysize,getarraysize(@array);
+    setarray .@array[0], 100, 200, 300, 400, 500, 600, 0;
+    set .@arraysize,getarraysize(.@array);
 
-@arraysize will still equal 6, even though you've set 7 values.
+.@arraysize will still equal 6, even though you've set 7 values.
 
 ---------------------------------------
 
@@ -3083,11 +3084,11 @@ Example:
     prontera,164,299,3%TAB%script%TAB%Nyah%TAB%730,{
         mes "My name is Nyah.";
         mes "I will now search for Meh all across the world!";
-        if (getmapxy(@mapname$, @mapx, @mapy, BL_NPC, "Meh") != 0) {
+        if (getmapxy(.@mapname$, .@mapx, .@mapy, BL_NPC, "Meh") != 0) {
                 mes "I can't seem to find Meh anywhere!";
                 close;
         }
-        mes "And I found him on map " + @mapname$ + " at X:" + @mapx + " Y:" + @mapy + " !";
+        mes "And I found him on map " + .@mapname$ + " at X:" + .@mapx + " Y:" + .@mapy + " !";
         close;
    }
 
@@ -4322,12 +4323,12 @@ class number system, but it's one that comes with constants which make it easy
 to convert among classes. The command will return -1 if you pass it a job number
 which doesn't have an eA job-number equivalent.
 
-	@eac = eaclass();
-	if ((@eac&EAJ_BASEMASK) == EAJ_SWORDMAN)
+	.@eac = eaclass();
+	if ((.@eac&EAJ_BASEMASK) == EAJ_SWORDMAN)
 		mes "Your base job is Swordman.";
-	if (@eac&EAJL_UPPER)
+	if (.@eac&EAJL_UPPER)
 		mes "You are a rebirth job.";
-	if ((@eac&EAJ_UPPERMASK) == EAJ_SWORDMAN)
+	if ((.@eac&EAJ_UPPERMASK) == EAJ_SWORDMAN)
 		mes "You must be a Swordman, Baby Swordman or High Swordman.";
 
 For more information on the eA Job System, see the docs/ea_job_system.txt file.
@@ -4343,16 +4344,16 @@ gender if none is given (if no player is attached, male will be used by default)
 The command will return -1 if there is no valid class to represent the specified
 job (for example, if you try to get the baby version of a Taekwon class).
 
-	@eac = eaclass();
+	.@eac = eaclass();
 	//Check if class is already rebirth
-	if (@eac&EAJL_UPPER) {
+	if (.@eac&EAJL_UPPER) {
 		mes "You look strong.";
 		close;
 	}
-	@eac = roclass(@eac|EAJL_UPPER);
+	.@eac = roclass(.@eac|EAJL_UPPER);
 	//Check if class has a rebirth version
-	if (@eac != -1) {
-		mes "Bet you can't wait to become a " + jobname(@eac) + "!";
+	if (.@eac != -1) {
+		mes "Bet you can't wait to become a " + jobname(.@eac) + "!";
 		close;
 	}
 
@@ -4633,24 +4634,24 @@ this. Careful, minor magic ahead.
 	// First, let's get an ID of a character who's name will be on the item.
 	// Only an existing character's name may be there.
 	// Let's assume our character is 'Adam' and find his ID.
-	@charid = getcharid(0,"Adam");
+	.@charid = getcharid(0,"Adam");
 
 	// Now we split the character ID number into two portions with a binary
 	// shift operation. If you don't understand what this does, just copy it.
-	@card3 = @charid & 65535;
-	@card4 = @charid >> 16;
+	.@card3 = .@charid & 65535;
+	.@card4 = .@charid >> 16;
 
-	// If you're inscribing non-equipment, @card1 must be 254.
+	// If you're inscribing non-equipment, .@card1 must be 254.
 	// Arrows are also not equipment.
-	@card1 = 254;
+	.@card1 = 254;
 
 	// For named equipment, card2 means the Star Crumbs and elemental
 	// crystals used to make this equipment. For everything else, it's 0.
-	@card2 = 0;
+	.@card2 = 0;
 
 	// Now, let's give the character who invoked the script some
 	// Adam's Apples:
-	getitem2 512,1,1,0,0,@card1,@card2,@card3,@card4;
+	getitem2 512,1,1,0,0,.@card1,.@card2,.@card3,.@card4;
 
 This wasn't tested with all possible items, so I can't give any promises,
 experiment first before relying on it.
@@ -4661,21 +4662,21 @@ To create equipment, continue this example it like this:
 	// values so we'll just set up card1 and card2 with data
 	// for an Ice Stiletto.
 
-	// If you're inscribing equipment, @card1 must be 255.
-	@card1 = 255;
+	// If you're inscribing equipment, .@card1 must be 255.
+	.@card1 = 255;
 
 	// That's the number of star crumbs in a weapon.
-	@sc = 2;
+	.@sc = 2;
 
 	// That's the number of elemental property of the weapon.
-	@ele = 1;
+	.@ele = 1;
 
 	// And that's the wacky formula that makes them into
 	// a single number.
-	@card2 = @ele+((@sc*5)<<8);
+	.@card2 = .@ele+((.@sc*5)<<8);
 
 	// That will make us an Adam's +2 VVS Ice Stiletto:
-	getitem2 1216,1,1,2,0,@card1,@card2,@card3,@card4;
+	getitem2 1216,1,1,2,0,.@card1,.@card2,.@card3,.@card4;
 
 Experiment with the number of star crumbs - I'm not certain just how much will
 work most and what it depends on. The valid element numbers are:
@@ -4941,8 +4942,8 @@ If player is not in a guild or storage is open, 'guildstoragedelitem2' will retu
 
 ---------------------------------------
 
-*countitem(<item id>)
-*countitem("<item name>")
+*countitem(<item id>{,<accountID>})
+*countitem("<item name>"{,<accountID>})
 
 This function will return the number of items for the specified item ID that the
 invoking character has in the inventory.
@@ -4978,10 +4979,10 @@ If player is not in a guild or storage is open, 'guildstoragecountitem' will ret
 
 ---------------------------------------
 
-*countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
-*countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
+*countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 
 Expanded version of 'countitem' function, used for created/carded/forged items.
 
@@ -5354,7 +5355,7 @@ Example:
 
 These commands toggle the ability to use atcommand while interacting with an NPC.
 
-The default setting, 'atcommand_enable_npc', is defined in 'conf/battle/gm.conf'.
+The default setting, 'atcommand_disable_npc', is defined in 'conf/battle/gm.conf'.
 
 ---------------------------------------
 //
@@ -6130,6 +6131,58 @@ Examples:
 
 	// Enables the current char to cast skills again.
 	pcblockskill getcharid(3),0;
+
+---------------------------------------
+
+*setpcblock <type>,<state>{,<account ID>};
+*getpcblock {<account ID>};
+
+'setpcblock' command prevents/allows the player from doing the given <type> of action according
+to the <state> during the player session (note: @reloadscript removes all <type> except PCBLOCK_IMMUNE).
+The <type> values are bit-masks, multiples of <type> can be added to change the player action.
+
+The action is blocked when the <state> is true, while false allows the action again.
+
+'getpcblock' command return the bit-mask value of the currently
+enabled block flags.
+
+Available <type>:
+	PCBLOCK_MOVE				Prevent the player from moving.
+	PCBLOCK_ATTACK				Prevent the player from attacking.
+	PCBLOCK_SKILL				Prevent the player from using skills/itemskills.
+	PCBLOCK_USEITEM				Prevent the player from using usable items.
+	PCBLOCK_CHAT				Prevent the player from sending global/guild/party/whisper messages.
+	PCBLOCK_IMMUNE				Prevent the player from being hit by monsters.
+	PCBLOCK_SITSTAND			Prevent the player from sitting/standing.
+	PCBLOCK_COMMANDS			Prevent the player from using atcommands/charcommands.
+	PCBLOCK_NPCCLICK			Prevent the player from clicking/touching any NPC/shop/warp.
+	PCBLOCK_EMOTION				Prevent the player from using emotions.
+	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK.
+	PCBLOCK_ALL				Sum of all the flags.
+
+Examples:
+
+// Make the attached player invulnerable to monster (same as @monsterignore)
+	setpcblock PCBLOCK_IMMUNE, true;
+
+// Prevents the attached player from attacking and using skills
+	setpcblock PCBLOCK_ATTACK|PCBLOCK_SKILL, true;
+
+// Re-enables attack, skills and item use
+	setpcblock PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM, false;
+
+// getpcblock related checks
+	if (getpcblock() & PCBLOCK_IMMUNE)
+		mes "You are invulnerable!";
+
+	if (getpcblock() & (PCBLOCK_MOVE|PCBLOCK_SITSTAND))
+		mes "You can't walk or sit.";
+
+	if ((getpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL)) == 0)
+		mes "You can attack and use skills.";
+
+	if (getpcblock() & PCBLOCK_CHAT)
+		mes "You can't chat.";
 
 ---------------------------------------
 
@@ -8148,9 +8201,9 @@ Example:
 	monster "prontera",149,190,"Poring",1002,10;
 	.GID = $@mobid[9]; // Store and modify the 10th Poring spawned to make him stronger!
 
-	// Save the strong Poring's mob data in the @por_arr[] variable. (@por_arr[1] being level, @por_arr[13] being class, etc.)
+	// Save the strong Poring's mob data in the .@por_arr[] variable. (.@por_arr[1] being level, .@por_arr[13] being class, etc.)
 	// With this data we can have the NPC display or manipulate it how we want. This does not have to be ran before 'setunitdata'.
-	getunitdata .GID,@por_arr;
+	getunitdata .GID,.@por_arr;
 
 	// Set the max HP of the Poring to 1000 (current HP will also get updated to 1000).
 	setunitdata .GID,UMOB_MAXHP,1000;
@@ -8845,18 +8898,17 @@ The command returns the instance ID upon success, and these values upon failure:
 *instance_destroy {<instance id>};
 
 Destroys instance with the ID <instance id>. If no ID is specified, the instance
-the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a character, party,
-guild or clan mode). If it is not owned by anyone, no player needs to be attached. If
-that fails, the script will come to a halt. This will also trigger the "OnInstanceDestroy"
-label in all NPCs inside the instance.
+the script is attached to is used. If that fails, the script will come to a halt.
+This will also trigger the "OnInstanceDestroy" label in all NPCs inside the instance.
 
 ---------------------------------------
 
 *instance_enter("<instance name>",{<x>,<y>,<char_id>,<instance id>});
 
-Warps player to the specified instance after the script terminates. The map and
-coordinates are located in 'db/(pre-)re/instance_db.txt'.
+Warps the attached player to the specified <instance id>. If no ID is specified,
+the IM_PARTY instance the invoking player is attached to is used.
+
+The map and coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
 The command returns IE_OK upon success, and these values upon failure:
  IE_NOMEMBER:	Party/Guild/Clan not found (for party/guild/clan modes).
@@ -8870,49 +8922,46 @@ Put -1 for x and y if want to warp player with default entrance coordinates.
 *instance_npcname("<npc name>"{,<instance id>})
 
 Returns the unique name of the instanced script. If no ID is specified,
-the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached NPC, player, party, guild
-or clan is used. If that fails, the script will come to a halt.
+the instance the script is attached to is used. If that fails, the script
+will come to a halt.
 
 ---------------------------------------
 
 *instance_mapname("<map name>"{,<instance id>})
 
 Returns the unique name of the instanced map. If no instance ID is specified,
-the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached player is used (if it is a
-character, party, guild or clan mode). If it is not owned by anyone, no player needs
-to be attached. If that fails, the command returns an empty string instead.
+the instance the script is attached to is used. If that fails, the command
+returns an empty string instead.
 
 ---------------------------------------
 
-*instance_id()
+*instance_id({<instance mode>})
 
-Returns the unique instance id of the attached script. If the script is not
-attached to an instance, the instance of the currently attached player is
-used (if it is a character, party, guild or clan mode). If it is not owned by anyone, no
-player needs to be attached. If that fails, the function will return 0.
+Returns the unique instance ID of the given mode. By default it returns the
+attached script instance. If <instance mode> is provided then the instance
+of the currently attached player is used. If that fails, the function will return 0.
+
+Instance Mode options:
+ IM_CHAR:	Attached to character.
+ IM_PARTY:	Attached to character's party.
+ IM_GUILD:	Attached to character's guild.
+ IM_CLAN:	Attached to character's clan.
 
 ---------------------------------------
 
 *instance_warpall "<map name>",<x>,<y>{,<instance id>};
 
-Warps all players in the instance <instance id> to <map name> at given
-coordinates. If no ID is specified, the instance the script is attached to
-is used. If the script is not attached to an instance, the instance of the
-currently attached player is used (if it is a character, party, guild or clan
-mode). If it is not owned by anyone, no player needs to be attached. If that
-fails, the script will come to a halt.
+Warps all players in the <instance id> to <map name> to the given coordinates.
+If no ID is specified, the IM_PARTY instance the invoking player is attached
+to is used. If that fails, the script will come to a halt.
 
 ---------------------------------------
 
 *instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
-Broadcasts a message to all players in the instance <instance id> currently
-residing on an instance map. If 0 is specified for <instance id>, the instance
-the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a character,
-party, guild or clan mode). If it is not owned by anyone, no player needs to be attached.
+Broadcasts a message to all players in the <instance id> currently residing on
+an instance map. If 0 is specified for <instance id>, the instance the script
+is attached to is used.
 
 For details on the other parameters, see 'announce'.
 
@@ -9005,6 +9054,20 @@ Example:
 .@name$ = "Endless Tower";
 mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(.@name$,IIT_IDLETIMEOUT) + " seconds.";
 // Endless Tower will be destroyed if no one is in the instance for 300 seconds.
+
+---------------------------------------
+
+*getvariableofinstance(<variable>,<instance id>);
+
+Returns a reference to an instance variable (' prefix) of the specific instance ID.
+This can only be used to get ' variables.
+
+Examples:
+	// This will set the .@s variable to the value of 'var variable of the specific instance ID.
+	set .@s, getvariableofinstance('var, instance_id(IM_PARTY));
+
+	// This will set the 'var variable of the specific instance ID to 1.
+	set getvariableofinstance('var, instance_id(IM_GUILD)), 1;
 
 ---------------------------------------
 
@@ -9380,7 +9443,7 @@ monster as long as it is in the pet database and the targeted monster requires t
 item used.
 See 'doc/mob_db_mode_list.txt' for more information about monster modes.
 
-A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.txt'.
+A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.yml'.
 
 ---------------------------------------
 
@@ -9388,7 +9451,7 @@ A full list of pet IDs can be found inside 'db/(pre-)re/pet_db.txt'.
 
 This command will create a pet egg and put it in the invoking character's
 inventory. The kind of pet is specified by pet ID numbers listed in
-'db/(pre-)re/pet_db.txt'. The egg is created exactly as if the character just successfully
+'db/(pre-)re/pet_db.yml'. The egg is created exactly as if the character just successfully
 caught a pet in the normal way.
 
 	// This will make you a poring:
@@ -9406,16 +9469,40 @@ This function will return pet information for the pet the invoking character
 currently has active. Valid types are:
 
  PETINFO_ID - Pet ID
- PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.txt' - will tell you what kind of a pet it
-     is.
+ PETINFO_CLASS - Pet class number as per 'db/(pre-)re/pet_db.yml' - will tell you what kind of a pet it is.
  PETINFO_NAME - Pet name. Will return "null" if there's no pet.
  PETINFO_INTIMATE - Pet friendly level (intimacy score). 1000 is full loyalty.
- PETINFO_HUNGRY - Pet hungry level. 100 is completely full.
+ PETINFO_HUNGRY - Pet hungry level. 100 is full hunger.
  PETINFO_RENAMED - Pet rename flag. 0 means this pet has not been named yet.
  PETINFO_LEVEL - Pet level
  PETINFO_BLOCKID - Pet Game ID
- PETINFO_EGGID - Pet egg item id
- PETINFO_FOODID - Pet food item id
+ PETINFO_EGGID - Pet egg item ID
+ PETINFO_FOODID - Pet food item ID
+
+PETINFO_INTIMATE can be used with the following constants for checking values:
+ PET_INTIMATE_NONE = 0
+ PET_INTIMATE_AWKWARD = 1 ~ 99
+ PET_INTIMATE_SHY = 100 ~ 249
+ PET_INTIMATE_NEUTRAL = 250 ~ 749
+ PET_INTIMATE_CORDIAL = 750 ~ 909
+ PET_INTIMATE_LOYAL = 910 ~ 1000
+
+PETINFO_HUNGRY can be used with the following constants for checking values:
+ PET_HUNGRY_NONE = 0
+ PET_HUNGRY_VERY_HUNGRY = 1 ~ 10
+ PET_HUNGRY_HUNGRY = 11 ~ 25
+ PET_HUNGRY_NEUTRAL = 26 ~ 75
+ PET_HUNGRY_SATISFIED = 76 ~ 90
+ PET_HUNGRY_STUFFED = 91 ~ 100
+
+Example:
+	mes "[Vet]";
+	mes "Your pet + " getpetinfo(PETINFO_NAME);
+	if (getpetinfo(PETINFO_INTIMATE) < PET_INTIMATE_LOYAL)
+		mes "has some growing to do on you!";
+	else
+		mes "seems to love you very much!";
+	close;
 
 ---------------------------------------
 

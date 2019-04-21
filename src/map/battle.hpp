@@ -91,7 +91,6 @@ struct Damage battle_calc_attack(int attack_type,struct block_list *bl,struct bl
 int64 battle_calc_return_damage(struct block_list *bl, struct block_list *src, int64 *, int flag, uint16 skill_id, bool status_reflect);
 
 void battle_drain(struct map_session_data *sd, struct block_list *tbl, int64 rdamage, int64 ldamage, int race, int class_);
-bool battle_vanish(struct map_session_data *sd, struct block_list *target, struct Damage *wd);
 
 int battle_attr_ratio(int atk_elem,int def_type, int def_lv);
 int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 damage,int atk_elem,int def_type, int def_lv);
@@ -624,6 +623,7 @@ struct Battle_Config
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
+	int atcommand_disable_npc;
 	int block_account_in_same_party;
 	int tarotcard_equal_chance; //Official or equal chance for each card
 	int change_party_leader_samemap;
@@ -642,6 +642,10 @@ struct Battle_Config
 	int allow_bound_sell;
 	int event_refine_chance;
 	int autoloot_adjust;
+	int feature_petevolution;
+	int feature_pet_autofeed;
+	int feature_pet_autofeed_rate;
+	int pet_autofeed_always;
 	int broadcast_hide_name;
 	int skill_drop_items_full;
 	int switch_remove_edp;
@@ -655,6 +659,7 @@ struct Battle_Config
 	int min_shop_buy;
 	int min_shop_sell;
 	int feature_equipswitch;
+	int pet_walk_speed;
 
 #include "../custom/battle_config_struct.inc"
 };

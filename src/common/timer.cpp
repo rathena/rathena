@@ -268,7 +268,7 @@ int add_timer_interval(t_tick tick, TimerFunc func, int id, intptr_t data, int i
 
 	if( interval < 1 )
 	{
-		ShowError("add_timer_interval: invalid interval (tick=%" PRtf " %p[%s] id=%d data=%d diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
+		ShowError("add_timer_interval: invalid interval (tick=%" PRtf " %p[%s] id=%d data=%" PRIdPTR " diff_tick=%d)\n", tick, func, search_timer_func_list(func), id, data, DIFF_TICK(tick, gettick()));
 		return INVALID_TIMER;
 	}
 

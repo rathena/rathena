@@ -333,6 +333,17 @@ uint16 mobdb_searchname(const char * const str)
 {
 	return mobdb_searchname_(str, true);
 }
+
+struct mob_db* mobdb_search_aegisname( const char* str ){
+	for( auto &mobdb_pair : mob_db_data ){
+		if( strcmpi( str, mobdb_pair.second.sprite ) == 0 ){
+			return &mobdb_pair.second;
+		}
+	}
+
+	return nullptr;
+}
+
 /*==========================================
  * Founds up to N matches. Returns number of matches [Skotlex]
  *------------------------------------------*/

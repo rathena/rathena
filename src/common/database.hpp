@@ -31,6 +31,7 @@ private:
 protected:
 	// Helper functions
 	bool nodeExists( const YAML::Node& node, const std::string& name );
+	bool nodesExist( const YAML::Node& node, std::initializer_list<const std::string> names );
 	void invalidWarning( const YAML::Node &node, const char* fmt, ... );
 	std::string getCurrentFile();
 
@@ -58,6 +59,7 @@ public:
 	}
 
 	bool load();
+	bool reload();
 
 	// Functions that need to be implemented for each type
 	virtual void clear() = 0;
