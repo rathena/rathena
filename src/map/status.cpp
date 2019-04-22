@@ -9526,6 +9526,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					return 0;
 				break;
 			case SC_JOINTBEAT:
+				if (sc && sc->data[type]->val2 & BREAK_NECK)
+					return 0; // BREAK_NECK cannot be stacked until the status is over.
 				val2 |= sce->val2; // Stackable ailments
 			default:
 				if(sce->val1 > val1)

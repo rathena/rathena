@@ -3634,10 +3634,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 40 * skill_lv;
 			break;
 		case LK_JOINTBEAT:
-			i = 10 * skill_lv - 50;
+			skillratio += -100 + 10 * skill_lv - 50;
 			if (wd->miscflag&BREAK_NECK) // The 2x damage is only for the break neck ailment.
-				i *= 2;
-			skillratio += i;
+				skillratio <<= 1;
 			break;
 #ifdef RENEWAL
 		// Renewal: skill ratio applies to entire damage [helvetica]

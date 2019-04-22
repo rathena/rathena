@@ -4785,11 +4785,13 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				flag |= BREAK_WAIST;
 				break;
 			case 5:
-				flag |= BREAK_NECK; // Send this flag through skill_attack for the double damage bonus (if the hit lands)
+				// Send this flag through skill_attack for the double damage bonus (if the hit lands)
+				// BREAK_NECK does not stack with other breaks
+				flag = BREAK_NECK;
 				break;
 		}
 		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
-			sc_start4(src, bl, status_skill2sc(skill_id), 50 + (skill_lv + 1) - 270 * tstatus->str / 100, skill_lv, flag&BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv));
+			sc_start4(src, bl, status_skill2sc(skill_id), 50 + (skill_lv + 1), skill_lv, flag&BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 
 	case MO_COMBOFINISH:
