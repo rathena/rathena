@@ -4767,27 +4767,25 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
 		break;
 
-	case LK_JOINTBEAT: // decide the ailment first (affects attack damage and effect)
+	case LK_JOINTBEAT:
 		switch (rnd() % 6) {
 			case 0:
-				flag |= BREAK_ANKLE;
+				flag = BREAK_ANKLE;
 				break;
 			case 1:
-				flag |= BREAK_WRIST;
+				flag = BREAK_WRIST;
 				break;
 			case 2:
-				flag |= BREAK_KNEE;
+				flag = BREAK_KNEE;
 				break;
 			case 3:
-				flag |= BREAK_SHOULDER;
+				flag = BREAK_SHOULDER;
 				break;
 			case 4:
-				flag |= BREAK_WAIST;
+				flag = BREAK_WAIST;
 				break;
 			case 5:
-				// Send this flag through skill_attack for the double damage bonus (if the hit lands)
-				// BREAK_NECK does not stack with other breaks
-				flag = BREAK_NECK;
+				flag = BREAK_NECK; // Send this flag through skill_attack for the double damage bonus (if the hit lands)
 				break;
 		}
 		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
