@@ -1511,13 +1511,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start2(src,bl, SC_BLEEDING,50, skill_lv, src->id, skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case LK_JOINTBEAT:
-		status = status_skill2sc(skill_id);
-		if (tsc->jb_flag) {
-			sc_start4(src,bl,status,(5*skill_lv+5),skill_lv,tsc->jb_flag&BREAK_FLAGS,src->id,0,skill_get_time2(skill_id,skill_lv));
-			tsc->jb_flag = 0;
-		}
-		break;
 	case ASC_METEORASSAULT:
 		//Any enemies hit by this skill will receive Stun, Darkness, or external bleeding status ailment with a 5%+5*skill_lv% chance.
 		switch(rnd()%3) {
@@ -4775,18 +4768,28 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case LK_JOINTBEAT: // decide the ailment first (affects attack damage and effect)
-		switch( rnd()%6 ){
-		case 0: flag |= BREAK_ANKLE; break;
-		case 1: flag |= BREAK_WRIST; break;
-		case 2: flag |= BREAK_KNEE; break;
-		case 3: flag |= BREAK_SHOULDER; break;
-		case 4: flag |= BREAK_WAIST; break;
-		case 5: flag |= BREAK_NECK; break;
+		switch (rnd() % 6) {
+			case 0:
+				flag |= BREAK_ANKLE;
+				break;
+			case 1:
+				flag |= BREAK_WRIST;
+				break;
+			case 2:
+				flag |= BREAK_KNEE;
+				break;
+			case 3:
+				flag |= BREAK_SHOULDER;
+				break;
+			case 4:
+				flag |= BREAK_WAIST;
+				break;
+			case 5:
+				flag |= BREAK_NECK; // Send this flag through skill_attack for the double damage bonus (if the hit lands)
+				break;
 		}
-		//TODO: is there really no cleaner way to do this?
-		sc = status_get_sc(bl);
-		if (sc) sc->jb_flag = flag;
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
+			sc_start4(src, bl, status_skill2sc(skill_id), 50 + (skill_lv + 1) - 270 * tstatus->str / 100, skill_lv, flag&BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 
 	case MO_COMBOFINISH:

@@ -3635,8 +3635,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case LK_JOINTBEAT:
 			i = 10 * skill_lv - 50;
-			// Although not clear, it's being assumed that the 2x damage is only for the break neck ailment.
-			if (wd->miscflag&BREAK_NECK)
+			if (wd->miscflag&BREAK_NECK) // The 2x damage is only for the break neck ailment.
 				i *= 2;
 			skillratio += i;
 			break;
