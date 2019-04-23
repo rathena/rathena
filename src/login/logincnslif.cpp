@@ -61,10 +61,10 @@ int logcnslif_get_options(int argc, char ** argv) {
 			} else if (SERVER_TYPE & (ATHENA_SERVER_LOGIN)) { //login
 				if (strcmp(arg, "lan-config") == 0) {
 					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.lanconf_name, argv[++i], sizeof(login_config.lanconf_name));
-				}
+				} else
 				if (strcmp(arg, "login-config") == 0) {
 					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.loginconf_name, argv[++i], sizeof(login_config.loginconf_name));
-				}
+				} else
 				if (strcmp(arg, "msg-config") == 0) {
 					if (opt_has_next_value(arg, i, argc)) safestrncpy(login_config.msgconf_name, argv[++i], sizeof(login_config.msgconf_name));
 				} else {
