@@ -8,7 +8,7 @@ If you need more information that may not be listed here, please be sure to chec
 If your questions are still unanswered after consulting this or CppCoreGuidelines, consider consulting the [rAthena forum](https://rathena.org/board/), [rAthena's Discord](https://rathena.org/discord/), or add your concerns directly to a pull request.
 
 # Code Guidelines
-### 1. Don't unnecessarily remove or add blank lines when commiting new code
+### 1. Don't unnecessarily remove or add blank lines when committing new code
 
 ##### Reason
 
@@ -22,7 +22,7 @@ Check for removed or added blank lines on each commit.
 
 ##### Reason
 
-`std::vector` requires to be shrinked after using `std::remove`. To avoid forgetting about proper shrinking after removing an element the removing should always be bound to a call to `erase`.
+`std::vector` requires to be shrunk after using `std::remove`. To avoid forgetting about proper shrinking after removing an element the removing should always be bound to a call to `erase`.
 
 ##### Note
 
@@ -130,7 +130,7 @@ In each case, we save writing a longish, hard-to-remember type that the compiler
 
 ##### Exception
 
-Avoid 'auto' when declaring a variable which is directly iniated with a return value of a function call which does not indicate the type. This is only required when using the fucnction call the first time within a method.
+Avoid 'auto' when declaring a variable which is directly initiated with a return value of a function call which does not indicate the type. This is only required when using the function call the first time within a method.
 
 Also avoid `auto` for initializer lists and in cases where you know exactly which type you want and where an initializer might require conversion.
 
