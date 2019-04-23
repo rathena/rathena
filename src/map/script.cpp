@@ -24409,8 +24409,14 @@ BUILDIN_FUNC(charinfo) {
 	}
 
 	int type = script_getnum(st, 3);
-	if (type < PC_NAME || type > PC_ACCOUNT) {
-		ShowError("buildin_charinfo: unknown type %d.\n", type);
+
+	switch (type) {
+	case PC_NAME:
+	case PC_CHAR:
+	case PC_ACCOUNT:
+		break;
+	default:
+		ShowError("buildin_charinfo: Unknown type %d.\n", type);
 		script_pushnil(st);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
