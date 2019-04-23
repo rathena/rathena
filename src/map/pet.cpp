@@ -824,7 +824,7 @@ static TIMER_FUNC(pet_hungry){
 
 		if( pd->pet.intimate <= PET_INTIMATE_NONE ) {
 			pd->pet.intimate = PET_INTIMATE_NONE;
-			pd->status.speed = pd->db->status.speed;
+			pd->status.speed = pd->get_pet_walk_speed();
 		}
 
 		status_calc_pet(pd,SCO_NONE);
@@ -1523,7 +1523,7 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd)
 		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
 			pd->pet.intimate = PET_INTIMATE_NONE;
 			pet_stop_attack(pd);
-			pd->status.speed = pd->db->status.speed;
+			pd->status.speed = pd->get_pet_walk_speed();
 		}
 	}
 	else {
@@ -1668,11 +1668,11 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_t
 	}
 
 	// Return speed to normal.
-	if (pd->status.speed != pd->db->status.speed) {
+	if (pd->status.speed != pd->get_pet_walk_speed()) {
 		if (pd->ud.walktimer != INVALID_TIMER)
 			return 0; // Wait until the pet finishes walking back to master.
 
-		pd->status.speed = pd->db->status.speed;
+		pd->status.speed = pd->get_pet_walk_speed();
 		pd->ud.state.change_walk_target = pd->ud.state.speed_changed = 1;
 	}
 
