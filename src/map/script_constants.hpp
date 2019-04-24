@@ -7117,6 +7117,7 @@
 	export_constant(HAT_EF_FLUFFYWING);
 	export_constant(HAT_EF_C_GHOST_EFFECT);
 	export_constant(HAT_EF_C_POPPING_PORING_AURA);
+	export_constant(HAT_EF_RESONATETAEGO);
 	export_constant(HAT_EF_99LV_RUNE_RED);
 	export_constant(HAT_EF_99LV_ROYAL_GUARD_BLUE);
 	export_constant(HAT_EF_99LV_WARLOCK_VIOLET);
