@@ -11037,7 +11037,7 @@ void pc_check_available_item(struct map_session_data *sd, uint8 type)
 			if (!nameid)
 				continue;
 			if (!itemdb_available(nameid)) {
-				sprintf(output, msg_txt(sd, 709), nameid); // Item %hu has been removed from your inventory.
+				sprintf(output, msg_txt(sd, 709), nameid); // Item %u has been removed from your inventory.
 				clif_displaymessage(sd->fd, output);
 				ShowWarning("Removed invalid/disabled item (ID: %u, amount: %d) from inventory (char_id: %d).\n", nameid, sd->inventory.u.items_inventory[i].amount, sd->status.char_id);
 				pc_delitem(sd, i, sd->inventory.u.items_inventory[i].amount, 4, 0, LOG_TYPE_OTHER);
@@ -11055,7 +11055,7 @@ void pc_check_available_item(struct map_session_data *sd, uint8 type)
 			if (!nameid)
 				continue;
 			if (!itemdb_available(nameid)) {
-				sprintf(output, msg_txt(sd, 710), nameid); // Item %hu has been removed from your cart.
+				sprintf(output, msg_txt(sd, 710), nameid); // Item %u has been removed from your cart.
 				clif_displaymessage(sd->fd, output);
 				ShowWarning("Removed invalid/disabled item (ID: %u, amount: %d) from cart (char_id: %d).\n", nameid, sd->cart.u.items_cart[i].amount, sd->status.char_id);
 				pc_cart_delitem(sd, i, sd->cart.u.items_cart[i].amount, 0, LOG_TYPE_OTHER);
@@ -11073,7 +11073,7 @@ void pc_check_available_item(struct map_session_data *sd, uint8 type)
 			if (!nameid)
 				continue;
 			if (!itemdb_available(nameid)) {
-				sprintf(output, msg_txt(sd, 711), nameid); // Item %hu has been removed from your storage.
+				sprintf(output, msg_txt(sd, 711), nameid); // Item %u has been removed from your storage.
 				clif_displaymessage(sd->fd, output);
 				ShowWarning("Removed invalid/disabled item (ID: %u, amount: %d) from storage (char_id: %d).\n", nameid, sd->storage.u.items_storage[i].amount, sd->status.char_id);
 				storage_delitem(sd, &sd->storage, i, sd->storage.u.items_storage[i].amount);
