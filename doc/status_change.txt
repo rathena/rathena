@@ -1035,9 +1035,9 @@ SC_JAILED	()
 	desc:
 	val1:
 
-SC_ENCHANTARMS	()
-	desc:
-	val1:
+SC_ENCHANTARMS	(EFST_WEAPONPROPERTY)
+	desc: Changes the element of a target's weapon.
+	val1: Element value from skill_db
 
 SC_MAGICALATTACK	()
 	desc:

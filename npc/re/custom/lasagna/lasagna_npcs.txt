@@ -15,7 +15,9 @@ lasa_fild01,47,297,0	script	#doint_evt01	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (Class == Job_Summoner && isbegin_quest(7711) == 0) {
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 100;
+		setpcblock PCBLOCK_NPC, false;
 		npctalk "Hey, newbie! Get over here!", "Vigilante Ajegna#doram0", bc_self;
 		npctalk "Come on over here! Click me, quick!", "Vigilante Ajegna#doram0", bc_self;
 		setquest 7711;// Beginning
@@ -151,10 +153,12 @@ lasa_fild01,53,322,3	script	Applicant Paul#doramt13	4_M_MERCAT1,4,4,{
 	}
 OnTouch:
 	if (Class == Job_Summoner && isbegin_quest(7723) == 0) {
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "You, dimwit! Nothing beats damage! You should boost your STR first!", "Applicant Paul#doramt13", bc_self;
 		sleep2 2000;
 		npctalk "You have no idea! DEX comes first if you want your attack to be successful!!", "Applicant MacCarnie#doramt13", bc_self;
 		sleep2 1000;
+		setpcblock PCBLOCK_NPC, false;
 		emotion ET_STARE, getnpcid(0, "Applicant Paul#doramt13");
 		emotion ET_OHNO, getnpcid(0, "Applicant MacCarnie#doramt13");
 	}
@@ -774,6 +778,7 @@ lasa_fild01,103,344,3	script	Well-known Troublemaker	4_DR_KID_01,3,3,{
 		completequest 7721;// Cat showoff contest
 		getexp 120,120;
 		close2;
+		setpcblock PCBLOCK_NPC, true;
 		classchange( 4_DR_AGLIO, "Vigilante Aglio#doram12", bc_self );
 		sleep2 1000;
 		npctalk "You! You're picking a fight with another innocent passerby?", "Vigilante Aglio#doram12", bc_self;
@@ -791,6 +796,7 @@ lasa_fild01,103,344,3	script	Well-known Troublemaker	4_DR_KID_01,3,3,{
 		sleep2 2000;
 		npctalk "You're just full of it.", "Well-known Troublemaker", bc_self;
 		classchange( HIDDEN_WARP_NPC, "Vigilante Aglio#doram12", bc_self );
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	case 2:
 		mes "[Well-known Kittie]";
@@ -1911,6 +1917,7 @@ lasagna,186,231,3	script	Youngster meow#dorcon05	4_DR_KID_01,{
 }
 
 lasagna,226,196,5	script	Aram#dorcon01	4_DR_F_02,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Is this the famous Pub-Oven?", "Tos#dorcon01", bc_self;
 	sleep2 2000;
 	npctalk "Stop looking around like a hillbilly!", "", bc_self;
@@ -1954,10 +1961,12 @@ lasagna,226,196,5	script	Aram#dorcon01	4_DR_F_02,{
 	npctalk "......", "", bc_self;
 	sleep2 2000;
 	npctalk "Cheesy...", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
 lasagna,228,193,5	script	Porto#dorcon01	4_DR_M_01,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Since I've come all the way here, I should try the kaluna milk!", "", bc_self;
 	sleep2 2000;
 	npctalk "Don't be so loud! Everyone is looking!", "Aram#dorcon01", bc_self;
@@ -1965,13 +1974,16 @@ lasagna,228,193,5	script	Porto#dorcon01	4_DR_M_01,{
 	npctalk "You know, you're the one who's louder.", "", bc_self;
 	sleep2 2000;
 	npctalk "Right, right.", "Tos#dorcon01", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
 lasagna,229,197,5	script	Tos#dorcon01	4_DR_M_02,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Befitting to its fame, this place is packed with people.", "", bc_self;
 	sleep2 2000;
 	npctalk "Stop looking around like a hillbilly!", "Aram#dorcon01", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -1983,6 +1995,7 @@ lasagna,230,192,3	script	Perky Doram#do_hint03	4_CAT_ADV2,{
 }
 
 lasagna,235,193,3	script	Customer#dorcon02	4_DR_TORTEL,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Always right-click when it comes to information! Right-click a human, item and cat to know more about them!", "", bc_self;
 	sleep2 1000;
 	emotion ET_THROB;
@@ -1990,6 +2003,7 @@ lasagna,235,193,3	script	Customer#dorcon02	4_DR_TORTEL,{
 	sleep2 2000;
 	emotion ET_SLEEPY;
 	npctalk "We're full, so there's only one thing to do. Sleep.", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -4463,7 +4477,6 @@ lasa_in01,61,91,5	script	Basilisk Prisoner#lasai	4_BASIL_SLAVE,{
 		next;
 		mes "[Enriched Foxtail]";
 		mes "MATK + 70, MSP + 50.";
-		mes "";
 		mes "[Long Foxtail]";
 		mes "Ranged physical ATK +5%, MHP + 200.";
 		next;
@@ -10090,7 +10103,7 @@ conch_in,122,61,5	script	Crewman#dorcon01	4_CAT_ADV1,{
 
 // in C_D
 conch_in,59,29,5	script	Engineer#dorcon01	4_CAT_SAILOR5,{
-	// pcblocknpc
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Are you an adventurer heading to the new world? Welcome. Have you heard about how our ship moves?", "", bc_self;
 	sleep2 2000;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : No, I have not.", bc_self;
@@ -10104,24 +10117,29 @@ conch_in,59,29,5	script	Engineer#dorcon01	4_CAT_SAILOR5,{
 	sleep2 1000;
 	emotion ET_SWEAT;
 	npctalk "Oh, wait. You're not taking me seriously, are you? It's a joke, a joke!", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
 // in E_F
 conch_in,59,91,5	script	Passenger#dorcon04	4_F_ALCHE_A,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Heading to Midgard? It's my first time in Lasagna and It's great, really! So I'm just going to stay here for good. I found a place to live and signed the papers, too!", "", bc_self;
 	sleep2 2000;
 	npctalk "I'm on my way to pack up my stuff in Midgard. It's great, really.", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
 // in_I_J
 conch_in,97,96,5	script	Merchant#dorcon01	4_M_MERCAT2,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "You can tell from this bundle, right? I'm not a rookie adventurer. I'm a merchant who travels to different places and sells stuff.", "", bc_self;
 	sleep2 2000;
 	npctalk "I heard that Igdrasil is rare in the new world since there are none. So I'm going to try selling it over there.", "", bc_self;
 	sleep2 2000;
 	npctalk "If there is anything else that might sell, I'm going to buy some and sell them there. I'm going be a millionaire.", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -10131,20 +10149,25 @@ conch_in,135,91,5	script	Passenger#dorcon01	4_CAT_ADV2,{
 	end;
 }
 conch_in,135,93,5	script	Passenger#dorcon03	4_DR_TORTEL,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Is this your first time on Con-Chliina? I was on this ship before to get to the new world once my training was over. Back then, the food was really good, so...", "", bc_self;
 	sleep2 2000;
 	npctalk "The minute I landed on the new world, I went right back to the boat. Just loved the food...", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 conch_in,137,98,3	script	Passenger#dorcon02	4_DR_F_01,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "It's my first time in the new world and I'm really excited. Did you decide what you'll do first when you get there? I want to go to the Mjolnir Mountains first!", "", bc_self;
 	sleep2 2000;
 	npctalk "The minute I saw it on [A Guide for New Adventurers to the New World], I promised myself that I would go! I heard It's got wonderful landscapes!", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
 // in_P_O
 conch_in,169,70,3	script	Crewman#dorcon02	4_CAT_SAILOR2,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "Midgard has been discovered, so I wonder if there's any other place out there. Place where we've never been to and not on the map.", "", bc_self;
 	sleep2 2000;
 	npctalk "You think there's such a place?", "Crewman#dorcon03", bc_self;
@@ -10154,13 +10177,16 @@ conch_in,169,70,3	script	Crewman#dorcon02	4_CAT_SAILOR2,{
 	npctalk "Do you think It's looking for us too?", "Crewman#dorcon03", bc_self;
 	sleep2 2000;
 	npctalk "Oh, my heart is beating just from the thought of it.", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 conch_in,166,68,6	script	Crewman#dorcon03	4_CAT_SAILOR1,{
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "You know, I think First Officer Stello may be able to find another sea route to the new world That's not on the map.", "", bc_self;
 	sleep2 2000;
 	npctalk "Indeed, if it does exist then we can find it and sail on it someday!", "Crewman#dorcon02", bc_self;
 	sleep2 2000;
 	npctalk "I should stay on Con-Chliina for a long time and witness the moment when we make a discovery.", "", bc_self;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }

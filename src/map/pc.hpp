@@ -193,6 +193,12 @@ struct s_add_drop {
 	unsigned short class_; ///Target Class, bitwise value of 1<<x
 };
 
+struct s_vanish_bonus {
+	int16 rate; // 1000 = 100%
+	int16 per; // 100 = 100%
+	int flag;
+};
+
 /// AutoBonus bonus struct
 struct s_autobonus {
 	short rate;
@@ -251,7 +257,6 @@ struct map_session_data {
 		unsigned int noask :1; // [LuzZza]
 		unsigned int trading :1; //[Skotlex] is 1 only after a trade has started.
 		unsigned int deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
-		unsigned int monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
 		unsigned int size :2; // for tiny/large types
 		unsigned int night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
 		unsigned int using_fake_npc :1;
@@ -289,6 +294,7 @@ struct map_session_data {
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 		bool cashshop_open;
 		bool sale_open;
+		unsigned int block_action : 10;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -327,7 +333,8 @@ struct map_session_data {
 	unsigned short mapindex;
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
-	int npc_id,areanpc_id,npc_shopid,touching_id; //for script follow scriptoid;   ,npcid
+	int npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
+	std::vector<int> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_menu; // internal variable, used in npc menu handling
 	int npc_amount;
@@ -429,6 +436,7 @@ struct map_session_data {
 		skillvarcast, skilldelay, itemhealrate, add_def, add_mdef, add_mdmg, reseff, itemgrouphealrate;
 	std::vector<s_add_drop> add_drop;
 	std::vector<s_addele2> subele2;
+	std::vector<s_vanish_bonus> sp_vanish, hp_vanish;
 	std::vector<s_autobonus> autobonus, autobonus2, autobonus3; //Auto script on attack, when attacked, on skill usage
 
 	// zeroed structures start here
@@ -478,8 +486,6 @@ struct map_session_data {
 		short add_steal_rate;
 		int add_heal_rate, add_heal2_rate;
 		int sp_gain_value, hp_gain_value, magic_sp_gain_value, magic_hp_gain_value;
-		short sp_vanish_rate, hp_vanish_rate;
-		short sp_vanish_per, hp_vanish_per;
 		unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
 		unsigned short unbreakable_equip; //100% break resistance on certain equipment
 		unsigned short unstripable_equip;

@@ -1899,6 +1899,24 @@ enum e_hat_effects {
 };
 
 /**
+ * Player blocking actions related flags.
+ */
+enum e_pcblock_action_flag : uint16 {
+	PCBLOCK_MOVE     = 0x001,
+	PCBLOCK_ATTACK   = 0x002,
+	PCBLOCK_SKILL    = 0x004,
+	PCBLOCK_USEITEM  = 0x008,
+	PCBLOCK_CHAT     = 0x010,
+	PCBLOCK_IMMUNE   = 0x020,
+	PCBLOCK_SITSTAND = 0x040,
+	PCBLOCK_COMMANDS = 0x080,
+	PCBLOCK_NPCCLICK = 0x100,
+	PCBLOCK_NPC      = 0x18D,
+	PCBLOCK_EMOTION  = 0x200,
+	PCBLOCK_ALL      = 0x3FF,
+};
+
+/**
  * used to generate quick script_array entries
  **/
 extern struct eri *array_ers;
@@ -1941,7 +1959,8 @@ void script_run_autobonus(const char *autobonus, struct map_session_data *sd, un
 const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
-void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
+void script_set_constant_(const char* name, int value, const char* constant_name, bool isparameter, bool deprecated);
+#define script_set_constant(name, value, isparameter, deprecated) script_set_constant_(name, value, NULL, isparameter, deprecated)
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);

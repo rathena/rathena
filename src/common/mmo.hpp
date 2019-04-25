@@ -407,6 +407,7 @@ struct s_pet {
 	char name[NAME_LENGTH];
 	char rename_flag;
 	char incubate;
+	bool autofeed;
 };
 
 struct s_homunculus {	//[orn]
