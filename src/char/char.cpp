@@ -685,7 +685,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	if (tableswitch == TABLE_INVENTORY)
 		StringBuf_Printf(&buf, ", `favorite`, `equip_switch`");
 	for( j = 0; j < MAX_SLOTS; ++j )
-		StringBuf_Printf(&buf, ", `card%u`", j);
+		StringBuf_Printf(&buf, ", `card%d`", j);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
 		StringBuf_Printf(&buf, ", `option_id%d`", j);
 		StringBuf_Printf(&buf, ", `option_val%d`", j);
