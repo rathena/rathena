@@ -9103,7 +9103,9 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	break;
 	// Strip skills, need to divest something or it fails.
 	case SC_STRIPWEAPON:
-		if (sd && !(flag&SCSTART_LOADED)) { // Apply sc anyway if loading saved sc_data
+		if (val2 == 1)
+			val2 = 0; // Brandish Spear/Bowling Bash effet. Do not take weapon off.
+		else if (sd && !(flag&SCSTART_LOADED)) { // Apply sc anyway if loading saved sc_data
 			short i;
 			opt_flag = 0; // Reuse to check success condition.
 			if(sd->bonus.unstripable_equip&EQP_WEAPON)
