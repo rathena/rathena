@@ -376,11 +376,11 @@ void initChangeTables(void)
 		);
 #endif
 	set_sc( KN_AUTOCOUNTER		, SC_AUTOCOUNTER	, EFST_AUTOCOUNTER	, SCB_NONE );
-	set_sc( PR_IMPOSITIO		, SC_IMPOSITIO		, EFST_IMPOSITIO		,
-#ifndef RENEWAL
-		SCB_WATK );
+	set_sc( PR_IMPOSITIO		, SC_IMPOSITIO		, EFST_IMPOSITIO	, SCB_WATK
+#ifdef RENEWAL
+		|SCB_MATK );
 #else
-		SCB_WATK|SCB_MATK );
+		);
 #endif
 	set_sc( PR_SUFFRAGIUM		, SC_SUFFRAGIUM		, EFST_SUFFRAGIUM		, SCB_NONE );
 	set_sc( PR_ASPERSIO		, SC_ASPERSIO		, EFST_ASPERSIO		, SCB_ATK_ELE );
@@ -6421,6 +6421,8 @@ static unsigned short status_calc_ematk(struct block_list *bl, struct status_cha
 	if (!sc || !sc->count)
 		return cap_value(matk,0,USHRT_MAX);
 
+	if (sc->data[SC_IMPOSITIO])
+		matk += sc->data[SC_IMPOSITIO]->val2;
 	if (sc->data[SC_MATKPOTION])
 		matk += sc->data[SC_MATKPOTION]->val1;
 	if (sc->data[SC_MATKFOOD])
@@ -6522,8 +6524,6 @@ static unsigned short status_calc_matk(struct block_list *bl, struct status_chan
 		matk += 30;
 	if (sc->data[SC_SHRIMP])
 		matk += matk * sc->data[SC_SHRIMP]->val2 / 100;
-	if (sc->data[SC_IMPOSITIO])
-		matk += sc->data[SC_IMPOSITIO]->val2;
 	if (sc->data[SC_VOLCANO])
 		matk += sc->data[SC_VOLCANO]->val2;
 #ifdef RENEWAL
