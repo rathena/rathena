@@ -1271,9 +1271,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				damage += damage * 15 / 100;
 			else
 				damage += damage * 30 / 100;
-
-			if (--sc->data[SC_RAID]->val1 == 0)
-				status_change_end(bl, SC_RAID, INVALID_TIMER);
 		}
 #endif
 
