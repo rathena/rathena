@@ -9354,7 +9354,10 @@ bool pc_can_attack( struct map_session_data *sd, int target_id ) {
 	if (sd->state.block_action & PCBLOCK_ATTACK)
 		return false;
 
-	if( sd->sc.data[SC_BASILICA] ||
+	if(
+#ifndef RENEWAL
+		sd->sc.data[SC_BASILICA] ||
+#endif
 		sd->sc.data[SC__SHADOWFORM] ||
 		sd->sc.data[SC_CURSEDCIRCLE_ATKER] ||
 		sd->sc.data[SC_CURSEDCIRCLE_TARGET] ||
@@ -12608,6 +12611,10 @@ void pc_bonus_script_clear(struct map_session_data *sd, uint16 flag) {
  * @param sd: Target player
  */
 void pc_cell_basilica(struct map_session_data *sd) {
+#ifdef RENEWAL
+	return;
+#endif
+
 	nullpo_retv(sd);
 	
 	if (!map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKBASILICA)) {

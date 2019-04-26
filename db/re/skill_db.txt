@@ -520,7 +520,7 @@
 //****
 // High Priest
 361,9,6,16,0,0x1,1,5,1,yes,0,0,0,magic,0,0x0,	HP_ASSUMPTIO,Assumptio
-362,9,6,16,0,0x1,0,5,1,yes,0,0,1,magic,0,0x0,		HP_BASILICA,Basilica
+362,0,6,4,0,0x1,0,5,1,yes,0,0,0,magic,0,0x0,		HP_BASILICA,Basilica
 363,0,0,0,0,0,0,10,0,no,0,0,0,magic,0,0x0,		HP_MEDITATIO,Meditatio
 
 //****

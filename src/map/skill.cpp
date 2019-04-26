@@ -2781,7 +2781,7 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 		BLOWN_NO_KNOCKBACK_MAP - at WOE/BG map
 		BLOWN_MD_KNOCKBACK_IMMUNE - if target is MD_KNOCKBACK_IMMUNE
 		BLOWN_TARGET_NO_KNOCKBACK - if target has 'special_state.no_knockback'
-		BLOWN_TARGET_BASILICA - if target is in Basilica area
+		BLOWN_TARGET_BASILICA - if target is in Basilica area (Pre-Renewal)
  * @return Number of knocked back cells done
  */
 short skill_blown(struct block_list* src, struct block_list* target, char count, int8 dir, enum e_skill_blown flag)
