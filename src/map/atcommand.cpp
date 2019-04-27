@@ -49,7 +49,6 @@
 #include "script.hpp"
 #include "storage.hpp"
 #include "trade.hpp"
-#include "mob.hpp"
 
 #define ATCOMMAND_LENGTH 50
 #define ACMD_FUNC(x) static int atcommand_ ## x (const int fd, struct map_session_data* sd, const char* command, const char* message)
@@ -7257,7 +7256,7 @@ ACMD_FUNC(mobinfo)
 			if (mob->dropitem[i].nameid <= 0 || mob->dropitem[i].p < 1 || (item_data = itemdb_exists(mob->dropitem[i].nameid)) == NULL)
 				continue;
 			droprate = mob->dropitem[i].p;
-			droprate2 = getdroprate(droprate, -1, mob->lv, mob->status.class_, mob->status.race, &sd->bl, sd);
+			droprate2 = mob_getdroprate(&sd->bl, mob, droprate, 100);
 
 			if (item_data->slot)
 				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)droprate2 / 100);
