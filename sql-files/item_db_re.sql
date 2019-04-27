@@ -12670,9 +12670,9 @@ REPLACE INTO `item_db_re` VALUES (31475,'C_Black_Fox_Ear_Ribbon','C Black Fox Ea
 REPLACE INTO `item_db_re` VALUES (31476,'C_Cherry_Blossom_Hat_YL','C Yellow Cherry Blossom Hat',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1727,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31478,'C_Eleanor_Wig_','C Eleanors Wig Lower',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1502,NULL,NULL,NULL);
 #
-REPLACE INTO `item_db_re` VALUES (31479,'C_Group_of_Stars','Costume Group of Stars',4,NULL,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,4096,NULL,'1',0,1729,'hateffect(HAT_EF_MANYSTARS,true);',NULL,'hateffect(HAT_EF_MANYSTARS,false);');
+REPLACE INTO `item_db_re` VALUES (31479,'C_Group_of_Stars','Costume Group of Stars',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1729,'hateffect(HAT_EF_MANYSTARS,true);',NULL,'hateffect(HAT_EF_MANYSTARS,false);');
 REPLACE INTO `item_db_re` VALUES (31588,'C_Snow_Flower','C Snow Flower',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1799,'hateffect(HAT_EF_SNOWFLAKE_TIARA,true);',NULL,'hateffect(HAT_EF_SNOWFLAKE_TIARA,false);');
-REPLACE INTO `item_db_re` VALUES (31602,'C_Midgarts_Glory','C Rune Midgarts Glory',,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',NULL,1807,'hateffect(HAT_EF_MIDGARTS_GLORY,true);',NULL,'hateffect(HAT_EF_MIDGARTS_GLORY,false);');
+REPLACE INTO `item_db_re` VALUES (31602,'C_Midgarts_Glory','C Rune Midgarts Glory',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1807,'hateffect(HAT_EF_MIDGARTS_GLORY,true);',NULL,'hateffect(HAT_EF_MIDGARTS_GLORY,false);');
 REPLACE INTO `item_db_re` VALUES (32005,'Illusion_Pole_Axe','Illusion Pole Axe',5,0,NULL,1500,'190',NULL,3,2,0x00004082,63,2,2,4,'120',1,4,'.@r = getrefine(); bonus bStr,3; bonus bInt,2; bonus bDex,2; if (.@r >= 13) { .@val = -2000; } else if (.@r >= 9) { .@val = -1000; } bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",.@val;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (32019,'Boost_Lance-OS','Boost Lance-OS',5,20,NULL,1000,'190',NULL,3,2,0x00004000,56,2,2,4,'130',1,4,'.@r = getrefine(); .@aspd = 3; if (.@r >= 7) { .@aspd += 7; if (.@r >= 9) { .@dmg = 20; if (.@r >= 11) { .@dmg += 15; } bonus2 bSkillAtk,"LG_BANISHINGPOINT",.@dmg; } } bonus bAspdRate,.@aspd;',NULL,NULL);
 #
