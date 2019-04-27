@@ -2430,7 +2430,7 @@ int mob_getdroprate(struct block_list *src, struct mob_db *mob, int base_rate, i
 
 	int drop_rate = base_rate;
 
-	if ((battle_config.mob_size_influence) && (mob->status.size > -1)) { // Change drops depending on monsters size [Valaris]
+	if (battle_config.mob_size_influence) { // Change drops depending on monsters size [Valaris]
 		if (mob->status.size == SZ_MEDIUM && drop_rate >= 2)
 			drop_rate /= 2; // SZ_MEDIUM actually is small size modification... this is not a bug!
 		else if (mob->status.size == SZ_BIG)
