@@ -2072,7 +2072,7 @@ Body:
         bonus bMdef,4;
       }
   - Mob: ORK_HERO
-    EggItem: Orc_Hero_Egg
+    EggItem: Orc_Hero_Egg_
     FoodItem: Pet_Food
     Fullness: 2
     HungryDelay: 120
