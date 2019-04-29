@@ -6047,6 +6047,12 @@
 9113,Skelion_Egg,Skelion Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9114,Pouring_Egg,Pouring Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9115,Bacsojin2_Egg_,Bacsojin Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9116,Furious_Nightmare_Terror_Egg,Furious Nightmare Terror Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9117,Furious_Wanderer_Egg,Furious Wanderer Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9118,Aliot_Egg,Aliot Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9119,Alicel_Egg,Alicel Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9120,Aliza_Egg,Aliza Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
+9121,Orc_Hero_Egg,Orc Hero Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 //===================================================================
 // Pet Accessories
 //===================================================================
