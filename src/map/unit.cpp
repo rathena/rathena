@@ -2881,7 +2881,9 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 
 	if(sc && sc->count ) { // map-change/warp dispells.
 		status_change_end(bl, SC_BLADESTOP, INVALID_TIMER);
-#ifndef RENEWAL
+#ifdef RENEWAL
+		status_change_end(bl, SC_BASILICA_CELL, INVALID_TIMER);
+#else
 		status_change_end(bl, SC_BASILICA, INVALID_TIMER);
 #endif
 		status_change_end(bl, SC_ANKLE, INVALID_TIMER);

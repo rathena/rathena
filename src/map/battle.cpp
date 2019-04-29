@@ -1103,12 +1103,15 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 #endif
 
 	if( sc && sc->count ) { // SC_* that reduce damage to 0.
-#ifndef RENEWAL
-		if( sc->data[SC_BASILICA] && !status_bl_has_mode(src,MD_STATUS_IMMUNE) ) {
+#ifdef RENEWAL
+		if (sc->data[SC_BASILICA_CELL]
+#else
+		if (sc->data[SC_BASILICA]
+#endif
+			&& !status_bl_has_mode(src,MD_STATUS_IMMUNE) ) {
 			d->dmg_lv = ATK_BLOCK;
 			return 0;
 		}
-#endif
 		if( sc->data[SC_WHITEIMPRISON] ) { // Pre-Renewal: Gravitation and Pressure do damage without removing the effect
 			if( skill_id == MG_NAPALMBEAT ||
 				skill_id == MG_SOULSTRIKE ||

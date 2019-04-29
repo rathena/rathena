@@ -13671,10 +13671,8 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 		map_getcell(bl->m, bl->x, bl->y, CELL_CHKMAELSTROM) )
 		return 0; //AoE skills are ineffective. [Skotlex]
 
-#ifndef RENEWAL
 	if( skill_get_inf2(sg->skill_id)&(INF2_SONG_DANCE|INF2_ENSEMBLE_SKILL) && map_getcell(bl->m, bl->x, bl->y, CELL_CHKBASILICA) )
 		return 0; //Songs don't work in Basilica
-#endif
 
 	sc = status_get_sc(bl);
 

@@ -1567,7 +1567,9 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_BLADESTOP]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP_WAIT]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_GOSPEL]				|= SCS_NOMOVE|SCS_NOMOVECOND;
-#ifndef RENEWAL
+#ifdef RENEWAL
+	StatusChangeStateTable[SC_BASILICA_CELL]		|= SCS_NOMOVE|SCS_NOMOVECOND;
+#else
 	StatusChangeStateTable[SC_BASILICA]				|= SCS_NOMOVE|SCS_NOMOVECOND;
 #endif
 	StatusChangeStateTable[SC_STOP]					|= SCS_NOMOVE;
