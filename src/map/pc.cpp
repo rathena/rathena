@@ -2765,19 +2765,21 @@ static void pc_bonus_subele(struct map_session_data* sd, unsigned char ele, shor
  * @param bonus: Bonus array
  * @param id: Key
  * @param val: Value
+ * @param cap_rate: If Value is a rate value that needs to be capped
  */
-static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int val)
+static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int val, bool cap_rate)
 {
 	for (auto &it : bonus) {
 		if (it.id == id) {
-			it.val = cap_value(it.val + val, -10000, 10000);
+			if (cap_rate)
+				it.val = cap_value(it.val + val, -10000, 10000);
 			return;
 		}
 	}
 
 	struct s_item_bonus entry = {};
 
-	if (val < -10000 || val > 10000)
+	if (cap_rate && (val < -10000 || val > 10000))
 		ShowWarning("pc_bonus_itembonus: Item bonus val %d exceeds -10000~10000 range, capping.\n", val);
 
 	entry.id = id;
@@ -3556,7 +3558,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->reseff, type2, val);
+		pc_bonus_itembonus(sd->reseff, type2, val, true);
 		break;
 	case SP_MAGIC_ADDELE: // bonus2 bMagicAddEle,e,x;
 		PC_BONUS_CHK_ELEMENT(type2,SP_MAGIC_ADDELE);
@@ -3591,7 +3593,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 				break;
 			}
 
-			pc_bonus_itembonus(wd->add_dmg, type2, val);
+			pc_bonus_itembonus(wd->add_dmg, type2, val, false);
 		}
 		break;
 	case SP_ADD_MAGIC_DAMAGE_CLASS: // bonus2 bAddMagicDamageClass,mid,x;
@@ -3602,7 +3604,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->add_mdmg, type2, val);
+		pc_bonus_itembonus(sd->add_mdmg, type2, val, false);
 		break;
 	case SP_ADD_DEF_MONSTER: // bonus2 bAddDefMonster,mid,x;
 		if(sd->state.lr_flag == 2)
@@ -3612,7 +3614,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->add_def, type2, val);
+		pc_bonus_itembonus(sd->add_def, type2, val, false);
 		break;
 	case SP_ADD_MDEF_MONSTER: // bonus2 bAddMDefMonster,mid,x;
 		if(sd->state.lr_flag == 2)
@@ -3622,7 +3624,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->add_mdef, type2, val);
+		pc_bonus_itembonus(sd->add_mdef, type2, val, false);
 		break;
 	case SP_HP_DRAIN_RATE: // bonus2 bHPDrainRate,x,n;
 		if(!sd->state.lr_flag) {
@@ -3713,7 +3715,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillatk, type2, val);
+		pc_bonus_itembonus(sd->skillatk, type2, val, false);
 		break;
 	case SP_SKILL_HEAL: // bonus2 bSkillHeal,sk,n;
 		if(sd->state.lr_flag == 2)
@@ -3723,7 +3725,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		
-		pc_bonus_itembonus(sd->skillheal, type2, val);
+		pc_bonus_itembonus(sd->skillheal, type2, val, false);
 		break;
 	case SP_SKILL_HEAL2: // bonus2 bSkillHeal2,sk,n;
 		if(sd->state.lr_flag == 2)
@@ -3733,7 +3735,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		
-		pc_bonus_itembonus(sd->skillheal2, type2, val);
+		pc_bonus_itembonus(sd->skillheal2, type2, val, false);
 		break;
 	case SP_ADD_SKILL_BLOW: // bonus2 bAddSkillBlow,sk,n;
 		if(sd->state.lr_flag == 2)
@@ -3743,7 +3745,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		
-		pc_bonus_itembonus(sd->skillblown, type2, val);
+		pc_bonus_itembonus(sd->skillblown, type2, val, false);
 		break;
 	case SP_HP_LOSS_RATE: // bonus2 bHPLossRate,n,t;
 		if(sd->state.lr_flag != 2) {
@@ -3798,7 +3800,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->itemhealrate, type2, val);
+		pc_bonus_itembonus(sd->itemhealrate, type2, val, false);
 		break;
 	case SP_ADD_ITEMGROUP_HEAL_RATE: // bonus2 bAddItemGroupHealRate,ig,n;
 		if (sd->state.lr_flag == 2)
@@ -3812,7 +3814,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->itemgrouphealrate, type2, val);
+		pc_bonus_itembonus(sd->itemgrouphealrate, type2, val, false);
 		break;
 	case SP_EXP_ADDRACE: // bonus2 bExpAddRace,r,x;
 		PC_BONUS_CHK_RACE(type2,SP_EXP_ADDRACE);
@@ -3913,7 +3915,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 		
-		pc_bonus_itembonus(sd->skillusesprate, type2, val);
+		pc_bonus_itembonus(sd->skillusesprate, type2, val, true);
 		break;
 	case SP_SKILL_DELAY:
 		if(sd->state.lr_flag == 2)
@@ -3923,7 +3925,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skilldelay, type2, val);
+		pc_bonus_itembonus(sd->skilldelay, type2, val, false);
 		break;
 	case SP_SKILL_COOLDOWN: // bonus2 bSkillCooldown,sk,t;
 		if(sd->state.lr_flag == 2)
@@ -3933,7 +3935,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillcooldown, type2, val);
+		pc_bonus_itembonus(sd->skillcooldown, type2, val, false);
 		break;
 #ifdef RENEWAL_CAST
 	case SP_SKILL_FIXEDCAST: // bonus2 bSkillFixedCast,sk,t;
@@ -3944,7 +3946,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillfixcast, type2, val);
+		pc_bonus_itembonus(sd->skillfixcast, type2, val, false);
 		break;
 	case SP_SKILL_VARIABLECAST: // bonus2 bSkillVariableCast,sk,t;
 		if(sd->state.lr_flag == 2)
@@ -3954,7 +3956,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillvarcast, type2, val);
+		pc_bonus_itembonus(sd->skillvarcast, type2, val, false);
 		break;
 	case SP_CASTRATE: // bonus2 bCastrate,sk,n;
 	case SP_VARCASTRATE: // bonus2 bVariableCastrate,sk,n;
@@ -3965,7 +3967,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillcastrate, type2, -val); // Send inversed value here
+		pc_bonus_itembonus(sd->skillcastrate, type2, -val, true); // Send inversed value here
 		break;
 	case SP_FIXCASTRATE: // bonus2 bFixedCastrate,sk,n;
 		if(sd->state.lr_flag == 2)
@@ -3975,7 +3977,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillfixcastrate, type2, -val); // Send inversed value here
+		pc_bonus_itembonus(sd->skillfixcastrate, type2, -val, true); // Send inversed value here
 		break;
 #else
 	case SP_SKILL_FIXEDCAST: // bonus2 bSkillFixedCast,sk,t;
@@ -3992,7 +3994,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillcastrate, type2, val);
+		pc_bonus_itembonus(sd->skillcastrate, type2, val, true);
 		break;
 #endif
 	case SP_SKILL_USE_SP: // bonus2 bSkillUseSP,sk,n;
@@ -4003,7 +4005,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->skillusesp, type2, val);
+		pc_bonus_itembonus(sd->skillusesp, type2, val, false);
 		break;
 	case SP_SUB_SKILL: // bonus2 bSubSkill,sk,n;
 		if (sd->subskill.size() == MAX_PC_BONUS) {
@@ -4011,7 +4013,7 @@ void pc_bonus2(struct map_session_data *sd,int type,int type2,int val)
 			break;
 		}
 
-		pc_bonus_itembonus(sd->subskill, type2, val);
+		pc_bonus_itembonus(sd->subskill, type2, val, false);
 		break;
 	case SP_SUBDEF_ELE: // bonus2 bSubDefEle,e,x;
 		PC_BONUS_CHK_ELEMENT(type2,SP_SUBDEF_ELE);
