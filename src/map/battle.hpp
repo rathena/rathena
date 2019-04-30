@@ -655,6 +655,8 @@ struct Battle_Config
 	int min_shop_buy;
 	int min_shop_sell;
 	int feature_equipswitch;
+	int persistent_favorites;
+	int persistent_favorites_equipment;
 
 #include "../custom/battle_config_struct.inc"
 };
