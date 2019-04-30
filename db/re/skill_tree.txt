@@ -1343,8 +1343,8 @@
 4021,394,10,47,5,324,1,46,5,0,0,0,0 //CG_ARROWVULCAN#Vulcan Arrow#
 4021,395,5,45,5,323,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
 4021,396,1,45,10,323,5,0,0,0,0,0,0 //CG_MARIONETTE#Marionette Control#
-//4021,487,5,315,10,396,1,317,3,0,0,0,0 //CG_LONGINGFREEDOM#Longing for Freedom# // Replaced with Skilled Special Singer
-4021,5068,1,315,10,396,1,317,3,0,0,0,0 //CG_SPECIALSINGER#Skilled Special Singer#
+//4021,487,5,323,10,396,1,325,3,0,0,0,0 //CG_LONGINGFREEDOM#Longing for Freedom# // Replaced with Skilled Special Singer
+4021,5068,1,323,10,396,1,325,3,0,0,0,0 //CG_SPECIALSINGER#Skilled Special Singer#
 4021,488,5,45,10,323,10,0,0,0,0,0,0 //CG_HERMODE#Wand of Hermod#
 4021,489,5,45,10,325,3,0,0,0,0,0,0 //CG_TAROTCARD#Tarot Card of Fate#
 4021,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
@@ -3733,8 +3733,8 @@
 4076,394,10,47,5,324,1,46,5,0,0,0,0 //CG_ARROWVULCAN#Vulcan Arrow#
 4076,395,5,45,5,323,7,0,0,0,0,0,0 //CG_MOONLIT#Sheltering Bliss#
 4076,396,1,45,10,323,5,0,0,0,0,0,0 //CG_MARIONETTE#Marionette Control#
-//4076,487,5,315,10,396,1,317,3,0,0,0,0 //CG_LONGINGFREEDOM#Longing for Freedom# // Replaced with Skilled Special Singer
-4076,5068,1,315,10,396,1,317,3,0,0,0,0 //CG_SPECIALSINGER#Skilled Special Singer#
+//4076,487,5,323,10,396,1,325,3,0,0,0,0 //CG_LONGINGFREEDOM#Longing for Freedom# // Replaced with Skilled Special Singer
+4076,5068,1,323,10,396,1,325,3,0,0,0,0 //CG_SPECIALSINGER#Skilled Special Singer#
 4076,488,5,45,10,323,10,0,0,0,0,0,0 //CG_HERMODE#Wand of Hermod#
 4076,489,5,45,10,325,3,0,0,0,0,0,0 //CG_TAROTCARD#Tarot Card of Fate#
 4076,410,1,0,0,0,0,0,0,0,0,0,0 //WE_CALLBABY#Call Baby#
