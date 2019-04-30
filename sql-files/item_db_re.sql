@@ -4099,7 +4099,7 @@ REPLACE INTO `item_db_re` VALUES (5907,'Sea_Captain_Hat','Sea Captain Hat',4,0,N
 REPLACE INTO `item_db_re` VALUES (5914,'Earmuff_Flowerform','C Flutter Butterfly',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1378,'hateffect HAT_EF_FLUTTER_BUTTERFLY,true;',NULL,'hateffect HAT_EF_FLUTTER_BUTTERFLY,false;');
 REPLACE INTO `item_db_re` VALUES (5917,'Yellow_Scarf','Yellow Scarf',4,0,NULL,100,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1,NULL,'90',0,1170,'bonus bLongAtkDef,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5918,'Gambler_Seal','Gambler Seal',4,0,NULL,500,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,512,NULL,'70',0,1202,'.@dex = readparam(bDex); .@luk = readparam(bLuk); .@critical = 3 + (.@luk / 10); .@critical_dmg = 3 - (.@dex/10) * 2; .@sub_arrowstorm = 10; .@sub_gateofhell = 10; bonus bBaseAtk,(.@luk/10)*2; bonus bMatk,(.@luk / 10) * 2; if (.@luk > 107) { .@critical += 5; .@critical_dmg += 10; } if (.@luk > 119) { .@critical += 10; .@critical_dmg += 17; .@sub_arrowstorm += 30; .@sub_gateofhell += 30; } bonus bCritical,.@critical; bonus bCritAtkRate,.@critical_dmg; bonus2 bSubSkill,"RA_ARROWSTORM",.@sub_arrowstorm; bonus2 bSubSkill,"SR_GATEOFHELL",.@sub_gateofhell;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (5919,'Camellia_Hair_Pin','Camellia Hair Pin',4,0,NULL,1000,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,256,NULL,'50',1,1203,'bonus bMdef,20; bonus3 bAutoSpell,"AL_PNEUMA",1,30+getrefine()*5; /* CONFIRM The Rate*/',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (5919,'Camellia_Hair_Pin','Camellia Hair Pin',4,0,NULL,1000,NULL,NULL,NULL,1,0xFFFFFFFF,63,2,256,NULL,'50',1,1203,'bonus bMdef,20; bonus3 bAutoSpell,"AL_PNEUMA",1,30+getrefine()*5; hateffect(HAT_EF_CAMELLIA_HAIR_PIN,true); /* CONFIRM The Rate*/',NULL,'hateffect(HAT_EF_CAMELLIA_HAIR_PIN,false);');
 REPLACE INTO `item_db_re` VALUES (5920,'Medical_Boots','Medical Boots',4,0,NULL,300,NULL,10,NULL,0,0xFFFFFFFF,63,2,64,NULL,'10',1,NULL,'.@r = getrefine(); bonus bHealPower,10+((.@r/2) * 2); bonus2 bSkillUseSP,"AB_CHEAL",(.@r * 5);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5943,'Owlviscount_Silk_Hat','Owl Viscount Silk Hat',4,0,NULL,500,NULL,15,NULL,1,0xFFFFFFFF,63,2,256,NULL,'70',1,1323,'bonus bInt,1; bonus bAspdRate,10; .@r = getrefine(); bonus bMatk,7*.@r; autobonus "{ .@r = getrefine(); bonus bAspdRate,(.@r >= 9 ? 40 : ((.@r >= 7) ? 10 : ((.@r >= 5) ? 5 : 1))); }",.@r*20,30000,BF_MAGIC,"{ specialeffect2 EF_SPELLBREAKER; }";',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5966,'KarduiEar','KarduiEar',4,0,NULL,300,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,512,NULL,'70',0,1357,'.@dex = readparam(bDex); bonus bMatk,(.@dex > 10) ? .@dex/10*2 : 0; if (.@dex > 107) { bonus bVariableCastrate,-10; bonus bMatk,60; } if (.@dex > 119) { bonus bVariableCastrate,-5; bonus bMatk,100; }',NULL,NULL);
@@ -10064,7 +10064,7 @@ REPLACE INTO `item_db_re` VALUES (19092,'Machoman_Glasses_','Machoman\'s Glasses
 REPLACE INTO `item_db_re` VALUES (19093,'Spinning_Eyes_','Geek Glasses',4,20000,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,63,2,512,NULL,'0',0,27,'bonus2 bResEff,Eff_Blind,800;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19094,'Mr_Smile_','Mr. Smile',4,60,NULL,100,NULL,1,NULL,1,0xFFFFFFFF,63,2,513,NULL,'0',0,65,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19095,'Happy_Balloon','Happy Balloon',4,0,NULL,10,NULL,0,NULL,0,0xFFFFFFFF,63,2,1,NULL,'1',0,1289,'bonus2 bDropAddRace,RC_All,5; bonus2 bExpAddRace,RC_All,5;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (19109,'Valhalla_Idol','Valhalla Idol',4,0,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,63,2,512,NULL,'70',0,1423,'bonus bMaxSP,50; bonus4 bAutoSpellWhenHit,"MG_SAFETYWALL",10,50,0;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (19109,'Valhalla_Idol','Valhalla Idol',4,0,NULL,300,NULL,2,NULL,0,0xFFFFFFFF,63,2,512,NULL,'70',0,1423,'bonus bMaxSP,50; bonus4 bAutoSpellWhenHit,"MG_SAFETYWALL",10,50,0; hateffect(HAT_EF_VALHALLA_IDOL,true);',NULL,'hateffect(HAT_EF_VALHALLA_IDOL,false);');
 REPLACE INTO `item_db_re` VALUES (19111,'Laser_Of_Eagle','Laser of Eagle',4,0,NULL,400,NULL,5,NULL,1,0xFFFFFFFF,63,2,256,NULL,'100',1,1424,'bonus bDex,2; bonus bLongAtkRate,10; bonus5 bAutoSpell,"PR_LEXAETERNA",1,50,BF_LONG,1; /*TODO: Chance to transform become Shechil while attacking.*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19115,'Republic_Hat','Republic Hat',4,0,NULL,400,NULL,3,NULL,1,0xFFFFFFFF,63,2,256,NULL,'100',1,1458,'.@r = getrefine(); .@val = 6; if (.@r >= 7) { .@val += 2; } if (.@r >= 9) { .@val += 4; } bonus bLongAtkRate,.@val;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19116,'Red_Baby_Dragon','Red Baby Dragon',4,0,NULL,700,NULL,NULL,1,1,0xFFFFFFFF,63,2,256,NULL,'90',1,1463,'.@r=getrefine(); bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus2 bSkillAtk,"RK_DRAGONBREATH",(.@r>=8?45:(.@r>=6?30:15)); bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",(.@r>=8?45:(.@r>=6?30:15));',NULL,NULL);
@@ -10125,6 +10125,7 @@ REPLACE INTO `item_db_re` VALUES (19428,'Illusion_Morpheus\'s_Hood','Illusion Mo
 #===================================================================
 # Costume System
 #===================================================================
+REPLACE INTO `item_db_re` VALUES (19433,'C_Resonate_Taego','Costume Resonate Taego',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1823,'hateffect(HAT_EF_RESONATETAEGO,true);',NULL,'hateffect(HAT_EF_RESONATETAEGO,false);');
 REPLACE INTO `item_db_re` VALUES (19500,'T_Mr_Smile','T Mr Smile',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,6144,NULL,'0',0,65,'bonus bStr,2;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19501,'T_Spinx_Helm','T Spinx Helm',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'0',0,137,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (19502,'T_Goggle','T Goggle',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,3072,NULL,'0',0,1,NULL,NULL,NULL);
@@ -10853,7 +10854,7 @@ REPLACE INTO `item_db_re` VALUES (20319,'C_Crimson_Booster','Costume Crimson Boo
 REPLACE INTO `item_db_re` VALUES (20320,'C_Red_Bandana','Costume Red Bandana',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,62,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20321,'C_Pterios_Fins','Costume Pterios Fins',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,1009,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20322,'C_Seal_Hat','Costume Seal Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,540,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (20323,'C_Sparkling_Sound','Costume Sparkling Sound',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,1074,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20323,'C_Sparkling_Sound','Costume Sparkling Sound',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,1074,NULL,'sc_start SC_DECORATION_OF_MUSIC,INFINITE_TICK,0;','sc_end SC_DECORATION_OF_MUSIC;');
 REPLACE INTO `item_db_re` VALUES (20324,'C_Pigeon_Hat','Costume Pigeon Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1362,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20325,'C_Little_Aquarium','Costume Little Aquarium',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,1363,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20326,'C_Sailor_Collar','Costume Sailor Collar',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,1364,NULL,NULL,NULL);
@@ -10923,7 +10924,7 @@ REPLACE INTO `item_db_re` VALUES (20400,'C_Ichthys_Rosario','Costume Ichthys Ros
 REPLACE INTO `item_db_re` VALUES (20401,'C_Angel_Guidance','Costume Angel Guidance',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1188,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20402,'C_Holy_Klobuk','Costume Holy Klobuk',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,895,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20403,'C_Dolor_Thanatos','Costume Dolor Thanatos',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,547,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (20404,'C_Blessing_Of_Angels','Costume Blessing of Angel',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,1425,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20404,'C_Blessing_Of_Angels','Costume Blessing of Angel',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,1425,'hateffect(HAT_EF_BLESSING_OF_ANGELS,true);',NULL,'hateffect(HAT_EF_BLESSING_OF_ANGELS,false);');
 REPLACE INTO `item_db_re` VALUES (20405,'C_Eremes_Scarf','Costume Eremes Scarf',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,1416,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20406,'C_Commandments_Of_Chain','Costume Chain of Commandments',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',1,1417,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20407,'C_Subject_Aura_Red','Costume Vicious Mind Aura Crimson',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',1,1418,NULL,NULL,NULL);
@@ -10948,11 +10949,11 @@ REPLACE INTO `item_db_re` VALUES (20431,'C_Magician_Headdress','Costume Magician
 REPLACE INTO `item_db_re` VALUES (20432,'C_Khalitzburg_Knight_Helm','Costume Khalitzburg Knight Helm',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1442,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20433,'C_Louise_Red_Hat','Costume Louise Red Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1443,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20434,'C_Drooping_Gunslinger','Costume Drooping Gunslinger',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1444,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (20435,'C_Camellia_Hair_Pin','Costume Camellia Hair Pin',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1203,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20435,'C_Camellia_Hair_Pin','Costume Camellia Hair Pin',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1203,'hateffect(HAT_EF_CAMELLIA_HAIR_PIN,true);',NULL,'hateffect(HAT_EF_GLOW_OF_NEW_YEAR,false);');
 REPLACE INTO `item_db_re` VALUES (20436,'C_Angelring_Furhat','Costume Angelring Furhat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,953,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20437,'C_Sakura_Hairband','Costume Sakura Hairband',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,949,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20438,'C_Abacus_In_Mouth','Costume Abacus In Mouth',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,825,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (20439,'C_New_Year_Shine','Costume New Year Shine',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,0,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20439,'C_New_Year_Shine','Costume New Year Shine',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,0,'hateffect(HAT_EF_GLOW_OF_NEW_YEAR,true);',NULL,'hateffect(HAT_EF_GLOW_OF_NEW_YEAR,false);');
 REPLACE INTO `item_db_re` VALUES (20440,'C_Tone_of_Gold','Costume Tone of Gold',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1447,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20441,'C_Large_Ribbon_Muffler_Red','Costume Large Ribbon Muffler Red',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1448,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20442,'C_Red_and_White_Mochiring_Hat','Costume Red and White Mochiring Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1449,NULL,NULL,NULL);
@@ -10965,8 +10966,9 @@ REPLACE INTO `item_db_re` VALUES (20451,'C_Sky_of_Memory','Costume Sky of Memory
 REPLACE INTO `item_db_re` VALUES (20452,'C_Crown_of_Strawberry_Prince','Costume Crown of Strawberry Prince',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',1,1455,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20455,'C_Republic_Hat','Costume Republic Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1458,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20456,'C_Combat_Vestige','Costume Combat Vestige',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1460,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20457,'C_Fluttering_Feathers','Costume Fluttering Feathers',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,0,'hateffect(HAT_EF_FEATHER_FLUTTERING,true);',NULL,'hateffect(HAT_EF_FEATHER_FLUTTERING,false);');
 REPLACE INTO `item_db_re` VALUES (20458,'C_Wild_Poring_Rider','Costume Wild Poring Rider',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1422,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (20459,'C_Valhalla_Idol','Costume Valhalla Idol',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,1423,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20459,'C_Valhalla_Idol','Costume Valhalla Idol',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,1423,'hateffect(HAT_EF_VALHALLA_IDOL,true);',NULL,'hateffect(HAT_EF_VALHALLA_IDOL,false);');
 REPLACE INTO `item_db_re` VALUES (20460,'C_Thorny_Hairband','Costume Thorny Hairband',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,921,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20461,'C_93_Style_Bloody_Wings','Costume 93 Style Bloody Wings',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,1037,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20462,'C_Cat_Ears_Cape','Costume Cat Ears Cape',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1464,NULL,NULL,NULL);
@@ -10977,6 +10979,7 @@ REPLACE INTO `item_db_re` VALUES (20466,'C_Crimson_Ribbon','Costume Crimson Ribb
 REPLACE INTO `item_db_re` VALUES (20467,'C_Elemental_Crown','Costume Elemental Crown',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1219,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20468,'C_Youinone_Mask','You in ONE',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,7168,NULL,'1',0,1462,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20470,'C_SweetChocolate_Hat','Costume Sweet Chocolate Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1469,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20487,'C_Waltz_of_Flowers','Costume Waltz of Flowers',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1473,'hateffect(HAT_EF_FLORAL_WALTZ,true);',NULL,'hateffect(HAT_EF_FLORAL_WALTZ,false);');
 REPLACE INTO `item_db_re` VALUES (20490,'C_Full_Blossom_Sakura_Hairpin_Blue','Costume Full Blossom Sakura Hairpin Blue',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1476,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20491,'C_Laser_of_Eagle','Costume Laser of Eagle',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1424,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20492,'C_Unidentified_Flying_Poring','Costume Unidentified Flying Poring',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1017,NULL,NULL,NULL);
@@ -10999,7 +11002,17 @@ REPLACE INTO `item_db_re` VALUES (20510,'C_SwordWing','Costume Sword Wing',4,0,N
 REPLACE INTO `item_db_re` VALUES (20511,'C_Blue_Fairy_Wing','Blue Wings of Fairy',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,21,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20512,'C_Bag_of_Adventurer_j','Costume Adventurer\'s Backpack',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,2,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20514,'C_Thanatos_Sword','Costume Thanatos Sword',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,23,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20515,'Costume_Magic_Circle','Costume Magic Circle',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,0,'hateffect(HAT_EF_MAGICCIRCLE,true);',NULL,'hateffect(HAT_EF_MAGICCIRCLE,false);');
 REPLACE INTO `item_db_re` VALUES (20516,'C_Wings_of_Michael','Costume Wings of Michael',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,24,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20519,'C_Full_Bloom_Cherry_Tree','Costume Full Bloom Cherry Tree',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,0,'hateffect(HAT_EF_FULL_BLOOMCHERRY_TREE,true);',NULL,'hateffect(HAT_EF_FULL_BLOOMCHERRY_TREE,false);');
+REPLACE INTO `item_db_re` VALUES (20522,'C_Blessings_Of_Soul','Costume Blessings Of Soul',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,0,'hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,true);',NULL,'hateffect(HAT_EF_C_BLESSINGS_OF_SOUL,false);');
+REPLACE INTO `item_db_re` VALUES (20524,'C_Shining_Angel_Wings','Costume Shining Angel Wings',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,0,'hateffect(HAT_EF_C_SHINING_ANGEL_WING,true);',NULL,'hateffect(HAT_EF_C_SHINING_ANGEL_WING,false);');
+REPLACE INTO `item_db_re` VALUES (20535,'C_Digital_Space','Costume Digital Space',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,0,'hateffect(HAT_EF_DIGITAL_SPACE,true);',NULL,'hateffect(HAT_EF_DIGITAL_SPACE,false);');
+REPLACE INTO `item_db_re` VALUES (20537,'C_Falling_Red_Foliage','Costume Falling Red Foliage',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,0,'hateffect(HAT_EF_C_MAPLE_WHICH_FALLS_RD,true);',NULL,'hateffect(HAT_EF_C_MAPLE_WHICH_FALLS_RD,false);');
+REPLACE INTO `item_db_re` VALUES (20538,'Costume_Magic_Circle_Rainbow','Costume Magic Circle Rainbow',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,0,'hateffect(HAT_EF_MAGICCIRCLERAINBOW,true);',NULL,'hateffect(HAT_EF_MAGICCIRCLERAINBOW,false);');
+REPLACE INTO `item_db_re` VALUES (20546,'C_Giant_Ribbon_Bell','Costume Giant Ribbon Bell',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,46,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (20547,'C_Ghost_Effect','Costume Ghost Effect',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,0,'hateffect(HAT_EF_C_GHOST_EFFECT,true);',NULL,'hateffect(HAT_EF_C_GHOST_EFFECT,false);');
+REPLACE INTO `item_db_re` VALUES (20548,'Costume_Popping_Poring_Aura','Costume Popping Poring Aura',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,0,'hateffect(HAT_EF_C_POPPING_PORING_AURA,true);',NULL,'hateffect(HAT_EF_C_POPPING_PORING_AURA,false);');
 REPLACE INTO `item_db_re` VALUES (20600,'Fantastic_Aura','Fantastic Aura',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,8192,NULL,'1',0,0,'/*TODO: View ID*/ bonus bUnbreakableHelm;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20700,'Egir_Manteau','Egir Manteau',4,200000,NULL,300,NULL,10,NULL,1,0xFFFFFFFF,63,2,4,NULL,'110',1,0,'bonus bUnbreakableGarment; .@r = getrefine(); if (.@r > 10) .@r = 10; if (BaseClass == Job_Mage || BaseClass == Job_Archer || BaseClass == Job_Acolyte) { bonus bFlee2,5+(.@r*2); } else if (BaseClass == Job_Swordman || BaseClass == Job_Merchant || BaseClass == Job_Thief) { bonus bShortWeaponDamageReturn,5+(.@r*2); }',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (20701,'Sol_Manteau','Sol Manteau',4,0,NULL,700,NULL,20,NULL,1,0xFFFFFFFF,63,2,4,NULL,'65',1,0,'bonus2 bSubEle,Ele_Earth,5; bonus2 bSubRace,RC_Fish,-5;',NULL,NULL);
@@ -12301,7 +12314,7 @@ REPLACE INTO `item_db_re` VALUES (31036,'C_Satto_Hat','Costume Used Hat',4,0,NUL
 REPLACE INTO `item_db_re` VALUES (31037,'C_Beret','Costume Beret',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,226,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31038,'C_Cheks_Bandana','Costume Cheks Bandana',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1174,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31039,'C_Crown_of_Old_King_Red','Costume Crown of Old King Red',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1491,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (31040,'C_Magical_Feather','Costume Magical Feather',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1279,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (31040,'C_Magical_Feather','Costume Magical Feather',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1279,'hateffect(HAT_EF_MAGICAL_FEATHER,true);',NULL,'hateffect(HAT_EF_MAGICAL_FEATHER,false);');
 REPLACE INTO `item_db_re` VALUES (31041,'C_Cat_Lace_Hairband','Costume Cat Lace Hairband',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,816,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31042,'C_Survival_Circlet','Costume Survival Circlet',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1220,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31043,'C_Ribbon_White','Costume Ribbon White',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,248,NULL,NULL,NULL);
@@ -12317,6 +12330,7 @@ REPLACE INTO `item_db_re` VALUES (31052,'C_Alchemist_Mask','Costume Alchemist Ma
 REPLACE INTO `item_db_re` VALUES (31053,'C_Drooping_Eddga','Costume Drooping Eddga',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,495,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31054,'C_Sting_Hat','Costume Sting Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,504,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31055,'C_Poring_Soap_Pipe','Costume Poring Soap Pipe',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1499,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (31056,'C_Furious_Wave','Costume Furious Wave',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,0,'hateffect(HAT_EF_DOUBLEGUMGANG,true);',NULL,'hateffect(HAT_EF_DOUBLEGUMGANG,false); } /* Need to confirm this *');
 REPLACE INTO `item_db_re` VALUES (31057,'C_Eremes_Guiles_Scarf_Black','Costume Eremes Guiles Scarf Black',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1501,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31058,'C_Gelato_Hat','Costume Gelato Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,777,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31059,'C_Sailor_Hat','Costume Sailor Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,798,NULL,NULL,NULL);
@@ -12349,9 +12363,9 @@ REPLACE INTO `item_db_re` VALUES (31085,'C_Long_Pony_Crimson','Costume Long Pony
 REPLACE INTO `item_db_re` VALUES (31086,'C_Long_Pony_Purple','Costume Long Pony Purple',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1526,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31087,'C_Dwarf_Beard','Costume Dwarf Beard',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1349,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31088,'C_Mad_Hatter','Costume Mad Hatter',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,5120,NULL,'1',0,1421,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (31089,'C_Exploding_Crimson_Flame','Costume Exploding Crimson Flame',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,0,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (31089,'C_Exploding_Crimson_Flame','Costume Exploding Crimson Flame',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,1500,'hateffect(HAT_EF_BAKURETSU_HADOU,true);',NULL,'hateffect(HAT_EF_BAKURETSU_HADOU,false); } /* Need to confirm this *');
 REPLACE INTO `item_db_re` VALUES (31090,'C_Angelring_Hat','Costume Angelring Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,348,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (31091,'C_Show_Me_The_Zeny','Costume Show Me The Zeny',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,0,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (31091,'C_Show_Me_The_Zeny','Costume Show Me The Zeny',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,0,'hateffect(HAT_EF_GOLD_SHOWER,true);',NULL,'hateffect(HAT_EF_GOLD_SHOWER,false);');
 REPLACE INTO `item_db_re` VALUES (31092,'C_Rabbit_Ribbon_Hat','Costume Bunny Ribbon Hat',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,845,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31093,'C_Under_Lamp','Costume Under Lamp',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1531,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31094,'C_Dice_Hat','Costume Dice Hairband',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,494,NULL,NULL,NULL);
@@ -12559,7 +12573,7 @@ REPLACE INTO `item_db_re` VALUES (31312,'C_Hades_Helm','C Hades Helm',4,0,NULL,0
 REPLACE INTO `item_db_re` VALUES (31313,'C_FallenAngelWingEar','C Fallen Angel Wing Ears',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,1662,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31314,'C_Ghost_Holiday','C Ghost Holiday',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1663,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31315,'C_Stall_Of_Angel','C Stall of Angel',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1664,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (31316,'C_C_FlutterButterfly_BL','C Black Fluttering Butterfly',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1665,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (31316,'C_C_FlutterButterfly_BL','C Black Fluttering Butterfly',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1665,'hateffect(HAT_EF_C_FLUTTERBUTTERFLY_BL,true);',NULL,'hateffect(HAT_EF_C_FLUTTERBUTTERFLY_BL,false);');
 REPLACE INTO `item_db_re` VALUES (31317,'C_15th_Anniversary_Wing','C 15th Anniversary Wing',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1660,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31318,'C_Gerhard_Von_Devi','Costume Gerhard Von Devi',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1092,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31319,'C_Summer_Fan_','C Summer Fan',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1051,NULL,NULL,NULL);
@@ -12567,7 +12581,7 @@ REPLACE INTO `item_db_re` VALUES (31320,'C_Pinwheel_Hat','C Pinwheel Hat',4,0,NU
 REPLACE INTO `item_db_re` VALUES (31321,'C_Shining_Sunflower','C Shining Sunflower',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,681,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31322,'C_Candy_Hat','C Candy Hat',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,853,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31323,'C_Yellow_Hunting_Cap','C Yellow Hunting Cap',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,484,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (31325,'C_Queen_Scarabas_Helmet','C Queen Scarabas Helmet',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,5120,NULL,'1',0,1231,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (31325,'C_Queen_Scarabas_Helmet','C Queen Scarabas Helmet',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,5120,NULL,'1',0,1231,'hateffect(HAT_EF_QSCARABA,true);',NULL,'hateffect(HAT_EF_QSCARABA,false);');
 REPLACE INTO `item_db_re` VALUES (31326,'C_Rolf_Von_Ziege_666_II','C Rolf Von Ziege 666 II',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,946,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31327,'C_Wood_Goblins_Nose','C Wood Goblins Nose',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,737,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31328,'C_Faceworm_Eggshell','C Faceworm Eggshell',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1356,NULL,NULL,NULL);
@@ -12594,7 +12608,7 @@ REPLACE INTO `item_db_re` VALUES (31385,'C_Gothic_Pumpkin_Head','Costume Gothic 
 REPLACE INTO `item_db_re` VALUES (31387,'C_Jjakk','C Jjakk',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1687,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31389,'C_White_Bird_Rose','C White Bird Rose',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1688,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31390,'C_Let_It_Snow','C Let It Snow',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1690,NULL,NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (31391,'C_Floating_Stone_of_Sage','C Floating Stone of Sage',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,1230,NULL,NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (31391,'C_Floating_Stone_of_Sage','C Floating Stone of Sage',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,2048,NULL,'1',0,1230,NULL,'sc_start SC_FSTONE,INFINITE_TICK,0;','sc_end SC_FSTONE;');
 REPLACE INTO `item_db_re` VALUES (31392,'C_Radio_Antenna','C Radio Antenna',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,347,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31393,'C_Vajra','C Vajra',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,983,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31394,'C_Magician_White_Hat','C Magician White Hat',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,283,NULL,NULL,NULL);
@@ -12656,6 +12670,9 @@ REPLACE INTO `item_db_re` VALUES (31475,'C_Black_Fox_Ear_Ribbon','C Black Fox Ea
 REPLACE INTO `item_db_re` VALUES (31476,'C_Cherry_Blossom_Hat_YL','C Yellow Cherry Blossom Hat',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1727,NULL,NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (31478,'C_Eleanor_Wig_','C Eleanors Wig Lower',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1502,NULL,NULL,NULL);
 #
+REPLACE INTO `item_db_re` VALUES (31479,'C_Group_of_Stars','Costume Group of Stars',4,0,NULL,0,NULL,NULL,NULL,0,0xFFFFFFFF,63,2,4096,NULL,'1',0,1729,'hateffect(HAT_EF_MANYSTARS,true);',NULL,'hateffect(HAT_EF_MANYSTARS,false);');
+REPLACE INTO `item_db_re` VALUES (31588,'C_Snow_Flower','C Snow Flower',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1799,'hateffect(HAT_EF_SNOWFLAKE_TIARA,true);',NULL,'hateffect(HAT_EF_SNOWFLAKE_TIARA,false);');
+REPLACE INTO `item_db_re` VALUES (31602,'C_Midgarts_Glory','C Rune Midgarts Glory',4,0,NULL,0,NULL,0,NULL,0,0xFFFFFFFF,63,2,1024,NULL,'1',0,1807,'hateffect(HAT_EF_MIDGARTS_GLORY,true);',NULL,'hateffect(HAT_EF_MIDGARTS_GLORY,false);');
 REPLACE INTO `item_db_re` VALUES (32005,'Illusion_Pole_Axe','Illusion Pole Axe',5,0,NULL,1500,'190',NULL,3,2,0x00004082,63,2,2,4,'120',1,4,'.@r = getrefine(); bonus bStr,3; bonus bInt,2; bonus bDex,2; if (.@r >= 13) { .@val = -2000; } else if (.@r >= 9) { .@val = -1000; } bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",.@val;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (32019,'Boost_Lance-OS','Boost Lance-OS',5,20,NULL,1000,'190',NULL,3,2,0x00004000,56,2,2,4,'130',1,4,'.@r = getrefine(); .@aspd = 3; if (.@r >= 7) { .@aspd += 7; if (.@r >= 9) { .@dmg = 20; if (.@r >= 11) { .@dmg += 15; } bonus2 bSkillAtk,"LG_BANISHINGPOINT",.@dmg; } } bonus bAspdRate,.@aspd;',NULL,NULL);
 #
