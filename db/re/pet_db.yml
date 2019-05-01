@@ -829,17 +829,17 @@ Body:
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus bAgi,3;
       }
-    Evolution:
-      - Target: C4_WANDER_MAN
-        ItemRequirements:
-          - Item: Skull
-            Amount: 500
-          - Item: Sacred_Marks
-            Amount: 50
-          - Item: Transparent_Cloth
-            Amount: 100
-          - Item: Wander_Man_Card
-            Amount: 1
+#    Evolution:
+#      - Target: WANDER_MAN_H
+#        ItemRequirements:
+#          - Item: Skull
+#            Amount: 500
+#          - Item: Sacred_Marks
+#            Amount: 50
+#          - Item: Transparent_Cloth
+#            Amount: 100
+#          - Item: Wander_Man_Card
+#            Amount: 1
   - Mob: P_CHUNG_E
     EggItem: New_Year_Doll_Egg
     FoodItem: Mojji
@@ -993,17 +993,17 @@ Body:
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bResEff,Eff_Sleep,10000;
       }
-    Evolution:
-      - Target: C4_NIGHTMARE_TERROR
-        ItemRequirements:
-          - Item: Burning_Horse_Shoe
-            Amount: 500
-          - Item: Blue_Herb
-            Amount: 100
-          - Item: Shell
-            Amount: 100
-          - Item: Nightmare_Card
-            Amount: 1
+#    Evolution:
+#      - Target: NIGHTMARE_TERROR_H
+#        ItemRequirements:
+#          - Item: Burning_Horse_Shoe
+#            Amount: 500
+#          - Item: Blue_Herb
+#            Amount: 100
+#          - Item: Shell
+#            Amount: 100
+#          - Item: Nightmare_Card
+#            Amount: 1
   - Mob: SHINOBI
     TameItem: Kuloren
     EggItem: Shinobi_Egg
@@ -1949,57 +1949,57 @@ Body:
       if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bExpAddClass,Class_All,1;
       }
-  - Mob: C4_NIGHTMARE_TERROR
-    EggItem: Furious_Nightmare_Terror_Egg
-    FoodItem: Pet_Food
-    Fullness: 2
-    HungryDelay: 120
-    IntimacyFed: 15
-    CaptureRate: 0
-    SpecialPerformance: false
-    AllowAutoFeed: true
-    Script: >
-      .@i = getpetinfo(PETINFO_INTIMATE);
-      
-      if (.@i >= PET_INTIMATE_LOYAL) {
-        bonus bInt,4;
-        bonus bMaxSPrate,3;
-        bonus2 bResEff,Eff_Sleep,10000;
-      } else if (.@i >= PET_INTIMATE_CORDIAL) {
-        bonus bInt,3;
-        bonus bMaxSPrate,1;
-        bonus2 bResEff,Eff_Sleep,10000;
-      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
-        bonus bInt,3;
-      } else {
-        bonus bInt,1;
-      }
-  - Mob: C4_WANDER_MAN
-    EggItem: Furious_Wanderer_Egg
-    FoodItem: Pet_Food
-    Fullness: 2
-    HungryDelay: 120
-    IntimacyFed: 15
-    CaptureRate: 0
-    SpecialPerformance: false
-    AllowAutoFeed: true
-    Script: >
-      .@i = getpetinfo(PETINFO_INTIMATE);
-      
-      if (.@i >= PET_INTIMATE_LOYAL) {
-        bonus bAgi,4;
-        bonus bCritical,3;
-        bonus bCritAtkRate,7;
-      } else if (.@i >= PET_INTIMATE_CORDIAL) {
-        bonus bAgi,4;
-        bonus bCritical,2;
-        bonus bCritAtkRate,5;
-      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
-        bonus bAgi,4;
-        bonus bCritical,1;
-      } else {
-        bonus bAgi,4;
-      }
+#  - Mob: NIGHTMARE_TERROR_H
+#    EggItem: Rigid_Nightmare_Terror_Egg
+#    FoodItem: Pet_Food
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bInt,4;
+#        bonus bMaxSPrate,3;
+#        bonus2 bResEff,Eff_Sleep,10000;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bInt,3;
+#        bonus bMaxSPrate,1;
+#        bonus2 bResEff,Eff_Sleep,10000;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bInt,3;
+#      } else {
+#        bonus bInt,1;
+#      }
+#  - Mob: WANDER_MAN_H
+#    EggItem: Contaminated_Wanderer_Egg
+#    FoodItem: Pet_Food
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bAgi,4;
+#        bonus bCritical,3;
+#        bonus bCritAtkRate,7;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bAgi,4;
+#        bonus bCritical,2;
+#        bonus bCritAtkRate,5;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bAgi,4;
+#        bonus bCritical,1;
+#      } else {
+#        bonus bAgi,4;
+#      }
   - Mob: ALIOT
     EggItem: Aliot_Egg
     FoodItem: Pet_Food
