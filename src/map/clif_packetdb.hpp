@@ -2193,6 +2193,12 @@
 	packet(0x09DA,-1);
 #endif
 
+// 2014-10-08Ragexe
+#if PACKETVER >= 20141008
+	parseable_packet(0x9FB, -1, clif_parse_pet_evolution, 2, 4); // CZ_PET_EVOLUTION
+	packet(0x09FC, 6); // ZC_PET_EVOLUTION_RESULT
+#endif
+
 // 2014-10-16Ragexe
 #if PACKETVER >= 20141016
 	packet(0x09DF,7);
@@ -2284,9 +2290,6 @@
 	parseable_packet(0x0A2E,6,clif_parse_change_title,0); // CZ_REQ_CHANGE_TITLE
 	packet(0x0A2F,7); // ZC_ACK_CHANGE_TITLE
 	packet(0x0A30,106); // ZC_ACK_REQNAMEALL2
-	// Pet Evolution System
-	parseable_packet(0x09FB,-1,clif_parse_dull,0); // CZ_PET_EVOLUTION
-	packet(0x09FC,6); // ZC_PET_EVOLUTION_RESULT
 
 	// Quest UI
 	packet(0x08FE,-1); // ZC_HUNTING_QUEST_INFO

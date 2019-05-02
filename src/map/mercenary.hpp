@@ -84,7 +84,7 @@ int mercenary_checkskill(struct mercenary_data *md, uint16 skill_id);
 short mercenary_skill_get_index(uint16 skill_id);
 
 /**
- * atcommand.c required
+ * atcommand.cpp required
  **/
 void mercenary_readdb(void);
 void mercenary_read_skilldb(void);
