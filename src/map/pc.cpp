@@ -5505,7 +5505,7 @@ void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 
 	pc_cart_delitem(sd, idx, amount, 0, LOG_TYPE_NONE);
 	char flag = pc_additem(sd, &item_copy, amount, LOG_TYPE_NONE);
-	if(flag != 0) {
+	if(flag != ADDITEM_SUCCESS) {
 		clif_dropitem(sd,idx,0);
 		clif_additem(sd,0,0,flag);
 	}
