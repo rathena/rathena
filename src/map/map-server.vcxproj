@@ -70,6 +70,8 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)</OutDir>
     <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+    <CodeAnalysisRuleSet>CppCoreCheckRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -96,6 +98,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
+      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -373,4 +376,3 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status_disabled.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status_disabled.txt')" />
   </Target>
 </Project>
-
