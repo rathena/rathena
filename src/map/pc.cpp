@@ -2773,17 +2773,21 @@ static void pc_bonus_itembonus(std::vector<s_item_bonus> &bonus, uint16 id, int 
 		if (it.id == id) {
 			if (cap_rate)
 				it.val = cap_value(it.val + val, -10000, 10000);
+			else
+				it.val += val;
 			return;
 		}
 	}
 
 	struct s_item_bonus entry = {};
 
-	if (cap_rate && (val < -10000 || val > 10000))
+	if (cap_rate && (val < -10000 || val > 10000)) {
 		ShowWarning("pc_bonus_itembonus: Item bonus val %d exceeds -10000~10000 range, capping.\n", val);
+		val = cap_value(val, -10000, 10000);
+	}
 
 	entry.id = id;
-	entry.val = cap_value(val, -10000, 10000);
+	entry.val = val;
 
 	bonus.push_back(entry);
 }
