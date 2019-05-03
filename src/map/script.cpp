@@ -6686,15 +6686,23 @@ BUILDIN_FUNC(viewpoint)
 {
 	int type,x,y,id,color;
 	TBL_PC* sd;
+	if (script_hasdata(st, 7)) {
+        if (!(sd = map_id2sd(script_getnum(st, 7)))) {
+            ShowError("buildin_viewpoint: player not found (AID=%d).\n",script_getnum(st, 7));
+            st->state = END;
+            return SCRIPT_CMD_FAILURE;
+        }
+    }
+    else {
+        if (!script_rid2sd(sd))
+            return SCRIPT_CMD_FAILURE;
+    }
 
 	type=script_getnum(st,2);
 	x=script_getnum(st,3);
 	y=script_getnum(st,4);
 	id=script_getnum(st,5);
 	color=script_getnum(st,6);
-
-	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
 
 	clif_viewpoint(sd,st->oid,type,x,y,id,color);
 
@@ -24496,7 +24504,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(enableitemuse,"enable_items",""),
 	BUILDIN_DEF2(disableitemuse,"disable_items",""),
 	BUILDIN_DEF(cutin,"si"),
-	BUILDIN_DEF(viewpoint,"iiiii"),
+	BUILDIN_DEF(viewpoint,"iiiii?"),
 	BUILDIN_DEF(heal,"ii?"),
 	BUILDIN_DEF(itemheal,"ii?"),
 	BUILDIN_DEF(percentheal,"ii?"),
