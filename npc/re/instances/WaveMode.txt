@@ -11,11 +11,11 @@
 //= 1.0 First version. [Capuche]
 //============================================================
 
-// Function simple to move the monster when idle. Can be improved.
-// Move the monster to the next coordinates + end the script on successful ; kill the monster + return on fail
+// Simple function to move the monster when idle. Can be improved.
+// Move the monster to the next coordinates + end the script on successful; kill the monster + return on failure
 // callfunc( "F_mobidle", <npc name + idle label>, <size coord>, <defined x array>, <x shift>,  <defined y array>, <defined spot-spot distance array> );
 function	script	F_mobidle	{
-	sleep2 1000;	// stop if no rid
+	sleep2 1000;	// stop if no RID
 
 	.@game_id = getattachedrid();
 	.@dist_min = 300;
@@ -91,22 +91,22 @@ prontera,146,75,1	script	Zonda Rep#pron	4_F_ZONDAGIRL,{
 		mes "We've developed two different dimensional rifts that we call Wave Modes - Forest and Sky!";
 		next;
 		mes "[Belka]";
-		mes "Questions about Zonda's ambitious new project, Wave Mode?";
+		mes "Do you have any questions about Zonda's ambitious new project, Wave Mode?";
 		while(true) {
 			next;
 			switch( select( "About ^6B9900<Wave Mode - Forest>^000000", "About ^6B9900<Wave Mode - Sky>^000000", "No." ) ) {
 			case 1:
 				mes "[Belka]";
 				mes "The ^6B9900<Wave Mode - Forest>^000000";
-				mes "Intoduced first Wave Mode service Zonda's objective is to work with your party members to keep monster wavers from reaching other side of the bridge.";
+				mes "Introducing the first Wave Mode service, Zonda's objective is to work with your party members to keep monster waves from reaching the other side of the bridge.";
 				next;
 				mes "[Belka]";
-				mes "Monsters will advance without fights, but the party will fail if 20 monsters are let go..";
+				mes "Monsters will advance without fighting, but the party will fail if 20 monsters are let go..";
 				break;
 			case 2:
 				mes "[Belka]";
 				mes "The ^6B9900<Wave Mode - Sky>^000000";
-				mes "Available once a day. Like other Wave Mode, keep the monsters aways from reaching other side of the map.";
+				mes "Available once a day. Like the other Wave Mode, keep the monsters away from reaching the other side of the map.";
 				next;
 				mes "[Belka]";
 				mes "Feel free to come back with your party.";
@@ -127,7 +127,7 @@ prontera,146,75,1	script	Zonda Rep#pron	4_F_ZONDAGIRL,{
 		.@s = select( "Enter ^6B9900<Wave Mode - Forest>^000000.", "Enter ^6B9900<Wave Mode - Sky>^000000." ) - 1;
 		setarray .@instance_name$[0], "Wave Mode - Forest", "Wave Mode - Sky";
 		mes "[Belka]";
-		mes "" + .@count_online + " party's member " + .@player_name$ + ", right? To enter the ^6B9900<" + .@instance_name$[.@s] + ">^000000, please sign here.";
+		mes "" + .@count_online + " party " + .@count_online == 1 ? "member" : "members" + " found " + .@player_name$ + ", right? To enter the ^6B9900<" + .@instance_name$[.@s] + ">^000000, please sign here.";
 		next;
 		select("Sign.");
 		mes "[Belka]";
@@ -148,7 +148,7 @@ prontera,146,75,1	script	Zonda Rep#pron	4_F_ZONDAGIRL,{
 		case IE_NOINSTANCE:
 		case IE_NOMEMBER:
 			mes "[Belka]";
-			mes "Please wait for ^6B9900<Wave Mode - Forest>^000000 stablization.";
+			mes "Please wait for ^6B9900<Wave Mode - Forest>^000000 stabilization.";
 			close;
 		case IE_OK:
 			mapannounce .@map_name$, "" + .@player_name$ + " of the party " + getpartyname(getcharid(1)) + " is entering <Wave Mode - Forest>.", bc_map,0xFF99;
@@ -517,7 +517,7 @@ S_Idle:
 	callfunc( "F_mobidle", ('npc_name$ + "::OnIdle" + getarg(0)), 'size_coord, 'x_mob, getarg(0), 'y_mob, 'dist_spot_AZ );
 	'mob_escaped++;
 	if ('mob_escaped <= 20)
-		mapannounce 'map_def01$, "" + 'mob_escaped + " monsters has escaped.", bc_map;
+		mapannounce 'map_def01$, "" + 'mob_escaped + " " + 'mob_escaped == 1 ? "monster has" : "monsters have" + " escaped.", bc_map;
 	if ('mob_escaped == 20)
 		donpcevent instance_npcname("#wave_mode_forest_out") + "::OnFail";
 	end;
@@ -547,7 +547,7 @@ OnFail:
 	initnpctimer;
 	end;
 OnTimer1000:
-	mapannounce 'map_def01$, "<Wave mode - Forest> service has closed. You will return to the place you entered if you use the warp at the entrance.", bc_map;
+	mapannounce 'map_def01$, "<Wave mode - Forest> service has closed. You will be returned to the place you entered if you use the warp at the entrance.", bc_map;
 	end;
 OnTimer30000:
 	stopnpctimer;
@@ -631,7 +631,7 @@ OnTimer4000:
 	}
 	end;
 OnTimer24000:
-	mapannounce 'map_def02$, "Next monsters will come out soon. Get ready.", bc_map;
+	mapannounce 'map_def02$, "Next monster wave will come out soon. Get ready.", bc_map;
 	initnpctimer;
 	end;
 OnStop:
@@ -748,7 +748,7 @@ OnIdle:
 	callfunc( "F_mobidle", ('npc_name_mob$ + "::OnIdle"), 'size_coord, 'x_mob, 0, 'y_mob, 'dist_spot_AZ );
 	'mob_escaped++;
 	if ('mob_escaped <= 20)
-		mapannounce 'map_def02$, "" + 'mob_escaped + " monsters has escaped.", bc_map;
+		mapannounce 'map_def02$, "" + 'mob_escaped + " " + 'mob_escaped == 1 ? "monster has" : "monsters have" + " escaped.", bc_map;
 	if ('mob_escaped == 20)
 		donpcevent instance_npcname("#wave_mode_sky_out") + "::OnFail";
 	end;
@@ -767,7 +767,7 @@ OnFail:
 	initnpctimer;
 	end;
 OnTimer1000:
-	mapannounce 'map_def02$, "<Wave mode - Sky> service has closed. You will return to the place you entered if you use the warp at the entrance.", bc_map;
+	mapannounce 'map_def02$, "<Wave mode - Sky> service has closed. You will be returned to the place you entered if you use the warp at the entrance.", bc_map;
 	end;
 OnTimer30000:
 	stopnpctimer;

@@ -1403,3 +1403,7 @@ IG_PrizeOfHero,22037,2		// Vet_Ungo_Boots
 // Private Airship items
 IG_PRIVATE_AIRSHIP,6909,1 // Actinidia_Cat_Fruit
 IG_PRIVATE_AIRSHIP,25464,1 // World_Moving_Rights
+// Token of Siegfried
+IG_Token_Of_Siegfried,6293,1	// F_Token_Of_Siegfried
+IG_Token_Of_Siegfried,6316,1	// E_Token_Of_Siegfried
+IG_Token_Of_Siegfried,7621,1	// Token_Of_Siegfried

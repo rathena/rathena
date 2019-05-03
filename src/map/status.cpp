@@ -495,7 +495,7 @@ void initChangeTables(void)
 	set_sc( CG_LONGINGFREEDOM	, SC_LONGING		, EFST_LONGING		, SCB_SPEED|SCB_ASPD );
 	set_sc( CG_HERMODE		, SC_HERMODE	, EFST_HERMODE	, SCB_NONE		);
 	set_sc( CG_TAROTCARD		, SC_TAROTCARD	, EFST_TAROTCARD, SCB_NONE	);
-	set_sc( ITEM_ENCHANTARMS	, SC_ENCHANTARMS	, EFST_BLANK		, SCB_ATK_ELE );
+	set_sc( ITEM_ENCHANTARMS	, SC_ENCHANTARMS	, EFST_WEAPONPROPERTY, SCB_ATK_ELE );
 	set_sc( SL_HIGH			, SC_SPIRIT		, EFST_SOULLINK, SCB_ALL );
 	set_sc( KN_ONEHAND		, SC_ONEHAND		, EFST_ONEHANDQUICKEN, SCB_ASPD );
 	set_sc( GS_FLING		, SC_FLING		, EFST_BLANK		, SCB_DEF|SCB_DEF2 );
@@ -2512,7 +2512,7 @@ unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd
 	float str = sd->base_status.str;
 	int weapon_atk_bonus = 0;
 
-	if (wa.range > 3 && !pc_checkskill(sd, SU_SOULATTACK))
+	if ((wa.range > 3 || sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP) && !pc_checkskill(sd, SU_SOULATTACK))
 		str = sd->base_status.dex;
 	if (sd->bonus.weapon_atk_rate)
 		weapon_atk_bonus = wa.atk * sd->bonus.weapon_atk_rate / 100;
@@ -7372,7 +7372,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 	if(!sc || !sc->count)
 		return cap_value(element, 0, UCHAR_MAX);
 	if(sc->data[SC_ENCHANTARMS])
-		return sc->data[SC_ENCHANTARMS]->val2;
+		return sc->data[SC_ENCHANTARMS]->val1;
 	if(sc->data[SC_WATERWEAPON]
 		|| (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2) )
 		return ELE_WATER;
@@ -10321,10 +10321,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// end previous enchants
 			skill_enchant_elemental_end(bl,type);
 			// Make sure the received element is valid.
-			if (val2 >= ELE_ALL)
-				val2 = val2%ELE_ALL;
-			else if (val2 < 0)
-				val2 = rnd()%ELE_ALL;
+			if (val1 >= ELE_ALL)
+				val1 = val1%ELE_ALL;
+			else if (val1 < 0)
+				val1 = rnd()%ELE_ALL;
 			break;
 		case SC_CRITICALWOUND:
 			val2 = 20*val1; // Heal effectiveness decrease
@@ -11339,6 +11339,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// Values that must be set regardless of flag&4 e.g. val_flag [Ind]
 	switch(type) {
 		// Start |1 val_flag setting
+		case SC_ENCHANTARMS:
 		case SC_ROLLINGCUTTER:
 		case SC_BANDING:
 		case SC_SPHERE_1:
