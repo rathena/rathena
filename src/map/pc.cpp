@@ -4550,7 +4550,7 @@ char pc_checkadditem(map_session_data *sd, unsigned short nameid, int amount)
 }
 
 /**
- * Check if we can add an item to the inventory
+ * Check if we can add an item to the cart
  * @param sd Player object
  * @param nameid Item ID
  * @param amount Item amount
@@ -4562,7 +4562,7 @@ char pc_checkadditem_cart(map_session_data* sd, unsigned short nameid, int amoun
 }
 
 /**
- * Check if we can add an item to the inventory
+ * Check if we can add an item to a s_storage type
  * @param inventory Target inventory
  * @param nameid Item ID
  * @param amount Item amount
@@ -5482,7 +5482,8 @@ void pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log
  * Transfer item from inventory to cart.
  *------------------------------------------*/
 void pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
-{	nullpo_retv(sd);
+{
+	nullpo_retv(sd);
 
 	if (idx < 0 || idx >= MAX_INVENTORY) //Invalid index check [Skotlex]
 		return;
