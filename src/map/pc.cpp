@@ -4544,28 +4544,74 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
  * @param amount
  * @return e_chkitem_result
  *------------------------------------------*/
-char pc_checkadditem(struct map_session_data *sd, unsigned short nameid, int amount)
+char pc_checkadditem(map_session_data *sd, unsigned short nameid, int amount)
 {
-	int i;
-	struct item_data* data;
+	return pc_can_add_item_to_inventory(&sd->inventory, nameid, amount);
+}
 
-	nullpo_ret(sd);
+/**
+ * Check if we can add an item to the inventory
+ * @param sd Player object
+ * @param nameid Item ID
+ * @param amount Item amount
+ * @return e_chkitem_result Result
+ */
+char pc_checkadditem_cart(map_session_data* sd, unsigned short nameid, int amount)
+{
+	return pc_can_add_item_to_inventory(&sd->cart, nameid, amount);
+}
 
-	if(amount > MAX_AMOUNT)
+/**
+ * Check if we can add an item to the inventory
+ * @param inventory Target inventory
+ * @param nameid Item ID
+ * @param amount Item amount
+ * @return e_chkitem_result Result
+ */
+char pc_can_add_item_to_inventory(s_storage* inventory, unsigned short nameid, int amount)
+{
+	nullpo_ret(inventory);
+
+	if (amount > MAX_AMOUNT)
 		return CHKADDITEM_OVERAMOUNT;
 
-	data = itemdb_search(nameid);
+	item_data* data = itemdb_search(nameid);
 
-	if(!itemdb_isstackable2(data))
+	// TODO: Could be better after separating storage types
+	bool limited_stack = true;
+	item* item_array = nullptr;
+	switch (inventory->type) {
+		case TABLE_INVENTORY:
+			limited_stack = data->stack.inventory;
+			item_array = inventory->u.items_inventory;
+			break;
+		case TABLE_CART:
+			limited_stack = data->stack.cart;
+			item_array = inventory->u.items_cart;
+			break;
+		case TABLE_STORAGE:
+			limited_stack = data->stack.storage;
+			item_array = inventory->u.items_storage;
+			break;
+		case TABLE_GUILD_STORAGE:
+			limited_stack = data->stack.guildstorage;
+			item_array = inventory->u.items_guild;
+			break;
+		default:
+			ShowWarning("pc_can_add_item_to_inventory: Unknown storage type %u.\n", inventory->type);
+	}
+
+
+	if (!itemdb_isstackable2(data))
 		return CHKADDITEM_NEW;
 
-	if( data->stack.inventory && amount > data->stack.amount )
+	if (limited_stack && amount > data->stack.amount)
 		return CHKADDITEM_OVERAMOUNT;
 
-	for(i=0;i<MAX_INVENTORY;i++){
+	for (int i = 0; i < MAX_INVENTORY; i++) {
 		// FIXME: This does not consider the checked item's cards, thus could check a wrong slot for stackability.
-		if(sd->inventory.u.items_inventory[i].nameid == nameid){
-			if( amount > MAX_AMOUNT - sd->inventory.u.items_inventory[i].amount || ( data->stack.inventory && amount > data->stack.amount - sd->inventory.u.items_inventory[i].amount ) )
+		if (item_array[i].nameid == nameid) {
+			if (amount > MAX_AMOUNT - item_array[i].amount || (data->stack.inventory && amount > data->stack.amount - item_array[i].amount))
 				return CHKADDITEM_OVERAMOUNT;
 			return CHKADDITEM_EXIST;
 		}
@@ -5436,16 +5482,12 @@ void pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log
  * Transfer item from inventory to cart.
  *------------------------------------------*/
 void pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
-{
-	struct item *item_data;
-	char flag;
-
-	nullpo_retv(sd);
+{	nullpo_retv(sd);
 
 	if (idx < 0 || idx >= MAX_INVENTORY) //Invalid index check [Skotlex]
 		return;
 
-	item_data = &sd->inventory.u.items_inventory[idx];
+	item *item_data = &sd->inventory.u.items_inventory[idx];
 
 	if( item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->state.vending || sd->state.prevend )
 		return;
@@ -5455,11 +5497,16 @@ void pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 		return;
 	}
 
-	if( (flag = pc_cart_additem(sd,item_data,amount,LOG_TYPE_NONE)) == 0 )
-		pc_delitem(sd,idx,amount,0,5,LOG_TYPE_NONE);
-	else {
-		clif_dropitem(sd,idx,0);
-		clif_cart_additem_ack(sd,(flag==1)?ADDITEM_TO_CART_FAIL_WEIGHT:ADDITEM_TO_CART_FAIL_COUNT);
+	if (pc_checkadditem_cart(sd, item_data->nameid, amount) == CHKADDITEM_OVERAMOUNT) {
+		return;
+	}
+
+	item item_copy = *item_data;
+	pc_delitem(sd, idx, amount, 0, 5, LOG_TYPE_NONE);
+	char flag = pc_cart_additem(sd, &item_copy, amount, LOG_TYPE_NONE);
+	if (flag != 0) {
+		clif_dropitem(sd, idx, 0);
+		clif_cart_additem_ack(sd, (flag == 1) ? ADDITEM_TO_CART_FAIL_WEIGHT : ADDITEM_TO_CART_FAIL_COUNT);
 	}
 }
 
