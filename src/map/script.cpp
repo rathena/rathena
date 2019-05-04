@@ -6687,16 +6687,16 @@ BUILDIN_FUNC(viewpoint)
 	int type,x,y,id,color;
 	TBL_PC* sd;
 	if (script_hasdata(st, 7)) {
-        if (!(sd = map_id2sd(script_getnum(st, 7)))) {
-            ShowError("buildin_viewpoint: player not found (AID=%d).\n",script_getnum(st, 7));
-            st->state = END;
-            return SCRIPT_CMD_FAILURE;
-        }
-    }
-    else {
-        if (!script_rid2sd(sd))
-            return SCRIPT_CMD_FAILURE;
-    }
+		if (!(sd = map_id2sd(script_getnum(st, 7)))) {
+			ShowError("buildin_viewpoint: player not found (AID=%d).\n",script_getnum(st, 7));
+			st->state = END;
+			return SCRIPT_CMD_FAILURE;
+		}
+	}
+	else {
+		if (!script_rid2sd(sd))
+			return SCRIPT_CMD_FAILURE;
+	}
 
 	type=script_getnum(st,2);
 	x=script_getnum(st,3);
