@@ -12184,7 +12184,7 @@
 28430,Arch_Bishop_Ring,Arch Bishop Ring,4,20,,400,,0,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ bonus bLuk,2; bonus bFlee2,5; bonus bUseSPrate,-5; bonus bHealPower,15; bonus bAddItemHealRate,15; },{},{}
 28433,Luminous_Blue_Stone,Luminous Blue Stone,4,20,,400,,0,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ bonus bAgi,2; bonus bCritical,5; bonus bAspdRate,5; bonus bCritAtkRate,2; skill "MG_SIGHT",1; if (readparam(bLuk)>=100) { bonus bCritical,10; bonus bCritAtkRate,10; } },{},{}
 28434,Fist_Fighter_Glove,Fist Fighter's Glove,4,20,,400,,0,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ bonus bStr,2; bonus bMaxSP,100; bonus2 bAddClass,Class_All,2; skill "MO_ABSORBSPIRITS",1; if (readparam(bStr)>99) bonus2 bAddClass,Class_All,5; },{},{}
-28437,Hibram's_Gloves,Hibram's Gloves,4,20,,400,,0,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ skill "AL_HEAL",3; bonus bInt,2; bonus bMatkRate,2; bonus bUseSPrate,-5; if (readparam(bInt>=100)) bonus bMatkRate,5; },{},{}
+28437,Hibram's_Gloves,Hibram's Gloves,4,20,,400,,0,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ skill "AL_HEAL",3; bonus bInt,2; bonus bMatkRate,2; bonus bUseSPrate,-5; if (readparam(bInt)>=100) bonus bMatkRate,5; },{},{}
 28438,Fairy_Leaf_Powder,Fairy Leaf Powder,4,20,,400,,0,,1,0xFFFFFFFF,63,2,136,,90,0,0,{ bonus bDex,2; bonus bDelayrate,-5; bonus bLongAtkRate,2; skill "SM_MAGNUM",3; if (readparam(bDex)>=100) bonus bLongAtkRate,5; },{},{}
 28441,Vigilante_Badge,Vigilante Badge,4,0,,200,,0,,0,0x00020000,56,2,136,,100,0,0,{ bonus bFlee,10; bonus bLongAtkRate,5; },{},{}
 28442,Hippie_Feather,Hippie Feather,4,0,,200,,0,,1,0x00080000,56,2,136,,100,0,0,{ bonus bHit,5; bonus bFlee,5; },{},{}
