@@ -1146,30 +1146,30 @@ Body:
       } else if (.@i >= PET_INTIMATE_CORDIAL) {
         bonus2 bSubRace,RC_Brute,3;
       }
-  - Mob: BACSOJIN_
-    TameItem: Shiny_Wing_Gown
-    EggItem: Bacsojin_Egg
-    EquipItem: Round_Hair_Ornament
-    FoodItem: Traditional_Cookie
-    Fullness: 7
-    IntimacyFed: 10
-    CaptureRate: 2000
-    SpecialPerformance: false
-    Script: >
-      .@i = getpetinfo(PETINFO_INTIMATE);
-      
-      if (.@i >= PET_INTIMATE_LOYAL) {
-        bonus bMaxSPRate,5;
-        bonus bDelayrate,-3;
-      } else if (.@i >= PET_INTIMATE_CORDIAL) {
-        bonus bMaxSPRate,4;
-        bonus bDelayrate,-2;
-      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
-        bonus bMaxSPRate,3;
-        bonus bDelayrate,-1;
-      } else {
-        bonus bMaxSPRate,2;
-      }
+#  - Mob: BACSOJIN2
+#    TameItem: Shiny_Wing_Gown
+#    EggItem: Bacsojin_Egg
+#    EquipItem: Round_Hair_Ornament
+#    FoodItem: Traditional_Cookie
+#    Fullness: 7
+#    IntimacyFed: 10
+#    CaptureRate: 2000
+#    SpecialPerformance: false
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bMaxSPRate,5;
+#        bonus bDelayrate,-3;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bMaxSPRate,4;
+#        bonus bDelayrate,-2;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bMaxSPRate,3;
+#        bonus bDelayrate,-1;
+#      } else {
+#        bonus bMaxSPRate,2;
+#      }
   - Mob: IMP
     TameItem: Flaming_Ice
     EggItem: Imp_Egg
@@ -1584,17 +1584,17 @@ Body:
         bonus bAtk,10;
         bonus bDef,-3;
       }
-    Evolution:
-      - Target: ORK_HERO
-        ItemRequirements:
-          - Item: Powerful_Soul_Essence
-            Amount: 30
-          - Item: Orc_Warrior_Card
-            Amount: 10
-          - Item: Orc_Baby_Card
-            Amount: 10
-          - Item: Voucher_Of_Orcish_Hero
-            Amount: 10
+#    Evolution:
+#      - Target: ORK_HERO2
+#        ItemRequirements:
+#          - Item: Powerful_Soul_Essence
+#            Amount: 30
+#          - Item: Orc_Warrior_Card
+#            Amount: 10
+#          - Item: Orc_Baby_Card
+#            Amount: 10
+#          - Item: Voucher_Of_Orcish_Hero
+#            Amount: 10
   - Mob: CHOCO
     EggItem: Choco_Egg
     FoodItem: Pet_Food
@@ -2071,26 +2071,26 @@ Body:
       } else {
         bonus bMdef,4;
       }
-  - Mob: ORK_HERO
-    EggItem: Orc_Hero_Egg_
-    FoodItem: Pet_Food
-    Fullness: 2
-    HungryDelay: 120
-    IntimacyFed: 15
-    CaptureRate: 0
-    SpecialPerformance: false
-    AllowAutoFeed: true
-    Script: >
-      .@i = getpetinfo(PETINFO_INTIMATE);
-      
-      if (.@i >= PET_INTIMATE_LOYAL) {
-        bonus bAtkRate,7;
-        bonus bCritAtkRate,3;
-      } else if (.@i >= PET_INTIMATE_CORDIAL) {
-        bonus bAtkRate,4;
-        bonus bCritAtkRate,1;
-      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
-        bonus bAtkRate,2;
-      } else {
-        bonus bAtkRate,1;
-      }
+#  - Mob: ORK_HERO2
+#    EggItem: Orc_Hero_Egg_
+#    FoodItem: Traditional_Cookie
+#    Fullness: 2
+#    HungryDelay: 120
+#    IntimacyFed: 15
+#    CaptureRate: 0
+#    SpecialPerformance: false
+#    AllowAutoFeed: true
+#    Script: >
+#      .@i = getpetinfo(PETINFO_INTIMATE);
+#      
+#      if (.@i >= PET_INTIMATE_LOYAL) {
+#        bonus bAtkRate,7;
+#        bonus bCritAtkRate,3;
+#      } else if (.@i >= PET_INTIMATE_CORDIAL) {
+#        bonus bAtkRate,4;
+#        bonus bCritAtkRate,1;
+#      } else if (.@i >= PET_INTIMATE_NEUTRAL) {
+#        bonus bAtkRate,2;
+#      } else {
+#        bonus bAtkRate,1;
+#      }
