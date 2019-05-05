@@ -4803,7 +4803,6 @@ short pc_search_inventory(struct map_session_data *sd, unsigned short nameid) {
 char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type) {
 	struct item_data *id;
 	int16 i;
-	int j;
 	unsigned int w;
 
 	nullpo_retr(1, sd);
@@ -4851,6 +4850,7 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 		i = pc_search_inventory(sd,0);
 		if( i < 0 )
 			return ADDITEM_OVERITEM;
+		int j;
 
 		memcpy(&sd->inventory.u.items_inventory[i], item, sizeof(sd->inventory.u.items_inventory[0]));
 		// clear equip and favorite fields first, just in case

@@ -18577,7 +18577,6 @@ void clif_parse_MoveItem(int fd, struct map_session_data *sd) {
 	struct s_packet_db* info = &packet_db[RFIFOW(fd,0)];
 	int index = RFIFOW(fd,info->pos[0]) - 2;
 	int type = RFIFOB(fd, info->pos[1]);
-	int j;
 
 	/* can't move while dead. */
 	if(pc_isdead(sd)) {
@@ -18588,10 +18587,12 @@ void clif_parse_MoveItem(int fd, struct map_session_data *sd) {
 		return;
 
 	if (sd->inventory.u.items_inventory[index].favorite && type == 1) {
+		int j;
 		sd->inventory.u.items_inventory[index].favorite = 0;
 		for (j = 0; j < MAX_FAVORITES; j++) if (sd->status.favs[j] == (sd->inventory.u.items_inventory[index].nameid)) sd->status.favs[j] = 0;
 	}
 	else if (type == 0) {
+		int j;
 		sd->inventory.u.items_inventory[index].favorite = 1;
 		if (battle_config.persistent_favorites)
 			if (!(itemdb_isequip2(sd->inventory_data[index]) && !(sd->inventory_data[index]->type==IT_AMMO)) || battle_config.persistent_favorites_equipment) {
