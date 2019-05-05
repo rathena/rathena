@@ -1106,7 +1106,7 @@ CREATE TABLE IF NOT EXISTS `vendings` (
 -- Table structure for table `favorites`
 --
 
-CREATE TABLE IF NOT EXISTS favorites (
+CREATE TABLE IF NOT EXISTS `favorites` (
     char_id INT,
     itemid INT,
     PRIMARY KEY (char_id,itemid)
