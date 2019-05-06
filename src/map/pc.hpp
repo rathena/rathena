@@ -1258,7 +1258,8 @@ void do_final_pc(void);
 enum e_chkitem_result {
 	CHKADDITEM_EXIST,
 	CHKADDITEM_NEW,
-	CHKADDITEM_OVERAMOUNT
+	CHKADDITEM_OVERAMOUNT,
+	CHKADDITEM_INVALIDTYPE
 };
 
 enum e_additem_result {

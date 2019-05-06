@@ -4536,14 +4536,13 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
 	return val;
 }
 
-/*==========================================
- * Checking if we have enough place on inventory for new item
- * Make sure to take 30k as limit (for client I guess)
- * @param sd
- * @param nameid
- * @param amount
- * @return e_chkitem_result
- *------------------------------------------*/
+/**
+ * Check if can add an item to the inventory
+ * @param sd: Player object
+ * @param nameid: Item ID
+ * @param amount: Item amount
+ * @return e_chkitem_result Result
+ */
 char pc_checkadditem(map_session_data *sd, unsigned short nameid, int amount)
 {
 	return pc_can_add_item_to_inventory(&sd->inventory, nameid, amount);
@@ -4551,9 +4550,9 @@ char pc_checkadditem(map_session_data *sd, unsigned short nameid, int amount)
 
 /**
  * Check if we can add an item to the cart
- * @param sd Player object
- * @param nameid Item ID
- * @param amount Item amount
+ * @param sd: Player object
+ * @param nameid: Item ID
+ * @param amount: Item amount
  * @return e_chkitem_result Result
  */
 char pc_checkadditem_cart(map_session_data* sd, unsigned short nameid, int amount)
@@ -4563,9 +4562,9 @@ char pc_checkadditem_cart(map_session_data* sd, unsigned short nameid, int amoun
 
 /**
  * Check if we can add an item to a s_storage type
- * @param inventory Target inventory
- * @param nameid Item ID
- * @param amount Item amount
+ * @param inventory: Target inventory
+ * @param nameid: Item ID
+ * @param amount: Item amount
  * @return e_chkitem_result Result
  */
 char pc_can_add_item_to_inventory(s_storage* inventory, unsigned short nameid, int amount)
@@ -4580,27 +4579,33 @@ char pc_can_add_item_to_inventory(s_storage* inventory, unsigned short nameid, i
 	// TODO: Could be better after separating storage types
 	bool limited_stack = true;
 	item* item_array = nullptr;
+	int item_array_max = 0;
+
 	switch (inventory->type) {
 		case TABLE_INVENTORY:
 			limited_stack = data->stack.inventory;
 			item_array = inventory->u.items_inventory;
+			item_array_max = MAX_INVENTORY;
 			break;
 		case TABLE_CART:
 			limited_stack = data->stack.cart;
 			item_array = inventory->u.items_cart;
+			item_array_max = MAX_CART;
 			break;
 		case TABLE_STORAGE:
 			limited_stack = data->stack.storage;
 			item_array = inventory->u.items_storage;
+			item_array_max = MAX_STORAGE;
 			break;
 		case TABLE_GUILD_STORAGE:
 			limited_stack = data->stack.guildstorage;
 			item_array = inventory->u.items_guild;
+			item_array_max = MAX_GUILD_STORAGE;
 			break;
 		default:
 			ShowWarning("pc_can_add_item_to_inventory: Unknown storage type %u.\n", inventory->type);
+			return CHKADDITEM_INVALIDTYPE;
 	}
-
 
 	if (!itemdb_isstackable2(data))
 		return CHKADDITEM_NEW;
@@ -4608,7 +4613,7 @@ char pc_can_add_item_to_inventory(s_storage* inventory, unsigned short nameid, i
 	if (limited_stack && amount > data->stack.amount)
 		return CHKADDITEM_OVERAMOUNT;
 
-	for (int i = 0; i < MAX_INVENTORY; i++) {
+	for (int i = 0; i < item_array_max; i++) {
 		// FIXME: This does not consider the checked item's cards, thus could check a wrong slot for stackability.
 		if (item_array[i].nameid == nameid) {
 			if (amount > MAX_AMOUNT - item_array[i].amount || (data->stack.inventory && amount > data->stack.amount - item_array[i].amount))
@@ -5503,11 +5508,14 @@ void pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 	}
 
 	item item_copy = *item_data;
+
 	pc_delitem(sd, idx, amount, 0, 5, LOG_TYPE_NONE);
+
 	char flag = pc_cart_additem(sd, &item_copy, amount, LOG_TYPE_NONE);
-	if (flag != 0) {
+
+	if (flag != ADDITEM_SUCCESS) {
 		clif_dropitem(sd, idx, 0);
-		clif_cart_additem_ack(sd, (flag == 1) ? ADDITEM_TO_CART_FAIL_WEIGHT : ADDITEM_TO_CART_FAIL_COUNT);
+		clif_cart_additem_ack(sd, (flag == ADDITEM_INVALID) ? ADDITEM_TO_CART_FAIL_WEIGHT : ADDITEM_TO_CART_FAIL_COUNT);
 	}
 }
 
@@ -5552,7 +5560,9 @@ void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 	item item_copy = *item_data;
 
 	pc_cart_delitem(sd, idx, amount, 0, LOG_TYPE_NONE);
+
 	char flag = pc_additem(sd, &item_copy, amount, LOG_TYPE_NONE);
+
 	if(flag != ADDITEM_SUCCESS) {
 		clif_dropitem(sd,idx,0);
 		clif_additem(sd,0,0,flag);
