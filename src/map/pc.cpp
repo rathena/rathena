@@ -4863,7 +4863,8 @@ char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_p
 
 		if (battle_config.persistent_favorites)
 			for (j = 0; j < MAX_FAVORITES; j++) {
-				if (sd->status.favs[j] == item->nameid) sd->inventory.u.items_inventory[i].favorite = 1;
+				if (sd->status.favs[j] == item->nameid) 
+					sd->inventory.u.items_inventory[i].favorite = 1;
 			}
 
 		sd->inventory.u.items_inventory[i].amount = amount;
