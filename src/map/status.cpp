@@ -10151,6 +10151,50 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_LONGING:
 			val2 = 500-100*val1; // Aspd penalty.
 			break;
+#else
+		case SC_RICHMANKIM:
+			val2 = 10 + 10 * val1; // Exp increase bonus
+			break;
+		case SC_DRUMBATTLE:
+			val2 = 15 + val1 * 5; // Atk increase
+			val3 = val1 * 15; // Def increase
+			break;
+		case SC_NIBELUNGEN:
+			val2 = rnd() % RINGNBL_MAX; // See e_nibelungen_status
+			break;
+		case SC_SIEGFRIED:
+			val2 = val1 * 3; // Elemental Resistance
+			val3 = val1 * 5; // Status ailment resistance
+			break;
+		case SC_WHISTLE:
+			val2 = 18 + 2 * val1; // Flee increase
+			val3 = (val1 + 1) / 2; // Perfect dodge increase
+			break;
+		case SC_ASSNCROS:
+			val2 = val1 < 10 ? val1 * 2 - 1 : 20; // ASPD increase
+			break;
+		case SC_POEMBRAGI:
+			val2 = 2 * val1; // Cast time reduction
+			val3 = 3 * val1; // After-cast delay reduction
+			break;
+		case SC_APPLEIDUN:
+			val2 = val1 < 10 ? 9 + val1 : 20; // HP rate increase
+			val3 = 2 * val1; // Potion recovery rate
+			break;
+		case SC_HUMMING:
+			val2 = 4 * val1; // Hit increase
+			break;
+		case SC_DONTFORGETME:
+			val2 = 30 * val1; // ASPD decrease
+			val3 = 2 * val1; // Movement speed adjustment.
+			break;
+		case SC_FORTUNE:
+			val2 = val1 * 10; // Critical increase
+			break;
+		case SC_SERVICE4U:
+			val2 = val1 < 10 ? 9 + val1 : 20; // MaxSP percent increase
+			val3 = 5 + val1; // SP cost reduction
+			break;
 #endif
 		case SC_EXPLOSIONSPIRITS:
 			val2 = 75 + 25*val1; // Cri bonus

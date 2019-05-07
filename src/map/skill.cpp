@@ -6205,9 +6205,7 @@ static int skill_apply_songs(struct block_list* target, va_list ap)
 	struct block_list* src = va_arg(ap, struct block_list*);
 	uint16 skill_id = static_cast<uint16>(va_arg(ap, int));
 	uint16 skill_lv = static_cast<uint16>(va_arg(ap, int));
-	int val2 = va_arg(ap, int);
-	int val3 = va_arg(ap, int);
-	int tick = va_arg(ap, int);
+	t_tick tick = va_arg(ap, t_tick);
 
 	if (flag & BCT_WOS && src == target)
 		return 0;
@@ -6222,11 +6220,9 @@ static int skill_apply_songs(struct block_list* target, va_list ap)
 		case BD_LULLABY:
 			return skill_additional_effect(src, target, skill_id, skill_lv, BF_LONG | BF_SKILL | BF_MISC, ATK_DEF, tick);
 		default: // Buff/Debuff type songs
-			if (skill_id == CG_HERMODE) {
-				if (src->id != target->id)
-					status_change_clear_buffs(target, SCCB_BUFFS); // Should dispell only allies.
-			}
-			return sc_start4(src, target, status_skill2sc(skill_id), 100, skill_id, val2, val3, 0, skill_get_time(skill_id, skill_lv));
+			if (skill_id == CG_HERMODE && src->id != target->id)
+				status_change_clear_buffs(target, SCCB_BUFFS); // Should dispell only allies.
+			return sc_start(src, target, status_skill2sc(skill_id), 100, skill_lv, skill_get_time(skill_id, skill_lv));
 		}
 	}
 
@@ -6256,68 +6252,20 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 	}
 
 	struct map_session_data* sd = BL_CAST(BL_PC, src);
-	uint8 ba_lesson = pc_checkskill(sd, BA_MUSICALLESSON), dc_lesson = pc_checkskill(sd, DC_DANCINGLESSON);
-	struct status_data* status = status_get_status_data(src);
-	struct status_change* sc = status_get_sc(src);
-	int val2 = 0, val3 = 0, flag = BCT_PARTY;
+	int flag = BCT_PARTY;
 
 	switch (skill_id) {
-	case BD_LULLABY:
-	case BD_ETERNALCHAOS:
-	case BD_ROKISWEIL:
-	case BA_DISSONANCE:
-	case DC_UGLYDANCE:
-		flag = BCT_ENEMY;
-		break;
-	case DC_DONTFORGETME:
-		val2 = 10 * (3 * skill_lv); // ASPD decrease
-		val3 = 2 * skill_lv; // Movement speed adjustment.
-		flag = BCT_ENEMY;
-		break;
-	case BA_WHISTLE:
-		val2 = 18 + 2 * skill_lv + status->agi / 15 + ba_lesson / 2; // Flee increase
-		val3 = (skill_lv + 1) / 2 + status->luk / 30 + ba_lesson / 5; // Perfect dodge increase
-		break;
-	case DC_HUMMING:
-		val2 = 4 * skill_lv + status->dex / 15 + dc_lesson; // Hit increase
-		break;
-	case BA_POEMBRAGI:
-		val2 = 2 * skill_lv + status->dex / 10 + ba_lesson; // Cast time reduction
-		val3 = 3 * skill_lv + status->int_ / 5 + 2 * ba_lesson; // After-cast delay reduction
-		break;
-	case BA_APPLEIDUN:
-		val2 = (skill_lv < 10 ? 9 + skill_lv : 20); // HP rate increase
-		val3 = 2 * skill_lv; // Potion recovery rate
-		break;
-	case DC_SERVICEFORYOU:
-		val2 = (skill_lv < 10 ? 9 + skill_lv : 20) + (status->int_ / 10) + dc_lesson / 2; // MaxSP percent increase
-		val3 = 5 + skill_lv + (status->int_ / 10) + dc_lesson / 2; // SP cost reduction
-		break;
-	case BA_ASSASSINCROSS:
-		val2 = ba_lesson / 2 + (skill_lv < 10 ? (skill_lv * 2 - 1) : 20) + (status->agi / 20); // ASPD increase
-		break;
-	case DC_FORTUNEKISS:
-		val2 = skill_lv + (status->luk / 10); // Critical increase
-		val2 *= 10;
-		val2 += 5 * dc_lesson;
-		break;
-	case BD_DRUMBATTLEFIELD:
-		val2 = 15 + skill_lv * 5; // Atk increase
-		val3 = skill_lv * 15; // Def increase
-		break;
-	case BD_RINGNIBELUNGEN:
-		val2 = rnd() % RINGNBL_MAX; // See e_nibelungen_status
-		break;
-	case BD_RICHMANKIM:
-		val2 = 10 + 10 * skill_lv; // Exp increase bonus
-		break;
-	case BD_SIEGFRIED:
-		val2 = skill_lv * 3; // Elemental Resistance
-		val3 = skill_lv * 5; // Status ailment resistance
-		break;
-	case CG_HERMODE:
-		flag |= BCT_GUILD;
-		break;
+		case BD_LULLABY:
+		case BD_ETERNALCHAOS:
+		case BD_ROKISWEIL:
+		case BA_DISSONANCE:
+		case DC_UGLYDANCE:
+		case DC_DONTFORGETME:
+			flag = BCT_ENEMY;
+			break;
+		case CG_HERMODE:
+			flag |= BCT_GUILD;
+			break;
 	}
 
 	clif_skill_nodamage(src, src, skill_id, skill_lv, 1);
@@ -6331,7 +6279,7 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 		// or maybe we do that in skill_check_pc_partner or something ??
 	}
 
-	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, val2, val3, tick);
+	return map_foreachinrange(skill_apply_songs, src, skill_get_splash(skill_id, skill_lv), splash_target(src), flag, src, skill_id, skill_lv, tick);
 }
 
 /**
