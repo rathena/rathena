@@ -4545,7 +4545,7 @@ int pc_modifysellvalue(struct map_session_data *sd,int orig_value)
  */
 char pc_checkadditem(map_session_data *sd, unsigned short nameid, int amount)
 {
-	return pc_can_add_item_to_inventory(&sd->inventory, nameid, amount);
+	return pc_can_add_item_to_inventory(sd, TABLE_INVENTORY, nameid, amount);
 }
 
 /**
@@ -4557,19 +4557,20 @@ char pc_checkadditem(map_session_data *sd, unsigned short nameid, int amount)
  */
 char pc_checkadditem_cart(map_session_data* sd, unsigned short nameid, int amount)
 {
-	return pc_can_add_item_to_inventory(&sd->cart, nameid, amount);
+	return pc_can_add_item_to_inventory(sd, TABLE_CART, nameid, amount);
 }
 
 /**
  * Check if we can add an item to a s_storage type
- * @param inventory: Target inventory
+ * @param sd: Player object
+ * @param type: Storage type
  * @param nameid: Item ID
  * @param amount: Item amount
  * @return e_chkitem_result Result
  */
-char pc_can_add_item_to_inventory(s_storage* inventory, unsigned short nameid, int amount)
+char pc_can_add_item_to_inventory(map_session_data* sd, storage_type type, unsigned short nameid, int amount)
 {
-	nullpo_ret(inventory);
+	nullpo_ret(sd);
 
 	if (amount > MAX_AMOUNT)
 		return CHKADDITEM_OVERAMOUNT;
@@ -4581,29 +4582,35 @@ char pc_can_add_item_to_inventory(s_storage* inventory, unsigned short nameid, i
 	item* item_array = nullptr;
 	int item_array_max = 0;
 
-	switch (inventory->type) {
+	switch (type) {
 		case TABLE_INVENTORY:
+			if (sd->weight + itemdb_weight(nameid) > sd->max_weight)
+				return ADDITEM_OVERWEIGHT;
+
 			limited_stack = data->stack.inventory;
-			item_array = inventory->u.items_inventory;
+			item_array = sd->inventory.u.items_inventory;
 			item_array_max = MAX_INVENTORY;
 			break;
 		case TABLE_CART:
+			if (sd->cart_weight + itemdb_weight(nameid) > sd->cart_weight_max)
+				return ADDITEM_OVERWEIGHT;
+
 			limited_stack = data->stack.cart;
-			item_array = inventory->u.items_cart;
+			item_array = sd->cart.u.items_cart;
 			item_array_max = MAX_CART;
 			break;
 		case TABLE_STORAGE:
 			limited_stack = data->stack.storage;
-			item_array = inventory->u.items_storage;
+			item_array = sd->storage.u.items_storage;
 			item_array_max = MAX_STORAGE;
 			break;
 		case TABLE_GUILD_STORAGE:
 			limited_stack = data->stack.guildstorage;
-			item_array = inventory->u.items_guild;
+			item_array = guild2storage2(sd->guild->guild_id)->u.items_guild;
 			item_array_max = MAX_GUILD_STORAGE;
 			break;
 		default:
-			ShowWarning("pc_can_add_item_to_inventory: Unknown storage type %u.\n", inventory->type);
+			ShowWarning("pc_can_add_item_to_inventory: Unknown storage type %u.\n", type);
 			return CHKADDITEM_INVALIDTYPE;
 	}
 
