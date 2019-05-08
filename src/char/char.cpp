@@ -1253,6 +1253,11 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 		{ p->favs[noffav] = fav; noffav++;  }
 		else
 		{ ShowWarning("mmo_char_fromsql: Attempt to load more favorites than MAX_FAVORITES!");	}
+		if (noffav < MAX_FAVORITES) { 
+			p->favs[noffav] = fav; noffav++;  
+		} else {
+			ShowWarning("mmo_char_fromsql: Attempt to load more favorites than MAX_FAVORITES!");	
+		}
 	}
 	StringBuf_AppendStr(&msg_buf, " favorites");
 
