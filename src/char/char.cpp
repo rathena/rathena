@@ -521,7 +521,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 	}
 	for (i = 0; i < MAX_FAVORITES; i++) {
 		if (p->favs[i]>0) {
-			if (SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`char_id`,`itemid`) VALUES ('%d','%d');",
+			if (SQL_ERROR == Sql_Query(sql_handle, "INSERT INTO `%s`(`char_id`,`nameid`) VALUES ('%d','%d');",
 				schema_config.favs_db, p->char_id, p->favs[i]))
 			{
 				Sql_ShowDebug(sql_handle);
@@ -1241,7 +1241,7 @@ int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_ev
 	StringBuf_AppendStr(&msg_buf, " hotkeys");
 #endif
 
-	if (SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `itemid` FROM `%s` WHERE `char_id`=?", schema_config.favs_db)
+	if (SQL_ERROR == SqlStmt_Prepare(stmt, "SELECT `nameid` FROM `%s` WHERE `char_id`=?", schema_config.favs_db)
 		|| SQL_ERROR == SqlStmt_BindParam(stmt, 0, SQLDT_INT, &char_id, 0)
 		|| SQL_ERROR == SqlStmt_Execute(stmt)
 		|| SQL_ERROR == SqlStmt_BindColumn(stmt, 0, SQLDT_INT, &fav, 0, NULL, NULL)
