@@ -18589,7 +18589,10 @@ void clif_parse_MoveItem(int fd, struct map_session_data *sd) {
 	if (sd->inventory.u.items_inventory[index].favorite && type == 1) {
 		int j;
 		sd->inventory.u.items_inventory[index].favorite = 0;
-		for (j = 0; j < MAX_FAVORITES; j++) if (sd->status.favs[j] == (sd->inventory.u.items_inventory[index].nameid)) sd->status.favs[j] = 0;
+		for (j = 0; j < MAX_FAVORITES; j++) 
+			if (sd->status.favs[j] == 
+			    (sd->inventory.u.items_inventory[index].nameid)) 
+				sd->status.favs[j] = 0;
 	}
 	else if (type == 0) {
 		int j;
