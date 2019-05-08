@@ -1567,9 +1567,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_BLADESTOP]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_BLADESTOP_WAIT]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_GOSPEL]				|= SCS_NOMOVE|SCS_NOMOVECOND;
-#ifdef RENEWAL
-	StatusChangeStateTable[SC_BASILICA_CELL]		|= SCS_NOMOVE|SCS_NOMOVECOND;
-#else
+#ifndef RENEWAL
 	StatusChangeStateTable[SC_BASILICA]				|= SCS_NOMOVE|SCS_NOMOVECOND;
 #endif
 	StatusChangeStateTable[SC_STOP]					|= SCS_NOMOVE;
@@ -1623,6 +1621,9 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_SILENCE]				|= SCS_NOCAST;
 	StatusChangeStateTable[SC_STEELBODY]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_BERSERK]				|= SCS_NOCAST;
+#ifdef RENEWAL
+	StatusChangeStateTable[SC_BASILICA_CELL]		|= SCS_NOCAST;
+#endif
 	StatusChangeStateTable[SC__BLOODYLUST]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_DEATHBOUND]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_OBLIVIONCURSE]		|= SCS_NOCAST;
