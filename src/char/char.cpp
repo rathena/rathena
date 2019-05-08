@@ -529,7 +529,7 @@ int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p){
 			}
 		}
 	};
-	strcat(save_status, " favorites1");
+	strcat(save_status, " favorites");
 
 	StringBuf_Destroy(&buf);
 	if (save_status[0]!='\0' && charserv_config.save_log)
