@@ -1108,6 +1108,6 @@ CREATE TABLE IF NOT EXISTS `vendings` (
 
 CREATE TABLE IF NOT EXISTS `favorites` (
   `char_id` int(11) unsigned NOT NULL default '0',
-  `itemid` smallint(5) unsigned NOT NULL default '0',
+  `nameid` smallint(5) unsigned NOT NULL default '0',
   PRIMARY KEY (char_id,itemid)
   ) ENGINE=MyISAM;
