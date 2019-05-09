@@ -87,7 +87,6 @@ enum item_itemid
 	ITEMID_COATING_BOTTLE				= 7139,
 	ITEMID_FRAGMENT_OF_CRYSTAL			= 7321,
 	ITEMID_SKULL_						= 7420,
-	ITEMID_TOKEN_OF_SIEGFRIED			= 7621,
 	ITEMID_TRAP_ALLOY					= 7940,
 	ITEMID_MERCENARY_RED_POTION			= 12184,
 	ITEMID_MERCENARY_BLUE_POTION		= 12185,
@@ -732,6 +731,7 @@ enum e_random_item_group {
 	IG_SANTA_GIFT,
 	IG_PRIZEOFHERO,
 	IG_PRIVATE_AIRSHIP,
+	IG_TOKEN_OF_SIEGFRIED,
 };
 
 /// Enum for bound/sell restricted selling
@@ -953,6 +953,7 @@ struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 
 struct s_item_group_db *itemdb_group_exists(unsigned short group_id);
 bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid);
+int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id);
 char itemdb_pc_get_itemgroup(uint16 group_id, bool identify, struct map_session_data *sd);
 
 bool itemdb_parse_roulette_db(void);

@@ -2782,7 +2782,7 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
 		// on official endows override all other elements [helvetica]
 		if(sc && sc->data[SC_ENCHANTARMS]) // Check for endows
-			element = sc->data[SC_ENCHANTARMS]->val2;
+			element = sc->data[SC_ENCHANTARMS]->val1;
 	} else if( element == -2 ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
 	else if( element == -3 ) //Use random element
@@ -3366,7 +3366,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 		case RL_QD_SHOT:
 			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20 + (tsc && tsc->data[SC_C_MARKER] ? 2 : 0);
 			break;
-		case SC_JYUMONJIKIRI:
+		case KO_JYUMONJIKIRI:
 			if( tsc && tsc->data[SC_JYUMONJIKIRI] )
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;

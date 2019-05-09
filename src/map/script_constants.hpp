@@ -4823,6 +4823,7 @@
 	export_constant(IG_SANTA_GIFT);
 	export_constant(IG_PRIZEOFHERO);
 	export_constant(IG_PRIVATE_AIRSHIP);
+	export_constant(IG_TOKEN_OF_SIEGFRIED);
 
 	/* unit stop walking */
 	export_constant(USW_NONE);
@@ -7105,6 +7106,44 @@
 	export_constant(HAT_EF_SUBJECT_AURA_WHITE);
 	export_constant(HAT_EF_SUBJECT_AURA_RED);
 	export_constant(HAT_EF_C_SHINING_ANGEL_WING);
+	export_constant(HAT_EF_MAGIC_STAR_TW);
+	export_constant(HAT_EF_DIGITAL_SPACE);
+	export_constant(HAT_EF_SLEIPNIR);
+	export_constant(HAT_EF_C_MAPLE_WHICH_FALLS_RD);
+	export_constant(HAT_EF_MAGICCIRCLERAINBOW);
+	export_constant(HAT_EF_SNOWFLAKE_TIARA);
+	export_constant(HAT_EF_MIDGARTS_GLORY);
+	export_constant(HAT_EF_LEVEL99_TIGER);
+	export_constant(HAT_EF_LEVEL160_TIGER);
+	export_constant(HAT_EF_FLUFFYWING);
+	export_constant(HAT_EF_C_GHOST_EFFECT);
+	export_constant(HAT_EF_C_POPPING_PORING_AURA);
+	export_constant(HAT_EF_RESONATETAEGO);
+	export_constant(HAT_EF_99LV_RUNE_RED);
+	export_constant(HAT_EF_99LV_ROYAL_GUARD_BLUE);
+	export_constant(HAT_EF_99LV_WARLOCK_VIOLET);
+	export_constant(HAT_EF_99LV_SORCERER_LBLUE);
+	export_constant(HAT_EF_99LV_RANGER_GREEN);
+	export_constant(HAT_EF_99LV_MINSTREL_PINK);
+	export_constant(HAT_EF_99LV_ARCHBISHOP_WHITE);
+	export_constant(HAT_EF_99LV_GUILL_SILVER);
+	export_constant(HAT_EF_99LV_SHADOWC_BLACK);
+	export_constant(HAT_EF_99LV_MECHANIC_GOLD);
+	export_constant(HAT_EF_99LV_GENETIC_YGREEN);
+	export_constant(HAT_EF_160LV_RUNE_RED);
+	export_constant(HAT_EF_160LV_ROYAL_G_BLUE);
+	export_constant(HAT_EF_160LV_WARLOCK_VIOLET);
+	export_constant(HAT_EF_160LV_SORCERER_LBLUE);
+	export_constant(HAT_EF_160LV_RANGER_GREEN);
+	export_constant(HAT_EF_160LV_MINSTREL_PINK);
+	export_constant(HAT_EF_160LV_ARCHB_WHITE);
+	export_constant(HAT_EF_160LV_GUILL_SILVER);
+	export_constant(HAT_EF_160LV_SHADOWC_BLACK);
+	export_constant(HAT_EF_160LV_MECHANIC_GOLD);
+	export_constant(HAT_EF_160LV_GENETIC_YGREEN);
+	export_constant(HAT_EF_WATER_BELOW3);
+	export_constant(HAT_EF_WATER_BELOW4);
+	export_constant(HAT_EF_C_VALKYRIE_WING);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
