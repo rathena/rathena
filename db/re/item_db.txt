@@ -11254,7 +11254,6 @@
 20433,C_Louise_Red_Hat,Costume Louise Red Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1443,{},{},{}
 20434,C_Drooping_Gunslinger,Costume Drooping Gunslinger,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1444,{},{},{}
 20435,C_Camellia_Hair_Pin,Costume Camellia Hair Pin,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1203,{ hateffect(HAT_EF_CAMELLIA_HAIR_PIN,true); },{},{ hateffect(HAT_EF_GLOW_OF_NEW_YEAR,false); }
->>>>>>> 120ffc122bf8b0d36ba2a9b6f7ad62ac75e2513e
 20436,C_Angelring_Furhat,Costume Angelring Furhat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,953,{},{},{}
 20437,C_Sakura_Hairband,Costume Sakura Hairband,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,949,{},{},{}
 20438,C_Abacus_In_Mouth,Costume Abacus In Mouth,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,825,{},{},{}
