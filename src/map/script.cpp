@@ -11350,10 +11350,10 @@ BUILDIN_FUNC(getunits)
 			ShowWarning("buildin_%s: Unknown map '%s'.\n", command, str);
 			return SCRIPT_CMD_FAILURE;
 		}
-		x0 = script_getnum(st, 4);
-		y0 = script_getnum(st, 5);
-		x1 = script_getnum(st, 6);
-		y1 = script_getnum(st, 7);
+		x0 = min(script_getnum(st, 4), script_getnum(st, 6));
+		y0 = min(script_getnum(st, 5), script_getnum(st, 7));
+		x1 = max(script_getnum(st, 4), script_getnum(st, 6));
+		y1 = max(script_getnum(st, 5), script_getnum(st, 7));
 
 		if (script_hasdata(st, 8))
 			data = script_getdata(st, 8);
