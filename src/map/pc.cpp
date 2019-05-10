@@ -4584,7 +4584,7 @@ char pc_can_add_item_to_inventory(map_session_data* sd, storage_type type, unsig
 
 	switch (type) {
 		case TABLE_INVENTORY:
-			if (sd->weight + itemdb_weight(nameid) > sd->max_weight)
+			if (sd->weight + (amount * itemdb_weight(nameid)) > sd->max_weight)
 				return ADDITEM_OVERWEIGHT;
 
 			limited_stack = data->stack.inventory;
@@ -4592,7 +4592,7 @@ char pc_can_add_item_to_inventory(map_session_data* sd, storage_type type, unsig
 			item_array_max = MAX_INVENTORY;
 			break;
 		case TABLE_CART:
-			if (sd->cart_weight + itemdb_weight(nameid) > sd->cart_weight_max)
+			if (sd->cart_weight + (amount * itemdb_weight(nameid)) > sd->cart_weight_max)
 				return ADDITEM_OVERWEIGHT;
 
 			limited_stack = data->stack.cart;
