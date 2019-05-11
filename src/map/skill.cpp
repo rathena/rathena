@@ -2392,6 +2392,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			sp += sd->sp_gain_race[status_get_race(bl)] + sd->sp_gain_race[RC_ALL];
 			hp += sd->bonus.hp_gain_value;
 		}
+		if( (attack_type&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG) ) {
+			sp += sd->bonus.long_sp_gain_value;
+			hp += sd->bonus.long_hp_gain_value;
+		}
 		if( attack_type&BF_MAGIC ) {
 			sp += sd->bonus.magic_sp_gain_value;
 			hp += sd->bonus.magic_hp_gain_value;
