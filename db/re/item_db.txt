@@ -11736,9 +11736,6 @@
 24318,Super_Novice_Shadow_Shield,Super Novice Shadow Shield,12,10,,0,,0,,0,0x00000001,63,2,262144,,1,1,,{ .@r = getrefine(); bonus bMaxHP,1000; bonus bMaxSP,200; bonus baspdrate,(2*getskilllv("TF_DOUBLE")+.@r); bonus bVariableCastrate,-(2*getskilllv("AC_OWL")+.@r); if (.@r>=7) { bonus2 bAddClass,Class_All,2; bonus bMatkRate,2; } if (.@r>=9) { bonus2 bAddClass,Class_All,3; bonus bMatkRate,3; } },{},{}
 24319,Gunslinger_Shadow_Shield,Gunslinger Shadow Shield,12,10,,0,,0,,0,0x01000000,63,2,262144,,1,1,,{ .@r = getrefine(); bonus bCritAtkRate,5; bonus bCritical,(getskilllv("GS_SINGLEACTION")*2)+.@r; if (.@r>=7) bonus bCritAtkRate,5; if (.@r>=9) bonus bCritAtkRate,5; },{},{}
 24330,S_Caster_Armor_II,Caster Shadow Armor II,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ bonus bInt,3; bonus bSPrecovRate,20; bonus bVariableCastrate,-getrefine()/2; },{},{}
-//===================================================================
-// New etc.
-//===================================================================
 24402,Rebellion_Shadow_Armor,Rebellion Shadow Armor,12,10,,0,,,,,0x01000000,63,2,65536,,100,1,,{ .@r = getrefine(); bonus2 bSkillCooldown,"RL_HEAT_BARREL",-(1000+.@r*50); },{},{}
 24403,Kagerou_Shadow_Armor,Kagerou Shadow Armor,12,10,,0,,,,,0x02000000,63,1,65536,,100,1,,{ .@r = getrefine(); bonus2 bSkillAtk,"KO_HUUMARANKA",20+.@r*5; },{},{}
 24404,Oboro_Shadow_Armor,Oboro Shadow Armor,12,10,,0,,,,,0x02000000,63,0,65536,,100,1,,{ .@r = getrefine(); bonus2 bSkillAtk,"NJ_KOUENKA",20+.@r*5; bonus2 bSkillAtk,"NJ_HYOUSENSOU",20+.@r*5; bonus2 bSkillAtk,"NJ_HUUJIN",20+.@r*5; },{},{}
@@ -11753,6 +11750,9 @@
 24413,Star_Emperor_Shadow_Shoes,Star Emperor Shadow Shoes,12,10,,0,,,,,0x00400000,63,2,524288,,100,1,,{ .@r = getrefine(); bonus2 bSkillCooldown,"SJ_DOCUMENT",-(3000+(3000*.@r/2)); },{},{}
 24414,Soul_Reaper_Shadow_Armor,Soul Reaper Shadow Armor,12,10,,0,,,,,0x00800000,63,2,65536,,100,1,,{ .@r = getrefine(); bonus2 bSkillAtk,"SP_SWHOO",20; bonus2 bSkillAtk,"SP_SPA",.@r*3; },{},{}
 24415,Soul_Reaper_Shadow_Shoes,Soul Reaper Shadow Shoes,12,10,,0,,,,,0x00800000,63,2,524288,,100,1,,{ .@r = getrefine(); bonus2 bSkillCooldown,"SP_SOULREAPER",-(3000+(1000*.@r/2)); },{},{}
+//===================================================================
+// New etc.
+//===================================================================
 25043,Thorny_Vine_Flute,Thorny Vine Flute,3,0,,0,,,,,,,,,,,,,{},{},{}
 25044,Hard_Thorny_Vine,Hard Thorny Vine,3,0,,10,,,,,,,,,,,,,{},{},{}
 25045,Luxurious_Cloth,Luxurious Cloth,3,0,,0,,,,,,,,,,,,,{},{},{}
