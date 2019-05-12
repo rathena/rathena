@@ -13086,12 +13086,12 @@
 31598,C_Forest_Guide,C Forest Guide,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1802,{},{},{}
 31599,C_Medium_Wave,C Medium Wave,4,0,,,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1803,{},{},{}
 31600,C_Kishu_Dog,C Kishu Dog,4,0,,,,0,,0,0xFFFFFFFF,63,2,2048,,1,0,1804,{},{},{}
-31601,C_Under_Rim_Glasses_Blue,C Under Rim Glasses Blue,,0,,,,0,,0,0xFFFFFFFF,63,2,2048,,1,,1805,{},{},{}
-31602,C_Midgarts_Glory,C Rune Midgarts Glory,,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,,1807,{},{},{}
+31601,C_Under_Rim_Glasses_Blue,C Under Rim Glasses Blue,4,0,,,,0,,0,0xFFFFFFFF,63,2,2048,,1,,1805,{},{},{}
+31602,C_Midgarts_Glory,C Rune Midgarts Glory,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,,1807,{},{},{}
 31606,C_Autumn_Headband,C Autumn Headband,4,0,,0,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1119,{},{},{}
 31607,C_Cat_Ear_Witch_Hat,C Cat Ear Witch Hat,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1808,{},{},{}
 31608,C_Magicstone_of_Grace,C Magic Stone of Grace,4,0,,,,0,,0,0xFFFFFFFF,63,2,7168,,1,0,1420,{},{},{}
-31609,C_Noble_Mask,C Noble Mask,,0,,,,0,,0,0xFFFFFFFF,63,2,2048,,1,,1409,{},{},{}
+31609,C_Noble_Mask,C Noble Mask,4,0,,,,0,,0,0xFFFFFFFF,63,2,2048,,1,,1409,{},{},{}
 31610,C_Yellow_Wizardry_Hat,C Yellow Wizardry Hat,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,286,{},{},{}
 31611,C_Snake_Lord_Stole,C Snake Lord Stole,4,0,,,,0,,0,0xFFFFFFFF,63,2,4096,,1,0,1810,{},{},{}
 31612,C_Large_Sorcerer_Crown,C Large Sorcerer Crown,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1811,{},{},{}
