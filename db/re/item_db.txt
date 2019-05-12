@@ -321,7 +321,7 @@
 966,Flesh_Of_Clam,Clam Flesh,3,158,,10,,,,,,,,,,,,,{},{},{}
 967,Turtle_Shell,Turtle Shell,3,680,,10,,,,,,,,,,,,,{},{},{}
 968,Voucher_Of_Orcish_Hero,Heroic Emblem,3,3000,,10,,,,,,,,,,,,,{},{},{}
-969,Gold,Gold,3,200000,,200,,,,,,,,,,,,,{},{},{}
+969,Gold,Gold,3,150000,,200,,,,,,,,,,,,,{},{},{}
 970,Alchol,Alcohol,3,400,,30,,,,,,,,,,,,,{},{},{}
 971,Detrimindexta,Detrimindexta,3,400,,30,,,,,,,,,,,,,{},{},{}
 972,Karvodailnirol,Karvodailnirol,3,400,,30,,,,,,,,,,,,,{},{},{}
