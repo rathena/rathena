@@ -6885,6 +6885,26 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
 	return count;
 }
 
+BUILDIN_FUNC(open_stylistui) {
+#if PACKETVER < 20151104
+	ShowError("buildin_open_stylistui: This command requires packet version 2015-11-04 or newer.\n");
+	return SCRIPT_CMD_FAILURE;
+#else
+	struct map_session_data *sd = NULL;
+
+	if (!script_charid2sd(2,sd))
+		return 1;
+
+	if (!battle_config.feature_stylistui) {
+		ShowError("buildin_open_stylistui: This command is disabled via configuration.\n");
+		return 1;
+	}
+
+	clif_ui_open(sd, OUT_UI_STYLIST, 0);
+	return SCRIPT_CMD_SUCCESS;
+#endif
+}
+
 /**
  * Returns number of items in inventory
  * countitem(<nameID>{,<accountID>})
@@ -24456,6 +24476,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(callsub,"l*"),
 	BUILDIN_DEF(callfunc,"s*"),
 	BUILDIN_DEF(return,"?"),
+	//Stylist UI
+	BUILDIN_DEF(open_stylistui,"?"),
 	BUILDIN_DEF(getarg,"i?"),
 	BUILDIN_DEF(jobchange,"i??"),
 	BUILDIN_DEF(jobname,"i"),

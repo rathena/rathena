@@ -3085,7 +3085,7 @@
 6044,Letter_From_Otto,Letter from Otto,3,0,,10,,,,,,,,,,,,,{},{},{}
 6045,Supply_Box,Supply Box,3,0,,0,,,,,,,,,,,,,{},{},{}
 6046,Clothing_Dye_Coupon,Clothing Dye Coupon,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
-6047,Clothing_Dye_Coupon_II,Clothing Dye Coupon II,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
+6047,Clothing_Dye_Coupon2,Clothing Dye Coupon II,2,0,,0,,,,,0xFFFFFFFF,7,2,,,,,,{},{},{}
 6048,Unidentified_Mineral,Unidentified Mineral,3,0,,10,,,,,,,,,,,,,{},{},{}
 6049,Marlin,Marlin,3,0,,10,,,,,,,,,,,,,{},{},{}
 6050,Mercenary_Contract,Mercenary Contract,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -3437,6 +3437,8 @@
 6513,Charm_Ice,Ice Amulet,3,100,,1,,,,,,,,,,,,,{},{},{}
 6514,Charm_Wind,Wind Amulet,3,100,,1,,,,,,,,,,,,,{},{},{}
 6515,Charm_Earth,Earth Amulet,3,100,,1,,,,,,,,,,,,,{},{},{}
+6707,Cash_Hair_Coupon,Cash Hair Coupon,3,10,,10,,,,,,,,,,,,,{},{},{}
+6959,Costume_Change_Ticket,Costume Change Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
 //
 7001,Mould_Powder,Mould Powder,3,466,,10,,,,,,,,,,,,,{},{},{}
 7002,Ogre_Tooth,Ogre Tooth,3,658,,10,,,,,,,,,,,,,{},{},{}
@@ -6545,9 +6547,14 @@
 16680,Universal_Catalog_Gold_Box50_,Universal Catalog Gold 50 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,50; },{},{}
 16776,Universal_Catalog_Gold_Box10__,Universal Catalog Gold 10 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,10; },{},{}
 16777,Universal_Catalog_Gold_Box50__,Universal Catalog Gold 50 Box,2,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 12581,50; },{},{}
+16843,Beauty_Gift_Coupon_Box,Beauty Gift Coupon Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 7622,1; },{},{}
+16854,Clothing_Dye_Coupon_Box,Clothing Dye Coupon Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6046,1; },{},{}
+16855,Clothing_Dye_Orig_Coupon_Box,Original Clothing Dye Coupon Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6047,1; },{},{}
 //
 17104,HD_Oridecon_50Box,HD Oridecon 50 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6240,50; },{},{}
 17105,HD_Elunium_50Box,HD Elunium 50 Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6241,50; },{},{}
+17336,Cash_Hair_Coupon_Box,Cash Hair Coupon Box,2,20,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6707,1; },{},{}
+17634,Costume_Change_Ticket_Box,Costume Change Ticket Box,18,0,,10,,,,,0xFFFFFFFF,7,2,,,,,,{ getitem 6959,1; },{},{}
 // Mechanic/Genetic Cannonballs
 18000,Cannon_Ball,Cannon Ball,10,100,,10,100,,,,0x00040400,8,2,32768,,99,,8,{},{},{}
 18001,Holy_Cannon_Ball,Holy Cannon Ball,10,200,,10,120,,,,0x00040400,8,2,32768,,99,,8,{ bonus bAtkEle,Ele_Holy; },{},{}

@@ -1440,6 +1440,9 @@
 16396,457,100	// HD Elunium 10 Box
 16461,73,100	// Red Wing Hat Box
 16555,73,100	// Pr Reset Stone Box
+16843,475,100	// Beauty Gift Coupon Box
+16854,475,100	// Clothing Dye Coupon Box
+16855,475,100	// Original Clothing Dye Coupon Box
 
 // Misc. Items
 1313,499,100	// Tourist Axe

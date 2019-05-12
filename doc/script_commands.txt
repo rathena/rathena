@@ -2717,6 +2717,15 @@ see 'getequipid'. Function originally used by the refining NPCs:
 	}
 
 ---------------------------------------
+ 
+*open_stylistui({<char id>})
+
+Opens the stylist UI for the attached player or the given character id.
+
+This feature requires 2015-11-04aRagexeRE or newer.
+
+
+---------------------------------------
 
 *getequipisenableref(<equipment slot>{,<char_id>})
 

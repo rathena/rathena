@@ -2310,6 +2310,14 @@
 	parseable_packet(0x0980,7,clif_parse_SelectCart,2,6); // CZ_SELECTCART
 #endif
 
+// 2015-11-04aRagexeRE
+#if PACKETVER >= 20151104
+	// New packet
+	parseable_packet(0x0A46,14,clif_parse_req_style_change,2,4,6,8,10,12);
+	packet(0x0A47,3);
+	parseable_packet(0x0A48,2,clif_parse_dull,0);
+#endif
+
 // 2016-03-02bRagexe
 #if PACKETVER >= 20160302
 	packet(0x0A51,34);
@@ -2425,6 +2433,11 @@
 // 2018-04-18bRagexeRE
 #if PACKETVER >= 20180418
 	packet(0x0ADD, 22);
+#endif
+
+// 2018-05-16cRagexeRE
+#if PACKETVER >= 20180516
+	parseable_packet(0x0afc,16,clif_parse_req_style_change,2,4,6,8,10,12,14);
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

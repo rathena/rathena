@@ -22,7 +22,12 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 	mes "Welcome to Veronica's hair salon.";
 	mes "How can I help you?";
 	next;
-	switch(select("See available hair styles.:Change hair style.:End conversation.")) {
+	set .@bflag,getbattleflag("feature.stylistui");
+	if(!.@bflag)
+		set .@menu,select("See available hair styles.:Change hair style.:End conversation.");
+	else
+		set .@menu,select(":Newly style change.:End conversation.");
+	switch(.@menu) {
 	case 1:
 		mes "[Veronica]";
 		mes "We have a total of 19 styles, available from no.1 to no.19.";
@@ -356,6 +361,10 @@ alberta_in,55,142,7	script	Hair Dresser	91,{
 			}
 		}
 	case 2:
+		if(.@bflag) {
+			open_stylistui();
+			close;
+		}
 		if(BaseLevel < 60) {
 			mes "[Veronica]";
 			mes "Oh, dear, you're looking fabulous with";
@@ -694,7 +703,12 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 	mes "shy, tell me exactly how you";
 	mes "want me to make you glamorous~";
 	next;
-	switch(select("Check all hairstyles:Change hairstyle:Cancel")) {
+	set .@bflag,getbattleflag("feature.stylistui");
+	if(!.@bflag)
+		set .@menu,select("Check all hairstyles:Change hairstyle:Cancel");
+	else
+		set .@menu,select(":Newly style change:Cancel");
+	switch(.@menu) {
 	case 1:
 		mes "[Prince Shammi]";
 		mes "Oh, would you like to";
@@ -895,6 +909,10 @@ lhz_in02,100,143,3	script	Hair Dresser#li	122,{
 		cutin "",255;
 		end;
 	case 2:
+		if (.@bflag) {
+			open_stylistui();
+			close;
+		}
 		if (BaseLevel < 60) {
 			mes "[Prince Shammi]";
 			mes "Oh, I'm so sorry, but";

@@ -495,6 +495,7 @@ struct Battle_Config
 	int client_reshuffle_dice;  // Reshuffle /dice
 	int client_sort_storage;
 	int feature_buying_store;
+	int feature_stylistui;
 	int feature_search_stores;
 	int searchstore_querydelay;
 	int searchstore_maxresults;

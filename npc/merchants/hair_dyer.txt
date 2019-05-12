@@ -22,6 +22,18 @@ prt_in,243,168,4	script	Jovovich	91,{
 	mes "Welcome~!";
 	mes "How may I help you?";
 	next;
+	if (getbattleflag("feature.stylistui")) {
+		switch(select("Newly style change:Cancel")) {
+		case 1:
+			open_stylistui();
+			close;
+		case 2:
+			mes "[Hairdresser Jovovich]";
+			mes "Men or Women...";
+			mes "Everyone has the right and obligation to be beautiful.";
+			close;
+		}
+	}
 	mes "[Hairdresser Jovovich]";
 	if (Sex == SEX_MALE) mes "Oh, no! Your hair is damaged. It seems as if you may need professional treatment. Come sit over here, please. Come.";
 	else {

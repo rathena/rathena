@@ -1101,10 +1101,12 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int ach_id);
 
 /// Attendance System
 enum in_ui_type : int8 {
+	IN_UI_STYLIST = 1,
 	IN_UI_ATTENDANCE = 5
 };
 
 enum out_ui_type : int8 {
+	OUT_UI_STYLIST = 1,
 	OUT_UI_ATTENDANCE = 7
 };
 
