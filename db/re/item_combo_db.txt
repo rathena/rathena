@@ -570,6 +570,7 @@
 15377:20934,{ bonus bMatk,50; }
 15377:22196,{ bonus bAspdRate,5; }
 15377:22197,{ bonus bMatkRate,5; }
+15388:15389,{ .@r = getequiprefinerycnt(EQI_ARMOR) + getequiprefinerycnt(EQI_GARMENT); bonus bMaxHPrate,5; bonus bMaxSPrate,5; if(.@r > 21){ bonus bDelayrate,-15; } }
 16065:20838,{ bonus bAspdRate,10; .@eq = getequiprefinerycnt(EQI_GARMENT); .@weapon = getequiprefinerycnt(EQI_HAND_R); if (.@eq >= 7 && .@weapon >= 7) { bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",25; bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",25; } if ((.@eq + .@weapon) >= 18) { bonus bCritical,15; if ((.@eq + .@weapon) >= 22) { bonus bCritAtkRate,20; } } }
 18137:1752,{ bonus bLongAtkRate,25; }
 18137:1752:19048,{ bonus bLongAtkRate,20; bonus2 bSubEle,Ele_Fire,-10; if (getequiprefinerycnt(EQI_HAND_R) >= 10) bonus bAspd,1; }
@@ -850,4 +851,10 @@
 28907:2998,{ bonus bSpeedRate,25; }
 28908:2998,{ bonus bDelayrate,-10; }
 28909:2998,{ bonus bUseSPrate,-10; bonus bMaxSPrate,10; }
+32228:15388:15389,{ bonus bBaseAtk,25; bonus bHit,10; }
+32229:15388:15389,{ bonus bMatk,25; bonus bVariableCastrate,-8; }
+32230:15388:15389,{ bonus bCritAtkRate,7; bonus2 bAddClass,Class_All,5; }
+32231:15388:15389,{ bonus bMaxHPrate,5; bonus bDelayrate,-5; }
+32232:15388:15389,{ bonus bAspdRate,3; bonus bCritical,7; }
+32233:15388:15389,{ bonus bLongAtkRate,7; bonus bAspd,1; }
 32238:32239,{ bonus bVariableCastrate,-10; bonus bMatkRate,10;  }
