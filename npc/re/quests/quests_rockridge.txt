@@ -163,8 +163,7 @@ OnTouch:
 	end;
 
 OnInit:
-	questinfo 7790, QTYPE_QUEST, 1;
-	setquestinfo_level 7790,100,175;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 100 && !isbegin_quest(7790)" );
 	end;
 }
 
@@ -417,10 +416,8 @@ harboro1,80,218,5	script	Costello#harboro1	10210,{
 	close;
 
 OnInit:
-	questinfo 7792, QTYPE_QUEST, 1;
-	setquestinfo_req 7792,7791,1;
-	questinfo 7794, QTYPE_QUEST, 1;
-	setquestinfo_req 7794,7793,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7791) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7793) == 1" );
 	end;
 }
 
@@ -818,18 +815,12 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 	close;
 
 OnInit:
-	questinfo 7793, QTYPE_QUEST, 1;
-	setquestinfo_req 7793,7792,1;
-	questinfo 7795, QTYPE_QUEST, 1;
-	setquestinfo_req 7795,7794,1;
-	questinfo 7797, QTYPE_QUEST, 1;
-	setquestinfo_req 7797,7796,1;
-	questinfo 7799, QTYPE_QUEST, 1;
-	setquestinfo_req 7799,7798,1;
-	questinfo 7809, QTYPE_QUEST, 1;
-	setquestinfo_req 7809,7803,1;
-	questinfo 7805, QTYPE_QUEST, 1;
-	setquestinfo_req 7805,7804,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7792) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7794) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7797) && isbegin_quest(7796) == 1" );// todo
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7798) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7809) && isbegin_quest(7803) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7804) == 1" );
 	end;
 }
 
@@ -956,8 +947,7 @@ har_in01,14,24,5	script	Ivoka Skudi#rr03	10212,{
 	close;
 
 OnInit:
-	questinfo 7797, QTYPE_QUEST, 1;
-	setquestinfo_req 7797,7796,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7796) == 1" );
 	end;
 }
 
@@ -1205,8 +1195,7 @@ har_in01,89,26,5	script	Johnny James#har_in01	10213,{
 	close;
 
 OnInit:
-	questinfo 7798, QTYPE_QUEST, 1;
-	setquestinfo_req 7798,7797,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7797) == 1" );
 	end;
 }
 
@@ -1349,8 +1338,7 @@ rockrdg1,156,312,3	script	Unmoving Freight Train#	4_ENERGY_RED,{
 	close;
 
 OnInit:
-	questinfo 7796, QTYPE_QUEST, 1;
-	setquestinfo_req 7796,7795,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7795) == 1" );
 	end;
 }
 
@@ -1507,8 +1495,7 @@ harboro1,288,193,5	script	Shawn McCurdy#harboro1	10215,{
 	end;
 
 OnInit:
-	questinfo 7800, QTYPE_QUEST, 1;
-	setquestinfo_req 7800,7799,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7799) == 1" );
 	end;
 }
 
@@ -1594,8 +1581,7 @@ rockrdg2,347,216,5	script	Shawn McCurdy#rockrdg2	10215,{
 	close;
 
 OnInit:
-	questinfo 7801, QTYPE_QUEST, 1;
-	setquestinfo_req 7801,7800,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7800) == 1" );
 	end;
 }
 
@@ -1709,8 +1695,7 @@ rockmi2,10,86,5	script	Shawn McCurdy#rockmi2	10215,{
 	end;
 
 OnInit:
-	questinfo 7801, QTYPE_QUEST, 1;
-	setquestinfo_req 7801,7800,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7800) == 1" );
 	end;
 }
 
@@ -4319,7 +4304,9 @@ harboro2,164,80,5	script	Demon#srdg01	4_M_NFMAN,{
 	}
 	end;
 
-// fix me : questinfo when playtime 2
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "checkquest(14673,PLAYTIME) == 2" );
+	end;
 }
 
 harboro2,166,80,5	script	Traces of Fire#srdg01	4_TRACE,{
@@ -4471,7 +4458,7 @@ rockrdg2,295,328,5	script	Frail Ghast#rockdaily	10231,{
 	end;
 
 OnInit:
-	questinfo 1298, QTYPE_QUEST, 1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(1298)" );
 	// fix me: questinfo 9457
 	// on hunting == -1
 	// on hunting == 2
@@ -4692,10 +4679,8 @@ harboro1,347,65,3	script	Mrs. McPhy#rockdaily	1_F_MERCHANT_02,{
 	end;
 
 OnInit:
-	questinfo 1321, QTYPE_QUEST, 1;
-	setquestinfo_level 1321,100,175;
-	questinfo 1329, QTYPE_QUEST, 1;
-	setquestinfo_req 1329,1322,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 100 && !isbegin_quest(1321)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(1329) && isbegin_quest(1322) == 1" );
 	// questinfo if playtime == 2
 	end;
 }
@@ -4746,7 +4731,7 @@ rockrdg1,36,250,5	script	Mr. McPhy#rkdlout	4W_M_02,{
 	end;
 
 // OnInit:
-// 	questinfo 1321, QTYPE_QUEST, 1;// fix me: quest ID
+// 	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(1321)" );// fix me: quest ID
 // 	end;
 }
 
@@ -4986,7 +4971,7 @@ harboro1,344,61,5	script	Mr. McPhy#rockdaily	4W_M_02,{
 	end;
 
 // OnInit:
-	// fix me: questinfo 1331, QTYPE_QUEST, 1;
+	// fix me: questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(1331)" );
 	// playtime == 2
 	// display when hunting completed
 	// end;

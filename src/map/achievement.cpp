@@ -744,7 +744,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	return info;
 }
 
-static bool achievement_check_condition( struct script_code* condition, struct map_session_data* sd, const std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> count ){
+bool achievement_check_condition( struct script_code* condition, struct map_session_data* sd, const std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> count ){
 	// Save the old script the player was attached to
 	struct script_state* previous_st = sd->st;
 

@@ -19322,32 +19322,20 @@ BUILDIN_FUNC(readbook)
 /******************
 Questlog script commands
 *******************/
- /**
- * Add job criteria to questinfo
- * @param qi Quest Info
- * @param job
- * @author [Cydh]
- **/
-static void buildin_questinfo_setjob(struct questinfo *qi, int job) {
-	RECREATE(qi->jobid, unsigned short, qi->jobid_count+1);
-	qi->jobid[qi->jobid_count++] = job;
-}
-/**
- * questinfo <Quest ID>,<Icon>{,<Map Mark Color>{,<Job Class>}};
- **/
+
+/// questinfo <Icon>{,<Map Mark Color>{,<condition>}};
 BUILDIN_FUNC(questinfo)
 {
 	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id, icon, color = 0;
-	struct questinfo qi, *q2;
 
-	if( nd == NULL || nd->bl.m == -1 ) {
+	if (!nd || nd->bl.m == -1) {
 		ShowError("buildin_questinfo: No NPC attached.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	quest_id = script_getnum(st, 2);
-	icon = script_getnum(st, 3);
+	struct questinfo qi;
+	struct script_code *script = nullptr;
+	int color = QMARK_NONE, icon = script_getnum(st, 2);
 
 #if PACKETVER >= 20120410
 	switch(icon){
@@ -19383,38 +19371,38 @@ BUILDIN_FUNC(questinfo)
 		icon = icon + 1;
 #endif
 
-	qi.quest_id = quest_id;
-	qi.icon = (unsigned char)icon;
-	qi.nd = nd;
-
-	if( script_hasdata(st, 4) ) {
-		color = script_getnum(st, 4);
-		if( color < 0 || color > 3 ) {
-			ShowWarning("buildin_questinfo: invalid color '%d', changing to 0\n",color);
+	if (script_hasdata(st, 3)) {
+		color = script_getnum(st, 3);
+		if (color < QMARK_NONE || color >= QMARK_MAX) {
+			ShowWarning("buildin_questinfo: invalid color '%d', defaulting to QMARK_NONE.\n",color);
 			script_reportfunc(st);
-			color = 0;
+			color = QMARK_NONE;
 		}
 	}
+
+	if (script_hasdata(st, 4)) {
+		const char *str = script_getstr(st, 4);
+
+		if (str) {
+			std::string condition(str);
+
+			if (condition.find( "achievement_condition" ) == std::string::npos)
+				condition = "achievement_condition( " + condition + " );";
+
+			script = parse_script(condition.c_str(), "questinfoparsing", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+			if (!script) {
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+	}
+
+	qi.nd = nd;
+	qi.icon = (unsigned short)icon;
 	qi.color = (unsigned char)color;
+	qi.condition = script;
 
-	qi.min_level = 1;
-	qi.max_level = MAX_LEVEL;
-
-	q2 = map_add_questinfo(nd->bl.m, &qi);
-	q2->req = NULL;
-	q2->req_count = 0;
-	q2->jobid = NULL;
-	q2->jobid_count = 0;
-
-	if(script_hasdata(st, 5)) {
-		int job = script_getnum(st, 5);
-
-		if (!pcdb_checkid(job))
-			ShowError("buildin_questinfo: Nonexistant Job Class.\n");
-		else {
-			buildin_questinfo_setjob(q2, job);
-		}
-	}
+	map_add_questinfo(nd->bl.m, &qi);
 
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -19539,7 +19527,7 @@ BUILDIN_FUNC(showevent)
 {
 	TBL_PC *sd;
 	struct npc_data *nd = map_id2nd(st->oid);
-	int icon, color = 0;
+	int icon, color = QMARK_NONE;
 
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
@@ -19550,10 +19538,10 @@ BUILDIN_FUNC(showevent)
 	icon = script_getnum(st, 2);
 	if( script_hasdata(st, 3) ) {
 		color = script_getnum(st, 3);
-		if( color < 0 || color > 3 ) {
-			ShowWarning("buildin_showevent: invalid color '%d', changing to 0\n",color);
+		if( color < QMARK_NONE || color >= QMARK_MAX ) {
+			ShowWarning("buildin_showevent: Invalid color '%d', defaulting to QMARK_NONE.\n",color);
 			script_reportfunc(st);
-			color = 0;
+			color = QMARK_NONE;
 		}
 	}
 
@@ -22447,97 +22435,6 @@ BUILDIN_FUNC(geteleminfo) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-
-/**
- * Set the quest info of quest_id only showed on player in level range.
- * setquestinfo_level <quest_id>,<min_level>,<max_level>
- * @author [Cydh]
- **/
-BUILDIN_FUNC(setquestinfo_level) {
-	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id = script_getnum(st, 2);
-	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
-
-	if (!qi) {
-		ShowError("buildin_setquestinfo_level: Quest with ID '%d' is not defined yet.\n", quest_id);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	qi->min_level = script_getnum(st, 3);
-	qi->max_level = script_getnum(st, 4);
-	if (!qi->max_level)
-		qi->max_level = MAX_LEVEL;
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/**
- * Set the quest info of quest_id only showed for player that has quest criteria
- * setquestinfo_req <quest_id>,<quest_req_id>,<state>{,<quest_req_id>,<state>,...};
- * @author [Cydh]
- **/
-BUILDIN_FUNC(setquestinfo_req) {
-	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id = script_getnum(st, 2);
-	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
-	uint8 i = 0;
-	uint8 num = script_lastdata(st);
-
-	if (!qi) {
-		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not defined yet.\n", quest_id);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (quest_search(quest_id) == &quest_dummy) {
-		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not found in Quest DB.\n", quest_id);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (num%2) {
-		ShowError("buildin_setquestinfo_req: Odd number of parameters(%d) - pairs of requirements are expected.\n", num-2);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	for (i = 3; i <= num; i += 2) {
-		RECREATE(qi->req, struct questinfo_req, qi->req_count+1);
-		qi->req[qi->req_count].quest_id = script_getnum(st, i);
-		qi->req[qi->req_count].state = (script_getnum(st, i+1) >= 2) ? 2 : (script_getnum(st, i+1) <= 0) ? 0 : 1;
-		qi->req_count++;
-	}
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/**
- * Set the quest info of quest_id only showed for player that has specified Job
- * setquestinfo_job <quest_id>,<job>{,<job>...};
- * @author [Cydh]
- **/
-BUILDIN_FUNC(setquestinfo_job) {
-	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id = script_getnum(st, 2);
-	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
-	int job_id = 0;
-	uint8 i = 0;
-	uint8 num = script_lastdata(st)+1;
-
-	if (!qi) {
-		ShowError("buildin_setquestinfo_job: Quest with ID '%d' is not defined yet.\n", quest_id);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	for (i = 3; i < num; i++) {
-		job_id = script_getnum(st, i);
-		if (!pcdb_checkid(job_id)) {
-			ShowError("buildin_setquestinfo_job: Invalid job id '%d' in Quest with ID %d.\n", job_id, quest_id);
-			continue;
-		}
-		buildin_questinfo_setjob(qi, job_id);
-	}
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
 /**
  * opendressroom(<flag>{,<char_id>});
  */
@@ -24943,7 +24840,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(useatcmd, "s"),
 
 	//Quest Log System [Inkfish]
-	BUILDIN_DEF(questinfo, "ii??"),
+	BUILDIN_DEF(questinfo, "i??"),
 	BUILDIN_DEF(setquest, "i?"),
 	BUILDIN_DEF(erasequest, "i?"),
 	BUILDIN_DEF(completequest, "i?"),
@@ -24990,9 +24887,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(showscript,"s??"),
 	BUILDIN_DEF(ignoretimeout,"i?"),
 	BUILDIN_DEF(geteleminfo,"i?"),
-	BUILDIN_DEF(setquestinfo_level,"iii"),
-	BUILDIN_DEF(setquestinfo_req,"iii*"),
-	BUILDIN_DEF(setquestinfo_job,"ii*"),
 	BUILDIN_DEF(opendressroom,"i?"),
 	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(getguildalliance,"ii"),

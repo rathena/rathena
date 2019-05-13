@@ -3858,6 +3858,12 @@
 	export_constant(QTYPE_JUMPING_PORING);
 	export_constant(QTYPE_NONE);
 
+	/* questinfo Map Mark Color */
+	export_constant(QMARK_NONE);
+	export_constant(QMARK_YELLOW);
+	export_constant(QMARK_GREEN);
+	export_constant(QMARK_PURPLE);
+
 	/* font weight types */
 	export_constant(FW_DONTCARE);
 	export_constant(FW_THIN);

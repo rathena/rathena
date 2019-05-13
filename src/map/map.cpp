@@ -4353,50 +4353,27 @@ int log_sql_init(void)
 	return 0;
 }
 
-struct questinfo *map_add_questinfo(int m, struct questinfo *qi) {
-	unsigned short i;
+void map_add_questinfo(int m, struct questinfo *qi) {
+	nullpo_retv(qi);
+
 	struct map_data *mapdata = map_getmapdata(m);
 
-	/* duplicate, override */
-	for(i = 0; i < mapdata->qi_count; i++) {
-		if( &mapdata->qi_data[i] && mapdata->qi_data[i].nd == qi->nd && mapdata->qi_data[i].quest_id == qi->quest_id)
-			break;
-	}
-
-	if( i == mapdata->qi_count )
-		RECREATE(mapdata->qi_data, struct questinfo, ++mapdata->qi_count);
-	else { // clear previous criteria on override
-		if (mapdata->qi_data[i].jobid)
-			aFree(mapdata->qi_data[i].jobid);
-		mapdata->qi_data[i].jobid = NULL;
-		mapdata->qi_data[i].jobid_count = 0;
-		if (mapdata->qi_data[i].req)
-			aFree(mapdata->qi_data[i].req);
-		mapdata->qi_data[i].req = NULL;
-		mapdata->qi_data[i].req_count = 0;
-	}
+	uint8 i = mapdata->qi_count;
+	RECREATE(mapdata->qi_data, struct questinfo, ++mapdata->qi_count);
 
 	memcpy(&mapdata->qi_data[i], qi, sizeof(struct questinfo));
-	return &mapdata->qi_data[i];
 }
 
-bool map_remove_questinfo(int m, struct npc_data *nd) {
-	unsigned short i, c;
+void map_remove_questinfo(int m, struct npc_data *nd) {
+	nullpo_retv(nd);
+
 	struct map_data *mapdata = map_getmapdata(m);
 
-	for(i = 0; i < mapdata->qi_count; i++) {
+	uint8 i, c;
+	for (i = 0; i < mapdata->qi_count; i++) {
 		struct questinfo *qi = &mapdata->qi_data[i];
-		if( qi->nd == nd ) {
-			if (qi->jobid)
-				aFree(qi->jobid);
-			qi->jobid = NULL;
-			qi->jobid_count = 0;
-
-			if (qi->req)
-				aFree(qi->req);
-			qi->req = NULL;
-			qi->req_count = 0;
-
+		if (qi->nd == nd) {
+			qi->condition = nullptr;
 			memset(&mapdata->qi_data[i], 0, sizeof(mapdata->qi_data[i]));
 		}
 	}
@@ -4421,42 +4398,17 @@ bool map_remove_questinfo(int m, struct npc_data *nd) {
 	}
 	else
 		RECREATE(mapdata->qi_data, struct questinfo, mapdata->qi_count);
-
-	return true;
 }
 
 static void map_free_questinfo(struct map_data *mapdata) {
-	unsigned short i;
-	if (!mapdata)
-		return;
+	nullpo_retv(mapdata);
 
-	for(i = 0; i < mapdata->qi_count; i++) {
-		if (mapdata->qi_data[i].jobid)
-			aFree(mapdata->qi_data[i].jobid);
-		mapdata->qi_data[i].jobid = NULL;
-		mapdata->qi_data[i].jobid_count = 0;
-		if (mapdata->qi_data[i].req)
-			aFree(mapdata->qi_data[i].req);
-		mapdata->qi_data[i].req = NULL;
-		mapdata->qi_data[i].req_count = 0;
-	}
+	for (uint8 i = 0; i < mapdata->qi_count; i++)
+		mapdata->qi_data[i].condition = nullptr;
+
 	aFree(mapdata->qi_data);
-	mapdata->qi_data = NULL;
+	mapdata->qi_data = nullptr;
 	mapdata->qi_count = 0;
-}
-
-struct questinfo *map_has_questinfo(int m, struct npc_data *nd, int quest_id) {
-	unsigned short i;
-	struct map_data *mapdata = map_getmapdata(m);
-
-	for (i = 0; i < mapdata->qi_count; i++) {
-		struct questinfo *qi = &mapdata->qi_data[i];
-		if (qi->nd == nd && qi->quest_id == quest_id) {
-			return qi;
-		}
-	}
-
-	return NULL;
 }
 
 /**

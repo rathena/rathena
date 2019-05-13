@@ -402,6 +402,14 @@ enum questinfo_types {
 	QTYPE_NONE = 9999
 };
 
+enum questinfo_markcolor : uint8 {
+	QMARK_NONE = 0,
+	QMARK_YELLOW,
+	QMARK_GREEN,
+	QMARK_PURPLE,
+	QMARK_MAX
+};
+
 #ifndef WIN32
 	// These are declared in wingdi.h
 	/* Font Weights */
