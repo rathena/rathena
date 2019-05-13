@@ -1049,7 +1049,7 @@ char pc_checkadditem(struct map_session_data *sd, unsigned short nameid, int amo
 uint8 pc_inventoryblank(struct map_session_data *sd);
 short pc_search_inventory(struct map_session_data *sd, unsigned short nameid);
 char pc_payzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
-char pc_additem(struct map_session_data *sd, struct item *item, int amount, e_log_pick_type log_type);
+enum e_additem_result pc_additem(struct map_session_data *sd, struct item *item, int amount, e_log_pick_type log_type);
 char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
 char pc_delitem(struct map_session_data *sd, int n, int amount, int type, short reason, e_log_pick_type log_type);
 

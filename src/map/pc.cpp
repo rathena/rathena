@@ -4800,13 +4800,13 @@ short pc_search_inventory(struct map_session_data *sd, unsigned short nameid) {
  *   6 = ?
  *   7 = stack limitation
  */
-char pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type) {
+enum e_additem_result pc_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type) {
 	struct item_data *id;
 	int16 i;
 	unsigned int w;
 
-	nullpo_retr(1, sd);
-	nullpo_retr(1, item);
+	nullpo_retr(ADDITEM_INVALID, sd);
+	nullpo_retr(ADDITEM_INVALID, item);
 
 	if( item->nameid == 0 || amount <= 0 )
 		return ADDITEM_INVALID;
@@ -5454,7 +5454,7 @@ void pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 
 	enum e_additem_result flag = pc_cart_additem(sd,item_data,amount,LOG_TYPE_NONE);
 
-	if (flag != ADDITEM_SUCCESS)
+	if (flag == ADDITEM_SUCCESS)
 		pc_delitem(sd,idx,amount,0,5,LOG_TYPE_NONE);
 	else {
 		clif_dropitem(sd, idx, 0);
@@ -5491,20 +5491,16 @@ void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 	if (idx < 0 || idx >= MAX_CART) //Invalid index check [Skotlex]
 		return;
 
-	item* item_data=&sd->cart.u.items_cart[idx];
+	struct item *item_data=&sd->cart.u.items_cart[idx];
 
 	if (item_data->nameid == 0 || amount < 1 || item_data->amount < amount || sd->state.vending || sd->state.prevend)
 		return;
 
-	if (pc_checkadditem(sd, item_data->nameid, amount) == CHKADDITEM_OVERAMOUNT) {
-		return;
-	}
+	enum e_additem_result flag = pc_additem(sd, item_data, amount, LOG_TYPE_NONE);
 
-	item item_copy = *item_data;
-
-	pc_cart_delitem(sd, idx, amount, 0, LOG_TYPE_NONE);
-	char flag = pc_additem(sd, &item_copy, amount, LOG_TYPE_NONE);
-	if(flag != ADDITEM_SUCCESS) {
+	if (flag == ADDITEM_SUCCESS)
+		pc_cart_delitem(sd, idx, amount, 0, LOG_TYPE_NONE);
+	else {
 		clif_dropitem(sd,idx,0);
 		clif_additem(sd,0,0,flag);
 	}
