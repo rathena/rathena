@@ -4585,7 +4585,7 @@ char pc_can_add_item_to_inventory(map_session_data* sd, storage_type type, unsig
 	switch (type) {
 		case TABLE_INVENTORY:
 			if (sd->weight + (amount * itemdb_weight(nameid)) > sd->max_weight)
-				return ADDITEM_OVERWEIGHT;
+				return CHKADDITEM_OVERWEIGHT;
 
 			limited_stack = data->stack.inventory;
 			item_array = sd->inventory.u.items_inventory;
@@ -4593,7 +4593,7 @@ char pc_can_add_item_to_inventory(map_session_data* sd, storage_type type, unsig
 			break;
 		case TABLE_CART:
 			if (sd->cart_weight + (amount * itemdb_weight(nameid)) > sd->cart_weight_max)
-				return ADDITEM_OVERWEIGHT;
+				return CHKADDITEM_OVERWEIGHT;
 
 			limited_stack = data->stack.cart;
 			item_array = sd->cart.u.items_cart;
@@ -5394,33 +5394,33 @@ int pc_useitem(struct map_session_data *sd,int n)
  * @param item
  * @param amount
  * @param log_type
- * @return 0 = success; 1 = fail; 2 = no slot
+ * @return See pc.hpp::e_additem_result
  */
-unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type)
+e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *item,int amount,e_log_pick_type log_type)
 {
 	struct item_data *data;
 	int i,w;
 
-	nullpo_retr(1, sd);
-	nullpo_retr(1, item);
+	nullpo_retr(ADDITEM_INVALID, sd);
+	nullpo_retr(ADDITEM_INVALID, item);
 
 	if(item->nameid == 0 || amount <= 0)
-		return 1;
+		return ADDITEM_INVALID;
 	data = itemdb_search(item->nameid);
 
 	if( data->stack.cart && amount > data->stack.amount )
 	{// item stack limitation
-		return 1;
+		return ADDITEM_STACKLIMIT;
 	}
 
 	if( !itemdb_cancartstore(item, pc_get_group_level(sd)) || (item->bound > BOUND_ACCOUNT && !pc_can_give_bounded_items(sd)))
 	{ // Check item trade restrictions	[Skotlex]
 		clif_displaymessage (sd->fd, msg_txt(sd,264));
-		return 1;
+		return ADDITEM_INVALID;
 	}
 
 	if( (w = data->weight*amount) + sd->cart_weight > sd->cart_weight_max )
-		return 1;
+		return ADDITEM_OVERWEIGHT;
 
 	i = MAX_CART;
 	if( itemdb_isstackable2(data) && !item->expire_time )
@@ -5438,7 +5438,7 @@ unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item,int 
 	if( i < MAX_CART )
 	{// item already in cart, stack it
 		if( amount > MAX_AMOUNT - sd->cart.u.items_cart[i].amount || ( data->stack.cart && amount > data->stack.amount - sd->cart.u.items_cart[i].amount ) )
-			return 2; // no slot
+			return ADDITEM_OVERAMOUNT; // no slot
 
 		sd->cart.u.items_cart[i].amount += amount;
 		clif_cart_additem(sd,i,amount,0);
@@ -5447,7 +5447,7 @@ unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item,int 
 	{// item not stackable or not present, add it
 		ARR_FIND( 0, MAX_CART, i, sd->cart.u.items_cart[i].nameid == 0 );
 		if( i == MAX_CART )
-			return 2; // no slot
+			return ADDITEM_OVERAMOUNT; // no slot
 
 		memcpy(&sd->cart.u.items_cart[i],item,sizeof(sd->cart.u.items_cart[0]));
 		sd->cart.u.items_cart[i].id = 0;
@@ -5462,7 +5462,7 @@ unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item,int 
 	sd->cart_weight += w;
 	clif_updatestatus(sd,SP_CARTINFO);
 
-	return 0;
+	return ADDITEM_SUCCESS;
 }
 
 /*==========================================
@@ -5518,7 +5518,7 @@ void pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 
 	pc_delitem(sd, idx, amount, 0, 5, LOG_TYPE_NONE);
 
-	char flag = pc_cart_additem(sd, &item_copy, amount, LOG_TYPE_NONE);
+	e_additem_result flag = pc_cart_additem(sd, &item_copy, amount, LOG_TYPE_NONE);
 
 	if (flag != ADDITEM_SUCCESS) {
 		clif_dropitem(sd, idx, 0);

@@ -1064,7 +1064,7 @@ int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist);
 int pc_paycash( struct map_session_data *sd, int price, int points, e_log_pick_type type );
 int pc_getcash( struct map_session_data *sd, int cash, int points, e_log_pick_type type );
 
-unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
+e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
 void pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log_pick_type log_type);
 void pc_putitemtocart(struct map_session_data *sd,int idx,int amount);
 void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount);
@@ -1259,7 +1259,8 @@ enum e_chkitem_result {
 	CHKADDITEM_EXIST,
 	CHKADDITEM_NEW,
 	CHKADDITEM_OVERAMOUNT,
-	CHKADDITEM_INVALIDTYPE
+	CHKADDITEM_INVALIDTYPE,
+	CHKADDITEM_OVERWEIGHT
 };
 
 enum e_additem_result {
