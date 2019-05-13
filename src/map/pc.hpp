@@ -92,6 +92,21 @@ enum prevent_logout_trigger {
 	PLT_DAMAGE = 8
 };
 
+enum e_chkitem_result {
+	CHKADDITEM_EXIST,
+	CHKADDITEM_NEW,
+	CHKADDITEM_OVERAMOUNT
+};
+
+enum e_additem_result {
+    ADDITEM_SUCCESS,
+    ADDITEM_INVALID,
+    ADDITEM_OVERWEIGHT,
+    ADDITEM_OVERITEM = 4,
+    ADDITEM_OVERAMOUNT,
+    ADDITEM_STACKLIMIT = 7
+};
+
 struct skill_cooldown_entry {
 	unsigned short skill_id;
 	int timer;
@@ -1252,21 +1267,6 @@ extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 void pc_readdb(void);
 void do_init_pc(void);
 void do_final_pc(void);
-
-enum e_chkitem_result {
-	CHKADDITEM_EXIST,
-	CHKADDITEM_NEW,
-	CHKADDITEM_OVERAMOUNT
-};
-
-enum e_additem_result {
-    ADDITEM_SUCCESS,
-    ADDITEM_INVALID,
-    ADDITEM_OVERWEIGHT,
-    ADDITEM_OVERITEM = 4,
-    ADDITEM_OVERAMOUNT,
-    ADDITEM_STACKLIMIT = 7
-};
 
 // timer for night.day
 extern int day_timer_tid;
