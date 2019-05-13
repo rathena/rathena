@@ -1045,9 +1045,7 @@ void pc_setsavepoint(struct map_session_data *sd, short mapindex,int x,int y);
 char pc_randomwarp(struct map_session_data *sd,clr_type type);
 bool pc_memo(struct map_session_data* sd, int pos);
 
-char pc_checkadditem(map_session_data *sd, unsigned short nameid, int amount);
-char pc_checkadditem_cart(map_session_data* sd, unsigned short nameid, int amount);
-char pc_can_add_item_to_inventory(map_session_data* sd, storage_type type, unsigned short nameid, int amount);
+char pc_checkadditem(struct map_session_data *sd, unsigned short nameid, int amount);
 uint8 pc_inventoryblank(struct map_session_data *sd);
 short pc_search_inventory(struct map_session_data *sd, unsigned short nameid);
 char pc_payzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
@@ -1064,7 +1062,7 @@ int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist);
 int pc_paycash( struct map_session_data *sd, int price, int points, e_log_pick_type type );
 int pc_getcash( struct map_session_data *sd, int cash, int points, e_log_pick_type type );
 
-e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
+enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
 void pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log_pick_type log_type);
 void pc_putitemtocart(struct map_session_data *sd,int idx,int amount);
 void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount);
@@ -1258,9 +1256,7 @@ void do_final_pc(void);
 enum e_chkitem_result {
 	CHKADDITEM_EXIST,
 	CHKADDITEM_NEW,
-	CHKADDITEM_OVERAMOUNT,
-	CHKADDITEM_INVALIDTYPE,
-	CHKADDITEM_OVERWEIGHT
+	CHKADDITEM_OVERAMOUNT
 };
 
 enum e_additem_result {
