@@ -569,6 +569,7 @@ L_Exchange:
 // Merry Badger
 //============================================================
 moc_para01,13,22,4	script	Merry Badger#xch	882,{
+	disable_items;
 	mes "[Merry Badger]";
 	mes "Hello there!  I'm Merry Badger and I was hired to exchange the ^00CC00Eden Merit Badges^000000!";
 	next;
@@ -576,65 +577,133 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 	mes "I can take your Merit Badges and give you some useful stuff, or I can take some of your stuff and give you some Eden Merit Badges.";
 	mes "As I get more authorization I can offer more things to trade with you, so definitely keep me in mind when visiting the Eden Group.";
 	next;
-	switch(select("Redeem Badges:Trade in FOR badges:Exchange Rates:15 Job Manuals - 1 JM Box")) {
+	// switch( select( "Redeem Badges", "Trade in FOR badges", "Exchange Rates", "15 Job Manuals - 1 JM Box", "Sky Fortress Tickets", "Weekly Special" ) ) {// Sky Fortress Tickets meaningless without the instance
+	switch( select( "Redeem Badges", "Trade in FOR badges", "Exchange Rates", "15 Job Manuals - 1 JM Box", "", "Weekly Special" ) ) {
 	case 1:
+		setarray .@menu_list$[0],
+			"4 EMB for 10 KVM Badge",
+			"4 EMB for 10 Bravery Medals",
+			"4 EMB for 10 Valor Medals", 
+			"8 EMB for 1 Reset Stone",
+			"5 EMB for Battle Manual Buff",
+			"5 EMB for Job Battle Manual Buff",
+			"10 EMB for HE Battle Manual Buff",
+			"20 EMB for 3X Battle Manual Buff",
+			"5 EMB for Bubblegum Buff", 
+			"10 EMB for HE Bubblegum Buff",
+			"",	// "5 EMB for Miracle Buff" (item doesn't exist in db)
+			"1 EMB for Yggdrasil Leaf",
+			"",	// "5 EMB for Rental Wing of Beelzebub" (item doesn't exist in db)
+			"5 EMB for Rental Halter Lead",
+			"5 EMB for 20 Blue Herbs",
+			"Token of Siegfried",
+			"Nothing Now";
+		.@menu$ = implode( .@menu_list$, ":" );
 		while(1) {
 			mes "[Merry Badger]";
-			mes "Sure thing, I have several options currently for your badges!";
+			mes "Sure thing, I have several options currently for your Badges!";
 			next;
-			switch(select("This week's Special:2 EMB for 10 KVM Badge:2 EMB for 10 Bravery Medals:2 EMB for 10 Valor Medals:5 EMB for 5 Medium Life Potion:5 EMB for 5 Life Insurance:5 EMB for 5 Token of Siegfried:7 EMB for 1 Job Battle Manual:8 EMB for 1 Reset Stone:Nothing Now")){
-			case 1:
-				if (countitem(6495) < 3) {
+			switch( select(.@menu$) ) {
+			case 1:// "4 EMB for 10 KVM Badge"
+				callsub L_Exchange,4,6376,10;// KVM_Badge
+				break;
+			case 2:// "4 EMB for 10 Bravery Medals"
+				callsub L_Exchange,4,7828,10;// BF_Badge1
+				break;
+			case 3:// "4 EMB for 10 Valor Medals"
+				callsub L_Exchange,4,7829,10;// BF_Badge2
+				break;
+			case 4:// "8 EMB for 1 Reset Stone"
+				callsub L_Exchange,8,6320,1;// Premium_Reset_Stone
+				break;
+			case 5:// "5 EMB for Battle Manual Buff"
+				callsub L_Exchange,5,12208,1;// Battle_Manual
+				break;
+			case 6:// "5 EMB for Job Battle Manual Buff"
+				callsub L_Exchange,5,14592,1;// Job_Manual50
+				break;
+			case 7:// "10 EMB for HE Battle Manual Buff"
+				callsub L_Exchange,10,12411,1;// HE_Battle_Manual
+				break;
+			case 8:// "20 EMB for 3X Battle Manual Buff"
+				callsub L_Exchange,20,14545,1;// Battle_Manual_X3
+				break;
+			case 9:// "5 EMB for Bubblegum Buff"
+				callsub L_Exchange,5,12210,1;// Bubble_Gum
+				break;
+			case 10:// "10 EMB for HE Bubblegum Buff"
+				callsub L_Exchange,10,12412,1;// HE_Bubble_Gum
+				break;
+			case 11:// "5 EMB for Miracle Buff"
+				.@item_id = 22819;
+				if (countitem(6495) < 5) {
 					mes "[Merry Badger]";
 					mes "You don't have enough ^00CC00Eden Merit Badges^000000. Let's start over!";
 					break;
 				}
 				mes "[Merry Badger]";
-				mes "Ok, I have a special for 3 Merit Badges. This week I'll give you ^00CC0040 Light Granule^000000, ^0066CC40 Gun Powder^000000, ^00CC003 Izidor^000000, ^0066CC10 Prickly Fruit^000000, ^00CC001 Mandragora Flowerpot^000000, and ^0066CC3 Elder Branch^000000.";
+				mes "Ok, I can give you ^ff0000" + getitemname(.@item_id) + "^000000 for ^0066CC5 of your Eden Merit Badge(s)^000000.";
+				mes "Do you want to?";
 				next;
-				switch(select("Yes:No")) {
-				case 1:
-					delitem 6495,3; //Para_Logro_Badge
-					getitem 7938,40; //Light_Granule
-					getitem 6244,40; //Gun_Power
-					getitem 709,3; //Izidor
-					getitem 576,10; //Prickly_Fruit
-					getitem 6217,1; //Mandragora_Flowerpot
-					getitem 7939,3; //Elder_Branch
-					mes "[Merry Badger]";
-					mes "There you go! What else would you like?";
-					break;
-				case 2:
+				if (select("Yes", "No") == 2) {
 					mes "[Merry Badger]";
 					mes "I understand, let's see if you'd like something different!";
 					break;
 				}
+				mes "[Merry Badger]";
+				mes "There you go! What else would you like?";
+				delitem 6495, 5;// Para_Logro_Badge
+				consumeitem .@item_id;
 				break;
-			case 2:
-				callsub L_Exchange,2,6376,10; //KVM_Badge
+			case 12:// "1 EMB for Yggdrasil Leaf"
+				callsub L_Exchange,1,610,1;// Leaf_Of_Yggdrasil
 				break;
-			case 3:
-				callsub L_Exchange,2,7828,10; //BF_Badge1
+			case 13:// "5 EMB for Rental Wing of Beelzebub"
+				.@item_id = 14645;
+				if (countitem(6495) < 5) {
+					mes "[Merry Badger]";
+					mes "You don't have enough ^00CC00Eden Merit Badges^000000. Let's start over!";
+					break;
+				}
+				mes "[Merry Badger]";
+				mes "Ok, I can give you ^ff0000" + getitemname(.@item_id) + "^000000 for ^0066CC5 of your Eden Merit Badge(s)^000000.";
+				mes "Do you want to?";
+				next;
+				if (select("Yes", "No") == 2) {
+					mes "[Merry Badger]";
+					mes "I understand, let's see if you'd like something different!";
+					break;
+				}
+				mes "[Merry Badger]";
+				mes "There you go! What else would you like?";
+				delitem 6495, 5;// Para_Logro_Badge
+				rentitem .@item_id, 604800;	// 7 days
 				break;
-			case 4:
-				callsub L_Exchange,2,7829,10; //BF_Badge2
+			case 14:// "5 EMB for Rental Halter Lead"
+				callsub L_Exchange,5,17162,1;// Boarding_Halter_Box7
 				break;
-			case 5:
-				callsub L_Exchange,5,14535,5; //Med_Life_Potion
+			case 15:// "5 EMB for 20 Blue Herbs"
+				callsub L_Exchange,5,510,20;// Blue_Herb
 				break;
-			case 6:
-				callsub L_Exchange,5,12209,5; //Insurance
-				break;
-			case 7:
-				callsub L_Exchange,5,7621,5; //Token_Of_Siegfried
-				break;
-			case 8:
-				callsub L_Exchange,7,14592,1; //Job_Manual50
-				break;
-			case 9:
-				callsub L_Exchange,8,6320,1; //Premium_Reset_Stone
-				break;
-			case 10:
+			case 16:// Token of Siegfried
+				if (vip_status(VIP_STATUS_ACTIVE) == false) {
+					mes "[Merry Badger]";
+					mes "VIP Services offers those to any user with VIP!!";
+					close;
+				}
+				// custom from here
+				.@date = gettime(DT_YYYYMMDD);
+				if (.@date <= eden_iro_token_date) {
+					mes "[Merry Badger]";
+					mes "You already got your Token today!";
+					close;
+				}
+				mes "[Merry Badger]";
+				mes "There you go! What else would you like?";
+				eden_iro_token_date = .@date;
+				getitem 7621,10;// Token_Of_Siegfried
+				close;
+			case 17:// Nothing Now
 				mes "[Merry Badger]";
 				mes "Wonderful!";
 				mes "I'll be here if you ever want to exchange for Eden Merit Badges!";
@@ -646,29 +715,87 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 		mes "[Merry Badger]";
 		mes "I have a limited selection as of right now, but here is what I can offer to get 1 Eden Merit Badge!";
 		next;
-		switch(select("Etc Items:Cancel")) {
+		switch( select( "Etc Items", "Equipments", "Cancel" ) ) {
 		case 1:
 			while(1) {
-				switch(select("5x Old Purple Box:Nothing")) {
-				case 1:
-					mes "[Merry Badger]";
-					if (countitem(617) < 5)
-						mes "You don't have enough of that to get 1 Eden Merit Badge. Lets start over!";
-					else {
-						mes "Wonderful, what else do you want?"; //custom dialogue
-						delitem 617,5; //Old_Violet_Box
-						getitem 6495,1; //Para_Logro_Badge
-					}
-					break;
-				case 2:
+				if (select( "5x Old Purple Box", "Nothing" ) == 2) {
 					mes "[Merry Badger]";
 					mes "Wonderful!";
 					mes "I'll be here if you ever want to exchange for Eden Merit Badges!";
 					close;
 				}
+				while(1) {
+					if (countitem(617) < 5) {
+						mes "[Merry Badger]";
+						mes "You don't have enough of that to get 1 Eden Merit Badge. Lets start over!";
+						break;
+					}
+					mes "[Merry Badger]";
+					mes "Ok, I can give you ^CC00001 Eden Merit Badge^000000 for ^0000CC5 of your Old Purple Boxes^000000. Do you want to?";
+					next;
+					if (select( "Yes", "No" ) == 2) {
+						mes "[Merry Badger]";
+						mes "I understand, lets see if you'd like something different!";
+						break;
+					}
+					else {
+						mes "[Merry Badger]";
+						mes "There you go!  What else would you like?";
+						delitem 617,5;// Old_Violet_Box
+						getitem 6495,1;// Para_Logro_Badge
+						next;
+					}
+				}
 				next;
 			}
 		case 2:
+			while(1) {
+				mes "[Merry Badger]";
+				mes "I will take the top item in your inventory! MAKE SURE YOU DONT HAVE ANY OF THESE ITEMS THAT YOU DONT WANT TO EXCHANGE.";
+				next;
+				switch( select( "Giant Faceworm Snake Skin", "Giant Faceworm Snake Skin [1]", "Nothing" ) ) {
+				case 1:
+					.@item_req = 20717;// FaceWorm_Skin
+					.@item_name$ = "Giant Faceworm Snake Skin";
+					.@amount_reward = 5;
+					break;
+				case 2:
+					.@item_req = 20718;// FaceWorm_Skin_
+					.@item_name$ = "Giant Faceworm Snake Skin [1]";
+					.@amount_reward = 7;
+					break;
+				case 3:
+					mes "[Merry Badger]";
+					mes "Wonderful!";
+					mes "I'll be here if you ever want to exchange for Eden Merit Badges!";
+					next;
+					mes "[Merry Badger]";
+					mes "Well that is OK, if you want to see what I offer just ask!";
+					close;
+				}
+				while(1) {
+					if (countitem(.@item_req) < 1) {
+						mes "[Merry Badger]";
+						mes "You don't have enough of that to get 1 Eden Merit Badge. Lets start over!";
+						break;
+					}
+					mes "[Merry Badger]";
+					mes "Ok, I can give you ^ff0000" + .@amount_reward + " Eden Merit Badge^000000 for ^00ff00" + .@item_name$ + "^000000. Do you want to?";
+					next;
+					if (select( "Yes", "No" ) == 2) {
+						mes "[Merry Badger]";
+						mes "I understand, lets see if you'd like something different!";
+						break;
+					}
+					delitem .@item_req, 1;
+					getitem 6495, .@amount_reward;// Para_Logro_Badge
+					mes "[Merry Badger]";
+					mes "There you go! What else do you like?";
+					next;
+				}
+				next;
+			}
+		case 3:
 			mes "[Merry Badger]";
 			mes "Well that is OK, if you want to see what I offer just ask!";
 			close;
@@ -676,19 +803,19 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 	case 3:
 		mes "[Merry Badger]";
 		mes "This is what I'll give you for your ^00CC00Eden Merit Badges^000000!";
-		mes "Ok, I have a special for 3 Merit Badges. This week I'll give you ^00CC0040 Light Granule^000000, ^0066CC40 Gun Powder^000000, ^00CC003 Izidor^000000, ^0066CC10 Prickly Fruit^000000, ^00CC001 Mandragora Flowerpot^000000, and ^0066CC3 Elder Branch^000000.";
-		mes "^00CC002 Eden Merit Badges^000000 = ^0066CC10x KVM Badge^000000";
-		mes "^00CC002 Eden Merit Badges^000000 = ^0066CC10x Bravery Medals^000000";
-		mes "^00CC002 Eden Merit Badges^000000 = ^0066CC10x Valor Medals^000000";
-		mes "^00CC005 Eden Merit Badges^000000 = ^0066CC5x Medium Life Potion^000000";
-		mes "^00CC005 Eden Merit Badges^000000 = ^0066CC5x Life Insurance^000000";
-		mes "^00CC005 Eden Merit Badges^000000 = ^0066CC5x Token Of Siegfried^000000";
-		mes "^00CC007 Eden Merit Badges^000000 = ^0066CC1x Job Battle Manual^000000";
-		mes "^00CC008 Eden Merit Badges^000000 = ^0066CC1x Reset Stone^000000";
+		mes "Ok, I have a special for 3 Merit Badge. This week I'll give you ^00CC0040 Light Granule^000000, ^00CC0040 Gun Powder^000000, ^0000CC3 Izidor^000000, ^00CC0010 Prickly Fruit^000000, ^0000CC1 Mandragora Flowerpot^000000, and ^00CC003 Elder Branch^000000.";
+		mes "^00CC002 Eden Merit Badges^000000 = ^0000CC10x KVM Badge^000000";
+		mes "^00CC002 Eden Merit Badges^000000 = ^0000CC10x Bravery Medals^000000";
+		mes "^00CC002 Eden Merit Badges^000000 = ^0000CC10x Valor Medals^000000";
+		mes "^00CC005 Eden Merit Badges^000000 = ^0000CC5x Medium Life Potion^000000";
+		mes "^00CC005 Eden Merit Badges^000000 = ^0000CC5x Life Insurance^000000";
+		mes "^00CC005 Eden Merit Badges^000000 = ^0000CC5x Token Of Siegfried^000000";
+		mes "^00CC007 Eden Merit Badges^000000 = ^0000CC1x Job Battle Manual^000000";
+		mes "^00CC008 Eden Merit Badges^000000 = ^0000CC1x Reset Stone^000000";
 		next;
 		mes "[Merry Badger]";
 		mes "This is what you can give me to get ^00CC001 Eden Merit Badge^000000!";
-		mes "^0066CC5x Old Purple Box^000000";
+		mes "^0000CC5x Old Purple Box^000000";
 		close;
 	case 4:
 		mes "[Merry Badger]";
@@ -701,19 +828,83 @@ moc_para01,13,22,4	script	Merry Badger#xch	882,{
 			mes "You don't have 15 or more Job Manuals to get 1 Box!";
 			close;
 		}
-		//custom dialogue below
-		switch(select("Yes:No")) {
-		case 1:
-			mes "[Merry Badger]";
-			mes "Wonderful, what else do you want?";
-			delitem 14592,15; //Job_Manual50
-			getitem 13990,1; //Job_Manual50_Box
-			close;
-		case 2:
+		// custom dialogue below
+		if (select("Yes", "No") == 2) {
 			mes "[Merry Badger]";
 			mes "Wonderful!";
 			mes "I'll be here if you ever want to exchange for Eden Merit Badges!";
 			close;
+		}
+		mes "[Merry Badger]";
+		mes "Wonderful, what else do you want?";
+		delitem 14592,15; //Job_Manual50
+		getitem 13990,1; //Job_Manual50_Box
+		close;
+	case 5:
+		mes "[Merry Badger]";
+		mes "I don't really understand why but I have this stack of coupons to sell.";
+		mes "Do you want to exchange 25 Eden Merit Badges for 1 dungeon ticket? If you are VIP your ticket will last much longer!";
+		next;
+		if (select( "Yes", "No" ) == 2) {
+			mes "[Merry Badger]";
+			mes "I understand, lets see if you'd like something different!";
+			close;
+		}
+		if (countitem(6495) < 25) {
+			mes "[Merry Badger]";
+			mes "You don't have enough badges!";
+			close;
+		}
+		delitem 6495,25;
+		if (vip_status(VIP_STATUS_ACTIVE))
+			getitem 17570,1;// Sky Fortress Ticket 3 Hour Box
+		else
+			getitem 17569,1;// Sky Fortress Ticket 1 Hour Box
+		mes "[Merry Badger]";
+		mes "There you go! What else would you like?";
+		close;
+	case 6:
+		while(1) {
+			mes "[Merry Badger]";
+			mes "The Weekly special is ....";
+			next;
+			mes "[Merry Badger]";
+			mes "Ok, I have a special for 3 Merit Badge or 1,000,000 zeny.  This week I'll give you ^00CC0040 Light Granule^000000, 40 Gun Powder^000000, ^0000CC3 Izidor^000000";
+			mes "^00CC0010 Prickly Fruit^000000, ^0000CC1 Mandragora Flowerpot^000000, and ^00CC003 Elder Branch^000000.";
+			next;
+			switch( select( "Badges", "Zeny", "No" ) ) {
+			case 1:
+				if (countitem(6495) < 3) {
+					mes "[Merry Badger]";
+					mes "You don't have enough ^00CC00Eden Merit Badges^000000. Lets start over!";
+					next;
+					continue;
+				}
+				delitem 6495,3; //Para_Logro_Badge
+				break;
+			case 2:
+				if (Zeny < 1000000) {
+					mes "[Merry Badger]";
+					mes "You don't have enough ^00CC00Zeny^000000. Lets start over!";
+					next;
+					continue;
+				}
+				Zeny -= 1000000;
+				break;
+			case 3:
+				mes "[Merry Badger]";
+				mes "I understand, lets see if you'd like something different!";
+				close;
+			}
+			getitem 7938,40;// Light_Granule
+			getitem 6244,40;// Gun_Power
+			getitem 709,3;	// Izidor
+			getitem 576,10;	// Prickly_Fruit
+			getitem 6217,1;	// Mandragora_Flowerpot
+			getitem 7939,3;	// Elder_Branch
+			mes "[Merry Badger]";
+			mes "There you go! What else would you like?";
+			next;
 		}
 	}
 	end;
@@ -730,18 +921,15 @@ L_Exchange:
 				callfunc("F_InsertPlural",getarg(2),getitemname(getarg(1))), getarg(0));
 	mes "Do you want to?";
 	next;
-	switch(select("Yes:No")) {
-	case 1:
-		mes "[Merry Badger]";
-		mes "There you go! What else would you like?";
-		delitem 6495, getarg(0); //Para_Logro_Badge
-		getitem getarg(1),getarg(2);
-		break;
-	case 2:
+	if (select("Yes", "No") == 2) {
 		mes "[Merry Badger]";
 		mes "I understand, let's see if you'd like something different!";
-		break;
+		return;
 	}
+	mes "[Merry Badger]";
+	mes "There you go! What else would you like?";
+	delitem 6495, getarg(0); //Para_Logro_Badge
+	getitem getarg(1),getarg(2);
 	return;
 }
 
@@ -974,3 +1162,162 @@ auction_03,152,42,4	script	Kafra Employee#annex	117,{
 auction_03,145,47,2	shop	Tool Dealer#annex	83,611:-1,501:-1,502:-1,503:-1,506:-1,504:-1,645:-1,656:-1,657:-1,601:-1,602:-1,1065:-1,911:-1,910:-1,717:-1,1092:-1,1093:-1,713:400
 
 */
+
+// Fallen_Angel_Wing Enchant
+//============================================================
+moc_para01,179,27,3	script	Dark Luhir#new10	4_F_VALKYRIE2,{
+	disable_items;
+	mes "[Dark Luhir]";
+	mes "Hello~ I am giving away extra stats to those who have a Fallen Angel Wing item.";
+	next;
+	if (getequipid(EQI_GARMENT) != 2589) {// Fallen_Angel_Wing
+		mes "[Dark Luhir]";
+		mes "Please ^0000ffwear your Fallen Angel Wing item first^000000, and then I will give you extra stats.";
+		close;
+	}
+	switch( select( "Cancel", "Enchant Fallen Angel Wing", "Reset Fallen Angel Wing Stats" ) ) {
+	case 1:
+		mes "[Dark Luhir]";
+		mes "Later then...";
+		close;
+	case 2:
+		.@refine = getequiprefinerycnt(EQI_GARMENT);
+		setarray .@card[0],
+			getequipcardid(EQI_GARMENT,0),
+			getequipcardid(EQI_GARMENT,1),
+			getequipcardid(EQI_GARMENT,2),
+			getequipcardid(EQI_GARMENT,3);
+		mes "[Dark Luhir]";
+		mes "Only 1 socket can get an extra stat when refine level is between 1~6.";
+		mes "If refine level is 7~8, it can receive stats for 2 sockets.";
+		mes "+9 can receive stats to all 3 sockets.";
+		next;
+		mes "[Dark Luhir]";
+		if (.@refine < 7)
+			mes "This item's refine level is lower than 7. Only ^ff0000socket slot 4^000000 can receive extra stats.";
+		else if (.@refine < 9)
+			mes "This item's refine level is between 7~8. ^ff0000Socket slot 3 and 4^000000 can receive extra stats.";
+		else
+			mes "This item's refine level is more than 9. All 3 of ^ff0000Socket slot 2, 3 and 4^000000 can receive extra stats.";
+		mes "What kind of extra stats do you want?";
+		next;
+		switch( select( "Let me get my gear on", "1.Fighting spirit", "2.Magic Attack", "3.Archery", "4.Critical", "5.MaxHP", "6.MaxSP", "7.Atk speed", "8.STR", "9.AGI", "10.VIT", "11.INT", "12.DEX", "13.LUK" ) ) {
+		case 1:
+			mes "[Dark Luhir]";
+			mes "Please come back after equipping your item.";
+			close;
+		case 2:
+			setarray .@enchants[0],4809,4808,4820,4821;		// Fighting Spirit 3~5 / Fighting Spirit 6
+			.@string$ = "Fighting Spirit stats will be given randomly by 3~5 (ATK+HIT) range.";
+			break;
+		case 3:
+			setarray .@enchants[0],4812,4826,4827,4828;		// Spell 4~6 / Spell 7
+			.@string$ = "Magic spell stats will be given randomly by 4~6 (MATK + Reduce change casting time).";
+			break;
+		case 4:
+			setarray .@enchants[0],4832,4833,4834,4835;		// Expert Archer 1~3 / Expert Archer 4
+			.@string$ = "Archery stats will be given randomly by 1~3 (Range atack rate).";
+			break;
+		case 5:
+			setarray .@enchants[0],4863,4864,4865,4866;		// Fatal 1~3 / Fatal 4
+			.@string$ = "Critical stats will be given randomly by 1~4 (Critical damage + CRI).";
+			break;
+		case 6:
+			setarray .@enchants[0],4861,4862,4867,4868;		// MaxHP +1~3% / MaxHP +4%
+			.@string$ = "MHP stats will be given randomly by 1~3 (Increase MHP %).";
+			break;
+		case 7:
+			setarray .@enchants[0],4870,4800,4871,4801;		// +25,50 or 75 sp / +100 sp
+			.@string$ = "SP stats will be given randomly by 25~75.";
+			break;
+		case 8:
+			setarray .@enchants[0],4869,4872,4873,4807;		// Delayafterattack 1~3 / +1 ASPD
+			.@string$ = "Atack delay stats will be given randomly by 1~3 (Reduce attack delay %).";
+			break;
+		case 9:
+			setarray .@enchants[0],4702,4703,4704,4853;		// Str +3~5 / Special Str
+			.@string$ = "STR stats will be given randomly by 3~5.";
+			break;
+		case 10:
+			setarray .@enchants[0],4731,4732,4733,4854;		// Agi +2~4 / Special Agi
+			.@string$ = "AGI stats will be given randomly by 2~4.";
+			break;
+		case 11:
+			setarray .@enchants[0],4742,4743,4744,4855;		// Vit +3~5 / Special Vit
+			.@string$ = "VIT stats will be given randomly by 3~5.";
+			break;
+		case 12:
+			setarray .@enchants[0],4712,4713,4714,4856;		// Int +3~5 / Special Int
+			.@string$ = "INT stats will be given randomly by 3~5.";
+			break;
+		case 13:
+			setarray .@enchants[0],4722,4723,4724,4857;		// Dex +3~5 / Special Dex
+			.@string$ = "DEX stats will be given randomly by 3~5.";
+			break;
+		case 14:
+			setarray .@enchants[0],4752,4753,4754,4858;		// Luk +3~5 / Special Luk
+			.@string$ = "LUK stats will be given randomly by 3~5.";
+			break;
+		}
+		mes "[Dark Luhir]";
+		mes .@string$ + " ^ff0000Given stats cannot be turned back.^000000 Do you want to proceed?";
+		next;
+		if (select( "1.Quit", "2.Yes, I want to try this." ) == 1) {
+			mes "[Dark Luhir]";
+			mes "Later then...";
+			close;
+		}
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", EQI_GARMENT, 2589) || callfunc("F_IsEquipCardHack", EQI_GARMENT, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", EQI_GARMENT, .@refine))
+			close;
+
+		if (.@card[3] == 0) {
+			.@card[3] = .@enchants[ rand(3) ];
+			.@slot = 4;
+		}
+		else if (.@card[2] == 0 && .@refine >= 7) {
+			.@card[2] = .@enchants[ rand(3) ];
+			.@slot = 3;
+		}
+		else if (.@card[1] == 0 && .@refine >= 9) {
+			.@card[1] = .@enchants[ rand(4) ];
+			.@slot = 2;
+		}
+		else {
+			mes "[Dark Luhir]";
+			mes "It seems this item is already has max enchanting. Please bring another one for extra stats.";
+			close;
+		}
+		specialeffect2 EF_REPAIRWEAPON;
+		mes "[Dark Luhir]";
+		mes "Giving ability to item's ^990000" + .@slot + " socket^000000.";
+		delequip EQI_GARMENT;
+		getitem2 2589,1,1, .@refine,0, .@card[0], .@card[1], .@card[2], .@card[3];
+		close;
+	case 3:
+		mes "[Dark Luhir]";
+		mes "Stat reset of the Fallen Angel Wing will cost you 1,000,000 zeny?";
+		mes "Do you wish to proceed?";
+		next;
+		if (select( "Yes", "No thanks!" ) == 2)
+			close;
+		if (Zeny < 1000000) {
+			mes "[Dark Luhir]";
+			mes "You liar you don't have enough zeny!";
+			close;
+		}
+		if (getequipid(EQI_GARMENT) == 2589) {
+			.@refine = getequiprefinerycnt(EQI_GARMENT);
+			.@card[0] = getequipcardid(EQI_GARMENT,0);
+
+			mes "[Dark Luhir]";
+			specialeffect2 EF_REPAIRWEAPON;
+			mes "Reseting item stats.";
+			delequip EQI_GARMENT;
+			Zeny -= 1000000;
+			getitem2 2589,1,1, .@refine,0, .@card[0],0,0,0;// Fallen_Angel_Wing
+		}
+		close;
+	}
+}
