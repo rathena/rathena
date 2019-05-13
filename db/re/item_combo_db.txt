@@ -211,8 +211,8 @@
 24264:24277,{ bonus2 bSkillAtk,"WZ_VERMILION",20; bonus2 bSkillAtk,"WZ_METEOR",20; bonus2 bSkillAtk,"WZ_STORMGUST",20; bonus2 bVariableCastrate,"WZ_JUPITEL",-40; }
 24265:24278,{ bonus2 bVariableCastrate,"WZ_HEAVENDRIVE",-40; if (BaseJob == Job_Sage) { bonus bMatkRate,3; } }
 24266:24279,{ if (BaseJob == Job_Hunter) { bonus2 bAddSize,Size_All,3; bonus2 bMagicAddSize,Size_All,3; bonus2 bSkillUseSPrate,"HT_CLAYMORETRAP",20; bonus2 bSkillUseSPrate,"HT_LANDMINE",20; } }
-24267:24280,{ autobonus3 "{ bonus bAspdRate,100; bonus bSpeedRate,100; }",1000,5000,"BD_ADAPTATION"; /* Unknow Specialeffect */ }
-24268:24281,{ autobonus3 "{ bonus bAspdRate,100; bonus bSpeedRate,100; }",1000,5000,"BD_ADAPTATION"; /* Unknow Specialeffect */ }
+24267:24280,{ autobonus3 "{ bonus bAspdRate,10; bonus bSpeedRate,25; }",1000,5000,"BD_ADAPTATION"; /* Unknow Specialeffect */ }
+24268:24281,{ autobonus3 "{ bonus bAspdRate,10; bonus bSpeedRate,25; }",1000,5000,"BD_ADAPTATION"; /* Unknow Specialeffect */ }
 24282:24318,{ bonus bMaxHPrate,2; bonus bMaxSPrate,2; bonus bAllStats,3; bonus bUseSPrate,-10; }
 24283:24319,{ bonus bMaxHPrate,2; bonus bMaxSPrate,2; bonus bAllStats,3; bonus bUseSPrate,-10; }
 24284:24315,{ bonus bMaxHPrate,2; bonus bMaxSPrate,2; bonus bAllStats,3; bonus bUseSPrate,-10; }
