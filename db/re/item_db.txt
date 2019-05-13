@@ -12043,7 +12043,7 @@
 24289,Royal_Guard_Shadow_Weapon,Royal Guard Shadow Weapon,12,10,,0,,0,,0,0x00004000,56,2,131072,,99,1,,{ .@r = getrefine(); bonus2 bSkillAtk,"LG_CANNONSPEAR",20+.@r*5; },{},{}
 24290,Mechanic_Shadow_Weapon,Mechanic Shadow Weapon,12,10,,0,,0,,0,0x00000400,56,2,131072,,99,1,,{ .@r = getrefine(); bonus2 bSkillAtk,"NC_VULCANARM",20+.@r*5; },{},{}
 24291,Genetic_Shadow_Weapon,Genetic Shadow Weapon,12,10,,0,,0,,0,0x00040000,56,2,131072,,99,1,,{ .@r = getrefine(); bonus2 bSkillAtk,"GN_CART_TORNADO",20+.@r*5; },{},{}
-24292,Arcbishop_Shadow_Weapon,Arcbishop Shadow Weapon,12,10,,0,,0,,0,0x00000100,56,2,131072,,99,1,,{ .@r = getrefine(); bonus2 bSkillAtk,"AB_DUPLELIGHT",20+.@r*5; bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",20+.@r*5; bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",20+.@r*5; },{},{}
+24292,Arcbishop_Shadow_Weapon,Arcbishop Shadow Weapon,12,10,,0,,0,,0,0x00000100,56,2,131072,,99,1,,{ .@r = getrefine(); bonus2 bSkillAtk,"AB_DUPLELIGHT",20+.@r*5; },{},{}
 24293,Sura_Shadow_Weapon,Sura Shadow Weapon,12,10,,0,,0,,0,0x00008000,56,2,131072,,99,1,,{ .@r = getrefine(); bonus2 bSkillCooldown,"SR_RAMPAGEBLASTER",-1*(2000+500*.@r); },{},{}
 24294,Guillotine_Cross_Shadow_Weapon,Guillotine Cross Shadow Weapon,12,10,,0,,0,,0,0x00001000,56,2,131072,,99,1,,{ .@r = getrefine(); bonus2 bSkillUseSPrate,"GC_DARKILLUSION",(20+(.@r*3)); },{},{}
 24295,Shadow_Chaser_Shadow_Weapon,Shadow Chaser Shadow Weapon,12,10,,0,,0,,0,0x00020000,56,2,131072,,99,1,,{ .@r = getrefine(); bonus2 bSkillAtk,"SC_TRIANGLESHOT",20+.@r*5; },{},{}

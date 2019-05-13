@@ -225,7 +225,7 @@
 24289:24302:24246:24250:24257:24270,{ bonus bAllStats,10; bonus bMaxHPrate,5; bonus bMaxSPrate,5; bonus2 bIgnoreDefClassRate,Class_Normal,50; bonus2 bIgnoreMDefClassRate,Class_Normal,50; }
 24290:24303,{ bonus2 bSkillAtk,"NC_VULCANARM",20; bonus2 bSkillUseSPrate,"NC_FLAMELAUNCHER",20; }
 24291:24304,{ bonus bMaxHPrate,2; bonus2 bSkillCooldown,"GN_CART_TORNADO",-1000; bonus2 bVariableCastrate,"GN_CARTBOOST",-100; }
-24292:24305,{ bonus2 bSkillAtk,"AB_DUPLELIGHT",20; bonus2 bSkillAtk,"AB_DUPLELIGHT_MELEE",20; bonus2 bSkillAtk,"AB_DUPLELIGHT_MAGIC",20; bonus2 bSkillCooldown,"AB_ADORAMUS",-1000; }
+24292:24305,{ bonus2 bSkillAtk,"AB_DUPLELIGHT",20; bonus2 bSkillCooldown,"AB_ADORAMUS",-1000; }
 24293:24306,{ bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",20; bonus2 bSkillUseSPrate,"SR_SKYNETBLOW",20; }
 24294:24307,{ bonus2 bSkillAtk,"GC_DARKILLUSION",20; bonus3 bAutoSpell,"GC_DARKCROW",1,10; }
 24295:24308,{ bonus2 bSkillAtk,"SC_TRIANGLESHOT",20; bonus2 bAddClass,Class_All,2; bonus bMatkRate,2; bonus bLongAtkRate,2; }
