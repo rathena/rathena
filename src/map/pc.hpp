@@ -92,19 +92,21 @@ enum prevent_logout_trigger {
 	PLT_DAMAGE = 8
 };
 
-enum e_chkitem_result {
+enum e_chkitem_result : uint8 {
 	CHKADDITEM_EXIST,
 	CHKADDITEM_NEW,
 	CHKADDITEM_OVERAMOUNT
 };
 
-enum e_additem_result {
-    ADDITEM_SUCCESS,
-    ADDITEM_INVALID,
-    ADDITEM_OVERWEIGHT,
-    ADDITEM_OVERITEM = 4,
-    ADDITEM_OVERAMOUNT,
-    ADDITEM_STACKLIMIT = 7
+enum e_additem_result : uint8 {
+	ADDITEM_SUCCESS,
+	ADDITEM_INVALID,
+	ADDITEM_OVERWEIGHT,
+	ADDITEM_ITEM,
+	ADDITEM_OVERITEM,
+	ADDITEM_OVERAMOUNT,
+	ADDITEM_REFUSED_TIME,
+	ADDITEM_STACKLIMIT
 };
 
 struct skill_cooldown_entry {

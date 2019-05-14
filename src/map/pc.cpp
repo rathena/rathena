@@ -5458,7 +5458,7 @@ void pc_putitemtocart(struct map_session_data *sd,int idx,int amount)
 		pc_delitem(sd,idx,amount,0,5,LOG_TYPE_NONE);
 	else {
 		clif_dropitem(sd, idx, 0);
-		clif_cart_additem_ack(sd, (flag == ADDITEM_INVALID) ? ADDITEM_TO_CART_FAIL_WEIGHT : ADDITEM_TO_CART_FAIL_COUNT);
+		clif_cart_additem_ack(sd, (flag == ADDITEM_OVERAMOUNT) ? ADDITEM_TO_CART_FAIL_COUNT : ADDITEM_TO_CART_FAIL_WEIGHT);
 	}
 }
 
@@ -5501,8 +5501,9 @@ void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount)
 	if (flag == ADDITEM_SUCCESS)
 		pc_cart_delitem(sd, idx, amount, 0, LOG_TYPE_NONE);
 	else {
-		clif_dropitem(sd,idx,0);
-		clif_additem(sd,0,0,flag);
+		clif_cart_delitem(sd, idx, amount);
+		clif_additem(sd, 0, 0, flag);
+		clif_cart_additem(sd, idx, amount, 0);
 	}
 }
 
