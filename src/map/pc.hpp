@@ -92,6 +92,23 @@ enum prevent_logout_trigger {
 	PLT_DAMAGE = 8
 };
 
+enum e_chkitem_result : uint8 {
+	CHKADDITEM_EXIST,
+	CHKADDITEM_NEW,
+	CHKADDITEM_OVERAMOUNT
+};
+
+enum e_additem_result : uint8 {
+	ADDITEM_SUCCESS,
+	ADDITEM_INVALID,
+	ADDITEM_OVERWEIGHT,
+	ADDITEM_ITEM,
+	ADDITEM_OVERITEM,
+	ADDITEM_OVERAMOUNT,
+	ADDITEM_REFUSED_TIME,
+	ADDITEM_STACKLIMIT
+};
+
 struct skill_cooldown_entry {
 	unsigned short skill_id;
 	int timer;
@@ -1049,7 +1066,7 @@ char pc_checkadditem(struct map_session_data *sd, unsigned short nameid, int amo
 uint8 pc_inventoryblank(struct map_session_data *sd);
 short pc_search_inventory(struct map_session_data *sd, unsigned short nameid);
 char pc_payzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
-char pc_additem(struct map_session_data *sd, struct item *item, int amount, e_log_pick_type log_type);
+enum e_additem_result pc_additem(struct map_session_data *sd, struct item *item, int amount, e_log_pick_type log_type);
 char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
 char pc_delitem(struct map_session_data *sd, int n, int amount, int type, short reason, e_log_pick_type log_type);
 
@@ -1062,7 +1079,7 @@ int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist);
 int pc_paycash( struct map_session_data *sd, int price, int points, e_log_pick_type type );
 int pc_getcash( struct map_session_data *sd, int cash, int points, e_log_pick_type type );
 
-unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
+enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
 void pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log_pick_type log_type);
 void pc_putitemtocart(struct map_session_data *sd,int idx,int amount);
 void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount);
@@ -1252,21 +1269,6 @@ extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 void pc_readdb(void);
 void do_init_pc(void);
 void do_final_pc(void);
-
-enum e_chkitem_result {
-	CHKADDITEM_EXIST,
-	CHKADDITEM_NEW,
-	CHKADDITEM_OVERAMOUNT
-};
-
-enum e_additem_result {
-    ADDITEM_SUCCESS,
-    ADDITEM_INVALID,
-    ADDITEM_OVERWEIGHT,
-    ADDITEM_OVERITEM = 4,
-    ADDITEM_OVERAMOUNT,
-    ADDITEM_STACKLIMIT = 7
-};
 
 // timer for night.day
 extern int day_timer_tid;
