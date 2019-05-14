@@ -695,32 +695,29 @@ int achievement_check_progress(struct map_session_data *sd, int achievement_id, 
  */
 int *achievement_level(struct map_session_data *sd, bool flag)
 {
-	nullpo_retr(0, sd);
+	nullpo_retr(nullptr, sd);
 
 	static int info[2];
-	int old_level = sd->achievement_data.level, temp_score, temp_level = 0;
+	int old_level = sd->achievement_data.level;
 	const int score_table[MAX_ACHIEVEMENT_RANK] = { 18, 31, 49, 73, 135, 104, 140, 178, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 }; //! TODO: Figure out the EXP required to level up from 8-20
 
 	sd->achievement_data.total_score = 0;
+	sd->achievement_data.level = 0;
 
 	for (int i = 0; i < sd->achievement_data.count; i++) { // Recount total score
 		if (sd->achievement_data.achievements[i].completed > 0)
 			sd->achievement_data.total_score += sd->achievement_data.achievements[i].score;
 	}
 
-	temp_score = sd->achievement_data.total_score;
+	int i, temp_score = sd->achievement_data.total_score;
 
-	for (int i = 0; i < MAX_ACHIEVEMENT_RANK; i++) { // Determine rollover and TNL EXP
-		if (temp_score >= score_table[i]) {
-			temp_score -= score_table[i];
-			temp_level++;
-		}
-
-		info[1] = score_table[i]; // Right number
+	for (i = 0; i < MAX_ACHIEVEMENT_RANK && temp_score > score_table[i]; i++) { // Determine rollover and TNL EXP
+		temp_score -= score_table[i];
+		sd->achievement_data.level++;
 	}
 
 	info[0] = temp_score; // Left number
-	sd->achievement_data.level = temp_level;
+	info[1] = score_table[i]; // Right number
 
 	if (flag && old_level != sd->achievement_data.level) { // Give AG_GOAL_ACHIEVE
 		int achievement_id = 240000 + sd->achievement_data.level;

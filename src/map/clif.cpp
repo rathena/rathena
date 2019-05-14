@@ -20295,7 +20295,7 @@ void clif_parse_sale_remove( int fd, struct map_session_data* sd ){
 /// Author: Luxuri, Aleos
 
 /**
- * Sends all achievement data to the client (ZC_ALL_AG_LIST).
+ * Sends all achievement data to the client (ZC_ALL_ACH_LIST).
  * 0a23 <packetType>.W <packetLength>.W <ACHCount>.L <ACHPoint>.L
  */
 void clif_achievement_list_all(struct map_session_data *sd)
@@ -20308,11 +20308,11 @@ void clif_achievement_list_all(struct map_session_data *sd)
 	}
 
 	int count = sd->achievement_data.count; // All achievements should be sent to the client
-	int len = (50 * count) + 22;
 
-	if (len <= 22)
+	if (count == 0)
 		return;
 
+	int len = (50 * count) + 22;
 	int fd = sd->fd;
 	int *info = achievement_level(sd, true);
 
@@ -20337,7 +20337,7 @@ void clif_achievement_list_all(struct map_session_data *sd)
 }
 
 /**
- * Sends a single achievement's data to the client (ZC_AG_UPDATE).
+ * Sends a single achievement's data to the client (ZC_ACH_UPDATE).
  * 0a24 <packetType>.W <ACHPoint>.L
  */
 void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count)
@@ -20371,7 +20371,7 @@ void clif_achievement_update(struct map_session_data *sd, struct achievement *ac
 }
 
 /**
- * Checks if an achievement reward can be rewarded (CZ_REQ_AG_REWARD).
+ * Checks if an achievement reward can be rewarded (CZ_REQ_ACH_REWARD).
  * 0a25 <packetType>.W <achievementID>.L
  */
 void clif_parse_AchievementCheckReward(int fd, struct map_session_data *sd)
@@ -20385,7 +20385,7 @@ void clif_parse_AchievementCheckReward(int fd, struct map_session_data *sd)
 }
 
 /**
- * Returns the result of achievement_check_reward (ZC_REQ_AG_REWARD_ACK).
+ * Returns the result of achievement_check_reward (ZC_REQ_ACH_REWARD_ACK).
  * 0a26 <packetType>.W <result>.W <achievementID>.L
  */
 void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_id)
