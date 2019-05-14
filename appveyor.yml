@@ -8,11 +8,12 @@ pull_requests:
   do_not_increment_build_number: true
 environment:
   matrix:
-  - VisualStudioVersion: 14.0
-    Defines: "\"BUILDBOT\""
-  - VisualStudioVersion: 14.0
-    Defines: "\"BUILDBOT;PRERE\""
-  - VisualStudioVersion: 15.0
+  #- VisualStudioVersion: 14.0
+  #  Defines: "\"BUILDBOT\""
+  #- VisualStudioVersion: 14.0
+  #  Defines: "\"BUILDBOT;PRERE\""
+  - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
+    VisualStudioVersion: 15.0
     Defines: "\"CODEANALYSIS\""
 platform:
   - Win32
