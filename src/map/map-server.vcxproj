@@ -100,7 +100,6 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
-      <EnablePREfast>true</EnablePREfast>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
