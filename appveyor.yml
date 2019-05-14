@@ -12,7 +12,7 @@ environment:
     Defines: "\"BUILDBOT\""
   - VisualStudioVersion: 14.0
     Defines: "\"BUILDBOT;PRERE\""
-  - VisualStudioVersion: 14.0
+  - VisualStudioVersion: 15.0
     Defines: "\"CODEANALYSIS\""
 platform:
   - Win32
