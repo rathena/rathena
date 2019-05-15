@@ -714,7 +714,7 @@
 20718:22116,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
 20718:22117,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
 20718:22118,{ bonus bMaxHPRate,15; bonus bMaxSPRate,5; }
-20725:2189,{ .@a = getequiprefinerycnt(EQI_GARMENT); autobonus "{ bonus2 bHPLossRate,30,1000; bonus bMatk,5*(.@a/3); }",30+.@a,10000,BF_MAGIC,"{ active_transform 1930,10000; specialeffect2 EF_POTION_BERSERK; /*Confirm Special Effect*/ }"; .@b = getequiprefinerycnt(EQI_HAND_L); if(.@b>=7) bonus2 bSubEle,Ele_All,2*.@b; }
+20725:2189,{ .@a = getequiprefinerycnt(EQI_GARMENT); autobonus "{ bonus2 bHPLossRate,30,1000; bonus bMatk,5*("+.@a+"/3); }",30+.@a,10000,BF_MAGIC,"{ active_transform 1930,10000; specialeffect2 EF_POTION_BERSERK; /*Confirm Special Effect*/ }"; .@b = getequiprefinerycnt(EQI_HAND_L); if(.@b>=7) bonus2 bSubEle,Ele_All,2*.@b; }
 20783:4174,{ bonus2 bSubEle,Ele_Neutral,-50; }
 20797:2339,{ bonus bInt,15; bonus bMaxHPrate,5; bonus bMaxSPrate,5; if (getequiprefinerycnt(EQI_ARMOR) > 6) bonus bNoCastCancel; }
 20797:4174,{ bonus2 bSubEle,Ele_All,50; bonus2 bSubEle,Ele_Neutral,-50; }
