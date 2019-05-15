@@ -12118,8 +12118,8 @@
 24363,S_Elegant_Weapon,Elegant Shadow Weapon,12,0,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ bonus bMaxHP,100 + 150*(getrefine()/2); },{},{}
 24364,S_Elegant_Earring,Elegant Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ bonus bMaxHPrate,1; bonus bMatk,5; bonus bMaxHP,50*(getrefine()/2); },{},{}
 24365,S_Elegant_Pendant,Elegant Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ .@val = 2 + (getrefine()/3); bonus bMatk,5; bonus bHealPower2,.@val; bonus bAddItemHealRate,.@val; },{},{}
-24366,S_Healing_Shield,Healing Shadow Shield,12,0,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ .@r = getrefine(); bonus bMatk,5; if (.@r >= 7) { .@val = 3; if (.@r >= 9) { .@val += 5; } bonus bHealPower,.@val; } },{},{}
-24367,S_Healing_Shoes,Healing Shadow Shoes,12,0,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ .@r = getrefine(); bonus bMatk,5; if (.@r >= 7) { .@val = 3; if (.@r >= 9) { .@val += 5; } bonus bHealPower,.@val; } },{},{}
+24366,S_Healing_Shield,Healing Shadow Shield,12,0,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ .@r = getrefine(); bonus bMatk,10; if (.@r >= 7) { .@val = 3; if (.@r >= 9) { .@val += 5; } bonus bHealPower,.@val; } },{},{}
+24367,S_Healing_Shoes,Healing Shadow Shoes,12,0,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ .@r = getrefine(); bonus bMatk,10; if (.@r >= 7) { .@val = 3; if (.@r >= 9) { .@val += 5; } bonus bHealPower,.@val; } },{},{}
 24368,S_Restore_Earring,Restore Shadow Earring,12,0,,0,,,,0,0xFFFFFFFF,63,2,1048576,,1,1,,{ .@r = getrefine(); if (.@r >= 9) { .@val = 50; } else if (.@r >= 7) { .@val = 30; } else { .@val = 20; } bonus bHPrecovRate,.@val; },{},{}
 24369,S_Restore_Pendant,Restore Shadow Pendant,12,0,,0,,,,0,0xFFFFFFFF,63,2,2097152,,1,1,,{ .@r = getrefine(); if (.@r >= 9) { .@val = 50; } else if (.@r >= 7) { .@val = 30; } else { .@val = 20; } bonus bSPrecovRate,.@val; },{},{}
 24370,S_Mortal_Blow_Weapon,Mortal Blow Shadow Weapon,12,0,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ .@r = getrefine(); if (.@r >= 9) { .@val = 7; } else if (.@r >= 7) { .@val = 4; } else { .@val = 2; } bonus bCritAtkRate,.@val; },{},{}
