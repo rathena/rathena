@@ -8,10 +8,10 @@ pull_requests:
   do_not_increment_build_number: true
 environment:
   matrix:
-  #- VisualStudioVersion: 14.0
-  #  Defines: "\"BUILDBOT\""
-  #- VisualStudioVersion: 14.0
-  #  Defines: "\"BUILDBOT;PRERE\""
+  - VisualStudioVersion: 14.0
+    Defines: "\"BUILDBOT\""
+  - VisualStudioVersion: 14.0
+    Defines: "\"BUILDBOT;PRERE\""
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     VisualStudioVersion: 15.0
     Defines: "\"CODEANALYSIS\""
@@ -24,6 +24,7 @@ configuration:
 # Disable Release for now, since do not want to have any optimization and have access to debug infos on crash
 #  - Release
 matrix:
+  # Minimizing CI time. Should be enough to check guidelines only for one platform.
   exclude:
     - platform: x64
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
