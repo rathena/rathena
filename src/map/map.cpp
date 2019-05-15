@@ -4403,9 +4403,12 @@ void map_remove_questinfo(int m, struct npc_data *nd) {
 static void map_free_questinfo(struct map_data *mapdata) {
 	nullpo_retv(mapdata);
 
-	for (uint8 i = 0; i < mapdata->qi_count; i++)
-		mapdata->qi_data[i].condition = nullptr;
-
+	for (uint8 i = 0; i < mapdata->qi_count; i++) {
+		if (mapdata->qi_data[i].condition) {
+			script_free_code(mapdata->qi_data[i].condition);
+			mapdata->qi_data[i].condition = nullptr;
+		}
+	}
 	aFree(mapdata->qi_data);
 	mapdata->qi_data = nullptr;
 	mapdata->qi_count = 0;
