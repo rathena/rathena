@@ -15,6 +15,7 @@ environment:
   - APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
     VisualStudioVersion: 15.0
     Defines: "\"CODEANALYSIS\""
+
 platform:
   - Win32
   - x64
@@ -23,6 +24,9 @@ configuration:
 # Disable Release for now, since do not want to have any optimization and have access to debug infos on crash
 #  - Release
 matrix:
+  exclude:
+    - platform: x64
+      APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
   fast_finish: true
 build_script:
 - cmd: msbuild rAthena.sln /p:DefineConstants=%Defines%
