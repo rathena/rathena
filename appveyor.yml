@@ -1,4 +1,5 @@
 image: Visual Studio 2013
+
 # This is the default location, but we put it here for safety reasons, since we use it in our test script
 clone_folder: c:\projects\rathena
 # We do not need the git history for our integration tests
@@ -6,6 +7,7 @@ clone_depth: 50
 version: '{branch}-{build}'
 pull_requests:
   do_not_increment_build_number: true
+  
 environment:
   matrix:
   - VisualStudioVersion: 14.0
@@ -19,18 +21,29 @@ environment:
 platform:
   - Win32
   - x64
+  
 configuration:
   - Debug
 # Disable Release for now, since do not want to have any optimization and have access to debug infos on crash
 #  - Release
+
 matrix:
   # Minimizing CI time. Should be enough to check guidelines only for one platform.
   exclude:
     - platform: x64
       APPVEYOR_BUILD_WORKER_IMAGE: Visual Studio 2017
   fast_finish: true
+  
 build_script:
-- cmd: msbuild rAthena.sln /p:DefineConstants=%Defines%
+- cmd: msbuild rAthena.sln /p:DefineConstants=%Defines% | tee result.txt
+
+after_build:
+- ps: >-
+    if ($env:Defines == "CODEANALYSIS") {
+        $warnings =  tail -n 5  result.txt | head -n 1
+        Add-AppveyorMessage -Message $warnings -Category Information
+    }
+
 services: mysql
 test_script:
 - cmd: >-
