@@ -39,7 +39,7 @@ build_script:
 
 after_build:
 - ps: >-
-    if ($env:Defines == "CODEANALYSIS") {
+    if ($env:Defines -eq "CODEANALYSIS") {
         $warnings =  tail -n 5  result.txt | head -n 1
         Add-AppveyorMessage -Message $warnings -Category Information
     }
