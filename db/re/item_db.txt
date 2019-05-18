@@ -13298,7 +13298,7 @@
 31588,C_Snow_Flower,C Snow Flower,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1799,{ hateffect(HAT_EF_SNOWFLAKE_TIARA,true); },{},{ hateffect(HAT_EF_SNOWFLAKE_TIARA,false); }
 31602,C_Midgarts_Glory,C Rune Midgarts Glory,4,0,,,,0,,0,0xFFFFFFFF,63,2,1024,,1,0,1807,{ hateffect(HAT_EF_MIDGARTS_GLORY,true); },{},{ hateffect(HAT_EF_MIDGARTS_GLORY,false); }
 //===================================================================
-// More 2-Handed Spears
+// More 1-Handed Spears
 //===================================================================
 32005,Illusion_Pole_Axe,Illusion Pole Axe,5,0,,1500,190,,3,2,0x00004082,63,2,2,4,120,1,4,{ .@r = getrefine(); bonus bStr,3; bonus bInt,2; bonus bDex,2; if (.@r >= 13) { .@val = -2000; } else if (.@r >= 9) { .@val = -1000; } bonus2 bSkillCooldown,"RK_HUNDREDSPEAR",.@val; },{},{}
 32013,Metal_Stick,Metal Stick,5,0,0,2000,180,,3,3,0x00004080,56,2,2,4,150,1,4,{ .@r = getrefine(); bonus2 bSkillAtk,"LG_CANNONSPEAR",10; if(.@r > 6){ bonus2 bSkillAtk,"LG_OVERBRAND",10 + (.@r > 8 ? 15 : 0); } if(.@r > 11){ bonus bDelayrate,-15; } },{},{}
