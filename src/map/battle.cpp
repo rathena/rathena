@@ -3533,7 +3533,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case KN_BRANDISHSPEAR:
 		case ML_BRANDISH: {
 #ifdef RENEWAL
-				int ratio = 100 + 20 * skill_lv * sstatus->str; // !TODO: Confirm STR role
+				int ratio = 100 + 20 * skill_lv + sstatus->str; // !TODO: Confirm STR role
 #else
 				int ratio = 100 + 20 * skill_lv;
 #endif
@@ -3729,7 +3729,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case CH_PALMSTRIKE:
 #ifdef RENEWAL
-			skillratio += 100 + 100 * skill_lv; // !TODO: How does STR play a role?
+			skillratio += 100 + 100 * skill_lv + sstatus->str; // !TODO: How does STR play a role?
 			RE_LVL_DMOD(100);
 #else
 			skillratio += 100 + 100 * skill_lv;
