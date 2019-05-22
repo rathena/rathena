@@ -11254,7 +11254,7 @@
 20432,C_Khalitzburg_Knight_Helm,Costume Khalitzburg Knight Helm,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1442,{},{},{}
 20433,C_Louise_Red_Hat,Costume Louise Red Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1443,{},{},{}
 20434,C_Drooping_Gunslinger,Costume Drooping Gunslinger,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,1,1444,{},{},{}
-20435,C_Camellia_Hair_Pin,Costume Camellia Hair Pin,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1203,{ hateffect(HAT_EF_CAMELLIA_HAIR_PIN,true); },{},{ hateffect(HAT_EF_GLOW_OF_NEW_YEAR,false); }
+20435,C_Camellia_Hair_Pin,Costume Camellia Hair Pin,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1203,{ hateffect(HAT_EF_CAMELLIA_HAIR_PIN,true); },{},{ hateffect(HAT_EF_CAMELLIA_HAIR_PIN,false); }
 20436,C_Angelring_Furhat,Costume Angelring Furhat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,953,{},{},{}
 20437,C_Sakura_Hairband,Costume Sakura Hairband,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,949,{},{},{}
 20438,C_Abacus_In_Mouth,Costume Abacus In Mouth,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,825,{},{},{}
@@ -11271,7 +11271,7 @@
 20452,C_Crown_of_Strawberry_Prince,Costume Crown of Strawberry Prince,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1455,{},{},{}
 20455,C_Republic_Hat,Costume Republic Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1458,{},{},{}
 20456,C_Combat_Vestige,Costume Combat Vestige,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1460,{},{},{}
-20457,C_Fluttering_Feathers,Costume Fluttering Feathers,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,0,{ hateffect(HAT_EF_FEATHER_FLUTTERING,true); },{},{ hateffect(HAT_EF_FEATHER_FLUTTERING,false); }
+20457,C_Fluttering_Feathers,Costume Fluttering Feathers,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1461,{ hateffect(HAT_EF_FEATHER_FLUTTERING,true); },{},{ hateffect(HAT_EF_FEATHER_FLUTTERING,false); }
 20458,C_Wild_Poring_Rider,Costume Wild Poring Rider,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1422,{},{},{}
 20459,C_Valhalla_Idol,Costume Valhalla Idol,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,1423,{ hateffect(HAT_EF_VALHALLA_IDOL,true); },{},{ hateffect(HAT_EF_VALHALLA_IDOL,false); }
 20460,C_Thorny_Hairband,Costume Thorny Hairband,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,921,{},{},{}
@@ -12806,7 +12806,7 @@
 31053,C_Drooping_Eddga,Costume Drooping Eddga,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,495,{},{},{}
 31054,C_Sting_Hat,Costume Sting Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,504,{},{},{}
 31055,C_Poring_Soap_Pipe,Costume Poring Soap Pipe,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1499,{},{},{}
-31056,C_Furious_Wave,Costume Furious Wave,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,0,{ hateffect(HAT_EF_DOUBLEGUMGANG,true); },{},{ hateffect(HAT_EF_DOUBLEGUMGANG,false); } /* Need to confirm this */
+31056,C_Furious_Wave,Costume Furious Wave,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,0,{ hateffect(HAT_EF_DOUBLEGUMGANG,true); /* Need to confirm this */ },{},{ hateffect(HAT_EF_DOUBLEGUMGANG,false); }
 31057,C_Eremes_Guiles_Scarf_Black,Costume Eremes Guiles Scarf Black,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1501,{},{},{}
 31058,C_Gelato_Hat,Costume Gelato Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,777,{},{},{}
 31059,C_Sailor_Hat,Costume Sailor Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,798,{},{},{}
@@ -12839,9 +12839,9 @@
 31086,C_Long_Pony_Purple,Costume Long Pony Purple,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1526,{},{},{}
 31087,C_Dwarf_Beard,Costume Dwarf Beard,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1349,{},{},{}
 31088,C_Mad_Hatter,Costume Mad Hatter,4,0,,0,,,,0,0xFFFFFFFF,63,2,5120,,1,0,1421,{},{},{}
-31089,C_Exploding_Crimson_Flame,Costume Exploding Crimson Flame,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,1500,{ hateffect(HAT_EF_BAKURETSU_HADOU,true); },{},{ hateffect(HAT_EF_BAKURETSU_HADOU,false); } /* Need to confirm this */
+31089,C_Exploding_Crimson_Flame,Costume Exploding Crimson Flame,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,1500,{ hateffect(HAT_EF_BAKURETSU_HADOU,true); /* Need to confirm this */ },{},{ hateffect(HAT_EF_BAKURETSU_HADOU,false); }
 31090,C_Angelring_Hat,Costume Angelring Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,348,{},{},{}
-31091,C_Show_Me_The_Zeny,Costume Show Me The Zeny,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,0,{ hateffect(HAT_EF_GOLD_SHOWER,true); },{},{ hateffect(HAT_EF_GOLD_SHOWER,false); }
+31091,C_Show_Me_The_Zeny,Costume Show Me The Zeny,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1528,{ hateffect(HAT_EF_GOLD_SHOWER,true); },{},{ hateffect(HAT_EF_GOLD_SHOWER,false); }
 31092,C_Rabbit_Ribbon_Hat,Costume Bunny Ribbon Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,845,{},{},{}
 31093,C_Under_Lamp,Costume Under Lamp,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1531,{},{},{}
 31094,C_Dice_Hat,Costume Dice Hairband,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,494,{},{},{}
