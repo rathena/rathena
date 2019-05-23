@@ -6688,7 +6688,6 @@ BUILDIN_FUNC(viewpoint)
 	TBL_PC* sd;
 	if (script_hasdata(st, 7)) {
 		if (!script_charid2sd(7, sd)) {
-			ShowError("buildin_viewpoint: player not found (CID=%d).\n",script_getnum(st, 7));
 			st->state = END;
 			return SCRIPT_CMD_FAILURE;
 		}
