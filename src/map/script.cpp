@@ -6687,12 +6687,12 @@ BUILDIN_FUNC(viewpoint)
 	int type,x,y,id,color;
 	TBL_PC* sd;
 
-	if (script_hasdata(st, 7)) {
-		script_charid2sd(7, sd)
+	if (script_hasdata(st, 7))
+		script_charid2sd(7, sd);
 	else
-		script_rid2sd(sd))
+		script_rid2sd(sd);
 
-	if(!sd){
+	if (!sd) {
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
