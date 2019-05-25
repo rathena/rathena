@@ -4494,7 +4494,7 @@ ACMD_FUNC(repairall)
 
 	count = 0;
 	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].card[0] != CARD0_PET && sd->inventory.u.items_inventory[i].attribute == 1) {
+		if (sd->inventory.u.items_inventory[i].nameid && sd->inventory.u.items_inventory[i].attribute == 1) {
 			sd->inventory.u.items_inventory[i].attribute = 0;
 			clif_produceeffect(sd, 0, sd->inventory.u.items_inventory[i].nameid);
 			count++;

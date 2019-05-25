@@ -925,7 +925,8 @@ bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	it.card[0] = CARD0_PET;
 	it.card[1] = GetWord(pd->pet.pet_id, 0);
 	it.card[2] = GetWord(pd->pet.pet_id, 1);
-	//need to check bound state for the item ?
+	it.card[3] = (unsigned int)MakeDWord(it.card[1], it.card[2]);
+	//need to check bound state for the item ? //the best option is to make it with the pet info TODO: sql
 
 	//Delete Egg from the Player
 	if (pc_additem(sd, &it, 1, LOG_TYPE_OTHER))
@@ -1287,7 +1288,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	tmp_item.card[0] = CARD0_PET;
 	tmp_item.card[1] = GetWord(pet_id,0);
 	tmp_item.card[2] = GetWord(pet_id,1);
-	tmp_item.card[3] = 0; //New pets are not named. //? i didn't find anything about this
+	tmp_item.card[3] = 0; //New pets are not named.
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
