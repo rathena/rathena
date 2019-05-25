@@ -5357,6 +5357,10 @@ enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *i
 
 	if(item->nameid == 0 || amount <= 0)
 		return ADDITEM_INVALID;
+
+	if (item->card[0] == CARD0_PET && item->attribute == 1)
+		return ADDITEM_INVALID;
+
 	data = itemdb_search(item->nameid);
 
 	if( data->stack.cart && amount > data->stack.amount )
