@@ -925,7 +925,7 @@ bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	it.card[0] = CARD0_PET;
 	it.card[1] = GetWord(pd->pet.pet_id, 0);
 	it.card[2] = GetWord(pd->pet.pet_id, 1);
-	it.card[3] = (unsigned int)MakeDWord(it.card[1], it.card[2]);//FOR TESTING
+	it.card[3] = (unsigned int)MakeDWord(it.card[1], it.card[2]);
 	//need to check bound state for the item ? //the best option is to make it with the pet info TODO: sql
 
 	//Delete Egg from the Player
