@@ -9367,7 +9367,7 @@ void pc_setmadogear(struct map_session_data* sd, int flag)
  *------------------------------------------*/
 bool pc_candrop(struct map_session_data *sd, struct item *item)
 {
-	if (item && (item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))))
+	if( item && (item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) )
 		return false;
 	if( !pc_can_give_items(sd) || sd->sc.cant.drop) //check if this GM level can drop items
 		return false;
