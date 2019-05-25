@@ -918,6 +918,14 @@ static int pet_performance(struct map_session_data *sd, struct pet_data *pd)
 bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	pet_lootitem_drop(pd,sd);
 
+	//int i = pet_egg_search( sd, pd->pet.pet_id );
+    //
+	//if( i == -1 ){
+	//	return false;
+ 	//}
+ 
+	//sd->inventory.u.items_inventory[i].attribute = 0;
+	
 	struct item it;
 	memset(&it, 0, sizeof(it));
 	it.nameid = pd->pet.egg_id;
@@ -927,7 +935,7 @@ bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	it.card[2] = GetWord(pd->pet.pet_id, 1);
 	//need to check bound state for the item ?
 
-	//Delete Egg from the Player
+	//if != 0 than the player didn't get the egg
 	if (pc_additem(sd, &it, 1, LOG_TYPE_OTHER))
 		return false;
 
@@ -1114,9 +1122,12 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 			return 1;
 		}
 
+		// Hide egg from inventory.
+		// Set pet egg to broken, before the inventory gets saved
+		//sd->inventory.u.items_inventory[i].attribute = 1;
+		
 		//delete the egg from the player's inventory
-		if(pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER))
-			return 1;
+		pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
 
 		// Hatch the pet
 		pet_birth_process( sd, p );

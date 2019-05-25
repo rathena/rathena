@@ -212,6 +212,9 @@ static enum e_storage_add storage_canAddItem(struct s_storage *stor, int idx, st
 	if (amount < 1 || amount > items[idx].amount)
 		return STORAGE_ADD_INVALID;
 
+	if (items[idx].card[0] == CARD0_PET && items[idx].attribute == 1)
+		return STORAGE_ADD_INVALID;
+
 	if (!stor->state.put)
 		return STORAGE_ADD_NOACCESS;
 
