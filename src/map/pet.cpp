@@ -913,32 +913,18 @@ static int pet_performance(struct map_session_data *sd, struct pet_data *pd)
  * Return a pet to it's egg.
  * @param sd : player requesting
  * @param pd : pet requesting
- * @return true if everything went well, false if the player could not get the egg.
+ * @return true if everything went well, false if the egg is not found in the inventory.
  */
 bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	pet_lootitem_drop(pd,sd);
 
-	//int i = pet_egg_search( sd, pd->pet.pet_id );
-    //
-	//if( i == -1 ){
-	//	return false;
- 	//}
- 
-	//sd->inventory.u.items_inventory[i].attribute = 0;
-	
-	struct item it;
-	memset(&it, 0, sizeof(it));
-	it.nameid = pd->pet.egg_id;
-	it.identify = 1;
-	it.card[0] = CARD0_PET;
-	it.card[1] = GetWord(pd->pet.pet_id, 0);
-	it.card[2] = GetWord(pd->pet.pet_id, 1);
-	//need to check bound state for the item ?
+	int i = pet_egg_search( sd, pd->pet.pet_id );
 
-	//if != 0 than the player didn't get the egg
-	if (pc_additem(sd, &it, 1, LOG_TYPE_OTHER))
+	if( i == -1 ){
 		return false;
-
+ 	}
+ 
+	sd->inventory.u.items_inventory[i].attribute = 0;
 	sd->inventory.dirty = true;
 	pd->pet.incubate = 1;
 	unit_free(&pd->bl,CLR_OUTSIGHT);
@@ -1124,10 +1110,7 @@ int pet_recv_petdata(uint32 account_id,struct s_pet *p,int flag)
 
 		// Hide egg from inventory.
 		// Set pet egg to broken, before the inventory gets saved
-		//sd->inventory.u.items_inventory[i].attribute = 1;
-		
-		//delete the egg from the player's inventory
-		pc_delitem(sd, i, 1, 0, 0, LOG_TYPE_OTHER);
+		sd->inventory.u.items_inventory[i].attribute = 1;
 
 		// Hatch the pet
 		pet_birth_process( sd, p );
@@ -1298,7 +1281,7 @@ bool pet_get_egg(uint32 account_id, short pet_class, int pet_id ) {
 	tmp_item.card[0] = CARD0_PET;
 	tmp_item.card[1] = GetWord(pet_id,0);
 	tmp_item.card[2] = GetWord(pet_id,1);
-	tmp_item.card[3] = 0; //New pets are not named. //? i didn't find anything about this
+	tmp_item.card[3] = 0; //New pets are not named.
 
 	if((ret = pc_additem(sd,&tmp_item,1,LOG_TYPE_PICKDROP_PLAYER))) {
 		clif_additem(sd,0,0,ret);
