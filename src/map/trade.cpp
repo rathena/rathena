@@ -385,7 +385,7 @@ void trade_tradeadditem(struct map_session_data *sd, short index, short amount)
 		return;
 	}
 
-	if (item->card[0] == CARD0_PET && item->attribute == 1)
+	if (itemdb_ishatched_egg(item))
 		return;
 
 	if( item->expire_time ) { // Rental System
