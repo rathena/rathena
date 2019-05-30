@@ -101,8 +101,8 @@
  **/
 #ifdef RENEWAL
     #define MAP_DEFAULT_NAME "iz_int"
-    #define MAP_DEFAULT_X 97
-    #define MAP_DEFAULT_Y 90
+    #define MAP_DEFAULT_X 18
+    #define MAP_DEFAULT_Y 26
 #else
     #define MAP_DEFAULT_NAME "new_1-1"
     #define MAP_DEFAULT_X 53
