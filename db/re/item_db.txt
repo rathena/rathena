@@ -164,7 +164,7 @@
 666,Gift_Box_3,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_GiftBox_3,1); },{},{}
 667,Gift_Box_4,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_GiftBox_4,1); },{},{}
 668,Handsei,Red Envelope,2,0,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ Zeny += rand(1000,10000); },{},{}
-669,Rice_Cake_Soup,Tempting Rice-Cake Soup,0,500,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal -100,-100; },{},{}
+669,Rice_Cake_Soup,Tempting Rice-Cake Soup,0,500,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 10,10; },{},{}
 670,Gold_Coin_Moneybag,Bag of Gold Coins,3,100000,,400,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 671,Gold_Coin,Gold Coin,2,10000,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ RouletteGold++; },{},{}
 672,Copper_Coin_Moneybag,Bag of Bronze Coins,3,1000,,400,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
