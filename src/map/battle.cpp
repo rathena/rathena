@@ -5861,9 +5861,6 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 			//Fall through
 		case NJ_KAENSIN:
 		case PR_SANCTUARY:
-#ifdef RENEWAL
-		case HW_GRAVITATION:
-#endif
 			ad.dmotion = 1; //No flinch animation.
 			break;
 	}
