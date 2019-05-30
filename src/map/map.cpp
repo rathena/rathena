@@ -4847,9 +4847,9 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 
 			mapdata->flag[mapflag] = status;
 			if (!status)
-				mapdata->zone ^= 1 << (args->flag_val + 1);
+				mapdata->zone ^= (1 << (args->flag_val + 1)) << 3;
 			else
-				mapdata->zone |= 1 << (args->flag_val + 1);
+				mapdata->zone |= (1 << (args->flag_val + 1)) << 3;
 			break;
 		case MF_NOCOMMAND:
 			if (status) {
