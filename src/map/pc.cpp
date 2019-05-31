@@ -1459,7 +1459,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->vars_ok = false;
 	sd->vars_received = 0x0;
 
-	sd->qi_display = NULL;
+	sd->qi_display = nullptr;
 	sd->qi_count = 0;
 
 	//warp player
@@ -12811,7 +12811,7 @@ void pc_validate_skill(struct map_session_data *sd) {
  * @param show If show is true and qi_display is 0, set qi_display to 1 and show the event bubble.
  *             If show is false and qi_display is 1, set qi_display to 0 and hide the event bubble.
  **/
-static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display, struct questinfo *qi, bool show) {
+static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display, struct s_questinfo *qi, bool show) {
 	if (show) {
 		// Check if need to be displayed
 		if ((*qi_display) != 1) {
@@ -12844,28 +12844,25 @@ void pc_show_questinfo(struct map_session_data *sd) {
 		return;
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	nullpo_retv(mapdata);
 
-	if (!mapdata->qi_count || !mapdata->qi_data)
+	if (mapdata->qi_data.empty())
 		return;
-	if (mapdata->qi_count != sd->qi_count)
+	if (mapdata->qi_data.size() != sd->qi_count)
 		return; // init was not called yet
 
-	struct questinfo *qi = nullptr;
+	struct s_questinfo *qi = nullptr;
 	bool show;
 
-	for (uint8 i = 0; i < mapdata->qi_count; i++) {
+	for (int i = 0; i < mapdata->qi_data.size(); i++) {
 		qi = &mapdata->qi_data[i];
+ 		if (!qi)
+ 			continue;
 
-		if (!qi)
-			continue;
-
-		// requirements
 		if (!qi->condition)
 			show = true;
 		else {
-			std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> current_count = {};
-
-			if (achievement_check_condition(qi->condition, sd, current_count))
+			if (achievement_check_condition(qi->condition, sd))
 				show = true;
 			else
 				show = false;
@@ -12885,7 +12882,7 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 
 	if (sd->qi_display) {
 		aFree(sd->qi_display);
-		sd->qi_display = NULL;
+		sd->qi_display = nullptr;
 	}
 	sd->qi_count = 0;
 
@@ -12893,10 +12890,12 @@ void pc_show_questinfo_reinit(struct map_session_data *sd) {
 		return;
 
 	struct map_data *mapdata = map_getmapdata(sd->bl.m);
+	nullpo_retv(mapdata);
 
-	if (!mapdata->qi_count || !mapdata->qi_data)
+	if (mapdata->qi_data.empty())
 		return;
-	CREATE(sd->qi_display, bool, (sd->qi_count = mapdata->qi_count));
+
+	CREATE(sd->qi_display, bool, (sd->qi_count = mapdata->qi_data.size()));
 #endif
 }
 

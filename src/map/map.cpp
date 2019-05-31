@@ -3682,15 +3682,10 @@ void map_data_copy(struct map_data *dst_map, struct map_data *src_map) {
 	dst_map->skill_duration.insert(src_map->skill_duration.begin(), src_map->skill_duration.end());
 
 	dst_map->zone = src_map->zone;
-	dst_map->qi_count = 0;
-	dst_map->qi_data = NULL;
 
 	// Mimic questinfo
-	if (src_map->qi_count) {
-		dst_map->qi_count = src_map->qi_count;
-		CREATE(dst_map->qi_data, struct questinfo, dst_map->qi_count);
-		memcpy(dst_map->qi_data, src_map->qi_data, dst_map->qi_count * sizeof(struct questinfo));
-	}
+	if (!src_map->qi_data.empty())
+		src_map->qi_data = dst_map->qi_data;
 }
 
 /**
@@ -3905,8 +3900,6 @@ int map_readallmaps (void)
 
 		memset(&mapdata->save, 0, sizeof(struct point));
 		mapdata->damage_adjust = {};
-		mapdata->qi_count = 0;
-		mapdata->qi_data = NULL;
 		mapdata->channel = NULL;
 	}
 
@@ -4353,65 +4346,31 @@ int log_sql_init(void)
 	return 0;
 }
 
-void map_add_questinfo(int m, struct questinfo *qi) {
-	nullpo_retv(qi);
-
-	struct map_data *mapdata = map_getmapdata(m);
-
-	uint8 i = mapdata->qi_count;
-	RECREATE(mapdata->qi_data, struct questinfo, ++mapdata->qi_count);
-
-	memcpy(&mapdata->qi_data[i], qi, sizeof(struct questinfo));
-}
-
 void map_remove_questinfo(int m, struct npc_data *nd) {
-	nullpo_retv(nd);
-
 	struct map_data *mapdata = map_getmapdata(m);
+	struct s_questinfo *qi;
 
-	uint8 i, c;
-	for (i = 0; i < mapdata->qi_count; i++) {
-		struct questinfo *qi = &mapdata->qi_data[i];
-		if (qi->nd == nd) {
-			qi->condition = nullptr;
-			memset(&mapdata->qi_data[i], 0, sizeof(mapdata->qi_data[i]));
+	nullpo_retv(nd);
+	nullpo_retv(mapdata);
+
+	for (int i = 0; i < mapdata->qi_data.size(); i++) {
+		qi = &mapdata->qi_data[i];
+		if (qi && qi->nd == nd) {
+			script_free_code(qi->condition);
+			mapdata->qi_data.erase(mapdata->qi_data.begin() + i);
 		}
 	}
-
-	// Move next data to empty slot
-	for(i = 0, c = 0; i < mapdata->qi_count; i++) {
-		struct questinfo *qi = &mapdata->qi_data[i];
-		if (!qi || !qi->nd)
-			continue;
-
-		if (i != c) {
-			mapdata->qi_data[c] = mapdata->qi_data[i];
-			memset(&mapdata->qi_data[i], 0, sizeof(mapdata->qi_data[i]));
-		}
-
-		c++;
-	}
-
-	if (!(mapdata->qi_count = c)) {
-		aFree(mapdata->qi_data);
-		mapdata->qi_data = NULL;
-	}
-	else
-		RECREATE(mapdata->qi_data, struct questinfo, mapdata->qi_count);
 }
 
 static void map_free_questinfo(struct map_data *mapdata) {
 	nullpo_retv(mapdata);
 
-	for (uint8 i = 0; i < mapdata->qi_count; i++) {
-		if (mapdata->qi_data[i].condition) {
-			script_free_code(mapdata->qi_data[i].condition);
-			mapdata->qi_data[i].condition = nullptr;
-		}
+	for (const auto &it : mapdata->qi_data) {
+		if (it.condition)
+			script_free_code(it.condition);
 	}
-	aFree(mapdata->qi_data);
-	mapdata->qi_data = nullptr;
-	mapdata->qi_count = 0;
+
+	mapdata->qi_data.clear();
 }
 
 /**

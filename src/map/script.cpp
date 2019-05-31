@@ -19333,7 +19333,7 @@ BUILDIN_FUNC(questinfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	struct questinfo qi;
+	struct s_questinfo qi;
 	struct script_code *script = nullptr;
 	int color = QMARK_NONE, icon = script_getnum(st, 2);
 
@@ -19402,7 +19402,8 @@ BUILDIN_FUNC(questinfo)
 	qi.color = (unsigned char)color;
 	qi.condition = script;
 
-	map_add_questinfo(nd->bl.m, &qi);
+	struct map_data *mapdata = map_getmapdata(nd->bl.m);
+	mapdata->qi_data.push_back(qi);
 
 	return SCRIPT_CMD_SUCCESS;
 }

@@ -698,7 +698,7 @@ struct iwall_data {
 	bool shootable;
 };
 
-struct questinfo {
+struct s_questinfo {
 	struct npc_data *nd;
 	unsigned short icon;
 	unsigned char color;
@@ -742,9 +742,8 @@ struct map_data {
 	struct Channel *channel;
 
 	/* ShowEvent Data Cache */
-	struct questinfo *qi_data;
-	uint8 qi_count;
-	
+	std::vector<s_questinfo> qi_data;
+
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
 };
@@ -1070,7 +1069,6 @@ struct mob_data * map_id2boss(int id);
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
 
-void map_add_questinfo(int m, struct questinfo *qi);
 void map_remove_questinfo(int m, struct npc_data *nd);
 
 /// Bitfield of flags for the iterator.
