@@ -8869,7 +8869,7 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 /*==========================================
  * Delete the item with specified sting unique id
  * return true on seccess, and false on fail
- * delitem_uniqueid(<"string unique id">{,<char_id>})
+ * uniqueid_delitem(<"string unique id">{,<char_id>})
  *------------------------------------------*/
 BUILDIN_FUNC(uniqueid_delitem)
 {
