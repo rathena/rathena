@@ -1996,6 +1996,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	script_cleararray_pc(sd, "@sold_refine", (void*)0);
 	script_cleararray_pc(sd, "@sold_attribute", (void*)0);
 	script_cleararray_pc(sd, "@sold_identify", (void*)0);
+	script_cleararray_pc(sd, "@sold_uniqueid$", (void*)0);
 
 	for( j = 0; j < MAX_SLOTS; j++ )
 	{// clear each of the card slot entries
