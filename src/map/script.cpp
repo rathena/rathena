@@ -8785,7 +8785,7 @@ BUILDIN_FUNC(getequipuniqueid)
 /*==========================================
   * Get the item information with specified sting unique id
   * and assing it to the given vatiable
-  * return true on seccess
+  * return true on seccess, and false on fail
   * uniqueid_getiteminfo(<"string unique id">,<int variable>{,<char_id>})
   *------------------------------------------*/
 BUILDIN_FUNC(uniqueid_getiteminfo)
@@ -8868,7 +8868,7 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 
 /*==========================================
  * Delete the item with specified sting unique id
- * return true on seccess
+ * return true on seccess, and false on fail
  * delitem_uniqueid(<"string unique id">{,<char_id>})
  *------------------------------------------*/
 BUILDIN_FUNC(uniqueid_delitem)
