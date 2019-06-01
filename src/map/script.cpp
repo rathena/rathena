@@ -14114,9 +14114,9 @@ BUILDIN_FUNC(getinventorylist)
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_expire"), j),sd->inventory.u.items_inventory[i].expire_time);
 			pc_setreg(sd,reference_uid(add_str("@inventorylist_bound"), j),sd->inventory.u.items_inventory[i].bound);
 			if (sd->inventory.u.items_inventory[i].unique_id) {
-				memset(buf, 0, maxlen);
 				snprintf(buf, maxlen - 1, "%llu", (unsigned long long)sd->inventory.u.items_inventory[i].unique_id);
 				pc_setregstr(sd, reference_uid(add_str("@inventorylist_unique_id$"), j), buf);
+				memset(buf, 0, maxlen);
 			}
 			for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
 			{
