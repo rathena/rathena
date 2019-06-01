@@ -8783,23 +8783,25 @@ BUILDIN_FUNC(getequipuniqueid)
 }
 
 /*==========================================
- * getitemreferences(<"string item unique id">,<int variable>{,<char_id>})
- *------------------------------------------*/
-BUILDIN_FUNC(getitemreferences)
+  * Get the item information with specified sting unique id
+  * and assing it to the given vatiable
+  * return true on seccess
+  * uniqueid_getiteminfo(<"string unique id">,<int variable>{,<char_id>})
+  *------------------------------------------*/
+BUILDIN_FUNC(uniqueid_getiteminfo)
 {
 	int i, k, s = 0;
 	TBL_PC* sd;
 	struct item* it = NULL;
-
-	unsigned long long uniqueid = atoll(script_getstr(st, 2));
-	struct script_data* data = script_getdata(st, 3);
 	struct reg_db* ref = NULL;
+	unsigned long long item_uniqueid = atoll(script_getstr(st, 2));
+	struct script_data* data = script_getdata(st, 3);
 	const char* name;
 	int32 idx, id;
 
-	if (!uniqueid) {
-		ShowError("buildin_delitem_uniqueid: unknown unique id .\n");
-		st->state = END;
+	if (!item_uniqueid) {
+		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%s).\n", script_getstr(st, 2));
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -8808,14 +8810,9 @@ BUILDIN_FUNC(getitemreferences)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].unique_id == uniqueid)
-			break;
-	}
-
 	if (!data_isreference(data))
 	{
-		ShowError("buildin_getitemreferences: not a variable\n");
+		ShowError("buildin_uniqueid_getiteminfo: not a variable\n");
 		script_reportdata(data);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
@@ -8826,80 +8823,82 @@ BUILDIN_FUNC(getitemreferences)
 	ref = reference_getref(data);
 
 	if (not_server_variable(*name) && !sd) {
-		ShowError("buildin_getitemreferences: Cannot use a player variable '%s' if no player is attached.\n", name);
+		ShowError("buildin_uniqueid_getiteminfo: Cannot use a player variable '%s' if no player is attached.\n", name);
+		script_reportdata(data);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 	if (is_string_variable(name)) {
-		ShowError("buildin_getitemreferences: Cannot Assign String variable '%s'.\n", name);
+		ShowError("buildin_uniqueid_getiteminfo: Cannot Assign String variable '%s'.\n", name);
+		script_reportdata(data);
 		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
+
+	if (i >= MAX_INVENTORY) {
+		ShowError("buildin_uniqueid_getiteminfo: Item not found (unique_id=%s).\n", script_getstr(st, 2));
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 	it = &sd->inventory.u.items_inventory[i];
-	if (it != NULL) {
 
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->nameid), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->refine), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->identify), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->attribute), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[0]), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[1]), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[2]), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[3]), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->expire_time), ref);
-		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->bound), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->nameid), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->refine), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->identify), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->attribute), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[0]), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[1]), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[2]), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[3]), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->expire_time), ref);
+	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->bound), ref);
 
-		for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
-		{
-			set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].id), ref);
-			set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].value), ref);
-			set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].param), ref);
-		}
-		script_pushint(st, true);
-	}
-	else
+	for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
 	{
-		ShowError("buildin_getitemreferences: Item not found.\n");
-		st->state = END;
-		return SCRIPT_CMD_FAILURE;
+		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].id), ref);
+		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].value), ref);
+		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].param), ref);
 	}
 
+	script_pushint(st, true);
 	return SCRIPT_CMD_SUCCESS;
 }
+
 /*==========================================
- * delitem_uniqueid(<"string item unique id">{,<char_id>})
+ * Delete the item with specified sting unique id
+ * return true on seccess
+ * delitem_uniqueid(<"string unique id">{,<char_id>})
  *------------------------------------------*/
-BUILDIN_FUNC(delitem_uniqueid)
+BUILDIN_FUNC(uniqueid_delitem)
 {
 	int i;
 	TBL_PC* sd;
 	struct item* it = NULL;
-	unsigned long long uniqueid = atoll(script_getstr(st, 2));
+	unsigned long long item_uniqueid = atoll(script_getstr(st, 2));
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (!uniqueid) {
-		ShowError("buildin_delitem_uniqueid: unknown item unique id .\n");
-		st->state = END;
+	if (!item_uniqueid) {
+		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%s).\n", script_getstr(st, 2));
+		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
-	for (i = 0; i < MAX_INVENTORY; i++) {
-		if (sd->inventory.u.items_inventory[i].unique_id == uniqueid)
-			break;
+
+	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
+
+	if (i >= MAX_INVENTORY) {
+		ShowError("buildin_uniqueid_delitem: Item not found (unique_id=%s).\n", script_getstr(st, 2));
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
 	}
 	it = &sd->inventory.u.items_inventory[i];
 
-	if (it == NULL)
-	{
-		ShowError("buildin_delitem_uniqueid: unknown item .\n");
-		st->state = END;
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if(it->equip)
+	if (it->equip)
 		pc_unequipitem(sd, i, 3);
 
 	if (buildin_delitem_search(sd, it, 0, 0))
@@ -8908,8 +8907,8 @@ BUILDIN_FUNC(delitem_uniqueid)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	ShowError("buildin_delitem_uniqueid: failed to delete %d items (AID=%d item_id=%hu).\n", it->amount, sd->status.account_id, it->nameid);
-	st->state = END;
+	ShowError("buildin_uniqueid_delitem: failed to delete (item_id=%hu unique_id=%s AID=%d).\n", it->nameid, script_getstr(st, 2), sd->status.account_id);
+	script_pushint(st, false);
 	return SCRIPT_CMD_FAILURE;
 }
 
@@ -14095,6 +14094,7 @@ BUILDIN_FUNC(getinventorylist)
 	char card_var[NAME_LENGTH], randopt_var[50];
 	int i,j=0,k, maxlen = 256;
 	char* buf = (char*)aMalloc(maxlen * sizeof(char));
+	memset(buf, 0, maxlen);
 
 	if (!script_charid2sd(2,sd))
 		return SCRIPT_CMD_FAILURE;
@@ -24663,8 +24663,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(strnpcinfo,"i"),
 	BUILDIN_DEF(getequipid,"??"),
 	BUILDIN_DEF(getequipuniqueid,"i?"),
-	BUILDIN_DEF(getitemreferences, "sr?"),
-	BUILDIN_DEF(delitem_uniqueid, "s?"),
+	BUILDIN_DEF(uniqueid_getiteminfo, "sr?"),
+	BUILDIN_DEF(uniqueid_delitem, "s?"),
 	BUILDIN_DEF(getequipname,"i?"),
 	BUILDIN_DEF(getbrokenid,"i?"), // [Valaris]
 	BUILDIN_DEF(repair,"i?"), // [Valaris]
