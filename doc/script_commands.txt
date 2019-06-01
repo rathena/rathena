@@ -2881,6 +2881,7 @@ recreate these items perfectly if they are destroyed. Here's what you get:
 @inventorylist_card3[]               inscribed on the items, so you can explicitly check
 @inventorylist_card4[]               if the character owns an item made by a specific
                                      craftsman.
+@inventorylist_unique_id$[]        - the item unique ids.
 @inventorylist_expire[]            - expire time (Unix time stamp). 0 means never expires.
 @inventorylist_bound[]             - the bound type of the items (see BOUND_* constants)
 @inventorylist_count               - the number of items in these lists.

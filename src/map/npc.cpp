@@ -1986,6 +1986,7 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 	int key_refine = 0;
 	int key_attribute = 0;
 	int key_identify = 0;
+	int key_uniqueid = 0;
 	int key_card[MAX_SLOTS];
 	int key_option_id[MAX_ITEM_RDM_OPT], key_option_val[MAX_ITEM_RDM_OPT], key_option_param[MAX_ITEM_RDM_OPT];
 
@@ -2027,6 +2028,11 @@ static int npc_selllist_sub(struct map_session_data* sd, int n, unsigned short* 
 			script_setarray_pc(sd, "@sold_refine", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].refine, &key_refine);
 			script_setarray_pc(sd, "@sold_attribute", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].attribute, &key_attribute);
 			script_setarray_pc(sd, "@sold_identify", i, (void*)(intptr_t)sd->inventory.u.items_inventory[idx].identify, &key_identify);
+
+			char* buf = (char*)aMalloc(255 * sizeof(char));
+			snprintf(buf, 255, "%llu", (unsigned long long)sd->inventory.u.items_inventory[idx].unique_id);
+			script_setarray_pc(sd, "@sold_uniqueid$", i, (void*)(intptr_t)buf, &key_uniqueid);
+			aFree(buf);
 
 			for( j = 0; j < MAX_SLOTS; j++ )
 			{// store each of the cards from the equipment in the array
