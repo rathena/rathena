@@ -2660,6 +2660,70 @@ See 'getequipid' for a full list of valid equipment slots.
 
 ---------------------------------------
 
+*uniqueid_getiteminfo(<"string item unique id">,<array_variable>{,<char_id>})
+
+This function Assign the item informaion in the specified int array_variable
+for the specified sting item unique id.
+will return true if seccessed and false if it fail.
+
+<array_variable>[0]      - item id
+<array_variable>[1]      - refine
+<array_variable>[2]      - identify
+<array_variable>[3]      - attribute
+<array_variable>[4]      - card[0]
+<array_variable>[5]      - card[1]
+<array_variable>[6]      - card[2]
+<array_variable>[7]      - card[3]
+<array_variable>[8]      - expire_time
+<array_variable>[9]      - bound type
+
+<array_variable>[10]     - option_id1
+<array_variable>[11]     - option_value1
+<array_variable>[12]     - option_parameter1
+<array_variable>[13]     - option_id2
+<array_variable>[14]     - option_value2
+<array_variable>[15]     - option_parameter2
+<array_variable>[16]     - option_id3
+<array_variable>[17]     - option_value3
+<array_variable>[18]     - option_parameter3
+<array_variable>[19]     - option_id4
+<array_variable>[20]     - option_value4
+<array_variable>[21]     - option_parameter4
+<array_variable>[22]     - option_id5
+<array_variable>[23]     - option_value5
+<array_variable>[24]     - option_parameter5
+
+	//while you are equiped with a Top Headgear
+	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
+	if(uniqueid_getiteminfo(.@unique_id$)){
+		//now '.@unique_id$' have all the Top Headgear you are equiped with.
+		for(.@i=0;.@i<getarraysize(.@unique_id$);.@i++){
+			mes .@i + " " + .@unique_id$[.@i];
+		}
+	}else{
+		mes "Item not found";
+	}
+	end;
+
+---------------------------------------
+
+*uniqueid_delitem(<"string item unique id">{,<char_id>})
+
+This command will remove an item with the specified string item unique id
+from the invoking/target character inventory.
+will return true if seccessed and false if it fail.
+
+	//while you are equiped with a Top Headgear
+	.@unique_id$ = getequipuniqueid(EQI_HEAD_TOP);
+	if(uniqueid_delitem(.@unique_id$)){
+		mes "item deleted";
+	}else{
+		mes "failed to delete the item";
+	}
+	end;
+
+---------------------------------------
+
 *getequipname(<equipment slot>{,<char_id>})
 
 Returns the jname of the item equipped in the specified equipment slot on the
