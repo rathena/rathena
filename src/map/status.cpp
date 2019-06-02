@@ -10325,6 +10325,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val1 = val1%ELE_ALL;
 			else if (val1 < 0)
 				val1 = rnd()%ELE_ALL;
+
+#ifdef PACKETVER < 20151104
+			StatusIconChangeTable[type] = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
+#endif
 			break;
 		case SC_CRITICALWOUND:
 			val2 = 20*val1; // Heal effectiveness decrease
