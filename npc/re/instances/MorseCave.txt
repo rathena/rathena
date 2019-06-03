@@ -197,7 +197,7 @@ moro_cav,57,69,3	script	Red Flower#a1	CLEAR_NPC,{
 		mes "Only party members can enter this Memorial dungeon.";
 		close;
 	case IE_OK:
-		mapannounce 'map_rev$, getpartyname( getcharid(1) ) + " party's " + strcharinfo(0) + " is entering Morse's Cave.", bc_map,0xFF99;
+		mapannounce "moro_cav", getpartyname( getcharid(1) ) + " party's " + strcharinfo(0) + " is entering Morse's Cave.", bc_map,0xFF99;
 		if (isbegin_quest(9319) > 0)
 			erasequest 9319;// Pursuing Hiding Morocc Continues
 		if (isbegin_quest(9318) > 0)
