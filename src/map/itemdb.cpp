@@ -1632,7 +1632,7 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
 		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
 		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+		(id->flag.no_equip&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return true;
 	return false;

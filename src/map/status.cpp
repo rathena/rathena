@@ -14504,13 +14504,12 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 		bool mapIsGVG = mapdata_flag_gvg2_no_te(mapdata);
 		bool mapIsBG = mapdata->flag[MF_BATTLEGROUND] != 0;
 		bool mapIsTE = mapdata_flag_gvg2_te(mapdata);
-		unsigned int mapZone = mapdata->zone << 3;
 
 		for (i = 0; i < SC_MAX; i++) {
 			if (!sc->data[i] || !SCDisabled[i])
 				continue;
 
-			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone, mapIsTE))
+			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapdata->zone, mapIsTE))
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 		}
 	}
