@@ -551,7 +551,7 @@ void initChangeTables(void)
 	add_sc( DC_SCREAM		, SC_STUN );
 	set_sc( DC_HUMMING		, SC_HUMMING		, EFST_HUMMING		, SCB_HIT );
 	set_sc( DC_DONTFORGETME		, SC_DONTFORGETME	, EFST_DONTFORGETME	, SCB_SPEED|SCB_ASPD );
-	set_sc( DC_FORTUNEKISS		, SC_FORTUNE		, EFST_FORTUNEKISS	, SCB_CRI );
+	set_sc( DC_FORTUNEKISS		, SC_FORTUNE		, EFST_FORTUNEKISS	, SCB_ALL );
 	set_sc( DC_SERVICEFORYOU	, SC_SERVICE4U		, EFST_SERVICEFORYOU	, SCB_ALL );
 	add_sc( NPC_DARKCROSS		, SC_BLIND		);
 	add_sc( NPC_GRANDDARKNESS	, SC_BLIND		);
@@ -10186,8 +10186,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 4 * val1; // Hit increase
 			break;
 		case SC_DONTFORGETME:
-			val2 = 30 * val1; // ASPD decrease
-			val3 = 2 * val1; // Movement speed adjustment.
+			val2 = 1 + 30 * val1; // ASPD decrease
+			val3 = 5 + 2 * val1; // Movement speed adjustment.
 			break;
 		case SC_FORTUNE:
 			val2 = val1 * 10; // Critical increase
