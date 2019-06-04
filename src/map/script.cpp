@@ -11103,10 +11103,10 @@ BUILDIN_FUNC(announce)
 		}else{
 			struct map_session_data* sd;
 
-			if( script_rid2sd(sd) )
-				bl = &sd->bl;
-			else
+			if (!script_charid2sd(9, sd))
 				bl = NULL;
+			else
+				bl = &sd->bl;
 		}
 		
 		if (bl == NULL)
@@ -24600,7 +24600,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(attachnpctimer,"?"), // attached the player id to the npc timer [Celest]
 	BUILDIN_DEF(detachnpctimer,"?"), // detached the player id from the npc timer [Celest]
 	BUILDIN_DEF(playerattached,""), // returns id of the current attached player. [Skotlex]
-	BUILDIN_DEF(announce,"si?????"),
+	BUILDIN_DEF(announce,"si??????"),
 	BUILDIN_DEF(mapannounce,"ssi?????"),
 	BUILDIN_DEF(areaannounce,"siiiisi?????"),
 	BUILDIN_DEF(getusers,"i"),
