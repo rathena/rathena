@@ -416,6 +416,9 @@ static TIMER_FUNC(unit_walktoxy_timer){
 			// Copying is required in case someone uses unitwalkto inside the event code
 			safestrncpy(walk_done_event, ud->walk_done_event, EVENT_NAME_LENGTH);
 
+			//Clear the event
+			ud->walk_done_event[0] = 0;
+
 			ud->state.walk_script = true;
 
 			// Execute the event
@@ -434,11 +437,6 @@ static TIMER_FUNC(unit_walktoxy_timer){
 				return 0;
 			}
 
-			// Check if another event was set
-			if( !strcmp(ud->walk_done_event,walk_done_event) ){
-				// If not remove it
-				ud->walk_done_event[0] = 0;
-			}
 		}
 	}
 
