@@ -5,9 +5,9 @@
 //
 // Healing Items
 //=============================================================
-501,Red_Potion,Red Potion,0,50,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(45,65),0; },{},{}
-502,Orange_Potion,Orange Potion,0,200,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(105,145),0; },{},{}
-503,Yellow_Potion,Yellow Potion,0,550,,130,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(175,235),0; },{},{}
+501,Red_Potion,Red Potion,0,10,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(45,65),0; },{},{}
+502,Orange_Potion,Orange Potion,0,50,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(105,145),0; },{},{}
+503,Yellow_Potion,Yellow Potion,0,180,,130,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(175,235),0; },{},{}
 504,White_Potion,White Potion,0,1200,,150,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(325,405),0; },{},{}
 505,Blue_Potion,Blue Potion,0,5000,,150,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 0,rand(40,60); },{},{}
 506,Green_Potion,Green Potion,0,40,,70,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_end SC_POISON; sc_end SC_SILENCE; sc_end SC_BLIND; sc_end SC_CONFUSION; sc_end SC_HALLUCINATION; },{},{}
@@ -81,7 +81,7 @@
 576,Prickly_Fruit,Prickly Fruit,0,540,,60,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(150,300),rand(20,30); },{},{}
 577,Grain,Bag of Grain,0,200,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(60,70),0; },{},{}
 578,Strawberry,Strawberry,0,200,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal 0,rand(16,28); },{},{}
-579,Delicious_Fish,Fresh Fish,0,250,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(100,150),0; },{},{}
+579,Delicious_Fish,Fresh Fish,0,700,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(100,150),0; },{},{}
 580,Bread,Bread,0,150,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(50,90),0; },{},{}
 581,Mushroom,Edible Mushroom,0,40,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(20,30),0; },{},{}
 582,Orange,Orange,0,300,,20,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(10,20),rand(10,20); },{},{}
@@ -147,12 +147,12 @@
 640,Shining_Stone,Shining Stone,2,3000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1155; },{},{}
 641,Contracts_In_Shadow,Contract in Shadow,2,100,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1109; },{},{}
 642,Book_Of_Devil,Book of the Devil,2,1800,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1101; },{},{}
-643,Pet_Incubator,Pet Incubator,2,3000,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ bpet; },{},{}
+643,Pet_Incubator,Pet Incubator,2,10000,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ bpet; },{},{}
 644,Gift_Box,Gift Box,2,1000,,200,,,,,0xFFFFFFFF,63,2,,,,,,{ getrandgroupitem(IG_GiftBox,1); },{},{}
 //ASPD in RE they give a fixed +4/+6/+9 ASPD
-645,Center_Potion,Concentration Potion,2,800,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,4; },{},{}
-656,Awakening_Potion,Awakening Potion,2,1500,,150,,,,,0xFFF7FEEF,63,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,6; },{},{}
-657,Berserk_Potion,Berserk Potion,2,3000,,200,,,,,0x41E646A6,63,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,9; },{},{}
+645,Center_Potion,Concentration Potion,2,1200,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ASPDPOTION0,1800000,4; },{},{}
+656,Awakening_Potion,Awakening Potion,2,2200,,150,,,,,0xFFF7FEEF,63,2,,,40,,,{ sc_start SC_ASPDPOTION1,1800000,6; },{},{}
+657,Berserk_Potion,Berserk Potion,2,4500,,200,,,,,0x41E646A6,63,2,,,85,,,{ sc_start SC_ASPDPOTION2,1800000,9; },{},{}
 658,Union_Of_Tribe,Union of Tribe,2,2,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ guildgetexp rand(600000,1200000); },{},{}
 659,Heart_Of_Her,Her Heart,2,500,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1188; },{},{}
 660,Prohibition_Red_Candle,Forbidden Red Candle,2,20000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1200; },{},{}
@@ -416,7 +416,7 @@
 1062,Pumpkin_Head,Jack o' Pumpkin,3,374,,10,,,,,,,,,,,,,{},{},{}
 1063,Sharpened_Cuspid,Fang,3,680,,10,,,,,,,,,,,,,{},{},{}
 1064,Reins,Reins,3,802,,10,,,,,,,,,,,,,{},{},{}
-1065,Booby_Trap,Trap,3,100,,10,,,,,,,,,,,,,{},{},{}
+1065,Booby_Trap,Trap,3,75,,10,,,,,,,,,,,,,{},{},{}
 1066,Tree_Of_Archer_1,Fine-grained Trunk,3,2,,10,,,,,,,,,,,,,{},{},{}
 1067,Tree_Of_Archer_2,Solid Trunk,3,2,,10,,,,,,,,,,,,,{},{},{}
 1068,Tree_Of_Archer_3,Barren Trunk,3,2,,10,,,,,,,,,,,,,{},{},{}
@@ -4180,7 +4180,7 @@
 6094,Traditional_Cookie,Traditional Sweets,3,20,,10,,,,,,,,,,,,,{},{},{}
 6095,Flavored_Alcohol,Flavored Alcohol,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6096,Fish_With_Blue_Back,Fish With Blue Back,3,20,,10,,,,,,,,,,,,,{},{},{}
-6097,Pumpkin_Pie_,Pumpkin Pie,3,20,,10,,,,,,,,,,,,,{},{},{}
+6097,Pumpkin_Pie_,Pumpkin Pie,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6098,Small_Snow_Flower,Small Snow Flower,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6099,Grilled_Rice_Cake,Grilled Rice Cake,3,20,,10,,,,,,,,,,,,,{},{},{}
 6100,Damp_Darkness,Damp Darkness,3,1000,,10,,,,,,,,,,,,,{},{},{}
@@ -4190,7 +4190,7 @@
 6104,Big_Cell,Big Cell,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6105,Morning_Dew,Morning Dew,3,20,,10,,,,,,,,,,,,,{},{},{}
 6106,Well_Ripened_Berry,Well Ripened Berry,3,20,,10,,,,,,,,,,,,,{},{},{}
-6107,Sunset_On_The_Rock,Sunset On The Rock,3,20,,10,,,,,,,,,,,,,{},{},{}
+6107,Sunset_On_The_Rock,Sunset On The Rock,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6108,Apple_Pudding,Apple Pudding,3,1000,,10,,,,,,,,,,,,,{},{},{}
 6109,Plant_Neutrient,Plant Neutrient,3,20,,10,,,,,,,,,,,,,{},{},{}
 6110,Vital_Flower,Vital Flower,3,1000,,10,,,,,,,,,,,,,{},{},{}
@@ -5421,12 +5421,12 @@
 7449,Bloody_Page,Bloody Page,3,681,,10,,,,,,,,,,,,,{},{},{}
 7450,Piece_Of_Bone_Armor,Skeletal Armor Piece,3,2050,,10,,,,,,,,,,,,,{},{},{}
 7451,Scale_Of_Red_Dragon,Fire Dragon Scale,3,1852,,10,,,,,,,,,,,,,{},{},{}
-7452,Yellow_Spice,Yellow Spice,3,1000,,10,,,,,,,,,,,,,{},{},{}
-7453,Sweet_Sauce,Sweet Sauce,3,700,,10,,,,,,,,,,,,,{},{},{}
-7454,Plain_Sauce,Savory Sauce,3,700,,10,,,,,,,,,,,,,{},{},{}
-7455,Hot_Sauce,Spicy Sauce,3,700,,10,,,,,,,,,,,,,{},{},{}
-7456,Red_Spice,Red Spice,3,1000,,10,,,,,,,,,,,,,{},{},{}
-7457,Cooking_Oil,Cooking Oil,3,500,,10,,,,,,,,,,,,,{},{},{}
+7452,Yellow_Spice,Yellow Spice,3,750,,10,,,,,,,,,,,,,{},{},{}
+7453,Sweet_Sauce,Sweet Sauce,3,525,,10,,,,,,,,,,,,,{},{},{}
+7454,Plain_Sauce,Savory Sauce,3,525,,10,,,,,,,,,,,,,{},{},{}
+7455,Hot_Sauce,Spicy Sauce,3,525,,10,,,,,,,,,,,,,{},{},{}
+7456,Red_Spice,Red Spice,3,750,,10,,,,,,,,,,,,,{},{},{}
+7457,Cooking_Oil,Cooking Oil,3,375,,10,,,,,,,,,,,,,{},{},{}
 7458,Baphomet's_Horn,Fortune Horn,3,2,,10,,,,,,,,,,,,,{},{},{}
 7459,RAMADAN_,Idul Fitri Card,3,2,,10,,,,,,,,,,,,,{},{},{}
 7460,Niflheim_Ticket,Niflheim Express Ticket,3,2,,10,,,,,,,,,,,,,{},{},{}
@@ -5451,7 +5451,7 @@
 7479,Cookbook08,Level 8 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
 7480,Cookbook09,Level 9 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
 7481,Cookbook10,Level 10 Cookbook,3,1000,,10,,,,,,,,,,,,,{},{},{}
-7482,Pot,Pot,3,200,,10,,,,,,,,,,,,,{},{},{}
+7482,Pot,Pot,3,150,,10,,,,,,,,,,,,,{},{},{}
 7483,Key_Of_Seal,Key of the Seal,3,0,,0,,,,,,,,,,,,,{},{},{}
 7484,Warrior_Symbol,Symbol of a Brave Warrior,3,0,,10,,,,,,,,,,,,,{},{},{}
 7485,2nd_Floor_Pass,Cloud General,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -5760,7 +5760,7 @@
 7821,Green_Apple,Green Apple,3,20,,10,,,,,,,,,,,,,{},{},{}
 7822,Whole_Barbecue,Whole Barbecue,3,20,,10,,,,,,,,,,,,,{},{},{}
 7823,Meat_Veg_Skewer,Meat Veg Skewer,3,20,,10,,,,,,,,,,,,,{},{},{}
-7824,Spirit_Liquor,Spirit Liquor,3,20,,10,,,,,,,,,,,,,{},{},{}
+7824,Spirit_Liquor,Spirit Liquor,3,1000,,10,,,,,,,,,,,,,{},{},{}
 7825,Heroic_Stone,Heroic Stone,3,20,,10,,,,,,,,,,,,,{},{},{}
 7826,Continental_Guard_Paper,Continental Guard Paper,3,0,,0,,,,,,,,,,,,,{},{},{}
 7827,Mineral_Report,Mineral Evals,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -12060,9 +12060,9 @@
 25185,Locket_Pendant,Locket Pendant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25187,Slug_Bullet,Slug Bullet,3,1200,,1200,,,,,,,,,,,,,{},{},{}
 25223,Para_Team_Coin,Eden Group Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
-25231,Suspicious_Bottle,Suspicious Bottle,3,0,,10,,,,,,,,,,,,,{},{},{}
-25232,Cheap_Lubricant,Cheap Lubricant,3,0,,10,,,,,,,,,,,,,{},{},{}
-25233,Cotton_Tufts,Cotton Tufts,3,0,,10,,,,,,,,,,,,,{},{},{}
+25231,Suspicious_Bottle,Suspicious Bottle,3,1000,,10,,,,,,,,,,,,,{},{},{}
+25232,Cheap_Lubricant,Cheap Lubricant,3,1000,,10,,,,,,,,,,,,,{},{},{}
+25233,Cotton_Tufts,Cotton Tufts,3,1000,,10,,,,,,,,,,,,,{},{},{}
 25238,New_Normal_Lubricant,New Normal Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25239,New_Advanced_Lubricant,New Advanced Lubricant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25246,Juice_Mix_Package,Juice Mix Package,3,0,,0,,,,,,,,,,,,,{},{},{}
