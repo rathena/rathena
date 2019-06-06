@@ -682,7 +682,7 @@ moro_vol,110,90,3	script	Adjutant Abidal#14302	4_M_SAGE_C,{
 	end;
 
 OnInit:
-	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 160 && isbegin_quest(7594) == 0 && isbegin_quest(7599) == 0 && isbegin_quest(7593) == 1" );
+	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 160 && !isbegin_quest(7594) && !isbegin_quest(7599) && isbegin_quest(7593) == 1" );
 	end;
 }
 
@@ -1015,14 +1015,11 @@ moro_vol,136,84,3	script	Jeruth Hesranta#ep143	4_MAN_JERUTOO,{
 
 OnInit:
 /* officially disabled
-	questinfo 1, QTYPE_QUEST2;
-	setquestinfo_level 1,140,160;
+	questinfo QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 140 && BaseLevel <= 160";
+	// 3650 = [ep13_3_secret]
 	SetQuestItem 1 3650 24
 */
-
-	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 140 && ep13_3_secret > 26 && !isbegin_quest(7579) && !isbegin_quest(7580)" );
-	// 3650 = [ep13_3_secret]
-	// SetQuestItem 7579 3650 26 "<"
+	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 140 && BaseLevel <= 160 && ep13_3_secret > 26 && !isbegin_quest(7579) && !isbegin_quest(7580)" );
 	end;
 }
 

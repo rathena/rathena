@@ -72,7 +72,7 @@ prontera,121,77,3	script	Phantasmagorika Spokesperson	4_F_ZONDAGIRL,{
 	}
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && !isbegin_quest(7610)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7610) != 2" );
 	end;
 }
 geffen,135,64,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#2	4_F_ZONDAGIRL
@@ -186,7 +186,7 @@ moc_para01,38,175,5	script	Lime Evenor#evtat01	4_F_EDEN_OFFICER,{
 	}
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && !isbegin_quest(7607)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7607) != 2" );
 	end;
 }
 
@@ -808,8 +808,8 @@ ver_eju,114,40,4	script	Manager Michelle#atnd05	4_M_LGTGUARD,{
 	}
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7611) && !isbegin_quest(7612)" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7612) && checkquest(7611,HUNTING) == 2" );
+	// note: only 7612 required
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7612)" );
 	end;
 }
 
@@ -911,7 +911,7 @@ verus04,182,168,5	script	Receptionist Nara#atnd06	4_F_HUWOMAN,{
 	close;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && !isbegin_quest(7610)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7610) != 2" );
 	end;
 }
 
@@ -1131,12 +1131,10 @@ verus04,179,165,5	script	Commander Louis#atnd07	4_M_LGTGUARD,{
 	}
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && !isbegin_quest(7610)" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7611) && !isbegin_quest(7612)" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7612) && checkquest(7611,HUTNING) == 2" );// todo confirm
-
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7613) && !isbegin_quest(7614)" );
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7614) && checkquest(7613,HUTNING) == 2" );// todo confirm
+	// note: only playtime quest required
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7612)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7614)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7617) == 1" );
 	end;
 }
 
@@ -2206,7 +2204,7 @@ verus04,141,193,5	script	Archaeologist Aures#atnd09	4_M_OLDSCHOLAR,{
 		mes "but I want to know how much progress Lloyd has made with his investigation.";
 		mes "Could you go check up on him?";
 		mes "Thank you.";
-		erasequest 7619;// Assisting the Excavation Team
+		completequest 7619;// Assisting the Excavation Team
 		setquest 7620;// Young Blood?
 		VER_MAIN = 9;
 		close3;
@@ -2399,7 +2397,7 @@ verus04,141,193,5	script	Archaeologist Aures#atnd09	4_M_OLDSCHOLAR,{
 	}
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7615)" );// inaccurate
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7619) && VER_MAIN < 8" );
 	end;
 }
 
@@ -3223,7 +3221,8 @@ S_Daily:
 	}
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7615) && !isbegin_quest(7616)" );// inaccurate
+	// note: only playtime quest required
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(7616)" );
 	end;
 }
 
@@ -3283,6 +3282,10 @@ verus03,167,257,5	script	Access Controller Damhw#atnd	4_M_LGTGUARD,{
 	mes "Then I expect there to be good results!";
 	completequest 7641;// Access Permitted (note : player can enter in verus01 without this quest)
 	close;
+
+OnInit:
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7641) == 1" );
+	end;
 }
 verus03,172,257,3	duplicate(Access Controller Damhw#atnd)	Access Controller Gyuhw#atnd	4_M_LGTGUARD
 verus03,52,250,5	duplicate(Access Controller Damhw#atnd)	Access Controller Geuma#atnd	4_M_LGTGUARD
@@ -5666,7 +5669,7 @@ juperos_01,242,91,3	script	Rekenber Guard#atd06	4_M_LGTGUARD,{
 	close;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && !isbegin_quest(7610)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7610) != 2" );
 	end;
 }
 
@@ -5687,7 +5690,7 @@ yuno_fild07,211,179,5	script	Excavator Guide#atd07	4_M_LGTGUARD,{
 	close;
 
 OnInit:
-	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && !isbegin_quest(7610)" );
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && isbegin_quest(7610) != 2" );
 	end;
 }
 
