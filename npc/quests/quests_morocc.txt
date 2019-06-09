@@ -2006,6 +2006,7 @@ OnMyMobDead:
 	donpcevent "Satan Broadcast#edq::OnDisable";
 	donpcevent "Group of Evil#edq::OnDisable";
 	disablenpc "Satan Summon#edq";
+	stopnpctimer;
 	end;
 
 OnTimer5400000:
