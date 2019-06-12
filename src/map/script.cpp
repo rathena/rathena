@@ -8783,21 +8783,21 @@ BUILDIN_FUNC(getequipuniqueid)
 }
 
 /*==========================================
-  * Get the item information with specified sting unique id
-  * and assing it to the given vatiable
-  * return true on seccess, and false on fail
-  * uniqueid_getiteminfo(<"string unique id">,<int variable>{,<char_id>})
+  * Get the item information with the specified unique id
+  * and assign it to the given variable
+  * Return true on success or false otherwise
+  * uniqueid_getiteminfo(<"item_unique_id">,<array_variable>{,<char_id>})
   *------------------------------------------*/
 BUILDIN_FUNC(uniqueid_getiteminfo)
 {
-	int i, k, s = 0;
-	TBL_PC* sd;
-	struct item* it = NULL;
-	struct reg_db* ref = NULL;
+	TBL_PC *sd;
+
+	if (!script_charid2sd(4, sd)) {
+		script_pushint(st, false);
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	unsigned long long item_uniqueid = atoll(script_getstr(st, 2));
-	struct script_data* data = script_getdata(st, 3);
-	const char* name;
-	int32 idx, id;
 
 	if (!item_uniqueid) {
 		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%s).\n", script_getstr(st, 2));
@@ -8805,22 +8805,19 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	if (!script_charid2sd(4, sd)) {
-		script_pushint(st, false);
-		return SCRIPT_CMD_FAILURE;
-	}
+	struct script_data* data = script_getdata(st, 3);
 
-	if (!data_isreference(data))
-	{
+	if (!data_isreference(data)) {
 		ShowError("buildin_uniqueid_getiteminfo: not a variable\n");
 		script_reportdata(data);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
-	name = reference_getname(data);
-	id = reference_getid(data);
-	idx = reference_getindex(data);
-	ref = reference_getref(data);
+
+	const char *name = reference_getname(data);
+	int32 id = reference_getid(data);
+	int32 idx = reference_getindex(data);
+	struct reg_db *ref = reference_getref(data);
 
 	if (not_server_variable(*name) && !sd) {
 		ShowError("buildin_uniqueid_getiteminfo: Cannot use a player variable '%s' if no player is attached.\n", name);
@@ -8828,12 +8825,15 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
+
 	if (is_string_variable(name)) {
 		ShowError("buildin_uniqueid_getiteminfo: Cannot Assign String variable '%s'.\n", name);
 		script_reportdata(data);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
+
+	int i;
 
 	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
 
@@ -8842,21 +8842,20 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
-	it = &sd->inventory.u.items_inventory[i];
+
+	struct item *it = &sd->inventory.u.items_inventory[i];
+	int s = 0;
 
 	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->nameid), ref);
 	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->refine), ref);
 	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->identify), ref);
 	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->attribute), ref);
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[0]), ref);
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[1]), ref);
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[2]), ref);
-	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[3]), ref);
+	for (int k = 0; k < MAX_SLOTS; k++)
+		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->card[k]), ref);
 	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->expire_time), ref);
 	set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->bound), ref);
 
-	for (k = 0; k < MAX_ITEM_RDM_OPT; k++)
-	{
+	for (int k = 0; k < MAX_ITEM_RDM_OPT; k++) {
 		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].id), ref);
 		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].value), ref);
 		set_reg(st, sd, reference_uid(id, idx + s++), name, (void*)__64BPRTSIZE(it->option[k].param), ref);
@@ -8867,27 +8866,28 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 }
 
 /*==========================================
- * Delete the item with specified sting unique id
- * return true on seccess, and false on fail
- * uniqueid_delitem(<"string unique id">{,<char_id>})
+ * Delete the item with the specified unique id
+ * Return true on success or false otherwise
+ * uniqueid_delitem(<"item_unique_id">{,<char_id>})
  *------------------------------------------*/
 BUILDIN_FUNC(uniqueid_delitem)
 {
-	int i;
 	TBL_PC* sd;
-	struct item* it = NULL;
-	unsigned long long item_uniqueid = atoll(script_getstr(st, 2));
 
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
 
+	unsigned long long item_uniqueid = atoll(script_getstr(st, 2));
+
 	if (!item_uniqueid) {
 		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%s).\n", script_getstr(st, 2));
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
+
+	int i;
 
 	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
 
@@ -8896,13 +8896,13 @@ BUILDIN_FUNC(uniqueid_delitem)
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
-	it = &sd->inventory.u.items_inventory[i];
+
+	struct item *it = &sd->inventory.u.items_inventory[i];
 
 	if (it->equip)
 		pc_unequipitem(sd, i, 3);
 
-	if (buildin_delitem_search(sd, it, 0, 0))
-	{
+	if (buildin_delitem_search(sd, it, 0, 0)) {
 		script_pushint(st, true);
 		return SCRIPT_CMD_SUCCESS;
 	}
