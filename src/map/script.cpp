@@ -8797,10 +8797,10 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	unsigned long long item_uniqueid = atoll(script_getstr(st, 2));
+	unsigned long long item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
 
 	if (!item_uniqueid) {
-		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%s).\n", script_getstr(st, 2));
+		ShowError("buildin_uniqueid_getiteminfo: unknown item (unique_id=%s).\n", script_getstr(st, 2));
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -8838,7 +8838,7 @@ BUILDIN_FUNC(uniqueid_getiteminfo)
 	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
 
 	if (i >= MAX_INVENTORY) {
-		ShowError("buildin_uniqueid_getiteminfo: Item not found (unique_id=%s).\n", script_getstr(st, 2));
+		ShowError("buildin_uniqueid_getiteminfo: Item not found (unique_id=%llu).\n", item_uniqueid);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -8879,7 +8879,7 @@ BUILDIN_FUNC(uniqueid_delitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	unsigned long long item_uniqueid = atoll(script_getstr(st, 2));
+	unsigned long long item_uniqueid = strtoull(script_getstr(st, 2), NULL, 10);
 
 	if (!item_uniqueid) {
 		ShowError("buildin_uniqueid_delitem: unknown item (unique_id=%s).\n", script_getstr(st, 2));
@@ -8892,7 +8892,7 @@ BUILDIN_FUNC(uniqueid_delitem)
 	ARR_FIND(0, MAX_INVENTORY, i, sd->inventory.u.items_inventory[i].unique_id == item_uniqueid);
 
 	if (i >= MAX_INVENTORY) {
-		ShowError("buildin_uniqueid_delitem: Item not found (unique_id=%s).\n", script_getstr(st, 2));
+		ShowError("buildin_uniqueid_delitem: Item not found (unique_id=%llu).\n", item_uniqueid);
 		script_pushint(st, false);
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -8907,7 +8907,7 @@ BUILDIN_FUNC(uniqueid_delitem)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	ShowError("buildin_uniqueid_delitem: failed to delete (item_id=%hu unique_id=%s AID=%d).\n", it->nameid, script_getstr(st, 2), sd->status.account_id);
+	ShowError("buildin_uniqueid_delitem: failed to delete (item_id=%hu unique_id=%llu AID=%d).\n", it->nameid, item_uniqueid, sd->status.account_id);
 	script_pushint(st, false);
 	return SCRIPT_CMD_FAILURE;
 }
