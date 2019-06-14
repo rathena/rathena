@@ -4527,18 +4527,18 @@
 //23901,507,100	//
 //23914,475,100	//
 //23919,475,100	//
-//24387,499,100	//
-//24388,499,100	//
-//24389,499,100	//
-//24390,499,100	//
-//24391,499,100	//
-//24392,499,100	//
-//24416,499,100	//
-//24417,499,100	//
-//24418,499,100	//
-//24419,499,100	//
-//24420,499,100	//
-//24421,499,100	//
+24387,499,100	// S_Beginner's_Armor
+24388,499,100	// S_Beginner's_Shield
+24389,499,100	// S_Beginner's_Shoes
+24390,499,100	// S_Beginner's_Weapon
+24391,499,100	// S_Beginner's_Earring
+24392,499,100	// S_Beginner's_Pendant
+24416,499,100	// S_Temporal_Transcendent_Weapon
+24417,499,100	// S_Temporal_Transcendent_Armor
+24418,499,100	// S_Temporal_Transcendent_Shield
+24419,499,100	// S_Temporal_Transcendent_Shoes
+24420,499,100	// S_Temporal_Transcendent_Earring
+24421,499,100	// S_Temporal_Transcendent_Pendant
 //25038,499,100	//
 //25039,499,100	//
 //25042,475,100	//
