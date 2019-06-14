@@ -5995,6 +5995,11 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 
 	nullpo_retv(bl);
 
+#if PACKETVER < 20151104
+	if (type == EFST_WEAPONPROPERTY)
+		type = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
+#endif
+
 #if PACKETVER >= 20120618
 	if (flag && battle_config.display_status_timers)
 		WBUFW(buf,0) = 0x983;
@@ -20869,6 +20874,10 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 		return;
 	}
 
+	// Check if the item exists
+	if (sd->inventory_data[index] == nullptr)
+		return;
+
 	// Check if the item was already added to equip switch
 	if( sd->inventory.u.items_inventory[index].equipSwitch ){
 		if( sd->npc_id ){
@@ -20884,9 +20893,10 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 		}
 
 		pc_equipswitch( sd, index );
-	}else{
-		pc_equipitem( sd, index, pc_equippoint(sd, index), true );
+		return;
 	}
+
+	pc_equipitem( sd, index, pc_equippoint(sd, index), true );
 #endif
 }
 
