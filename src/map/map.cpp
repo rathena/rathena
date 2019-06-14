@@ -3660,7 +3660,7 @@ void map_flags_init(void){
 			continue;
 
 		// adjustments
-		if( battle_config.pk_mode && !mapdata->flag[MF_PVP] )
+		if( battle_config.pk_mode && !mapdata_flag_vs2(mapdata) )
 			mapdata->flag[MF_PVP] = true; // make all maps pvp for pk_mode [Valaris]
 	}
 }
@@ -4847,9 +4847,9 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 
 			mapdata->flag[mapflag] = status;
 			if (!status)
-				mapdata->zone ^= 1 << (args->flag_val + 1);
+				mapdata->zone ^= (1 << (args->flag_val + 1)) << 3;
 			else
-				mapdata->zone |= 1 << (args->flag_val + 1);
+				mapdata->zone |= (1 << (args->flag_val + 1)) << 3;
 			break;
 		case MF_NOCOMMAND:
 			if (status) {

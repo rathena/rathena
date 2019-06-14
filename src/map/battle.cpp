@@ -2190,7 +2190,7 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||
 		(damage->map&8 && mapdata->flag[MF_BATTLEGROUND]) ||
 		(damage->map&16 && mapdata->flag[MF_SKILL_DAMAGE]) ||
-		(damage->map&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
+		(damage->map&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
 	}

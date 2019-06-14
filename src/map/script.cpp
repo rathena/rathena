@@ -6687,14 +6687,16 @@ BUILDIN_FUNC(viewpoint)
 	int type,x,y,id,color;
 	TBL_PC* sd;
 
+	if (!script_charid2sd(7, sd)) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	type=script_getnum(st,2);
 	x=script_getnum(st,3);
 	y=script_getnum(st,4);
 	id=script_getnum(st,5);
 	color=script_getnum(st,6);
-
-	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
 
 	clif_viewpoint(sd,st->oid,type,x,y,id,color);
 
@@ -11350,10 +11352,10 @@ BUILDIN_FUNC(getunits)
 			ShowWarning("buildin_%s: Unknown map '%s'.\n", command, str);
 			return SCRIPT_CMD_FAILURE;
 		}
-		x0 = script_getnum(st, 4);
-		y0 = script_getnum(st, 5);
-		x1 = script_getnum(st, 6);
-		y1 = script_getnum(st, 7);
+		x0 = min(script_getnum(st, 4), script_getnum(st, 6));
+		y0 = min(script_getnum(st, 5), script_getnum(st, 7));
+		x1 = max(script_getnum(st, 4), script_getnum(st, 6));
+		y1 = max(script_getnum(st, 5), script_getnum(st, 7));
 
 		if (script_hasdata(st, 8))
 			data = script_getdata(st, 8);
@@ -11385,7 +11387,7 @@ BUILDIN_FUNC(getunits)
 
 	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
 	{
-		if (!m || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y <= y0) && (bl->x <= x1 && bl->y >= y1)))
+		if (!m || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y >= y0) && (bl->x <= x1 && bl->y <= y1)))
 		{
 			if (data)
 				set_reg(st, sd, reference_uid(id, idx + size), name, (is_string_variable(name) ? (void*)status_get_name(bl) : (void*)__64BPRTSIZE(bl->id)), reference_getref(data));
@@ -24496,7 +24498,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(enableitemuse,"enable_items",""),
 	BUILDIN_DEF2(disableitemuse,"disable_items",""),
 	BUILDIN_DEF(cutin,"si"),
-	BUILDIN_DEF(viewpoint,"iiiii"),
+	BUILDIN_DEF(viewpoint,"iiiii?"),
 	BUILDIN_DEF(heal,"ii?"),
 	BUILDIN_DEF(itemheal,"ii?"),
 	BUILDIN_DEF(percentheal,"ii?"),

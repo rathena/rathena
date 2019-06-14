@@ -7489,7 +7489,7 @@ rand(2,5) would result in 2,3,4 or 5
 
 ---------------------------------------
 
-*viewpoint <action>,<x>,<y>,<point number>,<color>;
+*viewpoint <action>,<x>,<y>,<point number>,<color>{,<Char ID>};
 
 This command will mark places on the mini map in the client connected to the
 invoking character. It uses the normal X and Y coordinates from the main map.
