@@ -517,7 +517,7 @@ S_Idle:
 	callfunc( "F_mobidle", ('npc_name$ + "::OnIdle" + getarg(0)), 'size_coord, 'x_mob, getarg(0), 'y_mob, 'dist_spot_AZ );
 	'mob_escaped++;
 	if ('mob_escaped <= 20)
-		mapannounce 'map_def01$, "" + 'mob_escaped + " " + 'mob_escaped == 1 ? "monster has" : "monsters have" + " escaped.", bc_map;
+		mapannounce 'map_def01$, "" + 'mob_escaped + " " + ('mob_escaped == 1 ? "monster has" : "monsters have") + " escaped.", bc_map;
 	if ('mob_escaped == 20)
 		donpcevent instance_npcname("#wave_mode_forest_out") + "::OnFail";
 	end;
@@ -748,7 +748,7 @@ OnIdle:
 	callfunc( "F_mobidle", ('npc_name_mob$ + "::OnIdle"), 'size_coord, 'x_mob, 0, 'y_mob, 'dist_spot_AZ );
 	'mob_escaped++;
 	if ('mob_escaped <= 20)
-		mapannounce 'map_def02$, "" + 'mob_escaped + " " + 'mob_escaped == 1 ? "monster has" : "monsters have" + " escaped.", bc_map;
+		mapannounce 'map_def02$, "" + 'mob_escaped + " " + ('mob_escaped == 1 ? "monster has" : "monsters have") + " escaped.", bc_map;
 	if ('mob_escaped == 20)
 		donpcevent instance_npcname("#wave_mode_sky_out") + "::OnFail";
 	end;
