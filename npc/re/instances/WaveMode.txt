@@ -127,7 +127,7 @@ prontera,146,75,1	script	Zonda Rep#pron	4_F_ZONDAGIRL,{
 		.@s = select( "Enter ^6B9900<Wave Mode - Forest>^000000.", "Enter ^6B9900<Wave Mode - Sky>^000000." ) - 1;
 		setarray .@instance_name$[0], "Wave Mode - Forest", "Wave Mode - Sky";
 		mes "[Belka]";
-		mes "" + .@count_online + " party " + .@count_online == 1 ? "member" : "members" + " found " + .@player_name$ + ", right? To enter the ^6B9900<" + .@instance_name$[.@s] + ">^000000, please sign here.";
+		mes "" + .@count_online + " party " + (.@count_online == 1 ? "member" : "members") + " found " + .@player_name$ + ", right? To enter the ^6B9900<" + .@instance_name$[.@s] + ">^000000, please sign here.";
 		next;
 		select("Sign.");
 		mes "[Belka]";
