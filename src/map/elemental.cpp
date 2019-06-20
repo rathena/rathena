@@ -1,32 +1,32 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "elemental.hpp"
 
-#include <stdlib.h>
-#include <math.h>
-#include <ctgmath> //floor
 #include <cstring>
+#include <ctgmath> //floor
+#include <math.h>
+#include <stdlib.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/malloc.h"
-#include "../common/timer.h"
-#include "../common/nullpo.h"
-#include "../common/mmo.h"
-#include "../common/showmsg.h"
-#include "../common/random.h"
-#include "../common/strlib.h"
-#include "../common/utils.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
+#include "../common/utils.hpp"
 
-#include "log.hpp"
+#include "battle.hpp"
 #include "clif.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp"
-#include "pc.hpp"
-#include "party.hpp"
-#include "trade.hpp"
+#include "log.hpp"
 #include "npc.hpp"
-#include "battle.hpp"
+#include "party.hpp"
+#include "pc.hpp"
+#include "trade.hpp"
 
 struct s_elemental_db elemental_db[MAX_ELEMENTAL_CLASS]; // Elemental Database
 static uint16 elemental_count;
@@ -130,7 +130,7 @@ int elemental_create(struct map_session_data *sd, int class_, unsigned int lifet
 	return 1;
 }
 
-int elemental_get_lifetime(struct elemental_data *ed) {
+t_tick elemental_get_lifetime(struct elemental_data *ed) {
 	const struct TimerData * td;
 	if( ed == NULL || ed->summon_timer == INVALID_TIMER )
 		return 0;
@@ -157,7 +157,7 @@ int elemental_save(struct elemental_data *ed) {
 	return 1;
 }
 
-static int elemental_summon_end(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(elemental_summon_end){
 	struct map_session_data *sd;
 	struct elemental_data *ed;
 
@@ -385,7 +385,7 @@ int elemental_clean_effect(struct elemental_data *ed) {
 	return 1;
 }
 
-int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned int tick) {
+int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick tick) {
 	struct skill_condition req;
 	uint16 skill_id, skill_lv;
 	int i;
@@ -429,9 +429,9 @@ int elemental_action(struct elemental_data *ed, struct block_list *bl, unsigned 
 			ed->ud.skill_lv = skill_lv;
 
 			if( skill_get_inf(skill_id) & INF_GROUND_SKILL )
-				ed->ud.skilltimer = add_timer( tick+status_get_speed(&ed->bl)*walk_dist, skill_castend_pos, ed->bl.id, 0 );
+				ed->ud.skilltimer = add_timer( tick+(t_tick)status_get_speed(&ed->bl)*walk_dist, skill_castend_pos, ed->bl.id, 0 );
 			else
-				ed->ud.skilltimer = add_timer( tick+status_get_speed(&ed->bl)*walk_dist, skill_castend_id, ed->bl.id, 0 );
+				ed->ud.skilltimer = add_timer( tick+(t_tick)status_get_speed(&ed->bl)*walk_dist, skill_castend_id, ed->bl.id, 0 );
 		}
 		return 1;
 
@@ -633,7 +633,7 @@ static int elemental_ai_sub_timer_activesearch(struct block_list *bl, va_list ap
 	return 0;
 }
 
-static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, unsigned int tick) {
+static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_data *sd, t_tick tick) {
 	struct block_list *target = NULL;
 	int master_dist, view_range;
 	enum e_mode mode;
@@ -744,14 +744,14 @@ static int elemental_ai_sub_timer(struct elemental_data *ed, struct map_session_
 }
 
 static int elemental_ai_sub_foreachclient(struct map_session_data *sd, va_list ap) {
-	unsigned int tick = va_arg(ap,unsigned int);
+	t_tick tick = va_arg(ap,t_tick);
 	if(sd->status.ele_id && sd->ed)
 		elemental_ai_sub_timer(sd->ed,sd,tick);
 
 	return 0;
 }
 
-static int elemental_ai_timer(int tid, unsigned int tick, int id, intptr_t data) {
+static TIMER_FUNC(elemental_ai_timer){
 	map_foreachpc(elemental_ai_sub_foreachclient,tick);
 	return 0;
 }
@@ -783,8 +783,13 @@ static bool read_elementaldb_sub(char* str[], int columns, int current) {
 	status->max_hp = atoi(str[4]);
 	status->max_sp = atoi(str[5]);
 	status->rhw.range = atoi(str[6]);
-	status->rhw.atk = atoi(str[7]);
-	status->rhw.atk2 = atoi(str[8]);
+#ifdef RENEWAL
+	status->rhw.atk = atoi(str[7]); // BaseATK
+	status->rhw.matk = atoi(str[8]); // BaseMATK
+#else
+	status->rhw.atk = atoi(str[7]); // MinATK
+	status->rhw.atk2 = atoi(str[8]); // MaxATK
+#endif
 	status->def = atoi(str[9]);
 	status->mdef = atoi(str[10]);
 	status->str = atoi(str[11]);

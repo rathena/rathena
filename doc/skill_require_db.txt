@@ -128,8 +128,8 @@ RequiredStatuses: The active statuses needed to use the skill.
 Up to 3 ':'-separated values can be used, e.g.
     SC_STATUS1:SC_STATUS2:SC_STATUS3
 
-See MAX_SKILL_STATUS_REQUIRE in 'src/map/skill.h' to modify the max number
-of possible values, and 'db/const.txt' for a list of status constants.
+See MAX_SKILL_STATUS_REQUIRE in 'src/map/skill.hpp' to modify the max number
+of possible values, and 'src/map/script_constants.hpp' for a list of status constants.
 
 Use any number or SC_ALL to disable status requirements.
 
@@ -153,11 +153,11 @@ RequiredEquipment: Specific equipment IDs needed to use the skill.
 Up to 10 ':'-separated values can be used, e.g.
     item1:item2:item3
 
-See MAX_SKILL_EQUIP_REQUIRE in 'src/map/skill.h' to modify the max number
+See MAX_SKILL_EQUIP_REQUIRE in 'src/map/skill.hpp' to modify the max number
 of possible values.
 
 ---------------------------------------
 
 NOTE: On some fields, the ':' delimiter means for each skill level, but there
       are some level dependent checks.  See 'skill_get_requirement()' in
-      'src/map/skill.c'.
+      'src/map/skill.cpp'.

@@ -27,9 +27,10 @@
 //= 1.7 Replaced effect numerics with constants. [L0ne_W0lf]
 //= 1.8 Renamed the variable cooking to cooking_q [ultramage]
 //= 1.8a Minor cleaning. [Euphy]
+//= 1.9 Renewal script update for ep16.1 [Capuche]
 //============================================================ 
 
-prt_castle,43,30,3	script	Charles Orleans#cook	878,{
+-	script	Charles Orleans#cook_	-1,{
 	if (MaxWeight - Weight < 2000) {
 		mes "[Charles Orleans]";
 		mes "Just one second.";
@@ -1480,7 +1481,7 @@ L_End:
 	end;
 }
 
-prt_castle,45,35,5	script	Madeleine Chu#cook	886,{
+-	script	Madeleine Chu#cook_	-1,{
 	if (MaxWeight - Weight < 2000) {
 		mes "[Madeleine Chu]";
 		mes "I'm sorry, but right now";
@@ -2120,7 +2121,7 @@ S_SellSets:
 	return;
 }
 
-prt_castle,45,28,3	script	Child with Cat#cook	877,{
+-	script	Child with Cat#cook_	-1,{
 	set .@nyu,rand(1,2);
 	if (.@nyu == 1) {
 		cutin "nyuang_1",2;
@@ -2143,7 +2144,7 @@ prt_castle,45,28,3	script	Child with Cat#cook	877,{
 	end;
 }
 
-prt_castle,44,30,5	script	Wickebine#cook	725,{
+-	script	Wickebine#cook_	-1,{
 	disablenpc "Wickebine#cook";
 	end;
 

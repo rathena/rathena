@@ -1,11 +1,11 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _GUILD_HPP_
-#define _GUILD_HPP_
+#ifndef GUILD_HPP
+#define GUILD_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp"
 
 #include "map.hpp" // NAME_LENGTH
 
@@ -26,10 +26,10 @@ struct guardian_data {
 	struct guild_castle* castle;
 };
 
-int guild_skill_get_max(int id);
+uint16 guild_skill_get_max(uint16 id);
 
 int guild_checkskill(struct guild *g,int id);
-int guild_check_skill_require(struct guild *g,int id); // [Komurka]
+bool guild_check_skill_require(struct guild *g,uint16 id); // [Komurka]
 int guild_checkcastles(struct guild *g); // [MouseJstr]
 bool guild_isallied(int guild_id, int guild_id2); //Checks alliance based on guild Ids. [Skotlex]
 
@@ -118,4 +118,4 @@ void guild_retrieveitembound(uint32 char_id,uint32 account_id,int guild_id);
 
 void do_final_guild(void);
 
-#endif /* _GUILD_HPP_ */
+#endif /* GUILD_HPP */

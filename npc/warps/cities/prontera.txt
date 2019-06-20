@@ -13,6 +13,7 @@
 //= 1.3 prt19 warp fix [shadow]
 //= 1.4 Added warps for the sign quest [MasterOfMuppets]
 //= 1.5 Corrected NPC names to fall within proper restrictions. [L0ne_W0lf]
+//= 1.6 Renewal script update for ep16.1 [Capuche]
 //============================================================
 
 //= Prontera City ============================================
@@ -21,7 +22,6 @@ prontera,120,267,0	warp	prt02	2,2,prt_in,180,97
 prontera,133,183,0	warp	prt03	2,2,prt_in,50,105
 prontera,134,221,0	warp	prt04	1,1,prt_in,131,71
 prontera,156,22,0	warp	prt001	3,2,prt_fild08,170,375
-prontera,156,360,0	warp	prt005	4,2,prt_castle,102,20
 prontera,177,221,0	warp	prt05	2,2,prt_in,168,128
 prontera,179,184,0	warp	prt06	2,2,prt_in,60,73
 prontera,192,267,0	warp	prt07	2,2,prt_in,178,55
@@ -74,33 +74,3 @@ prt_church,109,81,0	warp	prtch01	1,2,prt_church,172,19
 prt_church,168,19,0	warp	prtch01-1	1,2,prt_church,105,81
 prt_church,31,19,0	warp	prtch02	1,2,prt_church,94,81
 prt_church,90,81,0	warp	prtch02-1	1,2,prt_church,27,19
-
-
-
-//= Prontera Castle ===========================================
-prt_castle,102,129,0	warp	prtca01	3,2,prt_castle,102,143
-prt_castle,102,140,0	warp	prtca01-1	3,2,prt_castle,102,126
-prt_castle,102,16,0	warp	prtca001	6,2,prontera,156,356
-prt_castle,102,181,0	warp	prtca002	6,2,prt_gld,159,28
-prt_castle,102,73,0	warp	prtca02	3,2,prt_castle,102,91
-prt_castle,102,88,0	warp	prtca02-1	3,2,prt_castle,102,70
-prt_castle,113,107,0	warp	prtca03	2,3,prt_castle,134,107
-prt_castle,121,29,0	warp	prtca04	1,1,prt_castle,148,29
-prt_castle,130,107,0	warp	prtca03-1	2,3,prt_castle,110,107
-prt_castle,135,153,0	warp	prtca05	1,1,prt_castle,167,145
-prt_castle,144,29,0	warp	prtca04-1	2,2,prt_castle,117,29
-prt_castle,149,113,0	warp	prtca06	1,1,prt_castle,175,113
-prt_castle,164,145,0	warp	prtca05-1	1,1,prt_castle,132,153
-prt_castle,170,138,0	warp	prtca07	3,2,prt_castle,176,118
-prt_castle,172,113,0	warp	prtca06-1	1,1,prt_castle,146,113
-prt_castle,176,121,0	warp	prtca07-1	3,2,prt_castle,170,141
-prt_castle,28,121,0	warp	prtca08	2,2,prt_castle,40,141
-prt_castle,31,113,0	warp	prtca09	1,1,prt_castle,58,113
-prt_castle,40,138,0	warp	prtca08-1	3,2,prt_castle,28,118
-prt_castle,45,145,0	warp	prtca10	1,1,prt_castle,72,153
-prt_castle,54,113,0	warp	prtca09-1	1,1,prt_castle,27,113
-prt_castle,59,29,0	warp	prtca11	2,2,prt_castle,85,29
-prt_castle,68,153,0	warp	prtca10-1	1,1,prt_castle,42,145
-prt_castle,75,107,0	warp	prtca12	2,3,prt_castle,95,107
-prt_castle,82,29,0	warp	prtca11-1	1,1,prt_castle,56,29
-prt_castle,92,107,0	warp	prtca12-1	2,3,prt_castle,72,107

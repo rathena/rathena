@@ -5,7 +5,7 @@
 //= Shadow equipments refining NPC.
 //===== Changelog: ===========================================
 //= 1.0 First version [Aleos]
-//= 1.1 Removed re-roll behavior and fetch materials from db 
+//= 1.1 Removed re-roll behavior and fetch materials from db
 //=     [Secret]
 //============================================================
 -	script	::ShadowBlacksmith	-1,{
@@ -35,62 +35,64 @@
 		mes "HD ores can be used for gear that is at least refine level +7 and will prevent breaking as long as you stay talking to me.";
 		close;
 	}
-	
+
 	.@part = .@indices[.@choice];
-	
+
 	if (!getequipisequiped(.@part)) {
 		mes "[Shadow Blacksmith]";
 		mes "There's nothing here!";
 		close;
 	}
-	
+	.@equip_id = getequipid(.@part);
+	setarray .@card[0], getequipcardid(.@part,0), getequipcardid(.@part,1), getequipcardid(.@part,2), getequipcardid(.@part,3);
+
 	while(1) {
+		.@equip_refine = getequiprefinerycnt(.@part);
 		mes "[Shadow Blacksmith]";
 		mes "I require " + callfunc("F_InsertComma", .@zeny_cost) + " zeny as a fee for EACH refine attempt.";
 		mes "Choose your Ore and start refining.";
 		next;
-		.@isNormalEqp = 0;
-		if (.@part != EQI_SHADOW_WEAPON)
-			.@isNormalEqp = 1;
-		
+
 		.@material[0] = getequiprefinecost(.@part, REFINE_COST_NORMAL, REFINE_MATERIAL_ID);
 		.@material[1] = getequiprefinecost(.@part, REFINE_COST_ENRICHED, REFINE_MATERIAL_ID);
 		.@material[2] = getequiprefinecost(.@part, REFINE_COST_HD, REFINE_MATERIAL_ID);
-		
+		.@is_enriched = false;
+
 		if (countitem(.@material[0]))
 			.@mate$[0] = getitemname(.@material[0]);
-		else {
+		else
 			.@mate$[0] = "^8C8C8C"+ getitemname(.@material[0]) +"^000000";
-			.@miss[0] = 1;
-		}
 		if (countitem(.@material[1]))
 			.@mate$[1] = getitemname(.@material[1]);
-		else {
+		else
 			.@mate$[1] = "^8C8C8C"+ getitemname(.@material[1]) +"^000000";
-			.@miss[1] = 1;
-		}
-		if (getequiprefinerycnt(.@part) > 6 && countitem(.@material[2]))
+		if (.@equip_refine > 6 && countitem(.@material[2]))
 			.@mate$[2] = getitemname(.@material[2]);
-		else {
+		else
 			.@mate$[2] = "^8C8C8C"+ getitemname(.@material[2]) +"^000000";
-			.@miss[2] = 1;
-		}
 
-		.@option = select(.@mate$[0],.@mate$[1],.@mate$[2],"Cancel");
-		if (.@option == 4) {
-			mes "[Shadow Blacksmith]";
-			mes "You've cancelled refining.";
-			close;
-		}
-		else if (.@option == 3) { // HD
-			if (getequiprefinerycnt(.@part) < 7) {
+		switch( select( .@mate$[0], .@mate$[1], .@mate$[2], "Cancel" ) ) {
+		case 1:// NORMAL
+			.@choose = .@material[0];
+			break;
+		case 2:// ENRICHED
+			.@is_enriched = true;
+			.@choose = .@material[1];
+			break;
+		case 3:// HD
+			if (.@equip_refine < 7) {
 				mes "[Shadow Blacksmith]";
 				mes "HD Ore can only used for +7 or higher refine level items.";
 				close;
 			}
 			.@hoihoi = 1;
+			.@choose = .@material[2];
+			break;
+		case 4:
+			mes "[Shadow Blacksmith]";
+			mes "You've cancelled refining.";
+			close;
 		}
-		.@choose = .@material[.@option-1];
 		if (!countitem(.@choose)) {
 			mes "[Shadow Blacksmith]";
 			mes "You do not have enough "+ getitemname(.@choose) +".";
@@ -101,7 +103,7 @@
 			mes "You do not have enough zeny.";
 			close;
 		}
-		if (getequiprefinerycnt(.@part) > 9) {
+		if (.@equip_refine > 9) {
 			mes "[Shadow Blacksmith]";
 			mes "Shadow Equipment can be refined to the maximum of 10...";
 			close;
@@ -125,13 +127,17 @@
 				close;
 			}
 		}
-
 		mes "[Shadow Blacksmith]";
 		mes "Well then.. here goes nothing!";
 		next;
 		delitem .@choose,1;
 		Zeny -= .@zeny_cost;
-		if (getequippercentrefinery(.@part, .@option > 1) > rand(100)) {
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+			close;
+
+		if (getequippercentrefinery(.@part, .@is_enriched) > rand(100)) {
 			successrefitem .@part;
 			mes "[Shadow Blacksmith]";
 			mes "It worked! It worked!";

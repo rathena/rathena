@@ -3491,7 +3491,7 @@ malangdo,125,147,3	script	Patrol Leader#ml	545,{
 	close;
 }
 
-malangdo,129,146,3	script	Crime Prevention Staff	545,{
+malangdo,129,146,3	script	Crime Prevention Staff#ml	545,{
 	if (malang_bad_guys > 11) {
 		mes "[Crime Prevention Staff]";
 		mes "A work to do means happy things!";
@@ -4184,7 +4184,7 @@ malangdo,133,134,0	script	Strange Pile of Sand#7	557,{
 				setquest .@quest;
 				if (!rand(3)) {
 					emotion ET_HUK;
-					getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
+					getmapxy(.@map$,.@x,.@y,BL_NPC);
 					monster .@map$,.@x,.@y,"Quick Dark Shadow",2209,1;
 				} else
 					getitem 11536,1; //Cat_Hard_Biscuit

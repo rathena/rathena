@@ -1,21 +1,21 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #include "mail.hpp"
 
-#include "../common/nullpo.h"
-#include "../common/showmsg.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
+#include "../common/nullpo.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
 #include "atcommand.hpp"
-#include "itemdb.hpp"
-#include "clif.hpp"
-#include "pc.hpp"
-#include "intif.hpp"
-#include "date.hpp" // date_get_dayofyear
-#include "log.hpp"
 #include "battle.hpp"
+#include "clif.hpp"
+#include "date.hpp" // date_get_dayofyear
+#include "intif.hpp"
+#include "itemdb.hpp"
+#include "log.hpp"
+#include "pc.hpp"
 
 void mail_clear(struct map_session_data *sd)
 {
@@ -143,8 +143,12 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 
 		idx -= 2;
 
-		if( idx < 0 || idx >= MAX_INVENTORY )
+		if( idx < 0 || idx >= MAX_INVENTORY || sd->inventory_data[idx] == nullptr )
 			return MAIL_ATTACH_ERROR;
+
+		if( sd->inventory.u.items_inventory[idx].equipSwitch ){
+			return MAIL_ATTACH_EQUIPSWITCH;
+		}
 
 #if PACKETVER < 20150513
 		i = 0;
@@ -326,7 +330,7 @@ void mail_deliveryfail(struct map_session_data *sd, struct mail_message *msg){
 bool mail_invalid_operation(struct map_session_data *sd)
 {
 #if PACKETVER < 20150513
-	if( !map[sd->bl.m].flag.town && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
+	if( !map_getmapflag(sd->bl.m, MF_TOWN) && !pc_can_use_command(sd, "mail", COMMAND_ATCOMMAND) )
 	{
 		ShowWarning("clif_parse_Mail: char '%s' trying to do invalid mail operations.\n", sd->status.name);
 		return true;
@@ -366,7 +370,7 @@ void mail_send(struct map_session_data *sd, const char *dest_name, const char *t
 			clif_Mail_send(sd, WRITE_MAIL_FAILED_CNT);
 			return;
 		}else{
-			sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.data[SC_DAILYSENDMAILCNT]->val2 + 1, -1 );
+			sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, date_get_dayofyear(), sd->sc.data[SC_DAILYSENDMAILCNT]->val2 + 1, INFINITE_TICK );
 		}
 	}
 
@@ -397,7 +401,7 @@ void mail_send(struct map_session_data *sd, const char *dest_name, const char *t
 	}
 
 	if (body_len)
-		safestrncpy(msg.body, (char*)body_msg, body_len + 1);
+		safestrncpy(msg.body, (char*)body_msg, min(body_len + 1, MAIL_BODY_LENGTH));
 	else
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 
@@ -415,6 +419,6 @@ void mail_refresh_remaining_amount( struct map_session_data* sd ){
 
 	// If it was not yet started or it was started on another day
 	if( sd->sc.data[SC_DAILYSENDMAILCNT] == NULL || sd->sc.data[SC_DAILYSENDMAILCNT]->val1 != doy ){
-		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, doy, 0, -1 );
+		sc_start2( &sd->bl, &sd->bl, SC_DAILYSENDMAILCNT, 100, doy, 0, INFINITE_TICK );
 	}
 }

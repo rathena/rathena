@@ -1,10 +1,10 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _DATE_HPP_
-#define _DATE_HPP_
+#ifndef DATE_HPP
+#define DATE_HPP
 
-#include "../common/cbasetypes.h"
+#include "../common/cbasetypes.hpp"
 
 enum e_month{
 	JANUARY = 1,
@@ -41,6 +41,7 @@ enum e_date_type{
 	DT_MONTH,
 	DT_YEAR,
 	DT_DAYOFYEAR,
+	DT_YYYYMMDD,
 	DT_MAX
 };
 
@@ -60,4 +61,4 @@ bool is_day_of_sun(void);
 bool is_day_of_moon(void);
 bool is_day_of_star(void);
 
-#endif /* _DATE_HPP_ */
+#endif /* DATE_HPP */

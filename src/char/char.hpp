@@ -1,13 +1,16 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHAR_HPP_
-#define _CHAR_HPP_
+#ifndef CHAR_HPP
+#define CHAR_HPP
 
-#include "../config/core.h"
-#include "../common/core.h" // CORE_ST_LAST
-#include "../common/msg_conf.h"
-#include "../common/mmo.h"
+#include <vector>
+
+#include "../common/core.hpp" // CORE_ST_LAST
+#include "../common/mmo.hpp"
+#include "../common/msg_conf.hpp"
+#include "../common/timer.hpp"
+#include "../config/core.hpp"
 
 extern int login_fd; //login file descriptor
 extern int char_fd; //char file descriptor
@@ -190,13 +193,13 @@ struct CharServ_Config {
 };
 extern struct CharServ_Config charserv_config;
 
-#define MAX_MAP_SERVERS 30 //how many mapserver a char server can handle
+#define MAX_MAP_SERVERS 2 //how many mapserver a char server can handle
 struct mmo_map_server {
 	int fd;
 	uint32 ip;
 	uint16 port;
 	int users;
-	unsigned short map[MAX_MAP_PER_SERVER];
+	std::vector<uint16> map;
 };
 extern struct mmo_map_server map_server[MAX_MAP_SERVERS];
 
@@ -277,13 +280,13 @@ void char_set_char_online(int map_id, uint32 char_id, uint32 account_id);
 void char_set_char_offline(uint32 char_id, uint32 account_id);
 void char_set_all_offline(int id);
 void char_disconnect_player(uint32 account_id);
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
+TIMER_FUNC(char_chardb_waiting_disconnect);
 
 int char_mmo_gender(const struct char_session_data *sd, const struct mmo_charstatus *p, char sex);
 int char_mmo_char_tobuf(uint8* buffer, struct mmo_charstatus* p);
 int char_mmo_char_tosql(uint32 char_id, struct mmo_charstatus* p);
 int char_mmo_char_fromsql(uint32 char_id, struct mmo_charstatus* p, bool load_everything);
-int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf);
+int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count = nullptr);
 enum e_char_del_response char_delete(struct char_session_data* sd, uint32 char_id);
 int char_rename_char_sql(struct char_session_data *sd, uint32 char_id);
 int char_divorce_char_sql(int partner_id1, int partner_id2);
@@ -327,4 +330,4 @@ const char* char_msg_txt(int msg_number);
 void char_do_final_msg(void);
 bool char_config_read(const char* cfgName, bool normal);
 
-#endif /* _CHAR_HPP_ */
+#endif /* CHAR_HPP */

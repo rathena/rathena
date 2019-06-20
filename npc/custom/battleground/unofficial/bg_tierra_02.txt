@@ -275,7 +275,8 @@ OnBuild:
 
 OnDestroy:
 	killmonster "bat_a02","Guillaume_TV2B::OnWall";
-	delwall "bat_a02_g1";
+	if (checkwall("bat_a02_g1") == true)
+		delwall "bat_a02_g1";
 	set .MyMobCount,0;
 	end;
 

@@ -392,7 +392,7 @@ mal_in01,160,34,4	script	Missing, the Cleaner	545,{
 	}
 	set .@playtime, checkquest(12254,PLAYTIME);
 	if (.@playtime == -1) {
-		if (getcharid(0) == getpartyleader(.@party_id,2)) {
+		if (is_party_leader() == true) {
 			mes "[Missing, the Cleaner]";
 			mes "Ummm? What's up? Tell me the password if you're the leader!";
 			next;
@@ -455,7 +455,7 @@ L_Enter:
 // Instance: Common Scripts
 //============================================================
 1@pump,63,100,4	script	Missing, the Cleaner#0	545,{
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Missing, the Cleaner]";
 		mes "I am trying to have a conversation with your leader now. Please don't disturb and wait!";
 		close;
@@ -546,7 +546,7 @@ function	script	F_mal_missing	{
 	mes "[Missing, the Cleaner]";
 	mes "I don't care if you get help from your friends or not. I want you to clean up all culverts! Don't forget! I will watch you and give you instructions. Just do what I said!!";
 	next;
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Missing, the Cleaner]";
 		mes "Once your leader finishes preparing, it will begin, so get your hearts ready for it!!";
 		close;
@@ -575,7 +575,7 @@ function	script	F_mal_missing	{
 	mes "[Missing, the Cleaner]";
 	mes "I see seaweed everywhere because you're wiggling! All the culverts will be blocked with seaweed!";
 	next;
-	if (getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Missing, the Cleaner]";
 		mes "Once your leader finishes preparing, settlement will be decided so get your hearts ready for it!!";
 		close;
@@ -737,7 +737,7 @@ OnEnable:
 	areamonster .@map$,.@c[0],.@c[1],.@c[2],.@c[3],"Ancient Kukre",2179,rand(1,3),.@label$;
 	areamonster .@map$,.@c[0],.@c[1],.@c[2],.@c[3],"Abysmal Cornutus",2177,rand(1,3),.@label$;
 	specialeffect EF_MAPPILLAR2,ALL_SAMEMAP; //currently broken
-	getmapxy(.@map$,.@x,.@y,UNITTYPE_NPC);
+	getmapxy(.@map$,.@x,.@y,BL_NPC);
 	getpartymember 'party_id,2;
 	copyarray .@partymemberaid[0],$@partymemberaid[0],$@partymembercount;
 	for(set .@i,0; .@i<$@partymembercount; set .@i,.@i+1) {

@@ -14,7 +14,7 @@ RDMOPT_VAR_MAXHPPERCENT,{ bonus bMaxHPrate,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_VAR_MAXSPPERCENT,{ bonus bMaxSPrate,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_VAR_HPACCELERATION,{ bonus bHPrecovRate,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_VAR_SPACCELERATION,{ bonus bSPrecovRate,getrandomoptinfo(ROA_VALUE); }
-RDMOPT_VAR_ATKPERCENT,{ bonus bAtkRate,getrandomoptinfo(ROA_VALUE); }
+RDMOPT_VAR_ATKPERCENT,{ bonus2 bAddClass,Class_All,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_VAR_MAGICATKPERCENT,{ bonus bMatkRate,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_VAR_PLUSASPD,{ bonus bAspd,getrandomoptinfo(ROA_VALUE); }
 RDMOPT_VAR_PLUSASPDPERCENT,{ bonus bAspdRate,getrandomoptinfo(ROA_VALUE); }

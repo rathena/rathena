@@ -1100,11 +1100,11 @@ morocc,27,112,4	script	Wickebine#BLS	725,{
 		mes "[Wickebine]";
 		mes "...";
 		next;
-		mes "[Wickemine]";
+		mes "[Wickebine]";
 		mes "...";
 		mes "......";
 		next;
-		mes "[Wickmine]";
+		mes "[Wickebine]";
 		mes "They're late.";
 		mes "They're late,";
 		mes "they're late,";

@@ -446,18 +446,23 @@ xmas,240,294,3	script	Black Beard Joe#pa0829	4_M_05,{
 		mes "There is a problem, please come back again!";// custom
 		close;
 	}
-	if (.@card[3] == 0 && .@sc_type < 4) 
-		.@card[3] = .@enchant;
+	if (.@card[3] == 0 && .@sc_type < 4)
+		.@index_slot = 3;
 	else if (.@card[2] == 0 && .@sc_type < 3)
-		.@card[2] = .@enchant;
+		.@index_slot = 2;
 	else if (.@card[1] == 0 && .@sc_type < 2)
-		.@card[1] = .@enchant;
+		.@index_slot = 1;
 	else {
 		mes "I don't know what this is, but I think this isn't thing I could handle.";// custom
 		close;
 	}
 	if (countitem(7642) > 14) {// Bloody_Coin
 		delitem 7642,15;// Bloody_Coin
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@eq_num, .@item_id) || callfunc("F_IsEquipCardHack", .@eq_num, .@card[0], .@card[1], .@card[2], .@card[3]) || callfunc("F_IsEquipRefineHack", .@eq_num, .@refine))
+			close;
+
 		delequip .@eq_num;
 		if (.@enchant == 0) {
 			mes "Ouch! Poor you, the enchantment has failed and your gear is broken, Geez!";
@@ -465,6 +470,7 @@ xmas,240,294,3	script	Black Beard Joe#pa0829	4_M_05,{
 			specialeffect2 EF_LORD;
 			end;
 		}
+		.@card[ .@index_slot ] = .@enchant;
 		getitem2 .@item_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 		mes "Hmm.. It was successful. Take a look at it.";
 		specialeffect2 EF_REPAIRWEAPON;

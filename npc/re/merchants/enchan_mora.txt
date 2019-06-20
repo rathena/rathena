@@ -1147,6 +1147,11 @@ L_Socket:
 		mes "The ability to enhance remains.";
 		delitem 6380,1; //Mora_Coin
 		set Zeny, Zeny-100000;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+			close;
+
 		delequip .@part;
 
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
@@ -1331,7 +1336,8 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		close;
 	}
 	set .@equip_id, getequipid(EQI_HAND_R);
-	setarray .@equip_card[2], getequipcardid(EQI_HAND_R,2),getequipcardid(EQI_HAND_R,3);
+	.@equip_refine = getequiprefinerycnt(EQI_HAND_R);
+	setarray .@equip_card[0], getequipcardid(EQI_HAND_R,0), getequipcardid(EQI_HAND_R,1), getequipcardid(EQI_HAND_R,2),getequipcardid(EQI_HAND_R,3);
 	switch(.@equip_id) {
 	case 2007: //Golden_Rod_Staff
 	case 2008: //Aqua_Staff
@@ -1359,7 +1365,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "The weapon you have isn't one of the Artifacts I can work with.";
 		close;
 	}
-	if (getequiprefinerycnt(EQI_HAND_R) < 7) {
+	if (.@equip_refine < 7) {
 		emotion ET_FRET;
 		mes "[Artifact Collector]";
 		mes "I must insist that the refine level of the Artifact be at least +7!";
@@ -1378,7 +1384,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 	next;
 	emotion ET_OK;
 	mes "[Artifact Collector]";
-	mes "If you are ready I am about to show you what I can do with your +"+getequiprefinerycnt(EQI_HAND_R)+" Artifact!";
+	mes "If you are ready I am about to show you what I can do with your +" + .@equip_refine + " Artifact!";
 	next;
 	mes "[Artifact Collector]";
 	mes "I'm going to take your ^FF0000"+getequipname(EQI_HAND_R)+"^000000 and exchange it, are you ready?";
@@ -1405,6 +1411,11 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		break;
 	}
 	emotion ET_SMILE;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine))
+		close;
+
 	delequip EQI_HAND_R;
 	getitem .@empowered,1;
 	mes "[Artifact Collector]";
@@ -1487,6 +1498,8 @@ function	script	F_Mora_Enchant	{
 	specialeffect2 EF_REPAIRWEAPON;
 	progressbar "ffff00",3;
 	delitem 6380,5; //Mora_Coin
+	if (countitem(getarg(0)) < 1)
+		return 0;
 	delitem getarg(0),1;
 	set .@i, rand(1,4568);
 	if (.@i <= 3168) {
@@ -1516,6 +1529,7 @@ function	script	F_Mora_Enchant	{
 	return 1;
 }
 mora,105,176,4	script	Master Tailor#pa0829	509,{
+	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
 		close;
@@ -1608,6 +1622,7 @@ mora,105,176,4	script	Master Tailor#pa0829	509,{
 }
 
 mora,123,177,6	script	Pendant Crafter#pa0829	509,{
+	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
 		close;
@@ -1678,6 +1693,7 @@ mora,123,177,6	script	Pendant Crafter#pa0829	509,{
 }
 
 mora,134,166,4	script	Bulberry Westhood#pa0829	509,{
+	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
 		close;

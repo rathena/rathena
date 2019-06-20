@@ -8,6 +8,12 @@
 //  8 - Item will be bound item when equipped
 // 16 - Special Broadcast: When item dropped by monster and player loot it, will be broadcasted!
 // 32 - Item will not be removed on consumption. Also supports 'itemskill'
+// 64 - Item will be displayed with a client side defined drop
+// 128 - Item will be displayed with a white pillar drop effect
+// 256 - Item will be displayed with a blue pillar drop effect
+// 512 - Item will be displayed with a yellow pillar drop effect
+// 1024 - Item will be displayed with a purple pillar drop effect
+// 2048 - Item will be displayed with a orange pillar drop effect
 // NOTE: For removing flag by import file, use "-" to remove the flag. Example, 604,-1 will removes flag 1 from Branch_Of_Dead_Tree
 
 // Logged as Dead Branch item

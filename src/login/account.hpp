@@ -1,19 +1,12 @@
-/**
- * @file account.h
- * Module purpose is to save, load, and update changes into the account table or file.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams < r15k
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#pragma once
-#ifndef _ACCOUNT_HPP_
-#define _ACCOUNT_HPP_
+#ifndef ACCOUNT_HPP
+#define ACCOUNT_HPP
 
-#include "../common/cbasetypes.h"
-#include "../common/mmo.h" // ACCOUNT_REG2_NUM
-#include "../config/core.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/mmo.hpp" // ACCOUNT_REG2_NUM
+#include "../config/core.hpp"
 
 typedef struct AccountDB AccountDB;
 typedef struct AccountDBIterator AccountDBIterator;
@@ -142,5 +135,4 @@ struct AccountDB {
 void mmo_send_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
 void mmo_save_global_accreg(AccountDB* self, int fd, int account_id, int char_id);
 
-
-#endif /* _ACCOUNT_HPP_ */
+#endif /* ACCOUNT_HPP */

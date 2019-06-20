@@ -1,42 +1,42 @@
-// Copyright (c) Athena Dev Teams - Licensed under GNU GPL
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
 #pragma warning(disable:4800)
 #include "char.hpp"
 
-#include <time.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
-#include "../common/cbasetypes.h"
-#include "../common/core.h"
-#include "../common/db.h"
-#include "../common/malloc.h"
-#include "../common/mapindex.h"
-#include "../common/mmo.h"
-#include "../common/random.h"
-#include "../common/showmsg.h"
-#include "../common/socket.h"
-#include "../common/strlib.h"
-#include "../common/timer.h"
-#include "../common/cli.h"
+#include "../common/cbasetypes.hpp"
+#include "../common/cli.hpp"
+#include "../common/core.hpp"
+#include "../common/db.hpp"
+#include "../common/malloc.hpp"
+#include "../common/mapindex.hpp"
+#include "../common/mmo.hpp"
+#include "../common/random.hpp"
+#include "../common/showmsg.hpp"
+#include "../common/socket.hpp"
+#include "../common/strlib.hpp"
+#include "../common/timer.hpp"
 
+#include "char_clif.hpp"
+#include "char_cnslif.hpp"
+#include "char_logif.hpp"
+#include "char_mapif.hpp"
+#include "inter.hpp"
+#include "int_elemental.hpp"
 #include "int_guild.hpp"
 #include "int_homun.hpp"
 #include "int_mail.hpp"
 #include "int_mercenary.hpp"
-#include "int_elemental.hpp"
 #include "int_party.hpp"
 #include "int_storage.hpp"
-#include "inter.hpp"
-#include "char_logif.hpp"
-#include "char_mapif.hpp"
-#include "char_cnslif.hpp"
-#include "char_clif.hpp"
 
-//definition of exported var declared in .h
+//definition of exported var declared in header
 int login_fd=-1; //login file descriptor
 int char_fd=-1; //char file descriptor
 struct Schema_Config schema_config;
@@ -66,8 +66,6 @@ struct s_subnet {
 	uint32 map_ip;
 } subnet[16];
 int subnet_count = 0;
-
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data);
 
 DBMap* auth_db; // uint32 account_id -> struct auth_node*
 DBMap* online_char_db; // uint32 account_id -> struct online_char_data*
@@ -566,8 +564,8 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `id`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `bound`, `unique_id`");
 	if (tableswitch == TABLE_INVENTORY) {
-		StringBuf_Printf(&buf, ", `favorite`");
-		offset = 1;
+		StringBuf_Printf(&buf, ", `favorite`, `equip_switch`");
+		offset = 2;
 	}
 
 	for( i = 0; i < MAX_SLOTS; ++i )
@@ -599,8 +597,10 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	SqlStmt_BindColumn(stmt, 7, SQLDT_UINT,      &item.expire_time, 0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 8, SQLDT_UINT,      &item.bound,       0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 9, SQLDT_UINT64,    &item.unique_id,   0, NULL, NULL);
-	if (tableswitch == TABLE_INVENTORY)
+	if (tableswitch == TABLE_INVENTORY){
 		SqlStmt_BindColumn(stmt, 10, SQLDT_CHAR, &item.favorite,    0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 11, SQLDT_UINT, &item.equipSwitch, 0, NULL, NULL);
+	}
 	for( i = 0; i < MAX_SLOTS; ++i )
 		SqlStmt_BindColumn(stmt, 10+offset+i, SQLDT_USHORT, &item.card[i], 0, NULL, NULL);
 	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
@@ -634,23 +634,23 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 				
 				if( j == MAX_SLOTS &&
 					k == MAX_ITEM_RDM_OPT &&
-				    items[i].amount == item.amount &&
-				    items[i].equip == item.equip &&
-				    items[i].identify == item.identify &&
-				    items[i].refine == item.refine &&
-				    items[i].attribute == item.attribute &&
-				    items[i].expire_time == item.expire_time &&
-				    items[i].bound == item.bound &&
-					(tableswitch != TABLE_INVENTORY || items[i].favorite == item.favorite) )
+					items[i].amount == item.amount &&
+					items[i].equip == item.equip &&
+					items[i].identify == item.identify &&
+					items[i].refine == item.refine &&
+					items[i].attribute == item.attribute &&
+					items[i].expire_time == item.expire_time &&
+					items[i].bound == item.bound &&
+					(tableswitch != TABLE_INVENTORY || (items[i].favorite == item.favorite && items[i].equipSwitch == item.equipSwitch)) )
 				;	//Do nothing.
 				else
 				{
 					// update all fields.
 					StringBuf_Clear(&buf);
-					StringBuf_Printf(&buf, "UPDATE `%s` SET `amount`='%d', `equip`='%d', `identify`='%d', `refine`='%d',`attribute`='%d', `expire_time`='%u', `bound`='%d', `unique_id`='%" PRIu64 "'",
+					StringBuf_Printf(&buf, "UPDATE `%s` SET `amount`='%d', `equip`='%u', `identify`='%d', `refine`='%d',`attribute`='%d', `expire_time`='%u', `bound`='%d', `unique_id`='%" PRIu64 "'",
 						tablename, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].bound, items[i].unique_id);
 					if (tableswitch == TABLE_INVENTORY)
-						StringBuf_Printf(&buf, ", `favorite`='%d'", items[i].favorite);
+						StringBuf_Printf(&buf, ", `favorite`='%d', `equip_switch`='%u'", items[i].favorite, items[i].equipSwitch);
 					for( j = 0; j < MAX_SLOTS; ++j )
 						StringBuf_Printf(&buf, ", `card%d`=%hu", j, items[i].card[j]);
 					for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
@@ -685,7 +685,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 	StringBuf_Clear(&buf);
 	StringBuf_Printf(&buf, "INSERT INTO `%s`(`%s`, `nameid`, `amount`, `equip`, `identify`, `refine`, `attribute`, `expire_time`, `bound`, `unique_id`", tablename, selectoption);
 	if (tableswitch == TABLE_INVENTORY)
-		StringBuf_Printf(&buf, ", `favorite`");
+		StringBuf_Printf(&buf, ", `favorite`, `equip_switch`");
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ", `card%d`", j);
 	for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
@@ -708,10 +708,10 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 		else
 			found = true;
 
-		StringBuf_Printf(&buf, "('%d', '%hu', '%d', '%d', '%d', '%d', '%d', '%u', '%d', '%" PRIu64 "'",
+		StringBuf_Printf(&buf, "('%d', '%hu', '%d', '%u', '%d', '%d', '%d', '%u', '%d', '%" PRIu64 "'",
 			id, items[i].nameid, items[i].amount, items[i].equip, items[i].identify, items[i].refine, items[i].attribute, items[i].expire_time, items[i].bound, items[i].unique_id);
 		if (tableswitch == TABLE_INVENTORY)
-			StringBuf_Printf(&buf, ", '%d'", items[i].favorite);
+			StringBuf_Printf(&buf, ", '%d', '%u'", items[i].favorite, items[i].equipSwitch);
 		for( j = 0; j < MAX_SLOTS; ++j )
 			StringBuf_Printf(&buf, ", '%hu'", items[i].card[j]);
 		for( j = 0; j < MAX_ITEM_RDM_OPT; ++j ) {
@@ -738,7 +738,7 @@ int char_memitemdata_to_sql(const struct item items[], int max, int id, enum sto
 bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storage_type tableswitch, uint8 stor_id) {
 	StringBuf buf;
 	SqlStmt* stmt;
-	int i,j, offset = 0;
+	int i,j, offset = 0, max2;
 	struct item item, *storage;
 	const char *tablename, *selectoption, *printname;
 
@@ -748,24 +748,28 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 			tablename = schema_config.inventory_db;
 			selectoption = "char_id";
 			storage = p->u.items_inventory;
+			max2 = MAX_INVENTORY;
 			break;
 		case TABLE_CART:
 			printname = "Cart";
 			tablename = schema_config.cart_db;
 			selectoption = "char_id";
 			storage = p->u.items_cart;
+			max2 = MAX_CART;
 			break;
 		case TABLE_STORAGE:
 			printname = "Storage";
 			tablename = inter_premiumStorage_getTableName(stor_id);
 			selectoption = "account_id";
 			storage = p->u.items_storage;
+			max2 = inter_premiumStorage_getMax(p->stor_id);
 			break;
 		case TABLE_GUILD_STORAGE:
 			printname = "Guild Storage";
 			tablename = schema_config.guild_storage_db;
 			selectoption = "guild_id";
 			storage = p->u.items_guild;
+			max2 = inter_guild_storagemax(id);
 			break;
 		default:
 			ShowError("Invalid table name!\n");
@@ -776,7 +780,7 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	p->id = id;
 	p->type = tableswitch;
 	p->stor_id = stor_id;
-	p->max_amount = inter_premiumStorage_getMax(p->stor_id);
+	p->max_amount = max2;
 
 	stmt = SqlStmt_Malloc(sql_handle);
 	if (stmt == NULL) {
@@ -787,8 +791,8 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	StringBuf_Init(&buf);
 	StringBuf_AppendStr(&buf, "SELECT `id`,`nameid`,`amount`,`equip`,`identify`,`refine`,`attribute`,`expire_time`,`bound`,`unique_id`");
 	if (tableswitch == TABLE_INVENTORY) {
-		StringBuf_Printf(&buf, ", `favorite`");
-		offset = 1;
+		StringBuf_Printf(&buf, ", `favorite`, `equip_switch`");
+		offset = 2;
 	}
 	for( j = 0; j < MAX_SLOTS; ++j )
 		StringBuf_Printf(&buf, ",`card%d`", j);
@@ -819,8 +823,10 @@ bool char_memitemdata_from_sql(struct s_storage* p, int max, int id, enum storag
 	SqlStmt_BindColumn(stmt, 7, SQLDT_UINT,         &item.expire_time, 0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 8, SQLDT_CHAR,         &item.bound,     0, NULL, NULL);
 	SqlStmt_BindColumn(stmt, 9, SQLDT_ULONGLONG,    &item.unique_id, 0, NULL, NULL);
-	if (tableswitch == TABLE_INVENTORY)
+	if (tableswitch == TABLE_INVENTORY){
 		SqlStmt_BindColumn(stmt, 10, SQLDT_CHAR, &item.favorite,    0, NULL, NULL);
+		SqlStmt_BindColumn(stmt, 11, SQLDT_UINT, &item.equipSwitch, 0, NULL, NULL);
+	}
 	for( i = 0; i < MAX_SLOTS; ++i )
 		SqlStmt_BindColumn(stmt, 10+offset+i, SQLDT_USHORT, &item.card[i],   0, NULL, NULL);
  	for( i = 0; i < MAX_ITEM_RDM_OPT; ++i ) {
@@ -895,7 +901,7 @@ int char_mmo_char_tobuf(uint8* buf, struct mmo_charstatus* p);
 
 //=====================================================================================================
 // Loads the basic character rooster for the given account. Returns total buffer used.
-int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
+int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf, uint8* count ) {
 	SqlStmt* stmt;
 	struct mmo_charstatus p;
 	int j = 0, i;
@@ -986,6 +992,10 @@ int char_mmo_chars_fromsql(struct char_session_data* sd, uint8* buf) {
 		// Addon System
 		// store the required info into the session
 		sd->char_moves[p.slot] = p.character_moves;
+	}
+
+	if( count != nullptr ){
+		*count = i;
 	}
 
 	memset(sd->new_name,0,sizeof(sd->new_name));
@@ -1884,6 +1894,8 @@ int char_married(int pl1, int pl2)
 
 int char_child(int parent_id, int child_id)
 {
+	if( parent_id == 0 || child_id == 0) //Failsafe, avoild querys and fix EXP bug dividing with lower level chars
+		return 0;
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `child` FROM `%s` WHERE `char_id` = '%d'", schema_config.char_db, parent_id) )
 		Sql_ShowDebug(sql_handle);
 	else if( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -1903,6 +1915,8 @@ int char_child(int parent_id, int child_id)
 
 int char_family(int cid1, int cid2, int cid3)
 {
+	if ( cid1 == 0 || cid2 == 0 || cid3 == 0 ) //Failsafe, and avoid querys where there is no sense to keep executing if any of the inputs are 0
+		return 0;
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `char_id`,`partner_id`,`child` FROM `%s` WHERE `char_id` IN ('%d','%d','%d')", schema_config.char_db, cid1, cid2, cid3) )
 		Sql_ShowDebug(sql_handle);
 	else while( SQL_SUCCESS == Sql_NextRow(sql_handle) )
@@ -2079,15 +2093,13 @@ int char_loadName(uint32 char_id, char* name){
 // Searches for the mapserver that has a given map (and optionally ip/port, if not -1).
 // If found, returns the server's index in the 'server' array (otherwise returns -1).
 int char_search_mapserver(unsigned short map, uint32 ip, uint16 port){
-	int i, j;
-
-	for(i = 0; i < ARRAYLENGTH(map_server); i++)
+	for(int i = 0; i < ARRAYLENGTH(map_server); i++)
 	{
 		if (map_server[i].fd > 0
 		&& (ip == (uint32)-1 || map_server[i].ip == ip)
 		&& (port == (uint16)-1 || map_server[i].port == port))
 		{
-			for (j = 0; map_server[i].map[j]; j++)
+			for (int j = 0; map_server[i].map[j]; j++)
 				if (map_server[i].map[j] == map)
 					return i;
 		}
@@ -2171,8 +2183,7 @@ void char_pincode_decrypt( uint32 userSeed, char* pin ){
 //Invoked 15 seconds after mapif_disconnectplayer in case the map server doesn't
 //replies/disconnect the player we tried to kick. [Skotlex]
 //------------------------------------------------
-int char_chardb_waiting_disconnect(int tid, unsigned int tick, int id, intptr_t data)
-{
+TIMER_FUNC(char_chardb_waiting_disconnect){
 	struct online_char_data* character;
 	if ((character = (struct online_char_data*)idb_get(online_char_db, id)) != NULL && character->waiting_disconnect == tid)
 	{	//Mark it offline due to timeout.
@@ -2198,12 +2209,12 @@ int char_online_data_cleanup_sub(DBKey key, DBData *data, va_list ap)
 	return 0;
 }
 
-int char_online_data_cleanup(int tid, unsigned int tick, int id, intptr_t data){
+TIMER_FUNC(char_online_data_cleanup){
 	online_char_db->foreach(online_char_db, char_online_data_cleanup_sub);
 	return 0;
 }
 
-int char_clan_member_cleanup( int tid, unsigned int tick, int id, intptr_t data ){
+TIMER_FUNC(char_clan_member_cleanup){
 	// Auto removal is disabled
 	if( charserv_config.clan_remove_inactive_days <= 0 ){
 		return 0;
@@ -2507,7 +2518,8 @@ bool char_checkdb(void){
 	}
 	//checking inventory_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `id`,`char_id`,`nameid`,`amount`,`equip`,`identify`,`refine`,"
-		"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`expire_time`,`favorite`,`bound`,`unique_id`"
+		"`attribute`,`card0`,`card1`,`card2`,`card3`,`option_id0`,`option_val0`,`option_parm0`,`option_id1`,`option_val1`,`option_parm1`,`option_id2`,`option_val2`,`option_parm2`,`option_id3`,`option_val3`,`option_parm3`,`option_id4`,`option_val4`,`option_parm4`,`expire_time`,`bound`,`unique_id`"
+		",`favorite`,`equip_switch`"
 		" FROM `%s` LIMIT 1;", schema_config.inventory_db) ){
 		Sql_ShowDebug(sql_handle);
 		return false;
@@ -2737,7 +2749,7 @@ void char_set_defaults(){
 	charserv_config.log_inter = 1;	// loggin inter or not [devil]
 	charserv_config.char_check_db =1;
 
-	// See const.h to change the default values
+	// See const.hpp to change the default values
 	charserv_config.start_point[0].map = mapindex_name2id(MAP_DEFAULT_NAME); 
 	charserv_config.start_point[0].x = MAP_DEFAULT_X;
 	charserv_config.start_point[0].y = MAP_DEFAULT_Y;
@@ -2818,7 +2830,7 @@ void char_config_split_startpoint(char *w1_value, char *w2_value, struct point s
 
 		start_point[i].map = mapindex_name2id(fields[1]);
 		if (!start_point[i].map) {
-			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", start_point[i].map);
+			ShowError("Start point %s not found in map-index cache. Setting to default location.\n", fields[1]);
 			start_point[i].map = mapindex_name2id(MAP_DEFAULT_NAME);
 			start_point[i].x = MAP_DEFAULT_X;
 			start_point[i].y = MAP_DEFAULT_Y;
@@ -2946,7 +2958,7 @@ bool char_config_read(const char* cfgName, bool normal){
 		} else if (strcmpi(w1, "char_maintenance") == 0) {
 			charserv_config.char_maintenance = atoi(w2);
 		} else if (strcmpi(w1, "char_new") == 0) {
-			charserv_config.char_new = (bool)atoi(w2);
+			charserv_config.char_new = (bool)config_switch(w2);
 		} else if (strcmpi(w1, "char_new_display") == 0) {
 			charserv_config.char_new_display = atoi(w2);
 		} else if (strcmpi(w1, "max_connect_user") == 0) {
@@ -2982,7 +2994,7 @@ bool char_config_read(const char* cfgName, bool normal){
 			char_config_split_startitem(w1, w2, charserv_config.start_items_doram);
 #endif
 		} else if(strcmpi(w1,"log_char")==0) {		//log char or not [devil]
-			charserv_config.log_char = atoi(w2);
+			charserv_config.log_char = config_switch(w2);
 		} else if (strcmpi(w1, "unknown_char_name") == 0) {
 			safestrncpy(charserv_config.char_config.unknown_char_name, w2, sizeof(charserv_config.char_config.unknown_char_name));
 			charserv_config.char_config.unknown_char_name[NAME_LENGTH-1] = '\0';
@@ -3196,7 +3208,7 @@ int do_init(int argc, char **argv)
 		ShowNotice("And then change the user/password to use in conf/char_athena.conf (or conf/import/char_conf.txt)\n");
 	}
 
-	inter_init_sql((argc > 2) ? argv[2] : inter_cfgName); // inter server configuration
+	inter_init_sql((argc > 2) ? argv[2] : SQL_CONF_NAME); // inter server configuration
 
 	auth_db = idb_alloc(DB_OPT_RELEASE_DATA);
 	online_char_db = idb_alloc(DB_OPT_RELEASE_DATA);

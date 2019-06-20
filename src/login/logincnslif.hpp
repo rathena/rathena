@@ -1,28 +1,12 @@
-/**
- * @file logincnslif.h
- * Module purpose is to handle incoming and outgoing requests with console.
- * Licensed under GNU GPL.
- *  For more information, see LICENCE in the main folder.
- * @author Athena Dev Teams originally in login.c
- * @author rAthena Dev Team
- */
+// Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
+// For more information, see LICENCE in the main folder
 
-#pragma once
-#ifndef _LOGINCNSLIF_HPP_
-#define _LOGINCNSLIF_HPP_
-
-extern "C" {
-/**
- * Login-server console help: starting option info.
- *  Do not rename function used as extern.
- * @param do_exit: terminate program execution ?
- */
-void display_helpscreen(bool do_exit);
-}
+#ifndef LOGINCNSLIF_HPP
+#define LOGINCNSLIF_HPP
 
 /**
  * Console Command Parser
- * Transmited from command cli.c
+ * Transmited from command cli.cpp
  * note common name for all serv do not rename (extern in cli)
  * @author [Wizputer]
  * @param buf: buffer to parse, (from console)
@@ -49,6 +33,4 @@ void do_init_logincnslif(void);
  */
 void do_final_logincnslif(void);
 
-
-#endif	/* _LOGINCNSLIF_HPP_ */
-
+#endif	/* LOGINCNSLIF_HPP */

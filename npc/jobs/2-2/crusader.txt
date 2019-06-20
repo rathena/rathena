@@ -32,11 +32,12 @@
 //= 3.1 Adding Hermemton's changes. [L0ne_W0lf]
 //= 3.2 Added Quest Log commands. [Kisuka]
 //= 3.3 Removed the need for use of 'goto.' [L0ne_W0lf]
+//= 4.0 Split for renewal ep16.1 [Capuche]
 //============================================================
 
 // Senior Crusader: 1st Collect Items Test
 //============================================================
-prt_castle,45,169,5	script	Senior Crusader	752,{
+-	script	Senior Crusader_	-1,{
 	mes "[Michael Halig]";
 	if (Upper == 1) { //the baby classes were totally blocked... due to missing == 1
 		mes "Go and train yourself in preparation for the holy war that is coming. Victory will be in the hands of those who are most ready to receive it.";
@@ -316,7 +317,7 @@ prt_castle,45,169,5	script	Senior Crusader	752,{
 
 // Suffering Man: 2nd Endurance Test
 //============================================================
-prt_castle,164,32,1	script	Man in Anguish	733,{
+-	script	Man in Anguish_	-1,{
 	mes "[Murnak Mijoul]";
 	if(BaseJob != Job_Swordman) {
 		if (BaseJob == Job_Crusader) {
@@ -799,7 +800,7 @@ prt_church,95,127,3	script	Crusader	745,{
 
 // Crusader: 4th Purification Test
 //============================================================
-prt_castle,35,151,5	script	Patron Knight	751,{
+-	script	Patron Knight_	-1,{
 	mes "[Bliant Piyord]";
 	mes "Welcome.";
 	if(BaseJob != Job_Swordman) {
@@ -1203,15 +1204,6 @@ OnDead:
 	end;
 }
 
-
-job_cru,98,105,4	script	 Summoner#cr5	45,3,3,{
-OnTouch_:
-	set CRUS_Q,6;
-	changequest 3010,3011;
-	warp "prt_castle",164,28;
-	end;
-}
-
 //----------------------------------------------------------------------------
 // Purification Test
 //----------------------------------------------------------------------------
@@ -1407,32 +1399,6 @@ OnEnd:
 job_cru,168,150,0	script	Monster Summon#cr4-a	-1,{
 OnDead:
 	donpcevent "Monster Summon#cr5::OnStart";
-	end;
-}
-
-job_cru,168,180,4	script	Monster Summon#cr5	45,3,3,{
-OnInit:
-	disablenpc "Monster Summon#cr5";
-	end;
-
-OnTouch_:
-	warp "prt_castle",35,147;
-	donpcevent "Monster Summon#cr0::OnReset";
-	donpcevent "Monster Summon#cr4::OnReset";
-	donpcevent "Monster Summon#cr0::OnEnd";
-	donpcevent "Monster Summon#cr4::OnEnd";
-	donpcevent "Monster Summon#cr5::OnEnd";
-	donpcevent "Monster Summon#cr6::OnStop";
-	donpcevent "Monster Summon#cr6::OnEnd";
-	donpcevent "Waiting Room#cr1::OnStart";
-	end;
-
-OnStart:
-	enablenpc "Monster Summon#cr5";
-	end;
-
-OnEnd:
-	disablenpc "Monster Summon#cr5";
 	end;
 }
 
