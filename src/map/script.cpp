@@ -20523,37 +20523,41 @@ BUILDIN_FUNC(instance_info)
 /*------------------------------------------
 *instance_live_info( <info type>{, <instance id>} );
 - ILI_NAME : Instance Name
-- ILI_MODE : Instance Mode options (IM_NONE, IM_CHAR etc..)
-- ILI_OWNER : owner id (if any)
+- ILI_MODE : Instance Mode
+- ILI_OWNER : owner id
 *------------------------------------------*/
 BUILDIN_FUNC(instance_live_info)
 {
-	struct instance_db *db = NULL;
-	struct instance_data *im = NULL;
-
 	int type = script_getnum(st, 2);
 	int id = 0;
 
-	if (script_hasdata(st, 3) == NULL)
+	if (type < ILI_NAME || type > ILI_OWNER) {
+		ShowError("buildin_instance_live_info: Unknown instance information type \"%d\".\n", type);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!script_hasdata(st, 3))
 		id = script_instancegetid(st);
 	else
 		id = script_getnum(st, 3);
 
-	if (id < 1 || id >= MAX_INSTANCE_DATA) {
-		ShowError("buildin_instance_live_info: Invalid Instance ID \"%d\" (min: 1, max: %d).\n", id, MAX_INSTANCE_DATA);
-		script_pushint(st, -1);
-		return SCRIPT_CMD_FAILURE;
-	}
-	im = &instance_data[id];
-	db = instance_searchtype_db(im->type);
+	struct instance_db *db = nullptr;
+	struct instance_data *im = nullptr;
 
-	if (db == NULL) {
-		ShowError("buildin_instance_live_info: Unknown instance ID \"%d\".\n", id);
+	if (id > 0 && id < MAX_INSTANCE_DATA) {
+		im = &instance_data[id];
+
+		if (im)
+			db = instance_searchtype_db(im->type);
+	}
+
+	if (!im || !db) {
 		if (type == ILI_NAME)
 			script_pushconststr(st, "");
 		else
 			script_pushint(st, -1);
-		return SCRIPT_CMD_FAILURE;
+		return SCRIPT_CMD_SUCCESS;
 	}
 
 	switch( type ) {
@@ -20566,12 +20570,7 @@ BUILDIN_FUNC(instance_live_info)
 	case ILI_OWNER:
 		script_pushint(st, im->owner_id);
 		break;
-	default:
-		ShowError("buildin_instance_live_info: Unknown instance information type \"%d\".\n", type);
-		script_pushint(st, -1);
-		return SCRIPT_CMD_FAILURE;
 	}
-
 	return SCRIPT_CMD_SUCCESS;
 }
 
