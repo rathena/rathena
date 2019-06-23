@@ -11092,9 +11092,6 @@ BUILDIN_FUNC(announce)
 	int         fontAlign = script_hasdata(st,7) ? script_getnum(st,7) : 0;     // default fontAlign
 	int         fontY     = script_hasdata(st,8) ? script_getnum(st,8) : 0;     // default fontY
 
-	if (!*mes)
-		return SCRIPT_CMD_SUCCESS;
-
 	if (flag&(BC_TARGET_MASK|BC_SOURCE_MASK)) // Broadcast source or broadcast region defined
 	{
 		send_target target;
@@ -11171,9 +11168,6 @@ BUILDIN_FUNC(mapannounce)
 	if ((m = map_mapname2mapid(mapname)) < 0)
 		return SCRIPT_CMD_SUCCESS;
 
-	if (!*mes)
-		return SCRIPT_CMD_SUCCESS;
-
 	map_foreachinmap(buildin_announce_sub, m, BL_PC,
 			mes, strlen(mes)+1, flag&BC_COLOR_MASK, fontColor, fontType, fontSize, fontAlign, fontY);
 	return SCRIPT_CMD_SUCCESS;
@@ -11198,9 +11192,6 @@ BUILDIN_FUNC(areaannounce)
 	int16 m;
 
 	if ((m = map_mapname2mapid(mapname)) < 0)
-		return SCRIPT_CMD_SUCCESS;
-
-	if (!*mes)
 		return SCRIPT_CMD_SUCCESS;
 
 	map_foreachinallarea(buildin_announce_sub, m, x0, y0, x1, y1, BL_PC,
