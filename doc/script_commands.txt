@@ -9069,7 +9069,7 @@ ILI_MODE	- Instance Mode
 			  Return IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, IM_CLAN or -1 if that fails.
 ILI_OWNER	- Owner ID
 			  Return an ID according to the instance mode of the instance attached/specified or -1 if that fails.
-			  IM_NONE will return the npc ID that created the instance,
+			  When the instance mode is IM_NONE, ILI_OWNER will return the npc ID that created the instance,
 			  IM_CHAR	- the owner char ID
 			  IM_PARTY	- the party ID
 			  IM_GUILD	- the guild ID
