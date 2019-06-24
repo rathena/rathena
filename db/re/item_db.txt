@@ -10889,7 +10889,7 @@
 20393,C_Schmitz_Helm,Costume Schmitz Helm,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,634,{},{},{}
 20394,C_Pumpkin_Toque,Costume Pumpkin Toque,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1411,{},{},{}
 20396,C_Green_Hat,Costume Green Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,939,{},{},{}
-20397,C_Jakk,Jack,4,0,,0,,,,0,0xFFFFFFFF,63,2,6144,,1,0,1415,{ autobonus2 "{}",31,10000,BF_WEAPON|BF_MAGIC,"{ active_transform 1130,10000; specialeffect2 372; /*Confirm Special Effect*/ }"; },{},{}
+20397,C_Jakk,Costume Jack,4,0,,0,,,,0,0xFFFFFFFF,63,2,6144,,1,0,1415,{ autobonus2 "{}",31,10000,BF_WEAPON|BF_MAGIC,"{ active_transform 1130,10000; specialeffect2 372; /*Confirm Special Effect*/ }"; },{},{}
 20398,C_Niffleheim_Bunny_Hat,Costume Niffleheim Bunny Hat,4,0,,0,,,,0,0xFFFFFFFF,63,2,1024,,1,0,1285,{},{},{}
 20399,C_Crow_Tengu_Mask,Costume Crow Tengu Mask,4,0,,0,,,,0,0xFFFFFFFF,63,2,2048,,1,0,1287,{},{},{}
 20400,C_Ichthys_Rosario,Costume Ichthys Rosario,4,0,,0,,,,0,0xFFFFFFFF,63,2,4096,,1,0,1028,{},{},{}
