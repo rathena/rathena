@@ -699,7 +699,7 @@ enum instance_info_type {
 	IIT_MAP
 };
 
-enum instance_live_info_type {
+enum e_instance_live_info_type : uint8 {
 	ILI_NAME,
 	ILI_MODE,
 	ILI_OWNER
