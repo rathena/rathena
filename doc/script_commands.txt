@@ -6858,7 +6858,7 @@ but it can be used instead in NPCs to "preview" an announce.
 	announce "This is my message just for you people here",bc_npc|bc_area;
 
 	// This will be a private message to the player with character id 150000
-	announce "This is my message just for char id 150000",bc_self,0xFFF618,FW_NORMAL,12,NULL,NULL,150000;
+	announce "This is my message just for char id 150000",bc_self,0xFFF618,FW_NORMAL,12,0,0,150000;
 
 ---------------------------------------
 
