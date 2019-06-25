@@ -89,7 +89,7 @@ prt_fild07,225,110,5,5	monster	Black Mushroom	1084,3,360000,180000
 //==================================================
 // prt_fild08 - Prontera Field
 //==================================================
-prt_fild08,0,0	monster	Poring	1002,110,5000
+prt_fild08,0,0	monster	Poring	1002,200,5000
 prt_fild08,0,0	monster	Lunatic	1063,110,5000
 prt_fild08,0,0	monster	Fabre	1007,88,5000
 prt_fild08,0,0	monster	Little Poring	2398,33,50000
