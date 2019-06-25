@@ -19335,7 +19335,8 @@ BUILDIN_FUNC(questinfo)
 
 	struct s_questinfo qi;
 	struct script_code *script = nullptr;
-	int color = QMARK_NONE, icon = script_getnum(st, 2);
+	int color = QMARK_NONE;
+	int icon = script_getnum(st, 2);
 
 #if PACKETVER >= 20120410
 	switch(icon){
@@ -19365,7 +19366,7 @@ BUILDIN_FUNC(questinfo)
 			break;
 	}
 #else
-	if(icon < QTYPE_QUEST || icon > 7) // TODO: check why 7 and not QTYPE_WARG, might be related to icon + 1 below
+	if (icon < QTYPE_QUEST || icon > 7) // TODO: check why 7 and not QTYPE_WARG, might be related to icon + 1 below
 		icon = QTYPE_QUEST;
 	else
 		icon = icon + 1;
@@ -19398,8 +19399,8 @@ BUILDIN_FUNC(questinfo)
 	}
 
 	qi.nd = nd;
-	qi.icon = (unsigned short)icon;
-	qi.color = (unsigned char)color;
+	qi.icon = static_cast<e_questinfo_types>(icon);
+	qi.color = static_cast<e_questinfo_markcolor>(color);
 	qi.condition = script;
 
 	struct map_data *mapdata = map_getmapdata(nd->bl.m);
@@ -19527,19 +19528,21 @@ BUILDIN_FUNC(isbegin_quest)
 BUILDIN_FUNC(showevent)
 {
 	TBL_PC *sd;
-	struct npc_data *nd = map_id2nd(st->oid);
-	int icon, color = QMARK_NONE;
 
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	if( sd == NULL || nd == NULL )
+	struct npc_data *nd = map_id2nd(st->oid);
+
+	if (!nd)
 		return SCRIPT_CMD_SUCCESS;
 
-	icon = script_getnum(st, 2);
-	if( script_hasdata(st, 3) ) {
+	int color = QMARK_NONE;
+	int icon = script_getnum(st, 2);
+
+	if (script_hasdata(st, 3)) {
 		color = script_getnum(st, 3);
-		if( color < QMARK_NONE || color >= QMARK_MAX ) {
+		if (color < QMARK_NONE || color >= QMARK_MAX) {
 			ShowWarning("buildin_showevent: Invalid color '%d', defaulting to QMARK_NONE.\n",color);
 			script_reportfunc(st);
 			color = QMARK_NONE;
@@ -19547,16 +19550,16 @@ BUILDIN_FUNC(showevent)
 	}
 
 #if PACKETVER >= 20120410
-	if(icon < 0 || (icon > 8 && icon != 9999) || icon == 7)
-		icon = 9999; // Default to nothing if icon id is invalid.
+	if (icon < 0 || (icon > 8 && icon != QTYPE_NONE) || icon == 7)
+		icon = QTYPE_NONE; // Default to nothing if icon id is invalid.
 #else
-	if(icon < 0 || icon > 7)
+	if (icon < 0 || icon > 7)
 		icon = 0;
 	else
 		icon = icon + 1;
 #endif
 
-	clif_quest_show_event(sd, &nd->bl, icon, color);
+	clif_quest_show_event(sd, &nd->bl, static_cast<e_questinfo_types>(icon), static_cast<e_questinfo_markcolor>(color));
 	return SCRIPT_CMD_SUCCESS;
 }
 

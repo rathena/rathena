@@ -12824,9 +12824,9 @@ static void pc_show_questinfo_sub(struct map_session_data *sd, bool *qi_display,
 		if ((*qi_display) != 0) {
 			(*qi_display) = 0;
 #if PACKETVER >= 20120410
-			clif_quest_show_event(sd, &qi->nd->bl, 9999, 0);
+			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_NONE, QMARK_NONE);
 #else
-			clif_quest_show_event(sd, &qi->nd->bl, 0, 0);
+			clif_quest_show_event(sd, &qi->nd->bl, QTYPE_QUEST, QMARK_NONE);
 #endif
 		}
 	}

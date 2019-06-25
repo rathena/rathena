@@ -384,7 +384,7 @@ enum petinfo_types {
 	PETINFO_FOODID
 };
 
-enum questinfo_types {
+enum e_questinfo_types {
 	QTYPE_QUEST = 0,
 	QTYPE_QUEST2,
 	QTYPE_JOB,
@@ -402,7 +402,7 @@ enum questinfo_types {
 	QTYPE_NONE = 9999
 };
 
-enum questinfo_markcolor : uint8 {
+enum e_questinfo_markcolor : uint8 {
 	QMARK_NONE = 0,
 	QMARK_YELLOW,
 	QMARK_GREEN,

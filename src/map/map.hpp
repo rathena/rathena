@@ -700,8 +700,8 @@ struct iwall_data {
 
 struct s_questinfo {
 	struct npc_data *nd;
-	unsigned short icon;
-	unsigned char color;
+	enum e_questinfo_types icon;
+	enum e_questinfo_markcolor color;
 	struct script_code* condition;
 };
 
