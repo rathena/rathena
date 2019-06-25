@@ -24392,11 +24392,11 @@ BUILDIN_FUNC(getvariableofinstance)
 }
 
 /*
-  charinfo(<char_id>,<type>)
-  charinfo(<account_id>,<type>)
-  charinfo(<player_name>,<type>)
+  convertpcinfo(<char_id>,<type>)
+  convertpcinfo(<account_id>,<type>)
+  convertpcinfo(<player_name>,<type>)
 */
-BUILDIN_FUNC(charinfo) {
+BUILDIN_FUNC(convertpcinfo) {
 	TBL_PC *sd;
 
 	if (script_isstring(st, 2))
@@ -24411,19 +24411,19 @@ BUILDIN_FUNC(charinfo) {
 	int type = script_getnum(st, 3);
 
 	switch (type) {
-	case PC_NAME:
-	case PC_CHAR:
-	case PC_ACCOUNT:
+	case CPC_NAME:
+	case CPC_CHAR:
+	case CPC_ACCOUNT:
 		break;
 	default:
-		ShowError("buildin_charinfo: Unknown type %d.\n", type);
+		ShowError("buildin_convertpcinfo: Unknown type %d.\n", type);
 		script_pushnil(st);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (!sd) {
-		if (type == PC_NAME)
+		if (type == CPC_NAME)
 			script_pushstrcopy(st, "");
 		else
 			script_pushint(st, 0);
@@ -24431,13 +24431,13 @@ BUILDIN_FUNC(charinfo) {
 	}
 
 	switch (type) {
-	case PC_NAME:
+	case CPC_NAME:
 		script_pushstrcopy(st, sd->status.name);
 		break;
-	case PC_CHAR:
+	case CPC_CHAR:
 		script_pushint(st, sd->status.char_id);
 		break;
-	case PC_ACCOUNT:
+	case CPC_ACCOUNT:
 		script_pushint(st, sd->status.account_id);
 		break;
 	}
@@ -25112,7 +25112,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(achievement_condition,"i"),
 	BUILDIN_DEF(getvariableofinstance,"ri"),
-	BUILDIN_DEF(charinfo,"vi"),
+	BUILDIN_DEF(convertpcinfo,"vi"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

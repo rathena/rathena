@@ -7230,10 +7230,10 @@
 	export_constant(PCBLOCK_EMOTION);
 	export_constant(PCBLOCK_ALL);
 
-	/* charinfo command */
-	export_constant(PC_NAME);
-	export_constant(PC_CHAR);
-	export_constant(PC_ACCOUNT);
+	/* convertpcinfo command */
+	export_constant(CPC_NAME);
+	export_constant(CPC_CHAR);
+	export_constant(CPC_ACCOUNT);
 
 	#undef export_constant
 	#undef export_constant2

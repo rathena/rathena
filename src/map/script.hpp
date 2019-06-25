@@ -1898,10 +1898,10 @@ enum e_hat_effects {
 	HAT_EF_MAX
 };
 
-enum e_charinfo_type : uint8 {
-	PC_NAME      = 0,
-	PC_CHAR      = 1,
-	PC_ACCOUNT   = 2
+enum e_convertpcinfo_type : uint8 {
+	CPC_NAME      = 0,
+	CPC_CHAR      = 1,
+	CPC_ACCOUNT   = 2
 };
 
 /**
