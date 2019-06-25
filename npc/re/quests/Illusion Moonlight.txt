@@ -1154,7 +1154,7 @@ OnInit:
 		$illusion_mvp += 1;
 		if($illusion_mvp == 1000){
 			mapannounce "pay_d03_i","Angry Moonlight Flower : Who dares bully us again? They're in a lot of trouble.",bc_map;
-			getmapxy(.@map$,.@x,.@y,UNITTYPE_PC);
+			getmapxy(.@map$,.@x,.@y,BL_PC);
 			monster "pay_d03_i",.@x,.@y,"Angry Moonlight Flower",3758,1;
 			$illusion_mvp = 0;
 		}
