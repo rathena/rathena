@@ -5245,14 +5245,8 @@ int pc_useitem(struct map_session_data *sd,int n)
 	struct script_code *script;
 	struct item item;
 	struct item_data *id;
-	struct unit_data *ud;
 
 	nullpo_ret(sd);
-
-	ud = unit_bl2ud(&sd->bl);
-
-	if (ud && ud->state.blockedall)
-		return 0;
 
 	if (sd->npc_id) {
 		if (sd->progressbar.npc_id) {

@@ -1530,7 +1530,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	if(ud == NULL)
 		return 0;
 
-	if (ud && (ud->state.blockedskill || ud->state.blockedall))
+	if (ud && ud->state.blockedskill)
 		return 0;
 
 	sc = status_get_sc(src);
@@ -1990,7 +1990,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	if(ud == NULL)
 		return 0;
 
-	if (ud && (ud->state.blockedskill || ud->state.blockedall))
+	if (ud && ud->state.blockedskill)
 		return 0;
 
 	if(ud->skilltimer != INVALID_TIMER) // Normally not needed since clif.cpp checks for it, but at/char/script commands don't! [Skotlex]
@@ -2286,7 +2286,7 @@ int unit_attack(struct block_list *src,int target_id,int continuous)
 		return 0;
 	}
 
-	if( !unit_can_attack(src, target_id) || ud->state.blockedall ) {
+	if( !unit_can_attack(src, target_id) ) {
 		unit_stop_attack(src);
 		return 0;
 	}
