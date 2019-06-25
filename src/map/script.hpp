@@ -699,6 +699,12 @@ enum instance_info_type {
 	IIT_MAP
 };
 
+enum e_instance_live_info_type : uint8 {
+	ILI_NAME,
+	ILI_MODE,
+	ILI_OWNER
+};
+
 enum vip_status_type {
 	VIP_STATUS_ACTIVE = 1,
 	VIP_STATUS_EXPIRE,
