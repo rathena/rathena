@@ -4420,16 +4420,16 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 			sd->right_weapon.addele[ELE_UNDEAD] += i;
 			sd->left_weapon.addele[ELE_DARK] += i;
 			sd->left_weapon.addele[ELE_UNDEAD] += i;
-			sd->magic_addele[ELE_HOLY] += sc->data[SC_BASILICA]->val1 * 3;
+			sd->magic_atk_ele[ELE_HOLY] += sc->data[SC_BASILICA]->val1 * 3;
 		}
 		if (sc->data[SC_FIREWEAPON])
-			sd->magic_addele[ELE_FIRE] += sc->data[SC_FIREWEAPON]->val1;
+			sd->magic_atk_ele[ELE_FIRE] += sc->data[SC_FIREWEAPON]->val1;
 		if (sc->data[SC_WINDWEAPON])
-			sd->magic_addele[ELE_WIND] += sc->data[SC_WINDWEAPON]->val1;
+			sd->magic_atk_ele[ELE_WIND] += sc->data[SC_WINDWEAPON]->val1;
 		if (sc->data[SC_WATERWEAPON])
-			sd->magic_addele[ELE_WATER] += sc->data[SC_WATERWEAPON]->val1;
+			sd->magic_atk_ele[ELE_WATER] += sc->data[SC_WATERWEAPON]->val1;
 		if (sc->data[SC_EARTHWEAPON])
-			sd->magic_addele[ELE_EARTH] += sc->data[SC_EARTHWEAPON]->val1;
+			sd->magic_atk_ele[ELE_EARTH] += sc->data[SC_EARTHWEAPON]->val1;
 #endif
 		if(sc->data[SC_PROVIDENCE]) {
 			sd->subele[ELE_HOLY] += sc->data[SC_PROVIDENCE]->val2;
