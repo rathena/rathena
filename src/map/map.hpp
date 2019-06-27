@@ -18,6 +18,8 @@
 #include "../common/timer.hpp"
 #include "../config/core.hpp"
 
+#include "script.hpp"
+
 struct npc_data;
 struct item_data;
 struct Channel;
@@ -700,8 +702,8 @@ struct iwall_data {
 
 struct s_questinfo {
 	struct npc_data *nd;
-	enum e_questinfo_types icon;
-	enum e_questinfo_markcolor color;
+	e_questinfo_types icon;
+	e_questinfo_markcolor color;
 	struct script_code* condition;
 };
 
