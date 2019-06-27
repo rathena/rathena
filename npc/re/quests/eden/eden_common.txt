@@ -273,7 +273,7 @@ izlude_b,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_b	729
 izlude_c,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_c	729
 izlude_d,131,148,4	duplicate(eto)	Eden Teleport Officer#30::eto_iz_d	729
 umbala,105,158,3	duplicate(eto)	Eden Teleport Officer#31	729
-malaya,238,206,6	duplicate(eto)	Eden Teleport Officer#32	729
+malaya,225,218,1	duplicate(eto)	Eden Teleport Officer#32	729
 verus04,116,243,0	duplicate(eto)	Eden Teleport Officer#33	729
 
 moc_para01,30,10,0	script	#eden_out	45,1,1,{

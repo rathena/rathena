@@ -409,6 +409,10 @@ void storage_storageaddfromcart(struct map_session_data *sd, struct s_storage *s
 	enum e_storage_add result;
 	nullpo_retv(sd);
 
+	if (sd->state.prevend) {
+		return;
+	}
+
 	result = storage_canAddItem(stor, index, sd->cart.u.items_inventory, amount, MAX_CART);
 	if (result == STORAGE_ADD_INVALID)
 		return;
@@ -443,6 +447,10 @@ void storage_storagegettocart(struct map_session_data* sd, struct s_storage *sto
 	enum e_storage_add result;
 
 	nullpo_retv(sd);
+
+	if (sd->state.prevend) {
+		return;
+	}
 
 	result = storage_canGetItem(stor, index, amount);
 	if (result != STORAGE_ADD_OK)

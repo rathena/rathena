@@ -623,6 +623,7 @@ struct Battle_Config
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
+	int atcommand_disable_npc;
 	int block_account_in_same_party;
 	int tarotcard_equal_chance; //Official or equal chance for each card
 	int change_party_leader_samemap;
@@ -658,6 +659,7 @@ struct Battle_Config
 	int min_shop_buy;
 	int min_shop_sell;
 	int feature_equipswitch;
+	int pet_walk_speed;
 	int feature_refineui;
 
 #include "../custom/battle_config_struct.inc"

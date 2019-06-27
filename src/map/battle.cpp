@@ -1301,22 +1301,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				status_change_end(bl,SC_VOICEOFSIREN,INVALID_TIMER);
 		}
 
-		if( sc->data[SC_DEVOTION] ) {
-			struct status_change_entry *sce_d = sc->data[SC_DEVOTION];
-			struct block_list *d_bl = map_id2bl(sce_d->val1);
-
-			if( d_bl &&
-				((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
-				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == bl->id)) &&
-				check_distance_bl(bl,d_bl,sce_d->val3) )
-			{
-				struct status_change *d_sc = status_get_sc(d_bl);
-
-				if( d_sc && d_sc->data[SC_DEFENDER] && (flag&(BF_LONG|BF_MAGIC)) == BF_LONG && skill_id != ASC_BREAKER && skill_id != CR_ACIDDEMONSTRATION && skill_id != NJ_ZENYNAGE && skill_id != GN_FIRE_EXPANSION_ACID && skill_id != KO_MUCHANAGE )
-					damage -= damage * d_sc->data[SC_DEFENDER]->val2 / 100;
-			}
-		}
-
 		// Damage reductions
 		// Assumptio doubles the def & mdef on RE mode, otherwise gives a reduction on the final damage. [Igniz]
 #ifndef RENEWAL
@@ -2206,7 +2190,7 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||
 		(damage->map&8 && mapdata->flag[MF_BATTLEGROUND]) ||
 		(damage->map&16 && mapdata->flag[MF_SKILL_DAMAGE]) ||
-		(damage->map&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
+		(damage->map&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
 	}
@@ -2296,7 +2280,7 @@ bool is_infinite_defense(struct block_list *target, int flag)
 	if(target->type == BL_SKILL) {
 		TBL_SKILL *su = ((TBL_SKILL*)target);
 
-		if (su && su->group && (su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD))
+		if (su && su->group && (su->group->skill_id == WM_REVERBERATION || su->group->skill_id == NPC_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD))
 			return true;
 	}
 
@@ -2798,7 +2782,7 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
 		// on official endows override all other elements [helvetica]
 		if(sc && sc->data[SC_ENCHANTARMS]) // Check for endows
-			element = sc->data[SC_ENCHANTARMS]->val2;
+			element = sc->data[SC_ENCHANTARMS]->val1;
 	} else if( element == -2 ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
 	else if( element == -3 ) //Use random element
@@ -3382,7 +3366,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 		case RL_QD_SHOT:
 			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20 + (tsc && tsc->data[SC_C_MARKER] ? 2 : 0);
 			break;
-		case SC_JYUMONJIKIRI:
+		case KO_JYUMONJIKIRI:
 			if( tsc && tsc->data[SC_JYUMONJIKIRI] )
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;
@@ -3566,6 +3550,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case NPC_HELLJUDGEMENT:
 		case NPC_PULSESTRIKE:
 			skillratio += 100 * (skill_lv - 1);
+			break;
+		case NPC_REVERBERATION_ATK:
+			skillratio += 400 + 200 * skill_lv;
 			break;
 		case RG_BACKSTAP:
 			if(sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
@@ -6811,17 +6798,30 @@ void battle_vanish_damage(struct map_session_data *sd, struct block_list *target
 	nullpo_retv(target);
 
 	// bHPVanishRate
-	int16 vanish_rate_hp = cap_value(sd->bonus.hp_vanish_rate, 0, INT16_MAX);
-	int8 vanish_hp = cap_value(sd->bonus.hp_vanish_per, INT8_MIN, INT8_MAX);
+	int16 vanish_hp = 0;
+	if (!sd->hp_vanish.empty()) {
+		for (auto &it : sd->hp_vanish) {
+			if (!(((it.flag)&flag)&BF_WEAPONMASK &&
+				((it.flag)&flag)&BF_RANGEMASK &&
+				((it.flag)&flag)&BF_SKILLMASK))
+				continue;
+			if (it.rate && (it.rate >= 1000 || rnd() % 1000 < it.rate))
+				vanish_hp += it.per;
+		}
+	}
+
 	// bSPVanishRate
-	int16 vanish_rate_sp = cap_value(sd->bonus.sp_vanish_rate, 0, INT16_MAX);
-	int8 vanish_sp = cap_value(sd->bonus.sp_vanish_per, INT8_MIN, INT8_MAX);
-
-	if (vanish_hp && !(vanish_rate_hp && sd->bonus.hp_vanish_flag & flag && (vanish_rate_hp >= 1000 || rnd() % 1000 < vanish_rate_hp)))
-		vanish_hp = 0;
-
-	if (vanish_sp && !(vanish_rate_sp && sd->bonus.sp_vanish_flag & flag && (vanish_rate_sp >= 1000 || rnd() % 1000 < vanish_rate_sp)))
-		vanish_sp = 0;
+	int16 vanish_sp = 0;
+	if (!sd->sp_vanish.empty()) {
+		for (auto &it : sd->sp_vanish) {
+			if (!(((it.flag)&flag)&BF_WEAPONMASK &&
+				((it.flag)&flag)&BF_RANGEMASK &&
+				((it.flag)&flag)&BF_SKILLMASK))
+				continue;
+			if (it.rate && (it.rate >= 1000 || rnd() % 1000 < it.rate))
+				vanish_sp += it.per;
+		}
+	}
 
 	if (vanish_hp > 0 || vanish_sp > 0)
 		status_percent_damage(&sd->bl, target, -vanish_hp, -vanish_sp, false); // Damage HP/SP applied once
@@ -7689,7 +7689,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if( !su || !su->group)
 				return 0;
 			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP && su->group->unit_id != UNT_USED_TRAPS) {
-				if (!skill_id || su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) {
+				if (!skill_id || su->group->skill_id == WM_REVERBERATION || su->group->skill_id == NPC_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) {
 					;
 				}
 				else if (skill_get_inf2(skill_id)&INF2_HIT_TRAP) { // Only a few skills can target traps
@@ -7756,7 +7756,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			sd = BL_CAST(BL_PC, t_bl);
 			sc = status_get_sc(t_bl);
 
-			if( (sd->state.monster_ignore || (sc->data[SC_KINGS_GRACE] && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
+			if( ((sd->state.block_action & PCBLOCK_IMMUNE) || (sc->data[SC_KINGS_GRACE] && s_bl->type != BL_PC)) && flag&BCT_ENEMY )
 				return 0; // Global immunity only to Attacks
 			if( sd->status.karma && s_bl->type == BL_PC && ((TBL_PC*)s_bl)->status.karma )
 				state |= BCT_ENEMY; // Characters with bad karma may fight amongst them
@@ -8488,6 +8488,7 @@ static const struct _battle_data {
 	{ "mvp_exp_reward_message",             &battle_config.mvp_exp_reward_message,          0,      0,      1,              },
 	{ "can_damage_skill",                   &battle_config.can_damage_skill,                1,      0,      BL_ALL,         },
 	{ "atcommand_levelup_events",			&battle_config.atcommand_levelup_events,		0,		0,		1,				},
+	{ "atcommand_disable_npc",				&battle_config.atcommand_disable_npc,			1,		0,		1,				},
 	{ "block_account_in_same_party",		&battle_config.block_account_in_same_party,		1,		0,		1,				},
 	{ "tarotcard_equal_chance",             &battle_config.tarotcard_equal_chance,          0,      0,      1,              },
 	{ "change_party_leader_samemap",        &battle_config.change_party_leader_samemap,     1,      0,      1,              },
@@ -8523,6 +8524,7 @@ static const struct _battle_data {
 	{ "min_shop_buy",                       &battle_config.min_shop_buy,                    1,      0,      INT_MAX,        },
 	{ "min_shop_sell",                      &battle_config.min_shop_sell,                   0,      0,      INT_MAX,        },
 	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
+	{ "pet_walk_speed",                     &battle_config.pet_walk_speed,                  1,      1,      3,              },
 	{ "feature.refineui",                   &battle_config.feature_refineui,                3,      0,      3,              },
 
 #include "../custom/battle_config_init.inc"
@@ -8659,9 +8661,9 @@ void battle_adjust_conf()
 		ShowWarning("conf/battle/feature.conf petevolution is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
 		battle_config.feature_petevolution = 0;
 	}
-	if (battle_config.feature_pet_auto_feed) {
+	if (battle_config.feature_pet_autofeed) {
 		ShowWarning("conf/battle/feature.conf pet auto feed is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
-		battle_config.feature_pet_auto_feed = 0;
+		battle_config.feature_pet_autofeed = 0;
 	}
 #endif
 

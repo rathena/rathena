@@ -477,7 +477,8 @@ nothing  - A permanent variable attached to the character, the default variable
            ('return .@var;' returns a value, not a reference).
 "'"      - An instance variable.
            These are used with the instancing system and are unique to each
-           instance type.
+           instance type. Can be accessed from inside the instance or by calling
+           'getvariableofinstance'.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -4951,8 +4952,8 @@ If player is not in a guild or storage is open, 'guildstoragedelitem2' will retu
 
 ---------------------------------------
 
-*countitem(<item id>)
-*countitem("<item name>")
+*countitem(<item id>{,<accountID>})
+*countitem("<item name>"{,<accountID>})
 
 This function will return the number of items for the specified item ID that the
 invoking character has in the inventory.
@@ -4988,10 +4989,10 @@ If player is not in a guild or storage is open, 'guildstoragecountitem' will ret
 
 ---------------------------------------
 
-*countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>)
-*countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
-*countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
+*countitem2(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*countitem2("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>{,<accountID>})
+*countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+*countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
 
 Expanded version of 'countitem' function, used for created/carded/forged items.
 
@@ -5364,7 +5365,7 @@ Example:
 
 These commands toggle the ability to use atcommand while interacting with an NPC.
 
-The default setting, 'atcommand_enable_npc', is defined in 'conf/battle/gm.conf'.
+The default setting, 'atcommand_disable_npc', is defined in 'conf/battle/gm.conf'.
 
 ---------------------------------------
 //
@@ -6140,6 +6141,58 @@ Examples:
 
 	// Enables the current char to cast skills again.
 	pcblockskill getcharid(3),0;
+
+---------------------------------------
+
+*setpcblock <type>,<state>{,<account ID>};
+*getpcblock {<account ID>};
+
+'setpcblock' command prevents/allows the player from doing the given <type> of action according
+to the <state> during the player session (note: @reloadscript removes all <type> except PCBLOCK_IMMUNE).
+The <type> values are bit-masks, multiples of <type> can be added to change the player action.
+
+The action is blocked when the <state> is true, while false allows the action again.
+
+'getpcblock' command return the bit-mask value of the currently
+enabled block flags.
+
+Available <type>:
+	PCBLOCK_MOVE				Prevent the player from moving.
+	PCBLOCK_ATTACK				Prevent the player from attacking.
+	PCBLOCK_SKILL				Prevent the player from using skills/itemskills.
+	PCBLOCK_USEITEM				Prevent the player from using usable items.
+	PCBLOCK_CHAT				Prevent the player from sending global/guild/party/whisper messages.
+	PCBLOCK_IMMUNE				Prevent the player from being hit by monsters.
+	PCBLOCK_SITSTAND			Prevent the player from sitting/standing.
+	PCBLOCK_COMMANDS			Prevent the player from using atcommands/charcommands.
+	PCBLOCK_NPCCLICK			Prevent the player from clicking/touching any NPC/shop/warp.
+	PCBLOCK_EMOTION				Prevent the player from using emotions.
+	PCBLOCK_NPC				Simulate NPC interaction. Useful for NPC with no mes window. Sum of PCBLOCK_MOVE|PCBLOCK_SKILL|PCBLOCK_USEITEM|PCBLOCK_COMMANDS|PCBLOCK_NPCCLICK.
+	PCBLOCK_ALL				Sum of all the flags.
+
+Examples:
+
+// Make the attached player invulnerable to monster (same as @monsterignore)
+	setpcblock PCBLOCK_IMMUNE, true;
+
+// Prevents the attached player from attacking and using skills
+	setpcblock PCBLOCK_ATTACK|PCBLOCK_SKILL, true;
+
+// Re-enables attack, skills and item use
+	setpcblock PCBLOCK_ATTACK|PCBLOCK_SKILL|PCBLOCK_USEITEM, false;
+
+// getpcblock related checks
+	if (getpcblock() & PCBLOCK_IMMUNE)
+		mes "You are invulnerable!";
+
+	if (getpcblock() & (PCBLOCK_MOVE|PCBLOCK_SITSTAND))
+		mes "You can't walk or sit.";
+
+	if ((getpcblock() & (PCBLOCK_ATTACK|PCBLOCK_SKILL)) == 0)
+		mes "You can attack and use skills.";
+
+	if (getpcblock() & PCBLOCK_CHAT)
+		mes "You can't chat.";
 
 ---------------------------------------
 
@@ -7446,7 +7499,7 @@ rand(2,5) would result in 2,3,4 or 5
 
 ---------------------------------------
 
-*viewpoint <action>,<x>,<y>,<point number>,<color>;
+*viewpoint <action>,<x>,<y>,<point number>,<color>{,<Char ID>};
 
 This command will mark places on the mini map in the client connected to the
 invoking character. It uses the normal X and Y coordinates from the main map.
@@ -8855,18 +8908,17 @@ The command returns the instance ID upon success, and these values upon failure:
 *instance_destroy {<instance id>};
 
 Destroys instance with the ID <instance id>. If no ID is specified, the instance
-the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a character, party,
-guild or clan mode). If it is not owned by anyone, no player needs to be attached. If
-that fails, the script will come to a halt. This will also trigger the "OnInstanceDestroy"
-label in all NPCs inside the instance.
+the script is attached to is used. If that fails, the script will come to a halt.
+This will also trigger the "OnInstanceDestroy" label in all NPCs inside the instance.
 
 ---------------------------------------
 
 *instance_enter("<instance name>",{<x>,<y>,<char_id>,<instance id>});
 
-Warps player to the specified instance after the script terminates. The map and
-coordinates are located in 'db/(pre-)re/instance_db.txt'.
+Warps the attached player to the specified <instance id>. If no ID is specified,
+the IM_PARTY instance the invoking player is attached to is used.
+
+The map and coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
 The command returns IE_OK upon success, and these values upon failure:
  IE_NOMEMBER:	Party/Guild/Clan not found (for party/guild/clan modes).
@@ -8880,49 +8932,46 @@ Put -1 for x and y if want to warp player with default entrance coordinates.
 *instance_npcname("<npc name>"{,<instance id>})
 
 Returns the unique name of the instanced script. If no ID is specified,
-the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached NPC, player, party, guild
-or clan is used. If that fails, the script will come to a halt.
+the instance the script is attached to is used. If that fails, the script
+will come to a halt.
 
 ---------------------------------------
 
 *instance_mapname("<map name>"{,<instance id>})
 
 Returns the unique name of the instanced map. If no instance ID is specified,
-the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached player is used (if it is a
-character, party, guild or clan mode). If it is not owned by anyone, no player needs
-to be attached. If that fails, the command returns an empty string instead.
+the instance the script is attached to is used. If that fails, the command
+returns an empty string instead.
 
 ---------------------------------------
 
-*instance_id()
+*instance_id({<instance mode>})
 
-Returns the unique instance id of the attached script. If the script is not
-attached to an instance, the instance of the currently attached player is
-used (if it is a character, party, guild or clan mode). If it is not owned by anyone, no
-player needs to be attached. If that fails, the function will return 0.
+Returns the unique instance ID of the given mode. By default it returns the
+attached script instance. If <instance mode> is provided then the instance
+of the currently attached player is used. If that fails, the function will return 0.
+
+Instance Mode options:
+ IM_CHAR:	Attached to character.
+ IM_PARTY:	Attached to character's party.
+ IM_GUILD:	Attached to character's guild.
+ IM_CLAN:	Attached to character's clan.
 
 ---------------------------------------
 
 *instance_warpall "<map name>",<x>,<y>{,<instance id>};
 
-Warps all players in the instance <instance id> to <map name> at given
-coordinates. If no ID is specified, the instance the script is attached to
-is used. If the script is not attached to an instance, the instance of the
-currently attached player is used (if it is a character, party, guild or clan
-mode). If it is not owned by anyone, no player needs to be attached. If that
-fails, the script will come to a halt.
+Warps all players in the <instance id> to <map name> to the given coordinates.
+If no ID is specified, the IM_PARTY instance the invoking player is attached
+to is used. If that fails, the script will come to a halt.
 
 ---------------------------------------
 
 *instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
-Broadcasts a message to all players in the instance <instance id> currently
-residing on an instance map. If 0 is specified for <instance id>, the instance
-the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a character,
-party, guild or clan mode). If it is not owned by anyone, no player needs to be attached.
+Broadcasts a message to all players in the <instance id> currently residing on
+an instance map. If 0 is specified for <instance id>, the instance the script
+is attached to is used.
 
 For details on the other parameters, see 'announce'.
 
@@ -9015,6 +9064,47 @@ Example:
 .@name$ = "Endless Tower";
 mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(.@name$,IIT_IDLETIMEOUT) + " seconds.";
 // Endless Tower will be destroyed if no one is in the instance for 300 seconds.
+
+---------------------------------------
+
+*instance_live_info(<info type>{,<instance id>});
+
+Returns the specified <info type> of instance attached to the npc or, if
+an instance ID is specified, of that instance.
+
+Valid <info type>:
+ILI_NAME	- Instance Name
+			  Return the name of the instance or "" if that fails.
+ILI_MODE	- Instance Mode
+			  Return IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, IM_CLAN or -1 if that fails.
+ILI_OWNER	- Owner ID
+			  Return an ID according to the instance mode of the instance attached/specified or -1 if that fails.
+			  When the instance mode is IM_NONE, ILI_OWNER will return the npc ID that created the instance,
+			  IM_CHAR	- the owner char ID
+			  IM_PARTY	- the party ID
+			  IM_GUILD	- the guild ID
+			  IM_CLAN	- the clan ID
+
+Examples:
+	// Return the instance name of the instance attached to the npc.
+	.@instance_name$ = instance_live_info(ILI_NAME);
+
+	// Return the guild owner ID of the given instance ID.
+	.@owner = instance_live_info(ILI_OWNER, instance_id(IM_GUILD));
+
+---------------------------------------
+
+*getvariableofinstance(<variable>,<instance id>);
+
+Returns a reference to an instance variable (' prefix) of the specific instance ID.
+This can only be used to get ' variables.
+
+Examples:
+	// This will set the .@s variable to the value of 'var variable of the specific instance ID.
+	set .@s, getvariableofinstance('var, instance_id(IM_PARTY));
+
+	// This will set the 'var variable of the specific instance ID to 1.
+	set getvariableofinstance('var, instance_id(IM_GUILD)), 1;
 
 ---------------------------------------
 

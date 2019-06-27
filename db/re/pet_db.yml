@@ -162,7 +162,7 @@ Body:
     EggItem: Picky_Egg
     EquipItem: Tiny_Egg_Shell
     FoodItem: Red_Herb
-    Fullness: 4   
+    Fullness: 4
     IntimacyFed: 40
     CaptureRate: 2000
     Script: >

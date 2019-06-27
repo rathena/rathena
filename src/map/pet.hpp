@@ -9,6 +9,9 @@
 #include "../common/mmo.hpp"
 #include "../common/timer.hpp"
 
+#include "battle.hpp"
+#include "mob.hpp"
+#include "pc.hpp"
 #include "script.hpp"
 #include "status.hpp"
 #include "unit.hpp"
@@ -166,6 +169,18 @@ struct pet_data {
 
 	std::shared_ptr<s_pet_db> get_pet_db() {
 		return pet_db.find(this->pet.class_);
+	}
+
+	int get_pet_walk_speed() {
+		switch (battle_config.pet_walk_speed) {
+			default:
+			case 1: // Master
+				return this->master->battle_status.speed;
+			case 2: // DEFAULT_WALK_SPEED
+				return DEFAULT_WALK_SPEED;
+			case 3: // Mob database
+				return this->db->status.speed;
+		}
 	}
 };
 
