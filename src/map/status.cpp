@@ -2435,6 +2435,10 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 {
 	int flag = 0, str, dex, dstr;
 
+#ifndef RENEWAL // Monster damage is not affected by STR
+	if (bl->type == BL_MOB)
+		return 0;
+#endif
 	if(!(bl->type&battle_config.enable_baseatk))
 		return 0;
 
