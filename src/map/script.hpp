@@ -1942,6 +1942,12 @@ enum e_hat_effects {
 	HAT_EF_MAX
 };
 
+enum e_convertpcinfo_type : uint8 {
+	CPC_NAME      = 0,
+	CPC_CHAR      = 1,
+	CPC_ACCOUNT   = 2
+};
+
 /**
  * Player blocking actions related flags.
  */
