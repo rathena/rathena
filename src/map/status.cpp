@@ -2435,8 +2435,11 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 {
 	int flag = 0, str, dex, dstr;
 
-#ifndef RENEWAL // Deprecated battle_config.enable_baseatk
-	if (!(bl->type&(BL_PC|BL_HOM)))
+#ifdef RENEWAL
+	if (!(bl->type&battle_config.enable_baseatk_renewal))
+		return 0;
+#else
+	if (!(bl->type&battle_config.enable_baseatk))
 		return 0;
 #endif
 
