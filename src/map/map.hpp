@@ -318,6 +318,7 @@ enum e_race2 : uint8{
 	RC2_HEARTHUNTER,
 	RC2_ROCKRIDGE,
 	RC2_WERNER_LAB,
+	RC2_BIO5_MVP,
 	RC2_MAX
 };
 
