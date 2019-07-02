@@ -1527,8 +1527,10 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			damage += damage * sc->data[SC_GVG_GIANT]->val4 / 100;
 		
 		if (status_get_race2(bl) == RC2_GREENAURA) {
-			if (status_get_race2(src) != RC2_GREENAURA) 	// [Sona]: This is for MvP vs MvP event purposes. (damage doesn't get reduced when attacking eachother)
-				damage = damage > 10 ? damage / 10 : 1; // Reduces all damage received to 10%
+			int finaldmg;
+			finaldmg = 100 - battle_config.greenaura_reduction_rate;
+			if (status_get_race2(src) != RC2_GREENAURA) // [Sona]: This is for MvP vs MvP event purposes. (damage doesn't get reduced when attacking eachother)
+				damage = damage > 100 ? damage * finaldmg / 100 : 1; // Reduces damage received by the ammount specified on conf/battle/monster.conf
 		}
 		// [Epoque]
 		if (bl->type == BL_MOB) {
