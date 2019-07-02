@@ -1525,7 +1525,11 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 
 		if (flag&BF_MAGIC && bl->type == BL_PC && sc->data[SC_GVG_GIANT] && sc->data[SC_GVG_GIANT]->val4)
 			damage += damage * sc->data[SC_GVG_GIANT]->val4 / 100;
-
+		
+		if (status_get_race2(bl) == RC2_GREENAURA) {
+			if (status_get_race2(src) != RC2_GREENAURA) 	// [Sona]: This is for MvP vs MvP event purposes. (damage doesn't get reduced when attacking eachother)
+				damage = damage > 10 ? damage / 10 : 1; // Reduces all damage received to 10%
+		}
 		// [Epoque]
 		if (bl->type == BL_MOB) {
 			if ((flag&BF_WEAPON) || (flag&BF_MAGIC)) {
