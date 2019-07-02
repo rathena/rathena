@@ -615,6 +615,7 @@ struct Battle_Config
 	int save_body_style;
 	int mob_eye_range_bonus; //Vulture's Eye and Snake's Eye range bonus
 	int mob_stuck_warning; //Show warning if a monster is stuck too long
+	int greenaura_reduction_rate;
 	int skill_eightpath_algorithm; //Official path algorithm
 	int death_penalty_maxlv;
 	int exp_cost_redemptio;
