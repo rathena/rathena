@@ -884,7 +884,7 @@
 //735,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_MANDRAGORA,NPC Howling of Mandragora
 //736,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_PSYCHIC_WAVE,NPC Psychic Wave
 //737,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_RAYOFGENESIS,NPC Ray of Genesis
-//738,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_VENOMIMPRESS,NPC Venom Impress
+738,10,6,1,0,0x1,0,5,1,no,0,0x00002,0,none,0,0x0,		NPC_VENOMIMPRESS,NPC Venom Impress
 //739,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_CLOUD_KILL,NPC Cloud Kill
 //740,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_IGNITIONBREAK,NPC Ignition Break
 //741,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_PHANTOMTHRUST,NPC Phantom Thrust
