@@ -4768,26 +4768,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case LK_JOINTBEAT:
-		switch (rnd() % 6) {
-			case 0:
-				flag = BREAK_ANKLE;
-				break;
-			case 1:
-				flag = BREAK_WRIST;
-				break;
-			case 2:
-				flag = BREAK_KNEE;
-				break;
-			case 3:
-				flag = BREAK_SHOULDER;
-				break;
-			case 4:
-				flag = BREAK_WAIST;
-				break;
-			case 5:
-				flag = BREAK_NECK; // Send this flag through skill_attack for the double damage bonus (if the hit lands)
-				break;
-		}
+		flag = 1 << rnd() % 6;
 		if (flag != BREAK_NECK && tsc && tsc->data[status_skill2sc(skill_id)]->val2 & BREAK_NECK)
 			flag = BREAK_NECK; // Target should always receive double damage if neck is already broken
 		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
