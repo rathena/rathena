@@ -21,8 +21,8 @@ SELECT
 	'0',								-- Refine
 	'1',								-- Attribute
 	'256',								-- Card0
-	( `p`.`pet_id` & 0xFF ),			-- Card1
-	( ( `p`.`pet_id` >> 16 ) & 0xFF ),	-- Card2
+	( `p`.`pet_id` & 0xFFFF ),			-- Card1
+	( ( `p`.`pet_id` >> 16 ) & 0xFFFF ),	-- Card2
 	'0'									-- Card3
 FROM `pet` `p`
 LEFT JOIN `inventory` `i`
