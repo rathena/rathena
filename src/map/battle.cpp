@@ -1512,6 +1512,13 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 			status_change_spread(bl, src, 1); // Deadly infect attacked side
 
 	} //End of target SC_ check
+	
+	if (status_get_race2(bl) == RC2_GREENAURA) {
+		int finaldmg;
+		finaldmg = 100 - battle_config.greenaura_reduction_rate;
+		if (status_get_race2(src) != RC2_GREENAURA) // [Sona]: This is for MvP vs MvP event purposes. (damage doesn't get reduced when attacking eachother)
+			damage = damage > 100 ? damage * finaldmg / 100 : 1; // Reduces damage received by the ammount specified on conf/battle/monster.conf
+	}	
 
 	//SC effects from caster side.
 	sc = status_get_sc(src);
@@ -1526,12 +1533,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 		if (flag&BF_MAGIC && bl->type == BL_PC && sc->data[SC_GVG_GIANT] && sc->data[SC_GVG_GIANT]->val4)
 			damage += damage * sc->data[SC_GVG_GIANT]->val4 / 100;
 		
-		if (status_get_race2(bl) == RC2_GREENAURA) {
-			int finaldmg;
-			finaldmg = 100 - battle_config.greenaura_reduction_rate;
-			if (status_get_race2(src) != RC2_GREENAURA) // [Sona]: This is for MvP vs MvP event purposes. (damage doesn't get reduced when attacking eachother)
-				damage = damage > 100 ? damage * finaldmg / 100 : 1; // Reduces damage received by the ammount specified on conf/battle/monster.conf
-		}
 		// [Epoque]
 		if (bl->type == BL_MOB) {
 			if ((flag&BF_WEAPON) || (flag&BF_MAGIC)) {
