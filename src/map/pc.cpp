@@ -729,6 +729,9 @@ bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_s
 		return false;
 	}
 
+	if (itemdb_ishatched_egg(item))
+		return false;
+
 	switch (shoptype) {
 		case NPCTYPE_SHOP:
 			if (item->bound && battle_config.allow_bound_sell&ISR_BOUND_SELLABLE && (
@@ -5359,6 +5362,10 @@ enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *i
 
 	if(item->nameid == 0 || amount <= 0)
 		return ADDITEM_INVALID;
+
+	if (itemdb_ishatched_egg(item))
+		return ADDITEM_INVALID;
+
 	data = itemdb_search(item->nameid);
 
 	if( data->stack.cart && amount > data->stack.amount )
@@ -9374,7 +9381,7 @@ void pc_setmadogear(struct map_session_data* sd, int flag)
  *------------------------------------------*/
 bool pc_candrop(struct map_session_data *sd, struct item *item)
 {
-	if( item && (item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) )
+	if( item && ((item->expire_time || (item->bound && !pc_can_give_bounded_items(sd))) || (itemdb_ishatched_egg(item))) )
 		return false;
 	if( !pc_can_give_items(sd) || sd->sc.cant.drop) //check if this GM level can drop items
 		return false;

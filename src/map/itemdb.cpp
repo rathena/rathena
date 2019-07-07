@@ -573,6 +573,12 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 	return true;
 }
 
+bool itemdb_ishatched_egg(struct item* item) {
+	if (item && item->card[0] == CARD0_PET && item->attribute == 1)
+		return true;
+	return false;
+}
+
 /** Specifies if item-type should drop unidentified.
 * @param nameid ID of item
 */
