@@ -260,7 +260,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				return 0;
 			}
 
-			achievement->rewards.nameid = amount;
+			achievement->rewards.amount = amount;
 		}
 
 		if( this->nodeExists( rewardNode, "Script" ) ){
