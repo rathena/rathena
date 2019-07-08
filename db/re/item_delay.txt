@@ -93,4 +93,9 @@
 //12206,60000	//Luk_Dish10_
 //12207,60000	//Vit_Dish10_
 22508,1200000	//Para_Team_Mark_
+
+// Bed of Honor
+22687,5000,SC_REUSE_LIMIT_F	// Pieces_Of_Sentiment
+
 23277,180000	//Mado_Box
+

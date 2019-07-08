@@ -76,6 +76,9 @@ OnInit:
 	end;
 }
 geffen,135,64,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#2	4_F_ZONDAGIRL
+alberta,119,65,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#3	4_F_ZONDAGIRL
+morocc,208,287,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#4	4_F_ZONDAGIRL
+payon,174,113,3	duplicate(Phantasmagorika Spokesperson)	Phantasmagorika Spokesperson#5	4_F_ZONDAGIRL
 
 moc_para01,31,14,0	script	#atnevt01	HIDDEN_WARP_NPC,2,2,{
 	end;

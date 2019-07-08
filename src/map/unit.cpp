@@ -1267,7 +1267,7 @@ int unit_stop_walking(struct block_list *bl,int type)
 {
 	struct unit_data *ud;
 	const struct TimerData* td = NULL;
-	unsigned int tick;
+	t_tick tick;
 
 	nullpo_ret(bl);
 
@@ -1445,7 +1445,7 @@ TIMER_FUNC(unit_resume_running){
  *	1: Skill induced delay; Walk delay can only be increased, not decreased
  * @return Success(1); Fail(0);
  */
-int unit_set_walkdelay(struct block_list *bl, unsigned int tick, int delay, int type)
+int unit_set_walkdelay(struct block_list *bl, t_tick tick, t_tick delay, int type)
 {
 	struct unit_data *ud = unit_bl2ud(bl);
 
@@ -1508,7 +1508,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 	struct status_change *sc;
 	struct map_session_data *sd = NULL;
 	struct block_list * target = NULL;
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	int combo = 0, range;
 	uint8 inf = 0;
 	uint32 inf2 = 0;
@@ -1886,7 +1886,7 @@ int unit_skilluse_id2(struct block_list *src, int target_id, uint16 skill_id, ui
 		ud->state.skillcastcancel = 0;
 
 	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
-		ud->canact_tick = tick + max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
+		ud->canact_tick = tick + i64max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
 
 	if( sd ) {
 		switch( skill_id ) {
@@ -1967,7 +1967,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 	struct unit_data        *ud = NULL;
 	struct status_change *sc;
 	struct block_list    bl;
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	int range;
 
 	nullpo_ret(src);
@@ -2058,7 +2058,7 @@ int unit_skilluse_pos2( struct block_list *src, short skill_x, short skill_y, ui
 
 	ud->state.skillcastcancel = castcancel&&casttime>0?1:0;
 	if (!sd || sd->skillitem != skill_id || skill_get_cast(skill_id, skill_lv))
-		ud->canact_tick = tick + max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
+		ud->canact_tick = tick + i64max(casttime, max(status_get_amotion(src), battle_config.min_skill_delay_limit)) + SECURITY_CASTTIME;
 
 // 	if( sd )
 // 	{
@@ -2136,6 +2136,26 @@ int unit_set_target(struct unit_data* ud, int target_id)
 	}
 
 	ud->target = target_id;
+
+	return 0;
+}
+
+/**
+ * Helper function used in foreach calls to stop auto-attack timers
+ * @param bl: Block object
+ * @param ap: func* with va_list values
+ *   Parameter: '0' - everyone, 'id' - only those attacking someone with that id
+ * @return 1 on success or 0 otherwise
+ */
+int unit_stopattack(struct block_list *bl, va_list ap)
+{
+	struct unit_data *ud = unit_bl2ud(bl);
+	int id = va_arg(ap, int);
+
+	if (ud && ud->attacktimer != INVALID_TIMER && (!id || id == ud->target)) {
+		unit_stop_attack(bl);
+		return 1;
+	}
 
 	return 0;
 }
@@ -2500,7 +2520,7 @@ int unit_calc_pos(struct block_list *bl, int tx, int ty, uint8 dir)
  * @param tick: Current tick
  * @return Attackable(1); Unattackable(0);
  */
-static int unit_attack_timer_sub(struct block_list* src, int tid, unsigned int tick)
+static int unit_attack_timer_sub(struct block_list* src, int tid, t_tick tick)
 {
 	struct block_list *target;
 	struct unit_data *ud;
@@ -2689,7 +2709,7 @@ int unit_skillcastcancel(struct block_list *bl, char type)
 {
 	struct map_session_data *sd = NULL;
 	struct unit_data *ud = unit_bl2ud( bl);
-	unsigned int tick = gettick();
+	t_tick tick = gettick();
 	int ret = 0, skill_id;
 
 	nullpo_ret(bl);
@@ -2957,7 +2977,7 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 				duel_leave(sd->duel_group, sd);
 
 			if(pc_issit(sd) && pc_setstand(sd, false))
-				skill_sit(sd,0);
+				skill_sit(sd, false);
 
 			party_send_dot_remove(sd);// minimap dot fix [Kevin]
 			guild_send_dot_remove(sd);
@@ -3167,9 +3187,10 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				pc_setrestartvalue(sd,2);
 
 			pc_delinvincibletimer(sd);
-			pc_delautobonus(sd,sd->autobonus,ARRAYLENGTH(sd->autobonus),false);
-			pc_delautobonus(sd,sd->autobonus2,ARRAYLENGTH(sd->autobonus2),false);
-			pc_delautobonus(sd,sd->autobonus3,ARRAYLENGTH(sd->autobonus3),false);
+
+			pc_delautobonus(sd, sd->autobonus, false);
+			pc_delautobonus(sd, sd->autobonus2, false);
+			pc_delautobonus(sd, sd->autobonus3, false);
 
 			if( sd->followtimer != INVALID_TIMER )
 				pc_stop_following(sd);
@@ -3237,8 +3258,6 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			// Clearing...
 			if (sd->bonus_script.head)
 				pc_bonus_script_clear(sd, BSF_REM_ALL);
-
-			pc_itemgrouphealrate_clear(sd);
 			break;
 		}
 		case BL_PET: {

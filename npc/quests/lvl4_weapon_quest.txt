@@ -211,13 +211,13 @@ umbala,117,285,3	script	Bazo#lv4	85,{
 			if (.@mons[.@i] == 1) {
 				mes "Poring";
 			}
-			else if (.@mons[.@i] == 1) {
+			else if (.@mons[.@i] == 2) {
 				mes "Hode";
 			}
-			else if (.@mons[.@i] == 2) {
+			else if (.@mons[.@i] == 3) {
 				mes "Obeaune";
 			}
-			else if (.@mons[.@i] == 3) {
+			else if (.@mons[.@i] == 4) {
 				mes "Minorous";
 			}
 		}
@@ -659,13 +659,13 @@ umbala,163,257,3	script	Hibilaithan#lv4	785,{
 			if (.@mons[.@i] == 1) {
 				mes "Zealotus";
 			}
-			else if (.@mons[.@i] == 1) {
+			else if (.@mons[.@i] == 2) {
 				mes "Alice";
 			}
-			else if (.@mons[.@i] == 2) {
+			else if (.@mons[.@i] == 3) {
 				mes "Munak";
 			}
-			else if (.@mons[.@i] == 3) {
+			else if (.@mons[.@i] == 4) {
 				mes "Isis";
 			}
 		}

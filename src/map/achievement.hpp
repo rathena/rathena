@@ -68,22 +68,13 @@ struct achievement_target {
 	int count;
 };
 
-struct av_condition {
-	int op;
-	std::shared_ptr<struct av_condition> left;
-	std::shared_ptr<struct av_condition> right;
-	long long value;
-
-	av_condition() : op(0), left(nullptr), right(nullptr), value(0) {}
-};
-
 struct s_achievement_db {
 	int achievement_id;
 	std::string name;
 	enum e_achievement_group group;
 	std::vector <achievement_target> targets;
 	std::vector <int> dependent_ids;
-	std::shared_ptr<struct av_condition> condition;
+	struct script_code* condition;
 	int16 mapindex;
 	struct ach_reward {
 		unsigned short nameid, amount;
@@ -96,6 +87,7 @@ struct s_achievement_db {
 	int has_dependent; // Used for quick updating of achievements that depend on others - this is their ID
 
 	s_achievement_db();
+	~s_achievement_db();
 };
 
 bool achievement_exists(int achievement_id);
@@ -116,11 +108,5 @@ void achievement_db_reload(void);
 
 void do_init_achievement(void);
 void do_final_achievement(void);
-
-// Parser
-const char *av_parse_subexpr(const char *p,int limit, std::shared_ptr<struct av_condition> parent);
-const char *av_parse_simpleexpr(const char *p, std::shared_ptr<struct av_condition> parent);
-long long achievement_check_condition(std::shared_ptr<struct av_condition> condition, struct map_session_data *sd, const int *count);
-void achievement_script_free(std::shared_ptr<struct av_condition> condition);
 
 #endif /* ACHIEVEMENT_HPP */

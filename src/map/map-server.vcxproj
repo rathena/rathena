@@ -92,7 +92,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
@@ -109,7 +109,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
       <DisableSpecificWarnings>4018</DisableSpecificWarnings>
@@ -346,6 +346,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_drop.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_drop.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_item_ratio.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_item_ratio.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_poring.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_poring.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_mission.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_mission.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_pouch.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_pouch.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_race2_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_race2_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_random_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_random_db.txt')" />

@@ -23,7 +23,7 @@
 16,Horror Toy Factory,3600,300,1@xm_d,111,22
 17,Faceworm's Nest,3600,300,1@face,112,370
 18,Ghost Palace,3600,300,1@spa,42,196
-// 19,Devil's Tower,3600,300,1@tnm1,50,104,1@tnm2,1@tnm3
+19,Devil's Tower,3600,300,1@tnm1,50,104,1@tnm2,1@tnm3
 20,Assault on the Airship,3600,300,1@air1,244,73,1@air2
 21,Fenrir and Sarah,3600,300,1@glast,367,304
 // 22,Wave Mode - Forest,3600,300,1@def01,50,21

@@ -53,6 +53,7 @@ The eA Job System:
 	EAJ_GUNSLINGER	0x9
 	EAJ_NINJA		0x0A
 	EAJ_GANGSI		0x0D
+	EAJ_SUMMONER	0x10
 
 - Branch: All classes can be classified as "1st Class", "2-1 Class" or
   "2-2 Class":
