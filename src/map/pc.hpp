@@ -727,7 +727,7 @@ struct map_session_data {
 
 	short last_addeditem_index; /// Index of latest item added
 	int autotrade_tid;
-	time_t respawn_tid;
+	int respawn_tid;
 	int bank_vault; ///< Bank Vault
 
 #ifdef PACKET_OBFUSCATION
