@@ -14940,29 +14940,7 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd)
 /// 0292
 void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 {
-	if (sd->sc.data[SC_HELLPOWER]) // Cannot resurrect while under the effect of SC_HELLPOWER.
-		return;
-
-	int16 item_position = itemdb_group_item_exists_pc(sd, IG_TOKEN_OF_SIEGFRIED);
-	uint8 hp = 100, sp = 100;
-
-	if (item_position < 0) {
-		if (sd->sc.data[SC_LIGHT_OF_REGENE]) {
-			hp = sd->sc.data[SC_LIGHT_OF_REGENE]->val2;
-			sp = 0;
-		} else
-			return;
-	}
-
-	if (!status_revive(&sd->bl, hp, sp))
-		return;
-
-	if (item_position < 0)
-		status_change_end(&sd->bl, SC_LIGHT_OF_REGENE, INVALID_TIMER);
-	else
-		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
-
-	clif_skill_nodamage(&sd->bl, &sd->bl, ALL_RESURRECTION, 4, 1);
+	pc_revive_item(sd);
 }
 
 
