@@ -15420,17 +15420,17 @@ BUILDIN_FUNC(isequippedcnt)
 	int total = script_lastdata(st);
 	std::vector<int32> list;
 
-	for( int i = 2; i <= total; ++i ) {
+	for ( int i = 2; i <= total; ++i ) {
 		int tmp = script_getnum(st,i);
 		if (tmp <= 0)
 			continue;
 		list.push_back(tmp);
 	}
-    std::sort(list.begin(), list.end());
-    list.erase(std::unique(list.begin(), list.end()), list.end());	// remove duplicates ID
+	std::sort(list.begin(), list.end());
+	list.erase(std::unique(list.begin(), list.end()), list.end());	// remove duplicates ID
 
-	for( auto &id : list ) {
-		for (short j = 0; j < EQI_MAX; j++) {
+	for ( auto &id : list ) {
+		for ( short j = 0; j < EQI_MAX; j++ ) {
 			short index = sd->equip_index[j];
 			if (index < 0)
 				continue;
@@ -15446,7 +15446,7 @@ BUILDIN_FUNC(isequippedcnt)
 			} else { //Count cards.
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue; //No cards
-				for (short k = 0; k < sd->inventory_data[index]->slot; k++) {
+				for ( short k = 0; k < sd->inventory_data[index]->slot; k++ ) {
 					if (sd->inventory.u.items_inventory[index].card[k] == id)
 						ret++; //[Lupus]
 				}
