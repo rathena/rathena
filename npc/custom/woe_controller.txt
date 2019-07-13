@@ -178,7 +178,7 @@ OnReward:
 					.@charid = .@cid[.@j];
 					.@sender$ = "no-reply";
 					.@title$ = "** Siege Reward: "+getcastlename(.Castles$[.@i])+" **";
-					.@body$ = "Brave one,% % Congratulations!% Your guild has successfully occupied% territory in the War of Emperium on% "+.@str$+".% % % % % [ Your reward is attached. ]";
+					.@body$ = "Brave one,\r\n \r\n Congratulations!\r\n Your guild has successfully occupied\r\n territory in the War of Emperium on\r\n "+.@str$+".\r\n \r\n \r\n \r\n \r\n [ Your reward is attached. ]";
 					setarray .@mailitem[0], .Reward[0];
 					setarray .@mailamount[0], .Reward[1];
 					mail .@charid, .@sender$, .@title$, .@body$, .Reward[2], .@mailitem, .@mailamount;
