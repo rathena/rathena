@@ -15418,9 +15418,9 @@ BUILDIN_FUNC(isequippedcnt)
 
 	int ret = 0;
 	int total = script_lastdata(st);
-	std::vector<int32> list;
+	std::vector<int32> list(total);
 
-	for ( int i = 2; i <= total; ++i ) {
+	for (int i = 2; i <= total; ++i) {
 		int tmp = script_getnum(st,i);
 		if (tmp <= 0)
 			continue;
@@ -15446,7 +15446,7 @@ BUILDIN_FUNC(isequippedcnt)
 			} else { //Count cards.
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue; //No cards
-				for ( short k = 0; k < sd->inventory_data[index]->slot; k++ ) {
+				for (short k = 0; k < sd->inventory_data[index]->slot; k++) {
 					if (sd->inventory.u.items_inventory[index].card[k] == id)
 						ret++; //[Lupus]
 				}
