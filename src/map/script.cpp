@@ -15421,16 +15421,14 @@ BUILDIN_FUNC(isequippedcnt)
 	std::vector<int32> list(total);
 
 	for (int i = 2; i <= total; ++i) {
-		int tmp = script_getnum(st,i);
-		if (tmp <= 0)
+		int id = script_getnum(st,i);
+		if (id <= 0)
 			continue;
-		list.push_back(tmp);
-	}
-	std::sort(list.begin(), list.end());
-	list.erase(std::unique(list.begin(), list.end()), list.end());	// remove duplicates ID
+		if (std::find(list.begin(), list.end(), id) != list.end())
+			continue;
+		list.push_back(id);
 
-	for ( auto &id : list ) {
-		for ( short j = 0; j < EQI_MAX; j++ ) {
+		for (short j = 0; j < EQI_MAX; j++) {
 			short index = sd->equip_index[j];
 			if (index < 0)
 				continue;
