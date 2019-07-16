@@ -331,7 +331,7 @@ bat_c01,51,130,5	script	Guillaume Vintenar::VintenarKvM01a	419,{
 		}
 
 		setquest 6025;
-		getitem 7773, .@Reward;
+		getitem 6376, .@Reward;
 		bg_leave;
 		warp "bat_room",155,150;
 		end;
@@ -369,7 +369,7 @@ bat_c01,148,53,1	script	Croix Vintenar::VintenarKvM01b	415,{
 		}
 
 		setquest 6025;
-		getitem 7773, .@Reward;
+		getitem 6376, .@Reward;
 		bg_leave;
 		warp "bat_room",155,150;
 		end;

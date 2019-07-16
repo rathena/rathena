@@ -146,6 +146,9 @@ enum mail_attach_result mail_setitem(struct map_session_data *sd, short idx, uin
 		if( idx < 0 || idx >= MAX_INVENTORY || sd->inventory_data[idx] == nullptr )
 			return MAIL_ATTACH_ERROR;
 
+		if (itemdb_ishatched_egg(&sd->inventory.u.items_inventory[idx]))
+			return MAIL_ATTACH_ERROR;
+
 		if( sd->inventory.u.items_inventory[idx].equipSwitch ){
 			return MAIL_ATTACH_EQUIPSWITCH;
 		}
@@ -401,7 +404,7 @@ void mail_send(struct map_session_data *sd, const char *dest_name, const char *t
 	}
 
 	if (body_len)
-		safestrncpy(msg.body, (char*)body_msg, body_len + 1);
+		safestrncpy(msg.body, (char*)body_msg, min(body_len + 1, MAIL_BODY_LENGTH));
 	else
 		memset(msg.body, 0x00, MAIL_BODY_LENGTH);
 

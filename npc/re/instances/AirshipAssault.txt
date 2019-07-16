@@ -12,11 +12,11 @@
 //= 2.2 Dialogues clean-ups [Aleos]
 //============================================================
 
-dali02,136,79,3	script	Explorer Lion#air1	4_M_DST_GRAND,{
-	mes "[Explorer Lion]";
+dali02,136,79,3	script	Adventurer Leon#air1	4_M_DST_GRAND,{
+	mes "[Adventurer Leon]";
 	mes "Hm...after several days of observation, this place seems to be a device imprinted with the memories of an airship.";
 	next;
-	mes "[Explorer Lion]";
+	mes "[Adventurer Leon]";
 	mes "...that is different. I don't have any more information...";
 	close;
 }

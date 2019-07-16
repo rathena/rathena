@@ -70,14 +70,14 @@ void ShowDump(const void* buffer, size_t length)
 
 		if( (i%16) == 15 )
 		{
-			ShowDebug("%03X %s  %s\n", i/16, hex, ascii);
+			ShowDebug("%03" PRIXPTR " %s  %s\n", i/16, hex, ascii);
 		}
 	}
 
 	if( (i%16) != 0 )
 	{
 		ascii[i%16] = 0;
-		ShowDebug("%03X %-48s  %-16s\n", i/16, hex, ascii);
+		ShowDebug("%03" PRIXPTR " %-48s  %-16s\n", i/16, hex, ascii);
 	}
 }
 
