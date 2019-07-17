@@ -201,7 +201,7 @@ OnReward:
 					.@name$ = rid2name(.@aid[.@j]);
 					.@castle_name$ = getcastlename(.Castles$[.@i]);
 					for ( .@k = 0; .@k < .reward_id_size; .@k++ ) {
-						if (checkweight(.reward_id[.@k], .reward_amount[.@k])
+						if (checkweight(.reward_id[.@k], .reward_amount[.@k]))
 							getitem .reward_id[.@k], .reward_amount[.@k], .@aid[.@j];
 						else
 							message .@name$, "You can't receive x" + .reward_amount[.@k] + " " + getitemname(.reward_id[.@k]) + " for conquering " + .@castle_name$ + " because you're overweight.";
