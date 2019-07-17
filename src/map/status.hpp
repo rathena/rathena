@@ -1956,15 +1956,14 @@ enum efst_types : short{
 };
 
 /// JOINTBEAT stackable ailments
-enum e_joint_break
-{
-	BREAK_ANKLE	= 0x01, ///< MoveSpeed reduced by 50%
-	BREAK_WRIST	= 0x02, ///< ASPD reduced by 25%
-	BREAK_KNEE	= 0x04, ///< MoveSpeed reduced by 30%, ASPD reduced by 10%
-	BREAK_SHOULDER	= 0x08, ///< DEF reduced by 50%
-	BREAK_WAIST	= 0x10, ///< DEF reduced by 25%, ATK reduced by 25%
-	BREAK_NECK	= 0x20, ///< current attack does 2x damage, inflicts 'bleeding' for 30 seconds
-	BREAK_FLAGS	= BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
+enum e_joint_break : uint8 {
+	BREAK_ANKLE = 0x01,		///< MoveSpeed reduced by 50%
+	BREAK_WRIST = 0x02,		///< ASPD reduced by 25%
+	BREAK_KNEE = 0x04,		///< MoveSpeed reduced by 30%, ASPD reduced by 10%
+	BREAK_SHOULDER = 0x08,	///< DEF reduced by 50%
+	BREAK_WAIST = 0x10,		///< DEF reduced by 25%, ATK reduced by 25%
+	BREAK_NECK = 0x20,		///< Current attack does 2x damage, inflicts 'bleeding' for 30 seconds
+	BREAK_FLAGS = BREAK_ANKLE | BREAK_WRIST | BREAK_KNEE | BREAK_SHOULDER | BREAK_WAIST | BREAK_NECK,
 };
 
 extern short current_equip_item_index;
@@ -2330,7 +2329,6 @@ struct status_change {
 	unsigned short opt2;// health state (bitfield)
 	unsigned char count;
 	//! TODO: See if it is possible to implement the following SC's without requiring extra parameters while the SC is inactive.
-	unsigned char jb_flag; //Joint Beat type flag
 	struct {
 		unsigned char move;
 		unsigned char pickup;
