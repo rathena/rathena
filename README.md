@@ -55,48 +55,8 @@ Database | [MySQL Workbench 5 or newer](http://www.mysql.com/downloads/workbench
 
 If you're having problems with starting your server, the first thing you should
 do is check what's happening on your consoles. More often that not, all support issues
-can be solved simply by looking at the error messages given.
-
-Examples:
-
-* You get an error on your map-server that looks something like this:
-
-      [Error]: npc_parsesrcfile: Unable to parse, probably a missing or extra TAB in 
-        file 'npc/custom/jobmaster.txt', line '17'. Skipping line...
-        * w1=prontera,153,193,6 script
-        * w2=Job Master
-        * w3=123,{
-        * w4=
-
-    If you look at the error, it's telling you that you're missing (or have an extra) TAB.
-    This is easily fixed by looking at this part of the error:
-
-        * w1=prontera,153,193,6 script
-
-  If there was a TAB where it's supposed to be, that line would have prontera,153,193,6 at w1
-    and 'script' at w2. As there's a space instead of a TAB, the two sections are read as a
-    single parameter.
-
-* You have a default user/password warning similar to the following:
-
-      [Warning]: Using the default user/password s1/p1 is NOT RECOMMENDED.
-      [Notice]: Please edit your 'login' table to create a proper inter-server user/pa
-      ssword (gender 'S')
-      [Notice]: and then edit your user/password in conf/map_athena.conf (or conf/impo
-      rt/map_conf.txt)
-
-    Relax. This is just indicating that you're using the default username and password. To
-    fix this, check over the part in the installation instructions relevant to the `login` table.
-  
-* Your map-server outputs the following:
-
-      [Error]: make_connection: connect failed (socket #2, error 10061: No connection
-      could be made because the target machine actively refused it.
-      )!
-
-    If this shows up on the map server, it generally means that there is no Char Server available
-    to accept the connection.
-
+can be solved simply by looking at the error messages given. Check out the [wiki](https://github.com/rathena/rathena/wiki)
+or [forums](https://rathena.org/forum) if you need more support on troubleshooting.
 
 ## 4. More Documentation
 rAthena has a large collection of help files and sample NPC scripts located in the /doc/
