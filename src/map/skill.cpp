@@ -4773,10 +4773,10 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 
 	case LK_JOINTBEAT:
 		flag = 1 << rnd() % 6;
-		if (flag != BREAK_NECK && tsc && tsc->data[status_skill2sc(skill_id)]->val2 & BREAK_NECK)
+		if (flag != BREAK_NECK && tsc && tsc->data[SC_JOINTBEAT]->val2 & BREAK_NECK)
 			flag = BREAK_NECK; // Target should always receive double damage if neck is already broken
 		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
-			sc_start4(src, bl, status_skill2sc(skill_id), 50 + (skill_lv + 1), skill_lv, flag&BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv));
+			sc_start4(src, bl, SC_JOINTBEAT, 50 + (skill_lv + 1), skill_lv, flag&BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 
 	case MO_COMBOFINISH:
