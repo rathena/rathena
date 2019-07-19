@@ -55,7 +55,7 @@ using namespace rathena;
 char default_codepage[32] = "";
 
 int map_server_port = 3306;
-char map_server_ip[32] = "127.0.0.1";
+char map_server_ip[64] = "127.0.0.1";
 char map_server_id[32] = "ragnarok";
 char map_server_pw[32] = "";
 char map_server_db[32] = "ragnarok";
@@ -90,7 +90,7 @@ char roulette_table[32] = "db_roulette";
 char guild_storage_log_table[32] = "guild_storage_log";
 
 // log database
-char log_db_ip[32] = "127.0.0.1";
+char log_db_ip[64] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
 char log_db_pw[32] = "ragnarok";
@@ -2642,7 +2642,43 @@ bool map_addnpc(int16 m,struct npc_data *nd)
 		return false;
 	}
 
-	mapdata->npc[mapdata->npc_num]=nd;
+	int xs = -1, ys = -1;
+
+	switch (nd->subtype) {
+	case NPCTYPE_WARP:
+		xs = nd->u.warp.xs;
+		ys = nd->u.warp.ys;
+		break;
+	case NPCTYPE_SCRIPT:
+		xs = nd->u.scr.xs;
+		ys = nd->u.scr.ys;
+		break;
+	default:
+		break;
+	}
+	// npcs with trigger area are grouped
+	// 0 < npc_num_warp < npc_num_area < npc_num
+	if (xs < 0 && ys < 0)
+		mapdata->npc[ mapdata->npc_num ] = nd;
+	else {
+		switch (nd->subtype) {
+		case NPCTYPE_WARP:
+			mapdata->npc[ mapdata->npc_num ] = mapdata->npc[ mapdata->npc_num_area ];
+			mapdata->npc[ mapdata->npc_num_area ] = mapdata->npc[ mapdata->npc_num_warp ];
+			mapdata->npc[ mapdata->npc_num_warp ] = nd;
+			mapdata->npc_num_warp++;
+			mapdata->npc_num_area++;
+			break;
+		case NPCTYPE_SCRIPT:
+			mapdata->npc[ mapdata->npc_num ] = mapdata->npc[ mapdata->npc_num_area ];
+			mapdata->npc[ mapdata->npc_num_area ] = nd;
+			mapdata->npc_num_area++;
+			break;
+		default:
+			mapdata->npc[ mapdata->npc_num ] = nd;
+			break;
+		}
+	}
 	mapdata->npc_num++;
 	idb_put(id_db,nd->bl.id,nd);
 	return true;
@@ -2709,6 +2745,8 @@ int map_addinstancemap(const char *name, unsigned short instance_id)
 
 	memset(dst_map->npc, 0, sizeof(dst_map->npc));
 	dst_map->npc_num = 0;
+	dst_map->npc_num_area = 0;
+	dst_map->npc_num_warp = 0;
 
 	// Reallocate cells
 	num_cell = dst_map->xs * dst_map->ys;
@@ -2938,6 +2976,9 @@ void map_removemobs(int16 m)
  *------------------------------------------*/
 const char* map_mapid2mapname(int m)
 {
+	if (m == -1)
+		return "Floating";
+
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if (mapdata->instance_id) { // Instance map check
@@ -3619,7 +3660,7 @@ void map_flags_init(void){
 			continue;
 
 		// adjustments
-		if( battle_config.pk_mode && !mapdata->flag[MF_PVP] )
+		if( battle_config.pk_mode && !mapdata_flag_vs2(mapdata) )
 			mapdata->flag[MF_PVP] = true; // make all maps pvp for pk_mode [Valaris]
 	}
 }
@@ -4806,9 +4847,9 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 
 			mapdata->flag[mapflag] = status;
 			if (!status)
-				mapdata->zone ^= 1 << (args->flag_val + 1);
+				mapdata->zone ^= (1 << (args->flag_val + 1)) << 3;
 			else
-				mapdata->zone |= 1 << (args->flag_val + 1);
+				mapdata->zone |= (1 << (args->flag_val + 1)) << 3;
 			break;
 		case MF_NOCOMMAND:
 			if (status) {

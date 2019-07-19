@@ -153,8 +153,7 @@ xmas,237,303,3	script	Catherine Jet Johnson	4_F_SKULL06GIRL,{
 		}
 		if (select( "Unlock Horror Toy Factory", "Cancel" ) == 1) {
 			mes "Door will be.. opened soon.. Would you wait for a moment?";
-			if (instance_create("Horror Toy Factory") >= 0)
-				'xm_d_map$ = instance_mapname("1@xm_d");
+			instance_create("Horror Toy Factory");
 		}
 		close;
 	case 0:
@@ -701,8 +700,7 @@ OnStart:
 			close;
 		}
 		close2;
-		pcblockmove getcharid(3),1;// todo : not able to talk to npc
-		pcblockskill getcharid(3),1;
+		setpcblock PCBLOCK_NPC, true;
 		switch(.@num) {
 		case 1:
 			npctalk "Worker: Ah! Grandpa? He's a real good man. He oiled us everyday and cleaned the dust very often.";
@@ -760,8 +758,7 @@ OnStart:
 			'worker[.@num] = 1;
 			donpcevent instance_npcname("#fac2wpc") + "::OnStart";
 		}
-		pcblockmove getcharid(3),0;
-		pcblockskill getcharid(3),0;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
 	mes "[Worker]";
@@ -1551,6 +1548,8 @@ OnTimer1000:
 	end;
 
 OnInstanceInit:
+	'xm_d_map$ = instance_mapname("1@xm_d");
+
 	// Warps
 	disablenpc instance_npcname("#fac3wp");
 	disablenpc instance_npcname("#fac3wp2");

@@ -1312,22 +1312,6 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 				status_change_end(bl,SC_VOICEOFSIREN,INVALID_TIMER);
 		}
 
-		if( sc->data[SC_DEVOTION] ) {
-			struct status_change_entry *sce_d = sc->data[SC_DEVOTION];
-			struct block_list *d_bl = map_id2bl(sce_d->val1);
-
-			if( d_bl &&
-				((d_bl->type == BL_MER && ((TBL_MER*)d_bl)->master && ((TBL_MER*)d_bl)->master->bl.id == bl->id) ||
-				(d_bl->type == BL_PC && ((TBL_PC*)d_bl)->devotion[sce_d->val2] == bl->id)) &&
-				check_distance_bl(bl,d_bl,sce_d->val3) )
-			{
-				struct status_change *d_sc = status_get_sc(d_bl);
-
-				if( d_sc && d_sc->data[SC_DEFENDER] && (flag&(BF_LONG|BF_MAGIC)) == BF_LONG && skill_id != ASC_BREAKER && skill_id != CR_ACIDDEMONSTRATION && skill_id != NJ_ZENYNAGE && skill_id != GN_FIRE_EXPANSION_ACID && skill_id != KO_MUCHANAGE )
-					damage -= damage * d_sc->data[SC_DEFENDER]->val2 / 100;
-			}
-		}
-
 		// Damage reductions
 		// Assumptio increases DEF on RE mode, otherwise gives a reduction on the final damage. [Igniz]
 #ifndef RENEWAL
@@ -2217,7 +2201,7 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||
 		(damage->map&8 && mapdata->flag[MF_BATTLEGROUND]) ||
 		(damage->map&16 && mapdata->flag[MF_SKILL_DAMAGE]) ||
-		(damage->map&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
+		(damage->map&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
 	}
@@ -2311,7 +2295,7 @@ bool is_infinite_defense(struct block_list *target, int flag)
 	if(target->type == BL_SKILL) {
 		TBL_SKILL *su = ((TBL_SKILL*)target);
 
-		if (su && su->group && (su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD))
+		if (su && su->group && (su->group->skill_id == WM_REVERBERATION || su->group->skill_id == NPC_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD))
 			return true;
 	}
 
@@ -2828,7 +2812,7 @@ static int battle_get_weapon_element(struct Damage* wd, struct block_list *src, 
 			element = sd->spiritcharm_type; // Summoning 10 spiritcharm will endow your weapon
 		// on official endows override all other elements [helvetica]
 		if(sc && sc->data[SC_ENCHANTARMS]) // Check for endows
-			element = sc->data[SC_ENCHANTARMS]->val2;
+			element = sc->data[SC_ENCHANTARMS]->val1;
 	} else if( element == -2 ) //Use enchantment's element
 		element = status_get_attack_sc_element(src,sc);
 	else if( element == -3 ) //Use random element
@@ -3413,7 +3397,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 		case RL_QD_SHOT:
 			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20 + (tsc && tsc->data[SC_C_MARKER] ? 2 : 0);
 			break;
-		case SC_JYUMONJIKIRI:
+		case KO_JYUMONJIKIRI:
 			if( tsc && tsc->data[SC_JYUMONJIKIRI] )
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;
@@ -3606,6 +3590,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case NPC_PULSESTRIKE:
 			skillratio += 100 * (skill_lv - 1);
 			break;
+		case NPC_REVERBERATION_ATK:
+			skillratio += 400 + 200 * skill_lv;
+			break;
 		case RG_BACKSTAP:
 			if(sd && sd->status.weapon == W_BOW && battle_config.backstab_bow_penalty)
 				skillratio += (200 + 40 * skill_lv) / 2;
@@ -3739,11 +3726,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 40 * skill_lv;
 			break;
 		case LK_JOINTBEAT:
-			i = 10 * skill_lv - 50;
-			// Although not clear, it's being assumed that the 2x damage is only for the break neck ailment.
-			if (wd->miscflag&BREAK_NECK)
-				i *= 2;
-			skillratio += i;
+			skillratio += -100 + 10 * skill_lv - 50;
+			if (wd->miscflag & BREAK_NECK || (tsc && tsc->data[SC_JOINTBEAT] && tsc->data[SC_JOINTBEAT]->val2 & BREAK_NECK)) // The 2x damage is only for the BREAK_NECK ailment.
+				skillratio <<= 1;
 			break;
 #ifdef RENEWAL
 		// Renewal: skill ratio applies to entire damage [helvetica]
@@ -7858,7 +7843,7 @@ int battle_check_target( struct block_list *src, struct block_list *target,int f
 			if( !su || !su->group)
 				return 0;
 			if( skill_get_inf2(su->group->skill_id)&INF2_TRAP && su->group->unit_id != UNT_USED_TRAPS) {
-				if (!skill_id || su->group->skill_id == WM_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) {
+				if (!skill_id || su->group->skill_id == WM_REVERBERATION || su->group->skill_id == NPC_REVERBERATION || su->group->skill_id == WM_POEMOFNETHERWORLD) {
 					;
 				}
 				else if (skill_get_inf2(skill_id)&INF2_HIT_TRAP) { // Only a few skills can target traps
@@ -8165,7 +8150,8 @@ static const struct _battle_data {
 	{ "enable_critical",                    &battle_config.enable_critical,                 BL_PC,  BL_NUL, BL_ALL,         },
 	{ "mob_critical_rate",                  &battle_config.mob_critical_rate,               100,    0,      INT_MAX,        },
 	{ "critical_rate",                      &battle_config.critical_rate,                   100,    0,      INT_MAX,        },
-	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_CHAR|BL_NPC, BL_NUL, BL_ALL,   },
+	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_CHAR|BL_HOM, BL_NUL, BL_ALL, },
+	{ "enable_baseatk_renewal",             &battle_config.enable_baseatk_renewal,          BL_ALL, BL_NUL, BL_ALL,         },
 	{ "enable_perfect_flee",                &battle_config.enable_perfect_flee,             BL_PC|BL_PET, BL_NUL, BL_ALL,   },
 	{ "casting_rate",                       &battle_config.cast_rate,                       100,    0,      INT_MAX,        },
 	{ "delay_rate",                         &battle_config.delay_rate,                      100,    0,      INT_MAX,        },
@@ -8693,6 +8679,7 @@ static const struct _battle_data {
 	{ "min_shop_buy",                       &battle_config.min_shop_buy,                    1,      0,      INT_MAX,        },
 	{ "min_shop_sell",                      &battle_config.min_shop_sell,                   0,      0,      INT_MAX,        },
 	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
+	{ "pet_walk_speed",                     &battle_config.pet_walk_speed,                  1,      1,      3,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8828,9 +8815,9 @@ void battle_adjust_conf()
 		ShowWarning("conf/battle/feature.conf petevolution is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
 		battle_config.feature_petevolution = 0;
 	}
-	if (battle_config.feature_pet_auto_feed) {
+	if (battle_config.feature_pet_autofeed) {
 		ShowWarning("conf/battle/feature.conf pet auto feed is enabled but it requires PACKETVER 2014-10-08 or newer, disabling...\n");
-		battle_config.feature_pet_auto_feed = 0;
+		battle_config.feature_pet_autofeed = 0;
 	}
 #endif
 

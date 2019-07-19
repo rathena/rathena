@@ -824,7 +824,7 @@ static TIMER_FUNC(pet_hungry){
 
 		if( pd->pet.intimate <= PET_INTIMATE_NONE ) {
 			pd->pet.intimate = PET_INTIMATE_NONE;
-			pd->status.speed = pd->db->status.speed;
+			pd->status.speed = pd->get_pet_walk_speed();
 		}
 
 		status_calc_pet(pd,SCO_NONE);
@@ -927,6 +927,10 @@ bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	sd->inventory.u.items_inventory[i].attribute = 0;
 	sd->inventory.dirty = true;
 	pd->pet.incubate = 1;
+#if PACKETVER >= 20180704
+	clif_inventorylist(sd);
+	clif_send_petdata(sd, pd, 6, 0);
+#endif
 	unit_free(&pd->bl,CLR_OUTSIGHT);
 
 	status_calc_pc(sd,SCO_NONE);
@@ -1067,6 +1071,9 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 		clif_spawn(&sd->pd->bl);
 		clif_send_petdata(sd,sd->pd, 0,0);
 		clif_send_petdata(sd,sd->pd, 5,battle_config.pet_hair_style);
+#if PACKETVER >= 20180704
+		clif_send_petdata(sd, sd->pd, 6, 1);
+#endif
 		clif_pet_equip_area(sd->pd);
 		clif_send_petstatus(sd);
 	}
@@ -1523,7 +1530,7 @@ int pet_food(struct map_session_data *sd, struct pet_data *pd)
 		if (pd->pet.intimate <= PET_INTIMATE_NONE) {
 			pd->pet.intimate = PET_INTIMATE_NONE;
 			pet_stop_attack(pd);
-			pd->status.speed = pd->db->status.speed;
+			pd->status.speed = pd->get_pet_walk_speed();
 		}
 	}
 	else {
@@ -1668,11 +1675,11 @@ static int pet_ai_sub_hard(struct pet_data *pd, struct map_session_data *sd, t_t
 	}
 
 	// Return speed to normal.
-	if (pd->status.speed != pd->db->status.speed) {
+	if (pd->status.speed != pd->get_pet_walk_speed()) {
 		if (pd->ud.walktimer != INVALID_TIMER)
 			return 0; // Wait until the pet finishes walking back to master.
 
-		pd->status.speed = pd->db->status.speed;
+		pd->status.speed = pd->get_pet_walk_speed();
 		pd->ud.state.change_walk_target = pd->ud.state.speed_changed = 1;
 	}
 

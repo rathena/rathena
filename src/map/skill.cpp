@@ -430,8 +430,54 @@ unsigned short skill_dummy2skill_id(unsigned short skill_id) {
 			return SU_SV_ROOTTWIST;
 		case SU_LUNATICCARROTBEAT2:
 			return SU_LUNATICCARROTBEAT;
+		case NPC_REVERBERATION_ATK:
+			return NPC_REVERBERATION;
 	}
 	return skill_id;
+}
+
+/**
+ * Check skill unit maxcount
+ * @param src: Caster to check against
+ * @param x: X location of skill
+ * @param y: Y location of skill
+ * @param skill_id: Skill used
+ * @param skill_lv: Skill level used
+ * @param type: Type of unit to check against for battle_config checks
+ * @param display_failure: Display skill failure message
+ * @return True on skill cast success or false on failure
+ */
+bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 skill_id, uint16 skill_lv, enum bl_type type, bool display_failure) {
+	if (!src)
+		return false;
+
+	struct unit_data *ud = unit_bl2ud(src);
+	struct map_session_data *sd = map_id2sd(src->id);
+	int maxcount = 0;
+
+	if (!(type&battle_config.skill_reiteration) && skill_get_unit_flag(skill_id)&UF_NOREITERATION && skill_check_unit_range(src, x, y, skill_id, skill_lv)) {
+		if (sd && display_failure)
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+		return false;
+	}
+	if (type&battle_config.skill_nofootset && skill_get_unit_flag(skill_id)&UF_NOFOOTSET && skill_check_unit_range2(src, x, y, skill_id, skill_lv, false)) {
+		if (sd && display_failure)
+			clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+		return false;
+	}
+	if (type&battle_config.land_skill_limit && (maxcount = skill_get_maxcount(skill_id, skill_lv)) > 0) {
+		for (int i = 0; i < MAX_SKILLUNITGROUP && ud->skillunit[i] && maxcount; i++) {
+			if (ud->skillunit[i]->skill_id == skill_id)
+				maxcount--;
+		}
+		if (maxcount == 0) {
+			if (sd && display_failure)
+				clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
+			return false;
+		}
+	}
+
+	return true;
 }
 
 /**
@@ -651,7 +697,7 @@ static int8 skill_isCopyable(struct map_session_data *sd, uint16 skill_idx) {
 
 /**
  * Check if the skill is ok to cast and when.
- * Done before check_condition_begin, requirement
+ * Done before skill_check_condition_castbegin, requirement
  * @param skill_id: Skill ID that casted
  * @param sd: Player who casted
  * @return true: Skill cannot be used, false: otherwise
@@ -710,7 +756,7 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		(skill_nocast&4 && mapdata_flag_gvg2_no_te(mapdata)) ||
 		(skill_nocast&8 && mapdata->flag[MF_BATTLEGROUND]) ||
 		(skill_nocast&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(mapdata->zone && skill_nocast&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) ){
+		(mapdata->zone && skill_nocast&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) ){
 			clif_msg(sd, SKILL_CANT_USE_AREA); // This skill cannot be used within this area
 			return true;
 	}
@@ -1484,13 +1530,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 			sc_start2(src,bl, SC_BLEEDING,50, skill_lv, src->id, skill_get_time2(skill_id,skill_lv));
 		break;
 
-	case LK_JOINTBEAT:
-		status = status_skill2sc(skill_id);
-		if (tsc->jb_flag) {
-			sc_start4(src,bl,status,(5*skill_lv+5),skill_lv,tsc->jb_flag&BREAK_FLAGS,src->id,0,skill_get_time2(skill_id,skill_lv));
-			tsc->jb_flag = 0;
-		}
-		break;
 	case ASC_METEORASSAULT:
 		//Any enemies hit by this skill will receive Stun, Darkness, or external bleeding status ailment with a 5%+5*skill_lv% chance.
 		switch(rnd()%3) {
@@ -2129,29 +2168,9 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 
 			tbl = (it.id < 0) ? src : bl;
 
-			if( (type = skill_get_casttype(skill)) == CAST_GROUND ) {
-				int maxcount = 0;
-				if( !(BL_PC&battle_config.skill_reiteration) &&
-					skill_get_unit_flag(skill)&UF_NOREITERATION &&
-					skill_check_unit_range(src,tbl->x,tbl->y,skill,autospl_skill_lv)
-				  )
+			if ((type = skill_get_casttype(skill)) == CAST_GROUND) {
+				if (!skill_pos_maxcount_check(src, tbl->x, tbl->y, skill, autospl_skill_lv, BL_PC, false))
 					continue;
-				if( BL_PC&battle_config.skill_nofootset &&
-					skill_get_unit_flag(skill)&UF_NOFOOTSET &&
-					skill_check_unit_range2(src,tbl->x,tbl->y,skill,autospl_skill_lv,false)
-				  )
-					continue;
-				if( BL_PC&battle_config.land_skill_limit &&
-					(maxcount = skill_get_maxcount(skill, autospl_skill_lv)) > 0
-				  ) {
-					int v;
-					for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;v++) {
-						if(sd->ud.skillunit[v]->skill_id == skill)
-							maxcount--;
-					}
-					if( maxcount == 0 )
-						continue;
-				}
 			}
 			if (battle_config.autospell_check_range &&
 				!battle_check_range(bl, tbl, skill_get_range2(src, skill, autospl_skill_lv, true)))
@@ -2256,27 +2275,9 @@ int skill_onskillusage(struct map_session_data *sd, struct block_list *bl, uint1
 		else
 			tbl = bl;
 
-		if( (type = skill_get_casttype(skill)) == CAST_GROUND ) {
-			int maxcount = 0;
-			if( !(BL_PC&battle_config.skill_reiteration) &&
-				skill_get_unit_flag(skill)&UF_NOREITERATION &&
-				skill_check_unit_range(&sd->bl,tbl->x,tbl->y,skill,skill_lv) )
+		if ((type = skill_get_casttype(skill)) == CAST_GROUND) {
+			if (!skill_pos_maxcount_check(&sd->bl, tbl->x, tbl->y, skill_id, skill_lv, BL_PC, false))
 				continue;
-			if( BL_PC&battle_config.skill_nofootset &&
-				skill_get_unit_flag(skill)&UF_NOFOOTSET &&
-				skill_check_unit_range2(&sd->bl,tbl->x,tbl->y,skill,skill_lv,false) )
-				continue;
-			if( BL_PC&battle_config.land_skill_limit &&
-				(maxcount = skill_get_maxcount(skill, skill_lv)) > 0 )
-			{
-				int v;
-				for(v=0;v<MAX_SKILLUNITGROUP && sd->ud.skillunit[v] && maxcount;v++) {
-					if(sd->ud.skillunit[v]->skill_id == skill)
-						maxcount--;
-				}
-				if( maxcount == 0 )
-					continue;
-			}
 		}
 		if (battle_config.autospell_check_range &&
 			!battle_check_range(bl, tbl, skill_get_range2(&sd->bl, skill, skill_lv, true)))
@@ -2407,6 +2408,10 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 			sp += sd->sp_gain_race[status_get_race(bl)] + sd->sp_gain_race[RC_ALL];
 			hp += sd->bonus.hp_gain_value;
 		}
+		if( (attack_type&(BF_WEAPON|BF_LONG)) == (BF_WEAPON|BF_LONG) ) {
+			sp += sd->bonus.long_sp_gain_value;
+			hp += sd->bonus.long_hp_gain_value;
+		}
 		if( attack_type&BF_MAGIC ) {
 			sp += sd->bonus.magic_sp_gain_value;
 			hp += sd->bonus.magic_hp_gain_value;
@@ -2466,30 +2471,9 @@ int skill_counter_additional_effect (struct block_list* src, struct block_list *
 				continue;
 
 			tbl = (it.id < 0) ? bl : src;
-			if( (type = skill_get_casttype(autospl_skill_id)) == CAST_GROUND ) {
-				int maxcount = 0;
-				if( !(BL_PC&battle_config.skill_reiteration) &&
-					skill_get_unit_flag(autospl_skill_id)&UF_NOREITERATION &&
-					skill_check_unit_range(bl,tbl->x,tbl->y,autospl_skill_id,autospl_skill_lv)
-				  )
+			if ((type = skill_get_casttype(autospl_skill_id)) == CAST_GROUND) {
+				if (!skill_pos_maxcount_check(bl, tbl->x, tbl->y, autospl_skill_id, autospl_skill_lv, BL_PC, false))
 					continue;
-				if( BL_PC&battle_config.skill_nofootset &&
-					skill_get_unit_flag(autospl_skill_id)&UF_NOFOOTSET &&
-					skill_check_unit_range2(bl,tbl->x,tbl->y,autospl_skill_id,autospl_skill_lv,false)
-				  )
-					continue;
-				if( BL_PC&battle_config.land_skill_limit &&
-					(maxcount = skill_get_maxcount(autospl_skill_id, autospl_skill_lv)) > 0
-				  ) {
-					int v;
-					for(v=0;v<MAX_SKILLUNITGROUP && dstsd->ud.skillunit[v] && maxcount;v++) {
-						if(dstsd->ud.skillunit[v]->skill_id == autospl_skill_id)
-							maxcount--;
-					}
-					if( maxcount == 0 ) {
-						continue;
-					}
-				}
 			}
 
 			if (!battle_check_range(bl, tbl, skill_get_range2(src, autospl_skill_id, autospl_skill_lv, true)) && battle_config.autospell_check_range)
@@ -3862,6 +3846,7 @@ static int skill_check_unit_range_sub(struct block_list *bl, va_list ap)
 		case RA_ICEBOUNDTRAP:
 		case SC_DIMENSIONDOOR:
 		case SC_BLOODYLUST:
+		case NPC_REVERBERATION:
 		case WM_REVERBERATION:
 		case GN_THORNS_TRAP:
 		case GN_HELLS_PLANT:
@@ -4291,6 +4276,7 @@ static TIMER_FUNC(skill_timerskill){
 						}
 					}
 					break;
+				case NPC_REVERBERATION_ATK:
 				case WM_REVERBERATION_MELEE:
 				case WM_REVERBERATION_MAGIC:
 					skill_castend_damage_id(src,target,skl->skill_id,skl->skill_lv,tick,skl->flag|SD_LEVEL|SD_ANIMATION);
@@ -4467,7 +4453,7 @@ static int skill_active_reverberation(struct block_list *bl, va_list ap) {
 
 	if (bl->type != BL_SKILL)
 		return 0;
-	if (su->alive && (sg = su->group) && sg->skill_id == WM_REVERBERATION) {
+	if (su->alive && (sg = su->group) && (sg->skill_id == WM_REVERBERATION || sg->skill_id == NPC_REVERBERATION)) {
 		map_foreachinallrange(skill_trap_splash, bl, skill_get_splash(sg->skill_id, sg->skill_lv), sg->bl_flag, bl, gettick());
 		su->limit = DIFF_TICK(gettick(), sg->tick);
 		sg->unit_id = UNT_USED_TRAPS;
@@ -4822,19 +4808,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag|SD_ANIMATION);
 		break;
 
-	case LK_JOINTBEAT: // decide the ailment first (affects attack damage and effect)
-		switch( rnd()%6 ){
-		case 0: flag |= BREAK_ANKLE; break;
-		case 1: flag |= BREAK_WRIST; break;
-		case 2: flag |= BREAK_KNEE; break;
-		case 3: flag |= BREAK_SHOULDER; break;
-		case 4: flag |= BREAK_WAIST; break;
-		case 5: flag |= BREAK_NECK; break;
-		}
-		//TODO: is there really no cleaner way to do this?
-		sc = status_get_sc(bl);
-		if (sc) sc->jb_flag = flag;
-		skill_attack(BF_WEAPON,src,src,bl,skill_id,skill_lv,tick,flag);
+	case LK_JOINTBEAT:
+		flag = 1 << rnd() % 6;
+		if (flag != BREAK_NECK && tsc && tsc->data[SC_JOINTBEAT]->val2 & BREAK_NECK)
+			flag = BREAK_NECK; // Target should always receive double damage if neck is already broken
+		if (skill_attack(BF_WEAPON, src, src, bl, skill_id, skill_lv, tick, flag))
+			sc_start4(src, bl, SC_JOINTBEAT, 50 + (skill_lv + 1), skill_lv, flag&BREAK_FLAGS, src->id, 0, skill_get_time2(skill_id, skill_lv));
 		break;
 
 	case MO_COMBOFINISH:
@@ -5075,6 +5054,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case NPC_VAMPIRE_GIFT:
 	case NPC_MAXPAIN_ATK:
 	case NPC_JACKFROST:
+	case NPC_REVERBERATION_ATK:
 	case NPC_ARROWSTORM:
 	case RK_IGNITIONBREAK:
 	case AB_JUDEX:
@@ -5162,6 +5142,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case NPC_EARTHQUAKE: //FIXME: Isn't EarthQuake a ground skill after all?
 					skill_addtimerskill(src,tick+250,src->id,0,0,skill_id,skill_lv,2,flag|BCT_ENEMY|SD_SPLASH|1);
 					break;
+				case NPC_REVERBERATION_ATK:
 				case WM_REVERBERATION_MELEE:
 				case WM_REVERBERATION_MAGIC:
 				case NC_ARMSCANNON:
@@ -6774,9 +6755,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case ITEM_ENCHANTARMS:
-		clif_skill_nodamage(src,bl,skill_id,skill_lv,
-			sc_start2(src,bl,type,100,skill_lv,
-				skill_get_ele(skill_id,skill_lv), skill_get_time(skill_id,skill_lv)));
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, type, 100, skill_get_ele(skill_id, skill_lv), skill_get_time(skill_id, skill_lv)));
 		break;
 
 	case TK_SEVENWIND:
@@ -6813,10 +6792,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		clif_skill_nodamage (src,src,skill_id,skill_lv,1);
 		// Initiate 20% of your damage becomes fire element.
 		sc_start4(src,src,SC_WATK_ELEMENT,100,3,20,0,0,skill_get_time2(skill_id, skill_lv));
-		if( sd )
-			skill_blockpc_start(sd, skill_id, skill_get_time(skill_id, skill_lv));
-		else if( bl->type == BL_MER )
-			skill_blockmerc_start((TBL_MER*)bl, skill_id, skill_get_time(skill_id, skill_lv));
 		break;
 
 	case TK_JUMPKICK:
@@ -11818,39 +11793,11 @@ TIMER_FUNC(skill_castend_pos){
 		ud->skilltimer = INVALID_TIMER;
 
 	do {
-		int maxcount=0;
 		if( status_isdead(src) )
 			break;
 
-		if( !(src->type&battle_config.skill_reiteration) &&
-			skill_get_unit_flag(ud->skill_id)&UF_NOREITERATION &&
-			skill_check_unit_range(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv)
-		  )
-		{
-			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
+		if (!skill_pos_maxcount_check(src, ud->skillx, ud->skilly, ud->skill_id, ud->skill_lv, src->type, true))
 			break;
-		}
-		if( skill_get_unit_flag(ud->skill_id)&UF_NOFOOTSET &&
-			skill_check_unit_range2(src,ud->skillx,ud->skilly,ud->skill_id,ud->skill_lv,false)
-		  )
-		{
-			if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
-			break;
-		}
-		if( src->type&battle_config.land_skill_limit &&
-			(maxcount = skill_get_maxcount(ud->skill_id, ud->skill_lv)) > 0
-		  ) {
-			int i;
-			for(i=0;i<MAX_SKILLUNITGROUP && ud->skillunit[i] && maxcount;i++) {
-				if(ud->skillunit[i]->skill_id == ud->skill_id)
-					maxcount--;
-			}
-			if( maxcount == 0 )
-			{
-				if (sd) clif_skill_fail(sd,ud->skill_id,USESKILL_FAIL_LEVEL,0);
-				break;
-			}
-		}
 
 		if(tid != INVALID_TIMER)
 		{	//Avoid double checks on instant cast skills. [Skotlex]
@@ -12122,6 +12069,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case NPC_VENOMFOG:
 	case NPC_ICEMINE:
 	case NPC_FLAMECROSS:
+	case NPC_REVERBERATION:
 	case RA_ELECTRICSHOCKER:
 	case RA_CLUSTERBOMB:
 	case RA_MAGENTATRAP:
@@ -13309,7 +13257,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 			else if (ele == -1) {
 				val1 = status->rhw.ele;
 				if (sc && sc->data[SC_ENCHANTARMS])
-					val1 = sc->data[SC_ENCHANTARMS]->val2;
+					val1 = sc->data[SC_ENCHANTARMS]->val1;
 			}
 
 			switch (val1) {
@@ -13514,6 +13462,7 @@ struct skill_unit_group *skill_unitsetting(struct block_list *src, uint16 skill_
 				if (unit_val1 < 1) unit_val1 = 1;
 				unit_val2 = 0;
 				break;
+			case NPC_REVERBERATION:
 			case WM_REVERBERATION:
 				unit_val1 = 1 + skill_lv;
 				break;
@@ -17975,8 +17924,12 @@ static int skill_trap_splash(struct block_list *bl, va_list ap)
 			}
 			break;
 		case UNT_REVERBERATION: // For proper skill delay animation when used with Dominion Impulse
-			skill_addtimerskill(ss, tick + status_get_amotion(ss), bl->id, 0, 0, WM_REVERBERATION_MELEE, sg->skill_lv, BF_WEAPON, 0);
-			skill_addtimerskill(ss, tick + status_get_amotion(ss) * 2, bl->id, 0, 0, WM_REVERBERATION_MAGIC, sg->skill_lv, BF_MAGIC, 0);
+			if (ss->type != BL_PC)
+				skill_addtimerskill(ss, tick + 50, bl->id, 0, 0, NPC_REVERBERATION_ATK, sg->skill_lv, BF_WEAPON, 0);
+			else {
+				skill_addtimerskill(ss, tick + status_get_amotion(ss), bl->id, 0, 0, WM_REVERBERATION_MELEE, sg->skill_lv, BF_WEAPON, 0);
+				skill_addtimerskill(ss, tick + status_get_amotion(ss) * 2, bl->id, 0, 0, WM_REVERBERATION_MAGIC, sg->skill_lv, BF_MAGIC, 0);
+			}
 			break;
 		case UNT_FIRINGTRAP:
 		case UNT_ICEBOUNDTRAP:
@@ -18067,7 +18020,7 @@ int skill_maelstrom_suction(struct block_list *bl, va_list ap)
 void skill_enchant_elemental_end(struct block_list *bl, int type)
 {
 	struct status_change *sc;
-	const enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON, SC_ENCHANTARMS };
+	const enum sc_type scs[] = { SC_ENCPOISON, SC_ASPERSIO, SC_FIREWEAPON, SC_WATERWEAPON, SC_WINDWEAPON, SC_EARTHWEAPON, SC_SHADOWWEAPON, SC_GHOSTWEAPON };
 	int i;
 
 	nullpo_retv(bl);
@@ -18076,6 +18029,7 @@ void skill_enchant_elemental_end(struct block_list *bl, int type)
 	if (!sc->count)
 		return;
 
+	status_change_end(bl, SC_ENCHANTARMS, INVALID_TIMER); // Should always end
 	for (i = 0; i < ARRAYLENGTH(scs); i++)
 		if (type != scs[i] && sc->data[scs[i]])
 			status_change_end(bl, scs[i], INVALID_TIMER);
@@ -19768,10 +19722,10 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 		make_per += pc_checkskill(sd,skill_id)*500; // Smithing skills bonus: +5/+10/+15
 		make_per += pc_checkskill(sd,BS_WEAPONRESEARCH)*100 +((wlv >= 3)? pc_checkskill(sd,BS_ORIDEOCON)*100:0); // Weaponry Research bonus: +1/+2/+3/+4/+5/+6/+7/+8/+9/+10, Oridecon Research bonus (custom): +1/+2/+3/+4/+5
 		make_per -= (ele?2000:0) + sc*1500 + (wlv>1?wlv*1000:0); // Element Stone: -20%, Star Crumb: -15% each, Weapon level malus: -0/-20/-30
-		if      (pc_search_inventory(sd,ITEMID_EMPERIUM_ANVIL) > 0) make_per+= 1000; // Emperium Anvil: +10
-		else if (pc_search_inventory(sd,ITEMID_GOLDEN_ANVIL) > 0)   make_per+= 500; // Golden Anvil: +5
-		else if (pc_search_inventory(sd,ITEMID_ORIDECON_ANVIL) > 0) make_per+= 300; // Oridecon Anvil: +3
-		else if (pc_search_inventory(sd,ITEMID_ANVIL) > 0)          make_per+= 0; // Anvil: +0?
+		if      (pc_search_inventory(sd,ITEMID_EMPERIUM_ANVIL) > -1) make_per+= 1000; // Emperium Anvil: +10
+		else if (pc_search_inventory(sd,ITEMID_GOLDEN_ANVIL) > -1)   make_per+= 500; // Golden Anvil: +5
+		else if (pc_search_inventory(sd,ITEMID_ORIDECON_ANVIL) > -1) make_per+= 300; // Oridecon Anvil: +3
+		else if (pc_search_inventory(sd,ITEMID_ANVIL) > -1)          make_per+= 0; // Anvil: +0?
 		if (battle_config.wp_rate != 100)
 			make_per = make_per * battle_config.wp_rate / 100;
 	}

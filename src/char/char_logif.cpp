@@ -361,8 +361,9 @@ int chlogif_parse_reqaccdata(int fd, struct char_session_data* sd){
 		ARR_FIND( 0, ARRAYLENGTH(map_server), server_id, map_server[server_id].fd > 0 && map_server[server_id].map[0] );
 		// continued from char_auth_ok...
 		if( server_id == ARRAYLENGTH(map_server) || //server not online, bugreport:2359
-			(charserv_config.max_connect_user == 0 && sd->group_id != charserv_config.gm_allow_group) ||
-			( charserv_config.max_connect_user > 0 && char_count_users() >= charserv_config.max_connect_user && sd->group_id != charserv_config.gm_allow_group ) ) {
+			(((charserv_config.max_connect_user == 0 || charserv_config.char_maintenance == 1) ||
+			(charserv_config.max_connect_user > 0 && char_count_users() >= charserv_config.max_connect_user)) &&
+			sd->group_id < charserv_config.gm_allow_group)) {
 			// refuse connection (over populated)
 			chclif_reject(u_fd,0);
 		} else {

@@ -193,7 +193,7 @@ struct CharServ_Config {
 };
 extern struct CharServ_Config charserv_config;
 
-#define MAX_MAP_SERVERS 30 //how many mapserver a char server can handle
+#define MAX_MAP_SERVERS 2 //how many mapserver a char server can handle
 struct mmo_map_server {
 	int fd;
 	uint32 ip;

@@ -504,11 +504,11 @@ ACMD_FUNC(mapmove)
 			return -1;
 	}
 
-	mapindex = mapindex_name2id(map_name);
+	mapindex = mapindex_name2idx(map_name, nullptr);
 	if (mapindex)
 		m = map_mapindex2mapid(mapindex);
 
-	if (!mapindex) { // m < 0 means on different server! [Kevin]
+	if (m < 0) { // m < 0 means on different server! [Kevin]
 		clif_displaymessage(fd, msg_txt(sd,1)); // Map not found.
 
 		if (battle_config.warp_suggestions_enabled)
@@ -3922,7 +3922,7 @@ ACMD_FUNC(reload) {
 		for( pl_sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); pl_sd = (TBL_PC*)mapit_next(iter) ){
 			pc_close_npc(pl_sd,1);
 			clif_cutin(pl_sd, "", 255);
-			pl_sd->state.block_action = 0;
+			pl_sd->state.block_action &= ~(PCBLOCK_ALL ^ PCBLOCK_IMMUNE);
 		}
 		mapit_free(iter);
 
