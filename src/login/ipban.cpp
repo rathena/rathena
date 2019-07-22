@@ -16,7 +16,7 @@
 #include "loginlog.hpp"
 
 // login sql settings
-static char   ipban_db_hostname[32] = "127.0.0.1";
+static char   ipban_db_hostname[64] = "127.0.0.1";
 static uint16 ipban_db_port = 3306;
 static char   ipban_db_username[32] = "ragnarok";
 static char   ipban_db_password[32] = "";

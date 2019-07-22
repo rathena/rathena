@@ -1436,7 +1436,7 @@ OnInstanceInit:
 				"Geffen Festivities.";
 				close2;
 				cutin "",255;
-				getitem 6671,20;
+				getitem 6671,'reward[getarraysize('reward[0]) - 1];
 				warp instance_mapname("1@gef"), 120,35;
 				end;
 			case 2:

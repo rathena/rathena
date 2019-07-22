@@ -466,12 +466,14 @@ OnTimer26000:
 		mes "Do you hear that?";
 		mes "Help Fama take care of the injured soldiers.";
 		mes "Fama will give you first aid-kits, use it to help the injured people.";
-		// close2;// still attached
+		close2;
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "Officer Heim: Do you hear that?";
 		sleep2 2000;
 		npctalk "Officer Heim: Help Fama take care of the injured soldiers.";
 		sleep2 2000;
 		npctalk "Healer Fama: Okay~ You are going to help me? Come here and receive the first aid kit~!";
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	case 1:
 		mes "[Officer Heim]";
@@ -528,7 +530,7 @@ OnTimer26000:
 	mes "You administer the first-aid-kit to the soldier.";
 	next;
 	specialeffect EF_SPHERE;
-	// progressbar "000000",10;	// fix me: progressbar doesn't display close button on cancel
+	progressbar "000000",10;
 	if ('devil_tower == 1) {
 		delitem 7641,1;
 		specialeffect EF_ENTRY;
@@ -648,7 +650,7 @@ OnTouch:
 		.@lucile$ = instance_npcname("Lucile#tnm01");
 		.@heim$ = instance_npcname("Officer Heim#heim");
 		'devil_tower = 3;
-		mes "";	// todo fix me "workinprogress"
+		setpcblock PCBLOCK_NPC, true;
 		cutin "tnm_lucile01.bmp",2;
 		sleep2 1500;
 		npctalk "Lucile: I am Lucile from the Assassin Guild.", .@lucile$;
@@ -699,6 +701,7 @@ OnTouch:
 		npctalk "Officer Heim: They are so unpredictable. You know what is going on right? Back them up...", .@heim$;
 		sleep2 2500;
 		npctalk "Officer Heim: Help us take care of the demons coming down from upstairs.", .@heim$;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
 }
@@ -867,7 +870,7 @@ OnMobDead:
 		mes "Lucile seems to be a machine.";
 		mes "I can hear mechanical sounds all of a sudden.";
 		specialeffect EF_LEVEL99_3;
-		// progressbar "000000",40;	// fix me: progressbar doesn't display close button on cancel
+		progressbar "000000",40;
 		if (is_party_leader() == true && 'devil_tower == 5) {
 			if (isbegin_quest(7572) == 0)
 				setquest 7572;// Lucile...?
@@ -1413,13 +1416,14 @@ OnTimer7000:
 OnTouch:
 	if ('devil_tower != 9)
 		end;
-	mes "";	// todo fix me "workinprogress"
+	setpcblock PCBLOCK_NPC, true;
 	disablenpc instance_npcname("#tnm3event01");
 	enablenpc instance_npcname("Young Girl#tnm01");
 	sleep2 4000;
 	mapannounce 'map_tnm3$, "Young Girl: Odin Preserve me! A demon!! Help me!", bc_map,0xFF00;
 	'mob_count = 12;
 	initnpctimer;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 OnTimer1000:
 	monster 'map_tnm3$,33,171,"Evil Shadow",2939,1, instance_npcname("Young Girl#tnm01") + "::OnMobDead";// MM_EVIL_SHADOW1
@@ -1596,7 +1600,7 @@ OnMobDead:
 OnTouch_:
 	if ('devil_tower == 11) {
 		'devil_tower = 12;
-		mes "";	// todo fix me "workinprogress"
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
 		npctalk "Evil Shadow: I thought I smelled rats sneaking in here. I was right!!";
 		sleep2 3000;
@@ -1605,6 +1609,7 @@ OnTouch_:
 		npctalk "Evil Shadow: I summon the Darkness!!";
 		disablenpc instance_npcname("Evil Shadow#tnm3mob01");
 		donpcevent instance_npcname("Evil Shadow kill#tnm3mob01") + "::OnSummon";
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -1647,7 +1652,7 @@ OnTouch_:// possibility to skip this step
 		end;
 	if ('shade == 0) {
 		'shade = 1;
-		mes "";	// todo fix me "workinprogress"
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
 		npctalk "Demonic Shade: So you are the trouble makers!";
 		sleep2 2000;
@@ -1656,6 +1661,7 @@ OnTouch_:// possibility to skip this step
 		npctalk "Demonic Shade: The eternal truth is I will turn your deaths into the Demon's life with your hearts' blood!!!";
 		disablenpc instance_npcname("Demonic Shade#mobmaster");
 		donpcevent instance_npcname("#mobmaster_kill") + "::OnSummon";
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }

@@ -871,8 +871,8 @@
 //722,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_WIDESUCK,Wide Suck
 //723,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_STORMGUST2,Storm Gust 2
 //724,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_FIRESTORM,Fire Storm
-//725,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION,Reverberation 2
-//726,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_REVERBERATION_ATK,Reverberation Attack
+725,1,6,2,0,0x3,2,5,1,no,0,0x20082,0,none,0,0x0,	NPC_REVERBERATION,Reverberation 2
+726,1,6,1,0,0x6,2,5,1,no,0,0x2,0,weapon,0,0x0,	NPC_REVERBERATION_ATK,Reverberation Attack
 727,9,6,2,0,0x3,2:5:8:11:14,5,0,yes,0,0x2,0,magic,0,0x0,	NPC_LEX_AETERNA,Lex Aeterna 2
 728,9,8,1,-1,0x2,3:3:3:3:3:4:4:4:4:5,10,-3,yes,0,0x2,0,weapon,0,0x80,		NPC_ARROWSTORM,NPC Arrow Storm
 //729,0,0,0,0,0,0,??,0,no,0,0,0,none,0,0x0,		NPC_CHEAL,NPC Coluceo Heal
@@ -1399,7 +1399,7 @@
 5003,7,6,1,-1,0x2,4:5:6:7:-1,5,1,no,0,0,0,weapon,0,0x0, GN_ILLUSIONDOPING,Illusion Doping
 5004,9,6,2,1,0x42,1:1:1:2:2:2:3:3:4:4,10,1,no,0,0x40000,0,weapon,0,0x0, RK_DRAGONBREATH_WATER,Dragon Breath - Water
 5005,0,6,4,0,0x3,3,1,1,no,0,0,0,none,0,0x0, RK_LUXANIMA,Lux Anima
-5006,1,6,2,3,0x2,3,5,1,no,0,0,3,misc,0,0x4000, NC_MAGMA_ERUPTION,Magma Eruption
+5006,1,6,2,-1,0x2,3,5,1,no,0,0,3,weapon,0,0x4000, NC_MAGMA_ERUPTION,Magma Eruption
 5007,0,6,4,0,0x3,5:6:7:8:9,5,1,no,0,0,0,none,0,0x0, WM_FRIGG_SONG,Frigg's Song
 5008,0,6,4,0,0x3,11,5,1,no,0,0,0,none,0,0x0, SO_ELEMENTAL_SHIELD,Elemental Shield
 5009,1,6,1,0,0x1,0,5,1,no,0,0,0,none,0,0x0, SR_FLASHCOMBO,Flash Combo
@@ -1408,6 +1408,7 @@
 5012,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0, WL_TELEKINESIS_INTENSE,Intense Telekinesis
 5013,0,6,4,0,0x3,0,5,1,no,0,0,0,none,0,0x0, LG_KINGS_GRACE,King's Grace
 5014,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x4000, ALL_FULL_THROTTLE,Full Throttle
+5015,1,6,1,0,0xC0,0,5,1,no,0,0,0,misc,0,0,	NC_MAGMA_ERUPTION_DOTDAMAGE,Magma Eruption Dot Damage
 
 // Summoner
 5018,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,		SU_BASIC_SKILL,New Basic Skill
