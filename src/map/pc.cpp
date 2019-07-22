@@ -1384,6 +1384,7 @@ bool pc_authok(struct map_session_data *sd, uint32 login_id2, time_t expiration_
 	sd->pvp_timer = INVALID_TIMER;
 	sd->expiration_tid = INVALID_TIMER;
 	sd->autotrade_tid = INVALID_TIMER;
+	sd->respawn_tid = INVALID_TIMER;
 
 #ifdef SECURE_NPCTIMEOUT
 	// Initialize to defaults/expected
@@ -7894,6 +7895,7 @@ static TIMER_FUNC(pc_respawn_timer){
 	if( sd != NULL )
 	{
 		sd->pvp_point=0;
+		sd->respawn_tid = INVALID_TIMER;
 		pc_respawn(sd,CLR_OUTSIGHT);
 	}
 
@@ -8279,19 +8281,19 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 			ssd->pvp_won++;
 		}
 		if( sd->pvp_point < 0 ) {
-			add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
+			sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer,sd->bl.id,0);
 			return 1|8;
 		}
 	}
 	//GvG
 	if( mapdata_flag_gvg2(mapdata) ) {
-		add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
+		sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
 		return 1|8;
 	}
 	else if( sd->bg_id ) {
 		struct battleground_data *bg = bg_team_search(sd->bg_id);
 		if( bg && bg->mapindex > 0 ) { // Respawn by BG
-			add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
+			sd->respawn_tid = add_timer(tick+1000, pc_respawn_timer, sd->bl.id, 0);
 			return 1|8;
 		}
 	}
@@ -8317,6 +8319,41 @@ void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp) {
 		guild_guildaura_refresh(sd,GD_HAWKEYES,guild_checkskill(sd->guild,GD_HAWKEYES));
 	}
 }
+
+bool pc_revive_item(struct map_session_data *sd) {
+	nullpo_retr(false, sd);
+
+	if (!pc_isdead(sd) || sd->respawn_tid != INVALID_TIMER)
+		return false;
+
+	if (sd->sc.data[SC_HELLPOWER]) // Cannot resurrect while under the effect of SC_HELLPOWER.
+		return false;
+
+	int16 item_position = itemdb_group_item_exists_pc(sd, IG_TOKEN_OF_SIEGFRIED);
+	uint8 hp = 100, sp = 100;
+
+	if (item_position < 0) {
+		if (sd->sc.data[SC_LIGHT_OF_REGENE]) {
+			hp = sd->sc.data[SC_LIGHT_OF_REGENE]->val2;
+			sp = 0;
+		}
+		else
+			return false;
+	}
+
+	if (!status_revive(&sd->bl, hp, sp))
+		return false;
+
+	if (item_position < 0)
+		status_change_end(&sd->bl, SC_LIGHT_OF_REGENE, INVALID_TIMER);
+	else
+		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
+
+	clif_skill_nodamage(&sd->bl, &sd->bl, ALL_RESURRECTION, 4, 1);
+
+	return true;
+}
+
 // script
 //
 /*==========================================
