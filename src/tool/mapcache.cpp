@@ -150,7 +150,7 @@ int find_map(char *name)
 
 	for(i = 0; i < header.map_count; i++) {
 		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1)
-			ShowError("An error has occured in fread while reading \"%s\"\n", map_cache_fp);
+			ShowError("An error has occurred in fread while reading \"%s\"\n", map_cache_fp);
 		if(strcmp(name, info.name) == 0) // Map found
 			return 1;
 		else // Map not found, jump to the beginning of the next map info header
@@ -195,7 +195,6 @@ void process_args(int argc, char *argv[])
 
 int do_init(int argc, char** argv)
 {
-
 	/* setup pre-defined, #define-dependant */
 	map_cache_file = std::string(db_path) + "/" + std::string(DBIMPORT) + "/map_cache.dat";
 
@@ -209,17 +208,17 @@ int do_init(int argc, char** argv)
 	ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
 	if (!rebuild) {
 		map_cache_fp = fopen(map_cache_file.c_str(), "rb");
-		if (map_cache_fp == NULL) {
+		if(map_cache_fp == NULL) {
 			ShowNotice("Existing map cache not found, forcing rebuild mode\n");
 			rebuild = 1;
 		} else
 			fclose(map_cache_fp);
 	}
-	if (rebuild)
+	if(rebuild)
 		map_cache_fp = fopen(map_cache_file.c_str(), "w+b");
 	else
 		map_cache_fp = fopen(map_cache_file.c_str(), "r+b");
-	if (map_cache_fp == NULL) {
+	if(map_cache_fp == NULL) {
 		ShowError("Failure when opening map cache file %s\n", map_cache_file.c_str());
 		exit(EXIT_FAILURE);
 	}
@@ -239,12 +238,12 @@ int do_init(int argc, char** argv)
 		}
 
 		// Initialize the main header
-		if (rebuild) {
+		if(rebuild) {
 			header.file_size = sizeof(struct main_header);
 			header.map_count = 0;
 		} else {
 			if (fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1)
-				ShowError("An error has occured while reading \"%s\"\n", map_cache_fp);
+				ShowError("An error has occurred while reading \"%s\"\n", map_cache_fp);
 			header.file_size = GetULong((unsigned char *)&(header.file_size));
 			header.map_count = GetUShort((unsigned char *)&(header.map_count));
 		}
@@ -252,7 +251,8 @@ int do_init(int argc, char** argv)
 		// Read and process the map list
 		char line[1024];
 
-		while (fgets(line, sizeof(line), list)) {
+		while (fgets(line, sizeof(line), list))
+		{
 			if (line[0] == '/' && line[1] == '/')
 				continue;
 
@@ -273,7 +273,8 @@ int do_init(int argc, char** argv)
 			else if (read_map(name, &map)) {
 				cache_map(name, &map);
 				ShowInfo("Map '" CL_WHITE "%s" CL_RESET "' successfully cached.\n", name);
-			} else
+			}
+			else
 				ShowError("Map '" CL_WHITE "%s" CL_RESET "' not found!\n", name);
 
 		}
