@@ -206,7 +206,7 @@ int do_init(int argc, char** argv)
 
 	// Attempt to open the map cache file and force rebuild if not found
 	ShowStatus("Opening map cache: %s\n", map_cache_file.c_str());
-	if (!rebuild) {
+	if(!rebuild) {
 		map_cache_fp = fopen(map_cache_file.c_str(), "rb");
 		if(map_cache_fp == NULL) {
 			ShowNotice("Existing map cache not found, forcing rebuild mode\n");
@@ -238,7 +238,7 @@ int do_init(int argc, char** argv)
 		}
 
 		// Initialize the main header
-		if(rebuild) {
+		if (rebuild) {
 			header.file_size = sizeof(struct main_header);
 			header.map_count = 0;
 		} else {
