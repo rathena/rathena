@@ -3364,7 +3364,7 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 				wd->div_ = tstatus->size + 2 + ( (rnd()%100 < 50-tstatus->size*10) ? 1 : 0 );
 			break;
 		case SR_RIDEINLIGHTNING:
-			wd->div_ = sd->spiritball_old;
+			wd->div_ = (sd ? max(1, sd->spiritball_old) : 1);
 			break;
 		case RL_QD_SHOT:
 			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20 + (tsc && tsc->data[SC_C_MARKER] ? 2 : 0);
@@ -4506,7 +4506,7 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			}
 		}
 		if (sc->data[SC_GT_CHANGE])
-			ATK_ADDRATE(wd->weaponAtk, wd->weaponAtk2, sc->data[SC_GT_CHANGE]->val1);
+			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_GT_CHANGE]->val1);
 		if (sc->data[SC_EDP]) {
 			switch(skill_id) {
 				case AS_SPLASHER:
