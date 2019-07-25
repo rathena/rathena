@@ -2677,10 +2677,10 @@ bool skill_strip_equip(struct block_list *src, struct block_list *target, uint16
 				time = skill_get_time(skill_id, skill_lv);
 
 			if (target->type == BL_PC)
-				time += skill_lv + 500 * (sstatus->dex - tstatus->dex);
+				time += max(1, skill_lv + 500 * (sstatus->dex - tstatus->dex));
 			else {
 				time += 15000;
-				time += skill_lv + 500 * (sstatus->dex - tstatus->dex);
+				time += max(1, skill_lv + 500 * (sstatus->dex - tstatus->dex));
 			}
 			break;
 	}
