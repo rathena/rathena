@@ -1515,8 +1515,8 @@ int64 battle_calc_damage(struct block_list *src,struct block_list *bl,struct Dam
 	
 	if (status_get_race2(bl) == RC2_GREENAURA) {
 		if (status_get_race2(src) != RC2_GREENAURA) // [Sona]: This is for MvP vs MvP event purposes. (damage doesn't get reduced when attacking eachother)
-			damage = damage > 100 ? damage * (100 - battle_config.greenaura_reduction_rate) / 100 : 1; // Reduces damage received by the amount specified in conf/battle/monster.conf	}	
-
+			damage = damage > 100 ? damage * (100 - battle_config.greenaura_reduction_rate) / 100 : 1; // Reduces damage received by the amount specified in conf/battle/monster.conf	
+	}
 	//SC effects from caster side.
 	sc = status_get_sc(src);
 
