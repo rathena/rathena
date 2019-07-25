@@ -141,7 +141,7 @@ struct Battle_Config
 	int enable_critical;
 	int mob_critical_rate;
 	int critical_rate;
-	int enable_baseatk;
+	int enable_baseatk, enable_baseatk_renewal;
 	int enable_perfect_flee;
 	int cast_rate, delay_rate;
 	int delay_dependon_dex, delay_dependon_agi;

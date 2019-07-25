@@ -3634,11 +3634,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 40 * skill_lv;
 			break;
 		case LK_JOINTBEAT:
-			i = 10 * skill_lv - 50;
-			// Although not clear, it's being assumed that the 2x damage is only for the break neck ailment.
-			if (wd->miscflag&BREAK_NECK)
-				i *= 2;
-			skillratio += i;
+			skillratio += -100 + 10 * skill_lv - 50;
+			if (wd->miscflag & BREAK_NECK || (tsc && tsc->data[SC_JOINTBEAT] && tsc->data[SC_JOINTBEAT]->val2 & BREAK_NECK)) // The 2x damage is only for the BREAK_NECK ailment.
+				skillratio <<= 1;
 			break;
 #ifdef RENEWAL
 		// Renewal: skill ratio applies to entire damage [helvetica]
@@ -7996,7 +7994,8 @@ static const struct _battle_data {
 	{ "enable_critical",                    &battle_config.enable_critical,                 BL_PC,  BL_NUL, BL_ALL,         },
 	{ "mob_critical_rate",                  &battle_config.mob_critical_rate,               100,    0,      INT_MAX,        },
 	{ "critical_rate",                      &battle_config.critical_rate,                   100,    0,      INT_MAX,        },
-	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_CHAR|BL_NPC, BL_NUL, BL_ALL,   },
+	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_CHAR|BL_HOM, BL_NUL, BL_ALL, },
+	{ "enable_baseatk_renewal",             &battle_config.enable_baseatk_renewal,          BL_ALL, BL_NUL, BL_ALL,         },
 	{ "enable_perfect_flee",                &battle_config.enable_perfect_flee,             BL_PC|BL_PET, BL_NUL, BL_ALL,   },
 	{ "casting_rate",                       &battle_config.cast_rate,                       100,    0,      INT_MAX,        },
 	{ "delay_rate",                         &battle_config.delay_rate,                      100,    0,      INT_MAX,        },

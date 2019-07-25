@@ -260,7 +260,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				return 0;
 			}
 
-			achievement->rewards.nameid = amount;
+			achievement->rewards.amount = amount;
 		}
 
 		if( this->nodeExists( rewardNode, "Script" ) ){
@@ -691,54 +691,39 @@ int achievement_check_progress(struct map_session_data *sd, int achievement_id, 
  * Calculate a player's achievement level
  * @param sd: Player to check achievement level
  * @param flag: If the call should attempt to give the AG_GOAL_ACHIEVE achievement
- * @return Player's achievement level or 0 on failure
+ * @return Rollover and TNL EXP or 0 on failure
  */
 int *achievement_level(struct map_session_data *sd, bool flag)
 {
+	nullpo_retr(nullptr, sd);
+
 	static int info[2];
-	int i, old_level;
+	int old_level = sd->achievement_data.level;
 	const int score_table[MAX_ACHIEVEMENT_RANK] = { 18, 31, 49, 73, 135, 104, 140, 178, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000 }; //! TODO: Figure out the EXP required to level up from 8-20
 
-	nullpo_retr(0, sd);
-
 	sd->achievement_data.total_score = 0;
-	old_level = sd->achievement_data.level;
+	sd->achievement_data.level = 0;
 
-	for (i = 0; i < sd->achievement_data.count; i++) {
+	for (int i = 0; i < sd->achievement_data.count; i++) { // Recount total score
 		if (sd->achievement_data.achievements[i].completed > 0)
 			sd->achievement_data.total_score += sd->achievement_data.achievements[i].score;
 	}
 
-	info[0] = 0;
-	info[1] = 0;
+	int i, temp_score = sd->achievement_data.total_score;
 
-	for (i = 0; i < MAX_ACHIEVEMENT_RANK; i++) {
-		info[0] = info[1];
-			
-		if (i < ARRAYLENGTH(score_table))
-			info[1] = score_table[i];
-		else {
-			info[0] = info[1];
-			info[1] = info[1] + 500;
-		}
-
-		if (sd->achievement_data.total_score < info[1])
-			break;
+	for (i = 0; i < MAX_ACHIEVEMENT_RANK && temp_score > score_table[i]; i++) { // Determine rollover and TNL EXP
+		temp_score -= score_table[i];
+		sd->achievement_data.level++;
 	}
 
-	if (i == MAX_ACHIEVEMENT_RANK)
-		i = 0;
+	info[0] = temp_score; // Left number
+	info[1] = score_table[i]; // Right number
 
-	info[1] = info[1] - info[0]; // Right number
-	info[0] = sd->achievement_data.total_score - info[0]; // Left number
-	sd->achievement_data.level = i;
-
-	if (flag == true && old_level != sd->achievement_data.level) {
+	if (flag && old_level != sd->achievement_data.level) { // Give AG_GOAL_ACHIEVE
 		int achievement_id = 240000 + sd->achievement_data.level;
 
-		if( achievement_add(sd, achievement_id) ){
+		if (achievement_add(sd, achievement_id))
 			achievement_update_achievement(sd, achievement_id, true);
-		}
 	}
 
 	return info;

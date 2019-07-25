@@ -20520,6 +20520,60 @@ BUILDIN_FUNC(instance_info)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*------------------------------------------
+*instance_live_info( <info type>{, <instance id>} );
+- ILI_NAME : Instance Name
+- ILI_MODE : Instance Mode
+- ILI_OWNER : owner id
+*------------------------------------------*/
+BUILDIN_FUNC(instance_live_info)
+{
+	int type = script_getnum(st, 2);
+	int id = 0;
+
+	if (type < ILI_NAME || type > ILI_OWNER) {
+		ShowError("buildin_instance_live_info: Unknown instance information type \"%d\".\n", type);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!script_hasdata(st, 3))
+		id = script_instancegetid(st);
+	else
+		id = script_getnum(st, 3);
+
+	struct instance_db *db = nullptr;
+	struct instance_data *im = nullptr;
+
+	if (id > 0 && id < MAX_INSTANCE_DATA) {
+		im = &instance_data[id];
+
+		if (im)
+			db = instance_searchtype_db(im->type);
+	}
+
+	if (!im || !db) {
+		if (type == ILI_NAME)
+			script_pushconststr(st, "");
+		else
+			script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch( type ) {
+	case ILI_NAME:
+		script_pushstrcopy(st, StringBuf_Value(db->name));
+		break;
+	case ILI_MODE:
+		script_pushint(st, im->mode);
+		break;
+	case ILI_OWNER:
+		script_pushint(st, im->owner_id);
+		break;
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Custom Fonts
  *------------------------------------------*/
@@ -24393,6 +24447,59 @@ BUILDIN_FUNC(getvariableofinstance)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*
+  convertpcinfo(<char_id>,<type>)
+  convertpcinfo(<account_id>,<type>)
+  convertpcinfo(<player_name>,<type>)
+*/
+BUILDIN_FUNC(convertpcinfo) {
+	TBL_PC *sd;
+
+	if (script_isstring(st, 2))
+		sd = map_nick2sd(script_getstr(st, 2),false);
+	else {
+		int id = script_getnum(st, 2);
+		sd = map_id2sd(id);
+		if (!sd)
+			sd = map_charid2sd(id);
+	}
+
+	int type = script_getnum(st, 3);
+
+	switch (type) {
+	case CPC_NAME:
+	case CPC_CHAR:
+	case CPC_ACCOUNT:
+		break;
+	default:
+		ShowError("buildin_convertpcinfo: Unknown type %d.\n", type);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!sd) {
+		if (type == CPC_NAME)
+			script_pushstrcopy(st, "");
+		else
+			script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch (type) {
+	case CPC_NAME:
+		script_pushstrcopy(st, sd->status.name);
+		break;
+	case CPC_CHAR:
+		script_pushint(st, sd->status.char_id);
+		break;
+	case CPC_ACCOUNT:
+		script_pushint(st, sd->status.account_id);
+		break;
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -24912,6 +25019,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_guild,"i???"),
 	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
+	BUILDIN_DEF(instance_live_info,"i?"),
 	/**
 	 * 3rd-related
 	 **/
@@ -25061,6 +25169,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(achievement_condition,"i"),
 	BUILDIN_DEF(getvariableofinstance,"ri"),
+	BUILDIN_DEF(convertpcinfo,"vi"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

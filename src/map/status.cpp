@@ -2435,8 +2435,13 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 {
 	int flag = 0, str, dex, dstr;
 
-	if(!(bl->type&battle_config.enable_baseatk))
+#ifdef RENEWAL
+	if (!(bl->type&battle_config.enable_baseatk_renewal))
 		return 0;
+#else
+	if (!(bl->type&battle_config.enable_baseatk))
+		return 0;
+#endif
 
 	if (bl->type == BL_PC)
 	switch(((TBL_PC*)bl)->status.weapon) {
@@ -8186,6 +8191,10 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 				tick /= 5;
 			sc_def = status->agi*50;
 			break;
+		case SC_JOINTBEAT:
+			sc_def2 = 270 * status->str / 100; // 270 * STR / 100
+			tick_def2 = (status->luk * 50 + status->agi * 200) / 2; // (50 * LUK / 100 + 20 * AGI / 100) / 2
+			break;
 		case SC_DEEPSLEEP:
 			tick_def2 = status_get_base_status(bl)->int_ * 25 + status_get_lv(bl) * 50;
 			break;
@@ -9522,6 +9531,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					return 0;
 				break;
 			case SC_JOINTBEAT:
+				if (sc && sc->data[type]->val2 & BREAK_NECK)
+					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
 			default:
 				if(sce->val1 > val1)
