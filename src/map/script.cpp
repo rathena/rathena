@@ -379,7 +379,7 @@ static struct linkdb_node *sleep_db; // int oid -> struct script_state *
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
 int run_func(struct script_state *st);
-unsigned short script_instancegetid(struct script_state *st, enum e_instance_mode mode = IM_NONE);
+int script_instancegetid(struct script_state *st, enum e_instance_mode mode = IM_NONE);
 
 const char* script_op2name(int op)
 {
