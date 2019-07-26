@@ -174,21 +174,28 @@ function	script	F_CoolEventCorp	{
 	end;
 }
 
-hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	874,{
+lighthalzen,94,248,3	script	Cool Event Corp Staff::CoolEventCorpStaffLighthalzen	4_M_ZONDAMAN,{
+	callfunc "F_CoolEventCorp",
+		"Save:Use Storage::Rent a Pushcart:Storage Password Service:Cancel",
+		"in the town of Lighthalzen","lighthalzen",95,240;
+	end;
+}
+
+hugel,88,168,4	script	Cool Event Corp. Staff::CoolEventCorpStaffHugel	4_M_ZONDAMAN,{
 	callfunc "F_CoolEventCorp",
 		"Save:Use Storage::Rent a Pushcart:Storage Password Service:Cancel",
 		"in the village of Hugel","hugel",96,155;
 	end;
 }
 
-rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	874,{
+rachel,109,138,5	script	Cool Event Corp. Staff::CoolEventCorpStaffRachel	4_M_ZONDAMAN,{
 	callfunc "F_CoolEventCorp",
 		"Save:Use Storage:Teleport Service:Rent a Pushcart:Storage Password Service:Cancel",
 		"in the town of Rachel","rachel",113,137,"Veins";
 	end;
 }
 
-veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	874,{
+veins,208,128,5	script	Cool Event Corp. Staff::CoolEventCorpStaffVeins	4_M_ZONDAMAN,{
 	callfunc "F_CoolEventCorp",
 		"Save:Use Storage:Teleport Service:Rent a Pushcart:Storage Password Service:Cancel",
 		"in the town of Veins","veins",204,103,"Rachel";

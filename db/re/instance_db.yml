@@ -199,12 +199,12 @@ Body:
 #    EnterMap: "1@def02"
 #    EnterX: 29
 #    EnterY: 35
-#  - Id: 24
-#    Name: "Nightmarish Jitterbug"
-#    LimitTime: 3600
-#    EnterMap: "1@jtb"
-#    EnterX: 16
-#    EnterY: 17
+  - Id: 24
+    Name: "Nightmarish Jitterbug"
+    LimitTime: 3600
+    EnterMap: "1@jtb"
+    EnterX: 16
+    EnterY: 17
   - Id: 25
     Name: "Isle of Bios"
     LimitTime: 3600

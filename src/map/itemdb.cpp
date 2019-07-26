@@ -51,6 +51,7 @@ struct s_item_group_db *itemdb_group_exists(unsigned short group_id) {
 
 /**
  * Check if an item exists in a group
+ * @param group_id: Item Group ID
  * @param nameid: Item to check for in group
  * @return True if item is in group, else false
  */
@@ -68,6 +69,30 @@ bool itemdb_group_item_exists(unsigned short group_id, unsigned short nameid)
 				return true;
 	}
 	return false;
+}
+
+/**
+ * Check if an item exists from a group in a player's inventory
+ * @param group_id: Item Group ID
+ * @return Item's index if found or -1 otherwise
+ */
+int16 itemdb_group_item_exists_pc(struct map_session_data *sd, unsigned short group_id)
+{
+	struct s_item_group_db *group = (struct s_item_group_db *)uidb_get(itemdb_group, group_id);
+
+	if (!group)
+		return -1;
+
+	for (int i = 0; i < MAX_ITEMGROUP_RANDGROUP; i++) {
+		for (int j = 0; j < group->random[i].data_qty; j++) {
+			int16 item_position = pc_search_inventory(sd, group->random[i].data[j].nameid);
+
+			if (item_position != -1)
+				return item_position;
+		}
+	}
+
+	return -1;
 }
 
 /**
@@ -114,6 +139,10 @@ static struct item_data* itemdb_searchname1(const char *str, bool aegis_only)
 struct item_data* itemdb_searchname(const char *str)
 {
 	return itemdb_searchname1(str, false);
+}
+
+struct item_data* itemdb_search_aegisname( const char *str ){
+	return itemdb_searchname1( str, true );
 }
 
 /**
@@ -542,6 +571,12 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 			return false;
 	}
 	return true;
+}
+
+bool itemdb_ishatched_egg(struct item* item) {
+	if (item && item->card[0] == CARD0_PET && item->attribute == 1)
+		return true;
+	return false;
 }
 
 /** Specifies if item-type should drop unidentified.
@@ -1603,7 +1638,7 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
 		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
 		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+		(id->flag.no_equip&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return true;
 	return false;
