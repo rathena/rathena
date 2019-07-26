@@ -107,7 +107,6 @@ int instance_addmap(int instance_id);
 
 void instance_addnpc(std::shared_ptr<s_instance_data> idata);
 
-void instance_db_reload(void);
 void do_reload_instance(void);
 void do_init_instance(void);
 void do_final_instance(void);
