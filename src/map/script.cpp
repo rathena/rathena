@@ -19932,9 +19932,9 @@ BUILDIN_FUNC(bg_get_data)
  * @param mode: Instance mode
  * @return instance ID on success or 0 otherwise
  */
-unsigned short script_instancegetid(struct script_state* st, enum e_instance_mode mode)
+int script_instancegetid(struct script_state* st, enum e_instance_mode mode)
 {
-	unsigned short instance_id = 0;
+	int instance_id = 0;
 
 	if (mode == IM_NONE) {
 		struct npc_data *nd = map_id2nd(st->oid);
@@ -20041,7 +20041,7 @@ BUILDIN_FUNC(instance_create)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_destroy)
 {
-	unsigned short instance_id;
+	int instance_id;
 
 	if( script_hasdata(st,2) )
 		instance_id = script_getnum(st,2);
@@ -20049,7 +20049,7 @@ BUILDIN_FUNC(instance_destroy)
 		instance_id = script_instancegetid(st);
 
 	if( instance_id == 0 ) {
-		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %hu.\n", instance_id);
+		ShowError("buildin_instance_destroy: Trying to destroy invalid instance %d.\n", instance_id);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -20070,7 +20070,7 @@ BUILDIN_FUNC(instance_enter)
 	struct map_session_data *sd = NULL;
 	int x = script_hasdata(st,3) ? script_getnum(st, 3) : -1;
 	int y = script_hasdata(st,4) ? script_getnum(st, 4) : -1;
-	unsigned short instance_id;
+	int instance_id;
 
 	if (script_hasdata(st, 6))
 		instance_id = script_getnum(st, 6);
@@ -20094,7 +20094,7 @@ BUILDIN_FUNC(instance_enter)
 BUILDIN_FUNC(instance_npcname)
 {
 	const char *str;
-	unsigned short instance_id = 0;
+	int instance_id = 0;
 	struct npc_data *nd;
 
 	str = script_getstr(st,2);
@@ -20108,7 +20108,7 @@ BUILDIN_FUNC(instance_npcname)
 		snprintf(npcname, sizeof(npcname), "dup_%hu_%d", instance_id, nd->bl.id);
 		script_pushconststr(st,npcname);
 	} else {
-		ShowError("buildin_instance_npcname: Invalid instance NPC (instance_id: %hu, NPC name: \"%s\".)\n", instance_id, str);
+		ShowError("buildin_instance_npcname: Invalid instance NPC (instance_id: %d, NPC name: \"%s\".)\n", instance_id, str);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -20125,7 +20125,7 @@ BUILDIN_FUNC(instance_mapname)
 {
  	const char *str;
 	int16 m;
-	unsigned short instance_id = 0;
+	int instance_id = 0;
 
 	str = script_getstr(st,2);
 
@@ -20174,7 +20174,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 	unsigned int m = va_arg(ap,unsigned int);
 	int x = va_arg(ap,int);
 	int y = va_arg(ap,int);
-	unsigned short instance_id = va_arg(ap,unsigned int);
+	int instance_id = va_arg(ap,unsigned int);
 	struct map_session_data *sd;
 
 	nullpo_retr(0, bl);
@@ -20218,7 +20218,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 BUILDIN_FUNC(instance_warpall)
 {
 	int16 m;
-	unsigned short instance_id;
+	int instance_id;
 	const char *mapn;
 	int x, y;
 
@@ -20253,7 +20253,7 @@ BUILDIN_FUNC(instance_warpall)
  * Using 0 for <instance id> will auto-detect the id.
  *------------------------------------------*/
 BUILDIN_FUNC(instance_announce) {
-	unsigned short instance_id = script_getnum(st,2);
+	int instance_id            = script_getnum(st,2);
 	const char     *mes        = script_getstr(st,3);
 	int            flag        = script_getnum(st,4);
 	const char     *fontColor  = script_hasdata(st,5) ? script_getstr(st,5) : NULL;
@@ -20268,7 +20268,7 @@ BUILDIN_FUNC(instance_announce) {
 	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if (instance_id == 0 && idata) {
-		ShowError("buildin_instance_announce: Intance is not found.\n");
+		ShowError("buildin_instance_announce: Instance not found.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -24438,7 +24438,7 @@ BUILDIN_FUNC(getvariableofinstance)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	unsigned short instance_id = script_getnum(st, 3);
+	int instance_id = script_getnum(st, 3);
 
 	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA) {
 		ShowError("buildin_getvariableofinstance: Invalid instance ID %d.\n", instance_id);
