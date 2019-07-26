@@ -61,11 +61,6 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 		}
 
-		if (!this->nodeExists(node, "LimitTime")) {
-			this->invalidWarning(node, "Node \"LimitTime\" is missing.\n");
-			return 0;
-		}
-
 		if (!this->nodeExists(node, "EnterMap")) {
 			this->invalidWarning(node, "Node \"EnterMap\" is missing.\n");
 			return 0;
@@ -101,6 +96,9 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		instance->limit = limit;
+	} else {
+		if (!exists)
+			instance->limit = 3600;
 	}
 
 	if (this->nodeExists(node, "IdleTimeOut")) {
@@ -139,7 +137,7 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 		m = map_mapname2mapid(map.c_str());
 
 		if (!m) {
-			this->invalidWarning(node, "Unknown Enter Map %s, skipping.\n", map.c_str());
+			this->invalidWarning(node, "Unknown Enter Map %s provided.\n", map.c_str());
 			return 0;
 		}
 
@@ -175,12 +173,12 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			m = map_mapname2mapid(map.c_str());
 
 			if (m == instance->enter.map) {
-				this->invalidWarning(map_list["Map"], "Additional Map %s is already listed as the Enter Map, skipping.\n", map.c_str());
+				this->invalidWarning(map_list["Map"], "Additional Map %s is already listed as the EnterMap, skipping.\n", map.c_str());
 				continue;
 			}
 
 			if (!m) {
-				this->invalidWarning(map_list["Map"], "Unknown Additional Map %s, skipping.\n", map.c_str());
+				this->invalidWarning(map_list["Map"], "Unknown Additional Map %s provided.\n", map.c_str());
 				return 0;
 			}
 
@@ -194,7 +192,6 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	return 1;
 }
 
-/*
 bool InstanceDatabase::reload() {
 	if (!TypesafeYamlDatabase::reload()) {
 		return false;
@@ -202,7 +199,6 @@ bool InstanceDatabase::reload() {
 
 	return true;
 }
-*/
 
 InstanceDatabase instance_db;
 
@@ -653,7 +649,7 @@ int instance_create(int owner_id, const char *name, enum e_instance_mode mode) {
 	clif_instance_create(instance_id, instance_wait.id.size());
 	instance_subscription_timer(0,0,0,0);
 
-	ShowInfo("[Instance] Created: %s (%hu).\n", name, instance_id);
+	ShowInfo("[Instance] Created: %s (%d).\n", name, instance_id);
 
 	// Start the instance timer on instance creation
 	instance_startkeeptimer(entry, instance_id);
@@ -690,7 +686,7 @@ int instance_addmap(int instance_id) {
 
 	// Add initial map
 	if ((m = map_addinstancemap(db->enter.map, instance_id)) < 0) {
-		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%hu).\n", db->name.c_str(), instance_id);
+		ShowError("instance_addmap: Failed to create initial map for instance '%s' (%d).\n", db->name.c_str(), instance_id);
 		return 0;
 	}
 
@@ -703,7 +699,7 @@ int instance_addmap(int instance_id) {
 	// Add extra maps (if any)
 	for (const auto &it : db->maplist) {
 		if ((m = map_addinstancemap(it, instance_id)) < 0) { // An error occured adding a map
-			ShowError("instance_addmap: No maps added to instance '%s' (%hu).\n", db->name.c_str(), instance_id);
+			ShowError("instance_addmap: No maps added to instance '%s' (%d).\n", db->name.c_str(), instance_id);
 			return 0;
 		} else {
 			entry.m = m;
@@ -767,10 +763,10 @@ int16 instance_mapid(int16 m, int instance_id)
 
 			if (!(strchr(iname, '@')) && strlen(iname) > 8) {
 				memmove((void*)iname, iname + (strlen(iname) - 9), strlen(iname));
-				snprintf(alt_name, sizeof(alt_name), "%hu#%s", instance_id, iname);
+				snprintf(alt_name, sizeof(alt_name), "%d#%s", instance_id, iname);
 			}
 			else
-				snprintf(alt_name, sizeof(alt_name), "%.3hu%s", instance_id, iname);
+				snprintf(alt_name, sizeof(alt_name), "%.3d%s", instance_id, iname);
 			return map_mapname2mapid(alt_name);
 		}
 	}
@@ -884,7 +880,7 @@ bool instance_destroy(int instance_id)
 	if( idata->regs.arrays )
 		idata->regs.arrays->destroy(idata->regs.arrays, script_free_array_db);
 
-	ShowInfo("[Instance] Destroyed %hu.\n", instance_id);
+	ShowInfo("[Instance] Destroyed %d.\n", instance_id);
 
 	instances.erase(instance_id);
 
@@ -1061,14 +1057,6 @@ bool instance_delusers(int instance_id)
 		instance_startidletimer(idata, instance_id);
 
 	return true;
-}
-
-/**
- * Reload the instance database
- */
-void instance_db_reload(void) {
-	instance_db.clear();
-	instance_db.load();
 }
 
 /**

@@ -17462,7 +17462,7 @@ void clif_instance_create(unsigned short instance_id, int num)
 	if (!sd)
 		return;
 
-	auto db = instance_db.find(instance_search(instance_id)->id);
+	std::shared_ptr<s_instance_db> db = instance_search_db(instance_id);
 
 	if (!db)
 		return;
@@ -17512,7 +17512,7 @@ void clif_instance_status(unsigned short instance_id, unsigned int limit1, unsig
 	if (!sd)
 		return;
 
-	auto db = instance_db.find(instance_search(instance_id)->id);
+	std::shared_ptr<s_instance_db> db = instance_search_db(instance_id);
 
 	if (!db)
 		return;

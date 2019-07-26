@@ -24,7 +24,7 @@
 ###########################################################################
 # - Id              Unique Instance ID.
 #   Name            Unique Instance Name.
-#   LimitTime       Total lifetime of instance in seconds.
+#   LimitTime       Total lifetime of instance in seconds. (Default: 3600)
 #   IdleTimeOut     Time before an idle instance is destroyed in seconds. (Default: 300)
 #   EnterMap        Map Name where players start.
 #   EnterX          X Coordinate where players start.
@@ -59,7 +59,6 @@ Body:
       - Map: "2@cata"
   - Id: 3
     Name: "Orc's Memory"
-    LimitTime: 3600
     EnterMap: "1@orcs" 
     EnterX: 179
     EnterY: 15
@@ -81,7 +80,6 @@ Body:
     EnterY: 29
   - Id: 6
     Name: "Culvert"
-    LimitTime: 3600
     EnterMap: "1@pump"
     EnterX: 63
     EnterY: 98
@@ -89,19 +87,16 @@ Body:
       - Map: "2@pump"
   - Id: 7
     Name: "Octopus Cave"
-    LimitTime: 3600
     EnterMap: "1@cash"
     EnterX: 199
     EnterY: 99
   - Id: 8
     Name: "Bangungot Hospital 2F"
-    LimitTime: 3600
     EnterMap: "1@ma_h"
     EnterX: 40
     EnterY: 157
   - Id: 9
     Name: "Buwaya Cave"
-    LimitTime: 3600
     EnterMap: "1@ma_c"
     EnterX: 35
     EnterY: 57
@@ -119,7 +114,6 @@ Body:
     EnterY: 148
   - Id: 12
     Name: "Old Glast Heim"
-    LimitTime: 3600
     EnterMap: "1@gl_k"
     EnterX: 150
     EnterY: 20
@@ -133,7 +127,6 @@ Body:
     EnterY: 50
   - Id: 14
     Name: "Sara's Memories"
-    LimitTime: 3600
     EnterMap: "1@sara"
     EnterX: 250
     EnterY: 155
@@ -148,25 +141,21 @@ Body:
       - Map: "1@ge_st"
   - Id: 16
     Name: "Horror Toy Factory"
-    LimitTime: 3600
     EnterMap: "1@xm_d"
     EnterX: 111
     EnterY: 22
   - Id: 17
     Name: "Faceworm's Nest"
-    LimitTime: 3600
     EnterMap: "1@face"
     EnterX: 112
     EnterY: 370
   - Id: 18
     Name: "Ghost Palace"
-    LimitTime: 3600
     EnterMap: "1@spa"
     EnterX: 42
     EnterY: 196
   - Id: 19
     Name: "Devil's Tower"
-    LimitTime: 3600
     EnterMap: "1@tnm1"
     EnterX: 50
     EnterY: 104
@@ -175,7 +164,6 @@ Body:
       - Map: "1@tnm3"
   - Id: 20
     Name: "Assault on the Airship"
-    LimitTime: 3600
     EnterMap: "1@air1"
     EnterX: 244
     EnterY: 73
@@ -183,31 +171,26 @@ Body:
       - Map: "1@air2"
   - Id: 21
     Name: "Fenrir and Sarah"
-    LimitTime: 3600
     EnterMap: "1@glast"
     EnterX: 367
     EnterY: 304
 #  - Id: 22
 #    Name: "Wave Mode - Forest"
-#    LimitTime: 3600
 #    EnterMap: "1@def01"
 #    EnterX: 50
 #    EnterY: 21
 #  - Id: 23
 #    Name: "Wave Mode - Sky"
-#    LimitTime: 3600
 #    EnterMap: "1@def02"
 #    EnterX: 29
 #    EnterY: 35
   - Id: 24
     Name: "Nightmarish Jitterbug"
-    LimitTime: 3600
     EnterMap: "1@jtb"
     EnterX: 16
     EnterY: 17
   - Id: 25
     Name: "Isle of Bios"
-    LimitTime: 3600
     EnterMap: "1@dth1"
     EnterX: 17
     EnterY: 93
@@ -216,49 +199,41 @@ Body:
       - Map: "1@dth3"
   - Id: 26
     Name: "Morse's Cave"
-    LimitTime: 3600
     EnterMap: "1@rev"
     EnterX: 26
     EnterY: 181
 #  - Id: 27
 #    Name: "Temple of the Demon God"
-#    LimitTime: 3600
 #    EnterMap: "1@eom"
 #    EnterX: 101
 #    EnterY: 16
   - Id: 28
     Name: "Central Laboratory"
-    LimitTime: 3600
     EnterMap: "1@lab"
     EnterX: 120
     EnterY: 30
   - Id: 29
     Name: "Last room"
-    LimitTime: 3600
     EnterMap: "1@uns"
     EnterX: 145
     EnterY: 35
 #  - Id: 30
 #    Name: "Charleston in Distress"
-#    LimitTime: 3600
 #    EnterMap: "1@mcd"
 #    EnterX: 127
 #    EnterY: 282
   - Id: 31
     Name: "Ritual of Blessing"
-    LimitTime: 3600
     EnterMap: "2@mir"
     EnterX: 101
     EnterY: 12
   - Id: 32
     Name: "Room of Consciousness"
-    LimitTime: 3600
     EnterMap: "1@mir"
     EnterX: 101
     EnterY: 10
 #  - Id: 33
 #    Name: "Sky Fortress Invasion"
-#    LimitTime: 3600
 #    EnterMap: "1@sthb"
 #    EnterX: 54
 #    EnterY: 67
