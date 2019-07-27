@@ -24057,12 +24057,13 @@ static inline bool mail_sub( struct script_state *st, struct script_data *data, 
 	return true;
 }
 
+// mail <destination id>,"<sender name>","<title>","<body>"{,<zeny>{,<item id array>,<item amount array>{,refine{,<item card0 array>{,<item card1 array>{,<item card2 array>{,<item card3 array>{, <random option id0 array>, <random option value0 array>, <random option paramter0 array>{, <random option id1 array>, <random option value1 array>, <random option paramter1 array>{, <random option id2 array>, <random option value2 array>, <random option paramter2 array>{, <random option id3 array>, <random option value3 array>, <random option paramter3 array>{, <random option id4 array>, <random option value4 array>, <random option paramter4 array>}}}}}}}};
 BUILDIN_FUNC(mail){
 	const char *sender, *title, *body, *name;
 	struct mail_message msg;
 	struct script_data *data;
 	struct map_session_data *sd = NULL;
-	unsigned int i, j, k, num_items, start, end;
+	unsigned int i, j, k, num_items, start, end, ref;
 	int32 id;
 
 	memset(&msg, 0, sizeof(struct mail_message));
@@ -24180,12 +24181,42 @@ BUILDIN_FUNC(mail){
 			}
 		}
 
-		// Cards
-		if( !script_hasdata(st,9) ){
+		// Refine
+		if (!script_hasdata(st, 9)) {
 			break;
 		}
 
-		for( i = 0, j = 9; i < MAX_SLOTS && script_hasdata(st,j); i++, j++ ){
+		data = script_getdata(st, 9);
+
+		if (!mail_sub(st, data, sd, 9, &name, &start, &end, &id)) {
+			return SCRIPT_CMD_FAILURE;
+		}
+
+		for (i = 0; i < num_items && start < end; i++, start++) {
+			struct item_data* item = itemdb_exists(msg.item[i].nameid);
+
+			ref = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id, start), reference_getref(data)));
+
+			script_removetop(st, -1, 0);
+
+			if (item->type == IT_WEAPON || item->type == IT_ARMOR || item->type == IT_SHADOWGEAR) {
+				if (ref > MAX_REFINE)
+					ref = MAX_REFINE;
+			}
+			else
+				ref = 0;
+			if (ref < 0)
+				ref = 0;
+
+			msg.item[i].refine = ref;
+		}
+
+		// Cards
+		if( !script_hasdata(st,10) ){
+			break;
+		}
+
+		for( i = 0, j = 10; i < MAX_SLOTS && script_hasdata(st,j); i++, j++ ){
 			data = script_getdata(st,j);
 
 			if( !mail_sub( st, data, sd, j + 1, &name, &start, &end, &id ) ){
@@ -24205,11 +24236,11 @@ BUILDIN_FUNC(mail){
 		}
 	
 		// Random Options
-		if( !script_hasdata(st,9 + MAX_SLOTS) ){
+		if( !script_hasdata(st,10 + MAX_SLOTS) ){
 			break;
 		}
 
-		for( i = 0, j = 9 + MAX_SLOTS; i < MAX_ITEM_RDM_OPT && script_hasdata(st,j) && script_hasdata(st,j + 1) && script_hasdata(st,j + 2); i++, j++ ){
+		for( i = 0, j = 10 + MAX_SLOTS; i < MAX_ITEM_RDM_OPT && script_hasdata(st,j) && script_hasdata(st,j + 1) && script_hasdata(st,j + 2); i++, j++ ){
 			// Option IDs
 			data = script_getdata(st, j);
 
