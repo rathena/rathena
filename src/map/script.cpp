@@ -379,7 +379,7 @@ static struct linkdb_node *sleep_db; // int oid -> struct script_state *
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
 int run_func(struct script_state *st);
-int script_instancegetid(struct script_state *st, enum e_instance_mode mode = IM_NONE);
+int script_instancegetid(struct script_state *st, e_instance_mode mode = IM_NONE);
 
 const char* script_op2name(int op)
 {
@@ -19932,7 +19932,7 @@ BUILDIN_FUNC(bg_get_data)
  * @param mode: Instance mode
  * @return instance ID on success or 0 otherwise
  */
-int script_instancegetid(struct script_state* st, enum e_instance_mode mode)
+int script_instancegetid(struct script_state* st, e_instance_mode mode)
 {
 	int instance_id = 0;
 
@@ -19986,7 +19986,7 @@ int script_instancegetid(struct script_state* st, enum e_instance_mode mode)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_create)
 {
-	enum e_instance_mode mode = IM_PARTY;
+	e_instance_mode mode = IM_PARTY;
 	int owner_id = 0;
 
 	if (script_hasdata(st, 3)) {
@@ -20267,7 +20267,7 @@ BUILDIN_FUNC(instance_announce) {
 
 	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
-	if (instance_id == 0 && idata) {
+	if (instance_id == 0 || !idata) {
 		ShowError("buildin_instance_announce: Instance not found.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
@@ -20483,7 +20483,7 @@ BUILDIN_FUNC(instance_info)
 
 	switch( type ){
 		case IIT_ID:
-			script_pushint(st, db->id);
+			script_pushint(st, db->db_id);
 			break;
 		case IIT_TIME_LIMIT:
 			script_pushint(st, db->limit);

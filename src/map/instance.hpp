@@ -26,7 +26,6 @@ extern int16 instance_start;
 #define INSTANCE_NAME_LENGTH (60+1)
 
 enum e_instance_state : uint8 {
-	INSTANCE_FREE,
 	INSTANCE_IDLE,
 	INSTANCE_BUSY
 };
@@ -53,9 +52,9 @@ struct s_instance_map {
 
 /// Instance data
 struct s_instance_data {
-	int id; ///< Instance DB ID
-	enum e_instance_state state; ///< State of instance
-	enum e_instance_mode mode; ///< Mode of instance
+	int id; ///< Instance ID
+	e_instance_state state; ///< State of instance
+	e_instance_mode mode; ///< Mode of instance
 	int owner_id; ///< Owner ID of instance
 	unsigned int keep_limit; ///< Life time of instance
 	int keep_timer; ///< Remaining life time of instance
@@ -67,7 +66,7 @@ struct s_instance_data {
 
 /// Instance DB entry
 struct s_instance_db {
-	int id; ///< Instance ID
+	int db_id; ///< Instance DB ID
 	std::string name; ///< Instance name
 	unsigned int limit, ///< Duration limit
 		timeout; ///< Timeout limit
@@ -89,16 +88,16 @@ public:
 
 extern InstanceDatabase instance_db;
 
-extern std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
+extern std::vector<std::shared_ptr<s_instance_data>> instances;
 
 std::shared_ptr<s_instance_data> instance_search(int instance_id);
 std::shared_ptr<s_instance_db> instance_search_db(int instance_id);
 std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
 void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_target *target);
 
-int instance_create(int owner_id, const char *name, enum e_instance_mode mode);
+int instance_create(int owner_id, const char *name, e_instance_mode mode);
 bool instance_destroy(int instance_id);
-enum e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, const char *name, short x, short y);
+e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, const char *name, short x, short y);
 bool instance_reqinfo(struct map_session_data *sd, int instance_id);
 bool instance_addusers(int instance_id);
 bool instance_delusers(int instance_id);

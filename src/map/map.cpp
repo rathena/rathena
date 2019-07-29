@@ -2692,11 +2692,11 @@ int map_addinstancemap(int src_m, unsigned short instance_id)
 	if(src_m < 0)
 		return -1;
 
-	const char *iname = map_mapid2mapname(src_m);
+	const char *name = map_mapid2mapname(src_m);
 
-	if(strlen(iname) > 20) {
+	if(strlen(name) > 20) {
 		// against buffer overflow
-		ShowError("map_addinstancemap: can't add long map name \"%s\"\n", iname);
+		ShowError("map_addinstancemap: can't add long map name \"%s\"\n", name);
 		return -2;
 	}
 
@@ -2718,12 +2718,15 @@ int map_addinstancemap(int src_m, unsigned short instance_id)
 
 	struct map_data *src_map = map_getmapdata(src_m);
 	struct map_data *dst_map = map_getmapdata(dst_m);
+	char iname[MAP_NAME_LENGTH];
+
+	strcpy(iname, name);
 
 	// Alter the name
 	// Due to this being custom we only worry about preserving as many characters as necessary for accurate map distinguishing
 	// This also allows us to maintain complete independence with main map functions
 	if((strchr(iname,'@') == NULL) && strlen(iname) > 8) {
-		memmove((void*)iname, iname+(strlen(iname)-9), strlen(iname));
+		memmove(iname, iname+(strlen(iname)-9), strlen(iname));
 		snprintf(dst_map->name, sizeof(dst_map->name),"%hu#%s", instance_id, iname);
 	} else
 		snprintf(dst_map->name, sizeof(dst_map->name),"%.3hu%s", instance_id, iname);
@@ -2761,7 +2764,7 @@ int map_addinstancemap(int src_m, unsigned short instance_id)
 
 	map_data_copy(dst_map, src_map);
 
-	ShowInfo("[Instance] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, iname, src_map->m);
+	ShowInfo("[Instance] Created map '%s' ('%d') from map '%s' ('%d')\n", dst_map->name, dst_map->m, name, src_map->m);
 
 	map_addmap2db(dst_map);
 
