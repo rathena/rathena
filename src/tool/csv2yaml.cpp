@@ -118,7 +118,7 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 
 	node["Id"] = str[0];
 	node["Name"] = str[1];
-	node["LimitTime"] = str[2];
+	node["TimeLimit"] = str[2];
 	node["IdleTimeOut"] = str[3];
 
 	node["EnterMap"] = str[4];

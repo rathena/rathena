@@ -24,7 +24,7 @@
 ###########################################################################
 # - Id              Unique Instance ID.
 #   Name            Unique Instance Name.
-#   LimitTime       Total lifetime of instance in seconds. (Default: 3600)
+#   TimeLimit       Total lifetime of instance in seconds. (Default: 3600)
 #   IdleTimeOut     Time before an idle instance is destroyed in seconds. (Default: 300)
 #   EnterMap        Map Name where players start.
 #   EnterX          X Coordinate where players start.

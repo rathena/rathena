@@ -40,6 +40,7 @@ struct mail_message;
 struct achievement;
 struct guild_log_entry;
 enum e_guild_storage_log : uint16;
+enum e_instance_notify : uint8;
 
 enum e_PacketDBVersion { // packet DB
 	MIN_PACKET_DB  = 0x064,
@@ -824,8 +825,8 @@ void clif_sendbgemblem_single(int fd, struct map_session_data *sd);
 // Instancing
 void clif_instance_create(int instance_id, int num);
 void clif_instance_changewait(int instance_id, int num);
-void clif_instance_status(int instance_id, unsigned int limit1, unsigned int limit2);
-void clif_instance_changestatus(int instance_id, int type, unsigned int limit);
+void clif_instance_status(int instance_id, time_t limit1, time_t limit2);
+void clif_instance_changestatus(int instance_id, e_instance_notify type, time_t limit);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);

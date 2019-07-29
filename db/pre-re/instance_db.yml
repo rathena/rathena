@@ -24,7 +24,7 @@
 ###########################################################################
 # - Id              Unique Instance ID.
 #   Name            Unique Instance Name.
-#   LimitTime       Total lifetime of instance in seconds. (Default: 3600)
+#   TimeLimit       Total lifetime of instance in seconds. (Default: 3600)
 #   IdleTimeOut     Time before an idle instance is destroyed in seconds. (Default: 300)
 #   EnterMap        Map Name where players start.
 #   EnterX          X Coordinate where players start.
@@ -39,7 +39,7 @@ Header:
 Body:
   - Id: 1
     Name: "Endless Tower"
-    LimitTime: 14400
+    TimeLimit: 14400
     EnterMap: "1@tower"
     EnterX: 50
     EnterY: 355
@@ -51,7 +51,7 @@ Body:
       - Map: "6@tower"
   - Id: 2
     Name: "Sealed Catacomb"
-    LimitTime: 7200
+    TimeLimit: 7200
     EnterMap: "1@cata"
     EnterX: 100
     EnterY: 224
@@ -66,7 +66,7 @@ Body:
       - Map: "2@orcs"
   - Id: 4
     Name: "Nidhoggur's Nest"
-    LimitTime: 14400
+    TimeLimit: 14400
     EnterMap: "1@nyd"
     EnterX: 32
     EnterY: 36

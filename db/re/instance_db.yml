@@ -24,7 +24,7 @@
 ###########################################################################
 # - Id              Unique Instance ID.
 #   Name            Unique Instance Name.
-#   LimitTime       Total lifetime of instance in seconds. (Default: 3600)
+#   TimeLimit       Total lifetime of instance in seconds. (Default: 3600)
 #   IdleTimeOut     Time before an idle instance is destroyed in seconds. (Default: 300)
 #   EnterMap        Map Name where players start.
 #   EnterX          X Coordinate where players start.
@@ -39,7 +39,7 @@ Header:
 Body:
   - Id: 1
     Name: "Endless Tower"
-    LimitTime: 14400
+    TimeLimit: 14400
     EnterMap: "1@tower"
     EnterX: 50
     EnterY: 355
@@ -51,7 +51,7 @@ Body:
       - Map: "6@tower"
   - Id: 2
     Name: "Sealed Catacomb"
-    LimitTime: 7200
+    TimeLimit: 7200
     EnterMap: "1@cata"
     EnterX: 100
     EnterY: 224
@@ -66,7 +66,7 @@ Body:
       - Map: "2@orcs"
   - Id: 4
     Name: "Nidhoggur's Nest"
-    LimitTime: 14400
+    TimeLimit: 14400
     EnterMap: "1@nyd"
     EnterX: 32
     EnterY: 36
@@ -74,7 +74,7 @@ Body:
       - Map: "2@nyd"
   - Id: 5
     Name: "Mistwood Maze"
-    LimitTime: 7200
+    TimeLimit: 7200
     EnterMap: "1@mist"
     EnterX: 89
     EnterY: 29
@@ -102,13 +102,13 @@ Body:
     EnterY: 57
   - Id: 10
     Name: "Bakonawa Lake"
-    LimitTime: 7200
+    TimeLimit: 7200
     EnterMap: "1@ma_b"
     EnterX: 64
     EnterY: 51
   - Id: 11
     Name: "Wolfchev's Laboratory"
-    LimitTime: 14400
+    TimeLimit: 14400
     EnterMap: "1@lhz"
     EnterX: 45
     EnterY: 148
@@ -121,7 +121,7 @@ Body:
       - Map: "2@gl_k"
   - Id: 13
     Name: "Eclage Interior"
-    LimitTime: 1200
+    TimeLimit: 1200
     EnterMap: "1@ecl"
     EnterX: 60
     EnterY: 50
@@ -132,7 +132,7 @@ Body:
     EnterY: 155
   - Id: 15
     Name: "Geffen Magic Tournament"
-    LimitTime: 7200
+    TimeLimit: 7200
     EnterMap: "1@gef"
     EnterX: 119
     EnterY: 209

@@ -94,10 +94,10 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 		instance->name = name;
 	}
 
-	if (this->nodeExists(node, "LimitTime")) {
+	if (this->nodeExists(node, "TimeLimit")) {
 		uint32 limit;
 
-		if (!this->asUInt32(node, "LimitTime", limit))
+		if (!this->asUInt32(node, "TimeLimit", limit))
 			return 0;
 
 		instance->limit = limit;
@@ -217,7 +217,7 @@ std::shared_ptr<s_instance_data> instance_search(int instance_id)
 	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
 		return nullptr;
 
-	return instances[instance_id];
+	return instances[instance_id]->id ? instances[instance_id] : nullptr;
 }
 
 /**
@@ -373,7 +373,7 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 		return false;
 
 	// Add timer
-	idata->keep_limit = (unsigned int)time(NULL) + db->limit;
+	idata->keep_limit = time(NULL) + db->limit;
 	idata->keep_timer = add_timer(gettick()+db->limit*1000, instance_delete_timer, instance_id, 0);
 
 	switch(idata->mode) {
@@ -420,7 +420,7 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 		return false;
 
 	// Add the timer
-	idata->idle_limit = (unsigned int)time(NULL) + db->timeout;
+	idata->idle_limit = time(NULL) + db->timeout;
 	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
 	switch(idata->mode) {
@@ -471,19 +471,19 @@ bool instance_stopidletimer(std::shared_ptr<s_instance_data> idata, int instance
 			break;
 		case IM_CHAR:
 			if (map_charid2sd(idata->owner_id)) // Notify the player
-				clif_instance_changestatus(instance_id, 0, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
 			break;
 		case IM_PARTY:
 			if (party_search(idata->owner_id)) // Notify the party
-				clif_instance_changestatus(instance_id, 0, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
 			break;
 		case IM_GUILD:
 			if (guild_search(idata->owner_id)) // Notify the guild
-				clif_instance_changestatus(instance_id, 0, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
 			break;
 		case IM_CLAN:
 			if (clan_search(idata->owner_id)) // Notify the clan
-				clif_instance_changestatus(instance_id, 0, idata->idle_limit);
+				clif_instance_changestatus(instance_id, IN_NOTIFY, idata->idle_limit);
 			break;
 		default:
 			return false;
@@ -691,7 +691,7 @@ int instance_addmap(int instance_id) {
 
 	// Set to busy, update timers
 	idata->state = INSTANCE_BUSY;
-	idata->idle_limit = (unsigned int)time(NULL) + db->timeout;
+	idata->idle_limit = time(NULL) + db->timeout;
 	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
 	int16 m;
@@ -802,9 +802,9 @@ bool instance_destroy(int instance_id)
 	struct party_data *pd;
 	struct guild *gd;
 	struct clan *cd;
-	int type;
 	unsigned int now = (unsigned int)time(NULL);
 	e_instance_mode mode = idata->mode;
+	e_instance_notify type;
 
 	switch(mode) {
 		case IM_NONE:
@@ -838,17 +838,17 @@ bool instance_destroy(int instance_id)
 					instance_wait.timer = add_timer(gettick()+INSTANCE_INTERVAL, instance_subscription_timer, 0, 0);
 				else
 					instance_wait.timer = INVALID_TIMER;
-				type = 0;
+				type = IN_NOTIFY;
 				break;
 			}
 		}
 	} else {
 		if(idata->keep_limit && idata->keep_limit <= now)
-			type = 1;
+			type = IN_DESTROY_LIVE_TIMEOUT;
 		else if(idata->idle_limit && idata->idle_limit <= now)
-			type = 2;
+			type = IN_DESTROY_ENTER_TIMEOUT;
 		else
-			type = 3;
+			type = IN_DESTROY_USER_REQUEST;
 
 		// Run OnInstanceDestroy on all NPCs in the instance
 		for (const auto &it : idata->map) {
