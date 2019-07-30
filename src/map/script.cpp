@@ -24063,7 +24063,7 @@ BUILDIN_FUNC(mail){
 	struct mail_message msg;
 	struct script_data *data;
 	struct map_session_data *sd = NULL;
-	unsigned int i, j, k, num_items, start, end, ref;
+	unsigned int i, j, k, num_items, start, end;
 	int32 id;
 
 	memset(&msg, 0, sizeof(struct mail_message));
@@ -24183,6 +24183,7 @@ BUILDIN_FUNC(mail){
 
 		// Refine
 		if (!script_hasdata(st, 9)) {
+			ShowError("buildin_mail: missing item refine variable at position %d.\n", 9);
 			break;
 		}
 
@@ -24195,20 +24196,18 @@ BUILDIN_FUNC(mail){
 		for (i = 0; i < num_items && start < end; i++, start++) {
 			struct item_data* item = itemdb_exists(msg.item[i].nameid);
 
-			ref = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id, start), reference_getref(data)));
+			msg.item[i].refine = (int32)__64BPRTSIZE(get_val2(st, reference_uid(id, start), reference_getref(data)));
 
 			script_removetop(st, -1, 0);
 
-			if (item->type == IT_WEAPON || item->type == IT_ARMOR || item->type == IT_SHADOWGEAR) {
-				if (ref > MAX_REFINE)
-					ref = MAX_REFINE;
+			if (!item->flag.no_refine && (item->type == IT_WEAPON || item->type == IT_ARMOR || item->type == IT_SHADOWGEAR)) {
+				if (msg.item[i].refine > MAX_REFINE)
+					msg.item[i].refine = MAX_REFINE;
 			}
 			else
-				ref = 0;
-			if (ref < 0)
-				ref = 0;
-
-			msg.item[i].refine = ref;
+				msg.item[i].refine = 0;
+			if (msg.item[i].refine < 0)
+				msg.item[i].refine = 0;
 		}
 
 		// Cards
