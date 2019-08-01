@@ -12299,7 +12299,7 @@ REPLACE INTO `item_db_re` VALUES (28038,'Meuchler-OS','Meuchler-OS',5,20,NULL,13
 # New Axes
 #===================================================================
 REPLACE INTO `item_db_re` VALUES (28100,'Thanos_Axe','Thanos Axe',5,10,NULL,4000,'300:80',NULL,1,1,0x000444A2,56,2,34,4,'120',1,7,'bonus bInt,6; bonus bVit,6; bonus bLuk,-6; bonus2 bHPDrainRate,50,5; bonus2 bSPDrainRate,10,5; bonus2 bHPLossRate,100,10000;',NULL,'heal -1000,0;');
-REPLACE INTO `item_db_re` VALUES (28101,'Tornado_Axe','Axe Tornado',5,10,NULL,4000,'320',NULL,NULL,1,0x00000400,56,2,34,4,'130',1,7,'bonus bAtkEle,Ele_Wind; bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (28101,'Tornado_Axe','Axe Tornado',5,10,NULL,4000,'320',NULL,NULL,1,0x00000400,56,2,34,4,'100',1,7,'bonus bAtkEle,Ele_Wind; bonus2 bSkillCooldown,"NC_AXETORNADO",-1000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28102,'Half_BF_Two_Handed_Axe1','Half BF Two Handed Axe1',5,20,NULL,0,'200',NULL,1,0,0x000444A2,63,2,34,3,'80',1,7,'bonus bStr,3; bonus2 bAddRace,RC_DemiHuman,30; bonus2 bAddRace,RC_Player,30; bonus2 bIgnoreDefRaceRate,RC_DemiHuman,10; bonus2 bIgnoreDefRaceRate,RC_Player,10; bonus bUnbreakableWeapon;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28103,'Ru_Blue_Axe_M','Blue Twohand Axe',5,10,NULL,3000,'330',NULL,1,1,0x00000400,56,2,34,3,'1',1,7,'bonus bStr,5; bonus bVit,5;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (28104,'Ru_Gold_Axe_M','Ru Gold Axe M',5,0,NULL,3000,'330',NULL,1,2,0x00000400,56,2,34,3,'120',1,7,'bonus bStr,8; bonus bVit,8;',NULL,NULL);
