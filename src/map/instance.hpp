@@ -21,8 +21,6 @@ struct block_list;
 
 extern int16 instance_start;
 
-#define MAX_INSTANCE_DATA 300 // Maximum amount of instances
-
 #define INSTANCE_NAME_LENGTH (60+1)
 
 enum e_instance_state : uint8 {
@@ -64,9 +62,9 @@ struct s_instance_data {
 	e_instance_state state; ///< State of instance
 	e_instance_mode mode; ///< Mode of instance
 	int owner_id; ///< Owner ID of instance
-	time_t keep_limit; ///< Life time of instance
+	t_tick keep_limit; ///< Life time of instance
 	int keep_timer; ///< Life time ID
-	time_t idle_limit; ///< Idle time of instance
+	t_tick idle_limit; ///< Idle time of instance
 	int idle_timer; ///< Idle timer ID
 	struct reg_db regs; ///< Instance variables for scripts
 	std::vector<s_instance_map> map; ///< Array of maps in instance

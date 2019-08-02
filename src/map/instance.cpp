@@ -52,8 +52,8 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!this->asUInt32(node, "Id", instance_id))
 		return 0;
 
-	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA) {
-		this->invalidWarning(node, "Instance \"Id\" is invalid. Valid range 1~%d, skipping.\n", MAX_INSTANCE_DATA);
+	if (instance_id == 0 || instance_id > INT_MAX) {
+		this->invalidWarning(node, "Instance \"Id\" is invalid. Valid range 1~%d, skipping.\n", INT_MAX);
 		return 0;
 	}
 
@@ -61,25 +61,8 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = instance != nullptr;
 
 	if (!exists) {
-		if (!this->nodeExists(node, "Name")) {
-			this->invalidWarning(node, "Node \"Name\" is missing.\n");
+		if (!this->nodesExist(node, { "Name", "EnterMap", "EnterX", "EnterY" }))
 			return 0;
-		}
-
-		if (!this->nodeExists(node, "EnterMap")) {
-			this->invalidWarning(node, "Node \"EnterMap\" is missing.\n");
-			return 0;
-		}
-
-		if (!this->nodeExists(node, "EnterX")) {
-			this->invalidWarning(node, "Node \"EnterX\" is missing.\n");
-			return 0;
-		}
-
-		if (!this->nodeExists(node, "EnterY")) {
-			this->invalidWarning(node, "Node \"EnterY\" is missing.\n");
-			return 0;
-		}
 
 		instance = std::make_shared<s_instance_db>();
 		instance->db_id = instance_id;
@@ -142,7 +125,7 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 		m = map_mapname2mapid(map.c_str());
 
 		if (!m) {
-			this->invalidWarning(node, "Unknown Enter Map %s provided.\n", map.c_str());
+			this->invalidWarning(node, "\"EnterMap\" %s is not a valid map, skipping.\n", map.c_str());
 			return 0;
 		}
 
@@ -178,12 +161,12 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			m = map_mapname2mapid(map.c_str());
 
 			if (m == instance->enter.map) {
-				this->invalidWarning(map_list["Map"], "Additional Map %s is already listed as the EnterMap, skipping.\n", map.c_str());
+				this->invalidWarning(map_list["Map"], "\"AdditionalMap\" %s is already listed as the EnterMap.\n", map.c_str());
 				continue;
 			}
 
 			if (!m) {
-				this->invalidWarning(map_list["Map"], "Unknown Additional Map %s provided.\n", map.c_str());
+				this->invalidWarning(map_list["Map"], "\"AdditionalMap\" %s is not a valid map, skipping.\n", map.c_str());
 				return 0;
 			}
 
@@ -214,7 +197,7 @@ InstanceDatabase instance_db;
  */
 std::shared_ptr<s_instance_data> instance_search(int instance_id)
 {
-	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
+	if (instance_id == 0 || instance_id > INT_MAX)
 		return nullptr;
 
 	return instances[instance_id]->id ? instances[instance_id] : nullptr;
@@ -227,7 +210,7 @@ std::shared_ptr<s_instance_data> instance_search(int instance_id)
  */
 std::shared_ptr<s_instance_db> instance_search_db(int instance_id)
 {
-	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA)
+	if (instance_id == 0 || instance_id > INT_MAX)
 		return nullptr;
 
 	return instance_db.find(instance_id);
@@ -258,13 +241,13 @@ void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_tar
 	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
 
 	if (!idata) {
-		sd = NULL;
+		sd = nullptr;
 		return;
 	}
 
 	switch(idata->mode) {
 		case IM_NONE:
-			sd = NULL;
+			sd = nullptr;
 			(*target) = SELF;
 			break;
 		case IM_GUILD:
@@ -373,8 +356,10 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 		return false;
 
 	// Add timer
-	idata->keep_limit = time(NULL) + db->limit;
-	idata->keep_timer = add_timer(gettick()+db->limit*1000, instance_delete_timer, instance_id, 0);
+	t_tick now = gettick();
+
+	idata->keep_limit = now + db->limit;
+	idata->keep_timer = add_timer(now + db->limit * 1000, instance_delete_timer, instance_id, 0);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -420,8 +405,10 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 		return false;
 
 	// Add the timer
-	idata->idle_limit = time(NULL) + db->timeout;
-	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	t_tick now = gettick();
+
+	idata->idle_limit = now + db->timeout;
+	idata->idle_timer = add_timer(now + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -615,12 +602,12 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 			return -2;
 	}
 
-	if (instances.size() > MAX_INSTANCE_DATA)
+	if (instances.size() > INT_MAX)
 		return -4;
 
-	int instance_id;
+	int instance_id = 1;
 
-	for (int i = 0; i < instances.size(); i++) { // Find an unused index value
+	for (int i = 1; i < instances.size(); i++) { // Find an unused index value
 		if (instance_search(i) == nullptr || i > instances.size()) {
 			instance_id = i;
 			break;
@@ -640,7 +627,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 	entry->idle_limit = 0;
 	entry->idle_timer = INVALID_TIMER;
 	entry->regs.vars = i64db_alloc(DB_OPT_RELEASE_DATA);
-	entry->regs.arrays = NULL;
+	entry->regs.arrays = nullptr;
 
 	switch(mode) {
 		case IM_CHAR:
@@ -690,9 +677,11 @@ int instance_addmap(int instance_id) {
 		return 0;
 
 	// Set to busy, update timers
+	t_tick now = gettick();
+
 	idata->state = INSTANCE_BUSY;
-	idata->idle_limit = time(NULL) + db->timeout;
-	idata->idle_timer = add_timer(gettick() + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	idata->idle_limit = now + db->timeout;
+	idata->idle_timer = add_timer(now + db->timeout * 1000, instance_delete_timer, instance_id, 0);
 
 	int16 m;
 
@@ -802,7 +791,6 @@ bool instance_destroy(int instance_id)
 	struct party_data *pd;
 	struct guild *gd;
 	struct clan *cd;
-	unsigned int now = (unsigned int)time(NULL);
 	e_instance_mode mode = idata->mode;
 	e_instance_notify type;
 
@@ -843,6 +831,8 @@ bool instance_destroy(int instance_id)
 			}
 		}
 	} else {
+		t_tick now = gettick();
+
 		if(idata->keep_limit && idata->keep_limit <= now)
 			type = IN_DESTROY_LIVE_TIMEOUT;
 		else if(idata->idle_limit && idata->idle_limit <= now)
@@ -1093,7 +1083,7 @@ void do_reload_instance(void)
 			std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
 
 			if (db)
-				idata->keep_limit = (unsigned int)time(NULL) + db->limit;
+				idata->keep_limit = gettick() + db->limit;
 		}
 	}
 

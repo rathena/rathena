@@ -825,8 +825,8 @@ void clif_sendbgemblem_single(int fd, struct map_session_data *sd);
 // Instancing
 void clif_instance_create(int instance_id, int num);
 void clif_instance_changewait(int instance_id, int num);
-void clif_instance_status(int instance_id, time_t limit1, time_t limit2);
-void clif_instance_changestatus(int instance_id, e_instance_notify type, time_t limit);
+void clif_instance_status(int instance_id, t_tick limit1, t_tick limit2);
+void clif_instance_changestatus(int instance_id, e_instance_notify type, t_tick limit);
 
 // Custom Fonts
 void clif_font(struct map_session_data *sd);

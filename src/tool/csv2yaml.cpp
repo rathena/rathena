@@ -51,6 +51,7 @@ int getch( void ){
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static size_t pet_read_db( const char* file );
+static bool instance_readdb_sub(char* str[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -113,38 +114,6 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 	return true;
 }
 
-static bool instance_readdb_sub(char* str[], int columns, int current) {
-	YAML::Node node;
-
-	node["Id"] = str[0];
-	node["Name"] = str[1];
-	node["TimeLimit"] = str[2];
-	node["IdleTimeOut"] = str[3];
-
-	node["EnterMap"] = str[4];
-	node["EnterX"] = str[5];
-	node["EnterY"] = str[6];
-
-	if (columns > 7) {
-		for (int i = 0; i < columns; i++) {
-			YAML::Node maps;
-
-			if (!strlen(str[i + 7]))
-				continue;
-
-			if (strcmpi(str[4], str[i + 7]) == 0)
-				continue;
-
-			maps["Map"] = std::string(str[i + 7]);
-			node["AdditionalMaps"][i] = maps;
-		}
-	}
-
-	body[current] = node;
-
-	return true;
-}
-
 int do_init( int argc, char** argv ){
 	const std::string path_db = std::string( db_path );
 	const std::string path_db_mode = path_db + "/" + DBPATH;
@@ -180,17 +149,13 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	// TODO: add implementations ;-)
-	std::vector<std::string> instance_db_paths = {
-		path_db,
-		path_db_import
-	};
-
-	if (process("INSTANCE_DB", 1, instance_db_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (process("INSTANCE_DB", 1, pet_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 7, 7 + MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, false);
 	})) {
 		return 0;
 	}
+
+	// TODO: add implementations ;-)
 
 	return 0;
 }
@@ -634,4 +599,33 @@ static size_t pet_read_db( const char* file ){
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
 
 	return entries;
+}
+
+static bool instance_readdb_sub(char* str[], int columns, int current) {
+	YAML::Node node;
+
+	node["Id"] = str[0];
+	node["Name"] = str[1];
+	node["TimeLimit"] = str[2];
+	node["IdleTimeOut"] = str[3];
+
+	node["EnterMap"] = str[4];
+	node["EnterX"] = str[5];
+	node["EnterY"] = str[6];
+
+	if (columns > 7) {
+		for (int i = 7, count = 0; i < columns; i++) {
+			if (!strlen(str[i]))
+				continue;
+
+			if (strcmpi(str[4], str[i]) == 0)
+				continue;
+
+			node["AdditionalMaps"][count++]["Map"] = std::string(str[i]);
+		}
+	}
+
+	body[current] = node;
+
+	return true;
 }

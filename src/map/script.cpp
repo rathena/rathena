@@ -20561,7 +20561,7 @@ BUILDIN_FUNC(instance_live_info)
 	std::shared_ptr<s_instance_db> db = nullptr;
 	std::shared_ptr<s_instance_data> im = nullptr;
 
-	if (id > 0 && id < MAX_INSTANCE_DATA) {
+	if (id > 0 && id < INT_MAX) {
 		im = instance_search(id);
 
 		if (im)
@@ -24440,7 +24440,7 @@ BUILDIN_FUNC(getvariableofinstance)
 
 	int instance_id = script_getnum(st, 3);
 
-	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA) {
+	if (instance_id == 0 || instance_id > INT_MAX) {
 		ShowError("buildin_getvariableofinstance: Invalid instance ID %d.\n", instance_id);
 		script_pushnil(st);
 		st->state = END;
