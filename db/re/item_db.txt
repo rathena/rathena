@@ -12087,10 +12087,10 @@
 // New Spears
 //===================================================================
 26007,Illusion_Spectral_Spear,Illusion Spectral Spear,5,20,,2000,240,,3,1,0x00004082,63,2,34,4,99,1,5,{ .@r = getrefine(); .@val = 3*(.@r/2); bonus2 bAddEle,Ele_Dark,(20+.@val); bonus2 bAddRace,RC_Demon,(20+.@val); bonus2 bAddRace,RC_Undead,(20+.@val); bonus2 bSubRace,RC_Demon,(10+.@val); bonus2 bSubEle,Ele_Undead,(10+.@val); bonus2 bSubEle,Ele_Dark,(10+.@val); bonus bHPGainValue,50; bonus bSPGainValue,(.@r/2); bonus2 bAddEff2,Eff_Confusion,1000; },{},{}
+26016,Royal_Knight's_Lance,Royal Knight's Lance,5,20,,1000,205,,1,2,0x00004082,63,2,34,3,175,1,5,{ .@r = getrefine(); bonus bLongAtkRate,3*(.@r/2); if (.@r>=7) bonus2 bAddClass,Class_All,5; if (.@r>=9) bonus2 bAddRace,RC_All,15; },{},{}
 //===================================================================
 // New Staves
 //===================================================================
-26016,Royal_Knight's_Lance,Royal Knight's Lance,5,20,,1000,205,,1,2,0x00004082,63,2,34,3,175,1,5,{ .@r = getrefine(); bonus bLongAtkRate,3*(.@r/2); if (.@r>=7) bonus2 bAddClass,Class_All,5; if (.@r>=9) bonus2 bAddRace,RC_All,15; },{},{}
 26100,Paradise_Foxtail_Staff_II,Eden Group Foxtail Staff II,5,20,,0,135:165,,1,0,0x80000000,7,2,2,2,40,0,10,{ bonus bDex,4; bonus bInt,4; bonus bLongAtkRate,6; },{},{}
 26101,Paradise_Foxtail_Staff_III,Eden Group Foxtail Staff III,5,20,,0,150:195,,1,0,0x80000000,7,2,2,3,60,0,10,{ bonus bDex,5; bonus bInt,5; bonus bLongAtkRate,7; },{},{}
 26107,Elder_Staff,Elder Staff,5,0,,500,60:150,,1,3,0x00008110,63,2,2,3,100,1,10,{ .@r = getrefine(); .@bonus = 10; if (.@r>=7) { .@bonus += 5; } if (.@r>=9) { .@bonus += 10; } bonus bHealPower,.@bonus; },{},{}
