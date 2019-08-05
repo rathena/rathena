@@ -4046,8 +4046,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += -100 + 300 * skill_lv;
 				RE_LVL_DMOD(100);
 				skillratio += status_get_str(src) * 3;
-			} else { //[(Skill Level x 50) x (Caster Base Level / 100) + (Caster STR x 2)] %
-				skillratio += -100 + 50 * skill_lv;
+			} else { //[(Skill Level x 400) x (Caster Base Level / 100) + (Caster STR x 2)] %
+				skillratio += -100 + 400 * skill_lv;
 				RE_LVL_DMOD(100);
 				skillratio += status_get_str(src) * 2;
 			}
@@ -4064,8 +4064,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
  			break;
 		case SR_TIGERCANNON:
 			{
-				unsigned int hp = sstatus->max_hp * abs(skill_get_hp_rate(skill_id, skill_lv)) / 100,
-							 sp = sstatus->max_sp * abs(skill_get_sp_rate(skill_id, skill_lv)) / 100;
+				unsigned int hp = sstatus->max_hp * (12 + (skill_lv * 2)) / 100,
+							 sp = sstatus->max_sp * (5 + skill_lv) / 100;
 
 				if (wd->miscflag&8)
 					// Base_Damage = [((Caster consumed HP + SP) / 2) x Caster Base Level / 100] %
@@ -4086,10 +4086,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 
 		case SR_RAMPAGEBLASTER:
 			if (tsc && tsc->data[SC_EARTHSHAKER]) {
-				skillratio += -100 + 550 * skill_lv;
+				skillratio += 1400 + 550 * skill_lv;
 				RE_LVL_DMOD(120);
 			} else {
-				skillratio += -100 + 350 * skill_lv;
+				skillratio += 900 + 350 * skill_lv;
 				RE_LVL_DMOD(150);
 			}
 			if (sc->data[SC_GT_CHANGE])
@@ -4132,8 +4132,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 300 * skill_lv;
 			RE_LVL_DMOD(150);
 			break;
-		case SR_RIDEINLIGHTNING: // ATK [{(Skill Level x 200) + Additional Damage} x Caster Base Level / 100] %
-			skillratio += -100 + 200 * skill_lv;
+		case SR_RIDEINLIGHTNING: // ATK [{(Skill Level x 40) + Additional Damage} x Caster Base Level / 100] %
+			skillratio += -100 + 40 * skill_lv;
 			if (sd && sd->status.weapon == W_KNUCKLE)
 				skillratio += skill_lv * 50;
 			RE_LVL_DMOD(100);
