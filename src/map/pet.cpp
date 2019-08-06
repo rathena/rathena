@@ -600,17 +600,13 @@ int pet_hungry_val(struct pet_data *pd)
  */
 void pet_set_intimate(struct pet_data *pd, int value)
 {
-	int intimate;
-	struct map_session_data *sd;
-
 	nullpo_retv(pd);
-
-	intimate = pd->pet.intimate;
-	sd = pd->master;
 
 	pd->pet.intimate = min(value, PET_INTIMATE_MAX);
 
-	if( sd && ((intimate >= battle_config.pet_equip_min_friendly && pd->pet.intimate < battle_config.pet_equip_min_friendly) || (intimate < battle_config.pet_equip_min_friendly && pd->pet.intimate >= battle_config.pet_equip_min_friendly)) )
+	struct map_session_data *sd = pd->master;
+
+	if (sd)
 		status_calc_pc(sd,SCO_NONE);
 }
 
