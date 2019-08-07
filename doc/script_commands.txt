@@ -3626,7 +3626,7 @@ You can see the full list of available effect types you can possibly inflict in
 ========================
 |3.- Checking commands.|
 ========================
--------------------------
+---------------------------------------
 
 *playerattached()
 
@@ -4000,7 +4000,7 @@ not.
 ==============================
 |4.- Player-related commands.|
 ==============================
--------------------------
+---------------------------------------
 
 *attachrid(<account ID>{,force})
 *detachrid;
@@ -4018,7 +4018,7 @@ even if he is currently attached to another script. Since this is not always the
 desired behavior you can also specify false to the command and it will only return 
 true if the player is online and was not attached to another script.
 
--------------------------
+---------------------------------------
 
 *addrid(<type>{,<flag>{,<parameters>}});
 
