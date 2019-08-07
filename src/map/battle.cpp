@@ -4135,7 +4135,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case SR_RIDEINLIGHTNING: // ATK [{(Skill Level x 40) + Additional Damage} x Caster Base Level / 100] %
 			skillratio += -100 + 40 * skill_lv;
 			if (sd && sd->status.weapon == W_KNUCKLE)
-				skillratio += skill_lv * 50;
+				skillratio += skillratio * 25 / 100;
 			RE_LVL_DMOD(100);
 			break;
 		case WM_REVERBERATION_MELEE:
