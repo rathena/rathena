@@ -11512,7 +11512,7 @@ REPLACE INTO `item_db_re` VALUES (22870,'Xmas_Package_14','Christmas Package',3,
 REPLACE INTO `item_db_re` VALUES (22873,'Sealed_Beelzebub_Scroll_II','Sealed Beelzebub Scroll II',2,10,NULL,10,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'getitem callfunc("F_Rand",22875,6238,6239,6228,6232,24231,24232,17474,6635),1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22874,'Sealed_Beelzebub_Card_Album','Sealed Beelzebub Card Album',2,10,NULL,50,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*No Info*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22875,'Sealed_Beelzebub_Card','Sealed Beelzebub Card',6,20,NULL,10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,769,NULL,NULL,NULL,NULL,'bonus bVariableCastrate,-15; /*Item removed on 2014-12-17*/',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (22876,'Old_Money_Pocket','Old Money Pocket',2,0,NULL,0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Zeny += rand(500,550);',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (22876,'Old_Money_Pocket','Old Money Pocket',2,0,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'Zeny += rand(500,550);',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22881,'Binding_Rope','Rope Gallows',2,10,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*Used to catch a Lost Sheep*/',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22882,'Choco_Tteokguk','Chocolate Rice Cake Soup',2,10,NULL,0,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'percentheal 10,10;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (22883,'September_Gift_Box_','September Gift Box',2,10,NULL,100,NULL,NULL,NULL,NULL,0xFFFFFFFF,63,2,NULL,NULL,NULL,NULL,NULL,'/*2 Lucky Eggs*/',NULL,NULL);
