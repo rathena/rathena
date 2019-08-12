@@ -4916,14 +4916,10 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
 				&& skill_id != LK_SPIRALPIERCE && skill_id != ML_SPIRALPIERCE
 #endif
 		) {
-			int lv = sc->data[SC_AURABLADE]->val1;
 #ifdef RENEWAL
-			static const int bonusarray[5] = { 4, 5, 6, 8, 10 };
-
-			lv += (bonusarray[lv - 1] * status_get_lv(src)) + ((skill_id == LK_SPIRALPIERCE || skill_id == ML_SPIRALPIERCE)?wd->div_:1); // +100 per hit in lv 5
-			ATK_ADD(wd->damage, wd->damage2, lv);
+			ATK_ADD(wd->damage, wd->damage2, (3 + sc->data[SC_AURABLADE]->val1) * status_get_lv(src)); // !TODO: Confirm formula
 #else
-			ATK_ADD(wd->damage, wd->damage2, 20*lv);
+			ATK_ADD(wd->damage, wd->damage2, 20 * sc->data[SC_AURABLADE]->val1);
 #endif
 		}
 	}
