@@ -462,6 +462,9 @@ function	script	F_KafEnd	{
 		mes "^666666Kaffffra n-never";
 		mes "diiiiiiiiiiiiiies. On...";
 		mes "On y-yooour siiiiide~^000000";
+	} else if (.@type == 2) {// RockRidge Save
+		mes "Saved.";
+		mes "Thank you for your patronage.";
 	}
 	close3;
 }

@@ -379,7 +379,7 @@ static struct linkdb_node *sleep_db; // int oid -> struct script_state *
  *------------------------------------------*/
 const char* parse_subexpr(const char* p,int limit);
 int run_func(struct script_state *st);
-unsigned short script_instancegetid(struct script_state *st);
+unsigned short script_instancegetid(struct script_state *st, enum instance_mode mode = IM_NONE);
 
 const char* script_op2name(int op)
 {
@@ -2741,15 +2741,22 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 				break;
 			case '\'':
 				{
-					unsigned short instance_id = script_instancegetid(st);
-					if( instance_id )
-						data->u.str = (char*)i64db_get(instance_data[instance_id].regs.vars,reference_getuid(data));
+					struct DBMap* n = nullptr;
+					if (data->ref)
+						n = data->ref->vars;
+					else {
+						unsigned short instance_id = script_instancegetid(st);
+						if (instance_id != 0)
+							n = instance_data[instance_id].regs.vars;
+					}
+					if (n)
+						data->u.str = (char*)i64db_get(n,reference_getuid(data));
 					else {
 						ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to \"\"\n", name);
 						data->u.str = NULL;
 					}
+					break;
 				}
-				break;
 			default:
 				data->u.str = pc_readglobalreg_str(sd, data->u.num);
 				break;
@@ -2799,15 +2806,22 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 					break;
 				case '\'':
 					{
-						unsigned short instance_id = script_instancegetid(st);
-						if( instance_id )
-							data->u.num = (int)i64db_iget(instance_data[instance_id].regs.vars,reference_getuid(data));
+						struct DBMap* n = nullptr;
+						if (data->ref)
+							n = data->ref->vars;
+						else {
+							unsigned short instance_id = script_instancegetid(st);
+							if (instance_id != 0)
+								n = instance_data[instance_id].regs.vars;
+						}
+						if (n)
+							data->u.num = (int)i64db_iget(n,reference_getuid(data));
 						else {
 							ShowWarning("script:get_val: cannot access instance variable '%s', defaulting to 0\n", name);
 							data->u.num = 0;
 						}
+						break;
 					}
-					break;
 				default:
 					data->u.num = pc_readglobalreg(sd, data->u.num);
 					break;
@@ -3015,10 +3029,13 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 			break;
 		case '\'': // instance
 			{
-				unsigned short instance_id = script_instancegetid(st);
+				if (ref)
+					src = ref;
+				else {
+					unsigned short instance_id = script_instancegetid(st);
 
-				if( instance_id ) {
-					src = &instance_data[instance_id].regs;
+					if (instance_id != 0)
+						src = &instance_data[instance_id].regs;
 				}
 				break;
 			}
@@ -3135,22 +3152,30 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 				return 1;
 			case '\'':
 				{
-					unsigned short instance_id = script_instancegetid(st);
-					if( instance_id ) {
-						if( str[0] ) {
-							i64db_put(instance_data[instance_id].regs.vars, num, aStrdup(str));
-							if( script_getvaridx(num) )
-								script_array_update(&instance_data[instance_id].regs, num, false);
+					struct reg_db *src = nullptr;
+					if (ref)
+						src = ref;
+					else {
+						unsigned short instance_id = script_instancegetid(st);
+						if (instance_id != 0)
+							src = &instance_data[instance_id].regs;
+					}
+					if (src) {
+						bool empty;
+						if (str[0]) {
+							i64db_put(src->vars, num, aStrdup(str));
+							empty = false;
 						} else {
-							i64db_remove(instance_data[instance_id].regs.vars, num);
-							if (script_getvaridx(num))
-								script_array_update(&instance_data[instance_id].regs, num, true);
+							i64db_remove(src->vars, num);
+							empty = true;
 						}
+						if (script_getvaridx(num) != 0)
+							script_array_update(src, num, empty);
 					} else {
 						ShowError("script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name);
 						script_reportsrc(st);
 					}
-				return 1;
+					return 1;
 				}
 			default:
 				return pc_setglobalreg_str(sd, num, str);
@@ -3198,22 +3223,30 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 				return 1;
 			case '\'':
 				{
-					unsigned short instance_id = script_instancegetid(st);
-					if( instance_id ) {
-						if( val != 0 ) {
-							i64db_iput(instance_data[instance_id].regs.vars, num, val);
-							if( script_getvaridx(num) )
-								script_array_update(&instance_data[instance_id].regs, num, false);
+					struct reg_db *src = nullptr;
+					if (ref)
+						src = ref;
+					else {
+						unsigned short instance_id = script_instancegetid(st);
+						if (instance_id != 0)
+							src = &instance_data[instance_id].regs;
+					}
+					if (src) {
+						bool empty;
+						if (val != 0) {
+							i64db_iput(src->vars, num, val);
+							empty = false;
 						} else {
-							i64db_remove(instance_data[instance_id].regs.vars, num);
-							if (script_getvaridx(num))
-								script_array_update(&instance_data[instance_id].regs, num, true);
+							i64db_remove(src->vars, num);
+							empty = true;
 						}
+						if (script_getvaridx(num) != 0)
+							script_array_update(src, num, empty);
 					} else {
 						ShowError("script_set_reg: cannot write instance variable '%s', NPC not in a instance!\n", name);
 						script_reportsrc(st);
 					}
-				return 1;
+					return 1;
 				}
 			default:
 				return pc_setglobalreg(sd, num, val);
@@ -4377,6 +4410,15 @@ void run_script_main(struct script_state *st)
 			st->bk_st = NULL;
 		}
 	} else {
+		if (st->stack && st->stack->defsp >= 1 && st->stack->stack_data[st->stack->defsp - 1].type == C_RETINFO) {
+			for (int i = 0; i < st->stack->sp; i++) {
+				if (st->stack->stack_data[i].type == C_RETINFO) { // Grab the first, aka the original
+					st->script = st->stack->stack_data[i].u.ri->script;
+					break;
+				}
+			}
+		}
+
 		//Dispose of script.
 		if ((sd = map_id2sd(st->rid))!=NULL)
 		{	//Restore previous stack and save char.
@@ -6654,14 +6696,16 @@ BUILDIN_FUNC(viewpoint)
 	int type,x,y,id,color;
 	TBL_PC* sd;
 
+	if (!script_charid2sd(7, sd)) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	type=script_getnum(st,2);
 	x=script_getnum(st,3);
 	y=script_getnum(st,4);
 	id=script_getnum(st,5);
 	color=script_getnum(st,6);
-
-	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
 
 	clif_viewpoint(sd,st->oid,type,x,y,id,color);
 
@@ -6787,8 +6831,8 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
  * @return Total count of item being searched
  */
 int script_countitem_sub(struct item *items, struct item_data *id, int size, bool expanded, bool random_option, struct script_state *st, struct map_session_data *sd) {
-	nullpo_retr(SCRIPT_CMD_FAILURE, items);
-	nullpo_retr(SCRIPT_CMD_FAILURE, st);
+	nullpo_retr(-1, items);
+	nullpo_retr(-1, st);
 
 	int count = 0;
 
@@ -6814,13 +6858,15 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
 		it.card[3] = script_getnum(st,9);
 
 		if (random_option) {
-			if (!sd)
-				return SCRIPT_CMD_FAILURE;
+			if (!sd) {
+				ShowError("buildin_countitem3: Player not attached.\n");
+				return -1;
+			}
 
 			int res = script_getitem_randomoption(st, sd, &it, "countitem3", 10);
 
 			if (res != SCRIPT_CMD_SUCCESS)
-				return SCRIPT_CMD_FAILURE;
+				return -1;
 		}
 
 		for (int i = 0; i < size; i++) {
@@ -6895,7 +6941,12 @@ BUILDIN_FUNC(countitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint(st, script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, (aid > 3) ? true : false, random_option, st, sd));
+	int count = script_countitem_sub(sd->inventory.u.items_inventory, id, MAX_INVENTORY, (aid > 3) ? true : false, random_option, st, sd);
+	if (count < 0) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+	script_pushint(st, count);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -6943,7 +6994,12 @@ BUILDIN_FUNC(cartcountitem)
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	script_pushint(st, script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, st, nullptr));
+	int count = script_countitem_sub(sd->cart.u.items_cart, id, MAX_CART, (aid > 3) ? true : false, false, st, nullptr);
+	if (count < 0) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+	script_pushint(st, count);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -6990,7 +7046,12 @@ BUILDIN_FUNC(storagecountitem)
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	script_pushint(st, script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, st, nullptr));
+	int count = script_countitem_sub(sd->storage.u.items_storage, id, MAX_STORAGE, (aid > 3) ? true : false, false, st, nullptr);
+	if (count < 0) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+	script_pushint(st, count);
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -7045,6 +7106,11 @@ BUILDIN_FUNC(guildstoragecountitem)
 
 	storage_guild_storageclose(sd);
 	gstor->lock = false;
+
+	if (count < 0) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
 
 	script_pushint(st, count);
 	return SCRIPT_CMD_SUCCESS;
@@ -9642,18 +9708,6 @@ BUILDIN_FUNC(end)
 
 	st->state = END;
 
-	if (st->stack->defsp >= 1 && st->stack->stack_data[st->stack->defsp-1].type == C_RETINFO) {
-		int i;
-
-		for(i = 0; i < st->stack->sp; i++) {
-			if (st->stack->stack_data[i].type == C_RETINFO) { // Grab the first, aka the original
-				struct script_retinfo *ri = st->stack->stack_data[i].u.ri;
-				st->script = ri->script;
-				break;
-			}
-		}
-	}
-
 	if( st->mes_active )
 		st->mes_active = 0;
 
@@ -11295,10 +11349,10 @@ BUILDIN_FUNC(getunits)
 			ShowWarning("buildin_%s: Unknown map '%s'.\n", command, str);
 			return SCRIPT_CMD_FAILURE;
 		}
-		x0 = script_getnum(st, 4);
-		y0 = script_getnum(st, 5);
-		x1 = script_getnum(st, 6);
-		y1 = script_getnum(st, 7);
+		x0 = min(script_getnum(st, 4), script_getnum(st, 6));
+		y0 = min(script_getnum(st, 5), script_getnum(st, 7));
+		x1 = max(script_getnum(st, 4), script_getnum(st, 6));
+		y1 = max(script_getnum(st, 5), script_getnum(st, 7));
 
 		if (script_hasdata(st, 8))
 			data = script_getdata(st, 8);
@@ -11330,7 +11384,7 @@ BUILDIN_FUNC(getunits)
 
 	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
 	{
-		if (!m || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y <= y0) && (bl->x <= x1 && bl->y >= y1)))
+		if (!m || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y >= y0) && (bl->x <= x1 && bl->y <= y1)))
 		{
 			if (data)
 				set_reg(st, sd, reference_uid(id, idx + size), name, (is_string_variable(name) ? (void*)status_get_name(bl) : (void*)__64BPRTSIZE(bl->id)), reference_getref(data));
@@ -19893,30 +19947,54 @@ BUILDIN_FUNC(bg_unbook)
 /*==========================================
  * Instancing System
  *------------------------------------------*/
-//Returns an Instance ID
-//Checks NPC first, then if player is attached we check
-unsigned short script_instancegetid(struct script_state* st)
+/**
+ * Returns an Instance ID.
+ * @param st: Script state
+ * @param mode: Instance mode
+ * @return instance ID on success or 0 otherwise
+ */
+unsigned short script_instancegetid(struct script_state* st, enum instance_mode mode)
 {
 	unsigned short instance_id = 0;
-	struct npc_data *nd;
 
-	if( (nd = map_id2nd(st->oid)) && nd->instance_id > 0 )
-		instance_id = nd->instance_id;
-	else {
-		struct map_session_data *sd = NULL;
-		struct party_data *pd = NULL;
-		struct guild *gd = NULL;
-		struct clan *cd = NULL;
+	if (mode == IM_NONE) {
+		struct npc_data *nd = map_id2nd(st->oid);
 
-		if ((sd = map_id2sd(st->rid))) {
-			if (sd->instance_id)
-				instance_id = sd->instance_id;
-			if (instance_id == 0 && sd->status.party_id && (pd = party_search(sd->status.party_id)) != NULL && pd->instance_id)
-				instance_id = pd->instance_id;
-			if (instance_id == 0 && sd->status.guild_id && (gd = guild_search(sd->status.guild_id)) != NULL && gd->instance_id)
-				instance_id = gd->instance_id;
-			if (instance_id == 0 && sd->status.clan_id && (cd = clan_search(sd->status.clan_id)) != NULL && cd->instance_id)
-				instance_id = cd->instance_id;
+		if (nd->instance_id > 0)
+			instance_id = nd->instance_id;
+	} else {
+		struct map_session_data *sd = map_id2sd(st->rid);
+
+		if (sd) {
+			switch (mode) {
+				case IM_CHAR:
+					if (sd->instance_id)
+						instance_id = sd->instance_id;
+					break;
+				case IM_PARTY: {
+					struct party_data *pd = party_search(sd->status.party_id);
+
+					if (pd && pd->instance_id)
+						instance_id = pd->instance_id;
+				}
+					break;
+				case IM_GUILD: {
+					struct guild *gd = guild_search(sd->status.guild_id);
+
+					if (gd && gd->instance_id)
+						instance_id = gd->instance_id;
+				}
+					break;
+				case IM_CLAN: {
+					struct clan *cd = clan_search(sd->status.clan_id);
+
+					if (cd && cd->instance_id)
+						instance_id = cd->instance_id;
+				}
+					break;
+				default: // Unsupported type
+					break;
+			}
 		}
 	}
 
@@ -20018,7 +20096,7 @@ BUILDIN_FUNC(instance_enter)
 	if (script_hasdata(st, 6))
 		instance_id = script_getnum(st, 6);
 	else
-		instance_id = script_instancegetid(st);
+		instance_id = script_instancegetid(st, IM_PARTY);
 
 	if (!script_charid2sd(5,sd))
 		return SCRIPT_CMD_FAILURE;
@@ -20091,7 +20169,19 @@ BUILDIN_FUNC(instance_mapname)
  *------------------------------------------*/
 BUILDIN_FUNC(instance_id)
 {
-	script_pushint(st, script_instancegetid(st));
+	int mode = IM_NONE; // Default to the attached NPC
+
+	if (script_hasdata(st, 2)) {
+		mode = script_getnum(st, 2);
+
+		if (mode <= IM_NONE || mode >= IM_MAX) {
+			ShowError("buildin_instance_id: Unknown instance mode %d.\n", mode);
+			script_pushint(st, 0);
+			return SCRIPT_CMD_SUCCESS;
+		}
+	}
+
+	script_pushint(st, script_instancegetid(st, static_cast<instance_mode>(mode)));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20153,7 +20243,7 @@ BUILDIN_FUNC(instance_warpall)
 	if( script_hasdata(st,5) )
 		instance_id = script_getnum(st,5);
 	else
-		instance_id = script_instancegetid(st);
+		instance_id = script_instancegetid(st, IM_PARTY);
 
 	if( !instance_id || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapname2mapid(map_getmapdata(m)->name,instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
@@ -20452,6 +20542,60 @@ BUILDIN_FUNC(instance_info)
 			return SCRIPT_CMD_FAILURE;
 	}
 
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*------------------------------------------
+*instance_live_info( <info type>{, <instance id>} );
+- ILI_NAME : Instance Name
+- ILI_MODE : Instance Mode
+- ILI_OWNER : owner id
+*------------------------------------------*/
+BUILDIN_FUNC(instance_live_info)
+{
+	int type = script_getnum(st, 2);
+	int id = 0;
+
+	if (type < ILI_NAME || type > ILI_OWNER) {
+		ShowError("buildin_instance_live_info: Unknown instance information type \"%d\".\n", type);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!script_hasdata(st, 3))
+		id = script_instancegetid(st);
+	else
+		id = script_getnum(st, 3);
+
+	struct instance_db *db = nullptr;
+	struct instance_data *im = nullptr;
+
+	if (id > 0 && id < MAX_INSTANCE_DATA) {
+		im = &instance_data[id];
+
+		if (im)
+			db = instance_searchtype_db(im->type);
+	}
+
+	if (!im || !db) {
+		if (type == ILI_NAME)
+			script_pushconststr(st, "");
+		else
+			script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch( type ) {
+	case ILI_NAME:
+		script_pushstrcopy(st, StringBuf_Value(db->name));
+		break;
+	case ILI_MODE:
+		script_pushint(st, im->mode);
+		break;
+	case ILI_OWNER:
+		script_pushint(st, im->owner_id);
+		break;
+	}
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -24277,6 +24421,110 @@ BUILDIN_FUNC(achievement_condition){
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/// Returns a reference to a variable of the specific instance ID.
+/// Returns 0 if an error occurs.
+///
+/// getvariableofinstance(<variable>, <instance ID>) -> <reference>
+BUILDIN_FUNC(getvariableofinstance)
+{
+	struct script_data* data = script_getdata(st, 2);
+
+	if (!data_isreference(data)) {
+		ShowError("buildin_getvariableofinstance: %s is not a variable.\n", script_getstr(st, 2));
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	const char* name = reference_getname(data);
+
+	if (*name != '\'') {
+		ShowError("buildin_getvariableofinstance: Invalid scope. %s is not an instance variable.\n", name);
+		script_reportdata(data);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	unsigned short instance_id = script_getnum(st, 3);
+
+	if (instance_id == 0 || instance_id > MAX_INSTANCE_DATA) {
+		ShowError("buildin_getvariableofinstance: Invalid instance ID %d.\n", instance_id);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	struct instance_data *im = &instance_data[instance_id];
+
+	if (im->state != INSTANCE_BUSY) {
+		ShowError("buildin_getvariableofinstance: Unknown instance ID %d.\n", instance_id);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!im->regs.vars)
+		im->regs.vars = i64db_alloc(DB_OPT_RELEASE_DATA);
+
+	push_val2(st->stack, C_NAME, reference_getuid(data), &im->regs);
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*
+  convertpcinfo(<char_id>,<type>)
+  convertpcinfo(<account_id>,<type>)
+  convertpcinfo(<player_name>,<type>)
+*/
+BUILDIN_FUNC(convertpcinfo) {
+	TBL_PC *sd;
+
+	if (script_isstring(st, 2))
+		sd = map_nick2sd(script_getstr(st, 2),false);
+	else {
+		int id = script_getnum(st, 2);
+		sd = map_id2sd(id);
+		if (!sd)
+			sd = map_charid2sd(id);
+	}
+
+	int type = script_getnum(st, 3);
+
+	switch (type) {
+	case CPC_NAME:
+	case CPC_CHAR:
+	case CPC_ACCOUNT:
+		break;
+	default:
+		ShowError("buildin_convertpcinfo: Unknown type %d.\n", type);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!sd) {
+		if (type == CPC_NAME)
+			script_pushstrcopy(st, "");
+		else
+			script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch (type) {
+	case CPC_NAME:
+		script_pushstrcopy(st, sd->status.name);
+		break;
+	case CPC_CHAR:
+		script_pushint(st, sd->status.char_id);
+		break;
+	case CPC_ACCOUNT:
+		script_pushint(st, sd->status.account_id);
+		break;
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -24382,7 +24630,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(enableitemuse,"enable_items",""),
 	BUILDIN_DEF2(disableitemuse,"disable_items",""),
 	BUILDIN_DEF(cutin,"si"),
-	BUILDIN_DEF(viewpoint,"iiiii"),
+	BUILDIN_DEF(viewpoint,"iiiii?"),
 	BUILDIN_DEF(heal,"ii?"),
 	BUILDIN_DEF(itemheal,"ii?"),
 	BUILDIN_DEF(percentheal,"ii?"),
@@ -24789,7 +25037,7 @@ struct script_function buildin_func[] = {
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),
 	BUILDIN_DEF(instance_destroy,"?"),
-	BUILDIN_DEF(instance_id,""),
+	BUILDIN_DEF(instance_id,"?"),
 	BUILDIN_DEF(instance_enter,"s????"),
 	BUILDIN_DEF(instance_npcname,"s?"),
 	BUILDIN_DEF(instance_mapname,"s?"),
@@ -24799,6 +25047,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_guild,"i???"),
 	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
+	BUILDIN_DEF(instance_live_info,"i?"),
 	/**
 	 * 3rd-related
 	 **/
@@ -24947,6 +25196,8 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(camerainfo,"iii?"),
 
 	BUILDIN_DEF(achievement_condition,"i"),
+	BUILDIN_DEF(getvariableofinstance,"ri"),
+	BUILDIN_DEF(convertpcinfo,"vi"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

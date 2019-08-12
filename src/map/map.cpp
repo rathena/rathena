@@ -55,7 +55,7 @@ using namespace rathena;
 char default_codepage[32] = "";
 
 int map_server_port = 3306;
-char map_server_ip[32] = "127.0.0.1";
+char map_server_ip[64] = "127.0.0.1";
 char map_server_id[32] = "ragnarok";
 char map_server_pw[32] = "";
 char map_server_db[32] = "ragnarok";
@@ -90,7 +90,7 @@ char roulette_table[32] = "db_roulette";
 char guild_storage_log_table[32] = "guild_storage_log";
 
 // log database
-char log_db_ip[32] = "127.0.0.1";
+char log_db_ip[64] = "127.0.0.1";
 int log_db_port = 3306;
 char log_db_id[32] = "ragnarok";
 char log_db_pw[32] = "ragnarok";
@@ -2979,6 +2979,9 @@ void map_removemobs(int16 m)
  *------------------------------------------*/
 const char* map_mapid2mapname(int m)
 {
+	if (m == -1)
+		return "Floating";
+
 	struct map_data *mapdata = map_getmapdata(m);
 
 	if (mapdata->instance_id) { // Instance map check
@@ -3660,7 +3663,7 @@ void map_flags_init(void){
 			continue;
 
 		// adjustments
-		if( battle_config.pk_mode && !mapdata->flag[MF_PVP] )
+		if( battle_config.pk_mode && !mapdata_flag_vs2(mapdata) )
 			mapdata->flag[MF_PVP] = true; // make all maps pvp for pk_mode [Valaris]
 	}
 }
@@ -4847,9 +4850,9 @@ bool map_setmapflag_sub(int16 m, enum e_mapflag mapflag, bool status, union u_ma
 
 			mapdata->flag[mapflag] = status;
 			if (!status)
-				mapdata->zone ^= 1 << (args->flag_val + 1);
+				mapdata->zone ^= (1 << (args->flag_val + 1)) << 3;
 			else
-				mapdata->zone |= 1 << (args->flag_val + 1);
+				mapdata->zone |= (1 << (args->flag_val + 1)) << 3;
 			break;
 		case MF_NOCOMMAND:
 			if (status) {

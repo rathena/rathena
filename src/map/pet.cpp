@@ -927,6 +927,10 @@ bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	sd->inventory.u.items_inventory[i].attribute = 0;
 	sd->inventory.dirty = true;
 	pd->pet.incubate = 1;
+#if PACKETVER >= 20180704
+	clif_inventorylist(sd);
+	clif_send_petdata(sd, pd, 6, 0);
+#endif
 	unit_free(&pd->bl,CLR_OUTSIGHT);
 
 	status_calc_pc(sd,SCO_NONE);
@@ -1067,6 +1071,9 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 		clif_spawn(&sd->pd->bl);
 		clif_send_petdata(sd,sd->pd, 0,0);
 		clif_send_petdata(sd,sd->pd, 5,battle_config.pet_hair_style);
+#if PACKETVER >= 20180704
+		clif_send_petdata(sd, sd->pd, 6, 1);
+#endif
 		clif_pet_equip_area(sd->pd);
 		clif_send_petstatus(sd);
 	}

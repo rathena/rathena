@@ -1016,7 +1016,7 @@ int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 		struct npc_data *nd = map_id2nd(sd->areanpc[i]);
 
 		if (!nd || nd->subtype != NPCTYPE_SCRIPT ||
-			!(x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
+			!(nd->bl.m == m && x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
 			sd->areanpc.erase(sd->areanpc.begin() + i);
 	}
 

@@ -477,7 +477,8 @@ nothing  - A permanent variable attached to the character, the default variable
            ('return .@var;' returns a value, not a reference).
 "'"      - An instance variable.
            These are used with the instancing system and are unique to each
-           instance type.
+           instance type. Can be accessed from inside the instance or by calling
+           'getvariableofinstance'.
 "#"      - A permanent local account variable.
            They are stored by char-server in the `acc_reg_num` table and
            `acc_reg_str`.
@@ -2337,6 +2338,22 @@ returned when requesting that information.
 
 ---------------------------------------
 
+*convertpcinfo(<char_id>,<type>)
+*convertpcinfo(<account_id>,<type>)
+*convertpcinfo(<player_name>,<type>)
+
+This function will return the information <type> for the
+specified character. Whatever it returns is determined by type.
+
+ CPC_NAME    - Character's name.
+ CPC_CHAR    - Character ID.
+ CPC_ACCOUNT - Account ID.
+
+If a character is not found (or not online) when requesting that information,
+an empty string will be returned for CPC_NAME, 0 for other <type>.
+
+---------------------------------------
+
 *strnpcinfo(<type>)
 
 This function will return the various parts of the name of the calling NPC.
@@ -3609,7 +3626,7 @@ You can see the full list of available effect types you can possibly inflict in
 ========================
 |3.- Checking commands.|
 ========================
--------------------------
+---------------------------------------
 
 *playerattached()
 
@@ -3983,7 +4000,7 @@ not.
 ==============================
 |4.- Player-related commands.|
 ==============================
--------------------------
+---------------------------------------
 
 *attachrid(<account ID>{,force})
 *detachrid;
@@ -4001,7 +4018,7 @@ even if he is currently attached to another script. Since this is not always the
 desired behavior you can also specify false to the command and it will only return 
 true if the player is online and was not attached to another script.
 
--------------------------
+---------------------------------------
 
 *addrid(<type>{,<flag>{,<parameters>}});
 
@@ -7488,7 +7505,7 @@ rand(2,5) would result in 2,3,4 or 5
 
 ---------------------------------------
 
-*viewpoint <action>,<x>,<y>,<point number>,<color>;
+*viewpoint <action>,<x>,<y>,<point number>,<color>{,<Char ID>};
 
 This command will mark places on the mini map in the client connected to the
 invoking character. It uses the normal X and Y coordinates from the main map.
@@ -8897,18 +8914,17 @@ The command returns the instance ID upon success, and these values upon failure:
 *instance_destroy {<instance id>};
 
 Destroys instance with the ID <instance id>. If no ID is specified, the instance
-the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a character, party,
-guild or clan mode). If it is not owned by anyone, no player needs to be attached. If
-that fails, the script will come to a halt. This will also trigger the "OnInstanceDestroy"
-label in all NPCs inside the instance.
+the script is attached to is used. If that fails, the script will come to a halt.
+This will also trigger the "OnInstanceDestroy" label in all NPCs inside the instance.
 
 ---------------------------------------
 
 *instance_enter("<instance name>",{<x>,<y>,<char_id>,<instance id>});
 
-Warps player to the specified instance after the script terminates. The map and
-coordinates are located in 'db/(pre-)re/instance_db.txt'.
+Warps the attached player to the specified <instance id>. If no ID is specified,
+the IM_PARTY instance the invoking player is attached to is used.
+
+The map and coordinates are located in 'db/(pre-)re/instance_db.txt'.
 
 The command returns IE_OK upon success, and these values upon failure:
  IE_NOMEMBER:	Party/Guild/Clan not found (for party/guild/clan modes).
@@ -8922,49 +8938,46 @@ Put -1 for x and y if want to warp player with default entrance coordinates.
 *instance_npcname("<npc name>"{,<instance id>})
 
 Returns the unique name of the instanced script. If no ID is specified,
-the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached NPC, player, party, guild
-or clan is used. If that fails, the script will come to a halt.
+the instance the script is attached to is used. If that fails, the script
+will come to a halt.
 
 ---------------------------------------
 
 *instance_mapname("<map name>"{,<instance id>})
 
 Returns the unique name of the instanced map. If no instance ID is specified,
-the instance the script is attached to is used. If the script is not attached to
-an instance, the instance of the currently attached player is used (if it is a
-character, party, guild or clan mode). If it is not owned by anyone, no player needs
-to be attached. If that fails, the command returns an empty string instead.
+the instance the script is attached to is used. If that fails, the command
+returns an empty string instead.
 
 ---------------------------------------
 
-*instance_id()
+*instance_id({<instance mode>})
 
-Returns the unique instance id of the attached script. If the script is not
-attached to an instance, the instance of the currently attached player is
-used (if it is a character, party, guild or clan mode). If it is not owned by anyone, no
-player needs to be attached. If that fails, the function will return 0.
+Returns the unique instance ID of the given mode. By default it returns the
+attached script instance. If <instance mode> is provided then the instance
+of the currently attached player is used. If that fails, the function will return 0.
+
+Instance Mode options:
+ IM_CHAR:	Attached to character.
+ IM_PARTY:	Attached to character's party.
+ IM_GUILD:	Attached to character's guild.
+ IM_CLAN:	Attached to character's clan.
 
 ---------------------------------------
 
 *instance_warpall "<map name>",<x>,<y>{,<instance id>};
 
-Warps all players in the instance <instance id> to <map name> at given
-coordinates. If no ID is specified, the instance the script is attached to
-is used. If the script is not attached to an instance, the instance of the
-currently attached player is used (if it is a character, party, guild or clan
-mode). If it is not owned by anyone, no player needs to be attached. If that
-fails, the script will come to a halt.
+Warps all players in the <instance id> to <map name> to the given coordinates.
+If no ID is specified, the IM_PARTY instance the invoking player is attached
+to is used. If that fails, the script will come to a halt.
 
 ---------------------------------------
 
 *instance_announce <instance id>,"<text>",<flag>{,<fontColor>{,<fontType>{,<fontSize>{,<fontAlign>{,<fontY>}}}}};
 
-Broadcasts a message to all players in the instance <instance id> currently
-residing on an instance map. If 0 is specified for <instance id>, the instance
-the script is attached to is used. If the script is not attached to an instance,
-the instance of the currently attached player is used (if it is a character,
-party, guild or clan mode). If it is not owned by anyone, no player needs to be attached.
+Broadcasts a message to all players in the <instance id> currently residing on
+an instance map. If 0 is specified for <instance id>, the instance the script
+is attached to is used.
 
 For details on the other parameters, see 'announce'.
 
@@ -9057,6 +9070,47 @@ Example:
 .@name$ = "Endless Tower";
 mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(.@name$,IIT_IDLETIMEOUT) + " seconds.";
 // Endless Tower will be destroyed if no one is in the instance for 300 seconds.
+
+---------------------------------------
+
+*instance_live_info(<info type>{,<instance id>});
+
+Returns the specified <info type> of instance attached to the npc or, if
+an instance ID is specified, of that instance.
+
+Valid <info type>:
+ILI_NAME	- Instance Name
+			  Return the name of the instance or "" if that fails.
+ILI_MODE	- Instance Mode
+			  Return IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, IM_CLAN or -1 if that fails.
+ILI_OWNER	- Owner ID
+			  Return an ID according to the instance mode of the instance attached/specified or -1 if that fails.
+			  When the instance mode is IM_NONE, ILI_OWNER will return the npc ID that created the instance,
+			  IM_CHAR	- the owner char ID
+			  IM_PARTY	- the party ID
+			  IM_GUILD	- the guild ID
+			  IM_CLAN	- the clan ID
+
+Examples:
+	// Return the instance name of the instance attached to the npc.
+	.@instance_name$ = instance_live_info(ILI_NAME);
+
+	// Return the guild owner ID of the given instance ID.
+	.@owner = instance_live_info(ILI_OWNER, instance_id(IM_GUILD));
+
+---------------------------------------
+
+*getvariableofinstance(<variable>,<instance id>);
+
+Returns a reference to an instance variable (' prefix) of the specific instance ID.
+This can only be used to get ' variables.
+
+Examples:
+	// This will set the .@s variable to the value of 'var variable of the specific instance ID.
+	set .@s, getvariableofinstance('var, instance_id(IM_PARTY));
+
+	// This will set the 'var variable of the specific instance ID to 1.
+	set getvariableofinstance('var, instance_id(IM_GUILD)), 1;
 
 ---------------------------------------
 

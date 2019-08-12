@@ -150,8 +150,7 @@ moro_cav,61,69,3	script	Senior Tracker#a1	4_M_JOB_ASSASSIN,{
 		mes "It will only stay open for a while.";
 		mes "You'd better use it";
 		mes "while you can.";
-		if (instance_create("Morse's Cave") >= 0)
-			'party_id = getcharid(1);
+		instance_create("Morse's Cave");
 	}
 	close;
 }
@@ -198,7 +197,7 @@ moro_cav,57,69,3	script	Red Flower#a1	CLEAR_NPC,{
 		mes "Only party members can enter this Memorial dungeon.";
 		close;
 	case IE_OK:
-		mapannounce 'map_rev$, getpartyname( getcharid(1) ) + " party's " + strcharinfo(0) + " is entering Morse's Cave.", bc_map,0xFF99;
+		mapannounce "moro_cav", getpartyname( getcharid(1) ) + " party's " + strcharinfo(0) + " is entering Morse's Cave.", bc_map,0xFF99;
 		if (isbegin_quest(9319) > 0)
 			erasequest 9319;// Pursuing Hiding Morocc Continues
 		if (isbegin_quest(9318) > 0)
@@ -223,6 +222,7 @@ OnInit:
 OnTouch:
 	// note : party member can also trigger this event
 	disablenpc instance_npcname("#RZ Memorial Start");
+	'party_id = getcharid(1);
 	'soul_name$ = strcharinfo(0);	// name displayed on soul is defined at entrance
 	setpcblock PCBLOCK_NPC, true;
 	sleep2 500;
@@ -1164,18 +1164,6 @@ OnInstanceInit:
 	// Debuff - Battle 1 & 2
 	for ( .@i = 1; .@i <= 15; .@i++ )
 		disablenpc instance_npcname( "#RZ Debuff_" + .@i );
-
-	// reload
-	if ('party_id > 0) {
-		getpartymember 'party_id, 1, .@char_id;
-		getpartymember 'party_id, 2, .@account_id;
-		for ( .@i = 0; .@i < $@partymembercount; .@i++ ) {
-			if (isloggedin(.@account_id[.@i],.@char_id[.@i]) == false)
-				continue;
-			if (strcharinfo(3,.@char_id[.@i]) == 'map_rev$)
-				setpcblock PCBLOCK_MOVE, false, .@account_id[.@i];
-		}
-	}
 	end;
 }
 
