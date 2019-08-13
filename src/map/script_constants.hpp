@@ -3237,6 +3237,7 @@
 	export_constant(EFST_ALL_PRONTERA_RECALL);
 	export_constant(EFST_LIMIT_POWER_BOOSTER);
 	export_constant(EFST_GIFT_OF_SNOW);
+	export_constant(EFST_NPC_HALLUCINATIONWALK);
 	export_constant(EFST_TIME_ACCESSORY);
 	export_constant(EFST_EP16_DEF);
 	export_constant(EFST_NORMAL_ATKED_SP);
@@ -3307,6 +3308,7 @@
 	export_constant(EFST_AID_PERIOD_PLUSJOBEXP);
 	export_constant(EFST_AID_PERIOD_DEADPENALTY);
 	export_constant(EFST_AID_PERIOD_ADDSTOREITEMCOUNT);
+	export_constant(EFST_ALL_GLASTHEIM_RECALL);
 	export_constant(EFST_ALL_THANATOS_RECALL);
 	export_constant(EFST_MAGICSTONE_OF_GRACE_SET);
 	export_constant(EFST_HISS);
@@ -3322,6 +3324,7 @@
 	export_constant(EFST_BLAZE_BEAD);
 	export_constant(EFST_FROZEN_BEAD);
 	export_constant(EFST_BREEZE_BEAD);
+	export_constant(EFST_SOULATTACK);
 	export_constant(EFST_AID_PERIOD_RECEIVEITEM_2ND);
 	export_constant(EFST_AID_PERIOD_PLUSEXP_2ND);
 	export_constant(EFST_AID_PERIOD_PLUSJOBEXP_2ND);
