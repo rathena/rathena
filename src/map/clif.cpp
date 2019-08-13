@@ -6220,6 +6220,10 @@ void clif_displaymessage(const int fd, const char* mes)
 /// 009a <packet len>.W <message>.?B
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
 {
+	nullpo_retv(mes);
+	if (len < 2)
+		return;
+
 	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
 	std::unique_ptr<unsigned char> buf(new unsigned char[4+lp+len]);
 
@@ -6266,6 +6270,10 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
+	nullpo_retv(mes);
+	if (len < 2)
+		return;
+
 	std::unique_ptr<unsigned char> buf(new unsigned char[16+len]);
 
 	WBUFW(buf.get(),0)  = 0x1c3;
