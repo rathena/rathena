@@ -711,7 +711,7 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 						erasequest .@i;
 					}
 				}
-				
+		if (checkquest(9315) != -1)
 			changequest 9315,9316;
 	}
 	
@@ -730,7 +730,7 @@ dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
 						erasequest .@i;
 					}
 				}
-				
+		if (checkquest(9315) != -1)
 			changequest 9315,9316;
 	}
 	
@@ -1380,7 +1380,8 @@ OnTouch_:
 		cutin "acamaster_a.bmp", 255;
 		hideonnpc "Geffen Academy Master";
 		'GMT_1QUE = 11;
-		changequest 9294,9295;
+		if (checkquest(9294) != -1)
+			changequest 9294,9295;
 		donpcevent instance_npcname("Geffen Academy Master")+"::OnStart";
 		'charname$ = strcharinfo(0);
 		'sex = Sex;
@@ -1539,7 +1540,8 @@ end;
 OnStart:
 	if ( 'GMT_1QUE != 11 ){
 		attachrid('gmt_account_id);
-		changequest 9283 + 'GMT_1QUE, 9284 +'GMT_1QUE;
+		if (checkquest(9283 + 'GMT_1QUE) != -1)
+			changequest 9283 + 'GMT_1QUE, 9284 +'GMT_1QUE;
 		detachrid;
 	}
 
@@ -3417,7 +3419,8 @@ OnTalk2:
     npctalk "However, next time, I won't lose!";
     sleep2 2000;
     cutin "", 255;
-    changequest 9307,9308;
+	if (checkquest(9307) != -1)
+		changequest 9307,9308;
     warp instance_mapname("1@ge_st"), 109,50;
 	donpcevent instance_npcname("#win")+"::OnEnable";
 	movenpc instance_npcname("#gefmagic_warp02"),120,213;
