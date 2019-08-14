@@ -80,7 +80,6 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 //2b13: Outgoing, chrif_update_ip -> 'tell the change of map-server IP'
 //2b14: Incoming, chrif_accountban -> 'not sure: kick the player with message XY'
 //2b15: Outgoing, chrif_skillcooldown_save -> request to save skillcooldown
-//2b16: Outgoing, chrif_ragsrvinfo -> 'sends base / job / drop rates ....'
 //2b17: Outgoing, chrif_char_offline -> 'tell the charserver that the char is now offline'
 //2b18: Outgoing, chrif_char_reset_offline -> 'set all players OFF!'
 //2b19: Outgoing, chrif_char_online -> 'tell the charserver that the char .. is online'
@@ -109,7 +108,6 @@ static const int packet_len_table[0x3d] = { // U - used, F - free
 
 int chrif_connected = 0;
 int char_fd = -1;
-int srvinfo;
 static char char_ip_str[128];
 static uint32 char_ip = 0;
 static uint16 char_port = 6121;
@@ -1449,24 +1447,6 @@ int chrif_skillcooldown_load(int fd) {
 	return 0;
 }
 
-/*==========================================
- * Send rates and motd to char server [Wizputer]
- * S 2b16 <base rate>.L <job rate>.L <drop rate>.L
- *------------------------------------------*/
-int chrif_ragsrvinfo(int base_rate, int job_rate, int drop_rate) {
-	chrif_check(-1);
-
-	WFIFOHEAD(char_fd,14);
-	WFIFOW(char_fd,0) = 0x2b16;
-	WFIFOL(char_fd,2) = base_rate;
-	WFIFOL(char_fd,6) = job_rate;
-	WFIFOL(char_fd,10) = drop_rate;
-	WFIFOSET(char_fd,14);
-
-	return 0;
-}
-
-
 /*=========================================
  * Tell char-server charcter disconnected [Wizputer]
  *-----------------------------------------*/
@@ -1915,12 +1895,6 @@ static TIMER_FUNC(check_connect_char_server){
 
 		chrif_connect(char_fd);
 		chrif_connected = (chrif_state == 2);
-		srvinfo = 0;
-	} else {
-		if (srvinfo == 0) {
-			chrif_ragsrvinfo(battle_config.base_exp_rate, battle_config.job_exp_rate, battle_config.item_rate_common);
-			srvinfo = 1;
-		}
 	}
 	if ( chrif_isconnected() )
 		displayed = 0;
