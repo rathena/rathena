@@ -3955,7 +3955,7 @@ The renewal feature to check is determined by type.
 \\
 ---------------------------------------
 
-*isequipped(<id>{,<id>{,<id>{,<id>}}})
+*isequipped(<id>{,<id>{,..}})
 
 This function will return 1 if the invoking character has all of the item
 IDs given equipped (if card IDs are passed, then it checks if the cards are
@@ -3973,15 +3973,14 @@ in February 2005, but it will work just fine in normal NPC scripts.
 
 ---------------------------------------
 
-*isequippedcnt(<card id>{,<card id>{,<card id>{,<card id>}}})
+*isequippedcnt(<id>{,<id>{,..}})
 
 This function is similar to 'isequipped', but instead of 1 or 0, it will return
-the number of cards in the list given that were found on the invoking character.
+the amount of item/card equipped that were found on the invoking character from the given list.
 
-If a given parameter is not a card, the function returns the amount of that
-item equipped on the invoking character.
-
-    if (isequippedcnt(4001,4005,4033,4196) == 4) mes "Finally got all four poring cards?";
+Example:
+    if (isequippedcnt(4001,4005,4033,4196) == 5)
+		mes "Finally got 5 cards from poring monsters type?";
 
 ---------------------------------------
 
