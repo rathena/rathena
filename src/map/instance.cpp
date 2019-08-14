@@ -28,6 +28,8 @@
 struct instance_data instance_data[MAX_INSTANCE_DATA];
 struct eri *instance_maps_ers = NULL; ///< Array of maps per instance
 
+int16 instance_start = 0;
+
 static DBMap *InstanceDB; /// Instance DB: struct instance_db, key: id
 static DBMap *InstanceNameDB; /// instance id, key: name
 
@@ -455,6 +457,9 @@ int instance_create(int owner_id, const char *name, enum instance_mode mode) {
 
 	ShowInfo("[Instance] Created: %s (%hu).\n", name, i);
 
+	// Start the instance timer on instance creation
+	instance_startkeeptimer(&instance_data[i], i);
+
 	return i;
 }
 
@@ -801,12 +806,6 @@ enum e_instance_enter instance_enter(struct map_session_data *sd, unsigned short
 	if (pc_setpos(sd, map_id2index(m), x, y, CLR_OUTSIGHT))
 		return IE_OTHER;
 
-	// If there was an idle timer, let's stop it
-	instance_stopidletimer(im, instance_id);
-
-	// Now we start the instance timer
-	instance_startkeeptimer(im, instance_id);
-
 	return IE_OK;
 }
 
@@ -1137,6 +1136,7 @@ void do_init_instance(void) {
 	InstanceDB = uidb_alloc(DB_OPT_BASE);
 	InstanceNameDB = strdb_alloc((DBOptions)(DB_OPT_DUP_KEY|DB_OPT_RELEASE_DATA),0);
 
+	instance_start = map_num;
 	instance_readdb();
 	memset(instance_data, 0, sizeof(instance_data));
 	memset(&instance_wait, 0, sizeof(instance_wait));
@@ -1151,10 +1151,10 @@ void do_init_instance(void) {
 void do_final_instance(void) {
 	int i;
 
-	ers_destroy(instance_maps_ers);
 	for( i = 1; i < MAX_INSTANCE_DATA; i++ )
 		instance_destroy(i);
 
 	InstanceDB->destroy(InstanceDB, instance_db_free);
 	db_destroy(InstanceNameDB);
+	ers_destroy(instance_maps_ers);
 }

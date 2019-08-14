@@ -1,0 +1,4 @@
+// Taekwon Mission Summonable Monsters Database
+//
+// Structure of Database:
+// MobRandomGroupID,MobID,DummyName,Rate

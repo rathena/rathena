@@ -70,14 +70,14 @@ void ShowDump(const void* buffer, size_t length)
 
 		if( (i%16) == 15 )
 		{
-			ShowDebug("%03X %s  %s\n", i/16, hex, ascii);
+			ShowDebug("%03" PRIXPTR " %s  %s\n", i/16, hex, ascii);
 		}
 	}
 
 	if( (i%16) != 0 )
 	{
 		ascii[i%16] = 0;
-		ShowDebug("%03X %-48s  %-16s\n", i/16, hex, ascii);
+		ShowDebug("%03" PRIXPTR " %-48s  %-16s\n", i/16, hex, ascii);
 	}
 }
 
@@ -216,7 +216,7 @@ void findfile(const char *p, const char *pat, void (func)(const char*))
 	DIR* dir;					// pointer to the scanned directory.
 	struct dirent* entry;		// pointer to one directory entry.
 	struct stat dir_stat;       // used by stat().
-	char tmppath[MAX_DIR_PATH+1];
+	char tmppath[MAX_DIR_PATH * 2];
 	char path[MAX_DIR_PATH+1]= ".";
 	const char *pattern = (pat==NULL)? "" : pat;
 	if(p!=NULL) strcpy(path,p);

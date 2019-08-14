@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _RANDOM_HPP_
-#define _RANDOM_HPP_
+#ifndef RANDOM_HPP
+#define RANDOM_HPP
 
 #include "cbasetypes.hpp"
 
@@ -11,4 +11,4 @@ void rnd_init(void);
 int32 rnd(void);// [0, SINT32_MAX]
 int32 rnd_value(int32 min, int32 max);// [min, max]
 
-#endif /* _RANDOM_HPP_ */
+#endif /* RANDOM_HPP */

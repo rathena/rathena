@@ -1,9 +1,12 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _WINAPI_HPP_
-#define _WINAPI_HPP_
+#ifndef WINAPI_HPP
+#define WINAPI_HPP
 
+#include "../config/core.hpp"
+
+#ifdef DEPRECATED_WINDOWS_SUPPORT
 #ifndef NTDDI_VERSION
 	#define NTDDI_VERSION 	0x05000000 // Windows 2000
 #endif
@@ -18,6 +21,9 @@
 #endif
 #ifndef _WIN32_WINNT_VISTA
 	#define _WIN32_WINNT_VISTA 0x0600 // Windows Vista
+#endif
+#else
+#include <sdkddkver.h>
 #endif
 
 #define STRICT
@@ -51,4 +57,4 @@
 
 bool IsCurrentUserLocalAdministrator(void);
 
-#endif /* _WINAPI_HPP_ */
+#endif /* WINAPI_HPP */

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLIF_OBFUSCATION_HPP_
-#define _CLIF_OBFUSCATION_HPP_
+#ifndef CLIF_OBFUSCATION_HPP
+#define CLIF_OBFUSCATION_HPP
 
 #if defined(PACKET_OBFUSCATION) || defined(PACKET_OBFUSCATION_WARN)
 	#define packet_keys(a,b,c) static unsigned int clif_cryptKey[] = { a, b, c };
@@ -427,4 +427,4 @@
 	#undef packet_keys
 #endif
 
-#endif /* _CLIF_OBFUSCATION_HPP_ */
+#endif /* CLIF_OBFUSCATION_HPP */

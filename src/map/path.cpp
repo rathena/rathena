@@ -56,7 +56,7 @@ static BHEAP_STRUCT_VAR(node_heap, g_open_set);	// use static heap for all path 
 /// @}
 
 // Translates dx,dy into walking direction
-static const char walk_choices [3][3] =
+static enum directions walk_choices [3][3] =
 {
 	{DIR_NORTHWEST,DIR_NORTH,DIR_NORTHEAST},
 	{DIR_WEST,DIR_CENTER,DIR_EAST},
@@ -509,4 +509,8 @@ int distance_client(int dx, int dy)
 	if(temp_dist < 0) temp_dist = 0;
 
 	return ((int)temp_dist);
+}
+
+bool direction_diagonal( enum directions direction ){
+	return direction == DIR_NORTHWEST || direction == DIR_SOUTHWEST || direction == DIR_SOUTHEAST || direction == DIR_NORTHEAST;
 }

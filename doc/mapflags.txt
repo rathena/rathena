@@ -321,6 +321,16 @@ This mapflag can also be used to adjust the damage of one skill by a percentage:
 
 ---------------------------------------
 
+*skill_duration	skill_name,percentage
+
+Sets skill (trap-type) time limit to n% of original duration.
+
+// Example:
+// Makes HT_ANKLESNARE's lifetime in the castle 4x longer than other maps.
+prtg_cas01	mapflag	skill_duration	HT_ANKLESNARE,400
+
+---------------------------------------
+
 ==================
 | 3. Map Effects |
 ==================

@@ -29,6 +29,7 @@ Thumbs.db
 *.a
 *.vcxproj.user
 /char-server
+/csv2yaml
 /config.log
 /config.status
 /core
@@ -71,7 +72,7 @@ Thumbs.db
 /src/common/Makefile
 /src/common/obj_all
 /src/common/obj_sql
-/src/common/svnversion.h
+/src/common/version.hpp
 
 # /src/custom/
 /src/custom
@@ -83,7 +84,7 @@ Thumbs.db
 # /src/map/
 /src/map/Makefile
 /src/map/obj_sql
-/src/map/pcre.h
+/src/map/pcre.hpp
 
 # /src/tool/
 /src/tool/Makefile
@@ -112,6 +113,7 @@ Thumbs.db
 
 # bat tools
 /charserv.bat
+/csv2yaml.bat
 /logserv.bat
 /mapcache.bat
 /mapserv.bat

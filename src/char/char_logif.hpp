@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CHAR_LOGIF_HPP_
-#define _CHAR_LOGIF_HPP_
+#ifndef CHAR_LOGIF_HPP
+#define CHAR_LOGIF_HPP
 
 #include "../common/cbasetypes.hpp"
 #include "../common/timer.hpp"
@@ -55,5 +55,4 @@ void do_final_chlogif(void);
 
 #define loginif_check(a) { if(!chlogif_isconnected()) return a; }
 
-#endif	/* _CHAR_LOGIF_HPP_ */
-
+#endif /* CHAR_LOGIF_HPP */

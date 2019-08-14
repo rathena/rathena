@@ -115,7 +115,8 @@ unsigned short mapindex_name2idx(const char* name, const char *func) {
 	if( (i = strdb_iget(mapindex_db, map_name)) )
 		return i;
 
-	ShowDebug("(%s) mapindex_name2id: Map \"%s\" not found in index list!\n", func, map_name);
+	if (func)
+		ShowDebug("(%s) mapindex_name2id: Map \"%s\" not found in index list!\n", func, map_name);
 	return 0;
 }
 

@@ -3243,7 +3243,7 @@ OnEnable:
 	hideonnpc "Flu Mask Dealer#ein";
 	hideonnpc "Paddler#ein";
 	hideonnpc "Laboratory Soldier#ein-1";
-	hideonnpc "Laboratory Soldier#ein=2";
+	hideonnpc "Laboratory Soldier#ein-2";
 	initnpctimer;
 	monster "einbroch",82,332,"Toxic Fog",1621,1,"Einbroch Smog Alert::OnMyMobDead";
 	monster "einbroch",99,328,"Toxic Fog",1621,1,"Einbroch Smog Alert::OnMyMobDead";
@@ -3347,8 +3347,8 @@ OnTimer600000:
 	hideoffnpc "Kesunboss#ein";
 	hideoffnpc "Train Station Staff#ein1";
 	hideoffnpc "Train Station Staff#ein2";
-	hideoffnpc "Leslie#ein_1#ein";
-	hideoffnpc "Tan#ein#ein";
+	hideoffnpc "Leslie#ein_1";
+	hideoffnpc "Tan#ein";
 	hideoffnpc "Little Toby#ein-1";
 	hideoffnpc "Airship Engineer#ein-1";
 	hideoffnpc "Kafra Employee#ein1";

@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _LOGINCLIF_HPP_
-#define _LOGINCLIF_HPP_
+#ifndef LOGINCLIF_HPP
+#define LOGINCLIF_HPP
 
 /**
  * Entry point from client to log-server.
@@ -24,5 +24,4 @@ void do_init_loginclif(void);
  */
 void do_final_loginclif(void);
 
-#endif	/* _LOGINCLIF_HPP_ */
-
+#endif	/* LOGINCLIF_HPP */

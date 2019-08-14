@@ -32,7 +32,7 @@ bif_fild01,158,340,5	script	Laphine Soldier#mist	447,{
 		close;
 	}
 	set .@playtime, checkquest(7211,PLAYTIME);
-	if (getcharid(0) == getpartyleader(.@party_id,2)) {
+	if (is_party_leader() == true) {
 		if (.@playtime == 0 || .@playtime == 1) {
 			mes "[Laphine Soldier]";
 			mes "...Are you sure you're not doing too much?";

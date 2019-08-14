@@ -25,7 +25,7 @@
 OnAgitInit2:
 OnRecvCastle2:
 	if (strnpcinfo(2) == "template") end;
-	if (!getcastledata(strnpcinfo(2),1)) {
+	if (!getcastledata(strnpcinfo(2),CD_GUILD_ID)) {
 		donpcevent strnpcinfo(0)+"::OnStart";
 		// Monster spawns are identical for all castles.
 		monster strnpcinfo(2),0,0,"Evil Druid",1117,10;
@@ -42,14 +42,14 @@ OnRecvCastle2:
 		monster strnpcinfo(2),0,0,"Dark Lord",1272,2;
 		monster strnpcinfo(2),0,0,"Tower Keeper",1270,4;
 	}
-	if (getcastledata(strnpcinfo(2),9) < 1)
+	if (getcastledata(strnpcinfo(2),CD_ENABLED_KAFRA) < 1)
 		disablenpc "Kafra Employee#"+substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9);
 	end;
 
 OnAgitStart2:
 	if (strnpcinfo(2) == "template") end;
 	if (agitcheck2()) {
-		maprespawnguildid strnpcinfo(2),getcastledata(strnpcinfo(2),1),2;
+		maprespawnguildid strnpcinfo(2),getcastledata(strnpcinfo(2),CD_GUILD_ID),2;
 		gvgon strnpcinfo(2);
 		donpcevent strnpcinfo(0)+"::OnStart";
 	}
@@ -60,7 +60,7 @@ OnAgitStart2:
 OnAgitEnd2:
 	if (strnpcinfo(2) == "template") end;
 	gvgoff strnpcinfo(2);
-	if (getcastledata(strnpcinfo(2),1)) {
+	if (getcastledata(strnpcinfo(2),CD_GUILD_ID)) {
 		set .@str$,substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9);
 		killmonster strnpcinfo(2),"Steward#"+.@str$+"::OnStartArena";
 		donpcevent strnpcinfo(0)+"::OnReset";
@@ -73,7 +73,7 @@ OnGuildBreak:
 	killmonster strnpcinfo(2),"gard1#"+strnpcinfo(2)+"::OnGuardianDied";
 	killmonster strnpcinfo(2),"gard2#"+strnpcinfo(2)+"::OnGuardianDied";
 	disablenpc "Kafra Employee#"+substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9);
-	setcastledata strnpcinfo(2),1,0;
+	setcastledata strnpcinfo(2),CD_GUILD_ID,0;
 	sleep 7000;
 	announce "Guild Base ["+getcastlename(strnpcinfo(2))+"] has been abandoned.",0;
 	donpcevent strnpcinfo(0)+"::OnRecvCastle2";
@@ -84,7 +84,7 @@ OnStart:
 	// 1st Guardian stone, 2nd Guardian stone, Barrier 1, Barrier 2, Barrier 3, Summon Guardians
 	// Settings for all but Summon Guardians: 0 = Okay | 1 = Destroyed | 2 = Repairing
 	// Summon Guardians: 0 = Do not Summon | 1 = Summon
-	if (getcastledata(strnpcinfo(2),1)) {
+	if (getcastledata(strnpcinfo(2),CD_GUILD_ID)) {
 		setarray getd("$agit_"+substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9)+"[0]"),0,0,0,0,0,0;
 		donpcevent "df1#"+strnpcinfo(2)+"::OnEnable";
 		donpcevent "df2#"+strnpcinfo(2)+"::OnEnable";
@@ -136,21 +136,21 @@ OnChange:
 OnClock0001:
 	// Spawn Treasure Chests based on castle economy.
 	if (strnpcinfo(2) == "template") end;
-	if (!getcastledata(strnpcinfo(2),1)) end;
+	if (!getcastledata(strnpcinfo(2),CD_GUILD_ID)) end;
 	killmonster strnpcinfo(2),strnpcinfo(0)+"::OnTreasureDied";
-	if (getcastledata(strnpcinfo(2),4)) {
-		set .@Economy,getcastledata(strnpcinfo(2),2);
-		setcastledata strnpcinfo(2),2,.@Economy+getcastledata(strnpcinfo(2),4)+(rand(2) && getgdskilllv(getcastledata(strnpcinfo(2),1),10014));
-		if (getcastledata(strnpcinfo(2),2) > 100) setcastledata strnpcinfo(2),2,100;
-		setcastledata strnpcinfo(2),4,0;
+	if (getcastledata(strnpcinfo(2),CD_INVESTED_ECONOMY)) {
+		set .@Economy,getcastledata(strnpcinfo(2),CD_CURRENT_ECONOMY);
+		setcastledata strnpcinfo(2),CD_CURRENT_ECONOMY,.@Economy+getcastledata(strnpcinfo(2),CD_INVESTED_ECONOMY)+(rand(2) && getgdskilllv(getcastledata(strnpcinfo(2),CD_GUILD_ID),10014));
+		if (getcastledata(strnpcinfo(2),CD_CURRENT_ECONOMY) > 100) setcastledata strnpcinfo(2),CD_CURRENT_ECONOMY,100;
+		setcastledata strnpcinfo(2),CD_INVESTED_ECONOMY,0;
 	}
-	if (getcastledata(strnpcinfo(2),5)) {
-		set .@Defence,getcastledata(strnpcinfo(2),3);
-		setcastledata strnpcinfo(2),3,.@Defence+getcastledata(strnpcinfo(2),5);
-		if (getcastledata(strnpcinfo(2),3) > 100) setcastledata strnpcinfo(2),3,100;
-		setcastledata strnpcinfo(2),5,0;
+	if (getcastledata(strnpcinfo(2),CD_INVESTED_DEFENSE)) {
+		set .@Defence,getcastledata(strnpcinfo(2),CD_CURRENT_DEFENSE);
+		setcastledata strnpcinfo(2),CD_CURRENT_DEFENSE,.@Defence+getcastledata(strnpcinfo(2),CD_INVESTED_DEFENSE);
+		if (getcastledata(strnpcinfo(2),CD_CURRENT_DEFENSE) > 100) setcastledata strnpcinfo(2),CD_CURRENT_DEFENSE,100;
+		setcastledata strnpcinfo(2),CD_INVESTED_DEFENSE,0;
 	}
-	set .@Treasure,getcastledata(strnpcinfo(2),2)/5+4;
+	set .@Treasure,getcastledata(strnpcinfo(2),CD_CURRENT_ECONOMY)/5+4;
 	if (!.@Treasure) end;
 	freeloop(1);
 	if (compare(strnpcinfo(2),"arug")) {
@@ -205,7 +205,7 @@ OnTreasureDied:
 // Guild Manager
 //============================================================
 -	script	Steward#template	-1,{
-	set .@GID, getcastledata(strnpcinfo(4),1);
+	set .@GID, getcastledata(strnpcinfo(4),CD_GUILD_ID);
 	if (!.@GID) {
 		mes "[ Steward ]";
 		mes "I await for the master";
@@ -215,7 +215,7 @@ OnTreasureDied:
 		mes "to conquer this stronghold?";
 		close;
 	}
-	if (getcharid(2) != .@GID || strcharinfo(0) != getguildmaster(.@GID)) {
+	if (is_guild_leader(.@GID) == false) {
 		mes "[ Steward ]";
 		mes "Hmpf. Your threats don't";
 		mes "scare me! Guardians, drive";
@@ -236,24 +236,24 @@ OnTreasureDied:
 	case 1:
 		mes "[ Steward ]";
 		mes "The Commercial Growth";
-		mes "Level of the stronghold is ^0000ff"+getcastledata(strnpcinfo(4),2)+".";
-		if (getcastledata(strnpcinfo(4),4) > 0) {
+		mes "Level of the stronghold is ^0000ff"+getcastledata(strnpcinfo(4),CD_CURRENT_ECONOMY)+".";
+		if (getcastledata(strnpcinfo(4),CD_INVESTED_ECONOMY) > 0) {
 			mes "Last time, you invested in";
-			mes "Commercial Growth "+getcastledata(strnpcinfo(4),4)+".";
+			mes "Commercial Growth "+getcastledata(strnpcinfo(4),CD_INVESTED_ECONOMY)+".";
 		}
 		next;
 		mes "[ Steward ]";
 		mes "Our stronghold's";
-		mes "safeguard level is "+getcastledata(strnpcinfo(4),3)+".";
-		if (getcastledata(strnpcinfo(4),5) > 0) {
+		mes "safeguard level is "+getcastledata(strnpcinfo(4),CD_CURRENT_DEFENSE)+".";
+		if (getcastledata(strnpcinfo(4),CD_INVESTED_DEFENSE) > 0) {
 			mes "Last time, you invested";
-			mes "in defense "+getcastledata(strnpcinfo(4),5)+" times.";
+			mes "in defense "+getcastledata(strnpcinfo(4),CD_INVESTED_DEFENSE)+" times.";
 		}
 		mes " ";
 		mes "That is all, master.";
 		close;
 	case 2:
-		set .@Economy,getcastledata(strnpcinfo(4),2);
+		set .@Economy,getcastledata(strnpcinfo(4),CD_CURRENT_ECONOMY);
 		setarray .@cost[0],5000,10000,20000,35000,55000,80000,110000,145000,185000,230000,280000,335000,395000,460000,530000,605000,685000,770000,860000,955000;
 		set .@j,0;
 		for(set .@i,6; .@i<101; set .@i,.@i+5) {
@@ -264,7 +264,7 @@ OnTreasureDied:
 			set .@j, .@j+1;
 		}
 		// Quadruple the cost of investing if you've already invested once.
-		if (getcastledata(strnpcinfo(4),4)) set .@eco_invest,.@eco_invest*4;
+		if (getcastledata(strnpcinfo(4),CD_INVESTED_ECONOMY)) set .@eco_invest,.@eco_invest*4;
 		mes "[ Steward ]";
 		mes "Raising the stronghold's";
 		mes "commercial growth will";
@@ -290,7 +290,7 @@ OnTreasureDied:
 			mes "any further than that.";
 			close;
 		}
-		if (getcastledata(strnpcinfo(4),4) >= 2) {
+		if (getcastledata(strnpcinfo(4),CD_INVESTED_ECONOMY) >= 2) {
 			mes "[ Steward ]";
 			mes "You've already made two";
 			mes "investments today, so you'll";
@@ -298,7 +298,7 @@ OnTreasureDied:
 			mes "to make another investment.";
 			close;
 		}
-		if (getcastledata(strnpcinfo(4),4) == 0) {
+		if (getcastledata(strnpcinfo(4),CD_INVESTED_ECONOMY) == 0) {
 			mes "[ Steward ]";
 			mes "You must pay ^FF0000"+.@eco_invest+"^000000 Zeny";
 			mes "to make an investment";
@@ -316,7 +316,7 @@ OnTreasureDied:
 		next;
 		switch(select("Invest in Commercial Growth:Cancel")) {
 		case 1:
-			if (getcastledata(strnpcinfo(4),4) >= 2) {
+			if (getcastledata(strnpcinfo(4),CD_INVESTED_ECONOMY) >= 2) {
 				mes "[ Steward ]";
 				mes "You've already made two";
 				mes "investments today, so you'll";
@@ -333,7 +333,7 @@ OnTreasureDied:
 				close;
 			}
 			set Zeny, Zeny-.@eco_invest;
-			setcastledata strnpcinfo(4),4,getcastledata(strnpcinfo(4),4)+1;
+			setcastledata strnpcinfo(4),CD_INVESTED_ECONOMY,getcastledata(strnpcinfo(4),CD_INVESTED_ECONOMY)+1;
 			mes "[ Steward ]";
 			mes "A wise use of the guild's";
 			mes "funds, Master. We can expect";
@@ -346,7 +346,7 @@ OnTreasureDied:
 			close;
 		}
 	case 3:
-		set .@Defence,getcastledata(strnpcinfo(4),3);
+		set .@Defence,getcastledata(strnpcinfo(4),CD_CURRENT_DEFENSE);
 		setarray .@cost[0],10000,20000,40000,70000,110000,160000,220000,290000,370000,460000,560000,670000,790000,920000,1060000,1210000,1370000,1540000,1720000,1910000;
 		set .@j,0;
 		for(set .@i,6; .@i<101; set .@i,.@i+5) {
@@ -357,7 +357,7 @@ OnTreasureDied:
 			set .@j, .@j+1;
 		}
 		// Quadruple the cost of investing if you've already invested once.
-		if (getcastledata(strnpcinfo(4),5)) set .@def_invest,.@def_invest*4;
+		if (getcastledata(strnpcinfo(4),CD_INVESTED_DEFENSE)) set .@def_invest,.@def_invest*4;
 		mes "[ Steward ]";
 		mes "Investing in our stronghold's";
 		mes "defense will enhance the";
@@ -373,13 +373,13 @@ OnTreasureDied:
 		mes "a maximum of two times daily.";
 		next;
 		mes "[ Steward ]";
-		if (getcastledata(strnpcinfo(4),3) == 100) {
+		if (getcastledata(strnpcinfo(4),CD_CURRENT_DEFENSE) == 100) {
 			mes "The Defense Level of this";
 			mes "stronghold is 100%, and";
 			mes "cannot be increased further.";
 			close;
 		}
-		if (getcastledata(strnpcinfo(4),5) >= 2) {
+		if (getcastledata(strnpcinfo(4),CD_INVESTED_DEFENSE) >= 2) {
 			mes "Master, you've already";
 			mes "invested in Defense twice";
 			mes "today. You'll need to wait";
@@ -387,7 +387,7 @@ OnTreasureDied:
 			mes "want to increase our defenses.";
 			close;
 		}
-		if (getcastledata(strnpcinfo(4),5) == 0) {
+		if (getcastledata(strnpcinfo(4),CD_INVESTED_DEFENSE) == 0) {
 			mes "We need ^FF0000"+.@def_invest+"^000000";
 			mes "Zeny to invest in our";
 			mes "stronghold's defenses.";
@@ -403,7 +403,7 @@ OnTreasureDied:
 		next;
 		switch(select("Invest in Defense:Cancel")) {
 		case 1:
-			if (getcastledata(strnpcinfo(4),5) >= 2) {
+			if (getcastledata(strnpcinfo(4),CD_INVESTED_DEFENSE) >= 2) {
 				mes "[ Steward ]";
 				mes "Master, you've already";
 				mes "invested in Defense twice";
@@ -421,7 +421,7 @@ OnTreasureDied:
 				close;
 			}
 			set Zeny, Zeny-.@def_invest;
-			setcastledata strnpcinfo(4),5,getcastledata(strnpcinfo(4),5)+1;
+			setcastledata strnpcinfo(4),CD_INVESTED_DEFENSE,getcastledata(strnpcinfo(4),CD_INVESTED_DEFENSE)+1;
 			mes "[ Steward ]";
 			mes "A wise use of the guild's";
 			mes "funds, Master. Increasing";
@@ -435,7 +435,7 @@ OnTreasureDied:
 			close;
 		}
 	case 4:
-		if (getcastledata(strnpcinfo(4),9) == 1) {
+		if (getcastledata(strnpcinfo(4),CD_ENABLED_KAFRA) == 1) {
 			mes "[ Steward ]";
 			mes "Do you wish to dismiss";
 			mes "the Kafra Employee that";
@@ -478,7 +478,7 @@ OnTreasureDied:
 				close;
 			}
 			disablenpc "Kafra Employee#"+strnpcinfo(2);
-			setcastledata strnpcinfo(4),9,0;
+			setcastledata strnpcinfo(4),CD_ENABLED_KAFRA,0;
 			mes "[ Steward ]";
 			mes "That Kafra Employee";
 			mes "has been dismissed.";
@@ -514,7 +514,7 @@ OnTreasureDied:
 				}
 				set Zeny, Zeny-10000;
 				enablenpc "Kafra Employee#"+strnpcinfo(2);
-				setcastledata strnpcinfo(4),9,1;
+				setcastledata strnpcinfo(4),CD_ENABLED_KAFRA,1;
 				mes "[ Steward ]";
 				mes "Very well. We have formed";
 				mes "a contract with the Kafra";
@@ -605,17 +605,17 @@ OnStartArena:
 	set .@GID,getcharid(2);
 	set .@region$, (compare(strnpcinfo(4),"arug"))?"Valfreyja":"Nithafjoll";
 	// Lower castle Economy
-	set .@Economy,getcastledata(strnpcinfo(4),2)-5;
+	set .@Economy,getcastledata(strnpcinfo(4),CD_CURRENT_ECONOMY)-5;
 	if (.@Economy < 0) set .@Economy, 0;
-	setcastledata strnpcinfo(4),2,.@Economy;
+	setcastledata strnpcinfo(4),CD_CURRENT_ECONOMY,.@Economy;
 	// Lower Castle Defence
-	set .@Defence,getcastledata(strnpcinfo(4),3)-5;
+	set .@Defence,getcastledata(strnpcinfo(4),CD_CURRENT_DEFENSE)-5;
 	if (.@Defence < 0) set .@Defence, 0;
-	setcastledata strnpcinfo(4),3,.@Defence;
+	setcastledata strnpcinfo(4),CD_CURRENT_DEFENSE,.@Defence;
 	// Set new owner
-	setcastledata strnpcinfo(4),1,.@GID;
+	setcastledata strnpcinfo(4),CD_GUILD_ID,.@GID;
 	// Clear castle's data.
-	for(set .@i,4; .@i<10; set .@i,.@i+1)
+	for(set .@i,CD_INVESTED_ECONOMY; .@i<CD_ENABLED_GUARDIAN00; set .@i,.@i+1)
 		setcastledata strnpcinfo(4),.@i,0;
 	// Disable Kafra
 	disablenpc "Kafra Employee#"+strnpcinfo(2);
@@ -623,7 +623,7 @@ OnStartArena:
 	announce "The ["+getguildname(.@GID)+"] guild conquered the ["+.@region$+" "+charat(strnpcinfo(2),3)+"] stronghold of "+getcastlename(strnpcinfo(4))+"!",bc_all|bc_woe;
 	mapannounce strnpcinfo(4),"The emperium has been shattered!",bc_map,"0x00FF00",FW_NORMAL,20,0,40;
 	donpcevent "Manager#"+strnpcinfo(4)+"::OnReset";
-	maprespawnguildid strnpcinfo(4),getcastledata(strnpcinfo(4),1),2;
+	maprespawnguildid strnpcinfo(4),getcastledata(strnpcinfo(4),CD_GUILD_ID),2;
 	donpcevent "Manager#"+strnpcinfo(4)+"::OnRecvCastle2";
 	donpcevent "::OnRecvCastle"+strnpcinfo(2);
 	sleep 10000;
@@ -637,7 +637,7 @@ OnStartArena:
 // Castle Guardians
 //============================================================
 -	script	Guardian#template	-1,{
-	set .@GID, getcastledata(strnpcinfo(4),1);
+	set .@GID, getcastledata(strnpcinfo(4),CD_GUILD_ID);
 	set .@n$, "["+strnpcinfo(1)+"]";
 	if (!.@GID) {
 		mes .@n$;
@@ -648,7 +648,7 @@ OnStartArena:
 		close;
 	}
 	if (getcharid(2) == .@GID) {
-		if (strcharinfo(0) != getguildmaster(.@GID)) {
+		if (is_guild_leader() == false) {
 			mes .@n$;
 			mes "As guardian of this";
 			mes "stronghold, I answer only";
@@ -838,7 +838,7 @@ OnInit:
 //============================================================
 -	script	Kafra#template	-1,{
 	cutin "kafra_01",2;
-	set .@GID, getcastledata(strnpcinfo(4),1);
+	set .@GID, getcastledata(strnpcinfo(4),CD_GUILD_ID);
 	if (getcharid(2) == .@GID && getgdskilllv(.@GID,10001)) {
 		mes "[Kafra Employee]";
 		mes "Welcome, proud member";
@@ -950,7 +950,7 @@ OnInit:
 // Guardian Stones (2)
 //============================================================
 -	script	Guardian Stone#template	-1,{
-	set .@GID, getcastledata(strnpcinfo(4),1);
+	set .@GID, getcastledata(strnpcinfo(4),CD_GUILD_ID);
 	set .@num, atoi(charat(strnpcinfo(1),0));
 	set .@var$,"$agit_"+strnpcinfo(2);
 	if (getcharid(2) == .@GID) {
@@ -1104,11 +1104,11 @@ OnEnable:
 // Control Devices (3)
 //============================================================
 -	script	Control#template	-1,{
-	set .@GID, getcastledata(strnpcinfo(4),1);
+	set .@GID, getcastledata(strnpcinfo(4),CD_GUILD_ID);
 	set .@num, atoi(charat(strnpcinfo(1),15));
 	set .@var$,"$agit_"+strnpcinfo(2);
 	if (getcharid(2) == .@GID) {
-		if (strcharinfo(0) == getguildmaster(.@GID)) {
+		if (is_guild_leader() == true) {
 			if (getd(.@var$+"["+(.@num+1)+"]") == 2) {
 				mes "^3355FFDemolished Fortress";
 				mes "Gates can be repaired,";
@@ -1353,40 +1353,40 @@ OnEnable:
 	if (compare(strnpcinfo(2),"arug")) {
 		if (strnpcinfo(2) == "arug_cas01") {
 			setarray .@w[0],195,250,292,188;
-			setarray .x[0],233,252,232,201,224,196,269,252,201,224,222, 294,256,240,246,235,235,246,240,256,254,242;
-			setarray .y[0], 83, 81,108,130,168,137, 89, 81,130,168,129, 210,203,133, 92,132,132, 92,133,203, 95,151;
+			setarray .@x[0],233,252,232,201,224,196,269,252,201,224,222, 294,256,240,246,235,235,246,240,256,254,242;
+			setarray .@y[0], 83, 81,108,130,168,137, 89, 81,130,168,129, 210,203,133, 92,132,132, 92,133,203, 95,151;
 		}
 		else if (strnpcinfo(2) == "arug_cas02") {
 			setarray .@w[0],20,169,268,169;
-			setarray .x[0],104,67,67,113,122,67, 90, 91,122, 20,67, 175,204,211,209,161,186,183,150,161,209,211;
-			setarray .y[0], 32,36,85, 87,112,60,167,119,112,169,85,  31, 32, 63, 88, 91,170,121,110, 91, 88, 63;
+			setarray .@x[0],104,67,67,113,122,67, 90, 91,122, 20,67, 175,204,211,209,161,186,183,150,161,209,211;
+			setarray .@y[0], 32,36,85, 87,112,60,167,119,112,169,85,  31, 32, 63, 88, 91,170,121,110, 91, 88, 63;
 		}
 		else {	// Castles 3,4,5 are identical.
 			setarray .@w[0],66,157,211,159;
-			setarray .x[0],130,128,128,128,110,91,65, 65,110,128,128, 156,172,154,156,155,187,212,211,155,156,172;
-			setarray .y[0], 60, 77, 90,100, 96,53,71,103, 96,100, 77, 101, 95, 90, 77, 60, 54, 67,105, 60, 77, 95;
+			setarray .@x[0],130,128,128,128,110,91,65, 65,110,128,128, 156,172,154,156,155,187,212,211,155,156,172;
+			setarray .@y[0], 60, 77, 90,100, 96,53,71,103, 96,100, 77, 101, 95, 90, 77, 60, 54, 67,105, 60, 77, 95;
 		}
 	}
 	else {
 		if (strnpcinfo(2) == "schg_cas02") {
 			setarray .@w[0],337,95,307,222;
-			setarray .x[0],326,337,334,296,285,236,285,296,334,337,334, 359,300,337,317,307,300,337,317,307,359,236;
-			setarray .y[0], 83, 95,119, 82, 40, 41, 40, 82,119, 95,119,  85,119,154,183,222,119,154,183,222, 85, 41;
+			setarray .@x[0],326,337,334,296,285,236,285,296,334,337,334, 359,300,337,317,307,300,337,317,307,359,236;
+			setarray .@y[0], 83, 95,119, 82, 40, 41, 40, 82,119, 95,119,  85,119,154,183,222,119,154,183,222, 85, 41;
 		}
 		else if (strnpcinfo(2) == "schg_cas03") {
 			setarray .@w[0],306,325,364,305;
-			setarray .x[0],323,273,288,306,323,323,273,288,306,273,273, 338,364,365,317,338,338,364,365,317,364,329;
-			setarray .y[0],308,309,306,326,308,308,309,306,325,309,309, 309,305,261,318,310,309,305,261,318,305,314;
+			setarray .@x[0],323,273,288,306,323,323,273,288,306,273,273, 338,364,365,317,338,338,364,365,317,364,329;
+			setarray .@y[0],308,309,306,326,308,308,309,306,325,309,309, 309,305,261,318,310,309,305,261,318,305,314;
 		}
 		else {	// Castles 1,4,5 are identical.
 			setarray .@w[0],108,32,128,42,187,15;	// Contains an extra pair, for whatever reason.
-			setarray .x[0],111,109,65,110,88,64,47,109,111,112,120, 130,129,151,187,128,152,187,128,130,130,151;
-			setarray .y[0], 18, 44,22, 40,20,40,43, 48, 18, 32, 37,  22, 47, 18, 15, 42, 43, 15, 42, 22, 28, 18;
+			setarray .@x[0],111,109,65,110,88,64,47,109,111,112,120, 130,129,151,187,128,152,187,128,130,130,151;
+			setarray .@y[0], 18, 44,22, 40,20,40,43, 48, 18, 32, 37,  22, 47, 18, 15, 42, 43, 15, 42, 22, 28, 18;
 		}
 	}
 	if (charat(strnpcinfo(1),4) == "2") set .@z,11;
 	freeloop(1);
-	set .@defence,getcastledata(strnpcinfo(2),3);
+	set .@defence,getcastledata(strnpcinfo(2),CD_CURRENT_DEFENSE);
 	callsub OnSummon,.@z;
 	if (.@defence > 70) set getd(".MyMobCount_"+charat(strnpcinfo(1),4)+strnpcinfo(2)),5;
 	else if (.@defence > 50) set getd(".MyMobCount_"+charat(strnpcinfo(1),4)+strnpcinfo(2)),4;
@@ -1700,7 +1700,9 @@ OnBarrierDestroyed:
 	end;
 
 OnDisable:
-	delwall substr(strnpcinfo(2),0,1)+substr(strnpcinfo(2),8,9)+"_"+strnpcinfo(1);
+	.@wall_name$ = substr(strnpcinfo(2),0,1) + substr(strnpcinfo(2),8,9) + "_" + strnpcinfo(1);
+	if (checkwall(.@wall_name$) == true)
+		delwall .@wall_name$;
 	killmonster strnpcinfo(2),strnpcinfo(0)+"::OnBarrierDestroyed";
 	end;
 }
@@ -1708,7 +1710,7 @@ OnDisable:
 // Link Flags (function)
 //============================================================
 function	script	LinkFlag	{
-	if (!getcharid(2) || getcharid(2) != getcastledata(strnpcinfo(4),1)) end;
+	if (!getcharid(2) || getcharid(2) != getcastledata(strnpcinfo(4),CD_GUILD_ID)) end;
 	if (getarg(0) == "Convenience Facility") {
 		mes "^3355FFThis is the Stronghold";
 		mes "Teleport Service. Would";
@@ -1746,7 +1748,7 @@ function	script	LinkFlag	{
 function	script	ReturnFlag	{
 	.@map$ = getarg(0);
 	set .@str$, (compare(strnpcinfo(4),"aru"))?"Arunafeltz":"Schwaltzvalt";
-	.@GID =  getcastledata(.@map$,1);
+	.@GID =  getcastledata(.@map$,CD_GUILD_ID);
 	if (!.@GID) {
 		mes "[ "+.@str$+" Royal Edict ]";
 		mes "The Holy Kingdom of";
@@ -1763,7 +1765,7 @@ function	script	ReturnFlag	{
 		mes "do you wish to return";
 		mes "to your stronghold?";
 		next;
-		if(select("Return to the Stronghold:Cancel") == 1 && getcharid(2) == getcastledata(.@map$,1)) {
+		if(select("Return to the Stronghold:Cancel") == 1 && getcharid(2) == getcastledata(.@map$,CD_GUILD_ID)) {
 			if (compare(.@map$,"arug")) {
 				if (.@map$ == "arug_cas01") setarray .@i[0],67,193;
 				else if (.@map$ == "arug_cas02") setarray .@i[0],43,256;
@@ -1819,7 +1821,7 @@ function	script	ReturnFlag	{
 // Guild Dungeon Warps
 //============================================================
 -	script	Sunflower#template	-1,{
-	if (getcharid(2) == getcastledata(strnpcinfo(4),1)) {
+	if (getcharid(2) == getcastledata(strnpcinfo(4),CD_GUILD_ID)) {
 		mes "- It's an amazingly huge sunflower; as big as a human! ... You feel something mysterious emanating from the flower. -";
 		next;
 		switch(select("Hold the stem.:Do nothing.")) {

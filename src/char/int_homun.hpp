@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_HOMUN_HPP_
-#define _INT_HOMUN_HPP_
+#ifndef INT_HOMUN_HPP
+#define INT_HOMUN_HPP
 
 #include "../common/cbasetypes.hpp"
 
@@ -17,4 +17,4 @@ bool mapif_homunculus_load(int homun_id, struct s_homunculus* hd);
 bool mapif_homunculus_delete(int homun_id);
 bool mapif_homunculus_rename(char *name);
 
-#endif /* _INT_HOMUN_HPP_ */
+#endif /* INT_HOMUN_HPP */

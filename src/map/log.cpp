@@ -84,6 +84,7 @@ static char log_picktype2char(e_log_pick_type type)
 		case LOG_TYPE_ROULETTE:			return 'Y';  // Roulette Lotter(Y)
 		case LOG_TYPE_MERGE_ITEM:		return 'Z';  // Merged Item
 		case LOG_TYPE_QUEST:			return 'Q';  // (Q)uest Item
+		case LOG_TYPE_PRIVATE_AIRSHIP:	return 'H';  // Private Airs(H)ip
 	}
 
 	// should not get here, fallback

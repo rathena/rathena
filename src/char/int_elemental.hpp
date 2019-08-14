@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _INT_ELEMENTAL_HPP_
-#define _INT_ELEMENTAL_HPP_
+#ifndef INT_ELEMENTAL_HPP
+#define INT_ELEMENTAL_HPP
 
 struct s_elemental;
 
@@ -12,4 +12,4 @@ int inter_elemental_parse_frommap(int fd);
 
 bool mapif_elemental_delete(int ele_id);
 
-#endif /* _INT_ELEMENTAL_HPP_ */
+#endif /* INT_ELEMENTAL_HPP */

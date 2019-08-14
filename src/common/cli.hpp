@@ -1,8 +1,8 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#ifndef _CLI_HPP_
-#define	_CLI_HPP_
+#ifndef CLI_HPP
+#define CLI_HPP
 
 #include "cbasetypes.hpp"
 #include "timer.hpp"
@@ -34,5 +34,4 @@ int cli_get_options(int argc, char ** argv);
 TIMER_FUNC(parse_console_timer);
 extern int parse_console(const char* buf); //particular for each serv
 
-#endif /* _CLI_HPP_ */
-
+#endif /* CLI_HPP */
