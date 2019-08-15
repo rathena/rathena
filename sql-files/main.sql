@@ -987,18 +987,6 @@ CREATE TABLE IF NOT EXISTS `quest` (
 ) ENGINE=MyISAM;
 
 --
--- Table structure for table `ragsrvinfo`
---
-
-CREATE TABLE IF NOT EXISTS `ragsrvinfo` (
-  `index` int(11) NOT NULL default '0',
-  `name` varchar(255) NOT NULL default '',
-  `exp` int(11) unsigned NOT NULL default '0',
-  `jexp` int(11) unsigned NOT NULL default '0',
-  `drop` int(11) unsigned NOT NULL default '0'
-) ENGINE=MyISAM;
-
---
 -- Table structure for table `skill`
 --
 
