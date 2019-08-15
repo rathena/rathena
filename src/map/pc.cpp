@@ -6799,7 +6799,10 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 
 	if (!next || sd->status.base_exp < next || pc_is_maxbaselv(sd))
 		return 0;
-
+	
+	int maxMultiLevelUp = battle_config.max_multi_level_up;
+	if (battle_config.max_multi_level_up <= 0 && battle_config.multi_level_up)
+		maxMultiLevelUp = MAX_LEVEL;
 	do {
 		sd->status.base_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
@@ -6814,7 +6817,8 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 			sd->status.base_exp = u32min(sd->status.base_exp,MAX_LEVEL_BASE_EXP);
 			break;
 		}
-	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next);
+		maxMultiLevelUp--;
+	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next && maxMultiLevelUp > 0);
 
 	if (battle_config.pet_lv_rate && sd->pd)	//<Skotlex> update pet's level
 		status_calc_pet(sd->pd,SCO_NONE);
