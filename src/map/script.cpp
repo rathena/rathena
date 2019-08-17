@@ -19375,6 +19375,20 @@ BUILDIN_FUNC(questinfo)
 }
 
 /**
+ * questinfo_refresh {<char_id>};
+ **/
+BUILDIN_FUNC(questinfo_refresh)
+{
+	struct map_session_data *sd;
+
+	if (!script_charid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	pc_show_questinfo(sd); 
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
  * setquest <ID>{,<char_id>};
  **/
 BUILDIN_FUNC(setquest)
@@ -24925,6 +24939,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(isbegin_quest,"i?"),
 	BUILDIN_DEF(changequest, "ii?"),
 	BUILDIN_DEF(showevent, "i??"),
+	BUILDIN_DEF(questinfo_refresh, "?"),
 
 	//Bound items [Xantara] & [Akinari]
 	BUILDIN_DEF2(getitem,"getitembound","vii?"),

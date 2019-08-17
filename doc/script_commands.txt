@@ -9170,6 +9170,13 @@ OnInit:
 
 ---------------------------------------
 
+*questinfo_refresh {<char_id>};
+
+This command refreshes each quest bubble that has been set on the map according
+to the questinfo condition for the attached/given player.
+
+---------------------------------------
+
 *setquest <ID>{,<char_id>};
 
 Place quest of <ID> in the users quest log, the state of which is "active".

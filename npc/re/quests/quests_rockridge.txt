@@ -593,7 +593,8 @@ har_in01,20,30,5	script	Wyatt Warp#har_in01	10211,{
 		mes "[Wyatt Warp]";
 		mes "but Ivoka has a different idea.";
 		mes "Let's listen to what he has to say.";
-		rock_main_quest = 7;	// note: the update should refresh the questinfo - like official
+		rock_main_quest = 7;
+		questinfo_refresh();	// the update of the variable refreshes questinfo
 		close;
 	}
 	if (rock_main_quest == 7) {
