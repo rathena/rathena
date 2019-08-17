@@ -2338,6 +2338,22 @@ returned when requesting that information.
 
 ---------------------------------------
 
+*convertpcinfo(<char_id>,<type>)
+*convertpcinfo(<account_id>,<type>)
+*convertpcinfo(<player_name>,<type>)
+
+This function will return the information <type> for the
+specified character. Whatever it returns is determined by type.
+
+ CPC_NAME    - Character's name.
+ CPC_CHAR    - Character ID.
+ CPC_ACCOUNT - Account ID.
+
+If a character is not found (or not online) when requesting that information,
+an empty string will be returned for CPC_NAME, 0 for other <type>.
+
+---------------------------------------
+
 *strnpcinfo(<type>)
 
 This function will return the various parts of the name of the calling NPC.
@@ -3610,7 +3626,7 @@ You can see the full list of available effect types you can possibly inflict in
 ========================
 |3.- Checking commands.|
 ========================
--------------------------
+---------------------------------------
 
 *playerattached()
 
@@ -3939,7 +3955,7 @@ The renewal feature to check is determined by type.
 \\
 ---------------------------------------
 
-*isequipped(<id>{,<id>{,<id>{,<id>}}})
+*isequipped(<id>{,<id>{,..}})
 
 This function will return 1 if the invoking character has all of the item
 IDs given equipped (if card IDs are passed, then it checks if the cards are
@@ -3957,15 +3973,14 @@ in February 2005, but it will work just fine in normal NPC scripts.
 
 ---------------------------------------
 
-*isequippedcnt(<card id>{,<card id>{,<card id>{,<card id>}}})
+*isequippedcnt(<id>{,<id>{,..}})
 
 This function is similar to 'isequipped', but instead of 1 or 0, it will return
-the number of cards in the list given that were found on the invoking character.
+the amount of item/card equipped that were found on the invoking character from the given list.
 
-If a given parameter is not a card, the function returns the amount of that
-item equipped on the invoking character.
-
-    if (isequippedcnt(4001,4005,4033,4196) == 4) mes "Finally got all four poring cards?";
+Example:
+    if (isequippedcnt(4001,4005,4033,4196) == 5)
+		mes "Finally got 5 cards from poring monsters type?";
 
 ---------------------------------------
 
@@ -3984,7 +3999,7 @@ not.
 ==============================
 |4.- Player-related commands.|
 ==============================
--------------------------
+---------------------------------------
 
 *attachrid(<account ID>{,force})
 *detachrid;
@@ -4002,7 +4017,7 @@ even if he is currently attached to another script. Since this is not always the
 desired behavior you can also specify false to the command and it will only return 
 true if the player is online and was not attached to another script.
 
--------------------------
+---------------------------------------
 
 *addrid(<type>{,<flag>{,<parameters>}});
 
@@ -7489,7 +7504,7 @@ rand(2,5) would result in 2,3,4 or 5
 
 ---------------------------------------
 
-*viewpoint <action>,<x>,<y>,<point number>,<color>;
+*viewpoint <action>,<x>,<y>,<point number>,<color>{,<Char ID>};
 
 This command will mark places on the mini map in the client connected to the
 invoking character. It uses the normal X and Y coordinates from the main map.
@@ -9054,6 +9069,33 @@ Example:
 .@name$ = "Endless Tower";
 mes .@name$ + " will be destroyed if no one is in the instance for " + instance_info(.@name$,IIT_IDLETIMEOUT) + " seconds.";
 // Endless Tower will be destroyed if no one is in the instance for 300 seconds.
+
+---------------------------------------
+
+*instance_live_info(<info type>{,<instance id>});
+
+Returns the specified <info type> of instance attached to the npc or, if
+an instance ID is specified, of that instance.
+
+Valid <info type>:
+ILI_NAME	- Instance Name
+			  Return the name of the instance or "" if that fails.
+ILI_MODE	- Instance Mode
+			  Return IM_NONE, IM_CHAR, IM_PARTY, IM_GUILD, IM_CLAN or -1 if that fails.
+ILI_OWNER	- Owner ID
+			  Return an ID according to the instance mode of the instance attached/specified or -1 if that fails.
+			  When the instance mode is IM_NONE, ILI_OWNER will return the npc ID that created the instance,
+			  IM_CHAR	- the owner char ID
+			  IM_PARTY	- the party ID
+			  IM_GUILD	- the guild ID
+			  IM_CLAN	- the clan ID
+
+Examples:
+	// Return the instance name of the instance attached to the npc.
+	.@instance_name$ = instance_live_info(ILI_NAME);
+
+	// Return the guild owner ID of the given instance ID.
+	.@owner = instance_live_info(ILI_OWNER, instance_id(IM_GUILD));
 
 ---------------------------------------
 

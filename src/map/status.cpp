@@ -2435,8 +2435,13 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 {
 	int flag = 0, str, dex, dstr;
 
-	if(!(bl->type&battle_config.enable_baseatk))
+#ifdef RENEWAL
+	if (!(bl->type&battle_config.enable_baseatk_renewal))
 		return 0;
+#else
+	if (!(bl->type&battle_config.enable_baseatk))
+		return 0;
+#endif
 
 	if (bl->type == BL_PC)
 	switch(((TBL_PC*)bl)->status.weapon) {
@@ -3826,9 +3831,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if( sd->pd ) { // Pet Bonus
 		struct pet_data *pd = sd->pd;
 		std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
-		if( pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script && pd->pet.intimate >= battle_config.pet_equip_min_friendly )
+
+		if (pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script)
 			run_script(pet_db_ptr->pet_bonus_script,0,sd->bl.id,0);
-		if( pet_db_ptr != nullptr && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus )
+		if (pet_db_ptr != nullptr && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus)
 			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
 	}
 
@@ -8186,6 +8192,10 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 				tick /= 5;
 			sc_def = status->agi*50;
 			break;
+		case SC_JOINTBEAT:
+			sc_def2 = 270 * status->str / 100; // 270 * STR / 100
+			tick_def2 = (status->luk * 50 + status->agi * 200) / 2; // (50 * LUK / 100 + 20 * AGI / 100) / 2
+			break;
 		case SC_DEEPSLEEP:
 			tick_def2 = status_get_base_status(bl)->int_ * 25 + status_get_lv(bl) * 50;
 			break;
@@ -9522,6 +9532,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					return 0;
 				break;
 			case SC_JOINTBEAT:
+				if (sc && sc->data[type]->val2 & BREAK_NECK)
+					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
 			default:
 				if(sce->val1 > val1)
@@ -14504,13 +14516,12 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 		bool mapIsGVG = mapdata_flag_gvg2_no_te(mapdata);
 		bool mapIsBG = mapdata->flag[MF_BATTLEGROUND] != 0;
 		bool mapIsTE = mapdata_flag_gvg2_te(mapdata);
-		unsigned int mapZone = mapdata->zone << 3;
 
 		for (i = 0; i < SC_MAX; i++) {
 			if (!sc->data[i] || !SCDisabled[i])
 				continue;
 
-			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone, mapIsTE))
+			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapdata->zone, mapIsTE))
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 		}
 	}
