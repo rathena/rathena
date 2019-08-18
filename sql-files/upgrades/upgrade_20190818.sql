@@ -28,3 +28,5 @@ ALTER TABLE `skillcooldown`
 
 ALTER TABLE `vending_items`
 	ADD PRIMARY KEY (`vending_id`, `index`);
+
+DROP TABLE `sstatus`;

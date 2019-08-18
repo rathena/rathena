@@ -1022,16 +1022,6 @@ CREATE TABLE IF NOT EXISTS `skill_homunculus` (
 ) ENGINE=MyISAM;
 
 --
--- Table structure for table `sstatus`
---
-
-CREATE TABLE IF NOT EXISTS `sstatus` (
-  `index` tinyint(4) unsigned NOT NULL default '0',
-  `name` varchar(255) NOT NULL default '',
-  `user` int(11) unsigned NOT NULL default '0'
-) ENGINE=MyISAM;
-
---
 -- Table structure for table `storage`
 --
 
