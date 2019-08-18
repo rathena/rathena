@@ -107,12 +107,15 @@ CREATE TABLE IF NOT EXISTS `db_roulette` (
 --
 
 CREATE TABLE IF NOT EXISTS `bonus_script` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `char_id` INT(11) UNSIGNED NOT NULL,
   `script` TEXT NOT NULL,
   `tick` BIGINT(20) NOT NULL DEFAULT '0',
   `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
   `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
-  `icon` SMALLINT(3) NOT NULL DEFAULT '-1'
+  `icon` SMALLINT(3) NOT NULL DEFAULT '-1',
+  PRIMARY KEY (`id`),
+  INDEX `char_id` (`char_id`)
 ) ENGINE=InnoDB;
 
 --
@@ -124,7 +127,8 @@ CREATE TABLE IF NOT EXISTS `buyingstore_items` (
   `index` smallint(5) unsigned NOT NULL,
   `item_id` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
-  `price` int(10) unsigned NOT NULL
+  `price` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`buyingstore_id`, `index`)
 ) ENGINE=MyISAM;
 
 --
@@ -307,7 +311,8 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `dex` int(11) unsigned NOT NULL default '0',
   `luk` int(11) unsigned NOT NULL default '0',
   `hair` tinyint(4) NOT NULL default '0',
-  `hair_color` int(11) NOT NULL default '0'
+  `hair_color` int(11) NOT NULL default '0',
+	PRIMARY KEY (`time`, `account_id`, `char_num`)
 ) ENGINE=MyISAM; 
 
 --
@@ -387,7 +392,8 @@ CREATE TABLE IF NOT EXISTS `friends` (
   `char_id` int(11) NOT NULL default '0',
   `friend_account` int(11) NOT NULL default '0',
   `friend_id` int(11) NOT NULL default '0',
-  KEY  `char_id` (`char_id`)
+  KEY  `char_id` (`char_id`),
+  PRIMARY KEY (`char_id`, `friend_account`, `friend_id`)
 ) ENGINE=MyISAM;
 
 --
@@ -671,8 +677,11 @@ CREATE TABLE IF NOT EXISTS `hotkey` (
 --
 
 CREATE TABLE IF NOT EXISTS `interlog` (
+  `id` INT NOT NULL AUTO_INCREMENT,
   `time` datetime NOT NULL,
-  `log` varchar(255) NOT NULL default ''
+  `log` varchar(255) NOT NULL default '',
+  PRIMARY KEY (`id`),
+  INDEX `time` (`time`)
 ) ENGINE=MyISAM; 
 
 --
@@ -735,6 +744,7 @@ CREATE TABLE IF NOT EXISTS `ipbanlist` (
   `btime` datetime NOT NULL,
   `rtime` datetime NOT NULL,
   `reason` varchar(255) NOT NULL default '',
+  PRIMARY KEY (`list`, `btime`),
   KEY (`list`)
 ) ENGINE=MyISAM;
 
@@ -919,6 +929,7 @@ CREATE TABLE IF NOT EXISTS `sc_data` (
   `val2` int(11) NOT NULL default '0',
   `val3` int(11) NOT NULL default '0',
   `val4` int(11) NOT NULL default '0',
+  PRIMARY KEY (`account_id`, `char_id`, `type`),
   KEY (`account_id`),
   KEY (`char_id`)
 ) ENGINE=MyISAM;
@@ -932,6 +943,7 @@ CREATE TABLE IF NOT EXISTS `skillcooldown` (
   `char_id` int(11) unsigned NOT NULL,
   `skill` smallint(11) unsigned NOT NULL DEFAULT '0',
   `tick` bigint(20) NOT NULL,
+  PRIMARY KEY (`account_id`, `char_id`, `skill`),
   KEY `account_id` (`account_id`),
   KEY `char_id` (`char_id`)
 ) ENGINE=MyISAM;
@@ -1067,7 +1079,8 @@ CREATE TABLE IF NOT EXISTS `vending_items` (
   `index` smallint(5) unsigned NOT NULL,
   `cartinventory_id` int(10) unsigned NOT NULL,
   `amount` smallint(5) unsigned NOT NULL,
-  `price` int(10) unsigned NOT NULL
+  `price` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`vending_id`, `index`)
 ) ENGINE=MyISAM;
 
 --
