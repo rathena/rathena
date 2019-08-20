@@ -1,5 +1,4 @@
 ALTER TABLE `bonus_script`
-    DROP INDEX `char_id`,
     ADD PRIMARY KEY (`char_id`, `type`);
 
 ALTER TABLE `buyingstore_items`
