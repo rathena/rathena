@@ -107,15 +107,13 @@ CREATE TABLE IF NOT EXISTS `db_roulette` (
 --
 
 CREATE TABLE IF NOT EXISTS `bonus_script` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
   `char_id` INT(11) UNSIGNED NOT NULL,
   `script` TEXT NOT NULL,
   `tick` BIGINT(20) NOT NULL DEFAULT '0',
   `flag` SMALLINT(5) UNSIGNED NOT NULL DEFAULT '0',
   `type` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0',
   `icon` SMALLINT(3) NOT NULL DEFAULT '-1',
-  PRIMARY KEY (`id`),
-  INDEX `char_id` (`char_id`)
+  PRIMARY KEY (`char_id`, `type`)
 ) ENGINE=InnoDB;
 
 --
@@ -312,7 +310,7 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `luk` int(11) unsigned NOT NULL default '0',
   `hair` tinyint(4) NOT NULL default '0',
   `hair_color` int(11) NOT NULL default '0',
-	PRIMARY KEY (`time`, `account_id`, `char_num`)
+  PRIMARY KEY (`time`, `account_id`, `char_num`)
 ) ENGINE=MyISAM; 
 
 --
@@ -392,8 +390,7 @@ CREATE TABLE IF NOT EXISTS `friends` (
   `char_id` int(11) NOT NULL default '0',
   `friend_account` int(11) NOT NULL default '0',
   `friend_id` int(11) NOT NULL default '0',
-  KEY  `char_id` (`char_id`),
-  PRIMARY KEY (`char_id`, `friend_account`, `friend_id`)
+  PRIMARY KEY (`char_id`, `friend_id`)
 ) ENGINE=MyISAM;
 
 --
@@ -664,12 +661,12 @@ CREATE TABLE IF NOT EXISTS `homunculus` (
 --
 
 CREATE TABLE IF NOT EXISTS `hotkey` (
-	`char_id` INT(11) NOT NULL,
-	`hotkey` TINYINT(2) unsigned NOT NULL,
-	`type` TINYINT(1) unsigned NOT NULL default '0',
-	`itemskill_id` INT(11) unsigned NOT NULL default '0',
-	`skill_lvl` TINYINT(4) unsigned NOT NULL default '0',
-	PRIMARY KEY (`char_id`,`hotkey`)
+  `char_id` INT(11) NOT NULL,
+  `hotkey` TINYINT(2) unsigned NOT NULL,
+  `type` TINYINT(1) unsigned NOT NULL default '0',
+  `itemskill_id` INT(11) unsigned NOT NULL default '0',
+  `skill_lvl` TINYINT(4) unsigned NOT NULL default '0',
+  PRIMARY KEY (`char_id`,`hotkey`)
 ) ENGINE=MyISAM;
 
 -- 
@@ -744,8 +741,7 @@ CREATE TABLE IF NOT EXISTS `ipbanlist` (
   `btime` datetime NOT NULL,
   `rtime` datetime NOT NULL,
   `reason` varchar(255) NOT NULL default '',
-  PRIMARY KEY (`list`, `btime`),
-  KEY (`list`)
+  PRIMARY KEY (`list`, `btime`)
 ) ENGINE=MyISAM;
 
 --
@@ -929,9 +925,7 @@ CREATE TABLE IF NOT EXISTS `sc_data` (
   `val2` int(11) NOT NULL default '0',
   `val3` int(11) NOT NULL default '0',
   `val4` int(11) NOT NULL default '0',
-  PRIMARY KEY (`account_id`, `char_id`, `type`),
-  KEY (`account_id`),
-  KEY (`char_id`)
+  PRIMARY KEY (`char_id`, `type`)
 ) ENGINE=MyISAM;
 
 --
@@ -943,9 +937,7 @@ CREATE TABLE IF NOT EXISTS `skillcooldown` (
   `char_id` int(11) unsigned NOT NULL,
   `skill` smallint(11) unsigned NOT NULL DEFAULT '0',
   `tick` bigint(20) NOT NULL,
-  PRIMARY KEY (`account_id`, `char_id`, `skill`),
-  KEY `account_id` (`account_id`),
-  KEY `char_id` (`char_id`)
+  PRIMARY KEY (`char_id`, `skill`)
 ) ENGINE=MyISAM;
 
 --
