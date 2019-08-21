@@ -9153,6 +9153,15 @@ QMARK_PURPLE - Purple Marker
 
 <condition> can be any expression similarly to the <condition> in the 'if' command.
 
+List of the player's actions to trigger the questinfo condition:
+-	Item added to/removed from player inventory
+-	Base/Job level change
+-	Job change
+-	Quest given/erased/completed
+-	Quest objective updated (character killed a monster quest target)
+-	Warp
+
+
 Example:
 izlude,100,100,4	script	Test	844,{
 	mes "[Test]";
