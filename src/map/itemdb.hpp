@@ -949,6 +949,7 @@ char itemdb_isidentified(unsigned short nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
+int itemdb_inventory_slot_needed(item_data *id, int amount);
 
 struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 

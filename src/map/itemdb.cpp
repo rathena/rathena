@@ -514,6 +514,10 @@ bool itemdb_isstackable2(struct item_data *id)
 	}
 }
 
+int itemdb_inventory_slot_needed(item_data *id, int amount) {
+	return (id && id->flag.guid) ? amount : 1;
+}
+
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
