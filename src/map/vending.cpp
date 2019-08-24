@@ -204,7 +204,7 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 		case CHKADDITEM_EXIST:
 			break;	//We'd add this item to the existing one (in buyers inventory)
 		case CHKADDITEM_NEW:
-			new_ += itemdb_inventory_slot_needed(itemdb_search(vsd->cart.u.items_cart[idx].nameid), amount);
+			new_++;
 			if (new_ > blank)
 				return; //Buyer has no space in his inventory
 			break;
