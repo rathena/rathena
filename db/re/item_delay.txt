@@ -91,7 +91,6 @@
 11623,10000	//White_Syrup
 11624,10000	//Blue_Syrup
 12135,10000	//Green_Ale
-12135,10000	//Green_Ale
 //12202,60000	//Str_Dish10_
 //12203,60000	//Agi_Dish10_
 //12204,60000	//Int_Dish10_
