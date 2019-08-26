@@ -6800,7 +6800,7 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	if (!next || sd->status.base_exp < next || pc_is_maxbaselv(sd))
 		return 0;
 
-	int maxMultiLevelUp = cap_value(battle_config.max_multi_level_up_base, 1, MAX_LEVEL);
+	int max_multi_level_up = cap_value(battle_config.max_multi_level_up_base, 1, MAX_LEVEL);
 	do {
 		sd->status.base_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
@@ -6815,10 +6815,10 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 			sd->status.base_exp = u32min(sd->status.base_exp,MAX_LEVEL_BASE_EXP);
 			break;
 		}
-		maxMultiLevelUp--;
-		if (maxMultiLevelUp <= 0)
+		max_multi_level_up--;
+		if (max_multi_level_up <= 0)
 			sd->status.base_exp = 0;
-	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next && maxMultiLevelUp > 0);
+	} while ((next=pc_nextbaseexp(sd)) > 0 && sd->status.base_exp >= next && max_multi_level_up > 0);
 
 	if (battle_config.pet_lv_rate && sd->pd)	//<Skotlex> update pet's level
 		status_calc_pet(sd->pd,SCO_NONE);
@@ -6874,7 +6874,7 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		return 0;
 
 	
-	int maxMultiLevelUp = cap_value(battle_config.max_multi_level_up_job, 1, MAX_LEVEL);
+	int max_multi_level_up = cap_value(battle_config.max_multi_level_up_job, 1, MAX_LEVEL);
 	do {
 		sd->status.job_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
@@ -6888,10 +6888,10 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 			sd->status.job_exp = u32min(sd->status.job_exp,MAX_LEVEL_JOB_EXP);
 			break;
 		}
-		maxMultiLevelUp--;
-		if (maxMultiLevelUp <= 0)
+		max_multi_level_up--;
+		if (max_multi_level_up <= 0)
 			sd->status.job_exp = 0;
-	} while ((next=pc_nextjobexp(sd)) > 0 && sd->status.job_exp >= next && maxMultiLevelUp > 0);
+	} while ((next=pc_nextjobexp(sd)) > 0 && sd->status.job_exp >= next && max_multi_level_up > 0);
 
 	clif_updatestatus(sd,SP_JOBLEVEL);
 	clif_updatestatus(sd,SP_JOBEXP);
