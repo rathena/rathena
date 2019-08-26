@@ -6799,10 +6799,8 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 
 	if (!next || sd->status.base_exp < next || pc_is_maxbaselv(sd))
 		return 0;
-	
-	int maxMultiLevelUp = battle_config.max_multi_level_up_base;
-	if (battle_config.max_multi_level_up_base <= 0 && battle_config.multi_level_up)
-		maxMultiLevelUp = MAX_LEVEL;
+
+	int maxMultiLevelUp = cap_value(battle_config.max_multi_level_up_base, 1, MAX_LEVEL);
 	do {
 		sd->status.base_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
@@ -6875,9 +6873,8 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 	if(!next || sd->status.job_exp < next || pc_is_maxjoblv(sd))
 		return 0;
 
-	int maxMultiLevelUp = battle_config.max_multi_level_up_job;
-	if (battle_config.max_multi_level_up_job <= 0 && battle_config.multi_level_up)
-		maxMultiLevelUp = MAX_LEVEL;
+	
+	int maxMultiLevelUp = cap_value(battle_config.max_multi_level_up_job, 1, MAX_LEVEL);
 	do {
 		sd->status.job_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
@@ -6890,11 +6887,10 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		if( pc_is_maxjoblv(sd) ){
 			sd->status.job_exp = u32min(sd->status.job_exp,MAX_LEVEL_JOB_EXP);
 			break;
-
+		}
 		maxMultiLevelUp--;
 		if (maxMultiLevelUp <= 0)
 			sd->status.job_exp = 0;
-		}
 	} while ((next=pc_nextjobexp(sd)) > 0 && sd->status.job_exp >= next && maxMultiLevelUp > 0);
 
 	clif_updatestatus(sd,SP_JOBLEVEL);
