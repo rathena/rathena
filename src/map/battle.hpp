@@ -349,7 +349,6 @@ struct Battle_Config
 	int equip_natural_break_rate;	//Base Natural break rate for attacks.
 	int equip_self_break_rate; //Natural & Penalty skills break rate
 	int equip_skill_break_rate; //Offensive skills break rate
-	int multi_level_up;
 	int max_multi_level_up_base;
 	int max_multi_level_up_job;
 	int multi_level_up_base;
