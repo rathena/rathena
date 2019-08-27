@@ -6800,11 +6800,11 @@ int pc_checkbaselevelup(struct map_session_data *sd) {
 	if (!next || sd->status.base_exp < next || pc_is_maxbaselv(sd))
 		return 0;
 
-	int max_multi_level_up = cap_value(battle_config.max_multi_level_up_base, 1, MAX_LEVEL);
+	int max_multi_level_up = cap_value(battle_config.max_multi_level_up_base, 0, MAX_LEVEL);
 	do {
 		sd->status.base_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
-		if( ( ( battle_config.multi_level_up_base > 0 && sd->status.base_level >= battle_config.multi_level_up_base ) ) && sd->status.base_exp > next-1 )
+		if( (  battle_config.multi_level_up_base > 0 && sd->status.base_level >= battle_config.multi_level_up_base ) && sd->status.base_exp > next-1 )
 			sd->status.base_exp = next-1;
 
 		next = pc_gets_status_point(sd->status.base_level);
@@ -6874,11 +6874,11 @@ int pc_checkjoblevelup(struct map_session_data *sd)
 		return 0;
 
 	
-	int max_multi_level_up = cap_value(battle_config.max_multi_level_up_job, 1, MAX_LEVEL);
+	int max_multi_level_up = cap_value(battle_config.max_multi_level_up_job, 0, MAX_LEVEL);
 	do {
 		sd->status.job_exp -= next;
 		//Kyoki pointed out that the max overcarry exp is the exp needed for the previous level -1. [Skotlex]
-		if( ( ( battle_config.multi_level_up_job > 0 && sd->status.job_level >= battle_config.multi_level_up_job ) ) && sd->status.job_exp > next-1 )
+		if( ( battle_config.multi_level_up_job > 0 && sd->status.job_level >= battle_config.multi_level_up_job ) && sd->status.job_exp > next-1 )
 			sd->status.job_exp = next-1;
 
 		sd->status.job_level ++;
