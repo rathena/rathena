@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= Syrus22 (1.1) dafide18 (1.4) Skotlex (1.5)
 //===== Current Version: =====================================
-//= 3.4
+//= 3.5
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -16,6 +16,7 @@
 //= 3.2a Added 'disable_items' command. [Euphy]
 //= 3.3 Some official script updates. [Euphy]
 //= 3.4 Added VIP features. [Euphy]
+//= 3.5 Added unofficial ore refinement of Shadowdecon and Zelunium [llchrisll]
 //============================================================
 
 // Christopher: Geffen Blacksmith
@@ -245,7 +246,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 		mes "[Christopher Guillenrow]";
 		mes "I can purify yer Oridecon and Elunium. I make a refined Ore out of 5 o'each rough ones. Well... Which one do ye want to make?";
 		next;
-		switch(select("Make Oridecon:Make Elunium:Cancel.")) {
+		switch(select("Make Oridecon:Make Elunium:Make Shadowdecon:Make Zelunium:Cancel.")) {
 		case 1:
 			if (countitem(756) < 5) {
 				mes "[Christopher Guillenrow]";
@@ -273,6 +274,32 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 		case 3:
+			if (countitem(25728) < 5) {
+				mes "[Christopher Guillenrow]";
+				mes "I told ye, I need 5 rough Shadowdecon fer one Shadowdecon.";
+				close;
+			}
+			else {
+				delitem 25728,5;  //Rough_Shadowdecon
+				getitem 25729,1; // Shadowdecon
+				mes "[Christopher Guillenrow]";
+				mes "Arrr, here's yer Shadowdecon. Yer business is always welcome here, so feel free to come again.";
+				close;
+			}
+		case 4:
+			if (countitem(25730) < 5) {
+				mes "[Christopher Guillenrow]";
+				mes "I told ye, I need 5 rough Zeluniums fer one Zelunium.";
+				close;
+			}
+			else {
+				delitem 25730,5;  //Rough_Zelunium
+				getitem 25731,1; // Zelunium
+				mes "[Christopher Guillenrow]";
+				mes "Arrr, here's yer Zelunium. Yer business is always welcome here, so feel free to come again.";
+				close;
+			}
+		case 5:
 			mes "[Christopher Guillenrow]";
 			mes "Feel free to come anytime, whenever ye need. Fare ye well.";
 			close;
