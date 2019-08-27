@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Payon City Renovation
+//= Payon City Pre-Renovation
 //===== Changelogs: ==========================================
 //= 1.0 First Version. [JohnnyPlayy]
 //============================================================
