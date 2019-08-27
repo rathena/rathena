@@ -3542,7 +3542,7 @@ REPLACE INTO `item_db_re` VALUES (5326,'Masquerade_C','Masquerade C',4,1,NULL,0,
 REPLACE INTO `item_db_re` VALUES (5327,'Orc_Hero_Helm_C','Refined Helmet of Orc Hero',4,1,NULL,0,NULL,10,NULL,0,0xFFFFFFFE,63,2,768,NULL,'0',0,178,'bonus bStr,5; bonus bVit,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5328,'Evil_Wing_Ears_C','Evil Wing Ears C',4,1,NULL,0,NULL,4,NULL,0,0xFFFFFFFF,63,2,512,NULL,'0',0,152,'bonus bStr,1;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5329,'Dark_Blindfold_C','Dark Blindfold C',4,1,NULL,0,NULL,1,NULL,0,0xFFFFFFFF,63,2,512,NULL,'0',0,187,'bonus2 bResEff,Eff_Blind,10000; bonus2 bResEff,Eff_Stun,500;',NULL,NULL);
-REPLACE INTO `item_db_re` VALUES (5330,'kRO_Drooping_Kitty_C','kRO Drooping Kitty C',4,1,NULL,0,NULL,9,NULL,0,0xFFFFFFFE,63,2,256,NULL,'0',0,142,'bonus bMdef,15; bonus2 bResEff,Eff_Curse,4000; bonus2 bResEff,Eff_Curse,1000;',NULL,NULL);
+REPLACE INTO `item_db_re` VALUES (5330,'kRO_Drooping_Kitty_C','kRO Drooping Kitty C',4,1,NULL,0,NULL,9,NULL,0,0xFFFFFFFE,63,2,256,NULL,'0',0,142,'bonus bMdef,15; bonus2 bResEff,Eff_Curse,4000; bonus2 bResEff,Eff_Stun,1000;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5331,'Corsair_C','Corsair C',4,1,NULL,0,NULL,14,NULL,0,0xFFFFFFFE,63,2,256,NULL,'0',0,105,'bonus bVit,3; bonus bInt,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5332,'Loki_Mask','Loki Mask',4,0,NULL,200,NULL,2,NULL,0,0xFFFFFFFF,63,2,513,NULL,'20',0,346,'bonus bFlee2,3;',NULL,NULL);
 REPLACE INTO `item_db_re` VALUES (5333,'Radio_Antenna','Radio Antenna',4,0,NULL,1500,NULL,2,NULL,0,0xFFFFFFFF,63,2,256,NULL,'50',1,347,'bonus bMdef,5; bonus bCritical,5; bonus bFlee,5; skill "MG_LIGHTNINGBOLT",1; bonus4 bAutoSpellWhenHit,"MG_THUNDERSTORM",5,30,1;',NULL,NULL);
