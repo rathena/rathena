@@ -806,7 +806,7 @@ int log_config_read(const char* cfgName)
 				log_config.amount_items_log = atoi(w2);
 //end of common filter settings
 			else if( strcmpi(w1, "log_branch") == 0 )
-				log_config.branch = (bool)config_switch(w2);
+				log_config.branch = config_switch(w2) ? true : false;
 			else if( strcmpi(w1, "log_filter") == 0 )
 				log_config.filter = (e_log_filter)config_switch(w2);
 			else if( strcmpi(w1, "log_zeny") == 0 )
@@ -814,17 +814,17 @@ int log_config_read(const char* cfgName)
 			else if( strcmpi( w1, "log_cash" ) == 0 )
 				log_config.cash = config_switch( w2 ) > 0;
 			else if( strcmpi(w1, "log_commands") == 0 )
-				log_config.commands = config_switch(w2);
+				log_config.commands = config_switch(w2) ? true : false;
 			else if( strcmpi(w1, "log_npc") == 0 )
-				log_config.npc = config_switch(w2);
+				log_config.npc = config_switch(w2) ? true : false;
 			else if( strcmpi(w1, "log_chat") == 0 )
 				log_config.chat = (e_log_chat_type)config_switch(w2);
 			else if( strcmpi(w1, "log_mvpdrop") == 0 )
-				log_config.mvpdrop = config_switch(w2);
+				log_config.mvpdrop = config_switch(w2) ? true : false;
 			else if( strcmpi(w1, "log_feeding") == 0 )
 				log_config.feeding = config_switch(w2);
 			else if( strcmpi(w1, "log_chat_woe_disable") == 0 )
-				log_config.log_chat_woe_disable = (bool)config_switch(w2);
+				log_config.log_chat_woe_disable = config_switch(w2) ? true : false;
 			else if( strcmpi(w1, "log_branch_table") == 0 )
 				log_config.schema.branch_table = w2;
 			else if( strcmpi(w1, "log_pick_table") == 0 )

@@ -3972,7 +3972,7 @@ static bool map_schema_read_conf(const char *w1, const char *w2) {
 	}\
 
 	if (strcmpi(w1,"use_sql_db")==0) {
-		mapserv_schema_config.db_use_sqldbs = config_switch(w2);
+		mapserv_schema_config.db_use_sqldbs = config_switch(w2) ? true : false;
 		ShowStatus ("Using SQL dbs: %s\n",w2);
 		return true;
 	}
@@ -4094,19 +4094,19 @@ int map_config_read(const char *cfgName)
 		else if(strcmpi(w1,"db_path") == 0)
 			safestrncpy(db_path,w2,ARRAYLENGTH(db_path));
 		else if (strcmpi(w1, "console") == 0) {
-			map_config.console = config_switch(w2);
+			map_config.console = config_switch(w2) ? true : false;
 			if (map_config.console)
 				ShowNotice("Console Commands are enabled.\n");
 		} else if (strcmpi(w1, "enable_spy") == 0)
-			map_config.enable_spy = config_switch(w2);
+			map_config.enable_spy = config_switch(w2) ? true : false;
 		else if (strcmpi(w1, "use_grf") == 0)
-			map_config.enable_grf = config_switch(w2);
+			map_config.enable_grf = config_switch(w2) ? true : false;
 		else if (strcmpi(w1, "console_msg_log") == 0)
 			console_msg_log = atoi(w2);//[Ind]
 		else if (strcmpi(w1, "console_log_filepath") == 0)
 			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
 		else if (strcmpi(w1,"check_tables") == 0)
-			map_config.check_tables = config_switch(w2);
+			map_config.check_tables = config_switch(w2) ? true : false;
 		else if (map_schema_read_conf(w1, w2))
 			continue;
 		else if (strcmpi(w1, "import") == 0)

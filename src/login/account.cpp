@@ -113,7 +113,7 @@ static bool account_db_check_tables(AccountDB* self) {
 	// Account table
 	if( SQL_ERROR == Sql_Query(db->accounts,
 		"SELECT `account_id`, `userid`, `user_pass`, `sex`, `email`, `group_id`, `state`, `unban_time`, `expiration_time`, "
-		"`logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`, `bank_vault`, "
+		"`logincount`, `lastlogin`, `last_ip`, `birthdate`, `character_slots`, `pincode`, `pincode_change`, "
 		"`vip_time`, `old_group` "
 		"FROM `%s`;", db->account_table.c_str()) )
 	{
