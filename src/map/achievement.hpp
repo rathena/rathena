@@ -113,7 +113,7 @@ public:
 extern AchievementDatabase achievement_db;
 
 void achievement_get_reward(struct map_session_data *sd, int achievement_id, time_t rewarded);
-struct achievement *achievement_add(struct map_session_data *sd, int achievement_id);
+struct achievement *achievement_add(struct map_session_data *sd, int achievement_id, bool dislpay = true);
 bool achievement_remove(struct map_session_data *sd, int achievement_id);
 bool achievement_update_achievement(struct map_session_data *sd, int achievement_id, bool complete);
 void achievement_check_reward(struct map_session_data *sd, int achievement_id);

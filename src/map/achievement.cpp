@@ -322,9 +322,10 @@ bool AchievementDatabase::mobexists( uint32 mob_id ){
  * Add an achievement to the player's log
  * @param sd: Player data
  * @param achievement_id: Achievement to add
+ * @param display: Display 'already acquired' error message
  * @return NULL on failure, achievement data on success
  */
-struct achievement *achievement_add(struct map_session_data *sd, int achievement_id)
+struct achievement *achievement_add(struct map_session_data *sd, int achievement_id, bool display)
 {
 	int i, index;
 
@@ -339,7 +340,8 @@ struct achievement *achievement_add(struct map_session_data *sd, int achievement
 
 	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
 	if (i < sd->achievement_data.count) {
-		ShowError("achievement_add: Character %d already has achievement %d.\n", sd->status.char_id, achievement_id);
+		if (display)
+			ShowError("achievement_add: Character %d already has achievement %d.\n", sd->status.char_id, achievement_id);
 		return NULL;
 	}
 
@@ -722,7 +724,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	if (flag && old_level != sd->achievement_data.level) { // Give AG_GOAL_ACHIEVE
 		int achievement_id = 240000 + sd->achievement_data.level;
 
-		if (achievement_add(sd, achievement_id))
+		if (achievement_add(sd, achievement_id, false))
 			achievement_update_achievement(sd, achievement_id, true);
 	}
 
