@@ -115,7 +115,7 @@ ma_in01,30,94,4	script	Inn Keeper#ma	583,{
 	case 1:
 		mes "[Inn Keeper]";
 		mes "Successfully stored. See you next time.";
-		savepoint "ma_in01",43,98;
+		savepoint "ma_in01",43,98,1,1;
 		close;
 	case 2:
 		if (Zeny < 5000) {
@@ -167,7 +167,7 @@ OnBingx2:
 		donpcevent "Unidentified Creature#"+.@npc$[.@i]+"::"+((.@i == .@rand)?"OnEnable":"OnDisable");
 	donpcevent strnpcinfo(0)+"::OnDisable";
 	end;
-OnTouch:
+OnTouch_:
 	if (getcharid(1)) {
 		if ($ma_name04$ == strcharinfo(0) || $ma_name05$ == strcharinfo(0) || $ma_name06$ == strcharinfo(0)) {
 			donpcevent strnpcinfo(0)+"::OnBingx2";
@@ -218,10 +218,10 @@ OnBingx2:
 		donpcevent "Unidentified Creature#"+.@npc$[.@i]+"::"+((.@i == .@rand)?"OnEnable":"OnDisable");
 	donpcevent strnpcinfo(0)+"::OnDisable";
 	end;
-OnTouch:
+OnTouch_:
 	set .@i, atoi(strnpcinfo(2));
 	if (.@i%4 == 2) {
-		if (getcharid(0) == getpartyleader(getcharid(1),2))
+		if (is_party_leader() == true)
 			set .@pass,1;
 	} else if (.@i%4 == 3) {
 		if (checkquest(4229,PLAYTIME) > -1 && checkquest(9223,PLAYTIME) > -1 && checkquest(12278,PLAYTIME) > -1)
@@ -325,11 +325,11 @@ malaya,227,311,4	script	Grandma#ma01	575,{
 
 malaya,189,263,4	script	Drumming Young Man#ma02	578,{
 	if (malaya_hi < 10) {
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Drumming Young Man]";
 		mes "Ugh... it's just like that time before...";
 		next;
-		emotion e_omg;
+		emotion ET_HUK;
 		mes "[Drumming Young Man]";
 		mes "When the moon was swallowed. Argh!";
 		close;
@@ -337,7 +337,7 @@ malaya,189,263,4	script	Drumming Young Man#ma02	578,{
 		mes "[Drumming Young Man]";
 		mes "I think the village was saved by a nameless adventurer.";
 		next;
-		emotion e_sigh;
+		emotion ET_OHNO;
 		mes "[Drumming Young Man]";
 		mes "Phew... I thought Bakonawa appeared again.";
 		close;
@@ -354,7 +354,7 @@ malaya,189,263,4	script	Drumming Young Man#ma02	578,{
 	mes "But I know that Bakonawa could also 'swallow people', too.";
 	next;
 	select("Huk! Then isn't it dangerous?");
-	emotion e_gg;
+	emotion ET_KIK;
 	mes "[Drumming Young Man]";
 	mes "Ha ha ha. There is a way to stop Bakonawa from swallowing a person.";
 	next;
@@ -378,12 +378,12 @@ malaya,189,263,4	script	Drumming Young Man#ma02	578,{
 
 malaya,270,59,4	script	Port Guard#ma03	570,{
 	if (malaya_hi < 10) {
-		emotion e_swt2;
+		emotion ET_PROFUSELY_SWEAT;
 		mes "[Port Guard]";
 		mes "The village is chaotic these days. Is it okay for me to be off like this?";
 		close;
 	} else if (malaya_hi < 20) {
-		emotion e_no;
+		emotion ET_STARE_ABOUT;
 		mes "[Port Guard]";
 		mes "The village is somewhat stable now but you should still be careful walking around at night.";
 		close;
@@ -393,7 +393,7 @@ malaya,270,59,4	script	Port Guard#ma03	570,{
 		mes getd("$ma_name0"+rand(1,6)+"$")+" is said to escape from Buwaya alive after being captured. This person must be powerful.";
 		close;
 	}
-	emotion e_omg;
+	emotion ET_HUK;
 	mes "[Port Guard]";
 	mes "What!! Port all clear!!";
 	next;
@@ -422,7 +422,7 @@ malaya,270,59,4	script	Port Guard#ma03	570,{
 		mes "[Port Guard]";
 		mes "And you should run into the nearest building when you hear Wokwoks wings fluttering from afar.";
 		next;
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		mes "[Port Guard]";
 		mes "But if the fluttering sound is small or if you don't hear anything, let's just say you should prepare for attack and wish for luck.";
 		close;

@@ -260,7 +260,7 @@ arena_room,147,49,3	script	Helper Epin	727,{
 	mes "I am a helper of Lv 80 arena stage and my name is Epin.";
 	mes "I like reading and I am 19 years old...huh...? Don't you want to hear about me...?";
 	next;
-	emotion e_cry,0;
+	emotion ET_CRY;
 	mes "[Epin]";
 	mes "Okay...";
 	next;
@@ -368,7 +368,7 @@ arena_room,158,93,5	script	Helper Lunic	828,{
 }
 
 arena_room,158,82,1	script	Helper Lonik	828,{
-	emotion e_no1,0;
+	emotion ET_BEST;
 	mes "[Lonik]";
 	mes "Tah dah! Here I am!";
 	next;
@@ -379,14 +379,14 @@ arena_room,158,82,1	script	Helper Lonik	828,{
 	mes "My answer is...";
 	mes ".............";
 	if (getmapusers("force_1-2")) {
-		emotion e_oh,0;
+		emotion ET_O;
 		mes "Yes!";
 		mes "There is someone inside.";
 		next;
 		mes "[Lonik]";
 		mes "You'd better wait a little bit longer!";
 	} else {
-		emotion e_x,0;
+		emotion ET_X;
 		mes "No!";
 		mes "Go for it, good luck!";
 	}
@@ -739,22 +739,22 @@ OnInit:
 	end;
 
 OnHeart:
-	emotion e_lv,0;
+	emotion ET_THROB;
 	end;
 OnSci:
-	emotion e_scissors,0;
+	emotion ET_SCISSOR;
 	end;
 OnBest:
-	emotion e_no1,0;
+	emotion ET_BEST;
 	end;
 OnOmg:
-	emotion e_omg,0;
+	emotion ET_HUK;
 	end;
 OnKik:
-	emotion e_gg,0;
+	emotion ET_KIK;
 	end;
 OnKis:
-	emotion e_kis,0;
+	emotion ET_CHUP;
 	end;
 }
 prt_are_in,1,1,5	duplicate(#arena_1039)	#arena_6969	714
@@ -999,7 +999,7 @@ function	script	Func_Are_Rew	{
 	mes "If you wish to cancel, please enter 0. If you don't, please enter how many ^3131FFtimes^000000 of arena points you wish to spend.";
 	next;
 	input .@reward;
-	if (.@reward == 0) {
+	if (.@reward <= 0) {
 		mes "[Givu]";
 		mes "You have canceled your request.";
 		close;
@@ -1008,7 +1008,7 @@ function	script	Func_Are_Rew	{
 		mes "You have exceeded the maximum capacity.";
 		close;
 	}
-	if (arena_point < .@reward * .@arena_point) {
+	if (arena_point < (.@reward * .@arena_point)) {
 		mes "[Givu]";
 		mes "You do not have enough arena points.";
 		mes "Please check the total amount of arena points you have.";

@@ -1,18 +1,16 @@
 //===== rAthena Script =======================================
 //= Mapflag: Disable Dead Branch use.
-//===== By: ==================================================
-//= rAthena Dev Team
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: ========================================= 
 //= Disables the following items:
 //=   Dead Branch (604), Bloody Branch (12103),
 //=   Red Pouch (12024), Poring Box (12109)
-//===== Additional Comments: ================================= 
+//===== Changelogs: ================================= 
 //= 1.0 Renewal split. [Euphy]
 //= 1.1 Added Izlude duplicates. [Euphy]
+//= 1.2 Added Nightmare Clock Tower [Lemongrass]
+//= 1.3 Added dali02 [Nova]
+//= 1.4 Added Nightmare Glastheim [Ridley8819]
+//= 1.5 Added WOE:TE maps [Cydh]
 //============================================================
 
 // 3rd Class Job Maps & Paradise
@@ -25,6 +23,7 @@ job3_guil01	mapflag	nobranch
 job3_guil02	mapflag	nobranch
 job3_guil03	mapflag	nobranch
 job_ko	mapflag	nobranch
+job_gun	mapflag	nobranch
 job3_rang01	mapflag	nobranch
 job3_rang02	mapflag	nobranch
 job3_rune01	mapflag	nobranch
@@ -75,6 +74,10 @@ ma_zif09	mapflag	nobranch
 1@ma_h	mapflag	nobranch
 1@ma_c	mapflag	nobranch
 1@ma_b	mapflag	nobranch
+c_tower2_	mapflag	nobranch
+c_tower3_	mapflag	nobranch
+gl_chyard_	mapflag	nobranch
+gl_cas02_	mapflag	nobranch
 
 // Episode 14.2 ================
 eclage	mapflag	nobranch
@@ -91,3 +94,124 @@ izlude_a	mapflag	nobranch
 izlude_b	mapflag	nobranch
 izlude_c	mapflag	nobranch
 izlude_d	mapflag	nobranch
+
+// Glast Heim Memorial Dungeon ===
+1@gl_k	mapflag	nobranch
+2@gl_k	mapflag	nobranch
+
+// Wave Mode Memorial Dungeon ====
+1@def01	mapflag	nobranch
+1@def02	mapflag	nobranch
+1@def03	mapflag	nobranch
+
+// Heroes' Trail - Part 1 ========
+1@face	mapflag	nobranch
+1@sara	mapflag	nobranch
+dali	mapflag	nobranch
+dali02	mapflag	nobranch
+
+// Heroes' Trail - Part 2 ========
+1@ge_st	mapflag	nobranch
+1@gef	mapflag	nobranch
+1@gef_in	mapflag	nobranch
+1@spa	mapflag	nobranch
+1@tnm1	mapflag	nobranch
+1@tnm2	mapflag	nobranch
+1@tnm3	mapflag	nobranch
+
+// Horror Toy Factory Memorial Dungeon
+1@xm_d	mapflag	nobranch
+
+// Heroes' Trail - Part 3 ========
+1@glast	mapflag	nobranch
+1@air1	mapflag	nobranch
+1@air2	mapflag	nobranch
+
+// Decisive Battle - Part 1 ======
+1@dth1	mapflag	nobranch
+1@dth2	mapflag	nobranch
+1@dth3	mapflag	nobranch
+1@rev	mapflag	nobranch
+
+// Decisive Battle - Part 2 ======
+1@eom	mapflag	nobranch
+1@jtb	mapflag	nobranch
+
+// Episode 15 - Phantasmagorica
+1@lab	mapflag	nobranch
+1@uns	mapflag	nobranch
+1@mcd	mapflag	nobranch
+un_myst	mapflag	nobranch
+
+// Nightmare Biolab
+lhz_dun_n	mapflag	nobranch
+lhz_d_n2	mapflag	nobranch
+
+// WOE:TE Maps ===================
+te_alde_gld	mapflag	nobranch
+te_prt_gld	mapflag	nobranch
+te_prtcas01	mapflag	nobranch
+te_prtcas02	mapflag	nobranch
+te_prtcas03	mapflag	nobranch
+te_prtcas04	mapflag	nobranch
+te_prtcas05	mapflag	nobranch
+te_aldecas1	mapflag	nobranch
+te_aldecas2	mapflag	nobranch
+te_aldecas3	mapflag	nobranch
+te_aldecas4	mapflag	nobranch
+te_aldecas5	mapflag	nobranch
+
+// Novice training
+int_land	mapflag	nobranch
+int_land01	mapflag	nobranch
+int_land02	mapflag	nobranch
+int_land03	mapflag	nobranch
+int_land04	mapflag	nobranch
+
+// Ep 16
+prt_lib	mapflag	nobranch
+prt_lib_q	mapflag	nobranch
+prt_cas	mapflag	nobranch
+prt_cas_q	mapflag	nobranch
+prt_pri00	mapflag	nobranch
+rebel_in	mapflag	nobranch
+que_swat	mapflag	nobranch
+1@mir	mapflag	nobranch
+2@mir	mapflag	nobranch
+1@sthb	mapflag	nobranch
+1@sthc	mapflag	nobranch
+1@sthd	mapflag	nobranch
+1@slw	mapflag	nobranch
+1@swat	mapflag	nobranch
+
+// Rockridge
+har_in01	mapflag	nobranch
+rockmi2	mapflag	nobranch
+
+// Lasagna
+lasagna	mapflag	nobranch
+lasa_in01	mapflag	nobranch
+conch_in	mapflag	nobranch
+lasa_dun_q	mapflag	nobranch
+
+// Chicken Mode Nightmare Glastheim
+1@gl_k2	mapflag	nobranch
+2@gl_k2	mapflag	nobranch
+
+// Chicken Mode Horror Toy Factory
+1@xm_d2	mapflag	nobranch
+
+// Suspicious shipwreck
+1@tre	mapflag	nobranch
+
+// Poring Town
+1@begi	mapflag	nobranch
+
+// Volcanic island Korodo
+1@crd	mapflag	nobranch
+
+// Noodles Festival July
+1@drdo	mapflag	nobranch
+
+// Soul Reaper Job Change
+1@soul	mapflag	nobranch

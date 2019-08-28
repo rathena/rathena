@@ -52,7 +52,7 @@ hugel,126,151,3	script	Emily	90,{
 	mes "For some reason, my older";
 	mes "sister wants to move out of";
 	mes "Hugel as soon as she can. She";
-	mes "Says that she's getting creeped";
+	mes "Says that she's getting crept";
 	mes "out by the people that live here.";
 	mes "Don't you think that sounds weird?";
 	close;

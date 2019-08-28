@@ -95,7 +95,7 @@ L_Reset:
 		mes @npcname$;
 		mes "It seems that you don't have enough money.";
 		mes "In addition we wait for the opportunity.";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		close;
 	}
 	set Zeny, Zeny-@zeny;
@@ -103,7 +103,7 @@ L_Reset:
 	resetskill;
 	mes @npcname$;
 	mes "Thank you.";
-	emotion e_thx;
+	emotion ET_THANKS;
 //	logmes "SKILL RESET EVENT";
 	close;
 }

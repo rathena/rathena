@@ -521,7 +521,7 @@ alberta_in,70,51,5	script	Guarnien	4W_M_02,{
 			tu_merchant = 1;
 			setquest 8229;
 			mes "[Guarnien]";
-			mes callfunc("F_Sex","Atta girl~!","Atta boy~!");
+			mes callfunc("F_SexMes","Atta girl~!","Atta boy~!");
 			mes "But first things first!";
 			mes "You better learn the";
 			mes "^871F78Increase Weight Limit^000000 skill!";

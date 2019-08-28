@@ -26,17 +26,17 @@ prontera,156,219,4	script	Cluckers	800,{
 	if (.startcluck) {
 		specialeffect2 EF_HIT3;
 		switch(rand(15)) {
-			case 0: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 0: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 			case 1: npctalk "Cluckers : Cluuuuuck!~"; break;
 			case 2: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
 			case 3: sc_start SC_Freeze,10000,0; break;
-			case 4: npctalk "Cluckers : CLUUUUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 4: npctalk "Cluckers : CLUUUUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 			case 5: sc_start SC_Sleep,10000,0; break;
-			case 6: sc_start SC_Stone,10000,0; emotion e_gg; break;
-			case 7: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
-			case 8: npctalk "Cluckers : Cluck! CLUUUCK!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion e_omg; break;
+			case 6: sc_start SC_Stone,10000,0; emotion ET_KIK; break;
+			case 7: npctalk "Cluckers : CLUUUUUUCK!!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
+			case 8: npctalk "Cluckers : Cluck! CLUUUCK!!"; unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; emotion ET_HUK; break;
 			case 9: sc_start SC_Stun,10000,0; break;
-			case 10: sc_start SC_Sleep,10000,0; emotion e_gg; break;
+			case 10: sc_start SC_Sleep,10000,0; emotion ET_KIK; break;
 			case 11: npctalk "Cluckers : Cluck! Cluck!"; break;
 			case 12: sc_start SC_Stun,10000,0; break;
 			case 13: unitkill getcharid(3); skilleffect "NPC_SELFDESTRUCTION",1; break;
@@ -64,7 +64,7 @@ prontera,156,219,4	script	Cluckers	800,{
 			case 1:
 				mes "[Cluckers]";
 				mes "CLUCK! ^FF0000~Sure thing!~^000000";
-				emotion e_ok;
+				emotion ET_OK;
 				close2;
 				announce "[Cluck! Cluck! Boom!] is about to start in Prontera!",bc_blue;
 				initnpctimer;
@@ -85,7 +85,7 @@ prontera,156,219,4	script	Cluckers	800,{
 				next;
 				mes "[Cluckers]";
 				mes "Cluck cluck..? Cluck. ^FF0000~So, the prize is^000000 ^008000"+ $cluck_item_amount +" "+ getitemname($cluck_item_id) +"^000000? ^FF0000Great.~^000000";
-				emotion e_ok;
+				emotion ET_OK;
 				next;
 				break;
 			case 4:

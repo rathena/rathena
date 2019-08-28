@@ -58,7 +58,7 @@ gonryun,180,118,4	script	Iron man#gnp	85,{
 		case 3:
 			mes "[Songmoodoo]";
 			mes "I guess not...";
-			emotion e_pif;
+			emotion ET_HNG;
 			break;
 		}
 	} else if (in_battle == 1) {
@@ -85,7 +85,7 @@ gonryun,180,118,4	script	Iron man#gnp	85,{
 		mes "Guess you're not strong enough!";
 		mes "I'll give you another chance.";
 		mes "See you again.";
-		emotion e_pif;
+		emotion ET_HNG;
 		set in_battle,1;
 	}
 	close;
@@ -96,7 +96,7 @@ L_Lifting:
 		set in_battle,1;
 		getitem 7049, getarg(0); // Stone
 		next;
-		emotion e_no1;
+		emotion ET_BEST;
 		mes "[Songmoodoo]";
 		mes "Wow~ Excellent~";
 		mes "I'll take you to someplace nice";

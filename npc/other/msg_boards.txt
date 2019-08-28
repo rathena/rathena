@@ -225,7 +225,7 @@ aldebaran,54,223,1	script	Billboard#Alde3	111,{
 }
 
 aldebaran,197,228,1	script	#Alde4	-1,1,1,{
-OnTouch:
+OnTouch_:
 	mes "[Home Owner]";
 	mes "Get off my roof you no good leecher!";
 	close;

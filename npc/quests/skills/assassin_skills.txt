@@ -633,7 +633,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 				mes "the one who invented this";
 				mes "skill, is also... He's a man";
 				mes "amongst men, I must say.";
-				emotion e_lv;
+				emotion ET_THROB;
 				next;
 				break;
 			case 2:
@@ -715,7 +715,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 			mes "Have you heard about";
 			mes "the latest news from";
 			mes "the Assassin Guild?";
-			emotion e_heh;
+			emotion ET_SMILE;
 			next;
 			select("News from the Assassin Guild?");
 			mes "[Assassin]";
@@ -737,7 +737,7 @@ in_moc_16,23,27,5	script	Assassin#realgirl	885,{
 }
 
 in_sphinx2,259,213,0	script	Old Coffin#qsk_as	-1,7,8,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 2) {
 		mes "^3355FFIt's an ancient coffin";
 		mes "with a broken lid that";
@@ -761,7 +761,7 @@ OnTouch:
 				mes "hand really hard!^000000";
 				sc_start SC_Poison,30000,0;
 				sc_start SC_Bleeding,10000,0;
-				emotion e_omg,1;
+				emotion ET_HUK, playerattached();
 				close;
 			case 2:
 				mes "^3355FFYou try to peek";
@@ -801,7 +801,7 @@ OnTouch:
 }
 
 in_sphinx2,212,267,0	script	Old Coffin#qsk_as2	-1,5,6,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 2) {
 		mes "^3355FFIt's an ancient coffin";
 		mes "with a broken lid that";
@@ -833,7 +833,7 @@ OnTouch:
 					mes "hand really hard!^000000";
 					sc_start SC_Poison,30000,0;
 					sc_start SC_Bleeding,10000,0;
-					emotion e_omg,1;
+					emotion ET_HUK, playerattached();
 					close;
 				}
 				else {
@@ -884,7 +884,7 @@ OnTouch:
 }
 
 in_sphinx2,13,163,0	script	Stone Statue#qsk_as	-1,7,7,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 3) {
 		specialeffect EF_CONE;
 		mes "^3355FFThis ancient stone statue";
@@ -919,7 +919,7 @@ OnTouch:
 }
 
 in_sphinx2,13,146,0	script	Stone Statue#qsk_as2	-1,7,7,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 3) {
 		specialeffect EF_CONE;
 		mes "^3355FFThis ancient stone statue";
@@ -946,14 +946,14 @@ OnTouch:
 			mes "all gas in your lungs in time";
 			mes "to escape its effects. Sadly,";
 			mes "all you found was broken glass.^000000";
-			emotion e_omg,1;
+			emotion ET_HUK, playerattached();
 		}
 		close;
 	}
 }
 
 moc_pryd04,85,96,0	script	¡¡#crypt	-1,3,3,{
-OnTouch:
+OnTouch_:
 	if (ASSN_SK == 4) {
 		specialeffect EF_CONE;
 		mes "^3355FFThere's something";

@@ -494,7 +494,7 @@ mjolnir_02,85,362,3	script	Blacksmith Miner	4_F_JOB_BLACKSMITH,{
 	mes "thousands of Diamonds,";
 	mes "all of them mine!";
 	mes "I'm rich!";
-	emotion e_heh;
+	emotion ET_SMILE;
 	next;
 	switch(select("I want to buy some.:Congratulations.")){
 	case 1:

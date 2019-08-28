@@ -24,7 +24,7 @@
 //============================================================
 
 -	script	#distorted_space_	-1,{
-OnTouch:
+OnTouch_:
 	if (job_wl > 1) {
 		mes " - There is a strange distortion here - ";
 		if (strnpcinfo(0) == "#distorted_space_1" && (Class == Job_Warlock || Class == Job_Warlock_T || Class == Job_Baby_Warlock)) {
@@ -659,7 +659,7 @@ spl_in02,80,108,5	script	Guild Master#Warlock	465,{
 		mes "[Yoop]";
 		mes "Yup, Master.";
 		mes "Please follow me.";
-		emotion e_ic,0,"Assistant#Warlock2";
+		emotion ET_AHA, getnpcid(0, "Assistant#Warlock2");
 		set job_wl,6;
 		changequest 11108,11109;
 		close;
@@ -1107,5 +1107,5 @@ job3_war01,1,2,0	script	Button Girl#wl	66,{
 	}
 }
 
-spl_fild02,0,0,0,0	monster	Bradium Golem	2049,20,5000,0,0
-spl_fild02,0,0,0,0	monster	Naga	2047,20,5000,0,0
+spl_fild02,0,0	monster	Bradium Golem	2049,20,5000
+spl_fild02,0,0	monster	Naga	2047,20,5000

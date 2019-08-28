@@ -16,8 +16,8 @@
 //==================================================
 // lou_fild01 - Louyang Field
 //==================================================
-lou_fild01,0,0,0,0	monster	Mi Gao	1516,40,5000,0,0
-lou_fild01,0,0,0,0	monster	Mantis	1139,19,5000,0,0
-lou_fild01,0,0,0,0	monster	Geographer	1368,19,5000,0,0
-lou_fild01,0,0,0,0	monster	Black Mushroom	1084,5,5000,0,0
-lou_fild01,0,0,0,0	monster	Yellow Plant	1081,10,10000,0,0
+lou_fild01,0,0	monster	Mi Gao	1516,40,5000
+lou_fild01,0,0	monster	Mantis	1139,19,5000
+lou_fild01,0,0	monster	Geographer	1368,19,5000
+lou_fild01,0,0	monster	Black Mushroom	1084,5,5000
+lou_fild01,0,0	monster	Yellow Plant	1081,10,10000

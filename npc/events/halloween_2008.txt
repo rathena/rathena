@@ -264,6 +264,6 @@ OnTouch:
 	end;
 }
 
-evt_zombie,0,0,0,0	monster	Zombie	3000,150,0,0,0
-evt_zombie,0,0,0,0	monster	Ghoul	3001,80,0,0,0
-evt_zombie,0,0,0,0	monster	Zombie Master	3002,20,0,0,0
+evt_zombie,0,0	monster	Zombie	3000,150
+evt_zombie,0,0	monster	Ghoul	3001,80
+evt_zombie,0,0	monster	Zombie Master	3002,20

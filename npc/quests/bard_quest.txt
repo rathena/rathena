@@ -515,7 +515,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "At Nine, love is reborn.";
 		mes "At Ten, my Love is gone.";
 		mes "At Eleven I find out why.";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "At Twelve I see his new girlfriend?";
 		else
 			mes "At Twelve I see her new boyfriend?";
@@ -849,7 +849,7 @@ geffen,132,38,3	script	Bard#2	51,{
 		mes "At Nine, love is reborn.";
 		mes "At Ten, my Love is gone.";
 		mes "At Eleven I find out why.";
-		if (Sex)
+		if (Sex == SEX_MALE)
 			mes "At Twelve I see her new boyfriend?";
 		else
 			mes "At Twelve I see his new girlfriend?";
@@ -1254,7 +1254,7 @@ S_StorySong:
 				// For 3 and 4 cases we set more chance earlier on .@random
 				if (.@num == 3 || .@num == 4){
 					mes "[Errende]";
-					if (Sex)
+					if (Sex == SEX_MALE)
 						mes "Heroic warrior,";
 					else
 						mes "My fair lady,";
@@ -2041,7 +2041,7 @@ morocc,134,111,3	script	Bard#3	741,{
 				}
 
 			} else {
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "[Kino Kitty]";
 					mes "You're such a nice young man. I will remember your name. I would much appreciate it if you would also remember mine.";
 					next;
@@ -2907,8 +2907,8 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 	mes "Err...?";
 	mes "What is it?";
 	next;
-	if (!Sex) {
-		emotion e_heh;
+	if (Sex == SEX_FEMALE) {
+		emotion ET_SMILE;
 		mes "[Energetic Young Man]";
 		mes "Oh...!";
 		mes "A beautiful,";
@@ -2932,7 +2932,7 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 			next;
 			mes "[Energetic Young Man]";
 			mes "I shall remember your name, my lady. Oh, but I'm so sorry. I'm kind of busy right now. Would you come back later? I'll do my best to please you next time.";
-			emotion e_kis;
+			emotion ET_CHUP;
 			close;
 
 		} else {
@@ -2940,7 +2940,7 @@ yuno_in04,33,119,3	script	Adventurer#1	828,{
 			next;
 			mes "[Energetic Young Man]";
 			mes "Eh, whatever. Oh, but I'm so sorry. I'm kind of busy right now. Would you come back later? I'll do my best to please you next time.";
-			emotion e_heh;
+			emotion ET_SMILE;
 			close;
 		}
 

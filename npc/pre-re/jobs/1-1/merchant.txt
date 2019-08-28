@@ -154,17 +154,9 @@ alberta_in,53,43,6	script	Merchant#mer	86,{
 		mes "Congratulations!";
 		callfunc "Job_Change",Job_Merchant;
 		callfunc "F_ClearJobVar";
-		if(checkquest(1009) != -1) {
-			completequest 1009;
-		}
-		else if(checkquest(1010) != -1) {
-			completequest 1010;
-		}
-		else if(checkquest(1011) != -1) {
-			completequest 1011;
-		}
-		else {
-			completequest 1012;
+		for ( .@quest_id = 1009; .@quest_id <= 1012; .@quest_id++ ) {
+			if (isbegin_quest(.@quest_id) == 1)
+				completequest .@quest_id;
 		}
 		mes "I'm very pleased that you are joining the Merchant Guild and hope that you will play an active part in Rune-Midgarts' economy.";
 		next;

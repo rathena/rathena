@@ -1,0 +1,12 @@
+//===== rAthena Script =======================================
+//= The Sign Quest
+//===== Description: =========================================
+//= [Official Conversion]
+//= Quest for opening the doors to Geffenia.
+//= This script uses sign_01.bmp - sign_04.bmp, these will be
+//= found in the language of your client.
+//===== Changelogs: ==========================================
+//= 1.0 Location changed in ep16.1 [Capuche]
+//============================================================
+
+prt_cas,87,214,8	duplicate(Soldier#s11_)	Soldier#s11	8W_SOLDIER

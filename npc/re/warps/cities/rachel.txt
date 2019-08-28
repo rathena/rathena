@@ -123,4 +123,4 @@ ra_in01,375,109,0	warp	rachel85	1,1,rachel,116,154
 rachel,116,158,0	warp	rachel86	1,1,ra_in01,375,114
 
 //Additional Temple warp
-ra_temin,275,243,0	warp	rachel87	1,1,ra_temin,131,131
+ra_temin,275,243,0	warp2	rachel87	1,1,ra_temin,131,131

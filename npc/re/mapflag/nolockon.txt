@@ -1,0 +1,8 @@
+//===== rAthena Script =======================================
+//= Mapflag: Nolockon
+//===== Description: ========================================= 
+//= Disables attacks on another player on clientside
+//= without using shift or /ns
+//===== Changelogs: ==========================================
+//= 0.1 Created empty file for further usage [Lemongrass]
+//============================================================

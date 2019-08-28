@@ -1,0 +1,30 @@
+// Item Stacking Restriction File
+// Prevents an item to be stacked more than x times in given
+// inventory types. Generally used by 3rd class related skill items.
+//
+// Structure of Database:
+// ItemID,MaxStackAmount,Type
+//
+// MaxStackAmount:
+//	Stack limit for the item. Use 0 to disable a restriction.
+//
+// Type mask values:
+//	&1: Character inventory restriction
+//	&2: Character cart restriction
+//	&4: Account storage restriction
+//	&8: Guild storage restriction
+//
+// Example:
+// 512,4,12  // Will not allow more than 4 Apples in storages.
+
+// Rune Knight
+12725,60,1  // Nauthiz Rune
+12726,60,1  // Raido Rune
+12727,60,1  // Berkana Rune
+12728,60,1  // Isa Rune
+12730,60,1  // Uruz Rune
+12733,60,1  // Hagalaz Rune
+22540,60,1  // Lux Anima Rune
+
+// Arch Bishop
+12333,3,1  // Ancilla

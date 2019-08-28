@@ -17,19 +17,19 @@ lighthalzen,108,229,2	script	La Fenn	766,{
 	mes "[La Fenn]";
 	if(BaseLevel<99) {
 		if(Q_99LVL) {
-			mes "You... You got younger!!! But you are defenitely YOU!";
+			mes "You... You got younger!!! But you are definitely YOU!";
 			mes "I couldn't think you were able to meet my condition...";
-			emotion e_hmm;
+			emotion ET_SCRATCH;
 			next;
 			mes "[La Fenn]";
 			mes "Here is your prize. It's yours for good.";
 			set Q_99LVL,0;
 			getitem 12106,1; //Jewel Case
-			emotion e_grat;
+			emotion ET_CONGRATULATION;
 		} else {
 			mes callfunc("F_Hi");
 			mes "...";
-			emotion e_yawn;
+			emotion ET_SLEEPY;
 			next;
 			mes "[La Fenn]";
 			mes "I've got a riddle for a strong man of 2nd Class and 99 Base Level.";
@@ -55,12 +55,12 @@ lighthalzen,108,229,2	script	La Fenn	766,{
 				mes "Now you're REALLY strong.";
 				mes "And if you get younger than now I'll give you my treasure.";
 				set Q_99LVL,1;
-				emotion e_no1;
+				emotion ET_BEST;
 			}
 		}
 		close;
 	}
-	emotion e_hmm;
+	emotion ET_SCRATCH;
 	mes "...";
 	close;
 }

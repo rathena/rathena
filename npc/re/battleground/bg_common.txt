@@ -1,0 +1,29 @@
+//===== rAthena Script ======================================= 
+//= BattleGround System - Common NPCs
+//===== By: ================================================== 
+//= ????, L0ne_W0lf
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Battleground NPCs:
+//= - Generals and Aides
+//= - Battleground Warper
+//= - Kafra and Repairman.
+//= - GM Management NPC
+//= - Badge Exchanger (Tierra and Flavius)
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//= 1.1 Updated several NPCs to Official.
+//= 1.2 Updated Repairman NPC
+//= 1.3 Optimized "Erundek" NPC. [Euphy]
+//= 1.4 Added GM management function. [Euphy]
+//= 1.5 Added VIP features and created a reward function. [Euphy]
+//============================================================
+
+// BattleGround Warper
+//============================================================
+
+morocc,145,82,3	duplicate(BatRecruit)	Maroll Battle Recruiter::BatRecruit8	728

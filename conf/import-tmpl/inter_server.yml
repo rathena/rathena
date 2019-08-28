@@ -1,0 +1,21 @@
+# Config for Storages
+#
+# To access the premium storage, use script command 'openstorage2'.
+# If premium storages are added, copy the structure of the storage table and match the table name in this config.
+# The 'max' of premium storages are not adjusted by 'vip_storage_increase' config nor MIN_STORAGE.
+#
+# Structure:
+#	- ID: <storage_id>          // (int) Storage ID will be used for script command 'openstorage2'.
+#	  Name: "<storage name>"    // (string) Storage name will be sent to the client to display on the title bar.
+#	  Table: "<storage_table>"  // (string) Name of table where storage is saved. The table stucture is the same as the default storage table.
+#	  Max: <max_amount>         // (int) *optional* Maximum number of items in storage. MAX_STORAGE will be used if no value is defined.
+###############################################################################################################################################
+Header:
+  Type: INTER_SERVER_DB
+  Version: 1
+
+#Body:
+#   - ID: 1
+#     Name: "VIP Storage"
+#     Table: "vip_storage"
+#     Max: 300

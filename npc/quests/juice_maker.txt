@@ -19,7 +19,7 @@
 //============================================================
 
 prt_in,49,172,3	script	Marianne#juice	53,{
-	if (MISC_QUEST&1 || morison_meat == 15) {
+	if ((MISC_QUEST&1) || morison_meat == 15) {
 		mes "[Housewife Marianne]";
 		mes "Whew...!";
 		mes "Still, he won't eat anything unless it's Meat. But maybe he will eat fruit if it was cut so that it was easy to eat. Like, if it was blended into juice...";
@@ -80,7 +80,7 @@ prt_in,49,172,3	script	Marianne#juice	53,{
 }
 
 prt_in,47,173,3	script	Morrison#juice	97,{
-	if (MISC_QUEST&1 || morison_meat == 15) {
+	if ((MISC_QUEST&1) || morison_meat == 15) {
 		mes "[Little Morrison]";
 		mes "Bleh... Forget it.";
 		mes "I'm just going to shrivel to death just eating fruits. Don't bother worrying about me .";
@@ -294,13 +294,10 @@ payon_in03,188,146,5	script	Marx Hansen#juice	86,{
 			mes "# Fruit Juice Information #";
 			mes "^CC4E5C- Apple Juice -^000000";
 			mes "Apple x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
-			mes "";
 			mes "^E3CF57- Banana Juice -^000000";
 			mes "Banana x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
-			mes "";
 			mes "^ED9121- Carrot Juice -^000000";
 			mes "Carrot x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
-			mes "";
 			mes "^CC00FF- Grape Juice -^000000";
 			mes "Grape x 1 ea, Empty Bottle x 1 ea, 3 zeny.";
 			close;

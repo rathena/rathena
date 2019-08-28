@@ -3,7 +3,7 @@
 # by lighta
 # TODO:
 # - Don't always override import/file, sed grep ?
-
+use lib '.';
 use File::Basename;
 use DBI;
 use DBD::mysql;
@@ -13,15 +13,19 @@ use Getopt::Long;
 use Net::Ping;
 use strict;
 use rA_Common;
+use LWP::Simple;
 
 use constant {
     SERV_UID => "Serv_userid",
     SERV_PW => "Serv_userpass",
+    LOGIN_PRIV_IP => "login_priv_ip",
+	CHAR_PRIV_IP => "char_priv_ip",
     SERV_WAN_IP => "Serv_wan_ip",
     MAP_PORT => "Map_port",
     CHAR_PORT => "Char_port",
     LOGIN_PORT => "Login_port",
     MD5_ENABLE => "enable_MD5",
+    PINCODE_ENABLE => "enable_pincode",
     SQL_HOST => "SQL_host",
     SQL_PORT => "SQL_port",
     SQL_UID => "SQL_userid",
@@ -87,13 +91,17 @@ sub Main {
     chdir $dir; #put ourself like was called in tools
     print "Running rAthena's configuration tool...\n";
     #default conf
+    my $pubip = GetPublicIP();
     my %hDefConf = (    SERV_UID => "s1",
 			SERV_PW => "p1",
-			SERV_WAN_IP => "localhost",
+			SERV_WAN_IP => $pubip || "localhost",
+			LOGIN_PRIV_IP => "localhost",
+			CHAR_PRIV_IP => "localhost",
 			MAP_PORT => "5121",
 			CHAR_PORT => "6121",
 			LOGIN_PORT => "6900",
 			MD5_ENABLE => "yes",
+			PINCODE_ENABLE => "yes",
 			SQL_HOST => "localhost",
 			SQL_PORT => "3306",
 			SQL_UID => "ragnarok",
@@ -101,6 +109,7 @@ sub Main {
 			SQL_MAIN_DB => "ragnarok",
 			SQL_LOG_DB => ,"ragnarok",
 			);
+			
 
 	my $sBasedir = getcwd; #for setupdb
 	if($sTarget =~ /All|Inst/i){ InstallSoft(); }
@@ -171,6 +180,15 @@ sub EnableCoredump {
 		system('sudo su root -c "echo \"echo fs.suid_dumpable = 1 >> /etc/sysctl.conf\" | sudo bash"');
 		system('sudo su root -c "sysctl -p"');
 	}
+}
+
+sub GetPublicIP {
+	print "\n== Resolving Public IP_addr";
+	my $content = get("http://checkip.dyndns.org");
+	$content =~ s/.*Current IP Address: ([\d.]+).*/$1/;
+	$content =~ s/\r|\n//gm;
+	print "\n found = $content ==\n";
+	return $content;
 }
 
 sub GetOS {
@@ -297,7 +315,8 @@ sub ApplyMapConf { my ($rhUserConf,$sCurfile) = @_;
     print FILE "passwd: " . $$rhUserConf{SERV_PW}."\n\n";
 
     print FILE "map_ip: " . $$rhUserConf{SERV_WAN_IP}."\n";
-    print FILE "map_port: " . $$rhUserConf{MAP_PORT}."\n";
+    print FILE "map_port: " . $$rhUserConf{MAP_PORT}."\n";    
+    print FILE "char_ip: " . $$rhUserConf{CHAR_PRIV_IP}."\n";
     print FILE "char_port: " . $$rhUserConf{CHAR_PORT}."\n";
 }
 
@@ -305,10 +324,13 @@ sub ApplyCharConf { my ($rhUserConf,$sCurfile) = @_;
     open FILE, "> $sCurfile" || die "Couldn't open file '$sCurfile'.\n";
     print FILE "userid: " . $$rhUserConf{SERV_UID}."\n";
     print FILE "passwd: " . $$rhUserConf{SERV_PW}."\n\n";
-
+	
     print FILE "char_ip: " . $$rhUserConf{SERV_WAN_IP}."\n";
     print FILE "char_port: " . $$rhUserConf{CHAR_PORT}."\n";
+    print FILE "login_ip: " . $$rhUserConf{LOGIN_PRIV_IP}."\n";
     print FILE "login_port: " . $$rhUserConf{LOGIN_PORT}."\n";
+    
+    print FILE "pincode_enabled: " . $$rhUserConf{PINCODE_ENABLE}."\n";
 }
 
 sub ApplyLoginConf { my ($rhUserConf,$sCurfile) = @_;
@@ -320,11 +342,17 @@ sub ApplyLoginConf { my ($rhUserConf,$sCurfile) = @_;
 sub ApplyInterConf { my ($rhUserConf,$sCurfile) = @_;
     open FILE, "> $sCurfile" || die "Couldn't open file '$sCurfile'.\n";
 
-    print FILE "sql.db_hostname: " . $$rhUserConf{SQL_HOST}."\n";
-    print FILE "sql.db_port: " . $$rhUserConf{SQL_PORT}."\n";
-    print FILE "sql.db_username: " . $$rhUserConf{SQL_UID}."\n";
-    print FILE "sql.db_password: " . $$rhUserConf{SQL_PW}."\n";
-    print FILE "sql.db_database: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
+    print FILE "login_server_ip: " . $$rhUserConf{SQL_HOST}."\n";
+    print FILE "login_server_port: " . $$rhUserConf{SQL_PORT}."\n";
+    print FILE "login_server_id: " . $$rhUserConf{SQL_UID}."\n";
+    print FILE "login_server_pw: " . $$rhUserConf{SQL_PW}."\n";
+    print FILE "login_server_db: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
+
+    print FILE "ipban_db_ip: " . $$rhUserConf{SQL_HOST}."\n";
+    print FILE "ipban_db_port: " . $$rhUserConf{SQL_PORT}."\n";
+    print FILE "ipban_db_id: " . $$rhUserConf{SQL_UID}."\n";
+    print FILE "ipban_db_pw: " . $$rhUserConf{SQL_PW}."\n";
+    print FILE "ipban_db_db: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
 
     print FILE "char_server_ip: " . $$rhUserConf{SQL_HOST}."\n";
     print FILE "char_server_port: " . $$rhUserConf{SQL_PORT}."\n";
@@ -332,13 +360,12 @@ sub ApplyInterConf { my ($rhUserConf,$sCurfile) = @_;
     print FILE "char_server_pw: " . $$rhUserConf{SQL_PW}."\n";
     print FILE "char_server_db: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
 
-    print FILE "sql.map_server_ip: " . $$rhUserConf{SQL_HOST}."\n";
-    print FILE "sql.map_server_port: " . $$rhUserConf{SQL_PORT}."\n";
+    print FILE "map_server_ip: " . $$rhUserConf{SQL_HOST}."\n";
+    print FILE "map_server_port: " . $$rhUserConf{SQL_PORT}."\n";
     print FILE "map_server_id: " . $$rhUserConf{SQL_UID}."\n";
     print FILE "map_server_pw: " . $$rhUserConf{SQL_PW}."\n";
     print FILE "map_server_db: " . $$rhUserConf{SQL_MAIN_DB}."\n\n";
 
-    #todo may we want 2 schema ??
     print FILE "log_db_ip: " . $$rhUserConf{SQL_HOST} ."\n";
     print FILE "log_db_port: " . $$rhUserConf{SQL_PORT}."\n";
     print FILE "log_db_id: " . $$rhUserConf{SQL_UID}."\n";

@@ -79,11 +79,11 @@ payon_in01,18,10,4	script	Mystic Lady	76,{
 	next;
 	mes "[Mystic Lady]";
 	mes "If you plan to travel to colder regions, I suggest that you bring some ^3355FFEar Muffs^000000...";
-	emotion e_dots;
+	emotion ET_THINK;
 	next;
 	mes "[Mystic Lady]";
 	mes "Ear Muffs are my family's specialty, and we provide it to customers who have ^FF33551 Cursed Ruby^000000, ^3311AA1 Headset,^000000 ^3355FF 200 Feathers^000000 and ^DDDD005000 Zeny^000000.";
-	emotion e_dots;
+	emotion ET_THINK;
 	next;
 	switch(select("Oh Yeah? That sounds good.:No thank you, Ma'am.")) {
 	case 1:
@@ -98,14 +98,14 @@ payon_in01,18,10,4	script	Mystic Lady	76,{
 			next;
 			mes "[Mystic Lady]";
 			mes "Thank you for buying our product. You won't regret purchasing our Ear Muffs: Satisfaction guaranteed~";
-			emotion e_dots;
+			emotion ET_THINK;
 			close;
 		}
 		else {
 			mes "[Mystic Lady]";
 			mes "Oh dear...";
 			mes "You don't have enough money or items. Unfortunately, we can't give any discounts. Please understand that we have to make a living...";
-			emotion e_dots;
+			emotion ET_THINK;
 			close;
 		}
 	case 2:
@@ -114,7 +114,7 @@ payon_in01,18,10,4	script	Mystic Lady	76,{
 		mes "I believe we";
 		mes "will meet again.";
 		mes "...One of these days.";
-		emotion e_dots;
+		emotion ET_THINK;
 		close;
 	}
 }

@@ -5,7 +5,7 @@
 DROP TABLE IF EXISTS `mob_db2`;
 CREATE TABLE `mob_db2` (
   `ID` mediumint(9) unsigned NOT NULL default '0',
-  `Sprite` text NOT NULL,
+  `Sprite` varchar(24) NOT NULL,
   `kName` text NOT NULL,
   `iName` text NOT NULL,
   `LV` tinyint(6) unsigned NOT NULL default '0',
@@ -29,7 +29,7 @@ CREATE TABLE `mob_db2` (
   `Scale` tinyint(4) unsigned NOT NULL default '0',
   `Race` tinyint(4) unsigned NOT NULL default '0',
   `Element` tinyint(4) unsigned NOT NULL default '0',
-  `Mode` smallint(6) unsigned NOT NULL default '0',
+  `Mode` int(11) unsigned NOT NULL default '0',
   `Speed` smallint(6) unsigned NOT NULL default '0',
   `aDelay` smallint(6) unsigned NOT NULL default '0',
   `aMotion` smallint(6) unsigned NOT NULL default '0',
@@ -61,10 +61,11 @@ CREATE TABLE `mob_db2` (
   `Drop9per` smallint(9) unsigned NOT NULL default '0',
   `DropCardid` smallint(5) unsigned NOT NULL default '0',
   `DropCardper` smallint(9) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`ID`)
+  PRIMARY KEY  (`ID`),
+  UNIQUE KEY (`Sprite`)
 ) ENGINE=MyISAM;
 
-# Monsters Additional Database
+# Monster Additional Database
 #
 # Structure of Database :
 #REPLACE INTO `mob_db2` VALUES ( ID,'Sprite_Name','kROName','iROName',LV,HP,SP,EXP,JEXP,Range1,ATK1,ATK2,DEF,MDEF,STR,AGI,VIT,INT,DEX,LUK,Range2,Range3,Scale,Race,Element,Mode,Speed,aDelay,aMotion,dMotion,MEXP,MVP1id,MVP1per,MVP2id,MVP2per,MVP3id,MVP3per,Drop1id,Drop1per,Drop2id,Drop2per,Drop3id,Drop3per,Drop4id,Drop4per,Drop5id,Drop5per,Drop6id,Drop6per,Drop7id,Drop7per,Drop8id,Drop8per,Drop9id,Drop9per,DropCardid,DropCardper);

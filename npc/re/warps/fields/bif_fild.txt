@@ -35,7 +35,7 @@ mora,56,25,0	warp	bifrost_field0005	1,1,bif_fild02,176,162
 		}
 	}
 	close;
-OnTouch:
+OnTouch_:
 	specialeffect EF_LEVEL99_4;
 	end;
 }

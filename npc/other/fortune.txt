@@ -2643,7 +2643,7 @@ payon_in03,118,119,1	script	Ascetic	4W_F_01,2,2,{
 	mes "Kiss me~~";
 	close;
 
-OnTouch:
+OnTouch_:
 	mes "[Kissy-Kissy]";
 	mes "NyangNyangNyang~";
 	mes "NyaNyangNyaNyang~";

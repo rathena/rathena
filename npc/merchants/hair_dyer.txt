@@ -23,7 +23,7 @@ prt_in,243,168,4	script	Jovovich	91,{
 	mes "How may I help you?";
 	next;
 	mes "[Hairdresser Jovovich]";
-	if (Sex) mes "Oh, no! Your hair is damaged. It seems as if you may need professional treatment. Come sit over here, please. Come.";
+	if (Sex == SEX_MALE) mes "Oh, no! Your hair is damaged. It seems as if you may need professional treatment. Come sit over here, please. Come.";
 	else {
 		if (rand(20) > 11) {
 			mes "Eh!? Oh my! Oh no no no no! Your hair is sooo damaged! It's not good if you leave your hair like this.";
@@ -158,7 +158,7 @@ S_NoDye:
 // Lighthalzen
 lhz_in02,100,134,3	script	Hair Dyer#lich	850,{
 	mes "[Rossa]";
-	if (Sex == 1) {
+	if (Sex == SEX_MALE) {
 		mes "Welcome, come in~";
 		mes "Oh, I see that you take";
 		mes "much better care of your";

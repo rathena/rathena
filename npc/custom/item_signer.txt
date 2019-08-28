@@ -25,7 +25,7 @@ prt_in,24,61,7	script	Perchik	47,{
 	if(select("Tell me more...:Sign my items, please!") == 1) {
 		mes "[Perchik]";
 		mes "I can put your name on any slotless equipment or weapon.";
-		emotion e_ic;
+		emotion ET_AHA;
 		next;
 		mes "[Perchik]";
 		if (getarraysize(.@Item) || getarraysize(.@Cost)) {
@@ -37,7 +37,7 @@ prt_in,24,61,7	script	Perchik	47,{
 		}
 		else mes "I work for free, but...";
 		next;
-		emotion e_cry;
+		emotion ET_CRY;
 		mes "[Perchik]";
 		mes "Alas, I have 12 hungry children";
 		mes "and a very angry wife.";
@@ -45,7 +45,7 @@ prt_in,24,61,7	script	Perchik	47,{
 		mes "[Perchik]";
 		mes "Or it was 12 angry children";
 		mes "and a very hungry wife...";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		close;
 	}
 	mes "[Perchik]";
@@ -63,7 +63,7 @@ prt_in,24,61,7	script	Perchik	47,{
 	mes "[Perchik]";
 	if (!getequipisequiped(.@part)) {
 		mes "Nothing is equipped there!";
-		emotion e_wah;
+		emotion ET_KEK;
 		close;
 	}
 	for(set .@i,0; .@i<4; set .@i,.@i+1)
@@ -71,25 +71,25 @@ prt_in,24,61,7	script	Perchik	47,{
 	if (.@slot[0]==255 || .@slot[0]==254 || .@slot[0]<0) {
 		mes "Alas, this item's already signed.";
 		mes "I would never touch a master's work.";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		close;
 	}
 	if (.@slot[0]>4000 && .@slot[0]<5000) {
 		mes "A card? Here?!";
 		mes "As I said before, I don't sign items with cards.";
-		emotion e_hmm;
+		emotion ET_SCRATCH;
 		close;
 	}
 	if (getiteminfo(.@id,10)) {
 		mes "Sorry, I don't sign slotted items.";
-		emotion e_sry;
+		emotion ET_SORRY;
 		close;
 	}
 	getinventorylist;
 	for(set .@i,0; .@i<@inventorylist_count; set .@i,.@i+1)
 		if (@inventorylist_expire[.@i] != 0) {
 			mes "Sorry, I don't sign rental items!";
-			emotion e_hmm;
+			emotion ET_SCRATCH;
 			close;
 		}
 	set .@price, .@Cost[0]+(.@Cost[1]*.@ref);
@@ -106,20 +106,20 @@ prt_in,24,61,7	script	Perchik	47,{
 	if(select("Ok!:Leave")==2) {
 		mes "[Perchik]";
 		mes "See you...";
-		emotion e_yawn;
+		emotion ET_SLEEPY;
 		close;
 	}
 	mes "[Perchik]";
 	if (Zeny < .@price || .@nr) {
 		mes "I don't work for 'thanks'.";
-		emotion e_sry;
+		emotion ET_SORRY;
 		close;
 	}
 	if (!countitem2(.@id,1,.@ref,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3])) {
 		mes "Where is "+getitemname(@id)+"...?";
 		npctalk "Perchik : You're a snoozy cheater!";
 		logmes "Hack: Tried to sign an item not having it: "+getitemname(@id);
-		emotion e_wah;
+		emotion ET_KEK;
 		close;
 	}
 	if (.@price) set Zeny, Zeny-.@price;
@@ -127,7 +127,7 @@ prt_in,24,61,7	script	Perchik	47,{
 		delitem .@Item[.@i], .@Item[.@i+1];
 	delitem2 .@id,1,1,.@ref,0,.@slot[0],.@slot[1],.@slot[2],.@slot[3];
 	mes "Done!";
-	emotion e_proud;
+	emotion ET_OK;
 	getitem2 .@id,1,1,.@ref,0,254,0,getcharid(0)&0xffff,(getcharid(0)>>16)&0xffff;
 	equip .@id;
 	close;

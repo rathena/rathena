@@ -1,0 +1,77 @@
+image: Visual Studio 2013
+# This is the default location, but we put it here for safety reasons, since we use it in our test script
+clone_folder: c:\projects\rathena
+# We do not need the git history for our integration tests
+clone_depth: 50
+version: '{branch}-{build}'
+pull_requests:
+  do_not_increment_build_number: true
+environment:
+  matrix:
+  - VisualStudioVersion: 14.0
+    Defines: "\"BUILDBOT\""
+  - VisualStudioVersion: 14.0
+    Defines: "\"BUILDBOT;PRERE\""
+platform:
+  - Win32
+  - x64
+configuration:
+  - Debug
+# Disable Release for now, since do not want to have any optimization and have access to debug infos on crash
+#  - Release
+matrix:
+  fast_finish: true
+build_script:
+- cmd: msbuild rAthena.sln /p:DefineConstants=%Defines%
+services: mysql
+test_script:
+- cmd: >-
+    rem ========================================================================
+    
+    rem Set up the environment variables we need
+    
+    rem ========================================================================
+    
+    set DB_HOST=127.0.0.1
+    
+    set DB_ROOT=root
+    
+    set DB_ROOTPW=Password12!
+    
+    set DB_USER=ragnarok
+    
+    set DB_USERPW=ragnarok
+    
+    set DB_NAME=ragnarok
+    
+    set MYSQL="C:\Program Files\MySql\MySQL Server 5.7\bin\mysql.exe"
+    
+    cd C:\projects\rathena
+    
+    rem ========================================================================
+    
+    rem MySQL database setup
+    
+    rem ========================================================================
+    
+    call tools\ci\sql.bat
+    
+    rem ========================================================================
+    
+    rem Activate all custom and test scripts
+    
+    rem ========================================================================
+    
+    start /d tools\ci npc.bat
+    
+    rem ========================================================================
+    
+    rem Start the map server
+    
+    rem ========================================================================
+    
+    login-server.exe --run-once
+    
+    char-server.exe --run-once
+    
+    map-server.exe --run-once

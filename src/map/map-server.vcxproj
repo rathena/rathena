@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{B4114A9C-EEA4-433C-A830-56119A984F24}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>mapserver</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>$(DefaultPlatformToolset)</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)</OutDir>
+    <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)</OutDir>
+    <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)</OutDir>
+    <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)</OutDir>
+    <IntDir>$(SolutionDir).vs\build\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4018</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common.lib;$(SolutionDir).vs\build\libconfig.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir)3rdparty\pcre\lib\$(Platform)\pcre8.lib;$(SolutionDir)3rdparty\mysql\lib\$(Platform)\libmysql.lib;$(SolutionDir).vs\build\yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;_DEBUG;_CONSOLE;_LIB;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4018</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common.lib;$(SolutionDir).vs\build\libconfig.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir)3rdparty\pcre\lib\$(Platform)\pcre8.lib;$(SolutionDir)3rdparty\mysql\lib\$(Platform)\libmysql.lib;$(SolutionDir).vs\build\yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4018</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common.lib;$(SolutionDir).vs\build\libconfig.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir)3rdparty\pcre\lib\$(Platform)\pcre8.lib;$(SolutionDir)3rdparty\mysql\lib\$(Platform)\libmysql.lib;$(SolutionDir).vs\build\yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>$(DefineConstants);WIN32;FD_SETSIZE=4096;PCRE_SUPPORT;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_WINSOCK_DEPRECATED_NO_WARNINGS;LIBCONFIG_STATIC;YY_USE_CONST;NDEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(SolutionDir)3rdparty\yaml-cpp\include\</AdditionalIncludeDirectories>
+      <DisableSpecificWarnings>4018</DisableSpecificWarnings>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>ws2_32.lib;$(SolutionDir).vs\build\common.lib;$(SolutionDir).vs\build\libconfig.lib;$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.lib;$(SolutionDir)3rdparty\pcre\lib\$(Platform)\pcre8.lib;$(SolutionDir)3rdparty\mysql\lib\$(Platform)\libmysql.lib;$(SolutionDir).vs\build\yaml-cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="achievement.hpp" />
+    <ClInclude Include="atcommand.hpp" />
+    <ClInclude Include="battle.hpp" />
+    <ClInclude Include="battleground.hpp" />
+    <ClInclude Include="buyingstore.hpp" />
+    <ClInclude Include="cashshop.hpp" />
+    <ClInclude Include="channel.hpp" />
+    <ClInclude Include="chat.hpp" />
+    <ClInclude Include="chrif.hpp" />
+    <ClInclude Include="clan.hpp" />
+    <ClInclude Include="clif.hpp" />
+    <ClInclude Include="clif_obfuscation.hpp" />
+    <ClInclude Include="clif_packetdb.hpp" />
+    <ClInclude Include="clif_shuffle.hpp" />
+    <ClInclude Include="date.hpp" />
+    <ClInclude Include="duel.hpp" />
+    <ClInclude Include="elemental.hpp" />
+    <ClInclude Include="guild.hpp" />
+    <ClInclude Include="homunculus.hpp" />
+    <ClInclude Include="instance.hpp" />
+    <ClInclude Include="intif.hpp" />
+    <ClInclude Include="itemdb.hpp" />
+    <ClInclude Include="log.hpp" />
+    <ClInclude Include="mail.hpp" />
+    <ClInclude Include="map.hpp" />
+    <ClInclude Include="mapreg.hpp" />
+    <ClInclude Include="mercenary.hpp" />
+    <ClInclude Include="mob.hpp" />
+    <ClInclude Include="npc.hpp" />
+    <ClInclude Include="party.hpp" />
+    <ClInclude Include="path.hpp" />
+    <ClInclude Include="pc.hpp" />
+    <ClInclude Include="pc_groups.hpp" />
+    <ClInclude Include="pet.hpp" />
+    <ClInclude Include="quest.hpp" />
+    <ClInclude Include="script.hpp" />
+    <ClInclude Include="script_constants.hpp" />
+    <ClInclude Include="searchstore.hpp" />
+    <ClInclude Include="skill.hpp" />
+    <ClInclude Include="status.hpp" />
+    <ClInclude Include="storage.hpp" />
+    <ClInclude Include="trade.hpp" />
+    <ClInclude Include="unit.hpp" />
+    <ClInclude Include="vending.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="achievement.cpp" />
+    <ClCompile Include="atcommand.cpp" />
+    <ClCompile Include="battle.cpp" />
+    <ClCompile Include="battleground.cpp" />
+    <ClCompile Include="buyingstore.cpp" />
+    <ClCompile Include="cashshop.cpp" />
+    <ClCompile Include="channel.cpp" />
+    <ClCompile Include="chat.cpp" />
+    <ClCompile Include="chrif.cpp" />
+    <ClCompile Include="clan.cpp" />
+    <ClCompile Include="clif.cpp" />
+    <ClCompile Include="date.cpp" />
+    <ClCompile Include="duel.cpp" />
+    <ClCompile Include="elemental.cpp" />
+    <ClCompile Include="guild.cpp" />
+    <ClCompile Include="homunculus.cpp" />
+    <ClCompile Include="instance.cpp" />
+    <ClCompile Include="intif.cpp" />
+    <ClCompile Include="itemdb.cpp" />
+    <ClCompile Include="log.cpp" />
+    <ClCompile Include="mail.cpp" />
+    <ClCompile Include="map.cpp" />
+    <ClCompile Include="mapreg.cpp" />
+    <ClCompile Include="mercenary.cpp" />
+    <ClCompile Include="mob.cpp">
+      <Optimization Condition="'$(Configuration)'=='Release'">Disabled</Optimization>
+    </ClCompile>
+    <ClCompile Include="npc.cpp" />
+    <ClCompile Include="npc_chat.cpp" />
+    <ClCompile Include="party.cpp" />
+    <ClCompile Include="path.cpp" />
+    <ClCompile Include="pc.cpp" />
+    <ClCompile Include="pc_groups.cpp" />
+    <ClCompile Include="pet.cpp" />
+    <ClCompile Include="quest.cpp" />
+    <ClCompile Include="script.cpp" />
+    <ClCompile Include="searchstore.cpp" />
+    <ClCompile Include="skill.cpp" />
+    <ClCompile Include="status.cpp" />
+    <ClCompile Include="storage.cpp" />
+    <ClCompile Include="trade.cpp" />
+    <ClCompile Include="unit.cpp" />
+    <ClCompile Include="vending.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+  <Target Name="AfterClean">
+    <Delete Files="$(SolutionDir)libmysql.dll" ContinueOnError="true" />
+    <Delete Files="$(SolutionDir)zlib.dll" ContinueOnError="true" />
+    <Delete Files="$(SolutionDir)pcre8.dll" ContinueOnError="true" />
+    <Delete Files="$(SolutionDir)serv.bat" ContinueOnError="true" />
+    <Delete Files="$(SolutionDir)mapserv.bat" ContinueOnError="true" />
+    <Delete Files="$(SolutionDir)runserver.bat" ContinueOnError="true" />
+  </Target>
+  <Target Name="AfterBuild">
+    <Copy SourceFiles="$(SolutionDir)3rdparty\mysql\lib\$(Platform)\libmysql.dll" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)libmysql.dll')" />
+    <Copy SourceFiles="$(SolutionDir)3rdparty\pcre\lib\$(Platform)\pcre8.dll" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)pcre8.dll')" />
+    <Copy SourceFiles="$(SolutionDir)3rdparty\zlib\lib\$(Platform)\zlib.dll" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)zlib.dll')" />
+    <Copy SourceFiles="$(SolutionDir)tools\serv.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)serv.bat')" />
+    <Copy SourceFiles="$(SolutionDir)tools\mapserv.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)mapserv.bat')" />
+    <Copy SourceFiles="$(SolutionDir)tools\runserver.bat" DestinationFolder="$(SolutionDir)" ContinueOnError="true" Condition="!Exists('$(SolutionDir)runserver.bat')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\battle_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\battle_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\char_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\char_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\inter_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\inter_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\inter_server.yml" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\inter_server.yml')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\log_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\log_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\login_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\login_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\map_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\map_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\packet_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\packet_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\import-tmpl\script_conf.txt" DestinationFolder="$(SolutionDir)conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\import\script_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_chn_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_chn_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_eng_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_eng_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_frn_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_frn_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_grm_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_grm_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_idn_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_idn_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_mal_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_mal_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_por_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_por_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_rus_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_rus_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_spn_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_spn_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_tha_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_tha_conf.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\abra_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\abra_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\achievement_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\achievement_db.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attendance.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attendance.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attr_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attr_fix.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\castle_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\castle_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\const.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\const.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\create_arrow_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\create_arrow_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\elemental_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\elemental_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\elemental_skill_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\elemental_skill_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\exp_guild.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\exp_guild.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\exp_homun.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\exp_homun.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\guild_skill_tree.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\guild_skill_tree.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\homun_skill_tree.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\homun_skill_tree.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\homunculus_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\homunculus_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\instance_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\instance_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_avail.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_avail.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_bluebox.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_bluebox.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_buyingstore.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_buyingstore.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_cardalbum.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_cardalbum.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_cash_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_cash_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_combo_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_combo_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_delay.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_delay.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_flag.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_flag.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_giftbox.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_giftbox.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_group_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_group_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_misc.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_misc.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_noequip.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_noequip.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_nouse.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_nouse.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_package.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_package.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_randomopt_group.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_randomopt_group.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_stack.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_stack.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_trade.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_trade.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\item_violetbox.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\item_violetbox.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_basehpsp_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_basehpsp_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_db1.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_db1.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_db2.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_db2.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_exp.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_exp.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_noenter_map.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_noenter_map.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_param_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_param_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\level_penalty.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\level_penalty.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\magicmushroom_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\magicmushroom_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_cache.dat" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_cache.dat')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_index.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_index.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mercenary_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mercenary_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mercenary_skill_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mercenary_skill_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_avail.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_avail.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_boss.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_boss.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_branch.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_branch.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_chat_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_chat_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_classchange.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_classchange.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_drop.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_drop.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_item_ratio.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_item_ratio.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_poring.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_poring.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_mission.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_mission.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_pouch.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_pouch.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_race2_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_race2_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_random_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_random_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mob_skill_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mob_skill_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\pet_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\pet_db.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\produce_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\produce_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\quest_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\quest_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\refine_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\refine_db.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\size_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\size_fix.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_cast_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_cast_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_castnodex_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_castnodex_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_changematerial_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_changematerial_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_copyable_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_copyable_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_damage_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_damage_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_improvise_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_improvise_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_nocast_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_nocast_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_nonearnpc_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_nonearnpc_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_require_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_require_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_tree.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_tree.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\skill_unit_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\skill_unit_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\spellbook_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\spellbook_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\statpoint.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\statpoint.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\status_disabled.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\status_disabled.txt')" />
+  </Target>
+</Project>
+

@@ -149,7 +149,7 @@ tha_t11,16,16,4	script	Mihane	111,{
 	close;
 nook:
 	mes "[Mihane]";
-	mes "Sorry, You must start over from the begining.";
+	mes "Sorry, You must start over from the beginning.";
 	next;
 	set TSQ_CHK,0;
 	close;
@@ -166,7 +166,7 @@ tha_t11,85,85,4	script	Seranes	111,{
 	close;
 nook:
 	mes "[Seranes]";
-	mes "You did not follow the good order, starts again from the begining.";
+	mes "You did not follow the good order, starts again from the beginning.";
 	next;
 	set TSQ_CHK,0;
 	close;

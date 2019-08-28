@@ -1,0 +1,182 @@
+//===== rAthena Script =======================================
+//= Guides WoE TE
+//===== Description: =========================================
+//= [Official Conversion]
+//= NPC Guide for WoE TE
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+prt_gld,118,151,4	script	Guide in Gloria#tes01	8W_SOLDIER,{
+	mes "[Guide Soldier]";
+	mes "May the endless glory be with the Kingdom of Rune-Midgarts and its seven royal families!";
+	mes "Welcome to Gloria, the fortress in Siege Battle TE. We provide services in cooperation with Kafra and the major royal families of the kingdom.";
+	next;
+	switch( select( "Gloria?", "About Siege Battle TE", "About requirements for participation", "Forget it." ) ) {
+	case 1:
+		mes "[Guide Soldier]";
+		mes "It has been named in honor of the seven royal families and the kingdom.";
+		mes "The whole city closely resembles Valkyrie Realm, and here resides the aspirations of the royal family for everyone.";
+		next;
+		mes "[Guide Soldier]";
+		mes "In Kafragarten of Aldebaran, managed by Gloria and Kafra Service, we have special rules that are slightly different from the existing ones.";
+		mes "We call it Siege Battle TE.";
+		next;
+		mes "[Guide Soldier]";
+		mes "You should not have troubles understanding the new rules since it is simply about setting a limit on qualifications for participation.";
+		close;
+	case 2:
+		mes "[Guide Soldier]";
+		mes "It is a new stage prepared by the royal family in order to let more people participate in siege battles.";
+		mes "Different rules are applied, and sufficient supports are provided since its atmosphere is similar to that of a gymnasium.";
+		next;
+		mes "[Guide Soldier]";
+		mes "^4d4dffTertiary job class and users with expanded levels are not allowed in Gloria and Kafragarten regions, where Siege Battle TE rules are applied.^000000";
+		next;
+		mes "[Guide Soldier]";
+		mes "Also, we lend a variety of battlegears that you use only in corresponding regions for free.";
+		mes "This may be the biggest difference.";
+		close;
+	case 3:
+		mes "[Guide Soldier]";
+		mes "^4d4dffNovice, primary, and secondary job classes are allowed to participate as well as extra job class.^000000";
+		mes "Of course, primary and secondary job classes are included as well.";
+		next;
+		mes "[Guide Soldier]";
+		mes "In other words, tertiary job class and jobs with expanded levels such as Kagerou and Oboro are not allowed.";
+		mes "Also, their buff effects get eliminated here.";
+		next;
+		mes "[Guide Soldier]";
+		mes "Other than that, it is not much different from the existing siege battles.";
+		close;
+	case 4:
+		mes "[Guide Soldier]";
+		mes "May the glory of the royal family and Odin's protection be with you!";
+		close;
+	}
+}
+
+prt_gld,122,151,4	script	Guide in Gloria#tes02	8W_SOLDIER,{
+	mes "[Guide Soldier]";
+	mes "This warp gate here will let you go into Gloria region.";
+	mes "Please keep in mind that you are supposed to travel through warps here.";
+	close;
+}
+
+te_prt_gld,118,151,4	script	Guide in Gloria#tes03	8W_SOLDIER,{
+	mes "[Guide Soldier]";
+	mes "You are now at the fortress in Gloria.";
+	mes "If you wish to return to Valkyrie Realm, you can travel through warp.";
+	close;
+}
+
+te_prt_gld,122,151,4	script	Guide in Gloria#tes04	8W_SOLDIER,{
+	mes "[Guide Soldier]";
+	mes "Welcome to Gloria.";
+	mes "Job classes that are allowed to participate in siege battles at the fortresses in Kafragarten and Gloria regions are limited to ^4d4dffprimary and secondary job classes as well as those without expanded levels.^000000";
+	next;
+	mes "[Guide Soldier]";
+	mes "In Kafragarten and Gloria regions, you get separate missions.";
+	mes "Some of them are not related to Emperiums, so challenge yourself!";
+	next;
+	mes "[Guide Soldier]";
+	mes "The royal family and Kafra Service have prepared a variety of retal items for you.";
+	mes "Although the rental period is relatively short, it's all free. So, don't miss the chance!";
+	close;
+}
+
+alde_gld,228,189,3	script	Sorin of Kafragarten	4_F_KAFRA3,{
+	mes "[Sorin]";
+	mes "Welcome to Kafra Service~ We always provide the best to our customers.";
+	mes "Finally, Kafra Service has established its own fortress!";
+	next;
+	switch( select( "What is Kafragarten?", "What is Siege Battle TE?", "Qualifications for participation", "Forget it." ) ) {
+	case 1:
+		mes "[Sorin]";
+		mes "This is a fortress provided by Kafra Service in cooperation with the royal family of Rune-Midgarts.";
+		mes "It means 'Kafra's garden.'";
+		next;
+		mes "[Sorin]";
+		mes "Although it looks very similar to Luina";
+		mes "It should be fine since it's servicing different users.";
+		mes "It's like a training stage, so to speak.";
+		next;
+		mes "[Sorin]";
+		mes "Kafragarten is built in the region of Luina, and in Valkyrie Realm, the royal family's Gloria is founded.";
+		mes "Kafra Service hopes that you would gain valuable experience in this new fortress.";
+		close;
+	case 2:
+		mes "[Sorin]";
+		mes "Siege Battle TE is ^4d4dffsiege battles designed for primary and secondary job classes only, ruling out tertiary job class.^000000";
+		next;
+		mes "[Sorin]";
+		mes "It's been newly established in an effort to allow more users to gain experience through siege battles.";
+		next;
+		mes "[Sorin]";
+		mes "Moreover, for your convenience, we lend a variety of items that you can use only inside the corresponding fortress. So, take advantage of this opportunity.";
+		next;
+		mes "[Sorin]";
+		mes "As they say, 'action speaks louder than words.'";
+		mes "Now, go and see for yourself~";
+		close;
+	case 3:
+		mes "[Sorin]";
+		mes "Primary, secondary, and extra job classes without expanded levels as well as primary and secondary job classes are allowed to participate only.";
+		next;
+		mes "[Sorin]";
+		mes "In other words, tertiary job class and jobs with expanded levels such as Kagerou and Oboro are not allowed.";
+		close;
+	case 4:
+		mes "[Sorin]";
+		mes "Kafra Service will do its utmost to bring joy to your life through Kafragarten.";
+		close;
+	}
+}
+
+alde_gld,224,185,5	script	Defolty of Kafragarten	4_F_KAFRA1,{
+	mes "[Defolty]";
+	mes "Kafragarten is like a mirrored image of Luina, so its structure is exactly the same as that of Luina.";
+	next;
+	mes "[Defolty]";
+	mes "You can travel by these warps here.";
+	mes "You can travel to Kafragarten using warp.";
+	close;
+}
+
+te_alde_gld,228,189,3	script	W of Kafragarten#tes01	4_F_KAFRA6,{
+	mes "[W]";
+	mes "You can travel to Luina using this warp here.";
+	mes "Make good use of it";
+	next;
+	mes "[W]";
+	mes "Who took the castle that was named after me, W?";
+	mes "Hehe doesn't it mean that I'm superior to Tailing?";
+	close;
+}
+
+te_alde_gld,224,185,5	script	Tailing of Kafragarten	4_F_KAFRA2,{
+	mes "[Tailing]";
+	mes "This is the region of Kafragarten.";
+	mes "In siege battles in the regions of Kafragarten and Gloria, only primary and secondary job classes as well as users without expanded levels are allowed to participate.";
+	next;
+	mes "[Tailing]";
+	mes "... .";
+	mes "In Kafragarten and Gloria regions, you get separate missions.";
+	mes "So you should pay close attention.";
+	next;
+	mes "[Tailing]";
+	mes "Also, we have prepared a variety of battlegears, which are available anytime upon your request.";
+	next;
+	mes "[Tailing]";
+	mes "But obviously, they're only valid in the regions of Kafragarten and Gloria.";
+	next;
+	mes "[Tailing]";
+	mes "... ..";
+	mes "Ah if you think I'm mad because my name is missing from Kafragarten and if my way of speaking is a little stiff because of that";
+	next;
+	mes "[Tailing]";
+	mes "Oh my.";
+	mes "Is that really true?";
+	mes "No way. W is no better than me..hahaha.";
+	close;
+}

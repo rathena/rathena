@@ -9,8 +9,8 @@ LOG_DIR="./log"
 
 print_start() {
 	#    more << EOF
-	echo "Athena Starting..."
-	echo "            (c) 2013 rAthena Project"
+	echo "rAthena is starting..."
+	echo "            (c) 2017 rAthena Project"
 	echo ""
 	echo ""
 	echo "checking..."
@@ -23,10 +23,10 @@ get_status(){
 		ISRUN=$(ps ax | grep $(cat ${PIDFILE}) | grep $1)
 		PSRUN=$(echo "$ISRUN" | awk '{ print $1 }')
 	fi
-	#return ${PSRUN} #seem to cause issue for some os
+	#return ${PSRUN} #seems to cause an issue for some os
 }
 
-#cheking if already started, launch and mark in log
+#checking if already started, launch and mark in log
 start_serv(){ 
 	get_status $1
 	if [ $2 ]; then #is logging on ?
@@ -42,7 +42,7 @@ start_serv(){
 			echo "$PID" > .$1.pid
 			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`" | tee ${LOGFILE}
 		else
-			echo "Can't start '$1', cause is already running p${PSRUN}" | tee ${LOGFILE}
+			echo "Cannot start '$1', because it is already running p${PSRUN}" | tee ${LOGFILE}
 		fi
 	else
 		if [ -z ${PSRUN} ]; then
@@ -50,7 +50,7 @@ start_serv(){
 			echo "$!" > .$1.pid
 			echo "Server '$1' started at `date +"%m-%d-%H:%M-%S"`"
 		else
-			echo "Can't start '$1', cause is already running p${PSRUN}"
+			echo "Cannot start '$1', because it is already running p${PSRUN}"
 		fi
 	fi
 }
@@ -94,7 +94,7 @@ restart(){
 		FIFO="$1_fifo"
 		while true; do
 			get_status ${i}
-			if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting end"; sleep 2;
+			if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting for the process to end"; sleep 2;
 			else 
 				if [ -e ./${FIFO} ]; then rm "$FIFO"; fi
 				break
@@ -109,38 +109,47 @@ case $1 in
 		print_start
 		check_files
 		echo "Check complete."
-		echo "Looks good, a nice Athena!"
+		echo "Looks like a good, nice rAthena!"
 		if [ "$2" = "--enlog" ]; then
 		 ENLOG=1
 		 if [ ! -d "$LOG_DIR" ]; then mkdir -p $LOG_DIR; fi
-		 echo "Logging is enable in $LOG_DIR"
+		 echo "Logging is enabled in $LOG_DIR"
 		else
-		 echo "Logging is disable"
+		 echo "Logging is disabled"
 		fi
 		for i in ${L_SRV} ${C_SRV} ${M_SRV}
 		do
 			start_serv $i $ENLOG
 		done
-		echo "Now Started Athena."
+		echo "rAthena was started."
 	;;
     'watch')
 		if [ ! -d "$LOG_DIR" ]; then mkdir -p $LOG_DIR; fi
 		if [ -z $2 ]; then Restart_count=10; else Restart_count=$2; fi
 		if [ -z $3 ]; then Restart_sleep=3; else Restart_sleep=$3; fi
-		echo " Gonna watch rA for Restart_count = $Restart_count, Restart_sleep= $Restart_sleep"
+		echo "Going to watch rAthena for restart_count = $Restart_count, restart_sleep = $Restart_sleep"
 		for i in ${L_SRV} ${C_SRV} ${M_SRV}
 		do
 			start_serv $i 1
 		done
 		watch_serv $Restart_count $Restart_sleep
-		echo "Now watching Athena."
+		echo "Watching rAthena now."
 	;;	
 	'stop')
-		for i in ${L_SRV} ${C_SRV} ${M_SRV}
+		for i in ${M_SRV} ${C_SRV} ${L_SRV}
 		do
 			PIDFILE=.${i}.pid
 			if [ -e ./${PIDFILE} ]; then
 				kill $(cat ${PIDFILE})
+				
+				while true; do
+					get_status ${i}
+					if [ ${PSRUN} ]; then echo "'${i}' is still running p${PSRUN} waiting for the process to end"; sleep 2;
+					else
+						break
+					fi
+				done
+				
 				rm ${PIDFILE}
 			fi
 		done
@@ -152,7 +161,7 @@ case $1 in
 		for i in ${L_SRV} ${C_SRV} ${M_SRV}
 		do
 			get_status ${i}
-			if [ ${PSRUN} ]; then echo "'${i}' is running p${PSRUN}"; else echo "'${i}' seem down"; fi
+			if [ ${PSRUN} ]; then echo "'${i}' is running p${PSRUN}"; else echo "'${i}' seems to be down"; fi
 		done
 	;;
 	'val_runonce')
@@ -171,39 +180,39 @@ case $1 in
 		case $2 in
 			'start')
 				echo "syntax: 'start {--enlog}'"
-				echo "This option will starts the servs"
-				echo "--enlog will tee all terminal output into a log/$servname.log file"
+				echo "This option will start the servers"
+				echo "--enlog will write all terminal output into a log/$servname.log file"
 			;;
 			'stop')
-				echo "This option will shutdowns the servs'"
+				echo "This option will shut the servers down"
 			;;
 			'restart')
 				echo "syntax: 'restart {<delay>}'"
-				echo "This option will wait delay then will attempt to restart the servs"
-				echo "NB, even if delay is over it will wait the pid is finished before atetmpting to restart servs"
+				echo "This option will wait for the given delay and will attempt to restart the servers afterwards"
+				echo "Note: Even if the delay is over it will wait until the pid is finished before attempting to restart the servers"
 			;;
 			'status')
-				echo "syntax: 'watch {<restart_intervall> <restart_count>}'"
-				echo "This option let you know if the server are running or not"
-				echo "NB this option is based on PID and supposed you have launch the serv by this script"
-				echo " If it wasn't the case please use something like 'ps ax | grep server' to know their status"
+				echo "syntax: 'status'"
+				echo "This option will let you know whether the server are running or not"
+				echo "Note: This option is based on PID and requires that you have launched the servers with this script too"
+				echo "If this was not the case please use something like 'ps ax | grep server' to check their status"
 			;;
 			'watch')
-				echo "syntax: 'watch {<restart_intervall> <restart_count>}'"
-				echo "The watch option allow you to auto restart the server when this one was stopped"
-				echo "<restart_intervall> delay in second before recheking if server are down (default 10) "
-				echo "<restart_count> how many time should we restart servs (default 3), (-1=undefinitly)"
+				echo "syntax: 'watch {<restart_interval> <restart_count>}'"
+				echo "The watch option allows you to automatically restart the servers when one of them was stopped"
+				echo "<restart_interval> delay in seconds before rechecking if a server is down (default 10) "
+				echo "<restart_count> how many times the servers should be restarted (default 3), (-1=indefinitly)"
 			;;
 			'val_runonce')
 				echo "syntax: 'val_runonce'"
-				echo "This option will run valgrin with run-once to check the serv"
+				echo "This option will run valgrin with run-once to check the servers"
 			;;
 			'valchk')
 				echo "syntax: 'valchk'"
-				echo "This option will run valgrin with the serv"
+				echo "This option will run valgrin with the servers"
 			;;
 			*)
-				echo "Please specify a command you'll like more info  { start | stop | restart | status | watch }"
+				echo "Please specify a command you would like more info on { start | stop | restart | status | watch }"
 				read -p "Enter a valid command: " readEnterKey
 				$0 "help" $readEnterKey
 			;;

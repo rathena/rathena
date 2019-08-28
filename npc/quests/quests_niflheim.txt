@@ -178,7 +178,7 @@ nif_in,31,20,3	script	Kuzkahina#nif	794,{
 niflheim,208,103,1	script	#Graveyard1	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 5 || nif_esc == 7 || nif_esc == 8 || nif_esc == 10) {
 		mes "^3355FFYou found something";
 		mes "half-buried near a grave.";
@@ -200,7 +200,7 @@ OnTouch:
 niflheim,169,71,1	script	#Graveyard2	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 6 || nif_esc == 9) {
 		mes "^3355FFYou found something";
 		mes "half-buried near a grave.";
@@ -219,7 +219,7 @@ OnTouch:
 nif_in,115,181,0	script	#Piano	111,1,1,{
 	end;
 
-OnTouch:
+OnTouch_:
 	if (nif_esc == 0 && (MISC_QUEST & 32) == 0) {
 		mes "^3355FFYou see a big, heavy piano.";
 		mes "You get the feeling that";
@@ -249,11 +249,11 @@ OnTouch:
 	end;
 }
 
-nif_in,114,181,0	script	#Piano3	111,1,1,{
+nif_in,118,151,0	script	#Piano3	111,1,1,{
 	end;
 
-OnTouch:
-	if (nif_esc == 12 || nif_esc == 13 || MISC_QUEST & 32) {
+OnTouch_:
+	if (nif_esc == 12 || nif_esc == 13 || (MISC_QUEST & 32)) {
 		mes "^3355FFAs you bend towards";
 		mes "the final empty key space";
 		mes "to take a better look at it...^000000";
@@ -310,7 +310,7 @@ prt_in,161,20,3	script	Erious#nif	92,{
 		mes "*Cries* Wahhh...!";
 		mes "Elly, how could you";
 		mes "leave me this way...";
-		emotion e_sob;
+		emotion ET_CRY;
 		next;
 		if (select("Comfort him.:Neglect him.") == 1) {
 			mes "[Erious]";
@@ -508,14 +508,14 @@ prt_in,161,20,3	script	Erious#nif	92,{
 }
 
 umbala,215,181,3	script	Billik	733,{
-	if (nif_revive > 1 || MISC_QUEST & 16384) {
+	if (nif_revive > 1 || (MISC_QUEST & 16384)) {
 		mes "[Billik]";
 		mes "Well, long time no see.";
 		mes "If you have a chance in the";
 		mes "future, let's meet in the";
 		mes "town of the dead later.";
 		mes "Hahahaha~";
-		emotion e_no1;
+		emotion ET_BEST;
 		close;
 	}
 	if (nif_revive == 1) {
@@ -575,7 +575,7 @@ umbala,215,181,3	script	Billik	733,{
 niflheim,153,215,3	script	Feylin	794,{
 	if (nif_revive == 2) {
 		mes "[Feylin]";
-		mes "Poor "+((Sex)?"guy":"girl")+"...";
+		mes "Poor "+((Sex == SEX_MALE)?"guy":"girl")+"...";
 		mes "Dying at such a young age...";
 		mes "I am always sorry to see the";
 		mes "young pass away.";
@@ -595,7 +595,7 @@ niflheim,153,215,3	script	Feylin	794,{
 		mes "come to the wrong person.";
 		next;
 		mes "[Feylin]";
-		mes "Nobody in Niffelheim can";
+		mes "Nobody in Niflheim can";
 		mes "perform that kind of miracle...";
 		next;
 		mes "[Feylin]";
@@ -614,7 +614,7 @@ niflheim,153,215,3	script	Feylin	794,{
 		mes "town immediately. I'm sorry";
 		mes "but I know nothing about what";
 		mes "you are asking.";
-		emotion e_an;
+		emotion ET_FRET;
 		next;
 		if (select("But...:I am sorry.") == 1) {
 			mes "[Feylin]";
@@ -680,7 +680,7 @@ niflheim,153,215,3	script	Feylin	794,{
 								mes "I have failed to summon";
 								mes "who you wish to see. I am";
 								mes "really sorry for this result.";
-								emotion e_omg;
+								emotion ET_HUK;
 								delitem 748,1; //Witherless_Rose
 								delitem 610,10; //Leaf_Of_Yggdrasil
 								set nif_revive,5;

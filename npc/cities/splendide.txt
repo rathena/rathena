@@ -381,13 +381,13 @@ splendide,210,95,3	script	Middle-Ranked Laphine#2	442,{
 	if ((isequipped(2782) == 1) && (ep13_2_rhea == 100)) {
 		mes "[Middle-Ranked Laphine]";
 		mes "Wow~ Great!!";
-		emotion e_no1;
+		emotion ET_BEST;
 		close;
 	}
 	else {
 		mes "[Middle-Ranked Laphine]";
 		mes "MushIyazTur Ee YurDana";
-		emotion e_no1;
+		emotion ET_BEST;
 		close;
 	}
 }
@@ -399,7 +399,7 @@ spl_in01,190,314,5	script	Security Officer#tre	461,{
 		mes "Those who are guilty and prisoners are detained here.";
 		next;
 		mes "[Security Officer]";
-		mes "If you do something supicious, you must be detained here too, so you'd better to be careful!";
+		mes "If you do something suspicious, you must be detained here too, so you'd better to be careful!";
 		close;
 	}
 	else {
@@ -461,7 +461,7 @@ OnTouch:
 spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
 	cutin "god_nelluad02",2;
 	mes "[Poet Nell]";
-	mes "Hi~~ do you hear the beautiful music comeing from afar~?";
+	mes "Hi~~ do you hear the beautiful music coming from afar~?";
 	next;
 	select("Who are you?");
 	cutin "god_nelluad01",2;
@@ -473,7 +473,7 @@ spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
 	mes "I cam here the other day, requesting to take notes of this new world and they allow me to follow the adventurers here.";
 	next;
 	mes "[Poet Nell]";
-	mes "I became familliar with the Lapine.";
+	mes "I became familiar with the Lapine.";
 	mes "It was quite awkward at first... Since I didn't knew their language.";
 	mes "But, one I started to play my instruments... they loved it.";
 	next;
@@ -502,7 +502,7 @@ spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
 			cutin "god_nelluad02",2;
 			mes "[Poet Nell]";
 			mes "Chaos in Eternity...";
-			mes "This is a great piece but I wouldn't reccomend it while dining...";
+			mes "This is a great piece but I wouldn't recommend it while dining...";
 			soundeffect "chaos_of_eternity.wav",0;
 			break;
 		case 3:
@@ -520,7 +520,7 @@ spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
 			mes "This song has quite an interesting story~";
 			next;
 			soundeffect "ring_of_nibelungen.wav",0;
-			mes "^4d4dff There was a niver named Rhein that";
+			mes "^4d4dff There was a river named Rhein that";
 			mes "that would shine as if made of gold.";
 			mes "It's secret hidden from all since";
 			mes "before this story was told...^000000";
@@ -573,7 +573,7 @@ spl_in01,172,225,3	script	Wandering Poet#ep13	51,{
 spl_in01,182,213,1	script	Resting Laphine#ep13_1	438,{
 	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
 		mes "[Resting Laphine]";
-		mes "The poet on the stagie is mysterious.";
+		mes "The poet on the stage is mysterious.";
 		mes "The moment you came here...";
 		mes "He arrived and started playing music.";
 		next;
@@ -636,7 +636,7 @@ spl_in01,162,202,5	script	Laphine taking notes#1	436,{
 	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
 		mes "[Laphine taking notes]";
 		mes "We are quite impressed by the poet.";
-		mes "We Laphine love music aswell.";
+		mes "We Laphine love music as well.";
 		mes "I never imagined that I would ever hear such exotic music.";
 		next;
 		mes "[Laphine taking notes]";
@@ -739,7 +739,7 @@ spl_in01,154,207,5	script	Laphine Staff#ep13_2	440,{
 spl_in01,122,314,5	script	High-Ranked Soldier#ep13	461,{
 	if ((isequipped(2782) > 0) && (ep13_2_rhea > 99)) {
 		mes "[High-Ranked Soldier]";
-		mes "Are ther any new supplies?";
+		mes "Are there any new supplies?";
 		next;
 		mes "[Laphine Soldier]";
 		mes "This sword just arrived...";

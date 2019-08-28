@@ -17,7 +17,7 @@
 gef_fild05,80,149,3	script	Myu#08_hat	877,{
 	mes "[Myu]";
 	mes "Meow...";
-	emotion e_omg;
+	emotion ET_HUK;
 	next;
 	if(hatcat2008 == 0) {
 		mes "[Myu]";
@@ -711,7 +711,7 @@ morocc_in,137,102,5	script	Trainee#2008hat01	82,{
 								mes "Did this color came out nicely?";
 								delitem 5438,1;
 								delitem 976,1;
-								getitem 250,1;
+								getitem 2250,1;
 								close;
 							}
 							mes "[Elgo]";

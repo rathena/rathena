@@ -279,7 +279,7 @@ prt_fild03,365,255,2	script	Ascetic#aco	89,{
 				mes "[Father Rubalkabara]";
 				mes "Farewell.";
 				close2;
-				savepoint "prt_fild03",361,255;
+				savepoint "prt_fild03",361,255,1,1;
 				set job_acolyte_q,6;
 				end;
 			}
@@ -347,7 +347,7 @@ moc_fild07,41,355,4	script	Ascetic#2aco	95,{
 				mes "[Mother Mathilda]";
 				mes "Please return to the Prontera Sanctuary and speak to the Priest in charge.";
 				close2;
-				savepoint "moc_fild07",35,355;
+				savepoint "moc_fild07",35,355,1,1;
 				set job_acolyte_q,7;
 				end;
 			}
@@ -424,7 +424,7 @@ prt_fild00,208,218,6	script	Ascetic#3aco	98,{
 				mes "[Father Yosuke]";
 				mes "Now go back to the Santuary and finish becoming an Acolyte, kid.";
 				close2;
-				savepoint "prt_fild00",206,230;
+				savepoint "prt_fild00",206,230,1,1;
 				set job_acolyte_q,8;
 				end;
 			}

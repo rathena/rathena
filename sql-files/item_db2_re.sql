@@ -11,7 +11,7 @@ CREATE TABLE `item_db2_re` (
   `price_buy` mediumint(8) unsigned DEFAULT NULL,
   `price_sell` mediumint(8) unsigned DEFAULT NULL,
   `weight` smallint(5) unsigned NOT NULL DEFAULT '0',
-  `attack` smallint(5) unsigned DEFAULT NULL,
+  `atk:matk` varchar(11) DEFAULT NULL,
   `defence` smallint(5) unsigned DEFAULT NULL,
   `range` tinyint(2) unsigned DEFAULT NULL,
   `slots` tinyint(2) unsigned DEFAULT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE `item_db2_re` (
   `equip_genders` tinyint(1) unsigned DEFAULT NULL,
   `equip_locations` mediumint(7) unsigned DEFAULT NULL,
   `weapon_level` tinyint(1) unsigned DEFAULT NULL,
-  `equip_level` tinyint(3) unsigned DEFAULT NULL,
+  `equip_level` varchar(10) DEFAULT NULL,
   `refineable` tinyint(1) unsigned DEFAULT NULL,
   `view` smallint(5) unsigned DEFAULT NULL,
   `script` text,
@@ -33,7 +33,7 @@ CREATE TABLE `item_db2_re` (
 # Items Additional Database
 #
 # Structure of Database:
-#REPLACE INTO `item_db2_re` VALUES ( ID,'Name','Name',Type,Price,Sell,Weight,ATK,DEF,Range,Slot,Job,Class,Gender,Loc,wLV,eLV,Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
+#REPLACE INTO `item_db2_re` VALUES ( ID,'AegisName','Name',Type,Buy,Sell,Weight,'ATK[:MATK]',DEF,Range,Slots,Job,Class,Gender,Loc,wLV,'eLV[:maxLevel]',Refineable,View,'Script','OnEquip_Script','OnUnequip_Script');
 #
 # THQ Quest Items
 #=============================================================

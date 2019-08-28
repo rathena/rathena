@@ -17,7 +17,7 @@ yuno_in01,124,164,6	script	Guild Leader	108,{
 	mes "[Keegan]";
 	mes "What brings you here? Have something to say?";
 	next;
-	menu "I want to be a Treasure Hunter",-,"Take a New Quest.",N_NQuest,"Take me to the Official Shop.",N_OShop,"Nevermind.",N_NVM;
+	menu "I want to be a Treasure Hunter",-,"Take a New Quest.",N_NQuest,"Take me to the Official Shop.",N_OShop,"Never mind.",N_NVM;
 	if(Event_THQS==1) goto N_AlreadyReg;
 	mes "[Keegan]";
 	mes "Well "+strcharinfo(0)+" if you want to be a Treasure Hunter first you must.";
@@ -34,7 +34,7 @@ yuno_in01,124,164,6	script	Guild Leader	108,{
 	set Event_THQS,1;
 	mes "[Keegan]";
 	mes "Congratulations!";
-	emotion e_grat;
+	emotion ET_CONGRATULATION;
 	next;
 	mes "[Keegan]";
 	mes "Welcome to the Guild of Treasure Hunters.";
@@ -46,7 +46,7 @@ N_NoZeny:
 	close;
 N_HighPrice:
 	mes "[Keegan]";
-	mes "Well if you can't afford a small ^FF000025,000z^000000 you shouldent be a Treasure Hunter yet.";
+	mes "Well if you can't afford a small ^FF000025,000z^000000 you shouldn't be a Treasure Hunter yet.";
 	close;
 N_AlreadyReg:
 	mes "[Keegan]";
@@ -77,7 +77,7 @@ N_OShop:
 	end;
 N_NeedMem:
 	mes "[Keegan]";
-	mes "Im sorry only members may visit our private shop.";
+	mes "I'm sorry only members may visit our private shop.";
 	close;
 N_NVM:
 	mes "[Keegan]";

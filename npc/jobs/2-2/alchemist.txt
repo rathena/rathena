@@ -443,7 +443,7 @@ alde_alche,175,107,3	script	Fastidious Alchemist#am	749,{
 				mes "Wait...";
 				mes "Maybe I've";
 				mes "misjudged you.";
-				if (Sex) {
+				if (Sex == SEX_MALE) {
 					mes "You might be a pretty boy,";
 					mes "but I can tell you're smart";
 					mes "from your eyes.";

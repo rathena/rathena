@@ -181,6 +181,7 @@ GC_DARKCROW,2      // Dark Claw
 // Arch Bishop
 AB_JUDEX,2        // Judex
 AB_ADORAMUS,2     // Adoramus
+AB_RENOVATIO,2    // Renovatio
 AB_HIGHNESSHEAL,2 // Highness Heal
 AB_DUPLELIGHT,2   // Duple Light
 AB_DUPLELIGHT_MELEE,2	// Dummy skill for Duple Light

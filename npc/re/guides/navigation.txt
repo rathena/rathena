@@ -13,11 +13,12 @@
 //===== Additional Comments: ================================= 
 //= 1.0 First version.
 //= 1.1 Added 'is_clientver' command. [Euphy]
+//= 1.2 Dropped 'is_clientver' command. [Lemongrass]
 //============================================================ 
 
 function	script	F_Navi	{
 
-	if (!is_clientver(1,20111010))
+	if ( PACKETVER < 20111010 )
 		set .@disabled,1;
 
 	// This function takes 0 ~ 3 parameters.

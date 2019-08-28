@@ -124,7 +124,7 @@ lhz_in02,230,284,4	script	Hotel Employee#01	86,{
 	next;
 	switch(select("Save Point:Rest - 5,000 zeny:Cancel")) {
 	case 1:
-		savepoint "lhz_in02",209,275;
+		savepoint "lhz_in02",209,275,1,1;
 		mes "[Hotel Employee]";
 		mes "Thank you, your";
 		mes "Respawn Point has";
@@ -179,7 +179,7 @@ ve_in,157,219,5	script	Inn Master#Receptionist	709,{
 		mes "Your Respawn Point";
 		mes "has been saved in Veins.";
 		mes "Enjoy your stay in town~";
-		savepoint "ve_in",157,209;
+		savepoint "ve_in",157,209,1,1;
 		close;
 	case 2:
 		mes "[Inn Master]";
@@ -219,7 +219,7 @@ function	script	F_InnMaid	{
 		mes "has been saved.";
 		mes "Thank you,";
 		mes "please come again.";
-		savepoint getarg(2),getarg(3),getarg(4);
+		savepoint getarg(2),getarg(3),getarg(4),1,1;
 		close;
 	case 2:
 		mes .@npc_name$;

@@ -1,0 +1,4855 @@
+//===== rAthena Script ======================================= 
+//= Geffen Magic Tournament Memorial Dungeon
+//===== By: ================================================== 
+//= Nova with the help of Tokei, Diablo and others.
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Custom implementation of official script]
+//= Participate in the Geffen Magic Tournament and gain coins to trade for rewards.
+//===== Additional Comments: ================================= 
+//= 1.0 First version. Converted to rAthena compliant standard.
+//=		Thanks to Nova, Tokei, Diablo and others for creating the script. [MasterOfMuppets]
+//============================================================ 
+
+//MAIN QUEST
+1@gef,0,0,0	script	#gmt_dummy	-1,{ end; }
+
+1@gef,119,208,0	script	#GefMagicStart	567,5,5,{
+	end;
+OnTouch:
+	if ('GMT == 0) {
+		'GMT = 1;
+		setquest 9292;
+		mapannounce instance_mapname("1@gef"),"Geffen Broadcast: The Geffen Magic Tournament is about to begin!",bc_blue;
+		sleep2 3000;
+		mapannounce instance_mapname("1@gef"),"Geffen Broadcast: Citizens and adventurers in Geffen, please join the tournament~!",bc_blue;
+		sleep2 5000;
+		mapannounce instance_mapname("1@gef"),"Geffen Broadcast: Anyone who wants to join the Geffen Magic Tournament, please come to the southern fountain of Geffen~!",bc_blue;
+		'charname$ = strcharinfo(0);
+		'sex = Sex;
+		'gmt_account_id = getcharid(3);
+	}
+
+	end;
+OnInit:
+	hideonnpc strnpcinfo(0);
+	end;
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gef,120,78,0	script	#GefMagicGuess0	567,4,1,{
+	end;
+OnTouch_:
+	if ('GMT == 1) {
+		'GMT = 2;
+		showscript strcharinfo(0)+" : Guess this is where I register for the tournament...";
+		end;
+	}
+	
+	end;
+OnInit:
+	hideonnpc strnpcinfo(0);
+	end;
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gef,142,53,0	duplicate(#GefMagicGuess0)	#GefMagicGuess1	567,1,15
+1@gef,99,53,0	duplicate(#GefMagicGuess0)	#GefMagicGuess2	567,1,20
+
+//Movie
+
+1@gef,71,86,4	duplicate(#gmt_dummy)	Young Lady#gef1	4_F_BRZ_WOMAN
+1@gef,75,82,4	duplicate(#gmt_dummy)	Young Lady#gef3	4_F_03
+1@gef,68,79,6	duplicate(#gmt_dummy)	Handsome Adventurer#gef	4_M_CRU
+1@gef,70,77,2	duplicate(#gmt_dummy)	Male Adventurer#gef	4_M_LGTMAN
+1@gef,73,84,4	duplicate(#gmt_dummy)	Young Lady#gef2	4_F_CAPEGIRL
+
+1@gef,73,84,0	script	MOVIECONTROL#gef	-1,13,13,{
+	end;
+OnTouch_:
+	if ('MOVIE == 1) end;
+	'MOVIE = 1;
+	'm1_timer = 0;
+	initnpctimer;
+	end;
+OnTimer1000:
+	'm1_timer++;
+	
+	switch('m1_timer) {
+		case   1: npctalk "I am lonely... Should I be alone during the festival?", instance_npcname("Young Lady#gef1"); break;
+		case   4: npctalk "Oh my god ~! Why do you say that~?", instance_npcname("Young Lady#gef2"); break;
+		case   8: npctalk "How about hitting on the handsome adventurers coming to Geffen?", instance_npcname("Young Lady#gef3"); break;
+		case  12: npctalk "Handsome? Where are there handsome men?", instance_npcname("Young Lady#gef1"); break;
+		case  17: npctalk "I only see guys who look so old and fat!", instance_npcname("Young Lady#gef1"); break;
+		case  21: npctalk "Agh... I can not just sit around during this festival alone...", instance_npcname("Young Lady#gef2"); break;
+		case  26: npctalk "No! There has to be some handsome guys around here! Don't give up!", instance_npcname("Young Lady#gef3"); break;
+		case  30:
+			npctalk "Um... okay...", instance_npcname("Young Lady#gef1");
+			npctalk "Um... okay...", instance_npcname("Young Lady#gef2");
+			break;
+		case  34: npctalk "See! Look over there! A handsome guy!", instance_npcname("Young Lady#gef3"); break;
+		case  38:
+			npctalk "Oh god! Where?!", instance_npcname("Young Lady#gef1");
+			npctalk "Oh my god! Where? Where?", instance_npcname("Young Lady#gef2");
+			break;
+		case  42:
+			hideoffnpc instance_npcname("Handsome Adventurer#gef");
+			npctalk "Over there~!", instance_npcname("Young Lady#gef3");
+			break;
+		case  46: npctalk "There are many beautiful ladies at this year's Magic Tournament.", instance_npcname("Handsome Adventurer#gef"); break;
+		case  50:
+			npctalk "Yikes~~~!!", instance_npcname("Young Lady#gef1");
+			npctalk "Yikes~~~! Is he talking about me?", instance_npcname("Young Lady#gef2");
+			npctalk "Yikes~~! Nice!!", instance_npcname("Young Lady#gef3");
+			break;
+		case  54: npctalk "What should I do? Should I talk to him?", instance_npcname("Young Lady#gef3"); break;
+		case  58: npctalk "Come on~! You're good at this! Hurry up and hook up with him!", instance_npcname("Young Lady#gef2"); break;
+		case  62: npctalk "Hurry up~!", instance_npcname("Young Lady#gef1"); break;
+		case  66: npctalk "It's almost time for the event to begin...", instance_npcname("Handsome Adventurer#gef"); break;
+		case  70: npctalk "Maybe he's waiting for someone!", instance_npcname("Young Lady#gef3"); break;
+		case  74: npctalk "A girlfriend?! It can't be!", instance_npcname("Young Lady#gef2"); break;
+		case  78:
+			hideoffnpc instance_npcname("Male Adventurer#gef");
+			npctalk "No... it can't be~!", instance_npcname("Young Lady#gef1");
+			break;
+		case  79: npctalk "Have I kept you waiting for a long time?", instance_npcname("Male Adventurer#gef"); break;
+		case  83: npctalk "Lucky! It's a man!!!", instance_npcname("Young Lady#gef3"); break;
+		case  86:
+			npctalk "Looks like it's just a friend~!!", instance_npcname("Young Lady#gef2");
+			break;
+		case  88: npctalk "Hook up with both of them? Ho ho ho~!", instance_npcname("Young Lady#gef1"); break;
+		case  91:
+			npctalk "Yes! You have finally arrived, my love!", instance_npcname("Handsome Adventurer#gef");
+			emotion ET_HUK, getnpcid(0, instance_npcname("Young Lady#gef1"));
+			emotion ET_HUK, getnpcid(0, instance_npcname("Young Lady#gef2"));
+			emotion ET_HUK, getnpcid(0, instance_npcname("Young Lady#gef3"));
+			break;
+		case  95:
+			npctalk "My love...", instance_npcname("Male Adventurer#gef");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"));
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
+			break;
+		case  99:
+			npctalk "Maybe... There are no good guys left for us...", instance_npcname("Young Lady#gef3");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
+			break;
+		case 103:
+			npctalk "Ahem... Maybe... Just the three of us... will be together forever...", instance_npcname("Young Lady#gef2");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"));
+			break;
+		case 106:
+			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef3");
+			emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef"));
+			sleep 500;
+			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef1");
+			sleep 500;
+			npctalk "Our friendship is forever~!!!", instance_npcname("Young Lady#gef2");
+			'm1_timer++;
+			break;
+		case 109:
+			emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef"));
+			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef1"));
+			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef2"));
+			emotion ET_CRY, getnpcid(0, instance_npcname("Young Lady#gef3"));
+			break;
+		case 111: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef")); break;
+		case 113: emotion ET_THROB, getnpcid(0, instance_npcname("Male Adventurer#gef")); break;
+		case 115: emotion ET_THROB, getnpcid(0, instance_npcname("Handsome Adventurer#gef")); break;
+		case 118:
+			hideonnpc instance_npcname("Male Adventurer#gef");
+			hideonnpc instance_npcname("Handsome Adventurer#gef");
+			'MOVIE = 0;
+			stopnpctimer;
+			end;
+	}
+	
+	initnpctimer;
+	end;
+}
+
+//Fireworks
+
+1@gef,90,197,0	script	#Firecrackers0	649,{
+	end;
+OnTimer2500:
+	.@r = rand(0,1);
+	if (.@r != 0 ) { stopnpctimer; initnpctimer; end; }
+	stopnpctimer;
+	specialeffect .effects[rand(getarraysize(.effects))],AREA,instance_npcname(strnpcinfo(0));
+	initnpctimer;
+	end;
+
+OnInit:
+	setarray .effects[0],EF_FIREPILLARBOMB,EF_FLAMELAUNCHER,EF_FROSTDIVER2,EF_FROSTWEAPON,EF_LIGHTBOLT,EF_LIGHTNINGLOADER,EF_MAGICROD,EF_METEORSTORM,EF_NAPALMBEAT;
+	setarray .effects[9],EF_PETRIFYATTACK,EF_SEISMICWEAPON,EF_SIGHT,EF_SIGHTRASHER,EF_SPELLBREAKER,EF_STORMGUST,EF_THUNDERSTORM,EF_VOLCANO,EF_WATERBALL,EF_YUFITELHIT;
+	hideonnpc strnpcinfo(0);
+	end;
+	
+OnInstanceInit:
+	initnpctimer;
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gef,106,145,0	duplicate(#Firecrackers0)	#Firecrackers1	649
+1@gef,112,49,0	duplicate(#Firecrackers0)	#Firecrackers2	649
+1@gef,134,145,0	duplicate(#Firecrackers0)	#Firecrackers3	649
+1@gef,132,111,0	duplicate(#Firecrackers0)	#Firecrackers4	649
+1@gef,141,56,0	duplicate(#Firecrackers0)	#Firecrackers5	649
+1@gef,146,175,0	duplicate(#Firecrackers0)	#Firecrackers6	649
+1@gef,182,163,0	duplicate(#Firecrackers0)	#Firecrackers7	649
+1@gef,183,126,0	duplicate(#Firecrackers0)	#Firecrackers8	649
+1@gef,194,89,0	duplicate(#Firecrackers0)	#Firecrackers9	649
+1@gef,59,125,0	duplicate(#Firecrackers0)	#Firecrackers10	649
+1@gef,62,147,0	duplicate(#Firecrackers0)	#Firecrackers11	649
+1@gef,62,91,0	duplicate(#Firecrackers0)	#Firecrackers12	649
+1@gef,71,181,0	duplicate(#Firecrackers0)	#Firecrackers13	649
+1@gef,112,196,0	duplicate(#Firecrackers0)	#Firecrackers14	649
+1@gef,98,58,0	duplicate(#Firecrackers0)	#Firecrackers15	649
+1@gef,98,126,0	duplicate(#Firecrackers0)	#Firecrackers16	649
+1@gef,127,196,0	duplicate(#Firecrackers0)	#Firecrackers17	649
+1@gef,40,125,0	duplicate(#Firecrackers0)	#Firecrackers18	649
+1@gef,116,75,0	duplicate(#Firecrackers0)	#Firecrackers19	649
+1@gef,58,112,0	duplicate(#Firecrackers0)	#Firecrackers20	649
+1@gef,40,112,0	duplicate(#Firecrackers0)	#Firecrackers21	649
+1@gef,107,111,0	duplicate(#Firecrackers0)	#Firecrackers22	649
+1@gef,127,49,0	duplicate(#Firecrackers0)	#Firecrackers23	649
+1@gef,123,75,0	duplicate(#Firecrackers0)	#Firecrackers24	649
+1@gef,199,126,0	duplicate(#Firecrackers0)	#Firecrackers25	649
+1@gef,183,113,0	duplicate(#Firecrackers0)	#Firecrackers26	649
+1@gef,199,114,0	duplicate(#Firecrackers0)	#Firecrackers27	649
+1@gef,140,126,0	duplicate(#Firecrackers0)	#Firecrackers28	649
+
+//SHOPS
+
+1@gef_in,77,167,0	shop	Tool Dealer#gefa_0et	1_F_03,1750:-1,611:-1,501:-1,502:-1,503:-1,504:-1,645:-1,656:-1,713:-1,601:-1,602:-1,2241:-1
+1@gef_in,77,173,0	shop	Trader#gef_0et	1_M_WIZARD,717:-1,1601:-1,1604:-1,1607:-1,1610:-1,2232:-1,2321:-1,2332:-1
+1@gef_in,74,144,0	shop	Trader#gef_0et1	1_F_01,911:-1,910:-1,912:-1
+1@gef_in,65,144,4	shop	Tool Dealer#gefb_0et1	1_M_WIZARD,1092:-1,1093:-1,713:-1
+
+1@gef_in,22,171,7	shop	Weapon Dealer#GMT	84,1146:-1,1245:-1
+1@gef_in,26,178,4	shop	Armor Dealer#GMT	66,2628:-1,2101:-1,2107:-1,2401:-1,2501:-1,2230:-1,2301:-1,2303:-1,2305:-1,2321:-1,2332:-1
+1@gef_in,30,178,4	shop	Weapon Dealer#GMT2	47,1750:-1,1751:-1,1101:-1,1701:-1,1201:-1,1204:-1,1207:-1,1210:-1,1213:-1,1216:-1,1601:-1,1604:-1,1607:-1,1610:-1
+
+1@gef,193,152,4	shop	Pet Groomer#GMT	124,537:-1,643:-1,10013:-1,10014:-1,6113:-1,6114:-1,6115:-1,6110:-1,6100:-1,6098:-1,6112:-1,6104:-1,6108:-1,6111:-1,7824:1000,6097:1000,6107:1000
+1@gef,196,111,3	shop	Cook#gef_0et	85,7482:-1
+
+1@gef,131,58,4	script	Geffen Coin Operator#g	4_F_ZONDAGIRL,{ // 55149
+	.@n$ = "[ Geffen Coin Operator ]";
+	mes .@n$,"I exchange Magic Tournament Coins for Equipment."; next;
+	goto L_Menu;
+	end;
+
+L_Menu:
+	switch(select("Shields:Rings:Armor:End Conversation")){
+		case 1:
+			mes .@n$,"There are two types of Shields are available for exchange.";
+			next;
+L_Shield:
+			switch(select("Magic Reflector ^3355FF<900 Coins>^000000:Revised Encyclopedia ^3355FF<900 Coins>^000000:Go back to previous menu")){
+				case 1: .@item = 2185; .@cost = 900; break;
+				case 2: .@item = 2186; .@cost = 900; break;
+				case 3: goto L_Menu; break;
+			}
+			mes .@n$;
+			mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+			mes "Price is "+.@cost+" coins";
+			mes "Do you wish to exchange your coins?";
+			next;
+				switch(select("Do Not Exchange:Exchange")){
+					case 1:
+						mes .@n$,"Take a look at the other equipment available.";
+						next;
+						goto L_Shield;
+						break;
+					case 2:
+						if( countitem(6671) < .@cost ) { 
+							mes .@n$,"You need "+.@cost+" Geffen Magic Tournament Coins."; 
+							next;
+							mes .@n$,"Participate in the Tournament to earn more coins."," ","Do you need more help?"; 
+							goto L_Shield; 
+						}
+						if(!checkweight(.@item,1)) { mes .@n$; mes "You have too many things in your inventory to carry a ^FF0000"+getitemname(.@item)+"^000000."; end; }
+						delitem 6671,.@cost;
+						getitem .@item,1;
+						mes .@n$,"Thank you.";
+						end;			
+				}
+
+		case 2:
+			mes .@n$;
+			mes "There are two types of Rings are available for exchange.";
+			next;
+L_Ring:
+				switch(select("Physical Enhancer Ring ^3355FF<1350 Coins>^000000:Magic Intensifier Ring ^3355FF<1350 Coins>^000000:Go back to previous menu")){
+					case 1:
+						.@item = 2963;
+						.@cost = 1350;
+						break;
+					case 2:
+						.@item = 2964;
+						.@cost = 1350;
+						break;
+					case 3:
+						goto L_Menu;
+						break;
+				}
+			mes .@n$;
+			mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+			mes "Price is "+.@cost+" coins";
+			mes "Do you wish to exchange your coins?";
+			next;
+				switch(select("Do Not Exchange:Exchange")){
+					case 1:
+						mes .@n$,"Take a look at the other equipment available.";
+						next;
+						goto L_Ring;
+						break;
+					case 2:
+						if( countitem(6671) < .@cost ) { 
+							mes .@n$,"You need "+.@cost+" Geffen Magic Tournament Coins."; 
+							next;
+							mes .@n$,"Participate in the Tournament to earn more coins."," ","Do you need more help?"; 
+							goto L_Ring; 
+						}
+						if(!checkweight(.@item,1)) { mes .@n$; mes "You have too many things in your inventory to carry a ^FF0000"+getitemname(.@item)+"^000000."; end; }
+						delitem 6671,.@cost;
+						getitem .@item,1;
+						mes .@n$,"Thank you.";
+						end;						
+				}
+		case 3:
+			mes .@n$;
+			mes "There are two types of Armor are available for exchange.";
+			next;
+L_Armor:
+				switch(select("Anti-Magic Suit ^3355FF<1800 Coins>^000000:Geffen Magic Robe ^3355FF<1800 Coins>^000000:Go back to previous menu")){
+					case 1:
+						.@item = 15073;
+						.@cost = 1800;
+						break;
+					case 2:
+						.@item = 15074;
+						.@cost = 1800;
+						break;
+					case 3:
+						goto L_Menu;
+						break;
+				}
+			mes .@n$;
+			mes "<ITEM>"+getitemname(.@item)+"<INFO>"+.@item+"</INFO></ITEM>";
+			mes "Price is "+.@cost+" coins";
+			mes "Do you wish to exchange your coins?";
+			next;
+				switch(select("Do Not Exchange:Exchange")){
+					case 1:
+						mes .@n$,"Take a look at the other equipment available.";
+						next;
+						goto L_Armor;
+						break;
+					case 2:
+						if( countitem(6671) < .@cost ) { 
+							mes .@n$,"You need "+.@cost+" Geffen Magic Tournament Coins."; 
+							next;
+							mes .@n$,"Participate in the Tournament to earn more coins."," ","Do you need more help?"; 
+							goto L_Armor; 
+						}
+						if(!checkweight(.@item,1)) { mes .@n$; mes "You have too many things in your inventory to carry a ^FF0000"+getitemname(.@item)+"^000000."; end; }
+						delitem 6671,.@cost;
+						getitem .@item,1;
+						mes .@n$,"Thank you.";
+						end;
+				}
+		case 4:
+			mes .@n$;
+			mes "You can tell a lot about a person by what gear they have.";
+			mes "I will see you next time~!";
+			close;
+
+	}
+	end;
+}
+
+//On Touch NPCs
+
+1@gef,0,0,0	script	#gmt_quotes	-1,{
+	end;
+OnTouch_:
+	if (strnpcinfo(0) == "Old Bachelor#z1_0et") setarray .@quotes$, "Old Bachelor: It's such a good festival, and I am alone...","Old Bachelor: Maybe I should hit on that girl...","Old Bachelor: It's so crowded in here during the Magic Tournament~!";
+	if (strnpcinfo(0) == "Little Geffen Boy#a2_0e") setarray .@quotes$, "Little Geffen Boy: Ugh ha ha~ Look~! That guy passing by there is so ugly~!!","Little Geffen Boy: I am bored! Is there anything fun to do around here?","Little Geffen Boy: I should ask my father for some pocket change.";
+	if (strnpcinfo(0) == "Dio Anemos#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Dio Anemos : Any time I face a woman, I really have no choice but to go easy on her...";
+		else setarray .@quotes$, "Dio Anemos: I want to eat some cookies before the Magic Tournament starts.","Dio Anemos: I'm hungry... Can i have some food?","Dio Anemos: Geffen is so lively whenever I visit.";
+	}
+	if (strnpcinfo(0) == "Ordre#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Ordre : Even powerful people like me can lose...";
+		else setarray .@quotes$, "Ordre: I've been waiting for this air and mood for a long time.","Ordre: Show us what you have trained for.","Ordre: Let's go register for the competition.";
+	}
+	if (strnpcinfo(0) == "Ju#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Ju : ... You really defeat me...";
+		else setarray .@quotes$, "Ju: I will make sure to register for the Magic Tournament quickly.","Ju: I only see novices around here.","Ju: I will surprise them with my excellent battle skills!";
+	}
+	if (strnpcinfo(0) == "Blut Hase#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Blut Hase : How can somebody be so powerful...";
+		else setarray .@quotes$, "Blut Hase: Where do I go to register for the Magic Tournament?","Blut Hase: My clothes will be stained with the blood of my enemies.";
+	}
+	if (strnpcinfo(0) == "Kuro Akuma#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Kuro Akuma : Maybe just being evil isn't enough to win the tournament...";
+		else setarray .@quotes$, "Kuro Akuma: It's like a calm before a storm~!","Kuro Akuma: So peaceful~! I love it!","Kuro Akuma: There quite a few innocent lambs joining the Magic Tournament~!";
+	}
+	if (strnpcinfo(0) == "Odoric#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Odoric : This is what youth looks like, sister... I'm truly jealous...";
+		else setarray .@quotes$, "Odoric: I can't find my type of competitors at all!","Odoric: It is so crowded during the Tournament~!","Odoric: It should be fun dancing in the festival~!";
+	}
+	if (strnpcinfo(0) == "Fay Kanavian#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Fay Kanavian : I actually lost... How is this possible?";
+		else setarray .@quotes$, "Fay Kanavian: It is time to show off my Philosopher's Stone at the Tournament~!","Fay Kanavian: No one can stop me. Ha ha ha ha ha ha~!","Fay Kanavian: Have you seen my Homonculus Alphonse?";
+	}
+	if (strnpcinfo(0) == "Licheniyes#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Lecheniyes : Most people won't even remember the outcome of the tournament, so there's no real sense of failure...";
+		else setarray .@quotes$, "Licheni: Happy Geffen Magic Tournament~!","Licheni: It will be a very fun Magic Tournament this year.","Licheni: Yahoo~ Let's go join the Magic Tournament~";
+	}
+	if (strnpcinfo(0) == "Ifodes#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Ifodes : Losing to a woman... Now that's a terrifying thought.";
+		else setarray .@quotes$, "Ifodes: I will show who I am at the Magic Tournament!","Ifodes: Strong attack and solid defense! Sigh, I wish I had a girlfriend...","Ifodes: Is there any beautiful ladies around to show my chivalry?";
+	}
+	if (strnpcinfo(0) == "Faymont#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Faymont : No time to chat, I need to go comfort the other girls who failed.";
+		else setarray .@quotes$, "Faymont: I heard a new hat was released in Geffen.","Faymont: There are no other decent competitors in the Tournament?","Faymont: I've never met anyone who has a better fashion sense than me.";
+	}
+	if (strnpcinfo(0) == "Arhi#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Arhi: The tournament is finally over! It was really a great year... Way too intense!";
+		else setarray .@quotes$, "Arhi: I'm thinking of joining the Magic Tournament!","Arhi: This should be a pretty good experience.","Arhi: Are there any competitors that look weak?";
+	}
+	if (strnpcinfo(0) == "Dwigh#z1_0et") {
+		if ('GMT_1QUE > 1) setarray .@quotes$, "Dwigh : Needless to say, it was a pretty decisive battle!";
+		else setarray .@quotes$, "Dwigh: I want this Magic Tournament to become my turning point.","Dwigh: I am quite depressed these days...","Dwigh: I will show my great skills to all of my students.";
+	}
+	
+	showscript .@quotes$[rand(getarraysize(.@quotes$))], getnpcid(0);
+	end;
+}
+
+1@gef,124,173,4	duplicate(#gmt_quotes)	Old Bachelor#z1_0et	1_M_03,4,4
+1@gef,91,117,6	duplicate(#gmt_quotes)	Dio Anemos#z1_0et	4_GEFFEN_01,4,4
+1@gef,85,68,6	duplicate(#gmt_quotes)	Ordre#z1_0et	4_GEFFEN_05,4,4
+1@gef,178,91,6	duplicate(#gmt_quotes)	Ju#z1_0et	4_GEFFEN_11,4,4
+1@gef,194,91,4	duplicate(#gmt_quotes)	Little Geffen Boy#a2_0e	4_KID01,4,4
+1@gef,111,62,6	duplicate(#gmt_quotes)	Blut Hase#z1_0et	4_GEFFEN_06,4,4
+1@gef,104,42,6	duplicate(#gmt_quotes)	Kuro Akuma#z1_0et	4_GEFFEN_07,4,4
+1@gef,158,63,4	duplicate(#gmt_quotes)	Odoric#z1_0et	4_GEFFEN_10,4,4
+1@gef,117,72,6	duplicate(#gmt_quotes)	Fay Kanavian#z1_0et	4_F_GEFFEN_FAY,4,4
+1@gef,137,53,4	duplicate(#gmt_quotes)	Licheniyes#z1_0et	4_GEFFEN_09,4,4
+1@gef,115,66,6	duplicate(#gmt_quotes)	Ifodes#z1_0et	4_GEFFEN_08,4,4
+1@gef,53,90,6	duplicate(#gmt_quotes)	Faymont#z1_0et	4_GEFFEN_04,4,4
+1@gef,145,125,4	duplicate(#gmt_quotes)	Arhi#z1_0et	4_GEFFEN_02,4,4
+1@gef,120,98,4	duplicate(#gmt_quotes)	Dwigh#z1_0et	4_GEFFEN_12,4,4
+
+//WARPS
+1@gef_in,70,132,0	warp2	#gef_a4_0et	2,2,1@gef,46,88
+1@gef_in,106,181,0	warp2	#gef_a3_0et	2,2,1@gef,178,63
+1@gef,182,59,0	warp2	#gef_a1_0et	2,2,1@gef_in,106,177
+1@gef_in,70,158,0	warp2	#gef_a5_0et	2,2,1@gef_in,70,146
+1@gef_in,70,149,0	warp2	#gef_a6_0et	2,2,1@gef_in,70,161
+1@gef,43,85,0	warp2	#gef_a2_0et	2,2,1@gef_in,70,138
+1@gef,98,141,0	warp2	#gef_a8_0et	2,2,1@gef_in,28,160
+1@gef_in,28,156,0	warp2	#gef_a7_0et	2,2,1@gef,101,138
+
+//SPECTATORS
+
+-	script	#d_c	4_M_DST_TOUGH,{ end; }
+
+1@gef,175,74,4	duplicate(#d_c)	Tournament Spectator#c0	4_M_DST_TOUGH
+1@gef,130,196,6	duplicate(#d_c)	Tournament Spectator#c1	1_ETC_01
+1@gef,137,190,6	duplicate(#d_c)	Tournament Spectator#c2	1_F_02
+1@gef,149,196,6	duplicate(#d_c)	Tournament Spectator#c3	1_M_01
+1@gef,136,188,6	duplicate(#d_c)	Tournament Spectator#c4	4_F_TWGRANDMOM
+1@gef,110,195,4	duplicate(#d_c)	Tournament Spectator#c5	1_M_03
+1@gef,134,63,4	duplicate(#d_c)	Tournament Spectator#c6	1_M_MERCHANT
+1@gef,145,47,4	duplicate(#d_c)	Tournament Spectator#c7	1_M_MOC_LORD
+1@gef,154,55,4	duplicate(#d_c)	Tournament Spectator#c8	1_M_ORIENT01
+1@gef,147,65,4	duplicate(#d_c)	Tournament Spectator#c9	1_M_PASTOR
+1@gef,163,76,4	duplicate(#d_c)	Tournament Spectator#c10	1_F_PRIEST
+1@gef,180,84,4	duplicate(#d_c)	Tournament Spectator#c11	1_M_INNKEEPER
+1@gef,189,97,4	duplicate(#d_c)	Tournament Spectator#c12	1_M_SIZ
+1@gef,194,110,4	duplicate(#d_c)	Tournament Spectator#c13	1_M_PAY_ELDER
+1@gef,185,107,6	duplicate(#d_c)	Tournament Spectator#c14	1_M_PRON_KING
+1@gef,189,120,4	duplicate(#d_c)	Tournament Spectator#c15	4_F_01
+1@gef,44,95,6	duplicate(#d_c)	Tournament Spectator#c17	1_M_JOBTESTER
+1@gef,52,83,6	duplicate(#d_c)	Tournament Spectator#c18	1_M_KNIGHTMASTER
+1@gef,130,196,6	duplicate(#d_c)	Tournament Spectator#c19	1_ETC_01
+1@gef,104,189,4	duplicate(#d_c)	Tournament Spectator#c20	1_F_01
+1@gef,94,194,4	duplicate(#d_c)	Tournament Spectator#c21	1_F_03
+1@gef,52,155,6	duplicate(#d_c)	Tournament Spectator#c22	1_F_04
+1@gef,55,142,4	duplicate(#d_c)	Tournament Spectator#c23	1_F_GYPSY
+1@gef,58,146,4	duplicate(#d_c)	Tournament Spectator#c24	1_M_BARD
+1@gef,45,149,6	duplicate(#d_c)	Tournament Spectator#c25	1_F_LIBRARYGIRL
+1@gef,44,133,6	duplicate(#d_c)	Tournament Spectator#c26	1_M_HOF
+1@gef,45,126,6	duplicate(#d_c)	Tournament Spectator#c27	1_M_02
+1@gef,44,118,6	duplicate(#d_c)	Tournament Spectator#c28	1_F_MERCHANT_01
+1@gef,55,113,4	duplicate(#d_c)	Tournament Spectator#c29	1_F_MERCHANT_02
+1@gef,50,107,6	duplicate(#d_c)	Tournament Spectator#c30	1_M_JOBGUIDER
+1@gef,72,65,6	duplicate(#d_c)	Tournament Spectator#c31	1_M_LIBRARYMASTER
+1@gef,83,60,6	duplicate(#d_c)	Tournament Spectator#c32	1_F_ORIENT_01
+1@gef,94,68,6	duplicate(#d_c)	Tournament Spectator#c33	1_F_ORIENT_02
+1@gef,97,66,4	duplicate(#d_c)	Tournament Spectator#c34	1_F_ORIENT_03
+1@gef,167,120,4	duplicate(#d_c)	Tournament Spectator#c36	1_M_SIGN1
+1@gef,152,120,4	duplicate(#d_c)	Tournament Spectator#c37	2_F_MAGICMASTER
+1@gef,138,110,4	duplicate(#d_c)	Tournament Spectator#c38	4_F_01
+1@gef,128,99,4	duplicate(#d_c)	Tournament Spectator#c39	4_F_02
+1@gef,105,109,6	duplicate(#d_c)	Tournament Spectator#c40	4_F_03
+1@gef,96,122,6	duplicate(#d_c)	Tournament Spectator#c41	4_F_04
+1@gef,132,137,6	duplicate(#d_c)	Tournament Spectator#c42	4_F_TRAINEE
+1@gef,141,132,4	duplicate(#d_c)	Tournament Spectator#c43	1_M_SIGNART
+1@gef,124,72,4	duplicate(#d_c)	Tournament Spectator#c44	1_M_SIGNMCNT
+1@gef,130,49,6	duplicate(#d_c)	Tournament Spectator#c45	1_M_SIGNMONK2
+
+
+//Dialogue NPC
+
+1@gef_in,110,172,0	script	Christopher#1_0et	1_M_SMITH,{
+	mes "[ Christopher ]";
+	mes "Welcome to Christopher's Workshop.";
+	mes "Ye can get all yer stuff for";
+	mes "forging here. What business";
+	mes "brings ye to me?";
+	next;
+	mes "[ Christopher ]";
+	mes "We are taking a break from our forges in honor of the festival.";
+	mes "Please come back again after the festival is done.";
+	close;
+}
+
+1@gef,129,65,4	script	Point Merchant#gef_m	8_F_GIRL,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "- Wait a minute !! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please try again -";
+		mes "- after you lose some weight. -";
+		close;
+	}
+	mes "[ Point Merchant ]";
+	mes "Hello. I'm selling a catalyst called ^FF0000Points^000000 for Sorcerers. What would you like?";
+	next;
+	.@i = select("Scarlet Points - 200z:Lime Green Points - 200z:Indigo Points - 200z:Yellow Wish Points - 200z:Cancel")-1;
+	mes "[ Point Merchant ]";
+	if (.@i == 4) {
+		mes "You can't find the stuff you need?";
+		close;
+	}
+	setarray .@itemid[0],6360,6363,6361,6362;
+	setarray .@color$[0],"Scarlet","Lime Green","Indigo","Yellow Wish";
+	mes "You have chosen "+.@color$[.@i]+" Points.";
+	mes "How many do you want?";
+	mes "If you want to cancel, enter 0.";
+	next;
+	input .@amount;
+	mes "[ Point Merchant ]";
+	if (.@amount == 0) {
+		mes "You've cancelled the trade.";
+		close;
+	}
+	if (Zeny < .@amount*200) {
+		mes "You don't seem to have enough money.";
+		close;
+	}
+	if (!checkweight(.@itemid[.@i],.@amount)) {
+		mes "You don't have enough space in your inventory to buy this amount.";
+		close;
+	}
+	Zeny = Zeny-(.@amount*200);
+	getitem .@itemid[.@i],.@amount;
+	mes "Thank you very much. See you~!";
+	close;
+}
+
+1@gef,127,65,3	script	Universal Rental NPC#gf	8W_SOLDIER,{
+	if (ismounting()) {
+		message strcharinfo(0),"You must first remove your mount.";
+		end;
+	} else if ((eaclass()&EAJ_THIRDMASK==EAJ_RANGER) && !countitem(6124)) {
+		if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) {
+			if(select(" ~ Falcon: ~ Warg")==1) setfalcon;
+			else getitem 6124,1; //Wolf's_Flute
+		} else getitem 6124,1; //Wolf's_Flute
+	} else if ((eaclass()&EAJ_THIRDMASK==EAJ_MECHANIC) && !checkcart() && getskilllv("MC_PUSHCART")) {
+		if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) {
+			if(select(" ~ Cart: ~ Mado")==1) setcart;
+			else setmadogear;
+		} else setcart;
+	} else if (!checkcart() && getskilllv("MC_PUSHCART")) setcart;
+	else if (!checkfalcon() && getskilllv("HT_FALCON") && !checkwug()) setfalcon;
+	else if (!checkriding() && !checkdragon() && getskilllv("KN_RIDING")) {
+		if (eaclass()&EAJ_THIRDMASK==EAJ_RUNE_KNIGHT) setdragon;
+		else setriding;
+	} else if (!checkmadogear() && getskilllv("NC_MADOLICENCE")) setmadogear;
+	else {
+		message strcharinfo(0),"You do not meet requirements to rent.";
+		end;
+	}
+	specialeffect2 EF_TEIHIT3;
+	end;
+}
+
+1@gef,124,65,4	script	Kafra Employee#gef_t	4_F_KAFRA4,{
+	cutin "kafra_04",2;
+	mes "[Kafra Employee]";
+	mes "Welcome~!";
+	mes "The Kafra Services.";
+	mes "are always on your side.";
+	mes "So how can I help you?";
+	callfunc "F_Kafra",5,5,1,50,0;
+}
+
+
+dali,100,147,3	script	Dimensional Device#gefma	PORTAL,{
+	.@n$ = "[ Dimensional Device ]";
+			
+		.@ins_geffen_time = checkquest(9316,PLAYTIME);
+		
+		if ( GeffenTournament < gettimetick(2)) {
+
+			.@party_id = getcharid(1);
+			.@p_name$ = getpartyname(.@party_id);
+			.@md_name$ = "Geffen Magic Tournament";
+			
+			getpartymember(getcharid(1),0);
+			set .@GPPartySize,$@partymembercount;
+			
+			if( !getcharid(1) || is_party_leader() == false || .@GPPartySize > 1) {
+				mes .@n$;
+				mes "This is a solo instance. Please form a solo party before continuing.";
+				end;
+			}
+			
+			if (!.@party_id) {
+				mes .@n$;
+				mes "This is a solo instance. Please form a solo party before continuing.";
+				end;
+			}
+				
+			switch(select("Leave it alone:^3355FFUse the Device^000000")){
+			
+				case 1:
+					mes .@n$;
+					mes "You can feel time being distorted by the device.";
+					end;
+					
+				case 2:
+					if (BaseLevel < 90) {
+						mes .@n$; 
+						mes "You must be base level 90 to continue.";
+						end;
+					}
+						switch(instance_enter(.@md_name$)) {
+							case 3:
+								mes "An unknown error has occurred.";
+								end;
+							case 2:
+								mes "The Geffen Magic Tournament instance has not been created. Please go to talk to Emmitt White first.";
+								end;
+							case 1:
+								mes "Only registered members can enter the "+.@md_name$+" instance.";
+								end;
+							case 0:
+								mapannounce "dali02",strcharinfo(0)+" of the party, "+.@p_name$+" is entering the "+.@md_name$+".",bc_map,"0x00ff99";
+								GeffenTournament = gettimetick(2) + 82800;
+								if(.@ins_geffen_time != -1) erasequest 9316;
+								setquest 9316;
+								end;
+						}
+					end;
+			}
+		} else if ( GeffenTournament > gettimetick(2) ) {
+			mes .@n$;
+			mes "Looks like the window of opportunity is not open right now.";
+			end;
+		}
+		end;
+
+}
+
+
+
+dali,98,141,3	script	Emmitt White	4_M_KHKYEL,{
+	.@n$ = "[ Time Travel Researcher ]";
+	
+		if (BaseLevel < 90) {
+			mes .@n$; 
+			mes "You must be base level 90 to continue.";
+			end;
+		}
+	
+	if (checkquest(9309) != -1) {
+		mes .@n$,
+		"I see that you've returned from the Tournament.",
+		"Did you find out anything interesting?";
+		next;
+		mes .@n$,
+		"You give details of your experience to the researcher.";
+		next;
+		mes .@n$,
+		"You didn't really give me any information that I didn't already know...";
+		next;
+		mes .@n$,
+		"But I still want more~!",
+		"Can you help me tomorrow?",
+		"I will be waiting for you.";
+		next;
+
+				for (.@i = 9284; .@i <= 9314; .@i++) {
+					if (checkquest(.@i) != -1) {
+						erasequest .@i;
+					}
+				}
+		if (checkquest(9315) != -1)
+			changequest 9315,9316;
+	}
+	
+	if (checkquest(9308) != -1) {
+		mes .@n$,
+		"I can't believe you won the Tournament!";
+		next;
+		mes .@n$,
+		"But I still want more~!",
+		"Can you help me tomorrow?",
+		"I will be waiting for you.";
+		next;
+
+				for (.@i = 9284; .@i <= 9314; .@i++) {
+					if (checkquest(.@i) != -1) {
+						erasequest .@i;
+					}
+				}
+		if (checkquest(9315) != -1)
+			changequest 9315,9316;
+	}
+	
+		getpartymember(getcharid(1),0);
+		set .@GPPartySize,$@partymembercount;
+		
+		if( !getcharid(1) || is_party_leader() == false || .@GPPartySize > 1) {
+			mes .@n$;
+			mes "This is a solo instance. Please form a solo party before continuing.";
+			end;
+		}
+		
+	
+	// 23 Hour Cooldown
+
+	if ( GeffenTournament < gettimetick(2) ) {
+		.@party_id = getcharid(1);
+		.@p_name$ = getpartyname(.@party_id);
+		.@md_name$ = "Geffen Magic Tournament";
+
+			if (!.@party_id) {
+				mes .@n$;
+				mes "You need to be a party leader in order to continue.";
+				end;
+			}
+			
+		if (is_party_leader() == true){
+			mes .@n$; 
+			mes "Did you know? A long time ago there was a Magic Tournament in Geffen.";
+			next;
+			mes .@n$; 
+			mes "I've done so much research on the Tournament but haven't gotten too much information from research alone.";
+			next;
+			mes .@n$; 
+			mes "When I found out that this time gap can help with my research I couldn't resist the opportunity to continue the research.";
+			next;
+			mes .@n$; 
+			mes "And now I've found an adventurer, in you, who can help me go back to the time that the Tournament took place.";
+			next;
+			mes .@n$; 
+			mes "Please use the dimensional device and participate in the Magic Tournament for me.";
+			next;
+			mes .@n$; 
+			mes "Will you go and tell me about it?";
+			next;
+			mes .@n$; 
+			mes "The portal is unstable so you have to go solo.";
+			mes "Are you ready to enter?";
+			next;
+				switch(select("No:Yes")){
+					case 1:
+						mes .@n$;
+						mes "Come back if you change your mind~!";
+						end;
+					case 2:
+						for (.@i = 9284; .@i <= 9314; .@i++) {
+							if (checkquest(.@i) != -1) {
+								erasequest .@i;
+							}
+						}
+						
+						if (instance_create(.@md_name$) < 0) {
+							mes "Party Name: "+.@p_name$;
+							mes "Party Leader: "+strcharinfo(0);
+							mes "^0000ff"+.@md_name$+" ^000000- Reservation Failed!";
+							end;
+						}
+						mes .@n$; 
+						mes "The Dimensional Device has been activated.";
+						end;
+					}
+			end;
+		} else {
+			mes .@n$;
+			mes "You need to be a party leader in order to continue.";
+			end;
+		}
+
+	} else {
+		mes .@n$;
+		mes "Just a second.";
+		mes "You need to wait for the timer to expire before going back.";
+		mes " ";
+		
+		.@time = (GeffenTournament - gettimetick(2));
+		.@sec = .@time % 60;
+		.@min = (.@time / 60) % 60;
+		.@hrs = (.@time / 3600) % 24;
+
+		mes "Cooldown: ^3355FF"+(.@hrs < 10 ? "0" : "")+.@hrs+":"+(.@min < 10 ? "0" : "")+.@min+":"+(.@sec < 10 ? "0" : "")+.@sec+"^000000";
+		end;
+		
+
+			
+	}
+}
+
+1@gef,120,34,4	script	#gefmagic_warp01	45,2,2,{
+	callfunc("InventoryCheck");
+	end;
+
+OnTouch:
+	movenpc instance_npcname("Old Bachelor#z1_0et"),1,1;
+	movenpc instance_npcname("Dio Anemos#z1_0et"),1,1;
+	movenpc instance_npcname("Ju#z1_0et"),1,1;
+	movenpc instance_npcname("Ordre#z1_0et"),1,1;
+	movenpc instance_npcname("Blut Hase#z1_0et"),1,1;
+	movenpc instance_npcname("Kuro Akuma#z1_0et"),1,1;
+	movenpc instance_npcname("Odoric#z1_0et"),1,1;
+	movenpc instance_npcname("Fay Kanavian#z1_0et"),1,1;
+	movenpc instance_npcname("Licheniyes#z1_0et"),1,1;
+	movenpc instance_npcname("Ifodes#z1_0et"),1,1;
+	movenpc instance_npcname("Faymont#z1_0et"),1,1;
+	movenpc instance_npcname("Arhi#z1_0et"),1,1;
+	movenpc instance_npcname("Dwigh#z1_0et"),1,1;	
+	
+	warp instance_mapname("1@ge_st"),104,50;
+	donpcevent instance_npcname(strnpcinfo(0))+"::OnDisable";
+	end;
+
+OnInstanceInit:
+OnDisable:
+	disablenpc instance_npcname(strnpcinfo(0));
+	end;
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gef,1,1,4	script	#gefmagic_warp02	45,2,2,{
+	end;
+	
+OnTouch_:
+	instance_warpall "dali",92,142;
+	end;
+
+OnInstanceInit:
+OnEnable:
+	hideoffnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+
+1@gef,1,1,4	script	#invisGMTquests	567,2,2,{
+	end;
+	
+OnTouch_:
+	if ('GMTHeroes < 1 ) {
+		'GMTHeroes = 1;
+		for (.@i = 9309; .@i < 9315; .@i++){
+			setquest .@i;
+		}
+	}
+	end;
+
+OnInit:
+	hideonnpc strnpcinfo(0);
+	end;
+	
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+	
+}
+
+
+1@gef,123,203,4	script	Tournament Guide#gfmg	705,{
+	cutin "gef_soldier.bmp",2;
+	.@n$ = "[ Tournament Guide ]";
+	mes .@n$,"Welcome to the Magical city of ^8B4513Geffen^000000.";
+	next;
+	mes .@n$,"If you want to watch the ^55CC55Magic Tournament^000000 go to the southern fountain of Geffen.";
+	next;
+	mes .@n$,"The fireworks are here to celebrate the Geffen Magical Tournament Festival.";
+	next;
+	mes .@n$,"Please enjoy the festivities and enjoy your stay here in Geffen~!";
+	close2;
+	cutin "",255;
+	end;
+
+OnInstanceInit:
+OnEnable:
+	enablenpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gef,203,116,4	duplicate(Tournament Guide#gfmg)	Tournament Guide#gf2	705
+1@gef,36,123,6	duplicate(Tournament Guide#gfmg)	Tournament Guide#gf3	705
+
+1@gef,122,58,4	script	Receptionist#1_0et	4_M_ARUNA_NFM1,{
+
+	.@n$ = "[ Tournament Receptionist ]";
+
+	if ( checkquest(9309) != -1 ) {
+		mes .@n$;
+		mes "Fenrir won this year's Magic Tournament!";
+		next;
+		mes .@n$;
+		mes "I'm such a big fan of hers.";
+		end;
+	}
+	
+	if ( checkquest(9308) != -1 ) {
+		mes .@n$;
+		mes "Congratulations on being this year's Magic Tournament winner!";
+		end;
+	}
+		
+	if ( 'passtest == 2 ) {
+		mes .@n$;
+		mes "Do you wish to try again?";
+		mes "If you can kill the Desert Wolf within 60 seconds, you pass the test.";
+		next;
+		mes .@n$;
+		mes "If you fail, you will automatically be eliminated from the list. You can try again as many times as you want.";
+		mes "Will you take the test again?";
+		next;
+		switch(select("No:Yes")){
+			case 1:
+				mes .@n$;
+				mes "Come back if you change your mind.";
+				close;
+			case 2:
+				mes .@n$;
+				mes "There is no registration fee to enter.";
+				mes "The only requirement is to pass a simple test.";
+				next;
+				mes .@n$;
+				mes "The test is very simple. Defeat a Desert Wolf in 60 seconds or less and you're in.";
+				next;
+				mes .@n$;
+				mes "If you fail you will automatically be eliminated from the list but you can try again as many times as you wish.";
+				mes "Are you ready?";
+				next;
+				switch(select("No:Yes")){
+					case 1:
+						mes .@n$;
+						mes "Come back if you change your mind.";
+						close;
+					case 2:
+						mes .@n$;
+						mes "You can participate in the Magic Tournament after passing the test.";
+						mes "Then, let us begin!";
+						npctalk "Time limit is 60 seconds ! Ready! Set! Go!";
+						erasequest 9292;
+						setquest 9293;
+						addtimer 60000,instance_npcname("Receptionist#1_0et")+"::OnFail";
+						monster instance_mapname("1@gef"),120,62,"--ja--",1106,1,instance_npcname("Receptionist#1_0et")+"::OnTest";
+						hideonnpc instance_npcname("Receptionist#1_0et");	
+						break;
+				}
+				end;
+		}
+		end;
+	}
+	
+	if ( 'passtest == 1 ) {
+	
+		if ('GMT >= 5){
+			mes .@n$;
+			mes "The Magic Tournament is going to start soon.";
+			mes "Enter the portal to the south and you can join in.";
+			next;
+			mes .@n$;
+			mes "Good luck!";
+			end;
+		}
+		
+		mes .@n$;
+		mes "Congratulations! You passed the test!";
+		next;
+		mes .@n$;
+		mes "Give me your name so I can write it down.";
+		mes "You will automatically be registered for the tournament now.";
+		next;
+		input .@char$;
+		if(.@char$ == "") { end; }
+		mes .@n$;
+		mes strcharinfo(0)+"?";
+		mes "Okay, interesting name.";
+		mes "Anyway, your registration is complete!";
+		'GMT = 5;
+		erasequest 9293;
+		if (checkquest(9294) > -1)
+			erasequest 9294;
+		setquest 9294;
+		donpcevent instance_npcname("#gefmagic_warp01")+"::OnEnable";
+		next;
+		mes .@n$;
+		mes "Competitors who registered will randomly be selected.";
+		next;
+		mes .@n$;
+		mes "The Magic Tournament is going to start soon.";
+		mes "Enter the portal to the south and you can join in.";
+		next;
+		mes .@n$;
+		mes "Good Luck~!";
+		end;
+	
+	}
+	
+	if ( checkquest(9293) == -1 ) {
+		
+		mes .@n$;
+		mes "Thank you for visiting the Geffen Magic Tournament.";
+		mes "What can I do for you?";
+		next;
+	L_Menu:
+		switch(select("About Geffen Magic Tournament:How do I Register?:Collecting Rewards.:Can I get a Spectator Pass?:End Conversation")){
+			case 1:
+				mes .@n$;
+				mes "Geffen Magic Tournament is being held once every 3 years.";
+				next;
+				mes .@n$;
+				mes "This festival used to be a more studious event with scholars discussing magical methods.";
+				mes "Now it's all about fun and a big party.";
+				next;
+				mes .@n$;
+				mes "Now it has become almost exclusively a fighting tournament.";
+				mes "The most famous Mages from all over the world come for the tournament.";
+				next;
+				mes .@n$;
+				mes "Anything else?";
+				next;
+				goto L_Menu;
+			case 2:
+				mes .@n$;
+				mes "There is no registration fee to enter.";
+				mes "The only requirement is to pass a simple test.";
+				next;
+				mes .@n$;
+				mes "The test is very simple. Defeat a Desert Wolf in 60 seconds or less and you're in.";
+				next;
+				mes .@n$;
+				mes "If you fail you will automatically be eliminated from the list but you can try again as many times as you wish.";
+				mes "Do you want to take the test?";
+				next;
+				switch(select("No:Yes")){
+					case 1:
+						mes .@n$;
+						mes "Come back if you change your mind.";
+						close;
+					case 2:
+						mes .@n$;
+						mes "You can participate in the Magic Tournament after passing the test.";
+						mes "Then, let us begin!";
+						erasequest 9292;
+						setquest 9293;
+						'GMT = 3;
+						npctalk "Time limit is 60 seconds ! Ready! Set! Go!";
+						addtimer 60000,instance_npcname("Receptionist#1_0et")+"::OnFail";
+						monster instance_mapname("1@gef"),120,62,"--ja--",1106,1,instance_npcname("Receptionist#1_0et")+"::OnTest";
+						hideonnpc instance_npcname("Receptionist#1_0et");	
+						break;
+				}
+				end;
+			case 3:
+				mes .@n$;
+				mes "The father you go along in the tournament, the more coins you will earn.";
+				next;
+				mes .@n$;
+				mes "Collect the coins and you can exchange them for equipment from the Geffen Coin Operator.";
+				next;
+				mes .@n$;
+				mes "Anything else?";
+				next;
+				goto L_Menu;
+			case 4:
+				mes .@n$;
+				mes "Hmm it seems that the Magic Tournament is so popular this year that there aren't any more spectator seats available.";
+				next;
+				mes .@n$;
+				mes "I am sorry for inconvenience.";
+				next;
+				mes .@n$;
+				mes "Do you need anything else?";
+				next;
+				goto L_Menu;
+			case 5:
+				mes .@n$;
+				mes "Please enjoy the Geffen Magic Tournament.";
+				close;
+		}
+		end;
+	}
+	
+	end;
+	
+OnTest:
+	deltimer instance_npcname("Receptionist#1_0et")+"::OnFail";
+	'passtest = 1;
+	hideoffnpc instance_npcname("Receptionist#1_0et");
+	npctalk "You passed the test! Shall we finish your registration?", instance_npcname("Receptionist#1_0et");
+	end;
+	
+OnFail:
+	hideoffnpc instance_npcname("Receptionist#1_0et");
+	'passtest = 2;
+	killmonster instance_mapname("1@gef"),instance_npcname("Receptionist#1_0et")+"::OnTest";
+	npctalk "You failed the test. Talk to me if you wish to try again.", instance_npcname("Receptionist#1_0et");
+	end;
+
+}
+
+1@ge_st,95,62,6	duplicate(#d_c)	Tournament Spectator#70	4_M_LGTPOOR
+1@ge_st,113,62,4	duplicate(#d_c)	Tournament Spectator#71	4_M_LGTGUARD
+1@ge_st,99,62,6	duplicate(#d_c)	Tournament Spectator#72	4_F_JOB_HUNTER
+1@ge_st,93,62,6	duplicate(#d_c)	Tournament Spectator#73	1_ETC_01
+1@ge_st,94,62,6	duplicate(#d_c)	Tournament Spectator#74	1_F_02
+1@ge_st,96,62,6	duplicate(#d_c)	Tournament Spectator#75	1_M_01
+1@ge_st,98,62,6	duplicate(#d_c)	Tournament Spectator#76	1_M_02
+1@ge_st,100,62,6	duplicate(#d_c)	Tournament Spectator#77	1_M_03
+1@ge_st,102,62,6	duplicate(#d_c)	Tournament Spectator#78	1_F_01
+1@ge_st,104,62,6	duplicate(#d_c)	Tournament Spectator#79	1_F_03
+1@ge_st,116,62,4	duplicate(#d_c)	Tournament Spectator#80	1_F_04
+1@ge_st,118,62,4	duplicate(#d_c)	Tournament Spectator#81	1_F_GYPSY
+1@ge_st,92,64,6	duplicate(#d_c)	Tournament Spectator#82	4_F_TWGRANDMOM
+1@ge_st,93,64,6	duplicate(#d_c)	Tournament Spectator#83	1_F_MERCHANT_01
+1@ge_st,94,64,6	duplicate(#d_c)	Tournament Spectator#84	1_F_MERCHANT_02
+1@ge_st,95,64,6	duplicate(#d_c)	Tournament Spectator#85	1_M_JOBGUIDER
+1@ge_st,96,64,6	duplicate(#d_c)	Tournament Spectator#86	1_M_JOBTESTER
+1@ge_st,97,64,6	duplicate(#d_c)	Tournament Spectator#87	1_M_KNIGHTMASTER
+1@ge_st,98,64,6	duplicate(#d_c)	Tournament Spectator#88	1_M_LIBRARYMASTER
+1@ge_st,99,64,6	duplicate(#d_c)	Tournament Spectator#89	1_F_ORIENT_01
+1@ge_st,100,64,6	duplicate(#d_c)	Tournament Spectator#90	1_F_ORIENT_02
+1@ge_st,101,64,6	duplicate(#d_c)	Tournament Spectator#91	1_F_ORIENT_03
+1@ge_st,102,64,6	duplicate(#d_c)	Tournament Spectator#92	1_F_ORIENT_04
+1@ge_st,103,64,6	duplicate(#d_c)	Tournament Spectator#93	1_M_MERCHANT
+1@ge_st,104,64,6	duplicate(#d_c)	Tournament Spectator#94	1_M_MOC_LORD
+1@ge_st,105,64,6	duplicate(#d_c)	Tournament Spectator#95	1_M_ORIENT01
+1@ge_st,106,64,6	duplicate(#d_c)	Tournament Spectator#96	1_M_PASTOR
+1@ge_st,107,64,6	duplicate(#d_c)	Tournament Spectator#97	1_F_PRIEST
+1@ge_st,108,64,6	duplicate(#d_c)	Tournament Spectator#98	1_F_PUBGIRL
+1@ge_st,109,64,4	duplicate(#d_c)	Tournament Spectator#99	4_M_DST_TOUGH
+1@ge_st,110,64,4	duplicate(#d_c)	Tournament Spectator#100	1_M_INNKEEPER
+1@ge_st,111,64,4	duplicate(#d_c)	Tournament Spectator#101	1_M_SIZ
+1@ge_st,112,64,4	duplicate(#d_c)	Tournament Spectator#102	1_M_PAY_ELDER
+1@ge_st,113,64,4	duplicate(#d_c)	Tournament Spectator#103	1_M_PRON_KING
+1@ge_st,114,64,4	duplicate(#d_c)	Tournament Spectator#104	1_M_PUBMASTER
+1@ge_st,115,64,4	duplicate(#d_c)	Tournament Spectator#105	1_M_SIGN1
+1@ge_st,116,64,4	duplicate(#d_c)	Tournament Spectator#106	2_F_MAGICMASTER
+1@ge_st,117,64,4	duplicate(#d_c)	Tournament Spectator#107	4_F_01
+1@ge_st,118,64,4	duplicate(#d_c)	Tournament Spectator#108	4_F_02
+1@ge_st,90,63,6	duplicate(#d_c)	Tournament Spectator#109	4_F_TELEPORTER
+1@ge_st,91,63,6	duplicate(#d_c)	Tournament Spectator#110	4_F_THAIAYO
+1@ge_st,89,38,8	duplicate(#d_c)	Tournament Spectator#111	4_M_ALCHE_E
+1@ge_st,89,39,8	duplicate(#d_c)	Tournament Spectator#112	4_M_ARUNA_NFM1
+1@ge_st,89,40,8	duplicate(#d_c)	Tournament Spectator#113	4_F_JPN2
+1@ge_st,89,41,8	duplicate(#d_c)	Tournament Spectator#114	4_F_JPN
+1@ge_st,89,42,8	duplicate(#d_c)	Tournament Spectator#115	4_F_JPNCHIBI
+1@ge_st,89,43,8	duplicate(#d_c)	Tournament Spectator#116	4_F_HUGRANMA
+1@ge_st,89,44,8	duplicate(#d_c)	Tournament Spectator#117	4_F_JPNOBA2
+1@ge_st,89,45,8	duplicate(#d_c)	Tournament Spectator#118	4_F_JPNOBA
+1@ge_st,89,51,6	duplicate(#d_c)	Tournament Spectator#119	4_F_SCIENCE
+1@ge_st,89,52,6	duplicate(#d_c)	Tournament Spectator#120	4_F_SHABBY
+1@ge_st,89,53,6	duplicate(#d_c)	Tournament Spectator#121	4_M_CRU_SOLD
+1@ge_st,89,54,6	duplicate(#d_c)	Tournament Spectator#122	4_M_DESERT
+1@ge_st,89,55,6	duplicate(#d_c)	Tournament Spectator#123	4_M_DEWBOY
+1@ge_st,89,56,6	duplicate(#d_c)	Tournament Spectator#124	4_M_DEWMAN
+1@ge_st,89,57,6	duplicate(#d_c)	Tournament Spectator#125	4_F_SHADOWCHASER
+1@ge_st,89,58,6	duplicate(#d_c)	Tournament Spectator#126	4_F_SISTER
+1@ge_st,89,59,6	duplicate(#d_c)	Tournament Spectator#127	4_F_SOCCER
+1@ge_st,89,62,6	duplicate(#d_c)	Tournament Spectator#128	4_M_DOCTOR
+1@ge_st,88,61,6	duplicate(#d_c)	Tournament Spectator#129	4_M_DEWZATICHIEF
+1@ge_st,87,37,8	duplicate(#d_c)	Tournament Spectator#130	4_M_ALCHE_D
+1@ge_st,87,59,6	duplicate(#d_c)	Tournament Spectator#131	4_F_SURA
+1@ge_st,87,60,6	duplicate(#d_c)	Tournament Spectator#132	4_M_DEWOLDMAN
+1@ge_st,119,62,4	duplicate(#d_c)	Tournament Spectator#133	4_F_JOB_KNIGHT
+1@ge_st,119,64,4	duplicate(#d_c)	Tournament Spectator#134	4_F_03
+1@ge_st,120,62,4	duplicate(#d_c)	Tournament Spectator#135	1_M_BARD
+1@ge_st,120,64,4	duplicate(#d_c)	Tournament Spectator#136	4_F_04
+1@ge_st,121,64,4	duplicate(#d_c)	Tournament Spectator#137	4_F_TRAINEE
+1@ge_st,122,64,4	duplicate(#d_c)	Tournament Spectator#138	1_M_SIGNART
+1@ge_st,123,64,4	duplicate(#d_c)	Tournament Spectator#139	1_M_SIGNMCNT
+1@ge_st,124,62,4	duplicate(#d_c)	Tournament Spectator#140	1_F_LIBRARYGIRL
+1@ge_st,124,64,4	duplicate(#d_c)	Tournament Spectator#141	1_M_SIGNMONK2
+1@ge_st,125,62,4	duplicate(#d_c)	Tournament Spectator#142	1_M_HOF
+1@ge_st,125,64,4	duplicate(#d_c)	Tournament Spectator#143	4_F_05
+1@ge_st,126,64,4	duplicate(#d_c)	Tournament Spectator#144	4_F_06
+1@ge_st,127,63,4	duplicate(#d_c)	Tournament Spectator#145	4_F_07
+1@ge_st,128,63,4	duplicate(#d_c)	Tournament Spectator#146	4_F_ACROSS
+1@ge_st,128,60,4	duplicate(#d_c)	Tournament Spectator#147	4_F_ALCHE
+1@ge_st,128,59,4	duplicate(#d_c)	Tournament Spectator#148	4_M_EDEN_GUARDER
+1@ge_st,128,58,4	duplicate(#d_c)	Tournament Spectator#149	4_F_ANNIVERSARY
+1@ge_st,128,57,4	duplicate(#d_c)	Tournament Spectator#150	4_F_BRZ_INDIAN
+1@ge_st,128,56,4	duplicate(#d_c)	Tournament Spectator#151	1_M_WIZARD
+1@ge_st,128,55,4	duplicate(#d_c)	Tournament Spectator#152	1_M_YOUNGKNIGHT
+1@ge_st,128,54,4	duplicate(#d_c)	Tournament Spectator#153	2_M_ALCHE
+1@ge_st,128,53,4	duplicate(#d_c)	Tournament Spectator#154	4_F_BRZ_INDIAN
+1@ge_st,128,52,4	duplicate(#d_c)	Tournament Spectator#155	4_F_BRZ_INDOLD
+1@ge_st,128,51,4	duplicate(#d_c)	Tournament Spectator#156	4_F_BRZ_WOMAN
+1@ge_st,128,45,2	duplicate(#d_c)	Tournament Spectator#157	2_M_BARD_ORIENT
+1@ge_st,128,44,2	duplicate(#d_c)	Tournament Spectator#158	2_M_DYEINGER
+1@ge_st,129,62,4	duplicate(#d_c)	Tournament Spectator#159	1_M_SIGNMONK
+1@ge_st,128,43,2	duplicate(#d_c)	Tournament Spectator#160	2_M_MOLGENSTEIN
+1@ge_st,129,43,2	duplicate(#d_c)	Tournament Spectator#161	4_M_CRU_OLD
+1@ge_st,129,44,2	duplicate(#d_c)	Tournament Spectator#162	4_F_RUSWOMAN2
+1@ge_st,129,45,2	duplicate(#d_c)	Tournament Spectator#163	4_F_RUSWOMAN3
+1@ge_st,130,61,4	duplicate(#d_c)	Tournament Spectator#164	1_M_SIGNROGUE
+1@ge_st,130,60,4	duplicate(#d_c)	Tournament Spectator#165	1_M_SMITH
+1@ge_st,128,42,2	duplicate(#d_c)	Tournament Spectator#166	4_F_CAPEGIRL
+1@ge_st,129,42,2	duplicate(#d_c)	Tournament Spectator#167	4_M_CRU_KNT
+1@ge_st,128,41,2	duplicate(#d_c)	Tournament Spectator#168	4_F_CAVE1
+1@ge_st,129,41,2	duplicate(#d_c)	Tournament Spectator#169	4_M_CRU_HEAD
+1@ge_st,128,40,2	duplicate(#d_c)	Tournament Spectator#170	4_F_CHILD
+1@ge_st,129,40,2	duplicate(#d_c)	Tournament Spectator#171	4_M_CRU_CRUA
+1@ge_st,128,39,2	duplicate(#d_c)	Tournament Spectator#172	2_M_OLDBLSMITH
+1@ge_st,129,39,2	duplicate(#d_c)	Tournament Spectator#173	4_F_RUSWOMAN1
+1@ge_st,128,38,2	duplicate(#d_c)	Tournament Spectator#174	2_M_PHARMACIST
+1@ge_st,129,38,2	duplicate(#d_c)	Tournament Spectator#175	4_F_RUSCHILD
+1@ge_st,128,37,2	duplicate(#d_c)	Tournament Spectator#176	2_M_SAGE_B
+1@ge_st,130,37,2	duplicate(#d_c)	Tournament Spectator#177	4_F_CHNDOCTOR
+1@ge_st,130,36,2	duplicate(#d_c)	Tournament Spectator#178	4_F_CHNDRESS1
+1@ge_st,130,35,2	duplicate(#d_c)	Tournament Spectator#179	2_M_SAGE_OLD
+1@ge_st,108,34,8	duplicate(#d_c)	Tournament Spectator#180	4_F_KID3
+1@ge_st,109,34,2	duplicate(#d_c)	Tournament Spectator#181	4_F_LGTGIRL
+1@ge_st,110,34,2	duplicate(#d_c)	Tournament Spectator#182	4_F_LGTGRAND
+1@ge_st,111,34,2	duplicate(#d_c)	Tournament Spectator#183	4_F_MADAME
+1@ge_st,112,34,2	duplicate(#d_c)	Tournament Spectator#184	4_M_CHN8GUEK
+1@ge_st,113,34,2	duplicate(#d_c)	Tournament Spectator#185	4_M_CHNCOOK
+1@ge_st,114,34,2	duplicate(#d_c)	Tournament Spectator#186	4_M_CHNGENERL
+1@ge_st,115,34,2	duplicate(#d_c)	Tournament Spectator#187	4_M_CHNMAN
+1@ge_st,116,34,2	duplicate(#d_c)	Tournament Spectator#188	4_F_MASK
+1@ge_st,117,34,2	duplicate(#d_c)	Tournament Spectator#189	4_F_MONK
+1@ge_st,118,34,2	duplicate(#d_c)	Tournament Spectator#190	4_F_NFLOSTGIRL
+1@ge_st,119,34,2	duplicate(#d_c)	Tournament Spectator#191	4_F_NOVICE
+1@ge_st,129,34,2	duplicate(#d_c)	Tournament Spectator#192	2_M_SWORDMASTER
+1@ge_st,120,34,2	duplicate(#d_c)	Tournament Spectator#193	4_M_CHNMONK
+1@ge_st,121,34,2	duplicate(#d_c)	Tournament Spectator#194	4_M_CHNOLD
+1@ge_st,122,34,2	duplicate(#d_c)	Tournament Spectator#195	4_M_CHNSOLDIER
+1@ge_st,123,34,2	duplicate(#d_c)	Tournament Spectator#196	4_M_CRU
+1@ge_st,124,34,2	duplicate(#d_c)	Tournament Spectator#197	4_F_RACHOLD
+1@ge_st,125,34,2	duplicate(#d_c)	Tournament Spectator#198	4_F_ROGUE
+1@ge_st,128,33,2	duplicate(#d_c)	Tournament Spectator#199	4_F_CHNDRESS2
+1@ge_st,127,33,2	duplicate(#d_c)	Tournament Spectator#200	4_F_CHNDRESS3
+1@ge_st,119,32,2	duplicate(#d_c)	Tournament Spectator#201	4_F_DST_CHILD
+1@ge_st,118,32,2	duplicate(#d_c)	Tournament Spectator#202	4_LGTSCIENCE
+1@ge_st,117,32,2	duplicate(#d_c)	Tournament Spectator#203	4_M_01
+1@ge_st,116,32,2	duplicate(#d_c)	Tournament Spectator#204	4_F_DST_GRAND
+1@ge_st,115,32,2	duplicate(#d_c)	Tournament Spectator#205	4_F_EDEN_MASTER
+1@ge_st,114,32,2	duplicate(#d_c)	Tournament Spectator#206	4_F_EDEN_OFFICER
+1@ge_st,113,32,2	duplicate(#d_c)	Tournament Spectator#207	4_M_1STPRIN1
+1@ge_st,112,32,2	duplicate(#d_c)	Tournament Spectator#208	4_M_DST_CHILD
+1@ge_st,111,32,2	duplicate(#d_c)	Tournament Spectator#209	4_F_EINOLD
+1@ge_st,110,32,2	duplicate(#d_c)	Tournament Spectator#210	4_F_YUNYANG
+1@ge_st,109,32,2	duplicate(#d_c)	Tournament Spectator#211	4_M_2NDPRIN1
+1@ge_st,108,32,8	duplicate(#d_c)	Tournament Spectator#212	4_M_03
+1@ge_st,126,32,2	duplicate(#d_c)	Tournament Spectator#213	2_M_THIEFMASTER
+1@ge_st,125,32,2	duplicate(#d_c)	Tournament Spectator#214	4_COOK
+1@ge_st,124,32,2	duplicate(#d_c)	Tournament Spectator#215	4_F_CHNWOMAN
+1@ge_st,123,32,2	duplicate(#d_c)	Tournament Spectator#216	4_F_CRU
+1@ge_st,122,32,2	duplicate(#d_c)	Tournament Spectator#217	4_DST_SOLDIER
+1@ge_st,121,32,2	duplicate(#d_c)	Tournament Spectator#218	4_KID01
+1@ge_st,120,32,2	duplicate(#d_c)	Tournament Spectator#219	4_F_DESERT
+1@ge_st,107,32,8	duplicate(#d_c)	Tournament Spectator#220	4_F_GODEMOM
+1@ge_st,107,34,8	duplicate(#d_c)	Tournament Spectator#221	4_F_KID2
+1@ge_st,106,32,8	duplicate(#d_c)	Tournament Spectator#222	4_F_GON
+1@ge_st,106,34,8	duplicate(#d_c)	Tournament Spectator#223	4_F_THAIGIRL
+1@ge_st,105,32,8	duplicate(#d_c)	Tournament Spectator#224	4_M_3RDPRIN1
+1@ge_st,105,34,8	duplicate(#d_c)	Tournament Spectator#225	4_M_CAVE1
+1@ge_st,104,32,8	duplicate(#d_c)	Tournament Spectator#226	4_M_DST_MASTER
+1@ge_st,104,34,8	duplicate(#d_c)	Tournament Spectator#227	4_M_CASMAN1
+1@ge_st,103,32,8	duplicate(#d_c)	Tournament Spectator#228	4_M_4THPRIN1
+1@ge_st,103,34,8	duplicate(#d_c)	Tournament Spectator#229	4_M_BUDDHIST
+1@ge_st,102,32,8	duplicate(#d_c)	Tournament Spectator#230	4_M_DSTMAN
+1@ge_st,102,34,8	duplicate(#d_c)	Tournament Spectator#231	4_M_BRZ_MAN1
+1@ge_st,101,32,8	duplicate(#d_c)	Tournament Spectator#232	4_F_GUILLOTINE
+1@ge_st,101,34,8	duplicate(#d_c)	Tournament Spectator#233	4_F_TWMASKGIRL
+1@ge_st,100,32,8	duplicate(#d_c)	Tournament Spectator#234	4_F_HUGIRL
+1@ge_st,100,34,8	duplicate(#d_c)	Tournament Spectator#235	4_F_KHGIRL
+1@ge_st,99,32,8	duplicate(#d_c)	Tournament Spectator#236	4_F_HUGRANMA
+1@ge_st,99,34,8	duplicate(#d_c)	Tournament Spectator#237	4_F_KHELLY
+1@ge_st,98,32,8	duplicate(#d_c)	Tournament Spectator#238	4_F_HUWOMAN
+1@ge_st,98,34,8	duplicate(#d_c)	Tournament Spectator#239	4_F_KHELLISIA
+1@ge_st,97,32,8	duplicate(#d_c)	Tournament Spectator#240	4_M_5THPRIN1
+1@ge_st,97,34,8	duplicate(#d_c)	Tournament Spectator#241	4_M_BRZ_JACI
+1@ge_st,96,32,8	duplicate(#d_c)	Tournament Spectator#242	4_M_06
+1@ge_st,96,34,8	duplicate(#d_c)	Tournament Spectator#243	4_M_BIBI
+1@ge_st,95,32,8	duplicate(#d_c)	Tournament Spectator#244	4_M_6THPRIN1
+1@ge_st,95,34,8	duplicate(#d_c)	Tournament Spectator#245	4_M_BARD
+1@ge_st,94,32,8	duplicate(#d_c)	Tournament Spectator#246	4_M_ACROSS
+1@ge_st,94,34,8	duplicate(#d_c)	Tournament Spectator#247	4_M_BARBER
+1@ge_st,93,32,8	duplicate(#d_c)	Tournament Spectator#248	4_M_ALCHE_A
+1@ge_st,93,34,8	duplicate(#d_c)	Tournament Spectator#249	4_M_ATEIL
+1@ge_st,92,32,8	duplicate(#d_c)	Tournament Spectator#250	4_F_JOB_ASSASSIN
+1@ge_st,91,33,8	duplicate(#d_c)	Tournament Spectator#251	4_F_JOB_BLACKSMITH
+1@ge_st,90,33,8	duplicate(#d_c)	Tournament Spectator#252	4_M_JP_RUN
+1@ge_st,89,34,8	duplicate(#d_c)	Tournament Spectator#253	4_M_EINMAN
+1@ge_st,88,35,8	duplicate(#d_c)	Tournament Spectator#254	4_M_ALCHE_B
+1@ge_st,88,36,8	duplicate(#d_c)	Tournament Spectator#255	4_M_ALCHE_C
+1@gef,124,72,4	duplicate(#d_c)	Tournament Spectator#256	1_M_SIGNMCNT
+1@gef,106,56,6	duplicate(#d_c)	Tournament Spectator#257	1_F_ORIENT_04
+1@ge_st,107,62,6	duplicate(#d_c)	Veins Spectator#a1	4_F_ALCHE_A
+1@ge_st,110,62,4	duplicate(#d_c)	Comodo Spectator#a1	4_F_EINWOMAN
+1@ge_st,115,62,4	duplicate(#d_c)	Prontera Spectator#a1	4_M_DST_GRAND
+1@ge_st,117,62,4	duplicate(#d_c)	Payon Spectator#a1	1_F_SIGNZISK
+1@ge_st,121,62,4	duplicate(#d_c)	Alberta Spectator#a1	4_M_05
+1@ge_st,97,62,6	duplicate(#d_c)	Prontera Spectator#a2	4_M_2NDPRIN1
+1@ge_st,101,62,6	duplicate(#d_c)	Payon Spectator#a2	4_M_ROGUE
+1@ge_st,105,62,6	duplicate(#d_c)	Alberta Spectator#a2	4_M_ORIENT02
+1@ge_st,103,62,6	duplicate(#d_c)	Magic Academy Student#1	4_M_02
+1@ge_st,109,62,4	duplicate(#d_c)	Magic Academy Student#2	4_M_CHILD1
+1@ge_st,114,62,4	duplicate(#d_c)	Magic Academy Student#3	4_M_04
+1@ge_st,122,62,4	duplicate(#d_c)	Magic Academy Student#4	1_F_MARIA
+1@ge_st,123,62,4	duplicate(#d_c)	Magic Academy Student#5	1_M_SIGNALCHE
+1@gef,128,93,4	duplicate(#d_c)	Geffen Villager#c1	4_F_CAVE1
+1@gef,103,100,6	duplicate(#d_c)	Geffen Villager#c2	1_M_JOBGUIDER
+
+// ===================================================================================
+// Tournament Start - CHINESE TOURNAMENT ARENA START
+// ===================================================================================
+1@ge_st,102,49,4	script	Geffen Academy Master#S	567,3,3,{
+end;
+
+OnTouch_:
+	ignoretimeout 1;
+	.@n$ = "[ Geffen Academy Master ]";
+	if ('GMT_1QUE < 11) {
+		cutin "acamaster_a.bmp",2;
+		mes .@n$,
+		"Ladies and gentlemen!",
+		"Welcome to the Geffen Magic",
+		"Tournament!";
+		next;
+		mes .@n$,
+		"Today a champion will be crowned.";
+		next;
+		mes .@n$,
+		"There are 2 divisions this year",
+		"divided into Group A and B.",
+		"The winner of each group will face",
+		"each other for the championship",
+		"match.";
+		next;
+		mes .@n$,
+		"I am the MC of Group A.",
+		"Geffen Academy Master~!",
+		"Archmage Zanzibar Hellmod";
+		next;
+		mes .@n$,
+		"I am honored to be this year's MC.",
+		"Now, it's time for the matches to begin.";
+		next;
+		mes .@n$,
+		"Ahem...";
+		close2;
+		cutin "acamaster_a.bmp", 255;
+		hideonnpc "Geffen Academy Master";
+		'GMT_1QUE = 11;
+		if (checkquest(9294) != -1)
+			changequest 9294,9295;
+		donpcevent instance_npcname("Geffen Academy Master")+"::OnStart";
+		'charname$ = strcharinfo(0);
+		'sex = Sex;
+		end;
+	}
+	end;
+
+OnInit:
+	hideonnpc strnpcinfo(0);
+	end;
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+	
+}
+
+1@ge_st,107,57,4	script	Tournament Guide#gefMT	4_M_HUMAN_02,{
+	.@n$ = "[ Tournament Guide ]";
+	ignoretimeout 1;
+	if (checkquest(9308) != -1) {
+		switch(select("Leave the Arena and receive your reward:End Conversation")) {
+			case 1:
+				mes .@n$;
+				mes "You won the competition!","Congratulations!";
+				next;
+				mes .@n$;
+				mes "By the way, the Academy Master has","something to tell you!";
+				next;
+				cutin "acamaster_a.bmp",2;
+				.@n2$ = "[ Geffen Academy Master ]";
+				mes .@n2$,
+				"Congratulations!",
+				"This has been the best pool of",
+				"competitors in the history of this",
+				"competition.";
+				next;
+				mes .@n2$,
+				"I present to you your earned ^55CC55Geffen",
+				"Magic Tournament Coins.^000000";
+				next;
+				mes .@n2$,
+				"Bring the coins to the ^55CC55Geffen Coin",
+				"Operator^000000 to exchange for special",
+				"equipment.";
+				next;
+				mes .@n2$,
+				"Your name will be remembered in the",
+				"history books of Geffen.";
+				next;
+				mes .@n2$,
+				"Congratulations again.",
+				"I hope you enjoy the rest of the",
+				"Geffen Festivities.";
+				close2;
+				cutin "",255;
+				getitem 6671,'reward[getarraysize('reward[0]) - 1];
+				warp instance_mapname("1@gef"), 120,35;
+				end;
+			case 2:
+				end;
+		}
+	}
+	mes .@n$;
+	if ('GMT_1QUE <22) {
+		mes "Congratulations on winning the "+callfunc("F_GetNumSuffix",('GMT_1QUE-10))+" round!";
+		.@menu$ = "Begin the "+callfunc("F_GetNumSuffix",('GMT_1QUE-9))+" match.";
+	}
+	else {
+	mes "Congratulations! You've defeated every other opponent in Group A! Good luck on the final!";
+	.@menu$ = "Begin the final match.";
+	}
+	next;
+	
+			switch(select(.@menu$,"End Conversation")) {
+			case 1:
+					mes .@n$;
+					mes "Winners of each round will receive ^55CC55Geffen Magic Tournament Coins^000000 as a reward.";
+					next;
+					mes .@n$;
+					mes "Bring the coins to the ^55CC55Geffen Coin Operator^000000 to exchange them for special equipment.";
+					next;
+					mes .@n$;
+					mes "The "+callfunc("F_GetNumSuffix",('GMT_1QUE-9))+" match of Group A is about to begin!";
+					close2;
+					getitem 6671, 'reward['GMT_1QUE-11];
+					hideonnpc instance_npcname("Tournament Healer#1");
+					
+					switch ('GMT_1QUE) {
+						  case 11:
+							enablenpc instance_npcname("Dio Anemos#1");
+							break;
+						  case 12:
+							if ('GMTQuest == 1)
+								enablenpc instance_npcname("Geffen Gangster#n1");
+							else if ('GMTQuest == 2)
+								enablenpc instance_npcname("Geffen Bully#n1");
+							else
+								enablenpc instance_npcname("Geffen Shoplifter#n1");
+								break;
+						  case 13:
+							enablenpc instance_npcname("Faymont#1");
+							break;
+						  case 14:
+							enablenpc instance_npcname("Ordre#1");
+							break;
+						  case 15:
+							enablenpc instance_npcname("Blut Hase#1");
+							break;
+						  case 16:
+							enablenpc instance_npcname("Kuro Akuma#1");
+							break;
+						  case 17:
+							enablenpc instance_npcname("Ifodes#1");
+							break;
+						  case 18:
+							enablenpc instance_npcname("Licheniyes#1");
+							break;
+						  case 19:
+							enablenpc instance_npcname("Odoric#1");
+							break;
+						  case 20:
+							enablenpc instance_npcname("Ju#1");
+							break;
+						  case 21:
+					'half = rand(0,1);
+					if ('half) {
+					enablenpc instance_npcname("Dwigh#1");
+					} else {
+					enablenpc instance_npcname("Fay Kanavian#1");
+									}
+									break;
+								  case 22:
+									enablenpc instance_npcname("Fenrir#f");
+									break;
+					}
+					warp instance_mapname("1@ge_st"), 104,50;
+					'GMT_1QUE++;
+					donpcevent instance_npcname("Geffen Academy Master")+"::OnStart";
+					hideoffnpc instance_npcname("Geffen Academy Master");
+					hideonnpc instance_npcname("Tournament Guide#gefMT");
+					end;
+			case 2:
+				mes .@n$; // KURAMA END CONVERSATION TEXT
+				mes "Need more time to prepare I see.";
+				mes "Not a problem, talk to me when you're ready.";
+				close;
+		}
+
+OnInstanceInit:
+	setarray 'reward,1,2,3,4,5,6,7,8,9,10,15,20,20;
+	end;
+}
+
+1@ge_st,109,57,4	script	Geffen Academy Master	10006,{
+end;
+OnStart:
+	if ( 'GMT_1QUE != 11 ){
+		attachrid('gmt_account_id);
+		if (checkquest(9283 + 'GMT_1QUE) != -1)
+			changequest 9283 + 'GMT_1QUE, 9284 +'GMT_1QUE;
+		detachrid;
+	}
+
+	switch ('GMT_1QUE) {
+		case 11:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			npctalk "Ladies and Gentlemen!";
+			sleep 3000;
+			npctalk "I do my best to be as loud as I can!";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			enablenpc instance_npcname("Arhi#1");
+			sleep 3000;
+			npctalk "The Geffen Magic Tournament will now commence!";
+			sleep 1000;
+			.@spec = rand(70,257);
+			showscript "Tournament Spectator: Wow~!!! Looks fun~~!! Yahoo~!",getnpcid(0,instance_npcname("Tournament Spectator#"+.@spec));
+			sleep 1000;
+			.@spec = rand(70,257);
+			showscript "Tournament Spectator: This is getting exciting~!",getnpcid(0,instance_npcname("Tournament Spectator#"+.@spec));
+			sleep 1000;
+			.@spec = rand(70,257);
+			showscript "Tournament Spectator: When is the game going to start~!",getnpcid(0,instance_npcname("Tournament Spectator#"+.@spec));
+			sleep 500;
+			donpcevent instance_npcname("Arhi#1")+"::OnActivate";
+			sleep 500;
+			npctalk "We are starting the 1st match for Group A";
+			sleep 2000;
+			npctalk "On this corner, "+('sex?"he":"she")+" looks weak enough to lose in the 1st match!";
+			sleep 3000;
+			npctalk "Give a big welcome to the unknown competitor! "+'charname$+"~!";
+			sleep 2000;
+			npctalk "And on the other corner, Arhi the Novice! Give it your best shot!";
+			end;
+		case 12:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "The 2nd match of Group A is about to begin!";
+			sleep 3000;
+			npctalk "On this corner, the competitor who exceeded our expectations by getting past the first round!";
+			sleep 3000;
+			npctalk "The extremely weak looking competitor, "+'charname$+"!";
+			sleep 3000;
+			donpcevent instance_npcname("Dio Anemos#1")+"::OnActivate";
+			sleep 500;
+			npctalk "And "+('sex ? "his" : "her")+" opponent...";
+			sleep 3000;
+			npctalk "Despite his skipping classes at the Magic Academy...";
+			sleep 3000;
+			npctalk "A crowd favorite! A big round of applause to the Magician Apprentice, Dio Anemos!";
+			end;
+		case 13:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "The 3rd match of Group A is about to begin!";
+			sleep 2000;
+			npctalk "Welcome back our unlikely competitor, "+'charname$+"!";
+			sleep 3000;
+			npctalk "And "+('sex ? "his" : "her")+" opponent...";
+			sleep 2000;
+			if ('GMTQuest == 1) {
+				donpcevent instance_npcname("Geffen Gangster#n1")+"::OnActivate";
+				sleep 500;
+				npctalk "Whose looks give off a creepy air about him...";
+				sleep 3000;
+				npctalk "A member of the Curvy Woman Loving club~!! Geffen Gangster!";
+			} else if ('GMTQuest == 2) {
+				donpcevent instance_npcname("Geffen Bully#n1")+"::OnActivate";
+				sleep 500;
+				npctalk "With a face only a mother can love!";
+				sleep 3000;
+				npctalk "The ruthless Geffen Bully!";
+			} else {
+				donpcevent instance_npcname("Geffen Shoplifter#n1")+"::OnActivate";
+				sleep 500;
+				npctalk "With a mischievous grin on her face!";
+				sleep 3000;
+				npctalk "The Geffen Thief Guild's Guildmaster! Geffen Shoplifter!";
+			}
+			end;
+		case 14:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "The surprise of this year's Tournament~!";
+			sleep 3000;
+			npctalk "The unrivaled warrior! "+'charname$+"!";
+			sleep 3000;
+			donpcevent instance_npcname("Faymont#1")+"::OnActivate";
+			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
+			sleep 3000;
+			npctalk "Entering the ring with pomp and circumstance.";
+			sleep 3000;
+			npctalk "Prontera's pride and style, Faymont!";
+			npctalk "Oh~ A player from Prontera ah!", instance_npcname("Prontera Spectator#a1");
+			sleep 2000;
+			npctalk "Do not give Prontera a bad name!!", instance_npcname("Prontera Spectator#a2");
+			end;
+		case 15:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "This isn't just a fluke ladies and gents!";
+			sleep 3000;
+			npctalk "The remarkable rookie! "+'charname$+"!";
+			sleep 3000;
+			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
+			sleep 500;
+			donpcevent instance_npcname("Ordre#1")+"::OnActivate";
+			sleep 3000;
+			npctalk "One who promises to fight with honor!";
+			sleep 3000;
+			npctalk "The self-proclaimed master of battle, Ordre!";
+			end;
+		case 16:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "Suddenly, the incredibly powerful!";
+			sleep 3000;
+			npctalk "Super rookie of this year's tournament~! "+'charname$+"!";
+			sleep 3000;
+			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
+			sleep 500;
+			donpcevent instance_npcname("Blut Hase#1")+"::OnActivate";
+			sleep 3000;
+			npctalk "Cute on the outside, but cruely destroys enemies!";
+			sleep 3000;
+			npctalk "Bloody Rabbit Ears~!! Blut Hase!";
+			end;
+		case 17:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "Onwards to the 7th Round!";
+			sleep 3000;
+			npctalk "Welcome back "+'charname$+"!";
+			sleep 3000;
+			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
+			sleep 2000;
+			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+			npctalk "A competitor more evil than any we've seen before!";
+			sleep 500;
+			donpcevent instance_npcname("Kuro Akuma#1")+"::OnActivate";
+			sleep 3000;
+			npctalk "The Devil's Tooth, Kuro Akuma!";
+			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+			end;
+		case 18:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "Starting up Round 8 for Group A!";
+			sleep 3000;
+			npctalk "The darling of this year's tournament!";
+			sleep 3000;
+			npctalk "Rune-Midgard newest star, "+'charname$+"!";
+			sleep 2000;
+			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
+			sleep 2000;
+			npctalk "They look very strong!", instance_npcname("Payon Spectator#a1");
+			sleep 250;
+			donpcevent instance_npcname("Ifodes#1")+"::OnActivate";
+			sleep 250;
+			npctalk "Looks good and strong ah!", instance_npcname("Veins Spectator#a1");
+			sleep 1000;
+			npctalk "Slow as a turtle, fast as a hare!";
+			sleep 3000;
+			npctalk "The maniac of Rune Midgard! Ifodes!";
+			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+			end;
+		case 19:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "We have now entered the 9th Round of this competition!";
+			sleep 3000;
+			npctalk "Nobody can stop "+('sex ? "him" : "her")+"!";
+			sleep 3000;
+			npctalk ""+('sex ? "His" : "Her")+" strength has been recognized by the people! "+'charname$;
+			sleep 2000;
+			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
+			sleep 500;
+			donpcevent instance_npcname("Licheniyes#1")+"::OnActivate";
+			sleep 500;
+			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+			sleep 1000;
+			npctalk "She might look like a nice lady, but you better watch out!";
+			sleep 3000;
+			npctalk "She'll attack you with the swiftness of a snake!";
+			sleep 3000;
+			npctalk "The Lady of Death! Licheniyes!";
+			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+			end;
+		case 20:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "Let us begin the 10th Round of Group A!";
+			sleep 3000;
+			npctalk "In this corner, back to entertain us again!";
+			sleep 3000;
+			npctalk "None other than the incredible "+'charname$+"!";
+			sleep 1000;
+			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+			sleep 1000;
+			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
+			sleep 1000;
+			npctalk "Seductress of Rune Midgard...";
+			sleep 500;
+			donpcevent instance_npcname("Odoric#1")+"::OnActivate";
+			sleep 500;
+			npctalk "You can't look away from her curves!";
+			sleep 3000;
+			npctalk "The Songstress of Death! Odoric!";
+			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+			end;
+		case 21:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "We're getting closer to the end, next up is Quarter-Finals!";
+			sleep 3000;
+			npctalk "The winning never ends with "+'charname$+"!";
+			sleep 2000;
+			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+			sleep 1000;
+			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
+			sleep 500;
+			donpcevent instance_npcname("Ju#1")+"::OnActivate";
+			sleep 250;
+			npctalk "I can smell blood...",instance_npcname("Loki#a2");
+			sleep 1000;
+			npctalk "Oh... A fierce competitor, is not it?",instance_npcname("Iris#a2");
+			sleep 500;
+			npctalk "Hidden behind a shroud of mystery...";
+			sleep 3000;
+			npctalk "Master of power and speed! Ju!";
+			donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+			end;
+		case 22:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "We are now at the Semi-Finals of this competition, this match will decide the winner for Group A!";
+			sleep 3000;
+			npctalk "Winning against all odds, Group A's Dark Horse, "+'charname$+"!";
+			sleep 3000;
+			npctalk "And "+('sex ? "his" : "her")+" opponent~!!!";
+			if ('half) {
+				sleep 500;
+				donpcevent instance_npcname("Dwigh#1")+"::OnActivate";
+				sleep 1500;
+				npctalk "Chief Professor of the Mage Academy, loved by her many disciples!";
+				sleep 1000;
+				donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+				sleep 2000;
+				npctalk "Commander of battle and wits! Dwigh!";
+			}	else {
+				sleep 2000;
+				npctalk "An Alchemist from Aldebaran, the city of science!";
+				sleep 500;
+				donpcevent instance_npcname("Fay Kanavian#1")+"::OnActivate";
+				sleep 500;
+				donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+				sleep 2000;
+				npctalk "Fay Kanavian and her homunculus, Alphonse!";
+				}
+			end;
+		case 23:
+			donpcevent instance_npcname("#Talkcontrol")+"::OnStart";
+			donpcevent instance_npcname("#FireworksControl")+"::OnStart";
+			npctalk "A previously anonymous fighter";
+			sleep 3000;
+			npctalk "Despite this, unmatched in Group A!";
+			sleep 2000;
+			npctalk "The most talked about competitor this year!";
+			sleep 3000;
+			npctalk "The unrivaled! "+'charname$+"!";
+			sleep 3000;
+			npctalk "Aha, this match looks like it will be interesting.",instance_npcname("Loki#a2");
+			sleep 3000;
+			npctalk "And the champion of Group B~!!!";
+			sleep 1500;
+			donpcevent instance_npcname("Fenrir#f")+"::OnActivate";
+			sleep 1500;
+			npctalk "A Warlock with incredible powers!";
+			sleep 3000;
+			npctalk "A competitor who swept through Group B like a hurricane!";
+			sleep 1000;
+			npctalk "Oh! This match is going to be exciting!",instance_npcname("Chaos#a2");
+			sleep 2000;
+			npctalk "Is there any Wizard stronger in all of Rune-Midgard?!";
+			sleep 3000;
+			npctalk "The Blue Wizard! Fenris Fenrir~!!";
+			end;
+	}
+
+OnTalk1:
+	showscript "Geffen Academy Master : Let's get it on!",getnpcid(0,instance_npcname(strnpcinfo(0)));
+	end;
+	
+OnTalk2:
+	if ('GMT_1QUE == 22) {
+		npctalk "The final match of Group A is finished~! Congratulations "+'charname$+"!"; 
+	}
+	else {
+		npctalk "The "+callfunc("F_GetNumSuffix",('GMT_1QUE-10))+" match of Group A is finished~! Congratulations "+'charname$+"!"; 
+		sleep 6000;
+		npctalk "You may take some time to heal your wounds.";
+		sleep 6000;
+		npctalk "Please speak with the Tournament Guide when you are ready for the next round.";
+		sleep 3000;
+	}
+	switch ('GMT_1QUE) {
+	case 11:
+	case 12:
+	case 14:
+	case 15:
+	case 17:
+	case 18:
+	case 20:
+	case 21:
+		break;
+	case 13:
+		npctalk "Fenris Fenrir has 3 consecutive victories in Group B~!";
+		sleep 3000;
+		break;
+	case 16:
+		npctalk "Okay~! There is news from Group B!";
+		sleep 3000;
+		npctalk "While all of the other competitors are doing their best,";
+		sleep 3000;
+		npctalk "Fenrir is taking the tournament by storm, and has won 5 consecutive matches!";
+		sleep 1000;
+		break;
+	case 19:
+		npctalk "This is getting exciting! More news from Group B!";
+		sleep 3000;
+		npctalk "Fenris Fenrir is continuing her reign of dominance~! Those in Group A better beware!";
+		sleep 2000;
+		break;
+	case 22:
+		npctalk "Group B has completed their 12th match as well~!";
+		sleep 3000;
+		npctalk "Have you heard of Tetra Vortex? There is a competitor using this mysterious spell!";
+		sleep 3000;
+		npctalk "Her name is none other than Fenris Fenrir!";
+		sleep 3000;
+		npctalk "The final match of this tournament is bound to be challenging!";
+		sleep 1000;
+		break;
+	}
+	hideoffnpc instance_npcname("Tournament Guide#gefMT");
+	hideoffnpc instance_npcname("Geffen Academy Master");
+	hideoffnpc instance_npcname("Tournament Healer#1");
+	end;
+
+OnTalk3:
+	npctalk "The Final Round has started! Let's get it on!";
+	end;
+OnTalk4:
+	npctalk "The Final Match of this year's Geffen Magic Tournament is finished~!";
+	sleep 3000;
+	npctalk "Everyone! Thank you for supporting the Geffen Magic Tournament~!!";
+	sleep 3000;
+	npctalk "This year's Geffen Magic Tournament Champion is "+'charname$+"~!!";
+	donpcevent instance_npcname("#FireworksControl")+"::OnWin";
+	end;
+
+OnInstanceInit:
+	hideonnpc instance_npcname("Tournament Guide#gefMT");
+	disablenpc instance_npcname("Arhi#1");
+	disablenpc instance_npcname("Dio Anemos#1");
+	disablenpc instance_npcname("Geffen Gangster#n1");
+	disablenpc instance_npcname("Geffen Bully#n1");
+	disablenpc instance_npcname("Geffen Shoplifter#n1");
+	disablenpc instance_npcname("Faymont#1");
+	disablenpc instance_npcname("Ordre#1");
+	disablenpc instance_npcname("Blut Hase#1");
+	disablenpc instance_npcname("Kuro Akuma#1");
+	disablenpc instance_npcname("Ifodes#1");
+	disablenpc instance_npcname("Licheniyes#1");
+	disablenpc instance_npcname("Odoric#1");
+	disablenpc instance_npcname("Ju#1");
+	disablenpc instance_npcname("Dwigh#1");
+	disablenpc instance_npcname("Fay Kanavian#1");
+	disablenpc instance_npcname("Fenrir#f");
+	end;
+	
+OnMobDead:
+	end;
+	
+}
+
+1@ge_st,1,1,1	script	#GMTcontroller	-1,{
+	end;
+OnStart:
+	.@map$ = instance_mapname("1@ge_st");
+	.@label$ = instance_npcname("#GMTcontroller")+"::OnMobDead";
+	'timeout = 180;
+	if ('GMT_1QUE == 23) 'timeout = 300;
+	mapannounce .@map$, "<Magic Tournament Broadcast>: Time limit is " + ('timeout / 60) + " minutes.",bc_blue; sleep 2000;
+	mapannounce .@map$, "<Magic Tournament Broadcast>: Ready... Set...",bc_blue; sleep 2000;
+	mapannounce .@map$, "<Magic Tournament Broadcast>: Fight!",bc_blue;
+	
+	donpcevent instance_npcname("#FireworksControl")+"::OnTurn";
+	initnpctimer;
+	
+	switch ('GMT_1QUE) {
+		case 11:
+			hideonnpc instance_npcname("Arhi#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2549,1,.@label$);
+			break;
+		case 12:
+			hideonnpc instance_npcname("Dio Anemos#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2550,1,.@label$);
+			break;
+		case 13:
+			if ('GMTQuest == 1) {
+				hideonnpc instance_npcname("Geffen Gangster#n1");
+				'BossID = monster(.@map$,114,50,"--ja--",2553,1,.@label$);
+			} else if ('GMTQuest == 2) {
+				hideonnpc instance_npcname("Geffen Bully#n1");
+				'BossID = monster(.@map$,114,50,"--ja--",2552,1,.@label$);
+			} else {
+				hideonnpc instance_npcname("Geffen Shoplifter#n1");
+				'BossID = monster(.@map$,114,50,"--ja--",2551,1,.@label$);
+			}
+			break;
+		case 14:
+			hideonnpc instance_npcname("Faymont#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2554,1,.@label$);
+			break;
+		case 15:
+			hideonnpc instance_npcname("Ordre#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2555,1,.@label$);
+			break;
+		case 16:
+			hideonnpc instance_npcname("Blut Hase#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2556,1,.@label$);
+			break;
+		case 17:
+			hideonnpc instance_npcname("Kuro Akuma#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2557,1,.@label$);
+			break;
+		case 18:
+			hideonnpc instance_npcname("Ifodes#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2558,1,.@label$);
+			break;
+		case 19:
+			hideonnpc instance_npcname("Licheniyes#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2559,1,.@label$);
+			break;
+		case 20:
+			hideonnpc instance_npcname("Odoric#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2560,1,.@label$);
+			break;
+		case 21:
+			hideonnpc instance_npcname("Ju#1");
+			'BossID = monster(.@map$,114,50,"--ja--",2561,1,.@label$);
+			break;
+		case 22:
+			if ('half) {
+				hideonnpc instance_npcname("Dwigh#1");
+				'BossID = monster(.@map$,114,50,"--ja--",2562,1,.@label$);
+			}
+			else {
+				hideonnpc instance_npcname("Fay Kanavian#1");
+				'BossID = monster(.@map$,114,50,"--ja--",2563,1,.@label$);
+				donpcevent instance_npcname("#GMTHomun")+"::OnSummon";
+			}
+			
+			break;
+		case 23:
+			hideonnpc instance_npcname("Fenrir#f");
+			'BossID = monster(.@map$,114,50,"--ja--",2564,1,.@label$);
+			donpcevent instance_npcname("Geffen Academy Master")+"::OnTalk3";
+			end;
+	}
+		
+	donpcevent instance_npcname("Geffen Academy Master")+"::OnTalk1";
+	end;
+OnTimeout:
+	end;
+OnMobDead:
+	'timeout_exit = 1;
+	
+	switch ('GMT_1QUE) {
+		case 11: donpcevent instance_npcname("Arhi#1")+"::OnDefeat"; break;
+		case 12: donpcevent instance_npcname("Dio Anemos#1")+"::OnDefeat"; break;
+		case 13:
+			if ('GMTQuest == 1) { donpcevent instance_npcname("Geffen Gangster#n1")+"::OnDefeat"; }
+			else if ('GMTQuest == 2) { donpcevent instance_npcname("Geffen Bully#n1")+"::OnDefeat"; }
+			else { donpcevent instance_npcname("Geffen Shoplifter#n1")+"::OnDefeat"; }
+			break;
+		case 14: donpcevent instance_npcname("Faymont#1")+"::OnDefeat"; break;
+		case 15: donpcevent instance_npcname("Ordre#1")+"::OnDefeat"; break;
+		case 16: donpcevent instance_npcname("Blut Hase#1")+"::OnDefeat"; break;
+		case 17: donpcevent instance_npcname("Kuro Akuma#1")+"::OnDefeat"; break;
+		case 18: donpcevent instance_npcname("Ifodes#1")+"::OnDefeat"; break;
+		case 19: donpcevent instance_npcname("Licheniyes#1")+"::OnDefeat"; break;
+		case 20: donpcevent instance_npcname("Odoric#1")+"::OnDefeat"; break;
+		case 21: donpcevent instance_npcname("Ju#1")+"::OnDefeat"; break;
+		case 22:
+			if ('half) {
+				donpcevent instance_npcname("Dwigh#1")+"::OnDefeat";
+			}
+			else {
+				donpcevent instance_npcname("Fay Kanavian#1")+"::OnDefeat";
+				donpcevent instance_npcname("#GMTHomun")+"::OnEnd";
+			}
+			
+			break;
+		case 23:
+			donpcevent instance_npcname("Fenrir#f")+"::OnDefeat";
+			donpcevent instance_npcname("Geffen Academy Master")+"::OnTalk4";
+			end;
+	}
+	
+	mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: "+'charname$+" has won the round!",bc_blue;
+	donpcevent instance_npcname("Geffen Academy Master")+"::OnTalk2";
+	end;
+OnTimer1000:
+	'timeout--;
+	
+	if ('timeout_exit) {
+		'timeout_exit = 0;
+		stopnpctimer;
+		end;
+	}
+	
+	switch('timeout) {
+		case 240: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: Time remaining is 4 minutes, this match is getting heated!",bc_blue; break;
+		case 180: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: Time remaining is 3 minutes, the match has gotten extremely heated!",bc_blue; break;
+		case 120: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: Time remaining is 2 minutes, we're racing towards the end!",bc_blue; break;
+		case  90: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: Time remaining is 1 minute 30 seconds, the bout is halfway over!",bc_blue; break;
+		case  60: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: Time remaining is 1 minute, the end of the match is nearing!",bc_blue; break;
+		case  30: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: Time remaining is 30 seconds, turn coming to an end!",bc_blue; break;
+		case  10: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: 10 seconds remaining!",bc_blue; break;
+		case   5: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: 5!",bc_blue; break;
+		case   4: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: 4!",bc_blue; break;
+		case   3: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: 3!",bc_blue; break;
+		case   2: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: 2!",bc_blue; break;
+		case   1: mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: 1!",bc_blue; break;
+		case   0:
+			stopnpctimer;
+			donpcevent instance_npcname("#GMTcontroller") + "::OnTimeout2";
+			end;
+	}
+	
+	initnpctimer;
+	end;
+OnTimeout2:
+	mapannounce instance_mapname("1@ge_st"), "<Magic Tournament Broadcast>: Time's up! The judges will decide the victor for this round!",bc_blue;	
+	
+	setcell instance_mapname("1@ge_st"), 50, 50, 50, 50, cell_walkable, 1;
+	unitwarp 'BossID, instance_mapname("1@ge_st"), 50, 50;
+	killmonster instance_mapname("1@ge_st"), instance_npcname("#GMTcontroller")+"::OnTimeout";
+	'BossID = 0;
+	
+	if ('HomID) {
+		killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomJR";
+		killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomDead";
+		'HomID = 0;
+	}
+	
+	sleep 3000;
+	hideoffnpc instance_npcname("Geffen Academy Master");
+//	npctalk "The votes are in... And the winner is...",instance_npcname("Geffen Academy Master");
+//	sleep 1500;
+	npctalk "1st judge's score! "+rand(100)+" - "+rand(100)+"", "Geffen Academy Master";
+	sleep 1500;
+	npctalk "2nd judge's score! "+rand(100)+" - "+rand(100)+"", "Geffen Academy Master";
+	sleep 1500;
+	npctalk "3rd judge's score! "+rand(100)+" - "+rand(100)+"", "Geffen Academy Master";
+	sleep 1500;
+	
+	switch ('GMT_1QUE) {
+		case 11:
+			enablenpc instance_npcname("Arhi#1");
+			donpcevent instance_npcname("Arhi#1")+"::OnVictory";
+			.@defeat$ = "The Novice, Arhi!";
+			break;
+		case 12:
+			enablenpc instance_npcname("Dio Anemos#1");
+			donpcevent instance_npcname("Dio Anemos#1")+"::OnVictory";
+			.@defeat$ = "The Magician Apprentice, Dio Anemos!";
+			break;
+		case 13:
+			if ('GMTQuest == 1) {
+				enablenpc instance_npcname("Geffen Gangster#n1");
+				donpcevent instance_npcname("Geffen Gangster#n1")+"::OnVictory";
+				.@defeat$ = "Geffen Gangster!";
+			} else if ('GMTQuest == 2) {
+				enablenpc instance_npcname("Geffen Bully#n1");
+				donpcevent instance_npcname("Geffen Bully#n1")+"::OnVictory";
+				.@defeat$ = "Gefen Bully!";
+				break;
+			} else {
+				enablenpc instance_npcname("Geffen Shoplifter#n1");
+				donpcevent instance_npcname("Geffen Shoplifter#n1")+"::OnVictory";
+				.@defeat$ = "Geffen Shoplifter!";
+				break;
+			}
+			break;
+		case 14:
+			enablenpc instance_npcname("Faymont#1");
+			donpcevent instance_npcname("Faymont#1")+"::OnVictory";
+			.@defeat$ = "Prontera's pride and style, Feymont!";
+			break;
+		case 15:
+			enablenpc instance_npcname("Ordre#1");
+			donpcevent instance_npcname("Ordre#1")+"::OnVictory";
+			.@defeat$ = "Self proclaimed Master of Battle, Ordre!";
+			break;
+		case 16:
+			enablenpc instance_npcname("Blut Hase#1");
+			donpcevent instance_npcname("Blut Hase#1")+"::OnVictory";
+			.@defeat$ = "Bloody Rabbit Ears~!! Blut Hase!";
+			break;
+		case 17:
+			enablenpc instance_npcname("Kuro Akuma#1");
+			donpcevent instance_npcname("Kuro Akuma#1")+"::OnVictory";
+			.@defeat$ = "The Devil's Tooth! Kuro Akuma!";
+			break;
+		case 18:
+			enablenpc instance_npcname("Ifodes#1");
+			donpcevent instance_npcname("Ifodes#1")+"::OnVictory";
+			.@defeat$ = "The Maniac of Rune Mindgard! Ifodes!";
+			break;
+		case 19:
+			enablenpc instance_npcname("Licheniyes#1");
+			donpcevent instance_npcname("Licheniyes#1")+"::OnVictory";
+			.@defeat$ = "The Lady of Death! Licheniyes!";
+			break;
+		case 20:
+			enablenpc instance_npcname("Odoric#1");
+			donpcevent instance_npcname("Odoric#1")+"::OnVictory";
+			.@defeat$ = "The Songstress of Death! Odoric!";
+			break;
+		case 21:
+			enablenpc instance_npcname("Ju#1");
+			donpcevent instance_npcname("Ju#1")+"::OnVictory";
+			.@defeat$ = "Master of power and speed! Ju!";
+			break;
+		case 22:
+			if ('half) {
+				enablenpc instance_npcname("Dwigh#1");
+				donpcevent instance_npcname("Dwigh#1")+"::OnVictory";
+				.@defeat$ = "Commander of battle and wits! Dwigh!";
+				break;
+			} else {
+				enablenpc instance_npcname("Fay Kanavian#1");
+				donpcevent instance_npcname("Fay Kanavian#1")+"::OnVictory";
+				.@defeat$ = "Fay Kanavian and her homunculus Alphonse!";
+				
+				if ('HomID) {
+					killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomJR";
+					killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomDead";
+					'HomID = 0;
+				}
+				break;
+			}
+			break;
+		case 23:
+			enablenpc instance_npcname("Fenrir#f");
+			donpcevent instance_npcname("Fenrir#f")+"::OnVictory";
+			.@defeat$ = "The Blue Wizard! Fenris Fenrir~!!";
+			break;
+	}
+	
+	npctalk "The winner of the "+callfunc("F_GetNumSuffix",('GMT_1QUE-10))+" match in Group A by judge's decision is...! "+.@defeat$, "Geffen Academy Master";
+	sleep 1500;
+	//donpcevent instance_npcname("#DEATHGMT")+"::OnLoseRound";
+	npctalk "Give a warm round of applause to the losing competitor.", "Geffen Academy Master";
+	sleep 1500;
+	npctalk "Defeated competitors please leave the arena!", "Geffen Academy Master";
+	sleep 3000;
+	movenpc instance_npcname("#gefmagic_warp02"),120,213;
+	movenpc instance_npcname("#invisGMTquests"),120,61;
+	
+	donpcevent instance_npcname("Fenrir#e1")+"::OnEnable";
+	donpcevent instance_npcname("Chaos#e1")+"::OnEnable";
+	donpcevent instance_npcname("Iris#e1")+"::OnEnable";
+	donpcevent instance_npcname("Lydia#e1")+"::OnEnable";
+	donpcevent instance_npcname("Loki#e1")+"::OnEnable";
+	end;
+	
+OnStop:
+	stopnpctimer;
+	end;
+}
+
+1@ge_st,1,1,1	script	#GMTHomun	HIDDEN_NPC,{
+end;
+
+OnSummon:
+	initnpctimer;
+	'HomID = monster (instance_mapname("1@ge_st"), 114,50,"--ja--",2565,1, instance_npcname("#GMTHomun")+"::OnHomDead");
+	end;
+
+OnTimer10000:
+	if (!'BossID) {
+		stopnpctimer;
+		disablenpc instance_npcname("#GMTHomun");
+		end;
+	}
+	
+	initnpctimer;
+	
+	if ('HomID != 0) {
+		getunitdata 'BossID,.@bossdata;
+		getunitdata 'HomID,.@homdata;
+			if (distance(.@bossdata[6],.@bossdata[7],.@homdata[6],.@homdata[7]) > 10) {
+				unittalk 'BossID,"Alphonse, come!";
+				sleep 500;
+				unitwarp 'HomID, instance_mapname("1@ge_st"),.@bossdata[6],.@bossdata[7];
+			}
+	}
+	else {
+		if (mobcount(instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomJR")) { end; }
+		getunitdata 'BossID,.@bossdata;
+		unittalk 'BossID, "Alphonse, I'll revive you!";
+		areamonster instance_mapname("1@ge_st"),.@bossdata[6]-2,.@bossdata[7]-2,.@bossdata[6]+2,.@bossdata[7]+2,"--ja--",2566,3,instance_npcname("#GMTHomun")+"::OnHomJR";
+	}
+	end;
+
+OnHomDead:
+	initnpctimer;
+	'HomID = 0;
+	end;
+
+OnHomJR:
+	end;
+
+OnEnd:
+	stopnpctimer;
+	if ('HomID) { 
+		killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomJR";
+		killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomDead";
+	}
+	disablenpc instance_npcname("#GMTHomun");
+	end;
+}
+
+
+1@ge_st,111,57,4	script	Tournament Healer#1	569,{ //83649 (hide) 
+	mes "[ Tournament Healer ]";
+	mes "The previous round's winner can receive a heal from me.";
+	next;
+		if (select ("Heal", "Cancel") == 2) {
+			mes "[ Tournament Healer ]";
+			mes "Guess you don't need to be healed.";
+			close;
+		}
+	mes "[ Tournament Healer ]";
+	mes "Enjoy.";
+	mes "Good luck on the next round!";
+	percentheal 100,100;
+	specialeffect2 EF_HEAL;
+	close2;
+	hideonnpc instance_npcname("Tournament Healer#1"); // 83649
+	end;
+OnInstanceInit:
+	hideonnpc instance_npcname("Tournament Healer#1");
+	end;
+}
+
+1@ge_st,1,1,1	script	#FireworksControl	-1,{
+end;
+OnStart:
+	initnpctimer;
+		for ( .@i = 11; .@i <= 20; .@i++ ) {
+			specialeffect .effect[rand(getarraysize(.effect))], AREA, instance_npcname("#fireworks_" +.@i);
+		}
+	end;
+OnTimer6000:
+	initnpctimer;
+		for ( .@i = 0; .@i < 5; .@i++) {
+			specialeffect .effect[rand(getarraysize(.effect))], AREA, instance_npcname("#fireworks_" + rand(11,20));
+		}
+	end;
+
+OnTurn:
+	stopnpctimer;
+	end;
+
+OnWin:
+	for ( .@i = 1; .@i <= 5; .@i++ ) {
+		specialeffect EF_LORD, AREA, instance_npcname("#fireworks_f" + .@i);
+	}
+	sleep 3000;
+	for ( .@i = 1; .@i <= 5; .@i++ ) {
+		specialeffect EF_SIGHTRASHER, AREA, instance_npcname("#fireworks_f" + .@i);
+	}
+	sleep 500;
+	for ( .@i = 1; .@i <= 5; .@i++ ){
+		specialeffect EF_STORMGUST, AREA, instance_npcname("#fireworks_f" + .@i);
+	}
+	sleep 3000;
+	for ( .@i = 1; .@i <= 5; .@i++ ) {
+		specialeffect EF_VIOLENTGALE, AREA, instance_npcname("#fireworks_f" + .@i);
+	}
+	end;
+OnInstanceInit:
+	setarray .effect, EF_THUNDERSTORM, EF_STORMGUST, EF_METEORSTORM;
+	end;
+}
+
+1@ge_st,102,42,0	script	#fireworks_11	139,{ end; }
+1@ge_st,100,60,0	duplicate(#fireworks_11)	#fireworks_12	139
+1@ge_st,109,60,0	duplicate(#fireworks_11)	#fireworks_13	139
+1@ge_st,118,60,0	duplicate(#fireworks_11)	#fireworks_14	139
+1@ge_st,126,59,0	duplicate(#fireworks_11)	#fireworks_15	139
+1@ge_st,126,37,0	duplicate(#fireworks_11)	#fireworks_16	139
+1@ge_st,118,36,0	duplicate(#fireworks_11)	#fireworks_17	139
+1@ge_st,109,36,0	duplicate(#fireworks_11)	#fireworks_18	139
+1@ge_st,100,36,0	duplicate(#fireworks_11)	#fireworks_19	139
+1@ge_st,92,37,0	duplicate(#fireworks_11)	#fireworks_20	139
+1@ge_st,112,52,0	duplicate(#fireworks_11)	#fireworks_f1	139
+1@ge_st,112,42,0	duplicate(#fireworks_11)	#fireworks_f2	139
+1@ge_st,102,52,0	duplicate(#fireworks_11)	#fireworks_f3	139
+1@ge_st,102,52,0	duplicate(#fireworks_11)	#fireworks_f4	139
+1@ge_st,102,42,0	duplicate(#fireworks_11)	#fireworks_f5	139
+
+1@ge_st,1,1,1	script	#Talkcontrol	-1,{
+end;
+
+OnStart:
+	'Talkcounter = 0;
+	initnpctimer;
+	end;
+
+OnTimer5000:
+	'Talkcounter++;
+	if ('Talkcounter <4)
+	initnpctimer;
+OnRndtalk:
+	.@iter = rand(1,3);
+	for (.@i = 0; .@i <.@iter ;.@i++) {
+	.@group = rand(30);
+	if (.@group <18) {
+		showscript 'audience$[rand(getarraysize('audience$))],getnpcid(0,instance_npcname("Tournament Spectator#"+rand(70,257)));
+		showscript 'audience$[rand(getarraysize('audience$))],getnpcid(0,instance_npcname("Tournament Spectator#"+rand(70,257)));
+	} else if (.@group <23) {
+		showscript 'student$[rand(getarraysize('student$))],getnpcid(0,instance_npcname("Magic Academy Student#" + rand(1,5)));
+	} else {
+		.@id = rand(getarraysize('tourist$));
+		showscript 'touristname2$[.@id]+'tourist$[.@id],getnpcid(0,instance_npcname('touristname$[.@id]));
+	}
+	sleep rand(2,5) * 100;
+	}
+	end;
+
+OnTimer13000:
+	stopnpctimer;
+	.@iter = rand(1,3);
+		for ( .@i = 0; .@i <.@iter; .@i++ ) {
+			.@group = rand(30);
+			
+				if ( .@group <18) {
+					showscript 'audience$[rand(getarraysize('audience$))],getnpcid(0,instance_npcname("Tournament Spectator#"+rand(70,257)));
+					showscript 'audience$[rand(getarraysize('audience$))],getnpcid(0,instance_npcname("Tournament Spectator#"+rand(70,257)));
+				} else if (.group <23) {
+					showscript 'student$[rand(getarraysize('student$))],getnpcid(0,instance_npcname("Magic Academy Student#" + rand(1,5)));
+				} else {
+					.@id = rand(getarraysize('tourist$));
+					showscript 'touristname2$[.@id]+'tourist$[.@id],getnpcid(0,instance_npcname('touristname$[.@id]));
+				}
+					
+	
+			sleep rand(2,5)*100;
+		}
+	end;
+
+OnInstanceInit:
+	setarray 'audience$,
+		"Tournament Spectator : I've been watiing for this round!",
+		"Tournament Spectator : Hope this round's an interesting match up!",
+		"Tournament Spectator : Oh! Ah! Oh! Ah!",
+		"Tournament Spectator : Oooh, finally started!",
+		"Tournament Spectator : Start already! Fight! Come on, start!",
+		"Tournament Spectator : Is this that guy's first time? I feel he's very powerful, ah!",
+		"Tournament Spectator : Who do you think will win?",
+		"Tournament Spectator : Come on, start!",
+		"Tournament Spectator : Get it on already!",
+		"Tournament Spectator : I feel like I'm in danger...",
+		"Tournament Spectator : I'm counting on that "+('sex ? "guy" : "girl")+" to lose!",
+		"Tournament Spectator : Gotta feel sorry for that guy! Come on!",
+		"Tournament Spectator : He's terrific! You've got this! Come on!",
+		"Tournament Spectator : I'm having such a great time here!",
+		"Tournament Spectator : Come on!~~",
+		"Tournament Spectator : Let's see what you've got "+'charname$+"!",
+		"Tournament Spectator : He's probably going to lose this round.",
+		"Tournament Spectator : This contest has a lot of good participants.",
+		"Tournament Spectator : Do not be afraid, come on!",
+		"Tournament Spectator : Almost to start huh?",
+		"Tournament Spectator : Even just watching this is fun!",
+		"Tournament Spectator : My hands are sweating...",
+		"Tournament Spectator : Come on let's go!";
+
+	setarray 'student$,
+		"Magic Academy Student: Ya~ Hoo~",
+		"Magic Academy Student: Wow, I'm so nervous!",
+		"Magic Academy Student: Both of you please! Come on!";
+
+	setarray 'tourist$,
+		" : Oh, the atmosphere's starting to heat up...",
+		" : This is so energizing!",
+		" : There's no Payon contestants are there?",
+		" : The atmosphere here is great!",
+		" : Oooh! Come on!",
+		" : These participants are so energetic!",
+		" : Good thing too...",
+		" : Don't lose too quickly! Oh!~";
+
+	setarray 'touristname$,
+		"Prontera Spectator#a1",
+		"Prontera Spectator#a2",
+		"Payon Spectator#a1",
+		"Payon Spectator#a2",
+		"Alberta Spectator#a1",
+		"Alberta Spectator#a2",
+		"Veins Spectator#a1",
+		"Comodo Spectator#a1";
+		
+	setarray 'touristname2$,
+		"Prontera Spectator",
+		"Prontera Spectator",
+		"Payon Spectator",
+		"Payon Spectator",
+		"Alberta Spectator",
+		"Alberta Spectator",
+		"Veins Spectator",
+		"Comodo Spectator";
+		end;
+
+}
+
+1@ge_st,106,62,6	script	Loki#a2	512,{}
+1@ge_st,108,62,6	script	Chaos#a2	683,{}
+1@ge_st,111,62,4	script	Iris#a2	666,{}
+1@ge_st,112,62,4	script	Lydia#a2	10010,{}
+
+// ================================================================
+// Rivals
+// ================================================================
+1@ge_st,114,50,4	script	Arhi#1	670,{
+end;
+
+OnActivate:
+	enablenpc instance_npcname("Arhi#1");
+	npctalk "The first match always makes me nervous~!";
+	sleep 2000;
+	npctalk "Can I win?";
+	sleep 3000;
+	npctalk "I guess it will be okay, this "+('sex ? "guy" : "girl")+" seems weak.";
+	sleep 3000;
+	npctalk "Okay, just relax~!";
+	sleep 3000;
+	npctalk "Ah... Finally, It's going to start soon!";
+	sleep 3000;
+	npctalk "Just relax~!";
+	sleep 2000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Arhi#1");
+	sleep 1000;
+	npctalk "Ah... I lost the first match...";
+	sleep 3000;
+	npctalk "How can I face my family...";
+	sleep 3000;
+	npctalk "So shameful...";
+	sleep 3000;
+	npctalk "Ah... My friends will laugh at me...";
+	sleep 3000;
+	npctalk "Sob...";
+	sleep 1000;	
+	hideonnpc instance_npcname("Arhi#1");
+	sleep 1000;
+	movenpc instance_npcname("Arhi#z1_0et"),145,125;
+	hideoffnpc instance_npcname("Tournament Guide#gefMT");
+	disablenpc instance_npcname("Arhi#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Arhi#1");
+	sleep 1000;
+	npctalk "I knew I would win!";
+	sleep 3000;
+	npctalk "I'm so relieved!";
+	sleep 3000;
+	npctalk "I was able to beat a weak competitor.";
+	sleep 3000;
+	npctalk "Yahoo!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,114,50,4	script	Dio Anemos#1	669,{
+end;
+
+OnActivate:
+	npctalk "Second round huh...";
+	sleep 2000;
+	npctalk "You look like a weak competitor.";
+	sleep 3000;
+	npctalk "I think I've got a good chance against you.";
+	sleep 3000;
+	npctalk "I wish the match would start already...";
+	sleep 3000;
+	npctalk "If I finish it quickly maybe I can go buy some cookies!";
+	sleep 3000;
+	npctalk "Okay then let's start!";
+	sleep 2000;
+	npctalk "Boring...",instance_npcname("Loki#a2");
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Dio Anemos#1");
+	sleep 1000;
+	npctalk "Oh my god....";
+	sleep 2000;
+	npctalk "I lost...";
+	sleep 2000;
+	npctalk "Ah... and to this random loser too...";
+	sleep 3000;
+	npctalk "My skills have gotten worse...";
+	sleep 3000;
+	npctalk "This is so sad...";
+	sleep 2000;
+	npctalk "Ahhhh! Why?...";
+	sleep 1000;
+	hideonnpc instance_npcname("Dio Anemos#1");
+	sleep 1000;
+	movenpc instance_npcname("Dio Anemos#z1_0et"),91,117;
+	disablenpc instance_npcname("Dio Anemos#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Dio Anemos#1");
+	sleep 1000;
+	npctalk "Phew... That was easy.";
+	sleep 3000;
+	npctalk "You should go home and ask your mommy to feed you!";
+	sleep 3000;
+	npctalk "Ha ha ha ha~!!!!";
+	sleep 3000;
+	npctalk "Time to get ready for my next match.";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,114,50,4	script	Geffen Gangster#n1	682,{
+end;
+
+OnActivate:
+	npctalk "Hmmm, you're that kid from before...";
+	sleep 3000;
+	npctalk "I've got a lesson to teach you!";
+	sleep 3000;
+	npctalk "It's my turn to beat you!";
+	sleep 3000;
+	npctalk "First I'll take care of you, and then I'll go back for that Kafra...";
+	sleep 3000;
+	npctalk "Watcha got punk?!";
+	sleep 3000;
+	npctalk "Prepare to die!";
+	sleep 2000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Geffen Gangster#n1");
+	sleep 1000;
+	npctalk "I was defeated! This doesn't make any sense!";
+	sleep 2000;
+	npctalk "I can't believe I lost to you!";
+	sleep 3000;
+	npctalk "To be embarrassed in front of the Kafra with the luscious legs...!";
+	sleep 3000;
+	npctalk "Sob.. This can't be happening!";
+	sleep 2000;
+	npctalk "I shouldn't have to go through this depression alone!";
+	sleep 2000;
+	npctalk "I'll have to go to see the Kafra gal' in Prontera hu-hu-hu...";
+	sleep 1000;
+	hideonnpc instance_npcname("Geffen Gangster#n1");
+	sleep 1000;
+	disablenpc instance_npcname("Geffen Gangster#n1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Geffen Gangster#n1");
+	sleep 1000;
+	npctalk "This is my real ability!";
+	sleep 3000;
+	npctalk "Hu hu... That... Kafra...!";
+	sleep 3000;
+	npctalk "I want to go back to my Kafra~!!";
+	sleep 3000;
+	npctalk "Hu hu hu hu hu...";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+}
+
+1@ge_st,114,50,4	script	Geffen Bully#n1	681,{
+end;
+
+OnActivate:
+	npctalk "Just you wait, you'll be immediately disabled!";
+	sleep 3000;
+	npctalk "I will beat you down today!";
+	sleep 3000;
+	npctalk "Give me your zeny!";
+	sleep 3000;
+	npctalk "I'll send you crying home!";
+	sleep 3000;
+	npctalk "I will make you experience my 20 years of bullying.";
+	sleep 3000;
+	npctalk "You're dead!";
+	sleep 2000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Geffen Bully#n1");
+	sleep 1000;
+	npctalk "I can't believe you beat me...";
+	sleep 3000;
+	npctalk "It can't be!";
+	sleep 3000;
+	npctalk "This can't be! I only wanted to get more zeny!";
+	sleep 3000;
+	npctalk "Now I'll be the laughing stock of all of Geffen!";
+	sleep 3000;
+	npctalk "Ah! Ahhh!! It can't be!!!";
+	sleep 1000;
+	hideonnpc instance_npcname("Geffen Bully#n1");
+	sleep 1000;
+	disablenpc instance_npcname("Geffen Bully#n1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Geffen Bully#n1");
+	sleep 1000;
+	npctalk "You! How much zeny do you have left?";
+	sleep 3000;
+	npctalk "You messed with me once before!";
+	sleep 3000;
+	npctalk "And now I've left you speechless!";
+	sleep 3000;
+	npctalk "Never show your face in Geffen again!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,114,50,4	script	Geffen Shoplifter#n1	671,{
+end;
+
+OnActivate:
+	npctalk "There are so many people gathered here.";
+	sleep 3000;
+	npctalk "I thought there'd be something good to steal here";
+	sleep 3000;
+	npctalk "But I can't steal anything because of all the attention it'll cause.";
+	sleep 3000;
+	npctalk "Ah... This is no good...";
+	sleep 2000;
+	npctalk "I guess I'll just participate in the tournament...";
+	sleep 2000;
+	npctalk "Well~! Let's win anyway!";
+	sleep 2000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Geffen Shoplifter#n1");
+	sleep 1000;
+	npctalk "Oh my god... I was defeated.";
+	sleep 2000;
+	npctalk "I have been spending too much time stealing.";
+	sleep 2000;
+	npctalk "My battle power has been reduced.";
+	sleep 3000;
+	npctalk "Ah... It can't be...";
+	sleep 2000;
+	npctalk "I'll need to train more if I want to keep my position as Guild Leader...";
+	sleep 3000;
+	npctalk "Fine, I'm outta here!";
+	sleep 1000;
+	hideonnpc instance_npcname("Geffen Shoplifter#n1");
+	sleep 1000;
+	disablenpc instance_npcname("Geffen Shoplifter#n1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Geffen Shoplifter#n1");
+	sleep 1000;
+	npctalk "I know, I'm really good.";
+	sleep 3000;
+	npctalk "Okay! Time to keep winning~!!";
+	sleep 3000;
+	npctalk "I should take as many rewards as possible~!";
+	sleep 3000;
+	npctalk "You should go home~ Bye~!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+}
+
+1@ge_st,114,50,4	script	Faymont#1	672,{
+end;
+
+OnActivate:
+	enablenpc instance_npcname("Faymont#1");
+	npctalk "Well would you look at that... this competitor seems...";
+	sleep 2000;
+	npctalk "Like he's just gotten lucky up until now!";
+	sleep 3000;
+	npctalk "I really don't want to get my hands dirty.";
+	sleep 3000;
+	npctalk "I'll handle this in a sophisticated way...";
+	sleep 3000;
+	npctalk "Ahem... Looks like we're about to start now.";
+	sleep 3000;
+	npctalk "Maybe if I finish this quickly, I can buy that new headdress...";
+	npctalk "Come on!", instance_npcname("Prontera Spectator#a1");
+	sleep 2000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Faymont#1");
+	sleep 1000;
+	npctalk "How could... How could I lose?!...";
+	sleep 2000;
+	npctalk "And to the one "+('sex ? "guy" : "girl")+" with no taste...";
+	sleep 2000;
+	npctalk "How shameful...";
+	sleep 2000;
+	npctalk "My fans will be disappointed at me for losing...";
+	sleep 3000;
+	npctalk "Ahh.... What's the quickest way out of here?";
+	sleep 3000;
+	npctalk "I can't show my face around here any longer...";
+	sleep 1000;
+	hideonnpc instance_npcname("Faymont#1");
+	sleep 1000;
+	movenpc instance_npcname("Faymont#z1_0et"),53,90;
+	disablenpc instance_npcname("Faymont#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Faymont#1");
+	sleep 1000;
+	npctalk "Can you see the difference between you and me? Noble and shallow.";
+	sleep 3000;
+	npctalk "This tournament is pointless.";
+	sleep 3000;
+	npctalk "What kind of shallow man will I have to fight with next?";
+	sleep 3000;
+	npctalk "No matter, I'll just prepare for the next match.";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+}
+
+1@ge_st,114,50,4	script	Ordre#1	673,{
+end;
+
+OnActivate:
+	enablenpc instance_npcname("Ordre#1");
+	npctalk "One! Two! One! Two!";
+	sleep 2000;
+	npctalk "Let's climb the ladder one step at a time!";
+	sleep 2000;
+	npctalk "I've been training so hard!";
+	sleep 3000;
+	npctalk "I'm not about to give up now!";
+	sleep 3000;
+	npctalk "I can't lose after coming so far";
+	sleep 3000;
+	npctalk "Now~! Let's do our best for those in the audience!";
+	sleep 3000;
+	npctalk "Shall we begin?";
+	npctalk "What? Is this really the level of competition?",instance_npcname("Chaos#a2");
+	sleep 2000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Ordre#1");
+	sleep 1000;
+	npctalk "Defeated...";
+	sleep 2000;
+	npctalk "I need more practice...";
+	sleep 2000;
+	npctalk "I need more training...";
+	sleep 3000;
+	npctalk "I'll train twice as hard as before!";
+	sleep 3000;
+	npctalk "I must start over.";
+	sleep 2000;
+	npctalk "Let's go.";
+	sleep 1000;
+	hideonnpc instance_npcname("Ordre#1");
+	sleep 1000;
+	movenpc instance_npcname("Ordre#z1_0et"),85,68;
+	disablenpc instance_npcname("Ordre#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Ordre#1");
+	sleep 1000;
+	npctalk "I won!";
+	sleep 3000;
+	npctalk "As long as you try... you can get what you want!";
+	sleep 3000;
+	npctalk "Let's show respect to this competition!";
+	sleep 3000;
+	npctalk "I'm ready for the next match!!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+}
+
+
+1@ge_st,114,50,4	script	Blut Hase#1	674,{
+end;
+
+OnActivate:
+	npctalk "You've gotten this far.";
+	sleep 2000;
+	npctalk "I imagine by now the rest of the competitors are quite strong";
+	sleep 3000;
+	npctalk "But I did not build my reputation for nothing!";
+	sleep 3000;
+	npctalk "Fear my Bunny Band!";
+	sleep 3000;
+	npctalk "You are but an obstacle in my way!";
+	sleep 1000;
+	donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+	sleep 2000;
+	npctalk "You will be sacrificed on my path to victory!";
+	sleep 1000;
+	donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+	sleep 1000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Blut Hase#1");
+	sleep 1000;
+	npctalk "I will not lose!";
+	sleep 1000;
+	npctalk "My reputation... My popularity...";
+	sleep 3000;
+	npctalk "I will lose them both...";
+	sleep 3000;
+	npctalk "I cannot accept this result!";
+	sleep 3000;
+	npctalk "I will regain my reputation!";
+	sleep 2000;
+	npctalk "Next time I will be the winner!";
+	sleep 1000;
+	hideonnpc instance_npcname("Blut Hase#1");
+	sleep 1000;
+	movenpc instance_npcname("Blut Hase#z1_0et"),111,62;
+	disablenpc instance_npcname("Blut Hase#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Blut Hase#1");
+	sleep 1000;
+	npctalk "In terms of reputation or popularity...";
+	sleep 3000;
+	npctalk "It was impossible for me to lose!";
+	sleep 3000;
+	npctalk "I will be known as Ultra Rabbit's Blood instead of Rabbit's Bloody Ear now!";
+	sleep 3000;
+	npctalk "Ha ha ha ha ha~!!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+}
+
+1@ge_st,114,50,4	script	Kuro Akuma#1	675,{
+end;
+OnActivate:
+	npctalk "Finally the 7th game has started ~!";
+	sleep 2000;
+	npctalk "You've never met anyone as evil as me ~!";
+	sleep 3000;
+	npctalk "You are lucky~!";
+	sleep 3000;
+	npctalk "This will be a good experience for you~!";
+	sleep 3000;
+	npctalk "Nobody who's faced me has ever survived~!";
+	sleep 3000;
+	npctalk "I will destroy you if I must~!";
+	sleep 1000;
+	donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+	sleep 1000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Kuro Akuma#1");
+	sleep 1000;
+	npctalk "Oh my god...";
+	sleep 3000;
+	npctalk "I am The Devil's Tooth...";
+	sleep 2000;
+	npctalk "And I have lost this match...";
+	sleep 3000;
+	npctalk "Yach, yikes, ah, ah, ah! Yikes ah, ah, ah!!";
+	sleep 3000;
+	npctalk "I can't lose! I'll have my revenge!";
+	sleep 2000;
+	hideonnpc instance_npcname("Kuro Akuma#1");
+	sleep 1000;
+	movenpc instance_npcname("Kuro Akuma#z1_0et"),104,42;
+	disablenpc instance_npcname("Kuro Akuma#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Kuro Akuma#1");
+	sleep 1000;
+	npctalk "How is it~! My Power~!";
+	sleep 3000;
+	npctalk "I took pity on you and decided not to send you to hell~!";
+	sleep 3000;
+	npctalk "You should appreciate that!";
+	sleep 3000;
+	npctalk "Now, I shall prepare for my next match~!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,114,50,4	script	Ifodes#1	676,{
+end;
+OnActivate:
+	npctalk "At long last, the 8th game has started.";
+	sleep 3000;
+	npctalk "No one can pierce my defenses!";
+	sleep 3000;
+	npctalk "But I can surely get past yours.";
+	sleep 2000;
+	npctalk "Therefore, you stand no chance!";
+	sleep 2000;
+	npctalk "Once the match has started, your laughter will turn into tears!";
+	sleep 2000;
+	npctalk "Shall we start?";
+	sleep 1000;
+	donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+	sleep 1000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Ifodes#1");
+	sleep 1000;
+	npctalk "I will not lose this tournament!";
+	sleep 3000;
+	npctalk "This is nonsense.";
+	sleep 2000;
+	npctalk "How could this happen?";
+	sleep 3000;
+	npctalk "I can't understand!";
+	sleep 3000;
+	npctalk "Arrgggh!";
+	sleep 2000;
+	hideonnpc instance_npcname("Ifodes#1");
+	sleep 1000;
+	movenpc instance_npcname("Ifodes#z1_0et"),115,66;
+	disablenpc instance_npcname("Ifodes#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Ifodes#1");
+	sleep 1000;
+	npctalk "You can't penetrate my defense!";
+	sleep 3000;
+	npctalk "You can't even protect yourself from my powerful attacks!";
+	sleep 3000;
+	npctalk "Wahahaha~!!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,114,50,4	script	Licheniyes#1	677,{
+end;
+OnActivate:
+	npctalk "Ho ho ho~!!";
+	sleep 3000;
+	npctalk "The competitor of the 9th match looks scary~!";
+	sleep 3000;
+	npctalk "You don't scare me though~!";
+	sleep 2000;
+	npctalk "I'm a lady~!";
+	sleep 2000;
+	npctalk "But once this match starts...!";
+	sleep 2000;
+	npctalk "*Giggling*... I will bite you!";
+	sleep 1000;
+	npctalk "good horror players ...", instance_npcname("Payon Spectator#a1");
+	sleep 1000;
+	npctalk "Do not be afraid ah, dark horse contestant!", instance_npcname("Prontera Spectator#a1");
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Licheniyes#1");
+	sleep 1000;
+	npctalk "You try to beat me with cruelty, a lady like me...";
+	sleep 3000;
+	npctalk "I am very sad...";
+	sleep 2000;
+	npctalk "Sob...";
+	sleep 3000;
+	npctalk "But, next time we meet...";
+	sleep 3000;
+	npctalk "I will destroy you with little effort!";
+	sleep 1000;
+	hideonnpc instance_npcname("Licheniyes#1");
+	sleep 1000;
+	movenpc instance_npcname("Licheniyes#z1_0et"),137,53;
+	disablenpc instance_npcname("Licheniyes#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Licheniyes#1");
+	sleep 1000;
+	npctalk "Oh ho ho ho~~! I knew I would win~!";
+	sleep 3000;
+	npctalk "Oh my! Oh my! I am very sorry~!";
+	sleep 3000;
+	npctalk "Ah, Ah~ I need to prepare next match!";
+	sleep 3000;
+	npctalk "I'm so giddy to find out who I'm up against next!~";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,114,50,4	script	Odoric#1	678,{
+end;
+OnActivate:
+	npctalk "Lu lu~ What a fun tournament!";
+	sleep 3000;
+	npctalk "Dance~ Dance~ Bewitching dance~!";
+	sleep 3000;
+	npctalk "Everyone is mesmerized by my magical dance!";
+	sleep 3000;
+	npctalk "You will be captured by my charm~!";
+	sleep 2000;
+	npctalk "Now, feast on my magical dance!";
+	sleep 2000;
+	npctalk "Lah, Lah, Lah, Lah~~!";
+	sleep 1000;
+	npctalk "How beautiful!", instance_npcname("Veins Spectator#a1");
+	sleep 1000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Odoric#1");
+	sleep 1000;
+	npctalk "Sob...";
+	sleep 3000;
+	npctalk "I lost, even though I did my best...";
+	sleep 2000;
+	npctalk "My charming poses...";
+	sleep 3000;
+	npctalk "They didn't work... Sob...";
+	sleep 3000;
+	npctalk "I'm so sad that I lost here...";
+	sleep 2000;
+	npctalk "I have to leave~!";
+	sleep 1000;
+	hideonnpc instance_npcname("Odoric#1");
+	sleep 1000;
+	movenpc instance_npcname("Odoric#z1_0et"),158,63;
+	disablenpc instance_npcname("Odoric#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Odoric#1");
+	sleep 1000;
+	npctalk "Even you... Against my fascinating dance moves...";
+	sleep 3000;
+	npctalk "You're nothing special~!!";
+	sleep 3000;
+	npctalk "You did a good job getting to this point~!!";
+	sleep 3000;
+	npctalk "I need to get ready for my next match now~";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,114,50,4	script	Ju#1	679,{
+end;
+OnActivate:
+	npctalk "Another match has started...";
+	sleep 3000;
+	npctalk "A real battle is a serious matter...";
+	sleep 3000;
+	npctalk "It is something to be feared!";
+	sleep 3000;
+	npctalk "All of these novices who spent their time only training";
+	sleep 3000;
+	npctalk "They will never know the true meaning of battle!";
+	sleep 3000;
+	npctalk "I will make sure to handle them as fast as possible.";
+	sleep 3000;
+	npctalk "My heart is beating so fast! I'm so nervous!",instance_npcname("Lydia#a2");
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Ju#1");
+	sleep 1000;
+	npctalk "Sob... defeated...";
+	sleep 3000;
+	npctalk "You're stronger than I thought...";
+	sleep 3000;
+	npctalk "You must have experienced many cruel battles.";
+	sleep 3000;
+	npctalk "Sob... Victory was the only thing in my mind...";
+	sleep 3000;
+	npctalk "I wish you luck on your following matches.";
+	sleep 3000;
+	npctalk "You better not lose after defeating me!";
+	sleep 2000;
+	hideonnpc instance_npcname("Ju#1");
+	sleep 1000;
+	movenpc	instance_npcname("Ju#z1_0et"),178,91;
+	disablenpc instance_npcname("Ju#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Ju#1");
+	sleep 1000;
+	npctalk "This is not a game.";
+	sleep 3000;
+	npctalk "This is real battle.";
+	sleep 3000;
+	npctalk "Yeahhhh !!";
+	sleep 3000;
+	npctalk "The real game is battle!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,114,50,4	script	Dwigh#1	680,{
+end;
+OnActivate:
+	npctalk "Semi-Finals huh...";
+	sleep 2000;
+	npctalk "I can see the end...";
+	sleep 3000;
+	npctalk "You must be a decent fighter, making it all the way here...";
+	sleep 3000;
+	npctalk "But I came to here for my students.";
+	sleep 3000;
+	npctalk "People who are important to me are watching this battle!";
+	sleep 3000;
+	npctalk "Wow, teacher!",instance_npcname("Magic Academy Student#22");
+	npctalk "Teacher, show 'em what you've got!",instance_npcname("Magic Academy Student#3");
+	npctalk "What a great teacher, I want to be like her!",instance_npcname("Magic Academy Student#4");
+	sleep 2000;
+	npctalk "I can't imagine teacher losing here~!",instance_npcname("Magic Academy Student#1");
+	npctalk "Everyone cheer loudly for our teacher!",instance_npcname("Magic Academy Student#5");
+	sleep 2000;
+	npctalk "I can't lose in front of my students!";
+	sleep 2000;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	sleep 1000;
+	npctalk "Ahh!~ Go teacher~!!",instance_npcname("Magic Academy Student#5");
+	sleep 1000;
+	npctalk "Go! Go! Teacher~!!",instance_npcname("Magic Academy Student#22");
+	npctalk "Teacher! She's the one~!!",instance_npcname("Magic Academy Student#3");
+	npctalk "If she can't do it~!!",instance_npcname("Magic Academy Student#4");
+	npctalk "No one can~!!",instance_npcname("Magic Academy Student#1");
+	npctalk "Teacher~!!",instance_npcname("Magic Academy Student#5");
+	end;
+
+OnDefeat:
+	hideoffnpc instance_npcname("Dwigh#1");
+	sleep 1000;
+	npctalk "If I had just won one more game, I could have been in the finals...";
+	sleep 3000;
+	npctalk "I'm ashamed for losing in front of my students...";
+	sleep 3000;
+	npctalk "But the competition was too strong.";
+	sleep 3000;
+	npctalk "I admit defeat.";
+	sleep 3000;
+	npctalk "According to my students, Fenrir's strength should still be above me, I wish you luck.";
+	sleep 2000;
+	hideonnpc instance_npcname("Dwigh#1");
+	sleep 1000;
+	movenpc instance_npcname("Dwigh#z1_0et"),120,98;
+	disablenpc instance_npcname("Dwigh#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Dwigh#1");
+	sleep 1000;
+	npctalk "Ugh... It was a tough match.";
+	sleep 3000;
+	npctalk "But I am happy to have won.";
+	sleep 3000;
+	npctalk "I will do my best for my students.";
+	sleep 3000;
+	npctalk "I have just one more match to win!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,114,50,4	script	Fay Kanavian#1	665,{
+end;
+OnActivate:
+	enablenpc instance_npcname("#paycanatalk");
+	end;
+OnDefeat:
+	hideoffnpc instance_npcname("Fay Kanavian#1");
+	killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomJR";
+	killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomDead";
+	enablenpc instance_npcname("#paycanatalk2");
+	end;
+
+OnTalk1:
+    cutin "paycana_a", 2;
+    npctalk "You~ I've never heard about you before~!";
+    sleep2 4000;
+    npctalk "You must know, all of the spectators are cheering for me!";
+    sleep2 4000;
+    npctalk "If you want to keep your life you should run now~!";
+    sleep2 4000;
+    npctalk "Unless you want to experience the strength of my masterpiece, Alphonse!";
+    sleep2 4000;
+    npctalk "You HAVE seen my Alphonse, right?";
+    sleep2 4000;
+    donpcevent instance_npcname("#Talkcontrol")+"::OnRndtalk";
+    sleep2 1000;
+    npctalk "Once this match starts, you will see his full power!";
+    sleep2 2000;
+    cutin "", 255;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnTalk2:
+    cutin "paycana_b ", 2;
+    npctalk "I actually lost...";
+    sleep2 3000;
+    npctalk "Alphonse... I gave you my heart and soul...";
+    sleep2 3000;
+    npctalk "I was supposed to make it to the finals...";
+    sleep2 3000;
+    npctalk "And face Fenris Fenrir...";
+    sleep2 3000;
+    npctalk "I wanted to fight her so bad!";
+    sleep2 2000;
+    cutin "", 255;
+	hideonnpc instance_npcname("Fay Kanavian#1");
+	sleep 1000;
+	movenpc instance_npcname("Fay Kanavian#z1_0et"),117,72;
+	disablenpc instance_npcname("Fay Kanavian#1");
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Fay Kanavian#1");
+	sleep 1000;
+	npctalk "My abilities are amazing~!";
+	sleep 3000;
+	npctalk "This tournament is but a game to me, and not at all important.";
+	sleep 3000;
+	npctalk "But Fenrir has reached the finals by winning every single round...";
+	sleep 3000;
+	npctalk "I will defeat her and win this tournament!";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,108,50,4	script	#paycanatalk	139,25,25,{
+end;
+
+OnTouch:
+    doevent instance_npcname("Fay Kanavian#1")+"::OnTalk1";
+    disablenpc instance_npcname("#paycanatalk");
+    end;
+
+OnInstanceInit:
+    disablenpc instance_npcname("#paycanatalk");
+    end;
+
+}
+
+1@ge_st,108,50,4	script	#paycanatalk2	139,25,25,{
+end;
+
+OnTouch_:
+    doevent instance_npcname("Fay Kanavian#1")+"::OnTalk2";
+    disablenpc instance_npcname("#paycanatalk2");
+    end;
+
+OnInstanceInit:
+    disablenpc instance_npcname("#paycanatalk2");
+    end;
+
+}
+
+1@ge_st,114,50,4	script	Fenrir#f	664,{
+    end;
+OnActivate:
+    enablenpc instance_npcname("#fenrirtalk");
+    end;
+OnDefeat:
+    hideoffnpc instance_npcname("Fenrir#f");
+    enablenpc instance_npcname("#fenrirtalk2");
+    end;
+
+OnTalk1:
+    cutin "fenrir_b", 1;
+    npctalk "The final match...";
+    sleep2 1000;
+    npctalk "Fenrir is going to win without a doubt~!", instance_npcname("Payon Spectator#a1");
+    sleep2 1000;
+    npctalk "I am Fenris Fenrir.";
+    sleep2 1000;
+    npctalk "Hey, do your best!",instance_npcname("Iris#a2");
+    sleep2 2000;
+    npctalk "You... made it here.";
+    sleep2 2000;
+    npctalk "I am sure that this will be a hard fought match.";
+    sleep2 1000;
+    npctalk "Wow! I'm so excited!",instance_npcname("Lydia#a2");
+    npctalk "Fenrir, please give me an autograph!", instance_npcname("Prontera Spectator#a2");
+    sleep2 2000;
+    npctalk "I will do my best to fight you fairly.";
+	sleep2 2000;
+    npctalk "Then, should we start the final match?";
+    cutin "", 255;
+	donpcevent instance_npcname("#GMTcontroller")+"::OnStart";
+	end;
+
+OnTalk2:
+    cutin "fenrir_a", 1;
+    npctalk "Uh... I am defeated.";
+    sleep2 2000;
+    npctalk "How did you get to be so strong?";
+    sleep2 3000;
+    npctalk "I am completely defeated...";
+    sleep2 3000;
+    npctalk "This world is full of surprises...";
+    sleep2 3000;
+    npctalk "Congratulations on your victory "+'charname$+".";
+    sleep2 2000;
+    npctalk "However, next time, I won't lose!";
+    sleep2 2000;
+    cutin "", 255;
+	if (checkquest(9307) != -1)
+		changequest 9307,9308;
+    warp instance_mapname("1@ge_st"), 109,50;
+	donpcevent instance_npcname("#win")+"::OnEnable";
+	movenpc instance_npcname("#gefmagic_warp02"),120,213;
+	end;
+	
+OnVictory:
+	hideoffnpc instance_npcname("Fenrir#f");
+	sleep 1000;
+	npctalk "Thank you~ It was a good match.";
+	sleep 3000;
+	npctalk "It feels good to be the winner.";
+	sleep 3000;
+	npctalk "I hope to see you again.";
+	sleep 3000;
+	npctalk "I have to go... My friends are waiting for me.";
+	sleep 5000;
+	instance_warpall instance_mapname("1@gef"),120,61, instance_id();
+	end;
+	
+}
+
+1@ge_st,108,50,4	script	#fenrirtalk	139,25,25,{
+end;
+
+OnTouch:
+    doevent instance_npcname("Fenrir#f")+"::OnTalk1";
+    disablenpc instance_npcname("#fenrirtalk");
+    end;
+
+OnInstanceInit:
+    disablenpc instance_npcname("#fenrirtalk");
+    end;
+
+}
+
+1@ge_st,108,50,4	script	#fenrirtalk2	139,25,25,{
+end;
+
+OnTouch_:
+    doevent instance_npcname("Fenrir#f")+"::OnTalk2";
+    disablenpc instance_npcname("#fenrirtalk2");
+    end;
+
+OnInstanceInit:
+    disablenpc instance_npcname("#fenrirtalk2");
+    end;
+
+}
+
+1@ge_st,1,1,1	script	#win	CLEAR_NPC,{
+end;
+
+OnEnable:
+	disablenpc instance_npcname("Fenrir#f");
+	movenpc instance_npcname("Arhi#q1"), 104, 53;
+	movenpc instance_npcname("Dio Anemos#q1"), 100, 49;
+	movenpc instance_npcname("Faymont#q1"), 102, 46;
+	movenpc instance_npcname("Ordre#q1"), 104, 44;
+	movenpc instance_npcname("Blut Hase#q1"), 112, 45;
+	movenpc instance_npcname("Kuro Akuma#q1"), 116, 46;
+	movenpc instance_npcname("Ifodes#q1"), 115, 53;
+	movenpc instance_npcname("Licheniyes#q1"), 116, 49;
+	movenpc instance_npcname("Odoric#q1"), 112, 53;
+	movenpc instance_npcname("Ju#q1"), 109, 54;
+	movenpc instance_npcname("Dwigh#q1"), 106, 50;
+	movenpc instance_npcname("Fay Kanavian#q1"), 107, 48;
+	movenpc instance_npcname("Fenrir#q1"), 112, 50;
+	hideoffnpc instance_npcname("Tournament Guide#gefMT");
+	hideoffnpc instance_npcname("Geffen Academy Master");
+	sleep 1000;
+	npctalk "The other contestants want to congratulate you on winning as well!",instance_npcname("Fenrir#q1");
+	end;
+
+OnInstanceInit:
+end;
+}
+
+1@ge_st,1,1,6	script	Arhi#q1	670,{
+	switch(rand(1,2)){
+		case 1:
+			showscript "Arhi : Tsk, I will come back when I get stronger!",getnpcid(0);//DONE
+			break;
+		case 2:
+			showscript "Arhi : Congratulations~!",getnpcid(0);//DONE
+			break;
+	}
+	end;
+}
+1@ge_st,1,1,6	script	Dio Anemos#q1	669,{
+	
+		switch(rand(1,2)){
+		case 1:
+			showscript "Dio Anemos : I'm suddenly really hungry...",getnpcid(0);//DONE
+			break;
+		case 2:
+			showscript "Dio Anemos : Congratulations~! It is your treat~!",getnpcid(0);//DONE
+			break;
+	}
+	end;
+}
+1@ge_st,1,1,0	script	Faymont#q1	672,{
+	showscript "Faymont : Awesome fighting ability!",getnpcid(0);//DONE
+	end;
+}
+1@ge_st,1,1,0	script	Ordre#q1	673,{
+	switch(rand(1,2)){
+		case 1:
+			showscript "Ordre : Simply amazing!",getnpcid(0);//DONE
+			break;
+		case 2:
+			showscript "Ordre : I can only imagine how long you have trained yourself to become this strong.",getnpcid(0);//DONE
+			break;
+	}	
+	end;
+}
+1@ge_st,1,1,2	script	Blut Hase#q1	674,{
+	switch(rand(1,2)){
+		case 1:
+			showscript "Blut Hase : You must be famous, right?",getnpcid(0);//DONE
+			break;
+		case 2:
+			showscript "Blut Hase : Well... Congratulations anyway...",getnpcid(0);//DONE
+			break;
+	}	
+	end;
+}
+1@ge_st,1,1,2	script	Kuro Akuma#q1	675,{
+	showscript "Kuro Akuma : So... very strong...",getnpcid(0);//DONE
+	end;
+}
+1@ge_st,1,1,4	script	Ifodes#q1	676,{
+	switch(rand(1,2)){
+		case 1:
+			showscript "Ifodes : Your talents suit your chivalry.",getnpcid(0);//DONE
+			break;
+		case 2:
+			showscript "Ifodes : You were great competition. Congratulations!",getnpcid(0);//DONE
+			break;
+	}	
+	end;
+}
+1@ge_st,1,1,4	script	Licheniyes#q1	677,{
+	showscript "Licheniyes : Awesome victory~!",getnpcid(0);//DONE
+	end;
+}
+1@ge_st,1,1,4	script	Odoric#q1	678,{
+	switch(rand(1,2)){
+		case 1:
+			showscript "Odoric : Simply amazing.",getnpcid(0);//DONE
+			break;
+		case 2:
+			showscript "Odoric : Congratulations on your victory~!",getnpcid(0);//DONE
+			break;
+	}	
+	end;
+}
+1@ge_st,1,1,4	script	Ju#q1	679,{
+	switch(rand(1,2)){
+		case 1:
+			showscript "Ju : You... are... strong... I... won't... forget... you...",getnpcid(0);//DONE	
+			break;
+		case 2:
+			showscript "Ju : I've never lost before. But you are a worthy foe.",getnpcid(0);//DONE
+			break;
+	}
+	end;
+}
+1@ge_st,1,1,6	script	Dwigh#q1	680,{
+	showscript "Dwigh : Really good fight, you've got exceptional strength!",getnpcid(0);
+	end;
+}
+1@ge_st,1,1,0	script	Fay Kanavian#q1	665,{
+	switch(rand(1,2)){
+		case 1:
+			showscript "Fay Kanavian : I didn't think that Fenrir would lose...",getnpcid(0);//DONE
+			break;
+		case 2:
+			showscript "Fay Kanavian : Next time we fight, Alphonse will be stronger!",getnpcid(0);//DONE
+			break;
+	}
+	end;
+}
+1@ge_st,1,1,4	script	Fenrir#q1	664,{
+	switch(rand(1,2)){
+		case 1:
+			showscript "Fenrir : All of my colleagues are so excited about your victory. They are eager to meet you.",getnpcid(0);//DONE
+			break;
+		case 2:
+			showscript "Fenrir : You defeated me in a fair fight. You are very strong.",getnpcid(0);//DONE
+			break;
+	}	
+	end;
+}
+
+-	script	#EVT_GMT	-1,{
+OnPCDieEvent:
+	if (strcharinfo(3) == "1@ge_st" || strcharinfo(3) == instance_mapname("1@ge_st") ) {
+		dispbottom "You've fallen! You have 10 seconds to get up or the match will be over!";
+		sleep2 10000;
+		if (Hp >= 1) {
+			end; 
+		}
+		if (Hp == 0) {
+			instance_warpall instance_mapname("1@ge_st"),104,50;
+			donpcevent instance_npcname("#DEATHGMT")+"::OnLoseRound";
+			donpcevent instance_npcname("#GMTcontroller")+"::OnStop";
+			end;
+		}
+	}
+	
+	end;
+}
+
+1@ge_st,1,1,1	script	#DEATHGMT	-1,{
+	end;
+OnInstanceInit:
+	enablenpc instance_npcname("#DEATHGMT");
+	end;
+	
+OnLoseRound:
+	killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTcontroller")+"::OnMobDead";
+	movenpc instance_npcname("#gefmagic_warp02"),120,213;
+	movenpc instance_npcname("#invisGMTquests"),120,61;
+	
+	donpcevent instance_npcname("Fenrir#e1")+"::OnEnable";
+	donpcevent instance_npcname("Chaos#e1")+"::OnEnable";
+	donpcevent instance_npcname("Iris#e1")+"::OnEnable";
+	donpcevent instance_npcname("Lydia#e1")+"::OnEnable";
+	donpcevent instance_npcname("Loki#e1")+"::OnEnable";
+	
+		
+	switch ('GMT_1QUE) {
+		case 11:
+			.@defeat$ = "Arhi";
+			break;
+		case 12:
+			.@defeat$ = "Dio Anemos";
+			break;
+		case 13:
+			if ('GMTQuest == 1) {
+				.@defeat$ = "Geffen Gangster";
+			}
+			else if ('GMTQuest == 2) {
+				.@defeat$ = "Gefen Bully";
+			}
+			else {
+				.@defeat$ = "Geffen Shoplifter";
+			}
+			break;
+		case 14:
+			.@defeat$ = "Feymont";
+			break;
+		case 15:
+			.@defeat$ = "Ordre";
+			break;
+		case 16:
+			.@defeat$ = "Blut Hase";
+			break;
+		case 17:
+			.@defeat$ = "Kuro Akuma";
+			break;
+		case 18:
+			.@defeat$ = "Ifodes";
+			break;
+		case 19:
+			.@defeat$ = "Licheniyes";
+			break;
+		case 20:
+			.@defeat$ = "Odoric";
+			break;
+		case 21:
+			.@defeat$ = "Ju";
+			break;
+		case 22:
+			if ('half) {
+				.@defeat$ = "Dwigh";
+			} else {
+				.@defeat$ = "Fay Kanavian";
+			}
+			break;
+		case 23:
+			.@defeat$ = "Fenrir";
+			break;
+		default:
+			break;
+	}
+	
+	npctalk ""+.@defeat$+" has won the "+callfunc("F_GetNumSuffix",('GMT_1QUE-10))+" Round of Group A!",instance_npcname("Geffen Academy Master");
+	
+		switch ('GMT_1QUE) {
+			case 11:
+				enablenpc instance_npcname("Arhi#1");
+				donpcevent instance_npcname("Arhi#1")+"::OnVictory";
+				break;
+			case 12:
+				enablenpc instance_npcname("Dio Anemos#1");
+				donpcevent instance_npcname("Dio Anemos#1")+"::OnVictory";
+				break;
+			case 13:
+				if ('GMTQuest == 1) {
+					enablenpc instance_npcname("Geffen Gangster#n1");
+					donpcevent instance_npcname("Geffen Gangster#n1")+"::OnVictory";
+					break;
+				} else if ('GMTQuest == 2) {
+					enablenpc instance_npcname("Geffen Bully#n1");
+					donpcevent instance_npcname("Geffen Bully#n1")+"::OnVictory";
+					break;
+				} else {
+					enablenpc instance_npcname("Geffen Shoplifter#n1");
+					donpcevent instance_npcname("Geffen Shoplifter#n1")+"::OnVictory";
+					break;
+				}
+				break;
+			case 14:
+				enablenpc instance_npcname("Faymont#1");
+				donpcevent instance_npcname("Faymont#1")+"::OnVictory";
+				break;
+			case 15:
+				enablenpc instance_npcname("Ordre#1");
+				donpcevent instance_npcname("Ordre#1")+"::OnVictory";
+				break;
+			case 16:
+				enablenpc instance_npcname("Blut Hase#1");
+				donpcevent instance_npcname("Blut Hase#1")+"::OnVictory";
+				break;
+			case 17:
+				enablenpc instance_npcname("Kuro Akuma#1");
+				donpcevent instance_npcname("Kuro Akuma#1")+"::OnVictory";
+				break;
+			case 18:
+				enablenpc instance_npcname("Ifodes#1");
+				donpcevent instance_npcname("Ifodes#1")+"::OnVictory";
+				break;
+			case 19:
+				enablenpc instance_npcname("Licheniyes#1");
+				donpcevent instance_npcname("Licheniyes#1")+"::OnVictory";
+				break;
+			case 20:
+				enablenpc instance_npcname("Odoric#1");
+				donpcevent instance_npcname("Odoric#1")+"::OnVictory";
+				break;
+			case 21:
+				enablenpc instance_npcname("Ju#1");
+				donpcevent instance_npcname("Ju#1")+"::OnVictory";
+				break;
+			case 22:
+				if ('half) {
+					enablenpc instance_npcname("Dwigh#1");
+					donpcevent instance_npcname("Dwigh#1")+"::OnVictory";
+					break;
+				} else {
+					enablenpc instance_npcname("Fay Kanavian#1");
+					donpcevent instance_npcname("Fay Kanavian#1")+"::OnVictory";
+					
+						if ('HomID) {
+							killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomJR";
+							killmonster instance_mapname("1@ge_st"),instance_npcname("#GMTHomun")+"::OnHomDead";
+							'HomID = 0;
+						}
+						
+					break;
+				}
+				break;
+			case 23:
+				enablenpc instance_npcname("Fenrir#f");
+				donpcevent instance_npcname("Fenrir#f")+"::OnVictory";
+				break;
+		}
+	
+	end;
+	
+}
+
+1@gef,115,105,6	script	Loki#e1	4_M_ROKI2,{
+	.@n$ = "[ Loki ]";
+		
+	if(checkquest(9314) != -1) {
+		cutin "ep14_roki01.bmp", 2;
+		mes .@n$;
+		mes "That's a pretty good score.";
+		next;
+		mes .@n$;
+		mes "Please take this present.";
+		setarray .items,501,502,503,504,505,506,608,607;
+		getitem .items[rand(0,7)],1;
+		erasequest 9314;
+		cutin "", 255;
+		end;
+	}
+	
+	cutin "ep14_roki01", 2;
+	mes .@n$;
+	mes "Let's take a rain check on our match.";
+	mes "We'll fight next time we meet...";
+	close2;
+	cutin "", 255;
+	end;
+
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+	
+OnEnable:
+	hideoffnpc instance_npcname(strnpcinfo(0));
+	end;
+	
+}
+
+1@gef,117,108,6	script	Lydia#e1	4_F_LYDIA,{
+
+	.@n$ = "[ Lydia ]";
+		
+	if(checkquest(9312) != -1) {
+		cutin "lydia_a.bmp",2;
+		mes .@n$;
+		mes "Good game~!";
+		next;
+		mes .@n$;
+		mes "I want to give you a reward even if you lost~!";
+		setarray .items,501,502,503,504,505,506,608,607;
+		getitem .items[rand(0,7)],1;
+		erasequest 9312;
+		cutin "", 255;
+		end;
+	}
+	cutin "lydia_a.bmp",2;
+	mes .@n$;
+	mes "I hope to see you again.";
+	close2;
+	cutin "", 255;
+	end;
+	
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+	
+OnEnable:
+	hideoffnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gef,125,105,4	script	Iris#e1	4_F_IRIS,{
+
+	.@n$ = "[ Iris ]";
+		
+	if(checkquest(9310) != -1) {
+		cutin "hero_iris_01.bmp",2;
+		mes .@n$;
+		mes "I enjoyed watching your round~";
+		mes "Bad luck this year huh?~";
+		mes "Wish you luck next year.";
+		next;
+		mes .@n$;
+		mes "Take this to cheer you up.";
+		setarray .items,501,502,503,504,505,506,608,607;
+		getitem .items[rand(0,7)],1;
+		erasequest 9310;
+		cutin "", 255;
+		end;
+	}
+	
+	cutin "hero_iris_01.bmp",2;
+	mes .@n$;
+	mes "Think we'll meet again?";
+	close2;
+	cutin "", 255;
+	end;
+	
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+	
+OnEnable:
+	hideoffnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gef,123,108,4	script	Chaos#e1	4_M_CHAOS,{
+
+	.@n$ = "[ Chaos ]";
+	
+		if(checkquest(9311) != -1) {
+			cutin "hero_chaos_01.bmp",2;
+			mes .@n$;
+			mes "That was a good match~!";
+			mes "Not bad at all~!";
+			next;
+			mes .@n$;
+			mes "You have been very impressive today.";
+			mes "I want to give you a present~!";
+			setarray .items,501,502,503,504,505,506,608,607;
+			getitem .items[rand(0,7)],1;
+			erasequest 9311;
+			cutin "", 255;
+			end;
+		}
+	cutin "hero_chaos_01.bmp",2;
+	mes .@n$;
+	mes "I hope to see you again next time~!";
+	close2;
+	cutin "", 255;
+	end;
+	
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+	
+OnEnable:
+	hideoffnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+1@gef,120,108,4	script	Fenrir#e1	4_F_FENRIR,{
+
+	.@n$ = "[ Fenrir ]";
+	
+	if(checkquest(9313) != -1) {
+		cutin "fenrir_a.bmp",2;
+		mes .@n$;
+		mes "It was a good game.";
+		mes "Hope you get farther next time.";
+		next;
+		mes .@n$;
+		mes "Take this gift.";
+		mes "Keep trying harder~!";
+		setarray .items,501,502,503,504,505,506,608,607;
+		getitem .items[rand(0,7)],1;
+		erasequest 9313;
+		cutin "", 255;
+		end;
+	}
+	cutin "fenrir_a.bmp",2;
+	mes .@n$;
+	mes "I hope to see you again adventurer!";
+	close2;
+	cutin "", 255;
+	end;
+	
+OnInstanceInit:
+	hideonnpc instance_npcname(strnpcinfo(0));
+	end;
+	
+OnEnable:
+	hideoffnpc instance_npcname(strnpcinfo(0));
+	end;
+}
+
+// Cutscenes
+
+
+//ϯϯϯϯϯϯϯϯϯ
+//   Event 1
+//__________________
+1@gef,159,172,6	duplicate(#gmt_dummy)	Geffen Gangster#1	682
+1@gef,160,176,6	duplicate(#gmt_dummy)	Geffen Gangster#3	682
+1@gef,164,175,6	duplicate(#gmt_dummy)	Geffen Gangster#2	682
+1@gef,168,170,6	duplicate(#gmt_dummy)	Geffen Gangster#11	682
+1@gef,167,169,6	duplicate(#gmt_dummy)	Geffen Gangster#22	682
+1@gef,166,168,6	duplicate(#gmt_dummy)	Geffen Gangster#33	682
+1@gef,170,168,4	duplicate(#gmt_dummy)	Iris#Gef1	666
+1@gef,169,167,2	duplicate(#gmt_dummy)	Kafra Employee#1	114
+1@gef,173,167,4	duplicate(#gmt_dummy)	Chaos#Gef1	683
+1@gef,168,168,4	duplicate(#gmt_dummy)	Chaos#Gef2	683
+1@gef,162,174,4	duplicate(#gmt_dummy)	Chaos#3	683
+
+1@gef,166,168,0	script	#Event 1 start	139,7,7,{
+	end;
+OnTouch:
+	if ('gmt_event != 0) end;
+	if('OnTouchOnce1) end;
+	set 'OnTouchOnce1,1;
+	hideonnpc instance_npcname("#Event 1 start");
+	disablenpc instance_npcname("#Event 1 start");
+	hideoffnpc instance_npcname("Geffen Gangster#1");
+	hideoffnpc instance_npcname("Geffen Gangster#2");
+	hideoffnpc instance_npcname("Geffen Gangster#3");
+	hideoffnpc instance_npcname("Kafra Employee#1");
+	'gmt_char_name$ = strcharinfo(0);
+	'GMTQuest = 1;
+
+	//if (checkquest(9284) > -1)
+	//	erasequest 9284;
+	//setquest 9284;
+	'gmt_timer_evt1 = 0;
+	initnpctimer;
+	end;
+OnTimer1000:
+	'gmt_timer_evt1++;
+	
+	switch('gmt_timer_evt1) {
+		case 1: npctalk "Geffen Gangster : Hey girl~", instance_npcname("Geffen Gangster#1"); break;
+		case 3: npctalk "Geffen Gangster : Whoo~ You have beautiful legs~!", instance_npcname("Geffen Gangster#2"); break;
+		case 5: npctalk "Kafra Employee : What are you doing?", instance_npcname("Kafra Employee#1"); break;
+		case 10: npctalk "Geffen Gangster : What do you think I'm doing~?", instance_npcname("Geffen Gangster#3"); break;
+		case 13: npctalk "Kafra Employee : You creep! Get away~!", instance_npcname("Kafra Employee#1"); break;
+		case 15: npctalk "Geffen Gangster : How dare you!", instance_npcname("Geffen Gangster#1");	break;
+		case 16:
+			hideonnpc instance_npcname("Geffen Gangster#1");
+			hideonnpc instance_npcname("Geffen Gangster#2");
+			hideonnpc instance_npcname("Geffen Gangster#3");
+			hideoffnpc instance_npcname("Geffen Gangster#11");
+			hideoffnpc instance_npcname("Geffen Gangster#22");
+			hideoffnpc instance_npcname("Geffen Gangster#33");
+			break;
+		case 19: npctalk "Geffen Gangster : Wanna have some fun?", instance_npcname("Geffen Gangster#11"); break;
+		case 20: npctalk "Geffen Gangster : We won't bite!", instance_npcname("Geffen Gangster#22"); break;
+		case 21: npctalk "Geffen Gangster : Unless...", instance_npcname("Geffen Gangster#33"); break;
+		case 23: npctalk "Kafra Employee : Help me~!!!", instance_npcname("Kafra Employee#1"); break;
+		case 25: unittalk 'gmt_account_id, "What can I do? I have to help."; break;
+		case 27:
+			enablenpc instance_npcname("#Event 1 start 2");
+			stopnpctimer;
+			end;
+	}
+	
+	initnpctimer;
+	end;
+}
+
+1@gef,166,169,0	script	#Event 1 start 2	139,5,5,{
+	end;
+OnTouch:
+	if('OnTouchOnce2) end;
+	set 'OnTouchOnce2,1;
+	if ('gmt_event != 0) end;
+	'gmt_event = 2;
+	hideonnpc instance_npcname("#Event 1 start 2");
+	'gmt_timer_evt1 = 0;
+	initnpctimer;
+	end;
+OnTimer1000:
+	'gmt_timer_evt1++;
+	
+	switch('gmt_timer_evt1) {
+		case 1: unittalk 'gmt_account_id, "You bastards! Leave her alone!"; break;
+		case 3: npctalk "Geffen Gangster : What's with your attitude?", instance_npcname("Geffen Gangster#11"); break;
+		case 4: npctalk "Geffen Gangster : You're such an idiot!", instance_npcname("Geffen Gangster#22"); break;
+		case 5: npctalk "Geffen Gangster : Who're you calling bastards!?", instance_npcname("Geffen Gangster#33"); break;
+		case 8: npctalk "Kafra Employee : Please help me~!", instance_npcname("Kafra Employee#1"); break;
+		case 9:
+			unittalk 'gmt_account_id, "Time to teach them a lesson~!";
+			hideonnpc instance_npcname("Geffen Gangster#11");
+			hideonnpc instance_npcname("Geffen Gangster#22");
+			hideonnpc instance_npcname("Geffen Gangster#33");
+			
+			monster instance_mapname("1@gef"), 168, 170, "Geffen Gangster", 2568, 1, instance_npcname("#Event 1 start 2") + "::OnMobKilled";
+			monster instance_mapname("1@gef"), 167, 169, "Geffen Gangster", 2568, 1, instance_npcname("#Event 1 start 2") + "::OnMobKilled";
+			monster instance_mapname("1@gef"), 166, 168, "Geffen Gangster", 2568, 1, instance_npcname("#Event 1 start 2") + "::OnMobKilled";
+			
+			stopnpctimer;
+			end;
+	}
+	
+	initnpctimer;
+	end;
+OnMobKilled:
+	if (mobcount(instance_mapname("1@gef"), instance_npcname("#Event 1 start 2") + "::OnMobKilled") <= 0) {
+		hideoffnpc instance_npcname("Geffen Gangster#1");
+		hideoffnpc instance_npcname("Geffen Gangster#2");
+		hideoffnpc instance_npcname("Geffen Gangster#3");
+		//completequest 9284;
+		//setquest 9284;
+		//completequest 9284;
+		//setquest 9285;
+		donpcevent instance_npcname("#GefGangsterEvent1")+"::OnStart";
+	}
+	
+	end;
+}
+
+1@gef,166,167,0	script	#GefGangsterEvent1	-1,{
+	end;
+OnStart:
+	'gmt_timer_evt1 = 0;
+	initnpctimer;
+	end;
+OnTimer1000:
+	'gmt_timer_evt1++;
+	
+	switch('gmt_timer_evt1) {
+		case 1:
+			specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Gangster#1");
+			specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Gangster#2");
+			specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Gangster#3");
+			npctalk "Geffen Gangster : You're pretty good...!", instance_npcname("Geffen Gangster#1");
+			npctalk "Geffen Gangster : We should stop playing around...", instance_npcname("Geffen Gangster#2");
+			npctalk "Geffen Gangster : You're gonna pay the price!", instance_npcname("Geffen Gangster#3");
+			break;
+		case 4: npctalk "Kafra Employee : No... I'm scared...!", instance_npcname("Kafra Employee#1"); break;
+		case 5:
+			hideoffnpc instance_npcname("Iris#Gef1");
+			npctalk "Iris : Hey, you stop right there~!!", instance_npcname("Iris#Gef1");
+			break;
+		case 8: npctalk "Iris : That's enough.", instance_npcname("Iris#Gef1"); break;
+		case 11: npctalk "Iris : I won't forgive you~!", instance_npcname("Iris#Gef1"); break;
+		case 13: specialeffect EF_POTION1, AREA, instance_npcname("Iris#Gef1"); break;
+		case 14:
+			npctalk "Geffen Gangster : Why hello there, are you scared?", instance_npcname("Geffen Gangster#1");
+			npctalk "Geffen Gangster : You're pretty cute. Do you want to play with us too?", instance_npcname("Geffen Gangster#2");
+			npctalk "Geffen Gangster : Aren't I your type babe?~", instance_npcname("Geffen Gangster#3");
+			break;
+		case 18:
+			hideonnpc instance_npcname("Geffen Gangster#1");
+			hideonnpc instance_npcname("Geffen Gangster#2");
+			hideonnpc instance_npcname("Geffen Gangster#3");
+			hideoffnpc instance_npcname("Geffen Gangster#11");
+			hideoffnpc instance_npcname("Geffen Gangster#22");
+			hideoffnpc instance_npcname("Geffen Gangster#33");
+			break;
+		case 22: mapannounce instance_mapname("1@gef"), "Stop right there! Jerks!", 0x00ebff; break;
+		case 23: hideoffnpc instance_npcname("Chaos#Gef1"); break;
+		case 25: specialeffect EF_POTION_CON, AREA, instance_npcname("Chaos#Gef1"); break;
+		case 26: npctalk "Chaos : Are you clowns harassing Iris?", instance_npcname("Chaos#Gef1"); break;
+		case 30: npctalk "Chaos : I think I need to teach someone a lesson!", instance_npcname("Chaos#Gef1"); break;
+		case 31:
+			specialeffect EF_LOCKON, AREA, instance_npcname("Geffen Gangster#11");
+			specialeffect EF_LOCKON, AREA, instance_npcname("Geffen Gangster#22");
+			specialeffect EF_LOCKON, AREA, instance_npcname("Geffen Gangster#33");
+			npctalk "Chaos : Come and fight me!", instance_npcname("Chaos#Gef2");
+			hideonnpc instance_npcname("Chaos#Gef1");
+			hideoffnpc instance_npcname("Chaos#Gef2");
+			break;
+		case 34:
+			npctalk "Chaos : Bash~!!!", instance_npcname("Chaos#Gef2");
+			specialeffect EF_HIT2, AREA, instance_npcname("Chaos#Gef2");
+			specialeffect EF_BASH, AREA, instance_npcname("Geffen Gangster#11");
+			specialeffect EF_BASH, AREA, instance_npcname("Geffen Gangster#22");
+			specialeffect EF_BASH, AREA, instance_npcname("Geffen Gangster#33");
+			hideonnpc instance_npcname("Geffen Gangster#11");
+			hideonnpc instance_npcname("Geffen Gangster#22");
+			hideonnpc instance_npcname("Geffen Gangster#33");
+			break;
+		case 35:
+			hideoffnpc instance_npcname("Geffen Gangster#1");
+			hideoffnpc instance_npcname("Geffen Gangster#2");
+			hideoffnpc instance_npcname("Geffen Gangster#3");
+			break;
+		case 36:
+			npctalk "Geffen Gangster : Ugh...", instance_npcname("Geffen Gangster#1");
+			npctalk "Geffen Gangster : Strong...", instance_npcname("Geffen Gangster#2");
+			npctalk "Geffen Gangster : Too strong...", instance_npcname("Geffen Gangster#3");
+			break;
+		case 39:
+			hideonnpc instance_npcname("Chaos#Gef2");
+			hideoffnpc instance_npcname("Chaos#3");
+			break;
+		case 42:
+			npctalk "Chaos : I'm not done yet!! Magnum Break~!", instance_npcname("Chaos#3");
+			specialeffect EF_MAGNUMBREAK, AREA, instance_npcname("Geffen Gangster#1");
+			specialeffect EF_MAGNUMBREAK, AREA, instance_npcname("Geffen Gangster#2");
+			specialeffect EF_MAGNUMBREAK, AREA, instance_npcname("Geffen Gangster#3");
+			break;
+		case 43:
+			specialeffect EF_SUI_EXPLOSION, AREA, instance_npcname("Geffen Gangster#1");
+			specialeffect EF_SUI_EXPLOSION, AREA, instance_npcname("Geffen Gangster#2");
+			specialeffect EF_SUI_EXPLOSION, AREA, instance_npcname("Geffen Gangster#3");
+			hideonnpc instance_npcname("Geffen Gangster#1");
+			hideonnpc instance_npcname("Geffen Gangster#2");
+			hideonnpc instance_npcname("Geffen Gangster#3");
+			break;
+		case 45: hideonnpc instance_npcname("Chaos#3"); break;
+		case 46:
+			hideoffnpc instance_npcname("Chaos#Gef1");
+			stopnpctimer;
+			
+			if (attachrid('gmt_account_id)) {
+				cutin "hero_iris_01.bmp", 2;
+				mes "[Iris]", "Are you okay?", "There have been so many jerks everywhere we go..."; next;
+				cutin "", 255;
+				mes "[Kafra]", "Thanks for helping me out.", "Who are you?"; next;
+				cutin "hero_iris_01.bmp", 2;
+				mes "[Iris]", "I am Iris~", "I am travelling with my good friend Chaos~!"; next;
+				mes "[Iris]", "I am not the one you should thank.", "Thank that adventurer, " + strcharinfo(0) + ".", "It could have been much worse."; next;
+				cutin "", 255;
+				mes "[Kafra]", "Thank you " + strcharinfo(0) + ".", "You saved me."; next;
+				cutin "hero_iris_01.bmp", 2;
+				mes "[Iris]", "It's pretty rare to meet someone as righteous as " + strcharinfo(0) + "."; next;
+				mes "[Iris]", "I'm on my way to see the Geffen Magic Tournament with Chaos.", "Are you on your way there too, " + strcharinfo(0) + "?"; next;
+				cutin "hero_chaos_01.bmp", 2;
+				mes "[Chaos]", "Yes, you seem strong enough to be in the Tournament."; next;
+				mes "[Chaos]", "Just know that Fenrir plans on joining as well, so it won't be that easy."; next;
+				mes "[Chaos]", "This is my favorite magic buff scroll, so take it as a token of our appreciation.";
+				sc_start4 SC_GEFFEN_MAGIC3, 3600000, 5, 0, 0, 0, 10000, 1;
+				atcommand "@effect 220";
+				next;
+				mes "[Chaos]", "It will be useful in the Magic Tournament.", "Let's go Iris~!", "It's going to start soon~!"; next;
+				cutin "hero_iris_01.bmp", 2;
+				mes "[Iris]", "Yes~! Go " + strcharinfo(0) + "~", "Kafra, wish us luck~!", "Do your best " + strcharinfo(0) + ".";
+				close2;
+				cutin "", 255;
+				hideonnpc instance_npcname("Iris#Gef1");
+                hideonnpc instance_npcname("Chaos#Gef1");
+                hideonnpc instance_npcname("Kafra Employee#1");
+				sleep2 2000;
+				unittalk 'gmt_account_id, "They sure are brave...";
+				sleep2 2000;
+				unittalk 'gmt_account_id, "Should we apply for the Magic Tournament now?";
+				end;
+			}
+			
+			end;
+	}
+	
+	initnpctimer;
+	end;
+}
+
+//ϯϯϯϯϯϯϯϯϯ
+//   Event 2
+//__________________
+1@gef,75,172,4	duplicate(#gmt_dummy)	Geffen Bully#1	681
+1@gef,76,170,4	duplicate(#gmt_dummy)	Geffen Bully#2	681
+1@gef,73,173,4	duplicate(#gmt_dummy)	Geffen Bully#3	681
+1@gef,68,171,4	duplicate(#gmt_dummy)	Geffen Bully#11	681
+1@gef,70,171,4	duplicate(#gmt_dummy)	Geffen Bully#22	681
+1@gef,70,169,4	duplicate(#gmt_dummy)	Geffen Bully#33	681
+1@gef,70,167,8	duplicate(#gmt_dummy)	Magic Academy Student#11	123
+1@gef,73,170,8	duplicate(#gmt_dummy)	Magic Academy Student#22	123
+1@gef,69,168,8	duplicate(#gmt_dummy)	Loki#1	512
+1@gef,69,170,8	duplicate(#gmt_dummy)	Loki#2	512
+1@gef,67,170,8	duplicate(#gmt_dummy)	Loki#3	512
+1@gef,68,169,8	duplicate(#gmt_dummy)	Fenrir#1	664
+
+1@gef,72,169,0	script	#Event 2 start	139,7,7,{
+	end;
+OnTouch:
+	if ('gmt_event != 0) end;
+	if('OnTouchOnce3) end;
+	set 'OnTouchOnce3,1;
+	hideoffnpc instance_npcname("Geffen Bully#1");
+	hideoffnpc instance_npcname("Geffen Bully#2");
+	hideoffnpc instance_npcname("Geffen Bully#3");
+	hideoffnpc instance_npcname("Magic Academy Student#11");
+	hideonnpc instance_npcname("#Event 2 start");
+	disablenpc instance_npcname("#Event 2 start");
+	//setquest 9286;
+	'gmt_timer_evt2 = 2;
+	'gmt_char_name$ = strcharinfo(0);
+	'GMTQuest = 2;
+	initnpctimer;
+	end;
+OnTimer1000:
+	'gmt_timer_evt2++;
+	
+	switch('gmt_timer_evt2) {
+		case 5: npctalk "Geffen Bully : Hey you! Yeah you~", instance_npcname("Geffen Bully#1"); break;
+		case 7: npctalk "Magic Academy Student : Yea... yeah? Me...? Do you mean me?", instance_npcname("Magic Academy Student#11"); break;
+		case 8: npctalk "Geffen Bully : Yes, you! Come over here!", instance_npcname("Geffen Bully#2"); break;
+		case 9: npctalk "Geffen Bully : Hurry! You have 3 seconds!", instance_npcname("Geffen Bully#3"); break;
+		case 11: npctalk "Geffen Bully : 3...", instance_npcname("Geffen Bully#3"); break;
+		case 12: npctalk "Geffen Bully : 2...", instance_npcname("Geffen Bully#3"); break;
+		case 13: npctalk "Geffen Bully : 1...", instance_npcname("Geffen Bully#3"); break;
+		case 14:
+			hideonnpc instance_npcname("Magic Academy Student#11");
+			hideoffnpc instance_npcname("Magic Academy Student#22");
+			break;
+		case 17: npctalk "Geffen Bully : You! How much zeny do you have?", instance_npcname("Geffen Bully#1"); break;
+		case 20: npctalk "Magic Academy Student : What... huh?", instance_npcname("Magic Academy Student#22"); break;
+		case 23: npctalk "Geffen Bully : Did I stutter? I said, how much zeny do you have! You idiot!", instance_npcname("Geffen Bully#2"); break;
+		case 27: npctalk "Magic Academy Student : I don't have any zeny... I'm but a student...", instance_npcname("Magic Academy Student#22"); break;
+		case 30: npctalk "Geffen Bully : Do I have to beat the zeny out of you?!", instance_npcname("Geffen Bully#3"); break;
+		case 33: npctalk "Magic Academy Student : Ugh... I told you, I don't have any zeny!", instance_npcname("Magic Academy Student#22"); break;
+		case 36:
+			unittalk 'gmt_account_id, "What should I do? I have to help!";
+			enablenpc instance_npcname("#Event 2 start 2");
+			hideoffnpc instance_npcname("#Event 2 start 2");
+			stopnpctimer;
+			end;
+	}
+	
+	initnpctimer;
+	end;
+}
+
+1@gef,72,170,0	script	#Event 2 start 2	139,3,3,{
+	end;
+OnTouch:
+	if ('gmt_event != 0) end;
+	if('OnTouchOnce4) end;
+	set 'OnTouchOnce4,1;
+	hideonnpc instance_npcname("#Event 2 start 2");
+	'gmt_timer_evt2 = 0;
+	'gmt_event = 2;
+	initnpctimer;
+	end;
+OnTimer1000:
+	'gmt_timer_evt2++;
+	
+	switch('gmt_timer_evt2) {
+		case 2: unittalk 'gmt_account_id, "You! Bullies! Stop!"; break;
+		case 3: npctalk "Geffen Bully : You ready for a beating?", instance_npcname("Geffen Bully#1"); break;
+		case 4: npctalk "Geffen Bully : I've been waiting to have some fun...", instance_npcname("Geffen Bully#2"); break;
+		case 5: npctalk "Geffen Bully : Say hello to my little friends!", instance_npcname("Geffen Bully#3"); break;
+		case 7: npctalk "Magic Academy Student : Please help me~", instance_npcname("Magic Academy Student#22"); break;
+		case 9:
+			unittalk 'gmt_account_id, "I have to help!";
+			attachrid 'gmt_account_id;
+			specialeffect2 EF_LOCKON;
+			detachrid;
+			monster instance_mapname("1@gef"), 75, 172, "Geffen Bully", 2567, 1, instance_npcname("#Event 2 start 2") + "::OnMobKilled";
+			monster instance_mapname("1@gef"), 76, 170, "Geffen Bully", 2567, 1, instance_npcname("#Event 2 start 2") + "::OnMobKilled";
+			monster instance_mapname("1@gef"), 73, 173, "Geffen Bully", 2567, 1, instance_npcname("#Event 2 start 2") + "::OnMobKilled";
+			hideonnpc instance_npcname("Geffen Bully#1");
+			hideonnpc instance_npcname("Geffen Bully#2");
+			hideonnpc instance_npcname("Geffen Bully#3");
+			stopnpctimer;
+			end;
+	}
+	
+	initnpctimer;
+	end;
+OnMobKilled:
+	if (mobcount(instance_mapname("1@gef"), instance_npcname("#Event 2 start 2") + "::OnMobKilled") <= 0) {
+		hideoffnpc instance_npcname("Geffen Bully#1");
+		hideoffnpc instance_npcname("Geffen Bully#2");
+		hideoffnpc instance_npcname("Geffen Bully#3");
+		//completequest 9286;
+		//setquest 9286;
+		//completequest 9286;
+		//setquest 9287;
+		sleep2 500;
+		specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Bully#1");
+		specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Bully#2");
+		specialeffect EF_POTION_BERSERK, AREA, instance_npcname("Geffen Bully#3");
+		
+		$gmt_timer_evt2 = -1;
+		
+		while($gmt_timer_evt2 < 50) {
+			$gmt_timer_evt2++;
+			
+			switch($gmt_timer_evt2) {
+				case 0:
+					npctalk "Geffen Bully : He has surprisingly good skills.", instance_npcname("Geffen Bully#1");
+					npctalk "Geffen Bully : This isn't good...", instance_npcname("Geffen Bully#2");
+					npctalk "Geffen Bully : 1 slap for 10 wins. No... You get 10 slaps for 1 win.", instance_npcname("Geffen Bully#3");
+					break;
+				case 3:
+					hideonnpc instance_npcname("Magic Academy Student#22");
+					hideoffnpc instance_npcname("Magic Academy Student#11");
+					sleep2 500;
+					npctalk "Magic Academy Student : I'm scared~! Help me...", instance_npcname("Magic Academy Student#11");
+					break;
+				case 6: hideoffnpc instance_npcname("Fenrir#1"); break;
+				case 7: npctalk "Fenrir : Hello. Are you going to stop now?", instance_npcname("Fenrir#1"); break;
+				case 10: npctalk "Fenrir : This is really uncomfortable. I can't just sit back and watch.", instance_npcname("Fenrir#1"); break;
+				case 13:
+					npctalk "Fenrir : Stop harassing her. I won't forgive you.", instance_npcname("Fenrir#1");
+					specialeffect EF_POTION1, AREA, instance_npcname("Fenrir#1");
+					break;
+				case 15: npctalk "Geffen Bully : Hey~ You look rich, you must have a lot of zeny right?", instance_npcname("Geffen Bully#1"); break;
+				case 17: npctalk "Geffen Bully : What's a rich girl like you doing around here?~", instance_npcname("Geffen Bully#2"); break;
+				case 19: npctalk "Geffen Bully : Hey! Rich girl~! How much zeny do you got?", instance_npcname("Geffen Bully#3"); break;
+				case 22:
+					hideonnpc instance_npcname("Geffen Bully#1");
+					hideonnpc instance_npcname("Geffen Bully#2");
+					hideonnpc instance_npcname("Geffen Bully#3");
+					hideoffnpc instance_npcname("Geffen Bully#11");
+					hideoffnpc instance_npcname("Geffen Bully#22");
+					hideoffnpc instance_npcname("Geffen Bully#33");
+					break;
+				case 23:
+					emotion ET_SURPRISE, getnpcid(0, instance_npcname("Fenrir#1"));
+					mapannounce instance_mapname("1@gef"), "Take your dirty hands off of me.", 0x00ebff;
+					break;
+				case 25:
+					hideoffnpc instance_npcname("Loki#1");
+					sleep2 500;
+					specialeffect EF_POISONREACT, AREA, instance_npcname("Loki#1");
+					sleep2 1500;
+					specialeffect EF_SONICBLOW, AREA, instance_npcname("Loki#1");
+					npctalk "Loki : Hmph!", instance_npcname("Loki#1");
+					sleep2 500;
+					specialeffect EF_VENOMDUST, AREA, instance_npcname("Loki#1");
+					specialeffect EF_SONICBLOWHIT, AREA, instance_npcname("Geffen Bully#33");
+					specialeffect EF_SONICBLOW2, AREA, instance_npcname("Geffen Bully#33");
+					sleep2 330;
+					specialeffect EF_NAPALMBEAT, AREA, instance_npcname("Geffen Bully#33");
+					hideonnpc instance_npcname("Geffen Bully#33");
+					hideoffnpc instance_npcname("Geffen Bully#3");
+					break;
+				case 26: npctalk "Geffen Bully : Yikes!", instance_npcname("Geffen Bully#3"); break;
+				case 27:
+					hideonnpc instance_npcname("Loki#1");
+					hideoffnpc instance_npcname("Loki#2");
+					sleep2 750;
+					npctalk "Loki : Take this.", instance_npcname("Loki#2");
+					sleep2 500;
+					specialeffect EF_STRIPARMOR, AREA, instance_npcname("Geffen Bully#22");
+					specialeffect EF_SONICBLOWHIT, AREA, instance_npcname("Geffen Bully#22");
+					specialeffect EF_SONICBLOW2, AREA, instance_npcname("Geffen Bully#22");
+					sleep2 330;
+					specialeffect EF_NAPALMBEAT, AREA, instance_npcname("Geffen Bully#22");
+					hideonnpc instance_npcname("Geffen Bully#22");
+					hideoffnpc instance_npcname("Geffen Bully#2");
+					break;
+				case 28:
+					npctalk "Geffen Bully : Ugh, uuurgh! What the?!", instance_npcname("Geffen Bully#2");
+					hideonnpc instance_npcname("Loki#2");
+					hideoffnpc instance_npcname("Loki#3");
+					sleep2 750;
+					npctalk "Loki : Change your mind yet?", instance_npcname("Loki#3");
+					sleep2 500;
+					specialeffect EF_STRIPSHIELD, AREA, instance_npcname("Geffen Bully#11");
+					specialeffect EF_SONICBLOWHIT, AREA, instance_npcname("Geffen Bully#11");
+					specialeffect EF_SONICBLOW2, AREA, instance_npcname("Geffen Bully#11");
+					sleep2 330;
+					specialeffect EF_NAPALMBEAT, AREA, instance_npcname("Geffen Bully#11");
+					hideonnpc instance_npcname("Geffen Bully#11");
+					hideoffnpc instance_npcname("Geffen Bully#1");
+					break;
+				case 29: npctalk "Geffen Bully : Ugh, urgh, urgh! GAAAAAAH!!", instance_npcname("Geffen Bully#1"); break;
+				case 31: npctalk "Loki : If you don't want to taste my Katar, leave now.", instance_npcname("Loki#3"); break;
+				case 34: npctalk "Loki : Get out of my sight.", instance_npcname("Loki#3"); break;
+				case 36: npctalk "Geffen Bully : Oh, oh! Time to go!", instance_npcname("Geffen Bully#1"); break;
+				case 38: npctalk "Geffen Bully : Please... spare my life...", instance_npcname("Geffen Bully#2"); break;
+				case 40: npctalk "Geffen Bully : Let's get away!~!!!!!", instance_npcname("Geffen Bully#3"); break;
+				case 41:
+					npctalk "Loki : You have 10 seconds.", instance_npcname("Loki#3");
+					specialeffect EF_SONICBLOW, AREA, instance_npcname("Loki#3");
+					break;
+				case 43:
+					specialeffect EF_SLOWPOISON, AREA, instance_npcname("Loki#3");
+					npctalk "Loki : 10... 9...", instance_npcname("Loki#3");
+					sleep2 500;
+					specialeffect EF_STRIPWEAPON, AREA, instance_npcname("Loki#3");
+					specialeffect EF_POISONREACT, AREA, instance_npcname("Loki#3");
+					specialeffect EF_POISONREACT2, AREA, instance_npcname("Loki#3");
+					break;
+				case 45:
+					specialeffect EF_ENCHANTPOISON, AREA, instance_npcname("Loki#3");
+					sleep2 500;
+					emotion ET_KIK, getnpcid(0, instance_npcname("Loki#3"));
+					npctalk "Loki : 3... 2...", instance_npcname("Loki#3");
+					sleep2 500;
+					npctalk "Geffen Bully : What?! You went from from 9 to 3 seconds!!", instance_npcname("Geffen Bully#1");
+					npctalk "Geffen Bully : Screw this, let's run~!!!!!!!!!", instance_npcname("Geffen Bully#2");
+					npctalk "Geffen Bully : I will have my revenge~!!", instance_npcname("Geffen Bully#3");
+					break;
+				case 46:
+					specialeffect EF_SOULBREAKER, AREA, instance_npcname("Loki#3");
+					specialeffect EF_VENOMDUST, AREA, instance_npcname("Loki#3");
+					npctalk "Loki : 1...", instance_npcname("Loki#3");
+					sleep2 330;
+					hideonnpc instance_npcname("Geffen Bully#1");
+					hideonnpc instance_npcname("Geffen Bully#2");
+					hideonnpc instance_npcname("Geffen Bully#3");
+					break;
+				case 48:
+					hideonnpc instance_npcname("Loki#3");
+					hideoffnpc instance_npcname("Loki#1");
+					break;
+				case 49:
+					attachrid('gmt_account_id);
+					cutin "fenrir_a.bmp", 2;
+					mes "[Fenrir]", "Are you okay?", "Where are all these punks coming from anyways?"; next;
+					cutin "", 255;
+					mes "[Magic Academy Student]", "Thanks for helping me.", "Who are you?"; next;
+					cutin "fenrir_a.bmp", 2;
+					mes "[Fenrir]", "I am Fenris Fenrir."; next;
+					mes "[Fenrir]", "Thank " + strcharinfo(0) + ".", "It would have been much worse if "+('sex?"he":"she")+" hadn't shown up."; next;
+					cutin "", 255;
+					mes "[Magic Academy Student]", "Thank you so much " + strcharinfo(0) + ".", "You saved me."; next;
+					cutin "fenrir_a.bmp", 2;
+					mes "[Fenrir]", "You don't meet many people like " + strcharinfo(0) + " these days.", "You're a good person."; next;
+					mes "[Fenrir]", "I was on the way to register for the Geffen Magic Tournament with Loki."; next;
+					mes "[Fenrir]", "I have a feeling that you will register too " + strcharinfo(0) + ".", "I hope to meet you in the finals of the Tournament."; next;
+					cutin "ep14_roki01.bmp", 2;
+					mes "[Loki]", "Oh yeah?", "" + strcharinfo(0) + " is going to register?", "That's interesting."; next;
+					mes "[Loki]", "I have a spare magic buff scroll.", "I will give it to you as a present.";
+					sc_start4 SC_GEFFEN_MAGIC2, 3600000, 5, 0, 0, 0, 10000, 1;
+					atcommand "@effect 220";
+					next;
+					mes "[Loki]", "I doubt that you can beat Fenrir at the Tournament.", "Her fighting prowess is unmatched."; next;
+					mes "[Loki]", "Fenrir, it's time to register.", "Let's hurry."; next;
+					cutin "fenrir_a.bmp", 2;
+					mes "[Fenrir]", "Yes~! I almost forgot.", "It was nice meeting you " + strcharinfo(0) + "~!"; next;
+					mes "[Fenrir]", "I hope to meet you in combat soon.";
+					close2;
+					cutin "", 255;
+					hideonnpc instance_npcname("Fenrir#1");
+					hideonnpc instance_npcname("Loki#1");
+					sleep2 1000;
+					hideonnpc instance_npcname("Magic Academy Student#11");
+					sleep2 3000;
+					unittalk $gmt_account_id, "It was fun meeting Fenrir.";
+					sleep2 2000;
+					unittalk $gmt_account_id, "I should register for the Magic Tournament.";
+					end;
+			}
+			
+			sleep2 1000;
+		}
+	}
+	
+	end;
+}
+
+//ϯϯϯϯϯϯϯϯϯ
+//   Event 3
+//__________________
+1@gef,111,146,4	duplicate(#gmt_dummy)	Geffen Resident#1	67
+1@gef,106,141,4	duplicate(#gmt_dummy)	Geffen Resident#2	67
+1@gef,104,141,6	duplicate(#gmt_dummy)	Lydia#1	10010
+
+1@gef,108,139,6	script	Geffen Shoplifter#1	671,4,4,{
+OnTouch:
+	if ('gmt_chase != 1) end;
+	if ('gmt_event != 0) end;
+	'gmt_event = 3;
+	unittalk 'gmt_account_id, "Thief! Give that zeny back!! Don't move!!";
+	sleep2 3000;
+	npctalk "Geffen Shoplifter : Threatening me?~!! Yeah, boo hoo! You really scare me~!!", instance_npcname("Geffen Shoplifter#1");
+	sleep2 2000;
+	npctalk "Geffen Shoplifter : Catch me if you can~!!", instance_npcname("Geffen Shoplifter#1");
+	sleep2 2000;
+	npctalk "Geffen Resident : Please find my paycheck...", instance_npcname("Geffen Resident#1");
+	sleep2 3000;
+	unittalk 'gmt_account_id, "I have you now!";
+	hideonnpc instance_npcname("Geffen Shoplifter#1");
+	hideoffnpc instance_npcname("Geffen Shoplifter#2");
+	'gmt_chase = 2;
+	'GMTQuest = 3;
+	end;
+}
+
+1@gef,107,126,4	script	Geffen Shoplifter#2	671,4,4,{
+	end;
+OnTouch:
+	if ('gmt_chase != 2) end;
+	if('OnTouchOnce5) end;
+	set 'OnTouchOnce5,1;
+	if (Zeny > 2000) Zeny -= 2000;
+	npctalk "Geffen Shoplifter : Are you following me? Thanks for the 2,000 zeny~!", instance_npcname("Geffen Shoplifter#2");
+	atcommand "@effect 18";
+	sleep2 3000;
+	unittalk 'gmt_account_id, "Hey~ Stop right there! Thief!";
+	sleep2 3000;
+	hideonnpc instance_npcname("Geffen Shoplifter#2");
+	hideoffnpc instance_npcname("Geffen Shoplifter#3");
+	'gmt_chase = 3;
+	end;
+}
+
+1@gef,111,118,4	script	Geffen Shoplifter#3	671,4,4,{
+	end;
+OnTouch:
+	if ('gmt_chase != 3) end;
+	if('OnTouchOnce6) end;
+	set 'OnTouchOnce6,1;
+	if (Zeny > 2000) Zeny -= 2000;
+	npctalk "Geffen Shoplifter : Woohoo~ Catch me if you can~! 4,000 large! Easy~!", instance_npcname("Geffen Shoplifter#3");
+	atcommand "@effect 18";
+	sleep2 3000;
+	unittalk 'gmt_account_id, "I will beat you down once I catch you!";
+	sleep2 3000;
+	hideonnpc instance_npcname("Geffen Shoplifter#3");
+	hideoffnpc instance_npcname("Geffen Shoplifter#11");
+	'gmt_chase = 11;
+	end;
+}
+
+1@gef,123,111,4	script	Geffen Shoplifter#11	671,4,4,{
+	end;
+OnTouch:
+	if ('gmt_chase != 11) end;
+	if('OnTouchOnce7) end;
+	set 'OnTouchOnce7,1;
+	if (Zeny > 2000) Zeny -= 2000;
+	npctalk "Geffen Shoplifter : You're annoying me~! I like it! 6,000 zeny~!", instance_npcname("Geffen Shoplifter#11");
+	atcommand "@effect 18";
+	sleep2 3000;
+	unittalk 'gmt_account_id, "Stop right there you filthy thief!";
+	sleep2 3000;
+	hideonnpc instance_npcname("Geffen Shoplifter#11");
+	hideoffnpc instance_npcname("Geffen Shoplifter#22");
+	'gmt_chase = 22;
+	end;
+}
+
+1@gef,129,121,4	script	Geffen Shoplifter#22	671,4,4,{
+	end;
+OnTouch:
+	if ('gmt_chase != 22) end;
+	if('OnTouchOnce8) end;
+	set 'OnTouchOnce8,1;
+	if (Zeny > 2000) Zeny -= 2000;
+	npctalk "Geffen Shoplifter : Calling me a rat? Yoink~ 8,000 zeny~!", instance_npcname("Geffen Shoplifter#22");
+	atcommand "@effect 18";
+	sleep2 3000;
+	unittalk 'gmt_account_id, "Would you stop?!";
+	sleep2 3000;
+	hideonnpc instance_npcname("Geffen Shoplifter#22");
+	hideoffnpc instance_npcname("Geffen Shoplifter#33");
+	'gmt_chase = 33;
+	end;
+}
+
+1@gef,114,137,4	script	Geffen Shoplifter#33	671,4,4,{
+	end;
+OnTouch:
+	if ('gmt_chase != 33) end;
+	if('OnTouchOnce9) end;
+	set 'OnTouchOnce9,1;
+	if (Zeny > 2000) Zeny -= 2000;
+	npctalk "Geffen Shoplifter : Stop following me. It's driving me crazy! 10,000 zeny~!", instance_npcname("Geffen Shoplifter#33");
+	atcommand "@effect 18";
+	sleep2 3000;
+	unittalk 'gmt_account_id, "You can't run away anymore. I've got you now!";
+	sleep2 3000;
+	npctalk "Geffen Shoplifter : You really piss me off! I'm gonna have to beat you down!", instance_npcname("Geffen Shoplifter#33");
+	sleep2 3000;
+	hideonnpc instance_npcname("Geffen Shoplifter#33");
+	monster instance_mapname("1@gef"), 114, 137, "Geffen Shoplifter", 2914, 1, instance_npcname("Geffen Shoplifter#33") + "::OnMobKilled";
+	end;
+OnMobKilled:
+	hideoffnpc instance_npcname("Geffen Shoplifter#1");
+	//completequest 9288;
+	//setquest 9288; // State = 1, Time = 0
+	//completequest 9288;
+	//setquest 9289; // State = 1, Time = 0
+	'gmt_timer_evt3 = 0;
+	initnpctimer;
+	end;
+OnTimer1000:
+	'gmt_timer_evt3++;
+	
+	switch('gmt_timer_evt3) {
+		case 1: specialeffect EF_PATTACK, AREA, instance_npcname("Geffen Shoplifter#1"); break;
+		case 4: npctalk "Geffen Shoplifter : Ugh, I shouldn't fight toe to toe with anyone...", instance_npcname("Geffen Shoplifter#1"); break;
+		case 7: unittalk 'gmt_account_id, "Don't want to be in a fair fight, huh thief?"; break;
+		case 10: npctalk "Geffen Shoplifter : Umm... stealing zeny is my job~ I did nothing wrong~!", instance_npcname("Geffen Shoplifter#1"); break;
+		case 13: unittalk 'gmt_account_id, "What? You're stealing from needy people."; break;
+		case 16: npctalk "Geffen Shoplifter : Well, it has been fun~! I'm outta here~", instance_npcname("Geffen Shoplifter#1"); break;
+		case 17: unittalk 'gmt_account_id, "Hey! Give back what you stole thief!"; break;
+		case 20: npctalk "Geffen Shoplifter : Hahaha~! You'll get nothing~!", instance_npcname("Geffen Shoplifter#1"); break;
+		case 22: hideonnpc instance_npcname("Geffen Shoplifter#1"); break;
+		case 24:
+			if (attachrid('gmt_account_id)) {
+				mes "[Geffen Resident]", "My monthly salary...", "What am I gonna do?", "I have to eat..."; next;
+				mes "[Geffen Resident]", "You're not a thief are you?", "I don't know what to do about my zeny being stolen."; next;
+				mes "[Lydia]", "Woo, yeah, what a day~", "It seems like all these thieves in Geffen are rich.", "They may be good at stealing but they're easy to steal from too.";
+				cutin "lydia_a.bmp", 0;
+				next;
+				hideoffnpc instance_npcname("Lydia#1");
+				mes "[Lydia]", "Hey, why are you crying?", "What happened?"; next;
+				mes "You tell Lydia about the shoplifters.";
+				cutin "", 255;
+				next;
+				mes "[Geffen Resident]", "What am I going to do?", "*sobbing*"; next;
+				mes "[Lydia]", "(I stole this envelope from one of those thug-looking guys)", "....", "How much zeny was stolen from you?";
+				cutin "lydia_a.bmp", 0;
+				next;
+				mes "[Geffen Resident]", "1,000,000 zeny!", "It's everything that I had.";
+				cutin "", 255;
+				next;
+				mes "[Lydia]", "Whoa! That's the same amount as what's in this envelope that I stole from that shoplifter.";
+				cutin "lydia_a.bmp", 0;
+				next;
+				mes "[Lydia]", "Maybe this is what you are looking for?", "Check it out!"; next;
+				mes "[Geffen Resident]", "Let me see...", "Wait, this has to be my zeny!", "Thank you very much for finding it!";
+				cutin "", 255;
+				next;
+				hideonnpc instance_npcname("Geffen Resident#1");
+				hideoffnpc instance_npcname("Geffen Resident#2");
+				mes "[Lydia]", "Well... Um, that is...", "I didn't say I was gonna give it back to you...";
+				cutin "lydia_a.bmp", 0;
+				next;
+				mes "[Geffen Resident]", "Thank you very much!!", "I will never forget your kindness~!", "I'm putting it in the bank right now!", "Have a good day~!!! Zap~!!";
+				cutin "", 255;
+				next;
+				hideonnpc instance_npcname("Geffen Resident#2");
+				mes "[Lydia]", "......", "I guess... I did a good thing...?";
+				cutin "lydia_a.bmp", 0;
+				next;
+				mes "You tell Lydia about your stolen zeny.";
+				cutin "", 255;
+				next;
+				mes "[Lydia]";
+				mes "So, are you asking me for more zeny?";
+				mes "Zeny doesn't grow on trees you know!";
+				cutin "lydia_a.bmp", 0;
+				next;
+				mes "[Lydia]";
+				mes "I mean it is hers so...";
+				mes "I'll just consider it a donation to the Geffen Magic Tournament.";
+				next;
+				mes "[Lydia]";
+				mes "Well, I can't give away any Tournament participants any zeny...";
+				next;
+				mes "[Lydia]";
+				mes "I stole this magic scroll from another thief, so don't worry about taking it.";
+				sc_start4 SC_GEFFEN_MAGIC1, 3600000, 5, 0, 0, 0, 10000, 1; // flag = 1
+				atcommand "@effect 220";
+				next;
+				mes "[Lydia]";
+				mes "I need to get to the Geffen Magic Tournament.";
+				mes "Gotta go!";
+				close2;
+				cutin "", 255;
+				hideonnpc instance_npcname("Lydia#1");
+				sleep2 2000;
+				unittalk 'gmt_account_id, "She disappeared before I could thank her...";
+				sleep2 3000;
+				unittalk 'gmt_account_id, "She seems like a good person...";
+				sleep2 3000;
+				unittalk 'gmt_account_id, "Well, time to register for the Magic Tournament.";
+				stopnpctimer;
+				end;
+			}
+		
+			stopnpctimer;
+			end;
+	}
+	
+	initnpctimer;
+	end;
+	
+}
+
+1@gef,114,143,0	script	#Event 3 start	139,5,5,{
+	end;
+OnTouch:
+	if ('gmt_event != 0) end;
+	if('OnTouchOnce10) end;
+	set 'OnTouchOnce10,1;
+	'gmt_char_name$ = strcharinfo(0);
+	hideonnpc instance_npcname("#Event 3 start");
+	disablenpc instance_npcname("#Event 3 start");
+	hideoffnpc instance_npcname("Geffen Resident#1");
+	//setquest 9288;
+	'gmt_timer_evt3 = 0;
+	initnpctimer;
+	end;
+OnTimer1000:
+	'gmt_timer_evt3++;
+	
+	switch('gmt_timer_evt3) {
+		case 1: npctalk "Geffen Resident : A thief...! A thief~!!", instance_npcname("Geffen Resident#1"); break;
+		case 3: npctalk "Geffen Resident : Help me~!! Someone stole my paycheck!", instance_npcname("Geffen Resident#1"); break;
+		case 6: 
+			hideoffnpc instance_npcname("Geffen Shoplifter#1");
+			'gmt_chase = 1;
+			break;
+		case 8: npctalk "Geffen Shoplifter : Damn... Someone saw me...", instance_npcname("Geffen Shoplifter#1"); break;
+		case 11:
+			unittalk 'gmt_account_id, "What can I do? I gotta help.";
+			stopnpctimer;
+			end;
+	}
+	
+	initnpctimer;
+	end;
+}
+
+1@gef,0,0,0	script	#gmt_main	-1,{
+	end;
+OnInstanceInit:
+	// Event 1
+	hideonnpc instance_npcname("Geffen Gangster#1");
+	hideonnpc instance_npcname("Geffen Gangster#2");
+	hideonnpc instance_npcname("Geffen Gangster#3");
+	hideonnpc instance_npcname("Kafra Employee#1");
+	hideonnpc instance_npcname("Geffen Gangster#11");
+	hideonnpc instance_npcname("Geffen Gangster#22");
+	hideonnpc instance_npcname("Geffen Gangster#33");
+	disablenpc instance_npcname("#Event 1 start 2");
+	hideonnpc instance_npcname("Chaos#Gef1");
+	hideonnpc instance_npcname("Chaos#Gef2");
+	hideonnpc instance_npcname("Chaos#3");
+	hideonnpc instance_npcname("Iris#Gef1");
+	
+	// Event 2
+	hideonnpc instance_npcname("Geffen Bully#1");
+	hideonnpc instance_npcname("Geffen Bully#2");
+	hideonnpc instance_npcname("Geffen Bully#3");
+	hideonnpc instance_npcname("Geffen Bully#11");
+	hideonnpc instance_npcname("Geffen Bully#22");
+	hideonnpc instance_npcname("Geffen Bully#33");
+	hideonnpc instance_npcname("Magic Academy Student#11");
+	hideonnpc instance_npcname("Magic Academy Student#22");
+	hideonnpc instance_npcname("Loki#1");
+	hideonnpc instance_npcname("Loki#2");
+	hideonnpc instance_npcname("Loki#3");
+	hideonnpc instance_npcname("Fenrir#1");
+	disablenpc instance_npcname("#Event 2 start 2");
+	
+	// Event 3
+	hideonnpc instance_npcname("Geffen Resident#1");
+	hideonnpc instance_npcname("Geffen Resident#2");
+	hideonnpc instance_npcname("Geffen Shoplifter#1");
+	hideonnpc instance_npcname("Geffen Shoplifter#2");
+	hideonnpc instance_npcname("Geffen Shoplifter#3");
+	hideonnpc instance_npcname("Geffen Shoplifter#11");
+	hideonnpc instance_npcname("Geffen Shoplifter#22");
+	hideonnpc instance_npcname("Geffen Shoplifter#33");
+	hideonnpc instance_npcname("Geffen Shoplifter#33");
+	hideonnpc instance_npcname("Lydia#1");
+	
+	hideonnpc instance_npcname("Male Adventurer#gef");
+	hideonnpc instance_npcname("Handsome Adventurer#gef");
+	end;
+}
+
+1@gef	mapflag	nowarp
+1@gef	mapflag	nomemo
+1@gef	mapflag	noteleport
+1@gef	mapflag	monster_noteleport
+1@gef	mapflag	nosave
+1@gef	mapflag	nobranch
+1@gef	mapflag	nowarpto
+1@gef	mapflag	noicewall
+1@gef	mapflag	restricted	9
+
+1@ge_st	mapflag	nowarp
+1@ge_st	mapflag	nomemo
+1@ge_st	mapflag	noteleport
+1@ge_st	mapflag	monster_noteleport
+1@ge_st	mapflag	nosave
+1@ge_st	mapflag	nobranch
+1@ge_st	mapflag	nowarpto
+1@ge_st	mapflag	noicewall
+1@ge_st	mapflag	restricted	9
+
+1@gef_in	mapflag	nowarp
+1@gef_in	mapflag	nomemo
+1@gef_in	mapflag	noteleport
+1@gef_in	mapflag	monster_noteleport
+1@gef_in	mapflag	nosave
+1@gef_in	mapflag	nobranch
+1@gef_in	mapflag	nowarpto
+1@gef_in	mapflag	noicewall
+1@gef_in	mapflag	restricted	9

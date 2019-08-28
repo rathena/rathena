@@ -1,0 +1,2577 @@
+//===== rAthena Script =======================================
+//= Phantasmagorika Quests.
+//===== Description: =========================================
+//--- Memory Record Daily Quests:
+//- Help Her
+//- Air Purifier
+//- Grape Harvest
+//- Subdue Hysterical Patients
+//- Daily Necessities Transport
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// Return 0 if a time limit of "Restriction on the Journey" quests has been reached.
+function	script	F_time_limit_recorder	{
+	return (checkquest(5341,PLAYTIME) != 2 && checkquest(5351,PLAYTIME) != 2 && checkquest(5358,PLAYTIME) != 2 && checkquest(5363,PLAYTIME) != 2 && checkquest(5366,PLAYTIME) != 2);
+}
+
+// Erase datas if a time limit of "Restriction on the Journey" quests has been reached.
+function	script	F_erase_datas_recorder	{
+	if (callfunc("F_time_limit_recorder") == 1)
+		return;
+	mes "Your whole body suddenly becomes heavy and time seems to be passing faster around you.";
+	for ( .@quest_id = 5341; .@quest_id < 5371; .@quest_id++ ) {
+		if (isbegin_quest(.@quest_id) > 0)
+			erasequest .@quest_id;
+	}
+	delitem 6825, countitem(6825);// Air Purifier Box
+	delitem 6826, countitem(6826);// Fresh Grape
+	recorder_quest_type = 0;
+	recorder_quest_status = 0;
+	mes "Ah- This cozy and snug fe...el.....ling";
+	warp "un_bunker",98,91;
+	close;
+}
+
+// Monitoring room
+un_bk_q,97,141,0	script	Monitoring room#A-0	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 1 && recorder_quest_status == 0) {
+		mes "[Bunker Sayhu]";
+		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
+		close;
+	}
+	warp "un_bk_q",98,121;
+	end;
+}
+
+un_bk_q,69,167,0	script	Monitoring room#L-1	WARPNPC,1,1,{
+	end;
+OnTouch:
+	if (recorder_quest_type == 1 && recorder_quest_status == 0) {
+		mes "[Bunker Sayhu]";
+		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
+		close;
+	}
+	warp "un_bk_q",57,168;
+	end;
+}
+
+un_bk_q,126,168,0	script	Monitoring room#L-2	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 1 && recorder_quest_status == 0) {
+		mes "[Bunker Sayhu]";
+		mes "Hey!! Where do you think you're going when we're trying to get a headcount? Get over here.";
+		close;
+	}
+	warp "un_bk_q",140,167;
+	end;
+}
+
+un_bk_q,103,147,4	script	Bunker Sayhu#EP15.2MR	4_M_ALCHE_C,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		switch( recorder_quest_status ) {
+		case 0:
+			emotion ET_CONGRATULATION;
+			mes "[Bunker Sayhu]";
+			mes "First congratulations on surviving. I'm glad you got into the air-raid shelter. If you were outside..";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "...";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "Whew.. even thinking about it makes me dizzy. Both of us were lucky. Don't you think so?";
+			next;
+			select("I think so too.");
+			emotion ET_CRY;
+			mes "[Bunker Sayhu]";
+			mes "I feel a lot of sympathy though. It looks like a lot of people are blaming this explosion on Fresa.";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "The explosion can't be only Lona's responsibility.";
+			next;
+			select("Lona?");
+			emotion ET_QUESTION, playerattached();
+			mes "[Bunker Sayhu]";
+			mes "A great person for sure despite failing the experiment.";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "She took charge of figuring out the number of survivors in that confusing mess of a situation.";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "If it was me...";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "I would probably be wandering around without knowing what do to right about now..";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "Ugh- I guess even I should go and help. Want to help?";
+			next;
+			select("Agree to help.");
+			emotion ET_THANKS;
+			mes "[Bunker Sayhu]";
+			mes "Really? You will help? What a relief because I wasn't confident about going by myself.";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "There is a researcher with a cold demeanor in the center of this room, right?";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "She is the head of the experiment, Lona Fresa. People usually call her Dr. Fresa.";
+			next;
+			setquest 5341;// Limits of Journeys
+			setquest 5342;// Help Her
+			recorder_quest_status = 1;
+			mes "[Bunker Sayhu]";
+			mes "Do you want to go and ask her if she needs any help?";
+			close;
+		case 1:
+			mes "[Bunker Sayhu]";
+			mes "There is a researcher with a cold demeanor in the center of this room, right?";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "Do you want to go and ask her if she needs any help?";
+			close;
+		case 3:
+		case 5:
+		case 9:
+		case 17:
+			mes "[Bunker Sayhu]";
+			mes "I was asked to find out how many are capable of cooking.";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "We have to try hard even though the air-raid shelter is complex and wide.";
+			close;
+		case 100:
+			mes "[Bunker Sayhu]";
+			mes "Thanks for helping her.";
+			next;
+			mes "[Bunker Sayhu]";
+			mes "Is it because we helped? I thought I saw a faint smile on her face.";
+			close;
+		}
+		end;
+	case 2:
+		emotion ET_QUESTION;
+		mes "[Bunker Sayhu]";
+		mes "Uh?! I don't think I've seen you before in the air-raid shelter?";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "Ah! Are you the Adventurer who's helping with moving the newly made air cleaning unit?";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "You are working a lot because of those thoughtless Mechanicians.";
+		close;
+	case 3:
+		mes "[Bunker Sayhu]";
+		mes "The Bioengineers succeeded in cultivating grapes right?";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "They say at least one grape harvest every 2 weeks is possible? The harvest day is probably either today or tomorrow.";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "I want to taste fresh grapes soon. I've been eating only dry food for the past few days.";
+		close;
+	case 4:
+		mes "[Bunker Sayhu]";
+		mes "There's a rumor going around in the air-raid shelter.";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "A while ago the Chemical Substance Specialist and a few others went outside the air-raid shelter.";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "Apparently some contaminated substance got inside the air-raid shelter.";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "I heard the number of convulsing patients are rapidly increasing because of the contaminant.";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "Ah! It's just a rumor! A Rumor!!";
+		close;
+	case 5:
+		mes "[Bunker Sayhu]";
+		mes "It seems the rumor going around was true.";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "I hear they are moving supplies to the clean Zone Z-2 even though it's newly opened because of the contaminant.";
+		next;
+		mes "[Bunker Sayhu]";
+		mes "I think I will lend a hand even just a little.";
+		close;
+	}
+}
+
+un_bk_q,93,168,4	script	Dr.Fresa#EP15.2MR	4_F_BERRYTEA,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		switch( recorder_quest_status ) {
+		case 0:
+			mes "[Lona Fresa]";
+			emotion ET_SORRY;
+			mes "I am sorry. Right now I am a little busy with several problems. Can we speak later?";
+			close;
+		case 1:
+			mes "[Lona Fresa]";
+			emotion ET_SORRY;
+			mes "I am sorry. Right now I am a little busy with several problems. Can we speak later?";
+			next;
+			select("No! What I mean..");
+			emotion ET_SURPRISE;
+			emotion ET_QUESTION;
+			mes "[Lona Fresa]";
+			mes "What?! The Adventurer wants to help me?";
+			next;
+			mes "[Lona Fresa]";
+			mes "Good. The people are uncontrollable because they are shocked and confused.";
+			next;
+			mes "[Lona Fresa]";
+			mes "If the intimidating Adventurer helps out it will be easier to control the confused masses.";
+			next;
+			mes "[Lona Fresa]";
+			mes "Good!! I approve. Just in time for a troublesome problem as well.";
+			next;
+			select("Troublesome problem?");
+			emotion ET_QUESTION, playerattached();
+			mes "[Lona Fresa]";
+			mes "The personnel with various specialties such as yourself have not changed their positions and are easy to grasp, but the other employees are the problem.";
+			next;
+			mes "[Lona Fresa]";
+			mes "Surely they are moving according to the Emergency Situation Guidelines of their respective teams.";
+			next;
+			emotion ET_SCRATCH;
+			mes "[Lona Fresa]";
+			mes "I cannot figure out from here where they are and what they are doing.";
+			next;
+			mes "[Lona Fresa]";
+			mes "So I was thinking if you";
+			next;
+			mes "[Lona Fresa]";
+			.@r = rand(1,4);
+			switch(.@r) {
+			case 1:
+				setquest 5343;// Headcount
+				mes "Can you figure out the number of ^0000FFBioengineers ^000000?";
+				break;
+			case 2:
+				setquest 5344;// Headcount
+				mes "Can you figure out the number of ^0000FFMechanicians^000000?";
+				break;
+			case 3:
+				setquest 5345;// Headcount
+				mes "Can you figure out the number of ^0000FFFacilities managers^000000?";
+				break;
+			case 4:
+				setquest 5346;// Headcount
+				mes "Can you figure out the number of ^0000FFChemical Substance Specialists^000000?";
+				break;
+			}
+			recorder_quest_status = recorder_quest_status | pow(2,.@r);
+			next;
+			mes "[Lona Fresa]";
+			mes "I ask you for this favor even though it won't be easy in this large and complex shelter.";
+			close;
+		case 3:
+			callsub( S_Num, 22, 5343, "Bioengineers" );
+		case 5:
+			callsub( S_Num, 18, 5344, "Mechanicians" );
+		case 9:
+			callsub( S_Num, 28, 5345, "Facilities managers" );
+		case 17:
+			callsub( S_Num, 11, 5346, "Chemical Substance Specialists" );
+		case 100:
+			mes "[Lona Fresa]";
+			mes "I know it is frustrating but I hope you will adjust to life inside the air-raid shelter until the outside situation becomes safer.";
+			close;
+		}
+		end;
+	case 2:
+		emotion ET_SORRY;
+		mes "[Lona Fresa]";
+		mes "I am sorry. Right now I am a little busy with several problems. It would be better if we speak later.";
+		close;
+	case 4:
+		if (recorder_quest_status == 2) {
+			emotion ET_SORRY;
+			mes "[Lona Fresa]";
+			mes "I am sorry. Right now I am a little busy with several problems. It would be better if we speak later.";
+			next;
+			select("I have something urgent to tell you.");
+			mes "[Lona Fresa]";
+			mes "What?! What is going on?";
+			next;
+			mes "Explain current situation at the temporary clinic.";
+			next;
+			emotion ET_HUK;
+			mes "[Lona Fresa]";
+			mes "Patients are convulsing simultaneously.. this is not good.";
+			next;
+			mes "[Lona Fresa]";
+			mes "I got it. We need to take measures.";
+			next;
+			erasequest 5364;// Convulsing Patient Suppression
+			erasequest 5365;// Urgent News
+			setquest 5370;// Memory Record
+			getexp 750000,750000;
+			recorder_quest_status = 3;
+			mes "The small round capsule has percolated through the skin. It feels like experience has accumulated.";
+			next;
+			mes "[Lona Fresa]";
+			mes "Thank you for informing me.";
+			close;
+		}
+		emotion ET_PROFUSELY_SWEAT;
+		mes "[Lona Fresa]";
+		mes "This situation is grave so we need to quickly take measures.";
+		close;
+	case 5:
+		emotion ET_SORRY;
+		mes "[Lona Fresa]";
+		mes "I am sorry. Right now I am a little busy with several problems. It would be better if we speak later.";
+		close;
+	}
+	end;
+
+S_Num:
+	.@bon_nombre = getarg(0);
+	.@quest_id = getarg(1);
+	.@headcount_complete = isbegin_quest(getarg(1)+4);
+
+	mes "[Lona Fresa]";
+	if (.@headcount_complete > 0)
+		mes "Ah! You are here. Isn't the interior of the shelter a bit complicated? The favor I asked of you..";
+	else {
+		emotion ET_QUESTION;
+		mes "Huh?! You're already back? You came back earlier than I thought.";
+		next;
+		mes "[Lona Fresa]";
+		mes "The favor that I asked.. ah?! Ah!!";
+	}
+	next;
+	mes "[Lona Fresa]";
+	mes "The number of ^0000FF" + getarg(2) + "^000000? How many do they say have survived?";
+	next;
+	input .@num;
+	mes "[Lona Fresa]";
+	if (.@num != .@bon_nombre || .@headcount_complete == 0) {
+		mes "" + .@num + " people you say?";
+		next;
+		emotion ET_SCRATCH;
+		mes "[Lona Fresa]";
+		mes "That's strange? According to the list they have never been that number.";
+		next;
+		mes "[Lona Fresa]";
+		mes "Can you check again?";
+		close;
+	}
+	mes "Really? It is roughly the same as the number on the list. Good work.";
+	next;
+	mes "[Lona Fresa]";
+	mes "Sayhu says Adventurers like this kind of stuff. This is compensation for your help.";
+	next;
+	mes "The small round capsule has percolated through the skin. It feels like experience has accumulated.";
+	next;
+	erasequest 5342;// Help Her
+	erasequest .@quest_id;// Headcount
+	erasequest (.@quest_id + 4);// Headcount Complete
+	setquest 5370;// Memory Record
+	getexp 750000,750000;
+	recorder_quest_status = 100;
+	mes "[Lona Fresa]";
+	mes "Good work. I know it is frustrating but I hope you will adjust to the life inside the air-raid shelter until the outside situation becomes safer.";
+	close;
+}
+
+un_bk_q,76,175,4	script	Researcher Grum#EP15.2M	4_F_SCIENCE,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		if (recorder_quest_status == 0) {
+			mes "[Researcher Grum]";
+			mes "I really don't like self-righteous and hypocritical Fresa.";
+			close;
+		}
+		mes "[Researcher Grum]";
+		mes "Who is that woman to conduct a headcount as if she's the leader?";
+		next;
+		mes "[Researcher Grum]";
+		mes "There wouldn't have been an explosion if there was no experiment the first place? Right?";
+		close;
+	case 2:
+		mes "[Researcher Grum]";
+		mes "I think the self-righteous and haggardly Fresa has changed.";
+		next;
+		mes "[Researcher Grum]";
+		mes "She's become more warm compared to the past, right?";
+		close;
+	case 3:
+		mes "[Researcher Grum]";
+		mes "Fresa has definitely changed a lot.";
+		next;
+		mes "[Researcher Grum]";
+		mes "Today she is handing out grapes to people. In the past that would have been unimaginable.";
+		close;
+	case 4:
+		mes "[Researcher Grum]";
+		mes "Why is that Fresa acting like the leader alone but still hasn't taken measures?";
+		next;
+		mes "[Researcher Grum]";
+		mes "Measures need to taken about the convulsing patients. Are you going to cover this up like in the past?";
+		close;
+	case 5:
+		mes "[Researcher Grum]";
+		mes "So this is what's happening?";
+		next;
+		mes "[Researcher Grum]";
+		mes "I should have known when she tried to half-ass things.";
+		close;
+	}
+}
+
+// Corridor Monitoring room
+un_bk_q,86,121,4	script	Chemical Substance Specialist Karsten	4_M_ALCHE_B,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		if (recorder_quest_status == 17) {
+			if (isbegin_quest(5350) == 0) {
+				mes "[Chemical Substance Specialist Karsten]";
+				emotion ET_QUESTION;
+				mes "Who are you?";
+				next;
+				select("I am...");
+				emotion ET_SURPRISE;
+				mes "[Chemical Substance Specialist Karsten]";
+				mes "Ah! Ah! Fresa? I have met her a few times at plenary sessions.";
+				next;
+				mes "[Chemical Substance Specialist Karsten]";
+				mes "If I recall she is the one in charge of this failed project?";
+				next;
+				mes "[Chemical Substance Specialist Karsten]";
+				mes "Anyway!!";
+				next;
+				mes "[Chemical Substance Specialist Karsten]";
+				mes "Not everybody is fit to be director. A headcount in this hectic situation.";
+				next;
+				emotion ET_PROFUSELY_SWEAT;
+				mes "[Chemical Substance Specialist Karsten]";
+				mes "Wait a minute. I did a headcount and wrote it down somewhere..";
+				next;
+				mes "[Chemical Substance Specialist Karsten]";
+				mes "Was it this number? That number? Ah?! This number.";
+				next;
+				setquest 5350;// Headcount Complete
+				mes "[Chemical Substance Specialist Karsten]";
+				mes "Total number of Chemical Substance Specialists is ^FF000011^000000. Damn a lot less.";
+				next;
+				mes "[Chemical Substance Specialist Karsten]";
+				mes "Ah! Tell Fresa on your way that we are checking for hazardous substances within the air-raid shelter according to emergency protocol.";
+				next;
+				mes "[Chemical Substance Specialist Karsten]";
+				mes "We have to do our job even if there aren't many of us left.";
+				close;
+			}
+			mes "[Chemical Substance Specialist Karsten]";
+			mes "Total number of Chemical Substance Specialists is ^FF000011^000000.";
+			next;
+			mes "[Chemical Substance Specialist Karsten]";
+			mes "Tell Fresa that although there are only a few left but, we are checking for hazardous substances within the air-raid shelter.";
+			close;
+		}
+		mes "[Chemical Substance Specialist Karsten]";
+		mes "We are checking for hazardous substances within the air-raid shelter according to emergency protocol.";
+		close;
+	case 3:
+		if (recorder_quest_status == 2) {
+			mes "[Chemical Substance Specialist Karsten]";
+			mes "Is that the first grape harvested by the Bioengineers?";
+			next;
+			emotion ET_QUESTION;
+			mes "[Chemical Substance Specialist Karsten]";
+			mes "The rumors say a grape tree got smashed because of the Mechanicians but it seems it hasn't affected the harvest.";
+			next;
+			mes "[Chemical Substance Specialist Karsten]";
+			mes "Anyway thanks. I prepared this for compensation.";
+			next;
+			erasequest 5359;// Grape Harvest
+			erasequest 5362;// Grape Delivery
+			setquest 5370;// Memory Record
+			getexp 1000000,1000000;
+			recorder_quest_status = 3;
+			mes "- The small round capsule has percolated through skin. It feels like experience has accumulated.";
+			next;
+			emotion ET_CRY;
+			mes "[Chemical Substance Specialist Karsten]";
+			mes "I've been eating nothing but dried food for the past few days so it moves me to eat fresh grape.";
+			close;
+		}
+		mes "[Chemical Substance Specialist Karsten]";
+		mes "I've been eating nothing but dried food so eating fresh grape makes me feel fresh.";
+		close;
+	case 2:
+	case 4:
+	case 5:
+		emotion ET_SMILE;
+		mes "[Chemical Substance Specialist Karsten]";
+		mes "Us Chemical Substance Specialists are living like we always do. It's not like we can do chemical experiments in a place like this.";
+		close;
+	}
+}
+
+// Control Room
+un_bk_q,98,246,8	script	Facilities manager Jiko	4_M_EINMAN2,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Facilities manager Jiko]";
+		mes "Aah- I don't know the reason but the control room is";
+		next;
+		mes "[Facilities manager Jiko]";
+		mes "is damaged a lot. At this point it isn't a control room but a warehouse.";
+		close;
+	case 2:
+		mes "[Facilities manager Jiko]";
+		mes "Ah the air cleaning unit doesn't belong here.";
+		next;
+		mes "[Facilities manager Jiko]";
+		mes "If my memory is correct, you have to deliver them to Zones C-0, F-1, F-2, I-0, Z-0.";
+		close;
+	case 3:
+		mes "[Facilities manager Jiko]";
+		mes "Haa- I have been cleaning the Control room for several days now";
+		next;
+		mes "[Facilities manager Jiko]";
+		mes "This place cannot be organized no matter how I much organize it. I guess we should just use it for storage.";
+		close;
+	case 4:
+		mes "[Facilities manager Jiko]";
+		mes "Come on in. Welcome to the Warehouse.";
+		next;
+		mes "[Facilities manager Jiko]";
+		mes "Urrghh";
+		close;
+	case 5:
+		mes "[Facilities manager Jiko]";
+		mes "This is not the control room.";
+		next;
+		mes "[Facilities manager Jiko]";
+		mes "It's the warehouse!!";
+		close;
+	}
+}
+
+un_bk_q,108,243,4	script	Discarded Mechanical Device	4_ENERGY_BLUE,{
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 1) {
+		mes "The mechanical device thrown on the floor cannot be determined if it is still operable.";
+		close;
+	}
+	for ( .@i = 0; .@i < (recorder_quest_type - 1); .@i++ )
+		.@listen_continue$[.@i] = "Continue listening.";
+	.@listen_again$[.@i] = "Listen again.";
+
+	mes "There is a Memory Record somebody is recording.";
+	next;
+	if (select( "Listen.", "Quit." ) == 2)
+		close;
+	while(true) {
+		mes "Oh- Is this a memory record? Does it work? Oh it works. Works! Should I try it since I'm bored?";
+		next;
+		mes "My name is Maso an Adventurer traveling the world. Today is 4th day of entering the air-raid shelter? 3rd day? The vibe here is weird and hard to adjust to.";
+		next;
+		mes "Verus city has Adventurers amongst its original population but the treatment towards Adventurers is strangely good.";
+		next;
+		mes "The mood is that Adventurers are people caught up in an uncontrollable accident and need to be treated well.";
+		next;
+		mes "As an Adventurer who eats and plays as much as he works, I cannot stand the itching for action. Urgh";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Is today day 6? Details aren't told to Adventurers so I am not sure but the people of Verus city seem very gloomy.";
+		next;
+		mes "The Adventurer's blood is boiling and wanting to explore places but there isn't much to do.";
+		next;
+		mes "I looked around the air-raid shelter but whoever designed it has not one artistic hair on him.";
+		next;
+		mes "It is no fun to keep looking at the same hallways and same room lay outs.";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Is today day 21? The Verus City people look happy to have solved the food problem.";
+		next;
+		mes "It is cute to see the mild looking researchers going around cheering and screaming.";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "The 30th night but because it's always dark I don't really know if it's night or day. I just ate supper so it must be night.";
+		next;
+		mes "Today I moved the really heavy air cleaning units made by the Mechanicians with the other Adventurers.";
+		next;
+		mes "The air-raid shelter is so large that I had no idea where they were but thanks to that I became friends with some of the Adventurers, especially Castle and Blat.";
+		next;
+		mes "By the way the Mechanicians seem to have mental problems. They make a ruckus for not being able to make machines and got dragged out by the guards.";
+		next;
+		mes "The Mechanicians are definitely going to cause trouble someday.";
+		next;
+		switch( select( .@listen_again$[1], .@listen_continue$[1], "Stop listening." ) ) {
+		case 1:
+			continue;
+		case 2:
+			break;
+		case 3:
+			close;
+		}
+		mes "Today is day 32 and I worked on the grape harvest.";
+		next;
+		mes "I ate fresh grapes and since I don't have anything to do anything to do, I'm going to sleep early.";
+		next;
+		mes "Ah.. the grape was good, I want it again. Did they say harvest was possible once every 2 weeks?";
+		next;
+		switch( select( .@listen_again$[2], .@listen_continue$[2], "Stop listening." ) ) {
+		case 1:
+			continue;
+		case 2:
+			break;
+		case 3:
+			close;
+		}
+		mes "Today is the 38th day of being in the shelter and there is a fuss since the morning.";
+		next;
+		mes "This morning the recruited Adventurers to join the Chemical Substance Specialists for an investigation outside the air-raid shelter, many volunteered despite the dangers.";
+		next;
+		mes "I am of the belief danger should be avoided but my friends Castle and Blat volunteered.";
+		next;
+		mes "Well I understand that they were sick of living in the shelter for a while.";
+		next;
+		mes "They have not returned past the afternoon. Verus City leader Fresa has concluded that the people who left are dead.";
+		next;
+		mes "Everybody had a moment of silence at dawn. They were good people so it is sad to part like this.";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Is it since the morning of the 40th day? There is a mysterious infectious disease going around the shelter.";
+		next;
+		mes "A few people have suddenly attacked those near them and convulsed";
+		next;
+		mes "And Adventurers have been deployed to suppress the convulsing people because a lot of the weak researchers are wounded.";
+		next;
+		mes "There is a rumor saying a contaminant came in because of the people who went outside the shelter a while go.";
+		next;
+		switch( select( .@listen_again$[3], .@listen_continue$[3], "Stop listening." ) ) {
+		case 1:
+			continue;
+		case 2:
+			break;
+		case 3:
+			close;
+		}
+		mes "Lunch during day 44 the air-raid shelter leader Fresa gathered the Adventurers and had a presentation.";
+		next;
+		mes "The rumor has been confirmed true and a safety partition will be built in Zone Z-0";
+		next;
+		mes "A decision has been made to move necessities to Zone Z-2 tomorrow and I heard they need the help of Adventurers.";
+		next;
+		mes "I have to work tomorrow so I am doing to sleep early.";
+		next;
+		mes "There is no more recorded content.";
+		next;
+		switch( select( .@listen_again$[4], .@listen_continue$[4], "Stop listening." ) ) {
+		case 1:
+			continue;
+		case 2:
+			break;
+		case 3:
+			close;
+		}
+	}
+}
+
+// Corridor Control Room
+un_bk_q,56,192,4	script	Chemical Substance Specialist Kori	4_M_ALCHE_B,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Chemical Substance Specialist Kori]";
+		mes "We are seeing if there are hazardous substances within the air-raid shelter according to emergency protocol.";
+		next;
+		mes "[Chemical Substance Specialist Kori]";
+		mes "You want to know how many Chemical Substance Specialists there are? Go to Karsten then. Should be here somewhere.";
+		close;
+	case 2:
+		mes "[Chemical Substance Specialist Kori]";
+		mes "This next room is temporarily being used by the Chemical Substance Specialist.";
+		next;
+		mes "[Chemical Substance Specialist Kori]";
+		mes "We tightly hid away dangerous things but don't touch anything just in case.";
+		close;
+	case 3:
+		mes "[Chemical Substance Specialist Kori]";
+		mes "Karsten gave me grapes.";
+		next;
+		mes "[Chemical Substance Specialist Kori]";
+		mes "How fresh and tasty it was.";
+		close;
+	case 4:
+		mes "[Chemical Substance Specialist Kori]";
+		mes "My colleagues left the air-raid shelter to investigate and haven't come back.";
+		next;
+		mes "[Chemical Substance Specialist Kori]";
+		mes "It was concluded they are dead but are they really all dead? I want to see my colleagues.";
+		close;
+	case 5:
+		mes "[Chemical Substance Specialist Kori]";
+		mes "Good work.";
+		next;
+		mes "[Chemical Substance Specialist Kori]";
+		mes "We are working to find a solution for the contaminant.";
+		close;
+	}
+}
+
+// Corridor K-0
+un_bk_q,161,193,6	script	Adventurer Bamdaku#EP15.2MR	4_M_ALCHE_C,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Adventurer Bamdaku]";
+		mes "I found this while looking around the air-raid shelter";
+		next;
+		mes "[Adventurer Bamdaku]";
+		mes "but there is a lot of this on the wall. What can it be?";
+		close;
+	case 2:
+		mes "[Adventurer Bamdaku]";
+		mes "I have been investigating this for 30 days already but I do not know what it is.";
+		next;
+		mes "[Adventurer Bamdaku]";
+		mes "I am too proud to ask somebody.";
+		close;
+	case 3:
+		mes "[Adventurer Bamdaku]";
+		mes "I have been investigating this for 32 days already but I do not know what it is.";
+		next;
+		mes "[Adventurer Bamdaku]";
+		mes "Ugh what to do.. Should I just ask somebody?";
+		close;
+	case 4:
+		mes "[Adventurer Bamdaku]";
+		mes "I have been investigating this for 40 days already.";
+		next;
+		mes "[Adventurer Bamdaku]";
+		mes "My pride won't let me quit now.";
+		close;
+	case 5:
+		mes "[Adventurer Bamdaku]";
+		mes "45 days have passed since I started investigating this unknown thing.";
+		next;
+		mes "[Adventurer Bamdaku]";
+		mes "How did I come to investigate this?";
+		close;
+	}
+}
+
+un_bk_q,103,393,4	script	Memory_Record#EP15.2MR	4_ENERGY_BLUE,{
+	callfunc("F_time_limit_recorder");
+
+	for ( .@i = 0; .@i < (recorder_quest_type - 1); .@i++ )
+		.@listen_continue$[.@i] = "Continue listening.";
+	.@listen_again$[.@i] = "Listen again.";
+
+	mes "There is a Memory Record somebody is recording.";
+	next;
+	if (select( "Listen.", "Quit." ) == 2)
+		close;
+	while(true) {
+		mes "Ah ah- One two three test- test-";
+		next;
+		mes "To distinguish survival days in the air-raid shelter, today will be designated Explosion Day 1 after the experiment explosion.";
+		next;
+		mes "Everybody fell into panic after seeing the outside situation on the monitor after the explosion.";
+		next;
+		mes "But chief researcher Dr. Fresa calmly consoled everybody and checked how many survived.";
+		next;
+		mes "The final number of survivors including adventurers seems to be 326.";
+		next;
+		mes "The camera showing outside was damaged in the afternoon. It seems we cannot see the situation outside anymore.";
+		next;
+		mes "There is no more recorded content.";
+		next;
+		switch( select( .@listen_again$[0], .@listen_continue$[0], "Stop listening." ) ) {
+		case 1:
+			continue;
+		case 2:
+			break;
+		case 3:
+			close;
+		}
+		mes "Explosion Day 2";
+		next;
+		mes "A witch hunt against the director and chief researcher Fresa began.";
+		next;
+		mes "My opinion is different. The research and experiment was conducted under her direction but this is an accident.";
+		next;
+		mes "If not Fresa, they would have made somebody else to blame.";
+		next;
+		mes "But she is handling it in a dignified manner despite concerns.";
+		next;
+		mes "She says problem solving is more important than blame and is checking assignments of survivors before the accident.";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Explosion Day 3";
+		next;
+		mes "Fresa.. She naturally became the leader of the survivors.";
+		next;
+		mes "There was no vote of sorts, but nobody is complaining about her being the leader.";
+		next;
+		mes "The day before she had a briefing on the situation of the total survivors.";
+		next;
+		mes "20 Bioengineers";
+		mes "16 Mechanicians";
+		mes "27 Facilities managers";
+		mes "10 Chemical Substance Specialists";
+		mes "Other than specialists the assignments of survivors such as cafeteria staff, janitors, gardeners, distribution directors, health professionals, adventurers caught in the accident have been assessed.";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Explosion Day 4";
+		next;
+		mes "Everybody's work has been decided based on Fresa's briefing the day before.";
+		next;
+		mes "It was decided that researchers including myself know nothing much research and must continue our lives in the air-raid shelter under the guidance of those who have technical skill needed for survival.";
+		next;
+		mes "First the Chemical Substance Specialists and Facilities managers started to install Air Contamination Gauge Sensors in the air-raid shelter.";
+		next;
+		mes "After evaluating that oxygen levels were low the Mechanicians have started to assemble Air cleaning units.";
+		next;
+		mes "Lora, a former cafeteria employee was consulted on the important problem of food.";
+		next;
+		mes "We assessed that about 40 days of survival is possible based on the food in the warehouse and the number of survivors.";
+		next;
+		mes "This prompted the Bioengineers to cultivate plants that can self-produce.";
+		next;
+		mes "Other miscellaneous assignments were issued under Fresa's direction.";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Explosion Day 5";
+		next;
+		mes "I don't know the details but the air pollution level outside of the shelter was measured.";
+		next;
+		mes "According to the Chemical Substance Specialists the situation is hopeless.";
+		next;
+		mes "It seems life in the air-raid shelter has to continue longer. Just can quietly keep working..";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Explosion Day 21";
+		next;
+		mes "After silently working for several days the Bioengineers have good news.";
+		next;
+		mes "They have succeeded in artificially germinating a plant that can self-produce.";
+		next;
+		mes "Fortunately the air-raid shelter has a warehouse spacious enough to grow plants in.";
+		next;
+		mes "It seems we can forget about our food problem now.";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Explosion Day 30";
+		next;
+		mes "A small problem has occurred in the air-raid shelter. The air cleaning units made in the beginning are broken.";
+		next;
+		mes "Fortunately there will be no problem maintaining oxygen concentration levels thanks to the air cleaning units the Mechanicians made without approval.";
+		next;
+		mes "They are too heavy so adventurers were deployed because nobody else is able to move them.";
+		next;
+		switch( select( .@listen_again$[1], .@listen_continue$[1], "Stop listening." ) ) {
+		case 1:
+			continue;
+		case 2:
+			break;
+		case 3:
+			close;
+		}
+		mes "Explosion Day 32";
+		next;
+		mes "Today is the first harvest of the grape tree cultivated by the Bioengineers.";
+		next;
+		mes "Although there was a small problem of the Mechanicians destroying one grape tree";
+		next;
+		mes "The air-raid shelter residents are throwing a small party to celebrate the successful harvest.";
+		next;
+		mes "There is no more recorded content.";
+		next;
+		switch( select( .@listen_again$[2], .@listen_continue$[2], "Stop listening." ) ) {
+		case 1:
+			continue;
+		case 2:
+			break;
+		case 3:
+			close;
+		}
+		mes "Explosion Day 38";
+		next;
+		mes "Chemical Substance Specialists and some Adventurers sick of living in the air-raid shelter have left the shelter to measure the air.";
+		next;
+		mes "They have not returned by evening.";
+		next;
+		mes "Was the freedom of outside better than the life in the dark air-raid shelter?";
+		next;
+		mes "After midnight the remaining Chemical Substance Specialists assessed that they were dead and everybody had a brief moment of silence.";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Explosion Day 40";
+		next;
+		mes "A dark rumor is going around the shelter.";
+		next;
+		mes "There is a rumor that a contaminant from the outside has invaded the air-raid shelter because of the people who left a while ago.";
+		next;
+		mes "Is it because of the contaminant? There are patients who suddenly convulse and attack others.";
+		next;
+		mes "Under the leader Fresa's decision, everybody was checked and those found with transfectants were quarantined in the temporary clinic.";
+		next;
+		switch( select( .@listen_again$[3], .@listen_continue$[3], "Stop listening." ) ) {
+		case 1:
+			continue;
+		case 2:
+			break;
+		case 3:
+			close;
+		}
+		mes "Explosion Day 43";
+		next;
+		mes "The rumor in the air-raid shelter has come true.";
+		next;
+		mes "The remaining Chemical Substance Specialists have confirmed that the contaminant is eroding into the air-raid shelter";
+		next;
+		mes "And Fresa and experts have started taking measures.";
+		next;
+		if (select( "Continue listening.", "Stop listening." ) == 2)
+			close;
+		mes "Explosion Day 45";
+		next;
+		mes "The invading contaminant will not stop.";
+		next;
+		mes "It has been decided to move all equipment and necessities to the less contaminated Zone Z-2";
+		next;
+		mes "And facility managers have started to install a partition in Zone Z-0 to prevent the contaminant from coming in further.";
+		next;
+		mes "There is no more recorded content.";
+		next;
+		if (select( "Listen again.", "Stop listening." ) == 2)
+			close;
+	}
+}
+
+// Machine Warehouse
+un_bk_q,41,275,0	script	Machine Warehouse#J-0	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 2 && recorder_quest_status == 0) {
+		emotion ET_O, getnpcid(0, "Mechanician Mugeosi#EP1");
+		mes "[Mechanician Mugeosi]";
+		mes "Ah! You're the adventurer send to deliver air cleaners. You are at the right place. Come this way.";
+		close;
+	}
+	warp "un_bk_q",21,276;
+	end;
+}
+
+un_bk_q,56,286,4	script	Mechanician Mugeosi#EP1	4_M_REPAIR,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Mechanician Mugeosi]";
+		mes "Are you an Adventurer? This is the machine warehouse.";
+		next;
+		mes "[Mechanician Mugeosi]";
+		mes "It was originally a warehouse but it is now being used by Mechanicians to assemble machines for the air-raid shelter.";
+		next;
+		emotion ET_FRET;
+		mes "[Mechanician Mugeosi]";
+		mes "You want to know the total number of Mechanicians? I don't think I know?";
+		next;
+		mes "[Mechanician Mugeosi]";
+		mes "Ah! Al up there might know. Go to Al.";
+		close;
+	case 2:
+		if (recorder_quest_status == 0) {
+			mes "[Mechanician Mugeosi]";
+			mes "An adventure to move the air cleaner?";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "You look solid just like the other researchers mentioned. I bet you can lift the air cleaner like nothing!!";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "We shouldn't be ordering people like you who got caught up in an accident, but the situation is urgent.";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "We made a new air cleaning unit because the one operating previously broke down a while ago.";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "We should have made it in modular form. Made it as one solid piece by mistake.";
+			next;
+			emotion ET_SMILE;
+			mes "[Mechanician Mugeosi]";
+			mes "Didn't think of it when we were making it!!";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "It happens. Right?";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "Facilities managers are making a fuss about needing the air cleaning unit soon.";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "We can't move the air cleaning unit with the equipment we have now..";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "We could make the machine that can transport it if we had more time..";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "So we ended up asking the strong Adventurer.";
+			next;
+			select("Yes sir.");
+			emotion ET_SMILE;
+			mes "[Mechanician Mugeosi]";
+			mes "Aren't you refreshing!!";
+			next;
+			setquest 5351;// Limits of Journeys
+			setquest 5352;// Air Cleaning Unit
+			recorder_quest_status = 1;
+			mes "[Mechanician Mugeosi]";
+			mes "We are counting on you. Take five air cleaning units to areas C-0, F-1, F-2, I-0, Z-0. Talk to me when you're ready.";
+			close;
+		}
+		if (recorder_quest_status == 1) {
+			.@total = isbegin_quest(5353) + isbegin_quest(5354) + isbegin_quest(5355) + isbegin_quest(5356) + isbegin_quest(5357);
+			if (.@total < 5) {
+				emotion ET_QUESTION;
+				mes "[Mechanician Mugeosi]";
+				mes "Are you ready to move heavy objects?";
+				next;
+				select("Give it to me.");
+				if (checkweight(6825,1) == 0) {
+					mes "[Mechanician Mugeosi]";
+					mes "You look strong but seems you are weak. You can't lift the air cleaning unit like that.";
+					close;
+				}
+				getitem 6825,1;// Air Purifier Box
+				mes "[Mechanician Mugeosi]";
+				mes "Deliver them to zones C-0, F-1, F-2, I-0, Z-0. The order doesn't matter and please be careful since they are precise machines.";
+				close;
+			}
+			emotion ET_BEST;
+			mes "[Mechanician Mugeosi]";
+			mes "Good work. The air cleaning units are heavy, right?";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "Sayhu says Adventurers like this kind of stuff and I should use this as compensation after giving you work.";
+			next;
+			erasequest 5352;// Air Cleaning Unit
+			erasequest 5353;// C-0 Delivery Complete
+			erasequest 5354;// F-1 Delivery Complete
+			erasequest 5355;// F-2 Delivery Complete
+			erasequest 5356;// I-0 Delivery Complete
+			erasequest 5357;// Z-0 Delivery Complete
+			setquest 5370;// Memory Record
+			getexp 1000000,1000000;
+			recorder_quest_status = 2;
+			mes "The small round capsule has percolated through skin. It feels like experience has accumulated.";
+			next;
+			mes "[Mechanician Mugeosi]";
+			mes "Thanks to you we overcame a crisis. I need to make a machine that can move heavy objects in case this happens again.";
+			close;
+		}
+		mes "[Mechanician Mugeosi]";
+		mes "Good work. Let's relax for now.";
+		close;
+	case 3:
+		mes "[Mechanician Mugeosi]";
+		mes "Have you tried the grapes made by the Bioengineers using that growth thingy?";
+		next;
+		mes "[Mechanician Mugeosi]";
+		mes "We can now eat fresh fruit in this dull and dark air-raid shelter.";
+		close;
+	case 4:
+		mes "[Mechanician Mugeosi]";
+		mes "Are you worried because people are suddenly attacking? What? You aren't infected right?";
+		close;
+	case 5:
+		mes "[Mechanician Mugeosi]";
+		mes "Why is everybody rejecting us making a machine that can make shipping easier? Pssh!!";
+		close;
+	}
+}
+
+un_bk_q,82,323,2	script	Mechanician Al#EP15.2MR	4_M_REPAIR,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		switch( recorder_quest_status ) {
+		case 3:
+		case 9:
+		case 17:
+			mes "[Mechanician Al]";
+			mes "So busy. This is why I asked for additional manpower in the first place. No use now I guess.";
+			close;
+		case 5:
+			if (isbegin_quest(5348) == 0) {
+				mes "[Mechanician Al]";
+				emotion ET_DELIGHT;
+				mes "You are?";
+				next;
+				select("I am...");
+				emotion ET_SCRATCH;
+				mes "[Mechanician Al]";
+				mes "Fresa? Hm? Who is Fresa?";
+				next;
+				mes "[Mechanician Al]";
+				mes "Ah?! Ah!! The chief director of the experiment was ^0000FF Lona Fresa^000000.";
+				next;
+				mes "[Mechanician Al]";
+				mes "OK Adventurer man, identity confirmation complete!!";
+				next;
+				mes "[Mechanician Al]";
+				mes "Was it your business to check the Mechanician survivor headcount?";
+				next;
+				setquest 5348;// Headcount Complete
+				mes "[Mechanician Al]";
+				mes "There weren't many in the first place, and too bad for the poor bastards who didn't make it into the shelter.";
+				next;
+				mes "[Mechanician Al]";
+				mes "Tell Fresa, Fress or whatever her name is, that the Mechanicians are inspecting";
+				next;
+				mes "[Mechanician Al]";
+				mes "the mechanical systems in the air-raid shelter according to the emergency protocols. Thanks~";
+				close;
+			}
+			mes "[Mechanician Al]";
+			mes "^FF000018^000000 Mechanicians have survived.";
+			next;
+			mes "[Mechanician Al]";
+			mes "Tell Fresa, Fress or whatever her name is, that the Mechanicians are inspecting the mechanical systems in the air-raid shelter.";
+			close;
+		default:
+			mes "[Mechanician Al]";
+			mes "The Mechanicians are checking for irregularities in the internal mechanical systems according to Emergency Situation Guidelines.";
+			next;
+			emotion ET_FRET;
+			mes "[Mechanician Al]";
+			mes "Darn it- Why am I even explaining this? You're bothering me so go away.";
+			close;
+		}
+	case 2:
+		mes "[Mechanician Al]";
+		mes "So busy. This is why I asked for additional manpower in the first place. No use now I guess.";
+		close;
+	case 3:
+		mes "[Mechanician Al]";
+		mes "Is that grape for me? It's not? Pssh!!";
+		close;
+	case 4:
+		mes "[Mechanician Al]";
+		mes "So busy. This is why I asked for additional manpower in the first place. No use now I guess.";
+		close;
+	case 5:
+		switch( recorder_quest_status ) {
+		case 0:
+			end;
+		case 1:
+			mes "[Mechanician Al]";
+			mes "Huh? What's going on?";
+			next;
+			mes "[Mechanician Al]";
+			mes "What, shouldn't the items be moved to Zone Z-2 and not here? Take them there.";
+			close;
+		case 2:
+			mes "[Mechanician Al]";
+			mes "Huh? What's going on? I heard the Adventurers are being used to move the supplies?";
+			next;
+			select("The message from Ernon..");
+			mes "[Mechanician Al]";
+			mes "Ernon? Goods manager Ernon? He has a message for me? What is it?";
+			next;
+			input .@string$;
+			setquest 5369;// Message Delivery Complete
+			recorder_quest_status = 3;
+			mes "[" + strcharinfo(0) + "]";
+			mes .@string$;
+			next;
+			emotion ET_OTL;
+			mes "[Mechanician Al]";
+			mes "Huh.. uh.. buh.. buh..";
+			next;
+			mes "He seems shocked and out of it. Go back to Ernon since the message has been delivered.";
+			close;
+		case 3:
+			emotion ET_OTL;
+			mes "[Mechanician Al]";
+			mes "Huh.. uh.. buh.. buh..";
+			next;
+			mes "He is out of it. Go back to Ernon since the message has been delivered.";
+			close;
+		case 4:
+			emotion ET_OTL;
+			mes "[Mechanician Al]";
+			mes "Er.. non.. ar.. argh!!";
+			next;
+			mes "He is convulsing like an infected patient.";
+			close;
+		}
+	}
+}
+
+un_bk_q,100,312,6	script	Mechanician Bukal#EP15.	4_M_REPAIR,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Mechanician Bukal]";
+		mes "You're conducting a headcount?";
+		next;
+		mes "[Mechanician Bukal]";
+		mes "I am not sure. Maybe you can ask Al over there?";
+		close;
+	case 2:
+		if (recorder_quest_status == 0) {
+			mes "[Mechanician Bukal]";
+			mes "Ugh.. I want to make something.";
+			close;
+		}
+		mes "[Mechanician Bukal]";
+		mes "I mean the air cleaning unit you are moving now.";
+		next;
+		mes "[Mechanician Bukal]";
+		mes "I made that. Isn't it awesome?";
+		close;
+	case 3:
+		mes "[Mechanician Bukal]";
+		mes "Ah!! You're the adventurer. You could check out the farm.";
+		next;
+		mes "[Mechanician Bukal]";
+		mes "Isn't the farm good because it's warm? I made the temperature control device there. Isn't it awesome?";
+		close;
+	case 4:
+		mes "[Mechanician Bukal]";
+		mes "I am worried of the people suddenly attacking.";
+		next;
+		mes "[Mechanician Bukal]";
+		mes "Since we're already here should I make something like a patient suppression device?";
+		close;
+	case 5:
+		mes "[Mechanician Bukal]";
+		mes "I don't know why everybody is rejecting a device that can move heavy objects.";
+		next;
+		mes "[Mechanician Bukal]";
+		mes "I should have made one when they were making new air cleaning units..";
+		close;
+	}
+}
+
+un_bk_q,91,283,2	script	Guard#EP15.2MR	4_M_HUMAN_02,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Guard]";
+		mes "Hello adventurer?";
+		next;
+		mes "[Guard]";
+		mes "I don't know the reason, but Fresa assigned me here.";
+		close;
+	case 2:
+		if (recorder_quest_status == 0) {
+			mes "[Guard]";
+			mes "Hello adventurer?";
+			close;
+		}
+		mes "[Guard]";
+		mes "I always wondered why I was assigned here but now I think I know the reason.";
+		next;
+		mes "[Guard]";
+		mes "It is to watch if the Mechanicians make useless things.";
+		close;
+	case 3:
+		mes "[Guard]";
+		mes "The Mechanicians occasionally want to make something.";
+		next;
+		mes "[Guard]";
+		mes "My job is to stop them.";
+		close;
+	case 4:
+		mes "[Guard]";
+		mes "I hear patients these days are convulsing and attacking the people around them?";
+		next;
+		mes "[Guard]";
+		mes "The Mechanician constantly convulse saying they want to make something so it's not weird to me.";
+		close;
+	case 5:
+		mes "[Guard]";
+		mes "The convulsion of Mechanicians are reaching extremes.";
+		next;
+		mes "[Guard]";
+		mes "They are convulsing so much I may need to call back up.";
+		close;
+	}
+}
+
+un_bk_q,212,294,6	script	Zone C-0 Facilities man#1	4_M_EINMAN2,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Facilities manager]";
+		mes "We are inspecting the interior facilities of the air-raid shelter according to emergency regulations.";
+		close;
+	case 2:
+		.@npc_num = strnpcinfo(2);
+		switch(.@npc_num) {
+		case 1:
+			if (isbegin_quest(5353) == 0 && recorder_quest_status == 1) {
+				emotion ET_DELIGHT;
+				mes "[Facilities manager]";
+				mes "Oh- You're here? I was waiting.";
+				next;
+				mes "[Facilities manager]";
+				mes "I have heard Adventurers are all strong as oxen but it is still impressive.";
+				next;
+				if (countitem(6825) < 1) {
+					mes "[Facilities manager]";
+					mes "But where is the air cleaning unit? You didn't bring the most important thing. Bring it here.";
+					close;
+				}
+				delitem 6825,1;// Air Purifier Box
+				setquest 5353;// C-0 Delivery Complete
+				mes "[Facilities manager]";
+				mes "Good work. Good work. We have received the air cleaning unit.";
+				close;
+			}
+			mes "[Facilities manager]";
+			mes "Good work. Good work. We have received the air cleaning unit.";
+			close;
+		case 2:
+			if (isbegin_quest(5354) == 0 && recorder_quest_status == 1) {
+				emotion ET_THANKS;
+				mes "[Facilities manager]";
+				mes "Oh my you are working hard. You can place the item over here.";
+				next;
+				mes "[Facilities manager]";
+				mes "Whoa- I heard the rumors but you are really strong.";
+				next;
+				mes "[Facilities manager]";
+				mes "It's hard for even four of us Facilities managers to lift it for a moment..";
+				next;
+				if (countitem(6825) < 1) {
+					mes "[Facilities manager]";
+					mes "But where is the air cleaning unit? You didn't bring the most important thing. Bring it here.";
+					close;
+				}
+				delitem 6825,1;// Air Purifier Box
+				setquest 5354;// F-1 Delivery Complete
+				mes "[Facilities manager]";
+				mes "Anyway we have received the air cleaning unit.";
+				close;
+			}
+			mes "[Facilities manager]";
+			mes "Anyway we have received the air cleaning unit.";
+			close;
+		case 3:
+			if (isbegin_quest(5355) == 0 && recorder_quest_status == 1) {
+				emotion ET_QUESTION;
+				mes "[Facilities manager]";
+				mes "Ah?! Are you the Adventurer who's delivering air cleaning units?";
+				next;
+				if (countitem(6825) < 1) {
+					mes "[Facilities manager]";
+					mes "But where is the air cleaning unit? Did you not bring it?";
+					close;
+				}
+				delitem 6825,1;// Air Purifier Box
+				setquest 5355;// F-2 Delivery Complete
+				mes "[Facilities manager]";
+				mes "We need to work fast so place the item here.";
+				close;
+			}
+			mes "[Facilities manager]";
+			mes "We have received the air cleaning unit.";
+			close;
+		case 4:
+			if (isbegin_quest(5356) == 0 && recorder_quest_status == 1) {
+				emotion ET_QUESTION;
+				mes "[Facilities manager]";
+				mes "Has the adventurer not delivered the air cleaning unit yet? Uh?! It's here. Hurry.. the air cleaning unit..";
+				next;
+				if (countitem(6825) < 1) {
+					mes "[Facilities manager]";
+					mes "Arwhat!! Why didn't you bring it. Bring it now, okay?";
+					close;
+				}
+				delitem 6825,1;// Air Purifier Box
+				setquest 5356;// I-0 Delivery Complete
+				mes "[Facilities manager]";
+				mes "It's urgent. I'll thank you later..";
+				close;
+			}
+			mes "[Facilities manager]";
+			mes "Don't talk to me. Every hour is precious.";
+			close;
+		case 5:
+			if (isbegin_quest(5357) == 0 && recorder_quest_status == 1) {
+				emotion ET_BEST;
+				mes "[Facilities manager]";
+				mes "Oh- You're here? I was waiting.";
+				next;
+				mes "[Facilities manager]";
+				mes "I have heard Adventurers are all strong as oxen but it is still impressive.";
+				next;
+				if (countitem(6825) < 1) {
+					mes "[Facilities manager]";
+					mes "But where is the air cleaning unit? You didn't bring the most important thing. Bring it here.";
+					close;
+				}
+				delitem 6825,1;// Air Purifier Box
+				setquest 5357;// Z-0 Delivery Complete
+				mes "[Facilities manager]";
+				mes "Good work. Good work. We have received the air cleaning unit.";
+				close;
+			}
+			mes "[Facilities manager]";
+			mes "Good work. Good work. We have received the air cleaning unit.";
+			close;
+		}
+		end;
+	case 3:
+		mes "[Facilities manager]";
+		mes "Have you tried the grape made by the Bioengineers?";
+		next;
+		mes "[Facilities manager]";
+		mes "Science is truly amazing to have us enjoy fresh grapes in this underground air-raid shelter.";
+		close;
+	case 4:
+		mes "[Facilities manager]";
+		mes "I think the air cleaner might be useless because the contaminant has already infiltrated the air-raid shelter.";
+		close;
+	case 5:
+		mes "[Facilities manager]";
+		mes "You are going through a lot.";
+		close;
+	}
+}
+
+un_bk_q,223,217,4	duplicate(Zone C-0 Facilities man#1)	Zone F-1 Facilities man#2	4_M_EINMAN2
+un_bk_q,372,217,6	duplicate(Zone C-0 Facilities man#1)	Zone F-2 Facilities man#3	4_M_EINMAN2
+un_bk_q,389,276,6	duplicate(Zone C-0 Facilities man#1)	Zone I-0 Facilities man#4	4_M_EINMAN2
+un_bk_q,291,158,4	duplicate(Zone C-0 Facilities man#1)	Zone Z-0 Facilities man#5	4_M_EINMAN2
+
+// Corridor Farm
+un_bk_q,213,303,4	script	Bioengineer Touring#EP1	4W_M_02,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		if (recorder_quest_status == 3) {
+			if (isbegin_quest(5347) == 0) {
+				mes "[Bioengineer Touring]";
+				emotion ET_QUESTION;
+				mes "Huh?! Who are you?";
+				next;
+				select("I am...");
+				emotion ET_SURPRISE;
+				mes "[Bioengineer Touring]";
+				mes "Ah! Dr. Fresa sent you to check the conditions of survivor assignments?";
+				next;
+				mes "[Bioengineer Touring]";
+				mes "What a relief. The disaster network came on a bit ago and we just confirmed how many Bioengineers have survived.";
+				next;
+				setquest 5347;// Headcount
+				mes "[Bioengineer Touring]";
+				mes "We have confirmed ^FF000022 ^000000Bioengineers have survived including myself.";
+				next;
+				mes "[Bioengineer Touring]";
+				mes "Oh yeah! Tell Dr. Fresa that the Bioengineers are using growth acceleration technology for food production according to the Emergency Situation Guidelines.";
+				next;
+				emotion ET_THANKS;
+				mes "[Bioengineer Touring]";
+				mes "I will count on you.";
+				close;
+			}
+			mes "[Bioengineer Touring]";
+			mes "We have confirmed ^FF000022 ^000000Bioengineers have survived including myself.";
+			next;
+			mes "[Bioengineer Touring]";
+			mes "Oh yeah! Tell Dr. Fresa that the Bioengineers are using growth acceleration technology for food production according to the Emergency Situation Guidelines.";
+			next;
+			emotion ET_THANKS;
+			mes "[Bioengineer Touring]";
+			mes "I will count on you.";
+			close;
+		}
+		mes "[Bioengineer Touring]";
+		mes "We Bioengineers are doing all we can to produce food for the people inside the air-raid shelter.";
+		close;
+	case 2:
+		mes "[Bioengineer Touring]";
+		mes "Wait a minute. You cannot enter the farm right now.";
+		close;
+	case 3:
+		mes "[Bioengineer Touring]";
+		mes "We have just finished the last grape harvest and are getting ready for the next one.";
+		next;
+		emotion ET_SORRY;
+		mes "[Bioengineer Touring]";
+		mes "If people come and go often, it may interfere with the work so access is prohibited.";
+		close;
+	case 4:
+		mes "[Bioengineer Touring]";
+		mes "We Bioengineers are doing all we can to produce food for the people inside the air-raid shelter.";
+		next;
+		emotion ET_SORRY;
+		mes "[Bioengineer Touring]";
+		mes "If people come and go often, it may interfere with the work for the next harvest so access will be prohibited.";
+		close;
+	case 5:
+		mes "[Bioengineer Touring]";
+		mes "We Bioengineers are doing all we can to produce food for the people inside the air-raid shelter.";
+		next;
+		emotion ET_SORRY;
+		mes "[Bioengineer Touring]";
+		mes "If people come and go often, it may interfere with the work for the next harvest so access will be prohibited.";
+		close;
+	}
+}
+
+// Farm
+un_bk_q,216,300,0	script	C-0#farm	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	mes "[Bioengineer Touring]";
+	mes "Wait a minute. You cannot enter the farm right now.";
+	close;
+}
+
+un_bk_q,213,346,0	script	farm#C-0	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 3 && recorder_quest_status == 0) {
+		emotion ET_BIGTHROB, getnpcid(0, "Bioengineer Ebrik#EP15.2MR");
+		mes "[Bioengineer Ebrik]";
+		mes "Are you the Adventurer here to help us with the grape harvest? Right here!!";
+		close;
+	}
+	warp "un_bk_q",213,299;
+	end;
+}
+
+un_bk_q,220,350,4	script	Bioengineer Ebrik#EP15.2MR	4_M_01,{
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type != 3)
+		end;
+	switch( recorder_quest_status ) {
+	case 0:
+		emotion ET_QUESTION;
+		mes "[Bioengineer Ebrik]";
+		mes "Are you the Adventurer here to help us with the grape harvest? Nice to meet you.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "Bioengineers alone do not have enough hands to harvest the amount of grapes we need to provide all the people inside the air-raid shelter.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "So we ended up asking the Adventurers.";
+		next;
+		select("Are there others who can help?");
+		mes "[Bioengineer Ebrik]";
+		mes "Don't even mention it. We gave the task of harvesting grapes to the meandering Mechanicians and..";
+		next;
+		emotion ET_KEK;
+		mes "[Bioengineer Ebrik]";
+		mes "They ended up smashing one of the grape trees!!";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "We were lucky to have found out and stopped them before they destroyed the other trees. The thought of it is horrible.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "Ah! That is not what's important.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "We used growth acceleration to make ripe grapes drop periodically.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "It would be nice if you can wait in front of the grape tree and collect 30 bunches of grapes.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "You can collect more, but the remaining ones from the harvest will naturally decompose and disappear.";
+		next;
+		setquest 5358;// Limits of Journeys
+		setquest 5359;// Grape Harvest
+		recorder_quest_status = 1;
+		mes "[Bioengineer Ebrik]";
+		mes "Then the soil fertility will recover partially. Good luck.";
+		close;
+	case 1:
+		if (countitem(6826) < 30) {
+			mes "[Bioengineer Ebrik]";
+			mes "We have decided to give out one grape box per team.";
+			next;
+			mes "[Bioengineer Ebrik]";
+			mes "One box can hold 30~32 bunches so collect accordingly.";
+			close;
+		}
+		emotion ET_BEST;
+		mes "[Bioengineer Ebrik]";
+		mes "Whoa good job. As I thought Adventurers are so much more capable than Mechanicians.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "Since the grapes are harvested should we deliver them to each team?";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "I will be rude and ask you another favor on top of your hard work.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "Let's see.. the grapes you just harvested";
+		next;
+		delitem 6826, countitem(6826);// Fresh Grape
+		setquest 5362;// Grape Delivery
+		recorder_quest_status = 2;
+		mes "[Bioengineer Ebrik]";
+		mes "This should be delivered to the Chemical Substance team. You can deliver this to Karsten.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "Oh! You do not have to come back after the deliveries. We will be busy starting the next project.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "The people receiving the deliveries will probably give you compensation. If they don't, you can nag them.";
+		close;
+	case 2:
+		mes "[Bioengineer Ebrik]";
+		mes "That grape box you are holding";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "Has to be delivered to Karsten of the Chemical substance team.";
+		next;
+		mes "[Bioengineer Ebrik]";
+		mes "Compensation will be paid by the people receiving the deliveries so you do not have to come back here.";
+		close;
+	}
+	end;
+
+OnInit:
+	freeloop 1;
+	setarray .amount[0],1,1,2;
+	setarray .grap_num[0],1,2,3,4,5;
+	setarray .coord[0],
+		242,391,	// Grape tree 1
+		274,391,	// Grape tree 2
+		333,360,	// Grape tree 3
+		316,344,	// Grape tree 4
+		241,343;	// Grape tree 5
+
+	while(true) {
+		sleep 60000;
+		callsub( S_Random_Grap, 0 );
+		callsub( S_Random_Grap, 1 );
+	}
+
+S_Random_Grap:
+	.@end = 4 - getarg(0);
+	.@r = rand(3);
+	.@tmp = .grap_num[.@r];
+	.@index = (.@tmp - 1) * 2;
+	.grap_num[.@r] = .grap_num[.@end];
+	.grap_num[.@end] = .@tmp;
+
+	for ( .@i = 0; .@i < 3; .@i++ ) {
+		do {
+			.@x = .coord[.@index] + rand(-2,2);
+			.@y = .coord[.@index+1] + rand(-2,2);
+		}
+		while( !checkcell("un_bk_q",.@x,.@y,cell_chkpass) );
+		makeitem 6826, .amount[.@i], "un_bk_q",.@x,.@y;
+	}
+	return;
+}
+
+un_bk_q,240,380,8	script	Bioengineer#EP15.2MR1	4_M_ALCHE_C,{
+	callfunc("F_time_limit_recorder");
+	mes "[Bioengineer]";
+	mes "It seems we can harvest grape tree number 1 without problems. What a relief.";
+	next;
+	mes "[Bioengineer]";
+	mes "My heart sank when the Mechanicians destroyed a tree..";
+	close;
+}
+
+un_bk_q,274,380,8	script	Bioengineer#EP15.2MR2	4_M_ALCHE_C,{
+	callfunc("F_time_limit_recorder");
+	mes "[Bioengineer]";
+	mes "The soil grape tree number 2 is in seems to be lacking nutrition.";
+	next;
+	mes "[Bioengineer]";
+	mes "We need to prepare fertilizer to provide the soil more nutrition.";
+	close;
+}
+
+un_bk_q,327,360,6	script	Bioengineer#EP15.2MR3	4_M_ALCHE_C,{
+	callfunc("F_time_limit_recorder");
+	mes "[Bioengineer]";
+	mes "I worried because a lot of weird stuff was growing around grape tree number 3.";
+	next;
+	mes "[Bioengineer]";
+	mes "It seems the harvest will have no problem.";
+	close;
+}
+
+un_bk_q,316,351,4	script	Bioengineer#EP15.2MR4	4_M_ALCHE_C,{
+	callfunc("F_time_limit_recorder");
+	mes "[Bioengineer]";
+	mes "Grape tree number 4 has no particular problem.";
+	next;
+	mes "[Bioengineer]";
+	mes "Nutrition state good. Harvest state good.";
+	close;
+}
+
+un_bk_q,249,344,2	script	Bioengineer#EP15.2MR5	4_M_ALCHE_C,{
+	callfunc("F_time_limit_recorder");
+	mes "[Bioengineer]";
+	mes "The nutrition of grape tree number 5 is too good.";
+	next;
+	mes "[Bioengineer]";
+	mes "That doesn't mean there will be a higher harvest yield..";
+	close;
+}
+
+// Clinic
+un_bk_q,269,236,0	script	Clinic#G-1	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 4 && recorder_quest_status == 0) {
+		mes "[Nurse Lapplad]";
+		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
+		close;
+	}
+	warp "un_bk_q",255,235;
+	end;
+}
+
+un_bk_q,297,221,0	script	Clinic#H-0	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 4 && recorder_quest_status == 0) {
+		mes "[Nurse Lapplad]";
+		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
+		close;
+	}
+	warp "un_bk_q",298,203;
+	end;
+}
+
+un_bk_q,326,236,0	script	Clinic#G-2	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 4 && recorder_quest_status == 0) {
+		mes "[Nurse Lapplad]";
+		mes "Look here?! Where are you trying to go? We have to do some tests so don't leave and wait here!!";
+		close;
+	}
+	warp "un_bk_q",340,235;
+	end;
+}
+
+un_bk_q,276,243,4	script	Nurse Lapplad#EP15.2MR	4_F_BRZ_WOMAN,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 4:
+		switch( recorder_quest_status ) {
+		case 0:
+			emotion ET_SORRY;
+			mes "[Nurse Lapplad]";
+			mes "Sorry. Did you wait long? There are a lot of suspected infection patients as you can see..";
+			next;
+			select("Not really..");
+			emotion ET_HUK;
+			mes "[Nurse Lapplad]";
+			mes "Eh?! You didn't wait? That's strange? Did you cut in line? Cutting is bad.";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "As you know there are infectees who are suddenly showing strange phenomena..";
+			next;
+			emotion ET_SCISSOR;
+			mes "[Nurse Lapplad]";
+			mes "Um...";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "...Ah...";
+			next;
+			emotion ET_SURPRISE;
+			mes "[Nurse Lapplad]";
+			mes "...Oh!!";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "I don't see any problematic symptoms. Fortunate.";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "We are having trouble because of the suddenly convulsing patients.";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "Look here. My skin is getting crispy from not being able to sleep for days~";
+			next;
+			mes "Thudunk!! Babang!! Crash!!";
+			if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMobDead" ) < 1)
+				callsub S_Random, 1;	// always starts on Patient 1
+			next;
+			emotion ET_SMILE;
+			mes "[Nurse Lapplad]";
+			mes "Yes.. Just like that";
+			next;
+			emotion ET_SCISSOR;
+			mes "[Nurse Lapplad]";
+			mes ". .";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "Argh!! Another convulsing patient.";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "Hey. Aren't you an adventurer? You must be really strong.";
+			next;
+			setquest 5363;// Limits of Journeys
+			setquest 5364;// Convulsing Patient Suppression
+			recorder_quest_status = 1;
+			mes "[Nurse Lapplad]";
+			mes "Can you suppress that convulsing patient? I am counting on you.";
+			close;
+		case 1:
+			if (mobcount( "un_bk_q", "Nurse Lapplad#EP15.2MR::OnMobDead" ) > 0) {
+				emotion ET_CRY;
+				mes "[Nurse Lapplad]";
+				mes "Ee~~ ee~ ek~~~~~~~~~!!";
+				next;
+				emotion ET_CRY;
+				mes "[Nurse Lapplad]";
+				mes "Take those patients down quickly! You're an adventurer!!";
+				close;
+			}
+			mes "[Nurse Lapplad]";
+			mes "You didn't get bit or scratched by the convulsing patient, did you?";
+			next;
+			select("Why?");
+			mes "[Nurse Lapplad]";
+			mes "Hmm~ I don't see any particular wounds.";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "Since I can't figure out the infection route...";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "We have to prepare for a possible disaster...";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "Anyway, Adventurer~ Assuring and the best!";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "I haven't been that bewildered by simultaneously convulsing patients before..";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "Lucky you were here to suppress it with ease.";
+			next;
+			mes "[Nurse Lapplad]";
+			mes "I am sorry but can you report this to Fresa on your way? You know who Fresa is?";
+			next;
+			setquest 5365;// Urgent News
+			recorder_quest_status = 2;
+			mes "[Nurse Lapplad]";
+			mes "It is a situation so I am asking you a favor.";
+			close;
+		case 2:
+			mes "[Nurse Lapplad]";
+			mes "I am sorry but can you report this to Fresa on your way? This is a favor.";
+			close;
+		}
+	}
+	end;
+
+S_Random:
+	.rand_npc = getarg(0);
+	getmapxy .@map$,.@x,.@y, BL_NPC, "Patient#EP15.2MR_0" + .rand_npc;
+	disablenpc "Patient#EP15.2MR_0" + .rand_npc;
+	monster .@map$,.@x,.@y, "Convulsing Patient",1015,1,"Nurse Lapplad#EP15.2MR::OnMobDead";
+	.mob_id = $@mobid[0];
+	initnpctimer;
+	return;
+
+OnMobDead:
+	enablenpc "Patient#EP15.2MR_0" + .rand_npc;
+	stopnpctimer;
+	if (rand(7) > 0)	// inaccurate
+		callsub S_Random, rand(1,7);
+	end;
+
+OnTimer3000:
+	if (rand(100) < 50) {
+		if (.rand_npc == 1) unittalk .mob_id, "Woouuu~";
+		else if (.rand_npc == 2) unittalk .mob_id, "Wooaa~";
+		else if (.rand_npc == 3) unittalk .mob_id, "Eh~";
+		else if (.rand_npc == 4) unittalk .mob_id, "Ha-ak-ha-ak~";
+		else if (.rand_npc == 5) unittalk .mob_id, "Uh- Ugh~";
+		else if (.rand_npc == 6) unittalk .mob_id, "Eh~";
+		else if (.rand_npc == 7) unittalk .mob_id, "Kur..urk..kekek..";
+	}
+	initnpctimer;
+	end;
+}
+
+// Patients
+un_bk_q,286,254,4	script	Patient#EP15.2MR_01	4_M_LIEMAN,{
+	callfunc("F_time_limit_recorder");
+	emotion ET_PROFUSELY_SWEAT;
+	mes "[Patient]";
+	mes "Hurts.. It hurts..";
+	close;
+}
+
+un_bk_q,296,252,4	script	Patient#EP15.2MR_02	4_M_DSTMANDEAD,{
+	callfunc("F_time_limit_recorder");
+	mes "[Patient]";
+	mes "I'm fine. They're making a fuss for no reason.";
+	close;
+}
+
+un_bk_q,316,231,4	script	Patient#EP15.2MR_03	4_M_DIEMAN,{
+	callfunc("F_time_limit_recorder");
+	emotion ET_SLEEPY;
+	mes "[Patient]";
+	mes "I keep feeling sleepy for some reason. Is it because I'm sick?";
+	close;
+}
+un_bk_q,281,226,4	script	Patient#EP15.2MR_04	4_F_PATIENT,{
+	callfunc("F_time_limit_recorder");
+	emotion ET_OHNO;
+	mes "[Patient]";
+	mes "My head feels blank.. Uh? Did you say something?";
+	close;
+}
+
+un_bk_q,320,249,4	script	Patient#EP15.2MR_05	4_M_PATIENT,{
+	callfunc("F_time_limit_recorder");
+	emotion ET_CONFUSE;
+	mes "[Patient]";
+	mes "Ugh.. Feels like my whole body is cramped.";
+	close;
+}
+
+un_bk_q,306,233,4	script	Patient#EP15.2MR_06	4_M_DIEMAN,{
+	callfunc("F_time_limit_recorder");
+	emotion ET_SEXY;
+	mes "[Patient]";
+	mes "Urk.. I feel sick even though I didn't drink.";
+	close;
+}
+
+un_bk_q,310,261,4	script	Patient#EP15.2MR_07	4_M_LIEMAN,{
+	callfunc("F_time_limit_recorder");
+	emotion ET_OTL;
+	mes "[Patient]";
+	mes "Oh no is there a transfectant found in me..";
+	close;
+}
+
+// Nurses
+un_bk_q,313,261,2	script	Nurse#EP15.2MR1	4_F_NURSE,{
+	callfunc("F_time_limit_recorder");
+	mes "[Nurse]";
+	mes "Patient~ That chair is quite high.. doesn't your head ache?";
+	close;
+}
+
+un_bk_q,322,249,2	script	Nurse#EP15.2MR2	4_F_NURSE,{
+	callfunc("F_time_limit_recorder");
+	mes "[Nurse]";
+	mes "Why does he say he has a cramp? The other patients didn't have that problem.";
+	close;
+}
+
+un_bk_q,316,233,4	script	Nurse#EP15.2MR3	4_F_NURSE,{
+	callfunc("F_time_limit_recorder");
+	mes "[Nurse]";
+	mes "Argh- I told you not to scribble on the floor while pretending to sleep.";
+	close;
+}
+
+un_bk_q,304,233,4	script	Nurse#EP15.2MR4	4_F_NURSE,{
+	callfunc("F_time_limit_recorder");
+	mes "[Nurse]";
+	mes "You ran around the elephant trunk thirty times so you must be sick. Claiming he can't feel dizziness. Quite the bluffer.";
+	close;
+}
+
+un_bk_q,283,226,2	script	Nurse#EP15.2MR5	4_F_NURSE,{
+	callfunc("F_time_limit_recorder");
+	emotion ET_CRY;
+	mes "[Nurse]";
+	mes "Ah geez! There is no other issues yet but why is he saying he's dizzy?";
+	close;
+}
+
+un_bk_q,284,255,4	script	Nurse#EP15.2MR6	4_F_NURSE,{
+	callfunc("F_time_limit_recorder");
+	mes "[Nurse]";
+	mes "So what do you mean!! Where does it hurt!!";
+	close;
+}
+
+un_bk_q,296,254,4	script	Nurse#EP15.2MR7	4_F_NURSE,{
+	callfunc("F_time_limit_recorder");
+	emotion ET_CRY;
+	mes "[Nurse]";
+	mes "What do you mean nothing is wrong, your face has gone purple.";
+	close;
+}
+
+// Cafeteria
+un_bk_q,271,290,0	script	Cafeteria#G-1	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 5 && recorder_quest_status == 0) {
+		emotion ET_FRET, getnpcid(0, "Transportation Executive Ernon");
+		mes "[Transportation Executive Ernon]";
+		mes "Hey~ This is a time to borrow even the hands of small children. Stop goofing around and come here.";
+		close;
+	}
+	warp "un_bk_q",255,261;
+	end;
+}
+
+un_bk_q,324,290,0	script	Cafeteria#G-2	WARPNPC,1,1,{
+	end;
+OnTouch:
+	callfunc("F_time_limit_recorder");
+	if (recorder_quest_type == 5 && recorder_quest_status == 0) {
+		mes "[Transportation Executive Ernon]";
+		mes "Hey~ This is a time to borrow even the hands of small children. Stop goofing around and come here.";
+		close;
+	}
+	warp "un_bk_q",340,261;
+	end;
+}
+
+un_bk_q,279,294,4	script	Transportation Executive Ernon	4_M_LGTMAN,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Transportation Executive Ernon]";
+		mes "We used to deliver things like daily necessities or research tools here before the accident.";
+		next;
+		mes "[Transportation Executive Ernon]";
+		mes "Work that involved going out to other places a lot more even as a staff member here.";
+		close;
+	case 2:
+		emotion ET_QUESTION;
+		mes "[Transportation Executive Ernon]";
+		mes "What?! Is something going on? The Mechanicians and Facilities managers look busy.";
+		close;
+	case 3:
+		emotion ET_BEST;
+		mes "[Transportation Executive Ernon]";
+		mes "Yaa~ Did you try the grapes?";
+		next;
+		mes "[Transportation Executive Ernon]";
+		mes "Isn't it great that we can grow fresh grapes in an underground evacuation facility like this?";
+		close;
+	case 4:
+		mes "[Transportation Executive Ernon]";
+		mes "Some people are suddenly attacking others.";
+		next;
+		mes "[Transportation Executive Ernon]";
+		mes "What in the hell is going on?";
+		close;
+	case 5:
+		switch( recorder_quest_status ) {
+		case 0:
+			emotion ET_QUESTION;
+			mes "[Transportation Executive Ernon]";
+			mes "They were talking about it in the broadcast since yesterday so you know the gist of the situation, right?";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "The contaminant is getting to the interior of the air-raid shelter so the decision has been made to move all supplies to the uncontaminated zone Z-2 that the Chemical Substance Specialists found.";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "There was a request to move the cargo with the Adventurers since the scrawny researchers won't be of help.";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "Alright- let's move the cargo to Zone Z-2 first.";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "If you go to the machine Warehouse on your way back there will a person called Al. Tell him";
+			next;
+			emotion ET_KIK;
+			mes "[Transportation Executive Ernon]";
+			mes "^0000FF You idiots!! Stop wasting material with stupid machines!!^000000 for me and come back.";
+			next;
+			select("Eh?");
+			mes "[Transportation Executive Ernon]";
+			mes "Don't understand? Tell Al in the machine Warehouse";
+			next;
+			emotion ET_KIK;
+			mes "[Transportation Executive Ernon]";
+			mes "^0000FF You idiots!! Stop wasting material with stupid machines!!^000000 and come back.";
+			next;
+			setquest 5366;// Limits of Journeys
+			setquest 5367;// Transport Necessities
+			recorder_quest_status = 1;
+			mes "[Transportation Executive Ernon]";
+			mes "Remember to get every postposition right and convey my feeling 100%.";
+			close;
+		case 1:
+		case 2:
+			mes "[Transportation Executive Ernon]";
+			mes "Transport the cargo to Zone Z-2 first.";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "On your way back go to the machine Warehouse and tell Al";
+			next;
+			emotion ET_KIK;
+			mes "[Transportation Executive Ernon]";
+			mes "??^0000FF You idiots!! Stop wasting material with stupid machines!!^000000?? for me and come back.";
+			close;
+		case 3:
+			mes "[Transportation Executive Ernon]";
+			mes "You conveyed my feeling right?";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "They should be smartened up by now. They wouldn't waste precious components again, right?";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "Here! This is compensation for the job.";
+			next;
+			erasequest 5367;// Transport Necessities
+			erasequest 5368;// Goods delivery Complete
+			erasequest 5369;// Message Delivery Complete
+			setquest 5370;// Memory Record
+			getexp 750000,500000;
+			recorder_quest_status = 4;
+			mes "- The small round capsule has percolated through skin. It feels like experience has accumulated.";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "Though our survival isn't sure because of the contaminant,";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "The chief researcher told us to adequately compensate the adventurers who were caught up in the explosion.";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "Don't worry about it though.";
+			close;
+		case 4:
+			mes "[Transportation Executive Ernon]";
+			mes "Though our survival isn't sure because of the contaminant,";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "The chief researcher told us to adequately compensate the adventurers who were caught up in the explosion.";
+			next;
+			mes "[Transportation Executive Ernon]";
+			mes "Don't worry about it though.";
+			close;
+		}
+	}
+}
+
+un_bk_q,297,287,6	script	Adventurer Jean#EP15.2M	4_M_HUBOY,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Adventurer Jean]";
+		mes "Uh?! You're an adventurer too?";
+		next;
+		mes "[Adventurer Jean]";
+		mes "Ugh.. It seems you are unlucky as well.";
+		close;
+	case 2:
+		mes "[Adventurer Jean]";
+		mes "Don't you think this place is trying to exploit us Adventurers?";
+		next;
+		mes "[Adventurer Jean]";
+		mes "The Cafeteria food is good though.";
+		close;
+	case 3:
+		mes "[Adventurer Jean]";
+		mes "Grapes were served on the side today.";
+		next;
+		mes "[Adventurer Jean]";
+		mes "I like grapes. I want to eat more.";
+		close;
+	case 4:
+		mes "[Adventurer Jean]";
+		mes "A friend I made here is confined in the temporary clinic. They found a transfectant or something.";
+		next;
+		mes "[Adventurer Jean]";
+		mes "To us adventurers a healthy body is an asset.";
+		close;
+	case 5:
+		mes "[Adventurer Jean]";
+		mes "I ate a lot of different things from adventuring places.";
+		next;
+		mes "[Adventurer Jean]";
+		mes "I think the food here is one of the best.";
+		close;
+	}
+}
+
+un_bk_q,318,299,2	script	Cafeteria Lady#EP15.2MR	4_F_CAVE1,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Cafeteria Lady]";
+		mes "Sorry. We aren't ready to distribute food yet.";
+		close;
+	case 2:
+		mes "[Cafeteria Lady]";
+		mes "Grab a plate or tray and wait in line.";
+		close;
+	case 3:
+		mes "[Cafeteria Lady]";
+		mes "Oh no what should we do? We ran out of grapes.";
+		next;
+		mes "[Cafeteria Lady]";
+		mes "New grapes should be delivered from the farm soon. Do you want to wait?";
+		close;
+	case 4:
+		mes "[Cafeteria Lady]";
+		mes "Do you know that's the temporary clinic? You cannot go that way now.";
+		next;
+		mes "[Cafeteria Lady]";
+		mes "The passage is blocked because of convulsing patients.";
+		close;
+	case 5:
+		mes "[Cafeteria Lady]";
+		mes "You are working hard.";
+		close;
+	}
+}
+
+// Corridor
+un_bk_q,280,280,8	script	Access Control Guard#EP_clinic1	4_M_HUMAN_02,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+	case 2:
+	case 3:
+		mes "[Access Control Guard]";
+		mes "You cannot enter this area because it is under construction.";
+		next;
+		mes "[Access Control Guard]";
+		mes "According to the Facilities managers it will be later used as a Clinic.";
+		close;
+	case 4:
+		mes "[Access Control Guard]";
+		mes "Access to the temporary clinic is restricted to quarantine convulsing patients.";
+		next;
+		mes "[Access Control Guard]";
+		mes "I ask for your understanding.";
+		close;
+	case 5:
+		mes "[Access Control Guard]";
+		mes "Movement in this area is currently prohibited.";
+		next;
+		mes "[Access Control Guard]";
+		mes "I ask for your understanding.";
+		close;
+	}
+}
+un_bk_q,313,280,8	duplicate(Access Control Guard#EP_clinic1)	Access Control Guard#EP_clinic2	4_M_HUMAN_02
+un_bk_q,340,235,6	duplicate(Access Control Guard#EP_clinic1)	Access Control Guard#EP_clinic3	4_M_HUMAN_02
+un_bk_q,298,203,4	duplicate(Access Control Guard#EP_clinic1)	Access Control Guard#EP_clinic4	4_M_HUMAN_02
+un_bk_q,255,236,2	duplicate(Access Control Guard#EP_clinic1)	Access Control Guard#EP_clinic5	4_M_HUMAN_02
+
+un_bk_q,248,258,2	script	Adventurer Dally#EP15.2	4_F_SITDOWN,{
+	callfunc("F_time_limit_recorder");
+	mes "[Adventurer Dally]";
+	mes "Darn it!! Frustrating";
+	next;
+	sc_start SC_INCREASEAGI,240000,10;
+	mes "[Adventurer Dally]";
+	mes "Sister- Run~";
+	close;
+}
+
+// Z-2 Zone
+un_bk_q,72,53,4	script	Distribution Chief Avrandi	4_M_TWTEAMAN,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		emotion ET_OHNO;
+		mes "[Distribution Chief Avrandi]";
+		mes "It is a relief we were able to evacuate to the air-raid shelter interior in advance.";
+		next;
+		mes "[Distribution Chief Avrandi]";
+		mes "If we weren't able to evacuate..? We probably won't be here.";
+		close;
+	case 2:
+		emotion ET_QUESTION;
+		mes "[Distribution Chief Avrandi]";
+		mes "Is there something wrong?";
+		next;
+		mes "[Distribution Chief Avrandi]";
+		mes "A while ago the Facilities managers were running around in haste.";
+		close;
+	case 3:
+		emotion ET_HUK;
+		mes "[Distribution Chief Avrandi]";
+		mes "What in the world?! You ate fresh grapes? Why didn't I get to eat them? Why?";
+		close;
+	case 4:
+		emotion ET_SHY;
+		mes "[Distribution Chief Avrandi]";
+		mes "This place is sure quiet. Why you ask?";
+		next;
+		mes "[Distribution Chief Avrandi]";
+		mes "Not many people come this far.";
+		close;
+	case 5:
+		if (recorder_quest_status == 1) {
+			mes "[Distribution Chief Avrandi]";
+			mes "Ah! Come on in. It seems there are a lot of visitors today because of the broadcast this morning.";
+			next;
+			mes "[Distribution Chief Avrandi]";
+			mes "You're here because Ernon sent you right?";
+			next;
+			mes "[Distribution Chief Avrandi]";
+			mes "I have received the item you have brought.";
+			next;
+			setquest 5368;// Goods delivery Complete
+			recorder_quest_status = 2;
+			mes "[Distribution Chief Avrandi]";
+			mes "Eh-? Are you taking it back? That is a lot of work.";
+			close;
+		}
+		mes "[Distribution Chief Avrandi]";
+		mes "Good luck. You are working hard.";
+		close;
+	}
+}
+
+// B-1 Warehouse
+un_bk_q,34,138,4	script	Warehouse Keeper Pik#EP	4W_M_03,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Warehouse Keeper Pik]";
+		mes "I don't know what brings you here but please don't touch anything.";
+		next;
+		mes "[Warehouse Keeper Pik]";
+		mes "I haven't finished checking the stock and it would be annoying if anything went missing.";
+		close;
+	case 2:
+		mes "[Warehouse Keeper Pik]";
+		mes "You're an adventurer. You don't have to deliver air cleaners here.";
+		next;
+		mes "[Warehouse Keeper Pik]";
+		mes "It's a warehouse anyway. The independent air circulation system is enough.";
+		close;
+	case 3:
+		mes "[Warehouse Keeper Pik]";
+		mes "Aahh- Looking after the warehouse is annoying.";
+		next;
+		mes "[Warehouse Keeper Pik]";
+		mes "There is nobody to rotate my shift";
+		close;
+	case 4:
+		mes "[Warehouse Keeper Pik]";
+		mes "Wha- wha- wait stop!!";
+		next;
+		mes "[Warehouse Keeper Pik]";
+		mes "You're not here to ambush me right? It's alright if not.";
+		close;
+	case 5:
+		mes "[Warehouse Keeper Pik]";
+		mes "Are you here to move items?";
+		next;
+		mes "[Warehouse Keeper Pik]";
+		mes "The goods in this warehouse should not be today I think? From what I know today we are moving necessities first.";
+		close;
+	}
+}
+
+// Corridor F-2
+un_bk_q,347,217,4	script	Facilities manager Remodeling	4_M_EINMAN,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		if (recorder_quest_status == 9) {
+			if (isbegin_quest(5349) == 0) {
+				emotion ET_QUESTION;
+				mes "[Facilities manager Remodeling]";
+				mes "Uh?! Hello. First time meeting you. What brings you here?";
+				next;
+				select("Explain situation.");
+				mes "[Facilities manager Remodeling]";
+				mes "Ah! Is that so? Fresa you say? It hasn't been long since my department was placed here.";
+				next;
+				mes "[Facilities manager Remodeling]";
+				mes "I only heard of the name Fresa.";
+				next;
+				setquest 5349;// Headcount Complete
+				mes "[Facilities manager Remodeling]";
+				mes "Anyway the current number of us facilities managers is ^FF000028^000000.";
+				next;
+				mes "[Facilities manager Remodeling]";
+				mes "There might be some others who are hiding somewhere but as of right now there are ^FF000028^000000.";
+				next;
+				mes "[Facilities manager Remodeling]";
+				mes "Tell Fresa on your way that Facilities managers are inspecting facilities in their assigned areas because the air-raid shelter facilities have not really been used.";
+				close;
+			}
+			mes "[Facilities manager Remodeling]";
+			mes "The current number of facilities managers is ^FF000028^000000.";
+			next;
+			mes "[Facilities manager Remodeling]";
+			mes "Tell Fresa that Facilities managers are inspecting facilities in their assigned areas because the air-raid shelter facilities have not really been used.";
+			close;
+		}
+		mes "[Facilities manager Remodeling]";
+		mes "I don't know who equipped the air-raid shelter. But it surely is well made and sturdy.";
+		close;
+	case 2:
+		mes "[Facilities manager Remodeling]";
+		mes "I don't know who equipped the air-raid shelter. But it surely is well made and sturdy.";
+		close;
+	case 3:
+		mes "[Facilities manager Remodeling]";
+		mes "What!! That grape!! I had some already so I am guessing it's not mine.";
+		close;
+	case 4:
+		mes "[Facilities manager Remodeling]";
+		mes "I don't know who equipped the air-raid shelter. But it surely is well made and sturdy.";
+		close;
+	case 5:
+		mes "[Facilities manager Remodeling]";
+		mes "I don't know who equipped the air-raid shelter. But it surely is well made and sturdy.";
+		close;
+	}
+}
+
+// Off Limits
+un_bk_q,102,97,2	script	Adventurer Breezin#EP15.2MR	4_F_BRZ_INDOLD,{
+	callfunc("F_time_limit_recorder");
+	switch( recorder_quest_type ) {
+	case 1:
+		mes "[Adventurer Breezin]";
+		mes "Ahh.. Why did I travel here..";
+		next;
+		mes "[Adventurer Breezin]";
+		mes "Hey don't think of going out that way. It's going to be dangerous because of the explosion.";
+		close;
+	case 2:
+		mes "[Adventurer Breezin]";
+		mes "Today is strange. Hey do you see the mysterious device over there too?";
+		close;
+	case 3:
+		mes "[Adventurer Breezin]";
+		mes "I think I said it 30 times today alone but there is no device at the door.";
+		next;
+		mes "[Adventurer Breezin]";
+		mes "I am itching for an adventure but safety outside isn't confirmed so don't think of going outside.";
+		close;
+	case 4:
+		mes "[Adventurer Breezin]";
+		mes "A while I ago I couldn't stop the Chemical Substance Specialists from going outside.";
+		next;
+		mes "[Adventurer Breezin]";
+		mes "Seeing how they didn't return, they must be dead, right?";
+		close;
+	case 5:
+		mes "[Adventurer Breezin]";
+		mes "The situation has grown out of control.";
+		next;
+		mes "[Adventurer Breezin]";
+		mes "Haa- Should have I stopped those people leaving the air-raid shelter?";
+		close;
+	}
+}
+
+// Bulletin Board
+un_bk_q,101,92,8	script	Off Limits#01	4_BULLETIN_BOARD2,{ end; }
+un_bk_q,94,92,8	duplicate(Off Limits#01)	Off Limits#02	4_BULLETIN_BOARD2
+un_bk_q,22,279,4	duplicate(Off Limits#01)	Machine Warehouse	4_BULLETIN_BOARD2
+un_bk_q,215,303,4	duplicate(Off Limits#01)	farm#C0	4_BULLETIN_BOARD2
+
+un_bk_q,58,185,4	duplicate(Off Limits#01)	Control room#Left	4_BULLETIN_BOARD2
+un_bk_q,139,187,4	duplicate(Off Limits#01)	Control room#Right	4_BULLETIN_BOARD2
+
+un_bk_q,101,122,4	duplicate(Off Limits#01)	Monitoring room#A0Center	4_BULLETIN_BOARD2
+un_bk_q,58,171,4	duplicate(Off Limits#01)	Monitoring room#L1Left	4_BULLETIN_BOARD2
+un_bk_q,139,171,4	duplicate(Off Limits#01)	Monitoring room#L2Right	4_BULLETIN_BOARD2
+
+un_bk_q,256,239,4	duplicate(Off Limits#01)	Temporary Clinic#G1	4_BULLETIN_BOARD2
+un_bk_q,301,204,4	duplicate(Off Limits#01)	Temporary Clinic#H0	4_BULLETIN_BOARD2
+
+un_bk_q,58,121,4	duplicate(Off Limits#01)	A-0 Zone#L1	4_BULLETIN_BOARD2
+un_bk_q,141,115,4	duplicate(Off Limits#01)	A-0 Zone#L2	4_BULLETIN_BOARD2
+un_bk_q,278,193,4	duplicate(Off Limits#01)	A-0 Zone#H0Left	4_BULLETIN_BOARD2
+un_bk_q,317,193,4	duplicate(Off Limits#01)	A-0 Zone#H0Right	4_BULLETIN_BOARD2
+
+un_bk_q,49,137,4	duplicate(Off Limits#01)	B-1 Warehouse	4_BULLETIN_BOARD2
+
+un_bk_q,219,265,4	duplicate(Off Limits#01)	C-0 Zone#G1	4_BULLETIN_BOARD2
+
+un_bk_q,247,217,4	duplicate(Off Limits#01)	F-1 Zone#G1	4_BULLETIN_BOARD2
+un_bk_q,349,217,4	duplicate(Off Limits#01)	F-2 Zone#G2	4_BULLETIN_BOARD2
+
+un_bk_q,214,283,4	duplicate(Off Limits#01)	G-1 Zone#C0	4_BULLETIN_BOARD2
+un_bk_q,228,217,4	duplicate(Off Limits#01)	G-1 Zone#F1	4_BULLETIN_BOARD2
+un_bk_q,273,203,4	duplicate(Off Limits#01)	G-1 Zone#H0	4_BULLETIN_BOARD2
+un_bk_q,322,203,4	duplicate(Off Limits#01)	G-2 Zone#H0	4_BULLETIN_BOARD2
+un_bk_q,388,266,4	duplicate(Off Limits#01)	G-2 Zone#I0	4_BULLETIN_BOARD2
+
+un_bk_q,122,125,4	duplicate(Off Limits#01)	H-0 Zone#Right	4_BULLETIN_BOARD2
+un_bk_q,78,125,4	duplicate(Off Limits#01)	H-0 Zone#Left	4_BULLETIN_BOARD2
+un_bk_q,340,203,4	duplicate(Off Limits#01)	H-0 Zone#H0	4_BULLETIN_BOARD2
+un_bk_q,300,184,4	duplicate(Off Limits#01)	H-0 Zone#Z0	4_BULLETIN_BOARD2
+
+un_bk_q,368,267,4	duplicate(Off Limits#01)	I-0 Zone#G2	4_BULLETIN_BOARD2
+
+un_bk_q,25,193,4	duplicate(Off Limits#01)	J-0 Zone#L1	4_BULLETIN_BOARD2
+
+un_bk_q,173,193,4	duplicate(Off Limits#01)	K-0 Zone#L2	4_BULLETIN_BOARD2
+
+un_bk_q,71,121,4	duplicate(Off Limits#01)	L-1 Zone#A0	4_BULLETIN_BOARD2
+un_bk_q,22,259,4	duplicate(Off Limits#01)	L-1 Zone#J0	4_BULLETIN_BOARD2
+un_bk_q,126,121,4	duplicate(Off Limits#01)	L-2 Zone#A0	4_BULLETIN_BOARD2
+un_bk_q,171,233,4	duplicate(Off Limits#01)	L-2 Zone#K0	4_BULLETIN_BOARD2
+
+un_bk_q,300,194,4	duplicate(Off Limits#01)	Z-0 Zone#H0	4_BULLETIN_BOARD2
+un_bk_q,164,55,4	duplicate(Off Limits#01)	Z-0 Zone#Z1	4_BULLETIN_BOARD2
+un_bk_q,27,55,4	duplicate(Off Limits#01)	Z-0 Zone#Z2	4_BULLETIN_BOARD2
+un_bk_q,230,167,4	duplicate(Off Limits#01)	Z-1 Zone#Z0	4_BULLETIN_BOARD2
+un_bk_q,365,167,4	duplicate(Off Limits#01)	Z-2 Zone#Z0	4_BULLETIN_BOARD2
+
+un_bk_q,97,84,4	script	Dimension move Portal#E	PORTAL,{
+	callfunc("F_time_limit_recorder");
+	mes "[Dimension-mover]";
+	mes "Do you want finish your travels and";
+	mes "go back to your original time?";
+	mes "^FF0000All traces in this place will be erased if you go back to your original time.^000000";
+	next;
+	if (select( "Stay here.", "Go back." ) == 2) {
+		mes "[Dimension-mover]";
+		delitem 6825, countitem(6825);// Air Purifier Box
+		delitem 6826, countitem(6826);// Fresh Grape
+		for ( .@quest_id = 5341; .@quest_id < 5371; .@quest_id++ ) {
+			if (isbegin_quest(.@quest_id) > 0)
+				erasequest .@quest_id;
+		}
+		recorder_quest_type = 0;
+		recorder_quest_status = 0;
+		mes "Your whole body becomes heavy and time seems to be passing faster around you.";
+		close2;
+		warp "un_bunker",98,91;
+	}
+	end;
+}

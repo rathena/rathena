@@ -5,7 +5,7 @@
 DROP TABLE IF EXISTS `mob_db2_re`;
 CREATE TABLE `mob_db2_re` (
   `ID` mediumint(9) unsigned NOT NULL default '0',
-  `Sprite` text NOT NULL,
+  `Sprite` varchar(24) NOT NULL,
   `kName` text NOT NULL,
   `iName` text NOT NULL,
   `LV` tinyint(6) unsigned NOT NULL default '0',
@@ -29,7 +29,7 @@ CREATE TABLE `mob_db2_re` (
   `Scale` tinyint(4) unsigned NOT NULL default '0',
   `Race` tinyint(4) unsigned NOT NULL default '0',
   `Element` tinyint(4) unsigned NOT NULL default '0',
-  `Mode` smallint(6) unsigned NOT NULL default '0',
+  `Mode` int(11) unsigned NOT NULL default '0',
   `Speed` smallint(6) unsigned NOT NULL default '0',
   `aDelay` smallint(6) unsigned NOT NULL default '0',
   `aMotion` smallint(6) unsigned NOT NULL default '0',
@@ -61,7 +61,8 @@ CREATE TABLE `mob_db2_re` (
   `Drop9per` smallint(9) unsigned NOT NULL default '0',
   `DropCardid` smallint(5) unsigned NOT NULL default '0',
   `DropCardper` smallint(9) unsigned NOT NULL default '0',
-  PRIMARY KEY  (`ID`)
+  PRIMARY KEY  (`ID`),
+  UNIQUE KEY (`Sprite`)
 ) ENGINE=MyISAM;
 
 # Monsters Additional Database

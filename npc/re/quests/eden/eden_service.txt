@@ -3,7 +3,7 @@
 //===== By: ==================================================
 //= L0ne_W0lf
 //===== Current Version: =====================================
-//= 1.1
+//= 1.3
 //===== Compatible With: =====================================
 //= rAthena Project
 //===== Description: =========================================
@@ -11,6 +11,8 @@
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.1 Replaced 2nd NPC with duplicate function. [Masao]
+//= 1.2 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.3 Added use of F_HasEdenGroupMark function. [Ragno]
 //============================================================
 
 // Goods Cabinets :: pare_service
@@ -32,7 +34,7 @@
 	mes "3.Cabinet fee is";
 	mes "  ^4d4dff500 zeny^000000!";
 	next;
-	if (countitem(6219) > 0) {
+	if (callfunc("F_HasEdenGroupMark")) {
 		mes "You need to insert zeny to use the cabinet.";
 		mes "Cost : 500 Zeny ";
 		mes "Would you like to use it?";

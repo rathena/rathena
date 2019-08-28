@@ -94,7 +94,7 @@ function	script	F_IzludeChannel	{
 	set .@i, select(getarg(0)+":Never mind");
 	if (.@i < 6) {
 		setarray .@maps$[1],"izlude","izlude_a","izlude_b","izlude_c","izlude_d";
-		savepoint .@maps$[.@i],128,98;
+		savepoint .@maps$[.@i],128,98,1,1;
 		warp .@maps$[.@i],128,98;
 		end;
 	}

@@ -19,33 +19,33 @@
 //==================================================
 // lhz_fild01 - Lighthalzen Field
 //==================================================
-lhz_fild01,0,0,0,0	monster	Metaling	1613,70,0,0,0
-lhz_fild01,0,0,0,0	monster	Holden	1628,30,0,0,0
-lhz_fild01,0,0,0,0	monster	Caramel	1103,20,0,0,0
-lhz_fild01,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
-lhz_fild01,0,0,0,0	monster	Yellow Plant	1081,10,60000,30000,0
-lhz_fild01,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
+lhz_fild01,0,0	monster	Metaling	1613,70
+lhz_fild01,0,0	monster	Holden	1628,30
+lhz_fild01,0,0	monster	Caramel	1103,20
+lhz_fild01,0,0	monster	Red Plant	1078,10,60000,30000
+lhz_fild01,0,0	monster	Yellow Plant	1081,10,60000,30000
+lhz_fild01,0,0	monster	Green Plant	1080,10,60000,30000
 
 //==================================================
 // lhz_fild02 - Lighthalzen Field (Grim Ripper's Valley)
 //==================================================
-lhz_fild02,0,0,0,0	monster	Metaling	1613,50,0,0,0
-lhz_fild02,0,0,0,0	monster	Caramel	1103,30,0,0,0
-lhz_fild02,0,0,0,0	monster	Horn	1128,10,0,0,0
-lhz_fild02,0,0,0,0	monster	Holden	1628,10,0,0,0
-lhz_fild02,0,0,0,0	monster	Anopheles	1627,10,0,0,0
-lhz_fild02,0,0,0,0	monster	Yellow Plant	1081,15,60000,30000,0
-lhz_fild02,0,0,0,0	monster	Green Plant	1080,15,60000,30000,0
+lhz_fild02,0,0	monster	Metaling	1613,50
+lhz_fild02,0,0	monster	Caramel	1103,30
+lhz_fild02,0,0	monster	Horn	1128,10
+lhz_fild02,0,0	monster	Holden	1628,10
+lhz_fild02,0,0	monster	Anopheles	1627,10
+lhz_fild02,0,0	monster	Yellow Plant	1081,15,60000,30000
+lhz_fild02,0,0	monster	Green Plant	1080,15,60000,30000
 
 //==================================================
 // lhz_fild03 - Lighthalzen Field
 //==================================================
-lhz_fild03,262,233,74,140	monster	Stem Worm	1215,50,600000,0,0
-lhz_fild03,262,233,74,140	monster	Metaling	1613,20,0,0,0
-lhz_fild03,127,248,45,140	monster	Caramel	1103,20,0,0,0
-lhz_fild03,127,248,45,140	monster	Horn	1128,10,0,0,0
-lhz_fild03,127,248,45,140	monster	Rafflesia	1162,5,0,0,0
-lhz_fild03,0,0,0,0	monster	Anopheles	1627,20,0,0,1
-lhz_fild03,0,0,0,0	monster	Hill Wind	1680,10,0,0,1
-lhz_fild03,0,0,0,0	monster	Red Plant	1078,10,60000,30000,0
-lhz_fild03,0,0,0,0	monster	Green Plant	1080,10,60000,30000,0
+lhz_fild03,262,233,74,140	monster	Stem Worm	1215,50,600000
+lhz_fild03,262,233,74,140	monster	Metaling	1613,20
+lhz_fild03,127,248,45,140	monster	Caramel	1103,20
+lhz_fild03,127,248,45,140	monster	Horn	1128,10
+lhz_fild03,127,248,45,140	monster	Rafflesia	1162,5
+lhz_fild03,0,0	monster	Anopheles	1627,20
+lhz_fild03,0,0	monster	Hill Wind	1680,10
+lhz_fild03,0,0	monster	Red Plant	1078,10,60000,30000
+lhz_fild03,0,0	monster	Green Plant	1080,10,60000,30000

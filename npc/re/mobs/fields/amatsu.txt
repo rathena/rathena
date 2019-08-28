@@ -16,22 +16,22 @@
 //==================================================
 // ama_fild01 - Amatsu Field
 //==================================================
-ama_fild01,0,0,0,0	monster	Bigfoot	1060,15,5000,0,0
-ama_fild01,0,0,0,0	monster	Karakasa	1400,50,5000,0,0
-ama_fild01,0,0,0,0	monster	Kapha	1406,40,5000,0,0
-ama_fild01,0,0,0,0	monster	Miyabi Doll	1404,2,5000,0,0
-ama_fild01,0,0,0,0	monster	Poison Toad	1402,1,5000,0,0
-ama_fild01,173,313,0,0	monster	Hydra	1068,1,60000,30000,0
-ama_fild01,173,314,0,0	monster	Hydra	1068,1,60000,30000,0
-ama_fild01,173,310,0,0	monster	Hydra	1068,1,60000,30000,0
-ama_fild01,177,315,0,0	monster	Hydra	1068,1,60000,30000,0
-ama_fild01,175,315,0,0	monster	Hydra	1068,1,63000,31500,0
-ama_fild01,169,314,0,0	monster	Hydra	1068,1,63000,31500,0
-ama_fild01,177,314,0,0	monster	Hydra	1068,1,66000,33000,0
-ama_fild01,175,313,0,0	monster	Hydra	1068,1,66000,33000,0
-ama_fild01,173,315,0,0	monster	Hydra	1068,1,66000,33000,0
-ama_fild01,171,313,0,0	monster	Hydra	1068,1,66000,33000,0
-ama_fild01,171,314,0,0	monster	Hydra	1068,1,69000,34500,0
-ama_fild01,171,315,0,0	monster	Hydra	1068,1,69000,34500,0
-ama_fild01,175,314,0,0	monster	Hydra	1068,1,72000,39000,0
-ama_fild01,169,315,0,0	monster	Hydra	1068,1,72000,39000,0
+ama_fild01,0,0	monster	Bigfoot	1060,15,5000
+ama_fild01,0,0	monster	Karakasa	1400,50,5000
+ama_fild01,0,0	monster	Kapha	1406,40,5000
+ama_fild01,0,0	monster	Miyabi Doll	1404,2,5000
+ama_fild01,0,0	monster	Poison Toad	1402,1,5000
+ama_fild01,173,313	monster	Hydra	1068,1,60000,30000
+ama_fild01,173,314	monster	Hydra	1068,1,60000,30000
+ama_fild01,173,310	monster	Hydra	1068,1,60000,30000
+ama_fild01,177,315	monster	Hydra	1068,1,60000,30000
+ama_fild01,175,315	monster	Hydra	1068,1,63000,31500
+ama_fild01,169,314	monster	Hydra	1068,1,63000,31500
+ama_fild01,177,314	monster	Hydra	1068,1,66000,33000
+ama_fild01,175,313	monster	Hydra	1068,1,66000,33000
+ama_fild01,173,315	monster	Hydra	1068,1,66000,33000
+ama_fild01,171,313	monster	Hydra	1068,1,66000,33000
+ama_fild01,171,314	monster	Hydra	1068,1,69000,34500
+ama_fild01,171,315	monster	Hydra	1068,1,69000,34500
+ama_fild01,175,314	monster	Hydra	1068,1,72000,39000
+ama_fild01,169,315	monster	Hydra	1068,1,72000,39000

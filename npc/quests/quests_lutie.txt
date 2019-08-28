@@ -39,18 +39,18 @@ xmas,117,295,4	script	Vending Machine Man	704,{
 		next;
 		mes "[Titicupe]";
 		mes "Oh, this creation of mine is so magnificent!";
-		emotion e_kis2;
+		emotion ET_CHUPCHUP;
 		next;
 		mes "[Titicupe]";
 		mes "And the headgears--! I... I can't contain myself!";
 		next;
 		mes "^3355FFToy factory manager Titicupe jumps and convulses with joy. Clearly he's insane, but it may be possible that he may be brilliant.^000000";
-		emotion e_gasp;
+		emotion ET_SURPRISE;
 		close;
 	case 2:
 		mes "[Titicupe]";
 		mes "Oh right! You need to know what kind of items to put into the Vending Machine to get what you want, yes? Go ahead... Ask me~";
-		emotion e_ic;
+		emotion ET_AHA;
 		next;
 		switch(select("Raccoon Hat:Spore Hat:Wonder Nutshell:Ranbow Eggshell:Blush:Chef Hat:Candle:Cake Hat:End Conversation")) {
 		case 1:
@@ -133,7 +133,7 @@ xmas,117,295,4	script	Vending Machine Man	704,{
 		mes "I love you";
 		mes "Mister Snowman";
 		mes "Vending Machine.";
-		emotion e_kis2;
+		emotion ET_CHUPCHUP;
 		next;
 		mes "^3355FFToy factory manager Titicupe begins to jump around and emit screams of unbridled ecstacy. At this point, it's not difficult to doubt his sanity, as well as his genius.";
 		close;
@@ -171,7 +171,7 @@ xmas,115,297,4	script	Vending Machine	111,{
 			delitem 1036,20;  //Dragon_Scale
 			delitem 7012,200;  //Tough_Scalelike_Stem
 			delitem 7065,300;  //Sea_Otter_Leather
-			emotion e_Oh;
+			emotion ET_O;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
@@ -192,7 +192,7 @@ xmas,115,297,4	script	Vending Machine	111,{
 			delitem 7033,850;  //Poison_Spore
 			delitem 7068,300;  //Burn_Tree
 			delitem 1015,1;  //Thin_N'_Long_Tongue
-			emotion e_oh;
+			emotion ET_O;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
@@ -218,7 +218,7 @@ xmas,115,297,4	script	Vending Machine	111,{
 			mes "*Kapang!*";
 			mes "*BeepBoopBeepBoop*";
 			mes "*Beeeeeeoop*^000000";
-			emotion e_oh;
+			emotion ET_O;
 			getitem 5050,1; // Mystery_Fruit_Shell
 			next;
 			mes "[Audi]";
@@ -235,7 +235,7 @@ xmas,115,297,4	script	Vending Machine	111,{
 			delitem 5015,1;  //Egg_Shell
 			delitem 978,1;  //Cobaltblue_Dyestuffs
 			delitem 7030,50;  //Claw_Of_Desert_Wolf
-			emotion e_oh;
+			emotion ET_O;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
@@ -254,7 +254,7 @@ xmas,115,297,4	script	Vending Machine	111,{
 			mes "^3355FFYou gingerly place all 100 Aprons into the snowman's mouth.^000000";
 			next;
 			delitem 7047,100;  //Alice's_Apron
-			emotion e_oh;
+			emotion ET_O;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
@@ -280,7 +280,7 @@ xmas,115,297,4	script	Vending Machine	111,{
 			delitem 982,1;  //White_Dyestuffs
 			delitem 949,330;  //Feather
 			delitem 1036,450;  //Dragon_Scale
-			emotion e_oh;
+			emotion ET_O;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
@@ -302,7 +302,7 @@ xmas,115,297,4	script	Vending Machine	111,{
 			delitem 2279,1;  //Bomb_Wick
 			delitem 7035,50;  //Matchstick
 			delitem 526,100;  //Royal_Jelly
-			emotion e_oh;
+			emotion ET_O;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
@@ -325,7 +325,7 @@ xmas,115,297,4	script	Vending Machine	111,{
 			delitem 538,15;  //Well_Baked_Cookie
 			delitem 539,20;  //Piece_Of_Cake
 			delitem 999,10;  //Steel
-			emotion e_oh;
+			emotion ET_O;
 			mes "^3355FF*Vroooooom~~*";
 			mes "*Bzzzzzt*";
 			mes "*choogachooga*";
@@ -346,7 +346,7 @@ xmas,115,297,4	script	Vending Machine	111,{
 		mes "Items.^000000";
 		close;
 	}
-	emotion e_x;
+	emotion ET_X;
 	mes "[Audi]";
 	mes "^555555Error Error!";
 	mes "Incorrect items!^000000";

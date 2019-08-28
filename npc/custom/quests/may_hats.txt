@@ -18,14 +18,14 @@ gonryun,187,140,4	script	Yakima	850,{
 	mes "[Yakima]";
 	mes callfunc("F_Hi");
 	mes "I can make some items for you.";
-	mes "They are quite rare novadays...";
+	mes "They are quite rare nowadays...";
 	specialeffect EF_HITBODY;
 	next;
 	menu "Bird Nest",-,"Lion Mask",M_2,"Skeleton Manteau",M_3,"Fashion Hip Sack",M_4,"Sales Banner",M_5,"Leave",M_EXIT;
 
 	mes "[Yakima]";
 	mes "Oh.. it's an excellent item for any beast hunter.";
-	emotion e_rock;
+	emotion ET_ROCK;
 	next;
 	mes "[Yakima]";
 	mes "For the hat I'll need:";
@@ -51,7 +51,7 @@ gonryun,187,140,4	script	Yakima	850,{
 M_2:
 	mes "[Yakima]";
 	mes "Bingo! Many people are afraid of lions... to the muteness...";
-	emotion e_slur;
+	emotion ET_SEXY;
 	next;
 	mes "[Yakima]";
 	mes "For the hat I'll need:";
@@ -80,7 +80,7 @@ M_3:
 	mes "[Yakima]";
 	mes "I wish I sold this filthy manteau faster...";
 	mes "Guess it isn't so plain as it looks... Hmm.";
-	emotion e_wah;
+	emotion ET_KEK;
 	next;
 	mes "[Yakima]";
 	mes "I'm giving it almost for free:";
@@ -107,9 +107,9 @@ M_3:
 
 M_4:
 	mes "[Yakima]";
-	mes "It's a fresh style! Ancessory and a bag all in one! You'd get +2 STR... It's different from that sabby nest!";
-	mes "It fits to Merchant classonly.";
-	emotion e_heh;
+	mes "It's a fresh style! Accessory and a bag all in one! You'd get +2 STR... It's different from that sabby nest!";
+	mes "It fits to Merchant class only.";
+	emotion ET_SMILE;
 	next;
 	mes "[Yakima]";
 	mes "Now my stock is full of those bags... So I'll make it from 3 flower things and a rough piece of clothes:";
@@ -138,7 +138,7 @@ M_5:
 	mes "[Yakima]";
 	mes "Well, well, well... this sign fits any class from a certain level!";
 	mes "Your foes'd be dazzled!";
-	emotion e_no1;
+	emotion ET_BEST;
 	next;
 	mes "[Yakima]";
 	mes "Well... we construct it from some common items:";
@@ -170,7 +170,7 @@ M_5:
 L_NOITEM:
 	mes "[Yakima]";
 	mes "You are lack of items. Please, get all the items.";
-	emotion e_sry;
+	emotion ET_SORRY;
 	close;
 
 M_EXIT:

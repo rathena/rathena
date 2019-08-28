@@ -35,7 +35,7 @@
 //============================================================ 
 comodo,228,159,3	script	Hair Ornament Girl	700,{
 	mes "[Hair Ornament Girl]";
-	if (Sex == 1) {
+	if (Sex == SEX_MALE) {
 		mes "Oh, hello!";
 		mes "Would you like to order a hairband? They're great presents to give to your girlfriend, and show that you're thinking of her.";
 	}
@@ -1579,7 +1579,7 @@ comodo,187,153,4	script	Hullaris#cmd	701,{
 		mes "Love together~";
 		mes "Love! Love!";
 		mes "Love togeth-hm?";
-		if (Sex) {
+		if (Sex == SEX_MALE) {
 			mes "Boy, you're ruining";
 			mes "my groove! Now beat it!";
 		}

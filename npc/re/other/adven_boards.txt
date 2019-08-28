@@ -2332,7 +2332,7 @@ lhz_cube,234,97,0	script	Signpost#Somatology	2_BULLETIN_BOARD,{
 }
 
 ra_temin,31,316,0	script	Signpost#Holy Ground	2_BULLETIN_BOARD,{
-	if (MISC_QUEST & 8192 == 0) {
+	if ((MISC_QUEST & 8192) == 0) {
 		mes "Holy Ground";
 		mes "- High Priest Zhed -";
 		close;
@@ -2490,7 +2490,7 @@ tha_t01,142,78,0	script	Guide#Thanatos1	CLEAR_NPC,{
 		next;
 		mes "[Public Announcement]";
 		mes "Please don't touch it. Only those that have a contract with '^0000FFRenkenber^000000' can progress.";
-		emotion 23;
+		emotion ET_HUK;
 		close;
 	}
 	mes "Thanatos Tower is comprised of 12 floors, but only 3 floors are open to the public. If you wish to progress, you must have signed a contract with'^0000FFRenkenber^000000'.";
@@ -2713,7 +2713,7 @@ prt_fild05,278,220,0	script	Signpost#Culvert	2_BULLETIN_BOARD,{
 		mes "Prontera Culvert can only be accessed by adventurers who have the permission from Rune Midgard Kingdrom.";
 		mes "-- Adventurer Group --";
 		next;
-		if (MISC_QUEST & 8 == 0) {
+		if ((MISC_QUEST & 8) == 0) {
 			mes "[Prontera Culvert]";
 			mes "Prontera Culvert can only be accessed by adventurers who have signed a volunteer form at Prontera Chivalry. Would you like to go sign the volunteer form?";
 			next;

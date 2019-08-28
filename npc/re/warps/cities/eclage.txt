@@ -30,7 +30,7 @@ ecl_in02,80,18,0	warp	in02-2_in02-3	1,1,ecl_in02,157,66
 ecl_in02,157,68,0	warp	in02-3_in02-2	1,1,ecl_in02,83,18
 ecl_in01,84,68,0	script	in01e_hub2-1	45,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	if (ep14_2_mylord == 29)
 		warp "ecl_hub01",106,31;
 	else
@@ -41,7 +41,7 @@ ecl_hub01,107,110,0	warp	hub2-1_in01e	1,1,ecl_in01,82,68
 ecl_hub01,127,95,0	warp	hub2-2_hub3-1	1,1,ecl_hub01,18,32
 ecl_hub01,18,34,0	script	hub3-1_hub2-2	45,1,1,{
 	end;
-OnTouch:
+OnTouch_:
 	if (ep14_2_mylord == 29)
 		warp "ecl_hub01",135,14;
 	else

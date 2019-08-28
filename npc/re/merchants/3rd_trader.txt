@@ -81,7 +81,7 @@
 	close;
 }
 job3_guil01,79,96,3	duplicate(phs)	Poison Herb Merchant	4_F_YUNYANG
-morocc,191,94,4	duplicate(phs)	Poison Herb Merchant#moc	4_F_YUNYANG	//Official: (190,96) -> in a wall
+morocc,193,100,4	duplicate(phs)	Poison Herb Merchant#moc	4_F_YUNYANG
 lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	4_F_YUNYANG
 
 // Rune Stone Merchants (Rune Knight) :: rune_3rd_trader

@@ -3,7 +3,7 @@
 //===== By: ================================================== 
 //= Evera
 //===== Current Version: ===================================== 
-//= 2.9
+//= 2.9a
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: =========================================
@@ -54,6 +54,7 @@
 //= 2.7 Fixed a typo, a - to a +. Not sure how that happened. [L0ne_w0lf]
 //= 2.8 Corrected another typo this time in a variable.
 //= 2.9 Added GM management function. [Euphy]
+//= 2.9a Tweaked NPC sprite & cutin used. [Liam]
 //============================================================ 
 
 einbroch,246,70,0	script	Vote Timer#ein	-1,{
@@ -690,7 +691,7 @@ yuno,162,191,4	script	Kafra Voting Staff#yuno	861,{
 prontera,164,125,4	script	Kafra Voting Staff#prt	116,{
 	callfunc "F_VoteKafra",2;
 }
-moc_ruins,97,133,4	script	Kafra Voting Staff#moc	4_M_ZONDAMAN,{
+moc_ruins,104,133,4	script	Kafra Voting Staff#moc	116,{
 	callfunc "F_VoteKafra",2;
 }
 geffen,122,37,4	script	Kafra Voting Staff#gef	116,{
@@ -1103,7 +1104,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 
 yuno,153,191,6	duplicate(VotingStaffCCE)	Cool Event Staff#yuno	874
 prontera,147,125,6	duplicate(VotingStaffCCE)	Cool Event Staff#prt	874
-moc_ruins,104,133,6	duplicate(VotingStaffCCE)	Cool Event Staff#moc	874
+moc_ruins,97,133,6	duplicate(VotingStaffCCE)	Cool Event Staff#moc	874
 geffen,117,37,6	duplicate(VotingStaffCCE)	Cool Event Staff#gef	874
 payon,153,182,6	duplicate(VotingStaffCCE)	Cool Event Staff#pay	874
 alberta,114,70,6	duplicate(VotingStaffCCE)	Cool Event Staff#alb	874

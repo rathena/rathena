@@ -1,0 +1,103 @@
+//===== rAthena Documentation ================================
+//= Achievement Database Structure
+//===== By: ==================================================
+//= rAthena Dev Team
+//===== Last Updated: ========================================
+//= 20190226
+//===== Description: =========================================
+//= Explanation of the achievements_db.yml file and structure.
+//============================================================
+
+---------------------------------------
+
+ID: Unique achievement ID.
+
+---------------------------------------
+
+Group: Achievement group type. Each achievement type calls a specific objective check.
+Valid groups:
+	AG_ADD_FRIEND - Triggered when a player adds a friend.
+	AG_ADVENTURE - Does not trigger automatically. These are triggered by the achievementcomplete script command.
+	AG_BABY - Triggered when a player becomes a baby job.
+	AG_BATTLE - Triggered when a player kills a monster.
+	AG_CHATTING - Unknown.
+	AG_CHATTING_COUNT - Triggered when a player has a chatroom open and others join.
+	AG_CHATTING_CREATE - Triggered when a player creates a chatroom.
+	AG_CHATTING_DYING - Triggered when a player creates a chatroom and dies with it open.
+	AG_EAT - Unknown.
+	AG_GET_ITEM - Triggered when a player gets an item that has a specific sell value.
+	AG_GET_ZENY - Triggered when a player gets a specific amount of zeny at once.
+	AG_GOAL_ACHIEVE - Triggered when a player's achievement rank levels up.
+	AG_GOAL_LEVEL - Triggered when a player's base level or job level changes.
+	AG_GOAL_STATUS - Triggered when a player's base stats changes.
+	AG_HEAR - Unknown.
+	AG_JOB_CHANGE - Triggered when a player's job changes.
+	AG_MARRY - Triggered when two players get married.
+	AG_PARTY - Triggered when a player creates a party.
+	AG_ENCHANT_FAIL - Triggered when a player fails to refine an equipment.
+	AG_ENCHANT_SUCCESS - Triggered when a player successfully refines an equipment.
+	AG_SEE - Unknown.
+	AG_SPEND_ZENY - Triggered when a player spends any amount of zeny on vendors.
+	AG_TAMING - Triggered when a player tames a monster.
+
+---------------------------------------
+
+Name: Achievement name. Not read into source but used for quick look ups.
+
+---------------------------------------
+
+Target: A list of monster ID and count values that the achievement requires.
+		The target count can also be used for achievements that keep a counter while not being related to monster kills.
+		Capped at MAX_ACHIEVEMENT_OBJECTIVES.
+
+Example:
+  // Player must kill 5 Scorpions and 10 Poring.
+  Target:
+    - MobID: 1001
+      Count: 5
+    - MobID: 1002
+      Count: 10
+
+Example 2:
+  // Player must have 100 or more of ARG0 value. Using the count target value is useful for achievements that are increased in increments
+  // and not checked for a total (UI_Type = 1).
+  // IE: In the achievement_list.lub file, UI_Type 0 is displayed as non-incremental while 1 shows a progress bar of completion for the achievement.
+  Condition: " ARG0 >= 100 "
+  Target:
+    - Id: 0 // Array index value
+      Count: 100
+
+---------------------------------------
+
+Condition: A conditional statement that must be met for the achievement to be considered complete. Accepts script constants, player variables, and
+		   ARGX (where X is the argument vector value). The ARGX values are sent from the server to the achievement script engine on special events.
+		   Below are two examples of how the ARGX feature works.
+
+Example:
+	// This function will send 1 argument (ARG0) with a value of i + 1 when a friend is added.
+	achievement_update_objective(f_sd, AG_ADD_FRIEND, 1, i + 1);
+
+Example 2:
+	// This function will send 2 arguments (ARG0 and ARG1) with values of weapon level and refine level, respectively, when an equipment is
+	// successfully refined.
+	achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
+
+---------------------------------------
+
+Map: A map name that is used for the AG_CHATTING type which increments the counter based on the player's map.
+
+---------------------------------------
+
+Dependent: A list of achievement IDs that need to be completed before this achievement is considered complete.
+
+---------------------------------------
+
+Reward: A list of rewards that are given on completion. All fields are optional.
+  ItemID: Item ID
+  Amount:	Amount of Item ID (default 1)
+  Script: Bonus Script
+  TitleID: Title ID
+
+---------------------------------------
+
+Score: Achievement points that are given on completion.

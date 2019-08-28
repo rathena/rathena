@@ -1147,12 +1147,17 @@ L_Socket:
 		mes "The ability to enhance remains.";
 		delitem 6380,1; //Mora_Coin
 		set Zeny, Zeny-100000;
+
+		// anti-hack
+		if (callfunc("F_IsEquipIDHack", .@part, .@equip_id) || callfunc("F_IsEquipCardHack", .@part, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", .@part, .@equip_refine))
+			close;
+
 		delequip .@part;
 
 //		GetNonSlotItemSock2 .@equip_refine .@equip_id .@equip_card[0] .@equip_card[1] .@equip_card[2] .@equip_card[3]
-		for(set .@i,0; .@i<4; set .@i,.@i+1) {
-			if (.@equip_card[.@i] >= 4700) // Armor Enchant System
-				set .@equip_card[.@i],0;
+		for ( .@i = getiteminfo(.@equip_id,10); .@i < MAX_SLOTS; .@i++ ) {
+			if (callfunc("F_IsCharm",.@equip_card[.@i]) == true)
+				.@equip_card[.@i] = 0;// Armor Enchant System
 		}
 		getitem2 .@equip_id,1,1,.@equip_refine,0,.@equip_card[0],.@equip_card[1],.@equip_card[2],.@equip_card[3];
 
@@ -1172,7 +1177,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		close;
 	}
 	disable_items;
-	emotion e_ho;
+	emotion ET_DELIGHT;
 	mes "Those Mora Artifacts look so perfect!";
 	mes "But I know you want them to be even better!";
 	next;
@@ -1183,7 +1188,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 	case 1:
 		break;
 	case 2:
-		emotion e_ok;
+		emotion ET_OK;
 		mes "[Artifact Collector]";
 		mes "You seem like a pretty good judge of character.";
 		next;
@@ -1191,35 +1196,35 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "For over 200 years I've been working with Artifacts here in Mora. Toiling to get the perfect +9!";
 		next;
 		select("Gulp... +9?!");
-		emotion e_omg,1;
+		emotion ET_HUK, playerattached();
 		mes "[Artifact Collector]";
 		mes "My business is collecting the old relics and refining them to their essence!";
 		next;
-		emotion e_sob;
+		emotion ET_CRY;
 		mes "[Artifact Collector]";
 		mes "Finding the perfect Artifact for me to experiment on is my life's work.";
 		mes "Plus seeing the wonder of our ancestor's legacy is also gratifying.";
 		next;
 		select("I can see how that could be fun.");
-		emotion e_pat;
+		emotion ET_GOODBOY;
 		mes "[Artifact Collector]";
 		mes "Thank you human.";
 		next;
 		mes "[Artifact Collector]";
 		mes "I've been doing this for over 200 years, and honestly the readily available supply is gone, and Artificer and Artifact Crafter won't trade me anymore...";
 		next;
-		emotion e_dots;
+		emotion ET_THINK;
 		mes "[Artifact Collector]";
 		mes "But maybe the Humans that are starting to visit can bring in some new stock!";
 		next;
 		select("Humans... Stock?");
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		mes "[Artifact Collector]";
 		mes "Yes! If the humans can bring me new artifacts I can work on my ultimate achievement!";
 		next;
 		select("Ultimate Achievement?");
-		emotion e_what,1;
-		emotion e_ok;
+		emotion ET_QUESTION, playerattached();
+		emotion ET_OK;
 		mes "[Artifact Collector]";
 		mes "Patience, we'll get to that...";
 		next;
@@ -1230,24 +1235,24 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "[Artifact Collector]";
 		mes "You might just be the human to help me complete my plan.";
 		next;
-		emotion e_otl;
+		emotion ET_OTL;
 		mes "[Artifact Collector]";
 		mes "Oh how I love how fate works sometimes...";
 		next;
 		mes "[Artifact Collector]";
 		mes "+1, +2, +3, +4, +5, +6 those refinements are not strong enough to work on my craft.";
 		next;
-		emotion e_otl,0;
+		emotion ET_OTL;
 		mes "[Artifact Collector]";
 		mes "But +7! +7 is rare and just barely strong enough to work in my crafting attempts.";
 		next;
 		select("I'm gonna be abused again...");
-		emotion e_hmm,1;
+		emotion ET_SCRATCH, playerattached();
 		mes "[Artifact Collector]";
 		mes "Right you are! I know it is natural for you Humans to help a friend, even without the friend asking...";
 		next;
 		select("I'm not sure if...");
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		mes "[Artifact Collector]";
 		mes "Of course I'll accept your help!  Find me...";
 		next;
@@ -1259,7 +1264,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "- Mace of Judgement -";
 		next;
 		select("Anything else?");
-		emotion e_what,1;
+		emotion ET_QUESTION, playerattached();
 		mes "[Artifact Collector]";
 		mes "Well aside from the +7, there are very specific enchantments that need to be on the artifact that help catalyze the process.";
 		next;
@@ -1267,15 +1272,15 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "If either the +7 or the specific enchantment is missing I can't do it.";
 		next;
 		select("So the Refining will be preserved?");
-		emotion e_omg,1;
-		emotion e_an;
+		emotion ET_HUK, playerattached();
+		emotion ET_FRET;
 		mes "[Artifact Collector]";
 		mes "No, but what you'll get back is so much better!";
 		next;
 		mes "[Artifact Collector]";
 		mes "By now you are wondering more about the artifacts I'm looking for?";
 		next;
-		emotion e_what;
+		emotion ET_QUESTION;
 		mes "[Artifact Collector]";
 		mes "Go ahead and ask!";
 		next;
@@ -1284,7 +1289,7 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		while(1) {
 			set .@i, select("I don't think I'm interested:Staff of Mercy:Mace of Judgement:Golden Rod Staff:Aqua Staff:Crimson Staff:Forest Staff")-2;
 			if (.@i == -1) {
-				emotion e_what;
+				emotion ET_QUESTION;
 				mes "[Artifact Collector]";
 				mes "Ok, well maybe someday you will be.";
 				close;
@@ -1320,18 +1325,19 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "Have yourself a great day. Bye~";
 		close;
 	}
-	emotion e_flash;
+	emotion ET_SPARK;
 	mes "[Artifact Collector]";
 	mes "Let me take a look at what you have brought me.";
 	next;
 	if (!getequipisequiped(EQI_HAND_R)) {
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Artifact Collector]";
 		mes "I don't know what you are trying to do... I can't enhance what you don't have.";
 		close;
 	}
 	set .@equip_id, getequipid(EQI_HAND_R);
-	setarray .@equip_card[2], getequipcardid(EQI_HAND_R,2),getequipcardid(EQI_HAND_R,3);
+	.@equip_refine = getequiprefinerycnt(EQI_HAND_R);
+	setarray .@equip_card[0], getequipcardid(EQI_HAND_R,0), getequipcardid(EQI_HAND_R,1), getequipcardid(EQI_HAND_R,2),getequipcardid(EQI_HAND_R,3);
 	switch(.@equip_id) {
 	case 2007: //Golden_Rod_Staff
 	case 2008: //Aqua_Staff
@@ -1354,38 +1360,38 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 			set .@empowered,16018; //Mace_Of_Judgement2
 		break;
 	default:
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Artifact Collector]";
 		mes "The weapon you have isn't one of the Artifacts I can work with.";
 		close;
 	}
-	if (getequiprefinerycnt(EQI_HAND_R) < 7) {
-		emotion e_an;
+	if (.@equip_refine < 7) {
+		emotion ET_FRET;
 		mes "[Artifact Collector]";
 		mes "I must insist that the refine level of the Artifact be at least +7!";
 		close;
 	}
 	if (!.@empowered) {
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Artifact Collector]";
 		mes "These attributes just won't do for my research process, try re-randoming them.";
 		close;
 	}
-	emotion e_slur;
+	emotion ET_SEXY;
 	mes "[Artifact Collector]";
 	mes "I'm tingling with excitement!";
 	mes "You've brought me everything I need!!";
 	next;
-	emotion e_ok;
+	emotion ET_OK;
 	mes "[Artifact Collector]";
-	mes "If you are ready I am about to show you what I can do with your +"+getequiprefinerycnt(EQI_HAND_R)+" Artifact!";
+	mes "If you are ready I am about to show you what I can do with your +" + .@equip_refine + " Artifact!";
 	next;
 	mes "[Artifact Collector]";
 	mes "I'm going to take your ^FF0000"+getequipname(EQI_HAND_R)+"^000000 and exchange it, are you ready?";
 	next;
 	switch(select("NOOO!:Yes, I'm ready!:What will it be after?")) {
 	case 1:
-		emotion e_an;
+		emotion ET_FRET;
 		mes "[Artifact Collector]";
 		mes "You've got to be kidding... you got my hopes up...";
 		close;
@@ -1397,14 +1403,19 @@ mora,124,82,4	script	Artifact Collector#blan	522,{
 		mes "Surely you want to go on?";
 		next;
 		if(select("No, I don't.:Yes, do it!") == 1) {
-			emotion e_an;
+			emotion ET_FRET;
 			mes "[Artifact Collector]";
 			mes "You've got to be kidding... you got my hopes up...";
 			close;
 		}
 		break;
 	}
-	emotion e_heh;
+	emotion ET_SMILE;
+
+	// anti-hack
+	if (callfunc("F_IsEquipIDHack", EQI_HAND_R, .@equip_id) || callfunc("F_IsEquipCardHack", EQI_HAND_R, .@equip_card[0], .@equip_card[1], .@equip_card[2], .@equip_card[3]) || callfunc("F_IsEquipRefineHack", EQI_HAND_R, .@equip_refine))
+		close;
+
 	delequip EQI_HAND_R;
 	getitem .@empowered,1;
 	mes "[Artifact Collector]";
@@ -1487,6 +1498,8 @@ function	script	F_Mora_Enchant	{
 	specialeffect2 EF_REPAIRWEAPON;
 	progressbar "ffff00",3;
 	delitem 6380,5; //Mora_Coin
+	if (countitem(getarg(0)) < 1)
+		return 0;
 	delitem getarg(0),1;
 	set .@i, rand(1,4568);
 	if (.@i <= 3168) {
@@ -1516,6 +1529,7 @@ function	script	F_Mora_Enchant	{
 	return 1;
 }
 mora,105,176,4	script	Master Tailor#pa0829	509,{
+	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
 		close;
@@ -1608,6 +1622,7 @@ mora,105,176,4	script	Master Tailor#pa0829	509,{
 }
 
 mora,123,177,6	script	Pendant Crafter#pa0829	509,{
+	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
 		close;
@@ -1678,6 +1693,7 @@ mora,123,177,6	script	Pendant Crafter#pa0829	509,{
 }
 
 mora,134,166,4	script	Bulberry Westhood#pa0829	509,{
+	disable_items;
 	if (checkweight(1201,1) == 0) {
 		mes "You have too many kinds of things with you to do that. Throw out some of them and try again.";
 		close;

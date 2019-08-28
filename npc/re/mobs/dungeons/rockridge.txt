@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= Rock Ridge Monsters Spawn Script
+//===== Additional Comments: =================================
+//= 1.0 First version. [Capuche]
+//============================================================
+
+// Rock Ridge Mine
+rockmi1,0,0	monster	Thief Bug	1051,3
+rockmi1,0,0	monster	Gaster	3740,18
+rockmi1,0,0	monster	Elite Buffalo Bandit	3747,3
+rockmi1,0,0	monster	Elite Buffalo Bandit	3748,8
+rockmi1,0,0	monster	Elite Buffalo Bandit	3749,6
+rockmi1,0,0	boss_monster	Spider Chariot	3741,1,7200000,600000,1
+
+// Rock Ridge Mine
+rockmi2,100,36,20,20	monster	Purple Ore	3742,31
+
+// Culvert
+harboro2,0,0	monster	Swamp Arclouze	3787,29
+harboro2,0,0	monster	Brown Rat	3788,29
+harboro2,0,0	monster	Anopheles	1627,10
+harboro2,0,0	monster	Black Mushroom	1084,19
+harboro2,50,259,10,6	monster	Sea Anemone	3743,20

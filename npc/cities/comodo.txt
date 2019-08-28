@@ -436,7 +436,7 @@ moc_fild12,35,303,4	script	Serutero#cmd	59,{
 		mes "[Serutero]";
 		mes "Comodo grew in power and";
 		mes "influence and eventually annexed Sandaruman. More and more people";
-		mes "moved from the fortress to Comodo until Sandaruman Fotress was";
+		mes "moved from the fortress to Comodo until Sandaruman fortress was";
 		mes "essentially abandoned.";
 		next;
 		mes "[Serutero]";

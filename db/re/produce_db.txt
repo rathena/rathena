@@ -656,3 +656,27 @@
 //-- Cure Free <-- GN_S_PHARMACY Lv1, Quality Potion Book, 20 Green Herb, 1 Fruit Of Mastela, 5 Panacea, 1 Leaf Of Yggdrasil, 10 Empty Cylinder
 263,12475,29,2497,1,6285,0,511,20,522,1,525,5,610,1,1092,10
 //===============================================
+
+//--------------------LEVEL 30-----------
+// Novice Red Potion (569) <-- 2 Red Herbs, 1 Apple
+264,569,30,0,0,11058,0,507,2,512,1
+// Novice Magnifier (12325) <-- 3 Fine-grained Trunk, 1 Jellopy
+265,12325,30,0,0,11058,0,1066,3,909,1
+// Novice Fly Wing (12323) <-- 2 Fluffs, 2 Feathers, 2 Jellopies
+266,12323,30,0,0,11058,0,914,2,949,2,909,2
+// Novice Cutter (13040) <-- 10 Shells, 10 Worm Peelings, 1 Phracon
+267,13040,30,0,0,11058,0,935,10,955,10,1010,1
+// Little Unripe Apple (12846) <-- 1 Apple, 1 Green Herb
+268,12846,30,0,0,11058,0,512,1,511,1
+// Four Leaf Clover (706) <-- 200 Clovers, 200 Sticky Mucus
+269,706,30,0,0,11058,0,705,200,938,200
+// Banana Juice (532) <-- 1 Banana, 1 Milk
+270,532,30,0,0,11058,0,513,1,519,1
+// Apple Juice (531) <-- 1 Apple, 1 Milk
+271,531,30,0,0,11058,0,512,1,519,1
+// Carrot Juice (534) <-- 1 Carrot, 1 Milk
+272,534,30,0,0,11058,0,515,1,519,1
+// Grape Juice (533) <-- 1 Grape, 1 Milk
+273,533,30,0,0,11058,0,514,1,519,1
+// Unripe Apple (619) <-- 10 Sticky Mucus, 20 Green Herbs, 10 Apples
+274,619,30,0,0,11058,0,938,10,511,20,512,10

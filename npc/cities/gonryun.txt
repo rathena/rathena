@@ -211,7 +211,7 @@ gonryun,268,88,3	script	Liang Zhun Bu#gon	776,{
 	mes "off every invasion! As long";
 	mes "as we believe in ourselves,";
 	mes "we shall never forget the";
-	mes "Trumphal Song that has helped us in our struggles.";
+	mes "Triumphal Song that has helped us in our struggles.";
 	close;
 }
 

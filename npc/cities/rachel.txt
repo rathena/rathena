@@ -53,7 +53,7 @@ ra_san04,137,48,3	script	Loomin-1st Class Secret	111,{
 	mes "^333333The pope was born together";
 	mes "with a twin brother, a fair";
 	mes "skinned boy with pale skin";
-	mes "and silver blonde hair. This";
+	mes "and silver blond hair. This";
 	mes "had never happened before";
 	mes "and presented a unique problem";
 	mes " ";
@@ -112,7 +112,7 @@ rachel,74,150,7	script	Girl#1	914,{
 	mes "[Girl]";
 	mes "I've never seen our pope";
 	mes "before, I hear that she has";
-	mes "silver blonde hair and really";
+	mes "silver blond hair and really";
 	mes "white skin. Daddy says that";
 	mes "only one girl is like that";
 	mes "in every generation.";
@@ -276,7 +276,7 @@ rachel,206,30,3	script	Freya's Priest#play	920,{
 	mes "[Freya's Priest]";
 	mes "You!";
 	mes "Entertain me!";
-	emotion e_ag;
+	emotion ET_ANGER;
 	next;
 	if (select("What? You can't tell me what to do!:You got it.") == 1) {
 		mes "[Freya's Priest]";
@@ -329,7 +329,7 @@ rachel,197,137,3	script	Bard#aru	51,{
 	mes "[Bard]";
 	mes "Can I fulfill this hope~?";
 	mes "Meeting the girl with";
-	mes "skin as white as lillies,";
+	mes "skin as white as lilies,";
 	mes "eyes sparkling like stars~";
 	mes "Yes, I'm talking about the pope~";
 	mes "Pope, yeah~ Pope, yeah~";
@@ -343,7 +343,7 @@ rachel,197,137,3	script	Bard#aru	51,{
 	mes ".........";
 	mes ".........";
 	mes ".........";
-	emotion e_sob;
+	emotion ET_CRY;
 	close;
 }
 
@@ -421,7 +421,7 @@ ra_temin,138,64,5	script	Child Follower#in1	921,{
 	mes "I really wanted it to just";
 	mes "rest and be healthy again";
 	mes "but it died! Waaaaah!";
-	emotion e_sob;
+	emotion ET_CRY;
 	next;
 	mes "[Child Follower]";
 	mes "I... I'm going to";
@@ -557,7 +557,7 @@ rachel,127,117,4	script	Child Follower#2	914,{
 	mes "believe that if it is Freya's";
 	mes "will, then it shall be realized.";
 	next;
-	emotion e_what;
+	emotion ET_QUESTION;
 	mes "[Deno]";
 	mes "I know it might seem";
 	mes "a little confusing to";

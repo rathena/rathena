@@ -1,0 +1,29 @@
+//===== rAthena Script =======================================
+//= Lasagna Dungeons Monsters Spawn Script
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [Capuche]
+//============================================================
+
+//==================================================
+// lasa_dun01 - Dragon's Nest
+//==================================================
+lasa_dun01	monster	Trans Spore	3501,40
+lasa_dun01	monster	Scout Basilisk	3502,40
+lasa_dun01	boss_monster	Big Eggring	3505,1,3600000,1800000,1
+
+//==================================================
+// lasa_dun02 - Dragon's Nest
+//==================================================
+lasa_dun02	monster	Combat Basilisk	3503,40
+lasa_dun02	monster	Jungle Madragora	3506,40
+
+//==================================================
+// lasa_dun03 - Dragon's Nest
+//==================================================
+lasa_dun03	monster	Combat Basilisk	3504,80
+lasa_dun03	monster	Fruits Pom Spider	3507,80
+
+//==================================================
+// lasa_dun_q - Dragon's Nest
+//==================================================
+lasa_dun_q	monster	Scout Basilisk	3502,40
