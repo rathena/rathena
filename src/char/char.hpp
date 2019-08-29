@@ -4,6 +4,7 @@
 #ifndef CHAR_HPP
 #define CHAR_HPP
 
+#include <string>
 #include <vector>
 
 #include "../common/core.hpp" // CORE_ST_LAST
