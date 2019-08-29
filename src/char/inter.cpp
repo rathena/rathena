@@ -35,7 +35,7 @@
 #include "int_quest.hpp"
 #include "int_storage.hpp"
 
-std::string cfgFile = "inter_athena.yml"; ///< Inter-Config file
+std::string cfgFile = "inter_server.yml"; ///< Inter-Config file
 InterServerDatabase interServerDb;
 
 #define WISDATA_TTL (60*1000)	//Wis data Time To Live (60 seconds)
