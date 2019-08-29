@@ -244,7 +244,7 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 		}
 	case 4:
 		mes "[Christopher Guillenrow]";
-		mes "I can purify yer Oridecon and Elunium. I make a refined Ore out of 5 o'each rough ones. Well... Which one do ye want to make?";
+		mes "I can purify yer Oridecon and Elunium, Zelunium and Shadowdecon. I make a refined Ore out of 5 o'each rough Oridecon and Elunium and 20 o'each Zelunium Ore and Shadowdecon Ore. Well... Which one do ye want to make?";
 		next;
 		switch(select("Make Oridecon:Make Elunium:Make Shadowdecon:Make Zelunium:Cancel.")) {
 		case 1:
@@ -274,26 +274,26 @@ geffen_in,110,172,0	script	Christopher#1	63,{
 				close;
 			}
 		case 3:
-			if (countitem(25728) < 5) {
+			if (countitem(25728) < 20) {
 				mes "[Christopher Guillenrow]";
-				mes "I told ye, I need 5 rough Shadowdecon fer one Shadowdecon.";
+				mes "I told ye, I need 20 Shadowdecon Ore fer one Shadowdecon.";
 				close;
 			}
 			else {
-				delitem 25728,5;  //Rough_Shadowdecon
+				delitem 25728,20;  //Shadowdecon_Ore
 				getitem 25729,1; // Shadowdecon
 				mes "[Christopher Guillenrow]";
 				mes "Arrr, here's yer Shadowdecon. Yer business is always welcome here, so feel free to come again.";
 				close;
 			}
 		case 4:
-			if (countitem(25730) < 5) {
+			if (countitem(25730) < 20) {
 				mes "[Christopher Guillenrow]";
-				mes "I told ye, I need 5 rough Zeluniums fer one Zelunium.";
+				mes "I told ye, I need 20 Zelunium Ore fer one Zelunium.";
 				close;
 			}
 			else {
-				delitem 25730,5;  //Rough_Zelunium
+				delitem 25730,20;  //Zelunium_Ore
 				getitem 25731,1; // Zelunium
 				mes "[Christopher Guillenrow]";
 				mes "Arrr, here's yer Zelunium. Yer business is always welcome here, so feel free to come again.";
