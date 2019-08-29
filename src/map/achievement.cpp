@@ -697,27 +697,35 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 {
 	nullpo_retr(nullptr, sd);
 
-	static int info[2];
-	int old_level = sd->achievement_data.level;
-	const int score_table[MAX_ACHIEVEMENT_RANK] = { 18, 49, 98, 171, 306, 410, 550, 728, 942, 1247, 1504, 1804, 2152, 2550, 3070, 3522, 4030, 4592, 5210, 5980 };
-
 	sd->achievement_data.total_score = 0;
-	sd->achievement_data.level = 0;
 
 	for (int i = 0; i < sd->achievement_data.count; i++) { // Recount total score
 		if (sd->achievement_data.achievements[i].completed > 0)
 			sd->achievement_data.total_score += sd->achievement_data.achievements[i].score;
 	}
 
-	int i, temp_score = sd->achievement_data.total_score;
+	int left_score, right_score, old_level = sd->achievement_data.level;
+	const int score_table[MAX_ACHIEVEMENT_RANK] = { 18, 49, 98, 171, 306, 410, 550, 728, 942, 1247, 1504, 1804, 2152, 2550, 3070, 3522, 4030, 4592, 5210, 5980 };
 
-	for (i = 0; i < MAX_ACHIEVEMENT_RANK && temp_score > score_table[i]; i++) { // Determine rollover and TNL EXP
-		temp_score -= score_table[i];
-		sd->achievement_data.level++;
+	for (sd->achievement_data.level = 0; sd->achievement_data.level < MAX_ACHIEVEMENT_RANK; sd->achievement_data.level++) {
+		if (sd->achievement_data.level + 1 == MAX_ACHIEVEMENT_RANK) {
+			left_score = sd->achievement_data.total_score;
+			right_score = score_table[MAX_ACHIEVEMENT_RANK - 1];
+		} else {
+			if (sd->achievement_data.total_score > score_table[sd->achievement_data.level])
+				continue; // Enough points for this level, check the next one
+			else {
+				left_score = score_table[sd->achievement_data.level] - sd->achievement_data.total_score;
+				right_score = score_table[sd->achievement_data.level + 1];
+				break;
+			}
+		}
 	}
 
-	info[0] = temp_score; // Left number
-	info[1] = score_table[i]; // Right number
+	static int info[2];
+
+	info[0] = left_score; // Left number
+	info[1] = right_score; // Right number
 
 	if (flag && old_level != sd->achievement_data.level) { // Give AG_GOAL_ACHIEVE
 		int achievement_id = 240000 + sd->achievement_data.level;
