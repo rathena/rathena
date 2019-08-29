@@ -2306,8 +2306,8 @@ bool char_checkdb(void){
 		charserv_table(clan_table), charserv_table(clan_alliance_table), charserv_table(mail_attachment_table), charserv_table(achievement_table),
 	};
 	ShowInfo("Start checking DB integrity\n");
-	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can acces them in sql-server
-		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i]) ){
+	for (i=0; i<ARRAYLENGTH(sqltable); i++){ //check if they all exist and we can access them in sql-server
+		if( SQL_ERROR == Sql_Query(sql_handle, "SELECT 1 FROM `%s` LIMIT 1;", sqltable[i].c_str()) ){
 			Sql_ShowDebug(sql_handle);
 			return false;
 		}

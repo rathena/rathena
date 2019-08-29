@@ -71,7 +71,7 @@ struct clan* inter_clan_fromsql(int clan_id){
 		clan->max_member = MAX_CLAN;
 	}
 
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `opposition`,`alliance_id`,`name` FROM `%s` WHERE `clan_id`='%d'", schema_config.clan_alliance_table, clan_id) ){
+	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT `opposition`,`alliance_id`,`name` FROM `%s` WHERE `clan_id`='%d'", charserv_table(clan_alliance_table), clan_id) ){
 		Sql_ShowDebug(sql_handle);
 		aFree(clan);
 		return NULL;
@@ -209,7 +209,7 @@ int inter_clan_init(void){
 
 	clan_db = idb_alloc(DB_OPT_RELEASE_DATA);
 
-	if( SQL_ERROR == Sql_Query( sql_handle, "SELECT `clan_id` FROM `%s`", schema_config.clan_table ) ){
+	if( SQL_ERROR == Sql_Query( sql_handle, "SELECT `clan_id` FROM `%s`", charserv_table(clan_table) ) ){
 		Sql_ShowDebug(sql_handle);
 		return 1;
 	}
