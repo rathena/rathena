@@ -11,11 +11,11 @@ malangdo,218,101,3	script	Malangdo Guide#Malangdo	4_CAT_SAILOR3,{
 	F_Navi("[Malangdo Guide]");
 	while(1) {
 		next;
-		switch(select("[ Major Facilities ]:[ Trader & Assistant ]:Clear Mini-Map:Cancel.")) {
+		switch(select("[ Major Facilities ]:[ Trader & Assistant ]:Clear Mini-Map:Cancel")) {
 		case 1:
 			set .@loop,1;
 			while (.@loop) {
-				switch(select("[ Cat Gamers Director ]:[ Special Vending Machine ]:[ Coin Exchanger ]:[ Starry Coral ]:Previous Menu.")) {
+				switch(select("[ Cat Gamers Director ]:[ Special Vending Machine ]:[ Coin Exchanger ]:[ Starry Coral ]:Previous Menu")) {
 				case 1:
 					callsub L_Mark, F_Navi("Cat Gamers Director","malangdo,119,137","FF0000");
 					viewpoint 1,119,137,0,0xFF0000;
@@ -36,7 +36,6 @@ malangdo,218,101,3	script	Malangdo Guide#Malangdo	4_CAT_SAILOR3,{
 					next;
 					viewpoint 1,73,238,3,0x7B68EE;
 					break;
-					break;
 				case 5:
 					set .@loop,0;
 					break;
@@ -46,7 +45,7 @@ malangdo,218,101,3	script	Malangdo Guide#Malangdo	4_CAT_SAILOR3,{
 		case 2:
 			set .@loop,1;
 			while (.@loop) {
-				switch(select("[ Chief Thomas ]:[ Stinky Merchant ]:[ Wandering Merchant ]:[ Inn Owner ]:[ Storekeeper ]:[ Tool Dealer ]:[ Portali ]:[ Clink ]:[ Holink ]:[ Roving Merchant ]:Previous Menu.")) {
+				switch(select("[ Chief Thomas ]:[ Stinky Merchant ]:[ Wandering Merchant ]:[ Inn Owner ]:[ Storekeeper ]:[ Tool Dealer ]:[ Portali ]:[ Clink ]:[ Holink ]:[ Roving Merchant ]:Previous Menu")) {
 				case 1:
 					callsub L_Mark, F_Navi("Chief Thomas","malangdo,164,163","0A9696");
 					viewpoint 1,164,163,4,0x0A9696;
