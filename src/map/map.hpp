@@ -219,6 +219,42 @@ enum e_mapid {
 	MAPID_BABY_SOUL_REAPER,
 };
 
+static std::unordered_map<std::string, int> um_jobnames {
+	{ "Novice", JOB_NOVICE },
+	{ "Swordsman", JOB_SWORDMAN },
+	{ "Magician", JOB_MAGE },
+	{ "Archer", JOB_ARCHER },
+	{ "Acolyte", JOB_ACOLYTE },
+	{ "Merchant", JOB_MERCHANT },
+	{ "Thief", JOB_THIEF },
+	{ "Knight", JOB_KNIGHT },
+	{ "Priest", JOB_PRIEST },
+	{ "Wizard", JOB_WIZARD },
+	{ "Blacksmith", JOB_BLACKSMITH },
+	{ "Hunter", JOB_HUNTER },
+	{ "Assassin", JOB_ASSASSIN },
+	{ "Crusader", JOB_CRUSADER },
+	{ "Monk", JOB_MONK },
+	{ "Sage", JOB_SAGE },
+	{ "Rogue", JOB_ROGUE },
+	{ "Alchemist", JOB_ALCHEMIST },
+	{ "Bard", JOB_BARD },
+	{ "Dancer", JOB_DANCER },
+	{ "SuperNovice", JOB_SUPER_NOVICE },
+	{ "Gunslinger", JOB_GUNSLINGER },
+	{ "Ninja", JOB_NINJA },
+	{ "Taekwon", JOB_TAEKWON, },
+	{ "StarGladiator", JOB_STAR_GLADIATOR },
+	{ "SoulLinker", JOB_SOUL_LINKER },
+//	{ "Gangsi", JOB_GANGSI },
+//	{ "DeathKnight", JOB_DEATH_KNIGHT },
+//	{ "DarkCollector", JOB_DARK_COLLECTOR },
+	{ "Kagerou", JOB_KAGEROU },
+	{ "Oboro", JOB_OBORO },
+	{ "Rebellion", JOB_REBELLION },
+	{ "Summoner", JOB_SUMMONER },
+};
+
 //Max size for inputs to Graffiti, Talkie Box and Vending text prompts
 #define MESSAGE_SIZE (79 + 1)
 //String length you can write in the 'talking box'

@@ -804,16 +804,17 @@ enum weapon_type {
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
 
-enum ammo_type {
-	A_ARROW = 1,
-	A_DAGGER,   //2
-	A_BULLET,   //3
-	A_SHELL,    //4
-	A_GRENADE,  //5
-	A_SHURIKEN, //6
-	A_KUNAI,     //7
-	A_CANNONBALL,	//8
-	A_THROWWEAPON	//9
+enum ammo_type : uint8 {
+	AMMO_ARROW = 1,
+	AMMO_DAGGER,   //2
+	AMMO_BULLET,   //3
+	AMMO_SHELL,    //4
+	AMMO_GRENADE,  //5
+	AMMO_SHURIKEN, //6
+	AMMO_KUNAI,     //7
+	AMMO_CANNONBALL,	//8
+	AMMO_THROWWEAPON,	//9
+	MAX_AMMO_TYPE
 };
 
 enum idletime_option {

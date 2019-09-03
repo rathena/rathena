@@ -1,0 +1,93 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2019 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Item Database
+###########################################################################
+#
+# Item Settings
+#
+###########################################################################
+# - Id                      Item ID
+#   AegisName               Server name to reference the item in scripts and lookups, should use no spaces
+#   Name                    Name in English for displaying as output
+#   Type                    Item type (Optional) (Default: IT_ETC)
+#   SubType                 Weapon or Ammo type (Optional) (Default: 0)
+#   Buy                     Buying price. When not specified, becomes double the sell price (Optional) (Default: 0)
+#   Sell                    Selling price. When not specified, becomes half the buy price (Optional) (Default: 0)
+#   Weight                  Item weight. Each 10 is 1 weight (Optional) (Default: 0)
+#   Attack                  Weapon's attack (Optional) (Default: 0)
+#   MagicAttack             Weapon's magic attack (Optional) (Default: 0)
+#   Defense                 Armor's defense (Optional) (Default: 0)
+#   Range                   Weapon's attack range (Optional) (Default: 0)
+#   Slots                   Available slots in item (Optional) (Default: 0)
+#   Job                     Jobs that can equip the item (Optional) (Default: All)
+#   Class                   Upper class types that can equip the item (Optional) (Default: All)
+#   Gender                  Gender that can equip the item (Optional) (Default: SEX_BOTH)
+#   Location                Equipment location (Optional) (Default: None)
+#   WeaponLevel             Weapon level (Optional) (Default: 0)
+#   EquipLevelMin           Minimum required level to equip (Optional) (Default: 0)
+#   EquipLevelMax           Maximum level that can equip (Optional) (Default: 0)
+#   Refineable              If the item can be refined (Optional) (Default: False)
+#   View                    View sprite of an item (Optional) (Default: 0)
+#   BuyingStore             If the item is available for Buyingstores (Optional) (Default: False)
+#   DeadBranch              If the item is a Dead Branch (Optional) (Default: False)
+#   Container               If the item is part of a container (Optional) (Default: False)
+#   GUID                    If the item is a unique stack (Optional) (Default: False)
+#   BindOnEquip             If the item is bound to the character upon equipping (Optional) (Default: False)
+#   DropAnnounce            If the item has a special announcement to self on drop (Optional) (Default: False)
+#   NoConsume               If the item is consumed on use (Optional) (Default: False)
+#   DropEffect              If the item has a special effect when on the ground (Optional) (Default: DROPEFFECT_NONE)
+#   Delay:                  Item use delay (Optional) (Default: null)
+#     Duration                Duration of delay in seconds
+#     Status                  Status Change used to track delay (Optional) (Default: SC_NONE)
+#   Stack:                  Item stack amount (Optional) (Default: null)
+#     Amount                  Maximum amount that can be stacked
+#     Inventory               If the stack is applied to player's inventory (Optional) (Default: False)
+#     Cart                    If the stack is applied to the player's cart (Optional) (Default: False)
+#     Storage                 If the stack is applied to the player's storage (Optional) (Default: False)
+#     GuildStorage            If the stack is applied to the player's guild storage (Optional) (Default: False)
+#   NoUse:                  Conditions when the item is unusable (Optional) (Default: null)
+#     Override                Group level to override these conditions
+#     Sitting                 If the item can not be used while sitting (Optional) (Default: False)
+#   Trade:                  Trade restrictions (Optional) (Default: null)
+#     Override                Group level to override these conditions
+#     NoDrop                  If the item can not be dropped (Optional) (Default: False)
+#     NoTrade                 If the item can not be traded (Optional) (Default: False)
+#     TradePartner            If the item can not be traded to the player's partner (Optional) (Default: False)
+#     NoSell                  If the item can not be sold (Optional) (Default: False)
+#     NoCart                  If the item can not be put in a cart (Optional) (Default: False)
+#     NoStorage               If the item can not be put in a storage (Optional) (Default: False)
+#     NoGuildStorage          If the item can not be put in a guild storage (Optional) (Default: False)
+#     NoMail                  If the item can not be put in a mail (Optional) (Default: False)
+#     NoAuction               If the item can not be put in an auction (Optional) (Default: False)
+#   Script                  Script to execute when the item is used/equipped (Optional) (Default: null)
+#   EquipScript             Script to execute when the item is equipped (Optional) (Default: null)
+#   UnEquipScript           Script to execute when the item is unequipped or when a rental item expires (Optional) (Default: null)
+###########################################################################
+
+Header:
+  Type: ITEM_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/item_db.yml
+    Mode: Prerenewal
+  - Path: db/re/item_db.yml
+    Mode: Renewal
+  - Path: db/import/item_db.yml

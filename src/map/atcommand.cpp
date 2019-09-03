@@ -6218,7 +6218,7 @@ ACMD_FUNC(autolootitem)
 					ShowDebug("Non-existant item %d on autolootitem list (account_id: %d, char_id: %d)", sd->state.autolootid[i], sd->status.account_id, sd->status.char_id);
 					continue;
 				}
-				sprintf(atcmd_output, "'%s'/'%s' {%hu}", item_data->name, item_data->jname, item_data->nameid);
+				sprintf(atcmd_output, "'%s'/'%s' {%hu}", item_data->name.c_str(), item_data->jname.c_str(), item_data->nameid);
 				clif_displaymessage(fd, atcmd_output);
 			}
 		}
@@ -7272,9 +7272,9 @@ ACMD_FUNC(mobinfo)
 			if (pc_isvip(sd)) // Display drop rate increase for VIP
 				droprate += (droprate * battle_config.vip_drop_increase) / 100;
 			if (item_data->slot)
-				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, (float)droprate / 100);
+				sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname.c_str(), item_data->slot, (float)droprate / 100);
 			else
-				sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname, (float)droprate / 100);
+				sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname.c_str(), (float)droprate / 100);
 			strcat(atcmd_output, atcmd_output2);
 			if (++j % 3 == 0) {
 				clif_displaymessage(fd, atcmd_output);
@@ -7305,14 +7305,14 @@ ACMD_FUNC(mobinfo)
 					j++;
 					if (j == 1) {
 						if (item_data->slot)
-							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->jname, item_data->slot, mvppercent);
+							sprintf(atcmd_output2, " %s[%d]  %02.02f%%", item_data->jname.c_str(), item_data->slot, mvppercent);
 						else
-							sprintf(atcmd_output2, " %s  %02.02f%%", item_data->jname, mvppercent);
+							sprintf(atcmd_output2, " %s  %02.02f%%", item_data->jname.c_str(), mvppercent);
 					} else {
 						if (item_data->slot)
-							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname, item_data->slot, mvppercent);
+							sprintf(atcmd_output2, " - %s[%d]  %02.02f%%", item_data->jname.c_str(), item_data->slot, mvppercent);
 						else
-							sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname, mvppercent);
+							sprintf(atcmd_output2, " - %s  %02.02f%%", item_data->jname.c_str(), mvppercent);
 					}
 					strcat(atcmd_output, atcmd_output2);
 				}
@@ -7737,7 +7737,7 @@ ACMD_FUNC(iteminfo)
 	for (i = 0; i < count; i++) {
 		struct item_data * item_data = item_array[i];
 		sprintf(atcmd_output, msg_txt(sd,1277), // Item: '%s'/'%s'[%d] (%hu) Type: %s | Extra Effect: %s
-			item_data->name,item_data->jname,item_data->slot,item_data->nameid,
+			item_data->name.c_str(),item_data->jname.c_str(),item_data->slot,item_data->nameid,
 			(item_data->type != IT_AMMO) ? itemdb_typename((enum item_types)item_data->type) : itemdb_typename_ammo((enum e_item_ammo)item_data->look),
 			(item_data->script==NULL)? msg_txt(sd,1278) : msg_txt(sd,1279) // None / With script
 		);

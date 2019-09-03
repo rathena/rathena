@@ -4,8 +4,12 @@
 #ifndef ITEMDB_HPP
 #define ITEMDB_HPP
 
+#include "../common/database.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
+
+#include "script.hpp"
+#include "status.hpp"
 
 ///Maximum allowed Item ID (range: 1 ~ 65,534)
 #define MAX_ITEMID USHRT_MAX
@@ -205,36 +209,23 @@ enum poison_item_list
 	ITEMID_VENOMBLEED,
 };
 
-///Item No Use List
-enum item_nouse_list
-{
-	NOUSE_SITTING = 0x01,
-};
-
 ///Item job
-enum e_item_job
+enum e_item_job : uint16
 {
+	ITEMJ_NONE        = 0x00,
 	ITEMJ_NORMAL      = 0x01,
 	ITEMJ_UPPER       = 0x02,
 	ITEMJ_BABY        = 0x04,
 	ITEMJ_THIRD       = 0x08,
-	ITEMJ_THIRD_TRANS = 0x10,
+	ITEMJ_THIRD_UPPER = 0x10,
 	ITEMJ_THIRD_BABY  = 0x20,
-};
+	ITEMJ_MAX         = 0xFF,
 
-enum e_item_ammo
-{
-	AMMO_ARROW = 1,
-	AMMO_THROWABLE_DAGGER,
-	AMMO_BULLET,
-	AMMO_SHELL,
-	AMMO_GRENADE,
-	AMMO_SHURIKEN,
-	AMMO_KUNAI,
-	AMMO_CANNONBALL,
-	AMMO_THROWABLE_ITEM, ///Sling items
-
-	MAX_AMMO_TYPE,
+#ifdef RENEWAL
+	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY | ITEMJ_THIRD | ITEMJ_THIRD_UPPER | ITEMJ_THIRD_BABY,
+#else
+	ITEMJ_ALL = ITEMJ_NORMAL | ITEMJ_UPPER | ITEMJ_BABY,
+#endif
 };
 
 #define AMMO_TYPE_ALL ((1<<MAX_AMMO_TYPE)-1)
@@ -743,6 +734,18 @@ enum e_itemshop_restrictions {
 	ISR_BOUND_GUILDLEADER_ONLY = 0x8,
 };
 
+/// Enum for item drop effects
+enum e_item_drop_effect : uint16 {
+	DROPEFFECT_NONE = 0,
+	DROPEFFECT_CLIENT,
+	DROPEFFECT_WHITE_PILLAR,
+	DROPEFFECT_BLUE_PILLAR,
+	DROPEFFECT_YELLOW_PILLAR,
+	DROPEFFECT_PURPLE_PILLAR,
+	DROPEFFECT_ORANGE_PILLAR,
+	DROPEFFECT_MAX
+};
+
 ///Item combo struct
 struct item_combo
 {
@@ -791,16 +794,50 @@ struct s_roulette_db {
 };
 extern struct s_roulette_db rd;
 
+static std::unordered_map<std::string, equip_pos> um_equipnames {
+	{ "HeadLow", EQP_HEAD_LOW },
+	{ "HeadMid", EQP_HEAD_MID },
+	{ "HeadTop", EQP_HEAD_TOP },
+	{ "RightHand", EQP_HAND_R },
+	{ "LeftHand", EQP_HAND_L },
+	{ "Armor", EQP_ARMOR },
+	{ "Shoes", EQP_SHOES },
+	{ "Garment", EQP_GARMENT },
+	{ "RightAccessory", EQP_ACC_R },
+	{ "LeftAccessory", EQP_ACC_L },
+	{ "CostumeHeadTop", EQP_COSTUME_HEAD_TOP },
+	{ "CostumeHeadMid", EQP_COSTUME_HEAD_MID },
+	{ "CostumeHeadLow", EQP_COSTUME_HEAD_LOW },
+	{ "CostumeGarment", EQP_COSTUME_GARMENT },
+	{ "Ammo", EQP_AMMO },
+	{ "ShadowArmor", EQP_SHADOW_ARMOR },
+	{ "ShadowWeapon", EQP_SHADOW_WEAPON },
+	{ "ShadowShield", EQP_SHADOW_SHIELD },
+	{ "ShadowShoes", EQP_SHADOW_SHOES },
+	{ "ShadowRightAccessory", EQP_SHADOW_ACC_R },
+	{ "ShadowLeftAccessory", EQP_SHADOW_ACC_L },
+};
+
+static std::unordered_map<std::string, e_item_job> um_itemjobnames {
+	{ "Normal", ITEMJ_NORMAL },
+	{ "High", ITEMJ_UPPER },
+	{ "Baby", ITEMJ_BABY },
+	{ "Third", ITEMJ_THIRD },
+	{ "ThirdHigh", ITEMJ_THIRD_UPPER },
+	{ "ThirdBaby", ITEMJ_THIRD_BABY },
+};
+
 ///Main item data struct
 struct item_data
 {
 	unsigned short nameid;
-	char name[ITEM_NAME_LENGTH],jname[ITEM_NAME_LENGTH];
+	std::string name, jname;
 
 	//Do not add stuff between value_buy and view_id (see how getiteminfo works)
 	int value_buy;
 	int value_sell;
-	int type;
+	item_types type;
+	int subtype;
 	int maxchance; //For logs, for external game info, for scripts: Max drop chance of this item (e.g. 0.01% , etc.. if it = 0, then monsters don't drop it, -1 denotes items sold in shops only) [Lupus]
 	int sex;
 	int equip;
@@ -818,7 +855,6 @@ struct item_data
 	int matk;
 #endif
 
-	int delay;
 //Lupus: I rearranged order of these fields due to compatibility with ITEMINFO script command
 //		some script commands should be revised as well...
 	uint64 class_base[3];	//Specifies if the base can wear this item (split in 3 indexes per type: 1-1, 2-1, 2-2)
@@ -834,33 +870,46 @@ struct item_data
 		unsigned available : 1;
 		uint32 no_equip;
 		unsigned no_refine : 1;	// [celest]
-		unsigned delay_consume : 2;	// 1 - Signifies items that are not consumed immediately upon double-click; 2 - Signifies items that are not removed on consumption [Skotlex]
-		unsigned trade_restriction : 9;	//Item restrictions mask [Skotlex]
+		unsigned delay_consume;	// 0x1 - Signifies items that are not consumed immediately upon double-click; 0x2 - Signifies items that are not removed on consumption [Skotlex]
+		struct {
+			bool drop, trade, trade_partner, sell, cart, storage, guild_storage, mail, auction;
+		} trade_restriction;	//Item restrictions mask [Skotlex]
 		unsigned autoequip: 1;
-		unsigned buyingstore : 1;
-		unsigned dead_branch : 1; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
-		unsigned group : 1; // As item group container [Cydh]
+		bool buyingstore;
+		bool dead_branch; // As dead branch item. Logged at `branchlog` table and cannot be used at 'nobranch' mapflag [Cydh]
+		bool group; // As item group container [Cydh]
 		unsigned guid : 1; // This item always be attached with GUID and make it as bound item! [Cydh]
-		unsigned broadcast : 1; ///< Will be broadcasted if someone obtain the item [Cydh]
+		bool broadcast; ///< Will be broadcasted if someone obtain the item [Cydh]
 		bool bindOnEquip; ///< Set item as bound when equipped
-		uint8 dropEffect; ///< Drop Effect Mode
+		e_item_drop_effect dropEffect; ///< Drop Effect Mode
 	} flag;
 	struct {// item stacking limitation
-		unsigned short amount;
-		unsigned int inventory:1;
-		unsigned int cart:1;
-		unsigned int storage:1;
-		unsigned int guildstorage:1;
+		uint16 amount;
+		bool inventory, cart, storage, guild_storage;
 	} stack;
-	struct {// used by item_nouse.txt
-		unsigned int flag;
-		unsigned short override;
+	struct {
+		uint16 override;
+		bool sitting;
 	} item_usage;
 	short gm_lv_trade_override;	//GM-level to override trade_restriction
 	/* bugreport:309 */
 	struct item_combo **combos;
 	unsigned char combos_count;
-	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+	struct {
+		uint32 duration;
+		sc_type sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+	} delay;
+
+	~item_data() {
+		if (this->script)
+			script_free_code(this->script);
+
+		if (this->equip_script)
+			script_free_code(this->equip_script);
+
+		if (this->unequip_script)
+			script_free_code(this->unequip_script);
+	}
 };
 
 // Struct for item random option [Secret]
@@ -888,6 +937,18 @@ struct s_random_opt_group {
 	uint16 total;
 };
 
+class ItemDatabase : public TypesafeYamlDatabase<uint32, item_data> {
+public:
+	ItemDatabase() : TypesafeYamlDatabase("ITEM_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+extern ItemDatabase item_db;
+
 struct item_data* itemdb_searchname(const char *name);
 struct item_data* itemdb_search_aegisname( const char *str );
 int itemdb_searchname_array(struct item_data** data, int size, const char *str);
@@ -896,6 +957,7 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_name(n) itemdb_search(n)->name
 #define itemdb_jname(n) itemdb_search(n)->jname
 #define itemdb_type(n) itemdb_search(n)->type
+#define itemdb_subtype(n) itemdb_search(n)->subtype
 #define itemdb_atk(n) itemdb_search(n)->atk
 #define itemdb_def(n) itemdb_search(n)->def
 #define itemdb_look(n) itemdb_search(n)->look

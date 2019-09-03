@@ -2484,8 +2484,8 @@ struct script_code* parse_script(const char *src,const char *file,int line,int o
 	memset(&syntax,0,sizeof(syntax));
 	if(first){
 		add_buildin_func();
-		read_constdb();
-		script_hardcoded_constants();
+		//read_constdb(); // Why here?
+		//script_hardcoded_constants();
 		first=false;
 	}
 
@@ -4751,6 +4751,8 @@ void do_init_script(void) {
 	next_id = 0;
 
 	mapreg_init();
+	read_constdb();
+	script_hardcoded_constants();
 }
 
 void script_reload(void) {
@@ -8787,7 +8789,7 @@ BUILDIN_FUNC(getequipname)
 
 	item = sd->inventory_data[i];
 	if( item != 0 )
-		script_pushstrcopy(st,item->jname);
+		script_pushstrcopy(st,item->jname.c_str());
 	else
 		script_pushconststr(st,"");
 
@@ -13694,7 +13696,7 @@ BUILDIN_FUNC(getitemname)
 	}
 	item_name=(char *)aMalloc(ITEM_NAME_LENGTH*sizeof(char));
 
-	memcpy(item_name, i_data->jname, ITEM_NAME_LENGTH);
+	memcpy(item_name, i_data->jname.c_str(), ITEM_NAME_LENGTH);
 	script_pushstr(st,item_name);
 	return SCRIPT_CMD_SUCCESS;
 }

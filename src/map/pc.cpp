@@ -750,7 +750,7 @@ bool pc_can_sell_item(struct map_session_data *sd, struct item *item, enum npc_s
 				return true;
 			else if (!item->bound) {
 				struct item_data *itd = itemdb_search(item->nameid);
-				if (itd && itd->flag.trade_restriction&8 && battle_config.allow_bound_sell&ISR_SELLABLE)
+				if (itd && itd->flag.trade_restriction.sell && battle_config.allow_bound_sell&ISR_SELLABLE)
 					return true;
 			}
 			break;
@@ -872,7 +872,7 @@ int pc_equippoint_sub(struct map_session_data *sd,struct item_data* id){
 		return 0; //Not equippable by players.
 
 	ep = id->equip;
-	if(id->look == W_DAGGER	|| id->look == W_1HSWORD || id->look == W_1HAXE) {
+	if(id->subtype == W_DAGGER	|| id->subtype == W_1HSWORD || id->subtype == W_1HAXE) {
 		if(pc_checkskill(sd,AS_LEFT) > 0 || (sd->class_&MAPID_UPPERMASK) == MAPID_ASSASSIN || (sd->class_&MAPID_UPPERMASK) == MAPID_KAGEROUOBORO) { //Kagerou and Oboro can dual wield daggers. [Rytech]
 			if (ep == EQP_WEAPON)
 				return EQP_ARMS;
@@ -982,14 +982,14 @@ void pc_setequipindex(struct map_session_data *sd)
 
 			if (sd->inventory.u.items_inventory[i].equip & EQP_HAND_R) {
 				if (sd->inventory_data[i])
-					sd->weapontype1 = sd->inventory_data[i]->look;
+					sd->weapontype1 = sd->inventory_data[i]->subtype;
 				else
 					sd->weapontype1 = 0;
 			}
 
 			if( sd->inventory.u.items_inventory[i].equip & EQP_HAND_L ) {
 				if( sd->inventory_data[i] && sd->inventory_data[i]->type == IT_WEAPON )
-					sd->weapontype2 = sd->inventory_data[i]->look;
+					sd->weapontype2 = sd->inventory_data[i]->subtype;
 				else
 					sd->weapontype2 = 0;
 			}
@@ -1205,7 +1205,7 @@ static bool pc_isItemClass (struct map_session_data *sd, struct item_data* item)
 		if (item->class_upper&ITEMJ_THIRD && sd->class_&JOBL_THIRD && !(sd->class_&(JOBL_UPPER|JOBL_BABY)))
 			break;
 		//trans-third classes
-		if (item->class_upper&ITEMJ_THIRD_TRANS && sd->class_&JOBL_THIRD && sd->class_&JOBL_UPPER)
+		if (item->class_upper&ITEMJ_THIRD_UPPER && sd->class_&JOBL_THIRD && sd->class_&JOBL_UPPER)
 			break;
 		//third-baby classes
 		if (item->class_upper&ITEMJ_THIRD_BABY && sd->class_&JOBL_THIRD && sd->class_&JOBL_BABY)
@@ -1247,14 +1247,14 @@ uint8 pc_isequip(struct map_session_data *sd,int n)
 		return ITEM_EQUIP_ACK_FAIL;
 
 	if (item->equip&EQP_AMMO) {
-		switch (item->look) {
+		switch (item->subtype) {
 			case AMMO_ARROW:
 				if (battle_config.ammo_check_weapon && sd->status.weapon != W_BOW && sd->status.weapon != W_MUSICAL && sd->status.weapon != W_WHIP) {
 					clif_msg(sd, ITEM_NEED_BOW);
 					return ITEM_EQUIP_ACK_FAIL;
 				}
 				break;
-			case AMMO_THROWABLE_DAGGER:
+			case AMMO_DAGGER:
 				if (!pc_checkskill(sd, AS_VENOMKNIFE))
 					return ITEM_EQUIP_ACK_FAIL;
 				break;
@@ -5102,7 +5102,7 @@ bool pc_isUseitem(struct map_session_data *sd,int n)
 	)
 		return false;
 
-	if( (item->item_usage.flag&NOUSE_SITTING) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
+	if( (item->item_usage.sitting) && (pc_issit(sd) == 1) && (pc_get_group_level(sd) < item->item_usage.override) ) {
 		clif_msg(sd,ITEM_NOUSE_SITTING);
 		return false; // You cannot use this item while sitting.
 	}
@@ -5299,7 +5299,7 @@ int pc_useitem(struct map_session_data *sd,int n)
 	if( id->flag.delay_consume && ( sd->ud.skilltimer != INVALID_TIMER /*|| !status_check_skilluse(&sd->bl, &sd->bl, ALL_RESURRECTION, 0)*/ ) )
 		return 0;
 
-	if( id->delay > 0 && !pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && pc_itemcd_check(sd, id, tick, n))
+	if( id->delay.duration > 0 && !pc_has_permission(sd,PC_PERM_ITEM_UNCONDITIONAL) && pc_itemcd_check(sd, id, tick, n))
 		return 0;
 
 	/* on restricted maps the item is consumed but the effect is not used */
@@ -5564,7 +5564,7 @@ int pc_show_steal(struct block_list *bl,va_list ap)
 	if((item=itemdb_exists(itemid))==NULL)
 		sprintf(output,"%s stole an Unknown Item (id: %i).",sd->status.name, itemid);
 	else
-		sprintf(output,"%s stole %s.",sd->status.name,item->jname);
+		sprintf(output,"%s stole %s.",sd->status.name,item->jname.c_str());
 	clif_displaymessage( ((struct map_session_data *)bl)->fd, output);
 
 	return 0;
@@ -12154,7 +12154,7 @@ uint8 pc_itemcd_add(struct map_session_data *sd, struct item_data *id, t_tick ti
 			sd->item_delay[i].nameid = id->nameid;
 		}
 		if( !(id->nameid == ITEMID_REINS_OF_MOUNT && sd->sc.option&(OPTION_WUGRIDER|OPTION_RIDING|OPTION_DRAGON|OPTION_MADOGEAR)) )
-			sd->item_delay[i].tick = tick + sd->inventory_data[n]->delay;
+			sd->item_delay[i].tick = tick + sd->inventory_data[n]->delay.duration;
 	} else {// should not happen
 		ShowError("pc_itemcd_add: Exceeded item delay array capacity! (nameid=%hu, char_id=%d)\n", id->nameid, sd->status.char_id);
 	}
@@ -12184,17 +12184,17 @@ uint8 pc_itemcd_check(struct map_session_data *sd, struct item_data *id, t_tick 
 	nullpo_retr(0, id);
 
 	// Do normal delay assignment
-	if (id->delay_sc <= SC_NONE || id->delay_sc >= SC_MAX || !(sc = &sd->sc))
+	if (id->delay.sc <= SC_NONE || id->delay.sc >= SC_MAX || !(sc = &sd->sc))
 		return pc_itemcd_add(sd, id, tick, n);
 
 	// Send reply of delay remains
-	if (sc->data[id->delay_sc]) {
-		const struct TimerData *timer = get_timer(sc->data[id->delay_sc]->timer);
+	if (sc->data[id->delay.sc]) {
+		const struct TimerData *timer = get_timer(sc->data[id->delay.sc]->timer);
 		clif_msg_value(sd, ITEM_REUSE_LIMIT, (int)(timer ? DIFF_TICK(timer->tick, tick) / 1000 : 99));
 		return 1;
 	}
 
-	sc_start(&sd->bl, &sd->bl, (sc_type)id->delay_sc, 100, id->nameid, id->delay);
+	sc_start(&sd->bl, &sd->bl, id->delay.sc, 100, id->nameid, id->delay.duration);
 	return 0;
 }
 

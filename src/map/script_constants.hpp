@@ -372,6 +372,7 @@
 	/* sex */
 	export_constant(SEX_FEMALE);
 	export_constant(SEX_MALE);
+	export_constant(SEX_BOTH);
 
 	/* broadcasts */
 	export_constant(BC_ALL);
@@ -3809,15 +3810,17 @@
 	export_constant(MAX_WEAPON_TYPE_ALL);
 
 	/* ammunition types */
-	export_constant(A_ARROW);
-	export_constant(A_DAGGER);
-	export_constant(A_BULLET);
-	export_constant(A_SHELL);
-	export_constant(A_GRENADE);
-	export_constant(A_SHURIKEN);
-	export_constant(A_KUNAI);
-	export_constant(A_CANNONBALL);
-	export_constant(A_THROWWEAPON);
+	/* Send deprecation notice and temporarily replace with new constant value. */
+	export_deprecated_constant3("A_ARROW", AMMO_ARROW, "AMMO_ARROW");
+	export_deprecated_constant3("A_DAGGER", AMMO_DAGGER, "AMMO_DAGGER");
+	export_deprecated_constant3("A_BULLET", AMMO_BULLET, "AMMO_BULLET");
+	export_deprecated_constant3("A_SHELL", AMMO_SHELL, "AMMO_SHELL");
+	export_deprecated_constant3("A_GRENADE", AMMO_GRENADE, "AMMO_GRENADE");
+	export_deprecated_constant3("A_SHURIKEN", AMMO_SHURIKEN, "AMMO_SHURIKEN");
+	export_deprecated_constant3("A_KUNAI", AMMO_KUNAI, "AMMO_KUNAI");
+	export_deprecated_constant3("A_CANNONBALL", AMMO_CANNONBALL, "AMMO_CANNONBALL");
+	export_deprecated_constant3("A_THROWWEAPON", AMMO_THROWWEAPON, "AMMO_THROWWEAPON");
+	export_constant(MAX_AMMO_TYPE);
 
 	/* monsterinfo types */
 	export_constant(MOB_NAME);
@@ -7301,6 +7304,16 @@
 	export_constant(CPC_NAME);
 	export_constant(CPC_CHAR);
 	export_constant(CPC_ACCOUNT);
+
+	/* item drop effects */
+	export_constant(DROPEFFECT_NONE);
+	export_constant(DROPEFFECT_CLIENT);
+	export_constant(DROPEFFECT_WHITE_PILLAR);
+	export_constant(DROPEFFECT_BLUE_PILLAR);
+	export_constant(DROPEFFECT_YELLOW_PILLAR);
+	export_constant(DROPEFFECT_PURPLE_PILLAR);
+	export_constant(DROPEFFECT_ORANGE_PILLAR);
+	export_constant(DROPEFFECT_MAX);
 
 	#undef export_constant
 	#undef export_constant2
