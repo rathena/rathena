@@ -1147,7 +1147,7 @@ struct item_data* itemdb_exists(unsigned short nameid) {
 }
 
 /// Returns name type of ammunition [Cydh]
-const char *itemdb_typename_ammo (enum e_item_ammo ammo) {
+const char *itemdb_typename_ammo (e_ammo_type ammo) {
 	switch (ammo) {
 		case AMMO_ARROW:		return "Arrow";
 		case AMMO_DAGGER:		return "Throwable Dagger";

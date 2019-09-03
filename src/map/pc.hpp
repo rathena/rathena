@@ -804,7 +804,7 @@ enum weapon_type {
 
 #define WEAPON_TYPE_ALL ((1<<MAX_WEAPON_TYPE)-1)
 
-enum ammo_type : uint8 {
+enum e_ammo_type : uint8 {
 	AMMO_ARROW = 1,
 	AMMO_DAGGER,   //2
 	AMMO_BULLET,   //3

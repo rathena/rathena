@@ -138,7 +138,7 @@ struct skill_condition {
 	int16 sp_rate;							 /// SP cost (%)
 	uint32 zeny;							 /// Zeny cost
 	uint32 weapon;							 /// Weapon type. Combined bitmask of enum weapon_type (1<<weapon)
-	uint16 ammo;							 /// Ammo type. Combine bitmask of enum ammo_type (1<<ammo)
+	uint16 ammo;							 /// Ammo type. Combine bitmask of enum e_ammo_type (1<<ammo)
 	int8 ammo_qty;							 /// Amount of ammo
 	uint8 state;							 /// State/condition. @see enum e_require_state
 	int8 spiritball;						 /// Spiritball cost
@@ -159,7 +159,7 @@ struct s_skill_require {
 	int sp_rate[MAX_SKILL_LEVEL];			 /// SP cost (%)
 	int zeny[MAX_SKILL_LEVEL];				 /// Zeny cost
 	uint32 weapon;							 /// Weapon type. Combined bitmask of enum weapon_type (1<<weapon)
-	uint16 ammo;							 /// Ammo type. Combine bitmask of enum ammo_type (1<<ammo)
+	uint16 ammo;							 /// Ammo type. Combine bitmask of enum e_ammo_type (1<<ammo)
 	int ammo_qty[MAX_SKILL_LEVEL];			 /// Amount of ammo
 	uint8 state;							 /// State/condition. @see enum e_require_state
 	int spiritball[MAX_SKILL_LEVEL];		 /// Spiritball cost

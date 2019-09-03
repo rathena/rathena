@@ -974,7 +974,7 @@ struct item_data* itemdb_exists(unsigned short nameid);
 #define itemdb_autoequip(n) (itemdb_search(n)->flag.autoequip)
 #define itemdb_dropeffect(n) (itemdb_search(n)->flag.dropEffect)
 const char* itemdb_typename(enum item_types type);
-const char *itemdb_typename_ammo (enum e_item_ammo ammo);
+const char *itemdb_typename_ammo (e_ammo_type ammo);
 bool itemdb_is_spellbook2(unsigned short nameid);
 
 struct s_item_group_entry *itemdb_get_randgroupitem(uint16 group_id, uint8 sub_group);
