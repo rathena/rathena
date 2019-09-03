@@ -5534,9 +5534,12 @@ ACMD_FUNC(dropall)
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
 				pc_equipswitch_remove(sd, i);
-				if(pc_dropitem(sd, i, sd->inventory.u.items_inventory[i].amount))
-					count += sd->inventory.u.items_inventory[i].amount;
-				else count2 += sd->inventory.u.items_inventory[i].amount;
+
+				int amount = sd->inventory.u.items_inventory[i].amount;
+
+				if(pc_dropitem(sd, i, amount))
+					count += amount;
+				else count2 += amount;
 			}
 		}
 	}
