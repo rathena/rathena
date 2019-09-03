@@ -8,6 +8,7 @@
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // ITEM_NAME_LENGTH
 
+#include "pc.hpp"
 #include "script.hpp"
 #include "status.hpp"
 
