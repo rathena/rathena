@@ -92,7 +92,7 @@ std::unordered_map<weapon_type, std::string> um_weapontypenames{
 	{ W_2HSTAFF, "W_2HSTAFF" },
 };
 
-std::unordered_map<ammo_type, std::string> um_ammotypenames{
+std::unordered_map<e_ammo_type, std::string> um_ammotypenames{
 	{ AMMO_ARROW, "AMMO_ARROW" },
 	{ AMMO_DAGGER, "AMMO_DAGGER" },
 	{ AMMO_BULLET, "AMMO_BULLET" },
@@ -985,7 +985,7 @@ static size_t itemdb_read_db(const char* file, std::ofstream &out) {
 		if (type == IT_WEAPON && subtype)
 			emitter << YAML::Key << "SubType" << YAML::Value << um_weapontypenames.find(static_cast<weapon_type>(subtype))->second;
 		else if (type == IT_AMMO && subtype)
-			emitter << YAML::Key << "SubType" << YAML::Value << um_ammotypenames.find(static_cast<ammo_type>(subtype))->second;
+			emitter << YAML::Key << "SubType" << YAML::Value << um_ammotypenames.find(static_cast<e_ammo_type>(subtype))->second;
 
 		if (atoi(str[4]) > 0)
 			emitter << YAML::Key << "Buy" << YAML::Value << atoi(str[4]);
