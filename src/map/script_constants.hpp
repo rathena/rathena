@@ -3820,6 +3820,16 @@
 	export_deprecated_constant3("A_KUNAI", AMMO_KUNAI, "AMMO_KUNAI");
 	export_deprecated_constant3("A_CANNONBALL", AMMO_CANNONBALL, "AMMO_CANNONBALL");
 	export_deprecated_constant3("A_THROWWEAPON", AMMO_THROWWEAPON, "AMMO_THROWWEAPON");
+
+	export_constant(AMMO_ARROW);
+	export_constant(AMMO_DAGGER);
+	export_constant(AMMO_BULLET);
+	export_constant(AMMO_SHELL);
+	export_constant(AMMO_GRENADE);
+	export_constant(AMMO_SHURIKEN);
+	export_constant(AMMO_KUNAI);
+	export_constant(AMMO_CANNONBALL);
+	export_constant(AMMO_THROWWEAPON);
 	export_constant(MAX_AMMO_TYPE);
 
 	/* monsterinfo types */
