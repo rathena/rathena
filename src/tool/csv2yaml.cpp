@@ -1,12 +1,12 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <iostream>
 #include <fstream>
 #include <functional>
-#include <vector>
-#include <unordered_map>
+#include <iostream>
 #include <locale>
+#include <unordered_map>
+#include <vector>
 
 #ifdef WIN32
 	#include <conio.h>
@@ -26,7 +26,6 @@
 #include "../common/utilities.hpp"
 
 // Only for constants - do not use functions of it or linking will fail
-#include "../map/itemdb.hpp"
 #include "../map/map.hpp"
 #include "../map/mob.hpp" // MAX_MVP_DROP and MAX_MOB_DROP
 #include "../map/pc.hpp"
@@ -50,7 +49,7 @@ int getch( void ){
 // Required constant and structure definitions
 #define MAX_GUILD_SKILL_REQUIRE 5
 
-std::unordered_map<item_types, std::string> um_itemtypenames{
+std::unordered_map<uint8, std::string> um_itemtypenames {
 	{ IT_HEALING, "IT_HEALING" },
 	{ IT_USABLE, "IT_USABLE" },
 	{ IT_ETC, "IT_ETC" },
@@ -65,7 +64,7 @@ std::unordered_map<item_types, std::string> um_itemtypenames{
 	{ IT_CASH, "IT_CASH" },
 };
 
-std::unordered_map<weapon_type, std::string> um_weapontypenames{
+std::unordered_map<uint8, std::string> um_weapontypenames {
 	{ W_FIST, "W_FIST" },
 	{ W_DAGGER, "W_DAGGER" },
 	{ W_1HSWORD, "W_1HSWORD" },
@@ -92,7 +91,7 @@ std::unordered_map<weapon_type, std::string> um_weapontypenames{
 	{ W_2HSTAFF, "W_2HSTAFF" },
 };
 
-std::unordered_map<e_ammo_type, std::string> um_ammotypenames{
+std::unordered_map<uint8, std::string> um_ammotypenames {
 	{ AMMO_ARROW, "AMMO_ARROW" },
 	{ AMMO_DAGGER, "AMMO_DAGGER" },
 	{ AMMO_BULLET, "AMMO_BULLET" },
@@ -104,27 +103,27 @@ std::unordered_map<e_ammo_type, std::string> um_ammotypenames{
 	{ AMMO_THROWWEAPON, "AMMO_THROWWEAPON" },
 };
 
-struct s_item_flag {
+struct s_item_flag_csv2yaml {
 	bool buyingstore, dead_branch, group, guid, broadcast, bindOnEquip, delay_consume;
 	e_item_drop_effect dropEffect;
 };
 
-struct s_item_delay {
+struct s_item_delay_csv2yaml {
 	uint32 delay;
 	std::string sc;
 };
 
-struct s_item_stack {
+struct s_item_stack_csv2yaml {
 	uint16 amount;
 	bool inventory, cart, storage, guild_storage;
 };
 
-struct s_item_nouse {
+struct s_item_nouse_csv2yaml {
 	uint16 override;
 	bool sitting;
 };
 
-struct s_item_trade {
+struct s_item_trade_csv2yaml {
 	uint16 override;
 	bool drop, trade, trade_partner, sell, cart, storage, guild_storage, mail, auction;
 };
@@ -142,11 +141,11 @@ static size_t itemdb_read_db(const char *file, std::ofstream &out);
 
 // Pre-loaded databases for item database merge
 std::unordered_map<int, bool> item_buyingstore;
-std::unordered_map<int, s_item_flag> item_flag;
-std::unordered_map<int, s_item_delay> item_delay;
-std::unordered_map<int, s_item_stack> item_stack;
-std::unordered_map<int, s_item_nouse> item_nouse;
-std::unordered_map<int, s_item_trade> item_trade;
+std::unordered_map<int, s_item_flag_csv2yaml> item_flag;
+std::unordered_map<int, s_item_delay_csv2yaml> item_delay;
+std::unordered_map<int, s_item_stack_csv2yaml> item_stack;
+std::unordered_map<int, s_item_nouse_csv2yaml> item_nouse;
+std::unordered_map<int, s_item_trade_csv2yaml> item_trade;
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -761,7 +760,7 @@ static bool itemdb_read_buyingstore(char* fields[], int columns, int current) {
 }
 
 static bool itemdb_read_flag(char* fields[], int columns, int current) {
-	s_item_flag item = { 0 };
+	s_item_flag_csv2yaml item = { 0 };
 	uint16 flag = abs(atoi(fields[1]));
 
 	if (flag & 1)
@@ -794,7 +793,7 @@ static bool itemdb_read_flag(char* fields[], int columns, int current) {
 }
 
 static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
-	s_item_delay item = { 0 };
+	s_item_delay_csv2yaml item = { 0 };
 
 	item.delay = atoi(str[1]);
 
@@ -806,7 +805,7 @@ static bool itemdb_read_itemdelay(char* str[], int columns, int current) {
 }
 
 static bool itemdb_read_stack(char* fields[], int columns, int current) {
-	s_item_stack item = { 0 };
+	s_item_stack_csv2yaml item = { 0 };
 
 	item.amount = atoi(fields[1]);
 
@@ -826,7 +825,7 @@ static bool itemdb_read_stack(char* fields[], int columns, int current) {
 }
 
 static bool itemdb_read_nouse(char* fields[], int columns, int current) {
-	s_item_nouse item = { 0 };
+	s_item_nouse_csv2yaml item = { 0 };
 
 	item.sitting = "true";
 	item.override = atoi(fields[2]);
@@ -836,7 +835,7 @@ static bool itemdb_read_nouse(char* fields[], int columns, int current) {
 }
 
 static bool itemdb_read_itemtrade(char* str[], int columns, int current) {
-	s_item_trade item = { 0 };
+	s_item_trade_csv2yaml item = { 0 };
 	int flag = atoi(str[1]);
 
 	if (flag & 1)
@@ -981,11 +980,11 @@ static size_t itemdb_read_db(const char* file, std::ofstream &out) {
 
 		int type = atoi(str[3]), subtype = atoi(str[18]);
 
-		emitter << YAML::Key << "Type" << YAML::Value << um_itemtypenames.find(static_cast<item_types>(type))->second;
+		emitter << YAML::Key << "Type" << YAML::Value << um_itemtypenames.find(type)->second;
 		if (type == IT_WEAPON && subtype)
-			emitter << YAML::Key << "SubType" << YAML::Value << um_weapontypenames.find(static_cast<weapon_type>(subtype))->second;
+			emitter << YAML::Key << "SubType" << YAML::Value << um_weapontypenames.find(subtype)->second;
 		else if (type == IT_AMMO && subtype)
-			emitter << YAML::Key << "SubType" << YAML::Value << um_ammotypenames.find(static_cast<e_ammo_type>(subtype))->second;
+			emitter << YAML::Key << "SubType" << YAML::Value << um_ammotypenames.find(subtype)->second;
 
 		if (atoi(str[4]) > 0)
 			emitter << YAML::Key << "Buy" << YAML::Value << atoi(str[4]);
@@ -1052,7 +1051,7 @@ static size_t itemdb_read_db(const char* file, std::ofstream &out) {
 			} else {
 				emitter << YAML::Key << "Class";
 				emitter << YAML::Value << YAML::BeginMap;
-				for (const auto & it : um_itemjobnames) {
+				for (const auto &it : um_itemjobnames) {
 					if (it.second & temp_class)
 						emitter << YAML::Key << it.first << YAML::Value << "true";
 				}
