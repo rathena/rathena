@@ -844,7 +844,7 @@ bool storage_guild_additem2(struct s_storage* stor, struct item* item, int amoun
 				// Set the amount, make it fit with max amount
 				amount = min(amount, ((id->stack.guild_storage) ? id->stack.amount : MAX_AMOUNT) - stor->u.items_guild[i].amount);
 				if (amount != item->amount)
-					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \"" CL_WHITE "%s" CL_RESET "\" (%d). '" CL_WHITE "%d" CL_RESET "' -> '" CL_WHITE"%d" CL_RESET "'.\n", id->name, id->nameid, item->amount, amount);
+					ShowWarning("storage_guild_additem2: Stack limit reached! Altered amount of item \"" CL_WHITE "%s" CL_RESET "\" (%d). '" CL_WHITE "%d" CL_RESET "' -> '" CL_WHITE"%d" CL_RESET "'.\n", id->name.c_str(), id->nameid, item->amount, amount);
 				stor->u.items_guild[i].amount += amount;
 				stor->dirty = true;
 				return true;
