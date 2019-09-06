@@ -37,6 +37,8 @@
 #include "homunculus.hpp"
 #include "instance.hpp"
 #include "intif.hpp"
+#include "item_upgrade.hpp"
+#include "item_synthesis.hpp"
 #include "log.hpp"
 #include "mapreg.hpp"
 #include "mercenary.hpp"
@@ -5018,6 +5020,8 @@ void do_final(void){
 	do_final_channel(); //should be called after final guild
 	do_final_vending();
 	do_final_buyingstore();
+	do_final_item_upgrade();
+	do_final_item_synthesis();
 	do_final_path();
 
 	map_db->destroy(map_db, map_db_final);
@@ -5342,6 +5346,8 @@ int do_init(int argc, char *argv[])
 	do_init_elemental();
 	do_init_quest();
 	do_init_achievement();
+	do_init_item_upgrade();
+	do_init_item_synthesis();
 	do_init_npc();
 	do_init_unit();
 	do_init_battleground();

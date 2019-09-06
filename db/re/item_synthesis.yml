@@ -1,0 +1,3731 @@
+###########################################################################
+# 
+# Item Synthesis Database
+#
+# This feature need a sync client file: LapineDdukDDakBox.lub
+#
+###########################################################################
+# - Id:                 # (int) Item ID of synthesis box
+#   NeedRefine:         # (int) Minimum refine level for source item
+#   SourceNeeded:       # (int) Number of item sets (in SourceItem) must be selected
+#   SourceItem:         # List of item required
+#     - Item:           # (int) Item ID for source
+#     - Amount:         # (int) Item amount will be consumed
+#   Reward:             # (string) Script on synthesis success
+###########################################################################
+
+Header:
+  Type: ITEM_SYNTHESIS_DB
+  Version: 1
+
+Body:
+- Id: 100060 # EnchantStone_Recipe_4m
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 31139
+    Amount: 1
+  - Item: 31606
+    Amount: 1
+  - Item: 31249
+    Amount: 1
+  - Item: 20174
+    Amount: 1
+  - Item: 20098
+    Amount: 1
+  - Item: 20395
+    Amount: 1
+  - Item: 20175
+    Amount: 1
+  - Item: 31586
+    Amount: 1
+  - Item: 31565
+    Amount: 1
+  - Item: 31693
+    Amount: 1
+  - Item: 19990
+    Amount: 1
+  - Item: 31440
+    Amount: 1
+  - Item: 31481
+    Amount: 1
+  - Item: 31382
+    Amount: 1
+  - Item: 31624
+    Amount: 1
+  - Item: 20486
+    Amount: 1
+  - Item: 20257
+    Amount: 1
+  - Item: 31600
+    Amount: 1
+  - Item: 31512
+    Amount: 1
+  - Item: 31614
+    Amount: 1
+  - Item: 20519
+    Amount: 1
+  Reward: getgroupitem(IG_EnchantStone_Recipe_4m);
+- Id: 100053 # Piercing_Mix
+  SourceNeeded: 2
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24156
+    Amount: 1
+  - Item: 24157
+    Amount: 1
+  - Item: 24158
+    Amount: 1
+  - Item: 24159
+    Amount: 1
+  - Item: 24160
+    Amount: 1
+  - Item: 24161
+    Amount: 1
+  - Item: 24162
+    Amount: 1
+  - Item: 24163
+    Amount: 1
+  - Item: 24164
+    Amount: 1
+  - Item: 24165
+    Amount: 1
+  Reward: getgroupitem(IG_Piercing_Shadow_Box);
+- Id: 100058 # Hasty_Mix
+  SourceNeeded: 2
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24320
+    Amount: 1
+  - Item: 24197
+    Amount: 1
+  - Item: 24196
+    Amount: 1
+  Reward: getitem(24386,1);
+- Id: 100010 # PerfectSize_Mix
+  SourceNeeded: 3
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24075
+    Amount: 1
+  - Item: 24076
+    Amount: 1
+  - Item: 24077
+    Amount: 1
+  - Item: 24072
+    Amount: 1
+  - Item: 24073
+    Amount: 1
+  - Item: 24074
+    Amount: 1
+  Reward: getitem(24426,1);
+- Id: 100011 # MagicPiercing_Mix
+  SourceNeeded: 2
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24170
+    Amount: 1
+  - Item: 24171
+    Amount: 1
+  - Item: 24172
+    Amount: 1
+  - Item: 24173
+    Amount: 1
+  - Item: 24174
+    Amount: 1
+  - Item: 24175
+    Amount: 1
+  - Item: 24176
+    Amount: 1
+  - Item: 24177
+    Amount: 1
+  - Item: 24178
+    Amount: 1
+  - Item: 24179
+    Amount: 1
+  Reward: getitem(24436,1);
+- Id: 100000 # IDTest_Special
+  SourceNeeded: 3
+  NeedRefine: 0
+  SourceItem:
+  - Item: 909
+    Amount: 1
+  - Item: 914
+    Amount: 1
+  - Item: 935
+    Amount: 1
+  Reward: getitem(1750,10);
+- Id: 23967 # EnchantStone_Recipe_9m
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 19960
+    Amount: 1
+  - Item: 19959
+    Amount: 1
+  - Item: 31437
+    Amount: 1
+  - Item: 31396
+    Amount: 1
+  - Item: 31439
+    Amount: 1
+  - Item: 31432
+    Amount: 1
+  - Item: 31314
+    Amount: 1
+  - Item: 31460
+    Amount: 1
+  - Item: 31433
+    Amount: 1
+  - Item: 31498
+    Amount: 1
+  - Item: 31463
+    Amount: 1
+  - Item: 31489
+    Amount: 1
+  - Item: 31490
+    Amount: 1
+  - Item: 31529
+    Amount: 1
+  - Item: 20171
+    Amount: 1
+  - Item: 20482
+    Amount: 1
+  - Item: 20033
+    Amount: 1
+  - Item: 31139
+    Amount: 1
+  - Item: 31606
+    Amount: 1
+  - Item: 31249
+    Amount: 1
+  Reward: getgroupitem(IG_EnchantStone_Recipe_9m);
+- Id: 23818 # Bs_Item_M_S_2
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 10
+  - Item: 25508
+    Amount: 150
+  Reward: getitem(5375,1); // Orc Hero Hea﻿ddress
+- Id: 23819 # Bs_Item_M_S_8
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 10
+  - Item: 7510
+    Amount: 150
+  Reward: getitem(5548,1); // Crimson Rose﻿
+- Id: 23820 # Bs_Item_M_S_10
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 10
+  - Item: 7754
+    Amount: 150
+  Reward: getitem(5476,1); // Grand Peco﻿ Headdress﻿
+- Id: 23821 # Bs_Item_M_S_11
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 10
+  - Item: 7020
+    Amount: 150
+  Reward: getitem(5214,1); // Moonlight Flower Hat
+- Id: 23822 # Bs_Item_M_S_34
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 10
+  - Item: 7450
+    Amount: 150
+  Reward: getitem(5936,1); // 8 Forms Purgatory Wing
+- Id: 23823 # Bs_Item_M_S_41
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 10
+  - Item: 7020
+    Amount: 150
+  Reward: getitem(18528,1); // Tare Neko Cru [1]﻿
+- Id: 23824 # Bs_Item_M_S_42
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 10
+  - Item: 7109
+    Amount: 50
+  Reward: getitem(5859,1); // Worldcup﻿ Hat of Honor﻿ [1]﻿
+- Id: 23825 # Bs_Item_M_S_43
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 10
+  - Item: 751
+    Amount: 30
+  Reward: getitem(18522,1); // Evil Marching Hat [1﻿]
+- Id: 23826 # Bs_Item_M_S_44
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 10
+  - Item: 7036
+    Amount: 120
+  Reward: getitem(5498,1); // Vagabond Wolf﻿﻿ Hat [1]
+- Id: 23827 # Bs_Sha_M_S_1
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 10
+  - Item: 7513
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_1);
+- Id: 23828 # Bs_Sha_M_S_17
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 10
+  - Item: 751
+    Amount: 10
+  Reward: getgroupitem(IG_Bs_Sha_M_S_17);
+- Id: 23829 # Bs_Sha_M_S_18
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 10
+  - Item: 750
+    Amount: 10
+  Reward: getgroupitem(IG_Bs_Sha_M_S_18);
+- Id: 23830 # Bs_Sha_M_S_19
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 10
+  - Item: 7109
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_19);
+- Id: 23831 # Bs_Sha_M_S_20
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 10
+  - Item: 7019
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_20);
+- Id: 23832 # Bs_Item_M_S_4
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 750
+    Amount: 30
+  Reward: getitem(19827,1); // 아미스트르캡(1)
+- Id: 23833 # Bs_Item_M_S_6
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 1030
+    Amount: 150
+  Reward: getitem(5497,1); // 호랑이 왕 인형모자(1)
+- Id: 23834 # Bs_Item_M_S_7
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 25622
+    Amount: 150
+  Reward: getitem(5464,1); // 백소진 인형모자(1)
+- Id: 23835 # Bs_Item_M_S_12
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7300
+    Amount: 150
+  Reward: getgroupitem(IG_Bs_Item_M_S_12); // 획득 가능한 아이템
+- Id: 23836 # Bs_Item_M_S_13
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7018
+    Amount: 150
+  Reward: getitem(19264,1); // 황금 물고기 머리 모자(1)
+- Id: 23837 # Bs_Item_M_S_15
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7169
+    Amount: 150
+  Reward: getgroupitem(IG_Bs_Item_M_S_15);
+- Id: 23838 # Bs_Item_M_S_28
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7562
+    Amount: 150
+  Reward: getitem(19240,1); // 장난감 주사기
+- Id: 23839 # Bs_Item_M_S_29
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7300
+    Amount: 150
+  Reward: getitem(19243,1); // 쪽빛 리어 리본
+- Id: 23840 # Bs_Item_M_S_31
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 6091
+    Amount: 150
+  Reward: getitem(19241,1); // 매지컬 부스터(1)
+- Id: 23841 # Bs_Item_M_S_32
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7020
+    Amount: 150
+  Reward: getitem(19244,1); // 로자리오의 목걸이
+- Id: 23842 # Bs_Item_M_S_33
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7754
+    Amount: 150
+  Reward: getitem(19177,1); // 정령의 왕관
+- Id: 23843 # Bs_Item_M_S_36
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 1030
+    Amount: 150
+  Reward: getitem(18878,1); // 근위병의 모자(1)
+- Id: 23844 # Bs_Item_M_S_37
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7019
+    Amount: 150
+  Reward: getitem(5944,1); // 도적의 두건(1)
+- Id: 23845 # Bs_Item_M_S_38
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7513
+    Amount: 150
+  Reward: getitem(19031,1); // 타천사의 축복(1)
+- Id: 23846 # Bs_Item_M_S_39
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7114
+    Amount: 150
+  Reward: getitem(19179,1); // 토끼 마술 모자(1)
+- Id: 23847 # Bs_Item_M_S_40
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7113
+    Amount: 150
+  Reward: getitem(19180,1); // 아누비스 투구(1)
+- Id: 23848 # Bs_Item_M_S_45
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 6091
+    Amount: 150
+  Reward: getitem(5658,1); // 임프 모자(1)
+- Id: 23849 # Bs_Item_M_S_46
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7451
+    Amount: 150
+  Reward: getitem(5654,1); // 빨간 마칭햇(1)
+- Id: 23850 # Bs_Item_M_S_47
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 25629
+    Amount: 150
+  Reward: getitem(5420, 1); // 이프리트 가면(1)
+- Id: 23851 # Bs_Item_M_S_48
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 751
+    Amount: 30
+  Reward: getitem(5671,1); // 늘어진 모로크의 현신(1)
+- Id: 23852 # Bs_Item_M_S_49
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 25508
+    Amount: 150
+  Reward: getitem(5511,1); // 사만바이아(1)
+- Id: 23853 # Bs_Item_M_S_50
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 7018
+    Amount: 150
+  Reward: getitem(19129,1); // 병아리 모자
+- Id: 23894 # Bs_Item_M_S_51
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 20
+  - Item: 6326
+    Amount: 150
+  Reward: getitem(19134,1); // 휘케바인의 검은 고양이귀
+- Id: 23854 # Bs_Sha_M_S_2
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 20
+  - Item: 7451
+    Amount: 50
+  Reward: getitem(rand(24246,24319),1); /*getgroupitem(IG_Bs_Sha_M_S_2);*/ # TODO Class Shadow equipment: 24246-24255 or 24256-24319?
+- Id: 23855 # Bs_Sha_M_S_5
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 20
+  - Item: 6326
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_5);
+- Id: 23856 # Bs_Sha_M_S_6
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 20
+  - Item: 1030
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_6);
+- Id: 23857 # Bs_Sha_M_S_7
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 20
+  - Item: 7108
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_7);
+- Id: 23858 # Bs_Sha_M_S_8
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 20
+  - Item: 7566
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_8);
+- Id: 23859 # Bs_Sha_M_S_13
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 20
+  - Item: 968
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_13);
+- Id: 23860 # Bs_Sha_M_S_15
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 20
+  - Item: 25508
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_15);
+- Id: 23861 # Bs_Sha_M_S_16
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 20
+  - Item: 7020
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_16);
+- Id: 23862 # Bs_Sha_M_S_23
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 20
+  - Item: 6649
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_23);
+- Id: 23863 # Bs_Item_M_S_5
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 25
+  - Item: 751
+    Amount: 30
+  Reward: getgroupitem(IG_Bs_Item_M_S_5);
+- Id: 23864 # Bs_Item_M_S_9
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 25
+  - Item: 7510
+    Amount: 150
+  Reward: getitem(2573,1); // 대천사의 날개(1)
+- Id: 23865 # Bs_Item_M_S_14
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 25
+  - Item: 6091
+    Amount: 150
+  Reward: getitem(19265,1); // 스모키의 변신 나뭇잎(1)
+- Id: 23866 # Bs_Item_M_S_16
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 25
+  - Item: 7566
+    Amount: 150
+  Reward: getitem(19128,1); // 이프리트의 귀
+- Id: 23867 # Bs_Item_M_S_17
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 25
+  - Item: 7020
+    Amount: 150
+  Reward: getitem(18563,1); // 하트날개 헤어밴드(1)
+- Id: 23868 # Bs_Item_M_S_19
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 25
+  - Item: 7562
+    Amount: 150
+  Reward: getitem(19085,1); // 사이그룬의 날개
+- Id: 23869 # Bs_Item_M_S_27
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 25
+  - Item: 7754
+    Amount: 150
+  Reward: getitem(19242,1); // 새끼 고양이 헤드드레스(1)
+- Id: 23870 # Bs_Item_M_S_35
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 25
+  - Item: 7566
+    Amount: 150
+  Reward: getitem(5985,1); // 귀족의 가면
+- Id: 23871 # Bs_Sha_M_S_9
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 25
+  - Item: 7018
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_9);
+- Id: 23872 # Bs_Sha_M_S_10
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 25
+  - Item: 1030
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_10);
+- Id: 23873 # Bs_Sha_M_S_11
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 25
+  - Item: 7566
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_11);
+- Id: 23874 # Bs_Sha_M_S_21
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 25
+  - Item: 7109
+    Amount: 10
+  Reward: getgroupitem(IG_Bs_Sha_M_S_21);
+- Id: 23875 # Bs_Sha_M_S_22
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 25
+  - Item: 7036
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_22);
+- Id: 23876 # Bs_Item_M_S_1
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7510
+    Amount: 300
+  Reward: getitem(2589,1); // 타락천사의 날개(1)
+- Id: 23877 # Bs_Item_M_S_3
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7754
+    Amount: 150
+  Reward: getitem(2576,1); // 모험가 배낭(1)
+- Id: 23879 # Bs_Item_M_S_18
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7211
+    Amount: 150
+  Reward: getitem(19249,1); // 스펠 서킷(1)
+- Id: 23880 # Bs_Item_M_S_20
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7019
+    Amount: 200
+  Reward: getitem(19181,1); // 뉴웨이브 선글라스
+- Id: 23881 # Bs_Item_M_S_21
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 6649
+    Amount: 150
+  Reward: getitem(19268,1); // 거신뱀의 숨결
+- Id: 23882 # Bs_Item_M_S_22
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7169
+    Amount: 150
+  Reward: getitem(5371,1); // 판관모자(1)
+- Id: 23883 # Bs_Item_M_S_23
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7036
+    Amount: 150
+  Reward: getitem(19300,1); // 멍멍장교(1)
+- Id: 23884 # Bs_Item_M_S_24
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7300
+    Amount: 150
+  Reward: getitem(19296,1); // 멋진 패더 햇(1)
+- Id: 23885 # Bs_Item_M_S_25
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7018
+    Amount: 150
+  Reward: getitem(19308,1); // 아미스트르 베레모(1)
+- Id: 23886 # Bs_Item_M_S_26
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7108
+    Amount: 150
+  Reward: getitem(19263,1); // 장군의 투구(1)
+- Id: 23887 # Bs_Item_M_S_30
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25731
+    Amount: 30
+  - Item: 7109
+    Amount: 50
+  Reward: getitem(28942,1); // 저주받은 기사의 방패(1)
+- Id: 23888 # Bs_Sha_M_S_3
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 30
+  - Item: 7450
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_3);
+- Id: 23889 # Bs_Sha_M_S_4
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 30
+  - Item: 25629
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_4);
+- Id: 23890 # Bs_Sha_M_S_12
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 30
+  - Item: 7169
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_12);
+- Id: 23891 # Bs_Sha_M_S_14
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 30
+  - Item: 7019
+    Amount: 50
+  Reward: getgroupitem(IG_Bs_Sha_M_S_14);
+- Id: 23892 # Bs_Sha_M_S_24
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 25
+  - Item: 7513
+    Amount: 150
+  Reward: getgroupitem(IG_Bs_Sha_M_S_24);
+- Id: 23893 # Bs_Sha_M_S_25
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 25729
+    Amount: 25
+  - Item: 7300
+    Amount: 150
+  Reward: getgroupitem(IG_Bs_Sha_M_S_25);
+- Id: 23665 # PhysicalMagical_Mix
+  SourceNeeded: 3
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24019
+    Amount: 1
+  - Item: 24018
+    Amount: 1
+  - Item: 24020
+    Amount: 1
+  - Item: 24022
+    Amount: 1
+  - Item: 24021
+    Amount: 1
+  - Item: 24023
+    Amount: 1
+  Reward: getgroupitem(IG_PhysicalMagical_Mix);
+- Id: 23666 # ImmunedAthena_Mix
+  SourceNeeded: 2
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24027
+    Amount: 1
+  - Item: 24026
+    Amount: 1
+  - Item: 24051
+    Amount: 1
+  Reward: getitem(24399,1); // 이뮨드 아테나 쉴드 쉐도우
+- Id: 23667 # HardChamption_Mix
+  SourceNeeded: 2
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24028
+    Amount: 1
+  - Item: 24049
+    Amount: 1
+  - Item: 24025
+    Amount: 1
+  Reward: getitem(24400,1); // 하드 챔피언 슈즈 쉐도우
+- Id: 23668 # KingbirdAncient_Mix
+  SourceNeeded: 2
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24031
+    Amount: 1
+  - Item: 24029
+    Amount: 1
+  Reward: getitem(24401,1); // 킹버드 에이션트 아머 쉐도우
+- Id: 23669 # CriticalHit_Mix
+  SourceNeeded: 2
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24333
+    Amount: 1
+  - Item: 24332
+    Amount: 1
+  - Item: 24032
+    Amount: 1
+  - Item: 24030
+    Amount: 1
+  Reward: getitem(15280,1); // 크리티컬 히트 아머 쉐도우
+- Id: 23545 # Silver_Statue
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 28942
+    Amount: 1
+  Reward: getgroupitem(IG_Silver_Statue);
+- Id: 23474 # InfinityShadow_Mix
+  SourceNeeded: 2
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24150
+    Amount: 1
+  - Item: 24151
+    Amount: 1
+  Reward: getitem(24386,1); // 인피니티 웨폰 쉐도우
+- Id: 23324 # Stability Shadow Box // 스테빌리티S변환상자
+  SourceNeeded: 3
+  NeedRefine: 5
+  SourceItem:
+  - Item: 24091
+    Amount: 1
+  - Item: 24092
+    Amount: 1
+  - Item: 24093
+    Amount: 1
+  - Item: 24094
+    Amount: 1
+  - Item: 24095
+    Amount: 1
+  - Item: 24096
+    Amount: 1
+  - Item: 24097
+    Amount: 1
+  - Item: 24098
+    Amount: 1
+  - Item: 24099
+    Amount: 1
+  - Item: 24100
+    Amount: 1
+  - Item: 24101
+    Amount: 1
+  - Item: 24102
+    Amount: 1
+  - Item: 24103
+    Amount: 1
+  - Item: 24104
+    Amount: 1
+  - Item: 24105
+    Amount: 1
+  - Item: 24106
+    Amount: 1
+  - Item: 24107
+    Amount: 1
+  - Item: 24108
+    Amount: 1
+  Reward: getgroupitem(IG_Stability_Shadow_Box);
+- Id: 23308 # 부스터증폭기
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 19241
+    Amount: 1
+  Reward: |
+    // Duplicate on item upgrade
+    if (rand(2) == 0) {
+        getitem(19245,1); // chance to become Crimson Booster
+    } else {
+        // Magical Booster Enchant (19241)
+        callfunc("F_Lapine_Magical_Booster_Enchant", .@opts[0], .@vals[0]);
+        .@params[0] = 0;
+        getitem3(19241,1,1,0,0,0,0,0,0,.@opts,.@vals,@params);
+    }
+- Id: 23311 # 마법고양이손
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 19242
+    Amount: 1
+  Reward: |
+    // Duplicate on item upgrade
+    callfunc("F_Lapine_Magic_Cat_Hand", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+    .@params[0] = 0;
+    getitem3(19242,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23289 # 사탕축복스크롤_물리
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 20842
+    Amount: 1
+  Reward: |
+    // Duplicate on item upgrade
+    callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_W", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+    .@params[0] = 0;
+    getitem3(20842,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23290 # 사탕축복스크롤_원거리
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 20843
+    Amount: 1
+  Reward: |
+    // Duplicate on item upgrade
+    callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_R", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+    .@params[0] = 0;
+    getitem3(20843,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23291 # 사탕축복스크롤_마법
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 20844
+    Amount: 1
+  Reward: |
+    // Duplicate on item upgrade
+    callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_M", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+    .@params[0] = 0;
+    getitem3(20844,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23281 # 레이스S변환상자
+  SourceNeeded: 4
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24056
+    Amount: 1
+  - Item: 24061
+    Amount: 1
+  - Item: 24060
+    Amount: 1
+  - Item: 24059
+    Amount: 1
+  - Item: 24058
+    Amount: 1
+  - Item: 24057
+    Amount: 1
+  - Item: 24055
+    Amount: 1
+  - Item: 24054
+    Amount: 1
+  - Item: 24052
+    Amount: 1
+  - Item: 24070
+    Amount: 1
+  - Item: 24069
+    Amount: 1
+  - Item: 24068
+    Amount: 1
+  - Item: 24067
+    Amount: 1
+  - Item: 24066
+    Amount: 1
+  - Item: 24065
+    Amount: 1
+  - Item: 24064
+    Amount: 1
+  - Item: 24062
+    Amount: 1
+  - Item: 24071
+    Amount: 1
+  Reward: getgroupitem(IG_Race_Shadow_Box);
+- Id: 23250 # 컴포즈S변환상자
+  SourceNeeded: 4
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24219
+    Amount: 1
+  - Item: 24220
+    Amount: 1
+  - Item: 24221
+    Amount: 1
+  - Item: 24222
+    Amount: 1
+  Reward: getitem(24334,1); // 매직 컴포즈 아머 쉐도우
+- Id: 23249 # 베어러즈S변환상자
+  SourceNeeded: 3
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24181
+    Amount: 1
+  - Item: 24180
+    Amount: 1
+  - Item: 24182
+    Amount: 1
+  - Item: 24184
+    Amount: 1
+  - Item: 24183
+    Amount: 1
+  - Item: 24185
+    Amount: 1
+  Reward: getgroupitem(IG_Bearers_S_Conversion_Box);
+- Id: 23248 # 젬스톤S변환상자
+  SourceNeeded: 3
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24089
+    Amount: 1
+  - Item: 24084
+    Amount: 1
+  - Item: 24085
+    Amount: 1
+  - Item: 24086
+    Amount: 1
+  - Item: 24088
+    Amount: 1
+  - Item: 24087
+    Amount: 1
+  Reward: getgroupitem(IG_Gemstone_S_Conversion_Box);
+- Id: 23247 # 스테이터스S변환상자
+  SourceNeeded: 5
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24034
+    Amount: 1
+  - Item: 24035
+    Amount: 1
+  - Item: 24036
+    Amount: 1
+  - Item: 24037
+    Amount: 1
+  - Item: 24038
+    Amount: 1
+  - Item: 24039
+    Amount: 1
+  - Item: 24040
+    Amount: 1
+  - Item: 24041
+    Amount: 1
+  - Item: 24042
+    Amount: 1
+  - Item: 24043
+    Amount: 1
+  - Item: 24044
+    Amount: 1
+  - Item: 24045
+    Amount: 1
+  Reward: getgroupitem(IG_Status_S_Conversion_Box);
+- Id: 23236 # 직업S변환상자_웨폰
+  SourceNeeded: 1
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24282
+    Amount: 1
+  - Item: 24283
+    Amount: 1
+  - Item: 24284
+    Amount: 1
+  - Item: 24285
+    Amount: 1
+  - Item: 24286
+    Amount: 1
+  - Item: 24287
+    Amount: 1
+  - Item: 24288
+    Amount: 1
+  - Item: 24289
+    Amount: 1
+  - Item: 24290
+    Amount: 1
+  - Item: 24291
+    Amount: 1
+  - Item: 24292
+    Amount: 1
+  - Item: 24293
+    Amount: 1
+  - Item: 24294
+    Amount: 1
+  - Item: 24295
+    Amount: 1
+  - Item: 24296
+    Amount: 1
+  - Item: 24297
+    Amount: 1
+  - Item: 24298
+    Amount: 1
+  - Item: 24299
+    Amount: 1
+  - Item: 24300
+    Amount: 1
+  Reward: |
+    .@itemid = groupranditem(IG_Class_Shadow_Weapon);
+    callfunc("F_Lapine_Class_Shadow_Weapon_Options", .@refine, .@opts[0], .@vals[0]);
+    .@params[0] = 0;
+    getitem3(.@itemid,1,1,.@refine,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23237 # 직업S변환상자_아머
+  SourceNeeded: 1
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24269
+    Amount: 1
+  - Item: 24270
+    Amount: 1
+  - Item: 24271
+    Amount: 1
+  - Item: 24272
+    Amount: 1
+  - Item: 24273
+    Amount: 1
+  - Item: 24274
+    Amount: 1
+  - Item: 24275
+    Amount: 1
+  - Item: 24276
+    Amount: 1
+  - Item: 24277
+    Amount: 1
+  - Item: 24278
+    Amount: 1
+  - Item: 24279
+    Amount: 1
+  - Item: 24280
+    Amount: 1
+  - Item: 24281
+    Amount: 1
+  - Item: 24402
+    Amount: 1
+  - Item: 24403
+    Amount: 1
+  - Item: 24404
+    Amount: 1
+  - Item: 24408
+    Amount: 1
+  - Item: 24410
+    Amount: 1
+  - Item: 24412
+    Amount: 1
+  - Item: 24414
+    Amount: 1
+  Reward: |
+    .@itemid = groupranditem(IG_Class_Shadow_Armor);
+    callfunc("F_Lapine_Class_Shadow_Armor_Options", .@refine, .@opts[0], .@vals[0]);
+    .@params[0] = 0;
+    getitem3(.@itemid,1,1,.@refine,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23238 # 직업S변환상자_슈즈
+  SourceNeeded: 1
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24256
+    Amount: 1
+  - Item: 24257
+    Amount: 1
+  - Item: 24258
+    Amount: 1
+  - Item: 24259
+    Amount: 1
+  - Item: 24260
+    Amount: 1
+  - Item: 24261
+    Amount: 1
+  - Item: 24262
+    Amount: 1
+  - Item: 24263
+    Amount: 1
+  - Item: 24264
+    Amount: 1
+  - Item: 24265
+    Amount: 1
+  - Item: 24266
+    Amount: 1
+  - Item: 24267
+    Amount: 1
+  - Item: 24268
+    Amount: 1
+  - Item: 24405
+    Amount: 1
+  - Item: 24406
+    Amount: 1
+  - Item: 24407
+    Amount: 1
+  - Item: 24409
+    Amount: 1
+  - Item: 24411
+    Amount: 1
+  - Item: 24413
+    Amount: 1
+  - Item: 24415
+    Amount: 1
+  Reward: |
+    .@itemid = groupranditem(IG_Class_Shadow_Shoes);
+    callfunc("F_Lapine_Class_Shadow_Shoes_Options", .@refine, .@opts[0], .@vals[0]);
+    .@params[0] = 0;
+    getitem3(.@itemid,1,1,.@refine,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23239 # 직업S변환상자_쉴드
+  SourceNeeded: 1
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24301
+    Amount: 1
+  - Item: 24302
+    Amount: 1
+  - Item: 24303
+    Amount: 1
+  - Item: 24304
+    Amount: 1
+  - Item: 24305
+    Amount: 1
+  - Item: 24306
+    Amount: 1
+  - Item: 24307
+    Amount: 1
+  - Item: 24308
+    Amount: 1
+  - Item: 24309
+    Amount: 1
+  - Item: 24310
+    Amount: 1
+  - Item: 24311
+    Amount: 1
+  - Item: 24312
+    Amount: 1
+  - Item: 24313
+    Amount: 1
+  - Item: 24314
+    Amount: 1
+  - Item: 24315
+    Amount: 1
+  - Item: 24316
+    Amount: 1
+  - Item: 24317
+    Amount: 1
+  - Item: 24318
+    Amount: 1
+  - Item: 24319
+    Amount: 1
+  Reward: |
+    .@itemid = groupranditem(IG_Class_Shadow_Shield);
+    callfunc("F_Lapine_Class_Shadow_Shield_Options", .@refine, .@opts[0], .@vals[0]);
+    .@params[0] = 0;
+    getitem3(.@itemid,1,1,.@refine,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23240 # 직업S변환상자_펜던트
+  SourceNeeded: 1
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24250
+    Amount: 1
+  - Item: 24251
+    Amount: 1
+  - Item: 24252
+    Amount: 1
+  - Item: 24253
+    Amount: 1
+  - Item: 24254
+    Amount: 1
+  - Item: 24255
+    Amount: 1
+  Reward: |
+    .@itemid = groupranditem(IG_Class_Shadow_Pendant);
+    callfunc("F_Lapine_Class_Shadow_Pendant_Options", .@refine, .@opts[0], .@vals[0]);
+    .@params[0] = 0;
+    getitem3(.@itemid,1,1,.@refine,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23241 # 직업S변환상자_이어링
+  SourceNeeded: 1
+  NeedRefine: 7
+  SourceItem:
+  - Item: 24246
+    Amount: 1
+  - Item: 24247
+    Amount: 1
+  - Item: 24248
+    Amount: 1
+  - Item: 24249
+    Amount: 1
+  - Item: 28391
+    Amount: 1
+  - Item: 28392
+    Amount: 1
+  Reward: |
+    .@itemid = groupranditem(IG_Class_Shadow_Earring);
+    callfunc("F_Lapine_Class_Shadow_Earring_Options", .@refine, .@opts[0], .@vals[0]);
+    .@params[0] = 0;
+    getitem3(.@itemid,1,1,.@refine,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23229 # 타락천사날개초기화권
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 20835
+    Amount: 1
+  - Item: 2589
+    Amount: 1
+  Reward: |
+    // Duplicate on item upgrade
+    getitem(2589,1);
+- Id: 22529 # 쉐도우뚝딱상자
+  SourceNeeded: 3
+  NeedRefine: 0
+  SourceItem:
+  - Item: 24018
+    Amount: 1
+  - Item: 24019
+    Amount: 1
+  - Item: 24020
+    Amount: 1
+  - Item: 24021
+    Amount: 1
+  - Item: 24022
+    Amount: 1
+  - Item: 24023
+    Amount: 1
+  - Item: 24024
+    Amount: 1
+  - Item: 24025
+    Amount: 1
+  - Item: 24026
+    Amount: 1
+  - Item: 24027
+    Amount: 1
+  - Item: 24028
+    Amount: 1
+  - Item: 24029
+    Amount: 1
+  - Item: 24030
+    Amount: 1
+  - Item: 24031
+    Amount: 1
+  - Item: 24032
+    Amount: 1
+  - Item: 24033
+    Amount: 1
+  - Item: 24034
+    Amount: 1
+  - Item: 24035
+    Amount: 1
+  - Item: 24036
+    Amount: 1
+  - Item: 24037
+    Amount: 1
+  - Item: 24038
+    Amount: 1
+  - Item: 24039
+    Amount: 1
+  - Item: 24040
+    Amount: 1
+  - Item: 24041
+    Amount: 1
+  - Item: 24042
+    Amount: 1
+  - Item: 24043
+    Amount: 1
+  - Item: 24044
+    Amount: 1
+  - Item: 24045
+    Amount: 1
+  - Item: 24046
+    Amount: 1
+  - Item: 24047
+    Amount: 1
+  - Item: 24048
+    Amount: 1
+  - Item: 24049
+    Amount: 1
+  - Item: 24050
+    Amount: 1
+  - Item: 24051
+    Amount: 1
+  - Item: 24052
+    Amount: 1
+  - Item: 24053
+    Amount: 1
+  - Item: 24054
+    Amount: 1
+  - Item: 24055
+    Amount: 1
+  - Item: 24056
+    Amount: 1
+  - Item: 24057
+    Amount: 1
+  - Item: 24058
+    Amount: 1
+  - Item: 24059
+    Amount: 1
+  - Item: 24060
+    Amount: 1
+  - Item: 24061
+    Amount: 1
+  - Item: 24062
+    Amount: 1
+  - Item: 24063
+    Amount: 1
+  - Item: 24064
+    Amount: 1
+  - Item: 24065
+    Amount: 1
+  - Item: 24066
+    Amount: 1
+  - Item: 24067
+    Amount: 1
+  - Item: 24068
+    Amount: 1
+  - Item: 24069
+    Amount: 1
+  - Item: 24070
+    Amount: 1
+  - Item: 24071
+    Amount: 1
+  - Item: 24072
+    Amount: 1
+  - Item: 24073
+    Amount: 1
+  - Item: 24074
+    Amount: 1
+  - Item: 24075
+    Amount: 1
+  - Item: 24076
+    Amount: 1
+  - Item: 24077
+    Amount: 1
+  - Item: 24078
+    Amount: 1
+  - Item: 24079
+    Amount: 1
+  - Item: 24080
+    Amount: 1
+  - Item: 24081
+    Amount: 1
+  - Item: 24082
+    Amount: 1
+  - Item: 24083
+    Amount: 1
+  - Item: 24084
+    Amount: 1
+  - Item: 24085
+    Amount: 1
+  - Item: 24086
+    Amount: 1
+  - Item: 24087
+    Amount: 1
+  - Item: 24088
+    Amount: 1
+  - Item: 24089
+    Amount: 1
+  - Item: 24090
+    Amount: 1
+  - Item: 24091
+    Amount: 1
+  - Item: 24092
+    Amount: 1
+  - Item: 24093
+    Amount: 1
+  - Item: 24094
+    Amount: 1
+  - Item: 24095
+    Amount: 1
+  - Item: 24096
+    Amount: 1
+  - Item: 24097
+    Amount: 1
+  - Item: 24098
+    Amount: 1
+  - Item: 24099
+    Amount: 1
+  - Item: 24100
+    Amount: 1
+  - Item: 24101
+    Amount: 1
+  - Item: 24102
+    Amount: 1
+  - Item: 24103
+    Amount: 1
+  - Item: 24104
+    Amount: 1
+  - Item: 24105
+    Amount: 1
+  - Item: 24106
+    Amount: 1
+  - Item: 24107
+    Amount: 1
+  - Item: 24108
+    Amount: 1
+  - Item: 24109
+    Amount: 1
+  - Item: 24110
+    Amount: 1
+  - Item: 24111
+    Amount: 1
+  - Item: 24112
+    Amount: 1
+  - Item: 24113
+    Amount: 1
+  - Item: 24114
+    Amount: 1
+  - Item: 24115
+    Amount: 1
+  - Item: 24116
+    Amount: 1
+  - Item: 24117
+    Amount: 1
+  - Item: 24118
+    Amount: 1
+  - Item: 24119
+    Amount: 1
+  - Item: 24120
+    Amount: 1
+  - Item: 24121
+    Amount: 1
+  - Item: 24122
+    Amount: 1
+  - Item: 24123
+    Amount: 1
+  - Item: 24124
+    Amount: 1
+  - Item: 24125
+    Amount: 1
+  - Item: 24126
+    Amount: 1
+  - Item: 24127
+    Amount: 1
+  - Item: 24128
+    Amount: 1
+  - Item: 24129
+    Amount: 1
+  - Item: 24130
+    Amount: 1
+  - Item: 24131
+    Amount: 1
+  - Item: 24132
+    Amount: 1
+  - Item: 24133
+    Amount: 1
+  - Item: 24134
+    Amount: 1
+  - Item: 24135
+    Amount: 1
+  - Item: 24136
+    Amount: 1
+  - Item: 24137
+    Amount: 1
+  - Item: 24138
+    Amount: 1
+  - Item: 24139
+    Amount: 1
+  - Item: 24140
+    Amount: 1
+  - Item: 24141
+    Amount: 1
+  - Item: 24142
+    Amount: 1
+  - Item: 24143
+    Amount: 1
+  - Item: 24144
+    Amount: 1
+  - Item: 24145
+    Amount: 1
+  - Item: 24146
+    Amount: 1
+  - Item: 24147
+    Amount: 1
+  - Item: 24148
+    Amount: 1
+  - Item: 24149
+    Amount: 1
+  - Item: 24150
+    Amount: 1
+  - Item: 24151
+    Amount: 1
+  - Item: 24152
+    Amount: 1
+  - Item: 24153
+    Amount: 1
+  - Item: 24154
+    Amount: 1
+  - Item: 24155
+    Amount: 1
+  - Item: 24156
+    Amount: 1
+  - Item: 24157
+    Amount: 1
+  - Item: 24158
+    Amount: 1
+  - Item: 24159
+    Amount: 1
+  - Item: 24160
+    Amount: 1
+  - Item: 24161
+    Amount: 1
+  - Item: 24162
+    Amount: 1
+  - Item: 24163
+    Amount: 1
+  - Item: 24164
+    Amount: 1
+  - Item: 24165
+    Amount: 1
+  - Item: 24166
+    Amount: 1
+  - Item: 24167
+    Amount: 1
+  - Item: 24168
+    Amount: 1
+  - Item: 24169
+    Amount: 1
+  - Item: 24170
+    Amount: 1
+  - Item: 24171
+    Amount: 1
+  - Item: 24172
+    Amount: 1
+  - Item: 24173
+    Amount: 1
+  - Item: 24174
+    Amount: 1
+  - Item: 24175
+    Amount: 1
+  - Item: 24176
+    Amount: 1
+  - Item: 24177
+    Amount: 1
+  - Item: 24178
+    Amount: 1
+  - Item: 24179
+    Amount: 1
+  - Item: 24180
+    Amount: 1
+  - Item: 24181
+    Amount: 1
+  - Item: 24182
+    Amount: 1
+  - Item: 24183
+    Amount: 1
+  - Item: 24184
+    Amount: 1
+  - Item: 24185
+    Amount: 1
+  - Item: 24186
+    Amount: 1
+  - Item: 24187
+    Amount: 1
+  - Item: 24188
+    Amount: 1
+  - Item: 24189
+    Amount: 1
+  - Item: 24190
+    Amount: 1
+  - Item: 24191
+    Amount: 1
+  - Item: 24192
+    Amount: 1
+  - Item: 24193
+    Amount: 1
+  - Item: 24194
+    Amount: 1
+  - Item: 24195
+    Amount: 1
+  - Item: 24196
+    Amount: 1
+  - Item: 24197
+    Amount: 1
+  - Item: 24198
+    Amount: 1
+  - Item: 24199
+    Amount: 1
+  - Item: 24200
+    Amount: 1
+  - Item: 24201
+    Amount: 1
+  - Item: 24202
+    Amount: 1
+  - Item: 24203
+    Amount: 1
+  - Item: 24204
+    Amount: 1
+  - Item: 24205
+    Amount: 1
+  - Item: 24206
+    Amount: 1
+  - Item: 24207
+    Amount: 1
+  - Item: 24208
+    Amount: 1
+  - Item: 24209
+    Amount: 1
+  - Item: 24210
+    Amount: 1
+  - Item: 24211
+    Amount: 1
+  - Item: 24212
+    Amount: 1
+  - Item: 24213
+    Amount: 1
+  - Item: 24214
+    Amount: 1
+  - Item: 24215
+    Amount: 1
+  - Item: 24216
+    Amount: 1
+  - Item: 24217
+    Amount: 1
+  - Item: 24218
+    Amount: 1
+  - Item: 24219
+    Amount: 1
+  - Item: 24220
+    Amount: 1
+  - Item: 24221
+    Amount: 1
+  - Item: 24222
+    Amount: 1
+  - Item: 24223
+    Amount: 1
+  - Item: 24224
+    Amount: 1
+  - Item: 24225
+    Amount: 1
+  - Item: 24226
+    Amount: 1
+  - Item: 24227
+    Amount: 1
+  - Item: 24228
+    Amount: 1
+  - Item: 24229
+    Amount: 1
+  - Item: 24230
+    Amount: 1
+  - Item: 24231
+    Amount: 1
+  - Item: 24232
+    Amount: 1
+  - Item: 24233
+    Amount: 1
+  - Item: 24234
+    Amount: 1
+  - Item: 24235
+    Amount: 1
+  - Item: 24236
+    Amount: 1
+  - Item: 24237
+    Amount: 1
+  - Item: 24238
+    Amount: 1
+  - Item: 24239
+    Amount: 1
+  - Item: 24240
+    Amount: 1
+  - Item: 24241
+    Amount: 1
+  - Item: 24242
+    Amount: 1
+  - Item: 24243
+    Amount: 1
+  - Item: 24244
+    Amount: 1
+  - Item: 24245
+    Amount: 1
+  - Item: 24246
+    Amount: 1
+  - Item: 24247
+    Amount: 1
+  - Item: 24248
+    Amount: 1
+  - Item: 24249
+    Amount: 1
+  - Item: 24250
+    Amount: 1
+  - Item: 24251
+    Amount: 1
+  - Item: 24252
+    Amount: 1
+  - Item: 24253
+    Amount: 1
+  - Item: 24254
+    Amount: 1
+  - Item: 24255
+    Amount: 1
+  - Item: 24256
+    Amount: 1
+  - Item: 24257
+    Amount: 1
+  - Item: 24258
+    Amount: 1
+  - Item: 24259
+    Amount: 1
+  - Item: 24260
+    Amount: 1
+  - Item: 24261
+    Amount: 1
+  - Item: 24262
+    Amount: 1
+  - Item: 24263
+    Amount: 1
+  - Item: 24264
+    Amount: 1
+  - Item: 24265
+    Amount: 1
+  - Item: 24266
+    Amount: 1
+  - Item: 24267
+    Amount: 1
+  - Item: 24268
+    Amount: 1
+  - Item: 24269
+    Amount: 1
+  - Item: 24270
+    Amount: 1
+  - Item: 24271
+    Amount: 1
+  - Item: 24272
+    Amount: 1
+  - Item: 24273
+    Amount: 1
+  - Item: 24274
+    Amount: 1
+  - Item: 24275
+    Amount: 1
+  - Item: 24276
+    Amount: 1
+  - Item: 24277
+    Amount: 1
+  - Item: 24278
+    Amount: 1
+  - Item: 24279
+    Amount: 1
+  - Item: 24280
+    Amount: 1
+  - Item: 24281
+    Amount: 1
+  - Item: 24282
+    Amount: 1
+  - Item: 24283
+    Amount: 1
+  - Item: 24284
+    Amount: 1
+  - Item: 24285
+    Amount: 1
+  - Item: 24286
+    Amount: 1
+  - Item: 24287
+    Amount: 1
+  - Item: 24288
+    Amount: 1
+  - Item: 24289
+    Amount: 1
+  - Item: 24290
+    Amount: 1
+  - Item: 24291
+    Amount: 1
+  - Item: 24292
+    Amount: 1
+  - Item: 24293
+    Amount: 1
+  - Item: 24294
+    Amount: 1
+  - Item: 24295
+    Amount: 1
+  - Item: 24296
+    Amount: 1
+  - Item: 24297
+    Amount: 1
+  - Item: 24298
+    Amount: 1
+  - Item: 24299
+    Amount: 1
+  - Item: 24300
+    Amount: 1
+  - Item: 24301
+    Amount: 1
+  - Item: 24302
+    Amount: 1
+  - Item: 24303
+    Amount: 1
+  - Item: 24304
+    Amount: 1
+  - Item: 24305
+    Amount: 1
+  - Item: 24306
+    Amount: 1
+  - Item: 24307
+    Amount: 1
+  - Item: 24308
+    Amount: 1
+  - Item: 24309
+    Amount: 1
+  - Item: 24310
+    Amount: 1
+  - Item: 24311
+    Amount: 1
+  - Item: 24312
+    Amount: 1
+  - Item: 24313
+    Amount: 1
+  - Item: 24314
+    Amount: 1
+  - Item: 24315
+    Amount: 1
+  - Item: 24316
+    Amount: 1
+  - Item: 24317
+    Amount: 1
+  - Item: 24318
+    Amount: 1
+  - Item: 24319
+    Amount: 1
+  - Item: 28391
+    Amount: 1
+  - Item: 28392
+    Amount: 1
+  - Item: 24320
+    Amount: 1
+  - Item: 24321
+    Amount: 1
+  - Item: 24322
+    Amount: 1
+  - Item: 24323
+    Amount: 1
+  - Item: 24324
+    Amount: 1
+  - Item: 24325
+    Amount: 1
+  - Item: 24326
+    Amount: 1
+  - Item: 24327
+    Amount: 1
+  - Item: 24332
+    Amount: 1
+  - Item: 24333
+    Amount: 1
+  - Item: 24334
+    Amount: 1
+  - Item: 24335
+    Amount: 1
+  - Item: 24336
+    Amount: 1
+  - Item: 24337
+    Amount: 1
+  - Item: 24338
+    Amount: 1
+  - Item: 24339
+    Amount: 1
+  - Item: 24340
+    Amount: 1
+  - Item: 24345
+    Amount: 1
+  - Item: 24346
+    Amount: 1
+  - Item: 24347
+    Amount: 1
+  - Item: 24348
+    Amount: 1
+  - Item: 24349
+    Amount: 1
+  - Item: 24350
+    Amount: 1
+  - Item: 24351
+    Amount: 1
+  - Item: 24352
+    Amount: 1
+  - Item: 24353
+    Amount: 1
+  - Item: 24354
+    Amount: 1
+  - Item: 24355
+    Amount: 1
+  - Item: 24356
+    Amount: 1
+  - Item: 24357
+    Amount: 1
+  - Item: 24358
+    Amount: 1
+  - Item: 24359
+    Amount: 1
+  - Item: 24360
+    Amount: 1
+  - Item: 24361
+    Amount: 1
+  - Item: 24362
+    Amount: 1
+  - Item: 24363
+    Amount: 1
+  - Item: 24364
+    Amount: 1
+  - Item: 24365
+    Amount: 1
+  - Item: 24366
+    Amount: 1
+  - Item: 24367
+    Amount: 1
+  - Item: 24368
+    Amount: 1
+  - Item: 24369
+    Amount: 1
+  - Item: 24370
+    Amount: 1
+  - Item: 24371
+    Amount: 1
+  - Item: 24372
+    Amount: 1
+  - Item: 24373
+    Amount: 1
+  - Item: 24374
+    Amount: 1
+  - Item: 24375
+    Amount: 1
+  - Item: 24376
+    Amount: 1
+  - Item: 24377
+    Amount: 1
+  - Item: 24378
+    Amount: 1
+  - Item: 24379
+    Amount: 1
+  - Item: 24380
+    Amount: 1
+  - Item: 24381
+    Amount: 1
+  - Item: 24382
+    Amount: 1
+  - Item: 24383
+    Amount: 1
+  - Item: 24384
+    Amount: 1
+  - Item: 24385
+    Amount: 1
+  - Item: 24386
+    Amount: 1
+  - Item: 24393
+    Amount: 1
+  - Item: 24394
+    Amount: 1
+  - Item: 24395
+    Amount: 1
+  - Item: 24396
+    Amount: 1
+  - Item: 24397
+    Amount: 1
+  - Item: 24398
+    Amount: 1
+  - Item: 24399
+    Amount: 1
+  - Item: 24400
+    Amount: 1
+  - Item: 24401
+    Amount: 1
+  - Item: 15280
+    Amount: 1
+  - Item: 24402
+    Amount: 1
+  - Item: 24403
+    Amount: 1
+  - Item: 24404
+    Amount: 1
+  - Item: 24405
+    Amount: 1
+  - Item: 24406
+    Amount: 1
+  - Item: 24407
+    Amount: 1
+  - Item: 24408
+    Amount: 1
+  - Item: 24409
+    Amount: 1
+  - Item: 24410
+    Amount: 1
+  - Item: 24411
+    Amount: 1
+  - Item: 24412
+    Amount: 1
+  - Item: 24413
+    Amount: 1
+  - Item: 24414
+    Amount: 1
+  - Item: 24415
+    Amount: 1
+  - Item: 24423
+    Amount: 1
+  - Item: 24424
+    Amount: 1
+  - Item: 24425
+    Amount: 1
+  - Item: 24426
+    Amount: 1
+  - Item: 24427
+    Amount: 1
+  - Item: 24428
+    Amount: 1
+  - Item: 24429
+    Amount: 1
+  - Item: 24430
+    Amount: 1
+  - Item: 24431
+    Amount: 1
+  - Item: 24432
+    Amount: 1
+  - Item: 24433
+    Amount: 1
+  - Item: 24434
+    Amount: 1
+  - Item: 24435
+    Amount: 1
+  - Item: 24436
+    Amount: 1
+  - Item: 24437
+    Amount: 1
+  - Item: 24438
+    Amount: 1
+  - Item: 24439
+    Amount: 1
+  - Item: 24440
+    Amount: 1
+  - Item: 24441
+    Amount: 1
+  - Item: 24442
+    Amount: 1
+  - Item: 24443
+    Amount: 1
+  - Item: 24444
+    Amount: 1
+  - Item: 24445
+    Amount: 1
+  - Item: 24446
+    Amount: 1
+  - Item: 24447
+    Amount: 1
+  - Item: 24448
+    Amount: 1
+  - Item: 24449
+    Amount: 1
+  - Item: 24450
+    Amount: 1
+  - Item: 24451
+    Amount: 1
+  - Item: 24452
+    Amount: 1
+  - Item: 24453
+    Amount: 1
+  - Item: 24454
+    Amount: 1
+  - Item: 24455
+    Amount: 1
+  - Item: 24456
+    Amount: 1
+  - Item: 24457
+    Amount: 1
+  - Item: 24458
+    Amount: 1
+  - Item: 24459
+    Amount: 1
+  - Item: 24460
+    Amount: 1
+  - Item: 24461
+    Amount: 1
+  - Item: 24462
+    Amount: 1
+  - Item: 24463
+    Amount: 1
+  - Item: 24464
+    Amount: 1
+  - Item: 24465
+    Amount: 1
+  - Item: 24466
+    Amount: 1
+  - Item: 24467
+    Amount: 1
+  - Item: 24468
+    Amount: 1
+  - Item: 24469
+    Amount: 1
+  - Item: 24470
+    Amount: 1
+  - Item: 24471
+    Amount: 1
+  - Item: 24472
+    Amount: 1
+  - Item: 24473
+    Amount: 1
+  - Item: 24474
+    Amount: 1
+  - Item: 24475
+    Amount: 1
+  Reward: getgroupitem(IG_Shadow_Exchange_Box);
+- Id: 23100 # 건슬링거두루마리
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 19157
+    Amount: 1
+  Reward: |
+    // Duplicate on item upgrade
+    callfunc("F_Lapine_Grown_Gunslinger", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+    .@params[0] = 0;
+    getitem3(19157,1,1,.@refine,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23170 # 선풍기개조키트
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 28439
+    Amount: 1
+  Reward: |
+    callfunc("F_Lapine_Fan_Modification_Kits", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+    .@params[0] = 0;
+    getitem3(28439,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23175 # 제복수선키트
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 15186
+    Amount: 1
+  Reward: |
+    // Duplicate on item upgrade
+    callfunc("F_Lapine_Uniform_Repair_Kits", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
+    .@params[0] = 0;
+    getitem3(15186,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+- Id: 23151 # 의상스톤뚝딱상자
+  SourceNeeded: 3
+  NeedRefine: 0
+  SourceItem:
+  - Item: 6740
+    Amount: 1
+  - Item: 6741
+    Amount: 1
+  - Item: 6742
+    Amount: 1
+  - Item: 6743
+    Amount: 1
+  - Item: 6744
+    Amount: 1
+  - Item: 6745
+    Amount: 1
+  - Item: 6636
+    Amount: 1
+  - Item: 6637
+    Amount: 1
+  - Item: 6638
+    Amount: 1
+  - Item: 6639
+    Amount: 1
+  - Item: 6640
+    Amount: 1
+  - Item: 6641
+    Amount: 1
+  - Item: 6642
+    Amount: 1
+  - Item: 6643
+    Amount: 1
+  - Item: 6644
+    Amount: 1
+  - Item: 6645
+    Amount: 1
+  - Item: 6790
+    Amount: 1
+  - Item: 6791
+    Amount: 1
+  - Item: 6792
+    Amount: 1
+  - Item: 6908
+    Amount: 1
+  - Item: 6943
+    Amount: 1
+  - Item: 6944
+    Amount: 1
+  - Item: 6945
+    Amount: 1
+  - Item: 6946
+    Amount: 1
+  - Item: 6947
+    Amount: 1
+  - Item: 6948
+    Amount: 1
+  - Item: 6949
+    Amount: 1
+  - Item: 6950
+    Amount: 1
+  - Item: 6963
+    Amount: 1
+  - Item: 6964
+    Amount: 1
+  - Item: 6999
+    Amount: 1
+  - Item: 25000
+    Amount: 1
+  - Item: 25016
+    Amount: 1
+  - Item: 25017
+    Amount: 1
+  - Item: 25012
+    Amount: 1
+  - Item: 25003
+    Amount: 1
+  - Item: 25013
+    Amount: 1
+  - Item: 25005
+    Amount: 1
+  - Item: 25010
+    Amount: 1
+  - Item: 25007
+    Amount: 1
+  - Item: 25008
+    Amount: 1
+  - Item: 25006
+    Amount: 1
+  - Item: 25009
+    Amount: 1
+  - Item: 25004
+    Amount: 1
+  - Item: 25011
+    Amount: 1
+  - Item: 25002
+    Amount: 1
+  - Item: 25001
+    Amount: 1
+  - Item: 25014
+    Amount: 1
+  - Item: 25015
+    Amount: 1
+  - Item: 25067
+    Amount: 1
+  - Item: 25072
+    Amount: 1
+  - Item: 25068
+    Amount: 1
+  - Item: 25062
+    Amount: 1
+  - Item: 25069
+    Amount: 1
+  - Item: 25070
+    Amount: 1
+  - Item: 25071
+    Amount: 1
+  - Item: 25060
+    Amount: 1
+  - Item: 25061
+    Amount: 1
+  - Item: 25058
+    Amount: 1
+  - Item: 25059
+    Amount: 1
+  - Item: 25063
+    Amount: 1
+  - Item: 25064
+    Amount: 1
+  - Item: 25065
+    Amount: 1
+  - Item: 25066
+    Amount: 1
+  - Item: 25138
+    Amount: 1
+  - Item: 25136
+    Amount: 1
+  - Item: 25137
+    Amount: 1
+  - Item: 25139
+    Amount: 1
+  - Item: 25141
+    Amount: 1
+  - Item: 25177
+    Amount: 1
+  - Item: 25170
+    Amount: 1
+  - Item: 25175
+    Amount: 1
+  - Item: 25178
+    Amount: 1
+  - Item: 25176
+    Amount: 1
+  - Item: 25172
+    Amount: 1
+  - Item: 25173
+    Amount: 1
+  - Item: 25174
+    Amount: 1
+  - Item: 25171
+    Amount: 1
+  - Item: 6716
+    Amount: 1
+  - Item: 6718
+    Amount: 1
+  - Item: 6717
+    Amount: 1
+  - Item: 25205
+    Amount: 1
+  - Item: 25206
+    Amount: 1
+  - Item: 25207
+    Amount: 1
+  - Item: 25210
+    Amount: 1
+  - Item: 25208
+    Amount: 1
+  - Item: 25209
+    Amount: 1
+  - Item: 25226
+    Amount: 1
+  - Item: 25225
+    Amount: 1
+  - Item: 25224
+    Amount: 1
+  - Item: 25229
+    Amount: 1
+  - Item: 25228
+    Amount: 1
+  - Item: 25227
+    Amount: 1
+  - Item: 25409
+    Amount: 1
+  - Item: 25410
+    Amount: 1
+  - Item: 25411
+    Amount: 1
+  - Item: 25412
+    Amount: 1
+  - Item: 25413
+    Amount: 1
+  - Item: 25414
+    Amount: 1
+  - Item: 25415
+    Amount: 1
+  - Item: 25416
+    Amount: 1
+  - Item: 25417
+    Amount: 1
+  - Item: 25418
+    Amount: 1
+  - Item: 25419
+    Amount: 1
+  - Item: 25420
+    Amount: 1
+  - Item: 25445
+    Amount: 1
+  - Item: 25446
+    Amount: 1
+  - Item: 25447
+    Amount: 1
+  - Item: 25448
+    Amount: 1
+  - Item: 25449
+    Amount: 1
+  - Item: 25450
+    Amount: 1
+  - Item: 25451
+    Amount: 1
+  - Item: 25452
+    Amount: 1
+  - Item: 25453
+    Amount: 1
+  - Item: 25454
+    Amount: 1
+  - Item: 25455
+    Amount: 1
+  - Item: 25456
+    Amount: 1
+  - Item: 25490
+    Amount: 1
+  - Item: 25491
+    Amount: 1
+  - Item: 25492
+    Amount: 1
+  - Item: 25493
+    Amount: 1
+  - Item: 25494
+    Amount: 1
+  - Item: 25495
+    Amount: 1
+  - Item: 25496
+    Amount: 1
+  - Item: 25497
+    Amount: 1
+  - Item: 25498
+    Amount: 1
+  - Item: 25499
+    Amount: 1
+  - Item: 25500
+    Amount: 1
+  - Item: 25501
+    Amount: 1
+  - Item: 6951
+    Amount: 1
+  - Item: 25302
+    Amount: 1
+  - Item: 25303
+    Amount: 1
+  - Item: 25304
+    Amount: 1
+  - Item: 25305
+    Amount: 1
+  - Item: 25306
+    Amount: 1
+  - Item: 25706
+    Amount: 1
+  - Item: 25707
+    Amount: 1
+  - Item: 25708
+    Amount: 1
+  - Item: 25709
+    Amount: 1
+  - Item: 25710
+    Amount: 1
+  - Item: 25711
+    Amount: 1
+  - Item: 25712
+    Amount: 1
+  - Item: 25713
+    Amount: 1
+  - Item: 25714
+    Amount: 1
+  - Item: 25715
+    Amount: 1
+  - Item: 25716
+    Amount: 1
+  - Item: 25717
+    Amount: 1
+  - Item: 25797
+    Amount: 1
+  - Item: 25798
+    Amount: 1
+  - Item: 25799
+    Amount: 1
+  - Item: 25800
+    Amount: 1
+  - Item: 25801
+    Amount: 1
+  - Item: 25802
+    Amount: 1
+  - Item: 25803
+    Amount: 1
+  - Item: 25804
+    Amount: 1
+  - Item: 25805
+    Amount: 1
+  - Item: 25806
+    Amount: 1
+  - Item: 25807
+    Amount: 1
+  - Item: 25808
+    Amount: 1
+  - Item: 25842
+    Amount: 1
+  - Item: 25843
+    Amount: 1
+  - Item: 25844
+    Amount: 1
+  - Item: 25845
+    Amount: 1
+  - Item: 25846
+    Amount: 1
+  - Item: 25847
+    Amount: 1
+  - Item: 25848
+    Amount: 1
+  - Item: 25849
+    Amount: 1
+  - Item: 25850
+    Amount: 1
+  - Item: 25851
+    Amount: 1
+  - Item: 25852
+    Amount: 1
+  - Item: 25853
+    Amount: 1
+  - Item: 25854
+    Amount: 1
+  - Item: 25855
+    Amount: 1
+  - Item: 25856
+    Amount: 1
+  - Item: 25857
+    Amount: 1
+  - Item: 25858
+    Amount: 1
+  - Item: 25859
+    Amount: 1
+  - Item: 25860
+    Amount: 1
+  - Item: 25861
+    Amount: 1
+  - Item: 25862
+    Amount: 1
+  - Item: 1000008
+    Amount: 1
+  - Item: 1000009
+    Amount: 1
+  - Item: 1000010
+    Amount: 1
+  - Item: 1000011
+    Amount: 1
+  - Item: 1000012
+    Amount: 1
+  - Item: 1000013
+    Amount: 1
+  - Item: 1000014
+    Amount: 1
+  - Item: 1000015
+    Amount: 1
+  - Item: 1000016
+    Amount: 1
+  - Item: 1000017
+    Amount: 1
+  - Item: 1000018
+    Amount: 1
+  - Item: 1000019
+    Amount: 1
+  Reward: getgroupitem(IG_Costume_Enchant_Stone_Box);
+- Id: 23152 # 수집품뚝딱상자
+  SourceNeeded: 10
+  NeedRefine: 0
+  SourceItem:
+  - Item: 901
+    Amount: 10
+  - Item: 902
+    Amount: 10
+  - Item: 903
+    Amount: 10
+  - Item: 904
+    Amount: 10
+  - Item: 905
+    Amount: 10
+  - Item: 906
+    Amount: 10
+  - Item: 907
+    Amount: 10
+  - Item: 908
+    Amount: 10
+  - Item: 909
+    Amount: 10
+  - Item: 910
+    Amount: 10
+  - Item: 911
+    Amount: 10
+  - Item: 912
+    Amount: 10
+  - Item: 913
+    Amount: 10
+  - Item: 914
+    Amount: 10
+  - Item: 915
+    Amount: 10
+  - Item: 916
+    Amount: 10
+  - Item: 917
+    Amount: 10
+  - Item: 918
+    Amount: 10
+  - Item: 919
+    Amount: 10
+  - Item: 920
+    Amount: 10
+  - Item: 921
+    Amount: 10
+  - Item: 922
+    Amount: 10
+  - Item: 923
+    Amount: 10
+  - Item: 924
+    Amount: 10
+  - Item: 925
+    Amount: 10
+  - Item: 926
+    Amount: 10
+  - Item: 928
+    Amount: 10
+  - Item: 929
+    Amount: 10
+  - Item: 930
+    Amount: 10
+  - Item: 931
+    Amount: 10
+  - Item: 932
+    Amount: 10
+  - Item: 935
+    Amount: 10
+  - Item: 936
+    Amount: 10
+  - Item: 937
+    Amount: 10
+  - Item: 938
+    Amount: 10
+  - Item: 939
+    Amount: 10
+  - Item: 940
+    Amount: 10
+  - Item: 941
+    Amount: 10
+  - Item: 942
+    Amount: 10
+  - Item: 943
+    Amount: 10
+  - Item: 944
+    Amount: 10
+  - Item: 945
+    Amount: 10
+  - Item: 946
+    Amount: 10
+  - Item: 947
+    Amount: 10
+  - Item: 948
+    Amount: 10
+  - Item: 949
+    Amount: 10
+  - Item: 950
+    Amount: 10
+  - Item: 951
+    Amount: 10
+  - Item: 952
+    Amount: 10
+  - Item: 953
+    Amount: 10
+  - Item: 954
+    Amount: 10
+  - Item: 955
+    Amount: 10
+  - Item: 956
+    Amount: 10
+  - Item: 957
+    Amount: 10
+  - Item: 958
+    Amount: 10
+  - Item: 959
+    Amount: 10
+  - Item: 960
+    Amount: 10
+  - Item: 961
+    Amount: 10
+  - Item: 962
+    Amount: 10
+  - Item: 963
+    Amount: 10
+  - Item: 964
+    Amount: 10
+  - Item: 965
+    Amount: 10
+  - Item: 966
+    Amount: 10
+  - Item: 967
+    Amount: 10
+  - Item: 968
+    Amount: 10
+  - Item: 969
+    Amount: 10
+  - Item: 1012
+    Amount: 10
+  - Item: 1013
+    Amount: 10
+  - Item: 1014
+    Amount: 10
+  - Item: 1015
+    Amount: 10
+  - Item: 1016
+    Amount: 10
+  - Item: 1017
+    Amount: 10
+  - Item: 1018
+    Amount: 10
+  - Item: 1019
+    Amount: 10
+  - Item: 1020
+    Amount: 10
+  - Item: 1021
+    Amount: 10
+  - Item: 1022
+    Amount: 10
+  - Item: 1023
+    Amount: 10
+  - Item: 1024
+    Amount: 10
+  - Item: 1025
+    Amount: 10
+  - Item: 1026
+    Amount: 10
+  - Item: 1027
+    Amount: 10
+  - Item: 1028
+    Amount: 10
+  - Item: 1029
+    Amount: 10
+  - Item: 1030
+    Amount: 10
+  - Item: 1031
+    Amount: 10
+  - Item: 1032
+    Amount: 10
+  - Item: 1033
+    Amount: 10
+  - Item: 1034
+    Amount: 10
+  - Item: 1035
+    Amount: 10
+  - Item: 1036
+    Amount: 10
+  - Item: 1037
+    Amount: 10
+  - Item: 1038
+    Amount: 10
+  - Item: 1039
+    Amount: 10
+  - Item: 1040
+    Amount: 10
+  - Item: 1041
+    Amount: 10
+  - Item: 1042
+    Amount: 10
+  - Item: 1043
+    Amount: 10
+  - Item: 1044
+    Amount: 10
+  - Item: 1045
+    Amount: 10
+  - Item: 1046
+    Amount: 10
+  - Item: 1047
+    Amount: 10
+  - Item: 1048
+    Amount: 10
+  - Item: 1049
+    Amount: 10
+  - Item: 1050
+    Amount: 10
+  - Item: 1051
+    Amount: 10
+  - Item: 1052
+    Amount: 10
+  - Item: 1053
+    Amount: 10
+  - Item: 1054
+    Amount: 10
+  - Item: 1055
+    Amount: 10
+  - Item: 1056
+    Amount: 10
+  - Item: 1057
+    Amount: 10
+  - Item: 1058
+    Amount: 10
+  - Item: 1059
+    Amount: 10
+  - Item: 1060
+    Amount: 10
+  - Item: 1061
+    Amount: 10
+  - Item: 1062
+    Amount: 10
+  - Item: 1063
+    Amount: 10
+  - Item: 1064
+    Amount: 10
+  - Item: 1066
+    Amount: 10
+  - Item: 1067
+    Amount: 10
+  - Item: 1068
+    Amount: 10
+  - Item: 1094
+    Amount: 10
+  - Item: 1095
+    Amount: 10
+  - Item: 1096
+    Amount: 10
+  - Item: 1097
+    Amount: 10
+  - Item: 1098
+    Amount: 10
+  - Item: 1099
+    Amount: 10
+  - Item: 4454
+    Amount: 10
+  - Item: 4455
+    Amount: 10
+  - Item: 4478
+    Amount: 10
+  - Item: 4479
+    Amount: 10
+  - Item: 6020
+    Amount: 10
+  - Item: 6021
+    Amount: 10
+  - Item: 6022
+    Amount: 10
+  - Item: 6023
+    Amount: 10
+  - Item: 6321
+    Amount: 10
+  - Item: 6322
+    Amount: 10
+  - Item: 6323
+    Amount: 10
+  - Item: 6324
+    Amount: 10
+  - Item: 6325
+    Amount: 10
+  - Item: 6357
+    Amount: 10
+  - Item: 6496
+    Amount: 10
+  - Item: 7001
+    Amount: 10
+  - Item: 7002
+    Amount: 10
+  - Item: 7003
+    Amount: 10
+  - Item: 7004
+    Amount: 10
+  - Item: 7005
+    Amount: 10
+  - Item: 7006
+    Amount: 10
+  - Item: 7007
+    Amount: 10
+  - Item: 7008
+    Amount: 10
+  - Item: 7009
+    Amount: 10
+  - Item: 7010
+    Amount: 10
+  - Item: 7011
+    Amount: 10
+  - Item: 7012
+    Amount: 10
+  - Item: 7013
+    Amount: 10
+  - Item: 7017
+    Amount: 10
+  - Item: 7030
+    Amount: 10
+  - Item: 7031
+    Amount: 10
+  - Item: 7032
+    Amount: 10
+  - Item: 7033
+    Amount: 10
+  - Item: 7047
+    Amount: 10
+  - Item: 7048
+    Amount: 10
+  - Item: 7053
+    Amount: 10
+  - Item: 7054
+    Amount: 10
+  - Item: 7444
+    Amount: 10
+  - Item: 7751
+    Amount: 10
+  - Item: 7752
+    Amount: 10
+  - Item: 7753
+    Amount: 10
+  - Item: 7754
+    Amount: 10
+  - Item: 6609
+    Amount: 10
+  - Item: 6610
+    Amount: 10
+  - Item: 6648
+    Amount: 10
+  - Item: 6936
+    Amount: 10
+  - Item: 6937
+    Amount: 10
+  - Item: 6938
+    Amount: 10
+  - Item: 6939
+    Amount: 10
+  - Item: 6940
+    Amount: 10
+  - Item: 6941
+    Amount: 10
+  - Item: 6942
+    Amount: 10
+  - Item: 25156
+    Amount: 10
+  - Item: 25157
+    Amount: 10
+  - Item: 25158
+    Amount: 10
+  - Item: 25276
+    Amount: 10
+  - Item: 25277
+    Amount: 10
+  - Item: 25278
+    Amount: 10
+  - Item: 25279
+    Amount: 10
+  - Item: 25280
+    Amount: 10
+  - Item: 25281
+    Amount: 10
+  - Item: 25282
+    Amount: 10
+  - Item: 25283
+    Amount: 10
+  - Item: 25284
+    Amount: 10
+  - Item: 25285
+    Amount: 10
+  - Item: 25297
+    Amount: 10
+  - Item: 25298
+    Amount: 10
+  - Item: 25299
+    Amount: 10
+  - Item: 25300
+    Amount: 10
+  - Item: 25256
+    Amount: 10
+  - Item: 25258
+    Amount: 10
+  - Item: 25259
+    Amount: 10
+  - Item: 25272
+    Amount: 10
+  - Item: 25261
+    Amount: 10
+  - Item: 25262
+    Amount: 10
+  - Item: 25263
+    Amount: 10
+  - Item: 25264
+    Amount: 10
+  - Item: 25265
+    Amount: 10
+  - Item: 25266
+    Amount: 10
+  - Item: 25267
+    Amount: 10
+  - Item: 25311
+    Amount: 10
+  - Item: 25312
+    Amount: 10
+  - Item: 25313
+    Amount: 10
+  Reward: getgroupitem(IG_VioletBox); # TODO
+- Id: 23153 # 펫알뚝딱상자
+  SourceNeeded: 2
+  NeedRefine: 0
+  SourceItem:
+  - Item: 9001
+    Amount: 1
+  - Item: 9002
+    Amount: 1
+  - Item: 9003
+    Amount: 1
+  - Item: 9004
+    Amount: 1
+  - Item: 9005
+    Amount: 1
+  - Item: 9006
+    Amount: 1
+  - Item: 9007
+    Amount: 1
+  - Item: 9008
+    Amount: 1
+  - Item: 9009
+    Amount: 1
+  - Item: 9010
+    Amount: 1
+  - Item: 9011
+    Amount: 1
+  - Item: 9012
+    Amount: 1
+  - Item: 9013
+    Amount: 1
+  - Item: 9014
+    Amount: 1
+  - Item: 9015
+    Amount: 1
+  - Item: 9016
+    Amount: 1
+  - Item: 9017
+    Amount: 1
+  - Item: 9018
+    Amount: 1
+  - Item: 9019
+    Amount: 1
+  - Item: 9020
+    Amount: 1
+  - Item: 9021
+    Amount: 1
+  - Item: 9022
+    Amount: 1
+  - Item: 9023
+    Amount: 1
+  - Item: 9024
+    Amount: 1
+  - Item: 9025
+    Amount: 1
+  - Item: 9026
+    Amount: 1
+  - Item: 9027
+    Amount: 1
+  - Item: 9028
+    Amount: 1
+  - Item: 9029
+    Amount: 1
+  - Item: 9030
+    Amount: 1
+  - Item: 9031
+    Amount: 1
+  - Item: 9032
+    Amount: 1
+  - Item: 9033
+    Amount: 1
+  - Item: 9034
+    Amount: 1
+  - Item: 9035
+    Amount: 1
+  - Item: 9036
+    Amount: 1
+  - Item: 9037
+    Amount: 1
+  - Item: 9038
+    Amount: 1
+  - Item: 9039
+    Amount: 1
+  - Item: 9040
+    Amount: 1
+  - Item: 9042
+    Amount: 1
+  - Item: 9043
+    Amount: 1
+  - Item: 9044
+    Amount: 1
+  - Item: 9045
+    Amount: 1
+  - Item: 9046
+    Amount: 1
+  - Item: 9047
+    Amount: 1
+  - Item: 9049
+    Amount: 1
+  - Item: 9050
+    Amount: 1
+  - Item: 9051
+    Amount: 1
+  - Item: 9052
+    Amount: 1
+  - Item: 9053
+    Amount: 1
+  - Item: 9054
+    Amount: 1
+  - Item: 9055
+    Amount: 1
+  - Item: 9056
+    Amount: 1
+  - Item: 9057
+    Amount: 1
+  - Item: 9058
+    Amount: 1
+  - Item: 9059
+    Amount: 1
+  - Item: 9060
+    Amount: 1
+  - Item: 9061
+    Amount: 1
+  - Item: 9063
+    Amount: 1
+  - Item: 9068
+    Amount: 1
+  - Item: 9095
+    Amount: 1
+  - Item: 9099
+    Amount: 1
+  - Item: 9104
+    Amount: 1
+  - Item: 9103
+    Amount: 1
+  - Item: 9100
+    Amount: 1
+  - Item: 9102
+    Amount: 1
+  - Item: 9101
+    Amount: 1
+  - Item: 9048
+    Amount: 1
+  - Item: 9041
+    Amount: 1
+  Reward: getitem(12105,1);
+- Id: 23154 # 냥다래의상뚝딱상자
+  SourceNeeded: 1
+  NeedRefine: 0
+  SourceItem:
+  - Item: 19876
+    Amount: 1
+  - Item: 19654
+    Amount: 1
+  - Item: 19608
+    Amount: 1
+  - Item: 19712
+    Amount: 1
+  - Item: 20145
+    Amount: 1
+  - Item: 19721
+    Amount: 1
+  - Item: 20146
+    Amount: 1
+  - Item: 19823
+    Amount: 1
+  - Item: 20036
+    Amount: 1
+  - Item: 20147
+    Amount: 1
+  - Item: 20746
+    Amount: 1
+  - Item: 19643
+    Amount: 1
+  - Item: 20199
+    Amount: 1
+  - Item: 20200
+    Amount: 1
+  - Item: 20201
+    Amount: 1
+  - Item: 20202
+    Amount: 1
+  - Item: 20761
+    Amount: 1
+  - Item: 20132
+    Amount: 1
+  - Item: 20130
+    Amount: 1
+  - Item: 20133
+    Amount: 1
+  - Item: 20230
+    Amount: 1
+  - Item: 20231
+    Amount: 1
+  - Item: 20232
+    Amount: 1
+  - Item: 20233
+    Amount: 1
+  - Item: 20273
+    Amount: 1
+  - Item: 20242
+    Amount: 1
+  - Item: 20762
+    Amount: 1
+  - Item: 20239
+    Amount: 1
+  - Item: 20071
+    Amount: 1
+  - Item: 19954
+    Amount: 1
+  - Item: 19815
+    Amount: 1
+  - Item: 20268
+    Amount: 1
+  - Item: 18740
+    Amount: 1
+  - Item: 20266
+    Amount: 1
+  - Item: 20255
+    Amount: 1
+  - Item: 20329
+    Amount: 1
+  - Item: 20330
+    Amount: 1
+  - Item: 20286
+    Amount: 1
+  - Item: 20349
+    Amount: 1
+  - Item: 20299
+    Amount: 1
+  - Item: 20300
+    Amount: 1
+  - Item: 20315
+    Amount: 1
+  - Item: 20350
+    Amount: 1
+  - Item: 20351
+    Amount: 1
+  - Item: 20352
+    Amount: 1
+  - Item: 20353
+    Amount: 1
+  - Item: 20354
+    Amount: 1
+  - Item: 20355
+    Amount: 1
+  - Item: 20356
+    Amount: 1
+  - Item: 20341
+    Amount: 1
+  - Item: 20357
+    Amount: 1
+  - Item: 20358
+    Amount: 1
+  - Item: 20359
+    Amount: 1
+  - Item: 20360
+    Amount: 1
+  - Item: 20361
+    Amount: 1
+  - Item: 20362
+    Amount: 1
+  - Item: 20363
+    Amount: 1
+  - Item: 20340
+    Amount: 1
+  - Item: 20364
+    Amount: 1
+  - Item: 20365
+    Amount: 1
+  - Item: 20366
+    Amount: 1
+  - Item: 20367
+    Amount: 1
+  - Item: 20368
+    Amount: 1
+  - Item: 20369
+    Amount: 1
+  - Item: 20370
+    Amount: 1
+  - Item: 20342
+    Amount: 1
+  - Item: 20504
+    Amount: 1
+  - Item: 19816
+    Amount: 1
+  - Item: 20396
+    Amount: 1
+  - Item: 20325
+    Amount: 1
+  - Item: 5979
+    Amount: 1
+  - Item: 20398
+    Amount: 1
+  - Item: 20399
+    Amount: 1
+  - Item: 20172
+    Amount: 1
+  - Item: 20405
+    Amount: 1
+  - Item: 20404
+    Amount: 1
+  - Item: 19761
+    Amount: 1
+  - Item: 20447
+    Amount: 1
+  - Item: 20458
+    Amount: 1
+  - Item: 20459
+    Amount: 1
+  - Item: 20433
+    Amount: 1
+  - Item: 20507
+    Amount: 1
+  - Item: 20430
+    Amount: 1
+  - Item: 20464
+    Amount: 1
+  - Item: 20432
+    Amount: 1
+  - Item: 20491
+    Amount: 1
+  - Item: 20502
+    Amount: 1
+  - Item: 20440
+    Amount: 1
+  - Item: 31087
+    Amount: 1
+  - Item: 31088
+    Amount: 1
+  - Item: 20448
+    Amount: 1
+  - Item: 20487
+    Amount: 1
+  - Item: 19158
+    Amount: 1
+  - Item: 20489
+    Amount: 1
+  - Item: 20318
+    Amount: 1
+  - Item: 20509
+    Amount: 1
+  - Item: 31029
+    Amount: 1
+  - Item: 20499
+    Amount: 1
+  - Item: 5909
+    Amount: 1
+  - Item: 31057
+    Amount: 1
+  - Item: 31062
+    Amount: 1
+  - Item: 31125
+    Amount: 1
+  - Item: 31118
+    Amount: 1
+  - Item: 31120
+    Amount: 1
+  - Item: 31123
+    Amount: 1
+  - Item: 31040
+    Amount: 1
+  - Item: 20381
+    Amount: 1
+  - Item: 31055
+    Amount: 1
+  - Item: 20510
+    Amount: 1
+  - Item: 31063
+    Amount: 1
+  - Item: 31064
+    Amount: 1
+  - Item: 31065
+    Amount: 1
+  - Item: 31066
+    Amount: 1
+  - Item: 31067
+    Amount: 1
+  - Item: 31068
+    Amount: 1
+  - Item: 31069
+    Amount: 1
+  - Item: 31070
+    Amount: 1
+  - Item: 31071
+    Amount: 1
+  - Item: 31072
+    Amount: 1
+  - Item: 31073
+    Amount: 1
+  - Item: 31074
+    Amount: 1
+  - Item: 31075
+    Amount: 1
+  - Item: 31076
+    Amount: 1
+  - Item: 31077
+    Amount: 1
+  - Item: 31078
+    Amount: 1
+  - Item: 31079
+    Amount: 1
+  - Item: 31080
+    Amount: 1
+  - Item: 31081
+    Amount: 1
+  - Item: 31082
+    Amount: 1
+  - Item: 31083
+    Amount: 1
+  - Item: 31084
+    Amount: 1
+  - Item: 31085
+    Amount: 1
+  - Item: 31086
+    Amount: 1
+  - Item: 31165
+    Amount: 1
+  - Item: 31160
+    Amount: 1
+  - Item: 31162
+    Amount: 1
+  - Item: 20511
+    Amount: 1
+  - Item: 31186
+    Amount: 1
+  - Item: 20449
+    Amount: 1
+  - Item: 20263
+    Amount: 1
+  - Item: 20195
+    Amount: 1
+  - Item: 20514
+    Amount: 1
+  - Item: 31300
+    Amount: 1
+  - Item: 31136
+    Amount: 1
+  - Item: 31134
+    Amount: 1
+  - Item: 31178
+    Amount: 1
+  - Item: 31166
+    Amount: 1
+  - Item: 31168
+    Amount: 1
+  - Item: 31164
+    Amount: 1
+  - Item: 31397
+    Amount: 1
+  - Item: 31031
+    Amount: 1
+  - Item: 31033
+    Amount: 1
+  - Item: 20488
+    Amount: 1
+  - Item: 31329
+    Amount: 1
+  - Item: 31332
+    Amount: 1
+  - Item: 31415
+    Amount: 1
+  - Item: 20516
+    Amount: 1
+  - Item: 31180
+    Amount: 1
+  - Item: 19294
+    Amount: 1
+  - Item: 19289
+    Amount: 1
+  - Item: 19291
+    Amount: 1
+  - Item: 20515
+    Amount: 1
+  - Item: 19992
+    Amount: 1
+  - Item: 19959
+    Amount: 1
+  - Item: 19960
+    Amount: 1
+  - Item: 31396
+    Amount: 1
+  - Item: 31437
+    Amount: 1
+  - Item: 31439
+    Amount: 1
+  - Item: 20765
+    Amount: 1
+  - Item: 20517
+    Amount: 1
+  - Item: 31432
+    Amount: 1
+  - Item: 31314
+    Amount: 1
+  - Item: 31460
+    Amount: 1
+  - Item: 31398
+    Amount: 1
+  - Item: 31489
+    Amount: 1
+  - Item: 31490
+    Amount: 1
+  - Item: 31529
+    Amount: 1
+  - Item: 20533
+    Amount: 1
+  - Item: 20171
+    Amount: 1
+  - Item: 20482
+    Amount: 1
+  - Item: 20033
+    Amount: 1
+  - Item: 20535
+    Amount: 1
+  - Item: 31139
+    Amount: 1
+  - Item: 31606
+    Amount: 1
+  - Item: 31249
+    Amount: 1
+  - Item: 20543
+    Amount: 1
+  - Item: 20174
+    Amount: 1
+  - Item: 20098
+    Amount: 1
+  - Item: 20395
+    Amount: 1
+  - Item: 20175
+    Amount: 1
+  - Item: 31565
+    Amount: 1
+  - Item: 31586
+    Amount: 1
+  - Item: 31625
+    Amount: 1
+  - Item: 20546
+    Amount: 1
+  - Item: 20764
+    Amount: 1
+  - Item: 19990
+    Amount: 1
+  - Item: 31440
+    Amount: 1
+  - Item: 31693
+    Amount: 1
+  - Item: 31616
+    Amount: 1
+  - Item: 20570
+    Amount: 1
+  - Item: 31382
+    Amount: 1
+  - Item: 31481
+    Amount: 1
+  - Item: 31624
+    Amount: 1
+  - Item: 20486
+    Amount: 1
+  - Item: 20257
+    Amount: 1
+  - Item: 31699
+    Amount: 1
+  - Item: 20572
+    Amount: 1
+  - Item: 31600
+    Amount: 1
+  - Item: 31512
+    Amount: 1
+  - Item: 20519
+    Amount: 1
+  - Item: 31614
+    Amount: 1
+  Reward: getgroupitem(IG_Costume_Exchange_Box);

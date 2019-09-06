@@ -34,6 +34,8 @@
 #include "instance.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp" // MAX_ITEMGROUP
+#include "item_synthesis.hpp"
+#include "item_upgrade.hpp"
 #include "log.hpp"
 #include "mail.hpp"
 #include "map.hpp"
@@ -934,7 +936,7 @@ ACMD_FUNC(storage)
 {
 	nullpo_retr(-1, sd);
 
-	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading || sd->state.storage_flag)
+	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading || sd->state.storage_flag ||sd->state.lapine_ui)
 		return -1;
 
 	if (storage_storageopen(sd) == 1)
@@ -956,7 +958,7 @@ ACMD_FUNC(guildstorage)
 {
 	nullpo_retr(-1, sd);
 
-	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading)
+	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading || sd->state.lapine_ui)
 		return -1;
 
 	switch (storage_guild_storageopen(sd)) {
@@ -3943,6 +3945,12 @@ ACMD_FUNC(reload) {
 	} else if (strstr(command, "achievementdb") || strncmp(message, "achievementdb", 4) == 0) {
 		achievement_db_reload();
 		clif_displaymessage(fd, msg_txt(sd,771)); // Achievement database has been reloaded.
+	} else if (strstr(command, "synthesisdb") || strncmp(message, "synthesisdb", 6) == 0) {
+		item_synthesis_db_reload();
+		clif_displaymessage(fd, msg_txt(sd, 795)); // Item Synthesis database has been reloaded.
+	} else if (strstr(command, "upgradedb") || strncmp(message, "upgradedb", 6) == 0) {
+		item_upgrade_db_reload();
+		clif_displaymessage(fd, msg_txt(sd, 796)); // Item Upgrade database has been reloaded.
 	}
 
 	return 0;
@@ -10056,6 +10064,38 @@ ACMD_FUNC(resurrect) {
 	return 0;
 }
 
+ACMD_FUNC(synthesisui) {
+	nullpo_retr(-1, sd);
+
+#if PACKETVER >= 20160525
+	unsigned int itemid;
+	if (sscanf(message, "%u", &itemid) < 1) {
+		clif_displaymessage(fd, "Please input itemid of synthesis id.");
+		return -1;
+	}
+	item_synthesis_open(sd, itemid);
+#else
+	clif_displaymessage(fd, "Client is not supported.");
+#endif
+	return 0;
+}
+
+ACMD_FUNC(upgradeui) {
+	nullpo_retr(-1, sd);
+
+#if PACKETVER >= 20160525
+	unsigned int itemid;
+	if (sscanf(message, "%u", &itemid) < 1) {
+		clif_displaymessage(fd, "Please input itemid of upgrade id.");
+		return -1;
+	}
+	item_upgrade_open(sd, itemid);
+#else
+	clif_displaymessage(fd, "Client is not supported.");
+#endif
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10357,6 +10397,8 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(resurrect, ATCMD_NOCONSOLE),
+		ACMD_DEFR(synthesisui, ATCMD_NOCONSOLE | ATCMD_NOAUTOTRADE),
+		ACMD_DEFR(upgradeui, ATCMD_NOCONSOLE | ATCMD_NOAUTOTRADE),
 	};
 	AtCommandInfo* atcommand;
 	int i;

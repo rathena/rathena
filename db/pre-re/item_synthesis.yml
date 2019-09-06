@@ -1,0 +1,19 @@
+###########################################################################
+# 
+# Item Synthesis Database
+#
+# This feature need a sync client file: LapineDdukDDakBox.lub
+#
+###########################################################################
+# - Id:                 # (int) Item ID of synthesis box
+#   NeedRefine:         # (int) Minimum refine level for source item
+#   SourceNeeded:       # (int) Number of item sets (in SourceItem) must be selected
+#   SourceItem:         # List of item required
+#     - Item:           # (int) Item ID for source
+#     - Amount:         # (int) Item amount will be consumed
+#   Reward:             # (string) Script on synthesis success
+###########################################################################
+
+Header:
+  Type: ITEM_SYNTHESIS_DB
+  Version: 1

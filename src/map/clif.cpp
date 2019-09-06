@@ -38,6 +38,8 @@
 #include "instance.hpp"
 #include "intif.hpp"
 #include "itemdb.hpp"
+#include "item_synthesis.hpp"
+#include "item_upgrade.hpp"
 #include "log.hpp"
 #include "mail.hpp"
 #include "map.hpp"
@@ -20888,6 +20890,246 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 	}
 
 	pc_equipitem( sd, index, pc_equippoint(sd, index), true );
+#endif
+}
+
+bool clif_synthesisui_open(struct map_session_data *sd, unsigned int itemid) {
+#if PACKETVER >= 20160525
+	nullpo_retr(false, sd);
+
+	unsigned char buf[8] = { '\0' };
+	unsigned short cmd = 0;
+	s_packet_db *info = NULL;
+
+	if (!(cmd = packet_db_ack[ZC_LAPINE_SYNTHESIS_OPEN]))
+		return false;
+
+	if (!(info = &packet_db[cmd]) || info->len == 0)
+		return false;
+
+	WBUFW(buf, 0) = cmd;
+#if PACKETVER >= 20181121
+	WBUFL(buf, info->pos[0]) = itemid;
+#else
+	WBUFW(buf, info->pos[0]) = (uint16)itemid;
+#endif
+
+	clif_send(buf, info->len, &sd->bl, SELF);
+	return true;
+#else
+	return false;
+#endif
+}
+
+void clif_synthesisui_result(struct map_session_data *sd, e_item_synthesis_result result) {
+#if PACKETVER >= 20160525
+	nullpo_retv(sd);
+
+	unsigned char buf[4] = { '\0' };
+	unsigned short cmd = 0;
+	s_packet_db *info = NULL;
+
+	if (!(cmd = packet_db_ack[ZC_LAPINE_SYNTHESIS_RESULT]))
+		return;
+
+	if (!(info = &packet_db[cmd]) || info->len == 0)
+		return;
+
+	WBUFW(buf, 0) = cmd;
+	WBUFW(buf, info->pos[0]) = result;
+
+	clif_send(buf, info->len, &sd->bl, SELF);
+#endif
+}
+
+void clif_parse_lapineSynthesis_submit(int fd, struct map_session_data* sd) {
+#if PACKETVER >= 20160525
+	nullpo_retv(sd);
+
+	if (pc_istrading(sd)) {
+		clif_synthesisui_result(sd, SYNTHESIS_INVALID_ITEM);
+		return;
+	}
+
+	if (sd->state.lapine_ui != 1) {
+		set_eof(sd->fd);
+		return;
+	}
+
+	s_packet_db* info = &packet_db[RFIFOW(fd, 0)];
+
+	if (!info) {
+		set_eof(sd->fd);
+		return;
+	}
+
+	int len = RFIFOW(fd, info->pos[0]), i = 0, n = (len - info->pos[2]) / info->pos[3];
+#if PACKETVER >= 20181121
+	unsigned int itemid = RFIFOL(fd, info->pos[1]);
+#else
+	unsigned int itemid = RFIFOW(fd, info->pos[1]);
+#endif
+	item_data *id;
+
+	if (n < 1 || n > MAX_SYNTHESIS_SOURCES || sd->last_lapine_box != itemid || !(id = itemdb_exists(itemid))) {
+		//clif_synthesisui_result(sd, SYNTHESIS_INVALID_ITEM);
+		set_eof(sd->fd);
+		return;
+	}
+
+	if (id->flag.delay_consume) {
+		item *it;
+		if (sd->itemindex == -1 || sd->itemid == -1 || !(it = &sd->inventory.u.items_inventory[sd->itemindex]) || it->nameid != itemid) {
+			//clif_synthesisui_result(sd, SYNTHESIS_INVALID_ITEM);
+			set_eof(sd->fd);
+			return;
+		}
+		pc_delitem(sd, sd->itemindex, 1, 0, 0, LOG_TYPE_CONSUME);
+	}
+
+	std::vector<s_item_synthesis_list> items;
+
+	for (; i < n; i++) {
+		int index = RFIFOW(fd, info->pos[2] + i * info->pos[3]) - 2;
+		int amount = RFIFOW(fd, info->pos[2] + i * info->pos[3] + 2);
+
+		if (amount < 1 || index < 0 || index >= MAX_INVENTORY) {
+			//clif_synthesisui_result(sd, SYNTHESIS_INVALID_ITEM);
+			set_eof(sd->fd);
+			return;
+		}
+
+		s_item_synthesis_list item;
+		item.index = (uint16)index;
+		item.amount = (uint16)amount;
+		items.push_back(item);
+	}
+
+	clif_synthesisui_result(sd, item_synthesis_submit(sd, itemid, items));
+	sd->itemid = sd->itemindex = -1;
+#endif
+}
+
+void clif_parse_lapineSynthesis_close(int fd, struct map_session_data* sd) {
+#if PACKETVER >= 20160525
+	nullpo_retv(sd);
+	sd->state.lapine_ui = 0;
+	sd->last_lapine_box = 0;
+#endif
+}
+
+bool clif_lapine_upgrade_open(struct map_session_data *sd, unsigned int itemid) {
+#if PACKETVER >= 20160525
+	nullpo_retr(false, sd);
+
+	unsigned char buf[8] = { '\0' };
+	unsigned short cmd = 0;
+	s_packet_db *info = NULL;
+
+	if (!(cmd = packet_db_ack[ZC_LAPINE_UPGRADE_OPEN]))
+		return false;
+
+	if (!(info = &packet_db[cmd]) || info->len == 0)
+		return false;
+
+	WBUFW(buf, 0) = cmd;
+#if PACKETVER >= 20181121
+	WBUFL(buf, info->pos[0]) = itemid;
+#else
+	WBUFW(buf, info->pos[0]) = (uint16)itemid;
+#endif
+
+	clif_send(buf, info->len, &sd->bl, SELF);
+	return true;
+#else
+	return false;
+#endif
+}
+
+void clif_lapine_upgrade_result(struct map_session_data *sd, e_item_upgrade_result result) {
+#if PACKETVER >= 20160525
+	nullpo_retv(sd);
+
+	unsigned char buf[4] = { '\0' };
+	unsigned short cmd = 0;
+	s_packet_db *info = NULL;
+
+	if (!(cmd = packet_db_ack[ZC_LAPINE_UPGRADE_RESULT]))
+		return;
+
+	if (!(info = &packet_db[cmd]) || info->len == 0)
+		return;
+
+	WBUFW(buf, 0) = cmd;
+	WBUFW(buf, info->pos[0]) = result;
+
+	clif_send(buf, info->len, &sd->bl, SELF);
+#endif
+}
+
+void clif_parse_lapineUpgrade_submit(int fd, struct map_session_data* sd) {
+#if PACKETVER >= 20160525
+	nullpo_retv(sd);
+
+	if (pc_istrading(sd)) {
+		clif_lapine_upgrade_result(sd, LAPINE_UPRAGDE_FAILURE);
+		return;
+	}
+
+	if (sd->state.lapine_ui != 2) {
+		set_eof(sd->fd);
+		return;
+	}
+
+	s_packet_db* info = &packet_db[RFIFOW(fd, 0)];
+
+	if (!info) {
+		set_eof(sd->fd);
+		return;
+	}
+
+	short index = RFIFOW(fd, info->pos[1]) - 2;
+	unsigned int itemid;
+#if PACKETVER >= 20181121
+	itemid = RFIFOL(fd, info->pos[0]);
+#else
+	itemid = RFIFOW(fd, info->pos[0]);
+#endif
+
+#ifndef ITEMID_INT32_SUPPORTED
+	if (itemid >= UINT16_MAX) {
+		set_eof(sd->fd);
+		return;
+	}
+#endif
+
+	item_data *id;
+
+	if (sd->last_lapine_box != itemid || index < 0 || index >= MAX_INVENTORY || !(id = itemdb_search(sd->last_lapine_box))) {
+		//clif_lapine_upgrade_result(sd, LAPINE_UPRAGDE_FAILURE);
+		set_eof(sd->fd);
+		return;
+	}
+
+	if (id->flag.delay_consume) {
+		if (sd->itemindex == -1 || sd->itemid == -1) {
+			//clif_lapine_upgrade_result(sd, LAPINE_UPRAGDE_FAILURE);
+			set_eof(sd->fd);
+			return;
+		}
+		pc_delitem(sd, sd->itemindex, 1, 0, 0, LOG_TYPE_CONSUME);
+	}
+
+	clif_lapine_upgrade_result(sd, item_upgrade_submit(sd, itemid, index));
+	sd->itemid = sd->itemindex = -1;
+#endif
+}
+
+void clif_parse_lapineUpgrade_close(int fd, struct map_session_data* sd) {
+#if PACKETVER >= 20160525
+	nullpo_retv(sd);
+	sd->state.lapine_ui = 0;
+	sd->last_lapine_box = 0;
 #endif
 }
 

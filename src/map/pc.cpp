@@ -8519,6 +8519,8 @@ int pc_readparam(struct map_session_data* sd,int type)
 #else
 			val = sd->castrate; break;
 #endif
+		case SP_LAST_LAPINE_UPGRADE_ITEM: val = sd->last_lapine_upgrade_item; break;
+		case SP_LAST_LAPINE_UPGRADE_INDEX: val = sd->last_lapine_upgrade_index; break;
 		default:
 			ShowError("pc_readparam: Attempt to read unknown parameter '%d'.\n", type);
 			return -1;
@@ -8741,6 +8743,12 @@ bool pc_setparam(struct map_session_data *sd,int type,int val)
 		val = cap_value(val, 0, 1999);
 		sd->cook_mastery = val;
 		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery);
+		return true;
+	case SP_LAST_LAPINE_UPGRADE_ITEM:
+		sd->last_lapine_upgrade_item = val;
+		return true;
+	case SP_LAST_LAPINE_UPGRADE_INDEX:
+		sd->last_lapine_upgrade_index = val;
 		return true;
 	default:
 		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);

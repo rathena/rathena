@@ -4675,3 +4675,1063 @@ IG_Santa_Gift,14586,500,5,1,0,0,0	// 5x Spark_Candy
 IG_Santa_Gift,12350,500,5,1,0,0,0	// 5x Angeling_Potion
 IG_Santa_Gift,12710,500,5,1,0,0,0	// 5x Guyak_Pudding
 IG_Santa_Gift,12259,500,2,1,0,0,0	// 2x Miracle_Medicine
+
+IG_Bs_Sha_M_S_1,24038,1,1,1,0,0,0 // 바이탈 슈즈 쉐도우
+IG_Bs_Sha_M_S_1,24044,1,1,1,0,0,0 // 바이탈 쉴드 쉐도우
+IG_Bs_Sha_M_S_1,24041,1,1,1,0,0,0 // 파워 펜던트 쉐도우
+IG_Bs_Sha_M_S_1,24035,1,1,1,0,0,0 // 파워 이어링 쉐도우
+IG_Bs_Sha_M_S_1,24036,1,1,1,0,0,0 // 인트 펜던트 쉐도우
+IG_Bs_Sha_M_S_1,24042,1,1,1,0,0,0 // 인트 이어링 쉐도우
+IG_Bs_Sha_M_S_1,24043,1,1,1,0,0,0 // 덱스터러스 웨폰 쉐도우
+IG_Bs_Sha_M_S_1,24037,1,1,1,0,0,0 // 덱스터러스 아머 쉐도우
+IG_Bs_Sha_M_S_1,24045,1,1,1,0,0,0 // 어틀레틱 슈즈 쉐도우
+IG_Bs_Sha_M_S_1,24039,1,1,1,0,0,0 // 어틀레틱 쉴드 쉐도우
+IG_Bs_Sha_M_S_1,24034,1,1,1,0,0,0 // 럭키 웨폰 쉐도우
+IG_Bs_Sha_M_S_1,24040,1,1,1,0,0,0 // 럭키 아머 쉐도우
+
+IG_Bs_Sha_M_S_17,24365,1,1,1,0,0,0 // 엘레강트 펜던트 쉐도우
+IG_Bs_Sha_M_S_17,24364,1,1,1,0,0,0 // 엘레강트 이어링 쉐도우
+IG_Bs_Sha_M_S_17,24363,1,1,1,0,0,0 // 엘레강트 웨폰 쉐도우
+
+IG_Bs_Sha_M_S_18,24362,1,1,1,0,0,0 // 텐션 펜던트 쉐도우
+IG_Bs_Sha_M_S_18,24361,1,1,1,0,0,0 // 텐션 이어링 쉐도우
+IG_Bs_Sha_M_S_18,24360,1,1,1,0,0,0 // 텐션 웨폰 쉐도우
+
+IG_Bs_Sha_M_S_19,24369,1,1,1,0,0,0 // 리스토어 펜던트 쉐도우
+IG_Bs_Sha_M_S_19,24368,1,1,1,0,0,0 // 리스토어 이어링 쉐도우
+
+IG_Bs_Sha_M_S_20,24366,1,1,1,0,0,0 // 힐링 쉴드 쉐도우
+IG_Bs_Sha_M_S_20,24367,1,1,1,0,0,0 // 힐링 슈즈 쉐도우
+IG_Bs_Sha_M_S_20,24033,1,1,1,0,0,0 // 힐링 웨폰 쉐도우
+
+IG_Bs_Item_M_S_12,20844,1,1,1,0,0,0 // 사탕 주머니 가방(마법)
+IG_Bs_Item_M_S_12,20843,1,1,1,0,0,0 // 사탕 주머니 가방(원거리)
+IG_Bs_Item_M_S_12,20842,1,1,1,0,0,0 // 사탕 주머니 가방(물리)
+
+IG_Bs_Item_M_S_15,19267,1,1,1,0,0,0 // 서바이벌 오브
+IG_Bs_Item_M_S_15,19266,1,1,1,0,0,0 // 서바이벌 서클릿
+
+IG_Bs_Sha_M_S_5,24112,1,1,1,0,0,0 // 스펠플로우 아머 쉐도우
+IG_Bs_Sha_M_S_5,24111,1,1,1,0,0,0 // 스펠플로우 슈즈 쉐도우
+IG_Bs_Sha_M_S_5,24113,1,1,1,0,0,0 // 스펠플로우 쉴드 쉐도우
+IG_Bs_Sha_M_S_5,24110,1,1,1,0,0,0 // 캐스터 웨폰 쉐도우
+IG_Bs_Sha_M_S_5,24048,1,1,1,0,0,0 // 캐스터 펜던트 쉐도우
+IG_Bs_Sha_M_S_5,24109,1,1,1,0,0,0 // 캐스터 이어링 쉐도우
+IG_Bs_Sha_M_S_5,24242,1,1,1,0,0,0 // 캐스터 아머 쉐도우
+IG_Bs_Sha_M_S_5,24240,1,1,1,0,0,0 // 캐스터 슈즈 쉐도우
+IG_Bs_Sha_M_S_5,24241,1,1,1,0,0,0 // 캐스터 쉴드 쉐도우
+
+IG_Bs_Sha_M_S_6,24072,1,1,1,0,0,0 // 빅 아머 쉐도우
+IG_Bs_Sha_M_S_6,24073,1,1,1,0,0,0 // 미디움 아머 쉐도우
+IG_Bs_Sha_M_S_6,24074,1,1,1,0,0,0 // 스몰 아머 쉐도우
+IG_Bs_Sha_M_S_6,24075,1,1,1,0,0,0 // 빅 웨폰 쉐도우
+IG_Bs_Sha_M_S_6,24076,1,1,1,0,0,0 // 미디움 웨폰 쉐도우
+IG_Bs_Sha_M_S_6,24077,1,1,1,0,0,0 // 스몰 웨폰 쉐도우
+IG_Bs_Sha_M_S_6,24235,1,1,1,0,0,0 // 타이탄 펜던트 쉐도우
+IG_Bs_Sha_M_S_6,24234,1,1,1,0,0,0 // 타이탄 이어링 쉐도우
+IG_Bs_Sha_M_S_6,24237,1,1,1,0,0,0 // 보운드 펜던트 쉐도우
+IG_Bs_Sha_M_S_6,24236,1,1,1,0,0,0 // 보운드 이어링 쉐도우
+IG_Bs_Sha_M_S_6,24239,1,1,1,0,0,0 // 기간틱 펜던트 쉐도우
+IG_Bs_Sha_M_S_6,24238,1,1,1,0,0,0 // 기간틱 이어링 쉐도우
+
+IG_Bs_Sha_M_S_7,24056,1,1,1,0,0,0 // 호머즈 쉴드 쉐도우
+IG_Bs_Sha_M_S_7,24055,1,1,1,0,0,0 // 가간츄어 쉴드 쉐도우
+IG_Bs_Sha_M_S_7,24053,1,1,1,0,0,0 // 세이프가드 쉴드 쉐도우
+IG_Bs_Sha_M_S_7,24054,1,1,1,0,0,0 // 브루털 쉴드 쉐도우
+IG_Bs_Sha_M_S_7,24052,1,1,1,0,0,0 // 크레이니얼 쉴드 쉐도우
+IG_Bs_Sha_M_S_7,24057,1,1,1,0,0,0 // 드라군 쉴드 쉐도우
+IG_Bs_Sha_M_S_7,24058,1,1,1,0,0,0 // 사타닉 쉴드 쉐도우
+IG_Bs_Sha_M_S_7,24059,1,1,1,0,0,0 // 프레임가드 쉴드쉐도우
+IG_Bs_Sha_M_S_7,24060,1,1,1,0,0,0 // 레퀴엠 쉴드 쉐도우
+IG_Bs_Sha_M_S_7,24061,1,1,1,0,0,0 // 카디 쉴드 쉐도우
+IG_Bs_Sha_M_S_7,24071,1,1,1,0,0,0 // 드라군 슈즈 쉐도우
+IG_Bs_Sha_M_S_7,24064,1,1,1,0,0,0 // 케미컬 슈즈 쉐도우
+IG_Bs_Sha_M_S_7,24068,1,1,1,0,0,0 // 세라핌 슈즈 쉐도우
+IG_Bs_Sha_M_S_7,24069,1,1,1,0,0,0 // 비홀더 슈즈 쉐도우
+IG_Bs_Sha_M_S_7,24070,1,1,1,0,0,0 // 디바인 슈즈 쉐도우
+IG_Bs_Sha_M_S_7,24062,1,1,1,0,0,0 // 블러디 슈즈 쉐도우
+IG_Bs_Sha_M_S_7,24063,1,1,1,0,0,0 // 리버레이션 슈즈 쉐도우
+IG_Bs_Sha_M_S_7,24065,1,1,1,0,0,0 // 클래머러스 슈즈 쉐도우
+IG_Bs_Sha_M_S_7,24066,1,1,1,0,0,0 // 인섹티사이드 슈즈 쉐도우
+IG_Bs_Sha_M_S_7,24067,1,1,1,0,0,0 // 피셔 슈즈 쉐도우
+
+IG_Bs_Sha_M_S_8,24090,1,1,1,0,0,0 // 스테빌리티 쉴드 쉐도우
+IG_Bs_Sha_M_S_8,24091,1,1,1,0,0,0 // 플라스터러즈 아머 쉐도우
+IG_Bs_Sha_M_S_8,24092,1,1,1,0,0,0 // 플라스터러즈 슈즈 쉐도우
+IG_Bs_Sha_M_S_8,24093,1,1,1,0,0,0 // 인솜니악 아머 쉐도우
+IG_Bs_Sha_M_S_8,24094,1,1,1,0,0,0 // 인솜니악 슈즈 쉐도우
+IG_Bs_Sha_M_S_8,24095,1,1,1,0,0,0 // 피어리스 아머 쉐도우
+IG_Bs_Sha_M_S_8,24096,1,1,1,0,0,0 // 피어리스 슈즈 쉐도우
+IG_Bs_Sha_M_S_8,24097,1,1,1,0,0,0 // 애듀레이트 아머 쉐도우
+IG_Bs_Sha_M_S_8,24098,1,1,1,0,0,0 // 애듀레이트 슈즈 쉐도우
+IG_Bs_Sha_M_S_8,24099,1,1,1,0,0,0 // 언프리징 웨폰 쉐도우
+IG_Bs_Sha_M_S_8,24100,1,1,1,0,0,0 // 언프리징 이어링 쉐도우
+IG_Bs_Sha_M_S_8,24101,1,1,1,0,0,0 // 언프리징 펜던트 쉐도우
+IG_Bs_Sha_M_S_8,24104,1,1,1,0,0,0 // 뉴트럴 웨폰 쉐도우
+IG_Bs_Sha_M_S_8,24105,1,1,1,0,0,0 // 뉴트럴 이어링 쉐도우
+IG_Bs_Sha_M_S_8,24106,1,1,1,0,0,0 // 뉴트럴 펜던트 쉐도우
+IG_Bs_Sha_M_S_8,24107,1,1,1,0,0,0 // 언커즈 이어링 쉐도우
+IG_Bs_Sha_M_S_8,24108,1,1,1,0,0,0 // 언커즈 펜던트 쉐도우
+IG_Bs_Sha_M_S_8,24102,1,1,1,0,0,0 // 바이탈리티 이어링 쉐도우
+IG_Bs_Sha_M_S_8,24103,1,1,1,0,0,0 // 바이탈리티 펜던트 쉐도우
+
+IG_Bs_Sha_M_S_13,24031,1,1,1,0,0,0 // 킹버드 웨폰 쉐도우
+IG_Bs_Sha_M_S_13,24032,1,1,1,0,0,0 // 크리히트 웨폰 쉐도우
+IG_Bs_Sha_M_S_13,24033,1,1,1,0,0,0 // 힐링 웨폰 쉐도우
+IG_Bs_Sha_M_S_13,24029,1,1,1,0,0,0 // 에이션트 아머 쉐도우
+IG_Bs_Sha_M_S_13,24030,1,1,1,0,0,0 // 크리티컬 아머 쉐도우
+IG_Bs_Sha_M_S_13,24027,1,1,1,0,0,0 // 이뮨드 아머 쉐도우
+IG_Bs_Sha_M_S_13,24028,1,1,1,0,0,0 // 하드 아머 쉐도우
+IG_Bs_Sha_M_S_13,24049,1,1,1,0,0,0 // 하드 이어링 쉐도우
+IG_Bs_Sha_M_S_13,24026,1,1,1,0,0,0 // 아테나쉴드 쉐도우
+IG_Bs_Sha_M_S_13,24080,1,1,1,0,0,0 // 스피리츄얼 펜던트 쉐도우
+IG_Bs_Sha_M_S_13,24079,1,1,1,0,0,0 // 스피리츄얼 이어링 쉐도우
+IG_Bs_Sha_M_S_13,24078,1,1,1,0,0,0 // 스피리츄얼 웨폰 쉐도우
+IG_Bs_Sha_M_S_13,24051,1,1,1,0,0,0 // 아테나 이어링 쉐도우
+IG_Bs_Sha_M_S_13,24046,1,1,1,0,0,0 // 레지스트 스펠파워 펜던트 쉐도우
+IG_Bs_Sha_M_S_13,24155,1,1,1,0,0,0 // 임모털 펜던트 쉐도우
+IG_Bs_Sha_M_S_13,24383,1,1,1,0,0,0 // 임모털 웨폰 쉐도우
+IG_Bs_Sha_M_S_13,24152,1,1,1,0,0,0 // 솔리드 웨폰 쉐도우
+IG_Bs_Sha_M_S_13,24153,1,1,1,0,0,0 // 솔리드 이어링 쉐도우
+IG_Bs_Sha_M_S_13,24047,1,1,1,0,0,0 // 래피드 펜던트 쉐도우
+IG_Bs_Sha_M_S_13,24050,1,1,1,0,0,0 // 와이즈 이어링 쉐도우
+IG_Bs_Sha_M_S_13,24024,1,1,1,0,0,0 // 브리즈 아머 쉐도우
+IG_Bs_Sha_M_S_13,24025,1,1,1,0,0,0 // 챔피언 슈즈 쉐도우
+IG_Bs_Sha_M_S_13,24081,1,1,1,0,0,0 // 매리셔스 아머 쉐도우
+IG_Bs_Sha_M_S_13,24082,1,1,1,0,0,0 // 매리셔스 슈즈 쉐도우
+IG_Bs_Sha_M_S_13,24083,1,1,1,0,0,0 // 매리셔스 쉴드 쉐도우
+
+IG_Bs_Sha_M_S_15,24018,1,1,1,0,0,0 // 피지컬 이어링 쉐도우
+IG_Bs_Sha_M_S_15,24019,1,1,1,0,0,0 // 피지컬 웨폰 쉐도우
+IG_Bs_Sha_M_S_15,24020,1,1,1,0,0,0 // 피지컬 펜던트 쉐도우
+
+IG_Bs_Sha_M_S_16,24021,1,1,1,0,0,0 // 매지컬 이어링 쉐도우
+IG_Bs_Sha_M_S_16,24022,1,1,1,0,0,0 // 매지컬 웨폰 쉐도우
+IG_Bs_Sha_M_S_16,24023,1,1,1,0,0,0 // 매지컬 펜던트 쉐도우
+
+IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // 비기너 슈즈 쉐도우
+IG_Bs_Sha_M_S_23,24211,1,1,1,0,0,0 // 비기너 쉴드 쉐도우
+IG_Bs_Sha_M_S_23,24212,1,1,1,0,0,0 // 루키 슈즈 쉐도우
+IG_Bs_Sha_M_S_23,24213,1,1,1,0,0,0 // 루키 쉴드 쉐도우
+IG_Bs_Sha_M_S_23,24214,1,1,1,0,0,0 // 어드벤스드 슈즈 쉐도우
+IG_Bs_Sha_M_S_23,24215,1,1,1,0,0,0 // 어드벤스드 쉴드 쉐도우
+IG_Bs_Sha_M_S_23,24209,1,1,1,0,0,0 // 익스퍼트 쉴드 쉐도우
+IG_Bs_Sha_M_S_23,24210,1,1,1,0,0,0 // 익스퍼트 슈즈 쉐도우
+
+IG_Bs_Item_M_S_5,28901,1,1,1,0,0,0 // 저주받은 매드바니
+IG_Bs_Item_M_S_5,28902,1,1,1,0,0,0 // 매드바니
+
+IG_Bs_Sha_M_S_9,24084,1,1,1,0,0,0 // 젬스톤 아머 쉐도우
+IG_Bs_Sha_M_S_9,24086,1,1,1,0,0,0 // 젬스톤 쉴드 쉐도우
+IG_Bs_Sha_M_S_9,24087,1,1,1,0,0,0 // 젬스톤 웨폰 쉐도우
+IG_Bs_Sha_M_S_9,24085,1,1,1,0,0,0 // 젬스톤 슈즈 쉐도우
+IG_Bs_Sha_M_S_9,24088,1,1,1,0,0,0 // 젬스톤 이어링 쉐도우
+IG_Bs_Sha_M_S_9,24089,1,1,1,0,0,0 // 젬스톤 펜던트 쉐도우
+
+IG_Bs_Sha_M_S_10,24180,1,1,1,0,0,0 // 베어러즈 아머 쉐도우
+IG_Bs_Sha_M_S_10,24182,1,1,1,0,0,0 // 베어러즈 쉴드 쉐도우
+IG_Bs_Sha_M_S_10,24183,1,1,1,0,0,0 // 베어러즈 웨폰 쉐도우
+IG_Bs_Sha_M_S_10,24181,1,1,1,0,0,0 // 베어러즈 슈즈 쉐도우
+IG_Bs_Sha_M_S_10,24184,1,1,1,0,0,0 // 베어러즈 이어링 쉐도우
+IG_Bs_Sha_M_S_10,24185,1,1,1,0,0,0 // 베어러즈 펜던트 쉐도우
+
+IG_IG_Bs_Sha_M_S_11,24197,1,1,1,0,0,0 // 헤이스티 아머 쉐도우
+IG_IG_Bs_Sha_M_S_11,24196,1,1,1,0,0,0 // 헤이스티 슈즈 쉐도우
+
+IG_Bs_Sha_M_S_21,24030,1,1,1,0,0,0 // 크리티컬 아머 쉐도우
+IG_Bs_Sha_M_S_21,24333,1,1,1,0,0,0 // 크리티컬 슈즈 쉐도우
+IG_Bs_Sha_M_S_21,24332,1,1,1,0,0,0 // 크리티컬 쉴드 쉐도우
+
+IG_Bs_Sha_M_S_20,24371,1,1,1,0,0,0 // 모탈 블로우 이어링 쉐도우
+IG_Bs_Sha_M_S_20,24372,1,1,1,0,0,0 // 모탈 블로우 펜던트 쉐도우
+IG_Bs_Sha_M_S_20,24370,1,1,1,0,0,0 // 모탈 블로우 웨폰 쉐도우
+
+IG_Bs_Sha_M_S_3,24373,1,1,1,0,0,0 // 페니트레이션 슈즈 쉐도우
+IG_Bs_Sha_M_S_3,24374,1,1,1,0,0,0 // 페니트레이션 쉴드 쉐도우
+IG_Bs_Sha_M_S_3,24375,1,1,1,0,0,0 // 액서큐서너 홀리워터 아머 쉐도우
+IG_Bs_Sha_M_S_3,24376,1,1,1,0,0,0 // 엑소시스트 커럽트 아머 쉐도우
+IG_Bs_Sha_M_S_3,24377,1,1,1,0,0,0 // 바이브레이션 드래곤킬러 아머 쉐도우
+IG_Bs_Sha_M_S_3,24378,1,1,1,0,0,0 // 시저스 헌팅 아머 쉐도우
+IG_Bs_Sha_M_S_3,24379,1,1,1,0,0,0 // 피싱 인섹트 넷 아머 쉐도우
+IG_Bs_Sha_M_S_3,24166,1,1,1,0,0,0 // 페니트레이션 이어링 쉐도우
+IG_Bs_Sha_M_S_3,24167,1,1,1,0,0,0 // 페니트레이션 펜던트 쉐도우
+IG_Bs_Sha_M_S_3,24156,1,1,1,0,0,0 // 액서큐서너 웨폰 쉐도우
+IG_Bs_Sha_M_S_3,24157,1,1,1,0,0,0 // 엑소시스트 웨폰 쉐도우
+IG_Bs_Sha_M_S_3,24158,1,1,1,0,0,0 // 헌팅 웨폰 쉐도우
+IG_Bs_Sha_M_S_3,24159,1,1,1,0,0,0 // 인섹트 넷 웨폰 쉐도우
+IG_Bs_Sha_M_S_3,24160,1,1,1,0,0,0 // 피싱 웨폰 쉐도우
+IG_Bs_Sha_M_S_3,24161,1,1,1,0,0,0 // 드래곤 킬러 웨폰 쉐도우
+IG_Bs_Sha_M_S_3,24162,1,1,1,0,0,0 // 커럽트 웨폰 쉐도우
+IG_Bs_Sha_M_S_3,24163,1,1,1,0,0,0 // 바이브레이션 웨폰 쉐도우
+IG_Bs_Sha_M_S_3,24164,1,1,1,0,0,0 // 홀리 워터 웨폰 쉐도우
+IG_Bs_Sha_M_S_3,24165,1,1,1,0,0,0 // 시저스 웨폰 쉐도우
+
+IG_Bs_Sha_M_S_4,24346,1,1,1,0,0,0 // 템페스트 슈즈 쉐도우
+IG_Bs_Sha_M_S_4,24345,1,1,1,0,0,0 // 템페스트 쉴드 쉐도우
+IG_Bs_Sha_M_S_4,24347,1,1,1,0,0,0 // 매직 액서큐서너 홀리워터 아머 쉐도우
+IG_Bs_Sha_M_S_4,24348,1,1,1,0,0,0 // 매직 엑소시스트 커럽트 아머 쉐도우
+IG_Bs_Sha_M_S_4,24349,1,1,1,0,0,0 // 매직 바이브레이션 드래곤킬러 아머 쉐도우
+IG_Bs_Sha_M_S_4,24350,1,1,1,0,0,0 // 매직 시저스 헌팅 아머 쉐도우
+IG_Bs_Sha_M_S_4,24351,1,1,1,0,0,0 // 매직 피싱 인섹트 넷 아머 쉐도우
+IG_Bs_Sha_M_S_4,24168,1,1,1,0,0,0 // 템페스트 이어링 쉐도우
+IG_Bs_Sha_M_S_4,24169,1,1,1,0,0,0 // 템페스트 펜던트 쉐도우
+IG_Bs_Sha_M_S_4,24170,1,1,1,0,0,0 // 매직 액서큐서너 웨폰 쉐도우
+IG_Bs_Sha_M_S_4,24171,1,1,1,0,0,0 // 매직 엑소시스트 웨폰 쉐도우
+IG_Bs_Sha_M_S_4,24172,1,1,1,0,0,0 // 매직 헌팅 웨폰 쉐도우
+IG_Bs_Sha_M_S_4,24173,1,1,1,0,0,0 // 매직 인섹트 넷 웨폰 쉐도우
+IG_Bs_Sha_M_S_4,24174,1,1,1,0,0,0 // 매직 피싱 웨폰 쉐도우
+IG_Bs_Sha_M_S_4,24175,1,1,1,0,0,0 // 매직 드래곤 킬러 웨폰 쉐도우
+IG_Bs_Sha_M_S_4,24176,1,1,1,0,0,0 // 매직 커럽트 웨폰 쉐도우
+IG_Bs_Sha_M_S_4,24177,1,1,1,0,0,0 // 매직 바이브레이션 웨폰 쉐도우
+IG_Bs_Sha_M_S_4,24178,1,1,1,0,0,0 // 매직 홀리 워터 웨폰 쉐도우
+IG_Bs_Sha_M_S_4,24179,1,1,1,0,0,0 // 매직 시저스 웨폰 쉐도우
+
+IG_Bs_Sha_M_S_12,24344,1,1,1,0,0,0 // 블리츠 아머 쉐도우
+IG_Bs_Sha_M_S_12,24343,1,1,1,0,0,0 // 블리츠 웨폰 쉐도우
+IG_Bs_Sha_M_S_12,24232,1,1,1,0,0,0 // 블리츠 쉴드 쉐도우
+IG_Bs_Sha_M_S_12,24231,1,1,1,0,0,0 // 블리츠 슈즈 쉐도우
+IG_Bs_Sha_M_S_12,24218,1,1,1,0,0,0 // 블리츠 펜던트 쉐도우
+IG_Bs_Sha_M_S_12,24217,1,1,1,0,0,0 // 블리츠 이어링 쉐도우
+
+IG_Bs_Sha_M_S_14,24245,1,1,1,0,0,0 // 리로드 아머 쉐도우
+IG_Bs_Sha_M_S_14,24243,1,1,1,0,0,0 // 리로드 슈즈 쉐도우
+IG_Bs_Sha_M_S_14,24244,1,1,1,0,0,0 // 리로드 쉴드 쉐도우
+
+IG_Bs_Sha_M_S_24,24224,1,1,1,0,0,0 // 포스 웨폰 쉐도우
+IG_Bs_Sha_M_S_24,24225,1,1,1,0,0,0 // 포스 이어링 쉐도우
+IG_Bs_Sha_M_S_24,24226,1,1,1,0,0,0 // 포스 펜던트 쉐도우
+IG_Bs_Sha_M_S_24,24223,1,1,1,0,0,0 // 인핸스 포스 웨폰 쉐도우
+IG_Bs_Sha_M_S_24,24228,1,1,1,0,0,0 // 스피릿 웨폰
+IG_Bs_Sha_M_S_24,24229,1,1,1,0,0,0 // 스피릿 이어링 쉐도우
+IG_Bs_Sha_M_S_24,24230,1,1,1,0,0,0 // 스피릿 펜던트 쉐도우
+IG_Bs_Sha_M_S_24,24227,1,1,1,0,0,0 // 인핸스 스피릿 웨폰 쉐도우
+
+IG_Bs_Sha_M_S_25,24151,1,1,1,0,0,0 // 인피니티 펜던트 쉐도우
+IG_Bs_Sha_M_S_25,24150,1,1,1,0,0,0 // 인피니티 이어링 쉐도우
+
+IG_PhysicalMagical_Mix,24395,1,1,1,0,0,0 // 피지컬 아머 쉐도우
+IG_PhysicalMagical_Mix,24393,1,1,1,0,0,0 // 피지컬 슈즈 쉐도우
+IG_PhysicalMagical_Mix,24394,1,1,1,0,0,0 // 피지컬 쉴드 쉐도우
+IG_PhysicalMagical_Mix,24398,1,1,1,0,0,0 // 매지컬 아머 쉐도우
+IG_PhysicalMagical_Mix,24396,1,1,1,0,0,0 // 매지컬 슈즈 쉐도우
+IG_PhysicalMagical_Mix,24397,1,1,1,0,0,0 // 매지컬 쉴드 쉐도우
+
+IG_Silver_Statue,28945,1,1,1,0,0,0 // 피빛의 기사의 방패
+IG_Silver_Statue,28946,1,1,1,0,0,0 // 정화된 기사의 방패
+
+IG_Stability_Shadow_Box,24352,1,1,1,0,0,0 // S_Plasterer's_Armor_II
+IG_Stability_Shadow_Box,24353,1,1,1,0,0,0 // S_Insomniac_Shoes_II
+IG_Stability_Shadow_Box,24354,1,1,1,0,0,0 // S_Peerless_Armor_II
+IG_Stability_Shadow_Box,24355,1,1,1,0,0,0 // S_Adulate_Shoes_II
+IG_Stability_Shadow_Box,24356,1,1,1,0,0,0 // S_Unfreezing_Weapon_II
+IG_Stability_Shadow_Box,24357,1,1,1,0,0,0 // S_Vitality_Earring_II
+IG_Stability_Shadow_Box,24358,1,1,1,0,0,0 // S_Neutral_Weapon_II
+IG_Stability_Shadow_Box,24359,1,1,1,0,0,0 // S_Uncursed_Pendant_II
+
+IG_Race_Shadow_Box,24341,1,1,1,0,0,0 // 올 레이스 슈즈 쉐도우
+IG_Race_Shadow_Box,24342,1,1,1,0,0,0 // 올 레이스 쉴드 쉐도우
+
+IG_Bearers_S_Conversion_Box,24337,1,1,1,0,0,0 // 베어러즈 아머 쉐도우 II
+IG_Bearers_S_Conversion_Box,24338,1,1,1,0,0,0 // 베어러즈 슈즈 쉐도우 II
+
+IG_Gemstone_S_Conversion_Box,24335,1,1,1,0,0,0 // 젬스톤 웨폰 쉐도우 II
+IG_Gemstone_S_Conversion_Box,24336,1,1,1,0,0,0 // 젬스톤 쉴드 쉐도우 II
+
+IG_Status_S_Conversion_Box,24339,1,1,1,0,0,0 // 올마이티 이어링 쉐도우
+IG_Status_S_Conversion_Box,24340,1,1,1,0,0,0 // 올마이티 펜던트 쉐도우
+
+// TODO: Need 'yellow' shadow equipment as seen on https://ro.gnjoy.com.tw/notice/notice_view.aspx?id=1154
+IG_Shadow_Exchange_Box,24018,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24019,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24020,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24021,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24022,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24023,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24024,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24025,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24026,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24027,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24028,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24029,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24030,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24031,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24032,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24033,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24034,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24035,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24036,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24037,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24038,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24039,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24040,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24041,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24042,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24043,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24044,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24045,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24046,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24047,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24048,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24049,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24050,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24051,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24052,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24053,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24054,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24055,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24056,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24057,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24058,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24059,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24060,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24061,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24062,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24063,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24064,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24065,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24066,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24067,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24068,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24069,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24070,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24071,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24072,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24073,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24074,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24075,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24076,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24077,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24078,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24079,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24080,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24081,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24082,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24083,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24084,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24085,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24086,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24087,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24088,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24089,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24090,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24091,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24092,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24093,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24094,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24095,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24096,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24097,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24098,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24099,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24100,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24101,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24102,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24103,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24104,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24105,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24106,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24107,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24108,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24109,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24110,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24111,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24112,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24113,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24114,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24115,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24116,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24117,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24118,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24119,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24120,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24121,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24122,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24123,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24124,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24125,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24126,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24127,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24128,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24129,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24130,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24131,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24132,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24133,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24134,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24135,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24136,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24137,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24138,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24139,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24140,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24141,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24142,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24143,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24144,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24145,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24146,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24147,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24148,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24149,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24150,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24151,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24152,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24153,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24154,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24155,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24156,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24157,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24158,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24159,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24160,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24161,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24162,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24163,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24164,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24165,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24166,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24167,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24168,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24169,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24170,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24171,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24172,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24173,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24174,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24175,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24176,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24177,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24178,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24179,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24180,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24181,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24182,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24183,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24184,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24185,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24186,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24187,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24188,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24189,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24190,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24191,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24192,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24193,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24194,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24195,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24196,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24197,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24198,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24199,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24200,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24201,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24202,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24203,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24204,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24205,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24206,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24207,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24208,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24209,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24210,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24211,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24212,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24213,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24214,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24215,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24216,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24217,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24218,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24219,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24220,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24221,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24222,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24223,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24224,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24225,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24226,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24227,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24228,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24229,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24230,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24231,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24232,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24233,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24234,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24235,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24236,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24237,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24238,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24239,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24240,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24241,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24242,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24243,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24244,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24245,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24246,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24247,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24248,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24249,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24250,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24251,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24252,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24253,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24254,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24255,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24256,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24257,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24258,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24259,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24260,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24261,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24262,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24263,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24264,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24265,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24266,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24267,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24268,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24269,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24270,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24271,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24272,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24273,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24274,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24275,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24276,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24277,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24278,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24279,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24280,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24281,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24282,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24283,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24284,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24285,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24286,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24287,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24288,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24289,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24290,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24291,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24292,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24293,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24294,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24295,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24296,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24297,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24298,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24299,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24300,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24301,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24302,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24303,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24304,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24305,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24306,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24307,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24308,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24309,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24310,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24311,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24312,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24313,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24314,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24315,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24316,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24317,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24318,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24319,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,28391,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,28392,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24320,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24321,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24322,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24323,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24324,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24325,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24326,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24327,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24332,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24333,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24334,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24335,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24336,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24337,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24338,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24339,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24340,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24345,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24346,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24347,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24348,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24349,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24350,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24351,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24352,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24353,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24354,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24355,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24356,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24357,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24358,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24359,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24360,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24361,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24362,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24363,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24364,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24365,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24366,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24367,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24368,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24369,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24370,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24371,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24372,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24373,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24374,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24375,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24376,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24377,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24378,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24379,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24380,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24381,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24382,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24383,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24384,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24385,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24386,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24393,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24394,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24395,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24396,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24397,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24398,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24399,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24400,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24401,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,15280,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24402,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24403,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24404,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24405,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24406,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24407,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24408,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24409,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24410,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24411,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24412,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24413,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24414,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24415,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24423,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24424,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24425,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24426,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24427,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24428,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24429,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24430,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24431,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24432,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24433,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24434,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24435,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24436,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24437,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24438,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24439,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24440,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24441,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24442,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24443,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24444,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24445,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24446,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24447,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24448,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24449,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24450,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24451,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24452,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24453,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24454,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24455,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24456,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24457,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24458,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24459,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24460,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24461,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24462,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24463,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24464,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24465,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24466,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24467,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24468,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24469,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24470,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24471,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24472,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24473,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24474,1,1,1,0,0,0
+IG_Shadow_Exchange_Box,24475,1,1,1,0,0,0
+
+//!TODO : as item directly or boxes?
+//http://www.inven.co.kr/board/ro/1951/4571
+IG_Costume_Enchant_Stone_Box,22826,1,1,1,0,0,0 // 의상 인챈트 스톤 상자4
+IG_Costume_Enchant_Stone_Box,22868,1,1,1,0,0,0 // 의상 인챈트 스톤 상자5
+IG_Costume_Enchant_Stone_Box,22905,1,1,1,0,0,0 // 의상 인챈트 스톤 상자6
+IG_Costume_Enchant_Stone_Box,22953,1,1,1,0,0,0 // 의상 인챈트 스톤 상자7
+IG_Costume_Enchant_Stone_Box,23001,1,1,1,0,0,0 // 의상 인챈트 스톤 상자8
+IG_Costume_Enchant_Stone_Box,23058,1,1,1,0,0,0 // 의상 인챈트 스톤 상자9
+IG_Costume_Enchant_Stone_Box,23086,1,1,1,0,0,0 // 의상 인챈트 스톤 상자10
+IG_Costume_Enchant_Stone_Box,23174,1,1,1,0,0,0 // 의상 인챈트 스톤 상자11
+IG_Costume_Enchant_Stone_Box,23299,1,1,1,0,0,0 // 의상 인챈트 스톤 상자12
+IG_Costume_Enchant_Stone_Box,23524,1,1,1,0,0,0 // 의상 인챈트 스톤 상자13
+IG_Costume_Enchant_Stone_Box,23629,1,1,1,0,0,0 // 의상 인챈트 스톤 상자14
+IG_Costume_Enchant_Stone_Box,23682,1,1,1,0,0,0 // 의상 인챈트 스톤 상자15
+IG_Costume_Enchant_Stone_Box,23770,1,1,1,0,0,0 // 의상 인챈트 스톤 상자16
+IG_Costume_Enchant_Stone_Box,9510,1,1,1,0,0,0 // 의상 인챈트 스톤 상자17
+//IG_Costume_Enchant_Stone_Box,100019,1,1,1,0,0,0 // 의상 인챈트 스톤 상자18
+//IG_Costume_Enchant_Stone_Box,100052,1,1,1,0,0,0 // 의상 인챈트 스톤 상자19
+
+IG_Piercing_Shadow_Box,24434,1,1,1,0,0,0 // 액서큐서너 홀리워터 웨폰 쉐도우
+IG_Piercing_Shadow_Box,24437,1,1,1,0,0,0 // 바이브레이션 드래곤킬러 웨폰 쉐도우
+IG_Piercing_Shadow_Box,24436,1,1,1,0,0,0 // 시저스 헌팅 웨폰 쉐도우
+IG_Piercing_Shadow_Box,24435,1,1,1,0,0,0 // 피싱 인섹트 웨폰 쉐도우
+IG_Piercing_Shadow_Box,24438,1,1,1,0,0,0 // 엑소시스트 커럽트 웨폰 쉐도우
+
+IG_EnchantStone_Recipe_4m,23524,1,1,1,0,0,0 // 의상 인챈트 스톤 상자13
+IG_EnchantStone_Recipe_4m,23629,1,1,1,0,0,0 // 의상 인챈트 스톤 상자14
+IG_EnchantStone_Recipe_4m,23682,1,1,1,0,0,0 // 의상 인챈트 스톤 상자15
+IG_EnchantStone_Recipe_4m,23770,1,1,1,0,0,0 // 의상 인챈트 스톤 상자16
+IG_EnchantStone_Recipe_4m,9510,1,1,1,0,0,0 // 의상 인챈트 스톤 상자17
+//IG_EnchantStone_Recipe_4m,100019,1,1,1,0,0,0 // 의상 인챈트 스톤 상자18
+//IG_EnchantStone_Recipe_4m,100052,1,1,1,0,0,0 // 의상 인챈트 스톤 상자19
+
+IG_EnchantStone_Recipe_9m,23524,1,1,1,0,0,0 // 의상 인챈트 스톤 상자13
+IG_EnchantStone_Recipe_9m,23629,1,1,1,0,0,0 // 의상 인챈트 스톤 상자14
+IG_EnchantStone_Recipe_9m,23682,1,1,1,0,0,0 // 의상 인챈트 스톤 상자15
+IG_EnchantStone_Recipe_9m,23770,1,1,1,0,0,0 // 의상 인챈트 스톤 상자16
+
+// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955672
+IG_Class_Shadow_Pendant,24250,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24251,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24252,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24253,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24254,1,1,1,0,0,0
+IG_Class_Shadow_Pendant,24255,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955674
+IG_Class_Shadow_Earring,24246,1,1,1,0,0,0
+IG_Class_Shadow_Earring,24247,1,1,1,0,0,0
+IG_Class_Shadow_Earring,24248,1,1,1,0,0,0
+IG_Class_Shadow_Earring,24249,1,1,1,0,0,0
+IG_Class_Shadow_Earring,28391,1,1,1,0,0,0
+IG_Class_Shadow_Earring,28392,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955671
+IG_Class_Shadow_Shield,24301,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24302,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24303,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24304,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24305,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24306,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24307,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24308,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24309,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24310,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24311,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24312,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24313,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24314,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24315,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24316,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24317,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24318,1,1,1,0,0,0
+IG_Class_Shadow_Shield,24319,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955669
+IG_Class_Shadow_Shoes,24256,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24257,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24258,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24259,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24260,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24261,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24262,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24263,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24264,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24265,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24266,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24267,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24268,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24405,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24406,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24407,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24409,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24411,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24413,1,1,1,0,0,0
+IG_Class_Shadow_Shoes,24415,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955664
+IG_Class_Shadow_Armor,24269,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24270,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24271,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24272,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24273,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24274,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24275,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24276,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24277,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24278,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24279,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24280,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24281,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24402,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24403,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24404,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24408,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24410,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24412,1,1,1,0,0,0
+IG_Class_Shadow_Armor,24414,1,1,1,0,0,0
+
+// http://ro.gnjoy.com/news/probability/View.asp?category=6&seq=3955662
+IG_Class_Shadow_Weapon,24282,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24283,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24284,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24285,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24286,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24287,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24288,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24289,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24290,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24291,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24292,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24293,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24294,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24295,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24296,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24297,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24298,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24299,1,1,1,0,0,0
+IG_Class_Shadow_Weapon,24300,1,1,1,0,0,0
+
+IG_Costume_Exchange_Box,19876,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19654,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19608,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19712,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20145,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19721,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20146,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19823,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20036,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20147,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20746,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19643,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20199,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20200,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20201,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20202,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20761,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20132,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20130,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20133,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20230,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20231,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20232,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20233,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20273,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20242,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20762,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20239,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20071,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19954,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19815,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20268,1,1,1,0,0,0
+IG_Costume_Exchange_Box,18740,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20266,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20255,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20329,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20330,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20286,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20349,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20299,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20300,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20315,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20350,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20351,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20352,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20353,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20354,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20355,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20356,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20341,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20357,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20358,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20359,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20360,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20361,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20362,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20363,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20340,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20364,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20365,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20366,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20367,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20368,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20369,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20370,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20342,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20504,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19816,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20396,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20325,1,1,1,0,0,0
+IG_Costume_Exchange_Box,5979 ,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20398,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20399,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20172,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20405,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20404,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19761,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20447,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20458,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20459,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20433,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20507,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20430,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20464,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20432,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20491,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20502,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20440,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31087,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31088,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20448,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20487,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19158,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20489,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20318,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20509,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31029,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20499,1,1,1,0,0,0
+IG_Costume_Exchange_Box,5909 ,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31057,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31062,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31125,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31118,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31120,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31123,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31040,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20381,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31055,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20510,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31063,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31064,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31065,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31066,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31067,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31068,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31069,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31070,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31071,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31072,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31073,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31074,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31075,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31076,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31077,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31078,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31079,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31080,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31081,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31082,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31083,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31084,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31085,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31086,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31165,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31160,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31162,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20511,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31186,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20449,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20263,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20195,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20514,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31300,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31136,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31134,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31178,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31166,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31168,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31164,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31397,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31031,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31033,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20488,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31329,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31332,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31415,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20516,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31180,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19294,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19289,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19291,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20515,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19992,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19959,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19960,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31396,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31437,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31439,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20765,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20517,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31432,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31314,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31460,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31398,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31489,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31490,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31529,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20533,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20171,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20482,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20033,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20535,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31139,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31606,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31249,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20543,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20174,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20098,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20395,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20175,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31565,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31586,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31625,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20546,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20764,1,1,1,0,0,0
+IG_Costume_Exchange_Box,19990,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31440,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31693,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31616,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20570,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31382,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31481,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31624,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20486,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20257,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31699,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20572,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31600,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31512,1,1,1,0,0,0
+IG_Costume_Exchange_Box,20519,1,1,1,0,0,0
+IG_Costume_Exchange_Box,31614,1,1,1,0,0,0
+
+// TODO: IG_Collectibles_Exchange_Box

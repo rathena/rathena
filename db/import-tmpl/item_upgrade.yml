@@ -1,0 +1,19 @@
+###########################################################################
+# 
+# Item Upgrade Database
+#
+# This feature need a sync client file: LapineUpgradeBox.lub
+#
+###########################################################################
+# - Id:                   # (int) Item ID of upgrade box
+#   NeedRefineMin:        # (int) Minimum refine level for target item (default :0)
+#   NeedOptionNumMin:     # (int) Minimum random option that target item has (default :0)
+#   NotSocketEnchantItem: # (bool) Target item must not has enchant stone (default: true)
+#   TargetItem:           # List of possible item to be upgraded
+#     - Item:             # (int) Target's Item ID
+#   Result:               # (string) Script on upgrade success
+###########################################################################
+
+Header:
+  Type: ITEM_UPGRADE_DB
+  Version: 1

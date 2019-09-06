@@ -1,0 +1,11 @@
+Header:
+  Type: ITEM_UPGRADE_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/item_upgrade.yml
+    Mode: Prerenewal
+  - Path: db/re/item_upgrade.yml
+    Mode: Renewal
+  - Path: db/import/item_upgrade.yml
