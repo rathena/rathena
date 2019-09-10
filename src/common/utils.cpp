@@ -379,3 +379,24 @@ unsigned int get_percentage(const unsigned int A, const unsigned int B)
 
 	return (unsigned int)floor(result);
 }
+
+unsigned int get_percentage_exp(const unsigned long long A, const unsigned long long B)
+{
+	double result;
+
+	if (B == 0)
+	{
+		ShowError("get_percentage_exp(): divison by zero! (A=%llu,B=%llu)\n", A, B);
+		return ~0U;
+	}
+
+	result = 100 * ((double)A / (double)B);
+
+	if (result > UINT_MAX)
+	{
+		ShowError("get_percentage_exp(): result percentage too high! (A=%llu,B=%llu,result=%g)\n", A, B, result);
+		return UINT_MAX;
+	}
+
+	return (unsigned int)floor(result);
+}

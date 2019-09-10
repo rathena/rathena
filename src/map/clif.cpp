@@ -3313,19 +3313,19 @@ void clif_updatestatus(struct map_session_data *sd,int type)
 #else
 	case SP_BASEEXP:
 		WFIFOW(fd,0)=0xb1;
-		WFIFOL(fd,4)=sd->status.base_exp;
+		WFIFOL(fd,4)=(int32)u64min(sd->status.base_exp, INT32_MAX);
 		break;
 	case SP_JOBEXP:
 		WFIFOW(fd,0)=0xb1;
-		WFIFOL(fd,4)=sd->status.job_exp;
+		WFIFOL(fd,4)=(int32)u64min(sd->status.job_exp, INT32_MAX);
 		break;
 	case SP_NEXTBASEEXP:
 		WFIFOW(fd,0)=0xb1;
-		WFIFOL(fd,4)=pc_nextbaseexp(sd);
+		WFIFOL(fd,4)=(int32)u64min(pc_nextbaseexp(sd), INT32_MAX);
 		break;
 	case SP_NEXTJOBEXP:
 		WFIFOW(fd,0)=0xb1;
-		WFIFOL(fd,4)=pc_nextjobexp(sd);
+		WFIFOL(fd,4)=(int32)u64min(pc_nextjobexp(sd), INT32_MAX);
 		break;
 #endif
 
@@ -14469,10 +14469,10 @@ void clif_parse_NoviceDoriDori(int fd, struct map_session_data *sd)
 void clif_parse_NoviceExplosionSpirits(int fd, struct map_session_data *sd)
 {
 	if( (sd->class_&MAPID_UPPERMASK) == MAPID_SUPER_NOVICE ) {
-		unsigned int next = pc_nextbaseexp(sd);
+		expType next = pc_nextbaseexp(sd);
 
 		if( next ) {
-			int percent = (int)( ( (float)sd->status.base_exp/(float)next )*1000. );
+			int percent = (int)( ( (double)sd->status.base_exp/(double)next )*1000. );
 
 			if( percent && ( percent%100 ) == 0 ) {// 10.0%, 20.0%, ..., 90.0%
 				sc_start(&sd->bl,&sd->bl, status_skill2sc(MO_EXPLOSIONSPIRITS), 100, 17, skill_get_time(MO_EXPLOSIONSPIRITS, 5)); //Lv17-> +50 critical (noted by Poki) [Skotlex]
@@ -17618,7 +17618,7 @@ void clif_party_show_picker(struct map_session_data * sd, struct item * item_dat
  * @param quest False:Normal EXP; True:Quest EXP (displayed in purple color)
  * @param lost True:if lossing EXP
  */
-void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, bool quest, bool lost)
+void clif_displayexp(struct map_session_data *sd, expType exp, char type, bool quest, bool lost)
 {
 	int fd;
 	int offset;
@@ -17636,10 +17636,10 @@ void clif_displayexp(struct map_session_data *sd, unsigned int exp, char type, b
 	WFIFOW(fd,0) = cmd;
 	WFIFOL(fd,2) = sd->bl.id;
 #if PACKETVER >= 20170830
-	WFIFOQ(fd,6) = (int64)u64min((uint64)exp, INT_MAX) * (lost ? -1 : 1);
+	WFIFOQ(fd,6) = (int64)u64min(exp, INT64_MAX) * (lost ? -1 : 1);
 	offset = 4;
 #else
-	WFIFOL(fd,6) = (int)umin(exp, INT_MAX) * (lost ? -1 : 1);
+	WFIFOL(fd,6) = (int32)u64min(exp, INT_MAX) * (lost ? -1 : 1);
 	offset = 0;
 #endif
 	WFIFOW(fd,10+offset) = type;

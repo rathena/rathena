@@ -53,6 +53,13 @@
 	#define DEFTYPE_MAX CHAR_MAX
 #endif
 
+	typedef unsigned long long expType;
+#if PACKETVER >= 20170830
+	#define EXPTYPE_MAX UINT64_MAX
+#else
+	#define EXPTYPE_MAX UINT32_MAX
+#endif
+
 /* pointer size fix which fixes several gcc warnings */
 #ifdef __64BIT__
 	#define __64BPRTSIZE(y) (intptr)y

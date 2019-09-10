@@ -484,7 +484,7 @@ struct mmo_charstatus {
 	uint32 mother;
 	uint32 child;
 
-	unsigned int base_exp,job_exp;
+	expType base_exp,job_exp;
 	int zeny;
 
 	short class_; ///< Player's JobID
