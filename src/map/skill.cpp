@@ -17306,9 +17306,9 @@ int skill_autospell(struct map_session_data *sd, uint16 skill_id)
 	if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SAGE && skill_lv < 4)
 		maxlv = 10; //Soul Linker bonus. [Skotlex]
 	else {
-		maxlv = skill_id / 2; // Half of Autospell's level unless player learned a higher level
-		if (sd && pc_checkskill(sd, skill_id) > maxlv)
-			maxlv = pc_checkskill(sd, skill_id);
+		maxlv = skill_lv / 2; // Half of Autospell's level unless player learned a lower level
+		if (lv < maxlv)
+			maxlv = lv;
 	}
 #else
 	if(skill_id==MG_NAPALMBEAT)	maxlv=3;
