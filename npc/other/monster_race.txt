@@ -1578,7 +1578,7 @@ p_track02,67,45,5	script	Medal Distributor#medal	845,{
 	mes "Medals may be given to Wayne";
 	mes "in Hugel in exchange for items.";
 	next;
-	if (monster_race_2_1 == $@mon_race_2_1 && monster_race_2_2 == $@mon_race_2_2) {
+	if ((monster_race_2_1 == $@mon_race_2_1 && monster_race_2_2 == $@mon_race_2_2) || (monster_race_2_1 == $@mon_race_2_2 && monster_race_2_2 == $@mon_race_2_1)) {
 		mes "[Medal Distributor]";
 		mes "Congratulations! It's really";
 		mes "difficult to guess the winners";
