@@ -2450,12 +2450,6 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			case NJ_KIRIKAGE:
 				cri += 250 + 50*skill_lv;
 				break;
-#ifdef RENEWAL
-			case PR_MACEMASTERY:
-				if (sd && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE) && skill_lv > 9)
-					cri += 100;
-				break;
-#endif
 		}
 		if(tsd && tsd->bonus.critical_def)
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;

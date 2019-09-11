@@ -5318,13 +5318,16 @@ void status_calc_bl_main(struct block_list *bl, /*enum scb_flag*/int flag)
 			status->cri = status_calc_critical(bl, sc, b_status->cri + 3*(status->luk - b_status->luk));
 
 		/// After status_calc_critical so the bonus is applied despite if you have or not a sc bugreport:5240
-		if (bl->type == BL_PC) {
-			if (((TBL_PC*)bl)->status.weapon == W_KATAR)
+		if (sd) {
+			if (sd->status.weapon == W_KATAR)
 				status->cri <<= 1;
+
 #ifdef RENEWAL
 			uint8 skill_lv;
 
-			if ((skill_lv = pc_checkskill((TBL_PC *)bl, DC_DANCINGLESSON)) > 0)
+			if ((skill_lv = pc_checkskill(sd, DC_DANCINGLESSON)) > 0)
+				status->cri += skill_lv;
+			if ((skill_lv = pc_checkskill(sd, PR_MACEMASTERY)) > 0 && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE))
 				status->cri += skill_lv;
 #endif
 		}
