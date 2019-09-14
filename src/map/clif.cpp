@@ -18602,7 +18602,8 @@ void clif_parse_MoveItem(int fd, struct map_session_data *sd) {
 			      && !(sd->inventory_data[index]->type==IT_AMMO))
 				|| battle_config.persistent_favorites_equipment) {
 			for (j = 0; (j < MAX_FAVORITES) && 
-			     (sd->status.favs[j] > 0); j++) { ; }
+			     (sd->status.favs[j] > 0) &&
+			      (sd->status.favs[j] != (sd->inventory.u.items_inventory[index].nameid)); j++) { ; }
 
 			if (j < MAX_FAVORITES) { sd->status.favs[j] = 
 				(sd->inventory.u.items_inventory[index].nameid); };
