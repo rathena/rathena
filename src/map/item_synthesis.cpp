@@ -98,7 +98,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 		std::string script_str;
 		script_code *code;
 
-		if (!this->asString(node, "Reward", script_str) || !(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS)) != NULL) {
+		if (!this->asString(node, "Reward", script_str) || !(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
 			this->invalidWarning(node["Reward"], "Invalid item script for 'Reward'.\n");
 			return 0;
 		}
@@ -251,7 +251,7 @@ bool s_item_synthesis_db::checkRequirement(map_session_data *sd, const std::vect
 	item_data *id = NULL;
 
 	for (auto &it : items) {
-		if (it.index < 0 || it.index >= MAX_INVENTORY)
+		if (it.index >= MAX_INVENTORY)
 			return false;
 
 		if (!(item = &sd->inventory.u.items_inventory[it.index]) || !(id = sd->inventory_data[it.index]))

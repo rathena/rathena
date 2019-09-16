@@ -472,7 +472,7 @@ Body:
   TargetItem:
   - Item: 28945 #Bloody_Knight_Shield_
   Result: |
-    callfunc("F_Lapine_Cursed_Blood", .@opts[0], .@vals[0]);
+    callfunc("F_Lapine_Cursed_Blood", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23547 # Gold_Statue, 정화된 기사의 방패
@@ -482,7 +482,7 @@ Body:
   TargetItem:
   - Item: 28946 #Bloody_Knight_Shield__
   Result: |
-    callfunc("F_Lapine_Gold_Statue", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[3]);
+    callfunc("F_Lapine_Gold_Statue", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23436 # Shadow_Refine_Hammer, 쉐도우 아이템

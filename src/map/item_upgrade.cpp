@@ -50,7 +50,7 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 		std::string script_str;
 		script_code *code;
 
-		if (!this->asString(node, "Result", script_str) || !(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS)) != NULL) {
+		if (!this->asString(node, "Result", script_str) || !(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
 			this->invalidWarning(node["Result"], "Invalid item script for 'Result'.\n");
 			return 0;
 		}
