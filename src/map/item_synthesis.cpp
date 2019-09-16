@@ -36,13 +36,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = entry != nullptr;
 
 	if (!exists) {
-		if (!this->nodeExists(node, "SourceNeeded"))
-			return 0;
-
-		if (!this->nodeExists(node, "SourceItem"))
-			return 0;
-
-		if (!this->nodeExists(node, "Reward"))
+		if (!this->nodesExist(node, { "SourceNeeded", "SourceItem", "Reward" }))
 			return 0;
 
 		entry = std::make_shared<s_item_synthesis_db>();
@@ -98,7 +92,10 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 		std::string script_str;
 		script_code *code;
 
-		if (!this->asString(node, "Reward", script_str) || !(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
+		if (!this->asString(node, "Reward", script_str))
+			return 0;
+
+		if (!(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
 			this->invalidWarning(node["Reward"], "Invalid item script for 'Reward'.\n");
 			return 0;
 		}

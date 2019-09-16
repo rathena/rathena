@@ -36,10 +36,7 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = entry != nullptr;
 
 	if (!exists) {
-		if (!this->nodeExists(node, "TargetItem"))
-			return 0;
-
-		if (!this->nodeExists(node, "Result"))
+		if (!this->nodesExist(node, { "TargetItem", "Result" }))
 			return 0;
 
 		entry = std::make_shared<s_item_upgrade_db>();
@@ -50,7 +47,10 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 		std::string script_str;
 		script_code *code;
 
-		if (!this->asString(node, "Result", script_str) || !(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
+		if (!this->asString(node, "Result", script_str))
+			return 0;
+
+		if (!(code = parse_script(script_str.c_str(), this->getCurrentFile().c_str(), id, SCRIPT_IGNORE_EXTERNAL_BRACKETS))) {
 			this->invalidWarning(node["Result"], "Invalid item script for 'Result'.\n");
 			return 0;
 		}
