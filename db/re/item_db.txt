@@ -11649,7 +11649,7 @@
 23777,EP17_1_SPC06,Advanced Weapon Modifier (Physical),11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23777; },{},{}
 23778,EP17_1_SPC07,Super Weapon Modifier (Physical),11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23778; },{},{}
 23779,EP17_1_SPC08,Weapon Modifier (Magic),11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23779; },{},{}
-23780,EP17_1_SPC09,Advanced Weapon Modifier (Magic),11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23720; },{},{}
+23780,EP17_1_SPC09,Advanced Weapon Modifier (Magic),11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23780; },{},{}
 23781,EP17_1_SPC10,Super Weapon Modifier (Magic),11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23781; },{},{}
 23815,Magma_Essence,Lava Essence,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23815; },{},{}
 23818,Bs_Item_M_S_2,Giant Orc Helm Combination SynthesisBox,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23818; },{},{}

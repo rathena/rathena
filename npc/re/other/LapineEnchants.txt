@@ -1957,26 +1957,26 @@ function	script	F_Lapine_Grace_Convert4	{
 function	script	F_Lapine_Shadow_Random_Mix	{
 	// Option:1
 	.@r = rand(200); // No rates info
-	if (.@r < 10)  { set getarg(2), RDMOPT_VAR_STRAMOUNT; set getarg(3), rand(1,15); return; }
-	if (.@r < 20)  { set getarg(2), RDMOPT_VAR_AGIAMOUNT; set getarg(3), rand(1,15); return; }
-	if (.@r < 30)  { set getarg(2), RDMOPT_VAR_VITAMOUNT; set getarg(3), rand(1,3); return; }
-	if (.@r < 40)  { set getarg(2), RDMOPT_VAR_INTAMOUNT; set getarg(3), rand(1,3); return; }
-	if (.@r < 50)  { set getarg(2), RDMOPT_VAR_DEXAMOUNT; set getarg(3), 1; return; }
-	if (.@r < 60)  { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(100,500); return; }
-	if (.@r < 70)  { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(20,100); return; }
-	if (.@r < 80)  { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(1,2); return; }
-	if (.@r < 90)  { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(1,2); return; }
-	if (.@r < 100) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(5,15); return; }
-	if (.@r < 110) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(5,15); return; }
-	if (.@r < 120) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(1,5); return; }
-	if (.@r < 130) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(1,3); return; }
-	if (.@r < 140) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(1,5); return; }
-	if (.@r < 150) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(1,5); return; }
-	if (.@r < 160) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(3,5); return; }
-	if (.@r < 170) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(3,5); return; }
-	if (.@r < 180) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(10,25); return; }
-	if (.@r < 190) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(1,3); return; }
-	if (.@r < 200) { set getarg(2), RDMOPT_VAR_LUKAMOUNT; set getarg(3), rand(1,5); return; }
+	if (.@r < 10)  { set getarg(0), RDMOPT_VAR_ATTPOWER; set getarg(1), rand(1,15); return; }
+	if (.@r < 20)  { set getarg(0), RDMOPT_VAR_ATTMPOWER; set getarg(1), rand(1,15); return; }
+	if (.@r < 30)  { set getarg(0), RDMOPT_VAR_ATKPERCENT; set getarg(1), rand(1,3); return; }
+	if (.@r < 40)  { set getarg(0), RDMOPT_VAR_MAGICATKPERCENT; set getarg(1), rand(1,3); return; }
+	if (.@r < 50)  { set getarg(0), RDMOPT_VAR_PLUSASPD; set getarg(1), 1; return; }
+	if (.@r < 60)  { set getarg(0), RDMOPT_VAR_MAXHPAMOUNT; set getarg(1), rand(100,500); return; }
+	if (.@r < 70)  { set getarg(0), RDMOPT_VAR_MAXSPAMOUNT; set getarg(1), rand(20,100); return; }
+	if (.@r < 80)  { set getarg(0), RDMOPT_VAR_MAXHPPERCENT; set getarg(1), rand(1,2); return; }
+	if (.@r < 90)  { set getarg(0), RDMOPT_VAR_MAXSPPERCENT; set getarg(1), rand(1,2); return; }
+	if (.@r < 100) { set getarg(0), RDMOPT_VAR_HITSUCCESSVALUE; set getarg(1), rand(5,15); return; }
+	if (.@r < 110) { set getarg(0), RDMOPT_VAR_AVOIDSUCCESSVALUE; set getarg(1), rand(5,15); return; }
+	if (.@r < 120) { set getarg(0), RDMOPT_VAR_CRITICALSUCCESSVALUE; set getarg(1), rand(1,5); return; }
+	if (.@r < 130) { set getarg(0), RDMOPT_DEC_SPELL_CAST_TIME; set getarg(1), rand(1,3); return; }
+	if (.@r < 140) { set getarg(0), RDMOPT_DAMAGE_CRI_TARGET; set getarg(1), rand(1,5); return; }
+	if (.@r < 150) { set getarg(0), RDMOPT_RANGE_ATTACK_DAMAGE_TARGET; set getarg(1), rand(1,5); return; }
+	if (.@r < 160) { set getarg(0), RDMOPT_HEAL_VALUE; set getarg(1), rand(3,5); return; }
+	if (.@r < 170) { set getarg(0), RDMOPT_HEAL_MODIFY_PERCENT; set getarg(1), rand(3,5); return; }
+	if (.@r < 180) { set getarg(0), RDMOPT_VAR_ITEMDEFPOWER; set getarg(1), rand(10,25); return; }
+	if (.@r < 190) { set getarg(0), RDMOPT_VAR_MDEFPOWER; set getarg(1), rand(1,3); return; }
+	if (.@r < 200) { set getarg(0), RDMOPT_VAR_PLUSASPDPERCENT; set getarg(1), rand(1,5); return; }
 	return;
 }
 
