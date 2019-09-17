@@ -6885,7 +6885,7 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 #ifdef RENEWAL
 	int max_damage = status_get_max_hp(bl);
 
-	#define CAP_RDAMAGE(d) ( (d) = cap_value((d), 1, max_rdamage) )
+	#define CAP_RDAMAGE(d) ( (d) = cap_value((d), 1, max_damage) )
 #else
 	#define CAP_RDAMAGE(d) ( (d) = i64max((d), 1) )
 #endif
