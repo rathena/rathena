@@ -9054,7 +9054,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		switch (type) {
 		case SC_COMA:
 		// continue list...
-		    return 0;
+			return 0;
 		}
 	}
 
