@@ -861,6 +861,9 @@ struct item_data
 	struct item_combo **combos;
 	unsigned char combos_count;
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+
+	bool isStackable();
+	int inventorySlotNeeded(int quantity);
 };
 
 // Struct for item random option [Secret]
@@ -949,7 +952,6 @@ char itemdb_isidentified(unsigned short nameid);
 bool itemdb_isstackable2(struct item_data *id);
 #define itemdb_isstackable(nameid) itemdb_isstackable2(itemdb_search(nameid))
 bool itemdb_isNoEquip(struct item_data *id, uint16 m);
-int itemdb_inventory_slot_needed(item_data *id, int amount);
 
 struct item_combo *itemdb_combo_exists(unsigned short combo_id);
 

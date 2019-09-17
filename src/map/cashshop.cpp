@@ -510,9 +510,6 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 		if( !id ){
 			clif_cashshop_result( sd, nameid, CASHSHOP_RESULT_ERROR_UNKONWN_ITEM );
 			return false;
-		}else if( !itemdb_isstackable2( id ) && quantity > 1 ){
-			/* ShowWarning( "Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable cash item %hu!\n", sd->status.name, sd->status.account_id, sd->status.char_id, quantity, nameid ); */
-			quantity = *( item_list + i * 5 + 2 ) = 1;
 		}
 
 		if( quantity > 99 ){
@@ -546,7 +543,7 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 				break;
 
 			case CHKADDITEM_NEW:
-				new_ += itemdb_inventory_slot_needed(id, quantity);
+				new_ += id->inventorySlotNeeded(quantity);
 				break;
 
 			case CHKADDITEM_OVERAMOUNT:
@@ -582,13 +579,10 @@ bool cashshop_buylist( struct map_session_data* sd, uint32 kafrapoints, int n, u
 		if (!id)
 			continue;
 
-		if (!itemdb_isstackable2(id) && quantity > 1)
-			quantity = 1;
-
 		if (!pet_create_egg(sd, nameid)) {
 			unsigned short get_amt = quantity, j;
 
-			if (id->flag.guid)
+			if (id->flag.guid || !itemdb_isstackable2(id))
 				get_amt = 1;
 
 			for (j = 0; j < quantity; j += get_amt) {

@@ -1599,7 +1599,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 		switch( pc_checkadditem(sd,nameid,amount) )
 		{
 			case CHKADDITEM_NEW:
-				new_ += itemdb_inventory_slot_needed(id, amount);
+				new_ += id->inventorySlotNeeded(amount);
 				break;
 			case CHKADDITEM_OVERAMOUNT:
 				return ERROR_TYPE_INVENTORY_WEIGHT;
@@ -1751,7 +1751,7 @@ int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amo
 	switch( pc_checkadditem(sd, nameid, amount) )
 	{
 		case CHKADDITEM_NEW:
-			if( pc_inventoryblank(sd) < itemdb_inventory_slot_needed(item, amount) )
+			if( pc_inventoryblank(sd) < item->inventorySlotNeeded(amount) )
 				return ERROR_TYPE_INVENTORY_WEIGHT;
 			break;
 		case CHKADDITEM_OVERAMOUNT:
@@ -1901,7 +1901,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 				break;
 
 			case CHKADDITEM_NEW:
-				new_ += itemdb_inventory_slot_needed(id, amount);
+				new_ += id->inventorySlotNeeded(amount);
 				break;
 
 			case CHKADDITEM_OVERAMOUNT:
