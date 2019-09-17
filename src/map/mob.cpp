@@ -2426,8 +2426,6 @@ void mob_damage(struct mob_data *md, struct block_list *src, int damage)
  */
 int mob_getdroprate(struct block_list *src, struct mob_db *mob, int base_rate, int drop_modifier)
 {
-	nullpo_retr(base_rate, src);
-
 	int drop_rate = base_rate;
 
 	if (battle_config.mob_size_influence) { // Change drops depending on monsters size [Valaris]
