@@ -6737,7 +6737,7 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		// If no player is attached
 		if( !script_rid2sd(sd) ){
 			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_id_var );
-			return false;
+			return SCRIPT_CMD_FAILURE;
 		}
 	}
 
@@ -6756,7 +6756,7 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		// If no player is attached
 		if( !script_rid2sd(sd) ){
 			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_val_var );
-			return false;
+			return SCRIPT_CMD_FAILURE;
 		}
 	}
 
@@ -6775,7 +6775,7 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		// If no player is attached
 		if( !script_rid2sd(sd) ){
 			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_param_var );
-			return false;
+			return SCRIPT_CMD_FAILURE;
 		}
 	}
 
@@ -6791,11 +6791,6 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 
 	opt_id_ref = reference_getref(opt_id);
 	opt_id_n = script_array_highest_key(st, sd, opt_id_var, opt_id_ref);
-
-	if (opt_id_n < 1) {
-		ShowError("buildin_%s: No option id listed.\n", funcname);
-		return SCRIPT_CMD_FAILURE;
-	}
 
 	opt_val_ref = reference_getref(opt_val);
 	opt_param_ref = reference_getref(opt_param);
@@ -6900,8 +6895,8 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
  * Returns number of items in inventory
  * countitem(<nameID>{,<accountID>})
  * countitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>}) [Lupus]
- * countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
- * countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
+ * countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+ * countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
  */
 BUILDIN_FUNC(countitem)
 {
@@ -6917,16 +6912,8 @@ BUILDIN_FUNC(countitem)
 		random_option = true;
 	}
 
-	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	} else {
-		if (!script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-	}
+	if (!script_accid2sd(aid, sd))
+		return SCRIPT_CMD_FAILURE;
 
 	struct item_data *id;
 
@@ -6964,16 +6951,8 @@ BUILDIN_FUNC(cartcountitem)
 	if (command[strlen(command) - 1] == '2')
 		aid = 10;
 
-	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	} else {
-		if (!script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-	}
+	if (!script_accid2sd(aid, sd))
+		return SCRIPT_CMD_FAILURE;
 
 	if (!pc_iscarton(sd)) {
 		ShowError("buildin_%s: Player doesn't have cart (CID:%d).\n", command, sd->status.char_id);
@@ -7017,16 +6996,8 @@ BUILDIN_FUNC(storagecountitem)
 	if (command[strlen(command) - 1] == '2')
 		aid = 10;
 
-	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	} else {
-		if (!script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-	}
+	if (!script_accid2sd(aid, sd))
+		return SCRIPT_CMD_FAILURE;
 
 	struct item_data *id;
 
@@ -7069,16 +7040,8 @@ BUILDIN_FUNC(guildstoragecountitem)
 	if (command[strlen(command) - 1] == '2')
 		aid = 10;
 
-	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	} else {
-		if (!script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-	}
+	if (!script_accid2sd(aid, sd))
+		return SCRIPT_CMD_FAILURE;
 
 	struct item_data *id;
 
@@ -15407,38 +15370,41 @@ BUILDIN_FUNC(isday)
 BUILDIN_FUNC(isequippedcnt)
 {
 	TBL_PC *sd;
-	int i, id = 1;
-	int ret = 0;
 
-	if (!script_rid2sd(sd)) { //If the player is not attached it is a script error anyway... but better prevent the map server from crashing...
+	if (!script_rid2sd(sd)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	for (i=0; id!=0; i++) {
-		short j;
-		FETCH (i+2, id) else id = 0;
+	int ret = 0;
+	int total = script_lastdata(st);
+	std::vector<int32> list(total);
+
+	for (int i = 2; i <= total; ++i) {
+		int id = script_getnum(st,i);
 		if (id <= 0)
 			continue;
+		if (std::find(list.begin(), list.end(), id) != list.end())
+			continue;
+		list.push_back(id);
 
-		for (j=0; j<EQI_MAX; j++) {
+		for (short j = 0; j < EQI_MAX; j++) {
 			short index = sd->equip_index[j];
-			if(index < 0)
+			if (index < 0)
 				continue;
 			if (pc_is_same_equip_index((enum equip_index)j, sd->equip_index, index))
 				continue;
 
-			if(!sd->inventory_data[index])
+			if (!sd->inventory_data[index])
 				continue;
 
 			if (itemdb_type(id) != IT_CARD) { //No card. Count amount in inventory.
 				if (sd->inventory_data[index]->nameid == id)
-					ret+= sd->inventory.u.items_inventory[index].amount;
+					ret += sd->inventory.u.items_inventory[index].amount;
 			} else { //Count cards.
-				short k;
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue; //No cards
-				for(k=0; k<sd->inventory_data[index]->slot; k++) {
+				for (short k = 0; k < sd->inventory_data[index]->slot; k++) {
 					if (sd->inventory.u.items_inventory[index].card[k] == id)
 						ret++; //[Lupus]
 				}

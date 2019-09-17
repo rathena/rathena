@@ -226,7 +226,6 @@ struct Battle_Config
 	int pet_attack_support;
 	int pet_damage_support;
 	int pet_support_min_friendly;	//[Skotlex]
-	int pet_equip_min_friendly;
 	int pet_support_rate;
 	int pet_attack_exp_to_master;
 	int pet_attack_exp_rate;
