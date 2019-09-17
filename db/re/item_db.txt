@@ -11678,7 +11678,7 @@
 23841,Bs_Item_M_S_32,Rosario's Necklace SynthesisBox,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23841; },{},{}
 23842,Bs_Item_M_S_33,Spirit Crown SynthesisBox,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23842; },{},{}
 23843,Bs_Item_M_S_36,Guard's Cap SynthesisBox,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23843; },{},{}
-23844,Bs_Item_M_S_37,Bandit's Hood SynthesisBox,3,,,1,,0,,0,0xFFFFFFFF,63,2,,0,,,,{ synthesisui 23844; },{},{}
+23844,Bs_Item_M_S_37,Bandit's Hood SynthesisBox,11,,,1,,0,,0,0xFFFFFFFF,63,2,,0,,,,{ synthesisui 23844; },{},{}
 23845,Bs_Item_M_S_38,Angel's Blessing SynthesisBox,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23845; },{},{}
 23846,Bs_Item_M_S_39,Rabbit Magic Hat SynthesisBox,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23846; },{},{}
 23847,Bs_Item_M_S_40,Anubis Helm SynthesisBox,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23847; },{},{}
