@@ -10146,7 +10146,7 @@ If <char id> is specified, the specified player is used rather than the attached
 
 ---------------------------------------
 
-*synthesisui(<id>{<char_id>})
+*synthesisui(<id>,{<char_id>})
 
 Open Item Synthesis UI for attached player. The id must be valid from
 db/[pre-]re/item_synthesis.yml.
@@ -10155,7 +10155,7 @@ Returns 1 on success and 0 of failure.
 
 ---------------------------------------
 
-*upgradeui(<id>{<char_id>})
+*upgradeui(<id>,{<char_id>})
 
 Open Item Upgrade UI for attached player. The id must be valid from
 db/[pre-]re/item_upgrade.yml.
