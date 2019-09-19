@@ -4276,9 +4276,9 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 
 #ifdef RENEWAL
 	if ((skill = pc_checkskill(sd, DC_DANCINGLESSON)) > 0)
-		status->cri += skill * 10;
+		base_status->cri += skill * 10;
 	if ((skill = pc_checkskill(sd, PR_MACEMASTERY)) > 0 && (sd->status.weapon == W_MACE || sd->status.weapon == W_2HMACE))
-		status->cri += skill * 10;
+		base_status->cri += skill * 10;
 #endif
 
 // ----- EQUIPMENT-DEF CALCULATION -----

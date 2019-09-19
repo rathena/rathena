@@ -17287,29 +17287,24 @@ void skill_weaponrefine(struct map_session_data *sd, int idx)
 int skill_autospell(struct map_session_data *sd, uint16 skill_id)
 {
 	uint16 skill_lv;
-	uint16 idx = 0;
 	int maxlv=1,lv;
 
 	nullpo_ret(sd);
 
 	skill_lv = sd->menuskill_val;
 
-	if ((idx = skill_get_index2(skill_id)) == 0)
-		return 0;
 	if (SKILL_CHK_GUILD(skill_id))
 		return 0;
-	lv = (sd->status.skill[idx].id == skill_id) ? sd->status.skill[idx].lv : 0;
+
+	lv = pc_checkskill(sd, skill_id);
 
 	if(!skill_lv || !lv) return 0; // Player must learn the skill before doing auto-spell [Lance]
 
 #ifdef RENEWAL
 	if (sd->sc.data[SC_SPIRIT] && sd->sc.data[SC_SPIRIT]->val2 == SL_SAGE && skill_lv < 4)
 		maxlv = 10; //Soul Linker bonus. [Skotlex]
-	else {
-		maxlv = skill_lv / 2; // Half of Autospell's level unless player learned a lower level
-		if (lv < maxlv)
-			maxlv = lv;
-	}
+	else
+		maxlv = skill_lv / 2; // Half of Autospell's level unless player learned a lower level (capped below)
 #else
 	if(skill_id==MG_NAPALMBEAT)	maxlv=3;
 	else if(skill_id==MG_COLDBOLT || skill_id==MG_FIREBOLT || skill_id==MG_LIGHTNINGBOLT){
@@ -17332,8 +17327,7 @@ int skill_autospell(struct map_session_data *sd, uint16 skill_id)
 	else return 0;
 #endif
 
-	if(maxlv > lv)
-		maxlv = lv;
+	maxlv = min(lv, maxlv);
 
 	sc_start4(&sd->bl,&sd->bl,SC_AUTOSPELL,100,skill_lv,skill_id,maxlv,0,
 		skill_get_time(SA_AUTOSPELL,skill_lv));
