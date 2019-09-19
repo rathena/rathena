@@ -11531,7 +11531,7 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || (sd->state.block_action & PCBLOCK_USEITEM) ) {
+	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || sd->state.lapine_ui || (sd->state.block_action & PCBLOCK_USEITEM) ) {
 		clif_msg(sd, WORK_IN_PROGRESS);
 		return;
 	}
@@ -20893,6 +20893,11 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 #endif
 }
 
+static void clif_lapine_ui_reset(map_session_data *sd) {
+	sd->state.lapine_ui = 0;
+	sd->last_lapine_box = 0;
+}
+
 bool clif_synthesisui_open(struct map_session_data *sd, unsigned int itemid) {
 #if PACKETVER >= 20160525
 	nullpo_retr(false, sd);
@@ -20928,6 +20933,8 @@ void clif_synthesisui_result(struct map_session_data *sd, e_item_synthesis_resul
 	unsigned char buf[4] = { '\0' };
 	unsigned short cmd = 0;
 	s_packet_db *info = NULL;
+
+	clif_lapine_ui_reset(sd);
 
 	if (!(cmd = packet_db_ack[ZC_LAPINE_SYNTHESIS_RESULT]))
 		return;
@@ -20971,7 +20978,7 @@ void clif_parse_lapineSynthesis_submit(int fd, struct map_session_data* sd) {
 #endif
 	item_data *id;
 
-	if (n < 1 || n > MAX_SYNTHESIS_SOURCES || sd->last_lapine_box != itemid || !(id = itemdb_exists(itemid))) {
+	if (n < 1 || n > MAX_SYNTHESIS_SOURCES || sd->last_lapine_box != itemid || sd->last_lapine_box != sd->itemid || !(id = itemdb_exists(itemid))) {
 		//clif_synthesisui_result(sd, SYNTHESIS_INVALID_ITEM);
 		set_eof(sd->fd);
 		return;
@@ -21013,8 +21020,7 @@ void clif_parse_lapineSynthesis_submit(int fd, struct map_session_data* sd) {
 void clif_parse_lapineSynthesis_close(int fd, struct map_session_data* sd) {
 #if PACKETVER >= 20160525
 	nullpo_retv(sd);
-	sd->state.lapine_ui = 0;
-	sd->last_lapine_box = 0;
+	clif_lapine_ui_reset(sd);
 #endif
 }
 
@@ -21053,6 +21059,8 @@ void clif_lapine_upgrade_result(struct map_session_data *sd, e_item_upgrade_resu
 	unsigned char buf[4] = { '\0' };
 	unsigned short cmd = 0;
 	s_packet_db *info = NULL;
+
+	clif_lapine_ui_reset(sd);
 
 	if (!(cmd = packet_db_ack[ZC_LAPINE_UPGRADE_RESULT]))
 		return;
@@ -21105,7 +21113,7 @@ void clif_parse_lapineUpgrade_submit(int fd, struct map_session_data* sd) {
 
 	item_data *id;
 
-	if (sd->last_lapine_box != itemid || index < 0 || index >= MAX_INVENTORY || !(id = itemdb_search(sd->last_lapine_box))) {
+	if (sd->last_lapine_box != itemid || sd->last_lapine_box != sd->itemid || index < 0 || index >= MAX_INVENTORY || !(id = itemdb_search(sd->last_lapine_box))) {
 		//clif_lapine_upgrade_result(sd, LAPINE_UPRAGDE_FAILURE);
 		set_eof(sd->fd);
 		return;
@@ -21128,8 +21136,7 @@ void clif_parse_lapineUpgrade_submit(int fd, struct map_session_data* sd) {
 void clif_parse_lapineUpgrade_close(int fd, struct map_session_data* sd) {
 #if PACKETVER >= 20160525
 	nullpo_retv(sd);
-	sd->state.lapine_ui = 0;
-	sd->last_lapine_box = 0;
+	clif_lapine_ui_reset(sd);
 #endif
 }
 

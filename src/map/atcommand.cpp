@@ -936,7 +936,7 @@ ACMD_FUNC(storage)
 {
 	nullpo_retr(-1, sd);
 
-	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading || sd->state.storage_flag ||sd->state.lapine_ui)
+	if (sd->npc_id || sd->state.vending || sd->state.buyingstore || sd->state.trading || sd->state.storage_flag || sd->state.lapine_ui)
 		return -1;
 
 	if (storage_storageopen(sd) == 1)
