@@ -57,9 +57,6 @@ Body:
     callfunc("F_Lapine_Ancient_Hero_Bravery", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-    // setarray .@properties[0], ITEMUPG_OPTION_ID0, ITEMUPG_OPTION_VALUE0, ITEMUPG_OPTION_ID1, ITEMUPG_OPTION_VALUE1;
-    // setarray .@values[0], .@opt1, .@val1, .@opt2, .@val2;
-    // upgrade @last_lapine_idx,.@properties,.@values;
 - Id: 100025 # Ancient_Hero_Wisdom, 영웅의 무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -405,7 +402,7 @@ Body:
   - Item: 16028 #타노스의망치
   - Item: 28100 #타노스의도끼
   Result: |
-    callfunc("F_Lapine_Gray_Charcoal_Range", .@opts[0], .@vals[0]);
+    callfunc("F_Lapine_Gray_Charcoal_Range", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23677 # Gray_Charcoal_Magic, 타노스 마법 무기
@@ -420,7 +417,7 @@ Body:
   - Item: 1933 #타노스의바이올린
   - Item: 1988 #타노스의윕소드
   Result: |
-    callfunc("F_Lapine_Gray_Charcoal_Magic", .@opts[0], .@vals[0]);
+    callfunc("F_Lapine_Gray_Charcoal_Magic", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23676 # Gray_Charcoal_Melee, 타노스 근거리 무기
@@ -440,7 +437,7 @@ Body:
   - Item: 28100 #타노스의도끼
   - Item: 1933 #타노스의바이올린
   Result: |
-    callfunc("F_Lapine_Gray_Charcoal_Melee", .@opts[0], .@vals[0]);
+    callfunc("F_Lapine_Gray_Charcoal_Melee", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23679 # Geffen_Magic_Scroll2, 게펜 마법 대회 액세서리 (accessory)
@@ -1433,7 +1430,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Shadow_9_Refine_Hammer", .@refine);
     getitem2(LapineUpgradeItem,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
-- Id: 23311 # 마법고양이손, 새끼 고양이 헤드드레스
+- Id: 23311 # 마법고양이손, 새끼 고양이 헤드드레스 (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
   NotSocketEnchantItem: true
@@ -1443,7 +1440,7 @@ Body:
     callfunc("F_Lapine_Magic_Cat_Hand", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
-- Id: 23289 # 사탕축복스크롤_물리, 사탕 주머니 가방(물리)
+- Id: 23289 # 사탕축복스크롤_물리, 사탕 주머니 가방(물리) (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
   NotSocketEnchantItem: true
@@ -1453,7 +1450,7 @@ Body:
     callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_W", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23290 # 사탕축복스크롤_원거리, 사탕 주머니 가방(원거리)
+- Id: 23290 # 사탕축복스크롤_원거리, 사탕 주머니 가방(원거리) (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
   NotSocketEnchantItem: true
@@ -1463,7 +1460,7 @@ Body:
     callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_R", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23291 # 사탕축복스크롤_마법, 사탕 주머니 가방(마법)
+- Id: 23291 # 사탕축복스크롤_마법, 사탕 주머니 가방(마법) (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
   NotSocketEnchantItem: true
@@ -1473,7 +1470,7 @@ Body:
     callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_M", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23100 # 건슬링거두루마리, 늘어진 건슬링거
+- Id: 23100 # 건슬링거두루마리, 늘어진 건슬링거 (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
   NotSocketEnchantItem: true
@@ -1483,7 +1480,7 @@ Body:
     callfunc("F_Lapine_Grown_Gunslinger", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
     getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
-- Id: 23229 # 타락천사날개초기화권, 타락천사의 날개
+- Id: 23229 # 타락천사날개초기화권, 타락천사의 날개 (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
   NotSocketEnchantItem: true
@@ -1495,7 +1492,7 @@ Body:
         getitem(@last_lapine_card1,1);
     }
     getitem2(LapineUpgradeItem,1,1,0,0,0,0,0,0);
-- Id: 23175 # 제복수선키트, 카프라 제복
+- Id: 23175 # 제복수선키트, 카프라 제복 (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
   NotSocketEnchantItem: true

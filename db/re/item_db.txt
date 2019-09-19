@@ -11347,7 +11347,7 @@
 22526,Level_Up_Box150,Level Up Box(150),18,10,,0,,,,0,0xFFFFFFFF,63,2,,,150,,,{ getgroupitem(IG_Level_Up_Box150); },{},{}
 22527,Level_Up_Box160,Level Up Box(160),18,10,,0,,,,0,0xFFFFFFFF,63,2,,,160,,,{ getgroupitem(IG_Level_Up_Box160); },{},{}
 22528,Pet_Exchange_Ticket_Box,Pet Exchange Ticket Box,18,10,,20,,,,,,,,,,,,,{ /*TODO*/ },{},{}
-22529,Shadow_Exchange_Box,Shadow Exchange SynthesisBox,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 22529; },{},{}
+22529,Shadow_Exchange_Box,Shadow Exchange SynthesisBox,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 22529; },{},{}
 22530,Christmas_Box,Christmas Box,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Christmas_Box); },{},{}
 22531,Special_Christmas_Box,Special Christmas Box,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Special_Christmas_Box); },{},{}
 22532,Santa_Gift,Santa Gift,18,10,,200,,,,0,0xFFFFFFFF,63,2,,,1,,,{ getgroupitem(IG_Santa_Gift); },{},{}
@@ -12258,8 +12258,8 @@
 25131,Fallen_Energy_Particle,Fallen Energy Particle,3,0,,0,,,,,,,,,,,,,{},{},{}
 25132,Pumpkin_Deco,Pumpkin Deco,3,0,,0,,,,,,,,,,,,,{},{},{}
 25133,Dried_White_Stem,Dried White Stem,3,0,,0,,,,,,,,,,,,,{},{},{}
-25136,ElectricEffect_Middle,ElectricEffect (Middle),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
-25137,GreenFloor_Bottom,GreenFloor (Bottom),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
+25136,ElectricEffect_Middle,ElectricEffect (Middle),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_Electric,true; },{},{ hateffect HAT_EF_Electric,false; }
+25137,GreenFloor_Bottom,GreenFloor (Bottom),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_Green_Floor,true; },{},{ hateffect HAT_EF_Green_Floor,false; }
 25138,ShrinkEffect_Middle,ShrinkEffect (Middle),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
 25139,Identify_Stone,Identify Stone (Bottom),6,,,100,,,,,,,,,,,,,{ skill "MC_IDENTIFY",1; },{},{}
 25141,EXPStone_Middle,EXPStone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bExpAddClass,Class_All,2; },{},{}
@@ -12307,7 +12307,7 @@
 25185,Locket_Pendant,Locket Pendant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25187,Slug_Bullet,Slug Bullet,3,1200,,1200,,,,,,,,,,,,,{},{},{}
 25205,ShrinkEffect_Bottom,ShrinkEffect (Bottom),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
-25206,ElectricEffect_Top,ElectricEffect (Upper),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
+25206,ElectricEffect_Top,ElectricEffect (Upper),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_Electric,true; },{},{ hateffect HAT_EF_Electric,false; }
 25207,SPAbsorb_Stone_Top,SPAbsorb Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus2 bSPDrainRate,20,1; },{},{}
 25208,SPAbsorb_Stone_Robe,SPAbsorb Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSPDrainRate,20,1; },{},{}
 25209,HPAbsorb_Stone_Robe,HPAbsorb Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bHPDrainRate,20,3; },{},{}
@@ -12332,15 +12332,15 @@
 25256,Hazy_Dream_Fragment,Hazy Dream Fragment,3,0,,10,,,,,,,,,,,,,{},{},{}
 25257,Bloody_Love_Letter,Bloody Love Letter,3,780,,10,,,,,,,,,,,,,{},{},{}
 25258,Broken_Arrow,Broken Arrow,3,550,,10,,,,,,,,,,,,,{},{},{}
-25259,Recruitment_Leaflet,Recruitment Leaflet,3,778,,1,,,,,,,,,,,,,{},{},{}
+25259,Recruitment_Leaflet,Recruitment Leaflet,3,778,,10,,,,,,,,,,,,,{},{},{}
 25260,Fragment_of_Purple_Ore,Fragment of Purple Ore,3,0,,0,,,,,,,,,,,,,{},{},{}
-25261,Torn_Paper_,Torn Paper,3,0,,1,,,,,,,,,,,,,{},{},{}
-25262,Well-dried_Clover,Well-dried Clover,3,0,,1,,,,,,,,,,,,,{},{},{}
-25263,Short_Bat_Hair,Short Bat Hair,3,0,,1,,,,,,,,,,,,,{},{},{}
-25264,Cluster_of_Nightmares,Cluster of Nightmares,3,0,,1,,,,,,,,,,,,,{},{},{}
-25265,Shining_Spore,Shining Spore,3,0,,1,,,,,,,,,,,,,{},{},{}
-25266,Dried_Leaf_Of_Ygg,Dried Yggdrasil Leaf,3,0,,1,,,,,,,,,,,,,{},{},{}
-25267,Suspicious_Pentacle,Suspicious Pentacle,3,0,,1,,,,,,,,,,,,,{},{},{}
+25261,Torn_Paper_,Torn Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
+25262,Well-dried_Clover,Well-dried Clover,3,0,,10,,,,,,,,,,,,,{},{},{}
+25263,Short_Bat_Hair,Short Bat Hair,3,0,,10,,,,,,,,,,,,,{},{},{}
+25264,Cluster_of_Nightmares,Cluster of Nightmares,3,0,,10,,,,,,,,,,,,,{},{},{}
+25265,Shining_Spore,Shining Spore,3,0,,10,,,,,,,,,,,,,{},{},{}
+25266,Dried_Leaf_Of_Ygg,Dried Yggdrasil Leaf,3,0,,10,,,,,,,,,,,,,{},{},{}
+25267,Suspicious_Pentacle,Suspicious Pentacle,3,0,,10,,,,,,,,,,,,,{},{},{}
 25271,Illusion_Stone,Illusion Stone,3,10,,0,,,,,,,,,,,,,{},{},{}
 25272,Illusion_Gemstone,Illusion Gemstone,3,0,,10,,,,,,,,,,,,,{},{},{}
 25276,Clean_Bone,Clean Bone,3,248,,10,,,,,,,,,,,,,{},{},{}

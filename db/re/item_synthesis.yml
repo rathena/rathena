@@ -1009,7 +1009,6 @@ Body:
   - Item: 19241
     Amount: 1
   Reward: |
-    // Duplicate on item upgrade
     if (rand(2) == 0) {
         getitem(19245,1); // chance to become Crimson Booster
     } else {
@@ -1423,7 +1422,7 @@ Body:
     Amount: 1
   Reward: |
     // Duplicate on item upgrade
-    getitem(2589,1);
+    getitem(20835,1);
 - Id: 22529 # 쉐도우뚝딱상자
   SourceNeeded: 3
   NeedRefine: 0
@@ -2319,7 +2318,7 @@ Body:
     // Duplicate on item upgrade
     callfunc("F_Lapine_Grown_Gunslinger", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(19157,1,1,.@refine,0,0,0,0,0,.@opts,.@vals,.@params);
+    getitem3(19157,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
 - Id: 23170 # 선풍기개조키트
   SourceNeeded: 1
   NeedRefine: 0
