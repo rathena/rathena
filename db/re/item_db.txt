@@ -6273,6 +6273,10 @@
 11602,Catnip_Fruit,Catnip Fruit,0,15,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(10,40),0; },{},{}
 11601,Delicious_Anchovy,Delicious Anchovy,0,20,,30,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(30,46),0; },{},{}
 11605,Cookies_Bat,Cookie Bat,0,0,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(50,100),0; /*TODO*/ },{},{}
+11621,Red_Syrup,Red Syrup,0,800,400,7,,,,,0xFFFFFFFF,63,2,,,60,,,{ itemheal 325,0; },{},{}
+11622,Yellow_Syrup,Yellow Syrup,0,1200,600,10,,,,,0xFFFFFFFF,63,2,,,60,,,{ itemheal 900,0; },{},{}
+11623,White_Syrup,White Syrup,0,1500,750,14,,,,,0xFFFFFFFF,63,2,,,60,,,{ itemheal 1800,0; },{},{}
+11624,Blue_Syrup,Blue Syrup,0,7000,3500,10,,,,,0xFFFFFFFF,63,2,,,60,,,{ itemheal 0,180; },{},{}
 //
 11701,Girl_Bunch_Of_Flower,Girl's Bouquet,0,20,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ itemheal rand(105,145),0; },{},{}
 11702,Moon_Cookie,Moon Cookie,0,0,,300,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
