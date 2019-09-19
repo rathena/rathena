@@ -1986,7 +1986,7 @@ bool item_data::isStackable()
 
 int item_data::inventorySlotNeeded(int quantity)
 {
-	return (this->flag.guid || this->isStackable()) ? quantity : 1;
+	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }
 
 /**
