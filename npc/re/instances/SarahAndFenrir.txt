@@ -500,7 +500,7 @@ dali02,93,146,6	script	Assistant Professor#a1	4_M_REPAIR,{
 	end;
 OnTouch:
 	disablenpc instance_npcname("#glast_event_1");
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	specialeffect2 EF_HIT2;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : Huh? Somebody there? Hello~ You must be a traveler.";
 	sleep2 3000;
@@ -525,6 +525,7 @@ OnTouch:
 	npctalk "Fenrith Fenrir: Buy me some time while I cast magic! I will handle this!", 'fenrir_1$;
 	donpcevent instance_npcname("#glast_event_1") + "::OnBar";
 	donpcevent instance_npcname("#glast_event_1") + "::OnEvent";
+	setpcblock PCBLOCK_NPC, false;
 	end;
 OnBar:
 	progressbar_npc "000000",10, 'fenrir_1$;
@@ -563,7 +564,7 @@ OnMobDead:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#glast_event_3");
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	cutin "fenrir_a.bmp",2;
 	npctalk "Fenrith Fenrir: By the way, I know it was sudden but thank you for helping.", 'fenrir_1$;
 	sleep2 2000;
@@ -593,6 +594,7 @@ OnTouch:
 	enablenpc instance_npcname("#glast_move_01");
 	enablenpc instance_npcname("#glast_event_5");
 	enablenpc 'fenrir_2$;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -705,7 +707,7 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#glast_event_5");
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	cutin "fenrir_a.bmp",2;
 	npctalk "Fenrith Fenrir: You are still in Glast Heim? Why aren't you leaving this dangerous place?", 'fenrir_2$;
 	sleep2 2000;
@@ -741,6 +743,7 @@ OnTouch:
 	enablenpc 'fenrir_3$;
 	enablenpc instance_npcname("#glast_event_7");
 	disablenpc instance_npcname("#glast_move_01");	// officially player can be stucked in entrance
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -753,12 +756,13 @@ OnTouch:
 	if (is_party_leader() == false)
 		npctalk "Fenrith Fenrir: I would like your party leader to come and help me!", 'fenrir_3$;
 	else {
-		mes "";
+		setpcblock PCBLOCK_NPC, true;
 		disablenpc instance_npcname("#glast_event_7");
 		npctalk "Fenrith Fenrir: You came! I was waiting!", 'fenrir_3$;
 		sleep2 2000;
 		npctalk "Fenrith Fenrir: We don't have much time! We have to go search for it now! Let's go in!", 'fenrir_3$;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		if ('skip_left_part == 0) {// 5 mins have passed?
 			donpcevent instance_npcname("#fenrir_left_final_2") + "::OnStop";
 			disablenpc 'fenrir_3$;
@@ -777,7 +781,7 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#glast_event_9");
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	cutin "fenrir_a.bmp",2;
 	npctalk "Fenrith Fenrir: The sword of Baldur, Sentinel Breeze... even after 1000 years..", 'fenrir_4$;
 	sleep2 3000;
@@ -820,6 +824,7 @@ OnTouch:
 	monster 'map_glast$,49,363, "Gigantes#semi1", 3191,1, instance_npcname("#fenrir_left_final_1") + "::OnMobDead";// MM_M_GIGAN1
 	monster 'map_glast$,41,363, "Gigantes#semi2", 3192,1, instance_npcname("#fenrir_left_final_1") + "::OnMobDead";// MM_M_GIGAN2
 	donpcevent instance_npcname("#glast_event_9") + "::OnEvent";
+	setpcblock PCBLOCK_NPC, false;
 	end;
 OnEvent:
 	sleep 15000;
@@ -1028,7 +1033,7 @@ OnTouch:
 	disablenpc instance_npcname("#glast_event_13");
 	//for ( .@i = 1; .@i < 8; .@i++ )
 	//	disablenpc instance_npcname("#glast_event_warp_" + .@i);
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	cutin "fenrir_a.bmp",2;
 	sleep2 1000;
 	npctalk "Fenrith Fenrir: I need to go to Glast Heim Castle to retrieve the sword of Baldur.", 'fenrir_5$;
@@ -1045,6 +1050,7 @@ OnTouch:
 	npctalk "Fenrith Fenrir: Then I will go on ahead! Warp!", 'fenrir_5$;
 	cutin "",255;
 	donpcevent instance_npcname("#glast_event_13") + "::OnBar";
+	setpcblock PCBLOCK_NPC, false;
 	end;
 OnBar:
 	progressbar_npc "000000",3, 'fenrir_5$;
@@ -1117,7 +1123,7 @@ OnTouch:
 	disablenpc instance_npcname("#glast_move_03");
 	disablenpc instance_npcname("#glast_event_15");
 	donpcevent instance_npcname("#fenrir_boss_final_2") + "::OnStop";
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 1000;
 	npctalk "Fenrith Fenrir: I was waiting. Thank you for not being late.", 'fenrir_6$;
 	sleep2 3000;
@@ -1128,6 +1134,7 @@ OnTouch:
 	enablenpc instance_npcname("#glast_event_18");
 	enablenpc instance_npcname("Sarah Irene#glast_17");
 	enablenpc 'fenrir_7$;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -1138,7 +1145,7 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#glast_event_18");
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	cutin "sarah_hero3.bmp",0;
 	sleep2 1000;
 	npctalk "Sarah Irene: It seemed like forever waiting for you~ Fenrith Fenrir.", 'sarah_17$;
@@ -1179,6 +1186,7 @@ OnTouch:
 	donpcevent instance_npcname("#glast_event_19") + "::OnEvent";
 	monster 'map_glast$,200,336, "Sarah Irene#1",3190,1, instance_npcname("#fenrir_boss_final_1") + "::OnBossDead";	// MM_SARAH
 	'boss_id = $@mobid[0];
+	setpcblock PCBLOCK_NPC, false;
 	end;
 OnBar:
 	progressbar_npc "000000",3, 'fenrir_7$;
@@ -1628,7 +1636,7 @@ OnMobDead:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#glast_event_24");
-	mes "";
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 1500;
 	cutin "fenrir_b.bmp",2;
 	npctalk "Fenrith Fenrir: Hehe.. You are certainly skilled but I think you have underestimated me, Valkyrie.", 'fenrir_10$;
@@ -1648,6 +1656,7 @@ OnTouch:
 	cutin "",255;
 	disablenpc 'fenrir_10$;
 	donpcevent instance_npcname("#sarah_wrath") + "::OnStart";
+	setpcblock PCBLOCK_NPC, false;
 	end;
 }
 
@@ -2021,7 +2030,7 @@ OnMobDead:
 1@glast,277,130,8	script	Stone Gargoyle#glast_01	4_GARGOYLE_STATUE,2,2,{
 	end;
 OnTouch:
-	getmapxy .@map$,.@x,.@y, UNITTYPE_NPC;
+	getmapxy .@map$,.@x,.@y, BL_NPC;
 	monster .@map$,.@x,.@y, "Mutant Gargoyle",3197,1, instance_npcname( strnpcinfo(0) ) + "::OnMobDead";	// MM_M_GARGOYLE
 	disablenpc instance_npcname( strnpcinfo(0) );
 	end;

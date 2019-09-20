@@ -191,17 +191,17 @@ The following list describes each module and its purpose.
   malloc         handles runtime memory allocation (so that memory manager could check for leaks)
   mapindex       handles the processing and reading of the mapcache.dat
   md5calc        offers md5 encryption
-  mmo.h          common structures and defines across serv
+  mmo.hpp        common structures and defines across serv
   msg_conf       handles msg in src from configuration
   nullpo         checks and dumps info for debug mode
   random         generation of random numbers
   showmsg        display messages in console with a certain color
   socket         handling of sockets (listening, close, open, etc.)
-  sql.c          MySQL database proxy
-  strlib.c       string handling
-  timer.c        timer-related functions
-  utils.c        misc functions
-  winapi.h       Windows redefine and include
+  sql.cpp        MySQL database proxy
+  strlib.cpp     string handling
+  timer.cpp      timer-related functions
+  utils.cpp      misc functions
+  winapi.hpp     Windows redefine and include
 
   ==============
   | Login-serv |
@@ -265,7 +265,7 @@ The following list describes each module and its purpose.
   guild          functions for the guild system
   homunculus     functions for Alchemist Homunculi processing (create, delete, get stats, death, etc.)
   instance       functions for instance system
-  intif          map-serv <=> inter-serv interface (meant to communicate with 'char/inter.c' or its submodules)
+  intif          map-serv <=> inter-serv interface (meant to communicate with 'char/inter.cpp' or its submodules)
   itemdb         functions for the item database
   log            functions for server log system
   mail           functions for mail system
@@ -286,7 +286,7 @@ The following list describes each module and its purpose.
   searchstore    functions for the Vendor Shop Search feature
   skill          functions for skills (skill_casttime calculation, skill behaviours, skill_chk_cast, requirement checks, 'db/skill_*.txt' processing)
   status         functions for statuses on a bl (add, remove, calculation of effects as a temporary bonus)
-                   status is a struct available by most units as common attributes (bl_type only attribute are dealt in bl specific files, like 'pc.c' or 'mob.c')
+                   status is a struct available by most units as common attributes (bl_type only attribute are dealt in bl specific files, like 'pc.cpp' or 'mob.cpp')
   storage        functions for the storage system: Kafra, cart, guild, inventory (add, transfer, remove items between containers)
                    also ensures container mutex (e.g. guild_storage) and preparation for save requests
   trade          functions to perform a trade (request, accept, add items/Zeny, checks, complete trade)
@@ -300,7 +300,7 @@ The following are standard naming conventions used by rAthena.
 
   Type        Prefix         Example
   ----        ------         -------
-  function    module_        pc_addspiritball -> located in pc.c file
+  function    module_        pc_addspiritball -> located in pc.cpp file
   structure   s_             s_quest_db
   enum        e_             e_race
   status      SC_            SC_INTOABYSS
@@ -347,7 +347,7 @@ The following variables are commonly used in the source code.
 ===============
 | 8. Building |
 ===============
-When adding a new src file or library (new.c and its header, new.h), you'll also
+When adding a new src file or library (new.cpp and its header, new.hpp), you'll also
 need to update the following files to fully integrate it into the project so that
 users can compile it.
 

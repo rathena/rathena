@@ -1,17 +1,12 @@
 //===== rAthena Script =======================================
 //= Battleground: Emperium
-//===== By: ==================================================
-//= AnnieRuru
-//===== Current Version: =====================================
-//= 1.1
-//===== Compatible With: =====================================
-//= rAthena Project
 //===== Description: =========================================
 //= A simple battleground script:
 //= Destroy the opponent's Emperium to win the match.
-//===== Additional Comments: =================================
-//= 1.0 First version, edited. [Euphy]
+//===== Changelogs: ==========================================
+//= 1.0 First version, edited. [Euphy] [AnnieRuru]
 //= 1.1 Use up to date battleground script commands [AnnieRuru]
+//= 1.2 Fix player can be kill multiple times within 250ms time frame [AnnieRuru]
 //============================================================
 
 -	script	bg_emp#control	-1,{
@@ -26,8 +21,8 @@ OnStart:
 		end;
 
 	// create Battleground and teams
-	.red = waitingroom2bg( "bat_a01", 157,347, strnpcinfo(0)+"::OnRedQuit", strnpcinfo(0)+"::OnRedDead", .rednpcname$ );
-	.blue = waitingroom2bg( "bat_a01", 142,51, strnpcinfo(0)+"::OnBlueQuit", strnpcinfo(0)+"::OnBlueDead", .bluenpcname$ );
+	.red = waitingroom2bg( "-", 0,0, strnpcinfo(0)+"::OnRedQuit", strnpcinfo(0)+"::OnRedDead", .rednpcname$ );
+	.blue = waitingroom2bg( "-", 0,0, strnpcinfo(0)+"::OnBlueQuit", strnpcinfo(0)+"::OnBlueDead", .bluenpcname$ );
 	delwaitingroom .rednpcname$;
 	delwaitingroom .bluenpcname$;
 	setwall "bat_a01", 164,347, 6, 4, 0, "bg_emp_town_red";
@@ -84,9 +79,10 @@ L_EmpDown:
 	end;
 
 // "OnDeath" event
-OnRedDead:
-OnBlueDead:
-	sleep2 1250;
+OnRedDead:  callsub L_Dead, 157,347;
+OnBlueDead: callsub L_Dead, 142,51;
+L_Dead:
+	warp "bat_a01", getarg(0), getarg(1);
 	percentheal 100,100;
 	end;
 

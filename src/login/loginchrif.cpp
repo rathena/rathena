@@ -376,7 +376,7 @@ int logchrif_parse_reqbanacc(int fd, int id, char* ip){
 				uint8 buf[11];
 				char tmpstr[24];
 				timestamp2string(tmpstr, sizeof(tmpstr), timestamp, login_config.date_format);
-				ShowNotice("Char-server '%s': Ban request (account: %d, new final date of banishment: %d (%s), ip: %s).\n", ch_server[id].name, account_id, timestamp, tmpstr, ip);
+				ShowNotice("Char-server '%s': Ban request (account: %d, new final date of banishment: %s, ip: %s).\n", ch_server[id].name, account_id, tmpstr, ip);
 
 				acc.unban_time = timestamp;
 

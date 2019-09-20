@@ -1,0 +1,7 @@
+//===== rAthena Script ======================================= 
+//= Payon City Pre-Renovation
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [JohnnyPlayy]
+//============================================================
+
+payon_in01,46,21,4	duplicate(Young man#12)	Young man#1	89

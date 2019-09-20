@@ -238,7 +238,7 @@ void clif_setbindip(const char* ip)
 
 /*==========================================
  * Sets map port to 'port'
- * is run from map.c upon loading map server configuration
+ * is run from map.cpp upon loading map server configuration
  *------------------------------------------*/
 void clif_setport(uint16 port)
 {
@@ -3974,8 +3974,11 @@ void clif_changeoption(struct block_list* bl)
 
 	//Whenever we send "changeoption" to the client, the provoke icon is lost
 	//There is probably an option for the provoke icon, but as we don't know it, we have to do this for now
-	if (sc->data[SC_PROVOKE] && sc->data[SC_PROVOKE]->timer == INVALID_TIMER)
-		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, INFINITE_TICK, 0, 0, 0);
+	if (sc->data[SC_PROVOKE]) {
+		const struct TimerData *td = get_timer(sc->data[SC_PROVOKE]->timer);
+
+		clif_status_change(bl, StatusIconChangeTable[SC_PROVOKE], 1, (!td ? INFINITE_TICK : DIFF_TICK(td->tick, gettick())), 0, 0, 0);
+	}
 }
 
 
@@ -4781,6 +4784,7 @@ static int clif_hallucination_damage()
 ///     10 = critical hit
 ///     11 = lucky dodge
 ///     12 = (touch skill?)
+///     13 = multi-hit critical
 int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage)
 {
 	unsigned char buf[34];
@@ -4801,7 +4805,8 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 	nullpo_ret(src);
 	nullpo_ret(dst);
 
-	type = clif_calc_delay(type,div,damage+damage2,ddelay);
+	if (type != DMG_MULTI_HIT_CRITICAL)
+		type = clif_calc_delay(type,div,damage+damage2,ddelay);
 	sc = status_get_sc(dst);
 	if(sc && sc->count) {
 		if(sc->data[SC_HALLUCINATION]) {
@@ -4863,6 +4868,9 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 	if(src == dst) {
 		unit_setdir(src, unit_getdir(src));
 	}
+
+	// In case this assignment is bypassed by DMG_MULTI_HIT_CRITICAL
+	type = clif_calc_delay(type, div, damage + damage2, ddelay);
 	//Return adjusted can't walk delay for further processing.
 	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div);
 }
@@ -5840,7 +5848,7 @@ void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 {
 	struct status_data *status;
 	unsigned char buf[64];
-	int i;//, fix;
+	int i, fix;
 
 	nullpo_retv(sd);
 	nullpo_retv(dst);
@@ -5862,9 +5870,8 @@ void clif_skill_estimation(struct map_session_data *sd,struct block_list *dst)
 		+(battle_config.estimation_type&2?status->mdef2:0);
 	WBUFW(buf,18)= status->def_ele;
 	for(i=0;i<9;i++)
-		WBUFB(buf,20+i)= (unsigned char)battle_attr_ratio(i+1,status->def_ele, status->ele_lv);
 //		The following caps negative attributes to 0 since the client displays them as 255-fix. [Skotlex]
-//		WBUFB(buf,20+i)= (unsigned char)((fix=battle_attr_ratio(i+1,status->def_ele, status->ele_lv))<0?0:fix);
+		WBUFB(buf,20+i)= (unsigned char)((fix=battle_attr_ratio(i+1,status->def_ele, status->ele_lv))<0?0:fix);
 
 	clif_send(buf,packet_len(0x18c),&sd->bl,sd->status.party_id>0?PARTY_SAMEMAP:SELF);
 }
@@ -5991,6 +5998,11 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 		return;
 
 	nullpo_retv(bl);
+
+#if PACKETVER < 20151104
+	if (type == EFST_WEAPONPROPERTY)
+		type = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
+#endif
 
 #if PACKETVER >= 20120618
 	if (flag && battle_config.display_status_timers)
@@ -6174,11 +6186,11 @@ void clif_displaymessage(const int fd, const char* mes)
 		message = aStrdup(mes);
 		line = strtok(message, "\n");
 
+		while(line != NULL) {
 #if PACKETVER == 20141022
 		/** for some reason game client crashes depending on message pattern (only for this packet) **/
 		/** so we redirect to ZC_NPC_CHAT **/
 		//clif_messagecolor(&sd->bl, color_table[COLOR_DEFAULT], mes, false, SELF);
-		while(line != NULL) {
 			unsigned long color = (color_table[COLOR_DEFAULT] & 0x0000FF) << 16 | (color_table[COLOR_DEFAULT] & 0x00FF00) | (color_table[COLOR_DEFAULT] & 0xFF0000) >> 16; // RGB to BGR
 			unsigned short len = strnlen(line, CHAT_SIZE_MAX);
 
@@ -6192,7 +6204,6 @@ void clif_displaymessage(const int fd, const char* mes)
 				WFIFOSET(fd, WFIFOW(fd, 2));
 			}
 #else
-		while(line != NULL) {
 			// Limit message to 255+1 characters (otherwise it causes a buffer overflow in the client)
 			int len = strnlen(line, CHAT_SIZE_MAX);
 
@@ -6214,6 +6225,10 @@ void clif_displaymessage(const int fd, const char* mes)
 /// 009a <packet len>.W <message>.?B
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
 {
+	nullpo_retv(mes);
+	if (len < 2)
+		return;
+
 	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
 	std::unique_ptr<unsigned char> buf(new unsigned char[4+lp+len]);
 
@@ -6260,6 +6275,10 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
+	nullpo_retv(mes);
+	if (len < 2)
+		return;
+
 	std::unique_ptr<unsigned char> buf(new unsigned char[16+len]);
 
 	WBUFW(buf.get(),0)  = 0x1c3;
@@ -7916,6 +7935,7 @@ void clif_sendegg(struct map_session_data *sd)
 ///     3 = accessory
 ///     4 = performance (data = 1~3: normal, 4: special)
 ///     5 = hairstyle
+///     6 = close egg selection ui and update egg in inventory (PACKETVER >= 20180704)
 ///
 /// If sd is null, the update is sent to nearby objects, otherwise it is sent only to that player.
 void clif_send_petdata(struct map_session_data* sd, struct pet_data* pd, int type, int param)
@@ -7968,25 +7988,13 @@ void clif_send_petstatus(struct map_session_data *sd)
 void clif_pet_emotion(struct pet_data *pd,int param)
 {
 	unsigned char buf[16];
-	s_pet_db *pet_db_ptr;
 
 	nullpo_retv(pd);
-
-	pet_db_ptr = pd->get_pet_db();
 
 	memset(buf,0,packet_len(0x1aa));
 
 	WBUFW(buf,0)=0x1aa;
 	WBUFL(buf,2)=pd->bl.id;
-	if(param >= 100 && pet_db_ptr->talk_convert_class) {
-		if(pet_db_ptr->talk_convert_class < 0)
-			return;
-		else if(pet_db_ptr->talk_convert_class > 0) {
-			// replace mob_id component of talk/act data
-			param -= (pd->pet.class_ - 100)*100;
-			param += (pet_db_ptr->talk_convert_class - 100)*100;
-		}
-	}
 	WBUFL(buf,6)=param;
 
 	clif_send(buf,packet_len(0x1aa),&pd->bl,AREA);
@@ -10110,7 +10118,7 @@ static bool clif_process_message(struct map_session_data* sd, bool whisperFormat
 	if( is_atcommand( fd, sd, out_message, 1 )  )
 		return false;
 
-	if (sd->sc.cant.chat)
+	if (sd->sc.cant.chat || (sd->state.block_action & PCBLOCK_CHAT))
 		return false; //no "chatting" while muted.
 
 	if( battle_config.min_chat_delay ) { //[Skotlex]
@@ -10406,7 +10414,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if( sd->pd ) {
 		if( battle_config.pet_no_gvg && mapdata_flag_gvg(mapdata) ) { //Return the pet to egg. [Skotlex]
 			clif_displaymessage(sd->fd, msg_txt(sd,666));
-			pet_menu(sd, 3); //Option 3 is return to egg.
+			pet_return_egg( sd, sd->pd );
 		} else {
 			if(map_addblock(&sd->pd->bl))
 				return;
@@ -10524,6 +10532,21 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 #if PACKETVER >= 20070918
 		clif_partyinvitationstate(sd);
 		clif_equipcheckbox(sd);
+#endif
+#if PACKETVER >= 20141008
+		if( battle_config.pet_autofeed_always ){
+			// Always send ON or OFF
+			if( sd->pd && battle_config.feature_pet_autofeed ){
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, sd->pd->pet.autofeed );
+			}else{
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, false );
+			}
+		}else{
+			// Only send when enabled
+			if( sd->pd && battle_config.feature_pet_autofeed && sd->pd->pet.autofeed ){
+				clif_configuration( sd, CONFIG_PET_AUTOFEED, true );
+			}
+		}
 #endif
 #if PACKETVER >= 20170920
 		if( battle_config.homunculus_autofeed_always ){
@@ -10650,7 +10673,7 @@ void clif_parse_LoadEndAck(int fd,struct map_session_data *sd)
 	if (map_getcell(sd->bl.m,sd->bl.x,sd->bl.y,CELL_CHKNPC))
 		npc_touch_areanpc(sd,sd->bl.m,sd->bl.x,sd->bl.y);
 	else
-		sd->areanpc_id = 0;
+		sd->areanpc.clear();
 
 	/* it broke at some point (e.g. during a crash), so we make it visibly dead again. */
 	if( !sd->status.hp && !pc_isdead(sd) && status_isdead(&sd->bl) )
@@ -10791,19 +10814,32 @@ void clif_progressbar_abort(struct map_session_data * sd)
 }
 
 
-/// Notification from the client, that the progress bar has reached 100% (CZ_PROGRESS).
-/// 02f1
-void clif_parse_progressbar(int fd, struct map_session_data * sd)
-{
-	int npc_id = sd->progressbar.npc_id;
+/// Notification from the client, that the progress bar has reached 100%.
+/// 02f1 (CZ_PROGRESS)
+void clif_parse_progressbar(int fd, struct map_session_data * sd){
+	// No progressbar active, ignore it
+	if( !sd->progressbar.npc_id ){
+		return;
+	}
 
-	if( gettick() < sd->progressbar.timeout && sd->st )
-		sd->st->state = END;
+	int npc_id = sd->progressbar.npc_id;
+	bool closing = false;
+
+	// Check if the progress was canceled
+	if( gettick() < sd->progressbar.timeout && sd->st ){
+		closing = true;
+		sd->st->state = CLOSE; // will result in END in npc_scriptcont
+
+		// If a message window was open, offer a close button to the user
+		if( sd->st->mes_active ){
+			clif_scriptclose( sd, npc_id );
+		}
+	}
 
 	sd->progressbar.npc_id = 0;
 	sd->progressbar.timeout = 0;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
-	npc_scriptcont(sd, npc_id, false);
+	npc_scriptcont(sd, npc_id, closing);
 }
 
 /// Displays cast-like progress bar on a NPC
@@ -11084,6 +11120,11 @@ void clif_parse_Emotion(int fd, struct map_session_data *sd)
 		if (battle_config.idletime_option&IDLE_EMOTION)
 			sd->idletime = last_tick;
 
+		if (sd->state.block_action & PCBLOCK_EMOTION) {
+			clif_skill_fail(sd, 1, USESKILL_FAIL_LEVEL, 1);
+			return;
+		}
+
 		if(battle_config.client_reshuffle_dice && emoticon>=ET_DICE1 && emoticon<=ET_DICE6) {// re-roll dice
 			emoticon = rnd()%6+ET_DICE1;
 		}
@@ -11184,6 +11225,11 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 		)) //No sitting during these states either.
 			break;
 
+		if (sd->state.block_action & PCBLOCK_SITSTAND) {
+			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+			break;
+		}
+
 		if (battle_config.idletime_option&IDLE_SIT)
 			sd->idletime = last_tick;
 
@@ -11200,6 +11246,11 @@ void clif_parse_ActionRequest_sub(struct map_session_data *sd, int action_type, 
 
 		if (sd->sc.opt1 && sd->sc.opt1 != OPT1_STONEWAIT && sd->sc.opt1 != OPT1_BURNING)
 			break;
+
+		if (sd->state.block_action & PCBLOCK_SITSTAND) {
+			clif_displaymessage(sd->fd, msg_txt(sd,794)); // This action is currently blocked.
+			break;
+		}
 
 		if (pc_setstand(sd, false)) {
 			if (battle_config.idletime_option&IDLE_SIT)
@@ -11483,8 +11534,10 @@ void clif_parse_UseItem(int fd, struct map_session_data *sd)
 		return;
 	}
 
-	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID )
+	if ( (!sd->npc_id && pc_istrading(sd)) || sd->chatID || (sd->state.block_action & PCBLOCK_USEITEM) ) {
+		clif_msg(sd, WORK_IN_PROGRESS);
 		return;
+	}
 
 	//Whether the item is used or not is irrelevant, the char ain't idle. [Skotlex]
 	if (battle_config.idletime_option&IDLE_USEITEM)
@@ -12197,6 +12250,11 @@ void clif_parse_skill_toid( struct map_session_data* sd, uint16 skill_id, uint16
 	if (inf&INF_GROUND_SKILL || !inf)
 		return; //Using a ground/passive skill on a target? WRONG.
 
+	if (sd->state.block_action & PCBLOCK_SKILL) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
+
 	if( SKILL_CHK_HOMUN(skill_id) ) {
 		clif_parse_UseSkillToId_homun(sd->hd, sd, tick, skill_id, skill_lv, target_id);
 		return;
@@ -12309,6 +12367,11 @@ static void clif_parse_UseSkillToPosSub(int fd, struct map_session_data *sd, uin
 
 	if( !(skill_get_inf(skill_id)&INF_GROUND_SKILL) )
 		return; //Using a target skill on the ground? WRONG.
+
+	if (sd->state.block_action & PCBLOCK_SKILL) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return;
+	}
 
 	if( SKILL_CHK_HOMUN(skill_id) ) {
 		clif_parse_UseSkillToPos_homun(sd->hd, sd, tick, skill_id, skill_lv, x, y, skillmoreinfo);
@@ -14890,31 +14953,7 @@ void clif_parse_HomMenu(int fd, struct map_session_data *sd)
 /// 0292
 void clif_parse_AutoRevive(int fd, struct map_session_data *sd)
 {
-	short item_position = pc_search_inventory(sd, ITEMID_TOKEN_OF_SIEGFRIED);
-	uint8 hp = 100, sp = 100;
-
-	if (item_position < 0) {
-		if (sd->sc.data[SC_LIGHT_OF_REGENE]) {
-			// HP restored
-			hp = sd->sc.data[SC_LIGHT_OF_REGENE]->val2;
-			sp = 0;
-		}
-		else
-			return;
-	}
-
-	if (sd->sc.data[SC_HELLPOWER]) //Cannot res while under the effect of SC_HELLPOWER.
-		return;
-
-	if (!status_revive(&sd->bl, hp, sp))
-		return;
-
-	if (item_position < 0)
-		status_change_end(&sd->bl, SC_LIGHT_OF_REGENE, INVALID_TIMER);
-	else
-		pc_delitem(sd, item_position, 1, 0, 1, LOG_TYPE_CONSUME);
-
-	clif_skill_nodamage(&sd->bl, &sd->bl, ALL_RESURRECTION, 4, 1);
+	pc_revive_item(sd);
 }
 
 
@@ -15840,7 +15879,17 @@ void clif_mail_removeitem( struct map_session_data* sd, bool success, int index,
 	WFIFOB(fd, 2) = success;
 	WFIFOW(fd, 3) = index;
 	WFIFOW(fd, 5) = amount;
-	WFIFOW(fd, 7) = 0; // TODO: which weight? item weight? removed weight? remaining weight?
+
+	int total = 0;
+	for( int i = 0; i < MAIL_MAX_ITEM; i++ ){
+		if( sd->mail.item[i].nameid == 0 ){
+			break;
+		}
+
+		total += sd->mail.item[i].amount * ( sd->inventory_data[sd->mail.item[i].index]->weight / 10 );
+	}
+
+	WFIFOW(fd, 7) = total;
 	WFIFOSET(fd, 9);
 }
 
@@ -15886,16 +15935,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd){
 
 	mail_send(sd, RFIFOCP(fd,info->pos[1]), RFIFOCP(fd,info->pos[2]), RFIFOCP(fd,info->pos[4]), RFIFOB(fd,info->pos[3]));
 #else
-	unsigned short length;
-	static char receiver[NAME_LENGTH];
-	static char sender[NAME_LENGTH];
-	char *title;
-	char *text;
-	uint64 zeny;
-	uint16 titleLength;
-	uint16 textLength;
-
-	length = RFIFOW(fd, 2);
+	uint16 length = RFIFOW(fd, 2);
 
 	if( length < 0x3e ){
 		ShowWarning("Too short...\n");
@@ -15908,22 +15948,30 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd){
 		return; // Ignore it
 	}
 
-	safestrncpy(receiver, RFIFOCP(fd, 4), NAME_LENGTH);
-	safestrncpy(sender, RFIFOCP(fd, 28), NAME_LENGTH);
-	zeny = RFIFOQ(fd, 52);
-	titleLength = RFIFOW(fd, 60);
-	textLength = RFIFOW(fd, 62);
+	char receiver[NAME_LENGTH];
 
-	title = (char*)aMalloc(titleLength);
-	text = (char*)aMalloc(textLength);
+	safestrncpy(receiver, RFIFOCP(fd, 4), NAME_LENGTH);
+
+//	char sender[NAME_LENGTH];
+
+//	safestrncpy(sender, RFIFOCP(fd, 28), NAME_LENGTH);
+
+	uint64 zeny = RFIFOQ(fd, 52);
+	uint16 titleLength = RFIFOW(fd, 60);
+	uint16 textLength = RFIFOW(fd, 62);
+	uint16 realTitleLength = min(titleLength, MAIL_TITLE_LENGTH);
+	uint16 realTextLength = min(textLength, MAIL_BODY_LENGTH);
+
+	char title[MAIL_TITLE_LENGTH];
+	char text[MAIL_BODY_LENGTH];
 
 #if PACKETVER <= 20160330
-	safestrncpy(title, RFIFOCP(fd, 64), titleLength);
-	safestrncpy(text, RFIFOCP(fd, 64 + titleLength), textLength);
+	safestrncpy(title, RFIFOCP(fd, 64), realTitleLength);
+	safestrncpy(text, RFIFOCP(fd, 64 + titleLength), realTextLength);
 #else
 	// 64 = <char id>.L
-	safestrncpy(title, RFIFOCP(fd, 68), titleLength);
-	safestrncpy(text, RFIFOCP(fd, 68 + titleLength), textLength);
+	safestrncpy(title, RFIFOCP(fd, 68), realTitleLength);
+	safestrncpy(text, RFIFOCP(fd, 68 + titleLength), realTextLength);
 #endif
 
 	if( zeny > 0 ){
@@ -15933,10 +15981,7 @@ void clif_parse_Mail_send(int fd, struct map_session_data *sd){
 		}
 	}
 
-	mail_send(sd, receiver, title, text, textLength);
-
-	aFree(title);
-	aFree(text);
+	mail_send(sd, receiver, title, text, realTextLength);
 #endif
 }
 
@@ -16676,7 +16721,12 @@ void clif_parse_configuration( int fd, struct map_session_data* sd ){
 			sd->status.show_equip = flag;
 			break;
 		case CONFIG_PET_AUTOFEED:
-			// TODO: Implement with pet evolution system
+			// Player can not click this if he does not have a pet
+			if( sd->pd == nullptr || !battle_config.feature_pet_autofeed || !sd->pd->get_pet_db()->allow_autofeed ){
+				return;
+			}
+
+			sd->pd->pet.autofeed = flag;
 			break;
 		case CONFIG_HOMUNCULUS_AUTOFEED:
 			// Player can not click this if he does not have a homunculus or it is vaporized
@@ -19734,6 +19784,11 @@ void clif_parse_merge_item_req(int fd, struct map_session_data* sd) {
 
 	for (i = 0, j = 0; i < n; i++) {
 		unsigned short idx = RFIFOW(fd, info->pos[1] + i*2) - 2;
+
+		if( idx < 0 || idx >= MAX_INVENTORY ){
+			return;
+		}
+
 		if (!clif_merge_item_check((id = sd->inventory_data[idx]), &sd->inventory.u.items_inventory[idx]))
 			continue;
 		indexes[j] = idx;
@@ -20246,14 +20301,11 @@ void clif_parse_sale_remove( int fd, struct map_session_data* sd ){
 /// Author: Luxuri, Aleos
 
 /**
- * Sends all achievement data to the client (ZC_ALL_AG_LIST).
+ * Sends all achievement data to the client (ZC_ALL_ACH_LIST).
  * 0a23 <packetType>.W <packetLength>.W <ACHCount>.L <ACHPoint>.L
  */
 void clif_achievement_list_all(struct map_session_data *sd)
 {
-	int i, j, len, fd, *info;
-	uint16 count = 0;
-
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_achievement) {
@@ -20261,14 +20313,14 @@ void clif_achievement_list_all(struct map_session_data *sd)
 		return;
 	}
 
-	fd = sd->fd;
-	count = sd->achievement_data.count; // All achievements should be sent to the client
-	len = (50 * count) + 22;
+	int count = sd->achievement_data.count; // All achievements should be sent to the client
 
-	if (len <= 22)
+	if (count == 0)
 		return;
 
-	info = achievement_level(sd, true);
+	int len = (50 * count) + 22;
+	int fd = sd->fd;
+	int *info = achievement_level(sd, true);
 
 	WFIFOHEAD(fd,len);
 	WFIFOW(fd, 0) = 0xa23;
@@ -20279,10 +20331,10 @@ void clif_achievement_list_all(struct map_session_data *sd)
 	WFIFOL(fd, 14) = info[0]; // Achievement EXP (left number in bar)
 	WFIFOL(fd, 18) = info[1]; // Achievement EXP TNL (right number in bar)
 
-	for (i = 0; i < count; i++) {
+	for (int i = 0; i < count; i++) {
 		WFIFOL(fd, i * 50 + 22) = (uint32)sd->achievement_data.achievements[i].achievement_id;
 		WFIFOB(fd, i * 50 + 26) = (uint32)sd->achievement_data.achievements[i].completed > 0;
-		for (j = 0; j < MAX_ACHIEVEMENT_OBJECTIVES; j++) 
+		for (int j = 0; j < MAX_ACHIEVEMENT_OBJECTIVES; j++) 
 			WFIFOL(fd, (i * 50) + 27 + (j * 4)) = (uint32)sd->achievement_data.achievements[i].count[j];
 		WFIFOL(fd, i * 50 + 67) = (uint32)sd->achievement_data.achievements[i].completed;
 		WFIFOB(fd, i * 50 + 71) = sd->achievement_data.achievements[i].rewarded > 0;
@@ -20291,13 +20343,11 @@ void clif_achievement_list_all(struct map_session_data *sd)
 }
 
 /**
- * Sends a single achievement's data to the client (ZC_AG_UPDATE).
+ * Sends a single achievement's data to the client (ZC_ACH_UPDATE).
  * 0a24 <packetType>.W <ACHPoint>.L
  */
 void clif_achievement_update(struct map_session_data *sd, struct achievement *ach, int count)
 {
-	int fd, i, *info;
-
 	nullpo_retv(sd);
 
 	if (!battle_config.feature_achievement) {
@@ -20305,8 +20355,8 @@ void clif_achievement_update(struct map_session_data *sd, struct achievement *ac
 		return;
 	}
 
-	fd = sd->fd;
-	info = achievement_level(sd, true);
+	int fd = sd->fd;
+	int *info = achievement_level(sd, true);
 
 	WFIFOHEAD(fd, packet_len(0xa24));
 	WFIFOW(fd, 0) = 0xa24;
@@ -20317,7 +20367,7 @@ void clif_achievement_update(struct map_session_data *sd, struct achievement *ac
 	if (ach) {
 		WFIFOL(fd, 16) = ach->achievement_id; // Achievement ID
 		WFIFOB(fd, 20) = ach->completed > 0; // Is it complete?
-		for (i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; i++)
+		for (int i = 0; i < MAX_ACHIEVEMENT_OBJECTIVES; i++)
 			WFIFOL(fd, 21 + (i * 4)) = (uint32)ach->count[i]; // 1~10 pre-reqs
 		WFIFOL(fd, 61) = (uint32)ach->completed; // Epoch time
 		WFIFOB(fd, 65) = ach->rewarded > 0; // Got reward?
@@ -20327,7 +20377,7 @@ void clif_achievement_update(struct map_session_data *sd, struct achievement *ac
 }
 
 /**
- * Checks if an achievement reward can be rewarded (CZ_REQ_AG_REWARD).
+ * Checks if an achievement reward can be rewarded (CZ_REQ_ACH_REWARD).
  * 0a25 <packetType>.W <achievementID>.L
  */
 void clif_parse_AchievementCheckReward(int fd, struct map_session_data *sd)
@@ -20341,7 +20391,7 @@ void clif_parse_AchievementCheckReward(int fd, struct map_session_data *sd)
 }
 
 /**
- * Returns the result of achievement_check_reward (ZC_REQ_AG_REWARD_ACK).
+ * Returns the result of achievement_check_reward (ZC_REQ_ACH_REWARD_ACK).
  * 0a26 <packetType>.W <result>.W <achievementID>.L
  */
 void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_id)
@@ -20351,6 +20401,34 @@ void clif_achievement_reward_ack(int fd, unsigned char result, int achievement_i
 	WFIFOB(fd, 2) = result;
 	WFIFOL(fd, 3) = achievement_id;
 	WFIFOSET(fd, packet_len(0xa26));
+}
+
+/// Process the pet evolution request
+/// 09fb <packetType>.W <packetLength>.W <evolutionPetEggITID>.W (CZ_PET_EVOLUTION)
+void clif_parse_pet_evolution( int fd, struct map_session_data *sd ){
+#if PACKETVER >= 20141008
+	auto pet = pet_db_search(RFIFOW(fd, 4), PET_EGG);
+
+	if (!pet) {
+		clif_pet_evolution_result(sd, e_pet_evolution_result::FAIL_NOT_PETEGG);
+		return;
+	}
+
+	pet_evolution(sd, pet->class_);
+#endif
+}
+
+/// Sends the result of the evolution to the client.
+/// 09fc <result>.L (ZC_PET_EVOLUTION_RESULT)
+void clif_pet_evolution_result( struct map_session_data* sd, e_pet_evolution_result result ){
+#if PACKETVER >= 20141008
+	int fd = sd->fd;
+
+	WFIFOHEAD(fd, packet_len(0x9fc));
+	WFIFOW(fd, 0) = 0x9fc;
+	WFIFOL(fd, 2) = static_cast<uint32>(result);
+	WFIFOSET(fd, packet_len(0x9fc));
+#endif
 }
 
 /*
@@ -20792,6 +20870,10 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 		return;
 	}
 
+	// Check if the item exists
+	if (sd->inventory_data[index] == nullptr)
+		return;
+
 	// Check if the item was already added to equip switch
 	if( sd->inventory.u.items_inventory[index].equipSwitch ){
 		if( sd->npc_id ){
@@ -20807,9 +20889,10 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 		}
 
 		pc_equipswitch( sd, index );
-	}else{
-		pc_equipitem( sd, index, pc_equippoint(sd, index), true );
+		return;
 	}
+
+	pc_equipitem( sd, index, pc_equippoint(sd, index), true );
 #endif
 }
 

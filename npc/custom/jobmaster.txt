@@ -132,7 +132,7 @@ function	Job_Options	{
 	.@rebirth_possible = Can_Rebirth();
 	.@first_eac = .@eac&EAJ_BASEMASK;
 	.@second_eac = .@eac&EAJ_UPPERMASK;
-	// Note: These are already set in pc.c
+	// Note: These are already set in pc.cpp
 	// BaseClass = roclass(.@eac&EAJ_BASEMASK) which is the players First Class
 	// BaseJob = roclass(.@eac&EAJ_UPPERMASK) which is the players Second Class
 	//dispbottom "Debug: eac ("+.@eac+"), third ("+.@third_possible+"), rebirth("+.@rebirth_possible+"), BaseClass ("+BaseClass+"), BaseJob ("+BaseJob+")";
@@ -418,10 +418,6 @@ function	Get_Job_Equip	{
 				getitem 1960,1;	break;	//	Whip [1]
 			case Job_Super_Novice:
 				getitem 1208,1;	break;	//	Main Gauche [4]
-			case Job_Gunslinger:
-				getitem 13101,1; break;	//	Six Shooter [2]
-			case Job_Ninja:
-				getitem 13010,1; break;	//	Asura [2]
 			case Job_Star_Gladiator:
 				getitem 1550,1;	break;	//	Book [3]
 			case Job_Soul_Linker:
@@ -444,6 +440,10 @@ function	Get_Job_Equip	{
 				getitem 1302,1;	break;	//	Axe [4]
 			case Job_Thief:
 				getitem 1208,1;	break;	//	Main Gauche [4]
+			case Job_Gunslinger:
+				getitem 13101,1; break;	//	Six Shooter [2]
+			case Job_Ninja:
+				getitem 13010,1; break;	//	Asura [2]
 		}
 	}
 	return;

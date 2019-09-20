@@ -290,7 +290,7 @@ int chclif_parse_pincode_setnew( int fd, struct char_session_data* sd ){
 
 		if( pincode_allowed(newpin) ){
 			chlogif_pincode_notifyLoginPinUpdate( sd->account_id, newpin );
-			strncpy( sd->pincode, newpin, strlen( newpin ) );
+			strncpy( sd->pincode, newpin, sizeof( newpin ) );
 
 			chclif_pincode_sendstate( fd, sd, PINCODE_PASSED );	
 		}else{

@@ -731,7 +731,7 @@ CREATE TABLE IF NOT EXISTS `inventory` (
 --
 
 CREATE TABLE IF NOT EXISTS `ipbanlist` (
-  `list` varchar(255) NOT NULL default '',
+  `list` varchar(15) NOT NULL default '',
   `btime` datetime NOT NULL,
   `rtime` datetime NOT NULL,
   `reason` varchar(255) NOT NULL default '',
@@ -781,7 +781,7 @@ CREATE TABLE IF NOT EXISTS `mail` (
   `dest_name` varchar(30) NOT NULL default '',
   `dest_id` int(11) unsigned NOT NULL default '0',
   `title` varchar(45) NOT NULL default '',
-  `message` varchar(255) NOT NULL default '',
+  `message` varchar(500) NOT NULL default '',
   `time` int(11) unsigned NOT NULL default '0',
   `status` tinyint(2) NOT NULL default '0',
   `zeny` int(11) unsigned NOT NULL default '0',
@@ -967,6 +967,7 @@ CREATE TABLE IF NOT EXISTS `pet` (
   `hungry` smallint(9) unsigned NOT NULL default '0',
   `rename_flag` tinyint(4) unsigned NOT NULL default '0',
   `incubate` int(11) unsigned NOT NULL default '0',
+  `autofeed` tinyint(2) NOT NULL default '0',
   PRIMARY KEY  (`pet_id`)
 ) ENGINE=MyISAM;
 
@@ -983,18 +984,6 @@ CREATE TABLE IF NOT EXISTS `quest` (
   `count2` mediumint(8) unsigned NOT NULL default '0',
   `count3` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`char_id`,`quest_id`)
-) ENGINE=MyISAM;
-
---
--- Table structure for table `ragsrvinfo`
---
-
-CREATE TABLE IF NOT EXISTS `ragsrvinfo` (
-  `index` int(11) NOT NULL default '0',
-  `name` varchar(255) NOT NULL default '',
-  `exp` int(11) unsigned NOT NULL default '0',
-  `jexp` int(11) unsigned NOT NULL default '0',
-  `drop` int(11) unsigned NOT NULL default '0'
 ) ENGINE=MyISAM;
 
 --

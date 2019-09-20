@@ -205,6 +205,10 @@ int intif_rename(struct map_session_data *sd, int type, char *name)
  */
 int intif_broadcast(const char* mes, int len, int type)
 {
+	nullpo_ret(mes);
+	if (len < 2)
+		return 0;
+
 	int lp = (type|BC_COLOR_MASK) ? 4 : 0;
 
 	// Send to the local players
@@ -246,6 +250,10 @@ int intif_broadcast(const char* mes, int len, int type)
  */
 int intif_broadcast2(const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY)
 {
+	nullpo_ret(mes);
+	if (len < 2)
+		return 0;
+
 	// Send to the local players
 	clif_broadcast2(NULL, mes, len, fontColor, fontType, fontSize, fontAlign, fontY, ALL_CLIENT);
 
@@ -2150,13 +2158,12 @@ void intif_parse_achievements(int fd)
 			CREATE(sd->achievement_data.achievements, struct achievement, num_received);
 
 		for (i = 0; i < num_received; i++) {
+			std::shared_ptr<s_achievement_db> adb = achievement_db.find( received[i].achievement_id );
 
-			if (!achievement_exists(received[i].achievement_id)) {
-				ShowError("intif_parse_achievementlog: Achievement %d not found in DB.\n", received[i].achievement_id);
+			if (!adb) {
+				ShowError("intif_parse_achievements: Achievement %d not found in achievement_db.\n", received[i].achievement_id);
 				continue;
 			}
-
-			auto &adb = achievement_get(received[i].achievement_id);
 
 			received[i].score = adb->score;
 
