@@ -107,7 +107,7 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 bool item_upgrade_open(map_session_data *sd, unsigned int itemid) {
 	nullpo_retr(false, sd);
 
-	if (pc_cant_act(sd))
+	if (pc_cant_act2(sd) || (sd)->chatID)
 		return false;
 
 	if (pc_is90overweight(sd) || !pc_inventoryblank(sd)) {
