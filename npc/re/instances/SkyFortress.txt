@@ -61,6 +61,11 @@ prt_q,252,79,4	script	Doek#a1	8W_SOLDIER,{
 }
 
 prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
+	if (!checkweight(1001,2)) {	// asking for 2 free slots
+		mes "- It's full of items";
+		mes "so you can't proceed to conversation. -";
+		close;
+	}
 	if (BaseLevel < 145) {
 		mes "- You should be level 145 or higher";
 		mes "to proceed. -";
@@ -68,7 +73,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 	}
 	switch( checkquest(9419,PLAYTIME) ) {
 	case -1:
-		if (getcharid(1) == 0 || getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (is_party_leader() == false) {
 			callsub S_Info;
 			close;
 		}
@@ -168,7 +173,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		mes "or I need about";
 		mes "three days to collect magic.";
 		next;
-		if (getcharid(1) > 0 && getpartyleader(getcharid(1),2) == getcharid(0)) {
+		if (is_party_leader() == true) {
 			if (select( "End the dialogue.", "Show the -Dungeon Pass-." ) == 2) {
 				if (countitem(14505) < 1 && countitem(14506) < 1) {// Sky Fortress Ticket
 					mes "[Scientist Doyeon]";
@@ -232,7 +237,7 @@ prt_q,249,79,4	script	Scientist Doyeon#a1	4_M_MAYOR,{
 		mes "I hope you would help me";
 		mes "destroy the fortress and";
 		mes "get back our Prontera.";
-		if (getcharid(1) > 0 && getpartyleader(getcharid(1),2) == getcharid(0)) {
+		if (is_party_leader() == true) {
 			next;
 			if (select( "No", "Yes" ) == 1) {
 				mes "[Scientist Doyeon]";
@@ -318,8 +323,10 @@ prt_q,243,75,3	script	Fortress Entry Warp Portal#1	PORTAL,{
 		mes "to proceed. -";
 		close;
 	}
-	if ((checkquest(9419,PLAYTIME) == -1 || checkquest(9419,PLAYTIME) == 2) && isbegin_quest(9418) != 1)
+	if (checkquest(9419,PLAYTIME) == 2 || (checkquest(9419,PLAYTIME) == -1 && isbegin_quest(9418) != 1)) {
 		setarray .@menu$[0], "Don't step into the warp.", "Step into the warp.";
+		.@type = 1;
+	}
 	else {
 		mes "- The warp doesn't seem to work.";
 		mes "You can't seem to enter... -";
@@ -354,38 +361,14 @@ prt_q,243,75,3	script	Fortress Entry Warp Portal#1	PORTAL,{
 		close;
 	case IE_OK:
 		mapannounce "prt_q", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters " + .@md_name$ + "", bc_map,0xFF99;
-		switch( checkquest(9419,PLAYTIME) ) {
-		case -1:
-			switch( isbegin_quest(9418) ) {
-			case 0:
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			case 1:
-				break;
-			case 2:
+		if (.@type == 1) {
+			if (isbegin_quest(9419) > 0)
+				erasequest 9419;
+			if (isbegin_quest(9418) > 0)
 				erasequest 9418;
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			}
-			break;
-		case 0:
-		case 1:
-			break;
-		case 2:
-			erasequest 9419;
-			switch( isbegin_quest(9418) ) {
-			case 0:
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			case 1:
-				break;
-			case 2:
-				erasequest 9418;
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			}
-			break;
+			setquest 9418;// Attack Sky Fortress Invading Prontera
 		}
+		fortress_entrance_loc = 0;	// warp back to prt_q on exit
 		// warp "1@sthb",54,67;
 		end;
 	}
@@ -432,41 +415,12 @@ dali02,115,61,3	script	Fortress Entry Warp Portal#2	PORTAL,{
 		close;
 	case IE_OK:
 		mapannounce "prt_q", "Party member " + strcharinfo(0) + " of party's " + getpartyname( getcharid(1) ) + " enters " + .@md_name$ + "", bc_map,0xFF99;
-		switch( checkquest(9419,PLAYTIME) ) {
-		case -1:
-			switch( isbegin_quest(9418) ) {
-			case 0:
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			case 1:
-				break;
-			case 2:
-				erasequest 9418;
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			}
-			break;
-		case 0:
-		case 1:
-			break;
-		case 2:
-			erasequest 9419;
-			switch( isbegin_quest(9418) ) {
-			case 0:
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			case 1:
-				break;
-			case 2:
-				erasequest 9418;
-				setquest 9418;// Attack Sky Fortress Invading Prontera
-				break;
-			}
-			break;
-		}
 		// warp "1@sthb",54,67;
+		fortress_entrance_loc = 1;	// warp back to dali02 on exit
+		// note: no quest change when using tickets
 		end;
 	}
+	end;
 
 OnInit:
 	while(true) {
@@ -477,12 +431,17 @@ OnInit:
 }
 
 dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
+	if (!checkweight(1001,2)) {
+		mes "- It's full of items";
+		mes "so you can't proceed to conversation. -";
+		close;
+	}
 	if (BaseLevel < 145) {
 		mes "- You should be level 145 or higher";
 		mes "to proceed. -";
 		close;
 	}
-	if (getcharid(1) < 1 || getcharid(0) != getpartyleader(getcharid(1),2)) {
+	if (is_party_leader() == false) {
 		mes "[Scientist Doyeon]";
 		mes "I'm a scientist";
 		mes "living in Prontera.";
@@ -1667,7 +1626,12 @@ OnStop:
 	}
 	mes "- You start to transport. -";
 	close2;
-	warp "prt_q",244,81;
+	if (fortress_entrance_loc == 0)
+		warp "prt_q",244,81;
+	else {
+		warp "dali02",117,69;
+		fortress_entrance_loc = 0;
+	}
 	end;
 
 OnEnable:
