@@ -10177,7 +10177,7 @@
 19329,Devil's_Hand,Devil's Hand,4,10,,1000,,18,,0,0xFFFFFFFF,63,2,256,,100,1,1018,{ .@r = getrefine(); .@a = getskilllv("SR_RIDEINLIGHTNING"); .@b = getskilllv("SR_EARTHSHAKER"); .@c = getskilllv("SR_RAMPAGEBLASTER"); bonus bNoCastCancel; bonus bAspdRate,10; bonus2 bFixedCastrate,"SR_HOWLINGOFLION",-100; bonus2 bSkillAtk,"SR_HOWLINGOFLION",20; if (.@r>=7) { bonus2 bSkillAtk,"SR_HOWLINGOFLION",30; bonus bAspdRate,5; } if (.@r>=9) { bonus2 bSkillAtk,"SR_HOWLINGOFLION",50; bonus bAspdRate,5; } if (.@r>=10) bonus bIgnoreDefClass,Class_All; if (.@r>=10 && .@a==5) { bonus2 bVariableCastrate,"SR_HOWLINGOFLION",-50; bonus2 bVariableCastrate,"MO_STEELBODY",-50; bonus2 bVariableCastrate,"MO_CALLSPIRITS",-50; } if (.@r>=10 && .@b==5) bonus2 bSkillCooldown,"SR_HOWLINGOFLION",-9500; if (.@r>=10 && .@c==5) bonus2 bAddClass,Class_Boss,50; },{},{}
 19337,Safety_Glasses,Safety Glasses,4,20,,500,,2,,1,0xFFFFFFFF,63,2,256,,40,1,1721,{ .@r = getrefine(); bonus2 bSubEle,Ele_Poison,10; if (.@r<7) .@a = 15; else if (.@r<9) .@a = 30; else if (.@r>=9) .@a = 50; if (.@r>=8) bonus2 bSubEle,Ele_Poison,15; /* bonus2 bAddRace2,RC2_HEARTHUNTER,.@a; bonus2 bMagicAddRace2,RC2_HEARTHUNTER,.@a; bonus2 bSubRace2,RC2_HEARTHUNTER,.@a; Hearthunter Warbase is not implemented yet */ },{},{}
 19342,Bull_Hat,Bull Hat,4,20,,500,,2,,1,0xFFFFFFFF,63,2,256,,130,1,819,{ .@r = getrefine(); bonus2 bSubEle,Ele_Wind,10; if (.@r<7) .@a = 15; if (.@r>=7 && .@r<9) .@a = 30; if (.@r>=8) bonus2 bSubEle,Ele_Wind,15; if (.@r>=9) .@a = 50; bonus2 bAddRace2,RC2_ROCKRIDGE,.@a; bonus2 bMagicAddRace2,RC2_ROCKRIDGE,.@a; bonus2 bSubRace2,RC2_ROCKRIDGE,.@a; },{},{}
-19343,Circlet_Of_Phoenix,Circlet Of Phoenix,4,0,,1000,,18,,0,0xFFFFFFFF,63,2,256,,100,1,1056,{ .@r = getrefine(); .@mdef = 15; .@hp = 10; .@dmg = 10; .@cast = -10; bonus2 bFixedCastrate,"LG_OVERBRAND",-100; if (.@r>=7) { .@cast -= 5; .@dmg += 15; if (.@r>=9) { .@cast -= 5; .@dmg += 25; if (.@r>=10) { bonus2 bIgnoreDefClassRate,Class_All,100; } } } if (getskilllv("LG_KINGS_GRACE")>=5) { bonus2 bSkillCooldown,"LG_INSPIRATION",-10000; bonus2 bSkillVariableCast,"LG_INSPIRATION",-2000; } if (getskilllv("LG_MOONSLASHER")>=5) { bonus2 bSkillVariableCast,"LG_OVERBRAND",-1000; } if (getskilllv("LG_FORCEOFVANGUARD")>=5) { .@hp += 10; .@mdef += 15; bonus bMaxSPrate,10; bonus bDef,150; } bonus bMdef,.@mdef; bonus bMaxHPrate,.@hp; bonus2 bSkillAtk,"LG_OVERBRAND",.@dmg; bonus bVariableCastrate,.@cast; },{},{} 
+19343,Circlet_Of_Phoenix,Circlet Of Phoenix,4,0,,1000,,18,,0,0xFFFFFFFF,63,2,256,,100,1,1056,{ .@r = getrefine(); .@mdef = 15; .@hp = 10; .@dmg = 10; .@cast = -10; bonus2 bFixedCastrate,"LG_OVERBRAND",-100; if (.@r>=7) { .@cast -= 5; .@dmg += 15; if (.@r>=9) { .@cast -= 5; .@dmg += 25; if (.@r>=10) { bonus2 bIgnoreDefClassRate,Class_All,100; } } } if (getskilllv("LG_KINGS_GRACE")>=5) { bonus2 bSkillCooldown,"LG_INSPIRATION",-10000; bonus2 bSkillVariableCast,"LG_INSPIRATION",-2000; } if (getskilllv("LG_MOONSLASHER")>=5) { bonus2 bSkillVariableCast,"LG_OVERBRAND",-1000; } if (getskilllv("LG_FORCEOFVANGUARD")>=5) { .@hp += 10; .@mdef += 15; bonus bMaxSPrate,10; bonus bDef,150; } bonus bMdef,.@mdef; bonus bMaxHPrate,.@hp; bonus2 bSkillAtk,"LG_OVERBRAND",.@dmg; bonus bVariableCastrate,.@cast; },{},{}
 19344,Illusion_Hot_blooded_Headband,Illusion Hot-blooded Headband,4,0,,100,,3,,1,0xFFFFFFFE,63,2,256,,120,1,154,{ .@r = getrefine(); bonus bStr,2; bonus bBaseAtk,(10*(.@r/2)); if (.@r >= 7) { bonus2 bAddEle,Ele_Water,10; bonus2 bAddEle,Ele_Wind,10; bonus2 bAddEle,Ele_Earth,10; bonus2 bAddEle,Ele_Neutral,10; if (.@r >= 9) { bonus2 bAddSize,Size_Small,15; bonus2 bAddSize,Size_Large,15; } } },{},{}
 19366,Illusion_Goibne_Helm,Illusion Goibne Helm,4,0,,1000,,25,,1,0xFFFFFFFE,63,2,256,,130,1,258,{ .@r = getrefine(); .@vit = 3; if (.@r >= 7) { .@vit += 5; if (.@r >= 9) { bonus bDelayrate,-12; } } bonus bVit,.@vit; bonus bMdef,3; },{},{}
 19379,Striking_Hat,Striking Hat,4,20,,400,,5,,1,0xFFFFFFFF,63,2,256,,100,1,1759,{ .@r = getrefine(); bonus bDex,5; bonus bAgi,5; bonus bLongAtkRate,5; bonus bAspdRate,10; bonus bPerfectHitAddRate,10; bonus bHit,2*.@r; bonus bDelayrate,-2*.@r; if (.@r>=7) { bonus bPerfectHitAddRate,20; bonus bLongAtkRate,10; } if (.@r>=9) { bonus bPerfectHitAddRate,20; bonus bLongAtkRate,10; } },{},{}
@@ -11912,7 +11912,7 @@
 24341,S_All_Race_Shoes,All Race Shadow Shoes,12,0,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ .@r = getrefine(); if (.@r >= 9) { .@val = 5; } else if (.@r >= 7) { .@val = 3; } else { .@val = 2; } bonus2 bAddRace,RC_All,.@val; bonus2 bMagicAddRace,RC_All,.@val; },{},{}
 24342,S_All_Race_Shield,All Race Shadow Shield,12,0,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ .@r = getrefine(); if (.@r >= 9) { .@val = 3; } else if (.@r >= 7) { .@val = 2; } else { .@val = 1; } bonus2 bSubRace,RC_All,.@val; },{},{}
 24343,S_Blitz_Weapon,Blitz Shadow Weapon,12,0,,0,,,,0,0xFFFFFFFF,63,2,131072,,1,1,,{ .@r = getrefine(); bonus bAspdRate,5+.@r/2; if (.@r >= 7) { bonus bAspd,1; if (.@r >= 9) { bonus bDelayrate,-1; } } },{},{}
-24344,S_Blitz_Armor,Blitz Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ .@r = getrefine(); bonus bDef,25+5*(.@r/2); if (.@r >= 7) { bonus bAspd,1; if (.@r >= 9) { bonus bDelayrate,-1; } } },{},{} 
+24344,S_Blitz_Armor,Blitz Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ .@r = getrefine(); bonus bDef,25+5*(.@r/2); if (.@r >= 7) { bonus bAspd,1; if (.@r >= 9) { bonus bDelayrate,-1; } } },{},{}
 24345,S_Tempest_Shield,Tempest Shadow Shield,12,0,,0,,,,0,0xFFFFFFFF,63,2,262144,,1,1,,{ bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2); },{},{}
 24346,S_Tempest_Shoes,Tempest Shadow Shoes,12,0,,0,,,,0,0xFFFFFFFF,63,2,524288,,1,1,,{ bonus2 bIgnoreMdefClassRate,Class_Normal,5+(getrefine()/2); },{},{}
 24347,S_Magic_Executioner_Holy_Water_Armor,Magic Executioner Holy Water Shadow Armor,12,0,,0,,,,0,0xFFFFFFFF,63,2,65536,,1,1,,{ .@val = 5 + (getrefine()/2); bonus2 bIgnoreMdefRaceRate,RC_DemiHuman,.@val; bonus2 bIgnoreMdefRaceRate,RC_Undead,.@val; },{},{}
@@ -12633,9 +12633,6 @@
 29151,Aquarius_Stone,Aquarius Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bVit,1; },{},{}
 29152,Scorpio_Stone,Scorpio Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bDex,1; },{},{}
 29153,Taurus_Stone,Taurus Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bLuk,1; },{},{}
-//===================================================================
-// New Cards
-//===================================================================
 29310,Racing_RK_1,Racing(Rune Knight) 1Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
 29311,Racing_RK_2,Racing(Rune Knight) 2Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
 29312,Racing_RK_3,Racing(Rune Knight) 3Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
@@ -12690,6 +12687,9 @@
 29582,Racing_SL_1,Racing (Soul Linker) 1Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
 29583,Racing_SL_2,Racing (Soul Linker) 2Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
 29584,Racing_SL_3,Racing (Soul Linker) 3Lv,6,20,,0,,,,,,,,,,,,,{},{},{}
+//===================================================================
+// New Cards
+//===================================================================
 31006,LoVA_Hades_Card,LoVA Hades Card,6,20,,10,,,,,,,,16,,,,,{ bonus2 bSubRace,RC_Undead,10; },{},{}
 31007,LoVA_Realization_Hades_Card,LoVA Realization Hades Card,6,20,,10,,,,,,,,16,,,,,{ bonus bDefEle,Ele_Undead; bonus2 bSubRace,RC_Undead,10; },{},{}
 31008,LoVA_Lulu_Card,LoVA Lulu Card,6,20,,10,,,,,,,,64,,,,,{ bonus2 bHPRegenRate,BaseLevel,10000; if(getrefine()>=7) { bonus bAtk,6*(readparam(bStr)/60); bonus bMaxHPrate,readparam(bStr)/60; } },{},{}
