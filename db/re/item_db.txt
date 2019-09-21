@@ -519,7 +519,7 @@
 1161,Balmung,Balmung,5,20,,1000,250,,1,0,0xFFFFFFFF,63,2,34,4,48,1,3,{ bonus bUnbreakableWeapon; bonus bAtkEle,Ele_Holy; },{},{}
 1162,Broad_Sword_,Broad Sword,5,65000,,2000,140,,1,2,0x00004082,63,2,34,3,33,1,3,{ bonus bDef,5; bonus bUnbreakableWeapon; },{},{}
 1163,Claymore,Claymore,5,74000,,2500,180,,1,0,0x00004080,63,2,34,3,33,1,3,{},{},{}
-1164,Muramasa,Muramasa,5,20,,1000,155,,1,0,0x00004082,63,2,34,4,48,1,3,{ bonus bCritical,30; bonus bAspdRate,8; bonus2 bAddEff2,Eff_Curse,10; },{},{}
+1164,Muramasa,Muramasa,5,20,,1000,155,,1,0,0x00004082,63,2,34,4,48,1,3,{ bonus bCritical,30; bonus bAspdRate,8;  autobonus "{}",1,20000, BF_SHORT, "{sc_start SC_CURSE,10000,0;}";; },{},{}
 1165,Masamune,Masamune,5,20,,1000,200,,1,0,0x00004082,63,2,34,4,48,1,3,{ bonus bFlee,30; bonus bStr,-5; bonus bAspd,2; bonus bDefRate,-67; bonus bDef2Rate,-67; },{},{}
 1166,Dragon_Slayer,Dragon Slayer,5,20,,1300,150,,1,0,0x00004082,63,2,34,4,48,1,3,{ bonus bIgnoreDefRace,RC_Dragon; bonus2 bAddRace,RC_Dragon,15; },{},{}
 1167,Schweizersabel,Schweizersabel,5,20,,1600,160,,1,0,0x00004082,63,2,34,4,48,1,3,{ bonus bAtkEle,Ele_Wind; bonus bDef,1; bonus3 bAutoSpell,"MG_LIGHTNINGBOLT",3,100; },{},{}
@@ -1863,7 +1863,7 @@
 2649,Morpheus's_Armlet,Morpheus's Bracelet,4,30000,,100,,0,,0,0xFFFFFFFE,63,2,136,,33,0,0,{ bonus bInt,1; bonus bMaxSPrate,5; },{},{}
 2650,Morrigane's_Belt,Morrigane's Belt,4,30000,,200,,0,,0,0xFFFFFFFE,63,2,136,,61,0,0,{ bonus bBaseAtk,5; bonus bCritical,3; },{},{}
 2651,Morrigane's_Pendant,Morrigane's Pendant,4,30000,,200,,0,,0,0xFFFFFFFE,63,2,136,,61,0,0,{ bonus bStr,2; bonus bCritical,3; },{},{}
-2652,Cursed_Lucky_Brooch,Goddess of Fortune's Cursed Brooch,4,20,,100,,0,,0,0xFFFFFFFF,63,2,136,,40,0,0,{ bonus bCritical,6; bonus2 bAddEff2,Eff_Curse,50; },{},{}
+2652,Cursed_Lucky_Brooch,Goddess of Fortune's Cursed Brooch,4,20,,100,,0,,0,0xFFFFFFFF,63,2,136,,40,0,0,{ bonus bCritical,6;  autobonus "{}",5,20000, BF_SHORT, "{sc_start SC_CURSE,10000,0;}"; },{},{}
 2653,Sacrifice_Ring,Sacrifice Ring,4,20,,100,,0,,0,0xFFFFFFFF,63,2,136,,90,0,0,{},{},{}
 2654,Shinobi's_Sash,Shinobi Sash,4,20000,,300,,1,,0,0x02021040,63,2,136,,30,0,0,{ bonus bStr,1; bonus bAgi,1; bonus bMdef,1; },{},{}
 2655,Bloody_Iron_Ball,Bloodied Shackle Ball,4,50000,,4000,,0,,0,0xFFFFFFFE,63,2,136,,0,0,0,{},{},{}
