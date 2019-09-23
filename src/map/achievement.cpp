@@ -318,6 +318,54 @@ bool AchievementDatabase::mobexists( uint32 mob_id ){
 	return (it != this->achievement_mobs.end()) ? true : false;
 }
 
+const std::string AchievementLevelDatabase::getDefaultLocation(){
+	return std::string(db_path) + "/achievement_level_db.yml";
+}
+
+uint64 AchievementLevelDatabase::parseBodyNode( const YAML::Node &node ){
+	if( !this->nodesExist( node, { "Level", "Points" } ) ){
+		return 0;
+	}
+
+	uint16 level;
+
+	if( !this->asUInt16( node, "Level", level ) ){
+		return 0;
+	}
+
+	if( level == 0 ){
+		this->invalidWarning( node, "Invalid achievement level %hu (minimum value: 1), skipping.\n", level );
+		return 0;
+	}
+
+	// Make it zero based
+	level -= 1;
+
+	std::shared_ptr<s_achievement_level> ptr = this->find( level );
+	bool exists = ptr != nullptr;
+
+	if( !exists ){
+		ptr = std::make_shared<s_achievement_level>();
+		ptr->level = level;
+	}
+
+	uint16 points;
+
+	if (!this->asUInt16(node, "Points", points)) {
+		return 0;
+	}
+
+	ptr->points = points;
+
+	if( !exists ){
+		this->put( level, ptr );
+	}
+
+	return 1;
+}
+
+AchievementLevelDatabase achievement_level_db;
+
 /**
  * Add an achievement to the player's log
  * @param sd: Player data
@@ -705,20 +753,34 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	}
 
 	int left_score, right_score, old_level = sd->achievement_data.level;
-	const int score_table[MAX_ACHIEVEMENT_RANK] = { 18, 49, 98, 171, 306, 410, 550, 728, 942, 1247, 1504, 1804, 2152, 2550, 3070, 3522, 4030, 4592, 5210, 5980 };
 
-	for (sd->achievement_data.level = 0; sd->achievement_data.level < MAX_ACHIEVEMENT_RANK; sd->achievement_data.level++) {
-		if (sd->achievement_data.level + 1 == MAX_ACHIEVEMENT_RANK) {
+	for( sd->achievement_data.level = 0; /* Break condition's inside the loop */; sd->achievement_data.level++ ){
+		std::shared_ptr<s_achievement_level> next_level = achievement_level_db.find( sd->achievement_data.level + 1 );
+
+		if( next_level == nullptr ){
+			// TODO: Confirm the final display amount
+			left_score = 0;
+			right_score = 0;
+			break;
+		}
+
+		std::shared_ptr<s_achievement_level> level = achievement_level_db.find( sd->achievement_data.level );
+
+		if( sd->achievement_data.total_score > level->points ){
+			// Enough points for this level, check the next one
+			continue;
+		}
+
+		if( sd->achievement_data.level == 0 ){
 			left_score = sd->achievement_data.total_score;
-			right_score = score_table[MAX_ACHIEVEMENT_RANK - 1];
-		} else {
-			if (sd->achievement_data.total_score > score_table[sd->achievement_data.level])
-				continue; // Enough points for this level, check the next one
-			else {
-				left_score = score_table[sd->achievement_data.level] - sd->achievement_data.total_score;
-				right_score = score_table[sd->achievement_data.level + 1];
-				break;
-			}
+			right_score = level->points;
+			break;
+		}else{
+			std::shared_ptr<s_achievement_level> previous_level = achievement_level_db.find( sd->achievement_data.level - 1 );
+
+			left_score = sd->achievement_data.total_score - previous_level->points;
+			right_score = level->points - previous_level->points;
+			break;
 		}
 	}
 
@@ -728,10 +790,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	info[1] = right_score; // Right number
 
 	if (flag && old_level != sd->achievement_data.level) { // Give AG_GOAL_ACHIEVE
-		int achievement_id = 240000 + sd->achievement_data.level;
-
-		if (achievement_add(sd, achievement_id))
-			achievement_update_achievement(sd, achievement_id, true);
+		achievement_update_objective( sd, AG_GOAL_ACHIEVE, 0 );
 	}
 
 	return info;
@@ -926,7 +985,6 @@ void achievement_update_objective(struct map_session_data *sd, enum e_achievemen
 
 		switch(group) {
 			case AG_CHAT: //! TODO: Not sure how this works officially
-			case AG_GOAL_ACHIEVE:
 				// These have no objective use.
 				break;
 			default:
@@ -961,6 +1019,8 @@ void achievement_read_db(void)
 			}
 		}
 	}
+
+	achievement_level_db.load();
 }
 
 /**
@@ -989,6 +1049,7 @@ void do_init_achievement(void)
  */
 void do_final_achievement(void){
 	achievement_db.clear();
+	achievement_level_db.clear();
 }
 
 /**
