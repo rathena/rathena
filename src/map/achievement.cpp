@@ -755,21 +755,25 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	int left_score, right_score, old_level = sd->achievement_data.level;
 
 	for( sd->achievement_data.level = 0; /* Break condition's inside the loop */; sd->achievement_data.level++ ){
-		std::shared_ptr<s_achievement_level> next_level = achievement_level_db.find( sd->achievement_data.level + 1 );
-
-		if( next_level == nullptr ){
-			std::shared_ptr<s_achievement_level> previous_level = achievement_level_db.find( sd->achievement_data.level - 1 );
-
-			left_score = sd->achievement_data.total_score - previous_level->points;
-			right_score = 0;
-			break;
-		}
-
 		std::shared_ptr<s_achievement_level> level = achievement_level_db.find( sd->achievement_data.level );
 
 		if( sd->achievement_data.total_score > level->points ){
-			// Enough points for this level, check the next one
-			continue;
+			std::shared_ptr<s_achievement_level> next_level = achievement_level_db.find( sd->achievement_data.level + 1 );
+
+			// Check if there is another level
+			if( next_level == nullptr ){
+				std::shared_ptr<s_achievement_level> level = achievement_level_db.find( sd->achievement_data.level );
+
+				left_score = sd->achievement_data.total_score - level->points;
+				right_score = 0;
+
+				// Increase the level for client side display
+				sd->achievement_data.level++;
+				break;
+			}else{
+				// Enough points for this level, check the next one
+				continue;
+			}
 		}
 
 		if( sd->achievement_data.level == 0 ){
