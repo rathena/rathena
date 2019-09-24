@@ -758,8 +758,9 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 		std::shared_ptr<s_achievement_level> next_level = achievement_level_db.find( sd->achievement_data.level + 1 );
 
 		if( next_level == nullptr ){
-			// TODO: Confirm the final display amount
-			left_score = 0;
+			std::shared_ptr<s_achievement_level> previous_level = achievement_level_db.find( sd->achievement_data.level - 1 );
+
+			left_score = sd->achievement_data.total_score - previous_level->points;
 			right_score = 0;
 			break;
 		}
