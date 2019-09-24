@@ -1726,6 +1726,12 @@ Body:
     Reward:
       ItemID: 617
     Score: 50
+  - ID: 129021
+    Group: "AG_BATTLE"
+    Name: "Glastheim Challenge Mode" # Complete 100 times?
+    Reward:
+      TitleID: 1045
+    Score: 10
   - ID: 130000 # Talk to Prince NPC (npc/quests/quests_morocc.txt L5288)
     Group: "AG_CHATTING"
     Name: "Socialite debut"
@@ -1983,263 +1989,20 @@ Body:
     #Reward:
     #  ItemID: 23585
     Score: 10
-  - ID: 230100
-    Group: "AG_TAMING"
-    Name: "Poring is Love"
-    Dependent:
-      - Id: 230101
-      - Id: 230102
-      - Id: 230103
-      - Id: 230104
+  - ID: 200033
+    Group: "AG_GOAL_LEVEL"
+    Name: "With a new mind!(1)"
+    Condition: " BaseLevel == 170 && (Class >= JOB_RUNE_KNIGHT && Class <= JOB_GUILLOTINE_CROSS_T) "
     Reward:
-      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
-      TitleID: 1025
+      ItemID: 6959
     Score: 50
-  - ID: 230110
-    Group: "AG_TAMING"
-    Name: "Entomologist"
-    Dependent:
-      - Id: 230111
-      - Id: 230112
-      - Id: 230113
-      - Id: 230114
-      - Id: 230115
-      - Id: 230116
+  - ID: 200034
+    Group: "AG_GOAL_LEVEL"
+    Name: "With a new mind!(2)"
+    Condition: " BaseLevel == 170 && (Class >= JOB_ROYAL_GUARD && Class <= JOB_SHADOW_CHASER_T) "
     Reward:
-      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
-      TitleID: 1026
+      ItemID: 6959
     Score: 50
-  - ID: 230120
-    Group: "AG_TAMING"
-    Name: "Animals are also our friend"
-    Dependent:
-      - Id: 230121
-      - Id: 230122
-      - Id: 230123
-      - Id: 230124
-      - Id: 230125
-      - Id: 230126
-      - Id: 230127
-      - Id: 230128
-    Reward:
-      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
-      TitleID: 1027
-    Score: 50
-  - ID: 230140
-    Group: "AG_TAMING"
-    Name: "Monster Girls Unite!!"
-    Dependent:
-      - Id: 230141
-      - Id: 230142
-      - Id: 230143
-      - Id: 230144
-      - Id: 230145
-      - Id: 230146
-      - Id: 230147
-    Reward:
-      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
-      TitleID: 1029
-    Score: 50
-  - ID: 230101
-    Group: "AG_TAMING"
-    Name: "Poring - taming"
-    Target:
-      - Id: 0
-        MobID: 1002
-        Count: 1
-    Score: 10
-  - ID: 230102
-    Group: "AG_TAMING"
-    Name: "Drops - taming"
-    Target:
-      - Id: 0
-        MobID: 1113
-        Count: 1
-    Score: 10
-  - ID: 230103
-    Group: "AG_TAMING"
-    Name: "Poporing - taming"
-    Target:
-      - Id: 0
-        MobID: 1031
-        Count: 1
-    Score: 10
-  - ID: 230104
-    Group: "AG_TAMING"
-    Name: "Novice Poring - taming"
-    #Target:
-    #  - Id: 0
-    #    MobID: 2398
-    #    Count: 1
-    Score: 10
-  - ID: 230111
-    Group: "AG_TAMING"
-    Name: "Chonchon - taming"
-    Target:
-      - Id: 0
-        MobID: 1011
-        Count: 1
-    Score: 10
-  - ID: 230112
-    Group: "AG_TAMING"
-    Name: "Steel Chonchon - taming"
-    Target:
-      - Id: 0
-        MobID: 1042
-        Count: 1
-    Score: 10
-  - ID: 230113
-    Group: "AG_TAMING"
-    Name: "Hunter Fly - taming"
-    Target:
-      - Id: 0
-        MobID: 1035
-        Count: 1
-    Score: 10
-  - ID: 230114
-    Group: "AG_TAMING"
-    Name: "Rocker - taming"
-    Target:
-      - Id: 0
-        MobID: 1052
-        Count: 1
-    Score: 10
-  - ID: 230115
-    Group: "AG_TAMING"
-    Name: "Spore - taming"
-    Target:
-      - Id: 0
-        MobID: 1014
-        Count: 1
-    Score: 10
-  - ID: 230116
-    Group: "AG_TAMING"
-    Name: "Poison Spore - taming"
-    Target:
-      - Id: 0
-        MobID: 1077
-        Count: 1
-    Score: 10
-  - ID: 230121
-    Group: "AG_TAMING"
-    Name: "Lunatic - taming"
-    Target:
-      - Id: 0
-        MobID: 1063
-        Count: 1
-    Score: 10
-  - ID: 230122
-    Group: "AG_TAMING"
-    Name: "Picky - taming"
-    Target:
-      - Id: 0
-        MobID: 1049
-        Count: 1
-    Score: 10
-  - ID: 230123
-    Group: "AG_TAMING"
-    Name: "Savage Bebe - taming"
-    Target:
-      - Id: 0
-        MobID: 1167
-        Count: 1
-    Score: 10
-  - ID: 230124
-    Group: "AG_TAMING"
-    Name: "Baby Desert Wolf - taming"
-    Target:
-      - Id: 0
-        MobID: 1107
-        Count: 1
-    Score: 10
-  - ID: 230125
-    Group: "AG_TAMING"
-    Name: "Smokie - taming"
-    Target:
-      - Id: 0
-        MobID: 1056
-        Count: 1
-    Score: 10
-  - ID: 230126
-    Group: "AG_TAMING"
-    Name: "Yoyo - taming"
-    Target:
-      - Id: 0
-        MobID: 1057
-        Count: 1
-    Score: 10
-  - ID: 230127
-    Group: "AG_TAMING"
-    Name: "Peco Peco - taming"
-    Target:
-      - Id: 0
-        MobID: 1019
-        Count: 1
-    Score: 10
-  - ID: 230128
-    Group: "AG_TAMING"
-    Name: "Petite - taming"
-    Target:
-      - Id: 0
-        MobID: 1155
-        Count: 1
-    Score: 10
-  - ID: 230141
-    Group: "AG_TAMING"
-    Name: "Munak - taming"
-    Target:
-      - Id: 0
-        MobID: 1026
-        Count: 1
-    Score: 10
-  - ID: 230142
-    Group: "AG_TAMING"
-    Name: "Isis - taming"
-    Target:
-      - Id: 0
-        MobID: 1029
-        Count: 1
-    Score: 10
-  - ID: 230143
-    Group: "AG_TAMING"
-    Name: "Sohee - taming"
-    Target:
-      - Id: 0
-        MobID: 1170
-        Count: 1
-    Score: 10
-  - ID: 230144
-    Group: "AG_TAMING"
-    Name: "Zherlthsh - taming"
-    Target:
-      - Id: 0
-        MobID: 1200
-        Count: 1
-    Score: 10
-  - ID: 230145
-    Group: "AG_TAMING"
-    Name: "Alice - taming"
-    Target:
-      - Id: 0
-        MobID: 1275
-        Count: 1
-    Score: 10
-  - ID: 230146
-    Group: "AG_TAMING"
-    Name: "Succubus - taming"
-    Target:
-      - Id: 0
-        MobID: 1370
-        Count: 1
-    Score: 10
-  - ID: 230147
-    Group: "AG_TAMING"
-    Name: "Loli Ruri - taming"
-    Target:
-      - Id: 0
-        MobID: 1505
-        Count: 1
-    Score: 10
   - ID: 220000
     Group: "AG_CHATTING_CREATE"
     Name: "Community begin"
@@ -2436,6 +2199,308 @@ Body:
     Name: "Rich King (6)"
     Condition: " ARG0 >= 1000000000 "
     Score: 40
+  - ID: 230100
+    Group: "AG_TAMING"
+    Name: "Poring is Love"
+    Dependent:
+      - Id: 230101
+      - Id: 230102
+      - Id: 230103
+      - Id: 230104
+    Reward:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleID: 1025
+    Score: 50
+  - ID: 230110
+    Group: "AG_TAMING"
+    Name: "Entomologist"
+    Dependent:
+      - Id: 230111
+      - Id: 230112
+      - Id: 230113
+      - Id: 230114
+      - Id: 230115
+      - Id: 230116
+    Reward:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleID: 1026
+    Score: 50
+  - ID: 230120
+    Group: "AG_TAMING"
+    Name: "Animals are also our friend"
+    Dependent:
+      - Id: 230121
+      - Id: 230122
+      - Id: 230123
+      - Id: 230124
+      - Id: 230125
+      - Id: 230126
+      - Id: 230127
+      - Id: 230128
+    Reward:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleID: 1027
+    Score: 50
+  - ID: 230140
+    Group: "AG_TAMING"
+    Name: "Monster Girls Unite!!"
+    Dependent:
+      - Id: 230141
+      - Id: 230142
+      - Id: 230143
+      - Id: 230144
+      - Id: 230145
+      - Id: 230146
+      - Id: 230147
+    Reward:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleID: 1029
+    Score: 50
+  - ID: 230101
+    Group: "AG_TAMING"
+    Name: "Poring - taming"
+    Target:
+      - Id: 0
+        MobID: 1002
+        Count: 1
+    Score: 10
+  - ID: 230102
+    Group: "AG_TAMING"
+    Name: "Drops - taming"
+    Target:
+      - Id: 0
+        MobID: 1113
+        Count: 1
+    Score: 10
+  - ID: 230103
+    Group: "AG_TAMING"
+    Name: "Poporing - taming"
+    Target:
+      - Id: 0
+        MobID: 1031
+        Count: 1
+    Score: 10
+  - ID: 230104
+    Group: "AG_TAMING"
+    Name: "Novice Poring - taming"
+    #Target:
+    #  - Id: 0
+    #    MobID: 2398
+    #    Count: 1
+    Score: 10
+  - ID: 230110
+    Group: "AG_TAMING"
+    Name: "Entomologist"
+    Dependent:
+      - Id: 230111
+      - Id: 230112
+      - Id: 230113
+      - Id: 230114
+      - Id: 230115
+      - Id: 230116
+    Reward:
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+      TitleID: 1026
+    Score: 50
+  - ID: 230111
+    Group: "AG_TAMING"
+    Name: "Chonchon - taming"
+    Target:
+      - Id: 0
+        MobID: 1011
+        Count: 1
+    Score: 10
+  - ID: 230112
+    Group: "AG_TAMING"
+    Name: "Steel Chonchon - taming"
+    Target:
+      - Id: 0
+        MobID: 1042
+        Count: 1
+    Score: 10
+  - ID: 230113
+    Group: "AG_TAMING"
+    Name: "Hunter Fly - taming"
+    Target:
+      - Id: 0
+        MobID: 1035
+        Count: 1
+    Score: 10
+  - ID: 230114
+    Group: "AG_TAMING"
+    Name: "Rocker - taming"
+    Target:
+      - Id: 0
+        MobID: 1052
+        Count: 1
+    Score: 10
+  - ID: 230115
+    Group: "AG_TAMING"
+    Name: "Spore - taming"
+    Target:
+      - Id: 0
+        MobID: 1014
+        Count: 1
+    Score: 10
+  - ID: 230116
+    Group: "AG_TAMING"
+    Name: "Poison Spore - taming"
+    Target:
+      - Id: 0
+        MobID: 1077
+        Count: 1
+    Score: 10
+  - ID: 230120
+    Group: "AG_TAMING"
+    Name: "Animals are also our friend"
+    Dependent:
+      - Id: 230121
+      - Id: 230122
+      - Id: 230123
+      - Id: 230124
+      - Id: 230125
+      - Id: 230126
+      - Id: 230127
+      - Id: 230128
+    Reward:
+      TitleID: 1027
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 50
+  - ID: 230121
+    Group: "AG_TAMING"
+    Name: "Lunatic - taming"
+    Target:
+      - Id: 0
+        MobID: 1063
+        Count: 1
+    Score: 10
+  - ID: 230122
+    Group: "AG_TAMING"
+    Name: "Picky - taming"
+    Target:
+      - Id: 0
+        MobID: 1049
+        Count: 1
+    Score: 10
+  - ID: 230123
+    Group: "AG_TAMING"
+    Name: "Savage Bebe - taming"
+    Target:
+      - Id: 0
+        MobID: 1167
+        Count: 1
+    Score: 10
+  - ID: 230124
+    Group: "AG_TAMING"
+    Name: "Baby Desert Wolf - taming"
+    Target:
+      - Id: 0
+        MobID: 1107
+        Count: 1
+    Score: 10
+  - ID: 230125
+    Group: "AG_TAMING"
+    Name: "Smokie - taming"
+    Target:
+      - Id: 0
+        MobID: 1056
+        Count: 1
+    Score: 10
+  - ID: 230126
+    Group: "AG_TAMING"
+    Name: "Yoyo - taming"
+    Target:
+      - Id: 0
+        MobID: 1057
+        Count: 1
+    Score: 10
+  - ID: 230127
+    Group: "AG_TAMING"
+    Name: "Peco Peco - taming"
+    Target:
+      - Id: 0
+        MobID: 1019
+        Count: 1
+    Score: 10
+  - ID: 230128
+    Group: "AG_TAMING"
+    Name: "Petite - taming"
+    Target:
+      - Id: 0
+        MobID: 1155
+        Count: 1
+    Score: 10
+  - ID: 230140
+    Group: "AG_TAMING"
+    Name: "Monster Girls Unite!!"
+    Dependent:
+      - Id: 230141
+      - Id: 230142
+      - Id: 230143
+      - Id: 230144
+      - Id: 230145
+      - Id: 230146
+      - Id: 230147
+    Reward:
+      TitleID: 1029
+      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
+    Score: 50
+  - ID: 230141
+    Group: "AG_TAMING"
+    Name: "Munak - taming"
+    Target:
+      - Id: 0
+        MobID: 1026
+        Count: 1
+    Score: 10
+  - ID: 230142
+    Group: "AG_TAMING"
+    Name: "Isis - taming"
+    Target:
+      - Id: 0
+        MobID: 1029
+        Count: 1
+    Score: 10
+  - ID: 230143
+    Group: "AG_TAMING"
+    Name: "Sohee - taming"
+    Target:
+      - Id: 0
+        MobID: 1170
+        Count: 1
+    Score: 10
+  - ID: 230144
+    Group: "AG_TAMING"
+    Name: "Zherlthsh - taming"
+    Target:
+      - Id: 0
+        MobID: 1200
+        Count: 1
+    Score: 10
+  - ID: 230145
+    Group: "AG_TAMING"
+    Name: "Alice - taming"
+    Target:
+      - Id: 0
+        MobID: 1275
+        Count: 1
+    Score: 10
+  - ID: 230146
+    Group: "AG_TAMING"
+    Name: "Succubus - taming"
+    Target:
+      - Id: 0
+        MobID: 1370
+        Count: 1
+    Score: 10
+  - ID: 230147
+    Group: "AG_TAMING"
+    Name: "Loli Ruri - taming"
+    Target:
+      - Id: 0
+        MobID: 1505
+        Count: 1
+    Score: 10
   - ID: 230200
     Group: "AG_BATTLE"
     Name: "Poring seeker"
