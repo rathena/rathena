@@ -1171,69 +1171,6 @@
 25303:25304:25305,{ bonus bCritical,10; }
 25304:25305,{ bonus bCritAtkRate,6; }
 25306:25172:25173:25174,{ bonus bVariableCastrate,-5; }
-25412:25409,{ bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",10; }
-25412:25410,{ bonus2 bFixedCastrate,"CH_SOULCOLLECT",-40; }
-25412:25411,{ bonus4 bAutoSpellOnSkill,"SR_RAMPAGEBLASTER",300,1,"CH_SOULCOLLECT"; }
-25416:25413,{ bonus2 bSkillAtk,"RA_ARROWSTORM",15; }
-25416:25414,{ bonus bVariableCastrate,-10; }
-25416:25415,{ autobonus3 "{ bonus bLongAtkRate,5; }",1000,60000,"SN_WINDWALK"; }
-25420:25417,{ bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15; }
-25420:25418,{ bonus2 bSkillCooldown,"SO_WARMER",-15000; }
-25420:25419,{ bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-2000; }
-25448:25445,{ bonus2 bSkillAtk,"RK_DRAGONBREATH",10; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10; }
-25448:25446,{ bonus2 bSkillUseSPrate,"RK_DRAGONBREATH",10; bonus2 bSkillUseSPrate,"RK_DRAGONBREATH_WATER",10; }
-25448:25447,{ bonus bDelayrate,-5; }
-25449:25450,{ bonus2 bSkillAtk,"GN_CARTCANNON",15; }
-25449:25451,{ bonus2 bSkillCooldown,"GN_MANDRAGORA",-3000; }
-25449:25452,{ bonus bLongAtkRate,5; }
-25456:25453,{ bonus2 bSkillAtk,"WL_CRIMSONROCK",15; }
-25456:25454,{ bonus bFixedCast,-100*getskilllv("HW_SOULDRAIN")/2; }
-25456:25455,{ bonus2 bMagicAtkEle,ELE_FIRE,5; }
-25493:25490,{ bonus2 bSkillAtk,"SC_TRIANGLESHOT",15; }
-25493:25491,{ bonus bLongAtkRate,10; }
-25493:25492,{ bonus2 bSkillUseSPrate,"SC_TRIANGLESHOT",10; }
-25497:25494,{ bonus2 bSPDrainRate,20,1; }
-25497:25495,{ bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; }
-25497:25496,{ bonus2 bSkillAtk,"NC_AXETORNADO",15; }
-25501:25498,{ bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15; }
-25501:25499,{ bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000; }
-25501:25500,{ bonus2 bSkillFixedCast,"WM_SEVERE_RAINSTORM",-500; }
-25709:25706,{ bonus2 bSkillAtk,"AB_ADORAMUS",15; }
-25709:25707,{ bonus2 bSkillCooldown,"AB_ADORAMUS",-1000; }
-25709:25708,{ bonus bFixedCast,-500; }
-25713:25710,{ bonus2 bSPDrainRate,20,1; }
-25713:25711,{ bonus2 bSkillCooldown,"LG_CANNONSPEAR",-500; }
-25713:25712,{ bonus2 bSkillAtk,"LG_BANISHINGPOINT",15; }
-25717:25714,{ bonus2 bSPDrainRate,20,1; }
-25717:25715,{ bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15; }
-25717:25716,{ bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15; }
-25797:25798,{ bonus2 bSkillAtk,"SR_TIGERCANNON",15; }
-25797:25799,{ bonus bMaxHPrate,10; }
-25797:25800,{ bonus2 bSkillAtk,"SR_TIGERCANNON",15; }
-25801:25802,{ bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-1000; }
-25801:25803,{ bonus2 bSkillAtk,"SO_EARTHGRAVE",20; }
-25801:25804,{ bonus2 bSkillAtk,"SO_DIAMONDDUST",10; }
-25805:25806,{ bonus2 bSPDrainRate,10,1; }
-25805:25807,{ bonus2 bSkillUseSPrate,"SC_FATALMENACE",10; }
-25805:25808,{ bonus2 bSkillAtk,"SC_FATALMENACE",15; }
-25842:25843,{ bonus bFixedCast,-500; }
-25842:25844,{ bonus2 bSkillAtk,"SP_SPA",20; }
-25842:25845,{ bonus2 bSkillAtk,"SP_SWHOO",20; }
-25849:25846,{ bonus2 bSkillAtk,"SJ_SOLARBURST",15; }
-25849:25847,{ bonus2 bSkillAtk,"SJ_FALLINGSTAR",15; }
-25849:25848,{ bonus2 bSPDrainRate,10,1; }
-25853:25850,{ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25; }
-25853:25851,{ bonus2 bSkillAtk,"KO_BAKURETSU",25; }
-25853:25852,{ bonus2 bSPDrainRate,10,1; }
-25854:25850,{ bonus2 bSkillAtk,"NJ_BAKUENRYU",30; bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",30; bonus2 bSkillAtk,"NJ_KAMAITACHI",30; }
-25854:25851,{ bonus2 bSkillAtk,"NJ_HYOUSENSOU",20; bonus2 bSkillAtk,"NJ_HUUJIN",20; }
-25854:25852,{ bonus bVariableCastrate,-15; }
-25858:25855,{ bonus2 bSkillAtk,"RL_R_TRIP",15;}
-25858:25856,{ bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20; }
-25858:25857,{ bonus2 bSkillAtk,"RL_BANISHING_BUSTER",25; }
-25862:25859,{ bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",20; bonus2 bSkillAtk,"SU_SV_STEMSPEAR",20; }
-25862:25860,{ bonus2 bSkillCooldown,"SU_SVG_SPIRIT",-1000; }
-25862:25861,{ bonus2 bSkillCooldown,"SU_CN_METEOR",-1000; }
 27101:28510,{ bonus bMatkRate,(getrefine()/3); }
 27102:28510,{ bonus bFlee2,5; }
 27103:28510,{ bonus2 bAddClass,Class_All,(getrefine()/3); }
@@ -1309,6 +1246,69 @@
 28907:2998,{ bonus bSpeedRate,25; }
 28908:2998,{ bonus bDelayrate,-10; }
 28909:2998,{ bonus bUseSPrate,-10; bonus bMaxSPrate,10; }
+29426:29423,{ bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",10; }
+29426:29424,{ bonus2 bFixedCastrate,"CH_SOULCOLLECT",-40; }
+29426:29425,{ bonus4 bAutoSpellOnSkill,"SR_RAMPAGEBLASTER",300,1,"CH_SOULCOLLECT"; }
+29427:29613,{ bonus2 bSkillAtk,"SR_TIGERCANNON",15; }
+29427:29612,{ bonus bMaxHPrate,10; }
+29427:29611,{ bonus2 bSkillAtk,"SR_TIGERCANNON",15; }
+29431:29428,{ bonus2 bSkillAtk,"RA_ARROWSTORM",15; }
+29431:29429,{ bonus bVariableCastrate,-10; }
+29431:29430,{ autobonus3 "{ bonus bLongAtkRate,5; }",1000,60000,"SN_WINDWALK"; }
+29435:29432,{ bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",15; }
+29435:29433,{ bonus2 bSkillCooldown,"SO_WARMER",-15000; }
+29435:29434,{ bonus2 bSkillCooldown,"SO_PSYCHIC_WAVE",-2000; }
+29463:29460,{ bonus2 bSkillAtk,"RK_DRAGONBREATH",10; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10; }
+29463:29461,{ bonus2 bSkillUseSPrate,"RK_DRAGONBREATH",10; bonus2 bSkillUseSPrate,"RK_DRAGONBREATH_WATER",10; }
+29463:29462,{ bonus bDelayrate,-5; }
+29467:29464,{ bonus2 bSkillAtk,"GN_CARTCANNON",15; }
+29467:29465,{ bonus2 bSkillCooldown,"GN_MANDRAGORA",-3000; }
+29467:29466,{ bonus bLongAtkRate,5; }
+29471:29468,{ bonus2 bSkillAtk,"WL_CRIMSONROCK",15; }
+29471:29469,{ bonus bFixedCast,-100*getskilllv("HW_SOULDRAIN")/2; }
+29471:29470,{ bonus2 bMagicAtkEle,ELE_FIRE,5; }
+29480:29477,{ bonus2 bSkillAtk,"SC_TRIANGLESHOT",15; }
+29480:29478,{ bonus bLongAtkRate,10; }
+29480:29479,{ bonus2 bSkillUseSPrate,"SC_TRIANGLESHOT",10; }
+29484:29481,{ bonus2 bSPDrainRate,20,1; }
+29484:29482,{ bonus2 bSkillCooldown,"NC_AXETORNADO",-1000; }
+29484:29483,{ bonus2 bSkillAtk,"NC_AXETORNADO",15; }
+29488:29485,{ bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15; }
+29488:29486,{ bonus2 bSkillCooldown,"WM_SEVERE_RAINSTORM",-1000; }
+29488:29487,{ bonus2 bSkillFixedCast,"WM_SEVERE_RAINSTORM",-500; }
+29516:29513,{ bonus2 bSkillAtk,"AB_ADORAMUS",15; }
+29516:29514,{ bonus2 bSkillCooldown,"AB_ADORAMUS",-1000; }
+29516:29515,{ bonus bFixedCast,-500; }
+29520:29517,{ bonus2 bSPDrainRate,20,1; }
+29520:29518,{ bonus2 bSkillCooldown,"LG_CANNONSPEAR",-500; }
+29520:29519,{ bonus2 bSkillAtk,"LG_BANISHINGPOINT",15; }
+29524:29521,{ bonus2 bSPDrainRate,20,1; }
+29524:29522,{ bonus2 bSkillAtk,"GC_CROSSRIPPERSLASHER",15; }
+29524:29523,{ bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15; }
+29614:29615,{ bonus2 bSkillCooldown,"SO_VARETYR_SPEAR",-1000; }
+29614:29616,{ bonus2 bSkillAtk,"SO_EARTHGRAVE",20; }
+29614:29617,{ bonus2 bSkillAtk,"SO_DIAMONDDUST",10; }
+29618:29619,{ bonus2 bSPDrainRate,10,1; }
+29618:29620,{ bonus2 bSkillUseSPrate,"SC_FATALMENACE",10; }
+29618:29621,{ bonus2 bSkillAtk,"SC_FATALMENACE",10; }
+29654:29651,{ bonus bFixedCast,-500; }
+29654:29652,{ bonus2 bSkillAtk,"SP_SPA",20; }
+29654:29653,{ bonus2 bSkillAtk,"SP_SWHOO",20; }
+29658:29655,{ bonus2 bSkillAtk,"SJ_SOLARBURST",15; }
+29658:29656,{ bonus2 bSkillAtk,"SJ_FALLINGSTAR",15; }
+29658:29657,{ bonus2 bSPDrainRate,10,1; }
+29662:29659,{ bonus2 bSkillAtk,"KO_JYUMONJIKIRI",25; }
+29662:29660,{ bonus2 bSkillAtk,"KO_BAKURETSU",25; }
+29662:29660,{ bonus2 bSPDrainRate,10,1; }
+29663:29659,{ bonus2 bSkillAtk,"NJ_BAKUENRYU",30; bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",30; bonus2 bSkillAtk,"NJ_KAMAITACHI",30; }
+29663:29660,{ bonus2 bSkillAtk,"NJ_HYOUSENSOU",20; bonus2 bSkillAtk,"NJ_HUUJIN",20; }
+29663:29661,{ bonus bVariableCastrate,-15; }
+29667:29664,{ bonus2 bSkillAtk,"RL_R_TRIP",15;}
+29667:29665,{ bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20; }
+29667:29666,{ bonus2 bSkillAtk,"RL_BANISHING_BUSTER",25; }
+29671:29668,{ bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",20; bonus2 bSkillAtk,"SU_SV_STEMSPEAR",20; }
+29671:29669,{ bonus2 bSkillCooldown,"SU_SVG_SPIRIT",-1000; }
+29671:29670,{ bonus2 bSkillCooldown,"SU_CN_METEOR",-1000; }
 32228:15388:15389,{ bonus bBaseAtk,25; bonus bHit,10; }
 32229:15388:15389,{ bonus bMatk,25; bonus bVariableCastrate,-8; }
 32230:15388:15389,{ bonus bCritAtkRate,7; bonus2 bAddClass,Class_All,5; }
@@ -1323,6 +1323,24 @@
 32222:15096,{ .@r = getequiprefinerycnt(EQI_ARMOR); bonus bAllStats,2*.@r; bonus3 bAddEff,Eff_Stun,.@r*50,ATF_SHORT; bonus3 bAddEff,Eff_Curse,.@r*50,ATF_SHORT; bonus3 bAddEff,Eff_Poison,.@r*50,ATF_SHORT; bonus3 bAddEff,Eff_Silence,.@r*50,ATF_SHORT; /* Unknow rates */ }
 32238:32239,{ bonus bVariableCastrate,-10; bonus bMatkRate,10;  }
 
+//310003:310000,{ bonus2 bSkillAtk,"RA_AIMEDBOLT",15; }
+//310003:310001,{ bonus2 bSkillVariableCast,"RA_AIMEDBOLT",-1000; }
+//310003:310002,{ bonus2 bSkillCooldown,"RA_UNLIMIT",-45000; }
+//310007:310004,{ bonus bLongAtkRate,10; }
+//310007:310005,{ bonus2 bSkillAtk,"NC_VULCANARM",20; }
+//310007:310006,{ bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",20; }
+//310011:310008,{ bonus2 bSkillAtk,"AB_JUDEX",15; }
+//310011:310009,{ bonus2 bSkillUseSPrate,"AB_JUDEX",10; }
+//310011:310010,{ bonus2 bMagicAtkEle,Ele_Holy,10; }
+//310180:310181,{ bonus2 bSkillAtk,"WL_COMET",15; }
+//310180:310182,{ bonus bFixedCast,getskilllv("HW_MAGICPOWER")/2*-100; }
+//310180:310183,{ bonus2 bMagicAtkEle,Ele_Neutral,5; }
+//310184:310185,{ bonus bFixedCast,getskilllv("CR_AUTOGUARD")/2*-100; }
+//310184:310186,{ bonus2 bMagicAtkEle,Ele_Holy,5; }
+//310184:310187,{ bonus2 bSkillAtk,"LG_RAYOFGENESIS",15; }
+//310188:310189,{ bonus2 bAddClass,Class_All,5; bonus bCritAtkRate,15; }
+//310188:310190,{ bonus2 bSkillAtk,"GC_COUNTERSLASH",20; }
+//310188:310191,{ bonus bDelayrate,-5; }
 //500001:450001:470000:480000:490004,{ bonus bAspd,2; bonus2 bAddSize,Size_All,10; bonus2 bSkillAtk,"GN_CART_TORNADO",min(BaseLevel,180)/15; autobonus3 "{ bonus2 bSkillAtk,\"GN_CART_TORNADO\",20; }",1000,60000,"GN_CARTBOOST"; }
 //500001:450004:470003:480003:490007,{ bonus bMaxHPrate,10; bonus bVariableCastrate,-10; bonus2 bSkillAtk,"GN_CARTCANNON",min(BaseLevel,180)/15; autobonus3 "{ bonus2 bSkillAtk,\"GN_CARTCANNON\",20; }",1000,60000,"GN_CARTBOOST"; }
 //510001:450002:470001:480001:490005,{ bonus bMatk,20; bonus2 bMagicAddSize,Size_All,10; bonus2 bSkillAtk,"WZ_METEORSTORM",min(BaseLevel/15)*2; autobonus3 "{ bonus2 bSkillAtk,\"WZ_METEORSTORM\",35; }",1000,60000,"ST_PRESERVE"; }
@@ -1359,12 +1377,3 @@
 //700001:450004:470003:480003:490007,{ bonus bMaxHPrate,10; bonus bDelayrate,-15; bonus2 bSkillAtk,"RA_AIMEDBOLT",min(BaseLevel,180)/15*2; autobonus3 "{ bonus2 bSkillAtk,\"RA_AIMEDBOLT\",35; }",1000,60000,"SN_SIGHT"; }
 //830000:450001:470000:480000:490004,{ bonus bBaseAtk,20; bonus2 bAddSize,Size_All,10; bonus2 bSkillAtk,"RL_R_TRIP",min(BaseLevel,180)/15; autobonus3 "{ bonus2 bSkillAtk,\"RL_R_TRIP\",20; }",1000,60000,"RL_RICHS_COIN"; }
 //830000:450004:470003:480003:490007,{ bonus bBaseAtk,20; bonus2 bSkillCooldown,"RL_FIRE_RAIN",-1000; bonus2 bSkillAtk,"RL_FIRE_RAIN",min(BaseLevel,180)/15*2; autobonus3 "{ bonus2 bSkillAtk,\"RL_FIRE_RAIN\",35; }",1000,60000,"RL_RICHS_COIN"; }
-//1000011:1000008,{ bonus2 bSkillAtk,"RA_AIMEDBOLT",15; }
-//1000011:1000009,{ bonus2 bSkillVariableCast,"RA_AIMEDBOLT",-1000; }
-//1000011:1000010,{ bonus2 bSkillCooldown,"RA_UNLIMIT",-45000; }
-//1000015:1000012,{ bonus bLongAtkRate,10; }
-//1000015:1000013,{ bonus2 bSkillAtk,"NC_VULCANARM",20; }
-//1000015:1000014,{ bonus2 bSkillAtk,"NC_BOOSTKNUCKLE",20; }
-//1000019:1000016,{ bonus2 bSkillAtk,"AB_JUDEX",15; }
-//1000019:1000017,{ bonus2 bSkillUseSPrate,"AB_JUDEX",10; }
-//1000019:1000018,{ bonus2 bMagicAtkEle,Ele_Holy,10; }

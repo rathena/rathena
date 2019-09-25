@@ -6066,7 +6066,7 @@
 9120,Aliza_Egg,Aliza Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 9121,Orc_Hero_Egg_,Orc Hero Egg,7,20,,0,,,,,,,,,,,,,{},{},{}
 
-9510,Costume_Enchant_Stone_Box17,Costume Enchant Stone Box17,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box17);*/ },{},{}
+9510,Costume_Enchant_Stone_Box17,Costume Enchant Stone Box17,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box17); },{},{}
 9523,Metal_Smelting_Ticket,Metal Refining Ticket,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 9523; },{},{}
 9550,Gemstone_Of_Time,Gemstone of Time,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 9550; },{},{}
 9551,Time_Unseal_Key,Time Unseal Key,11,,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 9551; },{},{}
@@ -11552,12 +11552,12 @@
 22899,Parchment_City,Parchment City,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_INCAGI",1; heal -15,0; },{},{}
 22901,Question_Old_Blue_Box,Mysterious Blue Box,2,20,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Mysterious_box"); },{},{}
 22902,Sealed_Card_Album_Scroll_II,Sealed Card Album Scroll II,2,20,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem callfunc("F_Rand",6238,6239,17474,22829,24243,24244,24245),1; },{},{}
-22905,Costume_Enchant_Stone_Box6,Costume Enchant Stone Box6,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box6);*/ },{},{}
-22953,Costume_Enchant_Stone_Box7,Costume Enchant Stone Box7,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box7);*/ },{},{}
+22905,Costume_Enchant_Stone_Box6,Costume Enchant Stone Box6,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box6); },{},{}
+22953,Costume_Enchant_Stone_Box7,Costume Enchant Stone Box7,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box7); },{},{}
 22984,Kahluna_Milk,Kahluna Milk,0,6,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_01, 180000, 0; },{},{}
 22985,Basil,Basil,0,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_DORAM_BUF_02, 180000, 0; },{},{}
 //
-23001,Costume_Enchant_Stone_Box8,Costume Enchant Stone Box8,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box8);*/ },{},{}
+23001,Costume_Enchant_Stone_Box8,Costume Enchant Stone Box8,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box8); },{},{}
 23012,S_Small_Mana_Potion,[Sale] Small Mana Potion,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus2 bRegenPercentSP,5,5000;",600,9; /* fix me: unknown flag and specialeffect ; disabled when LK_BERSERK */ },{},{}
 23016,Cursed_Fragment,Cursed Fragment,2,1,,1,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Fragment"); },{},{}
 23038,S_Slim_White_Box,[Sale] Slim White Potion Box,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 11573,200; },{},{}
@@ -11566,12 +11566,12 @@
 23046,S_Mystic_Powder,[Sale] Mystic Powder,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bFlee,20; bonus bLuk,10;",300,9; /* fix me: unknown flag and specialeffect */ },{},{}
 23047,S_Blessing_Tyr,[Sale] Blessing of Tyr,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_FLEEFOOD,300000,30; sc_start SC_HITFOOD,300000,30; sc_start SC_ATKPOTION,300000,20; sc_start SC_MATKPOTION,300000,20; },{},{}
 23048,S_Resilience_Potion,[Sale] Resilience Enhancement Potion,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bAddItemHealRate,20;",1800,9; /* fix me: unknown flag and specialeffect */ },{},{}
-23058,Costume_Enchant_Stone_Box9,Costume Enchant Stone Box9,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box9);*/ },{},{}
+23058,Costume_Enchant_Stone_Box9,Costume Enchant Stone Box9,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box9); },{},{}
 23076,Build_Up_Potion_SS,Build Up Potion SS,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bAspd,10; }",10; } },{},{}
 23077,Build_Up_Potion_SC,Build Up Potion SC,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bCritical,30; }",10; } },{},{}
 23078,Build_Up_Potion_AC,Build Up Potion AC,2,10,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ if (strcharinfo(3) == "slabw01") { bonus_script "{ bonus bVariableCastrate,-80; }",10; } },{},{}
 23080,Cursed_Crystal,Cursed Crystal,2,1,,500,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc("F_Cursed_Crystal"); },{},{}
-23086,Costume_Enchant_Stone_Box10,Costume Enchant Stone Box10,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box10);*/ },{},{}
+23086,Costume_Enchant_Stone_Box10,Costume Enchant Stone Box10,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box10); },{},{}
 23087,Small_Leather_Bag,Small Leather Bag,2,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 25180,1; getitem 25181,1; getitem 25182,1; getitem 25183,1; getitem 25184,1; getitem 25185,1; },{},{}
 23100,Drooping_Gunslinger_Scroll,Drooping Gunslinger Scroll,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23100; },{},{}
 23123,Bullet_Case_Flare,Flare Bullet Cartridge,2,10,,250,,,,,0xFFFFFFFF,63,2,,,,,,{ getitem 13228,500; },{},{}
@@ -11584,7 +11584,7 @@
 23153,Pet_Egg_Box,Pet Egg SynthesisBox,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23153; },{},{}
 23154,Costume_Exchange_Box,Costume Exchange SynthesisBox,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23154; },{},{}
 23170,Fan_Modification_Kit,Fan Modification Kit,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23170; },{},{}
-23174,Costume_Enchant_Stone_Box11,Costume Enchant Stone Box11,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box11);*/ },{},{}
+23174,Costume_Enchant_Stone_Box11,Costume Enchant Stone Box11,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box11); },{},{}
 23175,Uniform_Repair_Kit,Uniform Repair Kit,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23175; },{},{}
 23177,Kafra_Card_,Kafra Card,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ callfunc "F_CashStore"; },{},{}
 23188,Unprocessed_Parts,Unprocessed Parts,2,10,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ pet 1632; },{},{}
@@ -11616,7 +11616,7 @@
 23289,Candy_Pouch_Blessing_Scroll_Melee,Candy Pouch Blessing Scroll(Physical),11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23289; },{},{}
 23290,Candy_Pouch_Blessing_Scroll_Range,Candy Pouch Blessing Scroll(Ranged),11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23290; },{},{}
 23291,Candy_Pouch_Blessing_Scroll_Macgi,Candy Pouch Blessing Scroll(Magic),11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23291; },{},{}
-23299,Costume_Enchant_Stone_Box12,Costume Enchant Stone Box12,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box12);*/ },{},{}
+23299,Costume_Enchant_Stone_Box12,Costume Enchant Stone Box12,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box12); },{},{}
 //
 23307,S_Shining_Def_Scroll,[Sale] Shining Defense Scroll,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ bonus_script "bonus bDef,500; bonus bMdef,200;",600; /* fix me: unknown flag and specialeffect */ },{},{}
 23308,Magical_Booster_Amplifier,Magical Booster Amplifier,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23308; },{},{}
@@ -11625,11 +11625,11 @@
 23340,S_Megaphone,[Sale] Megaphone,2,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ input .@megaphone$; announce strcharinfo(0) + ": " + .@megaphone$,bc_all,0xFF0000; },{},{}
 23436,Shadow_Refine_Hammer,Shadow Refine Hammer,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23436; },{},{}
 23474,InfinityShadow_Mix,InfinityShadow Mix,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23474; },{},{}
-23524,Costume_Enchant_Stone_Box13,Costume Enchant Stone Box13,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box13);*/ },{},{}
+23524,Costume_Enchant_Stone_Box13,Costume Enchant Stone Box13,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box13); },{},{}
 23545,Silver_Statue,Silver Statue,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23545; },{},{}
 23546,Cursed_Blood,Cursed Blood,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23546; },{},{}
 23547,Gold_Statue,Gold Statue,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23547; },{},{}
-23629,Costume_Enchant_Stone_Box14,Costume Enchant Stone Box14,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box14);*/ },{},{}
+23629,Costume_Enchant_Stone_Box14,Costume Enchant Stone Box14,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box14); },{},{}
 23665,PhysicalMagical_Mix,PhysicalMagical Mix,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23665; },{},{}
 23666,ImmunedAthena_Mix,ImmunedAthena Mix,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23666; },{},{}
 23667,HardChamption_Mix,HardChampion Mix,11,,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 23667; },{},{}
@@ -11640,11 +11640,11 @@
 23677,Gray_Charcoal_Magic,Grey Abrasive (magical),11,,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23677; },{},{}
 23678,Gray_Charcoal_Range,Grey Abrasive (distance),11,,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23678; },{},{}
 23679,Geffen_Magic_Scroll2,Geffen Magic Accessory Order Form,11,,,100,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23679; },{},{}
-23682,Costume_Enchant_Stone_Box15,Costume Enchant Stone Box15,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box15);*/ },{},{}
+23682,Costume_Enchant_Stone_Box15,Costume Enchant Stone Box15,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box15); },{},{}
 23706,Charleston_Parts_W,Charleston Upgrade Parts (Physical),11,,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23706; },{},{}
 23707,Charleston_Parts_R,Charleston Upgrade Parts (Ranged),11,,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23707; },{},{}
 23720,Shadow_Random_Mix,Shadow Random Mix,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23720; },{},{}
-23770,Costume_Enchant_Stone_Box16,Costume Enchant Stone Box16,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box16);*/ },{},{}
+23770,Costume_Enchant_Stone_Box16,Costume Enchant Stone Box16,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box16); },{},{}
 23776,EP17_1_SPC05,Weapon Modifier (Physical),11,,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23776; },{},{}
 23777,EP17_1_SPC06,Advanced Weapon Modifier (Physical),11,,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23777; },{},{}
 23778,EP17_1_SPC07,Super Weapon Modifier (Physical),11,,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 23778; },{},{}
@@ -12369,43 +12369,44 @@
 25375,Powerful_Soul_Essence,Powerful Soul Essence,3,0,,0,,,,,,,,,,,,,{},{},{}
 25377,Luxurious_Pet_Food,Luxurious Pet Food,3,0,,10,,,,,,,,,,,,,{},{},{}
 //
-25409,SuraStone_Top,SuraStone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("MO_IRONHAND")*2; },{},{}
-25410,SuraStone_Middle,SuraStone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("MO_DODGE")*2; },{},{}
-25411,SuraStone_Bottom,SuraStone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MO_CHAINCOMBO",20; },{},{}
-25412,SuraStone_Robe,SuraStone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15; },{},{}
-25413,RangerStone_Top,RangerStone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("HT_STEELCROW")*2; },{},{}
-25414,RangerStone_Middle,RangerStone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillFixedCast,"SN_SHARPSHOOTING",-500; },{},{}
-25415,RangerStone_Bottom,RangerStone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AC_SHOWER",20; },{},{}
-25416,RangerStone_Robe,RangerStone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RA_ARROWSTORM",10; },{},{}
-25417,SorcererStone_Top,SorcererStone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bDelayrate,getskilllv("SA_ADVANCEDBOOK"); },{},{}
-25418,SorcererStone_Middle,SorcererStone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillFixedCast,"PF_DOUBLECASTING",-400; },{},{}
-25419,SorcererStone_Bottom,SorcererStone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MG_FIREBOLT",20; bonus2 bSkillAtk,"MG_COLDBOLT",20; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20; },{},{}
-25420,SorcererStone_Robe,SorcererStone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10; },{},{}
-25445,RuneknightStone_Top,Lord Knight Stone (Top),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("KN_SPEARMASTERY")*2; },{},{}
-25446,RuneknightStone_Middle,Lord Knight Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"LK_SPIRALPIERCE",15; },{},{}
-25447,RuneknightStone_Bottom,Lord Knight Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bAspdRate,"KN_CAVALIERMASTERY"; },{},{}
-25448,RuneknightStone_Robe,Rune Knight Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RK_DRAGONBREATH",10; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10; },{},{}
-25449,GeneticStone_Robe,Genetic Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"GN_CARTCANNON",10; },{},{}
-25450,GeneticStone_Top,Creator Stone (Top),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("AM_LEARNINGPOTION")*2; },{},{}
-25451,GeneticStone_Middle,Creator Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bHealPower,getskilllv("AM_POTIONPITCHER")*2; },{},{}
-25452,GeneticStone_Bottom,Creator Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AM_ACIDTERROR",20; },{},{}
-25453,WarlockStone_Top,High Wizard Stone (Top),6,,,100,,,,,,,,,,,,,{ bonus bMatkRate,getskilllv("HW_MAGICPOWER")*2; },{},{}
-25454,WarlockStone_Middle,High Wizard Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WZ_METEOR",20; },{},{}
-25455,WarlockStone_Bottom,High Wizard Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WZ_FIREPILLAR",20; },{},{}
-25456,WarlockStone_Robe,Warlock Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WL_CRIMSONROCK",10; },{},{}
+25409,SuraStone_Top,Champion Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25410,SuraStone_Middle,Champion Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25411,SuraStone_Bottom,Champion Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25412,SuraStone_Robe,SuraStone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25413,RangerStone_Top,Sniper Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25414,RangerStone_Middle,Sniper Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25415,RangerStone_Bottom,Sniper Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25416,RangerStone_Robe,RangerStone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25417,SorcererStone_Top,Professor Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25418,SorcererStone_Middle,Professor Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25419,SorcererStone_Bottom,Professor Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25420,SorcererStone_Robe,SorcererStone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25445,RuneknightStone_Top,Lord Knight Stone (Top),3,,,100,,,,,,,,,,,,,{},{},{}
+25446,RuneknightStone_Middle,Lord Knight Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25447,RuneknightStone_Bottom,Lord Knight Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25448,RuneknightStone_Robe,Rune Knight Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25449,GeneticStone_Robe,Genetic Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25450,GeneticStone_Top,Creator Stone (Top),3,,,100,,,,,,,,,,,,,{},{},{}
+25451,GeneticStone_Middle,Creator Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25452,GeneticStone_Bottom,Creator Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25453,WarlockStone_Top,High Wizard Stone (Top),3,,,100,,,,,,,,,,,,,{},{},{}
+25454,WarlockStone_Middle,High Wizard Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25455,WarlockStone_Bottom,High Wizard Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25456,WarlockStone_Robe,Warlock Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
 25464,World_Moving_Rights,World Moving Rights,3,20,,0,,,,,,,,,,,,,{},{},{}
-25490,ShadowchaserStone_Top,Shadow Chaser Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("RG_PLAGIARISM")*2; },{},{}
-25491,ShadowchaseStone_Middle,Shadow Chaser Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bHit,getskilllv("AC_VULTURE")*2; },{},{}
-25492,ShadowchaseStone_Bottom,Shadow Chaser Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RG_RAID",20; },{},{}
-25493,ShadowchaserStone_Robe,Shadow Chaser Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SC_TRIANGLESHOT",15; },{},{}
-25494,MechanicStone_Top,Mechanic Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("BS_WEAPONRESEARCH")*2; },{},{}
-25495,MechanicStone_Middle,Mechanic Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bHit,getskilllv("BS_SKINTEMPER")*3; },{},{}
-25496,MechanicStone_Bottom,Mechanic Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WS_CARTTERMINATION",20; },{},{}
-25497,MechanicStone_Robe,Mechanic Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"NC_AXETORNADO",15; },{},{}
-25498,WanderMinstrelStone_Top,Wanderer Minstrel Stone (Upper),6,,,100,,,,,,,,,,,,,{ if (Sex == SEX_FEMALE) bonus bBaseAtk,getskilllv("DC_DANCINGLESSON")*2; else bonus bBaseAtk,getskilllv("BA_MUSICALLESSON")*2; },{},{}
-25499,WanderMinstrelStone_Middle,Wanderer Minstrel Stone (Middle),6,,,100,,,,,,,,,,,,,{ if (Sex == SEX_FEMALE) bonus2 bSkillAtk,"DC_THROWARROW",20; else bonus2 bSkillAtk,"BA_MUSICALSTRIKE",20; },{},{}
-25500,WanderMinstrelStone_Bottom,Wanderer Minstrel Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"CG_ARROWVULCAN",20; },{},{}
-25501,WanderMinstrelStone_Robe,Wanderer Minstrel Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15; },{},{}
+
+25490,ShadowchaserStone_Top,Stalker Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25491,ShadowchaseStone_Middle,Stalker Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25492,ShadowchaseStone_Bottom,Stalker Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25493,ShadowchaserStone_Robe,Shadow Chaser Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25494,MechanicStone_Top,Whitesmith Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25495,MechanicStone_Middle,Whitesmith Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25496,MechanicStone_Bottom,Whitesmith Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25497,MechanicStone_Robe,Mechanic Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25498,WanderMinstrelStone_Top,Clown Gypsy Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25499,WanderMinstrelStone_Middle,Clown Gypsy Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25500,WanderMinstrelStone_Bottom,Clown Gypsy Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25501,WanderMinstrelStone_Robe,Wanderer Minstrel Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
 25508,Token_of_OrcGeneral,Orc Warlord Token,3,,,1,,,,,,,,,,,,,{},{},{}
 //
 25622,White_Snake_Tear,White Snake's Tear,3,,,1,,,,,,,,,,,,,{},{},{}
@@ -12446,56 +12447,56 @@
 25703,M_M_Overpower,Modification Module (Overpower),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus bStr,50; bonus2 bAddClass,Class_All,15; bonus bMatkRate,-15; }",20,10000,BF_WEAPON; /* unknown rate */ },{},{}
 25704,M_M_Fatal_Flash,Modification Module (Fatal Flash),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus bStr,50; bonus bCritAtkRate,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_WEAPON; /* unknown rate */ },{},{}
 25705,M_M_Lucky_Strike,Modification Module (Lucky Strike),6,20,,10,,,,,,,,,,,,,{ autobonus "{ bonus bLuk,50; bonus2 bMagicAtkEle,Ele_All,10; bonus2 bHPLossRate,300,1000; }",20,10000,BF_MAGIC; /* unknown rate */ },{},{}
-25706,HighpriestStone_Top,High Priest Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bHealPower,getskilllv("HP_MEDITATIO"); },{},{}
-25707,HighpriestStone_Middle,High Priest Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bCritAtkRate,getskilllv("BS_MACE")*2; },{},{}
-25708,HighpriestStone_Bottom,High Priest Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"PR_MAGNUS",20; },{},{}
-25709,ArchbishopStone_Robe,Archbishop Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AB_ADORAMUS",15; },{},{}
-25710,PaladinStone_Top,Paladin Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bMaxHPrate,getskilllv("CR_TRUST")/2; },{},{}
-25711,PaladinStone_Middle,Paladin Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bLongAtkRate,getskilllv("KN_SPEARMASTERY")/2; },{},{}
-25712,PaladinStone_Bottom,Paladin Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"CR_HOLYCROSS",20; },{},{}
-25713,RoyalguardStone_Robe,Royal Guard Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"LG_BANISHINGPOINT",15; },{},{}
-25714,AssacrossStone_Top,Assassin Cross Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("AS_KATAR")*2; },{},{}
-25715,AssacrossStone_Middle,Assassin Cross Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("AS_LEFT")*2; },{},{}
-25716,AssacrossStone_Bottom,Assassin Cross Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AS_SONICBLOW",20; },{},{}
-25717,GuillcrossStone_Robe,Assassin Cross Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15; },{},{}
+25706,HighpriestStone_Top,High Priest Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25707,HighpriestStone_Middle,High Priest Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25708,HighpriestStone_Bottom,High Priest Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25709,ArchbishopStone_Robe,Archbishop Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25710,PaladinStone_Top,Paladin Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25711,PaladinStone_Middle,Paladin Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25712,PaladinStone_Bottom,Paladin Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25713,RoyalguardStone_Robe,Royal Guard Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25714,AssacrossStone_Top,Assassin Cross Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25715,AssacrossStone_Middle,Assassin Cross Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25716,AssacrossStone_Bottom,Assassin Cross Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25717,GuillcrossStone_Robe,Assassin Cross Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
 //
 25729,Shadowdecon,Shadowdecon,3,,,20,,,,,,,,,,,,,{},{},{}
 25731,Zelunium,Zelunium,3,,,20,,,,,,,,,,,,,{},{},{}
 //
-25797,SuraStone_Robe2,Sura Stone II (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SR_KNUCKLEARROW",15; },{},{}
-25798,SuraStone_Bottom2,Sura Stone II (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("AL_DP")*2; },{},{}
-25799,SuraStone_Middle2,Sura Stone II (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MO_COMBOFINISH",15; },{},{}
-25800,SuraStone_Top2,Sura Stone II (Upper),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"CH_CHAINCRUSH",15; },{},{}
-25801,SorcererStone_Robe2,Sorcerer Stone II (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SO_DIAMONDDUST",15; },{},{}
-25802,SorcererStone_Bottom2,Sorcerer Stone II (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bMatk,getskilllv("SA_AUTOSPELL")*2; },{},{}
-25803,SorcererStone_Middle2,Sorcerer Stone II (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MG_FIREBOLT",20; bonus2 bSkillAtk,"MG_COLDBOLT",20; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20; },{},{}
-25804,SorcererStone_Top2,Sorcerer Stone II (Upper),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WZ_EARTHSPIKE",20; bonus2 bSkillAtk,"WZ_HEAVENDRIVE",20; },{},{}
-25805,ShadowchaserStone_Robe2,Shadow Chaser Stone II (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SC_FATALMENACE",15; },{},{}
-25806,ShadowchasStone_Bottom2,Shadow Chaser Stone II (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bHit,getskilllv("TF_MISS"); },{},{}
-25807,ShadowchasStone_Middle2,Shadow Chaser Stone II (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RG_BACKSTAP",15; },{},{}
-25808,ShadowchaserStone_Top2,Shadow Chaser Stone II (Upper),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("RG_SNATCHER")*2; },{},{}
+25797,SuraStone_Robe2,Sura Stone II (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25798,SuraStone_Bottom2,Sura Stone II (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25799,SuraStone_Middle2,Sura Stone II (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25800,SuraStone_Top2,Sura Stone II (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25801,SorcererStone_Robe2,Sorcerer Stone II (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25802,SorcererStone_Bottom2,Sorcerer Stone II (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25803,SorcererStone_Middle2,Sorcerer Stone II (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25804,SorcererStone_Top2,Sorcerer Stone II (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25805,ShadowchaserStone_Robe2,Shadow Chaser Stone II (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25806,ShadowchasStone_Bottom2,Shadow Chaser Stone II (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25807,ShadowchasStone_Middle2,Shadow Chaser Stone II (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25808,ShadowchaserStone_Top2,Shadow Chaser Stone II (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
 //
-25842,SoulLinkerStone_Robe,Soul Linker Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SP_SWHOO",20; },{},{}
-25843,SoulLinkerStone_Top,Soul Linker Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bMatk,getskilllv("TK_SPTIME")*2; },{},{}
-25844,SoulLinkerStone_Middle,Soul Linker Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SL_SMA",20; },{},{}
-25845,SoulLinkerStone_Bottom,Soul Linker Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,getskilllv("SL_KAAHI")*2; },{},{}
-25846,StarGladiatorStone_Top,Star Gladiator Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("TK_HPTIME")*2; },{},{}
-25847,StarGladiatorStone_Middle,Star Gladiator Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bFixedCastrate,"SG_FEEL",-50; },{},{}
-25848,StarGladiatorStone_Bottom,Star Gladiator Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bAspdRate,getskilllv("SG_KNOWLEDGE"); },{},{}
-25849,StarGladiatorStone_Garment,Star Gladiator Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SJ_FALLINGSTAR",20; bonus2 bSkillAtk,"SJ_SOLARBURST",20; bonus2 bSkillAtk,"SJ_FULLMOONKICK",20; },{},{}
-25850,NinjaStone_Top,Ninja Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("NJ_NINPOU")*2; bonus bMatk,getskilllv("NJ_NINPOU")*2; },{},{}
-25851,NinjaStone_Middle,Ninja Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"KO_HUUMARANKA",20; },{},{}
-25852,NinjaStone_Bottom,Ninja Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"NJ_BAKUENRYU",20; bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",20; bonus2 bSkillAtk,"NJ_KAMAITACHI",20;},{},{}
-25853,KagerouStone_Robe,Kagerou Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"KO_HUUMARANKA",25; },{},{}
-25854,OboroStone_Robe,Oboro Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"NJ_KOUENKA",20; },{},{}
-25855,GunslingerStone_Top,Gunslinger Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("GS_SNAKEEYE")*2; },{},{}
-25856,GunslingerStone_Middle,Gunslinger Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"GS_DESPERADO",20; },{},{}
-25857,GunslingerStone_Bottom,Gunslinger Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bLongAtkRate,getskilllv("GS_CHAINACTION")/2; },{},{}
-25858,GunslingerStone_Robe,Gunslinger Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20; bonus2 bSkillAtk,"RL_R_TRIP",20; },{},{}
-25859,DoramStone_Top,Doram Stone (Upper),6,,,100,,,,,,,,,,,,,{ .@lv = getskilllv("SU_SCRATCH"); bonus bBaseAtk,.@lv; bonus bMatk,.@lv; },{},{}
-25860,DoramStone_Middle,Doram Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",20; },{},{}
-25861,DoramStone_Bottom,Doram Stone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SU_SV_STEMSPEAR",20; },{},{}
-25862,DoramStone_Robe,Doram Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SU_PICKYPECK",20; bonus2 bSkillAtk,"SU_CN_METEOR",20; },{},{}
+25842,SoulReaperStone_Robe,Soul Reaper Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25843,SoulLinkerStone_Top,Soul Linker Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25844,SoulLinkerStone_Middle,Soul Linker Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25845,SoulLinkerStone_Bottom,Soul Linker Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25846,StarGladiatorStone_Top,Star Gladiator Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25847,StarGladiatorStone_Middle,Star Gladiator Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25848,StarGladiatorStone_Bottom,Star Gladiator Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25849,StarEmperorStone_Garment,Star Emperor Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25850,NinjaStone_Top,Ninja Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25851,NinjaStone_Middle,Ninja Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25852,NinjaStone_Bottom,Ninja Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25853,KagerouStone_Robe,Kagerou Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25854,OboroStone_Robe,Oboro Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25855,GunslingerStone_Top,Gunslinger Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25856,GunslingerStone_Middle,Gunslinger Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25857,GunslingerStone_Bottom,Gunslinger Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25858,GunslingerStone_Robe,Gunslinger Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+25859,DoramStone_Top,Doram Stone (Upper),3,,,100,,,,,,,,,,,,,{},{},{}
+25860,DoramStone_Middle,Doram Stone (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+25861,DoramStone_Bottom,Doram Stone (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+25862,DoramStone_Robe,Doram Stone (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
 //===================================================================
 // New Spears
 //===================================================================
@@ -13028,6 +13029,91 @@
 29151,Aquarius_Stone,Aquarius Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bVit,1; },{},{}
 29152,Scorpio_Stone,Scorpio Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bDex,1; },{},{}
 29153,Taurus_Stone,Taurus Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bLuk,1; },{},{}
+29160,BlueAura_Effect,Blue Aura Effect 이펙트,6,,,0,,,,,,,,,,,,,{/*TODO*/},{},{}
+//
+29423,SuraStone_Top_,Champion Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("MO_IRONHAND")*2; },{},{}
+29424,SuraStone_Middle_,Champion Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus bHit,getskilllv("MO_DODGE")*2; },{},{}
+29425,SuraStone_Bottom_,Champion Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MO_CHAINCOMBO",20; },{},{}
+29426,SuraStone_Robe_,SuraStone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SR_RAMPAGEBLASTER",15; },{},{}
+29427,SuraStone_Robe2_,Sura Stone II (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SR_KNUCKLEARROW",15; },{},{}
+29428,RangerStone_Top_,Sniper Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("HT_STEELCROW")*2; },{},{}
+29429,RangerStone_Middle_,Sniper Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillFixedCast,"SN_SHARPSHOOTING",-500; },{},{}
+29430,RangerStone_Bottom_,Sniper Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AC_SHOWER",20; },{},{}
+29431,RangerStone_Robe_,RangerStone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RA_ARROWSTORM",10; },{},{}
+29432,SorcererStone_Top_,Professor Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bDelayrate,getskilllv("SA_ADVANCEDBOOK"); },{},{}
+29433,SorcererStone_Middle_,Professor Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillFixedCast,"PF_DOUBLECASTING",-400; },{},{}
+29434,SorcererStone_Bottom_,Professor Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MG_FIREBOLT",20; bonus2 bSkillAtk,"MG_COLDBOLT",20; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20; },{},{}
+29435,SorcererStone_Robe_,SorcererStone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SO_PSYCHIC_WAVE",10; },{},{}
+29460,RuneknightStone_Top_,Lord Knight Stone (Top),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("KN_SPEARMASTERY")*2; },{},{}
+29461,RuneknightStone_Middle_,Lord Knight Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"LK_SPIRALPIERCE",15; },{},{}
+29462,RuneknightStone_Bottom_,Lord Knight Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bAspdRate,"KN_CAVALIERMASTERY"; },{},{}
+29463,RuneknightStone_Robe_,Rune Knight Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RK_DRAGONBREATH",10; bonus2 bSkillAtk,"RK_DRAGONBREATH_WATER",10; },{},{}
+29464,GeneticStone_Top_,Creator Stone (Top),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("AM_LEARNINGPOTION")*2; },{},{}
+29465,GeneticStone_Middle_,Creator Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus bHealPower,getskilllv("AM_POTIONPITCHER")*2; },{},{}
+29466,GeneticStone_Bottom_,Creator Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bMatkRate,getskilllv("HW_MAGICPOWER")*2; },{},{}
+29467,GeneticStone_Robe_,Genetic Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AM_ACIDTERROR",20; },{},{}
+29468,WarlockStone_Top_,High Wizard Stone (Top),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"GN_CARTCANNON",10; },{},{}
+29469,WarlockStone_Middle_,High Wizard Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WZ_METEOR",20; },{},{}
+29470,WarlockStone_Bottom_,High Wizard Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WZ_FIREPILLAR",20; },{},{}
+29471,WarlockStone_Robe_,Warlock Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WL_CRIMSONROCK",10; },{},{}
+29477,ShadowchaserStone_Top_,Stalker Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("RG_PLAGIARISM")*2; },{},{}
+29478,ShadowchaseStone_Middle_,Stalker Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus bHit,getskilllv("AC_VULTURE")*2; },{},{}
+29479,ShadowchaseStone_Bottom_,Stalker Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RG_RAID",20; },{},{}
+29480,ShadowchaserStone_Robe_,Shadow Chaser Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SC_TRIANGLESHOT",15; },{},{}
+29481,MechanicStone_Top_,Whitesmith Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("BS_WEAPONRESEARCH")*2; },{},{}
+29482,MechanicStone_Middle_,Whitesmith Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus bHit,getskilllv("BS_SKINTEMPER")*3; },{},{}
+29483,MechanicStone_Bottom_,Whitesmith Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WS_CARTTERMINATION",20; },{},{}
+29484,MechanicStone_Robe_,Mechanic Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"NC_AXETORNADO",15; },{},{}
+29485,WanderMinstrelStone_Top_,Clown Gypsy Stone (Upper),6,,,0,,,,,,,,,,,,,{ if (Sex == SEX_FEMALE) bonus bBaseAtk,getskilllv("DC_DANCINGLESSON")*2; else bonus bBaseAtk,getskilllv("BA_MUSICALLESSON")*2; },{},{}
+29486,WanderMinstrelStone_Middle_,Clown Gypsy Stone (Middle),6,,,0,,,,,,,,,,,,,{ if (Sex == SEX_FEMALE) bonus2 bSkillAtk,"DC_THROWARROW",20; else bonus2 bSkillAtk,"BA_MUSICALSTRIKE",20; },{},{}
+29487,WanderMinstrelStone_Bottom_,Clown Gypsy Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"CG_ARROWVULCAN",20; },{},{}
+29488,WanderMinstrelStone_Robe_,Wanderer Minstrel Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WM_SEVERE_RAINSTORM",15; },{},{}
+29513,HighpriestStone_Top_,High Priest Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bHealPower,getskilllv("HP_MEDITATIO"); },{},{}
+29514,HighpriestStone_Middle_,High Priest Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,getskilllv("BS_MACE")*2; },{},{}
+29515,HighpriestStone_Bottom_,High Priest Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"PR_MAGNUS",20; },{},{}
+29516,ArchbishopStone_Robe_,Archbishop Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AB_ADORAMUS",15; },{},{}
+29517,PaladinStone_Top_,Paladin Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bMaxHPrate,getskilllv("CR_TRUST")/2; },{},{}
+29518,PaladinStone_Middle_,Paladin Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,getskilllv("KN_SPEARMASTERY")/2; },{},{}
+29519,PaladinStone_Bottom_,Paladin Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"CR_HOLYCROSS",20; },{},{}
+29520,RoyalguardStone_Robe_,Royal Guard Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"LG_BANISHINGPOINT",15; },{},{}
+29521,AssacrossStone_Top_,Assassin Cross Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("AS_KATAR")*2; },{},{}
+29522,AssacrossStone_Middle_,Assassin Cross Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("AS_LEFT")*2; },{},{}
+29523,AssacrossStone_Bottom_,Assassin Cross Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AS_SONICBLOW",20; },{},{}
+29524,GuillcrossStone_Robe_,Assassin Cross Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"GC_ROLLINGCUTTER",15; },{},{}
+//
+29611,SuraStone_Bottom2_,Sura Stone II (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("AL_DP")*2; },{},{}
+29612,SuraStone_Middle2_,Sura Stone II (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MO_COMBOFINISH",15; },{},{}
+29613,SuraStone_Top2_,Sura Stone II (Upper),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"CH_CHAINCRUSH",15; },{},{}
+29614,SorcererStone_Robe2_,Sorcerer Stone II (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SO_DIAMONDDUST",15; },{},{}
+29615,SorcererStone_Bottom2_,Sorcerer Stone II (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bMatk,getskilllv("SA_AUTOSPELL")*2; },{},{}
+29616,SorcererStone_Middle2_,Sorcerer Stone II (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"MG_FIREBOLT",20; bonus2 bSkillAtk,"MG_COLDBOLT",20; bonus2 bSkillAtk,"MG_LIGHTNINGBOLT",20; },{},{}
+29617,SorcererStone_Top2_,Sorcerer Stone II (Upper),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WZ_EARTHSPIKE",20; bonus2 bSkillAtk,"WZ_HEAVENDRIVE",20; },{},{}
+29618,ShadowchaserStone_Robe2_,Shadow Chaser Stone II (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SC_FATALMENACE",15; },{},{}
+29619,ShadowchasStone_Bottom2_,Shadow Chaser Stone II (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bHit,getskilllv("TF_MISS"); },{},{}
+29620,ShadowchasStone_Middle2_,Shadow Chaser Stone II (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RG_BACKSTAP",15; },{},{}
+29621,ShadowchaserStone_Top2_,Shadow Chaser Stone II (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("RG_SNATCHER")*2; },{},{}
+//
+29651,SoulLinkerStone_Top_,Soul Linker Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bMatk,getskilllv("TK_SPTIME")*2; },{},{}
+29652,SoulLinkerStone_Middle_,Soul Linker Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SL_SMA",20; },{},{}
+29653,SoulLinkerStone_Bottom_,Soul Linker Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bVariableCastrate,getskilllv("SL_KAAHI")*2; },{},{}
+29654,SoulReaperStone_Robe_,Soul Reaper Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SP_SWHOO",20; },{},{}
+29655,StarGladiatorStone_Top_,Star Gladiator Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("TK_HPTIME")*2; },{},{}
+29656,StarGladiatorStone_Middle_,Star Gladiator Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bFixedCastrate,"SG_FEEL",-50; },{},{}
+29657,StarGladiatorStone_Bottom_,Star Gladiator Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bAspdRate,getskilllv("SG_KNOWLEDGE"); },{},{}
+29658,StarEmperorStone_Garment_,Star Emperor Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SJ_FALLINGSTAR",20; bonus2 bSkillAtk,"SJ_SOLARBURST",20; bonus2 bSkillAtk,"SJ_FULLMOONKICK",20; },{},{}
+29659,NinjaStone_Top_,Ninja Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("NJ_NINPOU")*2; bonus bMatk,getskilllv("NJ_NINPOU")*2; },{},{}
+29660,NinjaStone_Middle_,Ninja Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"KO_HUUMARANKA",20; },{},{}
+29661,NinjaStone_Bottom_,Ninja Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"NJ_BAKUENRYU",20; bonus2 bSkillAtk,"NJ_HYOUSYOURAKU",20; bonus2 bSkillAtk,"NJ_KAMAITACHI",20;},{},{}
+29662,KagerouStone_Robe_,Kagerou Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"KO_HUUMARANKA",25; },{},{}
+29663,OboroStone_Robe_,Oboro Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"NJ_KOUENKA",20; },{},{}
+29664,GunslingerStone_Top_,Gunslinger Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("GS_SNAKEEYE")*2; },{},{}
+29665,GunslingerStone_Middle_,Gunslinger Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"GS_DESPERADO",20; },{},{}
+29666,GunslingerStone_Bottom_,Gunslinger Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,getskilllv("GS_CHAINACTION")/2; },{},{}
+29667,GunslingerStone_Robe_,Gunslinger Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RL_HAMMER_OF_GOD",20; bonus2 bSkillAtk,"RL_R_TRIP",20; },{},{}
+29668,DoramStone_Top_,Doram Stone (Upper),6,,,0,,,,,,,,,,,,,{ .@lv = getskilllv("SU_SCRATCH"); bonus bBaseAtk,.@lv; bonus bMatk,.@lv; },{},{}
+29669,DoramStone_Middle_,Doram Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SU_LUNATICCARROTBEAT",20; },{},{}
+29670,DoramStone_Bottom_,Doram Stone (Bottom),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SU_SV_STEMSPEAR",20; },{},{}
+29671,DoramStone_Robe_,Doram Stone (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"SU_PICKYPECK",20; bonus2 bSkillAtk,"SU_CN_METEOR",20; },{},{}
 //===================================================================
 // New Cards
 //===================================================================
@@ -13588,15 +13674,41 @@
 //100004,ILL_Piece_B,Azure Mirage Resonance Stone,11,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 100004; },{},{}
 //100010,ShadowPerfectSize_Mix,Perfect Size Shadow SynthesisBox,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 100010; },{},{}
 //100011,ShadowMagicPiercing_Mix,Magic Piercing Shadow SynthesisBox,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 100011; },{},{}
-//100019,Costume_Enchant_Stone_Box18,Costume Enchant Stone Box18,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box18);*/ },{},{}
+//100019,Costume_Enchant_Stone_Box18,Costume Enchant Stone Box18,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box18); },{},{}
 //100023,Ancient_Hero_Bravery,Ancient Hero Bravery,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 100023; },{},{}
 //100025,Ancient_Hero_Wisdom,Ancient Hero Wisdom,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 100025; },{},{}
 //100043,Boost_Up_1,Booster Armor UpgradeBox,11,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 100043; },{},{}
 //100044,Boost_Up_2,Booster Weapon UpgradeBox,11,,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ upgradeui 100044; },{},{}
-//100052,Costume_Enchant_Stone_Box19,Costume Enchant Stone Box19,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ /*getgroupitem(IG_Costume_Enchant_Stone_Box19);*/ },{},{}
+//100052,Costume_Enchant_Stone_Box19,Costume Enchant Stone Box19,18,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ getgroupitem(IG_Costume_Enchant_Stone_Box19); },{},{}
 //100053,ShadowPiercing_Mix,Piercing Shadow SynthesisBox,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 100053; },{},{}
 //100058,ShadowHasty_Mix,Hasty Shadow SynthesisBox,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 100058; },{},{}
 //100060,EnchantStone_Recipe_4m,4m Enchant Stone Recipe SynthesisBox,11,,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ synthesisui 100060; },{},{}
+//
+//310000,RangerStone_II_Top_,Sniper Stone II (Top),6,,,0,,,,,,,,,,,,,{ bonus bAspdRate,getskilllv("SN_WINDWALK")/2; },{},{}
+//310001,RangerStone_II_Middle_,Sniper Stone II (Middle),6,,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,getskilllv("HT_BEASTBANE")*2; },{},{}
+//310002,RangerStone_II_Bottom_,Sniper Stone II (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("SN_SIGHT")*2;},{},{}
+//310003,RangerStone_II_Garment_,Ranger Stone II (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RA_AIMEDBOLT",15; },{},{}
+//310004,MechanicStone_II_Top,Whitesmith Stone II (Top),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillCooldown,"NC_AXEBOOMERANG",getskilllv("BS_OVERTHRUST")*-100; },{},{}
+//310005,MechanicStone_II_Middle,Whitesmith Stone II (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WS_CARTTERMINATION",15; },{},{}
+//310006,MechanicStone_II_Bottom,Whitesmith Stone II (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bLongAtkRate,getskilllv("BS_MAXIMIZE"); },{},{}
+//310007,MechanicStone_II_Garment,Mechanic Stone II (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"NC_ARMSCANNON",15; },{},{}
+//310008,HighpriestStone_II_Top,High Priest Stone II (Top),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"PR_MAGNUS",15; },{},{}
+//310009,HighpriestStone_II_Middle,High Priest Stone II (Middle),6,,,0,,,,,,,,,,,,,{ bonus bMatkRate,getskilllv("HP_ASSUMPTIO"); },{},{}
+//310010,HighpriestStone_II_Bottom,High Priest Stone II (Bottom),6,,,0,,,,,,,,,,,,,{ bonus bVariableCastrate,getskilllv("PR_KYRIE")/2*-1; },{},{}
+//310011,ArchbishopStone_II_Garment,Archbishop Stone II (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AB_JUDEX",15; },{},{}
+//
+//310180,WarlockStone_II_Robe_,Warlock Stone II (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WL_COMET",15; },{},{}
+//310181,WarlockStone_II_Top_,High Wizard Stone II (Upper),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WZ_METEOR",20; },{},{}
+//310182,WarlockStone_II_Middle_,High Wizard Stone II (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bMagicAtkEle,Ele_Neutral,getskilllv("HW_GRAVITATION")*2; },{},{}
+//310183,WarlockStone_II_Bottom_,High Wizard Stone II (Lower),6,,,0,,,,,,,,,,,,,{ bonus bMatk,getskilllv("HW_SOULDRAIN")*2; },{},{}
+//310184,RoyalGuardStone_II_Robe_,Royal Guard Stone II (Garment),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"LG_RAYOFGENESIS",15; },{},{}
+//310185,RoyalGuardStone_II_Bottom_,Paladin Stone II (Lower),6,,,0,,,,,,,,,,,,,{ bonus2 bMagicAtkEle,Ele_Holy,getskilllv("CR_GRANDCROSS"); },{},{}
+//310186,RoyalGuardStone_II_Middle_,Paladin Stone II (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"PA_PRESSURE",20; },{},{}
+//310187,RoyalGuardStone_II_Top_,Paladin Stone II (Upper),6,,,0,,,,,,,,,,,,,{ bonus bVariableCast,getskilllv("CR_TRUST")*-1; },{},{}
+//310188,GuillotineCrossStone_II_Robe_,Guillotine Cross Stone II (Garment),6,,,0,,,,,,,,,,,,,{ bonus bCritAtkRate,15; if (getskilllv("AS_KATAR") >= 10) { skill "TF_DOUBLE",3; bonus bDoubleRate,15; } },{},{}
+//310189,GuillotineCrossStone_II_Bottom_,Assassin Cross Stone II (Lower),6,,,0,,,,,,,,,,,,,{ bonus2 bAddSize,Size_All,getskilllv("ASC_KATAR")*2; },{},{}
+//310190,GuillotineCrossStone_II_Middle_,Assassin Cross Stone II (Middle),6,,,0,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AS_SONICBLOW",20; },{},{}
+//310191,GuillotineCrossStone_II_Top_,Assassin Cross Stone II (Upper),6,,,0,,,,,,,,,,,,,{ bonus bDelayrate,getskilllv("ASC_BREAKER")*-1; },{},{}
 //
 //450001,Attacker_Booster_Plate_,Attacker Booster Plate,4,,,0,,120,,1,0xFFFFFFFF,63,2,16,,100,1,,{ bonus bBaseAtk,100; bonus bDelayrate,-5; .@r = getrefine(); if (.@r>=2) { bonus2 bAddClass,Class_All,.@r/2; } if (.@r>=3) { bonus bCritAtkRate,.@r/3; } if (.@r>=7) { bonus bBaseAtk,50; } if (.@r>=9) { bonus bDelayrate,-5; } },{},{}
 //450002,Elemental_Booster_Robe_,Elemental Booster Robe,4,,,0,,80,,1,0xFFFFFFFF,63,2,16,,100,1,,{ bonus bMatk,100; bonus bVariableCastrate,-5; .@r = getrefine(); if (.@r>=2) { bonus bMatkRate,.@r/2; } if (.@r>=3) { bonus bVariableCastrate,.@r/3*-1; } if (.@r>=7) { bonus bMatk,50; } if (.@r>=9) { bonus bVariableCastrate,-5; } },{},{}
@@ -13656,15 +13768,28 @@
 //
 //830000,Booster_Gatling_,Booster Gatling,5,,,0,170,,9,2,0x40000000,63,2,34,4,100,1,19,{ bonus2 bAddClass,Class_All,5; .@r = getrefine(); bonus bBaseAtk,.@r*3; bonus bBaseAtk,min(BaseLevel,180)/15*3; if (.@r>=7) { bonus bLongAtkRate,getskilllv("GS_SINGLEACTION"); } if (.@r>=9) { bonus bLongAtkRate,10; } },{},{}
 //
-//1000008,Sniper_Stone_II_Top,Sniper Stone II (Top),6,,,100,,,,,,,,,,,,,{ bonus bAspdRate,getskilllv("SN_WINDWALK")/2; },{},{}
-//1000009,Sniper_Stone_II_Middle,Sniper Stone II (Middle),6,,,100,,,,,,,,,,,,,{ bonus bLongAtkRate,getskilllv("HT_BEASTBANE")*2; },{},{}
-//1000010,Sniper_Stone_II_Bottom,Sniper Stone II (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("SN_SIGHT")*2;},{},{}
-//1000011,Ranger_Stone_II_Garment,Ranger Stone II (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"RA_AIMEDBOLT",15; },{},{}
-//1000012,Mastersmith_Stone_II_Top,Mastersmith Stone II (Top),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillCooldown,"NC_AXEBOOMERANG",getskilllv("BS_OVERTHRUST")*-100; },{},{}
-//1000013,Mastersmith_Stone_II_Middle,Mastersmith Stone II (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"WS_CARTTERMINATION",15; },{},{}
-//1000014,Mastersmith_Stone_II_Bottom,Mastersmith Stone II (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bLongAtkRate,getskilllv("BS_MAXIMIZE"); },{},{}
-//1000015,Mechanic_Stone_II_Garment,Mechanic Stone II (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"NC_ARMSCANNON",15; },{},{}
-//1000016,High_Priest_Stone_II_Top,High Priest Stone II (Top),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"PR_MAGNUS",15; },{},{}
-//1000017,High_Priest_Stone_II_Middle,High Priest Stone II (Middle),6,,,100,,,,,,,,,,,,,{ bonus bMatkRate,getskilllv("HP_ASSUMPTIO"); },{},{}
-//1000018,High_Priest_Stone_II_Bottom,High Priest Stone II (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,getskilllv("PR_KYRIE")/2*-1; },{},{}
-//1000019,Archbishop_Stone_II_Garment,Archbishop Stone II (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSkillAtk,"AB_JUDEX",15; },{},{}
+//1000008,RangerStone_II_Top,Sniper Stone II (Top),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000009,RangerStone_II_Middle,Sniper Stone II (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000010,RangerStone_II_Bottom,Sniper Stone II (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000011,RangerStone_II_Garment,Ranger Stone II (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000012,MechanicStone_II_Top,Whitesmith Stone II (Top),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000013,MechanicStone_II_Middle,Whitesmith Stone II (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000014,MechanicStone_II_Bottom,Whitesmith Stone II (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000015,MechanicStone_II_Garment,Mechanic Stone II (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000016,HighpriestStone_II_Top,High Priest Stone II (Top),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000017,HighpriestStone_II_Middle,High Priest Stone II (Middle),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000018,HighpriestStone_II_Bottom,High Priest Stone II (Bottom),3,,,100,,,,,,,,,,,,,{},{},{}
+//1000019,ArchbishopStone_II_Garment,Archbishop Stone II (Garment),3,,,100,,,,,,,,,,,,,{},{},{}
+//
+//1000213,WarlockStone_II_Robe,Warlock Stone II (Garment),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000214,WarlockStone_II_Top,High Wizard Stone II (Upper),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000215,WarlockStone_II_Middle,High Wizard Stone II (Middle),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000216,WarlockStone_II_Bottom,High Wizard Stone II (Lower),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000217,RoyalGuardStone_II_Robe,Royal Guard Stone II (Garment),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000218,RoyalGuardStone_II_Top,Paladin Stone II (Upper),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000219,RoyalGuardStone_II_Middle,Paladin Stone II (Middle),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000220,RoyalGuardStone_II_Bottom,Paladin Stone II (Lower),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000221,GuillotineCrossStone_II_Robe,Guillotine Cross Stone II (Garment),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000222,GuillotineCrossStone_II_Top,Assassin Cross Stone II (Upper),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000223,GuillotineCrossStone_II_Middle,Assassin Cross Stone II (Middle),6,,,100,,,,,,,,,,,,,{},{},{}
+//1000224,GuillotineCrossStone_II_Bottom,Assassin Cross Stone II (Lower),6,,,100,,,,,,,,,,,,,{},{},{}
