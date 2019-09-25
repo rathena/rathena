@@ -2981,6 +2981,9 @@ const char* map_mapid2mapname(int m)
 
 	struct map_data *mapdata = map_getmapdata(m);
 
+	if (!mapdata)
+		return "Unknown";
+
 	if (mapdata->instance_id) { // Instance map check
 		struct instance_data *im = &instance_data[mapdata->instance_id];
 
