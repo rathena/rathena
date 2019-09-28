@@ -12236,8 +12236,8 @@
 25047,Kahlunac,Kahlunac,3,0,,0,,,,,,,,,,,,,{},{},{}
 25048,Hearty_Lunchbox,Hearty Lunchbox,3,0,,0,,,,,,,,,,,,,{},{},{}
 25049,Basilac_Clam,Basilac Clam,3,0,,0,,,,,,,,,,,,,{},{},{}
-25058,TwinkleEffect_Top,TwinkleEffect (Upper),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
-25059,GhostEffect_Middle,GhostEffect (Middle),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
+25058,TwinkleEffect_Top,TwinkleEffect (Upper),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_LJOSALFAR,true; },{},{ hateffect HAT_EF_LJOSALFAR,false; }
+25059,GhostEffect_Middle,GhostEffect (Middle),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_RL_BANISHING_BUSTER,true; },{},{ hateffect HAT_EF_RL_BANISHING_BUSTER,false; }
 25060,Critical_Stone,Critical Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bCritAtkRate,3; },{},{}
 25061,Range_Stone,Range Stone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bLongAtkRate,3; },{},{}
 25062,Greed_Stone,Greed Stone (Bottom),6,,,100,,,,,,,,,,,,,{ skill "BS_GREED",1; },{},{}
@@ -12260,7 +12260,7 @@
 25133,Dried_White_Stem,Dried White Stem,3,0,,0,,,,,,,,,,,,,{},{},{}
 25136,ElectricEffect_Middle,ElectricEffect (Middle),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_Electric,true; },{},{ hateffect HAT_EF_Electric,false; }
 25137,GreenFloor_Bottom,GreenFloor (Bottom),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_Green_Floor,true; },{},{ hateffect HAT_EF_Green_Floor,false; }
-25138,ShrinkEffect_Middle,ShrinkEffect (Middle),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
+25138,ShrinkEffect_Middle,ShrinkEffect (Middle),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_SHRINK,true; },{},{ hateffect HAT_EF_SHRINK,false; }
 25139,Identify_Stone,Identify Stone (Bottom),6,,,100,,,,,,,,,,,,,{ skill "MC_IDENTIFY",1; },{},{}
 25141,EXPStone_Middle,EXPStone (Middle),6,,,100,,,,,,,,,,,,,{ bonus2 bExpAddClass,Class_All,2; },{},{}
 25142,Doram_Token,Doram Token,3,,0,0,,,,,,,,,,,,,{},{},{}
@@ -12295,9 +12295,9 @@
 25173,CastingStone_Middle,CastingStone (Middle),6,,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,-3; },{},{}
 25174,CastingStone_Bottom,CastingStone (Bottom),6,,,100,,,,,,,,,,,,,{ bonus bVariableCastrate,-3; },{},{}
 25175,LexAeternaStone_Middle,LexAeternaStone (Middle),6,,,100,,,,,,,,,,,,,{ bonus4 bAutoSpell,"PR_LEXAETERNA",1,10,1; },{},{}
-25176,BlueAuraEffect_Middle,BlueAuraEffect (Middle),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
-25177,ShadowEffect_Middle,ShadowEffect (Middle),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
-25178,PinkGlowEffect_Middle,PinkGlowEffect (Middle),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
+25176,BlueAuraEffect_Middle,BlueAuraEffect (Middle),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_CIRCLEPOWER,true; },{},{ hateffect HAT_EF_CIRCLEPOWER,false; }
+25177,ShadowEffect_Middle,ShadowEffect (Middle),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_KAGEMUSYA,true; },{},{ hateffect HAT_EF_KAGEMUSYA,false; }
+25178,PinkGlowEffect_Middle,PinkGlowEffect (Middle),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_CHERRYBLOSSOM,true; },{},{ hateffect HAT_EF_CHERRYBLOSSOM,false; }
 25179,Blessing_Star,Blessing Star,3,0,,0,,,,,,,,,,,,,{},{},{}
 25180,Old_Rings,Old Rings,3,0,,0,,,,,,,,,,,,,{},{},{}
 25181,Wood_Rosary,Wood Rosary,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -12306,16 +12306,16 @@
 25184,Portable_Sewingbox,Portable Sewingbox,3,0,,0,,,,,,,,,,,,,{},{},{}
 25185,Locket_Pendant,Locket Pendant,3,0,,0,,,,,,,,,,,,,{},{},{}
 25187,Slug_Bullet,Slug Bullet,3,1200,,1200,,,,,,,,,,,,,{},{},{}
-25205,ShrinkEffect_Bottom,ShrinkEffect (Bottom),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
+25205,ShrinkEffect_Bottom,ShrinkEffect (Bottom),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_SHRINK,true; },{},{ hateffect HAT_EF_SHRINK,false; }
 25206,ElectricEffect_Top,ElectricEffect (Upper),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_Electric,true; },{},{ hateffect HAT_EF_Electric,false; }
 25207,SPAbsorb_Stone_Top,SPAbsorb Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus2 bSPDrainRate,20,1; },{},{}
 25208,SPAbsorb_Stone_Robe,SPAbsorb Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bSPDrainRate,20,1; },{},{}
 25209,HPAbsorb_Stone_Robe,HPAbsorb Stone (Garment),6,,,100,,,,,,,,,,,,,{ bonus2 bHPDrainRate,20,3; },{},{}
 25210,HPAbsorb_Stone_Top,HPAbsorb Stone (Upper),6,,,100,,,,,,,,,,,,,{ bonus2 bHPDrainRate,20,3; },{},{}
 25223,Para_Team_Coin,Eden Group Coin,3,0,,0,,,,,,,,,,,,,{},{},{}
-25224,WhiteBodyEffect_Middle,WhiteBodyEffect (Middle),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
+25224,WhiteBodyEffect_Middle,WhiteBodyEffect (Middle),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_WHITEBODY2,true; },{},{ hateffect HAT_EF_WHITEBODY2,false; }
 25225,ExplodingEffect_Middle,ExplodingEffect (Middle),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
-25226,WaterFieldEffect_Bottom,WaterFieldEffect (Bottom),6,,,100,,,,,,,,,,,,,{/*TODO*/},{},{}
+25226,WaterFieldEffect_Bottom,WaterFieldEffect (Bottom),6,,,100,,,,,,,,,,,,,{ hateffect HAT_EF_WATER_BELOW,true; },{},{ hateffect HAT_EF_WATER_BELOW,false; }
 25227,Heal_Stone_Bottom,Heal Stone (Bottom),6,,,100,,,,,,,,,,,,,{ skill "AL_HEAL",1; },{},{}
 25228,Teleport_Stone_Bottom,Teleport Stone (Bottom),6,,,100,,,,,,,,,,,,,{ skill "AL_TELEPORT",1; },{},{}
 25229,Steal_Stone_Bottom,Steal Stone (Bottom),6,,,100,,,,,,,,,,,,,{ skill "TF_STEAL",1; },{},{}
@@ -13029,7 +13029,7 @@
 29151,Aquarius_Stone,Aquarius Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bVit,1; },{},{}
 29152,Scorpio_Stone,Scorpio Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bDex,1; },{},{}
 29153,Taurus_Stone,Taurus Stone,6,10,,0,,,,,0xFFFFFFFF,63,2,64,,,,,{ bonus bLuk,1; },{},{}
-29160,BlueAura_Effect,Blue Aura Effect 이펙트,6,,,0,,,,,,,,,,,,,{/*TODO*/},{},{}
+29160,BlueAura_Effect,Blue Aura Effect,6,,,0,,,,,,,,,,,,,{ hateffect HAT_EF_GUMGANG,true; },{},{ hateffect HAT_EF_GUMGANG,false; }
 //
 29423,SuraStone_Top_,Champion Stone (Upper),6,,,0,,,,,,,,,,,,,{ bonus bBaseAtk,getskilllv("MO_IRONHAND")*2; },{},{}
 29424,SuraStone_Middle_,Champion Stone (Middle),6,,,0,,,,,,,,,,,,,{ bonus bHit,getskilllv("MO_DODGE")*2; },{},{}
