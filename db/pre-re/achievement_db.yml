@@ -2288,20 +2288,6 @@ Body:
     #    MobID: 2398
     #    Count: 1
     Score: 10
-  - ID: 230110
-    Group: "AG_TAMING"
-    Name: "Entomologist"
-    Dependent:
-      - Id: 230111
-      - Id: 230112
-      - Id: 230113
-      - Id: 230114
-      - Id: 230115
-      - Id: 230116
-    Reward:
-      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
-      TitleID: 1026
-    Score: 50
   - ID: 230111
     Group: "AG_TAMING"
     Name: "Chonchon - taming"
@@ -2350,22 +2336,6 @@ Body:
         MobID: 1077
         Count: 1
     Score: 10
-  - ID: 230120
-    Group: "AG_TAMING"
-    Name: "Animals are also our friend"
-    Dependent:
-      - Id: 230121
-      - Id: 230122
-      - Id: 230123
-      - Id: 230124
-      - Id: 230125
-      - Id: 230126
-      - Id: 230127
-      - Id: 230128
-    Reward:
-      TitleID: 1027
-      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
-    Score: 50
   - ID: 230121
     Group: "AG_TAMING"
     Name: "Lunatic - taming"
@@ -2430,21 +2400,6 @@ Body:
         MobID: 1155
         Count: 1
     Score: 10
-  - ID: 230140
-    Group: "AG_TAMING"
-    Name: "Monster Girls Unite!!"
-    Dependent:
-      - Id: 230141
-      - Id: 230142
-      - Id: 230143
-      - Id: 230144
-      - Id: 230145
-      - Id: 230146
-      - Id: 230147
-    Reward:
-      TitleID: 1029
-      Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
-    Score: 50
   - ID: 230141
     Group: "AG_TAMING"
     Name: "Munak - taming"
