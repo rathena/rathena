@@ -6893,6 +6893,9 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	if (sc && sc->data[SC_WHITEIMPRISON])
 		return 0; // White Imprison does not reflect any damage
 
+	if (sc && sc->data[SC_KYOMU] && (!ssc || !ssc->data[SC_SHIELDSPELL_DEF])) // Nullify reflecting ability except for Shield Spell - Def
+		return 0;
+
 	if (flag & BF_SHORT) {//Bounces back part of the damage.
 		if ( (skill_get_inf2(skill_id)&INF2_TRAP || !status_reflect) && sd && sd->bonus.short_weapon_damage_return )
 			rdamage += damage * sd->bonus.short_weapon_damage_return / 100;
@@ -6953,16 +6956,13 @@ int64 battle_calc_return_damage(struct block_list* bl, struct block_list *src, i
 	if (ssc && ssc->data[SC_INSPIRATION])
 		rdamage += damage / 100;
 
-	if (sc && sc->data[SC_KYOMU] && (!ssc || !ssc->data[SC_SHIELDSPELL_DEF])) // Nullify reflecting ability except for Shield Spell - Def
-		return 0;
-
 	if (sc && sc->data[SC_MAXPAIN])
 		rdamage += damage * sc->data[SC_MAXPAIN]->val1 * 10 / 100;
 
 #ifdef RENEWAL
-	return cap_value(rdamage, 1, max_damage);
+		return cap_value(rdamage, 0, max_damage);
 #else
-	return i64max(rdamage, 1);
+		return i64max(rdamage, 0);
 #endif
 }
 
