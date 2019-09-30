@@ -187,7 +187,14 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			condition = "achievement_condition( " + condition + " );";
 		}
 
+		if( achievement->condition ){
+			aFree( achievement->condition );
+			achievement->condition = nullptr;
+		}
+
 		achievement->condition = parse_script( condition.c_str(), this->getCurrentFile().c_str(), node["Condition"].Mark().line + 1, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+	}else{
+		achievement->condition = nullptr;
 	}
 
 	if( this->nodeExists( node, "Map" ) ){
@@ -270,7 +277,14 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 				return 0;
 			}
 
+			if( achievement->rewards.script ){
+				aFree( achievement->rewards.script );
+				achievement->rewards.script = nullptr;
+			}
+
 			achievement->rewards.script = parse_script( script.c_str(), this->getCurrentFile().c_str(), achievement_id, SCRIPT_IGNORE_EXTERNAL_BRACKETS );
+		}else{
+			achievement->rewards.script = nullptr;
 		}
 
 		// TODO: not camel case
