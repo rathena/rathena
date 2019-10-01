@@ -43,6 +43,7 @@ struct s_item_synthesis_db {
 
 	bool sourceExists(uint32 source_id);
 	bool checkRequirement(map_session_data *sd, const std::vector<s_item_synthesis_list> items);
+	bool deleteRequirement(map_session_data *sd, const std::vector<s_item_synthesis_list> items);
 };
 
 class ItemSynthesisDatabase : public TypesafeYamlDatabase<uint32, s_item_synthesis_db> {

@@ -526,8 +526,6 @@
 	export_parameter(KAFRAPOINT_VAR, SP_KAFRAPOINTS);
 	export_parameter(PCDIECOUNTER_VAR, SP_PCDIECOUNTER);
 	export_parameter(COOKMASTERY_VAR, SP_COOKMASTERY);
-	export_parameter("LapineUpgradeItem", SP_LAST_LAPINE_UPGRADE_ITEM);
-	export_parameter("LapineUpgradeIndex", SP_LAST_LAPINE_UPGRADE_INDEX);
 
 	export_constant2("bMaxHP",SP_MAXHP);
 	export_constant2("bMaxSP",SP_MAXSP);

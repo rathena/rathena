@@ -99,9 +99,9 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 }
 
 /*
-* Attempt to open synthesis UI for a player
+* Attempt to open upgrade UI for a player
 * @param sd Open UI for this player
-* @param itemid ID of synthesis UI
+* @param itemid ID of upgrade UI
 * @return True on succes, false on failure
 */
 bool item_upgrade_open(map_session_data *sd, unsigned int itemid) {
@@ -133,6 +133,13 @@ bool item_upgrade_open(map_session_data *sd, unsigned int itemid) {
 	return true;
 }
 
+/*
+* Process selected item from player's input
+* @param sd Player
+* @param source_itemid Item ID of source item to open Upgrade UI
+* @param target_index Index of target item in player's inventory
+* @return LAPINE_UPRAGDE_SUCCESS on success. @see e_item_upgrade_result
+*/
 e_item_upgrade_result item_upgrade_submit(map_session_data *sd, unsigned int source_itemid, uint16 target_index) {
 	nullpo_retr(LAPINE_UPRAGDE_FAILURE, sd);
 
@@ -146,7 +153,7 @@ e_item_upgrade_result item_upgrade_submit(map_session_data *sd, unsigned int sou
 	if (target_index >= MAX_INVENTORY || !sd->inventory_data[target_index] || !(it = &sd->inventory.u.items_inventory[target_index]))
 		return LAPINE_UPRAGDE_FAILURE;
 
-	if (it->expire_time || it->equip)
+	if (it->expire_time || it->equip || it->identify != 1)
 		return LAPINE_UPRAGDE_FAILURE;
 
 	auto info = item_upgrade_db.find(source_itemid);
@@ -154,35 +161,7 @@ e_item_upgrade_result item_upgrade_submit(map_session_data *sd, unsigned int sou
 	if (!info || !info->targetExists(it->nameid) || !info->checkRequirement(it, sd->inventory_data[target_index]))
 		return LAPINE_UPRAGDE_FAILURE;
 
-	pc_setparam(sd, SP_LAST_LAPINE_UPGRADE_ITEM, it->nameid);
-	pc_setparam(sd, SP_LAST_LAPINE_UPGRADE_INDEX, target_index);
-
-	pc_setreg(sd, add_str("@last_lapine_id"), it->nameid);
-	pc_setreg(sd, add_str("@last_lapine_idx"), target_index);
-	pc_setreg(sd, add_str("@last_lapine_refine"), it->refine);
-	pc_setreg(sd, add_str("@last_lapine_identify"), it->identify);
-	pc_setreg(sd, add_str("@last_lapine_attribute"), it->attribute);
-	pc_setreg(sd, add_str("@last_lapine_card1"), it->card[0]);
-	pc_setreg(sd, add_str("@last_lapine_card2"), it->card[1]);
-	pc_setreg(sd, add_str("@last_lapine_card3"), it->card[2]);
-	pc_setreg(sd, add_str("@last_lapine_card4"), it->card[3]);
-	pc_setreg(sd, add_str("@last_lapine_expire"), it->expire_time);
-	pc_setreg(sd, add_str("@last_lapine_bound"), it->bound);
-
-	char unique_id[23];
-	memset(unique_id, '\0', sizeof(unique_id));
-	snprintf(unique_id, sizeof(unique_id), "%llu", (unsigned long long)it->unique_id);
-	pc_setregstr(sd, add_str("@last_lapine_uniqueid$"), unique_id);
-
-	int key_opt_id = 0, key_opt_value = 0, key_opt_param = 0;
-	script_cleararray_pc(sd, "@last_lapine_option_id", (void*)0);
-	script_cleararray_pc(sd, "@last_lapine_option_value", (void*)0);
-	script_cleararray_pc(sd, "@last_lapine_option_param", (void*)0);
-	for (int i = 0; i < MAX_ITEM_RDM_OPT; i++) {
-		script_setarray_pc(sd, "@last_lapine_option_id", i, (void*)(intptr_t)it->option[i].id, &key_opt_id);
-		script_setarray_pc(sd, "@last_lapine_option_value", i, (void*)(intptr_t)it->option[i].value, &key_opt_value);
-		script_setarray_pc(sd, "@last_lapine_option_param", i, (void*)(intptr_t)it->option[i].param, &key_opt_param);
-	}
+	info->setPlayerInfo(sd, target_index, it);
 
 	if (info->delete_target_onsuccess)
 		pc_delitem(sd, target_index, 1, 0, 0, LOG_TYPE_OTHER);
@@ -195,7 +174,7 @@ e_item_upgrade_result item_upgrade_submit(map_session_data *sd, unsigned int sou
 }
 
 /**
-* Loads item_upgrade db
+* Loads lapine upgrade database
 */
 void item_upgrade_read_db(void)
 {
@@ -203,7 +182,7 @@ void item_upgrade_read_db(void)
 }
 
 /**
-* Reloads the achievement database
+* Reloads the lapine upgrade database
 */
 void item_upgrade_db_reload(void)
 {
@@ -212,7 +191,7 @@ void item_upgrade_db_reload(void)
 }
 
 /**
-* Initializes the achievement database
+* Initializes the lapine upgrade database
 */
 void do_init_item_upgrade(void)
 {
@@ -220,7 +199,7 @@ void do_init_item_upgrade(void)
 }
 
 /**
-* Finalizes the achievement database
+* Finalizes the lapine upgrade database
 */
 void do_final_item_upgrade(void) {
 	item_upgrade_db.clear();
@@ -249,6 +228,11 @@ s_item_upgrade_db::~s_item_upgrade_db()
 	}
 }
 
+/*
+* Check if submitted target item is valid
+* @param target_id Item ID of target item
+* @return True if exist, false if not
+*/
 bool s_item_upgrade_db::targetExists(uint32 target_id)
 {
 	if (this->targets.empty())
@@ -257,7 +241,13 @@ bool s_item_upgrade_db::targetExists(uint32 target_id)
 	return (target != this->targets.end());
 }
 
-bool s_item_upgrade_db::checkRequirement(item * it, item_data *id)
+/*
+* Check if the target item is valid
+* @param it Target item
+* @param id Item data
+* @return True if valid, false if invalid
+*/
+bool s_item_upgrade_db::checkRequirement(item *it, item_data *id)
 {
 	if (this->source_refine_min > it->refine)
 		return false;
@@ -280,4 +270,39 @@ bool s_item_upgrade_db::checkRequirement(item * it, item_data *id)
 	}
 
 	return true;
+}
+
+/*
+* Set variables for player on success upgrade process
+* @param sd Player
+* @param target_index Index of player's inventory items as upgrade target
+* @param it Latest item data
+*/
+void s_item_upgrade_db::setPlayerInfo(map_session_data * sd, uint16 target_index, item *it)
+{
+	pc_setreg(sd, add_str("@last_lapine_id"), it->nameid);
+	pc_setreg(sd, add_str("@last_lapine_idx"), target_index);
+	pc_setreg(sd, add_str("@last_lapine_refine"), it->refine);
+	pc_setreg(sd, add_str("@last_lapine_attribute"), it->attribute);
+	pc_setreg(sd, add_str("@last_lapine_card1"), it->card[0]);
+	pc_setreg(sd, add_str("@last_lapine_card2"), it->card[1]);
+	pc_setreg(sd, add_str("@last_lapine_card3"), it->card[2]);
+	pc_setreg(sd, add_str("@last_lapine_card4"), it->card[3]);
+	pc_setreg(sd, add_str("@last_lapine_bound"), it->bound);
+
+	char unique_id[23];
+	memset(unique_id, '\0', sizeof(unique_id));
+	snprintf(unique_id, sizeof(unique_id), "%llu", (unsigned long long)it->unique_id);
+	pc_setregstr(sd, add_str("@last_lapine_uniqueid$"), unique_id);
+
+	int key_opt_id = 0, key_opt_value = 0, key_opt_param = 0;
+	script_cleararray_pc(sd, "@last_lapine_option_id", (void*)0);
+	script_cleararray_pc(sd, "@last_lapine_option_value", (void*)0);
+	script_cleararray_pc(sd, "@last_lapine_option_param", (void*)0);
+
+	for (int i = 0; i < MAX_ITEM_RDM_OPT; i++) {
+		script_setarray_pc(sd, "@last_lapine_option_id", i, (void*)(intptr_t)it->option[i].id, &key_opt_id);
+		script_setarray_pc(sd, "@last_lapine_option_value", i, (void*)(intptr_t)it->option[i].value, &key_opt_value);
+		script_setarray_pc(sd, "@last_lapine_option_param", i, (void*)(intptr_t)it->option[i].param, &key_opt_param);
+	}
 }

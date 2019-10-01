@@ -50,6 +50,10 @@
 	#define OFFICIAL_GUILD_STORAGE
 #endif
 
+#if PACKETVER >= 20160525
+	#define FEATURE_LAPINE_UI
+#endif
+
 #ifndef DUMP_UNKNOWN_PACKET
 	//#define DUMP_UNKNOWN_PACKET
 #endif

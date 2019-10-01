@@ -10067,7 +10067,7 @@ ACMD_FUNC(resurrect) {
 ACMD_FUNC(synthesisui) {
 	nullpo_retr(-1, sd);
 
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	unsigned int itemid;
 	if (sscanf(message, "%u", &itemid) < 1) {
 		clif_displaymessage(fd, "Please input itemid of synthesis id.");
@@ -10083,7 +10083,7 @@ ACMD_FUNC(synthesisui) {
 ACMD_FUNC(upgradeui) {
 	nullpo_retr(-1, sd);
 
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	unsigned int itemid;
 	if (sscanf(message, "%u", &itemid) < 1) {
 		clif_displaymessage(fd, "Please input itemid of upgrade id.");

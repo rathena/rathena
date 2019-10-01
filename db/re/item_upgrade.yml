@@ -56,7 +56,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Ancient_Hero_Bravery", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 100025 # Ancient_Hero_Wisdom, 영웅의 무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -94,7 +94,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Ancient_Hero_Wisdom", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 100003 # ILL_Piece_A, 4레벨 일루전 무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -127,7 +127,7 @@ Body:
   Result: |
     callfunc("F_Lapine_ILL_Piece_A", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 100004 # ILL_Piece_B, 4레벨 일루전 무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -160,7 +160,7 @@ Body:
   Result: |
     callfunc("F_Lapine_ILL_Piece_B", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 9550 # Gemstone_Of_Time, 시간의 갑옷 6종
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -175,7 +175,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Gemstone_Of_Time", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 9551 # Time_Unseal_Key, 시간의 망토 6종
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -190,7 +190,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Time_Unseal_Key", .@opts[0], .@vals[0]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23815 # Magma_Essence, 라바 레더 갑옷 장비
   NeedRefineMin: 0
   NeedOptionNumMin: 2
@@ -202,7 +202,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Magma_Essence", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2], .@opts[3]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23776 # EP17_1_SPC05, OS무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -227,7 +227,7 @@ Body:
   Result: |
     callfunc("F_Lapine_EP17_1_SPC05", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23777 # EP17_1_SPC06, OS무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -252,7 +252,7 @@ Body:
   Result: |
     callfunc("F_Lapine_EP17_1_SPC06", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23778 # EP17_1_SPC07, OS무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -277,7 +277,7 @@ Body:
   Result: |
     callfunc("F_Lapine_EP17_1_SPC07", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23779 # EP17_1_SPC08, OS무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -302,7 +302,7 @@ Body:
   Result: |
     callfunc("F_Lapine_EP17_1_SPC08", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23780 # EP17_1_SPC09, OS무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -327,7 +327,7 @@ Body:
   Result: |
     callfunc("F_Lapine_EP17_1_SPC09", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23781 # EP17_1_SPC10, OS무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -352,7 +352,7 @@ Body:
   Result: |
     callfunc("F_Lapine_EP17_1_SPC10", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23706 # Charleston_Parts_W, 찰스턴 업그레이드 부품(물리)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -368,7 +368,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Charleston_Parts_W", .@opts[0], .@vals[0]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23707 # Charleston_Parts_R, 찰스턴 업그레이드 부품(원거리)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -384,7 +384,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Charleston_Parts_R", .@opts[0], .@vals[0]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23678 # Gray_Charcoal_Range, 타노스 원거리 무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -404,7 +404,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Gray_Charcoal_Range", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23677 # Gray_Charcoal_Magic, 타노스 마법 무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -419,7 +419,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Gray_Charcoal_Magic", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23676 # Gray_Charcoal_Melee, 타노스 근거리 무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -439,7 +439,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Gray_Charcoal_Melee", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23679 # Geffen_Magic_Scroll2, 게펜 마법 대회 액세서리 (accessory)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -450,7 +450,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Geffen_Magic_Scroll2", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23675 # Geffen_Magic_Scroll, 게펜 마법 대회 갑옷 (armor)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -461,7 +461,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Geffen_Magic_Scroll", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23546 # Cursed_Blood, 피빛의 기사의 방패
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -471,7 +471,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Cursed_Blood", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23547 # Gold_Statue, 정화된 기사의 방패
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -481,7 +481,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Gold_Statue", .@opts[0], .@vals[0], .@opts[1], .@vals[1], .@opts[2], .@vals[2]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23436 # Shadow_Refine_Hammer, 쉐도우 아이템
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -955,7 +955,7 @@ Body:
   - Item: 24475 #S_Arms_Earing
   Result: |
     callfunc("F_Lapine_Shadow_Refine_Hammer", .@refine);
-    getitem2(LapineUpgradeItem,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
 - Id: 23926 # Shadow_9_Refine_Hammer, 쉐도우 아이템
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1429,7 +1429,7 @@ Body:
   - Item: 24475 #S_Arms_Earing
   Result: |
     callfunc("F_Lapine_Shadow_9_Refine_Hammer", .@refine);
-    getitem2(LapineUpgradeItem,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
 - Id: 23311 # 마법고양이손, 새끼 고양이 헤드드레스 (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1439,7 +1439,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Magic_Cat_Hand", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
 - Id: 23289 # 사탕축복스크롤_물리, 사탕 주머니 가방(물리) (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1449,7 +1449,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_W", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23290 # 사탕축복스크롤_원거리, 사탕 주머니 가방(원거리) (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1459,7 +1459,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_R", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23291 # 사탕축복스크롤_마법, 사탕 주머니 가방(마법) (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1469,7 +1469,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Candy_Pouch_Blessing_Scroll_M", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23100 # 건슬링거두루마리, 늘어진 건슬링거 (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1479,7 +1479,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Grown_Gunslinger", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 23229 # 타락천사날개초기화권, 타락천사의 날개 (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1491,7 +1491,7 @@ Body:
     if (@last_lapine_card1) {
         getitem(@last_lapine_card1,1);
     }
-    getitem2(LapineUpgradeItem,1,1,0,0,0,0,0,0);
+    getitem2(@last_lapine_id,1,1,0,0,0,0,0,0);
 - Id: 23175 # 제복수선키트, 카프라 제복 (rdata.grf)
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1501,7 +1501,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Uniform_Repair_Kits", .@opts[0], .@vals[0], .@opts[1], .@vals[1]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,0,0,0,0,0,0,.@opts,.@vals,.@params);
 - Id: 23720 # Shadow_Random_Mix, "+7 쉐도우 아이템"
   NeedRefineMin: 7
   NeedOptionNumMin: 0
@@ -1886,7 +1886,7 @@ Body:
   Result: |
     callfunc("F_Lapine_Shadow_Random_Mix", .@opts[0], .@vals[0]);
     .@params[0] = 0;
-    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 - Id: 100043 # Boost_Up_1, 부스터 방어구
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1906,7 +1906,7 @@ Body:
   - Item: 470002 #Defn_Shoes
   Result: |
     callfunc("F_Lapine_Boost_Up_1", .@refine);
-    getitem2(LapineUpgradeItem,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
 - Id: 100044 # Boost_Up_2, 부스팅 무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1932,7 +1932,7 @@ Body:
   - Item: 550002 #Boost_Foxtail
   Result: |
     callfunc("F_Lapine_Boost_Up_2", .@refine);
-    getitem2(LapineUpgradeItem,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
 - Id: 9523 # Metal_Rifine_Ticket, 메탈 무기
   NeedRefineMin: 0
   NeedOptionNumMin: 0
@@ -1952,7 +1952,7 @@ Body:
   - Item: 26111 #메탈강아지풀
   Result: |
     callfunc("F_Lapine_Metal_Rifine_Ticket", .@refine);
-    getitem2(LapineUpgradeItem,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
 #- Id: 100128 # Noblesse_Rifine_Ticket, 노블레스 아이템
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2000,7 +2000,7 @@ Body:
 #  - Item: 480014 # Noblesse_Magic_Manteau
 #  Result: |
 #    callfunc("F_Lapine_Noblesse_Refine_Ticket", .@refine);
-#    getitem2(LapineUpgradeItem,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+#    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
 #- Id: 100129 # Imperial_Rifine_Ticket, 임페리얼 아이템
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2048,7 +2048,7 @@ Body:
 #  - Item: 480017 # Imperial_Magic_Manteau
 #  Result: |
 #    callfunc("F_Lapine_Imperial_Refine_Ticket", .@refine);
-#    getitem2(LapineUpgradeItem,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+#    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
 #- Id: 100130 # Grace_Rifine_Ticket, 그레이스 아이템
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2096,7 +2096,7 @@ Body:
 #  - Item: 480019 # Grace_Magic_Manteau
 #  Result: |
 #    callfunc("F_Lapine_Grace_Refine_Ticket", .@refine);
-#    getitem2(LapineUpgradeItem,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
+#    getitem2(@last_lapine_id,1,1,.@refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4);
 #- Id: 100131 # Imperial_Convert1, 임페리얼 망토
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2107,7 +2107,7 @@ Body:
 #  Result: |
 #    callfunc("F_Lapine_Imperial_Convert1", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100132 # Imperial_Convert2, 임페리얼 망토
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2118,7 +2118,7 @@ Body:
 #  Result: |
 #    callfunc("F_Lapine_Imperial_Convert2", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100135 # Imperial_Convert3, 임페리얼 갑옷
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2163,7 +2163,7 @@ Body:
 #  Result: |
 #    callfunc("F_Lapine_Imperial_Convert3", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100136 # Imperial_Convert4, 임페리얼 갑옷
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2208,7 +2208,7 @@ Body:
 #  Result: |
 #    callfunc("F_Lapine_Imperial_Convert4", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100133 # Grace_Convert1, 그레이스 망토
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2219,7 +2219,7 @@ Body:
 #  Result: |
 #    callfunc("F_Lapine_Grace_Convert1", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100134 # Grace_Convert2, 그레이스 망토
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2230,7 +2230,7 @@ Body:
 #  Result: |
 #    callfunc("F_Lapine_Grace_Convert2", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100137 # Grace_Convert3, 그레이스 갑옷
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2275,7 +2275,7 @@ Body:
 #  Result: |
 #    callfunc("F_Lapine_Grace_Convert3", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100138 # Grace_Convert4, 그레이스 갑옷
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2320,7 +2320,7 @@ Body:
 #  Result: |
 #    callfunc("F_Lapine_Grace_Convert4", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 9514 # Ein_Ddbox, 물리 개조 시스템
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2348,7 +2348,7 @@ Body:
 #    // TODO
 #    callfunc("F_Lapine_Ein_Ddbox", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 9529 # Ein_Ddbox2, 마법 개조 시스템
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2376,7 +2376,7 @@ Body:
 #    // TODO
 #    callfunc("F_Lapine_Ein_Ddbox2", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 23981 # Abyss_Ddbox, 소용돌이 치는 용의 힘
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2392,7 +2392,7 @@ Body:
 #    // TODO
 #    callfunc("F_Lapine_Abyss_Ddbox", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100142 # Abyss_Ddbox2, 안정된 용의 힘
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2408,7 +2408,7 @@ Body:
 #    // TODO
 #    callfunc("F_Lapine_Abyss_Ddbox2", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100144 # Abyss_Ddbox3, 불타는 용의 힘
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2419,7 +2419,7 @@ Body:
 #    // TODO
 #    callfunc("F_Lapine_Abyss_Ddbox3", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
 #- Id: 100145 # Abyss_Ddbox4, 뜨거운 용의 힘
 #  NeedRefineMin: 0
 #  NeedOptionNumMin: 0
@@ -2430,4 +2430,4 @@ Body:
 #    // TODO
 #    callfunc("F_Lapine_Abyss_Ddbox4", .@opts[0], .@vals[0]);
 #    .@params[0] = 0;
-#    getitem3(LapineUpgradeItem,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);
+#    getitem3(@last_lapine_id,1,1,@last_lapine_refine,0,@last_lapine_card1,@last_lapine_card2,@last_lapine_card3,@last_lapine_card4,.@opts,.@vals,.@params);

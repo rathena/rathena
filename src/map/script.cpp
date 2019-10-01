@@ -24416,12 +24416,14 @@ BUILDIN_FUNC(getvariableofinstance)
 * synthesisui(<id>);
 */
 BUILDIN_FUNC(synthesisui) {
+#ifdef FEATURE_LAPINE_UI
 	TBL_PC *sd;
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 	script_pushint(st, item_synthesis_open(sd, script_getnum(st, 2)));
+#endif
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -24429,12 +24431,14 @@ BUILDIN_FUNC(synthesisui) {
 * upgradeui(<id>);
 */
 BUILDIN_FUNC(upgradeui) {
+#ifdef FEATURE_LAPINE_UI
 	TBL_PC *sd;
 	if (!script_charid2sd(3, sd)) {
 		script_pushint(st, 0);
 		return SCRIPT_CMD_FAILURE;
 	}
 	script_pushint(st, item_upgrade_open(sd, script_getnum(st, 2)));
+#endif
 	return SCRIPT_CMD_SUCCESS;
 }
 

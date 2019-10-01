@@ -20893,13 +20893,24 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 #endif
 }
 
+/*
+* Reset Lapine UI variables
+* @param sd Player
+*/
 static void clif_lapine_ui_reset(map_session_data *sd) {
 	sd->state.lapine_ui = 0;
 	sd->last_lapine_box = 0;
 }
 
+/*
+* Open Lapine Synthesis UI
+* @param sd Player
+* @param itemid ID for synthesis item
+* 0A4E <itemid>.W (ZC_LAPINE_SYNTHESIS_OPEN)
+* 0A4E <itemid>.L (ZC_LAPINE_SYNTHESIS_OPEN PACKETVER >= 20181121)
+*/
 bool clif_synthesisui_open(struct map_session_data *sd, unsigned int itemid) {
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	nullpo_retr(false, sd);
 
 	unsigned char buf[8] = { '\0' };
@@ -20926,8 +20937,14 @@ bool clif_synthesisui_open(struct map_session_data *sd, unsigned int itemid) {
 #endif
 }
 
+/*
+* Send Lapine Synthesis result to player
+* @param sd Player
+* @param result @see e_item_synthesis_result
+* 0A50 <result>.W (ZC_LAPINE_SYNTHESIS_RESULT)
+*/
 void clif_synthesisui_result(struct map_session_data *sd, e_item_synthesis_result result) {
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	nullpo_retv(sd);
 
 	unsigned char buf[4] = { '\0' };
@@ -20949,8 +20966,15 @@ void clif_synthesisui_result(struct map_session_data *sd, e_item_synthesis_resul
 #endif
 }
 
+/*
+* Received selected items from Lapine Synthesis UI
+* @param fd
+* @param sd
+* 0A4F <length>.W <itemid>.W { <index>.W <count>.W }.*4B (CZ_LAPINE_SYNTHESIS_ACK)
+* 0A4F <length>.W <itemid>.L { <index>.W <count>.W }.*4B (CZ_LAPINE_SYNTHESIS_ACK PACKETVER >= 20181121)
+*/
 void clif_parse_lapineSynthesis_submit(int fd, struct map_session_data* sd) {
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	nullpo_retv(sd);
 
 	if (pc_istrading(sd)) {
@@ -21017,15 +21041,28 @@ void clif_parse_lapineSynthesis_submit(int fd, struct map_session_data* sd) {
 #endif
 }
 
+/*
+* Close Lapine Synthesis UI
+* @param fd
+* @param sd
+* 0A70 CZ_LAPINE_SYNTHESIS_CLOSE
+*/
 void clif_parse_lapineSynthesis_close(int fd, struct map_session_data* sd) {
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	nullpo_retv(sd);
 	clif_lapine_ui_reset(sd);
 #endif
 }
 
+/*
+* Open Lapine Upgrade UI
+* @param sd Player
+* @param itemid ID for upgrade item
+* 0AB4 <itemid>.W (ZC_LAPINE_UPGRADE_OPEN)
+* 0AB4 <itemid>.L (ZC_LAPINE_UPGRADE_OPEN PACKETVER >= 20181121)
+*/
 bool clif_lapine_upgrade_open(struct map_session_data *sd, unsigned int itemid) {
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	nullpo_retr(false, sd);
 
 	unsigned char buf[8] = { '\0' };
@@ -21052,8 +21089,14 @@ bool clif_lapine_upgrade_open(struct map_session_data *sd, unsigned int itemid) 
 #endif
 }
 
+/*
+* Send Lapine Upgrade result to player
+* @param sd Player
+* @param result @see e_item_upgrade_result
+* 0AB7 <result>.W (ZC_LAPINE_UPGRADE_RESULT)
+*/
 void clif_lapine_upgrade_result(struct map_session_data *sd, e_item_upgrade_result result) {
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	nullpo_retv(sd);
 
 	unsigned char buf[4] = { '\0' };
@@ -21075,8 +21118,15 @@ void clif_lapine_upgrade_result(struct map_session_data *sd, e_item_upgrade_resu
 #endif
 }
 
+/*
+* Received selected item from Lapine Upgrade UI
+* @param fd
+* @param sd
+* 0AB6 <itemid>.W <index>.W (CZ_LAPINE_UPGRADE_ACK)
+* 0AB6 <itemid>.L <index>.W (CZ_LAPINE_UPGRADE_ACK PACKETVER >= 20181121)
+*/
 void clif_parse_lapineUpgrade_submit(int fd, struct map_session_data* sd) {
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	nullpo_retv(sd);
 
 	if (pc_istrading(sd)) {
@@ -21133,8 +21183,14 @@ void clif_parse_lapineUpgrade_submit(int fd, struct map_session_data* sd) {
 #endif
 }
 
+/*
+* Close Lapine Upgrade UI
+* @param fd
+* @param sd
+* 0AB5 CZ_LAPINE_UPGRADE_CLOSE
+*/
 void clif_parse_lapineUpgrade_close(int fd, struct map_session_data* sd) {
-#if PACKETVER >= 20160525
+#ifdef FEATURE_LAPINE_UI
 	nullpo_retv(sd);
 	clif_lapine_ui_reset(sd);
 #endif

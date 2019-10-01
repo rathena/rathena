@@ -148,7 +148,7 @@ bool item_synthesis_open(map_session_data *sd, unsigned int itemid) {
 }
 
 /*
-* Proccess synthesis input from player
+* Process synthesis input from player
 * @param sd Player who request
 * @param itemid ID of synthesis UI
 * @param items Item list sent by player
@@ -167,6 +167,9 @@ e_item_synthesis_result item_synthesis_submit(map_session_data *sd, unsigned int
 	if (!info || !info->checkRequirement(sd, items))
 		return SYNTHESIS_INSUFFICIENT_AMOUNT;
 
+	if (!info->deleteRequirement(sd, items))
+		return SYNTHESIS_INSUFFICIENT_AMOUNT;
+
 	if (info->reward)
 		run_script(info->reward, 0, sd->status.account_id, 0);
 
@@ -175,7 +178,7 @@ e_item_synthesis_result item_synthesis_submit(map_session_data *sd, unsigned int
 }
 
 /**
-* Loads item_synthesis db
+* Loads lapine synthesis database
 */
 void item_synthesis_read_db(void)
 {
@@ -183,7 +186,7 @@ void item_synthesis_read_db(void)
 }
 
 /**
-* Reloads the achievement database
+* Reloads the lapine synthesis database
 */
 void item_synthesis_db_reload(void)
 {
@@ -192,7 +195,7 @@ void item_synthesis_db_reload(void)
 }
 
 /**
-* Initializes the achievement database
+* Initializes the lapine synthesis database
 */
 void do_init_item_synthesis(void)
 {
@@ -200,7 +203,7 @@ void do_init_item_synthesis(void)
 }
 
 /**
-* Finalizes the achievement database
+* Finalizes the lapine synthesis database
 */
 void do_final_item_synthesis(void) {
 	item_synthesis_db.clear();
@@ -228,6 +231,11 @@ s_item_synthesis_db::~s_item_synthesis_db()
 	}
 }
 
+/*
+* Check if the source for synthesis item is exists
+* @param source_id Item ID of source item
+* @return true if source exists, false if doesn't
+*/
 bool s_item_synthesis_db::sourceExists(uint32 source_id)
 {
 	if (this->sources.empty())
@@ -239,6 +247,12 @@ bool s_item_synthesis_db::sourceExists(uint32 source_id)
 	return (source != this->sources.end());
 }
 
+/*
+* Check all submitted items are valid
+* @param sd Player
+* @param items Submitted items by player
+* @return True if all items are valid
+*/
 bool s_item_synthesis_db::checkRequirement(map_session_data *sd, const std::vector<s_item_synthesis_list> items)
 {
 	if (items.empty() || items.size() != this->source_needed)
@@ -254,7 +268,7 @@ bool s_item_synthesis_db::checkRequirement(map_session_data *sd, const std::vect
 		if (!(item = &sd->inventory.u.items_inventory[it.index]) || !(id = sd->inventory_data[it.index]))
 			return false;
 
-		if (item->equip || item->expire_time || item->amount < it.amount)
+		if (item->equip || item->expire_time || item->amount < it.amount || item->identify != 1)
 			return false;
 
 		if (!this->sourceExists(item->nameid))
@@ -265,6 +279,25 @@ bool s_item_synthesis_db::checkRequirement(map_session_data *sd, const std::vect
 
 		if (item->refine > this->source_refine_max)
 			return false;
+	}
+
+	return true;
+}
+
+/*
+* Delete all submitted items for synthesis
+* @param sd Player
+* @param items Submitted items by player
+* @return True if all items are deleted
+*/
+bool s_item_synthesis_db::deleteRequirement(map_session_data *sd, const std::vector<s_item_synthesis_list> items)
+{
+	if (items.empty() || items.size() != this->source_needed)
+		return false;
+
+	for (auto &it : items) {
+		if (it.index >= MAX_INVENTORY)
+			return false;
 
 		if (pc_delitem(sd, it.index, it.amount, 0, 0, LOG_TYPE_OTHER) != 0)
 			return false;
@@ -273,6 +306,10 @@ bool s_item_synthesis_db::checkRequirement(map_session_data *sd, const std::vect
 	return true;
 }
 
+/*
+* Synthesis items constructor.
+* Set default amount to 1
+*/
 s_item_synthesis_source::s_item_synthesis_source()
 	: amount(1)
 {
