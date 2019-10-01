@@ -1375,8 +1375,8 @@
 2160,Giant_Shield,Giant Shield,4,56000,,2800,,130,,1,0x00004082,63,2,32,,100,1,3,{ bonus2 bSubSize,Size_Large,5; if(getrefine()>=9){ bonus2 bSubSize,Size_Large,5; } },{},{}
 2161,Geffenia_Book_Water,Geffenia Tomb of Water,4,56000,,1000,,30,,1,0x00000200,63,2,32,,100,1,5,{ bonus bMdef,2; bonus bInt,1; if(readparam(bInt)>=120){ bonus bMatk,10; bonus bMaxHP,800; } },{},{}
 2162,Bible_Of_Promise2,Bible of Promise(2nd Vol.),4,20,,500,,20,,1,0x00000100,63,2,32,,140,1,5,{ bonus bMdef,5; skill "ALL_ODINS_POWER",2; bonus bHealPower,5; },{},{}
-2163,Flow_Shield,Floor Shield,4,20,,1300,,50,,1,0xFFFFFFFF,63,2,32,,65,1,3,{ bonus2 bSubDefEle,Ele_Water,5; bonus2 bMagicSubDefEle,Ele_Water,5; bonus2 bSubRace,RC_Brute,-5; },{},{}
-2164,Sombre_Shield,Bull Son Shield,4,20,,1300,,50,,1,0xFFFFFFFF,63,2,32,,65,1,3,{ bonus2 bSubDefEle,Ele_Dark,5; bonus2 bMagicSubDefEle,Ele_Dark,5; bonus2 bSubRace,RC_Undead,-5; },{},{}
+2163,Flow_Shield,Flow Shield,4,20,,1300,,50,,1,0xFFFFFFFF,63,2,32,,65,1,3,{ bonus2 bSubDefEle,Ele_Water,5; bonus2 bMagicSubDefEle,Ele_Water,5; bonus2 bSubRace,RC_Brute,-5; },{},{}
+2164,Sombre_Shield,Sombre Shield,4,20,,1300,,50,,1,0xFFFFFFFF,63,2,32,,65,1,3,{ bonus2 bSubDefEle,Ele_Dark,5; bonus2 bMagicSubDefEle,Ele_Dark,5; bonus2 bSubRace,RC_Undead,-5; },{},{}
 2165,Sol_Shield,Sol Shield,4,20,,1300,,50,,1,0xFFFFFFFF,63,2,32,,65,1,3,{ bonus2 bSubDefEle,Ele_Earth,5; bonus2 bMagicSubDefEle,Ele_Earth,5; bonus2 bSubRace,RC_Plant,-5; },{},{}
 2166,Exorcism_Bible_,Devil's Bible Drive,4,20,,600,,80,,1,0x00008100,63,2,32,,50,1,5,{ bonus bInt,1; },{},{}
 2167,Poison_Shield,Poison Shield,4,20,,1300,,50,,1,0xFFFFFFFF,63,2,32,,65,1,3,{ bonus2 bSubDefEle,Ele_Poison,5; bonus2 bMagicSubDefEle,Ele_Poison,5; bonus2 bSubRace,RC_Plant,-5; },{},{}
