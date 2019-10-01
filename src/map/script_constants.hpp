@@ -7174,6 +7174,11 @@
 	export_constant(HAT_EF_WATER_BELOW3);
 	export_constant(HAT_EF_WATER_BELOW4);
 	export_constant(HAT_EF_C_VALKYRIE_WING);
+	export_constant(HAT_EF_2019RTC_CELEAURA_TW);
+	export_constant(HAT_EF_2019RTC1ST_TW);
+	export_constant(HAT_EF_2019RTC2ST_TW);
+	export_constant(HAT_EF_2019RTC3ST_TW);
+	export_constant(HAT_EF_CONS_OF_WIND);
 
 	/* pet catch */
 	export_constant(PET_CATCH_UNIVERSAL);
