@@ -5954,6 +5954,23 @@
 	export_constant_npc(JT_4_PIGOCTO);
 	export_constant_npc(JT_4_ORK_HERO);
 	export_constant_npc(JT_4_JP_16TH);
+	export_constant_npc(JT_4_EP17_MASTER_A);
+	export_constant_npc(JT_4_EP17_BASIC_B);
+	export_constant_npc(JT_4_EP17_GUARD_B);
+	export_constant_npc(JT_4_EP17_BASIC_B_NG);
+	export_constant_npc(JT_4_EP17_GUARD_B_NG);
+	export_constant_npc(JT_4_EP17_SWEETY);
+	export_constant_npc(JT_4_EP17_BOY_A);
+	export_constant_npc(JT_4_EP17_BOY_B);
+	export_constant_npc(JT_4_EP17_TAMARIN);
+	export_constant_npc(JT_4_EP17_SCISSORE);
+	export_constant_npc(JT_4_EP17_TABLET);
+	export_constant_npc(JT_4_EP17_BUCKETS);
+	export_constant_npc(JT_4_EP17_CLEANER);
+	export_constant_npc(JT_4_EP17_BASKET);
+	export_constant_npc(JT_4_EP17_BROKENBETA);
+	export_constant_npc(JT_4_EP17_CLEANER_W);
+	export_constant_npc(JT_4_EP17_MERMAID);
 	export_constant_npc(JT_NEW_NPC_3RD_END);
 	#undef export_constant_npc
 
