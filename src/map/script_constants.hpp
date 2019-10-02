@@ -1534,7 +1534,7 @@
 	export_constant(SC_NEWMOON);
 	export_constant(SC_STARSTANCE);
 	export_constant(SC_DIMENSION);
-	export_constant(SC_DIMENSION);
+	export_constant(SC_DIMENSION1);
 	export_constant(SC_DIMENSION2);
 	export_constant(SC_CREATINGSTAR);
 	export_constant(SC_FALLINGSTAR);
