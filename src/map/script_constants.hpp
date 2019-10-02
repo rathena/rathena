@@ -4190,7 +4190,7 @@
 	export_constant(UELE_TARGETID);
 
 	/* unit control - NPC */
-	export_deprecated_constant3("UNPC_DISPLAY", NPC_CLASS, "NPC_CLASS");
+	export_deprecated_constant3("UNPC_DISPLAY", UNPC_CLASS, "UNPC_CLASS");
 	export_constant(UNPC_LEVEL);
 	export_constant(UNPC_HP);
 	export_constant(UNPC_MAXHP);
