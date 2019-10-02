@@ -23808,7 +23808,7 @@ BUILDIN_FUNC(achievementexists) {
 		}
 	}
 
-	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
+	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id && sd->achievement_data.achievements[i].completed > 0 );
 	script_pushint(st, i < sd->achievement_data.count ? true : false);
 	return SCRIPT_CMD_SUCCESS;
 }
