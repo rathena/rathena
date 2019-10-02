@@ -891,9 +891,28 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			break;
 	}
 
-	if (isNew) {
-		if (!(entry = achievement_add(sd, ad->achievement_id)))
-			return false; // Failed to add achievement
+	if( isNew ){
+		// Always add the achievement if it was completed
+		bool hasCounter = complete;
+
+		// If it was not completed
+		if( !hasCounter ){
+			// Check if it has a counter
+			for( int counter : current_count ){
+				if( counter != 0 ){
+					hasCounter = true;
+					break;
+				}
+			}
+		}
+
+		if( hasCounter ){
+			if( !( entry = achievement_add( sd, ad->achievement_id ) ) ){
+				return false; // Failed to add achievement
+			}
+		}else{
+			changed = false;
+		}
 	}
 
 	if (changed) {
