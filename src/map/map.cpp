@@ -2102,6 +2102,7 @@ int map_quit(struct map_session_data *sd) {
 		status_change_end(&sd->bl, SC_EQC, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SPRITEMABLE, INVALID_TIMER);
 		status_change_end(&sd->bl, SC_SV_ROOTTWIST, INVALID_TIMER);
+		status_change_end(&sd->bl, SC_SOULCOLLECT, INVALID_TIMER);
 		// Remove visuals effect from headgear
 		status_change_end(&sd->bl, SC_MOONSTAR, INVALID_TIMER); 
 		status_change_end(&sd->bl, SC_SUPER_STAR, INVALID_TIMER); 
@@ -2145,6 +2146,18 @@ int map_quit(struct map_session_data *sd) {
 			status_change_end(&sd->bl, SC_GLASTHEIM_STATE, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_ITEMDEF, INVALID_TIMER);
 			status_change_end(&sd->bl, SC_GLASTHEIM_HPSP, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULGOLEM, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULSHADOW, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFALCON, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SOULFAIRY, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_SCRESIST, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCMHPRATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCMSPRATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCALLSTATUS, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCDEFRATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCATKRATE, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCHIT, INVALID_TIMER);
+			status_change_end(&sd->bl, SC_INCFLEE, INVALID_TIMER);
 		}
 	}
 
