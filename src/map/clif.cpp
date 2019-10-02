@@ -20760,9 +20760,9 @@ void clif_parse_equipswitch_remove( int fd, struct map_session_data* sd ){
 }
 
 /// Acknowledgement for adding an equip to the equip switch window
-/// 0a98 <index>.W <position.>.L <failure>.L  <= 20170502
-/// 0a98 <index>.W <position.>.L <failure>.W
-void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos, bool failed ){
+/// 0a98 <index>.W <position.>.L <flag>.L  <= 20170502
+/// 0a98 <index>.W <position.>.L <flag>.W
+void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos, uint8 flag ){
 #if PACKETVER >= 20170208
 	int fd = sd->fd;
 
@@ -20771,9 +20771,9 @@ void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos
 	WFIFOW(fd, 2) = index + 2;
 	WFIFOL(fd, 4) = pos;
 #if PACKETVER <= 20170502
-	WFIFOL(fd, 8) = failed;
+	WFIFOL(fd, 8) = flag;
 #else
-	WFIFOW(fd, 8) = failed;
+	WFIFOW(fd, 8) = flag;
 #endif
 	WFIFOSET(fd,packet_len(0xa98));
 #endif
@@ -20795,7 +20795,7 @@ void clif_parse_equipswitch_add( int fd, struct map_session_data* sd ){
 	}
 
 	if( sd->state.trading || sd->npc_shopid ){
-		clif_equipswitch_add( sd, index, position, true );
+		clif_equipswitch_add( sd, index, position, ITEM_EQUIP_ACK_OK );
 		return;
 	}
 
