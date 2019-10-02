@@ -1,0 +1,50 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2019 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Mob Availability and Alias Database
+###########################################################################
+#
+# Mob Availability and Alias Settings
+#
+###########################################################################
+# - Mob                     Mob to adjust
+#   Sprite                  Sprite which will be sent to the client instead of Mob
+#   HairStyle               Hair Style ID (if displayed as a player) (Default: 0)
+#   HairColor               Hair Color ID (if displayed as a player) (Default: 0)
+#   ClothColor              Cloth Color ID (if displayed as a player) (Default: 0)
+#   Weapon                  Item name of weapon (if displayed as a player) (Default: 0)
+#   Shield                  Item name of shield (if displayed as a player) (Default: 0)
+#   HeadTop                 Item name of headgear (if displayed as a player) (Default: 0)
+#   HeadMid                 Item name of headgear (if displayed as a player) (Default: 0)
+#   HeadLow                 Item name of headgear (if displayed as a player) (Default: 0)
+#   PetEquip                Item name of pet equipment (if Id is a valid pet) (Default: 0)
+#   Options:                Set an option for an object (Optional)
+#     - OptionState: bool
+###########################################################################
+
+Header:
+  Type: MOB_AVAIL_DB
+  Version: 1
+
+Footer:
+  Imports:
+  - Path: db/pre-re/mob_avail.yml
+    Mode: Prerenewal
+  - Path: db/re/mob_avail.yml
+    Mode: Renewal
+  - Path: db/import/mob_avail.yml

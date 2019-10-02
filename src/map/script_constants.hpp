@@ -4025,6 +4025,8 @@
 	export_constant(UMOB_ADELAY);
 	export_constant(UMOB_DMOTION);
 	export_constant(UMOB_TARGETID);
+	export_constant(UMOB_ROBE);
+	export_constant(UMOB_BODY2);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
@@ -4188,7 +4190,7 @@
 	export_constant(UELE_TARGETID);
 
 	/* unit control - NPC */
-	export_constant(UNPC_DISPLAY);
+	export_deprecated_constant2("UNPC_DISPLAY", -1);
 	export_constant(UNPC_LEVEL);
 	export_constant(UNPC_HP);
 	export_constant(UNPC_MAXHP);
@@ -4221,6 +4223,19 @@
 	export_constant(UNPC_AMOTION);
 	export_constant(UNPC_ADELAY);
 	export_constant(UNPC_DMOTION);
+	export_constant(UNPC_SEX);
+	export_constant(UNPC_CLASS);
+	export_constant(UNPC_HAIRSTYLE);
+	export_constant(UNPC_HAIRCOLOR);
+	export_constant(UNPC_HEADBOTTOM);
+	export_constant(UNPC_HEADMIDDLE);
+	export_constant(UNPC_HEADTOP);
+	export_constant(UNPC_CLOTHCOLOR);
+	export_constant(UNPC_SHIELD);
+	export_constant(UNPC_WEAPON);
+	export_constant(UNPC_ROBE);
+	export_constant(UNPC_BODY2);
+	export_constant(UNPC_DEADSIT);
 
 	export_constant(NAV_NONE);
 	export_constant(NAV_AIRSHIP_ONLY);

@@ -118,8 +118,12 @@ struct script_event_s{
 // Holds pointers to the commonly executed scripts for speedup. [Skotlex]
 std::map<enum npce_event, std::vector<struct script_event_s>> script_event;
 
-struct view_data* npc_get_viewdata(int class_)
-{	//Returns the viewdata for normal npc classes.
+/**
+ * Returns the viewdata for normal NPC classes.
+ * @param class_: NPC class ID
+ * @return viewdata or nullptr if the ID is invalid
+ */
+struct view_data* npc_get_viewdata(int class_) {
 	if( class_ == JT_INVISIBLE )
 		return &npc_viewdb[0];
 	if (npcdb_checkid(class_)){
@@ -129,7 +133,7 @@ struct view_data* npc_get_viewdata(int class_)
 			return &npc_viewdb[class_];
 		}
 	}
-	return NULL;
+	return nullptr;
 }
 
 int npc_isnear_sub(struct block_list* bl, va_list args) {
@@ -2582,6 +2586,7 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	nd->sc_display = NULL;
 	nd->sc_display_count = 0;
 	nd->progressbar.timeout = 0;
+	nd->vd.class_ = 0;
 
 	return nd;
 }
@@ -3764,14 +3769,9 @@ void npc_setclass(struct npc_data* nd, short class_)
 	if( nd->class_ == class_ )
 		return;
 
-	struct map_data *mapdata = map_getmapdata(nd->bl.m);
-
-	if( mapdata->users )
-		clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);// fade out
 	nd->class_ = class_;
 	status_set_viewdata(&nd->bl, class_);
-	if( mapdata->users )
-		clif_spawn(&nd->bl);// fade in
+	unit_refresh(&nd->bl);
 }
 
 // @commands (script based)

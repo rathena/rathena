@@ -26,6 +26,7 @@
 
 // Only for constants - do not use functions of it or linking will fail
 #include "../map/mob.hpp" // MAX_MVP_DROP and MAX_MOB_DROP
+#include "../map/pc.hpp"
 
 using namespace rathena;
 
@@ -46,12 +47,46 @@ int getch( void ){
 // Required constant and structure definitions
 #define MAX_GUILD_SKILL_REQUIRE 5
 
+std::unordered_map<uint32, std::string> um_optionnames {
+	{ OPTION_SIGHT, "OPTION_SIGHT" },
+	{ OPTION_CART1, "OPTION_CART1" },
+	{ OPTION_FALCON, "OPTION_FALCON" },
+	{ OPTION_RIDING, "OPTION_RIDING" },
+	{ OPTION_CART2, "OPTION_CART2" },
+	{ OPTION_CART3, "OPTION_CART3" },
+	{ OPTION_CART4, "OPTION_CART4" },
+	{ OPTION_CART5, "OPTION_CART5" },
+	{ OPTION_ORCISH, "OPTION_ORCISH" },
+	{ OPTION_WEDDING, "OPTION_WEDDING" },
+	{ OPTION_RUWACH, "OPTION_RUWACH" },
+	{ OPTION_FLYING, "OPTION_FLYING" },
+	{ OPTION_XMAS, "OPTION_XMAS" },
+	{ OPTION_TRANSFORM, "OPTION_TRANSFORM" },
+	{ OPTION_SUMMER, "OPTION_SUMMER" },
+	{ OPTION_DRAGON1, "OPTION_DRAGON1" },
+	{ OPTION_WUG, "OPTION_WUG" },
+	{ OPTION_WUGRIDER, "OPTION_WUGRIDER" },
+	{ OPTION_MADOGEAR, "OPTION_MADOGEAR" },
+	{ OPTION_DRAGON2, "OPTION_DRAGON2" },
+	{ OPTION_DRAGON3, "OPTION_DRAGON3" },
+	{ OPTION_DRAGON4, "OPTION_DRAGON4" },
+	{ OPTION_DRAGON5, "OPTION_DRAGON5" },
+	{ OPTION_HANBOK, "OPTION_HANBOK" },
+	{ OPTION_OKTOBERFEST, "OPTION_OKTOBERFEST" },
+	{ OPTION_SUMMER2, "OPTION_SUMMER2" },
+	{ OPTION_CART, "OPTION_CART" },
+	{ OPTION_DRAGON, "OPTION_DRAGON" },
+	{ OPTION_COSTUME, "OPTION_COSTUME" },
+};
+
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static size_t pet_read_db( const char* file );
+static bool mob_readdb_mobavail(char *split[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
+std::unordered_map<uint16, uint16> aegis_itemviewid;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
 
@@ -143,6 +178,12 @@ int do_init( int argc, char** argv ){
 	if( !process( "PET_DB", 1, pet_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
+		return 0;
+	}
+
+	if (!process("MOB_AVAIL_DB", 1, guild_skill_tree_paths, "mob_avail", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 12, -1, &mob_readdb_mobavail, false);
+	})) {
 		return 0;
 	}
 
@@ -335,6 +376,11 @@ static bool parse_item_constants( const char* path ){
 		char* name = trim( str[1] );
 
 		aegis_itemnames[item_id] = std::string(name);
+
+		uint16 equip = atoi(str[14]);
+
+		if (equip & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, (uint16)atoi(str[18])) == nullptr)
+			aegis_itemviewid[atoi(str[18])] = item_id;
 
 		count++;
 	}
@@ -590,4 +636,127 @@ static size_t pet_read_db( const char* file ){
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
 
 	return entries;
+}
+
+// Copied and adjusted from mob.cpp
+static bool mob_readdb_mobavail(char* str[], int columns, int current) {
+	YAML::Node node;
+	uint16 mob_id = atoi(str[0]);
+	std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
+
+	if (mob_name == nullptr) {
+		ShowWarning("mob_avail reading: Invalid mob-class %hu, Mob not read.\n", mob_id);
+		return false;
+	}
+
+	node["Mob"] = *mob_name;
+
+	uint16 sprite_id = atoi(str[1]);
+	std::string *sprite_name = util::umap_find(aegis_mobnames, sprite_id);
+
+	if (sprite_name == nullptr) {
+		// !TODO: Add job constant support (currently in item_db2yaml PR)
+		node["Sprite"] = sprite_id;
+	} else
+		node["Sprite"] = *sprite_name;
+
+	if (columns == 12) {
+		node["Sex"] = atoi(str[2]) ? "SEX_MALE" : "SEX_FEMALE";
+		if (atoi(str[3]) != 0)
+			node["HairStyle"] = atoi(str[3]);
+		if (atoi(str[4]) != 0)
+			node["HairColor"] = atoi(str[4]);
+		if (atoi(str[11]) != 0)
+			node["ClothColor"] = atoi(str[11]);
+
+		if (atoi(str[5]) != 0) {
+			uint16 weapon_item_id = atoi(str[5]);
+			std::string *weapon_item_name = util::umap_find(aegis_itemnames, weapon_item_id);
+
+			if (weapon_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (weapon) is not known.\n", weapon_item_id);
+				return false;
+			}
+
+			node["Weapon"] = *weapon_item_name;
+		}
+
+		if (atoi(str[6]) != 0) {
+			uint16 shield_item_id = atoi(str[6]);
+			std::string *shield_item_name = util::umap_find(aegis_itemnames, shield_item_id);
+
+			if (shield_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (shield) is not known.\n", shield_item_id);
+				return false;
+			}
+
+			node["Shield"] = *shield_item_name;
+		}
+
+		if (atoi(str[7]) != 0) {
+			uint16 *headtop_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[7]));
+			std::string *headtop_item_name = util::umap_find(aegis_itemnames, *headtop_item_id);
+
+			if (headtop_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (head top) is not known.\n", *headtop_item_id);
+				return false;
+			}
+
+			node["HeadTop"] = *headtop_item_name;
+		}
+
+		if (atoi(str[8]) != 0) {
+			uint16 *headmid_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[8]));
+			std::string *headmid_item_name = util::umap_find(aegis_itemnames, *headmid_item_id);
+
+			if (headmid_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (head mid) is not known.\n", *headmid_item_id);
+				return false;
+			}
+
+			node["HeadMid"] = *headmid_item_name;
+		}
+
+		if (atoi(str[9]) != 0) {
+			uint16 *headlow_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[9]));
+			std::string *headlow_item_name = util::umap_find(aegis_itemnames, *headlow_item_id);
+
+			if (headlow_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (head low) is not known.\n", *headlow_item_id);
+				return false;
+			}
+
+			node["HeadLow"] = *headlow_item_name;
+		}
+
+		if (atoi(str[10]) != 0) {
+			YAML::Node opt;
+			std::string *option_name = util::umap_find(um_optionnames, (uint32)atoi(str[10]));
+
+			if (option_name == nullptr) {
+				ShowError("Option %d is not known.\n", atoi(str[10]));
+				return false;
+			}
+
+			opt[*option_name] = "true";
+
+			node["Options"][0] = opt;
+		}
+	} else if (columns == 3) {
+		if (atoi(str[5]) != 0) {
+			uint16 peteq_item_id = atoi(str[5]);
+			std::string *peteq_item_name = util::umap_find(aegis_itemnames, peteq_item_id);
+
+			if (peteq_item_name == nullptr) {
+				ShowError("Item name for item ID %hu (pet equip) is not known.\n", peteq_item_id);
+				return false;
+			}
+
+			node["PetEquip"] = *peteq_item_name;
+		}
+	}
+
+	body[counter++] = node;
+
+	return true;
 }

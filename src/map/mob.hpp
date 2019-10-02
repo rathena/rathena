@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "../common/database.hpp"
 #include "../common/mmo.hpp" // struct item
 #include "../common/timer.hpp"
 
@@ -242,6 +243,18 @@ struct mob_data {
 	 **/
 	int tomb_nid;
 };
+
+class MobAvailDatabase : public TypesafeYamlDatabase<uint32, int32> {
+public:
+	MobAvailDatabase() : TypesafeYamlDatabase("MOB_AVAIL_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+extern MobAvailDatabase mob_avail_db;
 
 enum e_mob_skill_target {
 	MST_TARGET	=	0,

@@ -4115,6 +4115,8 @@ static bool mob_parse_dbrow(char** str)
 	status = &entry.status;
 
 	entry.vd.class_ = mob_id;
+	entry.vd.hair_color = MIN_HAIR_COLOR;
+	entry.vd.hair_style = MIN_HAIR_STYLE;
 	safestrncpy(entry.sprite, str[1], sizeof(entry.sprite));
 	safestrncpy(entry.jname, str[2], sizeof(entry.jname));
 	safestrncpy(entry.name, str[3], sizeof(entry.name));
@@ -4347,54 +4349,233 @@ static int mob_read_sqldb(void)
 	return 0;
 }
 
-/*==========================================
- * MOB display graphic change data reading
- *------------------------------------------*/
-static bool mob_readdb_mobavail(char* str[], int columns, int current)
-{
-	int mob_id, sprite_id;
-	struct mob_db *db;
+const std::string MobAvailDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/mob_avail.yml";
+}
 
-	mob_id = atoi(str[0]);
+/**
+ * Reads and parses an entry from the mob_avail.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
+uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string mob_name;
 
-	if( (db=mob_db(mob_id)) == NULL)	// invalid class (probably undefined in db)
-	{
-		ShowWarning("mob_readdb_mobavail: Unknown mob id %d.\n", mob_id);
-		return false;
+	if (!this->asString(node, "Mob", mob_name))
+		return 0;
+
+	uint32 mob_id = mobdb_searchname(mob_name.c_str());
+
+	if (mob_id == 0) {
+		this->invalidWarning(node, "Unknown mob %s.\n", mob_name.c_str());
+		return 0;
 	}
 
-	sprite_id = atoi(str[1]);
+	if (!this->nodeExists(node, "Sprite")) {
+		this->invalidWarning(node, "Sprite value is missing.\n");
+		return 0;
+	}
 
-	memset(&db->vd, 0, sizeof(struct view_data));
-	db->vd.class_ = sprite_id;
+	std::string sprite;
 
-	//Player sprites
-	if(pcdb_checkid(sprite_id) && columns==12) {
-		db->vd.sex=atoi(str[2]);
-		db->vd.hair_style=atoi(str[3]);
-		db->vd.hair_color=atoi(str[4]);
-		db->vd.weapon=atoi(str[5]);
-		db->vd.shield=atoi(str[6]);
-		db->vd.head_top=atoi(str[7]);
-		db->vd.head_mid=atoi(str[8]);
-		db->vd.head_bottom=atoi(str[9]);
-		db->option=atoi(str[10])&~(OPTION_HIDE|OPTION_CLOAK|OPTION_INVISIBLE);
-		db->vd.cloth_color=atoi(str[11]); // Monster player dye option - Valaris
+	if (!this->asString(node, "Sprite", sprite))
+		return 0;
+
+	int constant;
+
+	if (!script_get_constant(sprite.c_str(), &constant) || mobdb_checkid(constant) == 0 || npcdb_checkid(constant) == 0 || pcdb_checkid(constant) == 0) {
+		this->invalidWarning(node, "Unknown sprite %s.\n", sprite);
+		return 0;
+	}
+
+	struct mob_db *mob = mob_db(mob_id);
+
+	mob->vd.class_ = constant;
+
+	if (this->nodeExists(node, "Sex")) {
+		std::string sex;
+
+		if (this->asString(node, "Sex", sex))
+			return 0;
+
+		int constant;
+
+		if (script_get_constant(sex.c_str(), &constant) || constant < SEX_FEMALE || constant > SEX_MALE) {
+			this->invalidWarning(node, "Sex value %s is not a valid type.\n", sex.c_str());
+			return 0;
+		}
+
+		mob->vd.sex = constant;
+	}
+
+	if (this->nodeExists(node, "HairStyle")) {
+		uint16 hair_style;
+
+		if (!this->asUInt16(node, "HairStyle", hair_style))
+			return 0;
+
+		if (hair_style < MIN_HAIR_STYLE || hair_style > MAX_HAIR_STYLE) {
+			this->invalidWarning(node, "HairStyle value %d is out of range %d~%d. Setting to MIN_HAIR_STYLE.\n", hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+			hair_style = MIN_HAIR_STYLE;
+		}
+
+		mob->vd.hair_style = hair_style;
+	}
+
+	if (this->nodeExists(node, "HairColor")) {
+		uint16 hair_color;
+
+		if (!this->asUInt16(node, "HairColor", hair_color))
+			return 0;
+
+		if (hair_color < MIN_HAIR_COLOR || hair_color > MAX_HAIR_COLOR) {
+			this->invalidWarning(node, "HairColor value %d is out of range %d~%d. Setting to MIN_HAIR_COLOR.\n", hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+			hair_color = MIN_HAIR_COLOR;
+		}
+
+		mob->vd.hair_color = hair_color;
+	}
+
+	if (this->nodeExists(node, "ClothColor")) {
+		uint32 cloth_color;
+
+		if (!this->asUInt32(node, "ClothColor", cloth_color))
+			return 0;
+
+		if (cloth_color < MIN_CLOTH_COLOR || cloth_color > MAX_CLOTH_COLOR) {
+			this->invalidWarning(node, "ClothColor value %d is out of range %d~%d. Setting to MIN_CLOTH_CLOR.\n", cloth_color, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
+			cloth_color = MIN_CLOTH_COLOR;
+		}
+
+		mob->vd.cloth_color = cloth_color;
+	}
+
+	if (this->nodeExists(node, "Weapon")) {
+		std::string weapon;
+
+		if (!this->asString(node, "Weapon", weapon))
+			return 0;
+
+		struct item_data *item;
+
+		if ((item = itemdb_searchname(weapon.c_str())) == nullptr)
+			this->invalidWarning(node, "Weapon value %s is not a valid item, skipping.\n", weapon.c_str());
+		else
+			mob->vd.weapon = item->nameid;
+	}
+
+	if (this->nodeExists(node, "Shield")) {
+		std::string shield;
+
+		if (!this->asString(node, "Shield", shield))
+			return 0;
+
+		struct item_data *item;
+
+		if ((item = itemdb_searchname(shield.c_str())) == nullptr)
+			this->invalidWarning(node, "Shield value %s is not a valid item, skipping.\n", shield.c_str());
+		else
+			mob->vd.shield = item->nameid;
+	}
+
+	if (this->nodeExists(node, "HeadTop")) {
+		std::string head;
+
+		if (!this->asString(node, "HeadTop", head))
+			return 0;
+
+		struct item_data *item;
+
+		if ((item = itemdb_searchname(head.c_str())) == nullptr)
+			this->invalidWarning(node, "HeadTop value %s is not a valid item, skipping.\n", head.c_str());
+		else
+			mob->vd.head_top = item->view_id;
+	}
+
+	if (this->nodeExists(node, "HeadMid")) {
+		std::string head;
+
+		if (!this->asString(node, "HeadMid", head))
+			return 0;
+
+		struct item_data *item;
+
+		if ((item = itemdb_searchname(head.c_str())) == nullptr)
+			this->invalidWarning(node, "HeadMid value %s is not a valid item, skipping.\n", head.c_str());
+		else
+			mob->vd.head_mid = item->view_id;
+	}
+
+	if (this->nodeExists(node, "HeadLow")) {
+		std::string head;
+
+		if (!this->asString(node, "HeadLow", head))
+			return 0;
+
+		struct item_data *item;
+
+		if ((item = itemdb_searchname(head.c_str())) == nullptr)
+			this->invalidWarning(node, "HeadLow value %s is not a valid item, skipping.\n", head.c_str());
+		else
+			mob->vd.head_bottom = item->view_id;
+	}
+
+	if (this->nodeExists(node, "PetEquip")) {
+		std::shared_ptr<s_pet_db> pet_db_ptr = pet_db.find(mob_id);
+
+		if (pet_db_ptr == nullptr) {
+			this->invalidWarning(node, "PetEquip value can only be used for defined pets, skipping.\n");
+			return false;
+		}
+
+		std::string equipment;
+
+		if (!this->asString(node, "PetEquip", equipment))
+			return 0;
+
+		struct item_data *item;
+
+		if ((item = itemdb_searchname(equipment.c_str())) == nullptr)
+			this->invalidWarning(node, "PetEquip value %s is not a valid item, skipping.\n", equipment.c_str());
+		else
+			mob->vd.head_bottom = item->nameid;
+	}
+
+	if (this->nodeExists(node, "Options")) {
+		for (const auto &optionNode : node["Options"]) {
+			std::string option = optionNode.first.as<std::string>();
+			int constant;
+
+			if (script_get_constant(option.c_str(), &constant)) {
+				this->invalidWarning(node, "Option value %s is not a valid option, skipping.\n", option.c_str());
+				continue;
+			}
+
+			bool active;
+
+			if (!this->asBool(node, option, active))
+				continue;
 
 #ifdef NEW_CARTS
-		if( db->option & OPTION_CART ){
-			ShowWarning("mob_readdb_mobavail: You tried to use a cart for mob id %d. This does not work with setting an option anymore.\n", mob_id );
-			db->option &= ~OPTION_CART;
-		}
+			if (constant & OPTION_CART) {
+				this->invalidWarning(node, "Option value can not set carts. This does not work with options anymore.\n");
+				continue;
+			}
 #endif
-	}
-	else if(columns==3)
-		db->vd.head_bottom=atoi(str[2]); // mob equipment [Valaris]
-	else if( columns != 2 )
-		return false;
 
-	return true;
+			if (active)
+				mob->option |= constant;
+			else
+				mob->option &= ~constant;
+		}
+
+		mob->option &= ~(OPTION_HIDE | OPTION_CLOAK | OPTION_INVISIBLE | OPTION_CHASEWALK); // Remove hiding types
+	}
+
+	return 1;
 }
+
+MobAvailDatabase mob_avail_db;
 
 /*==========================================
  * Reading of random monster data
@@ -5281,7 +5462,7 @@ static void mob_load(void)
 			mob_readskilldb(dbsubpath2, silent);
 		}
 
-		sv_readdb(dbsubpath1, "mob_avail.txt", ',', 2, 12, -1, &mob_readdb_mobavail,silent);
+		mob_avail_db.load();
 		sv_readdb(dbsubpath2, "mob_race2_db.txt", ',', 2, MAX_RACE2_MOBS, -1, &mob_readdb_race2, silent);
 		sv_readdb(dbsubpath1, "mob_item_ratio.txt", ',', 2, 2+MAX_ITEMRATIO_MOBS, -1, &mob_readdb_itemratio, silent);
 		sv_readdb(dbsubpath1, "mob_chat_db.txt", '#', 3, 3, -1, &mob_parse_row_chatdb, silent);
@@ -5391,15 +5572,12 @@ static int mob_reload_sub( struct mob_data *md, va_list args ){
 static int mob_reload_sub_npc( struct npc_data *nd, va_list args ){
 	// If the view data points to a mob
 	if( mobdb_checkid(nd->class_) ){
-		// Get the new view data from the mob database
-		nd->vd = mob_get_viewdata(nd->class_);
+		struct view_data *vd = mob_get_viewdata(nd->class_);
 
-		// If they are spawned right now
-		if( nd->bl.prev != NULL ){
-			// Respawn all NPCs on client side so that they are displayed correctly(if their view id changed)
-			clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
-			clif_spawn(&nd->bl);
-		}
+		if (vd) // Get the new view data from the mob database
+			memcpy(&nd->vd, vd, sizeof(struct view_data));
+		if (nd->bl.prev) // If they are spawned right now
+			unit_refresh(&nd->bl); // Respawn all NPCs on client side so that they are displayed correctly(if their view id changed)
 	}
 
 	return 0;

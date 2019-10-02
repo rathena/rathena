@@ -41,8 +41,8 @@ struct s_npc_buy_list {
 
 struct npc_data {
 	struct block_list bl;
-	struct unit_data  ud; //Because they need to be able to move....
-	struct view_data *vd;
+	struct unit_data ud; //Because they need to be able to move....
+	struct view_data vd;
 	struct status_change sc; //They can't have status changes, but.. they want the visual opt values.
 	struct npc_data *master_nd;
 	short class_,speed,instance_id;
