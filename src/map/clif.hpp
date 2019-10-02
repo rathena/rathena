@@ -1120,7 +1120,7 @@ void clif_camerainfo( struct map_session_data* sd, bool show, float range = 0.0f
 
 /// Equip Switch System
 void clif_equipswitch_list( struct map_session_data* sd );
-void clif_equipswitch_add( struct map_session_data* sd,uint16 index, uint32 pos, bool failed );
+void clif_equipswitch_add( struct map_session_data* sd,uint16 index, uint32 pos, uint8 flag );
 void clif_equipswitch_remove( struct map_session_data* sd, uint16 index, uint32 pos, bool failed );
 void clif_equipswitch_reply( struct map_session_data* sd, bool failed );
 
