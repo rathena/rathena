@@ -40,10 +40,8 @@ yuno_in01,32,36,0	warp	yun12	1,1,yuno,193,142
 yuno,264,87,0	warp	yun13	1,1,yuno_in01,168,101
 yuno_in01,168,104,0	warp	yun14	1,1,yuno,264,90
 yuno,341,203,0	warp	yun15	1,1,yuno_in04,32,58
-
 yuno,195,87,0	warp	yun16	1,1,yuno_in04,186,28
 yuno_in04,192,28,0	warp	yun17	1,1,yuno,198,87
-
 yuno_in04,29,58,0	warp	yun18	1,1,yuno,338,203
 yuno_in04,52,58,0	warp	yun19	1,1,yuno_in04,97,58
 yuno_in04,95,58,0	warp	yun20	1,1,yuno_in04,50,58
