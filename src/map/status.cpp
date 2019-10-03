@@ -7906,6 +7906,7 @@ void status_set_viewdata(struct block_list *bl, int class_)
 
 				md->vd->class_ = class_;
 				md->vd->hair_style = cap_value(md->vd->hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+				md->vd->hair_color = cap_value(md->vd->hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 			}else
 				ShowError("status_set_viewdata (MOB): No view data for class %d\n", class_);
 		}
@@ -7936,8 +7937,12 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				memset(&nd->vd, 0, sizeof(struct view_data));
 				nd->vd.class_ = class_;
 				nd->vd.hair_style = cap_value(nd->vd.hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
-			} else
-				ShowDebug("Source (NPC): %s (invisible/not on a map)\n", nd->name);
+			} else {
+				if (bl->m >= 0)
+					ShowDebug("Source (NPC): %s at %s (%d,%d)\n", nd->name, map_mapid2mapname(bl->m), bl->x, bl->y);
+				else
+					ShowDebug("Source (NPC): %s (invisible/not on a map)\n", nd->name);
+			}
 			break;
 		}
 	break;

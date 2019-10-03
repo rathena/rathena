@@ -3632,10 +3632,10 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 			val2 = (vd ? vd->shield : 0);
 		}
 		if (disguised(bl)) {
-			clif_sprite_change(bl,bl->id,type,val,val2,AREA_WOS);
-			clif_sprite_change(bl,-bl->id,type,val,val2,SELF);
+			clif_sprite_change(bl, bl->id, type, val, val2, AREA_WOS);
+			clif_sprite_change(bl, -bl->id, type, val, val2, SELF);
 		} else
-			clif_sprite_change(bl,bl->id,type,val,val2,target);
+			clif_sprite_change(bl, bl->id, type, val, val2, target);
 	} else
 		unit_refresh(bl);
 #endif

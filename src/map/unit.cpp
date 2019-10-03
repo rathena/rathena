@@ -3141,6 +3141,9 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 void unit_refresh(struct block_list *bl) {
 	nullpo_retv(bl);
 
+	if (bl->m < 0)
+		return;
+
 	struct map_data *mapdata = map_getmapdata(bl->m);
 
 	// Using CLR_TRICKDEAD because other flags show effects

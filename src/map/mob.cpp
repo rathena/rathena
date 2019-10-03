@@ -4115,8 +4115,6 @@ static bool mob_parse_dbrow(char** str)
 	status = &entry.status;
 
 	entry.vd.class_ = mob_id;
-	entry.vd.hair_color = MIN_HAIR_COLOR;
-	entry.vd.hair_style = MIN_HAIR_STYLE;
 	safestrncpy(entry.sprite, str[1], sizeof(entry.sprite));
 	safestrncpy(entry.jname, str[2], sizeof(entry.jname));
 	safestrncpy(entry.name, str[3], sizeof(entry.name));

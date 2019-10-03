@@ -32,7 +32,7 @@
 #   HeadTop                 Item name of headgear (if displayed as a player) (Default: 0)
 #   HeadMid                 Item name of headgear (if displayed as a player) (Default: 0)
 #   HeadLow                 Item name of headgear (if displayed as a player) (Default: 0)
-#   PetEquip                Item name of pet equipment (if Id is a valid pet) (Default: 0)
+#   PetEquip                Item name of pet equipment (if Mob is a valid pet) (Default: 0)
 #   Options:                Set an option for an object (Optional)
 #     - OptionState: bool
 ###########################################################################
