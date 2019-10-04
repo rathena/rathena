@@ -823,7 +823,7 @@ void clif_sendbgemblem_area(struct map_session_data *sd);
 void clif_sendbgemblem_single(int fd, struct map_session_data *sd);
 
 // Battleground Queue
-void clif_bg_queue_apply_result(enum e_bg_queue_apply_ack result, char *name, struct map_session_data *sd);
+void clif_bg_queue_apply_result(e_bg_queue_apply_ack result, char *name, struct map_session_data *sd);
 void clif_bg_queue_apply_notify(char *name, struct map_session_data *sd);
 void clif_bg_queue_entry_init(struct map_session_data *sd);
 void clif_bg_queue_lobby_notify(const char *name, struct map_session_data *sd);

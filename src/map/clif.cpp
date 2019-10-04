@@ -17443,7 +17443,7 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 
 	short type = RFIFOW(fd,2);
 	char name[NAME_LENGTH];
-	enum e_bg_queue_apply_ack result;
+	e_bg_queue_apply_ack result;
 
 	safestrncpy(name, RFIFOCP(fd, 4), NAME_LENGTH);
 
@@ -17471,7 +17471,7 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 /// Outgoing battlegrounds queue apply result.
 /// Result types: @see e_bg_queue_apply_ack
 /// 0x8d8 <result>.B <battleground name>.24B (ZC_ACK_ENTRY_QUEUE_APPLY)
-void clif_bg_queue_apply_result(enum e_bg_queue_apply_ack result, char *name, struct map_session_data *sd)
+void clif_bg_queue_apply_result(e_bg_queue_apply_ack result, char *name, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
@@ -17575,18 +17575,16 @@ void clif_parse_bg_queue_lobby_reply(int fd, struct map_session_data *sd)
 	if(sd->bg_queue) {
 		uint8 result = RFIFOB(fd, 2);
 
-		// Accept
-		if(result == 1) {
+		if(result == 1) { // Accept
 			bg_queue_on_accept_invite(sd->bg_queue, sd);
-		// Decline
-		} else if(result == 2) {
+		} else if(result == 2) { // Decline
 			bg_queue_leave(sd);
 			clif_bg_queue_entry_init(sd);
 		}
 	}
 }
 
-/// Plays a gong sound, signaling that someone has accepted the invite to enter a battleground (I think).
+/// Plays a gong sound, signaling that someone has accepted the invite to enter a battleground.
 /// 0x8e1 <result>.B <battleground name>.24B <lobby name>.24B (ZC_REPLY_ACK_LOBBY_ADMISSION)
 void clig_bg_queue_ack_lobby(bool result, const char *name, const char *lobbyname, struct map_session_data *sd)
 {
@@ -17610,7 +17608,7 @@ void clif_parse_bg_queue_request_queue_number(int fd, struct map_session_data *s
 
 	char name[NAME_LENGTH];
 
-	safestrncpy( name, WFIFOCP(fd, 2), NAME_LENGTH );
+	safestrncpy( name, RFIFOCP(fd, 2), NAME_LENGTH );
 
 	clif_bg_queue_apply_notify(name, sd);
 }

@@ -150,7 +150,7 @@ Body:
           QuitEvent: "KvM02_BG::OnCroixQuit"
           Variable: "$@KvM02BG_id2"
   - Id: 5
-    Name: "KVM (Level 59 and below)"
+    Name: "KVM (Level 59 and below"
     MinPlayers: 5
     MaxLevel: 59
     Locations:
