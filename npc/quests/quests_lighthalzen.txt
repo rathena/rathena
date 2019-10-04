@@ -11099,7 +11099,7 @@ einbroch,55,52,3	script	Laboratory Guard#reken	 852,{
 	close;
 }
 
-airplane_01,96,48,3	script	Man#Lyozien	868,{
+airplane_01,96,48,3	script	Man#Lyozien	869,{
 
 	if(lhz_rekenber > 21)
 	{
