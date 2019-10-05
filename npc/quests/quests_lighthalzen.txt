@@ -4207,7 +4207,7 @@ lhz_que01,99,74,5	script	#li_Man	1_M_02,{
 	end;
 }
 
-lhz_que01,90,71,5	script	#li_bird	PECOPECO,3,3,{
+lhz_que01,90,71,5	script	#li_bird	1019,3,3,{
 	mes "[Peco Peco]";
 	mes "You're a fool!";
 	mes "You're a fool!";
