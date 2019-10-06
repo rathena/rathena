@@ -743,7 +743,7 @@ int *achievement_level(struct map_session_data *sd, bool flag)
 	return info;
 }
 
-static bool achievement_check_condition( struct script_code* condition, struct map_session_data* sd, const std::array<int, MAX_ACHIEVEMENT_OBJECTIVES> count ){
+bool achievement_check_condition( struct script_code* condition, struct map_session_data* sd ){
 	// Save the old script the player was attached to
 	struct script_state* previous_st = sd->st;
 
@@ -834,7 +834,7 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 			if (!ad->condition)
 				return false;
 
-			if (!achievement_check_condition(ad->condition, sd, current_count)) // Parameters weren't met
+			if (!achievement_check_condition(ad->condition, sd)) // Parameters weren't met
 				return false;
 
 			changed = true;
@@ -855,7 +855,7 @@ static bool achievement_update_objectives(struct map_session_data *sd, std::shar
 					current_count[it.first] += update_count[it.first];
 			}
 
-			if (!achievement_check_condition(ad->condition, sd, current_count)) // Parameters weren't met
+			if (!achievement_check_condition(ad->condition, sd)) // Parameters weren't met
 				return false;
 
 			changed = true;
