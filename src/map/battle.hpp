@@ -141,7 +141,7 @@ struct Battle_Config
 	int enable_critical;
 	int mob_critical_rate;
 	int critical_rate;
-	int enable_baseatk;
+	int enable_baseatk, enable_baseatk_renewal;
 	int enable_perfect_flee;
 	int cast_rate, delay_rate;
 	int delay_dependon_dex, delay_dependon_agi;
@@ -226,7 +226,6 @@ struct Battle_Config
 	int pet_attack_support;
 	int pet_damage_support;
 	int pet_support_min_friendly;	//[Skotlex]
-	int pet_equip_min_friendly;
 	int pet_support_rate;
 	int pet_attack_exp_to_master;
 	int pet_attack_exp_rate;

@@ -1492,17 +1492,17 @@ alde_dun03,264,16,4	script	Gatekeeper#ct1	101,{
 }
 
 function	script	F_ClockTowerGate	{
-	.@floor = getarg(0);
+	.@floor$ = getarg(0);
 	.@item_req = getarg(1);
 
 	mes "[Gatekeeper Boy]";
 	mes "Welcome to";
 	mes "Kinase - Blue Gallino";
 	mes "The one of Local Speciality in Aldebaran.";
-	mes "You can't go through from "+ .@floor +" Floor,";
+	mes "You can't go through from "+ .@floor$ +" Floor,";
 	mes "Please go back.";
 	next;
-	switch(select("About Clock Tower:About the "+ .@floor +" Floor:Move to the "+ .@floor +" Floor:End Dialogue")) {
+	switch(select("About Clock Tower:About the "+ .@floor$ +" Floor:Move to the "+ .@floor$ +" Floor:End Dialogue")) {
 	case 1:
 		mes "[Gatekeeper Boy]";
 		mes "Homeland of Alchemy,Aldebaran!";

@@ -3900,7 +3900,6 @@ ACMD_FUNC(reload) {
 		)
 		{	// Exp or Drop rates changed.
 			mob_reload(); //Needed as well so rate changes take effect.
-			chrif_ragsrvinfo(battle_config.base_exp_rate, battle_config.job_exp_rate, battle_config.item_rate_common);
 		}
 		clif_displaymessage(fd, msg_txt(sd,255)); // Battle configuration has been reloaded.
 	} else if (strstr(command, "statusdb") || strncmp(message, "statusdb", 3) == 0) {
@@ -5535,9 +5534,12 @@ ACMD_FUNC(dropall)
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
 				pc_equipswitch_remove(sd, i);
-				if(pc_dropitem(sd, i, sd->inventory.u.items_inventory[i].amount))
-					count += sd->inventory.u.items_inventory[i].amount;
-				else count2 += sd->inventory.u.items_inventory[i].amount;
+
+				int amount = sd->inventory.u.items_inventory[i].amount;
+
+				if(pc_dropitem(sd, i, amount))
+					count += amount;
+				else count2 += amount;
 			}
 		}
 	}
@@ -10045,6 +10047,15 @@ ACMD_FUNC(camerainfo){
 	return 0;
 }
 
+ACMD_FUNC(resurrect) {
+	nullpo_retr(-1, sd);
+
+	if (!pc_revive_item(sd))
+		return -1;
+
+	return 0;
+}
+
 #include "../custom/atcommand.inc"
 
 /**
@@ -10345,6 +10356,7 @@ void atcommand_basecommands(void) {
 		ACMD_DEFR(limitedsale, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(changedress, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
 		ACMD_DEFR(camerainfo, ATCMD_NOCONSOLE|ATCMD_NOAUTOTRADE),
+		ACMD_DEFR(resurrect, ATCMD_NOCONSOLE),
 	};
 	AtCommandInfo* atcommand;
 	int i;

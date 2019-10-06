@@ -120,6 +120,7 @@ void achievement_check_reward(struct map_session_data *sd, int achievement_id);
 void achievement_free(struct map_session_data *sd);
 int achievement_check_progress(struct map_session_data *sd, int achievement_id, int type);
 int *achievement_level(struct map_session_data *sd, bool flag);
+bool achievement_check_condition(struct script_code* condition, struct map_session_data* sd);
 void achievement_get_titles(uint32 char_id);
 void achievement_update_objective(struct map_session_data *sd, enum e_achievement_group group, uint8 arg_count, ...);
 void achievement_read_db(void);

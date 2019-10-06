@@ -2299,7 +2299,7 @@ bool char_checkdb(void){
 		schema_config.party_db, schema_config.pet_db, schema_config.friend_db, schema_config.mail_db, 
                 schema_config.auction_db, schema_config.quest_db, schema_config.homunculus_db, schema_config.skill_homunculus_db,
                 schema_config.mercenary_db, schema_config.mercenary_owner_db,
-		schema_config.elemental_db, schema_config.ragsrvinfo_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
+		schema_config.elemental_db, schema_config.skillcooldown_db, schema_config.bonus_script_db,
 		schema_config.clan_table, schema_config.clan_alliance_table, schema_config.mail_attachment_db, schema_config.achievement_table
 	};
 	ShowInfo("Start checking DB integrity\n");
@@ -2494,11 +2494,6 @@ bool char_checkdb(void){
 		Sql_ShowDebug(sql_handle);
 		return false;
 	}
-	//checking ragsrvinfo_db
-	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `index`,`name`,`exp`,`jexp`,`drop` FROM `%s` LIMIT 1;", schema_config.ragsrvinfo_db) ){
-		Sql_ShowDebug(sql_handle);
-		return false;
-	}
 	//checking skillcooldown_db
 	if( SQL_ERROR == Sql_Query(sql_handle, "SELECT  `account_id`,`char_id`,`skill`,`tick` FROM `%s` LIMIT 1;", schema_config.skillcooldown_db) ){
 		Sql_ShowDebug(sql_handle);
@@ -2686,7 +2681,6 @@ void char_set_default_sql(){
 	safestrncpy(schema_config.skill_homunculus_db,"skill_homunculus",sizeof(schema_config.skill_homunculus_db));
 	safestrncpy(schema_config.mercenary_db,"mercenary",sizeof(schema_config.mercenary_db));
 	safestrncpy(schema_config.mercenary_owner_db,"mercenary_owner",sizeof(schema_config.mercenary_owner_db));
-	safestrncpy(schema_config.ragsrvinfo_db,"ragsrvinfo",sizeof(schema_config.ragsrvinfo_db));
 	safestrncpy(schema_config.skillcooldown_db,"skillcooldown",sizeof(schema_config.skillcooldown_db));
 	safestrncpy(schema_config.bonus_script_db,"bonus_script",sizeof(schema_config.bonus_script_db));
 	safestrncpy(schema_config.char_reg_num_table,"char_reg_num",sizeof(schema_config.char_reg_num_table));
@@ -3128,9 +3122,6 @@ void do_final(void)
 	do_final_msg();
 	do_final_chmapif();
 	do_final_chlogif();
-
-	if( SQL_ERROR == Sql_Query(sql_handle, "DELETE FROM `%s`", schema_config.ragsrvinfo_db) )
-		Sql_ShowDebug(sql_handle);
 
 	char_db_->destroy(char_db_, NULL);
 	online_char_db->destroy(online_char_db, NULL);
