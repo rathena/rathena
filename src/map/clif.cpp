@@ -17057,9 +17057,12 @@ void clif_quest_update_status(struct map_session_data *sd, int quest_id, bool ac
 ///     1 = orange
 ///     2 = green
 ///     3 = purple
-void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short effect, short color)
+void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, e_questinfo_types effect, e_questinfo_markcolor color)
 {
 #if PACKETVER >= 20090218
+	nullpo_retv(sd);
+	nullpo_retv(bl);
+
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd, packet_len(0x446));

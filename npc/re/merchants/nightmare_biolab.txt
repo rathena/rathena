@@ -1603,7 +1603,7 @@ OnTouch:
 	end;
 
 OnInit:
-	// questinfo 14683,QTYPE_QUEST,1;	// display when quest 14683 active
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(14683) == 1" );
 	end;
 }
 
@@ -1729,7 +1729,8 @@ OnTouch:
 	end;
 
 OnInit:
-	questinfo atoi(strnpcinfo(2)),QTYPE_QUEST,1;
+	.@condition$ = "!isbegin_quest(" + strnpcinfo(2) + ")";
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, .@condition$ );
 	end;
 }
 

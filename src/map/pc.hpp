@@ -643,7 +643,7 @@ struct map_session_data {
 
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;
-	unsigned short qi_count;
+	int qi_count;
 
 	// temporary debug [flaviojs]
 	const char* debug_file;
