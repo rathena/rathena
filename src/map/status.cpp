@@ -4160,12 +4160,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 #ifndef RENEWAL_ASPD
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
 		base_status->aspd_rate -= 5*skill;
-	if ((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || sd->status.job_level >= 50)) {
-		if ((skill = pc_checkskill(sd,SJ_PURIFY)) > 0)
-			base_status->aspd_rate -= 30*skill;
-		else
-			base_status->aspd_rate -= 15*skill;
-	}
+	if ((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
+		base_status->aspd_rate -= 30*skill;
 	if((skill=pc_checkskill(sd,GS_SINGLEACTION))>0 &&
 		(sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
 		base_status->aspd_rate -= ((skill+1)/2) * 10;
@@ -4174,12 +4170,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	else if(pc_isridingdragon(sd))
 		base_status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 #else // Needs more info
-	if ((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || sd->status.job_level >= 50)) {
-		if ((skill = pc_checkskill(sd,SJ_PURIFY)) > 0)
-			base_status->aspd_rate += 30*skill;
-		else
-			base_status->aspd_rate += 15*skill;
-	}
+	if ((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && ((sd->class_&MAPID_THIRDMASK) == MAPID_STAR_EMPEROR || pc_is_maxjoblv(sd)))
+		base_status->aspd_rate += 30*skill;
 	if(pc_isriding(sd))
 		base_status->aspd_rate -= 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
 	else if(pc_isridingdragon(sd))
@@ -6948,7 +6940,7 @@ static unsigned short status_calc_speed(struct block_list *bl, struct status_cha
 			if (sc->data[SC_SP_SHA])
 				val = max(val, sc->data[SC_SP_SHA]->val2);
 			if (sc->data[SC_CREATINGSTAR])
-				val = max(val, sc->data[SC_CREATINGSTAR]->val2);
+				val = max(val, 90);
 
 			if( sd && sd->bonus.speed_rate + sd->bonus.speed_add_rate > 0 ) // Permanent item-based speedup
 				val = max( val, sd->bonus.speed_rate + sd->bonus.speed_add_rate );
@@ -11439,7 +11431,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val2 += 1; // Make it 15% at level 7.
 			break;
 		case SC_CREATINGSTAR:
-			val2 = 90; // Move speed reduction
 			val4 = tick / 500;
 			tick = 10;
 			break;

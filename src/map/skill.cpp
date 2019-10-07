@@ -13873,11 +13873,6 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 		}
 			break;
 
-		case UNT_CREATINGSTAR:
-			if (!sce)
-				sc_start4(ss, bl, type,100, sg->skill_lv, ss->id, unit->bl.id, 0, sg->limit);
-			break;
-
 		case UNT_QUAGMIRE:
 			if( !sce && battle_check_target(&unit->bl,bl,sg->target_flag) > 0 )
 				sc_start4(ss, bl,type,100,sg->skill_lv,sg->group_id,0,0,sg->limit);
@@ -14046,6 +14041,11 @@ static int skill_unit_onplace(struct skill_unit *unit, struct block_list *bl, t_
 		case UNT_NYANGGRASS:
 			if (!sce)
 				sc_start(ss, bl, type, 100, sg->skill_lv, skill_get_time(sg->skill_id, sg->skill_lv));
+			break;
+
+		case UNT_CREATINGSTAR:
+			if (!sce)
+				sc_start4(ss, bl, type, 100, sg->skill_lv, ss->id, unit->bl.id, 0, sg->limit);
 			break;
 
 		case UNT_GD_LEADERSHIP:
