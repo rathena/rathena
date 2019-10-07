@@ -1310,8 +1310,8 @@
 2585,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_GRAVITYCONTROL,Gravity Control
 2586,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_BOOKOFDIMENSION,Book of Dimension
 2587,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_BOOKOFCREATINGSTAR,Book of Creating Star
-2588,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_DOCUMENT,Document of Sun, Moon and Star
-2589,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_PURIFY,Purification of Sun, Moon and Star
+2588,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_DOCUMENT,Document of Sun Moon and Star
+2589,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_PURIFY,Purification of Sun Moon and Star
 2590,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_LIGHTOFSUN,Light of Sun
 2591,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_SUNSTANCE,Sun Stance
 2592,0,0,0,0,0,0,1,0,no,0,0,0,none,0,0x0,	SJ_SOLARBURST,Solar Burst
