@@ -83,7 +83,8 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		mes "[Nihil]";
 		mes "That's why we had to come here unwillingly without talking to you in advance.";
 		mes "Sorry for your inconvenience. Please wait for a while.";
-		// close2;// fix me
+		close2;
+		setpcblock PCBLOCK_NPC, true;
 		cutin "",255;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : .....", bc_self;
 		sleep2 1500;
@@ -96,6 +97,7 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		classchange( 4_EP16_SPICA, "Spica Nerius#ep162_01", bc_self );
 		terra_gloria_main = 1;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		npctalk "Please allow me to get right down to business.", "Spica Nerius#ep162_01", bc_self;
 		end;
 	}
@@ -329,11 +331,13 @@ prt_cas_q,21,39,3	script	Nihil M. Heine#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_NI
 		erasequest 7734;// Arrest
 		setquest 7735;// Secret Action 2
 		terra_gloria_main = 7;
-		// close2;// fix me
+		close2;
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "See you later.", "Spica Nerius#ep162_01", bc_self;
 		sleep2 2000;
 		npctalk "I am going too.", "", bc_self;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		classchange( HIDDEN_WARP_NPC, "Nihil M. Heine#ep162_01", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep162_01", bc_self );
 		cutin "",255;
@@ -619,7 +623,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SKIA
 		mes "[Kronecker]";
 		mes "You can continue to enjoy everything you did as a guest. We have agreed on it.";
 		mes "As you always have shown us honest faith.";
-		getitem 6919,10;
+		getitem 6919,10;	// Honor_Proof
 		getexp 500000,500000;
 		completequest 7741;// Let's return
 		terra_gloria_main = 24;
@@ -652,7 +656,8 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SKIA
 		mes "[Spica]";
 		mes "I don't know why he used me as a contact point. What a brave young man.";
 		mes "I will see you later.";
-		// close2;	// fix me
+		close2;
+		setpcblock PCBLOCK_NPC, true;
 		cutin "",255;
 		npctalk "Now, tell me everything about Nihil!", "Spica Nerius#ep162_01", bc_self;
 		sleep2 2000;
@@ -662,6 +667,7 @@ prt_cas_q,18,37,5	script	Skia Nerius#ep162_01	HIDDEN_WARP_NPC,{		// 4_EP16_SKIA
 		sleep2 2000;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : ....", bc_self;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		classchange( HIDDEN_WARP_NPC, "Skia Nerius#ep162_01", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep162_01", bc_self );
 		end;
@@ -807,8 +813,7 @@ lhz_airport,189,39,3	script	Crux#ep162_01	4_EP16_CRUX,{
 	close3;
 
 OnInit:
-	questinfo 7732, QTYPE_QUEST;
-	setquestinfo_req 7732,7731,1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7731) == 1" );
 	end;
 }
 
@@ -858,7 +863,7 @@ lighthalzen,186,293,0	script	#ep162_evt01	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 4) {
-		mes "";// fix me
+		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : .....! Those people?!", bc_self;
 		sleep2 1000;
 		classchange( 1_M_01, "Man#ep162_01", bc_self );
@@ -898,6 +903,7 @@ OnTouch:
 		setquest 7733;// Pursuit!
 		terra_gloria_main = 5;
 		sleep2 3000;
+		setpcblock PCBLOCK_NPC, false;
 		classchange( HIDDEN_WARP_NPC, "Scientist#ep162_01", bc_self );
 		unittalk getcharid(3), "" + strcharinfo(0) + " : I must tell Skia about this and head to the slum right away!", bc_self;
 		end;
@@ -927,7 +933,7 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 	if (terra_gloria_main != 5)
 		npctalk "Hey, what are you looking at? Go away!", "", bc_self;
 	else {
-		mes "";// fix me
+		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Bruno?", bc_self;
 		sleep2 1000;
 		npctalk "Who are you? Why do you call me?", "", bc_self;
@@ -998,6 +1004,7 @@ lighthalzen,309,263,3	script	Man#ep162_02	1_M_01,{
 		sleep2 2000;
 		npctalk "Yes, lady. See you in the palace.", "Crux#ep162_02", bc_self;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		classchange( HIDDEN_WARP_NPC, "Crux#ep162_02", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Man#ep162_02", bc_self );
 		erasequest 7733;// Pursuit!
@@ -1011,8 +1018,7 @@ OnMobDead:
 	end;
 
 OnInit:
-	questinfo 7734, QTYPE_QUEST, 1;
-	setquestinfo_req 7734,7733,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7733) == 1" );
 	end;
 }
 
@@ -1106,8 +1112,7 @@ y_airport,168,41,3	script	Crux#ep162_04	4_EP16_CRUX,{
 	close3;
 
 OnInit:
-	questinfo 7736, QTYPE_QUEST, 1;
-	setquestinfo_req 7736,7735,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(7735) == 1" );
 	end;
 }
 
@@ -1368,9 +1373,11 @@ lhz_in02,239,148,4	script	Philopontess#ep162_01	HIDDEN_WARP_NPC,{		// 4_M_PHILOF
 		erasequest 7736;// Small differences between sightseeing and secret bussiness
 		setquest 7737;// Together with Rebel
 		terra_gloria_main = 9;
-		// close2;// fix me
+		close2;
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "I will see you later.", "Crux#ep162_05", bc_self;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		classchange( HIDDEN_WARP_NPC, "Spica Nerius#ep162_02", bc_self );
 		classchange( HIDDEN_WARP_NPC, "Crux#ep162_05", bc_self );
 		cutin "",255;
@@ -1680,8 +1687,7 @@ einbroch,239,269,3	script	Unusual person#16nego01	4_M_LAZY,{
 	end;
 
 OnInit:
-	questinfo 14595, QTYPE_QUEST, 1;
-	setquestinfo_req 14595,7737,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(14595) == 0 && isbegin_quest(7737) == 1" );
 	end;
 }
 
@@ -2840,8 +2846,7 @@ OnTouch:
 	end;
 
 OnInit:
-	questinfo 7738, QTYPE_QUEST;
-	setquestinfo_req 7738, 14615,1;	// note: actually display when 14615 active and stop when 14615 completed
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(14615) == 1" );
 	end;
 }
 
@@ -2996,7 +3001,7 @@ function	script	F_Terra_Gloria_Inn	{
 	mes "[Skia]";
 	mes "Yes~";
 	mes "Mr. Philopontess, so long!";
-	delitem 25179,1;
+	delitem 25179,1;	// Blessing_Star
 	erasequest 7740;// Star of Blessing obtained
 	setquest 7741;// Let's return
 	terra_gloria_main = 23;
@@ -3009,7 +3014,7 @@ ein_in01,273,275,0	script	#ep162_evt04	HIDDEN_WARP_NPC,1,1,{
 	end;
 OnTouch:
 	if (terra_gloria_main == 18) {
-		mes "";	// fix me
+		setpcblock PCBLOCK_NPC, true;
 		classchange( 4_EP16_NIHIL, "Nihil#ep162_02", bc_self );
 		classchange( 4_M_PHILOFONTES, "Philopontess#ep162_03", bc_self );
 		classchange( 4_EP16_SKIA, "Skia#ep162_05", bc_self );
@@ -3031,6 +3036,7 @@ OnTouch:
 		sleep2 2000;
 		npctalk "This way.", "Nihil#ep162_02", bc_self;
 		sleep2 2000;
+		setpcblock PCBLOCK_NPC, false;
 		npctalk "Welcome, adventurer!", "Skia#ep162_05", bc_self;
 		end;
 	}
@@ -3343,8 +3349,7 @@ ein_fild04,284,332,3	script	Rookie#ep162_02	4_M_ROOKIE,{
 	end;
 
 OnInit:
-	questinfo 12374, QTYPE_QUEST, 1;
-	setquestinfo_req 12374, 7739,1;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(12374) == 0 && isbegin_quest(7739) == 1" );
 	end;
 }
 
@@ -3506,7 +3511,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 			mes "We will count on you again next time.";
 			erasequest 7742;// Sweeping the remnants
 			setquest 7743;// Sweeping the remnants (Standby)
-			getitem 25155,3;
+			getitem 25155,3;	// Schwartz's_Honor_Token
 			getexp 200000,200000;
 			close3;
 		}
@@ -3539,8 +3544,7 @@ que_swat,150,58,3	script	Rookie#ep162_03	4_M_ROOKIE,{
 	end;
 
 OnInit:
-	questinfo 7742, QTYPE_QUEST;
-	// setquestinfo_req 7742, 7742, 1;	// todo: should display when 7742 hunting completed
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(7742,HUNTING) == 2" );
 	end;
 }
 
@@ -3601,7 +3605,7 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 		next;
 		mes "[Tess]";
 		mes "Thank you for your support in advance.";
-		getitem 25155,10;
+		getitem 25155,10;	// Schwartz's_Honor_Token
 		getexp 500000,500000;
 		terra_gloria_main = 25;
 		close2;
@@ -3653,10 +3657,10 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 			mes "[Tess]";
 			mes "We already heard of your performance from the Rebellion.";
 			mes "Thank you for cooperating with the republic.";
-			setquest 7745;// Hiding Researcher (Standby)
-			erasequest 7760;
-			erasequest 7744;// Hiding Researcher
-			getitem 25155,3;
+			setquest 7745;		// Hiding Researcher (Standby)
+			erasequest 7760;	// Well hidden
+			erasequest 7744;	// Hiding Researcher
+			getitem 25155,3;	// Schwartz's_Honor_Token
 			getexp 200000,200000;
 			next;
 			mes "[Tess]";
@@ -3699,11 +3703,8 @@ que_swat,145,57,3	script	Philopontess#ep162_04	4_M_PHILOFONTES,{
 	end;
 
 OnInit:
-	questinfo 7744, QTYPE_QUEST;
-	setquestinfo_req 7744, 7741, 2;
-
-	questinfo 7745, QTYPE_QUEST;
-	setquestinfo_req 7745, 7760, 1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7744) == 0 && isbegin_quest(7741) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(7745) == 0 && isbegin_quest(7760) == 1" );
 	end;
 }
 
@@ -3774,7 +3775,7 @@ que_swat,161,53,3	script	Yuslan#ep162_1	4_M_GUNSLINGER3,{
 			mes "Please be with us next time!";
 			erasequest 7761;// Make Chimeras rest in peace
 			setquest 7762;// Make Chimeras rest in peace (Standby)
-			getitem 25155,3;
+			getitem 25155,3;	// Schwartz's_Honor_Token
 			getexp 300000,300000;
 			close;
 		}
@@ -3801,10 +3802,10 @@ que_swat,161,53,3	script	Yuslan#ep162_1	4_M_GUNSLINGER3,{
 	end;
 
 OnInit:
-	questinfo 7761, QTYPE_QUEST;
-	// note hunting 2: redisplay quest ; playtime 2: redisplay quest
+	questinfo( QTYPE_QUEST, QMARK_NONE, "checkquest(7761,HUNTING) == 2 || checkquest(7762,PLAYTIME) == 2" );
 	end;
 }
+
 // Part Elena - Fight
 rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 	if (terra_gloria_main < 16) {
@@ -3820,7 +3821,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 		close3;
 	}
 
-	// twin daily quest
+	// twins daily quest
 	if (isbegin_quest(16031) == 1) {
 		cutin "162elena_01.bmp",2;
 		mes "[USU commander Elena]";
@@ -3915,8 +3916,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			if (select( "Fight Elena.", "I don't listen to someone weaker than me." ) == 1) {
 				mes "[" + strcharinfo(0) + "]";
 				mes "(I have no choice. Let's prepare for the fight and talk to Elena Bolkova again.)";
-				setquest 16060;
-				setquest 16061;
+				setquest 16060;	// Fighting is the language of warmonger
+				setquest 16061;	// Fair and equitable result
 				close3;
 			}
 			mes "[" + strcharinfo(0) + "]";
@@ -3935,8 +3936,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			cutin "162elena_02.bmp",2;
 			mes "[USU commander Elena]";
 			mes "Great. Tell me when you are ready.";
-			setquest 16060;
-			setquest 16061;
+			setquest 16060;	// Fighting is the language of warmonger
+			setquest 16061;	// Fair and equitable result
 			close3;
 		case 1:
 		case 2:
@@ -3983,8 +3984,8 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				mes "[USU commander Elena]";
 				mes "A coward who's scared at me won't be helpful for the Rebellion at all.";
 				mes "Get lost.";
-				erasequest 16060;
-				erasequest 16061;
+				erasequest 16060;	// Fighting is the language of warmonger
+				erasequest 16061;	// Fair and equitable result
 				close3;
 			case 1:
 			case 2:
@@ -4025,7 +4026,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 					mes "A coward who's scared at me won't be helpful for the Rebellion at all.";
 					mes "Get lost.";
 					erasequest 16011;// Arena entrance
-					erasequest 16061;
+					erasequest 16061;	// Fair and equitable result
 					close3;
 				}
 				cutin "162elena_02.bmp",2;
@@ -4086,12 +4087,12 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				mes "Just like the one I'm giving you now.";
 				mes "If you want to know what this is for, ask the stubborn guy named 'Strasse' below the stairs.";
 				erasequest 16011;// Arena entrance
-				erasequest 16060;
-				erasequest 16061;
+				erasequest 16060;	// Fighting is the language of warmonger
+				erasequest 16061;	// Fair and equitable result
 				setquest 16010;// Battle in great condition
 				completequest 14602;// Hunter on second floor
 				getexp 200000,200000;
-				getitem 25155,10;
+				getitem 25155,10;	// Schwartz's_Honor_Token
 				close3;
 			}
 		}
@@ -4152,7 +4153,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "Oh, great!";
 			mes "Tell me when you are fully ready. I will go to the waiting room.";
 			setquest 16009;// Fighting is the language of warmonger
-			setquest 16061;
+			setquest 16061;	// Fair and equitable result
 			close3;
 		case 1:
 		case 2:
@@ -4196,7 +4197,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "[USU commander Elena]";
 			mes "...You made me expect it. And what are you doing now?";
 			erasequest 16009;// Fighting is the language of warmonger
-			erasequest 16061;
+			erasequest 16061;	// Fair and equitable result
 			close3;
 		case 1:
 		case 2:
@@ -4232,7 +4233,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 				mes "...We have no choice. Come back later.";
 				erasequest 16009;// Fighting is the language of warmonger
 				erasequest 16011;// Arena entrance
-				erasequest 16061;
+				erasequest 16061;	// Fair and equitable result
 				close3;
 			}
 			cutin "162elena_02.bmp",2;
@@ -4249,7 +4250,7 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 			mes "Come back. I can fight you everyday.";
 			erasequest 16009;// Fighting is the language of warmonger// Fighting is the language of warmonger
 			erasequest 16011;// Arena entrance
-			erasequest 16061;
+			erasequest 16061;	// Fair and equitable result
 			setquest 16010;// Battle in great condition
 			getexp 400000,400000;
 			getitem 25155,3;// Schwartz's Honor Token
@@ -4601,17 +4602,13 @@ rebel_in,70,78,3	script	Elena Bolkova#16.2rm	4_F_ELENA,{
 	end;
 
 OnInit:
-	questinfo 16011, QTYPE_QUEST;
-	setquestinfo_req 16011, 14602,1;	// display too when 16061 completed
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16011) == 0 && isbegin_quest(14602) == 1" );// todo display too when 16061 completed
 
 	// twin quest main - incomplete: should display everytime player need to talk to npc
-	questinfo 16012, QTYPE_QUEST;
-	setquestinfo_req 16012, 14615,1, 14615,2;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16012) == 0 && isbegin_quest(14615) == 1" );
 
-	// twin daily quest
-	questinfo 16020, QTYPE_QUEST;
-	setquestinfo_req 16020, 16031,1;
-	// questinfocondition 16020, " countitem(25161) > 0 ";
+	// twins daily quest : "Service: Cookies delivery"
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16031) == 1 && countitem(25161) > 0" );
 	end;
 }
 
@@ -4643,7 +4640,7 @@ rebel_in,177,30,3	script	Sorita Doritas#16.2rm	4_M_GUNSLINGER3,{
 rebel_in,177,28,5	script	Ivan Ivanov#16.2rm	4_M_REBELLION2,{
 	end;
 OnInit:
-	questinfo 16010, QTYPE_QUEST;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16010) == 0" );
 	waitingroom "Enter Rebellion arena",20,"Ivan Ivanov#16.2rm::OnEvent",1;
 	end;
 OnEvent:
@@ -4725,7 +4722,7 @@ OnTimer136000:
 	end;
 OnMobDead:
 	stopnpctimer;
-	completequest 16061;
+	completequest 16061;	// Fair and equitable result
 	npctalk "Milo River: " + strcharinfo(0) + ", you win! You can go out and magnify yourself. You are moving to the lobby in three seconds.";
 	donpcevent "Ivan Ivanov#16.2rm::OnStart";
 	// sleep2 3000;	// should simulate player attached
@@ -5221,7 +5218,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 		cutin "ep162_dn03.bmp",2;
 		classchange( HIDDEN_WARP_NPC, "Dien#162gmbs2", bc_self );
 		if (terra_gloria_lady_part == 9) {
-			getitem 25155,10;
+			getitem 25155,10;	// Schwartz's_Honor_Token
 			getexp 200000,200000;
 			completequest 14600;// Gentleman on second floor
 			completequest 11462;// Doubt
@@ -5238,8 +5235,7 @@ rebel_in,122,71,3	script	Rebellion leader#162gmb	4_M_RUPERT,{
 	close;
 
 OnInit:
-	questinfo 11454, QTYPE_QUEST;
-	setquestinfo_req 11454, 11455,0, 11456,0, 11457,0, 14601,1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11454) == 0 && isbegin_quest(11455) == 0 && isbegin_quest(11456) == 0 && isbegin_quest(11457) == 0 && isbegin_quest(14601) == 1" );
 	end;
 }
 
@@ -6550,7 +6546,7 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 		npctalk "Please visit us again, adventurer.", "Rookie#16nego02", bc_self;
 		erasequest 14614;// Convince the leaders
 		setquest 14615;// Between negotiation and deception
-		getitem 25155,10;
+		getitem 25155,10;	// Schwartz's_Honor_Token
 		getexp 1000000,500000;
 		terra_gloria_main = 17;
 		close3;
@@ -6561,11 +6557,8 @@ rebel_in,86,61,5	script	Lazy#16nego05	4_M_LAZY,{
 	close3;
 
 OnInit:
-	questinfo 14614, QTYPE_QUEST;
-	setquestinfo_req 14614, 14599,1;
-
-	questinfo 14615, QTYPE_QUEST;
-	setquestinfo_req 14615, 14602,2, 11462,2;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(14614) == 0 && isbegin_quest(14599) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(14615) == 0 && isbegin_quest(14602) == 2 && isbegin_quest(11462) == 2" );
 	end;
 }
 // Old Lady Room - Outside
@@ -6877,8 +6870,7 @@ OnTouch:
 	end;
 
 OnInit:
-	questinfo 11463, QTYPE_QUEST;
-	setquestinfo_req 11463, 14600,2, 11464,0;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11463) == 0 && isbegin_quest(14600) == 0 && isbegin_quest(11464) == 2" );
 	end;
 }
 
@@ -7515,8 +7507,8 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 				next;
 				mes "[Rebellion Guard leader Larcis]";
 				mes "If you bring this token to Strasse at the stairs at 10 o'clock in the corridor of the 2nd floor, you will receive something useful in return.";
-				delitem 25166,4;
-				getitem 25155,3;
+				delitem 25166,4;	// Very_Shining_Ring
+				getitem 25155,3;	// Schwartz's_Honor_Token
 				erasequest 11469;// Cotness's Shiny Ring
 				setquest 11470;// Cotness's Shiny Ring
 				getexp 150000,150000;
@@ -7528,12 +7520,10 @@ rebel_in,162,87,5	script	Rebellion Guard leader#2	4_M_REBELLION,{
 	end;
 
 OnInit:
-	questinfo 11465, QTYPE_QUEST;
-	questinfo 11467, QTYPE_QUEST;
-	questinfo 11469, QTYPE_QUEST;
-	setquestinfo_req 11465, 11464,2;
-	setquestinfo_req 11467, 11464,2;
-	setquestinfo_req 11469, 11464,2;
+	// todo: check the playtime condition to display the bubble
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11465) == 0 && (checkquest(11466,PLAYTIME) == -1 || checkquest(11466,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11467) == 0 && (checkquest(11468,PLAYTIME) == -1 || checkquest(11466,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(11469) == 0 && (checkquest(11470,PLAYTIME) == -1 || checkquest(11466,PLAYTIME) == 2) && isbegin_quest(11464) == 2" );
 	end;
 }
 
@@ -7905,7 +7895,7 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 			mes "[Arivero Yurhik]";
 			mes "I have several things to prepare. I believe you also need some time to get ready before departing, don't you?";
 			next;
-			setquest 5727;
+			setquest 5727;	// Suddenly in charge
 			mes "[Arivero Yurhik]";
 			mes "I will be fully ready after 4:00 am tomorrow. Once you are ready after that time, tell my elder sister. Then I will get here quickly.";
 			close2;
@@ -7998,8 +7988,8 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 			mes "[" + strcharinfo(0) + "]";
 			mes "Do you agree?";
 			next;
-			erasequest 5727;
-			setquest 5728;
+			erasequest 5727;	// Suddenly in charge
+			setquest 5728;	// Headache
 			yurhik_quest = 1;
 			emotion ET_CONFUSE;
 			mes "[Arivero Yurhik]";
@@ -8098,8 +8088,8 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 		mes "[Arivero Yurhik]";
 		mes "You come to the very end of the freight train with the items with full of fire attributes.";
 		next;
-		erasequest 5728;
-		setquest 5729;
+		erasequest 5728;	// Headache
+		setquest 5729;	// To Einbech
 		yurhik_quest = 2;
 		mes "[Arivero Yurhik]";
 		mes "See you at the end of the freight train.";
@@ -8178,8 +8168,8 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 		mes "Ah! I see.";
 		mes "It is a great idea.";
 		next;
-		erasequest 5731;
-		setquest 5732;
+		erasequest 5731;	// Clana Namieri
+		setquest 5732;	// To Lighthalzen
 		yurhik_quest = 5;
 		mes "[Arivero Yurhik]";
 		mes "As I told you, I used to be the hottest person in Clana Nemieri before you showed up!";
@@ -8231,8 +8221,8 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 		mes "[Arivero Yurhik]";
 		mes "So please bring one Star Crumb, the core material. Once you bring it to me, we can repair it and leave right away. I will be ready for it.";
 		next;
-		erasequest 5733;
-		setquest 5734;
+		erasequest 5733;	// Clana Namieri
+		setquest 5734;	// Core materials are always a problem
 		yurhik_quest = 7;
 		mes "[Arivero Yurhik]";
 		mes "All we have to do is to insert the Star Crumb. So once you bring it, we can leave right away.";
@@ -8289,8 +8279,8 @@ rebel_in,78,66,6	script	Arivero Yurhik#TFQ02	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGE
 		mes "Please get four Great Natures and come to Yuno. They have opposite attributes to the Wind attribute.";
 		next;
 		delitem 1000,1;// Star Crumb
-		erasequest 5734;
-		setquest 5735;
+		erasequest 5734;	// Core materials are always a problem
+		setquest 5735;	// To Yuno
 		yurhik_quest = 8;
 		mes "[Arivero Yurhik]";
 		mes "See you in Yuno.";
@@ -8355,7 +8345,7 @@ rebel_in,78,63,6	script	Rebellion leader#TFQ15	HIDDEN_WARP_NPC,{		// 4_M_RUPERT
 		mes "[Rebellion leader]";
 		mes "Since it was not an official mission, I cannot give you a huge reward. But it's still a remarkable achievement.";
 		next;
-		completequest 5737;
+		completequest 5737;	// Clana Namieri
 		getitem 25155,10;// Schwartz's Honor Token
 		getexp 1000000,4000000;
 		yurhik_quest = 11;
@@ -8430,8 +8420,8 @@ einbech,212,212,6	script	Arivero Yurhik#TFQ04	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		mes "If we attack it using a Water attribute, the equipment will be destroyed. Hey, pal. Bring an item with a strong Water attribute.";
 		next;
 		delitem 994,1;// Flame Heart
-		erasequest 5729;
-		setquest 5730;
+		erasequest 5729;	// To Einbech
+		setquest 5730;	// Things that can destroy the device
 		yurhik_quest = 3;
 		mes "[Arivero Yurhik]";
 		mes "Obviously we will need more than one. Please bring me several of those. I will be guarding here to prevent the equipment from disappearing.";
@@ -8483,8 +8473,8 @@ einbech,212,212,6	script	Arivero Yurhik#TFQ04	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		mes "But, eventually, teleporting will become possible.";
 		next;
 		delitem 995,3;// Mystic Frozen
-		erasequest 5730;
-		setquest 5731;
+		erasequest 5730;	// // Things that can destroy the device
+		setquest 5731;	// // Clana Namieri
 		yurhik_quest = 4;
 		mes "[Arivero Yurhik]";
 		mes "We destroyed the prohibition equipment. Now let's go back to Clana Nemieri.";
@@ -8587,8 +8577,8 @@ lighthalzen,135,233,6	script	Arivero Yurhik#TFQ07	HIDDEN_WARP_NPC,{		// 4_M_GUNS
 		next;
 		delitem 995,1;// Mystic Frozen
 		delitem 996,3;// Rough Wind
-		erasequest 5732;
-		setquest 5733;
+		erasequest 5732;	// To Lighthalzen
+		setquest 5733;	// Clana Namieri
 		yurhik_quest = 6;
 		mes "[Arivero Yurhik]";
 		mes "To avoid getting caught, let's scatter.";
@@ -8661,8 +8651,8 @@ yuno,204,226,6	script	Arivero Yurhik#TFQ10	HIDDEN_WARP_NPC,{		// 4_M_GUNSLINGER
 		mes "We destroyed the prohibition equipment and there appear to be.. no eyewitnesses. Just in case, let's scatter and move to Einbroch.";
 		next;
 		delitem 997,3;// Great Nature
-		erasequest 5735;
-		setquest 5736;
+		erasequest 5735;	// To Yuno
+		setquest 5736;	// To Einbroch
 		yurhik_quest = 9;
 		emotion ET_HUK;
 		mes "[Arivero Yurhik]";
@@ -8767,8 +8757,8 @@ einbroch,262,42,4	script	Arivero Yurhik#TFQ13	HIDDEN_WARP_NPC,{		// 4_M_GUNSLING
 		classchange( HIDDEN_WARP_NPC, "Arivero Yurhik#TFQ13", bc_self );
 		delitem 997,1;// Great Nature
 		delitem 994,3;// Flame Heart
-		erasequest 5736;
-		setquest 5737;
+		erasequest 5736;	// To Einbroch
+		setquest 5737;	// Clana Namieri
 		yurhik_quest = 10;
 		mes "Vero disappeared all of a sudden after saying goodbye. What's going on here? Has he been summoned for an urgent mission?";
 		mes "Vero's gone. Shall I go back to Clana Nemieri?";
@@ -8838,7 +8828,7 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 		getitem 25161,1;// Delicious Handmade Cookie
 		close;
 	}
-	// twin daily quest
+	// twins daily quest
 	if (isbegin_quest(16030) == 1) {
 		mes "[Detached Force commander Ericsson]";
 		mes "Cookies? Lebedev twins made them?";
@@ -8910,15 +8900,15 @@ rebel_in,91,67,3	script	Ericsson Adler#16.2rm	4_MAL_CAPTAIN,{
 	end;
 
 OnInit:
-	questinfo 16045, QTYPE_QUEST;
-	setquestinfo_req 16045, 14615,2;
+	// Ericsson daily
+	.@terra_main_18$ = "isbegin_quest(14615) == 2";
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && isbegin_quest(16045) == 0") );
 
-	// twin daily quest
-	questinfo 16020, QTYPE_QUEST;
-	setquestinfo_req 16020, 16030,1;
-	// questinfocondition 16020, " countitem(25161) > 0 ";
+	// twins daily quest : "Service: Cookies delivery"
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16030) == 1 && countitem(25161) > 0" );
 	end;
 }
+
 
 // Daily Quest - Mason Bender Business
 rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
@@ -8973,6 +8963,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			mes "People were just excited about small kids shooting guns.";
 			completequest 16014;// Testimony: Sniper's story
 			lebedev_quest_16_2++;
+			questinfo_refresh();
 			close;
 		}
 	}
@@ -9076,11 +9067,11 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			next;
 			mes "[Mason Bender]";
 			mes "Now! I will give you the leaflets. See you!";
-			setquest 16054;
-			setquest 16055;
-			setquest 16056;
-			setquest 16057;
-			getitem 25163,3;
+			setquest 16054;	// Differentiated advertising strategy
+			setquest 16055;	// Advertising: Dou you want a clean city?
+			setquest 16056;	// Advertising: Then blow it all away!
+			setquest 16057;	// Advertising: Suitable revenge for old age!
+			getitem 25163,3;	// Arms_Shop_Ad
 			close;
 		case 1:
 			if (isbegin_quest(16055) != 2 || isbegin_quest(16056) != 2 || isbegin_quest(16057) != 2) {
@@ -9095,7 +9086,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 					mes "[Mason Bender]";
 					mes "Please don't mistreat the leaflets. This time, I will give them to you again.";
 					.@count = (isbegin_quest(16055) != 2) + (isbegin_quest(16056) != 2) + (isbegin_quest(16057) != 2);
-					getitem 25163,.@count;
+					getitem 25163,.@count;	// Arms_Shop_Ad
 					close;
 				}
 				mes "[Mason Bender]";
@@ -9103,7 +9094,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 				mes "You will be spreading my talented writing in the entire village!";
 				close;
 			}
-			mes "[Mason Bender]";	// todo questinfo display at this point
+			mes "[Mason Bender]";
 			mes "Welcome back! How did they respond?";
 			next;
 			mes "[" + strcharinfo(0) + "]";
@@ -9128,13 +9119,13 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			next;
 			mes "[Mason Bender]";
 			mes "If you don't mind, could you please come back tomorrow and help me receiving customers? Huhu...";
-			completequest 16054;
-			erasequest 16055;
-			erasequest 16056;
-			erasequest 16057;
-			setquest 16058;
+			completequest 16054;	// Differentiated advertising strategy
+			erasequest 16055;	// Advertising: Dou you want a clean city?
+			erasequest 16056;	// Advertising: Then blow it all away!
+			erasequest 16057;	// Advertising: Suitable revenge for old age!
+			setquest 16058;	// Slow advertising effect
 			getexp 100000,100000;
-			getitem 25155,10;
+			getitem 25155,10;	// Schwartz's_Honor_Token
 			close;
 		case 2:
 			break;
@@ -9142,7 +9133,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 		break;
 	case 0:
 	case 1:
-		mes "[Mason Bender]";	// todo (note) no questinfo at this point
+		mes "[Mason Bender]";
 		mes "Welcome! Glad to meet you! Have you come to buy the mortar... Oh?";
 		mes "... It's you, adventurer. Welcome.";
 		next;
@@ -9180,7 +9171,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 		mes "I apologize on behalf of Mason that he kicked you out. Please come back tomorrow and give him a valuable advice so that he can rouse himself.";
 		close;
 	case 2:
-		erasequest 16058;
+		erasequest 16058;	// Slow advertising effect
 		break;
 	}
 	if (isbegin_quest(16059) == 0) {
@@ -9230,11 +9221,11 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "(I don't think there will be anyone who seem to need the mortar earnestly)";
-		setquest 16059;
-		setquest 16055;
-		setquest 16056;
-		setquest 16057;
-		getitem 25163,3;
+		setquest 16059;	// Differentiated advertising strategy
+		setquest 16055;	// Advertising: Dou you want a clean city?
+		setquest 16056;	// Advertising: Then blow it all away!
+		setquest 16057;	// Advertising: Suitable revenge for old age!
+		getitem 25163,3;	// Arms_Shop_Ad
 		close;
 	}
 	if (isbegin_quest(16055) != 2 || isbegin_quest(16056) != 2 || isbegin_quest(16057) != 2) {
@@ -9249,7 +9240,7 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 			mes "[Mason Bender]";
 			mes "Please don't mistreat the leaflets. This time, I will give them to you again.";
 			.@count = (isbegin_quest(16055) != 2) + (isbegin_quest(16056) != 2) + (isbegin_quest(16057) != 2);
-			getitem 25163,.@count;
+			getitem 25163,.@count;	// Arms_Shop_Ad
 			close;
 		}
 		mes "[Mason Bender]";
@@ -9270,27 +9261,26 @@ rebel_in,19,48,5	script	Mason Bender#16.2rm	4_M_KHMAN,{
 	mes "[Mason Bender]";
 	mes "Then I will get ready to receive customers again!";
 	mes "I will be busy tomorrow. If you want to visit us, make a reservation in advance.";
-	erasequest 16055;
-	erasequest 16056;
-	erasequest 16057;
-	erasequest 16059;
-	setquest 16058;
+	erasequest 16055;	// Advertising: Dou you want a clean city?
+	erasequest 16056;	// Advertising: Then blow it all away!
+	erasequest 16057;	// Advertising: Suitable revenge for old age!
+	erasequest 16059;	// Differentiated advertising strategy
+	setquest 16058;	// Slow advertising effect
 	getexp 100000,100000;
 	getitem 25155,3;// Schwartz's Honor Token
 	close;
 
 OnInit:
-	// todo questinfo (1st time and daily)
-	questinfo 16059, QTYPE_QUEST;
-	setquestinfo_req 16059, 14615,2, 16058,0;	// actually should display when playtime == 2
+	// Mason Bender Business
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16054) == 0" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16055) == 2 && isbegin_quest(16056) == 2 && isbegin_quest(16057) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16059) == 0 && isbegin_quest(16054) == 2 && (checkquest(16058,PLAYTIME) == -1 || checkquest(16058,PLAYTIME) == 2)" );
 
-	questinfo 16015, QTYPE_QUEST;
-	setquestinfo_req 16015, 16014,1;
+	// Lebedev twins quest
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16014) == 1" );
 
-	// twin daily quest
-	questinfo 16020, QTYPE_QUEST;
-	setquestinfo_req 16020, 16028,1;
-	// questinfocondition 16020, " countitem(25161) > 0 ";
+	// twins daily quest : "Service: Cookies delivery"
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16028) == 1 && countitem(25161) > 0" );
 	end;
 }
 
@@ -9317,8 +9307,8 @@ einbech,71,168,1	script	Tired Looking Man#16.2r	4_M_SEAMAN,{
 		next;
 		mes "[Tired Looking Man]";
 		mes "Mortar? Are we having a war? Why would I buy it?";
-		completequest 16055;
-		delitem 25163,1;
+		delitem 25163,1;	// Arms_Shop_Ad
+		completequest 16055;	// Advertising: Dou you want a clean city?
 		close;
 	case 2:
 		mes "[Tired Looking Man]";
@@ -9329,8 +9319,7 @@ einbech,71,168,1	script	Tired Looking Man#16.2r	4_M_SEAMAN,{
 	end;
 
 OnInit:
-	questinfo 16055, QTYPE_QUEST;
-	setquestinfo_req 16055, 14615,2, 16059,0;	// actually should display when playtime == 2
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16055) == 1 && (checkquest(16058,PLAYTIME) == -1 || checkquest(16058,PLAYTIME) == 2)" );	// todo
 	end;
 }
 
@@ -9357,8 +9346,8 @@ einbech,79,100,3	script	Tired Looking Old man#1	4_M_BARYO_OLD,{
 		next;
 		mes "[Tired Looking Old man]";
 		mes "I will take the leaflets if you give me... But I only need a little amount of gunpowder in the mine.";
-		completequest 16056;
-		delitem 25163,1;
+		delitem 25163,1;	// Arms_Shop_Ad
+		completequest 16056;	// Advertising: Then blow it all away!
 		close;
 	case 2:
 		mes "[Tired Looking Old man]";
@@ -9369,7 +9358,7 @@ einbech,79,100,3	script	Tired Looking Old man#1	4_M_BARYO_OLD,{
 	end;
 
 OnInit:
-	// questinfo 16056, QTYPE_QUEST, 1;// display when == 1
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16056) == 1 && (checkquest(16058,PLAYTIME) == -1 || checkquest(16058,PLAYTIME) == 2)" );	// todo
 	end;
 }
 
@@ -9395,8 +9384,8 @@ einbech,170,143,3	script	Sleepy Looking Old woman	4_F_BARYO_OLD,{
 		next;
 		mes "[Sleepy Looking Old woman]";
 		mes "Dried filefish fillet? Are you selling it? Oh, I don't have tooth so I can't eat it.";
-		completequest 16057;
-		delitem 25163,1;
+		delitem 25163,1;	// Arms_Shop_Ad
+		completequest 16057;	// Advertising: Suitable revenge for old age!
 		close;
 	case 2:
 		mes "[Sleepy Looking Old woman]";
@@ -9406,7 +9395,8 @@ einbech,170,143,3	script	Sleepy Looking Old woman	4_F_BARYO_OLD,{
 	end;
 
 OnInit:
-	//16057
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(16057) == 1 && (checkquest(16058,PLAYTIME) == -1 || checkquest(16058,PLAYTIME) == 2)" );	// todo
+	end;
 }
 
 // Milo Quests
@@ -9457,6 +9447,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			mes "This is all I can tell you.";
 			completequest 16013;// Testimony: Chef's story
 			lebedev_quest_16_2++;
+			questinfo_refresh();
 			next;
 			mes "[" + strcharinfo(0) + "]";
 			mes "(I heard a similar story from others...";
@@ -9465,7 +9456,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			close;
 		}
 	}
-	// twin daily quest
+	// twins daily quest
 	if (isbegin_quest(16027) == 1) {
 		mes "[Milo River]";
 		mes "Cookies? Made by the twins?";
@@ -9677,7 +9668,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 				mes "[Milo River]";
 				mes "Thank you! I will give you enough Anchovy cookies.";
 				mes "They are for cats. Give them to Charity and bring back the rest of them. Make sure you don't eat them.";
-				getitem 25162,1;
+				getitem 25162,1;	// Crispy_Anchovy
 				setquest 16041;// Investigation: Capture strolling cat operation
 				close;
 			case 1:
@@ -9695,7 +9686,7 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 					next;
 					mes "[Milo River]";
 					mes "Anyway, I'll give you the Anchovy cookies again. Please keep them safe. This time, you return with Charity and Anchovy cookies!";
-					getitem 25162,1;
+					getitem 25162,1;	// Crispy_Anchovy
 					close;
 				}
 				mes "[Milo River]";
@@ -9842,11 +9833,11 @@ rebel_in,108,27,3	script	Milo River#16.2rm	4_M_GUNSLINGER2,{
 			classchange( HIDDEN_WARP_NPC, "Morana Rudel#16.2rm", bc_self );
 			classchange( HIDDEN_WARP_NPC, "Nice Looking Gun#16.2rm", bc_self );
 			if (countitem(25162) > 0)
-				delitem 25162,1;
+				delitem 25162,1;	// Crispy_Anchovy
 			erasequest 16044;// In charge of Charity
 			setquest 16042;// Charity temporarily stays
 			getexp 100000,100000;
-			getitem 25155,10;
+			getitem 25155,10;	// Schwartz's_Honor_Token
 			next;
 			mes "[Charity]";
 			mes "Meow~";
@@ -9895,23 +9886,18 @@ S_Item:
 	close;
 
 OnInit:
-	questinfo 16032, QTYPE_QUEST;
-	setquestinfo_req 16032, 14615,2;
-	questinfo 16041, QTYPE_QUEST;
-	setquestinfo_req 16041, 14615,2, 16044,0, 16042,0;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16032) == 0 && isbegin_quest(14615) == 2" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16041) == 0 && isbegin_quest(14615) == 2 && isbegin_quest(16044) == 0 && isbegin_quest(16042) == 0" );
 
-	questinfo 16015, QTYPE_QUEST;
-	setquestinfo_req 16015, 16013,1;
+	// Lebedev twins quest
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16013) == 1" );
 
 	// twin quest main - display when 16027 active
-	questinfo 16013, QTYPE_QUEST;
-	setquestinfo_req 16013, 16012,1;
-	setquestinfo_req 16015, 16013,2, 16014,2;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16013) == 0 && isbegin_quest(16012) == 1" );
+	// questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16015) == 0 && isbegin_quest(16013) == 2 && isbegin_quest(16014) == 2" );
 
-	// twin daily quest
-	questinfo 16020, QTYPE_QUEST;
-	setquestinfo_req 16020, 16027,1;
-	// questinfocondition 16020, " countitem(25161) > 0 ";
+	// twins daily quest : "Service: Cookies delivery"
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16027) == 1 && countitem(25161) > 0" );
 	end;
 }
 
@@ -9984,7 +9970,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		mes "Firearms are actually consumables. If someone shoots them, someone has to maintain them.";
 		close;
 	}
-	// twin daily quest
+	// twins daily quest
 	if (isbegin_quest(16029) == 1) {
 		mes "[Rachel Smith]";
 		mes "Cookies? Where did you get them? Aha... Made by Lebedev kids?";
@@ -10056,7 +10042,7 @@ rebel_in,90,51,5	script	Rachel Smith#16.2rm	4_F_GUNSLINGER2,{
 		mes "[Rachel Smith]";
 		mes "Bring this revolver to Einbroch Blacksmith guild and show it to them. Since I am a member of that guild, they will recognize it when they see the revolver repaired by me. I am counting on you.";
 		setquest 16035;// Delivery: Explosive revolver materials
-		getitem 25151,1;
+		getitem 25151,1;	// Rachel's_Revolver
 		rachel_quest_16_2 = 1;
 		close;
 	}
@@ -10229,22 +10215,16 @@ S_Quest:
 	close;
 
 OnInit:
-	questinfo 16035, QTYPE_QUEST;
-	setquestinfo_req 16035, 14615,2;
-	// questinfocondition 16035, " isbegin_quest(16036) == 0 || isbegin_quest(16036) == 1 ";
+	.@terra_main_18$ = "isbegin_quest(14615) == 2";
+	.@has_item$ = 
+		"(isbegin_quest(16038) == 1 && countitem(984) > 1) || " +
+		"(isbegin_quest(16039) == 1 && countitem(985) > 1) || " +
+		"(isbegin_quest(16040) == 1 && countitem(998) > 4)";
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && isbegin_quest(16035) == 0 && (isbegin_quest(16036) == 0 || isbegin_quest(16036) == 1)") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && ((checkquest(16037,PLAYTIME) == -1 && (" + .@has_item$ + ")) || checkquest(16037,PLAYTIME) == 2)") );
 
-	questinfo 16037, QTYPE_QUEST;
-	setquestinfo_req 16037, 14615,2;
-	// questinfocondition 16020, " countitem(25161) > 0 ";
-
-	// todo: display when playtime completed
-	// todo: display when erasequest 16036; and no quest
-	// todo: display when item req in inventory
-
-	// twin daily quest
-	questinfo 16020, QTYPE_QUEST;
-	setquestinfo_req 16020, 16029,1;
-	// questinfocondition 16020, " countitem(25161) > 0 ";
+	// twins daily quest : "Service: Cookies delivery"
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16029) == 1 && countitem(25161) > 0" );
 	end;
 }
 
@@ -10298,8 +10278,7 @@ ein_in01,38,21,3	script	Blacksmith Jack#16.2rm	4_M_MIDDLE1,{
 	close;
 
 OnInit:
-	questinfo 16036, QTYPE_QUEST;
-	setquestinfo_req 16036, 16035,1;
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16035) == 1" );
 	end;
 }
 
@@ -10546,7 +10525,7 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 		else if (.@card[2] == 0)
 			.@card[2] = .@enhance[ rand(.@size) ];
 
-		delitem 25155,20;
+		delitem 25155,20;	// Schwartz's_Honor_Token
 		delequip EQI_ARMOR;
 		getitem2 .@equip_id,1,1,.@refine,0,.@card[0],.@card[1],.@card[2],.@card[3];
 		specialeffect2 EF_REPAIRWEAPON;
@@ -10614,7 +10593,7 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 		else if (.@card[2] == 0)
 			.@card[2] = .@enhance[ rand(.@size) ];
 
-		delitem 25155,5;
+		delitem 25155,5;	// Schwartz's_Honor_Token
 		delequip EQI_ACC_L;
 		getitem2 .@equip_id,1,1,0,0,.@card[0],.@card[1],.@card[2],.@card[3];
 		specialeffect2 EF_REPAIRWEAPON;
@@ -10661,7 +10640,7 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 			mes "Listen, fellow. If you don't have any " + getitemname(25155) + ", you cannot trade with me.";
 			close;
 		}
-		delitem 25155,10;
+		delitem 25155,10;	// Schwartz's_Honor_Token
 		delequip EQI_ARMOR;
 		getitem2 .@equip_id,1,1,.@refine,0,.@card[0],0,0,0;
 		specialeffect2 EF_REPAIRWEAPON;
@@ -10718,7 +10697,7 @@ rebel_in,90,40,5	script	Hogar#pa0829	4_M_MASKMAN,{
 			mes "Listen, fellow. If you don't have any " + getitemname(25155) + ", you cannot trade with me.";
 			close;
 		}
-		delitem 25155,10;
+		delitem 25155,10;	// Schwartz's_Honor_Token
 		delequip EQI_ACC_L;
 		if (rand(100) < 20) {
 			specialeffect2 EF_LORD;
@@ -11179,8 +11158,10 @@ rebel_in,108,36,3	script	Master#16nego02	4_F_HUWOMAN,{
 	end;
 
 OnInit:
-	questinfo 14610, QTYPE_QUEST;
-	setquestinfo_req 14610, 14615,2, 14612,0, 14611,0;	// note: display questinfo when hunting completed too
+	// todo: check the result when 25153 not in inventory but HUNTING completed, when playtime completed
+	.@terra_main_18$ = "isbegin_quest(14615) == 2";
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && (checkquest(14610,HUNTING) == -1 || checkquest(14610,HUNTING) == 2) && checkquest(14612,PLAYTIME) == -1 && isbegin_quest(14611) == 0") );
+	questinfo( QTYPE_QUEST, QMARK_NONE, (.@terra_main_18$ + " && (checkquest(14612,PLAYTIME) == 2 || checkquest(14611,HUNTING) == 2)") );
 	end;
 }
 
@@ -11192,9 +11173,10 @@ ein_fild09,70,175,5	script	Suspicious Heap of Earth#1	4_SOIL,{
 		mes "You've reclaimed enough of them. Let's go back to the Master.";
 		close;
 	}
-	mes "";	// fix me
+	setpcblock PCBLOCK_NPC, true;
 	npctalk "It's the Heap of Earth where Broken Guns have been buried. Let's dig it and reclaim the guns.", "", bc_self;
 	sleep2 1000;
+	setpcblock PCBLOCK_NPC, false;
 	npctalk "As you attempted to reclaim the Broken Gun, the Heap of Earth moved and something popped out suddenly.", "", bc_self;
 	getmapxy .@map$,.@x,.@y, BL_NPC;
 	monster .@map$,.@x,.@y,"Grudge of Broken Gun",3629,1;
@@ -11251,7 +11233,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 		mes "Why do you carry so many stuffs? Unless you want to give them away, make your bag lighter and come back.";
 		close;
 	}
-	if (terra_gloria_main == 15) {
+	if (terra_gloria_main < 16) {
 		cutin "16loo_03.bmp",2;
 		mes "[Rookie]";
 		mes "If you value your life, don't stimulate the people here. Many of them are short-tempered.";
@@ -11675,7 +11657,7 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 			cutin "16loo_01.bmp",2;
 			mes "[Rookie]";
 			mes "Please take a good rest today. We will count on you again tomorrow. You must be exhausted.";
-			erasequest 14606;// Pipe repair materials
+			erasequest 14603;// Pipe repair materials
 			delitem 999,5;// Steel
 			delitem 7319,15;// Used Iron Plate
 			setquest 14609;// Quiet time
@@ -12713,10 +12695,13 @@ rebel_in,88,61,5	script	Rookie#16nego02	4_M_ROOKIE,{
 	end;
 
 OnInit:
-	questinfo 14603, QTYPE_QUEST;
-	setquestinfo_req 14603, 14615,2, 14604,0;
-	questinfo 14604, QTYPE_QUEST;
-	setquestinfo_req 14604, 14615,2, 14603,0;
+	// todo: check conditions
+	.@terra_main_18$ = "isbegin_quest(14615) == 2";
+	.@conditions$ =
+		.@terra_main_18$ +
+		" && isbegin_quest(14603) == 0 && isbegin_quest(14604) == 0 && isbegin_quest(14605) == 0 && isbegin_quest(14606) == 0 && isbegin_quest(14607) == 0 && isbegin_quest(14608) == 0" +
+		" && checkquest(14609,PLAYTIME) == -1";
+	questinfo( QTYPE_QUEST, QMARK_NONE, .@conditions$ );
 	end;
 }
 
@@ -12749,7 +12734,7 @@ slabw01,235,137,3	script	Suspicious cabinet#hide01	4_ENERGY_WHITE,{
 	else {
 		mes "^4d4dffYou can stop searching and take a rest!^000000";
 		mes "We will search for the rest of them.";
-		setquest 7760;
+		setquest 7760;	// Well hidde
 		for ( .@quest_id = 7752; .@quest_id < 7760; .@quest_id++ ) {
 			if (isbegin_quest(.@quest_id) == 1)
 				erasequest .@quest_id;
@@ -13089,6 +13074,7 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 		}
 		setquest 16015;// The cause of failure is a careless attempt
 		lebedev_quest_16_2 = 5;
+		questinfo_refresh();
 		close;
 	}
 	if (lebedev_quest_16_2 == 5 || lebedev_quest_16_2 == 6) {
@@ -13521,17 +13507,12 @@ rebel_in,109,54,3	script	Jana Levedeva#16.2rm	4_F_ANYA,{
 	end;
 
 OnInit:
-	questinfo 16013, QTYPE_QUEST;
-	setquestinfo_req 16013, 16012,1;
-
-	questinfo 16015, QTYPE_QUEST;
-	setquestinfo_req 16015, 16013,2, 16014,2;
+	// incomplete
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16012) == 1" );
+	questinfo( QTYPE_QUEST, QMARK_NONE, "lebedev_quest_16_2 == 4" );
 
 	// twin cookies
-	questinfo 16020, QTYPE_QUEST;
-	setquestinfo_req 16020, 16027,2, 16028,2, 16029,2, 16030,2, 16031,2;
-
-	// todo
+	questinfo( QTYPE_QUEST, QMARK_NONE, "isbegin_quest(16027) == 2 && isbegin_quest(16028) == 2 && isbegin_quest(16029) == 2 && isbegin_quest(16030) == 2 && isbegin_quest(16031) == 2" );
 	end;
 }
 
