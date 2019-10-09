@@ -11016,7 +11016,7 @@ lighthalzen,141,162,3	script	Old Man#reken	85,{
 	close;
 }
 
-einbroch,55,52,3	script	Laboratory Guard#reken	 852,{
+einbroch,55,52,3	script	Laboratory Guard#reken	852,{
 
 	if(lhz_rekenber == 3)
 	{
