@@ -15,6 +15,7 @@
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 
 #include "clan.hpp"
 #include "clif.hpp"
@@ -23,6 +24,8 @@
 #include "npc.hpp"
 #include "party.hpp"
 #include "pc.hpp"
+
+using namespace rathena;
 
 /// Instance Idle Queue data
 struct s_instance_wait {
@@ -33,8 +36,9 @@ struct s_instance_wait {
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
 int16 instance_start = 0;
+int instance_count = 1;
 
-std::vector<std::shared_ptr<s_instance_data>> instances;
+std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
 
 const std::string InstanceDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/instance_db.yml";
@@ -52,7 +56,7 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!this->asUInt32(node, "Id", instance_id))
 		return 0;
 
-	if (instance_id == 0 || instance_id > INT_MAX) {
+	if (instance_id <= 0) {
 		this->invalidWarning(node, "Instance \"Id\" is invalid. Valid range 1~%d, skipping.\n", INT_MAX);
 		return 0;
 	}
@@ -191,32 +195,6 @@ bool InstanceDatabase::reload() {
 InstanceDatabase instance_db;
 
 /**
- * Searches for an active instance
- * @param instance_id: ID to lookup
- * @return shared_ptr of instances on success or nullptr on failure
- */
-std::shared_ptr<s_instance_data> instance_search(int instance_id)
-{
-	if (instance_id == 0 || instance_id > INT_MAX)
-		return nullptr;
-
-	return instances[instance_id]->id ? instances[instance_id] : nullptr;
-}
-
-/**
- * Searches for an instance in the database
- * @param instance_id: ID to search for
- * @return shared_ptr of instance or nullptr on failure
- */
-std::shared_ptr<s_instance_db> instance_search_db(int instance_id)
-{
-	if (instance_id == 0 || instance_id > INT_MAX)
-		return nullptr;
-
-	return instance_db.find(instance_id);
-}
-
-/**
  * Searches for an instance name in the database
  * @param instance_name: Instance to search for
  * @return shared_ptr of instance or nullptr on failure
@@ -238,7 +216,7 @@ std::shared_ptr<s_instance_db> instance_search_db_name(const char *instance_name
  * @param target: Target display type
  */
 void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_target *target) {
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if (!idata) {
 		sd = nullptr;
@@ -293,7 +271,7 @@ static TIMER_FUNC(instance_subscription_timer){
 	struct clan *cd;
 	e_instance_mode mode;
 	int ret = instance_addmap(instance_id); // Check that maps have been added
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if (!idata)
 		return 0;
@@ -350,16 +328,16 @@ bool instance_startkeeptimer(std::shared_ptr<s_instance_data> idata, int instanc
 	if (!idata || idata->keep_timer != INVALID_TIMER)
 		return false;
 
-	std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
+	std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
 	if (!db)
 		return false;
 
 	// Add timer
-	t_tick now = gettick();
+	t_tick duration = gettick() + db->limit * 1000;
 
-	idata->keep_limit = now + db->limit;
-	idata->keep_timer = add_timer(now + db->limit * 1000, instance_delete_timer, instance_id, 0);
+	idata->keep_limit = duration;
+	idata->keep_timer = add_timer(duration, instance_delete_timer, instance_id, 0);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -399,16 +377,16 @@ bool instance_startidletimer(std::shared_ptr<s_instance_data> idata, int instanc
 	if (!idata || idata->idle_timer != INVALID_TIMER)
 		return false;
 
-	std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
+	std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
 	if (!db)
 		return false;
 
 	// Add the timer
-	t_tick now = gettick();
+	t_tick duration = gettick() + db->timeout * 1000;
 
-	idata->idle_limit = now + db->timeout;
-	idata->idle_timer = add_timer(now + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	idata->idle_limit = duration;
+	idata->idle_timer = add_timer(duration, instance_delete_timer, instance_id, 0);
 
 	switch(idata->mode) {
 		case IM_NONE:
@@ -602,21 +580,11 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 			return -2;
 	}
 
-	if (instances.size() > INT_MAX)
+	if (instance_count <= 0)
 		return -4;
 
-	int instance_id = 1;
-
-	for (int i = 1; i < instances.size(); i++) { // Find an unused index value
-		if (instance_search(i) == nullptr || i > instances.size()) {
-			instance_id = i;
-			break;
-		}
-	}
-
-	instances.push_back(std::make_shared<s_instance_data>());
-
-	std::shared_ptr<s_instance_data> entry = instance_search(instance_id);
+	int instance_id = instance_count++;
+	std::shared_ptr<s_instance_data> entry = std::make_shared<s_instance_data>();
 
 	entry->id = db->db_id;
 	entry->state = INSTANCE_IDLE;
@@ -628,6 +596,7 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 	entry->idle_timer = INVALID_TIMER;
 	entry->regs.vars = i64db_alloc(DB_OPT_RELEASE_DATA);
 	entry->regs.arrays = nullptr;
+	instances.insert({ instance_id, entry });
 
 	switch(mode) {
 		case IM_CHAR:
@@ -665,23 +634,23 @@ int instance_addmap(int instance_id) {
 	if (instance_id == 0)
 		return 0;
 
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	// If the instance isn't idle, we can't do anything
 	if (idata->state != INSTANCE_IDLE)
 		return 0;
 
-	std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
+	std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
 	if (!db)
 		return 0;
 
 	// Set to busy, update timers
-	t_tick now = gettick();
+	t_tick duration = gettick() + db->timeout * 1000;
 
 	idata->state = INSTANCE_BUSY;
-	idata->idle_limit = now + db->timeout;
-	idata->idle_timer = add_timer(now + db->timeout * 1000, instance_delete_timer, instance_id, 0);
+	idata->idle_limit = duration;
+	idata->idle_timer = add_timer(duration, instance_delete_timer, instance_id, 0);
 
 	int16 m;
 
@@ -751,7 +720,7 @@ int16 instance_mapid(int16 m, int instance_id)
 		return -1;
 	}
 
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if(!idata || idata->state != INSTANCE_BUSY)
 		return -1;
@@ -782,7 +751,7 @@ int16 instance_mapid(int16 m, int instance_id)
  */
 bool instance_destroy(int instance_id)
 {
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if (!idata)
 		return false;
@@ -817,7 +786,7 @@ bool instance_destroy(int instance_id)
 				instance_wait.id.pop_front();
 
 				for (int i = 0; i < instance_wait.id.size(); i++) {
-					if (instance_search(instance_wait.id[i])->state == INSTANCE_IDLE)
+					if (util::umap_find(instances, instance_wait.id[i])->state == INSTANCE_IDLE)
 						if ((mode == IM_CHAR && sd) || (mode == IM_PARTY && pd) || (mode == IM_GUILD && gd) || (mode == IM_CLAN && cd))
 							clif_instance_changewait(instance_id, i + 1);
 				}
@@ -887,7 +856,7 @@ bool instance_destroy(int instance_id)
 	if (instances.size() == 1) // !TODO
 		instances.clear();
 	else
-		instances.erase(instances.begin() + instance_id);
+		instances.erase(instance_id);
 
 	return true;
 }
@@ -927,7 +896,7 @@ e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, co
 	if (instance_id == 0) // Default party checks will be used
 		mode = IM_PARTY;
 	else {
-		idata = instance_search(instance_id);
+		idata = util::umap_find(instances, instance_id);
 		mode = idata->mode;
 	}
 
@@ -999,9 +968,9 @@ bool instance_reqinfo(struct map_session_data *sd, int instance_id)
 {
 	nullpo_retr(false, sd);
 
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
-	if (!idata || !instance_search_db(idata->id))
+	if (!idata || !instance_db.find(idata->id))
 		return false;
 
 	// Say it's created if instance is not busy
@@ -1025,7 +994,7 @@ bool instance_reqinfo(struct map_session_data *sd, int instance_id)
  */
 bool instance_addusers(int instance_id)
 {
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if(!idata || idata->state != INSTANCE_BUSY)
 		return false;
@@ -1046,7 +1015,7 @@ bool instance_addusers(int instance_id)
  */
 bool instance_delusers(int instance_id)
 {
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if(!idata || idata->state != INSTANCE_BUSY)
 		return false;
@@ -1071,7 +1040,7 @@ bool instance_delusers(int instance_id)
 void do_reload_instance(void)
 {
 	for (const auto &it : instances) {
-		std::shared_ptr<s_instance_data> idata = instance_search(it->id);
+		std::shared_ptr<s_instance_data> idata = it.second;
 
 		if (!idata || idata->map.empty())
 			continue;
@@ -1080,10 +1049,10 @@ void do_reload_instance(void)
 			instance_addnpc(idata);
 
 			// Create new keep timer
-			std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
+			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
 			if (db)
-				idata->keep_limit = gettick() + db->limit;
+				idata->keep_limit = gettick() + db->limit * 1000;
 		}
 	}
 
@@ -1099,8 +1068,8 @@ void do_reload_instance(void)
 			struct guild *gd;
 			struct clan *cd;
 			int instance_id;
-			std::shared_ptr<s_instance_data> idata = instance_search(map[sd->bl.m].instance_id);
-			std::shared_ptr<s_instance_db> db = instance_search_db(idata->id);
+			std::shared_ptr<s_instance_data> idata = util::umap_find(instances, map[sd->bl.m].instance_id);
+			std::shared_ptr<s_instance_db> db = instance_db.find(idata->id);
 
 			switch (idata->mode) {
 				case IM_NONE:
@@ -1156,5 +1125,5 @@ void do_init_instance(void) {
  */
 void do_final_instance(void) {
 	for (const auto &it : instances)
-		instance_destroy(it->id);
+		instance_destroy(it.first);
 }

@@ -20,6 +20,7 @@ enum send_target : uint8;
 struct block_list;
 
 extern int16 instance_start;
+extern int instance_count;
 
 #define INSTANCE_NAME_LENGTH (60+1)
 
@@ -94,10 +95,8 @@ public:
 
 extern InstanceDatabase instance_db;
 
-extern std::vector<std::shared_ptr<s_instance_data>> instances;
+extern std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
 
-std::shared_ptr<s_instance_data> instance_search(int instance_id);
-std::shared_ptr<s_instance_db> instance_search_db(int instance_id);
 std::shared_ptr<s_instance_db> instance_search_db_name(const char* name);
 void instance_getsd(int instance_id, struct map_session_data *&sd, enum send_target *target);
 

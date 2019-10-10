@@ -28,6 +28,7 @@
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -60,6 +61,8 @@
 #include "pet.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
+
+using namespace rathena;
 
 struct eri *array_ers;
 DBMap *st_db;
@@ -2745,7 +2748,7 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 					if (data->ref)
 						n = data->ref->vars;
 					else {
-						std::shared_ptr<s_instance_data> idata = instance_search(script_instancegetid(st));
+						std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
 						if (idata)
 							n = idata->regs.vars;
@@ -2811,7 +2814,7 @@ struct script_data *get_val_(struct script_state* st, struct script_data* data, 
 						if (data->ref)
 							n = data->ref->vars;
 						else {
-							std::shared_ptr<s_instance_data> idata = instance_search(script_instancegetid(st));
+							std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
 							if (idata)
 								n = idata->regs.vars;
@@ -3034,7 +3037,7 @@ struct reg_db *script_array_src(struct script_state *st, struct map_session_data
 				if (ref)
 					src = ref;
 				else {
-					std::shared_ptr<s_instance_data> idata = instance_search(script_instancegetid(st));
+					std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
 					if (idata)
 						src = &idata->regs;
@@ -3158,7 +3161,7 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 					if (ref)
 						src = ref;
 					else {
-						std::shared_ptr<s_instance_data> idata = instance_search(script_instancegetid(st));
+						std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
 						if (idata)
 							src = &idata->regs;
@@ -3230,7 +3233,7 @@ int set_reg(struct script_state* st, struct map_session_data* sd, int64 num, con
 					if (ref)
 						src = ref;
 					else {
-						std::shared_ptr<s_instance_data> idata = instance_search(script_instancegetid(st));
+						std::shared_ptr<s_instance_data> idata = util::umap_find(instances, script_instancegetid(st));
 
 						if (idata)
 							src = &idata->regs;
@@ -20184,7 +20187,7 @@ static int buildin_instance_warpall_sub(struct block_list *bl, va_list ap)
 
 	sd = (TBL_PC *)bl;
 
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if (!idata)
 		return 0;
@@ -20233,7 +20236,7 @@ BUILDIN_FUNC(instance_warpall)
 	if( instance_id == 0 || (m = map_mapname2mapid(mapn)) < 0 || (m = instance_mapid(m, instance_id)) < 0)
 		return SCRIPT_CMD_FAILURE;
 
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if (!idata) {
 		ShowError("buildin_instance_warpall: Instance is not found.\n");
@@ -20265,7 +20268,7 @@ BUILDIN_FUNC(instance_announce) {
 	if (instance_id == 0)
 		instance_id = script_instancegetid(st);
 
-	std::shared_ptr<s_instance_data> idata = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> idata = util::umap_find(instances, instance_id);
 
 	if (instance_id == 0 || !idata) {
 		ShowError("buildin_instance_announce: Instance not found.\n");
@@ -20562,10 +20565,10 @@ BUILDIN_FUNC(instance_live_info)
 	std::shared_ptr<s_instance_data> im = nullptr;
 
 	if (id > 0 && id < INT_MAX) {
-		im = instance_search(id);
+		im = util::umap_find(instances, id);
 
 		if (im)
-			db = instance_search_db(im->id);
+			db = instance_db.find(im->id);
 	}
 
 	if (!im || !db) {
@@ -24440,14 +24443,14 @@ BUILDIN_FUNC(getvariableofinstance)
 
 	int instance_id = script_getnum(st, 3);
 
-	if (instance_id == 0 || instance_id > INT_MAX) {
+	if (instance_id <= 0) {
 		ShowError("buildin_getvariableofinstance: Invalid instance ID %d.\n", instance_id);
 		script_pushnil(st);
 		st->state = END;
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	std::shared_ptr<s_instance_data> im = instance_search(instance_id);
+	std::shared_ptr<s_instance_data> im = util::umap_find(instances, instance_id);
 
 	if (im->state != INSTANCE_BUSY) {
 		ShowError("buildin_getvariableofinstance: Unknown instance ID %d.\n", instance_id);

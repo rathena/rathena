@@ -16,6 +16,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "battle.hpp"
@@ -32,6 +33,8 @@
 #include "pc.hpp"
 #include "pet.hpp"
 #include "script.hpp" // script_config
+
+using namespace rathena;
 
 struct npc_data* fake_nd;
 
@@ -3388,7 +3391,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 
 	if( snd->subtype == NPCTYPE_WARP ) { // Adjust destination, if instanced
 		struct npc_data *wnd = NULL; // New NPC
-		std::shared_ptr<s_instance_data> idata = instance_search(mapdata->instance_id);
+		std::shared_ptr<s_instance_data> idata = util::umap_find(instances, mapdata->instance_id);
 		int dm = map_mapindex2mapid(snd->u.warp.mapindex), imap = 0;
 
 		if( dm < 0 ) return 1;

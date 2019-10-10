@@ -753,7 +753,7 @@ struct map_data {
 	int mob_delete_timer;	// Timer ID for map_removemobs_timer [Skotlex]
 
 	// Instance Variables
-	unsigned short instance_id;
+	int instance_id;
 	int instance_src_map;
 
 	/* rAthena Local Chat */

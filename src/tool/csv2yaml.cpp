@@ -606,8 +606,10 @@ static bool instance_readdb_sub(char* str[], int columns, int current) {
 
 	node["Id"] = str[0];
 	node["Name"] = str[1];
-	node["TimeLimit"] = str[2];
-	node["IdleTimeOut"] = str[3];
+	if (atoi(str[2]) != 3600)
+		node["TimeLimit"] = str[2];
+	if (atoi(str[3]) != 300)
+		node["IdleTimeOut"] = str[3];
 
 	node["EnterMap"] = str[4];
 	node["EnterX"] = str[5];

@@ -20,6 +20,7 @@
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -56,6 +57,8 @@
 #include "trade.hpp"
 #include "unit.hpp"
 #include "vending.hpp"
+
+using namespace rathena;
 
 static inline uint32 client_tick( t_tick tick ){
 	return (uint32)tick;
@@ -17462,7 +17465,7 @@ void clif_instance_create(int instance_id, int num)
 	if (!sd)
 		return;
 
-	std::shared_ptr<s_instance_db> db = instance_search_db(instance_search(instance_id)->id);
+	std::shared_ptr<s_instance_db> db = instance_db.find(util::umap_find(instances, instance_id)->id);
 
 	if (!db)
 		return;
@@ -17512,7 +17515,7 @@ void clif_instance_status(int instance_id, t_tick limit1, t_tick limit2)
 	if (!sd)
 		return;
 
-	std::shared_ptr<s_instance_db> db = instance_search_db(instance_search(instance_id)->id);
+	std::shared_ptr<s_instance_db> db = instance_db.find(util::umap_find(instances, instance_id)->id);
 
 	if (!db)
 		return;
