@@ -150,7 +150,7 @@ int find_map(char *name)
 
 	for(i = 0; i < header.map_count; i++) {
 		if(fread(&info, sizeof(info), 1, map_cache_fp) != 1)
-			ShowError("An error has occurred in fread while reading \"%s\"\n", map_cache_fp);
+			printf("An error has occurred in fread while reading map_cache_fp.\n");
 		if(strcmp(name, info.name) == 0) // Map found
 			return 1;
 		else // Map not found, jump to the beginning of the next map info header
@@ -243,7 +243,7 @@ int do_init(int argc, char** argv)
 			header.map_count = 0;
 		} else {
 			if (fread(&header, sizeof(struct main_header), 1, map_cache_fp) != 1)
-				ShowError("An error has occurred while reading \"%s\"\n", map_cache_fp);
+				printf("An error has occurred in fread while reading map_cache_fp.\n");
 			header.file_size = GetULong((unsigned char *)&(header.file_size));
 			header.map_count = GetUShort((unsigned char *)&(header.map_count));
 		}
