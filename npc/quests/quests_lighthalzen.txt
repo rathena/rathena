@@ -11017,7 +11017,7 @@ lighthalzen,141,162,3	script	Old Man#reken	4_M_03,{
 	close;
 }
 
-einbroch,55,52,3	script	Laboratory Guard#reken	 4_M_EIN_SOLDIER,{
+einbroch,55,52,3	script	Laboratory Guard#reken	4_M_EIN_SOLDIER,{
 
 	if(lhz_rekenber == 3)
 	{
