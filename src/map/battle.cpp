@@ -2539,7 +2539,7 @@ static bool is_attack_hitting(struct Damage* wd, struct block_list *src, struct 
 		return true;
 	else if (sc && sc->data[SC_FUSION])
 		return true;
-	else if (skill_id == AS_SPLASHER && !wd->miscflag)
+	else if (skill_id == AS_SPLASHER || skill_id == GN_SPORE_EXPLOSION)
 		return true;
 	else if (skill_id == CR_SHIELDBOOMERANG && sc && sc->data[SC_SPIRIT] && sc->data[SC_SPIRIT]->val2 == SL_CRUSADER )
 		return true;
