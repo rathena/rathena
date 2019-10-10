@@ -2586,7 +2586,7 @@ struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
 	nd->sc_display = NULL;
 	nd->sc_display_count = 0;
 	nd->progressbar.timeout = 0;
-	nd->vd.class_ = 0;
+	nd->vd = npc_viewdb[0]; // Default to JT_INVISIBLE
 
 	return nd;
 }
