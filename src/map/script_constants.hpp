@@ -526,6 +526,7 @@
 	export_parameter(KAFRAPOINT_VAR, SP_KAFRAPOINTS);
 	export_parameter(PCDIECOUNTER_VAR, SP_PCDIECOUNTER);
 	export_parameter(COOKMASTERY_VAR, SP_COOKMASTERY);
+	export_parameter(ACHIEVEMENTLEVEL, SP_ACHIEVEMENT_LEVEL);
 
 	export_constant2("bMaxHP",SP_MAXHP);
 	export_constant2("bMaxSP",SP_MAXSP);

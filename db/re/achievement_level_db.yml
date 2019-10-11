@@ -1,0 +1,74 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2019 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Renewal Achievement Level Database
+###########################################################################
+#
+# Achievement Level Settings
+#
+###########################################################################
+# Level - Achievement Level
+###########################################################################
+# Points - Required total scoring points to reach this level.
+###########################################################################
+
+Header:
+  Type: ACHIEVEMENT_LEVEL_DB
+  Version: 1
+
+Body:
+  - Level: 1
+    Points: 18
+  - Level: 2
+    Points: 49
+  - Level: 3
+    Points: 98
+  - Level: 4
+    Points: 171
+  - Level: 5
+    Points: 306
+  - Level: 6
+    Points: 410
+  - Level: 7
+    Points: 550
+  - Level: 8
+    Points: 728
+  - Level: 9
+    Points: 942
+  - Level: 10
+    Points: 1247
+  - Level: 11
+    Points: 1504
+  - Level: 12
+    Points: 1804
+  - Level: 13
+    Points: 2152
+  - Level: 14
+    Points: 2550
+  - Level: 15
+    Points: 3070
+  - Level: 16
+    Points: 3522
+  - Level: 17
+    Points: 4030
+  - Level: 18
+    Points: 4592
+  - Level: 19
+    Points: 5210
+  - Level: 20
+    Points: 5980
