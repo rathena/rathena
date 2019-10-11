@@ -35,8 +35,8 @@ struct s_instance_wait {
 
 #define INSTANCE_INTERVAL	60000	// Interval used to check when an instance is to be destroyed (ms)
 
-int16 instance_start = 0;
-int instance_count = 1;
+int16 instance_start = 0; // Instance MapID start
+int instance_count = 1; // Total created instances
 
 std::unordered_map<int, std::shared_ptr<s_instance_data>> instances;
 
@@ -69,7 +69,7 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		instance = std::make_shared<s_instance_db>();
-		instance->db_id = instance_id;
+		instance->id = instance_id;
 	}
 
 	if (this->nodeExists(node, "Name")) {
@@ -586,14 +586,9 @@ int instance_create(int owner_id, const char *name, e_instance_mode mode) {
 	int instance_id = instance_count++;
 	std::shared_ptr<s_instance_data> entry = std::make_shared<s_instance_data>();
 
-	entry->id = db->db_id;
-	entry->state = INSTANCE_IDLE;
+	entry->id = db->id;
 	entry->owner_id = owner_id;
 	entry->mode = mode;
-	entry->keep_limit = 0;
-	entry->keep_timer = INVALID_TIMER;
-	entry->idle_limit = 0;
-	entry->idle_timer = INVALID_TIMER;
 	entry->regs.vars = i64db_alloc(DB_OPT_RELEASE_DATA);
 	entry->regs.arrays = nullptr;
 	instances.insert({ instance_id, entry });
@@ -853,10 +848,7 @@ bool instance_destroy(int instance_id)
 
 	ShowInfo("[Instance] Destroyed %d.\n", instance_id);
 
-	if (instances.size() == 1) // !TODO
-		instances.clear();
-	else
-		instances.erase(instance_id);
+	instances.erase(instance_id);
 
 	return true;
 }
@@ -943,7 +935,7 @@ e_instance_enter instance_enter(struct map_session_data *sd, int instance_id, co
 
 	if (idata->state != INSTANCE_BUSY)
 		return IE_OTHER;
-	if (idata->id != db->db_id)
+	if (idata->id != db->id)
 		return IE_OTHER;
 
 	int16 m;

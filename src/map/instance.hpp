@@ -59,7 +59,7 @@ struct s_instance_map {
 
 /// Instance data
 struct s_instance_data {
-	int id; ///< Instance ID
+	int id; ///< Instance DB ID
 	e_instance_state state; ///< State of instance
 	e_instance_mode mode; ///< Mode of instance
 	int owner_id; ///< Owner ID of instance
@@ -69,11 +69,23 @@ struct s_instance_data {
 	int idle_timer; ///< Idle timer ID
 	struct reg_db regs; ///< Instance variables for scripts
 	std::vector<s_instance_map> map; ///< Array of maps in instance
+
+	s_instance_data() :
+		id(0),
+		state(INSTANCE_IDLE),
+		mode(IM_PARTY),
+		owner_id(0),
+		keep_limit(0),
+		keep_timer(INVALID_TIMER),
+		idle_limit(0),
+		idle_timer(INVALID_TIMER),
+		regs(),
+		map() { }
 };
 
 /// Instance DB entry
 struct s_instance_db {
-	int db_id; ///< Instance DB ID
+	int id; ///< Instance DB ID
 	std::string name; ///< Instance name
 	unsigned int limit, ///< Duration limit
 		timeout; ///< Timeout limit

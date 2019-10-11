@@ -20486,7 +20486,7 @@ BUILDIN_FUNC(instance_info)
 
 	switch( type ){
 		case IIT_ID:
-			script_pushint(st, db->db_id);
+			script_pushint(st, db->id);
 			break;
 		case IIT_TIME_LIMIT:
 			script_pushint(st, db->limit);
