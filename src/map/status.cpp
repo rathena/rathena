@@ -11408,22 +11408,24 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 
 		case SC_SUNSTANCE:
 			val2 = 2 + val1; // ATK Increase
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC_LUNARSTANCE:
 			val2 = 2 + val1; // MaxHP Increase
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC_STARSTANCE:
 			val2 = 4 + 2 * val1; // ASPD Increase
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC_UNIVERSESTANCE:
 			val2 = 2 + val1; // All Stats Increase
-			tick = -1;
+			tick = INFINITE_TICK;
 			break;
 		case SC_NEWMOON:
 			val2 = 7; // Number of Regular Attacks Until Reveal
+			t_tickime = 1000;
+			val4 = tick / t_tickime;
 			break;
 		case SC_FALLINGSTAR:
 			val2 = 8 + 2 * (1 + val1) / 2; // Autocast Chance
@@ -11431,7 +11433,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val2 += 1; // Make it 15% at level 7.
 			break;
 		case SC_CREATINGSTAR:
-			val4 = tick / 500;
+			t_tickime = 500;
+			val4 = tick / t_tickime;
 			tick = 10;
 			break;
 		case SC_LIGHTOFSUN:
@@ -11468,7 +11471,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val3 += 4 * (val1 - 5);
 			break;
 		case SC_SOULUNITY:
-			val4 = tick / 3000;
+			t_tickime = 3000;
+			val4 = tick / t_tickime;
 			tick = 3000;
 			break;
 		case SC_SOULDIVISION:
@@ -13882,43 +13886,6 @@ TIMER_FUNC(status_change_timer){
 		// They only end by status_change_end
 		sc_timer_next(600000 + tick);
 		return 0;
-
-	case SC_CREATINGSTAR:
-		if (--(sce->val4) >= 0) { // Needed to check who the caster is and what AoE is giving the status.
-			struct block_list *star_caster = map_id2bl(sce->val2), *star_aoe = map_id2bl(sce->val3);
-
-			if (!star_caster || status_isdead(star_caster) || star_caster->m != bl->m)
-				break;
-
-			map_freeblock_lock();
-			if (star_aoe)
-				skill_attack(BF_WEAPON,star_caster,star_aoe,bl,SJ_BOOKOFCREATINGSTAR,sce->val1,tick,0);
-			if (sc->data[type])
-				sc_timer_next(500 + tick);
-			map_freeblock_unlock();
-			return 0;
-		}
-		break;
-
-	case SC_SOULUNITY:
-		if (--(sce->val4) >= 0) { // Needed to check the caster's location for the range check.
-			struct block_list *unity_src = map_id2bl(sce->val1);
-
-			// End the status if out of range.
-			if (!check_distance_bl(bl, unity_src, 11))
-				break;
-
-			status_heal(bl, 150*sce->val3, 0, 2);
-			sc_timer_next(3000 + tick);
-			return 0;
-		}
-		break;
-
-	case SC_SOULCOLLECT:
-		pc_addsoulball(sd, skill_get_time2(SP_SOULCOLLECT, sce->val1), sce->val2);
-		sc_timer_next(sce->val3 + tick);
-		return 0;
-
 	case SC_MEIKYOUSISUI:
 		if( --(sce->val4) >= 0 ) {
 			status_heal(bl, status->max_hp * sce->val2 / 100, status->max_sp * sce->val3 / 100, 0);
@@ -14079,6 +14046,47 @@ TIMER_FUNC(status_change_timer){
 			return 0;
 		}
 		break;
+	case SC_NEWMOON:
+		if (--(sce->val4) >= 0) {
+			if (!status_charge(bl, 0, 1))
+				break;
+			sc_timer_next(1000 + tick);
+			return 0;
+		}
+		break;
+	case SC_CREATINGSTAR:
+		if (--(sce->val4) >= 0) { // Needed to check who the caster is and what AoE is giving the status.
+			struct block_list *star_caster = map_id2bl(sce->val2), *star_aoe = map_id2bl(sce->val3);
+
+			if (!star_caster || status_isdead(star_caster) || star_caster->m != bl->m)
+				break;
+
+			map_freeblock_lock();
+			if (star_aoe)
+				skill_attack(BF_WEAPON,star_caster,star_aoe,bl,SJ_BOOKOFCREATINGSTAR,sce->val1,tick,0);
+			if (sc->data[type])
+				sc_timer_next(500 + tick);
+			map_freeblock_unlock();
+			return 0;
+		}
+		break;
+	case SC_SOULUNITY:
+		if (--(sce->val4) >= 0) { // Needed to check the caster's location for the range check.
+			struct block_list *unity_src = map_id2bl(sce->val1);
+
+			// End the status if out of range.
+			if (!check_distance_bl(bl, unity_src, 11))
+				break;
+
+			status_heal(bl, 150*sce->val3, 0, 2);
+			sc_timer_next(3000 + tick);
+			return 0;
+		}
+		break;
+	case SC_SOULCOLLECT:
+		pc_addsoulball(sd, skill_get_time2(SP_SOULCOLLECT, sce->val1), sce->val2);
+		sc_timer_next(sce->val3 + tick);
+		return 0;
 	}
 
 	// If status has an interval and there is at least 100ms remaining time, wait for next interval

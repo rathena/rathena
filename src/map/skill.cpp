@@ -7403,8 +7403,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			flag |= 8;
 		if (skill_id == SR_HOWLINGOFLION)
 			starget = splash_target(src);
-		if (skill_id == SJ_NEWMOONKICK)
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start(src, bl, SC_NEWMOON, 100, skill_lv, skill_get_time(skill_id, skill_lv)));
+		if (skill_id == SJ_NEWMOONKICK) {
+			if (tsce) {
+				status_change_end(bl, type, INVALID_TIMER);
+				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+				break;
+			} else
+				sc_start(src, bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
+		}
 		if (skill_id == SJ_STAREMPEROR && sc && sc->data[SC_DIMENSION]) {
 			if (sd) {
 				// Remove old shields if any exist.
@@ -10141,7 +10147,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 
 	case SC_BODYPAINT:
 		if( flag&1 ) {
-			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_NEWMOON] || tsc->data[SC_STEALTHFIELD])) {
+			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD])) {
 				status_change_end(bl,SC_HIDING,INVALID_TIMER);
 				status_change_end(bl,SC_CLOAKING,INVALID_TIMER);
 				status_change_end(bl,SC_CLOAKINGEXCEED,INVALID_TIMER);
@@ -11113,6 +11119,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					status_change_end(bl, SC_CLOAKING, INVALID_TIMER);
 					status_change_end(bl, SC_CLOAKINGEXCEED, INVALID_TIMER);
 					status_change_end(bl, SC_CAMOUFLAGE, INVALID_TIMER);
+					status_change_end(bl, SC_NEWMOON, INVALID_TIMER);
 					if (tsc && tsc->data[SC__SHADOWFORM] && rnd() % 100 < 100 - tsc->data[SC__SHADOWFORM]->val1 * 10) // [100 - (Skill Level x 10)] %
 						status_change_end(bl, SC__SHADOWFORM, INVALID_TIMER);
 					status_change_end(bl, SC_MARIONETTE, INVALID_TIMER);
