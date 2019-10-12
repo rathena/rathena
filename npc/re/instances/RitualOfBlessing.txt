@@ -41,7 +41,7 @@
 
 2@mir,107,77,0	script	#royal_evt02	HIDDEN_WARP_NPC,2,2,{
 	end;
-OnTouch:
+OnTouch_:
 	donpcevent instance_npcname("#royal_evt02") + "::OnEvent";// player can move
 	end;
 OnEvent:
@@ -676,7 +676,7 @@ OnTimer12000:
 	mes "[Nyhill]";
 	mes "...This... Is all... My fault...";
 	close;
-OnTouch:
+OnTouch_:
 	npctalk "...Will I be a help?";
 	npcskill "AL_HEAL",11,99,60;
 	npcskill "PR_KYRIE",10,99,60;
