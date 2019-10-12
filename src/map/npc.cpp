@@ -2575,15 +2575,15 @@ bool npc_viewisid(const char * viewid)
  * @return npc_data
  */
 struct npc_data *npc_create_npc(int16 m, int16 x, int16 y){
-	struct npc_data *nd;
+	struct npc_data *nd = nullptr;
 
 	CREATE(nd, struct npc_data, 1);
 	nd->bl.id = npc_get_new_npc_id();
-	nd->bl.prev = nd->bl.next = NULL;
+	nd->bl.prev = nd->bl.next = nullptr;
 	nd->bl.m = m;
 	nd->bl.x = x;
 	nd->bl.y = y;
-	nd->sc_display = NULL;
+	nd->sc_display = nullptr;
 	nd->sc_display_count = 0;
 	nd->progressbar.timeout = 0;
 	nd->vd = npc_viewdb[0]; // Default to JT_INVISIBLE
