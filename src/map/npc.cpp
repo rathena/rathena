@@ -1563,6 +1563,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 	unsigned short nameid;
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 	enum e_CASHSHOP_ACK res;
+	item_data *id;
 
 	if( !nd || ( nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
 		return ERROR_TYPE_NPC;
@@ -1578,8 +1579,9 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 	{
 		nameid = item_list[i*2+1];
 		amount = item_list[i*2+0];
+		id = itemdb_exists(nameid);
 
-		if( !itemdb_exists(nameid) || amount <= 0 )
+		if( !id || amount <= 0 )
 			return ERROR_TYPE_ITEM_ID;
 
 		ARR_FIND(0,nd->u.shop.count,j,nd->u.shop.shop_item[j].nameid == nameid || itemdb_viewid(nd->u.shop.shop_item[j].nameid) == nameid);
@@ -1588,7 +1590,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 
 		nameid = item_list[i*2+1] = nd->u.shop.shop_item[j].nameid; //item_avail replacement
 
-		if( !itemdb_isstackable(nameid) && amount > 1 )
+		if( !itemdb_isstackable2(id) && amount > 1 )
 		{
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %hu!\n", sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
 			amount = item_list[i*2+0] = 1;
@@ -1597,7 +1599,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 		switch( pc_checkadditem(sd,nameid,amount) )
 		{
 			case CHKADDITEM_NEW:
-				new_++;
+				new_ += id->inventorySlotNeeded(amount);
 				break;
 			case CHKADDITEM_OVERAMOUNT:
 				return ERROR_TYPE_INVENTORY_WEIGHT;
@@ -1739,7 +1741,7 @@ int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amo
 
 	nameid = nd->u.shop.shop_item[i].nameid; //item_avail replacement
 
-	if(!itemdb_isstackable(nameid) && amount > 1)
+	if(!itemdb_isstackable2(item) && amount > 1)
 	{
 		ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %hu!\n",
 			sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
@@ -1749,7 +1751,7 @@ int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amo
 	switch( pc_checkadditem(sd, nameid, amount) )
 	{
 		case CHKADDITEM_NEW:
-			if( pc_inventoryblank(sd) == 0 )
+			if( pc_inventoryblank(sd) < item->inventorySlotNeeded(amount) )
 				return ERROR_TYPE_INVENTORY_WEIGHT;
 			break;
 		case CHKADDITEM_OVERAMOUNT:
@@ -1857,6 +1859,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 	for( i = 0; i < n; ++i ) {
 		unsigned short nameid, amount;
 		int value;
+		item_data *id;
 
 		// find this entry in the shop's sell list
 		ARR_FIND( 0, nd->u.shop.count, j,
@@ -1878,11 +1881,12 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 		amount = item_list[i].qty;
 		nameid = item_list[i].nameid = shop[j].nameid; //item_avail replacement
 		value = shop[j].value;
+		id = itemdb_exists(nameid);
 
-		if( !itemdb_exists(nameid) )
+		if( !id )
 			return 3; // item no longer in itemdb
 
-		if( !itemdb_isstackable(nameid) && amount > 1 ) { //Exploit? You can't buy more than 1 of equipment types o.O
+		if( !itemdb_isstackable2(id) && amount > 1 ) { //Exploit? You can't buy more than 1 of equipment types o.O
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %hu!\n",
 				sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
 			amount = item_list[i].qty = 1;
@@ -1897,7 +1901,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 				break;
 
 			case CHKADDITEM_NEW:
-				new_++;
+				new_ += id->inventorySlotNeeded(amount);
 				break;
 
 			case CHKADDITEM_OVERAMOUNT:
@@ -2516,7 +2520,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
  * Support for using Constants in place of NPC View IDs.
  */
 int npc_parseview(const char* w4, const char* start, const char* buffer, const char* filepath) {
-	int val = JT_FAKENPC, i = 0;
+	int i = 0;
 	char viewid[1024];	// Max size of name from const.txt, see read_constdb.
 
 	// Extract view ID / constant
@@ -2529,34 +2533,19 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 
 	safestrncpy(viewid, w4, i+=1);
 
+	char *pid;
+	int val = strtol(viewid, &pid, 0);
+
 	// Check if view id is not an ID (only numbers).
-	if(!npc_viewisid(viewid)) {
+	if (pid != nullptr && *pid != '\0') {
 		// Check if constant exists and get its value.
 		if(!script_get_constant(viewid, &val)) {
 			ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
 			val = JT_INVISIBLE;
 		}
-	} else {
-		// NPC has an ID specified for view id.
-		val = atoi(w4);
 	}
 
 	return val;
-}
-
-/**
- * Checks if given view is an ID or constant.
- */
-bool npc_viewisid(const char * viewid)
-{
-	if(atoi(viewid) != JT_FAKENPC) {
-		// Loop through view, looking for non-numeric character.
-		while (*viewid) {
-			if (ISDIGIT(*viewid++) == 0) return false;
-		}
-	}
-
-	return true;
 }
 
 /**

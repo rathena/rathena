@@ -3,6 +3,13 @@
 //===== Description: =========================================
 //= [Walkthrough Conversion]
 //= Nightmare Biolab exchange NPCs
+//  NOTE: The nightmare biolab monsters are currently missing
+//  some items used in the file.
+//    Silent Energy Particles (ID: 25127)
+//    Weak Energy Particles (ID: 25128)
+//    Unstable Energy Particles (ID: 25129)
+//    Sinister Energy Particles (ID: 25130)
+//    Cursed Crystal (ID: 23080)
 //===== Changelogs: ==========================================
 //= 1.0 First version. [Capuche]
 //============================================================
@@ -1603,7 +1610,7 @@ OnTouch:
 	end;
 
 OnInit:
-	// questinfo 14683,QTYPE_QUEST,1;	// display when quest 14683 active
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "isbegin_quest(14683) == 1" );
 	end;
 }
 
@@ -1729,7 +1736,8 @@ OnTouch:
 	end;
 
 OnInit:
-	questinfo atoi(strnpcinfo(2)),QTYPE_QUEST,1;
+	.@condition$ = "!isbegin_quest(" + strnpcinfo(2) + ")";
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, .@condition$ );
 	end;
 }
 
