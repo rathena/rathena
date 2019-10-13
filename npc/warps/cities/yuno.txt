@@ -20,6 +20,7 @@
 //= 1.8 Added Yuno Government Buildings warps
 //= 1.9 Updated Yuno Government Buildings warps according
 //= to Schwartzvalt Trilogy quest. [SinSloth]
+//= 2.0 Correct position of portals [JohnnyPlayy]
 //============================================================
 
 //= Yuno City ================================================
@@ -57,10 +58,10 @@ yuno_in03,167,19,0	warp	yun30	1,1,yuno,323,280
 yuno_in03,167,72,0	warp	yun31	1,1,yuno_in03,179,113
 yuno_in03,179,109,0	warp	yun32	1,1,yuno_in03,167,69
 yuno_in03,186,119,0	warp	yun33	1,1,yuno_in03,163,174
-yuno_in03,159,174,0	warp	yun34	1,1,yuno_in03,183,119
+yuno_in03,161,174,0	warp	yun34	1,1,yuno_in03,183,119
 yuno_in03,186,131,0	warp	yun35	1,1,yuno_in03,163,187
-yuno_in03,159,187,0	warp	yun36	1,1,yuno_in03,183,131
-yuno_in03,172,118,0	warp	yun37	1,1,yuno_in03,120,178
+yuno_in03,161,187,0	warp	yun36	1,1,yuno_in03,183,131
+yuno_in03,173,118,0	warp	yun37	1,1,yuno_in03,120,178
 yuno_in03,124,178,0	warp	yun38	1,1,yuno_in03,176,118
 yuno_in03,111,192,0	warp	yun39	1,1,yuno_in03,162,132
 yuno_in03,162,129,0	warp	yun40	1,1,yuno_in03,111,189
