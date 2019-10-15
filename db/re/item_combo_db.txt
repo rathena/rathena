@@ -754,8 +754,6 @@
 19139:22170,{ bonus bVit,4; bonus bInt,5; bonus2 bSubRace,RC_DemiHuman,3; bonus2 bSubRace,RC_Player,3; }
 19172:28500,{ bonus bDelayrate,-15; }
 19172:4403,{ bonus bDelayrate,30; }
-19242:18607,{ bonus bHealPower,5; if(BaseLevel < 100) { bonus2 bExpAddClass,Class_All,10; } else if(BaseLevel >= 100) { bonus2 bExpAddClass,Class_All,4; } }
-19242:5040,{ bonus bHealPower,5; if(BaseLevel < 100) { bonus2 bExpAddClass,Class_All,10; } else if(BaseLevel >= 100) { bonus2 bExpAddClass,Class_All,4; } }
 19243:20842,{ bonus bAspdRate,5; if(getequiprefinerycnt(EQI_GARMENT) >= 12) { bonus bAllStats,1; } }
 19243:20843,{ bonus bVariableCastrate,-5; if(getequiprefinerycnt(EQI_GARMENT) >= 12) { bonus bAllStats,1; } }
 19243:20844,{ bonus bAtkRate,4; if(getequiprefinerycnt(EQI_GARMENT) >= 12) { bonus bAllStats,1; } }
@@ -770,12 +768,6 @@
 19263:1413,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillAtk,"LG_BANISHINGPOINT",7*(.@r/2); }
 19263:1418,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillAtk,"LG_BANISHINGPOINT",7*(.@r/2); }
 19263:1527,{ .@r = getequiprefinerycnt(EQI_HAND_R); bonus2 bSkillAtk,"SR_TIGERCANNON",7*(.@r/2); }
-19266:1617,{ bonus bMatk,10*getequiprefinerycnt(EQI_HAND_R); }
-19266:1618,{ bonus bMatk,10*getequiprefinerycnt(EQI_HAND_R); }
-19266:1619,{ bonus bMatk,10*getequiprefinerycnt(EQI_HAND_R); }
-19266:1620,{ bonus bMatk,10*getequiprefinerycnt(EQI_HAND_R); }
-19266:19139,{ bonus bDelayrate,-getequiprefinerycnt(EQI_HEAD_TOP); }
-19266:2509,{ bonus bVariableCastrate,5*(getequiprefinerycnt(EQI_GARMENT)/2); }
 19268:20717,{ bonus bAtk,5*(readparam(bStr)/20); bonus bAspdRate,3*(readparam(bAgi)/20); bonus2 bSubEle,Ele_Neutral,1*(readparam(bVit)/20); bonus bVariableCastrate,-4*(readparam(bInt)/20); bonus bLongAtkRate,1*(readparam(bDex)/20); bonus bCritAtkRate,3*(readparam(bLuk)/20); }
 19268:20718,{ bonus bAtk,5*(readparam(bStr)/20); bonus bAspdRate,3*(readparam(bAgi)/20); bonus2 bSubEle,Ele_Neutral,1*(readparam(bVit)/20); bonus bVariableCastrate,-4*(readparam(bInt)/20); bonus bLongAtkRate,1*(readparam(bDex)/20); bonus bCritAtkRate,3*(readparam(bLuk)/20); }
 19272:4365,{ bonus bVariableCastrate,-100; bonus2 bSkillCooldown,"WL_TELEKINESIS_INTENSE",-120000; }
