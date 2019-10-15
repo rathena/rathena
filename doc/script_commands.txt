@@ -9118,13 +9118,15 @@ Examples:
 =========================
 ---------------------------------------
 
-*questinfo <Quest ID>,<Icon>{,<Map Mark Color>{,<Job Class>}};
+*questinfo <Icon>{,<Map Mark Color>{,"<condition>"}};
 
-This is esentially a combination of checkquest and showevent. Use this only
-in an OnInit label. For the Quest ID, specify the quest ID that you want
-checked if it has been started yet.
+This command should only be used in an OnInit label.
+Show an emotion on top of a NPC, and optionally, a colored mark in the mini-map like "viewpoint".
+When a user is doing some action, each NPC is checked for questinfo that has been set on the map.
+If questinfo is present, it will check if the player fulfill the condition.
+If he/she does or no condition has been set, the bubble will appear.
 
-For Icon, use one of the following:
+Available <Icon>:
 
 No Icon			: QTYPE_NONE
 ! Quest Icon	: QTYPE_QUEST
@@ -9141,59 +9143,46 @@ Daily Quest		: QTYPE_DAILYQUEST (Only for packetver >= 20170315)
 Job Quest		: QTYPE_JOBQUEST (Only for packetver >= 20170315)
 Jumping Poring	: QTYPE_JUMPING_PORING (Only for packetver >= 20170315)
 
-Map Mark Color, when used, creates a mark in the user's mini map on the position of the NPC,
+<Map Mark Color>, when used, creates a mark in the user's mini map on the position of the NPC,
 the available color values are:
 
-0 - No Marker (default)
-1 - Yellow Marker
-2 - Green Marker
-3 - Purple Marker
+QMARK_NONE   - No Marker (default)
+QMARK_YELLOW - Yellow Marker
+QMARK_GREEN  - Green Marker
+QMARK_PURPLE - Purple Marker
 
-When a user shows up on a map, each NPC is checked for questinfo that has been set.
-If questinfo is present, it will check if the quest has been started, if it has not, the bubble will appear.
+<condition> can be any expression similarly to the <condition> in the 'if' command.
 
-Optionally, you can also specify a Job Class if the quest bubble should only appear for a certain class.
+List of the player's actions to trigger the questinfo condition:
+-	Item added to/removed from player inventory
+-	Base/Job level change
+-	Job change
+-	Quest given/erased/completed
+-	Quest objective updated (character killed a monster quest target)
+-	Warp
 
-Example
+
+Example:
 izlude,100,100,4	script	Test	844,{
 	mes "[Test]";
 	mes "Hello World.";
 	close;
 
-	OnInit:
-		questinfo 1001, QTYPE_QUEST, 0, Job_Novice;
-		end;
+OnInit:
+	// Display an icon if the player has completed the given hunting quest and his/her variable 'unknown_var' is above 0
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "checkquest(1001,HUNTING) == 2 && unknown_var > 0";
+
+	//.. or display an icon if the player didn't start the given quest and he/she has one red potion in inventory
+	questinfo QTYPE_QUEST, QMARK_YELLOW, "!isbegin_quest(1001) && countitem(501) == 1";
+	end;
 }
 
 ---------------------------------------
 
-*setquestinfo_level <quest_id>,<min_level>,<max_level>;
+*questinfo_refresh {<char_id>};
 
-Add level range criteria for quest info with quest id 'quest_id'.
-
-This command must be used after 'questinfo'.
-
----------------------------------------
-
-*setquestinfo_req <quest_id>,<req_quest_id>,<state>{,<req_quest_id>,<state>,...};
-
-Add 'req_quest_id' as requirement for quest info with quest id 'quest_id'.
-
-Value os 'state' are:
-    0: Player doesn't started 'req_quest_id'.
-    1: Player has 'req_quest_id' (state is either "inactive" or "active").
-    2: Player has 'req_quest_id' completed
-
-This command must be used after 'questinfo'.
-
----------------------------------------
-
-*setquestinfo_job <quest_id>,<job_id>{,<job_id>...};
-
-Add job criteria for quest info with quest id 'quest_id'.
-The job criteria may more than one job_id.
-
-This command must be used after 'questinfo'.
+This command refreshes each quest bubble that has been set on the map according
+to the questinfo condition for the attached/given player.
 
 ---------------------------------------
 
@@ -9275,10 +9264,10 @@ Warg			: QTYPE_WARG
 Warg Face		: QTYPE_WARG2 (Only for packetver >= 20120410)
 
 Mark Color:
-0 - No Mark
-1 - Yellow Mark
-2 - Green Mark
-3 - Purple Mark
+QMARK_NONE   - No Marker (default)
+QMARK_YELLOW - Yellow Marker
+QMARK_GREEN  - Green Marker
+QMARK_PURPLE - Purple Marker
 
 ---------------------------------------
 
@@ -10362,7 +10351,7 @@ Returns true on success and false on failure.
 *achievementexists(<achievement id>{,<char id>});
 
 This function will return if the achievement exists on the player or the supplied
-<char id>.
+<char id> and is completed.
 Returns true on success and false on failure.
 
 ---------------------------------------

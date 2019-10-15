@@ -2520,11 +2520,13 @@ Body:
     Score: 20
   - ID: 240000
     Group: "AG_GOAL_LEVEL"
-    Name: "Complete challenges after first introduction"
+    Name: "First Login after the introduction of Achievement Tasks"
     Score: 10
+    Condition: " true "
   - ID: 240001
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 1"
+    Condition: " AchievementLevel >= 1 "
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2532,6 +2534,7 @@ Body:
   - ID: 240002
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 2"
+    Condition: " AchievementLevel >= 2 "
     Dependent:
       - Id: 240001
     Reward:
@@ -2541,6 +2544,7 @@ Body:
   - ID: 240003
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 3"
+    Condition: " AchievementLevel >= 3 "
     Dependent:
       - Id: 240002
     Reward:
@@ -2550,6 +2554,7 @@ Body:
   - ID: 240004
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 4"
+    Condition: " AchievementLevel >= 4 "
     Dependent:
       - Id: 240003
     Reward:
@@ -2559,6 +2564,7 @@ Body:
   - ID: 240005
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 5"
+    Condition: " AchievementLevel >= 5 "
     Dependent:
       - Id: 240004
     Reward:
@@ -2568,6 +2574,7 @@ Body:
   - ID: 240006
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 6"
+    Condition: " AchievementLevel >= 6 "
     Dependent:
       - Id: 240005
     Reward:
@@ -2577,6 +2584,7 @@ Body:
   - ID: 240007
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 7"
+    Condition: " AchievementLevel >= 7 "
     Dependent:
       - Id: 240006
     Reward:
@@ -2586,6 +2594,7 @@ Body:
   - ID: 240008
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 8"
+    Condition: " AchievementLevel >= 8 "
     Dependent:
       - Id: 240007
     Reward:
@@ -2595,6 +2604,7 @@ Body:
   - ID: 240009
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 9"
+    Condition: " AchievementLevel >= 9 "
     Dependent:
       - Id: 240008
     Reward:
@@ -2604,6 +2614,7 @@ Body:
   - ID: 240010
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 10"
+    Condition: " AchievementLevel >= 10 "
     Dependent:
       - Id: 240009
     Reward:
@@ -2614,6 +2625,7 @@ Body:
   - ID: 240011
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 11"
+    Condition: " AchievementLevel >= 11 "
     Dependent:
       - Id: 240010
     Reward:
@@ -2623,6 +2635,7 @@ Body:
   - ID: 240012
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 12"
+    Condition: " AchievementLevel >= 12 "
     Dependent:
       - Id: 240011
     Reward:
@@ -2632,6 +2645,7 @@ Body:
   - ID: 240013
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 13"
+    Condition: " AchievementLevel >= 13 "
     Dependent:
       - Id: 240012
     Reward:
@@ -2641,6 +2655,7 @@ Body:
   - ID: 240014
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 14"
+    Condition: " AchievementLevel >= 14 "
     Dependent:
       - Id: 240013
     Reward:
@@ -2650,6 +2665,7 @@ Body:
   - ID: 240015
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 15"
+    Condition: " AchievementLevel >= 15 "
     Dependent:
       - Id: 240014
     Reward:
@@ -2659,6 +2675,7 @@ Body:
   - ID: 240016
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 16"
+    Condition: " AchievementLevel >= 16 "
     Dependent:
       - Id: 240015
     Reward:
@@ -2668,6 +2685,7 @@ Body:
   - ID: 240017
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 17"
+    Condition: " AchievementLevel >= 17 "
     Dependent:
       - Id: 240016
     Reward:
@@ -2677,6 +2695,7 @@ Body:
   - ID: 240018
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 18"
+    Condition: " AchievementLevel >= 18 "
     Dependent:
       - Id: 240017
     Reward:
@@ -2686,6 +2705,7 @@ Body:
   - ID: 240019
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 19"
+    Condition: " AchievementLevel >= 19 "
     Dependent:
       - Id: 240018
     Reward:
@@ -2695,6 +2715,7 @@ Body:
   - ID: 240020
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 20"
+    Condition: " AchievementLevel >= 20 "
     Dependent:
       - Id: 240019
     Reward:
