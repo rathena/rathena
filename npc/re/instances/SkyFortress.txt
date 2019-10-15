@@ -1147,15 +1147,16 @@ OnTimer6000:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_5");
-	monster 'sthb_map$,61,84,"Immortal Fortress Legionnaire",3477,1;
+	// todo some monsters seem to spawn in area on official
+	monster 'sthb_map$,61,84,"Immortal Fortress Legionnaire",3477,1;	// AS_IMMORTAL_CORPS
 	monster 'sthb_map$,51,87,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,37,81,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,67,50,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,41,85,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,41,85,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,41,49,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,52,50,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,36,58,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
 	monster 'sthb_map$,36,60,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,36,58,"Immortal Cursed Zombie",3480,1;
+	monster 'sthb_map$,82,50,"Immortal Cursed Zombie",3480,1;
 	if (rand(100) < 10)	// unknown rates
 		monster 'sthb_map$,65,86,"Sky Fortress Key Keeper",3478,1;	// unknown coord
 	end;
@@ -1165,18 +1166,18 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_6");
-	monster 'sthb_map$,79,48,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,79,48,"Immortal Fortress Legionnaire",3477,1;	// AS_IMMORTAL_CORPS
+	monster 'sthb_map$,67,50,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,85,60,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,82,74,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,83,49,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,83,49,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,83,71,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,79,96,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,69,95,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,82,50,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,84,85,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,84,95,"Immortal Cursed Zombie",3480,1;
+	monster 'sthb_map$,84,95,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
 	monster 'sthb_map$,83,94,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,84,86,"Immortal Cursed Zombie",3480,1;
+	monster 'sthb_map$,82,85,"Immortal Cursed Zombie",3480,1;
 	if (rand(100) < 10)	// unknown rates
 		monster 'sthb_map$,80,49,"Sky Fortress Key Keeper",3478,1;
 	end;
@@ -1186,16 +1187,15 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_7");
-	monster 'sthb_map$,52,94,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,52,94,"Immortal Fortress Legionnaire",3477,1;	// AS_IMMORTAL_CORPS
 	monster 'sthb_map$,42,98,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,29,91,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,28,96,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,25,78,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,43,41,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,28,96,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,27,69,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,26,55,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,32,41,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,29,68,"Immortal Cursed Zombie",3480,1;
+	monster 'sthb_map$,29,68,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
 	monster 'sthb_map$,29,67,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,27,42,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,26,43,"Immortal Cursed Zombie",3480,1;
@@ -1208,17 +1208,18 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_8");
-	monster 'sthb_map$,52,43,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,53,38,"Immortal Fortress Legionnaire",3477,1;	// AS_IMMORTAL_CORPS
 	monster 'sthb_map$,64,41,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,78,38,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,28,40,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,43,41,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,28,40,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,59,40,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,92,45,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,95,57,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,94,39,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
 	monster 'sthb_map$,90,42,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,90,40,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,93,39,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,94,39,"Immortal Cursed Zombie",3480,1;
 	if (rand(100) < 10)	// unknown rates
 		monster 'sthb_map$,32,39,"Sky Fortress Key Keeper",3478,1;	// unknown coord
 	end;
@@ -1229,13 +1230,13 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_9");
-	monster 'sthb_map$,207,50,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,207,50,"Immortal Fortress Legionnaire",3477,1;	// AS_IMMORTAL_CORPS
 	monster 'sthb_map$,205,38,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,195,36,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,209,38,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,209,38,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,161,39,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,150,36,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,171,37,"Immortal Cursed Zombie",3480,1;
+	monster 'sthb_map$,171,37,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
 	monster 'sthb_map$,171,36,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,144,38,"Immortal Cursed Zombie",3480,1;
 	if (rand(100) < 10)	// unknown rates
@@ -1247,18 +1248,18 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_10");
-	monster 'sthb_map$,142,61,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,142,61,"Immortal Fortress Legionnaire",3477,1;	// AS_IMMORTAL_CORPS
 	monster 'sthb_map$,145,71,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,142,83,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,147,94,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,143,64,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,143,64,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,144,78,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,165,95,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,173,92,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,156,91,"Immortal Cursed Zombie",3480,1;
+	monster 'sthb_map$,156,91,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
+	monster 'sthb_map$,155,92,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,144,93,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,143,94,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,155,92,"Immortal Cursed Zombie",3480,1;
 	if (rand(100) < 10)	// unknown rates
 		monster 'sthb_map$,144,47,"Sky Fortress Key Keeper",3478,1;	// unknown coord
 	end;
@@ -1268,15 +1269,15 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_11");
-	monster 'sthb_map$,187,92,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,187,92,"Immortal Fortress Legionnaire",3477,1;	// AS_IMMORTAL_CORPS
 	monster 'sthb_map$,200,90,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,198,81,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,201,72,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,199,94,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,199,94,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,199,70,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,195,48,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,185,47,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,197,61,"Immortal Cursed Zombie",3480,1;
+	monster 'sthb_map$,197,61,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
 	monster 'sthb_map$,198,62,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,200,46,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,199,48,"Immortal Cursed Zombie",3480,1;
@@ -1289,18 +1290,18 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_12");
-	monster 'sthb_map$,167,44,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,168,49,"Immortal Fortress Legionnaire",3477,1;	// AS_IMMORTAL_CORPS
 	monster 'sthb_map$,159,46,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,154,52,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,152,65,"Immortal Fortress Legionnaire",3477,1;
-	monster 'sthb_map$,155,48,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,155,48,"Immortal Zombie Assault",3479,1;			// AS_ZOMBIE_MASTER
 	monster 'sthb_map$,154,73,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,159,84,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,171,82,"Immortal Zombie Assault",3479,1;
+	monster 'sthb_map$,153,84,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
 	monster 'sthb_map$,153,84,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,155,78,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,155,76,"Immortal Cursed Zombie",3480,1;
-	monster 'sthb_map$,153,84,"Immortal Cursed Zombie",3480,1;
 	if (rand(100) < 10)	// unknown rates
 		monster 'sthb_map$,179,48,"Sky Fortress Key Keeper",3478,1;	// unknown coord
 	end;
