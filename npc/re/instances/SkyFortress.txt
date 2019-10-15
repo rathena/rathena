@@ -614,7 +614,7 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 }
 
 // Warps
-1@sthb,73,71,0	warp2	#sthd_move_01_01	1,1,1@sthb,73,84
+1@sthb,73,71,0	warp2	#sthd_move_01_01	3,3,1@sthb,73,84
 1@sthb,93,77,0	warp2	#sthd_move_02_01	2,2,1@sthb,210,96
 1@sthb,190,54,0	warp2	#sthd_move_02_02	2,2,1@sthd,103,71
 
@@ -622,7 +622,7 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 1@sthb,64,67,4	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_01	4_AS_RAGGED_GOLEM
 1@sthb,64,67,4	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_02	4_AS_RAGGED_GOLEM
 
-1@sthb,56,71,0	script	#sthd_event_1	HIDDEN_WARP_NPC,4,4,{
+1@sthb,56,71,0	script	#sthd_event_1	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
 	if ('sky_status == 0) {
@@ -878,7 +878,7 @@ OnTouch:
 1@sthb,178,51,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_6	4_ENERGY_WHITE
 
 // Spawn in the rooms
-1@sthc,66,94,0	script	#sthd_event_13	HIDDEN_WARP_NPC,2,2,{
+1@sthc,66,94,0	script	#sthd_event_13	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
 	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasure1";
@@ -890,30 +890,31 @@ OnTouch:
 	monster 'sthc_map$,69,127,"Immortal Nightmare Shadow",3481,1, .@label$;
 	monster 'sthc_map$,64,132,"Immortal Nightmare Shadow",3481,1, .@label$;
 	monster 'sthc_map$,61,127,"Immortal Nightmare Shadow",3481,1, .@label$;
+	monster 'sthc_map$,61,101,"Immortal Nightmare Shadow",3481,1, .@label$;
 	monster 'sthc_map$,62,116,"Immortal Nightmare Shadow",3481,1, .@label$;
 	disablenpc instance_npcname("#sthd_event_13");
 	end;
 }
 
-1@sthc,116,94,0	script	#sthd_event_14	HIDDEN_WARP_NPC,2,2,{
+1@sthc,116,94,0	script	#sthd_event_14	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
 	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasure2";
-	monster 'sthc_map$,112,101, "Immortal Angry Shadow#1",3482,1, .@label$;// AS_EVIL_SHADOW2
-	monster 'sthc_map$,120,101, "Immortal Angry Shadow#2",3482,1, .@label$;
-	monster 'sthc_map$,119,110, "Immortal Angry Shadow#4",3482,1, .@label$;
-	monster 'sthc_map$,115,115, "Immortal Angry Shadow#1",3482,1, .@label$;
-	monster 'sthc_map$,114,128, "Immortal Angry Shadow#9",3482,1, .@label$;
-	monster 'sthc_map$,112,110, "Immortal Angry Shadow#3",3482,1, .@label$;
-	monster 'sthc_map$,118,120, "Immortal Angry Shadow#6",3482,1, .@label$;
-	monster 'sthc_map$,110,130, "Immortal Angry Shadow#7",3482,1, .@label$;
-	monster 'sthc_map$,114,122, "Immortal Angry Shadow#5",3482,1, .@label$;
-	monster 'sthc_map$,116,125, "Immortal Angry Shadow#8",3482,1, .@label$;
+	monster 'sthc_map$,112,101, "Immortal Angry Shadow",3482,1, .@label$;// AS_EVIL_SHADOW2
+	monster 'sthc_map$,120,101, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,119,110, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,115,115, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,114,128, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,112,110, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,118,120, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,110,130, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,111,120, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,120,130, "Immortal Angry Shadow",3482,1, .@label$;
 	disablenpc instance_npcname("#sthd_event_14");
 	end;
 }
 
-1@sthc,115,12,0	script	#sthd_event_15	HIDDEN_WARP_NPC,2,2,{
+1@sthc,115,12,0	script	#sthd_event_15	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
 	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasure3";
@@ -931,58 +932,58 @@ OnTouch:
 	end;
 }
 
-1@sthc,66,12,0	script	#sthd_event_16	HIDDEN_WARP_NPC,2,2,{
+1@sthc,66,12,0	script	#sthd_event_16	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
 	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasure4";
-	monster 'sthc_map$,70,18, "Immortal Angry Shadow#2",3482,1, .@label$;// AS_EVIL_SHADOW2
-	monster 'sthc_map$,61,18, "Immortal Angry Shadow#1",3482,1, .@label$;
-	monster 'sthc_map$,65,34, "Immortal Angry Shadow#1",3482,1, .@label$;
-	monster 'sthc_map$,62,38, "Immortal Angry Shadow#5",3482,1, .@label$;
-	monster 'sthc_map$,69,37, "Immortal Angry Shadow#6",3482,1, .@label$;
-	monster 'sthc_map$,72,29, "Immortal Angry Shadow#4",3482,1, .@label$;
-	monster 'sthc_map$,69,47, "Immortal Angry Shadow#8",3482,1, .@label$;
-	monster 'sthc_map$,62,47, "Immortal Angry Shadow#7",3482,1, .@label$;
-	monster 'sthc_map$,61,30, "Immortal Angry Shadow#3",3482,1, .@label$;
-	monster 'sthc_map$,64,50, "Immortal Angry Shadow#9",3482,1, .@label$;
+	monster 'sthc_map$,70,18, "Immortal Angry Shadow",3482,1, .@label$;// AS_EVIL_SHADOW2
+	monster 'sthc_map$,61,18, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,65,34, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,62,38, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,69,37, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,72,29, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,69,47, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,62,47, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,61,30, "Immortal Angry Shadow",3482,1, .@label$;
+	monster 'sthc_map$,64,50, "Immortal Angry Shadow",3482,1, .@label$;
 	disablenpc instance_npcname("#sthd_event_16");
 	end;
 }
 
 // Cursed Knight room
-1@sthc,15,94,0	script	#sthd_event_17	HIDDEN_WARP_NPC,2,2,{
+1@sthc,15,94,0	script	#sthd_event_17	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
 	.@label$ = instance_npcname("#chest_spawn") + "::OnTreasureB";
-	monster 'sthc_map$,19,106, "Immortal Death Shadow#2",3483,1, .@label$;// AS_EVIL_SHADOW3
-	monster 'sthc_map$,12,105, "Immortal Death Shadow#1",3483,1, .@label$;
-	monster 'sthc_map$,14,115, "Immortal Death Shadow#3",3483,1, .@label$;
-	monster 'sthc_map$,19,119, "Immortal Death Shadow#4",3483,1, .@label$;
-	monster 'sthc_map$,13,116, "Immortal Death Shadow#3",3483,1, .@label$;
-	monster 'sthc_map$,18,127, "Immortal Death Shadow#6",3483,1, .@label$;
-	monster 'sthc_map$,19,128, "Immortal Death Shadow#6",3483,1, .@label$;
-	monster 'sthc_map$,12,126, "Immortal Death Shadow#5",3483,1, .@label$;
-	monster 'sthc_map$,20,119, "Immortal Death Shadow#4",3483,1, .@label$;
-	monster 'sthc_map$,11,127, "Immortal Death Shadow#5",3483,1, .@label$;
+	monster 'sthc_map$,19,106, "Immortal Death Shadow",3483,1;// AS_EVIL_SHADOW3
+	monster 'sthc_map$,12,105, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,14,115, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,19,119, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,13,116, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,18,127, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,19,128, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,12,126, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,20,119, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,11,127, "Immortal Death Shadow",3483,1;
 	disablenpc instance_npcname("#sthd_event_17");
 	end;
 }
 
 // Wind Ghost room
-1@sthc,16,11,0	script	#sthd_event_18	HIDDEN_WARP_NPC,2,2,{
+1@sthc,16,11,0	script	#sthd_event_18	HIDDEN_WARP_NPC,8,8,{
 	end;
 OnTouch:
 	.@label$ = instance_npcname("#chest_spawn") + "::OnWindGhostRoom";
-	monster 'sthc_map$,19,21, "Immortal Death Shadow#2",3483,1, .@label$;// AS_EVIL_SHADOW3
-	monster 'sthc_map$,12,21, "Immortal Death Shadow#1",3483,1, .@label$;
-	monster 'sthc_map$,11,30, "Immortal Death Shadow#3",3483,1, .@label$;
-	monster 'sthc_map$,10,31, "Immortal Death Shadow#3",3483,1, .@label$;
-	monster 'sthc_map$,16,38, "Immortal Death Shadow#5",3483,1, .@label$;
-	monster 'sthc_map$,15,38, "Immortal Death Shadow#5",3483,1, .@label$;
-	monster 'sthc_map$,15,45, "Immortal Death Shadow#6",3483,1, .@label$;
-	monster 'sthc_map$,14,45, "Immortal Death Shadow#6",3483,1, .@label$;
-	monster 'sthc_map$,19,31, "Immortal Death Shadow#4",3483,1, .@label$;
-	monster 'sthc_map$,19,32, "Immortal Death Shadow#4",3483,1, .@label$;
+	monster 'sthc_map$,19,21, "Immortal Death Shadow",3483,1;// AS_EVIL_SHADOW3
+	monster 'sthc_map$,12,21, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,11,30, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,10,31, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,16,38, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,15,38, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,15,45, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,14,45, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,19,31, "Immortal Death Shadow",3483,1;
+	monster 'sthc_map$,19,32, "Immortal Death Shadow",3483,1;
 	disablenpc instance_npcname("#sthd_event_18");
 	end;
 }
