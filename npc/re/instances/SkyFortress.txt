@@ -7,6 +7,8 @@
 //= 1.0 First version. [Capuche]
 //============================================================
 
+-	script	dummy_sth	-1,{ end; }
+
 prt_q,249,82,2	script	Han#a1	8W_SOLDIER,{
 	mes "[Han]";
 	mes "There must be a ton of monsters";
@@ -616,9 +618,9 @@ dali02,122,63,2	script	Scientist Doyeon#a2	4_M_MAYOR,{
 1@sthb,93,77,0	warp2	#sthd_move_02_01	2,2,1@sthb,210,96
 1@sthb,190,54,0	warp2	#sthd_move_02_02	2,2,1@sthd,103,71
 
-// Event 1 entrance
-1@sthb,64,67,4	script	Stefan.J.E.Wolf#sthd_01	4_AS_RAGGED_GOLEM,{ end; }
-1@sthb,64,67,4	script	Stefan.J.E.Wolf#sthd_02	4_AS_RAGGED_GOLEM,{ end; }
+// Main event - step 1
+1@sthb,64,67,4	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_01	4_AS_RAGGED_GOLEM
+1@sthb,64,67,4	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_02	4_AS_RAGGED_GOLEM
 
 1@sthb,56,71,0	script	#sthd_event_1	HIDDEN_WARP_NPC,4,4,{
 	end;
@@ -627,7 +629,7 @@ OnTouch:
 		'sky_status = 1;
 		.@stefan$ = instance_npcname("Stefan.J.E.Wolf#sthd_01");
 
-		mes "";	// player attached
+		setpcblock PCBLOCK_NPC, true;
 		unittalk getcharid(3), "" + strcharinfo(0) + " : Is this what caused the invasion into Prontera? Inside the Sky Fortress?";
 		sleep2 4000;
 		cutin "stephan_j_e_w.bmp",2;
@@ -640,6 +642,7 @@ OnTouch:
 		sleep2 200;
 		npctalk "Earnest: Little...human...Greenhorn...Away...", .@stefan$;
 		sleep2 1800;
+		setpcblock PCBLOCK_NPC, false;
 		cutin "",255;
 		specialeffect2 EF_LOCKON;
 		monster 'sthb_map$,64,67, "Stefan.J.E.Wolf",3484,1, instance_npcname("#sthd_event_2") + "::OnMobDead";	// AS_D_RAGGED_GOLEM
@@ -728,7 +731,7 @@ OnMobDead:
 		break;
 	}
 	// disablenpc instance_npcname("#Stefan_Action1");
-	mes "";	// player attached
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 2000;
 	cutin "stephan_j_e_w.bmp",2;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : I believe that huge Golem is what plays an important role in the Sky Fortress.";
@@ -742,6 +745,7 @@ OnMobDead:
 	sleep2 2000;
 	specialeffect2 EF_LOCKON;
 	sleep2 1000;
+	setpcblock PCBLOCK_NPC, false;
 	specialeffect EF_BAKU,AREA, instance_npcname("Stefan.J.E.Wolf#sthd_02");
 	cutin "",255;
 	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_02");
@@ -873,7 +877,7 @@ OnTouch:
 1@sthb,147,87,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_5	4_ENERGY_WHITE
 1@sthb,178,51,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_6	4_ENERGY_WHITE
 
-// Rooms
+// Spawn in the rooms
 1@sthc,66,94,0	script	#sthd_event_13	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
@@ -945,6 +949,7 @@ OnTouch:
 	end;
 }
 
+// Cursed Knight room
 1@sthc,15,94,0	script	#sthd_event_17	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
@@ -963,6 +968,7 @@ OnTouch:
 	end;
 }
 
+// Wind Ghost room
 1@sthc,16,11,0	script	#sthd_event_18	HIDDEN_WARP_NPC,2,2,{
 	end;
 OnTouch:
@@ -994,7 +1000,7 @@ S_Treasure:
 	end;
 OnTreasureB:
 	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnTreasureB" ) < 1)
-		enablenpc instance_npcname("Sky Fortress Treasure B");
+		enablenpc instance_npcname("Sky Fortress Treasure Box");
 	end;
 OnKnightB:
 	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnKnightB" ) < 1)
@@ -1020,7 +1026,7 @@ OnWindDead:
 		mes "- there must be some good items. -";
 		close;
 	}
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "- Those other than the party leader -";
 		mes "- don't seem to be able to open the box. -";
 		close;
@@ -1049,7 +1055,7 @@ OnBar:
 1@sthc,66,55,4	duplicate(Sky Fortress Gold Treasure#1)	Sky Fortress Gold Treasure#4	4_TREASURE_BOX
 
 // Cursed Knight
-1@sthc,16,132,4	script	Sky Fortress Treasure B	CLEAR_NPC,{
+1@sthc,16,132,4	script	Sky Fortress Treasure Box	CLEAR_NPC,{
 	mes "- You've found -";
 	mes "- the Shining Treasure Box. -";
 	next;
@@ -1058,7 +1064,7 @@ OnBar:
 		mes "- there must be some good items. -";
 		close;
 	}
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "- Those other than the party leader -";
 		mes "- don't seem to be able to open the box. -";
 		close;
@@ -1069,7 +1075,7 @@ OnBar:
 	specialeffect EF_SILENT_BREEZE;
 	specialeffect EF_LOCKON;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : You may have touched something wrong...";
-	disablenpc instance_npcname("Sky Fortress Treasure B");
+	disablenpc instance_npcname("Sky Fortress Treasure Box");
 	donpcevent instance_npcname("Immortal Cursed Knight#") + "::OnEvent";
 	close;
 }
@@ -1100,7 +1106,7 @@ OnTimer6000:
 		mes "- extremely fearsome. -";
 		close;
 	}
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "- Those other than the party leader -";
 		mes "- don't seem to be able operate the test tube. -";
 		close;
@@ -1135,15 +1141,16 @@ OnTimer6000:
 	end;
 }
 
-// Spawn Step 1
+
+// Spawn stairs - step 1
 1@sthb,65,86,0	script	#sthd_event_5	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_5");
-	monster 'sthb_map$,61,84,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,51,87,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,37,81,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,67,50,"Immortal Fortress Legio",3477,1;
+	monster 'sthb_map$,61,84,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,51,87,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,37,81,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,67,50,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,41,85,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,41,49,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,52,50,"Immortal Zombie Assault",3479,1;
@@ -1158,9 +1165,9 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_6");
-	monster 'sthb_map$,79,48,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,85,60,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,82,74,"Immortal Fortress Legio",3477,1;
+	monster 'sthb_map$,79,48,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,85,60,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,82,74,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,83,49,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,83,71,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,79,96,"Immortal Zombie Assault",3479,1;
@@ -1179,12 +1186,12 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_7");
-	monster 'sthb_map$,52,94,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,42,98,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,29,91,"Immortal Fortress Legio",3477,1;
+	monster 'sthb_map$,52,94,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,42,98,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,29,91,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,28,96,"Immortal Zombie Assault",3479,1;
-	monster 'sthb_map$,25,78,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,43,41,"Immortal Fortress Legio",3477,1;
+	monster 'sthb_map$,25,78,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,43,41,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,27,69,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,26,55,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,32,41,"Immortal Zombie Assault",3479,1;
@@ -1201,9 +1208,9 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_8");
-	monster 'sthb_map$,52,43,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,64,41,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,78,38,"Immortal Fortress Legio",3477,1;
+	monster 'sthb_map$,52,43,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,64,41,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,78,38,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,28,40,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,59,40,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,92,45,"Immortal Zombie Assault",3479,1;
@@ -1217,14 +1224,14 @@ OnTouch:
 	end;
 }
 
-// Spawn Step 2
+// Spawn stairs - step 2
 1@sthb,209,64,0	script	#sthd_event_9	HIDDEN_WARP_NPC,5,5,{
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_9");
-	monster 'sthb_map$,207,50,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,205,38,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,195,36,"Immortal Fortress Legio",3477,1;
+	monster 'sthb_map$,207,50,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,205,38,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,195,36,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,209,38,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,161,39,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,150,36,"Immortal Zombie Assault",3479,1;
@@ -1240,10 +1247,10 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_10");
-	monster 'sthb_map$,142,61,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,145,71,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,142,83,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,147,94,"Immortal Fortress Legio",3477,1;
+	monster 'sthb_map$,142,61,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,145,71,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,142,83,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,147,94,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,143,64,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,144,78,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,165,95,"Immortal Zombie Assault",3479,1;
@@ -1261,10 +1268,10 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_11");
-	monster 'sthb_map$,187,92,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,200,90,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,198,81,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,201,72,"Immortal Fortress Legio",3477,1;
+	monster 'sthb_map$,187,92,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,200,90,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,198,81,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,201,72,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,199,94,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,199,70,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,195,48,"Immortal Zombie Assault",3479,1;
@@ -1282,10 +1289,10 @@ OnTouch:
 	end;
 OnTouch:
 	disablenpc instance_npcname("#sthd_event_12");
-	monster 'sthb_map$,167,44,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,159,46,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,154,52,"Immortal Fortress Legio",3477,1;
-	monster 'sthb_map$,152,65,"Immortal Fortress Legio",3477,1;
+	monster 'sthb_map$,167,44,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,159,46,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,154,52,"Immortal Fortress Legionnaire",3477,1;
+	monster 'sthb_map$,152,65,"Immortal Fortress Legionnaire",3477,1;
 	monster 'sthb_map$,155,48,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,154,73,"Immortal Zombie Assault",3479,1;
 	monster 'sthb_map$,159,84,"Immortal Zombie Assault",3479,1;
@@ -1299,12 +1306,13 @@ OnTouch:
 	end;
 }
 
-// 2nd step
+
+// Main event - 2nd step
 1@sthb,207,83,0	script	#Stefan_Action2	HIDDEN_WARP_NPC,6,6,{
 	end;
 OnTouch:
 	disablenpc instance_npcname("#Stefan_Action2");
-	mes "";	// player attached
+	setpcblock PCBLOCK_NPC, true;
 	sleep2 2000;
 	cutin "stephan_j_e_w.bmp",2;
 	npctalk "Stefan: ~Grunts~", instance_npcname("Stefan.J.E.Wolf#sthd_03");
@@ -1321,6 +1329,7 @@ OnTouch:
 	mapannounce 'sthb_map$, "Stefan Jack Earnest Wolf: Holy fortress...Intruders...How wicked...Stop them...", bc_map,0xEBFF;
 	cutin "",255;
 	sleep2 2000;
+	setpcblock PCBLOCK_NPC, false;
 	specialeffect2 EF_LOCKON;
 	disablenpc instance_npcname("Stefan.J.E.Wolf#sthd_03");
 	enablenpc instance_npcname("#Stefan for display3");
@@ -1328,17 +1337,18 @@ OnTouch:
 	end;
 }
 
-1@sthb,207,83,8	script	Stefan.J.E.Wolf#sthd_03	4_AS_RAGGED_GOLEM,{ end; }
+1@sthb,207,83,8	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_03	4_AS_RAGGED_GOLEM
+
 
 // Final step
-1@sthd,103,115,6	script	Stefan.J.E.Wolf#sthd_04	4_AS_RAGGED_GOLEM,{ end; }
+1@sthd,103,115,6	duplicate(dummy_sth)	Stefan.J.E.Wolf#sthd_04	4_AS_RAGGED_GOLEM
 
 1@sthd,103,115,0	script	#Stefan for display3	HIDDEN_WARP_NPC,10,10,{
 	end;
 OnTouch:
 	.@stephan$ = instance_npcname("Stefan.J.E.Wolf#sthd_04");
 	disablenpc instance_npcname("#Stefan for display3");
-	mes "";	// fix me
+	setpcblock PCBLOCK_NPC, true;
 	unittalk getcharid(3), "" + strcharinfo(0) + " : So this is finally the last...I suppose he must be the cause of Prontera Invasion, isn't he?";
 	sleep2 2000;
 	cutin "stephan_j_e_w.bmp",2;
@@ -1356,6 +1366,7 @@ OnTouch:
 	sleep2 2000;
 	mapannounce 'sthd_map$, "Stefan Jack Earnest Wolf: Soldiers...Bijou's...fortress...Cut them all...I'll step up...I'll kill them...all...", bc_map,0xEBFF;
 	sleep2 2000;
+	setpcblock PCBLOCK_NPC, false;
 	cutin "",255;
 	specialeffect EF_LOCKON;
 	disablenpc .@stephan$;
@@ -1474,7 +1485,7 @@ OnEvent:
 		.@size = 25 - .@i;
 		.@r = rand(.@size);
 		.@npc_num = 'npc_index[.@r];
-		donpcevent instance_npcname(.@npc_num + "#pantheon_damage") + "::OnEvent";
+		donpcevent instance_npcname(.@npc_num + "#pantheon_effect") + "::OnEvent";
 		'npc_index[.@r] = 'npc_index[ .@size-1 ];
 		'npc_index[ .@size-1 ] = .@npc_num;
 	}
@@ -1485,8 +1496,8 @@ OnTimer6000:
 	end;
 }
 
-// Simulate earthquake on random spot 
-1@sthd,94,119,0	script	1#pantheon_damage	HIDDEN_WARP_NPC,{
+// Additional npcs to simulate earthquake on random spot
+1@sthd,94,119,0	script	1#pantheon_effect	HIDDEN_WARP_NPC,{
 	end;
 OnEvent:
 	specialeffect EF_GUMGANG4;
@@ -1499,36 +1510,35 @@ OnTimer3000:	// note: the timer continue and end after boss dead
 	donpcevent instance_npcname("#pantheon_damage" + strnpcinfo(1)) + "::OnEvent";
 	end;
 }
-1@sthd,96,109,0	duplicate(1#pantheon_damage)	2#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,104,110,0	duplicate(1#pantheon_damage)	3#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,110,110,0	duplicate(1#pantheon_damage)	4#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,113,117,0	duplicate(1#pantheon_damage)	5#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,112,103,0	duplicate(1#pantheon_damage)	6#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,104,103,0	duplicate(1#pantheon_damage)	7#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,97,103,0	duplicate(1#pantheon_damage)	8#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,92,97,0	duplicate(1#pantheon_damage)	9#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,99,95,0	duplicate(1#pantheon_damage)	10#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,108,95,0	duplicate(1#pantheon_damage)	11#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,116,95,0	duplicate(1#pantheon_damage)	12#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,112,87,0	duplicate(1#pantheon_damage)	13#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,104,88,0	duplicate(1#pantheon_damage)	14#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,95,87,0	duplicate(1#pantheon_damage)	15#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,96,78,0	duplicate(1#pantheon_damage)	16#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,94,72,0	duplicate(1#pantheon_damage)	17#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,104,81,0	duplicate(1#pantheon_damage)	18#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,111,81,0	duplicate(1#pantheon_damage)	19#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,114,72,0	duplicate(1#pantheon_damage)	20#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,100,71,0	duplicate(1#pantheon_damage)	21#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,91,101,0	duplicate(1#pantheon_damage)	22#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,117,101,0	duplicate(1#pantheon_damage)	23#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,117,90,0	duplicate(1#pantheon_damage)	24#pantheon_damage	HIDDEN_WARP_NPC
-1@sthd,90,90,0	duplicate(1#pantheon_damage)	25#pantheon_damage	HIDDEN_WARP_NPC
-// official
-// 1@sthd,100,71,0	duplicate(1#pantheon_damage)	23#pantheon_damage	HIDDEN_WARP_NPC
-// 1@sthd,91,101,0	duplicate(1#pantheon_damage)	24#pantheon_damage	HIDDEN_WARP_NPC
-// 1@sthd,117,101,0	duplicate(1#pantheon_damage)	25#pantheon_damage	HIDDEN_WARP_NPC
-// 1@sthd,117,90,0	duplicate(1#pantheon_damage)	26#pantheon_damage	HIDDEN_WARP_NPC
-// 1@sthd,90,90,0	duplicate(1#pantheon_damage)	27#pantheon_damage	HIDDEN_WARP_NPC
+1@sthd,96,109,0	duplicate(1#pantheon_effect)	2#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,104,110,0	duplicate(1#pantheon_effect)	3#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,110,110,0	duplicate(1#pantheon_effect)	4#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,113,117,0	duplicate(1#pantheon_effect)	5#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,112,103,0	duplicate(1#pantheon_effect)	6#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,104,103,0	duplicate(1#pantheon_effect)	7#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,97,103,0	duplicate(1#pantheon_effect)	8#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,92,97,0	duplicate(1#pantheon_effect)	9#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,99,95,0	duplicate(1#pantheon_effect)	10#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,108,95,0	duplicate(1#pantheon_effect)	11#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,116,95,0	duplicate(1#pantheon_effect)	12#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,112,87,0	duplicate(1#pantheon_effect)	13#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,104,88,0	duplicate(1#pantheon_effect)	14#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,95,87,0	duplicate(1#pantheon_effect)	15#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,96,78,0	duplicate(1#pantheon_effect)	16#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,94,72,0	duplicate(1#pantheon_effect)	17#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,104,81,0	duplicate(1#pantheon_effect)	18#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,111,81,0	duplicate(1#pantheon_effect)	19#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,114,72,0	duplicate(1#pantheon_effect)	20#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,100,71,0	duplicate(1#pantheon_effect)	21#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,91,101,0	duplicate(1#pantheon_effect)	22#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,117,101,0	duplicate(1#pantheon_effect)	23#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,117,90,0	duplicate(1#pantheon_effect)	24#pantheon_effect	HIDDEN_WARP_NPC
+1@sthd,90,90,0	duplicate(1#pantheon_effect)	25#pantheon_effect	HIDDEN_WARP_NPC
+// 1@sthd,100,71,0	duplicate(1#pantheon_effect)	23#pantheon_effect	HIDDEN_WARP_NPC
+// 1@sthd,91,101,0	duplicate(1#pantheon_effect)	24#pantheon_effect	HIDDEN_WARP_NPC
+// 1@sthd,117,101,0	duplicate(1#pantheon_effect)	25#pantheon_effect	HIDDEN_WARP_NPC
+// 1@sthd,117,90,0	duplicate(1#pantheon_effect)	26#pantheon_effect	HIDDEN_WARP_NPC
+// 1@sthd,90,90,0	duplicate(1#pantheon_effect)	27#pantheon_effect	HIDDEN_WARP_NPC
 
 // Kill the player
 1@sthd,94,119,0	script	#pantheon_damage1	HIDDEN_WARP_NPC,4,4,{
@@ -1569,6 +1579,7 @@ OnTimer1000:
 1@sthd,117,101,0	duplicate(#pantheon_damage1)	#pantheon_damage23	HIDDEN_WARP_NPC,4,4
 1@sthd,117,90,0	duplicate(#pantheon_damage1)	#pantheon_damage24	HIDDEN_WARP_NPC,4,4
 1@sthd,90,90,0	duplicate(#pantheon_damage1)	#pantheon_damage25	HIDDEN_WARP_NPC,4,4
+// officials
 // 1@sthd,100,71,0	duplicate(#pantheon_damage1)	#pantheon_damage23	HIDDEN_WARP_NPC,4,4
 // 1@sthd,91,101,0	duplicate(#pantheon_damage1)	#pantheon_damage24	HIDDEN_WARP_NPC,4,4
 // 1@sthd,117,101,0	duplicate(#pantheon_damage1)	#pantheon_damage25	HIDDEN_WARP_NPC,4,4
@@ -1677,7 +1688,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("Sky Fortress Gold Treasure#2");
 	disablenpc instance_npcname("Sky Fortress Gold Treasure#3");
 	disablenpc instance_npcname("Sky Fortress Gold Treasure#4");
-	disablenpc instance_npcname("Sky Fortress Treasure B");
+	disablenpc instance_npcname("Sky Fortress Treasure Box");
 	disablenpc instance_npcname("Wind Ghost in Experiment");
 	disablenpc instance_npcname("Immortal Cursed Knight#");
 	disablenpc instance_npcname("Immortal Wind Ghost#01");
@@ -1692,7 +1703,7 @@ OnInstanceInit:
 	disablenpc instance_npcname("Sky Fortress Escape Warp");
 	for ( .@i = 1; .@i <= 25; .@i++ )
 		disablenpc instance_npcname("#pantheon_damage" + .@i);
-	for ( .@i = 1; .@i <= 25; .@i++ )	// hideonnpc to display the effect
-		hideonnpc instance_npcname(.@i + "#pantheon_damage");
+	for ( .@i = 1; .@i <= 25; .@i++ )	// unofficial npc, hideonnpc to display the effect
+		hideonnpc instance_npcname(.@i + "#pantheon_effect");
 	end;
 }
