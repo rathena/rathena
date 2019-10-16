@@ -169,11 +169,21 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 {
 	char name[EVENT_NAME_LENGTH];
 
+	if (pc_isdead(sd))	// Dead player don't trigger 'OnTouch_'
+		return 0;
+
 	if( nd->touching_id )
 		return 0; // Attached a player already. Can't trigger on anyone else.
 
-	if( pc_ishiding(sd) )
-		return 1; // Can't trigger 'OnTouch_'. try 'OnTouch' later.
+	// pc_ishiding moved in npc_event for now.
+	// If OnTouch_ event exists hiding player doesn't click the npc.
+	// if( pc_ishiding(sd) )
+		// return 1; // Can't trigger 'OnTouch_'.
+
+	auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
+
+	if (it != sd->npc_ontouch_.end())
+		return 0;
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_event_name);
 	return npc_event(sd,name,1);
@@ -182,8 +192,9 @@ int npc_ontouch_event(struct map_session_data *sd, struct npc_data *nd)
 int npc_ontouch2_event(struct map_session_data *sd, struct npc_data *nd)
 {
 	char name[EVENT_NAME_LENGTH];
+	auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
 
-	if( sd->areanpc_id == nd->bl.id )
+	if (it != sd->areanpc.end())
 		return 0;
 
 	safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch2_event_name);
@@ -206,6 +217,7 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 		if (nd->sc.option&OPTION_INVISIBLE)
 			return 1;
 
+		// note : disablenpc doesn't reset the previous trigger status on official
 		if( npc_ontouch_event(sd,nd) > 0 && npc_ontouch2_event(sd,nd) > 0 )
 		{ // failed to run OnTouch event, so just click the npc
 			if (sd->npc_id != 0)
@@ -221,14 +233,14 @@ int npc_enable_sub(struct block_list *bl, va_list ap)
 /*==========================================
  * Disable / Enable NPC
  *------------------------------------------*/
-int npc_enable(const char* name, int flag)
+bool npc_enable(const char* name, int flag)
 {
 	struct npc_data* nd = npc_name2id(name);
 
 	if (nd==NULL)
 	{
 		ShowError("npc_enable: Attempted to %s a non-existing NPC '%s' (flag=%d).\n", (flag&3) ? "show" : "hide", name, flag);
-		return 0;
+		return false;
 	}
 
 	if (flag&1) {
@@ -252,10 +264,10 @@ int npc_enable(const char* name, int flag)
 	} else
 		clif_changeoption(&nd->bl);
 
-	if( flag&3 && (nd->u.scr.xs >= 0 || nd->u.scr.ys >= 0) ) 	//check if player standing on a OnTouchArea
+	if( flag&3 && (nd->u.scr.xs >= 0 || nd->u.scr.ys >= 0) )// check if player standing on a OnTouchArea
 		map_foreachinallarea( npc_enable_sub, nd->bl.m, nd->bl.x-nd->u.scr.xs, nd->bl.y-nd->u.scr.ys, nd->bl.x+nd->u.scr.xs, nd->bl.y+nd->u.scr.ys, BL_PC, nd );
 
-	return 0;
+	return true;
 }
 
 /*==========================================
@@ -898,18 +910,25 @@ int npc_event(struct map_session_data* sd, const char* eventname, int ontouch)
 		return ontouch;
 	}
 
-	switch(ontouch)
-	{
-	case 1:
+	if (ontouch == 1) { // OnTouch_
+		if (pc_ishiding(sd))
+			return 0;
+
 		nd->touching_id = sd->bl.id;
-		sd->touching_id = nd->bl.id;
-		break;
-	case 2:
-		sd->areanpc_id = nd->bl.id;
-		break;
+
+		auto it = std::find(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), nd->bl.id);
+
+		if (it == sd->npc_ontouch_.end())
+			sd->npc_ontouch_.push_back(nd->bl.id);
+	} else if (ontouch == 2) { // OnTouch
+		auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), nd->bl.id);
+
+		if (it == sd->areanpc.end())
+			sd->areanpc.push_back(nd->bl.id);
 	}
 
-	return npc_event_sub(sd,ev,eventname);
+	npc_event_sub(sd,ev,eventname); // Don't return this value so npc_enable_sub doesn't attempt to "click" the NPC if OnTouch fails.
+	return 0;
 }
 
 /*==========================================
@@ -931,6 +950,8 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
 		return 0;
 	if( pc_ishiding(sd) )
 		return 0;
+	if( pc_isdead(sd) )
+		return 0;
 	if( pc_id == sd->bl.id )
 		return 0;
 
@@ -945,27 +966,40 @@ int npc_touch_areanpc_sub(struct block_list *bl, va_list ap)
  *------------------------------------------*/
 int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
 {
-	struct npc_data *nd = map_id2nd(sd->touching_id);
-	short xs, ys;
+	if (sd->npc_ontouch_.empty())
+		return 0;
 
-	if( !nd || nd->touching_id != sd->bl.id )
-		return 1;
+	bool found = false;
 
-	xs = nd->u.scr.xs;
-	ys = nd->u.scr.ys;
+	sd->npc_ontouch_.erase(std::remove_if(sd->npc_ontouch_.begin(), sd->npc_ontouch_.end(), [&] (const int &current_npc_id) {
+		struct npc_data *nd = map_id2nd(current_npc_id);
 
-	if( sd->bl.m != nd->bl.m ||
-		sd->bl.x < nd->bl.x - xs || sd->bl.x > nd->bl.x + xs ||
-		sd->bl.y < nd->bl.y - ys || sd->bl.y > nd->bl.y + ys ||
-		pc_ishiding(sd) || leavemap )
-	{
-		char name[EVENT_NAME_LENGTH];
+		if (!nd) {
+			return true;
+		} else {
+			int16 xs = nd->u.scr.xs;
+			int16 ys = nd->u.scr.ys;
 
-		nd->touching_id = sd->touching_id = 0;
-		safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_event_name);
-		map_forcountinarea(npc_touch_areanpc_sub,nd->bl.m,nd->bl.x - xs,nd->bl.y - ys,nd->bl.x + xs,nd->bl.y + ys,1,BL_PC,sd->bl.id,name);
-	}
-	return 0;
+			// note : hiding doesn't reset the previous trigger status
+			// player must leave the area to reset nd->touching_id on official
+			if (sd->bl.m != nd->bl.m || sd->bl.x < nd->bl.x - xs || sd->bl.x > nd->bl.x + xs || sd->bl.y < nd->bl.y - ys || sd->bl.y > nd->bl.y + ys || leavemap) {
+				char name[EVENT_NAME_LENGTH];
+
+				if (nd->touching_id && nd->touching_id == sd->bl.id) {// empty when reload script
+					found = true;
+					nd->touching_id = 0;
+					safesnprintf(name, ARRAYLENGTH(name), "%s::%s", nd->exname, script_config.ontouch_event_name);
+					map_forcountinarea(npc_touch_areanpc_sub,nd->bl.m,nd->bl.x - xs,nd->bl.y - ys,nd->bl.x + xs,nd->bl.y + ys,1,BL_PC,sd->bl.id,name);
+				}
+
+				return true;
+			}
+		}
+
+		return false;
+	}), sd->npc_ontouch_.end());
+
+	return found;
 }
 
 /*==========================================
@@ -973,94 +1007,81 @@ int npc_touchnext_areanpc(struct map_session_data* sd, bool leavemap)
  *------------------------------------------*/
 int npc_touch_areanpc(struct map_session_data* sd, int16 m, int16 x, int16 y)
 {
-	int xs,ys;
-	int f = 1;
-	int i;
-	int j, found_warp = 0;
+	int xs, ys, i, f = 1;
 
 	nullpo_retr(1, sd);
 
-	// Why not enqueue it? [Inkfish]
-	//if(sd->npc_id)
-	//	return 1;
+	// Remove NPCs that are no longer within the OnTouch area
+	for (i = 0; i < sd->areanpc.size(); i++) {
+		struct npc_data *nd = map_id2nd(sd->areanpc[i]);
+
+		if (!nd || nd->subtype != NPCTYPE_SCRIPT ||
+			!(nd->bl.m == m && x >= nd->bl.x - nd->u.scr.xs && x <= nd->bl.x + nd->u.scr.xs && y >= nd->bl.y - nd->u.scr.ys && y <= nd->bl.y + nd->u.scr.ys))
+			sd->areanpc.erase(sd->areanpc.begin() + i);
+	}
+
+	if (sd->state.block_action & PCBLOCK_NPCCLICK)
+		return 0;
 
 	struct map_data *mapdata = map_getmapdata(m);
 
-	for(i=0;i<mapdata->npc_num;i++)
-	{
+	for (i = 0; i < mapdata->npc_num_area; i++) {
 		if (mapdata->npc[i]->sc.option&OPTION_INVISIBLE) {
-			f=0; // a npc was found, but it is disabled; don't print warning
+			f = 0; // a npc was found, but it is disabled; don't print warning
 			continue;
 		}
 
 		switch(mapdata->npc[i]->subtype) {
 		case NPCTYPE_WARP:
-			xs=mapdata->npc[i]->u.warp.xs;
-			ys=mapdata->npc[i]->u.warp.ys;
+			xs = mapdata->npc[i]->u.warp.xs;
+			ys = mapdata->npc[i]->u.warp.ys;
 			break;
 		case NPCTYPE_SCRIPT:
-			xs=mapdata->npc[i]->u.scr.xs;
-			ys=mapdata->npc[i]->u.scr.ys;
+			xs = mapdata->npc[i]->u.scr.xs;
+			ys = mapdata->npc[i]->u.scr.ys;
 			break;
 		default:
 			continue;
 		}
-		if( x >= mapdata->npc[i]->bl.x-xs && x <= mapdata->npc[i]->bl.x+xs
-		&&  y >= mapdata->npc[i]->bl.y-ys && y <= mapdata->npc[i]->bl.y+ys )
-			break;
-	}
-	if( i == mapdata->npc_num )
-	{
-		if( f == 1 ) // no npc found
-			ShowError("npc_touch_areanpc : stray NPC cell/NPC not found in the block on coordinates '%s',%d,%d\n", mapdata->name, x, y);
-		return 1;
-	}
-	switch(mapdata->npc[i]->subtype) {
-		case NPCTYPE_WARP:
-			if ((!mapdata->npc[i]->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
-				break; // hidden or dead chars cannot use warps
-			if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(mapdata->npc[i]->u.warp.mapindex), sd->group_level))
-				break;
-			if(sd->count_rewarp > 10){
-				ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, mapdata->npc[i]->exname, mapdata->npc[i]->path);
-				sd->count_rewarp=0;
-				break;
-			}
-			pc_setpos(sd,mapdata->npc[i]->u.warp.mapindex,mapdata->npc[i]->u.warp.x,mapdata->npc[i]->u.warp.y,CLR_OUTSIGHT);
-			break;
-		case NPCTYPE_SCRIPT:
-			for (j = i; j < mapdata->npc_num; j++) {
-				if (mapdata->npc[j]->subtype != NPCTYPE_WARP) {
-					continue;
-				}
 
-				if ((sd->bl.x >= (mapdata->npc[j]->bl.x - mapdata->npc[j]->u.warp.xs) && sd->bl.x <= (mapdata->npc[j]->bl.x + mapdata->npc[j]->u.warp.xs)) &&
-					(sd->bl.y >= (mapdata->npc[j]->bl.y - mapdata->npc[j]->u.warp.ys) && sd->bl.y <= (mapdata->npc[j]->bl.y + mapdata->npc[j]->u.warp.ys))) {
-					if ((!mapdata->npc[i]->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
-						break; // hidden or dead chars cannot use warps
-					pc_setpos(sd,mapdata->npc[j]->u.warp.mapindex,mapdata->npc[j]->u.warp.x,mapdata->npc[j]->u.warp.y,CLR_OUTSIGHT);
-					found_warp = 1;
+		if (x >= mapdata->npc[i]->bl.x - xs && x <= mapdata->npc[i]->bl.x + xs && y >= mapdata->npc[i]->bl.y - ys && y <= mapdata->npc[i]->bl.y + ys) {
+			f = 0;
+
+			switch (mapdata->npc[i]->subtype) {
+			case NPCTYPE_WARP:
+				if ((!mapdata->npc[i]->trigger_on_hidden && (pc_ishiding(sd) || (sd->sc.count && sd->sc.data[SC_CAMOUFLAGE]))) || pc_isdead(sd))
+					break; // hidden or dead chars cannot use warps
+				if (!pc_job_can_entermap((enum e_job)sd->status.class_, map_mapindex2mapid(mapdata->npc[i]->u.warp.mapindex), sd->group_level))
+					break;
+				if (sd->count_rewarp > 10) {
+					ShowWarning("Prevented infinite warp loop for player (%d:%d). Please fix NPC: '%s', path: '%s'\n", sd->status.account_id, sd->status.char_id, mapdata->npc[i]->exname, mapdata->npc[i]->path);
+					sd->count_rewarp = 0;
 					break;
 				}
-			}
+				pc_setpos(sd, mapdata->npc[i]->u.warp.mapindex, mapdata->npc[i]->u.warp.x, mapdata->npc[i]->u.warp.y, CLR_OUTSIGHT);
+				return 0;
+			case NPCTYPE_SCRIPT:
+				// warp type sorted first, no need to check if they override any other OnTouch areas.
 
-			if (found_warp > 0) {
+				if (npc_ontouch_event(sd, mapdata->npc[i]) > 0 && npc_ontouch2_event(sd, mapdata->npc[i]) > 0) { // failed to run OnTouch event, so just click the npc
+					auto it = std::find(sd->areanpc.begin(), sd->areanpc.end(), mapdata->npc[i]->bl.id);
+
+					if (it == sd->areanpc.end())
+						sd->areanpc.push_back(mapdata->npc[i]->bl.id);
+
+					npc_click(sd, mapdata->npc[i]);
+				}
+
 				break;
 			}
-
-			if( npc_ontouch_event(sd,mapdata->npc[i]) > 0 && npc_ontouch2_event(sd,mapdata->npc[i]) > 0 )
-			{ // failed to run OnTouch event, so just click the npc
-				struct unit_data *ud = unit_bl2ud(&sd->bl);
-				if( ud && ud->walkpath.path_pos < ud->walkpath.path_len )
-				{ // Since walktimer always == INVALID_TIMER at this time, we stop walking manually. [Inkfish]
-					clif_fixpos(&sd->bl);
-					ud->walkpath.path_pos = ud->walkpath.path_len;
-				}
-				sd->areanpc_id = mapdata->npc[i]->bl.id;
-				npc_click(sd,mapdata->npc[i]);
-			}
-			break;
+		}
 	}
+	
+	if (f == 1) {
+		ShowError("npc_touch_areanpc : stray NPC cell/NPC not found in the block on coordinates '%s',%d,%d\n", mapdata->name, x, y);
+		return 1;
+	}
+
 	return 0;
 }
 
@@ -1074,7 +1095,7 @@ int npc_touch_areanpc2(struct mob_data *md)
 	int xs, ys;
 	struct map_data *mapdata = map_getmapdata(md->bl.m);
 
-	for( i = 0; i < mapdata->npc_num; i++ )
+	for( i = 0; i < mapdata->npc_num_area; i++ )
 	{
 		if( mapdata->npc[i]->sc.option&OPTION_INVISIBLE )
 			continue;
@@ -1163,7 +1184,7 @@ int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range)
 	if (!i) return 0; //No NPC_CELLs.
 
 	//Now check for the actual NPC on said range.
-	for(i=0;i<mapdata->npc_num;i++)
+	for (i = 0; i < mapdata->npc_num_area; i++)
 	{
 		if (mapdata->npc[i]->sc.option&OPTION_INVISIBLE)
 			continue;
@@ -1190,7 +1211,7 @@ int npc_check_areanpc(int flag, int16 m, int16 x, int16 y, int16 range)
 		&&  y1 >= mapdata->npc[i]->bl.y-ys && y0 <= mapdata->npc[i]->bl.y+ys )
 			break; // found a npc
 	}
-	if (i==mapdata->npc_num)
+	if (i == mapdata->npc_num_area)
 		return 0;
 
 	return (mapdata->npc[i]->bl.id);
@@ -1284,7 +1305,12 @@ int npc_click(struct map_session_data* sd, struct npc_data* nd)
 	//Hidden/Disabled npc.
 	if (nd->class_ < 0 || nd->sc.option&(OPTION_INVISIBLE|OPTION_HIDE))
 		return 1;
-	
+
+	if (sd->state.block_action & PCBLOCK_NPCCLICK) {
+		clif_msg(sd, WORK_IN_PROGRESS);
+		return 1;
+	}
+
 	switch(nd->subtype) {
 		case NPCTYPE_SHOP:
 			clif_npcbuysell(sd,nd->bl.id);
@@ -1537,6 +1563,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 	unsigned short nameid;
 	struct npc_data *nd = (struct npc_data *)map_id2bl(sd->npc_shopid);
 	enum e_CASHSHOP_ACK res;
+	item_data *id;
 
 	if( !nd || ( nd->subtype != NPCTYPE_CASHSHOP && nd->subtype != NPCTYPE_ITEMSHOP && nd->subtype != NPCTYPE_POINTSHOP ) )
 		return ERROR_TYPE_NPC;
@@ -1552,8 +1579,9 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 	{
 		nameid = item_list[i*2+1];
 		amount = item_list[i*2+0];
+		id = itemdb_exists(nameid);
 
-		if( !itemdb_exists(nameid) || amount <= 0 )
+		if( !id || amount <= 0 )
 			return ERROR_TYPE_ITEM_ID;
 
 		ARR_FIND(0,nd->u.shop.count,j,nd->u.shop.shop_item[j].nameid == nameid || itemdb_viewid(nd->u.shop.shop_item[j].nameid) == nameid);
@@ -1562,7 +1590,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 
 		nameid = item_list[i*2+1] = nd->u.shop.shop_item[j].nameid; //item_avail replacement
 
-		if( !itemdb_isstackable(nameid) && amount > 1 )
+		if( !itemdb_isstackable2(id) && amount > 1 )
 		{
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %hu!\n", sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
 			amount = item_list[i*2+0] = 1;
@@ -1571,7 +1599,7 @@ int npc_cashshop_buylist(struct map_session_data *sd, int points, int count, uns
 		switch( pc_checkadditem(sd,nameid,amount) )
 		{
 			case CHKADDITEM_NEW:
-				new_++;
+				new_ += id->inventorySlotNeeded(amount);
 				break;
 			case CHKADDITEM_OVERAMOUNT:
 				return ERROR_TYPE_INVENTORY_WEIGHT;
@@ -1713,7 +1741,7 @@ int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amo
 
 	nameid = nd->u.shop.shop_item[i].nameid; //item_avail replacement
 
-	if(!itemdb_isstackable(nameid) && amount > 1)
+	if(!itemdb_isstackable2(item) && amount > 1)
 	{
 		ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %hu!\n",
 			sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
@@ -1723,7 +1751,7 @@ int npc_cashshop_buy(struct map_session_data *sd, unsigned short nameid, int amo
 	switch( pc_checkadditem(sd, nameid, amount) )
 	{
 		case CHKADDITEM_NEW:
-			if( pc_inventoryblank(sd) == 0 )
+			if( pc_inventoryblank(sd) < item->inventorySlotNeeded(amount) )
 				return ERROR_TYPE_INVENTORY_WEIGHT;
 			break;
 		case CHKADDITEM_OVERAMOUNT:
@@ -1831,6 +1859,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 	for( i = 0; i < n; ++i ) {
 		unsigned short nameid, amount;
 		int value;
+		item_data *id;
 
 		// find this entry in the shop's sell list
 		ARR_FIND( 0, nd->u.shop.count, j,
@@ -1852,11 +1881,12 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 		amount = item_list[i].qty;
 		nameid = item_list[i].nameid = shop[j].nameid; //item_avail replacement
 		value = shop[j].value;
+		id = itemdb_exists(nameid);
 
-		if( !itemdb_exists(nameid) )
+		if( !id )
 			return 3; // item no longer in itemdb
 
-		if( !itemdb_isstackable(nameid) && amount > 1 ) { //Exploit? You can't buy more than 1 of equipment types o.O
+		if( !itemdb_isstackable2(id) && amount > 1 ) { //Exploit? You can't buy more than 1 of equipment types o.O
 			ShowWarning("Player %s (%d:%d) sent a hexed packet trying to buy %d of nonstackable item %hu!\n",
 				sd->status.name, sd->status.account_id, sd->status.char_id, amount, nameid);
 			amount = item_list[i].qty = 1;
@@ -1871,7 +1901,7 @@ uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *
 				break;
 
 			case CHKADDITEM_NEW:
-				new_++;
+				new_ += id->inventorySlotNeeded(amount);
 				break;
 
 			case CHKADDITEM_OVERAMOUNT:
@@ -2156,8 +2186,21 @@ int npc_remove_map(struct npc_data* nd)
 	if( i == mapdata->npc_num ) return 2; //failed to find it?
 
 	mapdata->npc_num--;
-	mapdata->npc[i] = mapdata->npc[mapdata->npc_num];
-	mapdata->npc[mapdata->npc_num] = NULL;
+	if (i >= mapdata->npc_num_area)
+		mapdata->npc[i] = mapdata->npc[ mapdata->npc_num ];
+	else if (i >= mapdata->npc_num_warp) {
+		mapdata->npc_num_area--;
+		mapdata->npc[i] = mapdata->npc[ mapdata->npc_num_area ];
+		mapdata->npc[ mapdata->npc_num_area ] = mapdata->npc[ mapdata->npc_num ];
+	}
+	else {
+		mapdata->npc_num_warp--;
+		mapdata->npc_num_area--;
+		mapdata->npc[i] = mapdata->npc[ mapdata->npc_num_warp ];
+		mapdata->npc[ mapdata->npc_num_warp ] = mapdata->npc[ mapdata->npc_num_area ];
+		mapdata->npc[ mapdata->npc_num_area ] = mapdata->npc[ mapdata->npc_num ];
+	}
+	mapdata->npc[ mapdata->npc_num ] = NULL;
 	return 0;
 }
 
@@ -2477,7 +2520,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
  * Support for using Constants in place of NPC View IDs.
  */
 int npc_parseview(const char* w4, const char* start, const char* buffer, const char* filepath) {
-	int val = JT_FAKENPC, i = 0;
+	int i = 0;
 	char viewid[1024];	// Max size of name from const.txt, see read_constdb.
 
 	// Extract view ID / constant
@@ -2490,34 +2533,19 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 
 	safestrncpy(viewid, w4, i+=1);
 
+	char *pid;
+	int val = strtol(viewid, &pid, 0);
+
 	// Check if view id is not an ID (only numbers).
-	if(!npc_viewisid(viewid)) {
+	if (pid != nullptr && *pid != '\0') {
 		// Check if constant exists and get its value.
 		if(!script_get_constant(viewid, &val)) {
 			ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
 			val = JT_INVISIBLE;
 		}
-	} else {
-		// NPC has an ID specified for view id.
-		val = atoi(w4);
 	}
 
 	return val;
-}
-
-/**
- * Checks if given view is an ID or constant.
- */
-bool npc_viewisid(const char * viewid)
-{
-	if(atoi(viewid) != JT_FAKENPC) {
-		// Loop through view, looking for non-numeric character.
-		while (*viewid) {
-			if (ISDIGIT(*viewid++) == 0) return false;
-		}
-	}
-
-	return true;
 }
 
 /**
@@ -2562,7 +2590,6 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	struct npc_data *nd;
 
 	nd = npc_create_npc(from_mapid, from_x, from_y);
-	map_addnpc(from_mapid, nd);
 
 	safestrncpy(nd->exname, name, ARRAYLENGTH(nd->exname));
 	if (npc_name2id(nd->exname) != NULL)
@@ -2589,6 +2616,7 @@ struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short 
 	nd->bl.type = BL_NPC;
 	nd->subtype = NPCTYPE_WARP;
 	nd->trigger_on_hidden = false;
+	map_addnpc(from_mapid, nd);
 	npc_setcells(nd);
 	if(map_addblock(&nd->bl))
 		return NULL;
@@ -2646,7 +2674,6 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 	}
 
 	nd = npc_create_npc(m, x, y);
-	map_addnpc(m, nd);
 	npc_parsename(nd, w3, start, buffer, filepath);
 
 	if (!battle_config.warp_point_debug)
@@ -2667,6 +2694,7 @@ static const char* npc_parse_warp(char* w1, char* w2, char* w3, char* w4, const 
 		nd->trigger_on_hidden = true;
 	else
 		nd->trigger_on_hidden = false;
+	map_addnpc(m, nd);
 	npc_setcells(nd);
 	if(map_addblock(&nd->bl)) //couldn't add on map
 		return strchr(start,'\n');
@@ -3368,7 +3396,6 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		}
 
 		wnd = npc_create_npc(m, snd->bl.x, snd->bl.y);
-		map_addnpc(m, wnd);
 		safestrncpy(wnd->name, "", ARRAYLENGTH(wnd->name));
 		safestrncpy(wnd->exname, newname, ARRAYLENGTH(wnd->exname));
 		wnd->class_ = JT_WARPNPC;
@@ -3382,6 +3409,7 @@ int npc_duplicate4instance(struct npc_data *snd, int16 m) {
 		wnd->subtype = NPCTYPE_WARP;
 		wnd->trigger_on_hidden = snd->trigger_on_hidden;
 		wnd->src_id = snd->src_id ? snd->src_id : snd->bl.id;
+		map_addnpc(m, wnd);
 		npc_setcells(wnd);
 		if(map_addblock(&wnd->bl))
 			return 1;
