@@ -344,6 +344,16 @@
 2733:2772,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,3; bonus bHealPower,5; }
 2733:2773,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,3; bonus bHealPower,5; }
 2733:2774,{ bonus2 bAddClass,Class_All,5; bonus bMatkRate,3; bonus bHealPower,5; }
+27347:27028,{ bonus2 bMagicAddEle,Ele_Earth,8; }
+27351:4582,{ bonus bMaxHPrate,5; }
+27352:4127,{ bonus bMaxSPrate,10; }
+27352:4166,{ bonus2 bAddClass,Class_All,10; }
+27354:4133,{ bonus2 bAddClass,Class_All,5; bonus2 bSubEle,Ele_Neutral,10; }
+27355:4633,{ bonus bLongAtkRate,5; }
+27357:4226,{ bonus bDef,150; bonus bMdef,20; }
+27359:27122,{ bonus2 bMagicAddEle,Ele_Water,8; }
+27360:4670,{ bonus2 bMagicAddEle,Ele_Fire,8; }
+27363:4168,{ bonus2 bMagicAtkEle,Ele_Fire,15; bonus2 bSkillAtk,"WZ_METEOR",15; }
 2747:13061,{ bonus bHit,5; bonus bMatk,5; bonus2 bSkillUseSP,"SC_ENERVATION",20; bonus2 bSkillUseSP,"SC_GROOMY",20; }
 2751:2888,{ bonus bAspdRate,3; bonus bVariableCastrate,-3; }
 2777:2778:5479,{ bonus bMaxHP,10*getequiprefinerycnt(EQI_HEAD_TOP); bonus bMaxSP,2*getequiprefinerycnt(EQI_ACC_L); bonus bNoCastCancel; bonus bCastrate,15; }
@@ -856,6 +866,12 @@
 20933:22197,{ bonus bVariableCastrate,-10; }
 20934:22196,{ bonus bLongAtkRate,10; }
 20934:22197,{ bonus2 bMagicAtkEle,Ele_All,10; }
+20935:22199,{ bonus bHit,5; }
+20935:22199:15378,{ bonus2 bAddClass,Class_All,2; .@a = getequiprefinerycnt(EQI_GARMENT); .@b = getequiprefinerycnt(EQI_SHOES); .@c = getequiprefinerycnt(EQI_ARMOR); if (.@a>=7 && .@b>=7 &&.@c>=7) bonus2 bAddClass,Class_All,3; if (.@a+.@b+.@c >= 27) bonus bDelayrate,-20; }
+20936:22200,{ bonus bCritAtkRate,5; }
+20936:22200:15379,{ bonus2 bAddClass,Class_All,2; .@a = getequiprefinerycnt(EQI_GARMENT); .@b = getequiprefinerycnt(EQI_SHOES); .@c = getequiprefinerycnt(EQI_ARMOR); if (.@a>=7 && .@b>=7 &&.@c>=7) bonus2 bAddClass,Class_All,3; if (.@a+.@b+.@c >= 27) bonus bCritAtkRate,20; }
+20937:22201,{ bonus bVariableCastrate,-5; }
+20937:22201:15380,{ bonus bMatkRate,2; .@a = getequiprefinerycnt(EQI_GARMENT); .@b = getequiprefinerycnt(EQI_SHOES); .@c = getequiprefinerycnt(EQI_ARMOR); if (.@a>=7 && .@b>=7 &&.@c>=7) bonus bMatkRate,3; if (.@a+.@b+.@c >= 27) bonus2 bMagicAtkEle,Ele_Fire,15; }
 20941:4197,{ bonus bFlee,20; bonus bMaxHPrate,10; bonus bMdef,10; }
 20969:1752,{ bonus2 bSubEle,Ele_Fire,75; }
 20969:1754,{ bonus2 bSubEle,Ele_Water,75; }

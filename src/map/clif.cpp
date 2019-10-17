@@ -4784,6 +4784,7 @@ static int clif_hallucination_damage()
 ///     10 = critical hit
 ///     11 = lucky dodge
 ///     12 = (touch skill?)
+///     13 = multi-hit critical
 int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int sdelay, int ddelay, int64 sdamage, int div, enum e_damage_type type, int64 sdamage2, bool spdamage)
 {
 	unsigned char buf[34];
@@ -4804,7 +4805,8 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 	nullpo_ret(src);
 	nullpo_ret(dst);
 
-	type = clif_calc_delay(type,div,damage+damage2,ddelay);
+	if (type != DMG_MULTI_HIT_CRITICAL)
+		type = clif_calc_delay(type,div,damage+damage2,ddelay);
 	sc = status_get_sc(dst);
 	if(sc && sc->count) {
 		if(sc->data[SC_HALLUCINATION]) {
@@ -4866,6 +4868,9 @@ int clif_damage(struct block_list* src, struct block_list* dst, t_tick tick, int
 	if(src == dst) {
 		unit_setdir(src, unit_getdir(src));
 	}
+
+	// In case this assignment is bypassed by DMG_MULTI_HIT_CRITICAL
+	type = clif_calc_delay(type, div, damage + damage2, ddelay);
 	//Return adjusted can't walk delay for further processing.
 	return clif_calc_walkdelay(dst, ddelay, type, damage+damage2, div);
 }
@@ -6220,6 +6225,10 @@ void clif_displaymessage(const int fd, const char* mes)
 /// 009a <packet len>.W <message>.?B
 void clif_broadcast(struct block_list* bl, const char* mes, int len, int type, enum send_target target)
 {
+	nullpo_retv(mes);
+	if (len < 2)
+		return;
+
 	int lp = (type&BC_COLOR_MASK) ? 4 : 0;
 	std::unique_ptr<unsigned char> buf(new unsigned char[4+lp+len]);
 
@@ -6266,6 +6275,10 @@ void clif_GlobalMessage(struct block_list* bl, const char* message, enum send_ta
 /// 01c3 <packet len>.W <fontColor>.L <fontType>.W <fontSize>.W <fontAlign>.W <fontY>.W <message>.?B
 void clif_broadcast2(struct block_list* bl, const char* mes, int len, unsigned long fontColor, short fontType, short fontSize, short fontAlign, short fontY, enum send_target target)
 {
+	nullpo_retv(mes);
+	if (len < 2)
+		return;
+
 	std::unique_ptr<unsigned char> buf(new unsigned char[16+len]);
 
 	WBUFW(buf.get(),0)  = 0x1c3;
@@ -15866,7 +15879,17 @@ void clif_mail_removeitem( struct map_session_data* sd, bool success, int index,
 	WFIFOB(fd, 2) = success;
 	WFIFOW(fd, 3) = index;
 	WFIFOW(fd, 5) = amount;
-	WFIFOW(fd, 7) = 0; // TODO: which weight? item weight? removed weight? remaining weight?
+
+	int total = 0;
+	for( int i = 0; i < MAIL_MAX_ITEM; i++ ){
+		if( sd->mail.item[i].nameid == 0 ){
+			break;
+		}
+
+		total += sd->mail.item[i].amount * ( sd->inventory_data[sd->mail.item[i].index]->weight / 10 );
+	}
+
+	WFIFOW(fd, 7) = total;
 	WFIFOSET(fd, 9);
 }
 
@@ -17034,9 +17057,12 @@ void clif_quest_update_status(struct map_session_data *sd, int quest_id, bool ac
 ///     1 = orange
 ///     2 = green
 ///     3 = purple
-void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short effect, short color)
+void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, e_questinfo_types effect, e_questinfo_markcolor color)
 {
 #if PACKETVER >= 20090218
+	nullpo_retv(sd);
+	nullpo_retv(bl);
+
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd, packet_len(0x446));
@@ -20737,9 +20763,9 @@ void clif_parse_equipswitch_remove( int fd, struct map_session_data* sd ){
 }
 
 /// Acknowledgement for adding an equip to the equip switch window
-/// 0a98 <index>.W <position.>.L <failure>.L  <= 20170502
-/// 0a98 <index>.W <position.>.L <failure>.W
-void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos, bool failed ){
+/// 0a98 <index>.W <position.>.L <flag>.L  <= 20170502
+/// 0a98 <index>.W <position.>.L <flag>.W
+void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos, uint8 flag ){
 #if PACKETVER >= 20170208
 	int fd = sd->fd;
 
@@ -20748,9 +20774,9 @@ void clif_equipswitch_add( struct map_session_data* sd, uint16 index, uint32 pos
 	WFIFOW(fd, 2) = index + 2;
 	WFIFOL(fd, 4) = pos;
 #if PACKETVER <= 20170502
-	WFIFOL(fd, 8) = failed;
+	WFIFOL(fd, 8) = flag;
 #else
-	WFIFOW(fd, 8) = failed;
+	WFIFOW(fd, 8) = flag;
 #endif
 	WFIFOSET(fd,packet_len(0xa98));
 #endif
@@ -20772,7 +20798,7 @@ void clif_parse_equipswitch_add( int fd, struct map_session_data* sd ){
 	}
 
 	if( sd->state.trading || sd->npc_shopid ){
-		clif_equipswitch_add( sd, index, position, true );
+		clif_equipswitch_add( sd, index, position, ITEM_EQUIP_ACK_OK );
 		return;
 	}
 

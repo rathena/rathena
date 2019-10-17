@@ -2402,8 +2402,14 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	temp_aspd = (float)(sqrt(temp_aspd) * 0.25f) + 0xc4;
 	if ((skill_lv = pc_checkskill(sd,SA_ADVANCEDBOOK)) > 0 && sd->status.weapon == W_BOOK)
 		val += (skill_lv - 1) / 2 + 1;
+	if ((skill_lv = pc_checkskill(sd, SG_DEVIL)) > 0 && pc_is_maxjoblv(sd))
+		val += 1 + skill_lv;
 	if ((skill_lv = pc_checkskill(sd,GS_SINGLEACTION)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
 		val += ((skill_lv + 1) / 2);
+	if (pc_isriding(sd))
+		val -= 50 - 10 * pc_checkskill(sd, KN_CAVALIERMASTERY);
+	else if (pc_isridingdragon(sd))
+		val -= 25 - 5 * pc_checkskill(sd, RK_DRAGONTRAINING);
 	amotion = ((int)(temp_aspd + ((float)(status_calc_aspd(&sd->bl, &sd->sc, true) + val) * status->agi / 200)) - min(amotion, 200));
 #else
 	// Angra Manyu disregards aspd_base and similar
@@ -3831,9 +3837,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if( sd->pd ) { // Pet Bonus
 		struct pet_data *pd = sd->pd;
 		std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
-		if( pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script && pd->pet.intimate >= battle_config.pet_equip_min_friendly )
+
+		if (pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script)
 			run_script(pet_db_ptr->pet_bonus_script,0,sd->bl.id,0);
-		if( pet_db_ptr != nullptr && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus )
+		if (pet_db_ptr != nullptr && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus)
 			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
 	}
 
@@ -4116,6 +4123,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	base_status->amotion = cap_value(i,pc_maxaspd(sd),2000);
 
 	// Relative modifiers from passive skills
+	// Renewal modifiers are handled in status_base_amotion_pc
 #ifndef RENEWAL_ASPD
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
 		base_status->aspd_rate -= 5*skill;
@@ -4128,13 +4136,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->aspd_rate += 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
 	else if(pc_isridingdragon(sd))
 		base_status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
-#else // Needs more info
-	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && pc_is_maxjoblv(sd))
-		base_status->aspd_rate += 30*skill;
-	if(pc_isriding(sd))
-		base_status->aspd_rate -= 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
-	else if(pc_isridingdragon(sd))
-		base_status->aspd_rate -= 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 #endif
 	base_status->adelay = 2*base_status->amotion;
 

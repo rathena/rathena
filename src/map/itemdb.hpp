@@ -861,6 +861,9 @@ struct item_data
 	struct item_combo **combos;
 	unsigned char combos_count;
 	short delay_sc; ///< Use delay group if any instead using player's item_delay data [Cydh]
+
+	bool isStackable();
+	int inventorySlotNeeded(int quantity);
 };
 
 // Struct for item random option [Secret]

@@ -1157,7 +1157,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	struct mob_data *md, *dstmd;
 	struct status_data *sstatus, *tstatus;
 	struct status_change *sc, *tsc;
-	enum sc_type status;
 	int skill;
 	int rate;
 
@@ -12341,7 +12340,7 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 
 	case SC_ESCAPE:
 		skill_unitsetting(src, skill_id, skill_lv, x, y, 0);
-		skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_NONE);
+		skill_blown(src, src, skill_get_blewcount(skill_id, skill_lv), unit_getdir(src), BLOWN_IGNORE_NO_KNOCKBACK); // Don't stop the caster from backsliding if special_state.no_knockback is active
 		clif_skill_nodamage(src,src,skill_id,skill_lv,1);
 		flag |= 1;
 		break;
@@ -16651,12 +16650,13 @@ int skill_vfcastfix(struct block_list *bl, double time, uint16 skill_id, uint16 
 	if (bl->type == BL_MOB || bl->type == BL_NPC)
 		return (int)time;
 
-	if (fixed < 0 || !battle_config.default_fixed_castrate) // no fixed cast time
+	if (fixed < 0) // no fixed cast time
 		fixed = 0;
 	else if (fixed == 0) {
 		fixed = (int)time * battle_config.default_fixed_castrate / 100; // fixed time
 		time = time * (100 - battle_config.default_fixed_castrate) / 100; // variable time
 	}
+	// Else, use fixed cast time from database (when default_fixed_castrate is set to 0)
 
 	// Additive Variable Cast bonus adjustments by items
 	if (sd && !(flag&4)) {
@@ -21062,7 +21062,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current)
 	skill_db[idx]->hit = atoi(split[2]);
 	skill_db[idx]->inf = atoi(split[3]);
 	skill_split_atoi(split[4],skill_db[idx]->element);
-	skill_db[idx]->nk = (uint8)strtol(split[5], NULL, 0);
+	skill_db[idx]->nk = static_cast<uint16>(strtol(split[5], NULL, 0));
 	skill_split_atoi(split[6],skill_db[idx]->splash);
 	skill_db[idx]->max = atoi(split[7]);
 	skill_split_atoi(split[8],skill_db[idx]->num);
