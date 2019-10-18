@@ -141,7 +141,7 @@ struct Battle_Config
 	int enable_critical;
 	int mob_critical_rate;
 	int critical_rate;
-	int enable_baseatk;
+	int enable_baseatk, enable_baseatk_renewal;
 	int enable_perfect_flee;
 	int cast_rate, delay_rate;
 	int delay_dependon_dex, delay_dependon_agi;
@@ -226,7 +226,6 @@ struct Battle_Config
 	int pet_attack_support;
 	int pet_damage_support;
 	int pet_support_min_friendly;	//[Skotlex]
-	int pet_equip_min_friendly;
 	int pet_support_rate;
 	int pet_attack_exp_to_master;
 	int pet_attack_exp_rate;
@@ -369,7 +368,6 @@ struct Battle_Config
 	int skill_removetrap_type;
 	int disp_experience;
 	int disp_zeny;
-	int castle_defense_rate;
 	int backstab_bow_penalty;
 	int hp_rate;
 	int sp_rate;
@@ -623,6 +621,7 @@ struct Battle_Config
 	int mvp_exp_reward_message;
 	int can_damage_skill; //Which BL types can damage traps
 	int atcommand_levelup_events;
+	int atcommand_disable_npc;
 	int block_account_in_same_party;
 	int tarotcard_equal_chance; //Official or equal chance for each card
 	int change_party_leader_samemap;
@@ -658,6 +657,7 @@ struct Battle_Config
 	int min_shop_buy;
 	int min_shop_sell;
 	int feature_equipswitch;
+	int pet_walk_speed;
 
 #include "../custom/battle_config_struct.inc"
 };

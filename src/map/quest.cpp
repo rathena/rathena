@@ -618,6 +618,7 @@ void quest_update_objective(struct map_session_data *sd, int mob_id)
 //				intif_broadcast_obtain_special_item(sd, it.nameid, it.mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 		}
 	}
+	pc_show_questinfo(sd);
 }
 
 /**

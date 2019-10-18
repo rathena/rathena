@@ -20,9 +20,7 @@ function	script	F_time_limit_recorder	{
 function	script	F_erase_datas_recorder	{
 	if (callfunc("F_time_limit_recorder") == 1)
 		return;
-	mes "";
 	mes "Your whole body suddenly becomes heavy and time seems to be passing faster around you.";
-	mes "";
 	for ( .@quest_id = 5341; .@quest_id < 5371; .@quest_id++ ) {
 		if (isbegin_quest(.@quest_id) > 0)
 			erasequest .@quest_id;

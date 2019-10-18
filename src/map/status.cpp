@@ -495,7 +495,7 @@ void initChangeTables(void)
 	set_sc( CG_LONGINGFREEDOM	, SC_LONGING		, EFST_LONGING		, SCB_SPEED|SCB_ASPD );
 	set_sc( CG_HERMODE		, SC_HERMODE	, EFST_HERMODE	, SCB_NONE		);
 	set_sc( CG_TAROTCARD		, SC_TAROTCARD	, EFST_TAROTCARD, SCB_NONE	);
-	set_sc( ITEM_ENCHANTARMS	, SC_ENCHANTARMS	, EFST_BLANK		, SCB_ATK_ELE );
+	set_sc( ITEM_ENCHANTARMS	, SC_ENCHANTARMS	, EFST_WEAPONPROPERTY, SCB_ATK_ELE );
 	set_sc( SL_HIGH			, SC_SPIRIT		, EFST_SOULLINK, SCB_ALL );
 	set_sc( KN_ONEHAND		, SC_ONEHAND		, EFST_ONEHANDQUICKEN, SCB_ASPD );
 	set_sc( GS_FLING		, SC_FLING		, EFST_BLANK		, SCB_DEF|SCB_DEF2 );
@@ -752,7 +752,7 @@ void initChangeTables(void)
 	set_sc( SR_LIGHTNINGWALK		, SC_LIGHTNINGWALK	, EFST_LIGHTNINGWALK		, SCB_NONE );
 	set_sc( SR_RAISINGDRAGON		, SC_RAISINGDRAGON	, EFST_RAISINGDRAGON		, SCB_REGEN|SCB_MAXHP|SCB_MAXSP );
 	set_sc( SR_GENTLETOUCH_ENERGYGAIN	, SC_GT_ENERGYGAIN	, EFST_GENTLETOUCH_ENERGYGAIN	, SCB_NONE );
-	set_sc( SR_GENTLETOUCH_CHANGE		, SC_GT_CHANGE		, EFST_GENTLETOUCH_CHANGE		, SCB_WATK|SCB_MDEF|SCB_ASPD );
+	set_sc( SR_GENTLETOUCH_CHANGE		, SC_GT_CHANGE		, EFST_GENTLETOUCH_CHANGE		, SCB_WATK|SCB_ASPD );
 	set_sc( SR_GENTLETOUCH_REVITALIZE	, SC_GT_REVITALIZE	, EFST_GENTLETOUCH_REVITALIZE	, SCB_MAXHP|SCB_REGEN );
 	set_sc( SR_FLASHCOMBO			, SC_FLASHCOMBO		, EFST_FLASHCOMBO			, SCB_WATK );
 
@@ -2402,8 +2402,14 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 	temp_aspd = (float)(sqrt(temp_aspd) * 0.25f) + 0xc4;
 	if ((skill_lv = pc_checkskill(sd,SA_ADVANCEDBOOK)) > 0 && sd->status.weapon == W_BOOK)
 		val += (skill_lv - 1) / 2 + 1;
+	if ((skill_lv = pc_checkskill(sd, SG_DEVIL)) > 0 && pc_is_maxjoblv(sd))
+		val += 1 + skill_lv;
 	if ((skill_lv = pc_checkskill(sd,GS_SINGLEACTION)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
 		val += ((skill_lv + 1) / 2);
+	if (pc_isriding(sd))
+		val -= 50 - 10 * pc_checkskill(sd, KN_CAVALIERMASTERY);
+	else if (pc_isridingdragon(sd))
+		val -= 25 - 5 * pc_checkskill(sd, RK_DRAGONTRAINING);
 	amotion = ((int)(temp_aspd + ((float)(status_calc_aspd(&sd->bl, &sd->sc, true) + val) * status->agi / 200)) - min(amotion, 200));
 #else
 	// Angra Manyu disregards aspd_base and similar
@@ -2435,8 +2441,13 @@ unsigned short status_base_atk(const struct block_list *bl, const struct status_
 {
 	int flag = 0, str, dex, dstr;
 
-	if(!(bl->type&battle_config.enable_baseatk))
+#ifdef RENEWAL
+	if (!(bl->type&battle_config.enable_baseatk_renewal))
 		return 0;
+#else
+	if (!(bl->type&battle_config.enable_baseatk))
+		return 0;
+#endif
 
 	if (bl->type == BL_PC)
 	switch(((TBL_PC*)bl)->status.weapon) {
@@ -2512,7 +2523,7 @@ unsigned int status_weapon_atk(struct weapon_atk wa, struct map_session_data *sd
 	float str = sd->base_status.str;
 	int weapon_atk_bonus = 0;
 
-	if (wa.range > 3 && !pc_checkskill(sd, SU_SOULATTACK))
+	if ((wa.range > 3 || sd->status.weapon == W_MUSICAL || sd->status.weapon == W_WHIP) && !pc_checkskill(sd, SU_SOULATTACK))
 		str = sd->base_status.dex;
 	if (sd->bonus.weapon_atk_rate)
 		weapon_atk_bonus = wa.atk * sd->bonus.weapon_atk_rate / 100;
@@ -2969,7 +2980,7 @@ void status_calc_pet_(struct pet_data *pd, enum e_status_calc_opt opt)
 		memcpy(&pd->status, &pd->db->status, sizeof(struct status_data));
 		pd->status.mode = MD_CANMOVE; // Pets discard all modes, except walking
 		pd->status.class_ = CLASS_NORMAL;
-		pd->status.speed = pd->db->status.speed;
+		pd->status.speed = pd->get_pet_walk_speed();
 
 		if(battle_config.pet_attack_support || battle_config.pet_damage_support) {
 			// Attack support requires the pet to be able to attack
@@ -3149,8 +3160,6 @@ static int status_get_hpbonus(struct block_list *bl, enum e_status_bonus type) {
 				bonus -= sc->data[SC__WEAKNESS]->val2;
 			if(sc->data[SC_MYSTERIOUS_POWDER])
 				bonus -= sc->data[SC_MYSTERIOUS_POWDER]->val1;
-			if(sc->data[SC_GT_CHANGE]) // Max HP decrease: [Skill Level x 4] %
-				bonus -= (4 * sc->data[SC_GT_CHANGE]->val1);
 			if(sc->data[SC_EQC])
 				bonus -= sc->data[SC_EQC]->val3;
 		}
@@ -3551,6 +3560,8 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	sd->itemhealrate.clear();
 	sd->subele2.clear();
 	sd->skilldelay.clear();
+	sd->sp_vanish.clear();
+	sd->hp_vanish.clear();
 
 	// Zero up structures...
 	memset(&sd->hp_loss, 0, sizeof(sd->hp_loss)
@@ -3824,9 +3835,10 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	if( sd->pd ) { // Pet Bonus
 		struct pet_data *pd = sd->pd;
 		std::shared_ptr<s_pet_db> pet_db_ptr = pd->get_pet_db();
-		if( pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script && pd->pet.intimate >= battle_config.pet_equip_min_friendly )
+
+		if (pet_db_ptr != nullptr && pet_db_ptr->pet_bonus_script)
 			run_script(pet_db_ptr->pet_bonus_script,0,sd->bl.id,0);
-		if( pet_db_ptr != nullptr && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus )
+		if (pet_db_ptr != nullptr && pd->pet.intimate > 0 && (!battle_config.pet_equip_required || pd->pet.equip > 0) && pd->state.skillbonus == 1 && pd->bonus)
 			pc_bonus(sd,pd->bonus->type, pd->bonus->val);
 	}
 
@@ -4109,6 +4121,7 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 	base_status->amotion = cap_value(i,pc_maxaspd(sd),2000);
 
 	// Relative modifiers from passive skills
+	// Renewal modifiers are handled in status_base_amotion_pc
 #ifndef RENEWAL_ASPD
 	if((skill=pc_checkskill(sd,SA_ADVANCEDBOOK))>0 && sd->status.weapon == W_BOOK)
 		base_status->aspd_rate -= 5*skill;
@@ -4121,13 +4134,6 @@ int status_calc_pc_sub(struct map_session_data* sd, enum e_status_calc_opt opt)
 		base_status->aspd_rate += 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
 	else if(pc_isridingdragon(sd))
 		base_status->aspd_rate += 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
-#else // Needs more info
-	if((skill = pc_checkskill(sd,SG_DEVIL)) > 0 && pc_is_maxjoblv(sd))
-		base_status->aspd_rate += 30*skill;
-	if(pc_isriding(sd))
-		base_status->aspd_rate -= 500-100*pc_checkskill(sd,KN_CAVALIERMASTERY);
-	else if(pc_isridingdragon(sd))
-		base_status->aspd_rate -= 250-50*pc_checkskill(sd,RK_DRAGONTRAINING);
 #endif
 	base_status->adelay = 2*base_status->amotion;
 
@@ -6695,11 +6701,6 @@ static defType status_calc_mdef(struct block_list *bl, struct status_change *sc,
 		mdef -= mdef * ( 14 * sc->data[SC_ANALYZE]->val1 ) / 100;
 	if(sc->data[SC_SYMPHONYOFLOVER])
 		mdef += mdef * sc->data[SC_SYMPHONYOFLOVER]->val3 / 100;
-	if(sc->data[SC_GT_CHANGE]) {
-		mdef -= sc->data[SC_GT_CHANGE]->val4;
-		if (mdef < 0)
-			return 0;
-	}
 	if (sc->data[SC_ODINS_POWER])
 		mdef -= 20 * sc->data[SC_ODINS_POWER]->val1;
 	if(sc->data[SC_GLASTHEIM_ITEMDEF])
@@ -7370,7 +7371,7 @@ unsigned char status_calc_attack_element(struct block_list *bl, struct status_ch
 	if(!sc || !sc->count)
 		return cap_value(element, 0, UCHAR_MAX);
 	if(sc->data[SC_ENCHANTARMS])
-		return sc->data[SC_ENCHANTARMS]->val2;
+		return sc->data[SC_ENCHANTARMS]->val1;
 	if(sc->data[SC_WATERWEAPON]
 		|| (sc->data[SC_WATER_INSIGNIA] && sc->data[SC_WATER_INSIGNIA]->val1 == 2) )
 		return ELE_WATER;
@@ -7923,8 +7924,14 @@ void status_set_viewdata(struct block_list *bl, int class_)
 			TBL_NPC* nd = (TBL_NPC*)bl;
 			if (vd)
 				nd->vd = vd;
-			else
+			else {
 				ShowError("status_set_viewdata (NPC): No view data for class %d\n", class_);
+				if (bl->m >= 0)
+					ShowDebug("Source (NPC): %s at %s (%d,%d)\n", nd->name, map_mapid2mapname(bl->m), bl->x, bl->y);
+				else
+					ShowDebug("Source (NPC): %s (invisible/not on a map)\n", nd->name);
+				break;
+			}
 		}
 	break;
 	case BL_HOM:
@@ -8021,7 +8028,7 @@ static int status_get_sc_interval(enum sc_type type)
  * @param src: Source of the status change [PC|MOB|HOM|MER|ELEM|NPC]
  * @param bl: Target of the status change
  * @param type: Status change (SC_*)
- * @param rate: Initial percentage rate of affecting bl
+ * @param rate: Initial percentage rate of affecting bl (0~10000)
  * @param tick: Initial duration that the status change affects bl
  * @param flag: Value which determines what parts to calculate. See e_status_change_start_flags
  * @return adjusted duration based on flag values
@@ -8079,6 +8086,7 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 		}
 	}
 
+	rate = cap_value(rate, 0, 10000);
 	sd = BL_CAST(BL_PC,bl);
 	status = status_get_status_data(bl);
 	status_src = status_get_status_data(src);
@@ -8176,6 +8184,10 @@ t_tick status_get_sc_def(struct block_list *src, struct block_list *bl, enum sc_
 			if(status_has_mode(status,MD_STATUS_IMMUNE)) // Lasts 5 times less on bosses
 				tick /= 5;
 			sc_def = status->agi*50;
+			break;
+		case SC_JOINTBEAT:
+			sc_def2 = 270 * status->str / 100; // 270 * STR / 100
+			tick_def2 = (status->luk * 50 + status->agi * 200) / 2; // (50 * LUK / 100 + 20 * AGI / 100) / 2
 			break;
 		case SC_DEEPSLEEP:
 			tick_def2 = status_get_base_status(bl)->int_ * 25 + status_get_lv(bl) * 50;
@@ -9301,16 +9313,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	case SC_BANDING:
 		status_change_end(bl, SC_PRESTIGE, INVALID_TIMER);
 		break;
-	case SC_GT_ENERGYGAIN:
-	case SC_GT_CHANGE:
-	case SC_GT_REVITALIZE:
-		if( type != SC_GT_REVITALIZE )
-			status_change_end(bl, SC_GT_REVITALIZE, INVALID_TIMER);
-		if( type != SC_GT_ENERGYGAIN )
-			status_change_end(bl, SC_GT_ENERGYGAIN, INVALID_TIMER);
-		if( type != SC_GT_CHANGE )
-			status_change_end(bl, SC_GT_CHANGE, INVALID_TIMER);
-		break;
 	case SC_WARMER:
 		status_change_end(bl, SC_CRYSTALIZE, INVALID_TIMER);
 		status_change_end(bl, SC_FREEZING, INVALID_TIMER);
@@ -9513,6 +9515,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 					return 0;
 				break;
 			case SC_JOINTBEAT:
+				if (sc && sc->data[type]->val2 & BREAK_NECK)
+					return 0; // BREAK_NECK cannot be stacked with new breaks until the status is over.
 				val2 |= sce->val2; // Stackable ailments
 			default:
 				if(sce->val1 > val1)
@@ -10066,7 +10070,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				while( i >= 0 ) {
 					enum sc_type type2 = types[i];
 					if( d_sc->data[type2] )
-						status_change_start(d_bl, bl, type2, 10000, d_sc->data[type2]->val1, 0, 0, (type2 == SC_REFLECTSHIELD ? 1 : 0), skill_get_time(status_sc2skill(type2),d_sc->data[type2]->val1), (type2 == SC_DEFENDER) ? 1 : SCSTART_NOAVOID|SCSTART_NOICON);
+						status_change_start(d_bl, bl, type2, 10000, d_sc->data[type2]->val1, 0, 0, (type2 == SC_REFLECTSHIELD ? 1 : 0), skill_get_time(status_sc2skill(type2),d_sc->data[type2]->val1), (type2 == SC_DEFENDER) ? SCSTART_NOAVOID : SCSTART_NOAVOID|SCSTART_NOICON);
 					i--;
 				}
 			}
@@ -10312,10 +10316,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// end previous enchants
 			skill_enchant_elemental_end(bl,type);
 			// Make sure the received element is valid.
-			if (val2 >= ELE_ALL)
-				val2 = val2%ELE_ALL;
-			else if (val2 < 0)
-				val2 = rnd()%ELE_ALL;
+			if (val1 >= ELE_ALL)
+				val1 = val1%ELE_ALL;
+			else if (val1 < 0)
+				val1 = rnd()%ELE_ALL;
 			break;
 		case SC_CRITICALWOUND:
 			val2 = 20*val1; // Heal effectiveness decrease
@@ -10761,22 +10765,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val2 = 10 + 5 * val1; // Sphere gain chance.
 			break;
 		case SC_GT_CHANGE:
-			{ // Take note there is no def increase as skill desc says. [malufett]
-				int stat = status_get_int(src);
-
-				if (stat <= 0)
-					stat = 1; // Prevent divide by zero.
-				val2 = (status_get_dex(src) / 4 + status_get_str(src) / 2) * val1 / 5; // ATK increase: ATK [{(Caster DEX / 4) + (Caster STR / 2)} x Skill Level / 5]
-				val3 = status->agi * val1 / 60; // ASPD increase: [(Target AGI x Skill Level) / 60] %
-				val4 = 200 / stat * val1; // MDEF decrease: MDEF [(200 / Caster INT) x Skill Level]
-			}
+			// Take note there is no def increase as skill desc says. [malufett]
+			val2 = val1 * 8; // ATK increase
+			val3 = status->agi * val1 / 60; // ASPD increase: [(Target AGI x Skill Level) / 60] %
 			break;
 		case SC_GT_REVITALIZE:
 			// Take note there is no vit, aspd, speed increase as skill desc says. [malufett]
 			val2 = 2 * val1; // MaxHP: [(Skill Level * 2)]%
 			val3 = val1 * 30 + 50; // Natural HP recovery increase: [(Skill Level x 30) + 50] %
 			// The stat def is not shown in the status window and it is processed differently
-			val4 = status_get_vit(src) / 4 * val1; // STAT DEF increase: [(Caster VIT / 4) x Skill Level]
+			val4 = val1 * 20; // STAT DEF increase
 			break;
 		case SC_PYROTECHNIC_OPTION:
 			val2 = 60; // Eatk Renewal (Atk2)
@@ -11330,6 +11328,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 	// Values that must be set regardless of flag&4 e.g. val_flag [Ind]
 	switch(type) {
 		// Start |1 val_flag setting
+		case SC_ENCHANTARMS:
 		case SC_ROLLINGCUTTER:
 		case SC_BANDING:
 		case SC_SPHERE_1:
@@ -11848,7 +11847,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 	}
 
-	if( opt_flag&2 && sd && sd->touching_id )
+	if( opt_flag&2 && sd && !sd->npc_ontouch_.empty() )
 		npc_touchnext_areanpc(sd,false); // Run OnTouch_ on next char in range
 
 	return 1;
@@ -14494,13 +14493,12 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
 		bool mapIsGVG = mapdata_flag_gvg2_no_te(mapdata);
 		bool mapIsBG = mapdata->flag[MF_BATTLEGROUND] != 0;
 		bool mapIsTE = mapdata_flag_gvg2_te(mapdata);
-		unsigned int mapZone = mapdata->zone << 3;
 
 		for (i = 0; i < SC_MAX; i++) {
 			if (!sc->data[i] || !SCDisabled[i])
 				continue;
 
-			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapZone, mapIsTE))
+			if (status_change_isDisabledOnMap_((sc_type)i, mapIsVS, mapIsPVP, mapIsGVG, mapIsBG, mapdata->zone, mapIsTE))
 				status_change_end(bl, (sc_type)i, INVALID_TIMER);
 		}
 	}

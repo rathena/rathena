@@ -38,7 +38,7 @@ extern DBMap* skilldb_name2id;
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
 /// when determining skill castend function to invoke.
-enum e_skill_nk {
+enum e_skill_nk : uint16 {
 	NK_NO_DAMAGE      = 0x01,
 	NK_SPLASH         = 0x02|0x04, // 0x4 = splash & split
 	NK_SPLASHSPLIT    = 0x04,
@@ -47,6 +47,7 @@ enum e_skill_nk {
 	NK_IGNORE_DEF     = 0x20,
 	NK_IGNORE_FLEE    = 0x40,
 	NK_NO_CARDFIX_DEF = 0x80,
+	NK_CRITICAL       = 0x100,
 };
 
 /// Constants to identify the skill's inf value:
@@ -181,7 +182,7 @@ struct s_skill_db {
 	int8 hit;									 ///< Hit type
 	uint8 inf;									 ///< Inf: 0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap
 	int element[MAX_SKILL_LEVEL];				 ///< Element
-	uint8 nk;									 ///< Damage properties
+	uint16 nk;									 ///< Damage properties
 	int splash[MAX_SKILL_LEVEL];				 ///< Splash effect
 	uint8 max;									 ///< Max level
 	int num[MAX_SKILL_LEVEL];					 ///< Number of hit
@@ -487,6 +488,7 @@ int skill_check_condition_char_sub (struct block_list *bl, va_list ap);
 void skill_consume_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv, short type);
 struct skill_condition skill_get_requirement(struct map_session_data *sd, uint16 skill_id, uint16 skill_lv);
 int skill_disable_check(struct status_change *sc, uint16 skill_id);
+bool skill_pos_maxcount_check(struct block_list *src, int16 x, int16 y, uint16 skill_id, uint16 skill_lv, enum bl_type type, bool display_failure);
 
 int skill_check_pc_partner(struct map_session_data *sd, uint16 skill_id, uint16 *skill_lv, int range, int cast_flag);
 int skill_unit_move(struct block_list *bl,t_tick tick,int flag);

@@ -49,6 +49,7 @@ enum sc_type : int16;
 #define TKMISSIONCOUNT_VAR "TK_MISSION_COUNT"
 #define ATTENDANCE_DATE_VAR "#AttendanceDate"
 #define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
+#define ACHIEVEMENTLEVEL "AchievementLevel"
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 85 since Expanded Super Baby needs it.
@@ -90,6 +91,23 @@ enum prevent_logout_trigger {
 	PLT_ATTACK = 2,
 	PLT_SKILL = 4,
 	PLT_DAMAGE = 8
+};
+
+enum e_chkitem_result : uint8 {
+	CHKADDITEM_EXIST,
+	CHKADDITEM_NEW,
+	CHKADDITEM_OVERAMOUNT
+};
+
+enum e_additem_result : uint8 {
+	ADDITEM_SUCCESS,
+	ADDITEM_INVALID,
+	ADDITEM_OVERWEIGHT,
+	ADDITEM_ITEM,
+	ADDITEM_OVERITEM,
+	ADDITEM_OVERAMOUNT,
+	ADDITEM_REFUSED_TIME,
+	ADDITEM_STACKLIMIT
 };
 
 struct skill_cooldown_entry {
@@ -193,6 +211,12 @@ struct s_add_drop {
 	unsigned short class_; ///Target Class, bitwise value of 1<<x
 };
 
+struct s_vanish_bonus {
+	int16 rate; // 1000 = 100%
+	int16 per; // 100 = 100%
+	int flag;
+};
+
 /// AutoBonus bonus struct
 struct s_autobonus {
 	short rate;
@@ -251,7 +275,6 @@ struct map_session_data {
 		unsigned int noask :1; // [LuzZza]
 		unsigned int trading :1; //[Skotlex] is 1 only after a trade has started.
 		unsigned int deal_locked :2; //1: Clicked on OK. 2: Clicked on TRADE
-		unsigned int monster_ignore :1; // for monsters to ignore a character [Valaris] [zzo]
 		unsigned int size :2; // for tiny/large types
 		unsigned int night :1; //Holds whether or not the player currently has the SI_NIGHT effect on. [Skotlex]
 		unsigned int using_fake_npc :1;
@@ -289,6 +312,7 @@ struct map_session_data {
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 		bool cashshop_open;
 		bool sale_open;
+		unsigned int block_action : 10;
 	} state;
 	struct {
 		unsigned char no_weapon_damage, no_magic_damage, no_misc_damage;
@@ -327,7 +351,8 @@ struct map_session_data {
 	unsigned short mapindex;
 	unsigned char head_dir; //0: Look forward. 1: Look right, 2: Look left.
 	t_tick client_tick;
-	int npc_id,areanpc_id,npc_shopid,touching_id; //for script follow scriptoid;   ,npcid
+	int npc_id,npc_shopid; //for script follow scriptoid;   ,npcid
+	std::vector<int> areanpc, npc_ontouch_;	///< Array of OnTouch and OnTouch_ NPC ID
 	int npc_item_flag; //Marks the npc_id with which you can use items during interactions with said npc (see script command enable_itemuse)
 	int npc_menu; // internal variable, used in npc menu handling
 	int npc_amount;
@@ -429,6 +454,7 @@ struct map_session_data {
 		skillvarcast, skilldelay, itemhealrate, add_def, add_mdef, add_mdmg, reseff, itemgrouphealrate;
 	std::vector<s_add_drop> add_drop;
 	std::vector<s_addele2> subele2;
+	std::vector<s_vanish_bonus> sp_vanish, hp_vanish;
 	std::vector<s_autobonus> autobonus, autobonus2, autobonus3; //Auto script on attack, when attacked, on skill usage
 
 	// zeroed structures start here
@@ -477,10 +503,7 @@ struct map_session_data {
 		short splash_range, splash_add_range;
 		short add_steal_rate;
 		int add_heal_rate, add_heal2_rate;
-		int sp_gain_value, hp_gain_value, magic_sp_gain_value, magic_hp_gain_value;
-		int sp_vanish_rate, hp_vanish_rate;
-		int sp_vanish_per, hp_vanish_per;
-		int sp_vanish_flag, hp_vanish_flag;
+		int sp_gain_value, hp_gain_value, magic_sp_gain_value, magic_hp_gain_value, long_sp_gain_value, long_hp_gain_value;
 		unsigned short unbreakable;	// chance to prevent ANY equipment breaking [celest]
 		unsigned short unbreakable_equip; //100% break resistance on certain equipment
 		unsigned short unstripable_equip;
@@ -621,7 +644,7 @@ struct map_session_data {
 
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;
-	unsigned short qi_count;
+	int qi_count;
 
 	// temporary debug [flaviojs]
 	const char* debug_file;
@@ -705,7 +728,7 @@ struct map_session_data {
 
 	short last_addeditem_index; /// Index of latest item added
 	int autotrade_tid;
-
+	int respawn_tid;
 	int bank_vault; ///< Bank Vault
 
 #ifdef PACKET_OBFUSCATION
@@ -1044,7 +1067,7 @@ char pc_checkadditem(struct map_session_data *sd, unsigned short nameid, int amo
 uint8 pc_inventoryblank(struct map_session_data *sd);
 short pc_search_inventory(struct map_session_data *sd, unsigned short nameid);
 char pc_payzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
-char pc_additem(struct map_session_data *sd, struct item *item, int amount, e_log_pick_type log_type);
+enum e_additem_result pc_additem(struct map_session_data *sd, struct item *item, int amount, e_log_pick_type log_type);
 char pc_getzeny(struct map_session_data *sd, int zeny, enum e_log_pick_type type, struct map_session_data *tsd);
 char pc_delitem(struct map_session_data *sd, int n, int amount, int type, short reason, e_log_pick_type log_type);
 
@@ -1057,7 +1080,7 @@ int pc_bound_chk(TBL_PC *sd,enum bound_type type,int *idxlist);
 int pc_paycash( struct map_session_data *sd, int price, int points, e_log_pick_type type );
 int pc_getcash( struct map_session_data *sd, int cash, int points, e_log_pick_type type );
 
-unsigned char pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
+enum e_additem_result pc_cart_additem(struct map_session_data *sd,struct item *item_data,int amount,e_log_pick_type log_type);
 void pc_cart_delitem(struct map_session_data *sd,int n,int amount,int type,e_log_pick_type log_type);
 void pc_putitemtocart(struct map_session_data *sd,int idx,int amount);
 void pc_getitemfromcart(struct map_session_data *sd,int idx,int amount);
@@ -1144,6 +1167,7 @@ int pc_skillheal2_bonus(struct map_session_data *sd, uint16 skill_id);
 void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp);
 int pc_dead(struct map_session_data *sd,struct block_list *src);
 void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp);
+bool pc_revive_item(struct map_session_data *sd);
 void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int type);
 int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp);
 int pc_percentheal(struct map_session_data *sd,int,int);
@@ -1247,21 +1271,6 @@ extern struct fame_list taekwon_fame_list[MAX_FAME_LIST];
 void pc_readdb(void);
 void do_init_pc(void);
 void do_final_pc(void);
-
-enum e_chkitem_result {
-	CHKADDITEM_EXIST,
-	CHKADDITEM_NEW,
-	CHKADDITEM_OVERAMOUNT
-};
-
-enum e_additem_result {
-    ADDITEM_SUCCESS,
-    ADDITEM_INVALID,
-    ADDITEM_OVERWEIGHT,
-    ADDITEM_OVERITEM = 4,
-    ADDITEM_OVERAMOUNT,
-    ADDITEM_STACKLIMIT = 7
-};
 
 // timer for night.day
 extern int day_timer_tid;
