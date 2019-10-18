@@ -630,7 +630,7 @@ void quest_update_objective(struct map_session_data *sd, int mob_id)
  * @return 0 in case of success, nonzero otherwise
  * @author [Inkfish]
  */
-int quest_update_status(struct map_session_data *sd, int quest_id, enum e_quest_state status)
+int quest_update_status(struct map_session_data *sd, int quest_id, e_quest_state status)
 {
 	int i;
 
@@ -679,7 +679,7 @@ int quest_update_status(struct map_session_data *sd, int quest_id, enum e_quest_
  *              1 if the quest's timeout has expired
  *              0 otherwise
  */
-int quest_check(struct map_session_data *sd, int quest_id, enum e_quest_check_type type)
+int quest_check(struct map_session_data *sd, int quest_id, e_quest_check_type type)
 {
 	int i;
 
