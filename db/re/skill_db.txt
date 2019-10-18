@@ -1146,7 +1146,7 @@
 2333,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		SR_CRESCENTELBOW,Crescent Elbow
 2334,0,6,4,0,0x3,1:1:2:2:3,5,1,no,0,0,0,none,0,0x0,	SR_CURSEDCIRCLE,Cursed Circle
 2335,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,		SR_LIGHTNINGWALK,Lightning Walk
-2336,7:8:9:10:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,2:3:4:5:6,0x0,	SR_KNUCKLEARROW,Knuckle Arrow
+2336,7:7:8:8:9:9:10:10:11:11,6,1,-1,0,0,5,1,no,0,0,0,weapon,2:2:3:3:4:4:5:5:6:6,0x0,	SR_KNUCKLEARROW,Knuckle Arrow
 2337,0,6,4,-1,0x2,2,1,1,yes,0,0,0,weapon,0,0x1000,	SR_WINDMILL,Windmill
 2338,0,6,4,0,0x1,0,10,1,no,0,0,0,none,0,0x0,	SR_RAISINGDRAGON,Raising Dragon
 2339,0,0,0,0,0,0,5,1,no,0,0,0,none,0,0x0,		SR_GENTLETOUCH,Gentle Touch
