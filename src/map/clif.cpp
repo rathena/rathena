@@ -16806,9 +16806,9 @@ void clif_quest_send_list(struct map_session_data *sd)
 		offset += 4;
 		WFIFOB(fd, offset) = sd->quest_log[i].state;
 		offset++;
-		WFIFOL(fd, offset) = sd->quest_log[i].time - qi->time;
+		WFIFOL(fd, offset) = static_cast<uint32>(sd->quest_log[i].time - qi->time);
 		offset += 4;
-		WFIFOL(fd, offset) = sd->quest_log[i].time;
+		WFIFOL(fd, offset) = static_cast<uint32>(sd->quest_log[i].time);
 		offset += 4;
 		WFIFOW(fd, offset) = static_cast<uint16>(qi->objectives.size());
 		offset += 2;
@@ -16882,8 +16882,8 @@ void clif_quest_send_mission(struct map_session_data *sd)
 		std::shared_ptr<s_quest_db> qi = quest_search(sd->quest_log[i].quest_id);
 
 		WFIFOL(fd, i*104+8) = sd->quest_log[i].quest_id;
-		WFIFOL(fd, i*104+12) = sd->quest_log[i].time - qi->time;
-		WFIFOL(fd, i*104+16) = sd->quest_log[i].time;
+		WFIFOL(fd, i*104+12) = static_cast<uint32>(sd->quest_log[i].time - qi->time);
+		WFIFOL(fd, i*104+16) = static_cast<uint32>(sd->quest_log[i].time);
 		WFIFOW(fd, i*104+20) = static_cast<uint16>(qi->objectives.size());
 
 		for (int j = 0 ; j < qi->objectives.size(); j++) {
@@ -16916,8 +16916,8 @@ void clif_quest_add(struct map_session_data *sd, struct quest *qd)
 	WFIFOW(fd, 0) = cmd;
 	WFIFOL(fd, 2) = qd->quest_id;
 	WFIFOB(fd, 6) = qd->state;
-	WFIFOB(fd, 7) = qd->time - qi->time;
-	WFIFOL(fd, 11) = qd->time;
+	WFIFOB(fd, 7) = static_cast<uint8>(qd->time - qi->time);
+	WFIFOL(fd, 11) = static_cast<uint32>(qd->time);
 	WFIFOW(fd, 15) = static_cast<uint16>(qi->objectives.size());
 
 	for (int i = 0, offset = 17; i < qi->objectives.size(); i++) {

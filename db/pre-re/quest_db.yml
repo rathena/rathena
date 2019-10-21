@@ -24,14 +24,14 @@
 ###########################################################################
 # - Id              Unique quest ID.
 #   Title           Quest title.
-#   TimeLimit       Amount of time in seconds before the quest expires. Not applicable with other time settings. (0: no timer) (Default: 0)
-#   TimeInDay       Amount of days before quest expires. Stackable with TimeAtHour. TimeAtMinute required. (Default: 0)
-#   TimeAtHour      Hour at which quest expires. Stackable with TimeInDay. TimeAtMinute required. [0-23] (-1: undefined hour) (Default: -1)
-#   TimeAtMinute    Minute at which quest expires. [0-59] (no timer by default)
-#   Target:         Quest objective target. (Optional) (Default: null)
+#   TimeLimit       Amount of time before the quest expires. (Optional) (Default: 0)
+#                   Use "d" for day(s), "h" for hour(s), "mn" for minute(s), and "s" for second(s).
+#                   Specify with "+" for how long until the quest expires.
+#                   Specify without "+" for the exact time the quest expires.
+#   Targets:        Quest objective target. (Optional) (Default: null)
 #     - Mob         Monster to kill.
 #       Count       Amount of monsters to kill.
-#   Drop:           Quest item drop targets. (Optional) (Default: null)
+#   Drops:          Quest item drop targets. (Optional) (Default: null)
 #     - Mob         Monster to kill. 0 will apply to all monsters. (Default: 0)
 #       Item        Item to drop.
 #       Count       Amount of items that will drop. Stackable items default to 1. (Default: 1)
@@ -79,47 +79,47 @@ Body:
     Title: Gaining base levels
   - Id: 1100
     Title: Solo in the Sphinx Dungeon!
-    Target:
+    Targets:
       - Mob: ZEROM
         Count: 20
   - Id: 1101
     Title: Soloing Sphinx Dungeon!
-    Target:
+    Targets:
       - Mob: REQUIEM
         Count: 20
   - Id: 1102
     Title: Soloing Clock Tower!
-    Target:
+    Targets:
       - Mob: ARCLOUSE
         Count: 40
   - Id: 1103
     Title: Soloing Clock Tower!
-    Target:
+    Targets:
       - Mob: HIGH_ORC
         Count: 30
   - Id: 1104
     Title: Solo at Louyang!
-    Target:
+    Targets:
       - Mob: CHUNG_E
         Count: 20
   - Id: 1105
     Title: Solo at Louyang!
-    Target:
+    Targets:
       - Mob: CIVIL_SERVANT
         Count: 50
   - Id: 1106
     Title: Solo at Amatsu Dungeon!
-    Target:
+    Targets:
       - Mob: THE_PAPER
         Count: 20
   - Id: 1107
     Title: Solo at Amatsu Dungeon!
-    Target:
+    Targets:
       - Mob: ANTIQUE_FIRELOCK
         Count: 40
   - Id: 1108
     Title: Solo at Louyang!
-    Target:
+    Targets:
       - Mob: CHUNG_E_
         Count: 20
   - Id: 1109
@@ -144,7 +144,7 @@ Body:
     Title: Neighborhood Knight - I Need Clues
   - Id: 1119
     Title: Neighborhood Knight - Cooldown
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 1145
     Title: Help the poor cat
   - Id: 1146
@@ -161,7 +161,7 @@ Body:
     Title: Help the poor cat
   - Id: 1152
     Title: Help the poor cat
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 1153
     Title: Help the poor cat
   - Id: 1154
@@ -418,10 +418,10 @@ Body:
     Title: The Crow of the Fate - 6
   - Id: 2069
     Title: Tierra Gorge Battle
-    TimeLimit: 300
+    TimeLimit: +5mn
   - Id: 2070
     Title: Flavius Battle
-    TimeLimit: 300
+    TimeLimit: +5mn
   - Id: 2071
     Title: Cursed Property
   - Id: 2072
@@ -542,7 +542,7 @@ Body:
     Title: For Arunafeltz
   - Id: 2143
     Title: Guild Dungeon Event
-    TimeLimit: 50
+    TimeLimit: +50s
   - Id: 2144
     Title: Guild Dungeon Event
   - Id: 2147
@@ -553,12 +553,12 @@ Body:
     Title: Attitude to the New
   - Id: 2150
     Title: Attitude to the New
-    Target:
+    Targets:
       - Mob: PINGUICULA
         Count: 30
   - Id: 2151
     Title: Attitude to the New
-    Target:
+    Targets:
       - Mob: CORNUS
         Count: 10
   - Id: 2152
@@ -573,7 +573,7 @@ Body:
     Title: Attitude to the New
   - Id: 2157
     Title: Attitude to the New
-    Target:
+    Targets:
       - Mob: TATACHO
         Count: 10
   - Id: 2158
@@ -588,7 +588,7 @@ Body:
     Title: Dr. Lifeguard's request
   - Id: 2182
     Title: Rough Minerals
-    TimeLimit: 64800
+    TimeLimit: +18h
   - Id: 2183
     Title: Flower of Alfheim
   - Id: 2184
@@ -597,7 +597,7 @@ Body:
     Title: Spirit of Alfheim
   - Id: 2186
     Title: Helping Grenouille
-    TimeLimit: 64800
+    TimeLimit: +18h
   - Id: 2187
     Title: Arch Bishop job changing quest
   - Id: 2188
@@ -668,15 +668,15 @@ Body:
     Title: Wanderer Job Change Quest
   - Id: 2221
     Title: Wanderer Job Change Quest
-    TimeLimit: 600
-    Target:
+    TimeLimit: +10mn
+    Targets:
       - Mob: NOVUS_
         Count: 50
   - Id: 2222
     Title: Wanderer Job Change Quest
   - Id: 2223
     Title: Generic Job Change Quest
-    Target:
+    Targets:
       - Mob: G_POISON_SPORE
         Count: 100
   - Id: 2271
@@ -705,10 +705,10 @@ Body:
     Title: Verit Hunting (Nightmare)
   - Id: 2290
     Title: Verit Hunting - Cooldown
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 2291
     Title: Mummy Hunting - Cooldown
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 2292
     Title: Mummy Hunting (Nightmare)
   - Id: 2299
@@ -783,10 +783,10 @@ Body:
     Title: Job Change to Monk - Become a Monk
   - Id: 3040
     Title: The Curse of Baphomet
-    TimeLimit: 43200
+    TimeLimit: +12h
   - Id: 3041
     Title: The Curse of Baphomet
-    TimeLimit: 180
+    TimeLimit: +3mn
   - Id: 3042
     Title: The Cursed Baphomet Doll
   - Id: 3043
@@ -795,7 +795,7 @@ Body:
     Title: The Gigantic Magestic Goat
   - Id: 3045
     Title: Sealed Shrine
-    TimeLimit: 7200
+    TimeLimit: +2h
   - Id: 3046
     Title: Sealed Shrine After-effect
   - Id: 3050
@@ -874,7 +874,7 @@ Body:
     Title: Report to the continent - Location of reports
   - Id: 3091
     Title: Report to the continent - Location of reports
-    TimeLimit: 1800
+    TimeLimit: +30mn
   - Id: 3092
     Title: Report to the continent - Success to restore!
   - Id: 3093
@@ -953,10 +953,10 @@ Body:
     Title: Z Gang Wanted - Clean Sweep of Z Gang
   - Id: 3135
     Title: Nidhoggur's Nest
-    TimeLimit: 259200
+    TimeLimit: +3d
   - Id: 3136
     Title: Nidhoggur's Nest Time Limit
-    TimeLimit: 14400
+    TimeLimit: +4h
   - Id: 3200
     Title: Job changes to Rune knight - Recommendation for Rune knight
   - Id: 3201
@@ -977,22 +977,22 @@ Body:
     Title: Job changes to Rune knight - The second test
   - Id: 3209
     Title: Job changes to Rune knight - Accumulation of magic energy1
-    Target:
+    Targets:
       - Mob: DULLAHAN
         Count: 10
   - Id: 3210
     Title: Job changes to Rune knight - Accumulation of magic energy2
-    Target:
+    Targets:
       - Mob: DISGUISE
         Count: 10
   - Id: 3211
     Title: Job changes to Rune knight - Accumulation of magic energy3
-    Target:
+    Targets:
       - Mob: QUVE
         Count: 10
   - Id: 3212
     Title: Job changes to Rune knight - Accumulation of magic energy4
-    Target:
+    Targets:
       - Mob: HYLOZOIST
         Count: 10
   - Id: 3213
@@ -1011,20 +1011,20 @@ Body:
     Title: Job changes to Rune knight - The end of all test
   - Id: 3220
     Title: Job changes to Rune knight - Waiting time of test
-    TimeLimit: 600
+    TimeLimit: +10mn
   - Id: 3250
     Title: Request - What is this bandage for?
-    Target:
+    Targets:
       - Mob: MUMMY
         Count: 30
   - Id: 3251
     Title: Request - An alligator of Counterattack
-    Target:
+    Targets:
       - Mob: ALLIGATOR
         Count: 30
   - Id: 3252
     Title: Request - My mermaid don't do like this way!
-    Target:
+    Targets:
       - Mob: MERMAN
         Count: 30
   - Id: 3253
@@ -1033,31 +1033,31 @@ Body:
     Title: Request - A country wants you
   - Id: 3255
     Title: Request - A wild boar subjugate operation
-    Target:
+    Targets:
       - Mob: SAVAGE
         Count: 30
   - Id: 3256
     Title: Request - Ready for waiting summer
   - Id: 3257
     Title: Request - A grudge of women
-    Target:
+    Targets:
       - Mob: SOHEE
         Count: 30
   - Id: 3258
     Title: Request - A material of delicacy
   - Id: 3259
     Title: Request - A agony of a doll master
-    Target:
+    Targets:
       - Mob: MARIONETTE
         Count: 30
   - Id: 3260
     Title: Request - Tiresome flies
-    Target:
+    Targets:
       - Mob: HUNTER_FLY
         Count: 30
   - Id: 3261
     Title: Request - Unclean girl
-    Target:
+    Targets:
       - Mob: MUNAK
         Count: 30
   - Id: 3262
@@ -1100,7 +1100,7 @@ Body:
     Title: Iara
   - Id: 4135
     Title: Iara
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 4154
     Title: Homunculus Researcher
   - Id: 4155
@@ -1129,250 +1129,250 @@ Body:
     Title: Passing Grades
   - Id: 4167
     Title: "Paradise: Dragon Tail Handling"
-    Target:
+    Targets:
       - Mob: DRAGON_TAIL
         Count: 30
   - Id: 4168
     Title: "Paradise: Spring Rabbit Handling"
-    Target:
+    Targets:
       - Mob: SPRING_RABBIT
         Count: 30
   - Id: 4169
     Title: "Paradise: Pest Handling"
-    Target:
+    Targets:
       - Mob: PEST
         Count: 30
   - Id: 4170
     Title: "Paradise: Bathory Handling"
-    Target:
+    Targets:
       - Mob: BATHORY
         Count: 30
   - Id: 4171
     Title: "Paradise: Alarm Handling"
-    Target:
+    Targets:
       - Mob: ALARM
         Count: 30
   - Id: 4172
     Title: "Paradise: Babayaga Handling"
-    Target:
+    Targets:
       - Mob: VAVAYAGA
         Count: 30
   - Id: 4173
     Title: "Paradise: Hyegun Handling"
-    Target:
+    Targets:
       - Mob: HYEGUN
         Count: 30
   - Id: 4174
     Title: "Paradise: Antique Firelock Handling"
-    Target:
+    Targets:
       - Mob: ANTIQUE_FIRELOCK
         Count: 30
   - Id: 4175
     Title: "Paradise: Zipper Bear Handling"
-    Target:
+    Targets:
       - Mob: ZIPPER_BEAR
         Count: 30
   - Id: 4176
     Title: "Paradise: Earth Petite Handling"
-    Target:
+    Targets:
       - Mob: PETIT
         Count: 30
   - Id: 4177
     Title: "Paradise: Rafflesia Handling"
-    Target:
+    Targets:
       - Mob: RAFFLESIA
         Count: 30
   - Id: 4178
     Title: "Paradise: Venomous Handling"
-    Target:
+    Targets:
       - Mob: VENOMOUS
         Count: 30
   - Id: 4179
     Title: "Paradise: Pitman Handling"
-    Target:
+    Targets:
       - Mob: PITMAN
         Count: 30
   - Id: 4180
     Title: "Paradise: Yellow Novus Handling"
-    Target:
+    Targets:
       - Mob: NOVUS_
         Count: 30
   - Id: 4181
     Title: "Paradise: Solider Handling"
-    Target:
+    Targets:
       - Mob: SOLIDER
         Count: 30
   - Id: 4182
     Title: "Paradise: Freezer Handling"
-    Target:
+    Targets:
       - Mob: FREEZER
         Count: 30
   - Id: 4183
     Title: "Paradise: Heater Handling"
-    Target:
+    Targets:
       - Mob: HEATER
         Count: 30
   - Id: 4184
     Title: "Paradise: Injustice Handling"
-    Target:
+    Targets:
       - Mob: INJUSTICE
         Count: 30
   - Id: 4185
     Title: "Paradise: Rybio Handling"
-    Target:
+    Targets:
       - Mob: RYBIO
         Count: 30
   - Id: 4186
     Title: "Paradise: Dark Priest Handling"
-    Target:
+    Targets:
       - Mob: DARK_PRIEST
         Count: 30
   - Id: 4187
     Title: "Paradise: Stapo Handling"
-    Target:
+    Targets:
       - Mob: STAPO
         Count: 30
   - Id: 4188
     Title: "Paradise: Roween Handling"
-    Target:
+    Targets:
       - Mob: ROWEEN
         Count: 30
   - Id: 4189
     Title: "Paradise: Siroma Handling"
-    Target:
+    Targets:
       - Mob: SIROMA
         Count: 30
   - Id: 4190
     Title: "Paradise: Shinobi Handling"
-    Target:
+    Targets:
       - Mob: SHINOBI
         Count: 30
   - Id: 4191
     Title: "Paradise: Evil Nymph Handling"
-    Target:
+    Targets:
       - Mob: WICKED_NYMPH
         Count: 30
   - Id: 4192
     Title: "Paradise: Deviruchi Handling"
-    Target:
+    Targets:
       - Mob: DEVIRUCHI
         Count: 30
   - Id: 4193
     Title: "Paradise: Mineral Handling"
-    Target:
+    Targets:
       - Mob: MINERAL
         Count: 30
   - Id: 4194
     Title: "Paradise: Kaho Handling"
-    Target:
+    Targets:
       - Mob: KAHO
         Count: 30
   - Id: 4195
     Title: "Paradise: Neraid Handling"
-    Target:
+    Targets:
       - Mob: NERAID
         Count: 30
   - Id: 4196
     Title: "Paradise: Disguise Handling"
-    Target:
+    Targets:
       - Mob: DISGUISE
         Count: 30
   - Id: 4197
     Title: Octopus
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4198
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4199
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4200
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4201
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4202
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4203
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4204
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4205
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4206
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4207
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4208
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4209
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4210
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4211
     Title: 86-90 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4212
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4213
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4214
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4215
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4216
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4217
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4218
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4219
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4220
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4221
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4222
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4223
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4224
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4225
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4226
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4227
     Title: 91-99 Mission Board Timer
-    TimeLimit: 10800
+    TimeLimit: +3h
   - Id: 4229
     Title: Devil in the Cave
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 4254
     Title: Fairy with a stomache
   - Id: 4255
@@ -1407,7 +1407,7 @@ Body:
     Title: The Crow of the Fate - 7
   - Id: 5001
     Title: King Froggie VII's revenge
-    Target:
+    Targets:
       - Mob: SIDE_WINDER
         Count: 50
   - Id: 5002
@@ -1416,7 +1416,7 @@ Body:
     Title: Frog Hiding Skill
   - Id: 5004
     Title: Food Shortage
-    Target:
+    Targets:
       - Mob: ARGIOPE
         Count: 50
   - Id: 5016
@@ -1429,14 +1429,14 @@ Body:
     Title: Bathroom Sample Studying
   - Id: 5020
     Title: Sample Researching
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 5021
     Title: Sample Collecting
   - Id: 5022
     Title: Sample Collecting
   - Id: 5023
     Title: Inspection of the Sample
-    TimeLimit: 21600
+    TimeLimit: +6h
   - Id: 5024
     Title: Eastern Pool Research
   - Id: 5025
@@ -1447,10 +1447,10 @@ Body:
     Title: Northern Pool Research
   - Id: 5028
     Title: Inspection of the Sample
-    TimeLimit: 43200
+    TimeLimit: +12h
   - Id: 5029
     Title: Unidentified Creature
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 5030
     Title: The creature's family
   - Id: 5031
@@ -1479,10 +1479,10 @@ Body:
     Title: Help the old man!
   - Id: 5043
     Title: Help the old man!
-    TimeLimit: 300
+    TimeLimit: +5mn
   - Id: 5044
     Title: Help the old man!
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 5045
     Title: Help the old man!
   - Id: 5046
@@ -1505,12 +1505,12 @@ Body:
     Title: Traditional Weapon
   - Id: 5055
     Title: Local Rising - Headless Horse
-    Target:
+    Targets:
       - Mob: HEADLESS_MULE
         Count: 15
   - Id: 5056
     Title: Local Rising - Tamruan
-    Target:
+    Targets:
       - Mob: TAMRUAN
         Count: 15
   - Id: 5057
@@ -1521,7 +1521,7 @@ Body:
     Title: The mood of the players-(2)
   - Id: 5060
     Title: Cat Shock
-    TimeLimit: 180
+    TimeLimit: +3mn
   - Id: 5061
     Title: Am I scared?
   - Id: 5062
@@ -1538,45 +1538,45 @@ Body:
     Title: Scary image-(2)
   - Id: 5068
     Title: Collecting complaint
-    TimeLimit: 72000
+    TimeLimit: +20h
   - Id: 5069
     Title: Token of honor
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 5070
     Title: Rock Paper Scissors
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 5071
     Title: Chamchamcham
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 5072
     Title: Kkongnyangkkong
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 5073
     Title: Challenging of flag wave
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 5074
     Title: Cat's Meal
-    Target:
+    Targets:
       - Mob: PHEN
         Count: 30
   - Id: 5075
     Title: Health food
-    Target:
+    Targets:
       - Mob: MARSE
         Count: 50
   - Id: 5076
     Title: Enemies
-    Target:
+    Targets:
       - Mob: KOBOLD_ARCHER
         Count: 30
   - Id: 5077
     Title: Reaction Training
-    Target:
+    Targets:
       - Mob: CRAMP
         Count: 10
   - Id: 5078
     Title: Light bird food
-    Target:
+    Targets:
       - Mob: PECOPECO
         Count: 50
   - Id: 5079
@@ -1611,22 +1611,22 @@ Body:
     Title: Unlocking the Ultimate Mediocrity
   - Id: 5094
     Title: Unlocking the Ultimate Mediocrity
-    Target:
+    Targets:
       - Mob: PORING
         Count: 1000
   - Id: 5095
     Title: Unlocking the Ultimate Mediocrity
-    Target:
+    Targets:
       - Mob: LUNATIC
         Count: 1000
   - Id: 5096
     Title: Unlocking the Ultimate Mediocrity
-    Target:
+    Targets:
       - Mob: FABRE
         Count: 1000
   - Id: 5097
     Title: Unlocking the Ultimate Mediocrity
-    Target:
+    Targets:
       - Mob: PICKY
         Count: 1000
   - Id: 5098
@@ -1643,7 +1643,7 @@ Body:
     Title: To the Lab...
   - Id: 5112
     Title: Laboratory Restricted Access
-    TimeLimit: 259200
+    TimeLimit: +3d
   - Id: 5113
     Title: "[Rest] Lord Knight"
   - Id: 5114
@@ -1692,7 +1692,7 @@ Body:
     Title: Uncertain chilliness
   - Id: 5141
     Title: Got a curse!!
-    TimeLimit: 120
+    TimeLimit: +2mn
   - Id: 5142
     Title: Prototype-(1)
   - Id: 5143
@@ -1705,106 +1705,106 @@ Body:
     Title: Battle test
   - Id: 5161
     Title: Low Level collection request[Stand by]
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 5162
     Title: Low Level collection request
-    Target:
+    Targets:
       - Mob: REQUIEM
         Count: 100
   - Id: 5163
     Title: Low Level collection request
-    Target:
+    Targets:
       - Mob: BATHORY
         Count: 100
   - Id: 5164
     Title: Low Level collection request
-    Target:
+    Targets:
       - Mob: SPRING_RABBIT
         Count: 100
   - Id: 5165
     Title: Low Level collection request
-    Target:
+    Targets:
       - Mob: SLEEPER
         Count: 100
   - Id: 5166
     Title: Low Level collection request
-    Target:
+    Targets:
       - Mob: EVIL_DRUID
         Count: 100
   - Id: 5167
     Title: Low Level collection request
-    Target:
+    Targets:
       - Mob: PETIT
         Count: 100
   - Id: 5168
     Title: Low Level collection request
-    Target:
+    Targets:
       - Mob: CLOCK
         Count: 100
   - Id: 5169
     Title: Mid-Level collection request[Stand by]
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 5170
     Title: Mid-Level collection request
-    Target:
+    Targets:
       - Mob: SIROMA
         Count: 100
   - Id: 5171
     Title: Mid-Level collection request
-    Target:
+    Targets:
       - Mob: DARK_PRIEST
         Count: 100
   - Id: 5172
     Title: Mid-Level collection request
-    Target:
+    Targets:
       - Mob: STAPO
         Count: 100
   - Id: 5173
     Title: Mid-Level collection request
-    Target:
+    Targets:
       - Mob: SOLIDER
         Count: 100
   - Id: 5174
     Title: High level collectiong request[Stand by]
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 5175
     Title: High level collection request
-    Target:
+    Targets:
       - Mob: DESERT_WOLF
         Count: 100
   - Id: 5176
     Title: High level collection request
-    Target:
+    Targets:
       - Mob: MEDUSA
         Count: 100
   - Id: 5177
     Title: High level collection request
-    Target:
+    Targets:
       - Mob: PINGUICULA
         Count: 100
   - Id: 5178
     Title: High level collection request
-    Target:
+    Targets:
       - Mob: MAJORUROS
         Count: 100
   - Id: 5179
     Title: Highest level collection request
-    Target:
+    Targets:
       - Mob: RAYDRIC
         Count: 100
   - Id: 5180
     Title: Highest level collection request
-    Target:
+    Targets:
       - Mob: NAGA
         Count: 100
   - Id: 5181
     Title: Highest level collection request
-    Target:
+    Targets:
       - Mob: ANCIENT_MUMMY
         Count: 100
   - Id: 5182
     Title: Highest level collection request
-    Target:
+    Targets:
       - Mob: ANCIENT_MIMIC
         Count: 100
   - Id: 5222
@@ -1815,13 +1815,13 @@ Body:
     Title: Saving the energy crystals
   - Id: 5225
     Title: Saving energy crystal[Stand by]
-    TimeLimit: 7200
+    TimeLimit: +2h
   - Id: 5226
     Title: Saving energy crystal[Stand by]
-    TimeLimit: 7200
+    TimeLimit: +2h
   - Id: 5227
     Title: Saving energy crystal[Stand by]
-    TimeLimit: 7200
+    TimeLimit: +2h
   - Id: 6000
     Title: Job Change to Taekwon
   - Id: 6001
@@ -1858,13 +1858,13 @@ Body:
     Title: Job Change to Gunslinger!
   - Id: 6025
     Title: KVM Guillaume
-    TimeLimit: 300
+    TimeLimit: +5mn
   - Id: 6026
     Title: KVM Croix
-    TimeLimit: 300
+    TimeLimit: +5mn
   - Id: 6027
     Title: KVM Indicator
-    TimeLimit: 300
+    TimeLimit: +5mn
   - Id: 7000
     Title: Job Change to Dancer!
   - Id: 7001
@@ -1961,7 +1961,7 @@ Body:
     Title: Part-time Job - warm rugs
   - Id: 7047
     Title: Part-time Job - Let's call it a day!
-    TimeLimit: 18000
+    TimeLimit: +5h
   - Id: 7048
     Title: Thanatos Tower - Burled's Favor
   - Id: 7049
@@ -1976,12 +1976,12 @@ Body:
     Title: Thanatos Tower - What they want is..
   - Id: 7054
     Title: Myu's Favor - Teach them a lesson!
-    Target:
+    Targets:
       - Mob: KOBOLD_ARCHER
         Count: 1000
   - Id: 7055
     Title: Myu's Favor - Not the cat!
-    Target:
+    Targets:
       - Mob: WILD_ROSE
         Count: 1
   - Id: 7056
@@ -2018,34 +2018,34 @@ Body:
     Title: Messenger - Invitation
   - Id: 7074
     Title: Rata Hunt
-    Target:
+    Targets:
       - Mob: RATA
         Count: 1
   - Id: 7075
     Title: Duneyrr Hunt
-    Target:
+    Targets:
       - Mob: DUNEYRR
         Count: 1
   - Id: 7076
     Title: "Wanted: Dandelion"
-    Target:
+    Targets:
       - Mob: DANDELION_
         Count: 1
   - Id: 7077
     Title: Collecting Dragon Eggs
   - Id: 7078
     Title: Collecting Dragon Eggs
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7079
     Title: Finding Refined Bradium
   - Id: 7080
     Title: Finding Refined Bradium
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7081
     Title: Helping the Laphine Craftsman
   - Id: 7082
     Title: Helping the Laphine Craftsman
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7091
     Title: An advice of Diora 01
   - Id: 7092
@@ -2110,41 +2110,41 @@ Body:
     Title: Novice Training
   - Id: 7122
     Title: First battle - Poring Hunt
-    Target:
+    Targets:
       - Mob: PORING
         Count: 1
   - Id: 7123
     Title: Battle Basics -Swordman
-    Target:
+    Targets:
       - Mob: PICKY
         Count: 2
   - Id: 7124
     Title: Battle Basics -Mage
-    Target:
+    Targets:
       - Mob: LUNATIC
         Count: 5
   - Id: 7126
     Title: Selling items
   - Id: 7127
     Title: Battle Basics -Thief
-    Target:
+    Targets:
       - Mob: WILOW
         Count: 5
   - Id: 7128
     Title: Training course 'conquest a desert!' -start
   - Id: 7129
     Title: The training course 'conquer the desert!' - A real battle 1
-    Target:
+    Targets:
       - Mob: CONDOR
         Count: 10
   - Id: 7130
     Title: The training course 'conquer the desert!' - A real battle 2
-    Target:
+    Targets:
       - Mob: DESERT_WOLF_B
         Count: 10
   - Id: 7131
     Title: The training course 'conquer the desert!' - A real battle 3
-    Target:
+    Targets:
       - Mob: SCORPION
         Count: 5
   - Id: 7132
@@ -2153,17 +2153,17 @@ Body:
     Title: The training course 'conquer the culvert!' - Start
   - Id: 7134
     Title: The training course 'conquer the culvert!' - A real battle 1
-    Target:
+    Targets:
       - Mob: THIEF_BUG
         Count: 10
   - Id: 7135
     Title: The training course 'conquer the culvert!' - A real battle 2
-    Target:
+    Targets:
       - Mob: TAROU
         Count: 10
   - Id: 7136
     Title: The training course 'conquer the culvert!' - A real battle 3
-    Target:
+    Targets:
       - Mob: FARMILIAR
         Count: 5
   - Id: 7137
@@ -2172,12 +2172,12 @@ Body:
     Title: The training course 'conquer the haunted cave!' - Start
   - Id: 7139
     Title: The training course 'conquer the haunted cave!' - A real battle 1
-    Target:
+    Targets:
       - Mob: SKELETON
         Count: 15
   - Id: 7140
     Title: The training course 'conquer the haunted cave!' - A real battle 2
-    Target:
+    Targets:
       - Mob: POPORING
         Count: 10
   - Id: 7141
@@ -2186,17 +2186,17 @@ Body:
     Title: The training course 'conquer ant hell!' - Start
   - Id: 7143
     Title: The training course 'conquer ant hell!' - A real battle 1
-    Target:
+    Targets:
       - Mob: PIERE
         Count: 15
   - Id: 7144
     Title: The training course 'conquer ant hell!' - A real battle 2
-    Target:
+    Targets:
       - Mob: ANDRE
         Count: 15
   - Id: 7145
     Title: The training course 'conquer ant hell!' - A real battle 3
-    Target:
+    Targets:
       - Mob: VITATA
         Count: 10
   - Id: 7146
@@ -2205,17 +2205,17 @@ Body:
     Title: The training course 'conquer the orc village!' - start
   - Id: 7148
     Title: The training course 'conquer the orc village!' - A real battle 1
-    Target:
+    Targets:
       - Mob: ORC_BABY
         Count: 10
   - Id: 7149
     Title: The training course 'conquer the orc village!' - A real battle 2
-    Target:
+    Targets:
       - Mob: ORK_WARRIOR
         Count: 10
   - Id: 7150
     Title: The training course 'conquer the orc village!' - A real battle 3
-    Target:
+    Targets:
       - Mob: ORC_LADY
         Count: 10
   - Id: 7151
@@ -2224,12 +2224,12 @@ Body:
     Title: The training course 'conquer the orc dungeon!' - start
   - Id: 7153
     Title: The training course 'conquer the orc dungeon!' - A real battle 1
-    Target:
+    Targets:
       - Mob: ORC_ZOMBIE
         Count: 20
   - Id: 7154
     Title: The training course 'conquer the orc dungeon!'- A real battle 2
-    Target:
+    Targets:
       - Mob: ORC_SKELETON
         Count: 20
   - Id: 7155
@@ -2238,12 +2238,12 @@ Body:
     Title: The training course 'conquer an undersea city!' - start
   - Id: 7157
     Title: The training course 'conquer an undersea city!' - A real battle 1
-    Target:
+    Targets:
       - Mob: MERMAN
         Count: 15
   - Id: 7158
     Title: The training course 'conquer an undersea city!' - A real battle 2
-    Target:
+    Targets:
       - Mob: STROUF
         Count: 10
   - Id: 7159
@@ -2258,7 +2258,7 @@ Body:
     Title: Mysterious Cryptogram - 2nd
   - Id: 7164
     Title: Hunt for shadow of deception
-    Target:
+    Targets:
       - Mob: S_WIND_GHOST
         Count: 1
   - Id: 7165
@@ -2275,7 +2275,7 @@ Body:
     Title: Mysterious Cryptogram - 3rd
   - Id: 7171
     Title: Hunt for shadow of delusion
-    Target:
+    Targets:
       - Mob: S_SKOGUL
         Count: 1
   - Id: 7172
@@ -2286,7 +2286,7 @@ Body:
     Title: Mysterious Cryptogram - 4th
   - Id: 7175
     Title: Hunft for shadow of gaiety
-    Target:
+    Targets:
       - Mob: S_SUCCUBUS
         Count: 1
   - Id: 7176
@@ -2339,7 +2339,7 @@ Body:
     Title: Secret Order from Ahat
   - Id: 7200
     Title: Cheshire's call
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7201
     Title: Removing traces
   - Id: 7202
@@ -2352,14 +2352,14 @@ Body:
     Title: Cheshire's Box
   - Id: 7208
     Title: Wait for Cheshire?
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7209
     Title: Forget the box.
   - Id: 7210
     Title: Daily delivery
   - Id: 7211
     Title: Misty Forest Labyrinth Exploration
-    TimeLimit: 9000
+    TimeLimit: +2h 30mn
   - Id: 7212
     Title: Loki's Search
   - Id: 7213
@@ -2368,12 +2368,12 @@ Body:
     Title: "Paradise Advanced: Romeo Training"
   - Id: 7215
     Title: "Paradise Advanced: Romeo Hunt 1"
-    Target:
+    Targets:
       - Mob: STALACTIC_GOLEM
         Count: 3
   - Id: 7216
     Title: "Paradise Advanced: Romeo Hunt 2"
-    Target:
+    Targets:
       - Mob: STALACTIC_GOLEM
         Count: 10
   - Id: 7217
@@ -2384,12 +2384,12 @@ Body:
     Title: "Paradise Advanced: Johan Training"
   - Id: 7220
     Title: "Paradise Advanced: Johan Hunt 1"
-    Target:
+    Targets:
       - Mob: WRAITH
         Count: 20
   - Id: 7221
     Title: "Paradise Advanced: Johan Hunt 2"
-    Target:
+    Targets:
       - Mob: EVIL_DRUID
         Count: 10
   - Id: 7222
@@ -2398,22 +2398,22 @@ Body:
     Title: "Paradise Advanced: Kiren Training"
   - Id: 7224
     Title: "Paradise Advanced: Kiren Hunt 1"
-    Target:
+    Targets:
       - Mob: PORCELLIO
         Count: 30
   - Id: 7225
     Title: "Paradise Advanced: Removed"
-    Target:
+    Targets:
       - Mob: NOXIOUS
         Count: 30
   - Id: 7226
     Title: "Paradise Advanced: Kiren Hunt 2 (Part A)"
-    Target:
+    Targets:
       - Mob: VENOMOUS
         Count: 30
   - Id: 7227
     Title: "Paradise Advanced: Kiren Hunt 2 (Part B)"
-    Target:
+    Targets:
       - Mob: TEDDY_BEAR
         Count: 5
   - Id: 7228
@@ -2422,12 +2422,12 @@ Body:
     Title: "Paradise Advanced: Naomi Training"
   - Id: 7230
     Title: "Paradise Advanced: Naomi Hunt 1"
-    Target:
+    Targets:
       - Mob: SIROMA
         Count: 30
   - Id: 7231
     Title: "Paradise Advanced: Naomi Hunt 2"
-    Target:
+    Targets:
       - Mob: SIROMA
         Count: 30
   - Id: 7232
@@ -2438,12 +2438,12 @@ Body:
     Title: "Paradise Advanced: Margaret's Favor"
   - Id: 7235
     Title: "Paradise Advanced: Margaret Hunt 1"
-    Target:
+    Targets:
       - Mob: NEPENTHES
         Count: 1
   - Id: 7236
     Title: "Paradise Advanced: Margaret Hunt 2"
-    Target:
+    Targets:
       - Mob: PINGUICULA
         Count: 5
   - Id: 7237
@@ -2456,24 +2456,24 @@ Body:
     Title: Strengthening Equipment
   - Id: 7241
     Title: Toren's Errands - Tomorrow
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7242
     Title: Play with the baby cat
   - Id: 7243
     Title: Nyadventure-Duruduru Compass
   - Id: 7244
     Title: Nyadventure-Duruduru Race
-    TimeLimit: 180
+    TimeLimit: +3mn
   - Id: 7245
     Title: Nyadventure-Duruduru Race
-    TimeLimit: 180
+    TimeLimit: +3mn
   - Id: 7246
     Title: Nyadventure-I'm coming now.
   - Id: 7247
     Title: Nyadventure-Stop the Bang!
   - Id: 7249
     Title: Nyadventure-Bang! See you next time
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7250
     Title: Nyadventure-Hidden Treasure?
   - Id: 7251
@@ -2490,7 +2490,7 @@ Body:
     Title: Nyadventure-The Sixth piece of Painting
   - Id: 7257
     Title: Nyadventure-Race, Come back tomorrow!
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7258
     Title: Nyadventure-Painting completed
   - Id: 7259
@@ -2511,7 +2511,7 @@ Body:
     Title: Declaration of Chef Nyas
   - Id: 7267
     Title: Appointed time with Cleanyang
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7268
     Title: Find the Cat's hard biscuits!
   - Id: 7269
@@ -2530,7 +2530,7 @@ Body:
     Title: Cat Biscuits - Sand
   - Id: 7276
     Title: Promise to deliver more food
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7281
     Title: List of Errands
   - Id: 7282
@@ -2665,7 +2665,7 @@ Body:
     Title: List of Errands
   - Id: 7349
     Title: Vote
-    TimeLimit: 1800
+    TimeLimit: +30mn
   - Id: 7350
     Title: Cautious Village
   - Id: 7351
@@ -2702,7 +2702,7 @@ Body:
     Title: Traditional Spiritual Protection and Impudent Girl-1
   - Id: 7367
     Title: Traditional Spiritual Protection and Impudent Girl-2
-    TimeLimit: 600
+    TimeLimit: +10mn
   - Id: 7368
     Title: Deliver Spiritual Protection-Pedro
   - Id: 7369
@@ -2719,21 +2719,21 @@ Body:
     Title: Love and Spiritual Protection for All
   - Id: 7375
     Title: Love and Spiritual Protection Continues
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7376
     Title: Old Man and Cast-Iron Caldron-1
   - Id: 7377
     Title: Old Man and Cast-Iron Caldron-2
   - Id: 7378
     Title: Old Man and Cast-Iron Caldron-Regular Trades
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7379
     Title: Peace Preacher
   - Id: 7380
     Title: To Smith a Traditional Spiritual Protection
   - Id: 7381
     Title: High Demand on Spiritual Protection Material
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7382
     Title: Deliver to Pedro
   - Id: 7383
@@ -2752,17 +2752,17 @@ Body:
     Title: Give the Shirt to Maries's Child
   - Id: 7390
     Title: Worried about Maries's Child
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7391
     Title: Jejeling and Jejellopy
   - Id: 7392
     Title: Collect Jejellopy Regularly
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 7393
     Title: Shiny Silver Blade
   - Id: 7394
     Title: Shiny Tomorrow
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7395
     Title: Ghost on the Ferry Ship
   - Id: 7396
@@ -2777,7 +2777,7 @@ Body:
     Title: Mumbaki of Port Malaya
   - Id: 7401
     Title: All Aboard for Perry Sailing
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7402
     Title: Bouquet for Diwata
   - Id: 7403
@@ -2786,19 +2786,19 @@ Body:
     Title: Get Rid of Jejeling
   - Id: 7405
     Title: Get Rid of Jejeling - Same Time Tomorrow
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7406
     Title: Agree to Collecting Bones!
   - Id: 7407
     Title: Purified Bone
   - Id: 7408
     Title: Agree to Come Back Tomorrow?
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7409
     Title: Cannot Meet Eyes with Him!
   - Id: 7410
     Title: Teach Another Lesson Tomorrow!
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7411
     Title: The traveler, Fome's story
   - Id: 7412
@@ -2811,7 +2811,7 @@ Body:
     Title: Laphine's Chief of Staff
   - Id: 7416
     Title: Waiting to meet
-    TimeLimit: 600
+    TimeLimit: +10mn
   - Id: 7417
     Title: Kardui's request
   - Id: 7418
@@ -2838,22 +2838,22 @@ Body:
     Title: Yai of the wild
   - Id: 7429
     Title: Wild recent trend!
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7430
     Title: Deliveryman that runs through space
   - Id: 7431
     Title: A mailman never rests!
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7432
     Title: The troublemakers in the land of blooming flowers
   - Id: 7433
     Title: Need constant guidance
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 7434
     Title: Kardui's big brother
   - Id: 7435
     Title: Time for reading the letter
-    TimeLimit: 180
+    TimeLimit: +3mn
   - Id: 7436
     Title: Avant the Scholar of Magics
   - Id: 7437
@@ -3380,7 +3380,7 @@ Body:
     Title: Handworked jewels
   - Id: 8253
     Title: Language translation device
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 8254
     Title: with a light heart and body
   - Id: 8255
@@ -3403,27 +3403,27 @@ Body:
     Title: One time a one hour!
   - Id: 8266
     Title: Hunting poison spore!
-    Target:
+    Targets:
       - Mob: POISON_SPORE
         Count: 10
   - Id: 8267
     Title: Hunting smokie!
-    Target:
+    Targets:
       - Mob: SMOKIE
         Count: 10
   - Id: 8268
     Title: Hunt elder wilow!
-    Target:
+    Targets:
       - Mob: ELDER_WILOW
         Count: 10
   - Id: 8269
     Title: Hunt coco!
-    Target:
+    Targets:
       - Mob: COCO
         Count: 10
   - Id: 8270
     Title: Hunt tharafrog!
-    Target:
+    Targets:
       - Mob: THARA_FROG
         Count: 10
   - Id: 8271
@@ -3490,22 +3490,22 @@ Body:
     Title: Lina's Curse
   - Id: 9118
     Title: Lina's Curse - Deviruchi Hunt
-    Target:
+    Targets:
       - Mob: DEVIRUCHI
         Count: 50
   - Id: 9119
     Title: Lina's Curse - Wraith Dead Hunt
-    Target:
+    Targets:
       - Mob: WRAITH_DEAD
         Count: 50
   - Id: 9120
     Title: Lina's Curse - Dullahan Hunt
-    Target:
+    Targets:
       - Mob: DULLAHAN
         Count: 50
   - Id: 9121
     Title: Lina's Curse - Nightmare Terror Hunt
-    Target:
+    Targets:
       - Mob: NIGHTMARE_TERROR
         Count: 50
   - Id: 9122
@@ -3518,14 +3518,14 @@ Body:
     Title: strange Hydra
   - Id: 9029
     Title: "Strange Hydra : present conditions"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 9030
     Title: Find a puppy
   - Id: 9031
     Title: Find a puppy
   - Id: 9032
     Title: Find a puppy
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 9155
     Title: Getting materials for the Jaty Crown
   - Id: 9156
@@ -3562,15 +3562,15 @@ Body:
     Title: Enchanted Items
   - Id: 9173
     Title: Tutorial Timer Cooldown
-    TimeLimit: 72000
+    TimeLimit: +20h
   - Id: 9222
     Title: Get Rid of Bangungot from Hospital 2F
   - Id: 9223
     Title: Will there be Peace at the Hospital?
-    TimeLimit: 604800
+    TimeLimit: +7d
   - Id: 9224
     Title: Explore Hospital 2F
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 9225
     Title: Mystery Robbery Incident 1
   - Id: 9226
@@ -3817,12 +3817,12 @@ Body:
     Title: Escape from the reality, into the broad world
   - Id: 10085
     Title: Escape from the reality, into the broad world
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 10086
     Title: Escape from the reality, into the broad world
   - Id: 10087
     Title: Escape from the reality, into the broad world
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 10088
     Title: Escape from the reality, into the broad world
   - Id: 10089
@@ -3863,87 +3863,87 @@ Body:
     Title: "To client - the chapter of localizing "
   - Id: 10107
     Title: Sphinx dungeon - Requiem
-    Target:
+    Targets:
       - Mob: REQUIEM
         Count: 10
   - Id: 10108
     Title: Sphinx dungeon - Marduk
-    Target:
+    Targets:
       - Mob: MARDUK
         Count: 10
   - Id: 10109
     Title: Sphinx dungeon - Pasana
-    Target:
+    Targets:
       - Mob: PASANA
         Count: 10
   - Id: 10110
     Title: Glast heim - Dark Frame
-    Target:
+    Targets:
       - Mob: DARK_FRAME
         Count: 10
   - Id: 10111
     Title: Glast heim - Evil druid
-    Target:
+    Targets:
       - Mob: EVIL_DRUID
         Count: 10
   - Id: 10112
     Title: Glast heim - Wraith
-    Target:
+    Targets:
       - Mob: WRAITH
         Count: 10
   - Id: 10113
     Title: Glast Heim - Raydric Archer
-    Target:
+    Targets:
       - Mob: RAYDRIC_ARCHER
         Count: 10
   - Id: 10114
     Title: Juno - Grand Peco
-    Target:
+    Targets:
       - Mob: GRAND_PECO
         Count: 20
   - Id: 10115
     Title: Juno - sleeper
-    Target:
+    Targets:
       - Mob: SLEEPER
         Count: 20
   - Id: 10116
     Title: Juno - Goat
-    Target:
+    Targets:
       - Mob: GOAT
         Count: 20
   - Id: 10117
     Title: Juno - Harpy
-    Target:
+    Targets:
       - Mob: HARPY
         Count: 20
   - Id: 10118
     Title: clock tower - Clock
-    Target:
+    Targets:
       - Mob: CLOCK
         Count: 15
   - Id: 10119
     Title: clock tower - Punk
-    Target:
+    Targets:
       - Mob: PUNK
         Count: 15
   - Id: 10120
     Title: clock tower - Rideword
-    Target:
+    Targets:
       - Mob: RIDEWORD
         Count: 15
   - Id: 10121
     Title: Localizing - Uzhas
-    Target:
+    Targets:
       - Mob: UZHAS
         Count: 15
   - Id: 10122
     Title: Localizing - Miyabi Doll
-    Target:
+    Targets:
       - Mob: MIYABI_NINGYO
         Count: 15
   - Id: 10123
     Title: Localizing - Mi Gao
-    Target:
+    Targets:
       - Mob: INCREASE_SOIL
         Count: 15
   - Id: 11000
@@ -4120,7 +4120,7 @@ Body:
     Title: Secret note of Bazet
   - Id: 11104
     Title: Resting time
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 11105
     Title: Tendrilrion skin
   - Id: 11106
@@ -4139,87 +4139,87 @@ Body:
     Title: Job changing to Warlock
   - Id: 11113
     Title: Until radering is functioning
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 11114
     Title: "Request : Hunt Honet"
-    Target:
+    Targets:
       - Mob: HORNET
         Count: 10
   - Id: 11115
     Title: "Request : Hunt Condor"
-    Target:
+    Targets:
       - Mob: CONDOR
         Count: 20
   - Id: 11116
     Title: "Request : Hunt Grasshopper's Leg"
-    Target:
+    Targets:
       - Mob: ROCKER
         Count: 10
   - Id: 11117
     Title: "Request : Hunt Worm tail"
-    Target:
+    Targets:
       - Mob: WORM_TAIL
         Count: 20
   - Id: 11118
     Title: "Request : Hunt Spore"
-    Target:
+    Targets:
       - Mob: SPORE
         Count: 30
   - Id: 11119
     Title: "Request : Pest Control"
-    Target:
+    Targets:
       - Mob: THIEF_BUG_EGG
         Count: 20
   - Id: 11120
     Title: "Request : Hunt Muka"
-    Target:
+    Targets:
       - Mob: MUKA
         Count: 20
   - Id: 11121
     Title: "Request : Hunt Farmiliar"
-    Target:
+    Targets:
       - Mob: FARMILIAR
         Count: 20
   - Id: 11122
     Title: "Request : Collect Feather"
-    Target:
+    Targets:
       - Mob: PECOPECO
         Count: 30
   - Id: 11123
     Title: "Request : Collect Poison Spore"
-    Target:
+    Targets:
       - Mob: POISON_SPORE
         Count: 30
   - Id: 11124
     Title: "Request : Hunt Honet - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11125
     Title: "Request : Hunt Condor - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11126
     Title: "Request : Hunt Grasshopper's Leg - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11127
     Title: "Request : Hunt Worm Tail - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11128
     Title: "Request : Hunt Spore - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11129
     Title: "Request : Pest Control - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11130
     Title: "Request : Hunt Muka - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11131
     Title: "Request : Hunt Farmiliar - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11132
     Title: "Request : Collect Feather - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11133
     Title: "Request : Collect Poison Spore - Complete"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 11135
     Title: Looking for Maestro Song
   - Id: 11136
@@ -4242,7 +4242,7 @@ Body:
     Title: "Juno manager : click"
   - Id: 11145
     Title: "I want to get the "
-    Target:
+    Targets:
       - Mob: TEDDY_BEAR
         Count: 33
   - Id: 11146
@@ -4267,7 +4267,7 @@ Body:
     Title: undefinable battler
   - Id: 11156
     Title: annoying homework
-    Target:
+    Targets:
       - Mob: DESERT_WOLF
         Count: 100
   - Id: 11157
@@ -4308,12 +4308,12 @@ Body:
     Title: Supply Shortage
   - Id: 11175
     Title: Supply Shortage
-    TimeLimit: 7200
+    TimeLimit: +2h
   - Id: 11176
     Title: For my friends
   - Id: 11182
     Title: Theore's Report
-    TimeLimit: 60
+    TimeLimit: +1mn
   - Id: 11183
     Title: Theore's Favor
   - Id: 11184
@@ -4424,7 +4424,7 @@ Body:
     Title: Malangdo Fruits
   - Id: 11239
     Title: Malangdo Fruits
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 11240
     Title: Repair of cracks
   - Id: 11241
@@ -4433,12 +4433,12 @@ Body:
     Title: Repair of cracks
   - Id: 11243
     Title: Repair of cracks
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 11244
     Title: Soft Jelly
   - Id: 11245
     Title: Soft Jelly
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 11284
     Title: Nurse at Port Malaya-1
   - Id: 11285
@@ -4493,7 +4493,7 @@ Body:
     Title: Nurse at Port Malaya-26
   - Id: 11310
     Title: Eclage's Entrance
-    TimeLimit: 30
+    TimeLimit: +30s
   - Id: 11311
     Title: Eclage's Entrance
   - Id: 11312
@@ -4668,103 +4668,103 @@ Body:
     Title: Pass to the Lab
   - Id: 12058
     Title: Admission Restricted to the 102 Tower
-    TimeLimit: 604800
+    TimeLimit: +7d
   - Id: 12059
     Title: Orc's Memory Time Limit
-    TimeLimit: 7200
+    TimeLimit: +2h
   - Id: 12060
     Title: Today's Fishing Closed
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 12061
     Title: Concentration
-    TimeLimit: 10
+    TimeLimit: +10s
   - Id: 12062
     Title: Today's Mining Closed
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 12070
     Title: Limited time for enter
-    TimeLimit: 14400
+    TimeLimit: +4h
   - Id: 12071
     Title: Stamp a seal on the attendance book
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 12072
     Title: Hunt tharafrog
-    Target:
+    Targets:
       - Mob: THARA_FROG
         Count: 20
   - Id: 12073
     Title: Remove Cruiser
-    Target:
+    Targets:
       - Mob: CRUISER
         Count: 15
   - Id: 12074
     Title: Remove Kukre
-    Target:
+    Targets:
       - Mob: KUKRE
         Count: 30
   - Id: 12075
     Title: Remove orcbaby
-    Target:
+    Targets:
       - Mob: ORC_BABY
         Count: 15
   - Id: 12076
     Title: Remove orcwarroir
-    Target:
+    Targets:
       - Mob: ORK_WARRIOR
         Count: 20
   - Id: 12077
     Title: Hunt vadon
-    Target:
+    Targets:
       - Mob: VADON
         Count: 15
   - Id: 12078
     Title: Hunt Megalodon
-    Target:
+    Targets:
       - Mob: MEGALODON
         Count: 30
   - Id: 12079
     Title: Hunt Marse
-    Target:
+    Targets:
       - Mob: MARSE
         Count: 15
   - Id: 12080
     Title: Hunt Cornutus
-    Target:
+    Targets:
       - Mob: CORNUTUS
         Count: 20
   - Id: 12081
     Title: Remove Myst
-    Target:
+    Targets:
       - Mob: MYST
         Count: 15
   - Id: 12082
     Title: Hunt shellfish
-    Target:
+    Targets:
       - Mob: SHELLFISH
         Count: 30
   - Id: 12083
     Title: Hunt Marine sphere
-    Target:
+    Targets:
       - Mob: MARINE_SPHERE
         Count: 15
   - Id: 12084
     Title: Hunt Phen
-    Target:
+    Targets:
       - Mob: PHEN
         Count: 20
   - Id: 12085
     Title: Remove orcskeleton
-    Target:
+    Targets:
       - Mob: ORC_SKELETON
         Count: 15
   - Id: 12086
     Title: Remove Zenorc
-    Target:
+    Targets:
       - Mob: ZENORC
         Count: 30
   - Id: 12087
     Title: Remove mummy
-    Target:
+    Targets:
       - Mob: MUMMY
         Count: 15
   - Id: 12088
@@ -4787,67 +4787,67 @@ Body:
     Title: Tour of dungeon
   - Id: 12099
     Title: Remove Root Cause
-    Target:
+    Targets:
       - Mob: DRACO_EGG
         Count: 10
   - Id: 12100
     Title: Violent Winged Insect
-    Target:
+    Targets:
       - Mob: LUCIOLA_VESPA
         Count: 12
   - Id: 12101
     Title: Work Interference
-    Target:
+    Targets:
       - Mob: DRACO
         Count: 5
   - Id: 12102
     Title: Intelligent Snakes
-    Target:
+    Targets:
       - Mob: NAGA
         Count: 10
   - Id: 12103
     Title: Legendary Creature
-    Target:
+    Targets:
       - Mob: CORNUS
         Count: 1
   - Id: 12104
     Title: Insects with an Appetite
-    Target:
+    Targets:
       - Mob: CENTIPEDE
         Count: 15
   - Id: 12105
     Title: Moving Rocks
-    Target:
+    Targets:
       - Mob: BRADIUM_GOLEM
         Count: 10
   - Id: 12106
     Title: A child on a flower
-    Target:
+    Targets:
       - Mob: PINGUICULA
         Count: 15
   - Id: 12107
     Title: Twisted Love
-    Target:
+    Targets:
       - Mob: PINGUICULA_D
         Count: 10
   - Id: 12108
     Title: Dangerous Plant Removal
-    Target:
+    Targets:
       - Mob: NEPENTHES
         Count: 12
   - Id: 12109
     Title: Larva Extermination
-    Target:
+    Targets:
       - Mob: CENTIPEDE_LARVA
         Count: 14
   - Id: 12110
     Title: Demon of Water
-    Target:
+    Targets:
       - Mob: AQUA_ELEMENTAL
         Count: 7
   - Id: 12111
     Title: Bird with ugly face
-    Target:
+    Targets:
       - Mob: TATACHO
         Count: 10
   - Id: 12117
@@ -4936,25 +4936,25 @@ Body:
     Title: Rage of the pub owner
   - Id: 12159
     Title: Quest record from Laponte
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12160
     Title: Quest record from Kalipo
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12161
     Title: Quest record from Pura
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12162
     Title: Quest record from Tragis
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12163
     Title: Quest record from Calyon
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12164
     Title: Quest record from Moltuka
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12165
     Title: Dizziness
-    TimeLimit: 21600
+    TimeLimit: +6h
   - Id: 12166
     Title: Tree Root Doc.
   - Id: 12167
@@ -5057,7 +5057,7 @@ Body:
     Title: Stone Heart Doc.
   - Id: 12216
     Title: Pouty Jahbong
-    TimeLimit: 21600
+    TimeLimit: +6h
   - Id: 12217
     Title: Request - Traces of wild boar hunt
   - Id: 12218
@@ -5082,7 +5082,7 @@ Body:
     Title: Miming Hunting
   - Id: 12230
     Title: Mora Monster Hunt
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12231
     Title: Insect Feeler Collecting
   - Id: 12232
@@ -5105,10 +5105,10 @@ Body:
     Title: Sticky Mucus Collecting
   - Id: 12241
     Title: Mora Item Request 1
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12242
     Title: Mora Item Request 2
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12243
     Title: Missing Information on Tajareu
   - Id: 12244
@@ -5131,10 +5131,10 @@ Body:
     Title: Missing Information on Tuale
   - Id: 12253
     Title: Missing Person Search Time Limit
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12254
     Title: Now it's cleaning
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 12255
     Title: Hunt deep sea crab
   - Id: 12256
@@ -5169,19 +5169,19 @@ Body:
     Title: Hunt mutation coelacanth
   - Id: 12271
     Title: In progress general culvert single day service
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12272
     Title: In progress hard culvert single day service
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12273
     Title: In progress general culvert weekly service
-    TimeLimit: 579600
+    TimeLimit: +6d 17h
   - Id: 12274
     Title: In progress hard culvert weekly service
-    TimeLimit: 579600
+    TimeLimit: +6d 17h
   - Id: 12278
     Title: Towards Bakonawa Lake...
-    TimeLimit: 604800
+    TimeLimit: +7d
   - Id: 12279
     Title: Get Rid of Bakonawa
   - Id: 12280
@@ -5230,7 +5230,7 @@ Body:
     Title: Two remaining friends
   - Id: 12317
     Title: Fake Keyblade
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 12318
     Title: "Upper Cats: annoying guy"
   - Id: 12319
@@ -5241,145 +5241,145 @@ Body:
     Title: RWC2011Card Gathering
   - Id: 13001
     Title: RWC2011Card Gathering - Hold
-    TimeLimit: 82800
+    TimeLimit: +23h
   - Id: 13002
     Title: Brigan collecting
   - Id: 13003
     Title: Carat Request
-    Target:
+    Targets:
       - Mob: CARAT
         Count: 30
   - Id: 13004
     Title: Carat Request timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13005
     Title: Arclouse Request
-    Target:
+    Targets:
       - Mob: ARCLOUSE
         Count: 22
   - Id: 13006
     Title: Arclouse Request timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13007
     Title: Anolian Request
-    Target:
+    Targets:
       - Mob: ANOLIAN
         Count: 30
   - Id: 13008
     Title: Anolian Request timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13009
     Title: Sting Request
-    Target:
+    Targets:
       - Mob: STING
         Count: 30
   - Id: 13010
     Title: Sting Request timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13011
     Title: Majoruros Request
-    Target:
+    Targets:
       - Mob: MAJORUROS
         Count: 30
   - Id: 13012
     Title: Majoruros Request timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13013
     Title: Pinguicula Request
-    Target:
+    Targets:
       - Mob: PINGUICULA
         Count: 30
   - Id: 13014
     Title: Pinguicula Request timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13015
     Title: Luciola Vespa Request
-    Target:
+    Targets:
       - Mob: LUCIOLA_VESPA
         Count: 30
   - Id: 13016
     Title: Luciola Vespa Request timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13017
     Title: Desert Wolf Request
-    Target:
+    Targets:
       - Mob: DESERT_WOLF
         Count: 30
   - Id: 13018
     Title: Desert Wolf Request timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13019
     Title: Snowier Request
-    Target:
+    Targets:
       - Mob: SNOWIER
         Count: 30
   - Id: 13020
     Title: Snowier Request timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13021
     Title: Ice Titan Request
-    Target:
+    Targets:
       - Mob: ICE_TITAN
         Count: 30
   - Id: 13022
     Title: Ice Titan Request Timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13023
     Title: Nightmare Terror Request
-    Target:
+    Targets:
       - Mob: NIGHTMARE_TERROR
         Count: 30
   - Id: 13024
     Title: Nightmare Terror Request Timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13025
     Title: Flying Deleter Request
-    Target:
+    Targets:
       - Mob: DELETER
         Count: 30
   - Id: 13026
     Title: Deleter Request Timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13040
     Title: Loli Ruri Request
-    Target:
+    Targets:
       - Mob: LOLI_RURI
         Count: 30
   - Id: 13041
     Title: Loli Ruri Request Timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13042
     Title: Medusa Request
-    Target:
+    Targets:
       - Mob: MEDUSA
         Count: 30
   - Id: 13043
     Title: Medusa Request Timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13044
     Title: Anubis Request
-    Target:
+    Targets:
       - Mob: ANUBIS
         Count: 20
   - Id: 13045
     Title: Anubis Request Timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13046
     Title: Tendrilion Request
-    Target:
+    Targets:
       - Mob: TENDRILRION
         Count: 1
   - Id: 13047
     Title: Tendrilion Request Timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13048
     Title: Tendrilion Request
-    Target:
+    Targets:
       - Mob: TENDRILRION
         Count: 1
   - Id: 13049
     Title: Tendrilion Request Timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13050
     Title: The Laphine that loves the land
   - Id: 13051
@@ -5400,134 +5400,134 @@ Body:
     Title: Troublemaker New Oz
   - Id: 13059
     Title: End of project
-    TimeLimit: 79200
+    TimeLimit: +22h
   - Id: 13060
     Title: Safety confirmation complete!
-    TimeLimit: 79200
+    TimeLimit: +22h
   - Id: 13061
     Title: Food support
   - Id: 13062
     Title: Food support - complete
-    TimeLimit: 79200
+    TimeLimit: +22h
   - Id: 13063
     Title: Dusting off
   - Id: 13064
     Title: Dusting off - complete
-    TimeLimit: 79200
+    TimeLimit: +22h
   - Id: 13065
     Title: Collecting a souvenir
   - Id: 13066
     Title: This is enough for souvenirs
-    TimeLimit: 79200
+    TimeLimit: +22h
   - Id: 13067
     Title: Raydric research
-    Target:
+    Targets:
       - Mob: RAYDRIC
         Count: 30
   - Id: 13068
     Title: Raydric research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13069
     Title: Khalitzburg research
-    Target:
+    Targets:
       - Mob: KHALITZBURG
         Count: 30
   - Id: 13070
     Title: Khalitzburg research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13071
     Title: Wander Man research
-    Target:
+    Targets:
       - Mob: WANDER_MAN
         Count: 30
   - Id: 13072
     Title: Wander Man research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13073
     Title: Ancient Mimic research
-    Target:
+    Targets:
       - Mob: ANCIENT_MIMIC
         Count: 30
   - Id: 13074
     Title: Ancient Mimic research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13075
     Title: Death Word research
-    Target:
+    Targets:
       - Mob: DEATHWORD
         Count: 30
   - Id: 13076
     Title: Death Word research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13077
     Title: Owl Baron research
-    Target:
+    Targets:
       - Mob: OWL_BARON
         Count: 20
   - Id: 13078
     Title: Owl Baron research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13079
     Title: Bloody Page Research
   - Id: 13080
     Title: Bloody Page Research - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13081
     Title: Dark Pinguicula research
-    Target:
+    Targets:
       - Mob: PINGUICULA_D
         Count: 30
   - Id: 13082
     Title: Dark Pinguicula research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13083
     Title: Nepenthes research
-    Target:
+    Targets:
       - Mob: NEPENTHES
         Count: 30
   - Id: 13084
     Title: Nepenthes research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13085
     Title: Naga research
-    Target:
+    Targets:
       - Mob: NAGA
         Count: 30
   - Id: 13086
     Title: Naga research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13087
     Title: Centipede Larva research
-    Target:
+    Targets:
       - Mob: CENTIPEDE_LARVA
         Count: 20
   - Id: 13088
     Title: Centipede Larva research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13089
     Title: Cornus research
-    Target:
+    Targets:
       - Mob: CORNUS
         Count: 30
   - Id: 13090
     Title: Cornus research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13091
     Title: Mystic Horn Research
   - Id: 13092
     Title: Mystic Horn Research - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13093
     Title: Ancient Mummy research
-    Target:
+    Targets:
       - Mob: ANCIENT_MUMMY
         Count: 30
   - Id: 13094
     Title: Ancient Mummy research - timer
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13095
     Title: Geffenia expedition
-    Target:
+    Targets:
       - Mob: INCUBUS
         Count: 10
       - Mob: SUCCUBUS
@@ -5536,10 +5536,10 @@ Body:
         Count: 10
   - Id: 13096
     Title: Geffenia expedition - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13097
     Title: Juperos expedition
-    Target:
+    Targets:
       - Mob: VENATU_2
         Count: 30
       - Mob: VENATU_3
@@ -5548,12 +5548,12 @@ Body:
         Count: 30
   - Id: 13098
     Title: Juperos expedition - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13099
     Title: Fragments and Rusty Screw
   - Id: 13100
     Title: Fragments and Rusty Screw - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13107
     Title: Thanatos Tower Search
   - Id: 13108
@@ -5572,212 +5572,212 @@ Body:
     Title: Abyss Lake Search - Reporting results
   - Id: 13115
     Title: Thanatos Tower Search - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13116
     Title: Rachel holy ground Search - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13117
     Title: Unknown island Search - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13118
     Title: Abyss Lake Search - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13119
     Title: Combat Baroness of Retribution
-    Target:
+    Targets:
       - Mob: RETRIBUTION
         Count: 30
   - Id: 13120
     Title: Combat Baroness of Retribution - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13121
     Title: Combat Lady Solace
-    Target:
+    Targets:
       - Mob: SOLACE
         Count: 30
   - Id: 13122
     Title: Combat Lady Solace - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13123
     Title: Combat Mistress of Shelter
-    Target:
+    Targets:
       - Mob: SHELTER
         Count: 30
   - Id: 13124
     Title: Combat Mistress of Shelter - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13125
     Title: Combat Dame of Sentinel
-    Target:
+    Targets:
       - Mob: OBSERVATION
         Count: 30
   - Id: 13126
     Title: Combat Dame of Sentinel - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13127
     Title: Combat Vanberk and Isilla
-    Target:
+    Targets:
       - Mob: VANBERK
         Count: 20
       - Mob: ISILLA
         Count: 20
   - Id: 13128
     Title: Combat Vanberk and Isilla - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13129
     Title: Combat Hodremlin
-    Target:
+    Targets:
       - Mob: HODREMLIN
         Count: 30
   - Id: 13130
     Title: Combat Hodremlin - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13131
     Title: Combat Agav and Echio
-    Target:
+    Targets:
       - Mob: AGAV
         Count: 20
       - Mob: ECHIO
         Count: 20
   - Id: 13132
     Title: Combat Agav and Echio - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13133
     Title: Combat Ragged Zombie
-    Target:
+    Targets:
       - Mob: RAGGED_ZOMBIE
         Count: 30
   - Id: 13134
     Title: Combat Ragged Zombie - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13135
     Title: Combat Zombie Slaughter
-    Target:
+    Targets:
       - Mob: ZOMBIE_SLAUGHTER
         Count: 30
   - Id: 13136
     Title: Combat Zombie Slaughter - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13137
     Title: Combat Banshee
-    Target:
+    Targets:
       - Mob: BANSHEE
         Count: 30
   - Id: 13138
     Title: Combat Banshee - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13139
     Title: Combat Ferus and Bewler
-    Target:
+    Targets:
       - Mob: FERUS
         Count: 30
       - Mob: FERUS_
         Count: 30
   - Id: 13140
     Title: Combat Ferus and Bewler - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13141
     Title: Combat Acidus
-    Target:
+    Targets:
       - Mob: ACIDUS
         Count: 30
       - Mob: ACIDUS_
         Count: 30
   - Id: 13142
     Title: Combat Acidus - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13143
     Title: Egnigem Story
-    Target:
+    Targets:
       - Mob: YGNIZEM
         Count: 30
   - Id: 13144
     Title: Egnigem Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13145
     Title: Armeyer Story
-    Target:
+    Targets:
       - Mob: ARMAIA
         Count: 30
   - Id: 13146
     Title: Armeyer Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13147
     Title: Whikebain Story
-    Target:
+    Targets:
       - Mob: WHIKEBAIN
         Count: 30
   - Id: 13148
     Title: Whikebain Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13149
     Title: Kavach Story
-    Target:
+    Targets:
       - Mob: KAVAC
         Count: 30
   - Id: 13150
     Title: Kavach Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13151
     Title: Errende Story
-    Target:
+    Targets:
       - Mob: EREND
         Count: 30
   - Id: 13152
     Title: Errende Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13153
     Title: Laurell Story
-    Target:
+    Targets:
       - Mob: RAWREL
         Count: 30
   - Id: 13154
     Title: Laurell Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13155
     Title: Morocc Story1
-    Target:
+    Targets:
       - Mob: MOROCC_1
         Count: 30
   - Id: 13156
     Title: Morocc Story1 - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13157
     Title: Morocc Story2
-    Target:
+    Targets:
       - Mob: MOROCC_2
         Count: 30
   - Id: 13158
     Title: Morocc Story2 - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13159
     Title: Morocc Story3
-    Target:
+    Targets:
       - Mob: MOROCC_4
         Count: 30
   - Id: 13160
     Title: Morocc Story3 - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13161
     Title: Uni-horn Scaraba Story
   - Id: 13162
     Title: Uni-horn Scaraba Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13163
     Title: Horn Scaraba Story
   - Id: 13164
     Title: Horn Scaraba Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13165
     Title: Antler Scaraba Story
   - Id: 13166
     Title: Antler Scaraba Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 13167
     Title: Rake horn Scaraba Story
   - Id: 13168
     Title: Rake horn Scaraba Story - Wait
-    TimeLimit: 3600
+    TimeLimit: +1h
   - Id: 14118
     Title: Wuhari's concern
   - Id: 14119
@@ -5800,7 +5800,7 @@ Body:
     Title: Obtaining the research report
   - Id: 14131
     Title: Analysis time
-    TimeLimit: 300
+    TimeLimit: +5mn
   - Id: 14133
     Title: Another favor
   - Id: 14134
@@ -5827,7 +5827,7 @@ Body:
     Title: "Christmas : Prepare the festival!"
   - Id: 15059
     Title: "Christmas : Cooldown Timer"
-    TimeLimit: 86400
+    TimeLimit: +1d
   - Id: 15060
     Title: "Christmas : Kwami has joined"
   - Id: 15061
@@ -6572,460 +6572,460 @@ Body:
     Title: Rendering the crown Inert
   - Id: 60101
     Title: Hunting Peco Pecos
-    Target:
+    Targets:
       - Mob: PECOPECO
         Count: 50
   - Id: 60102
     Title: Hunting Peco Pecos
-    Target:
+    Targets:
       - Mob: PECOPECO
         Count: 100
   - Id: 60103
     Title: Hunting Peco Pecos
-    Target:
+    Targets:
       - Mob: PECOPECO
         Count: 150
   - Id: 60104
     Title: Hunting Hodes
-    Target:
+    Targets:
       - Mob: HODE
         Count: 50
   - Id: 60105
     Title: Hunting Hodes
-    Target:
+    Targets:
       - Mob: HODE
         Count: 100
   - Id: 60106
     Title: Hunting Hodes
-    Target:
+    Targets:
       - Mob: HODE
         Count: 150
   - Id: 60107
     Title: Hunting Fabres
-    Target:
+    Targets:
       - Mob: FABRE
         Count: 50
   - Id: 60108
     Title: Hunting Fabres
-    Target:
+    Targets:
       - Mob: FABRE
         Count: 100
   - Id: 60109
     Title: Hunting Fabres
-    Target:
+    Targets:
       - Mob: FABRE
         Count: 150
   - Id: 60110
     Title: Hunting Pupa
-    Target:
+    Targets:
       - Mob: PUPA
         Count: 50
   - Id: 60111
     Title: Hunting Pupa
-    Target:
+    Targets:
       - Mob: PUPA
         Count: 100
   - Id: 60112
     Title: Hunting Pupa
-    Target:
+    Targets:
       - Mob: PUPA
         Count: 150
   - Id: 60113
     Title: Hunting Cocos
-    Target:
+    Targets:
       - Mob: COCO
         Count: 50
   - Id: 60114
     Title: Hunting Cocos
-    Target:
+    Targets:
       - Mob: COCO
         Count: 100
   - Id: 60115
     Title: Hunting Cocos
-    Target:
+    Targets:
       - Mob: COCO
         Count: 150
   - Id: 60116
     Title: Hunting Caramels
-    Target:
+    Targets:
       - Mob: CARAMEL
         Count: 50
   - Id: 60117
     Title: Hunting Caramels
-    Target:
+    Targets:
       - Mob: CARAMEL
         Count: 100
   - Id: 60118
     Title: Hunting Caramels
-    Target:
+    Targets:
       - Mob: CARAMEL
         Count: 150
   - Id: 60119
     Title: Hunting Alligators
-    Target:
+    Targets:
       - Mob: ALLIGATOR
         Count: 50
   - Id: 60120
     Title: Hunting Alligators
-    Target:
+    Targets:
       - Mob: ALLIGATOR
         Count: 100
   - Id: 60121
     Title: Hunting Alligators
-    Target:
+    Targets:
       - Mob: ALLIGATOR
         Count: 150
   - Id: 60122
     Title: Hunting Creamys
-    Target:
+    Targets:
       - Mob: CREAMY
         Count: 50
   - Id: 60123
     Title: Hunting Creamys
-    Target:
+    Targets:
       - Mob: CREAMY
         Count: 100
   - Id: 60124
     Title: Hunting Creamys
-    Target:
+    Targets:
       - Mob: CREAMY
         Count: 150
   - Id: 60125
     Title: Hunting Demon Pungus
-    Target:
+    Targets:
       - Mob: DEMON_PUNGUS
         Count: 50
   - Id: 60126
     Title: Hunting Demon Pungus
-    Target:
+    Targets:
       - Mob: DEMON_PUNGUS
         Count: 100
   - Id: 60127
     Title: Hunting Demon Pungus
-    Target:
+    Targets:
       - Mob: DEMON_PUNGUS
         Count: 150
   - Id: 60128
     Title: Hunting Dokebi
-    Target:
+    Targets:
       - Mob: DOKEBI
         Count: 50
   - Id: 60129
     Title: Hunting Dokebi
-    Target:
+    Targets:
       - Mob: DOKEBI
         Count: 100
   - Id: 60130
     Title: Hunting Dokebi
-    Target:
+    Targets:
       - Mob: DOKEBI
         Count: 150
   - Id: 60131
     Title: Hunting Dryads
-    Target:
+    Targets:
       - Mob: DRYAD
         Count: 50
   - Id: 60132
     Title: Hunting Dryads
-    Target:
+    Targets:
       - Mob: DRYAD
         Count: 100
   - Id: 60133
     Title: Hunting Dryads
-    Target:
+    Targets:
       - Mob: DRYAD
         Count: 150
   - Id: 60134
     Title: Hunting Frilldora
-    Target:
+    Targets:
       - Mob: FRILLDORA
         Count: 50
   - Id: 60135
     Title: Hunting Frilldora
-    Target:
+    Targets:
       - Mob: FRILLDORA
         Count: 100
   - Id: 60136
     Title: Hunting Frilldora
-    Target:
+    Targets:
       - Mob: FRILLDORA
         Count: 150
   - Id: 60137
     Title: Hunting Goats
-    Target:
+    Targets:
       - Mob: GOAT
         Count: 50
   - Id: 60138
     Title: Hunting Goats
-    Target:
+    Targets:
       - Mob: GOAT
         Count: 100
   - Id: 60139
     Title: Hunting Goats
-    Target:
+    Targets:
       - Mob: GOAT
         Count: 150
   - Id: 60140
     Title: Hunting Golems
-    Target:
+    Targets:
       - Mob: GOLEM
         Count: 50
   - Id: 60141
     Title: Hunting Golems
-    Target:
+    Targets:
       - Mob: GOLEM
         Count: 100
   - Id: 60142
     Title: Hunting Golems
-    Target:
+    Targets:
       - Mob: GOLEM
         Count: 150
   - Id: 60143
     Title: Hunting Leaf Cats
-    Target:
+    Targets:
       - Mob: LEAF_CAT
         Count: 50
   - Id: 60144
     Title: Hunting Leaf Cats
-    Target:
+    Targets:
       - Mob: LEAF_CAT
         Count: 100
   - Id: 60145
     Title: Hunting Leaf Cats
-    Target:
+    Targets:
       - Mob: LEAF_CAT
         Count: 150
   - Id: 60146
     Title: Hunting Skeletons
-    Target:
+    Targets:
       - Mob: SKELETON
         Count: 50
   - Id: 60147
     Title: Hunting Skeletons
-    Target:
+    Targets:
       - Mob: SKELETON
         Count: 100
   - Id: 60148
     Title: Hunting Skeletons
-    Target:
+    Targets:
       - Mob: SKELETON
         Count: 150
   - Id: 60149
     Title: Hunting Munaks
-    Target:
+    Targets:
       - Mob: MUNAK
         Count: 50
   - Id: 60150
     Title: Hunting Munaks
-    Target:
+    Targets:
       - Mob: MUNAK
         Count: 100
   - Id: 60151
     Title: Hunting Munaks
-    Target:
+    Targets:
       - Mob: MUNAK
         Count: 150
   - Id: 60152
     Title: Hunting Sohees
-    Target:
+    Targets:
       - Mob: SOHEE
         Count: 50
   - Id: 60153
     Title: Hunting Sohees
-    Target:
+    Targets:
       - Mob: SOHEE
         Count: 100
   - Id: 60154
     Title: Hunting Sohees
-    Target:
+    Targets:
       - Mob: SOHEE
         Count: 150
   - Id: 60155
     Title: Hunting Firelock Soldiers
-    Target:
+    Targets:
       - Mob: ANTIQUE_FIRELOCK
         Count: 50
   - Id: 60156
     Title: Hunting Firelock Soldiers
-    Target:
+    Targets:
       - Mob: ANTIQUE_FIRELOCK
         Count: 100
   - Id: 60157
     Title: Hunting Firelock Soldiers
-    Target:
+    Targets:
       - Mob: ANTIQUE_FIRELOCK
         Count: 150
   - Id: 60158
     Title: Hunting Tengus
-    Target:
+    Targets:
       - Mob: TENGU
         Count: 50
   - Id: 60159
     Title: Hunting Tengus
-    Target:
+    Targets:
       - Mob: TENGU
         Count: 100
   - Id: 60160
     Title: Hunting Tengus
-    Target:
+    Targets:
       - Mob: TENGU
         Count: 150
   - Id: 60161
     Title: Hunting Venatu
-    Target:
+    Targets:
       - Mob: VENATU
         Count: 25
   - Id: 60162
     Title: Hunting Venatu
-    Target:
+    Targets:
       - Mob: VENATU
         Count: 50
   - Id: 60163
     Title: Hunting Venatu
-    Target:
+    Targets:
       - Mob: VENATU
         Count: 75
   - Id: 60164
     Title: Hunting Archdam
-    Target:
+    Targets:
       - Mob: ARCHDAM
         Count: 50
   - Id: 60165
     Title: Hunting Archdam
-    Target:
+    Targets:
       - Mob: ARCHDAM
         Count: 100
   - Id: 60166
     Title: Hunting Archdam
-    Target:
+    Targets:
       - Mob: ARCHDAM
         Count: 150
   - Id: 60167
     Title: Hunting Siromas
-    Target:
+    Targets:
       - Mob: SIROMA
         Count: 50
   - Id: 60168
     Title: Hunting Siromas
-    Target:
+    Targets:
       - Mob: SIROMA
         Count: 100
   - Id: 60169
     Title: Hunting Siroma
-    Target:
+    Targets:
       - Mob: SIROMA
         Count: 150
   - Id: 60170
     Title: Hunting Ice Titans
-    Target:
+    Targets:
       - Mob: ICE_TITAN
         Count: 50
   - Id: 60171
     Title: Hunting Ice Titans
-    Target:
+    Targets:
       - Mob: ICE_TITAN
         Count: 100
   - Id: 60172
     Title: Hunting Ice Titans
-    Target:
+    Targets:
       - Mob: ICE_TITAN
         Count: 150
   - Id: 60173
     Title: Hunting Disguises
-    Target:
+    Targets:
       - Mob: DISGUISE
         Count: 50
   - Id: 60174
     Title: Hunting Disguises
-    Target:
+    Targets:
       - Mob: DISGUISE
         Count: 100
   - Id: 60175
     Title: Hunting Disguises
-    Target:
+    Targets:
       - Mob: DISGUISE
         Count: 150
   - Id: 60176
     Title: Hunting Loli Ruri
-    Target:
+    Targets:
       - Mob: LOLI_RURI
         Count: 50
   - Id: 60177
     Title: Hunting Loli Ruri
-    Target:
+    Targets:
       - Mob: LOLI_RURI
         Count: 100
   - Id: 60178
     Title: Hunting Loli Ruri
-    Target:
+    Targets:
       - Mob: LOLI_RURI
         Count: 150
   - Id: 60179
     Title: Hunting Mantis
-    Target:
+    Targets:
       - Mob: MANTIS
         Count: 50
   - Id: 60180
     Title: Hunting Mantis
-    Target:
+    Targets:
       - Mob: MANTIS
         Count: 100
   - Id: 60181
     Title: Hunting Mantis
-    Target:
+    Targets:
       - Mob: MANTIS
         Count: 150
   - Id: 60182
     Title: Hunting Dancing Dragons
-    Target:
+    Targets:
       - Mob: DANCING_DRAGON
         Count: 50
   - Id: 60183
     Title: Hunting Dancing Dragons
-    Target:
+    Targets:
       - Mob: DANCING_DRAGON
         Count: 100
   - Id: 60184
     Title: Hunting Dancing Dragons
-    Target:
+    Targets:
       - Mob: DANCING_DRAGON
         Count: 150
   - Id: 60185
     Title: Hunting Necromancers
-    Target:
+    Targets:
       - Mob: NECROMANCER
         Count: 20
   - Id: 60186
     Title: Hunting Necromancers
-    Target:
+    Targets:
       - Mob: NECROMANCER
         Count: 40
   - Id: 60187
     Title: Hunting Necromancers
-    Target:
+    Targets:
       - Mob: NECROMANCER
         Count: 60
   - Id: 60188
     Title: Hunting Apocalypse
-    Target:
+    Targets:
       - Mob: APOCALIPS
         Count: 50
   - Id: 60189
     Title: Hunting Apocalypse
-    Target:
+    Targets:
       - Mob: APOCALIPS
         Count: 100
   - Id: 60190
     Title: Hunting Apocalypse
-    Target:
+    Targets:
       - Mob: APOCALIPS
         Count: 150
   - Id: 60200
     Title: Endless Tower Effect
-    TimeLimit: 604800
+    TimeLimit: +7d
   - Id: 60201
     Title: Endless Tower Time Limit
-    TimeLimit: 14400
+    TimeLimit: +4h
   - Id: 60211
     Title: Thor Volcano base camp
   - Id: 60212
@@ -7034,52 +7034,52 @@ Body:
     Title: Thor Volcano base camp
   - Id: 60301
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: PETIT
         Count: 100
   - Id: 60302
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: PETIT
         Count: 200
   - Id: 60303
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: FERUS
         Count: 100
   - Id: 60304
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: FERUS
         Count: 200
   - Id: 60305
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: FERUS_
         Count: 100
   - Id: 60306
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: FERUS_
         Count: 200
   - Id: 60307
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: ACIDUS
         Count: 100
   - Id: 60308
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: ACIDUS
         Count: 200
   - Id: 60309
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: ACIDUS_
         Count: 100
   - Id: 60310
     Title: Dragon Hunting
-    Target:
+    Targets:
       - Mob: ACIDUS_
         Count: 200
   - Id: 60351
@@ -7094,4 +7094,5 @@ Body:
     Title: Bathroom Ghost
   - Id: 62238
     Title: Midgardian Mercenary timer
-    TimeLimit: 3600
+    TimeLimit: +1h
+

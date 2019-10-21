@@ -31,10 +31,9 @@ struct s_quest_objective {
 
 struct s_quest_db {
 	int32 id;
-	uint32 time;
-	uint16 timeday;
-	int16 timehour;
-	int16 timeminute;
+	time_t time;
+	int32 day, hour, minute;
+	bool time_at;
 	std::vector<std::shared_ptr<s_quest_objective>> objectives;
 	std::vector<std::shared_ptr<s_quest_dropitem>> dropitem;
 	std::string name;

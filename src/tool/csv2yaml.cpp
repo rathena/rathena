@@ -629,33 +629,67 @@ static bool quest_read_db(char *split[], int columns, int current) {
 	node["Title"] = title;
 
 	if (strchr(split[1], ':') == NULL) {
-		if (atoi(split[1]))
-			node["TimeLimit"] = split[1];
+		uint32 time = atoi(split[1]);
+
+		if (time > 0) {
+			int day = time / 86400;
+
+			time %= (24 * 3600);
+			int hour = time / 3600;
+
+			time %= 3600;
+			int minute = time / 60;
+
+			time %= 60;
+			int second = time;
+
+			std::string output = "+";
+
+			if (day > 0)
+				output += std::to_string(day) + "d";
+			if (hour > 0) {
+				if (day > 0)
+					output += " ";
+				output += std::to_string(hour) + "h";
+			}
+			if (minute > 0) {
+				if (day > 0 || hour > 0)
+					output += " ";
+				output += std::to_string(minute) + "mn";
+			}
+			if (second > 0) {
+				if (day > 0 || hour > 0 || minute > 0)
+					output += " ";
+				output += std::to_string(second) + "s";
+			}
+
+			node["TimeLimit"] = output;
+		}
 	} else {
 		if (*split[1]) {
-			std::string time_str(split[1]), hour;
-
-			hour = time_str.substr(0, time_str.find(':'));
+			std::string time_str(split[1]), hour = time_str.substr(0, time_str.find(':')), output = {};
 
 			time_str.erase(0, 3); // Remove "HH:"
 
 			if (std::stoi(hour) > 0)
-				node["TimeAtHour"] = std::stoi(hour);
+				output = std::to_string(std::stoi(hour)) + "h";
+			if (std::stoi(time_str) > 0) {
+				if (output.size() > 0)
+					output += " ";
+				output += std::to_string(std::stoi(time_str)) + "mn";
+			}
 
-			if (std::stoi(time_str) > 0)
-				node["TimeAtMinute"] = std::stoi(time_str);
+			node["TimeLimit"] = output; // No quests in TXT format had days, default to 0
 		}
 	}
 
-	int j = 0;
-
-	for (int i = 0, j = 0; i < MAX_QUEST_OBJECTIVES; i++) {
-		uint16 mob_id = (uint16)atoi(split[i * 2 + 2]), count = atoi(split[i * 2 + 3]);
+	for (size_t i = 0, j = 0; i < MAX_QUEST_OBJECTIVES; i++) {
+		int32 mob_id = (int32)atoi(split[i * 2 + 2]), count = atoi(split[i * 2 + 3]);
 
 		if (!mob_id || !count)
 			continue;
 
-		std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
+		std::string *mob_name = util::umap_find(aegis_mobnames, static_cast<uint16>(mob_id));
 
 		if (!mob_name) {
 			ShowError("quest_read_db: Invalid mob-class %hu, target not read.\n", mob_id);
@@ -667,23 +701,23 @@ static bool quest_read_db(char *split[], int columns, int current) {
 		obj["Mob"] = *mob_name;
 		obj["Count"] = count;
 
-		node["Target"][j++] = obj;
+		node["Targets"][j++] = obj;
 	}
 
-	for (int i = 0; i < MAX_QUEST_DROPS; i++) {
-		uint16 mob_id = (uint16)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]), nameid = (uint16)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 3)]);
+	for (size_t i = 0, j = 0; i < MAX_QUEST_DROPS; i++) {
+		int32 mob_id = (int32)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 2)]), nameid = (uint16)atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 3)]);
 
 		if (!mob_id || !nameid)
 			continue;
 
-		std::string *mob_name = util::umap_find(aegis_mobnames, mob_id);
+		std::string *mob_name = util::umap_find(aegis_mobnames, static_cast<uint16>(mob_id));
 
 		if (!mob_name) {
 			ShowError("quest_read_db: Invalid mob-class %hu, drop not read.\n", mob_id);
 			continue;
 		}
 
-		std::string *item_name = util::umap_find(aegis_itemnames, nameid);
+		std::string *item_name = util::umap_find(aegis_itemnames, static_cast<uint16>(nameid));
 
 		if (!item_name) {
 			ShowError("quest_read_db: Invalid item name %hu, drop not read.\n", nameid);
@@ -694,10 +728,10 @@ static bool quest_read_db(char *split[], int columns, int current) {
 
 		drop["Mob"] = *mob_name;
 		drop["Item"] = *item_name;
-		//drop["Count"] = 1;
+		//drop["Count"] = 1; // Default is 1
 		drop["Rate"] = atoi(split[3 * i + (2 * MAX_QUEST_OBJECTIVES + 4)]);
 
-		node["Drop"][j++] = drop;
+		node["Drops"][j++] = drop;
 	}
 
 	body[counter++] = node;

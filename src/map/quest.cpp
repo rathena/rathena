@@ -13,6 +13,7 @@
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/utilities.hpp"
+#include "../common/utils.hpp"
 
 #include "battle.hpp"
 #include "chrif.hpp"
@@ -43,14 +44,9 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	std::shared_ptr<s_quest_db> quest = this->find(quest_id);
 	bool exists = quest != nullptr;
 
-	if (this->nodeExists(node, "TimeLimit") && (this->nodeExists(node, "TimeInDay") || this->nodeExists(node, "TimeAtHour") || this->nodeExists(node, "TimeAtMinute"))) {
-		this->invalidWarning(node, "Node \"TimeLimit\" cannot be defined with \"TimeInDay\", \"TimeAtHour\", or \"TimeAtMinute\".\n");
-		return 0;
-	}
-
 	if (!exists) {
 		if (!this->nodeExists(node, "Title")) {
-			this->invalidWarning(node, "Node \"Title\" is missing.\n");
+			this->invalidWarning(node, "Title is missing.\n");
 			return 0;
 		}
 
@@ -69,92 +65,42 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "TimeLimit")) {
-		uint32 time;
+		std::string time;
 
-		if (!this->asUInt32(node, "TimeLimit", time))
+		if (!this->asString(node, "TimeLimit", time))
 			return 0;
 
-		quest->time = time;
+		double timediff = solve_time(const_cast<char *>(time.c_str()));
 
-		quest->timeday = 0;
-		quest->timehour = -1;
-		quest->timeminute = -1;
-	} else if (this->nodeExists(node, "TimeInDay") || this->nodeExists(node, "TimeAtHour") || this->nodeExists(node, "TimeAtMinute")) {
-
-		if (!exists) {
-			if (!this->nodeExists(node, "TimeAtMinute")) {
-				this->invalidWarning(node, "Node \"TimeAtMinute\" is missing.\n");
-				return 0;
-			}
-		} else {
-			if (quest->timeminute < 0 && !this->nodeExists(node, "TimeAtMinute")) {
-				this->invalidWarning(node, "Node \"TimeAtMinute\" is missing.\n");
-				return 0;
-			}
+		if (timediff == 0) {
+			this->invalidWarning(node, "Incorrect TimeLimit format supplied, skipping.\n");
+			return 0;
 		}
 
-		if (this->nodeExists(node, "TimeInDay")) {
-			uint16 time;
+		if (time.find("+") != std::string::npos)
+			quest->time = static_cast<time_t>(timediff);
+		else {
+			int32 zero;
 
-			if (!this->asUInt16(node, "TimeInDay", time))
-				return 0;
-
-			quest->timeday = time;
-		} else {
-			if (!exists)
-				quest->timeday = 0;
+			split_time(static_cast<int32>(timediff), &zero, &zero, &quest->day, &quest->hour, &quest->minute, &zero);
+			quest->time_at = true; // '+' not found, set to specific time
 		}
-
-		if (this->nodeExists(node, "TimeAtHour")) {
-			int16 time;
-
-			if (!this->asInt16(node, "TimeAtHour", time))
-				return 0;
-
-			if (time > 23) {
-				this->invalidWarning(node, "TimeAtHour %hu exceeds 23 hours. Capping to 23.\n", time);
-				time = 23;
-			}
-
-			quest->timehour = time;
-		} else {
-			if (!exists) 
-				quest->timehour = -1;
-		}
-		
-		if (this->nodeExists(node, "TimeAtMinute")) {
-			int16 time;
-
-			if (!this->asInt16(node, "TimeAtMinute", time))
-				return 0;
-
-			if (time > 59) {
-				this->invalidWarning(node, "TimeAtMinute %hu exceeds 59 minutes. Capping to 59.\n", time);
-				time = 59;
-			}
-			else if (time < 0)
-				time = 0;
-
-			quest->timeminute = time;
-		}
-
-		quest->time = 0;
 	} else {
 		if (!exists) {
 			quest->time = 0;
-
-			quest->timeday = 0;
-			quest->timehour = -1;
-			quest->timeminute = -1;
+			quest->day = 0;
+			quest->hour = 0;
+			quest->minute = 0;
+			quest->time_at = false;
 		}
 	}
 
-	if (this->nodeExists(node, "Target")) {
-		const YAML::Node &targets = node["Target"];
+	if (this->nodeExists(node, "Targets")) {
+		const YAML::Node &targets = node["Targets"];
 
 		for (const YAML::Node &targetNode : targets) {
 			if (quest->objectives.size() >= MAX_QUEST_OBJECTIVES) {
-				this->invalidWarning(targetNode, "Node \"Target\" list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
+				this->invalidWarning(targetNode, "Targets list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
 				return 0;
 			}
 
@@ -188,7 +134,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (!targetExists) {
 				if (!this->nodeExists(targetNode, "Count")) {
-					this->invalidWarning(targetNode, "Node \"Target\" has no data specified, skipping.\n");
+					this->invalidWarning(targetNode, "Targets has no data specified, skipping.\n");
 					return 0;
 				}
 
@@ -209,12 +155,12 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 		}
 	}
 
-	if (this->nodeExists(node, "Drop")) {
-		const YAML::Node &drops = node["Drop"];
+	if (this->nodeExists(node, "Drops")) {
+		const YAML::Node &drops = node["Drops"];
 
 		for (const YAML::Node &dropNode : drops) {
 			if (quest->objectives.size() >= MAX_QUEST_OBJECTIVES) {
-				this->invalidWarning(dropNode, "Node \"Target\" list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
+				this->invalidWarning(dropNode, "Drops list exceeds the maximum of %d, skipping.\n", MAX_QUEST_OBJECTIVES);
 				return 0;
 			}
 
@@ -251,7 +197,7 @@ uint64 QuestDatabase::parseBodyNode(const YAML::Node &node) {
 
 			if (!targetExists) {
 				if (!this->nodeExists(dropNode, "Item") || !this->nodeExists(dropNode, "Rate")) {
-					this->invalidWarning(dropNode, "Node \"Drop\" has no data specified, skipping.\n");
+					this->invalidWarning(dropNode, "Drops has no data specified, skipping.\n");
 					return 0;
 				}
 
@@ -350,6 +296,45 @@ int quest_pc_login(struct map_session_data *sd)
 }
 
 /**
+ * Determine a quest's time limit.
+ * @param qi: Quest data
+ * @return Time limit value
+ */
+static time_t quest_time(std::shared_ptr<s_quest_db> qi)
+{
+	if (!qi)
+		return 0;
+
+	if (!qi->time_at && qi->time > 0)
+		return time(NULL) + qi->time;
+	else if (qi->time_at && (qi->day > 0 || qi->hour > 0 || qi->minute > 0)) {
+		uint32 q_hour = (qi->hour * 3600) + (qi->minute * 60), q_minute = (qi->minute * 60);
+		time_t t = time(NULL);
+		struct tm *lt = localtime(&t);
+
+		if (q_hour >= 0) {
+			uint32 current_hour = (lt->tm_hour * 3600) + (lt->tm_min * 60) + lt->tm_sec;
+
+			if (current_hour < q_hour)
+				q_hour -= current_hour;
+			else
+				q_hour += 86400 - current_hour;
+		} else {
+			uint32 current_minute = (lt->tm_min * 60) + lt->tm_sec;
+
+			if (current_minute < q_minute)
+				q_minute -= current_minute;
+			else
+				q_minute += 3600 - current_minute;
+		}
+
+		return static_cast<time_t>(t + (qi->day * 86400) + q_hour + q_minute);
+	}
+
+	return 0;
+}
+
+/**
  * Adds a quest to the player's list.
  * New quest will be added as Q_ACTIVE.
  * @param sd : Player's data
@@ -382,35 +367,7 @@ int quest_add(struct map_session_data *sd, int quest_id)
 
 	sd->quest_log[n] = {};
 	sd->quest_log[n].quest_id = qi->id;
-
-	if (qi->time)
-		sd->quest_log[n].time = (uint32)(time(NULL) + qi->time);
-	else if (qi->timeminute >= 0) { // quest time limit at DD:HH:MM
-		time_t t = time(NULL);
-		struct tm *lt = localtime(&t);
-		uint32 q_hour = 0, q_minute = 0;
-
-		if (qi->timehour >= 0) {
-			uint32 my_hour = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
-			q_hour = qi->timehour * 3600 + qi->timeminute * 60;
-
-			if (my_hour < q_hour)
-				q_hour -= my_hour;
-			else
-				q_hour += 86400 - my_hour;
-		}
-		else {
-			uint32 my_minute = (lt->tm_min) * 60 + (lt->tm_sec);
-			q_minute = qi->timeminute * 60;
-
-			if (my_minute < q_minute)
-				q_minute -= my_minute;
-			else
-				q_minute += 3600 - my_minute;
-		}
-		sd->quest_log[n].time = (uint32)(t + (qi->timeday * 86400) + q_hour + q_minute);
-	}
-
+	sd->quest_log[n].time = quest_time(qi);
 	sd->quest_log[n].state = Q_ACTIVE;
 	sd->save_quest = true;
 
@@ -459,35 +416,7 @@ int quest_change(struct map_session_data *sd, int qid1, int qid2)
 
 	sd->quest_log[i] = {};
 	sd->quest_log[i].quest_id = qi->id;
-
-	if (qi->time)
-		sd->quest_log[i].time = (uint32)(time(NULL) + qi->time);
-	else if (qi->timeminute >= 0) { // quest time limit at DD:HH:MM
-		time_t t = time(NULL);
-		struct tm *lt = localtime(&t);
-		uint32 q_hour = 0, q_minute = 0;
-
-		if (qi->timehour >= 0) {
-			uint32 my_hour = (lt->tm_hour) * 3600 + (lt->tm_min) * 60 + (lt->tm_sec);
-			q_hour = qi->timehour * 3600 + qi->timeminute * 60;
-
-			if (my_hour < q_hour)
-				q_hour -= my_hour;
-			else
-				q_hour += 86400 - my_hour;
-		}
-		else {
-			uint32 my_minute = (lt->tm_min) * 60 + (lt->tm_sec);
-			q_minute = qi->timeminute * 60;
-
-			if (my_minute < q_minute)
-				q_minute -= my_minute;
-			else
-				q_minute += 3600 - my_minute;
-		}
-		sd->quest_log[i].time = (uint32)(t + (qi->timeday * 86400) + q_hour + q_minute);
-	}
-
+	sd->quest_log[i].time = quest_time(qi);
 	sd->quest_log[i].state = Q_ACTIVE;
 	sd->save_quest = true;
 
