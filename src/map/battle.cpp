@@ -2949,7 +2949,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->spiritball * 3);
 #endif
 
-		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) {
+		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
 			ATK_ADD(wd->damage, wd->damage2, 3 * skill);
 #ifdef RENEWAL
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 3 * skill);
@@ -3755,7 +3755,11 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 #endif
 		case NJ_HUUMA:
+#ifdef RENEWAL
+			skillratio += -150 + 250 * skill_lv;
+#else
 			skillratio += 50 + 150 * skill_lv;
+#endif
 			break;
 		case NJ_TATAMIGAESHI:
 			skillratio += 10 * skill_lv;
@@ -3764,14 +3768,22 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 #endif
 			break;
 		case NJ_KASUMIKIRI:
+#ifdef RENEWAL
+			skillratio += 20 * skill_lv;
+#else
 			skillratio += 10 * skill_lv;
+#endif
 			break;
 		case NJ_KIRIKAGE:
+#ifdef RENEWAL
+			skillratio += -50 + 150 * skill_lv;
+#else
 			skillratio += 100 * (skill_lv - 1);
+#endif
 			break;
 #ifdef RENEWAL
 		case NJ_KUNAI:
-			skillratio += 200;
+			skillratio += -100 + 100 * skill_lv;
 			break;
 #endif
 		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
@@ -5949,7 +5961,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 25 * sd->spiritcharm;
 						break;
 					case NJ_RAIGEKISAI:
+#ifdef RENEWAL
+						skillratio += 100 * skill_lv;
+#else
 						skillratio += 60 + 40 * skill_lv;
+#endif
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
 							skillratio += 15 * sd->spiritcharm;
 						break;
