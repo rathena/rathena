@@ -16249,7 +16249,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 
 	for (auto &it : sd->skillusesprate) {
 		if (it.id == skill_id) {
-			sp_skill_rate_bonus += it.val;
+			sp_skill_rate_bonus -= it.val;
 			break;
 		}
 	}
