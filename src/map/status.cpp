@@ -9314,11 +9314,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		status_change_end(bl, SC_PRESTIGE, INVALID_TIMER);
 		break;
 	case SC_GT_CHANGE:
+		status_change_end(bl, SC_GT_REVITALIZE, INVALID_TIMER);
+		break;
 	case SC_GT_REVITALIZE:
-		if( type != SC_GT_REVITALIZE )
-			status_change_end(bl, SC_GT_REVITALIZE, INVALID_TIMER);
-		if( type != SC_GT_CHANGE )
-			status_change_end(bl, SC_GT_CHANGE, INVALID_TIMER);
+		status_change_end(bl, SC_GT_CHANGE, INVALID_TIMER);
 		break;
 	case SC_WARMER:
 		status_change_end(bl, SC_CRYSTALIZE, INVALID_TIMER);
