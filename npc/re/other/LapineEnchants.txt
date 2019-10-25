@@ -1383,10 +1383,10 @@ function	script	F_Lapine_Gold_Statue	{
 	else if (.@r < 9362) { set getarg(4), RDMOPT_RACE_DAMAGE_DRAGON; set getarg(5), rand(5,10); }
 	else if (.@r < 9590) { set getarg(4), RDMOPT_DEC_SPELL_DELAY_TIME; set getarg(5), rand(1,5); }
 	else if (.@r < 9636) { set getarg(4), RDMOPT_DAMAGE_SIZE_PERFECT; set getarg(5), 1; }
-	else if (.@r < 9727) { set getarg(4), RDMOPT_CLASS_DAMAGE_NORMAL_TARGET; set getarg(5), rand(3,60); }
-	else if (.@r < 9818) { set getarg(4), RDMOPT_CLASS_DAMAGE_BOSS_TARGET; set getarg(5), rand(3,60); }
-	else if (.@r < 9909) { set getarg(4), RDMOPT_CLASS_MDAMAGE_NORMAL; set getarg(5), rand(3,60); }
-	else if (.@r < 10000) { set getarg(4), RDMOPT_CLASS_MDAMAGE_BOSS; set getarg(5), rand(3,60); }
+	else if (.@r < 9727) { set getarg(4), RDMOPT_CLASS_IGNORE_MDEF_PERCENT_NORMAL; set getarg(5), rand(30,60); }
+	else if (.@r < 9818) { set getarg(4), RDMOPT_CLASS_IGNORE_MDEF_PERCENT_BOSS; set getarg(5), rand(30,60); }
+	else if (.@r < 9909) { set getarg(4), RDMOPT_CLASS_IGNORE_DEF_PERCENT_NORMAL; set getarg(5), rand(30,60); }
+	else if (.@r < 10000) { set getarg(4), RDMOPT_CLASS_IGNORE_DEF_PERCENT_BOSS; set getarg(5), rand(30,60); }
 
 	return;
 }
