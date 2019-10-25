@@ -2531,8 +2531,13 @@ int mob_dead(struct mob_data *md, struct block_list *src, int type)
 	) { //Experience calculation.
 		int bonus = 100; //Bonus on top of your share (common to all attackers).
 		int pnum = 0;
+#ifndef RENEWAL
 		if (md->sc.data[SC_RICHMANKIM])
 			bonus += md->sc.data[SC_RICHMANKIM]->val2;
+#else
+		if (sd && sd->sc.data[SC_RICHMANKIM])
+			bonus += sd->sc.data[SC_RICHMANKIM]->val2;
+#endif
 		if(sd) {
 			temp = status_get_class(&md->bl);
 			if(sd->sc.data[SC_MIRACLE]) i = 2; //All mobs are Star Targets
