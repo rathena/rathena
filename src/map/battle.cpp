@@ -570,6 +570,22 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					damage += (int64)(damage * tsc->data[SC_ANTI_M_BLAST]->val2 / 100);
 #endif
 				break;
+			case ELE_DARK:
+				if (tsc->data[SC_SOULCURSE]) {
+					if (status_get_class_(target) == CLASS_BOSS)
+#ifdef RENEWAL
+						ratio += 20;
+#else
+						damage += (int64)(damage * 20 / 100);
+#endif
+					else
+#ifdef RENEWAL
+						ratio += 100;
+#else
+						damage *= 2;
+#endif
+				}
+				break;
 		}
 	}
 
@@ -4401,31 +4417,31 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += skillratio * status_get_hp(src) / status_get_max_hp(src);
 			break;
 		case SJ_FULLMOONKICK:
-			skillratio = 1100 + 100 * skill_lv;
+			skillratio += 1000 + 100 * skill_lv;
 			if (status_get_lv(src) > 100)
 					skillratio = skillratio * status_get_lv(src) / 100;
 			if (sc && sc->data[SC_LIGHTOFMOON])
 				skillratio += skillratio * sc->data[SC_LIGHTOFMOON]->val2 / 100;
 			break;
 		case SJ_NEWMOONKICK:
-			skillratio = 700 + 100 * skill_lv;
+			skillratio += 600 + 100 * skill_lv;
 			break;
 		case SJ_STAREMPEROR:
-			skillratio = 800 + 200 * skill_lv;
+			skillratio += 700 + 200 * skill_lv;
 			break;
 		case SJ_SOLARBURST:
-			skillratio = 900 + 100 * skill_lv;
+			skillratio += 900 + 220 * skill_lv;
 			if (status_get_lv(src) > 100)
 					skillratio = skillratio * status_get_lv(src) / 100;
 			if (sc && sc->data[SC_LIGHTOFSUN])
 				skillratio += skillratio * sc->data[SC_LIGHTOFSUN]->val2 / 100;
 			break;
 		case SJ_PROMINENCEKICK:
-				skillratio = 150 + 50 * skill_lv;
+				skillratio += 50 + 50 * skill_lv;
 			break;
 		case SJ_FALLINGSTAR_ATK:
 		case SJ_FALLINGSTAR_ATK2:
-			skillratio = 100 + 100 * skill_lv;
+			skillratio += 100 * skill_lv;
 			if (status_get_lv(src) > 100)
 					skillratio = skillratio * status_get_lv(src) / 100;
 			if (sc && sc->data[SC_LIGHTOFSTAR])
@@ -6294,20 +6310,20 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 						skillratio = 2500 + ((skill_lv - i + 1) * 500);
 						break;
 					case SP_CURSEEXPLOSION:
-						if (tsc && tsc->data[SC_CURSE])
-							skillratio = 1500 + 200 * skill_lv;
+						if (tsc && tsc->data[SC_SOULCURSE])
+							skillratio += 1400 + 200 * skill_lv;
 						else
-							skillratio = 400 + 100 * skill_lv;
+							skillratio += 300 + 100 * skill_lv;
 						break;
 					case SP_SPA:
-						skillratio = 500 + 250 * skill_lv;
+						skillratio += 400 + 250 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 					case SP_SHA:
-						skillratio = 5 * skill_lv;
+						skillratio += -100 + 5 * skill_lv;
 						break;
 					case SP_SWHOO:
-						skillratio = 1100 + 200 * skill_lv;
+						skillratio += 1000 + 200 * skill_lv;
 						RE_LVL_DMOD(100);
 						break;
 				}
