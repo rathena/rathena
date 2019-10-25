@@ -7228,8 +7228,8 @@ ACMD_FUNC(mobinfo)
 		job_exp = mob->job_exp;
 
 		if (pc_isvip(sd)) { // Display EXP rate increase for VIP
-			base_exp = (base_exp * battle_config.vip_base_exp_increase) / 100;
-			job_exp = (job_exp * battle_config.vip_job_exp_increase) / 100;
+			base_exp += (base_exp * battle_config.vip_base_exp_increase) / 100;
+			job_exp += (job_exp * battle_config.vip_job_exp_increase) / 100;
 		}
 #ifdef RENEWAL_EXP
 		if( battle_config.atcommand_mobinfo_type ) {

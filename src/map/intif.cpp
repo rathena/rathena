@@ -2179,11 +2179,17 @@ void intif_parse_achievements(int fd)
 				memmove(&sd->achievement_data.achievements[k], &sd->achievement_data.achievements[sd->achievement_data.incompleteCount], sizeof(struct achievement) * (num_received - k));
 			sd->achievement_data.achievements = (struct achievement *)aRealloc(sd->achievement_data.achievements, sizeof(struct achievement) * sd->achievement_data.count);
 		}
-		achievement_level(sd, false); // Calculate level info but don't give any AG_GOAL_ACHIEVE achievements
-		achievement_get_titles(sd->status.char_id); // Populate the title list for completed achievements
-		clif_achievement_update(sd, NULL, 0);
-		clif_achievement_list_all(sd);
 	}
+
+	// Check all conditions and counters on login
+	for( int group = AG_NONE + 1; group < AG_MAX; group++ ){
+		achievement_update_objective( sd, static_cast<e_achievement_group>( group ), 0 );
+	}
+
+	achievement_level(sd, false); // Calculate level info but don't give any AG_GOAL_ACHIEVE achievements
+	achievement_get_titles(sd->status.char_id); // Populate the title list for completed achievements
+	clif_achievement_update(sd, NULL, 0);
+	clif_achievement_list_all(sd);
 }
 
 /**
