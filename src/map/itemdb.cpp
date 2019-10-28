@@ -502,18 +502,8 @@ bool itemdb_isequip2(struct item_data *id) {
 bool itemdb_isstackable2(struct item_data *id)
 {
 	nullpo_ret(id);
-	switch(id->type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_PETEGG:
-		case IT_PETARMOR:
-		case IT_SHADOWGEAR:
-			return false;
-		default:
-			return true;
-	}
+	return id->isStackable();
 }
-
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
@@ -1979,6 +1969,24 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 	opt->script = NULL;
 	aFree(opt);
 	return 1;
+}
+
+bool item_data::isStackable()
+{
+	switch (this->type) {
+		case IT_WEAPON:
+		case IT_ARMOR:
+		case IT_PETEGG:
+		case IT_PETARMOR:
+		case IT_SHADOWGEAR:
+			return false;
+	}
+	return true;
+}
+
+int item_data::inventorySlotNeeded(int quantity)
+{
+	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }
 
 /**

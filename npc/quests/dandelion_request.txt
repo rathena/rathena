@@ -2778,7 +2778,7 @@ OnStop:
 	donpcevent "Kidd#2::OnInit";
 	donpcevent "Marjana#poison::OnInit";
 	donpcevent "#mao_table::OnInit";
-	donpcevent "#roombar1::OnInit";
+	$@maobar_room = 0;
 	stopnpctimer;
 	end;
 	
@@ -2800,7 +2800,7 @@ OnTimer245000:
 	
 OnTimer250000:
 	mapannounce "que_job01","The security magic in the Master Zone, Area 1 is deactivated.",1,0x70DBDB;
-	donpcevent "#roombar1::OnInit";
+	$@maobar_room = 0;
 	stopnpctimer;
 	end;
 }
@@ -2907,7 +2907,7 @@ OnStop:
 	donpcevent "Kidd#3::OnInit";
 	donpcevent "#Rabsent::OnInit";
 	donpcevent "#mao_empty::OnInit";
-	donpcevent "#roombar2::OnInit";
+	$@maobar_room2 = 0;
 	stopnpctimer;
 	end;
 	
@@ -2924,12 +2924,11 @@ OnTimer245000:
 	donpcevent "Kidd#3::OnInit";
 	donpcevent "#Rabsent::OnInit";
 	donpcevent "#mao_empty::OnInit";
-	donpcevent "#roombar2::OnInit";
 	end;
 	
 OnTimer250000:
 	mapannounce "que_job01","Security Level in the Master Zone, Area 2 deactivated.",1,0x70DBDB;
-	donpcevent "#roombar2::OnInit";
+	$@maobar_room2 = 0;
 	stopnpctimer;
 	end;
 }
