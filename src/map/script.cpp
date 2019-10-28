@@ -19948,17 +19948,14 @@ BUILDIN_FUNC(bg_info)
 			script_pushint(st, bg->max_lvl);
 			break;
 		case BG_INFO_MAPS: {
-			struct map_session_data *sd;
+			size_t i, j = 0;
 
-			if (script_rid2sd(sd)) {
-				size_t i;
-
-				for (i = 0; i < bg->maps.size(); i++)
-					pc_setregstr(sd, reference_uid(add_str("@bgmaps$"), i), map_mapid2mapname(bg->maps[i].mapid));
-				pc_setreg(sd, add_str("@bgmapscount"), i);
-				script_pushint(st, i);
-			} else
-				script_pushint(st, 0);
+			for (i = 0; i < bg->maps.size(); i++) {
+				setd_sub(st, nullptr, ".@bgmaps$", j, (void *)__64BPRTSIZE(map_mapid2mapname(bg->maps[i].mapid), nullptr);
+				j++;
+			}
+			setd_sub(st, nullptr, ".@bgmapscount", 0, (void *)__64BPRTSIZE(j), nullptr);
+			script_pushint(st, j);
 			break;
 		}
 		case BG_INFO_DESERTER_TIME:
