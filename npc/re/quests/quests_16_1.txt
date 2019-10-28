@@ -391,7 +391,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "Since you have some time to spare, why don't you go enjoy the banquet in the Banquet Hall.";
 		next;
 		mes "[Belle]";
-		mes "The ^4d4dffladies of the Nerius familiy have just asked to see you in the Banquet Hall^000000 .";
+		mes "The ^4d4dffladies of the Nerius family have just asked to see you in the Banquet Hall^000000 .";
 		mes "" + strcharinfo(0) + ", you must have made a good impression.";
 		next;
 		mes "[Belle]";
@@ -5148,7 +5148,7 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 		mes "I guess Isenarm didn't want you to be involved. If anything happened to him, you would have been the one in the biggest trouble.";
 		next;
 		mes "[K]";
-		mes "Ha... Perhaps... I did't think of that... Here are the ^0000cdletter and sword Isenarm^000000 has give me.";
+		mes "Ha... Perhaps... I didn't think of that... Here are the ^0000cdletter and sword Isenarm^000000 has give me.";
 		next;
 		mes "[K]";
 		mes "Please give them to Isenhonor. I hope they help him recover his brother's honor.";
@@ -5817,7 +5817,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 
 	if (banquet_roegenburg_quest == 0) {
 		mes "[Maximilian]";
-		mes "Hello, adventurers. I am honnored you have visited the ^0000cdRoegenburg^000000. I am ^0000cdMaximilian Roegenburg^000000.";
+		mes "Hello, adventurers. I am honored you have visited the ^0000cdRoegenburg^000000. I am ^0000cdMaximilian Roegenburg^000000.";
 		next;
 		mes "[Maximilian]";
 		mes "We are one of seven royal families that found the kingdom and have work hard for Rune Midgarts.";
@@ -5827,7 +5827,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		next;
 		cutin "16hel",0;
 		mes "[Helmut]";
-		mes "Hellow, I am ^0000cdHelmut Roegenburg^000000.";
+		mes "Hello, I am ^0000cdHelmut Roegenburg^000000.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Hello, I'm invited to this banquet. " + strcharinfo(0) + " It is nice to see you.";
@@ -6312,7 +6312,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			mes "Let me see.... Yes! they are what I wanted. You are the best.";
 			next;
 			mes "[Agnes]";
-			mes "I think I can use these to make a beautiful corsage. It will be fresh and beatiful.";
+			mes "I think I can use these to make a beautiful corsage. It will be fresh and beautiful.";
 			next;
 			mes "[Agnes]";
 			mes "Dear adventurer, Thank you very much. This is a small token of my sincerity.";
@@ -6576,7 +6576,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "I mean I prepared a dress that I choose thinking that I would go with Myer. And now the partner has changed and I have to prepare considering him.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Yes, you shoud!!!";
+		mes "Yes, you should!!!";
 		next;
 		mes "[Agnes]";
 		mes "I expected you would agree as a woman like me.";
@@ -6702,7 +6702,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 			mes "I prefer the soft pink dress other than young flower petal blooming on a large field. To be like that, I think I need a very soft silk cloth.";
 			next;
 			mes "[Agnes]";
-			mes "In the banquet, if my soft dress widens like young flower petal, the place will be full with fragnance.";
+			mes "In the banquet, if my soft dress widens like young flower petal, the place will be full with fragrance.";
 			next;
 			mes "[Agnes]";
 			mes "The width of the skirt should be as wider as possible. The dress will look like a flower petal shaking every time I move.";
@@ -7098,7 +7098,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "Looking at the answer, it really seems that the Wigner people love ^0000cdnumers and gold^000000. Will you try to solve it too?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "How come you ask me to dicipher the password. And isn't it a secret thing?";
+		mes "How come you ask me to decipher the password. And isn't it a secret thing?";
 		next;
 		mes "[Wolf]";
 		mes "Because you are reliable person. Just do it for fun.";
@@ -7120,11 +7120,11 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "But what is inside is not easy.";
 		next;
 		mes "[Wolf]";
-		mes "The thing put in the smal bottle in the box will change the dynamics of combats and wars, though it is in a testing stage.";
+		mes "The thing put in the small bottle in the box will change the dynamics of combats and wars, though it is in a testing stage.";
 		next;
 		mes "[Wolf]";
 		mes "You are a reliable person as I expected.";
-		mes "I was sorry when I asked you to do me a favor. We will reward you genersouly.";
+		mes "I was sorry when I asked you to do me a favor. We will reward you generously.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "It is OK. there is message from Isaac.";
@@ -7143,7 +7143,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "I need to check it, but there is no person we count on...";
 		next;
 		mes "[Wolf]";
-		mes "Execuse me, dear adventurer?";
+		mes "Excuse me, dear adventurer?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Yes?";
@@ -7270,7 +7270,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		next;
 		cutin "16mye_nor",1;
 		mes "[Myer]";
-		mes "Well, I asked for help church freinds, merchant frends and back street friends. Everyone said they would be willing to help me, when I told them I need help.";
+		mes "Well, I asked for help church friends, merchant friends and back street friends. Everyone said they would be willing to help me, when I told them I need help.";
 		next;
 		mes "[Myer]";
 		mes "I wonder how you can deal with invisible enemy.";
@@ -7280,7 +7280,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "I don't understand why you spread such a rumor and do all these things.";
 		next;
 		mes "[Wolf]";
-		mes "No, in fact, I think I know very well. It is becaused of your immature sympathety and you want to spoil my plan!";
+		mes "No, in fact, I think I know very well. It is because of your immature sympathy and you want to spoil my plan!";
 		next;
 		cutin "16mye_ang",1;
 		mes "[Myer]";
@@ -7298,10 +7298,10 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		next;
 		cutin "16mye_ang",1;
 		mes "[Myer]";
-		mes "Your plan is to delveop the power of the family and unify the contient. Then what? what will you have. Achievement? Revenge?";
+		mes "Your plan is to develop the power of the family and unify the continent. Then what? what will you have. Achievement? Revenge?";
 		next;
 		mes "[Myer]";
-		mes "As you know, such as thing causes another pain. We were raised without a parent. But we didn't fall becasue we had a family and we were rich.";
+		mes "As you know, such as thing causes another pain. We were raised without a parent. But we didn't fall because we had a family and we were rich.";
 		next;
 		mes "[Myer]";
 		mes "And we had brothers ^0000cdto depend on^000000. Think how we did to comfort one another? There are not many people that are so lucky as we were.";
@@ -8370,7 +8370,7 @@ yuno_fild01,242,175,5	script	Helmut Roegenburg#ep16lug01_b	4_EP16_HELMUT,5,5,{
 		mes "And I thought that it is the right way to develop the power that makes people to have no choice but to follow.";
 		next;
 		mes "[Helmut]";
-		mes "So, my goal was to unify the continent and make my power reached at every corner of the continent. So I trained and trained myslef.";
+		mes "So, my goal was to unify the continent and make my power reached at every corner of the continent. So I trained and trained myself.";
 		next;
 		mes "[Helmut]";
 		mes "However, when I listened to Myer and Agnes, I realized that the way I pursue could cause sadness and misfortune to someone.";
@@ -9412,7 +9412,7 @@ OnTouch:
 		next;
 		mes "[Mumbling Sound]";
 		mes "No...";
-		mes "I didn't say anything wrond.";
+		mes "I didn't say anything wrong.";
 		mes "Did I?";
 		next;
 		mes "[Mumbling Sound]";
@@ -9746,7 +9746,7 @@ prt_cas_q,82,21,1	script	Levuiere Wigner#ep16wig	4_EP16_LOUVIERE,{
 		mes "Since our ancestors founded this kingdom, we deserve to produce a king.";
 		next;
 		mes "[Levuiere]";
-		mes "The king is a hollow position. It only comes with resposibilities?";
+		mes "The king is a hollow position. It only comes with responsibilities?";
 		mes "Haven't I told you before? Did you forget?";
 		next;
 		mes "[Levuiere]";
@@ -10162,7 +10162,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		mes "Well, please don't take it wrong. Some people have said that Katrin may have done it to draw attention or they cannot trust Katrin.";
 		next;
 		mes "[Jurgen]";
-		mes "What a nonesense! Phew... This is exactly why I have told her to open her heart to others and talk more...";
+		mes "What a nonsense! Phew... This is exactly why I have told her to open her heart to others and talk more...";
 		next;
 		classchange( 4_EP16_POE, "Katrin Wigner#ep16wig", bc_self );
 		cutin "16kat_nor",2;
@@ -10224,7 +10224,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 		next;
 		cutin "16jur_sim",0;
 		mes "[Jurgen]";
-		mes "That's why you need to open up to others and act nicey...";
+		mes "That's why you need to open up to others and act nice...";
 		next;
 		cutin "16kat_nor",2;
 		mes "[Katrin]";
@@ -11999,7 +11999,7 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		next;
 		emotion ET_HUK;
 		mes "[Mary]";
-		mes "Oh! No, you shouln't. I told you. You are the only one who knows about it.";
+		mes "Oh! No, you shouldn't. I told you. You are the only one who knows about it.";
 		mes "^0000cdIf I get busted, I would be in trouble^000000. We don't have the money to pay the compensation.";
 		next;
 		mes "[Mary]";
@@ -12150,7 +12150,7 @@ S_Talk:
 			mes "Wipe the Mold Power over the mold which resembles demon's skin and sprinkle it with Holy Water.";
 			next;
 			mes "[Scrub Sponge]";
-			mes "And wipe it as I tell you. I am not going to tell you again so pay attentention.";
+			mes "And wipe it as I tell you. I am not going to tell you again so pay attention.";
 			next;
 			mes "[Scrub Sponge]";
 			mes "Tap it once gently and tap it three times more. You really need to soak the wall with the Holy Water and Mold Powder to wipe it off. This is very important.";
@@ -13279,7 +13279,7 @@ prt_cas,97,248,5	script	Court Musician#orint	2_M_BARD_ORIENT,{
 				117, "Dream of Whale",
 				128, "Splendide Dreams",
 				137, "Dazzling Snow",
-				145, "Marschmallow Waltz",
+				145, "Marshmallow Waltz",
 				155, "Eclage",
 				160, "Jittering Nightmare";
 		}
@@ -13471,7 +13471,7 @@ OnTouch:
 // Exchanges and enchants npc
 prt_cas,165,255,7	script	Commissary#ep16	4_M_JOB_KNIGHT2,{
 	mes "[Commissary Arner]";
-	mes "You can exchange the Honor Marks given by the noble people of Run Midgartz as the token of trust with some valuable items of Prontera.";
+	mes "You can exchange the Honor Marks given by the noble people of Rune Midgartz as the token of trust with some valuable items of Prontera.";
 	next;
 	switch( select( "Consumables", "Armors", "View item description" ) ) {
 	case 1:
@@ -13889,7 +13889,7 @@ OnTouchNPC:
 }
 prt_q,158,316,4	script	Soldier#EP162PS14	8W_SOLDIER,1,1,{
 	mes "[Soldier]";
-	mes "My friend has followed Scienties Doyeon. I am worried. I have heard that she really is an oddball.";
+	mes "My friend has followed Scientist Doyeon. I am worried. I have heard that she really is an oddball.";
 	close;
 OnTouchNPC:
 	npctalk "Soldier: Hiya!";
@@ -14856,7 +14856,7 @@ OnTouch_:
 		npctalk "WUG is the best!", "", bc_area;
 		break;
 	case 5:
-		npctalk "I want to fo home...", "", bc_area;
+		npctalk "I want to go home...", "", bc_area;
 		break;
 	case 4:
 	case 6:
@@ -14878,7 +14878,7 @@ OnTouch_:
 		npctalk "For Himmelmez...", "", bc_area;
 		break;
 	case 16:
-		npctalk "I am hungey...", "", bc_area;
+		npctalk "I am hungry...", "", bc_area;
 		break;
 	case 17:
 		npctalk "I had a date...", "", bc_area;
