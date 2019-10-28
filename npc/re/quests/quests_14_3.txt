@@ -196,8 +196,7 @@ morocc,138,238,4	script	Piled Rags#ep14bs	4_M_DIEMAN,{
 	close;
 
 OnInit:
-	questinfo 11349, QTYPE_QUEST, 1;
-	setquestinfo_level 11349,140,175;
+	questinfo( QTYPE_QUEST, QMARK_YELLOW, "BaseLevel >= 140 && !isbegin_quest(11349)" );
 	end;
 }
 
