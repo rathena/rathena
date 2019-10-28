@@ -1552,6 +1552,7 @@
 	export_constant(SC_USE_SKILL_SP_SPA);
 	export_constant(SC_USE_SKILL_SP_SHA);
 	export_constant(SC_SP_SHA);
+	export_constant(SC_SOULCURSE);
 #ifdef RENEWAL
 	export_constant(SC_EXTREMITYFIST2);
 #endif

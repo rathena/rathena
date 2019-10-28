@@ -892,6 +892,7 @@ enum sc_type : int16 {
 	SC_USE_SKILL_SP_SPA,
 	SC_USE_SKILL_SP_SHA,
 	SC_SP_SHA,
+	SC_SOULCURSE,
 
 #ifdef RENEWAL
 	SC_EXTREMITYFIST2, //! NOTE: This SC should be right before SC_MAX, so it doesn't disturb if RENEWAL is disabled
