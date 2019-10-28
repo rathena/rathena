@@ -213,14 +213,16 @@ OnTimer61000:
 	// Team Members
 	set .Guillaume_Count, bg_get_data($@KvM03BG_id1, 0);
 	set .Croix_Count, bg_get_data($@KvM03BG_id2, 0);
-	if( .Guillaume_Count < 5 || .Croix_Count < 5 )
-	{
-		set $@KvM03BG_Victory, 3;
-		set $@KvM03BG, 3;
-		mapannounce "bat_c03","There are not enough players to start the battle",1,0xC0C0C0;
-		stopnpctimer;
-		donpcevent "KvM03_BG::OnStop";
-		end;
+
+	if (!getbattleflag("feature.bgqueue")) {
+		if (.Guillaume_Count < 5 || .Croix_Count < 5) {
+			set $@KvM03BG_Victory, 3;
+			set $@KvM03BG, 3;
+			mapannounce "bat_c03","There are not enough players to start the battle",1,0xC0C0C0;
+			stopnpctimer;
+			donpcevent "KvM03_BG::OnStop";
+			end;
+		}
 	}
 	set $@KvM03BG, 2; // Playing
 	bg_warp $@KvM03BG_id1,"bat_c03",62,119;

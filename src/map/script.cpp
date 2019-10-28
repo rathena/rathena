@@ -19916,6 +19916,62 @@ BUILDIN_FUNC(bg_unbook)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/**
+ * Gets battleground database information.
+ * bg_info("<battleground name>", <type>);
+ */
+BUILDIN_FUNC(bg_info)
+{
+	std::shared_ptr<s_battleground_type> bg = bg_search_name(script_getstr(st, 2));
+
+	if (!bg) {
+		ShowError("bg_info: Invalid Battleground name %s.\n", script_getstr(st, 2));
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	int type = script_getnum(st, 3);
+
+	switch (type) {
+		case BG_INFO_ID:
+			script_pushint(st, bg->id);
+			break;
+		case BG_INFO_REQUIRED_PLAYERS:
+			script_pushint(st, bg->required_players);
+			break;
+		case BG_INFO_MAX_PLAYERS:
+			script_pushint(st, bg->max_players);
+			break;
+		case BG_INFO_MIN_LEVEL:
+			script_pushint(st, bg->min_lvl);
+			break;
+		case BG_INFO_MAX_LEVEL:
+			script_pushint(st, bg->max_lvl);
+			break;
+		case BG_INFO_MAPS: {
+			struct map_session_data *sd;
+
+			if (script_rid2sd(sd)) {
+				size_t i;
+
+				for (i = 0; i < bg->maps.size(); i++)
+					pc_setregstr(sd, reference_uid(add_str("@bgmaps$"), i), map_mapid2mapname(bg->maps[i].mapid));
+				pc_setreg(sd, add_str("@bgmapscount"), i);
+				script_pushint(st, i);
+			} else
+				script_pushint(st, 0);
+			break;
+		}
+		case BG_INFO_DESERTER_TIME:
+			script_pushint(st, bg->deserter_time);
+			break;
+		default:
+			ShowError("bg_info: Unknown battleground info type %d given.\n", type);
+			return SCRIPT_CMD_FAILURE;
+	}
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
 /*==========================================
  * Instancing System
  *------------------------------------------*/
@@ -24914,6 +24970,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(bg_create,"sii??"),
 	BUILDIN_DEF(bg_reserve,"s"),
 	BUILDIN_DEF(bg_unbook,"s"),
+	BUILDIN_DEF(bg_info,"si"),
 
 	// Instancing
 	BUILDIN_DEF(instance_create,"s??"),

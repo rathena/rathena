@@ -84,6 +84,17 @@ enum e_bg_queue_apply_ack : uint16 {
 	BG_APPLY_PLAYER_CLASS, ///< Your class can't apply
 };
 
+/// Enum of script command bg_info types
+enum e_bg_info : uint16 {
+	BG_INFO_ID = 0,
+	BG_INFO_REQUIRED_PLAYERS,
+	BG_INFO_MAX_PLAYERS,
+	BG_INFO_MIN_LEVEL,
+	BG_INFO_MAX_LEVEL,
+	BG_INFO_MAPS,
+	BG_INFO_DESERTER_TIME,
+};
+
 class BattlegroundDatabase : public TypesafeYamlDatabase<uint32, s_battleground_type> {
 public:
 	BattlegroundDatabase() : TypesafeYamlDatabase("BATTLEGROUND_DB", 1) {
@@ -113,12 +124,12 @@ bool bg_team_delete(int bg_id);
 int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter);
 bool bg_team_warp(int bg_id, unsigned short mapindex, short x, short y);
 bool bg_player_is_in_bg_map(struct map_session_data *sd);
-bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map_session_data *sd, char *name);
+bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map_session_data *sd, const char *name);
 std::shared_ptr<s_battleground_queue> bg_queue_create(int bg_id, int req_players);
-e_bg_queue_apply_ack bg_queue_join(char *name, struct map_session_data *sd);
-e_bg_queue_apply_ack bg_queue_join_party(char *name, struct map_session_data *sd);
-e_bg_queue_apply_ack bg_queue_join_guild(char *name, struct map_session_data *sd);
-e_bg_queue_apply_ack bg_queue_join_multi(char *name, struct map_session_data *sd, std::vector<map_session_data *> list);
+e_bg_queue_apply_ack bg_queue_join(const char *name, struct map_session_data *sd);
+e_bg_queue_apply_ack bg_queue_join_party(const char *name, struct map_session_data *sd);
+e_bg_queue_apply_ack bg_queue_join_guild(const char *name, struct map_session_data *sd);
+e_bg_queue_apply_ack bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vector<map_session_data *> list);
 bool bg_queue_leave(struct map_session_data *sd);
 bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> queue);
 void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, struct map_session_data *sd);

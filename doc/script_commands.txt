@@ -9469,6 +9469,21 @@ mapflag	<map name>	battleground	2
 
 ---------------------------------------
 
+*bg_info("<battleground name>", <type>);
+
+Retrieves data related to given <battleground name> from the database. Requires feature.bgqueue
+to be enabled. <Type> can be one of the following:
+
+	BG_INFO_ID: Battleground ID.
+	BG_INFO_REQUIRED_PLAYERS: Required players to start a battleground (per side).
+	BG_INFO_MAX_PLAYERS: Maximum players allowed in a battleground.
+	BG_INFO_MIN_LEVEL: Minimum level allowed to join a battleground.
+	BG_INFO_MAX_LEVEL: Maximum level allowed to join a battleground.
+	BG_INFO_MAPS: Number of maps in a battleground. Stores an array of map names in @bgmaps[] and a count in @bgmapscount.
+	BG_INFO_DESERTER_TIME: Amount of time in seconds a player is marked deserter.
+
+---------------------------------------
+
 ====================
 |10.- Pet commands.|
 ====================

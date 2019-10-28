@@ -5753,7 +5753,7 @@ enum e_setpos pc_setpos(struct map_session_data* sd, unsigned short mapindex, in
 				instance_addusers(new_map_instance_id);
 		}
 
-		if (sd->bg_id)
+		if (sd->bg_id && !mapdata->flag[MF_BATTLEGROUND]) // Moving to a map that isn't a Battlegrounds
 			bg_team_leave(sd, false, true);
 
 		sd->state.pmap = sd->bl.m;

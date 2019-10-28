@@ -269,9 +269,6 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
  */
 std::shared_ptr<s_battleground_type> bg_search(int bg_id)
 {
-	if (!battleground_db.exists(bg_id))
-		return nullptr;
-
 	return battleground_db.find(bg_id);
 }
 
@@ -457,7 +454,7 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter)
 		ARR_FIND(0, bgteam->members.size(), i, bgteam->members[i].sd == sd);
 		if (i < bgteam->members.size()) { // Removes member from BG
 			if (bgteam->members[i].entry_point.map != 0) {
-				unsigned short map_id = map_mapindex2mapid(bgteam->members[i].entry_point.map);
+				int16 map_id = map_mapindex2mapid(bgteam->members[i].entry_point.map);
 
 				if (!map_getmapflag(map_id, MF_NOSAVE))
 					pc_setpos(sd, bgteam->members[i].entry_point.map, bgteam->members[i].entry_point.x, bgteam->members[i].entry_point.y, CLR_TELEPORT);
@@ -662,12 +659,12 @@ static TIMER_FUNC(bg_on_ready_expire)
 
 	for (const auto &sd : queue->teama_members) {
 		sd->bg_queue_accept_state = false;
-		clif_displaymessage(sd->fd, msg_txt(sd, 341)); // Someone declined or didn't accept the invitation to enter. You have been returned to the battleground queue.
+		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, bg_search(queue->id)->name.c_str(), sd);
 	}
 
 	for (const auto &sd : queue->teamb_members) {
 		sd->bg_queue_accept_state = false;
-		clif_displaymessage(sd->fd, msg_txt(sd, 341)); // Someone declined or didn't accept the invitation to enter. You have been returned to the battleground queue.
+		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, bg_search(queue->id)->name.c_str(), sd);
 	}
 	return 0;
 }
@@ -691,7 +688,7 @@ static TIMER_FUNC(bg_on_ready_loopback)
 		bg_queue_on_ready(bg->name.c_str(), std::shared_ptr<s_battleground_queue>(queue));
 		return 0;
 	} else {
-		ShowError("bg_on_ready_loopback: Fatal error. Can't find battleground %d in the battlegrounds database.\n", queue->id);
+		ShowError("bg_on_ready_loopback: Can't find battleground %d in the battlegrounds database.\n", queue->id);
 		return 1;
 	}
 }
@@ -716,13 +713,47 @@ bool bg_player_is_in_bg_map(struct map_session_data *sd)
 }
 
 /**
+ * Battleground status change check
+ * @param sd: Player data
+ * @param name: Battleground name
+ * @return True if the player is good to join a queue or false otherwise
+ */
+static bool bg_queue_check_status(struct map_session_data* sd, const char *name)
+{
+	nullpo_retr(false, sd);
+
+	if (sd->sc.count) {
+		if (sd->sc.data[SC_ENTRY_QUEUE_APPLY_DELAY]) { // Exclude any player who's recently left a battleground queue
+			char buf[CHAT_SIZE_MAX];
+
+			sprintf(buf, msg_txt(sd, 339), (get_timer(sd->sc.data[SC_ENTRY_QUEUE_APPLY_DELAY]->timer)->tick - gettick()) / 1000); // You can't apply to a battleground queue for %d seconds due to recently leaving one.
+			clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], buf, false, SELF);
+			return false;
+		}
+
+		if (sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]) { // Exclude any player who's recently deserted a battleground
+			char buf[CHAT_SIZE_MAX];
+			t_tick status_tick = get_timer(sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]->timer)->tick, tick = gettick();
+
+			sprintf(buf, msg_txt(sd, 338), ((status_tick - tick) / 1000) / 60, ((status_tick - tick) / 1000) % 60); // You can't apply to a battleground queue due to recently deserting a battleground. Time remaining: %d minutes and %d seconds.
+			clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
+			clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], buf, false, SELF);
+			return false;
+		}
+	}
+
+	return true;
+}
+
+/**
  * Check to see if a Battleground is joinable
  * @param bg: Battleground data
  * @param sd: Player data
  * @param name: Battleground name
  * @return True on success or false otherwise
  */
-bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map_session_data *sd, char *name)
+bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map_session_data *sd, const char *name)
 {
 	nullpo_retr(false, sd);
 
@@ -736,27 +767,12 @@ bool bg_queue_check_joinable(std::shared_ptr<s_battleground_type> bg, struct map
 		return false;
 	}
 
-	if (sd->sc.data[SC_ENTRY_QUEUE_APPLY_DELAY]) { // Exclude any player who's recently left a battleground queue
-		char buf[CHAT_SIZE_MAX];
-
-		sprintf(buf, msg_txt(sd, 339), (get_timer(sd->sc.data[SC_ENTRY_QUEUE_APPLY_DELAY]->timer)->tick-gettick()) / 1000); // You can't apply to a battleground queue for %d seconds due to recently leaving one.
-		clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
-		clif_displaymessage(sd->fd, buf);
+	if (!bg_queue_check_status(sd, name))
 		return false;
-	}
-
-	if (sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]) { // Exclude any player who's recently deserted a battleground
-		char buf[CHAT_SIZE_MAX];
-
-		sprintf(buf, msg_txt(sd, 338), ((get_timer(sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]->timer)->tick-gettick()) / 1000) / 60, ((get_timer(sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]->timer)->tick-gettick()) / 1000) % 60); // You can't apply to a battleground queue due to recently deserting a battleground. Time remaining: %d minutes and %d seconds.
-		clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
-		clif_displaymessage(sd->fd, buf);
-		return false;
-	}
 
 	if (bg_player_is_in_bg_map(sd)) { // Is the player currently in a battleground map? Reject them.
 		clif_bg_queue_apply_result(BG_APPLY_NONE, name, sd);
-		clif_displaymessage(sd->fd, msg_txt(sd, 337)); // You may not join a battleground queue when you're in a battleground map.
+		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You may not join a battleground queue when you're in a battleground map.
 		return false;
 	}
 
@@ -812,31 +828,18 @@ std::shared_ptr<s_battleground_queue> bg_queue_create(int bg_id, int req_players
  * @param sd: Player data
  * @return @see e_bg_queue_apply_ack
  */
-e_bg_queue_apply_ack bg_queue_join(char *name, struct map_session_data *sd)
+e_bg_queue_apply_ack bg_queue_join(const char *name, struct map_session_data *sd)
 {
 	if (!sd) {
-		ShowError("bg_queue_join: Fatal error. Tried to join non-existent player.\n.");
+		ShowError("bg_queue_join: Tried to join non-existent player.\n.");
 		return BG_APPLY_NONE;
 	}
 
-	if (sd->sc.data[SC_ENTRY_QUEUE_APPLY_DELAY]) {
-		char buf[CHAT_SIZE_MAX];
-
-		sprintf(buf, msg_txt(sd, 339), (get_timer(sd->sc.data[SC_ENTRY_QUEUE_APPLY_DELAY]->timer)->tick - gettick()) / 1000); // You can't apply to a battleground queue for %d seconds due to recently leaving one.
-		clif_displaymessage(sd->fd, buf);
+	if (!bg_queue_check_status(sd, name))
 		return BG_APPLY_NONE;
-	}
-
-	if (sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]) {
-		char buf[CHAT_SIZE_MAX];
-
-		sprintf(buf, msg_txt(sd, 338), ((get_timer(sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]->timer)->tick - gettick()) / 1000) / 60, ((get_timer(sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]->timer)->tick - gettick()) / 1000) % 60); // You can't apply to a battleground queue due to recently deserting a battleground. Time remaining: %d minutes and %d seconds.
-		clif_displaymessage(sd->fd, buf);
-		return BG_APPLY_NONE;
-	}
 
 	if (bg_player_is_in_bg_map(sd)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 337)); // You may not join a battleground queue when you're in a battleground map.
+		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You may not join a battleground queue when you're in a battleground map.
 		return BG_APPLY_NONE;
 	}
 
@@ -936,7 +939,7 @@ e_bg_queue_apply_ack bg_queue_join(char *name, struct map_session_data *sd)
  * @param sd: Player who requested to join the battlegrounds
  * @return @see e_bg_queue_apply_ack
  */
-e_bg_queue_apply_ack bg_queue_join_party(char *name, struct map_session_data *sd)
+e_bg_queue_apply_ack bg_queue_join_party(const char *name, struct map_session_data *sd)
 {
 	struct party_data *p = party_search(sd->status.party_id);
 
@@ -988,7 +991,7 @@ e_bg_queue_apply_ack bg_queue_join_party(char *name, struct map_session_data *sd
  * @param sd: Player who requested to join the battlegrounds
  * @return @see e_bg_queue_apply_ack
  */
-e_bg_queue_apply_ack bg_queue_join_guild(char *name, struct map_session_data *sd)
+e_bg_queue_apply_ack bg_queue_join_guild(const char *name, struct map_session_data *sd)
 {
 	if (!sd->guild)
 		return BG_APPLY_INVALID_APP; // Someone has bypassed the client check for being in a guild
@@ -1038,31 +1041,18 @@ e_bg_queue_apply_ack bg_queue_join_guild(char *name, struct map_session_data *sd
  * @param list: Contains all players including the player who requested to join
  * @return @see e_bg_queue_apply_ack
  */
-e_bg_queue_apply_ack bg_queue_join_multi(char *name, struct map_session_data *sd, std::vector <map_session_data *> list)
+e_bg_queue_apply_ack bg_queue_join_multi(const char *name, struct map_session_data *sd, std::vector <map_session_data *> list)
 {
 	if (!sd) {
-		ShowError("bg_queue_join_multi: Fatal error. Tried to join non-existent player\n.");
+		ShowError("bg_queue_join_multi: Tried to join non-existent player\n.");
 		return BG_APPLY_NONE;
 	}
 
-	if (sd->sc.data[SC_ENTRY_QUEUE_APPLY_DELAY]) {
-		char buf[CHAT_SIZE_MAX];
-
-		sprintf(buf, msg_txt(sd, 339), (get_timer(sd->sc.data[SC_ENTRY_QUEUE_APPLY_DELAY]->timer)->tick - gettick()) / 1000); // You can't apply to a battleground queue for %d seconds due to recently leaving one.
-		clif_displaymessage(sd->fd, buf);
+	if (!bg_queue_check_status(sd, name))
 		return BG_APPLY_NONE;
-	}
-
-	if (sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]) {
-		char buf[CHAT_SIZE_MAX];
-
-		sprintf(buf, msg_txt(sd, 338), ((get_timer(sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]->timer)->tick - gettick()) / 1000) / 60, ((get_timer(sd->sc.data[SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT]->timer)->tick - gettick()) / 1000) % 60); // You can't apply to a battleground queue due to recently deserting a battleground. Time remaining: %d minutes and %d seconds.
-		clif_displaymessage(sd->fd, buf);
-		return BG_APPLY_NONE;
-	}
 
 	if (bg_player_is_in_bg_map(sd)) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 337)); // You may not join a battleground queue when you're in a battleground map.
+		clif_messagecolor(&sd->bl, color_table[COLOR_LIGHT_GREEN], msg_txt(sd, 337), false, SELF); // You may not join a battleground queue when you're in a battleground map.
 		return BG_APPLY_NONE;
 	}
 
@@ -1274,7 +1264,6 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 				}
 			}
 
-			clif_displaymessage(sd->fd, msg_txt(sd, 340)); // You have been removed from the battlgrounds queue and can't join again for a minute.
 			sc_start(nullptr, &sd->bl, SC_ENTRY_QUEUE_APPLY_DELAY, 100, 1, 60000);
 			sd->bg_queue = nullptr;
 			return true;
@@ -1295,7 +1284,7 @@ bool bg_queue_leave(struct map_session_data *sd)
 		return false;
 
 	if (!bg_queue_leave_sub(sd, sd->bg_queue->teama_members, sd->bg_queue->teamb_members) && !bg_queue_leave_sub(sd, sd->bg_queue->teamb_members, sd->bg_queue->teama_members)) {
-		ShowError("bg_queue_leave: Fatal error. Couldn't find player %s in battlegrounds queue.\n", sd->status.name);
+		ShowError("bg_queue_leave: Couldn't find player %s in battlegrounds queue.\n", sd->status.name);
 		return false;
 	} else
 		return true;
@@ -1312,7 +1301,7 @@ bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> q
 	std::shared_ptr<s_battleground_type> bg = bg_search(queue->id);
 
 	if (!bg) {
-		ShowError("bg_queue_on_ready: Fatal error. Couldn't find battleground ID %d in battlegrounds database.\n", queue->id);
+		ShowError("bg_queue_on_ready: Couldn't find battleground ID %d in battlegrounds database.\n", queue->id);
 		return false;
 	}
 
@@ -1382,7 +1371,7 @@ void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 	if (!bg) {
 		queue->map.isReserved = false;
 		queue->map = {};
-		ShowError("bg_queue_start_battleground: Fatal error. Could not find battleground ID %d in battlegrounds database.\n", queue->id);
+		ShowError("bg_queue_start_battleground: Could not find battleground ID %d in battlegrounds database.\n", queue->id);
 		return;
 	}
 

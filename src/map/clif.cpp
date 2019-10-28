@@ -17497,7 +17497,7 @@ void clif_parse_bg_queue_apply_request(int fd, struct map_session_data *sd)
 /// Outgoing battlegrounds queue apply result.
 /// Result types: @see e_bg_queue_apply_ack
 /// 0x8d8 <result>.B <battleground name>.24B (ZC_ACK_ENTRY_QUEUE_APPLY)
-void clif_bg_queue_apply_result(e_bg_queue_apply_ack result, char *name, struct map_session_data *sd)
+void clif_bg_queue_apply_result(e_bg_queue_apply_ack result, const char *name, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
@@ -17513,14 +17513,14 @@ void clif_bg_queue_apply_result(e_bg_queue_apply_ack result, char *name, struct 
 /// Outgoing battlegrounds queue apply notification.
 /// Sends a notification at the start of the battlegrounds queue and is also used to update the queue number.
 /// 0x8d9 <battleground name>.24B <queue number>.L (ZC_NOTIFY_ENTRY_QUEUE_APPLY)
-void clif_bg_queue_apply_notify(char *name, struct map_session_data *sd)
+void clif_bg_queue_apply_notify(const char *name, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 
 	std::shared_ptr<s_battleground_queue> queue = sd->bg_queue;
 
 	if (!queue) {
-		ShowError("clif_bg_queue_apply_notify: Fatal error. Player is not in a battleground queue.\n");
+		ShowError("clif_bg_queue_apply_notify: Player is not in a battleground queue.\n");
 		return;
 	}
 
@@ -17535,7 +17535,7 @@ void clif_bg_queue_apply_notify(char *name, struct map_session_data *sd)
 
 /// Battlegrounds queue outgoing cancel result.
 /// 0x8db <result>.B <battleground name>.24B (ZC_ACK_ENTRY_QUEUE_CANCEL)
-void clif_bg_queue_cancel_result(bool success, char *name, struct map_session_data *sd)
+void clif_bg_queue_cancel_result(bool success, const char *name, struct map_session_data *sd)
 {
 	nullpo_retv(sd);
 

@@ -7343,6 +7343,15 @@
 	export_constant(CPC_CHAR);
 	export_constant(CPC_ACCOUNT);
 
+	/* battleground info types */
+	export_constant(BG_INFO_ID);
+	export_constant(BG_INFO_REQUIRED_PLAYERS);
+	export_constant(BG_INFO_MAX_PLAYERS);
+	export_constant(BG_INFO_MIN_LEVEL);
+	export_constant(BG_INFO_MAX_LEVEL);
+	export_constant(BG_INFO_MAPS);
+	export_constant(BG_INFO_DESERTER_TIME);
+
 	#undef export_constant
 	#undef export_constant2
 	#undef export_parameter
