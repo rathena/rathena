@@ -594,9 +594,10 @@ int bg_send_xy_timer_sub(std::shared_ptr<s_battleground_data> bg)
 
 /**
  * Update a player's Battleground minimap icon
- * @param tid: Tick ID
+ * @param tid: Timer ID
  * @param tick: Timer
- * @param id: Timer ID
+ * @param id: ID
+ * @return 0 on success or 1 otherwise
  */
 TIMER_FUNC(bg_send_xy_timer)
 {
@@ -608,9 +609,10 @@ TIMER_FUNC(bg_send_xy_timer)
 
 /**
  * Reset Battleground queue data
- * @param tid: Tick ID
+ * @param tid: Timer ID
  * @param tick: Timer
- * @param id: Timer ID
+ * @param id: ID
+ * @return 0 on success or 1 otherwise
  */
 static TIMER_FUNC(bg_on_ready_expire)
 {
@@ -624,23 +626,25 @@ static TIMER_FUNC(bg_on_ready_expire)
 	queue->map = *bgmap;
 	queue->accepted_players = 0; // Reset the queue count
 
+	std::string bg_name = battleground_db.find(queue->id)->name;
+
 	for (const auto &sd : queue->teama_members) {
 		sd->bg_queue_accept_state = false;
-		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, battleground_db.find(queue->id)->name.c_str(), sd);
+		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, bg_name.c_str(), sd);
 	}
 
 	for (const auto &sd : queue->teamb_members) {
 		sd->bg_queue_accept_state = false;
-		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, battleground_db.find(queue->id)->name.c_str(), sd);
+		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, bg_name.c_str(), sd);
 	}
 	return 0;
 }
 
 /**
  * Mark a Battleground as ready to begin queuing
- * @param tid: Tick ID
+ * @param tid: Timer ID
  * @param tick: Timer
- * @param id: Timer ID
+ * @param id: ID
  * @return 0 on success or 1 otherwise
  */
 static TIMER_FUNC(bg_on_ready_loopback)
