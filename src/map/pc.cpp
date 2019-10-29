@@ -8306,7 +8306,7 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		return 1|8;
 	}
 	else if( sd->bg_id ) {
-		std::shared_ptr<s_battleground_data> bg = bg_team_search(sd->bg_id);
+		std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, sd->bg_id);
 
 		if (bg) {
 			if (bg->cemetery.map > 0) { // Respawn by BG

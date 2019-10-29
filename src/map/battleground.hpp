@@ -106,10 +106,9 @@ public:
 };
 
 extern BattlegroundDatabase battleground_db;
+extern std::unordered_map<int, std::shared_ptr<s_battleground_data>> bg_team_db;
 
-std::shared_ptr<s_battleground_type> bg_search(int bg_id);
 std::shared_ptr<s_battleground_type> bg_search_name(const char *name);
-std::shared_ptr<s_battleground_data> bg_team_search(int bg_id);
 void bg_send_dot_remove(struct map_session_data *sd);
 int bg_team_get_id(struct block_list *bl);
 struct map_session_data *bg_getavailablesd(s_battleground_data *bg);

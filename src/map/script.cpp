@@ -28,6 +28,7 @@
 #include "../common/socket.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -60,6 +61,8 @@
 #include "pet.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
+
+using namespace rathena;
 
 struct eri *array_ers;
 DBMap *st_db;
@@ -19611,7 +19614,7 @@ BUILDIN_FUNC(waitingroom2bg_single)
 	struct chat_data *cd;
 	struct map_session_data *sd;
 	int x, y, mapindex, bg_id = script_getnum(st,2);
-	std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_id);
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (!bg) {
 		script_pushint(st, false);
@@ -19692,7 +19695,7 @@ BUILDIN_FUNC(bg_join) {
 	const char* map_name;
 	struct map_session_data *sd;
 	int x, y, mapindex, bg_id = script_getnum(st, 2);
-	std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_id);
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (!bg) {
 		script_pushint(st, false);
@@ -19730,7 +19733,7 @@ BUILDIN_FUNC(bg_join) {
 BUILDIN_FUNC(bg_team_setxy)
 {
 	int bg_id = script_getnum(st,2);
-	std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_id);
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (bg) {
 		bg->cemetery.x = script_getnum(st, 3);
@@ -19820,7 +19823,7 @@ BUILDIN_FUNC(bg_getareausers)
 	int16 m, x0, y0, x1, y1;
 	int bg_id = script_getnum(st, 2);
 	int i = 0, c = 0;
-	std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_id);
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (!bg || (m = map_mapname2mapid(str)) < 0) {
 		script_pushint(st,0);
@@ -19867,7 +19870,7 @@ BUILDIN_FUNC(bg_updatescore)
 BUILDIN_FUNC(bg_get_data)
 {
 	int bg_id = script_getnum(st,2), type = script_getnum(st,3), i;
-	std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_id);
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_id);
 
 	if (bg) {
 		switch (type) {
@@ -19948,14 +19951,12 @@ BUILDIN_FUNC(bg_info)
 			script_pushint(st, bg->max_lvl);
 			break;
 		case BG_INFO_MAPS: {
-			size_t i, j = 0;
+			size_t i;
 
-			for (i = 0; i < bg->maps.size(); i++) {
-				setd_sub(st, nullptr, ".@bgmaps$", j, (void *)__64BPRTSIZE(map_mapid2mapname(bg->maps[i].mapid), nullptr);
-				j++;
-			}
-			setd_sub(st, nullptr, ".@bgmapscount", 0, (void *)__64BPRTSIZE(j), nullptr);
-			script_pushint(st, j);
+			for (i = 0; i < bg->maps.size(); i++)
+				setd_sub(st, nullptr, ".@bgmaps$", i, (void *)__64BPRTSIZE(map_mapid2mapname(bg->maps[i].mapid)), nullptr);
+			setd_sub(st, nullptr, ".@bgmapscount", 0, (void *)__64BPRTSIZE(i), nullptr);
+			script_pushint(st, i);
 			break;
 		}
 		case BG_INFO_DESERTER_TIME:

@@ -263,16 +263,6 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 }
 
 /**
- * Search for a battleground from the database
- * @param bg_id: ID to lookup
- * @return s_battleground_type on success or nullptr on failure
- */
-std::shared_ptr<s_battleground_type> bg_search(int bg_id)
-{
-	return battleground_db.find(bg_id);
-}
-
-/**
  * Search for a battleground based on the given name
  * @param name: Battleground name
  * @return s_battleground_type on success or nullptr on failure
@@ -287,29 +277,6 @@ std::shared_ptr<s_battleground_type> bg_search_name(const char *name)
 	}
 
 	return nullptr;
-}
-
-/**
- * Searches for a battleground team by ID
- * @param bg_id: ID to lookup
- * @return True if battleground team exists or false if it doesn't
- */
-bool battleground_team_exists(int bg_id)
-{
-	return bg_team_db.find(bg_id) != bg_team_db.end();
-}
-
-/**
- * Search for a Battleground team based on the give ID
- * @param bg_id: Battleground ID
- * @return s_battleground_data or nullptr if not found
- */
-std::shared_ptr<s_battleground_data> bg_team_search(int bg_id)
-{
-	if (!battleground_team_exists(bg_id))
-		return nullptr;
-
-	return bg_team_db[bg_id];
 }
 
 /**
@@ -331,7 +298,7 @@ struct map_session_data* bg_getavailablesd(s_battleground_data *bg)
  */
 bool bg_team_delete(int bg_id)
 {
-	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id);
+	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, bg_id);
 
 	if (bgteam) {
 		for (const auto &pl_sd : bgteam->members) {
@@ -357,7 +324,7 @@ bool bg_team_delete(int bg_id)
  */
 bool bg_team_warp(int bg_id, unsigned short mapindex, short x, short y)
 {
-	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id);
+	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, bg_id);
 
 	if (bgteam) {
 		for (const auto &pl_sd : bgteam->members)
@@ -394,7 +361,7 @@ bool bg_team_join(int bg_id, struct map_session_data *sd, bool is_queue)
 	if (!sd || sd->bg_id)
 		return false;
 
-	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id);
+	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, bg_id);
 
 	if (bgteam) {
 		if (bgteam->members.size() == MAX_BG_MEMBERS)
@@ -443,7 +410,7 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter)
 	bg_send_dot_remove(sd);
 
 	int bg_id = sd->bg_id;
-	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(bg_id);
+	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, bg_id);
 
 	sd->bg_id = 0;
 
@@ -475,7 +442,7 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter)
 			npc_event(sd, bgteam->logout_event.c_str(), 0);
 
 		if (deserter) {
-			std::shared_ptr<s_battleground_type> bg = bg_search(bg_id);
+			std::shared_ptr<s_battleground_type> bg = battleground_db.find(bg_id);
 
 			if (bg)
 				sc_start(nullptr, &sd->bl, SC_ENTRY_QUEUE_NOTIFY_ADMISSION_TIME_OUT, 100, 1, static_cast<t_tick>(bg->deserter_time) * 1000); // Deserter timer
@@ -497,7 +464,7 @@ bool bg_member_respawn(struct map_session_data *sd)
 	if (!sd || !sd->bg_id || !pc_isdead(sd))
 		return false;
 
-	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(sd->bg_id);
+	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, sd->bg_id);
 
 	if (bgteam) {
 		if (bgteam->cemetery.map == 0)
@@ -525,12 +492,12 @@ int bg_create(uint16 mapindex, s_battleground_team* team)
 {
 	int bg_team_counter = 1;
 
-	while (battleground_team_exists(bg_team_counter))
+	while (bg_team_db.find(bg_team_counter) != bg_team_db.end())
 		bg_team_counter++;
 
 	bg_team_db[bg_team_counter] = std::make_shared<s_battleground_data>();
 
-	std::shared_ptr<s_battleground_data> bg = bg_team_search(bg_team_counter);
+	std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, bg_team_counter);
 
 	bg->id = bg_team_counter;
 	bg->cemetery.map = mapindex;
@@ -596,7 +563,7 @@ void bg_send_message(struct map_session_data *sd, const char *mes, int len)
 	if (!sd->bg_id)
 		return;
 	
-	std::shared_ptr<s_battleground_data> bgteam = bg_team_search(sd->bg_id);
+	std::shared_ptr<s_battleground_data> bgteam = util::umap_find(bg_team_db, sd->bg_id);
 
 	if (bgteam)
 		clif_bg_message(bgteam.get(), sd->bl.id, sd->status.name, mes, len);
@@ -659,12 +626,12 @@ static TIMER_FUNC(bg_on_ready_expire)
 
 	for (const auto &sd : queue->teama_members) {
 		sd->bg_queue_accept_state = false;
-		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, bg_search(queue->id)->name.c_str(), sd);
+		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, battleground_db.find(queue->id)->name.c_str(), sd);
 	}
 
 	for (const auto &sd : queue->teamb_members) {
 		sd->bg_queue_accept_state = false;
-		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, bg_search(queue->id)->name.c_str(), sd);
+		clif_bg_queue_apply_result(BG_APPLY_QUEUE_FINISHED, battleground_db.find(queue->id)->name.c_str(), sd);
 	}
 	return 0;
 }
@@ -682,7 +649,7 @@ static TIMER_FUNC(bg_on_ready_loopback)
 
 	nullpo_ret(queue);
 
-	std::shared_ptr<s_battleground_type> bg = bg_search(queue->id);
+	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
 
 	if (bg) {
 		bg_queue_on_ready(bg->name.c_str(), std::shared_ptr<s_battleground_queue>(queue));
@@ -1298,7 +1265,7 @@ bool bg_queue_leave(struct map_session_data *sd)
  */
 bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> queue)
 {
-	std::shared_ptr<s_battleground_type> bg = bg_search(queue->id);
+	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
 
 	if (!bg) {
 		ShowError("bg_queue_on_ready: Couldn't find battleground ID %d in battlegrounds database.\n", queue->id);
@@ -1366,7 +1333,7 @@ void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 		queue->tid_expire = 0;
 	}
 
-	std::shared_ptr<s_battleground_type> bg = bg_search(queue->id);
+	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
 
 	if (!bg) {
 		queue->map.isReserved = false;

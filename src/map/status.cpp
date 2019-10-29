@@ -17,6 +17,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "battle.hpp"
@@ -35,6 +36,8 @@
 #include "pc_groups.hpp"
 #include "pet.hpp"
 #include "script.hpp"
+
+using namespace rathena;
 
 // Regen related flags.
 enum e_regen {
@@ -1875,7 +1878,7 @@ int status_damage(struct block_list *src,struct block_list *target,int64 dhp, in
 	if(target->type == BL_PC) {
 		TBL_PC *sd = BL_CAST(BL_PC,target);
 		if( sd->bg_id ) {
-			std::shared_ptr<s_battleground_data> bg = bg_team_search(sd->bg_id);
+			std::shared_ptr<s_battleground_data> bg = util::umap_find(bg_team_db, sd->bg_id);
 
 			if( bg && !(bg->die_event.empty()) )
 				npc_event(sd, bg->die_event.c_str(), 0);
