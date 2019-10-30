@@ -443,6 +443,16 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)((damage*sc->data[SC_VOLCANO]->val3) / 100);
 #endif
+				if (src->type == BL_PC) {
+					map_session_data *sd = map_id2bl(src->id);
+
+					if (sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > MAX_SPIRITCHARM) {
+#ifdef RENEWAL
+						ratio += 30;
+#else
+						damage += damage * 30 / 100;
+#endif
+				}
 				break;
 			case ELE_WIND:
 				if (sc->data[SC_VIOLENTGALE])
@@ -451,6 +461,16 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)((damage*sc->data[SC_VIOLENTGALE]->val3) / 100);
 #endif
+				if (src->type == BL_PC) {
+					map_session_data *sd = map_id2bl(src->id);
+
+					if (sd && sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > MAX_SPIRITCHARM) {
+#ifdef RENEWAL
+						ratio += 30;
+#else
+						damage += damage * 30 / 100;
+#endif
+				}
 				break;
 			case ELE_WATER:
 				if (sc->data[SC_DELUGE])
@@ -459,10 +479,32 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 #else
 					damage += (int64)((damage*sc->data[SC_DELUGE]->val3) / 100);
 #endif
+				if (src->type == BL_PC) {
+					map_session_data *sd = map_id2bl(src->id);
+
+					if (sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > MAX_SPIRITCHARM) {
+#ifdef RENEWAL
+						ratio += 30;
+#else
+						damage += damage * 30 / 100;
+#endif
+				}
 				break;
 			case ELE_GHOST:
 				if (sc->data[SC_TELEKINESIS_INTENSE])
 					ratio += sc->data[SC_TELEKINESIS_INTENSE]->val3;
+				break;
+			case ELE_EARTH:
+				if (src->type == BL_PC) {
+					map_session_data *sd = map_id2bl(src->id);
+
+					if (sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > MAX_SPIRITCHARM) {
+#ifdef RENEWAL
+						ratio += 30;
+#else
+						damage += damage * 30 / 100;
+#endif
+				}
 				break;
 		}
 	}
@@ -3189,6 +3231,8 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 #endif
 					sstatus->batk + sstatus->rhw.atk + (index >= 0 && sd->inventory_data[index] ?
 						sd->inventory_data[index]->atk : 0)) * (skill_lv + 5) / 5;
+				if (sc && sc->data[SC_KAGEMUSYA])
+					damagevalue += damagevalue * 20 / 100;
 				ATK_ADD(wd->damage, wd->damage2, damagevalue);
 #ifdef RENEWAL
 				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, damagevalue);
@@ -4252,13 +4296,18 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 700;
 			break;
 		case KO_JYUMONJIKIRI:
-			skillratio += -100 + 150 * skill_lv;
+			skillratio += -100 + 200 * skill_lv;
 			RE_LVL_DMOD(120);
 			if(tsc && tsc->data[SC_JYUMONJIKIRI])
 				skillratio += skill_lv * status_get_lv(src);
+			if (sc && sc->data[SC_KAGEMUSYA])
+				skillratio += 20;
 			break;
 		case KO_HUUMARANKA:
-			skillratio += -100 + 150 * skill_lv + sstatus->agi + sstatus->dex + (sd ? pc_checkskill(sd,NJ_HUUMA) * 100 : 0);
+			skillratio += -100 + 150 * skill_lv + sstatus->str + (sd ? pc_checkskill(sd,NJ_HUUMA) * 100 : 0);
+			RE_LVL_DMOD(100);
+			if (sc && sc->data[SC_KAGEMUSYA])
+				skillratio += 20;
 			break;
 		case KO_SETSUDAN:
 			skillratio += 100 * (skill_lv - 1);
@@ -4270,6 +4319,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + (sd ? pc_checkskill(sd,NJ_TOBIDOUGU) : 1) * (50 + sstatus->dex / 4) * skill_lv * 4 / 10;
 			RE_LVL_DMOD(120);
 			skillratio += 10 * (sd ? sd->status.job_level : 1);
+			if (sc && sc->data[SC_KAGEMUSYA])
+				skillratio += 20;
 			break;
 		case KO_MAKIBISHI:
 			skillratio += -100 + 20 * skill_lv;
@@ -5934,17 +5985,17 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 					case NJ_KOUENKA:
 						skillratio -= 10;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 20 * sd->spiritcharm;
+							skillratio += 10 * sd->spiritcharm;
 						break;
 					case NJ_KAENSIN:
 						skillratio -= 50;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 10 * sd->spiritcharm;
+							skillratio += 20 * sd->spiritcharm;
 						break;
 					case NJ_BAKUENRYU:
 						skillratio += 50 + 150 * skill_lv;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > 0)
-							skillratio += 15 * sd->spiritcharm;
+							skillratio += 100 * sd->spiritcharm;
 						break;
 					case NJ_HYOUSENSOU:
 #ifdef RENEWAL
@@ -5953,12 +6004,12 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 2 * skill_lv;
 #endif
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
-							skillratio += 5 * sd->spiritcharm;
+							skillratio += 20 * sd->spiritcharm;
 						break;
 					case NJ_HYOUSYOURAKU:
 						skillratio += 50 * skill_lv;
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > 0)
-							skillratio += 25 * sd->spiritcharm;
+							skillratio += 100 * sd->spiritcharm;
 						break;
 					case NJ_RAIGEKISAI:
 #ifdef RENEWAL

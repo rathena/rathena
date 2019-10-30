@@ -10925,9 +10925,10 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			clif_status_change(bl,EFST_ACTIVE_MONSTER_TRANSFORM,1,0,1002,0,0);
 			break;
 		case SC_KAGEMUSYA:
-			val2 = tick/1000;
+			val2 = 20; // Damage increase bonus
 			val3 = val1 * 2;
 			t_tickime = 1000;
+			val4 = tick / t_tickime;
 			break;
 		case SC_ZANGETSU:
 			if( status_get_hp(bl) % 2 == 0 )
@@ -13636,7 +13637,7 @@ TIMER_FUNC(status_change_timer){
 		}
 		break;
 	case SC_KAGEMUSYA:
-		if( --(sce->val2) >= 0 ) {
+		if( --(sce->val4) >= 0 ) {
 			if(!status_charge(bl, 0, 1)) break;
 			sc_timer_next(1000+tick);
 			return 0;
