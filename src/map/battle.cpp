@@ -444,9 +444,9 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					damage += (int64)((damage*sc->data[SC_VOLCANO]->val3) / 100);
 #endif
 				if (src->type == BL_PC) {
-					map_session_data *sd = map_id2bl(src->id);
+					map_session_data *sd = map_id2sd(src->id);
 
-					if (sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > MAX_SPIRITCHARM) {
+					if (sd && sd->spiritcharm_type == CHARM_TYPE_WATER && sd->spiritcharm > MAX_SPIRITCHARM)
 #ifdef RENEWAL
 						ratio += 30;
 #else
@@ -462,9 +462,9 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					damage += (int64)((damage*sc->data[SC_VIOLENTGALE]->val3) / 100);
 #endif
 				if (src->type == BL_PC) {
-					map_session_data *sd = map_id2bl(src->id);
+					map_session_data *sd = map_id2sd(src->id);
 
-					if (sd && sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > MAX_SPIRITCHARM) {
+					if (sd && sd->spiritcharm_type == CHARM_TYPE_LAND && sd->spiritcharm > MAX_SPIRITCHARM)
 #ifdef RENEWAL
 						ratio += 30;
 #else
@@ -480,9 +480,9 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 					damage += (int64)((damage*sc->data[SC_DELUGE]->val3) / 100);
 #endif
 				if (src->type == BL_PC) {
-					map_session_data *sd = map_id2bl(src->id);
+					map_session_data *sd = map_id2sd(src->id);
 
-					if (sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > MAX_SPIRITCHARM) {
+					if (sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > MAX_SPIRITCHARM)
 #ifdef RENEWAL
 						ratio += 30;
 #else
@@ -496,9 +496,9 @@ int64 battle_attr_fix(struct block_list *src, struct block_list *target, int64 d
 				break;
 			case ELE_EARTH:
 				if (src->type == BL_PC) {
-					map_session_data *sd = map_id2bl(src->id);
+					map_session_data *sd = map_id2sd(src->id);
 
-					if (sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > MAX_SPIRITCHARM) {
+					if (sd && sd->spiritcharm_type == CHARM_TYPE_FIRE && sd->spiritcharm > MAX_SPIRITCHARM)
 #ifdef RENEWAL
 						ratio += 30;
 #else
