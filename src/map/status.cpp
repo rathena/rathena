@@ -901,7 +901,9 @@ void initChangeTables(void)
 
 	set_sc( WE_CHEERUP				, SC_CHEERUP		, EFST_CHEERUP		, SCB_STR|SCB_AGI|SCB_VIT|SCB_INT|SCB_DEX|SCB_LUK );
 
+#ifdef RENEWAL
 	set_sc( NV_HELPANGEL			, SC_HELPANGEL		, EFST_HELPANGEL	, SCB_NONE );
+#endif
 
 	/* Storing the target job rather than simply SC_SPIRIT simplifies code later on */
 	SkillStatusChangeTable[skill_get_index(SL_ALCHEMIST)]	= (sc_type)MAPID_ALCHEMIST,
