@@ -25,30 +25,32 @@
 * @author [Cydh]
 **/
 BUILDIN_FUNC(itemlink) {
-	unsigned int nameid = script_getnum(st, 2), refine = 0;
 	struct s_item_link itemldata;
-	memset(&itemldata, 0, sizeof(itemldata));
-	FETCH(3, refine);
-	FETCH(4, itemldata.cards[0]);
-	FETCH(5, itemldata.cards[1]);
-	FETCH(6, itemldata.cards[2]);
-	FETCH(7, itemldata.cards[3]);
-	if (itemldata.cards[0] || itemldata.cards[1] || itemldata.cards[2] || itemldata.cards[3])
+
+	memset(&itemldata, 0, sizeof(s_item_link));
+	itemldata.item.nameid = script_getnum(st, 2);
+
+	FETCH(3, itemldata.item.refine);
+	FETCH(4, itemldata.item.card[0]);
+	FETCH(5, itemldata.item.card[1]);
+	FETCH(6, itemldata.item.card[2]);
+	FETCH(7, itemldata.item.card[3]);
+
+	if (itemldata.item.card[0] || itemldata.item.card[1] || itemldata.item.card[2] || itemldata.item.card[3])
 		itemldata.flag.cards = 1;
+
 #if PACKETVER >= 20150225
 	char *command = (char *)script_getfuncname(st);
 	if (command[strlen(command) - 1] == '2') {
-		struct item it;
-		memset(&it, 0, sizeof(it));
-		script_getitem_randomoption(st, NULL, &it, command, 8);
+		script_getitem_randomoption(st, NULL, &itemldata.item, command, 8);
 		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
-			if (it.option[i].id)
+			if (itemldata.item.option[i].id)
 				itemldata.flag.options = 1;
 		}
-		memcpy(&itemldata.options, &it.option, sizeof(it.option));
 	}
 #endif
-	std::string itemlstr = createItemLink(nameid, refine, &itemldata);
+
+	std::string itemlstr = createItemLink(&itemldata);
 	char *str = (char *)aMalloc((itemlstr.size() + 1) * sizeof(char));
 	safestrncpy(str, itemlstr.c_str(), itemlstr.size() + 1);
 	script_pushstr(st, str);

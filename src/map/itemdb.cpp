@@ -2098,48 +2098,63 @@ unsigned int base62_decode(std::string str)
 
 /**
 * Generate <ITEML> string
-* @param nameid Item ID
-* @param refine Refine level (optional)
-* @param s_item_link Additional info itemlink, cards and random options (optional)
+* @param data Item info
 * @return <ITEML> string for the item
 * @author [Cydh]
 **/
-std::string createItemLink(unsigned int nameid, unsigned char refine = 0, struct s_item_link *data = nullptr)
+std::string createItemLink(struct s_item_link *data)
 {
-	struct item_data *id = itemdb_exists(nameid);
+	struct item_data *id = itemdb_exists(data->item.nameid);
 	std::string itemstr = "<ITEML>";
 	std::string locdef = "00000";
 	std::string locval = (id && itemdb_isequip2(id)) ? base62_encode(id->equip) : "";
 	itemstr += (std::string(locdef, 0, locdef.size() - locval.size())) + locval;
 	itemstr += (id && itemdb_isequip2(id)) ? "1" : "0";
-	itemstr += base62_encode(nameid);
-	if (refine > 0) {
-		itemstr += "%0" + base62_encode(refine);
+	itemstr += base62_encode(data->item.nameid);
+	if (data->item.refine > 0) {
+		itemstr += "%0" + base62_encode(data->item.refine);
 	}
 	if (id && itemdb_isequip2(id)) {
 		itemstr += "&" + base62_encode(id->look);
 	}
-	if (data != nullptr) {
-		if (data->flag.cards) {
-			for (uint8 i = 0; i < MAX_SLOTS; ++i) {
-				itemstr += "(0" + ((data->cards[i] != 0) ? base62_encode(data->cards[i]) : "0");
-			}
+
+	if (data->flag.cards) {
+		for (uint8 i = 0; i < MAX_SLOTS; ++i) {
+			itemstr += "(0" + ((data->item.card[i] != 0) ? base62_encode(data->item.card[i]) : "0");
 		}
-#if PACKETVER >= 20150225
-		if (data->flag.options) {
-			for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
-				// Option ID
-				itemstr += "*0" + ((data->options[1].id != 0) ? base62_encode(data->options[i].id) : "0");
-				// Param
-				itemstr += "+0" + ((data->options[i].param != 0) ? base62_encode(data->options[i].param) : "0");
-				// Value
-				itemstr += ",0" + ((data->options[i].value != 0) ? base62_encode(data->options[i].value) : "0");
-			}
-		}
-#endif
 	}
+
+#if PACKETVER >= 20150225
+	if (data->flag.options) {
+		for (uint8 i = 0; i < MAX_ITEM_RDM_OPT; ++i) {
+			// Option ID
+			itemstr += "*0" + ((data->item.option[i].id != 0) ? base62_encode(data->item.option[i].id) : "0");
+			// Param
+			itemstr += "+0" + ((data->item.option[i].param != 0) ? base62_encode(data->item.option[i].param) : "0");
+			// Value
+			itemstr += ",0" + ((data->item.option[i].value != 0) ? base62_encode(data->item.option[i].value) : "0");
+		}
+	}
+#endif
+
 	itemstr += "</ITEML>";
 	return itemstr;
+}
+
+/*
+* Generate <ITEML> string from item data
+* @param item
+* @return <ITEML> string
+*/
+std::string itemdb_getItemLink(struct item *item)
+{
+	struct s_item_link itemldata;
+	memcpy(&itemldata.item, item, sizeof(struct item));
+
+	itemldata.flag.cards = 1;
+	itemldata.flag.options = 1;
+	
+	return createItemLink(&itemldata);
 }
 
 /**
