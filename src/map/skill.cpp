@@ -16526,12 +16526,22 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 
 		// Calculate cast time reduced by item/card bonuses
 		if (sd) {
-			if (!(flag&4) && sd->castrate != 100)
-				reduce_cast_rate += 100 - sd->castrate;
+			if (!(flag&4)) {
+				if (sd->castrate != 100)
+					reduce_cast_rate += 100 - sd->castrate;
+				if (sd->bonus.add_varcast != 0)
+					time += sd->bonus.add_varcast; // bonus bVariableCast
+			}
 			// Skill-specific reductions work regardless of flag
 			for (const auto &it : sd->skillcastrate) {
 				if (it.id == skill_id) {
 					time += time * it.val / 100;
+					break;
+				}
+			}
+			for (const auto &it : sd->skillvarcast) {
+				if (it.id == skill_id) { // bonus2 bSkillVariableCast
+					time += it.val;
 					break;
 				}
 			}
