@@ -34,37 +34,37 @@ Header:
 Body:
   - Skill: MG_COLDBOLT
     Book: Magic_Book_CB
-    PreservePoints: 
+    PreservePoints: 7
   - Skill: MG_FIREBOLT
     Book: Magic_Book_FB
-    PreservePoints: 
+    PreservePoints: 7
   - Skill: MG_LIGHTNINGBOLT
     Book: Magic_Book_LB
-    PreservePoints: 
+    PreservePoints: 7
   - Skill: MG_THUNDERSTORM
     Book: Magic_Book_TS
-    PreservePoints: 
+    PreservePoints: 9
   - Skill: WZ_METEOR
     Book: Magic_Book_MS
-    PreservePoints: 
+    PreservePoints: 10
   - Skill: WZ_JUPITEL
     Book: Magic_Book_JT
-    PreservePoints: 
+    PreservePoints: 9
   - Skill: WZ_VERMILION
     Book: Magic_Book_LOV
-    PreservePoints: 
+    PreservePoints: 10
   - Skill: WZ_WATERBALL
     Book: Magic_Book_WB
-    PreservePoints: 
+    PreservePoints: 9
   - Skill: WZ_STORMGUST
     Book: Magic_Book_SG
-    PreservePoints: 
+    PreservePoints: 10
   - Skill: WZ_EARTHSPIKE
     Book: Magic_Book_ES
-    PreservePoints: 
+    PreservePoints: 8
   - Skill: WZ_HEAVENDRIVE
     Book: Magic_Book_HD
-    PreservePoints: 
+    PreservePoints: 9
   - Skill: WL_DRAINLIFE
     Book: Magic_Book_DL
     PreservePoints: 8
