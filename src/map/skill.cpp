@@ -21678,7 +21678,7 @@ uint64 ChangeMaterialDatabase::parseBodyNode(const YAML::Node &node) {
 			if (this->nodeExists(makeNode, "Amount")) {
 				uint16 amount;
 
-				if (!this->asUInt16(node, "Amount", amount))
+				if (!this->asUInt16(makeNode, "Amount", amount))
 					return 0;
 
 				quantity->amount = amount;
@@ -21687,7 +21687,7 @@ uint64 ChangeMaterialDatabase::parseBodyNode(const YAML::Node &node) {
 			if (this->nodeExists(makeNode, "Rate")) {
 				uint16 rate;
 
-				if (!this->asUInt16(node, "Rate", rate))
+				if (!this->asUInt16(makeNode, "Rate", rate))
 					return 0;
 
 				quantity->rate = rate;
