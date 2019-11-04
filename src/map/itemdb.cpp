@@ -1640,11 +1640,15 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 * @return True if item is spellbook; False if not
 */
 bool itemdb_is_spellbook2(unsigned short nameid) {
-	unsigned char i;
-	if (!nameid || !itemdb_exists(nameid) || !skill_spellbook_count)
+	if (!nameid || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
 		return false;
-	ARR_FIND(0, MAX_SKILL_SPELLBOOK_DB, i, skill_spellbook_db[i].nameid == nameid);
-	return i == MAX_SKILL_SPELLBOOK_DB ? false : true;
+
+	for (const auto &it : reading_spellbook_db) {
+		if (it.second->nameid == nameid)
+			return true;
+	}
+
+	return false;
 }
 
 /**

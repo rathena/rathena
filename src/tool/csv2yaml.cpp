@@ -49,6 +49,7 @@ int getch( void ){
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static size_t pet_read_db( const char* file );
+static bool skill_parse_row_spellbookdb(char* split[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -143,6 +144,12 @@ int do_init( int argc, char** argv ){
 	if( !process( "PET_DB", 1, pet_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
+		return 0;
+	}
+
+	if (!process("READING_SPELLBOOK_DB", 1, guild_skill_tree_paths, "spellbook_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_spellbookdb, false);
+	})) {
 		return 0;
 	}
 
@@ -590,4 +597,24 @@ static size_t pet_read_db( const char* file ){
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
 
 	return entries;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_spellbookdb(char* split[], int columns, int current) {
+	YAML::Node node;
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Spell Book skill ID %hu is not known.\n", skill_id);
+		return false;
+	}
+
+	node["Skill"] = skill_id;
+	node["Book"] = atoi(split[2]);
+	node["PreservePoints"] = atoi(split[1]);
+
+	body[counter++] = node;
+
+	return false;
 }
