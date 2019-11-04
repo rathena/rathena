@@ -5,6 +5,7 @@
 #define SKILL_HPP
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // MAX_SKILL, struct square
 #include "../common/timer.hpp"
@@ -2210,7 +2211,30 @@ int skill_poisoningweapon( struct map_session_data *sd, unsigned short nameid);
 int skill_select_menu(struct map_session_data *sd,uint16 skill_id);
 
 int skill_elementalanalysis(struct map_session_data *sd, int n, uint16 skill_lv, unsigned short *item_list); // Sorcerer Four Elemental Analisys.
+
+struct s_skill_changematerial_quantity {
+	uint16 amount, rate;
+};
+
+struct s_skill_changematerial_db {
+	uint16 nameid, rate;
+	std::unordered_map<uint16, std::shared_ptr<s_skill_changematerial_quantity>> quantity;
+};
+
+class ChangeMaterialDatabase : public TypesafeYamlDatabase<uint16, s_skill_changematerial_db> {
+public:
+	ChangeMaterialDatabase() : TypesafeYamlDatabase("CHANGE_MATERIAL_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+extern ChangeMaterialDatabase change_material_db;
+
 int skill_changematerial(struct map_session_data *sd, int n, unsigned short *item_list);	// Genetic Change Material.
+
 int skill_get_elemental_type(uint16 skill_id, uint16 skill_lv);
 
 int skill_banding_count(struct map_session_data *sd);

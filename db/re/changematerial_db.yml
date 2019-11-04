@@ -1,0 +1,571 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2019 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Renewal Change Material Database
+###########################################################################
+#
+# Change Material Settings
+#
+###########################################################################
+# - Product     Item to produce.
+#   BaseRate    Base success rate (n/10%).
+#   Make:
+#   - Index     Index value used for import methods.
+#     Amount    Amount of Product item made on success.
+#     Rate      Rate for specific amount (n/10%).
+###########################################################################
+
+Header:
+  Type: CHANGE_MATERIAL_DB
+  Version: 1
+
+Body:
+  - Product: Hinalle
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 800
+      - Index: 1
+        Amount: 2
+        Rate: 200
+  - Product: Horrendous_Mouth
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 9
+        Rate: 1000
+  - Product: Rotten_Scale
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 7
+        Rate: 1000
+  - Product: Nipper
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 6
+        Rate: 800
+      - Index: 1
+        Amount: 9
+        Rate: 200
+  - Product: Conch
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 3
+        Rate: 1000
+  - Product: Tentacle
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 800
+      - Index: 1
+        Amount: 6
+        Rate: 200
+  - Product: Sharp_Scale
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 3
+        Rate: 1000
+  - Product: Crap_Shell
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 8
+        Rate: 1000
+  - Product: Turtle_Shell
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 1000
+  - Product: Voucher_Of_Orcish_Hero
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 1000
+  - Product: Alchol
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 9
+        Rate: 1000
+  - Product: Detrimindexta
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 1000
+  - Product: Counteragent
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 1000
+  - Product: Mixture
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 800
+      - Index: 1
+        Amount: 6
+        Rate: 200
+  - Product: Crystal_Blue
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 1
+        Rate: 500
+      - Index: 1
+        Amount: 1
+        Rate: 500
+  - Product: Wind_Of_Verdure
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 1
+        Rate: 500
+      - Index: 1
+        Amount: 1
+        Rate: 500
+  - Product: Steel
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000
+  - Product: Coal
+    BaseRate: 500
+    Make:
+      - Index: 0
+        Amount: 1
+        Rate: 1000
+  - Product: Frozen_Heart
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 6
+        Rate: 1000
+  - Product: Sacred_Marks
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 1000
+  - Product: Phracon
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 8
+        Rate: 1000
+  - Product: Emveretarcon
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 1000
+  - Product: Lizard_Scruff
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 3
+        Rate: 1000
+  - Product: Colorful_Shell
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 9
+        Rate: 800
+      - Index: 1
+        Amount: 13
+        Rate: 200
+  - Product: Jaws_Of_Ant
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 800
+      - Index: 1
+        Amount: 6
+        Rate: 200
+  - Product: Rat_Tail
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 7
+        Rate: 800
+      - Index: 1
+        Amount: 10
+        Rate: 200
+  - Product: Wooden_Block
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 2
+        Rate: 1000
+  - Product: Long_Hair
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 800
+      - Index: 1
+        Amount: 6
+        Rate: 200
+  - Product: Dokkaebi_Horn
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 1000
+  - Product: Fox_Tail
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 2
+        Rate: 800
+      - Index: 1
+        Amount: 3
+        Rate: 200
+  - Product: Chinese_Ink
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 1000
+  - Product: Spiderweb
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 8
+        Rate: 1000
+  - Product: Acorn
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 1000
+  - Product: Tiger_Footskin
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 2
+        Rate: 1000
+  - Product: Root_Of_Maneater
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 800
+      - Index: 1
+        Amount: 6
+        Rate: 200
+  - Product: Cobold_Hair
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 6
+        Rate: 800
+      - Index: 1
+        Amount: 9
+        Rate: 200
+  - Product: Dragon_Canine
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 8
+        Rate: 800
+      - Index: 1
+        Amount: 12
+        Rate: 200
+  - Product: Dragon_Train
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 6
+        Rate: 1000
+  - Product: Petite_DiablOfs_Horn
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 1
+        Rate: 1000
+  - Product: Elder_Pixie's_Beard
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 8
+        Rate: 800
+      - Index: 1
+        Amount: 12
+        Rate: 200
+  - Product: Lantern
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 3
+        Rate: 1000
+  - Product: Short_Leg
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 6
+        Rate: 1000
+  - Product: Nail_Of_Orc
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 6
+        Rate: 1000
+  - Product: Sacred_Masque
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 8
+        Rate: 1000
+  - Product: Tweezer
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 4
+        Rate: 1000
+  - Product: Skirt_Of_Virgin
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 6
+        Rate: 1000
+  - Product: Tendon
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 3
+        Rate: 1000
+  - Product: Detonator
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 7
+        Rate: 1000
+  - Product: Tooth_Of_Ancient_Fish
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 6
+        Rate: 800
+      - Index: 1
+        Amount: 9
+        Rate: 200
+  - Product: Grit
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 8
+        Rate: 1000
+  - Product: Wing_Of_Moth
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 1000
+  - Product: Transparent_Cloth
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 1000
+  - Product: Starsand_Of_Witch
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 2
+        Rate: 1000
+  - Product: Starsand_Of_Witch
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 1
+        Rate: 1000
+  - Product: Reins
+    BaseRate: 800
+    Make:
+      - Index: 0
+        Amount: 8
+        Rate: 1000
+  - Product: Bone_Wand
+    BaseRate: 200
+    Make:
+      - Index: 0
+        Amount: 1
+        Rate: 1000
+  - Product: Cigar
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 1
+        Rate: 1000
+  - Product: Soft_Feather
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 1
+        Rate: 200
+      - Index: 1
+        Amount: 1
+        Rate: 200
+      - Index: 2
+        Amount: 1
+        Rate: 100
+  - Product: Soft_Silk_Cloth
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 2
+        Rate: 1000
+  - Product: Boost500_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 500
+      - Index: 1
+        Amount: 2
+        Rate: 250
+      - Index: 2
+        Amount: 1
+        Rate: 100
+  - Product: Full_SwingK_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 500
+      - Index: 1
+        Amount: 2
+        Rate: 250
+      - Index: 2
+        Amount: 1
+        Rate: 100
+  - Product: Mana_Plus_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 500
+      - Index: 1
+        Amount: 2
+        Rate: 250
+      - Index: 2
+        Amount: 1
+        Rate: 100
+  - Product: Cure_Free_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 500
+      - Index: 1
+        Amount: 2
+        Rate: 250
+      - Index: 2
+        Amount: 1
+        Rate: 100
+  - Product: Stamina_Up_M_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 500
+      - Index: 1
+        Amount: 2
+        Rate: 250
+      - Index: 2
+        Amount: 1
+        Rate: 100
+  - Product: Digestive_F_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 5
+        Rate: 500
+      - Index: 1
+        Amount: 2
+        Rate: 250
+      - Index: 2
+        Amount: 1
+        Rate: 100
+  - Product: HP_Inc_PotS_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000
+  - Product: HP_Inc_PotM_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000
+  - Product: HP_Inc_PotL_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000
+  - Product: SP_Inc_PotS_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000
+  - Product: SP_Inc_PotM_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000
+  - Product: SP_Inc_PotL_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000
+  - Product: En_White_PotZ_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000
+  - Product: Vitata500_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000
+  - Product: En_Cel_Juice_To_Throw
+    BaseRate: 1000
+    Make:
+      - Index: 0
+        Amount: 10
+        Rate: 1000

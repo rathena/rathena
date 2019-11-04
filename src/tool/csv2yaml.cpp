@@ -45,10 +45,12 @@ int getch( void ){
 
 // Required constant and structure definitions
 #define MAX_GUILD_SKILL_REQUIRE 5
+#define MAX_SKILL_CHANGEMATERIAL_SET 3
 
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static size_t pet_read_db( const char* file );
+static bool skill_parse_row_changematerialdb(char* split[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -143,6 +145,12 @@ int do_init( int argc, char** argv ){
 	if( !process( "PET_DB", 1, pet_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
+		return 0;
+	}
+
+	if (!process("CHANGE_MATERIAL_DB", 1, guild_skill_tree_paths, "skill_changematerial_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 5, 5 + 2 * MAX_SKILL_CHANGEMATERIAL_SET, -1, &skill_parse_row_changematerialdb, false);
+	})) {
 		return 0;
 	}
 
@@ -590,4 +598,34 @@ static size_t pet_read_db( const char* file ){
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
 
 	return entries;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_changematerialdb(char* split[], int columns, int current) {
+	uint16 nameid = atoi(split[1]);
+	std::string *product_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (product_name == nullptr) {
+		ShowError("Product name for item ID %hu is not known.\n", nameid);
+		return false;
+	}
+
+	YAML::Node node;
+
+	node["Product"] = *product_name;
+	node["BaseRate"] = atoi(split[2]);
+
+	for (int x = 3, y = 0; x + 1 < columns && split[x] && split[x + 1]; x += 2, y++) {
+		YAML::Node quantity;
+
+		quantity["Index"] = y;
+		quantity["Amount"] = atoi(split[x]);
+		quantity["Rate"] = atoi(split[x + 1]);
+
+		node["Make"][y] = quantity;
+	}
+
+	body[counter++] = node;
+
+	return true;
 }

@@ -17,6 +17,7 @@
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/timer.hpp"
+#include "../common/utilities.hpp"
 #include "../common/utils.hpp"
 
 #include "achievement.hpp"
@@ -43,6 +44,8 @@
 #include "script.hpp"
 #include "status.hpp"
 #include "unit.hpp"
+
+using namespace rathena;
 
 #define SKILLUNITTIMER_INTERVAL	100
 #define TIMERSKILL_INTERVAL	150
@@ -97,16 +100,7 @@ struct s_skill_improvise_db {
 struct s_skill_improvise_db skill_improvise_db[MAX_SKILL_IMPROVISE_DB];
 static unsigned short skill_improvise_count;
 
-#define MAX_SKILL_CHANGEMATERIAL_DB 75
-#define MAX_SKILL_CHANGEMATERIAL_SET 3
-struct s_skill_changematerial_db {
-	unsigned short nameid;
-	unsigned short rate;
-	unsigned short qty[MAX_SKILL_CHANGEMATERIAL_SET];
-	unsigned short qty_rate[MAX_SKILL_CHANGEMATERIAL_SET];
-};
-struct s_skill_changematerial_db skill_changematerial_db[MAX_SKILL_CHANGEMATERIAL_DB];
-static unsigned short skill_changematerial_count;
+ChangeMaterialDatabase change_material_db;
 
 //Warlock
 struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
@@ -19350,12 +19344,11 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 				make_per = 3000 + 500 * pc_checkskill(sd,GC_RESEARCHNEWPOISON);
 				qty = 1+rnd()%pc_checkskill(sd,GC_RESEARCHNEWPOISON);
 				break;
-			case GN_CHANGEMATERIAL:
-				for (i = 0; i < MAX_SKILL_CHANGEMATERIAL_DB; i++) {
-					if (skill_changematerial_db[i].nameid == nameid) {
-						make_per = skill_changematerial_db[i].rate * 10;
-						break;
-					}
+			case GN_CHANGEMATERIAL: {
+					std::shared_ptr<s_skill_changematerial_db> material = change_material_db.find(nameid);
+
+					if (material)
+						make_per = material->rate * 10;
 				}
 				break;
 			case GN_S_PHARMACY:
@@ -19622,27 +19615,25 @@ bool skill_produce_mix(struct map_session_data *sd, uint16 skill_id, unsigned sh
 		}
 
 		if (skill_id == GN_CHANGEMATERIAL && tmp_item.amount) { //Success
-			int j, k = 0, l;
-			bool isStackable = itemdb_isstackable(tmp_item.nameid);
+			std::shared_ptr<s_skill_changematerial_db> material = change_material_db.find(nameid);
+			int k = 0;
 
-			for (i = 0; i < MAX_SKILL_CHANGEMATERIAL_DB; i++) {
-				if (skill_changematerial_db[i].nameid == nameid){
-					for (j = 0; j < MAX_SKILL_CHANGEMATERIAL_SET; j++){
-						if (rnd()%1000 < skill_changematerial_db[i].qty_rate[j]){
-							uint16 total_qty = qty * skill_changematerial_db[i].qty[j];
-							tmp_item.amount = (isStackable ? total_qty : 1);
-							for (l = 0; l < total_qty; l += tmp_item.amount) {
-								if ((flag = pc_additem(sd,&tmp_item,tmp_item.amount,LOG_TYPE_PRODUCE))) {
-									clif_additem(sd,0,0,flag);
-									if( battle_config.skill_drop_items_full ){
-										map_addflooritem(&tmp_item,tmp_item.amount,sd->bl.m,sd->bl.x,sd->bl.y,0,0,0,0,0);
-									}
+			if (material) {
+				for (const auto &qrate : material->quantity) {
+					if (rnd() % 1000 < qrate.second->rate) {
+						uint16 total_qty = qty * qrate.second->amount;
+
+						tmp_item.amount = (itemdb_isstackable(tmp_item.nameid) ? total_qty : 1);
+						for (int j = 0; j < total_qty; j += tmp_item.amount) {
+							if ((flag = pc_additem(sd, &tmp_item, tmp_item.amount, LOG_TYPE_PRODUCE))) {
+								clif_additem(sd, 0, 0, flag);
+								if (battle_config.skill_drop_items_full) {
+									map_addflooritem(&tmp_item, tmp_item.amount, sd->bl.m, sd->bl.x, sd->bl.y, 0, 0, 0, 0, 0);
 								}
 							}
-							k++;
 						}
+						k++;
 					}
-					break;
 				}
 			}
 			if (k) {
@@ -21621,59 +21612,93 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 	return true;
 }
 
-/** Reads change material db
- * Structure: ProductID,BaseRate,MakeAmount1,MakeAmountRate1...,MakeAmount5,MakeAmountRate5
+/**
+ * Parses the Change Material Database
  */
-static bool skill_parse_row_changematerialdb(char* split[], int columns, int current)
-{
-	uint16 id = atoi(split[0]), nameid = atoi(split[1]);
-	short rate = atoi(split[2]);
-	bool found = false;
-	int x, y;
+const std::string ChangeMaterialDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/changematerial_db.yml";
+}
 
-	if (id >= MAX_SKILL_CHANGEMATERIAL_DB) {
-		ShowError("skill_parse_row_changematerialdb: Maximum amount of entries reached (%d), increase MAX_SKILL_CHANGEMATERIAL_DB\n",MAX_SKILL_CHANGEMATERIAL_DB);
-		return false;
-	}
+uint64 ChangeMaterialDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string product_name;
 
-	// Clear previous data, for importing support
-	if (id < ARRAYLENGTH(skill_changematerial_db) && skill_changematerial_db[id].nameid > 0) {
-		found = true;
-		memset(&skill_changematerial_db[id], 0, sizeof(skill_changematerial_db[id]));
-	}
+	if (!this->asString(node, "Product", product_name))
+		return 0;
 
-	// Import just for clearing/disabling from original data
-	// NOTE: If import for disabling, better disable list from produce_db instead of here, or creation just failed with deleting requirements.
-	if (nameid == 0) {
-		memset(&skill_changematerial_db[id], 0, sizeof(skill_changematerial_db[id]));
-		//ShowInfo("skill_parse_row_changematerialdb: Change Material list with ID %d removed from list.\n", id);
-		return true;
+	struct item_data *product = itemdb_search_aegisname(product_name.c_str());
+
+	if (product == nullptr) {
+		this->invalidWarning(node["Product"], "Product item %s does not exist.\n", product_name.c_str());
+		return 0;
 	}
 
 	// Entry must be exists in skill_produce_db and with required skill GN_CHANGEMATERIAL
-	for (x = 0; x < MAX_SKILL_PRODUCE_DB; x++) {
-		if (skill_produce_db[x].nameid == nameid)
-			if( skill_produce_db[x].req_skill == GN_CHANGEMATERIAL )
-				break;
+	for (int i = 0; i < MAX_SKILL_PRODUCE_DB; i++) {
+		if (skill_produce_db[i].nameid == product->nameid && skill_produce_db[i].req_skill == GN_CHANGEMATERIAL)
+			break;
+		else if (i == MAX_SKILL_PRODUCE_DB) {
+			this->invalidWarning(node["Product"], "Product item %s does not exist in the Produce Database.\n", product_name.c_str());
+			return 0;
+		}
 	}
 
-	if (x >= MAX_SKILL_PRODUCE_DB) {
-		ShowError("skill_parse_row_changematerialdb: Not supported item ID (%d) for Change Material. \n", nameid);
-		return false;
+	std::shared_ptr<s_skill_changematerial_db> material = this->find(product->nameid);
+	bool exists = material != nullptr;
+
+	if (!exists) {
+		if (!this->nodesExist(node, { "BaseRate", "Make" }))
+			return 0;
+
+		material = std::make_shared<s_skill_changematerial_db>();
+		material->nameid = product->nameid;
 	}
 
-	skill_changematerial_db[id].nameid = nameid;
-	skill_changematerial_db[id].rate = rate;
+	if (this->nodeExists(node, "BaseRate")) {
+		uint16 rate;
 
-	for (x = 3, y = 0; x+1 < columns && split[x] && split[x+1] && y < MAX_SKILL_CHANGEMATERIAL_SET; x += 2, y++) {
-		skill_changematerial_db[id].qty[y] = atoi(split[x]);
-		skill_changematerial_db[id].qty_rate[y] = atoi(split[x+1]);
+		if (!this->asUInt16(node, "BaseRate", rate))
+			return 0;
+
+		material->rate = rate;
 	}
 
-	if (!found)
-		skill_changematerial_count++;
+	if (this->nodeExists(node, "Make")) {
+		for (const YAML::Node &makeNode : node["Make"]) {
+			uint16 index;
 
-	return true;
+			if (!this->asUInt16(makeNode, "Index", index))
+				return 0;
+
+			std::shared_ptr<s_skill_changematerial_quantity> quantity = util::umap_find(material->quantity, index);
+			bool quantity_exists = quantity != nullptr;
+
+			if (!quantity_exists)
+				quantity = std::make_shared<s_skill_changematerial_quantity>();
+
+			if (this->nodeExists(makeNode, "Amount")) {
+				uint16 amount;
+
+				if (!this->asUInt16(node, "Amount", amount))
+					return 0;
+
+				quantity->amount = amount;
+			}
+
+			if (this->nodeExists(makeNode, "Rate")) {
+				uint16 rate;
+
+				if (!this->asUInt16(node, "Rate", rate))
+					return 0;
+
+				quantity->rate = rate;
+			}
+		}
+	}
+
+	if (!exists)
+		this->put(product->nameid, material);
+
+	return 1;
 }
 
 /**
@@ -21785,9 +21810,8 @@ static void skill_readdb(void)
 	memset(skill_abra_db,0,sizeof(skill_abra_db));
 	memset(skill_spellbook_db,0,sizeof(skill_spellbook_db));
 	memset(skill_magicmushroom_db,0,sizeof(skill_magicmushroom_db));
-	memset(skill_changematerial_db,0,sizeof(skill_changematerial_db));
 	skill_produce_count = skill_arrow_count = skill_abra_count = skill_improvise_count =
-		skill_changematerial_count = skill_spellbook_count = skill_magicmushroom_count = 0;
+		skill_spellbook_count = skill_magicmushroom_count = 0;
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		size_t n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
@@ -21817,13 +21841,14 @@ static void skill_readdb(void)
 		sv_readdb(dbsubpath1, "magicmushroom_db.txt"  , ',',   1,  2, MAX_SKILL_MAGICMUSHROOM_DB, skill_parse_row_magicmushroomdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_copyable_db.txt"       , ',',   2,  4, -1, skill_parse_row_copyabledb, i > 0);
 		sv_readdb(dbsubpath1, "skill_improvise_db.txt"      , ',',   2,  2, MAX_SKILL_IMPROVISE_DB, skill_parse_row_improvisedb, i > 0);
-		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   5,  5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_nonearnpc_db.txt"      , ',',   2,  3, -1, skill_parse_row_nonearnpcrangedb, i > 0);
 		sv_readdb(dbsubpath1, "skill_damage_db.txt"         , ',',   4,  3+SKILLDMG_MAX, -1, skill_parse_row_skilldamage, i > 0);
 
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
+
+	change_material_db.load();
 	
 	skill_init_unit_layout();
 	skill_init_nounit_layout();
