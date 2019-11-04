@@ -17,15 +17,34 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "../common/cbasetypes.hpp"
 #include "../common/core.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/utilities.hpp"
+#ifdef WIN32
+#include "../common/winapi.hpp"
+#endif
 
 // Only for constants - do not use functions of it or linking will fail
-#include "../map/mob.hpp" // MAX_MVP_DROP and MAX_MOB_DROP
+#include "../map/achievement.hpp"
+#include "../map/battle.hpp"
+#include "../map/battleground.hpp"
+#include "../map/channel.hpp"
+#include "../map/chat.hpp"
+#include "../map/date.hpp"
+#include "../map/instance.hpp"
+#include "../map/mercenary.hpp"
+#include "../map/mob.hpp"
+#include "../map/npc.hpp"
+#include "../map/pc.hpp"
+#include "../map/pet.hpp"
+#include "../map/script.hpp"
+#include "../map/storage.hpp"
+#include "../map/quest.hpp"
 
 using namespace rathena;
 
@@ -54,6 +73,7 @@ static size_t pet_read_db( const char* file );
 std::unordered_map<uint16, std::string> aegis_itemnames;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
+std::unordered_map<const char*, int32> constants;
 
 // Forward declaration of constant loading functions
 static bool parse_item_constants( const char* path );
@@ -67,6 +87,24 @@ bool askConfirmation( const char* fmt, ... );
 
 YAML::Node body;
 size_t counter;
+
+// Implement the function instead of including the original version by linking
+void script_set_constant_( const char* name, int value, const char* constant_name, bool isparameter, bool deprecated ){
+	constants[name] = value;
+}
+
+const char* constant_lookup( int32 value, const char* prefix ){
+	nullpo_retr( nullptr, prefix );
+
+	for( auto const& pair : constants ){
+		// Same prefix group and same value
+		if( strncasecmp( pair.first, prefix, strlen( prefix ) ) == 0 && pair.second == value ){
+			return pair.first;
+		}
+	}
+
+	return nullptr;
+}
 
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
@@ -123,6 +161,9 @@ int do_init( int argc, char** argv ){
 	sv_readdb( path_db_import.c_str(), "mob_db.txt", ',', 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, 31 + 2 * MAX_MVP_DROP + 2 * MAX_MOB_DROP, -1, &parse_mob_constants, false );
 	sv_readdb( path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
 	sv_readdb( path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
+
+	// Load constants
+	#include "../map/script_constants.hpp"
 
 	std::vector<std::string> guild_skill_tree_paths = {
 		path_db,
