@@ -1135,6 +1135,20 @@ Give or remove a cart to a player and also change the cart skin based on ID:
 
 ---------------------------------------
 
+@synthesisui <id>
+
+Open Lapine Synthesis UI. Valid 'id' can be found in db/[pre-]re/item_synthesis.yml
+(available for PACKETVER >= 20160525)
+
+---------------------------------------
+
+@upgradeui <id>
+
+Open Lapine Upgrade UI. Valid 'id' can be found in db/[pre-]re/item_upgrade.yml
+(available for PACKETVER >= 20160525)
+
+---------------------------------------
+
 ==============================
 | 5. Administrative Commands |
 ==============================

@@ -7074,6 +7074,10 @@ ACMD_FUNC(mute)
 ACMD_FUNC(refresh)
 {
 	nullpo_retr(-1, sd);
+	if (sd->state.lapine_ui) {
+		clif_displaymessage(sd->fd, msg_txt(sd, 543));
+		return -1;
+	}
 	clif_refresh(sd);
 	return 0;
 }
@@ -10073,7 +10077,8 @@ ACMD_FUNC(synthesisui) {
 		clif_displaymessage(fd, "Please input itemid of synthesis id.");
 		return -1;
 	}
-	item_synthesis_open(sd, itemid);
+	if (!item_synthesis_open(sd, itemid))
+		return -1;
 #else
 	clif_displaymessage(fd, "Client is not supported.");
 #endif
@@ -10089,7 +10094,8 @@ ACMD_FUNC(upgradeui) {
 		clif_displaymessage(fd, "Please input itemid of upgrade id.");
 		return -1;
 	}
-	item_upgrade_open(sd, itemid);
+	if (!item_upgrade_open(sd, itemid))
+		return -1;
 #else
 	clif_displaymessage(fd, "Client is not supported.");
 #endif
