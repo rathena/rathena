@@ -612,10 +612,10 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 
 	node["Skill"] = *skill_name;
 
-	std::string *book_name = util::umap_find(aegis_itemnames, atoi(split[2]);
+	std::string *book_name = util::umap_find(aegis_itemnames, atoi(split[2]));
 
 	if (book_name == nullptr) {
-		ShowError("Book name for item ID %hu is not known.\n", atoi(split[2]);
+		ShowError("Book name for item ID %hu is not known.\n", atoi(split[2]));
 		return false;
 	}
 
