@@ -1635,23 +1635,6 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 }
 
 /**
-* Check if item is available in spellbook_db or not
-* @param nameid
-* @return True if item is spellbook; False if not
-*/
-bool itemdb_is_spellbook2(unsigned short nameid) {
-	if (!nameid || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
-		return false;
-
-	for (const auto &it : reading_spellbook_db) {
-		if (it.second->nameid == nameid)
-			return true;
-	}
-
-	return false;
-}
-
-/**
 * Retrieves random option data
 */
 struct s_random_opt_data* itemdb_randomopt_exists(short id) {

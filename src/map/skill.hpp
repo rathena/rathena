@@ -2179,6 +2179,7 @@ public:
 
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
+	std::shared_ptr<s_skill_spellbook_db> findBook(int32 nameid);
 };
 
 extern ReadingSpellbookDatabase reading_spellbook_db;

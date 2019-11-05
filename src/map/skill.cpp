@@ -19936,19 +19936,14 @@ void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
 		return;
 	}
 
-	std::shared_ptr<s_skill_spellbook_db> spell = nullptr;
-
-	for (const auto &it : reading_spellbook_db) {
-		if (it.second->nameid == nameid)
-			spell = it.second;
-	}
+	std::shared_ptr<s_skill_spellbook_db> spell = reading_spellbook_db.findBook(nameid);
 
 	if (spell == nullptr)
 		return;
 
-	uint16 skill_id;
+	uint16 skill_id = spell->skill_id, skill_lv = pc_checkskill(sd, skill_id);
 
-	if (!pc_checkskill(sd, (skill_id = spell->skill_id)) ) { // Caster hasn't learned the skill
+	if (!skill_lv) { // Caster hasn't learned the skill
 		sc_start(&sd->bl,&sd->bl, SC_SLEEP, 100, 1, skill_get_time(WL_READING_SB, pc_checkskill(sd, WL_READING_SB)));
 		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_DIFFICULT_SLEEP, 0);
 		return;
@@ -19964,17 +19959,17 @@ void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
 		for (i = SC_MAXSPELLBOOK; i >= SC_SPELLBOOK1; i--) { // This is how official saves spellbook. [malufett]
 			if (!sc->data[i]) {
 				sc->data[SC_FREEZE_SP]->val2 += points; // increase points
-				sc_start4(&sd->bl,&sd->bl, (sc_type)i, 100, skill_id, pc_checkskill(sd,skill_id), points, 0, INFINITE_TICK);
+				sc_start4(&sd->bl,&sd->bl, (sc_type)i, 100, skill_id, skill_lv, points, 0, INFINITE_TICK);
 				break;
 			}
 		}
 	} else {
 		sc_start2(&sd->bl, &sd->bl, SC_FREEZE_SP, 100, 0, points, INFINITE_TICK);
-		sc_start4(&sd->bl, &sd->bl, SC_MAXSPELLBOOK, 100, skill_id, pc_checkskill(sd, skill_id), points, 0, INFINITE_TICK);
+		sc_start4(&sd->bl, &sd->bl, SC_MAXSPELLBOOK, 100, skill_id, skill_lv, points, 0, INFINITE_TICK);
 	}
 
 	// Reading Spell Book SP cost same as the sealed spell.
-	status_zap(&sd->bl, 0, skill_get_sp(skill_id, pc_checkskill(sd, skill_id)));
+	status_zap(&sd->bl, 0, skill_get_sp(skill_id, skill_lv));
 }
 
 int skill_select_menu(struct map_session_data *sd,uint16 skill_id) {
@@ -21492,6 +21487,23 @@ uint64 ReadingSpellbookDatabase::parseBodyNode(const YAML::Node &node) {
 		this->put(skill_id, spell);
 
 	return 1;
+}
+
+/**
+ * Check if the specified item is available in the spellbook_db or not
+ * @param nameid: Book Item ID
+ * @return Spell data or nullptr otherwise
+ */
+std::shared_ptr<s_skill_spellbook_db> ReadingSpellbookDatabase::findBook(int32 nameid) {
+	if (nameid < 1 || !itemdb_exists(nameid) || reading_spellbook_db.size() == 0)
+		return nullptr;
+
+	for (const auto &spell : reading_spellbook_db) {
+		if (spell.second->nameid == nameid)
+			return spell.second;
+	}
+
+	return nullptr;
 }
 
 /** Reads improvise db
