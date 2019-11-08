@@ -3,14 +3,14 @@
 //===== By: ==================================================
 //= rAthena Dev Team
 //===== Last Updated: ========================================
-//= 20190226
+//= 20191107
 //===== Description: =========================================
 //= Explanation of the achievements_db.yml file and structure.
 //============================================================
 
 ---------------------------------------
 
-ID: Unique achievement ID.
+Id: Unique achievement ID.
 
 ---------------------------------------
 
@@ -42,20 +42,22 @@ Valid groups:
 
 ---------------------------------------
 
-Name: Achievement name. Not read into source but used for quick look ups.
+Name: Achievement name. Used when sending rewards through RODEX.
 
 ---------------------------------------
 
-Target: A list of monster ID and count values that the achievement requires.
+Targets: A list of monster names and count values that the achievement requires.
 		The target count can also be used for achievements that keep a counter while not being related to monster kills.
 		Capped at MAX_ACHIEVEMENT_OBJECTIVES.
 
 Example:
   // Player must kill 5 Scorpions and 10 Poring.
-  Target:
-    - MobID: 1001
+  Targets:
+    - Id: 0
+      Mob: SCORPION
       Count: 5
-    - MobID: 1002
+    - Id: 1
+      Mob: PORING
       Count: 10
 
 Example 2:
@@ -63,7 +65,7 @@ Example 2:
   // and not checked for a total (UI_Type = 1).
   // IE: In the achievement_list.lub file, UI_Type 0 is displayed as non-incremental while 1 shows a progress bar of completion for the achievement.
   Condition: " ARG0 >= 100 "
-  Target:
+  Targets:
     - Id: 0 // Array index value
       Count: 100
 
@@ -88,15 +90,23 @@ Map: A map name that is used for the AG_CHATTING type which increments the count
 
 ---------------------------------------
 
-Dependent: A list of achievement IDs that need to be completed before this achievement is considered complete.
+Dependents: A list of achievement IDs that need to be completed before this achievement is considered complete.
+
+Example:
+  // Player must complete achievements 10001 and 10002 first.
+  Dependents:
+    - Id: 0
+      AchievementId: 10001
+    - Id: 1
+      AchievementId: 10002
 
 ---------------------------------------
 
-Reward: A list of rewards that are given on completion. All fields are optional.
-  ItemID: Item ID
-  Amount:	Amount of Item ID (default 1)
+Rewards: A list of rewards that are given on completion. All fields are optional.
+  Item: Item Name
+  Amount: Amount of Item (Default: 1)
   Script: Bonus Script
-  TitleID: Title ID
+  TitleId: Title ID
 
 ---------------------------------------
 

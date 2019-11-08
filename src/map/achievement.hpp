@@ -74,8 +74,8 @@ struct s_achievement_db {
 	uint32 achievement_id;
 	std::string name;
 	enum e_achievement_group group;
-	std::map<uint16, std::shared_ptr<achievement_target>> targets;
-	std::vector<uint32> dependent_ids;
+	std::unordered_map<uint16, std::shared_ptr<achievement_target>> targets;
+	std::unordered_map<uint16, uint32> dependent_ids;
 	struct script_code* condition;
 	int16 mapindex;
 	struct ach_reward {
@@ -94,11 +94,10 @@ struct s_achievement_db {
 
 class AchievementDatabase : public TypesafeYamlDatabase<uint32, s_achievement_db>{
 private:
-	// Avoids checking achievements on every mob killed
-	std::vector<uint32> achievement_mobs;
+	std::vector<uint32> achievement_mobs; // Avoids checking achievements on every mob killed
 
 public:
-	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 1 ){
+	AchievementDatabase() : TypesafeYamlDatabase( "ACHIEVEMENT_DB", 2 ){
 
 	}
 

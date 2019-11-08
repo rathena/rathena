@@ -22,9 +22,8 @@
 # Achievement Level Settings
 #
 ###########################################################################
-# Level - Achievement Level
-###########################################################################
-# Points - Required total scoring points to reach this level.
+# - Level     Achievement Level.
+#   Points    Required total scoring points to reach this level.
 ###########################################################################
 
 Header:
