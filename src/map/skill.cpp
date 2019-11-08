@@ -6087,12 +6087,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case RL_QD_SHOT:
+		if ((tsc && !tsc->data[SC_C_MARKER]) || skill_area_temp[1] != bl->id)
+			break;
 	case RL_D_TAIL:
-		if (!sd || (tsc && tsc->data[SC_C_MARKER])) {
-			if (skill_id == RL_QD_SHOT && skill_area_temp[1] == bl->id )
-				break;
+		if (!sd)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
-		}
 		break;
 
 	case SU_SCAROFTAROU:
