@@ -241,8 +241,8 @@ moc_para01,35,23,3	script	Kafra Teleportation#eden	4_F_DRKAFRA01,{
 		mes "[Kafra Employee]";
 		mes "We do not offer free teleportation services for adventurers ^ff0000above level 40 or higher^000000.";
 		mes "Search for Kafra Teleportation services in the city.";
+		close3;
 		cutin "kafra_do01", 255;
-		close;
 	}
 	mes "[Kafra Employee]";
 	mes "Please tell me your destiny?";
