@@ -295,8 +295,10 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			}
 
 			achievement->rewards.amount = amount;
-		} else
-			achievement->rewards.amount = 1;
+		} else {
+			if (!exists)
+				achievement->rewards.amount = 1;
+		}
 
 		if( this->nodeExists( rewardNode, "Script" ) ){
 			std::string script;
