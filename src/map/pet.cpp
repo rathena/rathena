@@ -1151,10 +1151,8 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 	if(egg_index < 0 || egg_index >= MAX_INVENTORY)
 		return 0; //Forged packet!
 
-	if(sd->trade_partner){	//The player have trade in progress.
-		clif_displaymessage(sd->fd, "You need to complete the trade first.");
+	if(sd->trade_partner)	//The player have trade in progress.
 		return 0;
-	}
 
 	if(sd->inventory.u.items_inventory[egg_index].card[0] == CARD0_PET)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->inventory.u.items_inventory[egg_index].card[1], sd->inventory.u.items_inventory[egg_index].card[2]) );
