@@ -21,6 +21,7 @@ struct s_item_upgrade_db {
 	std::vector<uint32> targets;
 	script_code *result;
 	uint16 source_refine_min;
+	uint16 source_refine_max;
 	uint16 need_option_num;
 	bool not_socket_enchant;
 	bool delete_target_onsuccess;

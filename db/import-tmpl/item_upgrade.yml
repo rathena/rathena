@@ -6,8 +6,9 @@
 #
 ###########################################################################
 # - Id:                   # (int) Item ID of upgrade box
-#   NeedRefineMin:        # (int) Minimum refine level for target item (default :0)
-#   NeedOptionNumMin:     # (int) Minimum random option that target item has (default :0)
+#   NeedRefineMin:        # (int) Minimum refine level needed for target item (default: 0)
+#   NeedRefineMax:        # (int) Maximum refine level needed for target item (default: MAX_REFINE)
+#   NeedOptionNumMin:     # (int) Minimum random option that target item has (default: 0)
 #   NotSocketEnchantItem: # (bool) Target item must not has enchant stone (default: true)
 #   TargetItem:           # List of possible item to be upgraded
 #     - Item:             # (int) Target's Item ID

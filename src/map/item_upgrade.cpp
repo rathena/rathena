@@ -84,8 +84,12 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 		this->asUInt16(node, "NeedRefineMin", entry->source_refine_min);
 	}
 
+	if (this->nodeExists(node, "NeedRefineMax")) {
+		this->asUInt16(node, "NeedRefineMax", entry->source_refine_max);
+	}
+
 	if (this->nodeExists(node, "NeedOptionNumMin")) {
-		this->asUInt16(node, "NeedOptionNumMin", entry->source_refine_min);
+		this->asUInt16(node, "NeedOptionNumMin", entry->need_option_num);
 	}
 
 	if (this->nodeExists(node, "NotSocketEnchantItem")) {
@@ -212,6 +216,7 @@ s_item_upgrade_db::s_item_upgrade_db()
 	: targets()
 	, result(nullptr)
 	, source_refine_min(0)
+	, source_refine_max(MAX_REFINE)
 	, need_option_num(0)
 	, not_socket_enchant(false)
 	, delete_target_onsuccess(true)
@@ -250,6 +255,9 @@ bool s_item_upgrade_db::targetExists(uint32 target_id)
 bool s_item_upgrade_db::checkRequirement(item *it, item_data *id)
 {
 	if (this->source_refine_min > it->refine)
+		return false;
+
+	if (this->source_refine_max < it->refine)
 		return false;
 
 	if (this->not_socket_enchant) {

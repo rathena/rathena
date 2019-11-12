@@ -213,7 +213,7 @@ void do_final_item_synthesis(void) {
 * Constructor
 */
 s_item_synthesis_db::s_item_synthesis_db()
-	: source_needed(0)
+	: source_needed(1)
 	, sources()
 	, reward(nullptr)
 	, source_refine_min(0)
