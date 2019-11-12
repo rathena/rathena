@@ -1154,6 +1154,12 @@ int pet_select_egg(struct map_session_data *sd,short egg_index)
 	if(sd->trade_partner)	//The player have trade in progress.
 		return 0;
 
+	std::shared_ptr<s_pet_db> pet = pet_db_search(sd->inventory.u.items_inventory[egg_index].nameid, PET_EGG);
+	if (!pet) {
+		ShowError("pet does not exist, egg id %d\n", sd->inventory.u.items_inventory[egg_index].nameid);
+		return 0;
+	}
+
 	if(sd->inventory.u.items_inventory[egg_index].card[0] == CARD0_PET)
 		intif_request_petdata(sd->status.account_id, sd->status.char_id, MakeDWord(sd->inventory.u.items_inventory[egg_index].card[1], sd->inventory.u.items_inventory[egg_index].card[2]) );
 	else
