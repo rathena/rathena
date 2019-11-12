@@ -20900,6 +20900,7 @@ void clif_parse_equipswitch_request_single( int fd, struct map_session_data* sd 
 static void clif_lapine_ui_reset(map_session_data *sd) {
 	sd->state.lapine_ui = 0;
 	sd->last_lapine_box = 0;
+	sd->itemid = sd->itemindex = -1;
 }
 
 /*
@@ -20982,7 +20983,7 @@ void clif_parse_lapineSynthesis_submit(int fd, struct map_session_data* sd) {
 		return;
 	}
 
-	if (sd->state.lapine_ui != 1) {
+	if (!(sd->state.lapine_ui&1)) {
 		set_eof(sd->fd);
 		return;
 	}
@@ -21008,14 +21009,15 @@ void clif_parse_lapineSynthesis_submit(int fd, struct map_session_data* sd) {
 		return;
 	}
 
-	if (id->flag.delay_consume) {
+	if (!(sd->state.lapine_ui&4) && id->flag.delay_consume) {
 		item *it;
 		if (sd->itemindex == -1 || sd->itemid == -1 || !(it = &sd->inventory.u.items_inventory[sd->itemindex]) || it->nameid != itemid) {
 			//clif_synthesisui_result(sd, SYNTHESIS_INVALID_ITEM);
 			set_eof(sd->fd);
 			return;
 		}
-		pc_delitem(sd, sd->itemindex, 1, 0, 0, LOG_TYPE_CONSUME);
+		if (id->flag.delay_consume != 2)
+			pc_delitem(sd, sd->itemindex, 1, 0, 0, LOG_TYPE_CONSUME);
 	}
 
 	std::vector<s_item_synthesis_list> items;
@@ -21037,7 +21039,7 @@ void clif_parse_lapineSynthesis_submit(int fd, struct map_session_data* sd) {
 	}
 
 	clif_synthesisui_result(sd, item_synthesis_submit(sd, itemid, items));
-	sd->itemid = sd->itemindex = -1;
+	clif_lapine_ui_reset(sd);
 #endif
 }
 
@@ -21134,7 +21136,7 @@ void clif_parse_lapineUpgrade_submit(int fd, struct map_session_data* sd) {
 		return;
 	}
 
-	if (sd->state.lapine_ui != 2) {
+	if (!(sd->state.lapine_ui&2)) {
 		set_eof(sd->fd);
 		return;
 	}
@@ -21169,17 +21171,18 @@ void clif_parse_lapineUpgrade_submit(int fd, struct map_session_data* sd) {
 		return;
 	}
 
-	if (id->flag.delay_consume) {
+	if (!(sd->state.lapine_ui&4) && id->flag.delay_consume) {
 		if (sd->itemindex == -1 || sd->itemid == -1) {
 			//clif_lapine_upgrade_result(sd, LAPINE_UPRAGDE_FAILURE);
 			set_eof(sd->fd);
 			return;
 		}
-		pc_delitem(sd, sd->itemindex, 1, 0, 0, LOG_TYPE_CONSUME);
+		if (id->flag.delay_consume != 2)
+			pc_delitem(sd, sd->itemindex, 1, 0, 0, LOG_TYPE_CONSUME);
 	}
 
 	clif_lapine_upgrade_result(sd, item_upgrade_submit(sd, itemid, index));
-	sd->itemid = sd->itemindex = -1;
+	clif_lapine_ui_reset(sd);
 #endif
 }
 

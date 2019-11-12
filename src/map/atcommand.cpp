@@ -10079,6 +10079,8 @@ ACMD_FUNC(synthesisui) {
 	}
 	if (!item_synthesis_open(sd, itemid))
 		return -1;
+	sd->state.lapine_ui |= 4;
+	sd->itemid = itemid;
 #else
 	clif_displaymessage(fd, "Client is not supported.");
 #endif
@@ -10096,6 +10098,8 @@ ACMD_FUNC(upgradeui) {
 	}
 	if (!item_upgrade_open(sd, itemid))
 		return -1;
+	sd->state.lapine_ui |= 4;
+	sd->itemid = itemid;
 #else
 	clif_displaymessage(fd, "Client is not supported.");
 #endif

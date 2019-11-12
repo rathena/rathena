@@ -311,7 +311,7 @@ struct map_session_data {
 		bool mail_writing; // Whether the player is currently writing a mail in RODEX or not
 		bool cashshop_open;
 		bool sale_open;
-		unsigned int lapine_ui : 2; // Lapine Synthesis/Upgrade UI is opened
+		unsigned int lapine_ui : 3; // Lapine Synthesis/Upgrade UI is opened
 		unsigned int block_action : 10;
 	} state;
 	struct {
