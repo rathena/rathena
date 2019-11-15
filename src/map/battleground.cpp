@@ -621,8 +621,8 @@ static TIMER_FUNC(bg_on_ready_expire)
 	nullpo_ret(queue);
 
 	queue->in_ready_state = false;
+	queue->map->isReserved = false; // Remove reservation to free up for future queue
 	queue->map = nullptr;
-	queue->map->isReserved = false;
 	queue->accepted_players = 0; // Reset the queue count
 
 	std::string bg_name = battleground_db.find(queue->id)->name;
@@ -1341,8 +1341,8 @@ void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
 
 	if (!bg) {
+		queue->map->isReserved = false; // Remove reservation to free up for future queue
 		queue->map = nullptr;
-		queue->map->isReserved = false;
 		ShowError("bg_queue_start_battleground: Could not find battleground ID %d in battlegrounds database.\n", queue->id);
 		return;
 	}
