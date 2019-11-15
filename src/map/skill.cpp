@@ -6090,7 +6090,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		if ((tsc && !tsc->data[SC_C_MARKER]) || skill_area_temp[1] != bl->id)
 			break;
 	case RL_D_TAIL:
-		if (!sd)
+		if (flag&1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
 		break;
 
