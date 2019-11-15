@@ -140,7 +140,7 @@ void YamlDatabase::parse( const YAML::Node& rootNode ){
 		for( const YAML::Node &node : bodyNode ){
 			count += this->parseBodyNode( node );
 
-			ShowStatus( "Loading [%zd/%zd] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName );
+			ShowStatus( "Loading [%" PRIdPTR "/%" PRIdPTR "] entries from '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\r", ++childNodesProgressed, childNodesCount, fileName );
 		}
 
 		ShowStatus( "Done reading '" CL_WHITE "%" PRIu64 CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'" CL_CLL "\n", count, fileName );
