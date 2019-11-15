@@ -55,7 +55,7 @@ struct s_battleground_queue {
 	bool in_ready_state; ///< Is this BG queue waiting for players to enter the BG?
 	int tid_expire; ///< Timer ID associated with the time out at the ready to enter window
 	int tid_requeue; ///< Timer ID associated with requeuing this group if all BG maps are reserved
-	s_battleground_map map; ///< Map this BG queue has been assigned to
+	s_battleground_map *map; ///< Map this BG queue has been assigned to
 };
 
 struct s_battleground_type {

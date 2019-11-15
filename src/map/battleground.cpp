@@ -617,13 +617,12 @@ TIMER_FUNC(bg_send_xy_timer)
 static TIMER_FUNC(bg_on_ready_expire)
 {
 	s_battleground_queue *queue = (s_battleground_queue*)data;
-	s_battleground_map *bgmap = nullptr;
 
 	nullpo_ret(queue);
 
 	queue->in_ready_state = false;
-	queue->map.isReserved = false;
-	queue->map = *bgmap;
+	queue->map = nullptr;
+	queue->map->isReserved = false;
 	queue->accepted_players = 0; // Reset the queue count
 
 	std::string bg_name = battleground_db.find(queue->id)->name;
@@ -1238,6 +1237,8 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 			sc_start(nullptr, &sd->bl, SC_ENTRY_QUEUE_APPLY_DELAY, 100, 1, 60000);
 			sd->bg_queue = nullptr;
 			return true;
+		} else {
+			list_it++;
 		}
 	}
 
@@ -1287,7 +1288,7 @@ bool bg_queue_on_ready(const char *name, std::shared_ptr<s_battleground_queue> q
 		if (!it.isReserved) {
 			it.isReserved = true;
 			bgmap = &it;
-			queue->map = it;
+			queue->map = &it;
 			break;
 		}
 	}
@@ -1320,7 +1321,7 @@ void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, stru
 
 	sd->bg_queue_accept_state = true;
 	queue->accepted_players++;
-	clig_bg_queue_ack_lobby(true, map_mapid2mapname(queue->map.mapid), map_mapid2mapname(queue->map.mapid), sd);
+	clig_bg_queue_ack_lobby(true, map_mapid2mapname(queue->map->mapid), map_mapid2mapname(queue->map->mapid), sd);
 
 	if (queue->accepted_players == queue->required_players * 2)
 		bg_queue_start_battleground(queue);
@@ -1340,15 +1341,15 @@ void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
 
 	if (!bg) {
-		queue->map.isReserved = false;
-		queue->map = {};
+		queue->map = nullptr;
+		queue->map->isReserved = false;
 		ShowError("bg_queue_start_battleground: Could not find battleground ID %d in battlegrounds database.\n", queue->id);
 		return;
 	}
 
-	uint16 map_idx = map_id2index(queue->map.mapid);
-	int bg_team_1 = bg_create(map_idx, &queue->map.team1);
-	int bg_team_2 = bg_create(map_idx, &queue->map.team2);
+	uint16 map_idx = map_id2index(queue->map->mapid);
+	int bg_team_1 = bg_create(map_idx, &queue->map->team1);
+	int bg_team_2 = bg_create(map_idx, &queue->map->team2);
 
 	for (const auto &sd : queue->teama_members) {
 		sd->bg_queue = nullptr;
@@ -1364,9 +1365,9 @@ void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 		bg_team_join(bg_team_2, sd, true);
 	}
 
-	mapreg_setreg(add_str(queue->map.team1.bg_id_var.c_str()), bg_team_1);
-	mapreg_setreg(add_str(queue->map.team2.bg_id_var.c_str()), bg_team_2);
-	npc_event_do(queue->map.bgcallscript.c_str());
+	mapreg_setreg(add_str(queue->map->team1.bg_id_var.c_str()), bg_team_1);
+	mapreg_setreg(add_str(queue->map->team2.bg_id_var.c_str()), bg_team_2);
+	npc_event_do(queue->map->bgcallscript.c_str());
 	queue->teama_members.clear();
 	queue->teamb_members.clear();
 
