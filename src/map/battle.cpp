@@ -5032,27 +5032,6 @@ struct block_list *battle_check_devotion(struct block_list *bl) {
 static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,struct block_list *target,uint16 skill_id,uint16 skill_lv)
 {
 	if( wd->damage + wd->damage2 ) { //There is a total damage value
-		if( src != target && //Don't reflect your own damage (Grand Cross)
-			(!skill_id || skill_id ||
-			(src->type == BL_SKILL && (skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM))) ) {
-				int64 damage = wd->damage + wd->damage2, rdamage = 0;
-				struct map_session_data *tsd = BL_CAST(BL_PC, target);
-				struct status_data *sstatus = status_get_status_data(src);
-				t_tick tick = gettick(), rdelay = 0;
-
-				rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id, false);
-				if( rdamage > 0 ) { //Item reflect gets calculated before any mapflag reducing is applicated
-					struct block_list *d_bl = battle_check_devotion(src);
-
-					rdelay = clif_damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
-					if( tsd )
-						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
-					//Use Reflect Shield to signal this kind of skill trigger [Skotlex]
-					battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay, true, false);
-					skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
-				}
-		}
-
 		struct map_data *mapdata = map_getmapdata(target->m);
 
 		if(!wd->damage2) {
@@ -5079,6 +5058,27 @@ static void battle_calc_attack_gvg_bg(struct Damage* wd, struct block_list *src,
 			wd->damage2 = (int64)d2*100/d1 * wd->damage/100;
 			if(wd->damage > 1 && wd->damage2 < 1) wd->damage2 = 1;
 			wd->damage-=wd->damage2;
+		}
+
+		if( src != target && //Don't reflect your own damage (Grand Cross)
+			(!skill_id || skill_id ||
+			(src->type == BL_SKILL && (skill_id == SG_SUN_WARM || skill_id == SG_MOON_WARM || skill_id == SG_STAR_WARM))) ) {
+				int64 damage = wd->damage + wd->damage2, rdamage = 0;
+				struct map_session_data *tsd = BL_CAST(BL_PC, target);
+				struct status_data *sstatus = status_get_status_data(src);
+				t_tick tick = gettick(), rdelay = 0;
+
+				rdamage = battle_calc_return_damage(target, src, &damage, wd->flag, skill_id, false);
+				if( rdamage > 0 ) { //Item reflect gets calculated before any mapflag reducing is applicated
+					struct block_list *d_bl = battle_check_devotion(src);
+
+					rdelay = clif_damage(src, (!d_bl) ? src : d_bl, tick, wd->amotion, sstatus->dmotion, rdamage, 1, DMG_ENDURE, 0, false);
+					if( tsd )
+						battle_drain(tsd, src, rdamage, rdamage, sstatus->race, sstatus->class_);
+					//Use Reflect Shield to signal this kind of skill trigger [Skotlex]
+					battle_delay_damage(tick, wd->amotion, target, (!d_bl) ? src : d_bl, 0, CR_REFLECTSHIELD, 0, rdamage, ATK_DEF, rdelay, true, false);
+					skill_additional_effect(target, (!d_bl) ? src : d_bl, CR_REFLECTSHIELD, 1, BF_WEAPON|BF_SHORT|BF_NORMAL, ATK_DEF, tick);
+				}
 		}
 	}
 }
