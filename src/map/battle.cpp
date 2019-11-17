@@ -2384,7 +2384,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 
 	struct status_data *sstatus = status_get_status_data(src);
 
-	if( sstatus->cri && ( !skill_id || skill_get_nk(skill_id)&NK_CRITICAL ) )
+	if( sstatus->cri )
 	{
 		struct status_data *tstatus = status_get_status_data(target);
 		struct status_change *sc = status_get_sc(src);
