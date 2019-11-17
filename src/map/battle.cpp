@@ -2376,6 +2376,9 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	if (!first_call)
 		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
+	if( !skill_id && !skill_get_nk(skill_id)&NK_CRITICAL )
+		return false;
+
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
 
@@ -2433,7 +2436,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 			cri = cri * ( 100 - tsd->bonus.critical_def ) / 100;
 		return (rnd()%1000 < cri);
 	}
-	return 0;
+	return false;
 }
 
 /*==========================================================
@@ -3259,7 +3262,7 @@ static void battle_calc_skill_base_damage(struct Damage* wd, struct block_list *
 					RE_ALLATK_ADDRATE(wd, sd->bonus.atk_rate);
 				}
 #ifndef RENEWAL
-				if(sd->bonus.crit_atk_rate && !skill_id && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
+				if(sd->bonus.crit_atk_rate && is_attack_critical(wd, src, target, skill_id, skill_lv, false)) { // add +crit damage bonuses here in pre-renewal mode [helvetica]
 					ATK_ADDRATE(wd->damage, wd->damage2, sd->bonus.crit_atk_rate);
 				}
 #endif
