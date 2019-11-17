@@ -2379,8 +2379,11 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	if( !skill_id && !skill_get_nk(skill_id)&NK_CRITICAL )
 		return false;
 
-	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
-		return true;
+	switch(skill_id) { //Always critical skills
+		case NPC_CRITICALSLASH:
+		case LG_PINPOINTATTACK:
+			return true;
+	}
 
 	struct status_data *sstatus = status_get_status_data(src);
 
