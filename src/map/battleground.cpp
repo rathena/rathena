@@ -156,6 +156,18 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			bg->deserter_time = 600;
 	}
 
+	if (this->nodeExists(node, "StartDelay")) {
+		int delay;
+
+		if (!this->asInt32(node, "StartDelay", delay))
+			return 0;
+
+		bg->start_delay = delay;
+	} else {
+		if (!exists)
+			bg->start_delay = 30;
+	}
+
 	if (this->nodeExists(node, "Locations")) {
 		int count = 0;
 
@@ -608,6 +620,30 @@ TIMER_FUNC(bg_send_xy_timer)
 }
 
 /**
+ * Mark a Battleground as ready to begin queuing
+ * @param tid: Timer ID
+ * @param tick: Timer
+ * @param id: ID
+ * @return 0 on success or 1 otherwise
+ */
+static TIMER_FUNC(bg_on_ready_loopback)
+{
+	s_battleground_queue *queue = (s_battleground_queue*)data;
+
+	nullpo_retr(1, queue);
+
+	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
+
+	if (bg) {
+		bg_queue_on_ready(bg->name.c_str(), std::shared_ptr<s_battleground_queue>(queue));
+		return 0;
+	} else {
+		ShowError("bg_on_ready_loopback: Can't find battleground %d in the battlegrounds database.\n", queue->id);
+		return 1;
+	}
+}
+
+/**
  * Reset Battleground queue data
  * @param tid: Timer ID
  * @param tick: Timer
@@ -618,7 +654,7 @@ static TIMER_FUNC(bg_on_ready_expire)
 {
 	s_battleground_queue *queue = (s_battleground_queue*)data;
 
-	nullpo_ret(queue);
+	nullpo_retr(1, queue);
 
 	queue->in_ready_state = false;
 	queue->map->isReserved = false; // Remove reservation to free up for future queue
@@ -640,27 +676,20 @@ static TIMER_FUNC(bg_on_ready_expire)
 }
 
 /**
- * Mark a Battleground as ready to begin queuing
+ * Start a Battleground
  * @param tid: Timer ID
  * @param tick: Timer
  * @param id: ID
  * @return 0 on success or 1 otherwise
  */
-static TIMER_FUNC(bg_on_ready_loopback)
+static TIMER_FUNC(bg_on_ready_start)
 {
 	s_battleground_queue *queue = (s_battleground_queue*)data;
 
-	nullpo_ret(queue);
+	nullpo_retr(1, queue);
 
-	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
-
-	if (bg) {
-		bg_queue_on_ready(bg->name.c_str(), std::shared_ptr<s_battleground_queue>(queue));
-		return 0;
-	} else {
-		ShowError("bg_on_ready_loopback: Can't find battleground %d in the battlegrounds database.\n", queue->id);
-		return 1;
-	}
+	bg_queue_start_battleground(std::shared_ptr<s_battleground_queue>(queue));
+	return 0;
 }
 
 /**
@@ -785,8 +814,9 @@ std::shared_ptr<s_battleground_queue> bg_queue_create(int bg_id, int req_players
 	queue->id = bg_id;
 	queue->required_players = req_players;
 	queue->accepted_players = 0;
-	queue->tid_expire = 0;
-	queue->tid_requeue = 0;
+	queue->tid_expire = INVALID_TIMER;
+	queue->tid_start = INVALID_TIMER;
+	queue->tid_requeue = INVALID_TIMER;
 	queue->in_ready_state = false;
 
 	return queue;
@@ -1226,7 +1256,7 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 					if (sd->bg_queue == q) {
 						if (q->tid_requeue && get_timer(q->tid_requeue)) {
 							delete_timer(q->tid_requeue, bg_on_ready_loopback);
-							q->tid_requeue = 0;
+							q->tid_requeue = INVALID_TIMER;
 						}
 
 						queue_it = bg_queues.erase(queue_it);
@@ -1323,8 +1353,14 @@ void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, stru
 	queue->accepted_players++;
 	clig_bg_queue_ack_lobby(true, map_mapid2mapname(queue->map->mapid), map_mapid2mapname(queue->map->mapid), sd);
 
-	if (queue->accepted_players == queue->required_players * 2)
-		bg_queue_start_battleground(queue);
+	if (queue->accepted_players == queue->required_players * 2) {
+		queue->tid_start = add_timer(gettick() + battleground_db.find(queue->id)->start_delay * 1000, bg_on_ready_start, 0, (intptr_t)queue.get());
+
+		if (queue->tid_expire && get_timer(queue->tid_expire)) {
+			delete_timer(queue->tid_expire, bg_on_ready_expire);
+			queue->tid_expire = INVALID_TIMER;
+		}
+	}
 }
 
 /**
@@ -1333,9 +1369,9 @@ void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, stru
  */
 void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 {
-	if (queue->tid_expire && get_timer(queue->tid_expire)) {
-		delete_timer(queue->tid_expire, bg_on_ready_expire);
-		queue->tid_expire = 0;
+	if (queue->tid_start && get_timer(queue->tid_start)) {
+		delete_timer(queue->tid_start, bg_on_ready_start);
+		queue->tid_start = INVALID_TIMER;
 	}
 
 	std::shared_ptr<s_battleground_type> bg = battleground_db.find(queue->id);
@@ -1392,6 +1428,7 @@ void do_init_battleground(void)
 	add_timer_func_list(bg_send_xy_timer, "bg_send_xy_timer");
 	add_timer_func_list(bg_on_ready_loopback, "bg_on_ready_loopback");
 	add_timer_func_list(bg_on_ready_expire, "bg_on_ready_expire");
+	add_timer_func_list(bg_on_ready_start, "bg_on_ready_start");
 	add_timer_interval(gettick() + battle_config.bg_update_interval, bg_send_xy_timer, 0, 0, battle_config.bg_update_interval);
 }
 

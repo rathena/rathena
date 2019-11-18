@@ -54,6 +54,7 @@ struct s_battleground_queue {
 	int accepted_players; ///< Amount of players who accepted the offer to enter the battleground
 	bool in_ready_state; ///< Is this BG queue waiting for players to enter the BG?
 	int tid_expire; ///< Timer ID associated with the time out at the ready to enter window
+	int tid_start; ///< Timer ID associated with the start delay
 	int tid_requeue; ///< Timer ID associated with requeuing this group if all BG maps are reserved
 	s_battleground_map *map; ///< Map this BG queue has been assigned to
 };
@@ -67,6 +68,7 @@ struct s_battleground_type {
 	int max_lvl; ///< Maximum level to participate in this battleground type
 	std::vector<s_battleground_map> maps; ///< List of battleground locations
 	int deserter_time; ///< Amount of time a player is marked deserter (seconds)
+	int start_delay; ///< Amount of time before the start message is sent to players (seconds)
 };
 
 /// Enum of responses when applying for a Battleground
