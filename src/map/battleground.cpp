@@ -145,9 +145,9 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "Deserter")) {
-		int deserter;
+		uint32 deserter;
 
-		if (!this->asInt32(node, "Deserter", deserter))
+		if (!this->asUInt32(node, "Deserter", deserter))
 			return 0;
 
 		bg->deserter_time = deserter;
@@ -157,9 +157,9 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "StartDelay")) {
-		int delay;
+		uint32 delay;
 
-		if (!this->asInt32(node, "StartDelay", delay))
+		if (!this->asUInt32(node, "StartDelay", delay))
 			return 0;
 
 		bg->start_delay = delay;
@@ -1254,7 +1254,7 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 					std::shared_ptr<s_battleground_queue> q = *queue_it;
 
 					if (sd->bg_queue == q) {
-						if (q->tid_requeue && get_timer(q->tid_requeue)) {
+						if (q->tid_requeue != INVALID_TIMER && get_timer(q->tid_requeue)) {
 							delete_timer(q->tid_requeue, bg_on_ready_loopback);
 							q->tid_requeue = INVALID_TIMER;
 						}
@@ -1356,7 +1356,7 @@ void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, stru
 	if (queue->accepted_players == queue->required_players * 2) {
 		queue->tid_start = add_timer(gettick() + battleground_db.find(queue->id)->start_delay * 1000, bg_on_ready_start, 0, (intptr_t)queue.get());
 
-		if (queue->tid_expire && get_timer(queue->tid_expire)) {
+		if (queue->tid_expire != INVALID_TIMER && get_timer(queue->tid_expire)) {
 			delete_timer(queue->tid_expire, bg_on_ready_expire);
 			queue->tid_expire = INVALID_TIMER;
 		}
@@ -1369,7 +1369,7 @@ void bg_queue_on_accept_invite(std::shared_ptr<s_battleground_queue> queue, stru
  */
 void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 {
-	if (queue->tid_start && get_timer(queue->tid_start)) {
+	if (queue->tid_start != INVALID_TIMER && get_timer(queue->tid_start)) {
 		delete_timer(queue->tid_start, bg_on_ready_start);
 		queue->tid_start = INVALID_TIMER;
 	}

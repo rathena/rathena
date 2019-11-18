@@ -67,8 +67,8 @@ struct s_battleground_type {
 	int min_lvl; ///< Minimum level to participate in this battleground type
 	int max_lvl; ///< Maximum level to participate in this battleground type
 	std::vector<s_battleground_map> maps; ///< List of battleground locations
-	int deserter_time; ///< Amount of time a player is marked deserter (seconds)
-	int start_delay; ///< Amount of time before the start message is sent to players (seconds)
+	uint32 deserter_time; ///< Amount of time a player is marked deserter (seconds)
+	uint32 start_delay; ///< Amount of time before the start message is sent to players (seconds)
 };
 
 /// Enum of responses when applying for a Battleground
