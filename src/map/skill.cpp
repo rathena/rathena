@@ -6294,9 +6294,11 @@ static int skill_castend_song(struct block_list* src, uint16 skill_id, uint16 sk
 	int flag = BCT_PARTY;
 
 	switch (skill_id) {
+		case BD_ROKISWEIL:
+			flag = BCT_ENEMY | BCT_WOS;
+			break;
 		case BD_LULLABY:
 		case BD_ETERNALCHAOS:
-		case BD_ROKISWEIL:
 		case BA_DISSONANCE:
 		case DC_UGLYDANCE:
 		case DC_DONTFORGETME:

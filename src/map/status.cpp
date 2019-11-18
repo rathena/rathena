@@ -1623,6 +1623,7 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_BERSERK]				|= SCS_NOCAST;
 #ifdef RENEWAL
 	StatusChangeStateTable[SC_BASILICA_CELL]		|= SCS_NOCAST;
+	StatusChangeStateTable[SC_ROKISWEIL]			|= SCS_NOCAST;
 #endif
 	StatusChangeStateTable[SC__BLOODYLUST]			|= SCS_NOCAST;
 	StatusChangeStateTable[SC_DEATHBOUND]			|= SCS_NOCAST;
@@ -2586,10 +2587,8 @@ int status_base_amotion_pc(struct map_session_data* sd, struct status_data* stat
 		val += 1 + skill_lv;
 	if ((skill_lv = pc_checkskill(sd,GS_SINGLEACTION)) > 0 && (sd->status.weapon >= W_REVOLVER && sd->status.weapon <= W_GRENADE))
 		val += ((skill_lv + 1) / 2);
-#ifdef RENEWAL
-	if (skill_lv = pc_checkskill(sd, RG_PLAGIARISM) > 0)
+	if ((skill_lv = pc_checkskill(sd, RG_PLAGIARISM)) > 0)
 		val += skill_lv;
-#endif
 	if (pc_isriding(sd))
 		val -= 50 - 10 * pc_checkskill(sd, KN_CAVALIERMASTERY);
 	else if (pc_isridingdragon(sd))
