@@ -4107,16 +4107,6 @@ int skill_area_sub_count (struct block_list *src, struct block_list *target, uin
 						return 1;
 				}
 			}
-		case RL_D_TAIL:
-			if (src->type != BL_PC)
-				return 0;
-			{
-				struct status_change *tsc = status_get_sc(target);
-				// Only counts marked target with SC_C_MARKER
-				if (!tsc || !tsc->data[SC_C_MARKER])
-					return 0;
-			}
-			break;
 	}
 	return 1;
 }
@@ -6087,7 +6077,7 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 		break;
 
 	case RL_QD_SHOT:
-		if ((tsc && !tsc->data[SC_C_MARKER]) || skill_area_temp[1] != bl->id)
+		if ((tsc && !tsc->data[SC_C_MARKER]) || skill_area_temp[1] == bl->id)
 			break;
 	case RL_D_TAIL:
 		if (flag&1)
@@ -10895,6 +10885,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		}
 		break;
 	case RL_D_TAIL:
+		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		break;
 	case RL_QD_SHOT:
@@ -11194,20 +11185,6 @@ static int8 skill_castend_id_check(struct block_list *src, struct block_list *ta
 					return USESKILL_FAIL_MAX;				
 				if (skill_get_inf2(su->group->skill_id)&INF2_TRAP)
 					return USESKILL_FAIL_MAX;
-			}
-			break;
-		case RL_D_TAIL:
-			if (src) {
-				int count = 0;
-
-				if (battle_config.skill_wall_check)
-					count = map_foreachinshootrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, gettick(), BCT_ENEMY, skill_area_sub_count);
-				else
-					count = map_foreachinrange(skill_area_sub, src, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, gettick(), BCT_ENEMY, skill_area_sub_count);
-
-				if (!count) {
-					return USESKILL_FAIL_LEVEL;
-				}
 			}
 			break;
 	}
@@ -16019,6 +15996,7 @@ bool skill_check_condition_castend(struct map_session_data* sd, uint16 skill_id,
 #ifdef RENEWAL
 		switch(skill_id) { // 2016-10-26 kRO update made these skills require an extra ammo to cast
 			case WM_SEVERE_RAINSTORM:
+			case RL_FIREDANCE:
 			case RL_R_TRIP:
 			case RL_FIRE_RAIN:
 				extra_ammo = 1;
