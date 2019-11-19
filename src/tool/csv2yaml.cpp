@@ -86,7 +86,6 @@ bool askConfirmation( const char* fmt, ... );
 
 std::ofstream out;
 YAML::Emitter body;
-size_t counter;
 
 // Implement the function instead of including the original version by linking
 void script_set_constant_( const char* name, int value, const char* constant_name, bool isparameter, bool deprecated ){
@@ -160,7 +159,6 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				return false;
 			}
 
-			counter = 0;
 			prepareHeader(out, type, version);
 			prepareBody();
 
@@ -619,7 +617,6 @@ static size_t pet_read_db( const char* file ){
 		}
 
 		body << YAML::EndMap;
-		counter++;
 		entries++;
 	}
 
