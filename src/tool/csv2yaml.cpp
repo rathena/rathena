@@ -634,7 +634,7 @@ static size_t pet_read_db( const char* file ){
 		}
 
 		if( *str[20] ){
-			body << YAML::Key << "SupportScript" << YAML::Value << str[20];
+			body << YAML::Key << "SupportScript" << YAML::Value << YAML::Literal << str[20];
 		}
 
 		body << YAML::EndMap;
