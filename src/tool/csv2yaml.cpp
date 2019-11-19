@@ -84,7 +84,6 @@ static bool parse_skill_constants( char* split[], int columns, int current );
 bool fileExists( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
 
-std::ofstream out;
 YAML::Emitter body;
 
 // Implement the function instead of including the original version by linking
@@ -148,6 +147,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 					continue;
 				}
 			}
+
+			std::ofstream out;
 
 			out.open(to);
 
