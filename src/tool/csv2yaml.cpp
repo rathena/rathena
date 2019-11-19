@@ -104,7 +104,29 @@ const char* constant_lookup( int32 value, const char* prefix ){
 	return nullptr;
 }
 
-void prepareHeader(std::ofstream &file, const std::string& type, uint32 version) {
+void copyFileIfExists( std::ofstream& file,const std::string& name, bool newLine ){
+	std::string path = "doc/yaml/db/" + name + ".yml";
+
+	if( fileExists( path ) ){
+		std::ifstream source( path, std::ios::binary );
+
+		std::istreambuf_iterator<char> begin_source( source );
+		std::istreambuf_iterator<char> end_source;
+		std::ostreambuf_iterator<char> begin_dest( file );
+		copy( begin_source, end_source, begin_dest );
+
+		source.close();
+
+		if( newLine ){
+			file << "\n";
+		}
+	}
+}
+
+void prepareHeader(std::ofstream &file, const std::string& type, uint32 version, const std::string& name) {
+	copyFileIfExists( file, "license", false );
+	copyFileIfExists( file, name, true );
+
 	YAML::Emitter header(file);
 
 	header << YAML::BeginMap;
@@ -157,7 +179,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				return false;
 			}
 
-			prepareHeader(out, type, version);
+			prepareHeader(out, type, version, name);
 			prepareBody();
 
 			if( !lambda( path, name_ext ) ){
