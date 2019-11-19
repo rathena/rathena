@@ -82,7 +82,6 @@ static bool parse_mob_constants( char* split[], int columns, int current );
 static bool parse_skill_constants( char* split[], int columns, int current );
 
 bool fileExists( const std::string& path );
-bool writeToFile( const std::string& path );
 bool askConfirmation( const char* fmt, ... );
 
 std::ofstream out;
@@ -238,20 +237,6 @@ bool fileExists( const std::string& path ){
 
 		return true;
 	}else{
-		return false;
-	}
-}
-
-bool writeToFile( const std::string& path ){
-	std::ofstream file;
-
-	file.open( path );
-
-	if( !file.is_open() ){
-		file.close();
-
-		return true;
-	} else {
 		return false;
 	}
 }
