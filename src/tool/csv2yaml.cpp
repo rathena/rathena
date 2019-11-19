@@ -199,10 +199,6 @@ int do_init( int argc, char** argv ){
 
 	std::vector<std::string> root_paths = {
 		path_db,
-		path_db_import
-	};
-
-	std::vector<std::string> import_paths = {
 		path_db_mode,
 		path_db_import
 	};
@@ -213,7 +209,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if( !process( "PET_DB", 1, import_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "PET_DB", 1, root_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
 		return 0;
