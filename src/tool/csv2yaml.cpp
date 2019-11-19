@@ -116,11 +116,8 @@ void prepareHeader(std::ofstream &file, const std::string& type, uint32 version)
 	header << YAML::EndMap;
 	header << YAML::EndMap;
 
-#ifdef WIN32
-	file << "\r\n";
-#else
 	file << "\n";
-#endif
+	file << "\n";
 }
 
 void prepareBody(void) {
@@ -169,7 +166,8 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 
 			finalizeBody();
 			out << body.c_str();
-			out << "\n"; // Make sure there is an empty line at the end of the file for git
+			// Make sure there is an empty line at the end of the file for git
+			out << "\n";
 			out.close();
 			
 			// TODO: do you want to delete/rename?
