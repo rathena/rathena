@@ -6,11 +6,12 @@
 #
 ###########################################################################
 # - Id:                 # (int) Item ID of synthesis box
-#   NeedRefine:         # (int) Minimum refine level for source item
+#   NeedRefineMin:      # (int) Minimum refine level needed for source item (default: 0)
+#   NeedRefineMax:      # (int) Maximum refine level needed for source item (default: MAX_REFINE)
 #   SourceNeeded:       # (int) Number of item sets (in SourceItem) must be selected (default: 1)
 #   SourceItem:         # List of item required
 #     - Item:           # (int) Item ID for source
-#     - Amount:         # (int) Item amount will be consumed
+#     - Amount:         # (int) Item amount will be consumed (Default: 1)
 #   Reward:             # (string) Script on synthesis success
 ###########################################################################
 

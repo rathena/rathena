@@ -81,19 +81,23 @@ uint64 ItemUpgradeDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "NeedRefineMin")) {
-		this->asUInt16(node, "NeedRefineMin", entry->source_refine_min);
+		if (!this->asUInt16(node, "NeedRefineMin", entry->source_refine_min))
+			return 0;
 	}
 
 	if (this->nodeExists(node, "NeedRefineMax")) {
-		this->asUInt16(node, "NeedRefineMax", entry->source_refine_max);
+		if (!this->asUInt16(node, "NeedRefineMax", entry->source_refine_max))
+			return 0;
 	}
 
 	if (this->nodeExists(node, "NeedOptionNumMin")) {
-		this->asUInt16(node, "NeedOptionNumMin", entry->need_option_num);
+		if (!this->asUInt16(node, "NeedOptionNumMin", entry->need_option_num))
+			return 0;
 	}
 
 	if (this->nodeExists(node, "NotSocketEnchantItem")) {
-		this->asBool(node, "NotSocketEnchantItem", entry->not_socket_enchant);
+		if (!this->asBool(node, "NotSocketEnchantItem", entry->not_socket_enchant))
+			return 0;
 	}
 
 	if (!exists)

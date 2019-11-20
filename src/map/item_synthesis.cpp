@@ -36,7 +36,7 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = entry != nullptr;
 
 	if (!exists) {
-		if (!this->nodesExist(node, { "SourceNeeded", "SourceItem", "Reward" }))
+		if (!this->nodesExist(node, { "SourceItem", "Reward" }))
 			return 0;
 
 		entry = std::make_shared<s_item_synthesis_db>();
@@ -48,19 +48,14 @@ uint64 ItemSynthesisDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 	}
 
-	if (this->nodeExists(node, "NeedRefine")) {
-		const YAML::Node& refineNode = node["NeedRefine"];
+	if (this->nodeExists(node, "NeedRefineMin")) {
+		if (!this->asUInt16(node, "NeedRefineMin", entry->source_refine_min))
+			return 0;
+	}
 
-		if (refineNode.IsScalar()) {
-			this->asUInt16(node, "NeedRefine", entry->source_refine_min);
-		}
-		else {
-			if (this->nodeExists(refineNode, "Min"))
-				this->asUInt16(refineNode, "Min", entry->source_refine_min);
-
-			if (this->nodeExists(refineNode, "Max"))
-				this->asUInt16(refineNode, "Max", entry->source_refine_max);
-		}
+	if (this->nodeExists(node, "NeedRefineMax")) {
+		if (!this->asUInt16(node, "NeedRefineMax", entry->source_refine_max))
+			return 0;
 	}
 
 	if (this->nodeExists(node, "SourceItem")) {
@@ -260,6 +255,7 @@ bool s_item_synthesis_db::checkRequirement(map_session_data *sd, const std::vect
 
 	item *item = NULL;
 	item_data *id = NULL;
+	std::vector<int> indexes(this->source_needed);
 
 	for (auto &it : items) {
 		if (it.index >= MAX_INVENTORY)
@@ -279,6 +275,11 @@ bool s_item_synthesis_db::checkRequirement(map_session_data *sd, const std::vect
 
 		if (item->refine > this->source_refine_max)
 			return false;
+
+		if (std::find(indexes.begin(), indexes.end(), it.index) != indexes.end())
+			return false;
+
+		indexes.push_back(it.index);
 	}
 
 	return true;
