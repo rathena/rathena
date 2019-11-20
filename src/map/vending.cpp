@@ -106,11 +106,11 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
  * @return Total price after taxes
  */
 static unsigned short vending_tax_intotal(struct map_session_data* vsd, const uint8* data, int count) {
-	s_tax *tax = tax_get(TAX_SELLING);
+	std::shared_ptr<s_tax> tax = tax_db.find(TAX_SELLING);
 	double total = 0;
 	int i, vend_list[MAX_VENDING]; // against duplicate packets
 
-	if (tax->total.size() == 0)
+	if (tax == nullptr || tax->total.empty())
 		return 0;
 
 	for (i = 0; i < count; i++) {
@@ -134,7 +134,7 @@ static unsigned short vending_tax_intotal(struct map_session_data* vsd, const ui
 		total += ((double)vsd->vending[j].value * amount);
 	}
 
-	return tax->get_tax(tax->total, total);
+	return tax->taxPercentage(tax->total, total);
 }
 
 /**
@@ -340,9 +340,7 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 	int i, j;
 	int vending_skill_lvl;
 	char message_sql[MESSAGE_SIZE*2];
-	char msg[CHAT_SIZE_MAX];
 	StringBuf buf;
-	s_tax *taxdata;
 
 	nullpo_retr(false,sd);
 
@@ -401,24 +399,14 @@ int8 vending_openvending(struct map_session_data* sd, const char* message, const
 		return 5;
 	}
 
-	taxdata = tax_get(TAX_SELLING);
-	tax_vending_vat(sd); // Calculate value after taxes
-
-	if (battle_config.display_tax_info && taxdata->total.size()) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 778)); // [ Total Transaction Tax ]
-		for (const auto &tax : taxdata->total) {
-			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 779), tax.tax / 100., tax.minimal); // Tax: %.2f%% Minimal Transaction: %u
-			clif_displaymessage(sd->fd, msg);
-		}
-	}
-
 	sd->state.prevend = 0;
 	sd->state.vending = true;
 	sd->state.workinprogress = WIP_DISABLE_NONE;
 	sd->vender_id = vending_getuid();
 	sd->vend_num = i;
 	safestrncpy(sd->message, message, MESSAGE_SIZE);
+
+	tax_db.setVendingTax(sd);
 	
 	Sql_EscapeString( mmysql_handle, message_sql, sd->message );
 

@@ -17,8 +17,125 @@
 #include "pc.hpp"
 #include "vending.hpp"
 
-static struct s_tax TaxDB[TAX_MAX];
-std::string tax_conf = "conf/store_tax.yml";
+/*
+* Tax Database
+*/
+TaxDatabase tax_db;
+
+const std::string TaxDatabase::getDefaultLocation() {
+	return "conf/tax.yml";
+}
+
+/**
+* Reads and parses an entry from the tax_db.
+* @param node: YAML node containing the entry.
+* @return count of successfully parsed rows
+*/
+uint64 TaxDatabase::parseBodyNode(const YAML::Node &node) {
+	int type = 0;
+	std::string type_str;
+
+	if (!this->nodeExists(node, "Type")) {
+		return 0;
+	}
+
+	this->asString(node, "Type", type_str);
+	if (!script_get_constant(type_str.c_str(), &type)) {
+		this->invalidWarning(node, "Invalid type '%s'.\n", type_str.c_str());
+		return 0;
+	}
+
+	std::shared_ptr<s_tax> taxdata = this->find(type);
+	bool exists = taxdata != nullptr;
+
+	if (!exists) {
+		taxdata = std::make_shared<s_tax>();
+	}
+
+	if (this->nodeExists(node, "InTotal")) {
+		taxdata->total.clear();
+
+		for (const auto &taxNode : node["InTotal"]) {
+			if (this->nodeExists(taxNode, "MinimalValue") && this->nodeExists(taxNode, "Tax")) {
+				struct s_tax_entry entry = { 0 };
+
+				if (!this->asUInt64(taxNode, "MinimalValue", entry.minimal)) {
+					this->invalidWarning(taxNode, "Invalid value specified for \"MinimalValue\", defaulting to 0.");
+					entry.minimal = 0;
+				}
+
+				if (!this->asUInt16(taxNode, "Tax", entry.tax)) {
+					this->invalidWarning(taxNode, "Invalid value specified for \"Tax\", defaulting to 0.");
+					entry.tax = 0;
+				}
+
+				taxdata->total.push_back(entry);
+
+				std::sort(taxdata->total.begin(), taxdata->total.end(),
+					[](const s_tax_entry &a, const s_tax_entry &b) -> bool { return a.minimal > b.minimal; });
+			}
+		}
+	}
+
+	if (this->nodeExists(node, "EachEntry")) {
+		taxdata->each.clear();
+
+		for (const auto &taxNode : node["EachEntry"]) {
+			if (this->nodeExists(taxNode, "MinimalValue") && this->nodeExists(taxNode, "Tax")) {
+				struct s_tax_entry entry = { 0 };
+
+				if (!this->asUInt64(taxNode, "MinimalValue", entry.minimal)) {
+					this->invalidWarning(taxNode, "Invalid value specified for \"MinimalValue\", defaulting to 0.");
+					entry.minimal = 0;
+				}
+
+				if (!this->asUInt16(taxNode, "Tax", entry.tax)) {
+					this->invalidWarning(taxNode, "Invalid value specified for \"Tax\", defaulting to 0.");
+					entry.tax = 0;
+				}
+
+				taxdata->each.push_back(entry);
+
+				std::sort(taxdata->each.begin(), taxdata->each.end(),
+					[](const s_tax_entry &a, const s_tax_entry &b) -> bool { return a.minimal > b.minimal; });
+			}
+		}
+	}
+
+	if (!exists) {
+		this->put(type, taxdata);
+	}
+
+	return 1;
+}
+
+/*
+* Set vending tax to a player
+* @param sd Player
+*/
+void TaxDatabase::setVendingTax(map_session_data *sd)
+{
+	std::shared_ptr<s_tax> taxdata = this->find(TAX_SELLING);
+
+	if (taxdata != nullptr) {
+		taxdata->vendingVAT(sd); // Calculate value after taxes
+		taxdata->inTotalInfo(sd);
+	}
+}
+
+/*
+* Set buyingstore tax to a player
+* @param sd Player
+*/
+void TaxDatabase::setBuyingstoreTax(map_session_data *sd)
+{
+	std::shared_ptr<s_tax> taxdata = this->find(TAX_BUYING);
+
+	if (taxdata != nullptr) {
+		taxdata->buyingstoreVAT(sd); // Calculate value after taxes
+		taxdata->inTotalInfo(sd);
+	}
+}
 
 /**
  * Returns the tax rate of a given amount.
@@ -26,46 +143,31 @@ std::string tax_conf = "conf/store_tax.yml";
  * @param price: Value of item.
  * @return Tax rate
  */
-unsigned short s_tax::get_tax(const std::vector <struct s_tax_entry> entry, double price) {
+uint16 s_tax::taxPercentage(const std::vector <struct s_tax_entry> entry, double price) {
 	const auto &tax = std::find_if(entry.begin(), entry.end(),
 		[&price](const s_tax_entry &e) { return price >= e.minimal; });
 	return tax != entry.end() ? tax->tax : 0;
 }
 
 /**
- * Returns the tax type based on selling or buying.
- * @param type: Tax type.
- * @return Tax data.
- */
-struct s_tax *tax_get(enum e_tax_type type) {
-	if (type < TAX_SELLING || type >= TAX_MAX)
-		return NULL;
-	return &TaxDB[type];
-}
-
-/**
  * Calculates the value after tax for Vendors.
  * @param sd: Player data
  */
-void tax_vending_vat(struct map_session_data *sd) {
-	s_tax *taxdata;
+void s_tax::vendingVAT(map_session_data *sd) {
+	char msg[CHAT_SIZE_MAX];
 
 	nullpo_retv(sd);
 
 	if (battle_config.display_tax_info)
 		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 
-	taxdata = tax_get(TAX_SELLING);
-
-	for (int i = 0; i < ARRAYLENGTH(sd->vending); i++) {
-		char msg[CHAT_SIZE_MAX];
-		unsigned short tax;
-
+	for (int i = 0; i < sd->vend_num; i++) {
 		if (!sd->vending[i].amount)
 			continue;
 
-		tax = taxdata->get_tax(taxdata->each, sd->vending[i].value);
-		sd->vending[i].value_vat = tax ? (size_t)(sd->vending[i].value - sd->vending[i].value / 10000. * tax) : sd->vending[i].value;
+		uint16 tax = this->taxPercentage(this->each, sd->vending[i].value);
+
+		sd->vending[i].value_vat = tax ? (unsigned int)(sd->vending[i].value - sd->vending[i].value / 10000. * tax) : sd->vending[i].value;
 
 		if (battle_config.display_tax_info) {
 			memset(msg, '\0', CHAT_SIZE_MAX);
@@ -79,24 +181,21 @@ void tax_vending_vat(struct map_session_data *sd) {
  * Calculates the value after tax for Buyingstores.
  * @param sd: Player data
  */
-void tax_buyingstore_vat(struct map_session_data *sd) {
-	s_tax *taxdata;
+void s_tax::buyingstoreVAT(map_session_data *sd) {
+	char msg[CHAT_SIZE_MAX];
+
 	nullpo_retv(sd);
 
 	if (battle_config.display_tax_info)
 		clif_displaymessage(sd->fd, msg_txt(sd, 776)); // [ Tax Information ]
 
-	taxdata = tax_get(TAX_BUYING);
-
-	for (int i = 0; i < ARRAYLENGTH(sd->buyingstore.items); i++) {
-		char msg[CHAT_SIZE_MAX];
-		unsigned short tax;
-
+	for (int i = 0; i < sd->buyingstore.slots; i++) {
 		if (!sd->buyingstore.items[i].nameid)
 			continue;
 
-		tax = taxdata->get_tax(taxdata->each, sd->buyingstore.items[i].price);
-		sd->buyingstore.items[i].price_vat = (size_t)(sd->buyingstore.items[i].price + sd->buyingstore.items[i].price / 10000. * tax);
+		uint16 tax = this->taxPercentage(this->each, sd->buyingstore.items[i].price);
+
+		sd->buyingstore.items[i].price_vat = tax ? (unsigned int)(sd->buyingstore.items[i].price + sd->buyingstore.items[i].price / 10000. * tax) : sd->buyingstore.items[i].price;
 
 		if (battle_config.display_tax_info) {
 			memset(msg, '\0', CHAT_SIZE_MAX);
@@ -106,65 +205,24 @@ void tax_buyingstore_vat(struct map_session_data *sd) {
 	}
 }
 
-/**
- * Reads and parses an entry from the tax database.
- * @param node: YAML node containing the entry.
- * @param taxdata: Tax data.
- * @param count: The sequential index of the current entry.
- * @param source: The source YAML file.
- */
-static void tax_readdb_sub(const YAML::Node &node, struct s_tax *taxdata, int *count, const std::string &source) {
-	if (node["InTotal"].IsDefined()) {
-		for (const auto &tax : node["InTotal"]) {
-			if (tax["MinimalValue"].IsDefined() && tax["Tax"].IsDefined()) {
-				struct s_tax_entry entry;
+/*
+* Show selling/buying tax for total purchase value
+* @param sd Vendor or buyer data
+*/
+void s_tax::inTotalInfo(map_session_data *sd)
+{
+	char msg[CHAT_SIZE_MAX];
 
-				entry.minimal = tax["MinimalValue"].as<size_t>();
-				entry.tax = tax["Tax"].as<unsigned short>();
-				taxdata->total.push_back(entry);
-				std::sort(taxdata->total.begin(), taxdata->total.end(),
-					[](const s_tax_entry &a, const s_tax_entry &b) -> bool { return a.minimal > b.minimal; });
-				(*count)++;
-			}
-		}
-	}
-	if (node["EachEntry"].IsDefined()) {
-		for (const auto &tax : node["EachEntry"]) {
-			if (tax["MinimalValue"].IsDefined() && tax["Tax"].IsDefined()) {
-				struct s_tax_entry entry;
-
-				entry.minimal = tax["MinimalValue"].as<size_t>();
-				entry.tax = tax["Tax"].as<unsigned short>();
-				taxdata->each.push_back(entry);
-				std::sort(taxdata->each.begin(), taxdata->each.end(),
-					[](const s_tax_entry &a, const s_tax_entry &b) -> bool { return a.minimal > b.minimal; });
-				(*count)++;
-			}
-		}
-	}
-}
-
-/**
- * Loads taxes from the tax database.
- */
-void tax_readdb(void) {
-	YAML::Node config;
-
-	try {
-		config = YAML::LoadFile(tax_conf);
-	}
-	catch (...) {
-		ShowError("tax_read_db: Cannot read '" CL_WHITE "%s" CL_RESET "'.\n", tax_conf.c_str());
+	if (!battle_config.display_tax_info || this->total.empty())
 		return;
+
+	clif_displaymessage(sd->fd, msg_txt(sd, 778)); // [ Total Transaction Tax ]
+
+	for (const auto &tax : this->total) {
+		memset(msg, '\0', CHAT_SIZE_MAX);
+		sprintf(msg, msg_txt(sd, 779), tax.tax / 100., tax.minimal); // Tax: %.2f%% Minimal Transaction: %u
+		clif_displaymessage(sd->fd, msg);
 	}
-
-	int count = 0;
-	if (config["Selling"].IsDefined())
-		tax_readdb_sub(config["Selling"], &TaxDB[TAX_SELLING], &count, tax_conf);
-	if (config["Buying"].IsDefined())
-		tax_readdb_sub(config["Buying"], &TaxDB[TAX_BUYING], &count, tax_conf);
-
-	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' entries in '" CL_WHITE "%s" CL_RESET "'\n", count, tax_conf.c_str());
 }
 
 /**
@@ -172,23 +230,22 @@ void tax_readdb(void) {
  */
 void tax_reload_vat(void) {
 	struct map_session_data *sd = NULL;
-	struct s_mapiterator *iter = NULL;
+	struct s_mapiterator *iter = mapit_getallusers();
 
-	iter = mapit_getallusers();
+	std::shared_ptr<s_tax> vending_tax = tax_db.find(TAX_SELLING);
+	std::shared_ptr<s_tax> buyingstore_tax = tax_db.find(TAX_BUYING);
+
 	for (sd = (TBL_PC*)mapit_first(iter); mapit_exists(iter); sd = (TBL_PC*)mapit_next(iter)) {
-		if (sd->state.vending)
-			tax_vending_vat(sd);
-		else if (sd->state.buyingstore)
-			tax_buyingstore_vat(sd);
+		if (sd->state.vending && vending_tax != nullptr) {
+			vending_tax->vendingVAT(sd);
+			vending_tax->inTotalInfo(sd);
+		}
+		else if (sd->state.buyingstore && buyingstore_tax != nullptr) {
+			buyingstore_tax->buyingstoreVAT(sd);
+			buyingstore_tax->inTotalInfo(sd);
+		}
 	}
 	mapit_free(iter);
-}
-
-/**
- * Sets the tax database file name from the map_athena.conf
- */
- void tax_set_conf(const std::string filename) {
-	tax_conf = filename;
 }
 
 /**
@@ -204,15 +261,12 @@ void tax_db_reload(void) {
  * Initializes the tax database
  */
 void do_init_tax(void) {
-	tax_readdb();
+	tax_db.load();
 }
 
 /**
  * Finalizes the tax database
  */
 void do_final_tax(void) {
-	for (int i = 0; i < TAX_MAX; i++) {
-		TaxDB[i].total.clear();
-		TaxDB[i].each.clear();
-	}
+	tax_db.clear();
 }

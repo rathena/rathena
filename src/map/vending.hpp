@@ -15,7 +15,7 @@ struct s_vending {
 	short index; ///< Cart index (return item data)
 	short amount; ///< Amount of the item for vending
 	unsigned int value; ///< Price
-	size_t value_vat; ///< Value after tax
+	unsigned int value_vat; ///< Value after tax
 };
 
 DBMap * vending_getdb();

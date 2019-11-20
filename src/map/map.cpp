@@ -4106,8 +4106,6 @@ int map_config_read(const char *cfgName)
 			console_msg_log = atoi(w2);//[Ind]
 		else if (strcmpi(w1, "console_log_filepath") == 0)
 			safestrncpy(console_log_filepath, w2, sizeof(console_log_filepath));
-		else if (strcmpi(w1, "tax_conf") == 0)
-			tax_set_conf(w2);
 		else if (strcmpi(w1, "import") == 0)
 			map_config_read(w2);
 		else

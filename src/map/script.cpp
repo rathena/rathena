@@ -60,6 +60,7 @@
 #include "pet.hpp"
 #include "quest.hpp"
 #include "storage.hpp"
+#include "tax.hpp" // e_tax_type
 
 struct eri *array_ers;
 DBMap *st_db;

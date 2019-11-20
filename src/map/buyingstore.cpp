@@ -118,9 +118,7 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 {
 	unsigned int i, weight, listidx;
 	char message_sql[MESSAGE_SIZE*2];
-	char msg[CHAT_SIZE_MAX];
 	StringBuf buf;
-	s_tax *taxdata;
 
 	nullpo_retr(1, sd);
 
@@ -224,24 +222,14 @@ int8 buyingstore_create(struct map_session_data* sd, int zenylimit, unsigned cha
 		return 7;
 	}
 
-	taxdata = tax_get(TAX_BUYING);
-	tax_buyingstore_vat(sd); // Calculate value after taxes
-
-	if (battle_config.display_tax_info && taxdata->total.size()) {
-		clif_displaymessage(sd->fd, msg_txt(sd, 778)); // [ Total Transaction Tax ]
-		for (const auto &tax : taxdata->total) {
-			memset(msg, '\0', CHAT_SIZE_MAX);
-			sprintf(msg, msg_txt(sd, 779), tax.tax / 100., tax.minimal); // Tax: %.2f%% Minimal Transaction: %u
-			clif_displaymessage(sd->fd, msg);
-		}
-	}
-
 	// success
 	sd->state.buyingstore = true;
 	sd->buyer_id = buyingstore_getuid();
 	sd->buyingstore.zenylimit = zenylimit;
 	sd->buyingstore.slots = i;  // store actual amount of items
 	safestrncpy(sd->message, storename, sizeof(sd->message));
+
+	tax_db.setBuyingstoreTax(sd);
 
 	Sql_EscapeString( mmysql_handle, message_sql, sd->message );
 
@@ -338,12 +326,12 @@ void buyingstore_open(struct map_session_data* sd, uint32 account_id)
  * @return Taxed price
  */
 static unsigned short buyinstore_tax_intotal(struct map_session_data* sd, const uint8* itemlist, int count) {
-	s_tax *tax = tax_get(TAX_BUYING);
+	std::shared_ptr<s_tax> tax = tax_db.find(TAX_BUYING);
 
 	double total = 0;
 	int i;
 
-	if (tax->total.size() == 0)
+	if (tax == nullptr || tax->total.empty())
 		return 0;
 
 	for (i = 0; i < count; i++) {
@@ -364,7 +352,7 @@ static unsigned short buyinstore_tax_intotal(struct map_session_data* sd, const 
 		total += ((double)sd->buyingstore.items[listidx].price * amount);
 	}
 
-	return tax->get_tax(tax->total, total);
+	return tax->taxPercentage(tax->total, total);
 }
 
 /**

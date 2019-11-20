@@ -8,36 +8,47 @@
 #include <vector>
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 
-#pragma once
+#include "pc.hpp"
 
-enum e_tax_type : unsigned char {
+enum e_tax_type : uint8 {
 	TAX_SELLING = 0,
 	TAX_BUYING,
 	TAX_MAX,
 };
 
 struct s_tax_entry {
-	size_t minimal;
-	unsigned short tax;
+	uint64 minimal;
+	uint16 tax;
 };
 
 struct s_tax {
-	std::vector <s_tax_entry> each;
-	std::vector <s_tax_entry> total;
+	std::vector<s_tax_entry> each;
+	std::vector<s_tax_entry> total;
 
-	unsigned short get_tax(const std::vector <s_tax_entry>, double);
+	uint16 taxPercentage(const std::vector <struct s_tax_entry> entry, double price);
+	void vendingVAT(map_session_data * sd);
+	void buyingstoreVAT(map_session_data * sd);
+	void inTotalInfo(map_session_data *sd);
 };
 
-struct s_tax *tax_get(enum e_tax_type type);
+class TaxDatabase : public TypesafeYamlDatabase<uint64, s_tax> {
+public:
+	TaxDatabase() : TypesafeYamlDatabase("TAX_DB", 1) {
 
-void tax_vending_vat(struct map_session_data *sd);
-void tax_buyingstore_vat(struct map_session_data *sd);
+	}
 
-void tax_readdb(void);
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+
+	void setVendingTax(map_session_data *sd);
+	void setBuyingstoreTax(map_session_data *sd);
+};
+
+extern TaxDatabase tax_db;
+
 void tax_reload_vat(void);
-void tax_set_conf(const std::string filename);
-
 void tax_db_reload(void);
 void do_init_tax(void);
 void do_final_tax(void);
