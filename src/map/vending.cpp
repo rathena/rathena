@@ -108,14 +108,14 @@ void vending_vendinglistreq(struct map_session_data* sd, int id)
 static unsigned short vending_tax_intotal(struct map_session_data* vsd, const uint8* data, int count) {
 	std::shared_ptr<s_tax> tax = tax_db.find(TAX_SELLING);
 	double total = 0;
-	int i, vend_list[MAX_VENDING]; // against duplicate packets
+	int i, j, vend_list[MAX_VENDING]; // against duplicate packets
 
 	if (tax == nullptr || tax->total.empty())
 		return 0;
 
 	for (i = 0; i < count; i++) {
 		short amount = *(uint16*)(data + 4 * i + 0);
-		short idx = *(uint16*)(data + 4 * i + 2), j;
+		short idx = *(uint16*)(data + 4 * i + 2);
 		idx -= 2;
 
 		if (amount <= 0)
@@ -248,8 +248,8 @@ void vending_purchasereq(struct map_session_data* sd, int aid, int uid, const ui
 
 	if (battle_config.etc_log) {
 		ShowInfo("vending_purchasereq: AID=%u CID=%u gained %u zeny. AID=%u CID=%u paid %u zeny\n",
-			vsd->status.account_id, vsd->status.char_id, (size_t)z_gained,
-			sd->status.account_id, sd->status.char_id, (size_t)z);
+			vsd->status.account_id, vsd->status.char_id, (unsigned int)z_gained,
+			sd->status.account_id, sd->status.char_id, (unsigned int)z);
 	}
 
 	for( i = 0; i < count; i++ ) {
