@@ -2391,10 +2391,20 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 
 	if( sstatus->cri )
 	{
+		struct map_session_data *sd = BL_CAST(BL_PC, src);
+
+		if(wd->type == DMG_MULTI_HIT){	//Multiple Hit Attack Skills.
+			if(pc_checkskill(sd,GS_CHAINACTION) && !(skill_get_nk(GS_CHAINACTION)&NK_CRITICAL)) //Chain Action
+				return false;
+
+			if(pc_checkskill(sd,TF_DOUBLE) && !(skill_get_nk(TF_DOUBLE)&NK_CRITICAL)) //Double Attack
+				return false;
+
+		}
+
 		struct status_data *tstatus = status_get_status_data(target);
 		struct status_change *sc = status_get_sc(src);
 		struct status_change *tsc = status_get_sc(target);
-		struct map_session_data *sd = BL_CAST(BL_PC, src);
 		struct map_session_data *tsd = BL_CAST(BL_PC, target);
 		short cri = sstatus->cri;
 
