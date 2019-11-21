@@ -1,11 +1,12 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
-#include <iostream>
 #include <fstream>
 #include <functional>
-#include <vector>
+#include <iostream>
+#include <locale>
 #include <unordered_map>
+#include <vector>
 
 #ifdef WIN32
 	#include <conio.h>
@@ -17,15 +18,34 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "../common/cbasetypes.hpp"
 #include "../common/core.hpp"
 #include "../common/malloc.hpp"
 #include "../common/mmo.hpp"
+#include "../common/nullpo.hpp"
 #include "../common/showmsg.hpp"
 #include "../common/strlib.hpp"
 #include "../common/utilities.hpp"
+#ifdef WIN32
+#include "../common/winapi.hpp"
+#endif
 
 // Only for constants - do not use functions of it or linking will fail
-#include "../map/mob.hpp" // MAX_MVP_DROP and MAX_MOB_DROP
+#include "../map/achievement.hpp"
+#include "../map/battle.hpp"
+#include "../map/battleground.hpp"
+#include "../map/channel.hpp"
+#include "../map/chat.hpp"
+#include "../map/date.hpp"
+#include "../map/instance.hpp"
+#include "../map/mercenary.hpp"
+#include "../map/mob.hpp"
+#include "../map/npc.hpp"
+#include "../map/pc.hpp"
+#include "../map/pet.hpp"
+#include "../map/script.hpp"
+#include "../map/storage.hpp"
+#include "../map/quest.hpp"
 
 using namespace rathena;
 
@@ -54,6 +74,7 @@ static size_t pet_read_db( const char* file );
 std::unordered_map<uint16, std::string> aegis_itemnames;
 std::unordered_map<uint16, std::string> aegis_mobnames;
 std::unordered_map<uint16, std::string> aegis_skillnames;
+std::unordered_map<const char*, int32> constants;
 
 // Forward declaration of constant loading functions
 static bool parse_item_constants( const char* path );
@@ -61,12 +82,75 @@ static bool parse_mob_constants( char* split[], int columns, int current );
 static bool parse_skill_constants( char* split[], int columns, int current );
 
 bool fileExists( const std::string& path );
-bool writeToFile( const YAML::Node& node, const std::string& path );
-void prepareHeader( YAML::Node& node, const std::string& type, uint32 version );
 bool askConfirmation( const char* fmt, ... );
 
-YAML::Node body;
-size_t counter;
+YAML::Emitter body;
+
+// Implement the function instead of including the original version by linking
+void script_set_constant_( const char* name, int value, const char* constant_name, bool isparameter, bool deprecated ){
+	constants[name] = value;
+}
+
+const char* constant_lookup( int32 value, const char* prefix ){
+	nullpo_retr( nullptr, prefix );
+
+	for( auto const& pair : constants ){
+		// Same prefix group and same value
+		if( strncasecmp( pair.first, prefix, strlen( prefix ) ) == 0 && pair.second == value ){
+			return pair.first;
+		}
+	}
+
+	return nullptr;
+}
+
+void copyFileIfExists( std::ofstream& file,const std::string& name, bool newLine ){
+	std::string path = "doc/yaml/db/" + name + ".yml";
+
+	if( fileExists( path ) ){
+		std::ifstream source( path, std::ios::binary );
+
+		std::istreambuf_iterator<char> begin_source( source );
+		std::istreambuf_iterator<char> end_source;
+		std::ostreambuf_iterator<char> begin_dest( file );
+		copy( begin_source, end_source, begin_dest );
+
+		source.close();
+
+		if( newLine ){
+			file << "\n";
+		}
+	}
+}
+
+void prepareHeader(std::ofstream &file, const std::string& type, uint32 version, const std::string& name) {
+	copyFileIfExists( file, "license", false );
+	copyFileIfExists( file, name, true );
+
+	YAML::Emitter header(file);
+
+	header << YAML::BeginMap;
+	header << YAML::Key << "Header";
+	header << YAML::BeginMap;
+	header << YAML::Key << "Type" << YAML::Value << type;
+	header << YAML::Key << "Version" << YAML::Value << version;
+	header << YAML::EndMap;
+	header << YAML::EndMap;
+
+	file << "\n";
+	file << "\n";
+}
+
+void prepareBody(void) {
+	body << YAML::BeginMap;
+	body << YAML::Key << "Body";
+	body << YAML::BeginSeq;
+}
+
+void finalizeBody(void) {
+	body << YAML::EndSeq;
+	body << YAML::EndMap;
+}
 
 template<typename Func>
 bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
@@ -79,30 +163,35 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			if( !askConfirmation( "Found the file \"%s\", which requires migration to yml.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
 				continue;
 			}
-
-			YAML::Node root;
-
-			prepareHeader( root, type, version );
-			body.reset();
-			counter = 0;
 			
-			if( !lambda( path, name_ext ) ){
-				return false;
-			}
-
-			root["Body"] = body;
-
-			if( fileExists( to ) ){
-				if( !askConfirmation( "The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str() ) ){
+			if (fileExists(to)) {
+				if (!askConfirmation("The file \"%s\" already exists.\nDo you want to replace it? (Y/N)\n", to.c_str())) {
 					continue;
 				}
 			}
 
-			if( !writeToFile( root, to ) ){
-				ShowError( "Failed to write the converted yml data to \"%s\".\nAborting now...\n", to.c_str() );
+			std::ofstream out;
+
+			out.open(to);
+
+			if (!out.is_open()) {
+				ShowError("Can not open file \"%s\" for writing.\n", to.c_str());
 				return false;
 			}
 
+			prepareHeader(out, type, version, name);
+			prepareBody();
+
+			if( !lambda( path, name_ext ) ){
+				out.close();
+				return false;
+			}
+
+			finalizeBody();
+			out << body.c_str();
+			// Make sure there is an empty line at the end of the file for git
+			out << "\n";
+			out.close();
 			
 			// TODO: do you want to delete/rename?
 		}
@@ -124,23 +213,22 @@ int do_init( int argc, char** argv ){
 	sv_readdb( path_db_mode.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
 	sv_readdb( path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
 
-	std::vector<std::string> guild_skill_tree_paths = {
+	// Load constants
+	#include "../map/script_constants.hpp"
+
+	std::vector<std::string> root_paths = {
 		path_db,
+		path_db_mode,
 		path_db_import
 	};
 
-	if( !process( "GUILD_SKILL_TREE_DB", 1, guild_skill_tree_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "GUILD_SKILL_TREE_DB", 1, root_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 2 + MAX_GUILD_SKILL_REQUIRE * 2, 2 + MAX_GUILD_SKILL_REQUIRE * 2, -1, &guild_read_guildskill_tree_db, false );
 	} ) ){
 		return 0;
 	}
 
-	std::vector<std::string> pet_paths = {
-		path_db_mode,
-		path_db_import
-	};
-
-	if( !process( "PET_DB", 1, pet_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "PET_DB", 1, root_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
 		return 0;
@@ -166,39 +254,6 @@ bool fileExists( const std::string& path ){
 	}else{
 		return false;
 	}
-}
-
-bool writeToFile( const YAML::Node& node, const std::string& path ){
-	std::ofstream out;
-
-	out.open( path );
-
-	if( !out.is_open() ){
-		ShowError( "Can not open file \"%s\" for writing.\n", path.c_str() );
-		return false;
-	}
-
-	out << node;
-
-	// Make sure there is an empty line at the end of the file for git
-#ifdef WIN32
-	out << "\r\n";
-#else
-	out << "\n";
-#endif
-
-	out.close();
-
-	return true;
-}
-
-void prepareHeader( YAML::Node& node, const std::string& type, uint32 version ){
-	YAML::Node header;
-
-	header["Type"] = type;
-	header["Version"] = version;
-
-	node["Header"] = header;
 }
 
 bool askConfirmation( const char* fmt, ... ){
@@ -369,10 +424,7 @@ static bool parse_skill_constants( char* split[], int columns, int current ){
 // Copied and adjusted from guild.cpp
 // <skill id>,<max lv>,<req id1>,<req lv1>,<req id2>,<req lv2>,<req id3>,<req lv3>,<req id4>,<req lv4>,<req id5>,<req lv5>
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current ){
-	YAML::Node node;
-
 	uint16 skill_id = (uint16)atoi(split[0]);
-
 	std::string* name = util::umap_find( aegis_skillnames, skill_id );
 
 	if( name == nullptr ){
@@ -380,33 +432,39 @@ static bool guild_read_guildskill_tree_db( char* split[], int columns, int curre
 		return false;
 	}
 
-	node["Id"] = *name;
-	node["MaxLevel"] = (uint16)atoi(split[1]);
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << *name;
+	body << YAML::Key << "MaxLevel" << YAML::Value << atoi(split[1]);
 
-	for( int i = 0, j = 0; i < MAX_GUILD_SKILL_REQUIRE; i++ ){
-		uint16 required_skill_id = atoi( split[i * 2 + 2] );
-		uint16 required_skill_level = atoi( split[i * 2 + 3] );
+	if (atoi(split[2]) > 0) {
+		body << YAML::Key << "Required";
+		body << YAML::BeginSeq;
 
-		if( required_skill_id == 0 || required_skill_level == 0 ){
-			continue;
+		for (int i = 0, j = 0; i < MAX_GUILD_SKILL_REQUIRE; i++) {
+			uint16 required_skill_id = atoi(split[i * 2 + 2]);
+			uint16 required_skill_level = atoi(split[i * 2 + 3]);
+
+			if (required_skill_id == 0 || required_skill_level == 0) {
+				continue;
+			}
+
+			std::string* required_name = util::umap_find(aegis_skillnames, required_skill_id);
+
+			if (required_name == nullptr) {
+				ShowError("Skill name for required skill id %hu is not known.\n", required_skill_id);
+				return false;
+			}
+
+			body << YAML::BeginMap;
+			body << YAML::Key << "Id" << YAML::Value << *required_name;
+			body << YAML::Key << "Level" << YAML::Value << required_skill_level;
+			body << YAML::EndMap;
 		}
 
-		std::string* required_name = util::umap_find( aegis_skillnames, required_skill_id );
-
-		if( required_name == nullptr ){
-			ShowError( "Skill name for required skill id %hu is not known.\n", required_skill_id );
-			return false;
-		}
-
-		YAML::Node req;
-
-		req["Id"] = *required_name;
-		req["Level"] = required_skill_level;
-
-		node["Required"][j++] = req;
+		body << YAML::EndSeq;
 	}
 
-	body[counter++] = node;
+	body << YAML::EndMap;
 
 	return true;
 }
@@ -490,9 +548,8 @@ static size_t pet_read_db( const char* file ){
 			continue;
 		}
 
-		YAML::Node node;
-
-		node["Mob"] = *mob_name;
+		body << YAML::BeginMap;
+		body << YAML::Key << "Mob" << YAML::Value << *mob_name;
 
 		uint16 tame_item_id = (uint16)atoi( str[3] );
 
@@ -504,11 +561,10 @@ static size_t pet_read_db( const char* file ){
 				return false;
 			}
 
-			node["TameItem"] = *tame_item_name;
+			body << YAML::Key << "TameItem" << YAML::Value << *tame_item_name;
 		}
 
 		uint16 egg_item_id = (uint16)atoi( str[4] );
-
 		std::string* egg_item_name = util::umap_find( aegis_itemnames, egg_item_id );
 
 		if( egg_item_name == nullptr ){
@@ -516,7 +572,7 @@ static size_t pet_read_db( const char* file ){
 			return false;
 		}
 
-		node["EggItem"] = *egg_item_name;
+		body << YAML::Key << "EggItem" << YAML::Value << *egg_item_name;
 
 		uint16 equip_item_id = (uint16)atoi( str[5] );
 
@@ -528,7 +584,7 @@ static size_t pet_read_db( const char* file ){
 				return false;
 			}
 
-			node["EquipItem"] = *equip_item_name;
+			body << YAML::Key << "EquipItem" << YAML::Value << *equip_item_name;
 		}
 
 		uint16 food_item_id = (uint16)atoi( str[6] );
@@ -541,48 +597,47 @@ static size_t pet_read_db( const char* file ){
 				return false;
 			}
 
-			node["FoodItem"] = *food_item_name;
+			body << YAML::Key << "FoodItem" << YAML::Value << *food_item_name;
 		}
 
-		node["Fullness"] = atoi( str[7] );
+		body << YAML::Key << "Fullness" << YAML::Value << atoi(str[7]);
 		// Default: 60
 		if( atoi( str[8] ) != 60 ){
-			node["HungryDelay"] = atoi( str[8] );
+			body << YAML::Key << "HungryDelay" << YAML::Value << atoi(str[8]);
 		}
 		// Default: 250
 		if( atoi( str[11] ) != 250 ){
-			node["IntimacyStart"] = atoi( str[11] );
+			body << YAML::Key << "IntimacyStart" << YAML::Value << atoi(str[11]);
 		}
-		node["IntimacyFed"] = atoi( str[9] );
+		body << YAML::Key << "IntimacyFed" << YAML::Value << atoi(str[9]);
 		// Default: -100
 		if( atoi( str[10] ) != 100 ){
-			node["IntimacyOverfed"] = -atoi( str[10] );
+			body << YAML::Key << "IntimacyOverfed" << YAML::Value << -atoi(str[10]);
 		}
 		// pet_hungry_friendly_decrease battle_conf
-		//node["IntimacyHungry"] = -5;
+		//body << YAML::Key << "IntimacyHungry" << YAML::Value << -5;
 		// Default: -20
 		if( atoi( str[12] ) != 20 ){
-			node["IntimacyOwnerDie"] = -atoi( str[12] );
+			body << YAML::Key << "IntimacyOwnerDie" << YAML::Value << -atoi(str[12]);
 		}
-		node["CaptureRate"] = atoi( str[13] );
+		body << YAML::Key << "CaptureRate" << YAML::Value << atoi(str[13]);
 		// Default: true
 		if( atoi( str[15] ) == 0 ){
-			node["SpecialPerformance"] = false;
+			body << YAML::Key << "SpecialPerformance" << YAML::Value << "false";
 		}
-		node["AttackRate"] = atoi( str[17] );
-		node["RetaliateRate"] = atoi( str[18] );
-		node["ChangeTargetRate"] = atoi( str[19] );
+		body << YAML::Key << "AttackRate" << YAML::Value << atoi(str[17]);
+		body << YAML::Key << "RetaliateRate" << YAML::Value << atoi(str[18]);
+		body << YAML::Key << "ChangeTargetRate" << YAML::Value << atoi(str[19]);
 
 		if( *str[21] ){
-			node["Script"] = str[21];
+			body << YAML::Key << "Script" << YAML::Value << YAML::Literal << str[21];
 		}
 
 		if( *str[20] ){
-			node["SupportScript"] = str[20];
+			body << YAML::Key << "SupportScript" << YAML::Value << YAML::Literal << str[20];
 		}
 
-		body[counter++] = node;
-
+		body << YAML::EndMap;
 		entries++;
 	}
 

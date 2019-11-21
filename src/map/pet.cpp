@@ -600,17 +600,13 @@ int pet_hungry_val(struct pet_data *pd)
  */
 void pet_set_intimate(struct pet_data *pd, int value)
 {
-	int intimate;
-	struct map_session_data *sd;
-
 	nullpo_retv(pd);
-
-	intimate = pd->pet.intimate;
-	sd = pd->master;
 
 	pd->pet.intimate = min(value, PET_INTIMATE_MAX);
 
-	if( sd && ((intimate >= battle_config.pet_equip_min_friendly && pd->pet.intimate < battle_config.pet_equip_min_friendly) || (intimate < battle_config.pet_equip_min_friendly && pd->pet.intimate >= battle_config.pet_equip_min_friendly)) )
+	struct map_session_data *sd = pd->master;
+
+	if (sd)
 		status_calc_pc(sd,SCO_NONE);
 }
 
@@ -927,6 +923,10 @@ bool pet_return_egg( struct map_session_data *sd, struct pet_data *pd ){
 	sd->inventory.u.items_inventory[i].attribute = 0;
 	sd->inventory.dirty = true;
 	pd->pet.incubate = 1;
+#if PACKETVER >= 20180704
+	clif_inventorylist(sd);
+	clif_send_petdata(sd, pd, 6, 0);
+#endif
 	unit_free(&pd->bl,CLR_OUTSIGHT);
 
 	status_calc_pc(sd,SCO_NONE);
@@ -1067,6 +1067,9 @@ int pet_birth_process(struct map_session_data *sd, struct s_pet *pet)
 		clif_spawn(&sd->pd->bl);
 		clif_send_petdata(sd,sd->pd, 0,0);
 		clif_send_petdata(sd,sd->pd, 5,battle_config.pet_hair_style);
+#if PACKETVER >= 20180704
+		clif_send_petdata(sd, sd->pd, 6, 1);
+#endif
 		clif_pet_equip_area(sd->pd);
 		clif_send_petstatus(sd);
 	}

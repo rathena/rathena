@@ -1142,8 +1142,25 @@ enum e_job_types
 	JT_4_F_EINRESERCHER,
 	JT_4_F_REINDEER,
 	JT_4_PIGOCTO,
-
-	JT_4_JP_16TH = 10343,
+	JT_4_ORK_HERO,
+	JT_4_JP_16TH,
+	JT_4_EP17_MASTER_A,
+	JT_4_EP17_BASIC_B,
+	JT_4_EP17_GUARD_B,
+	JT_4_EP17_BASIC_B_NG,
+	JT_4_EP17_GUARD_B_NG,
+	JT_4_EP17_SWEETY,
+	JT_4_EP17_BOY_A,
+	JT_4_EP17_BOY_B,
+	JT_4_EP17_TAMARIN,
+	JT_4_EP17_SCISSORE,
+	JT_4_EP17_TABLET,
+	JT_4_EP17_BUCKETS,
+	JT_4_EP17_CLEANER,
+	JT_4_EP17_BASKET,
+	JT_4_EP17_BROKENBETA,
+	JT_4_EP17_CLEANER_W,
+	JT_4_EP17_MERMAID,
 
 	JT_NEW_NPC_3RD_END = 19999,
 	NPC_RANGE3_END, // Official: JT_NEW_NPC_3RD_END=19999
@@ -1195,7 +1212,6 @@ int npc_buysellsel(struct map_session_data* sd, int id, int type);
 uint8 npc_buylist(struct map_session_data* sd, uint16 n, struct s_npc_buy_list *item_list);
 uint8 npc_selllist(struct map_session_data* sd, int n, unsigned short *item_list);
 void npc_parse_mob2(struct spawn_data* mob);
-bool npc_viewisid(const char * viewid);
 struct npc_data* npc_add_warp(char* name, short from_mapid, short from_x, short from_y, short xs, short ys, unsigned short to_mapindex, short to_x, short to_y);
 int npc_globalmessage(const char* name,const char* mes);
 const char *npc_get_script_event_name(int npce_index);

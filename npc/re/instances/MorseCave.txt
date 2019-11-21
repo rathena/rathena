@@ -197,7 +197,7 @@ moro_cav,57,69,3	script	Red Flower#a1	CLEAR_NPC,{
 		mes "Only party members can enter this Memorial dungeon.";
 		close;
 	case IE_OK:
-		mapannounce 'map_rev$, getpartyname( getcharid(1) ) + " party's " + strcharinfo(0) + " is entering Morse's Cave.", bc_map,0xFF99;
+		mapannounce "moro_cav", getpartyname( getcharid(1) ) + " party's " + strcharinfo(0) + " is entering Morse's Cave.", bc_map,0xFF99;
 		if (isbegin_quest(9319) > 0)
 			erasequest 9319;// Pursuing Hiding Morocc Continues
 		if (isbegin_quest(9318) > 0)
@@ -383,7 +383,7 @@ OnMobDead:
 }
 
 
-1@rev,34,126,4	script	Grim Reaper Ankou#RZ Event_3		3029,{ end; }
+1@rev,34,126,4	script	Grim Reaper Ankou#RZ Event_3	3029,{ end; }
 1@rev,112,126,4	duplicate(Grim Reaper Ankou#RZ Event_3)	Grim Reaper Ankou#RZ Event_4	3029
 1@rev,34,55,4	duplicate(Grim Reaper Ankou#RZ Event_3)	Grim Reaper Ankou#RZ Event_5	3029
 1@rev,112,48,4	duplicate(Grim Reaper Ankou#RZ Event_3)	Grim Reaper Ankou#RZ Event_6	3029

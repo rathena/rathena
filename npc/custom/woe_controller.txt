@@ -53,7 +53,7 @@ OnInit:
 //  [1] Enable rewards.
 //  [2] Mail all rewards.
 //      - If not set, players receive items in their inventory.
-//      - Only ONE item can be sent via mail, plus Zeny.
+//      - Only ONE item can be sent via mail for PACKETVER < 20150513 while later clients are limited to MAIL_MAX_ITEM (5).
 //      - Note that offline players do NOT receive rewards.
 //  [4] Only reward Guild Masters.
 //      - If not set, all guild members are rewarded.
@@ -67,9 +67,13 @@ OnInit:
 	set .Options, 1|8;
 
 	// Rewards per castle.
-	// -- when given directly: <itemID>,<amount>{,<itemID>,<amount>,...}
-	// -- via mail (option 2): <itemID>,<amount>,<Zeny>
-	setarray .Reward[0],14001,1;
+	//   setarray .reward_id[0],     <itemID>{,<itemID>,...}
+	//   setarray .reward_amount[0], <amount>{,<amount>,...}
+	setarray .reward_id[0],14001;
+	setarray .reward_amount[0],1;
+
+	// Zeny reward:
+	.reward_zeny = 0;
 
 // -----------------------------------------------------------
 //  Constants (leave this section alone).
@@ -91,6 +95,7 @@ OnInit:
 
 // -----------------------------------------------------------
 
+	.reward_id_size = getarraysize(.reward_id);
 	set .Size, getarraysize($WOE_CONTROL);
 	if (.AutoKick || .NoOwner)
 		for(set .@i,0; .@i<30; set .@i,.@i+1) {
@@ -160,10 +165,13 @@ function Add_Zero {
 }
 
 OnReward:
+	if (!.reward_id_size && !.reward_zeny)
+		return;
+
 	set .@sql$, ((.Options&4)?"position = 0":"online = 1");
 	if (.Options&2) set .@str$,gettimestr("%B %d, %Y",21);
 	freeloop(1);
-	for(set .@i,0; .@i<30; set .@i,.@i+1)
+	for(set .@i,0; .@i<30; set .@i,.@i+1) {
 		if (getarg(0)&(1<<.@i)) {
 			set .@gid, getcastledata(.Castles$[.@i],1);
 			if (!.@gid) continue;
@@ -175,22 +183,35 @@ OnReward:
 					setd ".@ip_"+.@i+"_"+.@ip$,1;
 				}
 				if (.Options&2) {
-					query_sql("INSERT INTO `mail` (send_name,dest_id,title,message,nameid,amount,identify,zeny,time) VALUES ("+
-					          "'no-reply',"+.@cid[.@j]+",'** Siege Reward: "+getcastlename(.Castles$[.@i])+" **',"+
-					          "'Brave one,% % Congratulations!% Your guild has successfully occupied% territory in the War of Emperium on% "+.@str$+".% % % % % [ Your reward is attached. ]',"+
-					          .Reward[0]+","+.Reward[1]+",0,"+.Reward[2]+",UNIX_TIMESTAMP(NOW()))");
-					if (!getd(".@str_"+.@cid[.@j]) && isloggedin(.@aid[.@j],.@cid[.@j])) {
+					.@charid = .@cid[.@j];
+					.@sender$ = "no-reply";
+					.@title$ = "** Siege Reward: "+getcastlename(.Castles$[.@i])+" **";
+					.@body$ = "Brave one,\r\n \r\n Congratulations!\r\n Your guild has successfully occupied\r\n territory in the War of Emperium on\r\n "+.@str$+".\r\n \r\n \r\n \r\n \r\n [ Your reward is attached. ]";
+
+					if (.reward_id_size)
+						mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny, .reward_id, .reward_amount;
+					else
+						mail .@charid, .@sender$, .@title$, .@body$, .reward_zeny;
+
+					if (PACKETVER < 20150513 && !getd(".@str_"+.@cid[.@j]) && isloggedin(.@aid[.@j],.@cid[.@j])) {
 						setd ".@str_"+.@cid[.@j],1;
-						message rid2name(.@aid[.@j]),"You've got mail! Please re-login to update your mailing list.";
+						message rid2name(.@aid[.@j]),"You've got mail!";
 					}
 				} else if (isloggedin(.@aid[.@j])) {
-					for(set .@k,0; .@k<getarraysize(.Reward); set .@k,.@k+2)
-						getitem .Reward[.@k], .Reward[.@k+1], .@aid[.@j];
-					message rid2name(.@aid[.@j]),"You have been rewarded for conquering "+getcastlename(.Castles$[.@i])+".";
+					.@name$ = rid2name(.@aid[.@j]);
+					.@castle_name$ = getcastlename(.Castles$[.@i]);
+					for ( .@k = 0; .@k < .reward_id_size; .@k++ ) {
+						if (checkweight(.reward_id[.@k], .reward_amount[.@k]))
+							getitem .reward_id[.@k], .reward_amount[.@k], .@aid[.@j];
+						else
+							message .@name$, "You can't receive x" + .reward_amount[.@k] + " " + getitemname(.reward_id[.@k]) + " for conquering " + .@castle_name$ + " because you're overweight.";
+					}
+					Zeny += .reward_zeny;
+					message .@name$, "You have been rewarded for conquering " + .@castle_name$ + ".";
 				}
 			}
 		}
-	if (.Options&2) query_sql("UPDATE `mail` SET message = REPLACE(message,'%',CHAR(13)) WHERE send_name = 'no-reply'");
+	}
 	return;
 
 OnPCLoadMapEvent:

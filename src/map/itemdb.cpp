@@ -502,18 +502,8 @@ bool itemdb_isequip2(struct item_data *id) {
 bool itemdb_isstackable2(struct item_data *id)
 {
 	nullpo_ret(id);
-	switch(id->type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_PETEGG:
-		case IT_PETARMOR:
-		case IT_SHADOWGEAR:
-			return false;
-		default:
-			return true;
-	}
+	return id->isStackable();
 }
-
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
@@ -571,6 +561,12 @@ bool itemdb_isrestricted(struct item* item, int gmlv, int gmlv2, bool (*func)(st
 			return false;
 	}
 	return true;
+}
+
+bool itemdb_ishatched_egg(struct item* item) {
+	if (item && item->card[0] == CARD0_PET && item->attribute == 1)
+		return true;
+	return false;
 }
 
 /** Specifies if item-type should drop unidentified.
@@ -1632,7 +1628,7 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 		(id->flag.no_equip&4 && mapdata_flag_gvg2_no_te(mapdata)) || // GVG
 		(id->flag.no_equip&8 && mapdata->flag[MF_BATTLEGROUND]) || // Battleground
 		(id->flag.no_equip&16 && mapdata_flag_gvg2_te(mapdata)) || // WOE:TE
-		(id->flag.no_equip&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
+		(id->flag.no_equip&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]) // Zone restriction
 		)
 		return true;
 	return false;
@@ -1973,6 +1969,24 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 	opt->script = NULL;
 	aFree(opt);
 	return 1;
+}
+
+bool item_data::isStackable()
+{
+	switch (this->type) {
+		case IT_WEAPON:
+		case IT_ARMOR:
+		case IT_PETEGG:
+		case IT_PETARMOR:
+		case IT_SHADOWGEAR:
+			return false;
+	}
+	return true;
+}
+
+int item_data::inventorySlotNeeded(int quantity)
+{
+	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }
 
 /**
