@@ -135,7 +135,7 @@ int date_get( enum e_date_type type )
  */
 bool is_day_of_sun(void)
 {
-	return date_get_dayofyear()%2 == 0;
+	return (date_get_dayofyear()+1)%2 == 0;
 }
 
 /*
@@ -143,7 +143,7 @@ bool is_day_of_sun(void)
  */
 bool is_day_of_moon(void)
 {
-	return date_get_dayofyear()%2 == 1;
+	return (date_get_dayofyear()+1)%2 == 1;
 }
 
 /*
@@ -151,5 +151,5 @@ bool is_day_of_moon(void)
  */
 bool is_day_of_star(void)
 {
-	return date_get_dayofyear()%5 == 0;
+	return (date_get_dayofyear()+1)%5 == 0;
 }
