@@ -2376,7 +2376,7 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	if (!first_call)
 		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
-	if( skill_id && !skill_get_nk(skill_id)&NK_CRITICAL )
+	if( skill_id && !(skill_get_nk(skill_id)&NK_CRITICAL) )
 		return false;
 
 #ifdef RENEWAL
