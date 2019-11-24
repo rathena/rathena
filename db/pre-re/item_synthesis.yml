@@ -11,7 +11,7 @@
 #   SourceNeeded:       # (int) Number of item sets (in SourceItem) must be selected (default: 1)
 #   SourceItem:         # List of item required
 #     - Item:           # (int) Item ID for source
-#     - Amount:         # (int) Item amount will be consumed (Default: 1)
+#       Amount:         # (int) Item amount will be consumed (Default: 1)
 #   Reward:             # (string) Script on synthesis success
 ###########################################################################
 
