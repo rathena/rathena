@@ -7241,7 +7241,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					break;
 				}
 
-				if (dstsd->sc.data[type] && dstsd->sc.data[type]->val1 != src->id) { // Fail if a player is in unity with another source.
+				if (dstsd->sc.data[type] && dstsd->sc.data[type]->val2 != src->id) { // Fail if a player is in unity with another source.
 					if (sd)
 						clif_skill_fail(sd, skill_id, USESKILL_FAIL, 0);
 					map_freeblock_unlock();
@@ -7264,7 +7264,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 					sd->united_soul[i] = bl->id;
 				}
 
-				clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, src->id, i, skill_lv, 0, skill_get_time(skill_id, skill_lv)));
+				clif_skill_nodamage(src, bl, skill_id, skill_lv, sc_start4(src, bl, type, 100, skill_lv, src->id, i, 0, skill_get_time(skill_id, skill_lv)));
 			} else if (sd)
 				party_foreachsamemap(skill_area_sub, sd, skill_get_splash(skill_id, skill_lv), src, skill_id, skill_lv, tick, flag|BCT_PARTY|1, skill_castend_nodamage_id);
 		}

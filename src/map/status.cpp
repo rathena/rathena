@@ -11418,7 +11418,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CREATINGSTAR:
 			tick_time = 500;
 			val4 = tick / tick_time;
-			tick = 10;
 			break;
 		case SC_LIGHTOFSUN:
 		case SC_LIGHTOFMOON:
@@ -11456,7 +11455,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_SOULUNITY:
 			tick_time = 3000;
 			val4 = tick / tick_time;
-			tick = 3000;
 			break;
 		case SC_SOULDIVISION:
 			val2 = 10 * val1; // Skill Aftercast Increase
@@ -12460,12 +12458,12 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 			break;
 
 		case SC_SOULUNITY: {
-				struct block_list *d_bl = map_id2bl(sce->val1);
+				struct map_session_data *tsd = nullptr;
 
-				if (d_bl) {
-					if (d_bl->type == BL_PC)
-						((TBL_PC *)d_bl)->united_soul[sce->val2] = 0;
-				}
+				if (!(tsd = map_id2sd(sce->val2)))
+					break;
+
+				tsd->united_soul[sce->val3] = 0;
 			}
 			break;
 
@@ -14055,13 +14053,12 @@ TIMER_FUNC(status_change_timer){
 		break;
 	case SC_SOULUNITY:
 		if (--(sce->val4) >= 0) { // Needed to check the caster's location for the range check.
-			struct block_list *unity_src = map_id2bl(sce->val1);
+			struct block_list *unity_src = map_id2bl(sce->val2);
 
-			// End the status if out of range.
-			if (!check_distance_bl(bl, unity_src, 11))
+			if (!unity_src || status_isdead(unity_src) || src->m != bl->m || !check_distance_bl(bl, unity_src, 11))
 				break;
 
-			status_heal(bl, 150*sce->val3, 0, 2);
+			status_heal(bl, 150 * sce->val1, 0, 2);
 			sc_timer_next(3000 + tick);
 			return 0;
 		}
