@@ -2643,7 +2643,7 @@ OnTouch:
 		next;
 		mes "[A man of Riehart Family]";
 		mes "Never mind...";
-		donpcevent "YoungNoble#valter::OnDisable";
+		donpcevent "Young Noble#valter::OnDisable";
 		donpcevent "Aged Noble#rihart::OnDisable";
 		next;
 		mes "[" + strcharinfo(0) + "]";
