@@ -11407,8 +11407,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_NEWMOON:
 			val2 = 7; // Number of Regular Attacks Until Reveal
-			t_tickime = 1000;
-			val4 = tick / t_tickime;
+			tick_time = 1000;
+			val4 = tick / tick_time;
 			break;
 		case SC_FALLINGSTAR:
 			val2 = 8 + 2 * (1 + val1) / 2; // Autocast Chance
@@ -11416,8 +11416,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val2 += 1; // Make it 15% at level 7.
 			break;
 		case SC_CREATINGSTAR:
-			t_tickime = 500;
-			val4 = tick / t_tickime;
+			tick_time = 500;
+			val4 = tick / tick_time;
 			tick = 10;
 			break;
 		case SC_LIGHTOFSUN:
@@ -11454,8 +11454,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				val3 += 4 * (val1 - 5);
 			break;
 		case SC_SOULUNITY:
-			t_tickime = 3000;
-			val4 = tick / t_tickime;
+			tick_time = 3000;
+			val4 = tick / tick_time;
 			tick = 3000;
 			break;
 		case SC_SOULDIVISION:
