@@ -4305,12 +4305,12 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 200 * skill_lv;
 			break;
 		case RL_FIREDANCE:
-			skillratio += -100 + 200 * skill_lv;
-			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 25 : 0); // !TODO: Confirm bonus from Desperado
+			skillratio += 100 + 100 * skill_lv;
+			skillratio += (sd ? pc_checkskill(sd, GS_DESPERADO) * 20 : 0);
 			RE_LVL_DMOD(100);
 			break;
 		case RL_BANISHING_BUSTER:
-			skillratio += -100 + 1100 + 100 * skill_lv;
+			skillratio += -100 + 1000 + 200 * skill_lv;
 			RE_LVL_DMOD(100);
 			break;
 		case RL_S_STORM:
@@ -4325,7 +4325,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case RL_D_TAIL:
 			skillratio += -100 + 500 + 200 * skill_lv;
-			if (sd && tsc && tsc->data[SC_C_MARKER])
+			if (sd && (wd->miscflag & 8))
 				skillratio *= 2;
 			RE_LVL_DMOD(100);
 			break;
@@ -4345,7 +4345,7 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 		case RL_HAMMER_OF_GOD:
 			skillratio += -100 + 2800 + 1400 * skill_lv;
 			if (sd) {
-				if (tsc && tsc->data[SC_C_MARKER])
+				if (wd->miscflag & 8)
 					skillratio += 100 * sd->spiritball_old;
 				else if (sd->spiritball_old)
 					skillratio += 10 * sd->spiritball_old;

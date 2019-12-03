@@ -1295,7 +1295,7 @@
 2563,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_P_ALTER,Platinum Alter
 2564,-9,6,2,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_FALLEN_ANGEL,Fallen Angel
 2565,0,6,4,-1,0x2,3:3:3:4:4:4:5:5:5:6,10,1,no,0,0,0,weapon,3,0x0,	RL_R_TRIP,Round Trip
-2566,11,6,1,0,0x30,-1,10,1,no,0,0,0,weapon,0,0x0,	RL_D_TAIL,Dragon Tail
+2566,11,6,1,0,0x30,1,10,1,no,0,0,0,weapon,0,0x0,	RL_D_TAIL,Dragon Tail
 2567,3,6,2,-1,0x2,1,5,1,no,0,0,0,weapon,0,0,	RL_FIRE_RAIN,Fire Rain
 2568,0,6,4,0,0x1,0,5,1,no,0,0,0,none,0,0x0,	RL_HEAT_BARREL,Heat Barrel
 2569,-15,6,1,-1,0,0,5,1,no,0,0,0,weapon,0,0x0,	RL_AM_BLAST,Anti-Material Blast

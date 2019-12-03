@@ -5131,6 +5131,16 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					skill_area_temp[4] = bl->x;
 					skill_area_temp[5] = bl->y;
 					break;
+				case RL_HAMMER_OF_GOD:
+					if (sd && tsc && tsc->data[SC_C_MARKER]) {
+						int i;
+
+						ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == bl->id);
+
+						if (i < MAX_SKILL_CRIMSON_MARKER)
+							flag |= 8;
+					}
+					break;
 				case SU_LUNATICCARROTBEAT:
 					if (sd && pc_search_inventory(sd, skill_get_itemid(SU_LUNATICCARROTBEAT, 0)) >= 0)
 						skill_id = SU_LUNATICCARROTBEAT2;
@@ -6082,6 +6092,19 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RL_D_TAIL:
 		if (flag&1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
+		else if (skill_id == RL_D_TAIL) {
+			if (sd && tsc && tsc->data[SC_C_MARKER]) {
+				int i;
+
+				ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == bl->id);
+
+				if (i < MAX_SKILL_CRIMSON_MARKER)
+					flag |= 8;
+			}
+
+			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
+		}
 		break;
 
 	case SU_SCAROFTAROU:
@@ -10884,10 +10907,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
 		}
 		break;
-	case RL_D_TAIL:
-		clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
-		map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
-		break;
 	case RL_QD_SHOT:
 		if (sd) {
 			skill_area_temp[1] = bl->id;
@@ -11340,25 +11359,10 @@ TIMER_FUNC(skill_castend_id){
 				}
 			case GN_WALLOFTHORN:
 			case SC_ESCAPE:
+			case RL_HAMMER_OF_GOD:
 			case SU_CN_POWDERING:
 				ud->skillx = target->x;
 				ud->skilly = target->y;
-				ud->skilltimer = tid;
-				return skill_castend_pos(tid,tick,id,data);
-			case RL_HAMMER_OF_GOD:
-				if ((sc = status_get_sc(target)) && sc->data[SC_C_MARKER]) {
-					ud->skillx = target->x;
-					ud->skilly = target->y;
-				} else {
-					int splash = skill_get_splash(ud->skill_id, ud->skill_lv); // !TODO: What's the random AoE size?
-
-					ud->skillx = target->x + splash;
-					ud->skilly = target->y + splash;
-					if (!map_random_dir(target, &ud->skillx, &ud->skilly)) {
-						ud->skillx = target->x;
-						ud->skilly = target->y;
-					}
-				}
 				ud->skilltimer = tid;
 				return skill_castend_pos(tid,tick,id,data);
 		}
