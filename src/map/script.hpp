@@ -384,7 +384,7 @@ enum petinfo_types {
 	PETINFO_FOODID
 };
 
-enum questinfo_types {
+enum e_questinfo_types {
 	QTYPE_QUEST = 0,
 	QTYPE_QUEST2,
 	QTYPE_JOB,
@@ -400,6 +400,14 @@ enum questinfo_types {
 	QTYPE_JUMPING_PORING,
 	// 11 - 9998 = free
 	QTYPE_NONE = 9999
+};
+
+enum e_questinfo_markcolor : uint8 {
+	QMARK_NONE = 0,
+	QMARK_YELLOW,
+	QMARK_GREEN,
+	QMARK_PURPLE,
+	QMARK_MAX
 };
 
 #ifndef WIN32
