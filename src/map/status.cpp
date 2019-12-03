@@ -14055,7 +14055,7 @@ TIMER_FUNC(status_change_timer){
 		if (--(sce->val4) >= 0) { // Needed to check the caster's location for the range check.
 			struct block_list *unity_src = map_id2bl(sce->val2);
 
-			if (!unity_src || status_isdead(unity_src) || src->m != bl->m || !check_distance_bl(bl, unity_src, 11))
+			if (!unity_src || status_isdead(unity_src) || unity_src->m != bl->m || !check_distance_bl(bl, unity_src, 11))
 				break;
 
 			status_heal(bl, 150 * sce->val1, 0, 2);
