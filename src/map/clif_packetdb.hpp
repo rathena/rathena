@@ -2193,6 +2193,12 @@
 	packet(0x09DA,-1);
 #endif
 
+// 2014-10-08Ragexe
+#if PACKETVER >= 20141008
+	parseable_packet(0x9FB, -1, clif_parse_pet_evolution, 2, 4); // CZ_PET_EVOLUTION
+	packet(0x09FC, 6); // ZC_PET_EVOLUTION_RESULT
+#endif
+
 // 2014-10-16Ragexe
 #if PACKETVER >= 20141016
 	packet(0x09DF,7);
@@ -2284,9 +2290,6 @@
 	parseable_packet(0x0A2E,6,clif_parse_change_title,0); // CZ_REQ_CHANGE_TITLE
 	packet(0x0A2F,7); // ZC_ACK_CHANGE_TITLE
 	packet(0x0A30,106); // ZC_ACK_REQNAMEALL2
-	// Pet Evolution System
-	parseable_packet(0x09FB,-1,clif_parse_dull,0); // CZ_PET_EVOLUTION
-	packet(0x09FC,6); // ZC_PET_EVOLUTION_RESULT
 
 	// Quest UI
 	packet(0x08FE,-1); // ZC_HUNTING_QUEST_INFO
@@ -2317,6 +2320,12 @@
 	parseable_packet(0x0A6E,-1,clif_parse_Mail_send,2,4,28,52,60,62,64,68); // CZ_REQ_WRITE_MAIL2
 #endif
 
+// 2016-05-25aRagexeRE
+#if PACKETVER >= 20160525
+	parseable_packet(0x0A77,15,clif_parse_camerainfo,0);
+	packet(0x0A78, 15);
+#endif
+
 // 2016-06-01aRagexe
 #if PACKETVER >= 20160601
 	packet(0x0A7D,-1);
@@ -2332,16 +2341,20 @@
 	packet(0x0A37,59);
 #endif
 
-// 2016-09-28cRagexeRE
-#if PACKETVER >= 20160928
-	parseable_packet(0x0A97,8,clif_parse_dull,0);
-	parseable_packet(0x0A99,4,clif_parse_dull,0);
-	parseable_packet(0x0A9C,2,clif_parse_dull,0);
-#endif
-
 // 2016-10-26bRagexeRE
 #if PACKETVER >= 20161026
 	packet(0x0AA5,-1);
+#endif
+
+// 2017-02-08bRagexeRE
+#if PACKETVER >= 20170208
+	parseable_packet(0x0A97,8,clif_parse_equipswitch_add,2,4);
+	packet(0x0A98,12);
+	parseable_packet(0x0A99,8,clif_parse_equipswitch_remove,2,4,6);
+	packet(0x0A9A,10);
+	packet(0x0A9B,-1);
+	parseable_packet(0x0A9C,2,clif_parse_equipswitch_request,0);
+	packet(0x0A9D,4);
 #endif
 
 // 2017-03-15cRagexeRE
@@ -2361,7 +2374,9 @@
 	packet(0x0A44,-1);
 	packet(0x0AB2,7);
 	packet(0x0ABD,10);
-	parseable_packet(0x0ACE,4,clif_parse_dull,0);
+	packet(0x0A98,10);
+	parseable_packet(0x0A99,4,clif_parse_equipswitch_remove,2,4);
+	parseable_packet(0x0ACE,4,clif_parse_equipswitch_request_single,0);
 #endif
 
 // 2017-08-30bRagexeRE
@@ -2405,6 +2420,11 @@
 	packet(0x0A4A,6);
 	packet(0x0A4B,22);
 	packet(0x0A4C,28);
+#endif
+
+// 2018-04-18bRagexeRE
+#if PACKETVER >= 20180418
+	packet(0x0ADD, 22);
 #endif
 
 #endif /* CLIF_PACKETDB_HPP */

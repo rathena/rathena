@@ -18,6 +18,8 @@
 #include "../common/timer.hpp"
 #include "../config/core.hpp"
 
+#include "script.hpp"
+
 struct npc_data;
 struct item_data;
 struct Channel;
@@ -312,6 +314,12 @@ enum e_race2 : uint8{
 	RC2_BIO5_ACOLYTE_MERCHANT,
 	RC2_BIO5_MAGE_ARCHER,
 	RC2_BIO5_MVP,
+	RC2_CLOCKTOWER,
+	RC2_THANATOS,
+	RC2_FACEWORM,
+	RC2_HEARTHUNTER,
+	RC2_ROCKRIDGE,
+	RC2_WERNER_LAB,
 	RC2_MAX
 };
 
@@ -399,7 +407,7 @@ struct flooritem_data {
 	unsigned char subx,suby;
 	int cleartimer;
 	int first_get_charid,second_get_charid,third_get_charid;
-	unsigned int first_get_tick,second_get_tick,third_get_tick;
+	t_tick first_get_tick,second_get_tick,third_get_tick;
 	struct item item;
 	unsigned short mob_id; ///< ID of monster who dropped it. 0 for non-monster who dropped it.
 };
@@ -430,6 +438,7 @@ enum _sp {
 	SP_ROULETTE_GOLD = 130,
 	SP_CASHPOINTS, SP_KAFRAPOINTS,
 	SP_PCDIECOUNTER, SP_COOKMASTERY,
+	SP_ACHIEVEMENT_LEVEL,
 
 	// Mercenaries
 	SP_MERCFLEE=165, SP_MERCKILLS=189, SP_MERCFAITH=190,
@@ -485,7 +494,8 @@ enum _sp {
 	SP_HP_VANISH_RACE_RATE, SP_SP_VANISH_RACE_RATE, SP_ABSORB_DMG_MAXHP, SP_SUB_SKILL, SP_SUBDEF_ELE, // 2074-2078
 	SP_STATE_NORECOVER_RACE, SP_CRITICAL_RANGEATK, SP_MAGIC_ADDRACE2, SP_IGNORE_MDEF_RACE2_RATE, // 2079-2082
 	SP_WEAPON_ATK_RATE, SP_WEAPON_MATK_RATE, SP_DROP_ADDRACE, SP_DROP_ADDCLASS, SP_NO_MADO_FUEL, // 2083-2087
-	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY //2088-2092
+	SP_IGNORE_DEF_CLASS_RATE, SP_REGEN_PERCENT_HP, SP_REGEN_PERCENT_SP, SP_SKILL_DELAY, SP_NO_WALK_DELAY, //2088-2093
+	SP_LONG_SP_GAIN_VALUE, SP_LONG_HP_GAIN_VALUE // 2094-2095
 };
 
 enum _look {
@@ -698,22 +708,11 @@ struct iwall_data {
 	bool shootable;
 };
 
-struct questinfo_req {
-	unsigned int quest_id;
-	unsigned state : 2; // 0: Doesn't have, 1: Inactive, 2: Active, 3: Complete //! TODO: CONFIRM ME!!
-};
-
-struct questinfo {
+struct s_questinfo {
 	struct npc_data *nd;
-	unsigned short icon;
-	unsigned char color;
-	int quest_id;
-	unsigned short min_level,
-		max_level;
-	uint8 req_count;
-	uint8 jobid_count;
-	struct questinfo_req *req;
-	unsigned short *jobid;
+	e_questinfo_types icon;
+	e_questinfo_markcolor color;
+	struct script_code* condition;
 };
 
 struct map_data {
@@ -726,7 +725,9 @@ struct map_data {
 	int16 xs,ys; // map dimensions (in cells)
 	int16 bxs,bys; // map dimensions (in blocks)
 	int16 bgscore_lion, bgscore_eagle; // Battleground ScoreBoard
-	int npc_num;
+	int npc_num; // number total of npc on the map
+	int npc_num_area; // number of npc with a trigger area on the map
+	int npc_num_warp; // number of warp npc on the map
 	int users;
 	int users_pvp;
 	int iwall_num; // Total of invisible walls in this map
@@ -751,9 +752,8 @@ struct map_data {
 	struct Channel *channel;
 
 	/* ShowEvent Data Cache */
-	struct questinfo *qi_data;
-	unsigned short qi_count;
-	
+	std::vector<s_questinfo> qi_data;
+
 	/* speeds up clif_updatestatus processing by causing hpmeter to run only when someone with the permission can view it */
 	unsigned short hpmeter_visible;
 };
@@ -1001,7 +1001,7 @@ int map_freeblock_unlock(void);
 // blocklist manipulation
 int map_addblock(struct block_list* bl);
 int map_delblock(struct block_list* bl);
-int map_moveblock(struct block_list *, int, int, unsigned int);
+int map_moveblock(struct block_list *, int, int, t_tick);
 int map_foreachinrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
 int map_foreachinallrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
 int map_foreachinshootrange(int (*func)(struct block_list*,va_list), struct block_list* center, int16 range, int type, ...);
@@ -1031,7 +1031,7 @@ bool map_addnpc(int16 m,struct npc_data *);
 TIMER_FUNC(map_clearflooritem_timer);
 TIMER_FUNC(map_removemobs_timer);
 void map_clearflooritem(struct block_list* bl);
-int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id);
+int map_addflooritem(struct item *item, int amount, int16 m, int16 x, int16 y, int first_charid, int second_charid, int third_charid, int flags, unsigned short mob_id, bool canShowEffect = false);
 
 // instances
 int map_addinstancemap(const char *name, unsigned short instance_id);
@@ -1079,9 +1079,7 @@ struct mob_data * map_id2boss(int id);
 // reload config file looking only for npcs
 void map_reloadnpc(bool clear);
 
-struct questinfo *map_add_questinfo(int m, struct questinfo *qi);
-bool map_remove_questinfo(int m, struct npc_data *nd);
-struct questinfo *map_has_questinfo(int m, struct npc_data *nd, int quest_id);
+void map_remove_questinfo(int m, struct npc_data *nd);
 
 /// Bitfield of flags for the iterator.
 enum e_mapitflags

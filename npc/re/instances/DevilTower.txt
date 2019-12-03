@@ -226,7 +226,7 @@ dali02,137,121,3	script	Magic Scholar Artie#tnm	4_M_FAIRYKID6,{
 		mes "Don't take any unncessary risks, okay?";
 		close;
 	}
-	if (getpartyleader(.@party_id,2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "[Artie]";
 		mes "Bring the Expedition Chief.";
 		mes "Devil's Tower is not a place to visit alone.";
@@ -441,7 +441,7 @@ OnTimer26000:
 1@tnm1,57,112,5	script	Officer Heim#heim0	4_TOWER_05,{ end; }
 
 1@tnm1,56,110,3	script	Officer Heim#heim	4_TOWER_05,{
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "[Officer Heim]";
 		mes "Who brought you all here?";
 		mes "I will talk to a representative.";
@@ -454,7 +454,7 @@ OnTimer26000:
 		npctalk "Officer Heim: Back up soldiers? So why are you just standing there?";
 		next;
 		select("Right now?");
-		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 0) {
+		if (is_party_leader() == true && 'devil_tower == 0) {
 			enablenpc instance_npcname("Healer Fama#feima");
 			'devil_tower = 1;
 		}
@@ -466,12 +466,14 @@ OnTimer26000:
 		mes "Do you hear that?";
 		mes "Help Fama take care of the injured soldiers.";
 		mes "Fama will give you first aid-kits, use it to help the injured people.";
-		// close2;// still attached
+		close2;
+		setpcblock PCBLOCK_NPC, true;
 		npctalk "Officer Heim: Do you hear that?";
 		sleep2 2000;
 		npctalk "Officer Heim: Help Fama take care of the injured soldiers.";
 		sleep2 2000;
 		npctalk "Healer Fama: Okay~ You are going to help me? Come here and receive the first aid kit~!";
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	case 1:
 		mes "[Officer Heim]";
@@ -528,7 +530,7 @@ OnTimer26000:
 	mes "You administer the first-aid-kit to the soldier.";
 	next;
 	specialeffect EF_SPHERE;
-	// progressbar "000000",10;	// fix me: progressbar doesn't display close button on cancel
+	progressbar "000000",10;
 	if ('devil_tower == 1) {
 		delitem 7641,1;
 		specialeffect EF_ENTRY;
@@ -638,7 +640,7 @@ OnTouch:
 }
 
 1@tnm1,46,105,5	script	Lucile#tnm01	4_F_LUCILE,{
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		cutin "tnm_lucile01.bmp",2;
 		mes "[Lucile]";
 		mes "Who is in charge of the back-up team?";
@@ -648,7 +650,7 @@ OnTouch:
 		.@lucile$ = instance_npcname("Lucile#tnm01");
 		.@heim$ = instance_npcname("Officer Heim#heim");
 		'devil_tower = 3;
-		mes "";	// todo fix me "workinprogress"
+		setpcblock PCBLOCK_NPC, true;
 		cutin "tnm_lucile01.bmp",2;
 		sleep2 1500;
 		npctalk "Lucile: I am Lucile from the Assassin Guild.", .@lucile$;
@@ -699,6 +701,7 @@ OnTouch:
 		npctalk "Officer Heim: They are so unpredictable. You know what is going on right? Back them up...", .@heim$;
 		sleep2 2500;
 		npctalk "Officer Heim: Help us take care of the demons coming down from upstairs.", .@heim$;
+		setpcblock PCBLOCK_NPC, false;
 		end;
 	}
 }
@@ -831,7 +834,7 @@ OnMobDead:
 1@tnm1,138,96,3	script	Lucile#tnm02	4_F_LUCILE,{
 	if (isbegin_quest(7571) == 0)
 		end;
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "You wave your hand in front of her but she doesn't react.";
 		close;
 	}
@@ -857,7 +860,7 @@ OnMobDead:
 			next;
 			sleep2 750;
 			npctalk "Lucile: Please hold tight.";
-			if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 4) {
+			if (is_party_leader() == true && 'devil_tower == 4) {
 				donpcevent instance_npcname("Huey#hui02") + "::OnEnable";
 				'devil_tower = 5;
 			}
@@ -867,8 +870,8 @@ OnMobDead:
 		mes "Lucile seems to be a machine.";
 		mes "I can hear mechanical sounds all of a sudden.";
 		specialeffect EF_LEVEL99_3;
-		// progressbar "000000",40;	// fix me: progressbar doesn't display close button on cancel
-		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 5) {
+		progressbar "000000",40;
+		if (is_party_leader() == true && 'devil_tower == 5) {
 			if (isbegin_quest(7572) == 0)
 				setquest 7572;// Lucile...?
 			'devil_tower = 6;
@@ -996,7 +999,7 @@ OnMobDead:
 1@tnm2,133,139,5	duplicate(Officer Heim#heim0)	Demon Morocc#tnm01	1916
 
 1@tnm2,144,137,3	script	Lucile#tnm03	4_F_LUCILE,{
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "[Lucile]";
 		mes "I am talking to your party leader now so please step back for a while.";
 		cutin "tnm_lucile01.bmp",2;
@@ -1012,7 +1015,7 @@ OnMobDead:
 		mes "We need to stop the demon...";
 		mes "Can you do that?";
 		npctalk "Lucile: We need to stop the demon... Can you do that?";
-		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 7) {
+		if (is_party_leader() == true && 'devil_tower == 7) {
 			if (isbegin_quest(7573) == 0)
 				setquest 7573;// Magic Swordman Thanatos
 			'demon$ = instance_npcname("Demon Morocc#tnm01");
@@ -1413,13 +1416,14 @@ OnTimer7000:
 OnTouch:
 	if ('devil_tower != 9)
 		end;
-	mes "";	// todo fix me "workinprogress"
+	setpcblock PCBLOCK_NPC, true;
 	disablenpc instance_npcname("#tnm3event01");
 	enablenpc instance_npcname("Young Girl#tnm01");
 	sleep2 4000;
 	mapannounce 'map_tnm3$, "Young Girl: Odin Preserve me! A demon!! Help me!", bc_map,0xFF00;
 	'mob_count = 12;
 	initnpctimer;
+	setpcblock PCBLOCK_NPC, false;
 	end;
 OnTimer1000:
 	monster 'map_tnm3$,33,171,"Evil Shadow",2939,1, instance_npcname("Young Girl#tnm01") + "::OnMobDead";// MM_EVIL_SHADOW1
@@ -1464,7 +1468,7 @@ OnTimer9000:
 		close;
 	}
 	if ('devil_tower == 10) {
-		if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+		if (is_party_leader() == false) {
 			mes "[Young Girl]";
 			mes "*weeping* The demons are so scary.";
 			close;
@@ -1493,7 +1497,7 @@ OnTimer9000:
 		mes "Please come with me through the passage behind that shelf!";
 		npctalk "Young Girl: Please come with me through the passage behind that shelf!";
 		close2;
-		if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 10) {
+		if (is_party_leader() == true && 'devil_tower == 10) {
 			enablenpc instance_npcname("#tnm3gate01");
 			enablenpc instance_npcname("#tnm3event02ect");
 			'devil_tower = 11;
@@ -1596,7 +1600,7 @@ OnMobDead:
 OnTouch_:
 	if ('devil_tower == 11) {
 		'devil_tower = 12;
-		mes "";	// todo fix me "workinprogress"
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
 		npctalk "Evil Shadow: I thought I smelled rats sneaking in here. I was right!!";
 		sleep2 3000;
@@ -1605,6 +1609,7 @@ OnTouch_:
 		npctalk "Evil Shadow: I summon the Darkness!!";
 		disablenpc instance_npcname("Evil Shadow#tnm3mob01");
 		donpcevent instance_npcname("Evil Shadow kill#tnm3mob01") + "::OnSummon";
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -1647,7 +1652,7 @@ OnTouch_:// possibility to skip this step
 		end;
 	if ('shade == 0) {
 		'shade = 1;
-		mes "";	// todo fix me "workinprogress"
+		setpcblock PCBLOCK_NPC, true;
 		sleep2 1000;
 		npctalk "Demonic Shade: So you are the trouble makers!";
 		sleep2 2000;
@@ -1656,6 +1661,7 @@ OnTouch_:// possibility to skip this step
 		npctalk "Demonic Shade: The eternal truth is I will turn your deaths into the Demon's life with your hearts' blood!!!";
 		disablenpc instance_npcname("Demonic Shade#mobmaster");
 		donpcevent instance_npcname("#mobmaster_kill") + "::OnSummon";
+		setpcblock PCBLOCK_NPC, false;
 	}
 	end;
 }
@@ -1825,7 +1831,7 @@ OnTimer55500:
 1@tnm3,137,65,3	script	Loki#tnmloki02	4_M_ROKI2,{
 	if ('devil_tower != 13)
 		end;
-	if (getpartyleader(getcharid(1),2) != getcharid(0)) {
+	if (is_party_leader() == false) {
 		mes "[Loki]";
 		mes "I am talking to your boss.";
 		close;
@@ -1853,7 +1859,7 @@ OnTimer55500:
 	mes "You will be in charge of activating Mind Blaster.";
 	npctalk "Loki: You will be in charge of activating Mind Blaster.", instance_npcname("Loki#tnmloki02");
 	next;
-	if (getpartyleader(getcharid(1),2) == getcharid(0) && 'devil_tower == 13) {
+	if (is_party_leader() == true && 'devil_tower == 13) {
 		disablenpc instance_npcname("Loki#tnmloki02");
 		mes "^4d4dffLoki, Guillotine Cross of the Assassin Guild, has joined your party.";
 		mes "We have to get rid of the demonic Lord Knight by Mind Blasting him with Loki's skill.^000000";

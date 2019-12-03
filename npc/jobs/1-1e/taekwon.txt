@@ -1,22 +1,18 @@
-//===== rAthena Script ======================================= 
+//===== rAthena Script =======================================
 //= Taekwon Job Quest
-//===== By: ================================================== 
-//= Tsuyuki & Samuray22
-//===== Current Version: ===================================== 
-//= 1.4
-//===== Compatible With: ===================================== 
-//= rAthena Project
-//===== Description: ========================================= 
-//= Official iRO TaeKwon Job Change Quest
-//===== Additional Comments: ================================= 
+//===== Description: =========================================
+//= [Official Conversion]
+//= Taekwon Job Change Quest
+//===== Changelogs: ==========================================
 //= 1.0 Replaced previous TK Job Quest with this one [Tsuyuki]
 //= 1.1 Rewrote to the Aegis Standars. [Samuray22]
 //= 1.2 Fixed position the npc is facing. [Kisuka]
 //= 1.3 Added Quest Log commands. [Kisuka]
 //= 1.4 Removed use of 'goto', and fixed some indentation. [L0ne_W0lf]
-//============================================================ 
+//= 1.5 Split into renewal [Lemongrass]
+//============================================================
 
-payon,157,141,5	script	Phoenix#TKJobChange	753,{
+-	script	Phoenix::PhoenixTKJobChange	-1,{
 	if(Upper == 2) {
 		mes "[Phoenix]";
 		mes "Hello, child.";

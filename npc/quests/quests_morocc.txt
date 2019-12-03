@@ -746,7 +746,7 @@ OnStop:
 	mapannounce "que_job01","The security magic in the Master Zone, Area 1 is deactivated.",bc_map,"0x70DBDB";
 	donpcevent "#room1_warp::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	donpcevent "que_job01#room_1::OnReset";
 	stopnpctimer;
 	end;
@@ -758,7 +758,7 @@ OnTimer240000:
 OnTimer245000:
 	donpcevent "#room1_warp::OnDisable";
 	donpcevent "Valdes#moc_master_1::OnDisable";
-	donpcevent "Marjana#poison::OnDisable";
+	donpcevent "Marjana#poison::OnInit";
 	end;
 
 OnTimer250000:
@@ -1893,6 +1893,7 @@ OnTimer25000:
 	end;
 
 OnDisable:
+	stopnpctimer;
 	disablenpc "Satan Broadcast#edq";
 	end;
 }
@@ -1919,18 +1920,9 @@ moc_fild21,178,239,0	script	Group of Evil#edq	844,1,1,{
 		close;
 	}
 
-OnInit:
-	enablenpc "Group of Evil#edq";
-	end;
-
 OnEnable:
 	enablenpc "Group of Evil#edq";
 	set $@re_moc_time$,"";
-	end;
-
-OnDisable:
-	disablenpc "Group of Evil#edq";
-	donpcevent "Time-Space Gap#edq::OnEnable";
 	end;
 }
 
@@ -1974,8 +1966,6 @@ OnTimer1800000:
 	end;
 
 OnTimer21600000:
-	stopnpctimer;
-	set $@re_moc,0;
 	donpcevent "Time-Space Gap#edq::OnDisable";
 	end;
 }
@@ -2004,7 +1994,9 @@ OnMyMobDead:
 	mapannounce "moc_fild21","I'll let live just a little longer. You'll never find me through this time-space gap!",bc_map,"0xFFFF00";
 	donpcevent "Time-Space Gap#edq::OnEnable";
 	donpcevent "Satan Broadcast#edq::OnDisable";
-	donpcevent "Group of Evil#edq::OnDisable";
+	disablenpc "Group of Evil#edq";
+	stopnpctimer;
+	killmonster "moc_fild21","Satan Summon#edq::OnMyMobDead";
 	disablenpc "Satan Summon#edq";
 	end;
 
@@ -2014,9 +2006,6 @@ OnTimer5400000:
 
 OnTimer5415000:
 	mapannounce "moc_fild21","I don't have time for this! Go away!",bc_map,"0xFFFF00";
-	stopnpctimer;
-	killmonster "moc_fild21","Satan Summon#edq::OnMyMobDead";
-	set $@re_moc,0;
 	donpcevent "Satan Summon#edq::OnDisable";
 	end;
 }

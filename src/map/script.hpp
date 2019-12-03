@@ -46,8 +46,8 @@
 /// Pushes a copy of the data in the target index
 #define script_pushcopy(st,i) push_copy((st)->stack, (st)->start + (i))
 
-#define script_isstring(st,i) data_isstring(script_getdata(st,i))
-#define script_isint(st,i) data_isint(script_getdata(st,i))
+#define script_isstring(st,i) data_isstring(get_val(st, script_getdata(st,i)))
+#define script_isint(st,i) data_isint(get_val(st, script_getdata(st,i)))
 
 #define script_getnum(st,val) conv_num(st, script_getdata(st,val))
 #define script_getstr(st,val) conv_str(st, script_getdata(st,val))
@@ -384,7 +384,7 @@ enum petinfo_types {
 	PETINFO_FOODID
 };
 
-enum questinfo_types {
+enum e_questinfo_types {
 	QTYPE_QUEST = 0,
 	QTYPE_QUEST2,
 	QTYPE_JOB,
@@ -402,6 +402,14 @@ enum questinfo_types {
 	QTYPE_NONE = 9999
 };
 
+enum e_questinfo_markcolor : uint8 {
+	QMARK_NONE = 0,
+	QMARK_YELLOW,
+	QMARK_GREEN,
+	QMARK_PURPLE,
+	QMARK_MAX
+};
+
 #ifndef WIN32
 	// These are declared in wingdi.h
 	/* Font Weights */
@@ -416,16 +424,6 @@ enum questinfo_types {
 	#define FW_EXTRABOLD        800
 	#define FW_HEAVY            900
 #endif
-
-enum getmapxy_types {
-	UNITTYPE_PC = 0,
-	UNITTYPE_NPC,
-	UNITTYPE_PET,
-	UNITTYPE_MOB,
-	UNITTYPE_HOM,
-	UNITTYPE_MER,
-	UNITTYPE_ELEM,
-};
 
 enum unitdata_mobtypes {
 	UMOB_SIZE = 0,
@@ -707,6 +705,12 @@ enum instance_info_type {
 	IIT_ENTER_Y,
 	IIT_MAPCOUNT,
 	IIT_MAP
+};
+
+enum e_instance_live_info_type : uint8 {
+	ILI_NAME,
+	ILI_MODE,
+	ILI_OWNER
 };
 
 enum vip_status_type {
@@ -1905,7 +1909,74 @@ enum e_hat_effects {
 	HAT_EF_SUBJECT_AURA_WHITE,
 	HAT_EF_SUBJECT_AURA_RED,
 	HAT_EF_C_SHINING_ANGEL_WING,
+	HAT_EF_MAGIC_STAR_TW,
+	HAT_EF_DIGITAL_SPACE,
+	HAT_EF_SLEIPNIR,
+	HAT_EF_C_MAPLE_WHICH_FALLS_RD,
+	HAT_EF_MAGICCIRCLERAINBOW,
+	HAT_EF_SNOWFLAKE_TIARA,
+	HAT_EF_MIDGARTS_GLORY,
+	HAT_EF_LEVEL99_TIGER,
+	HAT_EF_LEVEL160_TIGER,
+	HAT_EF_FLUFFYWING,
+	HAT_EF_C_GHOST_EFFECT,
+	HAT_EF_C_POPPING_PORING_AURA,
+	HAT_EF_RESONATETAEGO,
+	HAT_EF_99LV_RUNE_RED,
+	HAT_EF_99LV_ROYAL_GUARD_BLUE,
+	HAT_EF_99LV_WARLOCK_VIOLET,
+	HAT_EF_99LV_SORCERER_LBLUE,
+	HAT_EF_99LV_RANGER_GREEN,
+	HAT_EF_99LV_MINSTREL_PINK,
+	HAT_EF_99LV_ARCHBISHOP_WHITE,
+	HAT_EF_99LV_GUILL_SILVER,
+	HAT_EF_99LV_SHADOWC_BLACK,
+	HAT_EF_99LV_MECHANIC_GOLD,
+	HAT_EF_99LV_GENETIC_YGREEN,
+	HAT_EF_160LV_RUNE_RED,
+	HAT_EF_160LV_ROYAL_G_BLUE,
+	HAT_EF_160LV_WARLOCK_VIOLET,
+	HAT_EF_160LV_SORCERER_LBLUE,
+	HAT_EF_160LV_RANGER_GREEN,
+	HAT_EF_160LV_MINSTREL_PINK,
+	HAT_EF_160LV_ARCHB_WHITE,
+	HAT_EF_160LV_GUILL_SILVER,
+	HAT_EF_160LV_SHADOWC_BLACK,
+	HAT_EF_160LV_MECHANIC_GOLD,
+	HAT_EF_160LV_GENETIC_YGREEN,
+	HAT_EF_WATER_BELOW3,
+	HAT_EF_WATER_BELOW4,
+	HAT_EF_C_VALKYRIE_WING,
+	HAT_EF_2019RTC_CELEAURA_TW,
+	HAT_EF_2019RTC1ST_TW,
+	HAT_EF_2019RTC2ST_TW,
+	HAT_EF_2019RTC3ST_TW,
+	HAT_EF_CONS_OF_WIND,
 	HAT_EF_MAX
+};
+
+enum e_convertpcinfo_type : uint8 {
+	CPC_NAME      = 0,
+	CPC_CHAR      = 1,
+	CPC_ACCOUNT   = 2
+};
+
+/**
+ * Player blocking actions related flags.
+ */
+enum e_pcblock_action_flag : uint16 {
+	PCBLOCK_MOVE     = 0x001,
+	PCBLOCK_ATTACK   = 0x002,
+	PCBLOCK_SKILL    = 0x004,
+	PCBLOCK_USEITEM  = 0x008,
+	PCBLOCK_CHAT     = 0x010,
+	PCBLOCK_IMMUNE   = 0x020,
+	PCBLOCK_SITSTAND = 0x040,
+	PCBLOCK_COMMANDS = 0x080,
+	PCBLOCK_NPCCLICK = 0x100,
+	PCBLOCK_NPC      = 0x18D,
+	PCBLOCK_EMOTION  = 0x200,
+	PCBLOCK_ALL      = 0x3FF,
 };
 
 /**
@@ -1935,6 +2006,7 @@ TIMER_FUNC(run_script_timer);
 void script_stop_sleeptimers(int id);
 struct linkdb_node *script_erase_sleepdb(struct linkdb_node *n);
 void script_attach_state(struct script_state* st);
+void script_detach_rid(struct script_state* st);
 void run_script_main(struct script_state *st);
 
 void script_stop_scriptinstances(struct script_code *code);
@@ -1950,7 +2022,8 @@ void script_run_autobonus(const char *autobonus, struct map_session_data *sd, un
 const char* script_get_constant_str(const char* prefix, int64 value);
 bool script_get_parameter(const char* name, int* value);
 bool script_get_constant(const char* name, int* value);
-void script_set_constant(const char* name, int value, bool isparameter, bool deprecated);
+void script_set_constant_(const char* name, int value, const char* constant_name, bool isparameter, bool deprecated);
+#define script_set_constant(name, value, isparameter, deprecated) script_set_constant_(name, value, NULL, isparameter, deprecated)
 void script_hardcoded_constants(void);
 
 void script_cleararray_pc(struct map_session_data* sd, const char* varname, void* value);

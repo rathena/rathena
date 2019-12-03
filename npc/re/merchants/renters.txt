@@ -153,110 +153,110 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 	close;
 }
 
-// Magic Gear Renter :: madogear
+// Mado Gear Renter :: madogear
 //============================================================
 -	script	::mgm	-1,{
-	mes "[Magic Gear Master]";
+	mes "[Mado Gear Armorer]";
 	if (Class == Job_Mechanic || Class == Job_Mechanic_T || Class == Job_Baby_Mechanic) {
 		mes "Welcome, Mechanic.";
 		mes "Would you like to rent a Pushcart or";
-		mes "ride a Magic Gear?";
+		mes "ride a Mado Gear?";
 		next;
-		switch(select("Rent a Pushcart:Ride a Magic Gear:Buy Emergency Magic Gear:Upgrade Cooling Device:Cancel")) {
+		switch(select("Rent a Pushcart:Ride a Mado Gear:Buy Emergency Mado Gear:Upgrade Cooling Device:Cancel")) {
 		case 1:
 			if (checkcart()) {
-				mes "[Magic Gear Master]";
+				mes "[Mado Gear Armorer]";
 				mes "I'm sorry, but you already";
 				mes "have a Pushcart.";
 				close;
 			}
 			setcart;
-			mes "[Magic Gear Master]";
+			mes "[Mado Gear Armorer]";
 			mes "There you go!";
 			close;
 		case 2:
 			if (checkmadogear()) {
-				mes "[Magic Gear Master]";
+				mes "[Mado Gear Armorer]";
 				mes "I'm sorry, but you're already";
-				mes "riding a Magic Gear.";
+				mes "riding a Mado Gear.";
 				close;
 			}
 			else if (!getskilllv("NC_MADOLICENCE")) {
-				mes "[Magic Gear Master]";
-				mes "Please learn the skill to get the Magic Gear License first.";
+				mes "[Mado Gear Armorer]";
+				mes "Please learn the skill to get the Mado Gear License first.";
 				close;
 			}
 			else if(ismounting()) {
-				mes "[Magic Gear Master]";
+				mes "[Mado Gear Armorer]";
 				mes "Please remove your cash mount.";
 				close;
 			}
 			setmadogear;
-			mes "[Magic Gear Master]";
+			mes "[Mado Gear Armorer]";
 			mes "Have fun, and please come again!";
 			close;
 		case 3:
-			mes "[Magic Gear Master]";
-			mes "Emergency Magic Gear is really useful for emergency situations and it is sold at 1,000,000 Zeny.";
+			mes "[Mado Gear Armorer]";
+			mes "Emergency Mado Gear is really useful for emergency situations and it is sold at 1,000,000 Zeny.";
 			next;
 			if (select("Purchase:Cancel") == 2) {
-				mes "[Magic Gear Master]";
+				mes "[Mado Gear Armorer]";
 				mes "I see. Please feel free to ask me";
 				mes "if you change your mind.";
 				close;
 			}
 			if (countitem(23277) > 0) {
-				mes "[Magic Gear Master]";
-				mes "I'm sorry, but you already have an Emergency Magic Gear.";
+				mes "[Mado Gear Armorer]";
+				mes "I'm sorry, but you already have an Emergency Mado Gear.";
 				close;
 			}
 			if (Zeny < 1000000) {
-				mes "[Magic Gear Master]";
-				mes "I'm sorry, but you don't have enough Zeny to purchase the Emergency Magic Gear.";
+				mes "[Mado Gear Armorer]";
+				mes "I'm sorry, but you don't have enough Zeny to purchase the Emergency Mado Gear.";
 				close;
 			}
 			Zeny -= 1000000;
 			getitem 23277,1; //Mado_Box
-			mes "[Magic Gear Master]";
+			mes "[Mado Gear Armorer]";
 			mes "There you go!";
 			close;
 		case 4:
-			mes "[Magic Gear Master]";
+			mes "[Mado Gear Armorer]";
 			mes "Which device do you want to upgrade?";
 			next;
 			if (select("Cooling Device:High Quality Cooler") == 1) {
-				mes "[Magic Gear Master]";
+				mes "[Mado Gear Armorer]";
 				mes "Upgrading Cooling Device to High Quality Cooler needs 1 Cooling Device and 2,000,000 Zeny.";
 				next;
 				.@itemid = 2804;
 				.@cost = 2000000;
 			} else {
-				mes "[Magic Gear Master]";
+				mes "[Mado Gear Armorer]";
 				mes "Upgrading High Quality Cooler to Special Cooler needs 1 High Quality Cooler and 4,000,000 Zeny.";
 				next;
 				.@itemid = 2809;
 				.@cost = 4000000;
 			}
 			if (select("Upgrade:Cancel") == 2) {
-				mes "[Magic Gear Master]";
+				mes "[Mado Gear Armorer]";
 				mes "I see. Please feel free to ask me";
 				mes "if you change your mind.";
 				close;
 			}
 			if (!countitem(.@itemid)) {
-				mes "[Magic Gear Master]";
+				mes "[Mado Gear Armorer]";
 				mes "I'm sorry, but you don't have the " + getitemname(.@itemid) + ".";
 				close;
 			}
 			if (Zeny < .@cost) {
-				mes "[Magic Gear Master]";
+				mes "[Mado Gear Armorer]";
 				mes "I'm sorry, but you don't have enough Zeny to upgrade the device.";
 				close;
 			}
 			Zeny -= .@cost;
 			delitem .@itemid,1;
 			getitem (.@itemid == 2804 ? 2809 : 2810),1; //High_Quality_Cooler,Special_Cooler
-			mes "[Magic Gear Master]";
+			mes "[Mado Gear Armorer]";
 			mes "Here you are! Your very own " + getitemname(.@itemid) + ".";
 			close;
 		case 5:
@@ -264,16 +264,16 @@ prontera,125,208,5	script	Peco Peco Remover	105,{
 		}
 	}
 	mes "How may I help you?";
-	mes "Magic Gears are only available for Mechanics.";
+	mes "Mado Gears are only available for Mechanics.";
 	close;
 }
-prontera,163,178,3	duplicate(mgm)	Magic Gear Master#prt	105
-geffen,103,55,5	duplicate(mgm)	Magic Gear Master#gef	105
-payon,166,106,5	duplicate(mgm)	Magic Gear Master#pay	105
-aldebaran,133,112,5	duplicate(mgm)	Magic Gear Master#alde	105
-yuno,167,187,3	duplicate(mgm)	Magic Gear Master#yuno	105
-rachel,106,134,5	duplicate(mgm)	Magic Gear Master#ra	105
-dicastes01,187,207,3	duplicate(mgm)	Magic Gear Master#dic	105
-manuk,273,212,5	duplicate(mgm)	Magic Gear Master#man	105
-splendide,180,174,5	duplicate(mgm)	Magic Gear Master#spl	105
-mid_camp,242,243,3	duplicate(mgm)	Magic Gear Master#mid	105
+prontera,163,178,3	duplicate(mgm)	Mado Gear Armorer#prt	105
+geffen,103,55,5	duplicate(mgm)	Mado Gear Armorer#gef	105
+payon,166,106,5	duplicate(mgm)	Mado Gear Armorer#pay	105
+aldebaran,133,112,5	duplicate(mgm)	Mado Gear Armorer#alde	105
+yuno,167,187,3	duplicate(mgm)	Mado Gear Armorer#yuno	105
+rachel,106,134,5	duplicate(mgm)	Mado Gear Armorer#ra	105
+dicastes01,187,207,3	duplicate(mgm)	Mado Gear Armorer#dic	105
+manuk,273,212,5	duplicate(mgm)	Mado Gear Armorer#man	105
+splendide,180,174,5	duplicate(mgm)	Mado Gear Armorer#spl	105
+mid_camp,242,243,3	duplicate(mgm)	Mado Gear Armorer#mid	105
