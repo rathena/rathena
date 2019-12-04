@@ -5072,7 +5072,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RL_FIREDANCE:
 	case RL_S_STORM:
 	case RL_R_TRIP:
-	case RL_HAMMER_OF_GOD:
 	case MH_XENO_SLASHER:
 	case NC_ARMSCANNON:
 	case SU_SCRATCH:
@@ -5130,16 +5129,6 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case WL_CRIMSONROCK:
 					skill_area_temp[4] = bl->x;
 					skill_area_temp[5] = bl->y;
-					break;
-				case RL_HAMMER_OF_GOD:
-					if (sd && tsc && tsc->data[SC_C_MARKER]) {
-						int i;
-
-						ARR_FIND(0, MAX_SKILL_CRIMSON_MARKER, i, sd->c_marker[i] == bl->id);
-
-						if (i < MAX_SKILL_CRIMSON_MARKER)
-							flag |= 8;
-					}
 					break;
 				case SU_LUNATICCARROTBEAT:
 					if (sd && pc_search_inventory(sd, skill_get_itemid(SU_LUNATICCARROTBEAT, 0)) >= 0)
@@ -6089,10 +6078,14 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case RL_QD_SHOT:
 		if ((tsc && !tsc->data[SC_C_MARKER]) || skill_area_temp[1] == bl->id)
 			break;
-	case RL_D_TAIL:
 		if (flag&1)
 			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
-		else if (skill_id == RL_D_TAIL) {
+		break;
+	case RL_D_TAIL:
+	case RL_HAMMER_OF_GOD:
+		if (flag&1)
+			skill_attack(skill_get_type(skill_id), src, src, bl, skill_id, skill_lv, tick, flag|SD_ANIMATION);
+		else {
 			if (sd && tsc && tsc->data[SC_C_MARKER]) {
 				int i;
 
@@ -6102,7 +6095,11 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 					flag |= 8;
 			}
 
-			clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+			if (skill_id == RL_HAMMER_OF_GOD)
+				clif_skill_poseffect(src, skill_id, 1, bl->x, bl->y, gettick());
+			else
+				clif_skill_nodamage(src, bl, skill_id, skill_lv, 1);
+
 			map_foreachinrange(skill_area_sub, bl, skill_get_splash(skill_id, skill_lv), BL_CHAR, src, skill_id, skill_lv, tick, flag|BCT_ENEMY|SD_SPLASH|1, skill_castend_damage_id);
 		}
 		break;
@@ -11359,7 +11356,6 @@ TIMER_FUNC(skill_castend_id){
 				}
 			case GN_WALLOFTHORN:
 			case SC_ESCAPE:
-			case RL_HAMMER_OF_GOD:
 			case SU_CN_POWDERING:
 				ud->skillx = target->x;
 				ud->skilly = target->y;
