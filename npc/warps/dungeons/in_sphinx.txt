@@ -9,7 +9,7 @@
 //===== Description: =========================================
 //= Warp Points for Sphinx Dungeon
 //===== Additional Comments: =================================
-//= 1.0 Split from combined warp file Morocc_duns. [L0ne_W0lf]
+//= 1.0 Split from combined warp file morroc_duns. [L0ne_W0lf]
 //============================================================
 
 //= Morocc Sphinx ============================================

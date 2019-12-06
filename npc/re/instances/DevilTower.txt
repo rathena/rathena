@@ -1723,7 +1723,7 @@ OnMobDead:
 1@tnm3,97,48,3	script	Loki#tnmloki01	4_M_ROKI2,{
 	if ('devil_tower == 12) {
 		'devil_tower = 13;
-		donpcevent instance_npcname("#Morocc_lord_talk") + "::OnStart";
+		donpcevent instance_npcname("#morocc_lord_talk") + "::OnStart";
 		end;
 	}
 	mes "[Loki]";
@@ -1733,10 +1733,10 @@ OnMobDead:
 
 1@tnm3,94,51,4	duplicate(Officer Heim#heim0)	Young Girl#tnm04	4_F_DST_CHILD
 
-1@tnm2,1,1,0	script	#Morocc_lord_talk	HIDDEN_WARP_NPC,{
+1@tnm2,1,1,0	script	#morocc_lord_talk	HIDDEN_WARP_NPC,{
 	end;
 OnStart:
-	enablenpc instance_npcname("#Morocc_lord_talk");
+	enablenpc instance_npcname("#morocc_lord_talk");
 	'Morocc$ = instance_npcname("Morocc Lord Knight#mocl");
 	'loki$ = instance_npcname("Loki#tnmloki01");
 	npctalk "Morocc Lord Knight: So.. the rat was an assassin? You came here to die?", 'Morocc$;
@@ -1821,7 +1821,7 @@ OnTimer55500:
 	mapwarp 'map_tnm3$, 'map_tnm3$,136,62;// todo area 1x1
 	'devil_tower = 13;
 	stopnpctimer;
-	disablenpc instance_npcname("#Morocc_lord_talk");
+	disablenpc instance_npcname("#morocc_lord_talk");
 	disablenpc instance_npcname("Morocc Lord Knight#mocl");
 	disablenpc instance_npcname("Loki#tnmloki01");
 	disablenpc instance_npcname("Young Girl#tnm04");
@@ -2198,7 +2198,7 @@ OnInstanceInit:
 
 	// Boss
 	disablenpc instance_npcname("Morocc Lord Knight#mocl");
-	disablenpc instance_npcname("#Morocc_lord_talk");
+	disablenpc instance_npcname("#morocc_lord_talk");
 	disablenpc instance_npcname("Loki#tnmloki01");
 	disablenpc instance_npcname("Young Girl#tnm04");
 	disablenpc instance_npcname("Loki#tnmloki02");
