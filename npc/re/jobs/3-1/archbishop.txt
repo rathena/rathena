@@ -396,7 +396,7 @@ umbala,139,227,3	script	Priest#arch	60,{
 		mes "Now, there is a place you should go to.";
 		next;
 		mes "[Priest Dayan]";
-		mes "That place is Hugel in Schwaltzvalt.";
+		mes "That place is Hugel in Schwarzwald.";
 		mes "There is a Nun praying there named Vinue,";
 		mes "she is a true minister who prays for the suffering people in the world.";
 		mes "But the last time I saw her she seemed sad.";

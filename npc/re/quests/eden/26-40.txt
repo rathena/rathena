@@ -131,9 +131,9 @@ geffen,103,42,5	script	Sponiac	99,{
 	next;
 	switch(select("Hunting Poison Spore:Hunting Smokie:Hunting Elder Willow:Hunting Coco:Hunting Thara Frog")) {
 		case 1: callsub L_Quest,8266,"Hunting Poison Spore",1000,0,100,"You can find Poison Spores on the Geffen Dungeon 1F or northeast of Prontera. There are other spots but I'll leave it up to you to find out.";
-		case 2: callsub L_Quest,8267,"Hunting Smokie",1000,0,100,"You can find Smokies northeast and northwest of Geffen. Oh, also the field east of Ayotaya is good spot to find them.";
+		case 2: callsub L_Quest,8267,"Hunting Smokie",1000,0,100,"You can find Smokies northeast and northwest of Geffen. Oh, also the field east of Ayothaya is good spot to find them.";
 		case 3: callsub L_Quest,8268,"Hunting Elder Willow",1000,100,110,"You can find Elder Willows northeast of Geffen, east of payon and southwest of Prontera.";
-		case 4: callsub L_Quest,8269,"Hunting Coco",1000,200,150,"You can find Cocos around the east of Payon, southwest of Prontera and the field east of Ayotaya.";
+		case 4: callsub L_Quest,8269,"Hunting Coco",1000,200,150,"You can find Cocos around the east of Payon, southwest of Prontera and the field east of Ayothaya.";
 		case 5: callsub L_Quest,8270,"Hunting Thara Frog",1500,300,200,"You can find Thara Frogs in the Cave east of Comodo or on Turtle Island.";
 	}
 	end;
@@ -588,10 +588,10 @@ payon,179,66,3	script	Dashia	931,{
 		mes "You can get Yoyo Tails from 'Yoyo's', Acorn from 'Coco's' and Raccoon Leaf from 'Smokies'.";
 		next;
 		mes "[Dashia]";
-		mes "You can find them easily around fields, but the field east of Ayothya is the best spot for hunting all 3 monsters.";
+		mes "You can find them easily around fields, but the field east of Ayothaya is the best spot for hunting all 3 monsters.";
 		next;
 		mes "[Dashia]";
-		mes "To get to Ayotaya, you better go to 'Aibakthing' in Alberta and pay his fare.";
+		mes "To get to Ayothaya, you better go to 'Aibakthing' in Alberta and pay his fare.";
 		break;
 	case 5:
 		callsub L_Quest,8278;

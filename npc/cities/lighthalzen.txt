@@ -149,7 +149,7 @@ lighthalzen,233,121,3	script	Kariya#li_01	72,{
 	mes "Still, it's a fitting";
 	mes "name for the wealthiest";
 	mes "and most luxurious city in";
-	mes "all the Schwaltzvalt Republic.";
+	mes "all the Schwarzwald Republic.";
 	mes "So how do you like this place?";
 	close;
 }

@@ -726,13 +726,13 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "[Historian]";
 		mes "I might have it mentioned before, but my name is Karlomoff and";
 		mes "I work in the Rekenber Historical Research as its 1st scholar. We";
-		mes "recently finished our project on the Schwaltzvalt Republic.";
+		mes "recently finished our project on the Schwarzwald Republic.";
 		next;
 		mes "[Historian]";
 		mes "Now, we're trying to learn";
 		mes "more about the Rune-Midgarts";
 		mes "Kingdom's history. We believe";
-		mes "it's linked to our Schwaltzvalt";
+		mes "it's linked to our Schwarzwald";
 		mes "Republic because they share the";
 		mes "continent. Makes sense, right?";
 		next;
@@ -742,7 +742,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "research of Rune-Midgarts will";
 		mes "shed some new light on our";
 		mes "current understanding of the";
-		mes "Schwaltzvalt Republic's past.";
+		mes "Schwarzwald Republic's past.";
 		next;
 		mes "[Historian]";
 		mes "Including myself, there are";
@@ -757,7 +757,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "Midgarts may not know it, but";
 		mes "the Rekenber Corporation has";
 		mes "unofficial control over our";
-		mes "Schwaltzvalt Republic. Some";
+		mes "Schwarzwald Republic. Some";
 		mes "hate it, others don't care.";
 		next;
 		mes "[Historian]";
@@ -954,7 +954,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 		mes "have to be so hot? This";
 		mes "can't be good for my skin...";
 		mes "Ooh, I wish I were back home";
-		mes "in the Schwaltzvalt Republic~";
+		mes "in the Schwarzwald Republic~";
 		emotion ET_CRY;
 		next;
 		mes "[Historian Rodafrian]";

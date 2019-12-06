@@ -359,7 +359,7 @@ function Func_JupHist;
 			mes "read something? There are";
 			mes "many books that cover some";
 			mes "interesting topics, like the";
-			mes "Schwaltzvalt economy...";
+			mes "Schwarzwald economy...";
 			next;
 			mes "[Fayruz]";
 			mes "Oh, in any case, please";

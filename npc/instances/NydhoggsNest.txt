@@ -538,9 +538,9 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			next;
 			mes "The reports of these adventurers have been sent to representatives of all kingdoms, and an expedition team has been created to find out more information.";
 			next;
-			mes "The scientists of Schwartzwalt created a combination metal, using fragments of metals found in the dimensional gorge.";
+			mes "The scientists of Schwarzwald created a combination metal, using fragments of metals found in the dimensional gorge.";
 			next;
-			mes "The Schwaltzvalt Republic requested approval to find the source of the new metal, and since Rune-Midgart couldn't complete the test themselves, they finally accepted.";
+			mes "The Schwarzwald Republic requested approval to find the source of the new metal, and since Rune-Midgart couldn't complete the test themselves, they finally accepted.";
 			next;
 			mes "They associated together to gather volunteers. The Assassin Guild was the first to volunteer.";
 			next;

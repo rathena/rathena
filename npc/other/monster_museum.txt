@@ -44,7 +44,7 @@ yuno_in03,32,15,3	script	Museum Guide	67,{
 		mes "The glass tubes holding monsters";
 		mes "was developed with the latest";
 		mes "technology as a part of the";
-		mes "Schwartz Project. Rest assured,";
+		mes "Schwarz Project. Rest assured,";
 		mes "you'll be well protected.";
 		next;
 		break;

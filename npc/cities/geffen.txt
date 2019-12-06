@@ -880,13 +880,13 @@ geffen_in,114,73,5	script	Hadenheim	709,{
 	mes "Man, the Rune-Midgard continent sure is big! How's it going, youngster?";
 	next;
 	mes "[Hans Hadenheim]";
-	mes "This Geffen sure is strange. But it was worth it to travel here all the way from the Schubaltzwald Republic.";
+	mes "This Geffen sure is strange. But it was worth it to travel here all the way from the Schwarzwald Republic.";
 	next;
-	if (select("Schubaltzwald Republic?:So, why are you traveling?") == 1) {
+	if (select("Schwarzwald Republic?:So, why are you traveling?") == 1) {
 		mes "[Hans Hadenheim]";
 		mes "You...";
 		mes "Don't know the";
-		mes "Schubaltzwald Republic?";
+		mes "Schwarzwald Republic?";
 		next;
 		mes "[Hans Hadenheim]";
 		mes "You know, ally of the Rune-Midgarts Kingdom. Um... Our capital city is Juno?";

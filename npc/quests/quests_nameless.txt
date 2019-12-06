@@ -3079,9 +3079,9 @@ OnTouch:
 		mes "Write a report about the";
 		mes "tests conducted by the";
 		mes "moderates in Arunafeltz and";
-		mes "the Schwaltzvalt Republic,";
+		mes "the Schwarzwald Republic,";
 		mes "and their relationship with";
-		mes "that Schwaltzvalt Corporation.";
+		mes "that Schwarzwald Corporation.";
 		next;
 		mes "[Zhed]";
 		mes "I'll get it done immediately,";

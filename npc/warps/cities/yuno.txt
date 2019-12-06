@@ -19,7 +19,7 @@
 //= 1.7 Yet another missing warp [Musashiden]
 //= 1.8 Added Yuno Government Buildings warps
 //= 1.9 Updated Yuno Government Buildings warps according
-//= to Schwartzvalt Trilogy quest. [SinSloth]
+//= to Schwarzwald Trilogy quest. [SinSloth]
 //= 2.0 Correct position of portals [JohnnyPlayy]
 //============================================================
 

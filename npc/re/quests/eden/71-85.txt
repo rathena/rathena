@@ -142,7 +142,7 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 			case 2: callsub L_Quest,10122,.@str1$+"Hunt 15 Miyabi Dolls in Amatsu!",.@str2$;
 			case 3: callsub L_Quest,10123,.@str1$+"Hunt 15 Mi Gaos in Louyang!",.@str2$;
 			case 4: callsub L_Quest,5055,"I know there are many terrifying monsters outside the city, but what terrifies me are these Headless Mules lurking around. I hope they will never venture into town. Hunt 15 Headless Mules!","- Mariana from Brasilis -";
-			case 5: callsub L_Quest,5056,"Tamruans make a lot of noise. I don't mind in the morning but they keep me from falling asleep at night. I want to sleep. Hunt 15 Tamruans!","- Shaman Pumo from Ayotaya -";
+			case 5: callsub L_Quest,5056,"Tamruans make a lot of noise. I don't mind in the morning but they keep me from falling asleep at night. I want to sleep. Hunt 15 Tamruans!","- Shaman Pumo from Ayothaya -";
 			case 6: callsub L_Quest,5057,"The Dumpling Childs stole all the masks that I had prepared for the festival. Try to get a hold of 30 masks! I'll owe you~","- SaYumMoon Chief of Kunlun -";
 		}
 	}

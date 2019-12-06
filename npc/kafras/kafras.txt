@@ -457,7 +457,7 @@ ayothaya,212,169,5	script	Kafra Employee::kaf_ayothaya	116,{
 	mes "How can I help you today?";
 	callfunc "F_Kafra",5,3,1,50,700;
 	savepoint "ayothaya",149,69,1,1;
-	callfunc "F_KafEnd",0,1,"in the city of Ayotaya";
+	callfunc "F_KafEnd",0,1,"in the city of Ayothaya";
 }
 
 // Einbech

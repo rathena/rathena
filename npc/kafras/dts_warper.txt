@@ -755,7 +755,7 @@ lighthalzen,163,60,4	script	Kafra Voting Staff#lght	861,{
 		mes "details, please visit our";
 		mes "headquarters in the city of";
 		mes "Lighthalzen located in the";
-		mes "Schwaltzvalt Republic.";
+		mes "Schwarzwald Republic.";
 		mes "Thank you for your time.";
 		break;
 	case 2:

@@ -1448,7 +1448,7 @@ morocc,159,113,3	script	Chief Balrog	752,{
 			mes "I didn't think you would accept me so easily. I'm ready. Ask me whatever you want.";
 			next;
 			mes "[Chief Balrog]";
-			mes "Ah, I've got an idea. Now, because this is an allied operation, we've accepted some mercenary soldiers from the Schwaltzvalt Republic to join the Continental Guard.";
+			mes "Ah, I've got an idea. Now, because this is an allied operation, we've accepted some mercenary soldiers from the Schwarzwald Republic to join the Continental Guard.";
 			next;
 			mes "[Chief Balrog]";
 			mes "These mercenaries have never seen the desert, and they're having trouble carrying out operations in the heat, dry air, and sandstorms. It's not their fault, but they could use a little help since they're out of their element.";
@@ -2162,7 +2162,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				mes "I have a problem....";
 				next;
 				mes "[Benjamin]";
-				mes "My Mammi said that she's fallen in love with a book written by ^FF0000'Oliver Hilpert'^000000 of Schwaltzvalt: ^FF0000'The Crow of the Fate,'^000000 but I didn't have a chance of even looking at it!";
+				mes "My Mammi said that she's fallen in love with a book written by ^FF0000'Oliver Hilpert'^000000 of Schwarzwald: ^FF0000'The Crow of the Fate,'^000000 but I didn't have a chance of even looking at it!";
 				next;
 				mes "^660000The Crow of the Fate^000000?";
 				next;
@@ -2260,18 +2260,18 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 			mes "Gosh, it's you. What took you so long? Wasn't Prontera Library, like, five minutes away?";
 			next;
 			mes "["+ strcharinfo(0) +"]";
-			mes "Ahchoo! Thanks to you, I couldn't find it from the library. So I travelled all the way up to Schwaltzvalt... Ahchoo!";
+			mes "Ahchoo! Thanks to you, I couldn't find it from the library. So I travelled all the way up to Schwarzwald... Ahchoo!";
 			specialeffect2 EF_VENOMDUST;
 			next;
 			mes "^660000Feeling angry at him, you exaggerated a fit of sneezing which you have had for quite a while.^000000";
 			next;
 			mes "[Benjamin]";
 			mes "Oh... you did?";
-			mes "Hehehe, you're more reliable than I thought. Thanks for the book... Wait, does that mean I have to go up to Schwaltzvalt to return this? Man!";
+			mes "Hehehe, you're more reliable than I thought. Thanks for the book... Wait, does that mean I have to go up to Schwarzwald to return this? Man!";
 			next;
 			mes "[Benjamin]";
 			mes "...No, I can do anything as long as it's for Mammi. Heh heh, you're a kind adventurer. Thanks.";
-			mes "Was it cold up there? I guess it is since Schwaltzvalt is located up north from here.";
+			mes "Was it cold up there? I guess it is since Schwarzwald is located up north from here.";
 			next;
 			mes "["+ strcharinfo(0) +"]";
 			mes "..................";
@@ -2504,12 +2504,12 @@ prt_in,179,92,3	script	Library Curator#garas	57,{
 			next;
 			mes "[Curator Guys]";
 			mes "Haha... But I have bad news for you.";
-			mes "The book has become so popular that you can't even find it from Schwaltzvalt, the author's country.";
+			mes "The book has become so popular that you can't even find it from Schwarzwald, the author's country.";
 			mes "We tried to get a hold of the book, but it was too late. It'll take a while for the next editon to be published, so why don't you read a different book for now?";
 			next;
 			mes "[Curator Guys]";
 			mes "If you are not busy and really want to read the book, I have a suggestion: try Juno Library.";
-			mes "You can find every book published in Schwaltzvalt from the library. Chances are, you'll find it there.";
+			mes "You can find every book published in Schwarzwald from the library. Chances are, you'll find it there.";
 			next;
 			mes "[Curator Guys]";
 			mes "Well, Juno is quite far from here, but if you're really enthusiastic about reading such a popular book, it should be worthwile.";
@@ -2926,7 +2926,7 @@ OnTouch:
 		mes "Phew... I guess I had a dream or something... Ahchoo!";
 		specialeffect2 EF_VENOMDUST;
 		next;
-		mes "^660000It was an indescribable dream: a burning laboratory in an unknown place in Schwaltzvalt.";
+		mes "^660000It was an indescribable dream: a burning laboratory in an unknown place in Schwarzwald.";
 		mes "You tried to think hard, but could not figure out what the dream meant.^000000";
 		next;
 		mes "^660000You carefully opened the book again, but nothing happened.^000000";
@@ -3076,7 +3076,7 @@ yuno_in04,117,102,3	script	Old News Scrapbook	844,{
 				mes "and she is fighting against a group of evil villains";
 				mes "that are contaminating nature so that she can purify the water.";
 				mes "This book will be soon selected as an essential academic book of";
-				mes "the Schwaltzvalt Republic for";
+				mes "the Schwarzwald Republic for";
 				mes "promoting morality and";
 				mes "promoting environmental protection throughout the nation.";
 				mes " ";
@@ -3706,7 +3706,7 @@ que_ba,53,232,0	script	#garas_f_yume	139,1,1,{
 OnTouch:
 	if (barmunt_crow == 5) {
 		//GetHEALTHSTATE VAR_HEALTHSTATENORMAL 0
-		mes "^660000Suddenly a flash of light stung your eyes. A few seconds later, you opened your eyes and found that you were somewhere in Schwaltzvalt.^000000";
+		mes "^660000Suddenly a flash of light stung your eyes. A few seconds later, you opened your eyes and found that you were somewhere in Schwarzwald.^000000";
 		next;
 		mes "^660000And you aren't alone: you can now clearly see the man and woman that escaped the laboratory.^000000";
 		next;

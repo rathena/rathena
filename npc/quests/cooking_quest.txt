@@ -1057,7 +1057,7 @@
 		mes "sort of trouble. It makes me";
 		mes "me laugh whenever anyone";
 		mes "suggests that he is hiding";
-		mes "in the Schwaltzvalt Republic...";
+		mes "in the Schwarzwald Republic...";
 		next;
 		emotion ET_GO;
 		mes "[Charles Orleans]";

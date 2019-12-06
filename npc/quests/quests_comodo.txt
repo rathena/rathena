@@ -2461,7 +2461,7 @@ comodo,232,87,4	script	Won#cmd	106,{
 		mes "The first Sage that you";
 		mes "must visit is ^3355FFSage Yklah^000000";
 		mes "in the city of ^3355FFJuno^000000 in the";
-		mes "Schwaltzvalt Republic.";
+		mes "Schwarzwald Republic.";
 		mes "Your quest to obtain a";
 		mes "doomed sword isn't over yet...";
 		break;
@@ -2477,7 +2477,7 @@ comodo,232,87,4	script	Won#cmd	106,{
 		mes "The first Sage that you";
 		mes "must visit is ^3355FFSage Yklah^000000";
 		mes "in the city of ^3355FFJuno^000000 in the";
-		mes "Schwaltzvalt Republic.";
+		mes "Schwarzwald Republic.";
 		mes "Your quest to obtain a";
 		mes "doomed sword isn't over yet...";
 		break;

@@ -5710,7 +5710,7 @@ alberta_in,154,171,5	script	Maid#s10	758,{
 		mes "to. Hm, I wonder. Do you";
 		mes "think he could have been";
 		mes "heading towards the";
-		mes "Schwaltzvalt Republic?";
+		mes "Schwarzwald Republic?";
 		close;
 	}
 	else if (sign_q < 42) {

@@ -3519,7 +3519,7 @@ OnTimer300000:
 
 // Otherworld language :: ep13_2_rhea
 //============================================================ 
-mid_camp,197,237,3	script	Schwartzvalt Mechanic#1	869,{
+mid_camp,197,237,3	script	Schwarzwald Mechanic#1	869,{
 	if( !checkweight(2782,1)) { // Custom weight check.
 		mes "[Mechanic Engineer Dorance]";
 		mes "It looks like you're carrying too many things.";
@@ -4138,7 +4138,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	935,{
 		mes "How are we going to put together this tremendous data and make it into a portable translator... I just can't figure out how.";
 		next;
 		mes "[Linguist Dictionary]";
-		mes "I wonder what the Mechanic Engineer from the Schwaltzvalt Republic would think... Would you be kind to go ask him?";
+		mes "I wonder what the Mechanic Engineer from the Schwarzwald Republic would think... Would you be kind to go ask him?";
 		completequest 8247;
 		setquest 8248;
 		set ep13_2_rhea,7;
@@ -4149,7 +4149,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	935,{
 		mes "Just how are we going to put together these tremendous data and make it into a portable translator...I just can't figure out how.";
 		next;
 		mes "[Linguist Dictionary]";
-		mes "I wonder what the Mechanic Engineer from the Republic of Schwartzwalt would think...Would you be kind to go ask him?";
+		mes "I wonder what the Mechanic Engineer from the Republic of Schwarzwald would think...Would you be kind to go ask him?";
 		close;
 	}
 	else if (ep13_2_rhea > 12) {
@@ -4419,11 +4419,11 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	735,{
 			next;
 			mes "[Magician Whisper]";
 			mes "I've just finished infusing the magical power.";
-			mes "From now on, it's up to the Mechanic Engineer from Schwartzwalt to combined this gem with a machine to make it work as a real-time translator.";
+			mes "From now on, it's up to the Mechanic Engineer from Schwarzwald to combined this gem with a machine to make it work as a real-time translator.";
 			next;
 			mes "[Magician Whisper]";
 			mes "I will ask you one last favor.";
-			mes "Please deliver this crafted gem to the Mechanic Engineer from Schwartzwalt.";
+			mes "Please deliver this crafted gem to the Mechanic Engineer from Schwarzwald.";
 			next;
 			mes "[Magician Whisper]";
 			mes "I'm really sorry to ask you so many favors..., Ah...I've used up too much magical power...I should rest for a while.";
@@ -4444,7 +4444,7 @@ mid_camp,147,256,3	script	Rune Midgarts Magician#1	735,{
 	}
 	else if (ep13_2_rhea == 11) {
 		mes "[Magician Whisper]";
-		mes "Please deliver this crafted gem to the Mechanic Engineer from Schwartzwalt.";
+		mes "Please deliver this crafted gem to the Mechanic Engineer from Schwarzwald.";
 		next;
 		mes "[Magician Whisper]";
 		mes "I'm really sorry to ask you so many favors..., Ah...I've used up too much magical power...I should rest for a while.";
@@ -4740,7 +4740,7 @@ man_in01,372,221,5	script	Scientist#lifeguard	449,{
 					case 2: setarray .@rand_dayq$[0],"Abyss Lake","5","3"; break;
 					case 3: setarray .@rand_dayq$[0],"Thor Volcano","5","4"; break;
 				}
-				mes "Recently, someone who came from Schwaltzvalt gave me a small mineral as a gift from his home town when he saw our study of Bradium.";
+				mes "Recently, someone who came from Schwarzwald gave me a small mineral as a gift from his home town when he saw our study of Bradium.";
 				next;
 				mes "[Dr. Lifeguard]";
 				mes "I can't say for sure until now,";

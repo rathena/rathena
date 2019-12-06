@@ -1601,10 +1601,10 @@ geffen_in,109,170,3	script	Blacksmith Guildsman#gef	726,{
 	next;
 	mes "[Blacksmith Guildsman]";
 	mes "I thank you for coming this far to visit our guild. However, I regret to inform you that Blacksmith Guild has been";
-	mes "moved to ^3131FF'Einbroch' in the Schwaltzvalt Republic^000000.";
+	mes "moved to ^3131FF'Einbroch' in the Schwarzwald Republic^000000.";
 	next;
 	mes "[Blacksmith Guildsman]";
-	mes "You can travel to Schwaltzvalt Republic by using the airship.";
+	mes "You can travel to Schwarzwald Republic by using the airship.";
 	mes "I can provide you a teleport service to Izlude, where you can use the airship.";
 	mes "Would you like to move to Izlude immediately?";
 	next;
@@ -1614,10 +1614,10 @@ geffen_in,109,170,3	script	Blacksmith Guildsman#gef	726,{
 		mes "Oops, haven't you used the airship yet?";
 		next;
 		mes "[Blacksmith Guildsman]";
-		mes "Unlike Rune-Midgarts Kingdom, Schwalitzvalt Republic has 'the airship' instead of teleport services to move between towns.";
+		mes "Unlike Rune-Midgarts Kingdom, Schwarzwald Republic has 'the airship' instead of teleport services to move between towns.";
 		next;
 		mes "[Blacksmith Guildsman]";
-		mes "In ^3131FF'Izlude'^000000, you can use ^3131FF'the international airship'^000000 which travels between ^3131FFIzlude and Juno in Schwaltzvalt Republic^000000.";
+		mes "In ^3131FF'Izlude'^000000, you can use ^3131FF'the international airship'^000000 which travels between ^3131FFIzlude and Juno in Schwarzwald Republic^000000.";
 		next;
 		mes "[Blacksmith Guildsman]";
 		mes "Take the airship, and go to Juno. Then from Juno, you need to take ^3131FFthe domestic airship^000000 to go to Einbroch.";

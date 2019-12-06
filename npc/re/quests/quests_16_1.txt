@@ -1937,7 +1937,7 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_1	HIDDEN_WARP_NPC,{
 		mes "Since it was made by crafting a small piece fallen from the heart...";
 		next;
 		mes "[Kronecker]";
-		mes "Should we negotiate with the cooperation in Schwaltzvalt?";
+		mes "Should we negotiate with the cooperation in Schwarzwald?";
 		mes "Wait a minute.";
 		mes ".....";
 		next;
@@ -5909,7 +5909,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 	}
 	if (banquet_roegenburg_quest == 9) {
 		mes "[Maximilian]";
-		mes "Please bring Helmut. He must be in the ^0000cdcheckpoint near the border with Schwaltzvalt^000000. He is responsible for the patrol party.";
+		mes "Please bring Helmut. He must be in the ^0000cdcheckpoint near the border with Schwarzwald^000000. He is responsible for the patrol party.";
 		mes "Please.";
 		close;
 	}
@@ -7615,7 +7615,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "Then, my job is to bring him.";
 		next;
 		mes "[Maximilian]";
-		mes "Yes. He must be in the ^0000cdcheckpoint near the border with Schwaltzvalt^000000. He is responsible for the patrol party.";
+		mes "Yes. He must be in the ^0000cdcheckpoint near the border with Schwarzwald^000000. He is responsible for the patrol party.";
 		next;
 		mes "[Maximilian]";
 		mes "And when you come back, use this. You can return to Prontera instantly.";

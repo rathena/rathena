@@ -91,7 +91,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 -	script	Alliance Manager#prt_	-1,{
 	if (ep13_ryu == 13) {
 		mes "[Alliance Manager]";
-		mes "If we'd had the initiative over Schwartzvald, we could take advantage over them! But we lost the opportunity.";
+		mes "If we'd had the initiative over Schwarzwald, we could take advantage over them! But we lost the opportunity.";
 		next;
 		mes "[Alliance Manager]";
 		mes "Though we are allied with them, that's nothing more than a formality.";
@@ -117,7 +117,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		next;
 		mes "[Alliance Manager]";
 		mes "So, everything is going well?";
-		mes "You're allied with Schwartzvald?";
+		mes "You're allied with Schwarzwald?";
 		mes "They will join with you.";
 		mes "I know this.";
 		next;
@@ -140,7 +140,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		mes "it secretly.";
 		next;
 		mes "[Alliance Manager]";
-		mes "The Schwartzvald... they are all";
+		mes "The Schwarzwald... they are all";
 		mes "snobs. I know what they did.";
 		mes "They'll try to get what they can";
 		mes "with little or no work. I know";
@@ -177,7 +177,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 -	script	Member of Alliance#prt_	-1,{
 	if ((ep13_ryu == 12) || (ep13_ryu == 13)) {
 		mes "[Member of Alliance]";
-		mes "If we have absolute power, we wouldn't have to get along with Schwartzvald and Arunafeltz.";
+		mes "If we have absolute power, we wouldn't have to get along with Schwarzwald and Arunafeltz.";
 		next;
 		mes "[Member of Alliance]";
 		mes "I don't know when Satan Morroc will attack us, and whether we're powerful enough to detect him.";
@@ -200,7 +200,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 	if (ep13_ryu == 12) {
 		mes "[Recruiter]";
 		mes "Why have you come again?";
-		mes "You'd better go to Schwartzvald to register.";
+		mes "You'd better go to Schwarzwald to register.";
 		next;
 		mes "[Recruiter]";
 		mes "What? You came to here to convey a story? Go ahead.";
@@ -822,7 +822,7 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 			next;
 			mes "[Sikaiz]";
 			mes "All done.";
-			mes "Go to the field Officer of Schwartzvalt. He should be in the banquet hall of this building downstairs.";
+			mes "Go to the field Officer of Schwarzwald. He should be in the banquet hall of this building downstairs.";
 			next;
 			mes "[Sikaiz]";
 			mes "Only thing left for you is to go to the Officer to say that you are leaving now.";
@@ -923,14 +923,14 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 		mes "Anyway, I promised to tell you about the three kingdoms... This is kind of a long story, so please listen carefully.";
 		next;
 		mes "[Sikaiz]";
-		mes "The adventurers for Ash-vacuum! The alliance for the three kingdoms! Rune-Midgarts, Schwartzvalt, Arunafeltz!";
+		mes "The adventurers for Ash-vacuum! The alliance for the three kingdoms! Rune-Midgarts, Schwarzwald, Arunafeltz!";
 		mes "Three kingdoms united for one thing!";
 		next;
 		mes "[Sikaiz]";
 		mes "Frankly, there's a Dimensional Rift in the Sograt desert, so they can inspect it themselves, but it's not that good of a place to inspect the rift's magic well.";
 		next;
 		mes "[Sikaiz]";
-		mes "We are a little bit better in magic, but not that much developed in science as compared with Schwartzvalt, and not as wise compared with Arunafeltz.";
+		mes "We are a little bit better in magic, but not that much developed in science as compared with Schwarzwald, and not as wise compared with Arunafeltz.";
 		next;
 		mes "[Sikaiz]";
 		mes "So we need to get help from other countries, because the Ash-vacuum is quite a profitable place. That is why we made the Alliance to get into the Ash-Vacuum.";
@@ -948,7 +948,7 @@ lhz_in01,132,259,5	script	Sikaiz#1	868,{
 		mes "But the most valuable thing is the unity. Not each kingdom's interest. If we spoil the greatest plans, it's too regrettable.";
 		next;
 		mes "[Sikaiz]";
-		mes "Though I belong to Schwartzvalt, I need to balance the three kingdoms, as a leader... so I can't support my kingdom too much over the others.";
+		mes "Though I belong to Schwarzwald, I need to balance the three kingdoms, as a leader... so I can't support my kingdom too much over the others.";
 		next;
 		mes "[Sikaiz]";
 		mes "Anyway, I believe that my friend can assist me well.";
@@ -3693,7 +3693,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 			mes "I'm Rumis Block, and";
 			mes "I'm working here on behalf of";
 			mes "the monsternomics academy";
-			mes "from the Schwaltzvalt Republic.";
+			mes "from the Schwarzwald Republic.";
 			mes "Botanist Terris Block is";
 			mes "my older twin brother.";
 			next;
@@ -4201,7 +4201,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 				mes "I should make a brief report and then submit it to management. Hopefully, a new monster scholar after me will do a better job in actually studying them.";
 				next;
 				mes "[Rumis Block]";
-				mes "There are many cold places in my country, the Schwaltzvalt Republic, but none are as cold as this place. This weather is freezing my senses, dulling my passion toward my studies.";
+				mes "There are many cold places in my country, the Schwarzwald Republic, but none are as cold as this place. This weather is freezing my senses, dulling my passion toward my studies.";
 				mes "I shall go back home faster than anyone else in this camp. I'm tired of this world...";
 				next;
 				mes "[Rumis Block]";
@@ -5153,7 +5153,7 @@ OnTouch_:
 			mes "I've heard the assassins took action in order to find the traces of Satan Morroc, but nothing's been reported so far.";
 			next;
 			mes "[Hue]";
-			mes "I'm Hue from the Schwartzvalt Republic.";
+			mes "I'm Hue from the Schwarzwald Republic.";
 			next;
 			mes "[Hue]";
 			mes "We're still researching on the crack of dimension that Satan Morroc has come through, and the false data research on the noise created when moving through the crack is currently being corrected.";
@@ -5270,7 +5270,7 @@ OnTouch_:
 			next;
 			mes "[Ryosen]";
 			mes "Whatttttt!? Only a cake????";
-			mes "Aha, yeah, I just remembered. You people from Schwartzvalt don't ever appreciate food at all, right?";
+			mes "Aha, yeah, I just remembered. You people from Schwarzwald don't ever appreciate food at all, right?";
 			next;
 			mes "[Ryosen]";
 			mes "Especially when the food is NOT yours, huh? That's why you people sneak a taste of other people's food like my strawberry cake!!!";
@@ -5537,7 +5537,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			next;
 			mes "[Ryosen]";
 			mes "How about having some tea here?";
-			mes "It's Rafflesia tea from Schwartzvalt. Don't even expect taste, it's awful... But what can I do? It's the only thing I've got...";
+			mes "It's Rafflesia tea from Schwarzwald. Don't even expect taste, it's awful... But what can I do? It's the only thing I've got...";
 			set ep13_1_rhea,2;
 			close;
 		}
@@ -5585,7 +5585,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "Oh, well... Maybe the same thing's happening at other offices. People from other countries might have hidden some important information behind my back.";
 			next;
 			mes "[Ryosen]";
-			mes "Whatever... Could you deliver this document to the Schwartzvalt and Arunafeltz researchers?";
+			mes "Whatever... Could you deliver this document to the Schwarzwald and Arunafeltz researchers?";
 			next;
 			if(select("Why me?:Alright.") == 1) {
 				mes "[Ryosen]";
@@ -5597,13 +5597,13 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "No one in our research group wants to visit the offices of the other countries!";
 			next;
 			mes "[Ryosen]";
-			mes "Ok, now, please deliver the file to Hue and Hansenne. Hue's in charge of Schwartzvalt's documents and Hansenne's in chare of Arunafeltz's.";
+			mes "Ok, now, please deliver the file to Hue and Hansenne. Hue's in charge of Schwarzwald's documents and Hansenne's in chare of Arunafeltz's.";
 			next;
 			mes "[Ryosen]";
 			mes "The file contains the brief introduction and the schedule of the meesting.";
 			next;
 			mes "[Ryosen]";
-			mes "For your information, you should go see Hue at the Schwartzvalt's office first. Otherwise, he'll be whining about it.";
+			mes "For your information, you should go see Hue at the Schwarzwald's office first. Otherwise, he'll be whining about it.";
 			next;
 			mes "[Ryosen]";
 			mes "You must check if they read and understand correctly after delivering it. Don't forget to get them to sign at the bottom of the page, just in case.";
@@ -5619,7 +5619,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "The only thing we enjoy here is that dessert we receive, once a week.";
 			next;
 			mes "[Ryosen]";
-			mes "Schwartzvalt's Pineapple Jubilee is just awful. It tastes something like rusty steel.";
+			mes "Schwarzwald's Pineapple Jubilee is just awful. It tastes something like rusty steel.";
 			next;
 			mes "[Ryosen]";
 			mes "Arunafeltz's Desert Sandwich is nothing better than that. I think that sandwich's made of some old meat, otherwise, we wouldn't have been food poisoned so often!";
@@ -5649,7 +5649,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "Hurry up and deliver the document to Hue and Hansenne!";
 			next;
 			mes "[Ryosen]";
-			mes "Don't forget! Schwartzvalt's Hue must get it first, otherwise, he'll nag us like crazy.";
+			mes "Don't forget! Schwarzwald's Hue must get it first, otherwise, he'll nag us like crazy.";
 			next;
 			mes "[Ryosen]";
 			mes "And you must get the document signed at the bottom before you bring it back.";
@@ -6177,7 +6177,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 				mes "Whew... I can't even stand looking at it! Oh just, give it to me!";
 				next;
 				mes "[Hue]";
-				mes "Too bad I'm not in Schwartzvalt. I could use our document restoring machine back at home... Ugh! Now I gotta do everything manually.";
+				mes "Too bad I'm not in Schwarzwald. I could use our document restoring machine back at home... Ugh! Now I gotta do everything manually.";
 				next;
 				mes "[Hue]";
 				mes "Hmmm. It's completely soaked. I Should dry this thing first and iron these crumples. Then, I should restore the texts.";
@@ -6311,7 +6311,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			next;
 			mes "[Hue]";
 			mes "I'm sorry to ask you this but...";
-			mes "Could you? For this, I'll give you some Schwartzvalt's Pineapple Jubilee.";
+			mes "Could you? For this, I'll give you some Schwarzwald's Pineapple Jubilee.";
 			next;
 			mes "[Hue]";
 			mes "Please give this report to Ryosen.";
@@ -6348,7 +6348,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			next;
 			mes "[Hue]";
 			mes "Could you bring ^0000ffFur^000000 if you get some? I'm not asking it for free.";
-			mes "I'll give you my Pineapple Jubilee from Schwartzvalt, if you bring me ^0000ff2 Furs^000000.";
+			mes "I'll give you my Pineapple Jubilee from Schwarzwald, if you bring me ^0000ff2 Furs^000000.";
 			next;
 			switch(select("I don't have any, right now.:Oh, I'll give you Fur.")) {
 			case 1:
@@ -6364,7 +6364,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 					mes "Ah, oh my.";
 					next;
 					mes "[Hue]";
-					mes "You already have the Pineapple Jubilee from Schwartzvalt!";
+					mes "You already have the Pineapple Jubilee from Schwarzwald!";
 					next;
 					mes "[Hue]";
 					mes "I think you should drin that thing fast. Otherwise, all the ice will melt and it'll taste like some kinda medicine!";
@@ -6471,7 +6471,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 				mes "An invitation to the meeting?";
 				next;
 				mes "[Hansenne]";
-				mes "Hmm, Ryosen from Rune-Midgarts made it and... Hue from Schwartzvalt agreed to sign it too?";
+				mes "Hmm, Ryosen from Rune-Midgarts made it and... Hue from Schwarzwald agreed to sign it too?";
 				next;
 				mes "[Hansenne]";
 				mes "Hmmm, that's not funny at all.";
@@ -6680,7 +6680,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 				mes "Hmmmmm, but then... I'm afraid Ryosen would explode when he sees this! Boom!!!";
 				next;
 				mes "[Hansenne]";
-				mes "Schwartzvalt people have some talent in restoring things like this... Why don't you ask Hue to restore this?";
+				mes "Schwarzwald people have some talent in restoring things like this... Why don't you ask Hue to restore this?";
 				next;
 				mes "[Hansenne]";
 				mes "He'd scream so hard and the windows might break. But he'll do it.";
@@ -6707,7 +6707,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 			mes "Hmmmmm, it's all screwed up. I'm afraid Ryosen would explode when he sees this! Boom!!!";
 			next;
 			mes "[Hansenne]";
-			mes "Schwartzvalt people have some talent in restoring things like this... Why don't you ask Hue to restore this?";
+			mes "Schwarzwald people have some talent in restoring things like this... Why don't you ask Hue to restore this?";
 			next;
 			mes "[Hansenne]";
 			mes "He'd scream so hard and the windows might break. But he'll do it.";
@@ -8820,7 +8820,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Of course, you can't see them because they're undercover soldiers under my direct command. Hahaha!";
 		next;
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -8829,7 +8829,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 	}
 	else if ((ep13_1_edq == 9) && (countitem(11012) == 3)) {
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -8843,7 +8843,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		delitem 11012,countitem(11012); //Expedition_Report
 		getitem 11012,3; //Expedition_Report
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -8852,7 +8852,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 	}
 	else if (ep13_1_edq > 100) {
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwaltzvalt Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";

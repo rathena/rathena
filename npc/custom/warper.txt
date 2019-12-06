@@ -397,7 +397,7 @@ D42: Restrict("RE");
 	Castles:
 // --------------------------------------------------
 menu	"[FE] Aldebaran Castles",C1, "[FE] Geffen Castles",C2, "[FE] Payon Castles",C3,
-    	"[FE] Prontera Castles",C4, "[SE] Arunafeltz Castles",C5, "[SE] Schwaltzvalt Castles",C6,
+    	"[FE] Prontera Castles",C4, "[SE] Arunafeltz Castles",C5, "[SE] Schwarzwald Castles",C6,
 		"[TE] Aldebaran Castles",C7, "[TE] Prontera Castles",C8;
 
 C1: setarray @c[2],48,83,95,249,142,85,239,242,264,90;
@@ -431,7 +431,7 @@ C8: Restrict("RE");
 	Guild_Dungeons:
 // --------------------------------------------------
 menu	"Baldur",G1, "Luina",G2, "Valkyrie",G3, "Britoniah",G4,
-    	"Arunafeltz",G5, "Schwaltzvalt",G6, "Kafragarten",G7,
+    	"Arunafeltz",G5, "Schwarzwald",G6, "Kafragarten",G7,
 		"Gloria",G8;
 
 G1: Restrict("RE",2,3);

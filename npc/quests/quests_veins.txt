@@ -588,7 +588,7 @@ ve_in02,54,49,2	script	Factory Worker#ve1	943,{
 		mes "[Bahed]";
 		mes "Then, all of a sudden,";
 		mes "these people from--I guess";
-		mes "it was Schwaltzvalt--came";
+		mes "it was Schwarzwald--came";
 		mes "and bought a lot of these";
 		mes "stones. Later, they even built";
 		mes "this factory to process them!";
@@ -1443,7 +1443,7 @@ ra_in01,58,389,0	script	Guant Prisoner#sch	929,{
 	close;
 }
 
-// Escort Dancers to Schwaltzvalt Republic
+// Escort Dancers to Schwarzwald Republic
 job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 	if ((MaxWeight-Weight) < 2000 || checkweight(1201,1) == 0) {
 		mes "^3355FFWait a second!";
@@ -1514,7 +1514,7 @@ job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 			mes "I want you to do me a favor.";
 			next;
 			mes "[Hianna]";
-			mes "The Schwaltzvalt Republic";
+			mes "The Schwarzwald Republic";
 			mes "requested me to send some";
 			mes "Dancers for some party, but";
 			mes "I don't have enough guards";
@@ -1524,7 +1524,7 @@ job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 			mes "[Hianna]";
 			mes "If you act as bodyguard";
 			mes "to my Dancers on the way";
-			mes "to the Schwaltzvalt Republic,";
+			mes "to the Schwarzwald Republic,";
 			mes "I'll lend you my Megaphone";
 			mes "once you come back. So...";
 			mes "How does that sound?";
@@ -1535,7 +1535,7 @@ job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 				mes "Okay, the Dancers are";
 				mes "waiting are the entrance,";
 				mes "so bring them over to the";
-				mes "Schwaltzvalt Republic as";
+				mes "Schwarzwald Republic as";
 				mes "soon as you're ready.";
 				set que_sch,12;
 				close;
@@ -1601,7 +1601,7 @@ job_duncer,93,106,6	script	Dance Instructor#sch	892,{
 		mes "[Hianna]";
 		mes "Thanks for escorting";
 		mes "my Dancers over to the";
-		mes "Schwaltzvalt Republic.";
+		mes "Schwarzwald Republic.";
 		mes "Anything I can help";
 		mes "you with today?";
 		next;
@@ -1803,7 +1803,7 @@ airplane,75,53,0	script	Cheerful Dancer#sch2	724,{
 		mes "I've performed at many";
 		mes "venues, but this is the";
 		mes "frist time I'll be dancing";
-		mes "in the Schwaltzvalt Republic.";
+		mes "in the Schwarzwald Republic.";
 		mes "This is also my first time on";
 		mes "an airship. How exciting!";
 		close;
@@ -1826,7 +1826,7 @@ airplane,79,55,2	script	Mature Looking Dancer#s2	724,{
 	else if (que_sch == 13) {
 		mes "[Dancer]";
 		mes "This is the first time that";
-		mes "the Schwaltzvalt Republic";
+		mes "the Schwarzwald Republic";
 		mes "requested a performance";
 		mes "from us. Isn't that amazing?";
 		mes "I guess we earned a reputation";
@@ -6973,7 +6973,7 @@ OnTouch:
 		mes "^3355FFPeople are carrying";
 		mes "many heavy wooden boxes";
 		mes "imprinted with the stamp";
-		mes "of the Schwaltzvalt Republic.";
+		mes "of the Schwarzwald Republic.";
 		mes "These must contain military";
 		mes "supplies for the camp.^000000";
 		next;

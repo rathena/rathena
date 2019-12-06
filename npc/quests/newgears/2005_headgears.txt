@@ -2248,7 +2248,7 @@ airport,148,41,3	script	Freight Manager#toast	852,{
 				mes "Einbroch, adventurer.";
 				mes "I hope you enjoy your";
 				mes "travels here in the";
-				mes "Schwaltzvalt Republic.";
+				mes "Schwarzwald Republic.";
 				close;
 		}
 	}

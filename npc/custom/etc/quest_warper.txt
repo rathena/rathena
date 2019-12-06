@@ -1082,8 +1082,8 @@ function	script	QWS_Darray	{
 
 	QWS_Make_Dungeon_Menu 2;
 
-//----------------AYOTAYA
-	setarray @pDmenuitems$[@Di], "Ayotaya Dungeon";
+//----------------AYOTHAYA
+	setarray @pDmenuitems$[@Di], "Ayothaya Dungeon";
 	setarray @pDprice[@Di], $QW_OW_PRICE;
 	setarray @pDfee$[@Di], "$QW_OW_FEE";
 	setarray @DLevels[3], 2;
@@ -1633,7 +1633,7 @@ yuno_fild03,37,135,4	duplicate(Warpra#0)	Warpra#14	113
 
 alberta,32,240,4	script	Warpra#15	113,{ callfunc "QWS_Town_Warpra",1,"Alberta Town"; close; }
 aldebaran,146,118,4	script	Warpra#16	113,{ callfunc "QWS_Town_Warpra",2,"Aldebaran Town"; close; }
-ayothaya,216,171,5	script	Warpra#17	113,{ callfunc "QWS_Town_Warpra",4,"Ayotaya Town"; close; }
+ayothaya,216,171,5	script	Warpra#17	113,{ callfunc "QWS_Town_Warpra",4,"Ayothaya Town"; close; }
 amatsu,193,81,1	script	Warpra#18	113,{ callfunc "QWS_Town_Warpra",3,"Amatsu Town"; close; }
 comodo,195,158,4	script	Warpra#19	113,{ callfunc "QWS_Town_Warpra",5,"Comodo Town"; close; }
 einbroch,229,196,5	script	Warpra#20	113,{ callfunc "QWS_Town_Warpra",7,"Einbroch Town"; close; }
@@ -1666,7 +1666,7 @@ eclage,107,37,4	script	Warpra#45	113,{ callfunc "QWS_Town_Warpra",30,"Eclage Tow
 abyss_02,274,266,1	script	Warpra Helper#0	112,{ callfunc "QWS_Dungeon_Warpra",0,"Abyss Lake"; close; }
 ama_dun02,192,118,5	script	Warpra Helper#1	112,{ callfunc "QWS_Dungeon_Warpra",1,"Amatsu Dungeon"; close; }
 anthell02,170,165,3	script	Warpra Helper#2	112,{ callfunc "QWS_Dungeon_Warpra",2,"Ant Hell Dungeon"; close; }
-ayo_dun02,258,193,5	script	Warpra Helper#3	112,{ callfunc "QWS_Dungeon_Warpra",3,"Ayotaya Dungeon"; close; }
+ayo_dun02,258,193,5	script	Warpra Helper#3	112,{ callfunc "QWS_Dungeon_Warpra",3,"Ayothaya Dungeon"; close; }
 ein_dun02,292,282,1	script	Warpra Helper#4	112,{ callfunc "QWS_Dungeon_Warpra",8,"Einbech Dungeon"; close; }
 iz_dun03,202,47,2	script	Warpra Helper#5	112,{ callfunc "QWS_Dungeon_Warpra",4,"Byalan Dungeon"; close; }
 c_tower3,129,106,4	script	Warpra Helper#6	112,{ callfunc "QWS_Dungeon_Warpra",5,"Clock Tower Dungeon"; close; }

@@ -135,7 +135,7 @@ job3_gen01,25,58,3	script	Devries#gen	865,{
 			emotion ET_THROB;
 			mes "[Devries]";
 			mes "Really! That's why I felt some kind of familiar atmosphere around you.";
-			mes "Meeting a hometown person in Schwaltzvalt, it's my pleasure to meet you!";
+			mes "Meeting a hometown person in Schwarzwald, it's my pleasure to meet you!";
 			break;
 		}
 		next;
@@ -601,7 +601,7 @@ job3_gen01,83,72,3	script	Delivery Box#generic	111,{
 			}
 		case 2:
 			mes "[From: Rune-Midgarts Kingdom, Prontera, Charles Orleans]";
-			mes "[Recipient: Schwaltzvalt Republic, Lighthalzen, Devries]";
+			mes "[Recipient: Schwarzwald Republic, Lighthalzen, Devries]";
 			close;
 		case 3:
 			mes "You do nothing.";

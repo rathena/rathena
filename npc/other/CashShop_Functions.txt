@@ -97,7 +97,7 @@ function	script	F_CashDungeon	{
 		case 17: warp "prt_sewb3",20,175; end;	// Prontera Culverts 3F
 		case 18: warp "ama_dun01",222,144; end;	// Amatsu Dungeon 1F
 		case 19: warp "lhz_dun01",19,153; end;	// Somatology Laboratory 1F
-		case 20: warp "ayo_dun02",70,240; end;	// Ayotaya Dungeon 2F
+		case 20: warp "ayo_dun02",70,240; end;	// Ayothaya Dungeon 2F
 		}
 	case 2: // Menu names are not official.
 		switch(select("Thor Volcano 2f:Ice Dungeon Entrance:Nameless Island Entrance:Niflheim:Labyrinth Forest 2f:Ruins of Juperos Entrance:Ant Hell 2f:Kiel Hyre's Academy Entrance:Thanatos Tower Entrance:Abyss Lake Entrance:Rachel Sanctuary Entrance:Odin Temple 2f")) {
@@ -143,7 +143,7 @@ function	script	F_CashCity	{
 			case 6: warp "alberta",117,50; end;
 			case 7: warp "aldebaran",140,110; end;
 		}
-	case 2: // Green - Schwartzvalt
+	case 2: // Green - Schwarzwald
 		switch(select("Juno:Lighthalzen:Einbroch:Einbech:Hugel")) {
 			case 1: warp "yuno",160,170; end;
 			case 2: warp "lighthalzen",190,310; end;
@@ -157,14 +157,14 @@ function	script	F_CashCity	{
 			case 2: warp "veins",215,105; end;
 		}
 	case 4: // Blue - Islands
-		switch(select("Amatsu:Kunlun:Ayotaya:Louyang")) {
+		switch(select("Amatsu:Kunlun:Ayothaya:Louyang")) {
 			case 1: warp "amatsu",110,140; end;
 			case 2: warp "gonryun",160,115; end;
 			case 3: warp "ayothaya",220,170; end;
 			case 4: warp "louyang",217,95; end;
 		}
 	case 5: // Blue - Islands (Renewal)
-		switch(select("Amatsu:Kunlun:Ayotaya:Louyang:Moscovia:Dewata:Brasilis")) {
+		switch(select("Amatsu:Kunlun:Ayothaya:Louyang:Moscovia:Dewata:Brasilis")) {
 			case 1: warp "amatsu",110,140; end;
 			case 2: warp "gonryun",160,115; end;
 			case 3: warp "ayothaya",220,170; end;
