@@ -10453,7 +10453,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 						next;
 						cutin "gc_mayssel01.bmp", 1;
 						mes "[Mayssel]";
-						mes "If you are ready, I will send you to the deserts of Morroc to embrace the shadows.";
+						mes "If you are ready, I will send you to the deserts of Morocc to embrace the shadows.";
 						mes "The journey will be both strange and challenging.";
 						next;
 						if (select("At once please.", "I need more time.") == 2) {
@@ -10464,7 +10464,7 @@ iz_ac02,52,136,3	script	Guest Lecturer Mayssel#0	4_F_MAYSEL,{
 							end;
 						}
 						mes "[Mayssel]";
-						mes "^4d4dffFind the Pyramid^000000 in the ^4d4dffNorthwest^000000 of Morroc.";
+						mes "^4d4dffFind the Pyramid^000000 in the ^4d4dffNorthwest^000000 of Morocc.";
 						close2;
 						cutin "", 255;
 						warp "morocc", 30, 290;

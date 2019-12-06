@@ -7930,7 +7930,7 @@ ecl_in01,80,86,4	script	Midgard Exploration#bok1	HIDDEN_NPC,{
 			mes "Seriously, human capability is...so disappointing. If they're wise enough, they'll use Warp-portal.";
 			break;
 		case 9:
-			mes "Morroc Village is known to be a place where Morroc, the king of demons, rests.";
+			mes "Morocc Village is known to be a place where Morocc, the king of demons, rests.";
 			next;
 			mes "Making waterways and lakes in the barren inhospitable desert...what an exceptional piece of work for humans.";
 			next;
@@ -8329,7 +8329,7 @@ ecl_in01,82,79,4	script	Magazine#02	HIDDEN_NPC,{
 	next;
 	if (select("Keep reading.:Stop reading.") == 2)
 		close;
-	mes "That cat introduced himself and told me that he studied in Morroc.";
+	mes "That cat introduced himself and told me that he studied in Morocc.";
 	next;
 	mes "Then he assured me that he could upgrade my +9 Violet Fear to +10 Violet Fear.";
 	next;
@@ -8359,7 +8359,7 @@ ecl_in01,82,79,4	script	Magazine#02	HIDDEN_NPC,{
 	next;
 	if (select("Keep reading.:Stop reading.") == 2)
 		close;
-	mes "This is a story of 'Appearing in Morroc Chocheon****.'";
+	mes "This is a story of 'Appearing in Morocc Chocheon****.'";
 	close;
 }
 
@@ -15269,7 +15269,7 @@ ecl_in03,41,90,3	script	Mayor Jun Kardui#tl01	4_M_FARIYKING,{
 		mes "[Kardui]";
 		mes "Let's think about that later. ";
 		mes "Anyway...I heard from Nydhog.";
-		mes "The Chief of Staff seemed to be manipulated by a subordinate of Morroc.";
+		mes "The Chief of Staff seemed to be manipulated by a subordinate of Morocc.";
 		next;
 		cutin "kardui02",2;
 		mes "[Kardui]";

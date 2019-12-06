@@ -1,8 +1,8 @@
 //===== rAthena Script =======================================
-//= Morroc Quest NPCs
+//= Morocc Quest NPCs
 //===== Description: =========================================
 //= [Official Conversion]
-//= Quest NPCs related to Morroc.
+//= Quest NPCs related to Morocc.
 //===== Changelogs: ==========================================
 //= 1.0 Succession of the Prince removed in ep16.1 [Capuche]
 //= 1.1 Moved renewal specific npcs [zackdreaver]
@@ -16,7 +16,7 @@ moc_ruins,113,181,4	duplicate(William)	William#moc	89
 // ============================================================
 moc_ruins,118,176,4	duplicate(Alchemist)	Alchemist#moc	64
 
-// Resurrection of Satan Morroc
+// Resurrection of Satan Morocc
 // ============================================================
 
 morocc,176,103,3	duplicate(Continental Official)	Continental Official#mor	754
@@ -862,10 +862,10 @@ prt_castle,117,163,5	script	Inspector#prince	755,{
 				mes "The original rule is that the quality of princes has to be appraised by royal families for a long time, and one has to be elected by internal ordinance.";
 				next;
 				mes "[Inspector]";
-				mes "Because of the resurrection of the devil Satan Morroc, people are too uneasy to follow regular announcements, and the atmosphere of the kingdom is not stable.";
+				mes "Because of the resurrection of the devil Satan Morocc, people are too uneasy to follow regular announcements, and the atmosphere of the kingdom is not stable.";
 				next;
 				mes "[Inspector]";
-				mes "Each kingdom is busy preventing the interference of Satan Morroc too.";
+				mes "Each kingdom is busy preventing the interference of Satan Morocc too.";
 				next;
 				mes "[Inspector]";
 				mes "So this time, the Court decided to change its ways, giving the opportunity to appraise the candidates to famous and devoted adventurers like yourself. That's why you are here.";

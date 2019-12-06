@@ -179,7 +179,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						}
 						else {
 							cutin "Ä³·µÄ«µå",3;  //carat_card
-							mes "This request is from a merchant from Morroc who is somehow losing business from these monsters in Glastheim.";
+							mes "This request is from a merchant from Morocc who is somehow losing business from these monsters in Glastheim.";
 							next;
 							mes "[Gelkah]";
 							mes "Eden Group is aware that this is not a great reason but a request is a request. So please clear ^FF000030 Carat^000000 monsters inside of Glastheim castle.";

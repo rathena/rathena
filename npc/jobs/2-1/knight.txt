@@ -1601,7 +1601,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 				mes "let's begin!";
 				next;
 				mes "[Lady Amy]";
-				mes "You are a Knight and you are looking for a party in Morroc.";
+				mes "You are a Knight and you are looking for a party in Morocc.";
 				mes "How would you go about doing so?";
 				next;
 			}
@@ -1612,7 +1612,7 @@ prt_in,69,107,6	script	Lady Amy#knt	728,{
 				close;
 			}
 		}
-		mes "You are a Knight and you are looking for a party in Morroc.";
+		mes "You are a Knight and you are looking for a party in Morocc.";
 		mes "How would you go about doing so?";
 		next;
 		if (select("Shout out that you are looking for a party.:Open a chat room and wait.:Look for people seeking Knights.") != 1)

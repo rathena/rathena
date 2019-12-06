@@ -66,7 +66,7 @@ OnInit:
 
 prontera,147,305,0	duplicate(TheSign)	Sign#prontera	111
 geffen,168,175,0	duplicate(TheSign)	Sign#geffen	111
-morocc,168,265,0	duplicate(TheSign)	Sign#morroc	111
+morocc,168,265,0	duplicate(TheSign)	Sign#Morocc	111
 payon,160,183,0	duplicate(TheSign)	Sign#payon	111
 aldebaran,54,223,0	duplicate(TheSign)	Sign#aldebaran	111
 alberta,35,241,0	duplicate(TheSign)	Sign#alberta	111
@@ -137,7 +137,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 			mes "[Metz]";
 			mes "Now, the first person";
 			mes "you must visit is ^FF0000Arian^000000";
-			mes "in Morroc. Please speak";
+			mes "in Morocc. Please speak";
 			mes "to him and he'll give you";
 			mes "all the details about his";
 			mes "examination... I hope.";
@@ -160,7 +160,7 @@ prt_in,227,45,0	script	Archeologist#sign	804,{
 		case 3:
 			mes "Hm...?";
 			mes "Shouldn't you leave";
-			mes "for Morroc to see Arian?";
+			mes "for Morocc to see Arian?";
 			mes "You better hurry in case";
 			mes "somebody else applies";
 			mes "for this little job.";
@@ -4300,7 +4300,7 @@ geffen_in,61,72,7	script	Aaron#sign	754,{
 			mes "that looks different";
 			mes "than all the others.";
 			next;
-			if (select("Prontera Hollgrehenn:Prontera Doll Merchant:Izlude Meat Merchant:Morroc Meat Merchant") == 3) set .@user_p,.@user_p+1;
+			if (select("Prontera Hollgrehenn:Prontera Doll Merchant:Izlude Meat Merchant:Morocc Meat Merchant") == 3) set .@user_p,.@user_p+1;
 			break;
 		case 2:
 			mes "[Aaron]";

@@ -878,7 +878,7 @@ yuno,261,99,4	script	Sage Yklah#juno	735,{
 				mes "Return once you have obtained those items, and we will speak of the doomed sword again.";
 				next;
 				mes "[Yklah]";
-				mes "For your information, you can obtain the claw of desert wolf from the Morroc desert, and the tooth of bat can be found in most caves around the world.";
+				mes "For your information, you can obtain the claw of desert wolf from the Morocc desert, and the tooth of bat can be found in most caves around the world.";
 				next;
 				mes "[Yklah]";
 				mes "Lastly, the piece of egg shell can be found from solid egg monsters in the Payon cave.";
@@ -898,7 +898,7 @@ yuno,261,99,4	script	Sage Yklah#juno	735,{
 			mes "Return once you have obtained those items, and we will speak of the doomed sword again.";
 			next;
 			mes "[Yklah]";
-			mes "For your information, you can obtain the claw of desert wolf from the Morroc desert, and the tooth of bat can be found in most caves around the world.";
+			mes "For your information, you can obtain the claw of desert wolf from the Morocc desert, and the tooth of bat can be found in most caves around the world.";
 			next;
 			mes "[Yklah]";
 			mes "Lastly, the piece of egg shell can be found from solid egg monsters in the Payon cave.";

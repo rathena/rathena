@@ -893,8 +893,8 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 97;
 
 	QWS_Make_Town_Menu 24;
-//----------------Morroc:
-	setarray @pTmenuitems$[@Ti], "Morroc";
+//----------------Morocc:
+	setarray @pTmenuitems$[@Ti], "Morocc";
 	setarray @pTprice[@Ti], $QW_BW_PRICE;
 
 	setarray @pTmap$[@Ti], "morocc";
@@ -1645,7 +1645,7 @@ jawaii,107,182,5	script	Warpra#25	113,{ callfunc "QWS_Town_Warpra",12,"Jawaii To
 izlude,132,116,4	script	Warpra#26	113,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
 lighthalzen,153,100,5	script	Warpra#27	113,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
 louyang,211,106,4	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Louyang Town"; close; }
-morocc,157,95,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morroc Town"; close; }
+morocc,157,95,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
 nif_fild01,319,77,1	script	Warpra#30	113,{ callfunc "QWS_Town_Warpra",17,"Niflheim Town"; close; }
 payon,183,110,4	script	Warpra#31	113,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
 prontera,147,172,5	script	Warpra#32	113,{ callfunc "QWS_Town_Warpra",0,"Prontera Town"; close; }

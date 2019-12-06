@@ -439,7 +439,7 @@
 1085,Mage_Test_2,Unknown Test Tube,3,0,,10,,,,,,,,,,,,,{},{},{}
 1086,Mage_Test_3,Unknown Test Tube,3,0,,10,,,,,,,,,,,,,{},{},{}
 1087,Mage_Test_4,Unknown Test Tube,3,0,,10,,,,,,,,,,,,,{},{},{}
-1088,Morocc_Potion,Morroc Solution,3,0,,10,,,,,,,,,,,,,{},{},{}
+1088,Morocc_Potion,Morocc Solution,3,0,,10,,,,,,,,,,,,,{},{},{}
 1089,Payon_Potion,Payon Solution,3,0,,10,,,,,,,,,,,,,{},{},{}
 1090,Mage_Test_Etc,Unknown Test Tube,3,0,,10,,,,,,,,,,,,,{},{},{}
 1091,Merchant_Box_Etc,Delivery Box,3,0,,10,,,,,,,,,,,,,{},{},{}
@@ -4119,7 +4119,7 @@
 6026,Marriage_Covenant,Written Oath Of Marriage,3,0,,10,,,,,,,,,,,,,{},{},{}
 6027,Crystal_Of_Feardoom,Crystal Of Feardom,3,0,,0,,,,,,,,,,,,,{},{},{}
 6028,Seal_Scroll,Sealed Scroll,3,0,,0,,,,,,,,,,,,,{},{},{}
-6029,Morocc_Tracing_Log,Morroc Tracing Log,3,0,,0,,,,,,,,,,,,,{},{},{}
+6029,Morocc_Tracing_Log,Morocc Tracing Log,3,0,,0,,,,,,,,,,,,,{},{},{}
 6030,Glitering_PaperA,Glittering Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
 6031,Glitering_PaperB,Glittering Paper,3,0,,10,,,,,,,,,,,,,{},{},{}
 6032,Horn_Of_Hilsrion,Horn of Hillslion,3,500,,10,,,,,,,,,,,,,{},{},{}
@@ -5311,7 +5311,7 @@
 7332,Slate,Complete Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
 7333,Piece_Of_Slate_1,Prontera Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
 7334,Piece_Of_Slate_2,Payon Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
-7335,Piece_Of_Slate_3,Morroc Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
+7335,Piece_Of_Slate_3,Morocc Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
 7336,Piece_Of_Slate_4,Geffen Tablet,3,0,,0,,,,,,,,,,,,,{},{},{}
 7337,Eye_Of_Hellion,Eye of Hellion,3,0,,0,,,,,,,,,,,,,{},{},{}
 7338,RO_Transportation_Card,One-way Ticket,3,0,,0,,,,,,,,,,,,,{},{},{}
@@ -6339,7 +6339,7 @@
 12046,Int_Dish01,Grape Juice Herbal Tea,0,2000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,1200000,1; percentheal 0,5; },{},{}
 12047,Int_Dish02,Autumn Red Tea,0,4000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,1200000,2; percentheal 0,5; },{},{}
 12048,Int_Dish03,Honey Herbal Tea,0,6000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,1200000,3; percentheal 0,5; },{},{}
-12049,Int_Dish04,Morroc Fruit Wine,0,8000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,1200000,4; percentheal 0,5; },{},{}
+12049,Int_Dish04,Morocc Fruit Wine,0,8000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,1200000,4; percentheal 0,5; },{},{}
 12050,Int_Dish05,Mastela Fruit Wine,0,10000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INTFOOD,1200000,5; percentheal 0,10; },{},{}
 12051,Vit_Dish01,Steamed Crab Nippers,0,2000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_VITFOOD,1200000,1; percentheal 5,0; },{},{}
 12052,Vit_Dish02,Assorted Seafood,0,4000,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_VITFOOD,1200000,2; percentheal 5,0; },{},{}
@@ -6610,7 +6610,7 @@
 12317,Powder_Snow,Snow Powder,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12318,Little_Heart,Small Hearts,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12319,Strawberry_Cake,Rune Strawberry Cake,2,0,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_ATKPOTION,600000,5; sc_start SC_MATKPOTION,600000,5; },{},{}
-12320,Pineapple_Juice,Schwartzwald Pine Jubilee,2,0,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_HITFOOD,600000,10; sc_start SC_FLEEFOOD,600000,20; },{},{}
+12320,Pineapple_Juice,Schwarzwald Pine Jubilee,2,0,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_HITFOOD,600000,10; sc_start SC_FLEEFOOD,600000,20; },{},{}
 12321,Spicy_Sandwich,Arunafeltz Desert Sandwich,2,0,,300,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_INCCRI,600000,7; },{},{}
 12322,Chocolate_Pie,Chocolate Pie,0,0,,50,,,,,0xFFFFFFFF,63,2,,,,,,{ percentheal 5,5; },{},{}
 12323,N_Fly_Wing,Novice Fly Wing,11,0,,0,,,,,0xFFFFFFFF,63,2,,,,,,{ itemskill "AL_TELEPORT",1; },{},{}
@@ -6742,7 +6742,7 @@
 12449,F_Luk_Dish10_,F Luk Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_LUKFOOD,1800000,10; },{},{}
 12450,F_Vit_Dish10_,F Vit Dish10,2,2,,10,,,,,0xFFFFFFFF,63,2,,,,,,{ sc_start SC_VITFOOD,1800000,10; },{},{}
 12451,F_WOB_Rune,F WOB Rune,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
-12452,F_WOB_Schwaltz,F WOB Schwaltz,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
+12452,F_WOB_Schwaltz,F WOB Schwarz,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12453,F_WOB_Rachel,F WOB Rachel,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12454,F_WOB_Local,F WOB Local,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
 12456,F_Greed_Scroll,F Greed Scroll,2,0,,10,,,,,0xFFFFFFFF,63,2,,,,,,{},{},{}
@@ -11146,7 +11146,7 @@
 20923,Illusion_Goibne_Spaulders,Illusion Goibne Spaulders,4,0,,1000,,47,,1,0xFFFFFFFE,63,2,4,,130,1,0,{ .@r = getrefine();  bonus bMdef,2; bonus bVit,1; if (.@r >= 7) { .@val = 5; if (.@r >= 9) { .@val += 10; } } if (.@val) { bonus2 bAddEle,Ele_Water,.@val; bonus2 bAddEle,Ele_Wind,.@val; bonus2 bAddEle,Ele_Earth,.@val; bonus2 bAddEle,Ele_Fire,.@val; } },{},{}
 20925,Commander_Manteau2,Commander Manteau,4,20,,300,,20,,1,0xFFFFFFFF,63,2,4,,100,1,0,{ .@r = getrefine(); bonus bMaxHPrate,3; bonus bMaxSPrate,3; bonus bMdef,10; bonus bBaseAtk,10; bonus bMatk,10; bonus2 bSubRace,RC_Player,3; if (.@r>=5) { bonus bBaseAtk,20; bonus bMatk,20; bonus bMaxHPrate,7; bonus bMaxSPrate,7; } if (.@r>=7) { bonus bBaseAtk,30; bonus bMatk,30; bonus bMaxHPrate,10; bonus bMaxSPrate,10; } },{},{}
 20931,Prism_Rangers_Scarf,Prism Rangers Scarf,4,20,,300,,12,,0,0xFFFFFFFF,63,2,4,,100,1,0,{ .@r = getrefine(); bonus2 bSubRace,RC_DemiHuman,5; bonus2 bSubRace,RC_Player,5; if (.@r >= 7) { .@val = 10; } else if (.@r >= 5) { .@val = 5; } else { .@val = 2; } bonus bMaxHPrate,.@val; bonus bMaxSPrate,.@val; bonus bLongAtkRate,.@val+2*getskilllv("RA_AIMEDBOLT"); if (getskilllv("RA_WUGRIDER") == 3) { bonus2 bSkillCooldown,"RA_UNLIMIT",-180000; } if (getskilllv("RA_CAMOUFLAGE") == 5) { bonus bDelayrate,-10; } bonus2 bSkillCooldown,"RA_ARROWSTORM",-200; bonus2 bSkillAtk,"RA_ARROWSTORM",1; },{},{ sc_end SC_UNLIMIT; }
-20932,Old_Morroc_Shawl,Old Morroc Shawl,4,20,,300,,10,,1,0xFFFFFFFF,63,2,4,,100,1,0,{ .@r= getrefine(); bonus bMaxHPrate,5; bonus bFlee,10; if (.@r>=7) bonus bFlee,20; if (.@r>=8) { bonus bFlee,30; bonus bRestartFullRecover; } if (.@r>=9) bonus bFlee,40; if (.@r>=10) bonus bFlee2,25; },{},{}
+20932,Old_Morroc_Shawl,Old Morocc Shawl,4,20,,300,,10,,1,0xFFFFFFFF,63,2,4,,100,1,0,{ .@r= getrefine(); bonus bMaxHPrate,5; bonus bFlee,10; if (.@r>=7) bonus bFlee,20; if (.@r>=8) { bonus bFlee,30; bonus bRestartFullRecover; } if (.@r>=9) bonus bFlee,40; if (.@r>=10) bonus bFlee2,25; },{},{}
 20933,Illusion_Engine_wing_A-type,Illusion Engine wing A-type,4,0,,900,,50,,1,0xFFFFFFFF,63,2,4,,130,1,,{ .@r = getrefine(); bonus bMaxHP,1000+(100*(.@r/2)); if (.@r >= 7) { bonus bAspdRate,5; } },{},{}
 20934,Illusion_Engine_wing_B-type,Illusion Engine wing B-type,4,0,,900,,50,,1,0xFFFFFFFF,63,2,4,,130,1,,{ .@r = getrefine(); bonus bMaxHP,1000+(100*(.@r/2)); if (.@r >= 7) { bonus bVariableCastrate,-5; } },{},{}
 20935,Lava_Leather_Manteau,Lava Leather Manteau,4,20,,400,,50,,1,0xFFFFFFFF,63,2,4,,175,1,0,{ bonus bHit,10; .@r = getrefine(); if (.@r>=7) bonus bHit,5; if (.@r>=9) bonus bHit,5; if (.@r>=11) bonus bDelayrate,-3; },{},{}
@@ -12004,7 +12004,7 @@
 25152,Cherished_Bouquet,Cherished Bouquet,3,0,,0,,,,,,,,,,,,,{},{},{}
 25153,Broken_Gun_Wreck,Broken Gun Wreck,3,0,,0,,,,,,,,,,,,,{},{},{}
 25154,Antique_Gunpowder,Antique Gunpowder,3,0,,10,,,,,,,,,,,,,{},{},{}
-25155,Schwartz's_Honor_Token,Schwartz's Honor Token,3,0,,0,,,,,,,,,,,,,{},{},{}
+25155,Schwartz's_Honor_Token,Schwarz's Honor Token,3,0,,0,,,,,,,,,,,,,{},{},{}
 25156,Piece_of_Chimera,Piece of Chimera,3,0,,10,,,,,,,,,,,,,{},{},{}
 25157,Fallen_Leaves_Branch,Fallen Leaves Branch,3,0,,10,,,,,,,,,,,,,{},{},{}
 25158,Core_Jelly,Core Jelly,3,0,,10,,,,,,,,,,,,,{},{},{}

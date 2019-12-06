@@ -167,7 +167,7 @@ morocc,156,97,4	script	Kafra Employee::kaf_morocc	113,{
 	mes "How may I be of assistance?";
 	callfunc "F_Kafra",5,0,0,60,930;
 	savepoint "morocc",156,46,1,1;
-	callfunc "F_KafEnd",0,1,"in the city of Morroc";
+	callfunc "F_KafEnd",0,1,"in the city of Morocc";
 }
 
 morocc,160,258,4	script	Kafra::kaf_morocc2	114,{
@@ -182,7 +182,7 @@ morocc,160,258,4	script	Kafra::kaf_morocc2	114,{
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,0,0,60,930;
 	savepoint "morocc",157,272,1,1;
-	callfunc "F_KafEnd",0,1,"in the city of Morroc";
+	callfunc "F_KafEnd",0,1,"in the city of Morocc";
 }
 
 // Payon
@@ -645,7 +645,7 @@ mjolnir_02,83,362,4	script	Kafra Employee::kaf_mjolnir_02	116,{
 	callfunc "F_KafEnd",0,1,"at Mjolnir Dead Pit";
 }
 
-// - Morroc Ruins
+// - Morocc Ruins
 moc_ruins,59,157,5	script	Kafra Employee::moc_ruins	114,{
 	cutin "kafra_04",2;
 	mes "[Kafra Employee]";

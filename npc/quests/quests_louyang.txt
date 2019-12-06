@@ -2670,7 +2670,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				mes "about my hometown...?";
 				mes "As a Rune-Midgardian,";
 				mes "I'm sure you've at least";
-				mes "heard of Morroc...";
+				mes "heard of Morocc...";
 				next;
 				mes "[Nagash Arses]";
 				mes "A city built in the middle of the desert, its founders had to combat the harsh and unforgiving forces of nature everyday.";
@@ -2683,13 +2683,13 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				next;
 				if (ch_poison == 2) {
 					mes "[Nagash Arses]";
-					mes "Ah~ I miss Morroc, my hometown.";
+					mes "Ah~ I miss Morocc, my hometown.";
 					mes "I used to be a member of the Assassin organization known as the 'Canine of Desert.' Long ago, I was their poison expert.";
 					next;
-					switch(select("Tell him news of Morroc.:Info about 'Canine of Desert'.:Just listen.")) {
+					switch(select("Tell him news of Morocc.:Info about 'Canine of Desert'.:Just listen.")) {
 					case 1:
 						mes "[Nagash Arses]";
-						mes "Hm? Do you have recent news of Morroc?";
+						mes "Hm? Do you have recent news of Morocc?";
 						next;
 						mes "["+strcharinfo(0)+"]";
 						mes "Yeah, I've got some news you might be interested in.";
@@ -2830,7 +2830,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				}
 				else {
 					mes "[Nagash Arses]";
-					mes "Ah, Morroc.";
+					mes "Ah, Morocc.";
 					mes "That name brings";
 					mes "back memories of";
 					mes "being an Assassin";
@@ -2839,9 +2839,9 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 					mes "[Nagash Arses]";
 					mes "^666666*Sigh...*^000000";
 					mes "I wish I could see";
-					mes "Morroc just once before I die.";
+					mes "Morocc just once before I die.";
 					next;
-					if (select("Tell him news of Morroc.:Ask about 'Canine of Desert.'") == 1) {
+					if (select("Tell him news of Morocc.:Ask about 'Canine of Desert.'") == 1) {
 						mes "[Nagash Arses]";
 						mes "Hm...?";
 						mes "Is there anything";
@@ -2849,7 +2849,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 						next;
 						mes "["+strcharinfo(0)+"]";
 						mes "I have news";
-						mes "of Morroc...";
+						mes "of Morocc...";
 						input .@input$;
 						mes "["+strcharinfo(0)+"]";
 						mes ""+.@input$+"";
@@ -3392,7 +3392,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 		mes "^3355FFHe looks tired";
 		mes "for some reason,";
 		mes "as if he's thinking";
-		mes "of Morroc, his hometown.^000000";
+		mes "of Morocc, his hometown.^000000";
 		next;
 		mes "^3355FFYou reflect on when he gave you his remaining strength and remember that he told you that he used to be one of the greatest Assassins...^000000";
 		next;

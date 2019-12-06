@@ -85,8 +85,8 @@ moc_para01,44,38,3	script	Mission [71 - 85]	857,{
 		mes "- related to the Sphinx Dungeon -";
 		mes "- on this mission Board. -";
 		next;
-		set .@str1$,"The villagers of Morroc are worried by the increasing number of monsters in the Sphinx Dungeon. ";
-		set .@str2$,"- Meidi from Morroc -";
+		set .@str1$,"The villagers of Morocc are worried by the increasing number of monsters in the Sphinx Dungeon. ";
+		set .@str2$,"- Meidi from Morocc -";
 		switch(select("Hunt Requiem:Hunt Marduk:Hunt Pasana")) {
 			case 1: callsub L_Quest,10107,.@str1$+"Hunt 10 Requiems.",.@str2$;
 			case 2: callsub L_Quest,10108,.@str1$+"Hunt 10 Marduks.",.@str2$;

@@ -2046,7 +2046,7 @@ lhz_in02,145,177,0	script	Togii#07	849,{
 	mes "[Togii]";
 	mes "Oooh yeah...";
 	mes "Goes down smooth.";
-	mes "Morroc whiskey's the best!";
+	mes "Morocc whiskey's the best!";
 	mes "^333333*Hiccup*^000000 Whoa, this stuff";
 	mes "really works fast! Heh heh~";
 	close;
@@ -2678,13 +2678,13 @@ lhz_in02,267,25,4	script	Diana#npc	747,{
 	next;
 	mes "[Diana]";
 	mes "Oh, I was born";
-	mes "and raised in Morroc.";
+	mes "and raised in Morocc.";
 	next;
 	mes "[Shop Assistant]";
 	mes "Ah yes, I've heard many";
 	mes "good things about that town.";
 	mes "You've certainly proven that";
-	mes "people from Morroc truly have";
+	mes "people from Morocc truly have";
 	mes "good taste. Now, this Stiletto";
 	mes "is a steal at 39,800 zeny...";
 	next;

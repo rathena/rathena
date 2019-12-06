@@ -1362,7 +1362,7 @@ prt_in,172,106,0	script	Librarian#megin	833,{
 						next;
 						mes "^663300[Keyword: ^996633"+.@input$+"^663300]";
 						mes "Current location:";
-						mes "^996633Inn, Morroc^663300.^000000";
+						mes "^996633Inn, Morocc^663300.^000000";
 						close2;
 					}
 					else if (compare(.@input$,"jack_o") == 1) {

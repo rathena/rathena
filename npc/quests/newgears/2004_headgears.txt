@@ -2438,7 +2438,7 @@ morocc,273,79,4	script	Educated Traveller	99,{
 		mes "[Lee Hester]";
 		mes "Beautiful...";
 		mes "But insanely hot.";
-		mes "I live here, I should know. Still, nothing can beat the Morroc sunset.";
+		mes "I live here, I should know. Still, nothing can beat the Morocc sunset.";
 		next;
 		mes "[Lee Hester]";
 		mes "It's amazing how so many different animals can live in the desert. I've been spending some time researching the ways of animals, reading books in the Juno Library...";
@@ -2447,7 +2447,7 @@ morocc,273,79,4	script	Educated Traveller	99,{
 		mes "Trying to figure out the Animal Kingdom's secrets of dealing with the heat.";
 		next;
 		mes "[Lee Hester]";
-		mes "I hope you're having a good time here in Morroc. If you ever question the special abilities of animals, just think of the majestic Desert Wolf that's able to thrive in the harsh Morroc deserts.";
+		mes "I hope you're having a good time here in Morocc. If you ever question the special abilities of animals, just think of the majestic Desert Wolf that's able to thrive in the harsh Morocc deserts.";
 		emotion ET_WRAP;
 		close;
 	}

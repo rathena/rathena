@@ -2853,7 +2853,7 @@ hu_in01,256,40,3	script	Herico	897,{
 							getitem 12044,1; //Herb Marinade Beef
 							break;
 						case 2:
-							getitem 12049,1; //Morroc Fruit Wine
+							getitem 12049,1; //Morocc Fruit Wine
 							break;
 						case 3:
 							getitem 12059,1; //Lutie Cold Noodle
@@ -2974,7 +2974,7 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 			mes "Oh yes, do you know what? \"Commutative contract\".";
 			next;
 			mes "[Enquro Carson]";
-			mes "I heard of a private pub in Morroc,";
+			mes "I heard of a private pub in Morocc,";
 			mes "a city of Rune-Midgarts Kingdom";
 			mes "that is not open to the public.";
 			mes "People keep talking about the pub's best drink,";
@@ -2995,7 +2995,7 @@ lhz_in03,39,44,3	script	Enquro Carson	97,{
 	} else if (hg_tre == 46) {
 		if (!countitem(12112) || !countitem(12113)) {
 			mes "[Enquro Carson]";
-			mes "I heard of a private pub in Morroc,";
+			mes "I heard of a private pub in Morocc,";
 			mes "a city of Rune-Midgarts Kingdom";
 			mes "that is not open to the public.";
 			mes "People keep talking about the pub's best drink,";
@@ -9313,7 +9313,7 @@ hu_in01,162,85,4	script	Ashe#2	95,{
 		mes "Um, I've got a favor";
 		mes "of my own to ask you.";
 		mes "Would you please bring";
-		mes "this file to Morroc? Just";
+		mes "this file to Morocc? Just";
 		mes "bring it to my comrade";
 		mes "over at the South Gate.";
 		next;
@@ -9328,14 +9328,14 @@ hu_in01,162,85,4	script	Ashe#2	95,{
 		changequest 11007,11008;
 		mes "[Ashe]";
 		mes "Don't worry, my comrade";
-		mes "at Morroc's South Gate will";
+		mes "at Morocc's South Gate will";
 		mes "explain everything once you";
 		mes "find him. Please hurry!";
 		close;
 	} else if (hg_odin == 59) {
 		mes "[Ashe]";
 		mes "Don't worry, my comrade";
-		mes "at Morroc's South Gate will";
+		mes "at Morocc's South Gate will";
 		mes "explain everything once you";
 		mes "find him. Please hurry, and";
 		mes "find him as soon as you can!";
@@ -9354,7 +9354,7 @@ OnTouch_:
 		mes "Um, I've got a favor";
 		mes "of my own to ask you.";
 		mes "Would you please bring";
-		mes "this file to Morroc? Just";
+		mes "this file to Morocc? Just";
 		mes "bring it to my comrade";
 		mes "over at the South Gate.";
 		next;
@@ -9368,7 +9368,7 @@ OnTouch_:
 		set hg_odin,59;
 		mes "[Ashe]";
 		mes "Don't worry, my comrade";
-		mes "at Morroc's South Gate will";
+		mes "at Morocc's South Gate will";
 		mes "explain everything once you";
 		mes "find him. Please hurry!";
 		close;

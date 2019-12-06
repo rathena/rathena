@@ -3354,7 +3354,7 @@ prt_in,164,102,4	script	Monster Encyclopedia#7pr	HIDDEN_NPC,{
 				mes "^FF0000[Prontera Maze 3F Monsters]^000000";
 				mes "27. Mastering";
 				mes "A giant Poring rarely seen in the";
-				mes "Morroc Desert, Mt. Mjolnir or the";
+				mes "Morocc Desert, Mt. Mjolnir or the";
 				mes "Prontera Maze. It may be the Master";
 				mes "of Porings, but... it's still a";
 				mes "Poring";

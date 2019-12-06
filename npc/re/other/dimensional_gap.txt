@@ -56,11 +56,11 @@ dali,137,87,4	script	Allied Forces Soldier	4_M_MOCASS1,{
 	close;
 }
 
-dali,122,60,4	script	Morroc Soldier	4_M_MOC_SOLDIER,{
-	mes "[Morroc Soldier]";
-	mes "This dimensional rift is connected to ^0000FFMorroc^000000 back in Rune Midgard.";
+dali,122,60,4	script	Morocc Soldier	4_M_MOC_SOLDIER,{
+	mes "[Morocc Soldier]";
+	mes "This dimensional rift is connected to ^0000FFMorocc^000000 back in Rune Midgard.";
 	next;
-	mes "[Morroc Soldier]";
+	mes "[Morocc Soldier]";
 	mes "This is the fastest gateway back to our world.  The area is still destroyed but restoration efforts will soon be on the way.";
 	close;
 }

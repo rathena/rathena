@@ -2705,9 +2705,9 @@ malangdo,190,167,7	script	Portali#mal	546,{
 		}
 		switch(select("Rune-Midgarts:Schwarzwald Republic:Arunafeltz Kingdom")) {
 		case 1:
-			switch(select("Prontera:Morroc:Alberta:Al De Baran:Payon:Geffen")) {
+			switch(select("Prontera:Morocc:Alberta:Al De Baran:Payon:Geffen")) {
 				case 1: callsub L_Warp,"Prontera",4,"prontera",155,111;
-				case 2: callsub L_Warp,"Morroc",4,"morocc",159,255;
+				case 2: callsub L_Warp,"Morocc",4,"morocc",159,255;
 				case 3: callsub L_Warp,"Alberta",4,"alberta",95,66;
 				case 4: callsub L_Warp,"Al De Baran",4,"aldebaran",126,120;
 				case 5: callsub L_Warp,"Payon",4,"payon",198,135;

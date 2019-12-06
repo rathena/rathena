@@ -767,7 +767,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 			mes "Therefore, jobs such as Wizard and Sage have come out and the magic became their own sacred field.";
 			next;
 			mes "[Rune Knight, Renoa]";
-			mes "The leader of the Rune Knights, Beljeve, is known to have been in touch with the fairies even before the dimensional door of the Ash-Vacuum was made when Satan Morroc resurrected.";
+			mes "The leader of the Rune Knights, Beljeve, is known to have been in touch with the fairies even before the dimensional door of the Ash-Vacuum was made when Satan Morocc resurrected.";
 			next;
 			mes "[Rune Knight, Renoa]";
 			mes "I heard a story from the magical scholars about the technology that can substantialize the essence of magic. I began a study to substantialize it to a rune by getting their help.";

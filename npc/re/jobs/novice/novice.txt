@@ -167,7 +167,7 @@ new_5-1,53,114,3	duplicate(NvSprakkiA)	Sprakki#nv5a	90
 			mes "Ok, You want to start right away.";
 			mes "Which Town do you want to start at?";
 			next;
-			set .@select, select("Prontera:Morroc:Geffen:Payon:Alberta:Izlude");
+			set .@select, select("Prontera:Morocc:Geffen:Payon:Alberta:Izlude");
 			mes "[Sprakki]";
 			mes "I see.";
 			mes "Go ahead and grow stronger! Look toward a brighter future ahead of you.";
@@ -829,7 +829,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 			mes "^4d4dffProntera is the Capital City of the Rune-Midgarts Kingdom, and right next to it is Izlude^000000.";
 			next;
 			mes "[Kafra Employee]";
-			mes "^4d4dffMorroc is the Desert City, you can change your job to Thief and Assassin^000000 here.";
+			mes "^4d4dffMorocc is the Desert City, you can change your job to Thief and Assassin^000000 here.";
 			mes "^4d4dffPayon is the Village in the Mountains, and it is close to the Archer Village^000000.";
 			mes "^4d4dffGeffen is the City of Magic. Go there if you want to become a Mage.^000000";
 			next;
@@ -838,7 +838,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 			mes "Also, if you are trying to take a boat to go somewhere, you have to go through Alberta first.";
 			mes "Select the town you want to teleport to.";
 			next;
-			switch(select("Prontera:Morroc:Payon:Alberta:Geffen")) {
+			switch(select("Prontera:Morocc:Payon:Alberta:Geffen")) {
 			case 1:
 				mes "[Kafra Employee]";
 				mes "Rune-Midgarts' Capital, Prontera.";
@@ -851,7 +851,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 				end;
 			case 2:
 				mes "[Kafra Employee]";
-				mes "The Desert City, Morroc...";
+				mes "The Desert City, Morocc...";
 				mes "It has lost it's former glory...";
 				mes "Do not lose the dream in your heart right now.";
 				callfunc "F_NvErase";
@@ -1253,7 +1253,7 @@ new_5-2,36,176,4	duplicate(NvGuide)	Guide#nv5	105
 			mes "I guess you have made up your mind, huh?";
 			mes "Well, where do you want to go?";
 			next;
-			switch(select("Prontera:Morroc:Payon:Alberta:Geffen:Cancel")) {
+			switch(select("Prontera:Morocc:Payon:Alberta:Geffen:Cancel")) {
 			case 1:
 				mes "[Brade]";
 				mes "Prontera, the Capital city of the Rune-Midgarts Kingdom.";
@@ -1265,7 +1265,7 @@ new_5-2,36,176,4	duplicate(NvGuide)	Guide#nv5	105
 				end;
 			case 2:
 				mes "[Brade]";
-				mes "The Desert Town, Morroc...";
+				mes "The Desert Town, Morocc...";
 				mes "There's lots of hidden stories within that town.";
 				mes "Take care.";
 				callfunc "F_NvErase";
@@ -2247,7 +2247,7 @@ new_5-3,121,41,3	duplicate(NvBruce)	Bruce#nv5	57
 		mes "The Acolyte Guild is here at the Prontera Church located to the northwest. The Swordman Guild can be found at Izlude, a town just southeast of Prontera.";
 		next;
 		mes "[Eden Group Officer]";
-		mes "Morocc is a city located in the desert that was recently destroyed due to an evil monster named Satan Morroc. The Thief Guild has been working to restore it to it's former glory.";
+		mes "Morocc is a city located in the desert that was recently destroyed due to an evil monster named Satan Morocc. The Thief Guild has been working to restore it to it's former glory.";
 		next;
 		mes "[Eden Group Officer]";
 		mes "Payon is where the Archer Guild has made it's home. You can also find the Kafra Shop Employees selling their Item Mall items near the center of this city.";
@@ -2518,7 +2518,7 @@ function	script	F_NvErase	{
 				mes "You have chosen";
 				mes "to become a Thief.";
 				mes "You will be sent to";
-				mes "the town of Morroc.";
+				mes "the town of Morocc.";
 				next;
 				mes "[Hanson]";
 				mes "The Thief guild is in the underground 1st floor of a pyramid which is North-West of town. Please remember this.";
@@ -2571,7 +2571,7 @@ function	script	F_NvErase	{
 			mes "[Hanson]";
 			mes "To what town do you want to go?";
 			next;
-			callsub L_Warp, select("Prontera:Geffen:Morroc:Payon:Alberta:Never mind");
+			callsub L_Warp, select("Prontera:Geffen:Morocc:Payon:Alberta:Never mind");
 			end;
 		}
 	} else {
@@ -2579,7 +2579,7 @@ function	script	F_NvErase	{
 		mes "You have received all the supplies.";
 		mes "To what town do you want to go?";
 		next;
-		callsub L_Warp, select("Prontera:Geffen:Morroc:Payon:Alberta");
+		callsub L_Warp, select("Prontera:Geffen:Morocc:Payon:Alberta");
 		end;
 	}
 	end;
@@ -2634,7 +2634,7 @@ L_Warp:
 		warp "geffen",122,65;
 		end;
 	case 3:
-		mes "I will send you to Morroc, the Desert Town.";
+		mes "I will send you to Morocc, the Desert Town.";
 		close2;
 		savepoint "morocc",150,99,1,1;
 		warp "morocc",155,110;

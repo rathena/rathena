@@ -215,7 +215,7 @@ prontera,78,150,3	script	Dairenne#pront	90,{
 		mes "I wonder if you are interested in parties or dresses. Hehehe. These days, the hot topic is definitely the colorful, extravagant, magnificent dresses you can wear.";
 		next;
 		mes "[Towngirl Dairenne]";
-		mes "To get such dazzling colors, I heard you have to use a dye that you can only get in Morroc. But I also heard that the price is beyond imagination.";
+		mes "To get such dazzling colors, I heard you have to use a dye that you can only get in Morocc. But I also heard that the price is beyond imagination.";
 		next;
 		mes "[Towngirl Dairenne]";
 		mes "Aahhhh~ I wish I could wear such a dress. Even if it's just once...";
