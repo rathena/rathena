@@ -24,6 +24,10 @@ prontera,184,177,6	script	Refine Master	851,{
 		set .@bWeaponUp,1;
 	if (countitem(6239) || countitem(6232) || countitem(6233) || countitem(6234) || countitem(6235) || countitem(6457))
 		set .@bArmorUp,1;
+	if (countitem(6584) || countitem(6228) || countitem(6229) || countitem(6230) || countitem(6231) || countitem(6456))
+		set .@bWeaponUp,1;
+	if (countitem(6585) || countitem(6232) || countitem(6233) || countitem(6234) || countitem(6235) || countitem(6457))
+		set .@bArmorUp,1;
 	if (!.@bWeaponUp && !.@bArmorUp) {
 		mes "[Refine Master]";
 		mes "Hello!";
@@ -82,8 +86,8 @@ prontera,184,177,6	script	Refine Master	851,{
 	switch(getequipweaponlv(.@part)) {
 	default:
 	case 0:
-		setarray .@tickets[0],6457,6235,6234,6233,6232,6239;
-		setarray .@levels[0],5,6,7,8,9,11;
+		setarray .@tickets[0],6457,6235,6234,6233,6232,6239,6585;
+		setarray .@levels[0],5,6,7,8,9,11,12;
 		set .@type$,"Armor";
 		set .@check,.@bArmorUp;
 		break;
@@ -91,8 +95,20 @@ prontera,184,177,6	script	Refine Master	851,{
 	case 2:
 	case 3:
 	case 4:
-		setarray .@tickets[0],6456,6231,6230,6229,6228,6238;
-		setarray .@levels[0],5,6,7,8,9,11;
+		setarray .@tickets[0],6456,6231,6230,6229,6228,6238,6584;
+		setarray .@levels[0],5,6,7,8,9,11,12;
+		set .@type$,"Weapon";
+		set .@check,.@bWeaponUp;
+		break;
+	case 5:
+		setarray .@tickets[0],6457,6235,6234,6233,6232,6239,6585;
+		setarray .@levels[0],5,6,7,8,9,11,12;
+		set .@type$,"Armor";
+		set .@check,.@bArmorUp;
+		break;
+	case 6:
+		setarray .@tickets[0],6456,6231,6230,6229,6228,6238,6584;
+		setarray .@levels[0],5,6,7,8,9,11,12;
 		set .@type$,"Weapon";
 		set .@check,.@bWeaponUp;
 		break;
