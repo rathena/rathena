@@ -27,7 +27,7 @@
 		case 1:
 			mes "[Moscovia P.R. Officer]";
 			mes "Moscovia is a beautiful kingdom";
-			mes "on an island located north of Rune";
+			mes "on an island located north of Rune-";
 			mes "Midgarts.";
 			next;
 			mes "[Moscovia P.R. Officer]";
