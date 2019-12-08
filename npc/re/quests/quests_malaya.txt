@@ -8945,7 +8945,7 @@ OnDisable:
 
 ma_fild01,211,200,6	script	Tourist#pin02	775,{
 	mes "[Tourist]";
-	mes "I heard of the 'Pintados Festival' and came all the way from Gonryun.";
+	mes "I heard of the 'Pintados Festival' and came all the way from Kunlun.";
 	next;
 	mes "[Tourist]";
 	mes "Just in case you might think otherwise, this is a mask on my face and not a tattoo.";

@@ -128,12 +128,12 @@ function Restrict {
 // --------------------------------------------------
 menu	"Prontera",T1, "Alberta",T2, "Aldebaran",T3, "Amatsu",T4, "Ayothaya",T5,
     	"Brasilis",T6, "Comodo",T7, "Dewata",T8, "Eclage",T9, "Einbech",T10, 
-    	"Einbroch",T11, "El Dicastes",T12, "Geffen",T13, "Gonryun",T14, "Hugel",T15,
+    	"Einbroch",T11, "El Dicastes",T12, "Geffen",T13, "Kunlun",T14, "Hugel",T15,
     	"Izlude",T16, "Jawaii",T17, "Lasagna",T18, "Lighthalzen",T19, "Louyang",T20,
 		"Lutie",T21, "Malangdo",T22, "Malaya",T23, "Manuk",T24,
 		"Midgarts Expedition Camp",T25, "Mora",T26, "Morocc",T27, "Moscovia",T28,
 		"Nameless Island",T29, "Niflheim",T30, "Payon",T31, "Rachel",T32, "Splendide",T33,
-		"Thor Camp",T34, "Umbala",T35, "Veins",T36, "Yuno",T37;
+		"Thor Camp",T34, "Umbala",T35, "Veins",T36, "Juno",T37;
 
 T1: Go("prontera",155,183);
 T2: Go("alberta",28,234);
@@ -188,13 +188,13 @@ T37: Go("yuno",157,51);
 menu	"Amatsu Fields",F1, "Ayothaya Fields",F2, "Bifrost Fields", F3,
     	"Brasilis Fields",F4, "Comodo Fields",F5, "Dewata Fields",F6,
     	"Eclage Fields",F7, "Einbroch Fields",F8, "El Dicastes Fields",F9,
-    	"Geffen Fields",F10, "Gonryun Fields",F11, "Hugel Fields",F12,
+    	"Geffen Fields",F10, "Kunlun Fields",F11, "Hugel Fields",F12,
 		"Lasagna Fields",F13, "Lighthalzen Fields",F14, "Louyang Field",F15, 
 		"Lutie Field",F16, "Malaya Fields",F17, "Manuk Fields",F18, 
 		"Mjolnir Fields",F19, "Moscovia Fields",F20, "Niflheim Fields",F21, 
 		"Payon Forests",F22, "Prontera Fields",F23, "Rachel Fields",F24, 
 		"Sograt Deserts",F25, "Splendide Fields",F26, "Umbala Fields",F27, 
-		"Veins Fields",F28, "Yuno Fields",F29;
+		"Veins Fields",F28, "Juno Fields",F29;
 
 F1: setarray @c[2],190,197;
 	Disp("Amatsu Field",1,1); Pick("ama_fild");
@@ -225,7 +225,7 @@ F10: Restrict("Pre-RE",13,15);
 	 setarray @c[0],46,199,213,204,195,212,257,192,188,171,166,263,248,158,195,191,186,183,221,117,178,218,136,328,240,181,235,235,211,185;
 	 Disp("Geffen Field",0,14); Pick("gef_fild",1);
 F11: setarray @c[2],220,227;
-	 Disp("Gonryun Field",1,1); Pick("gon_fild");
+	 Disp("Kunlun Field",1,1); Pick("gon_fild");
 F12: Restrict("Pre-RE",3,7);
 	 setarray @c[2],268,101,222,193,232,185,252,189,196,106,216,220,227,197;
 	 Disp("Hugel Field",1,7); Pick("hu_fild");
@@ -274,7 +274,7 @@ F28: Restrict("Pre-RE",5);
 	 Disp("Veins Field",1,7); Pick("ve_fild");
 F29: Restrict("Pre-RE",5,10);
 	 setarray @c[2],189,224,192,207,221,157,226,199,223,177,187,232,231,174,196,203,183,214,200,124,195,226,210,304;
-	 Disp("Yuno Field",1,12); Pick("yuno_fild");
+	 Disp("Juno Field",1,12); Pick("yuno_fild");
 
 // --------------------------------------------------
 	Dungeons:
@@ -285,7 +285,7 @@ menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
     	"Bio Labs",D6, "Brasilis Dungeon",D7, "Byalan Dungeon",D8, "Clock Tower",D9,
     	"Coal Mines",D10, "Culvert",D11, "Cursed Abbey",D12, "Dewata Dungeon",D13,
     	"Einbroch Dungeon",D14, "Gefenia",D15, "Geffen Dungeon",D16,
-    	"Glast Heim",D17, "Gonryun Dungeon",D18, "Hidden Dungeon",D19,
+    	"Glast Heim",D17, "Kunlun Dungeon",D18, "Hidden Dungeon",D19,
     	"Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22, "Lasagna Dungeon",D23,
 		"Louyang Dungeon",D24, "Magma Dungeon",D25, "Malangdo Dungeon",D26,
 		"Moscovia Dungeon",D27, "Nidhogg's Dungeon",D28, "Odin Temple",D29,
@@ -334,7 +334,7 @@ D17: setarray @c[2],370,304,199,29,104,25,150,15,157,287,147,15,258,255,108,291,
 	 Disp("Entrance:Castle 1:Castle 2:Chivalry 1:Chivalry 2:Churchyard:Culvert 1:Culvert 2:Culvert 3:Culvert 4:St. Abbey:Staircase Dungeon:Underground Cave 1:Underground Cave 2:Underground Prison 1:Underground Prison 2");
 	 Pick("","glast_01","gl_cas01","gl_cas02","gl_knt01","gl_knt02","gl_chyard","gl_sew01","gl_sew02","gl_sew03","gl_sew04","gl_church","gl_step","gl_dun01","gl_dun02","gl_prison","gl_prison1");
 D18: setarray @c[2],153,53,28,113,68,16;
-	 Disp("Gonryun Dungeon",1,3); Pick("gon_dun");
+	 Disp("Kunlun Dungeon",1,3); Pick("gon_dun");
 D19: setarray @c[2],176,7,93,20,23,8;
 	 Disp("Hidden Dungeon",1,3); Pick("prt_maze");
 D20: setarray @c[2],157,14,151,155,149,22,33,158;
@@ -509,7 +509,7 @@ I20: Restrict("RE");
 	Special:
 // --------------------------------------------------
 menu	"Auction Hall",S1, "Battlegrounds",S2, "Casino",S3, "Dimensional Rift",S4,
-		"Eden Group Headquarters",S5, "Gonryun Arena",S6, "Izlude Arena",S7, 
+		"Eden Group Headquarters",S5, "Kunlun Arena",S6, "Izlude Arena",S7, 
 		"Monster Race Arena",S8, "Para Market",S9, "Turbo Track",S10;
 
 S1: Go("auction_01",22,68);

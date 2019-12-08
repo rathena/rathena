@@ -300,7 +300,7 @@ prontera,146,89,6	script	Kafra Employee::kaf_prontera5	117,{
 	callfunc "F_KafEnd",0,1,"in the city of Prontera";
 }
 
-// Yuno
+// Juno
 //============================================================
 yuno,152,187,4	script	Kafra Employee::kaf_yuno	860,{
 	cutin "kafra_08",2;
@@ -502,7 +502,7 @@ einbroch,59,203,6	script	Kafra Employee#ein1::kaf_einbroch2	861,{
 	callfunc "F_KafEnd",0,1,"in the city of Einbroch";
 }
 
-// Gonryun
+// Kunlun
 //============================================================
 gonryun,159,122,4	script	Kafra Employee::kaf_gonryun	116,{
 	cutin "kafra_02",2;

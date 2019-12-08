@@ -2280,7 +2280,7 @@
 
 10102,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of the sphinx dungeon"
 10103,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of Glast heim"
-10104,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of Yuno"
+10104,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of Juno"
 10105,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of a clock tower"
 10106,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"To client - the chapter of localizing "
 10107,0,1164,10,0,0,0,0,0,0,0,0,0,0,0,0,0,"Sphinx dungeon - Requiem"

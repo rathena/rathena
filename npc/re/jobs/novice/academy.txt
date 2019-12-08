@@ -1217,7 +1217,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 					case 3:
 						mes "[Information Staff]";
 						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
-						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
+						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Juno^000000, and";
 						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 210, 73, 2, 0xFF0A82;
@@ -1483,7 +1483,7 @@ izlude,120,207,4	script	Information Staff#0	8W_SOLDIER,{
 					case 3:
 						mes "[Information Staff]";
 						mes "To the southeast, the <NAVI>[Airship]<INFO>izlude,206,75,</INFO></NAVI>";
-						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Yuno^000000, and";
+						mes "will be connected with the Capital of the republic of Schwarzwald -^8B4513 Juno^000000, and";
 						mes "The capital of the Arunapeltsdom -^8B4513 Rachel ^000000.";
 						mes "Do you need additional directions?";
 						viewpoint 1, 210, 73, 2, 0xFF0A82;

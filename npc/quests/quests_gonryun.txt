@@ -1,5 +1,5 @@
 //===== rAthena Script ======================================= 
-//= Quest NPCs related to Gonryun
+//= Quest NPCs related to Kunlun
 //===== By: ==================================================
 //= KarLaeda
 //===== Current Version: ===================================== 

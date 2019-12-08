@@ -2714,10 +2714,10 @@ malangdo,190,167,7	script	Portali#mal	546,{
 				case 6: callsub L_Warp,"Geffen",4,"geffen",120,100;
 			}
 		case 2:
-			switch(select("Einbroch:Lighthalzen:Yuno:Hugel")) {
+			switch(select("Einbroch:Lighthalzen:Juno:Hugel")) {
 				case 1: callsub L_Warp,"Einbroch",6,"einbroch",229,196;
 				case 2: callsub L_Warp,"Lighthalzen",6,"lighthalzen",214,150;
-				case 3: callsub L_Warp,"Yuno",6,"yuno",157,220;
+				case 3: callsub L_Warp,"Juno",6,"yuno",157,220;
 				case 4: callsub L_Warp,"Hugel",6,"hugel",95,121;
 			}
 		case 3:

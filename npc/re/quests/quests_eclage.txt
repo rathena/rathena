@@ -8078,7 +8078,7 @@ ecl_in01,83,84,4	script	Midgard Exploration#bok3	HIDDEN_NPC,{
 			mes "But aren't those entertainment facilities supposed to be in the center of a country?";
 			break;
 		case 5:
-			mes "A city called Yuno is even floating in the sky! How incredible is this.";
+			mes "A city called Juno is even floating in the sky! How incredible is this.";
 			next;
 			mes "And there is a special reward for those who escape the maze: there is a place where rebirth is given.";
 			next;

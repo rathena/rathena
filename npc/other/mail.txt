@@ -114,7 +114,7 @@ umbala,104,155,0	duplicate(MailBox)	Mailbox#um	888
 //============================================================
 amatsu,102,146,0	duplicate(MailBox)	Mailbox#ama	888
 
-// Gonryun
+// Kunlun
 //============================================================
 gonryun,152,117,0	duplicate(MailBox)	Mailbox#gon	888
 
