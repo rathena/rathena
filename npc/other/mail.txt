@@ -122,7 +122,7 @@ gonryun,152,117,0	duplicate(MailBox)	Mailbox#gon	888
 //============================================================
 ayothaya,205,169,0	duplicate(MailBox)	Mailbox#ayo	888
 
-// Louyang
+// Luoyang
 //============================================================
 louyang,204,100,0	duplicate(MailBox)	Mailbox#lou	888
 

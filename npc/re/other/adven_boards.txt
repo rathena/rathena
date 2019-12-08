@@ -2990,9 +2990,9 @@ gonryun,155,198,0	script	Signpost#Kunlun Dungeon	2_BULLETIN_BOARD,{
 	}
 }
 
-louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
+louyang,37,276,0	script	Signpost#Luoyang Dungeon	2_BULLETIN_BOARD,{
 	while(1) {
-		mes "[Louyang Dungeon]";
+		mes "[Luoyang Dungeon]";
 		mes "In order for Adventurers to travel all over the world for a relaxing adventure, Information gathered from various adventurers are made public. Please provide information tips to the adventurer group to revise the information.";
 		mes "-- Adventurer Group --";
 		next;
@@ -3011,13 +3011,13 @@ louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
 			1513,"Mao Guai","Evil cat spirit in human clothing. It walks on two legs like a human and attacks with a fan in its hands.",
 			1518,"White Lady","This MVP monster lures nearby adventurers with its beauty. Some adventurers become enchanted by its scream." );
 		if (.@mo_board == 1) {
-			mes "[Louyang Dungeon]";
-			mes "Louyang Dungeon is comprised of 3 floors and the monsters that appear here tend to overpower adventurers in mass numbers. Prepare before venturing into this dungeon.";
+			mes "[Luoyang Dungeon]";
+			mes "Luoyang Dungeon is comprised of 3 floors and the monsters that appear here tend to overpower adventurers in mass numbers. Prepare before venturing into this dungeon.";
 			next;
 			while(1) {
-				switch( select( "Louyang Dungeon - Suei Long Gon","Louyang Dungeon - The Royal Tomb","Louyang Dungeon - Inside the Royal Tomb","Cancel" ) ) {
+				switch( select( "Luoyang Dungeon - Suei Long Gon","Luoyang Dungeon - The Royal Tomb","Luoyang Dungeon - Inside the Royal Tomb","Cancel" ) ) {
 				case 1:
-					mes "[Louyang Dungeon - Suei Long Gon]";
+					mes "[Luoyang Dungeon - Suei Long Gon]";
 					mes "------------ Monster ------------";
 					mes "Horong(66)";
 					mes "Grizzly(66)";
@@ -3029,7 +3029,7 @@ louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
 					F_InfoBoard;
 					continue;
 				case 2:
-					mes "[Louyang Dungeon - The Royal Tomb]";
+					mes "[Luoyang Dungeon - The Royal Tomb]";
 					mes "------------ Monster ------------";
 					mes "Mimic(56)";
 					mes "Munak(58)";
@@ -3039,7 +3039,7 @@ louyang,37,276,0	script	Signpost#Louyang Dungeon	2_BULLETIN_BOARD,{
 					F_InfoBoard;
 					continue;
 				case 3:
-					mes "[Louyang Dungeon - Inside the Royal Tomb]";
+					mes "[Luoyang Dungeon - Inside the Royal Tomb]";
 					mes "------------ Monster ------------";
 					mes "Zhu Po Long(82)";
 					mes "Green Maiden(82)";

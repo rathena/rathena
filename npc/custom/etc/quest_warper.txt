@@ -39,7 +39,7 @@
 // - fixed missing pyramid gats in @DGat$ array
 // - removed the culver level 5 that didn't exist
 //= 1.7 - Readability of Dungeon menu building increased [Neouni]
-// - Thanatos Tower & Louyang Dungeon added
+// - Thanatos Tower & Luoyang Dungeon added
 //= 1.8 - changed around unlock variables [Neouni]
 // - Moved warp variables to mark what you have unlocked to an binary array in login based permanent variable
 // (warp variables are saved in login database, so all charservers have these unlocked)
@@ -857,8 +857,8 @@ function	script	QWS_Tarray	{
 	setarray @pTYcoords[@Ti], 110;
 
 	QWS_Make_Town_Menu 13;
-//----------------Louyang:
-	setarray @pTmenuitems$[@Ti], "Louyang";
+//----------------Luoyang:
+	setarray @pTmenuitems$[@Ti], "Luoyang";
 	setarray @pTprice[@Ti], $QW_OW_PRICE;
 
 	setarray @pTmap$[@Ti], "louyang";
@@ -1279,7 +1279,7 @@ function	script	QWS_Darray	{
 	QWS_Make_Dungeon_Menu 15;
 
 //----------------LOUYANG DUNGEON
-	setarray @pDmenuitems$[@Di], "Louyang Dungeon";
+	setarray @pDmenuitems$[@Di], "Luoyang Dungeon";
 	setarray @pDprice[@Di], $QW_OW_PRICE;
 	setarray @pDfee$[@Di], "$QW_OW_FEE";
 	setarray @DLevels[@Di], 2;
@@ -1644,7 +1644,7 @@ hugel,90,127,5	script	Warpra#24	113,{ callfunc "QWS_Town_Warpra",10,"Hugel Town"
 jawaii,107,182,5	script	Warpra#25	113,{ callfunc "QWS_Town_Warpra",12,"Jawaii Town"; close; }
 izlude,132,116,4	script	Warpra#26	113,{ callfunc "QWS_Town_Warpra",11,"Izlude Town"; close; }
 lighthalzen,153,100,5	script	Warpra#27	113,{ callfunc "QWS_Town_Warpra",13,"Lighthalzen Town"; close; }
-louyang,211,106,4	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Louyang Town"; close; }
+louyang,211,106,4	script	Warpra#28	113,{ callfunc "QWS_Town_Warpra",14,"Luoyang Town"; close; }
 morocc,157,95,4	script	Warpra#29	113,{ callfunc "QWS_Town_Warpra",16,"Morocc Town"; close; }
 nif_fild01,319,77,1	script	Warpra#30	113,{ callfunc "QWS_Town_Warpra",17,"Niflheim Town"; close; }
 payon,183,110,4	script	Warpra#31	113,{ callfunc "QWS_Town_Warpra",18,"Payon Town"; close; }
@@ -1679,7 +1679,7 @@ gon_dun01,167,273,4	script	Warpra Helper#12	112,{ callfunc "QWS_Dungeon_Warpra",
 juperos_02,127,154,5	script	Warpra Helper#13	112,{ callfunc "QWS_Dungeon_Warpra",14,"Juperos Cave"; close; }
 kh_dun01,14,224,3	script	Warpra Helper#14	112,{ callfunc "QWS_Dungeon_Warpra",28,"Kiel Dungeon"; close; }
 lhz_dun02,156,151,5	script	Warpra Helper#15	112,{ callfunc "QWS_Dungeon_Warpra",15,"Lighthalzen Bio Lab"; close; }
-lou_dun02,168,264,4	script	Warpra Helper#16	112,{ callfunc "QWS_Dungeon_Warpra",16,"Louyang Dungeon"; close; }
+lou_dun02,168,264,4	script	Warpra Helper#16	112,{ callfunc "QWS_Dungeon_Warpra",16,"Luoyang Dungeon"; close; }
 mag_dun02,46,41,3	script	Warpra Helper#17	112,{ callfunc "QWS_Dungeon_Warpra",17,"Magma Dungeon"; close; }
 odin_tem01,115,148,3	script	Warpra Helper#18	112,{ callfunc "QWS_Dungeon_Warpra",18,"Odin Temple"; close; }
 orcsdun01,185,11,3	script	Warpra Helper#19	112,{ callfunc "QWS_Dungeon_Warpra",19,"Orc Dungeon"; close; }

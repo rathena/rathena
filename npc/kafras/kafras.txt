@@ -556,7 +556,7 @@ lhz_in02,237,284,4	script	Kafra Employee::kaf_lhz_in02	861,{
 	callfunc "F_KafEnd",0,1,"in the city of Lighthalzen";
 }
 
-// Louyang
+// Luoyang
 //============================================================
 louyang,210,104,5	script	Kafra Employee::kaf_louyang	4_F_KAFRA2,{
 	cutin "kafra_01",2;
@@ -568,7 +568,7 @@ louyang,210,104,5	script	Kafra Employee::kaf_louyang	4_F_KAFRA2,{
 	mes "How can I help you today?";
 	callfunc "F_Kafra",5,3,1,50,700;
 	savepoint "louyang",217,92,1,1;
-	callfunc "F_KafEnd",0,1,"in the city of Louyang";
+	callfunc "F_KafEnd",0,1,"in the city of Luoyang";
 }
 
 // Umbala

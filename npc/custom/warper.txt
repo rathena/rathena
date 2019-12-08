@@ -129,7 +129,7 @@ function Restrict {
 menu	"Prontera",T1, "Alberta",T2, "Aldebaran",T3, "Amatsu",T4, "Ayothaya",T5,
     	"Brasilis",T6, "Comodo",T7, "Dewata",T8, "Eclage",T9, "Einbech",T10, 
     	"Einbroch",T11, "El Dicastes",T12, "Geffen",T13, "Kunlun",T14, "Hugel",T15,
-    	"Izlude",T16, "Jawaii",T17, "Lasagna",T18, "Lighthalzen",T19, "Louyang",T20,
+    	"Izlude",T16, "Jawaii",T17, "Lasagna",T18, "Lighthalzen",T19, "Luoyang",T20,
 		"Lutie",T21, "Malangdo",T22, "Malaya",T23, "Manuk",T24,
 		"Midgarts Expedition Camp",T25, "Mora",T26, "Morocc",T27, "Moscovia",T28,
 		"Nameless Island",T29, "Niflheim",T30, "Payon",T31, "Rachel",T32, "Splendide",T33,
@@ -189,7 +189,7 @@ menu	"Amatsu Fields",F1, "Ayothaya Fields",F2, "Bifrost Fields", F3,
     	"Brasilis Fields",F4, "Comodo Fields",F5, "Dewata Fields",F6,
     	"Eclage Fields",F7, "Einbroch Fields",F8, "El Dicastes Fields",F9,
     	"Geffen Fields",F10, "Kunlun Fields",F11, "Hugel Fields",F12,
-		"Lasagna Fields",F13, "Lighthalzen Fields",F14, "Louyang Field",F15, 
+		"Lasagna Fields",F13, "Lighthalzen Fields",F14, "Luoyang Field",F15, 
 		"Lutie Field",F16, "Malaya Fields",F17, "Manuk Fields",F18, 
 		"Mjolnir Fields",F19, "Moscovia Fields",F20, "Niflheim Fields",F21, 
 		"Payon Forests",F22, "Prontera Fields",F23, "Rachel Fields",F24, 
@@ -235,7 +235,7 @@ F13: Restrict("RE");
 F14: setarray @c[2],240,179,185,235,240,226;
 	 Disp("Lighthalzen Field",1,3); Pick("lhz_fild");
 F15: setarray @c[2],229,187;
-	 Disp("Louyang Field",1,1); Pick("lou_fild");
+	 Disp("Luoyang Field",1,1); Pick("lou_fild");
 F16: setarray @c[2],115,145;
 	 Disp("Lutie Field",1,1); Pick("xmas_fild");
 F17: Restrict("RE");
@@ -287,7 +287,7 @@ menu	"Abyss Lakes",D1, "Amatsu Dungeon",D2, "Anthell",D3,
     	"Einbroch Dungeon",D14, "Gefenia",D15, "Geffen Dungeon",D16,
     	"Glast Heim",D17, "Kunlun Dungeon",D18, "Hidden Dungeon",D19,
     	"Ice Dungeon",D20, "Juperos",D21, "Kiel Dungeon",D22, "Lasagna Dungeon",D23,
-		"Louyang Dungeon",D24, "Magma Dungeon",D25, "Malangdo Dungeon",D26,
+		"Luoyang Dungeon",D24, "Magma Dungeon",D25, "Malangdo Dungeon",D26,
 		"Moscovia Dungeon",D27, "Nidhogg's Dungeon",D28, "Odin Temple",D29,
 		"Orc Dungeon",D30, "Payon Dungeon",D31, "Pyramids",D32, "Rachel Sanctuary",D33,
     	"Scaraba Hole",D34, "Sphinx",D35, "Sunken Ship",D36, "Thanatos Tower",D37,

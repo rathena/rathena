@@ -86,7 +86,7 @@ dew_dun02,87,272,0	duplicate(ach_treasure#core)	#dew_ach1::120119	HIDDEN_WARP_NP
 // Labyrinth
 prt_maze03,11,14,0	duplicate(ach_treasure#core)	#maze_ach1::120140	HIDDEN_WARP_NPC,5,5
 
-// Louyang Dungeon
+// Luoyang Dungeon
 lou_dun03,29,228,0	duplicate(ach_treasure#core)	#lou_ach1::120134	HIDDEN_WARP_NPC,5,5
 
 // Nogg Road

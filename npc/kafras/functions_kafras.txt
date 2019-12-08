@@ -24,9 +24,9 @@
 //= 2.3 Removed SAVE from Niflheim. [Lupus]
 //= 2.3 removed "fix" by HawkMoon RTFM and check supernovice.txt . There's a SPECIAL Kafra which gives CARTS to SN for a special proce. [Lupus]
 //= 2.4 Added Baby Class Support (Baby Novice check) Removed annoying storage feature where u had to close dialog window to be able to use your storage [Lupus]
-//= 2.5 Added Louyang official Kafra, fixes some Kafras, not letting you to Save your position [Lupus]
+//= 2.5 Added Luoyang official Kafra, fixes some Kafras, not letting you to Save your position [Lupus]
 //= 2.6 Reverted Dungeons Kafras (they should offer only Storage). Added temp Ayothaya Kafra
-//= 2.7 Added correct Ayothaya, Louyang & Amatsu Kafras. [Lupus]
+//= 2.7 Added correct Ayothaya, Luoyang & Amatsu Kafras. [Lupus]
 //= 2.8 Fixed Amatsu Storage problems [Lupus] 2.9 Fixed spelling mistakes. [Nexon]
 //= 3.0 Added special "not working teleport menu" for Einbroch Kafras [Lupus]
 //= 3.1 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
@@ -105,7 +105,7 @@ function	script	F_Kafra	{
 		mes "The air is eternally heavy with the";
 		mes "scent of pleasant wildflowers.";
 		break;
-	case 4:// Louyang and Ayothaya specific message (obsolete)
+	case 4:// Luoyang and Ayothaya specific message (obsolete)
 		mes "[Kafra Employee]";
 		mes "With our many Kafra";
 		mes "service locations, you're never";

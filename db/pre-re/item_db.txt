@@ -2572,7 +2572,7 @@
 5389,Angel_Spirit,Angel Spirit,4,20,,200,,0,,0,0xFFFFFFFF,7,2,512,,30,0,394,{ bonus bStr,2; bonus bHit,15; },{},{}
 5390,Santa_Hat_2,Frozen Twin Pompom,4,20,,100,,2,,0,0xFFFFFFFF,7,2,256,,0,1,395,{ bonus2 bResEff, Eff_Freeze, 3000; },{},{}
 5391,Toast_C,Toast,4,20,,0,,0,,0,0xFFFFFFFF,7,2,1,,0,0,188,{ bonus bMaxHP,100; bonus2 bAddMonsterDropItem,617,10; },{},{}
-5392,Louyang_Cap,Louyang NewYear Hat,4,20,,300,,3,,1,0xFFFFFFFF,7,2,256,,0,1,396,{ bonus bLuk,2; },{},{}
+5392,Louyang_Cap,Luoyang NewYear Hat,4,20,,300,,3,,1,0xFFFFFFFF,7,2,256,,0,1,396,{ bonus bLuk,2; },{},{}
 5393,Valentine_Hat,Love Valentine's Hat,4,20,,200,,2,,0,0xFFFFFFFF,7,2,256,,0,0,397,{ bonus bMaxSPrate, 7; bonus bMaxHPrate, 7; },{},{}
 5394,Bubblegum_Lower,Bubblegum,4,0,,0,,0,,0,0xFFFFFFFF,7,2,1,,0,0,0,{},{},{}
 5395,Tiraya_Bonnet,Striped Hat,4,20,,500,,2,,1,0xFFFFFFFF,7,2,256,,50,1,398,{ bonus bMaxHP,100+(getrefine()*20); bonus bLuk,3; },{},{}
@@ -3968,11 +3968,11 @@
 7529,Stolen_Sandals,Stolen Sandal,3,0,,0,,,,,,,,,,,,,{},{},{}
 7530,Travel_Brochure_01,Travel Brochure [Amatsu],3,0,,0,,,,,,,,,,,,,{},{},{}
 7531,Travel_Brochure_02,Travel Brochure [Kunlun],3,0,,0,,,,,,,,,,,,,{},{},{}
-7532,Travel_Brochure_03,Travel Brochure [Louyang],3,0,,0,,,,,,,,,,,,,{},{},{}
+7532,Travel_Brochure_03,Travel Brochure [Luoyang],3,0,,0,,,,,,,,,,,,,{},{},{}
 7533,Travel_Brochure_04,Travel Brochure [Ayothaya],3,0,,0,,,,,,,,,,,,,{},{},{}
 7534,Photo_Album_01,Amatsu Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
 7535,Photo_Album_02,Kunlun Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
-7536,Photo_Album_03,Louyang Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
+7536,Photo_Album_03,Luoyang Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
 7537,Photo_Album_04,Ayothaya Completed Photo Album,3,0,,0,,,,,,,,,,,,,{},{},{}
 7538,Sifted_Sand,Sand for Work,3,0,,0,,,,,,,,,,,,,{},{},{}
 7539,Poring_Coin,Poring Coin,3,0,,0,,,,,,,,,,,,,{},{},{}

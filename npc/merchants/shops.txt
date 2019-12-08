@@ -186,7 +186,7 @@ lhz_in03,258,101,3	shop	Arrow Merchant#lhz	855,1750:-1,1770:-1,1752:-1,1751:-1
 lhz_in03,249,24,4	shop	Merchant#lhz	855,911:-1,910:-1,912:-1,528:-1
 
 //=======================================================
-// Louyang
+// Luoyang
 //=======================================================
 lou_in02,121,182,5	shop	Armor Dealer#lou	818,2211:-1,2401:-1,2403:-1,2501:-1,2503:-1,2101:-1,2103:-1,2305:-1,2321:-1,2332:-1,2328:-1,2627:-1
 lou_in02,130,182,5	shop	Weapon Dealer#lou	822,1207:-1,1216:-1,1107:-1,1122:-1,1116:-1,1154:-1,1407:-1,1457:-1,1354:-1,1519:-1
@@ -315,14 +315,14 @@ niflheim,209,180,5	shop	Chef Assistant#nif	83,581:-1
 
 //===== Additional Comments(old): ================================= 
 //= swapped shop titles in GONRYUN, thanks to Kashy
-//= 1.3a Fixed Louyang map name. Added additional shops in Juno. [kobra_k88]
+//= 1.3a Fixed Luoyang map name. Added additional shops in Juno. [kobra_k88]
 //= 1.4 Added Niflheim Shops
 //= 1.5 New Payon Locations [Darkchild]
 //=     Moved shops in Umbala.txt here. Commented out the duplicate ones.[kobra_k88]
 //= 1.6 Removed GRAPE ID 514 from shops (caused exploits)
 //= 1.7 Removed juices from custom amatsu shops (it's a quest item + levelup exploit)
 //= 1.8 Corrected Niflheim Shops and Morocc Jewel Merchant [celest]
-//= 1.9 Updated Louyang shops thanks to MasterOfMuppets
+//= 1.9 Updated Luoyang shops thanks to MasterOfMuppets
 //= 1.10 Lutie Tools coords [Yor]
 //= 1.11 Added Belts to Prontera/Aldebaran shops, thanks to reddozen [Lupus]
 //= 1.12 official Ayothaya Shops, thanks to MasterOfMuppets [Lupus]

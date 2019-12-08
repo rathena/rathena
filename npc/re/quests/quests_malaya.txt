@@ -9017,7 +9017,7 @@ ma_fild01,162,235,6	script	Tourist#pin05	815,{
 	mes "They say the Pintados Festival will only be held for one week.";
 	next;
 	mes "[Tourist]";
-	mes "I came from Louyang without knowing about the festival. Must be my lucky day.";
+	mes "I came from Luoyang without knowing about the festival. Must be my lucky day.";
 	close;
 OnInit:
 	if (!$malaya_pintados_00)

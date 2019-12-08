@@ -129,11 +129,11 @@
 // "2006 USA 3rd Anniversary" related items
 7530,507,100	// Travel Brochure [Amatsu]
 7531,507,100	// Travel Brochure [Kunlun]
-7532,507,100	// Travel Brochure [Louyang]
+7532,507,100	// Travel Brochure [Luoyang]
 7533,507,100	// Travel Brochure [Ayothaya]
 7534,507,100	// Amatsu Completed Photo Album
 7535,507,100	// Kunlun Completed Photo Album
-7536,507,100	// Louyang Completed Photo Album
+7536,507,100	// Luoyang Completed Photo Album
 7537,507,100	// Ayothaya Completed Photo Album
 
 // Poring Coin items
