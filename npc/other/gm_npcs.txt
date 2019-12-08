@@ -142,7 +142,7 @@ List of GM Management NPCs (incomplete)
 
 [ Other ]
 -------- Marriage --------
-- The King of Midgart
+- The King of Rune-Midgarts
 - Divorce Staff
 - Remarry Staff
 ------ Izlude Arena ------

@@ -849,7 +849,7 @@ OnTimer180000:
 	end;
 }
 
-prt_church,28,178,4	script	The King of Midgart	108,{
+prt_church,28,178,4	script	The King of Rune-Midgarts	108,{
 	callfunc "F_GM_NPC";
 	mes "[Vomars]";
 	mes "Wh-who are you?";

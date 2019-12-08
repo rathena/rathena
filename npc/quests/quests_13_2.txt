@@ -3817,7 +3817,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	935,{
 		mes "And...don't you think the reason man like me is here is that there's a predictable cause?";
 		next;
 		mes "[Linguist Dictionary]";
-		mes "From what I heard, you've done much for the Midgarts Alliance Research Group.";
+		mes "From what I heard, you've done much for the Midgard Alliance Research Group.";
 		mes "And while you were helping us, I believe you've seen and visited many places here in the other world.";
 		next;
 		mes "[Linguist Dictionary]";
@@ -4036,7 +4036,7 @@ mid_campin,168,82,3	script	Arunafeltz Linguist#1	935,{
 			mes "According to the Expedition Camp's investigation, there is a different ethnic race that is similar to fairy's, along with a different ethnic race that is similar to giants.";
 			next;
 			mes "[Linguist Dictionary]";
-			mes "It is said that they are using a language that cannot be understood by people from Midgart... ...Although we all say this, nobody is able to remember their conversation / words.";
+			mes "It is said that they are using a language that cannot be understood by people from Midgard... ...Although we all say this, nobody is able to remember their conversation / words.";
 			next;
 			mes "[Linguist Dictionary]";
 			mes "A New language!!! As a linguist, I cannot sit here. But outside, there are many different monsters, as a scholar, it is too dangerous to go outside.";
@@ -4348,7 +4348,7 @@ mid_camp,147,256,3	script	Rune-Midgarts Magician#1	735,{
 		mes "Of course it is a piece of cake to turn data into magical power and put'em into a gem...Most important thing is, I don't know if there's a jewl that has enough storage space to store that much of data...";
 		next;
 		mes "[Magician Whisper]";
-		mes "I heard that cold side of a field outside of the Expedition Camp, ^0000ff Mysterious Ore that can't be found in the Midgart.";
+		mes "I heard that cold side of a field outside of the Expedition Camp, ^0000ff Mysterious Ore that can't be found in the Midgard.";
 		next;
 		mes "[Magician Whisper]";
 		mes "Only if we could find that ore, it would make this work much easier... What do you think about that? Do you think you could go and find one for me?";

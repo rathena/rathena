@@ -1308,7 +1308,7 @@ morocc,159,113,3	script	Chief Balrog	752,{
 			mes "Morocc Village is completely devastated, and Satan Morocc has now claimed possession of the Sograt Desert.";
 			next;
 			mes "[Chief Balrog]";
-			mes "I've no doubt that if left unchecked, Satan Morocc will take over the entire Midgart Continent. We've got to stop him right now before the entire world suffers.";
+			mes "I've no doubt that if left unchecked, Satan Morocc will take over the entire Midgard Continent. We've got to stop him right now before the entire world suffers.";
 			next;
 			mes "[Chief Balrog]";
 			mes "That's why the kingdom has ordered us elite soldiers to form the Continental Guard, and recruit reputable adventurers around the world so that we can make a united stand against Satan Morocc.";
