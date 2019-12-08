@@ -777,7 +777,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 		mes "[Kafra Employee]";
 		mes "Hello.";
 		mes "I've been dispatched by the Kafra Head Office to help trainees.";
-		mes "The Kafra Corporation is the world's largest company with a long and distinguished history on the Rune-Midgard continent.";
+		mes "The Kafra Corporation is the world's largest company with a long and distinguished history on the Midgard continent.";
 		mes "It's important for you adventurers to be close with us.";
 		next;
 		mes "[Kafra Employee]";
@@ -872,7 +872,7 @@ new_5-2,33,172,4	duplicate(NvChocolat)	Chocolat#nv5	96
 			case 4:
 				mes "[Kafra Employee]";
 				mes "The Port City, Alberta.";
-				mes "Main city for all trades on the Rune-Midgard continent.";
+				mes "Main city for all trades on the Midgard continent.";
 				mes "If you want to experience other civilizations, you have to visit Alberta first.";
 				callfunc "F_NvErase";
 				close2;
@@ -1020,7 +1020,7 @@ new_5-2,30,176,4	duplicate(NvKafra)	Kafra Employee#nv5	117
 	} else if (job_novice_q == 9) {
 		mes "[Cool Event Corp. Staff]";
 		mes "Hello.";
-		mes "We are working hard to provide events on Rune-Midgard similar to the Kafra services.";
+		mes "We are working hard to provide events on Midgard similar to the Kafra services.";
 		next;
 		mes "[Cool Event Corp. Staff]";
 		mes "Our staff is here to support you with [storage], [save] and [teleport service].";
@@ -1807,7 +1807,7 @@ new_5-3,105,41,3	duplicate(NvThief)	Thief Guide#nv5	118
 			if (Zeny >= 300) {
 				mes "[Merchant Guildsman]";
 				mes "Excellent!";
-				mes "Zeny is the currency of Rune-Midgard.";
+				mes "Zeny is the currency of Midgard.";
 				mes "You can make zeny by selling loot as well as through making smart business decisions.";
 				next;
 				mes "[Merchant Guildsman]";
@@ -1825,7 +1825,7 @@ new_5-3,105,41,3	duplicate(NvThief)	Thief Guide#nv5	118
 				close;
 			} else {
 				mes "[Merchant Guildsman]";
-				mes "Zeny is the currency of Rune-Midgard.";
+				mes "Zeny is the currency of Midgard.";
 				mes "You can make zeny by selling loot as well as through making smart business decisions.";
 				next;
 				mes "[Merchant Guildsman]";
@@ -2179,7 +2179,7 @@ new_5-3,121,41,3	duplicate(NvBruce)	Bruce#nv5	57
 	if (BaseLevel < 10) {
 		mes "[Eden Group Officer]";
 		mes "Hello, I am a representative of the Eden Group.";
-		mes "We are here to assist adventurers in Rune Midgard.";
+		mes "We are here to assist adventurers in Midgard.";
 		next;
 		mes "[Eden Group Officer]";
 		mes "We have agents all over the world waiting to send you to our secret headquarters where you can get some useful quests.";
@@ -2230,7 +2230,7 @@ new_5-3,121,41,3	duplicate(NvBruce)	Bruce#nv5	57
 			callsub S_Warp,"alberta",115,57,116,58;
 		case 5:
 			mes "[Eden Group Officer]";
-			mes "Geffen, is known as the Magical City of Rune Midgard.";
+			mes "Geffen, is known as the Magical City of Rune-Midgarts.";
 			mes "I will send you near the Fountains.";
 			mes "Goddess Freya bless you.";
 			callsub S_Warp,"geffen",118,36,128,66;
@@ -2241,7 +2241,7 @@ new_5-3,121,41,3	duplicate(NvBruce)	Bruce#nv5	57
 		}
 	case 2:
 		mes "[Eden Group Officer]";
-		mes "Prontera is the main capital of the Rune-Midgard Kingdom. Here you will find Merchants selling their items and is a favorite gathering point of adventurers.";
+		mes "Prontera is the main capital of the Rune-Midgarts Kingdom. Here you will find Merchants selling their items and is a favorite gathering point of adventurers.";
 		next;
 		mes "[Eden Group Officer]";
 		mes "The Acolyte Guild is here at the Prontera Church located to the northwest. The Swordman Guild can be found at Izlude, a town just southeast of Prontera.";
@@ -2253,10 +2253,10 @@ new_5-3,121,41,3	duplicate(NvBruce)	Bruce#nv5	57
 		mes "Payon is where the Archer Guild has made it's home. You can also find the Kafra Shop Employees selling their Item Mall items near the center of this city.";
 		next;
 		mes "[Eden Group Officer]";
-		mes "Alberta is the trading hub of Rune Midgard. The Merchant Guild is located here and the docks have ships that will take you to different island cities.";
+		mes "Alberta is the trading hub of Rune-Midgarts. The Merchant Guild is located here and the docks have ships that will take you to different island cities.";
 		next;
 		mes "[Eden Group Officer]";
-		mes "Geffen is known as the magical city of Rune Midgard. The Mage Guild is located here and research for new magic is always being conducted at their headquarters.";
+		mes "Geffen is known as the magical city of Rune-Midgarts. The Mage Guild is located here and research for new magic is always being conducted at their headquarters.";
 		next;
 		mes "[Eden Group Officer]";
 		mes "If you wish to be sent directly to the Job Guilds, then speak to the Job Guides and tell them that you want to change your job.";

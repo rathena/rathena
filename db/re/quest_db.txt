@@ -461,7 +461,7 @@
 3083,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Kids in Veins - Mr. Lockenlock's key"
 3085,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Call from the commander"
 3086,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Commander's Duty"
-3087,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to Rune Midgard"
+3087,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to Midgard"
 3088,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to the continent - Accident!"
 3089,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to the continent - How to restore"
 3090,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Report to the continent - Location of reports"

@@ -36,7 +36,7 @@ morocc_in,116,101,3	script	Old Scholar Tyus#hellion	735,3,3,{
 		mes "Greetings...";
 		mes "My name is Sir Chilias'Tyus.";
 		mes "I've lived a long time here in";
-		mes "Rune-Midgard and I've come";
+		mes "Rune-Midgarts and I've come";
 		mes "to see and know a lot of things. Power, jealously, hardship...";
 		next;
 		mes "[" + strcharinfo(0) + "]";

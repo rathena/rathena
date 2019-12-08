@@ -48,7 +48,7 @@ OnTouch_:
 
 morocc,202,244,0	script	Volunteer - Morocc#01	745,{
 	mes "[Morocc Volunteer]";
-	mes "After that terrible incident wiped out the entire Morocc, Rune-Midgard Kingdom has gathered us volunteers to help restorations.";
+	mes "After that terrible incident wiped out the entire Morocc, Rune-Midgarts Kingdom has gathered us volunteers to help restorations.";
 	next;
 	mes "[Morocc Volunteer]";
 	mes "As important as it seems, everyone's being careful but there are always some that really don't realize the situation, don't you think?";
@@ -61,7 +61,7 @@ morocc,88,133,3	script	Volunteer - Morocc#02	748,{
 	next;
 	mes "[Morocc Volunteer]";
 	mes "This work's like never-ending, no matter how hard we try!!!";
-	mes "People of Rune-Midgard!! Please lend us a helping hand!!";
+	mes "People of Rune-Midgarts!! Please lend us a helping hand!!";
 	next;
 	mes "[Morocc Volunteer]";
 	mes "Haw.... Whew... Ugh...";
@@ -83,7 +83,7 @@ morocc,202,110,0	script	Volunteer - Morocc#03	730,{
 morocc,268,287,3	script	Volunteer - Morocc#04	727,{
 	mes "[Morocc Volunteer]";
 	mes "As bad as it seems, we can't even ask for more support.";
-	mes "This sure must be the worst thing ever happened in Rune-Midgard's history.";
+	mes "This sure must be the worst thing ever happened in Rune-Midgarts' history.";
 	next;
 	mes "[Morocc Volunteer]";
 	mes "I wish I knew how bad the damage is, but we can't even estimate it. It's like shovelling sand against the tide..";
@@ -296,7 +296,7 @@ moc_ruins,118,82,1	script	Little Boy#moc	706,{
 
 moc_ruins,121,116,4	script	Picky Lady#moc	66,{
 	mes "[Syvia]";
-	mes "The fields of Rune-Midgard are infested with wild and dangerous monsters..But, you've got to admit a bunch of them are soooo cute!";
+	mes "The fields of Rune-Midgarts are infested with wild and dangerous monsters..But, you've got to admit a bunch of them are soooo cute!";
 	mes "You know, like how Spore sticks out its tongue after you kill it..";
 	next;
 	mes "[Syvia]";
@@ -593,7 +593,7 @@ moc_fild16,199,212,4	script	 Uncle Assassin#moc	55,{
 		mes "[Hashisid]";
 		mes "Our true directive is to assassinate evil creatures,";
 		mes "and to use our stealth to gather intelligence";
-		mes "for the good of all Rune-Midgard.";
+		mes "for the good of all Rune-Midgarts.";
 		close;
 	case 2:
 		mes "[Hashisid]";

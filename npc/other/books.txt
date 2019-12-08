@@ -1502,7 +1502,7 @@ prt_in,172,96,4	script	Monster Encyclopedia#4pr	HIDDEN_NPC,{
 				mes "5. Doppelganger";
 				mes "A ghostly double of a Swordman.";
 				mes "Perhaps the coolest and baddest";
-				mes "monster in all of Rune-Midgard.";
+				mes "monster in all of Rune-Midgarts.";
 				mes "^0099FFItem Drops^000000: Spiky Band, Blue";
 				mes "Potion, Cursed Ruby, Ruby";
 				next;

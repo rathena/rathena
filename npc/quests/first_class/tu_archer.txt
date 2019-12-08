@@ -1344,7 +1344,7 @@ pay_arche,84,139,3	script	Seisner	4_F_JOB_HUNTER,{
 				mes "he can't stop its flight or change his target. That's why Archers need to be level headed and really careful in battle.";
 				next;
 				mes "[Seisner]";
-				mes "Someday, I'd like to become a great Archer and use my skills for the good of Rune-Midgard.";
+				mes "Someday, I'd like to become a great Archer and use my skills for the good of Rune-Midgarts.";
 				close;
 			}
 		}

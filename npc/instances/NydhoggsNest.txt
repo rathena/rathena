@@ -540,7 +540,7 @@ prt_in,171,94,3	script	Assistant Naomi#edq	893,3,3,{
 			next;
 			mes "The scientists of Schwarzwald created a combination metal, using fragments of metals found in the dimensional gorge.";
 			next;
-			mes "The Schwarzwald Republic requested approval to find the source of the new metal, and since Rune-Midgart couldn't complete the test themselves, they finally accepted.";
+			mes "The Schwarzwald Republic requested approval to find the source of the new metal, and since Rune-Midgarts couldn't complete the test themselves, they finally accepted.";
 			next;
 			mes "They associated together to gather volunteers. The Assassin Guild was the first to volunteer.";
 			next;

@@ -137,7 +137,7 @@ moc_para01,48,175,3	script	86-90 Mission Board	857,{
 		}
 	case 4:
 		mes "[86-90 Mission Board]";
-		mes "Here is a list of random requests to hunt monsters in other regions of Rune Midgard.";
+		mes "Here is a list of random requests to hunt monsters in other regions of Midgard.";
 		mes "Which monster will you hunt or have you finished hunting?";
 		next;
 		switch(select("^0000FFGround Petite^000000:^0000FFRafflesia^000000:^0000FFVenomous^000000:^0000FFPitman^000000:^0000FFYellow Novus^000000")) {

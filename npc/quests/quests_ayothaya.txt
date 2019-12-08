@@ -1157,7 +1157,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		mes "[Tham]";
 		emotion ET_SURPRISE;
 		mes "Oh, aren't you";
-		mes "from Rune-Midgard?";
+		mes "from Midgard?";
 		mes "Hello there~";
 		next;
 		mes "[Tham]";
@@ -1181,7 +1181,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		if (.@randayo < 5) {
 			mes "[Tham]";
 			mes "Oh hello~";
-			mes "I can tell from your clothes that you must be from Rune-Midgard.";
+			mes "I can tell from your clothes that you must be from Midgard.";
 			next;
 			mes "[Tham]";
 			mes "Recently, it seems that";
@@ -1219,7 +1219,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		} else {
 			mes "[Tham]";
 			mes "Oh hello~";
-			mes "I can tell from your clothes that you must be from Rune-Midgard.";
+			mes "I can tell from your clothes that you must be from Midgard.";
 			next;
 			mes "[Tham]";
 			mes "I hope that you enjoy your stay here, and that you come visit Ayothaya as often as you can~";
@@ -1849,7 +1849,7 @@ ayo_fild01,129,197,0	script	Puraim#thai1	842,{
 			mes "have a holy spirit. Still, be careful. You might not want to go to the 2nd underground level of the ruins.";
 			next;
 			mes "[Puraim]";
-			mes "As you Rune-Midgardians";
+			mes "As you Midgardians";
 			mes "say, 'curiousity killed the cat.'";
 			mes "Anyway, go for it!";
 			next;

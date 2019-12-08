@@ -2608,7 +2608,7 @@ moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 					mes "Ah, this place should be good!";
 					mes "Do you know where Glast Heim is?";
 					mes "If it wasn't for that terrible accident, Glast Heim would still be";
-					mes "the capital of Rune Midgard, not Prontera.";
+					mes "the capital of Rune-Midgarts, not Prontera.";
 					next;
 					mes "[Instructor Ur]";
 					mes "Anyways, that ancient castle is now full of undead monsters .";
@@ -2785,7 +2785,7 @@ moc_para01,23,35,5	script	Instructor Ur#2nd01	4_M_KNIGHT_BLACK,{
 	else if (para_2nd01 < 20)
 		callsub S_Direction,"Ice Dungeon";
 	else if (para_2nd01 < 29) {
-		mes "You have to travel very far to get to the ^4d4dffRune Midgard Expedition Camp^000000!";
+		mes "You have to travel very far to get to the ^4d4dffMidgard Expedition Camp^000000!";
 		mes "If you want to stay there then earn your keep by doing missions. Got it?";
 	}
 	close;

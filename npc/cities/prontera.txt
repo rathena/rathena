@@ -92,7 +92,7 @@ prontera,149,202,2	script	YuNa#pront	700,{
 	mes "God of war!";
 	next;
 	mes "[YuNa]";
-	mes "Here, in Rune-Midgard, we serve Odin, the fearsome god who sacrificed one of his eyes in order to acquire wisdom.";
+	mes "Here, in Rune-Midgarts, we serve Odin, the fearsome god who sacrificed one of his eyes in order to acquire wisdom.";
 	next;
 	mes "[YuNa]";
 	mes "The statue you see behind of me is a sculpture of mighty Odin. But, it's a shame because it's such a bad likeness.";

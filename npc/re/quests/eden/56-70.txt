@@ -165,7 +165,7 @@ L_Details:
 		next;
 		mes "Alligators have gone wild these days, they attack women and drunken people who hang out near the beach.";
 		next;
-		mes "This is a very shameful situation for us, the most wonderful vacation spot in Rune-Midgard.";
+		mes "This is a very shameful situation for us, the most wonderful vacation spot in Rune-Midgarts.";
 		next;
 		mes "So, it would be very helpful if you hunt 30 Alligators to clean out this situation.";
 		next;

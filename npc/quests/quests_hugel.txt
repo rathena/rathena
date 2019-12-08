@@ -8155,7 +8155,7 @@ hu_in01,14,11,4	script	Laura	70,{
 		mes "we have absolutely nothing to";
 		mes "give you. But you'd be doing";
 		mes "a great service your country,";
-		mes "the Rune-Midgart's Kingdom.";
+		mes "the Rune-Midgarts' Kingdom.";
 		next;
 		cutin "hu_laura04.bmp",2;
 		mes "[Laura]";
@@ -8260,7 +8260,7 @@ hu_in01,14,11,4	script	Laura	70,{
 			mes "Sorry, let me introduce";
 			mes "myself. I'm Laura Laurence,";
 			mes "the leader of the Odin Shrine";
-			mes "expedition for the Rune Midgarts Kingdom. Ashe Milton is my";
+			mes "expedition for the Rune-Midgarts Kingdom. Ashe Milton is my";
 			mes "assistant for this excavation.";
 			next;
 			emotion ET_SMILE, getnpcid(0, "Ashe");

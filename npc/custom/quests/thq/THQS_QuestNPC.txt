@@ -245,7 +245,7 @@ N_ProntCulvert:
 N_CoalMine:
 	mes "^FF0000Trouble at the Coal Mine^000000";
 	mes "^FF0000************************^000000";
-	mes "The fun...err...trouble never stops in Rune Midgard.";
+	mes "The fun...err...trouble never stops in Rune-Midgarts.";
 	mes " ";
 	mes "Recently there was an accident at the coal mines. There was a huge chasm that released some undead Evil Druids.";
 	next;

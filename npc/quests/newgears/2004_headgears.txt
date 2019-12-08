@@ -522,7 +522,7 @@ comodo,237,217,5	script	Meruntei#1	732,{
 		mes "Oh! You brought all of them! Now I shall make you an Indian Headband of your very own.";
 		next;
 		mes "[Meruntei]";
-		mes "Take this! The items you have brought will be very useful for continuing my work in spreading headbands around Rune-Midgard.";
+		mes "Take this! The items you have brought will be very useful for continuing my work in spreading headbands around Midgard.";
 		delitem 5010,1; //Indian_Hair_Piece
 		delitem 5049,1; //Stripe_Band
 		delitem 7101,10; //Peco_Wing_Feather
@@ -550,7 +550,7 @@ comodo,237,217,5	script	Meruntei#1	732,{
 	mes "and ^FF000010,000 zeny!";
 	next;
 	mes "[Meruntei]";
-	mes "I will be using the items you've given me so I can continue my work in spreading Indian Headbands, and paying homage to the tribes of Rune-Midgard.";
+	mes "I will be using the items you've given me so I can continue my work in spreading Indian Headbands, and paying homage to the tribes of Midgard.";
 	next;
 	mes "[Meruntei]";
 	mes "^FF0000For your information, if you bring me any item that has a card inserted, or has been upgraded, the additional abilities of the item will disappear after I have used them. So please keep that in mind.^000000";

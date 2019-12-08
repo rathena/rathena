@@ -846,7 +846,7 @@ morocc_in,140,102,4	script	Student#mer	86,{
 	}
 	else {
 		mes "[Dyer's Student]";
-		mes "Mr. Java Dullihan is the one and only, the best dye maker on the Rune-Midgard continent.";
+		mes "Mr. Java Dullihan is the one and only, the best dye maker on the Midgard continent.";
 		next;
 		mes "[Dyer's Student]";
 		mes "Aaaand I'm proud to say that I'm his student! Someday, I'll be able to make really beautiful dyes too!";

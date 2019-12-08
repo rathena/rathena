@@ -41,7 +41,7 @@
 		mes "Hoo! Hahh! Hoo! Hahh!";
 		mes "No man alive can resist the";
 		mes "call of this beautiful land.";
-		mes "Rune-Midgardians are";
+		mes "Midgardians are";
 		mes "always welcome!";
 		close;
 	case 2:
@@ -126,7 +126,7 @@ ayothaya,171,152,5	script	Girl#Lalitha	838,{
 		next;
 		mes "[Lalitha]";
 		mes "You must be";
-		mes "from Rune-Midgard.";
+		mes "from Midgard.";
 		mes "After all, I know every single person living in this village.";
 		mes "Heh heh~";
 		next;
@@ -239,7 +239,7 @@ ayothaya,197,189,5	script	Young Man#1ayothaya	841,{
 	next;
 	mes "[Kwan]";
 	mes "You must be";
-	mes "from Rune-Midgard, huh?";
+	mes "from Midgard, huh?";
 	mes "I've seen a lot of tourists";
 	mes "coming from there recently.";
 	next;

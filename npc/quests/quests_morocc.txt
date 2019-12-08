@@ -2136,7 +2136,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				next;
 				emotion ET_HUK;
 				mes "[Book-Touching Man]";
-				mes "What? Don't you know Mammi, one of the three greatest Rune-Midgart's idols?";
+				mes "What? Don't you know Mammi, one of the three greatest Rune-Midgarts' idols?";
 				next;
 				emotion ET_OHNO;
 				mes "[Book-Touching Man]";
@@ -2154,7 +2154,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				emotion ET_COOL;
 				mes "[Book-Touching Man]";
 				mes "That means... She's waiting for someone like me. Hehehe!";
-				mes "You see, every book in Rune-Midgart's Library has the name Benjamin written on them... That's me!";
+				mes "You see, every book in Rune-Midgarts' Library has the name Benjamin written on them... That's me!";
 				next;
 				mes "^660000This Benjamin seems to be a huge fan of a female celebrity called Mammi. He didn't shut his mouth and worshipped her beauty for a while, but then he suddenly stopped and looked depressed.^000000";
 				next;
@@ -2191,7 +2191,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 				next;
 				mes "[Benjamin]";
 				mes "You look bored. You must be waiting for someone to give you something to do!";
-				mes "Help me connect with Mammi. Who knows? I may let you have a conversation with Mammi, whom everyone in Rune-Midgart adores.";
+				mes "Help me connect with Mammi. Who knows? I may let you have a conversation with Mammi, whom everyone in Rune-Midgarts adores.";
 				next;
 				mes "^660000Didn't you just call me an adventurer that runs around on meaningless errands for others...?^000000";
 				next;
@@ -2277,7 +2277,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 			mes "..................";
 			next;
 			mes "[Benjamin]";
-			mes "Let me think. If this book is not yet available in Prontera Library, it must mean that not many people of Rune-Midgart have read this book.";
+			mes "Let me think. If this book is not yet available in Prontera Library, it must mean that not many people of Rune-Midgarts have read this book.";
 			next;
 			mes "[Benjamin]";
 			mes "Grrrr... Mammi! Here I am, following your noble tastes to read such a rare book! Mammi...!";
@@ -2415,7 +2415,7 @@ moc_ruins,137,70,3	script	Book-Touching Man#garas	48,{
 prt_in,179,92,3	script	Library Curator#garas	57,{
 	if (barmunt_crow == 0) {
 		mes "[Curator Guys]";
-		mes "Our library's Monster Encyclopedia has every monster in the Rune-Midgart Kingdom categorized by dungeon, to help our readers find them easily.";
+		mes "Our library's Monster Encyclopedia has every monster in the Rune-Midgarts Kingdom categorized by dungeon, to help our readers find them easily.";
 		mes "We also have many essential books for adventurers. Why don't you take a look?";
 		next;
 		mes "[Curator Guys]";
@@ -2425,7 +2425,7 @@ prt_in,179,92,3	script	Library Curator#garas	57,{
 	}
 	else if (barmunt_crow == 1) {
 		mes "[Curator Guys]";
-		mes "Our library's Monster Encyclopedia has every monster in the Rune-Midgart Kingdom categorized by dungeon, to help our readers find them easily.";
+		mes "Our library's Monster Encyclopedia has every monster in the Rune-Midgarts Kingdom categorized by dungeon, to help our readers find them easily.";
 		mes "We also have many essential books for adventurers. Why don't you take a look?";
 		next;
 		switch(select("Search books.:Look around the library.")) {
@@ -2527,13 +2527,13 @@ prt_in,179,92,3	script	Library Curator#garas	57,{
 	}
 	else if (barmunt_crow == 2) {
 		mes "[Curator Guys]";
-		mes "^3131FFThe Crow of the Fate^000000 was sold out even before we got a hold of one copy. You won't be able to find the book anywhere in the Rune-Midgart Kingdom.";
+		mes "^3131FFThe Crow of the Fate^000000 was sold out even before we got a hold of one copy. You won't be able to find the book anywhere in the Rune-Midgarts Kingdom.";
 		mes "If you really want to read the book, you should try Juno Library.";
 		close;
 	}
 	else {
 		mes "[Curator Guys]";
-		mes "Our library's Monster Encyclopedia has every monster in the Rune-Midgart Kingdom, categorized by dungeon to help the readers find them easily.";
+		mes "Our library's Monster Encyclopedia has every monster in the Rune-Midgarts Kingdom, categorized by dungeon to help the readers find them easily.";
 		mes "We also have many essential books for adventurers. Why don't you take a look?";
 		next;
 		mes "[Curator Guys]";
@@ -3437,7 +3437,7 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 		mes "Lady Mammi!";
 		emotion ET_BIGTHROB;
 		next;
-		mes "^660000Yes, it was the picture book of Mammi, an idol whom Benjamin of Morocc insists to be one of the three greatest idols in the Rune-Midgart Kingdom. That must be why Oliver is squealing in delight.^000000";
+		mes "^660000Yes, it was the picture book of Mammi, an idol whom Benjamin of Morocc insists to be one of the three greatest idols in the Rune-Midgarts Kingdom. That must be why Oliver is squealing in delight.^000000";
 		emotion ET_THINK, playerattached();
 		next;
 		mes "["+ strcharinfo(0) +"]";
@@ -3483,7 +3483,7 @@ yuno_in04,167,120,3	script	Worn-out Book#garas	111,{
 		mes "It's shocking to see you unimpressed by the beauty of Lady Mammi,";
 		mes "but it is more shocking that God has given such a rare picture book of her";
 		mes "to someone like you who does not appreciate its value!";
-		mes "I flew over to the Rune-Midgart Kingdom on the earliest airship";
+		mes "I flew over to the Rune-Midgarts Kingdom on the earliest airship";
 		mes "to get this book on the day it was released, but the books were sold out. The person right in front of me got the last one!";
 		next;
 		mes "["+ strcharinfo(0) +"]";

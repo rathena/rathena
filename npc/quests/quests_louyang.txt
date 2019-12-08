@@ -1843,7 +1843,7 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 	}
 	else if (ch_par < 9) {
 		mes "[Jin Chiyuan]";
-		mes "Hm? A Rune-Midgardian?";
+		mes "Hm? A Midgardian?";
 		mes "Now, how may I help you?";
 		next;
 		if (select("I need a document.:I just dropped by.") == 1) {
@@ -1960,7 +1960,7 @@ lou_in02,210,47,0	script	City Hall Officer#lou	825,{
 		mes "[Jin Chiyuan]";
 		mes "Hahahaha...";
 		mes "Take care,";
-		mes "Rune-Midgardian.";
+		mes "Midgardian.";
 	}
 	else if (ch_par == 15) {
 		mes "[Jin Chiyuan]";
@@ -2668,7 +2668,7 @@ lou_in02,123,39,4	script	Poison King#lou	824,{
 				mes "[Nagash Arses]";
 				mes "Are you asking me";
 				mes "about my hometown...?";
-				mes "As a Rune-Midgardian,";
+				mes "As a Midgardian,";
 				mes "I'm sure you've at least";
 				mes "heard of Morocc...";
 				next;
@@ -3930,7 +3930,7 @@ lou_in02,253,45,0	script	Employee#poison	822,{
 		mes "I want you to put this poison some place where Lord Bai Long might stay. But be careful, the castle has a lot of security.";
 		next;
 		mes "[Song Zhi Du]";
-		mes "Still, you're an adventurer from Rune-Midgard. You've probably had challenges like this before, so I'm sure you'll find a way.";
+		mes "Still, you're an adventurer from Midgard. You've probably had challenges like this before, so I'm sure you'll find a way.";
 		next;
 		mes "[Song Zhi Du]";
 		mes "Anyway, I'm sure my master";
@@ -4301,7 +4301,7 @@ lou_in01,114,163,0	script	Trap#lou_in4	-1,6,1,{
 OnTouch_:
 	if (ch_poison == 12 || ch_poison == 16) {
 		mes "[Soldier]";
-		mes "Hold it right there, Rune-Midgardian!";
+		mes "Hold it right there, Midgardian!";
 		next;
 		mes "^3355FFYou run as fast as you can before the soldiers can catch you.^000000";
 		close2;
@@ -4422,7 +4422,7 @@ lou_in01,99,158,4	script	Lord#bailong	821,{
 		mes "[Lord Bai Long]";
 		mes "I hope you enjoy";
 		mes "your stay here,";
-		mes "Rune-Midgardian!";
+		mes "Midgardian!";
 		next;
 		if (ch_poison == 18) {
 			mes "^3355FFYou give Nagash Arses' Journal";
@@ -4742,7 +4742,7 @@ lou_in02,77,37,7	script	Hermit	824,{
 				mes "Without him, we cannot continue the gunpowder research, or produce the gunpowder we'll need for our movement. We must contact him so that he may make gunpowder for us.";
 				next;
 				mes "[Sun Mao]";
-				mes "Unfortunately, many of us cannot contact him, as our identities are known to the officials. However, since you are new recruits, as well as Rune-Midgardians, they will not know how you are.";
+				mes "Unfortunately, many of us cannot contact him, as our identities are known to the officials. However, since you are new recruits, as well as Midgardians, they will not know how you are.";
 				next;
 				mes "[Sun Mao]";
 				mes "Your mission will be to deliver these chemicals to our comrade Hao Chenryu who is held captive by the government.";
@@ -4879,7 +4879,7 @@ lou_in01,43,147,3	script	Gunpowder Expert	750,{
 			close;
 		} else if (@partymember != 8) {
 			mes "[Hao Chenryu]";
-			mes "Mao told me that eight Rune-Midgardians";
+			mes "Mao told me that eight Midgardians";
 			mes "would be coming.";
 			mes "But what happened?";
 			mes "I'm confused...";
@@ -4961,7 +4961,7 @@ lou_in01,45,138,3	script	Soldier#1	825,{
 		next;
 		mes "[Soldier]";
 		mes "You're not allowed to bring any gunpowder out of here. Now go";
-		mes "and put it back, Rune-Midgardian! Move!";
+		mes "and put it back, Midgardian! Move!";
 		close;
 	}
 	mes "[Soldier]";

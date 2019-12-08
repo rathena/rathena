@@ -6633,7 +6633,7 @@ prontera,148,326,3	script	Chief Officer#edq	734,{
 			mes "That damned Z Gang seems";
 			mes "to be in the center of all the";
 			mes "crime that's happening in";
-			mes "Rune-Midgard. They caused";
+			mes "Rune-Midgarts. They caused";
 			mes "a riot in Geffen by spreading";
 			mes "rumors about ghosts...";
 			next;

@@ -1564,7 +1564,7 @@ Body:
     Score: 20
   - ID: 129008
     Group: "AG_ADVENTURE"
-    Name: "Rune Midgard Explorer"
+    Name: "Rune-Midgarts Explorer"
     Dependent:
       - Id: 129001
       - Id: 129002

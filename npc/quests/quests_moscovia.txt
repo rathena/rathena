@@ -301,7 +301,7 @@ moscovia,135,49,5	script	Mr. Ibanoff#npc	4_M_RUSBALD,{
 			next;
 			mes "[Mr. Ibanoff]";
 			mes "When I adventured around";
-			mes "Rune Midgarts, maybe it was";
+			mes "Rune-Midgarts, maybe it was";
 			mes "well before you were born.";
 			mes "Ah... I miss those days...";
 			next;
@@ -6353,7 +6353,7 @@ mosk_fild02,198,252,3	script	Sage#rus01	4_M_SAGE_C,{
 		next;
 		select("Show him a Poring Card");
 		mes "["+ strcharinfo(0) +"]";
-		mes "This is a card of one of the monsters that inhabit the Rune Midgard continent.";
+		mes "This is a card of one of the monsters that inhabit the Midgard continent.";
 		next;
 		if (!countitem(4001)) {
 			mes "[Sage]";
@@ -8418,7 +8418,7 @@ OnTouch_:
 		}
 	} else if (rhea_rus_hair > 2 && rhea_rus_hair < 7) {
 		mes "[Lusalka's Voice]";
-		mes "His name is 'Igor'.. He has gone to the capital of Rune Midgarts. Give him my golden earrings.";
+		mes "His name is 'Igor'.. He has gone to the capital of Rune-Midgarts. Give him my golden earrings.";
 		next;
 		mes "[Lusalka's Voice]";
 		mes "And please, tell him to stop suffering and to be happy. This is my request.";
@@ -8511,11 +8511,11 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "If so, you came here from another continent, not Moscovia...?";
 				next;
 				mes "["+ strcharinfo(0) +"]";
-				mes "I'm from Rune Midgarts.";
+				mes "I'm from Rune-Midgarts.";
 				next;
 				mes "[Lusalka]";
 				mes "...Rune... Midgarts...";
-				mes "A few days ago, my lover left for Rune Midgarts.. Can you find him for me? I want to talk with him...";
+				mes "A few days ago, my lover left for Rune-Midgarts.. Can you find him for me? I want to talk with him...";
 				next;
 				mes "[Lusalka]";
 				mes "...I don't know why but, I can't remember how I became Lusalka. When I woke up, I was lying down on the bottom of the river.";
@@ -8530,7 +8530,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "I suffered seeing him grieve, but wasn't able to meet him. Ordinary people are killed immediately when they see Lusalka's stare...";
 				next;
 				mes "[Lusalka]";
-				mes "I saw him coming to the marsh everyday and heard him mourning. And his assurance to go to Rune Midgarts.";
+				mes "I saw him coming to the marsh everyday and heard him mourning. And his assurance to go to Rune-Midgarts.";
 				next;
 				mes "[Lusalka]";
 				mes "Adventurer, can you find him for me? I can't leave this marsh. Please, find him for me?";
@@ -8548,11 +8548,11 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				mes "Where can I find him?";
 				next;
 				mes "[Lusalka]";
-				mes "The night when he left, he said that he would go to the capital of Rune Midgarts. I am not sure if he is still there...";
+				mes "The night when he left, he said that he would go to the capital of Rune-Midgarts. I am not sure if he is still there...";
 				next;
 				if(select("Ok, I will do it:I don't think I can do it...") == 2) {
 					mes "["+ strcharinfo(0) +"]";
-					mes "Rune Midgarts is large! I don't think I can do it.";
+					mes "Rune-Midgarts is large! I don't think I can do it.";
 					next;
 					mes "["+ strcharinfo(0) +"]";
 					mes "There's nothing we can do. Just give it up.";
@@ -8575,7 +8575,7 @@ mosk_fild02,124,202,3	script	Lusalka#rus23	4_F_RUSGREEN,{
 				close;
 			} else if (rhea_rus_hair > 2 && rhea_rus_hair < 7) {
 				mes "[Lusalka]";
-				mes "His name is 'Igor'.. He has gone to the capital of Rune Midgarts. Give him my golden earrings.";
+				mes "His name is 'Igor'.. He has gone to the capital of Rune-Midgarts. Give him my golden earrings.";
 				next;
 				mes "[Lusalka]";
 				mes "And please, tell him to stop suffering and to be happy. This is my request.";
@@ -8699,7 +8699,7 @@ OnInit:
 prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 	if (rhea_rus_main < 8) {
 		mes "[A Wanderer from a strange land]";
-		mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+		mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune-Midgarts Kingdom!";
 		next;
 		mes "[A Wanderer from a strange land]";
 		mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
@@ -8707,7 +8707,7 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 	} else if (rhea_rus_main == 8) {
 		if (rhea_rus_hair < 3) {
 			mes "[A Wanderer from a strange land]";
-			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune-Midgarts Kingdom!";
 			next;
 			mes "[A Wanderer from a strange land]";
 			mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";
@@ -8719,7 +8719,7 @@ prontera,228,279,3	script	Wanderer#rus24	4_M_RUSMAN2,{
 				close;
 			}
 			mes "[A Wanderer from a strange land]";
-			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune Midgarts Kingdom!";
+			mes "Hey, there are so many adventurers around here. I can see why this is the capital of the Rune-Midgarts Kingdom!";
 			next;
 			mes "[A Wanderer from a strange land]";
 			mes "In your free time, come to see me! The weather here is even more favorable than our the best summer back home.";

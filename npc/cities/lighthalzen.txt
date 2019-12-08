@@ -485,7 +485,7 @@ lighthalzen,239,64,5	script	Jade#zen2	862,{
 	next;
 	mes "[Jade]";
 	mes "So are you from";
-	mes "Rune-Midgard?";
+	mes "Rune-Midgarts?";
 	mes "What do you think";
 	mes "of our city with its";
 	mes "advanced technology";
@@ -1556,7 +1556,7 @@ lhz_in03,193,25,2	script	Bartender#12	61,{
 	mes "on the verge of bein' totally";
 	mes "ghetto, but we're proud to";
 	mes "have the best rum in all of";
-	mes "Rune-Midgard. It's true~";
+	mes "Midgard. It's true~";
 	next;
 	mes "[Tony]";
 	mes "Just a sip of this";

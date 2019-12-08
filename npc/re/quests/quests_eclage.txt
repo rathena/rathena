@@ -8522,7 +8522,7 @@ ecl_in02,146,114,4	script	Clever#pa0829	4_M_FAIRYSCHOLAR_DIRTY,{
 		mes "Hmm? Why? Do you have an interesting story?";
 		while (1) {
 			next;
-			if (select("Try entertaining him.:Tell him about the journey until now.:Tell him about Rune Midgard.:Ask him what he wants to eat.") == 4) {
+			if (select("Try entertaining him.:Tell him about the journey until now.:Tell him about Midgard.:Ask him what he wants to eat.") == 4) {
 				mes "[Clever]";
 				mes "Hmm. What do I want to eat? I have lots of things I want to eat. After all, I've been eating stale prison rice all this time. I had one thing in particular.";
 				next;

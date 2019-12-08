@@ -1057,7 +1057,7 @@ yuno,213,298,4	script	Sage Esklah#juno	735,{
 			mes "Heh, you don't look like much. But even though you're ordinary looking, you possess the legendary item!";
 			next;
 			mes "[Esklah]";
-			mes "Only a few people in Rune-Midgard's history have been chosen to use the ^3355FFStamp of Muriniel.^000000";
+			mes "Only a few people in Midgard's history have been chosen to use the ^3355FFStamp of Muriniel.^000000";
 			next;
 			mes "[Esklah]";
 			mes "However, it's my job to test whether or not you are truly qualified to possess it.";

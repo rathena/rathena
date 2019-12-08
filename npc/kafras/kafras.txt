@@ -48,7 +48,7 @@ aldeba_in,96,181,4	script	Kafra Service	113,{
 		mes "Please make use of";
 		mes "the Kafra Services that are";
 		mes "available throughout all of";
-		mes "Rune Midgard. Thank you for";
+		mes "Midgard. Thank you for";
 		mes "visiting the Kafra Headquarters.";
 		close2;
 		break;
@@ -92,7 +92,7 @@ aldeba_in,96,181,4	script	Kafra Service	113,{
 		mes "[Kafra Leilah]";
 		mes "Kafra Employees are";
 		mes "stationed all over the";
-		mes "Rune Midgard continent,";
+		mes "Midgard continent,";
 		mes "and you should be able to find";
 		mes "plenty outside in Al De Baran.";
 		close2;
@@ -147,7 +147,7 @@ geffen,203,123,2	script	Kafra Employee::geffen2	114,{
 	mes "Welcome!";
 	mes "The Kafra Corporation";
 	mes "will always support the";
-	mes "adventurers of Rune-Midgard";
+	mes "adventurers of Rune-Midgarts";
 	mes "with its excellent service. So";
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,0,0,30,750;
@@ -177,7 +177,7 @@ morocc,160,258,4	script	Kafra::kaf_morocc2	114,{
 	mes "Welcome!";
 	mes "The Kafra Corporation";
 	mes "will always support the";
-	mes "adventurers of Rune-Midgard";
+	mes "adventurers of Rune-Midgarts";
 	mes "with its excellent service. So";
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,0,0,60,930;
@@ -278,7 +278,7 @@ prontera,282,200,2	script	Kafra Employee::kaf_prontera4	114,{
 	mes "Welcome!";
 	mes "The Kafra Corporation";
 	mes "will always support the";
-	mes "adventurers of Rune-Midgard";
+	mes "adventurers of Rune-Midgarts";
 	mes "with its excellent service. So";
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,0,0,40,800;
@@ -623,7 +623,7 @@ prt_fild05,290,224,3	script	Kafra Employee::prt_fild05	114,{
 	mes "Welcome!";
 	mes "The Kafra Corporation";
 	mes "will always support the";
-	mes "adventurers of Rune-Midgard";
+	mes "adventurers of Rune-Midgarts";
 	mes "with its excellent service. So";
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,1,1,40,0;
@@ -652,7 +652,7 @@ moc_ruins,59,157,5	script	Kafra Employee::moc_ruins	114,{
 	mes "Welcome!";
 	mes "The Kafra Corporation";
 	mes "will always support the";
-	mes "adventurers of Rune-Midgard";
+	mes "adventurers of Rune-Midgarts";
 	mes "with its excellent service. So";
 	mes "what can I do for you today?";
 	callfunc "F_Kafra",5,2,1,90,1200;

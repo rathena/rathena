@@ -1194,7 +1194,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 				mes "I hope we'll be";
 				mes "able to learn what";
 				mes "the goddess Freya has";
-				mes "left behind in Rune-Midgard...";
+				mes "left behind in Midgard...";
 				set god_brising,40;
 				close;
 			case 2:
@@ -1213,7 +1213,7 @@ yuno_in04,47,113,1	script	Studying Scholar#1	749,{
 				mes "I hope we'll be";
 				mes "able to learn what";
 				mes "the goddess Freya has";
-				mes "left behind in Rune-Midgard...";
+				mes "left behind in Midgard...";
 				set god_brising,40;
 				close;
 			}

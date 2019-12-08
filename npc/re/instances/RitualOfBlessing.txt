@@ -77,7 +77,7 @@ OnEvent:
 	npctalk "Roegenburg", instance_npcname("Wolf Roegenburg#wolf01");
 	npctalk "Roegenburg", instance_npcname("Helmut Roegenburg#helmu");
 	npctalk "Roegenburg", instance_npcname("Agnes Roegenburg#agnes0_1");
-	mapannounce instance_mapname("2@mir"), "Kronecker: On the behalf of the seven royal families supporting Rune Midgarts,", bc_map,0xFF99;
+	mapannounce instance_mapname("2@mir"), "Kronecker: On the behalf of the seven royal families supporting Rune-Midgarts,", bc_map,0xFF99;
 	mapannounce instance_mapname("2@mir"), "Kronecker: Here is the new representative appointed", bc_map,0xFF99;
 	mapannounce instance_mapname("2@mir"), "Kronecker: The blessing star light may reach the glory of the earth...", bc_map,0xFF99;
 	sleep 10000;
@@ -629,7 +629,7 @@ OnTimer12000:
 		next;
 		select("Terra Gloria?");
 		mes "[Kronecker]";
-		mes "It is the crown passed down in the palace of Rune Midgarts.";
+		mes "It is the crown passed down in the palace of Rune-Midgarts.";
 		mes "It means more than an ordinary crown.";
 		next;
 		mes "[Kronecker]";

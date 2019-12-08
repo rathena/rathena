@@ -5450,7 +5450,7 @@ lhz_in01,25,251,3	script	Rekenber Guidebook#li	HIDDEN_NPC,{
 	mes "^3131FF#The Vision^000000";
 	mes "In the pursuit of knowledge,";
 	mes "Rekenber will search the";
-	mes "Rune-Midgart continent for";
+	mes "Rune-Midgarts continent for";
 	mes "ancient relics. We hope to make";
 	mes "significant scientific progress by learning the secrets of the past.";
 	next;
@@ -5724,7 +5724,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "biggest contributer of the";
 			mes "Regenschirm Laboratory.";
 			mes "Their work will benefit the";
-			mes "entire Rune-Midgard continent, hence our highly involved support.";
+			mes "entire Midgard continent, hence our highly involved support.";
 			next;
 			mes "[Sueii Slierre]";
 			mes "A representative at the";
@@ -7677,7 +7677,7 @@ L_Mission:
 				mes "exist to create money, but";
 				mes "the Rekenber Corporation";
 				mes "is much more nefarious.";
-				mes "They actually want to dominate the entire Rune-Midgard continent.";
+				mes "They actually want to dominate the entire Midgard continent.";
 				next;
 				mes "[Karl]";
 				mes "In fact, the chairman of";
@@ -8130,7 +8130,7 @@ L_Mission:
 		mes "work, not only for the";
 		mes "sake of the Schwarzwald";
 		mes "Republic, but for peace";
-		mes "on all of Rune-Midgard.";
+		mes "on all of Midgard.";
 		close2;
 		cutin "",255;
 		end;

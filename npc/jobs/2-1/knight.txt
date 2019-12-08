@@ -444,7 +444,7 @@ prt_in,88,101,4	script	Chivalry Captain#knt	56,{
 		mes "[Captain Herman]";
 		mes "Go forth!";
 		mes "The future of";
-		mes "Rune-Midgard";
+		mes "Rune-Midgarts";
 		mes "rests on your";
 		mes "shoulders!";
 		close;
@@ -2018,7 +2018,7 @@ prt_in,87,92,4	script	Sir Gray#knt	119,{
 			switch(select("About ^3355FFClaymore^000000:Buy Claymore:End Conversation")) {
 			case 1:
 				mes "[Sir Gray]";
-				mes "Claymore, one of the best among the famous swords you can attain in Rune-Midgarts's Prontera!! Its value is priceless when considered by a Knight.";
+				mes "Claymore, one of the best among the famous swords you can attain in Rune-Midgarts' Prontera!! Its value is priceless when considered by a Knight.";
 				next;
 				mes "[Sir Gray]";
 				mes "Now, the Prontera Chivalry is making these fabulous Claymores. For Knights, they are only ^3355FF74,000^000000 Zeny.";

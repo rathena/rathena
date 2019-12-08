@@ -84,7 +84,7 @@ prt_in,88,105,2	script	Recruiter	105,{
 		mes "The Prontera Culvert is infested with all kinds of filthy vermin!";
 		next;
 		mes "[Recruiter]";
-		mes "Due to the serious risk of water contamination, and the safety of Rune-Midgardians, the Culvert has been quarantined by royal decree.";
+		mes "Due to the serious risk of water contamination, and the safety of Rune-Midgartsians, the Culvert has been quarantined by royal decree.";
 		next;
 		mes "[Recruiter]";
 		mes "Needless to say, this has caused shortages in the water supply in our kingdom. Indeed, such a crisis in these dark times...";
@@ -3509,7 +3509,7 @@ que_job01,10,16,5	script	Marjana#poison	885,{
 		mes "make those snake scale";
 		mes "marks... Some of them can't";
 		mes "even be found here on the";
-		mes "Rune-Midgard continent.";
+		mes "Midgard continent.";
 		next;
 		mes "[Marjana]";
 		mes "We're running out of time.";

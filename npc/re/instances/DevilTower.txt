@@ -1394,7 +1394,7 @@ OnTimer7000:
 	else {
 		mes "[Lucile]";
 		mes "The collision of those two powers is too much to handle.";
-		mes "It could have influenced the south of Rune Midgard.";
+		mes "It could have influenced the south of Rune-Midgarts.";
 	}
 	next;
 	if (select( "Follow.", "Stop." ) == 2) {

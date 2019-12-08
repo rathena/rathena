@@ -206,7 +206,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		mes "What? You came to here to convey a story? Go ahead.";
 		next;
 		mes "[Recruiter]";
-		mes "Move to the side. There's a Manager who is dealing with all of us, and is involved in international relations here on Rune Midgard.";
+		mes "Move to the side. There's a Manager who is dealing with all of us, and is involved in international relations here on Midgard.";
 		next;
 		mes "[Recruiter]";
 		mes "Just talk to him.";
@@ -250,7 +250,7 @@ prontera,163,53,3	script	Promotional Staff#prt	100,{
 		mes "Nobody knows.";
 		next;
 		mes "[Recruiter]";
-		mes "Only the brave, like you, deserve to go there. There will be many dangerous things around you, but you must explore it on behalf of Rune Midgard.";
+		mes "Only the brave, like you, deserve to go there. There will be many dangerous things around you, but you must explore it on behalf of Midgard.";
 		next;
 		mes "[Recruiter]";
 		mes "Hmm......";
@@ -3777,7 +3777,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 			next;
 			mes "[Rumis Block]";
 			mes "Yes, I'm a monster scholar";
-			mes "But I've been afraid of creatures even when I was on the Rune Midgard Continent...";
+			mes "But I've been afraid of creatures even when I was on the Midgard Continent...";
 			next;
 			mes "[Rumis Block]";
 			mes "No, but can't you see?";
@@ -3888,7 +3888,7 @@ mid_camp,188,254,3	script	Monster Scholar#ep13	883,{
 					mes "I... I see.";
 					mes "I've heard about adventurers";
 					mes "that have made positive";
-					mes "impacts on Rune Midgard.";
+					mes "impacts on Midgard.";
 					mes "You're one of them, huh?";
 					next;
 					mes "[Rumis Block]";
@@ -4997,7 +4997,7 @@ OnTouch_:
 			next;
 			mes "[United Research Official]";
 			mes "Oh! Hello there!";
-			mes "You must be the adventurer from Rune Midgard.";
+			mes "You must be the adventurer from Midgard.";
 			next;
 			mes "[United Research Official]";
 			mes "We've come all the way here to keep track of Satan Morocc, but... Now it seems that's not our priority anymore... Tsk,tsk...";
@@ -5165,7 +5165,7 @@ OnTouch_:
 			mes "Ok. I see. How's it going with the research on Ash-Vacuum?";
 			next;
 			mes "[Hansenne]";
-			mes "Hi, I'm Hansenne from Arunafeltz. We have conclused that his world of Ash-Vacuum is nothing related to the continent of Rune Midgard, as it is placed in a totally indipendent world dimension.";
+			mes "Hi, I'm Hansenne from Arunafeltz. We have conclused that his world of Ash-Vacuum is nothing related to the continent of Midgard, as it is placed in a totally indipendent world dimension.";
 			next;
 			mes "[Hansenne]";
 			mes "The enviroment of the fields on the East and West where we can work on the research has nothing in common with the enviroment within the boundrary of the Tripartite Union's army post.";
@@ -5174,7 +5174,7 @@ OnTouch_:
 			mes "I also have been reported that the ecosystem in the researched are is different.";
 			next;
 			mes "[Hansenne]";
-			mes "We could not go further with the research on the ecosystem due to some violent living creatures which have never been found on the Rune Midgard continent.";
+			mes "We could not go further with the research on the ecosystem due to some violent living creatures which have never been found on the Midgard continent.";
 			next;
 			mes "[United Research Official]";
 			mes "So... All in all, nothing has been clearly found. Any problems among the members of the United Research Group?";
@@ -5260,7 +5260,7 @@ OnTouch_:
 			mes "This cake was just fine before that evil thing appeared, and there were only 4 of us here!";
 			next;
 			mes "[Ryosen]";
-			mes "One of you must be guilty of ruining my Rune-Midgart Strawberry Cake!!!";
+			mes "One of you must be guilty of ruining my Rune-Midgarts' Strawberry Cake!!!";
 			next;
 			mes "[Ryosen]";
 			mes "I can't help checking your hands! This must be a fingerprint! It's loud and clear!! Hmm, I bet this is the mark of an index finger!";
@@ -5546,7 +5546,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "You must have heard about this, but this is the place where Satan Morocc landed through the crack of dimension.";
 			next;
 			mes "[Ryosen]";
-			mes "As you see, this seems like a totally different world. It's nothing like the continent of Rune Midgard, though we haven't found any concrete evidence. We decided to call this place Ash-Vacuum.";
+			mes "As you see, this seems like a totally different world. It's nothing like the continent of Midgard, though we haven't found any concrete evidence. We decided to call this place Ash-Vacuum.";
 			next;
 			mes "[Ryosen]";
 			mes "We're doing everything we can, to track down Satan Morocc, but all those researchers from different countries couldn't help but wonder what this place really is.";
@@ -5610,10 +5610,10 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			next;
 			mes "[Ryosen]";
 			mes "Go on now.";
-			mes "Just so you know, today's Desert Day. Rune Midgard is sending some desserts through the crack of dimension, regularly.";
+			mes "Just so you know, today's Desert Day. Midgard is sending some desserts through the crack of dimension, regularly.";
 			next;
 			mes "[Ryosen]";
-			mes "Rune Midgard's desserts are definitely the world's best.";
+			mes "Midgard's desserts are definitely the world's best.";
 			next;
 			mes "[Ryosen]";
 			mes "The only thing we enjoy here is that dessert we receive, once a week.";
@@ -5625,11 +5625,11 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "Arunafeltz's Desert Sandwich is nothing better than that. I think that sandwich's made of some old meat, otherwise, we wouldn't have been food poisoned so often!";
 			next;
 			mes "[Ryosen]";
-			mes "But, Rune-Midgart's Strawberry Cake! It's the best.";
+			mes "But, Rune-Midgarts' Strawberry Cake! It's the best.";
 			next;
 			mes "[Ryosen]";
 			mes "Nice and soft spongecake covered with sweet-tasting whipped cream, lots of fresh strawberries on top!";
-			mes "Rune-Midgart's top chef, Charles Orleans makes it himself!!!";
+			mes "Rune-Midgarts' top chef, Charles Orleans makes it himself!!!";
 			next;
 			mes "[Ryosen]";
 			mes "Hurry, you must hurry up, or you won't be able to taste this wonderful cake!";
@@ -5910,7 +5910,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "Could you go see the Official in my stead and set up a meeting?";
 			next;
 			mes "[Ryosen]";
-			mes "Oh! And... Here's Rune-Midgart's fresh strawberry cake. This is for you. I'm so sorry I haven't even offered you a piece. I was so distracted with stress, I think.";
+			mes "Oh! And... Here's Rune-Midgarts' fresh strawberry cake. This is for you. I'm so sorry I haven't even offered you a piece. I was so distracted with stress, I think.";
 			next;
 			mes "[Ryosen]";
 			mes "Thank you so much for everything you've done. And... pleade don't forget to do me this last favor, going to the Official and setting up a meeting.";
@@ -5951,7 +5951,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 			mes "I heard you can get this thing from a monster named, 'Cornus' found in the fields.";
 			next;
 			mes "[Ryosen]";
-			mes "Or... do you have any ^0000ffMystic Horns^000000 with you? Of course, I'm not saying that I want it for free. If you'd give me ^0000ff2 Mystic Horns^000000, I'd give you my Rune-Midgart's Strawberry Cake.";
+			mes "Or... do you have any ^0000ffMystic Horns^000000 with you? Of course, I'm not saying that I want it for free. If you'd give me ^0000ff2 Mystic Horns^000000, I'd give you my Rune-Midgarts' Strawberry Cake.";
 			next;
 			switch(select("I haven't seen such a thing.:Oh, ok, I'll give you!")) {
 			case 1:
@@ -5967,7 +5967,7 @@ mid_camp,165,245,0	script	Ryosen#ep131_rhea01	748,{
 					mes "Huh?";
 					next;
 					mes "[Ryosen]";
-					mes "You have Rune-Midgart's Strawberry Cake?";
+					mes "You have Rune-Midgarts' Strawberry Cake?";
 					next;
 					mes "[Ryosen]";
 					mes "How come you haven't had it yet?";
@@ -6105,8 +6105,8 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			if (.@shu_agree00 == 2) {
 				mes "[Hue]";
 				mes "...Meeting Schedule, on the Xth day, from hh:mm to hh:mm...";
-				mes "Location... Rune-Midgart's camp...";
-				mes "Ha! I knew it. Rune-Midgart's camp again!";
+				mes "Location... Rune-Midgarts' camp...";
+				mes "Ha! I knew it. Rune-Midgarts' camp again!";
 				next;
 				mes "[Hue]";
 				mes "Objectives... to report on the researching progress of tracking Satan Morocc and the Ash-Vacuum!";
@@ -6307,7 +6307,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			mes "Oh, I'm so embarrassed to see him face to face. Or.. how about...";
 			next;
 			mes "[Hue]";
-			mes "Here, this is the Rune-Midgart's report I took with me when everything went messy in the meeting room. Could you please give this to Ryosen?";
+			mes "Here, this is the Rune-Midgarts' report I took with me when everything went messy in the meeting room. Could you please give this to Ryosen?";
 			next;
 			mes "[Hue]";
 			mes "I'm sorry to ask you this but...";
@@ -6327,7 +6327,7 @@ mid_camp,247,255,1	script	Hue#ep131_rhea02	868,{
 			mes "Oh, I'm so embarrassed to see him face to face. Or.. how about...";
 			next;
 			mes "[Hue]";
-			mes "Here, this is the Rune-Midgart's report I took with me when everything went messy in the meeting room. Could you please give this to Ryosen?";
+			mes "Here, this is the Rune-Midgarts' report I took with me when everything went messy in the meeting room. Could you please give this to Ryosen?";
 			next;
 			mes "[Hue]";
 			mes "I'm sorry to ask you this but...";
@@ -6526,7 +6526,7 @@ mid_camp,222,218,3	script	Hansenne#ep131_rhea03	931,{
 				mes "Meeting Schedule, shmeating schedule... Beating Schedule!!";
 				next;
 				mes "[Hansenne]";
-				mes "Location... Rune-Midgart's camp!";
+				mes "Location... Rune-Midgarts' camp!";
 				mes "Rude-Midgard's camp!?!?";
 				mes "Are they camping in that place??";
 				mes "Haha, hahaha, hahahahahahahahaha.";
@@ -8571,7 +8571,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "I must say that I'm quite impressed.";
 		next;
 		mes "[Hibba Agip]";
-		mes "As you know by now, I have to send out an expedition report to the national leaders of the Rune Midgard continent, and I need someone that I can trust.";
+		mes "As you know by now, I have to send out an expedition report to the national leaders of the Midgard continent, and I need someone that I can trust.";
 		next;
 		mes "[Hibba Agip]";
 		mes "I'd go if I could, but my duty is to command, and my instructor over there is too dense. He'll embarrass me by acting stupid in front of the national leaders.";
@@ -8581,16 +8581,16 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Don't you think you're exaggerating?";
 		next;
 		mes "[Hibba Agip]";
-		mes "Hmm... Anyways, this is not a difficult mission. All you have to do is deliver this expedition report to officials of three countries of Rune Midgard. Simple right?";
+		mes "Hmm... Anyways, this is not a difficult mission. All you have to do is deliver this expedition report to officials of three countries of Midgard. Simple right?";
 		next;
 		getitem 11012,1; //Expedition_Report
 		set ep13_1_edq,3;
 		changequest 3086,3087;
 		mes "[Hibba Agip]";
-		mes "The officials are ^0000FFMinister Laur^000000 of the Rune-Midgart's Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz, and ^0000FFGerhart^000000 of the Schwatzvalt Republic.";
+		mes "The officials are ^0000FFMinister Laur^000000 of the Rune-Midgarts' Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz, and ^0000FFGerhart^000000 of the Schwatzvalt Republic.";
 		next;
 		mes "[Hibba Agip]";
-		mes "A messenger, who will inform the official of your arrival, is waiting for you at the time-space gap to RUne Midgard. You'd better find him before you leave.";
+		mes "A messenger, who will inform the official of your arrival, is waiting for you at the time-space gap to Midgard. You'd better find him before you leave.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Since the officials are busy attending to national matters, they won't meet you unless they're informed of your arrival beforehand. I doubt those pretentious guys would even want to see me.";
@@ -8809,7 +8809,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "It looks alright. I don't have to read this thoroughly because I trust Abidal.";
 		next;
 		mes "[Hibba Agip]";
-		mes "Now, let's go back to your original mission. I'd like you to deliver this to the national leaders of the three countries of Rune Midgard.";
+		mes "Now, let's go back to your original mission. I'd like you to deliver this to the national leaders of the three countries of Midgard.";
 		next;
 		getitem 11012,3; //Expedition_Report
 		mes "[Hibba Agip]";
@@ -8820,7 +8820,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		mes "Of course, you can't see them because they're undercover soldiers under my direct command. Hahaha!";
 		next;
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune-Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -8829,7 +8829,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 	}
 	else if ((ep13_1_edq == 9) && (countitem(11012) == 3)) {
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune-Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -8843,7 +8843,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 		delitem 11012,countitem(11012); //Expedition_Report
 		getitem 11012,3; //Expedition_Report
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune-Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -8852,7 +8852,7 @@ mid_campin,90,121,5	script	Hibba Agip	459,{
 	}
 	else if (ep13_1_edq > 100) {
 		mes "[Hibba Agip]";
-		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
+		mes "Let me remind you again. The officials are these three people: ^0000FFMinister Laur^000000 of the Rune-Midgarts Kingdom, ^0000FFPriest Nuria^000000 of Arunafeltz and ^0000FFGerhart^000000 of the Schwarzwald Republic.";
 		next;
 		mes "[Hibba Agip]";
 		mes "Make sure to deliver the report to them without fail. Come back in one piece, alright?";
@@ -9245,7 +9245,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 		switch(select("Midgard Expedition Introduction:Midgard Expedition's Achievement:Situation in the Ash-Vacuum:Quit")) {
 		case 1:
 			mes "[Staff Officer Abidal]";
-			mes "The Midgard Expedition is conducted by a group of explorers from the three countries of Rune Midgard and the Mercenary Association. We're here to explore the Ash-Vacuum.";
+			mes "The Midgard Expedition is conducted by a group of explorers from the three countries of Midgard and the Mercenary Association. We're here to explore the Ash-Vacuum.";
 			next;
 			mes "[Staff Officer Abidal]";
 			mes "Command Hibba Agip behind me is our commander. He may appear unreliable, but he has extensive knowledge and experience in exploration.";
@@ -9311,7 +9311,7 @@ mid_campin,94,118,3	script	Staff Officer Abidal	755,{
 			mes "Thank you so much. I had a good feeling about you, and I was so sure that you'd be willing to help.";
 			next;
 			mes "[Staff Officer Abidal]";
-			mes "Let's cut to the chase. The mission is simple, deliver our expedition report to the three countries of Rune Midgard.";
+			mes "Let's cut to the chase. The mission is simple, deliver our expedition report to the three countries of Midgard.";
 			next;
 			mes "[Staff Officer Abidal]";
 			mes "But I have to tell you... We sent out three adventurers on this mission before you, and they all dissapeared. Please don't disclose this information to anyone.";
@@ -10175,10 +10175,10 @@ spl_fild03,172,71,3	duplicate(Expedition Scout#1)	Expedition Scout#4	707
 		close;
 	}
 	else {
-		mes "I'm Laur, the aide of the Home Minister of the Rune Midgarts Kingdom. Do you have any business with me?";
+		mes "I'm Laur, the aide of the Home Minister of the Rune-Midgarts Kingdom. Do you have any business with me?";
 		next;
 		mes "[Laur]";
-		mes "Can you sense the great disorder occuring on the Midgard Continent and the Rune-Midgart's Kingdom?";
+		mes "Can you sense the great disorder occuring on the Midgard Continent and the Rune-Midgarts' Kingdom?";
 		next;
 		mes "[Laur]";
 		mes "Still, there always a silver lining, no matter how dangerous this world may become.";
@@ -10633,7 +10633,7 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 	}
 	else if (mao_morocc2 == 30) {
 		mes "[Echinacea]";
-		mes "I'm in charge of tracing the wavelength from the Rune Midgard Continent,";
+		mes "I'm in charge of tracing the wavelength from the Midgard Continent,";
 		mes "and the south camp is tracing it in this area.";
 		next;
 		mes "[Echinacea]";
@@ -10649,7 +10649,7 @@ mid_campin,68,185,3	script	Pursuit Party Leader#1	803,{
 		next;
 		mes "[Echinacea]";
 		mes "Oh, is that the case? I see.";
-		mes "That means.. The man called Rayan isn't on the Rune Midgard Continent or in this Ash Vacuum.";
+		mes "That means.. The man called Rayan isn't on the Midgard Continent or in this Ash Vacuum.";
 		next;
 		mes "[Echinacea]";
 		mes "He must be somewhere else.";
@@ -10913,7 +10913,7 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 				mes "......";
 				mes "I don't know if Echinacea told you this already, but we are here";
 				mes "to follow the traces of Satan Morocc.";
-				mes "Some of us are here in the Ash Vacuum, and the rest are on the Rune Midgard Continent.";
+				mes "Some of us are here in the Ash Vacuum, and the rest are on the Midgard Continent.";
 				next;
 				mes "[Mr. Kidd]";
 				mes "We exchange information with our colleagues in Morocc on a regular basis, but we haven't heard from them for a while.";
@@ -10958,7 +10958,7 @@ mid_camp,199,311,7	script	Mr. Kidd#ep13_dan01	884,{
 		mes "I don't know if Echinacea told you this already, but we are here to follow the traces of Satan Morocc.";
 		next;
 		mes "[Mr. Kidd]";
-		mes "Some of us are here in the Ash Vacuum, and the rest are on the Rune Midgard Continent.";
+		mes "Some of us are here in the Ash Vacuum, and the rest are on the Midgard Continent.";
 		next;
 		mes "[Mr. Kidd]";
 		mes "We exchange information with our colleagues in Morocc on a regular basis, but we haven't heard from them for a while.";

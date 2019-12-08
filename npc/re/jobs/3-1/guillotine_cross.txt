@@ -1076,7 +1076,7 @@ job3_guil01,16,20,4	script	Mayshell#3rdgc03	894,{
 		next;
 		mes "[Mayshell]";
 		mes "Don't forget.";
-		mes "And the task you did is related to Rachel, Rune-Midgard, and our assassin guild.";
+		mes "And the task you did is related to Rachel, Rune-Midgarts, and our assassin guild.";
 		mes "So the others should not be known. Of course, you are included, so please forget everything.";
 		close;
 	} else if (job_3rd_gc == 20) {
