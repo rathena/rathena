@@ -199,7 +199,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 		mes "[Fishbone]";
 		mes "Anyway, good luck in";
 		mes "whatever it is you're doing";
-		mes "here in Lighthazlen. Oh, and";
+		mes "here in Lighthalzen. Oh, and";
 		mes "be real careful! Something";
 		mes "shadier than me is going";
 		mes "on in this big city~";

@@ -91,7 +91,7 @@ aldebaran,135,122,0	duplicate(MailBox)	Mailbox#alde	888
 yuno,148,187,0	duplicate(MailBox)	Mailbox#yuno	888
 yuno,332,108,0	duplicate(MailBox)	Mailbox#2yuno	888
 
-// Lightalzen
+// Lighthalzen
 //============================================================
 lighthalzen,164,85,0	duplicate(MailBox)	Mailbox#lht	888
 lighthalzen,196,320,0	duplicate(MailBox)	Mailbox#2lht	888

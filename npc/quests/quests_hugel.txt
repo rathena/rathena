@@ -104,7 +104,7 @@ hu_in01,387,245,0	script	Allen Schuwell	849,2,2,{
 			next;
 			mes "[Allen]";
 			mes "But you... I can count on you.";
-			mes "Even in Lighthazlen, I'd never";
+			mes "Even in Lighthalzen, I'd never";
 			mes "find anyone as dependable as";
 			mes "you. This time, I've decided to";
 			mes "discipline my degenerate son.";

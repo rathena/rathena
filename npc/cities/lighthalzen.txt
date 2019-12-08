@@ -2040,7 +2040,7 @@ lhz_in02,21,38,7	script	Bank Clerk#1::BankClerk	86,{
 lhz_in02,21,25,7	duplicate(BankClerk)	Bank Clerk#2	86
 lhz_in02,34,22,1	duplicate(BankClerk)	Bank Clerk#3	755
 
-// Lightalzen Prison Area -------------------------------------------------------------
+// Lighthalzen Prison Area -------------------------------------------------------------
 
 lhz_in02,145,177,0	script	Togii#07	849,{
 	mes "[Togii]";
