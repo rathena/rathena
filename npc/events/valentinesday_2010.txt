@@ -1,0 +1,897 @@
+//===== rAthena Script =======================================
+//= Valentine's Day Event (2010)
+//===== Description: =========================================
+//= [Official Conversion]
+//= Get chocolate and give it to either
+//= the 'The Old Man' or 'Andy' for a reward.
+//===== Changelogs: ==========================================
+//= 1.0 First version. [Kisuka]
+//============================================================
+
+hugel,102,148,3	script	The Old Man#hugel	4_M_HUGRANFA,{
+	if (BaseLevel < 20) {
+		mes "[The Old Man]";
+		mes "I heard that today is ^800080Valentine's Day^000000";
+		mes "There's no such thing ";
+		mes "as a good present";
+		mes "in this kind of town.";
+		close;
+	} else {
+		if (evt_2010_valen == 0) {
+			mes "[The Old Man]";
+			mes "Today's weather is so good.";
+			mes "It's been too cold that I couldn't";
+			mes "even come out for a fresh air.";
+			next;
+			mes "[The Old Man]";
+			mes "I'm lucky to take a walk with you";
+			mes "in a long time.";
+			next;
+			mes "[The Old Man]";
+			mes "Isn't it good to be outside?";
+			next;
+			mes "(The Old Woman who's beside him says nothing.)";
+			next;
+			if(select("Talk to her.", "Just pass.") == 2) {
+				mes "(The Old Man is laughing.";
+				mes "Would the Old Woman as well laughing?)";
+				close;
+			}
+			mes "[^0000CD"+strcharinfo(0)+"^000000]";
+			mes "Hello.";
+			mes "May I interrupt you for a second?";
+			next;
+			mes "[The Old Man]";
+			mes "Oh, please,";
+			mes "It'd be rather bored to talk to an old man";
+			mes "for the young like you.";
+			next;
+			mes "[The Old Man]";
+			mes "It's been so long time that a guest come";
+			mes "to this quiet village.";
+			mes "Welcome, I mean it.";
+			next;
+			mes "(It's ^FF0000really not^000000 that I might just explode";
+			mes "by a jealousy among couples like today";
+			mes "and come to find a quiet place";
+			mes "with no people.)";
+			next;
+			mes "[The Old Man]";
+			mes "My wife asks me to tell you that";
+			mes "she's glad to meet you.";
+			next;
+			mes "[^0000CD"+strcharinfo(0)+"^000000]";
+			mes "Oh, Hello.";
+			next;
+			mes "(The Old Woman still has no words,";
+			mes "neither a look on her face.)";
+			next;
+			mes "[The Old Man]";
+			mes "My wife seems to feel good";
+			mes "to meet you.";
+			mes "She talks a lot today.";
+			next;
+			mes "[^0000CD"+strcharinfo(0)+"^000000]";
+			mes "...It may be presumptuous to ask but,";
+			mes "is she";
+			mes "ill?";
+			next;
+			mes "[The Old Man]";
+			mes "It's okay, it's been almost";
+			mes "more than 30 years. Now I can read her even only";
+			mes "by her blinking.";
+			next;
+			mes "[The Old Man]";
+			mes "It's a miracle to come";
+			mes "outside like now. My wife likes";
+			mes "to watch the sky.";
+			next;
+			mes "[The Old Man]";
+			mes "Today is ^800080Valentine's Day^000000";
+			mes "so I wanted to show the sky";
+			mes "as a present.";
+			next;
+			mes "[The Old Man]";
+			mes "What she could do is only blinking but,";
+			mes "I wish I could see the sky with her";
+			mes "like this next year.";
+			next;
+			mes "(I prayed for the old man and the old woman's health ";
+			mes "while regretting";
+			mes "myself cursing";
+			mes "the ^800080Valentine's Day^000000.)";
+			next;
+			mes "[The Old Man]";
+			mes "I hope you a happy ^800080Valentine's Day^000000";
+			mes "Thank you for";
+			mes "being a company to talk to.";
+			emotion ET_SMILE;
+			next;
+			cutin "Aged_couple_1", 3;
+			mes "(When I say bye, and I was leaving";
+			mes "I saw the two taking a picture";
+			mes "friendly.";
+			next;
+			cutin "", 255;
+			cutin "Aged_couple_2", 3;
+			mes "I hope them to be happy for a long time.)";
+			emotion ET_BIGTHROB, playerattached();
+			evt_2010_valen = 1;
+			close2;
+			cutin "", 255;
+			end;
+		} else if (evt_2010_valen == 8) {
+			if (!countitem(7975)) {
+				mes "(Oh, my.. where have the ^FF1493Cupid's Chocolate^000000 gone?)";
+				close;
+			} else {
+				mes "(I truly think that I'm an angel.)";
+				specialeffect2 EF_DEVOTION;
+				next;
+				if(select("Give her the ^FF1493Cupid's Chocolate^000000.", "Just pass by her.") == 2) {
+					close;
+				}
+				mes "[^0000CD"+strcharinfo(0)+"^000000]";
+				mes "Grandpa.";
+				mes "Here, please give it to grandma.";
+				mes "Ah, You don't have to eat it";
+				mes "but it looks beautiful.";
+				next;
+				mes "[The Old Man]";
+				emotion ET_SURPRISE;
+				mes "Why.. what's this?";
+				next;
+				mes "[^0000CD"+strcharinfo(0)+"^000000]";
+				mes "Today is the ^800080Valentine's Day^000000.";
+				mes "She'll love it when";
+				mes "you give it to her.";
+				next;
+				mes "[The Old Man]";
+				mes "I'm not sure that I can";
+				mes "take such thing like this.";
+				mes "It would have been hard to find it..";
+				next;
+				mes "[The Old Man]";
+				mes "My wife liked the chocolate";
+				mes "very much. Thank you so much.";
+				next;
+				mes "[The Old Man]";
+				mes "If you don't mind I hope you to";
+				mes "take this. I'm in the countryside that";
+				mes "I have nothing to give you but this.";
+				next;
+				mes "[^0000CD"+strcharinfo(0)+"^000000]";
+				mes "No. I didn't want for any reward";
+				mes "when I gave you that.";
+				next;
+				mes "[The Old Man]";
+				mes "I just want to give you.";
+				mes "So please take this. It's the ^800080Valentine's Day^000000.";
+				next;
+				if (!checkweight(1172, 2)) {
+					mes "[The Old Man]";
+					mes "Your bag already looks full.";
+					mes "Please empty it and come again.";
+					close;
+				}
+				mes "[The Old Man]";
+				mes "I've got an unexpected present.";
+				mes "Thank you again.";
+				mes "I would never forget today's";
+				mes "^800080Valentine's day^000000.";
+				specialeffect2 EF_HEAL2;
+				percentheal 100, 100;
+				delitem 7975, 1; // Cupid_Choco
+				getitem 607, 5; // Yggdrasilberry
+				getexp 90000, 0;
+				evt_2010_valen = 10;
+				.@i = rand(0, 20);
+				setarray(.@pet,PORING,DROPS,POPORING,LUNATIC,PICKY,CHONCHON,STEEL_CHONCHON,SAVAGE_BABE,DESERT_WOLF_B,ROCKER,SPORE,POISON_SPORE,PECOPECO,SMOKIE,YOYO,ORK_WARRIOR,MUNAK,DOKEBI,ISIS,PETIT,BON_GUN);
+				makepet .@pet[.@i];
+				close;
+			}
+		} else {
+			mes "[The Old Man]";
+			mes "When she says thanks to me";
+			mes "she always blinks her eyes twice.";
+			mes "She don't need to bother to";
+			mes "tell me.";
+			close;
+		}
+	}
+}
+
+hugel,102,146,3	script	The Old Woman#hugel	4_F_HUGRANMA,{
+	if (evt_2010_valen == 10) {
+		mes "[the Old Woman]";
+		mes "(She blinks her eyes slowly";
+		mes "while watching me.)";
+		next;
+		mes "[the Old Woman]";
+		mes "(One time...)";
+		next;
+		mes "[the Old Woman]";
+		mes "(Two times...)";
+		close;
+	} else {
+		mes "[the Old Woman]";
+		mes "(She doesn't have any look on her face.";
+		mes "and her eye focus isn't correct as well.)";
+		close;
+	}
+}
+
+yuno,66,189,6	script	Andy#yuno	4_M_NFLOSTMAN,{
+	if (evt_2010_valen == 0) {
+		mes "[Andy]";
+		mes "It doesn't make sense.";
+		mes "Doesn't make any sense!!";
+		next;
+		mes "[Andy]";
+		mes "Sob Sob...I should not cry.";
+		mes "Crying is losing. Blubber~";
+		emotion ET_CRY;
+		close;
+	} else if (evt_2010_valen == 1) {
+		mes "[Andy]";
+		mes "Sob Sob...";
+		mes "This is a conspiracy. Conspiracy... sob.";
+		emotion ET_CRY;
+		next;
+		if(select("Talk to him.", "Just pass him.") == 2) {
+			mes "[Andy]";
+			mes "Sob.. Who are those just passing by";
+			mes "when a little kid is crying?";
+			mes "Boohoo..";
+			next;
+			mes "[Andy]";
+			mes "Booooohoooooo~";
+			mes "That one must haven't got any chocolate as well~";
+			emotion ET_HELP;
+			close;
+		}
+		mes "(I was so touched by the Old Man's";
+		mes "warm story so, I decided to calm him";
+		mes "down sweetly.)";
+		next;
+		mes "[^0000CD"+strcharinfo(0)+"^000000]";
+		mes "Hey boy, what's the matter?";
+		mes "Hey, Don't cry. Why are you";
+		mes "crying on such a wonderful day?";
+		next;
+		mes "[Andy]";
+		mes "Sob...sob..";
+		mes "What are you? Sob...";
+		next;
+		mes "[^0000CD"+strcharinfo(0)+"^000000]";
+		emotion ET_HUK, playerattached();
+		mes "(Damn.. you little bean..)";
+		mes "Stop crying, What's up?";
+		next;
+		mes "[Andy]";
+		mes "I want to get a chocolate as well~";
+		mes "Sobb~";
+		next;
+		mes "[Andy]";
+		mes "Only I haven't got";
+		mes "anything today, it's";
+		mes "the ^800080Valentine's Day^000000!!";
+		next;
+		mes "[Andy]";
+		mes "I'm so embarrassed to live..";
+		mes "Sob..Ugh~";
+		next;
+		mes "[^0000CD"+strcharinfo(0)+"^000000]";
+		mes "Were you crying over on such thing?";
+		mes "Don't cry, I didn't get any too.";
+		mes "The more important thing than chocolate is the mind..";
+		next;
+		mes "[Andy]";
+		mes "Noooooo!! No!!";
+		mes "There's no one who can't get any";
+		mes "chocolate in the ^800080Valentine's Day^000000!";
+		mes "It's so embarrassing that I'd rather die!!";
+		next;
+		mes "(I'm still alive, then what am I?..";
+		mes "He wishes to die, so shall I just";
+		mes "make his wish come true? Huh...)";
+		next;
+		mes "[^0000CD"+strcharinfo(0)+"^000000]";
+		mes "I'll just buy you a chocolate!";
+		mes "All right?! So please stop crying!";
+		next;
+		mes "[Andy]";
+		mes "Really??";
+		emotion ET_BIGTHROB;
+		next;
+		mes "[Andy]";
+		mes "You are giving me the ^FF1493Cupid's Chocolate^000000?!";
+		mes "Really?";
+		mes "You are going as far as ^0000FFAldebaran^000000 to get it?!";
+		mes "Are you sure?";
+		next;
+		mes "[^0000CD"+strcharinfo(0)+"^000000]";
+		mes "Oops.. When did I...";
+		next;
+		mes "[Andy]";
+		mes "I heard that for ^800080Valentine's Day^000000";
+		mes "the fairies of Cupid are handing out chocolates in";
+		mes "^0000FFAldebaran^000000.";
+		mes "I wanna get that chocolate!!";
+		next;
+		mes "[^0000CD"+strcharinfo(0)+"^000000]";
+		mes ".....How about....";
+		mes "......just a chocolate....?";
+		next;
+		mes "[Andy]";
+		mes "I'll be waiting for";
+		mes "^FF1493Cupid's Chocolate^000000!!";
+		evt_2010_valen = 2;
+		close;
+	} else if (evt_2010_valen == 8) {
+		if (!countitem(7975)) {
+			mes "[Andy]";
+			mes "Hey, why are you empty-handed?";
+			mes "Tell me! Have you eaten it already?!";
+			next;
+			mes "[Andy]";
+			mes "Give me my chocolate!!";
+			mes "Booohooooo~";
+			close;
+		}
+		mes "[Andy]";
+		mes "Wow! Is this the";
+		mes "^FF1493Cupid's Chocolate^000000?!";
+		next;
+		mes "[^0000CD"+strcharinfo(0)+"^000000]";
+		mes "Just take it.";
+		next;
+		mes "[Andy]";
+		mes "What's that attitude when";
+		mes "you're giving me the chocolate! Today is";
+		mes "the ^800080Valentine's Day^000000! Couldn't";
+		mes "you just be more nice?!";
+		next;
+		mes "(You're doing all sorts of things, man...)";
+		next;
+		switch(select("I've prepared it for you.", "Please take my heart.", "Happy Valentine's Day.", "Ow, I can't do this!")) {
+			case 1:
+				mes "[Andy]";
+				mes "You are so buttery.";
+				mes "Have you eaten oils? Ugh..";
+				next;
+				break;
+			case 2:
+				mes "[Andy]";
+				mes "That your heart,";
+				mes "I suddenly feel like not taking it...";
+				next;
+				break;
+			case 3:
+				mes "[Andy]";
+				mes "When I get the chocolate very forcefully from you";
+				mes "I don't feel happy..";
+				next;
+				break;
+			case 4:
+				mes "[Andy]";
+				mes "I think I wanted something so big";
+				mes "for you, sorry.";
+				next;
+				break;
+		}
+		mes "[Andy]";
+		mes "Anyway thanks. It looks delicious.";
+		mes "This is a present. Pick one among";
+		mes "these two.";
+		next;
+		if (!checkweight(1172, 1)) {
+			mes "[Andy]";
+			mes "But, your bag looks heavy.";
+			mes "Empty it out and come back.";
+			close;
+		}
+		switch(select("[ 5 Light Blue Potion  ]", "[ 10 Light White Potion ]", "End the conversation.")) {
+			case 1:
+				mes "[Andy]";
+				mes "Here are 5 light";
+				mes "blue potions.";
+				delitem 7975, 1; // Cupid_Choco
+				getitem 11502, 5; // Light_Blue_Pot
+				getexp 90000, 0;
+				evt_2010_valen = 9;
+				mes "Bye then, Take care.";
+				close;
+			case 2:
+				mes "[Andy]";
+				mes "Here are.";
+				mes "10 light white potions.";
+				delitem 7975, 1; // Cupid_Choco
+				getitem 11501, 10; // Light_White_Pot
+				getexp 90000, 0;
+				evt_2010_valen = 9;
+				mes "Then Bye. Take care.";
+				close;
+			case 3:
+				close;
+		}
+	} else if (evt_2010_valen == 9) {
+		mes "[Andy]";
+		mes "This chocolate is delicious, hehehe.";
+		specialeffect EF_VALLENTINE;
+		close;
+	} else {
+		mes "[Andy]";
+		mes "Have you been to the The Fairy of Cupid";
+		mes "in ^0000FFAldebaran^000000?";
+		mes "Did you get the ^FF1493Cupid's Chocolate^000000?";
+		next;
+		mes "[Andy]";
+		mes "When are you going to give me?!!";
+		mes "The ^800080Valentine's day^000000";
+		mes "would be over soon!! Boohoo~";
+		close;
+	}
+}
+
+aldebaran,95,139,6	script	The Fairy of Cupid#vday1	4_ANGELING,1,1,{
+	if (evt_2010_valen == 4) {
+		mes "[The Fairy of Cupid]";
+		mes "Whew.. This is tough. Too many crowds";
+		mes "are here. They are all excited that";
+		mes "it's free";
+		next;
+		mes "[The Fairy of Cupid]";
+		mes "Well, next turn!";
+		mes "Oh wait, is it you?";
+		next;
+		switch(select("Yes. give me one chocolate.", "No. I'm just looking around.", "End conversation.")) {
+			case 1:
+				mes "[The Fairy of Cupid]";
+				mes "Oh.. I can imagine that someone";
+				mes "gets the chocolate from you";
+				mes "must be very lucky?";
+				emotion ET_COOL;
+				next;
+				mes "[The Fairy of Cupid]";
+				mes "Wait a sec.";
+				mes "I'll give you the best one!";
+				next;
+				if (!checkweight(1172, 1)) {
+					mes "[The Fairy of Cupid]";
+					mes "Your bag looks too heavy";
+					mes "empty it and come back.";
+					close;
+				}
+				.@int_temp = rand(1, 10);
+				if (.@int_temp == 1 || .@int_temp == 2) {
+					mes "[The Fairy of Cupid]";
+					mes "Here it is! Be careful";
+					mes "not to eat it up all for yourself";
+					mes "in the way, because it looks too delicious.";
+					evt_2010_valen = 8;
+					getitem 7975, 1; // Cupid_Choco
+					next;
+					mes "[The Fairy of Cupid]";
+					mes "This is the only one.";
+					mes "So I hope you give it to";
+					mes "someone who you really want to give.";
+					next;
+					mes "[The Fairy of Cupid]";
+					mes "Happy ^800080Valentine's day^000000!";
+					specialeffect EF_VALLENTINE;
+					close;
+				} else {
+					mes "[The Fairy of Cupid]";
+					mes "Oopps.. Gee..";
+					mes "I must have given all out just before.";
+					mes "I'm sorry, Please come back";
+					mes "later.";
+					evt_2010_valen = 7;
+					close;
+				}
+			case 2:
+				mes "[The Fairy of Cupid]";
+				mes "If you're just watching, then could you";
+				mes "please help me here?";
+				next;
+				mes "[The Fairy of Cupid]";
+				mes "Of course there's no pay. hehehe..";
+				mes "Ugh, people are coming again..";
+				mes "Ah.. please stop coming!!";
+				close;
+			case 3:
+				close;
+		}
+	} else if (evt_2010_valen == 7) {
+		.@int_temp = rand(1, 8);
+		if (.@int_temp == 1 || .@int_temp == 2) {
+			mes "[The Fairy of Cupid]";
+			mes "Oh, you've came just in time.";
+			mes "Waited? Here arrived the chocolates";
+			mes "to give you just before.";
+			next;
+			mes "[The Fairy of Cupid]";
+			mes "This is the only one.";
+			mes "You should give it to someone";
+			mes "you really want to give.";
+			mes "Don't eat all by yourself again!";
+			evt_2010_valen = 8;
+			getitem 7975, 1; // Cupid_Choco
+			next;
+			mes "[The Fairy of Cupid]";
+			mes "Happy ^800080Valentin's Day^000000!";
+			specialeffect EF_VALLENTINE;
+			close;
+		} else {
+			mes "[The Fairy of Cupid]";
+			mes "Oh.. Sorry.";
+			mes "Chocolates aren't arrived";
+			mes "yet. Please wait for a while";
+			mes "more. I'm so sorry!";
+			close;
+		}
+	} else {
+		mes "[The Fairy of Cupid]";
+		mes "Hey, Hey, Wait in a line.";
+		mes "There you ma'am!";
+		mes "Don't push out, don't you know waiting in one line?!";
+		close;
+	}
+}
+
+aldebaran,184,127,3	script	The Fairy of Cupid#vday2	4_ANGELING,1,1,{
+	if (evt_2010_valen == 6) {
+		mes "[The Fairy of Cupid]";
+		mes "Please stand in the order.";
+		mes "Take a number.";
+		next;
+		mes "[The Fairy of Cupid]";
+		mes "Well, The next is..";
+		mes "Hello?";
+		mes "Have you come to get the chocolate?";
+		next;
+		switch(select("Yes, Give me one chocolate.", "No. I was looking around.", "End the conversation.")) {
+			case 1:
+				mes "[The Fairy of Cupid]";
+				mes "It's a very happy thing that";
+				mes "there's a person you want to";
+				mes "give a chocolate as a present.";
+				emotion ET_BEST;
+				next;
+				mes "[The Fairy of Cupid]";
+				mes "Wait for a second.";
+				mes "I'll give you an extraordinary chocolate.";
+				next;
+				if(!checkweight(1172, 1)) {
+					mes "[The Fairy of Cupid]";
+					mes "Your bag looks too heavy,";
+					mes "please empty it and come again.";
+					close;
+				}
+				.@int_temp = rand(1, 10);
+				if (.@int_temp == 1 || .@int_temp == 2) {
+					mes "[The Fairy of Cupid]";
+					mes "Here, Take it.";
+					evt_2010_valen = 8;
+					getitem 7975, 1; // Cupid_Choco
+					next;
+					mes "[The Fairy of Cupid]";
+					mes "It's only one in the world so,";
+					mes "I hope you give it to the one you";
+					mes "really want to give.";
+					next;
+					mes "[The Fairy of Cupid]";
+					mes "Happy ^800080Valentine's Day^000000!";
+					specialeffect EF_VALLENTINE;
+					close;
+				} else {
+					mes "[The Fairy of Cupid]";
+					mes "Oh, I'm sorry..";
+					mes "I'm out of chocolates right now.";
+					mes "Could you please pick it up";
+					mes "a little later?";
+					evt_2010_valen = 7;
+					close;
+				}
+			case 2:
+				mes "[The Fairy of Cupid]";
+				mes "So many people are here, right?";
+				mes "Everyone seems to want to give a present";
+				mes "to the ones they love.";
+				close;
+			case 3:
+				close;
+		}
+	} else if (evt_2010_valen == 7) {
+		.@int_temp = rand(1, 8);
+		if (.@int_temp == 1 || .@int_temp == 2) {
+			mes "[The Fairy of Cupid]";
+			mes "Ah, you are here.";
+			mes "You've waited so long time.";
+			mes "The chocolate has just arrived.";
+			next;
+			mes "[The Fairy of Cupid]";
+			mes "It's only one in the world so,";
+			mes "I hope you give it to the one you";
+			mes "really want to give.";
+			evt_2010_valen = 8;
+			getitem 7975, 1; // Cupid_Choco
+			next;
+			mes "[The Fairy of Cupid]";
+			mes "Happy ^800080Valentine's Day^000000!";
+			specialeffect EF_VALLENTINE;
+			close;
+		} else {
+			mes "[The Fairy of Cupid]";
+			mes "Sorry.";
+			mes "The chocolate hasn't";
+			mes "arrived yet. Please wait";
+			mes "a while more.";
+			mes "I'm really sorry.";
+			emotion ET_SORRY;
+			close;
+		}
+	} else {
+		mes "[The Fairy of Cupid]";
+		mes "For ^800080Valentine's Day^000000";
+		mes "we are sharing some chocolates.";
+		mes "Everybody please wait in a line.";
+		close;
+	}
+}
+
+aldebaran,98,138,3	script	Tarence#aldebaran	4_M_KID2,{
+	if (evt_2010_valen == 2) {
+		mes "[Tarence]";
+		mes "Oh, Have you come to get";
+		mes "a chocolate?";
+		next;
+		switch(select("Yes.", "No.", "End the conversation.")) {
+			case 1:
+				mes "[Tarence]";
+				mes "We are giving it  in order";
+				mes "so you might have to wait in line for a long time.";
+				next;
+				mes "[Tarence]";
+				mes "Oh, then shall I switch the line";
+				mes "with you? I'm just next.";
+				next;
+				mes "[Tarence]";
+				mes "Whew, I was waiting in the line";
+				mes "to give the chocolate to my girl friend..";
+				mes "But she won't eat! She's worried to get fat!";
+				mes "Oh, women are...";
+				next;
+				mes "[Tarence]";
+				mes "I'll switch the line for you";
+				mes "then, could you get me just";
+				mes "^D2691E20 of well baked cookies^000000?";
+				mes "Eshuter likes it...";
+				next;
+				switch(select("Accept", "Refuse", "End Conversation")) {
+					case 1:
+						mes "[Tarence]";
+						mes "Wow, Great.";
+						mes "Then I ask you for that.";
+						evt_2010_valen = 3;
+						close;
+					case 2:
+						mes "[Tarence]";
+						mes "You'll need to wait in line for a long time..";
+						mes "Well, I cannot help.";
+						close;
+					case 3:
+						close;
+				}
+			case 2:
+				mes "[Tarence]";
+				mes "Hmm, Right here, it's ^800080Valentine's Day^000000, so";
+				mes "we are waiting in a line to get";
+				mes "a ^FF1493Cupid's Chocolate^000000.";
+				close;
+			case 3:
+				close;
+		}
+	} else if (evt_2010_valen < 2) {
+		mes "[Tarence]";
+		mes "Whoa.. There are so many people.";
+		mes "It's really hard to get";
+		mes "a chocolate.";
+		close;
+	} else if (evt_2010_valen == 3) {
+		if (countitem(538) > 19) {
+			mes "[Tarence]";
+			mes "Wow, you've come back.";
+			mes "Eshuter must like it.";
+			delitem 538, 20; // Well_Baked_Cookie
+			evt_2010_valen = 4;
+			next;
+			mes "[Tarence]";
+			mes "Then I'll switch the line for you.";
+			mes "Stand here, Thank you.";
+			emotion ET_THANKS;
+			close;
+		} else {
+			mes "[Tarence]";
+			mes "Oh, well-baked cookies are";
+			mes "carried by a guy named Cookie in";
+			mes "^0000FFLutie^000000, the place";
+			mes "where many toys are.";
+			mes "Please get me ^FF000020^000000.";
+			close;
+		}
+	} else {
+		mes "[Tarence]";
+		mes "Chocolates makes us fat so she hates it,";
+		mes "but then, what about cookies?";
+		mes "Ugh.. It's too difficult to find out what";
+		mes "women are thinking... haa..";
+		emotion ET_OHNO;
+		close;
+	}
+}
+
+aldebaran,181,127,6	script	Eshuter#aldebaran	4_F_NFLOSTGIRL,{
+	if (evt_2010_valen == 2) {
+		mes "[Eshuter]";
+		mes "I'm on a diet.";
+		mes "But then my boy friend";
+		mes "started to ask about";
+		mes "^FF1493Cupid's Chocolate^000000";
+		next;
+		mes "[Eshuter]";
+		mes "So I thought he wanted to eat a";
+		mes "chocolate so I was just waiting";
+		mes "in line but actually,";
+		mes "he meant to give it to me!";
+		next;
+		mes "[Eshuter]";
+		mes "But I'm on a diet..";
+		mes "So it's no use waiting";
+		mes "in line till now.";
+		emotion ET_OHNO;
+		next;
+		switch(select("Then, can you switch the line with me?", "Never mind about the diet, just eat.", "End conversation.")) {
+			case 1:
+				mes "[Eshuter]";
+				mes "Oh, you've come to take";
+				mes "a chocolate? I'll switch with you.";
+				next;
+				mes "[Eshuter]";
+				mes "But I really want";
+				mes "to eat a cookie now,";
+				mes "I was on the diet that I";
+				mes "ate my meal just a little.";
+				next;
+				mes "[Eshuter]";
+				mes "Could you just get me";
+				mes "^D2691E 20 of well baked cookies^000000?";
+				mes "I'll switch the line immediately.";
+				next;
+				switch(select("Accept", "Refuse", "End Conversation")) {
+					case 1:
+						mes "[Eshuter]";
+						mes "Wow~ Thanks!";
+						mes "Then I'll be waiting for you.";
+						evt_2010_valen = 5;
+						close;
+					case 2:
+						mes "[Eshuter]";
+						mes "You'll have to wait in line then..";
+						mes "Whoa. it'll take a long time..";
+						close;
+					case 3:
+						close;
+				}
+			case 2:
+				mes "[Eshuter]";
+				mes "No! If I get fat, Tarence";
+				mes "might hate me!";
+				next;
+				mes "[Eshuter]";
+				mes "You are just jealous!";
+				close;
+			case 3:
+				close;
+		}
+	} else if (evt_2010_valen == 5) {
+		if (countitem(538) > 19) {
+			mes "[Eshuter]";
+			mes "Wow~ It looks yummy.";
+			delitem 538, 20; // Well_Baked_Cookie
+			evt_2010_valen = 6;
+			next;
+			mes "[Eshuter]";
+			mes "Stand in this line.";
+			mes "I'll switch the line for you.";
+			mes "Thank you, I'll take it well.";
+			emotion ET_THANKS;
+		} else {
+			mes "[Eshuter]";
+			mes "Oh, well-baked cookies are";
+			mes "carried by a guy named Cookie in";
+			mes "^0000FFLutie^000000, the place";
+			mes "where many toys are.";
+			mes "Please get me ^FF000020^000000.";
+		}
+	} else if (evt_2010_valen < 2) {
+		mes "[Eshuter]";
+		mes "I'll get the chocolate quickly";
+		mes "and give it to Tarence.";
+		close;
+	} else {
+		mes "[Eshuter]";
+		mes "It's a really happy thing to";
+		mes "eat sweet food.";
+		mes "I'll do the diet ^FF0000start/i/ing from tomorrow^000000";
+		emotion ET_DELIGHT;
+		close;
+	}
+}
+
+aldebaran,100,138,3	script	Woman#aldebaran01	1_F_02,{
+	mes "[Woman]";
+	mes "I was messing around at home";
+	mes "to make a homemade chocolate by myself.";
+	mes "What is this..isn't it a brick..";
+	emotion ET_OTL;
+	next;
+	mes "[Woman]";
+	mes "Ah.. how can I give it!";
+	mes "I really need to get";
+	mes "^FF1493Cupid's Chocolate^000000..";
+	close;
+}
+
+aldebaran,102,138,3	script	Man#aldebaran01	4_M_01,{
+	mes "[Man]";
+	mes "Today I'm going to meet my mom.";
+	mes "I see her once in every month,";
+	mes "today's the ^800080Valentine's Day^000000";
+	mes "so I'll give her a chocolate.";
+	close;
+}
+
+aldebaran,179,127,6	script	Woman#aldebaran02	4W_F_01,{
+	mes "[Woman]";
+	mes "Whatever the ^800080Valentine's day^000000!!";
+	mes "We are invincible solo troop!";
+	specialeffect EF_TORCH;
+	next;
+	mes "[Woman]";
+	mes "Why am I waiting in line?";
+	mes "Mind your own business. I'll eat it.";
+	close;
+}
+
+aldebaran,177,127,6	script	Man#aldebaran02	4_M_06,{
+	mes "[Man]";
+	mes "My friend has been so gloomy";
+	mes "recently.";
+	next;
+	mes "[Man]";
+	mes "Eating a chocolate makes";
+	mes "feel good, so";
+	mes "I hope my friend eats it, and get better.";
+	close;
+}
+
+hugel,1,1,3	script	Valentine ON/OFF#hugel	1_M_SIZ,{
+	mes "Hello?";
+	mes "I'm 2010 Valentine's Day Event ON/OFF NPC.";
+	next;
+	if(select("[2010] Valentine's Day NPC ON", "[2010] Valentine's Day NPC OFF") == 1) {
+		enablenpc "The Old Man#hugel";
+		enablenpc "the Old Woman#hugel";
+		mes "Valentine's Day NPC are now enabled.";
+	} else {
+		disablenpc "The Old Man#hugel";
+		disablenpc "the Old Woman#hugel";
+		mes "Valentine's Day NPCs are now disabled.";
+	}
+	mes "The location of NPCs are";
+	mes "Hugel 102 148 (The Old Man)";
+	mes "Hugel 100 148 (the Old Woman)";
+	close;
+}

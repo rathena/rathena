@@ -1,14 +1,8 @@
 //===== rAthena Script =======================================
-//= White Day Event Script
-//===== By: ==================================================
-//= 1.0a Muad_Dib (Prometheus Project)
-//===== Current Version: =====================================
-//= 1.0a
-//===== Compatible With: =====================================
-//= rAthena Project; RO Episode 6+
+//= 2004 White Day Event
 //===== Description: =========================================
 //= Sells candy, candy cane and well baked cookie.
-//===== Additional Comments: =================================
+//===== Changelogs: ==========================================
 //= 07/06/05 : Added 1st Version. [Muad_Dib]
 //= Converted to rAthena format by Dr.Evil
 //============================================================
@@ -61,7 +55,7 @@ L0_2:
 	goto L_INPUT;
 L0_3:
 	set @maplePrice,2000;
-	set @mapleItemID,538; 
+	set @mapleItemID,538;
 	mes "[Sugar]";
 	mes "It is a well baked cookie, and the price is";
 	mes "2000 Zeny each.";
