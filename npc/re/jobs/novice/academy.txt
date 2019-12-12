@@ -1645,7 +1645,7 @@ izlude_d,120,207,4	duplicate(Information Staff#0)	Information Staff#d	8W_SOLDIER
 // -----------------------------------------------------------------------------
 izlude,179,75,3	script	Airship#iz	4_BULLETIN_BOARD2,3,3,{
 	.@total = isbegin_quest(7475) + isbegin_quest(7476) + isbegin_quest(7477);
-	if (isbegin_quest(7474)) {
+	if (isbegin_quest(7474) == 1) {
 		if (!isbegin_quest(7475)) {
 			mes "==== Airship Information====";
 			mes "Izlude - Juno - Rachel";
@@ -2417,7 +2417,7 @@ izlude_d,140,249,7	duplicate(Academy Student#0)	Academy Student#d	4_M_NOV_RUMIN
 // - Instructor Argos (Trick Dead Quest)
 // -----------------------------------------------------------------------------
 izlude,140,260,3	script	Instructor Argos#iz	4_M_LIEMAN,{
-	if (Class != Job_Novice && getskilllv("NV_TRICKDEAD") != 0) {
+	if (Class != Job_Novice || getskilllv("NV_TRICKDEAD") != 0) {
 		mes "[Instructor Argos]";
 		mes "snoring... snoring...";
 		close;
