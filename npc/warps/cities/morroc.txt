@@ -25,8 +25,6 @@ morocc,253,56,0	warp	moc03	2,1,morocc_in,134,74
 //morocc,26,297,0	warp	moc02-1	5,2,moc_ruins,156,42
 morocc,274,269,0	warp	moc04	2,2,morocc_in,138,136
 morocc,283,170,0	warp	moc07	2,2,morocc_in,108,176
-//morocc,302,207,0	warp	moc005	2,2,moc_fild10,22,207
-morocc,299,207,0	warp	moc005	2,2,moc_fild20,36,177
 morocc,46,46,0	warp	moc05	2,1,morocc_in,68,72
 morocc,52,259,0	warp	moc06	1,2,morocc_in,180,65
 morocc,85,55,0	warp	moc08	2,2,morocc_in,44,149

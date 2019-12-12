@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Morroc Quest NPCs
+//= Morocc Quest NPCs
 //===== By: ==================================================
 //= Euphy
 //===== Current Version: =====================================
@@ -8,11 +8,12 @@
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
-//= Quest NPCs related to Morroc.
+//= Quest NPCs related to Morocc.
 //===== Additional Comments: =================================
 //= 1.0 First Version.
 //= 1.0a Gathered remaining dialogues. [Euphy]
-//= 1.1 Added new warpers for Satan Morroc maps. [Euphy]
+//= 1.1 Added new warpers for Satan Morocc maps. [Euphy]
+//= 1.2 Updated Continental Guards [Lemongrass]
 //============================================================
 
 // Stop Post Quest
@@ -23,39 +24,107 @@ morocc,152,167,4	duplicate(William)	William#moc	89
 // ============================================================
 morocc,169,168,4	duplicate(Alchemist)	Alchemist#moc	64
 
-// Resurrection of Satan Morroc
+// Resurrection of Satan Morocc
 // ============================================================
--	script	Continental Guard#man	-1,{
-	mes "[Continental Guard]";
-	mes "We've received orders from Headquarters to block access to this area since an unusual space-time phenomenon has been detected.";
-	next;
-	mes "[Continental Guard]";
-	mes "If you really want to go to the next area, you'll be responsible for your own safety.";
-	next;
-	switch(select("Nevermind.:Enter the Field.")) {
+moc_fild07,380,202,1	script	Continental Guard#man1::cont_guard	852,{
+	switch( atoi( charat( strnpcinfo(2),3 ) ) ) {
 	case 1:
-		mes "[Continental Guard]";
-		mes "Wise choice.";
-		mes "Have a safe journey.";
-		close;
+		.@menu$[0] = "Please send me to Prontera.";
+		break;
 	case 2:
-		mes "[Continental Guard]";
-		mes "I see.";
-		mes "I'll send you to the field shortly.";
-		close2;
-		warp "moc_fild20",208,207;
-		end;
+		break;
+	case 3:
+		.@menu$[1] = "I want to go to Morocc.";
+		.@menu$[2] = "I want to go to North of Morocc.";
+		break;
+	case 4:
+	case 5:
+	case 9:
+		.@menu$[1] = "I want to go to Morocc.";
+		break;
+	case 6:
+		.@menu$[1] = "I want to go to Morocc.";
+		.@menu$[3] = "Please send me to Southeast Morocc.";
+		break;
+	case 7:
+	case 8:
+		.@menu$[4] = "Please send me to Payon.";
+		break;
+	}
+	mes "[Continental Guard]";
+	mes "This is where access is controlled."; // 이 앞은 출입이 통제되는 곳입니다.
+	mes "It is a very dangerous place, please refrain from accessing the area."; // 매우 위험한 곳이니 근방의 출입을 자제해 주시기 바랍니다.
+	next;
+	// "대화를 취소한다." "무슨 일인지 물어본다." "경계선 너머로 보내주십시오" "프론테라 방면으로 보내주십시오"
+	switch( select( "Cancel the conversation.", "What is going on?", "Please send me over the border.", .@menu$[0], .@menu$[1], .@menu$[2], .@menu$[3], .@menu$[4] ) ){
+		case 1:
+			mes "[Continental Guard]";
+			mes "I hope you have a good trip."; // 좋은 여행 되시길 바랍니다.
+			close;
+		case 2:
+			mes "[Continental Guard]";
+			mes "It was a big event, but you still do not know?"; // 큰 사건이었는데 아직도 모르고 계셨군요.
+			next;
+			mes "[Continental Guard]";
+			mes "Someone revived Satan Morocc, who was sealed under the desert city."; // 사막도시 지하에 봉인되어 있던 마왕 모로크가 부활하는 사건이 있었습니다만,
+			next;
+			mes "[Continental Guard]";
+			mes "But Satan Morocc could be defeated by the Union of Midgard, an alliance of three countries: Rune Midgards, Arunafeltz and Schwalzvalt."; // 룬 미드가츠, 아루나펠츠, 슈발츠발드 3국의 동맹인 미드가르드 연합에 의해 마왕 모로크를 퇴치하는데 성공하였습니다.
+			next;
+			mes "[Continental Guard]";
+			mes "We are still controlling the area around Morocc, because we have not been able to get rid of all the remains yet, but if you ask the Continental Guards, we will transport you safely to your destination at any time."; // 아직 잔당들까지 모두 퇴치된 건 아니기에 부득이하게 모로크 주변은 통제되고 있습니다만, 언제든 저희 컨티넨탈 가드에게 부탁하시면 목적지까지 안전하게 호위해드리겠습니다.
+			close;
+		case 3:
+			mes "[Continental Guard]";
+			mes "Okay."; // 알겠습니다.
+			mes "Then I will send you to the land behind the border."; // 그럼 경계선 너머의 땅으로 보내 드리도록 하겠습니다.
+			close2;
+			warp "moc_fild20", 208, 207;
+			end;
+		case 4:
+			mes "[Continental Guard]";
+			mes "Okay."; // 알겠습니다.
+			mes "Then I will send you to Prontera."; // 그럼 프론테라 방면으로 보내 드리도록 하겠습니다.
+			close2;
+			warp "prt_fild10", 263, 34;
+			end;
+		case 5:
+			mes "[Continental Guard]";
+			mes "Okay."; // 알겠습니다.
+			mes "I hope you travel comfortably."; // 그럼 편안한 여행 하시길 바랍니다.
+			close2;
+			warp "morocc", 160, 61;
+			end;
+		case 6:
+			mes "[Continental Guard]";
+			mes "Okay."; // 알겠습니다.
+			mes "I hope you travel comfortably."; // 그럼 편안한 여행 하시길 바랍니다.
+			close2;
+			warp "moc_fild07", 377, 209;
+			end;
+		case 7:
+			mes "[Continental Guard]";
+			mes "Okay. I will send you to Southeast Morocc."; // 알겠습니다. 모로크 남동 방면으로 보내드리겠습니다.
+			close2;
+			warp "moc_fild16", 124, 372;
+			end;
+		case 8:
+			mes "[Continental Guard]";
+			mes "Okay."; // 알겠습니다.
+			mes "I hope you travel comfortably."; // 그럼 편안한 여행 하시길 바랍니다.
+			close2;
+			warp "moc_fild13", 41, 171;
+			end;
 	}
 }
-moc_fild07,380,202,1	duplicate(Continental Guard#man)	Continental Guard#man1	852
-moc_fild11,189,360,6	duplicate(Continental Guard#man)	Continental Guard#man2	852
-prt_fild10,263,23,1	duplicate(Continental Guard#man)	Continental Guard#man3	852
-prt_fild09,95,19,1	duplicate(Continental Guard#man)	Continental Guard#man4	852
-prt_fild09,246,17,1	duplicate(Continental Guard#man)	Continental Guard#man5	852
-moc_fild13,32,171,6	duplicate(Continental Guard#man)	Continental Guard#man6	852
-moc_fild16,124,381,4	duplicate(Continental Guard#man)	Continental Guard#man7	852
-moc_fild16,333,380,4	duplicate(Continental Guard#man)	Continental Guard#man8	852
-moc_fild01,84,19,1	duplicate(Continental Guard#man)	Continental Guard#man9	852
+moc_fild11,189,360,1	duplicate(cont_guard)	Continental Guard#man2	852
+prt_fild10,263,23,1	duplicate(cont_guard)	Continental Guard#man3	852
+prt_fild09,95,19,1	duplicate(cont_guard)	Continental Guard#man4	852
+prt_fild09,246,17,1	duplicate(cont_guard)	Continental Guard#man5	852
+moc_fild13,32,171,1	duplicate(cont_guard)	Continental Guard#man6	852
+moc_fild16,124,381,1	duplicate(cont_guard)	Continental Guard#man7	852
+moc_fild16,333,380,1	duplicate(cont_guard)	Continental Guard#man8	852
+moc_fild01,84,19,1	duplicate(cont_guard)	Continental Guard#man9	852
 
 morocc,176,101,3	duplicate(Continental Official)	Continental Official#mor	754
 

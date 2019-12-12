@@ -1,0 +1,10 @@
+//===== rAthena Script =======================================
+//= Morocc Warp Script
+//===== Description: =========================================
+//= Warp Points for Morocc
+//===== Changelog: ===========================================
+//= 1.0 Split into pre-re and re [Lemongrass]
+//============================================================
+
+//morocc,302,207,0	warp	moc005	2,2,moc_fild10,22,207
+morocc,299,207,0	warp	moc005	2,2,moc_fild20,36,177
