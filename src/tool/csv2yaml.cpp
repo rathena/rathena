@@ -235,7 +235,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("READING_SPELLBOOK_DB", 1, guild_skill_tree_paths, "spellbook_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("READING_SPELLBOOK_DB", 1, root_paths, "spellbook_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_spellbookdb, false);
 	})) {
 		return 0;
@@ -656,7 +656,6 @@ static size_t pet_read_db( const char* file ){
 
 // Copied and adjusted from skill.cpp
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current) {
-	YAML::Node node;
 	uint16 skill_id = atoi(split[0]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
@@ -664,8 +663,6 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 		ShowError("Skill name for Spell Book skill ID %hu is not known.\n", skill_id);
 		return false;
 	}
-
-	node["Skill"] = *skill_name;
 
 	uint16 nameid = (uint16)atoi(split[2]);
 	std::string *book_name = util::umap_find(aegis_itemnames, nameid);
@@ -675,10 +672,11 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 		return false;
 	}
 
-	node["Book"] = *book_name;
-	node["PreservePoints"] = atoi(split[1]);
-
-	body[counter++] = node;
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << YAML::Key << "Book" << YAML::Value << *book_name;
+	body << YAML::Key << "PreservePoints" << YAML::Value << atoi(split[1]);
+	body << YAML::EndMap;
 
 	return false;
 }
