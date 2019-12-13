@@ -731,6 +731,12 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 
 		if (atoi(str[7]) != 0) {
 			uint16 *headtop_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[7]));
+
+			if (headtop_item_id == nullptr) {
+				ShowError("Item ID for view ID %d (head top) is not known.\n", atoi(str[7]));
+				return false;
+			}
+
 			std::string *headtop_item_name = util::umap_find(aegis_itemnames, *headtop_item_id);
 
 			if (headtop_item_name == nullptr) {
@@ -743,6 +749,12 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 
 		if (atoi(str[8]) != 0) {
 			uint16 *headmid_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[8]));
+
+			if (headmid_item_id == nullptr) {
+				ShowError("Item ID for view ID %d (head mid) is not known.\n", atoi(str[8]));
+				return false;
+			}
+
 			std::string *headmid_item_name = util::umap_find(aegis_itemnames, *headmid_item_id);
 
 			if (headmid_item_name == nullptr) {
@@ -755,6 +767,12 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 
 		if (atoi(str[9]) != 0) {
 			uint16 *headlow_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[9]));
+
+			if (headlow_item_id == nullptr) {
+				ShowError("Item ID for view ID %d (head low) is not known.\n", atoi(str[9]));
+				return false;
+			}
+
 			std::string *headlow_item_name = util::umap_find(aegis_itemnames, *headlow_item_id);
 
 			if (headlow_item_name == nullptr) {
