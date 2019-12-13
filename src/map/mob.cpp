@@ -4405,17 +4405,17 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Sex", sex))
 			return 0;
 
-		sex = "SEX_" + sex;
+		std::string sex_constant = "SEX_" + sex;
 
 		int constant;
 
-		if (script_get_constant(sex.c_str(), &constant)) {
-			this->invalidWarning(node["Sex"], "Unknown sex constant %s.\n", sex.erase(0, 4).c_str());
+		if (script_get_constant(sex_constant.c_str(), &constant)) {
+			this->invalidWarning(node["Sex"], "Unknown sex constant %s.\n", sex.c_str());
 			return 0;
 		}
 
 		if (constant < SEX_FEMALE || constant > SEX_MALE) {
-			this->invalidWarning(node["Sex"], "Sex value %s is not valid.\n", sex.erase(0, 4).c_str());
+			this->invalidWarning(node["Sex"], "Sex value %s is not valid.\n", sex.c_str());
 			return 0;
 		}
 
@@ -4535,7 +4535,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (this->nodeExists(node, "PetEquip")) {
-		std::shared_ptr<s_pet_db> pet_db_ptr = pet_db.find(mob_id);
+		std::shared_ptr<s_pet_db> pet_db_ptr = pet_db.find(mob->vd.class_);
 
 		if (pet_db_ptr == nullptr) {
 			this->invalidWarning(node["PetEquip"], "PetEquip value can only be used for defined pets, skipping.\n");
@@ -4557,17 +4557,18 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "Options")) {
 		for (const auto &optionNode : node["Options"]) {
-			std::string option = "OPTION_" + optionNode.first.as<std::string>();
+			std::string option = optionNode.first.as<std::string>();
+			std::string option_constant = "OPTION_" + option;
 			int constant;
 
-			if (script_get_constant(option.c_str(), &constant)) {
-				this->invalidWarning(optionNode, "Unknown option constant %s, skipping.\n", option.erase(0, 7).c_str());
+			if (!script_get_constant(option_constant.c_str(), &constant)) {
+				this->invalidWarning(optionNode, "Unknown option constant %s, skipping.\n", option.c_str());
 				continue;
 			}
 
 			bool active;
 
-			if (!this->asBool(node, option.erase(0, 7), active))
+			if (!this->asBool(node, option, active))
 				continue;
 
 #ifdef NEW_CARTS
