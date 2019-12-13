@@ -682,12 +682,13 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 
 		if (sprite == nullptr) {
 			sprite = const_cast<char *>(constant_lookup(sprite_id, "JT_"));
-			sprite += 3; // Strip JT_ here because the script engine doesn't send this prefix for NPC.
 
 			if (sprite == nullptr) {
 				ShowError("Sprite name %s is not known.\n", sprite);
 				return false;
 			}
+
+			sprite += 3; // Strip JT_ here because the script engine doesn't send this prefix for NPC.
 
 			body << YAML::Key << "Sprite" << YAML::Value << *sprite;
 		} else
