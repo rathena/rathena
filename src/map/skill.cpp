@@ -21445,9 +21445,9 @@ uint64 ReadingSpellbookDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!this->asString(node, "Skill", skill_name))
 		return 0;
 
-	uint16 skill_id;
+	uint16 skill_id = skill_name2id(skill_name.c_str());
 
-	if (!(skill_id = skill_name2id(skill_name.c_str()))) {
+	if (skill_id == 0) {
 		this->invalidWarning(node["Skill"], "Invalid skill name \"%s\", skipping.\n", skill_name.c_str());
 		return 0;
 	}
