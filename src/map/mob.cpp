@@ -4379,9 +4379,11 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 		int constant;
 
-		if (!script_get_constant(sprite.c_str(), &constant)) {
-			this->invalidWarning(node["Sprite"], "Unknown sprite constant %s.\n", sprite.c_str());
-			return 0;
+		if (script_get_constant(sprite.c_str(), &constant)) {
+			if (npcdb_checkid(constant) == 0 && pcdb_checkid(constant) == 0) {
+				this->invalidWarning(node["Sprite"], "Unknown sprite constant %s.\n", sprite.c_str());
+				return 0;
+			}
 		} else {
 			constant = mobdb_searchname(sprite.c_str());
 
@@ -4389,11 +4391,6 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 				this->invalidWarning(node["Sprite"], "Unknown mob sprite constant %s.\n", sprite.c_str());
 				return 0;
 			}
-		}
-
-		if (mobdb_checkid(constant) == 0 && npcdb_checkid(constant) == 0 && pcdb_checkid(constant) == 0) {
-			this->invalidWarning(node["Sprite"], "Invalid sprite %s.\n", sprite.c_str());
-			return 0;
 		}
 
 		mob->vd.class_ = constant;
