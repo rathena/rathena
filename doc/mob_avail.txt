@@ -16,10 +16,13 @@ Mob: The AEGIS name of the monster.
 
 Sprite: The name of the sprite the monster will be changed to.
 
-This can be another mob, a player (prefixed with 'JOB_'), or an NPC (prefixed with 'JT_'). When using an
-NPC sprite, the prefix is not required in the mob_avail database as the script engine will strip it.
+This can be another mob, a player (prefixed with 'JOB_'), or an NPC. When using an NPC sprite,
+the prefix is not required in the mob_avail database as the script engine will strip it.
 
 Example:
+  - Mob: POPORING
+    Sprite: PORING # This will change the Poporing into a Poring.
+
   - Mob: PORING
     Sprite: JOB_STALKER # This will change the Poring into a Stalker.
 
