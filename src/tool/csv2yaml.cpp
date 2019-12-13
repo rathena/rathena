@@ -69,7 +69,7 @@ int getch( void ){
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static size_t pet_read_db( const char* file );
-static bool mob_readdb_mobavail(char *split[], int columns, int current);
+static bool mob_readdb_mobavail(char *str[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -216,6 +216,7 @@ int do_init( int argc, char** argv ){
 	sv_readdb( path_db_import.c_str(), "skill_db.txt", ',', 18, 18, -1, parse_skill_constants, false );
 
 	// Load constants
+	#define export_constant_npc(a) export_constant(a)
 	#include "../map/script_constants.hpp"
 
 	std::vector<std::string> root_paths = {
@@ -676,13 +677,26 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 	uint16 sprite_id = atoi(str[1]);
 	std::string *sprite_name = util::umap_find(aegis_mobnames, sprite_id);
 
-	if (sprite_name == nullptr)
-		body << YAML::Key << "Sprite" << YAML::Value << constant_lookup(sprite_id, "JT_");
-	else
+	if (sprite_name == nullptr) {
+		char *sprite = const_cast<char *>(constant_lookup(sprite_id, "JOB_"));
+
+		if (sprite == nullptr) {
+			sprite = const_cast<char *>(constant_lookup(sprite_id, "JT_"));
+			sprite += 3; // Strip JT_ here because the script engine doesn't send this prefix for NPC.
+
+			if (sprite == nullptr) {
+				ShowError("Sprite name %s is not known.\n", sprite);
+				return false;
+			}
+
+			body << YAML::Key << "Sprite" << YAML::Value << *sprite;
+		} else
+			body << YAML::Key << "Sprite" << YAML::Value << *sprite;
+	} else
 		body << YAML::Key << "Sprite" << YAML::Value << *sprite_name;
 
 	if (columns == 12) {
-		body << YAML::Key << "Sex" << YAML::Value << (atoi(str[2]) ? "SEX_MALE" : "SEX_FEMALE");
+		body << YAML::Key << "Sex" << YAML::Value << (atoi(str[2]) ? "Male" : "Female");
 		if (atoi(str[3]) != 0)
 			body << YAML::Key << "HairStyle" << YAML::Value << atoi(str[3]);
 		if (atoi(str[4]) != 0)
@@ -754,95 +768,91 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			uint32 options = atoi(str[10]);
 
 			body << YAML::Key << "Options";
-			body << YAML::BeginSeq;
+			body << YAML::BeginMap;
 
 			while (options > OPTION_NOTHING && options <= OPTION_SUMMER2) {
-				body << YAML::BeginMap;
-
 				if (options & OPTION_SIGHT) {
-					body << YAML::Key << "OPTION_SIGHT" << YAML::Value << "true";
-					options ^= ~OPTION_SIGHT;
+					body << YAML::Key << "Sight" << YAML::Value << "true";
+					options &= ~OPTION_SIGHT;
 				} else if (options & OPTION_CART1) {
-					body << YAML::Key << "OPTION_CART1" << YAML::Value << "true";
-					options ^= ~OPTION_CART1;
+					body << YAML::Key << "Cart1" << YAML::Value << "true";
+					options &= ~OPTION_CART1;
 				} else if (options & OPTION_FALCON) {
-					body << YAML::Key << "OPTION_FALCON" << YAML::Value << "true";
-					options ^= ~OPTION_FALCON;
+					body << YAML::Key << "Falcon" << YAML::Value << "true";
+					options &= ~OPTION_FALCON;
 				} else if (options & OPTION_RIDING) {
-					body << YAML::Key << "OPTION_RIDING" << YAML::Value << "true";
-					options ^= ~OPTION_RIDING;
+					body << YAML::Key << "Riding" << YAML::Value << "true";
+					options &= ~OPTION_RIDING;
 				} else if (options & OPTION_CART2) {
-					body << YAML::Key << "OPTION_CART2" << YAML::Value << "true";
-					options ^= ~OPTION_CART2;
+					body << YAML::Key << "Cart2" << YAML::Value << "true";
+					options &= ~OPTION_CART2;
 				} else if (options & OPTION_CART3) {
-					body << YAML::Key << "OPTION_CART3" << YAML::Value << "true";
-					options ^= ~OPTION_CART3;
+					body << YAML::Key << "Cart2" << YAML::Value << "true";
+					options &= ~OPTION_CART3;
 				} else if (options & OPTION_CART4) {
-					body << YAML::Key << "OPTION_CART4" << YAML::Value << "true";
-					options ^= ~OPTION_CART4;
+					body << YAML::Key << "Cart4" << YAML::Value << "true";
+					options &= ~OPTION_CART4;
 				} else if (options & OPTION_CART5) {
-					body << YAML::Key << "OPTION_CART5" << YAML::Value << "true";
-					options ^= ~OPTION_CART5;
+					body << YAML::Key << "Cart5" << YAML::Value << "true";
+					options &= ~OPTION_CART5;
 				} else if (options & OPTION_ORCISH) {
-					body << YAML::Key << "OPTION_ORCISH" << YAML::Value << "true";
-					options ^= ~OPTION_ORCISH;
+					body << YAML::Key << "Orcish" << YAML::Value << "true";
+					options &= ~OPTION_ORCISH;
 				} else if (options & OPTION_WEDDING) {
-					body << YAML::Key << "OPTION_WEDDING" << YAML::Value << "true";
-					options ^= ~OPTION_WEDDING;
+					body << YAML::Key << "Wedding" << YAML::Value << "true";
+					options &= ~OPTION_WEDDING;
 				} else if (options & OPTION_RUWACH) {
-					body << YAML::Key << "OPTION_RUWACH" << YAML::Value << "true";
-					options ^= ~OPTION_RUWACH;
+					body << YAML::Key << "Ruwach" << YAML::Value << "true";
+					options &= ~OPTION_RUWACH;
 				} else if (options & OPTION_FLYING) {
-					body << YAML::Key << "OPTION_FLYING" << YAML::Value << "true";
-					options ^= ~OPTION_FLYING;
+					body << YAML::Key << "Flying" << YAML::Value << "true";
+					options &= ~OPTION_FLYING;
 				} else if (options & OPTION_XMAS) {
-					body << YAML::Key << "OPTION_XMAS" << YAML::Value << "true";
-					options ^= ~OPTION_XMAS;
+					body << YAML::Key << "Xmas" << YAML::Value << "true";
+					options &= ~OPTION_XMAS;
 				} else if (options & OPTION_TRANSFORM) {
-					body << YAML::Key << "OPTION_TRANSFORM" << YAML::Value << "true";
-					options ^= ~OPTION_TRANSFORM;
+					body << YAML::Key << "Transform" << YAML::Value << "true";
+					options &= ~OPTION_TRANSFORM;
 				} else if (options & OPTION_SUMMER) {
-					body << YAML::Key << "OPTION_SUMMER" << YAML::Value << "true";
-					options ^= ~OPTION_SUMMER;
+					body << YAML::Key << "Summer" << YAML::Value << "true";
+					options &= ~OPTION_SUMMER;
 				} else if (options & OPTION_DRAGON1) {
-					body << YAML::Key << "OPTION_DRAGON1" << YAML::Value << "true";
-					options ^= ~OPTION_DRAGON1;
+					body << YAML::Key << "Dragon1" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON1;
 				} else if (options & OPTION_WUG) {
-					body << YAML::Key << "OPTION_WUG" << YAML::Value << "true";
-					options ^= ~OPTION_WUG;
+					body << YAML::Key << "Wug" << YAML::Value << "true";
+					options &= ~OPTION_WUG;
 				} else if (options & OPTION_WUGRIDER) {
-					body << YAML::Key << "OPTION_WUGRIDER" << YAML::Value << "true";
-					options ^= ~OPTION_WUGRIDER;
+					body << YAML::Key << "WugRider" << YAML::Value << "true";
+					options &= ~OPTION_WUGRIDER;
 				} else if (options & OPTION_MADOGEAR) {
-					body << YAML::Key << "OPTION_MADOGEAR" << YAML::Value << "true";
-					options ^= ~OPTION_MADOGEAR;
+					body << YAML::Key << "MadoGear" << YAML::Value << "true";
+					options &= ~OPTION_MADOGEAR;
 				} else if (options & OPTION_DRAGON2) {
-					body << YAML::Key << "OPTION_DRAGON2" << YAML::Value << "true";
-					options ^= ~OPTION_DRAGON2;
+					body << YAML::Key << "Dragon2" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON2;
 				} else if (options & OPTION_DRAGON3) {
-					body << YAML::Key << "OPTION_DRAGON3" << YAML::Value << "true";
-					options ^= ~OPTION_DRAGON3;
+					body << YAML::Key << "Dragon3" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON3;
 				} else if (options & OPTION_DRAGON4) {
-					body << YAML::Key << "OPTION_DRAGON4" << YAML::Value << "true";
-					options ^= ~OPTION_DRAGON4;
+					body << YAML::Key << "Dragon4" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON4;
 				} else if (options & OPTION_DRAGON5) {
-					body << YAML::Key << "OPTION_DRAGON5" << YAML::Value << "true";
-					options ^= ~OPTION_DRAGON5;
+					body << YAML::Key << "Dragon5" << YAML::Value << "true";
+					options &= ~OPTION_DRAGON5;
 				} else if (options & OPTION_HANBOK) {
-					body << YAML::Key << "OPTION_HANBOK" << YAML::Value << "true";
-					options ^= ~OPTION_HANBOK;
+					body << YAML::Key << "Hanbok" << YAML::Value << "true";
+					options &= ~OPTION_HANBOK;
 				} else if (options & OPTION_OKTOBERFEST) {
-					body << YAML::Key << "OPTION_OKTOBERFEST" << YAML::Value << "true";
-					options ^= ~OPTION_OKTOBERFEST;
+					body << YAML::Key << "Oktoberfest" << YAML::Value << "true";
+					options &= ~OPTION_OKTOBERFEST;
 				} else if (options & OPTION_SUMMER2) {
-					body << YAML::Key << "OPTION_SUMMER2" << YAML::Value << "true";
-					options ^= ~OPTION_SUMMER2;
+					body << YAML::Key << "Summer2" << YAML::Value << "true";
+					options &= ~OPTION_SUMMER2;
 				}
-
-				body << YAML::EndMap;
 			}
 
-			body << YAML::EndSeq;
+			body << YAML::EndMap;
 		}
 	} else if (columns == 3) {
 		if (atoi(str[5]) != 0) {

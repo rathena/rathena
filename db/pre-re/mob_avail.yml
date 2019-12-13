@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Pre-Renewal Mob Availability and Alias Database
+# Mob Availability and Alias Database
 ###########################################################################
 #
 # Mob Availability and Alias Settings
@@ -24,6 +24,7 @@
 ###########################################################################
 # - Mob                     Mob to adjust
 #   Sprite                  Sprite which will be sent to the client instead of Mob
+#   Sex                     Sex (if displayed as a player) (Default: Female)
 #   HairStyle               Hair Style ID (if displayed as a player) (Default: 0)
 #   HairColor               Hair Color ID (if displayed as a player) (Default: 0)
 #   ClothColor              Cloth Color ID (if displayed as a player) (Default: 0)
@@ -34,7 +35,7 @@
 #   HeadLow                 Item name of headgear (if displayed as a player) (Default: 0)
 #   PetEquip                Item name of pet equipment (if Mob is a valid pet) (Default: 0)
 #   Options:                Set an option for an object (Optional)
-#     - OptionState: bool
+#     OptionState: bool
 ###########################################################################
 
 Header:

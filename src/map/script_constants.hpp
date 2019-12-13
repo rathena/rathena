@@ -3964,9 +3964,14 @@
 	export_constant(OPTION_SIGHT);
 	export_constant(OPTION_HIDE);
 	export_constant(OPTION_CLOAK);
+	export_constant(OPTION_CART1);
 	export_constant(OPTION_FALCON);
 	export_constant(OPTION_RIDING);
 	export_constant(OPTION_INVISIBLE);
+	export_constant(OPTION_CART2);
+	export_constant(OPTION_CART3);
+	export_constant(OPTION_CART4);
+	export_constant(OPTION_CART5);
 	export_constant(OPTION_ORCISH);
 	export_constant(OPTION_WEDDING);
 	export_constant(OPTION_RUWACH);
@@ -3985,6 +3990,7 @@
 	export_constant(OPTION_DRAGON5);
 	export_constant(OPTION_HANBOK);
 	export_constant(OPTION_OKTOBERFEST);
+	export_constant(OPTION_SUMMER2);
 
 	/* status option compounds */
 	export_constant(OPTION_DRAGON);
@@ -4969,7 +4975,9 @@
 
 	/* NPC view ids */
 	// Special macro to strip the prefix 'JT_'
-	#define export_constant_npc(a) export_constant_offset(a,3)
+	#if !defined(export_constant_npc)
+		#define export_constant_npc(a) export_constant_offset(a,3)
+	#endif
 
 	export_constant_npc(JT_WARPNPC);
 	export_constant_npc(JT_1_ETC_01);

@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Custom Mob Availability and Alias Database
+# Mob Availability and Alias Database
 ###########################################################################
 #
 # Mob Availability and Alias Settings
@@ -24,6 +24,7 @@
 ###########################################################################
 # - Mob                     Mob to adjust
 #   Sprite                  Sprite which will be sent to the client instead of Mob
+#   Sex                     Sex (if displayed as a player) (Default: Female)
 #   HairStyle               Hair Style ID (if displayed as a player) (Default: 0)
 #   HairColor               Hair Color ID (if displayed as a player) (Default: 0)
 #   ClothColor              Cloth Color ID (if displayed as a player) (Default: 0)
@@ -34,7 +35,7 @@
 #   HeadLow                 Item name of headgear (if displayed as a player) (Default: 0)
 #   PetEquip                Item name of pet equipment (if Mob is a valid pet) (Default: 0)
 #   Options:                Set an option for an object (Optional)
-#     - OptionState: bool
+#     OptionState: bool
 ###########################################################################
 
 Header:
@@ -59,7 +60,7 @@ Header:
   # Valaris
 #  - Mob: BOW_GUARDIAN_
 #    Sprite: JOB_ASSASSIN_CROSS
-#    Sex: SEX_MALE
+#    Sex: Male
 #    HairStyle: 1
 #    HairColor: 1
 #    ClothColor: 1
@@ -68,11 +69,11 @@ Header:
 #    HeadMid: Sunglasses
 #    HeadLow: Cigar
 #    Options:
-#      - OPTION_FALCON: true
+#      Falcon: true
   # Valaris Worshiper
 #  - Mob: E_CONDOR
 #    Sprite: JOB_THIEF
-#    Sex: SEX_MALE
+#    Sex: Male
 #    HairStyle: 1
 #    HairColor: 1
 #    ClothColor: 1
@@ -84,25 +85,25 @@ Header:
   # MC Cameri
 #  - Mob: E_TREASURE1
 #    Sprite: JOB_CRUSADER
-#    Sex: SEX_MALE
+#    Sex: Male
 #    HairStyle: 6
 #    HairColor: 6
 #    ClothColor: 3
 #    Weapon: Sword
 #    Shield: Shield
 #    Options:
-#      - OPTION_RIDING: true
+#      Riding: true
   # Poki#3
 #  - Mob: E_TREASURE2
 #    Sprite: JOB_SNIPER
-#    Sex: SEX_MALE
+#    Sex: Male
 #    HairStyle: 21
 #    Weapon: Bow_Of_Rudra
 #    HeadTop: Boy's_Cap
 #    HeadMid: Takius_Blindfold
 #    HeadLow: Centimental_Leaf
 #    Options:
-#      - OPTION_FALCON: true
+#      Falcon: true
   # Sentry
 #  - Mob: BOMBPORING
 #    Sprite: KNIGHT_GUARDIAN

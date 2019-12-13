@@ -244,12 +244,13 @@ struct mob_data {
 	int tomb_nid;
 };
 
-class MobAvailDatabase : public TypesafeYamlDatabase<uint32, int32> {
+class MobAvailDatabase : public YamlDatabase {
 public:
-	MobAvailDatabase() : TypesafeYamlDatabase("MOB_AVAIL_DB", 1) {
+	MobAvailDatabase() : YamlDatabase("MOB_AVAIL_DB", 1) {
 
 	}
 
+	void clear() { };
 	const std::string getDefaultLocation();
 	uint64 parseBodyNode(const YAML::Node& node);
 };

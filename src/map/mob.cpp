@@ -4365,41 +4365,60 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 	uint32 mob_id = mobdb_searchname(mob_name.c_str());
 
 	if (mob_id == 0) {
-		this->invalidWarning(node, "Unknown mob %s.\n", mob_name.c_str());
-		return 0;
-	}
-
-	if (!this->nodeExists(node, "Sprite")) {
-		this->invalidWarning(node, "Sprite value is missing.\n");
-		return 0;
-	}
-
-	std::string sprite;
-
-	if (!this->asString(node, "Sprite", sprite))
-		return 0;
-
-	int constant;
-
-	if (!script_get_constant(sprite.c_str(), &constant) || mobdb_checkid(constant) == 0 || npcdb_checkid(constant) == 0 || pcdb_checkid(constant) == 0) {
-		this->invalidWarning(node, "Unknown sprite %s.\n", sprite.c_str());
+		this->invalidWarning(node["Mob"], "Unknown mob %s.\n", mob_name.c_str());
 		return 0;
 	}
 
 	struct mob_db *mob = mob_db(mob_id);
 
-	mob->vd.class_ = constant;
+	if (this->nodeExists(node, "Sprite")) {
+		std::string sprite;
 
-	if (this->nodeExists(node, "Sex")) {
-		std::string sex;
-
-		if (this->asString(node, "Sex", sex))
+		if (!this->asString(node, "Sprite", sprite))
 			return 0;
 
 		int constant;
 
-		if (script_get_constant(sex.c_str(), &constant) || constant < SEX_FEMALE || constant > SEX_MALE) {
-			this->invalidWarning(node, "Sex value %s is not a valid type.\n", sex.c_str());
+		if (!script_get_constant(sprite.c_str(), &constant)) {
+			this->invalidWarning(node["Sprite"], "Unknown sprite constant %s.\n", sprite.c_str());
+			return 0;
+		} else {
+			constant = mobdb_searchname(sprite.c_str());
+
+			if (constant == 0) {
+				this->invalidWarning(node["Sprite"], "Unknown mob sprite constant %s.\n", sprite.c_str());
+				return 0;
+			}
+		}
+
+		if (mobdb_checkid(constant) == 0 && npcdb_checkid(constant) == 0 && pcdb_checkid(constant) == 0) {
+			this->invalidWarning(node["Sprite"], "Invalid sprite %s.\n", sprite.c_str());
+			return 0;
+		}
+
+		mob->vd.class_ = constant;
+	} else {
+		this->invalidWarning(node["Sprite"], "Sprite value is missing.\n");
+		return 0;
+	}
+
+	if (this->nodeExists(node, "Sex")) {
+		std::string sex;
+
+		if (!this->asString(node, "Sex", sex))
+			return 0;
+
+		sex = "SEX_" + sex;
+
+		int constant;
+
+		if (script_get_constant(sex.c_str(), &constant)) {
+			this->invalidWarning(node["Sex"], "Unknown sex constant %s.\n", sex.erase(0, 4).c_str());
+			return 0;
+		}
+
+		if (constant < SEX_FEMALE || constant > SEX_MALE) {
+			this->invalidWarning(node["Sex"], "Sex value %s is not valid.\n", sex.erase(0, 4).c_str());
 			return 0;
 		}
 
@@ -4413,7 +4432,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (hair_style < MIN_HAIR_STYLE || hair_style > MAX_HAIR_STYLE) {
-			this->invalidWarning(node, "HairStyle value %d is out of range %d~%d. Setting to MIN_HAIR_STYLE.\n", hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+			this->invalidWarning(node["HairStyle"], "HairStyle value %d is out of range %d~%d. Setting to MIN_HAIR_STYLE.\n", hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
 			hair_style = MIN_HAIR_STYLE;
 		}
 
@@ -4427,7 +4446,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (hair_color < MIN_HAIR_COLOR || hair_color > MAX_HAIR_COLOR) {
-			this->invalidWarning(node, "HairColor value %d is out of range %d~%d. Setting to MIN_HAIR_COLOR.\n", hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+			this->invalidWarning(node["HairColor"], "HairColor value %d is out of range %d~%d. Setting to MIN_HAIR_COLOR.\n", hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 			hair_color = MIN_HAIR_COLOR;
 		}
 
@@ -4441,7 +4460,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (cloth_color < MIN_CLOTH_COLOR || cloth_color > MAX_CLOTH_COLOR) {
-			this->invalidWarning(node, "ClothColor value %d is out of range %d~%d. Setting to MIN_CLOTH_CLOR.\n", cloth_color, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
+			this->invalidWarning(node["ClothColor"], "ClothColor value %d is out of range %d~%d. Setting to MIN_CLOTH_CLOR.\n", cloth_color, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
 			cloth_color = MIN_CLOTH_COLOR;
 		}
 
@@ -4454,10 +4473,10 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Weapon", weapon))
 			return 0;
 
-		struct item_data *item;
+		struct item_data *item = itemdb_searchname(weapon.c_str());
 
-		if ((item = itemdb_searchname(weapon.c_str())) == nullptr)
-			this->invalidWarning(node, "Weapon value %s is not a valid item, skipping.\n", weapon.c_str());
+		if (item == nullptr)
+			this->invalidWarning(node["Weapon"], "Weapon value %s is not a valid item, skipping.\n", weapon.c_str());
 		else
 			mob->vd.weapon = item->nameid;
 	}
@@ -4468,10 +4487,10 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Shield", shield))
 			return 0;
 
-		struct item_data *item;
+		struct item_data *item = itemdb_searchname(shield.c_str());
 
-		if ((item = itemdb_searchname(shield.c_str())) == nullptr)
-			this->invalidWarning(node, "Shield value %s is not a valid item, skipping.\n", shield.c_str());
+		if (item == nullptr)
+			this->invalidWarning(node["Shield"], "Shield value %s is not a valid item, skipping.\n", shield.c_str());
 		else
 			mob->vd.shield = item->nameid;
 	}
@@ -4485,7 +4504,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		struct item_data *item;
 
 		if ((item = itemdb_searchname(head.c_str())) == nullptr)
-			this->invalidWarning(node, "HeadTop value %s is not a valid item, skipping.\n", head.c_str());
+			this->invalidWarning(node["HeadTop"], "HeadTop value %s is not a valid item, skipping.\n", head.c_str());
 		else
 			mob->vd.head_top = item->view_id;
 	}
@@ -4496,10 +4515,10 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "HeadMid", head))
 			return 0;
 
-		struct item_data *item;
+		struct item_data *item = itemdb_searchname(head.c_str());
 
-		if ((item = itemdb_searchname(head.c_str())) == nullptr)
-			this->invalidWarning(node, "HeadMid value %s is not a valid item, skipping.\n", head.c_str());
+		if (item == nullptr)
+			this->invalidWarning(node["HeadMid"], "HeadMid value %s is not a valid item, skipping.\n", head.c_str());
 		else
 			mob->vd.head_mid = item->view_id;
 	}
@@ -4510,10 +4529,10 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "HeadLow", head))
 			return 0;
 
-		struct item_data *item;
+		struct item_data *item = itemdb_searchname(head.c_str());
 
-		if ((item = itemdb_searchname(head.c_str())) == nullptr)
-			this->invalidWarning(node, "HeadLow value %s is not a valid item, skipping.\n", head.c_str());
+		if (item == nullptr)
+			this->invalidWarning(node["HeadLow"], "HeadLow value %s is not a valid item, skipping.\n", head.c_str());
 		else
 			mob->vd.head_bottom = item->view_id;
 	}
@@ -4522,8 +4541,8 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		std::shared_ptr<s_pet_db> pet_db_ptr = pet_db.find(mob_id);
 
 		if (pet_db_ptr == nullptr) {
-			this->invalidWarning(node, "PetEquip value can only be used for defined pets, skipping.\n");
-			return false;
+			this->invalidWarning(node["PetEquip"], "PetEquip value can only be used for defined pets, skipping.\n");
+			return 0;
 		}
 
 		std::string equipment;
@@ -4531,32 +4550,32 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "PetEquip", equipment))
 			return 0;
 
-		struct item_data *item;
+		struct item_data *item = itemdb_searchname(equipment.c_str());
 
-		if ((item = itemdb_searchname(equipment.c_str())) == nullptr)
-			this->invalidWarning(node, "PetEquip value %s is not a valid item, skipping.\n", equipment.c_str());
+		if (item == nullptr)
+			this->invalidWarning(node["PetEquip"], "PetEquip value %s is not a valid item, skipping.\n", equipment.c_str());
 		else
 			mob->vd.head_bottom = item->nameid;
 	}
 
 	if (this->nodeExists(node, "Options")) {
 		for (const auto &optionNode : node["Options"]) {
-			std::string option = optionNode.first.as<std::string>();
+			std::string option = "OPTION_" + optionNode.first.as<std::string>();
 			int constant;
 
 			if (script_get_constant(option.c_str(), &constant)) {
-				this->invalidWarning(node, "Option value %s is not a valid option, skipping.\n", option.c_str());
+				this->invalidWarning(optionNode, "Unknown option constant %s, skipping.\n", option.erase(0, 7).c_str());
 				continue;
 			}
 
 			bool active;
 
-			if (!this->asBool(node, option, active))
+			if (!this->asBool(node, option.erase(0, 7), active))
 				continue;
 
 #ifdef NEW_CARTS
 			if (constant & OPTION_CART) {
-				this->invalidWarning(node, "Option value can not set carts. This does not work with options anymore.\n");
+				this->invalidWarning(optionNode, "OPTION_CART can not be used to set carts anymore.\n");
 				continue;
 			}
 #endif
