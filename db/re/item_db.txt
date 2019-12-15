@@ -3031,7 +3031,7 @@
 4842,Atk_Speed2,Atk Speed2,6,20,,,,,,,,,,,,,,,{ bonus bAspd,2; },{},{}
 4843,Sharp4,Sharp4,6,20,,,,,,,,,,,,,,,{ bonus bCritical,14; bonus bHit,5; },{},{}
 4844,Sharp5,Sharp5,6,20,,,,,,,,,,,,,,,{ bonus bCritical,15; bonus bHit,6; },{},{}
-4845,Sea_Energy,Strength Of Ocean,6,0,,,,,,,,,,,,,,{},{},{}
+4845,Sea_Energy,Strength Of Ocean,6,0,,,,,,,,,,,,,,,{},{},{}
 4846,2011Valentin_Angel,Fully Loved Stone,6,20,,,,,,,,,,,,,,,{ bonus bBaseAtk,10; bonus bMatk,10; },{},{}
 4847,2011Valentin_Devil,Spelled Stone,6,20,,,,,,,,,,,,,,,{ bonus bBaseAtk,10; bonus bMatk,10; },{},{}
 4848,Immuned1,Immune Level 1,6,20,,,,,,,,,,,,,,,{ bonus2 bSubEle,Ele_Neutral,5; },{},{}
@@ -3114,7 +3114,7 @@
 4927,HP50,MaxHP50,6,10,,,,,,,,,,,,,,,{ bonus bMaxHP,50; },{},{}
 4928,SP10,MaxSP+10,6,10,,,,,,,,,,,,,,,{ bonus bMaxSP,10; },{},{}
 4929,MSP1,MSP+1%,6,10,,,,,,,,,,,,,,,{ bonus bMaxSPrate,1; },{},{}
-4930,HEAL2,Recovery UP,6,10,,,,,,,,,,,,,,{ bonus bHPrecovRate,2; bonus bSPrecovRate,2; },{},{}
+4930,HEAL2,Recovery UP,6,10,,,,,,,,,,,,,,,{ bonus bHPrecovRate,2; bonus bSPrecovRate,2; },{},{}
 4931,HEALHP1,Heal 10,6,10,,,,,,,,,,,,,,,{ bonus2 bHPRegenRate,10,10000; },{},{}
 4932,HEALSP1,SP recovery1,6,10,,,,,,,,,,,,,,,{ bonus bSPGainValue,1; },{},{}
 4933,Tolerance_Not1,Neutral Resistance Lv1,6,10,,,,,,,,,,,,,,,{ bonus2 bSubEle,Ele_Neutral,1; },{},{}
