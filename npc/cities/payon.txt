@@ -302,7 +302,7 @@ payon,132,235,3	script	Monster Scholar#02	98,{
 	mes "[Monster Scholar Vuicokk]";
 	mes "Nice to meet you.";
 	mes "I am called Vuicokk.";
-	mes "I am a scholar in the Monster Research organization of the Rune Midgarts Kingdom. Do you have any questions about monsters?";
+	mes "I am a scholar in the Monster Research organization of the Rune-Midgarts Kingdom. Do you have any questions about monsters?";
 	next;
 	switch(select("Any news?:Undead Monsters?:Monster Research Organization?")) {
 	case 1:
@@ -1024,7 +1024,7 @@ pay_arche,77,131,2	script	Archer Joe#payon	88,{
 				mes "You must know this place used to be isolated because of the thick forests and the mountainous area.";
 				next;
 				mes "[Archer Joe]";
-				mes "Because of that, the Payon developed a culture of its own, which is quite different than that of the rest of Rune-Midgard.";
+				mes "Because of that, the Payon developed a culture of its own, which is quite different than that of the rest of Rune-Midgarts.";
 				next;
 				mes "[Archer Joe]";
 				mes "This garment is traditional Payon clothing! Why don't you try wearing one? It's very comfortable~";

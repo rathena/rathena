@@ -66,7 +66,7 @@ gld_dun01,28,85,0	script	Grunburti#1::GodDwarf	826,{
 		mes "disappeared after the war 1,000 years ago. Somehow, I can no longer find the way through the Yggdrasil Tree that will take me back...";
 		next;
 		mes "[Dwarf Grunburti]";
-		mes "I'm stuck here in Rune-Midgard.";
+		mes "I'm stuck here in Midgard.";
 		mes "At least I was fortunate enough to find this cave. We Dwarves are most cozy living underground, after all.";
 		close;
 	case 3:

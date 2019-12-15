@@ -84,7 +84,7 @@ prt_in,88,105,2	script	Recruiter	105,{
 		mes "The Prontera Culvert is infested with all kinds of filthy vermin!";
 		next;
 		mes "[Recruiter]";
-		mes "Due to the serious risk of water contamination, and the safety of Rune-Midgardians, the Culvert has been quarantined by royal decree.";
+		mes "Due to the serious risk of water contamination, and the safety of Rune-Midgartsians, the Culvert has been quarantined by royal decree.";
 		next;
 		mes "[Recruiter]";
 		mes "Needless to say, this has caused shortages in the water supply in our kingdom. Indeed, such a crisis in these dark times...";
@@ -726,13 +726,13 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "[Historian]";
 		mes "I might have it mentioned before, but my name is Karlomoff and";
 		mes "I work in the Rekenber Historical Research as its 1st scholar. We";
-		mes "recently finished our project on the Schwaltzvalt Republic.";
+		mes "recently finished our project on the Schwarzwald Republic.";
 		next;
 		mes "[Historian]";
 		mes "Now, we're trying to learn";
 		mes "more about the Rune-Midgarts";
 		mes "Kingdom's history. We believe";
-		mes "it's linked to our Schwaltzvalt";
+		mes "it's linked to our Schwarzwald";
 		mes "Republic because they share the";
 		mes "continent. Makes sense, right?";
 		next;
@@ -742,7 +742,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "research of Rune-Midgarts will";
 		mes "shed some new light on our";
 		mes "current understanding of the";
-		mes "Schwaltzvalt Republic's past.";
+		mes "Schwarzwald Republic's past.";
 		next;
 		mes "[Historian]";
 		mes "Including myself, there are";
@@ -757,7 +757,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "Midgarts may not know it, but";
 		mes "the Rekenber Corporation has";
 		mes "unofficial control over our";
-		mes "Schwaltzvalt Republic. Some";
+		mes "Schwarzwald Republic. Some";
 		mes "hate it, others don't care.";
 		next;
 		mes "[Historian]";
@@ -849,7 +849,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 		mes "the Rune-Midgarts Kingdom?";
 		mes "If so, then I have a favor to";
 		mes "ask you. Would you please";
-		mes "deliver this report I've written to my colleague in Morroc?";
+		mes "deliver this report I've written to my colleague in Morocc?";
 		next;
 		mes "[Historian]";
 		mes "It would be a great help";
@@ -866,7 +866,7 @@ yuno,311,195,3	script	Historian#prt01	754,{
 	else if (prt_curse == 6) {
 		mes "[Historian]";
 		mes "Please find my colleague,";
-		mes "Rodafrian, in Morroc and";
+		mes "Rodafrian, in Morocc and";
 		mes "deliver my report to her.";
 		mes "You should be able to find";
 		mes "her there doing research.";
@@ -954,7 +954,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 		mes "have to be so hot? This";
 		mes "can't be good for my skin...";
 		mes "Ooh, I wish I were back home";
-		mes "in the Schwaltzvalt Republic~";
+		mes "in the Schwarzwald Republic~";
 		emotion ET_CRY;
 		next;
 		mes "[Historian Rodafrian]";
@@ -999,21 +999,21 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 			next;
 			mes "[Historian Rodafrian]";
 			mes "Right now, I'm spending";
-			mes "time in Morroc to visit the";
+			mes "time in Morocc to visit the";
 			mes "Sphinx and Pyramids and see";
 			mes "if I can excavage some relics.";
 			mes "Hopefully I can uncover some new historical evidence that way.";
 			next;
 			mes "[Historian Rodafrian]";
 			mes "If you're interested in";
-			mes "learning more about Morroc's";
+			mes "learning more about Morocc's";
 			mes "history, please go ahead and";
 			mes "talk to my assistance. He's very passionate about studying this";
 			mes "town's culture and background.";
 			next;
 			mes "[Historian Rodafrian]";
 			mes "Actually, the people of";
-			mes "Morroc also appreciate their";
+			mes "Morocc also appreciate their";
 			mes "town's history, and pass down";
 			mes "songs about ancient times";
 			mes "through the generations. Let's";
@@ -1234,7 +1234,7 @@ morocc_in,45,126,3	script	Historian#prt02	702,{
 			mes "greatly appreciated by the";
 			mes "Rekenber Historical Research";
 			mes "Group. But first, I need to";
-			mes "finish this Morroc project...";
+			mes "finish this Morocc project...";
 			next;
 			mes "[Historian Rodafrian]";
 			mes "Anyway, keep this information";
@@ -1342,7 +1342,7 @@ S_GiveName:
 	mes "Ah "+strcharinfo(0)+", eh?";
 	mes "Do you mind if I ask you a favor? I really need to verify the true";
 	mes "lyrics for this song. However,";
-	mes "I need to stay here in Morroc";
+	mes "I need to stay here in Morocc";
 	mes "to complete my research.";
 	next;
 	mes "[Historian Rodafrian]";
@@ -2127,7 +2127,7 @@ mjolnir_01,316,268,3	script	Exhausted-Looking Woman	879,{
 			next;
 			mes "^3355FFNow, you can return to";
 			mes "Rodafrian, the historian";
-			mes "stationed in Morroc.^000000";
+			mes "stationed in Morocc.^000000";
 			set prt_curse,55;
 			changequest 18049,18051;
 		}
@@ -2529,7 +2529,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "[Father Bamph]";
 		mes "Brave adventurer, would";
 		mes "you please visit the Assassin";
-		mes "Guild in Morroc and see if you";
+		mes "Guild in Morocc and see if you";
 		mes "can learn anything about how";
 		mes "we can verify whether poison";
 		mes "was used to kill the princes?";
@@ -2543,7 +2543,7 @@ prt_church,185,106,3	script	Father Bamph	60,{
 		mes "learn anything about testing";
 		mes "for the use of poison from";
 		mes "a member of the Assassin";
-		mes "Guild in Morroc.";
+		mes "Guild in Morocc.";
 		close;
 	}
 	else if (prt_curse == 31) {
@@ -3296,7 +3296,7 @@ prt_church,24,111,5	script	#prince3	887,{
 		mes "[Father Biscuss]";
 		mes "I say, you go straight to";
 		mes "the experts. Someone in the";
-		mes "^FF0000Assassin Guild in Morroc^000000";
+		mes "^FF0000Assassin Guild in Morocc^000000";
 		mes "ought to know. I hear they";
 		mes "can make poison that can kill";
 		mes "a man with just one drop!";
@@ -3399,7 +3399,7 @@ moc_fild16,201,295,5	script	Assassin Guildsman#poiso	884,{
 			mes "There is an";
 			mes "Assassin's Private Pub";
 			mes "in the 7 o'clock direction";
-			mes "in Morroc. Go find someone";
+			mes "in Morocc. Go find someone";
 			mes "named ^3131FFMarjana^000000 inside.";
 			set prt_curse,24;
 			changequest 18040,18041;
@@ -3509,7 +3509,7 @@ que_job01,10,16,5	script	Marjana#poison	885,{
 		mes "make those snake scale";
 		mes "marks... Some of them can't";
 		mes "even be found here on the";
-		mes "Rune-Midgard continent.";
+		mes "Midgard continent.";
 		next;
 		mes "[Marjana]";
 		mes "We're running out of time.";

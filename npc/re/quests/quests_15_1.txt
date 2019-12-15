@@ -6535,7 +6535,7 @@ lhz_in01,270,257,4	script	Rekenber Chairman#e152i	4_M_REKENBER,{
 		next;
 		cutin "verus_ian01.bmp",2;
 		mes "[Ian Atnad]";
-		mes "I found myself in a motel room in Yuno when I came to.";
+		mes "I found myself in a motel room in Juno when I came to.";
 		mes "I didn't even know how much time has passed.";
 		next;
 		cutin "verus_aures.bmp",0;
@@ -6669,7 +6669,7 @@ lhz_in01,267,257,5	script	Chief Secretary#e152i01	4_M_TATIO,{
 		cutin "ep15_tatio01.bmp",0;
 		mes "[Tatio]";
 		mes "That is why you have that one week gap.";
-		mes "I took care of you for four days and sent you to the motel in Yuno.";
+		mes "I took care of you for four days and sent you to the motel in Juno.";
 		next;
 		cutin "ep15_tatio02.bmp",0;
 		mes "[Tatio]";

@@ -37,7 +37,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 		mes "You're not a mature enough adventurer. You should be at least base level 100. So basically at least a third class.";
 		next;
 		mes "[Gelkah]";
-		mes "The request is from ^FF0000somewhere else^000000 other than Rune Midgard.";
+		mes "The request is from ^FF0000somewhere else^000000 other than Midgard.";
 	}
 	else if (BaseLevel < 111) {
 		if (para_100lv01 == 0) {
@@ -179,7 +179,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						}
 						else {
 							cutin "캐럿카드",3;  //carat_card
-							mes "This request is from a merchant from Morroc who is somehow losing business from these monsters in Glastheim.";
+							mes "This request is from a merchant from Morocc who is somehow losing business from these monsters in Glastheim.";
 							next;
 							mes "[Gelkah]";
 							mes "Eden Group is aware that this is not a great reason but a request is a request. So please clear ^FF000030 Carat^000000 monsters inside of Glastheim castle.";
@@ -204,7 +204,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 						}
 						else {
 							cutin "아크라우스카드",3;  //arclouse_card
-							mes "Do you know there are beans used as food here in Rune Midgard? When an Arclouse rolls, it resembles a bean.";
+							mes "Do you know there are beans used as food here in Midgard? When an Arclouse rolls, it resembles a bean.";
 							next;
 							mes "[Gelkah]";
 							mes "Eden Group Headquarters wants to investigate the Arclouse as a possible mascot.";
@@ -301,7 +301,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 					}
 					break;
 				case 2:
-					mes "There are many requests coming through from the Rune Midgards Expedition.";
+					mes "There are many requests coming through from the Midgard Expedition.";
 					next;
 					if (select( "Hunting Quests","Trauma" ) == 1) {
 						mes "[Gelkah]";
@@ -519,7 +519,7 @@ moc_para01,37,95,5	script	Gelkah#1	4_F_GELKA,{
 					}
 					break;
 				case 5:
-					mes "Here is a list of other requests from all over Rune Midgard.";
+					mes "Here is a list of other requests from all over Midgard.";
 					next;
 					switch( select( "Loli Ruri Hunting - Niflheim", "Medusa Hunting - Comodo", "Anubis Hunting - Sphinx" ) ) {
 						mes "[Gelkah]";
@@ -1148,7 +1148,7 @@ moc_para01,41,95,5	script	Rohtert#12	4_M_ROTERT,{
 				}
 				else {
 					mes "[Rohtert]";
-					mes "One fine windy day, I was collecting flowers in west south of the Rune Midgard Allied Forces Post to fulfill an Eden Group request.";
+					mes "One fine windy day, I was collecting flowers in west south of the Midgard Allied Forces Post to fulfill an Eden Group request.";
 					next;
 					mes "[Rohtert]";
 					mes "Then that one suddenly showed up.";
@@ -1196,7 +1196,7 @@ moc_para01,41,95,5	script	Rohtert#12	4_M_ROTERT,{
 					mes "The fact that I am strong is more important than the number. Just go there and take the beast out.";
 					next;
 					mes "[Rohtert]";
-					mes "You'll find it west of the Rune Midgard Allied Forces Post at the Ash Vacuum.";
+					mes "You'll find it west of the Midgard Allied Forces Post at the Ash Vacuum.";
 					next;
 					select("I guess I have no choice.");
 					cutin "rote03",2;
