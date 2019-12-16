@@ -21489,7 +21489,7 @@ uint64 ImproviseDatabase::parseBodyNode(const YAML::Node &node) {
 	}
 
 	if (!skill_get_inf(skill_id)) {
-		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted.\n", skill_name.c_str());
+		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted by Improvised Song.\n", skill_name.c_str());
 		return 0;
 	}
 
