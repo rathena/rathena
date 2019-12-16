@@ -377,7 +377,7 @@ extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 extern unsigned short skill_abra_count;
 
 struct s_skill_improvise_db {
-	uint16 skill_id, rate;
+	uint16 skill_id, per;
 };
 
 class ImproviseDatabase : public TypesafeYamlDatabase<uint16, s_skill_improvise_db> {

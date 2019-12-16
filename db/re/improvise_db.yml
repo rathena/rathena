@@ -23,7 +23,7 @@
 #
 ###########################################################################
 # - Skill             Skill to be casted by Improvised Song.
-#   Rate              Rate at which the skill will be casted (1 = 0.01%, 10000 = 100%).
+#   Probability       Probability of skill compared to others in database (1 = 0.01%, 10000 = 100%).
 ###########################################################################
 
 Header:

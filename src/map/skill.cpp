@@ -10233,7 +10233,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				std::advance(improvise_spell, rnd() % improvise_db.size());
 
 				improv_skill_id = improvise_spell->second->skill_id;
-			} while (checked++ < checked_max && rnd() % 10000 >= improvise_spell->second->rate);
+			} while (checked++ < checked_max && rnd() % 10000 >= improvise_spell->second->per);
 
 			if (!skill_get_index(improv_skill_id)) {
 				if (sd)
@@ -21497,25 +21497,25 @@ uint64 ImproviseDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = improvise != nullptr;
 
 	if (!exists) {
-		if (!this->nodeExists(node, "Rate"))
+		if (!this->nodeExists(node, "Probability"))
 			return 0;
 
 		improvise = std::make_shared<s_skill_improvise_db>();
 		improvise->skill_id = skill_id;
 	}
 
-	if (this->nodeExists(node, "Rate")) {
-		uint16 rate;
+	if (this->nodeExists(node, "Probability")) {
+		uint16 probability;
 
-		if (!this->asUInt16(node, "Rate", rate))
+		if (!this->asUInt16(node, "Probability", probability))
 			return 0;
 
-		if (!rate) {
-			this->invalidWarning(node["Rate"], "Rate has to be 1 or higher.\n");
+		if (!probability) {
+			this->invalidWarning(node["Probability"], "probability has to be 1 or higher.\n");
 			return 0;
 		}
 
-		improvise->rate = rate;
+		improvise->per = probability;
 	}
 
 	if (!exists)
