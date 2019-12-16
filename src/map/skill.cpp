@@ -21636,7 +21636,7 @@ uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (probNode.IsScalar()) {
 			if (!this->asInt32(probNode, "Probability", probability))
-				return;
+				return 0;
 
 			abra->per.fill(probability);
 		} else {
