@@ -87,8 +87,7 @@ static unsigned short skill_produce_count;
 struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 static unsigned short skill_arrow_count;
 
-struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
-unsigned short skill_abra_count;
+AbraDatabase abra_db;
 
 struct s_skill_improvise_db {
 	uint16 skill_id;
@@ -6413,19 +6412,20 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case SA_ABRACADABRA:
-		if (!skill_abra_count) {
+		if (abra_db.size() == 0) {
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 			break;
 		}
 		else {
-			int abra_skill_id = 0, abra_skill_lv, checked = 0, checked_max = MAX_SKILL_ABRA_DB * 3;
+			int abra_skill_id = 0, abra_skill_lv, checked = 0, checked_max = abra_db.size() * 3;
+			auto abra_spell = abra_db.begin();
+
 			do {
-				i = rnd() % MAX_SKILL_ABRA_DB;
-				abra_skill_id = skill_abra_db[i].skill_id;
+				std::advance(abra_spell, rnd() % abra_db.size());
+
+				abra_skill_id = abra_spell->second->skill_id;
 				abra_skill_lv = min(skill_lv, skill_get_max(abra_skill_id));
-			} while ( checked++ < checked_max &&
-				(abra_skill_id == 0 ||
-				rnd()%10000 >= skill_abra_db[i].per[max(skill_lv-1,0)]) );
+			} while (checked++ < checked_max && rnd() % 10000 >= abra_spell->second->per[max(skill_lv - 1, 0)]);
 
 			if (!skill_get_index(abra_skill_id))
 				break;
@@ -21595,40 +21595,74 @@ static bool skill_parse_row_nonearnpcrangedb(char* split[], int column, int curr
 	return true;
 }
 
-/** Reads skill chance by Abracadabra/Hocus Pocus spell
- * Structure: SkillID,DummyName,RatePerLvl
- */
-static bool skill_parse_row_abradb(char* split[], int columns, int current)
-{
-	unsigned short i, skill_id = atoi(split[0]);
-	if (!skill_get_index(skill_id) || !skill_get_max(skill_id)) {
-		ShowError("skill_parse_row_abradb: Invalid skill ID %d\n", skill_id);
-		return false;
-	}
-	if (!skill_get_inf(skill_id)) {
-		ShowError("skill_parse_row_abradb: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
-		return false;
+
+const std::string AbraDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/abra_db.yml";
+}
+
+/**
+* Reads and parses an entry from the abra_db.
+* @param node: YAML node containing the entry.
+* @return count of successfully parsed rows
+*/
+uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string skill_name;
+
+	if (!this->asString(node, "Skill", skill_name))
+		return 0;
+
+	uint16 skill_id = skill_name2id(skill_name.c_str());
+
+	if (!skill_id) {
+		this->invalidWarning(node["Skill"], "Invalid Abra skill name \"%s\", skipping.\n", skill_name.c_str());
+		return 0;
 	}
 
-	ARR_FIND(0, skill_abra_count, i, skill_abra_db[i].skill_id==skill_id);
-	if (i >= ARRAYLENGTH(skill_abra_db)) {
-		ShowError("skill_parse_row_abradb: Maximum db entries reached.\n");
-		return false;
-	}
-	// Import just for clearing/disabling from original data
-	if (strcmp(split[1],"clear") == 0) {
-		memset(&skill_abra_db[i], 0, sizeof(skill_abra_db[i]));
-		//ShowInfo("skill_parse_row_abradb: Skill %d removed from list.\n", skill_id);
-		return true;
+	std::shared_ptr<s_skill_abra_db> abra = this->find(skill_id);
+	bool exists = abra != nullptr;
+
+	if (!exists) {
+		if (!this->nodeExists(node, "Probability"))
+			return 0;
+
+		abra = std::make_shared<s_skill_abra_db>();
+		abra->skill_id = skill_id;
+		abra->per.fill(0);
 	}
 
-	skill_abra_db[i].skill_id = skill_id;
-	safestrncpy(skill_abra_db[i].name, trim(split[1]), sizeof(skill_abra_db[i].name)); //store dummyname
-	skill_split_atoi(split[2],skill_abra_db[i].per);
-	if (i == skill_abra_count)
-		skill_abra_count++;
+	if (this->nodeExists(node, "Probability")) {
+		const YAML::Node probNode = node["Probability"];
+		int32 probability;
 
-	return true;
+		if (probNode.IsScalar()) {
+			if (!this->asInt32(probNode, "Probability", probability))
+				return;
+
+			abra->per.fill(probability);
+		} else {
+			for (const YAML::Node &it : probNode) {
+				uint16 skill_lv;
+
+				if (!this->asUInt16(probNode, "Level", skill_lv))
+					continue;
+
+				if (skill_lv > MAX_SKILL_LEVEL) {
+					this->invalidWarning(probNode["Level"], "Probability Level exceeds the maximum skill level of %d, skipping.\n", MAX_SKILL_LEVEL);
+					return 0;
+				}
+
+				if (!this->asInt32(probNode, "Level", probability))
+					continue;
+
+				abra->per[skill_lv - 1] = probability;
+			}
+		}
+	}
+
+	if (!exists)
+		this->put(skill_id, abra);
+
+	return 1;
 }
 
 /** Reads change material db
@@ -21772,7 +21806,6 @@ static void skill_db_destroy(void) {
  * skill_unit_db.txt
  * produce_db.txt
  * create_arrow_db.txt
- * abra_db.txt
  *------------------------------*/
 static void skill_readdb(void)
 {
@@ -21792,11 +21825,10 @@ static void skill_readdb(void)
 
 	memset(skill_produce_db,0,sizeof(skill_produce_db));
 	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
-	memset(skill_abra_db,0,sizeof(skill_abra_db));
 	memset(skill_spellbook_db,0,sizeof(skill_spellbook_db));
 	memset(skill_magicmushroom_db,0,sizeof(skill_magicmushroom_db));
 	memset(skill_changematerial_db,0,sizeof(skill_changematerial_db));
-	skill_produce_count = skill_arrow_count = skill_abra_count = skill_improvise_count =
+	skill_produce_count = skill_arrow_count = skill_improvise_count =
 		skill_changematerial_count = skill_spellbook_count = skill_magicmushroom_count = 0;
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
@@ -21822,7 +21854,6 @@ static void skill_readdb(void)
 
 		sv_readdb(dbsubpath2, "produce_db.txt"        , ',',   5,  5+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, i > 0);
 		sv_readdb(dbsubpath1, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb, i > 0);
-		sv_readdb(dbsubpath1, "abra_db.txt"           , ',',   3,  3, MAX_SKILL_ABRA_DB, skill_parse_row_abradb, i > 0);
 		sv_readdb(dbsubpath1, "spellbook_db.txt"      , ',',   3,  3, MAX_SKILL_SPELLBOOK_DB, skill_parse_row_spellbookdb, i > 0);
 		sv_readdb(dbsubpath1, "magicmushroom_db.txt"  , ',',   1,  2, MAX_SKILL_MAGICMUSHROOM_DB, skill_parse_row_magicmushroomdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_copyable_db.txt"       , ',',   2,  4, -1, skill_parse_row_copyabledb, i > 0);
@@ -21834,6 +21865,8 @@ static void skill_readdb(void)
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
+
+	abra_db.load();
 	
 	skill_init_unit_layout();
 	skill_init_nounit_layout();

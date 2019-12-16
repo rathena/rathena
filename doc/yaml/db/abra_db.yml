@@ -1,0 +1,12 @@
+###########################################################################
+# Abracadabra Database
+###########################################################################
+#
+# Abracadabra Settings
+#
+###########################################################################
+# - Skill             Skill to be casted by Abracadabra
+#   Probability:      Probability of skill cast compared to other values (Default: 500)
+#     - Level         Skill level
+#       Probability   Probability at specific skill level
+###########################################################################
