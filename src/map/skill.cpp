@@ -21519,12 +21519,12 @@ uint64 MagicMushroomDatabase::parseBodyNode(const YAML::Node &node) {
 	uint16 skill_id = skill_name2id(skill_name.c_str());
 
 	if (!skill_id) {
-		this->invalidWarning(node["Skill"], "Invalid Improvised Song skill name \"%s\", skipping.\n", skill_name.c_str());
+		this->invalidWarning(node["Skill"], "Invalid Magic Mushroom skill name \"%s\", skipping.\n", skill_name.c_str());
 		return 0;
 	}
 
 	if (!skill_get_inf(skill_id)) {
-		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted.\n", skill_name.c_str());
+		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted by Magic Mushroom.\n", skill_name.c_str());
 		return 0;
 	}
 
