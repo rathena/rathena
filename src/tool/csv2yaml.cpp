@@ -664,7 +664,7 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 		return false;
 	}
 
-	uint16 nameid = (uint16)atoi(split[2]);
+	uint16 nameid = atoi(split[2]);
 	std::string *book_name = util::umap_find(aegis_itemnames, nameid);
 
 	if (book_name == nullptr) {
@@ -678,5 +678,5 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 	body << YAML::Key << "PreservePoints" << YAML::Value << atoi(split[1]);
 	body << YAML::EndMap;
 
-	return false;
+	return true;
 }
