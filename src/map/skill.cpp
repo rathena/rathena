@@ -21618,6 +21618,11 @@ uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 		return 0;
 	}
 
+	if (!skill_get_inf(skill_id)) {
+		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted by Abra.\n", skill_name.c_str());
+		return 0;
+	}
+
 	std::shared_ptr<s_skill_abra_db> abra = this->find(skill_id);
 	bool exists = abra != nullptr;
 
