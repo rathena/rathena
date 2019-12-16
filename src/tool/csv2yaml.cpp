@@ -69,6 +69,7 @@ int getch( void ){
 // Forward declaration of conversion functions
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static size_t pet_read_db( const char* file );
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -153,11 +154,11 @@ void finalizeBody(void) {
 }
 
 template<typename Func>
-bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
+bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, const std::string& rename, Func lambda ){
 	for( const std::string& path : paths ){
 		const std::string name_ext = name + ".txt";
 		const std::string from = path + "/" + name_ext;
-		const std::string to = path + "/" + name + ".yml";
+		const std::string to = path + "/" + (rename.size() > 0 ? rename : name) + ".yml";
 
 		if( fileExists( from ) ){
 			if( !askConfirmation( "Found the file \"%s\", which requires migration to yml.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
@@ -179,7 +180,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				return false;
 			}
 
-			prepareHeader(out, type, version, name);
+			prepareHeader(out, type, version, (rename.size() > 0 ? rename : name));
 			prepareBody();
 
 			if( !lambda( path, name_ext ) ){
@@ -193,7 +194,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			out << "\n";
 			out.close();
 			
-			// TODO: do you want to delete/rename?
+			// TODO: do you want to delete?
 		}
 	}
 
@@ -222,15 +223,21 @@ int do_init( int argc, char** argv ){
 		path_db_import
 	};
 
-	if( !process( "GUILD_SKILL_TREE_DB", 1, root_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "GUILD_SKILL_TREE_DB", 1, root_paths, "guild_skill_tree", "", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 2 + MAX_GUILD_SKILL_REQUIRE * 2, 2 + MAX_GUILD_SKILL_REQUIRE * 2, -1, &guild_read_guildskill_tree_db, false );
 	} ) ){
 		return 0;
 	}
 
-	if( !process( "PET_DB", 1, root_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "PET_DB", 1, root_paths, "pet_db", "", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
+		return 0;
+	}
+
+	if (!process("IMPROVISE_DB", 1, root_paths, "skill_improvise_db", "improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2, -1, &skill_parse_row_improvisedb, false);
+	})) {
 		return 0;
 	}
 
@@ -645,4 +652,22 @@ static size_t pet_read_db( const char* file ){
 	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' pets in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file );
 
 	return entries;
+}
+
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
+{
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Improvised Song skill ID &hu is not known.\n", skill_id);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << YAML::Key << "Rate" << YAML::Value << atoi(split[1]) / 10;
+	body << YAML::EndMap;
+
+	return true;
 }

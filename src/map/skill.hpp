@@ -5,6 +5,7 @@
 #define SKILL_HPP
 
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // MAX_SKILL, struct square
 #include "../common/timer.hpp"
@@ -26,7 +27,6 @@ struct status_change_entry;
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
 #define MAX_SKILL_ABRA_DB		160 /// Max Skill list of Abracadabra DB
-#define MAX_SKILL_IMPROVISE_DB 30 /// Max Skill for Improvise
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
@@ -375,6 +375,22 @@ struct s_skill_abra_db {
 };
 extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 extern unsigned short skill_abra_count;
+
+struct s_skill_improvise_db {
+	uint16 skill_id, rate;
+};
+
+class ImproviseDatabase : public TypesafeYamlDatabase<uint16, s_skill_improvise_db> {
+public:
+	ImproviseDatabase() : TypesafeYamlDatabase("IMPROVISE_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+extern ImproviseDatabase improvise_db;
 
 void do_init_skill(void);
 void do_final_skill(void);

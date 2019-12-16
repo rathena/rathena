@@ -1,0 +1,65 @@
+# This file is a part of rAthena.
+#   Copyright(C) 2019 rAthena Development Team
+#   https://rathena.org - https://github.com/rathena
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+###########################################################################
+# Improvise Database
+###########################################################################
+#
+# Improvise Settings
+#
+###########################################################################
+# - Skill             Skill to be casted by Improvised Song.
+#   Rate              Rate at which the skill will be casted (1 = 0.01%, 10000 = 100%).
+###########################################################################
+
+Header:
+  Type: IMPROVISE_DB
+  Version: 1
+
+Body:
+  - Skill: MG_NAPALMBEAT
+    Rate: 6000
+  - Skill: MG_SAFETYWALL
+    Rate: 4000
+  - Skill: MG_SOULSTRIKE
+    Rate: 6000
+  - Skill: MG_COLDBOLT
+    Rate: 6000
+  - Skill: MG_FROSTDIVER
+    Rate: 6000
+  - Skill: MG_FIREBALL
+    Rate: 6000
+  - Skill: MG_FIREWALL
+    Rate: 4000
+  - Skill: MG_FIREBOLT
+    Rate: 6000
+  - Skill: MG_LIGHTNINGBOLT
+    Rate: 6000
+  - Skill: MG_THUNDERSTORM
+    Rate: 4000
+  - Skill: WZ_FIREPILLAR
+    Rate: 4000
+  - Skill: WZ_METEOR
+    Rate: 4000
+  - Skill: WZ_JUPITEL
+    Rate: 6000
+  - Skill: WZ_VERMILION
+    Rate: 4000
+  - Skill: WZ_WATERBALL
+    Rate: 6000
+  - Skill: WZ_STORMGUST
+    Rate: 4000
