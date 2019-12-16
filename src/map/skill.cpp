@@ -21622,41 +21622,47 @@ uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = abra != nullptr;
 
 	if (!exists) {
-		if (!this->nodeExists(node, "Probability"))
-			return 0;
-
 		abra = std::make_shared<s_skill_abra_db>();
 		abra->skill_id = skill_id;
-		abra->per.fill(0);
 	}
 
 	if (this->nodeExists(node, "Probability")) {
 		const YAML::Node probNode = node["Probability"];
-		int32 probability;
+		uint16 probability;
 
 		if (probNode.IsScalar()) {
-			if (!this->asInt32(probNode, "Probability", probability))
+			if (!this->asUInt16(probNode, "Probability", probability))
 				return 0;
 
 			abra->per.fill(probability);
 		} else {
+			abra->per.fill(0);
+
 			for (const YAML::Node &it : probNode) {
 				uint16 skill_lv;
 
-				if (!this->asUInt16(probNode, "Level", skill_lv))
+				if (!this->asUInt16(it, "Level", skill_lv))
 					continue;
 
 				if (skill_lv > MAX_SKILL_LEVEL) {
-					this->invalidWarning(probNode["Level"], "Probability Level exceeds the maximum skill level of %d, skipping.\n", MAX_SKILL_LEVEL);
+					this->invalidWarning(it["Level"], "Probability Level exceeds the maximum skill level of %d, skipping.\n", MAX_SKILL_LEVEL);
 					return 0;
 				}
 
-				if (!this->asInt32(probNode, "Level", probability))
+				if (!this->asUInt16(it, "Probability", probability))
 					continue;
+
+				if (!probability) {
+					this->invalidWarning(it["Probability"], "Probability has to be 1 or higher.\n");
+					return 0;
+				}
 
 				abra->per[skill_lv - 1] = probability;
 			}
 		}
+	} else {
+		if (!exists)
+			abra->per.fill(500);
 	}
 
 	if (!exists)

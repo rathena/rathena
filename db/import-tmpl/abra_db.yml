@@ -23,9 +23,9 @@
 #
 ###########################################################################
 # - Skill             Skill to be casted by Abracadabra.
-#   Probability:      Probability of skill compared to others. (Default: 500)
+#   Probability:      Probability of skill compared to others in database. (Default: 500)
 #     - Level         Skill level.
-#       Probability   Probability at specific skill level.
+#       Probability   Probability at specific skill level. (Default: 0)
 ###########################################################################
 
 Header:
