@@ -13032,17 +13032,18 @@ TIMER_FUNC(status_change_timer){
 			}
 
 			if (!flag) { // Random Skill Cast
-				if (skill_magicmushroom_count && sd && !pc_issit(sd)) { // Can't cast if sit
-					int mushroom_skill_id = 0, checked = 0, checked_max = MAX_SKILL_MAGICMUSHROOM_DB * 3;
-					unit_stop_attack(bl);
-					unit_skillcastcancel(bl, 1);
-					do {
-						int i = rnd() % MAX_SKILL_MAGICMUSHROOM_DB;
-						mushroom_skill_id = skill_magicmushroom_db[i].skill_id;
-					} while (checked++ < checked_max && mushroom_skill_id == 0);
+				if (magic_mushroom_db.size() > 0 && sd && !pc_issit(sd)) { // Can't cast if sit
+					auto mushroom_spell = magic_mushroom_db.begin();
+
+					std::advance(mushroom_spell, rnd() % magic_mushroom_db.size());
+
+					uint16 mushroom_skill_id = mushroom_spell->second->skill_id;
 
 					if (!skill_get_index(mushroom_skill_id))
 						break;
+
+					unit_stop_attack(bl);
+					unit_skillcastcancel(bl, 1);
 
 					switch (skill_get_casttype(mushroom_skill_id)) { // Magic Mushroom skills are buffs or area damage
 					case CAST_GROUND:
