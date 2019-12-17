@@ -7,7 +7,7 @@
 //===== Compatible With: ===================================== 
 //= rAthena Project
 //===== Description: ========================================= 
-//= A Morroc quest that is no longer used.
+//= A Morocc quest that is no longer used.
 //===== Additional Comments: ================================= 
 //= 1.1 Fixed a small bug in Dandelion's Request. [SinSloth]
 //= 1.2 Moved Dandelion's Request to its own file.
@@ -32,7 +32,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 		mes "There are rumors";
 		mes "going around about";
 		mes "the disappearances of";
-		mes "children in the Morroc";
+		mes "children in the Morocc";
 		mes "area. Some guilds believe";
 		mes "these are actually kidnappings.";
 		next;
@@ -57,7 +57,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			next;
 			mes "[Guildsman]";
 			mes "Anyway, I don't know if you";
-			mes "know this, but a lot of kids are missing from Morroc recently.";
+			mes "know this, but a lot of kids are missing from Morocc recently.";
 			mes "We're not sure, but we think it's related to the latest assignment";
 			mes "for our Assassin Guild.";
 			next;
@@ -95,10 +95,10 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			mes "big going on, and I think it's";
 			mes "the most important thing the";
 			mes "Swordman Association has ever";
-			mes "been involved in. Pack your bags and head to Morroc right now!";
+			mes "been involved in. Pack your bags and head to Morocc right now!";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "All the way to Morroc...?";
+			mes "All the way to Morocc...?";
 			mes "Why, what's going on?";
 			next;
 			mes "[Guildsman]";
@@ -145,7 +145,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			mes "Guild in any way befitting of";
 			mes "the Knighthood in a special";
 			mes "mission to rescue children";
-			mes "missing from Morroc.";
+			mes "missing from Morocc.";
 			mes "-- Captain Herman''";
 			next;
 			mes "[Guildsman]";
@@ -207,7 +207,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			mes "[Guildsman]";
 			mes "If you check out the";
 			mes "west side of the Oasis";
-			mes "inside Morroc, you'll find";
+			mes "inside Morocc, you'll find";
 			mes "a very suspicious looking";
 			mes "hut. Your contact from the";
 			mes "Assassin Guild is near there.";
@@ -226,7 +226,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			mes "you'll need to meet with your";
 			mes "contact from the Assassin";
 			mes "Guild near a hut at the west";
-			mes "side of the Oasis inside Morroc. So keep an eye out for him.";
+			mes "side of the Oasis inside Morocc. So keep an eye out for him.";
 			next;
 			mes "[Guildsman]";
 			mes "I doubt you'll have";
@@ -244,7 +244,7 @@ izlude,103,106,3	script	Guildsman#1	48,3,3,{
 			mes "the mission? That's great!";
 			mes "Now, you need to meet your";
 			mes "contact from the Assassin";
-			mes "Guild outside a hut on the west side of the Oasis inside Morroc.";
+			mes "Guild outside a hut on the west side of the Oasis inside Morocc.";
 			next;
 			mes "[Guildsman]";
 			mes "I know those directions";
@@ -305,7 +305,7 @@ OnTouch:
 				next;
 				mes "[Guildsman]";
 				mes "Anyway, I don't know if you";
-				mes "know this, but a lot of kids are missing from Morroc recently.";
+				mes "know this, but a lot of kids are missing from Morocc recently.";
 				mes "We're not sure, but we think it's related to the latest assignment";
 				mes "for our Assassin Guild.";
 				next;
@@ -343,10 +343,10 @@ OnTouch:
 				mes "big going on, and I think it's";
 				mes "the most important thing the";
 				mes "Swordman Association has ever";
-				mes "been involved in. Pack your bags and head to Morroc right now!";
+				mes "been involved in. Pack your bags and head to Morocc right now!";
 				next;
 				mes "[" + strcharinfo(0) + "]";
-				mes "All the way to Morroc...?";
+				mes "All the way to Morocc...?";
 				mes "Why, what's going on?";
 				next;
 				mes "[Guildsman]";
@@ -393,7 +393,7 @@ OnTouch:
 				mes "Guild in any way befitting of";
 				mes "the Knighthood in a special";
 				mes "mission to rescue children";
-				mes "missing from Morroc.";
+				mes "missing from Morocc.";
 				mes "-- Captain Herman''";
 				next;
 				mes "[Guildsman]";
@@ -499,7 +499,7 @@ prontera,237,313,3	script	Nun#moc	79,3,3,{
 		mes "You may have heard that";
 		mes "there's been a recent influx";
 		mes "of missing child reports from";
-		mes "Morroc. Apparently, someone";
+		mes "Morocc. Apparently, someone";
 		mes "has hired the Assassin Guild";
 		mes "to investigate these cases.";
 		next;
@@ -519,7 +519,7 @@ prontera,237,313,3	script	Nun#moc	79,3,3,{
 		mes "client can be trusted.";
 		next;
 		mes "[Nun]";
-		mes "Please visit Morroc";
+		mes "Please visit Morocc";
 		mes "as soon as you can.";
 		mes "When you arrive, you";
 		mes "will need the Bishop's";
@@ -536,7 +536,7 @@ prontera,237,313,3	script	Nun#moc	79,3,3,{
 		mes "will need to meet your contact";
 		mes "from the Assassin Guild near";
 		mes "a hut on the west side of the";
-		mes "Oasis inside Morroc. I wonder";
+		mes "Oasis inside Morocc. I wonder";
 		mes "why they chose that location?";
 		next;
 		mes "[Nun]";
@@ -605,7 +605,7 @@ OnTouch:
 				mes "You may have heard that";
 				mes "there's been a recent influx";
 				mes "of missing child reports from";
-				mes "Morroc. Apparently, someone";
+				mes "Morocc. Apparently, someone";
 				mes "has hired the Assassin Guild";
 				mes "to investigate these cases.";
 				next;
@@ -625,7 +625,7 @@ OnTouch:
 				mes "client can be trusted.";
 				next;
 				mes "[Nun]";
-				mes "Please visit Morroc";
+				mes "Please visit Morocc";
 				mes "as soon as you can.";
 				mes "When you arrive, you";
 				mes "will need the Bishop's";
@@ -656,7 +656,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 		mes "[Guildsman]";
 		mes "Say, have you heard";
 		mes "what's happening in";
-		mes "Morroc recently? There's";
+		mes "Morocc recently? There's";
 		mes "something major going on...";
 		close;
 	}
@@ -759,7 +759,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "I think they're working for";
 			mes "a client, investigating these";
 			mes "children that are missing";
-			mes "from Morroc. If you want to";
+			mes "from Morocc. If you want to";
 			mes "help them, you'll need this";
 			mes "letter of recommendation, okay?";
 			set mao_request,1;
@@ -774,14 +774,14 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "ran into you. I know this is";
 			mes "sudden, but the Blacksmith";
 			mes "Guild has an assignment";
-			mes "for you over in Morroc.";
+			mes "for you over in Morocc.";
 			next;
 			mes "[Guildsman]";
 			mes "You see, the Assassin Guild";
 			mes "has formally requested for our";
 			mes "help in a mission regarding";
 			mes "children that have been missing";
-			mes "from Morroc recently. Here, take this letter of recommendation...";
+			mes "from Morocc recently. Here, take this letter of recommendation...";
 			next;
 			mes "[Guildsman]";
 			mes "If the Assassin Guild";
@@ -809,7 +809,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "officially asked our guild";
 			mes "for help in a mission regarding";
 			mes "children that have been missing";
-			mes "from Morroc, and they want us";
+			mes "from Morocc, and they want us";
 			mes "to send somebody... you!";
 			next;
 			mes "[Guildsman]";
@@ -823,7 +823,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "[Guildsman]";
 			mes "Here, take this letter of";
 			mes "recommendation with you and";
-			mes "head over to Morroc as soon";
+			mes "head over to Morocc as soon";
 			mes "as you can. If even the Assassin Guild needs help, I'm sure that";
 			mes "spells really big trouble...";
 			set mao_request,1;
@@ -845,7 +845,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			next;
 			mes "[Guildsman]";
 			mes "^71637DYou know the oasis inside";
-			mes "Morroc? To the west of that,";
+			mes "Morocc? To the west of that,";
 			mes "you'll find your contact from";
 			mes "the Assassin Guild.^000000";
 			mes " ";
@@ -868,7 +868,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "the Assassin Guild? Great!";
 			mes "You can meet your contact";
 			mes "on the west side of the oasis,";
-			mes "next to a hut, inside Morroc.";
+			mes "next to a hut, inside Morocc.";
 			next;
 			mes "[Guildsman]";
 			mes "Hey, good luck and";
@@ -887,7 +887,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "behalf of the Blacksmiths?";
 			mes "Then please meet your contact";
 			mes "at the west side of the Oasis";
-			mes "inside Morroc. Good luck~";
+			mes "inside Morocc. Good luck~";
 			close;
 		}
 		else if((Class == Job_Alchemist) || (Class == Job_Creator))
@@ -898,7 +898,7 @@ alberta,129,59,3	script	Guildsman#2	49,3,3,{
 			mes "from the Assassin Guild";
 			mes "will be waiting for you";
 			mes "at the west side of the";
-			mes "Oasis inside Morroc.";
+			mes "Oasis inside Morocc.";
 			next;
 			mes "[Guildsman]";
 			mes "Please help the";
@@ -1099,7 +1099,7 @@ OnTouch:
 				mes "I think they're working for";
 				mes "a client, investigating these";
 				mes "children that are missing";
-				mes "from Morroc. If you want to";
+				mes "from Morocc. If you want to";
 				mes "help them, you'll need this";
 				mes "letter of recommendation, okay?";
 				set mao_request,1;
@@ -1114,14 +1114,14 @@ OnTouch:
 				mes "ran into you. I know this is";
 				mes "sudden, but the Blacksmith";
 				mes "Guild has an assignment";
-				mes "for you over in Morroc.";
+				mes "for you over in Morocc.";
 				next;
 				mes "[Guildsman]";
 				mes "You see, the Assassin Guild";
 				mes "has formally requested for our";
 				mes "help in a mission regarding";
 				mes "children that have been missing";
-				mes "from Morroc recently. Here, take this letter of recommendation...";
+				mes "from Morocc recently. Here, take this letter of recommendation...";
 				next;
 				mes "[Guildsman]";
 				mes "If the Assassin Guild";
@@ -1149,7 +1149,7 @@ OnTouch:
 				mes "officially asked our guild";
 				mes "for help in a mission regarding";
 				mes "children that have been missing";
-				mes "from Morroc, and they want us";
+				mes "from Morocc, and they want us";
 				mes "to send somebody... you!";
 				next;
 				mes "[Guildsman]";
@@ -1163,7 +1163,7 @@ OnTouch:
 				mes "[Guildsman]";
 				mes "Here, take this letter of";
 				mes "recommendation with you and";
-				mes "head over to Morroc as soon";
+				mes "head over to Morocc as soon";
 				mes "as you can. If even the Assassin Guild needs help, I'm sure that";
 				mes "spells really big trouble...";
 				set mao_request,1;
@@ -1243,7 +1243,7 @@ geffen,123,109,3	script	Academy Staff	742,3,3,{
 		mes "[Academy Staff]";
 		mes "Have you decided to help";
 		mes "the Assassin Guild? Then";
-		mes "please, head to Morroc and";
+		mes "please, head to Morocc and";
 		mes "meet your contact that will";
 		mes "be waiting for you west of";
 		mes "the Oasis inside of the city.";
@@ -1484,7 +1484,7 @@ morocc,155,56,3	script	Miya	93,3,3,{
 		{
 			mes "[Miya]";
 			mes "Look west of the Oasis";
-			mes "here in Morroc to find Jack,";
+			mes "here in Morocc to find Jack,";
 			mes "who will let you go inside the";
 			mes "pub. Our guildmaster will be";
 			mes "waiting for you inside...";
@@ -1640,7 +1640,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 		mes "[Guildsman]";
 		mes "Please be careful if you're";
 		mes "planning to travel through";
-		mes "Morroc. Recently, there have";
+		mes "Morocc. Recently, there have";
 		mes "been reports of missing";
 		mes "children there...";
 		close;
@@ -1679,7 +1679,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "If you are interested in";
 			mes "assisting them, please take";
 			mes "this Letter of Recommendation";
-			mes "and bring it to the contact from the Assassin Guild in Morroc.";
+			mes "and bring it to the contact from the Assassin Guild in Morocc.";
 			set mao_request,1;
 			getitem 7416,1;
 			next;
@@ -1687,7 +1687,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "You can meet the";
 			mes "Assassin Guildsman near";
 			mes "some hut on the west side";
-			mes "of the Oasis inside Morroc.";
+			mes "of the Oasis inside Morocc.";
 			mes "Good luck, my friend, and please represent Taekwon Do with pride.";
 			close;
 		}
@@ -1713,7 +1713,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "letter of recommendation";
 			mes "and meet with our Asssasin";
 			mes "Guild contact to the west";
-			mes "of the Oasis in Morroc.";
+			mes "of the Oasis in Morocc.";
 			mes "Well, good luck, pal~";
 			set mao_request,1;
 			getitem 7416,1;
@@ -1750,7 +1750,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "Just... Just meet with the";
 			mes "contact from the Assassin";
 			mes "Guild just west of the Oasis";
-			mes "inside Morroc. I'm sure he";
+			mes "inside Morocc. I'm sure he";
 			mes "can explain everything better.";
 			close;
 		}
@@ -1792,7 +1792,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "For now, your cooperation";
 			mes "with the Assassin Guild is";
 			mes "probably your biggest priority.";
-			mes "Head over to Morroc and look";
+			mes "Head over to Morocc and look";
 			mes "for your contact to the west";
 			mes "of the Oasis inside town.";
 			next;
@@ -1814,7 +1814,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "You can meet the";
 			mes "Assassin Guildsman near";
 			mes "some hut on the west side";
-			mes "of the Oasis inside Morroc.";
+			mes "of the Oasis inside Morocc.";
 			mes "Good luck, my friend, and please represent Taekwon Do with pride.";
 			close;
 		}
@@ -1825,7 +1825,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "letter of recommendation";
 			mes "and meet with our Asssasin";
 			mes "Guild contact to the west";
-			mes "of the Oasis in Morroc.";
+			mes "of the Oasis in Morocc.";
 			mes "Well, good luck, pal~";
 			close;
 		}
@@ -1835,7 +1835,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "Just... Just meet with the";
 			mes "contact from the Assassin";
 			mes "Guild just west of the Oasis";
-			mes "inside Morroc. I'm sure he";
+			mes "inside Morocc. I'm sure he";
 			mes "can explain everything better.";
 			close;
 		}
@@ -1845,7 +1845,7 @@ payon,231,323,3	script	Guildsman#3	59,3,3,{
 			mes "For now, your cooperation";
 			mes "with the Assassin Guild is";
 			mes "probably your biggest priority.";
-			mes "Head over to Morroc and look";
+			mes "Head over to Morocc and look";
 			mes "for your contact to the west";
 			mes "of the Oasis inside town.";
 			next;
@@ -1952,7 +1952,7 @@ OnTouch:
 				mes "If you are interested in";
 				mes "assisting them, please take";
 				mes "this Letter of Recommendation";
-				mes "and bring it to the contact from the Assassin Guild in Morroc.";
+				mes "and bring it to the contact from the Assassin Guild in Morocc.";
 				set mao_request,1;
 				getitem 7416,1;
 				next;
@@ -1960,7 +1960,7 @@ OnTouch:
 				mes "You can meet the";
 				mes "Assassin Guildsman near";
 				mes "some hut on the west side";
-				mes "of the Oasis inside Morroc.";
+				mes "of the Oasis inside Morocc.";
 				mes "Good luck, my friend, and please represent Taekwon Do with pride.";
 				close;
 			}
@@ -1986,7 +1986,7 @@ OnTouch:
 				mes "letter of recommendation";
 				mes "and meet with our Asssasin";
 				mes "Guild contact to the west";
-				mes "of the Oasis in Morroc.";
+				mes "of the Oasis in Morocc.";
 				mes "Well, good luck, pal~";
 				set mao_request,1;
 				getitem 7416,1;
@@ -2023,7 +2023,7 @@ OnTouch:
 				mes "Just... Just meet with the";
 				mes "contact from the Assassin";
 				mes "Guild just west of the Oasis";
-				mes "inside Morroc. I'm sure he";
+				mes "inside Morocc. I'm sure he";
 				mes "can explain everything better.";
 				close;
 			}
@@ -2065,7 +2065,7 @@ OnTouch:
 				mes "For now, your cooperation";
 				mes "with the Assassin Guild is";
 				mes "probably your biggest priority.";
-				mes "Head over to Morroc and look";
+				mes "Head over to Morocc and look";
 				mes "for your contact to the west";
 				mes "of the Oasis inside town.";
 				next;
@@ -2778,7 +2778,7 @@ OnStop:
 	donpcevent "Kidd#2::OnInit";
 	donpcevent "Marjana#poison::OnInit";
 	donpcevent "#mao_table::OnInit";
-	donpcevent "#roombar1::OnInit";
+	$@maobar_room = 0;
 	stopnpctimer;
 	end;
 	
@@ -2800,7 +2800,7 @@ OnTimer245000:
 	
 OnTimer250000:
 	mapannounce "que_job01","The security magic in the Master Zone, Area 1 is deactivated.",1,0x70DBDB;
-	donpcevent "#roombar1::OnInit";
+	$@maobar_room = 0;
 	stopnpctimer;
 	end;
 }
@@ -2907,7 +2907,7 @@ OnStop:
 	donpcevent "Kidd#3::OnInit";
 	donpcevent "#Rabsent::OnInit";
 	donpcevent "#mao_empty::OnInit";
-	donpcevent "#roombar2::OnInit";
+	$@maobar_room2 = 0;
 	stopnpctimer;
 	end;
 	
@@ -2924,12 +2924,11 @@ OnTimer245000:
 	donpcevent "Kidd#3::OnInit";
 	donpcevent "#Rabsent::OnInit";
 	donpcevent "#mao_empty::OnInit";
-	donpcevent "#roombar2::OnInit";
 	end;
 	
 OnTimer250000:
 	mapannounce "que_job01","Security Level in the Master Zone, Area 2 deactivated.",1,0x70DBDB;
-	donpcevent "#roombar2::OnInit";
+	$@maobar_room2 = 0;
 	stopnpctimer;
 	end;
 }
@@ -3015,7 +3014,7 @@ que_job01,16,21,5	script	Valdes#1	55,{
 			mes "The Assassin Guild agreed to";
 			mes "perform two missions that are";
 			mes "supposed to be related to the";
-			mes "missing children in Morroc.";
+			mes "missing children in Morocc.";
 			mes "You must choose one mission";
 			mes "in which you will participate.";
 			next;
@@ -3184,7 +3183,7 @@ que_job01,16,21,5	script	Valdes#1	55,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "W-wait; a minute...";
 		mes "Are you saying we stopped";
-		mes "Satan Morroc's revival, but";
+		mes "Satan Morocc's revival, but";
 		mes "Raiyan Moore escaped?";
 		next;
 		mes "[Lin]";
@@ -3265,13 +3264,13 @@ que_job01,16,21,5	script	Valdes#1	55,{
 			mes "I must say that you";
 			mes "did a good job. We";
 			mes "didn't save the children,";
-			mes "but we stopped Satan Morroc.";
+			mes "but we stopped Satan Morocc.";
 		}
 		else
 		{
 			mes "We failed our original";
 			mes "objective to save those kids,";
-			mes "but we did stop Satan Morroc.";
+			mes "but we did stop Satan Morocc.";
 			mes "You did a good job, and we'll";
 			mes "notify your guild of your good";
 			mes "work. Thanks for your help.";
@@ -3326,7 +3325,7 @@ que_job01,16,21,5	script	Valdes#1	55,{
 		mes "damned bastard. Everything";
 		mes "that Raiyan Moore wanted us";
 		mes "to do was for the sake of";
-		mes "Satan Morroc's reincarnation.";
+		mes "Satan Morocc's reincarnation.";
 		mes "He almost got away with it...";
 		cutin "mocseal_rin01.bmp",2;
 		next;
@@ -3353,7 +3352,7 @@ que_job01,16,21,5	script	Valdes#1	55,{
 		mes "be blaming ourselves or ";
 		mes "each other. For now, we can";
 		mes "be satisfied with preventing";
-		mes "Satan Morroc's revival, and";
+		mes "Satan Morocc's revival, and";
 		mes "then focus on Raiyan Moore.";
 		cutin "mocseal_kid01.bmp",255;
 		next;
@@ -3464,7 +3463,7 @@ que_job01,16,21,5	script	Valdes#1	55,{
 			mes "Guild. Your aid will";
 			mes "always be welcome here.";
 			mes "If it weren't for you, then";
-			mes "Satan Morroc would have...";
+			mes "Satan Morocc would have...";
 		}
 		close2;
 	}
@@ -3661,7 +3660,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "research, and may provide";
 		mes "clues to finding those children";
 		mes "that have been missing from";
-		mes "Morroc. Please retrieve them!";
+		mes "Morocc. Please retrieve them!";
 		cutin "mocseal_dan01.bmp",0;
 		next;
 		mes "[Lin]";
@@ -3832,7 +3831,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "[Lin]";
 		mes "I guess we should do as";
 		mes "Mr. R asks. Go ahead and";
-		mes "check the field west of Morroc";
+		mes "check the field west of Morocc";
 		mes "for one of those artifacts or";
 		mes "crests, and I'll remain here";
 		mes "to guard Mr. R, just in case.";
@@ -3869,7 +3868,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		next;
 		mes "[Lin]";
 		mes "There's all this mention";
-		mes "of Morroc, Morroc Satan,";
+		mes "of Morocc, Morocc Satan,";
 		mes "and Thanatos Tower... How";
 		mes "is this all connected to the";
 		mes "missing children? If you ask";
@@ -3878,7 +3877,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "[Lin]";
 		mes "Hey, I want you to find out";
 		mes "what you can from our local";
-		mes "historian in Morroc about Morroc Satan and all that. There's";
+		mes "historian in Morocc about Morocc Satan and all that. There's";
 		mes "too much we don't know, and";
 		mes "I don't wanna take chances.";
 		set mao_request,116;
@@ -3946,7 +3945,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "^A9A9A9THE^000000 came back because you";
 		mes "^A9A9A9HISTORIAN^000000 forgot something. ";
 		mes "Now hurry ^A9A9A9IN^000000 up, we're going to";
-		mes "need ^A9A9A9MORROC^000000 snacks ^A9A9A9NOW^000000 soon.";
+		mes "need ^A9A9A9Morocc^000000 snacks ^A9A9A9NOW^000000 soon.";
 		close2;
 	}
 	else if(mao_request == 117)
@@ -4005,15 +4004,15 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "[R. Moore]";
 		mes "I think it's possible that the";
 		mes "missing children were kidnapped";
-		mes "to revive an ancient evil, Satan Morroc. I believe we can learn";
+		mes "to revive an ancient evil, Satan Morocc. I believe we can learn";
 		mes "more about the kidnappers by";
-		mes "learning about Satan Morroc.";
+		mes "learning about Satan Morocc.";
 		next;
 		mes "[R. Moore]";
 		mes "I know this all sounds";
 		mes "crazy, but please trust me.";
 		mes "Thanatos Tower is somehow";
-		mes "related to Satan Morroc, so";
+		mes "related to Satan Morocc, so";
 		mes "if you could tell me what";
 		mes "you can learn from there...";
 		next;
@@ -4047,9 +4046,9 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "First, those men that";
 		mes "attacked you. Are they";
 		mes "trying to revive Satan";
-		mes "Morroc? And those crests...";
+		mes "Morocc? And those crests...";
 		mes "Were they built to break Satan";
-		mes "Morroc's seal or protect it?";
+		mes "Morocc's seal or protect it?";
 		next;
 		cutin "mocseal_dan01.bmp",1;
 		mes "[R. Moore]";
@@ -4057,27 +4056,27 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "idea what they could want.";
 		mes "As for the elemental crests,";
 		mes "they were originally built by";
-		mes "a madman to revive Satan Morroc. ";
+		mes "a madman to revive Satan Morocc. ";
 		next;
 		mes "[R. Moore]";
 		mes "However, once that crazed";
 		mes "man's plot was discovered,";
 		mes "the crests were modified to";
 		mes "further shield the seal that";
-		mes "contains Satan Morroc.";
+		mes "contains Satan Morocc.";
 		next;
 		mes "[R. Moore]";
 		mes "But as a historian...";
 		mes "These stories about Satan";
-		mes "Morroc and seals are just";
+		mes "Morocc and seals are just";
 		mes "conjecture. I need concrete";
 		mes "proof that the threat of";
-		mes "Satan Morroc truly exists.";
+		mes "Satan Morocc truly exists.";
 		next;
 		mes "[R. Moore]";
 		mes "If I can obtain that,";
 		mes "people would be able to";
-		mes "take Satan Morroc's threat";
+		mes "take Satan Morocc's threat";
 		mes "more seriously. And Thanatos Tower wouldn't be a tourist area.";
 		next;
 		mes "[R. Moore]";
@@ -4085,7 +4084,7 @@ que_job01,84,17,3	script	Lin#2-1	885,{
 		mes "go to Thanatos Tower and";
 		mes "try to find some sort of solid";
 		mes "historical record that proves";
-		mes "that Satan Morroc really";
+		mes "that Satan Morocc really";
 		mes "existed in our world.";
 		set mao_request,120;
 		close2;
@@ -4270,14 +4269,14 @@ que_job01,79,15,1	script	R	880,{
 		mes "[R. Moore]";
 		mes "There are four crests";
 		mes "hidden in four different";
-		mes "directions around Morroc";
+		mes "directions around Morocc";
 		mes "which regulate the power";
 		mes "of the Water, Wind, Earth";
 		mes "and Fire elements in the area.";
 		next;
 		mes "[R. Moore]";
 		mes "The stability of these";
-		mes "elements in Morroc is in";
+		mes "elements in Morocc is in";
 		mes "currently in question, so";
 		mes "I want you to ^4D4DFFuse enchanted";
 		mes "stones^000000 to strengthen the power";
@@ -4304,7 +4303,7 @@ que_job01,79,15,1	script	R	880,{
 		mes "Regardless, those men";
 		mes "attacked me because they";
 		mes "did not want me to repair";
-		mes "Morroc's elemental equilibrium.";
+		mes "Morocc's elemental equilibrium.";
 		mes "At least, that's what I believe.";
 		set mao_request,109;
 		next;
@@ -4320,7 +4319,7 @@ que_job01,79,15,1	script	R	880,{
 		cutin "mocseal_dan01.bmp",0;
 		mes "[R. Moore]";
 		mes "Why don't you search West";
-		mes "Morroc first for one of the";
+		mes "Morocc first for one of the";
 		mes "elemental artifacts since it";
 		mes "is closer? It should be where";
 		mes "the pyramids are located.";
@@ -4347,7 +4346,7 @@ que_job01,79,15,1	script	R	880,{
 		mes "You should be able to find";
 		mes "the element regulation device";
 		mes "behind one of the pyramids in";
-		mes "the field west of Morroc. Please";
+		mes "the field west of Morocc. Please";
 		mes "use an enchanted stone to";
 		mes "boost the crest's power.";
 		close2;
@@ -4388,7 +4387,7 @@ que_job01,79,15,1	script	R	880,{
 		mes "Well, I guess I'll go out";
 		mes "and try to activate those";
 		mes "other elemental crests";
-		mes "just outside of Morroc.";
+		mes "just outside of Morocc.";
 		close2;
 	}
 	else if(mao_request > 112 && mao_request < 115)
@@ -4504,15 +4503,15 @@ que_job01,79,15,1	script	R	880,{
 		mes "[R. Moore]";
 		mes "I think it's possible that the";
 		mes "missing children were kidnapped";
-		mes "to revive an ancient evil, Satan Morroc. I believe we can learn";
+		mes "to revive an ancient evil, Satan Morocc. I believe we can learn";
 		mes "more about the kidnappers by";
-		mes "learning about Satan Morroc.";
+		mes "learning about Satan Morocc.";
 		next;
 		mes "[R. Moore]";
 		mes "I know this all sounds";
 		mes "crazy, but please trust me.";
 		mes "Thanatos Tower is somehow";
-		mes "related to Satan Morroc, so";
+		mes "related to Satan Morocc, so";
 		mes "if you could tell me what";
 		mes "you can learn from there...";
 		next;
@@ -4544,7 +4543,7 @@ que_job01,79,15,1	script	R	880,{
 		mes "go to Thanatos Tower and";
 		mes "try to find some sort of solid";
 		mes "historical record that proves";
-		mes "that Satan Morroc really";
+		mes "that Satan Morocc really";
 		mes "existed in our world.";
 		close2;
 	}
@@ -4685,7 +4684,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "[Dandelion Member]";
 		mes "Let me go, I can feel";
 		mes "something happening in";
-		mes "Morroc Castle! We have";
+		mes "Morocc Castle! We have";
 		mes "to go over there right now!";
 		close2;
 	}
@@ -4786,7 +4785,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "Anyway, back to the task at";
 		mes "hand. All we know is that our";
 		mes "target was last seen checking";
-		mes "out the Morroc ruins. Now, I think that we should begin our search ";
+		mes "out the Morocc ruins. Now, I think that we should begin our search ";
 		mes "by visiting the Juno Library.";
 		next;
 		switch( select( "Why should we go there?","Right, I understand!" ) )
@@ -4796,7 +4795,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 				mes "Our target, Raiyan Moore";
 				mes "is a scholar, an academic.";
 				mes "If he was researching the";
-				mes "Morroc Ruins, there's a good";
+				mes "Morocc Ruins, there's a good";
 				mes "chance that he went to the";
 				mes "Juno Library beforehand.";
 				next;
@@ -4844,7 +4843,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "[Kidd]";
 		mes "Hey you, Dandelion guy,";
 		mes "you know why these four";
-		mes "directions in Morroc are";
+		mes "directions in Morocc are";
 		mes "so important to Moore?";
 		mes "He wrote something about";
 		mes "it in his research journal.";
@@ -4854,7 +4853,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "Hm? No, not really.";
 		mes "In fact, it's even more";
 		mes "baffling. What could be";
-		mes "here in Morroc, and how";
+		mes "here in Morocc, and how";
 		mes "can it possibly relate";
 		mes "to the missing children?";
 		next;
@@ -4873,22 +4872,22 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "So...";
 		mes "How should we go";
 		mes "about investigating the";
-		mes "four directions in Morroc?";
+		mes "four directions in Morocc?";
 		next;
 		cutin "mocseal_kid01.bmp",2;
 		mes "[Kidd]";
 		mes "Hmm... Why don't we try";
 		mes "this? I'll check the south";
-		mes "part of Morroc for anything";
+		mes "part of Morocc for anything";
 		mes "out of the ordinary, while you";
-		mes "check the west part of Morroc.";
+		mes "check the west part of Morocc.";
 		next;
 		mes "[Kidd]";
 		mes "Since Moore was performing";
 		mes "historical research, it would";
 		mes "probably be best for you to";
 		mes "investigate the pyramids west";
-		mes "of Morroc. If you happen to find anything, then meet me back here.";
+		mes "of Morocc. If you happen to find anything, then meet me back here.";
 		set mao_request,10;
 		next;
 		cutin "mocseal_dan01.bmp",0;
@@ -4905,7 +4904,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		cutin "mocseal_kid01.bmp",2;
 		mes "[Kidd]";
 		mes "For now, investigate";
-		mes "the west part of Morroc";
+		mes "the west part of Morocc";
 		mes "where the pyramids are";
 		mes "located. If you find anything";
 		mes "that may interest Moore, come";
@@ -4919,16 +4918,16 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "Ah, you've returned.";
 		mes "I found some sort of";
 		mes "elemental crest over in";
-		mes "the south part of Morroc.";
+		mes "the south part of Morocc.";
 		mes "It was full of Earth magic...";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Really? I actually found the";
 		mes "Wind elemental crest west";
-		mes "of Morroc. Do you think this";
+		mes "of Morocc. Do you think this";
 		mes "means that there's elemental";
 		mes "crests in the fields north and";
-		mes "east of Morroc as well?";
+		mes "east of Morocc as well?";
 		next;
 		cutin "mocseal_kid01.bmp",2;
 		mes "[Kidd]";
@@ -4937,7 +4936,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "in those elemental crests. Now,";
 		mes "from what we read in Moore's";
 		mes "research, the four directions";
-		mes "in Morroc have to be balanced.";
+		mes "in Morocc have to be balanced.";
 		next;
 		cutin "mocseal_dan01.bmp",0;
 		mes "[Dandelion Member]";
@@ -4954,11 +4953,11 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "unstable when I found it.";
 		mes "For now, go and stabilize";
 		mes "all four elemental crests";
-		mes "located just outside of Morroc.";
+		mes "located just outside of Morocc.";
 		next;
 		mes "[Kidd]";
 		mes "While you're doing that,";
-		mes "I'm going to visit Morroc's";
+		mes "I'm going to visit Morocc's";
 		mes "local historian and see what";
 		mes "I can learn about those crests";
 		mes "and Raiyan Moore's intentions.";
@@ -4981,7 +4980,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "types of those elemental";
 		mes "stones. Anyway, you already";
 		mes "know where the west crest is.";
-		mes "The south crest is in the lowest part of the field south of Morroc.";
+		mes "The south crest is in the lowest part of the field south of Morocc.";
 		next;
 		mes "[Kidd]";
 		mes "As for the north and east";
@@ -5097,9 +5096,9 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "[Kidd]";
 		mes "You should be able to";
 		mes "find our local historian in";
-		mes "the Morroc Inn. If you can, ask";
+		mes "the Morocc Inn. If you can, ask";
 		mes "him about the crests around";
-		mes "Morroc and their importance.";
+		mes "Morocc and their importance.";
 		next;
 		mes "[Kidd]";
 		mes "We need to gather as";
@@ -5175,15 +5174,15 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Well, those elemental crests";
 		mes "are supposed to protect some";
-		mes "seal beneath Morroc Castle";
+		mes "seal beneath Morocc Castle";
 		mes "that keeps this monster, Satan";
-		mes "Morroc, from invading our world. It might be just a legend, but...";
+		mes "Morocc, from invading our world. It might be just a legend, but...";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "The assistant told me that";
 		mes "Thanatos Tower was actually";
 		mes "a place originally used by";
-		mes "Satan Morroc to summon his";
+		mes "Satan Morocc to summon his";
 		mes "minions. Now, demons or angels";
 		mes "or whatever inhabit that tower.";
 		next;
@@ -5196,7 +5195,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "[" + strcharinfo(0) + "]";
 		mes "Well... Let's say that";
 		mes "Raiyan Moore's goal is to";
-		mes "revive Satan Morroc, if it";
+		mes "revive Satan Morocc, if it";
 		mes "truly exists. It might be";
 		mes "possible to do that by";
 		mes "offering a blood sacrifice.";
@@ -5216,7 +5215,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "You know... I've been";
 		mes "thinking about what we";
 		mes "should do next. If Satan";
-		mes "Morroc really exists, then";
+		mes "Morocc really exists, then";
 		mes "that would be a worldwide";
 		mes "catastrophe, right?";
 		next;
@@ -5231,9 +5230,9 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		cutin "mocseal_dan01.bmp",0;
 		mes "[Dandelion Member]";
 		mes "There are those seals";
-		mes "around Morroc, but we're";
+		mes "around Morocc, but we're";
 		mes "not sure if they help keep";
-		mes "Satan Morroc sealed, or if";
+		mes "Satan Morocc sealed, or if";
 		mes "their magic makes it easier for humans to live in that desert.";
 		next;
 		cutin "mocseal_kid01.bmp",2;
@@ -5243,7 +5242,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "to Thanatos Tower and see if";
 		mes "you can find those kids, Raiyan";
 		mes "Moore, or concrete proof of";
-		mes "Satan Morroc's existence.";
+		mes "Satan Morocc's existence.";
 		set mao_request,22;
 		next;
 		mes "[Kidd]";
@@ -5261,7 +5260,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "So how's the investigation of";
 		mes "Thanatos Tower coming along?";
 		mes "Did you learn anything about";
-		mes "Raiyan Moore or Satan Morroc?";
+		mes "Raiyan Moore or Satan Morocc?";
 		next;
 		switch( select( "Yes, I did.","No, not yet..." ) )
 		{
@@ -5270,10 +5269,10 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 				{
 					mes "[" + strcharinfo(0) + "]";
 					mes "Well, I found some old log";
-					mes "entries about Satan Morroc.";
+					mes "entries about Satan Morocc.";
 					mes "They pretty much confirm that";
-					mes "Satan Morroc is real, and that";
-					mes "it's sealed under Morroc Castle. ";
+					mes "Satan Morocc is real, and that";
+					mes "it's sealed under Morocc Castle. ";
 					next;
 					mes "["+ strcharinfo(0) +"]";
 					mes "The Rekenber Corporation";
@@ -5285,7 +5284,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 					cutin "mocseal_kid01.bmp",2;
 					mes "[Kidd]";
 					mes "So it's true...";
-					mes "Satan Morroc does exist.";
+					mes "Satan Morocc does exist.";
 					mes "If Raiyan Moore kidnapped";
 					mes "those children, then he must";
 					mes "be planning to sacrifice them";
@@ -5316,7 +5315,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 					mes "[Kidd]";
 					mes "Hmm... Your investigation";
 					mes "wasn't thorough enough. You";
-					mes "need to find concrete proof about Satan Morroc's existence or Raiyan";
+					mes "need to find concrete proof about Satan Morocc's existence or Raiyan";
 					mes "Moore's intentions. Hurry back to Thanatos Tower and find it!";
 					close2;
 				}
@@ -5358,7 +5357,7 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		mes "This is bad... Not only";
 		mes "are the missing children in";
 		mes "danger, but if Raiyan may even";
-		mes "revive Satan Morroc. We cannot";
+		mes "revive Satan Morocc. We cannot";
 		mes "allow that to happen at any cost.";
 		next;
 		cutin "mocseal_kid01.bmp",2;
@@ -5470,10 +5469,10 @@ que_job01,91,83,3	script	Kidd#hall	884,{
 		cutin "mocseal_kid01.bmp",2;
 		mes "[Kidd]";
 		mes "Something huge is going";
-		mes "on at Morroc Castle. If that's";
-		mes "where Satan Morroc is sealed,";
+		mes "on at Morocc Castle. If that's";
+		mes "where Satan Morocc is sealed,";
 		mes "then the demon is beginning";
-		mes "to revive. We gotta stop it before Satan Morroc can enter our world!";
+		mes "to revive. We gotta stop it before Satan Morocc can enter our world!";
 		close2;
 	}
 	else if(mao_request == 28 || mao_request == 29 || mao_request == 126 || mao_request == 127)
@@ -5550,7 +5549,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 		mes "[Dandelion Member]";
 		mes "Let me go, I can feel";
 		mes "something happening in";
-		mes "Morroc Castle! We have";
+		mes "Morocc Castle! We have";
 		mes "to go over there right now!";
 		close2;
 	}
@@ -5664,7 +5663,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 		mes "All we know is that";
 		mes "Raiyan Moore has last";
 		mes "been spotted investigating";
-		mes "the ruins around Morroc.";
+		mes "the ruins around Morocc.";
 		mes "For now, I suggest that you plan your next action with Kidd.";
 		next;
 		mes "^3355FFThe representative from";
@@ -5706,7 +5705,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 		mes "Raiyan seems to have";
 		mes "been conducting some very";
 		mes "peculiar research. What could";
-		mes "the meaning of ''Morroc's four";
+		mes "the meaning of ''Morocc's four";
 		mes "directions'' be? How can it";
 		mes "possibly be of significance?";
 		close2;
@@ -5717,9 +5716,9 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 		mes "[Dandelion Member]";
 		mes "So you're really going to";
 		mes "check the four directions";
-		mes "in Morroc... What could";
+		mes "in Morocc... What could";
 		mes "possibly interest Raiyan";
-		mes "Moore in Morroc? Perhaps";
+		mes "Moore in Morocc? Perhaps";
 		mes "he is not just a kidnapper...";
 		close2;
 	}
@@ -5742,7 +5741,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 		mes "I don't understand what";
 		mes "could be so important about";
 		mes "these elemental crest devices";
-		mes "hidden in Morroc. What could";
+		mes "hidden in Morocc. What could";
 		mes "Raiyan Moore be planning...?";
 		close2;
 	}
@@ -5784,7 +5783,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 	{
 		cutin "mocseal_dan01.bmp",0;
 		mes "[Dandelion Member]";
-		mes "Now why would Morroc's";
+		mes "Now why would Morocc's";
 		mes "local historian refuse to see";
 		mes "Kidd? Maybe he didn't fully";
 		mes "understand the importance";
@@ -5874,7 +5873,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 		mes "[Dandelion Member]";
 		mes "Raiyan Moore...";
 		mes "The missing children...";
-		mes "Satan Morroc and Thanatos";
+		mes "Satan Morocc and Thanatos";
 		mes "Tower. They couldn't all be";
 		mes "connected somehow, can they?";
 		close2;
@@ -5909,7 +5908,7 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 		mes "[Dandelion Member]";
 		mes "Raiyan Moore kidnapped";
 		mes "the children to revive Satan";
-		mes "Morroc, and had the nerve";
+		mes "Morocc, and had the nerve";
 		mes "to hire the Assassin Guild";
 		mes "to protect him?! He's truly";
 		mes "a devious mastermind...";
@@ -5947,9 +5946,9 @@ que_job01,89,85,5	script	Dandelion Member	880,{
 		mes "This is bad news...";
 		mes "It looks like Raiyan Moore";
 		mes "is performing the ritual to";
-		mes "revive Satan Morroc. We need";
-		mes "to go to Morroc Castle, where";
-		mes "Satan Morroc is sealed...";
+		mes "revive Satan Morocc. We need";
+		mes "to go to Morocc Castle, where";
+		mes "Satan Morocc is sealed...";
 		close2;
 	}
 	else if(mao_request == 28 || mao_request == 29 || mao_request == 126 || mao_request == 127)
@@ -6241,11 +6240,11 @@ yuno_in04,180,106,3	script	Reading Girl	73,{
 		mes "Maybe this'll tell me about";
 		mes "Mr. R. Moore's research...";
 		next;
-		mes "^4d4dffSatan Morroc appeared,";
+		mes "^4d4dffSatan Morocc appeared,";
 		mes "turning the world into a";
 		mes "living hell. Somehow, the";
 		mes "monster was sealed, and a";
-		mes "castle and town was built over^FFFFFF ^4d4dff its prison. This place is Morroc.";
+		mes "castle and town was built over^FFFFFF ^4d4dff its prison. This place is Morocc.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Whoa, that's actually";
@@ -6338,7 +6337,7 @@ yuno_in04,175,129,0	script	Workbook#mao	111,{
 			mes "this paper from Moore's desk.";
 			next;
 			mes "[" + strcharinfo(0) + "]";
-			mes "...Morroc...";
+			mes "...Morocc...";
 			mes "Were summoned...";
 			mes "Through the tower...?";
 			mes "This handwriting is so";
@@ -6349,8 +6348,8 @@ yuno_in04,175,129,0	script	Workbook#mao	111,{
 			mes "Uhhh... Tower...";
 			mes "Prontera... Impact created...";
 			mes "Desert? Must... four directions";
-			mes "in Morroc... Oh! Balance the";
-			mes "four directions in Morroc";
+			mes "in Morocc... Oh! Balance the";
+			mes "four directions in Morocc";
 			mes "to prevent a great evil.";
 			next;
 			mes "[Kidd]";
@@ -6358,14 +6357,14 @@ yuno_in04,175,129,0	script	Workbook#mao	111,{
 			mes "spent the time to write that";
 			mes "part clearly, then he must be";
 			mes "planning to investigate the";
-			mes "four directions in Morroc.";
+			mes "four directions in Morocc.";
 			next;
 			mes "[Kidd]";
 			mes "I'm not sure what it";
 			mes "could all mean, but I'm";
 			mes "gonna bring this part of";
 			mes "his journal with me. I'll";
-			mes "meet you back in Morroc.";
+			mes "meet you back in Morocc.";
 			set mao_request,8;
 			close2;
 			cutin "mocseal_kid01.bmp",255;
@@ -6507,14 +6506,14 @@ que_job01,8,77,1	script	#linstairs	139,3,3,{
 		mes "the historian guy, and he";
 		mes "got a little intimidated. Now";
 		mes "he's holed up somewhere";
-		mes "in the Morroc Inn, and I don't";
+		mes "in the Morocc Inn, and I don't";
 		mes "think he's seeing anybody.";
 		next;
 		mes "[Lin]";
-		mes "I want you to find Morroc's";
+		mes "I want you to find Morocc's";
 		mes "historian and find out what";
-		mes "you can about Satan Morroc,";
-		mes "Morroc, and Thanatos Tower.";
+		mes "you can about Satan Morocc,";
+		mes "Morocc, and Thanatos Tower.";
 		mes "We need to know how they're";
 		mes "linked to the missing kids.";
 		next;
@@ -6527,7 +6526,7 @@ que_job01,8,77,1	script	#linstairs	139,3,3,{
 		mes "Great, thanks a lot.";
 		mes "Okay then, I'll see";
 		mes "you later. Remember,";
-		mes "the Morroc Inn, alright?";
+		mes "the Morocc Inn, alright?";
 		set mao_request,116;
 		close2;
 		cutin "mocseal_rin01.bmp",255;
@@ -6557,7 +6556,7 @@ que_job01,8,77,1	script	#linstairs	139,3,3,{
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "Thanatos Tower was used";
-		mes "by Morroc Satan to summon";
+		mes "by Morocc Satan to summon";
 		mes "his own monsters into our";
 		mes "world. Now, it's being rebuilt,";
 		mes "even though it houses these";
@@ -6572,7 +6571,7 @@ que_job01,8,77,1	script	#linstairs	139,3,3,{
 		mes "did you manage to learn?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "Well, Satan Morroc, if it";
+		mes "Well, Satan Morocc, if it";
 		mes "exists, might be able to";
 		mes "come back into our world";
 		mes "if the seal is broken by";
@@ -6582,7 +6581,7 @@ que_job01,8,77,1	script	#linstairs	139,3,3,{
 		mes "That... That sounds";
 		mes "really bad, especially";
 		mes "with all of those children";
-		mes "missing from Morroc lately.";
+		mes "missing from Morocc lately.";
 		mes "What'll be our next move?";
 		mes "I guess we'll talk to Mr. R.";
 		set mao_request,118;
@@ -6609,10 +6608,10 @@ que_job01,8,77,1	script	#linstairs	139,3,3,{
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Well, I found some old log";
-		mes "entries about Satan Morroc.";
+		mes "entries about Satan Morocc.";
 		mes "They pretty much confirm that";
-		mes "Satan Morroc is real, and that";
-		mes "it's sealed under Morroc Castle. ";
+		mes "Satan Morocc is real, and that";
+		mes "it's sealed under Morocc Castle. ";
 		next;
 		mes "["+ strcharinfo(0) +"]";
 		mes "The Rekenber Corporation";
@@ -6625,13 +6624,13 @@ que_job01,8,77,1	script	#linstairs	139,3,3,{
 		mes "Why would they want to do";
 		mes "something crazy like that?";
 		mes "If Mr. R is really preventing";
-		mes "Morroc Satan's return, then";
+		mes "Morocc Satan's return, then";
 		mes "his attackers must want";
-		mes "to revive Morroc Satan...";
+		mes "to revive Morocc Satan...";
 		next;
 		mes "[Lin]";
 		mes "But if he's lying, and";
-		mes "he's trying to bring Morroc";
+		mes "he's trying to bring Morocc";
 		mes "Satan into our world, then";
 		mes "he's wanted by the Dandelion";
 		mes "group... meaning, he may be";
@@ -6650,7 +6649,7 @@ que_job01,8,77,1	script	#linstairs	139,3,3,{
 		mes "both of these missions?!";
 		mes "In the worst case scenario,";
 		mes "we might be the ones who'll";
-		mes "have to keep Satan Morroc";
+		mes "have to keep Satan Morocc";
 		mes "from returning to this world...";
 		set mao_request,122;
 		close2;
@@ -6694,7 +6693,7 @@ moc_fild10,281,148,1	script	Upturned Spot#water	111,{
 			mes "Alright...";
 			mes "Now I should look for";
 			mes "the crest hidden in the";
-			mes "field north of Morroc.";
+			mes "field north of Morocc.";
 			close2;
 		}
 		else
@@ -6739,7 +6738,7 @@ moc_fild10,281,148,1	script	Upturned Spot#water	111,{
 			mes "Alright...";
 			mes "Now I should look for";
 			mes "the crest hidden in the";
-			mes "field north of Morroc.";
+			mes "field north of Morocc.";
 			close2;
 		}
 		else
@@ -6944,7 +6943,7 @@ moc_fild19,21,33,1	script	Unturned Spot#wind	111,{
 			mes "Now I need to talk to Lin";
 			mes "and figure out if there are";
 			mes "more of these things to be";
-			mes "found outside of Morroc.";
+			mes "found outside of Morocc.";
 			close2;
 		}
 		else
@@ -7010,7 +7009,7 @@ moc_fild12,280,36,1	script	Unturned Spot#earth	111,{
 			mes "That was simple.";
 			mes "Alright, now I should";
 			mes "try to find the crest";
-			mes "hidden east of Morroc.";
+			mes "hidden east of Morocc.";
 			close2;
 		}
 		else
@@ -7061,7 +7060,7 @@ moc_fild12,280,36,1	script	Unturned Spot#earth	111,{
 			mes "Great, I think that actually";
 			mes "worked! Now, I should try";
 			mes "to find the crest hidden to";
-			mes "the east of Morroc.";
+			mes "the east of Morocc.";
 			cutin "mocseal_earth01.bmp",2;
 			close2;
 		}
@@ -7197,7 +7196,7 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "Hopefully, I was able to";
 		mes "help you with whatever";
 		mes "information that you needed.";
-		mes "Morroc has a much richer";
+		mes "Morocc has a much richer";
 		mes "history than most people";
 		mes "realize, don't you think?";
 		close;
@@ -7208,7 +7207,7 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "Hopefully, I was able to";
 		mes "help you with whatever";
 		mes "information that you needed.";
-		mes "Morroc has a much richer";
+		mes "Morocc has a much richer";
 		mes "history than most people";
 		mes "realize, don't you think?";
 		next;
@@ -7250,12 +7249,12 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "If it's really important,";
 		mes "then I might be able to";
 		mes "answer your questions if";
-		mes "they're about Morroc's most";
+		mes "they're about Morocc's most";
 		mes "ancient histories and legends.";
 		next;
 		mes "^3355FFYou ask Sephit about the";
 		mes "four elemental crests around";
-		mes "Morroc, their significance, and";
+		mes "Morocc, their significance, and";
 		mes "about Raiyan Moore. You also";
 		mes "inform her that you've already";
 		mes "stabilized the crests' power.^000000";
@@ -7274,17 +7273,17 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "those crests. Still, you did";
 		mes "a great service by stabilizing";
 		mes "them. Otherwise, the seal under";
-		mes "Morroc Castle would break.";
+		mes "Morocc Castle would break.";
 		next;
 		mes "[Sephit]";
-		mes "The seal beneath Morroc";
+		mes "The seal beneath Morocc";
 		mes "Castle actually keeps Satan";
-		mes "Morroc from entering our world.";
+		mes "Morocc from entering our world.";
 		mes "If he ever returned, he might";
 		mes "repeat the mass destruction";
 		next;
 		mes "[Sephit]";
-		mes "When Satan Morroc";
+		mes "When Satan Morocc";
 		mes "was terrorizing the human";
 		mes "world, he used Thanatos";
 		mes "Tower as his power base.";
@@ -7300,25 +7299,25 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "roam that place freely.";
 		next;
 		mes "[Sephit]";
-		mes "Satan Morroc may have been";
+		mes "Satan Morocc may have been";
 		mes "unimaginably powerful, but";
 		mes "it would take a lot of work";
 		mes "to bring him back into our";
 		mes "world. Let's see, you could";
-		mes "destroy Morroc's seal...";
+		mes "destroy Morocc's seal...";
 		next;
 		mes "[Sephit]";
 		mes "There was also... Oh, God.";
 		mes "Long ago, someone actually";
 		mes "sacrificed children in a failed";
-		mes "attempt to revive Morroc Satan.";
+		mes "attempt to revive Morocc Satan.";
 		mes "The children missing here in";
-		mes "Morroc-- Y-you don't think...";
+		mes "Morocc-- Y-you don't think...";
 		next;
 		mes "[Sephit]";
 		mes "But who really knows?";
 		mes "I mean we have historical";
-		mes "records of Satan Morroc, ";
+		mes "records of Satan Morocc, ";
 		mes "but maybe it's just a legend.";
 		mes "Aside from that, we have no";
 		mes "proof that he really exists.";
@@ -7355,12 +7354,12 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "If it's really important,";
 		mes "then I might be able to";
 		mes "answer your questions if";
-		mes "they're about Morroc's most";
+		mes "they're about Morocc's most";
 		mes "ancient histories and legends.";
 		next;
 		mes "^3355FFYou ask Sephit for any";
 		mes "information related to";
-		mes "Satan Morroc and Thanatos";
+		mes "Satan Morocc and Thanatos";
 		mes "Tower, particularly their";
 		mes "significance and how";
 		mes "they might be related.^000000";
@@ -7369,7 +7368,7 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "about Moore's research,";
 		mes "and about the elemental";
 		mes "crests hidden throughout";
-		mes "Morroc that you've balanced.^000000";
+		mes "Morocc that you've balanced.^000000";
 		next;
 		mes "[Sephit]";
 		mes "Moore... Moore...";
@@ -7385,12 +7384,12 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "those crests. Still, you did";
 		mes "a great service by stabilizing";
 		mes "them. Otherwise, the seal under";
-		mes "Morroc Castle would break.";
+		mes "Morocc Castle would break.";
 		next;
 		mes "[Sephit]";
-		mes "The seal beneath Morroc";
+		mes "The seal beneath Morocc";
 		mes "Castle actually keeps Satan";
-		mes "Morroc from entering our world.";
+		mes "Morocc from entering our world.";
 		mes "If he ever returned, he might";
 		mes "repeat the mass destruction";
 		mes "that he caused in the past.";
@@ -7398,7 +7397,7 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "[Sephit]";
 		mes "It's funny that you should ask";
 		mes "about Thanatos Tower. When";
-		mes "Satan Morroc was terrorizing";
+		mes "Satan Morocc was terrorizing";
 		mes "our world, he used that place";
 		mes "to summon hordes of minions";
 		mes "that would menace us humans.";
@@ -7412,25 +7411,25 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "roam that place freely.";
 		next;
 		mes "[Sephit]";
-		mes "Satan Morroc may have been";
+		mes "Satan Morocc may have been";
 		mes "unimaginably powerful, but";
 		mes "it would take a lot of work";
 		mes "to bring him back into our";
 		mes "world. Let's see, you could";
-		mes "destroy Morroc's seal...";
+		mes "destroy Morocc's seal...";
 		next;
 		mes "[Sephit]";
 		mes "There was also... Oh, God.";
 		mes "Long ago, someone actually";
 		mes "sacrificed children in a failed";
-		mes "attempt to revive Morroc Satan.";
+		mes "attempt to revive Morocc Satan.";
 		mes "The children missing here in";
-		mes "Morroc-- Y-you don't think...";
+		mes "Morocc-- Y-you don't think...";
 		next;
 		mes "[Sephit]";
 		mes "But who really knows?";
 		mes "I mean we have historical";
-		mes "records of Satan Morroc, ";
+		mes "records of Satan Morocc, ";
 		mes "but maybe it's just a legend.";
 		mes "Aside from that, we have no";
 		mes "proof that he really exists.";
@@ -7460,11 +7459,11 @@ morocc_in,46,125,5	script	Assistant	729,{
 		mes "digging through some";
 		mes "old historical records and";
 		mes "learned something about";
-		mes "a monster called Satan Morroc.";
+		mes "a monster called Satan Morocc.";
 		next;
 		mes "[Sephit]";
 		mes "According to the legends,";
-		mes "he's sealed beneath Morroc";
+		mes "he's sealed beneath Morocc";
 		mes "Castle, and our town gets its";
 		mes "name from him. That sounds";
 		mes "pretty grotesque, don't you";
@@ -7499,7 +7498,7 @@ OnTouch:
 		mes "kidnapper when you told";
 		mes "me just now. But to sacrifice";
 		mes "them in order to revive Satan";
-		mes "Morroc... That's beyond evil.";
+		mes "Morocc... That's beyond evil.";
 		next;
 		mes "[Valdes]";
 		mes "Mr. R... If he is Raiyan";
@@ -7582,7 +7581,7 @@ OnTouch:
 		mes "I think...";
 		mes "I think it's the";
 		mes "ceremony to revive";
-		mes "Satan Morroc! Mr. R must";
+		mes "Satan Morocc! Mr. R must";
 		mes "have went there to stop";
 		mes "them... or to join them!";
 		next;
@@ -7602,7 +7601,7 @@ OnTouch:
 		mes "No matter what the ";
 		mes "cost, we can't let";
 		mes "that ritual finish...!";
-		mes "If Satan Morroc really";
+		mes "If Satan Morocc really";
 		mes "exists, we can't let";
 		mes "him enter our world!";
 		set mao_request,124;
@@ -7683,7 +7682,7 @@ OnTouch:
 		mes "[Kidd]";
 		mes "Damn, that has to be him!";
 		mes "He's trying to revive Satan";
-		mes "Morroc right now! And where's";
+		mes "Morocc right now! And where's";
 		mes "Lin?! What happened to her?";
 		next;
 		mes "[Valdes]";
@@ -7692,7 +7691,7 @@ OnTouch:
 		mes "Assassin Guild. You and Kidd";
 		mes "go try to find the source of";
 		mes "that voice and stop this!";
-		mapannounce "que_job01","...By Satan Morroc's blessings... Grant me... Immortality!",1,0x7B68EE;
+		mapannounce "que_job01","...By Satan Morocc's blessings... Grant me... Immortality!",1,0x7B68EE;
 		next;
 		mes "[Kidd]";
 		mes "Yes, sir!";
@@ -7874,7 +7873,7 @@ OnTouch:
 	mes "What is this place?";
 	mes "Arrgh, my head hurts,";
 	mes "but I've got to stop";
-	mes "Satan Morroc's revival...";
+	mes "Satan Morocc's revival...";
 	mapannounce "que_job02","...Blood... is the currency... of the soul...",1,0x7B68EE;
 	next;
 	mes "[" + strcharinfo(0) + "]";
@@ -7968,10 +7967,10 @@ OnTouch:
 	next;
 	mes "[???????]";
 	mes "But the hatred of Satan";
-	mes "Morroc has not ebbed with";
+	mes "Morocc has not ebbed with";
 	mes "time. If you look at the full";
 	mes "moon from here, it is colored";
-	mes "red with Satan Morroc's rage...";
+	mes "red with Satan Morocc's rage...";
 	next;
 	mes "......";
 	mes ".........";
@@ -8036,7 +8035,7 @@ OnTouch:
 	mes "They're like past";
 	mes "memories of something";
 	mes "that's happened here";
-	mes "in Castle Morroc...";
+	mes "in Castle Morocc...";
 	close2;
 	soundeffect "wander_man_move.wav",0;
 	sc_end SC_All;
@@ -8139,7 +8138,7 @@ OnTouch:
 	mes "......";
 	mes ".........";
 	mes "............";
-	mapannounce "que_job02","...Morroc Satan... needs... fresher blood...",1,0x7B68EE;
+	mapannounce "que_job02","...Morocc Satan... needs... fresher blood...",1,0x7B68EE;
 	next;
 	mes "["+ strcharinfo(0) +"]";
 	mes "I can't...";
@@ -8184,7 +8183,7 @@ OnTouch:
 	mes "What?! Why would";
 	mes "anyone do something";
 	mes "so stupid, so foolhardy,";
-	mes "as revive Satan Morroc?!";
+	mes "as revive Satan Morocc?!";
 	next;
 	mes "[????]";
 	mes "Why...?";
@@ -8321,7 +8320,7 @@ que_job02,66,85,5	script	Dandelion Member#1_bt	880,{
 		mes "I gathered as many members";
 		mes "of Dandelion as I could. From";
 		mes "the looks of it, I wouldn't be";
-		mes "surprised if Satan Morroc was";
+		mes "surprised if Satan Morocc was";
 		mes "almost unsealed by now...";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -8440,7 +8439,7 @@ OnTouch:
 	mes "hunting him down. Your client,";
 	mes "Mr. R. Moore, is none other";
 	mes "than Raiyan Moore-- and he";
-	mes "plans to revive Satan Morroc!";
+	mes "plans to revive Satan Morocc!";
 	next;
 	cutin "mocseal_rin01.bmp",2;
 	mes "[Lin]";
@@ -8470,7 +8469,7 @@ OnTouch:
 	mes "and be accepted into";
 	mes "this sacrifice... Lin...";
 	mes "Your blood will be used";
-	mes "to revive Morroc Satan!";
+	mes "to revive Morocc Satan!";
 	donpcevent "R#maogate1::OnSpell";
 	emotion ET_SURPRISE, getnpcid(0, "Kidd#maogate1_1");
 	emotion ET_SURPRISE, playerattached();
@@ -8490,7 +8489,7 @@ OnTouch:
 	mes "Wh-why...?";
 	mes "Mr. Moore, you said";
 	mes "that you were trying to";
-	mes "stop Satan Morroc's revival...";
+	mes "stop Satan Morocc's revival...";
 	next;
 	mes "[Kidd]";
 	mes "Can't you see...?";
@@ -8502,7 +8501,7 @@ OnTouch:
 	mes "You're resisting?";
 	mes "Fine, you leave me";
 	mes "no choice. Feel the";
-	mes "power of Morroc Satan!";
+	mes "power of Morocc Satan!";
 	emotion ET_KIK, getnpcid(0, "R#maogate1");
 	next;
 	donpcevent "R#maogate1::OnInit";
@@ -8857,7 +8856,7 @@ OnTouch:
 	mes "What is this place?";
 	mes "Arrgh, my head hurts,";
 	mes "but I've got to stop";
-	mes "Satan Morroc's revival...";
+	mes "Satan Morocc's revival...";
 	mapannounce "que_job03","...Blood... is the currency... of the soul...",1,0x7B68EE;
 	next;
 	mes "[" + strcharinfo(0) + "]";
@@ -8951,10 +8950,10 @@ OnTouch:
 	next;
 	mes "[???????]";
 	mes "But the hatred of Satan";
-	mes "Morroc has not ebbed with";
+	mes "Morocc has not ebbed with";
 	mes "time. If you look at the full";
 	mes "moon from here, it is colored";
-	mes "red with Satan Morroc's rage...";
+	mes "red with Satan Morocc's rage...";
 	next;
 	mes "......";
 	mes ".........";
@@ -9019,7 +9018,7 @@ OnTouch:
 	mes "They're like past";
 	mes "memories of something";
 	mes "that's happened here";
-	mes "in Castle Morroc...";
+	mes "in Castle Morocc...";
 	close2;
 	soundeffect "wander_man_move.wav",0;
 	sc_end SC_All;
@@ -9122,7 +9121,7 @@ OnTouch:
 	mes "......";
 	mes ".........";
 	mes "............";
-	mapannounce "que_job03","...Morroc Satan... needs... fresher blood...",1,0x7B68EE;
+	mapannounce "que_job03","...Morocc Satan... needs... fresher blood...",1,0x7B68EE;
 	next;
 	mes "["+ strcharinfo(0) +"]";
 	mes "I can't...";
@@ -9167,7 +9166,7 @@ OnTouch:
 	mes "What?! Why would";
 	mes "anyone do something";
 	mes "so stupid, so foolhardy,";
-	mes "as revive Satan Morroc?!";
+	mes "as revive Satan Morocc?!";
 	next;
 	mes "[????]";
 	mes "Why...?";
@@ -9315,7 +9314,7 @@ que_job03,66,85,5	script	Dandelion Member#2_bt	880,{
 		mes "Dandelion Organization,";
 		mes "and we've been trying to find";
 		mes "him. It turns out that we were";
-		mes "right about Moore: he's really planning to revive Satan Morroc.";
+		mes "right about Moore: he's really planning to revive Satan Morocc.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Huh? What are you";
@@ -9433,7 +9432,7 @@ OnTouch:
 	mes "hunting him down. Your client,";
 	mes "Mr. R. Moore, is none other";
 	mes "than Raiyan Moore-- and he";
-	mes "plans to revive Satan Morroc!";
+	mes "plans to revive Satan Morocc!";
 	next;
 	cutin "mocseal_rin01.bmp",2;
 	mes "[Lin]";
@@ -9463,7 +9462,7 @@ OnTouch:
 	mes "and be accepted into";
 	mes "this sacrifice... Lin...";
 	mes "Your blood will be used";
-	mes "to revive Morroc Satan!";
+	mes "to revive Morocc Satan!";
 	donpcevent "R#maogate2::OnSpell";
 	emotion ET_SURPRISE, getnpcid(0, "Kidd#maogate2_1");
 	emotion ET_SURPRISE, playerattached();
@@ -9483,7 +9482,7 @@ OnTouch:
 	mes "Wh-why...?";
 	mes "Mr. Moore, you said";
 	mes "that you were trying to";
-	mes "stop Satan Morroc's revival...";
+	mes "stop Satan Morocc's revival...";
 	next;
 	mes "[Kidd]";
 	mes "Can't you see...?";
@@ -9495,7 +9494,7 @@ OnTouch:
 	mes "You're resisting?";
 	mes "Fine, you leave me";
 	mes "no choice. Feel the";
-	mes "power of Morroc Satan!";
+	mes "power of Morocc Satan!";
 	emotion ET_KIK, getnpcid(0, "R#maogate2");
 	next;
 	donpcevent "R#maogate2::OnInit";
@@ -9998,7 +9997,7 @@ OnTimer320000:
 	end;
 	
 OnTimer325000:
-	mapannounce "morocc","???: Morroc Satan's angry! Oh Freya, please protect us from the evil being...",1,0x7B68EE;
+	mapannounce "morocc","???: Morocc Satan's angry! Oh Freya, please protect us from the evil being...",1,0x7B68EE;
 	monster "morocc",163,185,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",161,185,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",159,185,"Satan's Wrath",1041,1,"#mao_manager::OnMyMobDead";
@@ -10030,7 +10029,7 @@ OnTimer327000:
 	end;
 	
 OnTimer329000:
-	announce "Kafra Pavianne: This is the Morroc Kafra Branch! The m-monsters are... Aaaaahhh!",bc_all,0x70DBDB;
+	announce "Kafra Pavianne: This is the Morocc Kafra Branch! The m-monsters are... Aaaaahhh!",bc_all,0x70DBDB;
 	monster "morocc",163,203,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",161,203,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
 	monster "morocc",159,203,"Satan's Wrath",1154,1,"#mao_manager::OnMyMobDead";
@@ -10198,20 +10197,20 @@ que_job01,68,88,5	script	Simon#mao	881,{
 
 que_job01,70,84,1	duplicate(Simon#mao)	Kimmie	882
 
-sec_in02,38,162,0	script	Morroc Invasion Manager	882,{
+sec_in02,38,162,0	script	Morocc Invasion Manager	882,{
 	callfunc "F_GM_NPC";
 	mes "A total of " + $maoattack + " users completed";
-	mes "the Satan Morroc: Lin Quest.";
+	mes "the Satan Morocc: Lin Quest.";
 	mes "There are 2 requirements to";
-	mes "summon Satan Morroc's troops.";
+	mes "summon Satan Morocc's troops.";
 	mes "1) 50 users must complete";
-	mes "this Satan Morroc: Lin Quest.";
+	mes "this Satan Morocc: Lin Quest.";
 	next;
 	mes "2) One of these users that";
 	mes "completed the Lin Quest must";
 	mes "approach the Dandelion Org";
-	mes "NPCs at the outskirts of Morroc to trigger the monster invasion.";
-	mes "Change the GlobalVar to affect status of Satan Morroc invasation?";
+	mes "NPCs at the outskirts of Morocc to trigger the monster invasion.";
+	mes "Change the GlobalVar to affect status of Satan Morocc invasation?";
 	next;
 	switch( select( "Set Globalvar","Cancel" ) )
 	{
@@ -10229,14 +10228,14 @@ sec_in02,38,162,0	script	Morroc Invasion Manager	882,{
 					mes "The GlobalVar has been";
 					mes "set to 49. The Lin Quest";
 					mes "must be completed 1 more";
-					mes "time before the Satan Morroc";
+					mes "time before the Satan Morocc";
 					mes "invasion can be triggered.";
 					set $maoattack,49;
 					close;
 
 				case 2:
 					mes "The GlobalVar has been";
-					mes "set to 50. The Satan Morroc";
+					mes "set to 50. The Satan Morocc";
 					mes "invasion can now be triggered.";
 					set $maoattack,50;
 					close;
@@ -10245,7 +10244,7 @@ sec_in02,38,162,0	script	Morroc Invasion Manager	882,{
 					mes "The GlobalVar has been";
 					mes "set to 0. The Lin Quest";
 					mes "must be completed 1 more";
-					mes "time before the Satan Morroc";
+					mes "time before the Satan Morocc";
 					mes "invasion can be triggered.";
 					set $maoattack,0;
 					close;

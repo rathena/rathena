@@ -226,7 +226,7 @@ OnMyMobDead:
 		donpcevent instance_npcname("oct_boss_con")+"::OnEnable";
 		mapannounce .@map$,"Hey you!! I'll personally take care of you all! Let's bring it on!",bc_map,"0x00ff99";
 		enablenpc instance_npcname("oct_boss_warp");
-		instance_warpall .@map$,199,99;
+		instance_warpall .@map$,199,99, instance_id();
 		end;
 	}
 	mapannounce .@map$,"Arrgg!! That hurts!!! I need another strategy...",bc_map,"0x00ff99";

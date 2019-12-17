@@ -452,7 +452,7 @@ Body:
     Score: 10
   - ID: 120061
     Group: "AG_ADVENTURE"
-    Name: "Yuno Field Exploration"
+    Name: "Juno Field Exploration"
     Reward:
       ItemID: 22876
     Score: 10
@@ -704,7 +704,7 @@ Body:
     Score: 10
   - ID: 120103
     Group: "AG_ADVENTURE"
-    Name: "Gonryun Field Exploration"
+    Name: "Kunlun Field Exploration"
     Reward:
       ItemID: 22876
     Score: 10
@@ -890,7 +890,7 @@ Body:
     Score: 20
   - ID: 120134
     Group: "AG_ADVENTURE"
-    Name: "Gonryun Dungeon Exploration"
+    Name: "Kunlun Dungeon Exploration"
     Reward:
       ItemID: 22876
     Score: 20
@@ -1000,7 +1000,7 @@ Body:
     Score: 10
   - ID: 127005
     Group: "AG_CHATTING"
-    Name: "Yuno Contribution"
+    Name: "Juno Contribution"
     Map: "yuno"
     Target:
       - Id: 0
@@ -1564,7 +1564,7 @@ Body:
     Score: 20
   - ID: 129008
     Group: "AG_ADVENTURE"
-    Name: "Rune Midgard Explorer"
+    Name: "Rune-Midgarts Explorer"
     Dependent:
       - Id: 129001
       - Id: 129002
@@ -1578,7 +1578,7 @@ Body:
     Score: 50
   - ID: 129009
     Group: "AG_ADVENTURE"
-    Name: "Yuno Explorer"
+    Name: "Juno Explorer"
     Dependent:
       - Id: 120052
       - Id: 120053
@@ -1726,6 +1726,12 @@ Body:
     Reward:
       ItemID: 617
     Score: 50
+  - ID: 129021
+    Group: "AG_BATTLE"
+    Name: "Glastheim Challenge Mode" # Complete 100 times?
+    Reward:
+      TitleID: 1045
+    Score: 10
   - ID: 130000 # Talk to Prince NPC (npc/quests/quests_morocc.txt L5288)
     Group: "AG_CHATTING"
     Name: "Socialite debut"
@@ -1983,6 +1989,216 @@ Body:
     #Reward:
     #  ItemID: 23585
     Score: 10
+  - ID: 200033
+    Group: "AG_GOAL_LEVEL"
+    Name: "With a new mind!(1)"
+    Condition: " BaseLevel == 170 && (Class >= JOB_RUNE_KNIGHT && Class <= JOB_GUILLOTINE_CROSS_T) "
+    #Reward:
+    #  ItemID: 6959
+    Score: 50
+  - ID: 200034
+    Group: "AG_GOAL_LEVEL"
+    Name: "With a new mind!(2)"
+    Condition: " BaseLevel == 170 && (Class >= JOB_ROYAL_GUARD && Class <= JOB_SHADOW_CHASER_T) "
+    #Reward:
+    #  ItemID: 6959
+    Score: 50
+  - ID: 220000
+    Group: "AG_CHATTING_CREATE"
+    Name: "Community begin"
+    Score: 10
+  - ID: 220001
+    Group: "AG_CHATTING_DYING"
+    Name: "A mouth only moment"
+    Score: 10
+  - ID: 220002
+    Group: "AG_CHATTING_COUNT"
+    Name: "Admiring the chatter"
+    Condition: " ARG0 == 20 "
+    Score: 10
+  - ID: 220003
+    Group: "AG_ADD_FRIEND"
+    Name: "My friend's friend~"
+    Condition: " ARG0 >= 1 "
+    Score: 10
+  - ID: 220004
+    Group: "AG_ADD_FRIEND"
+    Name: "A competition of popularity"
+    Condition: " ARG0 >= 10 "
+    Score: 10
+  - ID: 220005
+    Group: "AG_PARTY"
+    Name: "Let's Party~"
+    Score: 10
+  - ID: 220006
+    Group: "AG_MARRY"
+    Name: "Married with who..?"
+    Reward:
+      TitleID: 1022
+    Score: 20
+  - ID: 220007
+    Group: "AG_BABY"
+    Name: "Can you grow?"
+    Condition: " ARG0 == 1 "
+    Reward:
+      TitleID: 1032
+    Score: 20
+  - ID: 220008
+    Group: "AG_BABY"
+    Name: "Being a parent"
+    Condition: " ARG0 == 2 "
+    Reward:
+      TitleID: 1033
+    Score: 20
+  - ID: 220009
+    Group: "AG_SPEND_ZENY"
+    Name: "Activating the market economy (1)"
+    Condition: " ARG0 >= 10000 "
+    Target:
+      - Id: 0
+        Count: 10000
+    Score: 10
+  - ID: 220010
+    Group: "AG_SPEND_ZENY"
+    Name: "Activating the market economy (2)"
+    Condition: " ARG0 >= 100000 "
+    Target:
+      - Id: 0
+        Count: 100000
+    Score: 15
+  - ID: 220011
+    Group: "AG_SPEND_ZENY"
+    Name: "Activating the market economy (3)"
+    Condition: " ARG0 >= 500000 "
+    Target:
+      - Id: 0
+        Count: 500000
+    Score: 20
+  - ID: 220012
+    Group: "AG_SPEND_ZENY"
+    Name: "Activating the market economy (4)"
+    Condition: " ARG0 >= 1000000 "
+    Target:
+      - Id: 0
+        Count: 1000000
+    Score: 30
+  - ID: 220013
+    Group: "AG_SPEND_ZENY"
+    Name: "Activating the market economy (5)"
+    Condition: " ARG0 >= 5000000 "
+    Target:
+      - Id: 0
+        Count: 5000000
+    Score: 50
+  - ID: 220014
+    Group: "AG_ENCHANT_SUCCESS"
+    Name: "I can't quit from refining! (1)"
+    Condition: " ARG0 == 1 && ARG1 >= 7 "
+    Score: 10
+  - ID: 220015
+    Group: "AG_ENCHANT_SUCCESS"
+    Name: "I can't quit from refining! (2)"
+    Condition: " ARG0 == 1 && ARG1 >= 12 "
+    Score: 15
+  - ID: 220016
+    Group: "AG_ENCHANT_SUCCESS"
+    Name: "I can't quit from refining! (3)"
+    Condition: " ARG0 == 2 && ARG1 >= 7 "
+    Score: 10
+  - ID: 220017
+    Group: "AG_ENCHANT_SUCCESS"
+    Name: "I can't quit from refining! (4)"
+    Condition: " ARG0 == 2 && ARG1 >= 12 "
+    Score: 15
+  - ID: 220018
+    Group: "AG_ENCHANT_SUCCESS"
+    Name: "I can't quit from refining! (5)"
+    Condition: " ARG0 == 3 && ARG1 >= 7 "
+    Score: 15
+  - ID: 220019
+    Group: "AG_ENCHANT_SUCCESS"
+    Name: "I can't quit from refining! (6)"
+    Condition: " ARG0 == 3 && ARG1 >= 12 "
+    Score: 20
+  - ID: 220020
+    Group: "AG_ENCHANT_SUCCESS"
+    Name: "I can't quit from refining! (7)"
+    Condition: " ARG0 == 4 && ARG1 >= 7 "
+    Score: 20
+  - ID: 220021
+    Group: "AG_ENCHANT_SUCCESS"
+    Name: "I can't quit from refining! (8)"
+    Condition: " ARG0 == 4 && ARG1 >= 12 "
+    Score: 30
+  - ID: 220022
+    Group: "AG_ENCHANT_FAIL"
+    Name: "Human's greed has no ending.."
+    Score: 10
+  - ID: 220023
+    Group: "AG_GET_ITEM"
+    Name: "I found it! (1)"
+    Condition: " ARG0 >= 100 "
+    Score: 10
+  - ID: 220024
+    Group: "AG_GET_ITEM"
+    Name: "I found it! (2)"
+    Condition: " ARG0 >= 1000 "
+    Score: 10
+  - ID: 220025
+    Group: "AG_GET_ITEM"
+    Name: "I found it! (3)"
+    Condition: " ARG0 >= 5000 "
+    Score: 15
+  - ID: 220026
+    Group: "AG_GET_ITEM"
+    Name: "I found it! (4)"
+    Condition: " ARG0 >= 10000 "
+    Score: 15
+  - ID: 220027
+    Group: "AG_GET_ITEM"
+    Name: "I found it! (5)"
+    Condition: " ARG0 >= 50000 "
+    Score: 20
+  - ID: 220028
+    Group: "AG_GET_ITEM"
+    Name: "I found it! (6)"
+    Condition: " ARG0 >= 100000 "
+    Score: 20
+  - ID: 220029
+    Group: "AG_GET_ITEM"
+    Name: "I found it! (7)"
+    Condition: " ARG0 >= 150000 "
+    Score: 30
+  - ID: 220030
+    Group: "AG_GET_ZENY"
+    Name: "Rich King (1)"
+    Condition: " ARG0 >= 10000 "
+    Score: 10
+  - ID: 220031
+    Group: "AG_GET_ZENY"
+    Name: "Rich King (2)"
+    Condition: " ARG0 >= 100000 "
+    Score: 15
+  - ID: 220032
+    Group: "AG_GET_ZENY"
+    Name: "Rich King (3)"
+    Condition: " ARG0 >= 1000000 "
+    Score: 20
+  - ID: 220033
+    Group: "AG_GET_ZENY"
+    Name: "Rich King (4)"
+    Condition: " ARG0 >= 10000000 "
+    Score: 25
+  - ID: 220034
+    Group: "AG_GET_ZENY"
+    Name: "Rich King (5)"
+    Condition: " ARG0 >= 100000000 "
+    Score: 30
+  - ID: 220035
+    Group: "AG_GET_ZENY"
+    Name: "Rich King (6)"
+    Condition: " ARG0 >= 1000000000 "
+    Score: 40
   - ID: 230100
     Group: "AG_TAMING"
     Name: "Poring is Love"
@@ -2240,202 +2456,6 @@ Body:
         MobID: 1505
         Count: 1
     Score: 10
-  - ID: 220000
-    Group: "AG_CHATTING_CREATE"
-    Name: "Community begin"
-    Score: 10
-  - ID: 220001
-    Group: "AG_CHATTING_DYING"
-    Name: "A mouth only moment"
-    Score: 10
-  - ID: 220002
-    Group: "AG_CHATTING_COUNT"
-    Name: "Admiring the chatter"
-    Condition: " ARG0 == 20 "
-    Score: 10
-  - ID: 220003
-    Group: "AG_ADD_FRIEND"
-    Name: "My friend's friend~"
-    Condition: " ARG0 >= 1 "
-    Score: 10
-  - ID: 220004
-    Group: "AG_ADD_FRIEND"
-    Name: "A competition of popularity"
-    Condition: " ARG0 >= 10 "
-    Score: 10
-  - ID: 220005
-    Group: "AG_PARTY"
-    Name: "Let's Party~"
-    Score: 10
-  - ID: 220006
-    Group: "AG_MARRY"
-    Name: "Married with who..?"
-    Reward:
-      TitleID: 1022
-    Score: 20
-  - ID: 220007
-    Group: "AG_BABY"
-    Name: "Can you grow?"
-    Condition: " ARG0 == 1 "
-    Reward:
-      TitleID: 1032
-    Score: 20
-  - ID: 220008
-    Group: "AG_BABY"
-    Name: "Being a parent"
-    Condition: " ARG0 == 2 "
-    Reward:
-      TitleID: 1033
-    Score: 20
-  - ID: 220009
-    Group: "AG_SPEND_ZENY"
-    Name: "Activating the market economy (1)"
-    Condition: " ARG0 >= 10000 "
-    Target:
-      - Id: 0
-        Count: 10000
-    Score: 10
-  - ID: 220010
-    Group: "AG_SPEND_ZENY"
-    Name: "Activating the market economy (2)"
-    Condition: " ARG0 >= 100000 "
-    Target:
-      - Id: 0
-        Count: 100000
-    Score: 15
-  - ID: 220011
-    Group: "AG_SPEND_ZENY"
-    Name: "Activating the market economy (3)"
-    Condition: " ARG0 >= 500000 "
-    Target:
-      - Id: 0
-        Count: 500000
-    Score: 20
-  - ID: 220012
-    Group: "AG_SPEND_ZENY"
-    Name: "Activating the market economy (4)"
-    Condition: " ARG0 >= 1000000 "
-    Target:
-      - Id: 0
-        Count: 1000000
-    Score: 30
-  - ID: 220013
-    Group: "AG_SPEND_ZENY"
-    Name: "Activating the market economy (5)"
-    Condition: " ARG0 >= 5000000 "
-    Target:
-      - Id: 0
-        Count: 5000000
-    Score: 50
-  - ID: 220014
-    Group: "AG_ENCHANT_SUCCESS"
-    Name: "I can't quit from refining! (1)"
-    Condition: " ARG0 == 1 && ARG1 >= 7 "
-    Score: 10
-  - ID: 220015
-    Group: "AG_ENCHANT_SUCCESS"
-    Name: "I can't quit from refining! (2)"
-    Condition: " ARG0 == 1 && ARG1 >= 12 "
-    Score: 15
-  - ID: 220016
-    Group: "AG_ENCHANT_SUCCESS"
-    Name: "I can't quit from refining! (3)"
-    Condition: " ARG0 == 2 && ARG1 >= 7 "
-    Score: 10
-  - ID: 220017
-    Group: "AG_ENCHANT_SUCCESS"
-    Name: "I can't quit from refining! (4)"
-    Condition: " ARG0 == 2 && ARG1 >= 12 "
-    Score: 15
-  - ID: 220018
-    Group: "AG_ENCHANT_SUCCESS"
-    Name: "I can't quit from refining! (5)"
-    Condition: " ARG0 == 3 && ARG1 >= 7 "
-    Score: 15
-  - ID: 220019
-    Group: "AG_ENCHANT_SUCCESS"
-    Name: "I can't quit from refining! (6)"
-    Condition: " ARG0 == 3 && ARG1 >= 12 "
-    Score: 20
-  - ID: 220020
-    Group: "AG_ENCHANT_SUCCESS"
-    Name: "I can't quit from refining! (7)"
-    Condition: " ARG0 == 4 && ARG1 >= 7 "
-    Score: 20
-  - ID: 220021
-    Group: "AG_ENCHANT_SUCCESS"
-    Name: "I can't quit from refining! (8)"
-    Condition: " ARG0 == 4 && ARG1 >= 12 "
-    Score: 30
-  - ID: 220022
-    Group: "AG_ENCHANT_FAIL"
-    Name: "Human's greed has no ending.."
-    Score: 10
-  - ID: 220023
-    Group: "AG_GET_ITEM"
-    Name: "I found it! (1)"
-    Condition: " ARG0 >= 100 "
-    Score: 10
-  - ID: 220024
-    Group: "AG_GET_ITEM"
-    Name: "I found it! (2)"
-    Condition: " ARG0 >= 1000 "
-    Score: 10
-  - ID: 220025
-    Group: "AG_GET_ITEM"
-    Name: "I found it! (3)"
-    Condition: " ARG0 >= 5000 "
-    Score: 15
-  - ID: 220026
-    Group: "AG_GET_ITEM"
-    Name: "I found it! (4)"
-    Condition: " ARG0 >= 10000 "
-    Score: 15
-  - ID: 220027
-    Group: "AG_GET_ITEM"
-    Name: "I found it! (5)"
-    Condition: " ARG0 >= 50000 "
-    Score: 20
-  - ID: 220028
-    Group: "AG_GET_ITEM"
-    Name: "I found it! (6)"
-    Condition: " ARG0 >= 100000 "
-    Score: 20
-  - ID: 220029
-    Group: "AG_GET_ITEM"
-    Name: "I found it! (7)"
-    Condition: " ARG0 >= 150000 "
-    Score: 30
-  - ID: 220030
-    Group: "AG_GET_ZENY"
-    Name: "Rich King (1)"
-    Condition: " ARG0 >= 10000 "
-    Score: 10
-  - ID: 220031
-    Group: "AG_GET_ZENY"
-    Name: "Rich King (2)"
-    Condition: " ARG0 >= 100000 "
-    Score: 15
-  - ID: 220032
-    Group: "AG_GET_ZENY"
-    Name: "Rich King (3)"
-    Condition: " ARG0 >= 1000000 "
-    Score: 20
-  - ID: 220033
-    Group: "AG_GET_ZENY"
-    Name: "Rich King (4)"
-    Condition: " ARG0 >= 10000000 "
-    Score: 25
-  - ID: 220034
-    Group: "AG_GET_ZENY"
-    Name: "Rich King (5)"
-    Condition: " ARG0 >= 100000000 "
-    Score: 30
-  - ID: 220035
-    Group: "AG_GET_ZENY"
-    Name: "Rich King (6)"
-    Condition: " ARG0 >= 1000000000 "
-    Score: 40
   - ID: 230200
     Group: "AG_BATTLE"
     Name: "Poring seeker"
@@ -2500,11 +2520,13 @@ Body:
     Score: 20
   - ID: 240000
     Group: "AG_GOAL_LEVEL"
-    Name: "Complete challenges after first introduction"
+    Name: "First Login after the introduction of Achievement Tasks"
     Score: 10
+    Condition: " true "
   - ID: 240001
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 1"
+    Condition: " AchievementLevel >= 1 "
     Reward:
       ItemID: 644
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2512,6 +2534,7 @@ Body:
   - ID: 240002
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 2"
+    Condition: " AchievementLevel >= 2 "
     Dependent:
       - Id: 240001
     Reward:
@@ -2521,6 +2544,7 @@ Body:
   - ID: 240003
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 3"
+    Condition: " AchievementLevel >= 3 "
     Dependent:
       - Id: 240002
     Reward:
@@ -2530,6 +2554,7 @@ Body:
   - ID: 240004
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 4"
+    Condition: " AchievementLevel >= 4 "
     Dependent:
       - Id: 240003
     Reward:
@@ -2539,6 +2564,7 @@ Body:
   - ID: 240005
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 5"
+    Condition: " AchievementLevel >= 5 "
     Dependent:
       - Id: 240004
     Reward:
@@ -2548,6 +2574,7 @@ Body:
   - ID: 240006
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 6"
+    Condition: " AchievementLevel >= 6 "
     Dependent:
       - Id: 240005
     Reward:
@@ -2557,6 +2584,7 @@ Body:
   - ID: 240007
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 7"
+    Condition: " AchievementLevel >= 7 "
     Dependent:
       - Id: 240006
     Reward:
@@ -2566,6 +2594,7 @@ Body:
   - ID: 240008
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 8"
+    Condition: " AchievementLevel >= 8 "
     Dependent:
       - Id: 240007
     Reward:
@@ -2575,6 +2604,7 @@ Body:
   - ID: 240009
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 9"
+    Condition: " AchievementLevel >= 9 "
     Dependent:
       - Id: 240008
     Reward:
@@ -2584,6 +2614,7 @@ Body:
   - ID: 240010
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 10"
+    Condition: " AchievementLevel >= 10 "
     Dependent:
       - Id: 240009
     Reward:
@@ -2594,6 +2625,7 @@ Body:
   - ID: 240011
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 11"
+    Condition: " AchievementLevel >= 11 "
     Dependent:
       - Id: 240010
     Reward:
@@ -2603,6 +2635,7 @@ Body:
   - ID: 240012
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 12"
+    Condition: " AchievementLevel >= 12 "
     Dependent:
       - Id: 240011
     Reward:
@@ -2612,6 +2645,7 @@ Body:
   - ID: 240013
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 13"
+    Condition: " AchievementLevel >= 13 "
     Dependent:
       - Id: 240012
     Reward:
@@ -2621,6 +2655,7 @@ Body:
   - ID: 240014
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 14"
+    Condition: " AchievementLevel >= 14 "
     Dependent:
       - Id: 240013
     Reward:
@@ -2630,6 +2665,7 @@ Body:
   - ID: 240015
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 15"
+    Condition: " AchievementLevel >= 15 "
     Dependent:
       - Id: 240014
     Reward:
@@ -2639,6 +2675,7 @@ Body:
   - ID: 240016
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 16"
+    Condition: " AchievementLevel >= 16 "
     Dependent:
       - Id: 240015
     Reward:
@@ -2648,6 +2685,7 @@ Body:
   - ID: 240017
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 17"
+    Condition: " AchievementLevel >= 17 "
     Dependent:
       - Id: 240016
     Reward:
@@ -2657,6 +2695,7 @@ Body:
   - ID: 240018
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 18"
+    Condition: " AchievementLevel >= 18 "
     Dependent:
       - Id: 240017
     Reward:
@@ -2666,6 +2705,7 @@ Body:
   - ID: 240019
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 19"
+    Condition: " AchievementLevel >= 19 "
     Dependent:
       - Id: 240018
     Reward:
@@ -2675,6 +2715,7 @@ Body:
   - ID: 240020
     Group: "AG_GOAL_ACHIEVE"
     Name: "Reaching Level 20"
+    Condition: " AchievementLevel >= 20 "
     Dependent:
       - Id: 240019
     Reward:

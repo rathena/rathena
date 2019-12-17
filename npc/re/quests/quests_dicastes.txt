@@ -2108,7 +2108,7 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 				mes "The report robber is Cheshire.";
 				mes "Cheshire is Ahat's servant and they are related to the crack.";
 				mes "They are trying to hide something or someone at the crack";
-				mes "and the crack was created by the evil lord Morroc!";
+				mes "and the crack was created by the evil lord Morocc!";
 				next;
 				mes "[" + strcharinfo(0) + "]";
 				mes "Ahat is the evil lord?";
@@ -2194,7 +2194,7 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 				mes "And tries to erase all traces found near the crack.";
 				mes "And Ahat wants to eliminate...";
 				next;
-				if (select("Ahat himself.:Morroc because of the crack?") == 1) {
+				if (select("Ahat himself.:Morocc because of the crack?") == 1) {
 					mes "[" + strcharinfo(0) + "]";
 					mes "Yes, Ahat might be a trace of himself.";
 					mes "Saphas want to hide something that is why they hired me";
@@ -2202,19 +2202,19 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 				}
 				else {
 					mes "[" + strcharinfo(0) + "]";
-					mes "A bit dramatic but we cannot rule out the evil lord Morroc.";
-					mes "Because the crack was created by the evil lord Morroc himself.";
+					mes "A bit dramatic but we cannot rule out the evil lord Morocc.";
+					mes "Because the crack was created by the evil lord Morocc himself.";
 				}
 				set .@yes, .@yes + 1;
 				next;
 			}
 			else if (.@yes == 4) {
 				mes "[" + strcharinfo(0) + "]";
-				mes "Ahat and the crack and then Morroc..";
+				mes "Ahat and the crack and then Morocc..";
 				mes "I can tell there is a relationship between them but I can't pinpoint it.";
 				mes "And in the expedition's report...";
 				next;
-				if (select("Content of conflict between three countries.. :Content about evil lord Morroc..") == 1) {
+				if (select("Content of conflict between three countries.. :Content about evil lord Morocc..") == 1) {
 					mes "[" + strcharinfo(0) + "]";
 					mes "There was something about the conflict between three countries..";
 					mes "But.. I don't think it all adds up?";
@@ -2223,7 +2223,7 @@ dic_in01,158,188,3	script	Jarute HesLanta#ep133_2	451,{
 				else {
 					mes "[" + strcharinfo(0) + "]";
 					mes "Yes. There is a report from the tracking team led by Echinacea.";
-					mes "It was about the evil lord Morroc.";
+					mes "It was about the evil lord Morocc.";
 					set .@yes, .@yes + 1;
 				}
 				next;
@@ -3692,7 +3692,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 		case 1:
 			mes "[Shay]";
 			mes "What will it be?";
-			mes "I have Tropical Sograt and Vermilion on the Beach flown in from Morroc.";
+			mes "I have Tropical Sograt and Vermilion on the Beach flown in from Morocc.";
 			mes "A bit on the expensive side though.";
 			next;		
 			if (select("Tropical Sorgrat - 2000z:Vermilion on the Beach - 2000z:Anything else?") == 3) {
@@ -3969,7 +3969,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				mes "Because it is difficult to meet the minister.";
 				next;
 				mes "[Shay]";
-				mes "The crack here must have been created when the crack in Morroc appeared.";
+				mes "The crack here must have been created when the crack in Morocc appeared.";
 				mes "If he did it.";
 				next;
 				mes "[Shay]";
@@ -4077,7 +4077,7 @@ dic_in01,245,119,4	script	Shay#ep133_13	884,{
 				next;
 				select("Oh..no..");
 				mes "[Shay]";
-				mes "When I was in Morroc.";
+				mes "When I was in Morocc.";
 				mes "A colleague from the guild used to make chocolate stuff you see?";
 				mes "I thought it would be simple since he was making it.";
 				next;
@@ -7494,7 +7494,7 @@ moc_para01,44,19,3	script	Cat Hand Agent#gekk	496,{
 				mes "However, we plan to spare no efforts on it.";
 				next;
 				mes "[Agent Geck]";
-				mes "Human!! Did you know there is a huge hole near the Morroc village and nearby area?";
+				mes "Human!! Did you know there is a huge hole near the Morocc village and nearby area?";
 				mes "They say you can travel to a new area through the hole!";
 				next;
 				mes "[Agent Geck]";

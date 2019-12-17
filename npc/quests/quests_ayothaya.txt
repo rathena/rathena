@@ -271,7 +271,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					next;
 					mes "[Powerful-Looking Woman]";
 					mes "Let me introduce myself.";
-					mes "My name is Shuda, I've lived in Ayotaya all my life. Since you don't have anything to do, I have";
+					mes "My name is Shuda, I've lived in Ayothaya all my life. Since you don't have anything to do, I have";
 					mes "a favor to ask of you.";
 					next;
 					mes "[Shuda]";
@@ -350,7 +350,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 					mes "[Shuda]";
 					mes "And her savior";
 					mes "would be known as";
-					mes "the hero of Ayotaya.";
+					mes "the hero of Ayothaya.";
 					next;
 					mes "[" +strcharinfo(0)+ "]";
 					mes " ...Say what?!";
@@ -411,7 +411,7 @@ ayothaya,233,105,3	script	Powerful-Looking Woman	838,2,2,{
 			next;
 			mes "[Powerful-Looking Woman]";
 			mes "^666666Stupid tourists, running";
-			mes "around all over Ayotalla,";
+			mes "around all over Ayothaya,";
 			mes "pestering and bothering";
 			mes "beautiful girls like me...^000000";
 			close;
@@ -1157,7 +1157,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		mes "[Tham]";
 		emotion ET_SURPRISE;
 		mes "Oh, aren't you";
-		mes "from Rune-Midgard?";
+		mes "from Midgard?";
 		mes "Hello there~";
 		next;
 		mes "[Tham]";
@@ -1172,7 +1172,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		mes "Ah! I think, in his intense fear, he was screaming something about some kind of '^FF0000Shuda^000000,' or whatever. But what could it possibly mean?";
 		next;
 		mes "[Tham]";
-		mes "Oh well, don't worry. All of our villagers aren't like that. Anyway, I hope you enjoy your travels in Ayotaya.";
+		mes "Oh well, don't worry. All of our villagers aren't like that. Anyway, I hope you enjoy your travels in Ayothaya.";
 		set thai_find,4;
 		changequest 12031,12032;
 		close;
@@ -1181,7 +1181,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		if (.@randayo < 5) {
 			mes "[Tham]";
 			mes "Oh hello~";
-			mes "I can tell from your clothes that you must be from Rune-Midgard.";
+			mes "I can tell from your clothes that you must be from Midgard.";
 			next;
 			mes "[Tham]";
 			mes "Recently, it seems that";
@@ -1194,7 +1194,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 			mes "Ah...";
 			mes "While you're here,";
 			mes "why don't you taste some";
-			mes "authentic Ayotayan cuisine";
+			mes "authentic Ayothaya cuisine";
 			mes "for yourself?";
 			next;
 			mes "[Tham]";
@@ -1204,7 +1204,7 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 			mes "restaurants around here.";
 			next;
 			mes "[Tham]";
-			mes "Anyway, I'm sure that you'll like it. I hope that you come visit Ayotaya as often as you can~";
+			mes "Anyway, I'm sure that you'll like it. I hope that you come visit Ayothaya as often as you can~";
 			close;
 		} else if (.@randayo > 4 && .@randayo < 7) {
 			mes "[Tham]";
@@ -1219,10 +1219,10 @@ ayothaya,193,171,3	script	Old Man#02	842,{
 		} else {
 			mes "[Tham]";
 			mes "Oh hello~";
-			mes "I can tell from your clothes that you must be from Rune-Midgard.";
+			mes "I can tell from your clothes that you must be from Midgard.";
 			next;
 			mes "[Tham]";
-			mes "I hope that you enjoy your stay here, and that you come visit Ayotaya as often as you can~";
+			mes "I hope that you enjoy your stay here, and that you come visit Ayothaya as often as you can~";
 			close;
 		}
 	}
@@ -1849,7 +1849,7 @@ ayo_fild01,129,197,0	script	Puraim#thai1	842,{
 			mes "have a holy spirit. Still, be careful. You might not want to go to the 2nd underground level of the ruins.";
 			next;
 			mes "[Puraim]";
-			mes "As you Rune-Midgardians";
+			mes "As you Midgardians";
 			mes "say, 'curiousity killed the cat.'";
 			mes "Anyway, go for it!";
 			next;
@@ -2110,9 +2110,9 @@ ayothaya,196,265,3	script	Einon#ayo	842,{
 		mes "of this village is?";
 		next;
 		mes "[Einon]";
-		mes "Ayotaya is world famous";
+		mes "Ayothaya is world famous";
 		mes "for its regional cuisine, but";
-		mes "out of all Ayotayan dishes,";
+		mes "out of all Ayothayan dishes,";
 		mes "'^3131FFTom Yum Goong^000000' is the best.";
 		next;
 		mes "[Einon]";
@@ -2165,7 +2165,7 @@ ayothaya,196,265,3	script	Einon#ayo	842,{
 		close;
 	}
 	mes "[Einon]";
-	mes "Golden Ayotaya...";
+	mes "Golden Ayothaya...";
 	mes "Although I've grown";
 	mes "up in this village,";
 	mes "I still think my village";
@@ -2497,7 +2497,7 @@ ayo_in01,145,163,3	script	Cook#ayo	839,{
 				mes "Thank you for all the trouble that you have been though to get these ingredients. It would make me happy if you shared Tom Yum Goong with your friends.";
 				next;
 				mes "[Mali the Spicy]";
-				mes "Share the flavor of Ayotaya, and let them know how beautiful our land is. It was good to see you, take care now~";
+				mes "Share the flavor of Ayothaya, and let them know how beautiful our land is. It was good to see you, take care now~";
 				close;
 			}
 			mes "[Mali the Spicy]";
@@ -3047,7 +3047,7 @@ ayothaya,213,94,7	script	Merchant#ayo	841,{
 	mes "it has a very strong flavor. It's also hot and spicy, so you should be careful when you eat one.";
 	next;
 	mes "[Merchant Thongdum]";
-	mes "The people of Ayotaya enjoy sensational food with distinct, spicy flavors. In Ayotayan cuisine, we use things like Chilis, garlic, ginger and cilantro.";
+	mes "The people of Ayothaya enjoy sensational food with distinct, spicy flavors. In Ayothayan cuisine, we use things like Chilis, garlic, ginger and cilantro.";
 	next;
 	mes "[Merchant Thongdum]";
 	mes "I'm selling Chilis,";

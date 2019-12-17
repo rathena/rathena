@@ -3900,7 +3900,6 @@ ACMD_FUNC(reload) {
 		)
 		{	// Exp or Drop rates changed.
 			mob_reload(); //Needed as well so rate changes take effect.
-			chrif_ragsrvinfo(battle_config.base_exp_rate, battle_config.job_exp_rate, battle_config.item_rate_common);
 		}
 		clif_displaymessage(fd, msg_txt(sd,255)); // Battle configuration has been reloaded.
 	} else if (strstr(command, "statusdb") || strncmp(message, "statusdb", 3) == 0) {
@@ -5535,9 +5534,12 @@ ACMD_FUNC(dropall)
 				if( sd->inventory.u.items_inventory[i].equip != 0 )
 					pc_unequipitem(sd, i, 3);
 				pc_equipswitch_remove(sd, i);
-				if(pc_dropitem(sd, i, sd->inventory.u.items_inventory[i].amount))
-					count += sd->inventory.u.items_inventory[i].amount;
-				else count2 += sd->inventory.u.items_inventory[i].amount;
+
+				int amount = sd->inventory.u.items_inventory[i].amount;
+
+				if(pc_dropitem(sd, i, amount))
+					count += amount;
+				else count2 += amount;
 			}
 		}
 	}
@@ -7226,8 +7228,8 @@ ACMD_FUNC(mobinfo)
 		job_exp = mob->job_exp;
 
 		if (pc_isvip(sd)) { // Display EXP rate increase for VIP
-			base_exp = (base_exp * battle_config.vip_base_exp_increase) / 100;
-			job_exp = (job_exp * battle_config.vip_job_exp_increase) / 100;
+			base_exp += (base_exp * battle_config.vip_base_exp_increase) / 100;
+			job_exp += (job_exp * battle_config.vip_job_exp_increase) / 100;
 		}
 #ifdef RENEWAL_EXP
 		if( battle_config.atcommand_mobinfo_type ) {

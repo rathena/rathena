@@ -44,7 +44,7 @@
 7332,507,100	// Complete Tablet
 7333,507,100	// Prontera Tablet
 7334,507,100	// Payon Tablet
-7335,507,100	// Morroc Tablet
+7335,507,100	// Morocc Tablet
 7336,507,100	// Geffen Tablet
 7339,507,100	// Commemorative Travel Card
 5132,472,100	// Angeling Hat
@@ -113,7 +113,7 @@
 7341,507,100	// Old Pendant
 
 // Lighthalzen Quest items
-// * Schwartzvalt Trilogy Quest items
+// * Schwarzwald Trilogy Quest items
 7342,507,100	// File Folder
 7343,507,100	// Sealed File Folder
 7344,507,100	// Shinokas Case File
@@ -129,11 +129,11 @@
 // "2006 USA 3rd Anniversary" related items
 7530,507,100	// Travel Brochure [Amatsu]
 7531,507,100	// Travel Brochure [Kunlun]
-7532,507,100	// Travel Brochure [Louyang]
+7532,507,100	// Travel Brochure [Luoyang]
 7533,507,100	// Travel Brochure [Ayothaya]
 7534,507,100	// Amatsu Completed Photo Album
 7535,507,100	// Kunlun Completed Photo Album
-7536,507,100	// Louyang Completed Photo Album
+7536,507,100	// Luoyang Completed Photo Album
 7537,507,100	// Ayothaya Completed Photo Album
 
 // Poring Coin items
@@ -332,7 +332,7 @@
 // Taiwan ???
 2713,507,100	// Certificate
 
-// Satan Morroc
+// Satan Morocc
 7820,507,100	// Piece of Morocc Skin
 
 // Vietnam Independence Day
