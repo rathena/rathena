@@ -4503,7 +4503,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if ((item = itemdb_searchname(head.c_str())) == nullptr)
 			this->invalidWarning(node["HeadTop"], "HeadTop value %s is not a valid item, skipping.\n", head.c_str());
 		else
-			mob->vd.head_top = item->view_id;
+			mob->vd.head_top = item->look;
 	}
 
 	if (this->nodeExists(node, "HeadMid")) {
@@ -4517,7 +4517,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (item == nullptr)
 			this->invalidWarning(node["HeadMid"], "HeadMid value %s is not a valid item, skipping.\n", head.c_str());
 		else
-			mob->vd.head_mid = item->view_id;
+			mob->vd.head_mid = item->look;
 	}
 
 	if (this->nodeExists(node, "HeadLow")) {
@@ -4531,7 +4531,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (item == nullptr)
 			this->invalidWarning(node["HeadLow"], "HeadLow value %s is not a valid item, skipping.\n", head.c_str());
 		else
-			mob->vd.head_bottom = item->view_id;
+			mob->vd.head_bottom = item->look;
 	}
 
 	if (this->nodeExists(node, "PetEquip")) {

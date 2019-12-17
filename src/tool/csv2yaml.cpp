@@ -400,9 +400,7 @@ static bool parse_item_constants( const char* path ){
 
 		aegis_itemnames[item_id] = std::string(name);
 
-		uint16 equip = atoi(str[14]);
-
-		if (equip & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, (uint16)atoi(str[18])) == nullptr)
+		if (atoi(str[14]) & (EQP_HELM | EQP_COSTUME_HELM) && util::umap_find(aegis_itemviewid, (uint16)atoi(str[18])) == nullptr)
 			aegis_itemviewid[atoi(str[18])] = item_id;
 
 		count++;
@@ -733,7 +731,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			uint16 *headtop_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[7]));
 
 			if (headtop_item_id == nullptr) {
-				ShowError("Item ID for view ID %d (head top) is not known.\n", atoi(str[7]));
+				ShowError("Item ID for view ID %hu (head top) is not known.\n", atoi(str[7]));
 				return false;
 			}
 
@@ -751,7 +749,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			uint16 *headmid_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[8]));
 
 			if (headmid_item_id == nullptr) {
-				ShowError("Item ID for view ID %d (head mid) is not known.\n", atoi(str[8]));
+				ShowError("Item ID for view ID %hu (head mid) is not known.\n", atoi(str[8]));
 				return false;
 			}
 
@@ -769,7 +767,7 @@ static bool mob_readdb_mobavail(char* str[], int columns, int current) {
 			uint16 *headlow_item_id = util::umap_find(aegis_itemviewid, (uint16)atoi(str[9]));
 
 			if (headlow_item_id == nullptr) {
-				ShowError("Item ID for view ID %d (head low) is not known.\n", atoi(str[9]));
+				ShowError("Item ID for view ID %hu (head low) is not known.\n", atoi(str[9]));
 				return false;
 			}
 
