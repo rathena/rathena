@@ -52,15 +52,8 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = bg != nullptr;
 
 	if (!exists) {
-		if (!this->nodeExists(node, "Name")) {
-			this->invalidWarning(node, "Node \"Name\" is missing.\n");
+		if (!this->nodesExist(node, { "Name", "Locations" }))
 			return 0;
-		}
-
-		if (!this->nodeExists(node, "Locations")) {
-			this->invalidWarning(node, "Node \"Locations\" is missing.\n");
-			return 0;
-		}
 
 		bg = std::make_shared<s_battleground_type>();
 		bg->id = id;
@@ -83,7 +76,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (min * 2 > MAX_BG_MEMBERS) {
-			this->invalidWarning(node, "Minimum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", min, MAX_BG_MEMBERS / 2);
+			this->invalidWarning(node["MinPlayers"], "Minimum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", min, MAX_BG_MEMBERS / 2);
 			min = MAX_BG_MEMBERS / 2;
 		}
 
@@ -100,7 +93,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (max * 2 > MAX_BG_MEMBERS) {
-			this->invalidWarning(node, "Maximum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", max, MAX_BG_MEMBERS / 2);
+			this->invalidWarning(node["MaxPlayers"], "Maximum players %d exceeds MAX_BG_MEMBERS, capping to %d.\n", max, MAX_BG_MEMBERS / 2);
 			max = MAX_BG_MEMBERS / 2;
 		}
 
@@ -117,7 +110,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (min > MAX_LEVEL) {
-			this->invalidWarning(node, "Minimum level %d exceeds MAX_LEVEL, capping to %d.\n", min, MAX_LEVEL);
+			this->invalidWarning(node["MinLevel"], "Minimum level %d exceeds MAX_LEVEL, capping to %d.\n", min, MAX_LEVEL);
 			min = MAX_LEVEL;
 		}
 
@@ -134,7 +127,7 @@ uint64 BattlegroundDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 
 		if (max > MAX_LEVEL) {
-			this->invalidWarning(node, "Maximum level %d exceeds MAX_LEVEL, capping to %d.\n", max, MAX_LEVEL);
+			this->invalidWarning(node["MaxLevel"], "Maximum level %d exceeds MAX_LEVEL, capping to %d.\n", max, MAX_LEVEL);
 			max = MAX_LEVEL;
 		}
 
@@ -441,6 +434,7 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter)
 					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT); // Warp to save point if the entry map has no save flag.
 			}
 			util::erase_at(bgteam->members, i);
+			bgteam->members.shrink_to_fit();
 		}
 
 		if (quit)
@@ -1246,6 +1240,7 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 			}
 
 			list_it = lista.erase(list_it);
+			lista.shrink_to_fit();
 
 			if (lista.empty() && listb.empty()) { // If there are no players left in the queue, discard it
 				auto queue_it = bg_queues.begin();
@@ -1260,6 +1255,7 @@ static bool bg_queue_leave_sub(struct map_session_data *sd, std::vector<map_sess
 						}
 
 						queue_it = bg_queues.erase(queue_it);
+						bg_queues.shrink_to_fit();
 					}
 				}
 			}
@@ -1413,6 +1409,10 @@ void bg_queue_start_battleground(std::shared_ptr<s_battleground_queue> queue)
 		if (*queue_it == queue)
 			queue_it = bg_queues.erase(queue_it);
 	}
+
+	queue->teama_members.shrink_to_fit();
+	queue->teamb_members.shrink_to_fit();
+	bg_queues.shrink_to_fit();
 
 	return;
 }
