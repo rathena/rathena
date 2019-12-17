@@ -220,9 +220,9 @@ enum e_quest_state : uint8 {
 /// Questlog entry
 struct quest {
 	int quest_id;                    ///< Quest ID
-	time_t time;                     ///< Expiration time
+	uint32 time;                     ///< Expiration time
 	int count[MAX_QUEST_OBJECTIVES]; ///< Kill counters of each quest objective
-	enum e_quest_state state;        ///< Current quest state
+	e_quest_state state;             ///< Current quest state
 };
 
 struct s_item_randomoption {

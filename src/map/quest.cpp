@@ -312,7 +312,7 @@ static time_t quest_time(std::shared_ptr<s_quest_db> qi)
 		time_t t = time(NULL);
 		struct tm *lt = localtime(&t);
 
-		if (q_hour >= 0) {
+		if (q_hour > 0) {
 			uint32 current_hour = (lt->tm_hour * 3600) + (lt->tm_min * 60) + lt->tm_sec;
 
 			if (current_hour < q_hour)
@@ -367,7 +367,7 @@ int quest_add(struct map_session_data *sd, int quest_id)
 
 	sd->quest_log[n] = {};
 	sd->quest_log[n].quest_id = qi->id;
-	sd->quest_log[n].time = quest_time(qi);
+	sd->quest_log[n].time = (uint32)quest_time(qi);
 	sd->quest_log[n].state = Q_ACTIVE;
 	sd->save_quest = true;
 
@@ -416,7 +416,7 @@ int quest_change(struct map_session_data *sd, int qid1, int qid2)
 
 	sd->quest_log[i] = {};
 	sd->quest_log[i].quest_id = qi->id;
-	sd->quest_log[i].time = quest_time(qi);
+	sd->quest_log[i].time = (uint32)quest_time(qi);
 	sd->quest_log[i].state = Q_ACTIVE;
 	sd->save_quest = true;
 
