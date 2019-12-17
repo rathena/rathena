@@ -488,7 +488,7 @@ OnTouch_:
 					mes "As I have told you repeatedly: Katar class weapons (Jamadhar/Jur/Katar etc) are two-handed!";
 					next;
 					mes "[Assassin 'Khai']";
-					mes "City of desert... I miss my hometown, Morroc. I haven't been there for a long time. I feel like I became a Thief a few days ago. Time flies so fast...";
+					mes "City of desert... I miss my hometown, Morocc. I haven't been there for a long time. I feel like I became a Thief a few days ago. Time flies so fast...";
 					next;
 					mes "[Assassin 'Khai']";
 					mes "Heh. I remember my Thief quest. I was so damn nervous when I broke into the farm to get Mushrooms...";

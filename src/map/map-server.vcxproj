@@ -292,6 +292,7 @@
     <Copy SourceFiles="$(SolutionDir)conf\msg_conf\import-tmpl\map_msg_tha_conf.txt" DestinationFolder="$(SolutionDir)conf\msg_conf\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)conf\msg_conf\import\map_msg_tha_conf.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\abra_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\abra_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\achievement_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\achievement_db.yml')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\achievement_level_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\achievement_level_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attendance.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attendance.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\attr_fix.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\attr_fix.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\castle_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\castle_db.txt')" />
@@ -332,7 +333,7 @@
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_noenter_map.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_noenter_map.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\job_param_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\job_param_db.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\level_penalty.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\level_penalty.txt')" />
-    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\magicmushroom_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\magicmushroom_db.txt')" />
+    <Copy SourceFiles="$(SolutionDir)db\import-tmpl\magicmushroom_db.yml" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\magicmushroom_db.yml')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_cache.dat" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_cache.dat')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\map_index.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\map_index.txt')" />
     <Copy SourceFiles="$(SolutionDir)db\import-tmpl\mercenary_db.txt" DestinationFolder="$(SolutionDir)db\import\" ContinueOnError="true" Condition="!Exists('$(SolutionDir)db\import\mercenary_db.txt')" />
