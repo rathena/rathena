@@ -9553,6 +9553,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 
+		case SC_KEEPING:
+		case SC_BARRIER: {
+			unit_data *ud = unit_bl2ud(bl);
+
+			if (ud)
+				ud->attackabletime = ud->canact_tick = ud->canmove_tick = gettick() + tick;
+		}
+			break;
 		case SC_DECREASEAGI:
 		case SC_INCREASEAGI:
 		case SC_ADORAMUS:
@@ -12178,6 +12186,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	vd = status_get_viewdata(bl);
 	calc_flag = static_cast<scb_flag>(StatusChangeFlagTable[type]);
 	switch(type) {
+		case SC_KEEPING:
+		case SC_BARRIER: {
+			unit_data *ud = unit_bl2ud(bl);
+
+			if (ud)
+				ud->attackabletime = ud->canact_tick = ud->canmove_tick = gettick();
+		}
+			break;
 		case SC_GRANITIC_ARMOR:
 			{
 				int damage = status->max_hp*sce->val3/100;

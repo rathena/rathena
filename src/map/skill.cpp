@@ -6754,6 +6754,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_DEFENDER:
 	case NPC_MAGICMIRROR:
 	case ST_PRESERVE:
+	case NPC_KEEPING:
+	case NPC_BARRIER:
 	case NPC_INVINCIBLE:
 	case NPC_INVINCIBLEOFF:
 	case MER_INVINCIBLEOFF2:
@@ -8222,21 +8224,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_PROVOCATION:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if (md) mob_unlocktarget(md, tick);
-		break;
-
-	case NPC_KEEPING:
-	case NPC_BARRIER:
-		{
-			int skill_time = skill_get_time(skill_id,skill_lv);
-			struct unit_data *ud = unit_bl2ud(bl);
-			if (clif_skill_nodamage(src,bl,skill_id,skill_lv,
-					sc_start(src,bl,type,100,skill_lv,skill_time))
-			&& ud) {	//Disable attacking/acting/moving for skill's duration.
-				ud->attackabletime =
-				ud->canact_tick =
-				ud->canmove_tick = tick + skill_time;
-			}
-		}
 		break;
 
 	case NPC_REBIRTH:
