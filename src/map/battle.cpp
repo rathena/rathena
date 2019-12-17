@@ -988,15 +988,15 @@ static void battle_absorb_damage(struct block_list *bl, struct Damage *d) {
  * @return True: Damage inflicted, False: Missed
  **/
 bool battle_check_sc(struct block_list *src, struct block_list *target, struct status_change *sc, struct Damage *d, int64 damage, uint16 skill_id, uint16 skill_lv) {
-	if (!sc)
+	if (!src || !target || !sc || !d)
 		return true;
 
-	struct status_change_entry *sce;
+	status_change_entry *sce;
 	int flag = d->flag;
 
 	// ATK_BLOCK Type
 	if ((sce = sc->data[SC_SAFETYWALL]) && (flag&(BF_SHORT | BF_MAGIC)) == BF_SHORT) {
-		struct skill_unit_group *group = skill_id2group(sce->val3);
+		skill_unit_group *group = skill_id2group(sce->val3);
 
 		if (group) {
 			d->dmg_lv = ATK_BLOCK;
@@ -1008,8 +1008,8 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 					break;
 				}
 #ifdef RENEWAL
-				if ((group->val3 - damage) > 0)
-					group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
+				if (group->val3 - damage > 0)
+					group->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
 				else
 					skill_delunitgroup(group);
 #endif
@@ -1019,8 +1019,8 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 					skill_delunitgroup(group);
 					break;
 				}
-				if ((group->val3 - damage) > 0)
-					group->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX);
+				if (group->val3 - damage > 0)
+					group->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX));
 				else
 					skill_delunitgroup(group);
 				break;
@@ -1046,7 +1046,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 			skill_id == MG_SOULSTRIKE ||
 			skill_id == WL_SOULEXPANSION ||
 			(skill_id && skill_get_ele(skill_id, skill_lv) == ELE_GHOST) ||
-			(!skill_id && (status_get_status_data(src))->rhw.ele == ELE_GHOST))
+			(skill_id == 0 && (status_get_status_data(src))->rhw.ele == ELE_GHOST))
 		{
 			if (skill_id == WL_SOULEXPANSION)
 				damage <<= 1; // If used against a player in White Imprison, the skill deals double damage.
@@ -1065,13 +1065,13 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 	}
 
 	if ((sce = sc->data[SC_MILLENNIUMSHIELD]) && sce->val2 > 0 && damage > 0) {
-		sce->val3 -= (int)cap_value(damage, INT_MIN, INT_MAX); // absorb damage
+		sce->val3 -= static_cast<int>(cap_value(damage, INT_MIN, INT_MAX)); // absorb damage
 		d->dmg_lv = ATK_BLOCK;
 		if (sce->val3 <= 0) { // Shield Down
 			sce->val2--;
 			if (sce->val2 >= 0) {
 				clif_millenniumshield(target, sce->val2);
-				if (!sce->val2)
+				if (sce->val2 != 0)
 					status_change_end(target, SC_MILLENNIUMSHIELD, INVALID_TIMER); // All shields down
 				else
 					sce->val3 = 1000; // Next shield
@@ -1081,12 +1081,12 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 		return false;
 	}
 
-	struct map_session_data *sd = map_id2sd(target->id);
+	map_session_data *sd = map_id2sd(target->id);
 
 	// ATK_MISS Type
 	if ((sce = sc->data[SC_AUTOGUARD]) && flag&BF_WEAPON && !(skill_get_inf3(skill_id)&INF3_NO_EFF_AUTOGUARD) && rnd() % 100 < sce->val2) {
-		struct status_change_entry *sce_d = sc->data[SC_DEVOTION];
-		struct block_list *d_bl;
+		status_change_entry *sce_d = sc->data[SC_DEVOTION];
+		block_list *d_bl;
 		int delay;
 
 		// different delay depending on skill level [celest]
@@ -1124,8 +1124,8 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 
 	// ATK_DEF Type
 	if ((sce = sc->data[SC_LIGHTNINGWALK]) && flag&BF_LONG && rnd() % 100 < sce->val1) {
-		int dx[8] = { 0,-1,-1,-1,0,1,1,1 };
-		int dy[8] = { 1,1,0,-1,-1,-1,0,1 };
+		const int dx[8] = { 0,-1,-1,-1,0,1,1,1 };
+		const int dy[8] = { 1,1,0,-1,-1,-1,0,1 };
 		uint8 dir = map_calc_dir(target, src->x, src->y);
 
 		if (unit_movepos(target, src->x - dx[dir], src->y - dy[dir], 1, 1)) {
@@ -1160,7 +1160,7 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 #ifndef RENEWAL
 		if (skill_id != ASC_BREAKER || !(flag&BF_WEAPON))
 #endif
-			if (--(sce->val3) <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
+			if (--sce->val3 <= 0) //We make it work like Safety Wall, even though it only blocks 1 time.
 				status_change_end(target, SC_KAUPE, INVALID_TIMER);
 		return false;
 	}
@@ -1179,9 +1179,9 @@ bool battle_check_sc(struct block_list *src, struct block_list *target, struct s
 			skill_blown(src, target, sce->val3, -1, BLOWN_NONE);
 		}
 		//Both need to be consumed if they are active.
-		if (sce && --(sce->val2) <= 0)
+		if (sce && --sce->val2 <= 0)
 			status_change_end(target, SC_UTSUSEMI, INVALID_TIMER);
-		if ((sce = sc->data[SC_BUNSINJYUTSU]) && --(sce->val2) <= 0)
+		if ((sce = sc->data[SC_BUNSINJYUTSU]) && --sce->val2 <= 0)
 			status_change_end(target, SC_BUNSINJYUTSU, INVALID_TIMER);
 		return false;
 	}
@@ -4626,11 +4626,9 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 			RE_ALLATK_ADDRATE(wd, sc->data[SC_GVG_GIANT]->val3);
 		}
 
-		if (!skill_id) {
-			if (sc->data[SC_EXEEDBREAK]) {
-				ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_EXEEDBREAK]->val2);
-				RE_ALLATK_ADDRATE(wd, sc->data[SC_EXEEDBREAK]->val2);
-			}
+		if (skill_id == 0 && sc->data[SC_EXEEDBREAK]) {
+			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_EXEEDBREAK]->val2);
+			RE_ALLATK_ADDRATE(wd, sc->data[SC_EXEEDBREAK]->val2);
 		}
 
 		if (sc->data[SC_MIRACLE])
@@ -4932,8 +4930,8 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 			return;
 		}
 
-		int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
-		int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
+		const int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
+		const int left_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_L, false);
 
 		if (wd->damage > 0) {
 			wd->damage = battle_attr_fix(src, target, wd->damage, right_element, tstatus->def_ele, tstatus->ele_lv);
