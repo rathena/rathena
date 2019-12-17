@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Pre-Renewal Quest Database
+# Quest Database
 ###########################################################################
 #
 # Quest Settings
@@ -98,12 +98,12 @@ Body:
       - Mob: HIGH_ORC
         Count: 30
   - Id: 1104
-    Title: Solo at Louyang!
+    Title: Solo at Luoyang!
     Targets:
       - Mob: CHUNG_E
         Count: 20
   - Id: 1105
-    Title: Solo at Louyang!
+    Title: Solo at Luoyang!
     Targets:
       - Mob: CIVIL_SERVANT
         Count: 50
@@ -118,7 +118,7 @@ Body:
       - Mob: ANTIQUE_FIRELOCK
         Count: 40
   - Id: 1108
-    Title: Solo at Louyang!
+    Title: Solo at Luoyang!
     Targets:
       - Mob: CHUNG_E_
         Count: 20
@@ -3137,13 +3137,13 @@ Body:
   - Id: 8122
     Title: Bruspetti's resting place
   - Id: 8123
-    Title: Ayotaya's world famous dish, Tom Yum Goong
+    Title: Ayothaya's world famous dish, Tom Yum Goong
   - Id: 8124
-    Title: Ayotaya's world famous dish, Tom Yum Goong
+    Title: Ayothaya's world famous dish, Tom Yum Goong
   - Id: 8125
-    Title: Ayotaya's world famous dish, Tom Yum Goong
+    Title: Ayothaya's world famous dish, Tom Yum Goong
   - Id: 8126
-    Title: Ayotaya's world famous dish, Tom Yum Goong
+    Title: Ayothaya's world famous dish, Tom Yum Goong
   - Id: 8127
     Title: Momotaro Field Trip
   - Id: 8128
@@ -3856,7 +3856,7 @@ Body:
   - Id: 10103
     Title: To client - the chapter of Glast heim
   - Id: 10104
-    Title: To client - the chapter of Yuno
+    Title: To client - the chapter of Juno
   - Id: 10105
     Title: To client - the chapter of a clock tower
   - Id: 10106
@@ -7095,4 +7095,3 @@ Body:
   - Id: 62238
     Title: Midgardian Mercenary timer
     TimeLimit: +1h
-

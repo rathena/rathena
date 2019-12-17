@@ -3525,7 +3525,9 @@ int64 skill_attack (int attack_type, struct block_list* src, struct block_list *
 		case WL_COMET:
 		case NPC_COMET:
 		case KO_MUCHANAGE:
+#ifndef RENEWAL
 		case NJ_HUUMA:
+#endif
 			dmg.dmotion = clif_skill_damage(src,bl,tick,dmg.amotion,dmg.dmotion,damage,dmg.div_,skill_id,skill_lv,DMG_MULTI_HIT);
 			break;
 		case WL_CHAINLIGHTNING_ATK:
@@ -5121,6 +5123,9 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 				case SU_SCRATCH:
 					clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 					break;
+#ifdef RENEWAL
+				case NJ_HUUMA:
+#endif
 				case LG_MOONSLASHER:
 				case MH_XENO_SLASHER:
 					clif_skill_damage(src,bl,tick, status_get_amotion(src), 0, -30000, 1, skill_id, skill_lv, DMG_SKILL);
@@ -11869,9 +11874,6 @@ int skill_castend_pos2(struct block_list* src, int x, int y, uint16 skill_id, ui
 	case NJ_HYOUSYOURAKU:
 	case NJ_RAIGEKISAI:
 	case NJ_KAMAITACHI:
-#ifdef RENEWAL
-	case NJ_HUUMA:
-#endif
 	case NPC_EVILLAND:
 	case NPC_VENOMFOG:
 	case NPC_ICEMINE:
@@ -16247,7 +16249,7 @@ struct skill_condition skill_get_requirement(struct map_session_data* sd, uint16
 
 	for (auto &it : sd->skillusesprate) {
 		if (it.id == skill_id) {
-			sp_skill_rate_bonus += it.val;
+			sp_skill_rate_bonus -= it.val;
 			break;
 		}
 	}
@@ -16524,12 +16526,22 @@ int skill_castfix(struct block_list *bl, uint16 skill_id, uint16 skill_lv) {
 
 		// Calculate cast time reduced by item/card bonuses
 		if (sd) {
-			if (!(flag&4) && sd->castrate != 100)
-				reduce_cast_rate += 100 - sd->castrate;
+			if (!(flag&4)) {
+				if (sd->castrate != 100)
+					reduce_cast_rate += 100 - sd->castrate;
+				if (sd->bonus.add_varcast != 0)
+					time += sd->bonus.add_varcast; // bonus bVariableCast
+			}
 			// Skill-specific reductions work regardless of flag
 			for (const auto &it : sd->skillcastrate) {
 				if (it.id == skill_id) {
 					time += time * it.val / 100;
+					break;
+				}
+			}
+			for (const auto &it : sd->skillvarcast) {
+				if (it.id == skill_id) { // bonus2 bSkillVariableCast
+					time += it.val;
 					break;
 				}
 			}

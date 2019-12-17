@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Gonryun Dungeon Monster Spawn Script
+//= Kunlun Dungeon Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
@@ -12,7 +12,7 @@
 //============================================================
 
 //==================================================
-// gon_dun01 - Shrine of Gonryun Queen
+// gon_dun01 - Shrine of Kunlun Queen
 //==================================================
 gon_dun01,0,0	monster	Bloody Butterfly	1408,55,650000,350000
 gon_dun01,0,0	monster	Enchanted Peach Tree	1410,35

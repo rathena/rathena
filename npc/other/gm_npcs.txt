@@ -136,13 +136,13 @@ List of GM Management NPCs (incomplete)
 - Extra Story Patch
 - boss::boss_aru_monas
 - Koshei GlobalVar#admin
-- Morroc GlobalVar Admin::MorrocAdmin_sec
-- Morroc GlobalVar Admin::MorrocAdmin_moc
-- Morroc Invasion Manager (disabled)
+- Morocc GlobalVar Admin::MoroccAdmin_sec
+- Morocc GlobalVar Admin::MoroccAdmin_moc
+- Morocc Invasion Manager (disabled)
 
 [ Other ]
 -------- Marriage --------
-- The King of Midgart
+- The King of Rune-Midgarts
 - Divorce Staff
 - Remarry Staff
 ------ Izlude Arena ------

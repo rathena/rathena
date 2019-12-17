@@ -16,7 +16,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Renewal Quest Database
+# Quest Database
 ###########################################################################
 #
 # Quest Settings
@@ -98,12 +98,12 @@ Body:
       - Mob: HIGH_ORC
         Count: 30
   - Id: 1104
-    Title: Solo at Louyang!
+    Title: Solo at Luoyang!
     Targets:
       - Mob: CHUNG_E
         Count: 20
   - Id: 1105
-    Title: Solo at Louyang!
+    Title: Solo at Luoyang!
     Targets:
       - Mob: CIVIL_SERVANT
         Count: 50
@@ -118,7 +118,7 @@ Body:
       - Mob: ANTIQUE_FIRELOCK
         Count: 40
   - Id: 1108
-    Title: Solo at Louyang!
+    Title: Solo at Luoyang!
     Targets:
       - Mob: CHUNG_E_
         Count: 20
@@ -985,7 +985,7 @@ Body:
   - Id: 3086
     Title: Commander's Duty
   - Id: 3087
-    Title: Report to Rune Midgard
+    Title: Report to Midgard
   - Id: 3088
     Title: Report to the continent - Accident!
   - Id: 3089
@@ -4456,13 +4456,13 @@ Body:
   - Id: 8122
     Title: Bruspetti's resting place
   - Id: 8123
-    Title: Ayotaya's world famous dish, Tom Yum Goong
+    Title: Ayothaya's world famous dish, Tom Yum Goong
   - Id: 8124
-    Title: Ayotaya's world famous dish, Tom Yum Goong
+    Title: Ayothaya's world famous dish, Tom Yum Goong
   - Id: 8125
-    Title: Ayotaya's world famous dish, Tom Yum Goong
+    Title: Ayothaya's world famous dish, Tom Yum Goong
   - Id: 8126
-    Title: Ayotaya's world famous dish, Tom Yum Goong
+    Title: Ayothaya's world famous dish, Tom Yum Goong
   - Id: 8127
     Title: Momotaro Field Trip
   - Id: 8128
@@ -5058,12 +5058,12 @@ Body:
     Title: Re-exploring the crack of spaces
     TimeLimit: +23h
   - Id: 9318
-    Title: Pursuing Hiding Morroc
+    Title: Pursuing Hiding Morocc
     Targets:
       - Mob: EP14_MORS_BOSSB
         Count: 1
   - Id: 9319
-    Title: Pursuing Hiding Morroc Continues
+    Title: Pursuing Hiding Morocc Continues
     TimeLimit: +23h
   - Id: 9335
     Title: Search for shards of Gigantes
@@ -5308,7 +5308,7 @@ Body:
   - Id: 10103
     Title: To client - the chapter of Glast heim
   - Id: 10104
-    Title: To client - the chapter of Yuno
+    Title: To client - the chapter of Juno
   - Id: 10105
     Title: To client - the chapter of a clock tower
   - Id: 10106
@@ -9534,4 +9534,3 @@ Body:
   - Id: 62238
     Title: Midgardian Mercenary timer
     TimeLimit: +1h
-
