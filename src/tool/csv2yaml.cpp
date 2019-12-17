@@ -237,7 +237,7 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (process("INSTANCE_DB", 1, pet_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (process("INSTANCE_DB", 1, root_paths, "instance_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 7, 7 + MAX_MAP_PER_INSTANCE, -1, &instance_readdb_sub, false);
 	})) {
 		return 0;
@@ -657,32 +657,37 @@ static size_t pet_read_db( const char* file ){
 }
 
 static bool instance_readdb_sub(char* str[], int columns, int current) {
-	YAML::Node node;
-
-	node["Id"] = str[0];
-	node["Name"] = str[1];
+	body << YAML::BeginMap;
+	body << YAML::Key << "Id" << YAML::Value << atoi(str[0]);
+	body << YAML::Key << "Name" << YAML::Value << str[1];
 	if (atoi(str[2]) != 3600)
-		node["TimeLimit"] = str[2];
+		body << YAML::Key << "TimeLimit" << YAML::Value << atoi(str[2]);
 	if (atoi(str[3]) != 300)
-		node["IdleTimeOut"] = str[3];
-
-	node["EnterMap"] = str[4];
-	node["EnterX"] = str[5];
-	node["EnterY"] = str[6];
+		body << YAML::Key << "IdleTimeOut" << YAML::Value << atoi(str[3]);
+	body << YAML::Key << "EnterMap" << YAML::Value << str[4];
+	body << YAML::Key << "EnterX" << YAML::Value << atoi(str[5]);
+	body << YAML::Key << "EnterY" << YAML::Value << atoi(str[6]);
 
 	if (columns > 7) {
-		for (int i = 7, count = 0; i < columns; i++) {
+		body << YAML::Key << "AdditionalMaps";
+		body << YAML::BeginSeq;
+
+		for (int i = 7; i < columns; i++) {
 			if (!strlen(str[i]))
 				continue;
 
 			if (strcmpi(str[4], str[i]) == 0)
 				continue;
 
-			node["AdditionalMaps"][count++]["Map"] = std::string(str[i]);
+			body << YAML::BeginMap;
+			body << YAML::Key << "Map" << YAML::Value << str[i];
+			body << YAML::EndMap;
 		}
+
+		body << YAML::EndSeq;
 	}
 
-	body[current] = node;
+	body << YAML::EndMap;
 
 	return true;
 }

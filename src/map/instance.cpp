@@ -51,13 +51,12 @@ const std::string InstanceDatabase::getDefaultLocation() {
  */
 uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	uint32 instance_id = 0;
-	bool existing = false;
 
 	if (!this->asUInt32(node, "Id", instance_id))
 		return 0;
 
 	if (instance_id <= 0) {
-		this->invalidWarning(node, "Instance \"Id\" is invalid. Valid range 1~%d, skipping.\n", INT_MAX);
+		this->invalidWarning(node, "Instance Id is invalid. Valid range 1~%d, skipping.\n", INT_MAX);
 		return 0;
 	}
 
@@ -121,15 +120,14 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "EnterMap")) {
 		std::string map;
-		int16 m;
 
 		if (!this->asString(node, "EnterMap", map))
 			return 0;
 
-		m = map_mapname2mapid(map.c_str());
+		int16 m = map_mapname2mapid(map.c_str());
 
 		if (!m) {
-			this->invalidWarning(node, "\"EnterMap\" %s is not a valid map, skipping.\n", map.c_str());
+			this->invalidWarning(node["EnterMap"], "EnterMap %s is not a valid map, skipping.\n", map.c_str());
 			return 0;
 		}
 
@@ -157,20 +155,19 @@ uint64 InstanceDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "AdditionalMaps")) {
 		for (const YAML::Node &map_list : node["AdditionalMaps"]) {
 			std::string map;
-			int16 m;
 
 			if (!this->asString(map_list, "Map", map))
 				return 0;
 
-			m = map_mapname2mapid(map.c_str());
+			int16 m = map_mapname2mapid(map.c_str());
 
 			if (m == instance->enter.map) {
-				this->invalidWarning(map_list["Map"], "\"AdditionalMap\" %s is already listed as the EnterMap.\n", map.c_str());
+				this->invalidWarning(map_list, "Additional Map %s is already listed as the EnterMap.\n", map.c_str());
 				continue;
 			}
 
 			if (!m) {
-				this->invalidWarning(map_list["Map"], "\"AdditionalMap\" %s is not a valid map, skipping.\n", map.c_str());
+				this->invalidWarning(map_list, "Additional Map %s is not a valid map, skipping.\n", map.c_str());
 				return 0;
 			}
 
