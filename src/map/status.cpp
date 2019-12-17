@@ -11723,8 +11723,16 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		calc_flag&=~SCB_BODY;
 	}*/
 
-	if(!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && StatusDisplayType[type]))
-		clif_status_change(bl,StatusIconChangeTable[type],1,tick,(val_flag&1)?val1:1,(val_flag&2)?val2:0,(val_flag&4)?val3:0);
+	if (!(flag&SCSTART_NOICON) && !(flag&SCSTART_LOADED && StatusDisplayType[type])) {
+		int status_icon = StatusIconChangeTable[type];
+
+#if PACKETVER < 20151104
+		if (status_icon == EFST_WEAPONPROPERTY)
+			status_icon = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
+#endif
+
+		clif_status_change(bl, status_icon, 1, tick, (val_flag & 1) ? val1 : 1, (val_flag & 2) ? val2 : 0, (val_flag & 4) ? val3 : 0);
+	}
 
 	// Used as temporary storage for scs with interval ticks, so that the actual duration is sent to the client first.
 	if( tick_time )
@@ -12814,7 +12822,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	}*/
 
 	// On Aegis, when turning off a status change, first goes the sc packet, then the option packet.
-	clif_status_change(bl,StatusIconChangeTable[type],0,0,0,0,0);
+	int status_icon = StatusIconChangeTable[type];
+
+#if PACKETVER < 20151104
+	if (status_icon == EFST_WEAPONPROPERTY)
+		status_icon = EFST_ATTACK_PROPERTY_NOTHING + sce->val1; // Assign status icon for older clients
+#endif
+
+	clif_status_change(bl,status_icon,0,0,0,0,0);
 
 	if( opt_flag&8 ) // bugreport:681
 		clif_changeoption2(bl);
