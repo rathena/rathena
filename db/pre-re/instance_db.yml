@@ -41,7 +41,7 @@ Body:
   - Id: 1
     Name: Endless Tower
     TimeLimit: 14400
-    Enter- Map: 1@tower
+    EnterMap: 1@tower
     EnterX: 50
     EnterY: 355
     AdditionalMaps:
@@ -53,14 +53,14 @@ Body:
   - Id: 2
     Name: Sealed Catacomb
     TimeLimit: 7200
-    Enter- Map: 1@cata
+    EnterMap: 1@cata
     EnterX: 100
     EnterY: 224
     AdditionalMaps:
       - Map: 2@cata
   - Id: 3
     Name: Orc's Memory
-    Enter- Map: 1@orcs 
+    EnterMap: 1@orcs 
     EnterX: 179
     EnterY: 15
     AdditionalMaps:
@@ -68,7 +68,7 @@ Body:
   - Id: 4
     Name: Nidhoggur's Nest
     TimeLimit: 14400
-    Enter- Map: 1@nyd
+    EnterMap: 1@nyd
     EnterX: 32
     EnterY: 36
     AdditionalMaps:
