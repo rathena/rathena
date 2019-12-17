@@ -21534,10 +21534,9 @@ uint64 MagicMushroomDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!exists) {
 		mushroom = std::make_shared<s_skill_magicmushroom_db>();
 		mushroom->skill_id = skill_id;
-	}
 
-	if (!exists)
 		this->put(skill_id, mushroom);
+	}
 
 	return 1;
 }
@@ -21836,6 +21835,8 @@ static void skill_readdb(void)
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
+
+	magic_mushroom_db.load();
 	
 	skill_init_unit_layout();
 	skill_init_nounit_layout();
