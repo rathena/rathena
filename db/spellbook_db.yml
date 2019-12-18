@@ -33,8 +33,6 @@ Header:
 
 Footer:
   Imports:
-  - Path: db/pre-re/spellbook_db.yml
-    Mode: Prerenewal
   - Path: db/re/spellbook_db.yml
     Mode: Renewal
   - Path: db/import/spellbook_db.yml
