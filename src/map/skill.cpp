@@ -21636,8 +21636,13 @@ uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 		uint16 probability;
 
 		if (probNode.IsScalar()) {
-			if (!this->asUInt16(probNode, "Probability", probability))
+			if (!this->asUInt16Rate(probNode, "Probability", probability))
 				return 0;
+
+				if (!probability) {
+					this->invalidWarning(probNode["Probability"], "Probability has to be within the range of 1~10000, skipping.\n");
+					return 0;
+				}
 
 			abra->per.fill(probability);
 		} else {
@@ -21654,11 +21659,11 @@ uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 					return 0;
 				}
 
-				if (!this->asUInt16(it, "Probability", probability))
+				if (!this->asUInt16Rate(it, "Probability", probability))
 					continue;
 
 				if (!probability) {
-					this->invalidWarning(it["Probability"], "Probability has to be 1 or higher.\n");
+					this->invalidWarning(it["Probability"], "Probability has to be within the range of 1~10000, skipping.\n");
 					return 0;
 				}
 
