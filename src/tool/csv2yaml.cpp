@@ -689,6 +689,7 @@ static size_t pet_read_db( const char* file ){
 	return entries;
 }
 
+// Copied and adjusted from skill.cpp
 static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current)
 {
 	uint16 skill_id = atoi(split[0]);
@@ -706,7 +707,9 @@ static bool skill_parse_row_magicmushroomdb(char* split[], int column, int curre
 	return true;
 }
 
+// Copied and adjusted from skill.cpp
 static bool skill_parse_row_abradb(char* split[], int columns, int current)
+{
 	uint16 skill_id = atoi(split[0]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
