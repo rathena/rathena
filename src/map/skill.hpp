@@ -385,9 +385,6 @@ public:
 	uint64 parseBodyNode(const YAML::Node& node);
 };
 
-extern AbraDatabase abra_db;
-
-
 void do_init_skill(void);
 void do_final_skill(void);
 
