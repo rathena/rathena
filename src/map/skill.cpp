@@ -90,7 +90,7 @@ static unsigned short skill_arrow_count;
 struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
 unsigned short skill_abra_count;
 
-ImproviseDatabase improvise_db;
+ImprovisedSongDatabase improvised_song_db;
 
 #define MAX_SKILL_CHANGEMATERIAL_DB 75
 #define MAX_SKILL_CHANGEMATERIAL_SET 3
@@ -10206,16 +10206,16 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WM_RANDOMIZESPELL:
-		if (improvise_db.size() == 0) {
+		if (improvised_song_db.size() == 0) {
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 			break;
 		}
 		else {
-			int improv_skill_id = 0, improv_skill_lv, checked = 0, checked_max = improvise_db.size() * 3;
-			auto improvise_spell = improvise_db.begin();
+			int improv_skill_id = 0, improv_skill_lv, checked = 0, checked_max = improvised_song_db.size() * 3;
+			auto improvise_spell = improvised_song_db.begin();
 
 			do {
-				std::advance(improvise_spell, rnd() % improvise_db.size());
+				std::advance(improvise_spell, rnd() % improvised_song_db.size());
 
 				improv_skill_id = improvise_spell->second->skill_id;
 			} while (checked++ < checked_max && rnd() % 10000 >= improvise_spell->second->per);
@@ -21451,7 +21451,7 @@ static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 }
 
 
-const std::string ImproviseDatabase::getDefaultLocation() {
+const std::string ImprovisedSongDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/improvise_db.yml";
 }
 
@@ -21460,7 +21460,7 @@ const std::string ImproviseDatabase::getDefaultLocation() {
 * @param node: YAML node containing the entry.
 * @return count of successfully parsed rows
 */
-uint64 ImproviseDatabase::parseBodyNode(const YAML::Node &node) {
+uint64 ImprovisedSongDatabase::parseBodyNode(const YAML::Node &node) {
 	std::string skill_name;
 
 	if (!this->asString(node, "Skill", skill_name))

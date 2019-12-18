@@ -236,13 +236,13 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", "" [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", "", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, -1, &skill_parse_row_magicmushroomdb, false);
 	})) {
 		return 0;
 	}
 
-	if (!process("IMPROVISE_DB", 1, root_paths, "skill_improvise_db", "improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("IMPROVISED_SONG_DB", 1, root_paths, "skill_improvise_db", "improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2, -1, &skill_parse_row_improvisedb, false);
 	})) {
 		return 0;

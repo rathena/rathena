@@ -16,10 +16,10 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Improvise Database
+# Improvised Song Database
 ###########################################################################
 #
-# Improvise Settings
+# Improvised Song Settings
 #
 ###########################################################################
 # - Skill             Skill to be casted by Improvised Song.
@@ -27,5 +27,5 @@
 ###########################################################################
 
 Header:
-  Type: IMPROVISE_DB
+  Type: IMPROVISED_SONG_DB
   Version: 1

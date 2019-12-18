@@ -380,9 +380,9 @@ struct s_skill_improvise_db {
 	uint16 skill_id, per;
 };
 
-class ImproviseDatabase : public TypesafeYamlDatabase<uint16, s_skill_improvise_db> {
+class ImprovisedSongDatabase : public TypesafeYamlDatabase<uint16, s_skill_improvise_db> {
 public:
-	ImproviseDatabase() : TypesafeYamlDatabase("IMPROVISE_DB", 1) {
+	ImprovisedSongDatabase() : TypesafeYamlDatabase("IMPROVISED_SONG_DB", 1) {
 
 	}
 
@@ -390,7 +390,7 @@ public:
 	uint64 parseBodyNode(const YAML::Node& node);
 };
 
-extern ImproviseDatabase improvise_db;
+extern ImprovisedSongDatabase improvised_song_db;
 
 void do_init_skill(void);
 void do_final_skill(void);
