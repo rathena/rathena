@@ -9932,6 +9932,8 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 	{
 		if (tsd->inventory.u.items_inventory[i].nameid <= 0 || tsd->inventory_data[i] == NULL)	// Item doesn't exist
 			continue;
+		if (!tsd->inventory.u.items_inventory[i].equip)
+			continue;
 		if (!itemdb_isequip2(tsd->inventory_data[i])) // Is not equippable
 			continue;
 		// Add item info : refine, identify flag, element, etc.
@@ -16705,7 +16707,9 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
 	if (!tsd)
 		return;
 
-	if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
+	if (sd->bl.m != tsd->bl.m)
+		return;
+	else if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
 		clif_viewequip_ack(sd, tsd);
 	else
 		clif_msg(sd, VIEW_EQUIP_FAIL);

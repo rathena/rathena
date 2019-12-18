@@ -112,9 +112,7 @@ static unsigned short skill_changematerial_count;
 struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
 unsigned short skill_spellbook_count;
 
-//Guillotine Cross
-struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
-unsigned short skill_magicmushroom_count;
+MagicMushroomDatabase magic_mushroom_db;
 
 struct s_skill_unit_layout skill_unit_layout[MAX_SKILL_UNIT_LAYOUT];
 int firewall_unit_pos;
@@ -6754,6 +6752,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_DEFENDER:
 	case NPC_MAGICMIRROR:
 	case ST_PRESERVE:
+	case NPC_KEEPING:
+	case NPC_BARRIER:
 	case NPC_INVINCIBLE:
 	case NPC_INVINCIBLEOFF:
 	case MER_INVINCIBLEOFF2:
@@ -8222,21 +8222,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 	case NPC_PROVOCATION:
 		clif_skill_nodamage(src,bl,skill_id,skill_lv,1);
 		if (md) mob_unlocktarget(md, tick);
-		break;
-
-	case NPC_KEEPING:
-	case NPC_BARRIER:
-		{
-			int skill_time = skill_get_time(skill_id,skill_lv);
-			struct unit_data *ud = unit_bl2ud(bl);
-			if (clif_skill_nodamage(src,bl,skill_id,skill_lv,
-					sc_start(src,bl,type,100,skill_lv,skill_time))
-			&& ud) {	//Disable attacking/acting/moving for skill's duration.
-				ud->attackabletime =
-				ud->canact_tick =
-				ud->canmove_tick = tick + skill_time;
-			}
-		}
 		break;
 
 	case NPC_REBIRTH:
@@ -21503,39 +21488,44 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 	return true;
 }
 
-/** Reads Magic mushroom db
- * Structure: SkillID
- */
-static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current)
-{
-	unsigned short i, skill_id = atoi(split[0]);
-	bool rem = (atoi(split[1]) == 1 ? true : false);
+const std::string MagicMushroomDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/magicmushroom_db.yml";
+}
 
-	if (!skill_get_index(skill_id) || !skill_get_max(skill_id)) {
-		ShowError("skill_parse_row_magicmushroomdb: Invalid skill ID %d\n", skill_id);
-		return false;
+/**
+* Reads and parses an entry from the magicmushroom_db.
+* @param node: YAML node containing the entry.
+* @return count of successfully parsed rows
+*/
+uint64 MagicMushroomDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string skill_name;
+
+	if (!this->asString(node, "Skill", skill_name))
+		return 0;
+
+	uint16 skill_id = skill_name2id(skill_name.c_str());
+
+	if (!skill_id) {
+		this->invalidWarning(node["Skill"], "Invalid Magic Mushroom skill name \"%s\", skipping.\n", skill_name.c_str());
+		return 0;
 	}
+
 	if (!skill_get_inf(skill_id)) {
-		ShowError("skill_parse_row_magicmushroomdb: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
-		return false;
-	}
-	ARR_FIND(0, skill_magicmushroom_count, i, skill_magicmushroom_db[i].skill_id==skill_id);
-	if (i >= ARRAYLENGTH(skill_magicmushroom_db)) {
-		ShowError("skill_parse_row_magicmushroomdb: Maximum db entries reached.\n");
-		return false;
-	}
-	// Import just for clearing/disabling from original data
-	if (rem) {
-		memset(&skill_magicmushroom_db[i], 0, sizeof(skill_magicmushroom_db[i]));
-		//ShowInfo("skill_parse_row_magicmushroomdb: Skill %d removed from list.\n", skill_id);
-		return true;
+		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted by Magic Mushroom.\n", skill_name.c_str());
+		return 0;
 	}
 
-	skill_magicmushroom_db[i].skill_id = skill_id;	
-	if (i == skill_magicmushroom_count)
-		skill_magicmushroom_count++;
+	std::shared_ptr<s_skill_magicmushroom_db> mushroom = this->find(skill_id);
+	bool exists = mushroom != nullptr;
 
-	return true;
+	if (!exists) {
+		mushroom = std::make_shared<s_skill_magicmushroom_db>();
+		mushroom->skill_id = skill_id;
+
+		this->put(skill_id, mushroom);
+	}
+
+	return 1;
 }
 
 /** Reads db of copyable skill
@@ -21794,10 +21784,9 @@ static void skill_readdb(void)
 	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
 	memset(skill_abra_db,0,sizeof(skill_abra_db));
 	memset(skill_spellbook_db,0,sizeof(skill_spellbook_db));
-	memset(skill_magicmushroom_db,0,sizeof(skill_magicmushroom_db));
 	memset(skill_changematerial_db,0,sizeof(skill_changematerial_db));
 	skill_produce_count = skill_arrow_count = skill_abra_count = skill_improvise_count =
-		skill_changematerial_count = skill_spellbook_count = skill_magicmushroom_count = 0;
+		skill_changematerial_count = skill_spellbook_count = 0;
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		size_t n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
@@ -21824,7 +21813,6 @@ static void skill_readdb(void)
 		sv_readdb(dbsubpath1, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb, i > 0);
 		sv_readdb(dbsubpath1, "abra_db.txt"           , ',',   3,  3, MAX_SKILL_ABRA_DB, skill_parse_row_abradb, i > 0);
 		sv_readdb(dbsubpath1, "spellbook_db.txt"      , ',',   3,  3, MAX_SKILL_SPELLBOOK_DB, skill_parse_row_spellbookdb, i > 0);
-		sv_readdb(dbsubpath1, "magicmushroom_db.txt"  , ',',   1,  2, MAX_SKILL_MAGICMUSHROOM_DB, skill_parse_row_magicmushroomdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_copyable_db.txt"       , ',',   2,  4, -1, skill_parse_row_copyabledb, i > 0);
 		sv_readdb(dbsubpath1, "skill_improvise_db.txt"      , ',',   2,  2, MAX_SKILL_IMPROVISE_DB, skill_parse_row_improvisedb, i > 0);
 		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   5,  5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, i > 0);
@@ -21834,6 +21822,8 @@ static void skill_readdb(void)
 		aFree(dbsubpath1);
 		aFree(dbsubpath2);
 	}
+
+	magic_mushroom_db.load();
 	
 	skill_init_unit_layout();
 	skill_init_nounit_layout();

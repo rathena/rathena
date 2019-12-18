@@ -3243,6 +3243,7 @@ int mob_class_change (struct mob_data *md, int mob_id)
 		memcpy(md->name,md->db->jname,NAME_LENGTH);
 
 	status_change_end(&md->bl,SC_KEEPING,INVALID_TIMER); // End before calling status_calc_mob().
+	status_change_end(&md->bl,SC_BARRIER,INVALID_TIMER);
 	mob_stop_attack(md);
 	mob_stop_walking(md, 0);
 	unit_skillcastcancel(&md->bl, 0);

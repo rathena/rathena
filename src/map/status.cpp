@@ -9558,6 +9558,14 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			tick = INFINITE_TICK;
 			break;
 
+		case SC_KEEPING:
+		case SC_BARRIER: {
+			unit_data *ud = unit_bl2ud(bl);
+
+			if (ud)
+				ud->attackabletime = ud->canact_tick = ud->canmove_tick = gettick() + tick;
+		}
+			break;
 		case SC_DECREASEAGI:
 		case SC_INCREASEAGI:
 		case SC_ADORAMUS:
@@ -12183,6 +12191,14 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 	vd = status_get_viewdata(bl);
 	calc_flag = static_cast<scb_flag>(StatusChangeFlagTable[type]);
 	switch(type) {
+		case SC_KEEPING:
+		case SC_BARRIER: {
+			unit_data *ud = unit_bl2ud(bl);
+
+			if (ud)
+				ud->attackabletime = ud->canact_tick = ud->canmove_tick = gettick();
+		}
+			break;
 		case SC_GRANITIC_ARMOR:
 			{
 				int damage = status->max_hp*sce->val3/100;
@@ -13037,17 +13053,18 @@ TIMER_FUNC(status_change_timer){
 			}
 
 			if (!flag) { // Random Skill Cast
-				if (skill_magicmushroom_count && sd && !pc_issit(sd)) { // Can't cast if sit
-					int mushroom_skill_id = 0, checked = 0, checked_max = MAX_SKILL_MAGICMUSHROOM_DB * 3;
-					unit_stop_attack(bl);
-					unit_skillcastcancel(bl, 1);
-					do {
-						int i = rnd() % MAX_SKILL_MAGICMUSHROOM_DB;
-						mushroom_skill_id = skill_magicmushroom_db[i].skill_id;
-					} while (checked++ < checked_max && mushroom_skill_id == 0);
+				if (magic_mushroom_db.size() > 0 && sd && !pc_issit(sd)) { // Can't cast if sit
+					auto mushroom_spell = magic_mushroom_db.begin();
+
+					std::advance(mushroom_spell, rnd() % magic_mushroom_db.size());
+
+					uint16 mushroom_skill_id = mushroom_spell->second->skill_id;
 
 					if (!skill_get_index(mushroom_skill_id))
 						break;
+
+					unit_stop_attack(bl);
+					unit_skillcastcancel(bl, 1);
 
 					switch (skill_get_casttype(mushroom_skill_id)) { // Magic Mushroom skills are buffs or area damage
 					case CAST_GROUND:

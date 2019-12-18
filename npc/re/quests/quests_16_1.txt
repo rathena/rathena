@@ -169,7 +169,7 @@ prontera,150,331,4	script	Royal Guard#ep16_ect01	8W_SOLDIER,4,4,{
 		mes "Let me send a message for the Chamberlain to find you.";
 		close;
 	}
-	npctalk "Welcome to the glorious Prontera Palace in the heart of Rune Midgards!", "Royal Guard#ep16_ect01", bc_self;// Royal Guard#ep16_ect01 only
+	npctalk "Welcome to the glorious Prontera Palace in the heart of Rune-Midgarts!", "Royal Guard#ep16_ect01", bc_self;// Royal Guard#ep16_ect01 only
 	end;
 
 OnTouch:
@@ -294,7 +294,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "There is a secret ritual passed down in the palace, which is held before the official coronation. The heir will be named the king upon passing the ritual.";
 		next;
 		mes "[Belle]";
-		mes "Unless the heavens fall, the ritual will be finished safely, and Rune Midgards will meet the new king.";
+		mes "Unless the heavens fall, the ritual will be finished safely, and Rune-Midgarts will meet the new king.";
 		next;
 		select("What's it got to do with me?");
 		mes "[Belle]";
@@ -323,7 +323,7 @@ prt_cas_q,26,30,3	script	Chamberlain Bell#ep16_m	4_M_RUSMAN1,{
 		mes "Since the late king passed away all of a sudden, the palace has been in a state of disorder.";
 		next;
 		mes "[Belle]";
-		mes "Fortunately, Rune Midgards is supported by the seven royal families.";
+		mes "Fortunately, Rune-Midgarts is supported by the seven royal families.";
 		mes "It is the time to welcome our new king.";
 		next;
 		npctalk "If Morocc hadn't been resurrected...", "", bc_self;
@@ -1937,7 +1937,7 @@ prt_lib,80,79,3	script	Kronecker G. Heine#ep16_1	HIDDEN_WARP_NPC,{
 		mes "Since it was made by crafting a small piece fallen from the heart...";
 		next;
 		mes "[Kronecker]";
-		mes "Should we negotiate with the cooperation in Schwaltzvalt?";
+		mes "Should we negotiate with the cooperation in Schwarzwald?";
 		mes "Wait a minute.";
 		mes ".....";
 		next;
@@ -2123,7 +2123,7 @@ prt_lib,85,82,5	script	Ian Walther#ep16_lib01	HIDDEN_WARP_NPC,{
 		mes "However...";
 		next;
 		mes "[Nyhill]";
-		mes "I am a Heine, one of the seven royal families of Rune Midgards.";
+		mes "I am a Heine, one of the seven royal families of Rune-Midgarts.";
 		mes "I didn't do such a thing on purpose.";
 		next;
 		mes "[Maximilian]";
@@ -4940,7 +4940,7 @@ prt_pri00,57,119,1	script	Bigfoot#ep16wal	1_M_JOBGUIDER,{
 		mes "I heard that you saw a person of the Walther family in a foreign country. Where did you see him? How did you know that he was from the Walther family?";
 		next;
 		mes "[Bigfoot]";
-		mes "Oh, you wanted to know that. As you know, it is rare to see seafarer Walthers in other places of Rune Midgards, except Alberta and Prontera.";
+		mes "Oh, you wanted to know that. As you know, it is rare to see seafarer Walthers in other places of Rune-Midgarts, except Alberta and Prontera.";
 		mes "They are good at hiding their identities other than those who are well known.";
 		next;
 		mes "[Bigfoot]";
@@ -5128,7 +5128,7 @@ veins,156,160,7	script	K#ep16wal	4_M_RASWORD,{
 		mes "In fact I know nothing about his death myself. However, he ^0000cdsent me here with a mission^000000 before incident broke out.";
 		next;
 		mes "[K]";
-		mes "When I was going to go back after completing the mission, he sent me a lot of money and a ^0000cdletter^000000. It said ^0000cdnot to return to Rune Midgards^000000.";
+		mes "When I was going to go back after completing the mission, he sent me a lot of money and a ^0000cdletter^000000. It said ^0000cdnot to return to Rune-Midgarts^000000.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "And then?";
@@ -5586,7 +5586,7 @@ prt_cas_q,19,85,4	script	Kronecker G. Heine#ep16	4_EP16_GRANZ,{
 		mes "Although I feel reluctant to reveal somewhat embarrassing part of the royal family to you,";
 		next;
 		mes "[Kronecker]";
-		mes "It was the royal family of Rune Midgards who let you observe the ritual anyway.";
+		mes "It was the royal family of Rune-Midgarts who let you observe the ritual anyway.";
 		mes "And you were the one who fought the intruders during the incident...";
 		next;
 		mes "[Kronecker]";
@@ -5821,7 +5821,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 		mes "Hello, adventurers. I am honored you have visited the ^0000cdRoegenburg^000000. I am ^0000cdMaximilian Roegenburg^000000.";
 		next;
 		mes "[Maximilian]";
-		mes "We are one of seven royal families that found the kingdom and have work hard for Rune Midgards.";
+		mes "We are one of seven royal families that found the kingdom and have work hard for Rune-Midgarts.";
 		next;
 		mes "[Maximilian]";
 		mes "^0000cdHelmut Roegenburg^000000, the heir of our family, is supposed to participate in the royal assembly. How about seeing him?";
@@ -5861,7 +5861,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 	}
 	if (banquet_roegenburg_quest >= 2 && banquet_roegenburg_quest <= 6) {
 		mes "[Maximilian]";
-		mes "The Roegenburg is proud that we are descents of Wilhelm, the national hero, and contributed to the foundation and development of Rune Midgards Kingdom.";
+		mes "The Roegenburg is proud that we are descents of Wilhelm, the national hero, and contributed to the foundation and development of Rune-Midgarts Kingdom.";
 		next;
 		mes "[Maximilian]";
 		mes "Therefore, we hoped that the children could grow into decent adults, but they were raised without their parents' care and now they tend to behave rudely and act as they want.";
@@ -5909,7 +5909,7 @@ prt_cas_q,90,186,5	script	Maximilian Roegenburg#e	4_EP16_MAX,{
 	}
 	if (banquet_roegenburg_quest == 9) {
 		mes "[Maximilian]";
-		mes "Please bring Helmut. He must be in the ^0000cdcheckpoint near the border with Schwaltzvalt^000000. He is responsible for the patrol party.";
+		mes "Please bring Helmut. He must be in the ^0000cdcheckpoint near the border with Schwarzwald^000000. He is responsible for the patrol party.";
 		mes "Please.";
 		close;
 	}
@@ -6610,7 +6610,7 @@ prt_cas_q,96,184,1	script	Agnes Roegenburg#ep16lu	4_EP16_AGNES,{
 		mes "So I hired very skillful person who can make a dress and accessories, but the key is materials. I guess that you are very experienced and can get what I need.";
 		next;
 		mes "[Agnes]";
-		mes "If I go out to get a dress, I may be the first princess in Rune Midgards who dies for a dress. So would you please save me from this situation?";
+		mes "If I go out to get a dress, I may be the first princess in Rune-Midgarts who dies for a dress. So would you please save me from this situation?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
 		mes "Of course, I'll do my best to help you.";
@@ -6882,7 +6882,7 @@ prt_cas_q,86,180,7	script	Kalbern#ep16lug	4_M_RUSCHILD,{
 		mes "I am ^0000cdKalbern^000000 and a chamberlain of Helmut.";
 		next;
 		mes "[Kalbern]";
-		mes "I served Helmut in a harsh front in the border area. Now I am in Prontera, the capital city of Rune Midgards and I cannot adapt to this situation";
+		mes "I served Helmut in a harsh front in the border area. Now I am in Prontera, the capital city of Rune-Midgarts and I cannot adapt to this situation";
 		next;
 		mes "[Kalbern]";
 		mes "I also lose my nerve when I see noble people and royal family in the palace.";
@@ -6938,7 +6938,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "To carry on the will of Wilhelm Roegenburg, a national hero, we, at the Roegenburg, are making lots of efforts to protect honor, justice and traditions.";
 		next;
 		mes "[Wolf]";
-		mes "Since the foundation of Rune Midgards, lots of people from the Roegenburg have made contribution to the country and this is our pride.";
+		mes "Since the foundation of Rune-Midgarts, lots of people from the Roegenburg have made contribution to the country and this is our pride.";
 		next;
 		mes "[Wolf]";
 		mes "Currently ^0000cdHelmut Roegenburg^000000, who is an excellent candidate for the throne, is participating in the royal assembly. Did you see him?";
@@ -7225,7 +7225,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "[I changed the rumor I got from children to a relatively softer version and told them.]";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "These days everybody talks about the rumor. I think it will spread throughout Rune Midgards as well as Prontera.";
+		mes "These days everybody talks about the rumor. I think it will spread throughout Rune-Midgarts as well as Prontera.";
 		next;
 		mes "[Wolf]";
 		mes "The rumor is....very.... specific and malicious. It must be circulated on purpose by someone who knows the circumstances of my family.";
@@ -7615,7 +7615,7 @@ prt_cas_q,96,186,3	script	Wolf Roegenburg#ep16lug	4_EP16_WOLF,{
 		mes "Then, my job is to bring him.";
 		next;
 		mes "[Maximilian]";
-		mes "Yes. He must be in the ^0000cdcheckpoint near the border with Schwaltzvalt^000000. He is responsible for the patrol party.";
+		mes "Yes. He must be in the ^0000cdcheckpoint near the border with Schwarzwald^000000. He is responsible for the patrol party.";
 		next;
 		mes "[Maximilian]";
 		mes "And when you come back, use this. You can return to Prontera instantly.";
@@ -7836,7 +7836,7 @@ function	script	F_kids_roegenburg_quest	{
 		mes "That is easy. Now you little one. What do you need?";
 		next;
 		mes "[Jin]";
-		mes "I want a history book, which includes all history of Rune Midgards. It is in the royal library and I have never see it.";
+		mes "I want a history book, which includes all history of Rune-Midgarts. It is in the royal library and I have never see it.";
 		next;
 		mes "[Jin]";
 		mes "I know no one around me who can access the palace and book stores do not sell it. Please get it for me.";
@@ -7848,7 +7848,7 @@ function	script	F_kids_roegenburg_quest	{
 		mes "Are you crazy? What do you think I am? Borrow it for me.";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "OK. ^0000cdHunting 33 Majoruroses, Getting 12 pieces of soft sick cloth an borrowing the history book on Rune Midgards from the royal library^000000. I'll be back soon.";
+		mes "OK. ^0000cdHunting 33 Majoruroses, Getting 12 pieces of soft sick cloth an borrowing the history book on Rune-Midgarts from the royal library^000000. I'll be back soon.";
 		next;
 		mes "[Harriet]";
 		mes "I will be waiting for you!";
@@ -8154,7 +8154,7 @@ prontera,271,70,3	script	Kiddo#ep16lug01	4_M_MIKID,{
 			mes "How can you say that! You must have forgotten what you should bring.";
 			next;
 			mes "[Harriet]";
-			mes "First, ^0000cd12 pieces of soft cloth^000000, ^0000cdhistory book on Rune Midgards ^000000";
+			mes "First, ^0000cd12 pieces of soft cloth^000000, ^0000cdhistory book on Rune-Midgarts ^000000";
 			next;
 			mes "[Harriet]";
 			mes "and hmm... ^0000cdkilling of 33 Majoruroses^000000 for Allen.";
@@ -8234,7 +8234,7 @@ prontera,271,68,1	script	Kiddo#ep16lug02	4_M_KID1,5,5,{
 			mes "Hey! You aren't, are you? You don't seem to be a such person. You forget what you should get, didn't you?";
 			next;
 			mes "[Harriet]";
-			mes "First, ^0000cd12 pieces of soft cloth^000000, ^0000cdhistory book on Rune Midgards ^000000";
+			mes "First, ^0000cd12 pieces of soft cloth^000000, ^0000cdhistory book on Rune-Midgarts ^000000";
 			next;
 			mes "[Harriet]";
 			mes "and hmm... ^0000cdkilling of 33 Majoruroses^000000 for Allen.";
@@ -8306,7 +8306,7 @@ prontera,269,69,5	script	Kiddo#ep16lug03	4_F_KID2,{
 			mes "Hey! You aren't, are you? You don't seem to be a such person. You forget what you should get, didn't you?";
 			next;
 			mes "[Harriet]";
-			mes "First, ^0000cd12 pieces of soft cloth^000000, ^0000cdhistory book on Rune Midgards ^000000";
+			mes "First, ^0000cd12 pieces of soft cloth^000000, ^0000cdhistory book on Rune-Midgarts ^000000";
 			next;
 			mes "[Harriet]";
 			mes "and hmm... ^0000cdkilling of 33 Majoruroses^000000 for Allen.";
@@ -8735,7 +8735,7 @@ prt_cas_q,93,74,4	script	Po Richard#EP161GAM	4_M_6THPRIN1,{
 		mes "In fact, it was not your will to come here. I am pretty sure that you must have come here since the his nibs called you. I understand that.";
 		next;
 		mes "[Po Richard]";
-		mes "Although the adventurers may care less about the palace affairs, the Richard family is in charge of the military force of Rune Midgards.";
+		mes "Although the adventurers may care less about the palace affairs, the Richard family is in charge of the military force of Rune-Midgarts.";
 		next;
 		emotion ET_QUESTION;
 		mes "[Po Richard]";
@@ -9292,7 +9292,7 @@ prt_cas,82,240,3	script	Lidion Geoborg#ep16_1	4_M_DOCTOR,{
 		mes "We, the Geoborg family, is one of the seven royal families, but we are the creme de la creme for producing the highest number of kings in the history.";
 		next;
 		mes "[Lidion Geoborg]";
-		mes "In fact, we are settled in Prontera, the center of the Rune Midgards.";
+		mes "In fact, we are settled in Prontera, the center of the Rune-Midgarts.";
 		next;
 		mes "[Lidion Geoborg]";
 		mes "Despite the series of unfortunate events regarding the princes after the death of King Tristan III,";
@@ -10854,7 +10854,7 @@ prt_cas_q,95,9,5	script	Jurgen Wigner#ep16wig	4_M_4THPRIN1,{
 				next;
 				cutin "16jur_sim",0;
 				mes "[Jurgen]";
-				mes "Sorry about the difficult request. I guess I should go there myself. You may be able to see the news that the heir of the Wigner family has been crushed to death by his followers on Daily Rune Midgards tomorrow morning.";
+				mes "Sorry about the difficult request. I guess I should go there myself. You may be able to see the news that the heir of the Wigner family has been crushed to death by his followers on Daily Rune-Midgarts tomorrow morning.";
 				next;
 				mes "[Jurgen]";
 				mes "Or, the poor maid could be hospitalized by tomorrow. Anyway, I understand.";
@@ -11714,7 +11714,7 @@ prt_cas,322,216,5	script	Maid#ep16wig02	1_F_04,{
 		mes "Argh... My arms... Was there anyone else in the room?";
 		next;
 		mes "[Maid]";
-		mes "You must know what kind of family that is. It is the wealthiest family in Rune Midgards. Despite being a temporary residence, the room was decorated with so much care.";
+		mes "You must know what kind of family that is. It is the wealthiest family in Rune-Midgarts. Despite being a temporary residence, the room was decorated with so much care.";
 		next;
 		mes "[Maid]";
 		mes "All the gorgeous pieces of furniture and carpets... I have never seen tiger skin as white and huge as that one in there.";
@@ -12665,13 +12665,13 @@ prt_cas,79,219,7	script	Banquet Hall Guest#ep16_1	4_F_MALAYA,{
 
 prt_cas,81,235,3	script	Banquet Hall Guest#ep16_2	4_F_BRZ_WOMAN,{
 	mes "[Banquet Hall Guest]";
-	mes "The Palace of Rune Midgards is so big and glamourous. It somewhat feels exotic too. It's been a long way, but I am glad to be here.";
+	mes "The Palace of Rune-Midgarts is so big and glamourous. It somewhat feels exotic too. It's been a long way, but I am glad to be here.";
 	close;
 }
 
 prt_cas,87,231,5	script	Banquet Hall Guest#ep16_3	4_M_TWTEAMAN,{
 	mes "[Banquet Hall Guest]";
-	mes "I visited the Palace of Rune Midgards long time ago. It has changed a lot ever since. It has become much more glamourous and magnificent that I really enjoy being guided around this place.";
+	mes "I visited the Palace of Rune-Midgarts long time ago. It has changed a lot ever since. It has become much more glamourous and magnificent that I really enjoy being guided around this place.";
 	close;
 }
 
@@ -13033,10 +13033,10 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
 		mes "What kind of book are you looking for?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
-		mes "A book about history of Rune Midgards.";
+		mes "A book about history of Rune-Midgarts.";
 		next;
 		mes "[Uptight Librarian]";
-		mes "Hm... history of Rune Midgards.";
+		mes "Hm... history of Rune-Midgarts.";
 		mes "Are you going to borrow the book?";
 		next;
 		mes "[" + strcharinfo(0) + "]";
@@ -13165,7 +13165,7 @@ prt_cas,343,67,4	script	Uptight Librarian#ep16l	1_F_LIBRARYGIRL,{
 		next;
 		mes "[Uptight Librarian]";
 		mes "I have been alone these days as no one has visited the library due to the banquet.";
-		mes "History of Rune Midgards.";
+		mes "History of Rune-Midgarts.";
 		next;
 		mes "[Uptight Librarian]";
 		mes "You can borrow it for one week. There is a fee for overdue books, but I was instructed to make you exempt from it";
@@ -13472,7 +13472,7 @@ OnTouch:
 // Exchanges and enchants npc
 prt_cas,165,255,7	script	Commissary#ep16	4_M_JOB_KNIGHT2,{
 	mes "[Commissary Arner]";
-	mes "You can exchange the Honor Marks given by the noble people of Rune Midgards as the token of trust with some valuable items of Prontera.";
+	mes "You can exchange the Honor Marks given by the noble people of Rune-Midgarts as the token of trust with some valuable items of Prontera.";
 	next;
 	switch( select( "Consumables", "Armors", "View item description" ) ) {
 	case 1:
@@ -14939,33 +14939,33 @@ prt_q,74,227,2	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE19	4_M_
 prt_q,45,146,8	duplicate(Dead Villager#EP161DIE01)	Dead Villager#EP161DIE20	4_M_DIEMAN,2,2
 
 prt_q,148,49,0	script	Sign#EP161ETC12	2_BULLETIN_BOARD,{
-	mes "[Prontera, the Capital of Rune Midgards Kingdom]";
+	mes "[Prontera, the Capital of Rune-Midgarts Kingdom]";
 	mes "Welcome to Prontera";
-	mes "in the heart of Rune Midgards!";
+	mes "in the heart of Rune-Midgarts!";
 	mes "Prontera is located";
 	mes "in the center of the continent,";
 	mes "and it is famous as the busy city";
 	mes "of commerce and trade.";
 	next;
-	mes "[Prontera, the Capital of Rune Midgards Kingdom]";
+	mes "[Prontera, the Capital of Rune-Midgarts Kingdom]";
 	mes "There are major buildings including";
 	mes "the Prontera Palace where job change to Crusader is available;";
 	mes "Prontera Cathedral where job changes to Acolyte, Priest are available";
 	mes "and wedding ceremonies are held;";
 	mes "the Knight's Building, etc.";
 	next;
-	mes "[Prontera, the Capital of Rune Midgards Kingdom]";
+	mes "[Prontera, the Capital of Rune-Midgarts Kingdom]";
 	mes "There are many people and stores";
 	mes "as well so make sure to look around.";
 	next;
-	mes "[Prontera, the Capital of Rune Midgards Kingdom]";
+	mes "[Prontera, the Capital of Rune-Midgarts Kingdom]";
 	mes "Also, in the south east of the central fountain,";
 	mes "there is the historic Quadro Blacksmith's Workshop.";
 	mes "Drop by the place if you want to get";
 	mes "your equipment";
 	mes "repaired.";
 	next;
-	mes "[Prontera, the Capital of Rune Midgards Kingdom]";
+	mes "[Prontera, the Capital of Rune-Midgarts Kingdom]";
 	mes "There is Izlude in the south east, Payon in the south, Geffen in the west and Al De Baran in the north.";
 	close;
 }
@@ -15696,7 +15696,7 @@ prt_pri00,51,116,8	script	Ellond Lawrence#EP161ER	4_M_CRU,1,1,{
 			mes "Nothing particular. What you can imagine about the dungeon of the kingdom is all there is.";
 			next;
 			mes "[Ellond Lawrence]";
-			mes "I was told it was made to lock up the menaces to peace and safety of Rune Midgards.";
+			mes "I was told it was made to lock up the menaces to peace and safety of Rune-Midgarts.";
 			next;
 			mes "[Ellond Lawrence]";
 			mes "Basically, it's strongly made, but...";
@@ -15718,7 +15718,7 @@ prt_pri00,51,116,8	script	Ellond Lawrence#EP161ER	4_M_CRU,1,1,{
 			mes "This facility is so old and there is no document written about it. We just pass down what people say about it.";
 			next;
 			mes "[Ellond Lawrence]";
-			mes "What's certain is that they were the culprit of the chaos created in Rune Midgards in the past.";
+			mes "What's certain is that they were the culprit of the chaos created in Rune-Midgarts in the past.";
 			next;
 			mes "[Ellond Lawrence]";
 			mes "Anyway, there is no document left about them ? for what they were charged or sentences confirmed against them.";
