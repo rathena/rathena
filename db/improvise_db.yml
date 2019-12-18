@@ -32,8 +32,6 @@ Header:
 
 Footer:
   Imports:
-  - Path: db/pre-re/improvise_db.yml
-    Mode: Prerenewal
   - Path: db/re/improvise_db.yml
     Mode: Renewal
   - Path: db/import/improvise_db.yml

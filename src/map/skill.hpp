@@ -390,8 +390,6 @@ public:
 	uint64 parseBodyNode(const YAML::Node& node);
 };
 
-extern ImprovisedSongDatabase improvised_song_db;
-
 void do_init_skill(void);
 void do_final_skill(void);
 

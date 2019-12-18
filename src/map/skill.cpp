@@ -21492,11 +21492,11 @@ uint64 ImprovisedSongDatabase::parseBodyNode(const YAML::Node &node) {
 	if (this->nodeExists(node, "Probability")) {
 		uint16 probability;
 
-		if (!this->asUInt16(node, "Probability", probability))
+		if (!this->asUInt16Rate(node, "Probability", probability))
 			return 0;
 
 		if (!probability) {
-			this->invalidWarning(node["Probability"], "probability has to be 1 or higher.\n");
+			this->invalidWarning(node["Probability"], "Probability has to be within the range of 1~10000, skipping.\n");
 			return 0;
 		}
 
