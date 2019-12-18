@@ -322,7 +322,7 @@ niflheim,181,173,5	script	Chef Candycon#2013HE	796,{
 			mes "Speaking like this is way better to scare people...heww..however, I can't bare it as it is too stuffy.";
 			next;
 			mes "[Chef Candycon]";
-			mes "Anyway! It won't be delayed if those pumpkins didn't escape to Midgarts.";
+			mes "Anyway! It won't be delayed if those pumpkins didn't escape to Midgard.";
 			next;
 			mes "[Chef Candycon]";
 			mes "Obviously, we are dead so we are pretty weak to the sun. We would be a pile of ash if we searched during daytime.";

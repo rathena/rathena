@@ -996,10 +996,10 @@ function	script	F_Tower_Monster	{
 		areamonster .@map$,9,9,19,45,"Skeggiold",1754,10,.@label$;
 		break;
 	case 97:
-		areamonster .@map$,93,9,103,45,"Incarnation of Morroc",1918,5,.@label$;
-		areamonster .@map$,93,9,103,45,"Incarnation of Morroc",1919,5,.@label$;
-		areamonster .@map$,93,9,103,45,"Incarnation of Morroc",1920,5,.@label$;
-		areamonster .@map$,93,9,103,45,"Incarnation of Morroc",1921,5,.@label$;
+		areamonster .@map$,93,9,103,45,"Incarnation of Morocc",1918,5,.@label$;
+		areamonster .@map$,93,9,103,45,"Incarnation of Morocc",1919,5,.@label$;
+		areamonster .@map$,93,9,103,45,"Incarnation of Morocc",1920,5,.@label$;
+		areamonster .@map$,93,9,103,45,"Incarnation of Morocc",1921,5,.@label$;
 		break;
 	case 98:
 		areamonster .@map$,181,9,191,45,"Kathryne Keyron",1639,2,.@label$;
@@ -1025,13 +1025,13 @@ function	script	F_Tower_Monster	{
 			else if (.@mob_ran == 6) 
 				areamonster .@map$,267,9,277,45,"Cecil Damon",1638,2,.@label$;
 			else if (.@mob_ran == 7) 
-				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1918,5,.@label$;
+				areamonster .@map$,267,9,277,45,"Incarnation of Morocc",1918,5,.@label$;
 			else if (.@mob_ran == 8) 
-				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1919,5,.@label$;
+				areamonster .@map$,267,9,277,45,"Incarnation of Morocc",1919,5,.@label$;
 			else if (.@mob_ran == 9) 
-				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1920,5,.@label$;
+				areamonster .@map$,267,9,277,45,"Incarnation of Morocc",1920,5,.@label$;
 			else if (.@mob_ran == 10) 
-				areamonster .@map$,267,9,277,45,"Incarnation of Morroc",1921,5,.@label$;
+				areamonster .@map$,267,9,277,45,"Incarnation of Morocc",1921,5,.@label$;
 			else if (.@mob_ran == 11) 
 				areamonster .@map$,267,9,277,45,"Valkyrie",1765,5,.@label$;
 			else if (.@mob_ran == 12) 
