@@ -680,7 +680,7 @@ static bool skill_parse_row_magicmushroomdb(char* split[], int column, int curre
 }
 
 // Copied and adjusted from skill.cpp
-static bool skill_parse_row_spellbookdb(char* split[], int columns, int current) {
+static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
 {
 	uint16 skill_id = atoi(split[0]);
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
