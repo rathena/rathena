@@ -4,6 +4,8 @@
 #ifndef SKILL_HPP
 #define SKILL_HPP
 
+#include <array>
+
 #include "../common/cbasetypes.hpp"
 #include "../common/database.hpp"
 #include "../common/db.hpp"
@@ -26,7 +28,6 @@ struct status_change_entry;
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
-#define MAX_SKILL_ABRA_DB		160 /// Max Skill list of Abracadabra DB
 #define MAX_SKILL_IMPROVISE_DB 30 /// Max Skill for Improvise
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
@@ -371,11 +372,18 @@ extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 /// Abracadabra database
 struct s_skill_abra_db {
 	uint16 skill_id; /// Skill ID
-	char name[SKILL_NAME_LENGTH]; /// Shouted skill name
-	int per[MAX_SKILL_LEVEL]; /// Probability summoned
+	std::array<uint16, MAX_SKILL_LEVEL> per; /// Probability summoned
 };
-extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
-extern unsigned short skill_abra_count;
+
+class AbraDatabase : public TypesafeYamlDatabase<uint16, s_skill_abra_db> {
+public:
+	AbraDatabase() : TypesafeYamlDatabase("ABRA_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
 
 void do_init_skill(void);
 void do_final_skill(void);
