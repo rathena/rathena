@@ -960,8 +960,6 @@ inline bool map_flag_gvg2_no_te(int16 m) {
 }
 
 extern char motd_txt[];
-extern char help_txt[];
-extern char help2_txt[];
 extern char charhelp_txt[];
 extern char channel_conf[];
 
