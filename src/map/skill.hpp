@@ -2182,6 +2182,8 @@ public:
 	std::shared_ptr<s_skill_spellbook_db> findBook(int32 nameid);
 };
 
+extern ReadingSpellbookDatabase reading_spellbook_db;
+
 void skill_spellbook(struct map_session_data *sd, unsigned short nameid);
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 
