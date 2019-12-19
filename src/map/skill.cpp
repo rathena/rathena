@@ -6412,20 +6412,23 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case SA_ABRACADABRA:
-		if (abra_db.size() == 0) {
+		if (abra_db.empty()) {
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 			break;
 		}
 		else {
 			int abra_skill_id = 0, abra_skill_lv, checked = 0, checked_max = abra_db.size() * 3;
-			auto abra_spell = abra_db.begin();
 
 			do {
-				std::advance(abra_spell, rnd() % abra_db.size());
+				auto abra_spell = abra_db.random();
 
-				abra_skill_id = abra_spell->second->skill_id;
+				abra_skill_id = abra_spell->skill_id;
 				abra_skill_lv = min(skill_lv, skill_get_max(abra_skill_id));
-			} while (checked++ < checked_max && rnd() % 10000 >= abra_spell->second->per[max(skill_lv - 1, 0)]);
+
+				if( rnd() % 10000 < abra_spell->per[max(skill_lv - 1, 0)] ){
+					break;
+				}
+			} while (checked++ < checked_max);
 
 			if (!skill_get_index(abra_skill_id))
 				break;
@@ -21679,11 +21682,6 @@ uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 			if (!this->asUInt16Rate(probNode, "Probability", probability))
 				return 0;
 
-				if (!probability) {
-					this->invalidWarning(probNode["Probability"], "Probability has to be within the range of 1~10000, skipping.\n");
-					return 0;
-				}
-
 			abra->per.fill(probability);
 		} else {
 			abra->per.fill(0);
@@ -21701,11 +21699,6 @@ uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 
 				if (!this->asUInt16Rate(it, "Probability", probability))
 					continue;
-
-				if (!probability) {
-					this->invalidWarning(it["Probability"], "Probability has to be within the range of 1~10000, skipping.\n");
-					return 0;
-				}
 
 				abra->per[skill_lv - 1] = probability;
 			}
