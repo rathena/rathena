@@ -766,7 +766,7 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 
 	body << YAML::BeginMap;
 	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
-	body << YAML::Key << "Rate" << YAML::Value << atoi(split[1]) / 10;
+	body << YAML::Key << "Probability" << YAML::Value << atoi(split[1]) / 10;
 	body << YAML::EndMap;
 
 	return true;
