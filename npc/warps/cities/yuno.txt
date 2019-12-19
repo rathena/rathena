@@ -89,6 +89,8 @@ yuno_in02,82,14,0	warp	yun61	1,1,yuno_in05,192,194
 yuno_in05,196,194,0	warp	yun62	1,1,yuno_in02,85,14
 yuno,195,87,0	warp	yun63	1,1,yuno_in04,186,28
 yuno_in04,192,28,0	warp	yun64	1,1,yuno,198,87
+yuno,245,147,0	warp	yun65	1,1,yuno_in01,101,88
+yuno_in01,101,85,0	warp	yun66	1,1,yuno,245,144
 
 // Yuno In05 (Entering Random Warps) -------------------------------------------
 yuno_in05,153,141,0	script	#yun63	45,1,1,{
