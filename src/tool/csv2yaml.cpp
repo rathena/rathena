@@ -721,7 +721,7 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
 	if (skill_name == nullptr) {
-		ShowError("Skill name for Abra skill ID &hu is not known.\n", skill_id);
+		ShowError("Skill name for Abra skill ID %hu is not known.\n", skill_id);
 		return false;
 	}
 
@@ -760,7 +760,7 @@ static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
 	if (skill_name == nullptr) {
-		ShowError("Skill name for Improvised Song skill ID &hu is not known.\n", skill_id);
+		ShowError("Skill name for Improvised Song skill ID %hu is not known.\n", skill_id);
 		return false;
 	}
 
