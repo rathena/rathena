@@ -10209,19 +10209,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WM_RANDOMIZESPELL:
-		if (improvised_song_db.size() == 0) {
+		if (improvised_song_db.empty()) {
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 			break;
 		}
 		else {
 			int improv_skill_id = 0, improv_skill_lv, checked = 0, checked_max = improvised_song_db.size() * 3;
-			auto improvise_spell = improvised_song_db.begin();
 
 			do {
-				std::advance(improvise_spell, rnd() % improvised_song_db.size());
+				auto improvise_spell = improvised_song_db.random();
 
-				improv_skill_id = improvise_spell->second->skill_id;
-			} while (checked++ < checked_max && rnd() % 10000 >= improvise_spell->second->per);
+				improv_skill_id = improvise_spell->skill_id;
+
+				if( rnd() % 10000 >= improvise_spell->per ){
+					break;
+				}
+			} while (checked++ < checked_max);
 
 			if (!skill_get_index(improv_skill_id)) {
 				if (sd)
@@ -21497,11 +21500,6 @@ uint64 ImprovisedSongDatabase::parseBodyNode(const YAML::Node &node) {
 
 		if (!this->asUInt16Rate(node, "Probability", probability))
 			return 0;
-
-		if (!probability) {
-			this->invalidWarning(node["Probability"], "Probability has to be within the range of 1~10000, skipping.\n");
-			return 0;
-		}
 
 		improvise->per = probability;
 	}
