@@ -21417,13 +21417,14 @@ static bool skill_parse_row_createarrowdb(char* split[], int columns, int curren
 	return true;
 }
 
-/**
- * Parses the Reading Spellbook Database
- */
 const std::string ReadingSpellbookDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/spellbook_db.yml";
 }
-
+/**
+ * Reads and parses an entry from the spellbook_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
 uint64 ReadingSpellbookDatabase::parseBodyNode(const YAML::Node &node) {
 	std::string skill_name;
 
@@ -21542,10 +21543,10 @@ const std::string MagicMushroomDatabase::getDefaultLocation() {
 }
 
 /**
-* Reads and parses an entry from the magicmushroom_db.
-* @param node: YAML node containing the entry.
-* @return count of successfully parsed rows
-*/
+ * Reads and parses an entry from the magicmushroom_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
 uint64 MagicMushroomDatabase::parseBodyNode(const YAML::Node &node) {
 	std::string skill_name;
 
@@ -21640,10 +21641,10 @@ const std::string AbraDatabase::getDefaultLocation() {
 }
 
 /**
-* Reads and parses an entry from the abra_db.
-* @param node: YAML node containing the entry.
-* @return count of successfully parsed rows
-*/
+ * Reads and parses an entry from the abra_db.
+ * @param node: YAML node containing the entry.
+ * @return count of successfully parsed rows
+ */
 uint64 AbraDatabase::parseBodyNode(const YAML::Node &node) {
 	std::string skill_name;
 
