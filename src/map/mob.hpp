@@ -255,8 +255,6 @@ public:
 	uint64 parseBodyNode(const YAML::Node& node);
 };
 
-extern MobAvailDatabase mob_avail_db;
-
 enum e_mob_skill_target {
 	MST_TARGET	=	0,
 	MST_RANDOM,	//Random Target!
