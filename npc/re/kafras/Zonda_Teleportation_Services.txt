@@ -9,7 +9,7 @@
 -	script	ZondaTeleportationServices	HIDDEN_NPC,{
 	cutin "zonda_do01", 2;
 	mes "[Zonda Employee]";
-	mes "Bem-vind" + ((Sex) ? "o":"a") + ".";
+	mes "Welcome.";
 	mes "Our team is always working to exceed your expectations regarding quality of service.";
 	mes "Please tell me your destiny?";
 	next;
