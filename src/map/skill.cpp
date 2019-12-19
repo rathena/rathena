@@ -21488,7 +21488,7 @@ uint64 ImprovisedSongDatabase::parseBodyNode(const YAML::Node &node) {
 	bool exists = improvise != nullptr;
 
 	if (!exists) {
-		if (!this->nodeExists(node, "Probability"))
+		if (!this->nodesExist(node, { "Probability" }))
 			return 0;
 
 		improvise = std::make_shared<s_skill_improvise_db>();
