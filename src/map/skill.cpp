@@ -10232,7 +10232,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 
-			improv_skill_lv = 4 + skill_lv;
+			improv_skill_lv = min(4 + skill_lv, skill_get_max(improv_skill_id));
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 
 			if( sd ) {
