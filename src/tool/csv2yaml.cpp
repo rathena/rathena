@@ -156,7 +156,7 @@ void finalizeBody(void) {
 }
 
 template<typename Func>
-bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, const std::string& rename, Func lambda ){
+bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
 		const std::string name_ext = name + ".txt";
 		const std::string from = path + "/" + name_ext;
@@ -225,19 +225,19 @@ int do_init( int argc, char** argv ){
 		path_db_import
 	};
 
-	if( !process( "GUILD_SKILL_TREE_DB", 1, root_paths, "guild_skill_tree", "", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "GUILD_SKILL_TREE_DB", 1, root_paths, "guild_skill_tree", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return sv_readdb( path.c_str(), name_ext.c_str(), ',', 2 + MAX_GUILD_SKILL_REQUIRE * 2, 2 + MAX_GUILD_SKILL_REQUIRE * 2, -1, &guild_read_guildskill_tree_db, false );
 	} ) ){
 		return 0;
 	}
 
-	if( !process( "PET_DB", 1, root_paths, "pet_db", "", []( const std::string& path, const std::string& name_ext ) -> bool {
+	if( !process( "PET_DB", 1, root_paths, "pet_db", []( const std::string& path, const std::string& name_ext ) -> bool {
 		return pet_read_db( ( path + name_ext ).c_str() );
 	} ) ){
 		return 0;
 	}
 
-	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", "", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, -1, &skill_parse_row_magicmushroomdb, false);
 	})) {
 		return 0;
@@ -249,9 +249,9 @@ int do_init( int argc, char** argv ){
 		return 0;
 	}
 
-	if (!process("IMPROVISED_SONG_DB", 1, root_paths, "skill_improvise_db", "improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
+	if (!process("IMPROVISED_SONG_DB", 1, root_paths, "skill_improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2, -1, &skill_parse_row_improvisedb, false);
-	})) {
+	}, "improvise_db")) {
 		return 0;
 	}
 
