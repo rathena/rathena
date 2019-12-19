@@ -21882,6 +21882,7 @@ static void skill_readdb(void)
 	}
 
 	abra_db.load();
+	improvised_song_db.load();
 	magic_mushroom_db.load();
 	
 	skill_init_unit_layout();
