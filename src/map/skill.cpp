@@ -19916,7 +19916,7 @@ int skill_magicdecoy(struct map_session_data *sd, unsigned short nameid) {
 void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
 	nullpo_retv(sd);
 
-	if (reading_spellbook_db.size() == 0)
+	if (reading_spellbook_db.empty())
 		return;
 
 	int i;
@@ -19925,11 +19925,16 @@ void skill_spellbook(struct map_session_data *sd, unsigned short nameid) {
 	status_change_end(&sd->bl, SC_STOP, INVALID_TIMER);
 
 	for (i = SC_SPELLBOOK1; i <= SC_MAXSPELLBOOK; i++) {
-		if (sc && !sc->data[i])
+		// No further checks needed
+		if( !sc ){
+			break;
+		}
+
+		if( !sc->data[i] )
 			break;
 	}
 
-	if (i > SC_MAXSPELLBOOK) {
+	if( i > SC_MAXSPELLBOOK ) {
 		clif_skill_fail(sd, WL_READING_SB, USESKILL_FAIL_SPELLBOOK_READING, 0);
 		return;
 	}
