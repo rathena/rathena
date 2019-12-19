@@ -28,7 +28,6 @@ struct status_change_entry;
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
-#define MAX_SKILL_IMPROVISE_DB 30 /// Max Skill for Improvise
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
@@ -378,6 +377,20 @@ struct s_skill_abra_db {
 class AbraDatabase : public TypesafeYamlDatabase<uint16, s_skill_abra_db> {
 public:
 	AbraDatabase() : TypesafeYamlDatabase("ABRA_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+struct s_skill_improvise_db {
+	uint16 skill_id, per;
+};
+
+class ImprovisedSongDatabase : public TypesafeYamlDatabase<uint16, s_skill_improvise_db> {
+public:
+	ImprovisedSongDatabase() : TypesafeYamlDatabase("IMPROVISED_SONG_DB", 1) {
 
 	}
 
