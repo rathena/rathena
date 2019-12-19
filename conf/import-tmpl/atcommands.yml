@@ -18,6 +18,15 @@
 ###########################################################################
 # Atcommand Database
 ###########################################################################
+#
+# Atcommand Settings
+#
+###########################################################################
+# - Command                  Command name.
+#   Aliases:                 Aliases for the command. (Optional)
+#     - <AliasName>
+#   Help                     Help message for the command. (Optional)
+###########################################################################
 
 Header:
   Type: ATCOMMAND_DB
