@@ -87,8 +87,6 @@ yuno_in01,88,36,0	warp	yun59	1,1,yuno_in01,173,34
 yuno_in01,176,34,0	warp	yun60	1,1,yuno_in01,91,36
 yuno_in02,82,14,0	warp	yun61	1,1,yuno_in05,192,194
 yuno_in05,196,194,0	warp	yun62	1,1,yuno_in02,85,14
-yuno,195,87,0	warp	yun63	1,1,yuno_in04,186,28
-yuno_in04,192,28,0	warp	yun64	1,1,yuno,198,87
 yuno,245,147,0	warp	yun65	1,1,yuno_in01,101,88
 yuno_in01,101,85,0	warp	yun66	1,1,yuno,245,144
 
@@ -191,6 +189,10 @@ yuno_in05,47,186,0	script	#yun75	45,1,1,{
 // Yuno In05 (Destination - Escaped Random Warps) ------------------------------
 yuno_in05,31,167,0	warp	yun76	1,1,yuno_in05,50,85
 yuno_in05,50,88,0	warp	yun77	1,1,yuno_in02,85,14
+
+// Yuno In04 (Destination - Room) ------------------------------
+yuno,195,87,0	warp	yun78 	1,1,yuno_in04,186,28
+yuno_in04,192,28,0	warp	yun79	1,1,yuno,198,87
 
 // Yuno Government Buildings ---------------------------------------------------
 yuno_pre,52,22,0	warp	yungvn01	1,1,yuno_pre,37,23
