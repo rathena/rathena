@@ -2520,7 +2520,7 @@ static void npc_parsename(struct npc_data* nd, const char* name, const char* sta
  * Support for using Constants in place of NPC View IDs.
  */
 int npc_parseview(const char* w4, const char* start, const char* buffer, const char* filepath) {
-	int val = JT_FAKENPC, i = 0;
+	int i = 0;
 	char viewid[1024];	// Max size of name from const.txt, see read_constdb.
 
 	// Extract view ID / constant
@@ -2533,34 +2533,19 @@ int npc_parseview(const char* w4, const char* start, const char* buffer, const c
 
 	safestrncpy(viewid, w4, i+=1);
 
+	char *pid;
+	int val = strtol(viewid, &pid, 0);
+
 	// Check if view id is not an ID (only numbers).
-	if(!npc_viewisid(viewid)) {
+	if (pid != nullptr && *pid != '\0') {
 		// Check if constant exists and get its value.
 		if(!script_get_constant(viewid, &val)) {
 			ShowWarning("npc_parseview: Invalid NPC constant '%s' specified in file '%s', line'%d'. Defaulting to INVISIBLE. \n", viewid, filepath, strline(buffer,start-buffer));
 			val = JT_INVISIBLE;
 		}
-	} else {
-		// NPC has an ID specified for view id.
-		val = atoi(w4);
 	}
 
 	return val;
-}
-
-/**
- * Checks if given view is an ID or constant.
- */
-bool npc_viewisid(const char * viewid)
-{
-	if(atoi(viewid) != JT_FAKENPC) {
-		// Loop through view, looking for non-numeric character.
-		while (*viewid) {
-			if (ISDIGIT(*viewid++) == 0) return false;
-		}
-	}
-
-	return true;
 }
 
 /**

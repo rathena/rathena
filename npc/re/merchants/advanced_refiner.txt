@@ -16,7 +16,7 @@ malangdo,221,174,6	script	Holink#mal_cash	559,{
 	mes "[Holink]";
 	mes "I am the meow~ Blacksmith Holink~";
 	mes "Master of refining, Holink~";
-	mes "I am the special cat Holink who learned from Morroc~";
+	mes "I am the special cat Holink who learned from Morocc~";
 	mes "My daughter is so proud of me, Holink~";
 	mes "What should Holink~ refine today?";
 	next;

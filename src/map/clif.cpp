@@ -5999,11 +5999,6 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 
 	nullpo_retv(bl);
 
-#if PACKETVER < 20151104
-	if (type == EFST_WEAPONPROPERTY)
-		type = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
-#endif
-
 #if PACKETVER >= 20120618
 	if (flag && battle_config.display_status_timers)
 		WBUFW(buf,0) = 0x983;
@@ -9924,6 +9919,8 @@ void clif_viewequip_ack(struct map_session_data* sd, struct map_session_data* ts
 	for(i=0,n=0; i < MAX_INVENTORY; i++)
 	{
 		if (tsd->inventory.u.items_inventory[i].nameid <= 0 || tsd->inventory_data[i] == NULL)	// Item doesn't exist
+			continue;
+		if (!tsd->inventory.u.items_inventory[i].equip)
 			continue;
 		if (!itemdb_isequip2(tsd->inventory_data[i])) // Is not equippable
 			continue;
@@ -16698,7 +16695,9 @@ void clif_parse_ViewPlayerEquip(int fd, struct map_session_data* sd)
 	if (!tsd)
 		return;
 
-	if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
+	if (sd->bl.m != tsd->bl.m)
+		return;
+	else if( tsd->status.show_equip || pc_has_permission(sd, PC_PERM_VIEW_EQUIPMENT) )
 		clif_viewequip_ack(sd, tsd);
 	else
 		clif_msg(sd, VIEW_EQUIP_FAIL);
@@ -17057,9 +17056,12 @@ void clif_quest_update_status(struct map_session_data *sd, int quest_id, bool ac
 ///     1 = orange
 ///     2 = green
 ///     3 = purple
-void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, short effect, short color)
+void clif_quest_show_event(struct map_session_data *sd, struct block_list *bl, e_questinfo_types effect, e_questinfo_markcolor color)
 {
 #if PACKETVER >= 20090218
+	nullpo_retv(sd);
+	nullpo_retv(bl);
+
 	int fd = sd->fd;
 
 	WFIFOHEAD(fd, packet_len(0x446));
@@ -18380,7 +18382,7 @@ int clif_spellbook_list(struct map_session_data *sd)
 
 	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ )
 	{
-		if( itemdb_is_spellbook2(sd->inventory.u.items_inventory[i].nameid) )
+		if( reading_spellbook_db.findBook(sd->inventory.u.items_inventory[i].nameid) )
 		{
 			WFIFOW(fd, c * 2 + 4) = sd->inventory.u.items_inventory[i].nameid;
 			c++;

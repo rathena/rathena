@@ -322,6 +322,7 @@ void quest_update_objective(TBL_PC *sd, int mob_id)
 //				intif_broadcast_obtain_special_item(sd, dropitem->nameid, dropitem->mob_id, ITEMOBTAIN_TYPE_MONSTER_ITEM);
 		}
 	}
+	pc_show_questinfo(sd);
 }
 
 /**

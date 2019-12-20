@@ -1635,19 +1635,6 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 }
 
 /**
-* Check if item is available in spellbook_db or not
-* @param nameid
-* @return True if item is spellbook; False if not
-*/
-bool itemdb_is_spellbook2(unsigned short nameid) {
-	unsigned char i;
-	if (!nameid || !itemdb_exists(nameid) || !skill_spellbook_count)
-		return false;
-	ARR_FIND(0, MAX_SKILL_SPELLBOOK_DB, i, skill_spellbook_db[i].nameid == nameid);
-	return i == MAX_SKILL_SPELLBOOK_DB ? false : true;
-}
-
-/**
 * Retrieves random option data
 */
 struct s_random_opt_data* itemdb_randomopt_exists(short id) {

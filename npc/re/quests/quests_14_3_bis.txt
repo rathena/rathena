@@ -244,12 +244,7 @@ moro_vol,98,107,3	script	Magic Scholar#143avt01	4_M_FAIRYAVANT,{
 	end;
 
 OnInit:
-	questinfo 7583, QTYPE_QUEST2;
-	setquestinfo_req 7583,7581,1;
-	setquestinfo_req 7583,7584,0;
-	setquestinfo_level 7583,140,175;
-	// 3759 is probably ep14_2_mylord
-	// SetQuestItem 7583 3759 33 "<"
+	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 140 && ep14_2_mylord > 33 && !isbegin_quest(7583) && !isbegin_quest(7584) && isbegin_quest(7581) == 1" );
 	end;
 }
 
@@ -414,12 +409,7 @@ moro_vol,95,108,7	script	Hishieh#143hisie01	4_M_FARIY_HISIE,{
 	end;
 
 OnInit:
-	questinfo 7595, QTYPE_QUEST2;
-	setquestinfo_req 7595,7593,1;
-	setquestinfo_req 7595,7600,0;
-	setquestinfo_level 7595,160,175;
-	// 3759 = [ep14_2_mylord]
-	// SetQuestItem 7595 3759 33 "<"
+	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 160 && ep14_2_mylord > 33 && !isbegin_quest(7595) && !isbegin_quest(7600) && isbegin_quest(7593) == 1" );
 	end;
 }
 
@@ -603,16 +593,8 @@ moro_vol,108,88,5	script	Commander Hibba Agip#14301	4_M_REDSWORD,{
 	end;
 
 OnInit:
-	questinfo 7593, QTYPE_QUEST2;
-	setquestinfo_req 7593,7597,0;
-	setquestinfo_req 7593,7598,0;
-	setquestinfo_level 7593,160,175;
-	// 3789 = [ep4_3_mockill]
-	// SetQuestItem 7593 3789 0 "<"
-
-	questinfo 7598, QTYPE_QUEST2;
-	setquestinfo_req 7598,7593,0;
-	setquestinfo_req 7598,7597,1;
+	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 160 && ep4_3_mockill > 0 && !isbegin_quest(7593) && !isbegin_quest(7597) && !isbegin_quest(7598)" );
+	questinfo( QTYPE_QUEST2, QMARK_NONE, "!isbegin_quest(7598) && !isbegin_quest(7593) && isbegin_quest(7597) == 1" );
 	end;
 }
 
@@ -700,10 +682,7 @@ moro_vol,110,90,3	script	Adjutant Abidal#14302	4_M_SAGE_C,{
 	end;
 
 OnInit:
-	questinfo 7594, QTYPE_QUEST2;
-	setquestinfo_req 7594,7593,1;
-	setquestinfo_req 7594,7599,0;
-	setquestinfo_level 7594,160,175;
+	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 160 && !isbegin_quest(7594) && !isbegin_quest(7599) && isbegin_quest(7593) == 1" );
 	end;
 }
 
@@ -795,9 +774,7 @@ moro_vol,111,87,1	script	 Instructor Igrid#14303	4_M_CRU,{
 	end;
 
 OnInit:
-	questinfo 7581, QTYPE_QUEST2, 0;
-	setquestinfo_req 7581,7582,0;
-	setquestinfo_level 7581,140,175;
+	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 140 && !isbegin_quest(7581) && !isbegin_quest(7582)" );
 	end;
 }
 
@@ -1038,16 +1015,11 @@ moro_vol,136,84,3	script	Jeruth Hesranta#ep143	4_MAN_JERUTOO,{
 
 OnInit:
 /* officially disabled
-	questinfo 1, QTYPE_QUEST2;
-	setquestinfo_level 1,140,160;
+	questinfo QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 140 && BaseLevel <= 160";
+	// 3650 = [ep13_3_secret]
 	SetQuestItem 1 3650 24
 */
-
-	questinfo 7579, QTYPE_QUEST2;
-	setquestinfo_req 7579,7580,0;
-	setquestinfo_level 7579,140,160;
-	// 3650 = [ep13_3_secret]
-	// SetQuestItem 7579 3650 26 "<"
+	questinfo( QTYPE_QUEST2, QMARK_NONE, "BaseLevel >= 140 && BaseLevel <= 160 && ep13_3_secret > 26 && !isbegin_quest(7579) && !isbegin_quest(7580)" );
 	end;
 }
 
