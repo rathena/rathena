@@ -70,6 +70,9 @@ int getch( void ){
 static bool guild_read_guildskill_tree_db( char* split[], int columns, int current );
 static size_t pet_read_db( const char* file );
 static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current);
+static bool skill_parse_row_abradb(char* split[], int columns, int current);
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current);
+static bool skill_parse_row_spellbookdb(char* split[], int columns, int current);
 static bool mob_readdb_mobavail(char *str[], int columns, int current);
 
 // Constants for conversion
@@ -156,11 +159,11 @@ void finalizeBody(void) {
 }
 
 template<typename Func>
-bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
+bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
 		const std::string name_ext = name + ".txt";
 		const std::string from = path + "/" + name_ext;
-		const std::string to = path + "/" + name + ".yml";
+		const std::string to = path + "/" + (rename.size() > 0 ? rename : name) + ".yml";
 
 		if( fileExists( from ) ){
 			if( !askConfirmation( "Found the file \"%s\", which requires migration to yml.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
@@ -182,7 +185,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				return false;
 			}
 
-			prepareHeader(out, type, version, name);
+			prepareHeader(out, type, version, (rename.size() > 0 ? rename : name));
 			prepareBody();
 
 			if( !lambda( path, name_ext ) ){
@@ -196,7 +199,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			out << "\n";
 			out.close();
 			
-			// TODO: do you want to delete/rename?
+			// TODO: do you want to delete?
 		}
 	}
 
@@ -240,6 +243,24 @@ int do_init( int argc, char** argv ){
 
 	if (!process("MAGIC_MUSHROOM_DB", 1, root_paths, "magicmushroom_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 1, 1, -1, &skill_parse_row_magicmushroomdb, false);
+	})) {
+		return 0;
+	}
+
+	if (!process("ABRA_DB", 1, root_paths, "abra_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_abradb, false);
+	})) {
+		return 0;
+	}
+
+	if (!process("IMPROVISED_SONG_DB", 1, root_paths, "skill_improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2, -1, &skill_parse_row_improvisedb, false);
+	}, "improvise_db")) {
+		return 0;
+	}
+
+	if (!process("READING_SPELLBOOK_DB", 1, root_paths, "spellbook_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_spellbookdb, false);
 	})) {
 		return 0;
 	}
@@ -436,6 +457,34 @@ static bool parse_skill_constants( char* split[], int columns, int current ){
 	aegis_skillnames[skill_id] = std::string( name );
 
 	return true;
+}
+
+/**
+ * Split the string with ':' as separator and put each value for a skilllv
+ * if no more value found put the last value to fill the array
+ * @param str: String to split
+ * @param val: Array of MAX_SKILL_LEVEL to put value into
+ * @return 0:error, x:number of value assign (should be MAX_SKILL_LEVEL)
+ */
+int skill_split_atoi(char *str, int *val) {
+	int i;
+
+	for (i = 0; i < MAX_SKILL_LEVEL; i++) {
+		if (!str)
+			break;
+		val[i] = atoi(str);
+		str = strchr(str, ':');
+		if (str)
+			*str++ = 0;
+	}
+
+	if (i == 0) // No data found.
+		return 0;
+
+	if (i == 1) // Single value, have the whole range have the same value.
+		return 1;
+
+	return i;
 }
 
 // Implementation of the conversion functions
@@ -679,6 +728,94 @@ static bool skill_parse_row_magicmushroomdb(char* split[], int column, int curre
 
 	body << YAML::BeginMap;
 	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_abradb(char* split[], int columns, int current)
+{
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Abra skill ID %hu is not known.\n", skill_id);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+
+	int arr[MAX_SKILL_LEVEL];
+	int arr_size = skill_split_atoi(split[2], arr);
+
+	if (arr_size == 1) {
+		if (arr[0] != 500)
+			body << YAML::Key << "Probability" << YAML::Value << arr[0];
+	} else {
+		body << YAML::Key << "Probability";
+		body << YAML::BeginSeq;
+
+		for (int i = 0; i < arr_size; i++) {
+			if (arr[i] > 0) {
+				body << YAML::BeginMap;
+				body << YAML::Key << "Level" << YAML::Value << i + 1;
+				body << YAML::Key << "Probability" << YAML::Value << arr[i];
+				body << YAML::EndMap;
+			}
+		}
+
+		body << YAML::EndSeq;
+	}
+
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
+{
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Improvised Song skill ID %hu is not known.\n", skill_id);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << YAML::Key << "Probability" << YAML::Value << atoi(split[1]) / 10;
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_spellbookdb(char* split[], int columns, int current)
+{
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Spell Book skill ID %hu is not known.\n", skill_id);
+		return false;
+	}
+
+	uint16 nameid = atoi(split[2]);
+	std::string *book_name = util::umap_find(aegis_itemnames, nameid);
+
+	if (book_name == nullptr) {
+		ShowError("Book name for item ID %hu is not known.\n", nameid);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << YAML::Key << "Book" << YAML::Value << *book_name;
+	body << YAML::Key << "PreservePoints" << YAML::Value << atoi(split[1]);
 	body << YAML::EndMap;
 
 	return true;

@@ -16,21 +16,50 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Magic Mushroom Database
+# Improvised Song Database
 ###########################################################################
 #
-# Magic Mushroom Settings
+# Improvised Song Settings
 #
 ###########################################################################
-# - Skill       Skill to be casted by Magic Mushroom.
+# - Skill             Skill to be casted by Improvised Song.
+#   Probability       Probability of skill compared to others in database (1 = 0.01%, 10000 = 100%).
 ###########################################################################
 
 Header:
-  Type: MAGIC_MUSHROOM_DB
+  Type: IMPROVISED_SONG_DB
   Version: 1
 
-Footer:
-  Imports:
-  - Path: db/re/magicmushroom_db.yml
-    Mode: Renewal
-  - Path: db/import/magicmushroom_db.yml
+Body:
+  - Skill: MG_NAPALMBEAT
+    Probability: 6000
+  - Skill: MG_SAFETYWALL
+    Probability: 4000
+  - Skill: MG_SOULSTRIKE
+    Probability: 6000
+  - Skill: MG_COLDBOLT
+    Probability: 6000
+  - Skill: MG_FROSTDIVER
+    Probability: 6000
+  - Skill: MG_FIREBALL
+    Probability: 6000
+  - Skill: MG_FIREWALL
+    Probability: 4000
+  - Skill: MG_FIREBOLT
+    Probability: 6000
+  - Skill: MG_LIGHTNINGBOLT
+    Probability: 6000
+  - Skill: MG_THUNDERSTORM
+    Probability: 4000
+  - Skill: WZ_FIREPILLAR
+    Probability: 4000
+  - Skill: WZ_METEOR
+    Probability: 4000
+  - Skill: WZ_JUPITEL
+    Probability: 6000
+  - Skill: WZ_VERMILION
+    Probability: 4000
+  - Skill: WZ_WATERBALL
+    Probability: 6000
+  - Skill: WZ_STORMGUST
+    Probability: 4000

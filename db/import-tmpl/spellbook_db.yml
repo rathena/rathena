@@ -16,21 +16,17 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Magic Mushroom Database
+# Reading Spellbook Database
 ###########################################################################
 #
-# Magic Mushroom Settings
+# Reading Spellbook Settings
 #
 ###########################################################################
-# - Skill       Skill to be casted by Magic Mushroom.
+# - Skill             Skill that is usable through a Spellbook.
+#   Book              Book item required to cast skill.
+#   PreservePoints    Amount of points required to preserve the skill into the book.
 ###########################################################################
 
 Header:
-  Type: MAGIC_MUSHROOM_DB
+  Type: READING_SPELLBOOK_DB
   Version: 1
-
-Footer:
-  Imports:
-  - Path: db/re/magicmushroom_db.yml
-    Mode: Renewal
-  - Path: db/import/magicmushroom_db.yml

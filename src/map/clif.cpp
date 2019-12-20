@@ -6006,11 +6006,6 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 
 	nullpo_retv(bl);
 
-#if PACKETVER < 20151104
-	if (type == EFST_WEAPONPROPERTY)
-		type = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
-#endif
-
 #if PACKETVER >= 20120618
 	if (flag && battle_config.display_status_timers)
 		WBUFW(buf,0) = 0x983;
@@ -18394,7 +18389,7 @@ int clif_spellbook_list(struct map_session_data *sd)
 
 	for( i = 0, c = 0; i < MAX_INVENTORY; i ++ )
 	{
-		if( itemdb_is_spellbook2(sd->inventory.u.items_inventory[i].nameid) )
+		if( reading_spellbook_db.findBook(sd->inventory.u.items_inventory[i].nameid) )
 		{
 			WFIFOW(fd, c * 2 + 4) = sd->inventory.u.items_inventory[i].nameid;
 			c++;

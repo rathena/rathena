@@ -16,21 +16,18 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 #
 ###########################################################################
-# Magic Mushroom Database
+# Abracadabra Database
 ###########################################################################
 #
-# Magic Mushroom Settings
+# Abracadabra Settings
 #
 ###########################################################################
-# - Skill       Skill to be casted by Magic Mushroom.
+# - Skill             Skill to be casted by Abracadabra.
+#   Probability:      Probability of skill compared to others in database (1 = 0.01%, 10000 = 100%). (Default: 500)
+#     - Level         Skill level.
+#       Probability   Probability at specific skill level (1 = 0.01%, 10000 = 100%). (Default: 0)
 ###########################################################################
 
 Header:
-  Type: MAGIC_MUSHROOM_DB
+  Type: ABRA_DB
   Version: 1
-
-Footer:
-  Imports:
-  - Path: db/re/magicmushroom_db.yml
-    Mode: Renewal
-  - Path: db/import/magicmushroom_db.yml
