@@ -797,13 +797,6 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 		return true;
 	}
 
-	/**
-	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions above
-	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
-	 */
-	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
-		return false;
-
 	skill_nocast = skill_get_nocast(skill_id);
 	// Check skill restrictions [Celest]
 	if( (skill_nocast&1 && !mapdata_flag_vs2(mapdata)) ||
@@ -904,6 +897,14 @@ bool skill_isNotOk(uint16 skill_id, struct map_session_data *sd)
 			break;
 
 	}
+
+	/**
+	 * It has been confirmed on a official server (thanks to Yommy) that item-cast skills bypass all the restrictions above
+	 * Also, without this check, an exploit where an item casting + healing (or any other kind buff) isn't deleted after used on a restricted map
+	 */
+	if( sd->skillitem == skill_id && !sd->skillitem_keep_requirement )
+		return false;
+
 	return false;
 }
 
