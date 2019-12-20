@@ -5999,11 +5999,6 @@ void clif_status_change_sub(struct block_list *bl, int id, int type, int flag, t
 
 	nullpo_retv(bl);
 
-#if PACKETVER < 20151104
-	if (type == EFST_WEAPONPROPERTY)
-		type = EFST_ATTACK_PROPERTY_NOTHING + val1; // Assign status icon for older clients
-#endif
-
 #if PACKETVER >= 20120618
 	if (flag && battle_config.display_status_timers)
 		WBUFW(buf,0) = 0x983;

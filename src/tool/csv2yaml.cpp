@@ -71,6 +71,7 @@ static bool guild_read_guildskill_tree_db( char* split[], int columns, int curre
 static size_t pet_read_db( const char* file );
 static bool skill_parse_row_magicmushroomdb(char* split[], int column, int current);
 static bool skill_parse_row_abradb(char* split[], int columns, int current);
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current);
 static bool skill_parse_row_spellbookdb(char* split[], int columns, int current);
 
 // Constants for conversion
@@ -156,11 +157,11 @@ void finalizeBody(void) {
 }
 
 template<typename Func>
-bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda ){
+bool process( const std::string& type, uint32 version, const std::vector<std::string>& paths, const std::string& name, Func lambda, const std::string& rename = "" ){
 	for( const std::string& path : paths ){
 		const std::string name_ext = name + ".txt";
 		const std::string from = path + "/" + name_ext;
-		const std::string to = path + "/" + name + ".yml";
+		const std::string to = path + "/" + (rename.size() > 0 ? rename : name) + ".yml";
 
 		if( fileExists( from ) ){
 			if( !askConfirmation( "Found the file \"%s\", which requires migration to yml.\nDo you want to convert it now? (Y/N)\n", from.c_str() ) ){
@@ -182,7 +183,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 				return false;
 			}
 
-			prepareHeader(out, type, version, name);
+			prepareHeader(out, type, version, (rename.size() > 0 ? rename : name));
 			prepareBody();
 
 			if( !lambda( path, name_ext ) ){
@@ -196,7 +197,7 @@ bool process( const std::string& type, uint32 version, const std::vector<std::st
 			out << "\n";
 			out.close();
 			
-			// TODO: do you want to delete/rename?
+			// TODO: do you want to delete?
 		}
 	}
 
@@ -246,6 +247,12 @@ int do_init( int argc, char** argv ){
 	if (!process("ABRA_DB", 1, root_paths, "abra_db", [](const std::string& path, const std::string& name_ext) -> bool {
 		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 3, 3, -1, &skill_parse_row_abradb, false);
 	})) {
+		return 0;
+	}
+
+	if (!process("IMPROVISED_SONG_DB", 1, root_paths, "skill_improvise_db", [](const std::string& path, const std::string& name_ext) -> bool {
+		return sv_readdb(path.c_str(), name_ext.c_str(), ',', 2, 2, -1, &skill_parse_row_improvisedb, false);
+	}, "improvise_db")) {
 		return 0;
 	}
 
@@ -721,7 +728,7 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
 
 	if (skill_name == nullptr) {
-		ShowError("Skill name for Abra skill ID &hu is not known.\n", skill_id);
+		ShowError("Skill name for Abra skill ID %hu is not known.\n", skill_id);
 		return false;
 	}
 
@@ -750,6 +757,25 @@ static bool skill_parse_row_abradb(char* split[], int columns, int current)
 		body << YAML::EndSeq;
 	}
 
+	body << YAML::EndMap;
+
+	return true;
+}
+
+// Copied and adjusted from skill.cpp
+static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
+{
+	uint16 skill_id = atoi(split[0]);
+	std::string *skill_name = util::umap_find(aegis_skillnames, skill_id);
+
+	if (skill_name == nullptr) {
+		ShowError("Skill name for Improvised Song skill ID %hu is not known.\n", skill_id);
+		return false;
+	}
+
+	body << YAML::BeginMap;
+	body << YAML::Key << "Skill" << YAML::Value << *skill_name;
+	body << YAML::Key << "Probability" << YAML::Value << atoi(split[1]) / 10;
 	body << YAML::EndMap;
 
 	return true;

@@ -92,12 +92,7 @@ static unsigned short skill_arrow_count;
 
 AbraDatabase abra_db;
 
-struct s_skill_improvise_db {
-	uint16 skill_id;
-	unsigned short per;//1-10000
-};
-struct s_skill_improvise_db skill_improvise_db[MAX_SKILL_IMPROVISE_DB];
-static unsigned short skill_improvise_count;
+ImprovisedSongDatabase improvised_song_db;
 
 ReadingSpellbookDatabase reading_spellbook_db;
 
@@ -10216,16 +10211,22 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 
 	case WM_RANDOMIZESPELL:
-		if (!skill_improvise_count) {
+		if (improvised_song_db.empty()) {
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 			break;
 		}
 		else {
-			int improv_skill_id = 0, improv_skill_lv, checked = 0, checked_max = MAX_SKILL_IMPROVISE_DB*3;
+			int improv_skill_id = 0, improv_skill_lv, checked = 0, checked_max = improvised_song_db.size() * 3;
+
 			do {
-				i = rnd() % MAX_SKILL_IMPROVISE_DB;
-				improv_skill_id = skill_improvise_db[i].skill_id;
-			} while( checked++ < checked_max && (improv_skill_id == 0 || rnd()%10000 >= skill_improvise_db[i].per) );
+				auto improvise_spell = improvised_song_db.random();
+
+				improv_skill_id = improvise_spell->skill_id;
+
+				if( rnd() % 10000 >= improvise_spell->per ){
+					break;
+				}
+			} while (checked++ < checked_max);
 
 			if (!skill_get_index(improv_skill_id)) {
 				if (sd)
@@ -10233,7 +10234,7 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 				break;
 			}
 
-			improv_skill_lv = 4 + skill_lv;
+			improv_skill_lv = min(4 + skill_lv, skill_get_max(improv_skill_id));
 			clif_skill_nodamage (src, bl, skill_id, skill_lv, 1);
 
 			if( sd ) {
@@ -21510,40 +21511,58 @@ std::shared_ptr<s_skill_spellbook_db> ReadingSpellbookDatabase::findBook(int32 n
 	return nullptr;
 }
 
-/** Reads improvise db
- * Structure: SkillID,Rate
- */
-static bool skill_parse_row_improvisedb(char* split[], int columns, int current)
-{
-	unsigned short skill_id = atoi(split[0]), per = atoi(split[1]), i;
 
-	if( !skill_get_index(skill_id) || !skill_get_max(skill_id) ) {
-		ShowError("skill_parse_row_improvisedb: Invalid skill ID %d\n", skill_id);
-		return false;
-	}
-	if ( !skill_get_inf(skill_id) ) {
-		ShowError("skill_parse_row_improvisedb: Passive skills cannot be casted (%d/%s)\n", skill_id, skill_get_name(skill_id));
-		return false;
-	}
-	ARR_FIND(0, skill_improvise_count, i, skill_improvise_db[i].skill_id == skill_id);
-	if (i >= ARRAYLENGTH(skill_improvise_db)) {
-		ShowError("skill_parse_row_improvisedb: Maximum amount of entries reached (%d), increase MAX_SKILL_IMPROVISE_DB\n",MAX_SKILL_IMPROVISE_DB);
-		return false;
-	}
-	// Import just for clearing/disabling from original data
-	if (per == 0) {
-		memset(&skill_improvise_db[i], 0, sizeof(skill_improvise_db[i]));
-		//ShowInfo("skill_parse_row_improvisedb: Skill %d removed from list.\n", skill_id);
-		return true;
+const std::string ImprovisedSongDatabase::getDefaultLocation() {
+	return std::string(db_path) + "/improvise_db.yml";
+}
+
+/**
+* Reads and parses an entry from the improvise_db.
+* @param node: YAML node containing the entry.
+* @return count of successfully parsed rows
+*/
+uint64 ImprovisedSongDatabase::parseBodyNode(const YAML::Node &node) {
+	std::string skill_name;
+
+	if (!this->asString(node, "Skill", skill_name))
+		return 0;
+
+	uint16 skill_id = skill_name2id(skill_name.c_str());
+
+	if (!skill_id) {
+		this->invalidWarning(node["Skill"], "Invalid Improvised Song skill name \"%s\", skipping.\n", skill_name.c_str());
+		return 0;
 	}
 
-	skill_improvise_db[i].skill_id = skill_id;
-	skill_improvise_db[i].per = per; // Still need confirm it.
+	if (!skill_get_inf(skill_id)) {
+		this->invalidWarning(node["Skill"], "Passive skill %s cannot be casted by Improvised Song.\n", skill_name.c_str());
+		return 0;
+	}
 
-	if (i == skill_improvise_count)
-		skill_improvise_count++;
+	std::shared_ptr<s_skill_improvise_db> improvise = this->find(skill_id);
+	bool exists = improvise != nullptr;
 
-	return true;
+	if (!exists) {
+		if (!this->nodesExist(node, { "Probability" }))
+			return 0;
+
+		improvise = std::make_shared<s_skill_improvise_db>();
+		improvise->skill_id = skill_id;
+	}
+
+	if (this->nodeExists(node, "Probability")) {
+		uint16 probability;
+
+		if (!this->asUInt16Rate(node, "Probability", probability))
+			return 0;
+
+		improvise->per = probability;
+	}
+
+	if (!exists)
+		this->put(skill_id, improvise);
+
+	return 1;
 }
 
 const std::string MagicMushroomDatabase::getDefaultLocation() {
@@ -21880,8 +21899,7 @@ static void skill_readdb(void)
 	memset(skill_produce_db,0,sizeof(skill_produce_db));
 	memset(skill_arrow_db,0,sizeof(skill_arrow_db));
 	memset(skill_changematerial_db,0,sizeof(skill_changematerial_db));
-	skill_produce_count = skill_arrow_count = skill_improvise_count =
-		skill_changematerial_count = 0;
+	skill_produce_count = skill_arrow_count = skill_changematerial_count = 0;
 
 	for(i=0; i<ARRAYLENGTH(dbsubpath); i++){
 		size_t n1 = strlen(db_path)+strlen(dbsubpath[i])+1;
@@ -21907,7 +21925,6 @@ static void skill_readdb(void)
 		sv_readdb(dbsubpath2, "produce_db.txt"        , ',',   5,  5+2*MAX_PRODUCE_RESOURCE, MAX_SKILL_PRODUCE_DB, skill_parse_row_producedb, i > 0);
 		sv_readdb(dbsubpath1, "create_arrow_db.txt"   , ',', 1+2,  1+2*MAX_ARROW_RESULT, MAX_SKILL_ARROW_DB, skill_parse_row_createarrowdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_copyable_db.txt"       , ',',   2,  4, -1, skill_parse_row_copyabledb, i > 0);
-		sv_readdb(dbsubpath1, "skill_improvise_db.txt"      , ',',   2,  2, MAX_SKILL_IMPROVISE_DB, skill_parse_row_improvisedb, i > 0);
 		sv_readdb(dbsubpath1, "skill_changematerial_db.txt" , ',',   5,  5+2*MAX_SKILL_CHANGEMATERIAL_SET, MAX_SKILL_CHANGEMATERIAL_DB, skill_parse_row_changematerialdb, i > 0);
 		sv_readdb(dbsubpath1, "skill_nonearnpc_db.txt"      , ',',   2,  3, -1, skill_parse_row_nonearnpcrangedb, i > 0);
 		sv_readdb(dbsubpath1, "skill_damage_db.txt"         , ',',   4,  3+SKILLDMG_MAX, -1, skill_parse_row_skilldamage, i > 0);
@@ -21917,6 +21934,7 @@ static void skill_readdb(void)
 	}
 
 	abra_db.load();
+	improvised_song_db.load();
 	magic_mushroom_db.load();
 	reading_spellbook_db.load();
 	
