@@ -423,7 +423,7 @@ void sale_notify_login( struct map_session_data* sd ){
 
 /*
  * Determines whether to read TXT or SQL database
- * based on 'db_use_sqldbs' in conf/map_athena.conf.
+ * based on 'db_use_sqlcashdbs' in conf/map_athena.conf.
  */
 static void cashshop_read_db( void ){
 #if PACKETVER_SUPPORTS_SALES
@@ -431,7 +431,7 @@ static void cashshop_read_db( void ){
 	time_t now = time(NULL);
 #endif
 
-	if( db_use_sqldbs ){
+	if( db_use_sqlcashdbs ){
 		cashshop_read_db_sql();
 	} else {
 		cashshop_read_db_txt();

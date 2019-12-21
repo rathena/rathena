@@ -1167,6 +1167,7 @@ typedef struct elemental_data	TBL_ELEM;
 #include "../common/sql.hpp"
 
 extern int db_use_sqldbs;
+extern int db_use_sqlcashdbs;
 
 extern Sql* mmysql_handle;
 extern Sql* qsmysql_handle;
