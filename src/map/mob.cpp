@@ -4380,7 +4380,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 		int constant;
 
-		if (!script_get_constant(sprite.c_str(), &constant)) {
+		if (script_get_constant(sprite.c_str(), &constant)) {
 			if (npcdb_checkid(constant) == 0 && pcdb_checkid(constant) == 0) {
 				this->invalidWarning(node["Sprite"], "Unknown sprite constant %s.\n", sprite.c_str());
 				return 0;
