@@ -19004,10 +19004,10 @@ BUILDIN_FUNC(setcell)
  */
 BUILDIN_FUNC(getfreecell)
 {
-	const char *mapn = script_getstr(st, 2), *name;
+	const char *mapn = script_getstr(st, 2), *name_x, *name_y;
 	char prefix;
 	struct map_session_data *sd;
-	int64 num;
+	int64 num_x, num_y;
 	int16 m, x = 0, y = 0;
 	int rx = -1, ry = -1, flag = 1;
 
@@ -19015,25 +19015,21 @@ BUILDIN_FUNC(getfreecell)
 
 	if (!data_isreference(script_getdata(st, 3))) {
 		ShowWarning("script: buildin_getfreecell: rX is not a variable.\n");
-		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (!data_isreference(script_getdata(st, 4))) {
 		ShowWarning("script: buildin_getfreecell: rY is not a variable.\n");
-		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (is_string_variable(reference_getname(script_getdata(st, 3)))) {
 		ShowWarning("script: buildin_getfreecell: rX is a string, must be an INT.\n");
-		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
 	if (is_string_variable(reference_getname(script_getdata(st, 4)))) {
 		ShowWarning("script: buildin_getfreecell: rY is a string, must be an INT.\n");
-		script_pushint(st, -1);
 		return SCRIPT_CMD_FAILURE;
 	}
 
@@ -19057,37 +19053,39 @@ BUILDIN_FUNC(getfreecell)
 	else
 		m = map_mapname2mapid(mapn);
 
-	map_search_freecell(NULL, m, &x, &y, rx, ry, flag);
+	if (sd)
+		map_search_freecell(&sd->bl, m, &x, &y, rx, ry, flag);
+	else
+		map_search_freecell(NULL, m, &x, &y, rx, ry, flag);
 
 	// Set MapX
-	num = st->stack->stack_data[st->start + 3].u.num;
-	name = get_str(num&0x00ffffff);
-	prefix = *name;
+	num_x = st->stack->stack_data[st->start + 3].u.num;
+	name_x = get_str(num_x&0x00ffffff);
+	prefix = *name_x;
 
 	if (not_server_variable(prefix)){
 		if( !script_rid2sd(sd) ){
-			ShowError( "buildin_getfreecell: variable '%s' for mapX is not a server variable, but no player is attached!", name );
+			ShowError( "buildin_getfreecell: variable '%s' for mapX is not a server variable, but no player is attached!", name_x );
 			return SCRIPT_CMD_FAILURE;
 		}
 	}else
 		sd = NULL;
-
-	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)x), script_getref(st, 3));
 
 	// Set MapY
-	num = st->stack->stack_data[st->start + 4].u.num;
-	name = get_str(num&0x00ffffff);
-	prefix = *name;
+	num_y = st->stack->stack_data[st->start + 4].u.num;
+	name_y = get_str(num_y&0x00ffffff);
+	prefix = *name_y;
 
 	if (not_server_variable(prefix)){
 		if( !script_rid2sd(sd) ){
-			ShowError( "buildin_getfreecell: variable '%s' for mapY is not a server variable, but no player is attached!", name );
+			ShowError( "buildin_getfreecell: variable '%s' for mapY is not a server variable, but no player is attached!", name_y );
 			return SCRIPT_CMD_FAILURE;
 		}
 	}else
 		sd = NULL;
 
-	set_reg(st, sd, num, name, (void*)__64BPRTSIZE((int)y), script_getref(st, 4));
+	set_reg(st, sd, num_x, name_x, (void*)__64BPRTSIZE((int)x), script_getref(st, 3));
+	set_reg(st, sd, num_y, name_y, (void*)__64BPRTSIZE((int)y), script_getref(st, 4));
 
 	return SCRIPT_CMD_SUCCESS;
 }
