@@ -4402,7 +4402,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "Sex")) {
 		if (pcdb_checkid(mob->vd.class_) == 0) {
-			this->invalidWarning(node["Sex"], "Sex is only applicable to Job sprites %s.\n");
+			this->invalidWarning(node["Sex"], "Sex is only applicable to Job sprites.\n");
 			return 0;
 		}
 
@@ -4430,7 +4430,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "HairStyle")) {
 		if (pcdb_checkid(mob->vd.class_) == 0) {
-			this->invalidWarning(node["HairStyle"], "HairStyle is only applicable to Job sprites %s.\n");
+			this->invalidWarning(node["HairStyle"], "HairStyle is only applicable to Job sprites.\n");
 			return 0;
 		}
 
@@ -4449,7 +4449,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "HairColor")) {
 		if (pcdb_checkid(mob->vd.class_) == 0) {
-			this->invalidWarning(node["HairColor"], "HairColor is only applicable to Job sprites %s.\n");
+			this->invalidWarning(node["HairColor"], "HairColor is only applicable to Job sprites.\n");
 			return 0;
 		}
 
@@ -4468,7 +4468,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "ClothColor")) {
 		if (pcdb_checkid(mob->vd.class_) == 0) {
-			this->invalidWarning(node["ClothColor"], "ClothColor is only applicable to Job sprites %s.\n");
+			this->invalidWarning(node["ClothColor"], "ClothColor is only applicable to Job sprites.\n");
 			return 0;
 		}
 
@@ -4487,7 +4487,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "Weapon")) {
 		if (pcdb_checkid(mob->vd.class_) == 0) {
-			this->invalidWarning(node["Weapon"], "Weapon is only applicable to Job sprites %s.\n");
+			this->invalidWarning(node["Weapon"], "Weapon is only applicable to Job sprites.\n");
 			return 0;
 		}
 
@@ -4506,7 +4506,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "Shield")) {
 		if (pcdb_checkid(mob->vd.class_) == 0) {
-			this->invalidWarning(node["Shield"], "Shield is only applicable to Job sprites %s.\n");
+			this->invalidWarning(node["Shield"], "Shield is only applicable to Job sprites.\n");
 			return 0;
 		}
 
@@ -4525,7 +4525,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "HeadTop")) {
 		if (pcdb_checkid(mob->vd.class_) == 0) {
-			this->invalidWarning(node["HeadTop"], "HeadTop is only applicable to Job sprites %s.\n");
+			this->invalidWarning(node["HeadTop"], "HeadTop is only applicable to Job sprites.\n");
 			return 0;
 		}
 
@@ -4544,7 +4544,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "HeadMid")) {
 		if (pcdb_checkid(mob->vd.class_) == 0) {
-			this->invalidWarning(node["HeadMid"], "HeadMid is only applicable to Job sprites %s.\n");
+			this->invalidWarning(node["HeadMid"], "HeadMid is only applicable to Job sprites.\n");
 			return 0;
 		}
 
@@ -4563,7 +4563,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 	if (this->nodeExists(node, "HeadLow")) {
 		if (pcdb_checkid(mob->vd.class_) == 0) {
-			this->invalidWarning(node["HeadLow"], "HeadLow is only applicable to Job sprites %s.\n");
+			this->invalidWarning(node["HeadLow"], "HeadLow is only applicable to Job sprites.\n");
 			return 0;
 		}
 
