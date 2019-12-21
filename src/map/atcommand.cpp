@@ -126,7 +126,7 @@ uint64 AtcommandAliasDatabase::parseBodyNode( const YAML::Node& node ){
 	AtCommandInfo* commandinfo = get_atcommandinfo_byname( command.c_str() );
 
 	if( commandinfo == nullptr ){
-		this->invalidWarning( node["Command"], "Command %s does not exist", command.c_str() );
+		this->invalidWarning( node["Command"], "Command %s does not exist.\n", command.c_str() );
 		return 0;
 	}
 
@@ -152,7 +152,7 @@ uint64 AtcommandAliasDatabase::parseBodyNode( const YAML::Node& node ){
 		const YAML::Node& aliasesNode = node["Aliases"];
 
 		if( !aliasesNode.IsSequence() ){
-			this->invalidWarning( aliasesNode, "Aliases should be a sequence" );
+			this->invalidWarning( aliasesNode, "Aliases should be a sequence.\n" );
 			return 0;
 		}
 
