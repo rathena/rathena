@@ -17,6 +17,7 @@
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
 
+#include "atcommand.hpp"
 #include "battleground.hpp"
 #include "chrif.hpp"
 #include "clif.hpp"
@@ -8763,8 +8764,25 @@ int battle_config_read(const char* cfgName)
 				continue;
 			if (strcmpi(w1, "import") == 0)
 				battle_config_read(w2);
-			else if
-				(battle_set_value(w1, w2) == 0)
+			else if( strcmpi( w1, "atcommand_symbol" ) == 0 ){
+				const char* symbol = &w2[0];
+
+				if (ISPRINT(*symbol) && // no control characters
+					*symbol != '/' && // symbol of client commands
+					*symbol != '%' && // symbol of party chat
+					*symbol != '$' && // symbol of guild chat
+					*symbol != charcommand_symbol)
+					atcommand_symbol = *symbol;
+			}else if( strcmpi( w1, "charcommand_symbol" ) == 0 ){
+				const char* symbol = &w2[0];
+
+				if (ISPRINT(*symbol) && // no control characters
+					*symbol != '/' && // symbol of client commands
+					*symbol != '%' && // symbol of party chat
+					*symbol != '$' && // symbol of guild chat
+					*symbol != atcommand_symbol)
+					charcommand_symbol = *symbol;
+			}else if( battle_set_value(w1, w2) == 0 )
 				ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 		}
 
