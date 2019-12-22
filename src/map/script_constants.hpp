@@ -3964,9 +3964,14 @@
 	export_constant(OPTION_SIGHT);
 	export_constant(OPTION_HIDE);
 	export_constant(OPTION_CLOAK);
+	export_constant(OPTION_CART1);
 	export_constant(OPTION_FALCON);
 	export_constant(OPTION_RIDING);
 	export_constant(OPTION_INVISIBLE);
+	export_constant(OPTION_CART2);
+	export_constant(OPTION_CART3);
+	export_constant(OPTION_CART4);
+	export_constant(OPTION_CART5);
 	export_constant(OPTION_ORCISH);
 	export_constant(OPTION_WEDDING);
 	export_constant(OPTION_RUWACH);
@@ -3985,6 +3990,7 @@
 	export_constant(OPTION_DRAGON5);
 	export_constant(OPTION_HANBOK);
 	export_constant(OPTION_OKTOBERFEST);
+	export_constant(OPTION_SUMMER2);
 
 	/* status option compounds */
 	export_constant(OPTION_DRAGON);
@@ -4059,6 +4065,8 @@
 	export_constant(UMOB_ADELAY);
 	export_constant(UMOB_DMOTION);
 	export_constant(UMOB_TARGETID);
+	export_constant(UMOB_ROBE);
+	export_constant(UMOB_BODY2);
 
 	/* unit control - homunculus */
 	export_constant(UHOM_SIZE);
@@ -4222,7 +4230,7 @@
 	export_constant(UELE_TARGETID);
 
 	/* unit control - NPC */
-	export_constant(UNPC_DISPLAY);
+	export_deprecated_constant3("UNPC_DISPLAY", UNPC_CLASS, "UNPC_CLASS");
 	export_constant(UNPC_LEVEL);
 	export_constant(UNPC_HP);
 	export_constant(UNPC_MAXHP);
@@ -4255,6 +4263,19 @@
 	export_constant(UNPC_AMOTION);
 	export_constant(UNPC_ADELAY);
 	export_constant(UNPC_DMOTION);
+	export_constant(UNPC_SEX);
+	export_constant(UNPC_CLASS);
+	export_constant(UNPC_HAIRSTYLE);
+	export_constant(UNPC_HAIRCOLOR);
+	export_constant(UNPC_HEADBOTTOM);
+	export_constant(UNPC_HEADMIDDLE);
+	export_constant(UNPC_HEADTOP);
+	export_constant(UNPC_CLOTHCOLOR);
+	export_constant(UNPC_SHIELD);
+	export_constant(UNPC_WEAPON);
+	export_constant(UNPC_ROBE);
+	export_constant(UNPC_BODY2);
+	export_constant(UNPC_DEADSIT);
 
 	export_constant(NAV_NONE);
 	export_constant(NAV_AIRSHIP_ONLY);
@@ -4954,7 +4975,9 @@
 
 	/* NPC view ids */
 	// Special macro to strip the prefix 'JT_'
-	#define export_constant_npc(a) export_constant_offset(a,3)
+	#if !defined(export_constant_npc)
+		#define export_constant_npc(a) export_constant_offset(a,3)
+	#endif
 
 	export_constant_npc(JT_WARPNPC);
 	export_constant_npc(JT_1_ETC_01);

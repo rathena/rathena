@@ -7797,7 +7797,7 @@ struct view_data* status_get_viewdata(struct block_list *bl)
 		case BL_PC:  return &((TBL_PC*)bl)->vd;
 		case BL_MOB: return ((TBL_MOB*)bl)->vd;
 		case BL_PET: return &((TBL_PET*)bl)->vd;
-		case BL_NPC: return ((TBL_NPC*)bl)->vd;
+		case BL_NPC: return &((TBL_NPC*)bl)->vd;
 		case BL_HOM: return ((TBL_HOM*)bl)->vd;
 		case BL_MER: return ((TBL_MER*)bl)->vd;
 		case BL_ELEM: return ((TBL_ELEM*)bl)->vd;
@@ -7861,10 +7861,10 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				sd->vd.head_top = sd->status.head_top;
 				sd->vd.head_mid = sd->status.head_mid;
 				sd->vd.head_bottom = sd->status.head_bottom;
-				sd->vd.hair_style = cap_value(sd->status.hair,0,battle_config.max_hair_style);
-				sd->vd.hair_color = cap_value(sd->status.hair_color,0,battle_config.max_hair_color);
-				sd->vd.cloth_color = cap_value(sd->status.clothes_color,0,battle_config.max_cloth_color);
-				sd->vd.body_style = cap_value(sd->status.body,0,battle_config.max_body_style);
+				sd->vd.hair_style = cap_value(sd->status.hair, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+				sd->vd.hair_color = cap_value(sd->status.hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
+				sd->vd.cloth_color = cap_value(sd->status.clothes_color, MIN_CLOTH_COLOR, MAX_CLOTH_COLOR);
+				sd->vd.body_style = cap_value(sd->status.body, MIN_BODY_STYLE, MAX_BODY_STYLE);
 				sd->vd.sex = sd->status.sex;
 
 				if (sd->vd.cloth_color) {
@@ -7898,6 +7898,8 @@ void status_set_viewdata(struct block_list *bl, int class_)
 				mob_set_dynamic_viewdata( md );
 
 				md->vd->class_ = class_;
+				md->vd->hair_style = cap_value(md->vd->hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+				md->vd->hair_color = cap_value(md->vd->hair_color, MIN_HAIR_COLOR, MAX_HAIR_COLOR);
 			}else
 				ShowError("status_set_viewdata (MOB): No view data for class %d\n", class_);
 		}
@@ -7923,15 +7925,18 @@ void status_set_viewdata(struct block_list *bl, int class_)
 		{
 			TBL_NPC* nd = (TBL_NPC*)bl;
 			if (vd)
-				nd->vd = vd;
-			else {
-				ShowError("status_set_viewdata (NPC): No view data for class %d\n", class_);
+				memcpy(&nd->vd, vd, sizeof(struct view_data));
+			else if (pcdb_checkid(class_)) {
+				memset(&nd->vd, 0, sizeof(struct view_data));
+				nd->vd.class_ = class_;
+				nd->vd.hair_style = cap_value(nd->vd.hair_style, MIN_HAIR_STYLE, MAX_HAIR_STYLE);
+			} else {
 				if (bl->m >= 0)
 					ShowDebug("Source (NPC): %s at %s (%d,%d)\n", nd->name, map_mapid2mapname(bl->m), bl->x, bl->y);
 				else
 					ShowDebug("Source (NPC): %s (invisible/not on a map)\n", nd->name);
-				break;
 			}
+			break;
 		}
 	break;
 	case BL_HOM:

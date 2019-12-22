@@ -283,7 +283,12 @@ static inline unsigned char clif_bl_type(struct block_list *bl) {
 	case BL_SKILL: return 0x3; //SKILL_TYPE
 	case BL_CHAT:  return 0x4; //UNKNOWN_TYPE
 	case BL_MOB:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x5; //NPC_MOB_TYPE
-	case BL_NPC:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x6; //NPC_EVT_TYPE
+	case BL_NPC:
+#if PACKETVER >= 20170726
+			return 0x6; //NPC_EVT_TYPE
+#else
+			return (pcdb_checkid(status_get_viewdata(bl)->class_) ? 0x0 : 0x6);
+#endif
 	case BL_PET:   return pcdb_checkid(status_get_viewdata(bl)->class_)?0x0:0x7; //NPC_PET_TYPE
 	case BL_HOM:   return 0x8; //NPC_HOM_TYPE
 	case BL_MER:   return 0x9; //NPC_MERSOL_TYPE
@@ -1144,7 +1149,7 @@ static int clif_set_unit_idle(struct block_list* bl, unsigned char* buffer, bool
 	WBUFW(buf,53) = (sd ? sd->status.font : 0);
 #endif
 #if PACKETVER >= 20120221
-	if ( battle_config.monster_hp_bars_info && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && bl->type == BL_MOB && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
+	if ( battle_config.monster_hp_bars_info && bl->type == BL_MOB && !map_getmapflag(bl->m, MF_HIDEMOBHPBAR) && (status_get_hp(bl) < status_get_max_hp(bl)) ) {
 		WBUFL(buf,55) = status_get_max_hp(bl);		// maxHP
 		WBUFL(buf,59) = status_get_hp(bl);		// HP
 	} else {
@@ -1447,7 +1452,7 @@ int clif_spawn(struct block_list *bl)
 	if(bl->type == BL_NPC && !((TBL_NPC*)bl)->chat_id && (((TBL_NPC*)bl)->sc.option&OPTION_INVISIBLE))
 		return 0;
 
-	len = clif_set_unit_idle(bl, buf,true);
+	len = clif_set_unit_idle(bl, buf, (bl->type == BL_NPC && vd->dead_sit ? false : true));
 	clif_send(buf, len, bl, AREA_WOS);
 	if (disguised(bl))
 		clif_setdisguise(bl, buf, len);
@@ -3606,7 +3611,7 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 #if PACKETVER < 20150513
 				return;
 #else
-				if (val && sd->sc.option&OPTION_COSTUME)
+				if (val && sd && sd->sc.option&OPTION_COSTUME)
  					val = 0;
  				vd->body_style = val;
 #endif
@@ -3620,17 +3625,19 @@ void clif_changelook(struct block_list *bl, int type, int val) {
 #if PACKETVER < 4
 	clif_sprite_change(bl, bl->id, type, val, 0, target);
 #else
-	if(type == LOOK_WEAPON || type == LOOK_SHIELD) {
-		nullpo_retv(vd);
-		type = LOOK_WEAPON;
-		val = vd->weapon;
-		val2 = vd->shield;
-	}
-	if( disguised(bl) ) {
-		clif_sprite_change(bl, bl->id, type, val, val2, AREA_WOS);
-		clif_sprite_change(bl, -bl->id, type, val, val2, SELF);
+	if (bl->type != BL_NPC) {
+		if (type == LOOK_WEAPON || type == LOOK_SHIELD) {
+			type = LOOK_WEAPON;
+			val = (vd ? vd->weapon : 0);
+			val2 = (vd ? vd->shield : 0);
+		}
+		if (disguised(bl)) {
+			clif_sprite_change(bl, bl->id, type, val, val2, AREA_WOS);
+			clif_sprite_change(bl, -bl->id, type, val, val2, SELF);
+		} else
+			clif_sprite_change(bl, bl->id, type, val, val2, target);
 	} else
-		clif_sprite_change(bl, bl->id, type, val, val2, target);
+		unit_refresh(bl);
 #endif
 }
 

@@ -3135,6 +3135,26 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 }
 
 /**
+ * Refresh the area with a change in display of a unit.
+ * @bl: Object to update
+ */
+void unit_refresh(struct block_list *bl) {
+	nullpo_retv(bl);
+
+	if (bl->m < 0)
+		return;
+
+	struct map_data *mapdata = map_getmapdata(bl->m);
+
+	// Using CLR_TRICKDEAD because other flags show effects
+	// Probably need to use another flag or other way to refresh it
+	if (mapdata->users) {
+		clif_clearunit_area(bl, CLR_TRICKDEAD); // Fade out
+		clif_spawn(bl); // Fade in
+	}
+}
+
+/**
  * Removes units of a master when the master is removed from map
  * @param sd: Player
  * @param clrtype: How bl is being removed
