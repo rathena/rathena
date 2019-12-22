@@ -4410,6 +4410,15 @@ void run_script_main(struct script_state *st)
 			st->bk_st = NULL;
 		}
 	} else {
+		if (st->stack && st->stack->defsp >= 1 && st->stack->stack_data[st->stack->defsp - 1].type == C_RETINFO) {
+			for (int i = 0; i < st->stack->sp; i++) {
+				if (st->stack->stack_data[i].type == C_RETINFO) { // Grab the first, aka the original
+					st->script = st->stack->stack_data[i].u.ri->script;
+					break;
+				}
+			}
+		}
+
 		//Dispose of script.
 		if ((sd = map_id2sd(st->rid))!=NULL)
 		{	//Restore previous stack and save char.
@@ -6687,14 +6696,16 @@ BUILDIN_FUNC(viewpoint)
 	int type,x,y,id,color;
 	TBL_PC* sd;
 
+	if (!script_charid2sd(7, sd)) {
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
 	type=script_getnum(st,2);
 	x=script_getnum(st,3);
 	y=script_getnum(st,4);
 	id=script_getnum(st,5);
 	color=script_getnum(st,6);
-
-	if( !script_rid2sd(sd) )
-		return SCRIPT_CMD_SUCCESS;
 
 	clif_viewpoint(sd,st->oid,type,x,y,id,color);
 
@@ -6726,7 +6737,7 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		// If no player is attached
 		if( !script_rid2sd(sd) ){
 			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_id_var );
-			return false;
+			return SCRIPT_CMD_FAILURE;
 		}
 	}
 
@@ -6745,7 +6756,7 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		// If no player is attached
 		if( !script_rid2sd(sd) ){
 			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_val_var );
-			return false;
+			return SCRIPT_CMD_FAILURE;
 		}
 	}
 
@@ -6764,7 +6775,7 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 		// If no player is attached
 		if( !script_rid2sd(sd) ){
 			ShowError( "buildin_%s: variable \"%s\" was not a server variable, but no player was attached.\n", funcname, opt_param_var );
-			return false;
+			return SCRIPT_CMD_FAILURE;
 		}
 	}
 
@@ -6780,11 +6791,6 @@ static int script_getitem_randomoption(struct script_state *st, struct map_sessi
 
 	opt_id_ref = reference_getref(opt_id);
 	opt_id_n = script_array_highest_key(st, sd, opt_id_var, opt_id_ref);
-
-	if (opt_id_n < 1) {
-		ShowError("buildin_%s: No option id listed.\n", funcname);
-		return SCRIPT_CMD_FAILURE;
-	}
 
 	opt_val_ref = reference_getref(opt_val);
 	opt_param_ref = reference_getref(opt_param);
@@ -6889,8 +6895,8 @@ int script_countitem_sub(struct item *items, struct item_data *id, int size, boo
  * Returns number of items in inventory
  * countitem(<nameID>{,<accountID>})
  * countitem2(<nameID>,<Identified>,<Refine>,<Attribute>,<Card0>,<Card1>,<Card2>,<Card3>{,<accountID>}) [Lupus]
- * countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
- * countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>)
+ * countitem3(<item id>,<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
+ * countitem3("<item name>",<identify>,<refine>,<attribute>,<card1>,<card2>,<card3>,<card4>,<RandomIDArray>,<RandomValueArray>,<RandomParamArray>{,<accountID>})
  */
 BUILDIN_FUNC(countitem)
 {
@@ -6906,16 +6912,8 @@ BUILDIN_FUNC(countitem)
 		random_option = true;
 	}
 
-	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	} else {
-		if (!script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-	}
+	if (!script_accid2sd(aid, sd))
+		return SCRIPT_CMD_FAILURE;
 
 	struct item_data *id;
 
@@ -6953,16 +6951,8 @@ BUILDIN_FUNC(cartcountitem)
 	if (command[strlen(command) - 1] == '2')
 		aid = 10;
 
-	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	} else {
-		if (!script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-	}
+	if (!script_accid2sd(aid, sd))
+		return SCRIPT_CMD_FAILURE;
 
 	if (!pc_iscarton(sd)) {
 		ShowError("buildin_%s: Player doesn't have cart (CID:%d).\n", command, sd->status.char_id);
@@ -7006,16 +6996,8 @@ BUILDIN_FUNC(storagecountitem)
 	if (command[strlen(command) - 1] == '2')
 		aid = 10;
 
-	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	} else {
-		if (!script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-	}
+	if (!script_accid2sd(aid, sd))
+		return SCRIPT_CMD_FAILURE;
 
 	struct item_data *id;
 
@@ -7058,16 +7040,8 @@ BUILDIN_FUNC(guildstoragecountitem)
 	if (command[strlen(command) - 1] == '2')
 		aid = 10;
 
-	if (script_hasdata(st, aid)) {
-		if (!(sd = map_id2sd(script_getnum(st, aid)))) {
-			ShowError("buildin_%s: player not found (AID=%d).\n", command, script_getnum(st, aid));
-			st->state = END;
-			return SCRIPT_CMD_FAILURE;
-		}
-	} else {
-		if (!script_rid2sd(sd))
-			return SCRIPT_CMD_FAILURE;
-	}
+	if (!script_accid2sd(aid, sd))
+		return SCRIPT_CMD_FAILURE;
 
 	struct item_data *id;
 
@@ -9111,7 +9085,7 @@ BUILDIN_FUNC(successrefitem) {
 		pc_equipitem(sd,i,ep);
 		clif_misceffect(&sd->bl,3);
 		achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
-		if (sd->inventory.u.items_inventory[i].refine == MAX_REFINE &&
+		if (sd->inventory.u.items_inventory[i].refine == battle_config.blacksmith_fame_refine_threshold &&
 			sd->inventory.u.items_inventory[i].card[0] == CARD0_FORGE &&
 			sd->status.char_id == (int)MakeDWord(sd->inventory.u.items_inventory[i].card[2],sd->inventory.u.items_inventory[i].card[3]))
 		{ // Fame point system [DracoRPG]
@@ -9696,18 +9670,6 @@ BUILDIN_FUNC(end)
 	sd = map_id2sd(st->rid);
 
 	st->state = END;
-
-	if (st->stack->defsp >= 1 && st->stack->stack_data[st->stack->defsp-1].type == C_RETINFO) {
-		int i;
-
-		for(i = 0; i < st->stack->sp; i++) {
-			if (st->stack->stack_data[i].type == C_RETINFO) { // Grab the first, aka the original
-				struct script_retinfo *ri = st->stack->stack_data[i].u.ri;
-				st->script = ri->script;
-				break;
-			}
-		}
-	}
 
 	if( st->mes_active )
 		st->mes_active = 0;
@@ -11326,7 +11288,7 @@ BUILDIN_FUNC(getunits)
 	int type = script_getnum(st, 2);
 	int size = 0;
 	int32 idx, id;
-	int16 m = 0, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
+	int16 m = -1, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
 
 	if (!strcmp(command, "getmapunits"))
@@ -11350,10 +11312,10 @@ BUILDIN_FUNC(getunits)
 			ShowWarning("buildin_%s: Unknown map '%s'.\n", command, str);
 			return SCRIPT_CMD_FAILURE;
 		}
-		x0 = script_getnum(st, 4);
-		y0 = script_getnum(st, 5);
-		x1 = script_getnum(st, 6);
-		y1 = script_getnum(st, 7);
+		x0 = min(script_getnum(st, 4), script_getnum(st, 6));
+		y0 = min(script_getnum(st, 5), script_getnum(st, 7));
+		x1 = max(script_getnum(st, 4), script_getnum(st, 6));
+		y1 = max(script_getnum(st, 5), script_getnum(st, 7));
 
 		if (script_hasdata(st, 8))
 			data = script_getdata(st, 8);
@@ -11385,7 +11347,7 @@ BUILDIN_FUNC(getunits)
 
 	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
 	{
-		if (!m || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y <= y0) && (bl->x <= x1 && bl->y >= y1)))
+		if (m == -1 || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y >= y0) && (bl->x <= x1 && bl->y <= y1)))
 		{
 			if (data)
 				set_reg(st, sd, reference_uid(id, idx + size), name, (is_string_variable(name) ? (void*)status_get_name(bl) : (void*)__64BPRTSIZE(bl->id)), reference_getref(data));
@@ -15408,38 +15370,41 @@ BUILDIN_FUNC(isday)
 BUILDIN_FUNC(isequippedcnt)
 {
 	TBL_PC *sd;
-	int i, id = 1;
-	int ret = 0;
 
-	if (!script_rid2sd(sd)) { //If the player is not attached it is a script error anyway... but better prevent the map server from crashing...
+	if (!script_rid2sd(sd)) {
 		script_pushint(st,0);
 		return SCRIPT_CMD_SUCCESS;
 	}
 
-	for (i=0; id!=0; i++) {
-		short j;
-		FETCH (i+2, id) else id = 0;
+	int ret = 0;
+	int total = script_lastdata(st);
+	std::vector<int32> list(total);
+
+	for (int i = 2; i <= total; ++i) {
+		int id = script_getnum(st,i);
 		if (id <= 0)
 			continue;
+		if (std::find(list.begin(), list.end(), id) != list.end())
+			continue;
+		list.push_back(id);
 
-		for (j=0; j<EQI_MAX; j++) {
+		for (short j = 0; j < EQI_MAX; j++) {
 			short index = sd->equip_index[j];
-			if(index < 0)
+			if (index < 0)
 				continue;
 			if (pc_is_same_equip_index((enum equip_index)j, sd->equip_index, index))
 				continue;
 
-			if(!sd->inventory_data[index])
+			if (!sd->inventory_data[index])
 				continue;
 
 			if (itemdb_type(id) != IT_CARD) { //No card. Count amount in inventory.
 				if (sd->inventory_data[index]->nameid == id)
-					ret+= sd->inventory.u.items_inventory[index].amount;
+					ret += sd->inventory.u.items_inventory[index].amount;
 			} else { //Count cards.
-				short k;
 				if (itemdb_isspecial(sd->inventory.u.items_inventory[index].card[0]))
 					continue; //No cards
-				for(k=0; k<sd->inventory_data[index]->slot; k++) {
+				for (short k = 0; k < sd->inventory_data[index]->slot; k++) {
 					if (sd->inventory.u.items_inventory[index].card[k] == id)
 						ret++; //[Lupus]
 				}
@@ -16577,10 +16542,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	if( class_ != JT_FAKENPC && nd->class_ != class_ )
 		npc_setclass(nd, class_);
 	else if( size != -1 )
-	{ // Required to update the visual size
-		clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
-		clif_spawn(&nd->bl);
-	}
+		unit_refresh(&nd->bl); // Required to update the visual size
 
 	script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
@@ -17644,6 +17606,8 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_ADELAY, md->status.adelay);
 			getunitdata_sub(UMOB_DMOTION, md->status.dmotion);
 			getunitdata_sub(UMOB_TARGETID, md->target_id);
+			getunitdata_sub(UMOB_ROBE, md->vd->robe);
+			getunitdata_sub(UMOB_BODY2, md->vd->body_style);
 			break;
 
 		case BL_HOM:
@@ -17832,7 +17796,6 @@ BUILDIN_FUNC(getunitdata)
 				ShowWarning("buildin_getunitdata: Error in finding object BL_NPC!\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			getunitdata_sub(UNPC_DISPLAY, nd->class_);
 			getunitdata_sub(UNPC_LEVEL, nd->level);
 			getunitdata_sub(UNPC_HP, nd->status.hp);
 			getunitdata_sub(UNPC_MAXHP, nd->status.max_hp);
@@ -17865,6 +17828,19 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UNPC_AMOTION,  nd->status.amotion);
 			getunitdata_sub(UNPC_ADELAY, nd->status.adelay);
 			getunitdata_sub(UNPC_DMOTION, nd->status.dmotion);
+			getunitdata_sub(UNPC_SEX, nd->vd.sex);
+			getunitdata_sub(UNPC_CLASS, nd->vd.class_);
+			getunitdata_sub(UNPC_HAIRSTYLE, nd->vd.hair_style);
+			getunitdata_sub(UNPC_HAIRCOLOR, nd->vd.hair_color);
+			getunitdata_sub(UNPC_HEADBOTTOM, nd->vd.head_bottom);
+			getunitdata_sub(UNPC_HEADMIDDLE, nd->vd.head_mid);
+			getunitdata_sub(UNPC_HEADTOP, nd->vd.head_top);
+			getunitdata_sub(UNPC_CLOTHCOLOR, nd->vd.cloth_color);
+			getunitdata_sub(UNPC_SHIELD, nd->vd.shield);
+			getunitdata_sub(UNPC_WEAPON, nd->vd.weapon);
+			getunitdata_sub(UNPC_ROBE, nd->vd.robe);
+			getunitdata_sub(UNPC_BODY2, nd->vd.body_style);
+			getunitdata_sub(UNPC_DEADSIT, nd->vd.dead_sit);
 			break;
 
 		default:
@@ -17947,6 +17923,8 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_CLOTHCOLOR:
 			case UMOB_SHIELD:
 			case UMOB_WEAPON:
+			case UMOB_ROBE:
+			case UMOB_BODY2:
 				mob_set_dynamic_viewdata( md );
 				break;
 		}
@@ -17964,8 +17942,8 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
-			case UMOB_SEX: md->vd->sex = (char)value; clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
-			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
+			case UMOB_SEX: md->vd->sex = (char)value; unit_refresh(bl); break;
+			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); unit_refresh(bl); break;
 			case UMOB_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
 			case UMOB_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
 			case UMOB_HEADBOTTOM: clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
@@ -18022,6 +18000,8 @@ BUILDIN_FUNC(setunitdata)
 				mob_target(md,target,0);
 				break;
 			}
+			case UMOB_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
+			case UMOB_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18268,7 +18248,6 @@ BUILDIN_FUNC(setunitdata)
 			return SCRIPT_CMD_FAILURE;
 		}
 		switch (type) {
-			case UNPC_DISPLAY: status_set_viewdata(bl, (unsigned short)value); break;
 			case UNPC_LEVEL: nd->level = (unsigned int)value; break;
 			case UNPC_HP: nd->status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
 			case UNPC_MAXHP: nd->status.hp = nd->status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
@@ -18300,6 +18279,19 @@ BUILDIN_FUNC(setunitdata)
 			case UNPC_AMOTION: nd->status.amotion = (short)value; break;
 			case UNPC_ADELAY: nd->status.adelay = (short)value; break;
 			case UNPC_DMOTION: nd->status.dmotion = (short)value; break;
+			case UNPC_SEX: nd->vd.sex = (char)value; unit_refresh(bl); break;
+			case UNPC_CLASS: npc_setclass(nd, (short)value); break;
+			case UNPC_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
+			case UNPC_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
+			case UNPC_HEADBOTTOM: clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
+			case UNPC_HEADMIDDLE: clif_changelook(bl, LOOK_HEAD_MID, (unsigned short)value); break;
+			case UNPC_HEADTOP: clif_changelook(bl, LOOK_HEAD_TOP, (unsigned short)value); break;
+			case UNPC_CLOTHCOLOR: clif_changelook(bl, LOOK_CLOTHES_COLOR, (unsigned short)value); break;
+			case UNPC_SHIELD: clif_changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
+			case UNPC_WEAPON: clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
+			case UNPC_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
+			case UNPC_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
+			case UNPC_DEADSIT: nd->vd.dead_sit = (char)value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_NPC.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -19322,32 +19314,21 @@ BUILDIN_FUNC(readbook)
 /******************
 Questlog script commands
 *******************/
- /**
- * Add job criteria to questinfo
- * @param qi Quest Info
- * @param job
- * @author [Cydh]
- **/
-static void buildin_questinfo_setjob(struct questinfo *qi, int job) {
-	RECREATE(qi->jobid, unsigned short, qi->jobid_count+1);
-	qi->jobid[qi->jobid_count++] = job;
-}
-/**
- * questinfo <Quest ID>,<Icon>{,<Map Mark Color>{,<Job Class>}};
- **/
+
+/// questinfo <Icon>{,<Map Mark Color>{,<condition>}};
 BUILDIN_FUNC(questinfo)
 {
 	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id, icon, color = 0;
-	struct questinfo qi, *q2;
 
-	if( nd == NULL || nd->bl.m == -1 ) {
+	if (!nd || nd->bl.m == -1) {
 		ShowError("buildin_questinfo: No NPC attached.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
 
-	quest_id = script_getnum(st, 2);
-	icon = script_getnum(st, 3);
+	struct s_questinfo qi;
+	struct script_code *script = nullptr;
+	int color = QMARK_NONE;
+	int icon = script_getnum(st, 2);
 
 #if PACKETVER >= 20120410
 	switch(icon){
@@ -19377,45 +19358,60 @@ BUILDIN_FUNC(questinfo)
 			break;
 	}
 #else
-	if(icon < QTYPE_QUEST || icon > 7) // TODO: check why 7 and not QTYPE_WARG, might be related to icon + 1 below
+	if (icon < QTYPE_QUEST || icon > 7) // TODO: check why 7 and not QTYPE_WARG, might be related to icon + 1 below
 		icon = QTYPE_QUEST;
 	else
 		icon = icon + 1;
 #endif
 
-	qi.quest_id = quest_id;
-	qi.icon = (unsigned char)icon;
-	qi.nd = nd;
-
-	if( script_hasdata(st, 4) ) {
-		color = script_getnum(st, 4);
-		if( color < 0 || color > 3 ) {
-			ShowWarning("buildin_questinfo: invalid color '%d', changing to 0\n",color);
+	if (script_hasdata(st, 3)) {
+		color = script_getnum(st, 3);
+		if (color < QMARK_NONE || color >= QMARK_MAX) {
+			ShowWarning("buildin_questinfo: invalid color '%d', defaulting to QMARK_NONE.\n",color);
 			script_reportfunc(st);
-			color = 0;
-		}
-	}
-	qi.color = (unsigned char)color;
-
-	qi.min_level = 1;
-	qi.max_level = MAX_LEVEL;
-
-	q2 = map_add_questinfo(nd->bl.m, &qi);
-	q2->req = NULL;
-	q2->req_count = 0;
-	q2->jobid = NULL;
-	q2->jobid_count = 0;
-
-	if(script_hasdata(st, 5)) {
-		int job = script_getnum(st, 5);
-
-		if (!pcdb_checkid(job))
-			ShowError("buildin_questinfo: Nonexistant Job Class.\n");
-		else {
-			buildin_questinfo_setjob(q2, job);
+			color = QMARK_NONE;
 		}
 	}
 
+	if (script_hasdata(st, 4)) {
+		const char *str = script_getstr(st, 4);
+
+		if (str) {
+			std::string condition(str);
+
+			if (condition.find( "achievement_condition" ) == std::string::npos)
+				condition = "achievement_condition( " + condition + " );";
+
+			script = parse_script(condition.c_str(), "questinfoparsing", 0, SCRIPT_IGNORE_EXTERNAL_BRACKETS);
+			if (!script) {
+				st->state = END;
+				return SCRIPT_CMD_FAILURE;
+			}
+		}
+	}
+
+	qi.nd = nd;
+	qi.icon = static_cast<e_questinfo_types>(icon);
+	qi.color = static_cast<e_questinfo_markcolor>(color);
+	qi.condition = script;
+
+	struct map_data *mapdata = map_getmapdata(nd->bl.m);
+	mapdata->qi_data.push_back(qi);
+
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/**
+ * questinfo_refresh {<char_id>};
+ **/
+BUILDIN_FUNC(questinfo_refresh)
+{
+	struct map_session_data *sd;
+
+	if (!script_charid2sd(2, sd))
+		return SCRIPT_CMD_FAILURE;
+
+	pc_show_questinfo(sd); 
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -19538,36 +19534,38 @@ BUILDIN_FUNC(isbegin_quest)
 BUILDIN_FUNC(showevent)
 {
 	TBL_PC *sd;
-	struct npc_data *nd = map_id2nd(st->oid);
-	int icon, color = 0;
 
 	if (!script_charid2sd(4,sd))
 		return SCRIPT_CMD_FAILURE;
 
-	if( sd == NULL || nd == NULL )
+	struct npc_data *nd = map_id2nd(st->oid);
+
+	if (!nd)
 		return SCRIPT_CMD_SUCCESS;
 
-	icon = script_getnum(st, 2);
-	if( script_hasdata(st, 3) ) {
+	int color = QMARK_NONE;
+	int icon = script_getnum(st, 2);
+
+	if (script_hasdata(st, 3)) {
 		color = script_getnum(st, 3);
-		if( color < 0 || color > 3 ) {
-			ShowWarning("buildin_showevent: invalid color '%d', changing to 0\n",color);
+		if (color < QMARK_NONE || color >= QMARK_MAX) {
+			ShowWarning("buildin_showevent: Invalid color '%d', defaulting to QMARK_NONE.\n",color);
 			script_reportfunc(st);
-			color = 0;
+			color = QMARK_NONE;
 		}
 	}
 
 #if PACKETVER >= 20120410
-	if(icon < 0 || (icon > 8 && icon != 9999) || icon == 7)
-		icon = 9999; // Default to nothing if icon id is invalid.
+	if (icon < 0 || (icon > 8 && icon != QTYPE_NONE) || icon == 7)
+		icon = QTYPE_NONE; // Default to nothing if icon id is invalid.
 #else
-	if(icon < 0 || icon > 7)
+	if (icon < 0 || icon > 7)
 		icon = 0;
 	else
 		icon = icon + 1;
 #endif
 
-	clif_quest_show_event(sd, &nd->bl, icon, color);
+	clif_quest_show_event(sd, &nd->bl, static_cast<e_questinfo_types>(icon), static_cast<e_questinfo_markcolor>(color));
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -20515,6 +20513,60 @@ BUILDIN_FUNC(instance_info)
 			return SCRIPT_CMD_FAILURE;
 	}
 
+	return SCRIPT_CMD_SUCCESS;
+}
+
+/*------------------------------------------
+*instance_live_info( <info type>{, <instance id>} );
+- ILI_NAME : Instance Name
+- ILI_MODE : Instance Mode
+- ILI_OWNER : owner id
+*------------------------------------------*/
+BUILDIN_FUNC(instance_live_info)
+{
+	int type = script_getnum(st, 2);
+	int id = 0;
+
+	if (type < ILI_NAME || type > ILI_OWNER) {
+		ShowError("buildin_instance_live_info: Unknown instance information type \"%d\".\n", type);
+		script_pushint(st, -1);
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!script_hasdata(st, 3))
+		id = script_instancegetid(st);
+	else
+		id = script_getnum(st, 3);
+
+	struct instance_db *db = nullptr;
+	struct instance_data *im = nullptr;
+
+	if (id > 0 && id < MAX_INSTANCE_DATA) {
+		im = &instance_data[id];
+
+		if (im)
+			db = instance_searchtype_db(im->type);
+	}
+
+	if (!im || !db) {
+		if (type == ILI_NAME)
+			script_pushconststr(st, "");
+		else
+			script_pushint(st, -1);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch( type ) {
+	case ILI_NAME:
+		script_pushstrcopy(st, StringBuf_Value(db->name));
+		break;
+	case ILI_MODE:
+		script_pushint(st, im->mode);
+		break;
+	case ILI_OWNER:
+		script_pushint(st, im->owner_id);
+		break;
+	}
 	return SCRIPT_CMD_SUCCESS;
 }
 
@@ -22447,97 +22499,6 @@ BUILDIN_FUNC(geteleminfo) {
 	return SCRIPT_CMD_SUCCESS;
 }
 
-
-/**
- * Set the quest info of quest_id only showed on player in level range.
- * setquestinfo_level <quest_id>,<min_level>,<max_level>
- * @author [Cydh]
- **/
-BUILDIN_FUNC(setquestinfo_level) {
-	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id = script_getnum(st, 2);
-	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
-
-	if (!qi) {
-		ShowError("buildin_setquestinfo_level: Quest with ID '%d' is not defined yet.\n", quest_id);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	qi->min_level = script_getnum(st, 3);
-	qi->max_level = script_getnum(st, 4);
-	if (!qi->max_level)
-		qi->max_level = MAX_LEVEL;
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/**
- * Set the quest info of quest_id only showed for player that has quest criteria
- * setquestinfo_req <quest_id>,<quest_req_id>,<state>{,<quest_req_id>,<state>,...};
- * @author [Cydh]
- **/
-BUILDIN_FUNC(setquestinfo_req) {
-	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id = script_getnum(st, 2);
-	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
-	uint8 i = 0;
-	uint8 num = script_lastdata(st);
-
-	if (!qi) {
-		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not defined yet.\n", quest_id);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (quest_search(quest_id) == &quest_dummy) {
-		ShowError("buildin_setquestinfo_req: Quest with ID '%d' is not found in Quest DB.\n", quest_id);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	if (num%2) {
-		ShowError("buildin_setquestinfo_req: Odd number of parameters(%d) - pairs of requirements are expected.\n", num-2);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	for (i = 3; i <= num; i += 2) {
-		RECREATE(qi->req, struct questinfo_req, qi->req_count+1);
-		qi->req[qi->req_count].quest_id = script_getnum(st, i);
-		qi->req[qi->req_count].state = (script_getnum(st, i+1) >= 2) ? 2 : (script_getnum(st, i+1) <= 0) ? 0 : 1;
-		qi->req_count++;
-	}
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
-/**
- * Set the quest info of quest_id only showed for player that has specified Job
- * setquestinfo_job <quest_id>,<job>{,<job>...};
- * @author [Cydh]
- **/
-BUILDIN_FUNC(setquestinfo_job) {
-	TBL_NPC* nd = map_id2nd(st->oid);
-	int quest_id = script_getnum(st, 2);
-	struct questinfo *qi = map_has_questinfo(nd->bl.m, nd, quest_id);
-	int job_id = 0;
-	uint8 i = 0;
-	uint8 num = script_lastdata(st)+1;
-
-	if (!qi) {
-		ShowError("buildin_setquestinfo_job: Quest with ID '%d' is not defined yet.\n", quest_id);
-		return SCRIPT_CMD_FAILURE;
-	}
-
-	for (i = 3; i < num; i++) {
-		job_id = script_getnum(st, i);
-		if (!pcdb_checkid(job_id)) {
-			ShowError("buildin_setquestinfo_job: Invalid job id '%d' in Quest with ID %d.\n", job_id, quest_id);
-			continue;
-		}
-		buildin_questinfo_setjob(qi, job_id);
-	}
-
-	return SCRIPT_CMD_SUCCESS;
-}
-
 /**
  * opendressroom(<flag>{,<char_id>});
  */
@@ -23789,7 +23750,7 @@ BUILDIN_FUNC(achievementexists) {
 		}
 	}
 
-	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id);
+	ARR_FIND(0, sd->achievement_data.count, i, sd->achievement_data.achievements[i].achievement_id == achievement_id && sd->achievement_data.achievements[i].completed > 0 );
 	script_pushint(st, i < sd->achievement_data.count ? true : false);
 	return SCRIPT_CMD_SUCCESS;
 }
@@ -24391,6 +24352,59 @@ BUILDIN_FUNC(getvariableofinstance)
 	return SCRIPT_CMD_SUCCESS;
 }
 
+/*
+  convertpcinfo(<char_id>,<type>)
+  convertpcinfo(<account_id>,<type>)
+  convertpcinfo(<player_name>,<type>)
+*/
+BUILDIN_FUNC(convertpcinfo) {
+	TBL_PC *sd;
+
+	if (script_isstring(st, 2))
+		sd = map_nick2sd(script_getstr(st, 2),false);
+	else {
+		int id = script_getnum(st, 2);
+		sd = map_id2sd(id);
+		if (!sd)
+			sd = map_charid2sd(id);
+	}
+
+	int type = script_getnum(st, 3);
+
+	switch (type) {
+	case CPC_NAME:
+	case CPC_CHAR:
+	case CPC_ACCOUNT:
+		break;
+	default:
+		ShowError("buildin_convertpcinfo: Unknown type %d.\n", type);
+		script_pushnil(st);
+		st->state = END;
+		return SCRIPT_CMD_FAILURE;
+	}
+
+	if (!sd) {
+		if (type == CPC_NAME)
+			script_pushstrcopy(st, "");
+		else
+			script_pushint(st, 0);
+		return SCRIPT_CMD_SUCCESS;
+	}
+
+	switch (type) {
+	case CPC_NAME:
+		script_pushstrcopy(st, sd->status.name);
+		break;
+	case CPC_CHAR:
+		script_pushint(st, sd->status.char_id);
+		break;
+	case CPC_ACCOUNT:
+		script_pushint(st, sd->status.account_id);
+		break;
+	}
+	return SCRIPT_CMD_SUCCESS;
+}
+
 #include "../custom/script.inc"
 
 // declarations that were supposed to be exported from npc_chat.cpp
@@ -24496,7 +24510,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF2(enableitemuse,"enable_items",""),
 	BUILDIN_DEF2(disableitemuse,"disable_items",""),
 	BUILDIN_DEF(cutin,"si"),
-	BUILDIN_DEF(viewpoint,"iiiii"),
+	BUILDIN_DEF(viewpoint,"iiiii?"),
 	BUILDIN_DEF(heal,"ii?"),
 	BUILDIN_DEF(itemheal,"ii?"),
 	BUILDIN_DEF(percentheal,"ii?"),
@@ -24910,6 +24924,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(instance_check_guild,"i???"),
 	BUILDIN_DEF(instance_check_clan,"i???"),
 	BUILDIN_DEF(instance_info,"si?"),
+	BUILDIN_DEF(instance_live_info,"i?"),
 	/**
 	 * 3rd-related
 	 **/
@@ -24943,7 +24958,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(useatcmd, "s"),
 
 	//Quest Log System [Inkfish]
-	BUILDIN_DEF(questinfo, "ii??"),
+	BUILDIN_DEF(questinfo, "i??"),
 	BUILDIN_DEF(setquest, "i?"),
 	BUILDIN_DEF(erasequest, "i?"),
 	BUILDIN_DEF(completequest, "i?"),
@@ -24951,6 +24966,7 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(isbegin_quest,"i?"),
 	BUILDIN_DEF(changequest, "ii?"),
 	BUILDIN_DEF(showevent, "i??"),
+	BUILDIN_DEF(questinfo_refresh, "?"),
 
 	//Bound items [Xantara] & [Akinari]
 	BUILDIN_DEF2(getitem,"getitembound","vii?"),
@@ -24990,9 +25006,6 @@ struct script_function buildin_func[] = {
 	BUILDIN_DEF(showscript,"s??"),
 	BUILDIN_DEF(ignoretimeout,"i?"),
 	BUILDIN_DEF(geteleminfo,"i?"),
-	BUILDIN_DEF(setquestinfo_level,"iii"),
-	BUILDIN_DEF(setquestinfo_req,"iii*"),
-	BUILDIN_DEF(setquestinfo_job,"ii*"),
 	BUILDIN_DEF(opendressroom,"i?"),
 	BUILDIN_DEF(navigateto,"s???????"),
 	BUILDIN_DEF(getguildalliance,"ii"),
@@ -25059,6 +25072,7 @@ struct script_function buildin_func[] = {
 
 	BUILDIN_DEF(achievement_condition,"i"),
 	BUILDIN_DEF(getvariableofinstance,"ri"),
+	BUILDIN_DEF(convertpcinfo,"vi"),
 #include "../custom/script_def.inc"
 
 	{NULL,NULL,NULL},

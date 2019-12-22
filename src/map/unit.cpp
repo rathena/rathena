@@ -1244,6 +1244,12 @@ int unit_warp(struct block_list *bl,short m,short x,short y,clr_type type)
 	bl->y = ud->to_y = y;
 	bl->m = m;
 
+	if (bl->type == BL_NPC) {
+		TBL_NPC *nd = (TBL_NPC*)bl;
+		map_addnpc(m, nd);
+		npc_setcells(nd);
+	}
+
 	if(map_addblock(bl))
 		return 4; //error on adding bl to map
 
@@ -3094,6 +3100,10 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 			}
 			break;
 		}
+		case BL_NPC:
+			if (npc_remove_map( (TBL_NPC*)bl ) != 0)
+				return 0;
+			break;
 		default:
 			break;// do nothing
 	}
@@ -3102,14 +3112,47 @@ int unit_remove_map_(struct block_list *bl, clr_type clrtype, const char* file, 
 		skill_unit_move(bl,gettick(),4);
 		skill_cleartimerskill(bl);
 	}
-	// /BL_MOB is handled by mob_dead unless the monster is not dead.
-	if( bl->type != BL_MOB || !status_isdead(bl) )
-		clif_clearunit_area(bl,clrtype);
 
-	map_delblock(bl);
+	switch (bl->type) {
+		case BL_NPC:
+			// already handled by npc_remove_map
+			break;
+		case BL_MOB:
+			// /BL_MOB is handled by mob_dead unless the monster is not dead.
+			if (status_isdead(bl)) {
+				map_delblock(bl);
+				break;
+			}
+			// Fall through
+		default:
+			clif_clearunit_area(bl, clrtype);
+			map_delblock(bl);
+			break;
+	}
+
 	map_freeblock_unlock();
 
 	return 1;
+}
+
+/**
+ * Refresh the area with a change in display of a unit.
+ * @bl: Object to update
+ */
+void unit_refresh(struct block_list *bl) {
+	nullpo_retv(bl);
+
+	if (bl->m < 0)
+		return;
+
+	struct map_data *mapdata = map_getmapdata(bl->m);
+
+	// Using CLR_TRICKDEAD because other flags show effects
+	// Probably need to use another flag or other way to refresh it
+	if (mapdata->users) {
+		clif_clearunit_area(bl, CLR_TRICKDEAD); // Fade out
+		clif_spawn(bl); // Fade in
+	}
 }
 
 /**
@@ -3261,6 +3304,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			// Clearing...
 			if (sd->bonus_script.head)
 				pc_bonus_script_clear(sd, BSF_REM_ALL);
+
+			skill_clear_unitgroup(bl);
+			status_change_clear(bl,1);
 			break;
 		}
 		case BL_PET: {
@@ -3282,6 +3328,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			if( sd )
 				sd->pd = NULL;
 			pd->master = NULL;
+
+			skill_clear_unitgroup(bl);
+			status_change_clear(bl,1);
 			break;
 		}
 		case BL_MOB: {
@@ -3337,6 +3386,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 				md->base_status = NULL;
 			}
 
+			skill_clear_unitgroup(bl);
+			status_change_clear(bl,1);
+
 			if( mob_is_clone(md->mob_id) )
 				mob_clone_delete(md);
 
@@ -3363,6 +3415,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 			if( sd )
 				sd->hd = NULL;
 			hd->master = NULL;
+
+			skill_clear_unitgroup(bl);
+			status_change_clear(bl,1);
 			break;
 		}
 		case BL_MER: {
@@ -3383,6 +3438,9 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			mercenary_contract_stop(md);
 			md->master = NULL;
+
+			skill_clear_unitgroup(bl);
+			status_change_clear(bl,1);
 			break;
 		}
 		case BL_ELEM: {
@@ -3403,12 +3461,13 @@ int unit_free(struct block_list *bl, clr_type clrtype)
 
 			elemental_summon_stop(ed);
 			ed->master = NULL;
+
+			skill_clear_unitgroup(bl);
+			status_change_clear(bl,1);
 			break;
 		}
 	}
 
-	skill_clear_unitgroup(bl);
-	status_change_clear(bl,1);
 	map_deliddb(bl);
 
 	if( bl->type != BL_PC ) // Players are handled by map_quit

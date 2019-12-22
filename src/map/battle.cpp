@@ -17,6 +17,7 @@
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
 
+#include "atcommand.hpp"
 #include "battleground.hpp"
 #include "chrif.hpp"
 #include "clif.hpp"
@@ -640,7 +641,7 @@ int battle_calc_cardfix(int attack_type, struct block_list *src, struct block_li
 			if( sd && !(nk&NK_NO_CARDFIX_ATK) ) {
 				cardfix = cardfix * (100 + sd->magic_addrace[tstatus->race] + sd->magic_addrace[RC_ALL] + sd->magic_addrace2[t_race2]) / 100;
 				if( !(nk&NK_NO_ELEFIX) ) { // Affected by Element modifier bonuses
-					cardfix = cardfix * (100 + sd->magic_addele[tstatus->def_ele] + sd->magic_addele[ELE_ALL] + 
+					cardfix = cardfix * (100 + sd->magic_addele[tstatus->def_ele] + sd->magic_addele[ELE_ALL] +
 						sd->magic_addele_script[tstatus->def_ele] + sd->magic_addele_script[ELE_ALL]) / 100;
 					cardfix = cardfix * (100 + sd->magic_atk_ele[rh_ele] + sd->magic_atk_ele[ELE_ALL]) / 100;
 				}
@@ -1709,10 +1710,7 @@ int64 battle_calc_gvg_damage(struct block_list *src,struct block_list *bl,int64 
 
 	if (skill_get_inf2(skill_id)&INF2_NO_GVG_DMG) //Skills with no gvg damage reduction.
 		return damage;
-	/* Uncomment if you want god-mode Emperiums at 100 defense. [Kisuka]
-	if (md && md->guardian_data)
-		damage -= damage * (md->guardian_data->castle->defense/100) * battle_config.castle_defense_rate/100;
-	*/
+
 	if (flag & BF_SKILL) { //Skills get a different reduction than non-skills. [Skotlex]
 		if (flag&BF_WEAPON)
 			damage = damage * battle_config.gvg_weapon_damage_rate / 100;
@@ -2190,7 +2188,7 @@ static int battle_skill_damage_skill(struct block_list *src, struct block_list *
 		(damage->map&4 && mapdata_flag_gvg2(mapdata)) ||
 		(damage->map&8 && mapdata->flag[MF_BATTLEGROUND]) ||
 		(damage->map&16 && mapdata->flag[MF_SKILL_DAMAGE]) ||
-		(damage->map&(8*mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
+		(damage->map&(mapdata->zone) && mapdata->flag[MF_RESTRICTED]))
 	{
 		return damage->rate[battle_skill_damage_type(target)];
 	}
@@ -2346,18 +2344,20 @@ static bool is_attack_right_handed(struct block_list *src, int skill_id)
 static bool is_attack_left_handed(struct block_list *src, int skill_id)
 {
 	if(src != NULL) {
-		struct status_data *sstatus = status_get_status_data(src);
-		struct map_session_data *sd = BL_CAST(BL_PC, src);
-
 		//Skills ALWAYS use ONLY your right-hand weapon (tested on Aegis 10.2)
 		if(!skill_id) {
-			if (sd && sd->weapontype1 == 0 && sd->weapontype2 > 0)
-				return true;
+			struct map_session_data *sd = BL_CAST(BL_PC, src);
+
+			if (sd) {
+				if (sd->weapontype1 == 0 && sd->weapontype2 > 0)
+					return true;
+				if (sd->status.weapon == W_KATAR)
+					return true;
+			}
+
+			struct status_data *sstatus = status_get_status_data(src);
 
 			if (sstatus->lhw.atk)
-				return true;
-
-			if (sd && sd->status.weapon == W_KATAR)
 				return true;
 		}
 	}
@@ -2382,14 +2382,12 @@ static bool is_attack_critical(struct Damage* wd, struct block_list *src, struct
 	struct map_session_data *tsd = BL_CAST(BL_PC, target);
 
 	if (!first_call)
-		return (wd->type == DMG_CRITICAL);
+		return (wd->type == DMG_CRITICAL || wd->type == DMG_MULTI_HIT_CRITICAL);
 
 	if (skill_id == NPC_CRITICALSLASH || skill_id == LG_PINPOINTATTACK) //Always critical skills
 		return true;
 
-	if( !(wd->type&DMG_MULTI_HIT) && sstatus->cri && (!skill_id ||
-		skill_id == KN_AUTOCOUNTER || skill_id == SN_SHARPSHOOTING ||
-		skill_id == MA_SHARPSHOOTING || skill_id == NJ_KIRIKAGE))
+	if( sstatus->cri && ( !skill_id || skill_get_nk(skill_id)&NK_CRITICAL ) )
 	{
 		short cri = sstatus->cri;
 
@@ -2952,7 +2950,7 @@ static void battle_calc_attack_masteries(struct Damage* wd, struct block_list *s
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, ((wd->div_ < 1) ? 1 : wd->div_) * sd->spiritball * 3);
 #endif
 
-		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) {
+		if (skill_id == NJ_SYURIKEN && (skill = pc_checkskill(sd,NJ_TOBIDOUGU)) > 0) { // !TODO: Confirm new mastery formula
 			ATK_ADD(wd->damage, wd->damage2, 3 * skill);
 #ifdef RENEWAL
 			ATK_ADD(wd->masteryAtk, wd->masteryAtk2, 3 * skill);
@@ -3363,10 +3361,13 @@ static void battle_calc_multi_attack(struct Damage* wd, struct block_list *src,s
 			if( tsc && (tsc->data[SC_BITE] || tsc->data[SC_ANKLE] || tsc->data[SC_ELECTRICSHOCKER]) )
 				wd->div_ = tstatus->size + 2 + ( (rnd()%100 < 50-tstatus->size*10) ? 1 : 0 );
 			break;
+		case SR_RIDEINLIGHTNING:
+			wd->div_ = (sd ? max(1, sd->spiritball_old) : 1);
+			break;
 		case RL_QD_SHOT:
 			wd->div_ = 1 + (sd ? sd->status.job_level : 1) / 20 + (tsc && tsc->data[SC_C_MARKER] ? 2 : 0);
 			break;
-		case SC_JYUMONJIKIRI:
+		case KO_JYUMONJIKIRI:
 			if( tsc && tsc->data[SC_JYUMONJIKIRI] )
 				wd->div_ = wd->div_ * -1;// needs more info
 			break;
@@ -3616,6 +3617,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case MO_COMBOFINISH:
 			skillratio += 140 + 60 * skill_lv;
+			if (sc->data[SC_GT_ENERGYGAIN])
+				skillratio += skillratio * 50 / 100;
 			break;
 		case BA_MUSICALSTRIKE:
 		case DC_THROWARROW:
@@ -3623,9 +3626,13 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case CH_TIGERFIST:
 			skillratio += -60 + 100 * skill_lv;
+			if (sc->data[SC_GT_ENERGYGAIN])
+				skillratio += skillratio * 50 / 100;
 			break;
 		case CH_CHAINCRUSH:
 			skillratio += 300 + 100 * skill_lv;
+			if (sc->data[SC_GT_ENERGYGAIN])
+				skillratio += skillratio * 50 / 100;
 			break;
 		case CH_PALMSTRIKE:
 			skillratio += 100 + 100 * skill_lv;
@@ -3634,11 +3641,9 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += 40 * skill_lv;
 			break;
 		case LK_JOINTBEAT:
-			i = 10 * skill_lv - 50;
-			// Although not clear, it's being assumed that the 2x damage is only for the break neck ailment.
-			if (wd->miscflag&BREAK_NECK)
-				i *= 2;
-			skillratio += i;
+			skillratio += 10 * skill_lv - 50;
+			if (wd->miscflag & BREAK_NECK || (tsc && tsc->data[SC_JOINTBEAT] && tsc->data[SC_JOINTBEAT]->val2 & BREAK_NECK)) // The 2x damage is only for the BREAK_NECK ailment.
+				skillratio <<= 1;
 			break;
 #ifdef RENEWAL
 		// Renewal: skill ratio applies to entire damage [helvetica]
@@ -3751,7 +3756,11 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 #endif
 		case NJ_HUUMA:
+#ifdef RENEWAL
+			skillratio += -150 + 250 * skill_lv;
+#else
 			skillratio += 50 + 150 * skill_lv;
+#endif
 			break;
 		case NJ_TATAMIGAESHI:
 			skillratio += 10 * skill_lv;
@@ -3760,14 +3769,22 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 #endif
 			break;
 		case NJ_KASUMIKIRI:
+#ifdef RENEWAL
+			skillratio += 20 * skill_lv;
+#else
 			skillratio += 10 * skill_lv;
+#endif
 			break;
 		case NJ_KIRIKAGE:
+#ifdef RENEWAL
+			skillratio += -50 + 150 * skill_lv;
+#else
 			skillratio += 100 * (skill_lv - 1);
+#endif
 			break;
 #ifdef RENEWAL
 		case NJ_KUNAI:
-			skillratio += 200;
+			skillratio += -100 + 100 * skill_lv;
 			break;
 #endif
 		case KN_CHARGEATK: { // +100% every 3 cells of distance but hard-limited to 500%
@@ -4035,14 +4052,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			break;
 		case SR_EARTHSHAKER:
 			if (tsc && ((tsc->option&(OPTION_HIDE|OPTION_CLOAK|OPTION_CHASEWALK)) || tsc->data[SC_CAMOUFLAGE] || tsc->data[SC_STEALTHFIELD] || tsc->data[SC__SHADOWFORM])) {
-				//[(Skill Level x 150) x (Caster Base Level / 100) + (Caster INT x 3)] %
-				skillratio += -100 + 150 * skill_lv;
+				//[(Skill Level x 300) x (Caster Base Level / 100) + (Caster STR x 3)] %
+				skillratio += -100 + 300 * skill_lv;
 				RE_LVL_DMOD(100);
-				skillratio += status_get_int(src) * 3;
-			} else { //[(Skill Level x 50) x (Caster Base Level / 100) + (Caster INT x 2)] %
-				skillratio += -100 + 50 * skill_lv;
+				skillratio += status_get_str(src) * 3;
+			} else { //[(Skill Level x 400) x (Caster Base Level / 100) + (Caster STR x 2)] %
+				skillratio += -100 + 400 * skill_lv;
 				RE_LVL_DMOD(100);
-				skillratio += status_get_int(src) * 2;
+				skillratio += status_get_str(src) * 2;
 			}
 			break;
 
@@ -4057,8 +4074,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
  			break;
 		case SR_TIGERCANNON:
 			{
-				unsigned int hp = sstatus->max_hp * abs(skill_get_hp_rate(skill_id, skill_lv)) / 100,
-							 sp = sstatus->max_sp * abs(skill_get_sp_rate(skill_id, skill_lv)) / 100;
+				unsigned int hp = sstatus->max_hp * (12 + (skill_lv * 2)) / 100,
+							 sp = sstatus->max_sp * (5 + skill_lv) / 100;
 
 				if (wd->miscflag&8)
 					// Base_Damage = [((Caster consumed HP + SP) / 2) x Caster Base Level / 100] %
@@ -4068,25 +4085,25 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 					skillratio += -100 + (hp + sp) / 4;
 				RE_LVL_DMOD(100);
 			}
+			if (sc->data[SC_GT_REVITALIZE])
+				skillratio += skillratio * 30 / 100;
 			break;
 		case SR_SKYNETBLOW:
-			if (wd->miscflag&8)
-				//ATK [{(Skill Level x 100) + (Caster AGI) + 150} x Caster Base Level / 100] %
-				skillratio += -100 + 100 * skill_lv + sstatus->agi + 150;
-			else
-				//ATK [{(Skill Level x 80) + (Caster AGI)} x Caster Base Level / 100] %
-				skillratio += -100 + 80 * skill_lv + sstatus->agi;
+			//ATK [{(Skill Level x 80) + (Caster AGI)} x Caster Base Level / 100] %
+			skillratio += -100 + 80 * skill_lv + sstatus->agi;
 			RE_LVL_DMOD(100);
 			break;
 
 		case SR_RAMPAGEBLASTER:
-			if (sc && sc->data[SC_EXPLOSIONSPIRITS]) {
-				skillratio += -100 + (20 * sc->data[SC_EXPLOSIONSPIRITS]->val1 + 20 * skill_lv) * ((sd) ? sd->spiritball_old : 1);
+			if (tsc && tsc->data[SC_EARTHSHAKER]) {
+				skillratio += 1400 + 550 * skill_lv;
 				RE_LVL_DMOD(120);
 			} else {
-				skillratio += -100 + (20 * skill_lv) * ((sd) ? sd->spiritball_old : 1);
+				skillratio += 900 + 350 * skill_lv;
 				RE_LVL_DMOD(150);
 			}
+			if (sc->data[SC_GT_CHANGE])
+				skillratio += skillratio * 30 / 100;
 			break;
 		case SR_KNUCKLEARROW:
 			if (wd->miscflag&4) { // ATK [(Skill Level x 150) + (1000 x Target current weight / Maximum weight) + (Target Base Level x 5) x (Caster Base Level / 150)] %
@@ -4094,10 +4111,15 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				if (tsd && tsd->weight)
 					skillratio += 100 * tsd->weight / tsd->max_weight;
 				RE_LVL_DMOD(150);
-			} else { // ATK [(Skill Level x 100 + 500) x Caster Base Level / 100] %
-				skillratio += 400 + 100 * skill_lv;
+			} else {
+				if (status_get_class_(target) == CLASS_BOSS)
+					skillratio += 400 + 200 * skill_lv;
+				else // ATK [(Skill Level x 100 + 500) x Caster Base Level / 100] %
+					skillratio += 400 + 100 * skill_lv;
 				RE_LVL_DMOD(100);
 			}
+			if (sc->data[SC_GT_CHANGE])
+				skillratio += skillratio * 30 / 100;
 			break;
 		case SR_WINDMILL: // ATK [(Caster Base Level + Caster DEX) x Caster Base Level / 100] %
 			skillratio += -100 + status_get_lv(src) + status_get_dex(src);
@@ -4109,6 +4131,8 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			else
 				skillratio += -100 + 500 * skill_lv;
 			RE_LVL_DMOD(100);
+			if (sc->data[SC_GT_REVITALIZE])
+				skillratio += skillratio * 30 / 100;
 			break;
 		case SR_GENTLETOUCH_QUIET:
 			skillratio += -100 + 100 * skill_lv + status_get_dex(src);
@@ -4118,10 +4142,10 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 			skillratio += -100 + 300 * skill_lv;
 			RE_LVL_DMOD(150);
 			break;
-		case SR_RIDEINLIGHTNING: // ATK [{(Skill Level x 200) + Additional Damage} x Caster Base Level / 100] %
-			skillratio += -100 + 200 * skill_lv;
-			if ((sstatus->rhw.ele) == ELE_WIND || (sstatus->lhw.ele) == ELE_WIND)
-				skillratio += skill_lv * 50;
+		case SR_RIDEINLIGHTNING: // ATK [{(Skill Level x 40) + Additional Damage} x Caster Base Level / 100] %
+			skillratio += -100 + 40 * skill_lv;
+			if (sd && sd->status.weapon == W_KNUCKLE)
+				skillratio += skillratio * 25 / 100;
 			RE_LVL_DMOD(100);
 			break;
 		case WM_REVERBERATION_MELEE:
@@ -4491,6 +4515,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 				RE_ALLATK_ADDRATE(wd, 100);
 			}
 		}
+		if (sc->data[SC_GT_CHANGE])
+			ATK_ADDRATE(wd->damage, wd->damage2, sc->data[SC_GT_CHANGE]->val1);
 		if (sc->data[SC_EDP]) {
 			switch(skill_id) {
 				case AS_SPLASHER:
@@ -4702,7 +4728,7 @@ static void battle_calc_defense_reduction(struct Damage* wd, struct block_list *
 		}
 
 		if (tsc->data[SC_GT_REVITALIZE])
-			def2 += tsc->data[SC_GT_REVITALIZE]->val4;
+			def1 += tsc->data[SC_GT_REVITALIZE]->val4;
 
 		if (tsc->data[SC_OVERED_BOOST] && target->type == BL_PC)
 			def1 = (def1 * tsc->data[SC_OVERED_BOOST]->val4) / 100;
@@ -4869,7 +4895,6 @@ static void battle_calc_attack_post_defense(struct Damage* wd, struct block_list
  */
 static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,struct block_list *target, uint16 skill_id, uint16 skill_lv)
 {
-	struct map_session_data *sd = BL_CAST(BL_PC, src);
 	struct status_data *tstatus = status_get_status_data(target);
 	bool attack_hits = is_attack_hitting(wd, src, target, skill_id, skill_lv, false);
 	int right_element = battle_get_weapon_element(wd, src, target, skill_id, skill_lv, EQI_HAND_R, false);
@@ -4883,11 +4908,12 @@ static void battle_calc_attack_plant(struct Damage* wd, struct block_list *src,s
 	if( attack_hits || wd->damage > 0 )
 		wd->damage = 1; //In some cases, right hand no need to have a weapon to deal a damage
 	if( is_attack_left_handed(src, skill_id) && (attack_hits || wd->damage2 > 0) ) {
-		if(sd->status.weapon == W_KATAR)
+		struct map_session_data *sd = BL_CAST(BL_PC, src);
+
+		if (sd && sd->status.weapon == W_KATAR)
 			wd->damage2 = 0; //No backhand damage against plants
-		else {
+		else
 			wd->damage2 = 1; //Deal 1 HP damage as long as there is a weapon in the left hand
-		}
 	}
 
 	if (attack_hits && target->type == BL_MOB) {
@@ -5361,8 +5387,16 @@ static struct Damage battle_calc_weapon_attack(struct block_list *src, struct bl
 	battle_calc_multi_attack(&wd, src, target, skill_id, skill_lv);
 
 	// crit check is next since crits always hit on official [helvetica]
-	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, true))
+	if (is_attack_critical(&wd, src, target, skill_id, skill_lv, true)) {
+#if PACKETVER >= 20161207
+		if (wd.type&DMG_MULTI_HIT)
+			wd.type = DMG_MULTI_HIT_CRITICAL;
+		else
+			wd.type = DMG_CRITICAL;
+#else
 		wd.type = DMG_CRITICAL;
+#endif
+	}
 
 	// check if we're landing a hit
 	if(!is_attack_hitting(&wd, src, target, skill_id, skill_lv, true))
@@ -5928,7 +5962,11 @@ struct Damage battle_calc_magic_attack(struct block_list *src,struct block_list 
 							skillratio += 25 * sd->spiritcharm;
 						break;
 					case NJ_RAIGEKISAI:
+#ifdef RENEWAL
+						skillratio += 100 * skill_lv;
+#else
 						skillratio += 60 + 40 * skill_lv;
+#endif
 						if(sd && sd->spiritcharm_type == CHARM_TYPE_WIND && sd->spiritcharm > 0)
 							skillratio += 15 * sd->spiritcharm;
 						break;
@@ -6570,7 +6608,7 @@ struct Damage battle_calc_misc_attack(struct block_list *src,struct block_list *
 				struct Damage atk = battle_calc_weapon_attack(src, target, skill_id, skill_lv, 0);
 				struct Damage matk = battle_calc_magic_attack(src, target, skill_id, skill_lv, 0);
 				md.damage = 7 * ((atk.damage/skill_lv + matk.damage/skill_lv) * tstatus->vit / 100 );
-	
+
 				// AD benefits from endow/element but damage is forced back to neutral
 				md.damage = battle_attr_fix(src, target, md.damage, ELE_NEUTRAL, tstatus->def_ele, tstatus->ele_lv);
 			}
@@ -7996,7 +8034,8 @@ static const struct _battle_data {
 	{ "enable_critical",                    &battle_config.enable_critical,                 BL_PC,  BL_NUL, BL_ALL,         },
 	{ "mob_critical_rate",                  &battle_config.mob_critical_rate,               100,    0,      INT_MAX,        },
 	{ "critical_rate",                      &battle_config.critical_rate,                   100,    0,      INT_MAX,        },
-	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_CHAR|BL_NPC, BL_NUL, BL_ALL,   },
+	{ "enable_baseatk",                     &battle_config.enable_baseatk,                  BL_CHAR|BL_HOM, BL_NUL, BL_ALL, },
+	{ "enable_baseatk_renewal",             &battle_config.enable_baseatk_renewal,          BL_ALL, BL_NUL, BL_ALL,         },
 	{ "enable_perfect_flee",                &battle_config.enable_perfect_flee,             BL_PC|BL_PET, BL_NUL, BL_ALL,   },
 	{ "casting_rate",                       &battle_config.cast_rate,                       100,    0,      INT_MAX,        },
 	{ "delay_rate",                         &battle_config.delay_rate,                      100,    0,      INT_MAX,        },
@@ -8092,7 +8131,6 @@ static const struct _battle_data {
 	{ "pet_attack_support",                 &battle_config.pet_attack_support,              0,      0,      1,              },
 	{ "pet_damage_support",                 &battle_config.pet_damage_support,              0,      0,      1,              },
 	{ "pet_support_min_friendly",           &battle_config.pet_support_min_friendly,        900,    0,      950,            },
-	{ "pet_equip_min_friendly",             &battle_config.pet_equip_min_friendly,          900,    0,      950,            },
 	{ "pet_support_rate",                   &battle_config.pet_support_rate,                100,    0,      INT_MAX,        },
 	{ "pet_attack_exp_to_master",           &battle_config.pet_attack_exp_to_master,        0,      0,      1,              },
 	{ "pet_attack_exp_rate",                &battle_config.pet_attack_exp_rate,             100,    0,      INT_MAX,        },
@@ -8182,7 +8220,7 @@ static const struct _battle_data {
 	{ "produce_item_name_input",            &battle_config.produce_item_name_input,         0x1|0x2, 0,     0x9F,           },
 	{ "display_skill_fail",                 &battle_config.display_skill_fail,              2,      0,      1|2|4|8,        },
 	{ "chat_warpportal",                    &battle_config.chat_warpportal,                 0,      0,      1,              },
-	{ "mob_warp",                           &battle_config.mob_warp,                        0,      0,      1|2|4,          },
+	{ "mob_warp",                           &battle_config.mob_warp,                        0,      0,      1|2|4|8,          },
 	{ "dead_branch_active",                 &battle_config.dead_branch_active,              1,      0,      1,              },
 	{ "vending_max_value",                  &battle_config.vending_max_value,               10000000, 1,    MAX_ZENY,       },
 	{ "vending_over_max",                   &battle_config.vending_over_max,                1,      0,      1,              },
@@ -8201,7 +8239,6 @@ static const struct _battle_data {
 	{ "skill_removetrap_type",              &battle_config.skill_removetrap_type,           0,      0,      1,              },
 	{ "disp_experience",                    &battle_config.disp_experience,                 0,      0,      1,              },
 	{ "disp_zeny",                          &battle_config.disp_zeny,                       0,      0,      1,              },
-	{ "castle_defense_rate",                &battle_config.castle_defense_rate,             100,    0,      100,            },
 	{ "bone_drop",                          &battle_config.bone_drop,                       0,      0,      2,              },
 	{ "buyer_name",                         &battle_config.buyer_name,                      1,      0,      1,              },
 	{ "skill_wall_check",                   &battle_config.skill_wall_check,                1,      0,      1,              },
@@ -8525,6 +8562,7 @@ static const struct _battle_data {
 	{ "min_shop_sell",                      &battle_config.min_shop_sell,                   0,      0,      INT_MAX,        },
 	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
 	{ "pet_walk_speed",                     &battle_config.pet_walk_speed,                  1,      1,      3,              },
+	{ "blacksmith_fame_refine_threshold",   &battle_config.blacksmith_fame_refine_threshold,10,     1,      MAX_REFINE,     },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8726,8 +8764,25 @@ int battle_config_read(const char* cfgName)
 				continue;
 			if (strcmpi(w1, "import") == 0)
 				battle_config_read(w2);
-			else if
-				(battle_set_value(w1, w2) == 0)
+			else if( strcmpi( w1, "atcommand_symbol" ) == 0 ){
+				const char* symbol = &w2[0];
+
+				if (ISPRINT(*symbol) && // no control characters
+					*symbol != '/' && // symbol of client commands
+					*symbol != '%' && // symbol of party chat
+					*symbol != '$' && // symbol of guild chat
+					*symbol != charcommand_symbol)
+					atcommand_symbol = *symbol;
+			}else if( strcmpi( w1, "charcommand_symbol" ) == 0 ){
+				const char* symbol = &w2[0];
+
+				if (ISPRINT(*symbol) && // no control characters
+					*symbol != '/' && // symbol of client commands
+					*symbol != '%' && // symbol of party chat
+					*symbol != '$' && // symbol of guild chat
+					*symbol != atcommand_symbol)
+					charcommand_symbol = *symbol;
+			}else if( battle_set_value(w1, w2) == 0 )
 				ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 		}
 
