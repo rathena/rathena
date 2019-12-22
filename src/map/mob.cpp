@@ -4349,7 +4349,7 @@ static int mob_read_sqldb(void)
 }
 
 const std::string MobAvailDatabase::getDefaultLocation() {
-	return std::string(db_path) + "/mob_avail.yml";
+	return std::string(db_path) + "/" + DBIMPORT + "/mob_avail.yml";
 }
 
 /**
