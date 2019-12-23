@@ -11110,12 +11110,11 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			break;
 		case SC_VACUUM_EXTREME:
 			// Suck target at n second, only if the n second is lower than the duration
-			// Doesn't apply to BL_PC
-			if (bl->type != BL_PC && val4 < tick && !unit_blown_immune(bl,0x1) && status_has_mode(status,MD_CANMOVE)) {
+			// Does not suck targets on no-knockback maps
+			if (val4 < tick && unit_blown_immune(bl, 0x9) == UB_KNOCKABLE) {
 				tick_time = val4;
 				val4 = tick - tick_time;
-			}
-			else
+			} else
 				val4 = 0;
 			break;
 		case SC_FIRE_INSIGNIA:
@@ -11500,7 +11499,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			unit_stop_attack(bl);
 			break;
 		case SC_VACUUM_EXTREME:
-			if (bl->type != BL_PC && !unit_blown_immune(bl,0x1)) {
+			if (bl->type != BL_PC && unit_blown_immune(bl, 0x1) == UB_KNOCKABLE) {
 				unit_stop_walking(bl,1);
 				unit_stop_attack(bl);
 			}
