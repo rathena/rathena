@@ -11112,8 +11112,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			// Suck target at n second, only if the n second is lower than the duration
 			// Does not suck targets on no-knockback maps
 			if (val4 < tick && unit_blown_immune(bl, 0x9) == UB_KNOCKABLE) {
-				t_tickime = val4;
-				val4 = tick - t_tickime;
+				tick_time = val4;
+				val4 = tick - tick_time;
 			} else
 				val4 = 0;
 			break;
