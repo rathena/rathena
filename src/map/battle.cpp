@@ -4343,13 +4343,14 @@ static int battle_calc_attack_skill_ratio(struct Damage* wd, struct block_list *
 				skillratio += -100 + 200 + 200 * skill_lv;
 			break;
 		case RL_HAMMER_OF_GOD:
-			skillratio += -100 + 2800 + 1400 * skill_lv;
+			skillratio += -100 + 100 * skill_lv;
 			if (sd) {
 				if (wd->miscflag & 8)
-					skillratio += 100 * sd->spiritball_old;
-				else if (sd->spiritball_old)
-					skillratio += 10 * sd->spiritball_old;
+					skillratio += 400 * sd->spiritball_old;
+				else
+					skillratio += 150 * sd->spiritball_old;
 			}
+			RE_LVL_DMOD(100);
 			break;
 		case RL_FIRE_RAIN:
 		case RL_AM_BLAST:
@@ -7218,7 +7219,12 @@ enum damage_lv battle_weapon_attack(struct block_list* src, struct block_list* t
 						}
 						break;
 					case W_GRENADE:
-						if (sd->inventory_data[index]->look != A_GRENADE) {
+						if (sd->inventory_data[index]->look !=
+#ifdef RENEWAL
+							A_BULLET) {
+#else
+							A_GRENADE) {
+#endif
 							clif_skill_fail(sd,0,USESKILL_FAIL_NEED_MORE_BULLET,0);
 							return ATK_NONE;
 						}
