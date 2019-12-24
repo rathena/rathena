@@ -4494,14 +4494,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, i64max(sstatus->matk_min - tmdef, 0));
 			}
 		}
-		if (sc->data[SC_GATLINGFEVER]) {
-			if (tstatus->size == SZ_SMALL) {
-				ATK_ADD(wd->equipAtk, wd->equipAtk2, 10 * sc->data[SC_GATLINGFEVER]->val1);
-			} else if (tstatus->size == SZ_MEDIUM) {
-				ATK_ADD(wd->equipAtk, wd->equipAtk2, 5 * sc->data[SC_GATLINGFEVER]->val1);
-			} else if (tstatus->size == SZ_BIG)
-				ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->data[SC_GATLINGFEVER]->val1);
-		}
+		if (sc->data[SC_GATLINGFEVER])
+			ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->data[SC_GATLINGFEVER]->val3);
 #else
 		if (sc->data[SC_TRUESIGHT])
 			ATK_ADDRATE(wd->damage, wd->damage2, 2 * sc->data[SC_TRUESIGHT]->val1);
