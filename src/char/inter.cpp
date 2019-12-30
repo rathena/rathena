@@ -255,25 +255,25 @@ const char* job_name(int class_) {
 		case JOB_MECHANIC_T2:
 			return msg_txt(79);
 
-		case JOB_BABY_RUNE:
+		case JOB_BABY_RUNE_KNIGHT:
 		case JOB_BABY_WARLOCK:
 		case JOB_BABY_RANGER:
-		case JOB_BABY_BISHOP:
+		case JOB_BABY_ARCH_BISHOP:
 		case JOB_BABY_MECHANIC:
-		case JOB_BABY_CROSS:
-		case JOB_BABY_GUARD:
+		case JOB_BABY_GUILLOTINE_CROSS:
+		case JOB_BABY_ROYAL_GUARD:
 		case JOB_BABY_SORCERER:
 		case JOB_BABY_MINSTREL:
 		case JOB_BABY_WANDERER:
 		case JOB_BABY_SURA:
 		case JOB_BABY_GENETIC:
-		case JOB_BABY_CHASER:
-			return msg_txt(88 - JOB_BABY_RUNE+class_);
+		case JOB_BABY_SHADOW_CHASER:
+			return msg_txt(88 - JOB_BABY_RUNE_KNIGHT+class_);
 
-		case JOB_BABY_RUNE2:
+		case JOB_BABY_RUNE_KNIGHT2:
 			return msg_txt(88);
 
-		case JOB_BABY_GUARD2:
+		case JOB_BABY_ROYAL_GUARD2:
 			return msg_txt(94);
 
 		case JOB_BABY_RANGER2:
