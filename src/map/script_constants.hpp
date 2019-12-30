@@ -171,22 +171,31 @@
 	export_constant(JOB_MECHANIC2);
 	export_constant(JOB_MECHANIC_T2);
 
-	export_constant(JOB_BABY_RUNE);
+	export_deprecated_constant3("JOB_BABY_RUNE", JOB_BABY_RUNE_KNIGHT, "JOB_BABY_RUNE_KNIGHT");
+	export_deprecated_constant3("JOB_BABY_BISHOP", JOB_BABY_ARCH_BISHOP, "JOB_BABY_ARCH_BISHOP");
+	export_deprecated_constant3("JOB_BABY_CROSS", JOB_BABY_GUILLOTINE_CROSS, "JOB_BABY_GUILLOTINE_CROSS");
+	export_deprecated_constant3("JOB_BABY_GUARD", JOB_BABY_ROYAL_GUARD, "JOB_BABY_ROYAL_GUARD");
+	export_deprecated_constant3("JOB_BABY_CHASER", JOB_BABY_SHADOW_CHASER, "JOB_BABY_SHADOW_CHASER");
+
+	export_deprecated_constant3("JOB_BABY_RUNE2", JOB_BABY_RUNE_KNIGHT2, "JOB_BABY_RUNE_KNIGHT2");
+	export_deprecated_constant3("JOB_BABY_GUARD2", JOB_BABY_ROYAL_GUARD2, "JOB_BABY_ROYAL_GUARD2");
+
+	export_constant(JOB_BABY_RUNE_KNIGHT);
 	export_constant(JOB_BABY_WARLOCK);
 	export_constant(JOB_BABY_RANGER);
-	export_constant(JOB_BABY_BISHOP);
+	export_constant(JOB_BABY_ARCH_BISHOP);
 	export_constant(JOB_BABY_MECHANIC);
-	export_constant(JOB_BABY_CROSS);
-	export_constant(JOB_BABY_GUARD);
+	export_constant(JOB_BABY_GUILLOTINE_CROSS);
+	export_constant(JOB_BABY_ROYAL_GUARD);
 	export_constant(JOB_BABY_SORCERER);
 	export_constant(JOB_BABY_MINSTREL);
 	export_constant(JOB_BABY_WANDERER);
 	export_constant(JOB_BABY_SURA);
 	export_constant(JOB_BABY_GENETIC);
-	export_constant(JOB_BABY_CHASER);
+	export_constant(JOB_BABY_SHADOW_CHASER);
 
-	export_constant(JOB_BABY_RUNE2);
-	export_constant(JOB_BABY_GUARD2);
+	export_constant(JOB_BABY_RUNE_KNIGHT2);
+	export_constant(JOB_BABY_ROYAL_GUARD2);
 	export_constant(JOB_BABY_RANGER2);
 	export_constant(JOB_BABY_MECHANIC2);
 
@@ -346,20 +355,26 @@
 	export_constant2("EAJ_GENETIC_T",MAPID_GENETIC_T);
 	export_constant2("EAJ_SHADOW_CHASER_T",MAPID_SHADOW_CHASER_T);
 
-	export_constant2("EAJ_BABY_RUNE",MAPID_BABY_RUNE);
+	export_deprecated_constant3("EAJ_BABY_RUNE", MAPID_BABY_RUNE_KNIGHT, "EAJ_BABY_RUNE_KNIGHT");
+	export_deprecated_constant3("EAJ_BABY_CROSS", MAPID_BABY_GUILLOTINE_CROSS, "EAJ_BABY_GUILLOTINE_CROSS");
+	export_deprecated_constant3("EAJ_BABY_BISHOP", MAPID_BABY_ARCH_BISHOP, "EAJ_BABY_ARCH_BISHOP");
+	export_deprecated_constant3("EAJ_BABY_GUARD", MAPID_BABY_ROYAL_GUARD, "EAJ_BABY_ROYAL_GUARD");
+	export_deprecated_constant3("EAJ_BABY_CHASER", MAPID_BABY_SHADOW_CHASER, "EAJ_BABY_SHADOW_CHASER");
+
+	export_constant2("EAJ_BABY_RUNE_KNIGHT",MAPID_BABY_RUNE_KNIGHT);
 	export_constant2("EAJ_BABY_WARLOCK",MAPID_BABY_WARLOCK);
 	export_constant2("EAJ_BABY_RANGER",MAPID_BABY_RANGER);
-	export_constant2("EAJ_BABY_BISHOP",MAPID_BABY_BISHOP);
+	export_constant2("EAJ_BABY_ARCH_BISHOP",MAPID_BABY_ARCH_BISHOP);
 	export_constant2("EAJ_BABY_MECHANIC",MAPID_BABY_MECHANIC);
-	export_constant2("EAJ_BABY_CROSS",MAPID_BABY_CROSS);
+	export_constant2("EAJ_BABY_GUILLOTINE_CROSS",MAPID_BABY_GUILLOTINE_CROSS);
 	export_constant2("EAJ_BABY_STAR_EMPEROR",MAPID_BABY_STAR_EMPEROR);
 
-	export_constant2("EAJ_BABY_GUARD",MAPID_BABY_GUARD);
+	export_constant2("EAJ_BABY_ROYAL_GUARD",MAPID_BABY_ROYAL_GUARD);
 	export_constant2("EAJ_BABY_SORCERER",MAPID_BABY_SORCERER);
 	export_constant2("EAJ_BABY_MINSTRELWANDERER",MAPID_BABY_MINSTRELWANDERER);
 	export_constant2("EAJ_BABY_SURA",MAPID_BABY_SURA);
 	export_constant2("EAJ_BABY_GENETIC",MAPID_BABY_GENETIC);
-	export_constant2("EAJ_BABY_CHASER",MAPID_BABY_CHASER);
+	export_constant2("EAJ_BABY_SHADOW_CHASER",MAPID_BABY_SHADOW_CHASER);
 	export_constant2("EAJ_BABY_SOUL_REAPER",MAPID_BABY_SOUL_REAPER);
 
 	export_constant2("EAJ_SUPER_NOVICE",MAPID_SUPER_NOVICE);
