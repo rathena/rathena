@@ -8557,6 +8557,8 @@ static const struct _battle_data {
 	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
 	{ "pet_walk_speed",                     &battle_config.pet_walk_speed,                  1,      1,      3,              },
 	{ "blacksmith_fame_refine_threshold",   &battle_config.blacksmith_fame_refine_threshold,10,     1,      MAX_REFINE,     },
+	{ "mob_nopc_idleskill",                 &battle_config.mob_nopc_idleskill,              1,      0,      1,              },
+	{ "mob_nopc_move",                      &battle_config.mob_nopc_move,                   1,      0,      1,              },
 
 #include "../custom/battle_config_init.inc"
 };

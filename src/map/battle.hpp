@@ -659,6 +659,8 @@ struct Battle_Config
 	int feature_equipswitch;
 	int pet_walk_speed;
 	int blacksmith_fame_refine_threshold;
+	int mob_nopc_idleskill;
+	int mob_nopc_move;
 
 #include "../custom/battle_config_struct.inc"
 };
