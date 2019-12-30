@@ -4363,14 +4363,12 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 	if (!this->asString(node, "Mob", mob_name))
 		return 0;
 
-	uint32 mob_id = mobdb_search_aegisname(mob_name.c_str());
+	mob_db *mob = mobdb_search_aegisname(mob_name.c_str());
 
-	if (mob_id == 0) {
+	if (mob == nullptr) {
 		this->invalidWarning(node["Mob"], "Unknown mob %s.\n", mob_name.c_str());
 		return 0;
 	}
-
-	struct mob_db *mob = mob_db(mob_id);
 
 	if (this->nodeExists(node, "Sprite")) {
 		std::string sprite;
@@ -4386,12 +4384,14 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 			}
 		} else {
-			constant = mobdb_search_aegisname(sprite.c_str());
+			mob_db *sprite_mob = mobdb_search_aegisname(sprite.c_str());
 
-			if (constant == 0) {
+			if (sprite_mob == nullptr) {
 				this->invalidWarning(node["Sprite"], "Unknown mob sprite constant %s.\n", sprite.c_str());
 				return 0;
 			}
+
+			constant = sprite_mob->vd.class_;
 		}
 
 		mob->vd.class_ = constant;
