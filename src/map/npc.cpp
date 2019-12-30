@@ -1124,12 +1124,14 @@ int npc_touch_areanpc2(struct mob_data *md)
 		{ // In the npc touch area
 			switch( mapdata->npc[i]->subtype )
 			{
-				case NPCTYPE_WARP:
-					xs = map_mapindex2mapid(mapdata->npc[i]->u.warp.mapindex);
-					if( md->bl.m < 0 )
+				case NPCTYPE_WARP: {
+					int16 warp_m = map_mapindex2mapid(mapdata->npc[i]->u.warp.mapindex);
+
+					if( warp_m < 0 )
 						break; // Cannot Warp between map servers
-					if( unit_warp(&md->bl, xs, mapdata->npc[i]->u.warp.x, mapdata->npc[i]->u.warp.y, CLR_OUTSIGHT) == 0 )
+					if( unit_warp(&md->bl, warp_m, mapdata->npc[i]->u.warp.x, mapdata->npc[i]->u.warp.y, CLR_OUTSIGHT) == 0 )
 						return 1; // Warped
+				}
 					break;
 				case NPCTYPE_SCRIPT:
 					if( mapdata->npc[i]->bl.id == md->areanpc_id )
