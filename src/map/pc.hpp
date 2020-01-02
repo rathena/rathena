@@ -961,15 +961,15 @@ short pc_maxaspd(struct map_session_data *sd);
 //JOB_NOVICE isn't checked for class_ is supposed to be unsigned
 #define pcdb_checkid_sub(class_) ( \
 	( (class_) < JOB_MAX_BASIC ) || \
-	( (class_) >= JOB_NOVICE_HIGH    && (class_) <= JOB_DARK_COLLECTOR ) || \
-	( (class_) >= JOB_RUNE_KNIGHT    && (class_) <= JOB_MECHANIC_T2    ) || \
-	( (class_) >= JOB_BABY_RUNE      && (class_) <= JOB_BABY_MECHANIC2 ) || \
-	( (class_) >= JOB_SUPER_NOVICE_E && (class_) <= JOB_SUPER_BABY_E   ) || \
-	( (class_) >= JOB_KAGEROU        && (class_) <= JOB_OBORO          ) || \
-	  (class_) == JOB_REBELLION      || (class_) == JOB_SUMMONER         || \
-	  (class_) == JOB_BABY_SUMMONER 				     || \
-	( (class_) >= JOB_BABY_NINJA     && (class_) <= JOB_BABY_REBELLION ) || \
-	( (class_) >= JOB_BABY_STAR_GLADIATOR2 && (class_) <= JOB_BABY_STAR_EMPEROR2 ) \
+	( (class_) >= JOB_NOVICE_HIGH			&& (class_) <= JOB_DARK_COLLECTOR ) || \
+	( (class_) >= JOB_RUNE_KNIGHT			&& (class_) <= JOB_MECHANIC_T2    ) || \
+	( (class_) >= JOB_BABY_RUNE_KNIGHT		&& (class_) <= JOB_BABY_MECHANIC2 ) || \
+	( (class_) >= JOB_SUPER_NOVICE_E		&& (class_) <= JOB_SUPER_BABY_E   ) || \
+	( (class_) >= JOB_KAGEROU				&& (class_) <= JOB_OBORO          ) || \
+	  (class_) == JOB_REBELLION				|| (class_) == JOB_SUMMONER         || \
+	  (class_) == JOB_BABY_SUMMONER			|| \
+	( (class_) >= JOB_BABY_NINJA			&& (class_) <= JOB_BABY_REBELLION ) || \
+	( (class_) >= JOB_BABY_STAR_GLADIATOR2	&& (class_) <= JOB_BABY_STAR_EMPEROR2 ) \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 

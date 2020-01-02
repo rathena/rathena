@@ -734,7 +734,7 @@ static int8 skill_isCopyable(struct map_session_data *sd, uint16 skill_idx) {
 			if (job_allowed&0x04 && sd->status.class_ == JOB_SHADOW_CHASER) break;
 			if (job_allowed&0x08 && sd->status.class_ == JOB_SHADOW_CHASER_T) break;
 			if (job_allowed&0x10 && sd->status.class_ == JOB_BABY_ROGUE) break;
-			if (job_allowed&0x20 && sd->status.class_ == JOB_BABY_CHASER) break;
+			if (job_allowed&0x20 && sd->status.class_ == JOB_BABY_SHADOW_CHASER) break;
 			return 0;
 		}
 	}
