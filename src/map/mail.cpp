@@ -299,15 +299,13 @@ void mail_getattachment(struct map_session_data* sd, struct mail_message* msg, i
 				if( pet != nullptr ){
 					// Create a new pet
 					pet_create_egg( sd, item[i].nameid );
-				}else{
-					// Add the item normally
-					pc_additem( sd, &item[i], item[i].amount, LOG_TYPE_MAIL );
+					item_received = true;
+					continue;
 				}
-			}else{
-				// Add the item normally
-				pc_additem( sd, &item[i], item[i].amount, LOG_TYPE_MAIL );
 			}
 
+			// Add the item normally
+			pc_additem( sd, &item[i], item[i].amount, LOG_TYPE_MAIL );
 			item_received = true;
 		}	
 	}
