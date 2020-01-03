@@ -252,11 +252,6 @@ OnEvent:
 	donpcevent instance_npcname("Intruder#hunter06") + "::OnStart";
 	end;
 OnMobDead:
-	hideonnpc instance_npcname("Intruder#hunter02");
-	donpcevent instance_npcname("Intruder#hunter05") + "::OnMobDead";
-	donpcevent instance_npcname("Helmut Roegenburg#helmu2") + "::OnMobDead";
-	donpcevent instance_npcname("Isenhonor Walther#eisen2") + "::OnMobDead";
-
 	'intruder_count++;
 	switch( 'intruder_count ) {
 	case 1:
