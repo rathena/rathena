@@ -19004,13 +19004,10 @@ BUILDIN_FUNC(setcell)
  */
 BUILDIN_FUNC(getfreecell)
 {
-	const char *mapn = script_getstr(st, 2);
+	const char *mapn = script_getstr(st, 2), *name_x, *name_y;
 	struct script_data
 		*data_x = script_getdata(st, 3),
 		*data_y = script_getdata(st, 4);
-	const char
-		*name_x = reference_getname(data_x),
-		*name_y = reference_getname(data_y);
 	struct block_list* bl = map_id2bl(st->rid);
 	struct map_session_data *sd = nullptr;
 	int16 m, x = 0, y = 0;
@@ -19024,6 +19021,8 @@ BUILDIN_FUNC(getfreecell)
 		ShowWarning("script: buildin_getfreecell: rY is not a variable.\n");
 		return SCRIPT_CMD_FAILURE;
 	}
+	name_x = reference_getname(data_x),
+	name_y = reference_getname(data_y);
 
 	if (is_string_variable(name_x)) {
 		ShowWarning("script: buildin_getfreecell: rX is a string, must be an INT.\n");
