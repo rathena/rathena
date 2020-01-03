@@ -10,6 +10,7 @@
 #include <unordered_map>
 
 #include "cbasetypes.hpp"
+#include "random.hpp"
 
 // Class used to perform time measurement
 class cScopeTimer {
@@ -119,6 +120,19 @@ namespace rathena {
 				return it->second;
 			else
 				return defaultValue;
+		}
+
+		/**
+		 * Get a random value from the given map
+		 * @param map: Unordered Map to search through
+		 * @return A random value by reference
+		*/
+		template <typename K, typename V> V& umap_random( std::unordered_map<K, V>& map ){
+			auto it = map.begin();
+
+			std::advance( it, rnd_value( 0, map.size() - 1 ) );
+
+			return it->second;
 		}
 	}
 }

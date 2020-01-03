@@ -9085,7 +9085,7 @@ BUILDIN_FUNC(successrefitem) {
 		pc_equipitem(sd,i,ep);
 		clif_misceffect(&sd->bl,3);
 		achievement_update_objective(sd, AG_REFINE_SUCCESS, 2, sd->inventory_data[i]->wlv, sd->inventory.u.items_inventory[i].refine);
-		if (sd->inventory.u.items_inventory[i].refine == MAX_REFINE &&
+		if (sd->inventory.u.items_inventory[i].refine == battle_config.blacksmith_fame_refine_threshold &&
 			sd->inventory.u.items_inventory[i].card[0] == CARD0_FORGE &&
 			sd->status.char_id == (int)MakeDWord(sd->inventory.u.items_inventory[i].card[2],sd->inventory.u.items_inventory[i].card[3]))
 		{ // Fame point system [DracoRPG]
@@ -11288,7 +11288,7 @@ BUILDIN_FUNC(getunits)
 	int type = script_getnum(st, 2);
 	int size = 0;
 	int32 idx, id;
-	int16 m = 0, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
+	int16 m = -1, x0 = 0, y0 = 0, x1 = 0, y1 = 0;
 	struct s_mapiterator *iter = mapit_alloc(MAPIT_NORMAL, bl_type(type));
 
 	if (!strcmp(command, "getmapunits"))
@@ -11347,7 +11347,7 @@ BUILDIN_FUNC(getunits)
 
 	for (bl = (struct block_list*)mapit_first(iter); mapit_exists(iter); bl = (struct block_list*)mapit_next(iter))
 	{
-		if (!m || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y >= y0) && (bl->x <= x1 && bl->y <= y1)))
+		if (m == -1 || (m == bl->m && !x0 && !y0 && !x1 && !y1) || (bl->m == m && (bl->x >= x0 && bl->y >= y0) && (bl->x <= x1 && bl->y <= y1)))
 		{
 			if (data)
 				set_reg(st, sd, reference_uid(id, idx + size), name, (is_string_variable(name) ? (void*)status_get_name(bl) : (void*)__64BPRTSIZE(bl->id)), reference_getref(data));
@@ -16542,10 +16542,7 @@ BUILDIN_FUNC(setnpcdisplay)
 	if( class_ != JT_FAKENPC && nd->class_ != class_ )
 		npc_setclass(nd, class_);
 	else if( size != -1 )
-	{ // Required to update the visual size
-		clif_clearunit_area(&nd->bl, CLR_OUTSIGHT);
-		clif_spawn(&nd->bl);
-	}
+		unit_refresh(&nd->bl); // Required to update the visual size
 
 	script_pushint(st,0);
 	return SCRIPT_CMD_SUCCESS;
@@ -17609,6 +17606,8 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UMOB_ADELAY, md->status.adelay);
 			getunitdata_sub(UMOB_DMOTION, md->status.dmotion);
 			getunitdata_sub(UMOB_TARGETID, md->target_id);
+			getunitdata_sub(UMOB_ROBE, md->vd->robe);
+			getunitdata_sub(UMOB_BODY2, md->vd->body_style);
 			break;
 
 		case BL_HOM:
@@ -17797,7 +17796,6 @@ BUILDIN_FUNC(getunitdata)
 				ShowWarning("buildin_getunitdata: Error in finding object BL_NPC!\n");
 				return SCRIPT_CMD_FAILURE;
 			}
-			getunitdata_sub(UNPC_DISPLAY, nd->class_);
 			getunitdata_sub(UNPC_LEVEL, nd->level);
 			getunitdata_sub(UNPC_HP, nd->status.hp);
 			getunitdata_sub(UNPC_MAXHP, nd->status.max_hp);
@@ -17830,6 +17828,19 @@ BUILDIN_FUNC(getunitdata)
 			getunitdata_sub(UNPC_AMOTION,  nd->status.amotion);
 			getunitdata_sub(UNPC_ADELAY, nd->status.adelay);
 			getunitdata_sub(UNPC_DMOTION, nd->status.dmotion);
+			getunitdata_sub(UNPC_SEX, nd->vd.sex);
+			getunitdata_sub(UNPC_CLASS, nd->vd.class_);
+			getunitdata_sub(UNPC_HAIRSTYLE, nd->vd.hair_style);
+			getunitdata_sub(UNPC_HAIRCOLOR, nd->vd.hair_color);
+			getunitdata_sub(UNPC_HEADBOTTOM, nd->vd.head_bottom);
+			getunitdata_sub(UNPC_HEADMIDDLE, nd->vd.head_mid);
+			getunitdata_sub(UNPC_HEADTOP, nd->vd.head_top);
+			getunitdata_sub(UNPC_CLOTHCOLOR, nd->vd.cloth_color);
+			getunitdata_sub(UNPC_SHIELD, nd->vd.shield);
+			getunitdata_sub(UNPC_WEAPON, nd->vd.weapon);
+			getunitdata_sub(UNPC_ROBE, nd->vd.robe);
+			getunitdata_sub(UNPC_BODY2, nd->vd.body_style);
+			getunitdata_sub(UNPC_DEADSIT, nd->vd.dead_sit);
 			break;
 
 		default:
@@ -17912,6 +17923,8 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_CLOTHCOLOR:
 			case UMOB_SHIELD:
 			case UMOB_WEAPON:
+			case UMOB_ROBE:
+			case UMOB_BODY2:
 				mob_set_dynamic_viewdata( md );
 				break;
 		}
@@ -17929,8 +17942,8 @@ BUILDIN_FUNC(setunitdata)
 			case UMOB_MODE: md->base_status->mode = (enum e_mode)value; calc_status = true; break;
 			case UMOB_AI: md->special_state.ai = (enum mob_ai)value; break;
 			case UMOB_SCOPTION: md->sc.option = (unsigned short)value; break;
-			case UMOB_SEX: md->vd->sex = (char)value; clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
-			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); clif_clearunit_area(bl, CLR_OUTSIGHT); clif_spawn(bl); break;
+			case UMOB_SEX: md->vd->sex = (char)value; unit_refresh(bl); break;
+			case UMOB_CLASS: status_set_viewdata(bl, (unsigned short)value); unit_refresh(bl); break;
 			case UMOB_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
 			case UMOB_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
 			case UMOB_HEADBOTTOM: clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
@@ -17987,6 +18000,8 @@ BUILDIN_FUNC(setunitdata)
 				mob_target(md,target,0);
 				break;
 			}
+			case UMOB_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
+			case UMOB_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_MOB.\n", type);
 				return SCRIPT_CMD_FAILURE;
@@ -18233,7 +18248,6 @@ BUILDIN_FUNC(setunitdata)
 			return SCRIPT_CMD_FAILURE;
 		}
 		switch (type) {
-			case UNPC_DISPLAY: status_set_viewdata(bl, (unsigned short)value); break;
 			case UNPC_LEVEL: nd->level = (unsigned int)value; break;
 			case UNPC_HP: nd->status.hp = (unsigned int)value; status_set_hp(bl, (unsigned int)value, 0); break;
 			case UNPC_MAXHP: nd->status.hp = nd->status.max_hp = (unsigned int)value; status_set_maxhp(bl, (unsigned int)value, 0); break;
@@ -18265,6 +18279,19 @@ BUILDIN_FUNC(setunitdata)
 			case UNPC_AMOTION: nd->status.amotion = (short)value; break;
 			case UNPC_ADELAY: nd->status.adelay = (short)value; break;
 			case UNPC_DMOTION: nd->status.dmotion = (short)value; break;
+			case UNPC_SEX: nd->vd.sex = (char)value; unit_refresh(bl); break;
+			case UNPC_CLASS: npc_setclass(nd, (short)value); break;
+			case UNPC_HAIRSTYLE: clif_changelook(bl, LOOK_HAIR, (unsigned short)value); break;
+			case UNPC_HAIRCOLOR: clif_changelook(bl, LOOK_HAIR_COLOR, (unsigned short)value); break;
+			case UNPC_HEADBOTTOM: clif_changelook(bl, LOOK_HEAD_BOTTOM, (unsigned short)value); break;
+			case UNPC_HEADMIDDLE: clif_changelook(bl, LOOK_HEAD_MID, (unsigned short)value); break;
+			case UNPC_HEADTOP: clif_changelook(bl, LOOK_HEAD_TOP, (unsigned short)value); break;
+			case UNPC_CLOTHCOLOR: clif_changelook(bl, LOOK_CLOTHES_COLOR, (unsigned short)value); break;
+			case UNPC_SHIELD: clif_changelook(bl, LOOK_SHIELD, (unsigned short)value); break;
+			case UNPC_WEAPON: clif_changelook(bl, LOOK_WEAPON, (unsigned short)value); break;
+			case UNPC_ROBE: clif_changelook(bl, LOOK_ROBE, (unsigned short)value); break;
+			case UNPC_BODY2: clif_changelook(bl, LOOK_BODY2, (unsigned short)value); break;
+			case UNPC_DEADSIT: nd->vd.dead_sit = (char)value; unit_refresh(bl); break;
 			default:
 				ShowError("buildin_setunitdata: Unknown data identifier %d for BL_NPC.\n", type);
 				return SCRIPT_CMD_FAILURE;

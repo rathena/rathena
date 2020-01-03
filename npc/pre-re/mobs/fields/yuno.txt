@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Yuno Fields Monster Spawn Script
+//= Juno Fields Monster Spawn Script
 //===== By: ==================================================
 //= Athena (1.0)
 //===== Current Version: =====================================
@@ -16,7 +16,7 @@
 //=     Mob quantity is custom.
 //= 1.5b Changed the spawn numbers a bit. [Poki#3]
 //=     Thanks to Playtester and Emperium.org
-//= 1.6 Fixed Yuno Field 10. Mob amount sugested by Playtester [Poki#3]
+//= 1.6 Fixed Juno Field 10. Mob amount sugested by Playtester [Poki#3]
 //= 1.7 Updated by using Tharis' Homun AI, by Tharis [Vicious]
 //= 1.8 Added kRO 10.1 spawns where they fit [Playtester]
 //= 1.9 More accurate spawns [Playtester]
@@ -96,7 +96,7 @@ yuno_fild05,176,202,8,8	monster	Blue Plant	1079,2,180000,90000
 yuno_fild05,300,280,5,5	monster	Blue Plant	1079,2,180000,90000
 
 //==================================================
-// yuno_fild06 - Yuno Field
+// yuno_fild06 - Juno Field
 //==================================================
 yuno_fild06,0,0	monster	Sleeper	1386,70
 yuno_fild06,0,0	monster	Goat	1372,40
@@ -147,7 +147,7 @@ yuno_fild09,0,0	monster	Green Plant	1080,10,180000,90000
 yuno_fild09,0,0	monster	Yellow Plant	1081,10,180000,90000
 
 //==================================================
-// yuno_fild10 - Yuno Field
+// yuno_fild10 - Juno Field
 //==================================================
 yuno_fild10,0,0	monster	Beetle King	1494,40
 yuno_fild10,0,0	monster	Stainer	1174,20
@@ -156,7 +156,7 @@ yuno_fild10,0,0	monster	Geographer	1368,20
 yuno_fild10,0,0	monster	Hunter Fly	1035,10
 
 //==================================================
-// yuno_fild11 - Yuno Field
+// yuno_fild11 - Juno Field
 //==================================================
 yuno_fild11,0,0	monster	Sleeper	1386,10
 yuno_fild11,0,0	monster	Demon Pungus	1378,10,120000
