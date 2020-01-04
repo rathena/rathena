@@ -166,10 +166,10 @@ spl_fild02,25,211,4	script	Cat Paw Agent#spl	421,{
 			}
 		case 3:
 			mes "[Cat Paw Agent]";
-			mes "The warp service is only"
-			mes "available for customers with"
-			mes ep13_yong1 + " or more Cat Trading Points."
-			mes "Please remember, you can't come back easily once you move to Midgard."
+			mes "The warp service is only";
+			mes "available for customers with";
+			mes ep13_yong1 + " or more Cat Trading Points.";
+			mes "Please remember, you can't come back easily once you move to Midgard.";
 			next;
 			if ((ep13_yong1 > 39) && (ep13_yong1 < 50)) {
 				switch(select("Prontera -> 5500z:Cancel")) {
@@ -236,10 +236,10 @@ spl_fild02,25,211,4	script	Cat Paw Agent#spl	421,{
 			}
 			else {
 				mes "[Cat Paw Agent]";
-				mes "I'm sorry, but you're not"
-				mes "eligible to use the warp service."
-				mes "Please check your points,"
-				mes "and then come back."
+				mes "I'm sorry, but you're not";
+				mes "eligible to use the warp service.";
+				mes "Please check your points,";
+				mes "and then come back.";
 				close;
 			}
 		case 4:
@@ -288,10 +288,10 @@ spl_fild02,25,211,4	script	Cat Paw Agent#spl	421,{
 			}
 		case 3:
 			mes "[Cat Paw Agent]";
-			mes "The warp service is only"
-			mes "available for customers with"
-			mes ep13_yong1 + " or more Cat Trading Points."
-			mes "Please remember, you can't come back easily once you move to Midgard."
+			mes "The warp service is only";
+			mes "available for customers with";
+			mes ep13_yong1 + " or more Cat Trading Points.";
+			mes "Please remember, you can't come back easily once you move to Midgard.";
 			next;
 			if ((ep13_yong1 > 99) && (ep13_yong1 < 200)) {
 				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morocc -> 4590z:Al De Baran -> 4590z:Cancel")) {
@@ -352,10 +352,10 @@ spl_fild02,25,211,4	script	Cat Paw Agent#spl	421,{
 			}
 			else {
 				mes "[Cat Paw Agent]";
-				mes "I'm sorry, but you're not"
-				mes "eligible to use the warp service."
-				mes "Please check your points,"
-				mes "and then come back."
+				mes "I'm sorry, but you're not";
+				mes "eligible to use the warp service.";
+				mes "Please check your points,";
+				mes "and then come back.";
 				close;
 			}
 		case 4:
