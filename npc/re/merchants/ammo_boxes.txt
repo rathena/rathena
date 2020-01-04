@@ -286,5 +286,5 @@ S_Close:
 	close;
 }
 
-alberta,118,157,3	duplicate(mdk)	Magazine Dealer Kenny#ng	4_M_01
+alberta,118,157,3	duplicate(mdk)	Magazine Dealer Kenny#al	4_M_01
 izlude_in,74,104,5	duplicate(mdk)	Magazine Dealer Kenny#iz	4_M_01
