@@ -8,7 +8,7 @@
 //= rAthena Project
 //===== Description: =========================================
 //= [Official Conversion]
-//= Cat Hand Addition. (Leads to 13.2 areas)
+//= Cat Paw Addition. (Leads to 13.2 areas)
 //= Two Tribes
 //= Monster Suppression
 //= Daily Quests:
@@ -52,21 +52,21 @@
 //= 2.9 Added custom weight check. Fixes issue #910. [Jeybla]
 //============================================================ 
 
-// Cat Hand Addition :: cat_enhance
+// Cat Paw Addition :: cat_enhance
 //============================================================ 
-spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
+spl_fild02,25,211,4	script	Cat Paw Agent#spl	421,{
 	function Catwarp;
 	if (ep13_yong1 < 3) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Welcome to Cat Trading.";
 		mes "I guess you're a first-time customer, huh?";
 		next;
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "For more details about our contract, you need to talk to our staff first.";
 		close;
 	}
 	else if ((ep13_yong1 > 2) && (ep13_yong1 < 20)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
@@ -80,13 +80,13 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			mes "You can now directly return to this camp.";
 			close;
 		case 2:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if ((ep13_yong1 > 19) && (ep13_yong1 < 40)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
@@ -101,7 +101,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
 				mes "Basic Skill Level 6 to";
@@ -110,7 +110,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Thank you.";
 				mes "Your storage will be opened shortly.";
 				close2;
@@ -118,7 +118,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				end;
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you don't";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
@@ -127,13 +127,13 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				close;
 			}
 		case 3:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if ((ep13_yong1 > 39) && (ep13_yong1 < 100)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
@@ -148,7 +148,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
 				mes "Basic Skill Level 6 to";
@@ -157,7 +157,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Thank you.";
 				mes "Your storage will be opened shortly.";
 				close2;
@@ -165,7 +165,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				end;
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you don't";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
@@ -174,9 +174,11 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				close;
 			}
 		case 3:
-			// Custom Translation.
-			mes "[Cat Hand Agent]";
-			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
+			mes "[Cat Paw Agent]";
+			mes "The warp service is only";
+			mes "available for customers with";
+			mes ep13_yong1 + " or more Cat Trading Points.";
+			mes "Please remember, you can't come back easily once you move to Midgard.";
 			next;
 			if ((ep13_yong1 > 39) && (ep13_yong1 < 50)) {
 				switch(select("Prontera -> 5500z:Cancel")) {
@@ -242,19 +244,21 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				}
 			}
 			else {
-				// Custom Translation.
-				mes "[Cat Hand Agent]";
-				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
+				mes "[Cat Paw Agent]";
+				mes "I'm sorry, but you're not";
+				mes "eligible to use the warp service.";
+				mes "Please check your points,";
+				mes "and then come back.";
 				close;
 			}
 		case 4:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else if (ep13_yong1 > 99) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Cat Trading's available services are as followed.";
 		mes "For additional services, please consult Agent Gyaruk.";
 		next;
@@ -269,7 +273,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			close;
 		case 2:
 			if(!callfunc("F_CanOpenStorage")){
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you";
 				mes "need the Novice's";
 				mes "Basic Skill Level 6 to";
@@ -278,7 +282,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 			}
 			else if (Zeny >= 60) {
 				set Zeny, Zeny-60;
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "Thank you.";
 				mes "Your storage will be opened shortly.";
 				close2;
@@ -286,7 +290,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				end;
 			}
 			else {
-				mes "[Cat Hand Agent]";
+				mes "[Cat Paw Agent]";
 				mes "I'm sorry, but you don't";
 				mes "have enough money?";
 				mes "Cat Trading's storage";
@@ -295,9 +299,11 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				close;
 			}
 		case 3:
-			// Custom Translation.
-			mes "[Cat Hand Agent]";
-			mes "With " + ep13_yong1 + " credit points, we offer the following warp services. Please remember, you can't come back easily once you move to Midgard.";
+			mes "[Cat Paw Agent]";
+			mes "The warp service is only";
+			mes "available for customers with";
+			mes ep13_yong1 + " or more Cat Trading Points.";
+			mes "Please remember, you can't come back easily once you move to Midgard.";
 			next;
 			if ((ep13_yong1 > 99) && (ep13_yong1 < 200)) {
 				switch(select("Alberta -> 4590z:Prontera -> 4590z:Izlude -> 4590z:Geffen -> 4590z:Payon -> 4590z:Morocc -> 4590z:Al De Baran -> 4590z:Cancel")) {
@@ -357,9 +363,11 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				close;
 			}
 			else {
-				// Custom Translation
-				mes "[Cat Hand Agent]";
-				mes "I am sorry, but you don't have enough credit points to use the warp service. Please come back when you have more points.";
+				mes "[Cat Paw Agent]";
+				mes "I'm sorry, but you're not";
+				mes "eligible to use the warp service.";
+				mes "Please check your points,";
+				mes "and then come back.";
 				close;
 			}
 		case 4:
@@ -367,7 +375,7 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				case 1: Catwarp(5500,13);
 				case 2: Catwarp(5500,12);
 				case 3:
-					mes "[Cat Hand Agent]";
+					mes "[Cat Paw Agent]";
 					mes "Thank you for using our service.";
 					close;
 				}
@@ -375,25 +383,25 @@ spl_fild02,25,211,4	script	Cat Hand Agent#spl	421,{
 				case 1: Catwarp(5500,13);
 				case 2: Catwarp(5500,11);
 				case 3:
-					mes "[Cat Hand Agent]";
+					mes "[Cat Paw Agent]";
 					mes "Thank you for using our service.";
 					close;
 				}
 		case 5:
-			mes "[Cat Hand Agent]";
+			mes "[Cat Paw Agent]";
 			mes "Thank you for using our service.";
 			close;
 		}
 	}
 	else {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "... ... ... ...";
 		mes "Please give me some Piece of Fish.";
 		close;
 	}
 function Catwarp {
 	if (Zeny < getarg(0)) {
-		mes "[Cat Hand Agent]";
+		mes "[Cat Paw Agent]";
 		mes "Don't play with money.";
 		close;
 	}
@@ -416,7 +424,7 @@ function Catwarp {
 	}
 }
 }
-man_fild02,132,47,4	duplicate(Cat Hand Agent#spl)	Cat Hand Agent#man	421
+man_fild02,132,47,4	duplicate(Cat Paw Agent#spl)	Cat Paw Agent#man	421
 
 -	script	Mysterious Rock#30::manukrock2	-1,{
 	if ((countitem(6048) < 3) && (checkquest(12062,PLAYTIME) == -1)) {
