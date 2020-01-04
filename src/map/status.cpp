@@ -14307,7 +14307,7 @@ static int status_natural_heal(struct block_list* bl, va_list args)
 	if (sd) {
 		if (sd->hp_loss.value || sd->sp_loss.value)
 			pc_bleeding(sd, natural_heal_diff_tick);
-		if (sd->hp_regen.value || sd->sp_regen.value)
+		if (sd->hp_regen.value || sd->sp_regen.value || sd->percent_hp_regen.value || sd->percent_sp_regen.value)
 			pc_regen(sd, natural_heal_diff_tick);
 	}
 
