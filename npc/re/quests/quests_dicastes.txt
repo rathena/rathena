@@ -11,7 +11,7 @@
 //= Quest NPCs related to Dewata:
 //== Sapha's Visit, Doha's Secrect Order, Frede's Request,
 //== Department Quests, Document Quests,
-//== Chesire's Call, Cat Paws Enchantment
+//== Chesire's Call, Cat Paw's Enchantment
 //== Cat Paw Agent
 //===== Additional Comments: =================================
 //= 1.0 First version. 14107 lines, oh, the pain...
