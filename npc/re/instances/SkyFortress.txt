@@ -785,32 +785,46 @@ S_Spawn:
 1@sthb,68,80,0	script	#sthd_key_control	HIDDEN_WARP_NPC,{
 	end;
 OnShuffle:
-	setarray .@index[0],0,1,2,3,4,5;
-	.@size = 6;
-
-	for ( .@i = 0; .@i < 6; .@i++ ) {
-		.@r = rand(.@size);
-		'room_in_coord[.@i] = .@index[.@r] * 2;	// index warp in
-		'room_back_coord[ .@index[.@r] ] = .@i * 2;	// index warp out
-		.@index[.@r] = .@index[ .@size - 1 ];
-		.@size--;
+	// Officially the randomization doesn't cover all possibilities (found 6 set)
+	switch( rand(6) ) {
+	case 0:
+		// 'warp_list[ <from room X> ] = <to room Y>;
+		setarray 'warp_list[1], 5,1,3,4,6,2;
+		break;
+	case 1:
+		setarray 'warp_list[1], 2,6,4,3,1,5;
+		break;
+	case 2:
+		setarray 'warp_list[1], 3,5,1,6,2,4;
+		break;
+	case 3:
+		setarray 'warp_list[1], 6,4,2,5,3,1;
+		break;
+	case 4:
+		setarray 'warp_list[1], 1,3,5,2,4,6;
+		break;
+	case 5:
+		setarray 'warp_list[1], 4,2,6,1,5,3;
+		break;
 	}
 	end;
 }
+
 
 // Warp outside
 1@sthc,66,88,0	script	#sthd_move_back_a_1	WARPNPC,2,2,{
 	end;
 OnTouch:
-	setarray .@coord[0],
+	setarray .@coord[2],
 		 39,85,	// Activated Warp#sthd_mov_1
 		 83,95,	// Activated Warp#sthd_mov_2
 		 28,39,	// Activated Warp#sthd_mov_3
 		210,79,	// Activated Warp#sthd_mov_4
 		143,87,	// Activated Warp#sthd_mov_5
 		179,47;	// Activated Warp#sthd_mov_6
-	.@room_num = atoi( replacestr( strnpcinfo(2), "sthd_move_back_a_", "" ) ) - 1;
-	warp 'sthb_map$, .@coord[ 'room_back_coord[.@room_num] ], .@coord[ 'room_back_coord[.@room_num]+1 ];
+	.@room_num = atoi( replacestr( strnpcinfo(2), "sthd_move_back_a_", "" ) );
+	.@index = inarray( 'warp_list[1], .@room_num ) * 2;
+	warp 'sthb_map$, .@coord[.@index], .@coord[ .@index+1 ];
 	end;
 }
 
@@ -829,7 +843,7 @@ OnTouch:
 	}
 	mes "- Black Warp is swirling about. -";
 	close2;
-	setarray .@coord[0],
+	setarray .@coord[2],
 		 66,96,	// #sthd_move_back_a_1, #sthd_event_13
 		116,96,	// #sthd_move_back_a_2, #sthd_event_14
 		 16,13,	// #sthd_move_back_a_3, #sthd_event_18, Immortal Wind Ghost
@@ -837,8 +851,9 @@ OnTouch:
 		 66,14,	// #sthd_move_back_a_5, #sthd_event_16
 		 15,96;	// #sthd_move_back_a_6, #sthd_event_17, Immortal Cursed Knight
 
-	.@room_num = atoi( replacestr( strnpcinfo(2), "sthd_mov_", "" ) ) - 1;
-	warp 'sthc_map$, .@coord[ 'room_in_coord[.@room_num] ], .@coord[ 'room_in_coord[.@room_num] + 1 ];
+	.@room_num = atoi( replacestr( strnpcinfo(2), "sthd_mov_", "" ) );
+	.@index = 'warp_list[.@room_num] * 2;
+	warp 'sthc_map$, .@coord[.@index], .@coord[ .@index+1 ];
 	end;
 }
 
@@ -876,6 +891,7 @@ OnTouch:
 1@sthb,206,79,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_4	4_ENERGY_WHITE
 1@sthb,147,87,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_5	4_ENERGY_WHITE
 1@sthb,178,51,1	duplicate(Desactivated Warp#sthd_mov_1)	Desactivated Warp#sthd_mov_6	4_ENERGY_WHITE
+
 
 // Spawn in the rooms
 1@sthc,66,94,0	script	#sthd_event_13	HIDDEN_WARP_NPC,8,8,{
@@ -996,7 +1012,7 @@ OnTreasure3: callsub( S_Treasure,3 );
 OnTreasure4: callsub( S_Treasure,4 );
 S_Treasure:
 	.@num = getarg(0);
-	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnTreasure" + .@num ) < 1)
+	if (mobcount( 'sthc_map$, instance_npcname("#chest_spawn") + "::OnTreasure" + .@num ) < 1)	// todo it seems there is a random delay of ~0-2 seconds
 		enablenpc instance_npcname("Sky Fortress Gold Treasure#" + .@num);
 	end;
 OnTreasureB:
@@ -1158,8 +1174,8 @@ OnTouch:
 	monster 'sthb_map$,36,58,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
 	monster 'sthb_map$,36,60,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,82,50,"Immortal Cursed Zombie",3480,1;
-	if (rand(100) < 10)	// unknown rates
-		monster 'sthb_map$,65,86,"Sky Fortress Key Keeper",3478,1;	// unknown coord
+	if (rand(100) < 20)	// ~ 15-25%
+		monster 'sthb_map$,80,49,"Sky Fortress Key Keeper",3478,1;
 	end;
 }
 	
@@ -1179,8 +1195,8 @@ OnTouch:
 	monster 'sthb_map$,83,94,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,84,86,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,82,85,"Immortal Cursed Zombie",3480,1;
-	if (rand(100) < 10)	// unknown rates
-		monster 'sthb_map$,80,49,"Sky Fortress Key Keeper",3478,1;
+	if (rand(100) < 20)
+		monster 'sthb_map$,73,96,"Sky Fortress Key Keeper",3478,1;
 	end;
 }
 
@@ -1200,8 +1216,8 @@ OnTouch:
 	monster 'sthb_map$,29,67,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,27,42,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,26,43,"Immortal Cursed Zombie",3480,1;
-	if (rand(100) < 10)	// unknown rates
-		monster 'sthb_map$,57,96,"Sky Fortress Key Keeper",3478,1;	// unknown coord
+	if (rand(100) < 20)
+		monster 'sthb_map$,27,54,"Sky Fortress Key Keeper",3478,1;
 	end;
 }
 
@@ -1221,8 +1237,8 @@ OnTouch:
 	monster 'sthb_map$,90,42,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,90,40,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,93,39,"Immortal Cursed Zombie",3480,1;
-	if (rand(100) < 10)	// unknown rates
-		monster 'sthb_map$,32,39,"Sky Fortress Key Keeper",3478,1;	// unknown coord
+	if (rand(100) < 20)
+		monster 'sthb_map$,75,40,"Sky Fortress Key Keeper",3478,1;
 	end;
 }
 
@@ -1240,7 +1256,7 @@ OnTouch:
 	monster 'sthb_map$,171,37,"Immortal Cursed Zombie",3480,1;			// AS_CURSED_SOLDIER
 	monster 'sthb_map$,171,36,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,144,38,"Immortal Cursed Zombie",3480,1;
-	if (rand(100) < 10)	// unknown rates
+	if (rand(100) < 20)
 		monster 'sthb_map$,163,38,"Sky Fortress Key Keeper",3478,1;
 	end;
 }
@@ -1261,8 +1277,8 @@ OnTouch:
 	monster 'sthb_map$,155,92,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,144,93,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,143,94,"Immortal Cursed Zombie",3480,1;
-	if (rand(100) < 10)	// unknown rates
-		monster 'sthb_map$,144,47,"Sky Fortress Key Keeper",3478,1;	// unknown coord
+	if (rand(100) < 20)
+		monster 'sthb_map$,154,96,"Sky Fortress Key Keeper",3478,1;
 	end;
 }
 
@@ -1282,8 +1298,8 @@ OnTouch:
 	monster 'sthb_map$,198,62,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,200,46,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,199,48,"Immortal Cursed Zombie",3480,1;
-	if (rand(100) < 10)	// unknown rates
-		monster 'sthb_map$,178,94,"Sky Fortress Key Keeper",3478,1;	// unknown coord
+	if (rand(100) < 20)
+		monster 'sthb_map$,202,56,"Sky Fortress Key Keeper",3478,1;
 	end;
 }
 
@@ -1303,8 +1319,8 @@ OnTouch:
 	monster 'sthb_map$,153,84,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,155,78,"Immortal Cursed Zombie",3480,1;
 	monster 'sthb_map$,155,76,"Immortal Cursed Zombie",3480,1;
-	if (rand(100) < 10)	// unknown rates
-		monster 'sthb_map$,179,48,"Sky Fortress Key Keeper",3478,1;	// unknown coord
+	if (rand(100) < 20)
+		monster 'sthb_map$,156,46,"Sky Fortress Key Keeper",3478,1;
 	end;
 }
 
