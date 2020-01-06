@@ -5,9 +5,13 @@ ALTER TABLE `buyingstore_items`
     ADD PRIMARY KEY (`buyingstore_id`, `index`);
 
 ALTER TABLE `charlog`
+    ADD COLUMN `id` INT NOT NULL AUTO_INCREMENT FIRST,
+    ADD PRIMARY KEY (`id`),
     ADD PRIMARY KEY (`time`, `account_id`, `char_num`);
 
 ALTER TABLE `friends`
+    ADD COLUMN `id` INT NOT NULL AUTO_INCREMENT FIRST,
+    ADD PRIMARY KEY (`id`),
     DROP INDEX `char_id`,
     ADD PRIMARY KEY (`char_id`, `friend_id`);
 
