@@ -199,7 +199,7 @@ lighthalzen,341,224,3	script	Fishbone	4_M_LGTGUARD,{
 		mes "[Fishbone]";
 		mes "Anyway, good luck in";
 		mes "whatever it is you're doing";
-		mes "here in Lighthazlen. Oh, and";
+		mes "here in Lighthalzen. Oh, and";
 		mes "be real careful! Something";
 		mes "shadier than me is going";
 		mes "on in this big city~";
@@ -5314,7 +5314,7 @@ lhz_in01,27,247,5	script	Representative#li_02	1_F_LIBRARYGIRL,{
 			mes "Rekenber was established";
 			mes "400 years ago, around the";
 			mes "same time as the foundation";
-			mes "of the Schwaltzvalt Republic.";
+			mes "of the Schwarzwald Republic.";
 			next;
 			mes "[Representative]";
 			mes "We began as the ''Zent Zerter";
@@ -5450,7 +5450,7 @@ lhz_in01,25,251,3	script	Rekenber Guidebook#li	HIDDEN_NPC,{
 	mes "^3131FF#The Vision^000000";
 	mes "In the pursuit of knowledge,";
 	mes "Rekenber will search the";
-	mes "Rune-Midgart continent for";
+	mes "Rune-Midgarts continent for";
 	mes "ancient relics. We hope to make";
 	mes "significant scientific progress by learning the secrets of the past.";
 	next;
@@ -5459,7 +5459,7 @@ lhz_in01,25,251,3	script	Rekenber Guidebook#li	HIDDEN_NPC,{
 	mes "improve current technologies";
 	mes "to provide more convenient";
 	mes "and affordable services in";
-	mes "the Schwaltzvalt Republic.";
+	mes "the Schwarzwald Republic.";
 	next;
 	mes "^3131FF#The Commitment^000000";
 	mes "Although magic and the";
@@ -5724,7 +5724,7 @@ lhz_in01,286,226,3	script	Secretary Slierre#li	4_F_ZONDAGIRL,{
 			mes "biggest contributer of the";
 			mes "Regenschirm Laboratory.";
 			mes "Their work will benefit the";
-			mes "entire Rune-Midgard continent, hence our highly involved support.";
+			mes "entire Midgard continent, hence our highly involved support.";
 			next;
 			mes "[Sueii Slierre]";
 			mes "A representative at the";
@@ -6228,7 +6228,7 @@ lhz_in01,269,114,3	script	A File#li-1	HIDDEN_NPC,{
 	close;
 }
 
-// President Quest, a.k.a. Schwartzvalt Triology Quest
+// President Quest, a.k.a. Schwarzwald Triology Quest
 //============================================================
 lighthalzen,179,170,4	script	Ordinary Man	4W_M_02,{
 
@@ -7115,7 +7115,7 @@ yuno_fild04,165,245,4	script	Dismal Guy	4_M_ORIENT02,{
 		mes "Rekenber Corporation is";
 		mes "our sworn enemy. Did you";
 		mes "know that it basically controls";
-		mes "the Schwaltzvalt Republic?";
+		mes "the Schwarzwald Republic?";
 		next;
 		mes "[Gushaar]";
 		mes "They're so powerful, they";
@@ -7136,12 +7136,12 @@ yuno_fild04,165,245,4	script	Dismal Guy	4_M_ORIENT02,{
 		mes "The ultimate goal of our";
 		mes "group, ''Secret Wing,'' is to";
 		mes "establish true independence";
-		mes "in the Schwaltzvalt Republic";
+		mes "in the Schwarzwald Republic";
 		mes "by destroying Rekenber Corporation.";
 		next;
 		mes "[Gushaar]";
 		mes "Fortunately, the new president";
-		mes "of the Schwaltzvalt Republic,";
+		mes "of the Schwarzwald Republic,";
 		mes "Mr. Weierstrass, is sympathetic";
 		mes "to our cause. He is working with us to bring about a revolution and";
 		mes "overthrow Rekenber Corporation.";
@@ -7257,7 +7257,7 @@ yuno_pre,69,20,4	script	Secretary#1	4_F_LGTGIRL,{
 				mes "I'm the personal";
 				mes "secretary to the";
 				mes "president of the";
-				mes "Schwartzvalt Republic,";
+				mes "Schwarzwald Republic,";
 				mes "if that's what you mean.";
 				close;
 		}
@@ -7677,7 +7677,7 @@ L_Mission:
 				mes "exist to create money, but";
 				mes "the Rekenber Corporation";
 				mes "is much more nefarious.";
-				mes "They actually want to dominate the entire Rune-Midgard continent.";
+				mes "They actually want to dominate the entire Midgard continent.";
 				next;
 				mes "[Karl]";
 				mes "In fact, the chairman of";
@@ -7701,7 +7701,7 @@ L_Mission:
 				mes "''Secret Wing's'' only";
 				mes "goal is to destroy the";
 				mes "Rekenber Corporation in";
-				mes "order to break the Schwaltzvalt Republic free from its oppression.";
+				mes "order to break the Schwarzwald Republic free from its oppression.";
 				next;
 				mes "[Karl]";
 				mes "Of course, we realize";
@@ -8128,9 +8128,9 @@ L_Mission:
 		mes "I hope you continue";
 		mes "to keep up the good";
 		mes "work, not only for the";
-		mes "sake of the Schwaltzvalt";
+		mes "sake of the Schwarzwald";
 		mes "Republic, but for peace";
-		mes "on all of Rune-Midgard.";
+		mes "on all of Midgard.";
 		close2;
 		cutin "",255;
 		end;
@@ -8486,7 +8486,7 @@ L_Mission:
 		next;
 		mes "[Karl]";
 		mes "I have had my men to gather some information and learned that Regenschrim had stopped operating now.";
-		mes "You have done well for the Schwaltzvalt Republic.";
+		mes "You have done well for the Schwarzwald Republic.";
 		close2;
 		cutin "",255;
 		end;
@@ -9176,7 +9176,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	4_F_AGENTKAFRA,{
 		mes "Good, you're back.";
 		mes "Listen, all members of";
 		mes "Secret Wing need to leave";
-		mes "the Schwaltzvalt Republic";
+		mes "the Schwarzwald Republic";
 		mes "immediately! We've been";
 		mes "severely compromised...";
 		next;
@@ -9225,7 +9225,7 @@ lhz_fild01,66,219,4	script	Mysterious Woman	4_F_AGENTKAFRA,{
 		mes "Still, aside from a few";
 		mes "agents, almost all of Secret";
 		mes "Wing must pull out of the";
-		mes "Schwaltzvalt Republic for";
+		mes "Schwarzwald Republic for";
 		mes "now so that we can live to";
 		mes "fight another day.";
 		next;
@@ -9930,7 +9930,7 @@ lhz_in01,184,52,0	script	Area 1-7	HIDDEN_NPC,{
 		mes "[Classified Info]";
 		mes "^8C1717Karl Weierstrass has";
 		mes "been a long distinguished";
-		mes "politician in the Schwaltzvalt";
+		mes "politician in the Schwarzwald";
 		mes "Republic and was elected as";
 		mes "its president in the year 984.^000000";
 		next;
@@ -10015,7 +10015,7 @@ lhz_in01,184,46,0	script	Area 3-2	HIDDEN_NPC,{
 		mes "3rd Security Team has alrady";
 		mes "placed secret agents in key";
 		mes "strategic locations within";
-		mes "the Schwaltzvalt Republic.^000000";
+		mes "the Schwarzwald Republic.^000000";
 		next;
 		mes "^3355FFThis file is very intriguing,";
 		mes "but it doesn't really cover";
@@ -11273,7 +11273,7 @@ airplane_01,96,48,3	script	Man#Lyozien	4_M_LGTMAN,{
 		mes "So you spoke to";
 		mes "Mr. Ahman already?";
 		mes "Good, good. Now we can";
-		mes "go back to the Schwaltzvalt";
+		mes "go back to the Schwarzwald";
 		mes "Republic for our next job.";
 		next;
 		mes "[Lyozien]";
@@ -11637,7 +11637,7 @@ OnStop:
 		mes "Oh, it's you again.";
 		mes "Shouldn't you be getting";
 		mes "on the Airship and heading";
-		mes "back to the Schwaltzvalt";
+		mes "back to the Schwarzwald";
 		mes "Republic? There are more";
 		mes "deliveries in queue, you know.";
 		close;
@@ -11990,11 +11990,11 @@ airplane_01,10,10,3	script	#LyozienSwitch	HIDDEN_NPC,{
 //= 2.9 Fixed Friendship Quest levelup exploit (u could get EXP twice) [Lupus]
 //= 3.0 Added Cursed Spirit Quest. [SinSloth]
 //=     Moved a book non-related to Lighthalzen quests.
-//= 3.1 Added Schwartzvalt Trilogy Quest. [SinSloth]
+//= 3.1 Added Schwarzwald Trilogy Quest. [SinSloth]
 //= 3.2 Updated some NPCs regarding Hugel Rebellion Quest. [SinSloth]
 //= 3.2 Removed the NPC "#kiz03-4" as I couldn't find any [L0ne_W0lf]
 //=     reference to it in the Aegis script.
-//= 3.3 Fixed a wrong negative value checking in Schwartzvalt Trilogy quest. [SinSloth]
+//= 3.3 Fixed a wrong negative value checking in Schwarzwald Trilogy quest. [SinSloth]
 //= 3.4 Fixed experience gains to match upcoming rate adjustments. [SinSloth]
 //= 3.5 Touch-ups to the Friendship quest. Added EXP reward. [L0ne_W0lf]
 //=     Added cutins for "Maku" npc, and changed "set HP" to percentheal.

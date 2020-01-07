@@ -150,7 +150,7 @@ morocc,138,238,4	script	Piled Rags#ep14bs	4_M_DIEMAN,{
 		mes "do you mean the ^0000FFoasis near the northwestern sphinx^000000?";
 		next;
 		mes "[Tamarin]";
-		mes "I've been in Morroc, but this is my first time inside the village.";
+		mes "I've been in Morocc, but this is my first time inside the village.";
 		mes "I remember hearing that the place holds special water.";
 		next;
 		mes "[Tamarin]";
@@ -313,7 +313,7 @@ moc_ruins,106,140,4	script	Tamarin#ep14bs_ru	4_M_TAMARIN,{
 			mes "My knees gave way and I rolled on my side. When I looked around, I was back at the ^0000FFDimensional Crack^000000 where my friends and I first arrived.";
 			next;
 			mes "[Tamarin]";
-			mes "I came out through the ^0000FFMorroc Dimensional Teleporter^000000 and used every ounce of my energy to get to Morroc.";
+			mes "I came out through the ^0000FFMorocc Dimensional Teleporter^000000 and used every ounce of my energy to get to Morocc.";
 			next;
 			mes "[Tamarin]";
 			mes "Sigh...";
@@ -327,7 +327,7 @@ moc_ruins,106,140,4	script	Tamarin#ep14bs_ru	4_M_TAMARIN,{
 		cutin "ep143_tasmi.bmp",2;
 		next;
 		mes "[Tamarin]";
-		mes "Fortunately for me, with the ^0000FFMorroc restoration work^000000 underway, I shouldn't have a problem making money through some part-time jobs.";
+		mes "Fortunately for me, with the ^0000FFMorocc restoration work^000000 underway, I shouldn't have a problem making money through some part-time jobs.";
 		next;
 		if (select( "Tell him have safe travel.", "Tell him you want to tag along." ) == 1) {
 			mes "[Tamarin]";
@@ -341,7 +341,7 @@ moc_ruins,106,140,4	script	Tamarin#ep14bs_ru	4_M_TAMARIN,{
 			cutin "ep143_tasmi.bmp",2;
 			next;
 			mes "[Tamarin]";
-			mes "I'll be in Morroc for a while, making some money and getting ready for another adventure. I hope I can see you again before I leave.";
+			mes "I'll be in Morocc for a while, making some money and getting ready for another adventure. I hope I can see you again before I leave.";
 			close3;
 		}
 		mes "[Tamarin]";
@@ -536,11 +536,11 @@ ecl_in01,40,96,3	script	Eclage Guard#143_6	4_M_FAIRYSOLDIER,{
 		next;
 		mes "[Eclage Guard]";
 		mes "Many a warrior already left to the hideout.";
-		mes "So long as Morroc exists, Yggdrasil is not safe. I'm going to join the Expedition.";
+		mes "So long as Morocc exists, Yggdrasil is not safe. I'm going to join the Expedition.";
 		close;
 	case 2:
 		mes "[Eclage Guard]";
-		mes "It turns out Demon God ran from Morroc to hide out in our dimension.";
+		mes "It turns out Demon God ran from Morocc to hide out in our dimension.";
 		mes "He has to be dealt with, either banished back to his realm or destroyed.";
 		next;
 		mes "[Eclage Guard]";

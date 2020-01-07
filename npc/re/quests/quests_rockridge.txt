@@ -5036,7 +5036,7 @@ rockrdg1,330,104,3	script	Curt Snake#rockc05	10218,{
 
 rockrdg1,299,82,3	script	Tagliatelle#rockc07	4_DR_M_02,{
 	mes "[Tagliatelle]";
-	mes "I love traveling. I had fun traveling in Pa-sta, and I'm determined to spend the rest of my life traveling in Rune Midgarts and other cities and villages that I can reach from the kingdom.";
+	mes "I love traveling. I had fun traveling in Pa-sta, and I'm determined to spend the rest of my life traveling in Rune-Midgarts and other cities and villages that I can reach from the kingdom.";
 	next;
 	mes "[Tagliatelle]";
 	mes "I like being in new places and talking to the residents. I can learn many things from the way they live.";

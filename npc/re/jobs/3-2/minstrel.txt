@@ -1559,7 +1559,7 @@ comodo,159,316,4	script	Woman Roasting Meat	701,{
 		mes "Finally, he became exhausted and he wanted to go somewhere quiet.";
 		next;
 		mes "[Woman Roasting Meat]";
-		mes "I told him that there was a quiet place near Morroc, and he left.";
+		mes "I told him that there was a quiet place near Morocc, and he left.";
 		next;
 		mes "[Woman Roasting Meat]";
 		mes "I regret that.";
@@ -1571,7 +1571,7 @@ comodo,159,316,4	script	Woman Roasting Meat	701,{
 		close;
 	} else if (job_min == 20) {
 		mes "Where is the quiet place?";
-		mes "Well I'm not sure but there is a mysterious building in south-eastern part of Morroc.";
+		mes "Well I'm not sure but there is a mysterious building in south-eastern part of Morocc.";
 		next;
 		mes "[Woman Roasting Meat]";
 		mes "I heard that some mysterious people gather there.";

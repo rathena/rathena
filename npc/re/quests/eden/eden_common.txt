@@ -62,7 +62,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
 		switch (select("What is Eden group?:Join the Eden Group.:Register new mission.:Search for missions.:Cancel.")) {
 		case 1:
 			mes "[Lime Evenor]";
-			mes "Eden Group is a group that helps people who are suffering from distresses in Rune-Midgard.";
+			mes "Eden Group is a group that helps people who are suffering from distresses in Midgard.";
 			next;
 			mes "[Lime Evenor]";
 			mes "If people need help, we put up the case on the bulletin board and introduce it to our members who are eager to help those in need.";
@@ -72,7 +72,7 @@ moc_para01,27,35,5	script	Secretary Lime Evenor	4_F_EDEN_OFFICER,{
 			mes "Members do these missions for rewards.";
 			next;
 			mes "[Lime Evenor]";
-			mes "If you are not too familiar with Rune-Midgard, this is a great way to explore the world.";
+			mes "If you are not too familiar with Midgard, this is a great way to explore the world.";
 			mes "Or, if you are mature enough, you can travel the world and make new friends while doing missions. Your honorable name will be spread out among lands.";
 			next;
 			break;

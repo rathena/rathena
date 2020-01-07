@@ -1,5 +1,5 @@
 //===== rAthena Script =======================================
-//= Official Gonryun Power Arena
+//= Official Kunlun Power Arena
 //===== By: ==================================================
 //= KarLaeda
 //===== Current Version: =====================================

@@ -417,7 +417,7 @@ Body:
     Score: 10
   - Id: 120061
     Group: AG_ADVENTURE
-    Name: Yuno Field Exploration
+    Name: Juno Field Exploration
     #Rewards:
     #  Item: Old_Money_Pocket
     Score: 10
@@ -669,7 +669,7 @@ Body:
     Score: 10
   - Id: 120103
     Group: AG_ADVENTURE
-    Name: Gonryun Field Exploration
+    Name: Kunlun Field Exploration
     #Rewards:
     #  Item: Old_Money_Pocket
     Score: 10
@@ -855,7 +855,7 @@ Body:
     Score: 20
   - Id: 120134
     Group: AG_ADVENTURE
-    Name: Gonryun Dungeon Exploration
+    Name: Kunlun Dungeon Exploration
     #Rewards:
     #  Item: Old_Money_Pocket
     Score: 20
@@ -965,8 +965,9 @@ Body:
     Score: 10
   - Id: 127005
     Group: AG_CHATTING
-    Name: Yuno Contribution
+    Name: Juno Contribution
     Targets:
+    Target:
       - Id: 0
         Count: 100000
     Map: yuno
@@ -1560,7 +1561,7 @@ Body:
     Score: 20
   - Id: 129008
     Group: AG_ADVENTURE
-    Name: Rune Midgard Explorer
+    Name: Rune-Midgarts Explorer
     Dependents:
       - Id: 0
         AchievementId: 129001
@@ -1581,7 +1582,7 @@ Body:
     Score: 50
   - Id: 129009
     Group: AG_ADVENTURE
-    Name: Yuno Explorer
+    Name: Juno Explorer
     Dependents:
       - Id: 0
         AchievementId: 120052
@@ -1797,11 +1798,11 @@ Body:
     Score: 50
   - Id: 129021
     Group: AG_BATTLE
-    Name: Glastheim Challenge Mode
+    Name: Glastheim Challenge Mode # Complete 100 times?
     Rewards:
       TitleId: 1045
     Score: 10
-  - Id: 130000
+  - Id: 130000 # Talk to Prince NPC (npc/quests/quests_morocc.txt L5288)
     Group: AG_CHATTING
     Name: Socialite debut
     Rewards:
@@ -2812,4 +2813,3 @@ Body:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleId: 1024
     Score: 10
-
