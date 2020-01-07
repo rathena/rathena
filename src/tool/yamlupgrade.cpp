@@ -41,9 +41,9 @@
 #include "../map/npc.hpp"
 #include "../map/pc.hpp"
 #include "../map/pet.hpp"
+#include "../map/quest.hpp"
 #include "../map/script.hpp"
 #include "../map/storage.hpp"
-#include "../map/quest.hpp"
 
 using namespace rathena;
 
@@ -62,7 +62,7 @@ int getch( void ){
 #endif
 
 // Forward declaration of conversion functions
-static size_t upgrade_achievement_db(std::string file, std::ofstream &out);
+static size_t upgrade_achievement_db(std::string file);
 
 // Constants for conversion
 std::unordered_map<uint16, std::string> aegis_itemnames;
@@ -75,12 +75,40 @@ static bool parse_mob_constants(char* split[], int columns, int current);
 static bool parse_skill_constants(char* split[], int columns, int current);
 
 bool fileExists(const std::string &path);
-uint32 getHeaderVersion(YAML::Node &node);
-void prepareHeader(const std::string &type, uint32 version, std::ofstream &out);
 bool askConfirmation(const char *fmt, ...);
 
 YAML::Node inNode;
-size_t counter;
+YAML::Emitter body;
+
+uint32 getHeaderVersion(YAML::Node &node) {
+	return node["Header"]["Version"].as<uint32>();
+}
+
+void prepareHeader(std::ofstream &file, const std::string &type, uint32 version) {
+	YAML::Emitter header(file);
+
+	header << YAML::BeginMap;
+	header << YAML::Key << "Header";
+	header << YAML::BeginMap;
+	header << YAML::Key << "Type" << YAML::Value << type;
+	header << YAML::Key << "Version" << YAML::Value << version;
+	header << YAML::EndMap;
+	header << YAML::EndMap;
+
+	file << "\n";
+	file << "\n";
+}
+
+void prepareBody(void) {
+	body << YAML::BeginMap;
+	body << YAML::Key << "Body";
+	body << YAML::BeginSeq;
+}
+
+void finalizeBody(void) {
+	body << YAML::EndSeq;
+	body << YAML::EndMap;
+}
 
 template<typename Func>
 bool process(const std::string &type, uint32 version, const std::vector<std::string> &paths, const std::string &name, Func lambda) {
@@ -112,20 +140,18 @@ bool process(const std::string &type, uint32 version, const std::vector<std::str
 				return false;
 			}
 
-			counter = 0;
-			prepareHeader(type, version, out);
+			prepareHeader(out, type, version);
+			prepareBody();
 
-			if (!lambda(path, name_ext, out)) {
+			if (!lambda(path, name_ext)) {
+				out.close();
 				return false;
 			}
-			
-			// Make sure there is an empty line at the end of the file for git
-#ifdef WIN32
-			out << "\r\n";
-#else
-			out << "\n";
-#endif
 
+			finalizeBody();
+			out << body.c_str();
+			// Make sure there is an empty line at the end of the file for git
+			out << "\n";
 			out.close();
 		}
 	}
@@ -148,16 +174,12 @@ int do_init(int argc, char** argv) {
 
 	std::vector<std::string> root_paths = {
 		path_db,
-		path_db_import
-	};
-
-	std::vector<std::string> mode_paths = {
 		path_db_mode,
 		path_db_import
 	};
 
-	if (!process("ACHIEVEMENT_DB", 2, mode_paths, "achievement_db", [](const std::string &path, const std::string &name_ext, std::ofstream &out) -> bool {
-		return upgrade_achievement_db(path + name_ext, out);
+	if (!process("ACHIEVEMENT_DB", 2, root_paths, "achievement_db", [](const std::string &path, const std::string &name_ext) -> bool {
+		return upgrade_achievement_db(path + name_ext);
 	})) {
 		return 0;
 	}
@@ -180,28 +202,6 @@ bool fileExists(const std::string &path) {
 	} else {
 		return false;
 	}
-}
-
-uint32 getHeaderVersion(YAML::Node &node) {
-	return node["Header"]["Version"].as<uint32>();
-}
-
-void prepareHeader(const std::string &type, uint32 version, std::ofstream &out) {
-	YAML::Emitter header(out);
-
-	header << YAML::BeginMap;
-	header << YAML::Key << "Header";
-	header << YAML::Value << YAML::BeginMap;
-	header << YAML::Key << "Type" << YAML::Value << type;
-	header << YAML::Key << "Version" << YAML::Value << version;
-	header << YAML::EndMap;
-	header << YAML::EndMap;
-
-#ifdef WIN32
-	out << "\r\n";
-#else
-	out << "\n";
-#endif
 }
 
 bool askConfirmation(const char *fmt, ...) {
@@ -368,83 +368,72 @@ static bool parse_skill_constants(char* split[], int columns, int current) {
 }
 
 // Implementation of the upgrade functions
-static size_t upgrade_achievement_db(std::string file, std::ofstream &out) {
+static size_t upgrade_achievement_db(std::string file) {
 	size_t entries = 0;
-	YAML::Emitter entry(out);
-
-	entry << YAML::BeginMap;
-	entry << YAML::Key << "Body";
-	entry << YAML::BeginSeq;
 
 	for (const auto &input : inNode["Body"]) {
-		entry << YAML::BeginMap;
-		entry << YAML::Key << "Id" << YAML::Value << input["ID"];
-		entry << YAML::Key << "Group" << YAML::Value << input["Group"];
-		entry << YAML::Key << "Name" << YAML::Value << input["Name"];
+		body << YAML::BeginMap;
+		body << YAML::Key << "Id" << YAML::Value << input["ID"];
+		body << YAML::Key << "Group" << YAML::Value << input["Group"];
+		body << YAML::Key << "Name" << YAML::Value << input["Name"];
 
 		if (input["Target"].IsDefined()) {
-			entry << YAML::Key << "Targets";
-			entry << YAML::BeginSeq;
+			body << YAML::Key << "Targets";
+			body << YAML::BeginSeq;
 
 			for (const auto &it : input["Target"]) {
-				entry << YAML::BeginMap;
-				entry << YAML::Key << "Id" << YAML::Value << it["Id"];
+				body << YAML::BeginMap;
+				body << YAML::Key << "Id" << YAML::Value << it["Id"];
 				if (it["MobID"].IsDefined())
-					entry << YAML::Key << "Mob" << YAML::Value << *util::umap_find(aegis_mobnames, it["MobID"].as<uint16>());
+					body << YAML::Key << "Mob" << YAML::Value << *util::umap_find(aegis_mobnames, it["MobID"].as<uint16>());
 				if (it["Count"].IsDefined() && it["Count"].as<int>() > 1)
-					entry << YAML::Key << "Count" << YAML::Value << it["Count"];
-				entry << YAML::EndMap;
+					body << YAML::Key << "Count" << YAML::Value << it["Count"];
+				body << YAML::EndMap;
 			}
 
-			entry << YAML::EndSeq;
+			body << YAML::EndSeq;
 		}
 
 		if (input["Condition"].IsDefined())
-			entry << YAML::Key << "Condition" << YAML::Value << input["Condition"];
+			body << YAML::Key << "Condition" << YAML::Value << input["Condition"];
 
 		if (input["Map"].IsDefined())
-			entry << YAML::Key << "Map" << YAML::Value << input["Map"];
+			body << YAML::Key << "Map" << YAML::Value << input["Map"];
 
 		if (input["Dependent"].IsDefined()) {
-			size_t j = 0;
-
-			entry << YAML::Key << "Dependents";
-			entry << YAML::BeginSeq;
+			body << YAML::Key << "Dependents";
+			body << YAML::BeginSeq;
 
 			for (const auto &it : input["Dependent"]) {
-				entry << YAML::BeginMap;
-				entry << YAML::Key << "Id" << YAML::Value << j;
-				entry << YAML::Key << "AchievementId" << YAML::Value << it["Id"];
-				entry << YAML::EndMap;
-				j++;
+				body << YAML::BeginMap;
+				body << YAML::Key << "Id" << YAML::Value << it["Id"];
+				body << YAML::EndMap;
 			}
 
-			entry << YAML::EndSeq;
+			body << YAML::EndSeq;
 		}
 
 		if (input["Reward"].IsDefined()) {
-			entry << YAML::Key << "Rewards";
-			entry << YAML::BeginMap;
+			body << YAML::Key << "Rewards";
+			body << YAML::BeginMap;
 			if (input["Reward"]["ItemID"].IsDefined())
-				entry << YAML::Key << "Item" << YAML::Value << *util::umap_find(aegis_itemnames, input["Reward"]["ItemID"].as<uint16>());
+				body << YAML::Key << "Item" << YAML::Value << *util::umap_find(aegis_itemnames, input["Reward"]["ItemID"].as<uint16>());
 			if (input["Reward"]["Amount"].IsDefined() && input["Reward"]["Amount"].as<uint16>() > 1)
-				entry << YAML::Key << "Amount" << YAML::Value << input["Reward"]["Amount"];
+				body << YAML::Key << "Amount" << YAML::Value << input["Reward"]["Amount"];
 			if (input["Reward"]["Script"].IsDefined())
-				entry << YAML::Key << "Script" << YAML::Value << input["Reward"]["Script"];
+				body << YAML::Key << "Script" << YAML::Value << input["Reward"]["Script"];
 			if (input["Reward"]["TitleID"].IsDefined())
-				entry << YAML::Key << "TitleId" << YAML::Value << input["Reward"]["TitleID"];
-			entry << YAML::EndMap;
+				body << YAML::Key << "TitleId" << YAML::Value << input["Reward"]["TitleID"];
+			body << YAML::EndMap;
 		}
 
-		entry << YAML::Key << "Score" << YAML::Value << input["Score"];
+		body << YAML::Key << "Score" << YAML::Value << input["Score"];
 
-		entry << YAML::EndMap;
-		counter++;
+		body << YAML::EndMap;
 		entries++;
 	}
 
-	entry << YAML::EndSeq;
-	entry << YAML::EndMap;
+	ShowStatus("Done reading '" CL_WHITE "%d" CL_RESET "' achievements in '" CL_WHITE "%s" CL_RESET "'.\n", entries, file.c_str());
 
 	return entries;
 }

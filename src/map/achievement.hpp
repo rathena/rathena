@@ -75,7 +75,7 @@ struct s_achievement_db {
 	std::string name;
 	enum e_achievement_group group;
 	std::unordered_map<uint16, std::shared_ptr<achievement_target>> targets;
-	std::unordered_map<uint16, uint32> dependent_ids;
+	std::vector<uint32> dependent_ids;
 	struct script_code* condition;
 	int16 mapindex;
 	struct ach_reward {

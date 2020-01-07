@@ -967,7 +967,6 @@ Body:
     Group: AG_CHATTING
     Name: Juno Contribution
     Targets:
-    Target:
       - Id: 0
         Count: 100000
     Map: yuno
@@ -1412,26 +1411,16 @@ Body:
     Group: AG_ADVENTURE
     Name: Prontera Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120001
-      - Id: 1
-        AchievementId: 120002
-      - Id: 2
-        AchievementId: 120003
-      - Id: 3
-        AchievementId: 120004
-      - Id: 4
-        AchievementId: 120005
-      - Id: 5
-        AchievementId: 120006
-      - Id: 6
-        AchievementId: 120007
-      - Id: 7
-        AchievementId: 120008
-      - Id: 8
-        AchievementId: 120009
-      - Id: 9
-        AchievementId: 120010
+      - Id: 120001
+      - Id: 120002
+      - Id: 120003
+      - Id: 120004
+      - Id: 120005
+      - Id: 120006
+      - Id: 120007
+      - Id: 120008
+      - Id: 120009
+      - Id: 120010
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1439,20 +1428,13 @@ Body:
     Group: AG_ADVENTURE
     Name: Geffen Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120011
-      - Id: 1
-        AchievementId: 120012
-      - Id: 2
-        AchievementId: 120013
-      - Id: 3
-        AchievementId: 120014
-      - Id: 4
-        AchievementId: 120015
-      - Id: 5
-        AchievementId: 120016
-      - Id: 6
-        AchievementId: 120017
+      - Id: 120011
+      - Id: 120012
+      - Id: 120013
+      - Id: 120014
+      - Id: 120015
+      - Id: 120016
+      - Id: 120017
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1460,18 +1442,12 @@ Body:
     Group: AG_ADVENTURE
     Name: Sograt Desert Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120018
-      - Id: 1
-        AchievementId: 120019
-      - Id: 2
-        AchievementId: 120020
-      - Id: 3
-        AchievementId: 120021
-      - Id: 4
-        AchievementId: 120022
-      - Id: 5
-        AchievementId: 120023
+      - Id: 120018
+      - Id: 120019
+      - Id: 120020
+      - Id: 120021
+      - Id: 120022
+      - Id: 120023
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1479,22 +1455,14 @@ Body:
     Group: AG_ADVENTURE
     Name: Payon Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120024
-      - Id: 1
-        AchievementId: 120025
-      - Id: 2
-        AchievementId: 120026
-      - Id: 3
-        AchievementId: 120027
-      - Id: 4
-        AchievementId: 120028
-      - Id: 5
-        AchievementId: 120029
-      - Id: 6
-        AchievementId: 120030
-      - Id: 7
-        AchievementId: 120031
+      - Id: 120024
+      - Id: 120025
+      - Id: 120026
+      - Id: 120027
+      - Id: 120028
+      - Id: 120029
+      - Id: 120030
+      - Id: 120031
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1502,16 +1470,11 @@ Body:
     Group: AG_ADVENTURE
     Name: North Mjolnir Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120032
-      - Id: 1
-        AchievementId: 120033
-      - Id: 2
-        AchievementId: 120034
-      - Id: 3
-        AchievementId: 120035
-      - Id: 4
-        AchievementId: 120036
+      - Id: 120032
+      - Id: 120033
+      - Id: 120034
+      - Id: 120035
+      - Id: 120036
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1519,20 +1482,13 @@ Body:
     Group: AG_ADVENTURE
     Name: South Mjolnir Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120037
-      - Id: 1
-        AchievementId: 120038
-      - Id: 2
-        AchievementId: 120039
-      - Id: 3
-        AchievementId: 120040
-      - Id: 4
-        AchievementId: 120041
-      - Id: 5
-        AchievementId: 120042
-      - Id: 6
-        AchievementId: 120043
+      - Id: 120037
+      - Id: 120038
+      - Id: 120039
+      - Id: 120040
+      - Id: 120041
+      - Id: 120042
+      - Id: 120043
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1540,22 +1496,14 @@ Body:
     Group: AG_ADVENTURE
     Name: Comodo Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120044
-      - Id: 1
-        AchievementId: 120045
-      - Id: 2
-        AchievementId: 120046
-      - Id: 3
-        AchievementId: 120047
-      - Id: 4
-        AchievementId: 120048
-      - Id: 5
-        AchievementId: 120049
-      - Id: 6
-        AchievementId: 120050
-      - Id: 7
-        AchievementId: 120051
+      - Id: 120044
+      - Id: 120045
+      - Id: 120046
+      - Id: 120047
+      - Id: 120048
+      - Id: 120049
+      - Id: 120050
+      - Id: 120051
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1563,20 +1511,13 @@ Body:
     Group: AG_ADVENTURE
     Name: Rune-Midgarts Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 129001
-      - Id: 1
-        AchievementId: 129002
-      - Id: 2
-        AchievementId: 129003
-      - Id: 3
-        AchievementId: 129004
-      - Id: 4
-        AchievementId: 129005
-      - Id: 5
-        AchievementId: 129006
-      - Id: 6
-        AchievementId: 129007
+      - Id: 129001
+      - Id: 129002
+      - Id: 129003
+      - Id: 129004
+      - Id: 129005
+      - Id: 129006
+      - Id: 129007
     Rewards:
       Item: Old_Violet_Box
     Score: 50
@@ -1584,26 +1525,16 @@ Body:
     Group: AG_ADVENTURE
     Name: Juno Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120052
-      - Id: 1
-        AchievementId: 120053
-      - Id: 2
-        AchievementId: 120054
-      - Id: 3
-        AchievementId: 120055
-      - Id: 4
-        AchievementId: 120056
-      - Id: 5
-        AchievementId: 120057
-      - Id: 6
-        AchievementId: 120058
-      - Id: 7
-        AchievementId: 120059
-      - Id: 8
-        AchievementId: 120060
-      - Id: 9
-        AchievementId: 120061
+      - Id: 120052
+      - Id: 120053
+      - Id: 120054
+      - Id: 120055
+      - Id: 120056
+      - Id: 120057
+      - Id: 120058
+      - Id: 120059
+      - Id: 120060
+      - Id: 120061
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1611,16 +1542,11 @@ Body:
     Group: AG_ADVENTURE
     Name: Hugel Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120062
-      - Id: 1
-        AchievementId: 120063
-      - Id: 2
-        AchievementId: 120064
-      - Id: 3
-        AchievementId: 120065
-      - Id: 4
-        AchievementId: 120066
+      - Id: 120062
+      - Id: 120063
+      - Id: 120064
+      - Id: 120065
+      - Id: 120066
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1628,22 +1554,14 @@ Body:
     Group: AG_ADVENTURE
     Name: Einbroch Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120067
-      - Id: 1
-        AchievementId: 120068
-      - Id: 2
-        AchievementId: 120069
-      - Id: 3
-        AchievementId: 120070
-      - Id: 4
-        AchievementId: 120071
-      - Id: 5
-        AchievementId: 120072
-      - Id: 6
-        AchievementId: 120073
-      - Id: 7
-        AchievementId: 120074
+      - Id: 120067
+      - Id: 120068
+      - Id: 120069
+      - Id: 120070
+      - Id: 120071
+      - Id: 120072
+      - Id: 120073
+      - Id: 120074
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1651,12 +1569,9 @@ Body:
     Group: AG_ADVENTURE
     Name: Lighthalzen Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120075
-      - Id: 1
-        AchievementId: 120076
-      - Id: 2
-        AchievementId: 120077
+      - Id: 120075
+      - Id: 120076
+      - Id: 120077
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1664,14 +1579,10 @@ Body:
     Group: AG_ADVENTURE
     Name: Schwarzwald Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 129009
-      - Id: 1
-        AchievementId: 129010
-      - Id: 2
-        AchievementId: 129011
-      - Id: 3
-        AchievementId: 129012
+      - Id: 129009
+      - Id: 129010
+      - Id: 129011
+      - Id: 129012
     Rewards:
       Item: Old_Violet_Box
     Score: 50
@@ -1679,20 +1590,13 @@ Body:
     Group: AG_ADVENTURE
     Name: Rachel Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120078
-      - Id: 1
-        AchievementId: 120079
-      - Id: 2
-        AchievementId: 120080
-      - Id: 3
-        AchievementId: 120081
-      - Id: 4
-        AchievementId: 120082
-      - Id: 5
-        AchievementId: 120083
-      - Id: 6
-        AchievementId: 120084
+      - Id: 120078
+      - Id: 120079
+      - Id: 120080
+      - Id: 120081
+      - Id: 120082
+      - Id: 120083
+      - Id: 120084
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1700,16 +1604,11 @@ Body:
     Group: AG_ADVENTURE
     Name: Veins Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120085
-      - Id: 1
-        AchievementId: 120086
-      - Id: 2
-        AchievementId: 120087
-      - Id: 3
-        AchievementId: 120088
-      - Id: 4
-        AchievementId: 120089
+      - Id: 120085
+      - Id: 120086
+      - Id: 120087
+      - Id: 120088
+      - Id: 120089
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1717,10 +1616,8 @@ Body:
     Group: AG_ADVENTURE
     Name: Arunafeltz Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 129014
-      - Id: 1
-        AchievementId: 129015
+      - Id: 129014
+      - Id: 129015
     Rewards:
       Item: Old_Violet_Box
     Score: 50
@@ -1728,18 +1625,12 @@ Body:
     Group: AG_ADVENTURE
     Name: Laphine Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120090
-      - Id: 1
-        AchievementId: 120091
-      - Id: 2
-        AchievementId: 120092
-      - Id: 3
-        AchievementId: 120093
-      - Id: 4
-        AchievementId: 120094
-      - Id: 5
-        AchievementId: 120095
+      - Id: 120090
+      - Id: 120091
+      - Id: 120092
+      - Id: 120093
+      - Id: 120094
+      - Id: 120095
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1747,16 +1638,11 @@ Body:
     Group: AG_ADVENTURE
     Name: Manuk Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120096
-      - Id: 1
-        AchievementId: 120097
-      - Id: 2
-        AchievementId: 120098
-      - Id: 3
-        AchievementId: 120099
-      - Id: 4
-        AchievementId: 120100
+      - Id: 120096
+      - Id: 120097
+      - Id: 120098
+      - Id: 120099
+      - Id: 120100
     Rewards:
       Item: Gift_Box
     Score: 20
@@ -1764,10 +1650,8 @@ Body:
     Group: AG_ADVENTURE
     Name: Eclage Explorer
     Dependents:
-      - Id: 0
-        AchievementId: 129017
-      - Id: 1
-        AchievementId: 129018
+      - Id: 129017
+      - Id: 129018
     Rewards:
       Item: Old_Violet_Box
     Score: 50
@@ -1775,24 +1659,15 @@ Body:
     Group: AG_ADVENTURE
     Name: Localizing fields explorer
     Dependents:
-      - Id: 0
-        AchievementId: 120101
-      - Id: 1
-        AchievementId: 120102
-      - Id: 2
-        AchievementId: 120103
-      - Id: 3
-        AchievementId: 120104
-      - Id: 4
-        AchievementId: 120105
-      - Id: 5
-        AchievementId: 120106
-      - Id: 6
-        AchievementId: 120107
-      - Id: 7
-        AchievementId: 120108
-      - Id: 8
-        AchievementId: 120109
+      - Id: 120101
+      - Id: 120102
+      - Id: 120103
+      - Id: 120104
+      - Id: 120105
+      - Id: 120106
+      - Id: 120107
+      - Id: 120108
+      - Id: 120109
     Rewards:
       Item: Old_Violet_Box
     Score: 50
@@ -1830,8 +1705,7 @@ Body:
     Name: Acquire the second aura!
     Condition: " BaseLevel >= 150 "
     Dependents:
-      - Id: 0
-        AchievementId: 200000
+      - Id: 200000
     Rewards:
       Item: Dark_Snake_Lord_Hat
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
@@ -1842,8 +1716,7 @@ Body:
     Name: Acquire the third aura!
     Condition: " BaseLevel >= 175 "
     Dependents:
-      - Id: 0
-        AchievementId: 200001
+      - Id: 200001
     Rewards:
     #  Item: Advanced_Jao_King_Hat
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
@@ -1863,8 +1736,7 @@ Body:
     Name: Grandmaster Job level!
     Condition: " JobLevel >= 70 "
     Dependents:
-      - Id: 0
-        AchievementId: 200003
+      - Id: 200003
     Rewards:
     #  Item: Old_Card_Album_
       Script: " specialeffect2 EF_BLESSING; sc_start SC_BLESSING,30000,10; "
@@ -2276,14 +2148,10 @@ Body:
     Group: AG_TAMING
     Name: Poring is Love
     Dependents:
-      - Id: 0
-        AchievementId: 230101
-      - Id: 1
-        AchievementId: 230102
-      - Id: 2
-        AchievementId: 230103
-      - Id: 3
-        AchievementId: 230104
+      - Id: 230101
+      - Id: 230102
+      - Id: 230103
+      - Id: 230104
     Rewards:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleId: 1025
@@ -2292,18 +2160,12 @@ Body:
     Group: AG_TAMING
     Name: Entomologist
     Dependents:
-      - Id: 0
-        AchievementId: 230111
-      - Id: 1
-        AchievementId: 230112
-      - Id: 2
-        AchievementId: 230113
-      - Id: 3
-        AchievementId: 230114
-      - Id: 4
-        AchievementId: 230115
-      - Id: 5
-        AchievementId: 230116
+      - Id: 230111
+      - Id: 230112
+      - Id: 230113
+      - Id: 230114
+      - Id: 230115
+      - Id: 230116
     Rewards:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleId: 1026
@@ -2312,22 +2174,14 @@ Body:
     Group: AG_TAMING
     Name: Animals are also our friend
     Dependents:
-      - Id: 0
-        AchievementId: 230121
-      - Id: 1
-        AchievementId: 230122
-      - Id: 2
-        AchievementId: 230123
-      - Id: 3
-        AchievementId: 230124
-      - Id: 4
-        AchievementId: 230125
-      - Id: 5
-        AchievementId: 230126
-      - Id: 6
-        AchievementId: 230127
-      - Id: 7
-        AchievementId: 230128
+      - Id: 230121
+      - Id: 230122
+      - Id: 230123
+      - Id: 230124
+      - Id: 230125
+      - Id: 230126
+      - Id: 230127
+      - Id: 230128
     Rewards:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleId: 1027
@@ -2336,20 +2190,13 @@ Body:
     Group: AG_TAMING
     Name: Monster Girls Unite!!
     Dependents:
-      - Id: 0
-        AchievementId: 230141
-      - Id: 1
-        AchievementId: 230142
-      - Id: 2
-        AchievementId: 230143
-      - Id: 3
-        AchievementId: 230144
-      - Id: 4
-        AchievementId: 230145
-      - Id: 5
-        AchievementId: 230146
-      - Id: 6
-        AchievementId: 230147
+      - Id: 230141
+      - Id: 230142
+      - Id: 230143
+      - Id: 230144
+      - Id: 230145
+      - Id: 230146
+      - Id: 230147
     Rewards:
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
       TitleId: 1029
@@ -2533,12 +2380,9 @@ Body:
     Group: AG_BATTLE
     Name: Poring seeker
     Dependents:
-      - Id: 0
-        AchievementId: 230201
-      - Id: 1
-        AchievementId: 230202
-      - Id: 2
-        AchievementId: 230203
+      - Id: 230201
+      - Id: 230202
+      - Id: 230203
     Score: 10
   - Id: 230201
     Group: AG_BATTLE
@@ -2607,8 +2451,7 @@ Body:
     Name: Reaching Level 2
     Condition: " AchievementLevel >= 2 "
     Dependents:
-      - Id: 0
-        AchievementId: 240001
+      - Id: 240001
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2618,8 +2461,7 @@ Body:
     Name: Reaching Level 3
     Condition: " AchievementLevel >= 3 "
     Dependents:
-      - Id: 0
-        AchievementId: 240002
+      - Id: 240002
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2629,8 +2471,7 @@ Body:
     Name: Reaching Level 4
     Condition: " AchievementLevel >= 4 "
     Dependents:
-      - Id: 0
-        AchievementId: 240003
+      - Id: 240003
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2640,8 +2481,7 @@ Body:
     Name: Reaching Level 5
     Condition: " AchievementLevel >= 5 "
     Dependents:
-      - Id: 0
-        AchievementId: 240004
+      - Id: 240004
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2651,8 +2491,7 @@ Body:
     Name: Reaching Level 6
     Condition: " AchievementLevel >= 6 "
     Dependents:
-      - Id: 0
-        AchievementId: 240005
+      - Id: 240005
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2662,8 +2501,7 @@ Body:
     Name: Reaching Level 7
     Condition: " AchievementLevel >= 7 "
     Dependents:
-      - Id: 0
-        AchievementId: 240006
+      - Id: 240006
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2673,8 +2511,7 @@ Body:
     Name: Reaching Level 8
     Condition: " AchievementLevel >= 8 "
     Dependents:
-      - Id: 0
-        AchievementId: 240007
+      - Id: 240007
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2684,8 +2521,7 @@ Body:
     Name: Reaching Level 9
     Condition: " AchievementLevel >= 9 "
     Dependents:
-      - Id: 0
-        AchievementId: 240008
+      - Id: 240008
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2695,8 +2531,7 @@ Body:
     Name: Reaching Level 10
     Condition: " AchievementLevel >= 10 "
     Dependents:
-      - Id: 0
-        AchievementId: 240009
+      - Id: 240009
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2707,8 +2542,7 @@ Body:
     Name: Reaching Level 11
     Condition: " AchievementLevel >= 11 "
     Dependents:
-      - Id: 0
-        AchievementId: 240010
+      - Id: 240010
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2718,8 +2552,7 @@ Body:
     Name: Reaching Level 12
     Condition: " AchievementLevel >= 12 "
     Dependents:
-      - Id: 0
-        AchievementId: 240011
+      - Id: 240011
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2729,8 +2562,7 @@ Body:
     Name: Reaching Level 13
     Condition: " AchievementLevel >= 13 "
     Dependents:
-      - Id: 0
-        AchievementId: 240012
+      - Id: 240012
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2740,8 +2572,7 @@ Body:
     Name: Reaching Level 14
     Condition: " AchievementLevel >= 14 "
     Dependents:
-      - Id: 0
-        AchievementId: 240013
+      - Id: 240013
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2751,8 +2582,7 @@ Body:
     Name: Reaching Level 15
     Condition: " AchievementLevel >= 15 "
     Dependents:
-      - Id: 0
-        AchievementId: 240014
+      - Id: 240014
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2762,8 +2592,7 @@ Body:
     Name: Reaching Level 16
     Condition: " AchievementLevel >= 16 "
     Dependents:
-      - Id: 0
-        AchievementId: 240015
+      - Id: 240015
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2773,8 +2602,7 @@ Body:
     Name: Reaching Level 17
     Condition: " AchievementLevel >= 17 "
     Dependents:
-      - Id: 0
-        AchievementId: 240016
+      - Id: 240016
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2784,8 +2612,7 @@ Body:
     Name: Reaching Level 18
     Condition: " AchievementLevel >= 18 "
     Dependents:
-      - Id: 0
-        AchievementId: 240017
+      - Id: 240017
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2795,8 +2622,7 @@ Body:
     Name: Reaching Level 19
     Condition: " AchievementLevel >= 19 "
     Dependents:
-      - Id: 0
-        AchievementId: 240018
+      - Id: 240018
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "
@@ -2806,8 +2632,7 @@ Body:
     Name: Reaching Level 20
     Condition: " AchievementLevel >= 20 "
     Dependents:
-      - Id: 0
-        AchievementId: 240019
+      - Id: 240019
     Rewards:
       Item: Gift_Box
       Script: " specialeffect2 EF_INCAGILITY; sc_start SC_INCREASEAGI,30000,10; "

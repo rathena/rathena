@@ -226,44 +226,25 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 
 	if( this->nodeExists( node, "Dependents" ) ){
 		for( const YAML::Node& subNode : node["Dependents"] ){
-			uint16 index;
-
-			if (!this->asUInt16( subNode, "Id", index)) {
-				continue;
-			}
-
-			if (index >= MAX_ACHIEVEMENT_DEPENDENTS) {
-				this->invalidWarning(subNode["Id"], "Dependent Id is out of valid range [0,%d], skipping.\n", MAX_ACHIEVEMENT_DEPENDENTS);
-				continue;
-			}
-
-			uint32 *dependent = rathena::util::umap_find(achievement->dependent_ids, index);
-
-			if (dependent == nullptr) {
-				if (!this->nodeExists(subNode, "AchievementId")) {
-					this->invalidWarning(subNode, "Dependent has no data specified, skipping.\n");
-					continue;
-				}
+			if (achievement->dependent_ids.size() >= MAX_ACHIEVEMENT_DEPENDENTS) {
+				this->invalidWarning(subNode["Id"], "Maximum amount (%d) of dependent achievements reached, skipping.\n", MAX_ACHIEVEMENT_DEPENDENTS);
+				break;
 			}
 
 			uint32 dependent_achievement_id;
 
-			if( !this->asUInt32( subNode, "AchievementId", dependent_achievement_id ) ){
+			if( !this->asUInt32( subNode, "Id", dependent_achievement_id ) ){
 				return 0;
 			}
 
-			bool dependentExists = false;
+			auto dependent_achievement = std::find(achievement->dependent_ids.begin(), achievement->dependent_ids.end(), dependent_achievement_id);
 
-			for (const auto &depit : achievement->dependent_ids) {
-				if (depit.second == dependent_achievement_id) {
-					this->invalidWarning(subNode, "Dependent achievement %d is already part of the list, skipping.\n", dependent_achievement_id);
-					dependentExists = true;
-					break;
-				}
+			if (dependent_achievement != achievement->dependent_ids.end()) {
+				this->invalidWarning(subNode, "Dependent achievement %d is already part of the list, skipping.\n", dependent_achievement_id);
+				continue;
 			}
 
-			if (!dependentExists)
-				achievement->dependent_ids[index] = dependent_achievement_id;
+			achievement->dependent_ids.push_back(dependent_achievement_id);
 		}
 	}
 
@@ -543,7 +524,7 @@ bool achievement_check_dependent(struct map_session_data *sd, int achievement_id
 	// Check if the achievement has a dependent
 	// If so, then do a check on all dependents to see if they're complete
 	for (const auto &depit : adb->dependent_ids) {
-		if (!achievement_done(sd, depit.second))
+		if (!achievement_done(sd, depit))
 			return false; // One of the dependent is not complete!
 	}
 
@@ -1086,10 +1067,11 @@ void achievement_read_db(void)
 	for (auto &achit : achievement_db) {
 		const auto ach = achit.second;
 
-		for (const auto &depit : ach->dependent_ids) {
-			if (!achievement_db.exists(depit.second)) {
-				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", depit.second, ach->achievement_id);
-				ach->dependent_ids.erase(depit.first);
+		for (size_t i = 0; i < ach->dependent_ids.size(); i++) {
+			if (!achievement_db.exists(ach->dependent_ids[i])) {
+				ShowWarning("achievement_read_db: An invalid Dependent ID %d was given for Achievement %d. Removing from list.\n", ach->dependent_ids[i], ach->achievement_id);
+				ach->dependent_ids.erase(ach->dependent_ids.begin() + i);
+				ach->dependent_ids.shrink_to_fit();
 			}
 		}
 	}
