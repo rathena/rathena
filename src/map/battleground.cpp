@@ -434,7 +434,6 @@ int bg_team_leave(struct map_session_data *sd, bool quit, bool deserter)
 					pc_setpos(sd, sd->status.save_point.map, sd->status.save_point.x, sd->status.save_point.y, CLR_TELEPORT); // Warp to save point if the entry map has no save flag.
 			}
 			util::erase_at(bgteam->members, i);
-			bgteam->members.shrink_to_fit();
 		}
 
 		if (quit)
