@@ -719,7 +719,7 @@ L_AskQuestions:
 				set .@sage_t,.@sage_t+5;
 			mes "2. Choose a city where you cannot purchase a Stiletto.";
 			next;
-			if (select("Prontera:Morroc:Geffen:Lutie") == 1)
+			if (select("Prontera:Morocc:Geffen:Lutie") == 1)
 				set .@sage_t,.@sage_t+5;
 			mes "3. Choose the closest city to Turtle Island.";
 			next;
@@ -795,17 +795,17 @@ L_AskQuestions:
 				set .@sage_t,.@sage_t+5;
 			break;
 		case 2:
-			mes "1. Choose the jewel that the Morroc Jewel Merchant does not sell.";
+			mes "1. Choose the jewel that the Morocc Jewel Merchant does not sell.";
 			next;
 			if (select("Topaz:Garnet:Diamond:Sapphire") == 2)
 				set .@sage_t,.@sage_t+5;
 			mes "2. Choose the city where users cannot purchase Monster's Feed from an NPC.";
 			next;
-			if (select("Prontera:Morroc:Al De Baran:Alberta") == 3)
+			if (select("Prontera:Morocc:Al De Baran:Alberta") == 3)
 				set .@sage_t,.@sage_t+5;
 			mes "3. Choose the closest city to the Maze.";
 			next;
-			if (select("Prontera:Morroc:Geffen:Payon") == 1)
+			if (select("Prontera:Morocc:Geffen:Payon") == 1)
 				set .@sage_t,.@sage_t+5;
 			mes "4. Choose the monster that is a different type than the others.";
 			next;
@@ -827,7 +827,7 @@ L_AskQuestions:
 			next;
 			if (select("Paul:Sir Windsor:Peter S. Alberto:Cecilia") == 2)
 				set .@sage_t,.@sage_t+5;
-			mes "9. Choose the NPC that is not a citizen of Morroc.";
+			mes "9. Choose the NPC that is not a citizen of Morocc.";
 			next;
 			if (select("Syvia:Akira:Antonio:Dmitrii") == 3)
 				set .@sage_t,.@sage_t+5;
@@ -887,7 +887,7 @@ L_AskQuestions:
 				set .@sage_t,.@sage_t+5;
 			mes "3. Choose the closest city to Glast Heim.";
 			next;
-			if (select("Prontera:Geffen:Morroc:Payon") == 2)
+			if (select("Prontera:Geffen:Morocc:Payon") == 2)
 				set .@sage_t,.@sage_t+5;
 			mes "4. Choose the monster that is a different type than the others.";
 			next;
@@ -1535,7 +1535,7 @@ yuno_in03,62,176,2	script	History Professor#sa	109,{
 				mes "Lutie, the winter land,";
 				break;
 			}
-			switch(select("Midgard, where humans live,:Rune-Midgarts where humans live,:Tritonia, where mermaids live,:Morroc, the desert city,")) {
+			switch(select("Midgard, where humans live,:Rune-Midgarts where humans live,:Tritonia, where mermaids live,:Morocc, the desert city,")) {
 			case 1:
 				mes "Midgard, where humans live in,";
 				break;
@@ -1549,7 +1549,7 @@ yuno_in03,62,176,2	script	History Professor#sa	109,{
 				break;
 			case 4:
 				set .@w_point,.@w_point+1;
-				mes "Morroc, the desert city,";
+				mes "Morocc, the desert city,";
 				break;
 			}
 			switch(select("Abguard, where gods live.:Asgard, where gods live.:Schwarzwald, where citizens live.:Prontera, the capital of Rune-Midgarts.")) {
@@ -2431,9 +2431,9 @@ yuno_in03,244,31,3	script	Physics Professor#sa	120,{
 				mes "You never know the limits of magic";
 				break;
 			}
-			switch(select("Merchant Lady in Morroc is also as cute as YuPi.:Nobody knows why Red Potion tastes like strawberries.:It is not suggested to be too addicted to magic spells.")) {
+			switch(select("Merchant Lady in Morocc is also as cute as YuPi.:Nobody knows why Red Potion tastes like strawberries.:It is not suggested to be too addicted to magic spells.")) {
 			case 1:
-				mes "Merchant Lady in Morroc is also as cute as YuPi.";
+				mes "Merchant Lady in Morocc is also as cute as YuPi.";
 				break;
 			case 2:
 				mes "Nobody knows why Red Potion tastes like strawberries.";

@@ -2040,7 +2040,7 @@ gl_prison1,100,48,5	script	Rybio#LhzHat	1201,{
 				mes "[Rybio]";
 				mes "Since Phendark's pretty big, and he's acting like a total wuss, you";
 				mes "you should probably get him to eat ^3131FF369 Dark Crystal Fragments^000000. Don't";
-				mes "worry, you should be able to find those all over Rune-Midgard.";
+				mes "worry, you should be able to find those all over Midgard.";
 				next;
 				mes "[Rybio]";
 				mes "I dunno why a human";
@@ -2248,7 +2248,7 @@ airport,148,41,3	script	Freight Manager#toast	852,{
 				mes "Einbroch, adventurer.";
 				mes "I hope you enjoy your";
 				mes "travels here in the";
-				mes "Schwaltzvalt Republic.";
+				mes "Schwarzwald Republic.";
 				close;
 		}
 	}

@@ -6,6 +6,7 @@
 
 #include <vector>
 
+#include "../common/database.hpp"
 #include "../common/mmo.hpp" // struct item
 #include "../common/timer.hpp"
 
@@ -241,6 +242,17 @@ struct mob_data {
 	 * MvP Tombstone NPC ID
 	 **/
 	int tomb_nid;
+};
+
+class MobAvailDatabase : public YamlDatabase {
+public:
+	MobAvailDatabase() : YamlDatabase("MOB_AVAIL_DB", 1) {
+
+	}
+
+	void clear() { };
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
 };
 
 enum e_mob_skill_target {

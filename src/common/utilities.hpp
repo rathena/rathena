@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "cbasetypes.hpp"
+#include "random.hpp"
 
 // Class used to perform time measurement
 class cScopeTimer {
@@ -123,6 +124,19 @@ namespace rathena {
 		}
 
 		/**
+		 * Get a random value from the given map
+		 * @param map: Unordered Map to search through
+		 * @return A random value by reference
+		*/
+		template <typename K, typename V> V& umap_random( std::unordered_map<K, V>& map ){
+			auto it = map.begin();
+
+			std::advance( it, rnd_value( 0, map.size() - 1 ) );
+
+			return it->second;
+		}
+
+		/**
 		 * Erase an index value from a vector
 		 * @param vector: Vector to erase value from
 		 * @param index: Index value to remove
@@ -132,6 +146,7 @@ namespace rathena {
 				vector.clear();
 			else
 				vector.erase(vector.begin() + index);
+      vector.shrink_to_fit();
 		}
 	}
 }
