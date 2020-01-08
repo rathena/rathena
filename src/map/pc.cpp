@@ -8527,7 +8527,7 @@ int64 pc_readparam(struct map_session_data* sd,int64 type)
 			val = sd->castrate; break;
 #endif
 		default:
-			ShowError("pc_readparam: Attempt to read unknown parameter '%d'.\n", type);
+			ShowError("pc_readparam: Attempt to read unknown parameter '%lld'.\n", type);
 			return -1;
 	}
 
@@ -8752,7 +8752,7 @@ bool pc_setparam(struct map_session_data *sd,int64 type,int64 val_tmp)
 		pc_setglobalreg(sd, add_str(COOKMASTERY_VAR), sd->cook_mastery);
 		return true;
 	default:
-		ShowError("pc_setparam: Attempted to set unknown parameter '%d'.\n", type);
+		ShowError("pc_setparam: Attempted to set unknown parameter '%lld'.\n", type);
 		return false;
 	}
 	clif_updatestatus(sd,static_cast<int>(type));

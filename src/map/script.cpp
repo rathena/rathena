@@ -3413,12 +3413,12 @@ int64 conv_num_(struct script_state* st, struct script_data* data, struct map_se
 
 		if( num < SCRIPT_INT_MIN || ( error && num == INT64_MIN ) ){
 			num = SCRIPT_INT_MIN;
-			ShowError( "script:conv_num: underflow detected, capping value to %" PRId64 "", p, SCRIPT_INT_MIN );
+			ShowError( "script:conv_num: underflow detected, capping value to %" PRId64 "", SCRIPT_INT_MIN );
 			script_reportdata(data);
 			script_reportsrc(st);
 		}else if( num > SCRIPT_INT_MAX || ( error && num == INT64_MAX ) ){
 			num = SCRIPT_INT_MAX;
-			ShowError( "script:conv_num: overflow detected, capping value to %" PRId64 "", p, SCRIPT_INT_MAX );
+			ShowError( "script:conv_num: overflow detected, capping value to %" PRId64 "", SCRIPT_INT_MAX );
 			script_reportdata(data);
 			script_reportsrc(st);
 		}

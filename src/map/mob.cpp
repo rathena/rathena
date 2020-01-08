@@ -5089,7 +5089,7 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 	}
 
 	if (!CHK_RACE2(race)) {
-		ShowWarning("mob_readdb_race2: Unknown race2 %d.\n", race);
+		ShowWarning("mob_readdb_race2: Unknown race2 %lld.\n", race);
 		return false;
 	}
 
@@ -5098,7 +5098,7 @@ static bool mob_readdb_race2(char* fields[], int columns, int current)
 		struct mob_db* db = mob_db(mob_id);
 
 		if (db == NULL) {
-			ShowWarning("mob_readdb_race2: Unknown mob id %d for race2 %d.\n", mob_id, race);
+			ShowWarning("mob_readdb_race2: Unknown mob id %d for race2 %lld.\n", mob_id, race);
 			continue;
 		}
 		db->race2 = (enum e_race2)race;
