@@ -297,6 +297,7 @@ CREATE TABLE IF NOT EXISTS `char_reg_str` (
 --
 
 CREATE TABLE IF NOT EXISTS `charlog` (
+  `id` bigint(20) unsigned NOT NULL auto_increment,
   `time` datetime NOT NULL,
   `char_msg` varchar(255) NOT NULL default 'char select',
   `account_id` int(11) NOT NULL default '0',
@@ -310,7 +311,8 @@ CREATE TABLE IF NOT EXISTS `charlog` (
   `luk` int(11) unsigned NOT NULL default '0',
   `hair` tinyint(4) NOT NULL default '0',
   `hair_color` int(11) NOT NULL default '0',
-  PRIMARY KEY (`time`, `account_id`, `char_num`)
+  PRIMARY KEY (`id`),
+  KEY `account_id` (`account_id`)
 ) ENGINE=MyISAM; 
 
 --
