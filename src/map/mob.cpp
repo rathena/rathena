@@ -4375,7 +4375,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		if (!this->asString(node, "Sprite", sprite))
 			return 0;
 
-		int constant;
+		int64 constant;
 
 		if (script_get_constant(sprite.c_str(), &constant)) {
 			if (npcdb_checkid(constant) == 0 && pcdb_checkid(constant) == 0) {
@@ -4393,7 +4393,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 			constant = sprite_mob->vd.class_;
 		}
 
-		mob->vd.class_ = constant;
+		mob->vd.class_ = (unsigned short)constant;
 	} else {
 		this->invalidWarning(node["Sprite"], "Sprite is missing.\n");
 		return 0;
@@ -4412,7 +4412,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 
 		std::string sex_constant = "SEX_" + sex;
 
-		int constant;
+		int64 constant;
 
 		if (!script_get_constant(sex_constant.c_str(), &constant)) {
 			this->invalidWarning(node["Sex"], "Unknown sex constant %s.\n", sex.c_str());
@@ -4424,7 +4424,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 			return 0;
 		}
 
-		mob->vd.sex = constant;
+		mob->vd.sex = (char)constant;
 	}
 
 	if (this->nodeExists(node, "HairStyle")) {
@@ -4616,7 +4616,7 @@ uint64 MobAvailDatabase::parseBodyNode(const YAML::Node &node) {
 		for (const auto &optionNode : node["Options"]) {
 			std::string option = optionNode.first.as<std::string>();
 			std::string option_constant = "OPTION_" + option;
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(option_constant.c_str(), &constant)) {
 				this->invalidWarning(optionNode, "Unknown option constant %s, skipping.\n", option.c_str());
@@ -4661,9 +4661,14 @@ static bool mob_readdb_group(char* str[], int columns, int current){
 
 	if (ISDIGIT(str[0][0]) && ISDIGIT(str[0][1]))
 		group = atoi(str[0]);
-	else if (!script_get_constant(str[0], &group)) {
-		ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
-		return false;
+	else {
+		int64 group_tmp;
+
+		if (!script_get_constant(str[0], &group_tmp)) {
+			ShowError("mob_readdb_group: Invalid random monster group '%s'\n", str[0]);
+			return false;
+		}
+		group = static_cast<int>(group_tmp);
 	}
 
 	mob_id = atoi(str[1]);
@@ -5073,7 +5078,8 @@ static int mob_read_sqlskilldb(void)
  *------------------------------------------*/
 static bool mob_readdb_race2(char* fields[], int columns, int current)
 {
-	int race, i;
+	int64 race;
+	int i;
 
 	if( ISDIGIT(fields[0][0]) )
 		race = atoi(fields[0]);
@@ -5201,11 +5207,14 @@ static bool mob_readdb_drop(char* str[], int columns, int current) {
 		drop[i].randomopt_group = 0;
 
 		if (columns > 3) {
+			int64 randomopt_group_tmp = -1;
 			int randomopt_group = -1;
-			if (!script_get_constant(trim(str[3]), &randomopt_group)) {
+
+			if (!script_get_constant(trim(str[3]), &randomopt_group_tmp)) {
 				ShowError("mob_readdb_drop: Invalid 'randopt_groupid' '%s' for monster '%hu'.\n", str[3], mobid);
 				return false;
 			}
+			randomopt_group = static_cast<int>(randomopt_group_tmp);
 			if (randomopt_group == RDMOPTG_None)
 				return true;
 			if (!itemdb_randomopt_group_exists(randomopt_group)) {

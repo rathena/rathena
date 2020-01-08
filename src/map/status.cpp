@@ -14553,7 +14553,7 @@ void status_change_clear_onChangeMap(struct block_list *bl, struct status_change
  */
 static bool status_readdb_status_disabled(char **str, int columns, int current)
 {
-	int type = SC_NONE;
+	int64 type = SC_NONE;
 
 	if (ISDIGIT(str[0][0]))
 		type = atoi(str[0]);
@@ -14611,6 +14611,7 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 	const YAML::Node &costs = node["Costs"];
 
 	for (const auto costit : costs) {
+		int64 idx_tmp = 0;
 		const YAML::Node &type = costit;
 		int idx = 0, price;
 		unsigned short material;
@@ -14624,8 +14625,10 @@ static bool status_yaml_readdb_refine_sub(const YAML::Node &node, int refine_inf
 		std::string refine_cost_const = type["Type"].as<std::string>();
 		if (ISDIGIT(refine_cost_const[0]))
 			idx = atoi(refine_cost_const.c_str());
-		else
-			script_get_constant(refine_cost_const.c_str(), &idx);
+		else {
+			script_get_constant(refine_cost_const.c_str(), &idx_tmp);
+			idx = static_cast<int>(idx_tmp);
+		}
 		price = type["Price"].as<int>();
 		material = type["Material"].as<uint16>();
 

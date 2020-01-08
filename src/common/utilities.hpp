@@ -134,6 +134,10 @@ namespace rathena {
 
 			return it->second;
 		}
+
+		bool safe_addition( int64 a, int64 b, int64& result );
+		bool safe_substraction( int64 a, int64 b, int64& result );
+		bool safe_multiplication( int64 a, int64 b, int64& result );
 	}
 }
 

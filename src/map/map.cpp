@@ -4517,7 +4517,7 @@ static int map_mapflag_pvp_stop_sub(struct block_list *bl, va_list ap)
 enum e_mapflag map_getmapflag_by_name(char* name)
 {
 	char flag_constant[255];
-	int mapflag;
+	int64 mapflag;
 
 	safesnprintf(flag_constant, sizeof(flag_constant), "mf_%s", name);
 
