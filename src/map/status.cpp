@@ -13209,6 +13209,7 @@ TIMER_FUNC(status_change_timer){
 		break;
 
 	case SC_SPLASHER:
+	case SC_SPORE_EXPLOSION:
 		// Custom Venom Splasher countdown timer
 		// if (sce->val4 % 1000 == 0) {
 		// 	char timer[10];
