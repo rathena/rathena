@@ -817,7 +817,7 @@ static void add_scriptl(int l)
 		add_scriptb(backpatch>>16);
 		break;
 	case C_INT:
-		add_scripti(abs(str_data[l].val));
+		add_scripti(std::abs(str_data[l].val));
 		if( str_data[l].val < 0 ) //Notice that this is negative, from jA (Rayce)
 			add_scriptc(C_NEG);
 		break;
