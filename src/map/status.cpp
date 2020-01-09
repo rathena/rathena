@@ -1413,8 +1413,6 @@ void initChangeTables(void)
 	StatusChangeStateTable[SC_STOP]					|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CLOSECONFINE]			|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_CLOSECONFINE2]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_TINDER_BREAKER]		|= SCS_NOMOVE;
-	StatusChangeStateTable[SC_TINDER_BREAKER2]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_MADNESSCANCEL]		|= SCS_NOMOVE;
 	StatusChangeStateTable[SC_GRAVITATION]			|= SCS_NOMOVE|SCS_NOMOVECOND;
 	StatusChangeStateTable[SC_WHITEIMPRISON]		|= SCS_NOMOVE;
@@ -6376,8 +6374,6 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		return cap_value(flee,1,SHRT_MAX);
 	if(sc->data[SC_OVERED_BOOST]) //Should be final and unmodifiable by any means
 		return sc->data[SC_OVERED_BOOST]->val2;
-	if(sc->data[SC_TINDER_BREAKER] || sc->data[SC_TINDER_BREAKER2])
-		return 1; // 1 = min flee
 
 	// Fixed value
 	if(sc->data[SC_INCFLEE])
@@ -6442,6 +6438,8 @@ static signed short status_calc_flee(struct block_list *bl, struct status_change
 		flee -= flee * (40 + 10 * sc->data[SC_SATURDAYNIGHTFEVER]->val1) / 100;
 	if( sc->data[SC_WIND_STEP_OPTION] )
 		flee += flee * sc->data[SC_WIND_STEP_OPTION]->val2 / 100;
+	if( sc->data[SC_TINDER_BREAKER] || sc->data[SC_TINDER_BREAKER2] )
+		flee -= flee * 50 / 100;
 	if( sc->data[SC_ZEPHYR] )
 		flee += sc->data[SC_ZEPHYR]->val2;
 	if(sc->data[SC_ASH])
@@ -6530,7 +6528,7 @@ static defType status_calc_def(struct block_list *bl, struct status_change *sc, 
 	if(sc->data[SC_ODINS_POWER])
 		def -= 20 * sc->data[SC_ODINS_POWER]->val1;
 	if( sc->data[SC_ANGRIFFS_MODUS] )
-		def -= 10 + 20 * sc->data[SC_ANGRIFFS_MODUS]->val1;
+		def -= 20 + 10 * sc->data[SC_ANGRIFFS_MODUS]->val1;
 	if(sc->data[SC_STONEHARDSKIN])
 		def += sc->data[SC_STONEHARDSKIN]->val1;
 	if(sc->data[SC_STONE] && sc->opt1 == OPT1_STONE)
@@ -10100,21 +10098,19 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			status_zap(bl, status->hp-1, val2?0:status->sp);
 			return 1;
 			break;
-		case SC_TINDER_BREAKER2:
 		case SC_CLOSECONFINE2:
 		{
 			struct block_list *src2 = val2?map_id2bl(val2):NULL;
 			struct status_change *sc2 = src2?status_get_sc(src2):NULL;
-			enum sc_type type2 = ((type == SC_TINDER_BREAKER2)?SC_TINDER_BREAKER:SC_CLOSECONFINE);
-			struct status_change_entry *sce2 = sc2?sc2->data[type2]:NULL;
+			struct status_change_entry *sce2 = sc2?sc2->data[SC_CLOSECONFINE]:NULL;
 
 			if (src2 && sc2) {
 				if (!sce2) // Start lock on caster.
-					sc_start4(src2,src2,type2,100,val1,1,0,0,tick+1000);
+					sc_start4(src2,src2,SC_CLOSECONFINE,100,val1,1,0,0,tick+1000);
 				else { // Increase count of locked enemies and refresh time.
 					(sce2->val2)++;
 					delete_timer(sce2->timer, status_change_timer);
-					sce2->timer = add_timer(gettick()+tick+1000, status_change_timer, src2->id, type2);
+					sce2->timer = add_timer(gettick()+tick+1000, status_change_timer, src2->id, SC_CLOSECONFINE);
 				}
 			} else // Status failed.
 				return 0;
@@ -10982,8 +10978,8 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 			val4 = 2 + 2 * val1; // Chance of holy attack
 			break;
 		case SC_OVERED_BOOST:
-			val2 = 300 + 40*val1; // flee bonus
-			val3 = 179 + 2*val1; // aspd bonus
+			val2 = 400 + 40 * val1; // flee bonus
+			val3 = 180 + 2 * val1; // aspd bonus
 			val4 = 50; // def reduc %
 			break;
 		case SC_GRANITIC_ARMOR:
@@ -11468,8 +11464,6 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 		case SC_CONFUSION:
 		case SC_CLOSECONFINE:
 		case SC_CLOSECONFINE2:
-		case SC_TINDER_BREAKER:
-		case SC_TINDER_BREAKER2:
 		case SC_BITE:
 		case SC_THORNSTRAP:
 		case SC_MEIKYOUSISUI:
@@ -12338,19 +12332,16 @@ int status_change_end_(struct block_list* bl, enum sc_type type, int tid, const 
 					skill_castend_damage_id(src, bl, sce->val2, sce->val1, gettick(), SD_LEVEL );
 			}
 			break;
-		case SC_TINDER_BREAKER2:
 		case SC_CLOSECONFINE2:{
 			struct block_list *src = sce->val2?map_id2bl(sce->val2):NULL;
 			struct status_change *sc2 = src?status_get_sc(src):NULL;
-			enum sc_type type2 = ((type==SC_CLOSECONFINE2)?SC_CLOSECONFINE:SC_TINDER_BREAKER);
-			if (src && sc2 && sc2->data[type2]) {
+			if (src && sc2 && sc2->data[SC_CLOSECONFINE]) {
 				// If status was already ended, do nothing.
 				// Decrease count
-				if (type==SC_TINDER_BREAKER2 || (--(sc2->data[type2]->val1) <= 0)) // No more holds, free him up.
-					status_change_end(src, type2, INVALID_TIMER);
+				if (--(sc2->data[SC_CLOSECONFINE]->val1) <= 0) // No more holds, free him up.
+					status_change_end(src, SC_CLOSECONFINE, INVALID_TIMER);
 			}
 		}
-		case SC_TINDER_BREAKER:
 		case SC_CLOSECONFINE:
 			if (sce->val2 > 0) {
 				// Caster has been unlocked... nearby chars need to be unlocked.
@@ -13901,16 +13892,13 @@ int status_change_timer_sub(struct block_list* bl, va_list ap)
 			}
 		}
 		break;
-	case SC_TINDER_BREAKER:
-	case SC_CLOSECONFINE:{
-		enum sc_type type2 = ((type==SC_CLOSECONFINE)?SC_CLOSECONFINE2:SC_TINDER_BREAKER2);
+	case SC_CLOSECONFINE:
 		// Lock char has released the hold on everyone...
-		if (tsc && tsc->data[type2] && tsc->data[type2]->val2 == src->id) {
-			tsc->data[type2]->val2 = 0;
-			status_change_end(bl, type2, INVALID_TIMER);
+		if (tsc && tsc->data[SC_CLOSECONFINE2] && tsc->data[SC_CLOSECONFINE2]->val2 == src->id) {
+			tsc->data[SC_CLOSECONFINE2]->val2 = 0;
+			status_change_end(bl, SC_CLOSECONFINE2, INVALID_TIMER);
 		}
 		break;
-	}
 	case SC_CURSEDCIRCLE_TARGET:
 		if( tsc && tsc->data[SC_CURSEDCIRCLE_TARGET] && tsc->data[SC_CURSEDCIRCLE_TARGET]->val2 == src->id ) {
 			clif_bladestop(bl, tsc->data[SC_CURSEDCIRCLE_TARGET]->val2, 0);

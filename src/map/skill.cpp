@@ -1905,16 +1905,6 @@ int skill_additional_effect(struct block_list* src, struct block_list *bl, uint1
 	case MH_NEEDLE_OF_PARALYZE:
 		sc_start(src,bl, SC_PARALYSIS, 30 + 5 * skill_lv, skill_lv, skill_get_time(skill_id, skill_lv));
 		break;
-	case MH_SILVERVEIN_RUSH:
-		sc_start4(src,bl,SC_STUN,5 * skill_lv,skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
-		break;
-	case MH_MIDNIGHT_FRENZY:
-		{
-			TBL_HOM *hd = BL_CAST(BL_HOM,src);
-			int spiritball = (hd?hd->homunculus.spiritball:1);
-			sc_start4(src,bl,SC_FEAR,spiritball*(10+2*skill_lv),skill_lv,src->id,0,0,skill_get_time(skill_id,skill_lv));
-		}
-		break;
 	case MH_XENO_SLASHER:
 		sc_start4(src, bl, SC_BLEEDING, skill_lv, skill_lv, src->id, 0, 0, skill_get_time2(skill_id, skill_lv));
 		break;
@@ -6041,16 +6031,12 @@ int skill_castend_damage_id (struct block_list* src, struct block_list *bl, uint
 	case MH_CBC:
 	case MH_EQC:
 		{
-			int duration = 0;
 			TBL_HOM *hd = BL_CAST(BL_HOM,src);
-			duration = max(skill_lv,(status_get_str(src)/7 - status_get_str(bl)/10))*1000; //Yommy formula
+			int duration = max(skill_lv, (status_get_str(src) / 7 - status_get_str(bl) / 10)) * 1000; //Yommy formula
 
 			if (skill_id == MH_TINDER_BREAKER && unit_movepos(src, bl->x, bl->y, 1, 1)) {
 				clif_blown(src);
 				clif_skill_poseffect(src,skill_id,skill_lv,bl->x,bl->y,tick);
-			} else if (skill_id == MH_EQC && status_bl_has_mode(bl, MD_STATUS_IMMUNE)) {
-				clif_skill_fail(hd->master, skill_id, USESKILL_FAIL_TOTARGET, 0);
-				break;
 			}
 			clif_skill_nodamage(src,bl,skill_id,skill_lv,
 				sc_start4(src,bl,status_skill2sc(skill_id),100,skill_lv,src->id,0,0,duration));
@@ -10799,8 +10785,6 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 			struct block_list *s_bl = battle_get_master(src);
 			if(s_bl) sc_start(src, s_bl, type, 100, skill_lv, skill_get_time(skill_id, skill_lv));
 			sc_start2(src, src, type, 100, skill_lv, hd->homunculus.level, skill_get_time(skill_id, skill_lv));
-			hd->homunculus.intimacy = hom_intimacy_grade2intimacy(HOMGRADE_NEUTRAL); //change to neutral
-			if(sd) clif_send_homdata(sd, SP_INTIMATE, hd->homunculus.intimacy/100); //refresh intimacy info
 			skill_blockhomun_start(hd, skill_id, skill_get_cooldown(skill_id, skill_lv));
 		}
 		break;
