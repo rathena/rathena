@@ -226,7 +226,6 @@ struct Battle_Config
 	int pet_attack_support;
 	int pet_damage_support;
 	int pet_support_min_friendly;	//[Skotlex]
-	int pet_equip_min_friendly;
 	int pet_support_rate;
 	int pet_attack_exp_to_master;
 	int pet_attack_exp_rate;
@@ -369,7 +368,6 @@ struct Battle_Config
 	int skill_removetrap_type;
 	int disp_experience;
 	int disp_zeny;
-	int castle_defense_rate;
 	int backstab_bow_penalty;
 	int hp_rate;
 	int sp_rate;
@@ -660,6 +658,9 @@ struct Battle_Config
 	int min_shop_sell;
 	int feature_equipswitch;
 	int pet_walk_speed;
+	int blacksmith_fame_refine_threshold;
+	int mob_nopc_idleskill_rate;
+	int mob_nopc_move_rate;
 	int homunculus_exp_gain;
 
 #include "../custom/battle_config_struct.inc"

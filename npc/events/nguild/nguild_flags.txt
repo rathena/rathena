@@ -21,9 +21,9 @@ function	script	F_Flags	{
 	set .@GID, GetCastleData(getarg(1),1);
 	if (getarg(5) == 0) return;
 	if (.@GID == 0) {
-		mes " [ Edict of the Divine Rune Midgard Kingdom ]";
+		mes " [ Edict of the Divine Rune-Midgarts Kingdom ]";
 		mes " ";
-		mes "1. Follow the ordinance of The Divine Rune Midgard Kingdom, ";
+		mes "1. Follow the ordinance of The Divine Rune-Midgarts Kingdom, ";
 		mes "We declare that";
 		mes "there is no formal master of this castle.";
 		mes " ";
@@ -45,10 +45,10 @@ function	script	F_Flags	{
 			}
 			return;
 		}
-		mes "[ Edict of the Divine Rune Midgard Kingdom ]";
+		mes "[ Edict of the Divine Rune-Midgarts Kingdom ]";
 		mes " ";
 		mes "1. Following the ordinance of the";
-		mes "Divine Rune Midgard Kingdom,";
+		mes "Divine Rune-Midgarts Kingdom,";
 		mes "we approve that this place is in";
 		mes "the private possession of ^ff0000" + GetGuildName(.@GID) + "^000000 Guild.";
 		mes " ";

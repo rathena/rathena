@@ -384,7 +384,7 @@ enum petinfo_types {
 	PETINFO_FOODID
 };
 
-enum questinfo_types {
+enum e_questinfo_types {
 	QTYPE_QUEST = 0,
 	QTYPE_QUEST2,
 	QTYPE_JOB,
@@ -400,6 +400,14 @@ enum questinfo_types {
 	QTYPE_JUMPING_PORING,
 	// 11 - 9998 = free
 	QTYPE_NONE = 9999
+};
+
+enum e_questinfo_markcolor : uint8 {
+	QMARK_NONE = 0,
+	QMARK_YELLOW,
+	QMARK_GREEN,
+	QMARK_PURPLE,
+	QMARK_MAX
 };
 
 #ifndef WIN32
@@ -468,6 +476,8 @@ enum unitdata_mobtypes {
 	UMOB_ADELAY,
 	UMOB_DMOTION,
 	UMOB_TARGETID,
+	UMOB_ROBE,
+	UMOB_BODY2,
 };
 
 enum unitdata_homuntypes {
@@ -636,8 +646,7 @@ enum unitdata_elemtypes {
 };
 
 enum unitdata_npctypes {
-	UNPC_DISPLAY = 0,
-	UNPC_LEVEL,
+	UNPC_LEVEL = 0,
 	UNPC_HP,
 	UNPC_MAXHP,
 	UNPC_MAPID,
@@ -669,6 +678,19 @@ enum unitdata_npctypes {
 	UNPC_AMOTION,
 	UNPC_ADELAY,
 	UNPC_DMOTION,
+	UNPC_SEX,
+	UNPC_CLASS,
+	UNPC_HAIRSTYLE,
+	UNPC_HAIRCOLOR,
+	UNPC_HEADBOTTOM,
+	UNPC_HEADMIDDLE,
+	UNPC_HEADTOP,
+	UNPC_CLOTHCOLOR,
+	UNPC_SHIELD,
+	UNPC_WEAPON,
+	UNPC_ROBE,
+	UNPC_BODY2,
+	UNPC_DEADSIT,
 };
 
 enum navigation_service {
@@ -1939,6 +1961,11 @@ enum e_hat_effects {
 	HAT_EF_WATER_BELOW3,
 	HAT_EF_WATER_BELOW4,
 	HAT_EF_C_VALKYRIE_WING,
+	HAT_EF_2019RTC_CELEAURA_TW,
+	HAT_EF_2019RTC1ST_TW,
+	HAT_EF_2019RTC2ST_TW,
+	HAT_EF_2019RTC3ST_TW,
+	HAT_EF_CONS_OF_WIND,
 	HAT_EF_MAX
 };
 

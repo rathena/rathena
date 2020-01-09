@@ -502,18 +502,8 @@ bool itemdb_isequip2(struct item_data *id) {
 bool itemdb_isstackable2(struct item_data *id)
 {
 	nullpo_ret(id);
-	switch(id->type) {
-		case IT_WEAPON:
-		case IT_ARMOR:
-		case IT_PETEGG:
-		case IT_PETARMOR:
-		case IT_SHADOWGEAR:
-			return false;
-		default:
-			return true;
-	}
+	return id->isStackable();
 }
-
 
 /*==========================================
  * Trade Restriction functions [Skotlex]
@@ -1645,19 +1635,6 @@ bool itemdb_isNoEquip(struct item_data *id, uint16 m) {
 }
 
 /**
-* Check if item is available in spellbook_db or not
-* @param nameid
-* @return True if item is spellbook; False if not
-*/
-bool itemdb_is_spellbook2(unsigned short nameid) {
-	unsigned char i;
-	if (!nameid || !itemdb_exists(nameid) || !skill_spellbook_count)
-		return false;
-	ARR_FIND(0, MAX_SKILL_SPELLBOOK_DB, i, skill_spellbook_db[i].nameid == nameid);
-	return i == MAX_SKILL_SPELLBOOK_DB ? false : true;
-}
-
-/**
 * Retrieves random option data
 */
 struct s_random_opt_data* itemdb_randomopt_exists(short id) {
@@ -1979,6 +1956,24 @@ static int itemdb_randomopt_free(DBKey key, DBData *data, va_list ap) {
 	opt->script = NULL;
 	aFree(opt);
 	return 1;
+}
+
+bool item_data::isStackable()
+{
+	switch (this->type) {
+		case IT_WEAPON:
+		case IT_ARMOR:
+		case IT_PETEGG:
+		case IT_PETARMOR:
+		case IT_SHADOWGEAR:
+			return false;
+	}
+	return true;
+}
+
+int item_data::inventorySlotNeeded(int quantity)
+{
+	return (this->flag.guid || !this->isStackable()) ? quantity : 1;
 }
 
 /**

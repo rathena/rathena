@@ -49,6 +49,7 @@ enum sc_type : int16;
 #define TKMISSIONCOUNT_VAR "TK_MISSION_COUNT"
 #define ATTENDANCE_DATE_VAR "#AttendanceDate"
 #define ATTENDANCE_COUNT_VAR "#AttendanceCounter"
+#define ACHIEVEMENTLEVEL "AchievementLevel"
 
 //Update this max as necessary. 55 is the value needed for Super Baby currently
 //Raised to 85 since Expanded Super Baby needs it.
@@ -643,7 +644,7 @@ struct map_session_data {
 
 	/* ShowEvent Data Cache flags from map */
 	bool *qi_display;
-	unsigned short qi_count;
+	int qi_count;
 
 	// temporary debug [flaviojs]
 	const char* debug_file;
@@ -727,7 +728,7 @@ struct map_session_data {
 
 	short last_addeditem_index; /// Index of latest item added
 	int autotrade_tid;
-
+	int respawn_tid;
 	int bank_vault; ///< Bank Vault
 
 #ifdef PACKET_OBFUSCATION
@@ -960,15 +961,15 @@ short pc_maxaspd(struct map_session_data *sd);
 //JOB_NOVICE isn't checked for class_ is supposed to be unsigned
 #define pcdb_checkid_sub(class_) ( \
 	( (class_) < JOB_MAX_BASIC ) || \
-	( (class_) >= JOB_NOVICE_HIGH    && (class_) <= JOB_DARK_COLLECTOR ) || \
-	( (class_) >= JOB_RUNE_KNIGHT    && (class_) <= JOB_MECHANIC_T2    ) || \
-	( (class_) >= JOB_BABY_RUNE      && (class_) <= JOB_BABY_MECHANIC2 ) || \
-	( (class_) >= JOB_SUPER_NOVICE_E && (class_) <= JOB_SUPER_BABY_E   ) || \
-	( (class_) >= JOB_KAGEROU        && (class_) <= JOB_OBORO          ) || \
-	  (class_) == JOB_REBELLION      || (class_) == JOB_SUMMONER         || \
-	  (class_) == JOB_BABY_SUMMONER 				     || \
-	( (class_) >= JOB_BABY_NINJA     && (class_) <= JOB_BABY_REBELLION ) || \
-	( (class_) >= JOB_BABY_STAR_GLADIATOR2 && (class_) <= JOB_BABY_STAR_EMPEROR2 ) \
+	( (class_) >= JOB_NOVICE_HIGH			&& (class_) <= JOB_DARK_COLLECTOR ) || \
+	( (class_) >= JOB_RUNE_KNIGHT			&& (class_) <= JOB_MECHANIC_T2    ) || \
+	( (class_) >= JOB_BABY_RUNE_KNIGHT		&& (class_) <= JOB_BABY_MECHANIC2 ) || \
+	( (class_) >= JOB_SUPER_NOVICE_E		&& (class_) <= JOB_SUPER_BABY_E   ) || \
+	( (class_) >= JOB_KAGEROU				&& (class_) <= JOB_OBORO          ) || \
+	  (class_) == JOB_REBELLION				|| (class_) == JOB_SUMMONER         || \
+	  (class_) == JOB_BABY_SUMMONER			|| \
+	( (class_) >= JOB_BABY_NINJA			&& (class_) <= JOB_BABY_REBELLION ) || \
+	( (class_) >= JOB_BABY_STAR_GLADIATOR2	&& (class_) <= JOB_BABY_STAR_EMPEROR2 ) \
 )
 #define pcdb_checkid(class_) pcdb_checkid_sub((unsigned int)class_)
 
@@ -1166,6 +1167,7 @@ int pc_skillheal2_bonus(struct map_session_data *sd, uint16 skill_id);
 void pc_damage(struct map_session_data *sd,struct block_list *src,unsigned int hp, unsigned int sp);
 int pc_dead(struct map_session_data *sd,struct block_list *src);
 void pc_revive(struct map_session_data *sd,unsigned int hp, unsigned int sp);
+bool pc_revive_item(struct map_session_data *sd);
 void pc_heal(struct map_session_data *sd,unsigned int hp,unsigned int sp, int type);
 int pc_itemheal(struct map_session_data *sd,int itemid, int hp,int sp);
 int pc_percentheal(struct map_session_data *sd,int,int);

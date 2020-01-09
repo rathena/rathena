@@ -4,7 +4,10 @@
 #ifndef SKILL_HPP
 #define SKILL_HPP
 
+#include <array>
+
 #include "../common/cbasetypes.hpp"
+#include "../common/database.hpp"
 #include "../common/db.hpp"
 #include "../common/mmo.hpp" // MAX_SKILL, struct square
 #include "../common/timer.hpp"
@@ -25,8 +28,6 @@ struct status_change_entry;
 #define MAX_PRODUCE_RESOURCE	12 /// Max Produce requirements
 #define MAX_SKILL_ARROW_DB		150 /// Max Arrow Creation DB
 #define MAX_ARROW_RESULT		5 /// Max Arrow results/created
-#define MAX_SKILL_ABRA_DB		160 /// Max Skill list of Abracadabra DB
-#define MAX_SKILL_IMPROVISE_DB 30 /// Max Skill for Improvise
 #define MAX_SKILL_LEVEL 13 /// Max Skill Level (for skill_db storage)
 #define MAX_MOBSKILL_LEVEL 100	/// Max monster skill level (on skill usage)
 #define MAX_SKILL_CRIMSON_MARKER 3 /// Max Crimson Marker targets (RL_C_MARKER)
@@ -38,7 +39,7 @@ extern DBMap* skilldb_name2id;
 /// Constants to identify a skill's nk value (damage properties)
 /// The NK value applies only to non INF_GROUND_SKILL skills
 /// when determining skill castend function to invoke.
-enum e_skill_nk {
+enum e_skill_nk : uint16 {
 	NK_NO_DAMAGE      = 0x01,
 	NK_SPLASH         = 0x02|0x04, // 0x4 = splash & split
 	NK_SPLASHSPLIT    = 0x04,
@@ -47,6 +48,7 @@ enum e_skill_nk {
 	NK_IGNORE_DEF     = 0x20,
 	NK_IGNORE_FLEE    = 0x40,
 	NK_NO_CARDFIX_DEF = 0x80,
+	NK_CRITICAL       = 0x100,
 };
 
 /// Constants to identify the skill's inf value:
@@ -181,7 +183,7 @@ struct s_skill_db {
 	int8 hit;									 ///< Hit type
 	uint8 inf;									 ///< Inf: 0- passive, 1- enemy, 2- place, 4- self, 16- friend, 32- trap
 	int element[MAX_SKILL_LEVEL];				 ///< Element
-	uint8 nk;									 ///< Damage properties
+	uint16 nk;									 ///< Damage properties
 	int splash[MAX_SKILL_LEVEL];				 ///< Splash effect
 	uint8 max;									 ///< Max level
 	int num[MAX_SKILL_LEVEL];					 ///< Number of hit
@@ -369,11 +371,32 @@ extern struct s_skill_arrow_db skill_arrow_db[MAX_SKILL_ARROW_DB];
 /// Abracadabra database
 struct s_skill_abra_db {
 	uint16 skill_id; /// Skill ID
-	char name[SKILL_NAME_LENGTH]; /// Shouted skill name
-	int per[MAX_SKILL_LEVEL]; /// Probability summoned
+	std::array<uint16, MAX_SKILL_LEVEL> per; /// Probability summoned
 };
-extern struct s_skill_abra_db skill_abra_db[MAX_SKILL_ABRA_DB];
-extern unsigned short skill_abra_count;
+
+class AbraDatabase : public TypesafeYamlDatabase<uint16, s_skill_abra_db> {
+public:
+	AbraDatabase() : TypesafeYamlDatabase("ABRA_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+struct s_skill_improvise_db {
+	uint16 skill_id, per;
+};
+
+class ImprovisedSongDatabase : public TypesafeYamlDatabase<uint16, s_skill_improvise_db> {
+public:
+	ImprovisedSongDatabase() : TypesafeYamlDatabase("IMPROVISED_SONG_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
 
 void do_init_skill(void);
 void do_final_skill(void);
@@ -2158,32 +2181,49 @@ void skill_usave_trigger(struct map_session_data *sd);
 /**
  * Warlock
  **/
-#define MAX_SKILL_SPELLBOOK_DB	17
 enum wl_spheres {
 	WLS_FIRE = 0x44,
 	WLS_WIND,
 	WLS_WATER,
 	WLS_STONE,
 };
+
 struct s_skill_spellbook_db {
-	unsigned short nameid;
-	unsigned short skill_id;
-	unsigned short point;
+	uint16 skill_id, nameid, points;
 };
-extern struct s_skill_spellbook_db skill_spellbook_db[MAX_SKILL_SPELLBOOK_DB];
-extern unsigned short skill_spellbook_count;
+
+class ReadingSpellbookDatabase : public TypesafeYamlDatabase<uint16, s_skill_spellbook_db> {
+public:
+	ReadingSpellbookDatabase() : TypesafeYamlDatabase("READING_SPELLBOOK_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+	std::shared_ptr<s_skill_spellbook_db> findBook(int32 nameid);
+};
+
+extern ReadingSpellbookDatabase reading_spellbook_db;
+
 void skill_spellbook(struct map_session_data *sd, unsigned short nameid);
 int skill_block_check(struct block_list *bl, enum sc_type type, uint16 skill_id);
 
-/**
- * Guilottine Cross
- **/
-#define MAX_SKILL_MAGICMUSHROOM_DB 25
 struct s_skill_magicmushroom_db {
 	uint16 skill_id;
 };
-extern struct s_skill_magicmushroom_db skill_magicmushroom_db[MAX_SKILL_MAGICMUSHROOM_DB];
-extern unsigned short skill_magicmushroom_count;
+
+class MagicMushroomDatabase : public TypesafeYamlDatabase<uint16, s_skill_magicmushroom_db> {
+public:
+	MagicMushroomDatabase() : TypesafeYamlDatabase("MAGIC_MUSHROOM_DB", 1) {
+
+	}
+
+	const std::string getDefaultLocation();
+	uint64 parseBodyNode(const YAML::Node& node);
+};
+
+extern MagicMushroomDatabase magic_mushroom_db;
+
 int skill_maelstrom_suction(struct block_list *bl, va_list ap);
 bool skill_check_shadowform(struct block_list *bl, int64 damage, int hit);
 

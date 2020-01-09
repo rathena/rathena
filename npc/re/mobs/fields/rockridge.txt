@@ -19,6 +19,6 @@ rockrdg2,0,0	monster	Bowie Buffalo Bandit	3738,52
 rockrdg2,0,0	monster	Coyote	3739,8
 rockrdg2,0,0	monster	Green Plant	1080,5
 rockrdg2,0,0	monster	Yellow Plant	1081,4
-rockrdg2,0,0	monster	White Plant	1084,5
+rockrdg2,0,0	monster	White Plant	1082,5
 rockrdg2,0,0	monster	Shining Plant	1083,4
 rockrdg2,0,0	monster	Thief Bug	1051,8
