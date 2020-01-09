@@ -11777,7 +11777,7 @@ int status_change_start(struct block_list* src, struct block_list* bl,enum sc_ty
 				case SC_BERSERK:
 				case SC_MERC_HPUP:
 				case SC_MERC_SPUP:
-					status_calc_bl_(bl, calc_flag, SCO_FORCE);
+					status_calc_bl_(bl, static_cast<scb_flag>(calc_flag), SCO_FORCE);
 					break;
 				default:
 					status_calc_bl(bl, calc_flag);
