@@ -67,7 +67,7 @@ int levenshtein(const std::string &s1, const std::string &s2)
 
 bool rathena::util::safe_addition( int64 a, int64 b, int64& result ){
 #if defined(__GNUC__) || defined(__clang__)
-	return __builtin_saddll_overflow( a, b, &result );
+	return __builtin_add_overflow( a, b, &result );
 #else
 	bool overflow = false;
 
@@ -89,7 +89,7 @@ bool rathena::util::safe_addition( int64 a, int64 b, int64& result ){
 
 bool rathena::util::safe_substraction( int64 a, int64 b, int64& result ){
 #if defined(__GNUC__) || defined(__clang__)
-	return __builtin_ssubll_overflow( a, b, &result );
+	return __builtin_sub_overflow( a, b, &result );
 #else
 	bool overflow = false;
 
@@ -111,7 +111,7 @@ bool rathena::util::safe_substraction( int64 a, int64 b, int64& result ){
 
 bool rathena::util::safe_multiplication( int64 a, int64 b, int64& result ){
 #if defined(__GNUC__) || defined(__clang__)
-	return __builtin_smulll_overflow( a, b, &result );
+	return __builtin_mul_overflow( a, b, &result );
 #else
 	result = a * b;
 
