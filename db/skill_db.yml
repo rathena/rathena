@@ -24,7 +24,7 @@
 ###########################################################################
 # - Id                        Unique skill ID.
 #   Name                      Skill Aegis name.
-#   iROName                   English name.
+#   Description               Skill description.
 #   MaxLevel                  Max skill level.
 #   Type                      Skill type. (Default: None)
 #   TargetType                Skill target type. (Default: Passive_Skill)

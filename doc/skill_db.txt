@@ -18,7 +18,7 @@ Name: Skill Aegis name.
 
 ---------------------------------------
 
-Description: English name.
+Description: Skill description.
 
 ---------------------------------------
 
