@@ -8,6 +8,7 @@
 #include <memory>
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 #include "cbasetypes.hpp"
 #include "random.hpp"
@@ -133,6 +134,36 @@ namespace rathena {
 			std::advance( it, rnd_value( 0, map.size() - 1 ) );
 
 			return it->second;
+		}
+
+		/**
+		 * Get an iterator element
+		 * @param vec: Vector to search through
+		 * @param key: Key wanted
+		 * @return Key value iterator on success or vector end iterator on failure
+		 */
+		template <typename K> typename std::vector<K>::iterator vector_get(std::vector<K> &vec, K key) {
+			auto it = std::find(vec.begin(), vec.end(), key);
+
+			if (it != vec.end())
+				return it;
+			else
+				return vec.end();
+		}
+
+		/**
+		 * Find a key-value pair
+		 * @param vec: Vector to search through
+		 * @param key: Key wanted
+		 * @return True on success or false on failure
+		 */
+		template <typename K> K vector_find(std::vector<K> &vec, K key) {
+			auto it = std::find(vec.begin(), vec.end(), key);
+
+			if (it != vec.end())
+				return true;
+			else
+				return false;
 		}
 	}
 }

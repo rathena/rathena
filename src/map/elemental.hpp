@@ -103,7 +103,7 @@ int elemental_set_target( struct map_session_data *sd, struct block_list *bl );
 int elemental_clean_single_effect(struct elemental_data *ed, uint16 skill_id);
 int elemental_clean_effect(struct elemental_data *ed);
 int elemental_action(struct elemental_data *ed, struct block_list *bl, t_tick tick);
-struct skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv);
+struct s_skill_condition elemental_skill_get_requirements(uint16 skill_id, uint16 skill_lv);
 
 #define elemental_stop_walking(ed, type) unit_stop_walking(&(ed)->bl, type)
 #define elemental_stop_attack(ed) unit_stop_attack(&(ed)->bl)
