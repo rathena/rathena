@@ -4,6 +4,7 @@
 #ifndef UTILILITIES_HPP
 #define UTILILITIES_HPP
 
+#include <algorithm>
 #include <map>
 #include <memory>
 #include <string>
