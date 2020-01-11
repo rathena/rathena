@@ -9684,13 +9684,14 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		if (sd) {
 			struct s_skill_condition req = skill_get_requirement(sd, skill_id, skill_lv);
 			int16 limit[] = { -45, -75, -105 };
-			uint8 i;
 
-			for (i = 0; i < req.eqItem.size(); i++) {
-				if (pc_search_inventory(sd, req.eqItem[i]) != -1)
+			i = 0;
+			for (const auto &reqItem : req.eqItem) {
+				if (pc_search_inventory(sd, reqItem) != -1)
 					break;
+				i++;
 			}
-			pc_overheat(sd, limit[i]);
+			pc_overheat(sd, limit[min(i, 2)]);
 		}
 		break;
 
@@ -9737,8 +9738,8 @@ int skill_castend_nodamage_id (struct block_list *src, struct block_list *bl, ui
 		break;
 	case SC_AUTOSHADOWSPELL:
 		if( sd ) {
-			if( (sd->reproduceskill_idx >= 0 && sd->status.skill[sd->reproduceskill_idx].id) ||
-				(sd->cloneskill_idx >= 0 && sd->status.skill[sd->cloneskill_idx].id) )
+			if( (sd->reproduceskill_idx > 0 && sd->status.skill[sd->reproduceskill_idx].id) ||
+				(sd->cloneskill_idx > 0 && sd->status.skill[sd->cloneskill_idx].id) )
 			{
 				sc_start(src,src,SC_STOP,100,skill_lv,INFINITE_TICK);// The skill_lv is stored in val1 used in skill_select_menu to determine the used skill lvl [Xazax]
 				clif_autoshadowspell_list(sd);
@@ -14895,7 +14896,6 @@ int skill_isammotype(struct map_session_data *sd, unsigned short skill_id)
 * @return True if condition is met, False otherwise
 **/
 static bool skill_check_condition_sc_required(struct map_session_data *sd, unsigned short skill_id, struct s_skill_condition *require) {
-	uint8 c = 0;
 	struct status_change *sc = NULL;
 
 	if (require->status.empty())
@@ -14912,12 +14912,11 @@ static bool skill_check_condition_sc_required(struct map_session_data *sd, unsig
 	}
 
 	/* May has multiple requirements */
-	for (c = 0; c < require->status.size(); c++) {
-		enum sc_type req_sc = require->status[c];
-		if (req_sc == SC_NONE)
+	for (const auto &reqStatus : require->status) {
+		if (reqStatus == SC_NONE)
 			continue;
 
-		switch (req_sc) {
+		switch (reqStatus) {
 			/* Official fail msg */
 			case SC_PUSH_CART:
 				if (!sc->data[SC_PUSH_CART]) {
@@ -14933,7 +14932,7 @@ static bool skill_check_condition_sc_required(struct map_session_data *sd, unsig
 				break;
 
 			default:
-				if (!sc->data[req_sc]) {
+				if (!sc->data[reqStatus]) {
 					clif_skill_fail(sd, skill_id, USESKILL_FAIL_LEVEL, 0);
 					return false;
 				}
@@ -21011,7 +21010,7 @@ const std::string SkillDatabase::getDefaultLocation() {
 	return std::string(db_path) + "/skill_db.yml";
 }
 
-template<typename T, size_t S> const bool SkillDatabase::parseNode(std::string nodeName, std::string subNodeName, YAML::Node node, T (&arr)[S]) {
+template<typename T, size_t S> bool SkillDatabase::parseNode(std::string nodeName, std::string subNodeName, YAML::Node node, T (&arr)[S]) {
 	int32 value;
 
 	if (node[nodeName].IsScalar()) {

@@ -176,12 +176,6 @@ public:
 				// Double the current size, so we do not have to resize that often
 				uint32 new_size = key * 2;
 
-				// Check if an overflow happened
-				if (new_size < 0) {
-					// We need at least key + 1 space to be able to store it
-					new_size = key + 1;
-				}
-
 				// Very important => initialize everything to nullptr
 				this->cache.resize(new_size, nullptr);
 			}
