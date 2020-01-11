@@ -12,6 +12,7 @@
 
 #include "cbasetypes.hpp"
 #include "core.hpp"
+#include "utilities.hpp"
 
 class YamlDatabase{
 // Internal stuff
@@ -84,6 +85,10 @@ public:
 		this->data.clear();
 	}
 
+	bool empty(){
+		return this->data.empty();
+	}
+
 	bool exists( keytype key ){
 		return this->find( key ) != nullptr;
 	}
@@ -112,6 +117,14 @@ public:
 
 	size_t size(){
 		return this->data.size();
+	}
+
+	std::shared_ptr<datatype> random(){
+		if( this->empty() ){
+			return nullptr;
+		}
+
+		return rathena::util::umap_random( this->data );
 	}
 };
 

@@ -22,7 +22,7 @@
 
 prt_in,162,24,3	script	Splendid-Looking Knight	470,2,2,{
 	mes "[Rune Knight Manuel]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "You are now a member of our select brethren. I can still remember when I first met you.";
 		next;
 		mes "[Rune Knight Manuel]";
@@ -136,7 +136,7 @@ prt_in,162,24,3	script	Splendid-Looking Knight	470,2,2,{
 
 glast_01,44,363,3	script	Rune Leader Jungberg	468,2,2,{
 	mes "[Rune Leader Jungberg]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "Oh, you must be "+strcharinfo(0)+".";
 		mes "Welcome.";
 		next;
@@ -260,7 +260,7 @@ glast_01,44,363,3	script	Rune Leader Jungberg	468,2,2,{
 
 gl_knt02,150,55,3	script	Rune Knight Staff	83,2,2,{
 	mes "[Rune Knight Staff]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "Welcome, "+strcharinfo(0)+". Are you going to the gathering place?";
 		next;
 		switch(select("Yes, take me there.:I'm on other business.:Cancel.")) {
@@ -310,7 +310,7 @@ job3_rune01,80,60,3	script	Rune Knight Captain	470,2,2,{
 		mes "You've got too many things. You cannot proceed anymore. Please try again after losing some weight.";
 		close;
 	}
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "[Captain Tigris]";
 		if (job_rune_edq == 23) {
 			mes "Oh, I see... Please wait a moment.";
@@ -584,7 +584,7 @@ L_Warning:
 }
 
 job3_rune01,90,50,3	script	Rune Knight Lunarea	469,2,2,{
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "She holds up her chin quietly, nods lightly and notices me.";
 		next;
 		mes "Then after a moment she puts her face down and seems absorbed with other thoughts.";
@@ -699,7 +699,7 @@ L_Test:
 
 job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 	mes "[Rune Knight, Renoa]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "Congratulations for becoming one of us. Junior Rune Knight, "+strcharinfo(0)+".";
 		next;
 		mes "[Rune Knight, Renoa]";
@@ -767,7 +767,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 			mes "Therefore, jobs such as Wizard and Sage have come out and the magic became their own sacred field.";
 			next;
 			mes "[Rune Knight, Renoa]";
-			mes "The leader of the Rune Knights, Beljeve, is known to have been in touch with the fairies even before the dimensional door of the Ash-Vacuum was made when Satan Morroc resurrected.";
+			mes "The leader of the Rune Knights, Beljeve, is known to have been in touch with the fairies even before the dimensional door of the Ash-Vacuum was made when Satan Morocc resurrected.";
 			next;
 			mes "[Rune Knight, Renoa]";
 			mes "I heard a story from the magical scholars about the technology that can substantialize the essence of magic. I began a study to substantialize it to a rune by getting their help.";
@@ -782,7 +782,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 			mes "So for the second test, you need to visit the Laphine magical scholars who had given the direct help to the birth of Rune Knights at Ash-Vacuum.";
 			next;
 			mes "[Rune Knight, Renoa]";
-			mes "Find the sage, Serpeone who's been studying and helping the Rune Knights who are out in the Rune-Midgard's camp at Ash-Vacuum.";
+			mes "Find the sage, Serpeone who's been studying and helping the Rune Knights who are out in the Midgard's camp at Ash-Vacuum.";
 			next;
 			mes "[Rune Knight, Renoa]";
 			mes "The sage has already been in touch with us for a long time so you don't need to worry about understanding Serpeone's language.";
@@ -794,7 +794,7 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 			changequest 3206,3207;
 			close;
 		} else if (job_rune_edq > 11 && job_rune_edq < 14) {
-			mes "If you are ready I'll open the way to the sage, Serpeone who's in the Rune-Midgard post at Ash-Vacuum. Are you prepared?";
+			mes "If you are ready I'll open the way to the sage, Serpeone who's in the Midgard post at Ash-Vacuum. Are you prepared?";
 			next;
 			switch(select("Yes, I am prepared.:Not yet.")) {
 			case 1:
@@ -802,16 +802,16 @@ job3_rune01,55,50,3	script	Rune Knight, Renoa	469,2,2,{
 				mes "Good. Then I'll send you there now. But, there's one thing I need to tell you.";
 				next;
 				mes "[Rune Knight, Renoa]";
-				mes "You will be sent to the Ash-Vacuum. The people dispatched to the Rune-Midgard post are certified adventurers and officials.";
+				mes "You will be sent to the Ash-Vacuum. The people dispatched to the Midgard post are certified adventurers and officials.";
 				next;
 				mes "[Rune Knight, Renoa]";
 				mes "Beljeve has an agreement with the other alliance countries that the free behavior of our Rune Knights is guaranteed but...";
 				next;
 				mes "[Rune Knight, Renoa]";
-				mes "If you want to move freely through all of Ash-Vacuum, you'll have to go through the normal route which is acquiring qualification with the Rune-Midgard alliance. It has nothing to do with us.";
+				mes "If you want to move freely through all of Ash-Vacuum, you'll have to go through the normal route which is acquiring qualification with the Midgard alliance. It has nothing to do with us.";
 				next;
 				mes "[Rune Knight, Renoa]";
-				mes "The agreement only allows us to send candidates to the Rune-Midgard camp and nowhere else.";
+				mes "The agreement only allows us to send candidates to the Midgard camp and nowhere else.";
 				next;
 				mes "[Rune Knight, Renoa]";
 				mes "Good luck.";
@@ -1057,7 +1057,7 @@ job3_rune01,43,44,1	script	The Principles of Runes	844,{
 		switch(select("The principle use of Runes:The types of Runes:Stop Reading")) {
 		case 1:
 			set .@book1,1;
-			mes "A rune is a kind of symbol that's been used on the Rune-Midgard continent since ancient times. Up until now it has only been used by occult circles.";
+			mes "A rune is a kind of symbol that's been used on the Midgard continent since ancient times. Up until now it has only been used by occult circles.";
 			next;
 			mes "Runes are used as a symbol system, however, by the story handed down orally, it's known to be used for fortune-telling or used to draw out the human sub consciousness.";
 			next;
@@ -1192,7 +1192,7 @@ job3_rune01,50,36,1	script	Runes, Make & Use	844,{
 
 mid_camp,238,250,3	script	Rune Knight Sage Guard	468,2,2,{
 	mes "[Rune Knight Sage Guard]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "The sage Serpeone is the one who has been with us since the beginning of the Rune Knights.";
 		next;
 		mes "[Rune Knight Sage Guard]";
@@ -1219,7 +1219,7 @@ mid_camp,238,250,3	script	Rune Knight Sage Guard	468,2,2,{
 
 mid_camp,13,138,3	script	Dispatched Rune Knight#1	83,2,2,{
 	mes "[Dispatched Rune Knight]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "Thanks for your work. We will continue our mission for the Rune Knight testers.";
 		close;
 	}
@@ -1254,7 +1254,7 @@ OnTouch:
 		mes "- Whispers of the sage Serpeone are delivered to my mind. -";
 		next;
 		mes "[Sage Serpeone]";
-		mes "Until you become an honorable Rune Knight I cannot help you control your powers in Rune-Midgard.";
+		mes "Until you become an honorable Rune Knight I cannot help you control your powers in Midgard.";
 		next;
 		mes "[Sage Serpeone]";
 		mes "Please understand this and be devoted to this test.";
@@ -1267,7 +1267,7 @@ OnTouch:
 
 mid_camp,235,250,3	script	Sage Serpeone	435,2,2,{
 	mes "[Sage Serpeone]";
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "Finally you are an honorable Rune Knight. I'm happy to help you.";
 		next;
 		mes "[Sage Serpeone]";
@@ -1430,7 +1430,7 @@ mid_camp,235,250,3	script	Sage Serpeone	435,2,2,{
 }
 
 job3_rune01,114,50,3	script	Rune Knight Velpino	468,{
-	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune) {
+	if (Class == Job_Rune_Knight || Class == Job_Rune_Knight_T || Class == Job_Baby_Rune_Knight) {
 		mes "[Rune Knight Velpino]";
 		mes "You still smell like a fledging. Bring honor to the Rune Knights and raise your power...";
 		close;

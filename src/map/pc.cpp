@@ -6290,21 +6290,21 @@ int pc_jobid2mapid(unsigned short b_class)
 		case JOB_SHADOW_CHASER_T:       return MAPID_SHADOW_CHASER_T;
 	//Baby 3-1 Jobs
 		case JOB_SUPER_BABY_E:          return MAPID_SUPER_BABY_E;
-		case JOB_BABY_RUNE:             return MAPID_BABY_RUNE;
+		case JOB_BABY_RUNE_KNIGHT:      return MAPID_BABY_RUNE_KNIGHT;
 		case JOB_BABY_WARLOCK:          return MAPID_BABY_WARLOCK;
 		case JOB_BABY_RANGER:           return MAPID_BABY_RANGER;
-		case JOB_BABY_BISHOP:           return MAPID_BABY_BISHOP;
+		case JOB_BABY_ARCH_BISHOP:      return MAPID_BABY_ARCH_BISHOP;
 		case JOB_BABY_MECHANIC:         return MAPID_BABY_MECHANIC;
-		case JOB_BABY_CROSS:            return MAPID_BABY_CROSS;
+		case JOB_BABY_GUILLOTINE_CROSS: return MAPID_BABY_GUILLOTINE_CROSS;
 		case JOB_BABY_STAR_EMPEROR:     return MAPID_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
-		case JOB_BABY_GUARD:            return MAPID_BABY_GUARD;
+		case JOB_BABY_ROYAL_GUARD:      return MAPID_BABY_ROYAL_GUARD;
 		case JOB_BABY_SORCERER:         return MAPID_BABY_SORCERER;
 		case JOB_BABY_MINSTREL:
 		case JOB_BABY_WANDERER:         return MAPID_BABY_MINSTRELWANDERER;
 		case JOB_BABY_SURA:             return MAPID_BABY_SURA;
 		case JOB_BABY_GENETIC:          return MAPID_BABY_GENETIC;
-		case JOB_BABY_CHASER:           return MAPID_BABY_CHASER;
+		case JOB_BABY_SHADOW_CHASER:    return MAPID_BABY_SHADOW_CHASER;
 		case JOB_BABY_SOUL_REAPER:      return MAPID_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case JOB_SUMMONER:              return MAPID_SUMMONER;
@@ -6442,20 +6442,20 @@ int pc_mapid2jobid(unsigned short class_, int sex)
 		case MAPID_SHADOW_CHASER_T:       return JOB_SHADOW_CHASER_T;
 	//Baby 3-1 Jobs
 		case MAPID_SUPER_BABY_E:          return JOB_SUPER_BABY_E;
-		case MAPID_BABY_RUNE:             return JOB_BABY_RUNE;
+		case MAPID_BABY_RUNE_KNIGHT:      return JOB_BABY_RUNE_KNIGHT;
 		case MAPID_BABY_WARLOCK:          return JOB_BABY_WARLOCK;
 		case MAPID_BABY_RANGER:           return JOB_BABY_RANGER;
-		case MAPID_BABY_BISHOP:           return JOB_BABY_BISHOP;
+		case MAPID_BABY_ARCH_BISHOP:      return JOB_BABY_ARCH_BISHOP;
 		case MAPID_BABY_MECHANIC:         return JOB_BABY_MECHANIC;
-		case MAPID_BABY_CROSS:            return JOB_BABY_CROSS;
+		case MAPID_BABY_GUILLOTINE_CROSS: return JOB_BABY_GUILLOTINE_CROSS;
 		case MAPID_BABY_STAR_EMPEROR:     return JOB_BABY_STAR_EMPEROR;
 	//Baby 3-2 Jobs
-		case MAPID_BABY_GUARD:            return JOB_BABY_GUARD;
+		case MAPID_BABY_ROYAL_GUARD:      return JOB_BABY_ROYAL_GUARD;
 		case MAPID_BABY_SORCERER:         return JOB_BABY_SORCERER;
 		case MAPID_BABY_MINSTRELWANDERER: return sex?JOB_BABY_MINSTREL:JOB_BABY_WANDERER;
 		case MAPID_BABY_SURA:             return JOB_BABY_SURA;
 		case MAPID_BABY_GENETIC:          return JOB_BABY_GENETIC;
-		case MAPID_BABY_CHASER:           return JOB_BABY_CHASER;
+		case MAPID_BABY_SHADOW_CHASER:    return JOB_BABY_SHADOW_CHASER;
 		case MAPID_BABY_SOUL_REAPER:      return JOB_BABY_SOUL_REAPER;
 	//Doram Jobs
 		case MAPID_SUMMONER:              return JOB_SUMMONER;
@@ -6649,25 +6649,25 @@ const char* job_name(int class_)
 	case JOB_MECHANIC_T2:
 		return msg_txt(NULL,629);
 
-	case JOB_BABY_RUNE:
+	case JOB_BABY_RUNE_KNIGHT:
 	case JOB_BABY_WARLOCK:
 	case JOB_BABY_RANGER:
-	case JOB_BABY_BISHOP:
+	case JOB_BABY_ARCH_BISHOP:
 	case JOB_BABY_MECHANIC:
-	case JOB_BABY_CROSS:
-	case JOB_BABY_GUARD:
+	case JOB_BABY_GUILLOTINE_CROSS:
+	case JOB_BABY_ROYAL_GUARD:
 	case JOB_BABY_SORCERER:
 	case JOB_BABY_MINSTREL:
 	case JOB_BABY_WANDERER:
 	case JOB_BABY_SURA:
 	case JOB_BABY_GENETIC:
-	case JOB_BABY_CHASER:
-		return msg_txt(NULL,638 - JOB_BABY_RUNE+class_);
+	case JOB_BABY_SHADOW_CHASER:
+		return msg_txt(NULL,638 - JOB_BABY_RUNE_KNIGHT+class_);
 
-	case JOB_BABY_RUNE2:
+	case JOB_BABY_RUNE_KNIGHT2:
 		return msg_txt(NULL,638);
 
-	case JOB_BABY_GUARD2:
+	case JOB_BABY_ROYAL_GUARD2:
 		return msg_txt(NULL,644);
 
 	case JOB_BABY_RANGER2:
@@ -8034,8 +8034,8 @@ int pc_dead(struct map_session_data *sd,struct block_list *src)
 		struct pet_data *pd = sd->pd;
 		if( !mapdata->flag[MF_NOEXPPENALTY] ) {
 			pet_set_intimate(pd, pd->pet.intimate + pd->get_pet_db()->die);
-			if( pd->pet.intimate < 0 )
-				pd->pet.intimate = 0;
+			if( pd->pet.intimate <= PET_INTIMATE_NONE )
+				pet_set_intimate(pd, PET_INTIMATE_NONE);
 			clif_send_petdata(sd,sd->pd,1,pd->pet.intimate);
 		}
 		if( sd->pd->target_id ) // Unlock all targets...
@@ -11039,7 +11039,7 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick)
 	if (sd->percent_hp_regen.value) {
 		sd->percent_hp_regen.tick += diff_tick;
 		while (sd->percent_hp_regen.tick >= sd->percent_hp_regen.rate) {
-			hp += (sd->percent_hp_regen.value * sd->status.max_hp);
+			hp += sd->status.max_hp * sd->percent_hp_regen.value / 100;
 			sd->percent_hp_regen.tick -= sd->percent_hp_regen.rate;
 		}
 	}
@@ -11047,7 +11047,7 @@ void pc_regen (struct map_session_data *sd, t_tick diff_tick)
 	if (sd->percent_sp_regen.value) {
 		sd->percent_sp_regen.tick += diff_tick;
 		while (sd->percent_sp_regen.tick >= sd->percent_sp_regen.rate) {
-			sp += (sd->percent_sp_regen.value * sd->status.max_sp);
+			sp += sd->status.max_sp * sd->percent_sp_regen.value / 100;
 			sd->percent_sp_regen.tick -= sd->percent_sp_regen.rate;
 		}
 	}

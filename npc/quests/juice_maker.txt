@@ -28,7 +28,7 @@ prt_in,49,172,3	script	Marianne#juice	53,{
 		set morison_meat,0;
 		set MISC_QUEST,MISC_QUEST | 1;
 		mes "[Housewife Marianne]";
-		mes "Ah! Come to think of it, I heard they were making fruit juice somewhere. Now where was it... Payon Village, or Morroc?";
+		mes "Ah! Come to think of it, I heard they were making fruit juice somewhere. Now where was it... Payon Village, or Morocc?";
 		close;
 	}
 	if (mother_marienu == 1) {

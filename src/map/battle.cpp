@@ -17,6 +17,7 @@
 #include "../common/timer.hpp"
 #include "../common/utils.hpp"
 
+#include "atcommand.hpp"
 #include "battleground.hpp"
 #include "chrif.hpp"
 #include "clif.hpp"
@@ -4493,14 +4494,8 @@ static void battle_attack_sc_bonus(struct Damage* wd, struct block_list *src, st
 				ATK_ADD(wd->weaponAtk, wd->weaponAtk2, i64max(sstatus->matk_min - tmdef, 0));
 			}
 		}
-		if (sc->data[SC_GATLINGFEVER]) {
-			if (tstatus->size == SZ_SMALL) {
-				ATK_ADD(wd->equipAtk, wd->equipAtk2, 10 * sc->data[SC_GATLINGFEVER]->val1);
-			} else if (tstatus->size == SZ_MEDIUM) {
-				ATK_ADD(wd->equipAtk, wd->equipAtk2, 5 * sc->data[SC_GATLINGFEVER]->val1);
-			} else if (tstatus->size == SZ_BIG)
-				ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->data[SC_GATLINGFEVER]->val1);
-		}
+		if (sc->data[SC_GATLINGFEVER])
+			ATK_ADD(wd->equipAtk, wd->equipAtk2, sc->data[SC_GATLINGFEVER]->val3);
 #else
 		if (sc->data[SC_TRUESIGHT])
 			ATK_ADDRATE(wd->damage, wd->damage2, 2 * sc->data[SC_TRUESIGHT]->val1);
@@ -8219,7 +8214,7 @@ static const struct _battle_data {
 	{ "produce_item_name_input",            &battle_config.produce_item_name_input,         0x1|0x2, 0,     0x9F,           },
 	{ "display_skill_fail",                 &battle_config.display_skill_fail,              2,      0,      1|2|4|8,        },
 	{ "chat_warpportal",                    &battle_config.chat_warpportal,                 0,      0,      1,              },
-	{ "mob_warp",                           &battle_config.mob_warp,                        0,      0,      1|2|4,          },
+	{ "mob_warp",                           &battle_config.mob_warp,                        0,      0,      1|2|4|8,          },
 	{ "dead_branch_active",                 &battle_config.dead_branch_active,              1,      0,      1,              },
 	{ "vending_max_value",                  &battle_config.vending_max_value,               10000000, 1,    MAX_ZENY,       },
 	{ "vending_over_max",                   &battle_config.vending_over_max,                1,      0,      1,              },
@@ -8561,6 +8556,9 @@ static const struct _battle_data {
 	{ "min_shop_sell",                      &battle_config.min_shop_sell,                   0,      0,      INT_MAX,        },
 	{ "feature.equipswitch",                &battle_config.feature_equipswitch,             1,      0,      1,              },
 	{ "pet_walk_speed",                     &battle_config.pet_walk_speed,                  1,      1,      3,              },
+	{ "blacksmith_fame_refine_threshold",   &battle_config.blacksmith_fame_refine_threshold,10,     1,      MAX_REFINE,     },
+	{ "mob_nopc_idleskill_rate",            &battle_config.mob_nopc_idleskill_rate,       100,      0,    100,              },
+	{ "mob_nopc_move_rate",                 &battle_config.mob_nopc_move_rate,            100,      0,    100,              },
 
 #include "../custom/battle_config_init.inc"
 };
@@ -8762,8 +8760,25 @@ int battle_config_read(const char* cfgName)
 				continue;
 			if (strcmpi(w1, "import") == 0)
 				battle_config_read(w2);
-			else if
-				(battle_set_value(w1, w2) == 0)
+			else if( strcmpi( w1, "atcommand_symbol" ) == 0 ){
+				const char* symbol = &w2[0];
+
+				if (ISPRINT(*symbol) && // no control characters
+					*symbol != '/' && // symbol of client commands
+					*symbol != '%' && // symbol of party chat
+					*symbol != '$' && // symbol of guild chat
+					*symbol != charcommand_symbol)
+					atcommand_symbol = *symbol;
+			}else if( strcmpi( w1, "charcommand_symbol" ) == 0 ){
+				const char* symbol = &w2[0];
+
+				if (ISPRINT(*symbol) && // no control characters
+					*symbol != '/' && // symbol of client commands
+					*symbol != '%' && // symbol of party chat
+					*symbol != '$' && // symbol of guild chat
+					*symbol != atcommand_symbol)
+					charcommand_symbol = *symbol;
+			}else if( battle_set_value(w1, w2) == 0 )
 				ShowWarning("Unknown setting '%s' in file %s\n", w1, cfgName);
 		}
 

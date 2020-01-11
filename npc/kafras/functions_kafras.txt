@@ -24,9 +24,9 @@
 //= 2.3 Removed SAVE from Niflheim. [Lupus]
 //= 2.3 removed "fix" by HawkMoon RTFM and check supernovice.txt . There's a SPECIAL Kafra which gives CARTS to SN for a special proce. [Lupus]
 //= 2.4 Added Baby Class Support (Baby Novice check) Removed annoying storage feature where u had to close dialog window to be able to use your storage [Lupus]
-//= 2.5 Added Louyang official Kafra, fixes some Kafras, not letting you to Save your position [Lupus]
+//= 2.5 Added Luoyang official Kafra, fixes some Kafras, not letting you to Save your position [Lupus]
 //= 2.6 Reverted Dungeons Kafras (they should offer only Storage). Added temp Ayothaya Kafra
-//= 2.7 Added correct Ayothaya, Louyang & Amatsu Kafras. [Lupus]
+//= 2.7 Added correct Ayothaya, Luoyang & Amatsu Kafras. [Lupus]
 //= 2.8 Fixed Amatsu Storage problems [Lupus] 2.9 Fixed spelling mistakes. [Nexon]
 //= 3.0 Added special "not working teleport menu" for Einbroch Kafras [Lupus]
 //= 3.1 Removed callfunc Is_####_Class in favor of baseClass [Silentdragon]
@@ -105,7 +105,7 @@ function	script	F_Kafra	{
 		mes "The air is eternally heavy with the";
 		mes "scent of pleasant wildflowers.";
 		break;
-	case 4:// Louyang and Ayothaya specific message (obsolete)
+	case 4:// Luoyang and Ayothaya specific message (obsolete)
 		mes "[Kafra Employee]";
 		mes "With our many Kafra";
 		mes "service locations, you're never";
@@ -163,7 +163,7 @@ function	script	F_Kafra	{
 				mes "Transport Agreement^000000, the";
 				mes "Kafra Corporation cannot";
 				mes "provide Teleport Services";
-				mes "in the Schwaltzvalt Republic.";
+				mes "in the Schwarzwald Republic.";
 				next;
 				mes "[Kafra Employee]";
 				mes "We ask that you please";
@@ -322,7 +322,7 @@ function	script	F_KafTele	{
 	}
 	else if (@wrpD$[.@j] == "Juno") warp "yuno", 158, 125;
 	else if (@wrpD$[.@j] == "Mjolnir Dead Pit") warp "mjolnir_02", 99, 351;
-	else if (@wrpD$[.@j] == "Morroc") warp "morocc", 156, 46;
+	else if (@wrpD$[.@j] == "Morocc") warp "morocc", 156, 46;
 	else if (@wrpD$[.@j] == "Orc Dungeon") warp "gef_fild10", 52, 326;
 	else if (@wrpD$[.@j] == "Payon") warp "payon", 161, 58;
 	else if (@wrpD$[.@j] == "Prontera") warp "prontera", 116, 72;
@@ -611,23 +611,23 @@ function	script	F_KafSet	{
 
 	.@map$ = strnpcinfo(4);
 	if (.@map$ == "prontera") {
-		setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morroc", "Orc Dungeon", "Alberta";
+		setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morocc", "Orc Dungeon", "Alberta";
 		setarray @wrpP[0], 600, 1200, 1200, 1200, 1700, 1800;
 		setarray @viewpX[0], 151, 29, 282, 152;
 		setarray @viewpY[0], 29, 207, 200, 326;
 	} else if (.@map$ == "alberta") {
 		setarray @wrpP[0], 1200, 1800, 1800;
-		setarray @wrpD$[0], "Payon", "Morroc", "Prontera";
+		setarray @wrpD$[0], "Payon", "Morocc", "Prontera";
 		setarray @viewpX[0], 28, 113, 0, 0;
 		setarray @viewpY[0], 229, 60, 0, 0;
 	} else if (.@map$ == "aldebaran") {
 		setarray @wrpP[0], 1200, 1200, 1800, 1700;
 		setarray @wrpD$[0], "Geffen", "Juno" , "Izlude", "Mjolnir Dead Pit";
 	} else if (.@map$ == "comodo" ) {
-		setarray @wrpD$[0], "Morroc", "Comodo Pharos Beacon", "Umbala";
+		setarray @wrpD$[0], "Morocc", "Comodo Pharos Beacon", "Umbala";
 		setarray @wrpP[0], 1800, 1200, 1800;
 	} else if (.@map$ == "cmd_fild07") {
-		setarray @wrpD$[0], "Comodo", "Morroc";
+		setarray @wrpD$[0], "Comodo", "Morocc";
 		setarray @wrpP[0], 1200, 1200;
 	} else if (.@map$ == "geffen") {
 		setarray @wrpD$[0], "Prontera", "Al De Baran", "Orc Dungeon", "Mjolnir Dead Pit";
@@ -635,7 +635,7 @@ function	script	F_KafSet	{
 		setarray @viewpX[0], 120, 203;
 		setarray @viewpY[0], 62, 123;
 	} else if (.@map$ == "izlude") {
-		setarray @wrpD$[0], "Geffen", "Payon", "Morroc", "Al De Baran";
+		setarray @wrpD$[0], "Geffen", "Payon", "Morocc", "Al De Baran";
 		setarray @wrpP[0], 1200, 1200, 1200, 1800;
 	} else if (.@map$ == "morocc") {
 		setarray @wrpD$[0], "Prontera", "Payon", "Alberta", "Comodo", "Comodo Pharos Beacon";
@@ -646,7 +646,7 @@ function	script	F_KafSet	{
 		setarray @wrpD$[0], "Comodo";
 		setarray @wrpP[0], 1800;
 	} else if (.@map$ == "payon") {
-		setarray @wrpD$[0], "Prontera", "Alberta", "Morroc";
+		setarray @wrpD$[0], "Prontera", "Alberta", "Morocc";
 		setarray @wrpP[0], 1200, 1200, 1200;
 	} else if (.@map$ == "yuno") {
 		setarray @wrpD$[0], "Al De Baran";
@@ -654,7 +654,7 @@ function	script	F_KafSet	{
 		setarray @viewpX[0], 328, 278, 153, 0;
 		setarray @viewpY[0], 108, 221, 187, 0;
 	} else if (.@map$ == "job3_rune01") {
-		setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morroc", "Alberta";
+		setarray @wrpD$[0], "Izlude", "Geffen", "Payon", "Morocc", "Alberta";
 		setarray @wrpP[0], 600, 1200, 1200, 1200, 1800;
 	}
 

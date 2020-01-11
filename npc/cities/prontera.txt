@@ -92,7 +92,7 @@ prontera,149,202,2	script	YuNa#pront	700,{
 	mes "God of war!";
 	next;
 	mes "[YuNa]";
-	mes "Here, in Rune-Midgard, we serve Odin, the fearsome god who sacrificed one of his eyes in order to acquire wisdom.";
+	mes "Here, in Rune-Midgarts, we serve Odin, the fearsome god who sacrificed one of his eyes in order to acquire wisdom.";
 	next;
 	mes "[YuNa]";
 	mes "The statue you see behind of me is a sculpture of mighty Odin. But, it's a shame because it's such a bad likeness.";
@@ -215,7 +215,7 @@ prontera,78,150,3	script	Dairenne#pront	90,{
 		mes "I wonder if you are interested in parties or dresses. Hehehe. These days, the hot topic is definitely the colorful, extravagant, magnificent dresses you can wear.";
 		next;
 		mes "[Towngirl Dairenne]";
-		mes "To get such dazzling colors, I heard you have to use a dye that you can only get in Morroc. But I also heard that the price is beyond imagination.";
+		mes "To get such dazzling colors, I heard you have to use a dye that you can only get in Morocc. But I also heard that the price is beyond imagination.";
 		next;
 		mes "[Towngirl Dairenne]";
 		mes "Aahhhh~ I wish I could wear such a dress. Even if it's just once...";
