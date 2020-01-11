@@ -136,23 +136,23 @@ private:
 	std::vector<std::shared_ptr<datatype>> cache;
 
 public:
-	TypesafeCachedYamlDatabase( const std::string type_, uint16 version_, uint16 minimumVersion_ ) : TypesafeYamlDatabase( type_, version_, minimumVersion_ ){
+	TypesafeCachedYamlDatabase( const std::string type_, uint16 version_, uint16 minimumVersion_ ) : TypesafeYamlDatabase<keytype, datatype>( type_, version_, minimumVersion_ ){
 
 	}
 
-	TypesafeCachedYamlDatabase( const std::string& type_, uint16 version_ ) : TypesafeYamlDatabase( type_, version_, version_ ){
+	TypesafeCachedYamlDatabase( const std::string& type_, uint16 version_ ) : TypesafeYamlDatabase<keytype, datatype>( type_, version_, version_ ){
 
 	}
 
 	void clear() override{
-		TypesafeYamlDatabase::clear();
+		TypesafeYamlDatabase<keytype, datatype>::clear();
 
 		cache.clear();
 	}
 
 	std::shared_ptr<datatype> find( keytype key ) override{
 		if( this->cache.empty() ){
-			return TypesafeYamlDatabase::find( key );
+			return TypesafeYamlDatabase<keytype, datatype>::find( key );
 		}else{
 			uint32 cacheKey = this->calculateCacheKey( key );
 
@@ -174,7 +174,7 @@ public:
 			// Check if the key fits into the current cache size
 			if (this->cache.capacity() < key) {
 				// Double the current size, so we do not have to resize that often
-				int new_size = key * 2;
+				uint32 new_size = key * 2;
 
 				// Check if an overflow happened
 				if (new_size < 0) {

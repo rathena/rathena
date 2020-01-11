@@ -1879,7 +1879,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 
 			body << YAML::EndSeq;
 		}
-		
+
+#ifdef RENEWAL_CAST
 		if (!isMultiLevel(it_cast->second.fixed_cast)) {
 			if (it_cast->second.fixed_cast[0] > 0)
 				body << YAML::Key << "FixedCastTime" << YAML::Value << it_cast->second.fixed_cast[0];
@@ -1899,6 +1900,7 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 			body << YAML::EndSeq;
 		}
 	}
+#endif
 
 	auto it_castdex = skill_castnodex.find(skill_id);
 
