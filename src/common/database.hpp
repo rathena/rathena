@@ -154,14 +154,14 @@ public:
 		if( this->cache.empty() ){
 			return TypesafeYamlDatabase::find( key );
 		}else{
-			int cacheKey = this->calculateCacheKey( key );
+			uint32 cacheKey = this->calculateCacheKey( key );
 
 			// TODO: out of range
 			return cache[cacheKey];
 		}
 	}
 
-	virtual int calculateCacheKey( keytype key ){
+	virtual uint32 calculateCacheKey( keytype key ){
 		return key;
 	}
 
@@ -169,7 +169,7 @@ public:
 		// Cache all known values
 		for (auto &pair : *this) {
 			// Calculate the key that should be used
-			int key = this->calculateCacheKey(pair.first);
+			uint32 key = this->calculateCacheKey(pair.first);
 
 			// Check if the key fits into the current cache size
 			if (this->cache.capacity() < key) {

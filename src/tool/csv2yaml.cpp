@@ -1,6 +1,7 @@
 // Copyright (c) rAthena Dev Teams - Licensed under GNU GPL
 // For more information, see LICENCE in the main folder
 
+#include <algorithm>
 #include <fstream>
 #include <functional>
 #include <iostream>
@@ -46,6 +47,7 @@
 #include "../map/pet.hpp"
 #include "../map/quest.hpp"
 #include "../map/script.hpp"
+#include "../map/skill.hpp"
 #include "../map/storage.hpp"
 
 using namespace rathena;
