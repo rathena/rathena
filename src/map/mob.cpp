@@ -2048,7 +2048,9 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 	{
 		// Move probability for mobs away from players
 		// In Aegis, this is 100% for mobs that have been activated by players and none otherwise.
-		if( mob_is_spotted(md) && rnd()%100 < battle_config.mob_nopc_move_rate )
+		if( mob_is_spotted(md) &&
+			((!status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.mob_nopc_move_rate) ||
+			(status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.boss_nopc_move_rate)))
 			mob_randomwalk(md, tick);
 	}
 	else if( md->ud.walktimer == INVALID_TIMER )
@@ -2058,7 +2060,9 @@ static int mob_ai_sub_lazy(struct mob_data *md, va_list args)
 
 		// Probability for mobs far from players from doing their IDLE skill.
 		// In Aegis, this is 100% for mobs that have been activated by players and none otherwise.
-		if( mob_is_spotted(md) && rnd()%100 < battle_config.mob_nopc_idleskill_rate )
+		if( mob_is_spotted(md) &&
+			((!status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.mob_nopc_idleskill_rate) ||
+			(status_has_mode(&md->status,MD_STATUS_IMMUNE) && rnd()%100 < battle_config.boss_nopc_idleskill_rate)))
 			mobskill_use(md, tick, -1);
 	}
 
