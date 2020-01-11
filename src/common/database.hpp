@@ -151,17 +151,14 @@ public:
 	}
 
 	std::shared_ptr<datatype> find( keytype key ) override{
-		if( this->cache.empty() ){
+		if( this->cache.empty() || key > this->cache.capacity() ){
 			return TypesafeYamlDatabase<keytype, datatype>::find( key );
 		}else{
-			uint32 cacheKey = this->calculateCacheKey( key );
-
-			// TODO: out of range
-			return cache[cacheKey];
+			return cache[this->calculateCacheKey( key )];
 		}
 	}
 
-	virtual uint32 calculateCacheKey( keytype key ){
+	virtual size_t calculateCacheKey( keytype key ){
 		return key;
 	}
 
@@ -169,12 +166,12 @@ public:
 		// Cache all known values
 		for (auto &pair : *this) {
 			// Calculate the key that should be used
-			uint32 key = this->calculateCacheKey(pair.first);
+			size_t key = this->calculateCacheKey(pair.first);
 
 			// Check if the key fits into the current cache size
 			if (this->cache.capacity() < key) {
 				// Double the current size, so we do not have to resize that often
-				uint32 new_size = key * 2;
+				size_t new_size = key * 2;
 
 				// Very important => initialize everything to nullptr
 				this->cache.resize(new_size, nullptr);
