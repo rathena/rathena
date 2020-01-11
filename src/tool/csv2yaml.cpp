@@ -1899,8 +1899,8 @@ static bool skill_parse_row_skilldb(char* split[], int columns, int current) {
 
 			body << YAML::EndSeq;
 		}
-	}
 #endif
+	}
 
 	auto it_castdex = skill_castnodex.find(skill_id);
 
