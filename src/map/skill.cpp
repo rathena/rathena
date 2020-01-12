@@ -933,7 +933,7 @@ bool skill_isNotOk_hom(struct homun_data *hd, uint16 skill_id, uint16 skill_lv)
 	if (sc && !sc->count)
 		sc = NULL;
 
-	if (util::vector_find(hd->blockskill, skill_id) > 0)
+	if (util::vector_exists(hd->blockskill, skill_id))
 		return true;
 
 	switch(skill_id) {
@@ -1039,7 +1039,7 @@ bool skill_isNotOk_mercenary(uint16 skill_id, struct mercenary_data *md)
 {
 	nullpo_retr(1, md);
 
-	if (util::vector_find(md->blockskill, skill_id) > 0)
+	if (util::vector_exists(md->blockskill, skill_id))
 		return true;
 
 	return skill_isNotOk(skill_id, md->master);

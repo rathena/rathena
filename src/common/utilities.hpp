@@ -153,12 +153,12 @@ namespace rathena {
 		}
 
 		/**
-		 * Find a key-value pair
+		 * Determine if a key exists in the vector
 		 * @param vec: Vector to search through
 		 * @param key: Key wanted
 		 * @return True on success or false on failure
 		 */
-		template <typename K> K vector_find(std::vector<K> &vec, K key) {
+		template <typename K> bool vector_exists(std::vector<K> &vec, K key) {
 			auto it = std::find(vec.begin(), vec.end(), key);
 
 			if (it != vec.end())
