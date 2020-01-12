@@ -213,7 +213,7 @@ static bool skill_check(uint16 id) {
 } while(0)
 
 // Skill DB
-e_damage_type skill_get_hit( uint16 skill_id )                     { if (!skill_check(skill_id)) return DMG_NORMAL; return static_cast<e_damage_type>(skill_db.find(skill_id)->hit); }
+e_damage_type skill_get_hit( uint16 skill_id )                     { if (!skill_check(skill_id)) return DMG_NORMAL; return skill_db.find(skill_id)->hit; }
 int skill_get_inf( uint16 skill_id )                               { skill_get(skill_id, skill_db.find(skill_id)->inf); }
 int skill_get_ele( uint16 skill_id , uint16 skill_lv )             { skill_get_lv(skill_id, skill_lv, skill_db.find(skill_id)->element); }
 int skill_get_max( uint16 skill_id )                               { skill_get(skill_id, skill_db.find(skill_id)->max); }
@@ -266,6 +266,10 @@ int skill_get_splash( uint16 skill_id , uint16 skill_lv ) {
 }
 
 bool skill_get_nk_(uint16 skill_id, std::vector<e_skill_nk> nk) {
+	if( !skill_id ){
+		return false;
+	}
+
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
 	if (!skill)
@@ -280,6 +284,10 @@ bool skill_get_nk_(uint16 skill_id, std::vector<e_skill_nk> nk) {
 }
 
 bool skill_get_inf2_(uint16 skill_id, std::vector<e_skill_inf2> inf2) {
+	if( !skill_id ){
+		return false;
+	}
+
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
 	if (!skill)
@@ -294,6 +302,10 @@ bool skill_get_inf2_(uint16 skill_id, std::vector<e_skill_inf2> inf2) {
 }
 
 bool skill_get_unit_flag_(uint16 skill_id, std::vector<e_skill_unit_flag> unit) {
+	if( !skill_id ){
+		return false;
+	}
+
 	std::shared_ptr<s_skill_db> skill = skill_db.find(skill_id);
 
 	if (!skill)
