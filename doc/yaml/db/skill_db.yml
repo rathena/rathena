@@ -88,14 +88,14 @@
 #       - Level               Skill level.
 #         Amount              Ammo amount required at specific skill level.
 #     State                   Special state required to cast. (Default: None)
-#     Status:                 Status change required to cast. (Default: 0)
+#     Status:                 Status change required to cast. (Default: nullptr)
 #     SphereCost:             Spirit sphere required to cast. (Default: 0)
 #       - Level               Skill level.
 #         Amount              Spirit sphere required at specific skill level.
 #     ItemCost:               Item required to cast. (Default: 0)
 #       - Item                Item name.
 #         Amount              Item amount.
-#     Equipment:              Equipped item required to cast. (Default: 0)
+#     Equipment:              Equipped item required to cast. (Default: nullptr)
 #   Unit:                     Skill unit values. (Optional)
 #     Id                      Skill unit ID.
 #     AlternateId:            Alternate skill unit ID. (Default: 0)
