@@ -21121,7 +21121,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 		std::string type_constant = "BF_" + type;
 
-		int constant;
+		int64 constant;
 
 		if (!script_get_constant(type_constant.c_str(), &constant)) {
 			this->invalidWarning(node["Type"], "Type %s is invalid.\n", type.c_str());
@@ -21147,14 +21147,14 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 		inf = "INF_" + inf;
 
-		int constant;
+		int64 constant;
 
 		if (!script_get_constant(inf.c_str(), &constant)) {
 			this->invalidWarning(node["TargetType"], "TargetType %s is invalid.\n", inf.c_str());
 			return 0;
 		}
 
-		skill->inf = constant;
+		skill->inf = static_cast<uint16>(constant);
 	}
 
 	if (this->nodeExists(node, "DamageFlags")) {
@@ -21162,7 +21162,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 		for (const auto &it : damageNode) {
 			std::string nk = it.first.as<std::string>(), nk_constant = "NK_" + nk;
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(nk_constant.c_str(), &constant)) {
 				this->invalidWarning(damageNode, "DamageFlags %s is invalid.\n", nk.c_str());
@@ -21186,7 +21186,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 		for (const auto &it : infoNode) {
 			std::string inf2 = it.first.as<std::string>(), inf2_constant = "INF2_" + inf2;
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(inf2_constant.c_str(), &constant)) {
 				this->invalidWarning(infoNode, "Flag %s is invalid, skipping.\n", inf2.c_str());
@@ -21221,7 +21221,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 		std::string hit_constant = "DMG_" + hit;
 
-		int constant;
+		int64 constant;
 
 		if (!script_get_constant(hit_constant.c_str(), &constant)) {
 			this->invalidWarning(node["Hit"], "Hit %s is invalid.\n", hit.c_str());
@@ -21251,7 +21251,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			std::string element_constant = "ELE_" + element;
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(element_constant.c_str(), &constant)) {
 				this->invalidWarning(elementNode["Element"], "Element %s is invalid.\n", element.c_str());
@@ -21263,7 +21263,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 			}
 
-			memset(skill->element, constant, sizeof(skill->element));
+			memset(skill->element, static_cast<e_element>(constant), sizeof(skill->element));
 		} else {
 			for (const YAML::Node &it : elementNode) {
 				uint16 skill_lv;
@@ -21280,7 +21280,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 					continue;
 
 				std::string element_constant = "ELE_" + element;
-				int constant;
+				int64 constant;
 
 				if (!script_get_constant(element_constant.c_str(), &constant)) {
 					this->invalidWarning(elementNode["Element"], "Element %s is invalid.\n", element.c_str());
@@ -21363,7 +21363,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 			for (const auto &it : copyreqNode) {
 				std::string req = it.first.as<std::string>(), req_constant = "SKILL_REQ_" + req;
-				int constant;
+				int64 constant;
 
 				if (!script_get_constant(req_constant.c_str(), &constant)) {
 					this->invalidWarning(copyreqNode, "CopyFlags RemoveRequirement %s is invalid.\n", req.c_str());
@@ -21398,7 +21398,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 			for (const auto &it : npctypeNode) {
 				std::string type = it.first.as<std::string>(), type_constant = "SKILL_NONEAR_" + type;
-				int constant;
+				int64 constant;
 
 				if (!script_get_constant(type_constant.c_str(), &constant)) {
 					this->invalidWarning(npctypeNode, "NoNearNPC Type %s is invalid.\n", type.c_str());
@@ -21508,7 +21508,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 		for (const auto &it : castNode) {
 			std::string flag = it.first.as<std::string>(), flag_constant = "SKILL_CAST_" + flag;
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(flag_constant.c_str(), &constant)) {
 				this->invalidWarning(castNode, "CastTimeFlags %s option is invalid.\n", flag.c_str());
@@ -21532,7 +21532,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 		for (const auto &it : castNode) {
 			std::string flag = it.first.as<std::string>(), flag_constant = "SKILL_CAST_" + flag;
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(flag_constant.c_str(), &constant)) {
 				this->invalidWarning(castNode, "CastDelayFlags %s option is invalid.\n", flag.c_str());
@@ -21618,7 +21618,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 					std::string weapon = it.first.as<std::string>();
 
 					std::string weapon_constant = "W_" + weapon;
-					int constant;
+					int64 constant;
 
 					if (!script_get_constant(weapon_constant.c_str(), &constant)) {
 						this->invalidWarning(weaponNode, "Requires Weapon %s is invalid.\n", weapon.c_str());
@@ -21655,7 +21655,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 			} else {
 				for (const auto &it : ammoNode) {
 					std::string ammo = it.first.as<std::string>(), ammo_constant = "A_" + ammo;
-					int constant;
+					int64 constant;
 
 					if (!script_get_constant(ammo_constant.c_str(), &constant)) {
 						this->invalidWarning(ammoNode, "Requires Ammo %s is invalid.\n", ammo.c_str());
@@ -21699,14 +21699,14 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 			std::string state_constant = "ST_" + state;
 
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(state_constant.c_str(), &constant)) {
 				this->invalidWarning(requireNode["State"], "Requires State %s is invalid.\n", state.c_str());
 				return 0;
 			}
 
-			skill->require.state = constant;
+			skill->require.state = static_cast<int32>(constant);
 		}
 
 		if (this->nodeExists(requireNode, "Status")) {
@@ -21714,7 +21714,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 			for (const auto &it : statusNode) {
 				std::string status = it.first.as<std::string>(), status_constant = "SC_" + status;
-				int constant;
+				int64 constant;
 
 				if (!script_get_constant(status_constant.c_str(), &constant)) {
 					this->invalidWarning(statusNode, "Requires Status %s is invalid.\n", status.c_str());
@@ -21726,7 +21726,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(statusNode, status, active))
 					return 0;
 
-				auto status_exists = util::vector_get(skill->require.status, static_cast<sc_type>(constant));
+				auto status_exists = util::vector_get(skill->require.status, constant);
 
 				if (active && status_exists == skill->require.status.end())
 					skill->require.status.push_back(static_cast<sc_type>(constant));
@@ -21790,7 +21790,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				if (!this->asBool(equipNode, item_name, active))
 					return 0;
 
-				auto equip_exists = util::vector_get(skill->require.eqItem, static_cast<int32>(item->nameid));
+				auto equip_exists = util::vector_get(skill->require.eqItem, item->nameid);
 
 				if (active && equip_exists == skill->require.eqItem.end())
 					skill->require.eqItem.push_back(item->nameid);
@@ -21812,7 +21812,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			std::string unit_constant = "UNT_" + unit;
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(unit_constant.c_str(), &constant)) {
 				this->invalidWarning(unitNode["Id"], "Unit Id %s is invalid.\n", unit.c_str());
@@ -21832,7 +21832,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 				return 0;
 
 			std::string unit_constant = "UNT_" + unit;
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(unit_constant.c_str(), &constant)) {
 				this->invalidWarning(unitNode["AlternateId"], "Alternate Unit Id %s is invalid.\n", unit.c_str());
@@ -21840,7 +21840,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 			}
 
 
-			skill->unit_id2 = constant;
+			skill->unit_id2 = static_cast<uint16>(constant);
 		} else {
 			if (!exists)
 				skill->unit_id2 = 0;
@@ -21882,7 +21882,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 			std::string target_constant = "BCT_" + target;
 
-			int constant;
+			int64 constant;
 
 			if (!script_get_constant(target_constant.c_str(), &constant)) {
 				this->invalidWarning(unitNode["Target"], "Unit Target %s is invalid.\n", target.c_str());
@@ -21900,7 +21900,7 @@ uint64 SkillDatabase::parseBodyNode(const YAML::Node &node) {
 
 			for (const auto &it : flagNode) {
 				std::string flag = it.first.as<std::string>(), flag_constant = "UF_" + flag;
-				int constant;
+				int64 constant;
 
 				if (!script_get_constant(flag_constant.c_str(), &constant)) {
 					this->invalidWarning(flagNode, "Skill Unit Flag %s is invalid.\n", flag.c_str());
