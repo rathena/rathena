@@ -77,7 +77,7 @@ uint64 AchievementDatabase::parseBodyNode(const YAML::Node &node){
 			return 0;
 		}
 
-		int constant;
+		int64 constant;
 
 		if( !script_get_constant( group_name.c_str(), &constant ) ){
 			this->invalidWarning( node, "achievement_read_db_sub: Invalid group %s for achievement %d, skipping.\n", group_name.c_str(), achievement_id );

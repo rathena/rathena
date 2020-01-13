@@ -22351,6 +22351,7 @@ static bool skill_parse_row_changematerialdb(char* split[], int columns, int cur
  */
 static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 {
+	int64 caster_tmp;
 	uint16 id = 0;
 	int caster;
 
@@ -22370,10 +22371,11 @@ static bool skill_parse_row_skilldamage(char* split[], int columns, int current)
 	if (ISDIGIT(split[1][0]))
 		caster = atoi(split[1]);
 	else { // Try to parse caster as constant
-		if (!script_get_constant(split[1], &caster)) {
+		if (!script_get_constant(split[1], &caster_tmp)) {
 			ShowError("skill_parse_row_skilldamage: Invalid caster constant given for skill %d. Skipping.", id);
 			return false;
 		}
+		caster = static_cast<int>(caster_tmp);
 	}
 	skill->damage.caster |= caster;
 	skill->damage.map |= atoi(split[2]);

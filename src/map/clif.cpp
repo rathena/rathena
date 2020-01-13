@@ -11362,7 +11362,7 @@ void clif_parse_WisMessage(int fd, struct map_session_data* sd)
 			for( i = 0; i < NUM_WHISPER_VAR; ++i ) {
 				char variablename[CHAT_SIZE_MAX];
 				safesnprintf(variablename,sizeof(variablename),"@whispervar%d$", i);
-				set_var(sd,variablename,(char *) split_data[i]);
+				set_var_str( sd, variablename, split_data[i] );
 			}
 
 			safesnprintf(event,sizeof(event),"%s::%s", npc->exname,script_config.onwhisper_event_name);
