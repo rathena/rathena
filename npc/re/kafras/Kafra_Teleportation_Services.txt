@@ -219,13 +219,11 @@ S_Zone:
 		mes "[Kafra Employee]";
 		mes "Can you tell me about other areas of service?";
 		close3;
-		cutin "kafra_do01", 255;
 	}
 	mes "[Kafra Employee]";
 	mes "Sir! You do not have enough value that we are asking for.";
 	mes "Please check back again.";
 	close3;
-	cutin "kafra_do01", 255;
 }
 
 moc_para01,35,23,3	script	Kafra Teleportation#eden	4_F_DRKAFRA01,{
@@ -242,7 +240,6 @@ moc_para01,35,23,3	script	Kafra Teleportation#eden	4_F_DRKAFRA01,{
 		mes "We do not offer free teleportation services for adventurers ^ff0000above level 40 or higher^000000.";
 		mes "Search for Kafra Teleportation services in the city.";
 		close3;
-		cutin "kafra_do01", 255;
 	}
 	mes "[Kafra Employee]";
 	mes "Please tell me your destiny?";
@@ -300,7 +297,6 @@ S_Zone:
 		mes "[Kafra Employee]";
 		mes "So can you check out other service?";
 		close3;
-		cutin "kafra_do01", 255;
 	}	
 }
 

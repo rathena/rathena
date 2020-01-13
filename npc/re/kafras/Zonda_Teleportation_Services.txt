@@ -43,7 +43,6 @@
 		mes "We are always striving to ensure the best services for our customers.";
 		mes "Thank you for using our services.";
 		close3;
-		cutin "zonda_do01", 255;
 	}
 
 S_Zone:
@@ -76,13 +75,11 @@ S_Zone:
 		mes "[Zonda Employee]";
 		mes "Can you tell me about other areas of service?";
 		close3;
-		cutin "zonda_do01", 255;
 	}
 	mes "[Zonda Employee]";
 	mes "Sir! You do not have enough value that we are asking for.";
 	mes "Please check back again.";
 	close3;
-	cutin "zonda_do01", 255;
 }
 
 alberta,35,239,3	duplicate(ZondaTeleportationServices)	Zonda Teleportation#alberta	4_M_DRZONDA01
